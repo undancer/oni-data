@@ -1,5 +1,8 @@
 # oni-data 缺氧游戏的Data文件夹
 
+##
+
+```
 Data
 ├── StreamingAssets
 │   ├── codex                                                                     百科全书
@@ -45,15 +48,18 @@ Data
 │   │   ├── subworlds                                                               # 子世界
 │   │   ├── traits                                                                  # 特质
 │   │   ├── worlds                                                                  # 世界
-│   │   ├── borders.yaml
-│   │   ├── defaults.yaml
-│   │   ├── layers.yaml
-│   │   ├── mobs.yaml
-│   │   ├── rivers.yaml
-│   │   ├── rooms.yaml
-│   │   ├── seed_names.txt
-│   │   └── temperatures.yaml
+│   │   ├── borders.yaml                                                            ##
+│   │   ├── defaults.yaml                                                           ##
+│   │   ├── layers.yaml                                                             ##
+│   │   ├── mobs.yaml                                                               ##
+│   │   ├── rivers.yaml                                                             ##
+│   │   ├── rooms.yaml                                                              ##
+│   │   ├── seed_names.txt                                                          # 暂时没啥用
+│   │   └── temperatures.yaml                                                       ##
 │   └── Tuning.json                                                               # TuningSystem
 ├── README.md
 ├── app.info
 └── boot.config
+```
+
+##
