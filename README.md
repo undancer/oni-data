@@ -48,18 +48,44 @@ Data
 │   │   ├── subworlds                                                               # 子世界
 │   │   ├── traits                                                                  # 特质
 │   │   ├── worlds                                                                  # 世界
-│   │   ├── borders.yaml                                                            ##
-│   │   ├── defaults.yaml                                                           ##
-│   │   ├── layers.yaml                                                             ##
-│   │   ├── mobs.yaml                                                               ##
-│   │   ├── rivers.yaml                                                             ##
-│   │   ├── rooms.yaml                                                              ##
+│   │   ├── borders.yaml                                                            ## SettingsCache
+│   │   ├── defaults.yaml                                                           ## SettingsCache
+│   │   ├── layers.yaml                                                             ## SettingsCache
+│   │   ├── mobs.yaml                                                               ## SettingsCache
+│   │   ├── rivers.yaml                                                             ## SettingsCache
+│   │   ├── rooms.yaml                                                              ## SettingsCache
 │   │   ├── seed_names.txt                                                          # 暂时没啥用
-│   │   └── temperatures.yaml                                                       ##
+│   │   └── temperatures.yaml                                                       ## SettingsCache
 │   └── Tuning.json                                                               # TuningSystem
 ├── README.md
 ├── app.info
 └── boot.config
 ```
 
-##
+## WorldGen
+
+新的策略是
+clusters -> worlds -> subworlds -> biomes
+
+WorldGenProgressStages.Stages
+| k | v |
+| - | - |
+| Failure | |
+| SetupNoise | |
+| GenerateNoise | |
+| GenerateSolarSystem | |
+| WorldLayout | |
+| CompleteLayout | |
+| NoiseMapBuilder | |
+| ClearingLevel | |
+| Processing | |
+| Borders | |
+| ProcessRivers | |
+| ConvertCellsToEdges | |
+| DrawWorldBorder | |
+| PlaceTemplates | |
+| SettleSim | |
+| DetectNaturalCavities | |
+| PlacingCreatures | |
+| Complete | |
+| NumberOfStages | |
