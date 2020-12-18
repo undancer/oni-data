@@ -1,0 +1,22 @@
+name: STRINGS.WORLD_TRAITS.METAL_POOR.NAME
+description: STRINGS.WORLD_TRAITS.METAL_POOR.DESCRIPTION
+colorHex: 8494A1
+exclusiveWith:
+  - traits/MetalRich
+
+elementBandModifiers:
+  - element: Cuprite
+    massMultiplier: .8
+    bandMultiplier: .8
+  - element: IronOre
+    massMultiplier: .8
+    bandMultiplier: .8
+  - element: Wolframite
+    massMultiplier: .8
+    bandMultiplier: .8
+  - element: AluminumOre
+    massMultiplier: .8
+    bandMultiplier: .8
+  - element: GoldAmalgam
+    massMultiplier: .8
+    bandMultiplier: .8

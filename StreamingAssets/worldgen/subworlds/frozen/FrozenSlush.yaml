@@ -1,0 +1,47 @@
+biomeNoise: noise/subworldFrozen
+temperatureRange: Chilly
+density:
+  min: 10
+  max: 15
+avoidRadius: 20.0
+extraBiomeChildren: 4
+sampleBehaviour: PoissonDisk
+biomes:
+  - name: biomes/Frozen/SaltySlush
+    weight: 2
+    tags:
+      - ColdWheat
+      - ColdWheatSeed
+      - ColdBreather
+tags:
+  - IgnoreCaveOverride
+pointsOfInterest:
+   heatsinks_a:
+    - poi_ice_heatsink_a
+    - poi_ice_heatsink_b
+   ruins_a:
+    - poi_ice_lab_basement
+    - poi_ice_lab_splitroom
+features:
+  - type: features/frozen/SlushPool
+  - type: features/frozen/SlushPool
+  - type: features/frozen/SaltShelf
+  - type: features/frozen/SaltShelf
+  - type: features/frozen/RustShelf
+  - type: features/frozen/RustShelf
+subworldFeatureRules:
+  - names:
+    - poi/poi_geyser_dirty_slush
+    - poi/poi_frozen_salt_water_geyser
+    listRule: GuaranteeAll
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 2
+      - command: IntersectWith
+        zoneTypes: [ FrozenWastes ]
+zoneType: FrozenWastes
+#

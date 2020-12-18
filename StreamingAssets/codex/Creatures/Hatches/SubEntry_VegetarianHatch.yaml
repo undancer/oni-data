@@ -1,0 +1,18 @@
+id: "HatchVeggie"
+title: STRINGS.CODEX.SAGE.TITLE
+parentEntryID: "HatchSpecies"
+layoutPriority: 2
+#lockID: critter_sage_hatch
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    showBeforeGeneratedContent: true
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.SAGE.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.SAGE.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1

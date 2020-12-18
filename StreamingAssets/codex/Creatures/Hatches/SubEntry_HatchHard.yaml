@@ -1,0 +1,18 @@
+id: "HatchHard"
+title: STRINGS.CODEX.STONE.TITLE
+parentEntryID: "HatchSpecies"
+layoutPriority: 3
+#lockID: critter_stone_hatch
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    showBeforeGeneratedContent: true
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.STONE.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.STONE.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1

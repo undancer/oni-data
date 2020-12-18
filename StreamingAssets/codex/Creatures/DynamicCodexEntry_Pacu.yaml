@@ -1,0 +1,27 @@
+id: "PacuSpecies"
+title: STRINGS.CODEX.PACU.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.PACU.SPECIES_TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.PACU.SPECIES_SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.PACU.BODY.CONTAINER1
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.CLEANER.BODY.CONTAINER2
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.TROPICAL.BODY.CONTAINER2
+          style: Body

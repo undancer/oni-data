@@ -1,0 +1,99 @@
+id: "lessons"
+title: STRINGS.CODEX.TIPS
+showBeforeGeneratedCategoryLinks: false
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+    content:
+      - !CodexSpacer
+          preferredWidth: -1
+          preferredHeight: 24
+      - !CodexText
+          stringKey: STRINGS.UI.CODEX.GAME_SYSTEMS
+          style: Title
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Grid
+    lockID:
+    content:    
+      - !CodexLabelWithLargeIcon
+          linkID: "POWER"
+          label:
+            stringKey: STRINGS.CODEX.POWER.TITLE
+            style: BodyWhite
+          icon:
+            spriteName: icon_category_electrical
+      - !CodexLabelWithLargeIcon
+          linkID: "RESEARCH"
+          label:
+            stringKey: STRINGS.CODEX.RESEARCH.TITLE
+            style: BodyWhite
+          icon:
+            spriteName: research_type_icon
+      - !CodexLabelWithLargeIcon
+          linkID: "MORALE"
+          label:
+            stringKey: STRINGS.CODEX.MORALE.TITLE
+            style: BodyWhite
+          icon:
+            spriteName: icon_category_morale
+      - !CodexLabelWithLargeIcon
+          linkID: "STRESS"
+          label:
+            stringKey: STRINGS.CODEX.STRESS.TITLE
+            style: BodyWhite
+          icon:
+            spriteName: hud_stress
+      - !CodexLabelWithLargeIcon
+          linkID: "PRIORITY"
+          label:
+            stringKey: STRINGS.CODEX.PRIORITY.TITLE
+            style: BodyWhite
+          icon:
+            spriteName: OverviewUI_priority_icon
+      - !CodexLabelWithLargeIcon
+          linkID: "DECOR"
+          label:
+            stringKey: STRINGS.CODEX.DECORSYSTEM.TITLE
+            style: BodyWhite
+          icon:
+            spriteName: icon_category_decor
+      - !CodexLabelWithLargeIcon
+          linkID: "HEAT"
+          label:
+            stringKey: STRINGS.CODEX.HEAT.TITLE
+            style: BodyWhite
+          icon:
+            spriteName: icon_category_utilities
+      - !CodexLabelWithLargeIcon
+          linkID: "LIGHT"
+          label:
+            stringKey: STRINGS.CODEX.LIGHT.TITLE
+            style: BodyWhite
+          icon:
+            spriteName: icon_category_lights
+      - !CodexLabelWithLargeIcon
+          linkID: "LOGIC"
+          label:
+            stringKey: STRINGS.CODEX.AUTOMATION.TITLE
+            style: BodyWhite
+          icon:
+            spriteName: icon_category_automation
+      - !CodexLabelWithLargeIcon
+          linkID: "HEALTH"
+          label:
+            stringKey: STRINGS.CODEX.HEALTH.TITLE
+            style: BodyWhite
+          icon:
+            spriteName: icon_category_medical			
+      - !CodexLabelWithLargeIcon
+          linkID: "MISCELLANEOUSTIPS"
+          label:
+            stringKey: STRINGS.UI.CODEX.CATEGORYNAMES.MISCELLANEOUSTIPS
+            style: BodyWhite
+          icon:
+            spriteName: icon_category_medical				
+      - !CodexSpacer
+          preferredWidth: -1

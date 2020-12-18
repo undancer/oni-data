@@ -1,0 +1,17 @@
+id: "MyLog5"
+title: STRINGS.CODEX.MYLOG.BODY.OUTSIDESTARTINGBIOME.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: buildoutsidestartingbiome
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.OUTSIDESTARTINGBIOME.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.OUTSIDESTARTINGBIOME.BODY
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.DIVIDER
+          style: Body

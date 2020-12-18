@@ -1,0 +1,116 @@
+id: "AIControl"
+title: STRINGS.CODEX.B6_AICONTROL.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_AIcontrol
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.SUBTITLE
+          style: Subtitle
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_AIcontrol
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_AIcontrol
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.BODY.CONTAINER6
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.BODY.SIGNATURE1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_AIcontrol2
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.TITLE3
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.BODY.EMAILHEADER2
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_AIcontrol2
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.BODY.CONTAINER5
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.BODY.SIGNATURE2
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_AIcontrol3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.TITLE3
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_AIcontrol3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.BODY.CONTAINER4
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.BODY.SIGNATURE1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_AIcontrol3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.TITLE3
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.BODY.EMAILHEADER2
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_AIcontrol3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.BODY.CONTAINER3
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.BODY.SIGNATURE2
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_AIcontrol4
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.TITLE2
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_AIcontrol4
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.BODY.CONTAINER2
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_AICONTROL.BODY.SIGNATURE1
+          style: Body

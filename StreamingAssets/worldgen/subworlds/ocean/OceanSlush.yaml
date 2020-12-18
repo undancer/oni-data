@@ -1,0 +1,26 @@
+biomeNoise: noise/subworldOcean
+temperatureRange: Cool
+density:
+  min: 10
+  max: 15
+avoidRadius: 20.0
+minChildCount: 4
+sampleBehaviour: PoissonDisk
+biomes:
+  - name: biomes/Ocean/Briny
+    weight: 2
+    tags:
+      - Pacu
+      - Crab
+      - SeaLettuceSeed
+      - SpiceVineSeed
+tags:
+  - IgnoreCaveOverride
+  - River
+pointsOfInterest:
+  geysers_a:
+    - poi_ocean_geyser_saltwater
+features:
+  - type: features/ocean/SlushPool
+  - type: features/ocean/SlushPool
+zoneType: Ocean

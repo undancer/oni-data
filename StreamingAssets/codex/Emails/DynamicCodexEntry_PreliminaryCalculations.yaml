@@ -1,0 +1,32 @@
+id: "PreliminaryCalculations"
+title: STRINGS.CODEX.A0_PRELIMINARYCALCULATIONS.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_preliminarycalculations
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A0_PRELIMINARYCALCULATIONS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A0_PRELIMINARYCALCULATIONS.SUBTITLE
+          style: Subtitle
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_preliminarycalculations
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A0_PRELIMINARYCALCULATIONS.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_preliminarycalculations
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A0_PRELIMINARYCALCULATIONS.BODY.CONTAINER2
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.A0_PRELIMINARYCALCULATIONS.BODY.SIGNATURE1
+          style: Body

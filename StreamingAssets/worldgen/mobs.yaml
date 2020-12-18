@@ -1,0 +1,1238 @@
+MobLookupTable:
+  # keys to remove from in-memory structure when this file is loaded
+  remove: [] 
+  # elements to add from in-memory structure when this file is loaded
+  add:
+    Hexaped:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.008
+        max: 0.015
+      width: 1
+      height: 1
+    Puft:
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.01
+        max: 0.01
+      width: 1
+      height: 1
+    med_Puft:
+      prefabName: Puft
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.04
+        max: 0.04
+      width: 1
+      height: 1
+    PuftBleachstone:
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.02
+        max: 0.02
+      width: 1
+      height: 1
+    med_PuftBleachstone:
+      prefabName: PuftBleachstone
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.04
+        max: 0.04
+      width: 1
+      height: 1
+    LightBug:
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.03
+        max: 0.03
+      width: 1
+      height: 1
+    med_LightBug:
+      prefabName: LightBug
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.03
+        max: 0.03
+      width: 1
+      height: 1
+    LightBugOrange:
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.03
+        max: 0.03
+      width: 1
+      height: 1
+    SteamSpout:
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.02
+        max: 0.02
+      width: 1
+      height: 1
+    Geyser:
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.01
+        max: 0.01
+      width: 1
+      height: 1
+    MethaneGeyser:
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.01
+        max: 0.01
+      width: 1
+      height: 1
+    PropaneSpout:
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.02
+        max: 0.02
+      width: 1
+      height: 1
+    OilSpout:
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.02
+        max: 0.02
+      width: 1
+      height: 1
+    OilEater:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.15
+        max: 0.2
+      width: 1
+      height: 1
+    OilFloater:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.1
+        max: 0.2
+      width: 1
+      height: 1
+    MysteryEgg:
+     location: Air
+     selectMethod: Centroid
+    Hatch:
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.015
+        max: 0.020
+      width: 1
+      height: 1
+    HatchBuried:
+      prefabName: Hatch
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.003
+        max: 0.005
+      width: 1
+      height: 1
+    HatchDense:
+      prefabName: Hatch
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.030 #
+        max: 0.060
+      width: 1
+      height: 1
+    HatchBuriedDense:
+      prefabName: Hatch
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.007 #
+        max: 0.010
+      width: 1
+      height: 1
+    exp1_Hatch:
+      prefabName: Hatch
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.017
+        max: 0.020
+      width: 1
+      height: 1
+    exp1_HatchBuried:
+      prefabName: Hatch
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.006
+        max: 0.008
+      width: 1
+      height: 1
+    Crab:
+      location: LiquidFloor
+      selectMethod: Centroid
+      density:
+        min: 0.075
+        max: 0.1
+      width: 1
+      height: 1
+    med_Crab:
+      prefabName: Crab
+      location: LiquidFloor
+      selectMethod: Centroid
+      density:
+        min: 0.12
+        max: 0.15
+      width: 1
+      height: 1
+    Drecko:
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.015
+        max: 0.020   
+      width: 1
+      height: 1
+    med_Drecko:
+      prefabName: Drecko
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.025
+        max: 0.035  
+      width: 1
+      height: 1
+    Mole:
+      prefabName: Mole
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.005
+        max: 0.008
+      width: 1
+      height: 1
+    GreedyGreen:
+      location: Floor
+      selectMethod: Centroid
+    JungleGasPlant:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.04
+        max: 0.06
+      width: 1
+      height: 1
+    BasicSingleHarvestPlant:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.16
+        max: 0.25
+      width: 1
+      height: 1
+    BasicSingleHarvestPlantSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.04
+        max: 0.05
+      width: 1
+      height: 1
+    exp1_BasicSingleHarvestPlant:
+      prefabName: BasicSingleHarvestPlant
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.16
+        max: 0.25
+      width: 1
+      height: 1
+    exp1_BasicSingleHarvestPlantSeed:
+      prefabName: BasicSingleHarvestPlantSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.04
+        max: 0.05
+      width: 1
+      height: 1
+    med_BasicSingleHarvestPlant:
+      prefabName: BasicSingleHarvestPlant
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.2
+        max: 0.3
+      width: 1
+      height: 1
+    med_BasicSingleHarvestPlantSeed:
+      prefabName: BasicSingleHarvestPlantSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.01
+        max: 0.02
+      width: 1
+      height: 1
+    BasicForagePlant:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.03
+        max: 0.05
+      width: 1
+      height: 1
+    exp1_BasicForagePlant:
+      prefabName: BasicForagePlant
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.07
+        max: 0.085
+      width: 1
+      height: 1
+    BasicForagePlantPlanted:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.12
+        max: 0.14
+      width: 1
+      height: 1
+    exp1_BasicForagePlantPlanted:
+      prefabName: BasicForagePlantPlanted
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.11
+        max: 0.15
+      width: 1
+      height: 1
+    BasicForagePlantDense:
+      prefabName: BasicForagePlant
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.04
+        max: 0.06
+      width: 1
+      height: 1
+    BasicForagePlantPlantedDense:
+      prefabName: BasicForagePlantPlanted
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.15
+        max: 0.19
+      width: 1
+      height: 1
+    SwampHarvestPlant:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.20
+        max: 0.25
+      width: 1
+      height: 1
+    med_SwampHarvestPlant:
+      prefabName: SwampHarvestPlant
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.35
+        max: 0.45
+      width: 1
+      height: 1
+    SwampHarvestPlantSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.005
+        max: 0.010
+      width: 1
+      height: 1      
+    med_SwampHarvestPlantSeed:
+      prefabName: SwampHarvestPlantSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.020
+        max: 0.030
+      width: 1
+      height: 1   
+    SwampForagePlant:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.0100
+        max: 0.0125
+      width: 1
+      height: 1
+    med_SwampForagePlant:
+      prefabName: SwampForagePlant
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.020
+        max: 0.023
+      width: 1
+      height: 1
+    SwampForagePlantPlanted:
+      location: LiquidFloor
+      selectMethod: Centroid
+      density:
+        min: 0.20
+        max: 0.25
+      width: 1
+      height: 1
+    med_SwampForagePlantPlanted: # fix
+      prefabName: SwampForagePlantPlanted
+      location: LiquidFloor
+      selectMethod: Centroid
+      density:
+        min: 0.20
+        max: 0.25
+      width: 1
+      height: 1
+    WineCups:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.200
+        max: 0.225
+      width: 1
+      height: 1
+    med_WineCups:
+      prefabName: WineCups
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.250
+        max: 0.300
+      width: 1
+      height: 1
+    WineCupsSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.005
+        max: 0.010
+      width: 1
+      height: 1
+    med_WineCupsSeed:
+      prefabName: WineCupsSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.010
+        max: 0.015
+      width: 1
+      height: 1
+    WormPlantSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.01
+        max: 0.015
+      width: 1
+      height: 1 
+    WormPlant:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.2
+        max: 0.4
+      width: 1
+      height: 1
+    SuperWormPlant:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.1
+        max: 0.25
+      width: 1
+      height: 1
+    CritterTrapPlant:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.05
+        max: 0.1
+      width: 1
+      height: 1    
+    med_CritterTrapPlant:
+      prefabName: CritterTrapPlant
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.3
+        max: 0.4
+      width: 1
+      height: 1
+    med_CritterTrapPlantSeed:
+      prefabName: CritterTrapPlantSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.02
+        max: 0.03
+      width: 1
+      height: 1
+    FilterPlant:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.25
+        max: 0.35
+      width: 1
+      height: 1
+    ForestForagePlantPlanted:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.12
+        max: 0.13
+      width: 1
+      height: 1
+    BasicFabricPlant:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.08
+        max: 0.18
+      width: 1
+      height: 1    
+    med_BasicFabricPlant:
+      prefabName: BasicFabricPlant
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.3
+        max: 0.4
+      width: 1
+      height: 1
+    SwampLily:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.4
+        max: 0.5
+      width: 1
+      height: 1
+    med_SwampLily:
+      prefabName: SwampLily
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.6
+        max: 0.8
+      width: 1
+      height: 1
+    BasicFabricMaterialPlantSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.04
+        max: 0.05
+      width: 1
+      height: 1
+    med_BasicFabricMaterialPlantSeed:
+      prefabName: BasicFabricMaterialPlantSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.01
+        max: 0.02
+      width: 1
+      height: 1
+    ColdBreather:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.08
+        max: 0.14
+      width: 1
+      height: 1
+    med_ColdBreather:
+      prefabName: ColdBreather
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.16
+        max: 0.28
+      width: 1
+      height: 1
+    ColdBreatherSparse:
+      prefabName: ColdBreather
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.03
+        max: 0.05
+      width: 1
+      height: 1
+    ColdBreatherSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.003
+        max: 0.005
+      width: 1
+      height: 1
+    med_ColdBreatherSeed:
+      prefabName: ColdBreatherSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.03
+        max: 0.05
+      width: 1
+      height: 1
+    BeanPlant:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.3
+        max: 0.4
+      width: 1
+      height: 1
+    BeanPlantSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.005
+        max: 0.009
+      width: 1
+      height: 1
+    med_BeanPlant:
+      prefabName: BeanPlant
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.3
+        max: 0.4
+      width: 1
+      height: 1
+    med_BeanPlantSeed:
+      prefabName: BeanPlantSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.05
+        max: 0.09
+      width: 1
+      height: 1
+    SpiceVine:
+      location: Ceiling
+      selectMethod: Centroid
+      density:
+        min: 0.23
+        max: 0.25
+      width: 1
+      height: 1
+    SpiceVineSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.005
+        max: 0.009
+      width: 1
+      height: 1
+    med_SpiceVine:
+      prefabName: SpiceVine
+      location: Ceiling
+      selectMethod: Centroid
+      density:
+        min: 0.27
+        max: 0.30
+      width: 1
+      height: 1
+    med_SpiceVineSeed:
+      prefabName: SpiceVineSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.02
+        max: 0.04
+      width: 1
+      height: 1
+    ColdWheat:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.33
+        max: 0.35
+      width: 1
+      height: 1
+    med_ColdWheat:
+      prefabName: ColdWheat
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.22
+        max: 0.33
+      width: 1
+      height: 1
+    ColdWheatSeed:
+      # prefabName: ColdWheat # todo: this was missing in base game
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.005
+        max: 0.009
+      width: 1
+      height: 1
+    med_ColdWheatSeed:
+      prefabName: ColdWheat
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.005
+        max: 0.009
+      width: 1
+      height: 1
+    MushroomPlant:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.2
+        max: 0.35
+      width: 1
+      height: 1
+    MushroomSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.04
+        max: 0.05
+      width: 1
+      height: 1    
+    med_MushroomPlant:
+      prefabName: MushroomPlant
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.3
+        max: 0.5
+      width: 1
+      height: 1
+    med_MushroomSeed:
+      prefabName: MushroomSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.02
+        max: 0.03
+      width: 1
+      height: 1
+    PrickleFlower:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.2
+        max: 0.32
+      width: 1
+      height: 1
+    PrickleFlowerSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.005
+        max: 0.009
+      width: 1
+      height: 1
+    med_PrickleFlower:
+      prefabName: PrickleFlower
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.3
+        max: 0.42
+      width: 1
+      height: 1
+    med_PrickleFlowerSeed:
+      prefabName: PrickleFlowerSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.05
+        max: 0.09
+      width: 1
+      height: 1
+    exp1_PrickleFlower:
+      prefabName: PrickleFlower
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.14
+        max: 0.18
+      width: 1
+      height: 1
+    exp1_PrickleFlowerSeed:
+      prefabName: PrickleFlowerSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.010
+        max: 0.014
+      width: 1
+      height: 1
+    PrickleGrass:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.13
+        max: 0.16
+      width: 1
+      height: 1
+    PrickleGrassSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.005
+        max: 0.010
+      width: 1
+      height: 1 
+    exp1_PrickleGrass:
+      prefabName: PrickleGrass
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.16
+        max: 0.22
+      width: 1
+      height: 1
+    exp1_PrickleGrassSeed:
+      prefabName: PrickleGrassSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.008
+        max: 0.012
+      width: 1
+      height: 1 
+    med_PrickleGrass:
+      prefabName: PrickleGrass
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.23
+        max: 0.26
+      width: 1
+      height: 1
+    med_PrickleGrassSeed:
+      prefabName: PrickleGrassSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.05
+        max: 0.1
+      width: 1
+      height: 1 
+    Cylindrica:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.13
+        max: 0.16
+      width: 1
+      height: 1
+    CylindricaSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.005
+        max: 0.010
+      width: 1
+      height: 1
+    ToePlant:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.13
+        max: 0.16
+      width: 1
+      height: 1
+    ToePlantSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.005
+        max: 0.010
+      width: 1
+      height: 1
+    med_ToePlant:
+      prefabName: ToePlant
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.30
+        max: 0.40
+      width: 1
+      height: 1
+    med_ToePlantSeed:
+      prefabName: ToePlantSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.03
+        max: 0.04
+      width: 1
+      height: 1
+    Pacu:
+      location: Water
+      selectMethod: Centroid
+      density:
+        min: 0.05
+        max: 0.05
+      width: 1
+      height: 1
+    med_Pacu:
+      prefabName: Pacu
+      location: Water
+      selectMethod: Centroid
+      density:
+        min: 0.08
+        max: 0.15
+      width: 1
+      height: 1
+    PacuDense:
+      prefabName: Pacu
+      location: Water
+      selectMethod: Centroid
+      density:
+        min: 0.375
+        max: 0.400
+      width: 1
+      height: 1
+    Glom:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.02
+        max: 0.04
+      width: 1
+      height: 1
+    med_Glom:
+      prefabName: Glom
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.04
+        max: 0.07
+      width: 1
+      height: 1
+    ShockWorm:
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.02
+        max: 0.04
+      width: 1
+      height: 1
+    Squirrel:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.065
+        max: 0.1
+      width: 1
+      height: 1
+    med_Squirrel:
+      prefabName: Squirrel
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.12
+        max: 0.2
+      width: 1
+      height: 1
+    BeeHive:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.1
+        max: 0.2
+      width: 1
+      height: 1
+    Staterpillar:
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.03
+        max: 0.05
+      width: 1
+      height: 1
+    med_Staterpillar:
+      prefabName: Staterpillar
+      location: Air
+      selectMethod: Centroid
+      density:
+        min: 0.04
+        max: 0.06
+      width: 1
+      height: 1
+    DivergentBeetle:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.015
+        max: 0.020
+      width: 1
+      height: 1
+    DivergentWorm:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.015
+        max: 0.020
+      width: 1
+      height: 1
+    PropSurfaceSatellite1:
+      location: Surface
+      selectMethod: Centroid
+      density:
+        min: 0.25
+        max: 0.25
+      width: 4
+      height: 3
+    PropSurfaceSatellite2:
+      location: Surface
+      selectMethod: Centroid
+      density:
+        min: 0.25
+        max: 0.25
+      width: 4
+      height: 4
+    PropSurfaceSatellite3:
+      location: Surface
+      selectMethod: Centroid
+      density:
+        min: 0.4
+        max: 0.4
+      width: 7
+      height: 6
+    LeafyPlant:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.13
+        max: 0.16
+      width: 1
+      height: 1
+    LeafyPlantSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.005
+        max: 0.010
+      width: 1
+      height: 1
+    med_LeafyPlant:
+      prefabName: LeafyPlant
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.2
+        max: 0.25
+      width: 1
+      height: 1
+    med_LeafyPlantSeed:
+      prefabName: LeafyPlantSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.01
+        max: 0.02
+      width: 1
+      height: 1
+    SeaLettuce:
+      location: LiquidFloor
+      selectMethod: Centroid
+      density:
+        min: 0.5
+        max: 0.5
+      width: 1
+      height: 1
+    SeaLettuceSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.05
+        max: 0.07
+      width: 1
+      height: 1
+    med_SeaLettuce:
+      prefabName: SeaLettuce
+      location: LiquidFloor
+      selectMethod: Centroid
+      density:
+        min: 0.75
+        max: 0.75
+      width: 1
+      height: 1
+    med_SeaLettuceSeed:
+      prefabName: SeaLettuceSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.07
+        max: 0.1
+      width: 1
+      height: 1
+    CactusPlant:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.13
+        max: 0.16
+      width: 1
+      height: 1
+    CactusPlantSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.005
+        max: 0.010
+      width: 1
+      height: 1
+    BulbPlant:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.13
+        max: 0.16
+      width: 1
+      height: 1
+    BulbPlantSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.005
+        max: 0.010
+      width: 1
+      height: 1
+    med_BulbPlant:
+      prefabName: BulbPlant
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.25
+        max: 0.3
+      width: 1
+      height: 1
+    med_BulbPlantSeed:
+      prefabName: BulbPlantSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.01
+        max: 0.02
+      width: 1
+      height: 1
+    ForestTree:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.125
+        max: 0.25
+      width: 1
+      height: 2
+    med_ForestTree:
+      prefabName: ForestTree
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.2
+        max: 0.4
+      width: 1
+      height: 2
+    Oxyfern:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.10
+        max: 0.12
+      width: 1
+      height: 1
+    med_Oxyfern:
+      prefabName: Oxyfern
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.2
+        max: 0.24
+      width: 1
+      height: 1
+    EvilFlower:
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.06
+        max: 0.08
+      width: 1
+      height: 1
+    EvilFlowerSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.002
+        max: 0.003
+      width: 1
+      height: 1
+    SaltPlant:
+      location: Ceiling
+      selectMethod: Centroid
+      density:
+        min: 0.23
+        max: 0.25
+      width: 1
+      height: 1
+    SaltPlantSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.005
+        max: 0.009
+      width: 1
+      height: 1
+    med_SaltPlant:
+      prefabName: SaltPlant
+      location: Ceiling
+      selectMethod: Centroid
+      density:
+        min: 0.27
+        max: 0.30
+      width: 1
+      height: 1
+    med_SaltPlantSeed:
+      prefabName: SaltPlantSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.03
+        max: 0.05
+      width: 1
+      height: 1
+    OilWell:
+      location: AnyFloor
+      selectMethod: Centroid
+      density:
+        min: 0.005
+        max: 0.009
+      width: 1
+      height: 1

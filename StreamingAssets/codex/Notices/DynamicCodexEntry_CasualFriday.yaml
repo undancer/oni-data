@@ -1,0 +1,23 @@
+id: "CasualFriday"
+title: STRINGS.CODEX.A4_CASUALFRIDAY.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: misc_casualfriday
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A4_CASUALFRIDAY.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A4_CASUALFRIDAY.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: misc_casualfriday
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A4_CASUALFRIDAY.BODY.CONTAINER1
+          style: Body

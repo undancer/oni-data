@@ -1,0 +1,15 @@
+tags:
+  - AllowExceedNodeBorders
+shape: Circle
+borders:
+blobSize:
+  min: 2
+  max: 3
+ElementChoiceGroups:
+  RoomCenterElements:
+    selectionMethod: WeightedResample
+    choices:
+      - element: Obsidian
+        weight: 0.5
+        overrides:
+          massOverride: 800

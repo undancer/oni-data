@@ -1,0 +1,74 @@
+id: "TheJanitor"
+title: STRINGS.CODEX.A5_THEJANITOR.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_thejanitor
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_THEJANITOR.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_THEJANITOR.SUBTITLE
+          style: Subtitle
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_thejanitor
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_THEJANITOR.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_thejanitor
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_THEJANITOR.BODY.CONTAINER2
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_THEJANITOR.BODY.SIGNATURE1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_thejanitor
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_THEJANITOR.TITLE2
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_THEJANITOR.BODY.EMAILHEADER2
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_thejanitor
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_THEJANITOR.BODY.CONTAINER3
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_THEJANITOR.BODY.SIGNATURE2
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_thejanitor
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_THEJANITOR.TITLE3
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_THEJANITOR.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_thejanitor
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_THEJANITOR.BODY.CONTAINER4
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_THEJANITOR.BODY.SIGNATURE1
+          style: Body

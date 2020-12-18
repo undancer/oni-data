@@ -1,0 +1,30 @@
+id: "HatchSpecies"
+title: STRINGS.CODEX.HATCH.SPECIES_TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.HATCH.SPECIES_TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.HATCH.SPECIES_SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.HATCH.BODY.CONTAINER1
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.STONE.BODY.CONTAINER2
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.SAGE.BODY.CONTAINER2
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.SMOOTH.BODY.CONTAINER2
+          style: Body

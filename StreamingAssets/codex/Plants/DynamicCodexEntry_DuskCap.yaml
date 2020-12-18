@@ -1,0 +1,54 @@
+id: "MushroomPlant"
+title: STRINGS.CODEX.DUSKCAP.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.DUSKCAP.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.DUSKCAP.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.DUSKCAP.BODY.CONTAINER1
+          style: Body
+
+      #- ImageExample:
+      #  type: Image
+      #  properties:
+      #    spriteName: ONI_logo
+      #
+      #    preferredHeight: 128
+#-----------------------------
+#  - contentLayout: Vertical
+#    lockID:
+#
+#    content:
+#      - BodyExample:
+#        type: Text
+#        properties:
+#          stringKey: STRINGS.CODEX.DUSKCAP.BODY.CONTAINER2
+#          style: "body"
+#
+#-----------------------------
+#  - contentLayout: Vertical
+#    lockID:
+#
+#    content:
+#      - BodyExample:
+#        type: Text
+#        properties:
+#          stringKey: STRINGS.CODEX.DUSKCAP.BODY.CONTAINER3
+#          style: "body"
+#

@@ -1,0 +1,47 @@
+id: "PersonalJournalB327"
+title: STRINGS.CODEX.A2_B327.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B327_1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_B327.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_B327.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B327_1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_B327.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B327_2
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_B327.BODY.CONTAINER2
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B327_3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_B327.BODY.CONTAINER3
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B327_4
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_B327.BODY.CONTAINER4
+          style: Body

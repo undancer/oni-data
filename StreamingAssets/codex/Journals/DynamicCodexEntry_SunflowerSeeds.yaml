@@ -1,0 +1,23 @@
+id: "SunflowerSeeds"
+title: STRINGS.CODEX.A5_SUNFLOWERSEEDS.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_sunflowerseeds
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_SUNFLOWERSEEDS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_SUNFLOWERSEEDS.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_sunflowerseeds
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_SUNFLOWERSEEDS.BODY.CONTAINER1
+          style: Body

@@ -1,0 +1,18 @@
+id: "Hatch"
+title: STRINGS.CODEX.HATCH.TITLE
+parentEntryID: "HatchSpecies"
+layoutPriority: 1
+#lockID: critter_hatch
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    showBeforeGeneratedContent: true
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.HATCH.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.HATCH.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1

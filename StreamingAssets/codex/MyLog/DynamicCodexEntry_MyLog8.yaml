@@ -1,0 +1,18 @@
+id: "MyLog8"
+title: STRINGS.CODEX.MYLOG.BODY.DUPLICANTDEATH.TITLE
+sortString: "ZZZ"
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: duplicantdeath
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.DUPLICANTDEATH.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.DUPLICANTDEATH.BODY
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.DIVIDER
+          style: Body
+#-----------------------------

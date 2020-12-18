@@ -1,0 +1,32 @@
+id: "NewSecurity3"
+title: STRINGS.CODEX.A8_NEWSECURITY3.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_security3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A8_NEWSECURITY3.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A8_NEWSECURITY3.SUBTITLE
+          style: Subtitle
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_security3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A8_NEWSECURITY3.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_security3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A8_NEWSECURITY3.BODY.CONTAINER2
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.A8_NEWSECURITY3.BODY.SIGNATURE1
+          style: Body

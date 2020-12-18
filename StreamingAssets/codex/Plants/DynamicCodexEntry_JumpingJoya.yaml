@@ -1,0 +1,21 @@
+id: "CactusPlant"
+title: STRINGS.CODEX.JUMPINGJOYA.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.JUMPINGJOYA.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.JUMPINGJOYA.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.JUMPINGJOYA.BODY.CONTAINER1
+          style: Body

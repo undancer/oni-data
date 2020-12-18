@@ -1,0 +1,29 @@
+id: "MoleSpecies"
+title: STRINGS.CODEX.MOLE.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MOLE.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MOLE.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MOLE.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    #lockID: studyable_mole
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MOLE.BODY.CONTAINER2
+          style: Body

@@ -1,0 +1,39 @@
+id: "PlanetaryEchoes"
+title: STRINGS.CODEX.PLANETARYECHOES.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: earth
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.PLANETARYECHOES.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.PLANETARYECHOES.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: earth
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.PLANETARYECHOES.BODY.TITLE1
+          style: Subtitle
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.PLANETARYECHOES.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: earth
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.PLANETARYECHOES.BODY.TITLE2
+          style: Subtitle
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.PLANETARYECHOES.BODY.CONTAINER2
+          style: Body

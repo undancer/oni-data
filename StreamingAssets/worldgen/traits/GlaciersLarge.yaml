@@ -1,0 +1,6 @@
+name: STRINGS.WORLD_TRAITS.GLACIERS_LARGE.NAME
+description: STRINGS.WORLD_TRAITS.GLACIERS_LARGE.DESCRIPTION
+colorHex: 91D8F0
+
+globalFeatureMods:
+  features/traits/GlacierLarge: 5

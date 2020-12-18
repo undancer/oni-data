@@ -1,0 +1,30 @@
+tags:
+  - AllowExceedNodeBorders
+shape: Blob
+borders:
+  - 1
+internalMobs:
+  - type: BeeHive
+    count:
+      min: 1
+      max: 1
+blobSize:
+  min: 2.5
+  max: 3.5
+ElementChoiceGroups:
+  RoomCenterElements:
+    selectionMethod: WeightedResample
+    choices:
+      - element: ChlorineGas
+        weight: 0.5
+  RoomBorderChoices0:
+    selectionMethod: WeightedResample
+    choices:
+      - element: Rust
+        weight: 1
+      - element: Radium
+        weight: 2
+      - element: UraniumOre
+        weight: 1
+      - element: Ice
+        weight: 0.5

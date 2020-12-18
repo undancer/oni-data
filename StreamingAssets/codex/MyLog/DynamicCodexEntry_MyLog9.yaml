@@ -1,0 +1,18 @@
+id: "MyLog9"
+title: STRINGS.CODEX.MYLOG.BODY.ONEDUPELEFT.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: onedupeleft
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.ONEDUPELEFT.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.ONEDUPELEFT.BODY
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.DIVIDER
+          style: Body
+#-----------------------------

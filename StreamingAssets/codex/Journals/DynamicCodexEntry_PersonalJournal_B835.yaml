@@ -1,0 +1,55 @@
+id: "PersonalJournalB835"
+title: STRINGS.CODEX.A4_B835.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B835_1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A4_B835.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A4_B835.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B835_1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A4_B835.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B835_2
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A4_B835.BODY.CONTAINER2
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B835_3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A4_B835.BODY.CONTAINER3
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B835_4
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A4_B835.BODY.CONTAINER4
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B835_5
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A4_B835.BODY.CONTAINER5
+          style: Body

@@ -1,0 +1,19 @@
+id: "LightBugBlue"
+title: STRINGS.CODEX.PLACID.TITLE
+parentEntryID: "LightBugSpecies"
+#lockID: critter_blue_shinebug
+layoutPriority: 5
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    showBeforeGeneratedContent: true
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.PLACID.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.PLACID.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------

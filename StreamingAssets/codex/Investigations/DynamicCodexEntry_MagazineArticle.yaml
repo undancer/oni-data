@@ -1,0 +1,31 @@
+id: "MagazineArticle"
+title: STRINGS.CODEX.B8_MAGAZINEARTICLE.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_magazine
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B8_MAGAZINEARTICLE.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B8_MAGAZINEARTICLE.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_magazine
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B8_MAGAZINEARTICLE.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_magazine
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B8_MAGAZINEARTICLE.BODY.CONTAINER2
+          style: Body

@@ -1,0 +1,19 @@
+biomeNoise: noise/Generic
+temperatureRange: ExtremelyHot
+minChildCount: 1
+density:
+  min: 35
+  max: 45
+avoidRadius: 50.0
+pdWeight: 0.3
+sampleBehaviour: PoissonDisk
+biomes:
+  - name: biomes/Magma/MagmaVent
+    weight: 1
+tags:
+  - ErodePointToBorder
+  - IgnoreCaveOverride
+  - NoGlobalFeatureSpawning
+featureTemplates:
+  feature_geyser_volcanohole: 8
+zoneType: MagmaCore

@@ -1,0 +1,17 @@
+id: "PacuTropical"
+title: STRINGS.CODEX.TROPICAL.TITLE
+parentEntryID: "PacuSpecies"
+layoutPriority: 2
+contentContainers:
+#-----------------------------
+  - showBeforeGeneratedContent: true
+    contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.TROPICAL.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.TROPICAL.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1

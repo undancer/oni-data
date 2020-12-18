@@ -1,0 +1,15 @@
+name: STRINGS.WORLD_TRAITS.SUBSURFACE_OCEAN.NAME
+description: STRINGS.WORLD_TRAITS.SUBSURFACE_OCEAN.DESCRIPTION
+colorHex: 12D1F4
+
+additionalSubworldFiles:
+  - name: subworlds/ocean/OceanDeep
+
+additionalUnknownCellFilters:
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - subworlds/ocean/OceanDeep

@@ -1,0 +1,54 @@
+id: "BasicSingleHarvestPlant"
+title: STRINGS.CODEX.MEALWOOD.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MEALWOOD.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MEALWOOD.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MEALWOOD.BODY.CONTAINER1
+          style: Body
+
+      #- ImageExample:
+      #  type: Image
+      #  properties:
+      #    spriteName: ONI_logo
+      #
+      #    preferredHeight: 128
+#-----------------------------
+#  - contentLayout: Vertical
+#    lockID:
+#
+#    content:
+#      - BodyExample:
+#        type: Text
+#        properties:
+#          stringKey: STRINGS.CODEX.MEALWOOD.BODY.CONTAINER2
+#          style: "body"
+#
+#-----------------------------
+#  - contentLayout: Vertical
+#    lockID:
+#
+#    content:
+#      - BodyExample:
+#        type: Text
+#        properties:
+#          stringKey: STRINGS.CODEX.MEALWOOD.BODY.CONTAINER3
+#          style: "body"
+#

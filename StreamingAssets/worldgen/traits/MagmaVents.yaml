@@ -1,0 +1,15 @@
+name: STRINGS.WORLD_TRAITS.MAGMA_VENTS.NAME
+description: STRINGS.WORLD_TRAITS.MAGMA_VENTS.DESCRIPTION
+colorHex: BF1C1C
+
+additionalSubworldFiles:
+  - name: subworlds/magma/MagmaVent
+
+additionalUnknownCellFilters:
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 1
+    maxDistance: 2
+    command: UnionWith
+    subworldNames:
+      - subworlds/magma/MagmaVent

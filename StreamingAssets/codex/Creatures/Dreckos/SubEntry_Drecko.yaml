@@ -1,0 +1,18 @@
+id: "Drecko"
+title: STRINGS.CODEX.GLOSSY.TITLE
+parentEntryID: "DreckoSpecies"
+layoutPriority: 1
+#lockID: critter_plastic_drecko
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    showBeforeGeneratedContent: true
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.DRECKO.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.DRECKO.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1

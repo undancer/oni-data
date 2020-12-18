@@ -1,0 +1,18 @@
+id: "MyLog10"
+title: STRINGS.CODEX.MYLOG.BODY.FULLDUPECOLONY.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: fulldupecolony
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.FULLDUPECOLONY.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.FULLDUPECOLONY.BODY
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.DIVIDER
+          style: Body
+#-----------------------------

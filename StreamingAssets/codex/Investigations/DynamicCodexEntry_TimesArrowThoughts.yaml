@@ -1,0 +1,23 @@
+id: "TimesArrowThoughts"
+title: STRINGS.CODEX.B7_TIMESARROWTHOUGHTS.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_timesarrowthoughts
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B7_TIMESARROWTHOUGHTS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B7_TIMESARROWTHOUGHTS.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_timesarrowthoughts
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B7_TIMESARROWTHOUGHTS.BODY.CONTAINER1
+          style: Body

@@ -1,0 +1,11 @@
+name: STRINGS.CLUSTER_NAMES.DEFAULT.NAME
+description: STRINGS.CLUSTER_NAMES.DEFAULT.DESCRIPTION
+forbiddenDlcId: EXPANSION1_ID
+menuOrder: 5
+
+startWorldIndex: 0
+worldPlacements:
+- world: worlds/ForestDefault
+  allowedRings:
+    min: 0
+    max: 0

@@ -1,0 +1,8 @@
+name: STRINGS.WORLD_TRAITS.BOULDERS_MEDIUM.NAME
+description: STRINGS.WORLD_TRAITS.BOULDERS_MEDIUM.DESCRIPTION
+colorHex: BDBDBD
+exclusiveWith:
+  - traits/BouldersLarge
+
+globalFeatureMods:
+  features/traits/BoulderMedium: 10

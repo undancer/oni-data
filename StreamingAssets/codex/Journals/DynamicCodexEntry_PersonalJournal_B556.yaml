@@ -1,0 +1,47 @@
+id: "PersonalJournalB556"
+title: STRINGS.CODEX.A3_B556.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B556_1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A3_B556.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A3_B556.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B556_1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A3_B556.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B556_2
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A3_B556.BODY.CONTAINER2
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B556_3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A3_B556.BODY.CONTAINER3
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B556_4
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A3_B556.BODY.CONTAINER4
+          style: Body

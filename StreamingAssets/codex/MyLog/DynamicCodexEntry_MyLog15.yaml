@@ -1,0 +1,18 @@
+id: "MyLog15"
+title: STRINGS.CODEX.MYLOG.BODY.TEMPORALTEAR.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: wormhole
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.TEMPORALTEAR.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.TEMPORALTEAR.BODY
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.DIVIDER
+          style: Body
+#-----------------------------

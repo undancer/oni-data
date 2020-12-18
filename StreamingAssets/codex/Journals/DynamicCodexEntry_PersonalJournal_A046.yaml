@@ -1,0 +1,47 @@
+id: "PersonalJournalA046"
+title: STRINGS.CODEX.A1_A046.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_A046_1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1_A046.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1_A046.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_A046_1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1_A046.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_A046_2
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1_A046.BODY.CONTAINER2
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_A046_3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1_A046.BODY.CONTAINER3
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_A046_4
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1_A046.BODY.CONTAINER4
+          style: Body

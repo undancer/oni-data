@@ -1,0 +1,20 @@
+biomeNoise: noise/OilPockets
+temperatureRange: ExtremelyCold
+minChildCount: 2
+density:
+  min: 10
+  max: 20
+avoidRadius: 20.0
+sampleBehaviour: PoissonDisk
+borderOverride: ice
+biomes:
+  - name: biomes/Radioactive/Frozen
+    weight: 1
+tags:
+  - IgnoreCaveOverride
+pointsOfInterest:
+  geysers_a:
+    - poi_uranium_fields_liquid_co2_geyser
+  geysers_b:
+    - poi_uranium_fields_liquid_co2_geyser_b
+zoneType: Radioactive

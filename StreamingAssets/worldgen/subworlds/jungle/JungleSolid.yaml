@@ -1,0 +1,59 @@
+biomeNoise: noise/subworldJungleSolid
+temperatureRange: HumanHot
+density:
+  min: 10
+  max: 15
+avoidRadius: 15.0
+doAvoidPoints: false
+dontRelaxChildren: true
+sampleBehaviour: PoissonDisk
+centralFeature:
+  type: features/jungle/SmallRoom
+features:
+  - type: features/jungle/BleachRoom
+  - type: features/jungle/SandGeode
+biomes:
+  - name: biomes/Jungle/Solid
+    weight: 1
+    tags:
+      - Glom
+      - Drecko
+      - SwampLily
+      - LeafyPlant
+      - LeafyPlantSeed
+tags:
+  - IgnoreCaveOverride
+  - River
+pointsOfInterest:
+  geysers_a:
+    - poi_jungle_geyser_steam 
+  geysers_b:
+    - poi_jungle_geyser_methane
+    - poi_jungle_geyser_chlorine
+  ruins_a:    
+    - poi_jungle_lab_poolbottom
+    - poi_jungle_buttongate
+    - poi_jungle_lab_vinetank
+    - poi_jungle_lab_daytimer
+    - poi_jungle_frag_lightbugs
+    - poi_jungle_frag_lockers
+    - poi_jungle_oxylite_spiral
+  ruins_b:    
+    - poi_jungle_lab_poolbottom
+    - poi_jungle_buttongate
+    - poi_jungle_lab_vinetank
+    - poi_jungle_lab_daytimer
+    - poi_jungle_frag_lightbugs
+    - poi_jungle_frag_lockers
+    - poi_jungle_oxylite_spiral
+  ruins_c:    
+    - poi_jungle_lab_poolbottom
+    - poi_jungle_buttongate
+    - poi_jungle_lab_vinetank
+    - poi_jungle_lab_daytimer
+    - poi_jungle_frag_lightbugs
+    - poi_jungle_frag_lockers
+    - poi_jungle_oxylite_spiral
+featureTemplates:
+  # feature_geyser_generic: 2
+zoneType: ToxicJungle

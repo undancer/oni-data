@@ -1,0 +1,54 @@
+id: "Spice_Vine"
+title: STRINGS.CODEX.PINCHAPEPPERPLANT.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.PINCHAPEPPERPLANT.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.PINCHAPEPPERPLANT.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.PINCHAPEPPERPLANT.BODY.CONTAINER1
+          style: Body
+
+      #- ImageExample:
+      #  type: Image
+      #  properties:
+      #    spriteName: ONI_logo
+      #
+      #    preferredHeight: 128
+#-----------------------------
+#  - contentLayout: Vertical
+#    lockID:
+#
+#    content:
+#      - BodyExample:
+#        type: Text
+#        properties:
+#          stringKey: STRINGS.CODEX.PINCHAPEPPERPLANT.BODY.CONTAINER2
+#          style: "body"
+#
+#-----------------------------
+#  - contentLayout: Vertical
+#    lockID:
+#
+#    content:
+#      - BodyExample:
+#        type: Text
+#        properties:
+#          stringKey: STRINGS.CODEX.PINCHAPEPPERPLANT.BODY.CONTAINER3
+#          style: "body"
+#

@@ -1,0 +1,9 @@
+id: "Home"
+title: STRINGS.UI.CODEX.CATEGORYNAMES.ROOT
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+
+    content:
+#-----------------------------

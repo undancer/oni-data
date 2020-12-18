@@ -1,0 +1,12 @@
+name: STRINGS.WORLD_TRAITS.MISALIGNED_START.NAME
+description: STRINGS.WORLD_TRAITS.MISALIGNED_START.DESCRIPTION
+colorHex: 8494A1
+
+startingBasePositionHorizontalMod:
+  min: -.2
+  max: .2
+startingBasePositionVerticalMod:
+  min: -.1
+  max: .1
+
+

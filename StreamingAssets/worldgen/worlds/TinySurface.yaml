@@ -1,0 +1,51 @@
+name: STRINGS.WORLDS.TINYSURFACE.NAME
+description: STRINGS.WORLDS.TINYSURFACE.DESCRIPTION
+coordinatePrefix: TNY-F
+difficulty: -1
+tier: -1
+disableWorldTraits: true
+
+worldsize:
+  X: 32
+  Y: 32
+layoutMethod: PowerTree
+
+defaultsOverrides:
+  data:
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+    OverworldDensityMin: 10
+    OverworldDensityMax: 10
+    DrawWorldBorder: true
+    DrawWorldBorderOverVacuum: false
+    WorldBorderThickness: 1
+    WorldBorderRange: 0
+#    OverworldMinNodes: 1
+  startingWorldElements: [] # remove the algae check
+
+
+# List all the zone files to load
+subworldFiles:
+  - name: subworlds/space/Space
+  - name: subworlds/space/SurfaceCrags
+  - name: subworlds/barren/BarrenGranite
+
+unknownCellsAllowedSubworlds: 
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      -  subworlds/space/Space
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - subworlds/space/SurfaceCrags
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 999
+    command: Replace
+    subworldNames:
+      - subworlds/barren/BarrenGranite

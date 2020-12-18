@@ -1,0 +1,139 @@
+TerrainBiomeLookupTable:
+  # keys to remove from in-memory structure when this file is loaded
+  remove: [] 
+  # elements to add from in-memory structure when this file is loaded
+  add:
+    Granite:
+    - content: Vacuum
+      bandSize: 0.1
+    - content: Granite
+      bandSize: 0.2
+    - content: Obsidian
+      bandSize: 0.2
+    - content: Granite
+      bandSize: 0.2
+    - content: IgneousRock
+      bandSize: 0.2
+    - content: Carbon
+      bandSize: 0.04
+    - content: Granite
+      bandSize: 0.2
+    - content: IgneousRock
+      bandSize: 0.1
+    - content: Granite
+      bandSize: 0.2
+    - content: Iron
+      bandSize: 0.04
+    - content: Obsidian
+      bandSize: 0.2
+    - content: Granite
+      bandSize: 0.2
+    - content: IgneousRock
+      bandSize: 0.2
+    - content: Granite
+      bandSize: 0.2
+    - content: IgneousRock
+      bandSize: 0.1
+    GraniteTunnels:
+    - content: Vacuum
+      bandSize: 0.05
+    - content: Obsidian
+      bandSize: 0.2
+    - content: Granite
+      bandSize: 0.2
+    - content: Granite
+      bandSize: 0.2
+    - content: IgneousRock
+      bandSize: 0.2
+    - content: Carbon
+      bandSize: 0.04
+    - content: Granite
+      bandSize: 0.2
+    - content: IgneousRock
+      bandSize: 0.3
+    - content: Iron
+      bandSize: 0.04
+    - content: Obsidian
+      bandSize: 0.2
+    - content: Granite
+      bandSize: 0.2
+    - content: IgneousRock
+      bandSize: 0.3
+    - content: IgneousRock
+      bandSize: 0.1
+    RockyChasm:
+    - content: SandStone
+      bandSize: 0.05
+    - content: IronOre
+      bandSize: 0.03
+    - content: IgneousRock
+      bandSize: 0.2
+    - content: SandStone
+      bandSize: 0.1
+    - content: Vacuum
+      bandSize: 0.8
+    - content: Vacuum #Void
+      bandSize: 0.1
+    RockyCaves:
+    - content: Vacuum
+      bandSize: 0.001
+    - content: SandStone
+      bandSize: 0.05
+    - content: IronOre
+      bandSize: 0.1
+    - content: IgneousRock
+      bandSize: 0.2
+    - content: SandStone
+      bandSize: 0.1
+    - content: Oxygen
+      bandSize: 0.4
+    - content: CarbonDioxide
+      bandSize: 0.4
+    RockyWetCaves:
+    - content: Vacuum
+      bandSize: 0.001
+    - content: SandStone
+      bandSize: 0.04
+    - content: Water
+      bandSize: 0.1
+    - content: IgneousRock
+      bandSize: 0.2
+    - content: SandStone
+      bandSize: 0.1
+    - content: Water # puddles
+      bandSize: 0.1
+    - content: Oxygen
+      bandSize: 0.4
+    - content: CarbonDioxide
+      bandSize: 0.4
+    GraniteOre:
+    - content: Vacuum
+      bandSize: 0.1
+    - content: Granite
+      bandSize: 0.2
+    - content: Obsidian
+      bandSize: 0.2
+    - content: Granite
+      bandSize: 0.2
+    - content: IgneousRock
+      bandSize: 0.2
+    - content: Carbon
+      bandSize: 0.04
+    - content: Granite
+      bandSize: 0.2
+    - content: IgneousRock
+      bandSize: 0.1
+    - content: Granite
+      bandSize: 0.2
+    - content: IronOre
+      bandSize: 0.04
+    - content: Obsidian
+      bandSize: 0.2
+    - content: Granite
+      bandSize: 0.2
+    - content: IgneousRock
+      bandSize: 0.2
+    - content: Granite
+      bandSize: 0.2
+    - content: IgneousRock
+      bandSize: 0.1

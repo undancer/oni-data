@@ -1,0 +1,18 @@
+id: "MyLog7"
+title: STRINGS.CODEX.MYLOG.BODY.STRANGERELICS.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_thermodynamiclaws
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.STRANGERELICS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.STRANGERELICS.BODY
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.DIVIDER
+          style: Body
+#-----------------------------

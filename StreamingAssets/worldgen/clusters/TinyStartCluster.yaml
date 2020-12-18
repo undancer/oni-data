@@ -1,0 +1,13 @@
+name: STRINGS.WORLDS.TINYSTART.NAME
+description: STRINGS.WORLDS.TINYSTART.DESCRIPTION
+requiredDlcId: EXPANSION1_ID
+menuOrder: 100
+coordinatePrefix: TNY-C
+skip: EditorOnly
+
+startWorldIndex: 0 
+worldPlacements:
+- world: worlds/TinyStart
+  allowedRings:
+    min: 0
+    max: 0

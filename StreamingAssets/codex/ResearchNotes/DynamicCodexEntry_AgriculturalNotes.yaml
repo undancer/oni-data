@@ -1,0 +1,71 @@
+id: "AgriculturalNotes"
+title: STRINGS.CODEX.A2_AGRICULTURALNOTES.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_agriculture1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_AGRICULTURALNOTES.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_AGRICULTURALNOTES.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_agriculture1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_AGRICULTURALNOTES.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_agriculture1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_AGRICULTURALNOTES.BODY.CONTAINER2
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_agriculture2
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_AGRICULTURALNOTES.BODY.CONTAINER3
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_agriculture2
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_AGRICULTURALNOTES.BODY.CONTAINER4
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_agriculture3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_AGRICULTURALNOTES.BODY.CONTAINER5
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_agriculture3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_AGRICULTURALNOTES.BODY.CONTAINER6
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_agriculture4
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_AGRICULTURALNOTES.BODY.CONTAINER7
+          style: Body

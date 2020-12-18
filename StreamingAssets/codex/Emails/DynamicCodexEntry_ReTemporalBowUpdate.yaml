@@ -1,0 +1,46 @@
+id: "ReTemporalBowUpdate"
+title: STRINGS.CODEX.B3_RETEMPORALBOWUPDATE.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_retemporalbowupdate
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B3_RETEMPORALBOWUPDATE.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B3_RETEMPORALBOWUPDATE.SUBTITLE
+          style: Subtitle
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_retemporalbowupdate
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B3_RETEMPORALBOWUPDATE.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_retemporalbowupdate
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B3_RETEMPORALBOWUPDATE.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_retemporalbowupdate
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B3_RETEMPORALBOWUPDATE.BODY.TITLEALT
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.B3_RETEMPORALBOWUPDATE.BODY.EMAILHEADER2
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_retemporalbowupdate
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B3_RETEMPORALBOWUPDATE.BODY.CONTAINER2
+          style: Body

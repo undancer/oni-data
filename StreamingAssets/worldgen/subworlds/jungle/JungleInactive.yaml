@@ -1,0 +1,49 @@
+biomeNoise: noise/subworldJungle
+temperatureRange: HumanHot
+density:
+  min: 10
+  max: 15
+avoidRadius: 15.0
+doAvoidPoints: false
+dontRelaxChildren: true
+extraBiomeChildren: 1
+sampleBehaviour: PoissonDisk
+centralFeature:
+  type: features/jungle/SmallRoom
+features:
+  - type: features/jungle/SmallRoom
+  - type: features/jungle/BleachRoom
+  - type: features/jungle/SandGeode
+biomes:
+  - name: biomes/Jungle/Basic
+    weight: 1
+    tags:
+      - Glom
+      - Drecko
+      - SwampLily
+      - SpiceVine
+      - SpiceVineSeed
+      - LeafyPlant
+      - LeafyPlantSeed
+      #- JungleGasPlant
+  - name: biomes/Jungle/Toxic
+    weight: 1
+    tags:
+      - Glom
+      - Drecko
+      - SwampLily
+      - SpiceVine
+      - SpiceVineSeed
+      - LeafyPlant
+      - LeafyPlantSeed
+tags:
+  - IgnoreCaveOverride
+pointsOfInterest:
+  ruins_a:    
+    - poi_jungle_lab_poolbottom
+    - poi_jungle_buttongate
+    - poi_jungle_lab_vinetank
+    - poi_jungle_lab_daytimer
+    - poi_jungle_frag_lightbugs
+    - poi_jungle_frag_lockers
+zoneType: ToxicJungle

@@ -1,0 +1,43 @@
+id: "BasicFabricPlant"
+title: STRINGS.CODEX.THIMBLEREED.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.THIMBLEREED.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.THIMBLEREED.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.THIMBLEREED.BODY.CONTAINER1
+          style: Body
+
+      #- ImageExample:
+      #  type: Image
+      #  properties:
+      #    spriteName: ONI_logo
+      #
+      #    preferredHeight: 128
+#-----------------------------
+#  - contentLayout: Vertical
+#    lockID:
+#
+#    content:
+#      - BodyExample:
+#        type: Text
+#        properties:
+#          stringKey: STRINGS.CODEX.THIMBLEREED.BODY.CONTAINER2
+#          style: "body"
+#

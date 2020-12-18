@@ -1,0 +1,31 @@
+id: "SchoolNewspaper"
+title: STRINGS.CODEX.SCHOOLNEWSPAPER.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_newspaper
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.SCHOOLNEWSPAPER.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.SCHOOLNEWSPAPER.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_newspaper
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.SCHOOLNEWSPAPER.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_newspaper
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.SCHOOLNEWSPAPER.BODY.CONTAINER2
+          style: Body

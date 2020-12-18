@@ -1,0 +1,29 @@
+id: "MooSpecies"
+title: STRINGS.CODEX.GASSYMOO.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.GASSYMOO.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.GASSYMOO.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.GASSYMOO.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    #lockID: studyable_gassymoo
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.GASSYMOO.BODY.CONTAINER2
+          style: Body

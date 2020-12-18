@@ -1,0 +1,29 @@
+biomeNoise: noise/LargeCaves
+borderOverride: NONE
+temperatureRange: HumanWarm
+minChildCount: 2
+density:
+  min: 7
+  max: 7
+avoidRadius: 5.0
+sampleBehaviour: PoissonDisk
+biomes:
+  - name: biomes/Forest/Chasm
+    weight: 4
+    tags:
+      - Oxyfern
+      - ForestTree     
+      - BasicSingleHarvestPlant
+      - BasicSingleHarvestPlantSeed
+      - ForestForagePlantPlanted
+      - LeafyPlant        
+      - LeafyPlantSeed
+      - Squirrel                 
+features: []
+pointsOfInterest:
+tags:
+  - IgnoreCaveOverride
+  - NoGlobalFeatureSpawning
+# featureTemplates:
+  # feature_geyser_generic: 2
+zoneType: Forest

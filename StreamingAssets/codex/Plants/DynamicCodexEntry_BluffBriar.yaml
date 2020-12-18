@@ -1,0 +1,54 @@
+id: "PrickleGrass"
+title: STRINGS.CODEX.BLUFFBRIAR.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.BLUFFBRIAR.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.BLUFFBRIAR.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.BLUFFBRIAR.BODY.CONTAINER1
+          style: Body
+
+      #- ImageExample:
+      #  type: Image
+      #  properties:
+      #    spriteName: ONI_logo
+      #
+      #    preferredHeight: 128
+#-----------------------------
+#  - contentLayout: Vertical
+#    lockID:
+#
+#    content:
+#      - BodyExample:
+#        type: Text
+#        properties:
+#          stringKey: STRINGS.CODEX.BLUFFBRIAR.BODY.CONTAINER2
+#          style: "body"
+#
+#-----------------------------
+#  - contentLayout: Vertical
+#    lockID:
+#
+#    content:
+#      - BodyExample:
+#        type: Text
+#        properties:
+#          stringKey: STRINGS.CODEX.BLUFFBRIAR.BODY.CONTAINER3
+#          style: "body"
+#

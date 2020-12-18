@@ -1,0 +1,36 @@
+id: "SquirrelSpecies"
+title: STRINGS.CODEX.PIP.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.PIP.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.PIP.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.PIP.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    #lockID: studyable_pip
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.PIP.BODY.CONTAINER2
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    #lockID: studyable_pip
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.PIP.BODY.CONTAINER3
+          style: Body

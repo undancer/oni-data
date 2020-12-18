@@ -1,0 +1,22 @@
+id: "MyLog1"
+title: STRINGS.CODEX.MYLOG.SUBTITLE
+sortString: "A"
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.SUBTITLE
+          style: Title
+#      - !CodexText
+#          stringKey: STRINGS.UI.WELCOMEMESSAGETITLE
+#          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.UI.WELCOMEMESSAGEBODY
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.DIVIDER
+          style: Body
+#-----------------------------

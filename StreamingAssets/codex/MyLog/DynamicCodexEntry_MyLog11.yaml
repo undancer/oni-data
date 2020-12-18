@@ -1,0 +1,18 @@
+id: "MyLog11"
+title: STRINGS.CODEX.MYLOG.BODY.NEURALVACILLATOR.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: neuralvacillator
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.NEURALVACILLATOR.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.NEURALVACILLATOR.BODY
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.DIVIDER
+          style: Body
+#-----------------------------

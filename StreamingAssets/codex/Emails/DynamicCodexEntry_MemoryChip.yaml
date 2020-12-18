@@ -1,0 +1,32 @@
+id: "MemoryChip"
+title: STRINGS.CODEX.B50_MEMORYCHIP.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_memorychip
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B50_MEMORYCHIP.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B50_MEMORYCHIP.SUBTITLE
+          style: Subtitle
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_memorychip
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B50_MEMORYCHIP.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_memorychip
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B50_MEMORYCHIP.BODY.CONTAINER2
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.B50_MEMORYCHIP.BODY.SIGNATURE1
+          style: Body

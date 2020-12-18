@@ -1,0 +1,31 @@
+id: "ElliesBirthday"
+title: STRINGS.CODEX.B2_ELLIESBIRTHDAY.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_elliesbirthday1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B2_ELLIESBIRTHDAY.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B2_ELLIESBIRTHDAY.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_elliesbirthday1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B2_ELLIESBIRTHDAY.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_elliesbirthday2
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B2_ELLIESBIRTHDAY.BODY.CONTAINER2
+          style: Body

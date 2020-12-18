@@ -1,0 +1,54 @@
+TerrainBiomeLookupTable:
+  # keys to remove from in-memory structure when this file is loaded
+  remove: [] 
+  # elements to add from in-memory structure when this file is loaded
+  add:
+    Basic:
+    # - content: UraniumOre
+    #   bandSize: 0.1
+    - content: IronOre
+      bandSize: 0.03
+    - content: MaficRock
+      bandSize: 0.1
+    - content: Rust
+      bandSize: 0.35
+    - content: CarbonDioxide
+      bandSize: 0.3
+      overrides:
+        massMultiplier: 1.1
+    - content: ChlorineGas
+      bandSize: 0.5
+      overrides:
+        massMultiplier: 1.1
+    Snowy:
+    # - content: UraniumOre
+    #   bandSize: 0.1
+    - content: IronOre
+      bandSize: 0.03
+    - content: MaficRock
+      bandSize: 0.1
+    - content: Rust
+      bandSize: 0.35  
+    - content: Snow
+      bandSize: 0.05
+    - content: CarbonDioxide
+      bandSize: 0.75
+      overrides:
+        massMultiplier: 0.5
+    Sulfurous:
+    - content: Sulfur
+      bandSize: 0.05
+    - content: MaficRock
+      bandSize: 0.1
+    # - content: UraniumOre
+    #   bandSize: 0.1
+    - content: Rust
+      bandSize: 0.35
+    - content: CarbonDioxide
+      bandSize: 0.3
+      overrides:
+        massMultiplier: 1.1
+    - content: ChlorineGas
+      bandSize: 0.5
+      overrides:
+        massMultiplier: 1.1

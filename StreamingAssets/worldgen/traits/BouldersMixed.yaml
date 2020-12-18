@@ -1,0 +1,10 @@
+name: STRINGS.WORLD_TRAITS.BOULDERS_MIXED.NAME
+description: STRINGS.WORLD_TRAITS.BOULDERS_MIXED.DESCRIPTION
+colorHex: BDBDBD
+exclusiveWith:
+  - traits/BouldersSmall
+
+globalFeatureMods:
+  features/traits/BoulderSmall: 10
+  features/traits/BoulderMedium: 5
+  features/traits/BoulderLarge: 2

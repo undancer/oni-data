@@ -1,0 +1,18 @@
+id: "MyLog18"
+title: STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MYLOGNAME
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: temporaltear
+    content:
+      - !CodexText
+          stringKey: STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MYLOGNAME
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_BODY
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.DIVIDER
+          style: Body
+#-----------------------------

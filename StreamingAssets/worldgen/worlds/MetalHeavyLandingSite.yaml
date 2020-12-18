@@ -1,0 +1,135 @@
+name: STRINGS.WORLDS.METALHEAVYLANDINGSITE.NAME
+description: STRINGS.WORLDS.METALHEAVYLANDINGSITE.DESCRIPTION
+nameTable: FOREST
+asteroidType: SwampRocket
+coordinatePrefix: TNY-ILS
+difficulty: -1
+tier: -1 
+disableWorldTraits: true
+
+worldsize:
+  X: 128
+  Y: 128
+layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
+#                                in order to use this.
+
+defaultsOverrides:
+  data:
+    DrawWorldBorderOverVacuum: false
+    DrawWorldBorder: true
+    WorldBorderThickness: 5
+    WorldBorderRange: 2
+    OverworldDensityMin: 18
+    OverworldDensityMax: 18
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+
+startSubworldName: subworlds/barren/LargeChasmStart
+startingBaseTemplate:  poi/poi_satellite_3_a
+startingBasePositionHorizontal:
+  min: 0.45
+  max: 0.55
+startingBasePositionVertical:
+  min: 0.75
+  max: 0.85
+
+# List all the zone files to load
+subworldFiles:
+  - name: subworlds/barren/LargeChasmStart
+  - name: subworlds/barren/LargeChasm
+  - name: subworlds/space/SpaceWithBorder
+    overridePower: 1.25
+  - name: subworlds/forest/med_ForestSurface
+  #- name: subworlds/metallic/MetalCrustLandingSite
+  #  overridePower: 0.4
+  - name: subworlds/marsh/med_HotMarshLandingSite
+    overridePower: 1.5
+  - name: subworlds/metallic/RenewableMetallic
+  - name: subworlds/radioactive/med_Radioactive
+  - name: subworlds/frozen/FrozenCore
+    weight: 0.4
+  - name: subworlds/radioactive/med_UraniumFields
+    weight: 0.6
+unknownCellsAllowedSubworlds: 
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - subworlds/marsh/med_HotMarshLandingSite
+      - subworlds/metallic/RenewableMetallic
+  - tagcommand: DistanceFromTag
+    tag: AtEdge
+    minDistance: 2
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - subworlds/barren/LargeChasm
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - subworlds/metallic/RenewableMetallic
+      - subworlds/radioactive/med_Radioactive
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/SpaceWithBorder
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - subworlds/forest/med_ForestSurface
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 0
+    command: Replace
+    subworldNames:
+      - subworlds/frozen/FrozenCore
+      - subworlds/radioactive/med_UraniumFields
+
+worldFeatureRules:
+  - names:
+    - poi/boon_bedroom
+    - poi/boon_washroom
+    - poi/boon_power
+    - poi/boon_kitchen
+    - poi/boon_well
+    - poi/boon_farm
+    listRule: TrySome
+    someCount: 2
+    priority: 50
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 0
+        maxDistance: 5
+      - command: IntersectWith
+        zoneTypes: [ Forest, Rust]
+      - command: ExceptWith
+        subworldNames:
+          - subworlds/barren/LargeChasmStart
+          - subworlds/barren/LargeChasm
+  - names: # Generic geysers
+    - features/feature_geyser_chlorine_gas
+    - features/feature_geyser_methane
+    - features/feature_geyser_hot_po2
+    - features/feature_geyser_small_volcano
+    - features/feature_geyser_hot_hydrogen
+    - features/feature_geyser_filthy_water
+    listRule: TrySome
+    someCount: 2
+    priority: 10
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 2
+        maxDistance: 10
+      - command: ExceptWith
+        zoneTypes: [ Space ]        

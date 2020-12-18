@@ -1,0 +1,30 @@
+id: "GeneticOoze"
+title: STRINGS.CODEX.A5_GENETICOOZE.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_geneticooze
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_GENETICOOZE.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_GENETICOOZE.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_geneticooze
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_GENETICOOZE.BODY.CONTAINER1
+          style: Body
+
+#      - Image:
+#        type: Image
+#        properties:
+#          spriteName: ONI_logo
+#
+#          preferredHeight: 128

@@ -1,0 +1,149 @@
+name: STRINGS.WORLDS.VOLCANIC.NAME
+description: STRINGS.WORLDS.VOLCANIC.DESCRIPTION
+nameTable: MAGMA
+coordinatePrefix: VOLCA
+difficulty: 3
+tier: 2
+
+worldsize:
+  X: 256
+  Y: 384
+layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
+#                                in order to use this.
+
+# List all the zone files to load
+subworldFiles:
+  - name: subworlds/sandstone/SandstoneStart
+  - name: subworlds/sandstone/SandstoneMiniMetal
+  - name: subworlds/sandstone/SandstoneMiniWater
+  - name: subworlds/sandstone/Sandstone
+  - name: subworlds/marsh/HotMarsh
+  - name: subworlds/jungle/Jungle
+  - name: subworlds/frozen/Frozen
+  - name: subworlds/ocean/Ocean
+  - name: subworlds/Impenetrable
+  - name: subworlds/magma/Bottom
+  - name: subworlds/magma/MagmaVent
+    weight: 4
+  - name: subworlds/oil/OilPockets
+  - name: subworlds/space/Space
+  - name: subworlds/space/SurfaceCrags
+    weight: 4
+
+startSubworldName: subworlds/sandstone/SandstoneStart
+startingBaseTemplate: bases/sandstoneBase
+
+globalFeatureTemplates:
+  feature_geyser_generic: 12
+
+seasons:
+  - MeteorShowers
+
+# Rivers:
+#   - River
+
+# When we are converting unknown cells, this will give us the options, processed in this order, the effects are cumlative
+unknownCellsAllowedSubworlds: 
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - subworlds/sandstone/SandstoneStart
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - subworlds/sandstone/SandstoneMiniMetal
+      - subworlds/sandstone/SandstoneMiniWater
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 2
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - subworlds/marsh/HotMarsh
+      - subworlds/jungle/Jungle
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 3
+    maxDistance: 3
+    command: Replace
+    subworldNames:
+      - subworlds/marsh/HotMarsh
+      - subworlds/jungle/Jungle
+      - subworlds/ocean/Ocean
+      - subworlds/frozen/Frozen
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 4
+    maxDistance: 4
+    command: Replace
+    subworldNames:
+      - subworlds/marsh/HotMarsh
+      - subworlds/jungle/Jungle
+      - subworlds/ocean/Ocean
+      - subworlds/frozen/Frozen
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 5
+    maxDistance: 999
+    command: Replace
+    subworldNames:
+      - subworlds/marsh/HotMarsh
+      - subworlds/jungle/Jungle
+      - subworlds/ocean/Ocean
+      - subworlds/frozen/Frozen
+      - subworlds/sandstone/SandstoneStart
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 1
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - subworlds/oil/OilPockets
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - subworlds/space/SurfaceCrags
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 1
+    maxDistance: 4
+    command: UnionWith
+    subworldNames:
+      - subworlds/magma/MagmaVent
+  - tagcommand: DistanceFromTag
+    tag: AtEdge
+    minDistance: 0
+    maxDistance: 1
+    command: UnionWith
+    subworldNames:
+      - subworlds/magma/MagmaVent
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 0
+    maxDistance: 4
+    command: ExceptWith
+    subworldNames:
+      - subworlds/magma/MagmaVent
+  - tagcommand: AtTag
+    tag: AtDepths
+    command: Replace
+    subworldNames:
+      - subworlds/magma/Bottom
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 3
+    command: UnionWith
+    subworldNames:
+      - subworlds/space/SurfaceCrags

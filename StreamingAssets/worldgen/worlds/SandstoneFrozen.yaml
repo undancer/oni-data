@@ -1,0 +1,142 @@
+name: STRINGS.WORLDS.SANDSTONE_FROZEN.NAME
+description: STRINGS.WORLDS.SANDSTONE_FROZEN.DESCRIPTION
+coordinatePrefix: S-FRZ
+difficulty: 2
+tier: 2
+
+worldsize:
+  X: 256
+  Y: 384
+layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
+#                                in order to use this.
+
+# List all the zone files to load
+subworldFiles:
+  - name: subworlds/sandstone/SandstoneStartCold
+  - name: subworlds/sandstone/SandstoneMiniMetalCold
+  - name: subworlds/sandstone/SandstoneMiniWaterCold
+  - name: subworlds/sandstone/SandstoneMiniAlgaeCold
+  - name: subworlds/sandstone/SandstoneFrozen
+  - name: subworlds/marsh/HotMarshSlush
+  - name: subworlds/jungle/JungleFrozen
+  - name: subworlds/frozen/Frozen
+  - name: subworlds/frozen/CO2Lakes
+  - name: subworlds/Impenetrable
+  - name: subworlds/magma/Bottom
+  - name: subworlds/magma/VolcanoHole
+  - name: subworlds/magma/SolidMagma
+  - name: subworlds/oil/OilPocketsCold
+  - name: subworlds/oil/OilPocketsFrozen
+  - name: subworlds/space/Space
+  - name: subworlds/space/Surface
+  - name: subworlds/ocean/OceanSlush
+  - name: subworlds/ocean/OceanFrozen
+  - name: subworlds/rust/RustFrozen
+  - name: subworlds/forest/ForestFrozen
+
+startSubworldName: subworlds/sandstone/SandstoneStartCold
+startingBaseTemplate: bases/sandstoneBase
+startingBasePositionHorizontal:
+  min: 0.4
+  max: 0.5
+startingBasePositionVertical:
+  min: 0.45
+  max: 0.55
+
+globalFeatureTemplates:
+  feature_geyser_generic: 12
+
+seasons:
+  - MeteorShowers
+
+# Rivers:
+#   - River
+
+# When we are converting unknown cells, this will give us the options, processed in this order, the effects are cumlative
+unknownCellsAllowedSubworlds: 
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - subworlds/sandstone/SandstoneStartCold
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - subworlds/sandstone/SandstoneMiniMetalCold
+      - subworlds/sandstone/SandstoneMiniWaterCold
+      - subworlds/sandstone/SandstoneMiniAlgaeCold
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 2
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - subworlds/forest/ForestFrozen
+      - subworlds/marsh/HotMarshSlush
+      - subworlds/jungle/JungleFrozen
+      - subworlds/sandstone/SandstoneFrozen
+      - subworlds/rust/RustFrozen
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 3
+    maxDistance: 3
+    command: Replace
+    subworldNames:
+      - subworlds/forest/ForestFrozen
+      - subworlds/marsh/HotMarshSlush
+      - subworlds/jungle/JungleFrozen
+      - subworlds/ocean/OceanSlush
+      - subworlds/sandstone/SandstoneFrozen
+      - subworlds/rust/RustFrozen
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 4
+    maxDistance: 4
+    command: Replace
+    subworldNames:
+      - subworlds/marsh/HotMarshSlush
+      - subworlds/jungle/JungleFrozen
+      - subworlds/ocean/OceanFrozen
+      - subworlds/rust/RustFrozen
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 5
+    maxDistance: 999
+    command: Replace
+    subworldNames:
+      - subworlds/forest/ForestFrozen
+      - subworlds/marsh/HotMarshSlush
+      - subworlds/jungle/JungleFrozen
+      - subworlds/ocean/OceanFrozen
+      - subworlds/rust/RustFrozen
+      - subworlds/frozen/CO2Lakes
+      - subworlds/sandstone/SandstoneFrozen
+      - subworlds/oil/OilPocketsFrozen
+  - tagcommand: AtTag
+    tag: AtDepths
+    command: Replace
+    subworldNames:
+      - subworlds/magma/Bottom
+      - subworlds/magma/SolidMagma
+      - subworlds/magma/VolcanoHole
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - subworlds/oil/OilPocketsFrozen
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - subworlds/space/Surface

@@ -1,0 +1,30 @@
+id: "ClonedRats"
+title: STRINGS.CODEX.A1_CLONEDRATS.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_clonedrats
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1_CLONEDRATS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1_CLONEDRATS.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_clonedrats
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1_CLONEDRATS.BODY.CONTAINER1
+          style: Body
+
+#      - Image:
+#        type: Image
+#        properties:
+#          spriteName: ONI_logo
+#
+#          preferredHeight: 128

@@ -1,0 +1,71 @@
+id: "HusbandryNotes"
+title: STRINGS.CODEX.A3_HUSBANDRYNOTES.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_husbandry1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A3_HUSBANDRYNOTES.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A3_HUSBANDRYNOTES.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_husbandry1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A3_HUSBANDRYNOTES.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_husbandry1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A3_HUSBANDRYNOTES.BODY.CONTAINER2
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_husbandry2
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A3_HUSBANDRYNOTES.BODY.CONTAINER3
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_husbandry2
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A3_HUSBANDRYNOTES.BODY.CONTAINER4
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_husbandry3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A3_HUSBANDRYNOTES.BODY.CONTAINER5
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_husbandry3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A3_HUSBANDRYNOTES.BODY.CONTAINER6
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_husbandry4
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A3_HUSBANDRYNOTES.BODY.CONTAINER7
+          style: Body

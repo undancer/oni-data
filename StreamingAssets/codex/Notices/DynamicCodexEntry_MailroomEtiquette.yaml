@@ -1,0 +1,23 @@
+id: "MailroomEtiquette"
+title: STRINGS.CODEX.A1_MAILROOMETIQUETTE.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: misc_mailroometiquette
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1_MAILROOMETIQUETTE.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1_MAILROOMETIQUETTE.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: misc_mailroometiquette
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1_MAILROOMETIQUETTE.BODY.CONTAINER1
+          style: Body

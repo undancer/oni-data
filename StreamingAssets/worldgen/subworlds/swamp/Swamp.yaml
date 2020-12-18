@@ -1,0 +1,52 @@
+biomeNoise: noise/Swamp
+temperatureRange: Room
+density:
+  min: 10
+  max: 15
+avoidRadius: 20.0
+extraBiomeChildren: 1
+doAvoidPoints: false
+sampleBehaviour: PoissonDisk
+biomes:
+  - name: biomes/Swamp/Basic
+    weight: 2
+    tags:
+      - med_Staterpillar
+      - med_WineCups
+      - med_WineCupsSeed
+      - med_SwampHarvestPlantSeed
+      - med_SwampHarvestPlant
+      - med_SwampForagePlant
+      - med_SwampForagePlantPlanted
+  - name: biomes/Swamp/Water_CO2
+    weight: 2
+    tags:
+      - med_Pacu
+      - med_SwampForagePlant
+      - med_SwampForagePlantPlanted
+      - med_WineCups
+      - med_WineCupsSeed
+      - med_SwampHarvestPlantSeed
+      - med_SwampHarvestPlant
+features:
+  - type: features/swamp/DirtBallSmall
+  - type: features/swamp/MetalCavernSmall
+  - type: features/swamp/AirPocket
+  - type: features/swamp/AirPocket
+  - type: features/swamp/PacuPoolSmall
+  #- type: features/swamp/BigAirPocket
+  #- type: features/swamp/TallPool
+pointsOfInterest:
+  water:
+    - poi_swamp_water_a
+    - poi_swamp_water_b
+    - poi_swamp_water_c
+  staterpillar_a: # 2 of them
+    - poi_swamp_staterpillar_a
+  staterpillar_b: # 3 of them
+    - poi_swamp_staterpillar_b
+    - poi_swamp_staterpillar_c
+tags:
+  - IgnoreCaveOverride
+  - NoGlobalFeatureSpawning
+zoneType: Swamp

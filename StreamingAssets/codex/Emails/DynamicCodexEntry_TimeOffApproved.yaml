@@ -1,0 +1,32 @@
+id: "TimeOffApproved"
+title: STRINGS.CODEX.TIMEOFFAPPROVED.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_timeoffapproved
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.TIMEOFFAPPROVED.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.TIMEOFFAPPROVED.SUBTITLE
+          style: Subtitle
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_timeoffapproved
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.TIMEOFFAPPROVED.BODY.EMAILHEADER
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_timeoffapproved
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.TIMEOFFAPPROVED.BODY.CONTAINER
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.TIMEOFFAPPROVED.BODY.SIGNATURE
+          style: Body

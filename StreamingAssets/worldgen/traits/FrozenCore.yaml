@@ -1,0 +1,15 @@
+name: STRINGS.WORLD_TRAITS.FROZEN_CORE.NAME
+description: STRINGS.WORLD_TRAITS.FROZEN_CORE.DESCRIPTION
+colorHex: 91D8F0
+
+additionalSubworldFiles:
+  - name: subworlds/frozen/FrozenSolid
+
+additionalUnknownCellFilters:
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 0
+    command: Replace
+    subworldNames:
+      - subworlds/frozen/FrozenSolid

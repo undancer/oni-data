@@ -1,0 +1,23 @@
+id: "Neutronium"
+title: STRINGS.CODEX.A7_NEUTRONIUM.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_neutronium
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A7_NEUTRONIUM.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A7_NEUTRONIUM.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_neutronium
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A7_NEUTRONIUM.BODY.CONTAINER1
+          style: Body

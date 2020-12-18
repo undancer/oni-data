@@ -1,0 +1,42 @@
+id: "CrabSpecies"
+title: STRINGS.CODEX.POKESHELL.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.POKESHELL.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.POKESHELL.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.POKESHELL.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.POKESHELL.BODY.CONTAINER2
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    #lockID: studyable_crab
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.POKESHELL.BODY.CONTAINER3
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    #lockID: studyable_crab
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.POKESHELL.BODY.CONTAINER4
+          style: Body

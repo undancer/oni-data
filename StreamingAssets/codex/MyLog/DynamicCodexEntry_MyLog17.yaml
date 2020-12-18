@@ -1,0 +1,18 @@
+id: "MyLog17"
+title: STRINGS.COLONY_ACHIEVEMENTS.THRIVING.MYLOGNAME
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: thriving
+    content:
+      - !CodexText
+          stringKey: STRINGS.COLONY_ACHIEVEMENTS.THRIVING.MYLOGNAME
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.COLONY_ACHIEVEMENTS.THRIVING.MESSAGE_BODY
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.DIVIDER
+          style: Body
+#-----------------------------

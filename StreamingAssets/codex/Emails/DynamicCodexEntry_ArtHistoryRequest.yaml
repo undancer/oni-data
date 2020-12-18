@@ -1,0 +1,53 @@
+id: "ArtHistoryRequest"
+title: STRINGS.CODEX.B51_ARTHISTORYREQUEST.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_arthistoryrequest
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B51_ARTHISTORYREQUEST.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B51_ARTHISTORYREQUEST.SUBTITLE
+          style: Subtitle
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_arthistoryrequest
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B51_ARTHISTORYREQUEST.BODY.EMAILHEADER2
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_arthistoryrequest
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B51_ARTHISTORYREQUEST.BODY.CONTAINER3
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.B51_ARTHISTORYREQUEST.BODY.SIGNATURE2
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_arthistoryrequest
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B51_ARTHISTORYREQUEST.TITLE2
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.B51_ARTHISTORYREQUEST.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_arthistoryrequest
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B51_ARTHISTORYREQUEST.BODY.CONTAINER2
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.B51_ARTHISTORYREQUEST.BODY.SIGNATURE1
+          style: Body

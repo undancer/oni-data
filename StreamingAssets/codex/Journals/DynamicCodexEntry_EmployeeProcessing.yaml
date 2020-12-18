@@ -1,0 +1,23 @@
+id: "EmployeeProcessing"
+title: STRINGS.CODEX.A7_EMPLOYEEPROCESSING.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_employeeprocessing
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A7_EMPLOYEEPROCESSING.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A7_EMPLOYEEPROCESSING.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_employeeprocessing
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A7_EMPLOYEEPROCESSING.BODY.CONTAINER1
+          style: Body

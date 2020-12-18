@@ -1,0 +1,23 @@
+id: "DishBot"
+title: STRINGS.CODEX.A6_DISHBOT.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: misc_dishbot
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A6_DISHBOT.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A6_DISHBOT.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: misc_dishbot
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A6_DISHBOT.BODY.CONTAINER1
+          style: Body

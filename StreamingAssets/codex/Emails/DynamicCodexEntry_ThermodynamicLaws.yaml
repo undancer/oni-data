@@ -1,0 +1,52 @@
+id: "ThermodynamicLaws"
+title: STRINGS.CODEX.A2_THERMODYNAMICLAWS.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_thermodynamiclaws
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_THERMODYNAMICLAWS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_THERMODYNAMICLAWS.SUBTITLE
+          style: Subtitle
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_thermodynamiclaws
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_THERMODYNAMICLAWS.BODY.EMAILHEADER1
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_THERMODYNAMICLAWS.BODY.CONTAINER1
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_THERMODYNAMICLAWS.BODY.CONTAINER2
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_THERMODYNAMICLAWS.BODY.CONTAINER3
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_THERMODYNAMICLAWS.BODY.CONTAINER4
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_THERMODYNAMICLAWS.BODY.CONTAINER5
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_THERMODYNAMICLAWS.BODY.CONTAINER6
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_thermodynamiclaws
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_THERMODYNAMICLAWS.BODY.SIGNATURE1
+          style: Body

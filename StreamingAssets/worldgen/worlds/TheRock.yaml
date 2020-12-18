@@ -1,0 +1,63 @@
+name: STRINGS.WORLDS.THE_ROCK.NAME
+description: STRINGS.WORLDS.THE_ROCK.DESCRIPTION
+coordinatePrefix: T-ROCK
+difficulty: 6
+tier: 2
+
+skip: true
+
+defaultsOverrides:
+  data:
+    DrawWorldBorder: false
+
+worldsize:
+  X: 384
+  Y: 384
+subworldFiles:
+  - name: subworlds/sandstone/SandstoneStart
+  - name: subworlds/frozen/Frozen
+  - name: subworlds/space/TheVoid
+  - name: subworlds/space/Surface
+  - name: subworlds/magma/Bottom
+  - name: subworlds/space/TheVoid
+    overrideName: Default
+
+startSubworldName: subworlds/sandstone/SandstoneStart
+startingBaseTemplate: bases/sandstoneBase
+
+globalFeatureTemplates:
+  feature_geyser_generic: 12
+
+seasons:
+  - MeteorShowers
+
+unknownCellsAllowedSubworlds: 
+  - tagcommand: Default # By default add in all the Human warm and hot areas
+    command: UnionWith
+    subworldNames:
+      - subworlds/frozen/Frozen
+      - subworlds/space/Surface
+      - subworlds/magma/Bottom
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 0
+    maxDistance: 2
+    command: UnionWith
+    subworldNames:
+      - subworlds/frozen/Frozen
+      - subworlds/space/Surface
+      - subworlds/magma/Bottom
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 3
+    maxDistance: 3
+    command: Replace
+    subworldNames:
+      - subworlds/space/Surface
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 4
+    maxDistance: 999
+    command: Replace
+    subworldNames:
+      - subworlds/space/TheVoid

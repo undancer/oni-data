@@ -1,0 +1,23 @@
+id: "Evacuation"
+title: STRINGS.CODEX.EVACUATION.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: pod_evacuation
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.EVACUATION.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.EVACUATION.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: pod_evacuation
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.EVACUATION.BODY.CONTAINER1
+          style: Body

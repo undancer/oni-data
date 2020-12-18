@@ -1,0 +1,34 @@
+id: "HEADQUARTERS"
+title: STRINGS.CODEX.HEADQUARTERS.TITLE
+disabled: false
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.HEADQUARTERS.TITLE
+          style: Title
+      - !CodexDividerLine
+          preferredWidth: -1
+      - !CodexImage
+          spriteName: icon_category_base
+
+          preferredHeight: 128
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.HEADQUARTERS.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: printingpod
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.HEADQUARTERS.BODY.CONTAINER2
+          style: Body
+

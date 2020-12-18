@@ -1,0 +1,18 @@
+id: "MyLog12"
+title: STRINGS.CODEX.MYLOG.BODY.NEARINGMAGMA.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: nearingmagma
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.NEARINGMAGMA.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.NEARINGMAGMA.BODY
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.DIVIDER
+          style: Body
+#-----------------------------

@@ -1,0 +1,19 @@
+id: "LightBugPurple"
+title: STRINGS.CODEX.ROYAL.TITLE
+parentEntryID: "LightBugSpecies"
+layoutPriority: 4
+#lockID: critter_purple_shinebug
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    showBeforeGeneratedContent: true
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.ROYAL.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.ROYAL.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------

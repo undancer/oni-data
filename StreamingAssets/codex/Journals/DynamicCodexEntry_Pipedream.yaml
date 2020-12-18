@@ -1,0 +1,23 @@
+id: "Pipedream"
+title: STRINGS.CODEX.A9_PIPEDREAM.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_pipedream
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A9_PIPEDREAM.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A9_PIPEDREAM.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_pipedream
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A9_PIPEDREAM.BODY.CONTAINER1
+          style: Body

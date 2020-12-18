@@ -1,0 +1,10 @@
+/globalgamemanagers*
+/level[012]
+/resources.*
+/sharedassets[012].*
+
+/Resources/
+/Managed/*.dll
+
+/StreamingAssets/*.bank
+/StreamingAssets/expansion1_*

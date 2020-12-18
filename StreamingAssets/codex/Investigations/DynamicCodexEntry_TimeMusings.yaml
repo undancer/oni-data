@@ -1,0 +1,23 @@
+id: "TimeMusings"
+title: STRINGS.CODEX.B6_TIMEMUSINGS.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_timemusings
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_TIMEMUSINGS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_TIMEMUSINGS.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_timemusings
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B6_TIMEMUSINGS.BODY.CONTAINER1
+          style: Body

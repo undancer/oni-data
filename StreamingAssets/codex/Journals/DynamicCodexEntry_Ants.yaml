@@ -1,0 +1,23 @@
+id: "Ants"
+title: STRINGS.CODEX.B5_ANTS.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_ants
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B5_ANTS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B5_ANTS.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_ants
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B5_ANTS.BODY.CONTAINER1
+          style: Body

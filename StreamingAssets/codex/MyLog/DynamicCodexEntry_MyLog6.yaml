@@ -1,0 +1,19 @@
+id: "MyLog6"
+title: STRINGS.CODEX.MYLOG.BODY.LOG3.TITLE
+sortString: "A3"
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: log3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.LOG3.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.LOG3.BODY
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.DIVIDER
+          style: Body
+#-----------------------------

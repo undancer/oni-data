@@ -1,0 +1,30 @@
+id: "RevisitedNumbers"
+title: STRINGS.CODEX.B4_REVISITEDNUMBERS.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_revisitednumbers
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B4_REVISITEDNUMBERS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B4_REVISITEDNUMBERS.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_revisitednumbers
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B4_REVISITEDNUMBERS.BODY.CONTAINER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_revisitednumbers2
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B4_REVISITEDNUMBERS.BODY.CONTAINER2
+          style: Body

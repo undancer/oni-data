@@ -1,0 +1,29 @@
+id: "ColdBreather"
+title: STRINGS.CODEX.WHEEZEWORT.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.WHEEZEWORT.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.WHEEZEWORT.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.WHEEZEWORT.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+#    lockID: studyable_critter_wheezewort
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.WHEEZEWORT.BODY.CONTAINER2
+          style: Body

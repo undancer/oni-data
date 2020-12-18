@@ -1,0 +1,19 @@
+id: "MyLog19"
+title: STRINGS.CODEX.MYLOG.BODY.LOG4.TITLE
+sortString: "A4"
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: log4
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.LOG4.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.LOG4.BODY
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.DIVIDER
+          style: Body
+#-----------------------------

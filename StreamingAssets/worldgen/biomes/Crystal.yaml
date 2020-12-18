@@ -1,0 +1,30 @@
+TerrainBiomeLookupTable:
+  # keys to remove from in-memory structure when this file is loaded
+  remove: [] 
+  # elements to add from in-memory structure when this file is loaded
+  add:
+    Basic:
+    - content: Oxygen
+      bandSize: 1
+    - content: Diamond
+      bandSize: 0.25
+    - content: Katairite
+      bandSize: 0.25
+    - content: Granite
+      bandSize: 0.25
+    - content: Electrum
+      bandSize: 0.25
+    - content: Diamond
+      bandSize: 0.25
+    - content: Katairite
+      bandSize: 0.25
+    - content: SedimentaryRock
+      bandSize: 0.25
+    - content: Electrum
+      bandSize: 0.25
+    - content: Oxygen
+      bandSize: 2
+    - content: Diamond
+      bandSize: 0.25
+
+

@@ -1,0 +1,23 @@
+id: "NeutroniumApplications"
+title: STRINGS.CODEX.A9_NEUTRONIUMAPPLICATIONS.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_neutroniumapplications
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A9_NEUTRONIUMAPPLICATIONS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A9_NEUTRONIUMAPPLICATIONS.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_neutroniumapplications
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A9_NEUTRONIUMAPPLICATIONS.BODY.CONTAINER1
+          style: Body

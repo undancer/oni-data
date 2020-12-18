@@ -1,0 +1,20 @@
+shape: Splat
+tags:
+  # - HighPriorityFeature
+  - AllowExceedNodeBorders 
+borders:
+blobSize:
+  min: 3.0
+  max: 13.0
+internalMobs:
+ElementChoiceGroups:
+  RoomCenterElements:
+    selectionMethod: WeightedResample
+    choices:
+      - element: SlimeMold
+        weight: 1
+        overrides:
+          diseaseOverride: SlimeLung
+          diseaseAmountOverride: 1000000
+      - element: Algae
+        weight: 0.1

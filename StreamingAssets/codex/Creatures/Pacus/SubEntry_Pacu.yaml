@@ -1,0 +1,17 @@
+id: "Pacu"
+title: STRINGS.CODEX.PACU.TITLE
+parentEntryID: "PacuSpecies"
+layoutPriority: 1
+contentContainers:
+#-----------------------------
+  - showBeforeGeneratedContent: true
+    contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.PACU.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.PACU.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1

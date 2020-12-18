@@ -1,0 +1,28 @@
+id: "ColdWheat"
+title: STRINGS.CODEX.SLEETWHEAT.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.SLEETWHEAT.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.SLEETWHEAT.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.SLEETWHEAT.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.SLEETWHEAT.BODY.CONTAINER2
+          style: Body

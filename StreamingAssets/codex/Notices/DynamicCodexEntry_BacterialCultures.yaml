@@ -1,0 +1,23 @@
+id: "BacterialCultures"
+title: STRINGS.CODEX.A2_BACTERIALCULTURES.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: misc_unattendedcultures
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_BACTERIALCULTURES.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_BACTERIALCULTURES.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: misc_unattendedcultures
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A2_BACTERIALCULTURES.BODY.CONTAINER1
+          style: Body

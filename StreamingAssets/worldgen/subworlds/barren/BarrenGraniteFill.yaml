@@ -1,0 +1,20 @@
+biomeNoise: noise/Swamp
+temperatureRange: HumanWarm
+minChildCount: 2
+pdWeight: 1
+density:
+  min: 35
+  max: 45
+avoidRadius: 50.0
+sampleBehaviour: PoissonDisk
+biomes:
+  - name: biomes/Barren/GraniteTunnels
+    weight: 1
+    tags:
+features: []
+pointsOfInterest:
+tags:
+  - IgnoreCaveOverride
+# featureTemplates:
+  # feature_geyser_generic: 2
+zoneType: Sandstone

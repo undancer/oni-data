@@ -1,0 +1,19 @@
+id: "Puft"
+title: STRINGS.CODEX.PUFT.TITLE
+parentEntryID: "PuftSpecies"
+layoutPriority: 1
+#lockID: critter_squeaky_puft
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    showBeforeGeneratedContent: true
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.PUFT.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.PUFT.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+

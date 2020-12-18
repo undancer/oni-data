@@ -1,0 +1,23 @@
+id: "CleanUpTheMess"
+title: STRINGS.CODEX.A8_CLEANUPTHEMESS.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_cleanup
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A8_CLEANUPTHEMESS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A8_CLEANUPTHEMESS.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_cleanup
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A8_CLEANUPTHEMESS.BODY.CONTAINER1
+          style: Body

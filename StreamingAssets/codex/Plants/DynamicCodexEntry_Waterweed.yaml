@@ -1,0 +1,25 @@
+id: "SeaLettuce"
+title: STRINGS.CODEX.WATERWEED.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.WATERWEED.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.WATERWEED.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.WATERWEED.BODY.CONTAINER1
+          style: Body

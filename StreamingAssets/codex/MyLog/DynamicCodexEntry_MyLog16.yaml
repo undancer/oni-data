@@ -1,0 +1,18 @@
+id: "MyLog16"
+title: STRINGS.CODEX.MYLOG.BODY.PLANETARYECHOES.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: earth
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.PLANETARYECHOES.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.PLANETARYECHOES.BODY
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.DIVIDER
+          style: Body
+#-----------------------------

@@ -1,0 +1,18 @@
+id: "MyLog3"
+title: STRINGS.CODEX.MYLOG.BODY.PRINTINGPOD.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: pod_evacuation
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.PRINTINGPOD.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.PRINTINGPOD.BODY
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.DIVIDER
+          style: Body
+#-----------------------------

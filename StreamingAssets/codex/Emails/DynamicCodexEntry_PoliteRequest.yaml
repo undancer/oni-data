@@ -1,0 +1,32 @@
+id: "PoliteRequest"
+title: STRINGS.CODEX.B8_POLITEREQUEST.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: misc_politerequest
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B8_POLITEREQUEST.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B8_POLITEREQUEST.SUBTITLE
+          style: Subtitle
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: misc_politerequest
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B8_POLITEREQUEST.BODY.EMAILHEADER
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: misc_politerequest
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B8_POLITEREQUEST.BODY.CONTAINER1
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.B8_POLITEREQUEST.BODY.SIGNATURE
+          style: Body

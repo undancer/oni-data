@@ -1,0 +1,18 @@
+id: "MyLog14"
+title: STRINGS.CODEX.MYLOG.BODY.CALCULATIONCOMPLETE.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: firstrocketlaunch
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.CALCULATIONCOMPLETE.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.CALCULATIONCOMPLETE.BODY
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.DIVIDER
+          style: Body
+#-----------------------------

@@ -1,0 +1,21 @@
+id: "BulbPlant"
+title: STRINGS.CODEX.BUDDYBUD.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.BUDDYBUD.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.BUDDYBUD.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.BUDDYBUD.BODY.CONTAINER1
+          style: Body

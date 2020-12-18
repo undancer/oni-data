@@ -1,0 +1,74 @@
+id: "HollandsDog"
+title: STRINGS.CODEX.B1_HOLLANDSDOG.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_hollandsdog
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B1_HOLLANDSDOG.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B1_HOLLANDSDOG.SUBTITLE
+          style: Subtitle
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_hollandsdog
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B1_HOLLANDSDOG.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_hollandsdog
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B1_HOLLANDSDOG.BODY.CONTAINER3
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.B1_HOLLANDSDOG.BODY.SIGNATURE1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_hollandsdog
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B1_HOLLANDSDOG.TITLE
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.B1_HOLLANDSDOG.BODY.EMAILHEADER2
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_hollandsdog
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B1_HOLLANDSDOG.BODY.CONTAINER2
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.B1_HOLLANDSDOG.BODY.SIGNATURE2
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_hollandsdog
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B1_HOLLANDSDOG.TITLE2
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.B1_HOLLANDSDOG.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_hollandsdog
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B1_HOLLANDSDOG.BODY.CONTAINER1
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.B1_HOLLANDSDOG.BODY.SIGNATURE1
+          style: Body

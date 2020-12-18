@@ -1,0 +1,19 @@
+id: "PacuCleaner"
+title: STRINGS.CODEX.CLEANER.TITLE
+parentEntryID: "PacuSpecies"
+layoutPriority: 3
+#lockID: critter_gulpfish
+contentContainers:
+#-----------------------------
+  - showBeforeGeneratedContent: true
+    contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.CLEANER.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.CLEANER.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+

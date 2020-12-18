@@ -1,0 +1,36 @@
+id: "NewEmployee"
+title: STRINGS.CODEX.A7_NEWEMPLOYEE.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_newemployee
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A7_NEWEMPLOYEE.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A7_NEWEMPLOYEE.SUBTITLE
+          style: Subtitle
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_newemployee
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A7_NEWEMPLOYEE.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_newemployee
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A7_NEWEMPLOYEE.BODY.CONTAINER2
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_newemployee
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A7_NEWEMPLOYEE.BODY.SIGNATURE1
+          style: Body

@@ -1,0 +1,23 @@
+id: "MovedRats"
+title: STRINGS.CODEX.B3_MOVEDRATS.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_movedrats
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B3_MOVEDRATS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B3_MOVEDRATS.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_movedrats
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B3_MOVEDRATS.BODY.CONTAINER1
+          style: Body

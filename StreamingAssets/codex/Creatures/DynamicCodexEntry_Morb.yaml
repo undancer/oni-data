@@ -1,0 +1,37 @@
+id: "GlomSpecies"
+title: STRINGS.CODEX.MORB.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MORB.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MORB.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MORB.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    #lockID: studyable_morb
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MORB.BODY.CONTAINER2
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    #lockID: studyable_morb
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MORB.BODY.CONTAINER3
+          style: Body

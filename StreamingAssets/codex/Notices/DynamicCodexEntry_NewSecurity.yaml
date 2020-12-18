@@ -1,0 +1,23 @@
+id: "NewSecurity"
+title: STRINGS.CODEX.A3_NEWSECURITY.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: misc_newsecurity
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A3_NEWSECURITY.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A3_NEWSECURITY.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: misc_newsecurity
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A3_NEWSECURITY.BODY.CONTAINER1
+          style: Body

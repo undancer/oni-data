@@ -1,0 +1,19 @@
+id: "LightBugPink"
+title: STRINGS.CODEX.VITAL.TITLE
+parentEntryID: "LightBugSpecies"
+layoutPriority: 3
+#lockID: critter_pink_shinebug
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    showBeforeGeneratedContent: true
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.VITAL.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.VITAL.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------

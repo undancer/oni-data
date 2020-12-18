@@ -1,0 +1,35 @@
+id: "GasGrass"
+title: STRINGS.CODEX.GASGRASS.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.GASGRASS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.GASGRASS.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.GASGRASS.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+#  - contentLayout: Vertical
+#    lockID: plant_gasgrass_studied
+#
+#    content:
+#      - !CodexText
+#          stringKey: STRINGS.CODEX.GASGRASS.BODY.CONTAINER2
+#          style: Body
+#

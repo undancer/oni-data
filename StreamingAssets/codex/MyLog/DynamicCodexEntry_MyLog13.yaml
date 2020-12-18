@@ -1,0 +1,18 @@
+id: "MyLog13"
+title: STRINGS.CODEX.MYLOG.BODY.SURFACEBREACH.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: surfacebreach
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.SURFACEBREACH.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.SURFACEBREACH.BODY
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.DIVIDER
+          style: Body
+#-----------------------------

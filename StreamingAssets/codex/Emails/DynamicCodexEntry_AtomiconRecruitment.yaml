@@ -1,0 +1,34 @@
+id: "AtomiconRecruitment"
+title: STRINGS.CODEX.A4_ATOMICONRECRUITMENT.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_atomiconrecruitment
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A4_ATOMICONRECRUITMENT.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A4_ATOMICONRECRUITMENT.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_atomiconrecruitment
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A4_ATOMICONRECRUITMENT.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_atomiconrecruitment
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A4_ATOMICONRECRUITMENT.BODY.CONTAINER2
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.A4_ATOMICONRECRUITMENT.BODY.SIGNATURE1
+          style: Body

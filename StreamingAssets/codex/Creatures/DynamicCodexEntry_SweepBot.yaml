@@ -1,0 +1,21 @@
+id: "SWEEPBOT"
+title: STRINGS.CODEX.SWEEPY.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.SWEEPY.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.SWEEPY.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.SWEEPY.BODY.CONTAINER1
+          style: Body

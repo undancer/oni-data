@@ -1,0 +1,17 @@
+name: STRINGS.WORLDS.TINYSURFACE.NAME
+description: STRINGS.WORLDS.TINYSURFACE.DESCRIPTION
+requiredDlcId: EXPANSION1_ID
+menuOrder: 101
+coordinatePrefix: TNY-SURF
+skip: EditorOnly
+
+startWorldIndex: 0 
+worldPlacements:
+- world: worlds/TinySurface
+  allowedRings:
+    min: 0
+    max: 0
+- world: worlds/TinySurface
+  allowedRings:
+    min: 3
+    max: 3

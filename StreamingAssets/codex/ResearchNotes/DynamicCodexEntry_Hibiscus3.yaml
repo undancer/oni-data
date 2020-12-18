@@ -1,0 +1,31 @@
+id: "Hibiscus3"
+title: STRINGS.CODEX.A4_HIBISCUS3.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_hibiscus3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A4_HIBISCUS3.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A4_HIBISCUS3.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_hibiscus3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A4_HIBISCUS3.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_hibiscus3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A4_HIBISCUS3.BODY.CONTAINER2
+          style: Body

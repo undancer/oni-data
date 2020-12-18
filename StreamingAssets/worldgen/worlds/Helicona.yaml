@@ -1,0 +1,97 @@
+name: STRINGS.WORLDS.HELICONA.NAME
+description: STRINGS.WORLDS.HELICONA.DESCRIPTION
+coordinatePrefix: HELI
+difficulty: 6
+tier: 2
+
+skip: true
+
+worldsize:
+  X: 384
+  Y: 384
+subworldFiles:
+  - name: subworlds/sandstone/SandstoneStart
+  - name: subworlds/frozen/Frozen
+  - name: subworlds/Default
+  - name: subworlds/space/Surface
+  - name: subworlds/magma/Bottom
+
+startSubworldName: subworlds/sandstone/SandstoneStart
+startingBaseTemplate: bases/sandstoneBase
+
+globalFeatureTemplates:
+  feature_geyser_generic: 12
+
+seasons:
+  - MeteorShowers
+
+unknownCellsAllowedSubworlds: 
+  - tagcommand: Default # By default add in all the Human warm and hot areas
+    command: Replace
+    temperatureRanges: # NOTE: The following Warm/Hot/Cool/Cold has been added, remove them as soon as we have more biomes
+      - HumanWarm
+      - HumanHot
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 1
+    maxDistance: 1
+    command: UnionWith
+    temperatureRanges: # Filter
+      - HumanWarm
+      - Cool
+      - Mild
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 2
+    maxDistance: 2
+    command: UnionWith
+    temperatureRanges:
+     - Mild
+     - Cool
+     - Cold
+     - HumanWarm
+     - HumanHot
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 3
+    maxDistance: 3
+    command: UnionWith
+    temperatureRanges:
+     - HumanWarm
+     - HumanHot
+     - Cool
+     - Cold
+     - Hot
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 2
+    maxDistance: 3
+    command: UnionWith
+    temperatureRanges:
+     - VeryHot
+     - ExtremelyHot
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 1
+    command: UnionWith
+    temperatureRanges:
+     - HumanWarm
+     - HumanHot
+     - VeryHot
+     - Hot
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 3
+    temperatureRanges:
+     - VeryCold
+     - Cool
+     - Cold
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 0
+    maxDistance: 1
+    temperatureRanges:
+     - VeryCold
+     - ExtremelyCold

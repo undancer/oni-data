@@ -1,0 +1,31 @@
+id: "MemoryImplantation"
+title: STRINGS.CODEX.A6_MEMORYIMPLANTATION.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_memoryimplantation
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A6_MEMORYIMPLANTATION.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A6_MEMORYIMPLANTATION.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_memoryimplantation
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A6_MEMORYIMPLANTATION.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_memoryimplantation
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A6_MEMORYIMPLANTATION.BODY.CONTAINER2
+          style: Body

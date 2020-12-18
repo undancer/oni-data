@@ -1,0 +1,18 @@
+id: "MyLog27"
+title: STRINGS.CODEX.MYLOG.BODY.RECBUILDINGS.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: //--TODO
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.RECBUILDINGS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.RECBUILDINGS.BODY
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.DIVIDER
+          style: Body
+#-----------------------------

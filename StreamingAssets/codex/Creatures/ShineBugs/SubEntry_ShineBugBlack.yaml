@@ -1,0 +1,23 @@
+id: "LightBugBlack"
+title: STRINGS.CODEX.NEGA.TITLE
+parentEntryID: "LightBugSpecies"
+layoutPriority: 6
+#lockID: critter_black_shinebug
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    showBeforeGeneratedContent: true
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.NEGA.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.NEGA.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+      - !CodexText
+          stringKey: STRINGS.CODEX.NEGA.BODY.CONTAINER2
+          style: Body
+
+#-----------------------------

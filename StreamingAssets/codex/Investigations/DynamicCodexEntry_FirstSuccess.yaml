@@ -1,0 +1,23 @@
+id: "FirstSuccess"
+title: STRINGS.CODEX.A8_FIRSTSUCCESS.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_firstsuccess
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A8_FIRSTSUCCESS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A8_FIRSTSUCCESS.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_firstsuccess
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A8_FIRSTSUCCESS.BODY.CONTAINER1
+          style: Body

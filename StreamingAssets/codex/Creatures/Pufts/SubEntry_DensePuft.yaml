@@ -1,0 +1,18 @@
+id: "PuftOxylite"
+title: STRINGS.CODEX.DENSE.TITLE
+parentEntryID: "PuftSpecies"
+layoutPriority: 4
+#lockID: critter_dense_puft
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    showBeforeGeneratedContent: true
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.DENSE.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.DENSE.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1

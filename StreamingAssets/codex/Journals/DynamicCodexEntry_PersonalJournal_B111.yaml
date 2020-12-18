@@ -1,0 +1,47 @@
+id: "PersonalJournalB111"
+title: STRINGS.CODEX.A1A_B111.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B111_1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1A_B111.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1A_B111.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B111_1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1A_B111.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B111_2
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1A_B111.BODY.CONTAINER2
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B111_3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1A_B111.BODY.CONTAINER3
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_B111_4
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1A_B111.BODY.CONTAINER4
+          style: Body

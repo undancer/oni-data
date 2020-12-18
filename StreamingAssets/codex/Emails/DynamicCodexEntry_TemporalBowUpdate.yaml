@@ -1,0 +1,28 @@
+id: "TemporalBowUpdate"
+title: STRINGS.CODEX.B2_TEMPORALBOWUPDATE.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_temporalbowupdate
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B2_TEMPORALBOWUPDATE.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B2_TEMPORALBOWUPDATE.SUBTITLE
+          style: Subtitle
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_temporalbowupdate
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B2_TEMPORALBOWUPDATE.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_temporalbowupdate
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B2_TEMPORALBOWUPDATE.BODY.CONTAINER2
+          style: Body

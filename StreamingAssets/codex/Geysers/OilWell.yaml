@@ -1,0 +1,25 @@
+id: "OILWELL"
+title: STRINGS.CREATURES.SPECIES.OIL_WELL.NAME
+disabled: false
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+
+    content:
+      - !CodexText
+          stringKey: STRINGS.CREATURES.SPECIES.OIL_WELL.NAME
+          style: Title
+      - !CodexDividerLine
+          preferredWidth: -1
+      - !CodexImage
+          batchedAnimPrefabSourceID: OILWELL
+          preferredWidth: 128
+          preferredHeight: 128
+      - !CodexText
+          stringKey: STRINGS.CREATURES.SPECIES.OIL_WELL.DESC
+          style: Body
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------

@@ -1,0 +1,18 @@
+id: "OilfloaterDecor"
+title: STRINGS.CODEX.DECOR.TITLE
+parentEntryID: "OilfloaterSpecies"
+#lockID: critter_longhair_slickster
+layoutPriority: 2
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    showBeforeGeneratedContent: true
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.DECOR.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.DECOR.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1

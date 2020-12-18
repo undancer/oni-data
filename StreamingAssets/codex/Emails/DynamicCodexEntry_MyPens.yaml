@@ -1,0 +1,53 @@
+id: "MyPens"
+title: STRINGS.CODEX.B4_REMYPENS.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_pens2
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B4_REMYPENS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B4_REMYPENS.SUBTITLE
+          style: Subtitle
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_pens2
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B4_REMYPENS.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_pens2
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B4_REMYPENS.BODY.CONTAINER2
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.B4_REMYPENS.BODY.SIGNATURE1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_pens
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B4_MYPENS.TITLE
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.B4_MYPENS.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_pens
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B4_MYPENS.BODY.CONTAINER2
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.B4_MYPENS.BODY.SIGNATURE1
+          style: Body

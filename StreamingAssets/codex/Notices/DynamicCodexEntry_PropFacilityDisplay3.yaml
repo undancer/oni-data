@@ -1,0 +1,31 @@
+id: "PropFacilityDisplay3"
+title: STRINGS.CODEX.A0_PROPFACILITYDISPLAY3.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: display_prop3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A0_PROPFACILITYDISPLAY3.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A0_PROPFACILITYDISPLAY3.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: display_prop3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A0_PROPFACILITYDISPLAY3.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: display_prop3
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A0_PROPFACILITYDISPLAY3.BODY.CONTAINER2
+          style: Body
