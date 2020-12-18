@@ -70,22 +70,22 @@ clusters -> worlds -> subworlds -> biomes
 WorldGenProgressStages.Stages
 | k | v |
 | - | - |
-| Failure | |
-| SetupNoise | |
-| GenerateNoise | |
-| GenerateSolarSystem | |
-| WorldLayout | |
-| CompleteLayout | |
-| NoiseMapBuilder | |
-| ClearingLevel | |
-| Processing | |
-| Borders | |
-| ProcessRivers | |
-| ConvertCellsToEdges | |
-| DrawWorldBorder | |
-| PlaceTemplates | |
-| SettleSim | |
-| DetectNaturalCavities | |
-| PlacingCreatures | |
-| Complete | |
-| NumberOfStages | |
+| Failure | - |
+| SetupNoise | WorldGen.GenerateNoiseData |
+| GenerateNoise | WorldGen.GenerateUnChunkedNoise |
+| GenerateSolarSystem | ??? |
+| WorldLayout | WorldGen.GenerateLayout |
+| CompleteLayout | WorldGen.CompleteLayout |
+| NoiseMapBuilder | WorldGen.WriteOverWorldNoise |
+| ClearingLevel | WorldGen.RenderToMap |
+| Processing | WorldGen.ProcessByTerrainCell |
+| Borders | WorldGen.ProcessByTerrainCell |
+| ProcessRivers | ??? |
+| ConvertCellsToEdges | ??? |
+| DrawWorldBorder | WorldGen.DrawWorldBorder |
+| PlaceTemplates | TemplateSpawning.DetermineTemplatesForWorld |
+| SettleSim | WorldGenSimUtil.DoSettleSim |
+| DetectNaturalCavities | MobSpawning.DetectNaturalCavities |
+| PlacingCreatures | WorldGen.SpawnMobsAndTemplates |
+| Complete | WorldGen.RenderOffline |
+| NumberOfStages | ??? |
