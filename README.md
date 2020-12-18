@@ -69,7 +69,7 @@ clusters -> worlds -> subworlds -> biomes
 
 WorldGenProgressStages.Stages
 | k | v |
-| - | - |
+| --- | :---: |
 | Failure | - |
 | SetupNoise | WorldGen.GenerateNoiseData |
 | GenerateNoise | WorldGen.GenerateUnChunkedNoise |
