@@ -1,0 +1,35 @@
+biomeNoise: noise/OilPockets
+temperatureRange: Hot
+minChildCount: 4
+density:
+  min: 20
+  max: 25
+avoidRadius: 50.0
+sampleBehaviour: PoissonDisk
+biomes:
+  - name: biomes/Oil/OilDry
+    weight: 1
+    tags:
+      # - OilEater
+      - OilFloater
+      - CactusPlant
+      - CactusPlantSeed
+      - EvilFlower
+      - EvilFlowerSeed
+    #overrides:
+    #  massMultiplier: 50
+features:
+  #- type: features/oilpockets/Cavity
+  - type: features/oilpockets/DiamondClump 
+pointsOfInterest:
+ ruins_a:
+  - poi_oil_switchdoor
+  - poi_oil_six_switch_door
+ ruins_b:
+  - poi_oil_switchdoor
+  - poi_oil_six_switch_door
+tags:
+  - IgnoreCaveOverride
+featureTemplates:
+  # feature_geyser_generic: 2
+zoneType: OilField

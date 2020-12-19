@@ -8,1237 +8,884 @@ cells:
 - element: Obsidian
   mass: 800
   temperature: 266.911743
-  diseaseName: FoodPoisoning
-  diseaseCount: -566
   location_x: -6
   location_y: -6
 - element: Salt
   mass: 255.589996
   temperature: 267.071533
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: -5
   location_y: -6
 - element: Salt
   mass: 255.589996
   temperature: 267.110352
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: -4
   location_y: -6
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -3
   location_y: -6
 - element: Salt
   mass: 255.589996
   temperature: 267.313171
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -2
   location_y: -6
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -1
   location_y: -6
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_y: -6
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 1
   location_y: -6
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 2
   location_y: -6
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 3
   location_y: -6
 - element: Salt
   mass: 255.589996
   temperature: 267.299927
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 4
   location_y: -6
 - element: Salt
   mass: 255.589996
   temperature: 267.288849
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 5
   location_y: -6
 - element: Rust
   mass: 800
   temperature: 266.665466
-  diseaseName: FoodPoisoning
-  diseaseCount: -635
   location_x: 6
   location_y: -6
 - element: Rust
   mass: 800
   temperature: 266.937439
-  diseaseName: FoodPoisoning
-  diseaseCount: -629
   location_x: 7
   location_y: -6
 - element: Obsidian
   mass: 800
   temperature: 266.920837
-  diseaseName: FoodPoisoning
-  diseaseCount: -564
   location_x: -6
   location_y: -5
 - element: Obsidian
   mass: 800
   temperature: 266.071899
-  diseaseName: FoodPoisoning
-  diseaseCount: -562
   location_x: -5
   location_y: -5
 - element: Obsidian
   mass: 800
   temperature: 266.111053
-  diseaseName: FoodPoisoning
-  diseaseCount: -562
   location_x: -4
   location_y: -5
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -3
   location_y: -5
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -2
   location_y: -5
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -1
   location_y: -5
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_y: -5
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: 1
   location_y: -5
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: 2
   location_y: -5
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: 3
   location_y: -5
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: 4
   location_y: -5
 - element: Salt
   mass: 255.589996
   temperature: 267.107727
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: 5
   location_y: -5
 - element: Obsidian
   mass: 800
   temperature: 266.108704
-  diseaseName: FoodPoisoning
-  diseaseCount: -536
   location_x: 6
   location_y: -5
 - element: Rust
   mass: 800
   temperature: 266.68219
-  diseaseName: FoodPoisoning
-  diseaseCount: -630
   location_x: 7
   location_y: -5
 - element: Salt
   mass: 255.589996
   temperature: 267.26416
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: -6
   location_y: -4
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -5
   location_y: -4
 - element: Obsidian
   mass: 800
   temperature: 266.111816
-  diseaseName: FoodPoisoning
-  diseaseCount: -562
   location_x: -4
   location_y: -4
 - element: Salt
   mass: 255.589996
   temperature: 267.111023
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: -3
   location_y: -4
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -2
   location_y: -4
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -1
   location_y: -4
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_y: -4
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 1
   location_y: -4
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 2
   location_y: -4
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 3
   location_y: -4
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: 4
   location_y: -4
 - element: Salt
   mass: 255.589996
   temperature: 267.108124
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: 5
   location_y: -4
 - element: Obsidian
   mass: 800
   temperature: 266.108765
-  diseaseName: FoodPoisoning
-  diseaseCount: -534
   location_x: 6
   location_y: -4
 - element: Obsidian
   mass: 800
   temperature: 266.634766
-  diseaseName: FoodPoisoning
-  diseaseCount: -535
   location_x: 7
   location_y: -4
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -6
   location_y: -3
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -5
   location_y: -3
 - element: Obsidian
   mass: 800
   temperature: 266.043182
-  diseaseName: FoodPoisoning
-  diseaseCount: -561
   location_x: -4
   location_y: -3
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -3
   location_y: -3
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -2
   location_y: -3
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -1
   location_y: -3
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_y: -3
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: 1
   location_y: -3
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: 2
   location_y: -3
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 3
   location_y: -3
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: 4
   location_y: -3
 - element: Salt
   mass: 255.589996
   temperature: 267.059662
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: 5
   location_y: -3
 - element: Obsidian
   mass: 800
   temperature: 266.060638
-  diseaseName: FoodPoisoning
-  diseaseCount: -533
   location_x: 6
   location_y: -3
 - element: Rust
   mass: 800
   temperature: 266.776245
-  diseaseName: FoodPoisoning
-  diseaseCount: -630
   location_x: 7
   location_y: -3
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -6
   location_y: -2
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -5
   location_y: -2
 - element: Salt
   mass: 255.589996
   temperature: 267.041473
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: -4
   location_y: -2
 - element: Obsidian
   mass: 800
   temperature: 266.042236
-  diseaseName: FoodPoisoning
-  diseaseCount: -559
   location_x: -3
   location_y: -2
 - element: Obsidian
   mass: 800
   temperature: 266.111816
-  diseaseName: FoodPoisoning
-  diseaseCount: -560
   location_x: -2
   location_y: -2
 - element: Salt
   mass: 255.589996
   temperature: 267.111023
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: -1
   location_y: -2
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_y: -2
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 1
   location_y: -2
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: 2
   location_y: -2
 - element: Salt
   mass: 255.589996
   temperature: 267.110352
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: 3
   location_y: -2
 - element: Obsidian
   mass: 800
   temperature: 266.111053
-  diseaseName: FoodPoisoning
-  diseaseCount: -527
   location_x: 4
   location_y: -2
 - element: Obsidian
   mass: 800
   temperature: 266.108734
-  diseaseName: FoodPoisoning
-  diseaseCount: -532
   location_x: 5
   location_y: -2
 - element: Obsidian
   mass: 800
   temperature: 265.899994
-  diseaseName: FoodPoisoning
-  diseaseCount: -531
   location_x: 6
   location_y: -2
 - element: Rust
   mass: 800
   temperature: 266.702148
-  diseaseName: FoodPoisoning
-  diseaseCount: -631
   location_x: 7
   location_y: -2
 - element: Salt
   mass: 255.589996
   temperature: 267.255157
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -6
   location_y: -1
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -5
   location_y: -1
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -4
   location_y: -1
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -3
   location_y: -1
 - element: Obsidian
   mass: 800
   temperature: 266.111053
-  diseaseName: FoodPoisoning
-  diseaseCount: -559
   location_x: -2
   location_y: -1
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -1
   location_y: -1
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_y: -1
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 1
   location_y: -1
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: 2
   location_y: -1
 - element: Salt
   mass: 255.589996
   temperature: 267.158691
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 3
   location_y: -1
 - element: Obsidian
   mass: 800
   temperature: 266.159729
-  diseaseName: FoodPoisoning
-  diseaseCount: -531
   location_x: 4
   location_y: -1
 - element: Salt
   mass: 255.589996
   temperature: 267.10791
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: 5
   location_y: -1
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -634
   location_x: 6
   location_y: -1
 - element: Rust
   mass: 800
   temperature: 266.613953
-  diseaseName: FoodPoisoning
-  diseaseCount: -631
   location_x: 7
   location_y: -1
 - element: Salt
   mass: 255.589996
   temperature: 266.864899
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: -6
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -5
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -4
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -3
 - element: Salt
   mass: 255.589996
   temperature: 267.110352
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: -2
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -1
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 1
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: 2
 - element: Salt
   mass: 255.589996
   temperature: 267.174805
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 3
 - element: Obsidian
   mass: 800
   temperature: 266.174866
-  diseaseName: FoodPoisoning
-  diseaseCount: -530
   location_x: 4
 - element: Salt
   mass: 255.589996
   temperature: 267.173218
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 5
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -634
   location_x: 6
 - element: Rust
   mass: 800
   temperature: 266.422729
-  diseaseName: FoodPoisoning
-  diseaseCount: -630
   location_x: 7
 - element: Salt
   mass: 255.589996
   temperature: 267.256531
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -6
   location_y: 1
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -5
   location_y: 1
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -4
   location_y: 1
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -3
   location_y: 1
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -2
   location_y: 1
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -1
   location_y: 1
 - element: BleachStone
   mass: 30.4300003
   temperature: 269.5
-  diseaseName: FoodPoisoning
   location_y: 1
 - element: BleachStone
   mass: 30.4300003
   temperature: 269.5
-  diseaseName: FoodPoisoning
   location_x: 1
   location_y: 1
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: 2
   location_y: 1
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 3
   location_y: 1
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: 4
   location_y: 1
 - element: Salt
   mass: 255.589996
   temperature: 267.29834
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 5
   location_y: 1
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -633
   location_x: 6
   location_y: 1
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -630
   location_x: 7
   location_y: 1
 - element: Salt
   mass: 255.589996
   temperature: 267.098114
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: -6
   location_y: 2
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -5
   location_y: 2
 - element: BleachStone
   mass: 30.4300003
   temperature: 269.5
-  diseaseName: FoodPoisoning
   location_x: -4
   location_y: 2
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -3
   location_y: 2
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -2
   location_y: 2
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -1
   location_y: 2
 - element: BleachStone
   mass: 30.4300003
   temperature: 269.5
-  diseaseName: FoodPoisoning
   location_y: 2
 - element: Salt
   mass: 255.589996
   temperature: 267.110352
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: 1
   location_y: 2
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 2
   location_y: 2
 - element: Salt
   mass: 255.589996
   temperature: 267.059601
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: 3
   location_y: 2
 - element: Obsidian
   mass: 800
   temperature: 266.110504
-  diseaseName: FoodPoisoning
-  diseaseCount: -456
   location_x: 4
   location_y: 2
 - element: Salt
   mass: 255.589996
   temperature: 267.061249
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: 5
   location_y: 2
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -633
   location_x: 6
   location_y: 2
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -630
   location_x: 7
   location_y: 2
 - element: Salt
   mass: 255.589996
   temperature: 266.998474
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: -6
   location_y: 3
 - element: BleachStone
   mass: 30.4300003
   temperature: 269.5
-  diseaseName: FoodPoisoning
   location_x: -5
   location_y: 3
 - element: BleachStone
   mass: 30.4300003
   temperature: 269.5
-  diseaseName: FoodPoisoning
   location_x: -4
   location_y: 3
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -3
   location_y: 3
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -2
   location_y: 3
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -1
   location_y: 3
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_y: 3
 - element: Obsidian
   mass: 800
   temperature: 266.111053
-  diseaseName: FoodPoisoning
-  diseaseCount: -550
   location_x: 1
   location_y: 3
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: 2
   location_y: 3
 - element: Obsidian
   mass: 800
   temperature: 266.060242
-  diseaseName: FoodPoisoning
-  diseaseCount: -451
   location_x: 3
   location_y: 3
 - element: Obsidian
   mass: 800
   temperature: 265.968018
-  diseaseName: FoodPoisoning
-  diseaseCount: -449
   location_x: 4
   location_y: 3
 - element: Obsidian
   mass: 800
   temperature: 266.061584
-  diseaseName: FoodPoisoning
-  diseaseCount: -459
   location_x: 5
   location_y: 3
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -633
   location_x: 6
   location_y: 3
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -630
   location_x: 7
   location_y: 3
 - element: Salt
   mass: 255.589996
   temperature: 267.107849
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: -6
   location_y: 4
 - element: BleachStone
   mass: 30.4300003
   temperature: 269.5
-  diseaseName: FoodPoisoning
   location_x: -5
   location_y: 4
 - element: Salt
   mass: 255.589996
   temperature: 267.109558
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -4
   location_y: 4
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -3
   location_y: 4
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -2
   location_y: 4
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -1
   location_y: 4
 - element: Salt
   mass: 255.589996
   temperature: 267.110352
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_y: 4
 - element: Obsidian
   mass: 800
   temperature: 266.111053
-  diseaseName: FoodPoisoning
-  diseaseCount: -550
   location_x: 1
   location_y: 4
 - element: Obsidian
   mass: 800
   temperature: 265.900757
-  diseaseName: FoodPoisoning
-  diseaseCount: -550
   location_x: 2
   location_y: 4
 - element: Obsidian
   mass: 800
   temperature: 266.073151
-  diseaseName: FoodPoisoning
-  diseaseCount: -551
   location_x: 3
   location_y: 4
 - element: Salt
   mass: 255.589996
   temperature: 266.967194
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: 4
   location_y: 4
 - element: Obsidian
   mass: 800
   temperature: 265.977783
-  diseaseName: FoodPoisoning
-  diseaseCount: -460
   location_x: 5
   location_y: 4
 - element: BleachStone
   mass: 30.4300003
   temperature: 269.5
-  diseaseName: FoodPoisoning
   location_x: 6
   location_y: 4
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -630
   location_x: 7
   location_y: 4
 - element: Salt
   mass: 255.589996
   temperature: 267.10498
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: -6
   location_y: 5
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -5
   location_y: 5
 - element: Obsidian
   mass: 800
   temperature: 266.109619
-  diseaseName: FoodPoisoning
-  diseaseCount: -441
   location_x: -4
   location_y: 5
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -3
   location_y: 5
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -607
   location_x: -2
   location_y: 5
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -623
   location_x: -1
   location_y: 5
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -623
   location_y: 5
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -623
   location_x: 1
   location_y: 5
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -623
   location_x: 2
   location_y: 5
 - element: Obsidian
   mass: 800
   temperature: 265.900757
-  diseaseName: FoodPoisoning
-  diseaseCount: -551
   location_x: 3
   location_y: 5
 - element: Obsidian
   mass: 800
   temperature: 266.0672
-  diseaseName: FoodPoisoning
-  diseaseCount: -461
   location_x: 4
   location_y: 5
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -624
   location_x: 5
   location_y: 5
 - element: BleachStone
   mass: 30.4300003
   temperature: 269.5
-  diseaseName: FoodPoisoning
   location_x: 6
   location_y: 5
 - element: Rust
   mass: 800
   temperature: 266.399994
-  diseaseName: FoodPoisoning
-  diseaseCount: -630
   location_x: 7
   location_y: 5
 - element: Salt
   mass: 255.589996
   temperature: 267.037598
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: -6
   location_y: 6
 - element: Obsidian
   mass: 800
   temperature: 266.039246
-  diseaseName: FoodPoisoning
-  diseaseCount: -439
   location_x: -5
   location_y: 6
 - element: Obsidian
   mass: 800
   temperature: 266.099701
-  diseaseName: FoodPoisoning
-  diseaseCount: -440
   location_x: -4
   location_y: 6
 - element: Salt
   mass: 255.589996
   temperature: 267.099274
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -3
   location_y: 6
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -2
   location_y: 6
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: -1
   location_y: 6
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_y: 6
 - element: Salt
   mass: 255.589996
   temperature: 267.110352
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: 1
   location_y: 6
 - element: Salt
   mass: 255.589996
   temperature: 267.082611
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 2
   location_y: 6
 - element: Obsidian
   mass: 800
   temperature: 266.173553
-  diseaseName: FoodPoisoning
-  diseaseCount: -552
   location_x: 3
   location_y: 6
 - element: Salt
   mass: 255.589996
   temperature: 266.932983
-  diseaseName: FoodPoisoning
-  diseaseCount: -728
   location_x: 4
   location_y: 6
 - element: Salt
   mass: 255.589996
   temperature: 267.271606
-  diseaseName: FoodPoisoning
-  diseaseCount: -729
   location_x: 5
   location_y: 6
 - element: BleachStone
   mass: 30.4300003
   temperature: 269.5
-  diseaseName: FoodPoisoning
   location_x: 6
   location_y: 6
 - element: BleachStone
   mass: 30.4300003
   temperature: 269.5
-  diseaseName: FoodPoisoning
   location_x: 7
   location_y: 6
 buildings: []
@@ -1250,9 +897,7 @@ otherEntities:
   element: Creature
   temperature: 266.779938
   units: 1
-  storage: []
   type: Other
-  rottable: {}
   amounts:
   - id: AirPressure
   - id: Temperature

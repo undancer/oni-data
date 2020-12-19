@@ -1,0 +1,35 @@
+biomeNoise: noise/subworldHotMarsh
+temperatureRange: HumanWarm
+density:
+  min: 20
+  max: 25
+avoidRadius: 40.0
+minChildCount: 4
+extraBiomeChildren: 1
+sampleBehaviour: PoissonDisk
+features:
+  - type: features/hotmarsh/TallRoom
+  - type: features/hotmarsh/BlobRoom
+biomes:
+  - name: biomes/HotMarsh/Dry
+    weight: 2
+  - name: biomes/HotMarsh/Basic
+    weight: 5
+    tags:
+      - MushroomPlant
+      - MushroomSeed
+      - Puft
+      - BasicFabricPlant
+      - BasicFabricMaterialPlantSeed
+      - BulbPlant
+      - BulbPlantSeed
+tags:
+  - IgnoreCaveOverride
+pointsOfInterest:
+  ruins_a:
+    - poi_hotmarsh_frag_doorway
+    - poi_hotmarsh_frag_table
+  ruins_b:
+    - poi_hotmarsh_lab_burrow
+    - poi_hotmarsh_lab_splitroom
+zoneType: BoggyMarsh

@@ -5,121 +5,11 @@ info:
     Y: 5
   area: 83
 cells:
-- element: Obsidian
-  mass: 200
-  temperature: 292.681793
-  diseaseIdx: 255
-  location_x: -4
-  location_y: -2
-- element: Obsidian
-  mass: 200
-  temperature: 293.11731
-  diseaseIdx: 255
-  location_x: -3
-  location_y: -2
-- element: Obsidian
-  mass: 200
-  temperature: 293.108185
-  diseaseIdx: 255
-  location_x: -2
-  location_y: -2
-- element: Obsidian
-  mass: 200
-  temperature: 293.101196
-  diseaseIdx: 255
-  location_x: -1
-  location_y: -2
-- element: Obsidian
-  mass: 200
-  temperature: 293.091125
-  diseaseIdx: 255
-  location_y: -2
-- element: Obsidian
-  mass: 200
-  temperature: 293.28064
-  diseaseIdx: 255
-  location_x: 1
-  location_y: -2
-- element: Obsidian
-  mass: 200
-  temperature: 293.33075
-  diseaseIdx: 255
-  location_x: 2
-  location_y: -2
-- element: Obsidian
-  mass: 200
-  temperature: 293.394287
-  diseaseIdx: 7
-  diseaseCount: 3
-  location_x: 3
-  location_y: -2
-- element: Obsidian
-  mass: 200
-  temperature: 293.461761
-  diseaseIdx: 7
-  diseaseCount: 11
-  location_x: 4
-  location_y: -2
-- element: Obsidian
-  mass: 200
-  temperature: 293.695129
-  diseaseIdx: 7
-  diseaseCount: 19
-  location_x: 5
-  location_y: -2
 - element: Oxygen
   mass: 490.35141
   temperature: 292.262115
   diseaseIdx: 255
   location_x: -4
-  location_y: -1
-- element: Oxygen
-  mass: 595.006714
-  temperature: 292.01532
-  diseaseIdx: 255
-  location_x: -3
-  location_y: -1
-- element: Oxygen
-  mass: 700.545654
-  temperature: 291.722778
-  diseaseIdx: 255
-  location_x: -2
-  location_y: -1
-- element: Oxygen
-  mass: 792.69342
-  temperature: 291.483032
-  diseaseIdx: 255
-  location_x: -1
-  location_y: -1
-- element: Oxygen
-  mass: 863.654175
-  temperature: 291.342438
-  diseaseIdx: 255
-  location_y: -1
-- element: Oxygen
-  mass: 910.760315
-  temperature: 291.069366
-  diseaseIdx: 255
-  location_x: 1
-  location_y: -1
-- element: Oxygen
-  mass: 935.530029
-  temperature: 291.059875
-  diseaseIdx: 255
-  location_x: 2
-  location_y: -1
-- element: Oxygen
-  mass: 942.494873
-  temperature: 292.999268
-  diseaseIdx: 255
-  location_x: 3
-  location_y: -1
-- element: Oxygen
-  mass: 937.550293
-  temperature: 295.338684
-  diseaseIdx: 7
-  diseaseCount: 5
-  location_x: 4
   location_y: -1
 - element: Oxygen
   mass: 926.441528
@@ -133,45 +23,6 @@ cells:
   temperature: 292.419159
   diseaseIdx: 255
   location_x: -4
-- element: Oxygen
-  mass: 541.14447
-  temperature: 292.234375
-  diseaseIdx: 255
-  location_x: -3
-- element: Oxygen
-  mass: 648.816223
-  temperature: 291.992981
-  diseaseIdx: 255
-  location_x: -2
-- element: Oxygen
-  mass: 748.221985
-  temperature: 291.74704
-  diseaseIdx: 255
-  location_x: -1
-- element: Oxygen
-  mass: 829.791199
-  temperature: 291.396393
-  diseaseIdx: 255
-- element: Oxygen
-  mass: 888.628418
-  temperature: 291.722137
-  diseaseIdx: 255
-  location_x: 1
-- element: Oxygen
-  mass: 924.252625
-  temperature: 293.142944
-  diseaseIdx: 255
-  location_x: 2
-- element: Oxygen
-  mass: 939.761292
-  temperature: 293.539825
-  diseaseIdx: 255
-  location_x: 3
-- element: Oxygen
-  mass: 940.43927
-  temperature: 294.431427
-  diseaseIdx: 255
-  location_x: 4
 - element: Oxygen
   mass: 932.16449
   temperature: 295.736237
@@ -297,18 +148,6 @@ cells:
   location_x: 5
   location_y: 2
 - element: Oxygen
-  mass: 595.006714
-  temperature: 292.01532
-  diseaseIdx: 255
-  location_x: -3
-  location_y: -1
-- element: Oxygen
-  mass: 700.545654
-  temperature: 291.722778
-  diseaseIdx: 255
-  location_x: -2
-  location_y: -1
-- element: Oxygen
   mass: 541.14447
   temperature: 292.234375
   diseaseIdx: 255
@@ -319,27 +158,10 @@ cells:
   diseaseIdx: 255
   location_x: -2
 - element: Oxygen
-  mass: 792.69342
-  temperature: 291.483032
-  diseaseIdx: 255
-  location_x: -1
-  location_y: -1
-- element: Oxygen
   mass: 748.221985
   temperature: 291.74704
   diseaseIdx: 255
   location_x: -1
-- element: Oxygen
-  mass: 863.654175
-  temperature: 291.342438
-  diseaseIdx: 255
-  location_y: -1
-- element: Oxygen
-  mass: 910.760315
-  temperature: 291.069366
-  diseaseIdx: 255
-  location_x: 1
-  location_y: -1
 - element: Oxygen
   mass: 829.791199
   temperature: 291.396393
@@ -349,18 +171,6 @@ cells:
   temperature: 291.722137
   diseaseIdx: 255
   location_x: 1
-- element: Oxygen
-  mass: 935.530029
-  temperature: 291.059875
-  diseaseIdx: 255
-  location_x: 2
-  location_y: -1
-- element: Oxygen
-  mass: 942.494873
-  temperature: 292.999268
-  diseaseIdx: 255
-  location_x: 3
-  location_y: -1
 - element: Oxygen
   mass: 937.550293
   temperature: 295.338684
@@ -493,19 +303,12 @@ buildings:
   element: Cuprite
   temperature: 293.12616
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Battery
   location_x: -1
   location_y: -1
   element: Cuprite
   temperature: 293.013824
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
   other_values:
   - id: joulesAvailable
     value: 1881.06836
@@ -523,187 +326,112 @@ buildings:
     diseaseCount: 100000
     rottable:
       rotAmount: 2396.44214
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: CookingStation
   location_x: 3
   location_y: -1
   element: Cuprite
   temperature: 295.47406
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -3
   location_y: -1
   element: Cuprite
   temperature: 292.902496
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -2
   location_y: -1
   element: Cuprite
   temperature: 292.776062
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -1
   location_y: -1
   element: Cuprite
   temperature: 292.71701
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_y: -1
   element: Cuprite
   temperature: 292.586304
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 1
   location_y: -1
   element: Cuprite
   temperature: 292.617218
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 2
   location_y: -1
   element: Cuprite
   temperature: 292.684052
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 3
   location_y: -1
   element: Cuprite
   temperature: 294.858795
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Tile
   location_x: -3
   location_y: -2
   element: Obsidian
   temperature: 293.11731
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Tile
   location_x: -2
   location_y: -2
   element: Obsidian
   temperature: 293.108185
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Tile
   location_x: -1
   location_y: -2
   element: Obsidian
   temperature: 293.101196
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Tile
   location_y: -2
   element: Obsidian
   temperature: 293.091125
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Tile
   location_x: 1
   location_y: -2
   element: Obsidian
   temperature: 293.28064
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Tile
   location_x: 2
   location_y: -2
   element: Obsidian
   temperature: 293.33075
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Tile
   location_x: 3
   location_y: -2
   element: Obsidian
   temperature: 293.394287
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Tile
   location_x: 4
   location_y: -2
   element: Obsidian
   temperature: 293.461761
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Tile
   location_x: 5
   location_y: -2
   element: Obsidian
   temperature: 293.695129
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Tile
   location_x: -4
   location_y: -2
   element: Obsidian
   temperature: 292.681793
   diseaseIdx: 255
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 pickupables: []
 elementalOres: []
 otherEntities: []

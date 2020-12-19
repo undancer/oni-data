@@ -1,6 +1,5 @@
 name: STRINGS.WORLDS.FOREST_LUSH.NAME
 description: STRINGS.WORLDS.FOREST_LUSH.DESCRIPTION
-spriteName: Asteroid_lushforest
 coordinatePrefix: LUSH-A
 difficulty: 2
 tier: 2
@@ -10,6 +9,9 @@ worldsize:
   Y: 384
 layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
 #                                in order to use this.
+
+defaultsOverrides:
+  startingWorldElements: [] # remove the algae check
 
 # List all the zone files to load
 subworldFiles:
@@ -33,11 +35,13 @@ subworldFiles:
   # - name: subworlds/sandstone/Sandstone
 
 startSubworldName: subworlds/forest/ForestStart
-startingBaseTemplate: forestBase
+startingBaseTemplate: bases/forestBase
 
 globalFeatureTemplates:
   feature_geyser_generic: 12
 
+seasons:
+  - MeteorShowers
 
 # Rivers:
 #   - water

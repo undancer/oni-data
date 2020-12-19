@@ -5,64 +5,20 @@ info:
     Y: 13
   area: 281
 cells:
-- element: Obsidian
-  mass: 100
-  temperature: 301.825775
-  location_x: -9
-  location_y: -1
-- element: Cuprite
-  mass: 100
-  temperature: 314.592468
-  location_x: -8
-  location_y: -1
 - element: IgneousRock
   mass: 1062
   temperature: 337.336395
   location_x: -7
-  location_y: -1
-- element: Obsidian
-  mass: 100
-  temperature: 316.493927
-  location_x: -6
-  location_y: -1
-- element: Cuprite
-  mass: 100
-  temperature: 316.006439
-  location_x: -5
   location_y: -1
 - element: IgneousRock
   mass: 1062
   temperature: 343.478546
   location_x: -4
   location_y: -1
-- element: Obsidian
-  mass: 100
-  temperature: 325.694153
-  location_x: -3
-  location_y: -1
-- element: Cuprite
-  mass: 100
-  temperature: 320.613831
-  location_x: -2
-  location_y: -1
 - element: IgneousRock
   mass: 1062
   temperature: 337.923431
   location_x: -1
-  location_y: -1
-- element: Obsidian
-  mass: 100
-  temperature: 315.421295
-  location_y: -1
-- element: Obsidian
-  mass: 100
-  temperature: 307.460571
-  location_x: 1
-  location_y: -1
-- element: Obsidian
-  mass: 100
-  temperature: 316.154419
-  location_x: 2
   location_y: -1
 - element: IgneousRock
   mass: 1062
@@ -73,21 +29,6 @@ cells:
   mass: 1062
   temperature: 346.024628
   location_x: 4
-  location_y: -1
-- element: Obsidian
-  mass: 100
-  temperature: 326.356415
-  location_x: 5
-  location_y: -1
-- element: Obsidian
-  mass: 100
-  temperature: 308.647644
-  location_x: 6
-  location_y: -1
-- element: Obsidian
-  mass: 100
-  temperature: 305.981476
-  location_x: 7
   location_y: -1
 - element: Phosphorite
   mass: 1056
@@ -124,29 +65,9 @@ cells:
   location_x: -9
   location_y: -2
 - element: Oxygen
-  mass: 0.00435834844
-  temperature: 312.074036
-  location_x: -8
-  location_y: -2
-- element: Oxygen
-  mass: 0.00615853816
-  temperature: 320.008606
-  location_x: -7
-  location_y: -2
-- element: Oxygen
   mass: 0.00651494181
   temperature: 317.041473
   location_x: -6
-  location_y: -2
-- element: Oxygen
-  mass: 0.00675575295
-  temperature: 320.008453
-  location_x: -5
-  location_y: -2
-- element: IgneousRock
-  mass: 1062
-  temperature: 349.299683
-  location_x: -4
   location_y: -2
 - element: IgneousRock
   mass: 1062
@@ -154,38 +75,8 @@ cells:
   location_x: -3
   location_y: -2
 - element: Oxygen
-  mass: 0.0132818846
-  temperature: 324.437653
-  location_x: -2
-  location_y: -2
-- element: Oxygen
-  mass: 0.0142026264
-  temperature: 322.424072
-  location_x: -1
-  location_y: -2
-- element: Oxygen
   mass: 0.0145478267
   temperature: 310.35788
-  location_y: -2
-- element: Oxygen
-  mass: 0.0140717737
-  temperature: 303.650085
-  location_x: 1
-  location_y: -2
-- element: Oxygen
-  mass: 0.0133246928
-  temperature: 311.345123
-  location_x: 2
-  location_y: -2
-- element: Oxygen
-  mass: 0.0126649402
-  temperature: 327.563965
-  location_x: 3
-  location_y: -2
-- element: IgneousRock
-  mass: 1062
-  temperature: 349.48114
-  location_x: 4
   location_y: -2
 - element: IgneousRock
   mass: 1062
@@ -198,194 +89,10 @@ cells:
   location_x: 6
   location_y: -2
 - element: Oxygen
-  mass: 0.00781587511
-  temperature: 311.046265
-  location_x: 7
-  location_y: -2
-- element: Oxygen
-  mass: 0.00620413339
-  temperature: 309.64035
-  location_x: -5
-  location_y: -4
-- element: ContaminatedOxygen
-  mass: 0.00223147497
-  temperature: 314.703247
-  location_x: -4
-  location_y: -4
-- element: Oxygen
-  mass: 0.00800049212
-  temperature: 324.619232
-  location_x: -3
-  location_y: -4
-- element: IgneousRock
-  mass: 1062
-  temperature: 349.88562
-  location_x: -2
-  location_y: -4
-- element: Oxygen
-  mass: 0.0139788752
-  temperature: 326.761536
-  location_x: -1
-  location_y: -4
-- element: Oxygen
-  mass: 0.0122899059
-  temperature: 311.755341
-  location_y: -4
-- element: Oxygen
-  mass: 0.0108789839
-  temperature: 303.22934
-  location_x: 1
-  location_y: -4
-- element: Oxygen
-  mass: 0.0100837573
-  temperature: 304.842529
-  location_x: 2
-  location_y: -4
-- element: Oxygen
-  mass: 0.00923990738
-  temperature: 311.503693
-  location_x: 3
-  location_y: -4
-- element: Oxygen
-  mass: 0.00831788313
-  temperature: 314.535889
-  location_x: 4
-  location_y: -4
-- element: Oxygen
-  mass: 0.00737403799
-  temperature: 309.320526
-  location_x: 5
-  location_y: -4
-- element: Oxygen
-  mass: 0.00628949283
-  temperature: 307.476959
-  location_x: 6
-  location_y: -4
-- element: Oxygen
-  mass: 0.0049720197
-  temperature: 304.287079
-  location_x: 7
-  location_y: -4
-- element: Oxygen
-  mass: 0.00679359678
-  temperature: 312.104156
-  location_x: -5
-  location_y: -3
-- element: Oxygen
-  mass: 0.00826922338
-  temperature: 322.513855
-  location_x: -4
-  location_y: -3
-- element: Oxygen
-  mass: 0.0108584035
-  temperature: 324.983215
-  location_x: -3
-  location_y: -3
-- element: Oxygen
-  mass: 0.0124910092
-  temperature: 325.042755
-  location_x: -2
-  location_y: -3
-- element: Oxygen
-  mass: 0.0142243318
-  temperature: 321.122894
-  location_x: -1
-  location_y: -3
-- element: Oxygen
-  mass: 0.0139361443
-  temperature: 308.841614
-  location_y: -3
-- element: Oxygen
-  mass: 0.0129862595
-  temperature: 302.278168
-  location_x: 1
-  location_y: -3
-- element: Oxygen
-  mass: 0.0120579787
-  temperature: 305.176605
-  location_x: 2
-  location_y: -3
-- element: Oxygen
   mass: 0.0110246809
   temperature: 321.475342
   location_x: 3
   location_y: -3
-- element: Oxygen
-  mass: 0.00966086797
-  temperature: 323.024414
-  location_x: 4
-  location_y: -3
-- element: Oxygen
-  mass: 0.00863435678
-  temperature: 322.573822
-  location_x: 5
-  location_y: -3
-- element: Oxygen
-  mass: 0.00777459564
-  temperature: 308.316345
-  location_x: 6
-  location_y: -3
-- element: Oxygen
-  mass: 0.00662275078
-  temperature: 308.059479
-  location_x: 7
-  location_y: -3
-- element: ContaminatedOxygen
-  mass: 0.00126045174
-  temperature: 314.535339
-  location_x: -7
-  location_y: -3
-- element: Oxygen
-  mass: 0.0064006648
-  temperature: 310.294952
-  location_x: -6
-  location_y: -3
-- element: Oxygen
-  mass: 0.00422774162
-  temperature: 324.192535
-  location_x: -3
-  location_y: -5
-- element: IgneousRock
-  mass: 1062
-  temperature: 349.901215
-  location_x: -2
-  location_y: -5
-- element: IgneousRock
-  mass: 1062
-  temperature: 349.900818
-  diseaseName: SlimeLung
-  diseaseCount: 14
-  location_x: -1
-  location_y: -5
-- element: Oxygen
-  mass: 0.00851393025
-  temperature: 317.78949
-  location_y: -5
-- element: Oxygen
-  mass: 0.00831484795
-  temperature: 306.078888
-  location_x: 1
-  location_y: -5
-- element: Oxygen
-  mass: 0.00791170262
-  temperature: 305.754028
-  location_x: 2
-  location_y: -5
-- element: Oxygen
-  mass: 0.00731398212
-  temperature: 310.525818
-  location_x: 3
-  location_y: -5
-- element: Oxygen
-  mass: 0.0065569263
-  temperature: 311.408417
-  location_x: 4
-  location_y: -5
-- element: Oxygen
-  mass: 0.00564607931
-  temperature: 308.737549
-  location_x: 5
-  location_y: -5
 - element: Oxygen
   mass: 0.00685983617
   temperature: 318.779449
@@ -412,9 +119,6 @@ cells:
   temperature: 329.545868
   location_x: -1
 - element: CarbonDioxide
-  mass: 0.0143192038
-  temperature: 326.614807
-- element: CarbonDioxide
   mass: 0.0232775528
   temperature: 316.804291
   location_x: 1
@@ -434,14 +138,6 @@ cells:
   mass: 0.028738156
   temperature: 322.617065
   location_x: 5
-- element: CarbonDioxide
-  mass: 0.0297172312
-  temperature: 307.94632
-  location_x: 6
-- element: Obsidian
-  mass: 100
-  temperature: 307.88681
-  location_x: 7
 - element: CarbonDioxide
   mass: 0.00916675106
   temperature: 317.625122
@@ -468,10 +164,6 @@ cells:
   location_x: -1
   location_y: 1
 - element: CarbonDioxide
-  mass: 0.0114905247
-  temperature: 330.953949
-  location_y: 1
-- element: CarbonDioxide
   mass: 0.00364276324
   temperature: 317.005951
   location_x: 1
@@ -495,16 +187,6 @@ cells:
   mass: 0.0283133499
   temperature: 321.071167
   location_x: 5
-  location_y: 1
-- element: Oxygen
-  mass: 0.00114638545
-  temperature: 316.714172
-  location_x: 6
-  location_y: 1
-- element: Obsidian
-  mass: 100
-  temperature: 315.737274
-  location_x: 7
   location_y: 1
 - element: CarbonDioxide
   mass: 0.00838413183
@@ -530,10 +212,6 @@ cells:
   mass: 0.00160858477
   temperature: 320.03537
   location_x: -1
-  location_y: 2
-- element: CarbonDioxide
-  mass: 0.0118394541
-  temperature: 324.198914
   location_y: 2
 - element: Oxygen
   mass: 0.0179900564
@@ -566,11 +244,6 @@ cells:
   location_x: 6
   location_y: 2
 - element: IgneousRock
-  mass: 1062
-  temperature: 335.540985
-  location_x: 7
-  location_y: 2
-- element: IgneousRock
   mass: 1056
   temperature: 313.082489
   location_x: -5
@@ -579,11 +252,6 @@ cells:
   mass: 1056
   temperature: 311.638428
   location_x: -4
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 314.867401
-  location_x: -3
   location_y: 3
 - element: IgneousRock
   mass: 1062
@@ -594,45 +262,6 @@ cells:
   mass: 1062
   temperature: 335.425354
   location_x: -1
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 316.841827
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 312.558624
-  location_x: 1
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 319.324738
-  location_x: 2
-  location_y: 3
-- element: IgneousRock
-  mass: 1062
-  temperature: 339.07309
-  location_x: 3
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 319.073639
-  location_x: 4
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 311.290619
-  location_x: 5
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 312.242188
-  location_x: 6
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 319.954193
-  location_x: 7
   location_y: 3
 - element: IgneousRock
   mass: 1056
@@ -829,25 +458,10 @@ cells:
   temperature: 325.694153
   location_x: -3
   location_y: -1
-- element: Cuprite
-  mass: 100
-  temperature: 316.006439
-  location_x: -5
-  location_y: -1
-- element: Cuprite
-  mass: 100
-  temperature: 314.592468
-  location_x: -8
-  location_y: -1
 - element: Obsidian
   mass: 100
   temperature: 301.825775
   location_x: -9
-  location_y: -1
-- element: Cuprite
-  mass: 100
-  temperature: 320.613831
-  location_x: -2
   location_y: -1
 - element: Obsidian
   mass: 100
@@ -969,29 +583,12 @@ cells:
 - element: IgneousRock
   mass: 1062
   temperature: 349.900818
-  diseaseName: SlimeLung
-  diseaseCount: 14
   location_x: -1
   location_y: -5
 - element: Oxygen
   mass: 0.00851393025
   temperature: 317.78949
   location_y: -5
-- element: Oxygen
-  mass: 0.0140717737
-  temperature: 303.650085
-  location_x: 1
-  location_y: -2
-- element: Oxygen
-  mass: 0.0129862595
-  temperature: 302.278168
-  location_x: 1
-  location_y: -3
-- element: Oxygen
-  mass: 0.0108789839
-  temperature: 303.22934
-  location_x: 1
-  location_y: -4
 - element: Oxygen
   mass: 0.0108789839
   temperature: 303.22934
@@ -1023,11 +620,6 @@ cells:
   location_x: 2
   location_y: -4
 - element: Oxygen
-  mass: 0.00923990738
-  temperature: 311.503693
-  location_x: 3
-  location_y: -4
-- element: Oxygen
   mass: 0.00831484795
   temperature: 306.078888
   location_x: 1
@@ -1036,11 +628,6 @@ cells:
   mass: 0.00791170262
   temperature: 305.754028
   location_x: 2
-  location_y: -5
-- element: Oxygen
-  mass: 0.00731398212
-  temperature: 310.525818
-  location_x: 3
   location_y: -5
 - element: Oxygen
   mass: 0.0126649402
@@ -1053,11 +640,6 @@ cells:
   location_x: 3
   location_y: -5
 - element: Oxygen
-  mass: 0.0065569263
-  temperature: 311.408417
-  location_x: 4
-  location_y: -5
-- element: Oxygen
   mass: 0.00923990738
   temperature: 311.503693
   location_x: 3
@@ -1067,26 +649,6 @@ cells:
   temperature: 314.535889
   location_x: 4
   location_y: -4
-- element: Oxygen
-  mass: 0.00628949283
-  temperature: 307.476959
-  location_x: 6
-  location_y: -4
-- element: Oxygen
-  mass: 0.0049720197
-  temperature: 304.287079
-  location_x: 7
-  location_y: -4
-- element: Oxygen
-  mass: 0.00777459564
-  temperature: 308.316345
-  location_x: 6
-  location_y: -3
-- element: Oxygen
-  mass: 0.00662275078
-  temperature: 308.059479
-  location_x: 7
-  location_y: -3
 - element: IgneousRock
   mass: 1062
   temperature: 349.48114
@@ -1142,11 +704,6 @@ cells:
   temperature: 308.647644
   location_x: 6
   location_y: -1
-- element: Obsidian
-  mass: 100
-  temperature: 305.981476
-  location_x: 7
-  location_y: -1
 - element: CarbonDioxide
   mass: 0.0143192038
   temperature: 326.614807
@@ -1154,62 +711,11 @@ cells:
   mass: 0.0114905247
   temperature: 330.953949
   location_y: 1
-- element: CarbonDioxide
-  mass: 0.0118394541
-  temperature: 324.198914
-  location_y: 2
 - element: Obsidian
   mass: 100
   temperature: 314.867401
   location_x: -3
   location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 316.841827
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 312.558624
-  location_x: 1
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 319.324738
-  location_x: 2
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 319.073639
-  location_x: 4
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 311.290619
-  location_x: 5
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 312.242188
-  location_x: 6
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 319.954193
-  location_x: 7
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 315.737274
-  location_x: 7
-  location_y: 1
-- element: Obsidian
-  mass: 100
-  temperature: 307.88681
-  location_x: 7
-- element: CarbonDioxide
-  mass: 0.0297172312
-  temperature: 307.94632
-  location_x: 6
 - element: Oxygen
   mass: 0.00114638545
   temperature: 316.714172
@@ -1219,63 +725,6 @@ cells:
   mass: 0.0297172312
   temperature: 307.94632
   location_x: 6
-- element: Obsidian
-  mass: 100
-  temperature: 307.88681
-  location_x: 7
-- element: Obsidian
-  mass: 100
-  temperature: 315.737274
-  location_x: 7
-  location_y: 1
-- element: IgneousRock
-  mass: 1062
-  temperature: 335.540985
-  location_x: 7
-  location_y: 2
-- element: Obsidian
-  mass: 100
-  temperature: 319.954193
-  location_x: 7
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 312.242188
-  location_x: 6
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 311.290619
-  location_x: 5
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 319.073639
-  location_x: 4
-  location_y: 3
-- element: IgneousRock
-  mass: 1062
-  temperature: 339.07309
-  location_x: 3
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 319.324738
-  location_x: 2
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 312.558624
-  location_x: 1
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 316.841827
-  location_y: 3
-- element: CarbonDioxide
-  mass: 0.0118394541
-  temperature: 324.198914
-  location_y: 2
 - element: Oxygen
   mass: 0.0049720197
   temperature: 304.287079
@@ -1374,665 +823,386 @@ buildings:
   location_y: -1
   element: Obsidian
   temperature: 309.369415
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -3
   location_y: -1
   element: Obsidian
   temperature: 311.499359
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: FloorSwitch
   location_x: -5
   location_y: -1
   element: Cuprite
   temperature: 316.00943
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: FloorSwitch
   location_x: -8
   location_y: -1
   element: Cuprite
   temperature: 314.593567
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -9
   location_y: -1
   element: Obsidian
   temperature: 297.970337
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: FloorSwitch
   location_x: -2
   location_y: -1
   element: Cuprite
   temperature: 320.616241
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_y: -1
   element: Obsidian
   temperature: 310.516022
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: -1
   element: Obsidian
   temperature: 303.032257
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -8
   location_y: -1
   element: Copper
   temperature: 314.592468
-  storage: []
   connections: 8
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -5
   location_y: -1
   element: Copper
   temperature: 316.006439
-  storage: []
   connections: 8
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -5
   location_y: -2
   element: Copper
   temperature: 300.431183
-  storage: []
   connections: 6
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -2
   location_y: -1
   element: Copper
   temperature: 320.613831
-  storage: []
   connections: 8
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -1
   location_y: -2
   element: Copper
   temperature: 318.662415
-  storage: []
   connections: 9
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -1
   location_y: -3
   element: Copper
   temperature: 316.158997
-  storage: []
   connections: 6
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_y: -3
   element: Copper
   temperature: 299.876923
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -4
   location_y: -3
   element: Copper
   temperature: 301.803345
-  storage: []
   connections: 6
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -7
   location_y: -2
   element: Copper
   temperature: 319.784027
-  storage: []
   connections: 9
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -7
   location_y: -3
   element: Copper
   temperature: 314.535339
-  storage: []
   connections: 6
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -6
   location_y: -3
   element: Copper
   temperature: 299.739136
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -5
   location_y: -3
   element: Copper
   temperature: 298.679657
-  storage: []
   connections: 9
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -5
   location_y: -4
   element: Copper
   temperature: 296.623901
-  storage: []
   connections: 6
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -3
   location_y: -3
   element: Copper
   temperature: 304.839966
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -2
   location_y: -3
   element: Copper
   temperature: 307.49884
-  storage: []
   connections: 9
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -2
   location_y: -4
   element: Copper
   temperature: 349.88562
-  storage: []
   connections: 6
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -1
   location_y: -4
   element: Copper
   temperature: 316.992279
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_y: -4
   element: Copper
   temperature: 300.19339
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -4
   location_y: -4
   element: Copper
   temperature: 298.381989
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -3
   location_y: -4
   element: Copper
   temperature: 300.696686
-  storage: []
   connections: 9
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -3
   location_y: -5
   element: Copper
   temperature: 301.58374
-  storage: []
   connections: 6
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -2
   location_y: -5
   element: Copper
   temperature: 349.901215
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -1
   location_y: -5
   element: Copper
   temperature: 349.900818
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_y: -5
   element: Copper
   temperature: 301.119507
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWireBridge
   location_x: 1
   location_y: -3
   element: Copper
   temperature: 296.591888
   rotationOrientation: R90
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 1
   location_y: -4
   element: Copper
   temperature: 297.1521
-  storage: []
   connections: 1
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 1
   location_y: -2
   element: Copper
   temperature: 297.728027
-  storage: []
   connections: 2
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 2
   location_y: -2
   element: Copper
   temperature: 300.844269
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 1
   location_y: -3
   element: Copper
   temperature: 297.16156
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 2
   location_y: -3
   element: Copper
   temperature: 299.765717
-  storage: []
   connections: 9
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 2
   location_y: -4
   element: Copper
   temperature: 298.925568
-  storage: []
   connections: 6
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 3
   location_y: -4
   element: Copper
   temperature: 305.70932
-  storage: []
   connections: 1
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 1
   location_y: -5
   element: Copper
   temperature: 298.089142
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 2
   location_y: -5
   element: Copper
   temperature: 298.828064
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 3
   location_y: -5
   element: Copper
   temperature: 304.831207
-  storage: []
   connections: 1
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 3
   location_y: -2
   element: Copper
   temperature: 312.000885
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicGateAND
   location_x: 3
   location_y: -5
   element: Copper
   temperature: 310.55191
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicGateAND
   location_x: 6
   location_y: -4
   element: Copper
   temperature: 300.343903
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 4
   location_y: -2
   element: Copper
   temperature: 349.48114
-  storage: []
   connections: 9
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 4
   location_y: -3
   element: Copper
   temperature: 316.164551
-  storage: []
   connections: 6
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 5
   location_y: -3
   element: Copper
   temperature: 307.718719
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 6
   location_y: -3
   element: Copper
   temperature: 301.619598
-  storage: []
   connections: 1
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 4
   location_y: -5
   element: Copper
   temperature: 311.408417
-  storage: []
   connections: 2
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 5
   location_y: -5
   element: Copper
   temperature: 303.13504
-  storage: []
   connections: 5
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 5
   location_y: -4
   element: Copper
   temperature: 303.823242
-  storage: []
   connections: 10
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 6
   location_y: -4
   element: Copper
   temperature: 300.187897
-  storage: []
   connections: 1
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 2
   location_y: -1
   element: Obsidian
   temperature: 309.363098
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 5
   location_y: -1
   element: Obsidian
   temperature: 317.044006
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 6
   location_y: -1
   element: Obsidian
   temperature: 304.567108
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 7
   location_y: -1
   element: Obsidian
   temperature: 304.43042
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Checkpoint
   element: Obsidian
   temperature: 342.967407
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -3
   location_y: 3
   element: Obsidian
   temperature: 311.217651
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_y: 3
   element: Obsidian
   temperature: 314.104919
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: 3
   element: Obsidian
   temperature: 310.000092
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 2
   location_y: 3
   element: Obsidian
   temperature: 315.749176
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 4
   location_y: 3
   element: Obsidian
   temperature: 315.591003
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 5
   location_y: 3
   element: Obsidian
   temperature: 309.176544
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 6
   location_y: 3
   element: Obsidian
   temperature: 310.21579
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 7
   location_y: 3
   element: Obsidian
   temperature: 319.190613
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 7
   location_y: 1
   element: Obsidian
   temperature: 313.396088
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 7
   element: Obsidian
   temperature: 306.384491
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Battery
   location_x: 6
   element: Cuprite
   temperature: 296.852966
-  storage: []
-  rottable: {}
-  amounts: []
   other_values:
   - id: joulesAvailable
     value: 9557.5
@@ -2040,315 +1210,187 @@ buildings:
   location_x: 6
   element: Cuprite
   temperature: 293.599518
-  storage: []
   connections: 2
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 7
   element: Cuprite
   temperature: 307.888123
-  storage: []
   connections: 5
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 7
   location_y: 1
   element: Cuprite
   temperature: 315.738495
-  storage: []
   connections: 12
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 7
   location_y: 2
   element: Cuprite
   temperature: 335.540741
-  storage: []
   connections: 12
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 7
   location_y: 3
   element: Cuprite
   temperature: 319.954163
-  storage: []
   connections: 9
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 6
   location_y: 3
   element: Cuprite
   temperature: 312.243774
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 5
   location_y: 3
   element: Cuprite
   temperature: 311.292419
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 4
   location_y: 3
   element: Cuprite
   temperature: 319.075745
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 3
   location_y: 3
   element: Cuprite
   temperature: 339.072906
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 2
   location_y: 3
   element: Cuprite
   temperature: 319.326996
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 1
   location_y: 3
   element: Cuprite
   temperature: 312.560944
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_y: 3
   element: Cuprite
   temperature: 316.843567
-  storage: []
   connections: 10
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_y: 2
   element: Cuprite
   temperature: 293.393158
-  storage: []
   connections: 4
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 7
   location_y: -4
   element: Copper
   temperature: 299.10675
-  storage: []
   connections: 4
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 7
   location_y: -3
   element: Copper
   temperature: 300.706879
-  storage: []
   connections: 12
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 7
   location_y: -2
   element: Copper
   temperature: 304.100311
-  storage: []
   connections: 12
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 7
   location_y: -1
   element: Copper
   temperature: 305.981476
-  storage: []
   connections: 12
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 7
   element: Copper
   temperature: 307.88681
-  storage: []
   connections: 12
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 7
   location_y: 1
   element: Copper
   temperature: 315.737274
-  storage: []
   connections: 12
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 7
   location_y: 2
   element: Copper
   temperature: 335.540985
-  storage: []
   connections: 12
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 7
   location_y: 3
   element: Copper
   temperature: 319.954193
-  storage: []
   connections: 9
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 6
   location_y: 3
   element: Copper
   temperature: 312.242188
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 5
   location_y: 3
   element: Copper
   temperature: 311.290619
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 4
   location_y: 3
   element: Copper
   temperature: 319.073639
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 3
   location_y: 3
   element: Copper
   temperature: 339.07309
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 2
   location_y: 3
   element: Copper
   temperature: 319.324738
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: 1
   location_y: 3
   element: Copper
   temperature: 312.558624
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_y: 3
   element: Copper
   temperature: 316.841827
-  storage: []
   connections: 10
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_y: 2
   element: Copper
   temperature: 302.230652
-  storage: []
   connections: 4
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -8
   location_y: -2
   element: Copper
   temperature: 299.414032
-  storage: []
   connections: 6
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -4
   location_y: -2
   element: Copper
   temperature: 349.299683
-  storage: []
   connections: 9
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LogicWire
   location_x: -2
   location_y: -2
   element: Copper
   temperature: 307.058624
-  storage: []
   connections: 6
-  rottable: {}
-  amounts: []
-  other_values: []
 pickupables: []
 elementalOres: []
 otherEntities:
@@ -2358,9 +1400,7 @@ otherEntities:
   element: Creature
   temperature: 320.03537
   units: 1
-  storage: []
   type: Other
-  rottable: {}
   amounts:
   - id: AirPressure
     value: 0.00849634688
@@ -2377,9 +1417,7 @@ otherEntities:
   element: Creature
   temperature: 319.957977
   units: 1
-  storage: []
   type: Other
-  rottable: {}
   amounts:
   - id: AirPressure
     value: 0.00960723683
@@ -2396,9 +1434,7 @@ otherEntities:
   element: Creature
   temperature: 320.001892
   units: 1
-  storage: []
   type: Other
-  rottable: {}
   amounts:
   - id: AirPressure
     value: 0.00267381594
@@ -2415,9 +1451,7 @@ otherEntities:
   element: Creature
   temperature: 320.065674
   units: 1
-  storage: []
   type: Other
-  rottable: {}
   amounts:
   - id: AirPressure
     value: 0.0147828311
@@ -2434,9 +1468,7 @@ otherEntities:
   element: Creature
   temperature: 319.892761
   units: 1
-  storage: []
   type: Other
-  rottable: {}
   amounts:
   - id: AirPressure
     value: 0.00533188134
@@ -2452,9 +1484,7 @@ otherEntities:
   element: Creature
   temperature: 328.159332
   units: 1
-  storage: []
   type: Other
-  rottable: {}
   amounts:
   - id: AirPressure
     value: 0.00774480915
@@ -2468,9 +1498,7 @@ otherEntities:
   element: Creature
   temperature: 328.016113
   units: 1
-  storage: []
   type: Other
-  rottable: {}
   amounts:
   - id: AirPressure
     value: 0.00615541777
@@ -2485,9 +1513,7 @@ otherEntities:
   element: Creature
   temperature: 328.188965
   units: 1
-  storage: []
   type: Other
-  rottable: {}
   amounts:
   - id: AirPressure
     value: 0.0141328555
@@ -2502,9 +1528,7 @@ otherEntities:
   element: Creature
   temperature: 328.32785
   units: 1
-  storage: []
   type: Other
-  rottable: {}
   amounts:
   - id: AirPressure
     value: 0.0147828311
@@ -2518,7 +1542,4 @@ otherEntities:
   element: Unobtanium
   temperature: 294.149994
   units: 1
-  storage: []
   type: Other
-  rottable: {}
-  amounts: []

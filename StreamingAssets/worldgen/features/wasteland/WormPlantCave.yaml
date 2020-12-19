@@ -1,0 +1,39 @@
+tags:
+  - AllowExceedNodeBorders
+  - PreventAmbientMobsInFeature # Want control over all placements
+shape: Square
+borders:
+  - 1
+  - 1
+blobSize:
+  min: 4.5
+  max: 9.5
+internalMobs:
+  - type: WormPlant
+    count:
+      min: 2
+      max: 4
+ElementChoiceGroups:
+  RoomCenterElements:
+    selectionMethod: HorizontalSlice
+    choices:
+      - element: Oxygen
+        weight: 0.50
+      - element: Sand
+        weight: 0.30
+      - element: IgneousRock
+        weight: 0.10
+  RoomBorderChoices0:
+    selectionMethod: WeightedResample
+    choices:
+      - element: Sand # Falls down to create rough floor
+        weight: 1
+      - element: SandStone
+        weight: 3
+  RoomBorderChoices1:
+    selectionMethod: WeightedResample
+    choices:
+      - element: SandStone
+        weight: 1
+      - element: MaficRock
+        weight: 3

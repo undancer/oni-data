@@ -410,3 +410,41 @@ TerrainBiomeLookupTable:
       bandSize: 0.84
     - content: Algae
       bandSize: 0.97
+    HospitableSurface:
+    - content: Vacuum #Void
+      bandSize: 0.001
+    - content: Vacuum
+      bandSize: 0.05
+    - content: Dirt
+      bandSize: 0.035
+    - content: MaficRock
+      bandSize: 0.05
+    - content: IgneousRock
+      bandSize: 0.30
+    - content: Cuprite
+      bandSize: 0.50
+    IcySurface:
+    - content: Vacuum #Void
+      bandSize: 0.001
+    - content: Vacuum
+      bandSize: 0.03
+    - content: Ice
+      bandSize: 0.01
+    - content: DirtyIce
+      bandSize: 0.01
+    - content: Ice
+      bandSize: 0.01
+    - content: DirtyIce
+      bandSize: 0.01
+    - content: Ice
+      bandSize: 0.01
+    - content: DirtyIce
+      bandSize: 0.01
+    - content: Dirt
+      bandSize: 0.035
+    - content: MaficRock
+      bandSize: 0.05
+    - content: IgneousRock
+      bandSize: 0.30
+    - content: Cuprite
+      bandSize: 0.50

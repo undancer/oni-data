@@ -20,11 +20,14 @@ TerrainBiomeLookupTable:
       bandSize: 2
       overrides:
         massMultiplier: 4
+        massOverride: 200 # Use old CrudeOil defaultMass to preserve existing seeds.
     OilField:
     - content: Fossil
       bandSize: 0.2
     - content: CrudeOil
       bandSize: 0.125
+      overrides:
+        massOverride: 200 # Use old CrudeOil defaultMass to preserve existing seeds.
     - content: Obsidian
       bandSize: 0.25
     - content: Lead
@@ -33,6 +36,7 @@ TerrainBiomeLookupTable:
       bandSize: 3
       overrides:
         massMultiplier: 30
+        massOverride: 200 # Use old CrudeOil defaultMass to preserve existing seeds.
     OilPocketsFrozen:
     - content: Fossil
       bandSize: 0.2
@@ -65,6 +69,8 @@ TerrainBiomeLookupTable:
       bandSize: 1.5
     - content: CrudeOil
       bandSize: 2
+      overrides:
+        massOverride: 200 # Use old CrudeOil defaultMass to preserve existing seeds.
     OilDry:
     - content: Fossil
       bandSize: 0.2

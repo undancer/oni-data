@@ -1,0 +1,138 @@
+name: STRINGS.WORLDS.TERRAMOONLET.NAME
+description: STRINGS.WORLDS.TERRAMOONLET.DESCRIPTION
+nameTable: TERRA
+asteroidType: SandstoneStart
+coordinatePrefix: TNY-S
+difficulty: -1
+tier: -1 
+disableWorldTraits: true
+
+worldsize:
+  X: 160
+  Y: 224
+layoutMethod: PowerTree
+
+defaultsOverrides:
+  data:
+    OverworldDensityMin: 18
+    OverworldDensityMax: 18
+
+startSubworldName: subworlds/sandstone/SandstoneStartMoonlet
+startingBaseTemplate: bases/sandstoneBase
+startingBasePositionHorizontal:
+  min: 0.5
+  max: 0.5
+startingBasePositionVertical:
+  min: 0.5
+  max: 0.5
+
+# List all the zone files to load
+subworldFiles:
+  - name: subworlds/sandstone/SandstoneStartMoonlet
+    overridePower: 4
+  - name: subworlds/sandstone/Sandstone
+  - name: subworlds/space/Space
+  - name: subworlds/space/IcySurface
+    overridePower: 1.3
+  - name: subworlds/magma/Bottom
+  - name: subworlds/jungle/JungleSteamy    
+  - name: subworlds/barren/CoalyGranite
+  - name: subworlds/marsh/HotMarshSteamy
+  - name: subworlds/wasteland/WastelandBeetle
+  - name: subworlds/wasteland/WastelandWorm
+
+unknownCellsAllowedSubworlds: 
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - subworlds/sandstone/Sandstone
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 99
+    command: Replace
+    subworldNames:
+      - subworlds/jungle/JungleSteamy
+      - subworlds/wasteland/WastelandBeetle
+      - subworlds/wasteland/WastelandWorm
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:    
+      - subworlds/marsh/HotMarshSteamy
+      - subworlds/jungle/JungleSteamy
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - subworlds/barren/CoalyGranite
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 0
+    command: Replace
+    subworldNames:
+      - subworlds/magma/Bottom
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - subworlds/space/IcySurface
+
+worldFeatureRules:
+  - names:
+    - poi/poi_warp_sender
+    - poi/poi_warp_receiver
+    - poi/poi_warp_teleporter
+    listRule: GuaranteeAll
+    priority: 500
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 2
+      - command: IntersectWith
+        zoneTypes: [ Wasteland, BoggyMarsh, ToxicJungle ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+  - names:
+    - poi/poi_geyser_magma
+    - poi/poi_geyser_magma_2
+    - poi/poi_geyser_magma_3
+    listRule: TryAll
+    priority: 50
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 1
+        maxDistance: 1
+      - command: IntersectWith
+        zoneTypes: [ Barren ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+  # DISABLED FOR TESTING
+  # - names:
+  #   - poi/poi_temporal_tear_analyzer
+  #   listRule: GuaranteeAll
+  #   priority: 500
+  #   allowedCellsFilter:
+  #     - command: Replace
+  #       tagcommand: DistanceFromTag
+  #       tag: AtSurface
+  #       minDistance: 1
+  #       maxDistance: 1

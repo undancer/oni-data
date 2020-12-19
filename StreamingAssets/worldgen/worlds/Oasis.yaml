@@ -1,6 +1,5 @@
 name: STRINGS.WORLDS.OASIS.NAME
 description: STRINGS.WORLDS.OASIS.DESCRIPTION
-spriteName: Asteroid_oasis
 coordinatePrefix: OASIS-A
 difficulty: 5
 tier: 2
@@ -10,6 +9,9 @@ worldsize:
   Y: 384
 layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
 #                                in order to use this.
+
+defaultsOverrides:
+  startingWorldElements: [] # remove the algae check
 
 # List all the zone files to load
 subworldFiles:
@@ -30,10 +32,13 @@ subworldFiles:
   - name: subworlds/space/Surface
 
 startSubworldName: subworlds/forest/ForestStart
-startingBaseTemplate: forestBase
+startingBaseTemplate: bases/forestBase
 
 globalFeatureTemplates:
   feature_geyser_generic: 12
+
+seasons:
+  - MeteorShowers
 
 # Rivers:
 #   - River

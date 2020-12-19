@@ -31,45 +31,6 @@ cells:
   location_x: -4
   location_y: -2
 - element: IgneousRock
-  mass: 200
-  temperature: 293.149994
-  location_x: -3
-  location_y: -2
-- element: IgneousRock
-  mass: 200
-  temperature: 295.144836
-  location_x: -2
-  location_y: -2
-- element: IgneousRock
-  mass: 200
-  temperature: 295.119141
-  location_x: -1
-  location_y: -2
-- element: IgneousRock
-  mass: 200
-  temperature: 295.13385
-  location_y: -2
-- element: IgneousRock
-  mass: 200
-  temperature: 295.108673
-  location_x: 1
-  location_y: -2
-- element: IgneousRock
-  mass: 200
-  temperature: 295.136108
-  location_x: 2
-  location_y: -2
-- element: IgneousRock
-  mass: 200
-  temperature: 295.130554
-  location_x: 3
-  location_y: -2
-- element: IgneousRock
-  mass: 200
-  temperature: 293.233185
-  location_x: 4
-  location_y: -2
-- element: IgneousRock
   mass: 700
   temperature: 295.002106
   location_x: 5
@@ -118,35 +79,6 @@ cells:
   mass: 1.66549218
   temperature: 295
   location_x: -4
-  location_y: -1
-- element: Oxygen
-  mass: 1.65838599
-  temperature: 295
-  location_x: -3
-  location_y: -1
-- element: Oxygen
-  mass: 1.64072824
-  temperature: 295
-  location_x: -2
-  location_y: -1
-- element: Oxygen
-  mass: 1.61289704
-  temperature: 295
-  location_x: -1
-  location_y: -1
-- element: Oxygen
-  mass: 1.58231175
-  temperature: 295
-  location_y: -1
-- element: Oxygen
-  mass: 1.55590999
-  temperature: 295
-  location_x: 1
-  location_y: -1
-- element: Oxygen
-  mass: 1.53592539
-  temperature: 295
-  location_x: 2
   location_y: -1
 - element: Oxygen
   mass: 1.51949465
@@ -203,29 +135,6 @@ cells:
   mass: 1.66707289
   temperature: 295
   location_x: -4
-- element: Oxygen
-  mass: 1.67317331
-  temperature: 295
-  location_x: -3
-- element: Oxygen
-  mass: 1.65685856
-  temperature: 295
-  location_x: -2
-- element: Oxygen
-  mass: 1.62621665
-  temperature: 295
-  location_x: -1
-- element: Oxygen
-  mass: 1.59190571
-  temperature: 295
-- element: Oxygen
-  mass: 1.56235731
-  temperature: 295
-  location_x: 1
-- element: Oxygen
-  mass: 1.53974164
-  temperature: 295
-  location_x: 2
 - element: Oxygen
   mass: 1.52288115
   temperature: 295
@@ -288,25 +197,6 @@ cells:
   mass: 1.68848097
   temperature: 295
   location_x: -2
-  location_y: 1
-- element: Oxygen
-  mass: 1.64447999
-  temperature: 295
-  location_x: -1
-  location_y: 1
-- element: Oxygen
-  mass: 1.6018374
-  temperature: 295
-  location_y: 1
-- element: Oxygen
-  mass: 1.56713617
-  temperature: 295
-  location_x: 1
-  location_y: 1
-- element: Oxygen
-  mass: 1.54193962
-  temperature: 295
-  location_x: 2
   location_y: 1
 - element: Oxygen
   mass: 1.52498746
@@ -377,25 +267,6 @@ cells:
   mass: 1.77032852
   temperature: 295
   location_x: -2
-  location_y: 2
-- element: Oxygen
-  mass: 1.67111588
-  temperature: 295
-  location_x: -1
-  location_y: 2
-- element: Oxygen
-  mass: 1.61320448
-  temperature: 295
-  location_y: 2
-- element: Oxygen
-  mass: 1.57262421
-  temperature: 295
-  location_x: 1
-  location_y: 2
-- element: Oxygen
-  mass: 1.54443026
-  temperature: 295
-  location_x: 2
   location_y: 2
 - element: Oxygen
   mass: 1.52597487
@@ -690,71 +561,39 @@ buildings:
   location_y: -2
   element: IgneousRock
   temperature: 295.130554
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Tile
   location_x: 2
   location_y: -2
   element: IgneousRock
   temperature: 295.136108
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Tile
   location_x: 1
   location_y: -2
   element: IgneousRock
   temperature: 295.108673
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Tile
   location_y: -2
   element: IgneousRock
   temperature: 295.13385
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Tile
   location_x: -1
   location_y: -2
   element: IgneousRock
   temperature: 295.119141
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Tile
   location_x: -2
   location_y: -2
   element: IgneousRock
   temperature: 295.144836
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Tile
   location_x: 4
   location_y: -2
   element: IgneousRock
   temperature: 293.233185
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Headquarters
   location_y: -1
   element: IronOre
   temperature: 295
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: RationBox
   location_x: -3
   location_y: -1
@@ -765,19 +604,11 @@ buildings:
     element: Creature
     units: 20
     temperature: 295
-    rottable: {}
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Tile
   location_x: -3
   location_y: -2
   element: IgneousRock
   temperature: 293.149994
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 pickupables:
 - id: Hatch
   location_x: -8
@@ -785,8 +616,4 @@ pickupables:
   element: Creature
   temperature: 293
   units: 1
-  storage: []
   type: Pickupable
-  rottable: {}
-elementalOres: []
-otherEntities: []

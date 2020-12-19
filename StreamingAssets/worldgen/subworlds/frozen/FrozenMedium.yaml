@@ -1,0 +1,47 @@
+biomeNoise: noise/subworldFrozen
+temperatureRange: Cold
+density:
+  min: 10
+  max: 15
+avoidRadius: 20.0
+minChildCount: 4
+extraBiomeChildren: 1
+#borderOverride: hardToDig
+sampleBehaviour: PoissonDisk
+biomes:
+  - name: biomes/Frozen/Wet
+    weight: 1
+    tags:
+      - med_ColdWheat
+      - med_ColdWheatSeed
+      - med_ColdBreather
+  - name: biomes/Frozen/Dry
+    weight: 2
+    tags:
+      - med_ColdWheat
+      - med_ColdWheatSeed
+      - med_ColdBreather
+tags:
+  - IgnoreCaveOverride
+pointsOfInterest:
+   heatsinks_a:
+    - poi_ice_heatsink_a
+    - poi_ice_heatsink_c
+    - poi_ice_heatsink_d
+   ruins_a:
+    - poi_ice_frag_vendingmachine
+    - poi_ice_frag_lockers
+    - poi_ice_lab_basement_small
+    - poi_ice_frag_neuro
+    - poi_ice_frag_breakroom
+   ruins_b:
+    - poi_ice_frag_vendingmachine
+    - poi_ice_frag_lockers
+    - poi_ice_lab_basement_small
+    - poi_ice_frag_neuro
+    - poi_ice_frag_breakroom
+features:
+  - type: features/frozen/ColdBubble
+  - type: features/frozen/ColdBubble
+  - type: features/frozen/SandGeode
+zoneType: FrozenWastes

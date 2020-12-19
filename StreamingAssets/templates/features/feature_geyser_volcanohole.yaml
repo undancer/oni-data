@@ -190,7 +190,4 @@ otherEntities:
   element: Obsidian
   temperature: 2000
   units: 1
-  storage: []
   type: Other
-  rottable: {}
-  amounts: []

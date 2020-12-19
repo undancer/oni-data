@@ -1,0 +1,35 @@
+name: STRINGS.WORLDS.SPACESHIPINTERIOR.NAME
+description: STRINGS.WORLDS.SPACESHIPINTERIOR.DESCRIPTION
+nameTable: TERRA
+coordinatePrefix: TNY-S
+difficulty: -1
+tier: -1 
+disableWorldTraits: true
+moduleInterior: true
+
+worldsize:
+  X: 96
+  Y: 96
+layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
+#                                in order to use this.
+
+defaultsOverrides:
+  data:
+    DrawWorldBorder: true
+    DrawWorldBorderOverVacuum: false
+    WorldBorderThickness: 1
+    WorldBorderRange: 0
+    OverworldDensityMin: 15
+    OverworldDensityMax: 15
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+
+# List all the zone files to load
+subworldFiles:
+  - name: subworlds/space/ModuleInterior  
+  
+unknownCellsAllowedSubworlds: 
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - subworlds/space/ModuleInterior

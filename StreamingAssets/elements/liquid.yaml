@@ -1,7 +1,7 @@
 ---
 elements:
   - elementId: Brine # 30% solution. keep in sync with desalinator!
-    maxMass: 1000
+    maxMass: 1200
     liquidCompression: 1.01
     speed: 100
     minHorizontalFlow: 0.01
@@ -22,11 +22,13 @@ elements:
     molarMass: 22
     toxicity: 0
     lightAbsorptionFactor: 0.25
+    radiationAbsorptionFactor: 0.35
     tags:
     - AnyWater
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.BRINE.NAME
+    dlcId: ""
 
   - elementId: Chlorine
     maxMass: 1000
@@ -48,10 +50,12 @@ elements:
     molarMass: 34.453
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
     tags:
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.CHLORINE.NAME
+    dlcId: ""
   
   - elementId: CrudeOil
     maxMass: 870
@@ -69,16 +73,18 @@ elements:
     lowTempTransitionTarget: SolidCrudeOil
     highTempTransitionTarget: Petroleum
     defaultTemperature: 350
-    defaultMass: 200
+    defaultMass: 870
     molarMass: 500
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
     tags:
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.CRUDEOIL.NAME
+    dlcId: ""
   
-  - elementId: DirtyWater
+  - elementId: DirtyWater #PollutedWater
     maxMass: 1000
     liquidCompression: 1.01
     speed: 125
@@ -94,7 +100,10 @@ elements:
     lowTempTransitionTarget: DirtyIce
     highTempTransitionTarget: Steam
     sublimateId: ContaminatedOxygen
-    sublimateFx: ContaminatedOxygenBubble
+    sublimateFx: ContaminatedOxygenBubbleWater
+    offGasPercentage: 0.001
+    sublimateEfficiency: 1
+    sublimateProbability: 0.01
     highTempTransitionOreId: Dirt
     highTempTransitionOreMassConversion: 0.01
     defaultTemperature: 300
@@ -102,12 +111,14 @@ elements:
     molarMass: 20
     toxicity: 0.1
     lightAbsorptionFactor: 0.7
+    radiationAbsorptionFactor: 0.35
     tags:
     - Mixture
     - AnyWater
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.DIRTYWATER.NAME
+    dlcId: ""
   
   - elementId: LiquidCarbonDioxide
     maxMass: 2000
@@ -129,9 +140,11 @@ elements:
     molarMass: 44.01
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.LIQUIDCARBONDIOXIDE.NAME
+    dlcId: ""
   
   - elementId: LiquidHelium
     maxMass: 1000
@@ -152,9 +165,11 @@ elements:
     molarMass: 4
     toxicity: 0
     lightAbsorptionFactor: 0.8
+    radiationAbsorptionFactor: 0.35
     isDisabled: true
     state: Liquid
     localizationID: STRINGS.ELEMENTS.LIQUIDHELIUM.NAME
+    dlcId: ""
   
   - elementId: LiquidHydrogen
     maxMass: 1000
@@ -176,10 +191,12 @@ elements:
     molarMass: 1.00794
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
     tags:
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.LIQUIDHYDROGEN.NAME
+    dlcId: ""
   
   - elementId: LiquidMethane
     maxMass: 1000
@@ -201,10 +218,12 @@ elements:
     molarMass: 16.044
     toxicity: 0
     lightAbsorptionFactor: 0.6
+    radiationAbsorptionFactor: 0.35
     tags:
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.LIQUIDMETHANE.NAME
+    dlcId: ""
   
   - elementId: LiquidOxygen
     maxMass: 500
@@ -226,9 +245,13 @@ elements:
     molarMass: 15.9994
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
+    tags:
+    - Oxidizer
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.LIQUIDOXYGEN.NAME
+    dlcId: ""
   
   - elementId: LiquidPhosphorus
     maxMass: 1000
@@ -250,11 +273,13 @@ elements:
     molarMass: 30.973762
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
     tags:
     - EmitsLight
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.LIQUIDPHOSPHORUS.NAME
+    dlcId: ""
   
   - elementId: LiquidPropane
     maxMass: 1000
@@ -276,10 +301,12 @@ elements:
     molarMass: 44.1
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
     tags:
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.LIQUIDPROPANE.NAME
+    dlcId: ""
   
   - elementId: LiquidSulfur
     maxMass: 740
@@ -301,10 +328,12 @@ elements:
     molarMass: 32
     toxicity: 0
     lightAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.35
     tags:
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.LIQUIDSULFUR.NAME
+    dlcId: ""
   
   - elementId: Magma
     maxMass: 1840
@@ -326,11 +355,13 @@ elements:
     molarMass: 50
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
     tags:
     - EmitsLight
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.MAGMA.NAME
+    dlcId: ""
   
   - elementId: Mercury
     maxMass: 1000
@@ -352,11 +383,13 @@ elements:
     molarMass: 200.59
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
     tags:
     - Metal
     isDisabled: true
     state: Liquid
     localizationID: STRINGS.ELEMENTS.MERCURY.NAME
+    dlcId: ""
   
   - elementId: MoltenAluminum
     maxMass: 7870
@@ -378,6 +411,7 @@ elements:
     molarMass: 55.845
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
     tags:
     - Metal
     - RefinedMetal
@@ -385,6 +419,7 @@ elements:
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.MOLTENALUMINUM.NAME
+    dlcId: ""
 
   - elementId: MoltenCarbon
     maxMass: 4000
@@ -406,10 +441,12 @@ elements:
     molarMass: 12.0107
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
     tags:
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.MOLTENCARBON.NAME
+    dlcId: ""
   
   - elementId: MoltenCopper
     maxMass: 3870
@@ -431,14 +468,15 @@ elements:
     molarMass: 63.546
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
     tags:
     - Metal
     - RefinedMetal
-
     - EmitsLight
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.MOLTENCOPPER.NAME
+    dlcId: ""
   
   - elementId: MoltenGlass
     maxMass: 1840
@@ -460,11 +498,13 @@ elements:
     molarMass: 50
     toxicity: 0
     lightAbsorptionFactor: 0.7
+    radiationAbsorptionFactor: 0.35
     tags:
     - EmitsLight
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.MOLTENGLASS.NAME
+    dlcId: ""
   
   - elementId: MoltenGold
     maxMass: 9970
@@ -486,6 +526,7 @@ elements:
     molarMass: 196.966569
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
     tags:
     - Metal
     - RefinedMetal
@@ -493,6 +534,7 @@ elements:
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.MOLTENGOLD.NAME
+    dlcId: ""
   
   - elementId: MoltenIron
     maxMass: 7870
@@ -514,6 +556,7 @@ elements:
     molarMass: 55.845
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
     tags:
     - Metal
     - RefinedMetal
@@ -521,6 +564,37 @@ elements:
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.MOLTENIRON.NAME
+    dlcId: ""
+  
+  - elementId: MoltenCobalt
+    maxMass: 7870
+    liquidCompression: 1.01
+    speed: 100
+    minHorizontalFlow: 30
+    minVerticalFlow: 3
+    specificHeatCapacity: 0.42
+    thermalConductivity: 4
+    solidSurfaceAreaMultiplier: 1
+    liquidSurfaceAreaMultiplier: 25
+    gasSurfaceAreaMultiplier: 1
+    lowTemp: 1768
+    highTemp: 3200
+    lowTempTransitionTarget: Cobalt
+    highTempTransitionTarget: CobaltGas
+    defaultTemperature: 2500
+    defaultMass: 1000
+    molarMass: 58.9
+    toxicity: 0
+    lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
+    tags:
+    - Metal
+    - RefinedMetal
+    - EmitsLight
+    isDisabled: false
+    state: Liquid
+    localizationID: STRINGS.ELEMENTS.MOLTENCOBALT.NAME
+    dlcId: EXPANSION1_ID
   
   - elementId: MoltenLead
     maxMass: 9970
@@ -542,6 +616,7 @@ elements:
     molarMass: 196.966569
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
     tags:
     - Metal
     - RefinedMetal
@@ -549,6 +624,7 @@ elements:
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.MOLTENLEAD.NAME
+    dlcId: ""
 
   - elementId: MoltenNiobium
     maxMass: 3870
@@ -570,6 +646,7 @@ elements:
     molarMass: 92.9
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
     tags:
     - Metal
     - RefinedMetal
@@ -577,6 +654,7 @@ elements:
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.MOLTENNIOBIUM.NAME
+    dlcId: ""
   
   - elementId: MoltenSalt
     maxMass: 740
@@ -598,10 +676,12 @@ elements:
     molarMass: 32
     toxicity: 0
     lightAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.35
     tags:
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.MOLTENSALT.NAME
+    dlcId: ""
 
   - elementId: MoltenSteel
     maxMass: 3870
@@ -623,6 +703,7 @@ elements:
     molarMass: 63.546
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
     tags:
     - Metal
     - RefinedMetal
@@ -630,6 +711,7 @@ elements:
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.MOLTENSTEEL.NAME
+    dlcId: ""
   
   - elementId: MoltenTungsten
     maxMass: 3870
@@ -651,12 +733,14 @@ elements:
     molarMass: 183.84
     toxicity: 0
     lightAbsorptionFactor: 0.7
+    radiationAbsorptionFactor: 0.35
     tags:
     - Metal
     - RefinedMetal
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.MOLTENTUNGSTEN.NAME
+    dlcId: ""
   
   - elementId: MoltenUranium
     maxMass: 9970
@@ -678,13 +762,15 @@ elements:
     molarMass: 196.966569
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
     tags:
     - Metal
     - RefinedMetal
     - EmitsLight
-    isDisabled: true
+    isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.MOLTENURANIUM.NAME
+    dlcId: EXPANSION1_ID
 
   - elementId: Naphtha
     maxMass: 740
@@ -706,11 +792,13 @@ elements:
     molarMass: 102.2
     toxicity: 0.25
     lightAbsorptionFactor: 0.8
+    radiationAbsorptionFactor: 0.35
     tags:
     - Oil
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.NAPHTHA.NAME
+    dlcId: ""
   
   - elementId: NuclearWaste
     maxMass: 9970
@@ -723,20 +811,22 @@ elements:
     solidSurfaceAreaMultiplier: 1
     liquidSurfaceAreaMultiplier: 25
     gasSurfaceAreaMultiplier: 1
-    lowTemp: 0
-    highTemp: 4405
-    defaultTemperature: 2000
+    lowTemp: 300
+    highTemp: 800
+    lowTempTransitionTarget: SolidNuclearWaste
+    highTempTransitionTarget: Fallout
+    defaultTemperature: 400
     defaultMass: 3000
     molarMass: 196.966569
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
     tags:
-    - Metal
-    - RefinedMetal
     - EmitsLight
-    isDisabled: true
+    isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.NUCLEARWASTE.NAME
+    dlcId: EXPANSION1_ID
 
   - elementId: Petroleum
     maxMass: 740
@@ -754,18 +844,20 @@ elements:
     lowTempTransitionTarget: SolidPetroleum
     highTempTransitionTarget: SourGas
     defaultTemperature: 300
-    defaultMass: 190
+    defaultMass: 740
     molarMass: 82.2
     toxicity: 0
     lightAbsorptionFactor: 0.8
+    radiationAbsorptionFactor: 0.35
     tags:
     - CombustibleLiquid
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.PETROLEUM.NAME
+    dlcId: ""
   
   - elementId: SaltWater # approx 7% solution -- keep in sync with desalinator
-    maxMass: 1000
+    maxMass: 1100
     liquidCompression: 1.01
     speed: 100
     minHorizontalFlow: 0.01
@@ -788,11 +880,13 @@ elements:
     molarMass: 21
     toxicity: 0
     lightAbsorptionFactor: 0.25
+    radiationAbsorptionFactor: 0.35
     tags:
     - AnyWater
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.SALTWATER.NAME
+    dlcId: ""
 
   - elementId: SuperCoolant
     maxMass: 910
@@ -814,9 +908,11 @@ elements:
     molarMass: 250
     toxicity: 0
     lightAbsorptionFactor: 0.9
+    radiationAbsorptionFactor: 0.35
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.SUPERCOOLANT.NAME
+    dlcId: ""
   
   - elementId: ViscoGel
     maxMass: 100
@@ -838,9 +934,11 @@ elements:
     molarMass: 10
     toxicity: 0
     lightAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.35
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.VISCOGEL.NAME
+    dlcId: ""
   
   - elementId: Water
     maxMass: 1000
@@ -863,11 +961,13 @@ elements:
     molarMass: 18.01528
     toxicity: 0
     lightAbsorptionFactor: 0.25
+    radiationAbsorptionFactor: 0.35
     tags:
     - AnyWater
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.WATER.NAME
+    dlcId: ""
 
   - elementId: Ethanol
     maxMass: 1000
@@ -889,11 +989,13 @@ elements:
     molarMass: 46.07
     toxicity: 0
     lightAbsorptionFactor: 0.25
+    radiationAbsorptionFactor: 0.35
     tags:
     - CombustibleLiquid
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.ETHANOL.NAME
+    dlcId: ""
 
   - elementId: MoltenSyngas
     maxMass: 1000
@@ -915,7 +1017,36 @@ elements:
     molarMass: 1.00794
     toxicity: 0
     lightAbsorptionFactor: 1
+    radiationAbsorptionFactor: 0.35
     tags:
     isDisabled: true
     state: Liquid
     localizationID: STRINGS.ELEMENTS.MOLTENSYNGAS.NAME
+    dlcId: ""
+    
+  - elementId: MoltenSucrose # Caramel? - These values need tuning as they were copied from MoltenSalt
+    maxMass: 740
+    liquidCompression: 1.01
+    speed: 50
+    minHorizontalFlow: 0.1
+    minVerticalFlow: 0.1
+    specificHeatCapacity: 0.7
+    thermalConductivity: 0.444
+    solidSurfaceAreaMultiplier: 1
+    liquidSurfaceAreaMultiplier: 25
+    gasSurfaceAreaMultiplier: 1
+    lowTemp: 459
+    highTemp: 1000 #??
+    lowTempTransitionTarget: Sucrose # transition to solid Caramel? 
+    #highTempTransitionTarget: SaltGas # carbon gas?
+    defaultTemperature: 500
+    defaultMass: 190
+    molarMass: 32
+    toxicity: 0
+    lightAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.35
+    tags:
+    isDisabled: false
+    state: Liquid
+    localizationID: STRINGS.ELEMENTS.MOLTENSUCROSE.NAME
+    dlcId: EXPANSION1_ID

@@ -1,0 +1,57 @@
+name: STRINGS.WORLDS.NIOBIUMMOONLET.NAME
+description: STRINGS.WORLDS.NIOBIUMMOONLET.DESCRIPTION
+nameTable: MAGMA
+asteroidType: NiobiumPlanet
+coordinatePrefix: TNY-N
+difficulty: 6
+tier: 3
+disableWorldTraits: true
+
+worldsize:
+  X: 64
+  Y: 80
+layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
+#                                in order to use this.
+
+defaultsOverrides:
+  data:
+    DrawWorldBorderOverVacuum: false
+    DrawWorldBorder: true
+    WorldBorderThickness: 3
+    WorldBorderRange: 1
+    OverworldDensityMin: 15
+    OverworldDensityMax: 15
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+
+# List all the zone files to load
+subworldFiles:
+  - name: subworlds/space/Space
+  - name: subworlds/magma/MagmaSurface
+  - name: subworlds/niobium/NiobiumPatch
+  - name: subworlds/magma/BottomSmall
+
+unknownCellsAllowedSubworlds:
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - subworlds/magma/MagmaSurface
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - subworlds/niobium/NiobiumPatch
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 0
+    command: Replace
+    subworldNames:
+      - subworlds/magma/BottomSmall

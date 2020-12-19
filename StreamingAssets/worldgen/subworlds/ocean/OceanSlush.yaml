@@ -20,6 +20,7 @@ tags:
 pointsOfInterest:
   geysers_a:
     - poi_ocean_geyser_saltwater
-featureTemplates:
-  # feature_geyser_generic: 2
+features:
+  - type: features/ocean/SlushPool
+  - type: features/ocean/SlushPool
 zoneType: Ocean

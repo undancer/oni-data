@@ -1,6 +1,5 @@
 name: STRINGS.WORLDS.SANDSTONE_DEFAULT.NAME
 description: STRINGS.WORLDS.SANDSTONE_DEFAULT.DESCRIPTION
-spriteName: Asteroid_sandstone
 coordinatePrefix: SNDST-A
 difficulty: 0
 tier: 0
@@ -8,7 +7,7 @@ disableWorldTraits: true
 
 worldsize:
   X: 256
-  Y: 384
+  Y: 320
 layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
 #                                in order to use this.
 
@@ -27,13 +26,23 @@ subworldFiles:
   - name: subworlds/magma/Bottom
   - name: subworlds/oil/OilPockets
   - name: subworlds/space/Space
-  - name: subworlds/space/Surface
+  - name: subworlds/space/SurfaceCrags
 
 startSubworldName: subworlds/sandstone/SandstoneStart
-startingBaseTemplate: sandstoneBase
+startingBaseTemplate: bases/sandstoneBase
+startingBasePositionHorizontal:
+  min: 0.5
+  max: 0.5
+startingBasePositionVertical:
+  min: 0.55
+  max: 0.55
 
 globalFeatureTemplates:
   feature_geyser_generic: 12
+  poi_gravitas: 1
+
+seasons:
+  - MeteorShowers
 
 # Rivers:
 #   - River
@@ -44,18 +53,18 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - subworlds/sandstone/SandstoneStart
+  # - tagcommand: DistanceFromTag
+  #   tag: AtStart
+  #   minDistance: 1
+  #   maxDistance: 1
+  #   command: Replace
+  #   subworldNames:
+  #     - subworlds/sandstone/SandstoneMiniMetal
+  #     - subworlds/sandstone/SandstoneMiniWater
+  #     - subworlds/sandstone/SandstoneMiniAlgae
   - tagcommand: DistanceFromTag
     tag: AtStart
     minDistance: 1
-    maxDistance: 1
-    command: Replace
-    subworldNames:
-      - subworlds/sandstone/SandstoneMiniMetal
-      - subworlds/sandstone/SandstoneMiniWater
-      - subworlds/sandstone/SandstoneMiniAlgae
-  - tagcommand: DistanceFromTag
-    tag: AtStart
-    minDistance: 2
     maxDistance: 2
     command: Replace
     subworldNames:
@@ -92,6 +101,26 @@ unknownCellsAllowedSubworlds:
       - subworlds/ocean/Ocean
       - subworlds/frozen/Frozen
       - subworlds/sandstone/SandstoneStart
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 4
+    maxDistance: 5
+    command: Replace
+    subworldNames:
+      - subworlds/sandstone/SandstoneMiniMetal
+      - subworlds/sandstone/SandstoneMiniWater
+      - subworlds/sandstone/SandstoneMiniAlgae
+  - tagcommand: DistanceFromTag
+    tag: AtEdge
+    minDistance: 0
+    maxDistance: 0
+    command: Replace
+    subworldNames:
+      - subworlds/marsh/HotMarsh
+      - subworlds/jungle/Jungle
+      - subworlds/ocean/Ocean
+      - subworlds/frozen/Frozen
+      - subworlds/sandstone/SandstoneStart
   - tagcommand: AtTag
     tag: AtDepths
     command: Replace
@@ -115,4 +144,18 @@ unknownCellsAllowedSubworlds:
     maxDistance: 1
     command: Replace
     subworldNames:
-      - subworlds/space/Surface
+      - subworlds/space/SurfaceCrags
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 3
+    command: UnionWith
+    subworldNames:
+      - subworlds/space/SurfaceCrags
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 0
+    maxDistance: 1
+    command: ExceptWith
+    subworldNames:
+      - subworlds/space/SurfaceCrags

@@ -4,7 +4,8 @@ density:
   min: 10
   max: 15
 avoidRadius: 20.0
-minChildCount: 4
+#minChildCount: 4
+extraBiomeChildren: 2
 sampleBehaviour: PoissonDisk
 biomes:
   - name: biomes/Rust/Basic

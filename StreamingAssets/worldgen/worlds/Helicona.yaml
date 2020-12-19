@@ -1,6 +1,5 @@
 name: STRINGS.WORLDS.HELICONA.NAME
 description: STRINGS.WORLDS.HELICONA.DESCRIPTION
-spriteName: Asteroid_icysandstone
 coordinatePrefix: HELI
 difficulty: 6
 tier: 2
@@ -18,10 +17,13 @@ subworldFiles:
   - name: subworlds/magma/Bottom
 
 startSubworldName: subworlds/sandstone/SandstoneStart
-startingBaseTemplate: sandstoneBase
+startingBaseTemplate: bases/sandstoneBase
 
 globalFeatureTemplates:
   feature_geyser_generic: 12
+
+seasons:
+  - MeteorShowers
 
 unknownCellsAllowedSubworlds: 
   - tagcommand: Default # By default add in all the Human warm and hot areas

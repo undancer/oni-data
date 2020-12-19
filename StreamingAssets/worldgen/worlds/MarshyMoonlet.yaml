@@ -1,0 +1,104 @@
+name: STRINGS.WORLDS.MARSHYMOONLET.NAME
+description: STRINGS.WORLDS.MARSHYMOONLET.DESCRIPTION
+nameTable: SWAMP
+asteroidType: MarshPlanet
+coordinatePrefix: TNY-S
+difficulty: -1
+tier: -1 
+disableWorldTraits: true
+
+worldsize:
+  X: 64
+  Y: 96
+layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
+#                                in order to use this.
+
+defaultsOverrides:
+  data:
+    DrawWorldBorderOverVacuum: false
+    DrawWorldBorder: true
+    WorldBorderThickness: 4
+    WorldBorderRange: 2
+    OverworldDensityMin: 15
+    OverworldDensityMax: 15
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+
+# List all the zone files to load
+subworldFiles:
+  - name: subworlds/space/SpaceWithOrganicBorder
+  - name: subworlds/marsh/med_HotMarshLandingSite
+  - name: subworlds/marsh/med_HotMarshInactive
+  - name: subworlds/jungle/med_JungleInactive
+  - name: subworlds/magma/BottomSmall
+  
+unknownCellsAllowedSubworlds: 
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - subworlds/marsh/med_HotMarshInactive
+      - subworlds/jungle/med_JungleInactive
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/SpaceWithOrganicBorder
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - subworlds/marsh/med_HotMarshLandingSite
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - subworlds/marsh/med_HotMarshInactive
+      - subworlds/jungle/med_JungleInactive
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 0
+    command: Replace
+    subworldNames:
+      - subworlds/magma/BottomSmall
+
+worldFeatureRules:
+  - names:
+    - poi/poi_molten_tungsten_volcano
+    - poi/poi_molten_tungsten_volcano_2
+    - poi/poi_molten_tungsten_volcano_3
+    listRule: GuaranteeSome
+    someCount: 2
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtSurface
+        minDistance: 1
+        maxDistance: 5
+      - command: IntersectWith
+        zoneTypes: [ BoggyMarsh, ToxicJungle ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+  - names:
+    - poi/poi_molten_tungsten_volcano
+    - poi/poi_molten_tungsten_volcano_2
+    - poi/poi_molten_tungsten_volcano_3
+    listRule: TryOne
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtSurface
+        minDistance: 1
+        maxDistance: 5
+      - command: IntersectWith
+        zoneTypes: [ BoggyMarsh, ToxicJungle ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures

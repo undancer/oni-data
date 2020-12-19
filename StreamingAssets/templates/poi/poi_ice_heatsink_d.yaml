@@ -10,23 +10,6 @@ cells:
   temperature: 235.921631
   location_x: -2
   location_y: 1
-- element: Vacuum
-  location_x: -1
-  location_y: 1
-- element: Ice
-  mass: 1452
-  temperature: 248.87793
-  location_y: 1
-- element: Granite
-  mass: 949.210144
-  temperature: 237.113251
-  location_x: 1
-  location_y: 1
-- element: Granite
-  mass: 956.108521
-  temperature: 236.731964
-  location_x: 2
-  location_y: 1
 - element: Granite
   mass: 965.152039
   temperature: 235.053543
@@ -36,25 +19,6 @@ cells:
   mass: 253.754654
   temperature: 235.117279
   location_x: -2
-  location_y: 2
-- element: DirtyIce
-  mass: 254.329163
-  temperature: 236.758682
-  location_x: -1
-  location_y: 2
-- element: DirtyIce
-  mass: 255.227371
-  temperature: 236.733154
-  location_y: 2
-- element: DirtyIce
-  mass: 256.512787
-  temperature: 236.306137
-  location_x: 1
-  location_y: 2
-- element: DirtyIce
-  mass: 258.267151
-  temperature: 236.402878
-  location_x: 2
   location_y: 2
 - element: DirtyIce
   mass: 260.588318
@@ -144,69 +108,16 @@ cells:
   temperature: 233.949432
   location_x: -1
   location_y: 5
-- element: Obsidian
-  mass: 100
-  temperature: 286.439911
-  location_x: -1
-  location_y: -2
-- element: Obsidian
-  mass: 100
-  temperature: 288.398315
-  location_y: -2
-- element: Obsidian
-  mass: 100
-  temperature: 289.489197
-  location_x: 1
-  location_y: -2
-- element: Obsidian
-  mass: 100
-  temperature: 289.440155
-  location_x: 2
-  location_y: -2
 - element: Snow
   mass: 5.41565323
   temperature: 247.525162
   location_x: 3
   location_y: -2
-- element: Ice
-  mass: 1452
-  temperature: 249.40448
-  location_x: -1
-  location_y: -1
-- element: Ice
-  mass: 1452
-  temperature: 249.211044
-  location_y: -1
-- element: DirtyIce
-  mass: 262.125916
-  temperature: 237.777802
-  location_x: 1
-  location_y: -1
-- element: DirtyIce
-  mass: 264.275421
-  temperature: 237.530594
-  location_x: 2
-  location_y: -1
 - element: DirtyIce
   mass: 267.088135
   temperature: 235.823273
   location_x: 3
   location_y: -1
-- element: DirtyIce
-  mass: 257.233887
-  temperature: 237.493423
-  location_x: -1
-- element: Ice
-  mass: 1452
-  temperature: 248.95784
-- element: DirtyIce
-  mass: 259.778137
-  temperature: 237.011505
-  location_x: 1
-- element: DirtyIce
-  mass: 261.784149
-  temperature: 236.92366
-  location_x: 2
 - element: DirtyIce
   mass: 264.39389
   temperature: 235.39296
@@ -358,65 +269,37 @@ buildings:
   location_y: -1
   element: Iron
   temperature: 240.214691
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: InsulatedGasConduit
   location_x: 0
   location_y: -1
   element: Obsidian
   temperature: 252.504623
-  storage: []
   connections: 8
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: InsulatedGasConduit
   location_x: 0
   location_y: -2
   element: Obsidian
   temperature: 253.132614
-  storage: []
   connections: 4
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_y: -2
   element: Obsidian
   temperature: 288.398315
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: -2
   element: Obsidian
   temperature: 289.489227
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -1
   location_y: -2
   element: Obsidian
   temperature: 286.439911
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 2
   location_y: -2
   element: Obsidian
   temperature: 289.440186
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 pickupables: []
 elementalOres:
 - id: DirtyIce
@@ -424,34 +307,26 @@ elementalOres:
   element: DirtyIce
   temperature: 236.444595
   units: 259.403503
-  storage: []
   type: Ore
-  rottable: {}
 - id: Ice
   location_x: -1
   location_y: -2
   element: Ice
   temperature: 250.438202
   units: 726
-  storage: []
   type: Ore
-  rottable: {}
 - id: DirtyIce
   location_x: 2
   location_y: -2
   element: DirtyIce
   temperature: 236.94101
   units: 266.411011
-  storage: []
   type: Ore
-  rottable: {}
 - id: DirtyIce
   location_x: -1
   location_y: -2
   element: DirtyIce
   temperature: 237.805939
   units: 131.08551
-  storage: []
   type: Ore
-  rottable: {}
 otherEntities: []

@@ -1,6 +1,5 @@
 name: STRINGS.WORLDS.BADLANDS.NAME
 description: STRINGS.WORLDS.BADLANDS.DESCRIPTION
-spriteName: Asteroid_badlands
 coordinatePrefix: BAD-A
 difficulty: 4
 tier: 2
@@ -29,7 +28,7 @@ subworldFiles:
   - name: subworlds/barren/BarrenGranite
 
 startSubworldName: subworlds/sandstone/SandstoneStart
-startingBaseTemplate: sandstoneBase
+startingBaseTemplate: bases/sandstoneBase
 startingBasePositionHorizontal:
   min: 0.4
   max: 0.5
@@ -39,6 +38,9 @@ startingBasePositionVertical:
 
 globalFeatureTemplates:
   feature_geyser_generic: 12
+
+seasons:
+  - MeteorShowers
 
 # globalFeatures:
 #   sand_geode: 30

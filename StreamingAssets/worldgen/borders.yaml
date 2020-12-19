@@ -2,6 +2,7 @@
 remove: [] 
 # elements to add from in-memory structure when this file is loaded
 add:
+  NONE: [] # special, will prevent a border from drawing
   impenetrable:
     - element: Unobtanium
       weight: 1
@@ -13,3 +14,49 @@ add:
       weight: 10
     - element: IgneousRock
       weight: 4
+  softRock:
+    - element: SedimentaryRock
+      weight: 1
+  softDirt:
+    - element: Dirt
+      weight: 2
+    - element: IgneousRock
+      weight: 1
+  ice:
+    - element: Ice
+      weight: 1
+    - element: Snow
+      weight: 1
+  oil:
+    - element: UraniumOre
+      weight: 1
+    - element: IgneousRock
+      weight: 1
+  metalCrust:
+    - element: GoldAmalgam
+      weight: 1
+    - element: AluminumOre
+      weight: 1
+    - element: IgneousRock
+      weight: 0.5
+  saltyCrust:
+    - element: Salt
+      weight: 1
+    - element: Granite
+      weight: 0.5
+    - element: Sand
+      weight: 1
+  organicCrust:
+    - element: SlimeMold
+      weight: 1
+    - element: Algae
+      weight: 1
+    - element: GoldAmalgam
+      weight: 0.5
+  frozenCrust:
+    - element: Ice
+      weight: 1
+    - element: Snow
+      weight: 1
+    - element: MaficRock
+      weight: 0.5

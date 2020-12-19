@@ -1,0 +1,14 @@
+name: STRINGS.WORLDS.TINYEMPTY.NAME
+description: STRINGS.WORLDS.TINYEMPTY.DESCRIPTION
+requiredDlcId: EXPANSION1_ID
+menuOrder: 102
+skip: EditorOnly
+coordinatePrefix: TNY-E
+
+startWorldIndex: 0 
+numRings: 9
+worldPlacements:
+- world: worlds/TinyEmpty
+  allowedRings:
+    min: 0
+    max: 0

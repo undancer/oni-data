@@ -1,0 +1,62 @@
+biomeNoise: noise/OilPockets
+temperatureRange: Hot
+extraBiomeChildren: 5
+density:
+  min: 20
+  max: 25
+avoidRadius: 50.0
+sampleBehaviour: PoissonDisk
+biomes:
+  - name: biomes/Oil/OilDry
+    weight: 1
+    tags:
+      # - OilEater
+      - OilFloater
+      - CactusPlant
+      - CactusPlantSeed
+      - EvilFlower
+      - EvilFlowerSeed
+    #overrides:
+    #  massMultiplier: 50
+features:
+  - type: features/oilpockets/Cavity
+subworldFeatureRules:
+  - names:
+    - poi/poi_oilpockets_geyser_a
+    - poi/poi_oilpockets_geyser_b
+    - poi/poi_oilpockets_geyser_c
+    - poi/poi_oilpockets_geyser_d
+    - poi/poi_oilpockets_geyser_e
+    - poi/poi_oilpockets_geyser_f
+    listRule: GuaranteeSome
+    someCount: 2
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 2
+      - command: IntersectWith
+        zoneTypes: [ OilField ]
+  - names:
+    - poi/poi_small_oilpockets_geyser_a
+    - poi/poi_small_oilpockets_geyser_b
+    - poi/poi_small_oilpockets_geyser_c
+    - poi/poi_small_oilpockets_geyser_d
+    - poi/poi_small_oilpockets_geyser_e
+    - poi/poi_small_oilpockets_geyser_f
+    listRule: TrySome
+    someCount: 3
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 2
+      - command: IntersectWith
+        zoneTypes: [ OilField ]
+tags:
+  - IgnoreCaveOverride
+zoneType: OilField

@@ -1171,7 +1171,4 @@ otherEntities:
   element: IgneousRock
   temperature: 300.004181
   units: 1
-  storage: []
   type: Other
-  rottable: {}
-  amounts: []

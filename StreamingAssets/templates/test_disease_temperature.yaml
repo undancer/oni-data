@@ -368,7 +368,6 @@ pickupables:
   units: 1
   diseaseName: FoodPoisoning
   diseaseCount: 10000
-  storage: []
 - id: MushBar
   location_x: -7
   element: Creature
@@ -376,7 +375,6 @@ pickupables:
   units: 1
   diseaseName: FoodPoisoning
   diseaseCount: 10000
-  storage: []
 - id: MushBar
   location_x: -5
   element: Creature
@@ -384,7 +382,6 @@ pickupables:
   units: 1
   diseaseName: FoodPoisoning
   diseaseCount: 10000
-  storage: []
 - id: MushBar
   location_x: -3
   element: Creature
@@ -392,7 +389,6 @@ pickupables:
   units: 1
   diseaseName: FoodPoisoning
   diseaseCount: 10000
-  storage: []
 - id: MushBar
   location_x: -1
   element: Creature
@@ -400,7 +396,6 @@ pickupables:
   units: 1
   diseaseName: FoodPoisoning
   diseaseCount: 10000
-  storage: []
 - id: MushBar
   location_x: 1
   element: Creature
@@ -408,7 +403,6 @@ pickupables:
   units: 1
   diseaseName: FoodPoisoning
   diseaseCount: 10000
-  storage: []
 - id: MushBar
   location_x: 3
   element: Creature
@@ -416,7 +410,6 @@ pickupables:
   units: 1
   diseaseName: FoodPoisoning
   diseaseCount: 10000
-  storage: []
 - id: MushBar
   location_x: 5
   element: Creature
@@ -424,7 +417,6 @@ pickupables:
   units: 1
   diseaseName: FoodPoisoning
   diseaseCount: 10000
-  storage: []
 - id: MushBar
   location_x: 7
   element: Creature
@@ -432,7 +424,6 @@ pickupables:
   units: 1
   diseaseName: FoodPoisoning
   diseaseCount: 10000
-  storage: []
 - id: MushBar
   location_x: 9
   element: Creature
@@ -440,7 +431,6 @@ pickupables:
   units: 1
   diseaseName: FoodPoisoning
   diseaseCount: 10000
-  storage: []
 elementalOres: []
 otherEntities: []
 utilityConnections: []

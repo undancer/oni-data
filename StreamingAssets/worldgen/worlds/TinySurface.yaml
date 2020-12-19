@@ -1,18 +1,14 @@
-name: Tiny Surface
-description: Tiny Surface
-spriteName: Asteroid_sandstone
+name: STRINGS.WORLDS.TINYSURFACE.NAME
+description: STRINGS.WORLDS.TINYSURFACE.DESCRIPTION
 coordinatePrefix: TNY-F
 difficulty: -1
 tier: -1
 disableWorldTraits: true
-noStart: true
-skip: EditorOnly
 
 worldsize:
   X: 32
   Y: 32
-layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
-#                                in order to use this.
+layoutMethod: PowerTree
 
 defaultsOverrides:
   data:
@@ -21,15 +17,17 @@ defaultsOverrides:
     OverworldDensityMin: 10
     OverworldDensityMax: 10
     DrawWorldBorder: true
-    DrawWorldBorderTop: false
+    DrawWorldBorderOverVacuum: false
     WorldBorderThickness: 1
     WorldBorderRange: 0
+#    OverworldMinNodes: 1
+  startingWorldElements: [] # remove the algae check
 
 
 # List all the zone files to load
 subworldFiles:
   - name: subworlds/space/Space
-  - name: subworlds/space/Surface
+  - name: subworlds/space/SurfaceCrags
   - name: subworlds/barren/BarrenGranite
 
 unknownCellsAllowedSubworlds: 
@@ -43,7 +41,7 @@ unknownCellsAllowedSubworlds:
     maxDistance: 1
     command: Replace
     subworldNames:
-      - subworlds/space/Surface
+      - subworlds/space/SurfaceCrags
   - tagcommand: DistanceFromTag
     tag: AtSurface
     minDistance: 2

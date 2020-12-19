@@ -1099,9 +1099,7 @@ otherEntities:
   element: Creature
   temperature: 299.960175
   units: 1
-  storage: []
   type: Other
-  rottable: {}
   amounts:
   - id: AirPressure
     value: 1
@@ -1118,9 +1116,7 @@ otherEntities:
   element: Creature
   temperature: 299.969818
   units: 1
-  storage: []
   type: Other
-  rottable: {}
   amounts:
   - id: AirPressure
     value: 1
@@ -1137,9 +1133,7 @@ otherEntities:
   element: Creature
   temperature: 319.443756
   units: 1
-  storage: []
   type: Other
-  rottable: {}
   amounts:
   - id: AirPressure
     value: 1
@@ -1156,7 +1150,4 @@ otherEntities:
   element: IgneousRock
   temperature: 299.997498
   units: 1
-  storage: []
   type: Other
-  rottable: {}
-  amounts: []

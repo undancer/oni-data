@@ -1,6 +1,5 @@
 name: STRINGS.WORLDS.FOREST_DEFAULT.NAME
 description: STRINGS.WORLDS.FOREST_DEFAULT.DESCRIPTION
-spriteName: Asteroid_forest
 coordinatePrefix: FRST-A
 difficulty: 3
 tier: 2
@@ -10,6 +9,9 @@ worldsize:
   Y: 384
 layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
 #                                in order to use this.
+
+defaultsOverrides:
+  startingWorldElements: [] # remove the algae check
 
 # List all the zone files to load
 subworldFiles:
@@ -30,11 +32,13 @@ subworldFiles:
   - name: subworlds/space/Surface
 
 startSubworldName: subworlds/forest/ForestStart
-startingBaseTemplate: forestBase
+startingBaseTemplate: bases/forestBase
 
 globalFeatureTemplates:
   feature_geyser_generic: 12
 
+seasons:
+  - MeteorShowers
 
 # Rivers:
 #   - water
