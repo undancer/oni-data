@@ -1,7 +1,6 @@
 biomeNoise: noise/subworldFrozen
 temperatureRange: Cold
 minChildCount: 4
-extraBiomeChildren: 1
 density:
   min: 10
   max: 20

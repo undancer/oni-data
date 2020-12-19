@@ -14,7 +14,6 @@ elements:
     molarMass: 63.546
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     - Metal
@@ -23,7 +22,6 @@ elements:
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.ALUMINUMGAS.NAME
-    dlcId: ""
 
   - elementId: CarbonDioxide
     specificHeatCapacity: 0.846
@@ -39,12 +37,10 @@ elements:
     molarMass: 44.01
     toxicity: 0.0001
     lightAbsorptionFactor: 0.1
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.CARBONDIOXIDE.NAME
-    dlcId: ""
   
   - elementId: CarbonGas
     specificHeatCapacity: 0.71
@@ -60,14 +56,12 @@ elements:
     molarMass: 12.0107
     toxicity: 0
     lightAbsorptionFactor: 0.3
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     - EmitsLight
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.CARBONGAS.NAME
-    dlcId: ""
   
   - elementId: ChlorineGas
     specificHeatCapacity: 0.48
@@ -83,13 +77,11 @@ elements:
     molarMass: 34.453
     toxicity: 0
     lightAbsorptionFactor: 0.2
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.CHLORINEGAS.NAME
-    dlcId: ""
   
   - elementId: ContaminatedOxygen
     specificHeatCapacity: 1.01
@@ -105,13 +97,11 @@ elements:
     molarMass: 15.9994
     toxicity: 0.01
     lightAbsorptionFactor: 0.1
-    radiationAbsorptionFactor: 0.1
     materialCategory: Breathable
     tags:
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.CONTAMINATEDOXYGEN.NAME
-    dlcId: ""
   
   - elementId: CopperGas
     specificHeatCapacity: 0.386
@@ -127,7 +117,6 @@ elements:
     molarMass: 63.546
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     - Metal
@@ -136,7 +125,6 @@ elements:
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.COPPERGAS.NAME
-    dlcId: ""
   
   - elementId: GoldGas
     specificHeatCapacity: 0.1291
@@ -152,7 +140,6 @@ elements:
     molarMass: 196.966569
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     - Metal
@@ -161,7 +148,6 @@ elements:
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.GOLDGAS.NAME
-    dlcId: ""
   
   - elementId: Helium
     specificHeatCapacity: 0.14
@@ -177,12 +163,10 @@ elements:
     molarMass: 4
     toxicity: 0
     lightAbsorptionFactor: 0.1
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     isDisabled: true
     state: Gas
     localizationID: STRINGS.ELEMENTS.HELIUM.NAME
-    dlcId: ""
   
   - elementId: Hydrogen
     specificHeatCapacity: 2.4
@@ -198,13 +182,11 @@ elements:
     molarMass: 1.00794
     toxicity: 0
     lightAbsorptionFactor: 0.1
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.HYDROGEN.NAME
-    dlcId: ""
   
   - elementId: IronGas
     specificHeatCapacity: 0.449
@@ -220,7 +202,6 @@ elements:
     molarMass: 55.845
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     - Metal
@@ -229,33 +210,6 @@ elements:
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.IRONGAS.NAME
-    dlcId: ""
-  
-  
-  - elementId: CobaltGas
-    specificHeatCapacity: 0.42
-    thermalConductivity: 1
-    solidSurfaceAreaMultiplier: 25
-    liquidSurfaceAreaMultiplier: 1
-    gasSurfaceAreaMultiplier: 1
-    flow: 0.1
-    lowTemp: 3200
-    lowTempTransitionTarget: MoltenCobalt
-    defaultTemperature: 4000
-    defaultPressure: 177
-    molarMass: 58.9
-    toxicity: 0
-    lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
-    materialCategory: Unbreathable
-    tags:
-    - Metal
-    - RefinedMetal
-    - EmitsLight
-    isDisabled: false
-    state: Gas
-    localizationID: STRINGS.ELEMENTS.COBALTGAS.NAME
-    dlcId: EXPANSION1_ID
   
   - elementId: LeadGas
     specificHeatCapacity: 0.128
@@ -271,7 +225,6 @@ elements:
     molarMass: 196.966569
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     - Metal
@@ -280,7 +233,6 @@ elements:
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.LEADGAS.NAME
-    dlcId: ""
 
   - elementId: MercuryGas
     specificHeatCapacity: 0.14
@@ -296,14 +248,12 @@ elements:
     molarMass: 200.59
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     - Metal
     isDisabled: true
     state: Gas
     localizationID: STRINGS.ELEMENTS.MERCURYGAS.NAME
-    dlcId: ""
   
   - elementId: Methane
     specificHeatCapacity: 2.191
@@ -319,14 +269,12 @@ elements:
     molarMass: 16.044
     toxicity: 0
     lightAbsorptionFactor: 0.25
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     - CombustibleGas
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.METHANE.NAME
-    dlcId: ""
   
   - elementId: NiobiumGas
     specificHeatCapacity: 0.265
@@ -342,7 +290,6 @@ elements:
     molarMass: 92.9
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     - Metal
@@ -351,31 +298,7 @@ elements:
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.NIOBIUMGAS.NAME
-    dlcId: ""
   
-  - elementId: Fallout
-    specificHeatCapacity: 0.265
-    thermalConductivity: 1
-    solidSurfaceAreaMultiplier: 25
-    liquidSurfaceAreaMultiplier: 1
-    gasSurfaceAreaMultiplier: 1
-    flow: 0.1
-    lowTemp: 340
-    lowTempTransitionTarget: NuclearWaste
-    defaultTemperature: 500
-    defaultPressure: 500
-    molarMass: 92.9
-    toxicity: 0
-    lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
-    materialCategory: Unbreathable
-    tags:
-    - EmitsLight
-    isDisabled: false
-    state: Gas
-    localizationID: STRINGS.ELEMENTS.FALLOUT.NAME
-    dlcId: EXPANSION1_ID
-
   - elementId: Oxygen
     specificHeatCapacity: 1.005
     thermalConductivity: 0.024
@@ -390,12 +313,10 @@ elements:
     molarMass: 15.9994
     toxicity: 0
     lightAbsorptionFactor: 0
-    radiationAbsorptionFactor: 0.1
     materialCategory: Breathable
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.OXYGEN.NAME
-    dlcId: ""
   
   - elementId: PhosphorusGas
     specificHeatCapacity: 0.7697
@@ -411,14 +332,12 @@ elements:
     molarMass: 30.973762
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     - EmitsLight
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.PHOSPHORUSGAS.NAME
-    dlcId: ""
   
   - elementId: Propane
     specificHeatCapacity: 2.4
@@ -434,13 +353,11 @@ elements:
     molarMass: 44.1
     toxicity: 0
     lightAbsorptionFactor: 0.25
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.PROPANE.NAME
-    dlcId: ""
   
   - elementId: RockGas
     specificHeatCapacity: 1
@@ -456,14 +373,12 @@ elements:
     molarMass: 50
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     - EmitsLight
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.ROCKGAS.NAME
-    dlcId: ""
   
   - elementId: SaltGas
     specificHeatCapacity: 0.88
@@ -479,12 +394,10 @@ elements:
     molarMass: 50
     toxicity: 0
     lightAbsorptionFactor: 0.1
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.SALTGAS.NAME
-    dlcId: ""
 
   - elementId: SourGas
     specificHeatCapacity: 1.898
@@ -502,13 +415,11 @@ elements:
     molarMass: 19.044
     toxicity: 0
     lightAbsorptionFactor: 0.25
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.SOURGAS.NAME
-    dlcId: ""
   
   - elementId: Steam
     specificHeatCapacity: 4.179
@@ -521,15 +432,13 @@ elements:
     lowTempTransitionTarget: Water
     defaultTemperature: 400
     defaultPressure: 57
-    molarMass: 13.01528
+    molarMass: 18.01528
     toxicity: 0
     lightAbsorptionFactor: 0.1
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.STEAM.NAME
-    dlcId: ""
   
   - elementId: SteelGas
     specificHeatCapacity: 0.49
@@ -545,7 +454,6 @@ elements:
     molarMass: 54.97
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     - Metal
@@ -555,7 +463,6 @@ elements:
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.STEELGAS.NAME
-    dlcId: ""
   
   - elementId: SulfurGas
     specificHeatCapacity: 0.7
@@ -571,13 +478,11 @@ elements:
     molarMass: 32
     toxicity: 0
     lightAbsorptionFactor: 0.1
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.SULFURGAS.NAME
-    dlcId: ""
   
   - elementId: SuperCoolantGas
     specificHeatCapacity: 8.44
@@ -593,11 +498,9 @@ elements:
     molarMass: 190
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     state: Gas
     localizationID: STRINGS.ELEMENTS.SUPERCOOLANTGAS.NAME
-    dlcId: ""
   
   - elementId: TungstenGas
     specificHeatCapacity: 0.134
@@ -613,7 +516,6 @@ elements:
     molarMass: 183.84
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     - Metal
@@ -621,7 +523,6 @@ elements:
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.TUNGSTENGAS.NAME
-    dlcId: ""
 
   - elementId: EthanolGas
     specificHeatCapacity: 2.148
@@ -637,13 +538,11 @@ elements:
     molarMass: 46.07
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     isDisabled: false
     state: Gas
     localizationID: STRINGS.ELEMENTS.ETHANOLGAS.NAME
-    dlcId: ""
 
   - elementId: Syngas
     specificHeatCapacity: 2.4
@@ -659,11 +558,9 @@ elements:
     molarMass: 26.96
     toxicity: 0
     lightAbsorptionFactor: 0.1
-    radiationAbsorptionFactor: 0.1
     materialCategory: Unbreathable
     tags:
     - CombustibleGas
     isDisabled: true
     state: Gas
     localizationID: STRINGS.ELEMENTS.SYNGAS.NAME
-    dlcId: ""

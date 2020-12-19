@@ -10,9 +10,6 @@ add:
     max: 227.0
   Cold:
     min: 227.0
-    max: 240.0
-  Chilly:
-    min: 240.0
     max: 257.0
   Cool:
     min: 257.0

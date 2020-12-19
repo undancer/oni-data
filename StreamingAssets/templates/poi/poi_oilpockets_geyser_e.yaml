@@ -491,4 +491,7 @@ otherEntities:
   element: SedimentaryRock
   temperature: 370.939362
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []

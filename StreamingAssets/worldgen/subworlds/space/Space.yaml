@@ -1,7 +1,6 @@
 biomeNoise: noise/Generic
-borderOverride: NONE
 temperatureRange: VeryCold
-minChildCount: 1
+minChildCount: 4
 density:
   min: 35
   max: 45

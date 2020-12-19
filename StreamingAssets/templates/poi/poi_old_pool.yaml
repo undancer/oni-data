@@ -5,6 +5,40 @@ info:
     Y: 7
   area: 97
 cells:
+- element: SandStone
+  mass: 200
+  temperature: 297.986084
+  location_x: -4
+  location_y: -3
+- element: SandStone
+  mass: 200
+  temperature: 298.835266
+  location_x: -3
+  location_y: -3
+- element: SandStone
+  mass: 200
+  temperature: 298.813629
+  location_x: -2
+  location_y: -3
+- element: SandStone
+  mass: 200
+  temperature: 298.767975
+  location_x: -1
+  location_y: -3
+- element: SandStone
+  mass: 200
+  temperature: 298.33017
+  location_y: -3
+- element: SandStone
+  mass: 200
+  temperature: 297.330597
+  location_x: 1
+  location_y: -3
+- element: SandStone
+  mass: 200
+  temperature: 299.578156
+  location_x: -4
+  location_y: -2
 - element: DirtyWater
   mass: 1009.70197
   temperature: 307.122223
@@ -21,6 +55,20 @@ cells:
   location_x: -1
   location_y: -2
 - element: DirtyWater
+  mass: 1009.59839
+  temperature: 306.981018
+  location_y: -2
+- element: SandStone
+  mass: 200
+  temperature: 298.328522
+  location_x: 1
+  location_y: -2
+- element: SandStone
+  mass: 200
+  temperature: 300.881287
+  location_x: -4
+  location_y: -1
+- element: DirtyWater
   mass: 999.687866
   temperature: 307.460388
   location_x: -3
@@ -35,6 +83,44 @@ cells:
   temperature: 307.699554
   location_x: -1
   location_y: -1
+- element: DirtyWater
+  mass: 999.587646
+  temperature: 307.305695
+  location_y: -1
+- element: SandStone
+  mass: 200
+  temperature: 298.361084
+  location_x: 1
+  location_y: -1
+- element: SandStone
+  mass: 200
+  temperature: 297.184814
+  location_x: 2
+  location_y: -1
+- element: SandStone
+  mass: 200
+  temperature: 296.184937
+  location_x: 3
+  location_y: -1
+- element: SandStone
+  mass: 200
+  temperature: 295.379669
+  location_x: 4
+  location_y: -1
+- element: SandStone
+  mass: 200
+  temperature: 295.334015
+  location_x: 5
+  location_y: -1
+- element: SandStone
+  mass: 200
+  temperature: 296.188812
+  location_x: 7
+  location_y: -1
+- element: SandStone
+  mass: 200
+  temperature: 301.883575
+  location_x: -4
 - element: ContaminatedOxygen
   mass: 0.0981838405
   temperature: 302.712952
@@ -69,11 +155,29 @@ cells:
   diseaseCount: 113
   location_x: 2
 - element: ContaminatedOxygen
+  mass: 0.097727485
+  temperature: 297.137573
+  diseaseName: SlimeLung
+  diseaseCount: 163
+  location_x: 3
+- element: ContaminatedOxygen
+  mass: 0.097630471
+  temperature: 296.172638
+  diseaseName: SlimeLung
+  diseaseCount: 238
+  location_x: 4
+- element: ContaminatedOxygen
   mass: 0.0975346714
   temperature: 296.405304
   diseaseName: SlimeLung
   diseaseCount: 351
   location_x: 5
+- element: ContaminatedOxygen
+  mass: 0.0974397659
+  temperature: 297.26236
+  diseaseName: SlimeLung
+  diseaseCount: 616
+  location_x: 6
 - element: ContaminatedOxygen
   mass: 0.0982026979
   temperature: 303.513641
@@ -116,6 +220,20 @@ cells:
   location_x: 2
   location_y: 1
 - element: ContaminatedOxygen
+  mass: 0.0977243558
+  temperature: 298.990875
+  diseaseName: SlimeLung
+  diseaseCount: 165
+  location_x: 3
+  location_y: 1
+- element: ContaminatedOxygen
+  mass: 0.097632058
+  temperature: 297.976349
+  diseaseName: SlimeLung
+  diseaseCount: 245
+  location_x: 4
+  location_y: 1
+- element: ContaminatedOxygen
   mass: 0.0975439176
   temperature: 298.078674
   diseaseName: SlimeLung
@@ -123,11 +241,25 @@ cells:
   location_x: 5
   location_y: 1
 - element: ContaminatedOxygen
+  mass: 0.0974336192
+  temperature: 298.643127
+  diseaseName: SlimeLung
+  diseaseCount: 598
+  location_x: 6
+  location_y: 1
+- element: ContaminatedOxygen
   mass: 0.0982214659
   temperature: 304.929565
   diseaseName: SlimeLung
   diseaseCount: 296
   location_x: -3
+  location_y: 2
+- element: ContaminatedOxygen
+  mass: 0.0981561989
+  temperature: 303.792969
+  diseaseName: SlimeLung
+  diseaseCount: 200
+  location_x: -2
   location_y: 2
 - element: ContaminatedOxygen
   mass: 0.0980856493
@@ -177,6 +309,53 @@ cells:
   diseaseCount: 572
   location_x: 5
   location_y: 2
+- element: SandStone
+  mass: 200
+  temperature: 298.12088
+  location_x: 6
+  location_y: 2
+- element: SandStone
+  mass: 200
+  temperature: 304.034729
+  location_x: 1
+  location_y: 3
+- element: SandStone
+  mass: 200
+  temperature: 303.29953
+  location_x: 2
+  location_y: 3
+- element: SandStone
+  mass: 200
+  temperature: 302.299042
+  location_x: 3
+  location_y: 3
+- element: SandStone
+  mass: 200
+  temperature: 301.30426
+  location_x: 4
+  location_y: 3
+- element: SandStone
+  mass: 200
+  temperature: 300.304382
+  location_x: 5
+  location_y: 3
+- element: SandStone
+  mass: 200
+  temperature: 299.309692
+  location_x: 6
+  location_y: 3
+- element: SandStone
+  mass: 200
+  temperature: 303.150757
+  location_x: -2
+  location_y: 3
+- element: ContaminatedOxygen
+  mass: 0.0980761871
+  temperature: 303.896454
+  diseaseName: SlimeLung
+  diseaseCount: 504
+  location_x: -1
+  location_y: 3
 - element: SandStone
   mass: 200
   temperature: 300.881287
@@ -240,6 +419,11 @@ cells:
   mass: 200
   temperature: 301.883575
   location_x: -4
+- element: SandStone
+  mass: 200
+  temperature: 303.150757
+  location_x: -2
+  location_y: 3
 - element: SandStone
   mass: 200
   temperature: 304.034729
@@ -362,142 +546,253 @@ buildings:
   location_y: -1
   element: SandStone
   temperature: 300.881287
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -4
   location_y: -2
   element: SandStone
   temperature: 299.578156
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -4
   location_y: -3
   element: SandStone
   temperature: 297.986084
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -3
   location_y: -3
   element: SandStone
   temperature: 298.835266
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -2
   location_y: -3
   element: SandStone
   temperature: 298.813629
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -1
   location_y: -3
   element: SandStone
   temperature: 298.767975
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_y: -3
   element: SandStone
   temperature: 298.33017
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: -3
   element: SandStone
   temperature: 297.330597
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: -2
   element: SandStone
   temperature: 298.328522
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: -1
   element: SandStone
   temperature: 298.361084
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 2
   location_y: -1
   element: SandStone
   temperature: 297.184814
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 3
   location_y: -1
   element: SandStone
   temperature: 296.184937
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -4
   element: SandStone
   temperature: 301.883575
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -2
   location_y: 3
   element: SandStone
   temperature: 303.150757
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: 3
   element: SandStone
   temperature: 304.034729
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 2
   location_y: 3
   element: SandStone
   temperature: 303.29953
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 3
   location_y: 3
   element: SandStone
   temperature: 302.299042
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 4
   location_y: 3
   element: SandStone
   temperature: 301.30426
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 5
   location_y: 3
   element: SandStone
   temperature: 300.304382
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 4
   location_y: -1
   element: SandStone
   temperature: 295.379669
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 5
   location_y: -1
   element: SandStone
   temperature: 295.334015
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 6
   location_y: 2
   element: SandStone
   temperature: 298.12088
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 6
   location_y: 3
   element: SandStone
   temperature: 299.309692
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 7
   location_y: -1
   element: SandStone
   temperature: 296.188812
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: Wire
   location_x: -2
   location_y: 2
   element: Cuprite
   temperature: 293.292206
+  storage: []
   connections: 4
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: Wire
   location_x: -2
   location_y: 3
   element: Cuprite
   temperature: 303.150757
+  storage: []
   connections: 10
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: Wire
   location_x: -1
   location_y: 3
   element: Cuprite
   temperature: 293.299805
+  storage: []
   connections: 1
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: POIBunkerExteriorDoor
   location_x: 6
   element: Cuprite
   temperature: 293.263214
-  other_values:
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: 
   - id: sealedDoorDirection
     value: 1
 pickupables: []
@@ -508,19 +803,32 @@ otherEntities:
   element: Unobtanium
   temperature: 300
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []
 - id: SetLocker
   location_x: 3
   element: Unobtanium
   temperature: 300
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []
 - id: PropLadder
   location_y: -2
   element: SandStone
   temperature: 306.983521
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: PropLadder
   location_y: -1
   element: SandStone
   temperature: 307.306976
+  storage: []
+  rottable: {}
+  amounts: []
   other_values: []

@@ -8,114 +8,138 @@ cells:
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: -2
   location_y: 1
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: -2
   location_y: 2
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: -4
   location_y: 2
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: -3
   location_y: 2
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: -4
   location_y: -1
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: -4
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: -4
   location_y: 1
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: -3
   location_y: -1
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: -2
   location_y: -1
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: -1
   location_y: -1
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_y: -1
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_y: 1
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_y: 2
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: 1
   location_y: 2
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: 2
   location_y: 2
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: 3
   location_y: 2
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: 4
   location_y: 2
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: 4
   location_y: -1
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: 4
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: 4
   location_y: 1
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: 2
   location_y: -1
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: 3
   location_y: -1
 - element: Rust
   mass: 800
   temperature: 265.700012
+  diseaseName: FoodPoisoning
   location_x: 2
 buildings: []
 pickupables: []

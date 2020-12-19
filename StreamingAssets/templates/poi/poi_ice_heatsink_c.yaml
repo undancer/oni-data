@@ -19,6 +19,26 @@ cells:
   mass: 1100
   temperature: 250.27597
   location_y: -4
+- element: Obsidian
+  mass: 100
+  temperature: 251.271545
+  location_x: 1
+  location_y: -4
+- element: Obsidian
+  mass: 100
+  temperature: 253.129639
+  location_x: 2
+  location_y: -4
+- element: Obsidian
+  mass: 100
+  temperature: 252.506302
+  location_x: 3
+  location_y: -4
+- element: Obsidian
+  mass: 100
+  temperature: 253.480591
+  location_x: 4
+  location_y: -4
 - element: Ice
   mass: 1100
   temperature: 250
@@ -28,6 +48,30 @@ cells:
   mass: 1100
   temperature: 250
   location_x: -1
+  location_y: -3
+- element: Ice
+  mass: 1100
+  temperature: 249.936844
+  location_y: -3
+- element: Ice
+  mass: 1452
+  temperature: 248.767761
+  location_x: 1
+  location_y: -3
+- element: Ice
+  mass: 800
+  temperature: 252.493683
+  location_x: 2
+  location_y: -3
+- element: Ice
+  mass: 800
+  temperature: 252.170837
+  location_x: 3
+  location_y: -3
+- element: Ice
+  mass: 800
+  temperature: 252.49765
+  location_x: 4
   location_y: -3
 - element: Ice
   mass: 1100
@@ -41,6 +85,30 @@ cells:
   location_y: -2
 - element: Ice
   mass: 1100
+  temperature: 250.001785
+  location_y: -2
+- element: Ice
+  mass: 1100
+  temperature: 250.090988
+  location_x: 1
+  location_y: -2
+- element: Ice
+  mass: 1100
+  temperature: 250.246231
+  location_x: 2
+  location_y: -2
+- element: Ice
+  mass: 1100
+  temperature: 250.231461
+  location_x: 3
+  location_y: -2
+- element: Ice
+  mass: 1100
+  temperature: 250.25029
+  location_x: 4
+  location_y: -2
+- element: Ice
+  mass: 1100
   temperature: 250
   location_x: -2
   location_y: -1
@@ -51,12 +119,55 @@ cells:
   location_y: -1
 - element: Ice
   mass: 1100
+  temperature: 250.001465
+  location_y: -1
+- element: Ice
+  mass: 1100
+  temperature: 250.146927
+  location_x: 1
+  location_y: -1
+- element: Ice
+  mass: 1100
+  temperature: 250.146927
+  location_x: 2
+  location_y: -1
+- element: Ice
+  mass: 1100
+  temperature: 250.146927
+  location_x: 3
+  location_y: -1
+- element: Ice
+  mass: 1100
+  temperature: 250.147293
+  location_x: 4
+  location_y: -1
+- element: Ice
+  mass: 1100
   temperature: 250
   location_x: -2
 - element: Ice
   mass: 1100
   temperature: 250
   location_x: -1
+- element: Ice
+  mass: 1100
+  temperature: 250.002457
+- element: Ice
+  mass: 1100
+  temperature: 250.146927
+  location_x: 1
+- element: Ice
+  mass: 1100
+  temperature: 250.146927
+  location_x: 2
+- element: Ice
+  mass: 1100
+  temperature: 250.146927
+  location_x: 3
+- element: Ice
+  mass: 1100
+  temperature: 250.14801
+  location_x: 4
 - element: Ice
   mass: 1100
   temperature: 250
@@ -66,6 +177,10 @@ cells:
   mass: 1100
   temperature: 250
   location_x: -1
+  location_y: 1
+- element: Ice
+  mass: 1100
+  temperature: 249.999466
   location_y: 1
 - element: Ice
   mass: 1100
@@ -99,6 +214,10 @@ cells:
   location_y: 2
 - element: Ice
   mass: 1100
+  temperature: 250.011002
+  location_y: 2
+- element: Ice
+  mass: 1100
   temperature: 250.208282
   location_x: 1
   location_y: 2
@@ -127,6 +246,17 @@ cells:
   temperature: 254.337387
   location_x: -1
   location_y: 3
+- element: ChlorineGas
+  mass: 0.0319071263
+  temperature: 253.385742
+  diseaseName: SlimeLung
+  diseaseCount: 100
+  location_y: 3
+- element: Ice
+  mass: 800
+  temperature: 255.152512
+  location_x: 1
+  location_y: 3
 - element: Ice
   mass: 800
   temperature: 253.50145
@@ -142,6 +272,25 @@ cells:
   temperature: 250.81778
   location_x: 4
   location_y: 3
+- element: Obsidian
+  mass: 100
+  temperature: 253.74556
+  location_x: -2
+  location_y: 4
+- element: Obsidian
+  mass: 100
+  temperature: 254.723877
+  location_x: -1
+  location_y: 4
+- element: Hydrogen
+  mass: 0.0709044635
+  temperature: 254.971313
+  location_y: 4
+- element: Obsidian
+  mass: 100
+  temperature: 254.004593
+  location_x: 1
+  location_y: 4
 - element: Granite
   mass: 1452
   temperature: 252.494522
@@ -379,6 +528,8 @@ cells:
 - element: ChlorineGas
   mass: 0.0319071263
   temperature: 253.385742
+  diseaseName: SlimeLung
+  diseaseCount: 100
   location_y: 3
 - element: Ice
   mass: 1100
@@ -400,6 +551,16 @@ cells:
   location_y: 4
 - element: Obsidian
   mass: 100
+  temperature: 251.271545
+  location_x: 1
+  location_y: -4
+- element: Obsidian
+  mass: 100
+  temperature: 253.129639
+  location_x: 2
+  location_y: -4
+- element: Obsidian
+  mass: 100
   temperature: 252.506302
   location_x: 3
   location_y: -4
@@ -412,6 +573,11 @@ cells:
   mass: 1452
   temperature: 248.767761
   location_x: 1
+  location_y: -3
+- element: Ice
+  mass: 800
+  temperature: 252.493683
+  location_x: 2
   location_y: -3
 - element: Ice
   mass: 800
@@ -519,72 +685,132 @@ buildings:
   location_y: 4
   element: Obsidian
   temperature: 255.032074
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -2
   location_y: 4
   element: Obsidian
   temperature: 254.00029
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: 4
   element: Obsidian
   temperature: 254.18956
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: -4
   element: Obsidian
   temperature: 251.867569
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 2
   location_y: -4
   element: Obsidian
   temperature: 253.909576
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 3
   location_y: -4
   element: Obsidian
   temperature: 253.062866
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 4
   location_y: -4
   element: Obsidian
   temperature: 254.00853
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MassiveHeatSink
   location_x: 2
   location_y: -3
   element: Iron
   temperature: 250.495361
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: PropLadder
   location_y: 1
   element: Obsidian
   temperature: 249.999466
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: PropLadder
   element: Obsidian
   temperature: 250.002457
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: PropLadder
   location_y: -1
   element: Obsidian
   temperature: 250.001465
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: PropLadder
   location_y: -2
   element: Obsidian
   temperature: 250.001785
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: PropLadder
   location_y: -3
   element: Obsidian
   temperature: 249.937073
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: InsulatedGasConduit
   location_x: 2
   location_y: -3
   element: Obsidian
   temperature: 252.504623
+  storage: []
   connections: 8
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: InsulatedGasConduit
   location_x: 2
   location_y: -4
   element: Obsidian
   temperature: 253.132614
+  storage: []
   connections: 4
+  rottable: {}
+  amounts: []
+  other_values: []
 pickupables: []
 elementalOres:
 - id: Cuprite
@@ -593,14 +819,18 @@ elementalOres:
   element: Cuprite
   temperature: 255.000931
   units: 400
+  storage: []
   type: Ore
+  rottable: {}
 - id: Obsidian
   location_x: 4
   location_y: -3
   element: Obsidian
   temperature: 252.805908
   units: 100
+  storage: []
   type: Ore
+  rottable: {}
 otherEntities:
 - id: PropLadder
   location_x: 0
@@ -608,53 +838,85 @@ otherEntities:
   element: Unobtanium
   temperature: 237.452576
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: PropLadder
   location_x: 0
   location_y: 2
   element: Unobtanium
   temperature: 237.452576
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: PropLadder
   location_x: 0
   location_y: 4
   element: Unobtanium
   temperature: 237.452576
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: PropLadder
   location_x: 0
   location_y: 1
   element: Unobtanium
   temperature: 237.452576
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: PropLadder
   location_x: 0
   location_y: 0
   element: Unobtanium
   temperature: 237.452576
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: PropLadder
   location_x: 0
   location_y: -1
   element: Unobtanium
   temperature: 237.452576
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: PropLadder
   location_x: 0
   location_y: -2
   element: Unobtanium
   temperature: 237.452576
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: PropLadder
   location_x: 0
   location_y: -3
   element: Unobtanium
   temperature: 237.452576
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []
+  other_values: []

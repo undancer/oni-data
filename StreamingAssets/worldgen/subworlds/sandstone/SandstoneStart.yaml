@@ -1,6 +1,6 @@
 biomeNoise: noise/SandstoneStart
 temperatureRange: Room
-pdWeight: 8
+pdWeight: 2
 density:
   min: 10
   max: 20
@@ -43,12 +43,11 @@ centralFeature:
   type: features/generic/StartLocation
 features:
   - type: features/sedimentary/SmallLake
-  - type: features/sedimentary/MetalVacuumBlob
+# - type: features/sedimentary/MetalVacuumBlob
   - type: features/sedimentary/FlatLake
 # - type: features/sedimentary/MediumLake  
 tags:
   - IgnoreCaveOverride
   - NoGlobalFeatureSpawning
   - StartWorld
-  - SwapLakesToBelow
 zoneType: Sandstone

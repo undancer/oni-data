@@ -1,11 +1,25 @@
 {
-  "CPUBudget+Tuning": {
-    "overrideCoreCount": -1,
-    "defaultLoadBalanceThreshold": 0.1
-  },
   "BrainScheduler+Tuning": {
     "disableAsyncPathProbes": false,
     "frameTime": 5.0
+  },
+  "BrainScheduler+DupeBrainGroup+Tuning": {
+    "initialProbeCount": 1,
+    "initialProbeSize": 1000,
+    "minProbeSize": 100,
+    "idealProbeSize": 1000,
+    "probeSizeStep": 100,
+    "estimatedFrameTime": 2.0,
+    "loadBalanceThreshold": 0.1
+  },
+  "BrainScheduler+CreatureBrainGroup+Tuning": {
+    "initialProbeCount": 1,
+    "initialProbeSize": 1000,
+    "minProbeSize": 100,
+    "idealProbeSize": 300,
+    "probeSizeStep": 100,
+    "estimatedFrameTime": 1.0,
+    "loadBalanceThreshold": 0.1
   },
   "AmbienceManager+Tuning": {
     "backwallTileValue": 1,
@@ -75,22 +89,8 @@
     "minFirstDreckoInterval": 3.0,
     "maxFirstDreckoInterval": 5.0
   },
-  "BrainScheduler+DupeBrainGroup+Tuning": {
-    "initialProbeCount": 1,
-    "initialProbeSize": 1000,
-    "minProbeSize": 100,
-    "idealProbeSize": 1000,
-    "probeSizeStep": 100,
-    "estimatedFrameTime": 2.0,
-    "loadBalanceThreshold": 0.1
-  },
-  "BrainScheduler+CreatureBrainGroup+Tuning": {
-    "initialProbeCount": 1,
-    "initialProbeSize": 1000,
-    "minProbeSize": 100,
-    "idealProbeSize": 300,
-    "probeSizeStep": 100,
-    "estimatedFrameTime": 1.0,
-    "loadBalanceThreshold": 0.1
+  "CPUBudget+Tuning": {
+    "overrideCoreCount": -1,
+    "defaultLoadBalanceThreshold": 0.1
   }
 }

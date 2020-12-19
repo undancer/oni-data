@@ -21,6 +21,7 @@ biomes:
       - Squirrel          
 tags:
   - IgnoreCaveOverride
+pointsOfInterest:
 features:
   - type: features/forest/SmallLake
 # featureTemplates:

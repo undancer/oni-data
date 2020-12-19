@@ -1,5 +1,6 @@
 name: STRINGS.WORLDS.FOREST_HOT.NAME
 description: STRINGS.WORLDS.FOREST_HOT.DESCRIPTION
+spriteName: Asteroid_hotforest
 coordinatePrefix: HTFST-A
 difficulty: 5
 tier: 2
@@ -9,9 +10,6 @@ worldsize:
   Y: 384
 layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
 #                                in order to use this.
-
-defaultsOverrides:
-  startingWorldElements: [] # remove the algae check
 
 # List all the zone files to load
 subworldFiles:
@@ -34,7 +32,7 @@ subworldFiles:
   - name: subworlds/space/Surface
 
 startSubworldName: subworlds/forest/ForestStartHot
-startingBaseTemplate: bases/forestBase
+startingBaseTemplate: forestBase
 startingBasePositionHorizontal:
   min: 0.4
   max: 0.5
@@ -45,8 +43,6 @@ startingBasePositionVertical:
 globalFeatureTemplates:
   feature_geyser_generic: 12
 
-seasons:
-  - MeteorShowers
 
 # Rivers:
 #   - water

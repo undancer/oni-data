@@ -16,12 +16,10 @@ elements:
     hardness: 2
     molarMass: 200
     lightAbsorptionFactor: 0.25
-    radiationAbsorptionFactor: 0.5
     buildMenuSort: 1
     isDisabled: true
     state: Solid
     localizationID: STRINGS.ELEMENTS.AEROGEL.NAME
-    dlcId: ""
   
   - elementId: Algae
     specificHeatCapacity: 0.2
@@ -39,13 +37,11 @@ elements:
     hardness: 2
     molarMass: 4
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 1
     materialCategory: Organics
     buildMenuSort: 2
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.ALGAE.NAME
-    dlcId: ""
   
   - elementId: Aluminum
     specificHeatCapacity: 0.91
@@ -63,7 +59,6 @@ elements:
     hardness: 25
     molarMass: 55.845
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: RefinedMetal
     tags:
     - BuildableAny
@@ -71,7 +66,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.ALUMINUM.NAME
-    dlcId: ""
 
   - elementId: AluminumOre
     specificHeatCapacity: 0.91
@@ -89,7 +83,6 @@ elements:
     hardness: 25
     molarMass: 143.09
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Metal
     tags:
     - Ore
@@ -98,7 +91,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.ALUMINUMORE.NAME
-    dlcId: ""
 
   - elementId: Bitumen
     specificHeatCapacity: 1.76
@@ -116,12 +108,10 @@ elements:
     hardness: 2
     molarMass: 82.2
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     buildMenuSort: 1
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.BITUMEN.NAME
-    dlcId: ""
   
   - elementId: BleachStone
     specificHeatCapacity: 0.5
@@ -139,7 +129,6 @@ elements:
     hardness: 50
     molarMass: 43
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: ConsumableOre
     buildMenuSort: 3
     isDisabled: false
@@ -147,7 +136,6 @@ elements:
     tags:
     - FlyingCritterEdible
     localizationID: STRINGS.ELEMENTS.BLEACHSTONE.NAME
-    dlcId: ""
   
   - elementId: Brick
     specificHeatCapacity: 0.84
@@ -165,7 +153,6 @@ elements:
     hardness: 50
     molarMass: 25
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: BuildableProcessed
     tags:
     - BuildableAny
@@ -173,7 +160,6 @@ elements:
     isDisabled: true
     state: Solid
     localizationID: STRINGS.ELEMENTS.BRICK.NAME
-    dlcId: ""
   
   - elementId: BrineIce
     specificHeatCapacity: 3.4
@@ -191,7 +177,6 @@ elements:
     hardness: 25
     molarMass: 18.01528
     lightAbsorptionFactor: 0.33333
-    radiationAbsorptionFactor: 0.5
     materialCategory: Liquifiable
     tags:
     - IceOre
@@ -200,11 +185,10 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.BRINEICE.NAME
-    dlcId: ""
 
   - elementId: Carbon
     specificHeatCapacity: 0.71
-    thermalConductivity: 1.25
+    thermalConductivity: 1
     solidSurfaceAreaMultiplier: 1
     liquidSurfaceAreaMultiplier: 1
     gasSurfaceAreaMultiplier: 1
@@ -218,7 +202,6 @@ elements:
     hardness: 2
     molarMass: 12.0107
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: ConsumableOre
     tags:
     - Coal
@@ -227,7 +210,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.CARBON.NAME
-    dlcId: ""
   
   - elementId: CarbonFibre
     specificHeatCapacity: 0.52
@@ -240,19 +222,17 @@ elements:
     highTempTransitionTarget: MoltenCarbon
     defaultTemperature: 300
     defaultMass: 1000
-    maxMass: 1840
+    maxMass: 800
     # hardnessTier: 8
     hardness: 250
     molarMass: 25
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     tags:
     - BuildableAny
     buildMenuSort: 1
     isDisabled: true
     state: Solid
     localizationID: STRINGS.ELEMENTS.CARBONFIBRE.NAME
-    dlcId: ""
   
   - elementId: Cement
     specificHeatCapacity: 1.55
@@ -270,7 +250,6 @@ elements:
     hardness: 200
     molarMass: 25
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: BuildableProcessed
     tags:
     - BuildableAny
@@ -278,7 +257,6 @@ elements:
     isDisabled: true
     state: Solid
     localizationID: STRINGS.ELEMENTS.CEMENT.NAME
-    dlcId: ""
   
   - elementId: CementMix
     specificHeatCapacity: 0.52
@@ -296,14 +274,12 @@ elements:
     hardness: 10
     molarMass: 25
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     tags:
     - BuildableAny
     buildMenuSort: 1
     isDisabled: true
     state: Solid
     localizationID: STRINGS.ELEMENTS.CEMENTMIX.NAME
-    dlcId: ""
   
   - elementId: Ceramic
     specificHeatCapacity: 0.84
@@ -321,18 +297,15 @@ elements:
     hardness: 50
     molarMass: 25
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: BuildableRaw
     tags:
     - Plumbable
     - Crushable
     - BuildableAny
-    - Insulator
     buildMenuSort: 5
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.CERAMIC.NAME
-    dlcId: ""
   
   
   - elementId: Clay
@@ -351,7 +324,6 @@ elements:
     hardness: 5
     molarMass: 200
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Farmable
     tags:
     - BuildableAny
@@ -359,7 +331,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.CLAY.NAME
-    dlcId: ""
   
   - elementId: Copper
     specificHeatCapacity: 0.385
@@ -377,7 +348,6 @@ elements:
     hardness: 25
     molarMass: 63.546
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: RefinedMetal
     tags:
     - BuildableAny
@@ -385,7 +355,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.COPPER.NAME
-    dlcId: ""
   
   - elementId: Creature
     specificHeatCapacity: 3.47
@@ -403,12 +372,10 @@ elements:
     hardness: 10
     molarMass: 25
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     buildMenuSort: 1
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.CREATURE.NAME
-    dlcId: ""
   
   - elementId: CrushedIce
     specificHeatCapacity: 2.05
@@ -426,7 +393,6 @@ elements:
     hardness: 10
     molarMass: 18.01528
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.5
     minHorizontalFlow: 50
     materialCategory: Liquifiable
     tags:
@@ -436,7 +402,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.CRUSHEDICE.NAME
-    dlcId: ""
   
   - elementId: CrushedRock
     specificHeatCapacity: 0.2
@@ -454,7 +419,6 @@ elements:
     hardness: 10
     molarMass: 50
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     minHorizontalFlow: 50
     materialCategory: BuildableProcessed
     tags:
@@ -463,7 +427,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.CRUSHEDROCK.NAME
-    dlcId: ""
   
   - elementId: Cuprite
     specificHeatCapacity: 0.386
@@ -481,7 +444,6 @@ elements:
     hardness: 25
     molarMass: 143.09
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Metal
     tags:
     - Ore
@@ -490,7 +452,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.CUPRITE.NAME
-    dlcId: ""
   
   - elementId: DepletedUranium
     specificHeatCapacity: 1
@@ -508,13 +469,11 @@ elements:
     hardness: 250
     molarMass: 120
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     tags:
     buildMenuSort: 1
-    isDisabled: false
+    isDisabled: true
     state: Solid
     localizationID: STRINGS.ELEMENTS.DEPLETEDURANIUM.NAME
-    dlcId: EXPANSION1_ID
 
   - elementId: Diamond
     specificHeatCapacity: 0.516
@@ -532,7 +491,6 @@ elements:
     hardness: 250
     molarMass: 12.0107
     lightAbsorptionFactor: 0.1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Other
     tags:
     - BuildableAny
@@ -542,7 +500,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.DIAMOND.NAME
-    dlcId: ""
   
   - elementId: Dirt
     specificHeatCapacity: 1.48
@@ -560,7 +517,6 @@ elements:
     hardness: 2
     molarMass: 50
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Farmable
     tags:
     - BuildableAny
@@ -568,7 +524,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.DIRT.NAME
-    dlcId: ""
   
   - elementId: DirtyIce
     specificHeatCapacity: 3.05
@@ -586,7 +541,6 @@ elements:
     hardness: 10
     molarMass: 25
     lightAbsorptionFactor: 0.8
-    radiationAbsorptionFactor: 0.5
     materialCategory: Liquifiable
     tags:
     - IceOre
@@ -596,7 +550,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.DIRTYICE.NAME
-    dlcId: ""
 
   - elementId: Electrum
     specificHeatCapacity: 0.15
@@ -614,7 +567,6 @@ elements:
     hardness: 2
     molarMass: 95.61
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Metal
     tags:
     - Ore
@@ -623,7 +575,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.ELECTRUM.NAME
-    dlcId: ""
   
   - elementId: EnrichedUranium
     specificHeatCapacity: 1
@@ -641,14 +592,11 @@ elements:
     hardness: 250
     molarMass: 120
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     tags:
-    materialCategory: ManufacturedMaterial
     buildMenuSort: 1
-    isDisabled: false
+    isDisabled: true
     state: Solid
     localizationID: STRINGS.ELEMENTS.ENRICHEDURANIUM.NAME
-    dlcId: EXPANSION1_ID
 
   - elementId: Fertilizer
     specificHeatCapacity: 0.83
@@ -666,15 +614,11 @@ elements:
     hardness: 2
     molarMass: 50
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
-    tags:
-    - Oxidizer
     materialCategory: Agriculture
     buildMenuSort: 5
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.FERTILIZER.NAME
-    dlcId: ""
   
   - elementId: FoolsGold
     specificHeatCapacity: 0.386
@@ -692,7 +636,6 @@ elements:
     hardness: 25
     molarMass: 95.61
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Metal
     tags:
     - Ore
@@ -701,7 +644,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.FOOLSGOLD.NAME
-    dlcId: ""
   
   - elementId: Fossil
     specificHeatCapacity: 0.91
@@ -719,13 +661,11 @@ elements:
     hardness: 50
     molarMass: 200
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: BuildableRaw
     buildMenuSort: 4
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.FOSSIL.NAME
-    dlcId: ""
   
   - elementId: Fullerene
     specificHeatCapacity: 0.95
@@ -743,12 +683,10 @@ elements:
     hardness: 250
     molarMass: 12.0107
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: RareMaterials
     buildMenuSort: 52
     state: Solid
     localizationID: STRINGS.ELEMENTS.FULLERENE.NAME
-    dlcId: ""
   
   - elementId: Glass
     specificHeatCapacity: 0.84
@@ -760,13 +698,12 @@ elements:
     highTemp: 1700
     highTempTransitionTarget: MoltenGlass
     defaultTemperature: 300
-    defaultMass: 800
-    maxMass: 1840
+    defaultMass: 1000
+    maxMass: 800
     # hardnessTier: 2
     hardness: 10
     molarMass: 25
     lightAbsorptionFactor: 0.1
-    radiationAbsorptionFactor: 0.5
     materialCategory: ManufacturedMaterial
     tags:
     - BuildableAny
@@ -775,7 +712,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.GLASS.NAME
-    dlcId: ""
   
   - elementId: Gold
     specificHeatCapacity: 0.129
@@ -793,7 +729,6 @@ elements:
     hardness: 2
     molarMass: 196.966569
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: RefinedMetal
     tags:
     - BuildableAny
@@ -801,7 +736,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.GOLD.NAME
-    dlcId: ""
   
   - elementId: GoldAmalgam
     specificHeatCapacity: 0.15
@@ -819,7 +753,6 @@ elements:
     hardness: 2
     molarMass: 95.61
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Metal
     tags:
     - Ore
@@ -828,7 +761,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.GOLDAMALGAM.NAME
-    dlcId: ""
   
   - elementId: Granite
     specificHeatCapacity: 0.79
@@ -846,7 +778,6 @@ elements:
     hardness: 80
     molarMass: 50
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: BuildableRaw
     tags:
     - Plumbable
@@ -857,7 +788,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.GRANITE.NAME
-    dlcId: ""
   
   - elementId: Ice
     specificHeatCapacity: 2.05
@@ -875,7 +805,6 @@ elements:
     hardness: 25
     molarMass: 18.01528
     lightAbsorptionFactor: 0.33333
-    radiationAbsorptionFactor: 0.5
     materialCategory: Liquifiable
     tags:
     - IceOre
@@ -884,7 +813,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.ICE.NAME
-    dlcId: ""
   
   - elementId: IgneousRock
     specificHeatCapacity: 1
@@ -902,7 +830,6 @@ elements:
     hardness: 25
     molarMass: 50
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: BuildableRaw
     tags:
     - Plumbable
@@ -912,7 +839,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.IGNEOUSROCK.NAME
-    dlcId: ""
   
   - elementId: Iron
     specificHeatCapacity: 0.449
@@ -930,7 +856,6 @@ elements:
     hardness: 50
     molarMass: 55.845
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: RefinedMetal
     tags:
     - BuildableAny
@@ -938,7 +863,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.IRON.NAME
-    dlcId: ""
   
   - elementId: IronOre
     specificHeatCapacity: 0.449
@@ -956,7 +880,6 @@ elements:
     hardness: 25
     molarMass: 159.6882
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Metal
     tags:
     - Ore
@@ -965,60 +888,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.IRONORE.NAME
-    dlcId: ""
-  
-  - elementId: Cobalt
-    specificHeatCapacity: 0.42
-    thermalConductivity: 100
-    solidSurfaceAreaMultiplier: 1
-    liquidSurfaceAreaMultiplier: 1
-    gasSurfaceAreaMultiplier: 1
-    strength: 0.9
-    highTemp: 1768
-    highTempTransitionTarget: MoltenCobalt
-    defaultTemperature: 300
-    defaultMass: 800
-    maxMass: 8900
-    # hardnessTier: 3
-    hardness: 75
-    molarMass: 58.9
-    lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
-    materialCategory: RefinedMetal
-    tags:
-    - BuildableAny
-    buildMenuSort: 2
-    isDisabled: false
-    state: Solid
-    localizationID: STRINGS.ELEMENTS.COBALT.NAME
-    dlcId: EXPANSION1_ID
-  
-  - elementId: Cobaltite # "Ore" form of Cobalt
-    specificHeatCapacity: 0.42
-    thermalConductivity: 4
-    solidSurfaceAreaMultiplier: 1
-    liquidSurfaceAreaMultiplier: 1
-    gasSurfaceAreaMultiplier: 1
-    strength: 0.9
-    highTemp: 1768
-    highTempTransitionTarget: MoltenCobalt
-    defaultTemperature: 300
-    defaultMass: 1250
-    maxMass: 6300
-    # hardnessTier: 3
-    hardness: 25
-    molarMass: 165.9
-    lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
-    materialCategory: Metal
-    tags:
-    - Ore
-    - BuildableAny
-    buildMenuSort: 2
-    isDisabled: false
-    state: Solid
-    localizationID: STRINGS.ELEMENTS.COBALTITE.NAME
-    dlcId: EXPANSION1_ID
   
   - elementId: Isoresin
     specificHeatCapacity: 1.3
@@ -1036,14 +905,12 @@ elements:
     hardness: 10
     molarMass: 162.14
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: RareMaterials
     tags:
     - BuildableRaw
     buildMenuSort: 51
     state: Solid
     localizationID: STRINGS.ELEMENTS.ISORESIN.NAME
-    dlcId: ""
   
   - elementId: Katairite
     specificHeatCapacity: 4
@@ -1061,13 +928,11 @@ elements:
     hardness: 150
     molarMass: 341.76
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Other
     buildMenuSort: 100
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.KATAIRITE.NAME
-    dlcId: ""
   
   - elementId: Lead
     specificHeatCapacity: 0.128
@@ -1085,7 +950,6 @@ elements:
     hardness: 10
     molarMass: 55.845
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: RefinedMetal
     tags:
     - BuildableAny
@@ -1093,7 +957,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.LEAD.NAME
-    dlcId: ""
 
   - elementId: Lime
     specificHeatCapacity: 0.834
@@ -1111,13 +974,11 @@ elements:
     hardness: 50
     molarMass: 200
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: ConsumableOre
     buildMenuSort: 4
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.LIME.NAME
-    dlcId: ""
   
   - elementId: MaficRock
     specificHeatCapacity: 0.2
@@ -1135,7 +996,6 @@ elements:
     hardness: 2
     molarMass: 50
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: BuildableRaw
     tags:
     - BuildableAny
@@ -1143,7 +1003,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.MAFICROCK.NAME
-    dlcId: ""
   
   - elementId: Niobium
     specificHeatCapacity: 0.265
@@ -1161,7 +1020,6 @@ elements:
     hardness: 50
     molarMass: 92.9
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: RareMaterials
     tags:
     - Metal
@@ -1170,38 +1028,7 @@ elements:
     buildMenuSort: 50
     state: Solid
     localizationID: STRINGS.ELEMENTS.NIOBIUM.NAME
-    dlcId: ""
   
-  - elementId: SolidNuclearWaste
-    specificHeatCapacity: 7.44
-    thermalConductivity: 6
-    solidSurfaceAreaMultiplier: 1
-    liquidSurfaceAreaMultiplier: 1
-    gasSurfaceAreaMultiplier: 1
-    strength: 0.45
-    highTemp: 900
-    highTempTransitionTarget: Fallout
-    sublimateId: NuclearWaste
-    sublimateFx: OxygenEmissionBubbles
-    sublimateRate: 0.4
-    sublimateEfficiency: 0.5
-    sublimateProbability: 1
-    defaultTemperature: 242.15
-    defaultMass: 200
-    maxMass: 200
-    # hardnessTier: 2
-    hardness: 251
-    molarMass: 196.966569
-    lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
-    materialCategory: ConsumableOre
-    buildMenuSort: 5
-    isDisabled: false
-    state: Solid
-    tags:
-    localizationID: STRINGS.ELEMENTS.SOLIDNUCLEARWASTE.NAME
-    dlcId: EXPANSION1_ID
-
   - elementId: Obsidian
     specificHeatCapacity: 0.2
     thermalConductivity: 2
@@ -1218,7 +1045,6 @@ elements:
     hardness: 200
     molarMass: 50
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: BuildableRaw
     tags:
     - Plumbable
@@ -1229,7 +1055,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.OBSIDIAN.NAME
-    dlcId: ""
   
   - elementId: OxyRock
     specificHeatCapacity: 1
@@ -1242,9 +1067,6 @@ elements:
     highTempTransitionTarget: Magma
     sublimateId: Oxygen
     sublimateFx: OxygenEmissionBubbles
-    sublimateRate: 0.4
-    sublimateEfficiency: 0.5
-    sublimateProbability: 1
     defaultTemperature: 300
     defaultMass: 200
     maxMass: 500
@@ -1252,16 +1074,13 @@ elements:
     hardness: 10
     molarMass: 43
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: ConsumableOre
     buildMenuSort: 5
     isDisabled: false
     state: Solid
     tags:
     - FlyingCritterEdible
-    - Oxidizer
     localizationID: STRINGS.ELEMENTS.OXYROCK.NAME
-    dlcId: ""
   
   - elementId: PhosphateNodules
     specificHeatCapacity: 0.15
@@ -1279,13 +1098,11 @@ elements:
     hardness: 25
     molarMass: 95.61
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Agriculture
     buildMenuSort: 1
     isDisabled: true
     state: Solid
     localizationID: STRINGS.ELEMENTS.PHOSPHATENODULES.NAME
-    dlcId: ""
   
   - elementId: Phosphorite
     specificHeatCapacity: 0.15
@@ -1303,7 +1120,6 @@ elements:
     hardness: 25
     molarMass: 95.61
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Agriculture
     buildMenuSort: 1
     isDisabled: false
@@ -1311,7 +1127,6 @@ elements:
     tags:
     - FlyingCritterEdible
     localizationID: STRINGS.ELEMENTS.PHOSPHORITE.NAME
-    dlcId: ""
   
   - elementId: Phosphorus
     specificHeatCapacity: 0.7697
@@ -1329,7 +1144,6 @@ elements:
     hardness: 0
     molarMass: 30.973762
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: ConsumableOre
     tags:
     - FlyingCritterEdible
@@ -1337,7 +1151,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.PHOSPHORUS.NAME
-    dlcId: ""
   
   - elementId: Polypropylene
     specificHeatCapacity: 1.92
@@ -1355,7 +1168,6 @@ elements:
     hardness: 1
     molarMass: 42.08
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: ManufacturedMaterial
     tags:
     - Antiseptic
@@ -1365,7 +1177,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.POLYPROPYLENE.NAME
-    dlcId: ""
   
   - elementId: Radium
     specificHeatCapacity: 1
@@ -1383,27 +1194,15 @@ elements:
     hardness: 250
     molarMass: 120
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     tags:
     buildMenuSort: 1
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.RADIUM.NAME
-    dlcId: EXPANSION1_ID
   
   - elementId: RefinedCarbon
-    # Assuming this is some kind of carbon-fibre or carbon-carbon insulation now. Details extracted from
-    #  https://www.mersen.com/sites/default/files/publications-media/3-gs-calcarb-grade-cbcf-15-2000-mersen.pdf
-    #  and also https://www.cs.odu.edu/~mln/ltrs-pdfs/NASA-97-tm4787.pdf
-    # Note that carbon structures aren't "Great" insulators because they have high conductivity,
-    #  they are "Great" because they have extremely stable properties and very high melting points,
-    #  so you can get them Very Hot without degredation in quality. (And they don't require smelting
-    #  to create.)
-    # I've chosen some values from the large range available that fit my story; it's some kind of
-    #  thermally preferred structure (i.e. t-t-t from the nasa chart) and built to maximize
-    #  insulation... but not _too_ good. :) ~gjans
-    specificHeatCapacity: 1.74
-    thermalConductivity: 3.1
+    specificHeatCapacity: 0.71
+    thermalConductivity: 1
     solidSurfaceAreaMultiplier: 1
     liquidSurfaceAreaMultiplier: 1
     gasSurfaceAreaMultiplier: 1
@@ -1417,15 +1216,11 @@ elements:
     hardness: 2
     molarMass: 12.0107
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: ConsumableOre
-    tags:
-    - Insulator
     buildMenuSort: 1
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.REFINEDCARBON.NAME
-    dlcId: ""
   
   - elementId: Regolith
     specificHeatCapacity: 0.2
@@ -1443,7 +1238,6 @@ elements:
     hardness: 2
     molarMass: 50
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     minHorizontalFlow: 50
     materialCategory: Filter
     tags:
@@ -1452,7 +1246,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.REGOLITH.NAME
-    dlcId: ""
   
   - elementId: Rust
     specificHeatCapacity: 0.449
@@ -1471,12 +1264,10 @@ elements:
     hardness: 25
     molarMass: 159.6882
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     buildMenuSort: 2
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.RUST.NAME
-    dlcId: ""
 
   - elementId: Salt
     specificHeatCapacity: 0.7
@@ -1494,13 +1285,11 @@ elements:
     hardness: 5
     molarMass: 50
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: ConsumableOre
     buildMenuSort: 10
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.SALT.NAME
-    dlcId: ""
 
   - elementId: Sand
     specificHeatCapacity: 0.83
@@ -1518,7 +1307,6 @@ elements:
     hardness: 10
     molarMass: 50
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     minHorizontalFlow: 50
     materialCategory: Filter
     tags:
@@ -1527,7 +1315,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.SAND.NAME
-    dlcId: ""
   
   - elementId: SandCement
     specificHeatCapacity: 1.5
@@ -1545,7 +1332,6 @@ elements:
     hardness: 50
     molarMass: 25
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: BuildableProcessed
     tags:
     - BuildableAny
@@ -1553,7 +1339,6 @@ elements:
     isDisabled: true
     state: Solid
     localizationID: STRINGS.ELEMENTS.SANDCEMENT.NAME
-    dlcId: ""
   
   - elementId: SandStone
     specificHeatCapacity: 0.8
@@ -1571,7 +1356,6 @@ elements:
     hardness: 10
     molarMass: 50
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: BuildableRaw
     tags:
     - Plumbable
@@ -1581,7 +1365,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.SANDSTONE.NAME
-    dlcId: ""
   
   - elementId: SedimentaryRock
     specificHeatCapacity: 0.2
@@ -1599,7 +1382,6 @@ elements:
     hardness: 2
     molarMass: 50
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: BuildableRaw
     tags:
     - Plumbable
@@ -1609,7 +1391,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.SEDIMENTARYROCK.NAME
-    dlcId: ""
   
   - elementId: Slabs
     specificHeatCapacity: 0.52
@@ -1627,7 +1408,6 @@ elements:
     hardness: 50
     molarMass: 25
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: BuildableProcessed
     tags:
     - BuildableAny
@@ -1635,7 +1415,6 @@ elements:
     isDisabled: true
     state: Solid
     localizationID: STRINGS.ELEMENTS.SLABS.NAME
-    dlcId: ""
   
   - elementId: SlimeMold
     specificHeatCapacity: 0.2
@@ -1653,7 +1432,6 @@ elements:
     hardness: 2
     molarMass: 4
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Organics
     buildMenuSort: 3
     isDisabled: false
@@ -1661,7 +1439,6 @@ elements:
     tags:
     - FlyingCritterEdible
     localizationID: STRINGS.ELEMENTS.SLIMEMOLD.NAME
-    dlcId: ""
   
   - elementId: Snow
     specificHeatCapacity: 2.05
@@ -1679,7 +1456,6 @@ elements:
     hardness: 10
     molarMass: 18.01528
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     minHorizontalFlow: 50
     materialCategory: Liquifiable
     tags:
@@ -1689,7 +1465,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.SNOW.NAME
-    dlcId: ""
   
   - elementId: SolidCarbonDioxide
     specificHeatCapacity: 0.846
@@ -1707,13 +1482,11 @@ elements:
     hardness: 2
     molarMass: 44.01
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Liquifiable
     buildMenuSort: 1
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.SOLIDCARBONDIOXIDE.NAME
-    dlcId: ""
   
   - elementId: SolidChlorine
     specificHeatCapacity: 0.48
@@ -1731,14 +1504,12 @@ elements:
     hardness: 25
     molarMass: 34.453
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Liquifiable
     tags:
     buildMenuSort: 1
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.SOLIDCHLORINE.NAME
-    dlcId: ""
   
   - elementId: SolidCrudeOil
     specificHeatCapacity: 1.69
@@ -1756,13 +1527,11 @@ elements:
     hardness: 2
     molarMass: 500
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Liquifiable
     buildMenuSort: 1
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.SOLIDCRUDEOIL.NAME
-    dlcId: ""
   
   - elementId: SolidHydrogen
     specificHeatCapacity: 2.4
@@ -1780,14 +1549,12 @@ elements:
     hardness: 2
     molarMass: 44.1
     lightAbsorptionFactor: 0.75
-    radiationAbsorptionFactor: 0.5
     materialCategory: Liquifiable
     tags:
     buildMenuSort: 1
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.SOLIDHYDROGEN.NAME
-    dlcId: ""
   
   - elementId: SolidMercury
     specificHeatCapacity: 0.14
@@ -1805,7 +1572,6 @@ elements:
     hardness: 2
     molarMass: 200.59
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Liquifiable
     tags:
     - Metal
@@ -1814,7 +1580,6 @@ elements:
     isDisabled: true
     state: Solid
     localizationID: STRINGS.ELEMENTS.SOLIDMERCURY.NAME
-    dlcId: ""
   
   - elementId: SolidMethane
     specificHeatCapacity: 2.191
@@ -1832,14 +1597,12 @@ elements:
     hardness: 2
     molarMass: 16.044
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: ConsumableOre
     tags:
     buildMenuSort: 1
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.SOLIDMETHANE.NAME
-    dlcId: ""
   
   - elementId: SolidNaphtha
     specificHeatCapacity: 2.191
@@ -1857,13 +1620,11 @@ elements:
     hardness: 2
     molarMass: 102.2
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Liquifiable
     buildMenuSort: 1
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.SOLIDNAPHTHA.NAME
-    dlcId: ""
   
   - elementId: SolidOxygen
     specificHeatCapacity: 1.01
@@ -1875,19 +1636,17 @@ elements:
     highTemp: 54.36
     highTempTransitionTarget: LiquidOxygen
     defaultTemperature: 30
-    defaultMass: 500 # chosen such that it doesn't exceed LiquidOxygen.maxMass
-    maxMass: 1000
+    defaultMass: 300
+    maxMass: 1
     # hardnessTier: 1
     hardness: 2
     molarMass: 50
     lightAbsorptionFactor: 0.75
-    radiationAbsorptionFactor: 0.5
     materialCategory: Liquifiable
     buildMenuSort: 1
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.SOLIDOXYGEN.NAME
-    dlcId: ""
   
   - elementId: SolidPetroleum
     specificHeatCapacity: 1.76
@@ -1905,13 +1664,11 @@ elements:
     hardness: 2
     molarMass: 82.2
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Liquifiable
     buildMenuSort: 1
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.SOLIDPETROLEUM.NAME
-    dlcId: ""
   
   - elementId: SolidPropane
     specificHeatCapacity: 2.4
@@ -1929,7 +1686,6 @@ elements:
     hardness: 10
     molarMass: 44.1
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Liquifiable
     tags:
     - BuildableAny
@@ -1937,7 +1693,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.SOLIDPROPANE.NAME
-    dlcId: ""
   
   - elementId: SolidSuperCoolant
     specificHeatCapacity: 8.44
@@ -1955,12 +1710,10 @@ elements:
     hardness: 2
     molarMass: 250
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: ManufacturedMaterial
     buildMenuSort: 62
     state: Solid
     localizationID: STRINGS.ELEMENTS.SOLIDSUPERCOOLANT.NAME
-    dlcId: ""
   
   - elementId: SolidViscoGel
     specificHeatCapacity: 1.55
@@ -1978,14 +1731,12 @@ elements:
     hardness: 2
     molarMass: 95
     lightAbsorptionFactor: 0.2
-    radiationAbsorptionFactor: 0.5
     materialCategory: ManufacturedMaterial
     tags:
     - Plastic
     buildMenuSort: 63
     state: Solid
     localizationID: STRINGS.ELEMENTS.SOLIDVISCOGEL.NAME
-    dlcId: ""
   
   - elementId: Steel
     specificHeatCapacity: 0.49
@@ -2003,7 +1754,6 @@ elements:
     hardness: 50
     molarMass: 54.97
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: ManufacturedMaterial
     tags:
     - Metal
@@ -2013,7 +1763,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.STEEL.NAME
-    dlcId: ""
   
   - elementId: Sulfur
     specificHeatCapacity: 0.7
@@ -2031,13 +1780,11 @@ elements:
     hardness: 5
     molarMass: 50
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Other
     buildMenuSort: 10
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.SULFUR.NAME
-    dlcId: ""
   
   - elementId: SuperInsulator
     specificHeatCapacity: 5.57
@@ -2057,18 +1804,15 @@ elements:
     hardness: 200
     molarMass: 341.76
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: ManufacturedMaterial
     tags:
     - BuildableRaw
     - Plumbable
     - Crushable
     - BuildableAny
-    - Insulator
     buildMenuSort: 60
     state: Solid
     localizationID: STRINGS.ELEMENTS.SUPERINSULATOR.NAME
-    dlcId: ""
   
   - elementId: TempConductorSolid
     specificHeatCapacity: 0.622
@@ -2088,7 +1832,6 @@ elements:
     hardness: 80
     molarMass: 174.35
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: ManufacturedMaterial
     tags:
     - Metal
@@ -2098,7 +1841,6 @@ elements:
     buildMenuSort: 61
     state: Solid
     localizationID: STRINGS.ELEMENTS.TEMPCONDUCTORSOLID.NAME
-    dlcId: ""
   
   - elementId: ToxicSand
     specificHeatCapacity: 0.83
@@ -2116,21 +1858,15 @@ elements:
     hardness: 10
     molarMass: 50
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     minHorizontalFlow: 50
     materialCategory: Organics
-    sublimateId: ContaminatedOxygen
-    sublimateFx: ContaminatedOxygenBubble
-    sublimateRate: 0.1
-    sublimateEfficiency: 0.2
-    sublimateProbability: 0.05
     tags:
+    - Unstable
     - Compostable
     buildMenuSort: 1
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.TOXICSAND.NAME
-    dlcId: ""
   
   - elementId: Tungsten
     specificHeatCapacity: 0.134
@@ -2148,7 +1884,6 @@ elements:
     hardness: 200
     molarMass: 183.84
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: RefinedMetal
     tags:
     - Plumbable
@@ -2157,7 +1892,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.TUNGSTEN.NAME
-    dlcId: ""
   
   - elementId: Unobtanium
     specificHeatCapacity: 0
@@ -2175,13 +1909,11 @@ elements:
     hardness: 255
     molarMass: 10000
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Special
     buildMenuSort: 1
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.UNOBTANIUM.NAME
-    dlcId: ""
   
   - elementId: UraniumOre
     specificHeatCapacity: 1
@@ -2199,13 +1931,11 @@ elements:
     hardness: 250
     molarMass: 120
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     tags:
     buildMenuSort: 1
-    isDisabled: false
+    isDisabled: true
     state: Solid
     localizationID: STRINGS.ELEMENTS.URANIUMORE.NAME
-    dlcId: EXPANSION1_ID
 
   - elementId: Wolframite
     specificHeatCapacity: 0.134
@@ -2223,7 +1953,6 @@ elements:
     hardness: 150
     molarMass: 150
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     materialCategory: Metal
     tags:
     - Plumbable
@@ -2232,7 +1961,6 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.WOLFRAMITE.NAME
-    dlcId: ""
 
   - elementId: Yellowcake
     specificHeatCapacity: 1
@@ -2250,13 +1978,11 @@ elements:
     hardness: 250
     molarMass: 120
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     tags:
     buildMenuSort: 1
     isDisabled: true
     state: Solid
     localizationID: STRINGS.ELEMENTS.YELLOWCAKE.NAME
-    dlcId: EXPANSION1_ID
 
   - elementId: SolidEthanol
     specificHeatCapacity: 2.46
@@ -2274,13 +2000,11 @@ elements:
     hardness: 250
     molarMass: 46.07
     lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
     tags:
     buildMenuSort: 1
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.SOLIDETHANOL.NAME
-    dlcId: ""
 
   - elementId: SolidSyngas
     specificHeatCapacity: 2.4
@@ -2298,104 +2022,9 @@ elements:
     hardness: 2
     molarMass: 44.1
     lightAbsorptionFactor: 0.75
-    radiationAbsorptionFactor: 0.5
     materialCategory: Liquifiable
     tags:
     buildMenuSort: 1
     isDisabled: true
     state: Solid
     localizationID: STRINGS.ELEMENTS.SOLIDSYNGAS.NAME
-    dlcId: ""
-
-  - elementId: ToxicMud
-    specificHeatCapacity: 0.83
-    thermalConductivity: 2
-    solidSurfaceAreaMultiplier: 1
-    liquidSurfaceAreaMultiplier: 1
-    gasSurfaceAreaMultiplier: 1
-    strength: 0.25
-    #lowTemp: 265.65    
-    highTemp: 372.84
-    highTempTransitionTarget: COMPOSITION
-    defaultTemperature: 300
-    defaultMass: 1000
-    maxMass: 1840
-    hardness: 10
-    molarMass: 50
-    lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
-    minHorizontalFlow: 50
-    materialCategory: Organics
-    sublimateId: ContaminatedOxygen
-    sublimateFx: ContaminatedOxygenBubble
-    sublimateRate: 0.1
-    sublimateEfficiency: 0.2
-    sublimateProbability: 0.05
-    tags:
-    - Unstable
-    buildMenuSort: 1
-    isDisabled: false
-    state: Solid
-    localizationID: STRINGS.ELEMENTS.TOXICMUD.NAME
-    dlcId: EXPANSION1_ID
-    composition:
-      - elementID: ToxicSand
-        percentage: 0.4
-      - elementID: DirtyWater
-        percentage: 0.6
-    
-  - elementId: Mud
-    specificHeatCapacity: 0.83
-    thermalConductivity: 2
-    solidSurfaceAreaMultiplier: 1
-    liquidSurfaceAreaMultiplier: 1
-    gasSurfaceAreaMultiplier: 1
-    strength: 0.25
-    #lowTemp: 265.65
-    highTemp: 372.84
-    highTempTransitionTarget: COMPOSITION
-    defaultTemperature: 300
-    defaultMass: 1000
-    maxMass: 1840
-    hardness: 10
-    molarMass: 50
-    lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
-    minHorizontalFlow: 50
-    materialCategory: Organics
-    tags:
-    - Unstable
-    buildMenuSort: 1
-    isDisabled: false
-    state: Solid
-    localizationID: STRINGS.ELEMENTS.MUD.NAME
-    dlcId: EXPANSION1_ID
-    composition:
-      - elementID: Dirt
-        percentage: 0.4
-      - elementID: Water
-        percentage: 0.6
-        
-  - elementId: Sucrose
-    specificHeatCapacity: 0.43
-    thermalConductivity: 0.444 #todo
-    solidSurfaceAreaMultiplier: 1
-    liquidSurfaceAreaMultiplier: 1
-    gasSurfaceAreaMultiplier: 1
-    strength: 0.1 #todo
-    highTemp: 459
-    highTempTransitionTarget: MoltenSucrose #decompose to caramel?
-    defaultTemperature: 290
-    defaultMass: 500 #todo
-    maxMass: 2000 #todo
-    # hardnessTier: 1
-    hardness: 5
-    molarMass: 342.30
-    lightAbsorptionFactor: 1
-    radiationAbsorptionFactor: 0.5
-    materialCategory: ConsumableOre
-    buildMenuSort: 11
-    isDisabled: false
-    state: Solid
-    localizationID: STRINGS.ELEMENTS.SUCROSE.NAME
-    dlcId: EXPANSION1_ID

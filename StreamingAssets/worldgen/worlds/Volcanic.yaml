@@ -1,6 +1,6 @@
 name: STRINGS.WORLDS.VOLCANIC.NAME
 description: STRINGS.WORLDS.VOLCANIC.DESCRIPTION
-nameTable: MAGMA
+spriteName: Asteroid_volcanic
 coordinatePrefix: VOLCA
 difficulty: 3
 tier: 2
@@ -31,13 +31,10 @@ subworldFiles:
     weight: 4
 
 startSubworldName: subworlds/sandstone/SandstoneStart
-startingBaseTemplate: bases/sandstoneBase
+startingBaseTemplate: sandstoneBase
 
 globalFeatureTemplates:
   feature_geyser_generic: 12
-
-seasons:
-  - MeteorShowers
 
 # Rivers:
 #   - River

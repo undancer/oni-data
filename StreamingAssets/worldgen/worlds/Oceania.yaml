@@ -1,5 +1,6 @@
 name: STRINGS.WORLDS.OCEANIA.NAME
 description: STRINGS.WORLDS.OCEANIA.DESCRIPTION
+spriteName: Asteroid_oceania
 coordinatePrefix: OCAN-A
 difficulty: 1
 tier: 1
@@ -31,7 +32,7 @@ subworldFiles:
   - name: subworlds/space/Surface
 
 startSubworldName: subworlds/sandstone/SandstoneStart
-startingBaseTemplate: bases/sandstoneBase
+startingBaseTemplate: sandstoneBase
 startingBasePositionHorizontal:
   min: 0.5
   max: 0.5
@@ -41,9 +42,6 @@ startingBasePositionVertical:
 
 globalFeatureTemplates:
   feature_geyser_generic: 12
-
-seasons:
-  - MeteorShowers
 
 # Rivers:
 #   - River

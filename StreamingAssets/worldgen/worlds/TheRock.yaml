@@ -1,5 +1,6 @@
 name: STRINGS.WORLDS.THE_ROCK.NAME
 description: STRINGS.WORLDS.THE_ROCK.DESCRIPTION
+spriteName: Asteroid_sandstone
 coordinatePrefix: T-ROCK
 difficulty: 6
 tier: 2
@@ -23,13 +24,10 @@ subworldFiles:
     overrideName: Default
 
 startSubworldName: subworlds/sandstone/SandstoneStart
-startingBaseTemplate: bases/sandstoneBase
+startingBaseTemplate: sandstoneBase
 
 globalFeatureTemplates:
   feature_geyser_generic: 12
-
-seasons:
-  - MeteorShowers
 
 unknownCellsAllowedSubworlds: 
   - tagcommand: Default # By default add in all the Human warm and hot areas

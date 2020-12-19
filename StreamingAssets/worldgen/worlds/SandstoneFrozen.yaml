@@ -1,5 +1,6 @@
 name: STRINGS.WORLDS.SANDSTONE_FROZEN.NAME
 description: STRINGS.WORLDS.SANDSTONE_FROZEN.DESCRIPTION
+spriteName: Asteroid_icysandstone
 coordinatePrefix: S-FRZ
 difficulty: 2
 tier: 2
@@ -35,7 +36,7 @@ subworldFiles:
   - name: subworlds/forest/ForestFrozen
 
 startSubworldName: subworlds/sandstone/SandstoneStartCold
-startingBaseTemplate: bases/sandstoneBase
+startingBaseTemplate: sandstoneBase
 startingBasePositionHorizontal:
   min: 0.4
   max: 0.5
@@ -45,9 +46,6 @@ startingBasePositionVertical:
 
 globalFeatureTemplates:
   feature_geyser_generic: 12
-
-seasons:
-  - MeteorShowers
 
 # Rivers:
 #   - River

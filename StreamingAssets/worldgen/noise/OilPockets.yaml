@@ -42,8 +42,7 @@ filters:
     filter: RidgedMultiFractal
     frequency: 0.08
     lacunarity: 2
-    octaves: 1
-    gain: 0 # when gain = 0 lacunarity and octaves has no effect
+    octaves: 2
     offset: -0.1
     exponent: 0.9
     name: StartAreaFilter

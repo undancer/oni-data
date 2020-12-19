@@ -8,99 +8,120 @@ cells:
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_x: -2
   location_y: -2
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_x: -2
   location_y: -1
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_x: -2
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_x: -2
   location_y: 1
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_x: -2
   location_y: 2
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_x: -2
   location_y: 3
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_x: -1
   location_y: -2
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_y: -2
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_x: 1
   location_y: -2
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_x: 2
   location_y: -2
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_x: 3
   location_y: -2
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_x: 3
   location_y: -1
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_x: 3
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_x: 3
   location_y: 1
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_x: 3
   location_y: 2
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_y: 2
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_x: 1
   location_y: 2
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_x: 2
   location_y: 2
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_y: 1
 - element: Salt
   mass: 500
   temperature: 305.299988
+  diseaseName: FoodPoisoning
   location_x: 1
 buildings: []
 pickupables: []

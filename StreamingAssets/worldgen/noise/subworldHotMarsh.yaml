@@ -57,7 +57,7 @@ filters:
     octaves: 3
     offset: 1
     gain: 1
-    exponent: 0.9
+    exponent: 1
     name: DefaultBaseFilter
     pos:
       X: -921
@@ -66,7 +66,7 @@ transformers:
   Transformer0:
     transformerType: RotatePoint
     power: 1
-    vector:
+    rotation:
       X: 6.2
       Y: 15.63
     name: Transformer0

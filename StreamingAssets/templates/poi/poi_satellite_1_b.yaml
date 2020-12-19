@@ -529,4 +529,7 @@ otherEntities:
   element: Unobtanium
   temperature: 294.149994
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []

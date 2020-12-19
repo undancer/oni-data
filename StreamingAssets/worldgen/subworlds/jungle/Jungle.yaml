@@ -6,7 +6,6 @@ density:
 avoidRadius: 15.0
 doAvoidPoints: false
 dontRelaxChildren: true
-extraBiomeChildren: 1
 sampleBehaviour: PoissonDisk
 centralFeature:
   type: features/jungle/SmallRoom

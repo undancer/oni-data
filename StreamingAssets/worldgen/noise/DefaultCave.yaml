@@ -39,7 +39,7 @@ filters:
     octaves: 3
     offset: 0.8
     gain: 1
-    exponent: 0.9
+    exponent: 0.5
     name: DefaultCaveFilter
     pos:
       X: -454

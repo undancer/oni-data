@@ -277,6 +277,8 @@ cells:
 - element: ChlorineGas
   mass: 0.471756488
   temperature: 319.593872
+  diseaseName: SlimeLung
+  diseaseCount: 298
   location_x: -2
   location_y: 3
 - element: ChlorineGas
@@ -326,16 +328,22 @@ cells:
 - element: ChlorineGas
   mass: 0.411655515
   temperature: 318.674255
+  diseaseName: SlimeLung
+  diseaseCount: 9804
   location_x: -3
   location_y: 4
 - element: BleachStone
   mass: 50
   temperature: 319.127838
+  diseaseName: SlimeLung
+  diseaseCount: 37710
   location_x: -2
   location_y: 4
 - element: ChlorineGas
   mass: 0.47146374
   temperature: 319.115845
+  diseaseName: SlimeLung
+  diseaseCount: 27
   location_x: -1
   location_y: 4
 - element: ChlorineGas
@@ -385,6 +393,8 @@ cells:
 - element: ChlorineGas
   mass: 0.41449973
   temperature: 319.087128
+  diseaseName: SlimeLung
+  diseaseCount: 90
   location_x: -2
   location_y: 5
 - element: BleachStone
@@ -483,133 +493,187 @@ cells:
 - element: Phosphorite
   mass: 600
   temperature: 319.328949
+  diseaseName: SlimeLung
+  diseaseCount: 40480
   location_x: -4
   location_y: -5
 - element: Phosphorite
   mass: 600
   temperature: 319.176971
+  diseaseName: SlimeLung
+  diseaseCount: 32871
   location_x: -3
   location_y: -5
 - element: ChlorineGas
   mass: 0.117812708
   temperature: 319.020264
+  diseaseName: SlimeLung
+  diseaseCount: 18954
   location_x: -2
   location_y: -5
 - element: ChlorineGas
   mass: 0.116208106
   temperature: 319.299835
+  diseaseName: SlimeLung
+  diseaseCount: 29727
   location_x: -1
   location_y: -5
 - element: ChlorineGas
   mass: 0.111342944
   temperature: 319.357971
+  diseaseName: SlimeLung
+  diseaseCount: 65402
   location_y: -5
 - element: BleachStone
   mass: 50
   temperature: 319.367767
+  diseaseName: SlimeLung
+  diseaseCount: 17481
   location_x: 1
   location_y: -5
 - element: ChlorineGas
   mass: 0.0819446594
   temperature: 319.376038
+  diseaseName: SlimeLung
+  diseaseCount: 63900
   location_x: 2
   location_y: -5
 - element: Phosphorite
   mass: 600
   temperature: 319.415497
+  diseaseName: SlimeLung
+  diseaseCount: 144012
   location_x: 3
   location_y: -5
 - element: Phosphorite
   mass: 600
   temperature: 319.237488
+  diseaseName: SlimeLung
+  diseaseCount: 3449
   location_x: -4
   location_y: -4
 - element: ChlorineGas
   mass: 0.111272693
   temperature: 319.379211
+  diseaseName: SlimeLung
+  diseaseCount: 514
   location_x: -3
   location_y: -4
 - element: ChlorineGas
   mass: 0.119803287
   temperature: 319.366791
+  diseaseName: SlimeLung
+  diseaseCount: 642
   location_x: -2
   location_y: -4
 - element: ChlorineGas
   mass: 0.126705334
   temperature: 319.344696
+  diseaseName: SlimeLung
+  diseaseCount: 461
   location_x: -1
   location_y: -4
 - element: BleachStone
   mass: 50
   temperature: 319.364349
+  diseaseName: SlimeLung
+  diseaseCount: 2093
   location_y: -4
 - element: ChlorineGas
   mass: 0.131410912
   temperature: 319.384491
+  diseaseName: SlimeLung
+  diseaseCount: 2157
   location_x: 1
   location_y: -4
 - element: Phosphorite
   mass: 600
   temperature: 319.427338
+  diseaseName: SlimeLung
+  diseaseCount: 21739
   location_x: 2
   location_y: -4
 - element: Phosphorite
   mass: 600
   temperature: 319.451111
+  diseaseName: SlimeLung
+  diseaseCount: 22197
   location_x: 3
   location_y: -4
 - element: Phosphorite
   mass: 600
   temperature: 319.336761
+  diseaseName: SlimeLung
+  diseaseCount: 437
   location_x: -4
   location_y: -3
 - element: Phosphorite
   mass: 600
   temperature: 319.295013
+  diseaseName: SlimeLung
+  diseaseCount: 2832
   location_x: -3
   location_y: -3
 - element: ChlorineGas
   mass: 0.118148737
   temperature: 319.372589
+  diseaseName: SlimeLung
+  diseaseCount: 94
   location_x: -2
   location_y: -3
 - element: ChlorineGas
   mass: 0.13706103
   temperature: 319.42746
+  diseaseName: SlimeLung
+  diseaseCount: 49
   location_x: -1
   location_y: -3
 - element: ChlorineGas
   mass: 0.152075231
   temperature: 319.425995
+  diseaseName: SlimeLung
+  diseaseCount: 35
   location_y: -3
 - element: ChlorineGas
   mass: 0.145674333
   temperature: 319.408264
+  diseaseName: SlimeLung
+  diseaseCount: 143
   location_x: 1
   location_y: -3
 - element: ChlorineGas
   mass: 0.127962336
   temperature: 319.397278
+  diseaseName: SlimeLung
+  diseaseCount: 2405
   location_x: 2
   location_y: -3
 - element: ChlorineGas
   mass: 0.117390275
   temperature: 319.444702
+  diseaseName: SlimeLung
+  diseaseCount: 2861
   location_x: 3
   location_y: -3
 - element: Phosphorite
   mass: 600
   temperature: 319.459717
+  diseaseName: SlimeLung
+  diseaseCount: 6933
   location_x: 4
   location_y: -3
 - element: Phosphorite
   mass: 600
   temperature: 319.102661
+  diseaseName: SlimeLung
+  diseaseCount: 56227
   location_x: -5
   location_y: -5
 - element: Phosphorite
   mass: 600
   temperature: 319.30542
+  diseaseName: SlimeLung
+  diseaseCount: 3724
   location_x: -5
   location_y: -4
 - element: Phosphorite
@@ -644,40 +708,56 @@ cells:
 - element: IgneousRock
   mass: 1832.53503
   temperature: 318.724121
+  diseaseName: SlimeLung
+  diseaseCount: 439429
   location_x: -4
   location_y: -6
 - element: IgneousRock
   mass: 1886.80774
   temperature: 318.721802
+  diseaseName: SlimeLung
+  diseaseCount: 439429
   location_x: -3
   location_y: -6
 - element: IgneousRock
   mass: 1978.85388
   temperature: 318.746735
+  diseaseName: SlimeLung
+  diseaseCount: 439429
   location_x: -2
   location_y: -6
 - element: IgneousRock
   mass: 2032.35645
   temperature: 318.683441
+  diseaseName: SlimeLung
+  diseaseCount: 439429
   location_x: -1
   location_y: -6
 - element: IgneousRock
   mass: 1992.03735
   temperature: 318.770691
+  diseaseName: SlimeLung
+  diseaseCount: 439429
   location_y: -6
 - element: Phosphorite
   mass: 631.400757
   temperature: 318.709808
+  diseaseName: SlimeLung
+  diseaseCount: 439429
   location_x: 1
   location_y: -6
 - element: Phosphorite
   mass: 572.255859
   temperature: 318.626648
+  diseaseName: SlimeLung
+  diseaseCount: 439429
   location_x: 2
   location_y: -6
 - element: Phosphorite
   mass: 508.98703
   temperature: 318.524597
+  diseaseName: SlimeLung
+  diseaseCount: 439429
   location_x: 3
   location_y: -6
 - element: Phosphorite
@@ -712,6 +792,8 @@ cells:
 - element: Phosphorite
   mass: 600
   temperature: 319.302429
+  diseaseName: SlimeLung
+  diseaseCount: 3568
   location_x: 7
   location_y: 1
 - element: Phosphorite
@@ -722,11 +804,15 @@ cells:
 - element: Phosphorite
   mass: 600
   temperature: 318.859314
+  diseaseName: SlimeLung
+  diseaseCount: 90
   location_x: 7
   location_y: 3
 - element: Phosphorite
   mass: 600
   temperature: 318.891785
+  diseaseName: SlimeLung
+  diseaseCount: 338
   location_x: 7
   location_y: 4
 - element: IgneousRock
@@ -743,4 +829,7 @@ otherEntities:
   element: IgneousRock
   temperature: 372.119629
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []

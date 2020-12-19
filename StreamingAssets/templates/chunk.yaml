@@ -40,6 +40,55 @@ cells:
   temperature: 286.06665
   location_x: -2
   location_y: -10
+- element: Copper
+  mass: 100
+  temperature: 294.685242
+  location_x: -1
+  location_y: -10
+- element: Copper
+  mass: 100
+  temperature: 293.712128
+  location_y: -10
+- element: Copper
+  mass: 100
+  temperature: 292.827606
+  location_x: 1
+  location_y: -10
+- element: Copper
+  mass: 100
+  temperature: 292.483063
+  location_x: 2
+  location_y: -10
+- element: Copper
+  mass: 100
+  temperature: 292.498871
+  location_x: 3
+  location_y: -10
+- element: Copper
+  mass: 100
+  temperature: 292.292511
+  location_x: 4
+  location_y: -10
+- element: Copper
+  mass: 100
+  temperature: 292.517151
+  location_x: 5
+  location_y: -10
+- element: Copper
+  mass: 100
+  temperature: 292.522064
+  location_x: 6
+  location_y: -10
+- element: Copper
+  mass: 100
+  temperature: 293.149353
+  location_x: 7
+  location_y: -10
+- element: Copper
+  mass: 100
+  temperature: 293.147736
+  location_x: 8
+  location_y: -10
 - element: CarbonDioxide
   mass: 0.000133559355
   temperature: 286.196747
@@ -69,6 +118,11 @@ cells:
   mass: 0.00013403788
   temperature: 286.056244
   location_x: -3
+  location_y: -9
+- element: Copper
+  mass: 100
+  temperature: 296.807861
+  location_x: -2
   location_y: -9
 - element: CarbonDioxide
   mass: 0.00237250538
@@ -144,6 +198,11 @@ cells:
   temperature: 285.858429
   location_x: -4
   location_y: -8
+- element: Copper
+  mass: 100
+  temperature: 298.035889
+  location_x: -3
+  location_y: -8
 - element: CarbonDioxide
   mass: 0.00237239012
   temperature: 297.071533
@@ -207,6 +266,21 @@ cells:
   mass: 0.000133208116
   temperature: 285.76828
   location_x: -7
+  location_y: -7
+- element: Copper
+  mass: 100
+  temperature: 299.584229
+  location_x: -6
+  location_y: -7
+- element: Copper
+  mass: 100
+  temperature: 298.714111
+  location_x: -5
+  location_y: -7
+- element: Copper
+  mass: 100
+  temperature: 297.739502
+  location_x: -4
   location_y: -7
 - element: CarbonDioxide
   mass: 0.00237216242
@@ -276,6 +350,16 @@ cells:
   mass: 0.000132845758
   temperature: 285.574341
   location_x: -7
+  location_y: -6
+- element: Unobtanium
+  mass: 33.3333321
+  temperature: 273
+  location_x: -6
+  location_y: -6
+- element: Unobtanium
+  mass: 33.3333321
+  temperature: 273
+  location_x: -5
   location_y: -6
 - element: CarbonDioxide
   mass: 0.00237203739
@@ -351,6 +435,16 @@ cells:
   temperature: 285.328857
   location_x: -7
   location_y: -5
+- element: Unobtanium
+  mass: 33.3333321
+  temperature: 273
+  location_x: -6
+  location_y: -5
+- element: Unobtanium
+  mass: 33.3333321
+  temperature: 273
+  location_x: -5
+  location_y: -5
 - element: CarbonDioxide
   mass: 0.00237190211
   temperature: 295.582245
@@ -425,6 +519,16 @@ cells:
   temperature: 284.896301
   location_x: -7
   location_y: -4
+- element: Unobtanium
+  mass: 33.3333321
+  temperature: 273
+  location_x: -6
+  location_y: -4
+- element: Unobtanium
+  mass: 33.3333321
+  temperature: 273
+  location_x: -5
+  location_y: -4
 - element: CarbonDioxide
   mass: 0.00237193983
   temperature: 294.307983
@@ -498,6 +602,21 @@ cells:
   mass: 0.000131501874
   temperature: 284.580566
   location_x: -7
+  location_y: -3
+- element: Copper
+  mass: 100
+  temperature: 291.426514
+  location_x: -6
+  location_y: -3
+- element: Copper
+  mass: 100
+  temperature: 292.380859
+  location_x: -5
+  location_y: -3
+- element: Copper
+  mass: 100
+  temperature: 293.311768
+  location_x: -4
   location_y: -3
 - element: CarbonDioxide
   mass: 0.0023710276
@@ -583,6 +702,11 @@ cells:
   temperature: 283.982605
   location_x: -4
   location_y: -2
+- element: Copper
+  mass: 100
+  temperature: 298.071625
+  location_x: -3
+  location_y: -2
 - element: CarbonDioxide
   mass: 0.00236856635
   temperature: 296.237
@@ -662,6 +786,11 @@ cells:
   temperature: 284.365753
   location_x: -4
   location_y: -1
+- element: Copper
+  mass: 100
+  temperature: 298.9953
+  location_x: -3
+  location_y: -1
 - element: CarbonDioxide
   mass: 0.00236822385
   temperature: 297.147705
@@ -740,6 +869,10 @@ cells:
   mass: 0.000131002729
   temperature: 283.888916
   location_x: -3
+- element: Copper
+  mass: 100
+  temperature: 296.850433
+  location_x: -2
 - element: CarbonDioxide
   mass: 0.00236519682
   temperature: 292.243591
@@ -808,6 +941,11 @@ cells:
   mass: 0.000131023975
   temperature: 283.853241
   location_x: -3
+  location_y: 1
+- element: Copper
+  mass: 100
+  temperature: 297.302063
+  location_x: -2
   location_y: 1
 - element: CarbonDioxide
   mass: 0.00236470671
@@ -893,6 +1031,11 @@ cells:
   temperature: 283.760925
   location_x: -2
   location_y: 2
+- element: Copper
+  mass: 100
+  temperature: 277.402405
+  location_x: -1
+  location_y: 2
 - element: CarbonDioxide
   mass: 0.00236212485
   temperature: 280.018829
@@ -971,6 +1114,11 @@ cells:
   mass: 0.000131720139
   temperature: 283.896881
   location_x: -2
+  location_y: 3
+- element: Copper
+  mass: 100
+  temperature: 276.506683
+  location_x: -1
   location_y: 3
 - element: CarbonDioxide
   mass: 0.0023615493
@@ -1051,6 +1199,11 @@ cells:
   temperature: 284.10611
   location_x: -2
   location_y: 4
+- element: Copper
+  mass: 100
+  temperature: 275.549225
+  location_x: -1
+  location_y: 4
 - element: CarbonDioxide
   mass: 0.00236143917
   temperature: 275.70459
@@ -1130,6 +1283,11 @@ cells:
   temperature: 285.182983
   location_x: -2
   location_y: 5
+- element: Copper
+  mass: 100
+  temperature: 274.599487
+  location_x: -1
+  location_y: 5
 - element: CarbonDioxide
   mass: 0.00236152206
   temperature: 273.740936
@@ -1175,7 +1333,7 @@ cells:
   location_x: 8
   location_y: 5
 - element: CarbonDioxide
-  mass: 9.01792373e-05
+  mass: 9.01792373E-05
   temperature: 285.710754
   location_x: -8
   location_y: 6
@@ -1209,6 +1367,30 @@ cells:
   temperature: 287.337158
   location_x: -2
   location_y: 6
+- element: Copper
+  mass: 100
+  temperature: 273.655853
+  location_x: -1
+  location_y: 6
+- element: Copper
+  mass: 100
+  temperature: 272.721741
+  location_y: 6
+- element: Copper
+  mass: 100
+  temperature: 271.788513
+  location_x: 1
+  location_y: 6
+- element: Copper
+  mass: 100
+  temperature: 270.828918
+  location_x: 2
+  location_y: 6
+- element: Copper
+  mass: 100
+  temperature: 270.037537
+  location_x: 3
+  location_y: 6
 - element: CarbonDioxide
   mass: 0.00231097592
   temperature: 274.574432
@@ -1235,17 +1417,17 @@ cells:
   location_x: 8
   location_y: 6
 - element: CarbonDioxide
-  mass: 8.5004649e-05
+  mass: 8.5004649E-05
   temperature: 286.094116
   location_x: -8
   location_y: 7
 - element: CarbonDioxide
-  mass: 7.43637866e-05
+  mass: 7.43637866E-05
   temperature: 286.428375
   location_x: -7
   location_y: 7
 - element: ContaminatedOxygen
-  mass: 2.88806932e-05
+  mass: 2.88806932E-05
   temperature: 290.500458
   location_x: -6
   location_y: 7
@@ -1288,6 +1470,11 @@ cells:
   temperature: 289.042053
   location_x: 2
   location_y: 7
+- element: Copper
+  mass: 100
+  temperature: 270.098206
+  location_x: 3
+  location_y: 7
 - element: CarbonDioxide
   mass: 0.00229854975
   temperature: 273.798157
@@ -1314,32 +1501,32 @@ cells:
   location_x: 8
   location_y: 7
 - element: ContaminatedOxygen
-  mass: 2.5853873e-05
+  mass: 2.5853873E-05
   temperature: 290.50061
   location_x: -8
   location_y: 8
 - element: CarbonDioxide
-  mass: 4.20861397e-05
+  mass: 4.20861397E-05
   temperature: 286.110931
   location_x: -7
   location_y: 8
 - element: CarbonDioxide
-  mass: 2.43026807e-05
+  mass: 2.43026807E-05
   temperature: 286.393066
   location_x: -6
   location_y: 8
 - element: CarbonDioxide
-  mass: 1.67852959e-05
+  mass: 1.67852959E-05
   temperature: 286.906921
   location_x: -5
   location_y: 8
 - element: ContaminatedOxygen
-  mass: 1.87654659e-05
+  mass: 1.87654659E-05
   temperature: 290.500763
   location_x: -4
   location_y: 8
 - element: CarbonDioxide
-  mass: 2.21056962e-05
+  mass: 2.21056962E-05
   temperature: 286.550354
   location_x: -3
   location_y: 8
@@ -1372,6 +1559,11 @@ cells:
   temperature: 289.538635
   location_x: 3
   location_y: 8
+- element: Copper
+  mass: 100
+  temperature: 276.332214
+  location_x: 4
+  location_y: 8
 - element: CarbonDioxide
   mass: 0.00216390332
   temperature: 283.238617
@@ -1398,7 +1590,7 @@ cells:
   location_x: -8
   location_y: 9
 - element: CarbonDioxide
-  mass: 6.44703368e-06
+  mass: 6.44703368E-06
   temperature: 286.090393
   location_x: -7
   location_y: 9
@@ -1423,7 +1615,7 @@ cells:
   location_x: -3
   location_y: 9
 - element: CarbonDioxide
-  mass: 1.2488862e-05
+  mass: 1.2488862E-05
   temperature: 288.385345
   location_x: -2
   location_y: 9
@@ -1455,6 +1647,11 @@ cells:
   mass: 0.000205743389
   temperature: 289.93869
   location_x: 4
+  location_y: 9
+- element: Copper
+  mass: 100
+  temperature: 289.845581
+  location_x: 5
   location_y: 9
 - element: CarbonDioxide
   mass: 0.00074506196
@@ -1507,26 +1704,26 @@ cells:
   location_x: -2
   location_y: 10
 - element: CarbonDioxide
-  mass: 1.73675508e-05
+  mass: 1.73675508E-05
   temperature: 289.293823
   location_x: -1
   location_y: 10
 - element: ContaminatedOxygen
-  mass: 2.12316772e-05
+  mass: 2.12316772E-05
   temperature: 290.500977
   location_y: 10
 - element: CarbonDioxide
-  mass: 2.66460702e-05
+  mass: 2.66460702E-05
   temperature: 289.620819
   location_x: 1
   location_y: 10
 - element: CarbonDioxide
-  mass: 2.7004462e-05
+  mass: 2.7004462E-05
   temperature: 290.036774
   location_x: 2
   location_y: 10
 - element: CarbonDioxide
-  mass: 3.27623566e-05
+  mass: 3.27623566E-05
   temperature: 289.919922
   location_x: 3
   location_y: 10
@@ -1534,6 +1731,11 @@ cells:
   mass: 0.000184887642
   temperature: 290.010132
   location_x: 4
+  location_y: 10
+- element: Copper
+  mass: 100
+  temperature: 290.833466
+  location_x: 5
   location_y: 10
 - element: CarbonDioxide
   mass: 0.00126602722
@@ -1600,19 +1802,39 @@ cells:
   location_x: 1
   location_y: 11
 - element: ContaminatedOxygen
-  mass: 9.48410016e-05
+  mass: 9.48410016E-05
   temperature: 290.501587
   location_x: 2
   location_y: 11
 - element: ContaminatedOxygen
-  mass: 7.20418175e-05
+  mass: 7.20418175E-05
   temperature: 290.501801
   location_x: 3
   location_y: 11
 - element: ContaminatedOxygen
-  mass: 4.62764692e-05
+  mass: 4.62764692E-05
   temperature: 290.501953
   location_x: 4
+  location_y: 11
+- element: Copper
+  mass: 100
+  temperature: 291.790131
+  location_x: 5
+  location_y: 11
+- element: Copper
+  mass: 100
+  temperature: 292.634521
+  location_x: 6
+  location_y: 11
+- element: Copper
+  mass: 100
+  temperature: 293.123016
+  location_x: 7
+  location_y: 11
+- element: Copper
+  mass: 100
+  temperature: 293.124481
+  location_x: 8
   location_y: 11
 - element: Copper
   mass: 100
@@ -1842,198 +2064,357 @@ buildings:
   location_y: 10
   element: Copper
   temperature: 290.833466
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: -1
   location_y: 2
   element: Copper
   temperature: 277.402283
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: 3
   location_y: -10
   element: Copper
   temperature: 292.498871
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: 5
   location_y: -10
   element: Copper
   temperature: 292.517181
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: 6
   location_y: -10
   element: Copper
   temperature: 292.522095
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: -1
   location_y: -10
   element: Copper
   temperature: 294.685242
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: -3
   location_y: -2
   element: Copper
   temperature: 298.071625
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: -6
   location_y: -3
   element: Copper
   temperature: 291.426514
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: -5
   location_y: -7
   element: Copper
   temperature: 298.714111
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: -3
   location_y: -1
   element: Copper
   temperature: 298.995331
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: 3
   location_y: 7
   element: Copper
   temperature: 270.098175
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_y: -10
   element: Copper
   temperature: 293.712097
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: 2
   location_y: 6
   element: Copper
   temperature: 270.828918
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: 5
   location_y: 11
   element: Copper
   temperature: 291.790131
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: -1
   location_y: 4
   element: Copper
   temperature: 275.549255
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: -4
   location_y: -3
   element: Copper
   temperature: 293.311768
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_y: 6
   element: Copper
   temperature: 272.721741
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: 1
   location_y: -10
   element: Copper
   temperature: 292.827576
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: 2
   location_y: -10
   element: Copper
   temperature: 292.483063
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: -4
   location_y: -7
   element: Copper
   temperature: 297.739502
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: -5
   location_y: -3
   element: Copper
   temperature: 292.380859
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: 3
   location_y: 6
   element: Copper
   temperature: 270.037506
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: 1
   location_y: 6
   element: Copper
   temperature: 271.788483
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: -6
   location_y: -7
   element: Copper
   temperature: 299.584229
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: -2
   location_y: -9
   element: Copper
   temperature: 296.807892
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: 6
   location_y: 11
   element: Copper
   temperature: 292.634521
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: -1
   location_y: 5
   element: Copper
   temperature: 274.599487
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: -3
   location_y: -8
   element: Copper
   temperature: 298.035889
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: -1
   location_y: 6
   element: Copper
   temperature: 273.655853
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: -1
   location_y: 3
   element: Copper
   temperature: 276.506683
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: 4
   location_y: 8
   element: Copper
   temperature: 276.332184
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: 5
   location_y: 9
   element: Copper
   temperature: 289.845612
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: -2
   element: Copper
   temperature: 296.850464
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: -2
   location_y: 1
   element: Copper
   temperature: 297.302155
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: 4
   location_y: -10
   element: Copper
   temperature: 292.292511
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: 7
   location_y: 11
   element: Copper
   temperature: 293.123047
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: 8
   location_y: 11
   element: Copper
   temperature: 293.124481
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: 7
   location_y: -10
   element: Copper
   temperature: 293.149384
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: MetalTile
   location_x: 8
   location_y: -10
   element: Copper
   temperature: 293.147766
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: POIFacilityDoor
   location_x: -6
   location_y: -6
   element: Unobtanium
   temperature: 273
+  storage: []
+  rottable: {}
+  amounts: []
   other_values:
   - id: sealedDoorDirection
 pickupables: []
@@ -2044,259 +2425,333 @@ elementalOres:
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -7
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -6
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -5
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -8
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -7
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -6
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -8
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -7
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -6
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -8
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -7
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -6
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -8
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -7
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -6
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -5
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -8
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -7
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -6
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -5
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -8
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -7
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -6
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -5
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -8
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -7
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -6
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -5
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -8
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -7
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -6
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -5
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -8
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -7
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -6
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 - id: Unobtanium
   location_x: -5
   location_y: -10
   element: Unobtanium
   temperature: 1
   units: 20000.0508
+  storage: []
   type: Ore
+  rottable: {}
 otherEntities:
 - id: PropFacilityHangingLight
   location_x: 3
@@ -2304,25 +2759,37 @@ otherEntities:
   element: Unobtanium
   temperature: 294.149994
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []
 - id: PropFacilityTable
   location_x: 1
   location_y: -9
   element: Unobtanium
   temperature: 294.149994
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []
 - id: PropFacilityCouch
   location_x: 5
   location_y: -9
   element: Unobtanium
   temperature: 294.149994
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []
 - id: PropFacilityChair
   location_x: -1
   location_y: -9
   element: Unobtanium
   temperature: 294.149994
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []

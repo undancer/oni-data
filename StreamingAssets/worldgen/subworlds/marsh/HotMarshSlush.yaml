@@ -25,24 +25,24 @@ tags:
   - IgnoreCaveOverride
 pointsOfInterest:
   geysers_a:
-    - poi_hotmarsh_geyser_steam
+    - poi_swamp_geyser_steam
   geysers_b:
-    - poi_hotmarsh_geyser_methane
+    - poi_swamp_geyser_methane
   ruins_a:
-    - poi_hotmarsh_lab_burrow
-    - poi_hotmarsh_lab_splitroom
-    - poi_hotmarsh_frag_doorway
-    - poi_hotmarsh_frag_table
+    - poi_swamp_lab_burrow
+    - poi_swamp_lab_splitroom
+    - poi_swamp_frag_doorway
+    - poi_swamp_frag_table
   ruins_b:
-    - poi_hotmarsh_lab_burrow
-    - poi_hotmarsh_lab_splitroom
-    - poi_hotmarsh_frag_doorway
-    - poi_hotmarsh_frag_table
+    - poi_swamp_lab_burrow
+    - poi_swamp_lab_splitroom
+    - poi_swamp_frag_doorway
+    - poi_swamp_frag_table
   ruins_c:
-    - poi_hotmarsh_lab_burrow
-    - poi_hotmarsh_lab_splitroom
-    - poi_hotmarsh_frag_doorway
-    - poi_hotmarsh_frag_table
+    - poi_swamp_lab_burrow
+    - poi_swamp_lab_splitroom
+    - poi_swamp_frag_doorway
+    - poi_swamp_frag_table
 # featureTemplates:
   # feature_geyser_generic: 2
 zoneType: BoggyMarsh

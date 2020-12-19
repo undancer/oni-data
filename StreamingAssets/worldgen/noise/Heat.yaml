@@ -59,7 +59,7 @@ transformers:
   HeatRotateZ:
     transformerType: RotatePoint
     power: 1
-    vector:
+    rotation:
       Y: 270
     name: HeatRotateZ
     pos:
