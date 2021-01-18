@@ -1,0 +1,117 @@
+using System.Collections.Generic;
+using STRINGS;
+using UnityEngine;
+
+public class LureableMonitor : GameStateMachine<LureableMonitor, LureableMonitor.Instance, IStateMachineTarget, LureableMonitor.Def>
+{
+	public class Def : BaseDef, IGameObjectEffectDescriptor
+	{
+		public float cooldown = 20f;
+
+		public Tag[] lures;
+
+		public List<Descriptor> GetDescriptors(GameObject go)
+		{
+			return new List<Descriptor>
+			{
+				new Descriptor(UI.BUILDINGEFFECTS.CAPTURE_METHOD_LURE, UI.BUILDINGEFFECTS.TOOLTIPS.CAPTURE_METHOD_LURE)
+			};
+		}
+	}
+
+	public new class Instance : GameInstance
+	{
+		private struct LureIterator : GameScenePartitioner.Iterator
+		{
+			private Navigator navigator;
+
+			private Tag[] lures;
+
+			public int cost
+			{
+				get;
+				private set;
+			}
+
+			public GameObject result
+			{
+				get;
+				private set;
+			}
+
+			public LureIterator(Navigator navigator, Tag[] lures)
+			{
+				this.navigator = navigator;
+				this.lures = lures;
+				cost = -1;
+				result = null;
+			}
+
+			public void Iterate(object target_obj)
+			{
+				Lure.Instance instance = target_obj as Lure.Instance;
+				if (instance != null && instance.IsActive() && instance.HasAnyLure(lures))
+				{
+					int navigationCost = navigator.GetNavigationCost(Grid.PosToCell(instance.transform.GetPosition()), instance.def.lurePoints);
+					if (navigationCost != -1 && (cost == -1 || navigationCost < cost))
+					{
+						cost = navigationCost;
+						result = instance.gameObject;
+					}
+				}
+			}
+
+			public void Cleanup()
+			{
+			}
+		}
+
+		public Instance(IStateMachineTarget master, Def def)
+			: base(master, def)
+		{
+		}
+
+		public void FindLure()
+		{
+			LureIterator iterator = new LureIterator(GetComponent<Navigator>(), base.def.lures);
+			GameScenePartitioner.Instance.Iterate(Grid.PosToCell(base.smi.transform.GetPosition()), 1, GameScenePartitioner.Instance.lure, ref iterator);
+			iterator.Cleanup();
+			base.sm.targetLure.Set(iterator.result, this);
+		}
+
+		public bool HasLure()
+		{
+			return base.sm.targetLure.Get(this) != null;
+		}
+
+		public GameObject GetTargetLure()
+		{
+			return base.sm.targetLure.Get(this);
+		}
+	}
+
+	public TargetParameter targetLure;
+
+	public State nolure;
+
+	public State haslure;
+
+	public State cooldown;
+
+	public override void InitializeStates(out BaseState default_state)
+	{
+		default_state = cooldown;
+		cooldown.ScheduleGoTo((Instance smi) => smi.def.cooldown, nolure);
+		nolure.Update("FindLure", delegate(Instance smi, float dt)
+		{
+			smi.FindLure();
+		}, UpdateRate.SIM_1000ms).ParamTransition(targetLure, haslure, (Instance smi, GameObject p) => p != null);
+		haslure.ParamTransition(targetLure, haslure, (Instance smi, GameObject p) => p == null).Update("FindLure", delegate(Instance smi, float dt)
+		{
+			smi.FindLure();
+		}, UpdateRate.SIM_1000ms).ToggleBehaviour(GameTags.Creatures.MoveToLure, (Instance smi) => smi.HasLure(), delegate(Instance smi)
+		{
+			smi.GoTo(cooldown);
+		});
+	}
+}
