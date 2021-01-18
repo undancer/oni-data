@@ -1,0 +1,80 @@
+using TUNING;
+using UnityEngine;
+
+public class DecontaminationShowerConfig : IBuildingConfig
+{
+	public const string ID = "DecontaminationShower";
+
+	private const float STORAGE_SIZE = 15f;
+
+	private const float MASS_PER_USE = 400f;
+
+	private const int DISEASE_REMOVAL_COUNT = 100000;
+
+	private const int RADS_REMOVAL_COUNT = 100000;
+
+	private const float WATER_PER_USE = 400f;
+
+	private const int USES_PER_FLUSH = 1;
+
+	private const float WORK_TIME = 15f;
+
+	private const SimHashes CONSUMED_ELEMENT = SimHashes.Water;
+
+	private const SimHashes PRODUCED_ELEMENT = SimHashes.DirtyWater;
+
+	public override BuildingDef CreateBuildingDef()
+	{
+		string[] rADIATION_CONTAINMENT = MATERIALS.RADIATION_CONTAINMENT;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(construction_mass: new float[2]
+		{
+			BUILDINGS.CONSTRUCTION_MASS_KG.TIER5[0],
+			BUILDINGS.CONSTRUCTION_MASS_KG.TIER2[0]
+		}, construction_materials: rADIATION_CONTAINMENT, melting_point: 1600f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER0, id: "DecontaminationShower", width: 2, height: 4, anim: "decontamination_shower_kanim", hitpoints: 250, construction_time: 120f, decor: BUILDINGS.DECOR.PENALTY.TIER3);
+		buildingDef.RequiredDlcId = "EXPANSION1_ID";
+		buildingDef.InputConduitType = ConduitType.Liquid;
+		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.UtilityInputOffset = new CellOffset(1, 2);
+		return buildingDef;
+	}
+
+	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
+	{
+		KBatchedAnimController kBatchedAnimController = go.AddOrGet<KBatchedAnimController>();
+		kBatchedAnimController.sceneLayer = Grid.SceneLayer.BuildingBack;
+		kBatchedAnimController.fgLayer = Grid.SceneLayer.BuildingFront;
+		HandSanitizer handSanitizer = go.AddOrGet<HandSanitizer>();
+		handSanitizer.massConsumedPerUse = 400f;
+		handSanitizer.consumedElement = SimHashes.Water;
+		handSanitizer.diseaseRemovalCount = 100000;
+		handSanitizer.outputElement = SimHashes.DirtyWater;
+		handSanitizer.diseaseRemovalCount = 100000;
+		handSanitizer.maxUses = 1;
+		handSanitizer.alwaysUse = true;
+		HandSanitizer.Work work = go.AddOrGet<HandSanitizer.Work>();
+		work.overrideAnims = new KAnimFile[1]
+		{
+			Assets.GetAnim("anim_interacts_decontamination_shower_kanim")
+		};
+		work.workLayer = Grid.SceneLayer.BuildingUse;
+		work.workTime = 15f;
+		work.trackUses = true;
+		work.removeIrritation = true;
+		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
+		conduitConsumer.conduitType = ConduitType.Liquid;
+		conduitConsumer.capacityTag = ElementLoader.FindElementByHash(SimHashes.Water).tag;
+		conduitConsumer.capacityKG = 400f;
+		conduitConsumer.wrongElementResult = ConduitConsumer.WrongElementResult.Store;
+		AutoStorageDropper.Def def = go.AddOrGetDef<AutoStorageDropper.Def>();
+		def.dropTag = SimHashes.DirtyWater.CreateTag();
+		def.dropOffset = new CellOffset(1, 0);
+		Storage storage = go.AddOrGet<Storage>();
+		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
+		go.AddOrGet<DirectionControl>();
+	}
+
+	public override void DoPostConfigureComplete(GameObject go)
+	{
+	}
+}
