@@ -21,20 +21,24 @@ public class LightBugPurpleConfig : IEntityConfig
 	public static GameObject CreateLightBug(string id, string name, string desc, string anim_file, bool is_baby)
 	{
 		GameObject prefab = BaseLightBugConfig.BaseLightBug(id, name, desc, anim_file, "LightBugPurpleBaseTrait", LIGHT2D.LIGHTBUG_COLOR_PURPLE, DECOR.BONUS.TIER6, is_baby, "prp_");
-		EntityTemplates.ExtendEntityToWildCreature(prefab, LightBugTuning.PEN_SIZE_PER_CREATURE, 25f);
+		EntityTemplates.ExtendEntityToWildCreature(prefab, LightBugTuning.PEN_SIZE_PER_CREATURE);
 		Trait trait = Db.Get().CreateTrait("LightBugPurpleBaseTrait", name, name, null, should_save: false, null, positive_trait: true, is_valid_starter_trait: true);
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.maxAttribute.Id, LightBugTuning.STANDARD_STOMACH_SIZE, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.deltaAttribute.Id, (0f - LightBugTuning.STANDARD_CALORIES_PER_CYCLE) / 600f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.HitPoints.maxAttribute.Id, 5f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Age.maxAttribute.Id, 25f, name));
-		return BaseLightBugConfig.SetupDiet(prefab, new HashSet<Tag>
-		{
-			TagManager.Create("FriedMushroom"),
-			TagManager.Create("GrilledPrickleFruit"),
-			TagManager.Create(SpiceNutConfig.ID),
-			TagManager.Create("SpiceBread"),
-			SimHashes.Phosphorite.CreateTag()
-		}, Tag.Invalid, CALORIES_PER_KG_OF_ORE);
+		HashSet<Tag> hashSet = new HashSet<Tag>();
+		hashSet.Add(TagManager.Create("FriedMushroom"));
+		hashSet.Add(TagManager.Create("GrilledPrickleFruit"));
+		hashSet.Add(TagManager.Create(SpiceNutConfig.ID));
+		hashSet.Add(TagManager.Create("SpiceBread"));
+		hashSet.Add(SimHashes.Phosphorite.CreateTag());
+		return BaseLightBugConfig.SetupDiet(prefab, hashSet, Tag.Invalid, CALORIES_PER_KG_OF_ORE);
+	}
+
+	public string GetDlcId()
+	{
+		return "";
 	}
 
 	public GameObject CreatePrefab()

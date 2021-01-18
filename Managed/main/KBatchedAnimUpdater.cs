@@ -42,7 +42,7 @@ public class KBatchedAnimUpdater : Singleton<KBatchedAnimUpdater>
 
 	public static readonly Vector2I INVALID_CHUNK_ID = Vector2I.minusone;
 
-	private Dictionary<int, KBatchedAnimController>[,] controllerGrid;
+	private Dictionary<int, KBatchedAnimController>[,] controllerGrid = null;
 
 	private LinkedList<KBatchedAnimController> updateList = new LinkedList<KBatchedAnimController>();
 
@@ -68,7 +68,7 @@ public class KBatchedAnimUpdater : Singleton<KBatchedAnimUpdater>
 
 	private const int CHUNKS_TO_CLEAN_PER_TICK = 16;
 
-	private int cleanUpChunkIndex;
+	private int cleanUpChunkIndex = 0;
 
 	private static readonly Vector2 VISIBLE_RANGE_SCALE = new Vector2(1.5f, 1.5f);
 
@@ -94,6 +94,11 @@ public class KBatchedAnimUpdater : Singleton<KBatchedAnimUpdater>
 
 	public Vector2I GetVisibleSize()
 	{
+		if (CameraController.Instance != null)
+		{
+			CameraController.Instance.GetWorldCamera(out var worldOffset, out var worldSize);
+			return new Vector2I((int)((float)(worldSize.x + worldOffset.x) * VISIBLE_RANGE_SCALE.x), (int)((float)(worldSize.y + worldOffset.y) * VISIBLE_RANGE_SCALE.y));
+		}
 		return new Vector2I((int)((float)Grid.WidthInCells * VISIBLE_RANGE_SCALE.x), (int)((float)Grid.HeightInCells * VISIBLE_RANGE_SCALE.y));
 	}
 
@@ -127,15 +132,18 @@ public class KBatchedAnimUpdater : Singleton<KBatchedAnimUpdater>
 	{
 		switch (controller.updateRegistrationState)
 		{
+		case RegistrationState.Registered:
+			break;
 		case RegistrationState.PendingRemoval:
 			controller.updateRegistrationState = RegistrationState.Registered;
 			break;
 		case RegistrationState.Unregistered:
-			((controller.visibilityType == KAnimControllerBase.VisibilityType.Always) ? alwaysUpdateList : updateList).AddLast(controller);
+		{
+			LinkedList<KBatchedAnimController> linkedList = ((controller.visibilityType == KAnimControllerBase.VisibilityType.Always) ? alwaysUpdateList : updateList);
+			linkedList.AddLast(controller);
 			controller.updateRegistrationState = RegistrationState.Registered;
 			break;
-		case RegistrationState.Registered:
-			break;
+		}
 		}
 	}
 
@@ -147,6 +155,7 @@ public class KBatchedAnimUpdater : Singleton<KBatchedAnimUpdater>
 			controller.updateRegistrationState = RegistrationState.PendingRemoval;
 			break;
 		case RegistrationState.PendingRemoval:
+			break;
 		case RegistrationState.Unregistered:
 			break;
 		}
@@ -194,14 +203,14 @@ public class KBatchedAnimUpdater : Singleton<KBatchedAnimUpdater>
 		ProcessRegistrations();
 		CleanUp();
 		float unscaledDeltaTime = Time.unscaledDeltaTime;
-		_ = alwaysUpdateList.Count;
+		int count = alwaysUpdateList.Count;
 		UpdateRegisteredAnims(alwaysUpdateList, unscaledDeltaTime);
 		if (DoGridProcessing())
 		{
 			unscaledDeltaTime = Time.deltaTime;
 			if (unscaledDeltaTime > 0f)
 			{
-				_ = updateList.Count;
+				int count2 = updateList.Count;
 				UpdateRegisteredAnims(updateList, unscaledDeltaTime);
 			}
 		}
@@ -222,6 +231,10 @@ public class KBatchedAnimUpdater : Singleton<KBatchedAnimUpdater>
 			{
 				value.updateRegistrationState = RegistrationState.Unregistered;
 				list.Remove(linkedListNode);
+			}
+			else if (value.forceUseGameTime)
+			{
+				value.UpdateAnim(Time.deltaTime);
 			}
 			else
 			{
@@ -244,7 +257,8 @@ public class KBatchedAnimUpdater : Singleton<KBatchedAnimUpdater>
 
 	public static Vector2I PosToChunkXY(Vector3 pos)
 	{
-		return KAnimBatchManager.CellXYToChunkXY(Grid.PosToXY(pos));
+		Vector2I cell_xy = Grid.PosToXY(pos);
+		return KAnimBatchManager.CellXYToChunkXY(cell_xy);
 	}
 
 	private void UpdateVisibility()
@@ -276,7 +290,8 @@ public class KBatchedAnimUpdater : Singleton<KBatchedAnimUpdater>
 				{
 					continue;
 				}
-				foreach (KeyValuePair<int, KBatchedAnimController> item in controllerGrid[j, i])
+				Dictionary<int, KBatchedAnimController> dictionary = controllerGrid[j, i];
+				foreach (KeyValuePair<int, KBatchedAnimController> item in dictionary)
 				{
 					KBatchedAnimController value = item.Value;
 					if (!(value == null))
@@ -293,7 +308,8 @@ public class KBatchedAnimUpdater : Singleton<KBatchedAnimUpdater>
 			{
 				continue;
 			}
-			foreach (KeyValuePair<int, KBatchedAnimController> item2 in controllerGrid[vector2I.x, vector2I.y])
+			Dictionary<int, KBatchedAnimController> dictionary2 = controllerGrid[vector2I.x, vector2I.y];
+			foreach (KeyValuePair<int, KBatchedAnimController> item2 in dictionary2)
 			{
 				KBatchedAnimController value2 = item2.Value;
 				if (!(value2 == null))
@@ -316,7 +332,8 @@ public class KBatchedAnimUpdater : Singleton<KBatchedAnimUpdater>
 			if (value2.chunkXY != vector2I)
 			{
 				ControllerChunkInfo value = default(ControllerChunkInfo);
-				DebugUtil.Assert(controllerChunkInfos.TryGetValue(value2.controllerInstanceId, out value));
+				bool test = controllerChunkInfos.TryGetValue(value2.controllerInstanceId, out value);
+				DebugUtil.Assert(test);
 				DebugUtil.Assert(value2.controller == value.controller);
 				DebugUtil.Assert(value.chunkXY == value2.chunkXY);
 				Dictionary<int, KBatchedAnimController> controllerMap = GetControllerMap(value.chunkXY);
@@ -415,7 +432,8 @@ public class KBatchedAnimUpdater : Singleton<KBatchedAnimUpdater>
 			KBatchedAnimController component = transform.GetComponent<KBatchedAnimController>();
 			int instanceID = component.GetInstanceID();
 			ControllerChunkInfo value = default(ControllerChunkInfo);
-			DebugUtil.Assert(controllerChunkInfos.TryGetValue(instanceID, out value));
+			bool test = controllerChunkInfos.TryGetValue(instanceID, out value);
+			DebugUtil.Assert(test);
 			if (is_moving)
 			{
 				DebugUtil.DevAssertArgs(!movingControllerInfos.ContainsKey(instanceID), "Readding controller which is already moving", component.name, value.chunkXY, movingControllerInfos.ContainsKey(instanceID) ? movingControllerInfos[instanceID].chunkXY.ToString() : null);
@@ -468,20 +486,29 @@ public class KBatchedAnimUpdater : Singleton<KBatchedAnimUpdater>
 		Grid.GetVisibleExtents(out min.x, out min.y, out max.x, out max.y);
 		min.x -= 4;
 		min.y -= 4;
-		min.x = Math.Min((int)((float)Grid.WidthInCells * VISIBLE_RANGE_SCALE.x) - 1, Math.Max(0, min.x));
-		min.y = Math.Min((int)((float)Grid.HeightInCells * VISIBLE_RANGE_SCALE.y) - 1, Math.Max(0, min.y));
-		max.x += 4;
-		max.y += 4;
-		max.x = Math.Min((int)((float)Grid.WidthInCells * VISIBLE_RANGE_SCALE.x) - 1, Math.Max(0, max.x));
-		max.y = Math.Min((int)((float)Grid.HeightInCells * VISIBLE_RANGE_SCALE.y) - 1, Math.Max(0, max.y));
+		if (CameraController.Instance != null)
+		{
+			CameraController.Instance.GetWorldCamera(out var worldOffset, out var worldSize);
+			min.x = Math.Min(worldOffset.x + worldSize.x - 1, Math.Max(worldOffset.x, min.x));
+			min.y = Math.Min(worldOffset.y + worldSize.y - 1, Math.Max(worldOffset.y, min.y));
+			max.x += 4;
+			max.y += 4;
+			max.x = Math.Min(worldOffset.x + worldSize.x - 1, Math.Max(worldOffset.x, max.x));
+			max.y = Math.Min(worldOffset.y + worldSize.y - 1, Math.Max(worldOffset.y, max.y));
+		}
+		else
+		{
+			min.x = Math.Min((int)((float)Grid.WidthInCells * VISIBLE_RANGE_SCALE.x) - 1, Math.Max(0, min.x));
+			min.y = Math.Min((int)((float)Grid.HeightInCells * VISIBLE_RANGE_SCALE.y) - 1, Math.Max(0, min.y));
+			max.x += 4;
+			max.y += 4;
+			max.x = Math.Min((int)((float)Grid.WidthInCells * VISIBLE_RANGE_SCALE.x) - 1, Math.Max(0, max.x));
+			max.y = Math.Min((int)((float)Grid.HeightInCells * VISIBLE_RANGE_SCALE.y) - 1, Math.Max(0, max.y));
+		}
 	}
 
 	private bool DoGridProcessing()
 	{
-		if (controllerGrid != null)
-		{
-			return Camera.main != null;
-		}
-		return false;
+		return controllerGrid != null && Camera.main != null;
 	}
 }

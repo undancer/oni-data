@@ -30,9 +30,9 @@ public class CodexEntry
 
 	private bool _disabled;
 
-	private bool _searchOnly;
+	private bool _searchOnly = false;
 
-	private int _customContentLength;
+	private int _customContentLength = 0;
 
 	private string _sortString;
 

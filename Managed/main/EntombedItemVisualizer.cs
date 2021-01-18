@@ -98,11 +98,7 @@ public class EntombedItemVisualizer : KMonoBehaviour
 
 	public bool IsEntombedItem(int cell)
 	{
-		if (cellEntombedCounts.ContainsKey(cell))
-		{
-			return cellEntombedCounts[cell].refCount > 0;
-		}
-		return false;
+		return cellEntombedCounts.ContainsKey(cell) && cellEntombedCounts[cell].refCount > 0;
 	}
 
 	private GameObject InstantiateEntombedObject()

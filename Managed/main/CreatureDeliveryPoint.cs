@@ -41,13 +41,15 @@ public class CreatureDeliveryPoint : StateMachineComponent<CreatureDeliveryPoint
 			{
 				List<GameObject> items = component.items;
 				int count = items.Count;
-				Vector3 position = Grid.CellToPosCBC(Grid.OffsetCell(Grid.PosToCell(smi.transform.GetPosition()), smi.master.spawnOffset), Grid.SceneLayer.Creatures);
+				int cell = Grid.OffsetCell(Grid.PosToCell(smi.transform.GetPosition()), smi.master.spawnOffset);
+				Vector3 position = Grid.CellToPosCBC(cell, Grid.SceneLayer.Creatures);
 				for (int num = count - 1; num >= 0; num--)
 				{
 					GameObject gameObject = items[num];
 					component.Drop(gameObject);
 					gameObject.transform.SetPosition(position);
-					gameObject.GetComponent<KBatchedAnimController>().SetSceneLayer(Grid.SceneLayer.Creatures);
+					KBatchedAnimController component2 = gameObject.GetComponent<KBatchedAnimController>();
+					component2.SetSceneLayer(Grid.SceneLayer.Creatures);
 				}
 				smi.master.RefreshCreatureCount();
 			}
@@ -66,7 +68,7 @@ public class CreatureDeliveryPoint : StateMachineComponent<CreatureDeliveryPoint
 	[Serialize]
 	private int creatureLimit = 20;
 
-	private int storedCreatureCount;
+	private int storedCreatureCount = 0;
 
 	public CellOffset[] deliveryOffsets = new CellOffset[1];
 
@@ -131,7 +133,8 @@ public class CreatureDeliveryPoint : StateMachineComponent<CreatureDeliveryPoint
 			{
 				IUserControlledCapacity userControlledCapacity = (IUserControlledCapacity)data;
 				string newValue = Util.FormatWholeNumber(Mathf.Floor(userControlledCapacity.AmountStored));
-				string newValue2 = Util.FormatWholeNumber(userControlledCapacity.UserMaxCapacity);
+				float userMaxCapacity = userControlledCapacity.UserMaxCapacity;
+				string newValue2 = Util.FormatWholeNumber(userMaxCapacity);
 				str = str.Replace("{Stored}", newValue).Replace("{Capacity}", newValue2).Replace("{Units}", userControlledCapacity.CapacityUnits);
 				return str;
 			};
@@ -164,7 +167,9 @@ public class CreatureDeliveryPoint : StateMachineComponent<CreatureDeliveryPoint
 
 	private void OnFilterChanged(Tag[] tags)
 	{
-		GetComponent<KBatchedAnimController>().TintColour = ((tags != null && tags.Length != 0) ? filterTint : noFilterTint);
+		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
+		bool flag = tags != null && tags.Length != 0;
+		component.TintColour = (flag ? filterTint : noFilterTint);
 		ClearFetches();
 		RebalanceFetches();
 	}
@@ -202,11 +207,12 @@ public class CreatureDeliveryPoint : StateMachineComponent<CreatureDeliveryPoint
 
 	private void RebalanceFetches()
 	{
-		Tag[] tags = GetComponent<TreeFilterable>().GetTags();
+		TreeFilterable component = GetComponent<TreeFilterable>();
+		Tag[] tags = component.GetTags();
 		ChoreType creatureFetch = Db.Get().ChoreTypes.CreatureFetch;
-		Storage component = GetComponent<Storage>();
+		Storage component2 = GetComponent<Storage>();
 		int num = creatureLimit - storedCreatureCount;
-		_ = fetches.Count;
+		int count = fetches.Count;
 		int num2 = 0;
 		int num3 = 0;
 		int num4 = 0;
@@ -229,7 +235,7 @@ public class CreatureDeliveryPoint : StateMachineComponent<CreatureDeliveryPoint
 		}
 		if (num7 == 0 && fetches.Count < num)
 		{
-			FetchOrder2 fetchOrder = new FetchOrder2(creatureFetch, tags, requiredFetchTags, null, component, 1f, FetchOrder2.OperationalRequirement.Operational);
+			FetchOrder2 fetchOrder = new FetchOrder2(creatureFetch, tags, requiredFetchTags, null, component2, 1f, FetchOrder2.OperationalRequirement.Operational);
 			fetchOrder.Submit(OnFetchComplete, check_storage_contents: false, OnFetchBegun);
 			fetches.Add(fetchOrder);
 			num3++;

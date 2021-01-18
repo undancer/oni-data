@@ -17,7 +17,7 @@ public class Gantry : Switch
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = extended;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			retracted_pre.Enter(delegate(Gantry.Instance smi)
 			{
 				smi.SetActive(active: true);
@@ -74,11 +74,7 @@ public class Gantry : Switch
 
 		public bool IsExtended()
 		{
-			if (!IsAutomated())
-			{
-				return manual_on;
-			}
-			return logic_on;
+			return IsAutomated() ? logic_on : manual_on;
 		}
 
 		public void SetSwitchState(bool on)
@@ -196,8 +192,8 @@ public class Gantry : Switch
 			World.Instance.OnSolidChanged(num);
 			GameScenePartitioner.Instance.TriggerEvent(num, GameScenePartitioner.Instance.solidChangedLayer, null);
 		}
-		tileOffsets = RetractableOffsets;
-		foreach (CellOffset offset2 in tileOffsets)
+		CellOffset[] retractableOffsets = RetractableOffsets;
+		foreach (CellOffset offset2 in retractableOffsets)
 		{
 			CellOffset rotatedOffset2 = building.GetRotatedOffset(offset2);
 			int num2 = Grid.OffsetCell(cell, rotatedOffset2);
@@ -240,9 +236,9 @@ public class Gantry : Switch
 
 	private static string ResolveInfoStatusItemString(string format_str, object data)
 	{
-		Instance obj = (Instance)data;
-		string format = (obj.IsAutomated() ? BUILDING.STATUSITEMS.GANTRY.AUTOMATION_CONTROL : BUILDING.STATUSITEMS.GANTRY.MANUAL_CONTROL);
-		string arg = (obj.IsExtended() ? BUILDING.STATUSITEMS.GANTRY.EXTENDED : BUILDING.STATUSITEMS.GANTRY.RETRACTED);
+		Instance instance = (Instance)data;
+		string format = (instance.IsAutomated() ? BUILDING.STATUSITEMS.GANTRY.AUTOMATION_CONTROL : BUILDING.STATUSITEMS.GANTRY.MANUAL_CONTROL);
+		string arg = (instance.IsExtended() ? BUILDING.STATUSITEMS.GANTRY.EXTENDED : BUILDING.STATUSITEMS.GANTRY.RETRACTED);
 		return string.Format(format, arg);
 	}
 }

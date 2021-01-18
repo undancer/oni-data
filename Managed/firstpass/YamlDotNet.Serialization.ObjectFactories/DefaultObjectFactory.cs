@@ -37,7 +37,8 @@ namespace YamlDotNet.Serialization.ObjectFactories
 			}
 			catch (Exception innerException)
 			{
-				throw new InvalidOperationException($"Failed to create an instance of type '{type}'.", innerException);
+				string message = $"Failed to create an instance of type '{type}'.";
+				throw new InvalidOperationException(message, innerException);
 			}
 		}
 	}

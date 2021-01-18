@@ -9,7 +9,7 @@ public class FetchListStatusItemUpdater : KMonoBehaviour, IRender200ms
 
 	private List<FetchList2> fetchLists = new List<FetchList2>();
 
-	private int currentIteratingIndex;
+	private int currentIteratingIndex = 0;
 
 	private int maxIteratingCount = 100;
 
@@ -66,7 +66,8 @@ public class FetchListStatusItemUpdater : KMonoBehaviour, IRender200ms
 			foreach (FetchList2 item2 in item.Value)
 			{
 				item2.UpdateRemaining();
-				foreach (KeyValuePair<Tag, float> item3 in item2.GetRemaining())
+				Dictionary<Tag, float> remaining = item2.GetRemaining();
+				foreach (KeyValuePair<Tag, float> item3 in remaining)
 				{
 					if (!pooledList2.Contains(item3.Key))
 					{
@@ -103,11 +104,11 @@ public class FetchListStatusItemUpdater : KMonoBehaviour, IRender200ms
 			{
 				if (!pooledDictionary2.ContainsKey(item7))
 				{
-					pooledDictionary2[item7] = WorldInventory.Instance.GetTotalAmount(item7);
+					pooledDictionary2[item7] = destination.GetMyWorld().worldInventory.GetTotalAmount(item7, includeRelatedWorlds: true);
 				}
 				if (!pooledDictionary3.ContainsKey(item7))
 				{
-					pooledDictionary3[item7] = WorldInventory.Instance.GetAmount(item7);
+					pooledDictionary3[item7] = destination.GetMyWorld().worldInventory.GetAmount(item7, includeRelatedWorlds: true);
 				}
 			}
 			foreach (FetchList2 item8 in item.Value)
@@ -115,7 +116,8 @@ public class FetchListStatusItemUpdater : KMonoBehaviour, IRender200ms
 				bool should_add = false;
 				bool should_add2 = true;
 				bool should_add3 = false;
-				foreach (KeyValuePair<Tag, float> item9 in item8.GetRemaining())
+				Dictionary<Tag, float> remaining2 = item8.GetRemaining();
+				foreach (KeyValuePair<Tag, float> item9 in remaining2)
 				{
 					Tag key = item9.Key;
 					float value2 = item9.Value;

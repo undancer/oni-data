@@ -75,7 +75,8 @@ public class LiquidPumpingStation : Workable, ISim200ms
 				a = Mathf.Max(a, 1f);
 				HandleVector<Game.ComplexCallbackInfo<Sim.MassConsumedCallback>>.Handle handle = Game.Instance.massConsumedCallbackManager.Add(OnSimConsumeCallback, this, "LiquidPumpingStation");
 				int depthAvailable = PumpingStationGuide.GetDepthAvailable(cell, pump);
-				SimMessages.ConsumeMass(Grid.OffsetCell(cell, new CellOffset(0, -depthAvailable)), element, a, (byte)(depthAvailable + 1), handle.index);
+				int gameCell = Grid.OffsetCell(cell, new CellOffset(0, -depthAvailable));
+				SimMessages.ConsumeMass(gameCell, element, a, (byte)(depthAvailable + 1), handle.index);
 			}
 		}
 
@@ -130,12 +131,6 @@ public class LiquidPumpingStation : Workable, ISim200ms
 		public SubstanceChunk source;
 	}
 
-	private static readonly CellOffset[] floorOffsets = new CellOffset[2]
-	{
-		new CellOffset(0, 0),
-		new CellOffset(1, 0)
-	};
-
 	private static readonly CellOffset[] liquidOffsets = new CellOffset[10]
 	{
 		new CellOffset(0, 0),
@@ -152,7 +147,7 @@ public class LiquidPumpingStation : Workable, ISim200ms
 
 	private LiquidInfo[] infos;
 
-	private int infoCount;
+	private int infoCount = 0;
 
 	private int depthAvailable = -1;
 
@@ -165,13 +160,6 @@ public class LiquidPumpingStation : Workable, ISim200ms
 		base.OnPrefabInit();
 		resetProgressOnStop = true;
 		showProgressBar = false;
-		int cell = Grid.PosToCell(this);
-		for (int i = 0; i < floorOffsets.Length; i++)
-		{
-			int num = Grid.OffsetCell(cell, floorOffsets[i]);
-			Grid.FakeFloor[num] = true;
-			Pathfinding.Instance.AddDirtyNavGridCell(num);
-		}
 	}
 
 	protected override void OnSpawn()
@@ -349,7 +337,8 @@ public class LiquidPumpingStation : Workable, ISim200ms
 			session.Cleanup();
 			session = null;
 		}
-		GetComponent<KAnimControllerBase>().Play("on");
+		KAnimControllerBase component = GetComponent<KAnimControllerBase>();
+		component.Play("on");
 	}
 
 	private void OnReservationsChanged()
@@ -427,13 +416,6 @@ public class LiquidPumpingStation : Workable, ISim200ms
 			{
 				infos[i].source.DeleteObject();
 			}
-		}
-		int cell = Grid.PosToCell(this);
-		for (int j = 0; j < floorOffsets.Length; j++)
-		{
-			int num = Grid.OffsetCell(cell, floorOffsets[j]);
-			Grid.FakeFloor[num] = false;
-			Pathfinding.Instance.AddDirtyNavGridCell(num);
 		}
 	}
 }

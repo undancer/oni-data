@@ -1,3 +1,4 @@
+#define UNITY_ASSERTIONS
 using System;
 using System.Collections.Generic;
 using Klei;
@@ -112,6 +113,7 @@ public class World : KMonoBehaviour
 		for (int l = 0; l < num_liquid_change_info; l++)
 		{
 			int cellIdx3 = liquid_change_info[l].cellIdx;
+			UnityEngine.Debug.Assert(Grid.IsValidCell(cellIdx3));
 			changedCells.Add(cellIdx3);
 			if (OnLiquidChanged != null)
 			{
@@ -132,7 +134,6 @@ public class World : KMonoBehaviour
 		{
 			if (GameUtil.IsCapturingTimeLapse())
 			{
-				Game.Instance.UpdateGameActiveRegion(0, 0, Grid.WidthInCells, Grid.HeightInCells);
 				groundRenderer.RenderAll();
 				KAnimBatchManager.Instance().UpdateActiveArea(new Vector2I(0, 0), new Vector2I(9999, 9999));
 				KAnimBatchManager.Instance().UpdateDirty(Time.frameCount);

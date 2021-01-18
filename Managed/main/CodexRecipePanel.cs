@@ -103,7 +103,8 @@ public class CodexRecipePanel : CodexWidget<CodexRecipePanel>
 		ComplexRecipe.RecipeElement[] ingredients = complexRecipe.ingredients;
 		foreach (ComplexRecipe.RecipeElement ing in ingredients)
 		{
-			HierarchyReferences component = Util.KInstantiateUI(materialPrefab, ingredientsContainer, force_active: true).GetComponent<HierarchyReferences>();
+			GameObject gameObject = Util.KInstantiateUI(materialPrefab, ingredientsContainer, force_active: true);
+			HierarchyReferences component = gameObject.GetComponent<HierarchyReferences>();
 			Tuple<Sprite, Color> uISprite = Def.GetUISprite(ing.material);
 			component.GetReference<Image>("Icon").sprite = uISprite.first;
 			component.GetReference<Image>("Icon").color = uISprite.second;
@@ -121,10 +122,11 @@ public class CodexRecipePanel : CodexWidget<CodexRecipePanel>
 				ManagementMenu.Instance.codexScreen.ChangeArticle(CodexCache.FormatLinkID(ing.material.ToString()));
 			};
 		}
-		ingredients = complexRecipe.results;
-		foreach (ComplexRecipe.RecipeElement res in ingredients)
+		ComplexRecipe.RecipeElement[] results = complexRecipe.results;
+		foreach (ComplexRecipe.RecipeElement res in results)
 		{
-			HierarchyReferences component2 = Util.KInstantiateUI(materialPrefab, resultsContainer, force_active: true).GetComponent<HierarchyReferences>();
+			GameObject gameObject2 = Util.KInstantiateUI(materialPrefab, resultsContainer, force_active: true);
+			HierarchyReferences component2 = gameObject2.GetComponent<HierarchyReferences>();
 			Tuple<Sprite, Color> uISprite2 = Def.GetUISprite(res.material);
 			component2.GetReference<Image>("Icon").sprite = uISprite2.first;
 			component2.GetReference<Image>("Icon").color = uISprite2.second;
@@ -143,7 +145,8 @@ public class CodexRecipePanel : CodexWidget<CodexRecipePanel>
 			};
 		}
 		string fabricatorId = complexRecipe.id.Substring(0, complexRecipe.id.IndexOf('_'));
-		HierarchyReferences component3 = Util.KInstantiateUI(fabricatorPrefab, fabricatorContainer, force_active: true).GetComponent<HierarchyReferences>();
+		GameObject gameObject3 = Util.KInstantiateUI(fabricatorPrefab, fabricatorContainer, force_active: true);
+		HierarchyReferences component3 = gameObject3.GetComponent<HierarchyReferences>();
 		Tuple<Sprite, Color> uISprite3 = Def.GetUISprite(fabricatorId);
 		component3.GetReference<Image>("Icon").sprite = uISprite3.first;
 		component3.GetReference<Image>("Icon").color = uISprite3.second;

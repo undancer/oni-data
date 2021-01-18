@@ -12,7 +12,7 @@ public class LogicGateBuffer : LogicGate, ISingleSliderControl, ISliderControl
 	private float delayAmount = 5f;
 
 	[Serialize]
-	private int delayTicksRemaining;
+	private int delayTicksRemaining = 0;
 
 	private MeterController meter;
 
@@ -90,7 +90,8 @@ public class LogicGateBuffer : LogicGate, ISingleSliderControl, ISliderControl
 
 	private void OnCopySettings(object data)
 	{
-		LogicGateBuffer component = ((GameObject)data).GetComponent<LogicGateBuffer>();
+		GameObject gameObject = (GameObject)data;
+		LogicGateBuffer component = gameObject.GetComponent<LogicGateBuffer>();
 		if (component != null)
 		{
 			DelayAmount = component.DelayAmount;
@@ -140,11 +141,7 @@ public class LogicGateBuffer : LogicGate, ISingleSliderControl, ISliderControl
 			}
 			input_was_previously_positive = false;
 		}
-		if (val1 == 0 && delayTicksRemaining <= 0)
-		{
-			return 0;
-		}
-		return 1;
+		return (val1 != 0 || delayTicksRemaining > 0) ? 1 : 0;
 	}
 
 	private void OnDelay()
@@ -158,7 +155,8 @@ public class LogicGateBuffer : LogicGate, ISingleSliderControl, ISliderControl
 		if (outputValueOne != 0)
 		{
 			int outputCellOne = base.OutputCellOne;
-			if (Game.Instance.logicCircuitSystem.GetNetworkForCell(outputCellOne) is LogicCircuitNetwork)
+			LogicCircuitNetwork logicCircuitNetwork = Game.Instance.logicCircuitSystem.GetNetworkForCell(outputCellOne) as LogicCircuitNetwork;
+			if (logicCircuitNetwork != null)
 			{
 				outputValueOne = 0;
 				RefreshAnimation();

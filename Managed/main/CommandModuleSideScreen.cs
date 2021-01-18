@@ -13,9 +13,14 @@ public class CommandModuleSideScreen : SideScreenContent
 
 	public MultiToggle destinationButton;
 
+	public MultiToggle destinationButtonExpansion;
+
 	public MultiToggle debugVictoryButton;
 
-	private Dictionary<RocketLaunchCondition, GameObject> conditionTable = new Dictionary<RocketLaunchCondition, GameObject>();
+	[Tooltip("This list is indexed by the ProcessCondition.Status enum")]
+	public List<Color> statusColors;
+
+	private Dictionary<ProcessCondition, GameObject> conditionTable = new Dictionary<ProcessCondition, GameObject>();
 
 	private SchedulerHandle updateHandle;
 
@@ -79,7 +84,7 @@ public class CommandModuleSideScreen : SideScreenContent
 
 	private void ClearConditions()
 	{
-		foreach (KeyValuePair<RocketLaunchCondition, GameObject> item in conditionTable)
+		foreach (KeyValuePair<ProcessCondition, GameObject> item in conditionTable)
 		{
 			Util.KDestroyGameObject(item.Value);
 		}
@@ -88,7 +93,7 @@ public class CommandModuleSideScreen : SideScreenContent
 
 	private void ConfigureConditions()
 	{
-		foreach (RocketLaunchCondition launchCondition in target.GetLaunchConditionList())
+		foreach (ProcessCondition launchCondition in target.GetLaunchConditionList())
 		{
 			GameObject value = Util.KInstantiateUI(prefabConditionLineItem, conditionListContainer, force_active: true);
 			conditionTable.Add(launchCondition, value);
@@ -99,14 +104,14 @@ public class CommandModuleSideScreen : SideScreenContent
 	public void RefreshConditions()
 	{
 		bool flag = false;
-		List<RocketLaunchCondition> launchConditionList = target.GetLaunchConditionList();
-		foreach (RocketLaunchCondition item in launchConditionList)
+		List<ProcessCondition> launchConditionList = target.GetLaunchConditionList();
+		foreach (ProcessCondition item in launchConditionList)
 		{
 			if (conditionTable.ContainsKey(item))
 			{
 				GameObject gameObject = conditionTable[item];
 				HierarchyReferences component = gameObject.GetComponent<HierarchyReferences>();
-				if (item.GetParentCondition() != null && item.GetParentCondition().EvaluateLaunchCondition() == RocketLaunchCondition.LaunchStatus.Failure)
+				if (item.GetParentCondition() != null && item.GetParentCondition().EvaluateCondition() == ProcessCondition.Status.Failure)
 				{
 					gameObject.SetActive(value: false);
 				}
@@ -114,18 +119,18 @@ public class CommandModuleSideScreen : SideScreenContent
 				{
 					gameObject.SetActive(value: true);
 				}
-				bool flag2 = item.EvaluateLaunchCondition() != RocketLaunchCondition.LaunchStatus.Failure;
-				component.GetReference<LocText>("Label").text = item.GetLaunchStatusMessage(flag2);
-				component.GetReference<LocText>("Label").color = (flag2 ? Color.black : Color.red);
-				component.GetReference<Image>("Box").color = (flag2 ? Color.black : Color.red);
-				component.GetReference<Image>("Check").gameObject.SetActive(flag2);
-				gameObject.GetComponent<ToolTip>().SetSimpleTooltip(item.GetLaunchStatusTooltip(flag2));
+				ProcessCondition.Status status = item.EvaluateCondition();
+				component.GetReference<LocText>("Label").text = item.GetStatusMessage(status);
+				component.GetReference<LocText>("Label").color = statusColors[(int)status];
+				component.GetReference<Image>("Box").color = statusColors[(int)status];
+				component.GetReference<Image>("Check").gameObject.SetActive(status != ProcessCondition.Status.Failure);
+				gameObject.GetComponent<ToolTip>().SetSimpleTooltip(item.GetStatusTooltip(status));
 				continue;
 			}
 			flag = true;
 			break;
 		}
-		foreach (KeyValuePair<RocketLaunchCondition, GameObject> item2 in conditionTable)
+		foreach (KeyValuePair<ProcessCondition, GameObject> item2 in conditionTable)
 		{
 			if (!launchConditionList.Contains(item2.Key))
 			{
@@ -141,6 +146,10 @@ public class CommandModuleSideScreen : SideScreenContent
 		destinationButton.onClick = delegate
 		{
 			ManagementMenu.Instance.ToggleStarmap();
+		};
+		destinationButtonExpansion.onClick = delegate
+		{
+			ClusterMapScreen.Instance.Show();
 		};
 	}
 

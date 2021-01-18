@@ -6,25 +6,25 @@ public class RocketStats
 {
 	private CommandModule commandModule;
 
-	private static Dictionary<Tag, float> oxidizerEfficiencies;
+	public static Dictionary<Tag, float> oxidizerEfficiencies = new Dictionary<Tag, float>
+	{
+		{
+			SimHashes.OxyRock.CreateTag(),
+			ROCKETRY.OXIDIZER_EFFICIENCY.LOW
+		},
+		{
+			SimHashes.LiquidOxygen.CreateTag(),
+			ROCKETRY.OXIDIZER_EFFICIENCY.HIGH
+		},
+		{
+			SimHashes.Fertilizer.CreateTag(),
+			ROCKETRY.OXIDIZER_EFFICIENCY.VERY_LOW
+		}
+	};
 
 	public RocketStats(CommandModule commandModule)
 	{
 		this.commandModule = commandModule;
-		if (oxidizerEfficiencies == null)
-		{
-			oxidizerEfficiencies = new Dictionary<Tag, float>
-			{
-				{
-					SimHashes.OxyRock.CreateTag(),
-					ROCKETRY.OXIDIZER_EFFICIENCY.LOW
-				},
-				{
-					SimHashes.LiquidOxygen.CreateTag(),
-					ROCKETRY.OXIDIZER_EFFICIENCY.HIGH
-				}
-			};
-		}
 	}
 
 	public float GetRocketMaxDistance()
@@ -67,11 +67,11 @@ public class RocketStats
 				SolidBooster component4 = component.GetComponent<SolidBooster>();
 				if (component2 != null)
 				{
-					num += component2.MassStored();
+					num += component2.storage.MassStored();
 				}
 				if (component3 != null)
 				{
-					num += component3.MassStored();
+					num += component3.storage.MassStored();
 				}
 				if (component4 != null)
 				{
@@ -101,7 +101,7 @@ public class RocketStats
 			Tag engineFuelTag = GetEngineFuelTag();
 			if (component != null)
 			{
-				num += component.GetAmountAvailable(engineFuelTag);
+				num += component.storage.GetAmountAvailable(engineFuelTag);
 			}
 			if (includeBoosters)
 			{
@@ -149,7 +149,8 @@ public class RocketStats
 			{
 				continue;
 			}
-			foreach (KeyValuePair<Tag, float> item2 in component.GetOxidizersAvailable())
+			Dictionary<Tag, float> oxidizersAvailable = component.GetOxidizersAvailable();
+			foreach (KeyValuePair<Tag, float> item2 in oxidizersAvailable)
 			{
 				if (dictionary.ContainsKey(item2.Key))
 				{
@@ -168,11 +169,13 @@ public class RocketStats
 		{
 			return 0f;
 		}
-		return num / num2 * 100f;
+		float num3 = num / num2;
+		return num3 * 100f;
 	}
 
 	public float GetTotalThrust()
 	{
+		float num = 0f;
 		float totalFuel = GetTotalFuel();
 		float totalOxidizer = GetTotalOxidizer();
 		float averageOxidizerEfficiency = GetAverageOxidizerEfficiency();
@@ -181,7 +184,8 @@ public class RocketStats
 		{
 			return 0f;
 		}
-		return (mainEngine.requireOxidizer ? (Mathf.Min(totalFuel, totalOxidizer) * (mainEngine.efficiency * (averageOxidizerEfficiency / 100f))) : (totalFuel * mainEngine.efficiency)) + GetBoosterThrust();
+		num = (mainEngine.requireOxidizer ? (Mathf.Min(totalFuel, totalOxidizer) * (mainEngine.efficiency * (averageOxidizerEfficiency / 100f))) : (totalFuel * mainEngine.efficiency));
+		return num + GetBoosterThrust();
 	}
 
 	public float GetBoosterThrust()
@@ -218,7 +222,7 @@ public class RocketStats
 			rocketEngine = item.GetComponent<RocketEngine>();
 			if (rocketEngine != null && rocketEngine.mainEngine)
 			{
-				return rocketEngine;
+				break;
 			}
 		}
 		return rocketEngine;

@@ -7,21 +7,21 @@ public class TravelTubeWallBridgeConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("TravelTubeWallBridge", 1, 1, "tube_tile_bridge_kanim", 100, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.PLASTICS, 1600f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
-		BuildingTemplates.CreateFoundationTileDef(obj);
-		obj.Overheatable = false;
-		obj.Floodable = false;
-		obj.Entombable = false;
-		obj.ObjectLayer = ObjectLayer.Building;
-		obj.AudioCategory = "Plastic";
-		obj.AudioSize = "small";
-		obj.BaseTimeUntilRepair = -1f;
-		obj.PermittedRotations = PermittedRotations.R90;
-		obj.UtilityInputOffset = new CellOffset(0, 0);
-		obj.UtilityOutputOffset = new CellOffset(0, 2);
-		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
-		obj.ForegroundLayer = Grid.SceneLayer.TileMain;
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("TravelTubeWallBridge", 1, 1, "tube_tile_bridge_kanim", 100, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.PLASTICS, 1600f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
+		BuildingTemplates.CreateFoundationTileDef(buildingDef);
+		buildingDef.Overheatable = false;
+		buildingDef.Floodable = false;
+		buildingDef.Entombable = false;
+		buildingDef.ObjectLayer = ObjectLayer.Building;
+		buildingDef.AudioCategory = "Plastic";
+		buildingDef.AudioSize = "small";
+		buildingDef.BaseTimeUntilRepair = -1f;
+		buildingDef.PermittedRotations = PermittedRotations.R90;
+		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
+		buildingDef.UtilityOutputOffset = new CellOffset(0, 2);
+		buildingDef.SceneLayer = Grid.SceneLayer.BuildingFront;
+		buildingDef.ForegroundLayer = Grid.SceneLayer.TileMain;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -31,7 +31,8 @@ public class TravelTubeWallBridgeConfig : IBuildingConfig
 		simCellOccupier.doReplaceElement = true;
 		simCellOccupier.movementSpeedMultiplier = DUPLICANTSTATS.MOVEMENT.PENALTY_3;
 		simCellOccupier.notifyOnMelt = true;
-		go.AddOrGet<BuildingHP>().destroyOnDamaged = true;
+		BuildingHP buildingHP = go.AddOrGet<BuildingHP>();
+		buildingHP.destroyOnDamaged = true;
 		go.AddOrGet<TileTemperature>();
 		go.AddOrGet<TravelTubeBridge>();
 	}
@@ -39,20 +40,23 @@ public class TravelTubeWallBridgeConfig : IBuildingConfig
 	public override void DoPostConfigurePreview(BuildingDef def, GameObject go)
 	{
 		base.DoPostConfigurePreview(def, go);
-		AddNetworkLink(go).visualizeOnly = true;
+		TravelTubeUtilityNetworkLink travelTubeUtilityNetworkLink = AddNetworkLink(go);
+		travelTubeUtilityNetworkLink.visualizeOnly = true;
 		go.AddOrGet<BuildingCellVisualizer>();
 	}
 
 	public override void DoPostConfigureUnderConstruction(GameObject go)
 	{
 		base.DoPostConfigureUnderConstruction(go);
-		AddNetworkLink(go).visualizeOnly = true;
+		TravelTubeUtilityNetworkLink travelTubeUtilityNetworkLink = AddNetworkLink(go);
+		travelTubeUtilityNetworkLink.visualizeOnly = true;
 		go.AddOrGet<BuildingCellVisualizer>();
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		AddNetworkLink(go).visualizeOnly = false;
+		TravelTubeUtilityNetworkLink travelTubeUtilityNetworkLink = AddNetworkLink(go);
+		travelTubeUtilityNetworkLink.visualizeOnly = false;
 		go.AddOrGet<BuildingCellVisualizer>();
 		go.AddOrGet<KPrefabID>().AddTag(GameTags.TravelTubeBridges);
 	}

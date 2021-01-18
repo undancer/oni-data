@@ -5,7 +5,7 @@ using TUNING;
 using UnityEngine;
 
 [AddComponentMenu("KMonoBehaviour/Workable/ResearchCenter")]
-public class ResearchCenter : Workable, IGameObjectEffectDescriptor, ISim200ms
+public class ResearchCenter : Workable, IGameObjectEffectDescriptor, ISim200ms, IResearchCenter
 {
 	private Chore chore;
 
@@ -60,8 +60,8 @@ public class ResearchCenter : Workable, IGameObjectEffectDescriptor, ISim200ms
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		Research.Instance.Subscribe(-1914338957, UpdateWorkingState);
-		Research.Instance.Subscribe(-125623018, UpdateWorkingState);
+		Subscribe(-1914338957, UpdateWorkingStateDelegate);
+		Subscribe(-125623018, UpdateWorkingStateDelegate);
 		Subscribe(187661686, UpdateWorkingStateDelegate);
 		Subscribe(-1697596308, CheckHasMaterialDelegate);
 		Components.ResearchCenters.Add(this);
@@ -96,10 +96,9 @@ public class ResearchCenter : Workable, IGameObjectEffectDescriptor, ISim200ms
 
 	protected virtual Chore CreateChore()
 	{
-		return new WorkChore<ResearchCenter>(Db.Get().ChoreTypes.Research, this, null, run_until_complete: true, null, null, null, allow_in_red_alert: true, null, ignore_schedule_block: false, only_when_operational: true, null, is_preemptable: true)
-		{
-			preemption_cb = CanPreemptCB
-		};
+		WorkChore<ResearchCenter> workChore = new WorkChore<ResearchCenter>(Db.Get().ChoreTypes.Research, this, null, run_until_complete: true, null, null, null, allow_in_red_alert: true, null, ignore_schedule_block: false, only_when_operational: true, null, is_preemptable: true);
+		workChore.preemption_cb = CanPreemptCB;
+		return workChore;
 	}
 
 	private static bool CanPreemptCB(Chore.Precondition.Context context)
@@ -107,7 +106,8 @@ public class ResearchCenter : Workable, IGameObjectEffectDescriptor, ISim200ms
 		Worker component = context.chore.driver.GetComponent<Worker>();
 		float num = Db.Get().AttributeConverters.ResearchSpeed.Lookup(component).Evaluate();
 		Worker worker = context.consumerState.worker;
-		return Db.Get().AttributeConverters.ResearchSpeed.Lookup(worker).Evaluate() > num;
+		float num2 = Db.Get().AttributeConverters.ResearchSpeed.Lookup(worker).Evaluate();
+		return num2 > num;
 	}
 
 	public override float GetPercentComplete()
@@ -230,6 +230,11 @@ public class ResearchCenter : Workable, IGameObjectEffectDescriptor, ISim200ms
 		Game.Instance.Trigger(-1974454597);
 	}
 
+	public string GetResearchType()
+	{
+		return research_point_type_id;
+	}
+
 	private void CheckHasMaterial(object o = null)
 	{
 		if (!HasMaterial() && chore != null)
@@ -256,10 +261,10 @@ public class ResearchCenter : Workable, IGameObjectEffectDescriptor, ISim200ms
 
 	public string GetStatusString()
 	{
-		string result = RESEARCH.MESSAGING.NORESEARCHSELECTED;
+		string text = RESEARCH.MESSAGING.NORESEARCHSELECTED;
 		if (Research.Instance.GetActiveResearch() != null)
 		{
-			result = "<b>" + Research.Instance.GetActiveResearch().tech.Name + "</b>";
+			text = "<b>" + Research.Instance.GetActiveResearch().tech.Name + "</b>";
 			int num = 0;
 			foreach (KeyValuePair<string, float> item in Research.Instance.GetActiveResearch().progressInventory.PointsByTypeID)
 			{
@@ -272,22 +277,19 @@ public class ResearchCenter : Workable, IGameObjectEffectDescriptor, ISim200ms
 			{
 				if (Research.Instance.GetActiveResearch().tech.costsByResearchTypeID[item2.Key] != 0f && item2.Key == research_point_type_id)
 				{
-					result = result + "\n   - " + Research.Instance.researchTypes.GetResearchType(item2.Key).name;
-					result = result + ": " + item2.Value + "/" + Research.Instance.GetActiveResearch().tech.costsByResearchTypeID[item2.Key];
+					text = text + "\n   - " + Research.Instance.researchTypes.GetResearchType(item2.Key).name;
+					text = text + ": " + item2.Value + "/" + Research.Instance.GetActiveResearch().tech.costsByResearchTypeID[item2.Key];
 				}
 			}
+			foreach (KeyValuePair<string, float> item3 in Research.Instance.GetActiveResearch().progressInventory.PointsByTypeID)
 			{
-				foreach (KeyValuePair<string, float> item3 in Research.Instance.GetActiveResearch().progressInventory.PointsByTypeID)
+				if (Research.Instance.GetActiveResearch().tech.costsByResearchTypeID[item3.Key] != 0f && !(item3.Key == research_point_type_id))
 				{
-					if (Research.Instance.GetActiveResearch().tech.costsByResearchTypeID[item3.Key] != 0f && !(item3.Key == research_point_type_id))
-					{
-						result = ((num <= 1) ? (result + "\n   - " + string.Format(RESEARCH.MESSAGING.RESEARCHTYPEREQUIRED, Research.Instance.researchTypes.GetResearchType(item3.Key).name)) : (result + "\n   - " + string.Format(RESEARCH.MESSAGING.RESEARCHTYPEALSOREQUIRED, Research.Instance.researchTypes.GetResearchType(item3.Key).name)));
-					}
+					text = ((num <= 1) ? (text + "\n   - " + string.Format(RESEARCH.MESSAGING.RESEARCHTYPEREQUIRED, Research.Instance.researchTypes.GetResearchType(item3.Key).name)) : (text + "\n   - " + string.Format(RESEARCH.MESSAGING.RESEARCHTYPEALSOREQUIRED, Research.Instance.researchTypes.GetResearchType(item3.Key).name)));
 				}
-				return result;
 			}
 		}
-		return result;
+		return text;
 	}
 
 	public override List<Descriptor> GetDescriptors(GameObject go)
@@ -296,5 +298,10 @@ public class ResearchCenter : Workable, IGameObjectEffectDescriptor, ISim200ms
 		descriptors.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.RESEARCH_MATERIALS, inputMaterial.ProperName(), GameUtil.GetFormattedByTag(inputMaterial, mass_per_point)), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.RESEARCH_MATERIALS, inputMaterial.ProperName(), GameUtil.GetFormattedByTag(inputMaterial, mass_per_point)), Descriptor.DescriptorType.Requirement));
 		descriptors.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.PRODUCES_RESEARCH_POINTS, Research.Instance.researchTypes.GetResearchType(research_point_type_id).name), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.PRODUCES_RESEARCH_POINTS, Research.Instance.researchTypes.GetResearchType(research_point_type_id).name)));
 		return descriptors;
+	}
+
+	public override bool InstantlyFinish(Worker worker)
+	{
+		return false;
 	}
 }

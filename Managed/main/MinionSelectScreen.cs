@@ -29,7 +29,6 @@ public class MinionSelectScreen : CharacterSelectionController
 		backButton.onClick += delegate
 		{
 			LoadScreen.ForceStopGame();
-			SaveGame.Instance.worldGen.Reset();
 			App.LoadScene("frontend");
 		};
 		InitializeContainers();
@@ -85,7 +84,7 @@ public class MinionSelectScreen : CharacterSelectionController
 		{
 			selectedDeliverables.Add(container.Stats);
 		}
-		NewBaseScreen.Instance.SetStartingMinionStats(selectedDeliverables.ToArray());
+		NewBaseScreen.Instance.Init(SaveLoader.Instance.ClusterLayout, selectedDeliverables.ToArray());
 		if (OnProceedEvent != null)
 		{
 			OnProceedEvent();

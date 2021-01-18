@@ -66,6 +66,18 @@ namespace TUNING
 
 			public static int ATMOSUIT_SCALDING = 1000;
 
+			public static float LEADSUIT_THERMAL_CONDUCTIVITY_BARRIER = 0.3f;
+
+			public static int LEADSUIT_SCALDING = 1000;
+
+			public static int LEADSUIT_INSULATION = 50;
+
+			public static int LEADSUIT_STRENGTH = 10;
+
+			public static int LEADSUIT_ATHLETICS = -8;
+
+			public static float LEADSUIT_RADIATION_SHIELDING = 0.66f;
+
 			public static int AQUASUIT_FABTIME = ATMOSUIT_FABTIME;
 
 			public static int AQUASUIT_INSULATION = 0;
@@ -83,6 +95,10 @@ namespace TUNING
 			public static int TEMPERATURESUIT_ATHLETICS = ATMOSUIT_ATHLETICS;
 
 			public static int TEMPERATURESUIT_MASS = ATMOSUIT_MASS;
+
+			public const int OXYGEN_MASK_MASS = 15;
+
+			public static int OXYGEN_MASK_ATHLETICS = -2;
 
 			public static float MINIMUM_USABLE_SUIT_CHARGE = 0.95f;
 		}

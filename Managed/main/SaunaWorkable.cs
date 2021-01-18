@@ -58,7 +58,7 @@ public class SaunaWorkable : Workable, IWorkerPrioritizable
 		operational.SetActive(value: false);
 		worker.GetComponent<Effects>().Remove("SaunaRelaxing");
 		Storage component = GetComponent<Storage>();
-		component.ConsumeAndGetDisease(SimHashes.Steam.CreateTag(), sauna.steamPerUseKG, out var disease_info, out var _);
+		component.ConsumeAndGetDisease(SimHashes.Steam.CreateTag(), sauna.steamPerUseKG, out var _, out var disease_info, out var _);
 		component.AddLiquid(SimHashes.Water, sauna.steamPerUseKG, sauna.waterOutputTemp, disease_info.idx, disease_info.count, keep_zero_mass: true, do_disease_transfer: false);
 	}
 

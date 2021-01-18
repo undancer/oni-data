@@ -14,11 +14,7 @@ public class Tuple<T, U> : IEquatable<Tuple<T, U>>
 
 	public bool Equals(Tuple<T, U> other)
 	{
-		if (first.Equals(other.first))
-		{
-			return second.Equals(other.second);
-		}
-		return false;
+		return first.Equals(other.first) && second.Equals(other.second);
 	}
 
 	public override int GetHashCode()
@@ -43,11 +39,7 @@ public class Tuple<T, U, V> : IEquatable<Tuple<T, U, V>>
 
 	public bool Equals(Tuple<T, U, V> other)
 	{
-		if (first.Equals(other.first) && second.Equals(other.second))
-		{
-			return third.Equals(other.third);
-		}
-		return false;
+		return first.Equals(other.first) && second.Equals(other.second) && third.Equals(other.third);
 	}
 
 	public override int GetHashCode()

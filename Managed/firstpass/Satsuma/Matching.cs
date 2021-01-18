@@ -77,11 +77,8 @@ namespace Satsuma
 
 		public Arc MatchedArc(Node node)
 		{
-			if (!matchedArc.TryGetValue(node, out var value))
-			{
-				return Arc.Invalid;
-			}
-			return value;
+			Arc value;
+			return matchedArc.TryGetValue(node, out value) ? value : Arc.Invalid;
 		}
 
 		public Node U(Arc arc)
@@ -119,15 +116,7 @@ namespace Satsuma
 
 		private bool YieldArc(Node u, ArcFilter filter, Arc arc)
 		{
-			if (filter != 0 && !IsEdge(arc) && (filter != ArcFilter.Forward || !(U(arc) == u)))
-			{
-				if (filter == ArcFilter.Backward)
-				{
-					return V(arc) == u;
-				}
-				return false;
-			}
-			return true;
+			return filter == ArcFilter.All || IsEdge(arc) || (filter == ArcFilter.Forward && U(arc) == u) || (filter == ArcFilter.Backward && V(arc) == u);
 		}
 
 		public IEnumerable<Arc> Arcs(Node u, ArcFilter filter = ArcFilter.All)
@@ -158,21 +147,13 @@ namespace Satsuma
 
 		public int ArcCount(ArcFilter filter = ArcFilter.All)
 		{
-			if (filter != 0)
-			{
-				return edgeCount;
-			}
-			return arcs.Count;
+			return (filter == ArcFilter.All) ? arcs.Count : edgeCount;
 		}
 
 		public int ArcCount(Node u, ArcFilter filter = ArcFilter.All)
 		{
 			Arc arc = MatchedArc(u);
-			if (!(arc != Arc.Invalid) || !YieldArc(u, filter, arc))
-			{
-				return 0;
-			}
-			return 1;
+			return (arc != Arc.Invalid && YieldArc(u, filter, arc)) ? 1 : 0;
 		}
 
 		public int ArcCount(Node u, Node v, ArcFilter filter = ArcFilter.All)
@@ -180,31 +161,19 @@ namespace Satsuma
 			if (u != v)
 			{
 				Arc arc = MatchedArc(u);
-				if (!(arc != Arc.Invalid) || !(arc == MatchedArc(v)) || !YieldArc(u, filter, arc))
-				{
-					return 0;
-				}
-				return 1;
+				return (arc != Arc.Invalid && arc == MatchedArc(v) && YieldArc(u, filter, arc)) ? 1 : 0;
 			}
 			return 0;
 		}
 
 		public bool HasNode(Node node)
 		{
-			if (Graph.HasNode(node))
-			{
-				return matchedArc.ContainsKey(node);
-			}
-			return false;
+			return Graph.HasNode(node) && matchedArc.ContainsKey(node);
 		}
 
 		public bool HasArc(Arc arc)
 		{
-			if (Graph.HasArc(arc))
-			{
-				return arcs.Contains(arc);
-			}
-			return false;
+			return Graph.HasArc(arc) && arcs.Contains(arc);
 		}
 	}
 }

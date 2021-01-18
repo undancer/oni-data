@@ -54,6 +54,15 @@ public class LightingSettings : ScriptableObject
 
 	public Vector2 StateTransitionUVOffsetRate;
 
+	[Header("Falling Solids")]
+	public Texture2D FallingSolidMap;
+
+	public Color FallingSolidColor;
+
+	public float FallingSolidUVScale;
+
+	public Vector2 FallingSolidUVOffsetRate;
+
 	[Header("Metal Shine")]
 	public Vector2 ShineCenter;
 

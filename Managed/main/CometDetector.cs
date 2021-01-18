@@ -29,7 +29,7 @@ public class CometDetector : GameStateMachine<CometDetector, CometDetector.Insta
 
 	public new class Instance : GameInstance
 	{
-		public bool ShowWorkingStatus;
+		public bool ShowWorkingStatus = false;
 
 		private const float BEST_WARNING_TIME = 200f;
 
@@ -85,7 +85,7 @@ public class CometDetector : GameStateMachine<CometDetector, CometDetector.Insta
 			KPrefabID component = GetComponent<KPrefabID>();
 			if (targetCraft.Get() == null)
 			{
-				if (SaveGame.Instance.GetComponent<SeasonManager>().TimeUntilNextBombardment() <= detectTime)
+				if (SaveGame.Instance.GetComponent<GameplayEventManager>().IsGameplayEventRunningWithTag(GameTags.SpaceDanger))
 				{
 					component.AddTag(GameTags.Detecting);
 				}

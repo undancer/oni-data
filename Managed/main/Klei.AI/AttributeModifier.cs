@@ -1,3 +1,4 @@
+#define UNITY_ASSERTIONS
 using System;
 using System.Diagnostics;
 using UnityEngine;
@@ -68,16 +69,13 @@ namespace Klei.AI
 
 		public void SetValue(float value)
 		{
+			UnityEngine.Debug.Assert(!IsReadonly);
 			Value = value;
 		}
 
 		public string GetDescription()
 		{
-			if (DescriptionCB == null)
-			{
-				return Description;
-			}
-			return DescriptionCB();
+			return (DescriptionCB != null) ? DescriptionCB() : Description;
 		}
 
 		public string GetFormattedString(GameObject parent_instance)

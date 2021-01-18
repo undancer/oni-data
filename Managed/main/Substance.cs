@@ -84,7 +84,8 @@ public class Substance
 		}
 		if (gameObject == null)
 		{
-			gameObject = GameUtil.KInstantiate(Assets.GetPrefab(nameTag), Grid.SceneLayer.Ore);
+			GameObject prefab = Assets.GetPrefab(nameTag);
+			gameObject = GameUtil.KInstantiate(prefab, Grid.SceneLayer.Ore);
 			primaryElement = gameObject.GetComponent<PrimaryElement>();
 			primaryElement.Mass = mass;
 		}
@@ -137,7 +138,8 @@ public class Substance
 			SetTexture(propertyBlock, "_MainTex");
 			float @float = material.GetFloat("_WorldUVScale");
 			propertyBlock.SetFloat("_WorldUVScale", @float);
-			if (ElementLoader.FindElementByHash(elementID).IsSolid)
+			Element element = ElementLoader.FindElementByHash(elementID);
+			if (element.IsSolid)
 			{
 				SetTexture(propertyBlock, "_MainTex2");
 				SetTexture(propertyBlock, "_HeightTex2");
@@ -150,64 +152,36 @@ public class Substance
 
 	internal AmbienceType GetAmbience()
 	{
-		if (audioConfig == null)
-		{
-			return AmbienceType.None;
-		}
-		return audioConfig.ambienceType;
+		return (audioConfig != null) ? audioConfig.ambienceType : AmbienceType.None;
 	}
 
 	internal SolidAmbienceType GetSolidAmbience()
 	{
-		if (audioConfig == null)
-		{
-			return SolidAmbienceType.None;
-		}
-		return audioConfig.solidAmbienceType;
+		return (audioConfig != null) ? audioConfig.solidAmbienceType : SolidAmbienceType.None;
 	}
 
 	internal string GetMiningSound()
 	{
-		if (audioConfig == null)
-		{
-			return "";
-		}
-		return audioConfig.miningSound;
+		return (audioConfig != null) ? audioConfig.miningSound : "";
 	}
 
 	internal string GetMiningBreakSound()
 	{
-		if (audioConfig == null)
-		{
-			return "";
-		}
-		return audioConfig.miningBreakSound;
+		return (audioConfig != null) ? audioConfig.miningBreakSound : "";
 	}
 
 	internal string GetOreBumpSound()
 	{
-		if (audioConfig == null)
-		{
-			return "";
-		}
-		return audioConfig.oreBumpSound;
+		return (audioConfig != null) ? audioConfig.oreBumpSound : "";
 	}
 
 	internal string GetFloorEventAudioCategory()
 	{
-		if (audioConfig == null)
-		{
-			return "";
-		}
-		return audioConfig.floorEventAudioCategory;
+		return (audioConfig != null) ? audioConfig.floorEventAudioCategory : "";
 	}
 
 	internal string GetCreatureChewSound()
 	{
-		if (audioConfig == null)
-		{
-			return "";
-		}
-		return audioConfig.creatureChewSound;
+		return (audioConfig != null) ? audioConfig.creatureChewSound : "";
 	}
 }

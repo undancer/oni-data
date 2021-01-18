@@ -40,6 +40,9 @@ public class StandardAttributeFormatter : IAttributeFormatter
 			GameUtil.UnitClass.Calories => GameUtil.GetFormattedCalories(value, timeSlice), 
 			GameUtil.UnitClass.Distance => GameUtil.GetFormattedDistance(value), 
 			GameUtil.UnitClass.Disease => GameUtil.GetFormattedDiseaseAmount(Mathf.RoundToInt(value)), 
+			GameUtil.UnitClass.Radiation => GameUtil.GetFormattedRads(value, timeSlice), 
+			GameUtil.UnitClass.Energy => GameUtil.GetFormattedJoules(value, "F1", timeSlice), 
+			GameUtil.UnitClass.Power => GameUtil.GetFormattedWattage(value), 
 			_ => GameUtil.GetFormattedSimple(value, timeSlice), 
 		};
 	}

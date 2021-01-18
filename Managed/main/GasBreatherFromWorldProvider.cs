@@ -51,6 +51,10 @@ public class GasBreatherFromWorldProvider : OxygenBreather.IGasProvider
 	{
 		if (!(oxygenBreather == null) && !oxygenBreather.GetComponent<KPrefabID>().HasTag(GameTags.Dead))
 		{
+			if (ElementLoader.elements[mass_cb_info.elemIdx].id == SimHashes.ContaminatedOxygen)
+			{
+				oxygenBreather.Trigger(-935848905, mass_cb_info);
+			}
 			Game.Instance.accumulators.Accumulate(oxygenBreather.O2Accumulator, mass_cb_info.mass);
 			float value = 0f - mass_cb_info.mass;
 			ReportManager.Instance.ReportValue(ReportManager.ReportType.OxygenCreated, value, oxygenBreather.GetProperName());

@@ -25,7 +25,7 @@ public static class PointGenerator
 		float num4 = num2 / 2f;
 		int num5 = (int)Mathf.Floor(num * num2 / density);
 		uint num6 = (uint)Mathf.Sqrt(num5);
-		int pointsPerIteration = 10;
+		int pointsPerIteration = 20;
 		uint num7 = (uint)((float)num5 * 0.98f);
 		Vector2 min = boundingArea.bounds.min;
 		Vector2 max = boundingArea.bounds.max;
@@ -37,11 +37,11 @@ public static class PointGenerator
 			break;
 		case SampleBehaviour.UniformSquare:
 		{
-			for (float num24 = 0f - num4 + density; num24 < num4 - density; num24 += density)
+			for (float num25 = 0f - num4 + density; num25 < num4 - density; num25 += density)
 			{
-				for (float num25 = 0f - num3 + density; num25 < num3 - density; num25 += density)
+				for (float num26 = 0f - num3 + density; num26 < num3 - density; num26 += density)
 				{
-					list.Add(boundingArea.Centroid() + new Vector2(num25, num24));
+					list.Add(boundingArea.Centroid() + new Vector2(num26, num25));
 				}
 			}
 			break;
@@ -59,27 +59,28 @@ public static class PointGenerator
 		}
 		case SampleBehaviour.UniformSpiral:
 		{
-			for (uint num18 = 0u; num18 < num7; num18++)
+			for (uint num19 = 0u; num19 < num7; num19++)
 			{
-				double num19 = (double)num18 / (32.0 * (double)density * 8.0);
-				double num20 = Math.Sqrt(num19 * 512.0 * (double)density);
-				double num21 = Math.Sqrt(num19);
-				double num22 = Math.Sin(num20) * num21;
-				double num23 = Math.Cos(num20) * num21;
-				list.Add(boundingArea.bounds.center + new Vector2((float)num22 * boundingArea.bounds.width, (float)num23 * boundingArea.bounds.height));
+				double num20 = (double)num19 / (32.0 * (double)density * 8.0);
+				double num21 = Math.Sqrt(num20 * 512.0 * (double)density);
+				double num22 = Math.Sqrt(num20);
+				double num23 = Math.Sin(num21) * num22;
+				double num24 = Math.Cos(num21) * num22;
+				list.Add(boundingArea.bounds.center + new Vector2((float)num23 * boundingArea.bounds.width, (float)num24 * boundingArea.bounds.height));
 			}
 			break;
 		}
 		case SampleBehaviour.UniformCircle:
 		{
-			float num12 = (float)Math.PI * 2f * avoidRadius / density;
-			float num13 = rnd.RandomValue();
-			for (uint num14 = 1u; (float)num14 < num12; num14++)
+			float num12 = (float)Math.PI * 2f * avoidRadius;
+			float num13 = num12 / density;
+			float num14 = rnd.RandomValue();
+			for (uint num15 = 1u; (float)num15 < num13; num15++)
 			{
-				float num15 = num13 + (float)num14 / num12 * (float)Math.PI * 2f;
-				double num16 = Math.Cos(num15) * (double)avoidRadius;
-				double num17 = Math.Sin(num15) * (double)avoidRadius;
-				list.Add(boundingArea.bounds.center + new Vector2((float)num16, (float)num17));
+				float num16 = num14 + (float)num15 / num13 * (float)Math.PI * 2f;
+				double num17 = Math.Cos(num16) * (double)avoidRadius;
+				double num18 = Math.Sin(num16) * (double)avoidRadius;
+				list.Add(boundingArea.bounds.center + new Vector2((float)num17, (float)num18));
 			}
 			break;
 		}

@@ -12,7 +12,7 @@ public class BaggedStates : GameStateMachine<BaggedStates, BaggedStates.Instance
 	public new class Instance : GameInstance
 	{
 		[Serialize]
-		public float baggedTime;
+		public float baggedTime = 0f;
 
 		public static readonly Chore.Precondition IsBagged = new Chore.Precondition
 		{
@@ -54,7 +54,7 @@ public class BaggedStates : GameStateMachine<BaggedStates, BaggedStates.Instance
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = bagged;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		root.ToggleStatusItem(CREATURES.STATUSITEMS.BAGGED.NAME, CREATURES.STATUSITEMS.BAGGED.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, default(HashedString), 129022, null, null, Db.Get().StatusItemCategories.Main);
 		bagged.Enter(BagStart).ToggleTag(GameTags.Creatures.Deliverable).PlayAnim("trussed", KAnim.PlayMode.Loop)
 			.TagTransition(GameTags.Creatures.Bagged, null, on_remove: true)
@@ -99,7 +99,8 @@ public class BaggedStates : GameStateMachine<BaggedStates, BaggedStates.Instance
 		{
 			return false;
 		}
-		if (GameClock.Instance.GetTime() - smi.baggedTime < smi.def.escapeTime)
+		float num = GameClock.Instance.GetTime() - smi.baggedTime;
+		if (num < smi.def.escapeTime)
 		{
 			return false;
 		}

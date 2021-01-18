@@ -21,11 +21,11 @@ public static class ThrivingSequence
 		MusicManager.instance.PlaySong("Music_Victory_02_NIS");
 		Vector3 cameraBiasUp = Vector3.up * 5f;
 		GameObject cameraTaget = null;
-		foreach (Telepad telepad in Components.Telepads)
+		foreach (Telepad pad in Components.Telepads)
 		{
-			if (telepad != null)
+			if (pad != null)
 			{
-				cameraTaget = telepad.gameObject;
+				cameraTaget = pad.gameObject;
 			}
 		}
 		CameraController.Instance.FadeOut(1f, 2f);
@@ -41,12 +41,12 @@ public static class ThrivingSequence
 		CameraController.Instance.SetOverrideZoomSpeed(0.05f);
 		CameraController.Instance.SetTargetPos(cameraTaget.transform.position, 20f, playSound: false);
 		CameraController.Instance.FadeIn(0f, 2f);
-		foreach (MinionIdentity liveMinionIdentity in Components.LiveMinionIdentities)
+		foreach (MinionIdentity minion in Components.LiveMinionIdentities)
 		{
-			if (liveMinionIdentity != null)
+			if (minion != null)
 			{
-				liveMinionIdentity.GetComponent<Facing>().Face(cameraTaget.transform.position.x);
-				new EmoteChore(liveMinionIdentity.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[6]
+				minion.GetComponent<Facing>().Face(cameraTaget.transform.position.x);
+				new EmoteChore(minion.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[6]
 				{
 					"cheer_pre",
 					"cheer_loop",
@@ -59,50 +59,50 @@ public static class ThrivingSequence
 		}
 		yield return new WaitForSecondsRealtime(0.5f);
 		yield return new WaitForSecondsRealtime(3f);
-		cameraTaget = null;
-		foreach (ComplexFabricator complexFabricator in Components.ComplexFabricators)
+		GameObject cameraTaget2 = null;
+		foreach (ComplexFabricator pad2 in Components.ComplexFabricators)
 		{
-			if (complexFabricator != null)
+			if (pad2 != null)
 			{
-				cameraTaget = complexFabricator.gameObject;
+				cameraTaget2 = pad2.gameObject;
 			}
 		}
-		if (cameraTaget == null)
+		if (cameraTaget2 == null)
 		{
-			foreach (Generator generator in Components.Generators)
+			foreach (Generator pad3 in Components.Generators)
 			{
-				if (generator != null)
+				if (pad3 != null)
 				{
-					cameraTaget = generator.gameObject;
+					cameraTaget2 = pad3.gameObject;
 				}
 			}
 		}
-		if (cameraTaget == null)
+		if (cameraTaget2 == null)
 		{
-			foreach (Fabricator fabricator in Components.Fabricators)
+			foreach (Fabricator pad4 in Components.Fabricators)
 			{
-				if (fabricator != null)
+				if (pad4 != null)
 				{
-					cameraTaget = fabricator.gameObject;
+					cameraTaget2 = pad4.gameObject;
 				}
 			}
 		}
-		if (cameraTaget != null)
+		if (cameraTaget2 != null)
 		{
 			CameraController.Instance.FadeOut(1f, 2f);
 			yield return new WaitForSecondsRealtime(1f);
-			CameraController.Instance.SetTargetPos(cameraTaget.transform.position + cameraBiasUp, 10f, playSound: false);
+			CameraController.Instance.SetTargetPos(cameraTaget2.transform.position + cameraBiasUp, 10f, playSound: false);
 			CameraController.Instance.SetOverrideZoomSpeed(10f);
 			yield return new WaitForSecondsRealtime(0.4f);
 			CameraController.Instance.SetOverrideZoomSpeed(0.1f);
-			CameraController.Instance.SetTargetPos(cameraTaget.transform.position + cameraBiasUp, 20f, playSound: false);
+			CameraController.Instance.SetTargetPos(cameraTaget2.transform.position + cameraBiasUp, 20f, playSound: false);
 			CameraController.Instance.FadeIn(0f, 2f);
-			foreach (MinionIdentity liveMinionIdentity2 in Components.LiveMinionIdentities)
+			foreach (MinionIdentity minion3 in Components.LiveMinionIdentities)
 			{
-				if (liveMinionIdentity2 != null)
+				if (minion3 != null)
 				{
-					liveMinionIdentity2.GetComponent<Facing>().Face(cameraTaget.transform.position.x);
-					new EmoteChore(liveMinionIdentity2.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[6]
+					minion3.GetComponent<Facing>().Face(cameraTaget2.transform.position.x);
+					new EmoteChore(minion3.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[6]
 					{
 						"cheer_pre",
 						"cheer_loop",
@@ -116,26 +116,26 @@ public static class ThrivingSequence
 			yield return new WaitForSecondsRealtime(0.5f);
 			yield return new WaitForSecondsRealtime(3f);
 		}
-		cameraTaget = null;
-		foreach (MonumentPart monumentPart in Components.MonumentParts)
+		GameObject cameraTaget3 = null;
+		foreach (MonumentPart part in Components.MonumentParts)
 		{
-			if (monumentPart.IsMonumentCompleted())
+			if (part.IsMonumentCompleted())
 			{
-				cameraTaget = monumentPart.gameObject;
+				cameraTaget3 = part.gameObject;
 			}
 		}
 		CameraController.Instance.FadeOut(1f, 2f);
 		yield return new WaitForSecondsRealtime(1f);
-		CameraController.Instance.SetTargetPos(cameraTaget.transform.position, 15f, playSound: false);
+		CameraController.Instance.SetTargetPos(cameraTaget3.transform.position, 15f, playSound: false);
 		CameraController.Instance.SetOverrideZoomSpeed(10f);
 		yield return new WaitForSecondsRealtime(0.4f);
 		CameraController.Instance.FadeIn(0f, 2f);
-		foreach (MinionIdentity liveMinionIdentity3 in Components.LiveMinionIdentities)
+		foreach (MinionIdentity minion2 in Components.LiveMinionIdentities)
 		{
-			if (liveMinionIdentity3 != null)
+			if (minion2 != null)
 			{
-				liveMinionIdentity3.GetComponent<Facing>().Face(cameraTaget.transform.position.x);
-				new EmoteChore(liveMinionIdentity3.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[6]
+				minion2.GetComponent<Facing>().Face(cameraTaget3.transform.position.x);
+				new EmoteChore(minion2.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[6]
 				{
 					"cheer_pre",
 					"cheer_loop",
@@ -148,7 +148,7 @@ public static class ThrivingSequence
 		}
 		yield return new WaitForSecondsRealtime(0.5f);
 		CameraController.Instance.SetOverrideZoomSpeed(0.075f);
-		CameraController.Instance.SetTargetPos(cameraTaget.transform.position, 25f, playSound: false);
+		CameraController.Instance.SetTargetPos(cameraTaget3.transform.position, 25f, playSound: false);
 		yield return new WaitForSecondsRealtime(5f);
 		CameraController.Instance.FadeOut();
 		MusicManager.instance.StopSong("Music_Victory_02_NIS");
@@ -159,10 +159,10 @@ public static class ThrivingSequence
 		{
 			SpeedControlScreen.Instance.Pause(playSound: false);
 		}
-		VideoScreen component = GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.VideoScreen.gameObject).GetComponent<VideoScreen>();
-		component.PlayVideo(Assets.GetVideo(Db.Get().ColonyAchievements.Thriving.shortVideoName), unskippable: true, AudioMixerSnapshots.Get().VictoryCinematicSnapshot);
-		component.QueueVictoryVideoLoop(queue: true, Db.Get().ColonyAchievements.Thriving.messageBody, Db.Get().ColonyAchievements.Thriving.Id, Db.Get().ColonyAchievements.Thriving.loopVideoName);
-		component.OnStop = (System.Action)Delegate.Combine(component.OnStop, (System.Action)delegate
+		VideoScreen screen = GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.VideoScreen.gameObject).GetComponent<VideoScreen>();
+		screen.PlayVideo(Assets.GetVideo(Db.Get().ColonyAchievements.Thriving.shortVideoName), unskippable: true, AudioMixerSnapshots.Get().VictoryCinematicSnapshot);
+		screen.QueueVictoryVideoLoop(queue: true, Db.Get().ColonyAchievements.Thriving.messageBody, Db.Get().ColonyAchievements.Thriving.Id, Db.Get().ColonyAchievements.Thriving.loopVideoName);
+		screen.OnStop = (System.Action)Delegate.Combine(screen.OnStop, (System.Action)delegate
 		{
 			StoryMessageScreen.HideInterface(hide: false);
 			CameraController.Instance.FadeIn();

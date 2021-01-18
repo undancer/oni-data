@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Klei.AI;
 using STRINGS;
 using UnityEngine;
 
@@ -30,6 +31,8 @@ public class Crop : KMonoBehaviour, IGameObjectEffectDescriptor
 	private KSelectable selectable;
 
 	public CropVal cropVal;
+
+	private AmountInstance yield;
 
 	public string domesticatedDesc = "";
 
@@ -63,6 +66,8 @@ public class Crop : KMonoBehaviour, IGameObjectEffectDescriptor
 	{
 		base.OnPrefabInit();
 		Components.Crops.Add(this);
+		Amounts amounts = base.gameObject.GetAmounts();
+		yield = amounts.Add(new AmountInstance(Db.Get().Amounts.YieldBonus, base.gameObject));
 	}
 
 	protected override void OnSpawn()
@@ -100,7 +105,7 @@ public class Crop : KMonoBehaviour, IGameObjectEffectDescriptor
 			gameObject.transform.SetPosition(gameObject.transform.GetPosition() + new Vector3(0f, y, 0f));
 			gameObject.SetActive(value: true);
 			PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
-			component.Units = cropVal.numProduced;
+			component.Units = (float)cropVal.numProduced + yield.GetDelta();
 			component.Temperature = base.gameObject.GetComponent<PrimaryElement>().Temperature;
 			Edible component2 = gameObject.GetComponent<Edible>();
 			if ((bool)component2)

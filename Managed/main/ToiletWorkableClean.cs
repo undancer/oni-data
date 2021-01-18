@@ -6,7 +6,7 @@ using UnityEngine;
 public class ToiletWorkableClean : Workable
 {
 	[Serialize]
-	public int timesCleaned;
+	public int timesCleaned = 0;
 
 	private static readonly HashedString[] CLEAN_ANIMS = new HashedString[2]
 	{

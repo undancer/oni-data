@@ -24,16 +24,21 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 	[MyCmpAdd]
 	private CopyBuildingSettings copyBuildingSettings;
 
+	private bool isTeleporter;
+
 	[Serialize]
 	private List<KeyValuePair<Ref<KPrefabID>, Permission>> savedPermissions = new List<KeyValuePair<Ref<KPrefabID>, Permission>>();
 
 	[Serialize]
-	private Permission _defaultPermission;
+	private Permission _defaultPermission = Permission.Both;
+
+	[Serialize]
+	public bool registered = true;
 
 	[Serialize]
 	public bool controlEnabled;
 
-	public Door.ControlState overrideAccess;
+	public Door.ControlState overrideAccess = Door.ControlState.Auto;
 
 	private static StatusItem accessControlActive;
 
@@ -76,12 +81,12 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 
 	protected override void OnSpawn()
 	{
+		isTeleporter = GetComponent<NavTeleporter>() != null;
 		base.OnSpawn();
-		RegisterInGrid(register: true);
-		SetGridRestrictions(null, DefaultPermission);
-		foreach (KeyValuePair<Ref<KPrefabID>, Permission> savedPermission in savedPermissions)
+		if (registered)
 		{
-			SetGridRestrictions(savedPermission.Key.Get(), savedPermission.Value);
+			RegisterInGrid(register: true);
+			RestorePermissions();
 		}
 		ListPool<Tuple<MinionAssignablesProxy, Permission>, AccessControl>.PooledList pooledList = ListPool<Tuple<MinionAssignablesProxy, Permission>, AccessControl>.Allocate();
 		for (int num = savedPermissions.Count - 1; num >= 0; num--)
@@ -119,7 +124,8 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 
 	private void OnCopySettings(object data)
 	{
-		AccessControl component = ((GameObject)data).GetComponent<AccessControl>();
+		GameObject gameObject = (GameObject)data;
+		AccessControl component = gameObject.GetComponent<AccessControl>();
 		if (!(component != null))
 		{
 			return;
@@ -134,6 +140,19 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 		}
 		_defaultPermission = component._defaultPermission;
 		SetGridRestrictions(null, DefaultPermission);
+	}
+
+	public void SetRegistered(bool newRegistered)
+	{
+		if (newRegistered && !registered)
+		{
+			RegisterInGrid(register: true);
+			RestorePermissions();
+		}
+		else if (!newRegistered && registered)
+		{
+			RegisterInGrid(register: false);
+		}
 	}
 
 	public void SetPermission(MinionAssignablesProxy key, Permission permission)
@@ -162,74 +181,158 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 		SetGridRestrictions(component, permission);
 	}
 
+	private void RestorePermissions()
+	{
+		SetGridRestrictions(null, DefaultPermission);
+		foreach (KeyValuePair<Ref<KPrefabID>, Permission> savedPermission in savedPermissions)
+		{
+			SetGridRestrictions(savedPermission.Key.Get(), savedPermission.Value);
+		}
+	}
+
 	private void RegisterInGrid(bool register)
 	{
 		Building component = GetComponent<Building>();
-		if (component == null)
+		OccupyArea component2 = GetComponent<OccupyArea>();
+		if (component2 == null && component == null)
 		{
 			return;
 		}
 		if (register)
 		{
-			Rotatable component2 = GetComponent<Rotatable>();
-			Grid.Restriction.Orientation orientation = ((!(component2 == null) && component2.GetOrientation() != 0) ? Grid.Restriction.Orientation.Horizontal : Grid.Restriction.Orientation.Vertical);
-			int[] placementCells = component.PlacementCells;
-			for (int i = 0; i < placementCells.Length; i++)
+			Rotatable component3 = GetComponent<Rotatable>();
+			Grid.Restriction.Orientation orientation = (isTeleporter ? Grid.Restriction.Orientation.SingleCell : ((!(component3 == null) && component3.GetOrientation() != 0) ? Grid.Restriction.Orientation.Horizontal : Grid.Restriction.Orientation.Vertical));
+			if (component != null)
 			{
-				Grid.RegisterRestriction(placementCells[i], orientation);
+				int[] placementCells = component.PlacementCells;
+				foreach (int cell in placementCells)
+				{
+					Grid.RegisterRestriction(cell, orientation);
+				}
+			}
+			else
+			{
+				CellOffset[] occupiedCellsOffsets = component2.OccupiedCellsOffsets;
+				foreach (CellOffset offset in occupiedCellsOffsets)
+				{
+					int cell2 = Grid.OffsetCell(Grid.PosToCell(component2), offset);
+					Grid.RegisterRestriction(cell2, orientation);
+				}
+			}
+			if (isTeleporter)
+			{
+				int cell3 = GetComponent<NavTeleporter>().GetCell();
+				Grid.RegisterRestriction(cell3, orientation);
 			}
 		}
 		else
 		{
-			int[] placementCells = component.PlacementCells;
-			for (int i = 0; i < placementCells.Length; i++)
+			if (component != null)
 			{
-				Grid.UnregisterRestriction(placementCells[i]);
+				int[] placementCells2 = component.PlacementCells;
+				foreach (int cell4 in placementCells2)
+				{
+					Grid.UnregisterRestriction(cell4);
+				}
+			}
+			else
+			{
+				CellOffset[] occupiedCellsOffsets2 = component2.OccupiedCellsOffsets;
+				foreach (CellOffset offset2 in occupiedCellsOffsets2)
+				{
+					int cell5 = Grid.OffsetCell(Grid.PosToCell(component2), offset2);
+					Grid.UnregisterRestriction(cell5);
+				}
+			}
+			if (isTeleporter)
+			{
+				int cell6 = GetComponent<NavTeleporter>().GetCell();
+				Grid.UnregisterRestriction(cell6);
 			}
 		}
+		registered = register;
 	}
 
 	private void SetGridRestrictions(KPrefabID kpid, Permission permission)
 	{
-		Building component = GetComponent<Building>();
-		if (!(component == null))
+		if (!registered || !base.isSpawned)
 		{
-			int minion = ((kpid != null) ? kpid.InstanceID : (-1));
-			Grid.Restriction.Directions directions = (Grid.Restriction.Directions)0;
-			switch (permission)
-			{
-			case Permission.Both:
-				directions = (Grid.Restriction.Directions)0;
-				break;
-			case Permission.GoLeft:
-				directions = Grid.Restriction.Directions.Right;
-				break;
-			case Permission.GoRight:
-				directions = Grid.Restriction.Directions.Left;
-				break;
-			case Permission.Neither:
-				directions = Grid.Restriction.Directions.Left | Grid.Restriction.Directions.Right;
-				break;
-			}
+			return;
+		}
+		Building component = GetComponent<Building>();
+		OccupyArea component2 = GetComponent<OccupyArea>();
+		if (component2 == null && component == null)
+		{
+			return;
+		}
+		int minionInstanceID = ((kpid != null) ? kpid.InstanceID : (-1));
+		Grid.Restriction.Directions directions = (Grid.Restriction.Directions)0;
+		switch (permission)
+		{
+		case Permission.Both:
+			directions = (Grid.Restriction.Directions)0;
+			break;
+		case Permission.GoLeft:
+			directions = Grid.Restriction.Directions.Right;
+			break;
+		case Permission.GoRight:
+			directions = Grid.Restriction.Directions.Left;
+			break;
+		case Permission.Neither:
+			directions = Grid.Restriction.Directions.Left | Grid.Restriction.Directions.Right;
+			break;
+		}
+		if (isTeleporter)
+		{
+			directions = ((directions != 0) ? Grid.Restriction.Directions.Teleport : ((Grid.Restriction.Directions)0));
+		}
+		if (component != null)
+		{
 			int[] placementCells = component.PlacementCells;
-			for (int i = 0; i < placementCells.Length; i++)
+			foreach (int cell in placementCells)
 			{
-				Grid.SetRestriction(placementCells[i], minion, directions);
+				Grid.SetRestriction(cell, minionInstanceID, directions);
 			}
+		}
+		else
+		{
+			CellOffset[] occupiedCellsOffsets = component2.OccupiedCellsOffsets;
+			foreach (CellOffset offset in occupiedCellsOffsets)
+			{
+				int cell2 = Grid.OffsetCell(Grid.PosToCell(component2), offset);
+				Grid.SetRestriction(cell2, minionInstanceID, directions);
+			}
+		}
+		if (isTeleporter)
+		{
+			int cell3 = GetComponent<NavTeleporter>().GetCell();
+			Grid.SetRestriction(cell3, minionInstanceID, directions);
 		}
 	}
 
 	private void ClearGridRestrictions(KPrefabID kpid)
 	{
 		Building component = GetComponent<Building>();
-		if (!(component == null))
+		OccupyArea component2 = GetComponent<OccupyArea>();
+		if (component2 == null && component == null)
 		{
-			int minion = ((kpid != null) ? kpid.InstanceID : (-1));
+			return;
+		}
+		int minionInstanceID = ((kpid != null) ? kpid.InstanceID : (-1));
+		if (component != null)
+		{
 			int[] placementCells = component.PlacementCells;
-			for (int i = 0; i < placementCells.Length; i++)
+			foreach (int cell in placementCells)
 			{
-				Grid.ClearRestriction(placementCells[i], minion);
+				Grid.ClearRestriction(cell, minionInstanceID);
 			}
+			return;
+		}
+		CellOffset[] occupiedCellsOffsets = component2.OccupiedCellsOffsets;
+		foreach (CellOffset offset in occupiedCellsOffsets)
+		{
+			int cell2 = Grid.OffsetCell(Grid.PosToCell(component2), offset);
+			Grid.ClearRestriction(cell2, minionInstanceID);
 		}
 	}
 
@@ -245,7 +348,8 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 
 	private MinionAssignablesProxy GetKeyForNavigator(Navigator minion)
 	{
-		return minion.GetComponent<MinionIdentity>().assignableProxy.Get();
+		MinionIdentity component = minion.GetComponent<MinionIdentity>();
+		return component.assignableProxy.Get();
 	}
 
 	public Permission GetSetPermission(MinionAssignablesProxy key)

@@ -22,18 +22,18 @@ public class EthanolDistilleryConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("EthanolDistillery", 4, 3, "ethanoldistillery_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.PENALTY.TIER1);
-		obj.Overheatable = false;
-		obj.RequiresPowerInput = true;
-		obj.EnergyConsumptionWhenActive = 240f;
-		obj.ExhaustKilowattsWhenActive = 0.5f;
-		obj.SelfHeatKilowattsWhenActive = 4f;
-		obj.AudioCategory = "HollowMetal";
-		obj.ViewMode = OverlayModes.LiquidConduits.ID;
-		obj.OutputConduitType = ConduitType.Liquid;
-		obj.PowerInputOffset = new CellOffset(2, 0);
-		obj.UtilityOutputOffset = new CellOffset(-1, 0);
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("EthanolDistillery", 4, 3, "ethanoldistillery_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.PENALTY.TIER1);
+		buildingDef.Overheatable = false;
+		buildingDef.RequiresPowerInput = true;
+		buildingDef.EnergyConsumptionWhenActive = 240f;
+		buildingDef.ExhaustKilowattsWhenActive = 0.5f;
+		buildingDef.SelfHeatKilowattsWhenActive = 4f;
+		buildingDef.AudioCategory = "HollowMetal";
+		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
+		buildingDef.OutputConduitType = ConduitType.Liquid;
+		buildingDef.PowerInputOffset = new CellOffset(2, 0);
+		buildingDef.UtilityOutputOffset = new CellOffset(-1, 0);
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

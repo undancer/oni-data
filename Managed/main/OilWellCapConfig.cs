@@ -24,28 +24,29 @@ public class OilWellCapConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("OilWellCap", 4, 4, "geyser_oil_cap_kanim", 100, 120f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		BuildingTemplates.CreateElectricalBuildingDef(obj);
-		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
-		obj.ViewMode = OverlayModes.LiquidConduits.ID;
-		obj.EnergyConsumptionWhenActive = 240f;
-		obj.SelfHeatKilowattsWhenActive = 2f;
-		obj.InputConduitType = ConduitType.Liquid;
-		obj.UtilityInputOffset = new CellOffset(0, 1);
-		obj.PowerInputOffset = new CellOffset(1, 1);
-		obj.OverheatTemperature = 2273.15f;
-		obj.Floodable = false;
-		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
-		obj.AttachmentSlotTag = GameTags.OilWell;
-		obj.BuildLocationRule = BuildLocationRule.BuildingAttachPoint;
-		obj.ObjectLayer = ObjectLayer.AttachableBuilding;
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("OilWellCap", 4, 4, "geyser_oil_cap_kanim", 100, 120f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		BuildingTemplates.CreateElectricalBuildingDef(buildingDef);
+		buildingDef.SceneLayer = Grid.SceneLayer.BuildingFront;
+		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
+		buildingDef.EnergyConsumptionWhenActive = 240f;
+		buildingDef.SelfHeatKilowattsWhenActive = 2f;
+		buildingDef.InputConduitType = ConduitType.Liquid;
+		buildingDef.UtilityInputOffset = new CellOffset(0, 1);
+		buildingDef.PowerInputOffset = new CellOffset(1, 1);
+		buildingDef.OverheatTemperature = 2273.15f;
+		buildingDef.Floodable = false;
+		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
+		buildingDef.AttachmentSlotTag = GameTags.OilWell;
+		buildingDef.BuildLocationRule = BuildLocationRule.BuildingAttachPoint;
+		buildingDef.ObjectLayer = ObjectLayer.AttachableBuilding;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		go.AddOrGet<LoopingSounds>();
-		BuildingTemplates.CreateDefaultStorage(go).showInUI = true;
+		Storage storage = BuildingTemplates.CreateDefaultStorage(go);
+		storage.showInUI = true;
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
 		conduitConsumer.conduitType = ConduitType.Liquid;
 		conduitConsumer.consumptionRate = 2f;

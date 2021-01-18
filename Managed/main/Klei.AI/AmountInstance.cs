@@ -92,7 +92,7 @@ namespace Klei.AI
 
 		public AttributeInstance deltaAttribute;
 
-		public Action<float> OnDelta;
+		public Action<float> OnDelta = null;
 
 		public System.Action OnMaxValueReached;
 

@@ -31,11 +31,7 @@ namespace UnityEngine.UI.Extensions
 		{
 			get
 			{
-				if (!(m_OverrideSprite == null))
-				{
-					return m_OverrideSprite;
-				}
-				return sprite;
+				return (m_OverrideSprite == null) ? sprite : m_OverrideSprite;
 			}
 			set
 			{

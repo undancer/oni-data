@@ -42,7 +42,7 @@ public class SpeedControlScreen : KScreen
 
 	private int speed;
 
-	private int pauseCount;
+	private int pauseCount = 0;
 
 	private float stepTime;
 
@@ -73,9 +73,10 @@ public class SpeedControlScreen : KScreen
 			mediumButton,
 			fastButton
 		};
-		for (int i = 0; i < array.Length; i++)
+		KToggle[] array2 = array;
+		foreach (KToggle kToggle in array2)
 		{
-			array[i].soundPlayer.Enabled = false;
+			kToggle.soundPlayer.Enabled = false;
 		}
 		slowButton.onClick += delegate
 		{
@@ -298,6 +299,7 @@ public class SpeedControlScreen : KScreen
 
 	public void DebugStepFrame()
 	{
+		DebugUtil.LogArgs($"Stepping one frame {GameClock.Instance.GetTime()} ({GameClock.Instance.GetTime() / 600f})");
 		stepTime = Time.time;
 		Unpause(playSound: false);
 		StartCoroutine(DebugStepFrameDelay());

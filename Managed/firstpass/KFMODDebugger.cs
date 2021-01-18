@@ -38,7 +38,7 @@ public class KFMODDebugger : KMonoBehaviour
 
 	public Dictionary<DebugSoundType, bool> allDebugSoundTypes = new Dictionary<DebugSoundType, bool>();
 
-	public bool debugEnabled;
+	public bool debugEnabled = false;
 
 	public static KFMODDebugger Get()
 	{

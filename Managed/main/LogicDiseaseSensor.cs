@@ -8,7 +8,7 @@ public class LogicDiseaseSensor : Switch, ISaveLoadable, IThresholdSwitch, ISim2
 {
 	[SerializeField]
 	[Serialize]
-	private float threshold;
+	private float threshold = 0f;
 
 	[SerializeField]
 	[Serialize]
@@ -16,7 +16,7 @@ public class LogicDiseaseSensor : Switch, ISaveLoadable, IThresholdSwitch, ISim2
 
 	private KBatchedAnimController animController;
 
-	private bool wasOn;
+	private bool wasOn = false;
 
 	private const float rangeMin = 0f;
 
@@ -26,7 +26,7 @@ public class LogicDiseaseSensor : Switch, ISaveLoadable, IThresholdSwitch, ISim2
 
 	private int[] samples = new int[8];
 
-	private int sampleIdx;
+	private int sampleIdx = 0;
 
 	[MyCmpAdd]
 	private CopyBuildingSettings copyBuildingSettings;
@@ -113,7 +113,8 @@ public class LogicDiseaseSensor : Switch, ISaveLoadable, IThresholdSwitch, ISim2
 
 	private void OnCopySettings(object data)
 	{
-		LogicDiseaseSensor component = ((GameObject)data).GetComponent<LogicDiseaseSensor>();
+		GameObject gameObject = (GameObject)data;
+		LogicDiseaseSensor component = gameObject.GetComponent<LogicDiseaseSensor>();
 		if (component != null)
 		{
 			Threshold = component.Threshold;

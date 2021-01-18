@@ -84,6 +84,15 @@ public class LoopingSoundManager : KMonoBehaviour, IRenderEveryTick
 		{
 			Game.Instance.Subscribe(-1788536802, instance.OnPauseChanged);
 		}
+		Game.Instance.Subscribe(1983128072, delegate
+		{
+			OnActiveWorldChanged();
+		});
+	}
+
+	private void OnActiveWorldChanged()
+	{
+		StopAllSounds();
 	}
 
 	private void CollectParameterUpdaters()
@@ -187,9 +196,9 @@ public class LoopingSoundManager : KMonoBehaviour, IRenderEveryTick
 				sound.pos.x += offset.x;
 				sound.pos.y += offset.y;
 			}
-			bool num = !sound.IsCullingEnabled || (sound.ShouldCameraScalePosition && soundCuller.IsAudible(sound.pos, sound.falloffDistanceSq)) || soundCuller.IsAudibleNoCameraScaling(sound.pos, sound.falloffDistanceSq);
+			bool flag2 = !sound.IsCullingEnabled || (sound.ShouldCameraScalePosition && soundCuller.IsAudible(sound.pos, sound.falloffDistanceSq)) || soundCuller.IsAudibleNoCameraScaling(sound.pos, sound.falloffDistanceSq);
 			bool isPlaying = sound.IsPlaying;
-			if (num)
+			if (flag2)
 			{
 				pooledList.Add(sound);
 				if (!isPlaying)
@@ -264,10 +273,10 @@ public class LoopingSoundManager : KMonoBehaviour, IRenderEveryTick
 			sound2.transform = value3.transform;
 			sound2.objectIsSelectedAndVisible = false;
 			LoopingSoundParameterUpdater.Sound sound4 = sound2;
-			SoundDescription.Parameter[] parameters = soundDescription2.parameters;
-			for (int j = 0; j < parameters.Length; j++)
+			SoundDescription.Parameter[] parameters2 = soundDescription2.parameters;
+			for (int k = 0; k < parameters2.Length; k++)
 			{
-				SoundDescription.Parameter parameter2 = parameters[j];
+				SoundDescription.Parameter parameter2 = parameters2[k];
 				LoopingSoundParameterUpdater value4 = null;
 				if (parameterUpdaters.TryGetValue(parameter2.name, out value4))
 				{

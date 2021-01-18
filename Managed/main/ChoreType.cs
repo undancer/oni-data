@@ -10,7 +10,7 @@ public class ChoreType : Resource
 
 	public HashSet<Tag> interruptExclusion;
 
-	public string reportName;
+	public string reportName = null;
 
 	public Urge urge
 	{
@@ -44,7 +44,8 @@ public class ChoreType : Resource
 
 	private string ResolveStringCallback(string str, object data)
 	{
-		return ((Chore)data).ResolveString(str);
+		Chore chore = (Chore)data;
+		return chore.ResolveString(str);
 	}
 
 	public ChoreType(string id, ResourceSet parent, string[] chore_groups, string urge, string name, string status_message, string tooltip, IEnumerable<Tag> interrupt_exclusion, int implicit_priority, int explicit_priority)

@@ -5,14 +5,12 @@ public class DoctorStationConfig : IBuildingConfig
 {
 	public const string ID = "DoctorStation";
 
-	private static Tag SUPPLY_TAG = "IntermediateCure";
-
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("DoctorStation", 3, 2, "treatment_chair_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
-		obj.Overheatable = false;
-		obj.AudioCategory = "Metal";
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("DoctorStation", 3, 2, "treatment_chair_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
+		buildingDef.Overheatable = false;
+		buildingDef.AudioCategory = "Metal";
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -25,9 +23,10 @@ public class DoctorStationConfig : IBuildingConfig
 	{
 		Storage storage = go.AddOrGet<Storage>();
 		storage.showInUI = true;
+		Tag supplyTagForStation = MedicineInfo.GetSupplyTagForStation("DoctorStation");
 		ManualDeliveryKG manualDeliveryKG = go.AddOrGet<ManualDeliveryKG>();
 		manualDeliveryKG.SetStorage(storage);
-		manualDeliveryKG.requestedItemTag = SUPPLY_TAG;
+		manualDeliveryKG.requestedItemTag = supplyTagForStation;
 		manualDeliveryKG.capacity = 10f;
 		manualDeliveryKG.refillMass = 5f;
 		manualDeliveryKG.minimumMass = 1f;
@@ -39,7 +38,6 @@ public class DoctorStationConfig : IBuildingConfig
 			Assets.GetAnim("anim_interacts_treatment_chair_sick_kanim")
 		};
 		doctorStation.workLayer = Grid.SceneLayer.BuildingFront;
-		doctorStation.supplyTag = SUPPLY_TAG;
 		RoomTracker roomTracker = go.AddOrGet<RoomTracker>();
 		roomTracker.requiredRoomType = Db.Get().RoomTypes.Hospital.Id;
 		roomTracker.requirement = RoomTracker.Requirement.CustomRecommended;

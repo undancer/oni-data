@@ -24,16 +24,16 @@ public class WoodGasGeneratorConfig : IBuildingConfig
 	public override BuildingDef CreateBuildingDef()
 	{
 		string[] aLL_METALS = MATERIALS.ALL_METALS;
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, construction_materials: aLL_METALS, melting_point: 2400f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, id: "WoodGasGenerator", width: 2, height: 2, anim: "generatorwood_kanim", hitpoints: 100, construction_time: 120f, decor: BUILDINGS.DECOR.PENALTY.TIER2);
-		obj.GeneratorWattageRating = 300f;
-		obj.GeneratorBaseCapacity = 20000f;
-		obj.ExhaustKilowattsWhenActive = 8f;
-		obj.SelfHeatKilowattsWhenActive = 1f;
-		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(1, 1));
-		obj.ViewMode = OverlayModes.Power.ID;
-		obj.AudioCategory = "Metal";
-		obj.PowerOutputOffset = new CellOffset(0, 0);
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(construction_mass: BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, construction_materials: aLL_METALS, melting_point: 2400f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, id: "WoodGasGenerator", width: 2, height: 2, anim: "generatorwood_kanim", hitpoints: 100, construction_time: 120f, decor: BUILDINGS.DECOR.PENALTY.TIER2);
+		buildingDef.GeneratorWattageRating = 300f;
+		buildingDef.GeneratorBaseCapacity = 20000f;
+		buildingDef.ExhaustKilowattsWhenActive = 8f;
+		buildingDef.SelfHeatKilowattsWhenActive = 1f;
+		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(1, 1));
+		buildingDef.ViewMode = OverlayModes.Power.ID;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.PowerOutputOffset = new CellOffset(0, 0);
+		return buildingDef;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

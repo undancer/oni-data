@@ -19,23 +19,24 @@ public class CompostConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("Compost", 2, 2, "compost_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.RAW_MINERALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER3);
-		obj.ExhaustKilowattsWhenActive = 0.125f;
-		obj.SelfHeatKilowattsWhenActive = 1f;
-		obj.Overheatable = false;
-		obj.AudioCategory = "HollowMetal";
-		obj.UtilityInputOffset = new CellOffset(0, 0);
-		obj.UtilityOutputOffset = new CellOffset(0, 0);
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("Compost", 2, 2, "compost_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.RAW_MINERALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER3);
+		buildingDef.ExhaustKilowattsWhenActive = 0.125f;
+		buildingDef.SelfHeatKilowattsWhenActive = 1f;
+		buildingDef.Overheatable = false;
+		buildingDef.AudioCategory = "HollowMetal";
+		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
+		buildingDef.UtilityOutputOffset = new CellOffset(0, 0);
 		SoundEventVolumeCache.instance.AddVolume("anim_interacts_compost_kanim", "Compost_shovel_in", NOISE_POLLUTION.NOISY.TIER2);
 		SoundEventVolumeCache.instance.AddVolume("anim_interacts_compost_kanim", "Compost_shovel_out", NOISE_POLLUTION.NOISY.TIER2);
-		return obj;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		Storage storage = go.AddOrGet<Storage>();
 		storage.capacityKg = 2000f;
-		go.AddOrGet<Compost>().simulatedInternalTemperature = 348.15f;
+		Compost compost = go.AddOrGet<Compost>();
+		compost.simulatedInternalTemperature = 348.15f;
 		CompostWorkable compostWorkable = go.AddOrGet<CompostWorkable>();
 		compostWorkable.workTime = 20f;
 		compostWorkable.overrideAnims = new KAnimFile[1]

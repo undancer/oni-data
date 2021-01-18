@@ -52,7 +52,8 @@ public class NotificationScreen : KScreen
 			}
 			if (label != null)
 			{
-				label.GetComponent<HierarchyReferences>().GetReference<LocText>("Text").text = message;
+				LocText reference = label.GetComponent<HierarchyReferences>().GetReference<LocText>("Text");
+				reference.text = message;
 			}
 		}
 	}
@@ -72,8 +73,6 @@ public class NotificationScreen : KScreen
 	private MessageDialogFrame messageDialog;
 
 	private float initTime;
-
-	private int notificationIncrement;
 
 	[MyCmpAdd]
 	private Notifier notifier;
@@ -105,6 +104,12 @@ public class NotificationScreen : KScreen
 	[SerializeField]
 	private Color messageColor;
 
+	[SerializeField]
+	private Color eventColorBG;
+
+	[SerializeField]
+	private Color eventColor;
+
 	public Sprite icon_normal;
 
 	public Sprite icon_warning;
@@ -116,6 +121,8 @@ public class NotificationScreen : KScreen
 	public Sprite icon_message;
 
 	public Sprite icon_video;
+
+	public Sprite icon_event;
 
 	private List<Notification> pendingNotifications = new List<Notification>();
 
@@ -246,14 +253,16 @@ public class NotificationScreen : KScreen
 		base.OnSpawn();
 		initTime = KTime.Instance.UnscaledGameTime;
 		LocText[] componentsInChildren = LabelPrefab.GetComponentsInChildren<LocText>();
-		for (int i = 0; i < componentsInChildren.Length; i++)
+		LocText[] array = componentsInChildren;
+		foreach (LocText locText in array)
 		{
-			componentsInChildren[i].color = normalColor;
+			locText.color = normalColor;
 		}
 		componentsInChildren = MessagesPrefab.GetComponentsInChildren<LocText>();
-		for (int i = 0; i < componentsInChildren.Length; i++)
+		LocText[] array2 = componentsInChildren;
+		foreach (LocText locText2 in array2)
 		{
-			componentsInChildren[i].color = normalColor;
+			locText2.color = normalColor;
 		}
 		Subscribe(Messenger.Instance.gameObject, 1558809273, OnNewMessage);
 		foreach (Message message in Messenger.Instance.Messages)
@@ -273,7 +282,6 @@ public class NotificationScreen : KScreen
 	private void AddNotification(Notification notification)
 	{
 		notifications.Add(notification);
-		notification.Idx = notificationIncrement++;
 		Entry entry = null;
 		entriesByMessage.TryGetValue(notification.titleText, out entry);
 		if (entry == null)
@@ -291,18 +299,25 @@ public class NotificationScreen : KScreen
 			{
 				colors.normalColor = messageColorBG;
 				Debug.Assert(notification.GetType() == typeof(MessageNotification), $"Notification: \"{notification.titleText}\" is not of type MessageNotification");
-				hierarchyReferences.GetReference<Button>("DismissButton").onClick.AddListener(delegate
+				Button reference2 = hierarchyReferences.GetReference<Button>("DismissButton");
+				reference2.onClick.AddListener(delegate
 				{
-					foreach (MessageNotification item in notifications.FindAll((Notification n) => n.titleText == notification.titleText))
+					List<Notification> list = notifications.FindAll((Notification n) => n.titleText == notification.titleText);
+					foreach (Notification item in list)
 					{
-						Messenger.Instance.RemoveMessage(item.message);
-						item.Clear();
+						MessageNotification messageNotification2 = (MessageNotification)item;
+						Messenger.Instance.RemoveMessage(messageNotification2.message);
+						messageNotification2.Clear();
 					}
 				});
 			}
 			else if (notification.Type == NotificationType.Tutorial)
 			{
 				colors.normalColor = warningColorBG;
+			}
+			else if (notification.Type == NotificationType.Event)
+			{
+				colors.normalColor = eventColorBG;
 			}
 			else
 			{
@@ -326,43 +341,47 @@ public class NotificationScreen : KScreen
 			entry = new Entry(hierarchyReferences.gameObject);
 			entriesByMessage[notification.titleText] = entry;
 			entries.Add(entry);
-			KImage reference2 = hierarchyReferences.GetReference<KImage>("Icon");
-			LocText reference3 = hierarchyReferences.GetReference<LocText>("Text");
+			KImage reference3 = hierarchyReferences.GetReference<KImage>("Icon");
+			LocText reference4 = hierarchyReferences.GetReference<LocText>("Text");
 			switch (notification.Type)
 			{
 			case NotificationType.Bad:
-				reference3.color = badColor;
-				reference2.sprite = icon_bad;
+				reference4.color = badColor;
+				reference3.sprite = icon_bad;
 				break;
 			case NotificationType.DuplicantThreatening:
-				reference3.color = badColor;
-				reference2.sprite = icon_threatening;
+				reference4.color = badColor;
+				reference3.sprite = icon_threatening;
 				break;
 			case NotificationType.Tutorial:
-				reference3.color = warningColor;
-				reference2.sprite = icon_warning;
+				reference4.color = warningColor;
+				reference3.sprite = icon_warning;
 				break;
 			case NotificationType.Messages:
 			{
-				reference3.color = messageColor;
-				reference2.sprite = icon_message;
+				reference4.color = messageColor;
+				reference3.sprite = icon_message;
 				MessageNotification messageNotification = notification as MessageNotification;
 				if (messageNotification != null)
 				{
 					TutorialMessage tutorialMessage = messageNotification.message as TutorialMessage;
 					if (tutorialMessage != null && !string.IsNullOrEmpty(tutorialMessage.videoClipId))
 					{
-						reference2.sprite = icon_video;
+						reference3.sprite = icon_video;
 					}
 				}
 				break;
 			}
+			case NotificationType.Event:
+				reference4.color = eventColor;
+				reference3.sprite = icon_event;
+				break;
 			default:
-				reference3.color = normalColor;
-				reference2.sprite = icon_normal;
+				reference4.color = normalColor;
+				reference3.sprite = icon_normal;
 				break;
 			}
-			reference2.color = reference3.color;
+			reference3.color = reference4.color;
 			string str = "";
 			if (KTime.Instance.UnscaledGameTime - initTime > 5f && notification.playSound)
 			{
@@ -483,7 +502,11 @@ public class NotificationScreen : KScreen
 		{
 			Vector3 position = nextClickedNotification.clickFocus.GetPosition();
 			position.z = -40f;
-			CameraController.Instance.SetTargetPos(position, 8f, playSound: true);
+			int myWorldId = nextClickedNotification.clickFocus.gameObject.GetMyWorldId();
+			if (myWorldId != -1)
+			{
+				CameraController.Instance.ActiveWorldStarWipe(myWorldId, position);
+			}
 			if (nextClickedNotification.clickFocus.GetComponent<KSelectable>() != null)
 			{
 				SelectTool.Instance.Select(nextClickedNotification.clickFocus.GetComponent<KSelectable>());
@@ -512,6 +535,7 @@ public class NotificationScreen : KScreen
 		notificationSounds[NotificationType.Tutorial] = "Notification";
 		notificationSounds[NotificationType.Messages] = "Message";
 		notificationSounds[NotificationType.DuplicantThreatening] = "Warning_DupeThreatening";
+		notificationSounds[NotificationType.Event] = "Message";
 	}
 
 	public Sprite GetNotificationIcon(NotificationType type)
@@ -522,6 +546,7 @@ public class NotificationScreen : KScreen
 			NotificationType.DuplicantThreatening => icon_threatening, 
 			NotificationType.Tutorial => icon_warning, 
 			NotificationType.Messages => icon_message, 
+			NotificationType.Event => icon_event, 
 			_ => icon_normal, 
 		};
 	}
@@ -534,6 +559,7 @@ public class NotificationScreen : KScreen
 			NotificationType.DuplicantThreatening => badColor, 
 			NotificationType.Tutorial => warningColor, 
 			NotificationType.Messages => messageColor, 
+			NotificationType.Event => eventColor, 
 			_ => normalColor, 
 		};
 	}
@@ -546,6 +572,7 @@ public class NotificationScreen : KScreen
 			NotificationType.DuplicantThreatening => badColorBG, 
 			NotificationType.Tutorial => warningColorBG, 
 			NotificationType.Messages => messageColorBG, 
+			NotificationType.Event => eventColorBG, 
 			_ => normalColorBG, 
 		};
 	}

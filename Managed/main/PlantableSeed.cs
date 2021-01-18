@@ -11,13 +11,13 @@ public class PlantableSeed : KMonoBehaviour, IReceptacleDirection, IGameObjectEf
 	public Tag PreviewID;
 
 	[Serialize]
-	public float timeUntilSelfPlant;
+	public float timeUntilSelfPlant = 0f;
 
 	public Tag replantGroundTag;
 
 	public string domesticatedDescription;
 
-	public SingleEntityReceptacle.ReceptacleDirection direction;
+	public SingleEntityReceptacle.ReceptacleDirection direction = SingleEntityReceptacle.ReceptacleDirection.Top;
 
 	private static readonly EventSystem.IntraObjectHandler<PlantableSeed> OnAbsorbDelegate = new EventSystem.IntraObjectHandler<PlantableSeed>(delegate(PlantableSeed component, object data)
 	{
@@ -57,6 +57,7 @@ public class PlantableSeed : KMonoBehaviour, IReceptacleDirection, IGameObjectEf
 
 	private void OnSplit(object data)
 	{
+		GetComponent<MutantPlant>().SetSubSpecies(((Pickupable)data).GetComponent<MutantPlant>().subspeciesID);
 	}
 
 	public void TryPlant(bool allow_plant_from_storage = false)
@@ -67,21 +68,31 @@ public class PlantableSeed : KMonoBehaviour, IReceptacleDirection, IGameObjectEf
 			return;
 		}
 		int cell = Grid.PosToCell(base.gameObject);
-		if (TestSuitableGround(cell))
+		if (!TestSuitableGround(cell))
 		{
-			Vector3 position = Grid.CellToPosCBC(cell, Grid.SceneLayer.BuildingFront);
-			GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(PlantID), position, Grid.SceneLayer.BuildingFront);
-			gameObject.SetActive(value: true);
-			Pickupable pickupable = GetComponent<Pickupable>().Take(1f);
-			if (pickupable != null)
+			return;
+		}
+		Vector3 position = Grid.CellToPosCBC(cell, Grid.SceneLayer.BuildingFront);
+		GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(PlantID), position, Grid.SceneLayer.BuildingFront);
+		MutantPlant component = gameObject.GetComponent<MutantPlant>();
+		if ((bool)component)
+		{
+			component.SetSubSpecies(GetComponent<MutantPlant>().subspeciesID);
+		}
+		gameObject.SetActive(value: true);
+		Pickupable component2 = GetComponent<Pickupable>();
+		Pickupable pickupable = component2.Take(1f);
+		if (pickupable != null)
+		{
+			Crop component3 = gameObject.GetComponent<Crop>();
+			if (component3 != null)
 			{
-				_ = gameObject.GetComponent<Crop>() != null;
-				Util.KDestroyGameObject(pickupable.gameObject);
 			}
-			else
-			{
-				KCrashReporter.Assert(condition: false, "Seed has fractional total amount < 1f");
-			}
+			Util.KDestroyGameObject(pickupable.gameObject);
+		}
+		else
+		{
+			KCrashReporter.Assert(condition: false, "Seed has fractional total amount < 1f");
 		}
 	}
 

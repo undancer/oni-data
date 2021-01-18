@@ -24,7 +24,7 @@ public class KCrashReporter : MonoBehaviour
 
 		public string user = "unknown";
 
-		public ulong steam64_verified;
+		public ulong steam64_verified = 0uL;
 
 		public string callstack = "";
 
@@ -36,9 +36,9 @@ public class KCrashReporter : MonoBehaviour
 
 		public string user_message = "";
 
-		public bool is_server;
+		public bool is_server = false;
 
-		public bool is_dedicated;
+		public bool is_dedicated = false;
 
 		public string save_hash = "";
 	}
@@ -74,7 +74,7 @@ public class KCrashReporter : MonoBehaviour
 	[SerializeField]
 	private ConfirmDialogScreen confirmDialogPrefab;
 
-	private GameObject errorScreen;
+	private GameObject errorScreen = null;
 
 	public static bool terminateOnError = true;
 
@@ -108,28 +108,32 @@ public class KCrashReporter : MonoBehaviour
 		{
 			StringBuilder stringBuilder = new StringBuilder();
 			MD5 mD = MD5.Create();
-			Dictionary<string, string> dictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(path));
+			string value = File.ReadAllText(path);
+			Dictionary<string, string> dictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
 			if (dictionary.Count > 0)
 			{
 				flag = true;
 				foreach (KeyValuePair<string, string> item in dictionary)
 				{
 					string key = item.Key;
-					string value = item.Value;
+					string value2 = item.Value;
 					stringBuilder.Length = 0;
-					using FileStream inputStream = new FileStream(Path.Combine(dataRoot, key), FileMode.Open, FileAccess.Read);
+					string path2 = Path.Combine(dataRoot, key);
+					using FileStream inputStream = new FileStream(path2, FileMode.Open, FileAccess.Read);
 					byte[] array = mD.ComputeHash(inputStream);
-					foreach (byte b in array)
+					byte[] array2 = array;
+					foreach (byte b in array2)
 					{
 						stringBuilder.AppendFormat("{0:x2}", b);
 					}
-					if (stringBuilder.ToString() != value)
+					string a = stringBuilder.ToString();
+					if (a != value2)
 					{
 						flag = false;
-						goto IL_011c;
+						goto IL_014b;
 					}
 				}
-				goto IL_011c;
+				goto IL_014b;
 			}
 			ignoreAll = false;
 		}
@@ -137,14 +141,14 @@ public class KCrashReporter : MonoBehaviour
 		{
 			ignoreAll = false;
 		}
-		goto IL_0136;
-		IL_011c:
+		goto IL_0171;
+		IL_014b:
 		if (flag)
 		{
 			ignoreAll = false;
 		}
-		goto IL_0136;
-		IL_0136:
+		goto IL_0171;
+		IL_0171:
 		if (ignoreAll)
 		{
 			Debug.Log("Ignoring crash due to mismatched hashes.json entries.");
@@ -162,6 +166,7 @@ public class KCrashReporter : MonoBehaviour
 
 	private void OnDisable()
 	{
+		Application.logMessageReceived -= HandleLog;
 	}
 
 	private void HandleLog(string msg, string stack_trace, LogType type)
@@ -171,7 +176,7 @@ public class KCrashReporter : MonoBehaviour
 			DebugUtil.DevLogError("Turning off logging to avoid increasing the file to an unreasonable size, please review the logs as they probably contain spam");
 			Debug.DisableLogging();
 		}
-		if (ignoreAll || Array.IndexOf(IgnoreStrings, msg) != -1 || (msg != null && msg.StartsWith("<RI.Hid>")))
+		if (ignoreAll || Array.IndexOf(IgnoreStrings, msg) != -1 || (msg?.StartsWith("<RI.Hid>") ?? false))
 		{
 			return;
 		}
@@ -190,7 +195,8 @@ public class KCrashReporter : MonoBehaviour
 		string text = stack_trace;
 		if (string.IsNullOrEmpty(text))
 		{
-			text = new StackTrace(5, fNeedFileInfo: true).ToString();
+			StackTrace stackTrace = new StackTrace(5, fNeedFileInfo: true);
+			text = stackTrace.ToString();
 		}
 		if (App.isLoading)
 		{
@@ -403,7 +409,7 @@ public class KCrashReporter : MonoBehaviour
 			}
 			if (string.IsNullOrEmpty(stack_trace))
 			{
-				string arg = "CS-" + 447596u;
+				string arg = LaunchInitializer.BuildPrefix() + "-" + 447598u;
 				stack_trace = $"No stack trace {arg}\n\n{msg}";
 			}
 			List<string> list = new List<string>();
@@ -465,7 +471,7 @@ public class KCrashReporter : MonoBehaviour
 				error.callstack = error.callstack + "\n" + Guid.NewGuid().ToString();
 			}
 			error.fullstack = $"{msg}\n\n{stack_trace}";
-			error.build = 447596;
+			error.build = 447598;
 			error.log = GetLogContents();
 			error.summaryline = string.Join("\n", list.ToArray());
 			error.user_message = userMessage;
@@ -491,7 +497,8 @@ public class KCrashReporter : MonoBehaviour
 			}
 			if (confirm_prefab != null && confirm_parent != null)
 			{
-				((ConfirmDialogScreen)KScreenManager.Instance.StartScreen(confirm_prefab.gameObject, confirm_parent)).PopupConfirmDialog(UI.CRASHSCREEN.REPORTEDERROR, null, null);
+				ConfirmDialogScreen confirmDialogScreen = (ConfirmDialogScreen)KScreenManager.Instance.StartScreen(confirm_prefab.gameObject, confirm_parent);
+				confirmDialogScreen.PopupConfirmDialog(UI.CRASHSCREEN.REPORTEDERROR, null, null);
 			}
 			obj2 = text3;
 		}

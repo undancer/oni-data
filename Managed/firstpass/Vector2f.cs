@@ -55,20 +55,12 @@ public struct Vector2f
 
 	public static bool operator ==(Vector2f u, Vector2f v)
 	{
-		if (u.x == v.x)
-		{
-			return u.y == v.y;
-		}
-		return false;
+		return u.x == v.x && u.y == v.y;
 	}
 
 	public static bool operator !=(Vector2f u, Vector2f v)
 	{
-		if (u.x == v.x)
-		{
-			return u.y != v.y;
-		}
-		return true;
+		return u.x != v.x || u.y != v.y;
 	}
 
 	public static implicit operator Vector2(Vector2f v)
@@ -83,11 +75,7 @@ public struct Vector2f
 
 	public bool Equals(Vector2 v)
 	{
-		if (v.x == x)
-		{
-			return v.y == y;
-		}
-		return false;
+		return v.x == x && v.y == y;
 	}
 
 	public override bool Equals(object obj)

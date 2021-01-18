@@ -7,6 +7,11 @@ public class RotPileConfig : IEntityConfig
 {
 	public static string ID = "RotPile";
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateLooseEntity(ID, ITEMS.FOOD.ROTPILE.NAME, ITEMS.FOOD.ROTPILE.DESC, 1f, unitMass: false, Assets.GetAnim("rotfood_kanim"), "object", Grid.SceneLayer.Front, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.4f, isPickupable: true);
@@ -17,7 +22,8 @@ public class RotPileConfig : IEntityConfig
 		gameObject.AddOrGet<OccupyArea>();
 		gameObject.AddOrGet<Modifiers>();
 		gameObject.AddOrGet<RotPile>();
-		gameObject.AddComponent<DecorProvider>().SetValues(DECOR.PENALTY.TIER2);
+		DecorProvider decorProvider = gameObject.AddComponent<DecorProvider>();
+		decorProvider.SetValues(DECOR.PENALTY.TIER2);
 		return gameObject;
 	}
 

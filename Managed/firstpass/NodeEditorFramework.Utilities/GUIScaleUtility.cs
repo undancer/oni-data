@@ -47,7 +47,8 @@ namespace NodeEditorFramework.Utilities
 
 		public static void Init()
 		{
-			Type type = Assembly.GetAssembly(typeof(GUI)).GetType("UnityEngine.GUIClip", throwOnError: true);
+			Assembly assembly = Assembly.GetAssembly(typeof(GUI));
+			Type type = assembly.GetType("UnityEngine.GUIClip", throwOnError: true);
 			PropertyInfo property = type.GetProperty("topmostRect", BindingFlags.Static | BindingFlags.Public);
 			MethodInfo method = type.GetMethod("GetTopRect", BindingFlags.Static | BindingFlags.NonPublic);
 			MethodInfo method2 = type.GetMethod("Clip", BindingFlags.Static | BindingFlags.Public, Type.DefaultBinder, new Type[1]

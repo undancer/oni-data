@@ -22,12 +22,6 @@ namespace ProcGen
 			AnyFloor
 		}
 
-		public MinMax units
-		{
-			get;
-			private set;
-		}
-
 		public string prefabName
 		{
 			get;

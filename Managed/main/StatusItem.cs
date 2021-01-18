@@ -38,8 +38,6 @@ public class StatusItem : Resource
 
 	public string notificationTooltipText;
 
-	public float notificationDelay;
-
 	public string soundPath;
 
 	public string iconName;
@@ -149,7 +147,7 @@ public class StatusItem : Resource
 		tooltipText = Strings.Get(composed_prefix + ".TOOLTIP");
 	}
 
-	public StatusItem(string id, string prefix, string icon, IconType icon_type, NotificationType notification_type, bool allow_multiples, HashedString render_overlay, bool showWorldIcon = true, int status_overlays = 129022)
+	public StatusItem(string id, string prefix, string icon, IconType icon_type, NotificationType notification_type, bool allow_multiples, HashedString render_overlay, bool showWorldIcon = true, int status_overlays = 129022, Func<string, object, string> resolve_string_callback = null)
 		: this(id, "STRINGS." + prefix + ".STATUSITEMS." + id.ToUpper())
 	{
 		switch (icon_type)
@@ -169,13 +167,14 @@ public class StatusItem : Resource
 		this.render_overlay = render_overlay;
 		showShowWorldIcon = showWorldIcon;
 		this.status_overlays = status_overlays;
+		resolveStringCallback = resolve_string_callback;
 		if (sprite == null)
 		{
 			Debug.LogWarning("Status item '" + id + "' references a missing icon: " + icon);
 		}
 	}
 
-	public StatusItem(string id, string name, string tooltip, string icon, IconType icon_type, NotificationType notification_type, bool allow_multiples, HashedString render_overlay, int status_overlays = 129022)
+	public StatusItem(string id, string name, string tooltip, string icon, IconType icon_type, NotificationType notification_type, bool allow_multiples, HashedString render_overlay, int status_overlays = 129022, bool showWorldIcon = true, Func<string, object, string> resolve_string_callback = null)
 		: base(id, name)
 	{
 		switch (icon_type)
@@ -195,16 +194,17 @@ public class StatusItem : Resource
 		allowMultiples = allow_multiples;
 		this.render_overlay = render_overlay;
 		this.status_overlays = status_overlays;
+		showShowWorldIcon = showWorldIcon;
+		resolveStringCallback = resolve_string_callback;
 		if (sprite == null)
 		{
 			Debug.LogWarning("Status item '" + id + "' references a missing icon: " + icon);
 		}
 	}
 
-	public void AddNotification(string sound_path = null, string notification_text = null, string notification_tooltip = null, float notification_delay = 0f)
+	public void AddNotification(string sound_path = null, string notification_text = null, string notification_tooltip = null)
 	{
 		shouldNotify = true;
-		notificationDelay = notification_delay;
 		if (sound_path == null)
 		{
 			NotificationType notificationType = this.notificationType;
@@ -276,11 +276,7 @@ public class StatusItem : Resource
 
 	public bool ShouldShowIcon()
 	{
-		if (iconType == IconType.Custom)
-		{
-			return showShowWorldIcon;
-		}
-		return false;
+		return iconType == IconType.Custom && showShowWorldIcon;
 	}
 
 	public virtual void ShowToolTip(ToolTip tooltip_widget, object data, TextStyleSetting property_style)
@@ -301,11 +297,7 @@ public class StatusItem : Resource
 
 	public bool UseConditionalCallback(HashedString overlay, Transform transform)
 	{
-		if (overlay != OverlayModes.None.ID && conditionalOverlayCallback != null)
-		{
-			return conditionalOverlayCallback(overlay, transform);
-		}
-		return false;
+		return overlay != OverlayModes.None.ID && conditionalOverlayCallback != null && conditionalOverlayCallback(overlay, transform);
 	}
 
 	public StatusItem SetResolveStringCallback(Func<string, object, string> cb)

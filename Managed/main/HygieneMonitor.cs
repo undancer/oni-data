@@ -37,7 +37,7 @@ public class HygieneMonitor : GameStateMachine<HygieneMonitor, HygieneMonitor.In
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = needsshower;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		clean.EventTransition(GameHashes.EffectRemoved, needsshower, (Instance smi) => smi.NeedsShower());
 		needsshower.EventTransition(GameHashes.EffectAdded, clean, (Instance smi) => !smi.NeedsShower()).ToggleUrge(Db.Get().Urges.Shower).Enter(delegate(Instance smi)
 		{

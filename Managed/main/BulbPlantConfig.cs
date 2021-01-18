@@ -13,6 +13,11 @@ public class BulbPlantConfig : IEntityConfig
 
 	public readonly EffectorValues NEGATIVE_DECOR_EFFECT = DECOR.PENALTY.TIER3;
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("BulbPlant", STRINGS.CREATURES.SPECIES.BULBPLANT.NAME, STRINGS.CREATURES.SPECIES.BULBPLANT.DESC, 1f, decor: POSITIVE_DECOR_EFFECT, anim: Assets.GetAnim("potted_bulb_kanim"), initialAnim: "grow_seed", sceneLayer: Grid.SceneLayer.BuildingFront, width: 1, height: 1);
@@ -25,10 +30,11 @@ public class BulbPlantConfig : IEntityConfig
 		PrickleGrass prickleGrass = gameObject.AddOrGet<PrickleGrass>();
 		prickleGrass.positive_decor_effect = POSITIVE_DECOR_EFFECT;
 		prickleGrass.negative_decor_effect = NEGATIVE_DECOR_EFFECT;
-		EntityTemplates.CreateAndRegisterPreviewForPlant(EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Hidden, "BulbPlantSeed", STRINGS.CREATURES.SPECIES.SEEDS.BULBPLANT.NAME, STRINGS.CREATURES.SPECIES.SEEDS.BULBPLANT.DESC, Assets.GetAnim("seed_potted_bulb_kanim"), "object", 1, new List<Tag>
+		GameObject seed = EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Hidden, "BulbPlantSeed", STRINGS.CREATURES.SPECIES.SEEDS.BULBPLANT.NAME, STRINGS.CREATURES.SPECIES.SEEDS.BULBPLANT.DESC, Assets.GetAnim("seed_potted_bulb_kanim"), "object", 1, new List<Tag>
 		{
 			GameTags.DecorSeed
-		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 6, STRINGS.CREATURES.SPECIES.BULBPLANT.DOMESTICATEDDESC, EntityTemplates.CollisionShape.CIRCLE, 0.4f, 0.4f), "BulbPlant_preview", Assets.GetAnim("potted_bulb_kanim"), "place", 1, 1);
+		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 6, STRINGS.CREATURES.SPECIES.BULBPLANT.DOMESTICATEDDESC, EntityTemplates.CollisionShape.CIRCLE, 0.4f, 0.4f);
+		EntityTemplates.CreateAndRegisterPreviewForPlant(seed, "BulbPlant_preview", Assets.GetAnim("potted_bulb_kanim"), "place", 1, 1);
 		gameObject.AddOrGet<KBatchedAnimController>().randomiseLoopedOffset = true;
 		DiseaseDropper.Def def = gameObject.AddOrGetDef<DiseaseDropper.Def>();
 		def.diseaseIdx = Db.Get().Diseases.GetIndex(Db.Get().Diseases.PollenGerms.id);

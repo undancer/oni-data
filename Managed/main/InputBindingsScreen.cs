@@ -24,13 +24,13 @@ public class InputBindingsScreen : KModalScreen
 
 	public KButton nextScreenButton;
 
-	private bool waitingForKeyPress;
+	private bool waitingForKeyPress = false;
 
 	private Action actionToRebind = Action.NumActions;
 
-	private bool ignoreRootConflicts;
+	private bool ignoreRootConflicts = false;
 
-	private KButton activeButton;
+	private KButton activeButton = null;
 
 	[SerializeField]
 	private LocText screenTitle;
@@ -171,11 +171,7 @@ public class InputBindingsScreen : KModalScreen
 
 	private bool IsKeyDown(KeyCode key_code)
 	{
-		if (!Input.GetKey(key_code))
-		{
-			return Input.GetKeyDown(key_code);
-		}
-		return true;
+		return Input.GetKey(key_code) || Input.GetKeyDown(key_code);
 	}
 
 	private string GetModifierString(Modifier modifiers)
@@ -302,6 +298,7 @@ public class InputBindingsScreen : KModalScreen
 		modifier |= ((IsKeyDown(KeyCode.LeftControl) || IsKeyDown(KeyCode.RightControl)) ? Modifier.Ctrl : Modifier.None);
 		modifier |= ((IsKeyDown(KeyCode.LeftShift) || IsKeyDown(KeyCode.RightShift)) ? Modifier.Shift : Modifier.None);
 		modifier |= (IsKeyDown(KeyCode.CapsLock) ? Modifier.CapsLock : Modifier.None);
+		modifier |= (IsKeyDown(KeyCode.BackQuote) ? Modifier.Backtick : Modifier.None);
 		bool flag = false;
 		for (int i = 0; i < validKeys.Length; i++)
 		{
@@ -465,11 +462,13 @@ public class InputBindingsScreen : KModalScreen
 			{
 				BindingEntry duplicatedBinding = GetDuplicatedBinding(screens[activeScreen], bindingEntry);
 				GameInputMapping.KeyBindings[i] = bindingEntry;
-				activeButton.GetComponentInChildren<LocText>().text = GetBindingText(bindingEntry);
+				LocText componentInChildren = activeButton.GetComponentInChildren<LocText>();
+				componentInChildren.text = GetBindingText(bindingEntry);
 				if (duplicatedBinding.mAction != 0 && duplicatedBinding.mAction != actionToRebind)
 				{
 					confirmDialog = Util.KInstantiateUI(confirmPrefab.gameObject, base.transform.gameObject).GetComponent<ConfirmDialogScreen>();
-					string arg = Strings.Get("STRINGS.INPUT_BINDINGS." + duplicatedBinding.mGroup.ToUpper() + "." + duplicatedBinding.mAction.ToString().ToUpper());
+					string key = "STRINGS.INPUT_BINDINGS." + duplicatedBinding.mGroup.ToUpper() + "." + duplicatedBinding.mAction.ToString().ToUpper();
+					string arg = Strings.Get(key);
 					string bindingText = GetBindingText(duplicatedBinding);
 					string text = string.Format(UI.FRONTEND.INPUT_BINDINGS_SCREEN.DUPLICATE, arg, bindingText);
 					Unbind(duplicatedBinding.mAction);

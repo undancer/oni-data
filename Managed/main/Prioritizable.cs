@@ -87,7 +87,8 @@ public class Prioritizable : KMonoBehaviour
 
 	private void OnCopySettings(object data)
 	{
-		Prioritizable component = ((GameObject)data).GetComponent<Prioritizable>();
+		GameObject gameObject = (GameObject)data;
+		Prioritizable component = gameObject.GetComponent<Prioritizable>();
 		if (component != null)
 		{
 			SetMasterPriority(component.GetMasterPriority());
@@ -115,6 +116,7 @@ public class Prioritizable : KMonoBehaviour
 			onPriorityChanged(masterPrioritySetting);
 		}
 		RefreshHighPriorityNotification();
+		RefreshTopPriorityOnWorld();
 		Vector3 position = base.transform.GetPosition();
 		Extents extents = new Extents((int)position.x, (int)position.y, 1, 1);
 		scenePartitionerEntry = GameScenePartitioner.Instance.Add(base.name, this, extents, GameScenePartitioner.Instance.prioritizableObjects, null);
@@ -135,19 +137,46 @@ public class Prioritizable : KMonoBehaviour
 			{
 				onPriorityChanged(masterPrioritySetting);
 			}
+			RefreshTopPriorityOnWorld();
 			RefreshHighPriorityNotification();
+		}
+	}
+
+	private void RefreshTopPriorityOnWorld()
+	{
+		SetTopPriorityOnWorld(IsTopPriority());
+	}
+
+	private void SetTopPriorityOnWorld(bool state)
+	{
+		WorldContainer myWorld = base.gameObject.GetMyWorld();
+		if (!(Game.Instance == null) && !(myWorld == null))
+		{
+			if (state)
+			{
+				myWorld.AddTopPriorityPrioritizable(this);
+			}
+			else
+			{
+				myWorld.RemoveTopPriorityPrioritizable(this);
+			}
 		}
 	}
 
 	public void AddRef()
 	{
 		refCount++;
+		RefreshTopPriorityOnWorld();
 		RefreshHighPriorityNotification();
 	}
 
 	public void RemoveRef()
 	{
 		refCount--;
+		if (IsTopPriority() || refCount == 0)
+		{
+			SetTopPriorityOnWorld(state: false);
+		}
 		RefreshHighPriorityNotification();
 	}
 
@@ -158,15 +187,17 @@ public class Prioritizable : KMonoBehaviour
 
 	public bool IsTopPriority()
 	{
-		if (masterPrioritySetting.priority_class == PriorityScreen.PriorityClass.topPriority)
-		{
-			return IsPrioritizable();
-		}
-		return false;
+		return masterPrioritySetting.priority_class == PriorityScreen.PriorityClass.topPriority && IsPrioritizable();
 	}
 
 	protected override void OnCleanUp()
 	{
+		WorldContainer myWorld = base.gameObject.GetMyWorld();
+		DebugUtil.DevAssert(myWorld != null, "World has been destroyed before this prioritizable");
+		if (myWorld != null)
+		{
+			myWorld.RemoveTopPriorityPrioritizable(this);
+		}
 		base.OnCleanUp();
 		GameScenePartitioner.Instance.Free(ref scenePartitionerEntry);
 		Components.Prioritizables.Remove(this);

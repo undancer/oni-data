@@ -23,7 +23,8 @@ public class Ref<ReferenceType> : ISaveLoadable where ReferenceType : KMonoBehav
 
 	private void UpdateID()
 	{
-		if ((bool)(Object)Get())
+		ReferenceType exists = Get();
+		if ((bool)(Object)exists)
 		{
 			id = obj.GetComponent<KPrefabID>().InstanceID;
 		}

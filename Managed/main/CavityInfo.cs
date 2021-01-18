@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class CavityInfo
 {
 	public HandleVector<int>.Handle handle;
 
-	public bool dirty;
+	public bool dirty = false;
 
 	public int numCells;
 
@@ -53,5 +54,10 @@ public class CavityInfo
 				building.Trigger(-832141045, data);
 			}
 		}
+	}
+
+	public Vector3 GetCenter()
+	{
+		return new Vector3(minX + (maxX - minX) / 2, minY + (maxY - minY) / 2);
 	}
 }

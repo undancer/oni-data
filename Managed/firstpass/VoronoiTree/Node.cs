@@ -35,15 +35,15 @@ namespace VoronoiTree
 
 			public delegate string NodeTypeOverride(Vector2 position);
 
-			public SplitType splitType;
+			public SplitType splitType = (SplitType)0;
 
-			public TagSet dontCopyTags;
+			public TagSet dontCopyTags = null;
 
-			public TagSet moveTags;
+			public TagSet moveTags = null;
 
 			public int minChildCount = 2;
 
-			public NodeTypeOverride typeOverride;
+			public NodeTypeOverride typeOverride = null;
 
 			public Action<Tree, SplitCommand> SplitFunction;
 		}
@@ -55,7 +55,7 @@ namespace VoronoiTree
 		[Serialize]
 		public NodeType type;
 
-		public VisitedType visited;
+		public VisitedType visited = VisitedType.NotVisited;
 
 		public LoggerSSF log;
 
@@ -87,14 +87,14 @@ namespace VoronoiTree
 		public Node()
 		{
 			type = NodeType.Unknown;
-			log = new LoggerSSF("VoronoiNode");
+			log = new LoggerSSF("VoronoiNode", 100);
 		}
 
 		public Node(NodeType type)
 		{
 			this.type = type;
 			tags = new TagSet();
-			log = new LoggerSSF("VoronoiNode");
+			log = new LoggerSSF("VoronoiNode", 100);
 		}
 
 		protected Node(Diagram.Site site, NodeType type, Tree parent)
@@ -103,7 +103,7 @@ namespace VoronoiTree
 			this.site = site;
 			this.type = type;
 			this.parent = parent;
-			log = new LoggerSSF("VoronoiNode");
+			log = new LoggerSSF("VoronoiNode", 100);
 		}
 
 		public Node GetNeighbour(uint id)
@@ -249,7 +249,8 @@ namespace VoronoiTree
 			hashSet.Add(new Diagram.Site(maxIndex + 2, new Vector2(site.poly.bounds.xMax + 500f, site.poly.bounds.yMin + site.poly.bounds.height / 2f)));
 			hashSet.Add(new Diagram.Site(maxIndex + 3, new Vector2(site.poly.bounds.xMin + site.poly.bounds.width / 2f, site.poly.bounds.yMin - 500f)));
 			hashSet.Add(new Diagram.Site(maxIndex + 4, new Vector2(site.poly.bounds.xMin + site.poly.bounds.width / 2f, site.poly.bounds.yMax + 500f)));
-			Diagram diagram = new Diagram(new Rect(site.poly.bounds.xMin - 500f, site.poly.bounds.yMin - 500f, site.poly.bounds.width + 500f, site.poly.bounds.height + 500f), hashSet);
+			Rect bounds = new Rect(site.poly.bounds.xMin - 500f, site.poly.bounds.yMin - 500f, site.poly.bounds.width + 500f, site.poly.bounds.height + 500f);
+			Diagram diagram = new Diagram(bounds, hashSet);
 			for (int j = 0; j < diagramSites.Count; j++)
 			{
 				if (diagramSites[j].id > maxIndex)
@@ -300,10 +301,10 @@ namespace VoronoiTree
 				return false;
 			}
 			visited = VisitedType.VisitedSuccess;
-			List<Site> list = new List<Site>();
+			List<PowerDiagramSite> list = new List<PowerDiagramSite>();
 			for (int i = 0; i < diagramSites.Count; i++)
 			{
-				Site item = new Site(diagramSites[i].id, diagramSites[i].position, diagramSites[i].weight);
+				PowerDiagramSite item = new PowerDiagramSite(diagramSites[i].id, diagramSites[i].position, diagramSites[i].weight);
 				list.Add(item);
 			}
 			PowerDiagram powerDiagram = new PowerDiagram(site.poly, list);
@@ -352,9 +353,17 @@ namespace VoronoiTree
 						Debug.LogError("FilterNeighbours neighbour.poly == null");
 					}
 					int edgeIdx = -1;
-					if (home.poly.SharesEdge(site.poly, ref edgeIdx) == Polygon.Commonality.Edge)
+					Polygon.DebugLog($"Testing for {home.id} common edge with {site.id}");
+					LineSegment overlapSegment;
+					Polygon.Commonality commonality = home.poly.SharesEdge(site.poly, ref edgeIdx, out overlapSegment);
+					if (commonality == Polygon.Commonality.Edge)
 					{
 						hashSet.Add(new KeyValuePair<uint, int>(niter.Current, edgeIdx));
+						Polygon.DebugLog($" -> {home.id} common edge with {site.id}: {edgeIdx}");
+					}
+					else
+					{
+						Polygon.DebugLog($" -> {home.id} NO COMMON with {site.id}: {edgeIdx}");
 					}
 				}
 			}
@@ -401,11 +410,6 @@ namespace VoronoiTree
 			{
 				GetNeighbour(enumerator.Current.Key).AddTag(tag);
 			}
-		}
-
-		public virtual Tree Split(SplitCommand cmd = null)
-		{
-			return null;
 		}
 	}
 }

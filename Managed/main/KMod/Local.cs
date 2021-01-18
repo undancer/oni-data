@@ -56,7 +56,8 @@ namespace KMod
 			label.distribution_platform = distribution_platform;
 			label.version = id.GetHashCode();
 			label.title = header.title;
-			Mod mod = new Mod(label, header.description, file_source, UI.FRONTEND.MODS.TOOLTIPS.MANAGE_LOCAL_MOD, delegate
+			Label label2 = label;
+			Mod mod = new Mod(label2, header.description, file_source, UI.FRONTEND.MODS.TOOLTIPS.MANAGE_LOCAL_MOD, delegate
 			{
 				Application.OpenURL("file://" + file_source.GetRoot());
 			});

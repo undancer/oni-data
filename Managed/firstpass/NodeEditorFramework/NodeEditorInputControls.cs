@@ -215,7 +215,8 @@ namespace NodeEditorFramework
 			NodeEditorState editorState = inputInfo.editorState;
 			if (inputInfo.inputEvent.button == 0 && editorState.connectOutput != null && editorState.focusedNode != null && editorState.focusedNodeKnob != null && editorState.focusedNodeKnob is NodeInput)
 			{
-				(editorState.focusedNodeKnob as NodeInput).TryApplyConnection(editorState.connectOutput);
+				NodeInput nodeInput = editorState.focusedNodeKnob as NodeInput;
+				nodeInput.TryApplyConnection(editorState.connectOutput);
 				inputInfo.inputEvent.Use();
 			}
 			editorState.connectOutput = null;

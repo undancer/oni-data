@@ -39,7 +39,8 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 			if (diet.consumedTags.Count > 0)
 			{
 				float calorie_loss_per_second = 0f;
-				foreach (AttributeModifier selfModifier in Db.Get().traits.Get(obj.GetComponent<Modifiers>().initialTraits[0]).SelfModifiers)
+				Trait trait = Db.Get().traits.Get(obj.GetComponent<Modifiers>().initialTraits[0]);
+				foreach (AttributeModifier selfModifier in trait.SelfModifiers)
 				{
 					if (selfModifier.AttributeId == Db.Get().Amounts.Calories.deltaAttribute.Id)
 					{
@@ -53,7 +54,8 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 					dailyPlantGrowthConsumption = (0f - calorie_loss_per_second) / t.Value;
 					GameObject prefab = Assets.GetPrefab(t.Key.ToString());
 					Crop crop = prefab.GetComponent<Crop>();
-					float num = CROPS.CROP_TYPES.Find((Crop.CropVal m) => m.cropId == crop.cropId).cropDuration / 600f;
+					float cropDuration = CROPS.CROP_TYPES.Find((Crop.CropVal m) => m.cropId == crop.cropId).cropDuration;
+					float num = cropDuration / 600f;
 					float num2 = 1f / num;
 					return UI.BUILDINGEFFECTS.DIET_CONSUMED_ITEM.text.Replace("{Food}", t.Key.ProperName()).Replace("{Amount}", GameUtil.GetFormattedPlantGrowth((0f - calorie_loss_per_second) / t.Value * num2 * 100f, GameUtil.TimeSlice.PerCycle));
 				}).ToArray()));
@@ -160,7 +162,8 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 			}
 			else if (flag)
 			{
-				int num4 = owner.GetComponent<Facing>().GetFrontCell();
+				Facing component = owner.GetComponent<Facing>();
+				int num4 = component.GetFrontCell();
 				if (!Grid.IsValidCell(num4))
 				{
 					Debug.LogWarningFormat("{0} attemping to Poop {1} on invalid cell {2} from cell {3}", owner, element.name, num4, num3);
@@ -172,12 +175,12 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 			{
 				element.substance.SpawnResource(Grid.CellToPosCCC(num3, Grid.SceneLayer.Ore), num, temperature, disease_idx, num2);
 			}
-			KPrefabID component = owner.GetComponent<KPrefabID>();
-			if (!Game.Instance.savedInfo.creaturePoopAmount.ContainsKey(component.PrefabTag))
+			KPrefabID component2 = owner.GetComponent<KPrefabID>();
+			if (!Game.Instance.savedInfo.creaturePoopAmount.ContainsKey(component2.PrefabTag))
 			{
-				Game.Instance.savedInfo.creaturePoopAmount.Add(component.PrefabTag, 0f);
+				Game.Instance.savedInfo.creaturePoopAmount.Add(component2.PrefabTag, 0f);
 			}
-			Game.Instance.savedInfo.creaturePoopAmount[component.PrefabTag] += num;
+			Game.Instance.savedInfo.creaturePoopAmount[component2.PrefabTag] += num;
 			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, element.name, owner.transform);
 		}
 
@@ -205,17 +208,14 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 
 		public float GetFullness()
 		{
-			return GetTotalConsumedCalories() / minPoopSizeInCalories;
+			float totalConsumedCalories = GetTotalConsumedCalories();
+			return totalConsumedCalories / minPoopSizeInCalories;
 		}
 
 		public bool IsReadyToPoop()
 		{
 			float totalConsumedCalories = GetTotalConsumedCalories();
-			if (totalConsumedCalories > 0f)
-			{
-				return totalConsumedCalories >= minPoopSizeInCalories;
-			}
-			return false;
+			return totalConsumedCalories > 0f && totalConsumedCalories >= minPoopSizeInCalories;
 		}
 
 		public void Consume(Tag tag, float calories)
@@ -299,14 +299,15 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 			stomach.Poop();
 		}
 
-		private float GetCalories0to1()
+		public float GetCalories0to1()
 		{
 			return calories.value / calories.GetMax();
 		}
 
 		public bool IsHungry()
 		{
-			return GetCalories0to1() < 0.9f;
+			float calories0to = GetCalories0to1();
+			return calories0to < 0.9f;
 		}
 
 		public bool IsOutOfCalories()
@@ -326,7 +327,7 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = normal;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		root.EventHandler(GameHashes.CaloriesConsumed, delegate(Instance smi, object data)
 		{
 			smi.OnCaloriesConsumed(data);
@@ -345,7 +346,7 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 		}).Transition(hungry.outofcalories.starvedtodeath, (Instance smi) => smi.GetDeathTimeRemaining() <= 0f, UpdateRate.SIM_1000ms)
 			.TagTransition(GameTags.Creatures.Wild, hungry.outofcalories.wild)
 			.ToggleStatusItem(STRINGS.CREATURES.STATUSITEMS.STARVING.NAME, STRINGS.CREATURES.STATUSITEMS.STARVING.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, default(HashedString), 129022, (string str, Instance smi) => str.Replace("{TimeUntilDeath}", GameUtil.GetFormattedCycles(smi.GetDeathTimeRemaining())))
-			.ToggleNotification((Instance smi) => new Notification(STRINGS.CREATURES.STATUSITEMS.STARVING.NOTIFICATION_NAME, NotificationType.BadMinor, HashedString.Invalid, (List<Notification> notifications, object data) => string.Concat(STRINGS.CREATURES.STATUSITEMS.STARVING.NOTIFICATION_TOOLTIP, notifications.ReduceMessages(countNames: false))))
+			.ToggleNotification((Instance smi) => new Notification(STRINGS.CREATURES.STATUSITEMS.STARVING.NOTIFICATION_NAME, NotificationType.BadMinor, (List<Notification> notifications, object data) => string.Concat(STRINGS.CREATURES.STATUSITEMS.STARVING.NOTIFICATION_TOOLTIP, notifications.ReduceMessages(countNames: false))))
 			.ToggleEffect((Instance smi) => outOfCaloriesTame);
 		hungry.outofcalories.starvedtodeath.Enter(delegate(Instance smi)
 		{
@@ -375,7 +376,8 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 
 	private static void StarvationStartTime(Instance smi)
 	{
-		if (smi.sm.starvationStartTime.Get(smi) == 0f)
+		float num = smi.sm.starvationStartTime.Get(smi);
+		if (num == 0f)
 		{
 			smi.sm.starvationStartTime.Set(GameClock.Instance.GetTime(), smi);
 		}

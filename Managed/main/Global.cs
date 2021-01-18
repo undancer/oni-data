@@ -24,11 +24,11 @@ public class Global : MonoBehaviour
 
 	public KMod.Manager modManager;
 
-	private bool gotKleiUserID;
+	private bool gotKleiUserID = false;
 
 	public Thread mainThread;
 
-	private bool updated_with_initialized_distribution_platform;
+	private bool updated_with_initialized_distribution_platform = false;
 
 	public static readonly string LanguagePackKey = "LanguagePack";
 
@@ -141,6 +141,7 @@ public class Global : MonoBehaviour
 			new BindingEntry("CinematicCamera", GamepadButton.NumButtons, KKeyCode.O, Modifier.None, Action.CinemaZoomOut, rebindable: true, ignore_root_conflicts: true),
 			new BindingEntry("CinematicCamera", GamepadButton.NumButtons, KKeyCode.Z, Modifier.None, Action.CinemaZoomSpeedPlus, rebindable: true, ignore_root_conflicts: true),
 			new BindingEntry("CinematicCamera", GamepadButton.NumButtons, KKeyCode.Z, Modifier.Shift, Action.CinemaZoomSpeedMinus, rebindable: true, ignore_root_conflicts: true),
+			new BindingEntry("CinematicCamera", GamepadButton.NumButtons, KKeyCode.P, Modifier.None, Action.CinemaUnpauseOnMove, rebindable: true, ignore_root_conflicts: true),
 			new BindingEntry("CinematicCamera", GamepadButton.NumButtons, KKeyCode.T, Modifier.None, Action.CinemaToggleLock, rebindable: true, ignore_root_conflicts: true),
 			new BindingEntry("CinematicCamera", GamepadButton.NumButtons, KKeyCode.E, Modifier.None, Action.CinemaToggleEasing, rebindable: true, ignore_root_conflicts: true),
 			new BindingEntry("Building", GamepadButton.NumButtons, KKeyCode.Slash, Modifier.None, Action.ToggleOpen),
@@ -164,9 +165,11 @@ public class Global : MonoBehaviour
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.Q, Modifier.Ctrl, Action.DebugGotoTarget),
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.S, Modifier.Ctrl, Action.DebugSelectMaterial),
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.M, Modifier.Ctrl, Action.DebugToggleMusic),
+			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.F, Modifier.Ctrl, Action.DebugToggleClusterFX),
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.Backspace, Modifier.None, Action.DebugToggle),
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.Backspace, Modifier.Ctrl, Action.DebugToggleFastWorkers),
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.Q, Modifier.Alt, Action.DebugTeleport),
+			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.F2, Modifier.Alt, Action.DebugSpawnMinionAtmoSuit),
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.F2, Modifier.Ctrl, Action.DebugSpawnMinion),
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.F3, Modifier.Ctrl, Action.DebugPlace),
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.F4, Modifier.Ctrl, Action.DebugInstantBuildMode),
@@ -229,11 +232,24 @@ public class Global : MonoBehaviour
 			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.F, Modifier.Shift, Action.SandboxFlood),
 			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.K, Modifier.Shift, Action.SandboxSample),
 			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.H, Modifier.Shift, Action.SandboxHeatGun),
+			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.J, Modifier.Shift, Action.SandboxRadsTool),
 			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.C, Modifier.Shift, Action.SandboxClearFloor),
 			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.X, Modifier.Shift, Action.SandboxDestroy),
 			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.E, Modifier.Shift, Action.SandboxSpawnEntity),
 			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.S, Modifier.Shift, Action.ToggleSandboxTools),
-			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.R, Modifier.Shift, Action.SandboxReveal)
+			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.R, Modifier.Shift, Action.SandboxReveal),
+			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.Z, Modifier.Shift, Action.SandboxCritterTool),
+			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.Mouse0, Modifier.Ctrl, Action.SandboxCopyElement),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha1, Modifier.Backtick, Action.SwitchActiveWorld1),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha2, Modifier.Backtick, Action.SwitchActiveWorld2),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha3, Modifier.Backtick, Action.SwitchActiveWorld3),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha4, Modifier.Backtick, Action.SwitchActiveWorld4),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha5, Modifier.Backtick, Action.SwitchActiveWorld5),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha6, Modifier.Backtick, Action.SwitchActiveWorld6),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha7, Modifier.Backtick, Action.SwitchActiveWorld7),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha8, Modifier.Backtick, Action.SwitchActiveWorld8),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha9, Modifier.Backtick, Action.SwitchActiveWorld9),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha0, Modifier.Backtick, Action.SwitchActiveWorld10)
 		};
 		IList<BuildMenu.DisplayInfo> list2 = (IList<BuildMenu.DisplayInfo>)BuildMenu.OrderedBuildings.data;
 		if (BuildMenu.UseHotkeyBuildMenu() && hotKeyBuildMenuPermitted)
@@ -255,7 +271,8 @@ public class Global : MonoBehaviour
 		Type type = display_info.data.GetType();
 		if (typeof(IList<BuildMenu.DisplayInfo>).IsAssignableFrom(type))
 		{
-			foreach (BuildMenu.DisplayInfo item2 in (IList<BuildMenu.DisplayInfo>)display_info.data)
+			IList<BuildMenu.DisplayInfo> list = (IList<BuildMenu.DisplayInfo>)display_info.data;
+			foreach (BuildMenu.DisplayInfo item2 in list)
 			{
 				AddBindings(display_info.category, item2, bindings);
 			}
@@ -263,7 +280,8 @@ public class Global : MonoBehaviour
 		else if (typeof(IList<BuildMenu.BuildingInfo>).IsAssignableFrom(type))
 		{
 			string str = HashCache.Get().Get(parent_category);
-			string group = new CultureInfo("en-US", useUserOverride: false).TextInfo.ToTitleCase(str) + " Menu";
+			TextInfo textInfo = new CultureInfo("en-US", useUserOverride: false).TextInfo;
+			string group = textInfo.ToTitleCase(str) + " Menu";
 			BindingEntry item = new BindingEntry(group, GamepadButton.NumButtons, display_info.keyCode, Modifier.None, display_info.hotkey, rebindable: true, ignore_root_conflicts: true);
 			bindings.Add(item);
 		}
@@ -286,17 +304,20 @@ public class Global : MonoBehaviour
 		Instance = this;
 		Debug.Log("Initializing at " + System.DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff"));
 		Debug.Log("Save path: " + Util.RootFolder());
+		MyCmp.Init();
+		MySmi.Init();
 		if (forcedAtlasInitializationList != null)
 		{
 			SpriteAtlas[] array = forcedAtlasInitializationList;
-			foreach (SpriteAtlas obj in array)
+			foreach (SpriteAtlas spriteAtlas in array)
 			{
-				Sprite[] array2 = new Sprite[obj.spriteCount];
-				obj.GetSprites(array2);
+				int spriteCount = spriteAtlas.spriteCount;
+				Sprite[] array2 = new Sprite[spriteCount];
+				spriteAtlas.GetSprites(array2);
 				Sprite[] array3 = array2;
-				for (int j = 0; j < array3.Length; j++)
+				foreach (Sprite sprite in array3)
 				{
-					Texture2D texture = array3[j].texture;
+					Texture2D texture = sprite.texture;
 					if (texture != null)
 					{
 						texture.filterMode = FilterMode.Bilinear;
@@ -330,6 +351,7 @@ public class Global : MonoBehaviour
 		RestoreLegacyMetricsSetting();
 		TestDataLocations();
 		DistributionPlatform.onExitRequest += OnExitRequest;
+		DistributionPlatform.onDlcAuthenticationFailed += OnDlcAuthenticationFailed;
 		if (DistributionPlatform.Initialized)
 		{
 			if (!KPrivacyPrefs.instance.disableDataCollection)
@@ -356,9 +378,11 @@ public class Global : MonoBehaviour
 			if (!string.IsNullOrEmpty(filename) && File.Exists(filename))
 			{
 				flag = false;
-				KScreen component = KScreenManager.AddChild(globalCanvas, ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject).GetComponent<KScreen>();
+				GameObject gameObject = KScreenManager.AddChild(globalCanvas, ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject);
+				KScreen component = gameObject.GetComponent<KScreen>();
 				component.Activate();
-				component.GetComponent<ConfirmDialogScreen>().PopupConfirmDialog(string.Format(UI.FRONTEND.RAILFORCEQUIT.SAVE_EXIT, Path.GetFileNameWithoutExtension(filename)), delegate
+				ConfirmDialogScreen component2 = component.GetComponent<ConfirmDialogScreen>();
+				component2.PopupConfirmDialog(string.Format(UI.FRONTEND.RAILFORCEQUIT.SAVE_EXIT, Path.GetFileNameWithoutExtension(filename)), delegate
 				{
 					SaveLoader.Instance.Save(filename);
 					ReportErrorDialog.MOST_RECENT_SAVEFILE = filename;
@@ -371,13 +395,28 @@ public class Global : MonoBehaviour
 		}
 		if (flag)
 		{
-			KScreen component2 = KScreenManager.AddChild(globalCanvas, ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject).GetComponent<KScreen>();
-			component2.Activate();
-			component2.GetComponent<ConfirmDialogScreen>().PopupConfirmDialog(UI.FRONTEND.RAILFORCEQUIT.WARN_EXIT, delegate
+			GameObject gameObject2 = KScreenManager.AddChild(globalCanvas, ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject);
+			KScreen component3 = gameObject2.GetComponent<KScreen>();
+			component3.Activate();
+			ConfirmDialogScreen component4 = component3.GetComponent<ConfirmDialogScreen>();
+			component4.PopupConfirmDialog(UI.FRONTEND.RAILFORCEQUIT.WARN_EXIT, delegate
 			{
 				App.Quit();
 			}, null);
 		}
+	}
+
+	private void OnDlcAuthenticationFailed()
+	{
+		GameObject gameObject = KScreenManager.AddChild(globalCanvas, ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject);
+		KScreen component = gameObject.GetComponent<KScreen>();
+		component.Activate();
+		ConfirmDialogScreen component2 = component.GetComponent<ConfirmDialogScreen>();
+		component2.deactivateOnCancelAction = false;
+		component2.PopupConfirmDialog(UI.FRONTEND.RAILFORCEQUIT.DLC_NOT_PURCHASED, delegate
+		{
+			App.Quit();
+		}, null);
 	}
 
 	private void RestoreLegacyMetricsSetting()
@@ -451,7 +490,7 @@ public class Global : MonoBehaviour
 	private void SetONIStaticSessionVariables()
 	{
 		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Branch", "release");
-		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Build", 447596u);
+		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Build", 447598u);
 		if (KPlayerPrefs.HasKey(UnitConfigurationScreen.MassUnitKey))
 		{
 			ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable(UnitConfigurationScreen.MassUnitKey, ((GameUtil.MassUnit)KPlayerPrefs.GetInt(UnitConfigurationScreen.MassUnitKey)).ToString());
@@ -508,11 +547,12 @@ public class Global : MonoBehaviour
 		try
 		{
 			Console.WriteLine("SYSTEM INFO:");
-			foreach (KeyValuePair<string, object> hardwareStat in KleiMetrics.GetHardwareStats())
+			Dictionary<string, object> hardwareStats = KleiMetrics.GetHardwareStats();
+			foreach (KeyValuePair<string, object> item in hardwareStats)
 			{
 				try
 				{
-					Console.WriteLine($"    {hardwareStat.Key.ToString()}={hardwareStat.Value.ToString()}");
+					Console.WriteLine($"    {item.Key.ToString()}={item.Value.ToString()}");
 				}
 				catch
 				{

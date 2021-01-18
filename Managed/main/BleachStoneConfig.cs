@@ -6,6 +6,11 @@ public class BleachStoneConfig : IOreConfig
 
 	public SimHashes SublimeElementID => SimHashes.ChlorineGas;
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateSolidOreEntity(ElementID);

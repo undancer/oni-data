@@ -23,16 +23,7 @@ public class SpacecraftManager : KMonoBehaviour, ISim1000ms
 	private List<Spacecraft> spacecraft = new List<Spacecraft>();
 
 	[Serialize]
-	public List<SpaceDestination> destinations;
-
-	[Serialize]
-	public Dictionary<int, int> savedSpacecraftDestinations;
-
-	[Serialize]
-	private int nextSpacecraftID;
-
-	[Serialize]
-	public bool destinationsGenerated;
+	private int nextSpacecraftID = 0;
 
 	public const int INVALID_DESTINATION_ID = -1;
 
@@ -40,7 +31,16 @@ public class SpacecraftManager : KMonoBehaviour, ISim1000ms
 	private int analyzeDestinationID = -1;
 
 	[Serialize]
-	public bool hasVisitedWormHole;
+	public bool hasVisitedWormHole = false;
+
+	[Serialize]
+	public List<SpaceDestination> destinations;
+
+	[Serialize]
+	public Dictionary<int, int> savedSpacecraftDestinations;
+
+	[Serialize]
+	public bool destinationsGenerated = false;
 
 	[Serialize]
 	public Dictionary<int, float> destinationAnalysisScores = new Dictionary<int, float>();
@@ -54,11 +54,15 @@ public class SpacecraftManager : KMonoBehaviour, ISim1000ms
 	{
 		base.OnPrefabInit();
 		instance = this;
-		SpaceDestinationTypes spaceDestinationTypes = Db.Get().SpaceDestinationTypes;
 		if (savedSpacecraftDestinations == null)
 		{
 			savedSpacecraftDestinations = new Dictionary<int, int>();
 		}
+	}
+
+	private void GenerateFixedDestinations()
+	{
+		SpaceDestinationTypes spaceDestinationTypes = Db.Get().SpaceDestinationTypes;
 		if (destinations == null)
 		{
 			destinations = new List<SpaceDestination>
@@ -75,7 +79,7 @@ public class SpacecraftManager : KMonoBehaviour, ISim1000ms
 
 	private void GenerateRandomDestinations()
 	{
-		System.Random random = new System.Random(SaveLoader.Instance.worldDetailSave.globalWorldSeed);
+		System.Random random = new System.Random(SaveLoader.Instance.clusterDetailSave.globalWorldSeed);
 		SpaceDestinationTypes spaceDestinationTypes = Db.Get().SpaceDestinationTypes;
 		List<List<string>> list = new List<List<string>>
 		{
@@ -216,14 +220,13 @@ public class SpacecraftManager : KMonoBehaviour, ISim1000ms
 		destinations.Add(new SpaceDestination(destinations.Count, Db.Get().SpaceDestinationTypes.Wormhole.Id, list.Count));
 	}
 
-	protected override void OnSpawn()
+	private void RestoreDestinations()
 	{
-		base.OnSpawn();
-		Game.Instance.spacecraftManager = this;
 		if (destinationsGenerated)
 		{
 			return;
 		}
+		GenerateFixedDestinations();
 		GenerateRandomDestinations();
 		destinations.Sort((SpaceDestination a, SpaceDestination b) => a.distance.CompareTo(b.distance));
 		List<float> list = new List<float>();
@@ -311,6 +314,20 @@ public class SpacecraftManager : KMonoBehaviour, ISim1000ms
 		}
 	}
 
+	protected override void OnSpawn()
+	{
+		base.OnSpawn();
+		Game.Instance.spacecraftManager = this;
+		if (DlcManager.IsExpansion1Active())
+		{
+			Debug.Assert(spacecraft == null || spacecraft.Count == 0);
+		}
+		else
+		{
+			RestoreDestinations();
+		}
+	}
+
 	public void SetSpacecraftDestination(LaunchConditionManager lcm, SpaceDestination destination)
 	{
 		Spacecraft spacecraftFromLaunchConditionManager = GetSpacecraftFromLaunchConditionManager(lcm);
@@ -381,6 +398,10 @@ public class SpacecraftManager : KMonoBehaviour, ISim1000ms
 
 	public void Sim1000ms(float dt)
 	{
+		if (DlcManager.IsExpansion1Active())
+		{
+			return;
+		}
 		foreach (Spacecraft item in spacecraft)
 		{
 			item.ProgressMission(dt);
@@ -393,7 +414,7 @@ public class SpacecraftManager : KMonoBehaviour, ISim1000ms
 
 	public void PushReadyToLandNotification(Spacecraft spacecraft)
 	{
-		Notification notification = new Notification(BUILDING.STATUSITEMS.SPACECRAFTREADYTOLAND.NOTIFICATION, NotificationType.Good, HashedString.Invalid, delegate(List<Notification> notificationList, object data)
+		Notification notification = new Notification(BUILDING.STATUSITEMS.SPACECRAFTREADYTOLAND.NOTIFICATION, NotificationType.Good, delegate(List<Notification> notificationList, object data)
 		{
 			string text = BUILDING.STATUSITEMS.SPACECRAFTREADYTOLAND.NOTIFICATION_TOOLTIP;
 			foreach (Notification notification2 in notificationList)

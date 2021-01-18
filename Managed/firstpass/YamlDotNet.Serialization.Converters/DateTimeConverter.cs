@@ -28,9 +28,12 @@ namespace YamlDotNet.Serialization.Converters
 
 		public object ReadYaml(IParser parser, Type type)
 		{
-			DateTime dateTime = EnsureDateTimeKind(DateTime.ParseExact(((Scalar)parser.Current).Value, style: (kind == DateTimeKind.Local) ? DateTimeStyles.AssumeLocal : DateTimeStyles.AssumeUniversal, formats: formats, provider: provider), kind);
+			string value = ((Scalar)parser.Current).Value;
+			DateTimeStyles style = ((kind == DateTimeKind.Local) ? DateTimeStyles.AssumeLocal : DateTimeStyles.AssumeUniversal);
+			DateTime dt = DateTime.ParseExact(value, formats, provider, style);
+			dt = EnsureDateTimeKind(dt, kind);
 			parser.MoveNext();
-			return dateTime;
+			return dt;
 		}
 
 		public void WriteYaml(IEmitter emitter, object value, Type type)

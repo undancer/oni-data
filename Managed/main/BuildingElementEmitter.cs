@@ -28,13 +28,13 @@ public class BuildingElementEmitter : KMonoBehaviour, IGameObjectEffectDescripto
 	public byte emitDiseaseIdx = byte.MaxValue;
 
 	[SerializeField]
-	public int emitDiseaseCount;
+	public int emitDiseaseCount = 0;
 
 	private HandleVector<int>.Handle accumulator = HandleVector<int>.InvalidHandle;
 
 	private int simHandle = -1;
 
-	private bool simActive;
+	private bool simActive = false;
 
 	private bool dirty = true;
 
@@ -107,7 +107,8 @@ public class BuildingElementEmitter : KMonoBehaviour, IGameObjectEffectDescripto
 		{
 			if (element != 0 && emitRate > 0f)
 			{
-				int game_cell = Grid.PosToCell(new Vector3(base.transform.GetPosition().x + modifierOffset.x, base.transform.GetPosition().y + modifierOffset.y, 0f));
+				Vector3 pos = new Vector3(base.transform.GetPosition().x + modifierOffset.x, base.transform.GetPosition().y + modifierOffset.y, 0f);
+				int game_cell = Grid.PosToCell(pos);
 				SimMessages.ModifyElementEmitter(simHandle, game_cell, emitRange, element, 0.2f, emitRate * 0.2f, temperature, float.MaxValue, emitDiseaseIdx, emitDiseaseCount);
 			}
 			statusHandle = GetComponent<KSelectable>().AddStatusItem(Db.Get().BuildingStatusItems.EmittingElement, this);
@@ -160,7 +161,8 @@ public class BuildingElementEmitter : KMonoBehaviour, IGameObjectEffectDescripto
 	public List<Descriptor> GetDescriptors(GameObject go)
 	{
 		List<Descriptor> list = new List<Descriptor>();
-		string arg = ElementLoader.FindElementByHash(element).tag.ProperName();
+		Element element = ElementLoader.FindElementByHash(this.element);
+		string arg = element.tag.ProperName();
 		Descriptor item = default(Descriptor);
 		item.SetupDescriptor(string.Format(UI.BUILDINGEFFECTS.ELEMENTEMITTED_FIXEDTEMP, arg, GameUtil.GetFormattedMass(EmitRate, GameUtil.TimeSlice.PerSecond), GameUtil.GetFormattedTemperature(temperature)), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.ELEMENTEMITTED_FIXEDTEMP, arg, GameUtil.GetFormattedMass(EmitRate, GameUtil.TimeSlice.PerSecond), GameUtil.GetFormattedTemperature(temperature)));
 		list.Add(item);

@@ -44,7 +44,7 @@ public class ScheduleScreen : KScreen
 
 	public override float GetSortKey()
 	{
-		return 100f;
+		return 50f;
 	}
 
 	protected override void OnPrefabInit()
@@ -178,10 +178,10 @@ public class ScheduleScreen : KScreen
 				{
 					if (currentSelectedGameObject == entry.GetNameInputField())
 					{
-						return true;
+						result = true;
+						break;
 					}
 				}
-				return result;
 			}
 		}
 		return result;

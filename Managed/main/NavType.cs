@@ -10,5 +10,6 @@ public enum NavType : byte
 	Pole,
 	Tube,
 	Solid,
+	Teleport,
 	NumNavTypes
 }

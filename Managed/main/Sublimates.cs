@@ -43,7 +43,7 @@ public class Sublimates : KMonoBehaviour, ISim200ms
 	private KSelectable selectable;
 
 	[SerializeField]
-	public SpawnFXHashes spawnFXHash;
+	public SpawnFXHashes spawnFXHash = SpawnFXHashes.None;
 
 	[SerializeField]
 	public Info info;
@@ -107,9 +107,9 @@ public class Sublimates : KMonoBehaviour, ISim200ms
 
 	private void OnSplitFromChunk(object data)
 	{
-		Pickupable obj = data as Pickupable;
-		PrimaryElement component = obj.GetComponent<PrimaryElement>();
-		Sublimates component2 = obj.GetComponent<Sublimates>();
+		Pickupable pickupable = data as Pickupable;
+		PrimaryElement component = pickupable.GetComponent<PrimaryElement>();
+		Sublimates component2 = pickupable.GetComponent<Sublimates>();
 		if (!(component2 == null))
 		{
 			float mass = primaryElement.Mass;

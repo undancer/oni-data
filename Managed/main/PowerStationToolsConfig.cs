@@ -10,6 +10,11 @@ public class PowerStationToolsConfig : IEntityConfig
 
 	public const float MASS = 5f;
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateLooseEntity("PowerStationTools", ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS.NAME, ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS.DESC, 5f, unitMass: true, Assets.GetAnim("kit_electrician_kanim"), "object", Grid.SceneLayer.Front, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.6f, isPickupable: true, 0, SimHashes.Creature, new List<Tag>

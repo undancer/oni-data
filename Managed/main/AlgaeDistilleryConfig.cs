@@ -19,19 +19,19 @@ public class AlgaeDistilleryConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("AlgaeDistillery", 3, 4, "algae_distillery_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.PENALTY.TIER1);
-		obj.Overheatable = false;
-		obj.RequiresPowerInput = true;
-		obj.PowerInputOffset = new CellOffset(1, 0);
-		obj.EnergyConsumptionWhenActive = 120f;
-		obj.ExhaustKilowattsWhenActive = 0.5f;
-		obj.SelfHeatKilowattsWhenActive = 1f;
-		obj.AudioCategory = "HollowMetal";
-		obj.ViewMode = OverlayModes.LiquidConduits.ID;
-		obj.OutputConduitType = ConduitType.Liquid;
-		obj.UtilityInputOffset = new CellOffset(0, 0);
-		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 1));
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("AlgaeDistillery", 3, 4, "algae_distillery_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.PENALTY.TIER1);
+		buildingDef.Overheatable = false;
+		buildingDef.RequiresPowerInput = true;
+		buildingDef.PowerInputOffset = new CellOffset(1, 0);
+		buildingDef.EnergyConsumptionWhenActive = 120f;
+		buildingDef.ExhaustKilowattsWhenActive = 0.5f;
+		buildingDef.SelfHeatKilowattsWhenActive = 1f;
+		buildingDef.AudioCategory = "HollowMetal";
+		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
+		buildingDef.OutputConduitType = ConduitType.Liquid;
+		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
+		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 1));
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

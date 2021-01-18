@@ -46,8 +46,8 @@ public class BuildingLoader : KMonoBehaviour
 		GameObject gameObject = CreateTemplate();
 		gameObject.AddOrGet<BuildingUnderConstruction>();
 		gameObject.AddOrGet<Constructable>();
-		gameObject.AddComponent<Storage>().doDiseaseTransfer = false;
-		gameObject.AddOrGet<Cancellable>();
+		Storage storage = gameObject.AddComponent<Storage>();
+		storage.doDiseaseTransfer = false;
 		gameObject.AddOrGet<Prioritizable>();
 		gameObject.AddOrGet<Notifier>();
 		gameObject.AddOrGet<SaveLoadRoot>();
@@ -152,14 +152,21 @@ public class BuildingLoader : KMonoBehaviour
 	{
 		GameObject gameObject = CreateBuilding(def, constructionTemplate);
 		Object.DontDestroyOnLoad(gameObject);
-		gameObject.GetComponent<KSelectable>().SetName(def.Name);
+		KSelectable component = gameObject.GetComponent<KSelectable>();
+		component.SetName(def.Name);
 		for (int i = 0; i < def.Mass.Length; i++)
 		{
 			gameObject.GetComponent<PrimaryElement>().MassPerUnit += def.Mass[i];
 		}
 		KPrefabID kPrefabID = AddID(gameObject, def.PrefabID + "UnderConstruction");
+		kPrefabID.AddTag(GameTags.UnderConstruction);
 		UpdateComponentRequirement<BuildingCellVisualizer>(gameObject, def.CheckRequiresBuildingCellVisualizer());
-		gameObject.GetComponent<Constructable>().SetWorkTime(def.ConstructionTime);
+		Constructable component2 = gameObject.GetComponent<Constructable>();
+		component2.SetWorkTime(def.ConstructionTime);
+		if (def.Cancellable)
+		{
+			gameObject.AddOrGet<Cancellable>();
+		}
 		Rotatable rotatable = UpdateComponentRequirement<Rotatable>(gameObject, def.PermittedRotations != PermittedRotations.Unrotatable);
 		if ((bool)rotatable)
 		{
@@ -175,6 +182,7 @@ public class BuildingLoader : KMonoBehaviour
 		}
 		Assets.AddPrefab(kPrefabID);
 		gameObject.PreInit();
+		GeneratedBuildings.InitializeHighEnergyParticlePorts(gameObject, def);
 		GeneratedBuildings.InitializeLogicPorts(gameObject, def);
 		return gameObject;
 	}
@@ -183,14 +191,15 @@ public class BuildingLoader : KMonoBehaviour
 	{
 		go.name = def.PrefabID + "Complete";
 		go.transform.SetPosition(new Vector3(0f, 0f, Grid.GetLayerZ(def.SceneLayer)));
-		go.GetComponent<KSelectable>().SetName(def.Name);
-		PrimaryElement component = go.GetComponent<PrimaryElement>();
-		component.MassPerUnit = 0f;
+		KSelectable component = go.GetComponent<KSelectable>();
+		component.SetName(def.Name);
+		PrimaryElement component2 = go.GetComponent<PrimaryElement>();
+		component2.MassPerUnit = 0f;
 		for (int i = 0; i < def.Mass.Length; i++)
 		{
-			component.MassPerUnit += def.Mass[i];
+			component2.MassPerUnit += def.Mass[i];
 		}
-		component.Temperature = 273.15f;
+		component2.Temperature = 273.15f;
 		BuildingHP buildingHP = go.AddOrGet<BuildingHP>();
 		if (def.Invincible)
 		{
@@ -202,7 +211,8 @@ public class BuildingLoader : KMonoBehaviour
 			UpdateComponentRequirement<Repairable>(go, required: true);
 		}
 		int defaultLayer = (go.layer = LayerMask.NameToLayer("Default"));
-		go.GetComponent<BuildingComplete>().Def = def;
+		Building component3 = go.GetComponent<BuildingComplete>();
+		component3.Def = def;
 		if (def.InputConduitType != 0 || def.OutputConduitType != 0)
 		{
 			go.AddComponent<BuildingConduitEndpoints>();
@@ -267,12 +277,14 @@ public class BuildingLoader : KMonoBehaviour
 		}
 		if (def.AttachmentSlotTag != Tag.Invalid)
 		{
-			UpdateComponentRequirement<AttachableBuilding>(go, required: true).attachableToTag = def.AttachmentSlotTag;
+			AttachableBuilding attachableBuilding = UpdateComponentRequirement<AttachableBuilding>(go, required: true);
+			attachableBuilding.attachableToTag = def.AttachmentSlotTag;
 		}
 		KPrefabID kPrefabID = AddID(go, def.PrefabID);
 		kPrefabID.defaultLayer = defaultLayer;
 		Assets.AddPrefab(kPrefabID);
 		go.PreInit();
+		GeneratedBuildings.InitializeHighEnergyParticlePorts(go, def);
 		GeneratedBuildings.InitializeLogicPorts(go, def);
 		return go;
 	}
@@ -294,19 +306,22 @@ public class BuildingLoader : KMonoBehaviour
 		{
 			rotatable.permittedRotations = def.PermittedRotations;
 		}
-		AddID(gameObject, def.PrefabID + "Preview").defaultLayer = num;
-		gameObject.GetComponent<KSelectable>().SetName(def.Name);
+		KPrefabID kPrefabID = AddID(gameObject, def.PrefabID + "Preview");
+		kPrefabID.defaultLayer = num;
+		KSelectable component2 = gameObject.GetComponent<KSelectable>();
+		component2.SetName(def.Name);
 		UpdateComponentRequirement<BuildingCellVisualizer>(gameObject, def.CheckRequiresBuildingCellVisualizer());
-		KAnimGraphTileVisualizer component2 = gameObject.GetComponent<KAnimGraphTileVisualizer>();
-		if (component2 != null)
+		KAnimGraphTileVisualizer component3 = gameObject.GetComponent<KAnimGraphTileVisualizer>();
+		if (component3 != null)
 		{
-			Object.DestroyImmediate(component2);
+			Object.DestroyImmediate(component3);
 		}
 		if (def.RequiresPowerInput)
 		{
 			GeneratedBuildings.RegisterSingleLogicInputPort(gameObject);
 		}
 		gameObject.PreInit();
+		GeneratedBuildings.InitializeHighEnergyParticlePorts(gameObject, def);
 		Assets.AddPrefab(gameObject.GetComponent<KPrefabID>());
 		GeneratedBuildings.InitializeLogicPorts(gameObject, def);
 		return gameObject;

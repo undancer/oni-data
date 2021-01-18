@@ -71,7 +71,9 @@ public class AtmoSuitConfig : IEquipmentConfig
 							component2.Remove("SoiledSuit");
 						}
 					}
-					eq.GetComponent<Storage>().DropAll(eq.transform.GetPosition(), vent_gas: true, dump_liquid: true, default(Vector3), do_disease_transfer: false);
+					TagBits any_tags = new TagBits(eq.GetComponent<SuitTank>().elementTag);
+					TagBits tagBits = default(TagBits);
+					eq.GetComponent<Storage>().DropUnlessHasTags(any_tags, tagBits, tagBits, do_disease_transfer: true, dumpElements: true);
 				}
 			}
 		};
@@ -85,6 +87,7 @@ public class AtmoSuitConfig : IEquipmentConfig
 		SuitTank suitTank = go.AddComponent<SuitTank>();
 		suitTank.element = "Oxygen";
 		suitTank.capacity = 75f;
+		suitTank.elementTag = GameTags.Breathable;
 		go.AddComponent<HelmetController>();
 		KPrefabID component = go.GetComponent<KPrefabID>();
 		component.AddTag(GameTags.Clothes);

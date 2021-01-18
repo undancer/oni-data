@@ -15,7 +15,8 @@ namespace Klei.AI
 			Sickness modifier = Db.Get().Sicknesses.Get(exposure_info.sicknessID);
 			if (!Has(modifier))
 			{
-				CreateInstance(modifier).ExposureInfo = exposure_info;
+				SicknessInstance sicknessInstance = CreateInstance(modifier);
+				sicknessInstance.ExposureInfo = exposure_info;
 			}
 		}
 

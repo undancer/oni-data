@@ -11,7 +11,7 @@ public class DoctorMonitor : GameStateMachine<DoctorMonitor, DoctorMonitor.Insta
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = root;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		root.ToggleUrge(Db.Get().Urges.Doctor);
 	}
 }

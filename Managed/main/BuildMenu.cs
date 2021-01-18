@@ -57,19 +57,20 @@ public class BuildMenu : KScreen
 			DisplayInfo result = default(DisplayInfo);
 			if (data != null && typeof(IList<DisplayInfo>).IsAssignableFrom(data.GetType()))
 			{
-				foreach (DisplayInfo item in (IList<DisplayInfo>)data)
+				IList<DisplayInfo> list = (IList<DisplayInfo>)data;
+				foreach (DisplayInfo item in list)
 				{
 					result = item.GetInfo(category);
 					if (result.category == category)
 					{
-						return result;
+						break;
 					}
 					if (item.category == category)
 					{
-						return item;
+						result = item;
+						break;
 					}
 				}
-				return result;
 			}
 			return result;
 		}
@@ -100,23 +101,23 @@ public class BuildMenu : KScreen
 
 	private Stack<KIconToggleMenu> submenuStack = new Stack<KIconToggleMenu>();
 
-	private bool selecting;
+	private bool selecting = false;
 
-	private bool updating;
+	private bool updating = false;
 
-	private bool deactivateToolQueued;
+	private bool deactivateToolQueued = false;
 
 	[SerializeField]
 	private Vector2 rootMenuOffset = Vector2.zero;
 
 	[SerializeField]
-	private PadInfo rootMenuPadding;
+	private PadInfo rootMenuPadding = default(PadInfo);
 
 	[SerializeField]
 	private Vector2 nestedMenuOffset = Vector2.zero;
 
 	[SerializeField]
-	private PadInfo nestedMenuPadding;
+	private PadInfo nestedMenuPadding = default(PadInfo);
 
 	[SerializeField]
 	private Vector2 buildingsMenuOffset = Vector2.zero;
@@ -135,7 +136,8 @@ public class BuildMenu : KScreen
 				new BuildingInfo("MetalTile", Action.BuildMenuKeyX),
 				new BuildingInfo("GlassTile", Action.BuildMenuKeyW),
 				new BuildingInfo("BunkerTile", Action.BuildMenuKeyB),
-				new BuildingInfo("CarpetTile", Action.BuildMenuKeyL)
+				new BuildingInfo("CarpetTile", Action.BuildMenuKeyL),
+				new BuildingInfo("ExobaseHeadquarters", Action.BuildMenuKeyP)
 			}),
 			new DisplayInfo(CacheHashString("Ladders"), "icon_category_base", Action.BuildCategoryLadders, KKeyCode.A, new List<BuildingInfo>
 			{
@@ -165,6 +167,7 @@ public class BuildMenu : KScreen
 				new BuildingInfo("ResearchCenter", Action.BuildMenuKeyR),
 				new BuildingInfo("AdvancedResearchCenter", Action.BuildMenuKeyS),
 				new BuildingInfo("CosmicResearchCenter", Action.BuildMenuKeyC),
+				new BuildingInfo("NuclearResearchCenter", Action.BuildMenuKeyN),
 				new BuildingInfo("Telescope", Action.BuildMenuKeyT)
 			})
 		}),
@@ -218,7 +221,8 @@ public class BuildMenu : KScreen
 				new BuildingInfo(ShowerConfig.ID, Action.BuildMenuKeyS),
 				new BuildingInfo("WashBasin", Action.BuildMenuKeyB),
 				new BuildingInfo("WashSink", Action.BuildMenuKeyW),
-				new BuildingInfo("HandSanitizer", Action.BuildMenuKeyA)
+				new BuildingInfo("HandSanitizer", Action.BuildMenuKeyA),
+				new BuildingInfo("DecontaminationShower", Action.BuildMenuKeyD)
 			}),
 			new DisplayInfo(CacheHashString("Furniture"), "icon_category_furniture", Action.BuildCategoryFurniture, KKeyCode.F, new List<BuildingInfo>
 			{
@@ -275,6 +279,7 @@ public class BuildMenu : KScreen
 				new BuildingInfo("ManualGenerator", Action.BuildMenuKeyG),
 				new BuildingInfo("Generator", Action.BuildMenuKeyC),
 				new BuildingInfo("WoodGasGenerator", Action.BuildMenuKeyW),
+				new BuildingInfo("NuclearReactor", Action.BuildMenuKeyN),
 				new BuildingInfo("HydrogenGenerator", Action.BuildMenuKeyD),
 				new BuildingInfo("MethaneGenerator", Action.BuildMenuKeyA),
 				new BuildingInfo("PetroleumGenerator", Action.BuildMenuKeyR),
@@ -318,7 +323,8 @@ public class BuildMenu : KScreen
 				new BuildingInfo("LiquidVent", Action.BuildMenuKeyV),
 				new BuildingInfo("LiquidFilter", Action.BuildMenuKeyF),
 				new BuildingInfo("LiquidConduitPreferentialFlow", Action.BuildMenuKeyW),
-				new BuildingInfo("LiquidConduitOverflow", Action.BuildMenuKeyR)
+				new BuildingInfo("LiquidConduitOverflow", Action.BuildMenuKeyR),
+				new BuildingInfo("ModularLaunchpadPortLiquid", Action.BuildMenuKeyM)
 			}),
 			new DisplayInfo(CacheHashString("Ventilation Structures"), "icon_category_ventilation", Action.BuildCategoryVentilationStructures, KKeyCode.V, new List<BuildingInfo>
 			{
@@ -332,7 +338,8 @@ public class BuildMenu : KScreen
 				new BuildingInfo("GasBottler", Action.BuildMenuKeyB),
 				new BuildingInfo("BottleEmptierGas", Action.BuildMenuKeyB),
 				new BuildingInfo("GasConduitPreferentialFlow", Action.BuildMenuKeyW),
-				new BuildingInfo("GasConduitOverflow", Action.BuildMenuKeyR)
+				new BuildingInfo("GasConduitOverflow", Action.BuildMenuKeyR),
+				new BuildingInfo("ModularLaunchpadPortGas", Action.BuildMenuKeyG)
 			})
 		}),
 		new DisplayInfo(CacheHashString("Industrial"), "icon_category_refinery", Action.Plan5, KKeyCode.None, new List<DisplayInfo>
@@ -340,6 +347,7 @@ public class BuildMenu : KScreen
 			new DisplayInfo(CacheHashString("Oxygen"), "icon_category_oxygen", Action.BuildCategoryOxygen, KKeyCode.X, new List<BuildingInfo>
 			{
 				new BuildingInfo("MineralDeoxidizer", Action.BuildMenuKeyX),
+				new BuildingInfo("SublimationStation", Action.BuildMenuKeyS),
 				new BuildingInfo("AlgaeHabitat", Action.BuildMenuKeyA),
 				new BuildingInfo("AirFilter", Action.BuildMenuKeyD),
 				new BuildingInfo("CO2Scrubber", Action.BuildMenuKeyC),
@@ -356,7 +364,8 @@ public class BuildMenu : KScreen
 				new BuildingInfo("LiquidConditioner", Action.BuildMenuKeyA),
 				new BuildingInfo("OreScrubber", Action.BuildMenuKeyC),
 				new BuildingInfo("ThermalBlock", Action.BuildMenuKeyF),
-				new BuildingInfo("ExteriorWall", Action.BuildMenuKeyD)
+				new BuildingInfo("ExteriorWall", Action.BuildMenuKeyD),
+				new BuildingInfo("HighEnergyParticleRedirector", Action.BuildMenuKeyP)
 			}),
 			new DisplayInfo(CacheHashString("Refining"), "icon_category_refinery", Action.BuildCategoryRefining, KKeyCode.R, new List<BuildingInfo>
 			{
@@ -364,6 +373,7 @@ public class BuildMenu : KScreen
 				new BuildingInfo("AlgaeDistillery", Action.BuildMenuKeyA),
 				new BuildingInfo("EthanolDistillery", Action.BuildMenuKeyX),
 				new BuildingInfo("RockCrusher", Action.BuildMenuKeyG),
+				new BuildingInfo("SludgePress", Action.BuildMenuKeyP),
 				new BuildingInfo("Kiln", Action.BuildMenuKeyZ),
 				new BuildingInfo("OilWellCap", Action.BuildMenuKeyC),
 				new BuildingInfo("OilRefinery", Action.BuildMenuKeyR),
@@ -371,7 +381,8 @@ public class BuildMenu : KScreen
 				new BuildingInfo("MetalRefinery", Action.BuildMenuKeyT),
 				new BuildingInfo("GlassForge", Action.BuildMenuKeyF),
 				new BuildingInfo("OxyliteRefinery", Action.BuildMenuKeyO),
-				new BuildingInfo("SupermaterialRefinery", Action.BuildMenuKeyS)
+				new BuildingInfo("SupermaterialRefinery", Action.BuildMenuKeyS),
+				new BuildingInfo("UraniumCentrifuge", Action.BuildMenuKeyU)
 			}),
 			new DisplayInfo(CacheHashString("Equipment"), "icon_category_misc", Action.BuildCategoryEquipment, KKeyCode.S, new List<BuildingInfo>
 			{
@@ -380,12 +391,15 @@ public class BuildMenu : KScreen
 				new BuildingInfo("PowerControlStation", Action.BuildMenuKeyC),
 				new BuildingInfo("AstronautTrainingCenter", Action.BuildMenuKeyA),
 				new BuildingInfo("ResetSkillsStation", Action.BuildMenuKeyR),
+				new BuildingInfo("OxygenMaskStation", Action.BuildMenuKeyO),
 				new BuildingInfo("ClothingFabricator", Action.BuildMenuKeyT),
 				new BuildingInfo("SuitFabricator", Action.BuildMenuKeyX),
 				new BuildingInfo("SuitMarker", Action.BuildMenuKeyE),
 				new BuildingInfo("SuitLocker", Action.BuildMenuKeyD),
 				new BuildingInfo("JetSuitMarker", Action.BuildMenuKeyJ),
-				new BuildingInfo("JetSuitLocker", Action.BuildMenuKeyO)
+				new BuildingInfo("JetSuitLocker", Action.BuildMenuKeyO),
+				new BuildingInfo("LeadSuitMarker", Action.BuildMenuKeyE),
+				new BuildingInfo("LeadSuitLocker", Action.BuildMenuKeyD)
 			}),
 			new DisplayInfo(CacheHashString("Rocketry"), "icon_category_rocketry", Action.BuildCategoryRocketry, KKeyCode.C, new List<BuildingInfo>
 			{
@@ -401,7 +415,8 @@ public class BuildMenu : KScreen
 				new BuildingInfo("CommandModule", Action.BuildMenuKeyC),
 				new BuildingInfo("TouristModule", Action.BuildMenuKeyY),
 				new BuildingInfo("ResearchModule", Action.BuildMenuKeyR),
-				new BuildingInfo("HydrogenEngine", Action.BuildMenuKeyH)
+				new BuildingInfo("HydrogenEngine", Action.BuildMenuKeyH),
+				new BuildingInfo("RailGun", Action.BuildMenuKeyP)
 			})
 		}),
 		new DisplayInfo(CacheHashString("Logistics"), "icon_category_ventilation", Action.Plan6, KKeyCode.None, new List<DisplayInfo>
@@ -421,7 +436,8 @@ public class BuildMenu : KScreen
 				new BuildingInfo("SolidVent", Action.BuildMenuKeyV),
 				new BuildingInfo("SolidLogicValve", Action.BuildMenuKeyL),
 				new BuildingInfo("SolidConduitBridge", Action.BuildMenuKeyB),
-				new BuildingInfo("AutoMiner", Action.BuildMenuKeyM)
+				new BuildingInfo("AutoMiner", Action.BuildMenuKeyM),
+				new BuildingInfo("ModularLaunchpadPortSolid", Action.BuildMenuKeyS)
 			}),
 			new DisplayInfo(CacheHashString("LogicWiring"), "icon_category_automation", Action.BuildCategoryLogicWiring, KKeyCode.W, new List<BuildingInfo>
 			{
@@ -489,7 +505,7 @@ public class BuildMenu : KScreen
 
 	private float updateInterval = 1f;
 
-	private float elapsedTime;
+	private float elapsedTime = 0f;
 
 	public static BuildMenu Instance
 	{
@@ -516,7 +532,8 @@ public class BuildMenu : KScreen
 
 	public static bool UseHotkeyBuildMenu()
 	{
-		return KPlayerPrefs.GetInt("ENABLE_HOTKEY_BUILD_MENU") != 0;
+		int @int = KPlayerPrefs.GetInt("ENABLE_HOTKEY_BUILD_MENU");
+		return @int != 0;
 	}
 
 	protected override void OnSpawn()
@@ -571,7 +588,8 @@ public class BuildMenu : KScreen
 			HashedString key = submenu2.Key;
 			if (!(key == ROOT_HASHSTR) && categorizedCategoryMap.TryGetValue(key, out var value2))
 			{
-				Image component = submenu2.Value.GetComponent<Image>();
+				BuildMenuCategoriesScreen value3 = submenu2.Value;
+				Image component = value3.GetComponent<Image>();
 				if (component != null)
 				{
 					component.enabled = value2.Count > 0;
@@ -595,7 +613,8 @@ public class BuildMenu : KScreen
 			{
 				anchoredPosition = rootMenuOffset;
 				padInfo = rootMenuPadding;
-				value.GetComponent<Image>().enabled = false;
+				Image component2 = value.GetComponent<Image>();
+				component2.enabled = false;
 			}
 			else
 			{
@@ -615,7 +634,8 @@ public class BuildMenu : KScreen
 	{
 		foreach (KeyValuePair<HashedString, BuildMenuCategoriesScreen> submenu in submenus)
 		{
-			submenu.Value.UpdateBuildableStates(skip_flourish: true);
+			BuildMenuCategoriesScreen value = submenu.Value;
+			value.UpdateBuildableStates(skip_flourish: true);
 		}
 	}
 
@@ -656,12 +676,12 @@ public class BuildMenu : KScreen
 		}
 		else if (typeof(IList<DisplayInfo>).IsAssignableFrom(type))
 		{
-			IList<DisplayInfo> obj = (IList<DisplayInfo>)data;
+			IList<DisplayInfo> list2 = (IList<DisplayInfo>)data;
 			if (!categorized_category_map.TryGetValue(category, out var value2))
 			{
 				value2 = (categorized_category_map[category] = new List<HashedString>());
 			}
-			foreach (DisplayInfo item in obj)
+			foreach (DisplayInfo item in list2)
 			{
 				value2.Add(item.category);
 				PopulateCategorizedMaps(item.category, depth + 1, item.data, category_map, order_map, ref building_index, categorized_building_map, categorized_category_map);
@@ -669,7 +689,8 @@ public class BuildMenu : KScreen
 		}
 		else
 		{
-			foreach (BuildingInfo item2 in (IList<BuildingInfo>)data)
+			IList<BuildingInfo> list4 = (IList<BuildingInfo>)data;
+			foreach (BuildingInfo item2 in list4)
 			{
 				Tag key = new Tag(item2.id);
 				category_map[key] = category;
@@ -691,9 +712,8 @@ public class BuildMenu : KScreen
 	{
 		if (!e.Consumed)
 		{
-			if (mouseOver && base.ConsumeMouseScroll && !e.TryConsume(Action.ZoomIn))
+			if (!mouseOver || !base.ConsumeMouseScroll || e.TryConsume(Action.ZoomIn) || e.TryConsume(Action.ZoomOut))
 			{
-				e.TryConsume(Action.ZoomOut);
 			}
 			if (!e.Consumed && selectedCategory.IsValid && e.TryConsume(Action.Escape))
 			{
@@ -744,7 +764,8 @@ public class BuildMenu : KScreen
 		productInfoScreen.Close();
 		while (submenuStack.Count > 0)
 		{
-			submenuStack.Pop().Close();
+			KIconToggleMenu kIconToggleMenu = submenuStack.Pop();
+			kIconToggleMenu.Close();
 			productInfoScreen.Close();
 		}
 		selectedCategory = HashedString.Invalid;
@@ -773,15 +794,16 @@ public class BuildMenu : KScreen
 				string sound = GlobalAssets.GetSound("NewBuildable_Embellishment");
 				if (sound != null)
 				{
-					SoundEvent.EndOneShot(SoundEvent.BeginOneShot(sound, SoundListenerController.Instance.transform.GetPosition()));
+					EventInstance instance = SoundEvent.BeginOneShot(sound, SoundListenerController.Instance.transform.GetPosition());
+					SoundEvent.EndOneShot(instance);
 				}
 			}
 			string sound2 = GlobalAssets.GetSound("NewBuildable");
 			if (sound2 != null)
 			{
-				EventInstance instance = SoundEvent.BeginOneShot(sound2, SoundListenerController.Instance.transform.GetPosition());
-				instance.setParameterByName("playCount", Instance.notificationPingCount);
-				SoundEvent.EndOneShot(instance);
+				EventInstance instance2 = SoundEvent.BeginOneShot(sound2, SoundListenerController.Instance.transform.GetPosition());
+				instance2.setParameterByName("playCount", Instance.notificationPingCount);
+				SoundEvent.EndOneShot(instance2);
 			}
 		}
 		timeSinceNotificationPing = 0f;
@@ -849,7 +871,8 @@ public class BuildMenu : KScreen
 		if (selectedBuilding.isKAnimTile && selectedBuilding.isUtility)
 		{
 			IList<Tag> getSelectedElementAsList = productInfoScreen.materialSelectionPanel.GetSelectedElementAsList;
-			((selectedBuilding.BuildingComplete.GetComponent<Wire>() != null) ? ((BaseUtilityBuildTool)WireBuildTool.Instance) : ((BaseUtilityBuildTool)UtilityBuildTool.Instance)).Activate(selectedBuilding, getSelectedElementAsList);
+			BaseUtilityBuildTool baseUtilityBuildTool = ((selectedBuilding.BuildingComplete.GetComponent<Wire>() != null) ? ((BaseUtilityBuildTool)WireBuildTool.Instance) : ((BaseUtilityBuildTool)UtilityBuildTool.Instance));
+			baseUtilityBuildTool.Activate(selectedBuilding, getSelectedElementAsList);
 		}
 		else
 		{
@@ -868,7 +891,8 @@ public class BuildMenu : KScreen
 		buildingsScreen.SetHasFocus(has_focus: false);
 		foreach (KeyValuePair<HashedString, BuildMenuCategoriesScreen> submenu in submenus)
 		{
-			submenu.Value.SetHasFocus(has_focus: false);
+			BuildMenuCategoriesScreen value = submenu.Value;
+			value.SetHasFocus(has_focus: false);
 		}
 		ToolMenu.Instance.ClearSelection();
 		if (def != null)
@@ -904,7 +928,8 @@ public class BuildMenu : KScreen
 			{
 				if (item is BuildMenuCategoriesScreen)
 				{
-					(item as BuildMenuCategoriesScreen).SetHasFocus(has_focus: false);
+					BuildMenuCategoriesScreen buildMenuCategoriesScreen = item as BuildMenuCategoriesScreen;
+					buildMenuCategoriesScreen.SetHasFocus(has_focus: false);
 				}
 			}
 			selectedCategory = new_category;
@@ -960,13 +985,12 @@ public class BuildMenu : KScreen
 		while (true)
 		{
 			HashedString parentCategory = GetParentCategory(child_category);
-			if (!(parentCategory == HashedString.Invalid))
+			if (parentCategory == HashedString.Invalid)
 			{
-				categories.Add(parentCategory);
-				child_category = parentCategory;
-				continue;
+				break;
 			}
-			break;
+			categories.Add(parentCategory);
+			child_category = parentCategory;
 		}
 	}
 
@@ -995,7 +1019,8 @@ public class BuildMenu : KScreen
 	{
 		foreach (KeyValuePair<HashedString, BuildMenuCategoriesScreen> submenu in submenus)
 		{
-			submenu.Value.UpdateNotifications(updated_categories);
+			BuildMenuCategoriesScreen value = submenu.Value;
+			value.UpdateNotifications(updated_categories);
 		}
 	}
 

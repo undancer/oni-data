@@ -27,12 +27,13 @@ public class MopToolHoverTextCard : HoverTextConfiguration
 	public override void UpdateHoverElements(List<KSelectable> selected)
 	{
 		int num = Grid.PosToCell(Camera.main.ScreenToWorldPoint(KInputManager.GetMousePos()));
-		if (!Grid.IsValidCell(num))
-		{
-			return;
-		}
 		HoverTextScreen instance = HoverTextScreen.Instance;
 		HoverTextDrawer hoverTextDrawer = instance.BeginDrawing();
+		if (!Grid.IsValidCell(num) || Grid.WorldIdx[num] != ClusterManager.Instance.activeWorldId)
+		{
+			hoverTextDrawer.EndDrawing();
+			return;
+		}
 		hoverTextDrawer.BeginShadowBar();
 		if (Grid.IsVisible(num))
 		{
@@ -48,7 +49,7 @@ public class MopToolHoverTextCard : HoverTextConfiguration
 				hoverTextDrawer.DrawText(element.GetMaterialCategoryTag().ProperName(), Styles_BodyText.Standard);
 				hoverTextDrawer.NewLine();
 				hoverTextDrawer.DrawIcon(instance.GetSprite("dash"));
-				string[] array = WorldInspector.MassStringsReadOnly(num);
+				string[] array = HoverTextHelper.MassStringsReadOnly(num);
 				hoverTextDrawer.DrawText(array[0], Styles_Values.Property.Standard);
 				hoverTextDrawer.DrawText(array[1], Styles_Values.Property_Decimal.Standard);
 				hoverTextDrawer.DrawText(array[2], Styles_Values.Property.Standard);

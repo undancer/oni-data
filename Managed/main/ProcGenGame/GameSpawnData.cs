@@ -23,76 +23,71 @@ namespace ProcGenGame
 		{
 			foreach (KeyValuePair<int, string> newItem in newItems)
 			{
-				ClearTemplatesInCell(newItem.Key);
 				Vector2I vector2I = Grid.CellToXY(newItem.Key);
 				Prefab item = new Prefab(newItem.Value, Prefab.Type.Other, vector2I.x, vector2I.y, (SimHashes)0);
 				otherEntities.Add(item);
 			}
 		}
 
-		public void ClearTemplatesInArea(int root_cell, CellOffset[] area)
+		public void AddTemplate(TemplateContainer template, Vector2I position, ref Dictionary<int, int> claimedCells)
 		{
-			foreach (CellOffset offset in area)
+			int cell = Grid.XYToCell(position.x, position.y);
+			if (template.buildings != null)
 			{
-				ClearTemplatesInCell(Grid.OffsetCell(root_cell, offset));
-			}
-		}
-
-		public void ClearTemplatesInCell(int cell)
-		{
-			ClearCellFromCollection(cell, buildings);
-			ClearCellFromCollection(cell, pickupables);
-			ClearCellFromCollection(cell, elementalOres);
-			ClearCellFromCollection(cell, otherEntities);
-			for (int i = 0; i < preventFoWReveal.Count; i++)
-			{
-				if (preventFoWReveal[i].Key == Grid.CellToXY(cell))
+				foreach (Prefab building in template.buildings)
 				{
-					preventFoWReveal.RemoveAt(i);
-					i--;
+					if (!claimedCells.ContainsKey(Grid.OffsetCell(cell, building.location_x, building.location_y)))
+					{
+						buildings.Add(building.Clone(position));
+					}
 				}
 			}
-		}
-
-		private void ClearCellFromCollection(int checkCell, List<Prefab> collection)
-		{
-			for (int i = 0; i < collection.Count; i++)
+			if (template.pickupables != null)
 			{
-				if (checkCell == Grid.XYToCell(collection[i].location_x, collection[i].location_y))
+				foreach (Prefab pickupable in template.pickupables)
 				{
-					collection.RemoveAt(i);
-					i--;
+					if (!claimedCells.ContainsKey(Grid.OffsetCell(cell, pickupable.location_x, pickupable.location_y)))
+					{
+						pickupables.Add(pickupable.Clone(position));
+					}
 				}
 			}
-		}
-
-		public void AddTemplate(TemplateContainer template, Vector2I position)
-		{
-			CellOffset[] array = new CellOffset[template.cells.Count];
+			if (template.elementalOres != null)
+			{
+				foreach (Prefab elementalOre in template.elementalOres)
+				{
+					if (!claimedCells.ContainsKey(Grid.OffsetCell(cell, elementalOre.location_x, elementalOre.location_y)))
+					{
+						elementalOres.Add(elementalOre.Clone(position));
+					}
+				}
+			}
+			if (template.otherEntities != null)
+			{
+				foreach (Prefab otherEntity in template.otherEntities)
+				{
+					if (!claimedCells.ContainsKey(Grid.OffsetCell(cell, otherEntity.location_x, otherEntity.location_y)))
+					{
+						otherEntities.Add(otherEntity.Clone(position));
+					}
+				}
+			}
+			if (template.cells == null)
+			{
+				return;
+			}
 			for (int i = 0; i < template.cells.Count; i++)
 			{
-				array[i] = new CellOffset(template.cells[i].location_x, template.cells[i].location_y);
-			}
-			ClearTemplatesInArea(Grid.XYToCell(position.x, position.y), array);
-			for (int j = 0; j < template.buildings.Count; j++)
-			{
-				buildings.Add((Prefab)template.buildings[j].Clone(position));
-			}
-			for (int k = 0; k < template.pickupables.Count; k++)
-			{
-				pickupables.Add((Prefab)template.pickupables[k].Clone(position));
-			}
-			for (int l = 0; l < template.elementalOres.Count; l++)
-			{
-				elementalOres.Add((Prefab)template.elementalOres[l].Clone(position));
-			}
-			for (int m = 0; m < template.otherEntities.Count; m++)
-			{
-				otherEntities.Add((Prefab)template.otherEntities[m].Clone(position));
-			}
-			for (int n = 0; n < template.cells.Count; n++)
-			{
-				preventFoWReveal.Add(new KeyValuePair<Vector2I, bool>(new Vector2I(position.x + template.cells[n].location_x, position.y + template.cells[n].location_y), template.cells[n].preventFoWReveal));
+				int key = Grid.XYToCell(position.x + template.cells[i].location_x, position.y + template.cells[i].location_y);
+				if (!claimedCells.ContainsKey(key))
+				{
+					claimedCells[key] = 1;
+					preventFoWReveal.Add(new KeyValuePair<Vector2I, bool>(new Vector2I(position.x + template.cells[i].location_x, position.y + template.cells[i].location_y), template.cells[i].preventFoWReveal));
+				}
+				else
+				{
+					claimedCells[key]++;
+				}
 			}
 		}
 	}

@@ -3,52 +3,46 @@ using UnityEngine;
 [AddComponentMenu("KMonoBehaviour/scripts/RadiationGermSpawner")]
 public class RadiationGermSpawner : KMonoBehaviour
 {
-	private const float GERM_SCALE = 100f;
+	private const float GERM_SCALE = 10f;
 
-	private const int CELLS_PER_UPDATE = 1024;
+	private const int CELLS_PER_UPDATE = 2048;
 
 	private int nextEvaluatedCell;
 
 	private float cellRatio;
 
-	private byte disease_idx;
+	private byte radiation_disease_idx;
 
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		cellRatio = Grid.CellCount / 1024;
-		disease_idx = byte.MaxValue;
+		cellRatio = Grid.CellCount / 2048;
+		radiation_disease_idx = Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.Id);
 	}
 
 	private void Update()
 	{
+		EvaluateRadiation();
 	}
 
 	private void EvaluateRadiation()
 	{
-		for (int i = 0; i < 1024; i++)
+		if (KMonoBehaviour.isLoadingScene)
+		{
+			return;
+		}
+		for (int i = 0; i < 2048; i++)
 		{
 			int num = (nextEvaluatedCell + i) % Grid.CellCount;
-			if (Grid.RadiationCount[num] < 0)
+			if (!(Grid.Radiation[num] <= 0f))
 			{
-				continue;
-			}
-			int num2 = Mathf.RoundToInt((float)Grid.RadiationCount[num] * 100f * (Time.deltaTime * cellRatio));
-			if (Grid.DiseaseIdx[num] == disease_idx)
-			{
-				SimMessages.ModifyDiseaseOnCell(num, disease_idx, num2);
-				continue;
-			}
-			int num3 = Grid.DiseaseCount[num] - num2;
-			if (num3 < 0)
-			{
-				SimMessages.ModifyDiseaseOnCell(num, disease_idx, num3);
-			}
-			else
-			{
-				SimMessages.ModifyDiseaseOnCell(num, Grid.DiseaseIdx[num], -num2);
+				int num2 = Mathf.RoundToInt(Grid.Radiation[num] * 10f * (Time.deltaTime * cellRatio));
+				if (Grid.DiseaseIdx[num] != radiation_disease_idx)
+				{
+					SimMessages.ModifyDiseaseOnCell(num, Grid.DiseaseIdx[num], -num2);
+				}
 			}
 		}
-		nextEvaluatedCell = (nextEvaluatedCell + 1024) % Grid.CellCount;
+		nextEvaluatedCell = (nextEvaluatedCell + 2048) % Grid.CellCount;
 	}
 }

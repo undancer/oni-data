@@ -71,10 +71,10 @@ public class FabricatorIngredientStatusManager : KMonoBehaviour, ISim1000ms
 				continue;
 			}
 			bool flag = false;
-			ComplexRecipe.RecipeElement[] ingredients = complexRecipe.ingredients;
-			foreach (ComplexRecipe.RecipeElement recipeElement2 in ingredients)
+			ComplexRecipe.RecipeElement[] ingredients2 = complexRecipe.ingredients;
+			foreach (ComplexRecipe.RecipeElement recipeElement2 in ingredients2)
 			{
-				float newBalance = fabricator.inStorage.GetAmountAvailable(recipeElement2.material) + fabricator.buildStorage.GetAmountAvailable(recipeElement2.material) + WorldInventory.Instance.GetTotalAmount(recipeElement2.material) - recipeElement2.amount;
+				float newBalance = fabricator.inStorage.GetAmountAvailable(recipeElement2.material) + fabricator.buildStorage.GetAmountAvailable(recipeElement2.material) + fabricator.GetMyWorld().worldInventory.GetTotalAmount(recipeElement2.material, includeRelatedWorlds: true) - recipeElement2.amount;
 				flag = flag || ChangeRecipeRequiredResourceBalance(complexRecipe, recipeElement2.material, newBalance) || (statusItems.ContainsKey(complexRecipe) && fabricator.GetRecipeQueueCount(complexRecipe) == 0);
 			}
 			if (!flag)

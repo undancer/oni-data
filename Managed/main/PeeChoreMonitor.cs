@@ -21,7 +21,7 @@ public class PeeChoreMonitor : GameStateMachine<PeeChoreMonitor, PeeChoreMonitor
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = building;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		building.Update(delegate(Instance smi, float dt)
 		{
 			pee_fuse.Delta(0f - dt, smi);
@@ -36,7 +36,11 @@ public class PeeChoreMonitor : GameStateMachine<PeeChoreMonitor, PeeChoreMonitor
 
 	private bool IsSleeping(Instance smi)
 	{
-		smi.master.gameObject.GetSMI<StaminaMonitor.Instance>()?.IsSleeping();
+		StaminaMonitor.Instance sMI = smi.master.gameObject.GetSMI<StaminaMonitor.Instance>();
+		if (sMI == null || !sMI.IsSleeping())
+		{
+			return false;
+		}
 		return false;
 	}
 

@@ -29,7 +29,8 @@ public class OptionSelector : MonoBehaviour
 
 	private void Start()
 	{
-		selectedItem.GetComponent<KButton>().onBtnClick += OnClick;
+		KButton component = selectedItem.GetComponent<KButton>();
+		component.onBtnClick += OnClick;
 	}
 
 	public void Initialize(object id)
@@ -52,35 +53,36 @@ public class OptionSelector : MonoBehaviour
 
 	public void ConfigureItem(bool disabled, DisplayOptionInfo display_info)
 	{
-		HierarchyReferences component = selectedItem.GetComponent<HierarchyReferences>();
-		KImage kImage = component.GetReference("BG") as KImage;
+		KImage kImage = selectedItem;
+		HierarchyReferences component = kImage.GetComponent<HierarchyReferences>();
+		KImage kImage2 = component.GetReference("BG") as KImage;
 		if (display_info.bgOptions == null)
-		{
-			kImage.gameObject.SetActive(value: false);
-		}
-		else
-		{
-			kImage.sprite = display_info.bgOptions[display_info.bgIndex];
-		}
-		KImage kImage2 = component.GetReference("FG") as KImage;
-		if (display_info.fgOptions == null)
 		{
 			kImage2.gameObject.SetActive(value: false);
 		}
 		else
 		{
-			kImage2.sprite = display_info.fgOptions[display_info.fgIndex];
+			kImage2.sprite = display_info.bgOptions[display_info.bgIndex];
 		}
-		KImage kImage3 = component.GetReference("Fill") as KImage;
-		if (kImage3 != null)
+		KImage kImage3 = component.GetReference("FG") as KImage;
+		if (display_info.fgOptions == null)
 		{
-			kImage3.enabled = !disabled;
-			kImage3.color = display_info.fillColour;
+			kImage3.gameObject.SetActive(value: false);
 		}
-		KImage kImage4 = component.GetReference("Outline") as KImage;
+		else
+		{
+			kImage3.sprite = display_info.fgOptions[display_info.fgIndex];
+		}
+		KImage kImage4 = component.GetReference("Fill") as KImage;
 		if (kImage4 != null)
 		{
 			kImage4.enabled = !disabled;
+			kImage4.color = display_info.fillColour;
+		}
+		KImage kImage5 = component.GetReference("Outline") as KImage;
+		if (kImage5 != null)
+		{
+			kImage5.enabled = !disabled;
 		}
 	}
 }

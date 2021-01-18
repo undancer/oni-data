@@ -8,7 +8,7 @@ public class MultipleRenderTarget : MonoBehaviour
 
 	private FullScreenQuad quad;
 
-	public bool isFrontEnd;
+	public bool isFrontEnd = false;
 
 	public event Action<Camera> onSetupComplete;
 
@@ -20,20 +20,21 @@ public class MultipleRenderTarget : MonoBehaviour
 	private IEnumerator SetupProxy()
 	{
 		yield return null;
-		Camera component = GetComponent<Camera>();
-		Camera camera = new GameObject().AddComponent<Camera>();
-		camera.CopyFrom(component);
-		renderProxy = camera.gameObject.AddComponent<MultipleRenderTargetProxy>();
-		camera.name = component.name + " MRT";
-		camera.transform.parent = component.transform;
-		camera.transform.SetLocalPosition(Vector3.zero);
-		camera.depth = component.depth - 1f;
-		component.cullingMask = 0;
-		component.clearFlags = CameraClearFlags.Color;
-		quad = new FullScreenQuad("MultipleRenderTarget", component, invert: true);
+		Camera camera = GetComponent<Camera>();
+		GameObject new_camera_go = new GameObject();
+		Camera new_camera = new_camera_go.AddComponent<Camera>();
+		new_camera.CopyFrom(camera);
+		renderProxy = new_camera.gameObject.AddComponent<MultipleRenderTargetProxy>();
+		new_camera.name = camera.name + " MRT";
+		new_camera.transform.parent = camera.transform;
+		new_camera.transform.SetLocalPosition(Vector3.zero);
+		new_camera.depth = camera.depth - 1f;
+		camera.cullingMask = 0;
+		camera.clearFlags = CameraClearFlags.Color;
+		quad = new FullScreenQuad("MultipleRenderTarget", camera, invert: true);
 		if (this.onSetupComplete != null)
 		{
-			this.onSetupComplete(camera);
+			this.onSetupComplete(new_camera);
 		}
 	}
 

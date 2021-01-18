@@ -1,4 +1,3 @@
-using System.IO;
 using Delaunay.Geo;
 using Klei;
 using ProcGen;
@@ -6,36 +5,36 @@ using STRINGS;
 
 namespace Database
 {
-	public class BuildOutsideStartBiome : ColonyAchievementRequirement
+	public class BuildOutsideStartBiome : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		public override bool Success()
 		{
-			WorldDetailSave worldDetailSave = SaveLoader.Instance.worldDetailSave;
-			for (int i = 0; i < worldDetailSave.overworldCells.Count; i++)
+			WorldDetailSave clusterDetailSave = SaveLoader.Instance.clusterDetailSave;
+			foreach (BuildingComplete item in Components.BuildingCompletes.Items)
 			{
-				WorldDetailSave.OverworldCell overworldCell = worldDetailSave.overworldCells[i];
-				if (overworldCell.tags == null || overworldCell.tags.Contains(WorldGenTags.StartWorld))
+				KPrefabID component = item.GetComponent<KPrefabID>();
+				if (component.HasTag(GameTags.TemplateBuilding))
 				{
 					continue;
 				}
-				Polygon poly = overworldCell.poly;
-				foreach (BuildingComplete item in Components.BuildingCompletes.Items)
+				for (int i = 0; i < clusterDetailSave.overworldCells.Count; i++)
 				{
-					if (!item.GetComponent<KPrefabID>().HasTag(GameTags.TemplateBuilding) && poly.PointInPolygon(item.transform.GetPosition()))
+					WorldDetailSave.OverworldCell overworldCell = clusterDetailSave.overworldCells[i];
+					if (overworldCell.tags != null && !overworldCell.tags.Contains(WorldGenTags.StartWorld))
 					{
-						Game.Instance.unlocks.Unlock("buildoutsidestartingbiome");
-						return true;
+						Polygon poly = overworldCell.poly;
+						if (poly.PointInPolygon(item.transform.GetPosition()))
+						{
+							Game.Instance.unlocks.Unlock("buildoutsidestartingbiome");
+							return true;
+						}
 					}
 				}
 			}
 			return false;
 		}
 
-		public override void Deserialize(IReader reader)
-		{
-		}
-
-		public override void Serialize(BinaryWriter writer)
+		public void Deserialize(IReader reader)
 		{
 		}
 

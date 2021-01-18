@@ -30,7 +30,7 @@ public class ExternalTemperatureMonitor : GameStateMachine<ExternalTemperatureMo
 
 		private const float MIN_SCALD_INTERVAL = 5f;
 
-		private float lastScaldTime;
+		private float lastScaldTime = 0f;
 
 		public float GetCurrentExternalTemperature
 		{

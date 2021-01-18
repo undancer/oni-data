@@ -42,8 +42,7 @@ public class RescueIncapacitatedChore : Chore<RescueIncapacitatedChore.StatesIns
 			default_state = approachIncapacitated;
 			approachIncapacitated.InitializeStates(rescuer, rescueTarget, holding.pickup, failure, Grid.DefaultOffset).Enter(delegate(StatesInstance smi)
 			{
-				DeathMonitor.Instance sMI2 = rescueTarget.GetSMI<DeathMonitor.Instance>(smi);
-				if (sMI2 == null || sMI2.IsDead())
+				if (rescueTarget.GetSMI<DeathMonitor.Instance>(smi)?.IsDead() ?? true)
 				{
 					smi.StopSM("target died");
 				}
@@ -77,8 +76,7 @@ public class RescueIncapacitatedChore : Chore<RescueIncapacitatedChore.StatesIns
 				.EventTransition(GameHashes.AnimQueueComplete, holding.delivering);
 			holding.delivering.InitializeStates(rescuer, deliverTarget, holding.deposit, holding.ditch).Enter(delegate(StatesInstance smi)
 			{
-				DeathMonitor.Instance sMI = rescueTarget.GetSMI<DeathMonitor.Instance>(smi);
-				if (sMI == null || sMI.IsDead())
+				if (rescueTarget.GetSMI<DeathMonitor.Instance>(smi)?.IsDead() ?? true)
 				{
 					smi.StopSM("target died");
 				}

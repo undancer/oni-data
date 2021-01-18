@@ -10,7 +10,8 @@ public class AquaSuitConfig : IEquipmentConfig
 
 	public EquipmentDef CreateEquipmentDef()
 	{
-		new Dictionary<string, float>().Add(SimHashes.DirtyWater.ToString(), 300f);
+		Dictionary<string, float> dictionary = new Dictionary<string, float>();
+		dictionary.Add(SimHashes.DirtyWater.ToString(), 300f);
 		List<AttributeModifier> list = new List<AttributeModifier>();
 		list.Add(new AttributeModifier(TUNING.EQUIPMENT.ATTRIBUTE_MOD_IDS.INSULATION, TUNING.EQUIPMENT.SUITS.AQUASUIT_INSULATION, STRINGS.EQUIPMENT.PREFABS.AQUA_SUIT.NAME));
 		list.Add(new AttributeModifier(TUNING.EQUIPMENT.ATTRIBUTE_MOD_IDS.ATHLETICS, TUNING.EQUIPMENT.SUITS.AQUASUIT_ATHLETICS, STRINGS.EQUIPMENT.PREFABS.AQUA_SUIT.NAME));

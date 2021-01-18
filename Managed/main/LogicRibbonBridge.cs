@@ -4,7 +4,8 @@ public class LogicRibbonBridge : KMonoBehaviour
 	{
 		base.OnSpawn();
 		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
-		switch (GetComponent<Rotatable>().GetOrientation())
+		Rotatable component2 = GetComponent<Rotatable>();
+		switch (component2.GetOrientation())
 		{
 		case Orientation.Neutral:
 			component.Play("0");

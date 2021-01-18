@@ -8,7 +8,7 @@ public class BudUprootedMonitor : KMonoBehaviour
 	public bool canBeUprooted = true;
 
 	[Serialize]
-	private bool uprooted;
+	private bool uprooted = false;
 
 	public Ref<KPrefabID> parentObject = new Ref<KPrefabID>();
 
@@ -24,17 +24,7 @@ public class BudUprootedMonitor : KMonoBehaviour
 		}
 	});
 
-	public bool IsUprooted
-	{
-		get
-		{
-			if (!uprooted)
-			{
-				return GetComponent<KPrefabID>().HasTag(GameTags.Uprooted);
-			}
-			return true;
-		}
-	}
+	public bool IsUprooted => uprooted || GetComponent<KPrefabID>().HasTag(GameTags.Uprooted);
 
 	protected override void OnSpawn()
 	{

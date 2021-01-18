@@ -1,7 +1,7 @@
 using STRINGS;
 using UnityEngine;
 
-public class CargoBayIsEmpty : RocketLaunchCondition
+public class CargoBayIsEmpty : ProcessCondition
 {
 	private CommandModule commandModule;
 
@@ -10,31 +10,31 @@ public class CargoBayIsEmpty : RocketLaunchCondition
 		commandModule = module;
 	}
 
-	public override RocketLaunchCondition GetParentCondition()
-	{
-		return null;
-	}
-
-	public override LaunchStatus EvaluateLaunchCondition()
+	public override Status EvaluateCondition()
 	{
 		foreach (GameObject item in AttachableBuilding.GetAttachedNetwork(commandModule.GetComponent<AttachableBuilding>()))
 		{
 			CargoBay component = item.GetComponent<CargoBay>();
 			if (component != null && component.storage.MassStored() != 0f)
 			{
-				return LaunchStatus.Failure;
+				return Status.Failure;
 			}
 		}
-		return LaunchStatus.Ready;
+		return Status.Ready;
 	}
 
-	public override string GetLaunchStatusMessage(bool ready)
+	public override string GetStatusMessage(Status status)
 	{
 		return UI.STARMAP.CARGOEMPTY.NAME;
 	}
 
-	public override string GetLaunchStatusTooltip(bool ready)
+	public override string GetStatusTooltip(Status status)
 	{
 		return UI.STARMAP.CARGOEMPTY.TOOLTIP;
+	}
+
+	public override bool ShowInUI()
+	{
+		return true;
 	}
 }

@@ -6,7 +6,7 @@ public abstract class ConduitThresholdSensor : ConduitSensor
 {
 	[SerializeField]
 	[Serialize]
-	protected float threshold;
+	protected float threshold = 0f;
 
 	[SerializeField]
 	[Serialize]
@@ -62,7 +62,8 @@ public abstract class ConduitThresholdSensor : ConduitSensor
 
 	private void OnCopySettings(object data)
 	{
-		ConduitThresholdSensor component = ((GameObject)data).GetComponent<ConduitThresholdSensor>();
+		GameObject gameObject = (GameObject)data;
+		ConduitThresholdSensor component = gameObject.GetComponent<ConduitThresholdSensor>();
 		if (component != null)
 		{
 			Threshold = component.Threshold;
@@ -72,7 +73,8 @@ public abstract class ConduitThresholdSensor : ConduitSensor
 
 	protected override void ConduitUpdate(float dt)
 	{
-		if (GetContainedMass() <= 0f && !dirty)
+		float containedMass = GetContainedMass();
+		if (containedMass <= 0f && !dirty)
 		{
 			return;
 		}
@@ -96,10 +98,11 @@ public abstract class ConduitThresholdSensor : ConduitSensor
 		int cell = Grid.PosToCell(this);
 		if (conduitType == ConduitType.Liquid || conduitType == ConduitType.Gas)
 		{
-			return Conduit.GetFlowManager(conduitType).GetContents(cell).mass;
+			ConduitFlow flowManager = Conduit.GetFlowManager(conduitType);
+			return flowManager.GetContents(cell).mass;
 		}
-		SolidConduitFlow flowManager = SolidConduit.GetFlowManager();
-		Pickupable pickupable = flowManager.GetPickupable(flowManager.GetContents(cell).pickupableHandle);
+		SolidConduitFlow flowManager2 = SolidConduit.GetFlowManager();
+		Pickupable pickupable = flowManager2.GetPickupable(flowManager2.GetContents(cell).pickupableHandle);
 		if (pickupable != null)
 		{
 			return pickupable.PrimaryElement.Mass;

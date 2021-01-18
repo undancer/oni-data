@@ -40,6 +40,23 @@ public class ColorSet : ScriptableObject
 
 	public Color32 harvestDisabled;
 
+	[Header("Gameplay Events")]
+	public Color32 eventPositive;
+
+	public Color32 eventNegative;
+
+	public Color32 eventNeutral;
+
+	[Header("Notifications")]
+	public Color32 NotificationBad;
+
+	public Color32 NotificationEvent;
+
+	[Header("Info Screen Status Items")]
+	public Color32 statusItemBad;
+
+	public Color32 statusItemEvent;
+
 	[Header("Germ Overlay")]
 	public Color32 germFoodPoisoning;
 
@@ -48,6 +65,8 @@ public class ColorSet : ScriptableObject
 	public Color32 germSlimeLung;
 
 	public Color32 germZombieSpores;
+
+	public Color32 germRadiationSickness;
 
 	[Header("Room Overlay")]
 	public Color32 roomNone;

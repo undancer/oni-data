@@ -88,7 +88,8 @@ public class NextUpdateTimer : KMonoBehaviour
 		}
 		TimerText.text = text;
 		UpdateAnimController.Play(s, KAnim.PlayMode.Loop);
-		float positionPercent = Mathf.Clamp01((float)(timeSpan3.TotalSeconds / timeSpan.TotalSeconds));
+		double num3 = timeSpan3.TotalSeconds / timeSpan.TotalSeconds;
+		float positionPercent = Mathf.Clamp01((float)num3);
 		UpdateAnimMeterController.SetPositionPercent(positionPercent);
 	}
 }

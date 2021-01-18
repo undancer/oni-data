@@ -51,7 +51,8 @@ namespace YamlDotNet.Samples
 			receipt.ship_to = address;
 			receipt.specialDelivery = "Follow the Yellow Brick\nRoad to the Emerald City.\nPay no attention to the\nman behind the curtain.";
 			Receipt graph = receipt;
-			string value = new SerializerBuilder().Build().Serialize(graph);
+			Serializer serializer = new SerializerBuilder().Build();
+			string value = serializer.Serialize(graph);
 			output.WriteLine(value);
 		}
 	}

@@ -16,7 +16,7 @@ public class POIBunkerExteriorDoor : IBuildingConfig
 		buildingDef.IsFoundation = true;
 		buildingDef.TileLayer = ObjectLayer.FoundationTile;
 		buildingDef.AudioCategory = "Metal";
-		buildingDef.PermittedRotations = PermittedRotations.R90;
+		buildingDef.PermittedRotations = PermittedRotations.FlipH;
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;
 		buildingDef.ForegroundLayer = Grid.SceneLayer.InteriorWall;
 		buildingDef.ShowInBuildMenu = false;
@@ -37,14 +37,18 @@ public class POIBunkerExteriorDoor : IBuildingConfig
 		go.AddOrGet<Unsealable>();
 		go.AddOrGet<KBoxCollider2D>();
 		Prioritizable.AddRef(go);
-		go.AddOrGet<Workable>().workTime = 5f;
-		go.AddOrGet<KBatchedAnimController>().fgLayer = Grid.SceneLayer.BuildingFront;
+		Workable workable = go.AddOrGet<Workable>();
+		workable.workTime = 5f;
+		KBatchedAnimController kBatchedAnimController = go.AddOrGet<KBatchedAnimController>();
+		kBatchedAnimController.fgLayer = Grid.SceneLayer.BuildingFront;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		go.GetComponent<AccessControl>().controlEnabled = false;
+		AccessControl component = go.GetComponent<AccessControl>();
+		component.controlEnabled = false;
 		go.GetComponent<Deconstructable>().allowDeconstruction = false;
-		go.GetComponent<KBatchedAnimController>().initialAnim = "closed";
+		KBatchedAnimController component2 = go.GetComponent<KBatchedAnimController>();
+		component2.initialAnim = "closed";
 	}
 }

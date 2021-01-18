@@ -2,7 +2,7 @@ using UnityEngine;
 
 [SkipSaveFileSerialization]
 [AddComponentMenu("KMonoBehaviour/scripts/SolidConduitConsumer")]
-public class SolidConduitConsumer : KMonoBehaviour
+public class SolidConduitConsumer : KMonoBehaviour, IConduitConsumer
 {
 	[SerializeField]
 	public Tag capacityTag = GameTags.Any;
@@ -11,7 +11,10 @@ public class SolidConduitConsumer : KMonoBehaviour
 	public float capacityKG = float.PositiveInfinity;
 
 	[SerializeField]
-	public bool alwaysConsume;
+	public bool alwaysConsume = false;
+
+	[SerializeField]
+	public bool useSecondaryInput = false;
 
 	[MyCmpReq]
 	private Operational operational;
@@ -28,6 +31,10 @@ public class SolidConduitConsumer : KMonoBehaviour
 
 	private bool consuming;
 
+	public Storage Storage => storage;
+
+	public ConduitType ConduitType => ConduitType.Solid;
+
 	public bool IsConsuming => consuming;
 
 	public bool IsConnected
@@ -35,11 +42,7 @@ public class SolidConduitConsumer : KMonoBehaviour
 		get
 		{
 			GameObject gameObject = Grid.Objects[utilityCell, 20];
-			if (gameObject != null)
-			{
-				return gameObject.GetComponent<BuildingComplete>() != null;
-			}
-			return false;
+			return gameObject != null && gameObject.GetComponent<BuildingComplete>() != null;
 		}
 	}
 
@@ -51,7 +54,7 @@ public class SolidConduitConsumer : KMonoBehaviour
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		utilityCell = building.GetUtilityInputCell();
+		utilityCell = GetInputCell();
 		ScenePartitionerLayer layer = GameScenePartitioner.Instance.objectLayers[20];
 		partitionerEntry = GameScenePartitioner.Instance.Add("SolidConduitConsumer.OnSpawn", base.gameObject, utilityCell, layer, OnConduitConnectionChanged);
 		GetConduitFlow().AddConduitUpdater(ConduitUpdate);
@@ -110,5 +113,15 @@ public class SolidConduitConsumer : KMonoBehaviour
 		GameObject gameObject = Grid.Objects[utilityCell, 20];
 		SolidConduit solidConduit = ((gameObject != null) ? gameObject.GetComponent<SolidConduit>() : null);
 		return ((solidConduit != null) ? solidConduit.GetNetwork() : null)?.id ?? (-1);
+	}
+
+	private int GetInputCell()
+	{
+		if (useSecondaryInput)
+		{
+			ISecondaryInput component = GetComponent<ISecondaryInput>();
+			return Grid.OffsetCell(building.NaturalBuildingCell(), component.GetSecondaryConduitOffset(ConduitType.Solid));
+		}
+		return building.GetUtilityInputCell();
 	}
 }

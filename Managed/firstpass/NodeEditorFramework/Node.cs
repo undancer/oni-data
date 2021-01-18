@@ -7,7 +7,7 @@ namespace NodeEditorFramework
 {
 	public abstract class Node : ScriptableObject
 	{
-		public Rect rect;
+		public Rect rect = default(Rect);
 
 		internal Vector2 contentOffset = Vector2.zero;
 
@@ -104,9 +104,12 @@ namespace NodeEditorFramework
 			defaultNode.InitBase();
 			if (connectingOutput != null)
 			{
-				using List<NodeInput>.Enumerator enumerator = defaultNode.Inputs.GetEnumerator();
-				while (enumerator.MoveNext() && !enumerator.Current.TryApplyConnection(connectingOutput))
+				foreach (NodeInput input in defaultNode.Inputs)
 				{
+					if (input.TryApplyConnection(connectingOutput))
+					{
+						break;
+					}
 				}
 			}
 			NodeEditorCallbacks.IssueOnAddNode(defaultNode);
@@ -165,7 +168,8 @@ namespace NodeEditorFramework
 			Rect rect = this.rect;
 			rect.position += NodeEditor.curEditorState.zoomPanAdjust + NodeEditor.curEditorState.panOffset;
 			contentOffset = new Vector2(0f, 20f);
-			GUI.Label(new Rect(rect.x, rect.y, rect.width, contentOffset.y), base.name, (NodeEditor.curEditorState.selectedNode == this) ? NodeEditorGUI.nodeBoxBold : NodeEditorGUI.nodeBox);
+			Rect position = new Rect(rect.x, rect.y, rect.width, contentOffset.y);
+			GUI.Label(position, base.name, (NodeEditor.curEditorState.selectedNode == this) ? NodeEditorGUI.nodeBoxBold : NodeEditorGUI.nodeBox);
 			Rect rect2 = new Rect(rect.x, rect.y + contentOffset.y, rect.width, rect.height - contentOffset.y);
 			GUI.BeginGroup(rect2, GUI.skin.box);
 			rect2.position = Vector2.zero;

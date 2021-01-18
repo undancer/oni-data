@@ -36,7 +36,8 @@ public class MechanicalSurfboardWorkable : Workable, IWorkerPrioritizable
 	public override AnimInfo GetAnim(Worker worker)
 	{
 		AnimInfo result = default(AnimInfo);
-		AttributeInstance attributeInstance = worker.GetAttributes().Get(Db.Get().Attributes.Athletics);
+		Attributes attributes = worker.GetAttributes();
+		AttributeInstance attributeInstance = attributes.Get(Db.Get().Attributes.Athletics);
 		if (attributeInstance.GetTotalValue() <= 7f)
 		{
 			result.overrideAnims = new KAnimFile[1]
@@ -69,11 +70,11 @@ public class MechanicalSurfboardWorkable : Workable, IWorkerPrioritizable
 		int min = -(widthInCells - 1) / 2;
 		int max = widthInCells / 2;
 		int x = Random.Range(min, max);
-		float num = component2.waterSpillRateKG * dt;
-		GetComponent<Storage>().ConsumeAndGetDisease(SimHashes.Water.CreateTag(), num, out var disease_info, out var aggregate_temperature);
+		float amount = component2.waterSpillRateKG * dt;
+		GetComponent<Storage>().ConsumeAndGetDisease(SimHashes.Water.CreateTag(), amount, out var amount_consumed, out var disease_info, out var aggregate_temperature);
 		int cell = Grid.OffsetCell(Grid.PosToCell(base.gameObject), new CellOffset(x, 0));
 		int elementIndex = ElementLoader.GetElementIndex(SimHashes.Water);
-		FallingWater.instance.AddParticle(cell, (byte)elementIndex, num, aggregate_temperature, disease_info.idx, disease_info.count, skip_sound: true);
+		FallingWater.instance.AddParticle(cell, (byte)elementIndex, amount_consumed, aggregate_temperature, disease_info.idx, disease_info.count, skip_sound: true);
 		return false;
 	}
 

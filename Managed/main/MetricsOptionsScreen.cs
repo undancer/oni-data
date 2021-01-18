@@ -25,7 +25,8 @@ public class MetricsOptionsScreen : KModalScreen
 		{
 			OnClickToggle();
 		};
-		enableButton.GetComponent<HierarchyReferences>().GetReference<LocText>("Text").SetText(UI.FRONTEND.METRICS_OPTIONS_SCREEN.ENABLE_BUTTON);
+		LocText reference = enableButton.GetComponent<HierarchyReferences>().GetReference<LocText>("Text");
+		reference.SetText(UI.FRONTEND.METRICS_OPTIONS_SCREEN.ENABLE_BUTTON);
 		dismissButton.onClick += delegate
 		{
 			Deactivate();

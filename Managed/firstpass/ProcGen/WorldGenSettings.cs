@@ -13,6 +13,8 @@ namespace ProcGen
 
 		public World world => mutatedWorldData.world;
 
+		public static string ClusterDefaultName => DlcManager.IsExpansion1Active() ? "clusters/SandstoneStartCluster" : "clusters/SandstoneDefault";
+
 		public WorldGenSettings(string worldName, List<string> traits, bool assertMissingTraits)
 		{
 			if (!SettingsCache.worlds.HasWorld(worldName))
@@ -73,6 +75,16 @@ namespace ProcGen
 			return SettingsCache.defaults.defaultMoveTags;
 		}
 
+		public List<StartingWorldElementSetting> GetDefaultStartingElements()
+		{
+			if (world != null && world.defaultsOverrides != null && world.defaultsOverrides.startingWorldElements != null)
+			{
+				DebugUtil.LogArgs($"World '{world.name}' is overriding startingWorldElements");
+				return world.defaultsOverrides.startingWorldElements;
+			}
+			return SettingsCache.defaults.startingWorldElements;
+		}
+
 		public string[] GetTraitIDs()
 		{
 			if (mutatedWorldData.traits != null && mutatedWorldData.traits.Count > 0)
@@ -100,12 +112,12 @@ namespace ProcGen
 				res = (T)obj;
 				return true;
 			}
-			bool num = parser(obj as string, out res);
-			if (num)
+			bool flag = parser(obj as string, out res);
+			if (flag)
 			{
 				set.data[target] = res;
 			}
-			return num;
+			return flag;
 		}
 
 		private T GetSetting<T>(string target, ParserFn<T> parser)
@@ -116,10 +128,6 @@ namespace ProcGen
 				if (!GetSetting(world.defaultsOverrides, target, parser, out res))
 				{
 					GetSetting(SettingsCache.defaults, target, parser, out res);
-				}
-				else
-				{
-					DebugUtil.LogArgs($"World '{world.name}' is overriding setting '{target}'");
 				}
 			}
 			else if (!GetSetting(SettingsCache.defaults, target, parser, out res))
@@ -214,16 +222,16 @@ namespace ProcGen
 			return value;
 		}
 
-		public List<WeightedSubWorld> GetSubworldsForWorld(List<WeightedName> subworldList)
+		public List<WeightedSubWorld> GetSubworldsForWorld(List<WeightedSubworldName> subworldList)
 		{
 			List<WeightedSubWorld> list = new List<WeightedSubWorld>();
 			foreach (KeyValuePair<string, SubWorld> subworld in mutatedWorldData.subworlds)
 			{
-				foreach (WeightedName subworld2 in subworldList)
+				foreach (WeightedSubworldName subworld2 in subworldList)
 				{
 					if (subworld.Key == subworld2.name)
 					{
-						list.Add(new WeightedSubWorld(subworld2.weight, subworld.Value));
+						list.Add(new WeightedSubWorld(subworld2.weight, subworld.Value, subworld2.overridePower));
 					}
 				}
 			}

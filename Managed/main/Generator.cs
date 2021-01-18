@@ -21,7 +21,7 @@ public class Generator : KMonoBehaviour, ISaveLoadable, IEnergyProducer
 	protected KSelectable selectable;
 
 	[Serialize]
-	private float joulesAvailable;
+	private float joulesAvailable = 0f;
 
 	[SerializeField]
 	public int powerDistributionOrder;
@@ -91,7 +91,7 @@ public class Generator : KMonoBehaviour, ISaveLoadable, IEnergyProducer
 
 	public ushort CircuitID => Game.Instance.circuitManager.GetCircuitID(PowerCell);
 
-	private float Efficiency => Mathf.Max(1f + generatorOutputAttribute.GetTotalValue() / 100f, 0.1f);
+	private float Efficiency => Mathf.Max(1f + generatorOutputAttribute.GetTotalValue() / 100f, 0f);
 
 	protected override void OnPrefabInit()
 	{

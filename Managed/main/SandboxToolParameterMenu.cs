@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Klei.AI;
 using STRINGS;
-using TUNING;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -203,6 +202,11 @@ public class SandboxToolParameterMenu : KScreen
 		instance.settings.SetFloatSetting("SandbosTools.TemperatureAdditive", GameUtil.GetTemperatureConvertedToKelvin(value));
 	});
 
+	public SliderValue radiationAdditiveSlider = new SliderValue(-100f, 1000f, "little", "lots", UI.UNITSUFFIXES.RADIATION.RADS, UI.SANDBOXTOOLS.SETTINGS.RADIATION_ADDITIVE.TOOLTIP, UI.SANDBOXTOOLS.SETTINGS.RADIATION_ADDITIVE.NAME, delegate(float value)
+	{
+		instance.settings.SetFloatSetting("SandbosTools.RadiationAdditive", value);
+	});
+
 	public SelectorValue diseaseSelector;
 
 	public SliderValue diseaseCountSlider = new SliderValue(0f, 10000f, "status_item_barren", "germ", UI.UNITSUFFIXES.DISEASE.UNITS, UI.SANDBOXTOOLS.SETTINGS.DISEASE_COUNT.TOOLTIP, UI.SANDBOXTOOLS.SETTINGS.DISEASE_COUNT.NAME, delegate(float value)
@@ -219,7 +223,7 @@ public class SandboxToolParameterMenu : KScreen
 
 	public override float GetSortKey()
 	{
-		return 100f;
+		return 50f;
 	}
 
 	protected override void OnPrefabInit()
@@ -257,7 +261,7 @@ public class SandboxToolParameterMenu : KScreen
 			elementSelector.button.GetComponentsInChildren<Image>()[1].sprite = uISprite.first;
 			elementSelector.button.GetComponentsInChildren<Image>()[1].color = uISprite.second;
 			SetAbsoluteTemperatureSliderRange(element);
-			massSlider.SetRange(0.1f, element.defaultValues.mass * 2f, resetCurrentValue: false);
+			massSlider.SetRange(0.1f, Mathf.Min(element.maxMass * 2f, massSlider.clampValueHigh), resetCurrentValue: false);
 			if (forceElementDefaults)
 			{
 				temperatureSlider.SetValue(GameUtil.GetConvertedTemperature(element.defaultValues.temperature, roundOutput: true));
@@ -337,6 +341,11 @@ public class SandboxToolParameterMenu : KScreen
 			temperatureAdditiveSlider.SetValue(GameUtil.GetConvertedTemperature(settings.GetFloatSetting("SandbosTools.TemperatureAdditive"), roundOutput: true), runOnValueChanged: false);
 		});
 		Game.Instance.Subscribe(999382396, OnTemperatureUnitChanged);
+		SandboxSettings sandboxSettings11 = settings;
+		sandboxSettings11.OnChangeAdditiveRadiation = (System.Action)Delegate.Combine(sandboxSettings11.OnChangeAdditiveRadiation, (System.Action)delegate
+		{
+			radiationAdditiveSlider.SetValue(settings.GetFloatSetting("SandbosTools.RadiationAdditive"), runOnValueChanged: false);
+		});
 	}
 
 	public void DisableParameters()
@@ -349,6 +358,7 @@ public class SandboxToolParameterMenu : KScreen
 		massSlider.row.SetActive(value: false);
 		temperatureAdditiveSlider.row.SetActive(value: false);
 		temperatureSlider.row.SetActive(value: false);
+		radiationAdditiveSlider.row.SetActive(value: false);
 		diseaseCountSlider.row.SetActive(value: false);
 		diseaseSelector.row.SetActive(value: false);
 	}
@@ -367,6 +377,7 @@ public class SandboxToolParameterMenu : KScreen
 		SpawnSlider(massSlider);
 		SpawnSlider(temperatureSlider);
 		SpawnSlider(temperatureAdditiveSlider);
+		SpawnSlider(radiationAdditiveSlider);
 		SpawnSelector(diseaseSelector);
 		SpawnSlider(diseaseCountSlider);
 		if (instance == null)
@@ -425,34 +436,37 @@ public class SandboxToolParameterMenu : KScreen
 		SelectorValue.SearchFilter item = new SelectorValue.SearchFilter(UI.SANDBOXTOOLS.FILTERS.ENTITIES.FOOD, delegate(object entity)
 		{
 			string idString = (entity as KPrefabID).PrefabID().ToString();
-			return !(entity as KPrefabID).HasTag(GameTags.Egg) && FOOD.FOOD_TYPES_LIST.Find((EdiblesManager.FoodInfo match) => match.Id == idString) != null;
+			return !(entity as KPrefabID).HasTag(GameTags.Egg) && EdiblesManager.GetAllFoodTypes().Find((EdiblesManager.FoodInfo match) => match.Id == idString) != null;
 		}, null, Def.GetUISprite(Assets.GetPrefab("MushBar")));
 		list.Add(item);
-		SelectorValue.SearchFilter item2 = new SelectorValue.SearchFilter(UI.SANDBOXTOOLS.FILTERS.ENTITIES.SPECIAL, (object entity) => (entity as KPrefabID).PrefabID().Name == MinionConfig.ID || (entity as KPrefabID).PrefabID().Name == DustCometConfig.ID || (entity as KPrefabID).PrefabID().Name == RockCometConfig.ID || (entity as KPrefabID).PrefabID().Name == IronCometConfig.ID, null, new Tuple<Sprite, Color>(Assets.GetSprite("ui_duplicant_portrait_placeholder"), Color.white));
+		SelectorValue.SearchFilter item2 = new SelectorValue.SearchFilter(UI.SANDBOXTOOLS.FILTERS.ENTITIES.COMETS, (object entity) => (entity as KPrefabID).HasTag(GameTags.Comet), null, Def.GetUISprite(Assets.GetPrefab(CopperCometConfig.ID)));
 		list.Add(item2);
+		SelectorValue.SearchFilter item3 = new SelectorValue.SearchFilter(UI.SANDBOXTOOLS.FILTERS.ENTITIES.SPECIAL, (object entity) => (entity as KPrefabID).PrefabID().Name == MinionConfig.ID, null, new Tuple<Sprite, Color>(Assets.GetSprite("ui_duplicant_portrait_placeholder"), Color.white));
+		list.Add(item3);
 		SelectorValue.SearchFilter searchFilter = null;
 		SelectorValue.SearchFilter searchFilter2 = null;
 		searchFilter = new SelectorValue.SearchFilter(UI.SANDBOXTOOLS.FILTERS.ENTITIES.CREATURE, (object entity) => false, null, Def.GetUISprite(Assets.GetPrefab("Hatch")));
 		list.Add(searchFilter);
 		List<Tag> list2 = new List<Tag>();
-		foreach (GameObject item7 in Assets.GetPrefabsWithTag("CreatureBrain".ToTag()))
+		foreach (GameObject item8 in Assets.GetPrefabsWithTag("CreatureBrain".ToTag()))
 		{
-			CreatureBrain brain = item7.GetComponent<CreatureBrain>();
+			CreatureBrain brain = item8.GetComponent<CreatureBrain>();
 			if (!list2.Contains(brain.species))
 			{
 				Tuple<Sprite, Color> icon = new Tuple<Sprite, Color>(CodexCache.entries[brain.species.ToString().ToUpper()].icon, CodexCache.entries[brain.species.ToString().ToUpper()].iconColor);
 				list2.Add(brain.species);
-				SelectorValue.SearchFilter item3 = new SelectorValue.SearchFilter(Strings.Get("STRINGS.CREATURES.FAMILY_PLURAL." + brain.species.ToString().ToUpper()), delegate(object entity)
+				string key = "STRINGS.CREATURES.FAMILY_PLURAL." + brain.species.ToString().ToUpper();
+				SelectorValue.SearchFilter item4 = new SelectorValue.SearchFilter(Strings.Get(key), delegate(object entity)
 				{
 					CreatureBrain component2 = Assets.GetPrefab((entity as KPrefabID).PrefabID()).GetComponent<CreatureBrain>();
 					return (entity as KPrefabID).HasTag("CreatureBrain".ToString()) && component2.species == brain.species;
 				}, searchFilter, icon);
-				list.Add(item3);
+				list.Add(item4);
 			}
 		}
 		searchFilter2 = new SelectorValue.SearchFilter(UI.SANDBOXTOOLS.FILTERS.ENTITIES.CREATURE_EGG, (object entity) => (entity as KPrefabID).HasTag(GameTags.Egg), searchFilter, Def.GetUISprite(Assets.GetPrefab("HatchEgg")));
 		list.Add(searchFilter2);
-		SelectorValue.SearchFilter item4 = new SelectorValue.SearchFilter(UI.SANDBOXTOOLS.FILTERS.ENTITIES.EQUIPMENT, delegate(object entity)
+		SelectorValue.SearchFilter item5 = new SelectorValue.SearchFilter(UI.SANDBOXTOOLS.FILTERS.ENTITIES.EQUIPMENT, delegate(object entity)
 		{
 			if ((entity as KPrefabID).gameObject == null)
 			{
@@ -461,7 +475,7 @@ public class SandboxToolParameterMenu : KScreen
 			GameObject gameObject4 = (entity as KPrefabID).gameObject;
 			return gameObject4 != null && gameObject4.GetComponent<Equippable>() != null;
 		}, null, Def.GetUISprite(Assets.GetPrefab("Funky_Vest")));
-		list.Add(item4);
+		list.Add(item5);
 		SelectorValue.SearchFilter searchFilter3 = new SelectorValue.SearchFilter(UI.SANDBOXTOOLS.FILTERS.ENTITIES.PLANTS, delegate(object entity)
 		{
 			if ((entity as KPrefabID).gameObject == null)
@@ -472,7 +486,7 @@ public class SandboxToolParameterMenu : KScreen
 			return gameObject3 != null && (gameObject3.GetComponent<Harvestable>() != null || gameObject3.GetComponent<WiltCondition>() != null);
 		}, null, Def.GetUISprite(Assets.GetPrefab("PrickleFlower")));
 		list.Add(searchFilter3);
-		SelectorValue.SearchFilter item5 = new SelectorValue.SearchFilter(UI.SANDBOXTOOLS.FILTERS.ENTITIES.SEEDS, delegate(object entity)
+		SelectorValue.SearchFilter item6 = new SelectorValue.SearchFilter(UI.SANDBOXTOOLS.FILTERS.ENTITIES.SEEDS, delegate(object entity)
 		{
 			if ((entity as KPrefabID).gameObject == null)
 			{
@@ -481,8 +495,8 @@ public class SandboxToolParameterMenu : KScreen
 			GameObject gameObject2 = (entity as KPrefabID).gameObject;
 			return gameObject2 != null && gameObject2.GetComponent<PlantableSeed>() != null;
 		}, searchFilter3, Def.GetUISprite(Assets.GetPrefab("PrickleFlowerSeed")));
-		list.Add(item5);
-		SelectorValue.SearchFilter item6 = new SelectorValue.SearchFilter(UI.SANDBOXTOOLS.FILTERS.ENTITIES.INDUSTRIAL_PRODUCTS, delegate(object entity)
+		list.Add(item6);
+		SelectorValue.SearchFilter item7 = new SelectorValue.SearchFilter(UI.SANDBOXTOOLS.FILTERS.ENTITIES.INDUSTRIAL_PRODUCTS, delegate(object entity)
 		{
 			if ((entity as KPrefabID).gameObject == null)
 			{
@@ -491,13 +505,13 @@ public class SandboxToolParameterMenu : KScreen
 			GameObject gameObject = (entity as KPrefabID).gameObject;
 			return gameObject != null && (gameObject.HasTag(GameTags.IndustrialIngredient) || gameObject.HasTag(GameTags.IndustrialProduct) || gameObject.HasTag(GameTags.Medicine) || gameObject.HasTag(GameTags.MedicalSupplies));
 		}, null, Def.GetUISprite(Assets.GetPrefab("BasicCure")));
-		list.Add(item6);
+		list.Add(item7);
 		List<KPrefabID> list3 = new List<KPrefabID>();
 		foreach (KPrefabID prefab2 in Assets.Prefabs)
 		{
-			foreach (SelectorValue.SearchFilter item8 in list)
+			foreach (SelectorValue.SearchFilter item9 in list)
 			{
-				if (item8.condition(prefab2))
+				if (item9.condition(prefab2))
 				{
 					list3.Add(prefab2);
 					break;
@@ -518,9 +532,13 @@ public class SandboxToolParameterMenu : KScreen
 					return new Tuple<Sprite, Color>(Assets.GetSprite("ui_duplicant_portrait_placeholder"), Color.white);
 				}
 				KBatchedAnimController component = prefab.GetComponent<KBatchedAnimController>();
-				if (component != null && component.AnimFiles.Length != 0 && component.AnimFiles[0] != null)
+				if (component != null && component.AnimFiles.Length != 0)
 				{
-					return Def.GetUISprite(prefab);
+					KAnimFile x = component.AnimFiles[0];
+					if (x != null)
+					{
+						return Def.GetUISprite(prefab);
+					}
 				}
 			}
 			return null;
@@ -553,6 +571,7 @@ public class SandboxToolParameterMenu : KScreen
 			brushRadiusSlider.SetValue(settings.GetIntSetting("SandboxTools.BrushSize"));
 		}
 		massSlider.SetValue(settings.GetFloatSetting("SandboxTools.Mass"));
+		radiationAdditiveSlider.SetValue(settings.GetFloatSetting("SandbosTools.RadiationAdditive"));
 		RefreshTemperatureUnitDisplays();
 		temperatureSlider.SetValue(GameUtil.GetConvertedTemperature(settings.GetFloatSetting("SandbosTools.Temperature"), roundOutput: true));
 		temperatureAdditiveSlider.SetValue(GameUtil.GetConvertedTemperature(settings.GetFloatSetting("SandbosTools.TemperatureAdditive"), roundOutput: true));
@@ -583,9 +602,11 @@ public class SandboxToolParameterMenu : KScreen
 	private void RefreshTemperatureUnitDisplays()
 	{
 		temperatureSlider.unitString = GameUtil.GetTemperatureUnitSuffix();
-		temperatureSlider.row.GetComponent<HierarchyReferences>().GetReference<LocText>("UnitLabel").text = temperatureSlider.unitString;
+		HierarchyReferences component = temperatureSlider.row.GetComponent<HierarchyReferences>();
+		component.GetReference<LocText>("UnitLabel").text = temperatureSlider.unitString;
 		temperatureAdditiveSlider.unitString = GameUtil.GetTemperatureUnitSuffix();
-		temperatureAdditiveSlider.row.GetComponent<HierarchyReferences>().GetReference<LocText>("UnitLabel").text = temperatureSlider.unitString;
+		component = temperatureAdditiveSlider.row.GetComponent<HierarchyReferences>();
+		component.GetReference<LocText>("UnitLabel").text = temperatureSlider.unitString;
 	}
 
 	private GameObject SpawnSelector(SelectorValue selector)
@@ -706,7 +727,7 @@ public class SandboxToolParameterMenu : KScreen
 			{
 				clearFilterButton.SetActive(value: true);
 			}
-			new List<KeyValuePair<object, GameObject>>();
+			List<KeyValuePair<object, GameObject>> list = new List<KeyValuePair<object, GameObject>>();
 			bool flag = selector.optionButtons.Find((KeyValuePair<object, GameObject> match) => match.Key is SelectorValue.SearchFilter).Key != null;
 			if (string.IsNullOrEmpty(filterString))
 			{
@@ -750,10 +771,11 @@ public class SandboxToolParameterMenu : KScreen
 			{
 				object[] options2 = selector.options;
 				object option2 = default(object);
-				for (int j = 0; j < options2.Length; j++)
+				for (int k = 0; k < options2.Length; k++)
 				{
-					option2 = options2[j];
-					foreach (KeyValuePair<object, GameObject> item in selector.optionButtons.FindAll((KeyValuePair<object, GameObject> match) => match.Key == option2))
+					option2 = options2[k];
+					list = selector.optionButtons.FindAll((KeyValuePair<object, GameObject> match) => match.Key == option2);
+					foreach (KeyValuePair<object, GameObject> item in list)
 					{
 						if (string.IsNullOrEmpty(filterString))
 						{
@@ -867,10 +889,10 @@ public class SandboxToolParameterMenu : KScreen
 				{
 					if (currentSelectedGameObject == inputField.gameObject)
 					{
-						return true;
+						result = true;
+						break;
 					}
 				}
-				return result;
 			}
 		}
 		return result;

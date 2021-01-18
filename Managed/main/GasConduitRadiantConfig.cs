@@ -8,34 +8,35 @@ public class GasConduitRadiantConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("GasConduitRadiant", 1, 1, "utilities_gas_radiant_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER0);
-		obj.ThermalConductivity = 2f;
-		obj.Overheatable = false;
-		obj.Floodable = false;
-		obj.Entombable = false;
-		obj.ViewMode = OverlayModes.GasConduits.ID;
-		obj.ObjectLayer = ObjectLayer.GasConduit;
-		obj.TileLayer = ObjectLayer.GasConduitTile;
-		obj.ReplacementLayer = ObjectLayer.ReplacementGasConduit;
-		obj.AudioCategory = "Metal";
-		obj.AudioSize = "small";
-		obj.BaseTimeUntilRepair = 0f;
-		obj.UtilityInputOffset = new CellOffset(0, 0);
-		obj.UtilityOutputOffset = new CellOffset(0, 0);
-		obj.SceneLayer = Grid.SceneLayer.GasConduits;
-		obj.isKAnimTile = true;
-		obj.isUtility = true;
-		obj.DragBuild = true;
-		obj.ReplacementTags = new List<Tag>();
-		obj.ReplacementTags.Add(GameTags.Vents);
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("GasConduitRadiant", 1, 1, "utilities_gas_radiant_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER0);
+		buildingDef.ThermalConductivity = 2f;
+		buildingDef.Overheatable = false;
+		buildingDef.Floodable = false;
+		buildingDef.Entombable = false;
+		buildingDef.ViewMode = OverlayModes.GasConduits.ID;
+		buildingDef.ObjectLayer = ObjectLayer.GasConduit;
+		buildingDef.TileLayer = ObjectLayer.GasConduitTile;
+		buildingDef.ReplacementLayer = ObjectLayer.ReplacementGasConduit;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.AudioSize = "small";
+		buildingDef.BaseTimeUntilRepair = 0f;
+		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
+		buildingDef.UtilityOutputOffset = new CellOffset(0, 0);
+		buildingDef.SceneLayer = Grid.SceneLayer.GasConduits;
+		buildingDef.isKAnimTile = true;
+		buildingDef.isUtility = true;
+		buildingDef.DragBuild = true;
+		buildingDef.ReplacementTags = new List<Tag>();
+		buildingDef.ReplacementTags.Add(GameTags.Vents);
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.GasVentIDs, "GasConduitRadiant");
-		return obj;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		GeneratedBuildings.MakeBuildingAlwaysOperational(go);
-		go.AddOrGet<Conduit>().type = ConduitType.Gas;
+		Conduit conduit = go.AddOrGet<Conduit>();
+		conduit.type = ConduitType.Gas;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

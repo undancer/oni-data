@@ -6,6 +6,11 @@ public class RawEggConfig : IEntityConfig
 {
 	public const string ID = "RawEgg";
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateLooseEntity("RawEgg", ITEMS.FOOD.RAWEGG.NAME, ITEMS.FOOD.RAWEGG.DESC, 1f, unitMass: false, Assets.GetAnim("rawegg_kanim"), "object", Grid.SceneLayer.Ore, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.4f, isPickupable: true);

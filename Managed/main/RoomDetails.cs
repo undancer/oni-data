@@ -72,7 +72,8 @@ public class RoomDetails
 	{
 		string str = "";
 		str = string.Concat(str, "<b>", ROOMS.DETAILS.HEADER, "</b>");
-		Detail[] display_details = room.roomType.display_details;
+		RoomType roomType = room.roomType;
+		Detail[] display_details = roomType.display_details;
 		foreach (Detail detail in display_details)
 		{
 			str = str + "\n    • " + detail.resolve_string_function(room);

@@ -16,7 +16,8 @@ public class BaseUtilityBuildTool : DragTool
 
 		public void Play(string anim)
 		{
-			visualizer.GetComponent<KBatchedAnimController>().Play(anim);
+			KBatchedAnimController component = visualizer.GetComponent<KBatchedAnimController>();
+			component.Play(anim);
 		}
 	}
 
@@ -30,11 +31,11 @@ public class BaseUtilityBuildTool : DragTool
 
 	private Coroutine visUpdater;
 
-	private int buildingCount;
+	private int buildingCount = 0;
 
 	private int lastCell = -1;
 
-	private BuildingCellVisualizer previousCellConnection;
+	private BuildingCellVisualizer previousCellConnection = null;
 
 	private int previousCell;
 
@@ -46,7 +47,8 @@ public class BaseUtilityBuildTool : DragTool
 
 	private void Play(GameObject go, string anim)
 	{
-		go.GetComponent<KBatchedAnimController>().Play(anim);
+		KBatchedAnimController component = go.GetComponent<KBatchedAnimController>();
+		component.Play(anim);
 	}
 
 	protected override void OnActivateTool()
@@ -63,10 +65,11 @@ public class BaseUtilityBuildTool : DragTool
 		}
 		visualizer.SetActive(value: true);
 		Play(visualizer, "None_Place");
-		GetComponent<BuildToolHoverTextCard>().currentDef = def;
+		BuildToolHoverTextCard component2 = GetComponent<BuildToolHoverTextCard>();
+		component2.currentDef = def;
 		ResourceRemainingDisplayScreen.instance.ActivateDisplay(visualizer);
-		IHaveUtilityNetworkMgr component2 = def.BuildingComplete.GetComponent<IHaveUtilityNetworkMgr>();
-		conduitMgr = component2.GetNetworkManager();
+		IHaveUtilityNetworkMgr component3 = def.BuildingComplete.GetComponent<IHaveUtilityNetworkMgr>();
+		conduitMgr = component3.GetNetworkManager();
 	}
 
 	protected override void OnDeactivateTool(InterfaceTool new_tool)
@@ -384,23 +387,27 @@ public class BaseUtilityBuildTool : DragTool
 				path[0] = CreateVisualizer(node);
 			}
 			ApplyPathToConduitSystem();
-			for (int i = 0; i < path.Count; i++)
+			int i = 0;
+			while (i < path.Count)
 			{
-				PathNode node2 = path[i];
-				node2 = CreateVisualizer(node2);
-				path[i] = node2;
-				string text = conduitMgr.GetVisualizerString(node2.cell) + "_place";
-				KBatchedAnimController component = node2.visualizer.GetComponent<KBatchedAnimController>();
-				if (component.HasAnimation(text))
+				PathNode node3 = path[i];
+				node3 = CreateVisualizer(node3);
+				path[i] = node3;
+				string vis_string = conduitMgr.GetVisualizerString(node3.cell) + "_place";
+				KBatchedAnimController kbac = node3.visualizer.GetComponent<KBatchedAnimController>();
+				if (kbac.HasAnimation(vis_string))
 				{
-					node2.Play(text);
+					node3.Play(vis_string);
 				}
 				else
 				{
-					node2.Play(conduitMgr.GetVisualizerString(node2.cell));
+					node3.Play(conduitMgr.GetVisualizerString(node3.cell));
 				}
-				component.TintColour = (def.IsValidBuildLocation(null, node2.cell, Orientation.Neutral, out var _) ? Color.white : Color.red);
-				TileVisualizer.RefreshCell(node2.cell, def.TileLayer, def.ReplacementLayer);
+				kbac.TintColour = (def.IsValidBuildLocation(null, node3.cell, Orientation.Neutral, out var reason) ? Color.white : Color.red);
+				TileVisualizer.RefreshCell(node3.cell, def.TileLayer, def.ReplacementLayer);
+				reason = null;
+				int num = i + 1;
+				i = num;
 			}
 			conduitMgr.UnstashVisualGrids();
 			yield return null;
@@ -430,7 +437,7 @@ public class BaseUtilityBuildTool : DragTool
 					gameObject = def.TryPlace(null, vector, Orientation.Neutral, selectedElements);
 					if (gameObject != null)
 					{
-						if (!def.MaterialsAvailable(selectedElements) && !DebugHandler.InstantBuildMode)
+						if (!def.MaterialsAvailable(selectedElements, ClusterManager.Instance.activeWorld) && !DebugHandler.InstantBuildMode)
 						{
 							PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, UI.TOOLTIPS.NOMATERIAL, null, vector);
 						}
@@ -470,7 +477,7 @@ public class BaseUtilityBuildTool : DragTool
 						component4.IsReplacementTile = true;
 						gameObject = def.Instantiate(vector, Orientation.Neutral, selectedElements);
 						component4.IsReplacementTile = false;
-						if (!def.MaterialsAvailable(selectedElements) && !DebugHandler.InstantBuildMode)
+						if (!def.MaterialsAvailable(selectedElements, ClusterManager.Instance.activeWorld) && !DebugHandler.InstantBuildMode)
 						{
 							PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, UI.TOOLTIPS.NOMATERIAL, null, vector);
 						}

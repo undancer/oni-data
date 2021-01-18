@@ -21,9 +21,9 @@ namespace NodeEditorFramework.Utilities
 
 			public object userData;
 
-			public bool separator;
+			public bool separator = false;
 
-			public bool group;
+			public bool group = false;
 
 			public Rect groupPos;
 

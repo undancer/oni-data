@@ -16,7 +16,7 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 	}
 
 	[SerializeField]
-	private KButton requestSelectedEntityBtn;
+	protected KButton requestSelectedEntityBtn;
 
 	[SerializeField]
 	private string requestStringDeposit;
@@ -37,7 +37,7 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 	[SerializeField]
 	protected LocText descriptionLabel;
 
-	private Dictionary<SingleEntityReceptacle, int> entityPreviousSelectionMap = new Dictionary<SingleEntityReceptacle, int>();
+	protected Dictionary<SingleEntityReceptacle, int> entityPreviousSelectionMap = new Dictionary<SingleEntityReceptacle, int>();
 
 	[SerializeField]
 	private string subtitleStringSelect;
@@ -89,17 +89,19 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 	private Sprite elementPlaceholderSpr;
 
 	[SerializeField]
-	private bool hideUndiscoveredEntities;
+	private bool hideUndiscoveredEntities = false;
 
-	private ReceptacleToggle selectedEntityToggle;
+	protected ReceptacleToggle selectedEntityToggle;
 
 	protected SingleEntityReceptacle targetReceptacle;
 
-	private Tag selectedDepositObjectTag;
+	protected Tag selectedDepositObjectTag;
 
-	private Dictionary<ReceptacleToggle, SelectableEntity> depositObjectMap;
+	protected Tag selectedDepositObjectAdditionalTag;
 
-	private List<ReceptacleToggle> entityToggles = new List<ReceptacleToggle>();
+	protected Dictionary<ReceptacleToggle, SelectableEntity> depositObjectMap;
+
+	protected List<ReceptacleToggle> entityToggles = new List<ReceptacleToggle>();
 
 	private int onObjectDestroyedHandle = -1;
 
@@ -132,9 +134,9 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 		});
 		entityToggles.Clear();
 		Tag[] possibleDepositObjectTags = target.possibleDepositObjectTags;
-		for (int i = 0; i < possibleDepositObjectTags.Length; i++)
+		foreach (Tag tag in possibleDepositObjectTags)
 		{
-			List<GameObject> prefabsWithTag = Assets.GetPrefabsWithTag(possibleDepositObjectTags[i]);
+			List<GameObject> prefabsWithTag = Assets.GetPrefabsWithTag(tag);
 			if (targetReceptacle.rotatable == null)
 			{
 				prefabsWithTag.RemoveAll(delegate(GameObject go)
@@ -186,6 +188,7 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 				entityToggles.Add(newToggle);
 			}
 		}
+		RestoreSelectionFromOccupant();
 		selectedEntityToggle = null;
 		if (entityToggles.Count > 0)
 		{
@@ -208,7 +211,7 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 		SimAndRenderScheduler.instance.Add(this);
 	}
 
-	private void UpdateState(object data)
+	protected virtual void UpdateState(object data)
 	{
 		requestSelectedEntityBtn.ClearOnClick();
 		if (targetReceptacle == null)
@@ -269,7 +272,7 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 		{
 			requestSelectedEntityBtn.onClick += delegate
 			{
-				targetReceptacle.CreateOrder(selectedDepositObjectTag);
+				targetReceptacle.CreateOrder(selectedDepositObjectTag, selectedDepositObjectAdditionalTag);
 				UpdateAvailableAmounts(null);
 				UpdateState(null);
 			};
@@ -335,11 +338,7 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 
 	private bool CanDepositEntity(SelectableEntity entity)
 	{
-		if (ValidRotationForDeposit(entity.direction) && (!RequiresAvailableAmountToDeposit() || GetAvailableAmount(entity.tag) > 0f))
-		{
-			return AdditionalCanDepositTest();
-		}
-		return false;
+		return ValidRotationForDeposit(entity.direction) && (!RequiresAvailableAmountToDeposit() || GetAvailableAmount(entity.tag) > 0f) && AdditionalCanDepositTest();
 	}
 
 	protected virtual bool AdditionalCanDepositTest()
@@ -373,23 +372,22 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 
 	private void ConfigureActiveEntity(Tag tag)
 	{
-		string properName = Assets.GetPrefab(tag).GetProperName();
+		GameObject prefab = Assets.GetPrefab(tag);
+		string properName = prefab.GetProperName();
 		activeEntityContainer.GetComponentInChildrenOnly<LocText>().text = properName;
 		activeEntityContainer.transform.GetChild(0).gameObject.GetComponentInChildrenOnly<Image>().sprite = GetEntityIcon(tag);
 	}
 
 	protected virtual Sprite GetEntityIcon(Tag prefabTag)
 	{
-		return Def.GetUISprite(Assets.GetPrefab(prefabTag)).first;
+		GameObject prefab = Assets.GetPrefab(prefabTag);
+		Tuple<Sprite, Color> uISprite = Def.GetUISprite(prefab);
+		return uISprite.first;
 	}
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		if (target.GetComponent<SingleEntityReceptacle>() != null && target.GetComponent<PlantablePlot>() == null)
-		{
-			return target.GetComponent<EggIncubator>() == null;
-		}
-		return false;
+		return target.GetComponent<SingleEntityReceptacle>() != null && target.GetComponent<PlantablePlot>() == null && target.GetComponent<EggIncubator>() == null;
 	}
 
 	public override void SetTarget(GameObject target)
@@ -402,6 +400,10 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 		}
 		Initialize(component);
 		UpdateState(null);
+	}
+
+	protected virtual void RestoreSelectionFromOccupant()
+	{
 	}
 
 	public override void ClearTarget()
@@ -426,7 +428,7 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 		}
 	}
 
-	private void SetImageToggleState(KToggle toggle, ImageToggleState.State state)
+	protected void SetImageToggleState(KToggle toggle, ImageToggleState.State state)
 	{
 		switch (state)
 		{
@@ -467,7 +469,7 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 		bool result = false;
 		foreach (KeyValuePair<ReceptacleToggle, SelectableEntity> item in depositObjectMap)
 		{
-			if (!DebugHandler.InstantBuildMode && hideUndiscoveredEntities && !WorldInventory.Instance.IsDiscovered(item.Value.tag))
+			if (!DebugHandler.InstantBuildMode && hideUndiscoveredEntities && !DiscoveredResources.Instance.IsDiscovered(item.Value.tag))
 			{
 				item.Key.gameObject.SetActive(value: false);
 			}
@@ -507,19 +509,15 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 
 	private float GetAvailableAmount(Tag tag)
 	{
-		return WorldInventory.Instance.GetAmount(tag);
+		return targetReceptacle.GetMyWorld().worldInventory.GetAmount(tag, includeRelatedWorlds: true);
 	}
 
 	private bool ValidRotationForDeposit(SingleEntityReceptacle.ReceptacleDirection depositDir)
 	{
-		if (!(targetReceptacle.rotatable == null))
-		{
-			return depositDir == targetReceptacle.Direction;
-		}
-		return true;
+		return targetReceptacle.rotatable == null || depositDir == targetReceptacle.Direction;
 	}
 
-	private void ToggleClicked(ReceptacleToggle toggle)
+	protected virtual void ToggleClicked(ReceptacleToggle toggle)
 	{
 		if (!depositObjectMap.ContainsKey(toggle))
 		{
@@ -541,10 +539,10 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 
 	private void CreateOrder(bool isInfinite)
 	{
-		targetReceptacle.CreateOrder(selectedDepositObjectTag);
+		targetReceptacle.CreateOrder(selectedDepositObjectTag, selectedDepositObjectAdditionalTag);
 	}
 
-	private bool CheckReceptacleOccupied()
+	protected bool CheckReceptacleOccupied()
 	{
 		if (targetReceptacle != null && targetReceptacle.Occupant != null)
 		{

@@ -20,7 +20,9 @@ namespace Delaunay.Geo
 		[Serialize]
 		private List<Vector2> vertices;
 
-		private Vector2? centroid;
+		private Vector2? centroid = null;
+
+		public static bool DoDebugSpew = false;
 
 		private const int CLIPPER_INTEGER_SCALE = 10000;
 
@@ -84,6 +86,11 @@ namespace Delaunay.Geo
 		}
 
 		public void Initialize()
+		{
+			RefreshBounds();
+		}
+
+		public void RefreshBounds()
 		{
 			Debug.Assert(vertices != null, "No verts added");
 			Vector2 vector = new Vector2(float.MaxValue, float.MaxValue);
@@ -224,35 +231,92 @@ namespace Delaunay.Geo
 			return result;
 		}
 
-		public Commonality SharesEdge(Polygon other, ref int edgeIdx)
+		public static void DebugLog(string message)
+		{
+			if (DoDebugSpew)
+			{
+				Debug.Log(message);
+			}
+		}
+
+		public Commonality SharesEdge(Polygon other, ref int edgeIdx, out LineSegment overlapSegment)
 		{
 			Commonality result = Commonality.None;
 			int num = vertices.Count - 1;
 			int num2 = 0;
 			while (num2 < vertices.Count)
 			{
-				Vector2 b = vertices[num];
-				Vector2 b2 = vertices[num2];
+				Vector2 vector = vertices[num];
+				Vector2 vector2 = vertices[num2];
+				Bounds bounds = new Bounds(vector, Vector3.zero);
+				bounds.Encapsulate(vector2);
 				int index = other.vertices.Count - 1;
 				int num3 = 0;
 				while (num3 < other.vertices.Count)
 				{
-					Vector2 a = other.vertices[index];
-					Vector2 a2 = other.vertices[num3];
-					int num4 = 0 + ((Vector2.Distance(a2, b2) < 0.001f) ? 1 : 0) + ((Vector2.Distance(a2, b) < 0.001f) ? 1 : 0) + ((Vector2.Distance(a, b2) < 0.001f) ? 1 : 0) + ((Vector2.Distance(a, b) < 0.001f) ? 1 : 0);
+					Vector2 vector3 = other.vertices[index];
+					Vector2 vector4 = other.vertices[num3];
+					int num4 = 0;
+					num4 += ((Vector2.Distance(vector4, vector2) < 0.001f) ? 1 : 0);
+					num4 += ((Vector2.Distance(vector4, vector) < 0.001f) ? 1 : 0);
+					num4 += ((Vector2.Distance(vector3, vector2) < 0.001f) ? 1 : 0);
+					num4 += ((Vector2.Distance(vector3, vector) < 0.001f) ? 1 : 0);
 					if (num4 == 1)
 					{
 						result = Commonality.Point;
 					}
-					if (num4 > 1)
+					Bounds bounds2 = new Bounds(vector3, Vector3.zero);
+					bounds2.Encapsulate(vector4);
+					if (bounds.Intersects(bounds2))
 					{
-						edgeIdx = num;
-						return Commonality.Edge;
+						float f = (vector2.x - vector.x) * (vector3.y - vector.y) - (vector3.x - vector.x) * (vector2.y - vector.y);
+						float f2 = (vector4.x - vector3.x) * (vector.y - vector3.y) - (vector.x - vector3.x) * (vector4.y - vector3.y);
+						if (Mathf.Abs(f) < 0.001f && Mathf.Abs(f2) < 0.001f)
+						{
+							bool flag = vector.x < vector2.x || (vector.x == vector2.x && vector.y < vector2.y);
+							Vector2 vector5 = (flag ? vector : vector2);
+							Vector2 vector6 = (flag ? vector2 : vector);
+							bool flag2 = vector3.x < vector4.x || (vector3.x == vector4.x && vector3.y < vector4.y);
+							Vector2 vector7 = (flag2 ? vector3 : vector4);
+							Vector2 vector8 = (flag2 ? vector4 : vector3);
+							if (!(vector5.x < vector7.x) && (vector5.x != vector7.x || !(vector5.y < vector7.y)))
+							{
+								Vector2 vector9 = vector5;
+								Vector2 vector10 = vector6;
+								vector5 = vector7;
+								vector6 = vector8;
+								vector7 = vector9;
+								vector8 = vector10;
+							}
+							if (Vector2.Distance(vector6, vector7) < 0.001f)
+							{
+								result = Commonality.Point;
+							}
+							else if (vector6.x - vector7.x > 0f || (vector6.x - vector7.x == 0f && vector6.y - vector7.y > 0f))
+							{
+								edgeIdx = num;
+								Vector2 value;
+								Vector2 value2;
+								if (vector6.x - vector8.x > 0f || (vector6.x - vector8.x == 0f && vector6.y - vector7.y > 0f))
+								{
+									value = vector7;
+									value2 = vector6;
+								}
+								else
+								{
+									value = vector7;
+									value2 = vector8;
+								}
+								overlapSegment = new LineSegment(value, value2);
+								return Commonality.Edge;
+							}
+						}
 					}
 					index = num3++;
 				}
 				num = num2++;
 			}
+			overlapSegment = null;
 			return result;
 		}
 
@@ -265,7 +329,8 @@ namespace Delaunay.Geo
 			float timeOnEdge = 0f;
 			MathUtil.Pair<Vector2, Vector2> closestEdge = GetClosestEdge(point.Value, ref timeOnEdge);
 			Vector2 a = closestEdge.Second - closestEdge.First;
-			return Vector2.Distance(closestEdge.First + a * timeOnEdge, point.Value);
+			Vector2 a2 = closestEdge.First + a * timeOnEdge;
+			return Vector2.Distance(a2, point.Value);
 		}
 
 		public MathUtil.Pair<Vector2, Vector2> GetClosestEdge(Vector2 point, ref float timeOnEdge)
@@ -474,7 +539,8 @@ namespace Delaunay.Geo
 			for (int i = 0; i < vertices.Count; i++)
 			{
 				Vector2 vector2 = vertices[i];
-				Vector2 vector3 = vertices[(i < vertices.Count - 1) ? (i + 1) : 0] - vector2;
+				Vector2 a = vertices[(i < vertices.Count - 1) ? (i + 1) : 0];
+				Vector2 vector3 = a - vector2;
 				Vector2 vector4 = new Vector2(vector3.y, 0f - vector3.x);
 				Vector2 u = vector2 - segment.p0.Value;
 				float num3 = perp(u, vector4);
@@ -520,7 +586,7 @@ namespace Delaunay.Geo
 			return true;
 		}
 
-		public void DebugDraw(Color colour, bool drawCentroid = false, float duration = 1f, float inset = 0f)
+		public void DebugDraw(Color colour, Vector2 offset, bool drawCentroid = false, float duration = 1f, float inset = 0f)
 		{
 			Vector2 b = Centroid();
 			for (int i = 0; i < vertices.Count; i++)
@@ -529,9 +595,12 @@ namespace Delaunay.Geo
 				Vector2 a2 = vertices[(i < vertices.Count - 1) ? (i + 1) : 0];
 				if (inset != 0f)
 				{
-					_ = (a - b).normalized * (0f - inset);
-					_ = (a2 - b).normalized * (0f - inset);
+					Vector2 vector = (a - b).normalized * (0f - inset);
+					Vector2 vector2 = (a2 - b).normalized * (0f - inset);
 				}
+			}
+			if (!drawCentroid)
+			{
 			}
 		}
 	}

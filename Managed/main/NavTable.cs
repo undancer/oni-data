@@ -11,8 +11,8 @@ public class NavTable
 	public NavTable(int cell_count)
 	{
 		ValidCells = new short[cell_count];
-		NavTypeMasks = new short[10];
-		for (short num = 0; num < 10; num = (short)(num + 1))
+		NavTypeMasks = new short[11];
+		for (short num = 0; num < 11; num = (short)(num + 1))
 		{
 			NavTypeMasks[num] = (short)(1 << (int)num);
 		}
@@ -22,7 +22,8 @@ public class NavTable
 	{
 		if (Grid.IsValidCell(cell))
 		{
-			return (NavTypeMasks[(uint)nav_type] & ValidCells[cell]) != 0;
+			short num = NavTypeMasks[(uint)nav_type];
+			return (num & ValidCells[cell]) != 0;
 		}
 		return false;
 	}
@@ -31,7 +32,8 @@ public class NavTable
 	{
 		short num = NavTypeMasks[(uint)nav_type];
 		short num2 = ValidCells[cell];
-		if ((num2 & num) != 0 != is_valid)
+		bool flag = (num2 & num) != 0;
+		if (flag != is_valid)
 		{
 			if (is_valid)
 			{

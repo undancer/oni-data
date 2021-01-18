@@ -6,8 +6,8 @@ namespace Klei.AI
 	{
 		public const string ID = "ZombieSpores";
 
-		public ZombieSpores()
-			: base("ZombieSpores", 50, new RangeInfo(168.15f, 258.15f, 513.15f, 563.15f), new RangeInfo(10f, 1200f, 1200f, 10f), new RangeInfo(0f, 0f, 1000f, 1000f), RangeInfo.Idempotent())
+		public ZombieSpores(bool statsOnly)
+			: base("ZombieSpores", 50, new RangeInfo(168.15f, 258.15f, 513.15f, 563.15f), new RangeInfo(10f, 1200f, 1200f, 10f), new RangeInfo(0f, 0f, 1000f, 1000f), RangeInfo.Idempotent(), statsOnly)
 		{
 		}
 
@@ -65,13 +65,13 @@ namespace Klei.AI
 				minDiffusionCount = 5100,
 				diffusionScale = 0.005f
 			});
-			array = new SimHashes[3]
+			SimHashes[] array2 = new SimHashes[3]
 			{
 				SimHashes.CarbonDioxide,
 				SimHashes.Methane,
 				SimHashes.SourGas
 			};
-			foreach (SimHashes element2 in array)
+			foreach (SimHashes element2 in array2)
 			{
 				AddGrowthRule(new ElementGrowthRule(element2)
 				{
@@ -95,14 +95,14 @@ namespace Klei.AI
 				maxCountPerKG = 100f,
 				diffusionScale = 0.01f
 			});
-			array = new SimHashes[4]
+			SimHashes[] array3 = new SimHashes[4]
 			{
 				SimHashes.CrudeOil,
 				SimHashes.Petroleum,
 				SimHashes.Naphtha,
 				SimHashes.LiquidMethane
 			};
-			foreach (SimHashes element3 in array)
+			foreach (SimHashes element3 in array3)
 			{
 				AddGrowthRule(new ElementGrowthRule(element3)
 				{

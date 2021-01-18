@@ -84,10 +84,14 @@ public class UniformGrid<T> where T : IUniformGridObject
 			for (int j = num; j <= num3; j++)
 			{
 				List<T> list = cells[i * numXCells + j];
-				if (list != null && list.IndexOf(item) != -1)
+				if (list != null)
 				{
-					list.Remove(item);
-					items.Remove(item);
+					int num5 = list.IndexOf(item);
+					if (num5 != -1)
+					{
+						list.Remove(item);
+						items.Remove(item);
+					}
 				}
 			}
 		}

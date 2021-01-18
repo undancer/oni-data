@@ -281,15 +281,16 @@ public class ConduitFlowVisualizer
 					else
 					{
 						element = null;
-						highlight = Grid.PosToCell(new Vector3(pos.x + GRID_OFFSET.x, pos.y + GRID_OFFSET.y, 0f)) == context.outer.highlightedCell;
+						int num = Grid.PosToCell(new Vector3(pos.x + GRID_OFFSET.x, pos.y + GRID_OFFSET.y, 0f));
+						highlight = num == context.outer.highlightedCell;
 					}
 					Color32 contentsColor = context.outer.GetContentsColor(element, color);
-					float num = 1f;
+					float num2 = 1f;
 					if (context.outer.showContents || lastFlowInfo.contents.mass < initialContents.mass)
 					{
-						num = context.outer.CalculateMassScale(lastFlowInfo.contents.mass);
+						num2 = context.outer.CalculateMassScale(lastFlowInfo.contents.mass);
 					}
-					moving_balls.Add(new Ball(lastFlowInfo.direction, pos, contentsColor, context.outer.tuning.size * num, foreground: true, highlight));
+					moving_balls.Add(new Ball(lastFlowInfo.direction, pos, contentsColor, context.outer.tuning.size * num2, foreground: true, highlight));
 					moving_conduits.Add(conduit);
 				}
 				if (!(initialContents.mass > lastFlowInfo.contents.mass) || !(initialContents.mass > 0f))
@@ -297,14 +298,15 @@ public class ConduitFlowVisualizer
 					continue;
 				}
 				int cell2 = conduit.GetCell(context.outer.flowManager);
-				Vector2 pos2 = Grid.CellToXY(cell2);
+				Vector2I v2 = Grid.CellToXY(cell2);
+				Vector2 pos2 = v2;
 				float mass = initialContents.mass - lastFlowInfo.contents.mass;
 				bool highlight2 = false;
 				Color32 cellTintColour3 = context.outer.GetCellTintColour(cell2);
-				float num2 = context.outer.CalculateMassScale(mass);
+				float num3 = context.outer.CalculateMassScale(mass);
 				if (context.outer.showContents)
 				{
-					static_balls.Add(new Ball(ConduitFlow.FlowDirections.None, pos2, cellTintColour3, context.outer.tuning.size * num2, foreground: false, highlight: false));
+					static_balls.Add(new Ball(ConduitFlow.FlowDirections.None, pos2, cellTintColour3, context.outer.tuning.size * num3, foreground: false, highlight: false));
 					if (element == null || initialContents.element != element.id)
 					{
 						element = ElementLoader.FindElementByHash(initialContents.element);
@@ -316,7 +318,7 @@ public class ConduitFlowVisualizer
 					highlight2 = cell2 == context.outer.highlightedCell;
 				}
 				Color32 contentsColor2 = context.outer.GetContentsColor(element, cellTintColour3);
-				static_balls.Add(new Ball(ConduitFlow.FlowDirections.None, pos2, contentsColor2, context.outer.tuning.size * num2, foreground: true, highlight2));
+				static_balls.Add(new Ball(ConduitFlow.FlowDirections.None, pos2, contentsColor2, context.outer.tuning.size * num3, foreground: true, highlight2));
 			}
 		}
 
@@ -347,11 +349,11 @@ public class ConduitFlowVisualizer
 
 	private string overlaySound;
 
-	private bool showContents;
+	private bool showContents = false;
 
 	private double animTime;
 
-	private int layer;
+	private int layer = 0;
 
 	private static Vector2 GRID_OFFSET = new Vector2(0.5f, 0.5f);
 
@@ -411,29 +413,17 @@ public class ConduitFlowVisualizer
 
 	private Color32 GetTintColour()
 	{
-		if (!showContents)
-		{
-			return visInfo.tint;
-		}
-		return GlobalAssets.Instance.colorSet.GetColorByName(visInfo.overlayTintName);
+		return showContents ? GlobalAssets.Instance.colorSet.GetColorByName(visInfo.overlayTintName) : visInfo.tint;
 	}
 
 	private Color32 GetInsulatedTintColour()
 	{
-		if (!showContents)
-		{
-			return visInfo.insulatedTint;
-		}
-		return GlobalAssets.Instance.colorSet.GetColorByName(visInfo.overlayInsulatedTintName);
+		return showContents ? GlobalAssets.Instance.colorSet.GetColorByName(visInfo.overlayInsulatedTintName) : visInfo.insulatedTint;
 	}
 
 	private Color32 GetRadiantTintColour()
 	{
-		if (!showContents)
-		{
-			return visInfo.radiantTint;
-		}
-		return GlobalAssets.Instance.colorSet.GetColorByName(visInfo.overlayRadiantTintName);
+		return showContents ? GlobalAssets.Instance.colorSet.GetColorByName(visInfo.overlayRadiantTintName) : visInfo.radiantTint;
 	}
 
 	private Color32 GetCellTintColour(int cell)
@@ -503,7 +493,8 @@ public class ConduitFlowVisualizer
 		{
 			z2 = 1f;
 		}
-		float w = (float)((int)(animTime / (1.0 / (double)tuning.framesPerSecond)) % (int)tuning.spriteCount) * (1f / tuning.spriteCount);
+		int num4 = (int)(animTime / (1.0 / (double)tuning.framesPerSecond)) % (int)tuning.spriteCount;
+		float w = (float)num4 * (1f / tuning.spriteCount);
 		movingBallMesh.Begin();
 		movingBallMesh.SetTexture("_BackgroundTex", tuning.backgroundTexture);
 		movingBallMesh.SetTexture("_ForegroundTex", tuning.foregroundTexture);

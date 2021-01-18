@@ -60,11 +60,7 @@ public class Brain : KMonoBehaviour
 
 	public bool IsRunning()
 	{
-		if (running)
-		{
-			return !suspend;
-		}
-		return false;
+		return running && !suspend;
 	}
 
 	public void Reset(string reason)

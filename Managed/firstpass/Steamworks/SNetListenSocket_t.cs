@@ -19,11 +19,7 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			if (other is SNetListenSocket_t)
-			{
-				return this == (SNetListenSocket_t)other;
-			}
-			return false;
+			return other is SNetListenSocket_t && this == (SNetListenSocket_t)other;
 		}
 
 		public override int GetHashCode()

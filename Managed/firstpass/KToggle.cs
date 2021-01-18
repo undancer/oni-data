@@ -16,7 +16,7 @@ public class KToggle : Toggle
 
 	public KToggleArtExtensions artExtension;
 
-	protected bool mouseOver;
+	protected bool mouseOver = false;
 
 	public bool GetMouseOver => mouseOver;
 
@@ -98,9 +98,9 @@ public class KToggle : Toggle
 		if (components != null && components.Length != 0)
 		{
 			ImageToggleState[] array = components;
-			for (int i = 0; i < array.Length; i++)
+			foreach (ImageToggleState imageToggleState in array)
 			{
-				array[i].SetActiveState(value);
+				imageToggleState.SetActiveState(value);
 			}
 		}
 		ActivateFlourish(value);
@@ -113,9 +113,9 @@ public class KToggle : Toggle
 		if (components != null && components.Length != 0)
 		{
 			ImageToggleState[] array = components;
-			for (int i = 0; i < array.Length; i++)
+			foreach (ImageToggleState imageToggleState in array)
 			{
-				array[i].ResetColor();
+				imageToggleState.ResetColor();
 			}
 		}
 	}
@@ -137,7 +137,8 @@ public class KToggle : Toggle
 
 	public override void OnDeselect(BaseEventData eventData)
 	{
-		if (GetParentToggleGroup(eventData) == base.group)
+		ToggleGroup parentToggleGroup = GetParentToggleGroup(eventData);
+		if (parentToggleGroup == base.group)
 		{
 			base.OnDeselect(eventData);
 		}
@@ -189,9 +190,9 @@ public class KToggle : Toggle
 		if (components != null && components.Length != 0)
 		{
 			ImageToggleState[] array = components;
-			for (int i = 0; i < array.Length; i++)
+			foreach (ImageToggleState imageToggleState in array)
 			{
-				array[i].SetState(ImageState);
+				imageToggleState.SetState(ImageState);
 			}
 		}
 		ActivateFlourish(state);
@@ -228,9 +229,9 @@ public class KToggle : Toggle
 		if (components != null && components.Length != 0)
 		{
 			ImageToggleState[] array = components;
-			for (int i = 0; i < array.Length; i++)
+			foreach (ImageToggleState imageToggleState in array)
 			{
-				array[i].OnHoverIn();
+				imageToggleState.OnHoverIn();
 			}
 		}
 		soundPlayer.Play(2);
@@ -252,9 +253,9 @@ public class KToggle : Toggle
 		if (components != null && components.Length != 0)
 		{
 			ImageToggleState[] array = components;
-			for (int i = 0; i < array.Length; i++)
+			foreach (ImageToggleState imageToggleState in array)
 			{
-				array[i].OnHoverOut();
+				imageToggleState.OnHoverOut();
 			}
 		}
 		mouseOver = false;

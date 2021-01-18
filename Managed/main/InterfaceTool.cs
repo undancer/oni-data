@@ -23,7 +23,7 @@ public class InterfaceTool : KMonoBehaviour
 
 	public string placeSound;
 
-	protected bool populateHitsList;
+	protected bool populateHitsList = false;
 
 	[NonSerialized]
 	public bool hasFocus;
@@ -57,7 +57,7 @@ public class InterfaceTool : KMonoBehaviour
 
 	private List<KSelectable> hits = new List<KSelectable>();
 
-	protected bool playedSoundThisFrame;
+	protected bool playedSoundThisFrame = false;
 
 	private List<Intersection> intersections = new List<Intersection>();
 
@@ -65,7 +65,7 @@ public class InterfaceTool : KMonoBehaviour
 
 	private HashSet<Component> curIntersectionGroup = new HashSet<Component>();
 
-	private int hitCycleCount;
+	private int hitCycleCount = 0;
 
 	public HashedString ViewMode => viewMode;
 
@@ -84,6 +84,11 @@ public class InterfaceTool : KMonoBehaviour
 
 	public virtual bool ShowHoverUI()
 	{
+		Vector3 pos = Camera.main.ScreenToWorldPoint(KInputManager.GetMousePos());
+		if (OverlayScreen.Instance == null || !ClusterManager.Instance.IsPositionInActiveWorld(pos) || pos.x < 0f || pos.x > Grid.WidthInMeters || pos.y < 0f || pos.y > Grid.HeightInMeters)
+		{
+			return false;
+		}
 		bool result = false;
 		UnityEngine.EventSystems.EventSystem current = UnityEngine.EventSystems.EventSystem.current;
 		if (current != null)
@@ -140,7 +145,8 @@ public class InterfaceTool : KMonoBehaviour
 	{
 		if (!(visualizer == null) && isAppFocused)
 		{
-			cursor_pos = Grid.CellToPosCBC(Grid.PosToCell(cursor_pos), visualizerLayer);
+			int cell = Grid.PosToCell(cursor_pos);
+			cursor_pos = Grid.CellToPosCBC(cell, visualizerLayer);
 			cursor_pos.z += -0.15f;
 			visualizer.transform.SetLocalPosition(cursor_pos);
 		}
@@ -182,7 +188,15 @@ public class InterfaceTool : KMonoBehaviour
 	protected Vector2 GetRegularizedPos(Vector2 input, bool minimize)
 	{
 		Vector3 vector = new Vector3(Grid.HalfCellSizeInMeters, Grid.HalfCellSizeInMeters, 0f);
-		return Grid.CellToPosCCC(Grid.PosToCell(input), Grid.SceneLayer.Background) + (minimize ? (-vector) : vector);
+		int cell = Grid.PosToCell(input);
+		return Grid.CellToPosCCC(cell, Grid.SceneLayer.Background) + (minimize ? (-vector) : vector);
+	}
+
+	protected Vector2 GetWorldRestrictedPosition(Vector2 input)
+	{
+		input.x = Mathf.Clamp(input.x, ClusterManager.Instance.activeWorld.minimumBounds.x, ClusterManager.Instance.activeWorld.maximumBounds.x);
+		input.y = Mathf.Clamp(input.y, ClusterManager.Instance.activeWorld.minimumBounds.y, ClusterManager.Instance.activeWorld.maximumBounds.y);
+		return input;
 	}
 
 	protected void SetCursor(Texture2D new_cursor, Vector2 offset, CursorMode mode)
@@ -206,7 +220,12 @@ public class InterfaceTool : KMonoBehaviour
 	{
 		if (populateHitsList)
 		{
-			if (!isAppFocused || !Grid.IsValidCell(Grid.PosToCell(Camera.main.ScreenToWorldPoint(KInputManager.GetMousePos()))))
+			if (!isAppFocused)
+			{
+				return;
+			}
+			int cell = Grid.PosToCell(Camera.main.ScreenToWorldPoint(KInputManager.GetMousePos()));
+			if (!Grid.IsValidCell(cell))
 			{
 				return;
 			}
@@ -402,11 +421,7 @@ public class InterfaceTool : KMonoBehaviour
 			return 1;
 		}
 		int num = x.transform.GetPosition().z.CompareTo(y.transform.GetPosition().z);
-		if (num != 0)
-		{
-			return num;
-		}
-		return x.GetInstanceID().CompareTo(y.GetInstanceID());
+		return (num == 0) ? x.GetInstanceID().CompareTo(y.GetInstanceID()) : num;
 	}
 
 	public void SetHoverOverride(KSelectable hover_override)

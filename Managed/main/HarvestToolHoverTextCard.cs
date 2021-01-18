@@ -1,13 +1,21 @@
 using System.Collections.Generic;
 using STRINGS;
+using UnityEngine;
 
 public class HarvestToolHoverTextCard : HoverTextConfiguration
 {
 	public override void UpdateHoverElements(List<KSelectable> selected)
 	{
-		string lastEnabledFilter = ToolMenu.Instance.toolParameterMenu.GetLastEnabledFilter();
+		ToolParameterMenu toolParameterMenu = ToolMenu.Instance.toolParameterMenu;
+		string lastEnabledFilter = toolParameterMenu.GetLastEnabledFilter();
 		HoverTextScreen instance = HoverTextScreen.Instance;
 		HoverTextDrawer hoverTextDrawer = instance.BeginDrawing();
+		int num = Grid.PosToCell(Camera.main.ScreenToWorldPoint(KInputManager.GetMousePos()));
+		if (!Grid.IsValidCell(num) || Grid.WorldIdx[num] != ClusterManager.Instance.activeWorldId)
+		{
+			hoverTextDrawer.EndDrawing();
+			return;
+		}
 		hoverTextDrawer.BeginShadowBar();
 		DrawTitle(instance, hoverTextDrawer);
 		DrawInstructions(HoverTextScreen.Instance, hoverTextDrawer);
@@ -21,7 +29,8 @@ public class HarvestToolHoverTextCard : HoverTextConfiguration
 
 	protected override void ConfigureTitle(HoverTextScreen screen)
 	{
-		string lastEnabledFilter = ToolMenu.Instance.toolParameterMenu.GetLastEnabledFilter();
+		ToolParameterMenu toolParameterMenu = ToolMenu.Instance.toolParameterMenu;
+		string lastEnabledFilter = toolParameterMenu.GetLastEnabledFilter();
 		if (string.IsNullOrEmpty(ToolName) || lastEnabledFilter == "ALL")
 		{
 			ToolName = Strings.Get(ToolNameStringKey).String.ToUpper();

@@ -76,6 +76,14 @@ namespace TUNING
 
 		public static readonly Vector2 HEADQUARTERS_OFFSET = new Vector2(0.5f, 3f);
 
+		public static readonly Vector2 EXOBASE_HEADQUARTERS_OFFSET = new Vector2(0f, 2.5f);
+
+		public const float ENGINE_RANGE = 10f;
+
+		public const LightShape ENGINE_SHAPE = LightShape.Circle;
+
+		public const int ENGINE_LUX = 80000;
+
 		public const float WALLLIGHT_RANGE = 4f;
 
 		public const float WALLLIGHT_ANGLE = 0f;
@@ -111,6 +119,8 @@ namespace TUNING
 		public static readonly Color LIGHTBUG_COLOR_BLUE = new Color(112f / 255f, 124f / 255f, 29f / 51f, 1f);
 
 		public static readonly Color LIGHTBUG_COLOR_CRYSTAL = new Color(131f / 255f, 2f / 3f, 2f / 3f, 1f);
+
+		public static readonly Color LIGHTBUG_COLOR_GREEN = new Color(22f / 51f, 1f, 8f / 15f, 1f);
 
 		public static readonly Vector2 LIGHTBUG_OFFSET = new Vector2(0.05f, 0.25f);
 

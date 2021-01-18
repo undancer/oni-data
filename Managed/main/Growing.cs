@@ -38,11 +38,7 @@ public class Growing : StateMachineComponent<Growing.StatesInstance>, IGameObjec
 
 		public bool IsWilting()
 		{
-			if (base.master.wiltCondition != null)
-			{
-				return base.master.wiltCondition.IsWilting();
-			}
-			return false;
+			return base.master.wiltCondition != null && base.master.wiltCondition.IsWilting();
 		}
 
 		public bool IsSleeping()
@@ -52,11 +48,7 @@ public class Growing : StateMachineComponent<Growing.StatesInstance>, IGameObjec
 
 		public bool CanExitStalled()
 		{
-			if (!IsWilting())
-			{
-				return !IsSleeping();
-			}
-			return false;
+			return !IsWilting() && !IsSleeping();
 		}
 	}
 
@@ -85,7 +77,7 @@ public class Growing : StateMachineComponent<Growing.StatesInstance>, IGameObjec
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = growing;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			growing.EventTransition(GameHashes.Wilt, stalled, (StatesInstance smi) => smi.IsWilting()).EventTransition(GameHashes.CropSleep, stalled, (StatesInstance smi) => smi.IsSleeping()).EventTransition(GameHashes.PlanterStorage, growing.planted, (StatesInstance smi) => smi.master.rm.Replanted)
 				.EventTransition(GameHashes.PlanterStorage, growing.wild, (StatesInstance smi) => !smi.master.rm.Replanted)
 				.TriggerOnEnter(GameHashes.Grow)
@@ -252,6 +244,11 @@ public class Growing : StateMachineComponent<Growing.StatesInstance>, IGameObjec
 		maturity.value = maturity.GetMax();
 	}
 
+	public float GetMaxMaturity()
+	{
+		return maturity.GetMax();
+	}
+
 	public float PercentOfCurrentHarvest()
 	{
 		return maturity.value / maturity.GetMax();
@@ -259,7 +256,8 @@ public class Growing : StateMachineComponent<Growing.StatesInstance>, IGameObjec
 
 	public float TimeUntilNextHarvest()
 	{
-		return (maturity.GetMax() - maturity.value) / maturity.GetDelta();
+		float num = maturity.GetMax() - maturity.value;
+		return num / maturity.GetDelta();
 	}
 
 	public float DomesticGrowthTime()
@@ -284,19 +282,14 @@ public class Growing : StateMachineComponent<Growing.StatesInstance>, IGameObjec
 
 	public float PercentOldAge()
 	{
-		if (!shouldGrowOld)
-		{
-			return 0f;
-		}
-		return oldAge.value / oldAge.GetMax();
+		return shouldGrowOld ? (oldAge.value / oldAge.GetMax()) : 0f;
 	}
 
 	public List<Descriptor> GetDescriptors(GameObject go)
 	{
-		return new List<Descriptor>
-		{
-			new Descriptor(string.Format(UI.GAMEOBJECTEFFECTS.GROWTHTIME_SIMPLE, GameUtil.GetFormattedCycles(growthTime, "")), string.Format(UI.GAMEOBJECTEFFECTS.TOOLTIPS.GROWTHTIME_SIMPLE, GameUtil.GetFormattedCycles(growthTime, "")), Descriptor.DescriptorType.Requirement)
-		};
+		List<Descriptor> list = new List<Descriptor>();
+		list.Add(new Descriptor(string.Format(UI.GAMEOBJECTEFFECTS.GROWTHTIME_SIMPLE, GameUtil.GetFormattedCycles(growthTime, "")), string.Format(UI.GAMEOBJECTEFFECTS.TOOLTIPS.GROWTHTIME_SIMPLE, GameUtil.GetFormattedCycles(growthTime, "")), Descriptor.DescriptorType.Requirement));
+		return list;
 	}
 
 	public void ConsumeMass(float mass_to_consume)

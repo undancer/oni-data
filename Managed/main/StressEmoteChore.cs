@@ -49,11 +49,7 @@ public class StressEmoteChore : Chore<StressEmoteChore.StatesInstance>
 
 	protected override StatusItem GetStatusItem()
 	{
-		if (getStatusItem == null)
-		{
-			return base.GetStatusItem();
-		}
-		return getStatusItem();
+		return (getStatusItem != null) ? getStatusItem() : base.GetStatusItem();
 	}
 
 	public override string ToString()

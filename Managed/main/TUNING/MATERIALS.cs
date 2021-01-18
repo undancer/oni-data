@@ -20,6 +20,10 @@ namespace TUNING
 
 		public const string BUILDINGFIBER = "BuildingFiber";
 
+		public const string LEAD = "Lead";
+
+		public const string INSULATOR = "Insulator";
+
 		public static readonly string[] ALL_METALS = new string[1]
 		{
 			"Metal"
@@ -103,6 +107,12 @@ namespace TUNING
 		public static readonly string[] FLYING_CRITTER_FOOD = new string[1]
 		{
 			"FlyingCritterEdible"
+		};
+
+		public static readonly string[] RADIATION_CONTAINMENT = new string[2]
+		{
+			"Metal",
+			"Lead"
 		};
 	}
 }

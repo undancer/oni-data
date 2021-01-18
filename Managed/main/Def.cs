@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Klei.AI;
 using UnityEngine;
 
 [Serializable]
@@ -39,6 +40,10 @@ public class Def : ScriptableObject
 				return new Tuple<Sprite, Color>(Assets.GetSprite("element_gas"), (item as Element).substance.uiColour);
 			}
 			return new Tuple<Sprite, Color>(null, Color.clear);
+		}
+		if (item is AsteroidGridEntity)
+		{
+			return new Tuple<Sprite, Color>(((AsteroidGridEntity)item).GetUISprite(), Color.white);
 		}
 		if (item is GameObject)
 		{
@@ -91,11 +96,13 @@ public class Def : ScriptableObject
 		{
 			if (Db.Get().Amounts.Exists(item as string))
 			{
-				return new Tuple<Sprite, Color>(Assets.GetSprite(Db.Get().Amounts.Get(item as string).uiSprite), Color.white);
+				Amount amount = Db.Get().Amounts.Get(item as string);
+				return new Tuple<Sprite, Color>(Assets.GetSprite(amount.uiSprite), Color.white);
 			}
 			if (Db.Get().Attributes.Exists(item as string))
 			{
-				return new Tuple<Sprite, Color>(Assets.GetSprite(Db.Get().Attributes.Get(item as string).uiSprite), Color.white);
+				Klei.AI.Attribute attribute = Db.Get().Attributes.Get(item as string);
+				return new Tuple<Sprite, Color>(Assets.GetSprite(attribute.uiSprite), Color.white);
 			}
 			return GetUISprite((item as string).ToTag(), animName, centered);
 		}
@@ -163,8 +170,8 @@ public class Def : ScriptableObject
 		{
 			symbolName = animName;
 		}
-		frameElement = data.FindAnimFrameElement(symbolName);
-		KAnim.Build.Symbol symbol = data.build.GetSymbol(frameElement.symbol);
+		KAnimHashedString symbol_name = new KAnimHashedString(symbolName);
+		KAnim.Build.Symbol symbol = data.build.GetSymbol(symbol_name);
 		if (symbol == null)
 		{
 			DebugUtil.LogWarningArgs(animFile.name, animName, "placeSymbol [", frameElement.symbol, "] is missing");
@@ -178,6 +185,7 @@ public class Def : ScriptableObject
 			return null;
 		}
 		Texture2D texture = data.build.GetTexture(0);
+		Debug.Assert(texture != null, "Invalid texture on " + animFile.name);
 		float x = symbolFrame.uvMin.x;
 		float x2 = symbolFrame.uvMax.x;
 		float y = symbolFrame.uvMax.y;

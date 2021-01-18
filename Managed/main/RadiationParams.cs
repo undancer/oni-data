@@ -1,0 +1,4 @@
+public enum RadiationParams
+{
+	RadiationDecay
+}

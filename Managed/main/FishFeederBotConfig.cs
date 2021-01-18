@@ -4,6 +4,11 @@ public class FishFeederBotConfig : IEntityConfig
 {
 	public const string ID = "FishFeederBot";
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateEntity("FishFeederBot", "FishFeederBot");

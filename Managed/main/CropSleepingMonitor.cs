@@ -5,9 +5,9 @@ public class CropSleepingMonitor : GameStateMachine<CropSleepingMonitor, CropSle
 {
 	public class Def : BaseDef, IGameObjectEffectDescriptor
 	{
-		public float lightIntensityThreshold;
+		public float lightIntensityThreshold = 0f;
 
-		public bool prefersDarkness;
+		public bool prefersDarkness = false;
 
 		public List<Descriptor> GetDescriptors(GameObject obj)
 		{
@@ -24,17 +24,14 @@ public class CropSleepingMonitor : GameStateMachine<CropSleepingMonitor, CropSle
 
 		public bool IsSleeping()
 		{
-			return GetCurrentState() == base.smi.sm.sleeping;
+			BaseState currentState = GetCurrentState();
+			return currentState == base.smi.sm.sleeping;
 		}
 
 		public bool IsCellSafe(int cell)
 		{
 			float num = Grid.LightIntensity[cell];
-			if (!base.def.prefersDarkness)
-			{
-				return num >= base.def.lightIntensityThreshold;
-			}
-			return num <= base.def.lightIntensityThreshold;
+			return base.def.prefersDarkness ? (num <= base.def.lightIntensityThreshold) : (num >= base.def.lightIntensityThreshold);
 		}
 	}
 
@@ -45,7 +42,7 @@ public class CropSleepingMonitor : GameStateMachine<CropSleepingMonitor, CropSle
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = awake;
-		base.serializable = false;
+		base.serializable = SerializeType.Never;
 		root.Update("CropSleepingMonitor.root", delegate(Instance smi, float dt)
 		{
 			int cell = Grid.PosToCell(smi.master.gameObject);

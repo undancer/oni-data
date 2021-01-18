@@ -1,3 +1,5 @@
+using Klei.AI;
+
 public class SafeCellSensor : Sensor
 {
 	private MinionBrain brain;
@@ -5,6 +7,8 @@ public class SafeCellSensor : Sensor
 	private Navigator navigator;
 
 	private KPrefabID prefabid;
+
+	private Traits traits;
 
 	private int cell = Grid.InvalidCell;
 
@@ -14,6 +18,7 @@ public class SafeCellSensor : Sensor
 		navigator = GetComponent<Navigator>();
 		brain = GetComponent<MinionBrain>();
 		prefabid = GetComponent<KPrefabID>();
+		traits = GetComponent<Traits>();
 	}
 
 	public override void Update()
@@ -41,11 +46,11 @@ public class SafeCellSensor : Sensor
 
 	public void RunSafeCellQuery(bool avoid_light)
 	{
-		MinionPathFinderAbilities obj = (MinionPathFinderAbilities)navigator.GetCurrentAbilities();
-		obj.SetIdleNavMaskEnabled(enabled: true);
+		MinionPathFinderAbilities minionPathFinderAbilities = (MinionPathFinderAbilities)navigator.GetCurrentAbilities();
+		minionPathFinderAbilities.SetIdleNavMaskEnabled(enabled: true);
 		SafeCellQuery safeCellQuery = PathFinderQueries.safeCellQuery.Reset(brain, avoid_light);
 		navigator.RunQuery(safeCellQuery);
-		obj.SetIdleNavMaskEnabled(enabled: false);
+		minionPathFinderAbilities.SetIdleNavMaskEnabled(enabled: false);
 		cell = safeCellQuery.GetResultCell();
 		if (cell == Grid.PosToCell(navigator))
 		{
@@ -71,17 +76,13 @@ public class SafeCellSensor : Sensor
 	{
 		if (cell == Grid.InvalidCell)
 		{
-			RunSafeCellQuery(avoid_light: true);
+			RunSafeCellQuery((!traits.HasTrait("NightLight")) ? true : false);
 		}
 		return cell;
 	}
 
 	public bool HasSafeCell()
 	{
-		if (cell != Grid.InvalidCell)
-		{
-			return cell != Grid.PosToCell(sensors);
-		}
-		return false;
+		return cell != Grid.InvalidCell && cell != Grid.PosToCell(sensors);
 	}
 }

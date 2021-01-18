@@ -86,17 +86,7 @@ public struct StructureTemperaturePayload
 
 	public float ExhaustKilowatts => building.Def.ExhaustKilowattsWhenActive;
 
-	public float OperatingKilowatts
-	{
-		get
-		{
-			if (!(operational != null) || !operational.IsActive)
-			{
-				return 0f;
-			}
-			return building.Def.SelfHeatKilowattsWhenActive;
-		}
-	}
+	public float OperatingKilowatts => (operational != null && operational.IsActive) ? building.Def.SelfHeatKilowattsWhenActive : 0f;
 
 	public StructureTemperaturePayload(GameObject go)
 	{
@@ -123,10 +113,6 @@ public struct StructureTemperaturePayload
 
 	public Extents GetExtents()
 	{
-		if (!overrideExtents)
-		{
-			return building.GetExtents();
-		}
-		return overriddenExtents;
+		return overrideExtents ? overriddenExtents : building.GetExtents();
 	}
 }

@@ -21,6 +21,8 @@ public abstract class ResourceSet : Resource
 
 	public abstract Resource Add(Resource resource);
 
+	public abstract void Remove(Resource resource);
+
 	public abstract Resource GetResource(int idx);
 }
 [Serializable]
@@ -78,6 +80,18 @@ public class ResourceSet<T> : ResourceSet where T : Resource
 		return null;
 	}
 
+	public T TryGet(HashedString id)
+	{
+		foreach (T resource in resources)
+		{
+			if (resource.IdHash == id)
+			{
+				return resource;
+			}
+		}
+		return null;
+	}
+
 	public T Get(HashedString id)
 	{
 		foreach (T resource in resources)
@@ -104,6 +118,16 @@ public class ResourceSet<T> : ResourceSet where T : Resource
 		return null;
 	}
 
+	public override void Remove(Resource resource)
+	{
+		T val = resource as T;
+		if (val == null)
+		{
+			Debug.LogError("Resource type mismatch: " + resource.GetType().Name + " does not match " + typeof(T).Name);
+		}
+		resources.Remove(val);
+	}
+
 	public override Resource Add(Resource resource)
 	{
 		T val = resource as T;
@@ -128,8 +152,10 @@ public class ResourceSet<T> : ResourceSet where T : Resource
 
 	public void ResolveReferences()
 	{
-		FieldInfo[] fields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
-		foreach (FieldInfo fieldInfo in fields)
+		Type type = GetType();
+		FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
+		FieldInfo[] array = fields;
+		foreach (FieldInfo fieldInfo in array)
 		{
 			if (fieldInfo.FieldType.IsSubclassOf(typeof(Resource)) && fieldInfo.GetValue(this) == null)
 			{

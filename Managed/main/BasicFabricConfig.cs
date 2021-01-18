@@ -10,6 +10,11 @@ public class BasicFabricConfig : IEntityConfig
 
 	private AttributeModifier decorModifier = new AttributeModifier("Decor", 0.1f, ITEMS.INDUSTRIAL_PRODUCTS.BASIC_FABRIC.NAME, is_multiplier: true);
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateLooseEntity(ID, ITEMS.INDUSTRIAL_PRODUCTS.BASIC_FABRIC.NAME, ITEMS.INDUSTRIAL_PRODUCTS.BASIC_FABRIC.DESC, 1f, unitMass: true, Assets.GetAnim("swampreedwool_kanim"), "object", Grid.SceneLayer.BuildingBack, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.45f, isPickupable: true, SORTORDER.BUILDINGELEMENTS + BasicFabricTuning.SORTORDER, SimHashes.Creature, new List<Tag>
@@ -18,7 +23,8 @@ public class BasicFabricConfig : IEntityConfig
 			GameTags.BuildingFiber
 		});
 		gameObject.AddOrGet<EntitySplitter>();
-		gameObject.AddOrGet<PrefabAttributeModifiers>().AddAttributeDescriptor(decorModifier);
+		PrefabAttributeModifiers prefabAttributeModifiers = gameObject.AddOrGet<PrefabAttributeModifiers>();
+		prefabAttributeModifiers.AddAttributeDescriptor(decorModifier);
 		return gameObject;
 	}
 

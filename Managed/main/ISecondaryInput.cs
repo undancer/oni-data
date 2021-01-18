@@ -1,6 +1,6 @@
 public interface ISecondaryInput
 {
-	ConduitType GetSecondaryConduitType();
+	bool HasSecondaryConduitType(ConduitType type);
 
-	CellOffset GetSecondaryConduitOffset();
+	CellOffset GetSecondaryConduitOffset(ConduitType type);
 }

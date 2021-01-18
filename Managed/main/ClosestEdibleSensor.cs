@@ -28,7 +28,8 @@ public class ClosestEdibleSensor : Sensor
 		}
 		else
 		{
-			flag = Game.Instance.fetchManager.FindFetchTarget(GetComponent<Storage>(), ref edibleTagBits, ref TagBits.None, ref TagBits.None, 0f) != null;
+			Pickupable x2 = Game.Instance.fetchManager.FindFetchTarget(GetComponent<Storage>(), ref edibleTagBits, ref TagBits.None, ref TagBits.None, 0f);
+			flag = x2 != null;
 		}
 		if (x != edible || hasEdible != flag2)
 		{

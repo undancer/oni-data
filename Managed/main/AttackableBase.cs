@@ -7,7 +7,7 @@ public class AttackableBase : Workable, IApproachable
 {
 	private HandleVector<int>.Handle scenePartitionerEntry;
 
-	private static readonly EventSystem.IntraObjectHandler<AttackableBase> OnDeadTagChangedDelegate = GameUtil.CreateHasTagHandler(GameTags.Dead, delegate(AttackableBase component, object data)
+	private static readonly EventSystem.IntraObjectHandler<AttackableBase> OnDeadTagAddedDelegate = GameUtil.CreateHasTagHandler(GameTags.Dead, delegate(AttackableBase component, object data)
 	{
 		component.OnDefeated(data);
 	});
@@ -36,7 +36,7 @@ public class AttackableBase : Workable, IApproachable
 		skillExperienceMultiplier = SKILLS.BARELY_EVER_EXPERIENCE;
 		SetupScenePartitioner();
 		Subscribe(1088554450, OnCellChangedDelegate);
-		GameUtil.SubscribeToTags(this, OnDeadTagChangedDelegate);
+		GameUtil.SubscribeToTags(this, OnDeadTagAddedDelegate, triggerImmediately: true);
 		Subscribe(-1506500077, OnDefeatedDelegate);
 		Subscribe(-1256572400, SetupScenePartitionerDelegate);
 	}

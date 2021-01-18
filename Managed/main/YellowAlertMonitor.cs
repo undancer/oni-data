@@ -19,7 +19,7 @@ public class YellowAlertMonitor : GameStateMachine<YellowAlertMonitor, YellowAle
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = off;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		off.EventTransition(GameHashes.EnteredYellowAlert, (Instance smi) => Game.Instance, on, (Instance smi) => YellowAlertManager.Instance.Get().IsOn());
 		on.EventTransition(GameHashes.ExitedYellowAlert, (Instance smi) => Game.Instance, off, (Instance smi) => !YellowAlertManager.Instance.Get().IsOn()).Enter("EnableYellowAlert", delegate(Instance smi)
 		{

@@ -15,7 +15,9 @@ public class Db : EntityModifierSet
 
 	private static Db _Instance;
 
-	public TextAsset researchTreeFile;
+	public TextAsset researchTreeFileVanilla;
+
+	public TextAsset researchTreeFileExpansion1;
 
 	public Diseases Diseases;
 
@@ -51,10 +53,6 @@ public class Db : EntityModifierSet
 
 	public ChoreTypes ChoreTypes;
 
-	public Techs Techs;
-
-	public TechTreeTitles TechTreeTitles;
-
 	public TechItems TechItems;
 
 	public AccessorySlots AccessorySlots;
@@ -71,6 +69,8 @@ public class Db : EntityModifierSet
 
 	public ArtifactDropRates ArtifactDropRates;
 
+	public AsteroidTypes AsteroidTypes;
+
 	public SpaceDestinationTypes SpaceDestinationTypes;
 
 	public SkillPerks SkillPerks;
@@ -80,6 +80,16 @@ public class Db : EntityModifierSet
 	public Skills Skills;
 
 	public ColonyAchievements ColonyAchievements;
+
+	public GameplayEvents GameplayEvents;
+
+	public GameplaySeasons GameplaySeasons;
+
+	public PlantMutations PlantMutations;
+
+	public Techs Techs;
+
+	public TechTreeTitles TechTreeTitles;
 
 	public static Db Get()
 	{
@@ -104,11 +114,13 @@ public class Db : EntityModifierSet
 		Thoughts = new Thoughts(Root);
 		Deaths = new Deaths(Root);
 		StatusItemCategories = new StatusItemCategories(Root);
-		Techs = new Techs(Root);
-		Techs.Load(researchTreeFile);
 		TechTreeTitles = new TechTreeTitles(Root);
-		TechTreeTitles.Load(researchTreeFile);
+		TechTreeTitles.Load(DlcManager.IsExpansion1Active() ? researchTreeFileExpansion1 : researchTreeFileVanilla);
+		Techs = new Techs(Root);
 		TechItems = new TechItems(Root);
+		Techs.Init();
+		Techs.Load(DlcManager.IsExpansion1Active() ? researchTreeFileExpansion1 : researchTreeFileVanilla);
+		TechItems.Init();
 		Accessories = new Accessories(Root);
 		AccessorySlots = new AccessorySlots(Root);
 		ScheduleBlockTypes = new ScheduleBlockTypes(Root);
@@ -116,6 +128,7 @@ public class Db : EntityModifierSet
 		RoomTypeCategories = new RoomTypeCategories(Root);
 		RoomTypes = new RoomTypes(Root);
 		ArtifactDropRates = new ArtifactDropRates(Root);
+		AsteroidTypes = new AsteroidTypes(Root);
 		SpaceDestinationTypes = new SpaceDestinationTypes(Root);
 		Diseases = new Diseases(Root);
 		Sicknesses = new Database.Sicknesses(Root);
@@ -128,6 +141,9 @@ public class Db : EntityModifierSet
 		BuildingStatusItems = new BuildingStatusItems(Root);
 		RobotStatusItems = new RobotStatusItems(Root);
 		ChoreTypes = new ChoreTypes(Root);
+		GameplayEvents = new GameplayEvents(Root);
+		GameplaySeasons = new GameplaySeasons(Root);
+		PlantMutations = new PlantMutations(Root);
 		Effect effect = new Effect("CenterOfAttention", DUPLICANTS.MODIFIERS.CENTEROFATTENTION.NAME, DUPLICANTS.MODIFIERS.CENTEROFATTENTION.TOOLTIP, 0f, show_in_ui: true, trigger_floating_text: true, is_bad: false);
 		effect.Add(new AttributeModifier("StressDelta", -0.008333334f, DUPLICANTS.MODIFIERS.CENTEROFATTENTION.NAME));
 		effects.Add(effect);

@@ -6,12 +6,12 @@ public class ConduitSecondaryOutput : KMonoBehaviour, ISecondaryOutput
 	[SerializeField]
 	public ConduitPortInfo portInfo;
 
-	public ConduitType GetSecondaryConduitType()
+	public bool HasSecondaryConduitType(ConduitType type)
 	{
-		return portInfo.conduitType;
+		return portInfo.conduitType == type;
 	}
 
-	public CellOffset GetSecondaryConduitOffset()
+	public CellOffset GetSecondaryConduitOffset(ConduitType type)
 	{
 		return portInfo.offset;
 	}

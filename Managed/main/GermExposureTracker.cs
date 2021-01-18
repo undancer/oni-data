@@ -54,7 +54,8 @@ public class GermExposureTracker : KMonoBehaviour
 				GermExposureMonitor.Instance sMI = item.GetSMI<GermExposureMonitor.Instance>();
 				if (sMI.GetExposureState(exposure_type.germ_id) == GermExposureMonitor.ExposureState.Exposed)
 				{
-					float exposureWeight = item.GetSMI<GermExposureMonitor.Instance>().GetExposureWeight(exposure_type.germ_id);
+					GermExposureMonitor.Instance sMI2 = item.GetSMI<GermExposureMonitor.Instance>();
+					float exposureWeight = sMI2.GetExposureWeight(exposure_type.germ_id);
 					if (exposureWeight > 0f)
 					{
 						exposure_candidates.Add(new WeightedExposure

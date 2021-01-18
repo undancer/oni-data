@@ -20,10 +20,10 @@ public class KAnimFile : ScriptableObject
 	public const string ANIM_ROOT_PATH = "Assets/anim";
 
 	[SerializeField]
-	private TextAsset animFile;
+	private TextAsset animFile = null;
 
 	[SerializeField]
-	private TextAsset buildFile;
+	private TextAsset buildFile = null;
 
 	[SerializeField]
 	private List<Texture2D> textures = new List<Texture2D>();
@@ -36,49 +36,11 @@ public class KAnimFile : ScriptableObject
 
 	public string homedirectory = "";
 
-	public byte[] animBytes
-	{
-		get
-		{
-			if (mod != null)
-			{
-				return mod.anim;
-			}
-			if (!(animFile != null))
-			{
-				return null;
-			}
-			return animFile.bytes;
-		}
-	}
+	public byte[] animBytes => (mod != null) ? mod.anim : ((animFile != null) ? animFile.bytes : null);
 
-	public byte[] buildBytes
-	{
-		get
-		{
-			if (mod != null)
-			{
-				return mod.build;
-			}
-			if (!(buildFile != null))
-			{
-				return null;
-			}
-			return buildFile.bytes;
-		}
-	}
+	public byte[] buildBytes => (mod != null) ? mod.build : ((buildFile != null) ? buildFile.bytes : null);
 
-	public List<Texture2D> textureList
-	{
-		get
-		{
-			if (mod != null)
-			{
-				return mod.textures;
-			}
-			return textures;
-		}
-	}
+	public List<Texture2D> textureList => (mod == null) ? textures : mod.textures;
 
 	public HashedString batchTag
 	{
@@ -92,7 +54,7 @@ public class KAnimFile : ScriptableObject
 			{
 				return KAnimBatchManager.NO_BATCH;
 			}
-			_batchTag = KAnimGroupFile.GetGroupFile().GetGroupForHomeDirectory(new HashedString(homedirectory));
+			_batchTag = KAnimGroupFile.GetGroupForHomeDirectory(new HashedString(homedirectory));
 			return _batchTag;
 		}
 	}

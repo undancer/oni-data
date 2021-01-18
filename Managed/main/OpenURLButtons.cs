@@ -29,7 +29,7 @@ public class OpenURLButtons : KMonoBehaviour
 	public List<URLButtonData> buttonData;
 
 	[SerializeField]
-	private GameObject patchNotesScreen;
+	private GameObject patchNotesScreenPrefab;
 
 	[SerializeField]
 	private FeedbackScreen feedbackScreenPrefab;
@@ -75,7 +75,7 @@ public class OpenURLButtons : KMonoBehaviour
 
 	public void OpenPatchNotes()
 	{
-		patchNotesScreen.SetActive(value: true);
+		Util.KInstantiateUI(patchNotesScreenPrefab, FrontEndManager.Instance.gameObject, force_active: true);
 	}
 
 	public void OpenFeedbackScreen()
@@ -95,13 +95,15 @@ public class OpenURLButtons : KMonoBehaviour
 			DistributionPlatform.Inst.GetAuthTicket(delegate(byte[] ticket)
 			{
 				string newValue = string.Concat(Array.ConvertAll(ticket, (byte x) => x.ToString("X2")));
-				Application.OpenURL(URL.Replace("{SteamID}", DistributionPlatform.Inst.LocalUser.Id.ToInt64().ToString()).Replace("{SteamTicket}", newValue));
+				string url2 = URL.Replace("{SteamID}", DistributionPlatform.Inst.LocalUser.Id.ToInt64().ToString()).Replace("{SteamTicket}", newValue);
+				Application.OpenURL(url2);
 			});
 		}
 		else
 		{
 			string value = URL.Replace("{SteamID}", "").Replace("{SteamTicket}", "");
-			Application.OpenURL("https://accounts.klei.com/login?goto={gotoUrl}".Replace("{gotoUrl}", WebUtility.HtmlEncode(value)));
+			string url = "https://accounts.klei.com/login?goto={gotoUrl}".Replace("{gotoUrl}", WebUtility.HtmlEncode(value));
+			Application.OpenURL(url);
 		}
 	}
 }

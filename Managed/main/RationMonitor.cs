@@ -50,11 +50,7 @@ public class RationMonitor : GameStateMachine<RationMonitor, RationMonitor.Insta
 
 		public bool IsEating()
 		{
-			if (choreDriver.HasChore())
-			{
-				return choreDriver.GetCurrentChore().choreType.urge == Db.Get().Urges.Eat;
-			}
-			return false;
+			return choreDriver.HasChore() && choreDriver.GetCurrentChore().choreType.urge == Db.Get().Urges.Eat;
 		}
 
 		public void OnNewDay()
@@ -79,7 +75,7 @@ public class RationMonitor : GameStateMachine<RationMonitor, RationMonitor.Insta
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = rationsavailable;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		root.EventHandler(GameHashes.EatCompleteEater, delegate(Instance smi, object d)
 		{
 			smi.OnEatComplete(d);

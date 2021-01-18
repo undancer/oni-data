@@ -34,7 +34,7 @@ public class HoverTextConfiguration : KMonoBehaviour
 	public string ActionName = "";
 
 	[HideInInspector]
-	public string ToolName;
+	public string ToolName = null;
 
 	protected string backStr;
 
@@ -45,6 +45,8 @@ public class HoverTextConfiguration : KMonoBehaviour
 	public TextStylePair Styles_BodyText;
 
 	public TextStylePair Styles_Instruction;
+
+	public TextStylePair Styles_Warning;
 
 	public ValuePropertyTextStyles Styles_Values;
 
@@ -93,6 +95,12 @@ public class HoverTextConfiguration : KMonoBehaviour
 	{
 		HoverTextScreen instance = HoverTextScreen.Instance;
 		HoverTextDrawer hoverTextDrawer = instance.BeginDrawing();
+		int num = Grid.PosToCell(Camera.main.ScreenToWorldPoint(KInputManager.GetMousePos()));
+		if (!Grid.IsValidCell(num) || Grid.WorldIdx[num] != ClusterManager.Instance.activeWorldId)
+		{
+			hoverTextDrawer.EndDrawing();
+			return;
+		}
 		hoverTextDrawer.BeginShadowBar();
 		DrawTitle(instance, hoverTextDrawer);
 		DrawInstructions(HoverTextScreen.Instance, hoverTextDrawer);

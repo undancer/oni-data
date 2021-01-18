@@ -18,10 +18,11 @@ namespace MIConvexHull
 
 		public static VoronoiMesh<DefaultVertex, DefaultTriangulationCell<DefaultVertex>, VoronoiEdge<DefaultVertex, DefaultTriangulationCell<DefaultVertex>>> Create(IList<double[]> data)
 		{
-			return VoronoiMesh<DefaultVertex, DefaultTriangulationCell<DefaultVertex>, VoronoiEdge<DefaultVertex, DefaultTriangulationCell<DefaultVertex>>>.Create(data.Select((double[] p) => new DefaultVertex
+			List<DefaultVertex> data2 = data.Select((double[] p) => new DefaultVertex
 			{
 				Position = p.ToArray()
-			}).ToList());
+			}).ToList();
+			return VoronoiMesh<DefaultVertex, DefaultTriangulationCell<DefaultVertex>, VoronoiEdge<DefaultVertex, DefaultTriangulationCell<DefaultVertex>>>.Create(data2);
 		}
 
 		public static VoronoiMesh<TVertex, TCell, VoronoiEdge<TVertex, TCell>> Create<TVertex, TCell>(IList<TVertex> data) where TVertex : IVertex where TCell : TriangulationCell<TVertex, TCell>, new()
@@ -35,15 +36,7 @@ namespace MIConvexHull
 		{
 			public bool Equals(TEdge x, TEdge y)
 			{
-				if (x.Source != y.Source || x.Target != y.Target)
-				{
-					if (x.Source == y.Target)
-					{
-						return x.Target == y.Source;
-					}
-					return false;
-				}
-				return true;
+				return (x.Source == y.Source && x.Target == y.Target) || (x.Source == y.Target && x.Target == y.Source);
 			}
 
 			public int GetHashCode(TEdge obj)
@@ -74,7 +67,8 @@ namespace MIConvexHull
 			{
 				throw new ArgumentNullException("data");
 			}
-			List<TCell> list = DelaunayTriangulation<TVertex, TCell>.Create(data).Cells.ToList();
+			DelaunayTriangulation<TVertex, TCell> delaunayTriangulation = DelaunayTriangulation<TVertex, TCell>.Create(data);
+			List<TCell> list = delaunayTriangulation.Cells.ToList();
 			HashSet<TEdge> hashSet = new HashSet<TEdge>(new EdgeComparer());
 			foreach (TCell item in list)
 			{

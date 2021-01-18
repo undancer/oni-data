@@ -22,31 +22,32 @@ public class SteamTurbineConfig2 : IBuildingConfig
 			"RefinedMetal",
 			"Plastic"
 		};
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: new float[2]
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(construction_mass: new float[2]
 		{
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER5[0],
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER3[0]
 		}, construction_materials: array, melting_point: 1600f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, id: "SteamTurbine2", width: 5, height: 3, anim: "steamturbine2_kanim", hitpoints: 30, construction_time: 60f, decor: BUILDINGS.DECOR.NONE, temperature_modification_mass_scale: 1f);
-		obj.OutputConduitType = ConduitType.Liquid;
-		obj.UtilityOutputOffset = new CellOffset(2, 2);
-		obj.GeneratorWattageRating = MAX_WATTAGE;
-		obj.GeneratorBaseCapacity = MAX_WATTAGE;
-		obj.Entombable = true;
-		obj.IsFoundation = false;
-		obj.PermittedRotations = PermittedRotations.FlipH;
-		obj.ViewMode = OverlayModes.Power.ID;
-		obj.AudioCategory = "Metal";
-		obj.PowerOutputOffset = new CellOffset(1, 0);
-		obj.OverheatTemperature = 1273.15f;
-		obj.SelfHeatKilowattsWhenActive = 4f;
-		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
-		return obj;
+		buildingDef.OutputConduitType = ConduitType.Liquid;
+		buildingDef.UtilityOutputOffset = new CellOffset(2, 2);
+		buildingDef.GeneratorWattageRating = MAX_WATTAGE;
+		buildingDef.GeneratorBaseCapacity = MAX_WATTAGE;
+		buildingDef.Entombable = true;
+		buildingDef.IsFoundation = false;
+		buildingDef.PermittedRotations = PermittedRotations.FlipH;
+		buildingDef.ViewMode = OverlayModes.Power.ID;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.PowerOutputOffset = new CellOffset(1, 0);
+		buildingDef.OverheatTemperature = 1273.15f;
+		buildingDef.SelfHeatKilowattsWhenActive = 4f;
+		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
+		return buildingDef;
 	}
 
 	public override void DoPostConfigureUnderConstruction(GameObject go)
 	{
 		base.DoPostConfigureUnderConstruction(go);
-		go.GetComponent<Constructable>().requiredSkillPerk = Db.Get().SkillPerks.CanPowerTinker.Id;
+		Constructable component = go.GetComponent<Constructable>();
+		component.requiredSkillPerk = Db.Get().SkillPerks.CanPowerTinker.Id;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

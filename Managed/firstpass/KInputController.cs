@@ -44,7 +44,7 @@ public class KInputController : IInputHandler
 		{
 			mKeyCode = key_code;
 			mModifier = modifier;
-			mActionFlags = new bool[250];
+			mActionFlags = new bool[266];
 		}
 	}
 
@@ -58,15 +58,15 @@ public class KInputController : IInputHandler
 
 	private float[] mAxis;
 
-	private Modifier mActiveModifiers;
+	private Modifier mActiveModifiers = Modifier.None;
 
 	private bool[] mActionState;
 
 	private bool[] mScrollState;
 
-	private bool mIgnoreKeyboard;
+	private bool mIgnoreKeyboard = false;
 
-	private bool mIgnoreMouse;
+	private bool mIgnoreMouse = false;
 
 	private Dictionary<KeyDefEntry, KeyDef> mKeyDefLookup = new Dictionary<KeyDefEntry, KeyDef>();
 
@@ -93,6 +93,11 @@ public class KInputController : IInputHandler
 		KKeyCode.CapsLock
 	};
 
+	private static readonly KKeyCode[] backtickCodes = new KKeyCode[1]
+	{
+		KKeyCode.BackQuote
+	};
+
 	public string handlerName => "KInputController";
 
 	public KInputHandler inputHandler
@@ -115,7 +120,7 @@ public class KInputController : IInputHandler
 		IsGamepad = is_gamepad;
 		mAxis = new float[4];
 		mActiveModifiers = Modifier.None;
-		mActionState = new bool[250];
+		mActionState = new bool[266];
 		mScrollState = new bool[2];
 		inputHandler = new KInputHandler(this, this);
 	}
@@ -226,6 +231,7 @@ public class KInputController : IInputHandler
 		CheckModifier(ctrlCodes, Modifier.Ctrl);
 		CheckModifier(shiftCodes, Modifier.Shift);
 		CheckModifier(capsCodes, Modifier.CapsLock);
+		CheckModifier(backtickCodes, Modifier.Backtick);
 	}
 
 	private void UpdateScrollStates()

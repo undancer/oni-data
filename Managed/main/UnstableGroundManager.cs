@@ -45,6 +45,8 @@ public class UnstableGroundManager : KMonoBehaviour
 	[SerializeField]
 	private Vector3 landEffectOffset;
 
+	private Vector3 fallingTileOffset;
+
 	[SerializeField]
 	private EffectInfo[] effects;
 
@@ -59,6 +61,7 @@ public class UnstableGroundManager : KMonoBehaviour
 
 	protected override void OnPrefabInit()
 	{
+		fallingTileOffset = new Vector3(0.5f, 0f, 0f);
 		EffectInfo[] array = effects;
 		for (int i = 0; i < array.Length; i++)
 		{
@@ -176,7 +179,8 @@ public class UnstableGroundManager : KMonoBehaviour
 		List<int> list = new List<int>();
 		for (int i = 0; i < fallingObjects.Count; i++)
 		{
-			Grid.PosToXY(fallingObjects[i].transform.GetPosition(), out var xy);
+			GameObject gameObject = fallingObjects[i];
+			Grid.PosToXY(gameObject.transform.GetPosition(), out var xy);
 			if (xy.x == cellXY.x || xy.y >= cellXY.y)
 			{
 				int item = Grid.PosToCell(xy);
@@ -215,15 +219,20 @@ public class UnstableGroundManager : KMonoBehaviour
 			}
 			Vector3 position = gameObject.transform.GetPosition();
 			int cell = Grid.PosToCell(position);
-			int num2 = Grid.CellBelow(cell);
-			if (!Grid.IsValidCell(num2) || Grid.Element[num2].IsSolid || (Grid.Properties[num2] & 4u) != 0)
+			int num2 = Grid.CellRight(cell);
+			int num3 = Grid.CellLeft(cell);
+			int num4 = Grid.CellBelow(cell);
+			int num5 = Grid.CellRight(num4);
+			int num6 = Grid.CellLeft(num4);
+			int num7 = cell;
+			if (!Grid.IsValidCell(num4) || Grid.Element[num4].IsSolid || (Grid.Properties[num4] & 4u) != 0)
 			{
 				UnstableGround component = gameObject.GetComponent<UnstableGround>();
-				pendingCells.Add(cell);
+				pendingCells.Add(num7);
 				SimMessages.AddRemoveSubstance(callbackIdx: Game.Instance.callbackManager.Add(new Game.CallbackInfo(delegate
 				{
 					RemoveFromPending(cell);
-				})).index, gameCell: cell, new_element: component.element, ev: CellEventLogger.Instance.UnstableGround, mass: component.mass, temperature: component.temperature, disease_idx: component.diseaseIdx, disease_count: component.diseaseCount);
+				})).index, gameCell: num7, new_element: component.element, ev: CellEventLogger.Instance.UnstableGround, mass: component.mass, temperature: component.temperature, disease_idx: component.diseaseIdx, disease_count: component.diseaseCount);
 				ListPool<ScenePartitionerEntry, UnstableGroundManager>.PooledList pooledList = ListPool<ScenePartitionerEntry, UnstableGroundManager>.Allocate();
 				Vector2I vector2I = Grid.CellToXY(cell);
 				vector2I.x = Mathf.Max(0, vector2I.x - 1);
@@ -233,7 +242,8 @@ public class UnstableGroundManager : KMonoBehaviour
 				{
 					if (item.obj is KCollider2D)
 					{
-						(item.obj as KCollider2D).gameObject.Trigger(-975551167);
+						GameObject gameObject2 = (item.obj as KCollider2D).gameObject;
+						gameObject2.Trigger(-975551167);
 					}
 				}
 				pooledList.Recycle();
@@ -242,7 +252,8 @@ public class UnstableGroundManager : KMonoBehaviour
 				{
 					SoundEvent.PlayOneShot(element.substance.fallingStopSound, position);
 				}
-				GameUtil.KInstantiate(Assets.GetPrefab(EffectConfigs.OreAbsorbId), position + landEffectOffset, Grid.SceneLayer.Front).SetActive(value: true);
+				GameObject gameObject3 = GameUtil.KInstantiate(Assets.GetPrefab(EffectConfigs.OreAbsorbId), position + landEffectOffset, Grid.SceneLayer.Front);
+				gameObject3.SetActive(value: true);
 				fallingObjects[num] = fallingObjects[fallingObjects.Count - 1];
 				fallingObjects.RemoveAt(fallingObjects.Count - 1);
 				ReleaseGO(gameObject);

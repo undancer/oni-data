@@ -75,7 +75,8 @@ public class PixelPack : KMonoBehaviour, ISaveLoadable
 
 	private void OnCopySettings(object data)
 	{
-		PixelPack component = ((GameObject)data).GetComponent<PixelPack>();
+		GameObject gameObject = (GameObject)data;
+		PixelPack component = gameObject.GetComponent<PixelPack>();
 		if (component != null)
 		{
 			for (int i = 0; i < component.colorSettings.Count; i++)

@@ -120,7 +120,8 @@ public class SeedPlantingStates : GameStateMachine<SeedPlantingStates, SeedPlant
 	private static void AddMouthOverride(Instance smi)
 	{
 		SymbolOverrideController component = smi.GetComponent<SymbolOverrideController>();
-		KAnim.Build.Symbol symbol = smi.GetComponent<KBatchedAnimController>().AnimFiles[0].GetData().build.GetSymbol("sq_mouth_cheeks");
+		KBatchedAnimController component2 = smi.GetComponent<KBatchedAnimController>();
+		KAnim.Build.Symbol symbol = component2.AnimFiles[0].GetData().build.GetSymbol("sq_mouth_cheeks");
 		if (symbol != null)
 		{
 			component.AddSymbolOverride("sq_mouth", symbol);
@@ -129,7 +130,8 @@ public class SeedPlantingStates : GameStateMachine<SeedPlantingStates, SeedPlant
 
 	private static void RemoveMouthOverride(Instance smi)
 	{
-		smi.GetComponent<SymbolOverrideController>().TryRemoveSymbolOverride("sq_mouth");
+		SymbolOverrideController component = smi.GetComponent<SymbolOverrideController>();
+		component.TryRemoveSymbolOverride("sq_mouth");
 	}
 
 	private static void PickupComplete(Instance smi)
@@ -168,7 +170,7 @@ public class SeedPlantingStates : GameStateMachine<SeedPlantingStates, SeedPlant
 			{
 				if (plot.Occupant == null)
 				{
-					plot.ForceDepositPickupable(smi.targetSeed);
+					plot.ForceDeposit(smi.targetSeed.gameObject);
 				}
 			}
 			else
@@ -201,7 +203,8 @@ public class SeedPlantingStates : GameStateMachine<SeedPlantingStates, SeedPlant
 		smi.targetDirtPlotCell = Grid.InvalidCell;
 		PlantableSeed component = smi.targetSeed.GetComponent<PlantableSeed>();
 		PlantableCellQuery plantableCellQuery = PathFinderQueries.plantableCellQuery.Reset(component, 20);
-		smi.GetComponent<Navigator>().RunQuery(plantableCellQuery);
+		Navigator component2 = smi.GetComponent<Navigator>();
+		component2.RunQuery(plantableCellQuery);
 		if (plantableCellQuery.result_cells.Count > 0)
 		{
 			smi.targetDirtPlotCell = plantableCellQuery.result_cells[Random.Range(0, plantableCellQuery.result_cells.Count)];

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using STRINGS;
 using UnityEngine;
@@ -10,6 +11,10 @@ public class DropAllWorkable : Workable
 	private bool showCmd;
 
 	private Storage[] storages;
+
+	public float dropWorkTime = 0.1f;
+
+	public string choreTypeID;
 
 	[MyCmpAdd]
 	private Prioritizable _prioritizable;
@@ -24,6 +29,8 @@ public class DropAllWorkable : Workable
 		component.OnStorageChange(data);
 	});
 
+	private Guid statusItem;
+
 	protected DropAllWorkable()
 	{
 		SetOffsetTable(OffsetGroups.InvertedStandardTable);
@@ -36,7 +43,7 @@ public class DropAllWorkable : Workable
 		Subscribe(-1697596308, OnStorageChangeDelegate);
 		workerStatusItem = Db.Get().DuplicantStatusItems.Emptying;
 		synchronizeAnims = false;
-		SetWorkTime(0.1f);
+		SetWorkTime(dropWorkTime);
 		Prioritizable.AddRef(base.gameObject);
 	}
 
@@ -60,17 +67,20 @@ public class DropAllWorkable : Workable
 		if (DebugHandler.InstantBuildMode)
 		{
 			OnCompleteWork(null);
-			return;
 		}
-		if (chore == null)
+		else if (chore == null)
 		{
-			chore = new WorkChore<DropAllWorkable>(Db.Get().ChoreTypes.EmptyStorage, this, null, run_until_complete: true, null, null, null, allow_in_red_alert: true, null, ignore_schedule_block: false, only_when_operational: false);
-			return;
+			ChoreType chore_type = ((!string.IsNullOrEmpty(choreTypeID)) ? Db.Get().ChoreTypes.Get(choreTypeID) : Db.Get().ChoreTypes.EmptyStorage);
+			chore = new WorkChore<DropAllWorkable>(chore_type, this, null, run_until_complete: true, null, null, null, allow_in_red_alert: true, null, ignore_schedule_block: false, only_when_operational: false);
 		}
-		chore.Cancel("Cancelled emptying");
-		chore = null;
-		GetComponent<KSelectable>().RemoveStatusItem(workerStatusItem);
-		ShowProgressBar(show: false);
+		else
+		{
+			chore.Cancel("Cancelled emptying");
+			chore = null;
+			GetComponent<KSelectable>().RemoveStatusItem(workerStatusItem);
+			ShowProgressBar(show: false);
+		}
+		RefreshStatusItem();
 	}
 
 	protected override void OnCompleteWork(Worker worker)
@@ -93,6 +103,7 @@ public class DropAllWorkable : Workable
 			}
 		}
 		chore = null;
+		RefreshStatusItem();
 		Trigger(-1957399615);
 	}
 
@@ -123,6 +134,20 @@ public class DropAllWorkable : Workable
 		{
 			showCmd = newShowCmd;
 			Game.Instance.userMenu.Refresh(base.gameObject);
+		}
+	}
+
+	private void RefreshStatusItem()
+	{
+		if (chore != null && statusItem == Guid.Empty)
+		{
+			KSelectable component = GetComponent<KSelectable>();
+			statusItem = component.AddStatusItem(Db.Get().BuildingStatusItems.AwaitingEmptyBuilding);
+		}
+		else if (chore == null && statusItem != Guid.Empty)
+		{
+			KSelectable component2 = GetComponent<KSelectable>();
+			statusItem = component2.RemoveStatusItem(statusItem);
 		}
 	}
 }

@@ -118,9 +118,9 @@ public class QualityOfLifeNeed : Need, ISim4000ms
 
 	private void OnScheduleBlocksTick(object data)
 	{
-		Schedule obj = (Schedule)data;
-		ScheduleBlock block = obj.GetBlock(Schedule.GetLastBlockIdx());
-		ScheduleBlock block2 = obj.GetBlock(Schedule.GetBlockIdx());
+		Schedule schedule = (Schedule)data;
+		ScheduleBlock block = schedule.GetBlock(Schedule.GetLastBlockIdx());
+		ScheduleBlock block2 = schedule.GetBlock(Schedule.GetBlockIdx());
 		bool flag = block.IsAllowed(Db.Get().ScheduleBlockTypes.Recreation);
 		bool flag2 = block2.IsAllowed(Db.Get().ScheduleBlockTypes.Recreation);
 		breakBlocks[Schedule.GetLastBlockIdx()] = flag;
@@ -144,7 +144,8 @@ public class QualityOfLifeNeed : Need, ISim4000ms
 		string breakBonus = GetBreakBonus(numBlocks);
 		if (breakBonus != null)
 		{
-			GetComponent<Effects>().Add(breakBonus, should_save: true);
+			Effects component = GetComponent<Effects>();
+			component.Add(breakBonus, should_save: true);
 		}
 	}
 

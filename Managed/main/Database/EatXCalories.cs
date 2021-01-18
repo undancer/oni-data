@@ -1,9 +1,8 @@
-using System.IO;
 using STRINGS;
 
 namespace Database
 {
-	public class EatXCalories : ColonyAchievementRequirement
+	public class EatXCalories : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		private int numCalories;
 
@@ -17,14 +16,9 @@ namespace Database
 			return RationTracker.Get().GetCaloriesConsumed() / 1000f > (float)numCalories;
 		}
 
-		public override void Deserialize(IReader reader)
+		public void Deserialize(IReader reader)
 		{
 			numCalories = reader.ReadInt32();
-		}
-
-		public override void Serialize(BinaryWriter writer)
-		{
-			writer.Write(numCalories);
 		}
 
 		public override string GetProgress(bool complete)

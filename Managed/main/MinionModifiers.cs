@@ -43,19 +43,16 @@ public class MinionModifiers : Modifiers, ISaveLoadable
 				attributes.Add(resource);
 			}
 		}
-		Traits component = GetComponent<Traits>();
-		Trait trait = Db.Get().traits.Get(MinionConfig.MINION_BASE_TRAIT_ID);
-		component.Add(trait);
 		foreach (Disease resource2 in Db.Get().Diseases.resources)
 		{
 			AmountInstance amountInstance = AddAmount(resource2.amount);
 			attributes.Add(resource2.cureSpeedBase);
 			amountInstance.SetValue(0f);
 		}
-		ChoreConsumer component2 = GetComponent<ChoreConsumer>();
-		if (component2 != null)
+		ChoreConsumer component = GetComponent<ChoreConsumer>();
+		if (component != null)
 		{
-			component2.AddProvider(GlobalChoreProvider.Instance);
+			component.AddProvider(GlobalChoreProvider.Instance);
 			base.gameObject.AddComponent<QualityOfLifeNeed>();
 		}
 	}
@@ -63,7 +60,8 @@ public class MinionModifiers : Modifiers, ISaveLoadable
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		if (GetComponent<ChoreConsumer>() != null)
+		ChoreConsumer component = GetComponent<ChoreConsumer>();
+		if (component != null)
 		{
 			Subscribe(1623392196, OnDeathDelegate);
 			Subscribe(-1506069671, OnAttachFollowCamDelegate);
@@ -99,7 +97,7 @@ public class MinionModifiers : Modifiers, ISaveLoadable
 
 	private void OnDeath(object data)
 	{
-		Debug.LogFormat("OnDeath {0}", data);
+		Debug.LogFormat("OnDeath {0} -- {1} has died!", data, base.name);
 		foreach (MinionIdentity item in Components.LiveMinionIdentities.Items)
 		{
 			item.GetComponent<Effects>().Add("Mourning", should_save: true);

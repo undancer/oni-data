@@ -5,12 +5,12 @@ using UnityEngine;
 [SerializationConfig(MemberSerialization.OptIn)]
 public class ConduitTemperatureSensor : ConduitThresholdSensor, IThresholdSwitch
 {
-	public float rangeMin;
+	public float rangeMin = 0f;
 
 	public float rangeMax = 373.15f;
 
 	[Serialize]
-	private float lastValue;
+	private float lastValue = 0f;
 
 	public override float CurrentValue
 	{
@@ -54,13 +54,14 @@ public class ConduitTemperatureSensor : ConduitThresholdSensor, IThresholdSwitch
 		int cell = Grid.PosToCell(this);
 		if (conduitType == ConduitType.Liquid || conduitType == ConduitType.Gas)
 		{
-			ConduitFlow.ConduitContents contents = Conduit.GetFlowManager(conduitType).GetContents(cell);
+			ConduitFlow flowManager = Conduit.GetFlowManager(conduitType);
+			ConduitFlow.ConduitContents contents = flowManager.GetContents(cell);
 			temperature = contents.temperature;
 			hasMass = contents.mass > 0f;
 			return;
 		}
-		SolidConduitFlow flowManager = SolidConduit.GetFlowManager();
-		Pickupable pickupable = flowManager.GetPickupable(flowManager.GetContents(cell).pickupableHandle);
+		SolidConduitFlow flowManager2 = SolidConduit.GetFlowManager();
+		Pickupable pickupable = flowManager2.GetPickupable(flowManager2.GetContents(cell).pickupableHandle);
 		if (pickupable != null && pickupable.PrimaryElement.Mass > 0f)
 		{
 			temperature = pickupable.PrimaryElement.Temperature;

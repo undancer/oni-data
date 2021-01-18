@@ -10,11 +10,7 @@ public struct UtilityNetworkGridNode : IEquatable<UtilityNetworkGridNode>
 
 	public bool Equals(UtilityNetworkGridNode other)
 	{
-		if (connections == other.connections)
-		{
-			return networkIdx == other.networkIdx;
-		}
-		return false;
+		return connections == other.connections && networkIdx == other.networkIdx;
 	}
 
 	public override bool Equals(object obj)

@@ -145,19 +145,22 @@ namespace Klei.AI
 
 		public float GetPercentComplete(string attribute_id)
 		{
-			return GetAttributeLevel(attribute_id).GetPercentComplete();
+			AttributeLevel attributeLevel = GetAttributeLevel(attribute_id);
+			return attributeLevel.GetPercentComplete();
 		}
 
 		public int GetMaxLevel()
 		{
 			int num = 0;
-			using IEnumerator<AttributeLevel> enumerator = GetEnumerator();
-			while (enumerator.MoveNext())
+			using (IEnumerator<AttributeLevel> enumerator = GetEnumerator())
 			{
-				AttributeLevel current = enumerator.Current;
-				if (current.GetLevel() > num)
+				while (enumerator.MoveNext())
 				{
-					num = current.GetLevel();
+					AttributeLevel current = enumerator.Current;
+					if (current.GetLevel() > num)
+					{
+						num = current.GetLevel();
+					}
 				}
 			}
 			return num;

@@ -7,8 +7,9 @@ public class FabricatorListScreen : KToggleMenu
 		List<ToggleInfo> list = new List<ToggleInfo>();
 		foreach (Fabricator item in Components.Fabricators.Items)
 		{
-			KSelectable component = item.GetComponent<KSelectable>();
-			list.Add(new ToggleInfo(component.GetName(), item));
+			Fabricator fabricator = item;
+			KSelectable component = fabricator.GetComponent<KSelectable>();
+			list.Add(new ToggleInfo(component.GetName(), fabricator));
 		}
 		Setup(list);
 	}

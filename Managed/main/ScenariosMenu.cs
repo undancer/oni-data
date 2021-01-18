@@ -46,7 +46,8 @@ public class ScenariosMenu : KModalScreen, SteamUGCService.IClient
 		{
 			Deactivate();
 		};
-		dismissButton.GetComponent<HierarchyReferences>().GetReference<LocText>("Title").SetText(UI.FRONTEND.OPTIONS_SCREEN.BACK);
+		LocText reference = dismissButton.GetComponent<HierarchyReferences>().GetReference<LocText>("Title");
+		reference.SetText(UI.FRONTEND.OPTIONS_SCREEN.BACK);
 		closeButton.onClick += delegate
 		{
 			Deactivate();
@@ -83,11 +84,13 @@ public class ScenariosMenu : KModalScreen, SteamUGCService.IClient
 				gameObject.name = pooledList[i].title + "_button";
 				gameObject.gameObject.SetActive(value: true);
 				HierarchyReferences component = gameObject.GetComponent<HierarchyReferences>();
-				component.GetReference<LocText>("Title").SetText(pooledList[i].title);
+				LocText reference = component.GetReference<LocText>("Title");
+				reference.SetText(pooledList[i].title);
 				Texture2D previewImage = pooledList[i].previewImage;
 				if (previewImage != null)
 				{
-					component.GetReference<Image>("Image").sprite = Sprite.Create(previewImage, new Rect(Vector2.zero, new Vector2(previewImage.width, previewImage.height)), Vector2.one * 0.5f);
+					Image reference2 = component.GetReference<Image>("Image");
+					reference2.sprite = Sprite.Create(previewImage, new Rect(Vector2.zero, new Vector2(previewImage.width, previewImage.height)), Vector2.one * 0.5f);
 				}
 				KButton component2 = gameObject.GetComponent<KButton>();
 				int index = i;
@@ -132,7 +135,8 @@ public class ScenariosMenu : KModalScreen, SteamUGCService.IClient
 
 	private ConfirmDialogScreen GetConfirmDialog()
 	{
-		KScreen component = KScreenManager.AddChild(base.transform.parent.gameObject, ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject).GetComponent<KScreen>();
+		GameObject gameObject = KScreenManager.AddChild(base.transform.parent.gameObject, ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject);
+		KScreen component = gameObject.GetComponent<KScreen>();
 		component.Activate();
 		return component.GetComponent<ConfirmDialogScreen>();
 	}

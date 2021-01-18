@@ -102,7 +102,7 @@ public class BuildMenuBuildingsScreen : KIconToggleMenu
 		foreach (BuildMenu.BuildingInfo building_info in building_infos)
 		{
 			BuildingDef def = Assets.GetBuildingDef(building_info.id);
-			if (def.ShowInBuildMenu && !def.Deprecated && (!def.DebugOnly || Game.Instance.DebugOnlyBuildingsAllowed))
+			if (def.ShouldShowInBuildMenu() && def.IsAvailable())
 			{
 				ToggleInfo item = new ToggleInfo(def.Name, new UserData(def, PlanScreen.RequirementsState.Tech), def.HotKey, () => def.GetUISprite());
 				list.Add(item);
@@ -160,10 +160,11 @@ public class BuildMenuBuildingsScreen : KIconToggleMenu
 		{
 			return;
 		}
-		BuildingDef def = (info.userData as UserData).def;
+		UserData userData = info.userData as UserData;
+		BuildingDef def = userData.def;
 		TechItem techItem = Db.Get().TechItems.TryGet(def.PrefabID);
 		bool flag = DebugHandler.InstantBuildMode || techItem == null || techItem.IsComplete();
-		bool flag2 = flag || techItem == null || techItem.parentTech.ArePrerequisitesComplete();
+		bool flag2 = flag || techItem == null || techItem.ParentTech.ArePrerequisitesComplete();
 		KToggle toggle = info.toggle;
 		if (toggle.gameObject.activeSelf != flag2)
 		{
@@ -237,7 +238,7 @@ public class BuildMenuBuildingsScreen : KIconToggleMenu
 		{
 			fgImage.sprite = Overlay_NeedTech;
 			fgImage.gameObject.SetActive(value: true);
-			string newString = string.Format(UI.PRODUCTINFO_REQUIRESRESEARCHDESC, techItem.parentTech.Name);
+			string newString = string.Format(UI.PRODUCTINFO_REQUIRESRESEARCHDESC, techItem.ParentTech.Name);
 			component.AddMultiStringTooltip("\n", buildingToolTipSettings.ResearchRequirement);
 			component.AddMultiStringTooltip(newString, buildingToolTipSettings.ResearchRequirement);
 		}
@@ -293,7 +294,8 @@ public class BuildMenuBuildingsScreen : KIconToggleMenu
 	private void OnSelectBuilding(BuildingDef def)
 	{
 		PlanScreen.RequirementsState requirementsState = BuildMenu.Instance.BuildableState(def);
-		if ((uint)(requirementsState - 1) <= 1u)
+		PlanScreen.RequirementsState requirementsState2 = requirementsState;
+		if ((uint)(requirementsState2 - 2) <= 1u)
 		{
 			if (def != selectedBuilding)
 			{
@@ -330,7 +332,7 @@ public class BuildMenuBuildingsScreen : KIconToggleMenu
 			RefreshToggle(item);
 			UserData userData = item.userData as UserData;
 			BuildingDef def = userData.def;
-			if (def.Deprecated)
+			if (!def.IsAvailable())
 			{
 				continue;
 			}
@@ -371,9 +373,8 @@ public class BuildMenuBuildingsScreen : KIconToggleMenu
 
 	public override void OnKeyDown(KButtonEvent e)
 	{
-		if (mouseOver && base.ConsumeMouseScroll && !e.TryConsume(Action.ZoomIn))
+		if (!mouseOver || !base.ConsumeMouseScroll || e.TryConsume(Action.ZoomIn) || e.TryConsume(Action.ZoomOut))
 		{
-			e.TryConsume(Action.ZoomOut);
 		}
 		if (!HasFocus)
 		{

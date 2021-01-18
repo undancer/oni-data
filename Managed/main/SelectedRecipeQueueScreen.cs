@@ -23,22 +23,11 @@ public class SelectedRecipeQueueScreen : KScreen
 
 	public GameObject InfiniteIcon;
 
-	private ComplexFabricator target;
+	private ComplexFabricator target = null;
 
-	private ComplexFabricatorSideScreen ownerScreen;
+	private ComplexFabricatorSideScreen ownerScreen = null;
 
 	private ComplexRecipe selectedRecipe;
-
-	private bool isEditing;
-
-	public override float GetSortKey()
-	{
-		if (isEditing)
-		{
-			return 100f;
-		}
-		return base.GetSortKey();
-	}
 
 	protected override void OnSpawn()
 	{
@@ -71,14 +60,14 @@ public class SelectedRecipeQueueScreen : KScreen
 		};
 		QueueCount.onEndEdit += delegate
 		{
-			isEditing = false;
+			base.isEditing = false;
 			target.SetRecipeQueueCount(selectedRecipe, Mathf.RoundToInt(QueueCount.currentValue));
 			RefreshQueueCountDisplay();
 			ownerScreen.RefreshQueueCountDisplayForRecipe(selectedRecipe, target);
 		};
 		QueueCount.onStartEdit += delegate
 		{
-			isEditing = true;
+			base.isEditing = true;
 			KScreenManager.Instance.RefreshStack();
 		};
 	}
@@ -170,22 +159,11 @@ public class SelectedRecipeQueueScreen : KScreen
 		{
 			GameObject prefab = Assets.GetPrefab(recipeElement.material);
 			string formattedByTag = GameUtil.GetFormattedByTag(recipeElement.material, recipeElement.amount);
-			string formattedByTag2 = GameUtil.GetFormattedByTag(recipeElement.material, WorldInventory.Instance.GetAmount(recipeElement.material));
-			string text = ((WorldInventory.Instance.GetAmount(recipeElement.material) >= recipeElement.amount) ? string.Format(UI.UISIDESCREENS.FABRICATORSIDESCREEN.RECIPERQUIREMENT, prefab.GetProperName(), formattedByTag, formattedByTag2) : ("<color=#F44A47>" + string.Format(UI.UISIDESCREENS.FABRICATORSIDESCREEN.RECIPERQUIREMENT, prefab.GetProperName(), formattedByTag, formattedByTag2) + "</color>"));
+			float amount = target.GetMyWorld().worldInventory.GetAmount(recipeElement.material, includeRelatedWorlds: true);
+			string formattedByTag2 = GameUtil.GetFormattedByTag(recipeElement.material, amount);
+			string text = ((amount >= recipeElement.amount) ? string.Format(UI.UISIDESCREENS.FABRICATORSIDESCREEN.RECIPERQUIREMENT, prefab.GetProperName(), formattedByTag, formattedByTag2) : ("<color=#F44A47>" + string.Format(UI.UISIDESCREENS.FABRICATORSIDESCREEN.RECIPERQUIREMENT, prefab.GetProperName(), formattedByTag, formattedByTag2) + "</color>"));
 			list.Add(new Descriptor(text, text, Descriptor.DescriptorType.Requirement));
 		}
 		return list;
-	}
-
-	public override void OnKeyDown(KButtonEvent e)
-	{
-		if (isEditing)
-		{
-			e.Consumed = true;
-		}
-		else
-		{
-			base.OnKeyDown(e);
-		}
 	}
 }

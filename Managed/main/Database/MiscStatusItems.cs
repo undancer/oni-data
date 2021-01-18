@@ -38,11 +38,11 @@ namespace Database
 
 		public StatusItem TreeFilterableTags;
 
-		public StatusItem OxyRockInactive;
+		public StatusItem SublimationOverpressure;
 
-		public StatusItem OxyRockEmitting;
+		public StatusItem SublimationEmitting;
 
-		public StatusItem OxyRockBlocked;
+		public StatusItem SublimationBlocked;
 
 		public StatusItem BuriedItem;
 
@@ -88,6 +88,8 @@ namespace Database
 
 		public StatusItem Space;
 
+		public StatusItem HighEnergyParticleCount;
+
 		public MiscStatusItems(ResourceSet parent)
 			: base("MiscStatusItems", parent)
 		{
@@ -124,15 +126,15 @@ namespace Database
 			OreMass = CreateStatusItem("OreMass", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			OreMass.resolveStringCallback = delegate(string str, object data)
 			{
-				GameObject gameObject2 = (GameObject)data;
-				str = str.Replace("{Mass}", GameUtil.GetFormattedMass(gameObject2.GetComponent<PrimaryElement>().Mass));
+				GameObject gameObject3 = (GameObject)data;
+				str = str.Replace("{Mass}", GameUtil.GetFormattedMass(gameObject3.GetComponent<PrimaryElement>().Mass));
 				return str;
 			};
 			OreTemp = CreateStatusItem("OreTemp", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			OreTemp.resolveStringCallback = delegate(string str, object data)
 			{
-				GameObject gameObject = (GameObject)data;
-				str = str.Replace("{Temp}", GameUtil.GetFormattedTemperature(gameObject.GetComponent<PrimaryElement>().Temperature));
+				GameObject gameObject2 = (GameObject)data;
+				str = str.Replace("{Temp}", GameUtil.GetFormattedTemperature(gameObject2.GetComponent<PrimaryElement>().Temperature));
 				return str;
 			};
 			ElementalState = CreateStatusItem("ElementalState", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
@@ -152,28 +154,28 @@ namespace Database
 			ElementalTemperature = CreateStatusItem("ElementalTemperature", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			ElementalTemperature.resolveStringCallback = delegate(string str, object data)
 			{
-				CellSelectionObject cellSelectionObject5 = (CellSelectionObject)data;
-				str = str.Replace("{Temp}", GameUtil.GetFormattedTemperature(cellSelectionObject5.temperature));
+				CellSelectionObject cellSelectionObject7 = (CellSelectionObject)data;
+				str = str.Replace("{Temp}", GameUtil.GetFormattedTemperature(cellSelectionObject7.temperature));
 				return str;
 			};
 			ElementalMass = CreateStatusItem("ElementalMass", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			ElementalMass.resolveStringCallback = delegate(string str, object data)
 			{
-				CellSelectionObject cellSelectionObject4 = (CellSelectionObject)data;
-				str = str.Replace("{Mass}", GameUtil.GetFormattedMass(cellSelectionObject4.Mass));
+				CellSelectionObject cellSelectionObject6 = (CellSelectionObject)data;
+				str = str.Replace("{Mass}", GameUtil.GetFormattedMass(cellSelectionObject6.Mass));
 				return str;
 			};
 			ElementalDisease = CreateStatusItem("ElementalDisease", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			ElementalDisease.resolveStringCallback = delegate(string str, object data)
 			{
-				CellSelectionObject cellSelectionObject3 = (CellSelectionObject)data;
-				str = str.Replace("{Disease}", GameUtil.GetFormattedDisease(cellSelectionObject3.diseaseIdx, cellSelectionObject3.diseaseCount));
+				CellSelectionObject cellSelectionObject5 = (CellSelectionObject)data;
+				str = str.Replace("{Disease}", GameUtil.GetFormattedDisease(cellSelectionObject5.diseaseIdx, cellSelectionObject5.diseaseCount));
 				return str;
 			};
 			ElementalDisease.resolveTooltipCallback = delegate(string str, object data)
 			{
-				CellSelectionObject cellSelectionObject2 = (CellSelectionObject)data;
-				str = str.Replace("{Disease}", GameUtil.GetFormattedDisease(cellSelectionObject2.diseaseIdx, cellSelectionObject2.diseaseCount, color: true));
+				CellSelectionObject cellSelectionObject4 = (CellSelectionObject)data;
+				str = str.Replace("{Disease}", GameUtil.GetFormattedDisease(cellSelectionObject4.diseaseIdx, cellSelectionObject4.diseaseCount, color: true));
 				return str;
 			};
 			TreeFilterableTags = CreateStatusItem("TreeFilterableTags", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
@@ -183,30 +185,44 @@ namespace Database
 				str = str.Replace("{Tags}", treeFilterable.GetTagsAsStatus());
 				return str;
 			};
-			OxyRockEmitting = CreateStatusItem("OxyRockEmitting", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
-			OxyRockEmitting.resolveStringCallback = delegate(string str, object data)
+			SublimationEmitting = CreateStatusItem("SublimationEmitting", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			SublimationEmitting.resolveStringCallback = delegate(string str, object data)
+			{
+				CellSelectionObject cellSelectionObject3 = (CellSelectionObject)data;
+				if (cellSelectionObject3.element.sublimateId == (SimHashes)0)
+				{
+					return str;
+				}
+				str = str.Replace("{Element}", GameUtil.GetElementNameByElementHash(cellSelectionObject3.element.sublimateId));
+				str = str.Replace("{FlowRate}", GameUtil.GetFormattedMass(cellSelectionObject3.FlowRate, GameUtil.TimeSlice.PerSecond));
+				return str;
+			};
+			SublimationEmitting.resolveTooltipCallback = SublimationEmitting.resolveStringCallback;
+			SublimationBlocked = CreateStatusItem("SublimationBlocked", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			SublimationBlocked.resolveStringCallback = delegate(string str, object data)
+			{
+				CellSelectionObject cellSelectionObject2 = (CellSelectionObject)data;
+				if (cellSelectionObject2.element.sublimateId == (SimHashes)0)
+				{
+					return str;
+				}
+				str = str.Replace("{Element}", cellSelectionObject2.element.name);
+				str = str.Replace("{SubElement}", GameUtil.GetElementNameByElementHash(cellSelectionObject2.element.sublimateId));
+				return str;
+			};
+			SublimationBlocked.resolveTooltipCallback = SublimationBlocked.resolveStringCallback;
+			SublimationOverpressure = CreateStatusItem("SublimationOverpressure", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			SublimationOverpressure.resolveTooltipCallback = delegate(string str, object data)
 			{
 				CellSelectionObject cellSelectionObject = (CellSelectionObject)data;
-				str = str.Replace("{FlowRate}", GameUtil.GetFormattedMass(cellSelectionObject.FlowRate, GameUtil.TimeSlice.PerSecond));
+				if (cellSelectionObject.element.sublimateId == (SimHashes)0)
+				{
+					return str;
+				}
+				str = str.Replace("{Element}", cellSelectionObject.element.name);
+				str = str.Replace("{SubElement}", GameUtil.GetElementNameByElementHash(cellSelectionObject.element.sublimateId));
 				return str;
 			};
-			OxyRockBlocked = CreateStatusItem("OxyRockBlocked", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
-			OxyRockBlocked.resolveStringCallback = delegate(string str, object data)
-			{
-				GameUtil.IsEmissionBlocked(((CellSelectionObject)data).SelectedCell, out var all_not_gaseous, out var all_over_pressure);
-				string newValue = null;
-				if (all_not_gaseous)
-				{
-					newValue = MISC.STATUSITEMS.OXYROCK.NEIGHBORSBLOCKED.NAME;
-				}
-				else if (all_over_pressure)
-				{
-					newValue = MISC.STATUSITEMS.OXYROCK.OVERPRESSURE.NAME;
-				}
-				str = str.Replace("{BlockedString}", newValue);
-				return str;
-			};
-			OxyRockInactive = CreateStatusItem("OxyRockInactive", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			Space = CreateStatusItem("Space", "MISC", "", StatusItem.IconType.Exclamation, NotificationType.Bad, allow_multiples: false, OverlayModes.None.ID);
 			BuriedItem = CreateStatusItem("BuriedItem", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			SpoutOverPressure = CreateStatusItem("SpoutOverPressure", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
@@ -269,6 +285,13 @@ namespace Database
 			RegionIsBlocked = CreateStatusItem("RegionIsBlocked", "MISC", "status_item_solids_blocking", StatusItem.IconType.Custom, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			AwaitingStudy = CreateStatusItem("AwaitingStudy", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			Studied = CreateStatusItem("Studied", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			HighEnergyParticleCount = CreateStatusItem("HighEnergyParticleCount", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			HighEnergyParticleCount.resolveStringCallback = delegate(string str, object data)
+			{
+				GameObject gameObject = (GameObject)data;
+				str = GameUtil.GetFormattedHighEnergyParticles(gameObject.GetComponent<HighEnergyParticle>().payload);
+				return str;
+			};
 		}
 	}
 }

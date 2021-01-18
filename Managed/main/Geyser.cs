@@ -35,7 +35,7 @@ public class Geyser : StateMachineComponent<Geyser.StatesInstance>, IGameObjectE
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = idle;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			root.DefaultState(idle).Enter(delegate(StatesInstance smi)
 			{
 				smi.master.emitter.SetEmitting(emitting: false);
@@ -108,56 +108,48 @@ public class Geyser : StateMachineComponent<Geyser.StatesInstance>, IGameObjectE
 	{
 		float num = onDuration + offDuration;
 		float num2 = time % num;
-		float result;
+		float num3;
 		Phase phase;
 		if (num2 < onDuration)
 		{
-			result = Mathf.Max(onDuration - num2, 0f);
+			num3 = Mathf.Max(onDuration - num2, 0f);
 			phase = Phase.On;
 		}
 		else
 		{
-			result = Mathf.Max(onDuration + offDuration - num2, 0f);
+			num3 = Mathf.Max(onDuration + offDuration - num2, 0f);
 			phase = Phase.Off;
 		}
-		if (expectedPhase != Phase.Any && phase != expectedPhase)
-		{
-			return 0f;
-		}
-		return result;
+		return (expectedPhase == Phase.Any || phase == expectedPhase) ? num3 : 0f;
 	}
 
 	public float RemainingPhaseTimeFrom4(float onDuration, float pstDuration, float offDuration, float preDuration, float time, Phase expectedPhase)
 	{
 		float num = onDuration + pstDuration + offDuration + preDuration;
 		float num2 = time % num;
-		float result;
+		float num3;
 		Phase phase;
 		if (num2 < onDuration)
 		{
-			result = onDuration - num2;
+			num3 = onDuration - num2;
 			phase = Phase.On;
 		}
 		else if (num2 < onDuration + pstDuration)
 		{
-			result = onDuration + pstDuration - num2;
+			num3 = onDuration + pstDuration - num2;
 			phase = Phase.Pst;
 		}
 		else if (num2 < onDuration + pstDuration + offDuration)
 		{
-			result = onDuration + pstDuration + offDuration - num2;
+			num3 = onDuration + pstDuration + offDuration - num2;
 			phase = Phase.Off;
 		}
 		else
 		{
-			result = onDuration + pstDuration + offDuration + preDuration - num2;
+			num3 = onDuration + pstDuration + offDuration + preDuration - num2;
 			phase = Phase.Pre;
 		}
-		if (expectedPhase != Phase.Any && phase != expectedPhase)
-		{
-			return 0f;
-		}
-		return result;
+		return (expectedPhase == Phase.Any || phase == expectedPhase) ? num3 : 0f;
 	}
 
 	private float IdleDuration()
@@ -223,7 +215,8 @@ public class Geyser : StateMachineComponent<Geyser.StatesInstance>, IGameObjectE
 	public List<Descriptor> GetDescriptors(GameObject go)
 	{
 		List<Descriptor> list = new List<Descriptor>();
-		string arg = ElementLoader.FindElementByHash(configuration.GetElement()).tag.ProperName();
+		Element element = ElementLoader.FindElementByHash(configuration.GetElement());
+		string arg = element.tag.ProperName();
 		list.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.GEYSER_PRODUCTION, arg, GameUtil.GetFormattedMass(configuration.GetEmitRate(), GameUtil.TimeSlice.PerSecond), GameUtil.GetFormattedTemperature(configuration.GetTemperature())), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.GEYSER_PRODUCTION, configuration.GetElement().ToString(), GameUtil.GetFormattedMass(configuration.GetEmitRate(), GameUtil.TimeSlice.PerSecond), GameUtil.GetFormattedTemperature(configuration.GetTemperature()))));
 		if (configuration.GetDiseaseIdx() != byte.MaxValue)
 		{

@@ -33,9 +33,7 @@ public class FilteredStorage
 
 	private bool hasMeter = true;
 
-	private bool useLogicMeter;
-
-	private static StatusItem capacityStatusItem;
+	private bool useLogicMeter = false;
 
 	private static StatusItem noFilterStatusItem;
 
@@ -61,30 +59,11 @@ public class FilteredStorage
 		treeFilterable.OnFilterChanged = (Action<Tag[]>)Delegate.Combine(treeFilterable.OnFilterChanged, new Action<Tag[]>(OnFilterChanged));
 		storage = root.GetComponent<Storage>();
 		storage.Subscribe(644822890, OnOnlyFetchMarkedItemsSettingChanged);
-		if (capacityStatusItem == null)
+		storage.Subscribe(-1852328367, OnFunctionalChanged);
+		if (noFilterStatusItem == null)
 		{
-			capacityStatusItem = new StatusItem("StorageLocker", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
-			capacityStatusItem.resolveStringCallback = delegate(string str, object data)
-			{
-				FilteredStorage filteredStorage = (FilteredStorage)data;
-				float amountStored = filteredStorage.GetAmountStored();
-				float num = filteredStorage.storage.capacityKg;
-				amountStored = ((!(amountStored > num - filteredStorage.storage.storageFullMargin) || !(amountStored < num)) ? Mathf.Floor(amountStored) : num);
-				string newValue = Util.FormatWholeNumber(amountStored);
-				IUserControlledCapacity component = filteredStorage.root.GetComponent<IUserControlledCapacity>();
-				if (component != null)
-				{
-					num = Mathf.Min(component.UserMaxCapacity, num);
-				}
-				string newValue2 = Util.FormatWholeNumber(num);
-				str = str.Replace("{Stored}", newValue);
-				str = str.Replace("{Capacity}", newValue2);
-				str = ((component == null) ? str.Replace("{Units}", GameUtil.GetCurrentMassUnit()) : str.Replace("{Units}", component.CapacityUnits));
-				return str;
-			};
 			noFilterStatusItem = new StatusItem("NoStorageFilterSet", "BUILDING", "status_item_no_filter_set", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 		}
-		root.GetComponent<KSelectable>().SetStatusItem(Db.Get().StatusItemCategories.Main, capacityStatusItem, this);
 	}
 
 	private void OnOnlyFetchMarkedItemsSettingChanged(object data)
@@ -153,6 +132,11 @@ public class FilteredStorage
 		UpdateMeter();
 	}
 
+	private void OnFunctionalChanged(object data)
+	{
+		OnFilterChanged(filterable.GetTags());
+	}
+
 	private void UpdateMeter()
 	{
 		float maxCapacityMinusStorageMargin = GetMaxCapacityMinusStorageMargin();
@@ -171,11 +155,7 @@ public class FilteredStorage
 		{
 			meter.SetPositionPercent(num);
 		}
-		if (!(num >= 1f))
-		{
-			return false;
-		}
-		return true;
+		return (num >= 1f) ? true : false;
 	}
 
 	private void OnFetchComplete()
@@ -208,6 +188,12 @@ public class FilteredStorage
 		return result;
 	}
 
+	private bool IsFunctional()
+	{
+		Operational component = storage.GetComponent<Operational>();
+		return component == null || component.IsFunctional;
+	}
+
 	private void OnFilterChanged(Tag[] tags)
 	{
 		KBatchedAnimController component = root.GetComponent<KBatchedAnimController>();
@@ -221,7 +207,7 @@ public class FilteredStorage
 		float maxCapacityMinusStorageMargin = GetMaxCapacityMinusStorageMargin();
 		float amountStored = GetAmountStored();
 		float num = Mathf.Max(0f, maxCapacityMinusStorageMargin - amountStored);
-		if (num > 0f && flag)
+		if (num > 0f && flag && IsFunctional())
 		{
 			num = Mathf.Max(0f, GetMaxCapacity() - amountStored);
 			fetchList = new FetchList2(storage, choreType);

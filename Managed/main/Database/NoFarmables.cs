@@ -1,9 +1,8 @@
-using System.IO;
 using STRINGS;
 
 namespace Database
 {
-	public class NoFarmables : ColonyAchievementRequirement
+	public class NoFarmables : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		public override bool Success()
 		{
@@ -14,9 +13,9 @@ namespace Database
 					continue;
 				}
 				Tag[] possibleDepositObjectTags = item.possibleDepositObjectTags;
-				for (int i = 0; i < possibleDepositObjectTags.Length; i++)
+				foreach (Tag a in possibleDepositObjectTags)
 				{
-					if (possibleDepositObjectTags[i] != GameTags.DecorSeed)
+					if (a != GameTags.DecorSeed)
 					{
 						return false;
 					}
@@ -30,11 +29,7 @@ namespace Database
 			return !Success();
 		}
 
-		public override void Deserialize(IReader reader)
-		{
-		}
-
-		public override void Serialize(BinaryWriter writer)
+		public void Deserialize(IReader reader)
 		{
 		}
 

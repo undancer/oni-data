@@ -81,8 +81,13 @@ public class VitalsTableScreen : TableScreen
 	protected void on_tooltip_stress(IAssignableIdentity minion, GameObject widget_go, ToolTip tooltip)
 	{
 		tooltip.ClearMultiStringTooltip();
-		switch (GetWidgetRow(widget_go).rowType)
+		TableRow widgetRow = GetWidgetRow(widget_go);
+		switch (widgetRow.rowType)
 		{
+		case TableRow.RowType.Default:
+			break;
+		case TableRow.RowType.Header:
+			break;
 		case TableRow.RowType.Minion:
 		{
 			MinionIdentity minionIdentity = minion as MinionIdentity;
@@ -95,21 +100,20 @@ public class VitalsTableScreen : TableScreen
 		case TableRow.RowType.StoredMinon:
 			StoredMinionTooltip(minion, tooltip);
 			break;
-		case TableRow.RowType.Header:
-		case TableRow.RowType.Default:
-			break;
 		}
 	}
 
 	protected void on_tooltip_sort_stress(IAssignableIdentity minion, GameObject widget_go, ToolTip tooltip)
 	{
 		tooltip.ClearMultiStringTooltip();
-		switch (GetWidgetRow(widget_go).rowType)
+		TableRow widgetRow = GetWidgetRow(widget_go);
+		switch (widgetRow.rowType)
 		{
+		case TableRow.RowType.Default:
+			break;
 		case TableRow.RowType.Header:
 			tooltip.AddMultiStringTooltip(UI.TABLESCREENS.COLUMN_SORT_BY_STRESS, null);
 			break;
-		case TableRow.RowType.Default:
 		case TableRow.RowType.Minion:
 		case TableRow.RowType.StoredMinon:
 			break;
@@ -172,8 +176,13 @@ public class VitalsTableScreen : TableScreen
 	protected void on_tooltip_qualityoflife_expectations(IAssignableIdentity identity, GameObject widget_go, ToolTip tooltip)
 	{
 		tooltip.ClearMultiStringTooltip();
-		switch (GetWidgetRow(widget_go).rowType)
+		TableRow widgetRow = GetWidgetRow(widget_go);
+		switch (widgetRow.rowType)
 		{
+		case TableRow.RowType.Default:
+			break;
+		case TableRow.RowType.Header:
+			break;
 		case TableRow.RowType.Minion:
 		{
 			MinionIdentity minionIdentity = identity as MinionIdentity;
@@ -186,21 +195,20 @@ public class VitalsTableScreen : TableScreen
 		case TableRow.RowType.StoredMinon:
 			StoredMinionTooltip(identity, tooltip);
 			break;
-		case TableRow.RowType.Header:
-		case TableRow.RowType.Default:
-			break;
 		}
 	}
 
 	protected void on_tooltip_sort_qualityoflife_expectations(IAssignableIdentity minion, GameObject widget_go, ToolTip tooltip)
 	{
 		tooltip.ClearMultiStringTooltip();
-		switch (GetWidgetRow(widget_go).rowType)
+		TableRow widgetRow = GetWidgetRow(widget_go);
+		switch (widgetRow.rowType)
 		{
+		case TableRow.RowType.Default:
+			break;
 		case TableRow.RowType.Header:
 			tooltip.AddMultiStringTooltip(UI.TABLESCREENS.COLUMN_SORT_BY_EXPECTATIONS, null);
 			break;
-		case TableRow.RowType.Default:
 		case TableRow.RowType.Minion:
 		case TableRow.RowType.StoredMinon:
 			break;
@@ -270,8 +278,13 @@ public class VitalsTableScreen : TableScreen
 	protected void on_tooltip_health(IAssignableIdentity identity, GameObject widget_go, ToolTip tooltip)
 	{
 		tooltip.ClearMultiStringTooltip();
-		switch (GetWidgetRow(widget_go).rowType)
+		TableRow widgetRow = GetWidgetRow(widget_go);
+		switch (widgetRow.rowType)
 		{
+		case TableRow.RowType.Default:
+			break;
+		case TableRow.RowType.Header:
+			break;
 		case TableRow.RowType.Minion:
 		{
 			MinionIdentity minionIdentity = identity as MinionIdentity;
@@ -284,21 +297,20 @@ public class VitalsTableScreen : TableScreen
 		case TableRow.RowType.StoredMinon:
 			StoredMinionTooltip(identity, tooltip);
 			break;
-		case TableRow.RowType.Header:
-		case TableRow.RowType.Default:
-			break;
 		}
 	}
 
 	protected void on_tooltip_sort_health(IAssignableIdentity minion, GameObject widget_go, ToolTip tooltip)
 	{
 		tooltip.ClearMultiStringTooltip();
-		switch (GetWidgetRow(widget_go).rowType)
+		TableRow widgetRow = GetWidgetRow(widget_go);
+		switch (widgetRow.rowType)
 		{
+		case TableRow.RowType.Default:
+			break;
 		case TableRow.RowType.Header:
 			tooltip.AddMultiStringTooltip(UI.TABLESCREENS.COLUMN_SORT_BY_HITPOINTS, null);
 			break;
-		case TableRow.RowType.Default:
 		case TableRow.RowType.Minion:
 		case TableRow.RowType.StoredMinon:
 			break;
@@ -338,8 +350,9 @@ public class VitalsTableScreen : TableScreen
 						{
 							seconds = Mathf.Min(item.GetInfectedTimeRemaining());
 						}
-						return text + string.Format(UI.VITALSSCREEN.MULTIPLE_SICKNESSES, GameUtil.GetFormattedCycles(seconds));
+						text += string.Format(UI.VITALSSCREEN.MULTIPLE_SICKNESSES, GameUtil.GetFormattedCycles(seconds));
 					}
+					else
 					{
 						foreach (SicknessInstance item2 in sicknesses)
 						{
@@ -349,8 +362,8 @@ public class VitalsTableScreen : TableScreen
 							}
 							text += string.Format(UI.VITALSSCREEN.SICKNESS_REMAINING, item2.modifier.Name, GameUtil.GetFormattedCycles(item2.GetInfectedTimeRemaining()));
 						}
-						return text;
 					}
+					return text;
 				}
 				return UI.VITALSSCREEN.NO_SICKNESSES;
 			}
@@ -371,8 +384,13 @@ public class VitalsTableScreen : TableScreen
 	protected void on_tooltip_sicknesses(IAssignableIdentity minion, GameObject widget_go, ToolTip tooltip)
 	{
 		tooltip.ClearMultiStringTooltip();
-		switch (GetWidgetRow(widget_go).rowType)
+		TableRow widgetRow = GetWidgetRow(widget_go);
+		switch (widgetRow.rowType)
 		{
+		case TableRow.RowType.Default:
+			break;
+		case TableRow.RowType.Header:
+			break;
 		case TableRow.RowType.Minion:
 		{
 			MinionIdentity minionIdentity = minion as MinionIdentity;
@@ -400,21 +418,20 @@ public class VitalsTableScreen : TableScreen
 		case TableRow.RowType.StoredMinon:
 			StoredMinionTooltip(minion, tooltip);
 			break;
-		case TableRow.RowType.Header:
-		case TableRow.RowType.Default:
-			break;
 		}
 	}
 
 	protected void on_tooltip_sort_sicknesses(IAssignableIdentity minion, GameObject widget_go, ToolTip tooltip)
 	{
 		tooltip.ClearMultiStringTooltip();
-		switch (GetWidgetRow(widget_go).rowType)
+		TableRow widgetRow = GetWidgetRow(widget_go);
+		switch (widgetRow.rowType)
 		{
+		case TableRow.RowType.Default:
+			break;
 		case TableRow.RowType.Header:
 			tooltip.AddMultiStringTooltip(UI.TABLESCREENS.COLUMN_SORT_BY_SICKNESSES, null);
 			break;
-		case TableRow.RowType.Default:
 		case TableRow.RowType.Minion:
 		case TableRow.RowType.StoredMinon:
 			break;
@@ -473,8 +490,13 @@ public class VitalsTableScreen : TableScreen
 	protected void on_tooltip_fullness(IAssignableIdentity identity, GameObject widget_go, ToolTip tooltip)
 	{
 		tooltip.ClearMultiStringTooltip();
-		switch (GetWidgetRow(widget_go).rowType)
+		TableRow widgetRow = GetWidgetRow(widget_go);
+		switch (widgetRow.rowType)
 		{
+		case TableRow.RowType.Default:
+			break;
+		case TableRow.RowType.Header:
+			break;
 		case TableRow.RowType.Minion:
 		{
 			MinionIdentity minionIdentity = identity as MinionIdentity;
@@ -487,21 +509,20 @@ public class VitalsTableScreen : TableScreen
 		case TableRow.RowType.StoredMinon:
 			StoredMinionTooltip(identity, tooltip);
 			break;
-		case TableRow.RowType.Header:
-		case TableRow.RowType.Default:
-			break;
 		}
 	}
 
 	protected void on_tooltip_sort_fullness(IAssignableIdentity minion, GameObject widget_go, ToolTip tooltip)
 	{
 		tooltip.ClearMultiStringTooltip();
-		switch (GetWidgetRow(widget_go).rowType)
+		TableRow widgetRow = GetWidgetRow(widget_go);
+		switch (widgetRow.rowType)
 		{
+		case TableRow.RowType.Default:
+			break;
 		case TableRow.RowType.Header:
 			tooltip.AddMultiStringTooltip(UI.TABLESCREENS.COLUMN_SORT_BY_FULLNESS, null);
 			break;
-		case TableRow.RowType.Default:
 		case TableRow.RowType.Minion:
 		case TableRow.RowType.StoredMinon:
 			break;
@@ -511,16 +532,19 @@ public class VitalsTableScreen : TableScreen
 	protected void on_tooltip_name(IAssignableIdentity minion, GameObject widget_go, ToolTip tooltip)
 	{
 		tooltip.ClearMultiStringTooltip();
-		switch (GetWidgetRow(widget_go).rowType)
+		TableRow widgetRow = GetWidgetRow(widget_go);
+		switch (widgetRow.rowType)
 		{
+		case TableRow.RowType.Default:
+			break;
+		case TableRow.RowType.Header:
+			break;
 		case TableRow.RowType.Minion:
 			if (minion != null)
 			{
 				tooltip.AddMultiStringTooltip(string.Format(UI.TABLESCREENS.GOTO_DUPLICANT_BUTTON, minion.GetProperName()), null);
 			}
 			break;
-		case TableRow.RowType.Header:
-		case TableRow.RowType.Default:
 		case TableRow.RowType.StoredMinon:
 			break;
 		}
@@ -559,7 +583,8 @@ public class VitalsTableScreen : TableScreen
 		TableRow widgetRow = GetWidgetRow(widget_go);
 		if (widgetRow.rowType == TableRow.RowType.Minion)
 		{
-			return GameUtil.GetFormattedCalories(RationsEatenToday(minion as MinionIdentity));
+			float calories = RationsEatenToday(minion as MinionIdentity);
+			return GameUtil.GetFormattedCalories(calories);
 		}
 		if (widgetRow.rowType == TableRow.RowType.StoredMinon)
 		{
@@ -591,8 +616,13 @@ public class VitalsTableScreen : TableScreen
 	protected void on_tooltip_eaten_today(IAssignableIdentity minion, GameObject widget_go, ToolTip tooltip)
 	{
 		tooltip.ClearMultiStringTooltip();
-		switch (GetWidgetRow(widget_go).rowType)
+		TableRow widgetRow = GetWidgetRow(widget_go);
+		switch (widgetRow.rowType)
 		{
+		case TableRow.RowType.Default:
+			break;
+		case TableRow.RowType.Header:
+			break;
 		case TableRow.RowType.Minion:
 			if (minion != null)
 			{
@@ -603,21 +633,20 @@ public class VitalsTableScreen : TableScreen
 		case TableRow.RowType.StoredMinon:
 			StoredMinionTooltip(minion, tooltip);
 			break;
-		case TableRow.RowType.Header:
-		case TableRow.RowType.Default:
-			break;
 		}
 	}
 
 	protected void on_tooltip_sort_eaten_today(IAssignableIdentity minion, GameObject widget_go, ToolTip tooltip)
 	{
 		tooltip.ClearMultiStringTooltip();
-		switch (GetWidgetRow(widget_go).rowType)
+		TableRow widgetRow = GetWidgetRow(widget_go);
+		switch (widgetRow.rowType)
 		{
+		case TableRow.RowType.Default:
+			break;
 		case TableRow.RowType.Header:
 			tooltip.AddMultiStringTooltip(UI.TABLESCREENS.COLUMN_SORT_BY_EATEN_TODAY, null);
 			break;
-		case TableRow.RowType.Default:
 		case TableRow.RowType.Minion:
 		case TableRow.RowType.StoredMinon:
 			break;

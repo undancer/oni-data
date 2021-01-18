@@ -21,11 +21,7 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			if (other is SteamInventoryUpdateHandle_t)
-			{
-				return this == (SteamInventoryUpdateHandle_t)other;
-			}
-			return false;
+			return other is SteamInventoryUpdateHandle_t && this == (SteamInventoryUpdateHandle_t)other;
 		}
 
 		public override int GetHashCode()

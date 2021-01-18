@@ -75,7 +75,8 @@ namespace Steamworks
 				int i = 0;
 				for (; i < strings.Length; i++)
 				{
-					Marshal.FreeHGlobal(strings[i]);
+					IntPtr hglobal = strings[i];
+					Marshal.FreeHGlobal(hglobal);
 				}
 				if (m_ptrStrings != IntPtr.Zero)
 				{

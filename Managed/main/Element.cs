@@ -20,6 +20,8 @@ public class Element : IComparable<Element>
 		TemperatureInsulated = 0x10
 	}
 
+	public const int INVALID_ID = 0;
+
 	public SimHashes id;
 
 	public Tag tag;
@@ -34,11 +36,11 @@ public class Element : IComparable<Element>
 
 	public float strength;
 
-	public float flow;
+	public float flow = 0f;
 
-	public float maxCompression;
+	public float maxCompression = 0f;
 
-	public float viscosity;
+	public float viscosity = 0f;
 
 	public float minHorizontalFlow = float.PositiveInfinity;
 
@@ -54,7 +56,7 @@ public class Element : IComparable<Element>
 
 	public State state;
 
-	public byte hardness;
+	public byte hardness = 0;
 
 	public float lowTemp;
 
@@ -70,11 +72,11 @@ public class Element : IComparable<Element>
 
 	public SimHashes highTempTransitionOreID = SimHashes.Vacuum;
 
-	public float highTempTransitionOreMassConversion;
+	public float highTempTransitionOreMassConversion = 0f;
 
 	public SimHashes lowTempTransitionOreID = SimHashes.Vacuum;
 
-	public float lowTempTransitionOreMassConversion;
+	public float lowTempTransitionOreMassConversion = 0f;
 
 	public SimHashes sublimateId;
 
@@ -82,7 +84,17 @@ public class Element : IComparable<Element>
 
 	public SpawnFXHashes sublimateFX;
 
+	public float sublimateRate;
+
+	public float sublimateEfficiency;
+
+	public float sublimateProbability;
+
+	public float offGasPercentage;
+
 	public float lightAbsorptionFactor;
+
+	public float radiationAbsorptionFactor;
 
 	public Sim.PhysicsData defaultValues;
 
@@ -94,11 +106,15 @@ public class Element : IComparable<Element>
 
 	public int buildMenuSort;
 
+	public ElementLoader.ElementComposition[] elementComposition;
+
 	public Tag[] oreTags = new Tag[0];
 
 	public List<AttributeModifier> attributeModifiers = new List<AttributeModifier>();
 
 	public bool disabled;
+
+	public string dlcId;
 
 	public const byte StateMask = 3;
 
@@ -114,17 +130,7 @@ public class Element : IComparable<Element>
 
 	public bool IsTemperatureInsulated => (state & State.TemperatureInsulated) != 0;
 
-	public bool HasTransitionUp
-	{
-		get
-		{
-			if (highTempTransitionTarget != 0 && highTempTransitionTarget != SimHashes.Unobtanium && highTempTransition != null)
-			{
-				return highTempTransition != this;
-			}
-			return false;
-		}
-	}
+	public bool HasTransitionUp => highTempTransitionTarget != 0 && highTempTransitionTarget != SimHashes.Unobtanium && highTempTransition != null && highTempTransition != this;
 
 	public string name
 	{
@@ -221,7 +227,6 @@ public class Element : IComparable<Element>
 				string formattedString = attributeModifier.GetFormattedString(null);
 				str = str + "\n" + string.Format(DUPLICANTS.MODIFIERS.MODIFIER_FORMAT, name, formattedString);
 			}
-			return str;
 		}
 		return str;
 	}

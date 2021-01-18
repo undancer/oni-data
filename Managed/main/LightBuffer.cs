@@ -92,32 +92,32 @@ public class LightBuffer : MonoBehaviour
 		Material.SetTexture("_PropertyWorldLight", WorldLight);
 		CircleMaterial.SetTexture("_PropertyWorldLight", WorldLight);
 		ConeMaterial.SetTexture("_PropertyWorldLight", WorldLight);
-		foreach (Light2D item in Components.Light2Ds.Items)
+		foreach (Light2D worldItem in Components.Light2Ds.GetWorldItems(ClusterManager.Instance.activeWorldId))
 		{
-			if (item == null || !item.enabled)
+			if (worldItem == null || !worldItem.enabled)
 			{
 				continue;
 			}
-			MaterialPropertyBlock materialPropertyBlock = item.materialPropertyBlock;
-			materialPropertyBlock.SetVector(ColorRangeTag, new Vector4(item.Color.r * item.IntensityAnimation, item.Color.g * item.IntensityAnimation, item.Color.b * item.IntensityAnimation, item.Range));
-			Vector3 position = item.transform.GetPosition();
-			position.x += item.Offset.x;
-			position.y += item.Offset.y;
+			MaterialPropertyBlock materialPropertyBlock = worldItem.materialPropertyBlock;
+			materialPropertyBlock.SetVector(ColorRangeTag, new Vector4(worldItem.Color.r * worldItem.IntensityAnimation, worldItem.Color.g * worldItem.IntensityAnimation, worldItem.Color.b * worldItem.IntensityAnimation, worldItem.Range));
+			Vector3 position = worldItem.transform.GetPosition();
+			position.x += worldItem.Offset.x;
+			position.y += worldItem.Offset.y;
 			materialPropertyBlock.SetVector(LightPosTag, new Vector4(position.x, position.y, 0f, 0f));
-			Vector2 normalized = item.Direction.normalized;
-			materialPropertyBlock.SetVector(LightDirectionAngleTag, new Vector4(normalized.x, normalized.y, 0f, item.Angle));
+			Vector2 normalized = worldItem.Direction.normalized;
+			materialPropertyBlock.SetVector(LightDirectionAngleTag, new Vector4(normalized.x, normalized.y, 0f, worldItem.Angle));
 			Graphics.DrawMesh(Mesh, Vector3.zero, Quaternion.identity, Material, Layer, Camera, 0, materialPropertyBlock, castShadows: false, receiveShadows: false);
-			if (item.drawOverlay)
+			if (worldItem.drawOverlay)
 			{
-				materialPropertyBlock.SetColor(TintColorTag, item.overlayColour);
-				switch (item.shape)
+				materialPropertyBlock.SetColor(TintColorTag, worldItem.overlayColour);
+				switch (worldItem.shape)
 				{
 				case LightShape.Circle:
-					matrix.SetTRS(position, Quaternion.identity, Vector3.one * item.Range);
+					matrix.SetTRS(position, Quaternion.identity, Vector3.one * worldItem.Range);
 					Graphics.DrawMesh(Mesh, matrix, CircleMaterial, Layer, Camera, 0, materialPropertyBlock);
 					break;
 				case LightShape.Cone:
-					matrix.SetTRS(position - Vector3.up * (item.Range * 0.5f), Quaternion.identity, new Vector3(1f, 0.5f, 1f) * item.Range);
+					matrix.SetTRS(position - Vector3.up * (worldItem.Range * 0.5f), Quaternion.identity, new Vector3(1f, 0.5f, 1f) * worldItem.Range);
 					Graphics.DrawMesh(Mesh, matrix, ConeMaterial, Layer, Camera, 0, materialPropertyBlock);
 					break;
 				}

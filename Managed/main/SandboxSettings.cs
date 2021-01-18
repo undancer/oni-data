@@ -37,7 +37,7 @@ public class SandboxSettings
 
 	public bool InstantBuild = true;
 
-	private bool hasRestoredElement;
+	private bool hasRestoredElement = false;
 
 	public Action<bool> OnChangeElement;
 
@@ -59,6 +59,8 @@ public class SandboxSettings
 
 	public System.Action OnChangeAdditiveTemperature;
 
+	public System.Action OnChangeAdditiveRadiation;
+
 	public const string KEY_SELECTED_ENTITY = "SandboxTools.SelectedEntity";
 
 	public const string KEY_SELECTED_ELEMENT = "SandboxTools.SelectedElement";
@@ -78,6 +80,8 @@ public class SandboxSettings
 	public const string KEY_TEMPERATURE = "SandbosTools.Temperature";
 
 	public const string KEY_TEMPERATURE_ADDITIVE = "SandbosTools.TemperatureAdditive";
+
+	public const string KEY_RADIATION_ADDITIVE = "SandbosTools.RadiationAdditive";
 
 	public void AddIntSetting(string prefsKey, Action<int> setAction, int defaultValue)
 	{
@@ -243,6 +247,11 @@ public class SandboxSettings
 			KPlayerPrefs.SetFloat("SandbosTools.TemperatureAdditive", val);
 			OnChangeAdditiveTemperature();
 		}, 5f);
+		AddFloatSetting("SandbosTools.RadiationAdditive", delegate(float val)
+		{
+			KPlayerPrefs.SetFloat("SandbosTools.RadiationAdditive", val);
+			OnChangeAdditiveRadiation();
+		}, 50f);
 	}
 
 	public void RestorePrefs()

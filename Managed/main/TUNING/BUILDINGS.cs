@@ -17,6 +17,16 @@ namespace TUNING
 			}
 		}
 
+		public class NUCLEAR_REACTOR
+		{
+			public class REACTOR_MASSES
+			{
+				public const float MIN = 1f;
+
+				public const float MAX = 10f;
+			}
+		}
+
 		public class OVERPRESSURE
 		{
 			public const float TIER0 = 1.8f;
@@ -136,6 +146,12 @@ namespace TUNING
 				1000f
 			};
 
+			public static float[] CARGO_MASS_SMALL = new float[2]
+			{
+				400f,
+				400f
+			};
+
 			public static float[] FUEL_TANK_DRY_MASS = new float[1]
 			{
 				100f
@@ -144,6 +160,16 @@ namespace TUNING
 			public static float[] FUEL_TANK_WET_MASS = new float[1]
 			{
 				900f
+			};
+
+			public static float[] FUEL_TANK_WET_MASS_SMALL = new float[1]
+			{
+				300f
+			};
+
+			public static float[] FUEL_TANK_WET_MASS_GAS = new float[1]
+			{
+				100f
 			};
 
 			public static float[] OXIDIZER_TANK_OXIDIZER_MASS = new float[1]
@@ -159,6 +185,44 @@ namespace TUNING
 			public static float[] ENGINE_MASS_LARGE = new float[1]
 			{
 				500f
+			};
+
+			public static float[] HOLLOW_TIER1 = new float[2]
+			{
+				200f,
+				100f
+			};
+
+			public static float[] HOLLOW_TIER2 = new float[2]
+			{
+				400f,
+				200f
+			};
+
+			public static float[] HOLLOW_TIER3 = new float[2]
+			{
+				800f,
+				400f
+			};
+
+			public static float[] DENSE_TIER0 = new float[1]
+			{
+				200f
+			};
+
+			public static float[] DENSE_TIER1 = new float[1]
+			{
+				500f
+			};
+
+			public static float[] DENSE_TIER2 = new float[1]
+			{
+				1000f
+			};
+
+			public static float[] DENSE_TIER3 = new float[1]
+			{
+				2000f
 			};
 		}
 
@@ -318,6 +382,8 @@ namespace TUNING
 
 		public class FABRICATION_TIME_SECONDS
 		{
+			public const float VERY_SHORT = 20f;
+
 			public const float SHORT = 40f;
 
 			public const float MODERATE = 80f;
@@ -602,6 +668,7 @@ namespace TUNING
 				"GlassTile",
 				"BunkerTile",
 				"CarpetTile",
+				"ExobaseHeadquarters",
 				"Door",
 				"ManualPressureDoor",
 				"PressureDoor",
@@ -618,6 +685,7 @@ namespace TUNING
 			new PlanScreen.PlanInfo(new HashedString("Oxygen"), hideIfNotResearched: false, new List<string>
 			{
 				"MineralDeoxidizer",
+				"SublimationStation",
 				"AlgaeHabitat",
 				"AirFilter",
 				"CO2Scrubber",
@@ -697,7 +765,8 @@ namespace TUNING
 				"LiquidLogicValve",
 				LiquidConduitElementSensorConfig.ID,
 				LiquidConduitDiseaseSensorConfig.ID,
-				LiquidConduitTemperatureSensorConfig.ID
+				LiquidConduitTemperatureSensorConfig.ID,
+				"ModularLaunchpadPortLiquid"
 			}),
 			new PlanScreen.PlanInfo(new HashedString("HVAC"), hideIfNotResearched: false, new List<string>
 			{
@@ -716,6 +785,7 @@ namespace TUNING
 				"GasLogicValve",
 				"GasBottler",
 				"BottleEmptierGas",
+				"ModularLaunchpadPortGas",
 				GasConduitElementSensorConfig.ID,
 				GasConduitDiseaseSensorConfig.ID,
 				GasConduitTemperatureSensorConfig.ID
@@ -730,12 +800,15 @@ namespace TUNING
 				"EthanolDistillery",
 				"RockCrusher",
 				"Kiln",
+				"SludgePress",
 				"MetalRefinery",
 				"GlassForge",
 				"OilRefinery",
 				"Polymerizer",
 				"OxyliteRefinery",
-				"SupermaterialRefinery"
+				"SupermaterialRefinery",
+				"NuclearReactor",
+				"UraniumCentrifuge"
 			}),
 			new PlanScreen.PlanInfo(new HashedString("Medical"), hideIfNotResearched: false, new List<string>
 			{
@@ -793,6 +866,7 @@ namespace TUNING
 			{
 				"ResearchCenter",
 				"AdvancedResearchCenter",
+				"NuclearResearchCenter",
 				"CosmicResearchCenter",
 				"Telescope",
 				"PowerControlStation",
@@ -801,12 +875,15 @@ namespace TUNING
 				"ShearingStation",
 				"RoleStation",
 				"ResetSkillsStation",
+				"OxygenMaskStation",
 				"ClothingFabricator",
 				"SuitFabricator",
 				"SuitMarker",
 				"SuitLocker",
 				"JetSuitMarker",
 				"JetSuitLocker",
+				"LeadSuitMarker",
+				"LeadSuitLocker",
 				"AstronautTrainingCenter"
 			}),
 			new PlanScreen.PlanInfo(new HashedString("Utilities"), hideIfNotResearched: true, new List<string>
@@ -873,10 +950,13 @@ namespace TUNING
 				SolidConduitDiseaseSensorConfig.ID,
 				SolidConduitElementSensorConfig.ID,
 				SolidConduitTemperatureSensorConfig.ID,
-				"AutoMiner"
+				"AutoMiner",
+				"ModularLaunchpadPortSolid"
 			}),
 			new PlanScreen.PlanInfo(new HashedString("Rocketry"), hideIfNotResearched: true, new List<string>
 			{
+				"ClusterTelescope",
+				"LaunchPad",
 				"Gantry",
 				"SteamEngine",
 				"KeroseneEngine",
@@ -891,7 +971,10 @@ namespace TUNING
 				"TouristModule",
 				"ResearchModule",
 				"SpecialCargoBay",
-				"HydrogenEngine"
+				"HydrogenEngine",
+				RocketControlStationConfig.ID,
+				"RailGun",
+				"RailGunPayloadOpener"
 			})
 		};
 
@@ -902,6 +985,7 @@ namespace TUNING
 			typeof(GourmetCookingStation),
 			typeof(RoleStation),
 			typeof(ResearchCenter),
+			typeof(NuclearResearchCenter),
 			typeof(LiquidCooledFan),
 			typeof(HandSanitizer),
 			typeof(HandSanitizer.Work),
@@ -963,6 +1047,12 @@ namespace TUNING
 			typeof(MechanicalSurfboard),
 			typeof(BottleEmptier),
 			typeof(AccessControl),
+			typeof(GammaRayOven),
+			typeof(RailGunPayload),
+			typeof(Reactor),
+			typeof(HighEnergyParticlePort),
+			typeof(LeadSuitTank),
+			typeof(ActiveParticleConsumer.Def),
 			typeof(FuelTank),
 			typeof(WaterCooler),
 			typeof(Edible),

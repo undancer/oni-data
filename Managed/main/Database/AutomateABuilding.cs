@@ -1,10 +1,9 @@
-using System.IO;
 using STRINGS;
 using UnityEngine;
 
 namespace Database
 {
-	public class AutomateABuilding : ColonyAchievementRequirement
+	public class AutomateABuilding : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		public override bool Success()
 		{
@@ -18,20 +17,28 @@ namespace Database
 				foreach (ILogicEventReceiver receiver in network.Receivers)
 				{
 					GameObject gameObject = Grid.Objects[receiver.GetLogicCell(), 1];
-					if (gameObject != null && !gameObject.GetComponent<KPrefabID>().HasTag(GameTags.TemplateBuilding))
+					if (gameObject != null)
 					{
-						flag = true;
-						break;
+						KPrefabID component = gameObject.GetComponent<KPrefabID>();
+						if (!component.HasTag(GameTags.TemplateBuilding))
+						{
+							flag = true;
+							break;
+						}
 					}
 				}
 				bool flag2 = false;
 				foreach (ILogicEventSender sender in network.Senders)
 				{
 					GameObject gameObject2 = Grid.Objects[sender.GetLogicCell(), 1];
-					if (gameObject2 != null && !gameObject2.GetComponent<KPrefabID>().HasTag(GameTags.TemplateBuilding))
+					if (gameObject2 != null)
 					{
-						flag2 = true;
-						break;
+						KPrefabID component2 = gameObject2.GetComponent<KPrefabID>();
+						if (!component2.HasTag(GameTags.TemplateBuilding))
+						{
+							flag2 = true;
+							break;
+						}
 					}
 				}
 				if (flag && flag2)
@@ -42,11 +49,7 @@ namespace Database
 			return false;
 		}
 
-		public override void Serialize(BinaryWriter writer)
-		{
-		}
-
-		public override void Deserialize(IReader reader)
+		public void Deserialize(IReader reader)
 		{
 		}
 

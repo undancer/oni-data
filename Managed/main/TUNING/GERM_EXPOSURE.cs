@@ -23,7 +23,7 @@ namespace TUNING
 
 		public const int MAX_EXPOSURE_TIER = 3;
 
-		public static ExposureType[] TYPES = new ExposureType[5]
+		public static ExposureType[] TYPES = new ExposureType[6]
 		{
 			new ExposureType
 			{
@@ -55,6 +55,17 @@ namespace TUNING
 			{
 				germ_id = "ZombieSpores",
 				sickness_id = "ZombieSickness",
+				exposure_threshold = 1,
+				base_resistance = -2,
+				excluded_effects = new List<string>
+				{
+					"ZombieSicknessRecovery"
+				}
+			},
+			new ExposureType
+			{
+				germ_id = "RadiationSickness",
+				sickness_id = "RadiationSickness",
 				exposure_threshold = 1,
 				base_resistance = -2,
 				excluded_effects = new List<string>

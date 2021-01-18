@@ -7,21 +7,269 @@ using UnityEngine;
 [SerializationConfig(MemberSerialization.OptIn)]
 public class LaunchableRocket : StateMachineComponent<LaunchableRocket.StatesInstance>
 {
+	public enum RegisterType
+	{
+		Spacecraft,
+		Clustercraft
+	}
+
 	public class StatesInstance : GameStateMachine<States, StatesInstance, LaunchableRocket, object>.GameInstance
 	{
+		private const float TAKEOFF_ACCEL_POWER = 4f;
+
+		private const float TAKEOFF_ACCEL_POWER_INV = 0.25f;
+
+		private const float WARMUP_TIME = 5f;
+
+		public const float ORBIT_HEIGHT = 50f;
+
+		private float landingDistancePartsTimeConstant;
+
+		private float partsLaunchSpeedRatio => base.master.parts.Count / 2;
+
+		public float DistanceAboveGround
+		{
+			get
+			{
+				return base.sm.distanceAboveGround.Get(this);
+			}
+			set
+			{
+				base.sm.distanceAboveGround.Set(value, this);
+			}
+		}
+
 		public StatesInstance(LaunchableRocket master)
 			: base(master)
 		{
 		}
 
-		public bool IsMissionState(Spacecraft.MissionState state)
+		public void SetTagOnModules(Tag tag, bool set)
 		{
-			return SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(base.master.GetComponent<LaunchConditionManager>()).state == state;
+			foreach (Ref<RocketModule> part in base.master.parts)
+			{
+				if (part != null)
+				{
+					if (set)
+					{
+						part.Get().AddTag(tag);
+					}
+					else
+					{
+						part.Get().RemoveTag(tag);
+					}
+				}
+			}
+			CraftModuleInterface craftInterface = GetComponent<RocketModule>().CraftInterface;
+			if (craftInterface != null)
+			{
+				if (set)
+				{
+					craftInterface.AddTag(tag);
+				}
+				else
+				{
+					craftInterface.RemoveTag(tag);
+				}
+			}
 		}
 
 		public void SetMissionState(Spacecraft.MissionState state)
 		{
-			SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(base.master.GetComponent<LaunchConditionManager>()).SetState(state);
+			Debug.Assert(!DlcManager.IsExpansion1Active());
+			Spacecraft spacecraftFromLaunchConditionManager = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(base.master.GetComponent<LaunchConditionManager>());
+			spacecraftFromLaunchConditionManager.SetState(state);
+		}
+
+		public Spacecraft.MissionState GetMissionState()
+		{
+			Debug.Assert(!DlcManager.IsExpansion1Active());
+			Spacecraft spacecraftFromLaunchConditionManager = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(base.master.GetComponent<LaunchConditionManager>());
+			return spacecraftFromLaunchConditionManager.state;
+		}
+
+		public bool IsGrounded()
+		{
+			if (base.smi.master.registerType == RegisterType.Spacecraft)
+			{
+				Spacecraft spacecraftFromLaunchConditionManager = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(base.master.GetComponent<LaunchConditionManager>());
+				return spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.WaitingToLand || spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.Landing || spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.Grounded;
+			}
+			Clustercraft component = base.smi.master.GetComponent<RocketModule>().CraftInterface.GetComponent<Clustercraft>();
+			return component.Status == Clustercraft.CraftStatus.Grounded;
+		}
+
+		public void SetupLaunch()
+		{
+			base.master.isLanding = false;
+			base.master.rocketSpeed = 0f;
+			base.sm.warmupTimeRemaining.Set(5f, this);
+			base.sm.distanceAboveGround.Set(0f, this);
+			if (base.master.soundSpeakerObject == null)
+			{
+				base.master.soundSpeakerObject = new GameObject("rocketSpeaker");
+				base.master.soundSpeakerObject.transform.SetParent(base.master.gameObject.transform);
+			}
+			foreach (GameObject engine in base.master.GetEngines())
+			{
+				engine.Trigger(-1358394196);
+			}
+			foreach (Ref<RocketModule> part in base.master.parts)
+			{
+				if (part != null)
+				{
+					base.master.takeOffLocation = Grid.PosToCell(base.master.gameObject);
+					part.Get().Trigger(-1277991738, base.master.gameObject);
+				}
+			}
+			CraftModuleInterface craftInterface = base.master.GetComponent<RocketModule>().CraftInterface;
+			if (craftInterface != null)
+			{
+				craftInterface.Trigger(-1277991738, base.master.gameObject);
+			}
+			if (base.master.registerType == RegisterType.Spacecraft)
+			{
+				SetMissionState(Spacecraft.MissionState.Launching);
+			}
+		}
+
+		public void LaunchLoop(float dt)
+		{
+			base.master.isLanding = false;
+			if (base.sm.warmupTimeRemaining.Get(this) > 0f)
+			{
+				base.sm.warmupTimeRemaining.Delta(0f - dt, this);
+			}
+			else
+			{
+				float num = base.smi.timeinstate - 5f;
+				DistanceAboveGround = Mathf.Pow(num / partsLaunchSpeedRatio, 4f);
+				base.master.rocketSpeed = DistanceAboveGround - Mathf.Pow((base.smi.timeinstate - 1f) / partsLaunchSpeedRatio, 4f);
+			}
+			UpdateSoundSpeakerObject();
+			if (UpdatePartsAnimPositionsAndDamage() == 0)
+			{
+				base.smi.GoTo(base.sm.not_grounded.space);
+			}
+		}
+
+		public void FinalizeLaunch()
+		{
+			base.master.rocketSpeed = 0f;
+			DistanceAboveGround = 50f;
+			foreach (Ref<RocketModule> part in base.master.parts)
+			{
+				if (part != null && !(part.Get() == null))
+				{
+					RocketModule rocketModule = part.Get();
+					rocketModule.GetComponent<KBatchedAnimController>().Offset = Vector3.up * DistanceAboveGround;
+					rocketModule.GetComponent<KBatchedAnimController>().enabled = false;
+					if (base.master.registerType == RegisterType.Clustercraft)
+					{
+						rocketModule.GetComponent<RocketModule>().MoveToSpace();
+					}
+				}
+			}
+			if (base.master.registerType == RegisterType.Clustercraft)
+			{
+				base.smi.master.GetComponent<RocketModule>().CraftInterface.GetComponent<Clustercraft>().SetCraftStatus(Clustercraft.CraftStatus.InFlight);
+			}
+			if (base.master.registerType == RegisterType.Spacecraft)
+			{
+				SetMissionState(Spacecraft.MissionState.Underway);
+			}
+		}
+
+		public void SetupLanding()
+		{
+			float f = (DistanceAboveGround = base.master.InitialFlightAnimOffsetForLanding());
+			landingDistancePartsTimeConstant = Mathf.Pow(f, 0.25f) * partsLaunchSpeedRatio;
+			base.master.isLanding = true;
+			base.master.rocketSpeed = 0f;
+			if (base.master.registerType == RegisterType.Spacecraft)
+			{
+				base.smi.SetMissionState(Spacecraft.MissionState.Landing);
+			}
+			List<GameObject> engines = base.smi.master.GetEngines();
+			if (engines.Count > 0)
+			{
+				engines[engines.Count - 1].Trigger(-1358394196);
+			}
+		}
+
+		public void LandingLoop(float dt)
+		{
+			base.master.isLanding = true;
+			if (base.smi.timeinstate > landingDistancePartsTimeConstant)
+			{
+				DistanceAboveGround = 0f;
+			}
+			else
+			{
+				DistanceAboveGround = Mathf.Pow((0f - base.smi.timeinstate + landingDistancePartsTimeConstant) / partsLaunchSpeedRatio, 4f);
+			}
+			base.master.rocketSpeed = DistanceAboveGround - Mathf.Pow((0f - (base.smi.timeinstate - 1f) + landingDistancePartsTimeConstant) / partsLaunchSpeedRatio, 4f);
+			UpdateSoundSpeakerObject();
+			UpdatePartsAnimPositionsAndDamage();
+		}
+
+		public void FinalizeLanding()
+		{
+			GetComponent<KSelectable>().IsSelectable = true;
+			base.master.rocketSpeed = 0f;
+			DistanceAboveGround = 0f;
+			foreach (Ref<RocketModule> part in base.smi.master.parts)
+			{
+				if (part != null && !(part.Get() == null))
+				{
+					part.Get().GetComponent<KBatchedAnimController>().Offset = Vector3.zero;
+				}
+			}
+			if (base.smi.master.registerType == RegisterType.Spacecraft)
+			{
+				base.smi.SetMissionState(Spacecraft.MissionState.Grounded);
+			}
+		}
+
+		private void UpdateSoundSpeakerObject()
+		{
+			if (base.master.soundSpeakerObject == null)
+			{
+				base.master.soundSpeakerObject = new GameObject("rocketSpeaker");
+				base.master.soundSpeakerObject.transform.SetParent(base.gameObject.transform);
+			}
+			base.master.soundSpeakerObject.transform.SetLocalPosition(DistanceAboveGround * Vector3.up);
+		}
+
+		private int UpdatePartsAnimPositionsAndDamage()
+		{
+			int myWorldId = base.gameObject.GetMyWorldId();
+			if (myWorldId == -1)
+			{
+				return 0;
+			}
+			int num = 0;
+			foreach (Ref<RocketModule> part in base.master.parts)
+			{
+				if (part != null)
+				{
+					RocketModule rocketModule = part.Get();
+					KBatchedAnimController component = rocketModule.GetComponent<KBatchedAnimController>();
+					component.Offset = Vector3.up * DistanceAboveGround;
+					Vector3 positionIncludingOffset = component.PositionIncludingOffset;
+					bool flag = Grid.IsValidCell(Grid.PosToCell(positionIncludingOffset));
+					if (component.enabled != flag)
+					{
+						component.enabled = flag;
+					}
+					if (flag)
+					{
+						num++;
+						States.DoWorldDamage(rocketModule.gameObject, positionIncludingOffset, myWorldId);
+					}
+				}
+			}
+			return num;
 		}
 	}
 
@@ -29,16 +277,22 @@ public class LaunchableRocket : StateMachineComponent<LaunchableRocket.StatesIns
 	{
 		public class NotGroundedStates : State
 		{
-			public State launch_pre;
-
-			public State space;
+			public State launch_setup;
 
 			public State launch_loop;
 
-			public State returning;
+			public State space;
+
+			public State landing_setup;
 
 			public State landing_loop;
+
+			public State land;
 		}
+
+		public FloatParameter warmupTimeRemaining;
+
+		public FloatParameter distanceAboveGround;
 
 		public State grounded;
 
@@ -47,200 +301,75 @@ public class LaunchableRocket : StateMachineComponent<LaunchableRocket.StatesIns
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = grounded;
-			base.serializable = true;
-			grounded.EventTransition(GameHashes.LaunchRocket, not_grounded.launch_pre).Enter(delegate(StatesInstance smi)
+			base.serializable = SerializeType.Both_DEPRECATED;
+			grounded.EventTransition(GameHashes.DoLaunchRocket, not_grounded.launch_setup).EnterTransition(not_grounded.launch_loop, (StatesInstance smi) => !smi.IsGrounded()).Enter(delegate(StatesInstance smi)
 			{
-				smi.master.rocketSpeed = 0f;
-				foreach (GameObject part in smi.master.parts)
+				smi.SetTagOnModules(GameTags.RocketOnGround, set: true);
+			})
+				.Exit(delegate(StatesInstance smi)
 				{
-					if (!(part == null))
-					{
-						part.GetComponent<KBatchedAnimController>().Offset = Vector3.zero;
-					}
-				}
-				smi.SetMissionState(Spacecraft.MissionState.Grounded);
+					smi.SetTagOnModules(GameTags.RocketOnGround, set: false);
+				})
+				.Enter(delegate(StatesInstance smi)
+				{
+					smi.FinalizeLanding();
+				});
+			not_grounded.Enter(delegate(StatesInstance smi)
+			{
+				smi.SetTagOnModules(GameTags.RocketNotOnGround, set: true);
+			}).Exit(delegate(StatesInstance smi)
+			{
+				smi.SetTagOnModules(GameTags.RocketNotOnGround, set: false);
 			});
-			not_grounded.ToggleTag(GameTags.RocketNotOnGround);
-			not_grounded.launch_pre.Enter(delegate(StatesInstance smi)
+			not_grounded.launch_setup.Enter(delegate(StatesInstance smi)
 			{
-				smi.master.isLanding = false;
-				smi.master.rocketSpeed = 0f;
-				smi.master.parts = AttachableBuilding.GetAttachedNetwork(smi.master.GetComponent<AttachableBuilding>());
-				if (smi.master.soundSpeakerObject == null)
+				smi.SetupLaunch();
+				smi.GoTo(not_grounded.launch_loop);
+			});
+			not_grounded.launch_loop.EventTransition(GameHashes.DoReturnRocket, not_grounded.landing_setup).Update(delegate(StatesInstance smi, float dt)
+			{
+				smi.LaunchLoop(dt);
+			}, UpdateRate.SIM_EVERY_TICK).ParamTransition(distanceAboveGround, not_grounded.space, (StatesInstance smi, float p) => p >= 50f);
+			not_grounded.space.EnterTransition(not_grounded.landing_setup, (StatesInstance smi) => smi.IsGrounded()).EventTransition(GameHashes.DoReturnRocket, not_grounded.landing_setup).Enter(delegate(StatesInstance smi)
+			{
+				smi.SetTagOnModules(GameTags.RocketInSpace, set: true);
+			})
+				.Exit(delegate(StatesInstance smi)
 				{
-					smi.master.soundSpeakerObject = new GameObject("rocketSpeaker");
-					smi.master.soundSpeakerObject.transform.SetParent(smi.master.gameObject.transform);
-				}
-				foreach (GameObject engine in smi.master.GetEngines())
+					smi.SetTagOnModules(GameTags.RocketInSpace, set: false);
+				})
+				.Enter(delegate(StatesInstance smi)
 				{
-					engine.Trigger(-1358394196);
-				}
-				Game.Instance.Trigger(-1056989049, this);
-				foreach (GameObject part2 in smi.master.parts)
+					smi.FinalizeLaunch();
+				});
+			not_grounded.landing_setup.Enter(delegate(StatesInstance smi)
+			{
+				smi.SetupLanding();
+				smi.GoTo(not_grounded.landing_loop);
+			});
+			not_grounded.landing_loop.Update(delegate(StatesInstance smi, float dt)
+			{
+				smi.LandingLoop(dt);
+			}, UpdateRate.SIM_EVERY_TICK).ParamTransition(distanceAboveGround, not_grounded.land, (StatesInstance smi, float p) => p < 0.0025f);
+			not_grounded.land.Enter(delegate(StatesInstance smi)
+			{
+				foreach (Ref<RocketModule> part in smi.master.parts)
 				{
-					if (!(part2 == null))
+					if (part != null && !(part.Get() == null))
 					{
-						smi.master.takeOffLocation = Grid.PosToCell(smi.master.gameObject);
-						part2.Trigger(-1056989049);
+						part.Get().Trigger(-887025858, smi.gameObject);
 					}
 				}
-				smi.SetMissionState(Spacecraft.MissionState.Launching);
-			}).ScheduleGoTo(5f, not_grounded.launch_loop);
-			not_grounded.launch_loop.EventTransition(GameHashes.ReturnRocket, not_grounded.returning).Update(delegate(StatesInstance smi, float dt)
-			{
-				smi.master.isLanding = false;
-				bool flag2 = true;
-				float num5 = Mathf.Clamp(Mathf.Pow(smi.timeinstate / 5f, 4f), 0f, 10f);
-				smi.master.rocketSpeed = num5;
-				smi.master.flightAnimOffset += dt * num5;
-				foreach (GameObject part3 in smi.master.parts)
+				CraftModuleInterface craftInterface = smi.master.GetComponent<RocketModule>().CraftInterface;
+				if (craftInterface != null)
 				{
-					if (!(part3 == null))
-					{
-						KBatchedAnimController component4 = part3.GetComponent<KBatchedAnimController>();
-						component4.Offset = Vector3.up * smi.master.flightAnimOffset;
-						Vector3 positionIncludingOffset3 = component4.PositionIncludingOffset;
-						if (smi.master.soundSpeakerObject == null)
-						{
-							smi.master.soundSpeakerObject = new GameObject("rocketSpeaker");
-							smi.master.soundSpeakerObject.transform.SetParent(smi.master.gameObject.transform);
-						}
-						smi.master.soundSpeakerObject.transform.SetLocalPosition(smi.master.flightAnimOffset * Vector3.up);
-						if (Grid.PosToXY(positionIncludingOffset3).y > Singleton<KBatchedAnimUpdater>.Instance.GetVisibleSize().y)
-						{
-							part3.GetComponent<RocketModule>().OnSuspend(null);
-							part3.GetComponent<KBatchedAnimController>().enabled = false;
-						}
-						else
-						{
-							flag2 = false;
-							DoWorldDamage(part3, positionIncludingOffset3);
-						}
-					}
+					craftInterface.Trigger(-887025858, smi.gameObject);
 				}
-				if (flag2)
-				{
-					smi.GoTo(not_grounded.space);
-				}
-			}, UpdateRate.SIM_33ms);
-			not_grounded.space.Enter(delegate(StatesInstance smi)
-			{
-				smi.master.rocketSpeed = 0f;
-				foreach (GameObject part4 in smi.master.parts)
-				{
-					if (!(part4 == null))
-					{
-						part4.GetComponent<KBatchedAnimController>().Offset = Vector3.up * smi.master.flightAnimOffset;
-						part4.GetComponent<KBatchedAnimController>().enabled = false;
-					}
-				}
-				smi.SetMissionState(Spacecraft.MissionState.Underway);
-			}).EventTransition(GameHashes.ReturnRocket, not_grounded.returning, (StatesInstance smi) => smi.IsMissionState(Spacecraft.MissionState.WaitingToLand));
-			not_grounded.returning.Enter(delegate(StatesInstance smi)
-			{
-				smi.master.isLanding = true;
-				smi.master.rocketSpeed = 0f;
-				smi.SetMissionState(Spacecraft.MissionState.Landing);
-			}).Update(delegate(StatesInstance smi, float dt)
-			{
-				smi.master.isLanding = true;
-				KBatchedAnimController component2 = smi.master.gameObject.GetComponent<KBatchedAnimController>();
-				component2.Offset = Vector3.up * smi.master.flightAnimOffset;
-				float num3 = Mathf.Abs(smi.master.gameObject.transform.position.y + component2.Offset.y - (Grid.CellToPos(smi.master.takeOffLocation) + Vector3.down * (Grid.CellSizeInMeters / 2f)).y);
-				float num4 = 0f;
-				num4 = Mathf.Clamp(0.5f * num3, 0f, 10f) * dt;
-				smi.master.rocketSpeed = num4;
-				smi.master.flightAnimOffset -= num4;
-				bool flag = true;
-				if (smi.master.soundSpeakerObject == null)
-				{
-					smi.master.soundSpeakerObject = new GameObject("rocketSpeaker");
-					smi.master.soundSpeakerObject.transform.SetParent(smi.master.gameObject.transform);
-				}
-				smi.master.soundSpeakerObject.transform.SetLocalPosition(smi.master.flightAnimOffset * Vector3.up);
-				foreach (GameObject part5 in smi.master.parts)
-				{
-					if (!(part5 == null))
-					{
-						KBatchedAnimController component3 = part5.GetComponent<KBatchedAnimController>();
-						component3.Offset = Vector3.up * smi.master.flightAnimOffset;
-						Vector3 positionIncludingOffset2 = component3.PositionIncludingOffset;
-						if (Grid.IsValidCell(Grid.PosToCell(part5)))
-						{
-							part5.GetComponent<KBatchedAnimController>().enabled = true;
-						}
-						else
-						{
-							flag = false;
-						}
-						DoWorldDamage(part5, positionIncludingOffset2);
-					}
-				}
-				if (flag)
-				{
-					smi.GoTo(not_grounded.landing_loop);
-				}
-			}, UpdateRate.SIM_33ms);
-			not_grounded.landing_loop.Enter(delegate(StatesInstance smi)
-			{
-				smi.master.isLanding = true;
-				int num2 = -1;
-				for (int i = 0; i < smi.master.parts.Count; i++)
-				{
-					GameObject gameObject = smi.master.parts[i];
-					if (!(gameObject == null) && gameObject != smi.master.gameObject && gameObject.GetComponent<RocketEngine>() != null)
-					{
-						num2 = i;
-					}
-				}
-				if (num2 != -1)
-				{
-					smi.master.parts[num2].Trigger(-1358394196);
-				}
-			}).Update(delegate(StatesInstance smi, float dt)
-			{
-				smi.master.gameObject.GetComponent<KBatchedAnimController>().Offset = Vector3.up * smi.master.flightAnimOffset;
-				float flightAnimOffset = smi.master.flightAnimOffset;
-				float num = 0f;
-				num = Mathf.Clamp(0.5f * flightAnimOffset, 0f, 10f);
-				smi.master.rocketSpeed = num;
-				smi.master.flightAnimOffset -= num * dt;
-				if (smi.master.soundSpeakerObject == null)
-				{
-					smi.master.soundSpeakerObject = new GameObject("rocketSpeaker");
-					smi.master.soundSpeakerObject.transform.SetParent(smi.master.gameObject.transform);
-				}
-				smi.master.soundSpeakerObject.transform.SetLocalPosition(smi.master.flightAnimOffset * Vector3.up);
-				if (num <= 0.0025f && dt != 0f)
-				{
-					smi.master.GetComponent<KSelectable>().IsSelectable = true;
-					num = 0f;
-					foreach (GameObject part6 in smi.master.parts)
-					{
-						if (!(part6 == null))
-						{
-							part6.Trigger(238242047);
-						}
-					}
-					smi.GoTo(grounded);
-				}
-				else
-				{
-					foreach (GameObject part7 in smi.master.parts)
-					{
-						if (!(part7 == null))
-						{
-							KBatchedAnimController component = part7.GetComponent<KBatchedAnimController>();
-							component.Offset = Vector3.up * smi.master.flightAnimOffset;
-							Vector3 positionIncludingOffset = component.PositionIncludingOffset;
-							DoWorldDamage(part7, positionIncludingOffset);
-						}
-					}
-				}
-			}, UpdateRate.SIM_33ms);
+				smi.GoTo(grounded);
+			});
 		}
 
-		private static void DoWorldDamage(GameObject part, Vector3 apparentPosition)
+		public static void DoWorldDamage(GameObject part, Vector3 apparentPosition, int actualWorld)
 		{
 			OccupyArea component = part.GetComponent<OccupyArea>();
 			component.UpdateOccupiedArea();
@@ -248,7 +377,7 @@ public class LaunchableRocket : StateMachineComponent<LaunchableRocket.StatesIns
 			foreach (CellOffset offset in occupiedCellsOffsets)
 			{
 				int num = Grid.OffsetCell(Grid.PosToCell(apparentPosition), offset);
-				if (!Grid.IsValidCell(num))
+				if (!Grid.IsValidCell(num) || Grid.WorldIdx[num] != Grid.WorldIdx[actualWorld])
 				{
 					continue;
 				}
@@ -414,13 +543,8 @@ public class LaunchableRocket : StateMachineComponent<LaunchableRocket.StatesIns
 		}
 	}
 
-	public List<GameObject> parts = new List<GameObject>();
-
 	[Serialize]
 	private int takeOffLocation;
-
-	[Serialize]
-	private float flightAnimOffset;
 
 	private bool isLanding;
 
@@ -428,15 +552,22 @@ public class LaunchableRocket : StateMachineComponent<LaunchableRocket.StatesIns
 
 	private GameObject soundSpeakerObject;
 
+	public RegisterType registerType;
+
+	public IList<Ref<RocketModule>> parts => GetComponent<RocketModule>().CraftInterface.Modules;
+
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		base.smi.master.parts = AttachableBuilding.GetAttachedNetwork(base.smi.master.GetComponent<AttachableBuilding>());
-		if (SpacecraftManager.instance.GetSpacecraftID(this) == -1)
+		if (registerType == RegisterType.Spacecraft)
 		{
-			Spacecraft spacecraft = new Spacecraft(GetComponent<LaunchConditionManager>());
-			spacecraft.GenerateName();
-			SpacecraftManager.instance.RegisterSpacecraft(spacecraft);
+			int spacecraftID = SpacecraftManager.instance.GetSpacecraftID(this);
+			if (spacecraftID == -1)
+			{
+				Spacecraft spacecraft = new Spacecraft(GetComponent<LaunchConditionManager>());
+				spacecraft.GenerateName();
+				SpacecraftManager.instance.RegisterSpacecraft(spacecraft);
+			}
 		}
 		base.smi.StartSM();
 	}
@@ -444,19 +575,35 @@ public class LaunchableRocket : StateMachineComponent<LaunchableRocket.StatesIns
 	public List<GameObject> GetEngines()
 	{
 		List<GameObject> list = new List<GameObject>();
-		foreach (GameObject part in parts)
+		foreach (Ref<RocketModule> part in parts)
 		{
-			if ((bool)part.GetComponent<RocketEngine>())
+			if ((bool)part.Get().GetComponent<RocketEngine>())
 			{
-				list.Add(part);
+				list.Add(part.Get().gameObject);
 			}
 		}
 		return list;
 	}
 
+	private float InitialFlightAnimOffsetForLanding()
+	{
+		int num = Grid.PosToCell(base.gameObject);
+		WorldContainer world = ClusterManager.Instance.GetWorld(Grid.WorldIdx[num]);
+		float num2 = world.maximumBounds.y - base.gameObject.transform.GetPosition().y;
+		float num3 = 0f;
+		foreach (Ref<RocketModule> part in parts)
+		{
+			num3 += (float)part.Get().GetComponent<Building>().Def.HeightInCells;
+		}
+		return num2 + num3 + 100f;
+	}
+
 	protected override void OnCleanUp()
 	{
-		SpacecraftManager.instance.UnregisterSpacecraft(GetComponent<LaunchConditionManager>());
+		if (registerType == RegisterType.Spacecraft)
+		{
+			SpacecraftManager.instance.UnregisterSpacecraft(GetComponent<LaunchConditionManager>());
+		}
 		base.OnCleanUp();
 	}
 }

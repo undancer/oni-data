@@ -26,7 +26,7 @@ public class ToolTipScreen : KScreen
 
 	private Vector2 ScreenEdgePadding = new Vector2(8f, 8f);
 
-	private ToolTip dirtyHoverTooltip;
+	private ToolTip dirtyHoverTooltip = null;
 
 	private bool tooltipIncubating = true;
 
@@ -159,7 +159,8 @@ public class ToolTipScreen : KScreen
 		clearMultiStringTooltip();
 		for (int i = 0; i < multiStringCount; i++)
 		{
-			Util.KInstantiateUI(labelPrefab, null, force_active: true).transform.SetParent(multiTooltipContainer.transform);
+			GameObject gameObject = Util.KInstantiateUI(labelPrefab, null, force_active: true);
+			gameObject.transform.SetParent(multiTooltipContainer.transform);
 		}
 		for (int j = 0; j < tooltipSetting.multiStringCount; j++)
 		{
@@ -167,7 +168,8 @@ public class ToolTipScreen : KScreen
 			LayoutElement component = child.GetComponent<LayoutElement>();
 			TextMeshProUGUI component2 = child.GetComponent<TextMeshProUGUI>();
 			component2.text = tooltipSetting.GetMultiString(j);
-			child.GetComponent<SetTextStyleSetting>().SetStyle((TextStyleSetting)tooltipSetting.GetStyleSetting(j));
+			SetTextStyleSetting component3 = child.GetComponent<SetTextStyleSetting>();
+			component3.SetStyle(tooltipSetting.GetStyleSetting(j));
 			if (setting.SizingSetting == ToolTip.ToolTipSizeSetting.MaxWidthWrapContent)
 			{
 				float num2 = (component.minWidth = (component.preferredWidth = setting.WrapWidth));
@@ -176,15 +178,15 @@ public class ToolTipScreen : KScreen
 				num2 = (component.minHeight = (component.preferredHeight = component2.preferredHeight));
 				component.rectTransform().sizeDelta = new Vector2(setting.WrapWidth, component.minHeight);
 				GetComponentInChildren<ContentSizeFitter>(includeInactive: true).horizontalFit = ContentSizeFitter.FitMode.MinSize;
-				multiTooltipContainer.GetComponent<LayoutElement>().minWidth = setting.WrapWidth;
+				multiTooltipContainer.GetComponent<LayoutElement>().minWidth = setting.WrapWidth + 2f * ScreenEdgePadding.x;
 			}
 			else if (setting.SizingSetting == ToolTip.ToolTipSizeSetting.DynamicWidthNoWrap)
 			{
 				GetComponentInChildren<ContentSizeFitter>(includeInactive: true).horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
 				Vector2 preferredValues = component2.GetPreferredValues();
-				LayoutElement component3 = multiTooltipContainer.GetComponent<LayoutElement>();
+				LayoutElement component4 = multiTooltipContainer.GetComponent<LayoutElement>();
 				float num5 = (component.preferredWidth = preferredValues.x);
-				float num2 = (component3.minWidth = (component.minWidth = num5));
+				float num2 = (component4.minWidth = (component.minWidth = num5));
 				num2 = (component.minHeight = (component.preferredHeight = preferredValues.y));
 				GetComponentInChildren<ContentSizeFitter>(includeInactive: true).SetLayoutHorizontal();
 				GetComponentInChildren<ContentSizeFitter>(includeInactive: true).SetLayoutVertical();
@@ -215,7 +217,8 @@ public class ToolTipScreen : KScreen
 		if (tooltipIncubating)
 		{
 			tooltipIncubating = false;
-			if (anchorRoot.GetComponentInChildren<Image>() != null)
+			Image componentInChildren = anchorRoot.GetComponentInChildren<Image>();
+			if (componentInChildren != null)
 			{
 				anchorRoot.GetComponentInChildren<Image>(includeInactive: true).enabled = false;
 			}
@@ -238,7 +241,8 @@ public class ToolTipScreen : KScreen
 		}
 		else if (multiTooltipContainer.transform.localScale != Vector3.one && !toolTipIsBlank)
 		{
-			if (anchorRoot.GetComponentInChildren<Image>() != null)
+			Image componentInChildren2 = anchorRoot.GetComponentInChildren<Image>();
+			if (componentInChildren2 != null)
 			{
 				anchorRoot.GetComponentInChildren<Image>(includeInactive: true).enabled = true;
 			}
@@ -248,9 +252,12 @@ public class ToolTipScreen : KScreen
 
 	public void HotSwapTooltipString(string newString, int lineIndex)
 	{
+		Transform transform = null;
 		if (multiTooltipContainer.transform.childCount > lineIndex)
 		{
-			multiTooltipContainer.transform.GetChild(lineIndex).GetComponent<TextMeshProUGUI>().text = newString;
+			transform = multiTooltipContainer.transform.GetChild(lineIndex);
+			TextMeshProUGUI component = transform.GetComponent<TextMeshProUGUI>();
+			component.text = newString;
 		}
 	}
 

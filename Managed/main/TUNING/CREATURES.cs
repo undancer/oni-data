@@ -123,7 +123,12 @@ namespace TUNING
 				CreateDietaryModifier("LightBugCrystal", "LightBugCrystalEgg".ToTag(), "CookedMeat".ToTag(), 0.00125f),
 				CreateTemperatureModifier("PacuTropical", "PacuTropicalEgg".ToTag(), 308.15f, 353.15f, 8.333333E-05f, alsoInvert: false),
 				CreateTemperatureModifier("PacuCleaner", "PacuCleanerEgg".ToTag(), 243.15f, 278.15f, 8.333333E-05f, alsoInvert: false),
-				CreateDietaryModifier("DreckoPlastic", "DreckoPlasticEgg".ToTag(), "BasicSingleHarvestPlant".ToTag(), 0.025f / DreckoTuning.STANDARD_CALORIES_PER_CYCLE)
+				CreateDietaryModifier("DreckoPlastic", "DreckoPlasticEgg".ToTag(), "BasicSingleHarvestPlant".ToTag(), 0.025f / DreckoTuning.STANDARD_CALORIES_PER_CYCLE),
+				CreateCropTendedModifier("DivergentWorm", "DivergentWormEgg".ToTag(), new TagBits(new Tag[2]
+				{
+					"WormPlant".ToTag(),
+					"SuperWormPlant".ToTag()
+				}), 0.05f / (float)DivergentTuning.TIMES_TENDED_PER_CYCLE_FOR_EVOLUTION)
 			};
 
 			private static System.Action CreateDietaryModifier(string id, Tag eggTag, TagBits foodTags, float modifierPerCal)
@@ -196,6 +201,33 @@ namespace TUNING
 				};
 			}
 
+			private static System.Action CreateCropTendedModifier(string id, Tag eggTag, TagBits cropTags, float modifierPerEvent)
+			{
+				return delegate
+				{
+					string name = STRINGS.CREATURES.FERTILITY_MODIFIERS.CROPTENDING.NAME;
+					string description = STRINGS.CREATURES.FERTILITY_MODIFIERS.CROPTENDING.DESC;
+					List<Tag> plantTagsActual = cropTags.GetTagsVerySlow();
+					Db.Get().CreateFertilityModifier(id, eggTag, name, description, delegate(string descStr)
+					{
+						string arg = string.Join(", ", plantTagsActual.Select((Tag t) => t.ProperName()).ToArray());
+						descStr = string.Format(descStr, arg);
+						return descStr;
+					}, delegate(FertilityMonitor.Instance inst, Tag eggType)
+					{
+						inst.gameObject.Subscribe(90606262, delegate(object data)
+						{
+							CropTendingStates.CropTendingEventData cropTendingEventData = (CropTendingStates.CropTendingEventData)data;
+							TagBits tag_bits = new TagBits(cropTendingEventData.cropId);
+							if (cropTags.HasAny(ref tag_bits))
+							{
+								inst.AddBreedingChance(eggType, modifierPerEvent);
+							}
+						});
+					});
+				};
+			}
+
 			private static System.Action CreateTemperatureModifier(string id, Tag eggTag, float minTemp, float maxTemp, float modifierPerSecond, bool alsoInvert)
 			{
 				return delegate
@@ -227,6 +259,8 @@ namespace TUNING
 			}
 		}
 
+		public const float WILD_GROWTH_RATE_MODIFIER = 0.25f;
+
 		public const int DEFAULT_PROBING_RADIUS = 32;
 
 		public const float FERTILITY_TIME_BY_LIFESPAN = 0.6f;
@@ -238,5 +272,7 @@ namespace TUNING
 		public const float WILD_CALORIE_BURN_RATIO = 0.25f;
 
 		public const float VIABILITY_LOSS_RATE = -0.016666668f;
+
+		public const float STATERPILLAR_POWER_CHARGE_LOSS_RATE = -0.055555556f;
 	}
 }

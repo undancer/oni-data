@@ -9,35 +9,38 @@ public class MeshTileConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("MeshTile", 1, 1, "floor_mesh_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER0);
-		BuildingTemplates.CreateFoundationTileDef(obj);
-		obj.Floodable = false;
-		obj.Entombable = false;
-		obj.Overheatable = false;
-		obj.UseStructureTemperature = false;
-		obj.AudioCategory = "Metal";
-		obj.AudioSize = "small";
-		obj.BaseTimeUntilRepair = -1f;
-		obj.SceneLayer = Grid.SceneLayer.TileMain;
-		obj.ConstructionOffsetFilter = BuildingDef.ConstructionOffsetFilter_OneDown;
-		obj.isKAnimTile = true;
-		obj.BlockTileAtlas = Assets.GetTextureAtlas("tiles_mesh");
-		obj.BlockTilePlaceAtlas = Assets.GetTextureAtlas("tiles_mesh_place");
-		obj.BlockTileShineAtlas = Assets.GetTextureAtlas("tiles_mesh_spec");
-		obj.BlockTileMaterial = Assets.GetMaterial("tiles_solid");
-		obj.DecorBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_mesh_tops_decor_info");
-		obj.DecorPlaceBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_mesh_tops_decor_place_info");
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("MeshTile", 1, 1, "floor_mesh_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER0);
+		BuildingTemplates.CreateFoundationTileDef(buildingDef);
+		buildingDef.Floodable = false;
+		buildingDef.Entombable = false;
+		buildingDef.Overheatable = false;
+		buildingDef.UseStructureTemperature = false;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.AudioSize = "small";
+		buildingDef.BaseTimeUntilRepair = -1f;
+		buildingDef.SceneLayer = Grid.SceneLayer.TileMain;
+		buildingDef.ConstructionOffsetFilter = BuildingDef.ConstructionOffsetFilter_OneDown;
+		buildingDef.isKAnimTile = true;
+		buildingDef.BlockTileAtlas = Assets.GetTextureAtlas("tiles_mesh");
+		buildingDef.BlockTilePlaceAtlas = Assets.GetTextureAtlas("tiles_mesh_place");
+		buildingDef.BlockTileShineAtlas = Assets.GetTextureAtlas("tiles_mesh_spec");
+		buildingDef.BlockTileMaterial = Assets.GetMaterial("tiles_solid");
+		buildingDef.DecorBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_mesh_tops_decor_info");
+		buildingDef.DecorPlaceBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_mesh_tops_decor_place_info");
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		GeneratedBuildings.MakeBuildingAlwaysOperational(go);
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
-		go.AddOrGet<SimCellOccupier>().doReplaceElement = false;
+		SimCellOccupier simCellOccupier = go.AddOrGet<SimCellOccupier>();
+		simCellOccupier.doReplaceElement = false;
 		go.AddOrGet<TileTemperature>();
-		go.AddOrGet<KAnimGridTileVisualizer>().blockTileConnectorID = BlockTileConnectorID;
-		go.AddOrGet<BuildingHP>().destroyOnDamaged = true;
+		KAnimGridTileVisualizer kAnimGridTileVisualizer = go.AddOrGet<KAnimGridTileVisualizer>();
+		kAnimGridTileVisualizer.blockTileConnectorID = BlockTileConnectorID;
+		BuildingHP buildingHP = go.AddOrGet<BuildingHP>();
+		buildingHP.destroyOnDamaged = true;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

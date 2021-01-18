@@ -6,11 +6,27 @@ public class InfoDescription : KMonoBehaviour
 {
 	public string nameLocString = "";
 
-	public string descriptionLocString = "";
+	private string descriptionLocString = "";
 
 	public string description;
 
 	public string displayName;
+
+	public string DescriptionLocString
+	{
+		get
+		{
+			return descriptionLocString;
+		}
+		set
+		{
+			descriptionLocString = value;
+			if (descriptionLocString != null)
+			{
+				description = Strings.Get(descriptionLocString);
+			}
+		}
+	}
 
 	protected override void OnPrefabInit()
 	{

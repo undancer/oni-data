@@ -5,6 +5,11 @@ public class BabyDreckoConfig : IEntityConfig
 {
 	public const string ID = "DreckoBaby";
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = DreckoConfig.CreateDrecko("DreckoBaby", CREATURES.SPECIES.DRECKO.BABY.NAME, CREATURES.SPECIES.DRECKO.BABY.DESC, "baby_drecko_kanim", is_baby: true);

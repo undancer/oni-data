@@ -16,7 +16,7 @@ public class TreeFilterableSideScreen : SideScreenContent
 	private MultiToggle allCheckBox;
 
 	[SerializeField]
-	private KToggle onlyAllowTransportItemsCheckBox;
+	private MultiToggle onlyAllowTransportItemsCheckBox;
 
 	[SerializeField]
 	private GameObject onlyallowTransportItemsRow;
@@ -32,7 +32,7 @@ public class TreeFilterableSideScreen : SideScreenContent
 
 	private GameObject target;
 
-	private bool visualDirty;
+	private bool visualDirty = false;
 
 	private KImage onlyAllowTransportItemsImg;
 
@@ -67,8 +67,7 @@ public class TreeFilterableSideScreen : SideScreenContent
 				break;
 			}
 		});
-		onlyAllowTransportItemsImg = onlyAllowTransportItemsCheckBox.gameObject.GetComponentInChildrenOnly<KImage>();
-		onlyAllowTransportItemsCheckBox.onClick += OnlyAllowTransportItemsClicked;
+		onlyAllowTransportItemsCheckBox.onClick = OnlyAllowTransportItemsClicked;
 	}
 
 	protected override void OnSpawn()
@@ -185,7 +184,7 @@ public class TreeFilterableSideScreen : SideScreenContent
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		return target.GetComponent<TreeFilterable>() != null;
+		return target.GetComponent<TreeFilterable>() != null && target.GetComponent<FlatTagFilterable>() == null;
 	}
 
 	public override void SetTarget(GameObject target)
@@ -220,11 +219,10 @@ public class TreeFilterableSideScreen : SideScreenContent
 
 	private void OnOnlyFetchMarkedItemsSettingChanged(object data)
 	{
+		onlyAllowTransportItemsCheckBox.ChangeState(storage.GetOnlyFetchMarkedItems() ? 1 : 0);
 		if (storage.allowSettingOnlyFetchMarkedItems)
 		{
 			onlyallowTransportItemsRow.SetActive(value: true);
-			onlyAllowTransportItemsCheckBox.isOn = storage.GetOnlyFetchMarkedItems();
-			onlyAllowTransportItemsImg.enabled = storage.GetOnlyFetchMarkedItems();
 		}
 		else
 		{
@@ -274,7 +272,8 @@ public class TreeFilterableSideScreen : SideScreenContent
 		freeElement.Parent = this;
 		tagRowMap.Add(rowTag, freeElement);
 		Dictionary<Tag, bool> dictionary = new Dictionary<Tag, bool>();
-		foreach (TagOrderInfo item in GetTagsSortedAlphabetically(WorldInventory.Instance.GetDiscoveredResourcesFromTag(rowTag)))
+		List<TagOrderInfo> tagsSortedAlphabetically = GetTagsSortedAlphabetically(DiscoveredResources.Instance.GetDiscoveredResourcesFromTag(rowTag));
+		foreach (TagOrderInfo item in tagsSortedAlphabetically)
 		{
 			dictionary.Add(item.tag, targetFilterable.ContainsTag(item.tag) || targetFilterable.ContainsTag(rowTag));
 		}
@@ -297,10 +296,11 @@ public class TreeFilterableSideScreen : SideScreenContent
 		if (storage.storageFilters != null && storage.storageFilters.Count >= 1)
 		{
 			bool flag = target.GetComponent<CreatureDeliveryPoint>() != null;
-			foreach (TagOrderInfo item in GetTagsSortedAlphabetically(storage.storageFilters))
+			List<TagOrderInfo> tagsSortedAlphabetically = GetTagsSortedAlphabetically(storage.storageFilters);
+			foreach (TagOrderInfo item in tagsSortedAlphabetically)
 			{
 				Tag tag = item.tag;
-				if (flag || WorldInventory.Instance.IsDiscovered(tag))
+				if (flag || DiscoveredResources.Instance.IsDiscovered(tag))
 				{
 					AddRow(tag);
 				}

@@ -15,9 +15,9 @@ namespace NodeEditorFramework
 
 		public NodeSide side;
 
-		public float sidePosition;
+		public float sidePosition = 0f;
 
-		public float sideOffset;
+		public float sideOffset = 0f;
 
 		protected virtual GUIStyle defaultLabelStyle => GUI.skin.label;
 
@@ -101,7 +101,8 @@ namespace NodeEditorFramework
 
 		public virtual void DrawKnob()
 		{
-			GUI.DrawTexture(GetGUIKnob(), knobTexture);
+			Rect gUIKnob = GetGUIKnob();
+			GUI.DrawTexture(gUIKnob, knobTexture);
 		}
 
 		public void DisplayLayout()
@@ -183,19 +184,7 @@ namespace NodeEditorFramework
 
 		public Vector2 GetDirection()
 		{
-			if (side != NodeSide.Right)
-			{
-				if (side != NodeSide.Bottom)
-				{
-					if (side != NodeSide.Top)
-					{
-						return Vector2.left;
-					}
-					return Vector2.down;
-				}
-				return Vector2.up;
-			}
-			return Vector2.right;
+			return (side == NodeSide.Right) ? Vector2.right : ((side == NodeSide.Bottom) ? Vector2.up : ((side == NodeSide.Top) ? Vector2.down : Vector2.left));
 		}
 
 		private static int getRotationStepsAntiCW(NodeSide sideA, NodeSide sideB)

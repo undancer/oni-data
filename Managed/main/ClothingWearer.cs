@@ -69,7 +69,20 @@ public class ClothingWearer : KMonoBehaviour
 		base.OnSpawn();
 		decorProvider.decor.Add(decorModifier);
 		decorProvider.decorRadius.Add(new AttributeModifier(Db.Get().BuildingAttributes.DecorRadius.Id, 3f));
-		decorProvider.overrideName = string.Format(UI.OVERLAYS.DECOR.CLOTHING, base.gameObject.GetProperName());
+		Traits component = GetComponent<Traits>();
+		string format = UI.OVERLAYS.DECOR.CLOTHING;
+		if (component != null)
+		{
+			if (component.HasTrait("DecorUp"))
+			{
+				format = UI.OVERLAYS.DECOR.CLOTHING_TRAIT_DECORUP;
+			}
+			else if (component.HasTrait("DecorDown"))
+			{
+				format = UI.OVERLAYS.DECOR.CLOTHING_TRAIT_DECORDOWN;
+			}
+		}
+		decorProvider.overrideName = string.Format(format, base.gameObject.GetProperName());
 		if (currentClothing == null)
 		{
 			ChangeToDefaultClothes();

@@ -72,7 +72,7 @@ namespace ProcGen
 			private set;
 		}
 
-		public List<WeightedName> additionalSubworldFiles
+		public List<WeightedSubworldName> additionalSubworldFiles
 		{
 			get;
 			private set;
@@ -104,7 +104,7 @@ namespace ProcGen
 
 		public WorldTrait()
 		{
-			additionalSubworldFiles = new List<WeightedName>();
+			additionalSubworldFiles = new List<WeightedSubworldName>();
 			additionalUnknownCellFilters = new List<World.AllowedCellsFilter>();
 			globalFeatureTemplateMods = new Dictionary<string, int>();
 			globalFeatureMods = new Dictionary<string, int>();

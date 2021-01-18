@@ -13,6 +13,11 @@ public class LeafyPlantConfig : IEntityConfig
 
 	public readonly EffectorValues NEGATIVE_DECOR_EFFECT = DECOR.PENALTY.TIER3;
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("LeafyPlant", STRINGS.CREATURES.SPECIES.LEAFYPLANT.NAME, STRINGS.CREATURES.SPECIES.LEAFYPLANT.DESC, 1f, decor: POSITIVE_DECOR_EFFECT, anim: Assets.GetAnim("potted_leafy_kanim"), initialAnim: "grow_seed", sceneLayer: Grid.SceneLayer.BuildingFront, width: 1, height: 1);
@@ -27,10 +32,11 @@ public class LeafyPlantConfig : IEntityConfig
 		PrickleGrass prickleGrass = gameObject.AddOrGet<PrickleGrass>();
 		prickleGrass.positive_decor_effect = POSITIVE_DECOR_EFFECT;
 		prickleGrass.negative_decor_effect = NEGATIVE_DECOR_EFFECT;
-		EntityTemplates.CreateAndRegisterPreviewForPlant(EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Hidden, "LeafyPlantSeed", STRINGS.CREATURES.SPECIES.SEEDS.LEAFYPLANT.NAME, STRINGS.CREATURES.SPECIES.SEEDS.LEAFYPLANT.DESC, Assets.GetAnim("seed_potted_leafy_kanim"), "object", 1, new List<Tag>
+		GameObject seed = EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Hidden, "LeafyPlantSeed", STRINGS.CREATURES.SPECIES.SEEDS.LEAFYPLANT.NAME, STRINGS.CREATURES.SPECIES.SEEDS.LEAFYPLANT.DESC, Assets.GetAnim("seed_potted_leafy_kanim"), "object", 1, new List<Tag>
 		{
 			GameTags.DecorSeed
-		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 7, STRINGS.CREATURES.SPECIES.LEAFYPLANT.DOMESTICATEDDESC, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.6f), "LeafyPlant_preview", Assets.GetAnim("potted_leafy_kanim"), "place", 1, 1);
+		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 7, STRINGS.CREATURES.SPECIES.LEAFYPLANT.DOMESTICATEDDESC, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.6f);
+		EntityTemplates.CreateAndRegisterPreviewForPlant(seed, "LeafyPlant_preview", Assets.GetAnim("potted_leafy_kanim"), "place", 1, 1);
 		gameObject.AddOrGet<KBatchedAnimController>().randomiseLoopedOffset = true;
 		return gameObject;
 	}

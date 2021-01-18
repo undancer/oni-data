@@ -12,19 +12,24 @@ public class SweepBotConfig : IEntityConfig
 
 	public const float STORAGE_CAPACITY = 500f;
 
-	public const float BATTERY_DEPLETION_RATE = 40f;
+	public const float BATTERY_CAPACITY = 9000f;
 
-	public const float BATTERY_CAPACITY = 21000f;
+	public const float BATTERY_DEPLETION_RATE = 17.142857f;
 
 	public const float MAX_SWEEP_AMOUNT = 10f;
 
 	public const float MOP_SPEED = 10f;
 
-	private string name = ROBOTS.MODELS.SWEEPBOT.NAME;
+	private string name = STRINGS.ROBOTS.MODELS.SWEEPBOT.NAME;
 
-	private string desc = ROBOTS.MODELS.SWEEPBOT.DESC;
+	private string desc = STRINGS.ROBOTS.MODELS.SWEEPBOT.DESC;
 
 	public static float MASS = 25f;
+
+	public string GetDlcId()
+	{
+		return "";
+	}
 
 	public GameObject CreatePrefab()
 	{
@@ -33,30 +38,31 @@ public class SweepBotConfig : IEntityConfig
 		gameObject.GetComponent<KBatchedAnimController>().isMovable = true;
 		KPrefabID kPrefabID = gameObject.AddOrGet<KPrefabID>();
 		kPrefabID.AddTag(GameTags.Creature);
-		gameObject.AddComponent<Pickupable>();
+		Pickupable pickupable = gameObject.AddComponent<Pickupable>();
 		gameObject.AddOrGet<Clearable>().isClearable = false;
 		Trait trait = Db.Get().CreateTrait("SweepBotBaseTrait", name, name, null, should_save: false, null, positive_trait: true, is_valid_starter_trait: true);
-		trait.Add(new AttributeModifier(Db.Get().Amounts.InternalBattery.maxAttribute.Id, 21000f, name));
-		trait.Add(new AttributeModifier(Db.Get().Amounts.InternalBattery.deltaAttribute.Id, -40f, name));
+		trait.Add(new AttributeModifier(Db.Get().Amounts.InternalBattery.maxAttribute.Id, 9000f, name));
+		trait.Add(new AttributeModifier(Db.Get().Amounts.InternalBattery.deltaAttribute.Id, -17.142857f, name));
 		Modifiers modifiers = gameObject.AddOrGet<Modifiers>();
-		modifiers.initialTraits = new string[1]
-		{
-			"SweepBotBaseTrait"
-		};
+		bool flag = true;
+		modifiers.initialTraits.Add("SweepBotBaseTrait");
 		modifiers.initialAmounts.Add(Db.Get().Amounts.HitPoints.Id);
 		modifiers.initialAmounts.Add(Db.Get().Amounts.InternalBattery.Id);
 		gameObject.AddOrGet<KBatchedAnimController>().SetSymbolVisiblity("snapto_pivot", is_visible: false);
 		gameObject.AddOrGet<Traits>();
-		gameObject.AddOrGet<CharacterOverlay>();
 		gameObject.AddOrGet<Effects>();
 		gameObject.AddOrGetDef<AnimInterruptMonitor.Def>();
 		gameObject.AddOrGetDef<StorageUnloadMonitor.Def>();
-		gameObject.AddOrGetDef<RobotBatteryMonitor.Def>();
+		RobotBatteryMonitor.Def def = gameObject.AddOrGetDef<RobotBatteryMonitor.Def>();
+		def.batteryAmountId = Db.Get().Amounts.InternalBattery.Id;
+		def.canCharge = true;
+		def.lowBatteryWarningPercent = 0.5f;
 		gameObject.AddOrGetDef<SweetBotReactMonitor.Def>();
 		gameObject.AddOrGetDef<CreatureFallMonitor.Def>();
 		gameObject.AddOrGetDef<SweepBotTrappedMonitor.Def>();
 		gameObject.AddOrGet<AnimEventHandler>();
-		gameObject.AddOrGet<SnapOn>().snapPoints = new List<SnapOn.SnapPoint>(new SnapOn.SnapPoint[1]
+		SnapOn snapOn = gameObject.AddOrGet<SnapOn>();
+		snapOn.snapPoints = new List<SnapOn.SnapPoint>(new SnapOn.SnapPoint[1]
 		{
 			new SnapOn.SnapPoint
 			{
@@ -68,9 +74,11 @@ public class SweepBotConfig : IEntityConfig
 			}
 		});
 		SymbolOverrideControllerUtil.AddToPrefab(gameObject);
-		gameObject.AddComponent<Storage>();
-		gameObject.AddComponent<Storage>().capacityKg = 500f;
-		gameObject.AddOrGet<OrnamentReceptacle>().AddDepositTag(GameTags.PedestalDisplayable);
+		Storage storage = gameObject.AddComponent<Storage>();
+		Storage storage2 = gameObject.AddComponent<Storage>();
+		storage2.capacityKg = 500f;
+		OrnamentReceptacle ornamentReceptacle = gameObject.AddOrGet<OrnamentReceptacle>();
+		ornamentReceptacle.AddDepositTag(GameTags.PedestalDisplayable);
 		gameObject.AddOrGet<DecorProvider>();
 		gameObject.AddOrGet<UserNameable>();
 		gameObject.AddOrGet<CharacterOverlay>();
@@ -101,7 +109,7 @@ public class SweepBotConfig : IEntityConfig
 	{
 		StorageUnloadMonitor.Instance sMI = inst.GetSMI<StorageUnloadMonitor.Instance>();
 		sMI.sm.internalStorage.Set(inst.GetComponents<Storage>()[1], sMI);
-		inst.GetComponent<OrnamentReceptacle>();
+		OrnamentReceptacle component = inst.GetComponent<OrnamentReceptacle>();
 		inst.GetSMI<CreatureFallMonitor.Instance>().anim = "idle_loop";
 	}
 }

@@ -14,11 +14,7 @@ public class Telepad : StateMachineComponent<Telepad.StatesInstance>
 
 		public bool IsColonyLost()
 		{
-			if (GameFlowManager.Instance != null)
-			{
-				return GameFlowManager.Instance.IsGameOver();
-			}
-			return false;
+			return GameFlowManager.Instance != null && GameFlowManager.Instance.IsGameOver();
 		}
 
 		public void UpdateMeter()
@@ -59,7 +55,7 @@ public class Telepad : StateMachineComponent<Telepad.StatesInstance>
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = idle;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			root.OnSignal(idlePortal, resetToIdle);
 			resetToIdle.GoTo(idle);
 			idle.Enter(delegate(StatesInstance smi)
@@ -73,13 +69,8 @@ public class Telepad : StateMachineComponent<Telepad.StatesInstance>
 				.OnSignal(openPortal, opening);
 			unoperational.PlayAnim("idle").Enter("StopImmigration", delegate(StatesInstance smi)
 			{
-				Immigration.Instance.Stop();
 				smi.master.meter.SetPositionPercent(0f);
-			}).Exit("StartImmigration", delegate
-			{
-				Immigration.Instance.Restart();
-			})
-				.EventTransition(GameHashes.OperationalChanged, idle, (StatesInstance smi) => smi.GetComponent<Operational>().IsOperational);
+			}).EventTransition(GameHashes.OperationalChanged, idle, (StatesInstance smi) => smi.GetComponent<Operational>().IsOperational);
 			opening.Enter(delegate(StatesInstance smi)
 			{
 				smi.master.meter.SetPositionPercent(1f);
@@ -126,11 +117,6 @@ public class Telepad : StateMachineComponent<Telepad.StatesInstance>
 		{
 			Debug.LogError("Headquarters spawned at: (" + x + "," + y + ")");
 		}
-		if (GameUtil.GetTelepad() != null)
-		{
-			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Building, string.Format(BUILDINGS.PREFABS.HEADQUARTERSCOMPLETE.UNIQUE_POPTEXT, this.GetProperName()), null, base.transform.GetPosition());
-			Util.KDestroyGameObject(base.gameObject);
-		}
 	}
 
 	protected override void OnSpawn()
@@ -152,7 +138,7 @@ public class Telepad : StateMachineComponent<Telepad.StatesInstance>
 	{
 		if (!base.smi.IsColonyLost())
 		{
-			if (Immigration.Instance.ImmigrantsAvailable)
+			if (Immigration.Instance.ImmigrantsAvailable && GetComponent<Operational>().IsOperational)
 			{
 				base.smi.sm.openPortal.Trigger(base.smi);
 				selectable.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.NewDuplicantsAvailable, this);
@@ -185,9 +171,9 @@ public class Telepad : StateMachineComponent<Telepad.StatesInstance>
 		if (component != null)
 		{
 			ReportManager.Instance.ReportValue(ReportManager.ReportType.PersonalTime, GameClock.Instance.GetTimeSinceStartOfReport(), string.Format(UI.ENDOFDAYREPORT.NOTES.PERSONAL_TIME, DUPLICANTS.CHORES.NOT_EXISTING_TASK), gameObject.GetProperName());
-			foreach (MinionIdentity item in Components.LiveMinionIdentities.Items)
+			foreach (MinionIdentity worldItem in Components.LiveMinionIdentities.GetWorldItems(base.gameObject.GetComponent<KSelectable>().GetMyWorldId()))
 			{
-				item.GetComponent<Effects>().Add("NewCrewArrival", should_save: true);
+				worldItem.GetComponent<Effects>().Add("NewCrewArrival", should_save: true);
 			}
 			MinionResume component2 = component.GetComponent<MinionResume>();
 			for (int i = 0; (float)i < startingSkillPoints; i++)

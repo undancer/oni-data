@@ -22,6 +22,10 @@ public class Tinkerable : Workable
 
 	public string addedEffect;
 
+	public string effectAttributeId;
+
+	public float effectMultiplier;
+
 	public HashedString choreTypeTinker = Db.Get().ChoreTypes.PowerTinker.IdHash;
 
 	public HashedString choreTypeFetch = Db.Get().ChoreTypes.PowerFetch.IdHash;
@@ -48,17 +52,16 @@ public class Tinkerable : Workable
 
 	private SchedulerHandle updateHandle;
 
-	private bool hasReservedMaterial;
+	private bool hasReservedMaterial = false;
 
 	public static Tinkerable MakePowerTinkerable(GameObject prefab)
 	{
-		RoomTracker obj = prefab.AddOrGet<RoomTracker>();
-		obj.requiredRoomType = Db.Get().RoomTypes.PowerPlant.Id;
-		obj.requirement = RoomTracker.Requirement.TrackingOnly;
+		RoomTracker roomTracker = prefab.AddOrGet<RoomTracker>();
+		roomTracker.requiredRoomType = Db.Get().RoomTypes.PowerPlant.Id;
+		roomTracker.requirement = RoomTracker.Requirement.TrackingOnly;
 		Tinkerable tinkerable = prefab.AddOrGet<Tinkerable>();
 		tinkerable.tinkerMaterialTag = PowerControlStationConfig.TINKER_TOOLS;
 		tinkerable.tinkerMaterialAmount = 1f;
-		tinkerable.addedEffect = "PowerTinker";
 		tinkerable.requiredSkillPerk = PowerControlStationConfig.ROLE_PERK;
 		tinkerable.SetWorkTime(180f);
 		tinkerable.workerStatusItem = Db.Get().DuplicantStatusItems.Tinkering;
@@ -66,12 +69,16 @@ public class Tinkerable : Workable
 		tinkerable.attributeExperienceMultiplier = DUPLICANTSTATS.ATTRIBUTE_LEVELING.PART_DAY_EXPERIENCE;
 		tinkerable.choreTypeTinker = Db.Get().ChoreTypes.PowerTinker.IdHash;
 		tinkerable.choreTypeFetch = Db.Get().ChoreTypes.PowerFetch.IdHash;
+		tinkerable.addedEffect = "PowerTinker";
+		tinkerable.effectAttributeId = Db.Get().Attributes.Machinery.Id;
+		tinkerable.effectMultiplier = 0.025f;
 		tinkerable.multitoolContext = "powertinker";
 		tinkerable.multitoolHitEffectTag = "fx_powertinker_splash";
 		tinkerable.shouldShowSkillPerkStatusItem = false;
 		prefab.AddOrGet<Storage>();
 		prefab.AddOrGet<Effects>();
-		prefab.GetComponent<KPrefabID>().prefabInitFn += delegate(GameObject inst)
+		KPrefabID component = prefab.GetComponent<KPrefabID>();
+		component.prefabInitFn += delegate(GameObject inst)
 		{
 			inst.GetComponent<Tinkerable>().SetOffsetTable(OffsetGroups.InvertedStandardTable);
 		};
@@ -80,15 +87,17 @@ public class Tinkerable : Workable
 
 	public static Tinkerable MakeFarmTinkerable(GameObject prefab)
 	{
-		RoomTracker obj = prefab.AddOrGet<RoomTracker>();
-		obj.requiredRoomType = Db.Get().RoomTypes.Farm.Id;
-		obj.requirement = RoomTracker.Requirement.TrackingOnly;
+		RoomTracker roomTracker = prefab.AddOrGet<RoomTracker>();
+		roomTracker.requiredRoomType = Db.Get().RoomTypes.Farm.Id;
+		roomTracker.requirement = RoomTracker.Requirement.TrackingOnly;
 		Tinkerable tinkerable = prefab.AddOrGet<Tinkerable>();
 		tinkerable.tinkerMaterialTag = FarmStationConfig.TINKER_TOOLS;
 		tinkerable.tinkerMaterialAmount = 1f;
-		tinkerable.addedEffect = "FarmTinker";
 		tinkerable.requiredSkillPerk = Db.Get().SkillPerks.CanFarmTinker.Id;
 		tinkerable.workerStatusItem = Db.Get().DuplicantStatusItems.Tinkering;
+		tinkerable.addedEffect = "FarmTinker";
+		tinkerable.effectAttributeId = Db.Get().Attributes.Botanist.Id;
+		tinkerable.effectMultiplier = 0.1f;
 		tinkerable.SetWorkTime(15f);
 		tinkerable.attributeConverter = Db.Get().AttributeConverters.PlantTendSpeed;
 		tinkerable.attributeExperienceMultiplier = DUPLICANTSTATS.ATTRIBUTE_LEVELING.PART_DAY_EXPERIENCE;
@@ -99,7 +108,8 @@ public class Tinkerable : Workable
 		tinkerable.shouldShowSkillPerkStatusItem = false;
 		prefab.AddOrGet<Storage>();
 		prefab.AddOrGet<Effects>();
-		prefab.GetComponent<KPrefabID>().prefabInitFn += delegate(GameObject inst)
+		KPrefabID component = prefab.GetComponent<KPrefabID>();
+		component.prefabInitFn += delegate(GameObject inst)
 		{
 			inst.GetComponent<Tinkerable>().SetOffsetTable(OffsetGroups.InvertedStandardTable);
 		};
@@ -150,7 +160,8 @@ public class Tinkerable : Workable
 
 	private void OnStorageChange(object data)
 	{
-		if (((GameObject)data).HasTag(tinkerMaterialTag))
+		GameObject go = (GameObject)data;
+		if (go.HasTag(tinkerMaterialTag))
 		{
 			QueueUpdateChore();
 		}
@@ -174,11 +185,11 @@ public class Tinkerable : Workable
 	{
 		Operational component = GetComponent<Operational>();
 		bool flag = component == null || component.IsFunctional;
-		bool num = HasEffect();
-		bool flag2 = RoomHasActiveTinkerstation();
-		bool flag3 = !num && flag2 && flag;
-		bool flag4 = num || !flag2;
-		if (chore == null && flag3)
+		bool flag2 = HasEffect();
+		bool flag3 = RoomHasActiveTinkerstation();
+		bool flag4 = !flag2 && flag3 && flag;
+		bool flag5 = flag2 || !flag3;
+		if (chore == null && flag4)
 		{
 			UpdateMaterialReservation(shouldReserve: true);
 			if (HasMaterial())
@@ -197,12 +208,13 @@ public class Tinkerable : Workable
 				}, null, null, null, run_until_complete: true, OnFetchComplete, null, null, FetchOrder2.OperationalRequirement.Functional);
 			}
 			chore.AddPrecondition(ChorePreconditions.instance.HasSkillPerk, requiredSkillPerk);
-			if (!string.IsNullOrEmpty(GetComponent<RoomTracker>().requiredRoomType))
+			RoomTracker component2 = GetComponent<RoomTracker>();
+			if (!string.IsNullOrEmpty(component2.requiredRoomType))
 			{
 				chore.AddPrecondition(ChorePreconditions.instance.IsInMyRoom, Grid.PosToCell(base.transform.GetPosition()));
 			}
 		}
-		else if (chore != null && flag4)
+		else if (chore != null && flag5)
 		{
 			UpdateMaterialReservation(shouldReserve: false);
 			chore.Cancel("No longer needed");
@@ -222,10 +234,15 @@ public class Tinkerable : Workable
 		}
 		foreach (KPrefabID building in roomTracker.room.buildings)
 		{
-			if (!(building == null))
+			if (building == null)
 			{
-				TinkerStation component = building.GetComponent<TinkerStation>();
-				if (component != null && component.outputPrefab == tinkerMaterialTag && building.GetComponent<Operational>().IsOperational)
+				continue;
+			}
+			TinkerStation component = building.GetComponent<TinkerStation>();
+			if (component != null && component.outputPrefab == tinkerMaterialTag)
+			{
+				Operational component2 = building.GetComponent<Operational>();
+				if (component2.IsOperational)
 				{
 					return true;
 				}
@@ -238,12 +255,12 @@ public class Tinkerable : Workable
 	{
 		if (shouldReserve && !hasReservedMaterial)
 		{
-			MaterialNeeds.Instance.UpdateNeed(tinkerMaterialTag, tinkerMaterialAmount);
+			MaterialNeeds.UpdateNeed(tinkerMaterialTag, tinkerMaterialAmount, base.gameObject.GetMyWorldId());
 			hasReservedMaterial = shouldReserve;
 		}
 		else if (!shouldReserve && hasReservedMaterial)
 		{
-			MaterialNeeds.Instance.UpdateNeed(tinkerMaterialTag, 0f - tinkerMaterialAmount);
+			MaterialNeeds.UpdateNeed(tinkerMaterialTag, 0f - tinkerMaterialAmount, base.gameObject.GetMyWorldId());
 			hasReservedMaterial = shouldReserve;
 		}
 	}
@@ -259,7 +276,8 @@ public class Tinkerable : Workable
 	{
 		base.OnCompleteWork(worker);
 		storage.ConsumeIgnoringDisease(tinkerMaterialTag, tinkerMaterialAmount);
-		effects.Add(addedEffect, should_save: true);
+		float totalValue = worker.GetAttributes().Get(Db.Get().Attributes.Get(effectAttributeId)).GetTotalValue();
+		effects.Add(addedEffect, should_save: true).timeRemaining *= 1f + totalValue * effectMultiplier;
 		UpdateMaterialReservation(shouldReserve: false);
 		chore = null;
 		UpdateChore();

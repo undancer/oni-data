@@ -10,19 +10,19 @@ using UnityEngine;
 public class EnergyConsumer : KMonoBehaviour, ISaveLoadable, IEnergyConsumer, IGameObjectEffectDescriptor
 {
 	[MyCmpReq]
-	private Building building;
+	private Building building = null;
 
 	[MyCmpGet]
-	protected Operational operational;
+	protected Operational operational = null;
 
 	[MyCmpGet]
 	private KSelectable selectable;
 
 	[SerializeField]
-	public int powerSortOrder;
+	public int powerSortOrder = 0;
 
 	[Serialize]
-	protected float circuitOverloadTime;
+	protected float circuitOverloadTime = 0f;
 
 	public static readonly Operational.Flag PoweredFlag = new Operational.Flag("powered", Operational.Flag.Type.Requirement);
 

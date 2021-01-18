@@ -43,8 +43,10 @@ public class LogicOperationalController : KMonoBehaviour
 
 	private LogicCircuitNetwork GetNetwork()
 	{
-		int portCell = GetComponent<LogicPorts>().GetPortCell(PORT_ID);
-		return Game.Instance.logicCircuitManager.GetNetworkForCell(portCell);
+		LogicPorts component = GetComponent<LogicPorts>();
+		int portCell = component.GetPortCell(PORT_ID);
+		LogicCircuitManager logicCircuitManager = Game.Instance.logicCircuitManager;
+		return logicCircuitManager.GetNetworkForCell(portCell);
 	}
 
 	private LogicCircuitNetwork CheckWireState()
@@ -57,7 +59,9 @@ public class LogicOperationalController : KMonoBehaviour
 
 	private static string ResolveInfoStatusItemString(string format_str, object data)
 	{
-		return ((LogicOperationalController)data).operational.GetFlag(LogicOperationalFlag) ? BUILDING.STATUSITEMS.LOGIC.LOGIC_CONTROLLED_ENABLED : BUILDING.STATUSITEMS.LOGIC.LOGIC_CONTROLLED_DISABLED;
+		LogicOperationalController logicOperationalController = (LogicOperationalController)data;
+		Operational operational = logicOperationalController.operational;
+		return operational.GetFlag(LogicOperationalFlag) ? BUILDING.STATUSITEMS.LOGIC.LOGIC_CONTROLLED_ENABLED : BUILDING.STATUSITEMS.LOGIC.LOGIC_CONTROLLED_DISABLED;
 	}
 
 	private void OnLogicValueChanged(object data)

@@ -12,13 +12,13 @@ public class SmartReservoir : KMonoBehaviour, IActivationRangeTarget, ISim200ms
 	private Operational operational;
 
 	[Serialize]
-	private int activateValue;
+	private int activateValue = 0;
 
 	[Serialize]
 	private int deactivateValue = 100;
 
 	[Serialize]
-	private bool activated;
+	private bool activated = false;
 
 	[MyCmpGet]
 	private LogicPorts logicPorts;
@@ -136,7 +136,8 @@ public class SmartReservoir : KMonoBehaviour, IActivationRangeTarget, ISim200ms
 
 	private void OnCopySettings(object data)
 	{
-		SmartReservoir component = ((GameObject)data).GetComponent<SmartReservoir>();
+		GameObject gameObject = (GameObject)data;
+		SmartReservoir component = gameObject.GetComponent<SmartReservoir>();
 		if (component != null)
 		{
 			ActivateValue = component.ActivateValue;

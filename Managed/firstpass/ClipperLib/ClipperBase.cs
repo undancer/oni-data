@@ -34,11 +34,7 @@ namespace ClipperLib
 
 		internal static bool near_zero(double val)
 		{
-			if (val > -1E-20)
-			{
-				return val < 1E-20;
-			}
-			return false;
+			return val > -1E-20 && val < 1E-20;
 		}
 
 		public void Swap(ref long val1, ref long val2)
@@ -72,25 +68,9 @@ namespace ClipperLib
 		{
 			if (UseFullRange)
 			{
-				if ((pt.X != linePt1.X || pt.Y != linePt1.Y) && (pt.X != linePt2.X || pt.Y != linePt2.Y))
-				{
-					if (pt.X > linePt1.X == pt.X < linePt2.X && pt.Y > linePt1.Y == pt.Y < linePt2.Y)
-					{
-						return Int128.Int128Mul(pt.X - linePt1.X, linePt2.Y - linePt1.Y) == Int128.Int128Mul(linePt2.X - linePt1.X, pt.Y - linePt1.Y);
-					}
-					return false;
-				}
-				return true;
+				return (pt.X == linePt1.X && pt.Y == linePt1.Y) || (pt.X == linePt2.X && pt.Y == linePt2.Y) || (pt.X > linePt1.X == pt.X < linePt2.X && pt.Y > linePt1.Y == pt.Y < linePt2.Y && Int128.Int128Mul(pt.X - linePt1.X, linePt2.Y - linePt1.Y) == Int128.Int128Mul(linePt2.X - linePt1.X, pt.Y - linePt1.Y));
 			}
-			if ((pt.X != linePt1.X || pt.Y != linePt1.Y) && (pt.X != linePt2.X || pt.Y != linePt2.Y))
-			{
-				if (pt.X > linePt1.X == pt.X < linePt2.X && pt.Y > linePt1.Y == pt.Y < linePt2.Y)
-				{
-					return (pt.X - linePt1.X) * (linePt2.Y - linePt1.Y) == (linePt2.X - linePt1.X) * (pt.Y - linePt1.Y);
-				}
-				return false;
-			}
-			return true;
+			return (pt.X == linePt1.X && pt.Y == linePt1.Y) || (pt.X == linePt2.X && pt.Y == linePt2.Y) || (pt.X > linePt1.X == pt.X < linePt2.X && pt.Y > linePt1.Y == pt.Y < linePt2.Y && (pt.X - linePt1.X) * (linePt2.Y - linePt1.Y) == (linePt2.X - linePt1.X) * (pt.Y - linePt1.Y));
 		}
 
 		internal bool PointOnPolygon(IntPoint pt, OutPt pp, bool UseFullRange)
@@ -232,14 +212,15 @@ namespace ClipperLib
 				{
 					E = E.Next;
 				}
-				if (E.Top.Y != E.Prev.Bot.Y)
+				if (E.Top.Y == E.Prev.Bot.Y)
 				{
-					if (tEdge.Prev.Bot.X < E.Bot.X)
-					{
-						E = tEdge;
-					}
-					break;
+					continue;
 				}
+				if (tEdge.Prev.Bot.X < E.Bot.X)
+				{
+					E = tEdge;
+				}
+				break;
 			}
 			return E;
 		}
@@ -348,45 +329,49 @@ namespace ClipperLib
 				{
 					ReverseHorizontal(E);
 				}
-				return tEdge.Next;
+				tEdge = tEdge.Next;
 			}
-			while (tEdge.Top.Y == tEdge.Prev.Bot.Y && tEdge.Prev.OutIdx != -2)
+			else
 			{
-				tEdge = tEdge.Prev;
-			}
-			if (tEdge.Dx == -3.4E+38 && tEdge.Prev.OutIdx != -2)
-			{
-				TEdge tEdge3 = tEdge;
-				while (tEdge3.Next.Dx == -3.4E+38)
+				while (tEdge.Top.Y == tEdge.Prev.Bot.Y && tEdge.Prev.OutIdx != -2)
 				{
-					tEdge3 = tEdge3.Next;
+					tEdge = tEdge.Prev;
 				}
-				if (tEdge3.Next.Top.X == tEdge.Prev.Top.X)
+				if (tEdge.Dx == -3.4E+38 && tEdge.Prev.OutIdx != -2)
 				{
-					if (!LeftBoundIsForward)
+					TEdge tEdge3 = tEdge;
+					while (tEdge3.Next.Dx == -3.4E+38)
+					{
+						tEdge3 = tEdge3.Next;
+					}
+					if (tEdge3.Next.Top.X == tEdge.Prev.Top.X)
+					{
+						if (!LeftBoundIsForward)
+						{
+							tEdge = tEdge3.Next;
+						}
+					}
+					else if (tEdge3.Next.Top.X > tEdge.Prev.Top.X)
 					{
 						tEdge = tEdge3.Next;
 					}
 				}
-				else if (tEdge3.Next.Top.X > tEdge.Prev.Top.X)
+				while (E != tEdge)
 				{
-					tEdge = tEdge3.Next;
+					E.NextInLML = E.Prev;
+					if (E.Dx == -3.4E+38 && E != tEdge2 && E.Bot.X != E.Next.Top.X)
+					{
+						ReverseHorizontal(E);
+					}
+					E = E.Prev;
 				}
-			}
-			while (E != tEdge)
-			{
-				E.NextInLML = E.Prev;
 				if (E.Dx == -3.4E+38 && E != tEdge2 && E.Bot.X != E.Next.Top.X)
 				{
 					ReverseHorizontal(E);
 				}
-				E = E.Prev;
+				tEdge = tEdge.Prev;
 			}
-			if (E.Dx == -3.4E+38 && E != tEdge2 && E.Bot.X != E.Next.Top.X)
-			{
-				ReverseHorizontal(E);
-			}
-			return tEdge.Prev;
+			return tEdge;
 		}
 
 		public bool AddPath(List<IntPoint> pg, PolyType polyType, bool Closed)
@@ -634,7 +619,7 @@ namespace ClipperLib
 		{
 			e.Delta.X = e.Top.X - e.Bot.X;
 			e.Delta.Y = e.Top.Y - e.Bot.Y;
-			if (e.Delta.Y == 0L)
+			if (e.Delta.Y == 0)
 			{
 				e.Dx = -3.4E+38;
 			}

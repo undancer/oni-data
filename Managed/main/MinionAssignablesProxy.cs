@@ -11,7 +11,7 @@ public class MinionAssignablesProxy : KMonoBehaviour, IAssignableIdentity
 	[Serialize]
 	private int target_instance_id = -1;
 
-	private bool slotsConfigured;
+	private bool slotsConfigured = false;
 
 	private static readonly EventSystem.IntraObjectHandler<MinionAssignablesProxy> OnAssignablesChangedDelegate = new EventSystem.IntraObjectHandler<MinionAssignablesProxy>(delegate(MinionAssignablesProxy component, object data)
 	{
@@ -175,7 +175,8 @@ public class MinionAssignablesProxy : KMonoBehaviour, IAssignableIdentity
 	{
 		if (!target.IsNull())
 		{
-			((KMonoBehaviour)target).Trigger(-1585839766, data);
+			KMonoBehaviour kMonoBehaviour = (KMonoBehaviour)target;
+			kMonoBehaviour.Trigger(-1585839766, data);
 		}
 	}
 

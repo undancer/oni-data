@@ -1,16 +1,25 @@
+using System.Collections.Generic;
 using STRINGS;
 using TUNING;
 using UnityEngine;
 
 public class PropFacilityPaintingConfig : IEntityConfig
 {
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
-		GameObject obj = EntityTemplates.CreatePlacedEntity("PropFacilityPainting", STRINGS.BUILDINGS.PREFABS.PROPFACILITYPAINTING.NAME, STRINGS.BUILDINGS.PREFABS.PROPFACILITYPAINTING.DESC, 50f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("gravitas_painting_kanim"), initialAnim: "off", sceneLayer: Grid.SceneLayer.Building, width: 3, height: 2);
-		PrimaryElement component = obj.GetComponent<PrimaryElement>();
+		GameObject gameObject = EntityTemplates.CreatePlacedEntity("PropFacilityPainting", STRINGS.BUILDINGS.PREFABS.PROPFACILITYPAINTING.NAME, STRINGS.BUILDINGS.PREFABS.PROPFACILITYPAINTING.DESC, 50f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("gravitas_painting_kanim"), initialAnim: "off", sceneLayer: Grid.SceneLayer.Building, width: 3, height: 2, element: SimHashes.Creature, additionalTags: new List<Tag>
+		{
+			GameTags.Gravitas
+		});
+		PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
 		component.SetElement(SimHashes.Granite);
 		component.Temperature = 294.15f;
-		return obj;
+		return gameObject;
 	}
 
 	public void OnPrefabInit(GameObject inst)

@@ -8,9 +8,9 @@ public class YellowAlertManager : GameStateMachine<YellowAlertManager, YellowAle
 	{
 		private static Instance instance;
 
-		private bool hasTopPriorityChore;
+		private bool hasTopPriorityChore = false;
 
-		public Notification notification = new Notification(MISC.NOTIFICATIONS.YELLOWALERT.NAME, NotificationType.Bad, HashedString.Invalid, (List<Notification> notificationList, object data) => MISC.NOTIFICATIONS.YELLOWALERT.TOOLTIP, null, expires: false);
+		public Notification notification = new Notification(MISC.NOTIFICATIONS.YELLOWALERT.NAME, NotificationType.Bad, (List<Notification> notificationList, object data) => MISC.NOTIFICATIONS.YELLOWALERT.TOOLTIP, null, expires: false);
 
 		public static void DestroyInstance()
 		{
@@ -56,7 +56,7 @@ public class YellowAlertManager : GameStateMachine<YellowAlertManager, YellowAle
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = off;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		off.ParamTransition(isOn, on, GameStateMachine<YellowAlertManager, Instance, IStateMachineTarget, object>.IsTrue);
 		on.Enter("EnterEvent", delegate
 		{

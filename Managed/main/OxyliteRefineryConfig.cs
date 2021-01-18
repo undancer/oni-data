@@ -30,22 +30,22 @@ public class OxyliteRefineryConfig : IBuildingConfig
 			"RefinedMetal",
 			"Plastic"
 		};
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: new float[2]
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(construction_mass: new float[2]
 		{
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER5[0],
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER2[0]
 		}, construction_materials: array, melting_point: 2400f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, id: "OxyliteRefinery", width: 3, height: 4, anim: "oxylite_refinery_kanim", hitpoints: 100, construction_time: 480f, decor: BUILDINGS.DECOR.PENALTY.TIER1);
-		obj.Overheatable = false;
-		obj.RequiresPowerInput = true;
-		obj.PowerInputOffset = new CellOffset(0, 0);
-		obj.EnergyConsumptionWhenActive = 1200f;
-		obj.ExhaustKilowattsWhenActive = 8f;
-		obj.SelfHeatKilowattsWhenActive = 4f;
-		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 1));
-		obj.AudioCategory = "HollowMetal";
-		obj.InputConduitType = ConduitType.Gas;
-		obj.UtilityInputOffset = new CellOffset(1, 0);
-		return obj;
+		buildingDef.Overheatable = false;
+		buildingDef.RequiresPowerInput = true;
+		buildingDef.PowerInputOffset = new CellOffset(0, 0);
+		buildingDef.EnergyConsumptionWhenActive = 1200f;
+		buildingDef.ExhaustKilowattsWhenActive = 8f;
+		buildingDef.SelfHeatKilowattsWhenActive = 4f;
+		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 1));
+		buildingDef.AudioCategory = "HollowMetal";
+		buildingDef.InputConduitType = ConduitType.Gas;
+		buildingDef.UtilityInputOffset = new CellOffset(1, 0);
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

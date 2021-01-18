@@ -18,7 +18,7 @@ public class LogicSwitch : Switch, IPlayerControlledToggle, ISim33ms
 
 	private bool wasOn;
 
-	private System.Action firstFrameCallback;
+	private System.Action firstFrameCallback = null;
 
 	public string SideScreenTitleKey => "STRINGS.BUILDINGS.PREFABS.LOGICSWITCH.SIDESCREEN_TITLE";
 
@@ -39,7 +39,8 @@ public class LogicSwitch : Switch, IPlayerControlledToggle, ISim33ms
 		base.OnSpawn();
 		wasOn = switchedOn;
 		UpdateLogicCircuit();
-		GetComponent<KBatchedAnimController>().Play(switchedOn ? "on" : "off");
+		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
+		component.Play(switchedOn ? "on" : "off");
 	}
 
 	protected override void OnCleanUp()
@@ -49,7 +50,8 @@ public class LogicSwitch : Switch, IPlayerControlledToggle, ISim33ms
 
 	private void OnCopySettings(object data)
 	{
-		LogicSwitch component = ((GameObject)data).GetComponent<LogicSwitch>();
+		GameObject gameObject = (GameObject)data;
+		LogicSwitch component = gameObject.GetComponent<LogicSwitch>();
 		if (component != null && switchedOn != component.switchedOn)
 		{
 			switchedOn = component.switchedOn;
@@ -78,7 +80,8 @@ public class LogicSwitch : Switch, IPlayerControlledToggle, ISim33ms
 
 	private void UpdateLogicCircuit()
 	{
-		GetComponent<LogicPorts>().SendSignal(PORT_ID, switchedOn ? 1 : 0);
+		LogicPorts component = GetComponent<LogicPorts>();
+		component.SendSignal(PORT_ID, switchedOn ? 1 : 0);
 	}
 
 	protected override void UpdateSwitchStatus()

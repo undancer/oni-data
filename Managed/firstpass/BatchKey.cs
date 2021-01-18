@@ -63,11 +63,7 @@ public struct BatchKey : IEquatable<BatchKey>
 
 	public bool Equals(BatchKey other)
 	{
-		if (_z == other._z && _layer == other._layer && _materialType == other._materialType && _groupID == other._groupID)
-		{
-			return _idx == other._idx;
-		}
-		return false;
+		return _z == other._z && _layer == other._layer && _materialType == other._materialType && _groupID == other._groupID && _idx == other._idx;
 	}
 
 	public override int GetHashCode()

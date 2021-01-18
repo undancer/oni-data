@@ -9,13 +9,13 @@ public class UserMenu
 	{
 		public MinMaxSlider.LockingType lockType = MinMaxSlider.LockingType.Drag;
 
-		public MinMaxSlider.Mode mode;
+		public MinMaxSlider.Mode mode = MinMaxSlider.Mode.Single;
 
-		public Slider.Direction direction;
+		public Slider.Direction direction = Slider.Direction.LeftToRight;
 
 		public bool interactable = true;
 
-		public bool lockRange;
+		public bool lockRange = false;
 
 		public string toolTip;
 
@@ -23,7 +23,7 @@ public class UserMenu
 
 		public string toolTipMax;
 
-		public float minLimit;
+		public float minLimit = 0f;
 
 		public float maxLimit = 100f;
 

@@ -41,11 +41,7 @@ public class KSplitCompactedVector<Header, Payload> : KCompactedVectorBase, ICol
 
 		public bool MoveNext()
 		{
-			if (headerCurrent.MoveNext())
-			{
-				return payloadCurrent.MoveNext();
-			}
-			return false;
+			return headerCurrent.MoveNext() && payloadCurrent.MoveNext();
 		}
 
 		public void Reset()
@@ -95,8 +91,8 @@ public class KSplitCompactedVector<Header, Payload> : KCompactedVectorBase, ICol
 	{
 		int num = headers.Count - 1;
 		int free_component_idx;
-		bool num2 = Free(handle, num, out free_component_idx);
-		if (num2)
+		bool flag = Free(handle, num, out free_component_idx);
+		if (flag)
 		{
 			if (free_component_idx < num)
 			{
@@ -106,11 +102,7 @@ public class KSplitCompactedVector<Header, Payload> : KCompactedVectorBase, ICol
 			headers.RemoveAt(num);
 			payloads.RemoveAt(num);
 		}
-		if (!num2)
-		{
-			return handle;
-		}
-		return HandleVector<int>.InvalidHandle;
+		return flag ? HandleVector<int>.InvalidHandle : handle;
 	}
 
 	public void GetData(HandleVector<int>.Handle handle, out Header header, out Payload payload)

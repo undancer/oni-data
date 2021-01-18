@@ -6,9 +6,9 @@ public class MinionPathFinderAbilities : PathFinderAbilities
 
 	private int proxyID;
 
-	private bool out_of_fuel;
+	private bool out_of_fuel = false;
 
-	private bool idleNavMaskEnabled;
+	private bool idleNavMaskEnabled = false;
 
 	public MinionPathFinderAbilities(Navigator navigator)
 		: base(navigator)
@@ -31,13 +31,9 @@ public class MinionPathFinderAbilities : PathFinderAbilities
 		idleNavMaskEnabled = enabled;
 	}
 
-	private static bool IsAccessPermitted(int proxyID, int cell, int from_cell)
+	private static bool IsAccessPermitted(int proxyID, int cell, int from_cell, NavType from_nav_type)
 	{
-		if (Grid.HasAccessDoor[cell])
-		{
-			return Grid.HasPermission(cell, proxyID, from_cell);
-		}
-		return true;
+		return Grid.HasPermission(cell, proxyID, from_cell, from_nav_type);
 	}
 
 	public override int GetSubmergedPathCostPenalty(PathFinder.PotentialPath path, NavGrid.Link link)
@@ -51,7 +47,7 @@ public class MinionPathFinderAbilities : PathFinderAbilities
 
 	public override bool TraversePath(ref PathFinder.PotentialPath path, int from_cell, NavType from_nav_type, int cost, int transition_id, int underwater_cost)
 	{
-		if (!IsAccessPermitted(proxyID, path.cell, from_cell))
+		if (!IsAccessPermitted(proxyID, path.cell, from_cell, from_nav_type))
 		{
 			return false;
 		}
@@ -59,7 +55,7 @@ public class MinionPathFinderAbilities : PathFinderAbilities
 		foreach (CellOffset offset in array)
 		{
 			int cell = Grid.OffsetCell(from_cell, offset);
-			if (!IsAccessPermitted(proxyID, cell, from_cell))
+			if (!IsAccessPermitted(proxyID, cell, from_cell, from_nav_type))
 			{
 				return false;
 			}

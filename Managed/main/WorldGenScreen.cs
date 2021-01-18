@@ -24,7 +24,10 @@ public class WorldGenScreen : NewGameFlowScreen
 		SaveLoader.SetActiveSaveFilePath(null);
 		try
 		{
-			File.Delete(WorldGen.SIM_SAVE_FILENAME);
+			for (int i = 0; File.Exists(WorldGen.GetSIMSaveFilename(i)); i++)
+			{
+				File.Delete(WorldGen.GetSIMSaveFilename(i));
+			}
 		}
 		catch (Exception ex)
 		{
@@ -37,7 +40,7 @@ public class WorldGenScreen : NewGameFlowScreen
 	{
 		if (AudioDebug.Get().musicEnabled && !MusicManager.instance.SongIsPlaying("Music_FrontEnd"))
 		{
-			MusicManager.instance.StopSong("Music_TitleTheme");
+			MusicManager.instance.StopSong("Music_TitleTheme_Expansion1");
 			AudioMixer.instance.Stop(AudioMixerSnapshots.Get().FrontEndSnapshot);
 			AudioMixer.instance.Start(AudioMixerSnapshots.Get().FrontEndWorldGenerationSnapshot);
 			MusicManager.instance.PlaySong("Music_FrontEnd");

@@ -22,7 +22,7 @@ public class DrowningMonitor : KMonoBehaviour, IWiltCause, ISlicedSim1000ms
 	[Serialize]
 	private bool drowned;
 
-	private bool drowning;
+	private bool drowning = false;
 
 	protected const float MaxDrownTime = 75f;
 
@@ -32,7 +32,7 @@ public class DrowningMonitor : KMonoBehaviour, IWiltCause, ISlicedSim1000ms
 
 	public bool canDrownToDeath = true;
 
-	public bool livesUnderWater;
+	public bool livesUnderWater = false;
 
 	private Guid drowningStatusGuid;
 

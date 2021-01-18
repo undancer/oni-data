@@ -1,0 +1,105 @@
+using System.Collections.Generic;
+using Klei.AI;
+using TUNING;
+using UnityEngine;
+
+public static class BaseBeeConfig
+{
+	public static GameObject BaseBee(string id, string name, string desc, string anim_file, string traitId, EffectorValues decor, bool is_baby, string symbolOverridePrefix = null)
+	{
+		GameObject gameObject = EntityTemplates.CreatePlacedEntity(id, name, desc, 5f, Assets.GetAnim(anim_file), "idle_loop", Grid.SceneLayer.Creatures, 1, 1, decor);
+		string text = "FlyerNavGrid1x1";
+		NavType navType = NavType.Hover;
+		int num = 6;
+		if (is_baby)
+		{
+			text = "WalkerBabyNavGrid";
+			navType = NavType.Floor;
+			num = 1;
+		}
+		EntityTemplates.ExtendEntityToBasicCreature(gameObject, FactionManager.FactionID.Hostile, traitId, text, navType, 32, num, "Meat", 0, drownVulnerable: true, entombVulnerable: true, lethalLowTemperature: CREATURES.TEMPERATURE.FREEZING_2, warningLowTemperature: CREATURES.TEMPERATURE.FREEZING_1, warningHighTemperature: CREATURES.TEMPERATURE.HOT_1, lethalHighTemperature: CREATURES.TEMPERATURE.HOT_2);
+		if (symbolOverridePrefix != null)
+		{
+			gameObject.AddOrGet<SymbolOverrideController>().ApplySymbolOverridesByAffix(Assets.GetAnim(anim_file), symbolOverridePrefix);
+		}
+		KPrefabID component = gameObject.GetComponent<KPrefabID>();
+		component.AddTag(GameTags.Creatures.Flyer);
+		component.prefabInitFn += delegate(GameObject inst)
+		{
+			inst.GetAttributes().Add(Db.Get().Attributes.MaxUnderwaterTravelCost);
+		};
+		gameObject.AddOrGet<LoopingSounds>();
+		gameObject.AddOrGetDef<ThreatMonitor.Def>();
+		EntityTemplates.CreateAndRegisterBaggedCreature(gameObject, must_stand_on_top_for_pickup: true, allow_mark_for_capture: false);
+		Bee bee = gameObject.AddOrGet<Bee>();
+		RadiationEmitter radiationEmitter = gameObject.AddComponent<RadiationEmitter>();
+		radiationEmitter.emitRate = 0.1f;
+		if (!is_baby)
+		{
+			bee.radiationAmount = 5f;
+			radiationEmitter.emitRadiusX = 3;
+			radiationEmitter.emitRadiusY = 3;
+			gameObject.AddOrGetDef<SubmergedMonitor.Def>();
+			gameObject.AddWeapon(2f, 3f);
+		}
+		else
+		{
+			bee.radiationAmount = 2f;
+			radiationEmitter.emitRadiusX = 2;
+			radiationEmitter.emitRadiusY = 2;
+			gameObject.AddOrGetDef<CreatureFallMonitor.Def>();
+		}
+		radiationEmitter.emitRads = bee.radiationAmount;
+		ElementConsumer elementConsumer = gameObject.AddOrGet<ElementConsumer>();
+		elementConsumer.elementToConsume = SimHashes.CarbonDioxide;
+		elementConsumer.consumptionRate = 0.1f;
+		elementConsumer.consumptionRadius = 3;
+		elementConsumer.showInStatusPanel = true;
+		elementConsumer.sampleCellOffset = new Vector3(0f, 0f, 0f);
+		elementConsumer.isRequired = false;
+		elementConsumer.storeOnConsume = false;
+		elementConsumer.showDescriptor = true;
+		elementConsumer.EnableConsumption(enabled: false);
+		gameObject.AddOrGetDef<BeeSleepMonitor.Def>();
+		gameObject.AddOrGetDef<ForagingMonitor.Def>();
+		gameObject.AddOrGet<Storage>();
+		ChoreTable.Builder chore_table = new ChoreTable.Builder().Add(new DeathStates.Def()).Add(new AnimInterruptStates.Def()).Add(new GrowUpStates.Def())
+			.Add(new BaggedStates.Def())
+			.Add(new FallStates.Def())
+			.Add(new StunnedStates.Def())
+			.Add(new DebugGoToStates.Def())
+			.Add(new DrowningStates.Def())
+			.Add(new FleeStates.Def())
+			.Add(new AttackStates.Def(), !is_baby)
+			.PushInterruptGroup()
+			.Add(new BeeSleepStates.Def())
+			.Add(new BeeMakeHiveStates.Def())
+			.Add(new EatStates.Def())
+			.Add(new CallAdultStates.Def())
+			.Add(new ForageStates.Def(SimHashes.Radium.CreateTag()))
+			.PopInterruptGroup()
+			.Add(new BuzzStates.Def());
+		EntityTemplates.AddCreatureBrain(gameObject, chore_table, GameTags.Creatures.Species.BeetaSpecies, symbolOverridePrefix);
+		return gameObject;
+	}
+
+	public static GameObject SetupDiet(GameObject prefab, HashSet<Tag> consumed_tags, Tag producedTag, float caloriesPerKg)
+	{
+		Diet.Info[] infos = new Diet.Info[1]
+		{
+			new Diet.Info(consumed_tags, producedTag, caloriesPerKg)
+		};
+		Diet diet = new Diet(infos);
+		CreatureCalorieMonitor.Def def = prefab.AddOrGetDef<CreatureCalorieMonitor.Def>();
+		def.diet = diet;
+		SolidConsumerMonitor.Def def2 = prefab.AddOrGetDef<SolidConsumerMonitor.Def>();
+		def2.diet = diet;
+		return prefab;
+	}
+
+	public static void SetupLoopingSounds(GameObject inst)
+	{
+		LoopingSounds component = inst.GetComponent<LoopingSounds>();
+		component.StartSound(GlobalAssets.GetSound("ShineBug_wings_LP"));
+	}
+}

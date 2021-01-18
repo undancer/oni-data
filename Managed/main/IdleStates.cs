@@ -44,6 +44,15 @@ public class IdleStates : GameStateMachine<IdleStates, IdleStates.Instance, ISta
 			{
 				return false;
 			}
+			Grid.ObjectLayers[1].TryGetValue(cell, out var value);
+			if (value != null)
+			{
+				BuildingUnderConstruction component = value.GetComponent<BuildingUnderConstruction>();
+				if (component != null && component.Def.isSolidTile)
+				{
+					return false;
+				}
+			}
 			bool flag = navType != NavType.Swim;
 			bool flag2 = navType == NavType.Swim || allowLiquid;
 			bool flag3 = Grid.IsSubstantialLiquid(cell);
@@ -86,10 +95,8 @@ public class IdleStates : GameStateMachine<IdleStates, IdleStates.Instance, ISta
 	public void MoveToNewCell(Instance smi)
 	{
 		Navigator component = smi.GetComponent<Navigator>();
-		MoveCellQuery moveCellQuery = new MoveCellQuery(component.CurrentNavType)
-		{
-			allowLiquid = smi.gameObject.HasTag(GameTags.Amphibious)
-		};
+		MoveCellQuery moveCellQuery = new MoveCellQuery(component.CurrentNavType);
+		moveCellQuery.allowLiquid = smi.gameObject.HasTag(GameTags.Amphibious);
 		component.RunQuery(moveCellQuery);
 		component.GoTo(moveCellQuery.GetResultCell());
 	}
@@ -99,7 +106,8 @@ public class IdleStates : GameStateMachine<IdleStates, IdleStates.Instance, ISta
 		KAnimControllerBase component = smi.GetComponent<KAnimControllerBase>();
 		Navigator component2 = smi.GetComponent<Navigator>();
 		NavType nav_type = component2.CurrentNavType;
-		if (smi.GetComponent<Facing>().GetFacing())
+		Facing component3 = smi.GetComponent<Facing>();
+		if (component3.GetFacing())
 		{
 			nav_type = NavGrid.MirrorNavType(nav_type);
 		}

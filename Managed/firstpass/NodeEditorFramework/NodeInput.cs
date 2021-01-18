@@ -24,17 +24,7 @@ namespace NodeEditorFramework
 			}
 		}
 
-		public bool IsValueNull
-		{
-			get
-			{
-				if (!(connection != null))
-				{
-					return true;
-				}
-				return connection.IsValueNull;
-			}
-		}
+		public bool IsValueNull => !(connection != null) || connection.IsValueNull;
 
 		public static NodeInput Create(Node nodeBody, string inputName, string inputType)
 		{
@@ -92,20 +82,12 @@ namespace NodeEditorFramework
 
 		public object GetValue()
 		{
-			if (!(connection != null))
-			{
-				return null;
-			}
-			return connection.GetValue();
+			return (connection != null) ? connection.GetValue() : null;
 		}
 
 		public object GetValue(Type type)
 		{
-			if (!(connection != null))
-			{
-				return null;
-			}
-			return connection.GetValue(type);
+			return (connection != null) ? connection.GetValue(type) : null;
 		}
 
 		public void SetValue(object value)
@@ -118,11 +100,7 @@ namespace NodeEditorFramework
 
 		public T GetValue<T>()
 		{
-			if (!(connection != null))
-			{
-				return NodeOutput.GetDefault<T>();
-			}
-			return connection.GetValue<T>();
+			return (connection != null) ? connection.GetValue<T>() : NodeOutput.GetDefault<T>();
 		}
 
 		public void SetValue<T>(T value)
@@ -195,11 +173,7 @@ namespace NodeEditorFramework
 
 		public override Node GetNodeAcrossConnection()
 		{
-			if (!(connection != null))
-			{
-				return null;
-			}
-			return connection.body;
+			return (connection != null) ? connection.body : null;
 		}
 	}
 }

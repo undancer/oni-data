@@ -20,7 +20,7 @@ public class KPrefabID : KMonoBehaviour, ISaveLoadable
 
 	private TagBits tagBits;
 
-	private bool initialized;
+	private bool initialized = false;
 
 	private bool dirtyTagBits = true;
 
@@ -208,7 +208,7 @@ public class KPrefabID : KMonoBehaviour, ISaveLoadable
 		if (Tags.Add(tag))
 		{
 			dirtyTagBits = true;
-			Trigger(-1582839653);
+			Trigger(-1582839653, new TagChangedEventData(tag, added: true));
 		}
 		if (serialize)
 		{
@@ -221,7 +221,7 @@ public class KPrefabID : KMonoBehaviour, ISaveLoadable
 		if (Tags.Remove(tag))
 		{
 			dirtyTagBits = true;
-			Trigger(-1582839653);
+			Trigger(-1582839653, new TagChangedEventData(tag, added: false));
 		}
 		serializedTags.Remove(tag);
 	}
@@ -294,11 +294,7 @@ public class KPrefabID : KMonoBehaviour, ISaveLoadable
 	public override bool Equals(object o)
 	{
 		KPrefabID kPrefabID = o as KPrefabID;
-		if (kPrefabID != null)
-		{
-			return PrefabTag == kPrefabID.PrefabTag;
-		}
-		return false;
+		return kPrefabID != null && PrefabTag == kPrefabID.PrefabTag;
 	}
 
 	public override int GetHashCode()
@@ -331,7 +327,8 @@ public class KPrefabID : KMonoBehaviour, ISaveLoadable
 	{
 		InitializeTags(force_initialize: true);
 		KPrefabIDTracker kPrefabIDTracker = KPrefabIDTracker.Get();
-		if ((bool)kPrefabIDTracker.GetInstance(InstanceID))
+		KPrefabID instance = kPrefabIDTracker.GetInstance(InstanceID);
+		if ((bool)instance)
 		{
 			conflicted = true;
 		}

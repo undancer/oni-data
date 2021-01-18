@@ -16,22 +16,22 @@ public class GasVentHighPressureConfig : IBuildingConfig
 			"RefinedMetal",
 			"Plastic"
 		};
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: new float[2]
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(construction_mass: new float[2]
 		{
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER3[0],
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER1[0]
 		}, construction_materials: array, melting_point: 1600f, build_location_rule: BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, id: "GasVentHighPressure", width: 1, height: 1, anim: "ventgas_powered_kanim", hitpoints: 30, construction_time: 30f, decor: BUILDINGS.DECOR.PENALTY.TIER1);
-		obj.InputConduitType = ConduitType.Gas;
-		obj.Floodable = false;
-		obj.Overheatable = false;
-		obj.ViewMode = OverlayModes.GasConduits.ID;
-		obj.AudioCategory = "Metal";
-		obj.UtilityInputOffset = new CellOffset(0, 0);
-		obj.UtilityOutputOffset = new CellOffset(0, 0);
-		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
+		buildingDef.InputConduitType = ConduitType.Gas;
+		buildingDef.Floodable = false;
+		buildingDef.Overheatable = false;
+		buildingDef.ViewMode = OverlayModes.GasConduits.ID;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
+		buildingDef.UtilityOutputOffset = new CellOffset(0, 0);
+		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.GasVentIDs, "GasVentHighPressure");
 		SoundEventVolumeCache.instance.AddVolume("ventgas_kanim", "GasVent_clunk", NOISE_POLLUTION.NOISY.TIER0);
-		return obj;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -46,7 +46,8 @@ public class GasVentHighPressureConfig : IBuildingConfig
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
 		conduitConsumer.conduitType = ConduitType.Gas;
 		conduitConsumer.ignoreMinMassCheck = true;
-		BuildingTemplates.CreateDefaultStorage(go).showInUI = true;
+		Storage storage = BuildingTemplates.CreateDefaultStorage(go);
+		storage.showInUI = true;
 		go.AddOrGet<SimpleVent>();
 	}
 

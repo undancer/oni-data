@@ -52,18 +52,24 @@ public class GraphedLine : KMonoBehaviour
 
 	public void HidePointHighlight()
 	{
-		highlightPoint.SetActive(value: false);
+		if (highlightPoint != null)
+		{
+			highlightPoint.SetActive(value: false);
+		}
 	}
 
 	public void SetPointHighlight(Vector2 point)
 	{
-		highlightPoint.SetActive(value: true);
-		Vector2 relativePosition = layer.graph.GetRelativePosition(point);
-		highlightPoint.rectTransform().SetLocalPosition(new Vector2(relativePosition.x * layer.graph.rectTransform().sizeDelta.x - layer.graph.rectTransform().sizeDelta.x / 2f, relativePosition.y * layer.graph.rectTransform().sizeDelta.y - layer.graph.rectTransform().sizeDelta.y / 2f));
-		ToolTip component = layer.graph.GetComponent<ToolTip>();
-		component.ClearMultiStringTooltip();
-		component.tooltipPositionOffset = new Vector2(highlightPoint.rectTransform().localPosition.x, layer.graph.rectTransform().rect.height / 2f - 12f);
-		component.SetSimpleTooltip(layer.graph.axis_x.name + " " + point.x + ", " + Mathf.RoundToInt(point.y) + " " + layer.graph.axis_y.name);
-		ToolTipScreen.Instance.SetToolTip(component);
+		if (!(highlightPoint == null))
+		{
+			highlightPoint.SetActive(value: true);
+			Vector2 relativePosition = layer.graph.GetRelativePosition(point);
+			highlightPoint.rectTransform().SetLocalPosition(new Vector2(relativePosition.x * layer.graph.rectTransform().sizeDelta.x - layer.graph.rectTransform().sizeDelta.x / 2f, relativePosition.y * layer.graph.rectTransform().sizeDelta.y - layer.graph.rectTransform().sizeDelta.y / 2f));
+			ToolTip component = layer.graph.GetComponent<ToolTip>();
+			component.ClearMultiStringTooltip();
+			component.tooltipPositionOffset = new Vector2(highlightPoint.rectTransform().localPosition.x, layer.graph.rectTransform().rect.height / 2f - 12f);
+			component.SetSimpleTooltip(layer.graph.axis_x.name + " " + point.x + ", " + Mathf.RoundToInt(point.y) + " " + layer.graph.axis_y.name);
+			ToolTipScreen.Instance.SetToolTip(component);
+		}
 	}
 }

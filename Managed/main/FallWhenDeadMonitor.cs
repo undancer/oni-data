@@ -10,16 +10,13 @@ public class FallWhenDeadMonitor : GameStateMachine<FallWhenDeadMonitor, FallWhe
 		public bool IsEntombed()
 		{
 			Pickupable component = GetComponent<Pickupable>();
-			if (component != null)
-			{
-				return component.IsEntombed;
-			}
-			return false;
+			return component != null && component.IsEntombed;
 		}
 
 		public bool IsFalling()
 		{
-			int num = Grid.CellBelow(Grid.PosToCell(base.master.transform.GetPosition()));
+			int cell = Grid.PosToCell(base.master.transform.GetPosition());
+			int num = Grid.CellBelow(cell);
 			if (!Grid.IsValidCell(num))
 			{
 				return false;

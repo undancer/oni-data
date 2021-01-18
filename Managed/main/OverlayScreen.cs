@@ -26,6 +26,8 @@ public class OverlayScreen : KMonoBehaviour
 
 	public static HashSet<Tag> SolidConveyorIDs = new HashSet<Tag>();
 
+	public static HashSet<Tag> RadiationIDs = new HashSet<Tag>();
+
 	[EventRef]
 	[SerializeField]
 	public string techViewSoundPath;
@@ -162,6 +164,7 @@ public class OverlayScreen : KMonoBehaviour
 		RegisterMode(new OverlayModes.Logic(logicModeUIPrefab));
 		RegisterMode(new OverlayModes.SolidConveyor());
 		RegisterMode(new OverlayModes.TileMode());
+		RegisterMode(new OverlayModes.Radiation());
 	}
 
 	private void RegisterMode(OverlayModes.Mode mode)
@@ -179,7 +182,7 @@ public class OverlayScreen : KMonoBehaviour
 
 	public void ToggleOverlay(HashedString newMode, bool allowSound = true)
 	{
-		int num = (allowSound ? ((!(currentModeInfo.mode.ViewMode() == newMode)) ? 1 : 0) : 0);
+		bool flag = allowSound && ((!(currentModeInfo.mode.ViewMode() == newMode)) ? true : false);
 		if (newMode != OverlayModes.None.ID)
 		{
 			ManagementMenu.Instance.CloseAll();
@@ -189,14 +192,13 @@ public class OverlayScreen : KMonoBehaviour
 		{
 			ManagementMenu.Instance.CloseAll();
 		}
-		ResourceCategoryScreen.Instance.Show(newMode == OverlayModes.None.ID && Game.Instance.GameStarted());
 		SimDebugView.Instance.SetMode(newMode);
 		if (!modeInfos.TryGetValue(newMode, out currentModeInfo))
 		{
 			currentModeInfo = modeInfos[OverlayModes.None.ID];
 		}
 		currentModeInfo.mode.Enable();
-		if (num != 0)
+		if (flag)
 		{
 			UpdateOverlaySounds();
 		}
@@ -236,11 +238,7 @@ public class OverlayScreen : KMonoBehaviour
 
 	public HashedString GetMode()
 	{
-		if (currentModeInfo.mode == null)
-		{
-			return OverlayModes.None.ID;
-		}
-		return currentModeInfo.mode.ViewMode();
+		return (currentModeInfo.mode != null) ? currentModeInfo.mode.ViewMode() : OverlayModes.None.ID;
 	}
 
 	private void UpdateOverlaySounds()

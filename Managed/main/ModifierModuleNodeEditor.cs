@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using LibNoiseDotNet.Graphics.Tools.Noise;
 using LibNoiseDotNet.Graphics.Tools.Noise.Modifier;
 using NodeEditorFramework;
@@ -63,9 +64,10 @@ public class ModifierModuleNodeEditor : BaseNodeEditor
 		{
 			Curve curve = module3D as Curve;
 			curve.ClearControlPoints();
-			foreach (ControlPoint control in value2.GetControls())
+			List<ControlPoint> controls = value2.GetControls();
+			foreach (ControlPoint item in controls)
 			{
-				curve.AddControlPoint(control);
+				curve.AddControlPoint(item);
 			}
 		}
 		else if (target.modifyType == ProcGen.Noise.Modifier.ModifyType.Terrace)

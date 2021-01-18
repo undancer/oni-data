@@ -193,9 +193,9 @@ public class KInputHandler
 	public static void Add(IInputHandler parent, GameObject child)
 	{
 		Component[] components = child.GetComponents<Component>();
-		for (int i = 0; i < components.Length; i++)
+		foreach (Component component in components)
 		{
-			IInputHandler inputHandler = components[i] as IInputHandler;
+			IInputHandler inputHandler = component as IInputHandler;
 			if (inputHandler != null)
 			{
 				Add(parent, inputHandler);

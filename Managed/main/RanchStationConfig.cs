@@ -8,13 +8,13 @@ public class RanchStationConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("RanchStation", 2, 3, "rancherstation_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.NONE);
-		obj.ViewMode = OverlayModes.Rooms.ID;
-		obj.Overheatable = false;
-		obj.AudioCategory = "Metal";
-		obj.AudioSize = "large";
-		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("RanchStation", 2, 3, "rancherstation_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.NONE);
+		buildingDef.ViewMode = OverlayModes.Rooms.ID;
+		buildingDef.Overheatable = false;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.AudioSize = "large";
+		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -30,9 +30,10 @@ public class RanchStationConfig : IBuildingConfig
 		def.isCreatureEligibleToBeRanchedCb = (GameObject creature_go, RanchStation.Instance ranch_station_smi) => !creature_go.GetComponent<Effects>().HasEffect("Ranched");
 		def.onRanchCompleteCb = delegate(GameObject creature_go)
 		{
-			RanchStation.Instance targetRanchStation = creature_go.GetSMI<RanchableMonitor.Instance>().targetRanchStation;
-			RancherChore.RancherChoreStates.Instance sMI = targetRanchStation.GetSMI<RancherChore.RancherChoreStates.Instance>();
-			GameObject go2 = targetRanchStation.GetSMI<RancherChore.RancherChoreStates.Instance>().sm.rancher.Get(sMI);
+			RanchableMonitor.Instance sMI = creature_go.GetSMI<RanchableMonitor.Instance>();
+			RanchStation.Instance targetRanchStation = sMI.targetRanchStation;
+			RancherChore.RancherChoreStates.Instance sMI2 = targetRanchStation.GetSMI<RancherChore.RancherChoreStates.Instance>();
+			GameObject go2 = targetRanchStation.GetSMI<RancherChore.RancherChoreStates.Instance>().sm.rancher.Get(sMI2);
 			float num2 = 1f + go2.GetAttributes().Get(Db.Get().Attributes.Ranching.Id).GetTotalValue() * 0.1f;
 			creature_go.GetComponent<Effects>().Add("Ranched", should_save: true).timeRemaining *= num2;
 		};
@@ -55,7 +56,8 @@ public class RanchStationConfig : IBuildingConfig
 		RoomTracker roomTracker = go.AddOrGet<RoomTracker>();
 		roomTracker.requiredRoomType = Db.Get().RoomTypes.CreaturePen.Id;
 		roomTracker.requirement = RoomTracker.Requirement.Required;
-		go.AddOrGet<SkillPerkMissingComplainer>().requiredSkillPerk = Db.Get().SkillPerks.CanWrangleCreatures.Id;
+		SkillPerkMissingComplainer skillPerkMissingComplainer = go.AddOrGet<SkillPerkMissingComplainer>();
+		skillPerkMissingComplainer.requiredSkillPerk = Db.Get().SkillPerks.CanWrangleCreatures.Id;
 		Prioritizable.AddRef(go);
 	}
 }

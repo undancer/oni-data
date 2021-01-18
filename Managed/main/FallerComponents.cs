@@ -112,15 +112,16 @@ public class FallerComponents : KGameObjectComponentManager<FallerComponent>
 		GameComps.Gravities.Remove(transform.gameObject);
 		HandleVector<int>.Handle h = GameComps.Fallers.GetHandle(transform.gameObject);
 		FallerComponent data = GameComps.Fallers.GetData(h);
-		int cell = Grid.CellBelow(Grid.PosToCell(transform.GetPosition()));
+		int cell = Grid.PosToCell(transform.GetPosition());
+		int cell2 = Grid.CellBelow(cell);
 		GameScenePartitioner.Instance.Free(ref data.partitionerEntry);
-		if (Grid.IsValidCell(cell))
+		if (Grid.IsValidCell(cell2))
 		{
 			data.solidChangedCB = delegate
 			{
 				OnSolidChanged(h);
 			};
-			data.partitionerEntry = GameScenePartitioner.Instance.Add("Faller", transform.gameObject, cell, GameScenePartitioner.Instance.solidChangedLayer, data.solidChangedCB);
+			data.partitionerEntry = GameScenePartitioner.Instance.Add("Faller", transform.gameObject, cell2, GameScenePartitioner.Instance.solidChangedLayer, data.solidChangedCB);
 		}
 		GameComps.Fallers.SetData(h, data);
 	}

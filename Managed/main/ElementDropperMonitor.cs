@@ -40,11 +40,7 @@ public class ElementDropperMonitor : GameStateMachine<ElementDropperMonitor, Ele
 
 		public bool ShouldDropElement()
 		{
-			if (IsValidDropCell())
-			{
-				return Random.Range(0f, 100f) < base.def.dirtyProbabilityPercent;
-			}
-			return false;
+			return IsValidDropCell() && Random.Range(0f, 100f) < base.def.dirtyProbabilityPercent;
 		}
 
 		public void DropDeathElement()
@@ -65,7 +61,8 @@ public class ElementDropperMonitor : GameStateMachine<ElementDropperMonitor, Ele
 				float temperature = GetComponent<PrimaryElement>().Temperature;
 				if (element.IsGas || element.IsLiquid)
 				{
-					SimMessages.AddRemoveSubstance(Grid.PosToCell(base.transform.GetPosition()), element_id, CellEventLogger.Instance.ElementConsumerSimUpdate, mass, temperature, disease_idx, disease_count);
+					int gameCell = Grid.PosToCell(base.transform.GetPosition());
+					SimMessages.AddRemoveSubstance(gameCell, element_id, CellEventLogger.Instance.ElementConsumerSimUpdate, mass, temperature, disease_idx, disease_count);
 				}
 				else if (element.IsSolid)
 				{

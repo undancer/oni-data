@@ -9,7 +9,7 @@ public class Uprootable : Workable
 	[Serialize]
 	protected bool isMarkedForUproot;
 
-	protected bool uprootComplete;
+	protected bool uprootComplete = false;
 
 	[MyCmpReq]
 	private Prioritizable prioritizable;

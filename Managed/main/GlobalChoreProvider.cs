@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public class GlobalChoreProvider : ChoreProvider, ISim200ms, IRender200ms
+public class GlobalChoreProvider : ChoreProvider, IRender200ms
 {
 	public struct Fetch
 	{
@@ -75,14 +75,17 @@ public class GlobalChoreProvider : ChoreProvider, ISim200ms, IRender200ms
 
 		private int end;
 
+		private List<Prioritizable> worldCollection;
+
 		public bool found;
 
 		public static bool abort;
 
-		public FindTopPriorityTask(int start, int end)
+		public FindTopPriorityTask(int start, int end, List<Prioritizable> worldCollection)
 		{
 			this.start = start;
 			this.end = end;
+			this.worldCollection = worldCollection;
 			found = false;
 		}
 
@@ -92,9 +95,9 @@ public class GlobalChoreProvider : ChoreProvider, ISim200ms, IRender200ms
 			{
 				return;
 			}
-			for (int i = start; i != end; i++)
+			for (int i = start; i != end && worldCollection.Count > i; i++)
 			{
-				if (Components.Prioritizables.Items[i].IsTopPriority())
+				if (!(worldCollection[i] == null) && worldCollection[i].IsTopPriority())
 				{
 					found = true;
 					break;
@@ -117,9 +120,7 @@ public class GlobalChoreProvider : ChoreProvider, ISim200ms, IRender200ms
 
 	private ClearableManager clearableManager;
 
-	private TagBits storageFetchableBits;
-
-	private static WorkItemCollection<FindTopPriorityTask, object> find_top_priority_job = new WorkItemCollection<FindTopPriorityTask, object>();
+	private TagBits storageFetchableBits = default(TagBits);
 
 	protected override void OnPrefabInit()
 	{
@@ -221,33 +222,6 @@ public class GlobalChoreProvider : ChoreProvider, ISim200ms, IRender200ms
 	{
 		base.OnLoadLevel();
 		Instance = null;
-	}
-
-	public void Sim200ms(float time_delta)
-	{
-		find_top_priority_job.Reset(null);
-		FindTopPriorityTask.abort = false;
-		int num = 512;
-		for (int i = 0; i < Components.Prioritizables.Items.Count; i += num)
-		{
-			int num2 = i + num;
-			if (Components.Prioritizables.Items.Count < num2)
-			{
-				num2 = Components.Prioritizables.Items.Count;
-			}
-			find_top_priority_job.Add(new FindTopPriorityTask(i, num2));
-		}
-		GlobalJobManager.Run(find_top_priority_job);
-		bool on = false;
-		for (int j = 0; j != find_top_priority_job.Count; j++)
-		{
-			if (find_top_priority_job.GetWorkItem(j).found)
-			{
-				on = true;
-				break;
-			}
-		}
-		VignetteManager.Instance.Get().HasTopPriorityChore(on);
 	}
 
 	public void Render200ms(float dt)

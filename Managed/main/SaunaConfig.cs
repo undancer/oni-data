@@ -11,7 +11,7 @@ public class SaunaConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("Sauna", 3, 3, "sauna_kanim", 30, 60f, new float[2]
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("Sauna", 3, 3, "sauna_kanim", 30, 60f, new float[2]
 		{
 			100f,
 			100f
@@ -20,26 +20,26 @@ public class SaunaConfig : IBuildingConfig
 			"Metal",
 			"BuildingWood"
 		}, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER2);
-		obj.DlcId = "PACK1";
-		obj.ViewMode = OverlayModes.GasConduits.ID;
-		obj.Floodable = true;
-		obj.AudioCategory = "Metal";
-		obj.Overheatable = true;
-		obj.InputConduitType = ConduitType.Gas;
-		obj.UtilityInputOffset = new CellOffset(1, 1);
-		obj.OutputConduitType = ConduitType.Liquid;
-		obj.UtilityInputOffset = new CellOffset(-1, 0);
-		obj.RequiresPowerInput = true;
-		obj.PowerInputOffset = new CellOffset(0, 2);
-		obj.EnergyConsumptionWhenActive = 60f;
-		obj.SelfHeatKilowattsWhenActive = 0.5f;
-		return obj;
+		buildingDef.ViewMode = OverlayModes.GasConduits.ID;
+		buildingDef.Floodable = true;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.Overheatable = true;
+		buildingDef.InputConduitType = ConduitType.Gas;
+		buildingDef.UtilityInputOffset = new CellOffset(-1, 0);
+		buildingDef.OutputConduitType = ConduitType.Liquid;
+		buildingDef.UtilityOutputOffset = new CellOffset(1, 0);
+		buildingDef.RequiresPowerInput = true;
+		buildingDef.PowerInputOffset = new CellOffset(0, 2);
+		buildingDef.EnergyConsumptionWhenActive = 60f;
+		buildingDef.SelfHeatKilowattsWhenActive = 0.5f;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.RecBuilding);
-		go.AddOrGet<Storage>().SetDefaultStoredItemModifiers(Storage.StandardInsulatedStorage);
+		Storage storage = go.AddOrGet<Storage>();
+		storage.SetDefaultStoredItemModifiers(Storage.StandardInsulatedStorage);
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
 		conduitConsumer.conduitType = ConduitType.Gas;
 		conduitConsumer.capacityTag = ElementLoader.FindElementByHash(SimHashes.Steam).tag;
@@ -52,7 +52,8 @@ public class SaunaConfig : IBuildingConfig
 		{
 			SimHashes.Water
 		};
-		go.AddOrGet<SaunaWorkable>().basePriority = RELAXATION.PRIORITY.TIER3;
+		SaunaWorkable saunaWorkable = go.AddOrGet<SaunaWorkable>();
+		saunaWorkable.basePriority = RELAXATION.PRIORITY.TIER3;
 		Sauna sauna = go.AddOrGet<Sauna>();
 		sauna.steamPerUseKG = 25f;
 		sauna.waterOutputTemp = 353.15f;

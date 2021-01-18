@@ -88,18 +88,20 @@ public class MinionStatsPanel : TargetScreen
 
 	private void RefreshAttributes()
 	{
-		if (!selectedTarget.GetComponent<MinionIdentity>())
+		MinionIdentity component = selectedTarget.GetComponent<MinionIdentity>();
+		if (!component)
 		{
 			attributesPanel.SetActive(value: false);
 			return;
 		}
 		attributesPanel.SetActive(value: true);
 		attributesPanel.GetComponent<CollapsibleDetailContentPanel>().HeaderLabel.text = UI.DETAILTABS.STATS.GROUPNAME_ATTRIBUTES;
-		List<AttributeInstance> list = new List<AttributeInstance>(selectedTarget.GetAttributes().AttributeTable).FindAll((AttributeInstance a) => a.Attribute.ShowInUI == Attribute.Display.Skill);
+		List<AttributeInstance> list = new List<AttributeInstance>(selectedTarget.GetAttributes().AttributeTable);
+		List<AttributeInstance> list2 = list.FindAll((AttributeInstance a) => a.Attribute.ShowInUI == Attribute.Display.Skill);
 		attributesDrawer.BeginDrawing();
-		if (list.Count > 0)
+		if (list2.Count > 0)
 		{
-			foreach (AttributeInstance item in list)
+			foreach (AttributeInstance item in list2)
 			{
 				attributesDrawer.NewLabel($"{item.Name}: {item.GetFormattedValue()}").Tooltip(item.GetAttributeValueTooltip());
 			}

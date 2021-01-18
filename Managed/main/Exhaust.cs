@@ -25,11 +25,11 @@ public class Exhaust : KMonoBehaviour, ISim200ms
 
 	private bool isAnimating;
 
-	private bool recentlyExhausted;
+	private bool recentlyExhausted = false;
 
 	private const float MinSwitchTime = 1f;
 
-	private float elapsedSwitchTime;
+	private float elapsedSwitchTime = 0f;
 
 	private static readonly EventSystem.IntraObjectHandler<Exhaust> OnConduitStateChangedDelegate = new EventSystem.IntraObjectHandler<Exhaust>(delegate(Exhaust component, object data)
 	{
@@ -153,10 +153,11 @@ public class Exhaust : KMonoBehaviour, ISim200ms
 		foreach (GameObject item in storage.items)
 		{
 			PrimaryElement component = item.GetComponent<PrimaryElement>();
-			if (component.Element.IsLiquid && EmitCommon(cell, component, emit))
+			if (!component.Element.IsLiquid || !EmitCommon(cell, component, emit))
 			{
-				break;
+				continue;
 			}
+			break;
 		}
 	}
 
@@ -165,10 +166,11 @@ public class Exhaust : KMonoBehaviour, ISim200ms
 		foreach (GameObject item in storage.items)
 		{
 			PrimaryElement component = item.GetComponent<PrimaryElement>();
-			if (component.Element.IsGas && EmitCommon(cell, component, emit_element))
+			if (!component.Element.IsGas || !EmitCommon(cell, component, emit_element))
 			{
-				break;
+				continue;
 			}
+			break;
 		}
 	}
 }

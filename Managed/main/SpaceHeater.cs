@@ -40,7 +40,7 @@ public class SpaceHeater : StateMachineComponent<SpaceHeater.StatesInstance>, IG
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = offline;
-			base.serializable = false;
+			base.serializable = SerializeType.Never;
 			statusItemUnderMassLiquid = new StatusItem("statusItemUnderMassLiquid", BUILDING.STATUSITEMS.HEATINGSTALLEDLOWMASS_LIQUID.NAME, BUILDING.STATUSITEMS.HEATINGSTALLEDLOWMASS_LIQUID.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			statusItemUnderMassGas = new StatusItem("statusItemUnderMassGas", BUILDING.STATUSITEMS.HEATINGSTALLEDLOWMASS_GAS.NAME, BUILDING.STATUSITEMS.HEATINGSTALLEDLOWMASS_GAS.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			statusItemOverTemp = new StatusItem("statusItemOverTemp", BUILDING.STATUSITEMS.HEATINGSTALLEDHOTENV.NAME, BUILDING.STATUSITEMS.HEATINGSTALLEDHOTENV.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
@@ -91,12 +91,12 @@ public class SpaceHeater : StateMachineComponent<SpaceHeater.StatesInstance>, IG
 
 	public float targetTemperature = 308.15f;
 
-	public float minimumCellMass;
+	public float minimumCellMass = 0f;
 
 	public int radius = 2;
 
 	[SerializeField]
-	private bool heatLiquid;
+	private bool heatLiquid = false;
 
 	[MyCmpReq]
 	private Operational operational;
@@ -123,7 +123,8 @@ public class SpaceHeater : StateMachineComponent<SpaceHeater.StatesInstance>, IG
 	private MonitorState MonitorHeating(float dt)
 	{
 		monitorCells.Clear();
-		GameUtil.GetNonSolidCells(Grid.PosToCell(base.transform.GetPosition()), radius, monitorCells);
+		int cell = Grid.PosToCell(base.transform.GetPosition());
+		GameUtil.GetNonSolidCells(cell, radius, monitorCells);
 		int num = 0;
 		float num2 = 0f;
 		for (int i = 0; i < monitorCells.Count; i++)
@@ -136,11 +137,7 @@ public class SpaceHeater : StateMachineComponent<SpaceHeater.StatesInstance>, IG
 		}
 		if (num == 0)
 		{
-			if (!heatLiquid)
-			{
-				return MonitorState.NotEnoughGas;
-			}
-			return MonitorState.NotEnoughLiquid;
+			return heatLiquid ? MonitorState.NotEnoughLiquid : MonitorState.NotEnoughGas;
 		}
 		if (num2 / (float)num >= targetTemperature)
 		{

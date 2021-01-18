@@ -117,6 +117,7 @@ public class MinionVitalsPanel : KMonoBehaviour
 		AddAmountLine(Db.Get().Amounts.Wildness);
 		AddAmountLine(Db.Get().Amounts.Incubation);
 		AddAmountLine(Db.Get().Amounts.Viability);
+		AddAmountLine(Db.Get().Amounts.PowerCharge);
 		AddAmountLine(Db.Get().Amounts.Fertility);
 		AddAmountLine(Db.Get().Amounts.Age);
 		AddAmountLine(Db.Get().Amounts.Stress);
@@ -128,6 +129,8 @@ public class MinionVitalsPanel : KMonoBehaviour
 		AddAmountLine(Db.Get().Amounts.ScaleGrowth);
 		AddAmountLine(Db.Get().Amounts.Temperature);
 		AddAmountLine(Db.Get().Amounts.Decor);
+		AddAmountLine(Db.Get().Amounts.InternalBattery);
+		AddAmountLine(Db.Get().Amounts.InternalChemicalBattery);
 		AddCheckboxLine(Db.Get().Amounts.AirPressure, conditionsContainerNormal, (GameObject go) => GetAirPressureLabel(go), (GameObject go) => (!(go.GetComponent<PressureVulnerable>() != null) || !go.GetComponent<PressureVulnerable>().pressure_sensitive) ? CheckboxLineDisplayType.Hidden : CheckboxLineDisplayType.Normal, (GameObject go) => check_pressure(go), (GameObject go) => GetAirPressureTooltip(go));
 		AddCheckboxLine(null, conditionsContainerNormal, (GameObject go) => GetAtmosphereLabel(go), (GameObject go) => (!(go.GetComponent<PressureVulnerable>() != null) || go.GetComponent<PressureVulnerable>().safe_atmospheres.Count <= 0) ? CheckboxLineDisplayType.Hidden : CheckboxLineDisplayType.Normal, (GameObject go) => check_atmosphere(go), (GameObject go) => GetAtmosphereTooltip(go));
 		AddCheckboxLine(Db.Get().Amounts.Temperature, conditionsContainerNormal, (GameObject go) => GetInternalTemperatureLabel(go), (GameObject go) => (!(go.GetComponent<TemperatureVulnerable>() != null)) ? CheckboxLineDisplayType.Hidden : CheckboxLineDisplayType.Normal, (GameObject go) => check_temperature(go), (GameObject go) => GetInternalTemperatureTooltip(go));
@@ -342,23 +345,23 @@ public class MinionVitalsPanel : KMonoBehaviour
 			reference.text = "";
 			reference.text = (flag4 ? string.Format(UI.VITALSSCREEN.CONDITIONS_GROWING.WILD_DECOR.BASE) : string.Format(UI.VITALSSCREEN.CONDITIONS_GROWING.WILD_INSTANT.BASE, Util.FormatTwoDecimalPlace(num * 0.25f * 100f)));
 			reference.GetComponent<ToolTip>().SetSimpleTooltip(string.Format(UI.VITALSSCREEN.CONDITIONS_GROWING.WILD_INSTANT.TOOLTIP));
-			LocText reference2 = conditionsContainerAdditional.GetComponent<HierarchyReferences>().GetReference<LocText>("Label");
-			reference2.color = (selectedEntity.GetComponent<ReceptacleMonitor>().Replanted ? Color.black : Color.grey);
-			reference2.text = "";
-			reference2.text = string.Format(UI.VITALSSCREEN.CONDITIONS_GROWING.ADDITIONAL_DOMESTIC_INSTANT.BASE, Util.FormatTwoDecimalPlace(num * 100f));
-			reference2.GetComponent<ToolTip>().SetSimpleTooltip(string.Format(UI.VITALSSCREEN.CONDITIONS_GROWING.ADDITIONAL_DOMESTIC_INSTANT.TOOLTIP));
+			reference = conditionsContainerAdditional.GetComponent<HierarchyReferences>().GetReference<LocText>("Label");
+			reference.color = (selectedEntity.GetComponent<ReceptacleMonitor>().Replanted ? Color.black : Color.grey);
+			reference.text = "";
+			reference.text = string.Format(UI.VITALSSCREEN.CONDITIONS_GROWING.ADDITIONAL_DOMESTIC_INSTANT.BASE, Util.FormatTwoDecimalPlace(num * 100f));
+			reference.GetComponent<ToolTip>().SetSimpleTooltip(string.Format(UI.VITALSSCREEN.CONDITIONS_GROWING.ADDITIONAL_DOMESTIC_INSTANT.TOOLTIP));
 		}
 		else
 		{
-			LocText reference3 = conditionsContainerNormal.GetComponent<HierarchyReferences>().GetReference<LocText>("Label");
-			reference3.text = "";
-			reference3.text = string.Format(UI.VITALSSCREEN.CONDITIONS_GROWING.WILD.BASE, GameUtil.GetFormattedCycles(component.GetComponent<Growing>().WildGrowthTime()));
-			reference3.GetComponent<ToolTip>().SetSimpleTooltip(string.Format(UI.VITALSSCREEN.CONDITIONS_GROWING.WILD.TOOLTIP, GameUtil.GetFormattedCycles(component.GetComponent<Growing>().WildGrowthTime())));
-			LocText reference4 = conditionsContainerAdditional.GetComponent<HierarchyReferences>().GetReference<LocText>("Label");
-			reference4.color = (selectedEntity.GetComponent<ReceptacleMonitor>().Replanted ? Color.black : Color.grey);
-			reference4.text = "";
-			reference4.text = (flag3 ? string.Format(UI.VITALSSCREEN.CONDITIONS_GROWING.ADDITIONAL_DOMESTIC.BASE, GameUtil.GetFormattedCycles(component.GetComponent<Growing>().DomesticGrowthTime())) : string.Format(UI.VITALSSCREEN.CONDITIONS_GROWING.DOMESTIC.BASE, GameUtil.GetFormattedCycles(component.GetComponent<Growing>().DomesticGrowthTime())));
-			reference4.GetComponent<ToolTip>().SetSimpleTooltip(string.Format(UI.VITALSSCREEN.CONDITIONS_GROWING.ADDITIONAL_DOMESTIC.TOOLTIP, GameUtil.GetFormattedCycles(component.GetComponent<Growing>().DomesticGrowthTime())));
+			LocText reference = conditionsContainerNormal.GetComponent<HierarchyReferences>().GetReference<LocText>("Label");
+			reference.text = "";
+			reference.text = string.Format(UI.VITALSSCREEN.CONDITIONS_GROWING.WILD.BASE, GameUtil.GetFormattedCycles(component.GetComponent<Growing>().WildGrowthTime()));
+			reference.GetComponent<ToolTip>().SetSimpleTooltip(string.Format(UI.VITALSSCREEN.CONDITIONS_GROWING.WILD.TOOLTIP, GameUtil.GetFormattedCycles(component.GetComponent<Growing>().WildGrowthTime())));
+			reference = conditionsContainerAdditional.GetComponent<HierarchyReferences>().GetReference<LocText>("Label");
+			reference.color = (selectedEntity.GetComponent<ReceptacleMonitor>().Replanted ? Color.black : Color.grey);
+			reference.text = "";
+			reference.text = (flag3 ? string.Format(UI.VITALSSCREEN.CONDITIONS_GROWING.ADDITIONAL_DOMESTIC.BASE, GameUtil.GetFormattedCycles(component.GetComponent<Growing>().DomesticGrowthTime())) : string.Format(UI.VITALSSCREEN.CONDITIONS_GROWING.DOMESTIC.BASE, GameUtil.GetFormattedCycles(component.GetComponent<Growing>().DomesticGrowthTime())));
+			reference.GetComponent<ToolTip>().SetSimpleTooltip(string.Format(UI.VITALSSCREEN.CONDITIONS_GROWING.ADDITIONAL_DOMESTIC.TOOLTIP, GameUtil.GetFormattedCycles(component.GetComponent<Growing>().DomesticGrowthTime())));
 		}
 		foreach (AmountLine amountsLine2 in amountsLines)
 		{
@@ -521,11 +524,7 @@ public class MinionVitalsPanel : KMonoBehaviour
 		IrrigationMonitor.Instance sMI = go.GetSMI<IrrigationMonitor.Instance>();
 		if (sMI != null)
 		{
-			if (!sMI.IsInsideState(sMI.sm.replanted.starved))
-			{
-				return !sMI.IsInsideState(sMI.sm.wild);
-			}
-			return false;
+			return !sMI.IsInsideState(sMI.sm.replanted.starved) && !sMI.IsInsideState(sMI.sm.wild);
 		}
 		return true;
 	}

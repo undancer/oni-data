@@ -5,6 +5,11 @@ public class DustCometConfig : IEntityConfig
 {
 	public static string ID = "DustComet";
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateEntity(ID, UI.SPACEDESTINATIONS.COMETS.DUSTCOMET.NAME);
@@ -31,8 +36,10 @@ public class DustCometConfig : IEntityConfig
 		kBatchedAnimController.initialAnim = "fall_loop";
 		kBatchedAnimController.initialMode = KAnim.PlayMode.Loop;
 		kBatchedAnimController.visibilityType = KAnimControllerBase.VisibilityType.OffscreenUpdate;
-		gameObject.AddOrGet<KCircleCollider2D>().radius = 0.5f;
+		KCircleCollider2D kCircleCollider2D = gameObject.AddOrGet<KCircleCollider2D>();
+		kCircleCollider2D.radius = 0.5f;
 		gameObject.transform.localScale = new Vector3(0.3f, 0.3f, 1f);
+		gameObject.AddTag(GameTags.Comet);
 		return gameObject;
 	}
 

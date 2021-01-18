@@ -9,7 +9,7 @@ public class CrewPortrait : KMonoBehaviour
 {
 	public Image targetImage;
 
-	public bool startTransparent;
+	public bool startTransparent = false;
 
 	public bool useLabels = true;
 
@@ -26,7 +26,7 @@ public class CrewPortrait : KMonoBehaviour
 
 	public bool useDefaultExpression = true;
 
-	private bool requiresRefresh;
+	private bool requiresRefresh = false;
 
 	private bool areEventsRegistered;
 
@@ -196,7 +196,8 @@ public class CrewPortrait : KMonoBehaviour
 		MinionIdentity minionIdentity = identityObject as MinionIdentity;
 		if (minionIdentity != null)
 		{
-			hat_id = minionIdentity.GetComponent<MinionResume>().CurrentHat;
+			MinionResume component = minionIdentity.GetComponent<MinionResume>();
+			hat_id = component.CurrentHat;
 		}
 		else if (identityObject as StoredMinionIdentity != null)
 		{
@@ -269,7 +270,7 @@ public class CrewPortrait : KMonoBehaviour
 			RefreshHat(storedMinionIdentity, controller);
 		}
 		float num = (controller.animScale = 0.25f);
-		string s = "ui";
+		string s = "ui_idle";
 		controller.Play(s, KAnim.PlayMode.Loop);
 		controller.SetSymbolVisiblity("snapTo_neck", is_visible: false);
 		controller.SetSymbolVisiblity("snapTo_goggles", is_visible: false);

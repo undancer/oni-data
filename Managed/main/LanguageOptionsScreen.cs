@@ -45,7 +45,7 @@ public class LanguageOptionsScreen : KModalScreen, SteamUGCService.IClient
 
 	private List<GameObject> buttons = new List<GameObject>();
 
-	private string _currentLanguageModId;
+	private string _currentLanguageModId = null;
 
 	private System.DateTime currentLastModified;
 
@@ -66,7 +66,8 @@ public class LanguageOptionsScreen : KModalScreen, SteamUGCService.IClient
 	{
 		base.OnSpawn();
 		dismissButton.onClick += Deactivate;
-		dismissButton.GetComponent<HierarchyReferences>().GetReference<LocText>("Title").SetText(UI.FRONTEND.OPTIONS_SCREEN.BACK);
+		LocText reference = dismissButton.GetComponent<HierarchyReferences>().GetReference<LocText>("Title");
+		reference.SetText(UI.FRONTEND.OPTIONS_SCREEN.BACK);
 		closeButton.onClick += Deactivate;
 		workshopButton.onClick += delegate
 		{
@@ -108,9 +109,11 @@ public class LanguageOptionsScreen : KModalScreen, SteamUGCService.IClient
 				Texture2D preinstalledLocalizationImage = Localization.GetPreinstalledLocalizationImage(code);
 				if (preinstalledLocalizationImage != null)
 				{
-					component.GetReference<Image>("Image").sprite = Sprite.Create(preinstalledLocalizationImage, new Rect(Vector2.zero, new Vector2(preinstalledLocalizationImage.width, preinstalledLocalizationImage.height)), Vector2.one * 0.5f);
+					Image reference2 = component.GetReference<Image>("Image");
+					reference2.sprite = Sprite.Create(preinstalledLocalizationImage, new Rect(Vector2.zero, new Vector2(preinstalledLocalizationImage.width, preinstalledLocalizationImage.height)), Vector2.one * 0.5f);
 				}
-				gameObject.GetComponent<KButton>().onClick += delegate
+				KButton component2 = gameObject.GetComponent<KButton>();
+				component2.onClick += delegate
 				{
 					ConfirmLanguagePreinstalledOrMod((code != Localization.DEFAULT_LANGUAGE_CODE) ? code : string.Empty, null);
 				};
@@ -147,7 +150,7 @@ public class LanguageOptionsScreen : KModalScreen, SteamUGCService.IClient
 		HashSet<MemberInfo> excluded_members = new HashSet<MemberInfo>(typeof(ConfirmDialogScreen).GetMember("cancelButton", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy));
 		Localization.SetFont(screen, font, locale.IsRightToLeft, excluded_members);
 		string value;
-		Func<LocString, string> func = (LocString loc_string) => (!translated_strings.TryGetValue(loc_string.key.String, out value)) ? ((string)loc_string) : value;
+		Func<LocString, string> func = (LocString loc_string) => translated_strings.TryGetValue(loc_string.key.String, out value) ? value : ((string)loc_string);
 		screen.PopupConfirmDialog(title_text: func(UI.CONFIRMDIALOG.DIALOG_HEADER), text: func(UI.FRONTEND.TRANSLATIONS_SCREEN.PLEASE_REBOOT), on_confirm: delegate
 		{
 			CleanUpSavedLanguageMod();
@@ -161,7 +164,7 @@ public class LanguageOptionsScreen : KModalScreen, SteamUGCService.IClient
 
 	private void ConfirmPreinstalledLanguage(string selected_preinstalled_translation)
 	{
-		Localization.GetSelectedLanguageType();
+		Localization.SelectedLanguageType selectedLanguageType = Localization.GetSelectedLanguageType();
 	}
 
 	private void ConfirmLanguagePreinstalledOrMod(string selected_preinstalled_translation, string mod_id)
@@ -188,7 +191,8 @@ public class LanguageOptionsScreen : KModalScreen, SteamUGCService.IClient
 				Deactivate();
 				return;
 			}
-			string[] lines = File.ReadAllLines(Localization.GetPreinstalledLocalizationFilePath(selected_preinstalled_translation), Encoding.UTF8);
+			string preinstalledLocalizationFilePath = Localization.GetPreinstalledLocalizationFilePath(selected_preinstalled_translation);
+			string[] lines = File.ReadAllLines(preinstalledLocalizationFilePath, Encoding.UTF8);
 			ConfirmLanguageChoiceDialog(lines, is_template: false, delegate
 			{
 				Localization.LoadPreinstalledTranslation(selected_preinstalled_translation);
@@ -200,7 +204,8 @@ public class LanguageOptionsScreen : KModalScreen, SteamUGCService.IClient
 		}
 		else
 		{
-			string[] lines2 = File.ReadAllLines(Localization.GetDefaultLocalizationFilePath(), Encoding.UTF8);
+			string defaultLocalizationFilePath = Localization.GetDefaultLocalizationFilePath();
+			string[] lines2 = File.ReadAllLines(defaultLocalizationFilePath, Encoding.UTF8);
 			ConfirmLanguageChoiceDialog(lines2, is_template: true, delegate
 			{
 				Localization.ClearLanguage();
@@ -210,7 +215,8 @@ public class LanguageOptionsScreen : KModalScreen, SteamUGCService.IClient
 
 	private ConfirmDialogScreen GetConfirmDialog()
 	{
-		KScreen component = KScreenManager.AddChild(base.transform.parent.gameObject, ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject).GetComponent<KScreen>();
+		GameObject gameObject = KScreenManager.AddChild(base.transform.parent.gameObject, ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject);
+		KScreen component = gameObject.GetComponent<KScreen>();
 		component.Activate();
 		return component.GetComponent<ConfirmDialogScreen>();
 	}
@@ -224,17 +230,21 @@ public class LanguageOptionsScreen : KModalScreen, SteamUGCService.IClient
 				GameObject gameObject = Util.KInstantiateUI(languageButtonPrefab, ugcLanguagesContainer);
 				gameObject.name = mod.title + "_button";
 				HierarchyReferences component = gameObject.GetComponent<HierarchyReferences>();
-				TMP_FontAsset font = Localization.GetFont(Localization.GetFontName(GetLanguageLinesForMod(mod)));
+				string[] languageLinesForMod = GetLanguageLinesForMod(mod);
+				string fontName = Localization.GetFontName(languageLinesForMod);
+				TMP_FontAsset font = Localization.GetFont(fontName);
 				LocText reference = component.GetReference<LocText>("Title");
 				reference.SetText(string.Format(UI.FRONTEND.TRANSLATIONS_SCREEN.UGC_MOD_TITLE_FORMAT, mod.title));
 				reference.font = font;
 				Texture2D previewImage = mod.GetPreviewImage();
 				if (previewImage != null)
 				{
-					component.GetReference<Image>("Image").sprite = Sprite.Create(previewImage, new Rect(Vector2.zero, new Vector2(previewImage.width, previewImage.height)), Vector2.one * 0.5f);
+					Image reference2 = component.GetReference<Image>("Image");
+					reference2.sprite = Sprite.Create(previewImage, new Rect(Vector2.zero, new Vector2(previewImage.width, previewImage.height)), Vector2.one * 0.5f);
 				}
 				string mod_id = mod.label.id;
-				gameObject.GetComponent<KButton>().onClick += delegate
+				KButton component2 = gameObject.GetComponent<KButton>();
+				component2.onClick += delegate
 				{
 					ConfirmLanguagePreinstalledOrMod(string.Empty, mod_id);
 				};
@@ -245,10 +255,12 @@ public class LanguageOptionsScreen : KModalScreen, SteamUGCService.IClient
 
 	private void Uninstall()
 	{
-		GetConfirmDialog().PopupConfirmDialog(UI.FRONTEND.TRANSLATIONS_SCREEN.ARE_YOU_SURE, delegate
+		ConfirmDialogScreen confirmDialog = GetConfirmDialog();
+		confirmDialog.PopupConfirmDialog(UI.FRONTEND.TRANSLATIONS_SCREEN.ARE_YOU_SURE, delegate
 		{
 			Localization.ClearLanguage();
-			GetConfirmDialog().PopupConfirmDialog(UI.FRONTEND.TRANSLATIONS_SCREEN.PLEASE_REBOOT, App.instance.Restart, Deactivate);
+			ConfirmDialogScreen confirmDialog2 = GetConfirmDialog();
+			confirmDialog2.PopupConfirmDialog(UI.FRONTEND.TRANSLATIONS_SCREEN.PLEASE_REBOOT, App.instance.Restart, Deactivate);
 		}, delegate
 		{
 		});
@@ -320,7 +332,8 @@ public class LanguageOptionsScreen : KModalScreen, SteamUGCService.IClient
 		{
 			return false;
 		}
-		if (Global.Instance.modManager.mods.Find((Mod m) => m.label.id == currentModId) == null)
+		Mod mod = Global.Instance.modManager.mods.Find((Mod m) => m.label.id == currentModId);
+		if (mod == null)
 		{
 			CleanUpSavedLanguageMod();
 			return false;
@@ -373,7 +386,8 @@ public class LanguageOptionsScreen : KModalScreen, SteamUGCService.IClient
 
 	private static string[] GetLanguageLinesForMod(string mod_id)
 	{
-		return GetLanguageLinesForMod(Global.Instance.modManager.mods.Find((Mod m) => m.label.id == mod_id));
+		Mod mod = Global.Instance.modManager.mods.Find((Mod m) => m.label.id == mod_id);
+		return GetLanguageLinesForMod(mod);
 	}
 
 	private static string[] GetLanguageLinesForMod(Mod mod)

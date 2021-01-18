@@ -38,7 +38,7 @@ public class UniformPoissonDiskSampler
 
 	private static readonly float SquareRootTwo = (float)Math.Sqrt(2.0);
 
-	private SeededRandom myRandom;
+	private SeededRandom myRandom = null;
 
 	public UniformPoissonDiskSampler(SeededRandom seed)
 	{

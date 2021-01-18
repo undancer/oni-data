@@ -1,14 +1,13 @@
 using System;
-using System.IO;
 using STRINGS;
 
 namespace Database
 {
-	public class TuneUpGenerator : ColonyAchievementRequirement
+	public class TuneUpGenerator : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		private float numChoreseToComplete;
 
-		private float choresCompleted;
+		private float choresCompleted = 0f;
 
 		public TuneUpGenerator(float numChoreseToComplete)
 		{
@@ -18,7 +17,8 @@ namespace Database
 		public override bool Success()
 		{
 			float num = 0f;
-			ReportManager.ReportEntry entry = ReportManager.Instance.TodaysReport.GetEntry(ReportManager.ReportType.ChoreStatus);
+			ReportManager.DailyReport todaysReport = ReportManager.Instance.TodaysReport;
+			ReportManager.ReportEntry entry = todaysReport.GetEntry(ReportManager.ReportType.ChoreStatus);
 			for (int i = 0; i < entry.contextEntries.Count; i++)
 			{
 				ReportManager.ReportEntry reportEntry = entry.contextEntries[i];
@@ -31,7 +31,8 @@ namespace Database
 			int count = ReportManager.Instance.reports.Count;
 			for (int j = 0; j < count; j++)
 			{
-				ReportManager.ReportEntry entry2 = ReportManager.Instance.reports[j].GetEntry(ReportManager.ReportType.ChoreStatus);
+				ReportManager.DailyReport dailyReport = ReportManager.Instance.reports[j];
+				ReportManager.ReportEntry entry2 = dailyReport.GetEntry(ReportManager.ReportType.ChoreStatus);
 				int count2 = entry2.contextEntries.Count;
 				for (int k = 0; k < count2; k++)
 				{
@@ -46,12 +47,7 @@ namespace Database
 			return Math.Abs(num) >= numChoreseToComplete;
 		}
 
-		public override void Serialize(BinaryWriter writer)
-		{
-			writer.Write(numChoreseToComplete);
-		}
-
-		public override void Deserialize(IReader reader)
+		public void Deserialize(IReader reader)
 		{
 			numChoreseToComplete = reader.ReadSingle();
 		}

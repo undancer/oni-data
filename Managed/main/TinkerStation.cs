@@ -19,7 +19,7 @@ public class TinkerStation : Workable, IGameObjectEffectDescriptor, ISim1000ms
 	[MyCmpAdd]
 	private Storage storage;
 
-	public bool useFilteredStorage;
+	public bool useFilteredStorage = false;
 
 	protected FilteredStorage filteredStorage;
 
@@ -105,11 +105,7 @@ public class TinkerStation : Workable, IGameObjectEffectDescriptor, ISim1000ms
 	private bool CorrectRolePrecondition(MinionIdentity worker)
 	{
 		MinionResume component = worker.GetComponent<MinionResume>();
-		if (component != null)
-		{
-			return component.HasPerk(requiredSkillPerk);
-		}
-		return false;
+		return component != null && component.HasPerk(requiredSkillPerk);
 	}
 
 	private void OnOperationalChanged(object data)
@@ -140,7 +136,7 @@ public class TinkerStation : Workable, IGameObjectEffectDescriptor, ISim1000ms
 	protected override void OnCompleteWork(Worker worker)
 	{
 		base.OnCompleteWork(worker);
-		storage.ConsumeAndGetDisease(inputMaterial, massPerTinker, out var _, out var _);
+		storage.ConsumeAndGetDisease(inputMaterial, massPerTinker, out var _, out var _, out var _);
 		GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(outputPrefab), base.transform.GetPosition(), Grid.SceneLayer.Ore);
 		gameObject.GetComponent<PrimaryElement>().Temperature = outputTemperature;
 		gameObject.SetActive(value: true);
@@ -177,11 +173,7 @@ public class TinkerStation : Workable, IGameObjectEffectDescriptor, ISim1000ms
 
 	private bool ToolsRequested()
 	{
-		if (MaterialNeeds.Instance.GetAmount(outputPrefab) > 0f)
-		{
-			return WorldInventory.Instance.GetAmount(outputPrefab) <= 0f;
-		}
-		return false;
+		return MaterialNeeds.GetAmount(outputPrefab, base.gameObject.GetMyWorldId(), includeRelatedWorlds: false) > 0f && this.GetMyWorld().worldInventory.GetAmount(outputPrefab, includeRelatedWorlds: true) <= 0f;
 	}
 
 	public override List<Descriptor> GetDescriptors(GameObject go)
@@ -204,14 +196,11 @@ public class TinkerStation : Workable, IGameObjectEffectDescriptor, ISim1000ms
 			Effect effect = Db.Get().effects.Get(list[0].addedEffect);
 			descriptors.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.ADDED_EFFECT, effect.Name), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.ADDED_EFFECT, effect.Name, Effect.CreateTooltip(effect, showDuration: true))));
 			descriptors.Add(new Descriptor(UI.BUILDINGEFFECTS.IMPROVED_BUILDINGS, UI.BUILDINGEFFECTS.TOOLTIPS.IMPROVED_BUILDINGS));
+			foreach (Tinkerable item3 in list)
 			{
-				foreach (Tinkerable item3 in list)
-				{
-					Descriptor item = new Descriptor(string.Format(UI.BUILDINGEFFECTS.IMPROVED_BUILDINGS_ITEM, item3.GetProperName()), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.IMPROVED_BUILDINGS_ITEM, item3.GetProperName()));
-					item.IncreaseIndent();
-					descriptors.Add(item);
-				}
-				return descriptors;
+				Descriptor item = new Descriptor(string.Format(UI.BUILDINGEFFECTS.IMPROVED_BUILDINGS_ITEM, item3.GetProperName()), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.IMPROVED_BUILDINGS_ITEM, item3.GetProperName()));
+				item.IncreaseIndent();
+				descriptors.Add(item);
 			}
 		}
 		return descriptors;
@@ -220,7 +209,8 @@ public class TinkerStation : Workable, IGameObjectEffectDescriptor, ISim1000ms
 	public static TinkerStation AddTinkerStation(GameObject go, string required_room_type)
 	{
 		TinkerStation result = go.AddOrGet<TinkerStation>();
-		go.AddOrGet<RoomTracker>().requiredRoomType = required_room_type;
+		RoomTracker roomTracker = go.AddOrGet<RoomTracker>();
+		roomTracker.requiredRoomType = required_room_type;
 		return result;
 	}
 }

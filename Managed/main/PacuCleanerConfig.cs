@@ -2,6 +2,7 @@ using STRINGS;
 using TUNING;
 using UnityEngine;
 
+[EntityConfigOrder(1)]
 public class PacuCleanerConfig : IEntityConfig
 {
 	public const string ID = "PacuCleaner";
@@ -23,20 +24,21 @@ public class PacuCleanerConfig : IEntityConfig
 	public static GameObject CreatePacu(string id, string name, string desc, string anim_file, bool is_baby)
 	{
 		GameObject prefab = BasePacuConfig.CreatePrefab(id, "PacuCleanerBaseTrait", name, desc, anim_file, is_baby, "glp_", 243.15f, 278.15f);
-		prefab = EntityTemplates.ExtendEntityToWildCreature(prefab, PacuTuning.PEN_SIZE_PER_CREATURE, 25f);
+		prefab = EntityTemplates.ExtendEntityToWildCreature(prefab, PacuTuning.PEN_SIZE_PER_CREATURE);
 		if (!is_baby)
 		{
-			prefab.AddComponent<Storage>().capacityKg = 10f;
-			PassiveElementConsumer passiveElementConsumer = prefab.AddOrGet<PassiveElementConsumer>();
-			passiveElementConsumer.elementToConsume = SimHashes.DirtyWater;
-			passiveElementConsumer.consumptionRate = 0.2f;
-			passiveElementConsumer.capacityKG = 10f;
-			passiveElementConsumer.consumptionRadius = 3;
-			passiveElementConsumer.showInStatusPanel = true;
-			passiveElementConsumer.sampleCellOffset = new Vector3(0f, 0f, 0f);
-			passiveElementConsumer.isRequired = false;
-			passiveElementConsumer.storeOnConsume = true;
-			passiveElementConsumer.showDescriptor = false;
+			Storage storage = prefab.AddComponent<Storage>();
+			storage.capacityKg = 10f;
+			ElementConsumer elementConsumer = prefab.AddOrGet<PassiveElementConsumer>();
+			elementConsumer.elementToConsume = SimHashes.DirtyWater;
+			elementConsumer.consumptionRate = 0.2f;
+			elementConsumer.capacityKG = 10f;
+			elementConsumer.consumptionRadius = 3;
+			elementConsumer.showInStatusPanel = true;
+			elementConsumer.sampleCellOffset = new Vector3(0f, 0f, 0f);
+			elementConsumer.isRequired = false;
+			elementConsumer.storeOnConsume = true;
+			elementConsumer.showDescriptor = false;
 			prefab.AddOrGet<UpdateElementConsumerPosition>();
 			BubbleSpawner bubbleSpawner = prefab.AddComponent<BubbleSpawner>();
 			bubbleSpawner.element = SimHashes.Water;
@@ -56,9 +58,16 @@ public class PacuCleanerConfig : IEntityConfig
 		return prefab;
 	}
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
-		return EntityTemplates.ExtendEntityToFertileCreature(EntityTemplates.ExtendEntityToWildCreature(CreatePacu("PacuCleaner", STRINGS.CREATURES.SPECIES.PACU.VARIANT_CLEANER.NAME, STRINGS.CREATURES.SPECIES.PACU.VARIANT_CLEANER.DESC, "pacu_kanim", is_baby: false), PacuTuning.PEN_SIZE_PER_CREATURE, 25f), "PacuCleanerEgg", STRINGS.CREATURES.SPECIES.PACU.VARIANT_CLEANER.EGG_NAME, STRINGS.CREATURES.SPECIES.PACU.VARIANT_CLEANER.DESC, "egg_pacu_kanim", PacuTuning.EGG_MASS, "PacuCleanerBaby", 15.000001f, 5f, PacuTuning.EGG_CHANCES_CLEANER, 501, is_ranchable: false, add_fish_overcrowding_monitor: true, add_fixed_capturable_monitor: false, 0.75f);
+		GameObject prefab = CreatePacu("PacuCleaner", STRINGS.CREATURES.SPECIES.PACU.VARIANT_CLEANER.NAME, STRINGS.CREATURES.SPECIES.PACU.VARIANT_CLEANER.DESC, "pacu_kanim", is_baby: false);
+		prefab = EntityTemplates.ExtendEntityToWildCreature(prefab, PacuTuning.PEN_SIZE_PER_CREATURE);
+		return EntityTemplates.ExtendEntityToFertileCreature(prefab, "PacuCleanerEgg", STRINGS.CREATURES.SPECIES.PACU.VARIANT_CLEANER.EGG_NAME, STRINGS.CREATURES.SPECIES.PACU.VARIANT_CLEANER.DESC, "egg_pacu_kanim", PacuTuning.EGG_MASS, "PacuCleanerBaby", 15.000001f, 5f, PacuTuning.EGG_CHANCES_CLEANER, 501, is_ranchable: false, add_fish_overcrowding_monitor: true, add_fixed_capturable_monitor: false, 0.75f);
 	}
 
 	public void OnPrefabInit(GameObject prefab)

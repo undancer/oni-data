@@ -33,6 +33,13 @@ namespace TUNING
 			public static int VERY_HIGH = 9;
 		}
 
+		public class CLUSTER_FOW
+		{
+			public static float POINTS_TO_REVEAL = 100f;
+
+			public static float DEFAULT_CYCLES_PER_REVEAL = 0.5f;
+		}
+
 		public class ENGINE_EFFICIENCY
 		{
 			public static float WEAK = 20f;
@@ -46,6 +53,8 @@ namespace TUNING
 
 		public class OXIDIZER_EFFICIENCY
 		{
+			public static float VERY_LOW = 0.334f;
+
 			public static float LOW = 1f;
 
 			public static float HIGH = 1.33f;
@@ -58,11 +67,66 @@ namespace TUNING
 			public static float PAYLOAD_MASS = 1000f;
 		}
 
+		public class BURDEN
+		{
+			public static int INSIGNIFICANT = 1;
+
+			public static int MINOR = 2;
+
+			public static int MINOR_PLUS = 3;
+
+			public static int MODERATE = 4;
+
+			public static int MODERATE_PLUS = 5;
+
+			public static int MAJOR = 6;
+
+			public static int MAJOR_PLUS = 7;
+
+			public static int MEGA = 9;
+		}
+
+		public class ENGINE_POWER
+		{
+			public static int EARLY_WEAK = 30;
+
+			public static int EARLY_STRONG = 60;
+
+			public static int WEAKER = 10;
+
+			public static int WEAK = 20;
+
+			public static int AVERAGE = 20;
+
+			public static int STRONG = 30;
+
+			public static int STRONGER = 40;
+
+			public static int SUPERIOR = 50;
+		}
+
+		public class FUEL_COST_PER_DISTANCE
+		{
+			public static float LOW = 0.0625f;
+
+			public static float MEDIUM = 0.083333336f;
+
+			public static float HIGH = 0.125f;
+
+			public static float VERY_HIGH = 0.25f;
+
+			public static float GAS_LOW = 0.027777778f;
+
+			public static float GAS_HIGH = 0.041666668f;
+		}
+
 		public static float MISSION_DURATION_SCALE = 1800f;
 
 		public static float MASS_PENALTY_EXPONENT = 3.2f;
 
 		public static float MASS_PENALTY_DIVISOR = 300f;
+
+		public static Vector2I ROCKET_INTERIOR_SIZE = new Vector2I(32, 32);
 
 		public static float MassFromPenaltyPercentage(float penaltyPercentage = 0.5f)
 		{

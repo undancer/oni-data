@@ -12,10 +12,9 @@ public class LureableMonitor : GameStateMachine<LureableMonitor, LureableMonitor
 
 		public List<Descriptor> GetDescriptors(GameObject go)
 		{
-			return new List<Descriptor>
-			{
-				new Descriptor(UI.BUILDINGEFFECTS.CAPTURE_METHOD_LURE, UI.BUILDINGEFFECTS.TOOLTIPS.CAPTURE_METHOD_LURE)
-			};
+			List<Descriptor> list = new List<Descriptor>();
+			list.Add(new Descriptor(UI.BUILDINGEFFECTS.CAPTURE_METHOD_LURE, UI.BUILDINGEFFECTS.TOOLTIPS.CAPTURE_METHOD_LURE));
+			return list;
 		}
 	}
 

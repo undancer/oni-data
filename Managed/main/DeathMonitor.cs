@@ -15,7 +15,7 @@ public class DeathMonitor : GameStateMachine<DeathMonitor, DeathMonitor.Instance
 
 	public new class Instance : GameInstance
 	{
-		private bool isDuplicant;
+		private bool isDuplicant = false;
 
 		public bool IsDuplicant => isDuplicant;
 
@@ -47,6 +47,7 @@ public class DeathMonitor : GameStateMachine<DeathMonitor, DeathMonitor.Instance
 		{
 			if (isDuplicant)
 			{
+				Game.Instance.assignmentManager.RemoveFromAllGroups(GetComponent<MinionIdentity>().assignableProxy.Get());
 				GetComponent<KSelectable>().SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().DuplicantStatusItems.Dead, base.smi.sm.death.Get(base.smi));
 				float value = 600f - GameClock.Instance.GetTimeSinceStartOfReport();
 				ReportManager.Instance.ReportValue(ReportManager.ReportType.PersonalTime, value, string.Format(UI.ENDOFDAYREPORT.NOTES.PERSONAL_TIME, DUPLICANTS.CHORES.IS_DEAD_TASK), base.smi.master.gameObject.GetProperName());
@@ -70,15 +71,20 @@ public class DeathMonitor : GameStateMachine<DeathMonitor, DeathMonitor.Instance
 
 	public Dead dead;
 
+	public Dead dead_creature;
+
 	public ResourceParameter<Death> death;
 
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = alive;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		alive.ParamTransition(death, dying_duplicant, (Instance smi, Death p) => p != null && smi.IsDuplicant).ParamTransition(death, dying_creature, (Instance smi, Death p) => p != null && !smi.IsDuplicant);
 		dying_duplicant.ToggleAnims("anim_emotes_default_kanim").ToggleTag(GameTags.Dying).ToggleChore((Instance smi) => new DieChore(smi.master, death.Get(smi)), die);
-		dying_creature.ToggleBehaviour(GameTags.Creatures.Die, (Instance smi) => true);
+		dying_creature.ToggleBehaviour(GameTags.Creatures.Die, (Instance smi) => true, delegate(Instance smi)
+		{
+			smi.GoTo(dead_creature);
+		});
 		die.ToggleTag(GameTags.Dying).Enter("Die", delegate(Instance smi)
 		{
 			Death death2 = death.Get(smi);
@@ -110,5 +116,6 @@ public class DeathMonitor : GameStateMachine<DeathMonitor, DeathMonitor.Instance
 			}
 		}).EventTransition(GameHashes.OnStore, dead.carried, (Instance smi) => smi.IsDuplicant && smi.HasTag(GameTags.Stored));
 		dead.carried.ToggleAnims("anim_dead_carried_kanim").PlayAnim("idle_default", KAnim.PlayMode.Loop).EventTransition(GameHashes.OnStore, dead.ground, (Instance smi) => !smi.HasTag(GameTags.Stored));
+		dead_creature.ToggleTag(GameTags.Dead).PlayAnim("idle_dead", KAnim.PlayMode.Loop);
 	}
 }

@@ -50,7 +50,7 @@ public class Compost : StateMachineComponent<Compost.StatesInstance>, IGameObjec
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = empty;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			empty.Enter("empty", delegate(StatesInstance smi)
 			{
 				smi.ResetWorkable();
@@ -124,7 +124,8 @@ public class Compost : StateMachineComponent<Compost.StatesInstance>, IGameObjec
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		GetComponent<ManualDeliveryKG>().ShowStatusItem = false;
+		ManualDeliveryKG component = GetComponent<ManualDeliveryKG>();
+		component.ShowStatusItem = false;
 		temperatureAdjuster = new SimulatedTemperatureAdjuster(simulatedInternalTemperature, simulatedInternalHeatCapacity, simulatedThermalConductivity, GetComponent<Storage>());
 		base.smi.StartSM();
 	}
@@ -136,7 +137,10 @@ public class Compost : StateMachineComponent<Compost.StatesInstance>, IGameObjec
 
 	private void OnStorageChanged(object data)
 	{
-		_ = (GameObject)data == null;
+		GameObject x = (GameObject)data;
+		if (!(x == null))
+		{
+		}
 	}
 
 	public List<Descriptor> GetDescriptors(GameObject go)

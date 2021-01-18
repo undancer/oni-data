@@ -1,25 +1,39 @@
 using System.Collections.Generic;
 using KSerialization;
-using TUNING;
 using UnityEngine;
 
-public class FuelTank : Storage, IUserControlledCapacity
+public class FuelTank : KMonoBehaviour, IUserControlledCapacity
 {
-	private bool isSuspended;
+	public Storage storage;
+
+	private bool isSuspended = false;
 
 	private MeterController meter;
 
 	[Serialize]
-	public float targetFillMass = BUILDINGS.ROCKETRY_MASS_KG.FUEL_TANK_WET_MASS[0];
+	public float targetFillMass;
+
+	[SerializeField]
+	public float physicalFuelCapacity;
+
+	public bool consumeFuelOnLand = true;
 
 	[SerializeField]
 	private Tag fuelType;
 
-	public float minimumLaunchMass = BUILDINGS.ROCKETRY_MASS_KG.FUEL_TANK_WET_MASS[0];
-
 	private static readonly EventSystem.IntraObjectHandler<FuelTank> OnCopySettingsDelegate = new EventSystem.IntraObjectHandler<FuelTank>(delegate(FuelTank component, object data)
 	{
 		component.OnCopySettings(data);
+	});
+
+	private static readonly EventSystem.IntraObjectHandler<FuelTank> OnRocketLandedDelegate = new EventSystem.IntraObjectHandler<FuelTank>(delegate(FuelTank component, object data)
+	{
+		component.OnRocketLanded(data);
+	});
+
+	private static readonly EventSystem.IntraObjectHandler<FuelTank> OnStorageChangedDelegate = new EventSystem.IntraObjectHandler<FuelTank>(delegate(FuelTank component, object data)
+	{
+		component.OnStorageChange(data);
 	});
 
 	public bool IsSuspended => isSuspended;
@@ -33,7 +47,7 @@ public class FuelTank : Storage, IUserControlledCapacity
 		set
 		{
 			targetFillMass = value;
-			capacityKg = targetFillMass;
+			storage.capacityKg = targetFillMass;
 			ConduitConsumer component = GetComponent<ConduitConsumer>();
 			if (component != null)
 			{
@@ -50,9 +64,9 @@ public class FuelTank : Storage, IUserControlledCapacity
 
 	public float MinCapacity => 0f;
 
-	public float MaxCapacity => 900f;
+	public float MaxCapacity => physicalFuelCapacity;
 
-	public float AmountStored => MassStored();
+	public float AmountStored => storage.MassStored();
 
 	public bool WholeValues => false;
 
@@ -67,11 +81,11 @@ public class FuelTank : Storage, IUserControlledCapacity
 		set
 		{
 			fuelType = value;
-			if (storageFilters == null)
+			if (storage.storageFilters == null)
 			{
-				storageFilters = new List<Tag>();
+				storage.storageFilters = new List<Tag>();
 			}
-			storageFilters.Add(fuelType);
+			storage.storageFilters.Add(fuelType);
 			ManualDeliveryKG component = GetComponent<ManualDeliveryKG>();
 			if (component != null)
 			{
@@ -90,17 +104,39 @@ public class FuelTank : Storage, IUserControlledCapacity
 	{
 		base.OnSpawn();
 		GetComponent<KBatchedAnimController>().Play("grounded", KAnim.PlayMode.Loop);
-		base.gameObject.Subscribe(1366341636, OnReturn);
+		GetComponent<RocketModule>().AddModuleCondition(ProcessCondition.ProcessConditionType.RocketPrep, new ConditionProperlyFueled(this));
+		Subscribe(-887025858, OnRocketLandedDelegate);
 		UserMaxCapacity = UserMaxCapacity;
 		meter = new MeterController(GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.Infront, Grid.SceneLayer.NoLayer, "meter_target", "meter_fill", "meter_frame", "meter_OL");
 		meter.gameObject.GetComponent<KBatchedAnimTracker>().matchParentOffset = true;
-		Subscribe(-1697596308, delegate
-		{
-			meter.SetPositionPercent(MassStored() / capacityKg);
-		});
+		OnStorageChange(null);
+		Subscribe(-1697596308, OnStorageChangedDelegate);
 	}
 
-	public void FillTank()
+	private void OnStorageChange(object data)
+	{
+		meter.SetPositionPercent(storage.MassStored() / storage.capacityKg);
+	}
+
+	private void OnRocketLanded(object data)
+	{
+		if (consumeFuelOnLand)
+		{
+			storage.ConsumeAllIgnoringDisease();
+		}
+	}
+
+	private void OnCopySettings(object data)
+	{
+		GameObject gameObject = (GameObject)data;
+		FuelTank component = gameObject.GetComponent<FuelTank>();
+		if (component != null)
+		{
+			UserMaxCapacity = component.UserMaxCapacity;
+		}
+	}
+
+	public void DEBUG_FillTank()
 	{
 		RocketEngine rocketEngine = null;
 		foreach (GameObject item in AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>()))
@@ -113,29 +149,23 @@ public class FuelTank : Storage, IUserControlledCapacity
 		}
 		if (rocketEngine != null)
 		{
-			AddLiquid(ElementLoader.GetElementID(rocketEngine.fuelTag), targetFillMass - MassStored(), ElementLoader.GetElement(rocketEngine.fuelTag).defaultValues.temperature, 0, 0);
+			Element element = ElementLoader.GetElement(rocketEngine.fuelTag);
+			if (element.IsLiquid)
+			{
+				storage.AddLiquid(element.id, targetFillMass - storage.MassStored(), element.defaultValues.temperature, 0, 0);
+			}
+			else if (element.IsGas)
+			{
+				storage.AddGasChunk(element.id, targetFillMass - storage.MassStored(), element.defaultValues.temperature, 0, 0, keep_zero_mass: false);
+			}
+			else if (element.IsSolid)
+			{
+				storage.AddOre(element.id, targetFillMass - storage.MassStored(), element.defaultValues.temperature, 0, 0);
+			}
 		}
 		else
 		{
 			Debug.LogWarning("Fuel tank couldn't find rocket engine");
-		}
-	}
-
-	private void OnReturn(object data)
-	{
-		for (int num = items.Count - 1; num >= 0; num--)
-		{
-			Util.KDestroyGameObject(items[num]);
-		}
-		items.Clear();
-	}
-
-	private void OnCopySettings(object data)
-	{
-		FuelTank component = ((GameObject)data).GetComponent<FuelTank>();
-		if (component != null)
-		{
-			UserMaxCapacity = component.UserMaxCapacity;
 		}
 	}
 }

@@ -28,7 +28,8 @@ public class SquirrelConfig : IEntityConfig
 
 	public static GameObject CreateSquirrel(string id, string name, string desc, string anim_file, bool is_baby)
 	{
-		GameObject prefab = EntityTemplates.ExtendEntityToWildCreature(BaseSquirrelConfig.BaseSquirrel(id, name, desc, anim_file, "SquirrelBaseTrait", is_baby), SquirrelTuning.PEN_SIZE_PER_CREATURE, 100f);
+		GameObject prefab = BaseSquirrelConfig.BaseSquirrel(id, name, desc, anim_file, "SquirrelBaseTrait", is_baby);
+		prefab = EntityTemplates.ExtendEntityToWildCreature(prefab, SquirrelTuning.PEN_SIZE_PER_CREATURE);
 		Trait trait = Db.Get().CreateTrait("SquirrelBaseTrait", name, name, null, should_save: false, null, positive_trait: true, is_valid_starter_trait: true);
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.maxAttribute.Id, SquirrelTuning.STANDARD_STOMACH_SIZE, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.deltaAttribute.Id, (0f - SquirrelTuning.STANDARD_CALORIES_PER_CYCLE) / 600f, name));
@@ -38,9 +39,15 @@ public class SquirrelConfig : IEntityConfig
 		return BaseSquirrelConfig.SetupDiet(prefab, diet_infos, MIN_POOP_SIZE_KG);
 	}
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
-		return EntityTemplates.ExtendEntityToFertileCreature(CreateSquirrel("Squirrel", CREATURES.SPECIES.SQUIRREL.NAME, CREATURES.SPECIES.SQUIRREL.DESC, "squirrel_kanim", is_baby: false), "SquirrelEgg", CREATURES.SPECIES.SQUIRREL.EGG_NAME, CREATURES.SPECIES.SQUIRREL.DESC, "egg_squirrel_kanim", SquirrelTuning.EGG_MASS, "SquirrelBaby", 60.000004f, 20f, SquirrelTuning.EGG_CHANCES_BASE, EGG_SORT_ORDER);
+		GameObject prefab = CreateSquirrel("Squirrel", CREATURES.SPECIES.SQUIRREL.NAME, CREATURES.SPECIES.SQUIRREL.DESC, "squirrel_kanim", is_baby: false);
+		return EntityTemplates.ExtendEntityToFertileCreature(prefab, "SquirrelEgg", CREATURES.SPECIES.SQUIRREL.EGG_NAME, CREATURES.SPECIES.SQUIRREL.DESC, "egg_squirrel_kanim", SquirrelTuning.EGG_MASS, "SquirrelBaby", 60.000004f, 20f, SquirrelTuning.EGG_CHANCES_BASE, EGG_SORT_ORDER);
 	}
 
 	public void OnPrefabInit(GameObject prefab)

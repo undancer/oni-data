@@ -95,10 +95,17 @@ public class Rottable : GameStateMachine<Rottable, Rottable.Instance, IStateMach
 
 		public void RefreshModifiers(float dt)
 		{
-			if (!GetMaster().isNull && Grid.IsValidCell(Grid.PosToCell(base.gameObject)))
+			IStateMachineTarget master = GetMaster();
+			if (master.isNull)
+			{
+				return;
+			}
+			int cell = Grid.PosToCell(base.gameObject);
+			if (Grid.IsValidCell(cell))
 			{
 				KSelectable component = GetComponent<KSelectable>();
-				if (GetComponent<KPrefabID>().HasAnyTags(PRESERVED_TAGS))
+				KPrefabID component2 = GetComponent<KPrefabID>();
+				if (component2.HasAnyTags(PRESERVED_TAGS))
 				{
 					UnrefrigeratedModifier.SetValue(0f);
 					ContaminatedAtmosphere.SetValue(0f);
@@ -123,11 +130,7 @@ public class Rottable : GameStateMachine<Rottable, Rottable.Instance, IStateMach
 
 		private float rotTemperatureModifier()
 		{
-			if (!IsRefrigerated(base.gameObject))
-			{
-				return -0.5f;
-			}
-			return 0f;
+			return IsRefrigerated(base.gameObject) ? 0f : (-0.5f);
 		}
 
 		private float rotAtmosphereModifier()
@@ -168,7 +171,8 @@ public class Rottable : GameStateMachine<Rottable, Rottable.Instance, IStateMach
 
 		public bool IsRotLevelStackable(Instance other)
 		{
-			return Mathf.Abs(RotConstitutionPercentage - other.RotConstitutionPercentage) < 0.1f;
+			float num = Mathf.Abs(RotConstitutionPercentage - other.RotConstitutionPercentage);
+			return num < 0.1f;
 		}
 
 		public string GetToolTip()
@@ -296,7 +300,7 @@ public class Rottable : GameStateMachine<Rottable, Rottable.Instance, IStateMach
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = Fresh;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		root.TagTransition(GameTags.Preserved, Preserved).TagTransition(GameTags.Entombed, Preserved);
 		Fresh.ToggleStatusItem(Db.Get().CreatureStatusItems.Fresh, (Instance smi) => smi).ParamTransition(rotParameter, Stale_Pre, (Instance smi, float p) => p <= smi.def.spoilTime - (smi.def.spoilTime - smi.def.staleTime)).FastUpdate("Rot", rotCB, UpdateRate.SIM_1000ms, load_balance: true);
 		Preserved.TagTransition(PRESERVED_TAGS, Fresh, on_remove: true).Enter("RefreshModifiers", delegate(Instance smi)
@@ -382,11 +386,7 @@ public class Rottable : GameStateMachine<Rottable, Rottable.Instance, IStateMach
 			if (component != null && component.storage != null)
 			{
 				Refrigerator component2 = component.storage.GetComponent<Refrigerator>();
-				if (component2 != null)
-				{
-					return component2.IsActive();
-				}
-				return false;
+				return component2 != null && component2.IsActive();
 			}
 		}
 		return false;

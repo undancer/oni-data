@@ -7,11 +7,11 @@ public class StorageLockerConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("StorageLocker", 1, 2, "storagelocker_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER1);
-		obj.Floodable = false;
-		obj.AudioCategory = "Metal";
-		obj.Overheatable = false;
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("StorageLocker", 1, 2, "storagelocker_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER1);
+		buildingDef.Floodable = false;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.Overheatable = false;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -25,7 +25,10 @@ public class StorageLockerConfig : IBuildingConfig
 		storage.storageFilters = STORAGEFILTERS.NOT_EDIBLE_SOLIDS;
 		storage.storageFullMargin = STORAGE.STORAGE_LOCKER_FILLED_MARGIN;
 		storage.fetchCategory = Storage.FetchCategory.GeneralStorage;
-		go.AddOrGet<CopyBuildingSettings>().copyGroupTag = GameTags.StorageLocker;
+		storage.showCapacityStatusItem = true;
+		storage.showCapacityAsMainStatus = true;
+		CopyBuildingSettings copyBuildingSettings = go.AddOrGet<CopyBuildingSettings>();
+		copyBuildingSettings.copyGroupTag = GameTags.StorageLocker;
 		go.AddOrGet<StorageLocker>();
 		go.AddOrGet<UserNameable>();
 	}

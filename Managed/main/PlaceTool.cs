@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlaceTool : DragTool
@@ -5,7 +6,7 @@ public class PlaceTool : DragTool
 	[SerializeField]
 	private TextStyleSetting tooltipStyle;
 
-	private Tag previewTag;
+	private Action<Placeable, int> onPlacedCallback;
 
 	private Placeable source;
 
@@ -13,7 +14,7 @@ public class PlaceTool : DragTool
 
 	public static PlaceTool Instance;
 
-	private bool active;
+	private bool active = false;
 
 	public static void DestroyInstance()
 	{
@@ -30,7 +31,7 @@ public class PlaceTool : DragTool
 	{
 		active = true;
 		base.OnActivateTool();
-		visualizer = GameUtil.KInstantiate(Assets.GetPrefab(previewTag), Grid.SceneLayer.Front, null, LayerMask.NameToLayer("Place"));
+		visualizer = GameUtil.KInstantiate(Assets.GetPrefab(source.previewTag), Grid.SceneLayer.Front, null, LayerMask.NameToLayer("Place"));
 		KBatchedAnimController component = visualizer.GetComponent<KBatchedAnimController>();
 		if (component != null)
 		{
@@ -39,7 +40,8 @@ public class PlaceTool : DragTool
 		}
 		visualizer.SetActive(value: true);
 		ShowToolTip();
-		GetComponent<BuildToolHoverTextCard>().currentDef = null;
+		BuildToolHoverTextCard component2 = GetComponent<BuildToolHoverTextCard>();
+		component2.currentDef = null;
 		ResourceRemainingDisplayScreen.instance.ActivateDisplay(visualizer);
 		if (component == null)
 		{
@@ -58,48 +60,35 @@ public class PlaceTool : DragTool
 		GridCompositor.Instance.ToggleMajor(on: false);
 		HideToolTip();
 		ResourceRemainingDisplayScreen.instance.DeactivateDisplay();
-		Object.Destroy(visualizer);
+		UnityEngine.Object.Destroy(visualizer);
 		KMonoBehaviour.PlaySound(GlobalAssets.GetSound(GetDeactivateSound()));
+		source = null;
+		onPlacedCallback = null;
 		base.OnDeactivateTool(new_tool);
 	}
 
-	public void Activate(Placeable source, Tag previewTag)
+	public void Activate(Placeable source, Action<Placeable, int> onPlacedCallback)
 	{
 		this.source = source;
-		this.previewTag = previewTag;
+		this.onPlacedCallback = onPlacedCallback;
 		PlayerController.Instance.ActivateTool(this);
-	}
-
-	public void Deactivate()
-	{
-		SelectTool.Instance.Activate();
-		source = null;
-		previewTag = Tag.Invalid;
-		ResourceRemainingDisplayScreen.instance.DeactivateDisplay();
 	}
 
 	protected override void OnDragTool(int cell, int distFromOrigin)
 	{
-		if (visualizer == null)
+		if (!(visualizer == null))
 		{
-			return;
-		}
-		bool flag = false;
-		if (visualizer.GetComponent<EntityPreview>().Valid)
-		{
-			if (DebugHandler.InstantBuildMode)
+			bool flag = false;
+			EntityPreview component = visualizer.GetComponent<EntityPreview>();
+			if (component.Valid)
 			{
-				source.Place(cell);
+				onPlacedCallback(source, cell);
+				flag = true;
 			}
-			else
+			if (flag)
 			{
-				source.QueuePlacement(cell);
+				DeactivateTool();
 			}
-			flag = true;
-		}
-		if (flag)
-		{
-			Deactivate();
 		}
 	}
 

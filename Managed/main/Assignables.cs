@@ -6,7 +6,7 @@ public class Assignables : KMonoBehaviour
 {
 	protected List<AssignableSlotInstance> slots = new List<AssignableSlotInstance>();
 
-	private static readonly EventSystem.IntraObjectHandler<Assignables> OnDeadTagChangedDelegate = GameUtil.CreateHasTagHandler(GameTags.Dead, delegate(Assignables component, object data)
+	private static readonly EventSystem.IntraObjectHandler<Assignables> OnDeadTagAddedDelegate = GameUtil.CreateHasTagHandler(GameTags.Dead, delegate(Assignables component, object data)
 	{
 		component.OnDeath(data);
 	});
@@ -26,7 +26,7 @@ public class Assignables : KMonoBehaviour
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		GameUtil.SubscribeToTags(this, OnDeadTagChangedDelegate);
+		GameUtil.SubscribeToTags(this, OnDeadTagAddedDelegate, triggerImmediately: true);
 	}
 
 	private void OnDeath(object data)
@@ -71,20 +71,21 @@ public class Assignables : KMonoBehaviour
 		{
 			return assignable;
 		}
-		GameObject targetGameObject = GetComponent<MinionAssignablesProxy>().GetTargetGameObject();
+		MinionAssignablesProxy component = GetComponent<MinionAssignablesProxy>();
+		GameObject targetGameObject = component.GetTargetGameObject();
 		if (targetGameObject == null)
 		{
 			Debug.LogWarning("AutoAssignSlot failed, proxy game object was null.");
 			return null;
 		}
-		Navigator component = targetGameObject.GetComponent<Navigator>();
+		Navigator component2 = targetGameObject.GetComponent<Navigator>();
 		IAssignableIdentity assignableIdentity = GetAssignableIdentity();
 		int num = int.MaxValue;
 		foreach (Assignable item in Game.Instance.assignmentManager)
 		{
 			if (!(item == null) && !item.IsAssigned() && item.slot == slot && item.CanAutoAssignTo(assignableIdentity))
 			{
-				int navigationCost = item.GetNavigationCost(component);
+				int navigationCost = item.GetNavigationCost(component2);
 				if (navigationCost != -1 && navigationCost < num)
 				{
 					num = navigationCost;

@@ -131,6 +131,46 @@ namespace ProcGen.Noise
 			}
 		}
 
+		public void CreateEmptyLists()
+		{
+			if (links == null)
+			{
+				links = new List<NodeLink>();
+			}
+			if (primitives == null)
+			{
+				primitives = new Dictionary<string, Primitive>();
+			}
+			if (filters == null)
+			{
+				filters = new Dictionary<string, Filter>();
+			}
+			if (transformers == null)
+			{
+				transformers = new Dictionary<string, Transformer>();
+			}
+			if (selectors == null)
+			{
+				selectors = new Dictionary<string, Selector>();
+			}
+			if (modifiers == null)
+			{
+				modifiers = new Dictionary<string, Modifier>();
+			}
+			if (combiners == null)
+			{
+				combiners = new Dictionary<string, Combiner>();
+			}
+			if (floats == null)
+			{
+				floats = new Dictionary<string, FloatList>();
+			}
+			if (controlpoints == null)
+			{
+				controlpoints = new Dictionary<string, ControlPointList>();
+			}
+		}
+
 		private IModule3D GetModuleFromLink(Link link)
 		{
 			if (link == null)
@@ -250,9 +290,9 @@ namespace ProcGen.Noise
 						controlPoints = controlpoints[nodeLink.source1.name];
 					}
 					FloatList controlFloats = null;
-					if (nodeLink.source2 != null && nodeLink.source2.type == Link.Type.FloatPoints && controlpoints.ContainsKey(nodeLink.source2.name))
+					if (nodeLink.source1 != null && nodeLink.source1.type == Link.Type.FloatPoints && floats.ContainsKey(nodeLink.source1.name))
 					{
-						controlFloats = floats[nodeLink.source2.name];
+						controlFloats = floats[nodeLink.source1.name];
 					}
 					modifiers[nodeLink.target.name].SetSouces(moduleFromLink, module3D2, controlFloats, controlPoints);
 					break;
@@ -261,7 +301,7 @@ namespace ProcGen.Noise
 					module3D2 = GetModuleFromLink(nodeLink.source0);
 					module3D3 = GetModuleFromLink(nodeLink.source1);
 					module3D4 = GetModuleFromLink(nodeLink.source2);
-					selectors[nodeLink.target.name].SetSouces(moduleFromLink, module3D2, module3D3, module3D4);
+					selectors[nodeLink.target.name].SetSouces(moduleFromLink, module3D4, module3D2, module3D3);
 					break;
 				case Link.Type.Transformer:
 					module3D2 = GetModuleFromLink(nodeLink.source0);

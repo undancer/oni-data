@@ -6,9 +6,9 @@ using UnityEngine.EventSystems;
 [AddComponentMenu("KMonoBehaviour/Plugins/KScreenManager")]
 public class KScreenManager : KMonoBehaviour, IInputHandler
 {
-	private static bool quitting;
+	private static bool quitting = false;
 
-	private static bool inputDisabled;
+	private static bool inputDisabled = false;
 
 	private List<KScreen> screenStack = new List<KScreen>();
 
@@ -65,7 +65,8 @@ public class KScreenManager : KMonoBehaviour, IInputHandler
 		{
 			for (int num = screenStack.Count - 1; num >= 0; num--)
 			{
-				screenStack[num].Deactivate();
+				KScreen kScreen = screenStack[num];
+				kScreen.Deactivate();
 			}
 		}
 	}
@@ -73,18 +74,21 @@ public class KScreenManager : KMonoBehaviour, IInputHandler
 	public GameObject ActivateScreen(GameObject screen, GameObject parent)
 	{
 		AddExistingChild(parent, screen);
-		screen.GetComponent<KScreen>().Activate();
+		KScreen component = screen.GetComponent<KScreen>();
+		component.Activate();
 		return screen;
 	}
 
 	public KScreen InstantiateScreen(GameObject screenPrefab, GameObject parent)
 	{
-		return AddChild(parent, screenPrefab).GetComponent<KScreen>();
+		GameObject gameObject = AddChild(parent, screenPrefab);
+		return gameObject.GetComponent<KScreen>();
 	}
 
 	public KScreen StartScreen(GameObject screenPrefab, GameObject parent)
 	{
-		KScreen component = AddChild(parent, screenPrefab).GetComponent<KScreen>();
+		GameObject gameObject = AddChild(parent, screenPrefab);
+		KScreen component = gameObject.GetComponent<KScreen>();
 		component.Activate();
 		return component;
 	}
@@ -165,7 +169,7 @@ public class KScreenManager : KMonoBehaviour, IInputHandler
 			if (kScreen != null && kScreen.isActiveAndEnabled)
 			{
 				kScreen.OnKeyDown(e);
-				if (e.Consumed || kScreen.IsModal())
+				if (e.Consumed)
 				{
 					lastConsumedEvent = e;
 					lastConsumedEventScreen = kScreen;
@@ -187,7 +191,7 @@ public class KScreenManager : KMonoBehaviour, IInputHandler
 			if (kScreen != null && kScreen.isActiveAndEnabled)
 			{
 				kScreen.OnKeyUp(e);
-				if (e.Consumed || kScreen.IsModal())
+				if (e.Consumed)
 				{
 					lastConsumedEvent = e;
 					lastConsumedEventScreen = kScreen;

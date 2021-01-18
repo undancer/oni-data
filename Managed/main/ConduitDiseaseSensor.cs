@@ -11,7 +11,7 @@ public class ConduitDiseaseSensor : ConduitThresholdSensor, IThresholdSwitch
 	private const float rangeMax = 100000f;
 
 	[Serialize]
-	private float lastValue;
+	private float lastValue = 0f;
 
 	private static readonly HashedString TINT_SYMBOL = "germs";
 
@@ -76,14 +76,15 @@ public class ConduitDiseaseSensor : ConduitThresholdSensor, IThresholdSwitch
 		int cell = Grid.PosToCell(this);
 		if (conduitType == ConduitType.Liquid || conduitType == ConduitType.Gas)
 		{
-			ConduitFlow.ConduitContents contents = Conduit.GetFlowManager(conduitType).GetContents(cell);
+			ConduitFlow flowManager = Conduit.GetFlowManager(conduitType);
+			ConduitFlow.ConduitContents contents = flowManager.GetContents(cell);
 			diseaseIdx = contents.diseaseIdx;
 			diseaseCount = contents.diseaseCount;
 			hasMass = contents.mass > 0f;
 			return;
 		}
-		SolidConduitFlow flowManager = SolidConduit.GetFlowManager();
-		Pickupable pickupable = flowManager.GetPickupable(flowManager.GetContents(cell).pickupableHandle);
+		SolidConduitFlow flowManager2 = SolidConduit.GetFlowManager();
+		Pickupable pickupable = flowManager2.GetPickupable(flowManager2.GetContents(cell).pickupableHandle);
 		if (pickupable != null && pickupable.PrimaryElement.Mass > 0f)
 		{
 			diseaseIdx = pickupable.PrimaryElement.DiseaseIdx;

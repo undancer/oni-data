@@ -27,13 +27,13 @@ public class GridSettings : KMonoBehaviour
 		Grid.Spawnable = new byte[Grid.CellCount];
 		Grid.BuildMasks = new Grid.BuildFlags[Grid.CellCount];
 		Grid.LightCount = new int[Grid.CellCount];
-		Grid.RadiationCount = new int[Grid.CellCount];
 		Grid.Damage = new float[Grid.CellCount];
 		Grid.NavMasks = new Grid.NavFlags[Grid.CellCount];
 		Grid.NavValidatorMasks = new Grid.NavValidatorFlags[Grid.CellCount];
 		Grid.Decor = new float[Grid.CellCount];
 		Grid.Loudness = new float[Grid.CellCount];
 		Grid.GravitasFacility = new bool[Grid.CellCount];
+		Grid.WorldIdx = new byte[Grid.CellCount];
 		Grid.ObjectLayers = new Dictionary<int, GameObject>[40];
 		for (int i = 0; i < Grid.ObjectLayers.Length; i++)
 		{
@@ -51,6 +51,10 @@ public class GridSettings : KMonoBehaviour
 			Game.Instance.travelTubeSystem.Initialize(Grid.WidthInCells, Grid.HeightInCells);
 			Game.Instance.gasConduitFlow.Initialize(Grid.CellCount);
 			Game.Instance.liquidConduitFlow.Initialize(Grid.CellCount);
+		}
+		for (int k = 0; k < Grid.CellCount; k++)
+		{
+			Grid.WorldIdx[k] = byte.MaxValue;
 		}
 		Grid.OnReveal = null;
 	}
@@ -71,12 +75,12 @@ public class GridSettings : KMonoBehaviour
 		Grid.BuildMasks = null;
 		Grid.NavValidatorMasks = null;
 		Grid.LightCount = null;
-		Grid.RadiationCount = null;
 		Grid.Damage = null;
 		Grid.Decor = null;
 		Grid.Loudness = null;
 		Grid.GravitasFacility = null;
 		Grid.ObjectLayers = null;
+		Grid.WorldIdx = null;
 		Grid.ResetNavMasksAndDetails();
 	}
 }

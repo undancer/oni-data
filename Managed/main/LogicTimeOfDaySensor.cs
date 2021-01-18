@@ -6,13 +6,13 @@ public class LogicTimeOfDaySensor : Switch, ISaveLoadable, ISim200ms
 {
 	[SerializeField]
 	[Serialize]
-	public float startTime;
+	public float startTime = 0f;
 
 	[SerializeField]
 	[Serialize]
 	public float duration = 1f;
 
-	private bool wasOn;
+	private bool wasOn = false;
 
 	[MyCmpAdd]
 	private CopyBuildingSettings copyBuildingSettings;
@@ -30,7 +30,8 @@ public class LogicTimeOfDaySensor : Switch, ISaveLoadable, ISim200ms
 
 	private void OnCopySettings(object data)
 	{
-		LogicTimeOfDaySensor component = ((GameObject)data).GetComponent<LogicTimeOfDaySensor>();
+		GameObject gameObject = (GameObject)data;
+		LogicTimeOfDaySensor component = gameObject.GetComponent<LogicTimeOfDaySensor>();
 		if (component != null)
 		{
 			startTime = component.startTime;
@@ -70,7 +71,8 @@ public class LogicTimeOfDaySensor : Switch, ISaveLoadable, ISim200ms
 
 	private void UpdateLogicCircuit()
 	{
-		GetComponent<LogicPorts>().SendSignal(LogicSwitch.PORT_ID, switchedOn ? 1 : 0);
+		LogicPorts component = GetComponent<LogicPorts>();
+		component.SendSignal(LogicSwitch.PORT_ID, switchedOn ? 1 : 0);
 	}
 
 	private void UpdateVisualState(bool force = false)

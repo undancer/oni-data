@@ -9,9 +9,9 @@ namespace VoronoiTree
 	{
 		public delegate bool LeafNodeTest(Node node);
 
-		protected List<Node> children;
+		protected List<Node> children = null;
 
-		public bool dontRelaxChildren;
+		public bool dontRelaxChildren = false;
 
 		public SeededRandom myRandom
 		{
@@ -76,7 +76,7 @@ namespace VoronoiTree
 			for (int i = 0; i < children.Count; i++)
 			{
 				Tree tree = children[i] as Tree;
-				if (tree != null && tree.site.poly.Contains(point))
+				if (tree?.site.poly.Contains(point) ?? false)
 				{
 					return tree;
 				}
@@ -136,9 +136,13 @@ namespace VoronoiTree
 				{
 					for (int k = 0; k < children.Count; k++)
 					{
-						if (children[k].type == NodeType.Internal && !(children[k] as Tree).ComputeChildrenRecursive(depth + 1, pd))
+						if (children[k].type == NodeType.Internal)
 						{
-							return false;
+							Tree tree = children[k] as Tree;
+							if (!tree.ComputeChildrenRecursive(depth + 1, pd))
+							{
+								return false;
+							}
 						}
 					}
 				}
@@ -147,9 +151,13 @@ namespace VoronoiTree
 			{
 				for (int l = 0; l < children.Count; l++)
 				{
-					if (children[l].type == NodeType.Internal && !(children[l] as Tree).ComputeChildrenRecursive(depth + 1))
+					if (children[l].type == NodeType.Internal)
 					{
-						return false;
+						Tree tree2 = children[l] as Tree;
+						if (!tree2.ComputeChildrenRecursive(depth + 1))
+						{
+							return false;
+						}
 					}
 				}
 			}
@@ -212,7 +220,8 @@ namespace VoronoiTree
 				{
 					if (children[i].type == NodeType.Internal)
 					{
-						(children[i] as Tree).Reset();
+						Tree tree = children[i] as Tree;
+						tree.Reset();
 					}
 				}
 			}
@@ -232,7 +241,8 @@ namespace VoronoiTree
 				int num3 = num2 + 1;
 				if (children[i].type == NodeType.Internal)
 				{
-					num3 = (children[i] as Tree).MaxDepth(num2);
+					Tree tree = children[i] as Tree;
+					num3 = tree.MaxDepth(num2);
 				}
 				if (num3 > num)
 				{
@@ -342,9 +352,13 @@ namespace VoronoiTree
 				{
 					num += Vector2.Distance(children[k].site.position, list[k].poly.Centroid());
 					children[k].site.position = list[k].poly.Centroid();
-					if (children[k].type == NodeType.Internal && !(children[k] as Tree).ComputeChildren(depth))
+					if (children[k].type == NodeType.Internal)
 					{
-						return 0f;
+						Tree tree2 = children[k] as Tree;
+						if (!tree2.ComputeChildren(depth))
+						{
+							return 0f;
+						}
 					}
 				}
 			}
@@ -405,7 +419,8 @@ namespace VoronoiTree
 				{
 					if (children[i].type == NodeType.Internal)
 					{
-						return (children[i] as Tree).GetNodeForSite(target);
+						Tree tree = children[i] as Tree;
+						return tree.GetNodeForSite(target);
 					}
 					return children[i];
 				}
@@ -455,17 +470,6 @@ namespace VoronoiTree
 					}
 				}
 			}
-		}
-
-		public override Tree Split(SplitCommand cmd)
-		{
-			if (cmd.SplitFunction != null)
-			{
-				cmd.SplitFunction(this, cmd);
-			}
-			ComputeChildrenRecursive(0);
-			RelaxRecursive(0, 3);
-			return this;
 		}
 
 		public Tree ReplaceLeafWithTree(Leaf leaf)
@@ -557,6 +561,11 @@ namespace VoronoiTree
 			}
 		}
 
+		public List<Node> ImmediateChildren()
+		{
+			return new List<Node>(children);
+		}
+
 		public void GetLeafNodes(List<Node> nodes, LeafNodeTest test = null)
 		{
 			for (int i = 0; i < children.Count; i++)
@@ -568,12 +577,12 @@ namespace VoronoiTree
 					{
 						tree.GetLeafNodes(nodes, test);
 					}
-					else if (test == null || test(children[i]))
+					else if (test?.Invoke(children[i]) ?? true)
 					{
 						nodes.Add(children[i]);
 					}
 				}
-				else if (test == null || test(children[i]))
+				else if (test?.Invoke(children[i]) ?? true)
 				{
 					nodes.Add(children[i]);
 				}

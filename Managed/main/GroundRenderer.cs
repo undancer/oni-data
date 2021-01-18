@@ -226,9 +226,9 @@ public class GroundRenderer : KMonoBehaviour
 
 		public void Rebuild(GroundMasks.BiomeMaskData[] biomeMasks, Dictionary<SimHashes, Materials> materials)
 		{
-			foreach (ElementChunk elementChunk2 in elementChunks)
+			foreach (ElementChunk elementChunk3 in elementChunks)
 			{
-				elementChunk2.Clear();
+				elementChunk3.Clear();
 			}
 			Vector2I vector2I = new Vector2I(chunkX * 16, chunkY * 16);
 			Vector2I vector2I2 = new Vector2I(Math.Min(Grid.WidthInCells, (chunkX + 1) * 16), Math.Min(Grid.HeightInCells, (chunkY + 1) * 16));
@@ -257,8 +257,13 @@ public class GroundRenderer : KMonoBehaviour
 					InsertSorted(elements[2], uniqueElements, 2);
 					InsertSorted(elements[3], uniqueElements, 3);
 					int num9 = -1;
-					int biomeIdx = GetBiomeIdx(i * Grid.WidthInCells + j);
+					int cell = i * Grid.WidthInCells + j;
+					int biomeIdx = GetBiomeIdx(cell);
 					GroundMasks.BiomeMaskData biomeMaskData = biomeMasks[biomeIdx];
+					if (biomeMaskData == null)
+					{
+						biomeMaskData = biomeMasks[3];
+					}
 					for (int k = 0; k < uniqueElements.Length; k++)
 					{
 						Element element = uniqueElements[k];
@@ -292,13 +297,14 @@ public class GroundRenderer : KMonoBehaviour
 					}
 				}
 			}
-			foreach (ElementChunk elementChunk3 in elementChunks)
+			foreach (ElementChunk elementChunk4 in elementChunks)
 			{
-				elementChunk3.Build();
+				elementChunk4.Build();
 			}
 			for (int num12 = elementChunks.Count - 1; num12 >= 0; num12--)
 			{
-				if (elementChunks[num12].tileCount == 0)
+				ElementChunk elementChunk2 = elementChunks[num12];
+				if (elementChunk2.tileCount == 0)
 				{
 					int index = elementChunks.Count - 1;
 					elementChunks[num12] = elementChunks[index];
@@ -456,38 +462,38 @@ public class GroundRenderer : KMonoBehaviour
 		Vector2I vector2I = Grid.CellToXY(cell);
 		Vector2I vector2I2 = new Vector2I(vector2I.x / 16, vector2I.y / 16);
 		dirtyChunks[vector2I2.x, vector2I2.y] = true;
-		bool num = vector2I.x % 16 == 0 && vector2I2.x > 0;
-		bool flag = vector2I.x % 16 == 15 && vector2I2.x < size.x - 1;
-		bool flag2 = vector2I.y % 16 == 0 && vector2I2.y > 0;
-		bool flag3 = vector2I.y % 16 == 15 && vector2I2.y < size.y - 1;
-		if (num)
+		bool flag = vector2I.x % 16 == 0 && vector2I2.x > 0;
+		bool flag2 = vector2I.x % 16 == 15 && vector2I2.x < size.x - 1;
+		bool flag3 = vector2I.y % 16 == 0 && vector2I2.y > 0;
+		bool flag4 = vector2I.y % 16 == 15 && vector2I2.y < size.y - 1;
+		if (flag)
 		{
 			dirtyChunks[vector2I2.x - 1, vector2I2.y] = true;
-			if (flag2)
+			if (flag3)
 			{
 				dirtyChunks[vector2I2.x - 1, vector2I2.y - 1] = true;
 			}
-			if (flag3)
+			if (flag4)
 			{
 				dirtyChunks[vector2I2.x - 1, vector2I2.y + 1] = true;
 			}
 		}
-		if (flag2)
+		if (flag3)
 		{
 			dirtyChunks[vector2I2.x, vector2I2.y - 1] = true;
 		}
-		if (flag3)
+		if (flag4)
 		{
 			dirtyChunks[vector2I2.x, vector2I2.y + 1] = true;
 		}
-		if (flag)
+		if (flag2)
 		{
 			dirtyChunks[vector2I2.x + 1, vector2I2.y] = true;
-			if (flag2)
+			if (flag3)
 			{
 				dirtyChunks[vector2I2.x + 1, vector2I2.y - 1] = true;
 			}
-			if (flag3)
+			if (flag4)
 			{
 				dirtyChunks[vector2I2.x + 1, vector2I2.y + 1] = true;
 			}
@@ -509,7 +515,8 @@ public class GroundRenderer : KMonoBehaviour
 			string key = biomeMask.Key;
 			if (a == key)
 			{
-				return biomeMask.Value;
+				result = biomeMask.Value;
+				break;
 			}
 		}
 		return result;
@@ -543,7 +550,8 @@ public class GroundRenderer : KMonoBehaviour
 
 	private void ConfigureMaterialShine(Material material)
 	{
-		if (material.GetTexture("_ShineMask") != null)
+		Texture texture = material.GetTexture("_ShineMask");
+		if (texture != null)
 		{
 			material.DisableKeyword("MATTE");
 			material.EnableKeyword("SHINY");

@@ -132,10 +132,10 @@ public class Refrigerator : KMonoBehaviour, IUserControlledCapacity, IGameObject
 
 	private void UpdateLogicCircuit()
 	{
-		bool num = filteredStorage.IsFull();
+		bool flag = filteredStorage.IsFull();
 		bool isOperational = operational.IsOperational;
-		bool flag = num && isOperational;
-		ports.SendSignal(FilteredStorage.FULL_PORT_ID, flag ? 1 : 0);
-		filteredStorage.SetLogicMeter(flag);
+		bool flag2 = flag && isOperational;
+		ports.SendSignal(FilteredStorage.FULL_PORT_ID, flag2 ? 1 : 0);
+		filteredStorage.SetLogicMeter(flag2);
 	}
 }

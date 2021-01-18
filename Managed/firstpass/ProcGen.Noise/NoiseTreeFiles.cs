@@ -18,6 +18,11 @@ namespace ProcGen.Noise
 			set;
 		}
 
+		public static string GetDirectory()
+		{
+			return System.IO.Path.Combine(Application.streamingAssetsPath, "worldgen/noise/");
+		}
+
 		public static string GetPath()
 		{
 			return System.IO.Path.Combine(Application.streamingAssetsPath, "worldgen/" + NOISE_FILE + ".yaml");

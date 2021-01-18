@@ -183,7 +183,7 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 
 	private Mesh mesh;
 
-	private float offset;
+	private float offset = 0f;
 
 	private float[] lastSpawnTime;
 
@@ -321,7 +321,9 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 				vector.x += 0.5f;
 			}
 			int num5 = Grid.PosToCell(vector);
-			if ((Grid.Element[num5].state & Element.State.Solid) == Element.State.Solid || (Grid.Properties[num5] & 2u) != 0)
+			Element element2 = Grid.Element[num5];
+			Element.State state = element2.state & Element.State.Solid;
+			if (state == Element.State.Solid || (Grid.Properties[num5] & 2u) != 0)
 			{
 				vector.y = Mathf.Floor(vector.y + 1f);
 			}
@@ -498,7 +500,8 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 		foreach (KeyValuePair<int, SoundInfo> topSound in topSounds)
 		{
 			SoundInfo value = topSound.Value;
-			if (t - value.startTime >= stopTopLoopDelay)
+			float num = t - value.startTime;
+			if (num >= stopTopLoopDelay)
 			{
 				if (value.handle != HandleVector<int>.InvalidHandle)
 				{
@@ -515,7 +518,8 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 		foreach (KeyValuePair<int, SoundInfo> splashSound in splashSounds)
 		{
 			SoundInfo value2 = splashSound.Value;
-			if (t - value2.startTime >= stopSplashLoopDelay)
+			float num2 = t - value2.startTime;
+			if (num2 >= stopSplashLoopDelay)
 			{
 				if (value2.handle != HandleVector<int>.InvalidHandle)
 				{
@@ -537,7 +541,8 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 		int count = physics.Count;
 		for (int i = 0; i < count; i++)
 		{
-			if (Grid.PosToCell(physics[i].position) == cell)
+			int num = Grid.PosToCell(physics[i].position);
+			if (num == cell)
 			{
 				ParticleProperties particleProperties = this.particleProperties[i];
 				float value = 0f;
@@ -559,7 +564,9 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 		bool flag = false;
 		do
 		{
-			if ((Grid.Element[cell].state & Element.State.Solid) == Element.State.Solid || (Grid.Properties[cell] & 2u) != 0)
+			Element element = Grid.Element[cell];
+			Element.State state = element.state & Element.State.Solid;
+			if (state == Element.State.Solid || (Grid.Properties[cell] & 2u) != 0)
 			{
 				cell += Grid.WidthInCells;
 				if (!Grid.IsValidCell(cell))
@@ -702,7 +709,8 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 	{
 		GameObject gameObject = GameUtil.KInstantiate(mistEffect, Grid.SceneLayer.BuildingBack);
 		gameObject.SetActive(value: false);
-		gameObject.GetComponent<KBatchedAnimController>().onDestroySelf = ReleaseMist;
+		KBatchedAnimController component = gameObject.GetComponent<KBatchedAnimController>();
+		component.onDestroySelf = ReleaseMist;
 		return gameObject;
 	}
 

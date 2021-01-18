@@ -31,7 +31,7 @@ public class Turbine : KMonoBehaviour
 		{
 			InitializeStatusItems();
 			default_state = operational;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			inoperational.EventTransition(GameHashes.OperationalChanged, operational.spinningUp, (Turbine.Instance smi) => smi.master.GetComponent<Operational>().IsOperational).QueueAnim("off").Enter(delegate(Turbine.Instance smi)
 			{
 				smi.master.currentRPM = 0f;
@@ -65,13 +65,13 @@ public class Turbine : KMonoBehaviour
 
 	public class Instance : GameStateMachine<States, Instance, Turbine, object>.GameInstance
 	{
-		public bool isInputBlocked;
+		public bool isInputBlocked = false;
 
-		public bool isOutputBlocked;
+		public bool isOutputBlocked = false;
 
-		public bool insufficientMass;
+		public bool insufficientMass = false;
 
-		public bool insufficientTemperature;
+		public bool insufficientTemperature = false;
 
 		private Guid inputBlockedHandle = Guid.Empty;
 
@@ -162,11 +162,7 @@ public class Turbine : KMonoBehaviour
 			}
 			insufficient_mass = num - num3 < base.master.requiredMassFlowDifferential;
 			insufficient_temperature = num2 < base.master.minActiveTemperature;
-			if (!insufficient_mass)
-			{
-				return !insufficient_temperature;
-			}
-			return false;
+			return !insufficient_mass && !insufficient_temperature;
 		}
 
 		public void UpdateStatusItems()
@@ -223,16 +219,16 @@ public class Turbine : KMonoBehaviour
 	private static readonly HashedString TINT_SYMBOL = new HashedString("meter_fill");
 
 	[Serialize]
-	private float storedMass;
+	private float storedMass = 0f;
 
 	[Serialize]
-	private float storedTemperature;
+	private float storedTemperature = 0f;
 
 	[Serialize]
 	private byte diseaseIdx = byte.MaxValue;
 
 	[Serialize]
-	private int diseaseCount;
+	private int diseaseCount = 0;
 
 	[MyCmpGet]
 	private Generator generator;
@@ -324,9 +320,9 @@ public class Turbine : KMonoBehaviour
 	{
 		float mass = pumpKGRate * dt / (float)srcCells.Length;
 		int[] array = srcCells;
-		for (int i = 0; i < array.Length; i++)
+		foreach (int gameCell in array)
 		{
-			SimMessages.ConsumeMass(array[i], callbackIdx: Game.Instance.massConsumedCallbackManager.Add(OnSimConsumeCallback, this, "TurbineConsume").index, element: srcElem, mass: mass, radius: 1);
+			SimMessages.ConsumeMass(callbackIdx: Game.Instance.massConsumedCallbackManager.Add(OnSimConsumeCallback, this, "TurbineConsume").index, gameCell: gameCell, element: srcElem, mass: mass, radius: 1);
 		}
 	}
 
@@ -352,9 +348,9 @@ public class Turbine : KMonoBehaviour
 			int disease_count = diseaseCount / destCells.Length;
 			Game.Instance.massEmitCallbackManager.GetItem(simEmitCBHandle);
 			int[] array = destCells;
-			for (int i = 0; i < array.Length; i++)
+			foreach (int gameCell in array)
 			{
-				SimMessages.EmitMass(array[i], mass_cb_info.elemIdx, mass, emitTemperature, diseaseIdx, disease_count, simEmitCBHandle.index);
+				SimMessages.EmitMass(gameCell, mass_cb_info.elemIdx, mass, emitTemperature, diseaseIdx, disease_count, simEmitCBHandle.index);
 			}
 			storedMass = 0f;
 			storedTemperature = 0f;
@@ -380,11 +376,9 @@ public class Turbine : KMonoBehaviour
 				diseaseInfo.idx = diseaseIdx;
 				diseaseInfo.count = diseaseCount;
 				SimUtil.DiseaseInfo a = diseaseInfo;
-				diseaseInfo = new SimUtil.DiseaseInfo
-				{
-					idx = info.diseaseIdx,
-					count = info.diseaseCount
-				};
+				diseaseInfo = default(SimUtil.DiseaseInfo);
+				diseaseInfo.idx = info.diseaseIdx;
+				diseaseInfo.count = info.diseaseCount;
 				SimUtil.DiseaseInfo b = diseaseInfo;
 				SimUtil.DiseaseInfo diseaseInfo2 = SimUtil.CalculateFinalDiseaseInfo(a, b);
 				diseaseIdx = diseaseInfo2.idx;

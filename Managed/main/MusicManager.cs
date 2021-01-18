@@ -26,10 +26,10 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 		public bool dynamic;
 
 		[NonSerialized]
-		public bool useTimeOfDay;
+		public bool useTimeOfDay = false;
 
 		[NonSerialized]
-		public int numberOfVariations;
+		public int numberOfVariations = 0;
 
 		[NonSerialized]
 		public FMOD.Studio.EventInstance ev;
@@ -56,11 +56,11 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 
 		[Tooltip("Some songs are set up to have Morning, Daytime, Hook, and Intro sections. Toggle this ON if this song has those sections.")]
 		[SerializeField]
-		public bool useTimeOfDay;
+		public bool useTimeOfDay = false;
 
 		[Tooltip("Some songs have different possible start locations. Enter how many start locations this song is set up to support.")]
 		[SerializeField]
-		public int numberOfVariations;
+		public int numberOfVariations = 0;
 	}
 
 	[Serializable]
@@ -175,14 +175,14 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 	private DynamicSongPlaylist miniSongPlaylist = new DynamicSongPlaylist();
 
 	[NonSerialized]
-	public SongInfo activeDynamicSong;
+	public SongInfo activeDynamicSong = null;
 
 	[NonSerialized]
-	public DynamicSongPlaylist activePlaylist;
+	public DynamicSongPlaylist activePlaylist = null;
 
-	private TypeOfMusic nextMusicType;
+	private TypeOfMusic nextMusicType = TypeOfMusic.DynamicSong;
 
-	private int musicTypeIterator;
+	private int musicTypeIterator = 0;
 
 	[Space]
 	[Header("Tuning Values")]
@@ -200,19 +200,19 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 
 	[Tooltip("When mini songs are active, we play a snapshot which attenuates the ambience and SFX. What intensity should that snapshot be applied?")]
 	[SerializeField]
-	private float miniSongSFXAttenuationPercentage;
+	private float miniSongSFXAttenuationPercentage = 0f;
 
 	[SerializeField]
 	private TypeOfMusic[] musicStyleOrder;
 
 	[NonSerialized]
-	public bool alwaysPlayMusic;
+	public bool alwaysPlayMusic = false;
 
 	private float time;
 
 	private float timeOfDayUpdateRate = 2f;
 
-	private static MusicManager _instance;
+	private static MusicManager _instance = null;
 
 	public Dictionary<string, SongInfo> SongMap => songMap;
 
@@ -488,8 +488,8 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 		while (lerpTime < 1f)
 		{
 			lerpTime += Time.unscaledDeltaTime / fadeTime;
-			float volume = Mathf.Lerp(startVolume, targetVolume2, lerpTime);
-			inst.setVolume(volume);
+			float lerpedVolume = Mathf.Lerp(startVolume, targetVolume2, lerpTime);
+			inst.setVolume(lerpedVolume);
 			yield return null;
 		}
 		inst.setPaused(paused: true);
@@ -504,8 +504,8 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 		while (lerpTime < 1f)
 		{
 			lerpTime += Time.unscaledDeltaTime / fadeTime;
-			float volume = Mathf.Lerp(startVolume, targetVolume2, lerpTime);
-			inst.setVolume(volume);
+			float lerpedVolume = Mathf.Lerp(startVolume, targetVolume2, lerpTime);
+			inst.setVolume(lerpedVolume);
 			yield return null;
 		}
 	}
@@ -617,11 +617,7 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 
 	public bool DynamicMusicIsActive()
 	{
-		if (activeDynamicSong == null)
-		{
-			return false;
-		}
-		return true;
+		return (activeDynamicSong != null) ? true : false;
 	}
 
 	public void SetDynamicMusicPaused()
@@ -746,8 +742,8 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 			songMap[simpleSoundEventName2] = songInfo2;
 			miniSongPlaylist.songMap[simpleSoundEventName2] = songInfo2;
 		}
-		array2 = stingers;
-		foreach (Stinger stinger2 in array2)
+		Stinger[] array3 = stingers;
+		foreach (Stinger stinger2 in array3)
 		{
 			string simpleSoundEventName3 = Assets.GetSimpleSoundEventName(stinger2.fmodEvent);
 			SongInfo songInfo3 = new SongInfo();
@@ -759,8 +755,8 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 			songInfo3.numberOfVariations = 0;
 			SongMap[simpleSoundEventName3] = songInfo3;
 		}
-		SongInfo[] array3 = menuSongs;
-		foreach (SongInfo songInfo4 in array3)
+		SongInfo[] array4 = menuSongs;
+		foreach (SongInfo songInfo4 in array4)
 		{
 			string simpleSoundEventName4 = Assets.GetSimpleSoundEventName(songInfo4.fmodEvent);
 			SongInfo songInfo5 = new SongInfo();

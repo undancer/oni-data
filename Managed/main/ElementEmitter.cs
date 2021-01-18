@@ -50,7 +50,8 @@ public class ElementEmitter : SimComponent
 
 	protected override void OnSimActivate()
 	{
-		int game_cell = Grid.OffsetCell(Grid.PosToCell(base.transform.GetPosition()), (int)outputElement.outputElementOffset.x, (int)outputElement.outputElementOffset.y);
+		int cell = Grid.PosToCell(base.transform.GetPosition());
+		int game_cell = Grid.OffsetCell(cell, (int)outputElement.outputElementOffset.x, (int)outputElement.outputElementOffset.y);
 		if (outputElement.elementHash != 0 && outputElement.massGenerationRate > 0f && emissionFrequency > 0f)
 		{
 			float emit_temperature = ((outputElement.minOutputTemperature == 0f) ? GetComponent<PrimaryElement>().Temperature : outputElement.minOutputTemperature);
@@ -64,7 +65,8 @@ public class ElementEmitter : SimComponent
 
 	protected override void OnSimDeactivate()
 	{
-		int game_cell = Grid.OffsetCell(Grid.PosToCell(base.transform.GetPosition()), (int)outputElement.outputElementOffset.x, (int)outputElement.outputElementOffset.y);
+		int cell = Grid.PosToCell(base.transform.GetPosition());
+		int game_cell = Grid.OffsetCell(cell, (int)outputElement.outputElementOffset.x, (int)outputElement.outputElementOffset.y);
 		SimMessages.ModifyElementEmitter(simHandle, game_cell, emitRange, SimHashes.Vacuum, 0f, 0f, 0f, 0f, byte.MaxValue, 0);
 		if (showDescriptor)
 		{
@@ -80,7 +82,8 @@ public class ElementEmitter : SimComponent
 			Element element = ElementLoader.FindElementByHash(outputElement.elementHash);
 			if (element.IsGas || element.IsLiquid)
 			{
-				SimMessages.AddRemoveSubstance(Grid.PosToCell(base.transform.GetPosition()), outputElement.elementHash, CellEventLogger.Instance.ElementConsumerSimUpdate, mass, temperature2, disease_idx, disease_count);
+				int gameCell = Grid.PosToCell(base.transform.GetPosition());
+				SimMessages.AddRemoveSubstance(gameCell, outputElement.elementHash, CellEventLogger.Instance.ElementConsumerSimUpdate, mass, temperature2, disease_idx, disease_count);
 			}
 			else if (element.IsSolid)
 			{
@@ -121,9 +124,10 @@ public class ElementEmitter : SimComponent
 
 	private void OnDrawGizmosSelected()
 	{
-		int cell = Grid.OffsetCell(Grid.PosToCell(base.transform.GetPosition()), (int)outputElement.outputElementOffset.x, (int)outputElement.outputElementOffset.y);
+		int cell = Grid.PosToCell(base.transform.GetPosition());
+		int cell2 = Grid.OffsetCell(cell, (int)outputElement.outputElementOffset.x, (int)outputElement.outputElementOffset.y);
 		Gizmos.color = Color.green;
-		Gizmos.DrawSphere(Grid.CellToPos(cell) + Vector3.right / 2f + Vector3.up / 2f, 0.2f);
+		Gizmos.DrawSphere(Grid.CellToPos(cell2) + Vector3.right / 2f + Vector3.up / 2f, 0.2f);
 	}
 
 	protected override Action<int> GetStaticUnregister()

@@ -28,7 +28,7 @@ public class GasBottlerConfig : IBuildingConfig
 		Storage storage = BuildingTemplates.CreateDefaultStorage(go);
 		storage.showDescriptor = true;
 		storage.storageFilters = STORAGEFILTERS.GASES;
-		storage.capacityKg = 10f;
+		storage.capacityKg = 25f;
 		storage.allowItemRemoval = false;
 		go.AddOrGet<DropAllWorkable>();
 		GasBottler gasBottler = go.AddOrGet<GasBottler>();

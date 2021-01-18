@@ -13,7 +13,7 @@ public class BeachChairConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("BeachChair", 2, 3, "beach_chair_kanim", 30, 60f, new float[2]
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("BeachChair", 2, 3, "beach_chair_kanim", 30, 60f, new float[2]
 		{
 			400f,
 			2f
@@ -22,17 +22,17 @@ public class BeachChairConfig : IBuildingConfig
 			"BuildableRaw",
 			"BuildingFiber"
 		}, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER4);
-		obj.DlcId = "PACK1";
-		obj.Floodable = true;
-		obj.AudioCategory = "Metal";
-		obj.Overheatable = true;
-		return obj;
+		buildingDef.Floodable = true;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.Overheatable = true;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.RecBuilding);
-		go.AddOrGet<BeachChairWorkable>().basePriority = RELAXATION.PRIORITY.TIER4;
+		BeachChairWorkable beachChairWorkable = go.AddOrGet<BeachChairWorkable>();
+		beachChairWorkable.basePriority = RELAXATION.PRIORITY.TIER4;
 		BeachChair beachChair = go.AddOrGet<BeachChair>();
 		beachChair.specificEffectUnlit = "BeachChairUnlit";
 		beachChair.specificEffectLit = "BeachChairLit";

@@ -13,7 +13,7 @@ public class TreeFilterableSideScreenRow : KMonoBehaviour
 		On
 	}
 
-	public bool visualDirty;
+	public bool visualDirty = false;
 
 	[SerializeField]
 	private LocText elementName;
@@ -25,7 +25,7 @@ public class TreeFilterableSideScreenRow : KMonoBehaviour
 	private MultiToggle checkBoxToggle;
 
 	[SerializeField]
-	private KToggle arrowToggle;
+	private MultiToggle arrowToggle;
 
 	[SerializeField]
 	private KImage bgImg;
@@ -75,11 +75,7 @@ public class TreeFilterableSideScreenRow : KMonoBehaviour
 		{
 			return State.Mixed;
 		}
-		if (rowElements.Count <= 0)
-		{
-			return State.Off;
-		}
-		return State.On;
+		return (rowElements.Count > 0) ? State.On : State.Off;
 	}
 
 	protected override void OnPrefabInit()
@@ -120,7 +116,6 @@ public class TreeFilterableSideScreenRow : KMonoBehaviour
 	protected override void OnCleanUp()
 	{
 		base.OnCleanUp();
-		arrowToggle.onClick -= ArrowToggleClicked;
 	}
 
 	public void UpdateCheckBoxVisualState()
@@ -151,21 +146,21 @@ public class TreeFilterableSideScreenRow : KMonoBehaviour
 
 	private void ArrowToggleClicked()
 	{
+		SetArrowToggleState((arrowToggle.CurrentState != 1) ? true : false);
 		UpdateArrowToggleState();
 	}
 
 	private void SetArrowToggleState(bool state)
 	{
-		arrowToggle.isOn = state;
+		arrowToggle.ChangeState(state ? 1 : 0);
 		UpdateArrowToggleState();
 	}
 
 	private void UpdateArrowToggleState()
 	{
-		bool isOn = arrowToggle.isOn;
-		arrowToggle.GetComponent<ImageToggleState>().SetActiveState(isOn);
-		elementGroup.SetActive(isOn);
-		bgImg.enabled = isOn;
+		bool flag = ((arrowToggle.CurrentState != 0) ? true : false);
+		elementGroup.SetActive(flag);
+		bgImg.enabled = flag;
 	}
 
 	private void ArrowToggleDisabledClick()
@@ -191,7 +186,6 @@ public class TreeFilterableSideScreenRow : KMonoBehaviour
 		subTags.Clear();
 		rowElements.Clear();
 		elementName.text = mainElementTag.ProperName();
-		arrowToggle.ClearOnClick();
 		bgImg.enabled = false;
 		string simpleTooltip = string.Format(UI.UISIDESCREENS.TREEFILTERABLESIDESCREEN.CATEGORYBUTTONTOOLTIP, mainElementTag.ProperName());
 		checkBoxToggle.GetComponent<ToolTip>().SetSimpleTooltip(simpleTooltip);
@@ -201,15 +195,13 @@ public class TreeFilterableSideScreenRow : KMonoBehaviour
 			{
 				elementGroup.SetActive(value: false);
 			}
-			arrowToggle.interactable = false;
-			arrowToggle.onClick += ArrowToggleDisabledClick;
-			arrowToggle.GetComponent<ImageToggleState>().SetDisabled();
+			arrowToggle.onClick = ArrowToggleDisabledClick;
+			arrowToggle.ChangeState(0);
 		}
 		else
 		{
-			arrowToggle.interactable = true;
-			arrowToggle.onClick += ArrowToggleClicked;
-			arrowToggle.GetComponent<ImageToggleState>().SetActiveState(active: false);
+			arrowToggle.onClick = ArrowToggleClicked;
+			arrowToggle.ChangeState(0);
 			foreach (KeyValuePair<Tag, bool> item in filterMap)
 			{
 				TreeFilterableSideScreenElement freeElement = parent.elementPool.GetFreeElement(elementGroup, forceActive: true);

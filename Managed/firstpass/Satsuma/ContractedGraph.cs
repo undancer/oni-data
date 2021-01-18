@@ -58,11 +58,11 @@ namespace Satsuma
 
 		public IEnumerable<Node> Nodes()
 		{
-			foreach (Node item in graph.Nodes())
+			foreach (Node node in graph.Nodes())
 			{
-				if (nodeGroups.WhereIs(item).Representative == item)
+				if (nodeGroups.WhereIs(node).Representative == node)
 				{
-					yield return item;
+					yield return node;
 				}
 			}
 		}
@@ -74,14 +74,14 @@ namespace Satsuma
 
 		public IEnumerable<Arc> Arcs(Node u, ArcFilter filter = ArcFilter.All)
 		{
-			DisjointSetSet<Node> aSet = nodeGroups.WhereIs(u);
-			foreach (Node node in nodeGroups.Elements(aSet))
+			DisjointSetSet<Node> x = nodeGroups.WhereIs(u);
+			foreach (Node node in nodeGroups.Elements(x))
 			{
-				foreach (Arc item in graph.Arcs(node, filter))
+				foreach (Arc arc in graph.Arcs(node, filter))
 				{
-					if (!(U(item) == V(item)) || (filter != 0 && !IsEdge(item)) || graph.U(item) == node)
+					if (!(U(arc) == V(arc)) || (filter != 0 && !IsEdge(arc)) || graph.U(arc) == node)
 					{
-						yield return item;
+						yield return arc;
 					}
 				}
 			}
@@ -89,11 +89,11 @@ namespace Satsuma
 
 		public IEnumerable<Arc> Arcs(Node u, Node v, ArcFilter filter = ArcFilter.All)
 		{
-			foreach (Arc item in Arcs(u, filter))
+			foreach (Arc arc in Arcs(u, filter))
 			{
-				if (this.Other(item, u) == v)
+				if (this.Other(arc, u) == v)
 				{
-					yield return item;
+					yield return arc;
 				}
 			}
 		}

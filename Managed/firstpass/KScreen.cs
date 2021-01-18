@@ -9,7 +9,15 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 	public delegate void PointerExitActions(PointerEventData eventData);
 
 	[SerializeField]
-	public bool activateOnSpawn;
+	public bool activateOnSpawn = false;
+
+	private bool _isEditing = false;
+
+	public const float MODAL_SCREEN_SORT_KEY = 100f;
+
+	public const float EDITING_SCREEN_SORT_KEY = 50f;
+
+	public const float FULLSCREEN_SCREEN_SORT_KEY = 20f;
 
 	private Canvas _canvas;
 
@@ -17,11 +25,11 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 
 	private bool isActive;
 
-	protected bool mouseOver;
+	protected bool mouseOver = false;
 
-	public WidgetTransition.TransitionType transitionType;
+	public WidgetTransition.TransitionType transitionType = WidgetTransition.TransitionType.SlideFromRight;
 
-	public bool fadeIn;
+	public bool fadeIn = false;
 
 	public string displayName;
 
@@ -29,7 +37,7 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 
 	public PointerExitActions pointerExitActions;
 
-	private bool hasFocus;
+	private bool hasFocus = false;
 
 	public string handlerName => base.gameObject.name;
 
@@ -40,6 +48,19 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 	}
 
 	public virtual bool HasFocus => hasFocus;
+
+	protected bool isEditing
+	{
+		get
+		{
+			return _isEditing;
+		}
+		set
+		{
+			_isEditing = value;
+			KScreenManager.Instance.RefreshStack();
+		}
+	}
 
 	public Canvas canvas => _canvas;
 
@@ -57,8 +78,17 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 		set;
 	}
 
+	public void SetIsEditing(bool state)
+	{
+		isEditing = state;
+	}
+
 	public virtual float GetSortKey()
 	{
+		if (isEditing)
+		{
+			return 50f;
+		}
 		return 0f;
 	}
 
@@ -122,14 +152,45 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 
 	public virtual void OnKeyDown(KButtonEvent e)
 	{
-		if (mouseOver && ConsumeMouseScroll && !e.Consumed && !e.TryConsume(Action.ZoomIn))
+		if (isEditing)
 		{
-			e.TryConsume(Action.ZoomOut);
+			e.Consumed = true;
+		}
+		if (!mouseOver || !ConsumeMouseScroll || e.Consumed || e.TryConsume(Action.ZoomIn) || e.TryConsume(Action.ZoomOut))
+		{
+		}
+		if (e.Consumed)
+		{
+			return;
+		}
+		KScrollRect[] componentsInChildren = GetComponentsInChildren<KScrollRect>();
+		KScrollRect[] array = componentsInChildren;
+		foreach (KScrollRect kScrollRect in array)
+		{
+			kScrollRect.OnKeyDown(e);
+			if (e.Consumed)
+			{
+				break;
+			}
 		}
 	}
 
 	public virtual void OnKeyUp(KButtonEvent e)
 	{
+		if (e.Consumed)
+		{
+			return;
+		}
+		KScrollRect[] componentsInChildren = GetComponentsInChildren<KScrollRect>();
+		KScrollRect[] array = componentsInChildren;
+		foreach (KScrollRect kScrollRect in array)
+		{
+			kScrollRect.OnKeyUp(e);
+			if (e.Consumed)
+			{
+				break;
+			}
+		}
 	}
 
 	public virtual bool IsModal()
@@ -225,6 +286,7 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 
 	private void InitWidgetTransition()
 	{
-		base.gameObject.FindOrAddUnityComponent<WidgetTransition>().SetTransitionType(transitionType);
+		WidgetTransition widgetTransition = base.gameObject.FindOrAddUnityComponent<WidgetTransition>();
+		widgetTransition.SetTransitionType(transitionType);
 	}
 }

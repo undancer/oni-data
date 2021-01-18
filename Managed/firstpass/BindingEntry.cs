@@ -61,20 +61,12 @@ public struct BindingEntry : IEquatable<BindingEntry>
 
 	public static bool operator ==(BindingEntry a, BindingEntry b)
 	{
-		if (a.mGroup == b.mGroup && a.mButton == b.mButton && a.mKeyCode == b.mKeyCode && a.mAction == b.mAction && a.mModifier == b.mModifier)
-		{
-			return a.mRebindable == b.mRebindable;
-		}
-		return false;
+		return a.mGroup == b.mGroup && a.mButton == b.mButton && a.mKeyCode == b.mKeyCode && a.mAction == b.mAction && a.mModifier == b.mModifier && a.mRebindable == b.mRebindable;
 	}
 
 	public bool IsBindingEqual(BindingEntry other)
 	{
-		if (mButton == other.mButton && mKeyCode == other.mKeyCode)
-		{
-			return mModifier == other.mModifier;
-		}
-		return false;
+		return mButton == other.mButton && mKeyCode == other.mKeyCode && mModifier == other.mModifier;
 	}
 
 	public static bool operator !=(BindingEntry a, BindingEntry b)

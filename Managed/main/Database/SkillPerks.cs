@@ -15,7 +15,9 @@ namespace Database
 
 		public SkillPerk CanDigNearlyImpenetrable;
 
-		public SkillPerk CanDigSupersuperhard;
+		public SkillPerk CanDigSuperDuperHard;
+
+		public SkillPerk CanDigRadioactiveMaterials;
 
 		public SkillPerk IncreaseConstructionSmall;
 
@@ -115,7 +117,13 @@ namespace Database
 
 		public SkillPerk AllowInterstellarResearch;
 
+		public SkillPerk AllowNuclearResearch;
+
 		public SkillPerk CanStudyWorldObjects;
+
+		public SkillPerk CanUseClusterTelescope;
+
+		public SkillPerk IncreaseRocketSpeedSmall;
 
 		public SkillPerk CanDoPlumbing;
 
@@ -125,6 +133,8 @@ namespace Database
 
 		public SkillPerk CanTrainToBeAstronaut;
 
+		public SkillPerk CanUseRocketControlStation;
+
 		public SkillPerks(ResourceSet parent)
 			: base("SkillPerks", parent)
 		{
@@ -133,7 +143,8 @@ namespace Database
 			IncreaseDigSpeedLarge = Add(new SkillAttributePerk("IncreaseDigSpeedLarge", Db.Get().Attributes.Digging.Id, ROLES.ATTRIBUTE_BONUS_THIRD, DUPLICANTS.ROLES.SENIOR_MINER.NAME));
 			CanDigVeryFirm = Add(new SimpleSkillPerk("CanDigVeryFirm", UI.ROLES_SCREEN.PERKS.CAN_DIG_VERY_FIRM.DESCRIPTION));
 			CanDigNearlyImpenetrable = Add(new SimpleSkillPerk("CanDigAbyssalite", UI.ROLES_SCREEN.PERKS.CAN_DIG_NEARLY_IMPENETRABLE.DESCRIPTION));
-			CanDigSupersuperhard = Add(new SimpleSkillPerk("CanDigDiamondAndObsidan", UI.ROLES_SCREEN.PERKS.CAN_DIG_SUPER_SUPER_HARD.DESCRIPTION));
+			CanDigSuperDuperHard = Add(new SimpleSkillPerk("CanDigDiamondAndObsidan", UI.ROLES_SCREEN.PERKS.CAN_DIG_SUPER_SUPER_HARD.DESCRIPTION));
+			CanDigRadioactiveMaterials = Add(new SimpleSkillPerk("CanDigCorium", UI.ROLES_SCREEN.PERKS.CAN_DIG_RADIOACTIVE_MATERIALS.DESCRIPTION));
 			IncreaseConstructionSmall = Add(new SkillAttributePerk("IncreaseConstructionSmall", Db.Get().Attributes.Construction.Id, ROLES.ATTRIBUTE_BONUS_FIRST, DUPLICANTS.ROLES.JUNIOR_BUILDER.NAME));
 			IncreaseConstructionMedium = Add(new SkillAttributePerk("IncreaseConstructionMedium", Db.Get().Attributes.Construction.Id, ROLES.ATTRIBUTE_BONUS_SECOND, DUPLICANTS.ROLES.BUILDER.NAME));
 			IncreaseConstructionLarge = Add(new SkillAttributePerk("IncreaseConstructionLarge", Db.Get().Attributes.Construction.Id, ROLES.ATTRIBUTE_BONUS_THIRD, DUPLICANTS.ROLES.SENIOR_BUILDER.NAME));
@@ -181,11 +192,15 @@ namespace Database
 			ExosuitExpertise = Add(new SimpleSkillPerk("ExosuitExpertise", UI.ROLES_SCREEN.PERKS.EXOSUIT_EXPERTISE.DESCRIPTION));
 			AllowAdvancedResearch = Add(new SimpleSkillPerk("AllowAdvancedResearch", UI.ROLES_SCREEN.PERKS.ADVANCED_RESEARCH.DESCRIPTION));
 			AllowInterstellarResearch = Add(new SimpleSkillPerk("AllowInterStellarResearch", UI.ROLES_SCREEN.PERKS.INTERSTELLAR_RESEARCH.DESCRIPTION));
+			AllowNuclearResearch = Add(new SimpleSkillPerk("AllowNuclearResearch", UI.ROLES_SCREEN.PERKS.NUCLEAR_RESEARCH.DESCRIPTION));
 			CanStudyWorldObjects = Add(new SimpleSkillPerk("CanStudyWorldObjects", UI.ROLES_SCREEN.PERKS.CAN_STUDY_WORLD_OBJECTS.DESCRIPTION));
+			CanUseClusterTelescope = Add(new SimpleSkillPerk("CanUseClusterTelescope", UI.ROLES_SCREEN.PERKS.CAN_USE_CLUSTER_TELESCOPE.DESCRIPTION));
 			CanDoPlumbing = Add(new SimpleSkillPerk("CanDoPlumbing", UI.ROLES_SCREEN.PERKS.CAN_DO_PLUMBING.DESCRIPTION));
 			CanUseRockets = Add(new SimpleSkillPerk("CanUseRockets", UI.ROLES_SCREEN.PERKS.CAN_USE_ROCKETS.DESCRIPTION));
 			FasterSpaceFlight = Add(new SkillAttributePerk("FasterSpaceFlight", Db.Get().Attributes.SpaceNavigation.Id, 0.1f, DUPLICANTS.ROLES.ASTRONAUT.NAME));
 			CanTrainToBeAstronaut = Add(new SimpleSkillPerk("CanTrainToBeAstronaut", UI.ROLES_SCREEN.PERKS.CAN_DO_ASTRONAUT_TRAINING.DESCRIPTION));
+			CanUseRocketControlStation = Add(new SimpleSkillPerk("CanUseRocketControlStation", UI.ROLES_SCREEN.PERKS.CAN_PILOT_ROCKET.DESCRIPTION));
+			IncreaseRocketSpeedSmall = Add(new SkillAttributePerk("IncreaseRocketSpeedSmall", Db.Get().Attributes.SpaceNavigation.Id, ROLES.ATTRIBUTE_BONUS_FIRST, DUPLICANTS.ROLES.ROCKETPILOT.NAME));
 		}
 	}
 }

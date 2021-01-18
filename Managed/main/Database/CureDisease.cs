@@ -1,20 +1,15 @@
-using System.IO;
 using STRINGS;
 
 namespace Database
 {
-	public class CureDisease : ColonyAchievementRequirement
+	public class CureDisease : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		public override bool Success()
 		{
 			return Game.Instance.savedInfo.curedDisease;
 		}
 
-		public override void Serialize(BinaryWriter writer)
-		{
-		}
-
-		public override void Deserialize(IReader reader)
+		public void Deserialize(IReader reader)
 		{
 		}
 

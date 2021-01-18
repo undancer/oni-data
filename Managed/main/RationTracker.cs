@@ -16,10 +16,10 @@ public class RationTracker : KMonoBehaviour, ISaveLoadable
 	private static RationTracker instance;
 
 	[Serialize]
-	public Frame currentFrame;
+	public Frame currentFrame = default(Frame);
 
 	[Serialize]
-	public Frame previousFrame;
+	public Frame previousFrame = default(Frame);
 
 	[Serialize]
 	public Dictionary<string, float> caloriesConsumedByFood = new Dictionary<string, float>();
@@ -55,37 +55,37 @@ public class RationTracker : KMonoBehaviour, ISaveLoadable
 		currentFrame = default(Frame);
 	}
 
-	public float CountRations(Dictionary<string, float> unitCountByFoodType, bool excludeUnreachable = true)
+	public float CountRations(Dictionary<string, float> unitCountByFoodType, WorldInventory inventory, bool excludeUnreachable = true)
 	{
 		float num = 0f;
-		ICollection<Pickupable> pickupables = WorldInventory.Instance.GetPickupables(GameTags.Edible);
+		ICollection<Pickupable> pickupables = inventory.GetPickupables(GameTags.Edible);
 		if (pickupables != null)
 		{
 			foreach (Pickupable item in pickupables)
 			{
-				if (!item.KPrefabID.HasTag(GameTags.StoredPrivate))
+				if (item.KPrefabID.HasTag(GameTags.StoredPrivate))
 				{
-					Edible component = item.GetComponent<Edible>();
-					num += component.Calories;
-					if (unitCountByFoodType != null)
+					continue;
+				}
+				Edible component = item.GetComponent<Edible>();
+				num += component.Calories;
+				if (unitCountByFoodType != null)
+				{
+					if (!unitCountByFoodType.ContainsKey(component.FoodID))
 					{
-						if (!unitCountByFoodType.ContainsKey(component.FoodID))
-						{
-							unitCountByFoodType[component.FoodID] = 0f;
-						}
-						unitCountByFoodType[component.FoodID] += component.Units;
+						unitCountByFoodType[component.FoodID] = 0f;
 					}
+					unitCountByFoodType[component.FoodID] += component.Units;
 				}
 			}
-			return num;
 		}
 		return num;
 	}
 
-	public float CountRationsByFoodType(string foodID, bool excludeUnreachable = true)
+	public float CountRationsByFoodType(string foodID, WorldInventory inventory, bool excludeUnreachable = true)
 	{
 		float num = 0f;
-		ICollection<Pickupable> pickupables = WorldInventory.Instance.GetPickupables(GameTags.Edible);
+		ICollection<Pickupable> pickupables = inventory.GetPickupables(GameTags.Edible);
 		if (pickupables != null)
 		{
 			foreach (Pickupable item in pickupables)
@@ -99,7 +99,6 @@ public class RationTracker : KMonoBehaviour, ISaveLoadable
 					}
 				}
 			}
-			return num;
 		}
 		return num;
 	}

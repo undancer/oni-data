@@ -3,7 +3,11 @@ using UnityEngine;
 [AddComponentMenu("KMonoBehaviour/scripts/TerrainBG")]
 public class TerrainBG : KMonoBehaviour
 {
-	public Material starsMaterial;
+	public Material starsMaterial_surface;
+
+	public Material starsMaterial_orbit;
+
+	public Material starsMaterial_space;
 
 	public Material backgroundMaterial;
 
@@ -61,8 +65,9 @@ public class TerrainBG : KMonoBehaviour
 	{
 		Mesh mesh = new Mesh();
 		mesh.name = name;
-		Vector3[] array = new Vector3[4];
-		Vector2[] array2 = new Vector2[4];
+		int num = 4;
+		Vector3[] array = new Vector3[num];
+		Vector2[] array2 = new Vector2[num];
 		int[] array3 = new int[6];
 		array = new Vector3[4]
 		{
@@ -98,8 +103,9 @@ public class TerrainBG : KMonoBehaviour
 	{
 		Mesh mesh = new Mesh();
 		mesh.name = name;
-		Vector3[] array = new Vector3[4];
-		Vector2[] array2 = new Vector2[4];
+		int num = 4;
+		Vector3[] array = new Vector3[num];
+		Vector2[] array2 = new Vector2[num];
 		int[] array3 = new int[6];
 		array = new Vector3[4]
 		{
@@ -135,8 +141,9 @@ public class TerrainBG : KMonoBehaviour
 	{
 		Mesh mesh = new Mesh();
 		mesh.name = name;
-		Vector3[] array = new Vector3[4];
-		Vector2[] array2 = new Vector2[4];
+		int num = 4;
+		Vector3[] array = new Vector3[num];
+		Vector2[] array2 = new Vector2[num];
 		int[] array3 = new int[6];
 		array = new Vector3[4]
 		{
@@ -175,9 +182,15 @@ public class TerrainBG : KMonoBehaviour
 		{
 			return;
 		}
-		starsMaterial.renderQueue = RenderQueues.Stars;
-		starsMaterial.SetTexture("_NoiseVolume", noiseVolume);
-		Graphics.DrawMesh(position: new Vector3(0f, 0f, Grid.GetLayerZ(Grid.SceneLayer.Background) + 1f), mesh: starsPlane, rotation: Quaternion.identity, material: starsMaterial, layer: layer);
+		Material material = starsMaterial_surface;
+		if (ClusterManager.Instance.activeWorld.IsModuleInterior)
+		{
+			Clustercraft component = ClusterManager.Instance.activeWorld.GetComponent<Clustercraft>();
+			material = ((component.Status != Clustercraft.CraftStatus.InFlight) ? starsMaterial_surface : ((!(ClusterGrid.Instance.GetVisibleAsteroidAtAdjacentCell(component.Location) != null)) ? starsMaterial_space : starsMaterial_orbit));
+		}
+		material.renderQueue = RenderQueues.Stars;
+		material.SetTexture("_NoiseVolume", noiseVolume);
+		Graphics.DrawMesh(position: new Vector3(0f, 0f, Grid.GetLayerZ(Grid.SceneLayer.Background) + 1f), mesh: starsPlane, rotation: Quaternion.identity, material: material, layer: layer);
 		backgroundMaterial.renderQueue = RenderQueues.Backwall;
 		for (int i = 0; i < Lighting.Instance.Settings.BackgroundLayers; i++)
 		{

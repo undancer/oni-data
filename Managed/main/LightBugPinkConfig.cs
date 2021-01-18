@@ -21,21 +21,25 @@ public class LightBugPinkConfig : IEntityConfig
 	public static GameObject CreateLightBug(string id, string name, string desc, string anim_file, bool is_baby)
 	{
 		GameObject prefab = BaseLightBugConfig.BaseLightBug(id, name, desc, anim_file, "LightBugPinkBaseTrait", LIGHT2D.LIGHTBUG_COLOR_PINK, DECOR.BONUS.TIER6, is_baby, "pnk_");
-		EntityTemplates.ExtendEntityToWildCreature(prefab, LightBugTuning.PEN_SIZE_PER_CREATURE, 25f);
+		EntityTemplates.ExtendEntityToWildCreature(prefab, LightBugTuning.PEN_SIZE_PER_CREATURE);
 		Trait trait = Db.Get().CreateTrait("LightBugPinkBaseTrait", name, name, null, should_save: false, null, positive_trait: true, is_valid_starter_trait: true);
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.maxAttribute.Id, LightBugTuning.STANDARD_STOMACH_SIZE, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.deltaAttribute.Id, (0f - LightBugTuning.STANDARD_CALORIES_PER_CYCLE) / 600f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.HitPoints.maxAttribute.Id, 5f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Age.maxAttribute.Id, 25f, name));
-		return BaseLightBugConfig.SetupDiet(prefab, new HashSet<Tag>
-		{
-			TagManager.Create("FriedMushroom"),
-			TagManager.Create("SpiceBread"),
-			TagManager.Create(PrickleFruitConfig.ID),
-			TagManager.Create("GrilledPrickleFruit"),
-			TagManager.Create("Salsa"),
-			SimHashes.Phosphorite.CreateTag()
-		}, Tag.Invalid, CALORIES_PER_KG_OF_ORE);
+		HashSet<Tag> hashSet = new HashSet<Tag>();
+		hashSet.Add(TagManager.Create("FriedMushroom"));
+		hashSet.Add(TagManager.Create("SpiceBread"));
+		hashSet.Add(TagManager.Create(PrickleFruitConfig.ID));
+		hashSet.Add(TagManager.Create("GrilledPrickleFruit"));
+		hashSet.Add(TagManager.Create("Salsa"));
+		hashSet.Add(SimHashes.Phosphorite.CreateTag());
+		return BaseLightBugConfig.SetupDiet(prefab, hashSet, Tag.Invalid, CALORIES_PER_KG_OF_ORE);
+	}
+
+	public string GetDlcId()
+	{
+		return "";
 	}
 
 	public GameObject CreatePrefab()

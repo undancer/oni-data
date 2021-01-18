@@ -41,7 +41,8 @@ public class PasteBaseTemplateScreen : KScreen
 			{
 				OnClickPasteButton(template_name);
 			};
-			gameObject.GetComponentInChildren<LocText>().text = template_name;
+			LocText componentInChildren = gameObject.GetComponentInChildren<LocText>();
+			componentInChildren.text = template_name;
 			template_buttons.Add(gameObject);
 		}
 	}

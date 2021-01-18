@@ -51,10 +51,11 @@ public class WaterCubes : KMonoBehaviour
 	{
 		Mesh mesh = new Mesh();
 		mesh.name = "WaterCubes";
-		Vector3[] array = new Vector3[4];
-		Vector2[] array2 = new Vector2[4];
-		Vector3[] array3 = new Vector3[4];
-		Vector4[] array4 = new Vector4[4];
+		int num = 4;
+		Vector3[] array = new Vector3[num];
+		Vector2[] array2 = new Vector2[num];
+		Vector3[] array3 = new Vector3[num];
+		Vector4[] array4 = new Vector4[num];
 		int[] array5 = new int[6];
 		float layerZ = Grid.GetLayerZ(Grid.SceneLayer.Liquid);
 		array = new Vector3[4]

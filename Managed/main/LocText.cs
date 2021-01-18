@@ -8,9 +8,9 @@ public class LocText : TextMeshProUGUI
 
 	public TextStyleSetting textStyleSetting;
 
-	public bool allowOverride;
+	public bool allowOverride = false;
 
-	public bool staticLayout;
+	public bool staticLayout = false;
 
 	private TextLinkHandler textLinkHandler;
 
@@ -79,9 +79,10 @@ public class LocText : TextMeshProUGUI
 		base.Awake();
 		if (Application.isPlaying)
 		{
-			if (key != "")
+			if (this.key != "")
 			{
-				StringEntry stringEntry = Strings.Get(new StringKey(key));
+				StringKey key = new StringKey(this.key);
+				StringEntry stringEntry = Strings.Get(key);
 				text = stringEntry.String;
 			}
 			text = Localization.Fixup(text);
@@ -136,9 +137,10 @@ public class LocText : TextMeshProUGUI
 	internal void SwapFont(TMP_FontAsset font, bool isRightToLeft)
 	{
 		base.font = font;
-		if (key != "")
+		if (this.key != "")
 		{
-			StringEntry stringEntry = Strings.Get(new StringKey(key));
+			StringKey key = new StringKey(this.key);
+			StringEntry stringEntry = Strings.Get(key);
 			text = stringEntry.String;
 		}
 		text = Localization.Fixup(text);

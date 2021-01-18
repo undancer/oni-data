@@ -22,12 +22,12 @@ public class PrebuildTool : InterfaceTool
 		base.OnActivateTool();
 	}
 
-	public void Activate(BuildingDef def, PlanScreen.RequirementsState reqState)
+	public void Activate(BuildingDef def, string errorMessage)
 	{
 		this.def = def;
 		PlayerController.Instance.ActivateTool(this);
 		PrebuildToolHoverTextCard component = GetComponent<PrebuildToolHoverTextCard>();
-		component.currentReqState = reqState;
+		component.errorMessage = errorMessage;
 		component.currentDef = def;
 	}
 

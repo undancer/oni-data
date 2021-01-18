@@ -11,12 +11,12 @@ public class FishFeederConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("FishFeeder", 1, 3, "fishfeeder_kanim", 100, 120f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
-		obj.AudioCategory = "Metal";
-		obj.Entombable = true;
-		obj.Floodable = true;
-		obj.ForegroundLayer = Grid.SceneLayer.TileMain;
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("FishFeeder", 1, 3, "fishfeeder_kanim", 100, 120f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.Entombable = true;
+		buildingDef.Floodable = true;
+		buildingDef.ForegroundLayer = Grid.SceneLayer.TileMain;
+		return buildingDef;
 	}
 
 	public override void DoPostConfigureUnderConstruction(GameObject go)
@@ -33,12 +33,15 @@ public class FishFeederConfig : IBuildingConfig
 		storage.showDescriptor = true;
 		storage.allowItemRemoval = false;
 		storage.allowSettingOnlyFetchMarkedItems = false;
+		storage.showCapacityStatusItem = true;
+		storage.showCapacityAsMainStatus = true;
 		Storage storage2 = go.AddComponent<Storage>();
 		storage2.capacityKg = 200f;
 		storage2.showInUI = true;
 		storage2.showDescriptor = true;
 		storage2.allowItemRemoval = false;
-		go.AddOrGet<StorageLocker>().choreTypeID = Db.Get().ChoreTypes.RanchingFetch.Id;
+		StorageLocker storageLocker = go.AddOrGet<StorageLocker>();
+		storageLocker.choreTypeID = Db.Get().ChoreTypes.RanchingFetch.Id;
 		go.AddOrGet<UserNameable>();
 		Effect effect = new Effect("AteFromFeeder", STRINGS.CREATURES.MODIFIERS.ATE_FROM_FEEDER.NAME, STRINGS.CREATURES.MODIFIERS.ATE_FROM_FEEDER.TOOLTIP, 600f, show_in_ui: true, trigger_floating_text: false, is_bad: false);
 		effect.Add(new AttributeModifier(Db.Get().Amounts.Wildness.deltaAttribute.Id, -71f / (678f * (float)Math.PI), STRINGS.CREATURES.MODIFIERS.ATE_FROM_FEEDER.NAME));

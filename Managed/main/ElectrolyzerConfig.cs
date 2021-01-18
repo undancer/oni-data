@@ -11,18 +11,18 @@ public class ElectrolyzerConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("Electrolyzer", 2, 2, "electrolyzer_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: BUILDINGS.DECOR.PENALTY.TIER1);
-		obj.RequiresPowerInput = true;
-		obj.PowerInputOffset = new CellOffset(1, 0);
-		obj.EnergyConsumptionWhenActive = 120f;
-		obj.ExhaustKilowattsWhenActive = 0.25f;
-		obj.SelfHeatKilowattsWhenActive = 1f;
-		obj.ViewMode = OverlayModes.Oxygen.ID;
-		obj.AudioCategory = "HollowMetal";
-		obj.InputConduitType = ConduitType.Liquid;
-		obj.UtilityInputOffset = new CellOffset(0, 0);
-		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(1, 1));
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("Electrolyzer", 2, 2, "electrolyzer_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: BUILDINGS.DECOR.PENALTY.TIER1);
+		buildingDef.RequiresPowerInput = true;
+		buildingDef.PowerInputOffset = new CellOffset(1, 0);
+		buildingDef.EnergyConsumptionWhenActive = 120f;
+		buildingDef.ExhaustKilowattsWhenActive = 0.25f;
+		buildingDef.SelfHeatKilowattsWhenActive = 1f;
+		buildingDef.ViewMode = OverlayModes.Oxygen.ID;
+		buildingDef.AudioCategory = "HollowMetal";
+		buildingDef.InputConduitType = ConduitType.Liquid;
+		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
+		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(1, 1));
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

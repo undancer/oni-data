@@ -7,10 +7,10 @@ public class MedicalCotConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("MedicalCot", 3, 2, "medical_cot_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
-		obj.Overheatable = false;
-		obj.AudioCategory = "Metal";
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("MedicalCot", 3, 2, "medical_cot_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
+		buildingDef.Overheatable = false;
+		buildingDef.AudioCategory = "Metal";
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -45,7 +45,8 @@ public class MedicalCotConfig : IBuildingConfig
 		roomTracker.requiredRoomType = Db.Get().RoomTypes.Hospital.Id;
 		roomTracker.requirement = RoomTracker.Requirement.CustomRecommended;
 		roomTracker.customStatusItemID = Db.Get().BuildingStatusItems.ClinicOutsideHospital.Id;
-		go.AddOrGet<Sleepable>().overrideAnims = new KAnimFile[1]
+		Sleepable sleepable = go.AddOrGet<Sleepable>();
+		sleepable.overrideAnims = new KAnimFile[1]
 		{
 			Assets.GetAnim("anim_interacts_med_cot_sick_kanim")
 		};
@@ -55,6 +56,7 @@ public class MedicalCotConfig : IBuildingConfig
 			Assets.GetAnim("anim_interacts_med_cot_doctor_kanim")
 		};
 		doctorChoreWorkable.workTime = 45f;
-		go.AddOrGet<Ownable>().slotID = Db.Get().AssignableSlots.Clinic.Id;
+		Ownable ownable = go.AddOrGet<Ownable>();
+		ownable.slotID = Db.Get().AssignableSlots.Clinic.Id;
 	}
 }

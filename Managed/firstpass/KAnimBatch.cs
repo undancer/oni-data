@@ -97,7 +97,7 @@ public class KAnimBatch
 
 	private static int nextBatchId;
 
-	private int currentOffset;
+	private int currentOffset = 0;
 
 	private static int ShaderProperty_SYMBOL_INSTANCE_TEXTURE_SIZE = Shader.PropertyToID("SYMBOL_INSTANCE_TEXTURE_SIZE");
 
@@ -117,7 +117,7 @@ public class KAnimBatch
 
 	public AtlasList atlases = new AtlasList(0);
 
-	private bool needsWrite;
+	private bool needsWrite = false;
 
 	public int id
 	{
@@ -329,7 +329,8 @@ public class KAnimBatch
 		{
 			return;
 		}
-		if (controllers.IndexOf(controller) >= 0)
+		int num = controllers.IndexOf(controller);
+		if (num >= 0)
 		{
 			if (!controllers.Remove(controller))
 			{

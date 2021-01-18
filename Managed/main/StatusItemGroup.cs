@@ -102,7 +102,7 @@ public class StatusItemGroup
 
 	public Guid SetStatusItem(StatusItemCategory category, StatusItem item, object data = null)
 	{
-		if (item != null && item.allowMultiples)
+		if (item?.allowMultiples ?? false)
 		{
 			throw new ArgumentException(item.Name + " allows multiple instances of itself to be active so you must access it via its handle");
 		}
@@ -185,12 +185,7 @@ public class StatusItemGroup
 		Entry entry = new Entry(item, category, data);
 		if (item.shouldNotify)
 		{
-			string notificationText = item.notificationText;
-			NotificationType notificationType = item.notificationType;
-			HashedString invalid = HashedString.Invalid;
-			Func<List<Notification>, object, string> tooltip = OnToolTip;
-			Notification.ClickCallback notificationClickCallback = item.notificationClickCallback;
-			entry.notification = new Notification(notificationText, notificationType, invalid, tooltip, item, expires: false, item.notificationDelay, notificationClickCallback, data);
+			entry.notification = new Notification(item.notificationText, item.notificationType, OnToolTip, item, expires: false, 0f, item.notificationClickCallback, data);
 			gameObject.AddOrGet<Notifier>().Add(entry.notification);
 		}
 		if (item.ShouldShowIcon())
@@ -255,7 +250,8 @@ public class StatusItemGroup
 
 	private static string OnToolTip(List<Notification> notifications, object data)
 	{
-		return ((StatusItem)data).notificationTooltipText + notifications.ReduceMessages();
+		StatusItem statusItem = (StatusItem)data;
+		return statusItem.notificationTooltipText + notifications.ReduceMessages();
 	}
 
 	public void Destroy()

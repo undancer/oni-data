@@ -7,12 +7,12 @@ public class BottleEmptierGasConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("BottleEmptierGas", 1, 3, "gas_emptying_station_kanim", 30, 60f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.PENALTY.TIER2);
-		obj.Floodable = false;
-		obj.AudioCategory = "Metal";
-		obj.Overheatable = false;
-		obj.PermittedRotations = PermittedRotations.FlipH;
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("BottleEmptierGas", 1, 3, "gas_emptying_station_kanim", 30, 60f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.PENALTY.TIER2);
+		buildingDef.Floodable = false;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.Overheatable = false;
+		buildingDef.PermittedRotations = PermittedRotations.FlipH;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

@@ -40,7 +40,11 @@ public class GeyserConfigurator : KMonoBehaviour
 
 		public float maxYearPercent;
 
-		public GeyserType(string id, SimHashes element, float temperature, float minRatePerCycle, float maxRatePerCycle, float maxPressure, float minIterationLength = 60f, float maxIterationLength = 1140f, float minIterationPercent = 0.1f, float maxIterationPercent = 0.9f, float minYearLength = 15000f, float maxYearLength = 135000f, float minYearPercent = 0.4f, float maxYearPercent = 0.8f)
+		public float geyserTemperature;
+
+		public string DlcID;
+
+		public GeyserType(string id, SimHashes element, float temperature, float minRatePerCycle, float maxRatePerCycle, float maxPressure, float minIterationLength = 60f, float maxIterationLength = 1140f, float minIterationPercent = 0.1f, float maxIterationPercent = 0.9f, float minYearLength = 15000f, float maxYearLength = 135000f, float minYearPercent = 0.4f, float maxYearPercent = 0.8f, float geyserTemperature = 99f, string DlcID = "")
 		{
 			this.id = id;
 			idHash = id;
@@ -57,6 +61,8 @@ public class GeyserConfigurator : KMonoBehaviour
 			this.maxYearLength = maxYearLength;
 			this.minYearPercent = minYearPercent;
 			this.maxYearPercent = maxYearPercent;
+			this.DlcID = DlcID;
+			this.geyserTemperature = geyserTemperature;
 			if (geyserTypes == null)
 			{
 				geyserTypes = new List<GeyserType>();
@@ -96,7 +102,7 @@ public class GeyserConfigurator : KMonoBehaviour
 
 		private float scaledYearPercent;
 
-		private bool didInit;
+		private bool didInit = false;
 
 		public GeyserType geyserType => FindType(typeId);
 
@@ -149,7 +155,8 @@ public class GeyserConfigurator : KMonoBehaviour
 		public float GetEmitRate()
 		{
 			float num = 600f / GetIterationLength();
-			return GetMassPerCycle() / num / GetOnDuration();
+			float num2 = GetMassPerCycle() / num;
+			return num2 / GetOnDuration();
 		}
 
 		public float GetYearLength()
@@ -199,7 +206,9 @@ public class GeyserConfigurator : KMonoBehaviour
 			float num = 6f;
 			float num2 = 0.002472623f;
 			float num3 = t * (1f - num2 * 2f) + num2;
-			return (0f - Mathf.Log(1f / num3 - 1f) + num) / (num * 2f) * (max - min) + min;
+			float num4 = 0f - Mathf.Log(1f / num3 - 1f);
+			num4 = (num4 + num) / (num * 2f);
+			return num4 * (max - min) + min;
 		}
 	}
 
@@ -207,7 +216,7 @@ public class GeyserConfigurator : KMonoBehaviour
 
 	public HashedString presetType;
 
-	public float presetMin;
+	public float presetMin = 0f;
 
 	public float presetMax = 1f;
 
@@ -232,7 +241,9 @@ public class GeyserConfigurator : KMonoBehaviour
 
 	private GeyserInstanceConfiguration CreateRandomInstance(HashedString typeId, float min, float max)
 	{
-		System.Random randomSource = new System.Random(SaveLoader.Instance.worldDetailSave.globalWorldSeed + (int)base.transform.GetPosition().x + (int)base.transform.GetPosition().y);
+		int globalWorldSeed = SaveLoader.Instance.clusterDetailSave.globalWorldSeed;
+		globalWorldSeed = globalWorldSeed + (int)base.transform.GetPosition().x + (int)base.transform.GetPosition().y;
+		System.Random randomSource = new System.Random(globalWorldSeed);
 		return new GeyserInstanceConfiguration
 		{
 			typeId = typeId,

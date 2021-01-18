@@ -453,7 +453,7 @@ namespace Epic.OnlineServices
 
 		internal static bool TryAssignNotificationIdToCallback(IntPtr clientDataAddress, ulong notificationId)
 		{
-			if (notificationId != 0L)
+			if (notificationId != 0)
 			{
 				DelegateHolder value = null;
 				if (s_Callbacks.TryGetValue(clientDataAddress, out value))
@@ -810,7 +810,8 @@ namespace Epic.OnlineServices
 			if (source.HasValue)
 			{
 				DateTime d = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-				long num = (target = (source.Value.UtcDateTime - d).Ticks / 10000000);
+				long ticks = (source.Value.UtcDateTime - d).Ticks;
+				long num = (target = ticks / 10000000);
 			}
 			return true;
 		}
@@ -902,7 +903,8 @@ namespace Epic.OnlineServices
 				select property).FirstOrDefault();
 			if (propertyInfo != null)
 			{
-				return IsOperationComplete((Result)propertyInfo.GetValue(callbackInfo, null));
+				Result result = (Result)propertyInfo.GetValue(callbackInfo, null);
+				return IsOperationComplete(result);
 			}
 			return true;
 		}

@@ -28,7 +28,8 @@ public static class BaseSquirrelConfig
 		gameObject.AddOrGet<Trappable>();
 		gameObject.AddOrGet<LoopingSounds>();
 		gameObject.AddOrGetDef<CreatureFallMonitor.Def>();
-		gameObject.AddOrGetDef<ThreatMonitor.Def>().fleethresholdState = Health.HealthState.Dead;
+		ThreatMonitor.Def def = gameObject.AddOrGetDef<ThreatMonitor.Def>();
+		def.fleethresholdState = Health.HealthState.Dead;
 		gameObject.AddWeapon(1f, 1f);
 		SoundEventVolumeCache.instance.AddVolume("hatch_kanim", "Hatch_voice_idle", NOISE_POLLUTION.CREATURES.TIER2);
 		SoundEventVolumeCache.instance.AddVolume("FloorSoundEvent", "Hatch_footstep", NOISE_POLLUTION.CREATURES.TIER1);
@@ -87,7 +88,8 @@ public static class BaseSquirrelConfig
 		CreatureCalorieMonitor.Def def = prefab.AddOrGetDef<CreatureCalorieMonitor.Def>();
 		def.diet = diet;
 		def.minPoopSizeInCalories = minPoopSizeInKg;
-		prefab.AddOrGetDef<SolidConsumerMonitor.Def>().diet = diet;
+		SolidConsumerMonitor.Def def2 = prefab.AddOrGetDef<SolidConsumerMonitor.Def>();
+		def2.diet = diet;
 		return prefab;
 	}
 

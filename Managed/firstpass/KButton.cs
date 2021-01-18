@@ -17,7 +17,7 @@ public class KButton : KMonoBehaviour, IPointerEnterHandler, IEventSystemHandler
 
 	private bool interactable = true;
 
-	private bool mouseOver;
+	private bool mouseOver = false;
 
 	public bool isInteractable
 	{
@@ -157,9 +157,9 @@ public class KButton : KMonoBehaviour, IPointerEnterHandler, IEventSystemHandler
 		if (components != null && components.Length != 0)
 		{
 			ImageToggleState[] array = components;
-			for (int i = 0; i < array.Length; i++)
+			foreach (ImageToggleState imageToggleState in array)
 			{
-				array[i].OnHoverIn();
+				imageToggleState.OnHoverIn();
 			}
 		}
 		UpdateColor(interactable, hover: true, press: false);
@@ -179,9 +179,9 @@ public class KButton : KMonoBehaviour, IPointerEnterHandler, IEventSystemHandler
 		if (components != null && components.Length != 0)
 		{
 			ImageToggleState[] array = components;
-			for (int i = 0; i < array.Length; i++)
+			foreach (ImageToggleState imageToggleState in array)
 			{
-				array[i].OnHoverOut();
+				imageToggleState.OnHoverOut();
 			}
 		}
 		UpdateColor(interactable, hover: false, press: false);

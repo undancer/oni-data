@@ -160,20 +160,14 @@ namespace Satsuma
 
 		public double GetDistance(Node node)
 		{
-			if (!distance.TryGetValue(node, out var value))
-			{
-				return double.PositiveInfinity;
-			}
-			return value;
+			double value;
+			return distance.TryGetValue(node, out value) ? value : double.PositiveInfinity;
 		}
 
 		public Arc GetParentArc(Node node)
 		{
-			if (!parentArc.TryGetValue(node, out var value))
-			{
-				return Arc.Invalid;
-			}
-			return value;
+			Arc value;
+			return parentArc.TryGetValue(node, out value) ? value : Arc.Invalid;
 		}
 
 		public IPath GetPath(Node node)

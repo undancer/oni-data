@@ -8,6 +8,11 @@ public class WoodLogConfig : IEntityConfig
 
 	public static readonly Tag TAG = TagManager.Create("WoodLog");
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateLooseEntity("WoodLog", ITEMS.INDUSTRIAL_PRODUCTS.WOOD.NAME, ITEMS.INDUSTRIAL_PRODUCTS.WOOD.DESC, 1f, unitMass: false, Assets.GetAnim("wood_kanim"), "object", Grid.SceneLayer.Front, EntityTemplates.CollisionShape.CIRCLE, 0.35f, 0.35f, isPickupable: true, 0, SimHashes.Creature, new List<Tag>

@@ -9,12 +9,24 @@ public class ComplexRecipe
 		Ingredient,
 		Result,
 		IngredientToResult,
-		ResultWithIngredient
+		ResultWithIngredient,
+		Composite
 	}
 
 	public class RecipeElement
 	{
+		public enum TemperatureOperation
+		{
+			AverageTemperature,
+			Heated,
+			Melted
+		}
+
 		public Tag material;
+
+		public TemperatureOperation temperatureOperation;
+
+		public bool storeElement;
 
 		public float amount
 		{
@@ -26,6 +38,15 @@ public class ComplexRecipe
 		{
 			this.material = material;
 			this.amount = amount;
+			temperatureOperation = TemperatureOperation.AverageTemperature;
+		}
+
+		public RecipeElement(Tag material, float amount, TemperatureOperation temperatureOperation, bool storeElement = false)
+		{
+			this.material = material;
+			this.amount = amount;
+			this.temperatureOperation = temperatureOperation;
+			this.storeElement = storeElement;
 		}
 	}
 
@@ -39,13 +60,13 @@ public class ComplexRecipe
 
 	public GameObject FabricationVisualizer;
 
-	public RecipeNameDisplay nameDisplay;
+	public RecipeNameDisplay nameDisplay = RecipeNameDisplay.Ingredient;
 
 	public string description;
 
 	public List<Tag> fabricators;
 
-	public int sortOrder;
+	public int sortOrder = 0;
 
 	public string requiredTech;
 
@@ -81,13 +102,16 @@ public class ComplexRecipe
 		{
 			return true;
 		}
-		return Db.Get().Techs.Get(requiredTech).IsComplete();
+		Tech tech = Db.Get().Techs.Get(requiredTech);
+		return tech.IsComplete();
 	}
 
 	public Sprite GetUIIcon()
 	{
 		Sprite result = null;
-		KBatchedAnimController component = Assets.GetPrefab((nameDisplay == RecipeNameDisplay.Ingredient) ? ingredients[0].material : results[0].material).GetComponent<KBatchedAnimController>();
+		Tag tag = ((nameDisplay == RecipeNameDisplay.Ingredient) ? ingredients[0].material : results[0].material);
+		GameObject prefab = Assets.GetPrefab(tag);
+		KBatchedAnimController component = prefab.GetComponent<KBatchedAnimController>();
 		if (component != null)
 		{
 			result = Def.GetUISpriteFromMultiObjectAnim(component.AnimFiles[0]);
@@ -122,6 +146,12 @@ public class ComplexRecipe
 				return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_WITH_INCLUDE_AMOUNTS, ingredients[0].material.ProperName(), results[0].material.ProperName(), ingredients[0].amount, results[0].amount);
 			}
 			return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_WITH, ingredients[0].material.ProperName(), results[0].material.ProperName());
+		case RecipeNameDisplay.Composite:
+			if (includeAmounts)
+			{
+				return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_FROM_TO_COMPOSITE_INCLUDE_AMOUNTS, ingredients[0].material.ProperName(), results[0].material.ProperName(), results[1].material.ProperName(), ingredients[0].amount, results[0].amount, results[1].amount);
+			}
+			return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_FROM_TO_COMPOSITE, ingredients[0].material.ProperName(), results[0].material.ProperName(), results[1].material.ProperName());
 		default:
 			if (includeAmounts)
 			{

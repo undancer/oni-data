@@ -22,8 +22,10 @@ public static class BaseHatchConfig
 		gameObject.AddOrGet<Trappable>();
 		gameObject.AddOrGetDef<CreatureFallMonitor.Def>();
 		gameObject.AddOrGetDef<BurrowMonitor.Def>();
-		gameObject.AddOrGetDef<WorldSpawnableMonitor.Def>().adjustSpawnLocationCb = AdjustSpawnLocationCB;
-		gameObject.AddOrGetDef<ThreatMonitor.Def>().fleethresholdState = Health.HealthState.Dead;
+		WorldSpawnableMonitor.Def def = gameObject.AddOrGetDef<WorldSpawnableMonitor.Def>();
+		def.adjustSpawnLocationCb = AdjustSpawnLocationCB;
+		ThreatMonitor.Def def2 = gameObject.AddOrGetDef<ThreatMonitor.Def>();
+		def2.fleethresholdState = Health.HealthState.Dead;
 		gameObject.AddWeapon(1f, 1f);
 		SoundEventVolumeCache.instance.AddVolume("hatch_kanim", "Hatch_voice_idle", NOISE_POLLUTION.CREATURES.TIER2);
 		SoundEventVolumeCache.instance.AddVolume("FloorSoundEvent", "Hatch_footstep", NOISE_POLLUTION.CREATURES.TIER1);
@@ -143,13 +145,13 @@ public static class BaseHatchConfig
 	public static List<Diet.Info> FoodDiet(Tag poopTag, float caloriesPerKg, float producedConversionRate, string diseaseId, float diseasePerKgProduced)
 	{
 		List<Diet.Info> list = new List<Diet.Info>();
-		foreach (EdiblesManager.FoodInfo item in FOOD.FOOD_TYPES_LIST)
+		foreach (EdiblesManager.FoodInfo allFoodType in EdiblesManager.GetAllFoodTypes())
 		{
-			if (item.CaloriesPerUnit > 0f)
+			if (allFoodType.CaloriesPerUnit > 0f)
 			{
 				HashSet<Tag> hashSet = new HashSet<Tag>();
-				hashSet.Add(new Tag(item.Id));
-				list.Add(new Diet.Info(hashSet, poopTag, item.CaloriesPerUnit, producedConversionRate, diseaseId, diseasePerKgProduced));
+				hashSet.Add(new Tag(allFoodType.Id));
+				list.Add(new Diet.Info(hashSet, poopTag, allFoodType.CaloriesPerUnit, producedConversionRate, diseaseId, diseasePerKgProduced));
 			}
 		}
 		return list;
@@ -161,7 +163,8 @@ public static class BaseHatchConfig
 		CreatureCalorieMonitor.Def def = prefab.AddOrGetDef<CreatureCalorieMonitor.Def>();
 		def.diet = diet;
 		def.minPoopSizeInCalories = referenceCaloriesPerKg * minPoopSizeInKg;
-		prefab.AddOrGetDef<SolidConsumerMonitor.Def>().diet = diet;
+		SolidConsumerMonitor.Def def2 = prefab.AddOrGetDef<SolidConsumerMonitor.Def>();
+		def2.diet = diet;
 		return prefab;
 	}
 

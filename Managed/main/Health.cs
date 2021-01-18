@@ -20,12 +20,15 @@ public class Health : KMonoBehaviour, ISaveLoadable
 	}
 
 	[Serialize]
-	public bool CanBeIncapacitated;
+	public bool CanBeIncapacitated = false;
 
 	[Serialize]
-	public HealthState State;
+	public HealthState State = HealthState.Perfect;
 
-	public HealthBar healthBar;
+	[Serialize]
+	private Death source_of_death;
+
+	public HealthBar healthBar = null;
 
 	private Effects effects;
 
@@ -69,7 +72,7 @@ public class Health : KMonoBehaviour, ISaveLoadable
 		{
 			if (CanBeIncapacitated)
 			{
-				Incapacitate(Db.Get().Deaths.Slain);
+				Incapacitate(GameTags.HitPointsDepleted);
 			}
 			else
 			{
@@ -113,7 +116,7 @@ public class Health : KMonoBehaviour, ISaveLoadable
 			{
 				if (CanBeIncapacitated)
 				{
-					Incapacitate(Db.Get().Deaths.Slain);
+					Incapacitate(GameTags.HitPointsDepleted);
 				}
 				else
 				{
@@ -257,22 +260,20 @@ public class Health : KMonoBehaviour, ISaveLoadable
 
 	public bool IsDefeated()
 	{
-		if (State != HealthState.Incapacitated)
-		{
-			return State == HealthState.Dead;
-		}
-		return true;
+		return State == HealthState.Incapacitated || State == HealthState.Dead;
 	}
 
-	public void Incapacitate(Death source_of_death)
+	public void Incapacitate(Tag cause)
 	{
 		State = HealthState.Incapacitated;
-		GetComponent<KPrefabID>().AddTag(GameTags.HitPointsDepleted);
+		GetComponent<KPrefabID>().AddTag(cause);
+		Damage(hitPoints);
 	}
 
 	private void Kill()
 	{
-		if (base.gameObject.GetSMI<DeathMonitor.Instance>() != null)
+		DeathMonitor.Instance sMI = base.gameObject.GetSMI<DeathMonitor.Instance>();
+		if (sMI != null)
 		{
 			base.gameObject.GetSMI<DeathMonitor.Instance>().Kill(Db.Get().Deaths.Slain);
 		}

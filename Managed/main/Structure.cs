@@ -19,6 +19,11 @@ public class Structure : KMonoBehaviour
 
 	private HandleVector<int>.Handle partitionerEntry;
 
+	private static EventSystem.IntraObjectHandler<Structure> RocketLandedDelegate = new EventSystem.IntraObjectHandler<Structure>(delegate(Structure cmp, object data)
+	{
+		cmp.RocketLanded(data);
+	});
+
 	public bool IsEntombed()
 	{
 		return isEntombed;
@@ -43,6 +48,12 @@ public class Structure : KMonoBehaviour
 		Extents extents = building.GetExtents();
 		partitionerEntry = GameScenePartitioner.Instance.Add("Structure.OnSpawn", base.gameObject, extents, GameScenePartitioner.Instance.solidChangedLayer, OnSolidChanged);
 		OnSolidChanged(null);
+		Subscribe(-887025858, RocketLandedDelegate);
+	}
+
+	private void RocketLanded(object data)
+	{
+		OnSolidChanged(data);
 	}
 
 	private void OnSolidChanged(object data)

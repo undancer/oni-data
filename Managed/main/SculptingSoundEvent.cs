@@ -86,7 +86,8 @@ public class SculptingSoundEvent : SoundEvent
 				Building component2 = workable.GetComponent<Building>();
 				if (component2 != null)
 				{
-					string name = component2.Def.name;
+					BuildingDef def = component2.Def;
+					string name = def.name;
 					if (!(name == "MetalSculpture"))
 					{
 						if (name == "MarbleSculpture")

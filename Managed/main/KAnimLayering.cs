@@ -81,7 +81,8 @@ public class KAnimLayering
 			KAnim.Build.Symbol[] symbols = data.build.symbols;
 			for (int j = 0; j < symbols.Length; j++)
 			{
-				if ((symbols[j].flags & 8) != 0 != isForeground && !(symbols[j].hash == UI))
+				bool flag = (symbols[j].flags & 8) != 0;
+				if (flag != isForeground && !(symbols[j].hash == UI))
 				{
 					controller.SetSymbolVisiblity(symbols[j].hash, is_visible: false);
 				}

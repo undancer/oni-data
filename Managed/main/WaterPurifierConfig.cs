@@ -19,22 +19,22 @@ public class WaterPurifierConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("WaterPurifier", 4, 3, "waterpurifier_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: BUILDINGS.DECOR.PENALTY.TIER2);
-		obj.RequiresPowerInput = true;
-		obj.EnergyConsumptionWhenActive = 120f;
-		obj.ExhaustKilowattsWhenActive = 0f;
-		obj.SelfHeatKilowattsWhenActive = 4f;
-		obj.InputConduitType = ConduitType.Liquid;
-		obj.OutputConduitType = ConduitType.Liquid;
-		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(-1, 0));
-		obj.ViewMode = OverlayModes.LiquidConduits.ID;
-		obj.AudioCategory = "HollowMetal";
-		obj.PowerInputOffset = new CellOffset(2, 0);
-		obj.UtilityInputOffset = new CellOffset(-1, 2);
-		obj.UtilityOutputOffset = new CellOffset(2, 2);
-		obj.PermittedRotations = PermittedRotations.FlipH;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("WaterPurifier", 4, 3, "waterpurifier_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: BUILDINGS.DECOR.PENALTY.TIER2);
+		buildingDef.RequiresPowerInput = true;
+		buildingDef.EnergyConsumptionWhenActive = 120f;
+		buildingDef.ExhaustKilowattsWhenActive = 0f;
+		buildingDef.SelfHeatKilowattsWhenActive = 4f;
+		buildingDef.InputConduitType = ConduitType.Liquid;
+		buildingDef.OutputConduitType = ConduitType.Liquid;
+		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(-1, 0));
+		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
+		buildingDef.AudioCategory = "HollowMetal";
+		buildingDef.PowerInputOffset = new CellOffset(2, 0);
+		buildingDef.UtilityInputOffset = new CellOffset(-1, 2);
+		buildingDef.UtilityOutputOffset = new CellOffset(2, 2);
+		buildingDef.PermittedRotations = PermittedRotations.FlipH;
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.LiquidVentIDs, "WaterPurifier");
-		return obj;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

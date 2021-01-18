@@ -109,7 +109,7 @@ public class Pickupable : Workable, IHasSortOrder
 
 	private bool isEntombed;
 
-	private bool cleaningUp;
+	private bool cleaningUp = false;
 
 	public bool trackOnPickup = true;
 
@@ -248,28 +248,12 @@ public class Pickupable : Workable, IHasSortOrder
 
 	private bool CouldBePickedUpCommon(GameObject carrier)
 	{
-		if (UnreservedAmount >= MinTakeAmount)
-		{
-			if (!(UnreservedAmount > 0f))
-			{
-				return FindReservedAmount(carrier) > 0f;
-			}
-			return true;
-		}
-		return false;
+		return UnreservedAmount >= MinTakeAmount && (UnreservedAmount > 0f || FindReservedAmount(carrier) > 0f);
 	}
 
 	public bool CouldBePickedUpByMinion(GameObject carrier)
 	{
-		if (CouldBePickedUpCommon(carrier))
-		{
-			if (!(storage == null) && (bool)storage.automatable)
-			{
-				return !storage.automatable.GetAutomationOnly();
-			}
-			return true;
-		}
-		return false;
+		return CouldBePickedUpCommon(carrier) && (storage == null || !storage.automatable || !storage.automatable.GetAutomationOnly());
 	}
 
 	public bool CouldBePickedUpByTransferArm(GameObject carrier)
@@ -392,8 +376,10 @@ public class Pickupable : Workable, IHasSortOrder
 			return;
 		}
 		UpdateCachedCell(num);
-		new ReachabilityMonitor.Instance(this).StartSM();
-		new FetchableMonitor.Instance(this).StartSM();
+		ReachabilityMonitor.Instance instance = new ReachabilityMonitor.Instance(this);
+		instance.StartSM();
+		FetchableMonitor.Instance instance2 = new FetchableMonitor.Instance(this);
+		instance2.StartSM();
 		SetWorkTime(1.5f);
 		faceTargetWhenWorking = true;
 		KSelectable component = GetComponent<KSelectable>();
@@ -490,7 +476,8 @@ public class Pickupable : Workable, IHasSortOrder
 		if (flag2 != flag && !KPrefabID.HasTag(GameTags.Stored))
 		{
 			IsEntombed = flag2;
-			GetComponent<KSelectable>().IsSelectable = !IsEntombed;
+			KSelectable component = GetComponent<KSelectable>();
+			component.IsSelectable = !IsEntombed;
 		}
 		UpdateEntombedVisualizer();
 		return IsEntombed;
@@ -603,7 +590,8 @@ public class Pickupable : Workable, IHasSortOrder
 		{
 			Vector3 position = base.transform.GetPosition();
 			position.z = Grid.GetLayerZ(Grid.SceneLayer.Front);
-			Util.KInstantiate(Assets.GetPrefab(EffectConfigs.OreAbsorbId), position, Quaternion.identity).SetActive(value: true);
+			GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(EffectConfigs.OreAbsorbId), position, Quaternion.identity);
+			gameObject.SetActive(value: true);
 		}
 		return true;
 	}
@@ -757,6 +745,12 @@ public class Pickupable : Workable, IHasSortOrder
 		component.GetBatchInstanceData().ClearOverrideTransformMatrix();
 	}
 
+	public void UpdateCachedCellFromStoragePosition()
+	{
+		Debug.Assert(storage != null, "Only call UpdateCachedCellFromStoragePosition on pickupables in storage!");
+		UpdateCachedCell(Grid.PosToCell(storage));
+	}
+
 	private void UpdateCachedCell(int cell)
 	{
 		cachedCell = cell;
@@ -873,7 +867,8 @@ public class Pickupable : Workable, IHasSortOrder
 			return;
 		}
 		Vector2 vector = (Vector2)data;
-		if (vector.sqrMagnitude <= 0.2f || SpeedControlScreen.Instance.IsPaused)
+		float sqrMagnitude = vector.sqrMagnitude;
+		if (sqrMagnitude <= 0.2f || SpeedControlScreen.Instance.IsPaused)
 		{
 			return;
 		}
@@ -942,7 +937,8 @@ public class Pickupable : Workable, IHasSortOrder
 		{
 			Game.Instance.GetComponent<EntombedItemVisualizer>().RemoveItem(entombedCell);
 			entombedCell = -1;
-			GetComponent<KBatchedAnimController>().enabled = true;
+			KBatchedAnimController component = GetComponent<KBatchedAnimController>();
+			component.enabled = true;
 			if (add_faller_if_necessary)
 			{
 				AddFaller(Vector2.zero);

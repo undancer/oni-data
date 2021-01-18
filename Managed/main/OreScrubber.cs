@@ -93,7 +93,7 @@ public class OreScrubber : StateMachineComponent<OreScrubber.SMInstance>, IGameO
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = notready;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			notoperational.PlayAnim("off").TagTransition(GameTags.Operational, notready);
 			notready.PlayAnim("off").EventTransition(GameHashes.OnStorageChange, ready, (SMInstance smi) => smi.HasSufficientMass()).ToggleStatusItem(Db.Get().BuildingStatusItems.MaterialsUnavailable, (SMInstance smi) => smi.GetNeededMass())
 				.TagTransition(GameTags.Operational, notoperational, on_remove: true);
@@ -107,7 +107,7 @@ public class OreScrubber : StateMachineComponent<OreScrubber.SMInstance>, IGameO
 	[AddComponentMenu("KMonoBehaviour/Workable/Work")]
 	public class Work : Workable, IGameObjectEffectDescriptor
 	{
-		private int diseaseRemoved;
+		private int diseaseRemoved = 0;
 
 		protected override void OnPrefabInit()
 		{
@@ -139,13 +139,13 @@ public class OreScrubber : StateMachineComponent<OreScrubber.SMInstance>, IGameO
 				firstInfected.ModifyDiseaseCount(-num, "OreScrubber.OnWorkTick");
 			}
 			component.maxPossiblyRemoved += num;
-			float num2 = component.massConsumedPerUse * dt / workTime;
+			float amount = component.massConsumedPerUse * dt / workTime;
 			SimUtil.DiseaseInfo disease_info = SimUtil.DiseaseInfo.Invalid;
-			component2.ConsumeAndGetDisease(ElementLoader.FindElementByHash(component.consumedElement).tag, num2, out disease_info, out var aggregate_temperature);
+			component2.ConsumeAndGetDisease(ElementLoader.FindElementByHash(component.consumedElement).tag, amount, out var amount_consumed, out disease_info, out var aggregate_temperature);
 			if (component.outputElement != SimHashes.Vacuum)
 			{
 				disease_info = SimUtil.CalculateFinalDiseaseInfo(invalid, disease_info);
-				component2.AddLiquid(component.outputElement, num2, aggregate_temperature, disease_info.idx, disease_info.count);
+				component2.AddLiquid(component.outputElement, amount_consumed, aggregate_temperature, disease_info.idx, disease_info.count);
 			}
 			return diseaseRemoved > component.diseaseRemovalCount;
 		}
@@ -169,7 +169,7 @@ public class OreScrubber : StateMachineComponent<OreScrubber.SMInstance>, IGameO
 	private MeterController cleanMeter;
 
 	[Serialize]
-	public int maxPossiblyRemoved;
+	public int maxPossiblyRemoved = 0;
 
 	private static readonly EventSystem.IntraObjectHandler<OreScrubber> OnStorageChangeDelegate = new EventSystem.IntraObjectHandler<OreScrubber>(delegate(OreScrubber component, object data)
 	{

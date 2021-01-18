@@ -39,8 +39,8 @@ public class SodaFountainWorkable : Workable, IWorkerPrioritizable
 	protected override void OnCompleteWork(Worker worker)
 	{
 		Storage component = GetComponent<Storage>();
-		component.ConsumeAndGetDisease(GameTags.Water, sodaFountain.waterMassPerUse, out var disease_info, out var aggregate_temperature);
-		component.ConsumeAndGetDisease(sodaFountain.ingredientTag, sodaFountain.ingredientMassPerUse, out var disease_info2, out aggregate_temperature);
+		component.ConsumeAndGetDisease(GameTags.Water, sodaFountain.waterMassPerUse, out var amount_consumed, out var disease_info, out var aggregate_temperature);
+		component.ConsumeAndGetDisease(sodaFountain.ingredientTag, sodaFountain.ingredientMassPerUse, out amount_consumed, out var disease_info2, out aggregate_temperature);
 		GermExposureMonitor.Instance sMI = worker.GetSMI<GermExposureMonitor.Instance>();
 		if (sMI != null)
 		{

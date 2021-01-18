@@ -8,7 +8,7 @@ public class StickerBomb : StateMachineComponent<StickerBomb.StatesInstance>
 	public class StatesInstance : GameStateMachine<States, StatesInstance, StickerBomb, object>.GameInstance
 	{
 		[Serialize]
-		public float destroyTime;
+		public float destroyTime = 0f;
 
 		public StatesInstance(StickerBomb master)
 			: base(master)
@@ -32,10 +32,10 @@ public class StickerBomb : StateMachineComponent<StickerBomb.StatesInstance>
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = idle;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			root.Transition(destroy, (StatesInstance smi) => GameClock.Instance.GetTime() >= smi.destroyTime).DefaultState(idle);
-			idle.PlayAnim((StatesInstance smi) => smi.GetStickerAnim("idle"), KAnim.PlayMode.Once).ScheduleGoTo((StatesInstance smi) => Random.Range(20, 30), sparkle);
-			sparkle.PlayAnim((StatesInstance smi) => smi.GetStickerAnim("sparkle"), KAnim.PlayMode.Once).OnAnimQueueComplete(idle);
+			idle.PlayAnim((StatesInstance smi) => smi.GetStickerAnim("idle")).ScheduleGoTo((StatesInstance smi) => Random.Range(20, 30), sparkle);
+			sparkle.PlayAnim((StatesInstance smi) => smi.GetStickerAnim("sparkle")).OnAnimQueueComplete(idle);
 			destroy.Enter(delegate(StatesInstance smi)
 			{
 				Util.KDestroyGameObject(smi.master);
@@ -78,36 +78,36 @@ public class StickerBomb : StateMachineComponent<StickerBomb.StatesInstance>
 	public static List<int> BuildCellOffsets(Vector3 position)
 	{
 		List<int> list = new List<int>();
-		bool num = position.x % 1f < 0.5f;
-		bool flag = position.y % 1f > 0.5f;
-		int num2 = Grid.PosToCell(position);
-		list.Add(num2);
-		if (num)
+		bool flag = position.x % 1f < 0.5f;
+		bool flag2 = position.y % 1f > 0.5f;
+		int num = Grid.PosToCell(position);
+		list.Add(num);
+		if (flag)
 		{
-			list.Add(Grid.CellLeft(num2));
-			if (flag)
+			list.Add(Grid.CellLeft(num));
+			if (flag2)
 			{
-				list.Add(Grid.CellAbove(num2));
-				list.Add(Grid.CellUpLeft(num2));
+				list.Add(Grid.CellAbove(num));
+				list.Add(Grid.CellUpLeft(num));
 			}
 			else
 			{
-				list.Add(Grid.CellBelow(num2));
-				list.Add(Grid.CellDownLeft(num2));
+				list.Add(Grid.CellBelow(num));
+				list.Add(Grid.CellDownLeft(num));
 			}
 		}
 		else
 		{
-			list.Add(Grid.CellRight(num2));
-			if (flag)
+			list.Add(Grid.CellRight(num));
+			if (flag2)
 			{
-				list.Add(Grid.CellAbove(num2));
-				list.Add(Grid.CellUpRight(num2));
+				list.Add(Grid.CellAbove(num));
+				list.Add(Grid.CellUpRight(num));
 			}
 			else
 			{
-				list.Add(Grid.CellBelow(num2));
-				list.Add(Grid.CellDownRight(num2));
+				list.Add(Grid.CellBelow(num));
+				list.Add(Grid.CellDownRight(num));
 			}
 		}
 		return list;

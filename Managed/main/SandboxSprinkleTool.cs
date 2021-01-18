@@ -82,11 +82,12 @@ public class SandboxSprinkleTool : BrushTool
 		{
 			for (int j = 0; j < brushRadius * 2; j++)
 			{
-				if (Vector2.Distance(new Vector2(i, j), new Vector2(brushRadius, brushRadius)) < (float)brushRadius - 0.8f)
+				float num = Vector2.Distance(new Vector2(i, j), new Vector2(brushRadius, brushRadius));
+				if (num < (float)brushRadius - 0.8f)
 				{
 					Vector2 vector = Grid.CellToXY(Grid.OffsetCell(currentCell, i, j));
-					float num = PerlinSimplexNoise.noise(vector.x / settings.GetFloatSetting("SandboxTools.NoiseDensity"), vector.y / settings.GetFloatSetting("SandboxTools.NoiseDensity"), Time.realtimeSinceStartup);
-					if (settings.GetFloatSetting("SandboxTools.NoiseScale") <= num)
+					float num2 = PerlinSimplexNoise.noise(vector.x / settings.GetFloatSetting("SandboxTools.NoiseDensity"), vector.y / settings.GetFloatSetting("SandboxTools.NoiseDensity"), Time.realtimeSinceStartup);
+					if (settings.GetFloatSetting("SandboxTools.NoiseScale") <= num2)
 					{
 						brushOffsets.Add(new Vector2(i - brushRadius, j - brushRadius));
 					}
@@ -133,5 +134,21 @@ public class SandboxSprinkleTool : BrushTool
 		int callbackIdx = index;
 		SimMessages.ReplaceElement(gameCell, id, sandBoxTool, floatSetting, floatSetting2, Db.Get().Diseases.GetIndex(Db.Get().Diseases.Get(settings.GetStringSetting("SandboxTools.SelectedDisease")).id), settings.GetIntSetting("SandboxTools.DiseaseCount"), callbackIdx);
 		SetBrushSize(brushRadius);
+	}
+
+	public override void OnKeyDown(KButtonEvent e)
+	{
+		if (e.TryConsume(Action.SandboxCopyElement))
+		{
+			int cell = Grid.PosToCell(PlayerController.GetCursorPos(KInputManager.GetMousePos()));
+			if (Grid.IsValidCell(cell))
+			{
+				SandboxSampleTool.Sample(cell);
+			}
+		}
+		if (!e.Consumed)
+		{
+			base.OnKeyDown(e);
+		}
 	}
 }

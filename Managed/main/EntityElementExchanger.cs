@@ -19,7 +19,7 @@ public class EntityElementExchanger : StateMachineComponent<EntityElementExchang
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = exchanging;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			exchanging.Enter(delegate(StatesInstance smi)
 			{
 				WiltCondition component = smi.master.gameObject.GetComponent<WiltCondition>();
@@ -39,7 +39,7 @@ public class EntityElementExchanger : StateMachineComponent<EntityElementExchang
 
 	public Vector3 outputOffset = Vector3.zero;
 
-	public bool reportExchange;
+	public bool reportExchange = false;
 
 	[MyCmpReq]
 	private KSelectable selectable;

@@ -42,14 +42,16 @@ public class LiquidConduitOverflowConfig : IBuildingConfig
 
 	private void AttachPort(GameObject go)
 	{
-		go.AddComponent<ConduitSecondaryOutput>().portInfo = secondaryPort;
+		ConduitSecondaryOutput conduitSecondaryOutput = go.AddComponent<ConduitSecondaryOutput>();
+		conduitSecondaryOutput.portInfo = secondaryPort;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		GeneratedBuildings.MakeBuildingAlwaysOperational(go);
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
-		go.AddOrGet<ConduitOverflow>().portInfo = secondaryPort;
+		ConduitOverflow conduitOverflow = go.AddOrGet<ConduitOverflow>();
+		conduitOverflow.portInfo = secondaryPort;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

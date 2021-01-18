@@ -22,9 +22,9 @@ public class ExpandRevealUIContent : MonoBehaviour
 
 	public float speedScale = 1f;
 
-	public bool Collapsing;
+	public bool Collapsing = false;
 
-	public bool Expanding;
+	public bool Expanding = false;
 
 	private void OnDisable()
 	{
@@ -98,17 +98,17 @@ public class ExpandRevealUIContent : MonoBehaviour
 	{
 		Collapsing = false;
 		Expanding = true;
-		float num = 0f;
+		float xMax = 0f;
 		Keyframe[] keys = expandAnimation.keys;
 		for (int i = 0; i < keys.Length; i++)
 		{
-			Keyframe keyframe = keys[i];
-			if (keyframe.time > num)
+			Keyframe kf = keys[i];
+			if (kf.time > xMax)
 			{
-				num = keyframe.time;
+				xMax = kf.time;
 			}
 		}
-		float duration = num / speedScale;
+		float duration = xMax / speedScale;
 		for (float remaining = duration; remaining >= 0f; remaining -= Time.unscaledDeltaTime * speedScale)
 		{
 			SetStretch(expandAnimation.Evaluate(duration - remaining));
@@ -172,17 +172,17 @@ public class ExpandRevealUIContent : MonoBehaviour
 	{
 		Expanding = false;
 		Collapsing = true;
-		float num = 0f;
+		float xMax = 0f;
 		Keyframe[] keys = collapseAnimation.keys;
 		for (int i = 0; i < keys.Length; i++)
 		{
-			Keyframe keyframe = keys[i];
-			if (keyframe.time > num)
+			Keyframe kf = keys[i];
+			if (kf.time > xMax)
 			{
-				num = keyframe.time;
+				xMax = kf.time;
 			}
 		}
-		float duration = num;
+		float duration = xMax;
 		for (float remaining = duration; remaining >= 0f; remaining -= Time.unscaledDeltaTime)
 		{
 			SetStretch(collapseAnimation.Evaluate(duration - remaining));

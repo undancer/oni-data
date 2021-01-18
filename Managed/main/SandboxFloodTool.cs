@@ -22,7 +22,7 @@ public class SandboxFloodTool : FloodTool
 	{
 		base.OnPrefabInit();
 		instance = this;
-		floodCriteria = (int cell) => Grid.IsValidCell(cell) && Grid.Element[cell] == Grid.Element[mouseCell];
+		floodCriteria = (int cell) => Grid.IsValidCell(cell) && Grid.Element[cell] == Grid.Element[mouseCell] && Grid.WorldIdx[cell] == Grid.WorldIdx[mouseCell];
 		paintArea = delegate(HashSet<int> cells)
 		{
 			foreach (int cell in cells)
@@ -90,5 +90,21 @@ public class SandboxFloodTool : FloodTool
 	{
 		base.OnMouseMove(cursorPos);
 		cellsToAffect = Flood(Grid.PosToCell(cursorPos));
+	}
+
+	public override void OnKeyDown(KButtonEvent e)
+	{
+		if (e.TryConsume(Action.SandboxCopyElement))
+		{
+			int cell = Grid.PosToCell(PlayerController.GetCursorPos(KInputManager.GetMousePos()));
+			if (Grid.IsValidCell(cell))
+			{
+				SandboxSampleTool.Sample(cell);
+			}
+		}
+		if (!e.Consumed)
+		{
+			base.OnKeyDown(e);
+		}
 	}
 }

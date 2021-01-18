@@ -1,3 +1,4 @@
+#define UNITY_ASSERTIONS
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,6 +7,7 @@ using System.Runtime.Serialization;
 using Klei;
 using KSerialization;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 [DebuggerDisplay("{conduitType}")]
@@ -30,9 +32,9 @@ public class ConduitFlow : IConduitFlow
 			{
 				Initialize(conduitCount);
 				Task[] tasks = base.tasks;
-				for (int i = 0; i < tasks.Length; i++)
+				foreach (Task val in tasks)
 				{
-					tasks[i].manager = manager;
+					val.manager = manager;
 				}
 			}
 		}
@@ -391,13 +393,15 @@ public class ConduitFlow : IConduitFlow
 
 		public void ForcePermanentDiseaseContainer(int idx, bool force_on)
 		{
-			if (diseaseContentsVisible[idx] != force_on)
+			bool flag = diseaseContentsVisible[idx];
+			if (flag != force_on)
 			{
 				diseaseContentsVisible[idx] = force_on;
 				GameObject gameObject = conduitGOs[idx];
 				if (!(gameObject == null))
 				{
-					gameObject.GetComponent<PrimaryElement>().ForcePermanentDiseaseContainer(force_on);
+					PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
+					component.ForcePermanentDiseaseContainer(force_on);
 				}
 			}
 		}
@@ -405,35 +409,14 @@ public class ConduitFlow : IConduitFlow
 		public Conduit GetConduitFromDirection(int idx, FlowDirections direction)
 		{
 			ConduitConnections conduitConnections = this.conduitConnections[idx];
-			switch (direction)
+			return direction switch
 			{
-			case FlowDirections.Left:
-				if (conduitConnections.left == -1)
-				{
-					return Conduit.Invalid;
-				}
-				return conduits[conduitConnections.left];
-			case FlowDirections.Right:
-				if (conduitConnections.right == -1)
-				{
-					return Conduit.Invalid;
-				}
-				return conduits[conduitConnections.right];
-			case FlowDirections.Up:
-				if (conduitConnections.up == -1)
-				{
-					return Conduit.Invalid;
-				}
-				return conduits[conduitConnections.up];
-			case FlowDirections.Down:
-				if (conduitConnections.down == -1)
-				{
-					return Conduit.Invalid;
-				}
-				return conduits[conduitConnections.down];
-			default:
-				return Conduit.Invalid;
-			}
+				FlowDirections.Left => (conduitConnections.left != -1) ? conduits[conduitConnections.left] : Conduit.Invalid, 
+				FlowDirections.Right => (conduitConnections.right != -1) ? conduits[conduitConnections.right] : Conduit.Invalid, 
+				FlowDirections.Up => (conduitConnections.up != -1) ? conduits[conduitConnections.up] : Conduit.Invalid, 
+				FlowDirections.Down => (conduitConnections.down != -1) ? conduits[conduitConnections.down] : Conduit.Invalid, 
+				_ => Conduit.Invalid, 
+			};
 		}
 
 		public void BeginFrame(ConduitFlow manager)
@@ -848,11 +831,7 @@ public class ConduitFlow : IConduitFlow
 
 				public bool Equals(Vertex rhs)
 				{
-					if (direction == rhs.direction)
-					{
-						return cell == rhs.cell;
-					}
-					return false;
+					return direction == rhs.direction && cell == rhs.cell;
 				}
 			}
 
@@ -931,11 +910,7 @@ public class ConduitFlow : IConduitFlow
 					{
 						return false;
 					}
-					if (vertices.Length == rhs.vertices.Length && vertices.Length == 2 && vertices[0].Equals(rhs.vertices[0]))
-					{
-						return vertices[1].Equals(rhs.vertices[1]);
-					}
-					return false;
+					return vertices.Length == rhs.vertices.Length && vertices.Length == 2 && vertices[0].Equals(rhs.vertices[0]) && vertices[1].Equals(rhs.vertices[1]);
 				}
 
 				public Edge Invert()
@@ -1139,11 +1114,8 @@ public class ConduitFlow : IConduitFlow
 			private bool IsEndpoint(int cell)
 			{
 				Debug.Assert(cell != -1);
-				if (conduit_flow.grid[cell].conduitIdx != -1 && !sources.Contains(cell) && !sinks.Contains(cell))
-				{
-					return dead_ends.Contains(cell);
-				}
-				return true;
+				GridNode gridNode = conduit_flow.grid[cell];
+				return gridNode.conduitIdx == -1 || sources.Contains(cell) || sinks.Contains(cell) || dead_ends.Contains(cell);
 			}
 
 			private bool IsSink(int cell)
@@ -1162,11 +1134,7 @@ public class ConduitFlow : IConduitFlow
 
 			private int JunctionValue(int conduit)
 			{
-				if (conduit != -1)
-				{
-					return 1;
-				}
-				return 0;
+				return (conduit != -1) ? 1 : 0;
 			}
 
 			private Vertex WalkPath(int root_conduit, int conduit, FlowDirections direction, bool are_dead_ends_pseudo_sources)
@@ -1743,13 +1711,13 @@ public class ConduitFlow : IConduitFlow
 
 	public const float WaitTime = 1f;
 
-	private float elapsedTime;
+	private float elapsedTime = 0f;
 
 	private float lastUpdateTime = float.NegativeInfinity;
 
 	public SOAInfo soaInfo = new SOAInfo();
 
-	private bool dirtyConduitUpdaters;
+	private bool dirtyConduitUpdaters = false;
 
 	private List<ConduitUpdater> conduitUpdaters = new List<ConduitUpdater>();
 
@@ -1832,11 +1800,7 @@ public class ConduitFlow : IConduitFlow
 
 	private static FlowDirections ComputeNextFlowDirection(FlowDirections current)
 	{
-		if (current != 0)
-		{
-			return ComputeFlowDirection((ComputeIndex(current) + 1) % 4);
-		}
-		return FlowDirections.Down;
+		return (current == FlowDirections.None) ? FlowDirections.Down : ComputeFlowDirection((ComputeIndex(current) + 1) % 4);
 	}
 
 	public static FlowDirections Invert(FlowDirections directions)
@@ -2112,11 +2076,8 @@ public class ConduitFlow : IConduitFlow
 		{
 			return 0f;
 		}
-		if (!sinks.TryGetValue(grid_node.conduitIdx, out var value) || !(value.consumer != null))
-		{
-			return contents.movable_mass;
-		}
-		return Mathf.Max(0f, contents.movable_mass - value.space_remaining);
+		Sink value;
+		return (sinks.TryGetValue(grid_node.conduitIdx, out value) && value.consumer != null) ? Mathf.Max(0f, contents.movable_mass - value.space_remaining) : contents.movable_mass;
 	}
 
 	private bool UpdateConduit(Conduit conduit, Dictionary<int, Sink> sinks)
@@ -2136,7 +2097,8 @@ public class ConduitFlow : IConduitFlow
 				{
 					Conduit conduitFromDirection = soaInfo.GetConduitFromDirection(conduit.idx, flowDirections);
 					Debug.Assert(conduitFromDirection.idx != -1);
-					if ((soaInfo.GetSrcFlowDirection(conduitFromDirection.idx) & Opposite(flowDirections)) != 0)
+					FlowDirections srcFlowDirection = soaInfo.GetSrcFlowDirection(conduitFromDirection.idx);
+					if ((srcFlowDirection & Opposite(flowDirections)) != 0)
 					{
 						soaInfo.SetPullDirection(conduitFromDirection.idx, flowDirections);
 					}
@@ -2154,9 +2116,9 @@ public class ConduitFlow : IConduitFlow
 				}
 				Conduit conduitFromDirection2 = soaInfo.GetConduitFromDirection(conduit.idx, flowDirections);
 				Debug.Assert(conduitFromDirection2.idx != -1);
-				FlowDirections srcFlowDirection = soaInfo.GetSrcFlowDirection(conduitFromDirection2.idx);
-				bool flag = (srcFlowDirection & Opposite(flowDirections)) != 0;
-				if (srcFlowDirection != 0 && !flag)
+				FlowDirections srcFlowDirection2 = soaInfo.GetSrcFlowDirection(conduitFromDirection2.idx);
+				bool flag = (srcFlowDirection2 & Opposite(flowDirections)) != 0;
+				if (srcFlowDirection2 != 0 && !flag)
 				{
 					result = true;
 					continue;
@@ -2164,24 +2126,25 @@ public class ConduitFlow : IConduitFlow
 				int cell2 = soaInfo.GetCell(conduitFromDirection2.idx);
 				Debug.Assert(cell2 != -1);
 				ConduitContents contents = grid[cell2].contents;
-				bool num2 = contents.element == SimHashes.Vacuum || contents.element == grid_node.contents.element;
+				bool flag2 = contents.element == SimHashes.Vacuum || contents.element == grid_node.contents.element;
 				float effectiveCapacity = contents.GetEffectiveCapacity(MaxMass);
-				bool flag2 = num2 && effectiveCapacity > 0f;
-				float num3 = Mathf.Min(num, effectiveCapacity);
-				if (flag && flag2)
+				bool flag3 = flag2 && effectiveCapacity > 0f;
+				float num2 = Mathf.Min(num, effectiveCapacity);
+				if (flag && flag3)
 				{
 					soaInfo.SetPullDirection(conduitFromDirection2.idx, flowDirections);
 				}
-				if (num3 <= 0f || !flag2)
+				if (num2 <= 0f || !flag3)
 				{
 					continue;
 				}
 				soaInfo.SetTargetFlowDirection(conduit.idx, flowDirections);
 				Debug.Assert(grid_node.contents.temperature > 0f);
-				contents.temperature = GameUtil.GetFinalTemperature(grid_node.contents.temperature, num3, contents.temperature, contents.mass);
-				contents.AddMass(num3);
+				contents.temperature = GameUtil.GetFinalTemperature(grid_node.contents.temperature, num2, contents.temperature, contents.mass);
+				contents.AddMass(num2);
 				contents.element = grid_node.contents.element;
-				int num4 = (int)(num3 / grid_node.contents.mass * (float)grid_node.contents.diseaseCount);
+				float num3 = num2 / grid_node.contents.mass;
+				int num4 = (int)(num3 * (float)grid_node.contents.diseaseCount);
 				if (num4 != 0)
 				{
 					SimUtil.DiseaseInfo diseaseInfo = SimUtil.CalculateFinalDiseaseInfo(grid_node.contents.diseaseIdx, num4, contents.diseaseIdx, contents.diseaseCount);
@@ -2189,9 +2152,9 @@ public class ConduitFlow : IConduitFlow
 					contents.diseaseCount = diseaseInfo.count;
 				}
 				grid[cell2].contents = contents;
-				Debug.Assert(num3 <= grid_node.contents.mass);
-				float num5 = grid_node.contents.mass - num3;
-				num -= num3;
+				Debug.Assert(num2 <= grid_node.contents.mass);
+				float num5 = grid_node.contents.mass - num2;
+				num -= num2;
 				if (num5 <= 0f)
 				{
 					Debug.Assert(num <= 0f);
@@ -2200,14 +2163,15 @@ public class ConduitFlow : IConduitFlow
 				}
 				else
 				{
-					int num6 = (int)(num5 / grid_node.contents.mass * (float)grid_node.contents.diseaseCount);
-					Debug.Assert(num6 >= 0);
+					float num6 = num5 / grid_node.contents.mass;
+					int num7 = (int)(num6 * (float)grid_node.contents.diseaseCount);
+					Debug.Assert(num7 >= 0);
 					ConduitContents contents2 = grid_node.contents;
 					contents2.RemoveMass(num5);
-					contents2.diseaseCount -= num6;
-					grid_node.contents.RemoveMass(num3);
-					grid_node.contents.diseaseCount = num6;
-					if (num6 == 0)
+					contents2.diseaseCount -= num7;
+					grid_node.contents.RemoveMass(num2);
+					grid_node.contents.diseaseCount = num7;
+					if (num7 == 0)
 					{
 						grid_node.contents.diseaseIdx = byte.MaxValue;
 					}
@@ -2218,25 +2182,30 @@ public class ConduitFlow : IConduitFlow
 				break;
 			}
 		}
-		FlowDirections srcFlowDirection2 = soaInfo.GetSrcFlowDirection(conduit.idx);
+		FlowDirections srcFlowDirection3 = soaInfo.GetSrcFlowDirection(conduit.idx);
 		FlowDirections pullDirection = soaInfo.GetPullDirection(conduit.idx);
-		if (srcFlowDirection2 == FlowDirections.None || (Opposite(srcFlowDirection2) & pullDirection) != 0)
+		if (srcFlowDirection3 == FlowDirections.None || (Opposite(srcFlowDirection3) & pullDirection) != 0)
 		{
 			soaInfo.SetPullDirection(conduit.idx, FlowDirections.None);
 			soaInfo.SetSrcFlowDirection(conduit.idx, FlowDirections.None);
 			for (int k = 0; k != 2; k++)
 			{
-				FlowDirections flowDirections2 = srcFlowDirection2;
+				FlowDirections flowDirections2 = srcFlowDirection3;
 				for (int l = 0; l != 4; l++)
 				{
 					flowDirections2 = ComputeNextFlowDirection(flowDirections2);
 					Conduit conduitFromDirection3 = soaInfo.GetConduitFromDirection(conduit.idx, flowDirections2);
-					if (conduitFromDirection3.idx != -1 && (soaInfo.GetPermittedFlowDirections(conduitFromDirection3.idx) & Opposite(flowDirections2)) != 0)
+					if (conduitFromDirection3.idx == -1)
+					{
+						continue;
+					}
+					FlowDirections permittedFlowDirections2 = soaInfo.GetPermittedFlowDirections(conduitFromDirection3.idx);
+					if ((permittedFlowDirections2 & Opposite(flowDirections2)) != 0)
 					{
 						int cell3 = soaInfo.GetCell(conduitFromDirection3.idx);
 						ConduitContents contents3 = grid[cell3].contents;
-						float num7 = ((k == 0) ? contents3.movable_mass : contents3.mass);
-						if (0f < num7)
+						float num8 = ((k == 0) ? contents3.movable_mass : contents3.mass);
+						if (0f < num8)
 						{
 							soaInfo.SetSrcFlowDirection(conduit.idx, flowDirections2);
 							break;
@@ -2287,11 +2256,7 @@ public class ConduitFlow : IConduitFlow
 	public ConduitContents RemoveElement(int cell, float delta)
 	{
 		Conduit conduit = GetConduit(cell);
-		if (conduit.idx == -1)
-		{
-			return ConduitContents.Empty;
-		}
-		return RemoveElement(conduit, delta);
+		return (conduit.idx != -1) ? RemoveElement(conduit, delta) : ConduitContents.Empty;
 	}
 
 	public ConduitContents RemoveElement(Conduit conduit, float delta)
@@ -2306,12 +2271,13 @@ public class ConduitFlow : IConduitFlow
 		}
 		ConduitContents result = contents;
 		result.RemoveMass(num2);
-		int num3 = (int)(num2 / contents.mass * (float)contents.diseaseCount);
-		result.diseaseCount = contents.diseaseCount - num3;
+		float num3 = num2 / contents.mass;
+		int num4 = (int)(num3 * (float)contents.diseaseCount);
+		result.diseaseCount = contents.diseaseCount - num4;
 		ConduitContents contents2 = contents;
 		contents2.RemoveMass(num);
-		contents2.diseaseCount = num3;
-		if (num3 <= 0)
+		contents2.diseaseCount = num4;
+		if (num4 <= 0)
 		{
 			contents2.diseaseIdx = byte.MaxValue;
 			contents2.diseaseCount = 0;
@@ -2338,11 +2304,7 @@ public class ConduitFlow : IConduitFlow
 	public Conduit GetConduit(int cell)
 	{
 		int conduitIdx = grid[cell].conduitIdx;
-		if (conduitIdx == -1)
-		{
-			return Conduit.Invalid;
-		}
-		return soaInfo.GetConduit(conduitIdx);
+		return (conduitIdx != -1) ? soaInfo.GetConduit(conduitIdx) : Conduit.Invalid;
 	}
 
 	private void DumpPipeContents(int cell, ConduitContents contents)
@@ -2376,6 +2338,10 @@ public class ConduitFlow : IConduitFlow
 	[Conditional("CHECK_NAN")]
 	private void Validate(ConduitContents contents)
 	{
+		Assert.IsTrue(!float.IsNaN(contents.temperature));
+		Assert.IsTrue(!float.IsPositiveInfinity(contents.temperature));
+		Assert.IsTrue(!float.IsNegativeInfinity(contents.temperature));
+		Assert.IsTrue(contents.mass == 0f || contents.temperature > 0f);
 		if (contents.mass > 0f && contents.temperature <= 0f)
 		{
 			Debug.LogError("zero degree pipe contents");

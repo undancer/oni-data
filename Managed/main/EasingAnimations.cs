@@ -88,8 +88,8 @@ public class EasingAnimations : MonoBehaviour
 		bool keepAnimating = true;
 		while (keepAnimating)
 		{
-			float num = Time.realtimeSinceStartup - startTime2;
-			currentAnimation.currentScale = GetEasing(num * currentAnimation.easingMultiplier);
+			float t = Time.realtimeSinceStartup - startTime2;
+			currentAnimation.currentScale = GetEasing(t * currentAnimation.easingMultiplier);
 			keepAnimating = ((!(currentAnimation.endScale > currentAnimation.startScale)) ? (currentAnimation.currentScale > currentAnimation.endScale + 0.025f) : (currentAnimation.currentScale < currentAnimation.endScale - 0.025f));
 			if (!keepAnimating)
 			{

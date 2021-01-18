@@ -32,7 +32,7 @@ public class TransitionDriver
 
 	private Vector3 targetPos;
 
-	private bool isComplete;
+	private bool isComplete = false;
 
 	private Brain brain;
 
@@ -69,44 +69,46 @@ public class TransitionDriver
 		}
 		else if (transition.navGridTransition.start == NavType.Solid || transition.navGridTransition.end == NavType.Solid)
 		{
-			navigator.GetComponent<KBatchedAnimController>().SetSceneLayer(sceneLayer);
+			KBatchedAnimController component2 = navigator.GetComponent<KBatchedAnimController>();
+			component2.SetSceneLayer(sceneLayer);
 		}
-		int cell = Grid.OffsetCell(Grid.PosToCell(navigator), transition.x, transition.y);
-		targetPos = Grid.CellToPosCBC(cell, sceneLayer);
+		int cell = Grid.PosToCell(navigator);
+		int cell2 = Grid.OffsetCell(cell, transition.x, transition.y);
+		targetPos = Grid.CellToPosCBC(cell2, sceneLayer);
 		if (transition.isLooping)
 		{
-			KAnimControllerBase component2 = navigator.GetComponent<KAnimControllerBase>();
-			component2.PlaySpeedMultiplier = transition.animSpeed;
+			KAnimControllerBase component3 = navigator.GetComponent<KAnimControllerBase>();
+			component3.PlaySpeedMultiplier = transition.animSpeed;
 			bool flag = transition.preAnim != "";
-			bool flag2 = component2.CurrentAnim != null && component2.CurrentAnim.name == transition.anim;
-			if (flag && component2.CurrentAnim != null && component2.CurrentAnim.name == transition.preAnim)
+			bool flag2 = component3.CurrentAnim != null && component3.CurrentAnim.name == transition.anim;
+			if (flag && component3.CurrentAnim != null && component3.CurrentAnim.name == transition.preAnim)
 			{
-				component2.ClearQueue();
-				component2.Queue(transition.anim, KAnim.PlayMode.Loop);
+				component3.ClearQueue();
+				component3.Queue(transition.anim, KAnim.PlayMode.Loop);
 			}
 			else if (flag2)
 			{
-				if (component2.PlayMode != 0)
+				if (component3.PlayMode != 0)
 				{
-					component2.ClearQueue();
-					component2.Queue(transition.anim, KAnim.PlayMode.Loop);
+					component3.ClearQueue();
+					component3.Queue(transition.anim, KAnim.PlayMode.Loop);
 				}
 			}
 			else if (flag)
 			{
-				component2.Play(transition.preAnim);
-				component2.Queue(transition.anim, KAnim.PlayMode.Loop);
+				component3.Play(transition.preAnim);
+				component3.Queue(transition.anim, KAnim.PlayMode.Loop);
 			}
 			else
 			{
-				component2.Play(transition.anim, KAnim.PlayMode.Loop);
+				component3.Play(transition.anim, KAnim.PlayMode.Loop);
 			}
 		}
 		else if (transition.anim != null)
 		{
-			KAnimControllerBase component3 = navigator.GetComponent<KAnimControllerBase>();
-			component3.PlaySpeedMultiplier = transition.animSpeed;
-			component3.Play(transition.anim);
+			KAnimControllerBase component4 = navigator.GetComponent<KAnimControllerBase>();
+			component4.PlaySpeedMultiplier = transition.animSpeed;
+			component4.Play(transition.anim);
 			navigator.Subscribe(-1061186183, OnAnimComplete);
 		}
 		if (transition.navGridTransition.y != 0)
@@ -136,26 +138,26 @@ public class TransitionDriver
 
 	public void UpdateTransition(float dt)
 	{
-		if (navigator == null)
+		if (this.navigator == null)
 		{
 			return;
 		}
 		foreach (OverrideLayer overrideLayer in overrideLayers)
 		{
-			overrideLayer.UpdateTransition(navigator, transition);
+			overrideLayer.UpdateTransition(this.navigator, transition);
 		}
 		if (!isComplete && transition.isCompleteCB != null)
 		{
 			isComplete = transition.isCompleteCB();
 		}
-		if (brain != null)
+		if (!(brain != null) || isComplete)
 		{
-			_ = isComplete;
 		}
 		if (transition.isLooping)
 		{
 			float speed = transition.speed;
-			Vector3 position = navigator.transform.GetPosition();
+			Vector3 position = this.navigator.transform.GetPosition();
+			int num = Grid.PosToCell(position);
 			if (transition.x > 0)
 			{
 				position.x += dt * speed;
@@ -196,16 +198,21 @@ public class TransitionDriver
 			{
 				position.y = targetPos.y;
 			}
-			navigator.transform.SetPosition(position);
+			this.navigator.transform.SetPosition(position);
+			int num2 = Grid.PosToCell(position);
+			if (num2 != num)
+			{
+				this.navigator.Trigger(915392638, num2);
+			}
 		}
 		if (isComplete)
 		{
 			isComplete = false;
-			Navigator obj = navigator;
-			obj.SetCurrentNavType(transition.end);
-			obj.transform.SetPosition(targetPos);
+			Navigator navigator = this.navigator;
+			navigator.SetCurrentNavType(transition.end);
+			navigator.transform.SetPosition(targetPos);
 			EndTransition();
-			obj.AdvancePath();
+			navigator.AdvancePath();
 		}
 	}
 

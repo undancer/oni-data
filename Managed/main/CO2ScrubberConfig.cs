@@ -11,20 +11,20 @@ public class CO2ScrubberConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("CO2Scrubber", 2, 2, "co2scrubber_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.RAW_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: BUILDINGS.DECOR.PENALTY.TIER1);
-		obj.RequiresPowerInput = true;
-		obj.EnergyConsumptionWhenActive = 120f;
-		obj.SelfHeatKilowattsWhenActive = 1f;
-		obj.InputConduitType = ConduitType.Liquid;
-		obj.OutputConduitType = ConduitType.Liquid;
-		obj.ViewMode = OverlayModes.Oxygen.ID;
-		obj.AudioCategory = "Metal";
-		obj.AudioSize = "large";
-		obj.UtilityInputOffset = new CellOffset(0, 0);
-		obj.UtilityOutputOffset = new CellOffset(1, 1);
-		obj.PermittedRotations = PermittedRotations.FlipH;
-		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(1, 0));
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("CO2Scrubber", 2, 2, "co2scrubber_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.RAW_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: BUILDINGS.DECOR.PENALTY.TIER1);
+		buildingDef.RequiresPowerInput = true;
+		buildingDef.EnergyConsumptionWhenActive = 120f;
+		buildingDef.SelfHeatKilowattsWhenActive = 1f;
+		buildingDef.InputConduitType = ConduitType.Liquid;
+		buildingDef.OutputConduitType = ConduitType.Liquid;
+		buildingDef.ViewMode = OverlayModes.Oxygen.ID;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.AudioSize = "large";
+		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
+		buildingDef.UtilityOutputOffset = new CellOffset(1, 1);
+		buildingDef.PermittedRotations = PermittedRotations.FlipH;
+		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(1, 0));
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -35,17 +35,19 @@ public class CO2ScrubberConfig : IBuildingConfig
 		storage.showInUI = true;
 		storage.capacityKg = 30000f;
 		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
-		go.AddOrGet<AirFilter>().filterTag = GameTagExtensions.Create(SimHashes.Water);
-		PassiveElementConsumer passiveElementConsumer = go.AddOrGet<PassiveElementConsumer>();
-		passiveElementConsumer.elementToConsume = SimHashes.CarbonDioxide;
-		passiveElementConsumer.consumptionRate = 0.6f;
-		passiveElementConsumer.capacityKG = 0.6f;
-		passiveElementConsumer.consumptionRadius = 3;
-		passiveElementConsumer.showInStatusPanel = true;
-		passiveElementConsumer.sampleCellOffset = new Vector3(0f, 0f, 0f);
-		passiveElementConsumer.isRequired = false;
-		passiveElementConsumer.storeOnConsume = true;
-		passiveElementConsumer.showDescriptor = false;
+		AirFilter airFilter = go.AddOrGet<AirFilter>();
+		airFilter.filterTag = GameTagExtensions.Create(SimHashes.Water);
+		ElementConsumer elementConsumer = go.AddOrGet<PassiveElementConsumer>();
+		elementConsumer.elementToConsume = SimHashes.CarbonDioxide;
+		elementConsumer.consumptionRate = 0.6f;
+		elementConsumer.capacityKG = 0.6f;
+		elementConsumer.consumptionRadius = 3;
+		elementConsumer.showInStatusPanel = true;
+		elementConsumer.sampleCellOffset = new Vector3(0f, 0f, 0f);
+		elementConsumer.isRequired = false;
+		elementConsumer.storeOnConsume = true;
+		elementConsumer.showDescriptor = false;
+		elementConsumer.ignoreActiveChanged = true;
 		ElementConverter elementConverter = go.AddOrGet<ElementConverter>();
 		elementConverter.consumedElements = new ElementConverter.ConsumedElement[2]
 		{

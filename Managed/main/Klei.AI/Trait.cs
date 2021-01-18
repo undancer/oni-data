@@ -15,7 +15,9 @@ namespace Klei.AI
 
 		public bool ValidStarterTrait;
 
-		public Action<GameObject> OnAddTrait;
+		public Action<GameObject> OnAddTrait = null;
+
+		public Func<string> TooltipCB = null;
 
 		public Func<string> ExtendedTooltip;
 
@@ -45,7 +47,15 @@ namespace Klei.AI
 
 		public string GetTooltip()
 		{
-			return string.Concat(string.Concat(string.Concat(description + GetAttributeModifiersString(list_entry: true), GetDisabledChoresString(list_entry: true)), GetIgnoredEffectsString(list_entry: true)), GetExtendedTooltipStr());
+			if (TooltipCB != null)
+			{
+				return TooltipCB();
+			}
+			string description = base.description;
+			description += GetAttributeModifiersString(list_entry: true);
+			description += GetDisabledChoresString(list_entry: true);
+			description += GetIgnoredEffectsString(list_entry: true);
+			return description + GetExtendedTooltipStr();
 		}
 
 		public string GetAttributeModifiersString(bool list_entry)
@@ -111,9 +121,9 @@ namespace Klei.AI
 			if (ExtendedTooltip != null)
 			{
 				Delegate[] invocationList = ExtendedTooltip.GetInvocationList();
-				for (int i = 0; i < invocationList.Length; i++)
+				foreach (Delegate @delegate in invocationList)
 				{
-					Func<string> func = (Func<string>)invocationList[i];
+					Func<string> func = (Func<string>)@delegate;
 					text = text + "\n" + func();
 				}
 			}

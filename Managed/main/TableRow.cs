@@ -23,7 +23,7 @@ public class TableRow : KMonoBehaviour
 
 	private Dictionary<string, GameObject> scrollerBorders = new Dictionary<string, GameObject>();
 
-	public bool isDefault;
+	public bool isDefault = false;
 
 	public KButton selectMinionButton;
 
@@ -124,7 +124,8 @@ public class TableRow : KMonoBehaviour
 						}
 					});
 					scrollers.Add(column_scroller, scroll_rect.content.gameObject);
-					if (scroll_rect.content.transform.parent.Find("Border") != null)
+					Transform x = scroll_rect.content.transform.parent.Find("Border");
+					if (x != null)
 					{
 						scrollerBorders.Add(column_scroller, scroll_rect.content.transform.parent.Find("Border").gameObject);
 					}

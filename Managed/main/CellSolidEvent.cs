@@ -19,7 +19,8 @@ public class CellSolidEvent : CellEvent
 
 	public override string GetDescription(EventInstanceBase ev)
 	{
-		if ((ev as CellEventInstance).data == 1)
+		CellEventInstance cellEventInstance = ev as CellEventInstance;
+		if (cellEventInstance.data == 1)
 		{
 			return GetMessagePrefix() + "Solid=true (" + reason + ")";
 		}

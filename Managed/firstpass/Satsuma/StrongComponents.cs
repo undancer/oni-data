@@ -91,8 +91,10 @@ namespace Satsuma
 			}
 			ForwardDfs forwardDfs = new ForwardDfs();
 			forwardDfs.Run(graph);
-			BackwardDfs backwardDfs = new BackwardDfs();
-			backwardDfs.Parent = this;
+			BackwardDfs backwardDfs = new BackwardDfs
+			{
+				Parent = this
+			};
 			backwardDfs.Run(graph, forwardDfs.ReverseExitOrder);
 		}
 	}

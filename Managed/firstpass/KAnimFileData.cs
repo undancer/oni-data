@@ -91,6 +91,7 @@ public class KAnimFileData
 
 	public KAnim.Anim.FrameElement FindAnimFrameElement(KAnimHashedString symbolName)
 	{
-		return KAnimBatchManager.Instance().GetBatchGroupData(animBatchTag).frameElements.Find((KAnim.Anim.FrameElement match) => match.symbol == symbolName);
+		KBatchGroupData batchGroupData = KAnimBatchManager.Instance().GetBatchGroupData(animBatchTag);
+		return batchGroupData.frameElements.Find((KAnim.Anim.FrameElement match) => match.symbol == symbolName);
 	}
 }

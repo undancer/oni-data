@@ -8,6 +8,12 @@ namespace ProcGen
 	[Serializable]
 	public class World
 	{
+		public enum WorldCategory
+		{
+			Asteroid,
+			Moon
+		}
+
 		public enum Skip
 		{
 			Never = 0,
@@ -25,12 +31,68 @@ namespace ProcGen
 		}
 
 		[Serializable]
+		public class FeatureSpawnRules
+		{
+			public enum ListRule
+			{
+				GuaranteeOne,
+				GuaranteeSome,
+				GuaranteeAll,
+				TryOne,
+				TrySome,
+				TryAll
+			}
+
+			public List<string> names
+			{
+				get;
+				private set;
+			}
+
+			public ListRule listRule
+			{
+				get;
+				private set;
+			}
+
+			public int someCount
+			{
+				get;
+				private set;
+			}
+
+			public int times
+			{
+				get;
+				private set;
+			}
+
+			public float priority
+			{
+				get;
+				private set;
+			}
+
+			public List<AllowedCellsFilter> allowedCellsFilter
+			{
+				get;
+				private set;
+			}
+
+			public FeatureSpawnRules()
+			{
+				times = 1;
+			}
+		}
+
+		[Serializable]
 		public class AllowedCellsFilter
 		{
 			public enum TagCommand
 			{
 				Default,
 				AtTag,
+				NotAtTag,
 				DistanceFromTag
 			}
 
@@ -63,12 +125,6 @@ namespace ProcGen
 			}
 
 			public int maxDistance
-			{
-				get;
-				private set;
-			}
-
-			public int distCmp
 			{
 				get;
 				private set;
@@ -120,13 +176,19 @@ namespace ProcGen
 			private set;
 		}
 
+		public string nameTable
+		{
+			get;
+			private set;
+		}
+
 		public string coordinatePrefix
 		{
 			get;
 			private set;
 		}
 
-		public string spriteName
+		public string asteroidType
 		{
 			get;
 			private set;
@@ -156,7 +218,13 @@ namespace ProcGen
 			private set;
 		}
 
-		public bool noStart
+		public bool moduleInterior
+		{
+			get;
+			private set;
+		}
+
+		public WorldCategory category
 		{
 			get;
 			private set;
@@ -180,7 +248,7 @@ namespace ProcGen
 			private set;
 		}
 
-		public List<WeightedName> subworldFiles
+		public List<WeightedSubworldName> subworldFiles
 		{
 			get;
 			private set;
@@ -228,6 +296,46 @@ namespace ProcGen
 			private set;
 		}
 
+		public List<FeatureSpawnRules> worldFeatureRules
+		{
+			get;
+			private set;
+		}
+
+		public List<string> seasons
+		{
+			get;
+			private set;
+		}
+
+		public bool adjacentTemporalTear
+		{
+			get;
+			private set;
+		}
+
+		public World()
+		{
+			subworldFiles = new List<WeightedSubworldName>();
+			unknownCellsAllowedSubworlds = new List<AllowedCellsFilter>();
+			startingBasePositionHorizontal = new MinMax(0.5f, 0.5f);
+			startingBasePositionVertical = new MinMax(0.5f, 0.5f);
+			globalFeatureTemplates = new Dictionary<string, int>();
+			globalFeatures = new Dictionary<string, int>();
+			seasons = new List<string>();
+			category = WorldCategory.Asteroid;
+		}
+
+		public void ModStartLocation(MinMax hMod, MinMax vMod)
+		{
+			MinMax startingBasePositionHorizontal = this.startingBasePositionHorizontal;
+			MinMax startingBasePositionVertical = this.startingBasePositionVertical;
+			startingBasePositionHorizontal.Mod(hMod);
+			startingBasePositionVertical.Mod(vMod);
+			this.startingBasePositionHorizontal = startingBasePositionHorizontal;
+			this.startingBasePositionVertical = startingBasePositionVertical;
+		}
+
 		public string GetCoordinatePrefix()
 		{
 			if (string.IsNullOrEmpty(coordinatePrefix))
@@ -250,26 +358,6 @@ namespace ProcGen
 				coordinatePrefix = text;
 			}
 			return coordinatePrefix;
-		}
-
-		public World()
-		{
-			subworldFiles = new List<WeightedName>();
-			unknownCellsAllowedSubworlds = new List<AllowedCellsFilter>();
-			startingBasePositionHorizontal = new MinMax(0.5f, 0.5f);
-			startingBasePositionVertical = new MinMax(0.5f, 0.5f);
-			globalFeatureTemplates = new Dictionary<string, int>();
-			globalFeatures = new Dictionary<string, int>();
-		}
-
-		public void ModStartLocation(MinMax hMod, MinMax vMod)
-		{
-			MinMax startingBasePositionHorizontal = this.startingBasePositionHorizontal;
-			MinMax startingBasePositionVertical = this.startingBasePositionVertical;
-			startingBasePositionHorizontal.Mod(hMod);
-			startingBasePositionVertical.Mod(vMod);
-			this.startingBasePositionHorizontal = startingBasePositionHorizontal;
-			this.startingBasePositionVertical = startingBasePositionVertical;
 		}
 	}
 }

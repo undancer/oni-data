@@ -103,11 +103,11 @@ namespace Satsuma
 				}
 				yield break;
 			}
-			for (int j = 0; j < nodeCount; j++)
+			for (int i = 0; i < nodeCount; i++)
 			{
-				for (int l = j + 1; l < nodeCount; l++)
+				for (int k = i + 1; k < nodeCount; k++)
 				{
-					yield return GetArcInternal(j, l);
+					yield return GetArcInternal(i, k);
 				}
 			}
 		}
@@ -119,11 +119,11 @@ namespace Satsuma
 				switch (filter)
 				{
 				default:
-					foreach (Node item in Nodes())
+					foreach (Node w2 in Nodes())
 					{
-						if (item != u)
+						if (w2 != u)
 						{
-							yield return GetArc(item, u);
+							yield return GetArc(w2, u);
 						}
 					}
 					break;
@@ -137,11 +137,11 @@ namespace Satsuma
 			{
 				yield break;
 			}
-			foreach (Node item2 in Nodes())
+			foreach (Node w in Nodes())
 			{
-				if (item2 != u)
+				if (w != u)
 				{
-					yield return GetArc(u, item2);
+					yield return GetArc(u, w);
 				}
 			}
 		}
@@ -212,11 +212,7 @@ namespace Satsuma
 
 		public bool HasNode(Node node)
 		{
-			if (node.Id >= 1)
-			{
-				return node.Id <= nodeCount;
-			}
-			return false;
+			return node.Id >= 1 && node.Id <= nodeCount;
 		}
 
 		public bool HasArc(Arc arc)
@@ -227,11 +223,7 @@ namespace Satsuma
 				return false;
 			}
 			Node node2 = U(arc);
-			if (!Directed)
-			{
-				return node2.Id < node.Id;
-			}
-			return true;
+			return Directed || node2.Id < node.Id;
 		}
 	}
 }

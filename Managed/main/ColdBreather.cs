@@ -34,7 +34,7 @@ public class ColdBreather : StateMachineComponent<ColdBreather.StatesInstance>, 
 
 		public override void InitializeStates(out BaseState default_state)
 		{
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			default_state = grow;
 			statusItemCooling = new StatusItem("cooling", CREATURES.STATUSITEMS.COOLING.NAME, CREATURES.STATUSITEMS.COOLING.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			dead.ToggleStatusItem(CREATURES.STATUSITEMS.DEAD.NAME, CREATURES.STATUSITEMS.DEAD.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, default(HashedString), 129022, null, null, Db.Get().StatusItemCategories.Main).Enter(delegate(StatesInstance smi)
@@ -63,10 +63,12 @@ public class ColdBreather : StateMachineComponent<ColdBreather.StatesInstance>, 
 				.Enter(delegate(StatesInstance smi)
 				{
 					smi.master.elementConsumer.EnableConsumption(enabled: true);
+					smi.master.radiationEmitter.SetEmitting(emitting: true);
 				})
 				.Exit(delegate(StatesInstance smi)
 				{
 					smi.master.elementConsumer.EnableConsumption(enabled: false);
+					smi.master.radiationEmitter.SetEmitting(emitting: false);
 				});
 			alive.wilting.PlayAnim("wilt1").EventTransition(GameHashes.WiltRecover, alive.mature, (StatesInstance smi) => !smi.master.wiltCondition.IsWilting());
 		}
@@ -85,11 +87,16 @@ public class ColdBreather : StateMachineComponent<ColdBreather.StatesInstance>, 
 	private ElementConsumer elementConsumer;
 
 	[MyCmpReq]
+	private RadiationEmitter radiationEmitter;
+
+	[MyCmpReq]
 	private ReceptacleMonitor receptacleMonitor;
 
 	private const float EXHALE_PERIOD = 1f;
 
-	public float consumptionRate;
+	public float consumptionRate = 0f;
+
+	public float radiationRate = 0f;
 
 	public float deltaEmitTemperature = -5f;
 
@@ -99,7 +106,7 @@ public class ColdBreather : StateMachineComponent<ColdBreather.StatesInstance>, 
 
 	private Tag lastEmitTag;
 
-	private int nextGasEmitIndex;
+	private int nextGasEmitIndex = 0;
 
 	private HandleVector<Game.ComplexCallbackInfo<Sim.MassEmittedCallback>>.Handle simEmitCBHandle = HandleVector<Game.ComplexCallbackInfo<Sim.MassEmittedCallback>>.InvalidHandle;
 
@@ -131,10 +138,14 @@ public class ColdBreather : StateMachineComponent<ColdBreather.StatesInstance>, 
 			if (component.Replanted)
 			{
 				component2.consumptionRate = consumptionRate;
+				radiationEmitter.emitRads = radiationRate;
+				radiationEmitter.Refresh();
 			}
 			else
 			{
 				component2.consumptionRate = consumptionRate * 0.25f;
+				radiationEmitter.emitRads = radiationRate * 0.25f;
+				radiationEmitter.Refresh();
 			}
 		}
 	}

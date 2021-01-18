@@ -43,9 +43,10 @@ namespace KSerialization
 			while (type != typeof(object))
 			{
 				object[] customAttributes = type.GetCustomAttributes(typeof(SerializationConfig), inherit: false);
-				for (int i = 0; i < customAttributes.Length; i++)
+				object[] array = customAttributes;
+				for (int i = 0; i < array.Length; i++)
 				{
-					Attribute attribute = (Attribute)customAttributes[i];
+					Attribute attribute = (Attribute)array[i];
 					if (attribute is SerializationConfig)
 					{
 						SerializationConfig serializationConfig = attribute as SerializationConfig;
@@ -75,9 +76,10 @@ namespace KSerialization
 			typeInfo = Manager.GetTypeInfo(type);
 			type.GetSerializationMethods(typeof(OnSerializingAttribute), typeof(OnSerializedAttribute), typeof(CustomSerialize), out onSerializing, out onSerialized, out customSerialize);
 			MemberSerialization serializationConfig = GetSerializationConfig(type);
-			if (serializationConfig != 0)
+			MemberSerialization memberSerialization = serializationConfig;
+			if (memberSerialization != 0)
 			{
-				if (serializationConfig == MemberSerialization.OptIn)
+				if (memberSerialization == MemberSerialization.OptIn)
 				{
 					while (type != typeof(object))
 					{
@@ -111,7 +113,8 @@ namespace KSerialization
 		private void AddPublicFields(Type type)
 		{
 			FieldInfo[] fields = type.GetFields(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public);
-			foreach (FieldInfo field in fields)
+			FieldInfo[] array = fields;
+			foreach (FieldInfo field in array)
 			{
 				AddValidField(field);
 			}
@@ -120,10 +123,12 @@ namespace KSerialization
 		private void AddOptInFields(Type type)
 		{
 			FieldInfo[] fields = type.GetFields(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-			foreach (FieldInfo fieldInfo in fields)
+			FieldInfo[] array = fields;
+			foreach (FieldInfo fieldInfo in array)
 			{
 				object[] customAttributes = fieldInfo.GetCustomAttributes(inherit: false);
-				foreach (object obj in customAttributes)
+				object[] array2 = customAttributes;
+				foreach (object obj in array2)
 				{
 					if (obj != null && obj is Serialize)
 					{
@@ -149,7 +154,8 @@ namespace KSerialization
 		private void AddPublicProperties(Type type)
 		{
 			PropertyInfo[] properties = type.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public);
-			foreach (PropertyInfo property in properties)
+			PropertyInfo[] array = properties;
+			foreach (PropertyInfo property in array)
 			{
 				AddValidProperty(property);
 			}
@@ -158,10 +164,12 @@ namespace KSerialization
 		private void AddOptInProperties(Type type)
 		{
 			PropertyInfo[] properties = type.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-			foreach (PropertyInfo propertyInfo in properties)
+			PropertyInfo[] array = properties;
+			foreach (PropertyInfo propertyInfo in array)
 			{
 				object[] customAttributes = propertyInfo.GetCustomAttributes(inherit: false);
-				foreach (object obj in customAttributes)
+				object[] array2 = customAttributes;
+				foreach (object obj in array2)
 				{
 					if (obj != null && obj is Serialize)
 					{
@@ -173,10 +181,15 @@ namespace KSerialization
 
 		private void AddValidProperty(PropertyInfo property)
 		{
-			if (property.GetIndexParameters().Length == 0)
+			if (property.GetIndexParameters().Length != 0)
 			{
-				object[] customAttributes = property.GetCustomAttributes(typeof(NonSerializedAttribute), inherit: false);
-				if ((customAttributes == null || customAttributes.Length == 0) && property.GetSetMethod() != null)
+				return;
+			}
+			object[] customAttributes = property.GetCustomAttributes(typeof(NonSerializedAttribute), inherit: false);
+			if (customAttributes == null || customAttributes.Length == 0)
+			{
+				MethodInfo setMethod = property.GetSetMethod();
+				if (setMethod != null)
 				{
 					serializableProperties.Add(new SerializationProperty
 					{

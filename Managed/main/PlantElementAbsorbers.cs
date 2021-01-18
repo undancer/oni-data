@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlantElementAbsorbers : KCompactedVector<PlantElementAbsorber>
 {
-	private bool updating;
+	private bool updating = false;
 
 	private List<HandleVector<int>.Handle> queuedRemoves = new List<HandleVector<int>.Handle>();
 
@@ -35,20 +35,25 @@ public class PlantElementAbsorbers : KCompactedVector<PlantElementAbsorber>
 				massConsumptionRate = consumed_elements[0].massConsumptionRate
 			};
 			initial_data.localInfo = localInfo;
-			return Allocate(initial_data);
+			invalidHandle = Allocate(initial_data);
 		}
-		initial_data = new PlantElementAbsorber
+		else
 		{
-			storage = storage,
-			consumedElements = consumed_elements,
-			accumulators = array
-		};
-		localInfo = (initial_data.localInfo = new PlantElementAbsorber.LocalInfo
-		{
-			tag = Tag.Invalid,
-			massConsumptionRate = 0f
-		});
-		return Allocate(initial_data);
+			initial_data = new PlantElementAbsorber
+			{
+				storage = storage,
+				consumedElements = consumed_elements,
+				accumulators = array
+			};
+			localInfo = new PlantElementAbsorber.LocalInfo
+			{
+				tag = Tag.Invalid,
+				massConsumptionRate = 0f
+			};
+			initial_data.localInfo = localInfo;
+			invalidHandle = Allocate(initial_data);
+		}
+		return invalidHandle;
 	}
 
 	public HandleVector<int>.Handle Remove(HandleVector<int>.Handle h)

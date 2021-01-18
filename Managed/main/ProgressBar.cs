@@ -103,7 +103,7 @@ public class ProgressBar : KMonoBehaviour
 		base.enabled = true;
 	}
 
-	public static ProgressBar CreateProgressBar(KMonoBehaviour entity, Func<float> updateFunc)
+	public static ProgressBar CreateProgressBar(GameObject entity, Func<float> updateFunc)
 	{
 		ProgressBar progressBar = Util.KInstantiateUI<ProgressBar>(ProgressBarsConfig.Instance.progressBarPrefab);
 		progressBar.SetUpdateFunc(updateFunc);

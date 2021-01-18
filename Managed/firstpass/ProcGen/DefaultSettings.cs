@@ -29,5 +29,11 @@ namespace ProcGen
 			get;
 			private set;
 		}
+
+		public List<StartingWorldElementSetting> startingWorldElements
+		{
+			get;
+			private set;
+		}
 	}
 }

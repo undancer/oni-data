@@ -201,9 +201,9 @@ public class KAnimBatchGroup
 
 	private static KAnimBatchTextureCache cache = new KAnimBatchTextureCache();
 
-	public int batchCount;
+	public int batchCount = 0;
 
-	private int float4sPerSide;
+	private int float4sPerSide = 0;
 
 	private static int ShaderProperty_BUILD_AND_ANIM_TEXTURE_SIZE = Shader.PropertyToID("BUILD_AND_ANIM_TEXTURE_SIZE");
 
@@ -325,9 +325,12 @@ public class KAnimBatchGroup
 
 	public static int GetBestTextureSize(float cost)
 	{
-		int num = Mathf.CeilToInt(Mathf.Sqrt(cost));
+		float f = Mathf.Sqrt(cost);
+		int num = Mathf.CeilToInt(f);
 		int num2 = 32;
-		return Mathf.CeilToInt((float)num / (float)num2) * num2;
+		float f2 = (float)num / (float)num2;
+		int num3 = Mathf.CeilToInt(f2);
+		return num3 * num2;
 	}
 
 	private void SetupMeshData()
@@ -341,7 +344,8 @@ public class KAnimBatchGroup
 
 	private float GetBuildDataSize()
 	{
-		return (float)(data.GetBuildSymbolFrameCount() * 16) / 4f;
+		int num = data.GetBuildSymbolFrameCount() * 16;
+		return (float)num / 4f;
 	}
 
 	private float GetAnimDataSize()

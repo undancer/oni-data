@@ -60,11 +60,7 @@ namespace ClipperLib
 
 		internal static long Round(double value)
 		{
-			if (!(value < 0.0))
-			{
-				return (long)(value + 0.5);
-			}
-			return (long)(value - 0.5);
+			return (value < 0.0) ? ((long)(value - 0.5)) : ((long)(value + 0.5));
 		}
 
 		public void AddPath(List<IntPoint> path, JoinType joinType, EndType endType)
@@ -429,7 +425,8 @@ namespace ClipperLib
 			m_sinA = m_normals[k].X * m_normals[j].Y - m_normals[j].X * m_normals[k].Y;
 			if (Math.Abs(m_sinA * m_delta) < 1.0)
 			{
-				if (m_normals[k].X * m_normals[j].X + m_normals[j].Y * m_normals[k].Y > 0.0)
+				double num = m_normals[k].X * m_normals[j].X + m_normals[j].Y * m_normals[k].Y;
+				if (num > 0.0)
 				{
 					m_destPoly.Add(new IntPoint(Round((double)m_srcPoly[j].X + m_normals[k].X * m_delta), Round((double)m_srcPoly[j].Y + m_normals[k].Y * m_delta)));
 					return;
@@ -455,10 +452,10 @@ namespace ClipperLib
 				{
 				case JoinType.jtMiter:
 				{
-					double num = 1.0 + (m_normals[j].X * m_normals[k].X + m_normals[j].Y * m_normals[k].Y);
-					if (num >= m_miterLim)
+					double num2 = 1.0 + (m_normals[j].X * m_normals[k].X + m_normals[j].Y * m_normals[k].Y);
+					if (num2 >= m_miterLim)
 					{
-						DoMiter(j, k, num);
+						DoMiter(j, k, num2);
 					}
 					else
 					{

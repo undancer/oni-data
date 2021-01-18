@@ -17,18 +17,18 @@ public class KAnimGraphTileVisualizer : KMonoBehaviour, ISaveLoadable, IUtilityI
 	}
 
 	[Serialize]
-	private UtilityConnections _connections;
+	private UtilityConnections _connections = (UtilityConnections)0;
 
 	public bool isPhysicalBuilding;
 
-	public bool skipCleanup;
+	public bool skipCleanup = false;
 
-	public bool skipRefresh;
+	public bool skipRefresh = false;
 
 	public ConnectionSource connectionSource;
 
 	[NonSerialized]
-	public IUtilityNetworkMgr connectionManager;
+	public IUtilityNetworkMgr connectionManager = null;
 
 	public UtilityConnections Connections
 	{
@@ -89,7 +89,8 @@ public class KAnimGraphTileVisualizer : KMonoBehaviour, ISaveLoadable, IUtilityI
 		if (component != null)
 		{
 			string text = connectionManager.GetVisualizerString(cell);
-			if (GetComponent<BuildingUnderConstruction>() != null && component.HasAnimation(text + "_place"))
+			BuildingUnderConstruction component2 = GetComponent<BuildingUnderConstruction>();
+			if (component2 != null && component.HasAnimation(text + "_place"))
 			{
 				text += "_place";
 			}

@@ -28,7 +28,8 @@ public class CalorieMonitor : GameStateMachine<CalorieMonitor, CalorieMonitor.In
 
 		public bool IsEatTime()
 		{
-			return base.master.GetComponent<Schedulable>().IsAllowed(Db.Get().ScheduleBlockTypes.Eat);
+			Schedulable component = base.master.GetComponent<Schedulable>();
+			return component.IsAllowed(Db.Get().ScheduleBlockTypes.Eat);
 		}
 
 		public bool IsHungry()
@@ -49,11 +50,7 @@ public class CalorieMonitor : GameStateMachine<CalorieMonitor, CalorieMonitor.In
 		public bool IsEating()
 		{
 			ChoreDriver component = base.master.GetComponent<ChoreDriver>();
-			if (component.HasChore())
-			{
-				return component.GetCurrentChore().choreType.urge == Db.Get().Urges.Eat;
-			}
-			return false;
+			return component.HasChore() && component.GetCurrentChore().choreType.urge == Db.Get().Urges.Eat;
 		}
 
 		public bool IsDepleted()
@@ -68,7 +65,8 @@ public class CalorieMonitor : GameStateMachine<CalorieMonitor, CalorieMonitor.In
 
 		public void Kill()
 		{
-			if (base.gameObject.GetSMI<DeathMonitor.Instance>() != null)
+			DeathMonitor.Instance sMI = base.gameObject.GetSMI<DeathMonitor.Instance>();
+			if (sMI != null)
 			{
 				base.gameObject.GetSMI<DeathMonitor.Instance>().Kill(Db.Get().Deaths.Starvation);
 			}
@@ -88,7 +86,7 @@ public class CalorieMonitor : GameStateMachine<CalorieMonitor, CalorieMonitor.In
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = satisfied;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		satisfied.Transition(hungry, (Instance smi) => smi.IsHungry());
 		hungry.DefaultState(hungry.normal).Transition(satisfied, (Instance smi) => smi.IsSatisfied()).EventTransition(GameHashes.BeginChore, eating, (Instance smi) => smi.IsEating());
 		hungry.working.EventTransition(GameHashes.ScheduleBlocksChanged, hungry.normal, (Instance smi) => smi.IsEatTime()).Transition(hungry.starving, (Instance smi) => smi.IsStarving()).ToggleStatusItem(Db.Get().DuplicantStatusItems.Hungry);

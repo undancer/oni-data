@@ -33,11 +33,13 @@ public class DebugHandler : IInputHandler
 
 	public static bool DebugNextCall;
 
-	private bool superTestMode;
+	public static bool RevealFogOfWar;
 
-	private bool ultraTestMode;
+	private bool superTestMode = false;
 
-	private bool slowTestMode;
+	private bool ultraTestMode = false;
+
+	private bool slowTestMode = false;
 
 	public static bool enabled
 	{
@@ -64,7 +66,8 @@ public class DebugHandler : IInputHandler
 	{
 		Vector3 mousePos = KInputManager.GetMousePos();
 		mousePos.z = 0f - Camera.main.transform.GetPosition().z - Grid.CellSizeInMeters;
-		return Grid.PosToCell(Camera.main.ScreenToWorldPoint(mousePos));
+		Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
+		return Grid.PosToCell(pos);
 	}
 
 	public static Vector3 GetMousePos()
@@ -74,22 +77,35 @@ public class DebugHandler : IInputHandler
 		return Camera.main.ScreenToWorldPoint(mousePos);
 	}
 
-	private void SpawnMinion()
+	private void SpawnMinion(bool addAtmoSuit = false)
 	{
-		if (!(Immigration.Instance == null))
+		if (Immigration.Instance == null)
 		{
-			if (!Grid.IsValidBuildingCell(GetMouseCell()))
-			{
-				PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Negative, UI.DEBUG_TOOLS.INVALID_LOCATION, null, GetMousePos(), 1.5f, track_target: false, force_spawn: true);
-				return;
-			}
-			GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(MinionConfig.ID));
-			gameObject.name = Assets.GetPrefab(MinionConfig.ID).name;
-			Immigration.Instance.ApplyDefaultPersonalPriorities(gameObject);
-			Vector3 position = Grid.CellToPosCBC(GetMouseCell(), Grid.SceneLayer.Move);
-			gameObject.transform.SetLocalPosition(position);
-			gameObject.SetActive(value: true);
-			new MinionStartingStats(is_starter_minion: false).Apply(gameObject);
+			return;
+		}
+		if (!Grid.IsValidBuildingCell(GetMouseCell()))
+		{
+			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Negative, UI.DEBUG_TOOLS.INVALID_LOCATION, null, GetMousePos(), 1.5f, track_target: false, force_spawn: true);
+			return;
+		}
+		GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(MinionConfig.ID));
+		gameObject.name = Assets.GetPrefab(MinionConfig.ID).name;
+		Immigration.Instance.ApplyDefaultPersonalPriorities(gameObject);
+		Vector3 position = Grid.CellToPosCBC(GetMouseCell(), Grid.SceneLayer.Move);
+		gameObject.transform.SetLocalPosition(position);
+		gameObject.SetActive(value: true);
+		MinionStartingStats minionStartingStats = new MinionStartingStats(is_starter_minion: false);
+		minionStartingStats.Apply(gameObject);
+		if (addAtmoSuit)
+		{
+			GameObject gameObject2 = GameUtil.KInstantiate(Assets.GetPrefab("Atmo_Suit"), position, Grid.SceneLayer.Creatures);
+			gameObject2.SetActive(value: true);
+			Equippable component = gameObject2.GetComponent<Equippable>();
+			gameObject.GetComponent<MinionIdentity>().ValidateProxy();
+			Equipment component2 = gameObject.GetComponent<MinionIdentity>().assignableProxy.Get().GetComponent<Equipment>();
+			component.Assign(component2.GetComponent<IAssignableIdentity>());
+			gameObject2.GetComponent<EquippableWorkable>().CancelChore();
+			component2.Equip(component);
 		}
 	}
 
@@ -107,6 +123,10 @@ public class DebugHandler : IInputHandler
 		if (e.TryConsume(Action.DebugSpawnMinion))
 		{
 			SpawnMinion();
+		}
+		else if (e.TryConsume(Action.DebugSpawnMinionAtmoSuit))
+		{
+			SpawnMinion(addAtmoSuit: true);
 		}
 		else if (e.TryConsume(Action.DebugSpawnStressTest))
 		{
@@ -156,7 +176,8 @@ public class DebugHandler : IInputHandler
 		}
 		else if (e.TryConsume(Action.DebugDig))
 		{
-			SimMessages.Dig(GetMouseCell());
+			int mouseCell = GetMouseCell();
+			SimMessages.Dig(mouseCell);
 		}
 		else if (e.TryConsume(Action.DebugToggleFastWorkers))
 		{
@@ -197,7 +218,8 @@ public class DebugHandler : IInputHandler
 		{
 			Vector3 mousePos = KInputManager.GetMousePos();
 			mousePos.z = 0f - Camera.main.transform.GetPosition().z - Grid.CellSizeInMeters;
-			GameUtil.CreateExplosion(Camera.main.ScreenToWorldPoint(mousePos));
+			Vector3 explosion_pos = Camera.main.ScreenToWorldPoint(mousePos);
+			GameUtil.CreateExplosion(explosion_pos);
 		}
 		else if (e.TryConsume(Action.DebugLockCursor))
 		{
@@ -209,11 +231,11 @@ public class DebugHandler : IInputHandler
 		}
 		else if (e.TryConsume(Action.DebugDiscoverAllElements))
 		{
-			if (WorldInventory.Instance != null)
+			if (DiscoveredResources.Instance != null)
 			{
 				foreach (Element element in ElementLoader.elements)
 				{
-					WorldInventory.Instance.Discover(element.tag, element.GetMaterialCategoryTag());
+					DiscoveredResources.Instance.Discover(element.tag, element.GetMaterialCategoryTag());
 				}
 			}
 		}
@@ -223,19 +245,23 @@ public class DebugHandler : IInputHandler
 		}
 		else if (e.TryConsume(Action.SreenShot1x))
 		{
-			ScreenCapture.CaptureScreenshot(Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png"), 1);
+			string filename = Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png");
+			ScreenCapture.CaptureScreenshot(filename, 1);
 		}
 		else if (e.TryConsume(Action.SreenShot2x))
 		{
-			ScreenCapture.CaptureScreenshot(Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png"), 2);
+			string filename2 = Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png");
+			ScreenCapture.CaptureScreenshot(filename2, 2);
 		}
 		else if (e.TryConsume(Action.SreenShot8x))
 		{
-			ScreenCapture.CaptureScreenshot(Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png"), 8);
+			string filename3 = Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png");
+			ScreenCapture.CaptureScreenshot(filename3, 8);
 		}
 		else if (e.TryConsume(Action.SreenShot32x))
 		{
-			ScreenCapture.CaptureScreenshot(Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png"), 32);
+			string filename4 = Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png");
+			ScreenCapture.CaptureScreenshot(filename4, 32);
 		}
 		else if (e.TryConsume(Action.DebugCellInfo))
 		{
@@ -245,7 +271,6 @@ public class DebugHandler : IInputHandler
 		{
 			if (Game.Instance != null)
 			{
-				Game.Instance.UpdateGameActiveRegion(0, 0, Grid.WidthInCells, Grid.HeightInCells);
 				SaveGame.Instance.worldGenSpawner.SpawnEverything();
 			}
 			if (DebugPaintElementScreen.Instance != null)
@@ -262,6 +287,8 @@ public class DebugHandler : IInputHandler
 				{
 					CameraController.Instance.EnableFreeCamera(!activeSelf);
 				}
+				RevealFogOfWar = !RevealFogOfWar;
+				Game.Instance.Trigger(-1991583975);
 			}
 		}
 		else if (e.TryConsume(Action.DebugCollectGarbage))
@@ -315,13 +342,13 @@ public class DebugHandler : IInputHandler
 			KSelectable selected = SelectTool.Instance.selected;
 			if (selected != null)
 			{
-				int mouseCell = GetMouseCell();
-				if (!Grid.IsValidBuildingCell(mouseCell))
+				int mouseCell2 = GetMouseCell();
+				if (!Grid.IsValidBuildingCell(mouseCell2))
 				{
 					PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Negative, UI.DEBUG_TOOLS.INVALID_LOCATION, null, GetMousePos(), 1.5f, track_target: false, force_spawn: true);
 					return;
 				}
-				selected.transform.SetPosition(Grid.CellToPosCBC(mouseCell, Grid.SceneLayer.Move));
+				selected.transform.SetPosition(Grid.CellToPosCBC(mouseCell2, Grid.SceneLayer.Move));
 			}
 		}
 		else if (!e.TryConsume(Action.DebugPlace) && !e.TryConsume(Action.DebugSelectMaterial))
@@ -456,6 +483,10 @@ public class DebugHandler : IInputHandler
 				else if (e.TryConsume(Action.DebugTogglePersonalPriorityComparison))
 				{
 					Chore.ENABLE_PERSONAL_PRIORITIES = !Chore.ENABLE_PERSONAL_PRIORITIES;
+				}
+				else if (e.TryConsume(Action.DebugToggleClusterFX))
+				{
+					CameraController.Instance.ToggleClusterFX();
 				}
 			}
 		}

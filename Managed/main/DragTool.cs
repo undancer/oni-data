@@ -37,9 +37,9 @@ public class DragTool : InterfaceTool
 
 	protected Vector3 placementPivot;
 
-	protected bool interceptNumberKeysForPriority;
+	protected bool interceptNumberKeysForPriority = false;
 
-	private bool dragging;
+	private bool dragging = false;
 
 	private Vector3 previousCursorPos;
 
@@ -90,7 +90,8 @@ public class DragTool : InterfaceTool
 			areaVisualizer.SetActive(value: false);
 			areaVisualizerSpriteRenderer = areaVisualizer.GetComponent<SpriteRenderer>();
 			areaVisualizer.transform.SetParent(base.transform);
-			areaVisualizer.GetComponent<Renderer>().material.color = areaColour;
+			Renderer component = areaVisualizer.GetComponent<Renderer>();
+			component.material.color = areaColour;
 		}
 	}
 
@@ -113,6 +114,7 @@ public class DragTool : InterfaceTool
 
 	public override void OnLeftClickDown(Vector3 cursor_pos)
 	{
+		cursor_pos = ClampPositionToWorld(cursor_pos, ClusterManager.Instance.activeWorld);
 		cursor_pos -= placementPivot;
 		dragging = true;
 		downPos = cursor_pos;
@@ -122,7 +124,9 @@ public class DragTool : InterfaceTool
 		if (areaVisualizerTextPrefab != null)
 		{
 			areaVisualizerText = NameDisplayScreen.Instance.AddWorldText("", areaVisualizerTextPrefab);
-			NameDisplayScreen.Instance.GetWorldText(areaVisualizerText).GetComponent<LocText>().color = areaColour;
+			GameObject worldText = NameDisplayScreen.Instance.GetWorldText(areaVisualizerText);
+			LocText component = worldText.GetComponent<LocText>();
+			component.color = areaColour;
 		}
 		switch (GetMode())
 		{
@@ -159,7 +163,8 @@ public class DragTool : InterfaceTool
 				NameDisplayScreen.Instance.RemoveWorldText(areaVisualizerText);
 				areaVisualizerText = Guid.Empty;
 			}
-			if (GetMode() == Mode.Box && areaVisualizer != null)
+			Mode mode = GetMode();
+			if (mode == Mode.Box && areaVisualizer != null)
 			{
 				areaVisualizer.SetActive(value: false);
 			}
@@ -168,6 +173,7 @@ public class DragTool : InterfaceTool
 
 	public override void OnLeftClickUp(Vector3 cursor_pos)
 	{
+		cursor_pos = ClampPositionToWorld(cursor_pos, ClusterManager.Instance.activeWorld);
 		cursor_pos -= placementPivot;
 		KScreenManager.Instance.SetEventSystemEnabled(state: true);
 		dragAxis = DragAxis.Invalid;
@@ -181,7 +187,8 @@ public class DragTool : InterfaceTool
 			NameDisplayScreen.Instance.RemoveWorldText(areaVisualizerText);
 			areaVisualizerText = Guid.Empty;
 		}
-		if (GetMode() != Mode.Box || !(areaVisualizer != null))
+		Mode mode = GetMode();
+		if (mode != Mode.Box || !(areaVisualizer != null))
 		{
 			return;
 		}
@@ -213,7 +220,8 @@ public class DragTool : InterfaceTool
 				}
 			}
 		}
-		KMonoBehaviour.PlaySound(GlobalAssets.GetSound(GetConfirmSound()));
+		string sound = GlobalAssets.GetSound(GetConfirmSound());
+		KMonoBehaviour.PlaySound(sound);
 		OnDragComplete(downPos, cursor_pos);
 	}
 
@@ -232,8 +240,16 @@ public class DragTool : InterfaceTool
 		return "Tile_Cancel";
 	}
 
+	protected Vector3 ClampPositionToWorld(Vector3 position, WorldContainer world)
+	{
+		position.x = Mathf.Clamp(position.x, world.minimumBounds.x, world.maximumBounds.x);
+		position.y = Mathf.Clamp(position.y, world.minimumBounds.y, world.maximumBounds.y);
+		return position;
+	}
+
 	public override void OnMouseMove(Vector3 cursorPos)
 	{
+		cursorPos = ClampPositionToWorld(cursorPos, ClusterManager.Instance.activeWorld);
 		if (dragging)
 		{
 			if (Input.GetKey((KeyCode)Global.Instance.GetInputManager().GetDefaultController().GetInputForAction(Action.DragStraight)))
@@ -277,22 +293,25 @@ public class DragTool : InterfaceTool
 			if (areaVisualizerText != Guid.Empty)
 			{
 				int dragLength = GetDragLength();
-				LocText component2 = NameDisplayScreen.Instance.GetWorldText(areaVisualizerText).GetComponent<LocText>();
+				GameObject worldText2 = NameDisplayScreen.Instance.GetWorldText(areaVisualizerText);
+				LocText component2 = worldText2.GetComponent<LocText>();
 				component2.text = string.Format(UI.TOOLS.TOOL_LENGTH_FMT, dragLength);
-				Vector3 position3 = Grid.CellToPos(Grid.PosToCell(cursorPos));
-				position3 += new Vector3(0f, 1f, 0f);
-				component2.transform.SetPosition(position3);
+				Vector3 position2 = Grid.CellToPos(Grid.PosToCell(cursorPos));
+				position2 += new Vector3(0f, 1f, 0f);
+				component2.transform.SetPosition(position2);
 			}
 			break;
 		case Mode.Box:
 		{
 			Vector2 input = Vector3.Max(downPos, cursorPos);
 			Vector2 input2 = Vector3.Min(downPos, cursorPos);
+			input = GetWorldRestrictedPosition(input);
+			input2 = GetWorldRestrictedPosition(input2);
 			input = GetRegularizedPos(input, minimize: false);
 			input2 = GetRegularizedPos(input2, minimize: true);
 			Vector2 vector2 = input - input2;
-			Vector2 v = (input + input2) * 0.5f;
-			areaVisualizer.transform.SetPosition(new Vector2(v.x, v.y));
+			Vector2 vector3 = (input + input2) * 0.5f;
+			areaVisualizer.transform.SetPosition(new Vector2(vector3.x, vector3.y));
 			int num = (int)(input.x - input2.x + (input.y - input2.y) - 1f);
 			if (areaVisualizerSpriteRenderer.size != vector2)
 			{
@@ -310,9 +329,11 @@ public class DragTool : InterfaceTool
 			if (areaVisualizerText != Guid.Empty)
 			{
 				Vector2I vector2I = new Vector2I(Mathf.RoundToInt(vector2.x), Mathf.RoundToInt(vector2.y));
-				LocText component = NameDisplayScreen.Instance.GetWorldText(areaVisualizerText).GetComponent<LocText>();
-				component.text = string.Format(UI.TOOLS.TOOL_AREA_FMT, vector2I.x, vector2I.y);
-				TransformExtensions.SetPosition(position: v, transform: component.transform);
+				GameObject worldText = NameDisplayScreen.Instance.GetWorldText(areaVisualizerText);
+				LocText component = worldText.GetComponent<LocText>();
+				component.text = string.Format(UI.TOOLS.TOOL_AREA_FMT, vector2I.x, vector2I.y, vector2I.x * vector2I.y);
+				Vector2 v = vector3;
+				component.transform.SetPosition(v);
 			}
 			break;
 		}
@@ -335,6 +356,7 @@ public class DragTool : InterfaceTool
 
 	private void AddDragPoint(Vector3 cursorPos)
 	{
+		cursorPos = ClampPositionToWorld(cursorPos, ClusterManager.Instance.activeWorld);
 		int cell = Grid.PosToCell(cursorPos);
 		if (Grid.IsValidCell(cell) && Grid.IsVisible(cell))
 		{
@@ -344,6 +366,7 @@ public class DragTool : InterfaceTool
 
 	private void AddDragPoints(Vector3 cursorPos, Vector3 previousCursorPos)
 	{
+		cursorPos = ClampPositionToWorld(cursorPos, ClusterManager.Instance.activeWorld);
 		Vector3 a = cursorPos - previousCursorPos;
 		float magnitude = a.magnitude;
 		float num = Grid.CellSizeInMeters * 0.25f;
@@ -462,11 +485,7 @@ public class DragTool : InterfaceTool
 
 	public override bool ShowHoverUI()
 	{
-		if (!dragging)
-		{
-			return base.ShowHoverUI();
-		}
-		return true;
+		return dragging || base.ShowHoverUI();
 	}
 
 	public override void LateUpdate()

@@ -26,7 +26,9 @@ public class GameScreenManager : KMonoBehaviour
 	[SerializeField]
 	private Color[] uiColors;
 
-	public Image fadePlane;
+	public Image fadePlaneBack;
+
+	public Image fadePlaneFront;
 
 	public static GameScreenManager Instance
 	{
@@ -111,7 +113,8 @@ public class GameScreenManager : KMonoBehaviour
 			parent = GetParent(target);
 		}
 		KScreenManager.AddExistingChild(parent, screen);
-		screen.GetComponent<KScreen>().Activate();
+		KScreen component = screen.GetComponent<KScreen>();
+		component.Activate();
 		return screen;
 	}
 
@@ -121,7 +124,8 @@ public class GameScreenManager : KMonoBehaviour
 		{
 			parent = GetParent(target);
 		}
-		return KScreenManager.AddChild(parent, screenPrefab).GetComponent<KScreen>();
+		GameObject gameObject = KScreenManager.AddChild(parent, screenPrefab);
+		return gameObject.GetComponent<KScreen>();
 	}
 
 	public KScreen StartScreen(GameObject screenPrefab, GameObject parent = null, UIRenderTarget target = UIRenderTarget.ScreenSpaceOverlay)
@@ -130,7 +134,8 @@ public class GameScreenManager : KMonoBehaviour
 		{
 			parent = GetParent(target);
 		}
-		KScreen component = KScreenManager.AddChild(parent, screenPrefab).GetComponent<KScreen>();
+		GameObject gameObject = KScreenManager.AddChild(parent, screenPrefab);
+		KScreen component = gameObject.GetComponent<KScreen>();
 		component.Activate();
 		return component;
 	}

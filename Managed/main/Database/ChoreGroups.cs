@@ -35,9 +35,13 @@ namespace Database
 
 		public ChoreGroup Toggle;
 
-		private ChoreGroup Add(string id, string name, Attribute attribute, string sprite, int default_personal_priority)
+		public ChoreGroup Recreation;
+
+		public ChoreGroup Rocketry;
+
+		private ChoreGroup Add(string id, string name, Attribute attribute, string sprite, int default_personal_priority, bool user_prioritizable = true)
 		{
-			ChoreGroup choreGroup = new ChoreGroup(id, name, attribute, sprite, default_personal_priority);
+			ChoreGroup choreGroup = new ChoreGroup(id, name, attribute, sprite, default_personal_priority, user_prioritizable);
 			Add(choreGroup);
 			return choreGroup;
 		}
@@ -49,6 +53,7 @@ namespace Database
 			LifeSupport = Add("LifeSupport", DUPLICANTS.CHOREGROUPS.LIFESUPPORT.NAME, Db.Get().Attributes.LifeSupport, "icon_errand_life_support", 5);
 			Toggle = Add("Toggle", DUPLICANTS.CHOREGROUPS.TOGGLE.NAME, Db.Get().Attributes.Toggle, "icon_errand_toggle", 5);
 			MedicalAid = Add("MedicalAid", DUPLICANTS.CHOREGROUPS.MEDICALAID.NAME, Db.Get().Attributes.Caring, "icon_errand_care", 4);
+			Rocketry = Add("Rocketry", DUPLICANTS.CHOREGROUPS.ROCKETRY.NAME, Db.Get().Attributes.SpaceNavigation, "icon_errand_tidy", 4);
 			Basekeeping = Add("Basekeeping", DUPLICANTS.CHOREGROUPS.BASEKEEPING.NAME, Db.Get().Attributes.Strength, "icon_errand_tidy", 4);
 			Cook = Add("Cook", DUPLICANTS.CHOREGROUPS.COOK.NAME, Db.Get().Attributes.Cooking, "icon_errand_cook", 3);
 			Art = Add("Art", DUPLICANTS.CHOREGROUPS.ART.NAME, Db.Get().Attributes.Art, "icon_errand_art", 3);
@@ -60,6 +65,7 @@ namespace Database
 			Dig = Add("Dig", DUPLICANTS.CHOREGROUPS.DIG.NAME, Db.Get().Attributes.Digging, "icon_errand_dig", 2);
 			Hauling = Add("Hauling", DUPLICANTS.CHOREGROUPS.HAULING.NAME, Db.Get().Attributes.Strength, "icon_errand_supply", 1);
 			Storage = Add("Storage", DUPLICANTS.CHOREGROUPS.STORAGE.NAME, Db.Get().Attributes.Strength, "icon_errand_storage", 1);
+			Recreation = Add("Recreation", DUPLICANTS.CHOREGROUPS.RECREATION.NAME, Db.Get().Attributes.Strength, "icon_errand_storage", 1, user_prioritizable: false);
 			Debug.Assert(condition: true);
 		}
 
@@ -70,7 +76,8 @@ namespace Database
 			{
 				if (resource.IdHash == id)
 				{
-					return resource;
+					result = resource;
+					break;
 				}
 			}
 			return result;

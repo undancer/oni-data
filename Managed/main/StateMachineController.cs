@@ -38,6 +38,7 @@ public class StateMachineController : KMonoBehaviour, ISaveLoadableDetails, ISta
 		if (!stateMachines.Contains(state_machine))
 		{
 			stateMachines.Add(state_machine);
+			MyAttributes.OnAwake(state_machine, this);
 		}
 	}
 
@@ -111,7 +112,7 @@ public class StateMachineController : KMonoBehaviour, ISaveLoadableDetails, ISta
 		}
 		foreach (StateMachine.BaseDef def in cmpdef.defs)
 		{
-			def.CreateSMI(this);
+			StateMachine.Instance instance = def.CreateSMI(this);
 		}
 	}
 

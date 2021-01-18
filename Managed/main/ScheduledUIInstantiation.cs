@@ -19,7 +19,7 @@ public class ScheduledUIInstantiation : KMonoBehaviour
 
 	public Instantiation[] UIElements;
 
-	public bool InstantiateOnAwake;
+	public bool InstantiateOnAwake = false;
 
 	public GameHashes InstantiationEvent = GameHashes.StartGameUser;
 
@@ -52,13 +52,13 @@ public class ScheduledUIInstantiation : KMonoBehaviour
 		{
 			Instantiation instantiation = uIElements[i];
 			GameObject[] prefabs = instantiation.prefabs;
-			foreach (GameObject obj in prefabs)
+			foreach (GameObject gameObject in prefabs)
 			{
-				Vector3 v = obj.rectTransform().anchoredPosition;
-				GameObject gameObject = Util.KInstantiateUI(obj, instantiation.parent.gameObject);
-				gameObject.rectTransform().anchoredPosition = v;
-				gameObject.rectTransform().localScale = Vector3.one;
-				instantiatedObjects.Add(gameObject);
+				Vector3 v = gameObject.rectTransform().anchoredPosition;
+				GameObject gameObject2 = Util.KInstantiateUI(gameObject, instantiation.parent.gameObject);
+				gameObject2.rectTransform().anchoredPosition = v;
+				gameObject2.rectTransform().localScale = Vector3.one;
+				instantiatedObjects.Add(gameObject2);
 			}
 		}
 		if (!InstantiateOnAwake)

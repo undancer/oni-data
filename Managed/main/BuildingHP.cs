@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Klei.AI;
 using KSerialization;
 using STRINGS;
 using UnityEngine;
@@ -31,7 +32,7 @@ public class BuildingHP : Workable
 
 	public class SMInstance : GameStateMachine<States, SMInstance, BuildingHP, object>.GameInstance
 	{
-		private ProgressBar progressBar;
+		private ProgressBar progressBar = null;
 
 		public SMInstance(BuildingHP master)
 			: base(master)
@@ -40,7 +41,7 @@ public class BuildingHP : Workable
 
 		public Notification CreateBrokenMachineNotification()
 		{
-			return new Notification(MISC.NOTIFICATIONS.BROKENMACHINE.NAME, NotificationType.BadMinor, HashedString.Invalid, (List<Notification> notificationList, object data) => string.Concat(MISC.NOTIFICATIONS.BROKENMACHINE.TOOLTIP, notificationList.ReduceMessages(countNames: false)), "/t• " + base.master.damageSourceInfo.source, expires: false);
+			return new Notification(MISC.NOTIFICATIONS.BROKENMACHINE.NAME, NotificationType.BadMinor, (List<Notification> notificationList, object data) => string.Concat(MISC.NOTIFICATIONS.BROKENMACHINE.TOOLTIP, notificationList.ReduceMessages(countNames: false)), "/t• " + base.master.damageSourceInfo.source, expires: false);
 		}
 
 		public void ShowProgressBar(bool show)
@@ -124,8 +125,9 @@ public class BuildingHP : Workable
 			if (base.master.damageSourceInfo.takeDamageEffect != 0)
 			{
 				BuildingDef def = base.master.GetComponent<BuildingComplete>().Def;
-				int cell = Grid.OffsetCell(Grid.PosToCell(base.master), 0, def.HeightInCells - 1);
-				Game.Instance.SpawnFX(base.master.damageSourceInfo.takeDamageEffect, cell, 0f);
+				int cell = Grid.PosToCell(base.master);
+				int cell2 = Grid.OffsetCell(cell, 0, def.HeightInCells - 1);
+				Game.Instance.SpawnFX(base.master.damageSourceInfo.takeDamageEffect, cell2, 0f);
 			}
 		}
 
@@ -150,7 +152,9 @@ public class BuildingHP : Workable
 				base.master.GetComponentsInChildren(kbacQueryList);
 				for (int i = 0; i < kbacQueryList.Count; i++)
 				{
-					kbacQueryList[i].GetComponent<KBatchedAnimController>().SetBlendValue(value);
+					Meter meter = kbacQueryList[i];
+					KBatchedAnimController component2 = meter.GetComponent<KBatchedAnimController>();
+					component2.SetBlendValue(value);
 				}
 			}
 		}
@@ -180,7 +184,7 @@ public class BuildingHP : Workable
 
 		public override void InitializeStates(out BaseState default_state)
 		{
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			default_state = healthy;
 			healthy.DefaultState(healthy.imperfect).EventTransition(GameHashes.BuildingReceivedDamage, damaged, (SMInstance smi) => smi.master.HitPoints <= 0);
 			healthy.imperfect.Enter(delegate(SMInstance smi)
@@ -191,7 +195,7 @@ public class BuildingHP : Workable
 				{
 					smi.UpdateMeter();
 				})
-				.ToggleStatusItem((SMInstance smi) => (smi.master.damageSourceInfo.statusItemID == null) ? null : Db.Get().BuildingStatusItems.Get(smi.master.damageSourceInfo.statusItemID))
+				.ToggleStatusItem((SMInstance smi) => (smi.master.damageSourceInfo.statusItemID != null) ? Db.Get().BuildingStatusItems.Get(smi.master.damageSourceInfo.statusItemID) : null)
 				.Exit(delegate(SMInstance smi)
 				{
 					smi.ShowProgressBar(show: false);
@@ -253,9 +257,9 @@ public class BuildingHP : Workable
 
 	public static List<Meter> kbacQueryList = new List<Meter>();
 
-	public bool destroyOnDamaged;
+	public bool destroyOnDamaged = false;
 
-	public bool invincible;
+	public bool invincible = false;
 
 	[MyCmpGet]
 	private Building building;
@@ -264,7 +268,7 @@ public class BuildingHP : Workable
 
 	private float minDamagePopInterval = 4f;
 
-	private float lastPopTime;
+	private float lastPopTime = 0f;
 
 	public int HitPoints => hitpoints;
 
@@ -348,7 +352,8 @@ public class BuildingHP : Workable
 
 	protected override void OnCompleteWork(Worker worker)
 	{
-		int num = (int)Db.Get().Attributes.Machinery.Lookup(worker).GetTotalValue();
+		AttributeInstance attributeInstance = Db.Get().Attributes.Machinery.Lookup(worker);
+		int num = (int)attributeInstance.GetTotalValue();
 		int repair_amount = 10 + Math.Max(0, num * 10);
 		Repair(repair_amount);
 	}
@@ -369,8 +374,9 @@ public class BuildingHP : Workable
 		if (info.takeDamageEffect != 0)
 		{
 			BuildingDef def = GetComponent<BuildingComplete>().Def;
-			int cell = Grid.OffsetCell(Grid.PosToCell(this), 0, def.HeightInCells - 1);
-			Game.Instance.SpawnFX(info.takeDamageEffect, cell, 0f);
+			int cell = Grid.PosToCell(this);
+			int cell2 = Grid.OffsetCell(cell, 0, def.HeightInCells - 1);
+			Game.Instance.SpawnFX(info.takeDamageEffect, cell2, 0f);
 		}
 	}
 

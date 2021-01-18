@@ -49,7 +49,8 @@ public class LogicGateFilterConfig : LogicGateBaseConfig
 		logicGateFilter.controlPortOffsets = ControlPortOffsets;
 		go.GetComponent<KPrefabID>().prefabInitFn += delegate(GameObject game_object)
 		{
-			game_object.GetComponent<LogicGateFilter>().SetPortDescriptions(GetDescriptions());
+			LogicGateFilter component = game_object.GetComponent<LogicGateFilter>();
+			component.SetPortDescriptions(GetDescriptions());
 		};
 		go.GetComponent<KPrefabID>().AddTag(GameTags.OverlayBehindConduits);
 	}

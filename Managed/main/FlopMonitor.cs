@@ -19,11 +19,7 @@ public class FlopMonitor : GameStateMachine<FlopMonitor, FlopMonitor.Instance, I
 			position.y += CreatureFallMonitor.FLOOR_DISTANCE;
 			int cell = Grid.PosToCell(base.transform.GetPosition());
 			int num = Grid.PosToCell(position);
-			if (Grid.IsValidCell(num) && Grid.Solid[num] && !Grid.IsSubstantialLiquid(cell))
-			{
-				return !Grid.IsLiquid(Grid.CellAbove(cell));
-			}
-			return false;
+			return Grid.IsValidCell(num) && Grid.Solid[num] && !Grid.IsSubstantialLiquid(cell) && !Grid.IsLiquid(Grid.CellAbove(cell));
 		}
 	}
 

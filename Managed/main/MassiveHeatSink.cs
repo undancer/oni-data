@@ -12,7 +12,8 @@ public class MassiveHeatSink : StateMachineComponent<MassiveHeatSink.StatesInsta
 
 		private string AwaitingFuelResolveString(string str, object obj)
 		{
-			ElementConverter elementConverter = ((StatesInstance)obj).master.elementConverter;
+			StatesInstance statesInstance = (StatesInstance)obj;
+			ElementConverter elementConverter = statesInstance.master.elementConverter;
 			string arg = elementConverter.consumedElements[0].tag.ProperName();
 			string formattedMass = GameUtil.GetFormattedMass(elementConverter.consumedElements[0].massConsumptionRate, GameUtil.TimeSlice.PerSecond);
 			str = string.Format(str, arg, formattedMass);

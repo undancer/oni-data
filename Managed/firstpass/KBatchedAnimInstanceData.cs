@@ -55,7 +55,7 @@ public class KBatchedAnimInstanceData
 
 	public const int SIZE_IN_FLOATS = 28;
 
-	private KAnimConverter.IAnimConverter target;
+	private KAnimConverter.IAnimConverter target = null;
 
 	private bool isTransformOverriden;
 

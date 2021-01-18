@@ -28,7 +28,7 @@ public class BuildWatermark : KScreen
 
 	public void RefreshText()
 	{
-		string str = "CS-";
+		string str = LaunchInitializer.BuildPrefix() + "-";
 		bool flag = true;
 		bool flag2 = DistributionPlatform.Initialized && DistributionPlatform.Inst.IsArchiveBranch;
 		button.ClearOnClick();
@@ -38,7 +38,7 @@ public class BuildWatermark : KScreen
 		}
 		else
 		{
-			str += 447596u;
+			str += 447598u;
 			if (DebugHandler.enabled)
 			{
 				str += "-D";
@@ -63,7 +63,8 @@ public class BuildWatermark : KScreen
 
 	private void ShowTestingMessage()
 	{
-		Util.KInstantiateUI<ConfirmDialogScreen>(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, Global.Instance.globalCanvas, force_active: true).PopupConfirmDialog(UI.DEVELOPMENTBUILDS.TESTING_MESSAGE, delegate
+		ConfirmDialogScreen confirmDialogScreen = Util.KInstantiateUI<ConfirmDialogScreen>(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, Global.Instance.globalCanvas, force_active: true);
+		confirmDialogScreen.PopupConfirmDialog(UI.DEVELOPMENTBUILDS.TESTING_MESSAGE, delegate
 		{
 			Application.OpenURL("https://forums.kleientertainment.com/klei-bug-tracker/oni/");
 		}, delegate

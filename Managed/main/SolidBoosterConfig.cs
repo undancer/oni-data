@@ -9,21 +9,23 @@ public class SolidBoosterConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("SolidBooster", 7, 5, "rocket_solid_booster_kanim", 1000, 480f, BUILDINGS.ROCKETRY_MASS_KG.ENGINE_MASS_SMALL, new string[1]
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("SolidBooster", 7, 5, "rocket_solid_booster_kanim", 1000, 480f, BUILDINGS.ROCKETRY_MASS_KG.ENGINE_MASS_SMALL, new string[1]
 		{
 			SimHashes.Steel.ToString()
-		}, 9999f, BuildLocationRule.BuildingAttachPoint, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		BuildingTemplates.CreateRocketBuildingDef(obj);
-		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
-		obj.Invincible = true;
-		obj.OverheatTemperature = 2273.15f;
-		obj.Floodable = false;
-		obj.AttachmentSlotTag = GameTags.Rocket;
-		obj.ObjectLayer = ObjectLayer.Building;
-		obj.RequiresPowerInput = false;
-		obj.attachablePosition = new CellOffset(0, 0);
-		obj.CanMove = true;
-		return obj;
+		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
+		buildingDef.SceneLayer = Grid.SceneLayer.Building;
+		buildingDef.Invincible = true;
+		buildingDef.OverheatTemperature = 2273.15f;
+		buildingDef.Floodable = false;
+		buildingDef.AttachmentSlotTag = GameTags.Rocket;
+		buildingDef.ObjectLayer = ObjectLayer.Building;
+		buildingDef.RequiresPowerInput = false;
+		buildingDef.attachablePosition = new CellOffset(0, 0);
+		buildingDef.CanMove = true;
+		buildingDef.Cancellable = false;
+		buildingDef.ShowInBuildMenu = !DlcManager.IsExpansion1Active();
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -31,7 +33,8 @@ public class SolidBoosterConfig : IBuildingConfig
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		go.AddOrGet<LoopingSounds>();
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
-		go.AddOrGet<BuildingAttachPoint>().points = new BuildingAttachPoint.HardPoint[1]
+		BuildingAttachPoint buildingAttachPoint = go.AddOrGet<BuildingAttachPoint>();
+		buildingAttachPoint.points = new BuildingAttachPoint.HardPoint[1]
 		{
 			new BuildingAttachPoint.HardPoint(new CellOffset(0, 5), GameTags.Rocket, null)
 		};
@@ -67,7 +70,6 @@ public class SolidBoosterConfig : IBuildingConfig
 		manualDeliveryKG2.refillMass = storage.capacityKg / 2f;
 		manualDeliveryKG2.capacity = storage.capacityKg / 2f;
 		manualDeliveryKG2.choreTypeIDHash = Db.Get().ChoreTypes.MachineFetch.IdHash;
-		go.AddOrGet<RocketModule>().SetBGKAnim(Assets.GetAnim("rocket_solid_booster_bg_kanim"));
-		EntityTemplates.ExtendBuildingToRocketModule(go);
+		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.MINOR_PLUS, "rocket_solid_booster_bg_kanim");
 	}
 }

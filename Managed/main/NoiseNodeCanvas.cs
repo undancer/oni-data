@@ -11,7 +11,7 @@ public class NoiseNodeCanvas : NodeCanvas
 {
 	private NoiseTreeFiles ntf;
 
-	private TerminalNodeEditor terminator;
+	private TerminalNodeEditor terminator = null;
 
 	private Rect lastRectPos;
 
@@ -119,7 +119,8 @@ public class NoiseNodeCanvas : NodeCanvas
 		{
 			foreach (Node node in nodes)
 			{
-				if (node.GetType() == typeof(TerminalNodeEditor))
+				Type type = node.GetType();
+				if (type == typeof(TerminalNodeEditor))
 				{
 					if (terminator == null)
 					{
@@ -137,7 +138,8 @@ public class NoiseNodeCanvas : NodeCanvas
 			}
 		}
 		Vector2 position = terminator.rect.min + new Vector2(0f, -290f);
-		((DisplayNodeEditor)Node.Create("displayNodeEditor", position)).Inputs[0].ApplyConnection(terminator.Outputs[0]);
+		DisplayNodeEditor displayNodeEditor = (DisplayNodeEditor)Node.Create("displayNodeEditor", position);
+		displayNodeEditor.Inputs[0].ApplyConnection(terminator.Outputs[0]);
 	}
 
 	private Link GetLink(Node node)
@@ -400,7 +402,8 @@ public class NoiseNodeCanvas : NodeCanvas
 	private NodeCanvas Load(string name, CompleteLoadCallback onComplete)
 	{
 		NodeCanvas nodeCanvas = null;
-		Tree tree = YamlIO.LoadFile<Tree>(NoiseTreeFiles.GetTreeFilePath(name));
+		string treeFilePath = NoiseTreeFiles.GetTreeFilePath(name);
+		Tree tree = YamlIO.LoadFile<Tree>(treeFilePath);
 		if (tree != null)
 		{
 			if (tree.settings.name == null || tree.settings.name == "")
@@ -491,9 +494,9 @@ public class NoiseNodeCanvas : NodeCanvas
 
 	private static NoiseNodeCanvas PopulateNoiseNodeEditor(Tree tree)
 	{
-		NodeCanvas nodeCanvas = (NodeEditor.curNodeCanvas = CreateInstance());
-		((NoiseNodeCanvas)nodeCanvas).Populate(tree);
-		return (NoiseNodeCanvas)nodeCanvas;
+		NoiseNodeCanvas noiseNodeCanvas = (NoiseNodeCanvas)(NodeEditor.curNodeCanvas = CreateInstance());
+		noiseNodeCanvas.Populate(tree);
+		return noiseNodeCanvas;
 	}
 
 	private void Populate(Tree tree)

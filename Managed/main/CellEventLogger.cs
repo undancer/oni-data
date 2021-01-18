@@ -147,7 +147,9 @@ public class CellEventLogger : EventLogger<CellEventInstance, CellEvent>
 	public void LogCallbackReceive(int callback_id)
 	{
 		int value = Grid.InvalidCell;
-		CallbackToCellMap.TryGetValue(callback_id, out value);
+		if (!CallbackToCellMap.TryGetValue(callback_id, out value))
+		{
+		}
 	}
 
 	protected override void OnPrefabInit()

@@ -25,13 +25,13 @@ public class BrushTool : InterfaceTool
 
 	protected Vector3 placementPivot;
 
-	protected bool interceptNumberKeysForPriority;
+	protected bool interceptNumberKeysForPriority = false;
 
 	protected List<Vector2> brushOffsets = new List<Vector2>();
 
-	protected bool affectFoundation;
+	protected bool affectFoundation = false;
 
-	private bool dragging;
+	private bool dragging = false;
 
 	protected int brushRadius = -1;
 
@@ -72,7 +72,8 @@ public class BrushTool : InterfaceTool
 		{
 			for (int j = 0; j < brushRadius * 2; j++)
 			{
-				if (Vector2.Distance(new Vector2(i, j), new Vector2(brushRadius, brushRadius)) < (float)brushRadius - 0.8f)
+				float num = Vector2.Distance(new Vector2(i, j), new Vector2(brushRadius, brushRadius));
+				if (num < (float)brushRadius - 0.8f)
 				{
 					brushOffsets.Add(new Vector2(i - brushRadius, j - brushRadius));
 				}
@@ -99,7 +100,8 @@ public class BrushTool : InterfaceTool
 			areaVisualizer = Util.KInstantiate(areaVisualizer);
 			areaVisualizer.SetActive(value: false);
 			areaVisualizer.GetComponent<RectTransform>().SetParent(base.transform);
-			areaVisualizer.GetComponent<Renderer>().material.color = areaColour;
+			Renderer component = areaVisualizer.GetComponent<Renderer>();
+			component.material.color = areaColour;
 		}
 	}
 
@@ -177,7 +179,7 @@ public class BrushTool : InterfaceTool
 	{
 		foreach (int item in cellsInRadius)
 		{
-			if (Grid.IsValidCell(item) && (!Grid.Foundation[item] || affectFoundation))
+			if (Grid.IsValidCell(item) && Grid.WorldIdx[item] == ClusterManager.Instance.activeWorldId && (!Grid.Foundation[item] || affectFoundation))
 			{
 				OnPaintCell(item, Grid.GetCellDistance(currentCell, item));
 			}
@@ -189,9 +191,14 @@ public class BrushTool : InterfaceTool
 		int num = (currentCell = Grid.PosToCell(cursorPos));
 		base.OnMouseMove(cursorPos);
 		cellsInRadius.Clear();
+		int num2 = -1;
 		foreach (Vector2 brushOffset in brushOffsets)
 		{
-			cellsInRadius.Add(Grid.OffsetCell(Grid.PosToCell(cursorPos), new CellOffset((int)brushOffset.x, (int)brushOffset.y)));
+			num2 = Grid.OffsetCell(Grid.PosToCell(cursorPos), new CellOffset((int)brushOffset.x, (int)brushOffset.y));
+			if (Grid.IsValidCell(num2) && Grid.WorldIdx[num2] == ClusterManager.Instance.activeWorldId)
+			{
+				cellsInRadius.Add(Grid.OffsetCell(Grid.PosToCell(cursorPos), new CellOffset((int)brushOffset.x, (int)brushOffset.y)));
+			}
 		}
 		if (dragging)
 		{
@@ -278,11 +285,7 @@ public class BrushTool : InterfaceTool
 
 	public override bool ShowHoverUI()
 	{
-		if (!dragging)
-		{
-			return base.ShowHoverUI();
-		}
-		return true;
+		return dragging || base.ShowHoverUI();
 	}
 
 	public override void LateUpdate()

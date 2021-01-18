@@ -53,25 +53,18 @@ public class EggIncubatorStates : GameStateMachine<EggIncubatorStates, EggIncuba
 	public static bool HasEgg(Instance smi)
 	{
 		GameObject occupant = smi.GetComponent<EggIncubator>().Occupant;
-		if ((bool)occupant)
-		{
-			return occupant.HasTag(GameTags.Egg);
-		}
-		return false;
+		return (bool)occupant && occupant.HasTag(GameTags.Egg);
 	}
 
 	public static bool HasBaby(Instance smi)
 	{
 		GameObject occupant = smi.GetComponent<EggIncubator>().Occupant;
-		if ((bool)occupant)
-		{
-			return occupant.HasTag(GameTags.Creature);
-		}
-		return false;
+		return (bool)occupant && occupant.HasTag(GameTags.Creature);
 	}
 
 	public static bool HasAny(Instance smi)
 	{
-		return smi.GetComponent<EggIncubator>().Occupant;
+		GameObject occupant = smi.GetComponent<EggIncubator>().Occupant;
+		return occupant;
 	}
 }

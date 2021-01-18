@@ -16,17 +16,9 @@ public class JetSuitConfig : IEquipmentConfig
 
 	public EquipmentDef CreateEquipmentDef()
 	{
-		new Dictionary<string, float>
-		{
-			{
-				SimHashes.Steel.ToString(),
-				200f
-			},
-			{
-				SimHashes.Petroleum.ToString(),
-				25f
-			}
-		};
+		Dictionary<string, float> dictionary = new Dictionary<string, float>();
+		dictionary.Add(SimHashes.Steel.ToString(), 200f);
+		dictionary.Add(SimHashes.Petroleum.ToString(), 25f);
 		List<AttributeModifier> list = new List<AttributeModifier>();
 		list.Add(new AttributeModifier(TUNING.EQUIPMENT.ATTRIBUTE_MOD_IDS.INSULATION, TUNING.EQUIPMENT.SUITS.ATMOSUIT_INSULATION, STRINGS.EQUIPMENT.PREFABS.ATMO_SUIT.NAME));
 		list.Add(new AttributeModifier(TUNING.EQUIPMENT.ATTRIBUTE_MOD_IDS.ATHLETICS, TUNING.EQUIPMENT.SUITS.ATMOSUIT_ATHLETICS, STRINGS.EQUIPMENT.PREFABS.ATMO_SUIT.NAME));
@@ -92,7 +84,9 @@ public class JetSuitConfig : IEquipmentConfig
 							component3.Remove("SoiledSuit");
 						}
 					}
-					eq.GetComponent<Storage>().DropAll(eq.transform.GetPosition(), vent_gas: true, dump_liquid: true, default(Vector3), do_disease_transfer: false);
+					TagBits any_tags = new TagBits(eq.GetComponent<SuitTank>().elementTag);
+					TagBits tagBits = default(TagBits);
+					eq.GetComponent<Storage>().DropUnlessHasTags(any_tags, tagBits, tagBits, do_disease_transfer: true, dumpElements: true);
 				}
 			}
 		};
@@ -106,8 +100,10 @@ public class JetSuitConfig : IEquipmentConfig
 		SuitTank suitTank = go.AddComponent<SuitTank>();
 		suitTank.element = "Oxygen";
 		suitTank.capacity = 75f;
+		suitTank.elementTag = GameTags.Breathable;
 		go.AddComponent<JetSuitTank>();
-		go.AddComponent<HelmetController>().has_jets = true;
+		HelmetController helmetController = go.AddComponent<HelmetController>();
+		helmetController.has_jets = true;
 		KPrefabID component = go.GetComponent<KPrefabID>();
 		component.AddTag(GameTags.Clothes);
 		component.AddTag(GameTags.PedestalDisplayable);

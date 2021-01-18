@@ -33,11 +33,7 @@ public class UpTopPoopStates : GameStateMachine<UpTopPoopStates, UpTopPoopStates
 			if (Grid.HasDoor[cellAbove])
 			{
 				Door component = Grid.Objects[cellAbove, 1].GetComponent<Door>();
-				if (component != null)
-				{
-					return component.CurrentState != Door.ControlState.Opened;
-				}
-				return false;
+				return component != null && component.CurrentState != Door.ControlState.Opened;
 			}
 			return false;
 		}

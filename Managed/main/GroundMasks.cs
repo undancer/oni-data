@@ -64,13 +64,14 @@ public class GroundMasks : ScriptableObject
 				int num2 = num & 1;
 				int num3 = (num & 2) >> 1;
 				int num4 = (num & 4) >> 2;
-				int num5 = ((num & 8) >> 3 << 2) | num4 | (num3 << 3) | (num2 << 1);
-				if (tiles[num5].isSource)
+				int num5 = (num & 8) >> 3;
+				int num6 = (num5 << 2) | num4 | (num3 << 3) | (num2 << 1);
+				if (tiles[num6].isSource)
 				{
-					array = new UVData[tiles[num5].variationUVs.Length];
-					for (int j = 0; j < tiles[num5].variationUVs.Length; j++)
+					array = new UVData[tiles[num6].variationUVs.Length];
+					for (int j = 0; j < tiles[num6].variationUVs.Length; j++)
 					{
-						UVData uVData = tiles[num5].variationUVs[j];
+						UVData uVData = tiles[num6].variationUVs[j];
 						UVData uVData2 = uVData;
 						switch (i)
 						{
@@ -91,7 +92,7 @@ public class GroundMasks : ScriptableObject
 					}
 					break;
 				}
-				num = num5;
+				num = num6;
 			}
 			return array;
 		}
@@ -100,7 +101,8 @@ public class GroundMasks : ScriptableObject
 		{
 			for (int i = 1; i < tiles.Length; i++)
 			{
-				if (tiles[i].variationUVs == null)
+				Tile tile = tiles[i];
+				if (tile.variationUVs == null)
 				{
 					DebugUtil.LogErrorArgs(name, "has invalid tile at index", i);
 				}
@@ -168,19 +170,21 @@ public class GroundMasks : ScriptableObject
 		}
 	}
 
-	[ContextMenu("Regenerate")]
+	[ContextMenu("Print Variations")]
 	private void Regenerate()
 	{
 		Initialize();
+		string text = "Listing all variations:\n";
 		foreach (KeyValuePair<string, BiomeMaskData> biomeMask in biomeMasks)
 		{
 			BiomeMaskData value = biomeMask.Value;
-			DebugUtil.LogArgs(value.name);
+			text = text + "Biome: " + value.name + "\n";
 			for (int i = 1; i < value.tiles.Length; i++)
 			{
 				Tile tile = value.tiles[i];
-				DebugUtil.LogArgs("Tile", i, "has", tile.variationUVs.Length, "variations");
+				text += $"  tile {Convert.ToString(i, 2).PadLeft(4, '0')}: {tile.variationUVs.Length} variations\n";
 			}
 		}
+		Debug.Log(text);
 	}
 }

@@ -6,6 +6,8 @@ public class MultitoolController : GameStateMachine<MultitoolController, Multito
 {
 	public new class Instance : GameInstance
 	{
+		public Workable workable;
+
 		private GameObject hitEffectPrefab;
 
 		private GameObject hitEffect;
@@ -20,7 +22,7 @@ public class MultitoolController : GameStateMachine<MultitoolController, Multito
 			hitEffectPrefab = hit_effect;
 			worker.GetComponent<AnimEventHandler>().SetContext(context);
 			base.sm.worker.Set(worker, base.smi);
-			base.sm.workable.Set(workable, base.smi);
+			this.workable = workable;
 			anims = GetAnimationStrings(workable, worker);
 		}
 
@@ -31,7 +33,8 @@ public class MultitoolController : GameStateMachine<MultitoolController, Multito
 
 		public void PlayLoop()
 		{
-			if (base.sm.worker.Get<KAnimControllerBase>(base.smi).currentAnim != anims[1])
+			KAnimControllerBase kAnimControllerBase = base.sm.worker.Get<KAnimControllerBase>(base.smi);
+			if (kAnimControllerBase.currentAnim != anims[1])
 			{
 				base.sm.worker.Get<KAnimControllerBase>(base.smi).Play(anims[1], KAnim.PlayMode.Loop);
 			}
@@ -39,7 +42,8 @@ public class MultitoolController : GameStateMachine<MultitoolController, Multito
 
 		public void PlayPost()
 		{
-			if (base.sm.worker.Get<KAnimControllerBase>(base.smi).currentAnim != anims[2])
+			KAnimControllerBase kAnimControllerBase = base.sm.worker.Get<KAnimControllerBase>(base.smi);
+			if (kAnimControllerBase.currentAnim != anims[2])
 			{
 				base.sm.worker.Get<KAnimControllerBase>(base.smi).Play(anims[2]);
 			}
@@ -49,7 +53,6 @@ public class MultitoolController : GameStateMachine<MultitoolController, Multito
 		{
 			if (!(hitEffect == null))
 			{
-				Workable workable = base.sm.workable.Get<Workable>(base.smi);
 				Worker worker = base.sm.worker.Get<Worker>(base.smi);
 				AnimEventHandler component = worker.GetComponent<AnimEventHandler>();
 				Vector3 targetPoint = workable.GetTargetPoint();
@@ -65,7 +68,6 @@ public class MultitoolController : GameStateMachine<MultitoolController, Multito
 		public void CreateHitEffect()
 		{
 			Worker worker = base.sm.worker.Get<Worker>(base.smi);
-			Workable workable = base.sm.workable.Get<Workable>(base.smi);
 			if (worker == null || workable == null)
 			{
 				return;
@@ -127,8 +129,6 @@ public class MultitoolController : GameStateMachine<MultitoolController, Multito
 	public State pst;
 
 	public TargetParameter worker;
-
-	public TargetParameter workable;
 
 	private static readonly string[][][] ANIM_BASE = new string[5][][]
 	{
@@ -279,7 +279,7 @@ public class MultitoolController : GameStateMachine<MultitoolController, Multito
 		pre.Enter(delegate(Instance smi)
 		{
 			smi.PlayPre();
-			worker.Get<Facing>(smi).Face(workable.Get(smi).transform.GetPosition());
+			worker.Get<Facing>(smi).Face(smi.workable.transform.GetPosition());
 		}).OnAnimQueueComplete(loop);
 		loop.Enter("PlayLoop", delegate(Instance smi)
 		{

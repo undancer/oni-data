@@ -93,7 +93,8 @@ public class ArtifactConfig : IMultiEntityConfig
 		{
 			GameTags.MiscPickupable
 		});
-		gameObject.AddOrGet<OccupyArea>().OccupiedCellsOffsets = EntityTemplates.GenerateOffsets(1, 1);
+		OccupyArea occupyArea = gameObject.AddOrGet<OccupyArea>();
+		occupyArea.OccupiedCellsOffsets = EntityTemplates.GenerateOffsets(1, 1);
 		DecorProvider decorProvider = gameObject.AddOrGet<DecorProvider>();
 		decorProvider.SetValues(artifact_tier.decorValues);
 		decorProvider.overrideName = gameObject.name;

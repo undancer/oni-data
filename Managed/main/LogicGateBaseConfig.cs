@@ -20,22 +20,22 @@ public abstract class LogicGateBaseConfig : IBuildingConfig
 
 	protected BuildingDef CreateBuildingDef(string ID, string anim, int width = 2, int height = 2)
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef(ID, width, height, anim, 10, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER0);
-		obj.ViewMode = OverlayModes.Logic.ID;
-		obj.ObjectLayer = ObjectLayer.LogicGate;
-		obj.SceneLayer = Grid.SceneLayer.LogicGates;
-		obj.ThermalConductivity = 0.05f;
-		obj.Floodable = false;
-		obj.Overheatable = false;
-		obj.Entombable = false;
-		obj.AudioCategory = "Metal";
-		obj.AudioSize = "small";
-		obj.BaseTimeUntilRepair = -1f;
-		obj.PermittedRotations = PermittedRotations.R360;
-		obj.DragBuild = true;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(ID, width, height, anim, 10, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER0);
+		buildingDef.ViewMode = OverlayModes.Logic.ID;
+		buildingDef.ObjectLayer = ObjectLayer.LogicGate;
+		buildingDef.SceneLayer = Grid.SceneLayer.LogicGates;
+		buildingDef.ThermalConductivity = 0.05f;
+		buildingDef.Floodable = false;
+		buildingDef.Overheatable = false;
+		buildingDef.Entombable = false;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.AudioSize = "small";
+		buildingDef.BaseTimeUntilRepair = -1f;
+		buildingDef.PermittedRotations = PermittedRotations.R360;
+		buildingDef.DragBuild = true;
 		LogicGateBase.uiSrcData = Assets.instance.logicModeUIData;
 		GeneratedBuildings.RegisterWithOverlay(OverlayModes.Logic.HighlightItemIDs, ID);
-		return obj;
+		return buildingDef;
 	}
 
 	protected abstract LogicGateBase.Op GetLogicOp();
@@ -77,7 +77,8 @@ public abstract class LogicGateBaseConfig : IBuildingConfig
 		logicGate.controlPortOffsets = ControlPortOffsets;
 		go.GetComponent<KPrefabID>().prefabInitFn += delegate(GameObject game_object)
 		{
-			game_object.GetComponent<LogicGate>().SetPortDescriptions(GetDescriptions());
+			LogicGate component = game_object.GetComponent<LogicGate>();
+			component.SetPortDescriptions(GetDescriptions());
 		};
 		go.GetComponent<KPrefabID>().AddTag(GameTags.OverlayBehindConduits);
 	}

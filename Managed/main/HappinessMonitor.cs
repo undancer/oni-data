@@ -5,7 +5,7 @@ public class HappinessMonitor : GameStateMachine<HappinessMonitor, HappinessMoni
 {
 	public class Def : BaseDef
 	{
-		public float threshold;
+		public float threshold = 0f;
 	}
 
 	public class UnhappyState : State

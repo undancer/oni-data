@@ -20,7 +20,7 @@ public class ArtifactFinder : KMonoBehaviour
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		Subscribe(238242047, OnLandDelegate);
+		Subscribe(-887025858, OnLandDelegate);
 	}
 
 	public ArtifactTier GetArtifactDropTier(StoredMinionIdentity minionID, SpaceDestination destination)
@@ -55,7 +55,9 @@ public class ArtifactFinder : KMonoBehaviour
 		List<string> list = new List<string>();
 		foreach (string artifactItem in ArtifactConfig.artifactItems)
 		{
-			if (Assets.GetPrefab(artifactItem.ToTag()).GetComponent<SpaceArtifact>().GetArtifactTier() == tier)
+			GameObject prefab = Assets.GetPrefab(artifactItem.ToTag());
+			ArtifactTier artifactTier = prefab.GetComponent<SpaceArtifact>().GetArtifactTier();
+			if (artifactTier == tier)
 			{
 				list.Add(artifactItem);
 			}
@@ -83,7 +85,9 @@ public class ArtifactFinder : KMonoBehaviour
 			string text = SearchForArtifact(minionID, spacecraftDestination);
 			if (text != null)
 			{
-				GameUtil.KInstantiate(Assets.GetPrefab(text.ToTag()), base.gameObject.transform.GetPosition(), Grid.SceneLayer.Ore).SetActive(value: true);
+				GameObject prefab = Assets.GetPrefab(text.ToTag());
+				GameObject gameObject = GameUtil.KInstantiate(prefab, base.gameObject.transform.GetPosition(), Grid.SceneLayer.Ore);
+				gameObject.SetActive(value: true);
 			}
 		}
 	}

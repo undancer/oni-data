@@ -54,11 +54,7 @@ public class ElementSplitterComponents : KGameObjectComponentManager<ElementSpli
 		}
 		ElementSplitter data = GameComps.ElementSplitters.GetData(first);
 		ElementSplitter data2 = GameComps.ElementSplitters.GetData(second);
-		if (data.primaryElement.ElementID == data2.primaryElement.ElementID)
-		{
-			return data.primaryElement.Units + data2.primaryElement.Units < 25000f;
-		}
-		return false;
+		return data.primaryElement.ElementID == data2.primaryElement.ElementID && data.primaryElement.Units + data2.primaryElement.Units < 25000f;
 	}
 
 	private static Pickupable OnTake(HandleVector<int>.Handle handle, float amount)

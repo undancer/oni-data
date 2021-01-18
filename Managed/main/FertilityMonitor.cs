@@ -81,7 +81,8 @@ public class FertilityMonitor : GameStateMachine<FertilityMonitor, FertilityMoni
 					egg = initialBreedingWeight.egg,
 					weight = initialBreedingWeight.weight
 				});
-				foreach (FertilityModifier item in Db.Get().FertilityModifiers.GetForTag(initialBreedingWeight.egg))
+				List<FertilityModifier> forTag = Db.Get().FertilityModifiers.GetForTag(initialBreedingWeight.egg);
+				foreach (FertilityModifier item in forTag)
 				{
 					item.ApplyFunction(this, initialBreedingWeight.egg);
 				}
@@ -144,7 +145,8 @@ public class FertilityMonitor : GameStateMachine<FertilityMonitor, FertilityMoni
 			GameObject gameObject = (egg = Util.KInstantiate(prefab, position));
 			SymbolOverrideController component = GetComponent<SymbolOverrideController>();
 			string str = "egg01";
-			CreatureBrain component2 = Assets.GetPrefab(prefab.GetDef<IncubationMonitor.Def>().spawnedCreature).GetComponent<CreatureBrain>();
+			IncubationMonitor.Def def = prefab.GetDef<IncubationMonitor.Def>();
+			CreatureBrain component2 = Assets.GetPrefab(def.spawnedCreature).GetComponent<CreatureBrain>();
 			if (!string.IsNullOrEmpty(component2.symbolPrefix))
 			{
 				str = component2.symbolPrefix + "egg01";
@@ -174,6 +176,18 @@ public class FertilityMonitor : GameStateMachine<FertilityMonitor, FertilityMoni
 			}
 			NormalizeBreedingChances();
 			base.master.Trigger(1059811075, breedingChances);
+		}
+
+		public float GetBreedingChance(Tag type)
+		{
+			foreach (BreedingChance breedingChance in breedingChances)
+			{
+				if (breedingChance.egg == type)
+				{
+					return breedingChance.weight;
+				}
+			}
+			return -1f;
 		}
 
 		private void NormalizeBreedingChances()
@@ -207,7 +221,7 @@ public class FertilityMonitor : GameStateMachine<FertilityMonitor, FertilityMoni
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = fertile;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		root.DefaultState(fertile);
 		fertile.ToggleBehaviour(GameTags.Creatures.Fertile, (Instance smi) => smi.IsReadyToLayEgg()).ToggleEffect((Instance smi) => smi.fertileEffect).Transition(infertile, GameStateMachine<FertilityMonitor, Instance, IStateMachineTarget, Def>.Not(IsFertile), UpdateRate.SIM_1000ms);
 		infertile.Transition(fertile, IsFertile, UpdateRate.SIM_1000ms);

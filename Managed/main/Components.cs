@@ -91,6 +91,19 @@ public class Components
 			OnRemove -= on_remove;
 		}
 
+		public List<T> GetWorldItems(int worldId)
+		{
+			List<T> list = new List<T>();
+			foreach (T item in Items)
+			{
+				if ((item as KMonoBehaviour).GetMyWorldId() == worldId)
+				{
+					list.Add(item);
+				}
+			}
+			return list;
+		}
+
 		public void CopyTo(Array array, int index)
 		{
 			throw new NotImplementedException();
@@ -132,6 +145,8 @@ public class Components
 
 	public static Cmps<Ladder> Ladders = new Cmps<Ladder>();
 
+	public static Cmps<NavTeleporter> NavTeleporters = new Cmps<NavTeleporter>();
+
 	public static Cmps<ITravelTubePiece> ITravelTubePieces = new Cmps<ITravelTubePiece>();
 
 	public static Cmps<CreatureFeeder> CreatureFeeders = new Cmps<CreatureFeeder>();
@@ -144,7 +159,7 @@ public class Components
 
 	public static Cmps<Diggable> Diggables = new Cmps<Diggable>();
 
-	public static Cmps<ResearchCenter> ResearchCenters = new Cmps<ResearchCenter>();
+	public static Cmps<IResearchCenter> ResearchCenters = new Cmps<IResearchCenter>();
 
 	public static Cmps<Harvestable> Harvestables = new Cmps<Harvestable>();
 
@@ -209,6 +224,28 @@ public class Components
 	public static Cmps<Painting> Paintings = new Cmps<Painting>();
 
 	public static Cmps<BuildingComplete> TemplateBuildings = new Cmps<BuildingComplete>();
+
+	public static Cmps<Teleporter> Teleporters = new Cmps<Teleporter>();
+
+	public static Cmps<MutantPlant> MutantPlants = new Cmps<MutantPlant>();
+
+	public static Cmps<LandingBeacon> LandingBeacons = new Cmps<LandingBeacon>();
+
+	public static Cmps<HighEnergyParticle> HighEnergyParticles = new Cmps<HighEnergyParticle>();
+
+	public static Cmps<HighEnergyParticlePort> HighEnergyParticlePorts = new Cmps<HighEnergyParticlePort>();
+
+	public static Cmps<Clustercraft> Clustercrafts = new Cmps<Clustercraft>();
+
+	public static Cmps<ClustercraftInteriorDoor> ClusterCraftInteriorDoors = new Cmps<ClustercraftInteriorDoor>();
+
+	public static Cmps<PassengerRocketModule> PassengerRocketModules = new Cmps<PassengerRocketModule>();
+
+	public static Cmps<LaunchPad> LaunchPads = new Cmps<LaunchPad>();
+
+	public static Cmps<BeeHive> BeeHives = new Cmps<BeeHive>();
+
+	public static Cmps<WarpReceiver> WarpReceivers = new Cmps<WarpReceiver>();
 
 	public static Cmps<IncubationMonitor.Instance> IncubationMonitors = new Cmps<IncubationMonitor.Instance>();
 

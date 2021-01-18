@@ -26,7 +26,7 @@ public class MooConfig : IEntityConfig
 	public static GameObject CreateMoo(string id, string name, string desc, string anim_file, bool is_baby)
 	{
 		GameObject gameObject = BaseMooConfig.BaseMoo(id, name, CREATURES.SPECIES.MOO.DESC, "MooBaseTrait", anim_file, is_baby, null);
-		EntityTemplates.ExtendEntityToWildCreature(gameObject, MooTuning.PEN_SIZE_PER_CREATURE, 75f);
+		EntityTemplates.ExtendEntityToWildCreature(gameObject, MooTuning.PEN_SIZE_PER_CREATURE);
 		Trait trait = Db.Get().CreateTrait("MooBaseTrait", name, name, null, should_save: false, null, positive_trait: true, is_valid_starter_trait: true);
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.maxAttribute.Id, MooTuning.STANDARD_STOMACH_SIZE, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.deltaAttribute.Id, (0f - MooTuning.STANDARD_CALORIES_PER_CYCLE) / 600f, name));
@@ -34,12 +34,22 @@ public class MooConfig : IEntityConfig
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Age.maxAttribute.Id, 75f, name));
 		HashSet<Tag> hashSet = new HashSet<Tag>();
 		hashSet.Add("GasGrass".ToTag());
-		Diet diet = new Diet(new Diet.Info(hashSet, POOP_ELEMENT, CALORIES_PER_DAY_OF_PLANT_EATEN, KG_POOP_PER_DAY_OF_PLANT));
+		Diet.Info[] infos = new Diet.Info[1]
+		{
+			new Diet.Info(hashSet, POOP_ELEMENT, CALORIES_PER_DAY_OF_PLANT_EATEN, KG_POOP_PER_DAY_OF_PLANT)
+		};
+		Diet diet = new Diet(infos);
 		CreatureCalorieMonitor.Def def = gameObject.AddOrGetDef<CreatureCalorieMonitor.Def>();
 		def.diet = diet;
 		def.minPoopSizeInCalories = MIN_POOP_SIZE_IN_CALORIES;
-		gameObject.AddOrGetDef<SolidConsumerMonitor.Def>().diet = diet;
+		SolidConsumerMonitor.Def def2 = gameObject.AddOrGetDef<SolidConsumerMonitor.Def>();
+		def2.diet = diet;
 		return gameObject;
+	}
+
+	public string GetDlcId()
+	{
+		return "";
 	}
 
 	public GameObject CreatePrefab()

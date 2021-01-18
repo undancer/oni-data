@@ -12,24 +12,24 @@ public class WireBridgeHighWattageConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef(GetID(), 1, 1, "heavywatttile_kanim", 100, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.HighWattBridgeTile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER5);
-		BuildingTemplates.CreateFoundationTileDef(obj);
-		obj.Overheatable = false;
-		obj.UseStructureTemperature = false;
-		obj.Floodable = false;
-		obj.Entombable = false;
-		obj.ViewMode = OverlayModes.Power.ID;
-		obj.AudioCategory = "Metal";
-		obj.AudioSize = "small";
-		obj.BaseTimeUntilRepair = -1f;
-		obj.PermittedRotations = PermittedRotations.R360;
-		obj.UtilityInputOffset = new CellOffset(0, 0);
-		obj.UtilityOutputOffset = new CellOffset(0, 2);
-		obj.ObjectLayer = ObjectLayer.Building;
-		obj.SceneLayer = Grid.SceneLayer.WireBridgesFront;
-		obj.ForegroundLayer = Grid.SceneLayer.TileMain;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(GetID(), 1, 1, "heavywatttile_kanim", 100, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.HighWattBridgeTile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER5);
+		BuildingTemplates.CreateFoundationTileDef(buildingDef);
+		buildingDef.Overheatable = false;
+		buildingDef.UseStructureTemperature = false;
+		buildingDef.Floodable = false;
+		buildingDef.Entombable = false;
+		buildingDef.ViewMode = OverlayModes.Power.ID;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.AudioSize = "small";
+		buildingDef.BaseTimeUntilRepair = -1f;
+		buildingDef.PermittedRotations = PermittedRotations.R360;
+		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
+		buildingDef.UtilityOutputOffset = new CellOffset(0, 2);
+		buildingDef.ObjectLayer = ObjectLayer.Building;
+		buildingDef.SceneLayer = Grid.SceneLayer.WireBridgesFront;
+		buildingDef.ForegroundLayer = Grid.SceneLayer.TileMain;
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.WireIDs, "WireBridgeHighWattage");
-		return obj;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -40,27 +40,31 @@ public class WireBridgeHighWattageConfig : IBuildingConfig
 		simCellOccupier.doReplaceElement = true;
 		simCellOccupier.movementSpeedMultiplier = DUPLICANTSTATS.MOVEMENT.PENALTY_3;
 		simCellOccupier.notifyOnMelt = true;
-		go.AddOrGet<BuildingHP>().destroyOnDamaged = true;
+		BuildingHP buildingHP = go.AddOrGet<BuildingHP>();
+		buildingHP.destroyOnDamaged = true;
 		go.AddOrGet<TileTemperature>();
 	}
 
 	public override void DoPostConfigurePreview(BuildingDef def, GameObject go)
 	{
 		base.DoPostConfigurePreview(def, go);
-		AddNetworkLink(go).visualizeOnly = true;
+		WireUtilityNetworkLink wireUtilityNetworkLink = AddNetworkLink(go);
+		wireUtilityNetworkLink.visualizeOnly = true;
 		go.AddOrGet<BuildingCellVisualizer>();
 	}
 
 	public override void DoPostConfigureUnderConstruction(GameObject go)
 	{
 		base.DoPostConfigureUnderConstruction(go);
-		AddNetworkLink(go).visualizeOnly = true;
+		WireUtilityNetworkLink wireUtilityNetworkLink = AddNetworkLink(go);
+		wireUtilityNetworkLink.visualizeOnly = true;
 		go.AddOrGet<BuildingCellVisualizer>();
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		AddNetworkLink(go).visualizeOnly = false;
+		WireUtilityNetworkLink wireUtilityNetworkLink = AddNetworkLink(go);
+		wireUtilityNetworkLink.visualizeOnly = false;
 		go.GetComponent<KPrefabID>().AddTag(GameTags.WireBridges);
 		go.AddOrGet<BuildingCellVisualizer>();
 	}

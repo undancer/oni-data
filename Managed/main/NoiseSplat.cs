@@ -177,7 +177,8 @@ public class NoiseSplat : IUniformGridObject
 		{
 			num = 0f;
 		}
-		return Mathf.Round((float)dB - (float)dB * num * 0.05f);
+		float f = (float)dB - (float)dB * num * 0.05f;
+		return Mathf.Round(f);
 	}
 
 	private void RemoveNoise()

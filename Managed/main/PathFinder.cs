@@ -29,7 +29,8 @@ public class PathFinder
 			None = 0x0,
 			HasAtmoSuit = 0x1,
 			HasJetPack = 0x2,
-			PerformSuitChecks = 0x4
+			HasOxygenMask = 0x4,
+			PerformSuitChecks = 0x8
 		}
 
 		public int cell;
@@ -96,20 +97,12 @@ public class PathFinder
 
 		public bool IsValid()
 		{
-			if (nodes != null)
-			{
-				return nodes.Count > 1;
-			}
-			return false;
+			return nodes != null && nodes.Count > 1;
 		}
 
 		public bool HasArrived()
 		{
-			if (nodes != null)
-			{
-				return nodes.Count > 0;
-			}
-			return false;
+			return nodes != null && nodes.Count > 0;
 		}
 
 		public void Clear()
@@ -179,12 +172,13 @@ public class PathFinder
 				while (pos > 0)
 				{
 					int num = (pos - 1) / 2;
-					if (_baseHeap[num].Key - _baseHeap[pos].Key <= 0)
+					if (_baseHeap[num].Key - _baseHeap[pos].Key > 0)
 					{
-						break;
+						ExchangeElements(num, pos);
+						pos = num;
+						continue;
 					}
-					ExchangeElements(num, pos);
-					pos = num;
+					break;
 				}
 				return pos;
 			}
@@ -371,7 +365,7 @@ public class PathFinder
 
 	public static void Initialize()
 	{
-		NavType[] array = new NavType[10];
+		NavType[] array = new NavType[11];
 		for (int i = 0; i < array.Length; i++)
 		{
 			array[i] = (NavType)i;
@@ -595,9 +589,9 @@ public class PathFinder
 			if (is_cell_in_range)
 			{
 				int num4 = cost + link3.cost;
-				bool num5 = cell.cost == -1;
-				bool flag = num4 < cell.cost;
-				if (num5 || flag)
+				bool flag = cell.cost == -1;
+				bool flag2 = num4 < cell.cost;
+				if (flag || flag2)
 				{
 					linksInCellRange[num3++] = new PotentialScratchPad.PathGridCellData
 					{
@@ -610,37 +604,40 @@ public class PathFinder
 		for (int j = 0; j < num3; j++)
 		{
 			PotentialScratchPad.PathGridCellData pathGridCellData = linksInCellRange[j];
-			int link5 = pathGridCellData.link.link;
-			pathGridCellData.isSubmerged = IsSubmerged(link5);
+			NavGrid.Link link5 = pathGridCellData.link;
+			int link6 = link5.link;
+			pathGridCellData.isSubmerged = IsSubmerged(link6);
 			linksInCellRange[j] = pathGridCellData;
 		}
 		for (int k = 0; k < num3; k++)
 		{
 			PotentialScratchPad.PathGridCellData pathGridCellData2 = linksInCellRange[k];
-			NavGrid.Link link6 = pathGridCellData2.link;
-			int link7 = link6.link;
+			NavGrid.Link link7 = pathGridCellData2.link;
+			int link8 = link7.link;
 			Cell cell_data = pathGridCellData2.pathGridCell;
-			int num6 = cost + link6.cost;
+			int num5 = cost + link7.cost;
 			PotentialPath path = potential;
-			path.cell = link7;
-			path.navType = link6.endNavType;
-			int num7 = underwater_cost;
+			path.cell = link8;
+			path.navType = link7.endNavType;
+			int num6 = underwater_cost;
 			if (pathGridCellData2.isSubmerged)
 			{
-				num7 = underwater_cost + 1;
-				int submergedPathCostPenalty = abilities.GetSubmergedPathCostPenalty(path, link6);
-				num6 += submergedPathCostPenalty;
+				num6 = underwater_cost + 1;
+				int submergedPathCostPenalty = abilities.GetSubmergedPathCostPenalty(path, link7);
+				num5 += submergedPathCostPenalty;
 			}
 			else
 			{
-				num7 = 0;
+				num6 = 0;
 			}
 			PotentialPath.Flags flags = path.flags;
-			bool num8 = abilities.TraversePath(ref path, potential.cell, potential.navType, num6, link6.transitionId, num7);
-			_ = path.flags;
-			if (num8)
+			bool flag3 = abilities.TraversePath(ref path, potential.cell, potential.navType, num5, link7.transitionId, num6);
+			if (path.flags != flags)
 			{
-				AddPotential(path, potential.cell, potential.navType, num6, num7, link6.transitionId, potentials, path_grid, ref cell_data);
+			}
+			if (flag3)
+			{
+				AddPotential(path, potential.cell, potential.navType, num5, num6, link7.transitionId, potentials, path_grid, ref cell_data);
 			}
 		}
 	}

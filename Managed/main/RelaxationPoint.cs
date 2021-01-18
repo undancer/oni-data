@@ -33,11 +33,11 @@ public class RelaxationPoint : Workable, IGameObjectEffectDescriptor
 	private RoomTracker roomTracker;
 
 	[Serialize]
-	protected float stopStressingValue;
+	protected float stopStressingValue = 0f;
 
-	public float stressModificationValue;
+	public float stressModificationValue = 0f;
 
-	public float roomStressModificationValue;
+	public float roomStressModificationValue = 0f;
 
 	private RelaxationPointSM.Instance smi;
 
@@ -103,7 +103,8 @@ public class RelaxationPoint : Workable, IGameObjectEffectDescriptor
 
 	protected override bool OnWorkTick(Worker worker, float dt)
 	{
-		if (Db.Get().Amounts.Stress.Lookup(worker.gameObject).value <= stopStressingValue)
+		AmountInstance amountInstance = Db.Get().Amounts.Stress.Lookup(worker.gameObject);
+		if (amountInstance.value <= stopStressingValue)
 		{
 			return true;
 		}

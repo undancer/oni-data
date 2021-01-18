@@ -54,7 +54,7 @@ public class KFMOD
 	{
 		try
 		{
-			_ = RuntimeManager.StudioSystem;
+			FMOD.Studio.System studioSystem = RuntimeManager.StudioSystem;
 			didFmodInitializeSuccessfully = RuntimeManager.IsInitialized;
 		}
 		catch (Exception ex)
@@ -72,7 +72,8 @@ public class KFMOD
 
 	public static void PlayOneShot(string sound, Vector3 position, float volume = 1f)
 	{
-		EndOneShot(BeginOneShot(sound, position, volume));
+		EventInstance instance = BeginOneShot(sound, position, volume);
+		EndOneShot(instance);
 	}
 
 	public static void PlayUISound(string sound)
@@ -89,11 +90,15 @@ public class KFMOD
 		EventInstance result = CreateInstance(sound);
 		if (!result.isValid())
 		{
-			_ = KFMODDebugger.instance != null;
+			if (KFMODDebugger.instance != null)
+			{
+			}
 			return result;
 		}
 		Vector3 pos = new Vector3(position.x, position.y, position.z);
-		_ = KFMODDebugger.instance != null;
+		if (KFMODDebugger.instance != null)
+		{
+		}
 		ATTRIBUTES_3D attributes = pos.To3DAttributes();
 		result.set3DAttributes(attributes);
 		result.setVolume(volume);
@@ -135,9 +140,9 @@ public class KFMOD
 		sound.description = soundEventDescription;
 		OneShotSoundParameterUpdater.Sound sound2 = sound;
 		OneShotSoundParameterUpdater[] oneShotParameterUpdaters = soundEventDescription.oneShotParameterUpdaters;
-		for (int i = 0; i < oneShotParameterUpdaters.Length; i++)
+		foreach (OneShotSoundParameterUpdater oneShotSoundParameterUpdater in oneShotParameterUpdaters)
 		{
-			oneShotParameterUpdaters[i].Play(sound2);
+			oneShotSoundParameterUpdater.Play(sound2);
 		}
 		return eventInstance;
 	}

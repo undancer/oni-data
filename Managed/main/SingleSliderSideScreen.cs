@@ -19,11 +19,7 @@ public class SingleSliderSideScreen : SideScreenContent
 	public override bool IsValidForTarget(GameObject target)
 	{
 		KPrefabID component = target.GetComponent<KPrefabID>();
-		if (target.GetComponent<ISingleSliderControl>() != null && !component.HasTag("HydrogenGenerator".ToTag()) && !component.HasTag("MethaneGenerator".ToTag()) && !component.HasTag("PetroleumGenerator".ToTag()))
-		{
-			return !component.HasTag("DevGenerator".ToTag());
-		}
-		return false;
+		return target.GetComponent<ISingleSliderControl>() != null && !component.HasTag("HydrogenGenerator".ToTag()) && !component.HasTag("MethaneGenerator".ToTag()) && !component.HasTag("PetroleumGenerator".ToTag()) && !component.HasTag("DevGenerator".ToTag());
 	}
 
 	public override void SetTarget(GameObject new_target)

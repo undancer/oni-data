@@ -7,7 +7,7 @@ using UnityEngine;
 [SerializationConfig(MemberSerialization.OptIn)]
 public struct Tag : ISerializationCallbackReceiver, IEquatable<Tag>, IComparable<Tag>
 {
-	public static readonly Tag Invalid;
+	public static readonly Tag Invalid = default(Tag);
 
 	[Serialize]
 	[SerializeField]
@@ -109,11 +109,7 @@ public struct Tag : ISerializationCallbackReceiver, IEquatable<Tag>, IComparable
 
 	public override string ToString()
 	{
-		if (name == null)
-		{
-			return hash.ToString("X");
-		}
-		return name;
+		return (name != null) ? name : hash.ToString("X");
 	}
 
 	public static implicit operator Tag(string s)

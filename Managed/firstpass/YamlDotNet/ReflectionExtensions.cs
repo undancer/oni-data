@@ -36,11 +36,7 @@ namespace YamlDotNet
 
 		public static bool HasDefaultConstructor(this Type type)
 		{
-			if (!type.IsValueType)
-			{
-				return type.GetConstructor(BindingFlags.Instance | BindingFlags.Public, null, Type.EmptyTypes, null) != null;
-			}
-			return true;
+			return type.IsValueType || type.GetConstructor(BindingFlags.Instance | BindingFlags.Public, null, Type.EmptyTypes, null) != null;
 		}
 
 		public static TypeCode GetTypeCode(this Type type)
@@ -56,14 +52,20 @@ namespace YamlDotNet
 		public static IEnumerable<PropertyInfo> GetPublicProperties(this Type type)
 		{
 			BindingFlags instancePublic = BindingFlags.Instance | BindingFlags.Public;
+			IEnumerable<PropertyInfo> result;
 			if (!type.IsInterface)
 			{
-				return type.GetProperties(instancePublic);
+				IEnumerable<PropertyInfo> properties = type.GetProperties(instancePublic);
+				result = properties;
 			}
-			return new Type[1]
+			else
 			{
-				type
-			}.Concat(type.GetInterfaces()).SelectMany((Type i) => i.GetProperties(instancePublic));
+				result = new Type[1]
+				{
+					type
+				}.Concat(type.GetInterfaces()).SelectMany((Type i) => i.GetProperties(instancePublic));
+			}
+			return result;
 		}
 
 		public static IEnumerable<MethodInfo> GetPublicStaticMethods(this Type type)

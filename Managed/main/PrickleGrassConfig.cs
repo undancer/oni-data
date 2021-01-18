@@ -13,6 +13,11 @@ public class PrickleGrassConfig : IEntityConfig
 
 	public static readonly EffectorValues NEGATIVE_DECOR_EFFECT = DECOR.PENALTY.TIER3;
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("PrickleGrass", STRINGS.CREATURES.SPECIES.PRICKLEGRASS.NAME, STRINGS.CREATURES.SPECIES.PRICKLEGRASS.DESC, 1f, decor: POSITIVE_DECOR_EFFECT, anim: Assets.GetAnim("bristlebriar_kanim"), initialAnim: "grow_seed", sceneLayer: Grid.SceneLayer.BuildingFront, width: 1, height: 1);
@@ -25,10 +30,11 @@ public class PrickleGrassConfig : IEntityConfig
 		PrickleGrass prickleGrass = gameObject.AddOrGet<PrickleGrass>();
 		prickleGrass.positive_decor_effect = POSITIVE_DECOR_EFFECT;
 		prickleGrass.negative_decor_effect = NEGATIVE_DECOR_EFFECT;
-		EntityTemplates.CreateAndRegisterPreviewForPlant(EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Hidden, "PrickleGrassSeed", STRINGS.CREATURES.SPECIES.SEEDS.PRICKLEGRASS.NAME, STRINGS.CREATURES.SPECIES.SEEDS.PRICKLEGRASS.DESC, Assets.GetAnim("seed_bristlebriar_kanim"), "object", 1, new List<Tag>
+		GameObject seed = EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Hidden, "PrickleGrassSeed", STRINGS.CREATURES.SPECIES.SEEDS.PRICKLEGRASS.NAME, STRINGS.CREATURES.SPECIES.SEEDS.PRICKLEGRASS.DESC, Assets.GetAnim("seed_bristlebriar_kanim"), "object", 1, new List<Tag>
 		{
 			GameTags.DecorSeed
-		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 5, STRINGS.CREATURES.SPECIES.PRICKLEGRASS.DOMESTICATEDDESC), "PrickleGrass_preview", Assets.GetAnim("bristlebriar_kanim"), "place", 1, 1);
+		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 5, STRINGS.CREATURES.SPECIES.PRICKLEGRASS.DOMESTICATEDDESC);
+		EntityTemplates.CreateAndRegisterPreviewForPlant(seed, "PrickleGrass_preview", Assets.GetAnim("bristlebriar_kanim"), "place", 1, 1);
 		gameObject.AddOrGet<KBatchedAnimController>().randomiseLoopedOffset = true;
 		return gameObject;
 	}

@@ -106,8 +106,8 @@ public class StarmapPlanet : KMonoBehaviour
 			RectTransform rectTransform = visualizer.rocketIconContainer.rectTransform();
 			if (rectTransform.childCount > 0)
 			{
-				rectTransform.GetChild(rectTransform.childCount - 1).GetComponent<HierarchyReferences>().GetReference<Image>("fg")
-					.color = (show ? new Color(0.11764706f, 44f / 51f, 16f / 51f) : Color.white);
+				HierarchyReferences component = rectTransform.GetChild(rectTransform.childCount - 1).GetComponent<HierarchyReferences>();
+				component.GetReference<Image>("fg").color = (show ? new Color(0.11764706f, 44f / 51f, 16f / 51f) : Color.white);
 			}
 		}
 	}

@@ -24,20 +24,16 @@ public class DiggerStates : GameStateMachine<DiggerStates, DiggerStates.Instance
 
 	public State behaviourcomplete;
 
-	private static float GetHideDuration()
+	private static bool ShouldStopHiding(Instance smi)
 	{
-		if (SaveGame.Instance != null && SaveGame.Instance.GetComponent<SeasonManager>() != null)
-		{
-			return SaveGame.Instance.GetComponent<SeasonManager>().GetBombardmentDuration();
-		}
-		return 0f;
+		return !GameplayEventManager.Instance.IsGameplayEventRunningWithTag(GameTags.SpaceDanger);
 	}
 
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = move;
 		move.MoveTo((Instance smi) => smi.GetTunnelCell(), hide, behaviourcomplete);
-		hide.ScheduleGoTo(GetHideDuration(), behaviourcomplete);
+		hide.Transition(behaviourcomplete, ShouldStopHiding, UpdateRate.SIM_4000ms);
 		behaviourcomplete.BehaviourComplete(GameTags.Creatures.Tunnel);
 	}
 }

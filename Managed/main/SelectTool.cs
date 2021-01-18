@@ -1,4 +1,3 @@
-using System.Collections;
 using FMOD.Studio;
 using UnityEngine;
 
@@ -18,7 +17,7 @@ public class SelectTool : InterfaceTool
 
 	private bool delayedSkipSound;
 
-	private KSelectable previousSelection;
+	private KSelectable previousSelection = null;
 
 	public static void DestroyInstance()
 	{
@@ -74,7 +73,8 @@ public class SelectTool : InterfaceTool
 		}
 		pos.z = -40f;
 		pos += offset;
-		CameraController.Instance.SetTargetPos(pos, 8f, playSound: true);
+		WorldContainer worldFromPosition = ClusterManager.Instance.GetWorldFromPosition(pos);
+		CameraController.Instance.ActiveWorldStarWipe(worldFromPosition.id, pos);
 	}
 
 	public void SelectAndFocus(Vector3 pos, KSelectable selectable, Vector3 offset)
@@ -92,12 +92,11 @@ public class SelectTool : InterfaceTool
 	{
 		delayedNextSelection = new_selected;
 		delayedSkipSound = skipSound;
-		StartCoroutine(DoSelectNextFrame());
+		UIScheduler.Instance.ScheduleNextFrame("DelayedSelect", DoSelectNextFrame);
 	}
 
-	private IEnumerator DoSelectNextFrame()
+	private void DoSelectNextFrame(object data)
 	{
-		yield return null;
 		Select(delayedNextSelection, delayedSkipSound);
 		delayedNextSelection = null;
 	}
@@ -114,7 +113,7 @@ public class SelectTool : InterfaceTool
 			selected.Unselect();
 		}
 		GameObject gameObject = null;
-		if (new_selected != null)
+		if (new_selected != null && new_selected.GetMyWorldId() == ClusterManager.Instance.activeWorldId)
 		{
 			SelectToolHoverTextCard component = GetComponent<SelectToolHoverTextCard>();
 			if (component != null)
@@ -153,7 +152,7 @@ public class SelectTool : InterfaceTool
 		{
 			selectMarker.gameObject.SetActive(value: false);
 		}
-		selected = new_selected;
+		selected = ((gameObject == null) ? null : new_selected);
 		Game.Instance.Trigger(-1503271301, gameObject);
 	}
 

@@ -95,7 +95,7 @@ public class GroupSelectorHeaderWidget : MonoBehaviour
 			foreach (int item in list)
 			{
 				int idx = item;
-				_ = options[idx];
+				GroupSelectorWidget.ItemData itemData = options[idx];
 				GameObject gameObject = Util.KInstantiateUI(itemTemplate, itemsPanel.gameObject, force_active: true);
 				KButton component = gameObject.GetComponent<KButton>();
 				component.fgImage.sprite = options[idx].sprite;
@@ -106,10 +106,12 @@ public class GroupSelectorHeaderWidget : MonoBehaviour
 				};
 				if (get_item_hover_text != null)
 				{
-					gameObject.GetComponent<ToolTip>().OnToolTip = () => get_item_hover_text(widgetID, options[idx].userData);
+					ToolTip component2 = gameObject.GetComponent<ToolTip>();
+					component2.OnToolTip = () => get_item_hover_text(widgetID, options[idx].userData);
 				}
 			}
-			itemsPanel.GetComponent<GridLayoutGroup>().constraintCount = Mathf.Min(numExpectedPanelColumns, itemsPanel.childCount);
+			GridLayoutGroup component3 = itemsPanel.GetComponent<GridLayoutGroup>();
+			component3.constraintCount = Mathf.Min(numExpectedPanelColumns, itemsPanel.childCount);
 			itemsPanel.gameObject.SetActive(value: true);
 			itemsPanel.GetComponent<Selectable>().Select();
 		}

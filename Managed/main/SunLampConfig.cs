@@ -7,7 +7,7 @@ public class SunLampConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("SunLamp", 2, 4, "sun_lamp_kanim", 10, 60f, new float[2]
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("SunLamp", 2, 4, "sun_lamp_kanim", 10, 60f, new float[2]
 		{
 			200f,
 			50f
@@ -16,13 +16,13 @@ public class SunLampConfig : IBuildingConfig
 			"RefinedMetal",
 			"Glass"
 		}, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER3);
-		obj.RequiresPowerInput = true;
-		obj.EnergyConsumptionWhenActive = 960f;
-		obj.SelfHeatKilowattsWhenActive = 4f;
-		obj.ExhaustKilowattsWhenActive = 1f;
-		obj.ViewMode = OverlayModes.Light.ID;
-		obj.AudioCategory = "Metal";
-		return obj;
+		buildingDef.RequiresPowerInput = true;
+		buildingDef.EnergyConsumptionWhenActive = 960f;
+		buildingDef.SelfHeatKilowattsWhenActive = 4f;
+		buildingDef.ExhaustKilowattsWhenActive = 1f;
+		buildingDef.ViewMode = OverlayModes.Light.ID;
+		buildingDef.AudioCategory = "Metal";
+		return buildingDef;
 	}
 
 	public override void DoPostConfigurePreview(BuildingDef def, GameObject go)

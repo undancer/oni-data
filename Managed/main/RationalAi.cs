@@ -56,11 +56,12 @@ public class RationalAi : GameStateMachine<RationalAi, RationalAi.Instance>
 			.ToggleStateMachine((Instance smi) => new RedAlertMonitor.Instance(smi.master))
 			.ToggleStateMachine((Instance smi) => new CringeMonitor.Instance(smi.master))
 			.ToggleStateMachine((Instance smi) => new HygieneMonitor.Instance(smi.master))
-			.ToggleStateMachine((Instance smi) => new FallMonitor.Instance(smi.master))
+			.ToggleStateMachine((Instance smi) => new FallMonitor.Instance(smi.master, shouldPlayEmotes: true))
 			.ToggleStateMachine((Instance smi) => new ThreatMonitor.Instance(smi.master, new ThreatMonitor.Def()))
 			.ToggleStateMachine((Instance smi) => new WoundMonitor.Instance(smi.master))
 			.ToggleStateMachine((Instance smi) => new TiredMonitor.Instance(smi.master))
 			.ToggleStateMachine((Instance smi) => new MoveToLocationMonitor.Instance(smi.master))
+			.ToggleStateMachine((Instance smi) => new RocketPassengerMonitor.Instance(smi.master))
 			.ToggleStateMachine((Instance smi) => new ReactionMonitor.Instance(smi.master))
 			.ToggleStateMachine((Instance smi) => new SuitWearer.Instance(smi.master))
 			.ToggleStateMachine((Instance smi) => new TubeTraveller.Instance(smi.master))
@@ -68,7 +69,10 @@ public class RationalAi : GameStateMachine<RationalAi, RationalAi.Instance>
 			.ToggleStateMachine((Instance smi) => new MournMonitor.Instance(smi.master))
 			.ToggleStateMachine((Instance smi) => new SpeechMonitor.Instance(smi.master, new SpeechMonitor.Def()))
 			.ToggleStateMachine((Instance smi) => new BlinkMonitor.Instance(smi.master, new BlinkMonitor.Def()))
-			.ToggleStateMachine((Instance smi) => new ConversationMonitor.Instance(smi.master, new ConversationMonitor.Def()));
+			.ToggleStateMachine((Instance smi) => new ConversationMonitor.Instance(smi.master, new ConversationMonitor.Def()))
+			.ToggleStateMachine((Instance smi) => new CoughMonitor.Instance(smi.master, new CoughMonitor.Def()))
+			.ToggleStateMachine((Instance smi) => new GameplayEventMonitor.Instance(smi.master, new GameplayEventMonitor.Def()))
+			.ToggleStateMachine((Instance smi) => new GasLiquidExposureMonitor.Instance(smi.master, new GasLiquidExposureMonitor.Def()));
 		dead.ToggleStateMachine((Instance smi) => new FallWhenDeadMonitor.Instance(smi.master)).ToggleBrain("dead").Enter("RefreshUserMenu", delegate(Instance smi)
 		{
 			smi.RefreshUserMenu();

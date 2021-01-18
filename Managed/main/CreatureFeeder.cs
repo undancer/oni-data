@@ -26,7 +26,8 @@ public class CreatureFeeder : KMonoBehaviour
 	{
 		if (!string.IsNullOrEmpty(effectId))
 		{
-			(data as GameObject).GetComponent<Effects>().Add(effectId, should_save: true);
+			GameObject gameObject = data as GameObject;
+			gameObject.GetComponent<Effects>().Add(effectId, should_save: true);
 		}
 	}
 }

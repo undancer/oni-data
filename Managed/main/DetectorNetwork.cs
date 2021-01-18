@@ -47,7 +47,7 @@ public class DetectorNetwork : GameStateMachine<DetectorNetwork, DetectorNetwork
 	{
 		private float closestMachinery = float.MaxValue;
 
-		private int visibleSkyCells;
+		private int visibleSkyCells = 0;
 
 		public Instance(IStateMachineTarget master, Def def)
 			: base(master, def)
@@ -140,7 +140,8 @@ public class DetectorNetwork : GameStateMachine<DetectorNetwork, DetectorNetwork
 		public MathUtil.MinMax GetDetectTimeRange()
 		{
 			float t = ComputeTotalDishQuality();
-			return new MathUtil.MinMax(Mathf.Lerp(base.def.worstWarningTime, base.def.bestWarningTime, t), base.def.bestWarningTime);
+			float min = Mathf.Lerp(base.def.worstWarningTime, base.def.bestWarningTime, t);
+			return new MathUtil.MinMax(min, base.def.bestWarningTime);
 		}
 	}
 

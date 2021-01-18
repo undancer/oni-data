@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class KInputField : KScreen
 {
-	private bool isEditing;
-
 	[SerializeField]
 	private TMP_InputField inputField;
 
@@ -29,7 +27,7 @@ public class KInputField : KScreen
 
 	private void OnEditStart()
 	{
-		isEditing = true;
+		base.isEditing = true;
 		inputField.Select();
 		inputField.ActivateInputField();
 		KScreenManager.Instance.RefreshStack();
@@ -54,7 +52,7 @@ public class KInputField : KScreen
 
 	private IEnumerator DelayedEndEdit()
 	{
-		if (isEditing)
+		if (base.isEditing)
 		{
 			yield return new WaitForEndOfFrame();
 			StopEditing();
@@ -63,7 +61,7 @@ public class KInputField : KScreen
 
 	private void StopEditing()
 	{
-		isEditing = false;
+		base.isEditing = false;
 		inputField.DeactivateInputField();
 		if (this.onEndEdit != null)
 		{
@@ -79,26 +77,5 @@ public class KInputField : KScreen
 	public void SetDisplayValue(string input)
 	{
 		inputField.text = input;
-	}
-
-	public override void OnKeyDown(KButtonEvent e)
-	{
-		if (isEditing)
-		{
-			e.Consumed = true;
-		}
-		else
-		{
-			base.OnKeyDown(e);
-		}
-	}
-
-	public override float GetSortKey()
-	{
-		if (isEditing)
-		{
-			return 10f;
-		}
-		return base.GetSortKey();
 	}
 }

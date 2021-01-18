@@ -8,7 +8,7 @@ public class SoundEvent : AnimEvent
 {
 	public static int IGNORE_INTERVAL = -1;
 
-	protected bool isDynamic;
+	protected bool isDynamic = false;
 
 	public string sound
 	{
@@ -70,9 +70,8 @@ public class SoundEvent : AnimEvent
 		{
 			sound = GlobalAssets.GetSound(sound_name);
 			soundHash = new HashedString(sound);
-			if (sound != null)
+			if (sound != null && !(sound == ""))
 			{
-				_ = sound == "";
 			}
 		}
 		minInterval = min_interval;
@@ -121,6 +120,10 @@ public class SoundEvent : AnimEvent
 		Vector3 offset = controller.Offset;
 		position.x += offset.x;
 		position.y += offset.y;
+		if (!SoundCuller.IsAudibleWorld(position))
+		{
+			return false;
+		}
 		SpeedControlScreen instance2 = SpeedControlScreen.Instance;
 		if (is_dynamic)
 		{
@@ -166,7 +169,8 @@ public class SoundEvent : AnimEvent
 	{
 		Vector3 vector = behaviour.GetComponent<Transform>().GetPosition();
 		vector.z = 0f;
-		if (ObjectIsSelectedAndVisible(behaviour.controller.gameObject))
+		GameObject gameObject = behaviour.controller.gameObject;
+		if (ObjectIsSelectedAndVisible(gameObject))
 		{
 			vector = AudioHighlightListenerPosition(vector);
 		}

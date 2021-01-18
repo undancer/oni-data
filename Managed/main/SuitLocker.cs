@@ -74,13 +74,15 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 			Equipment equipment = worker.GetComponent<MinionIdentity>().GetEquipment();
 			if (equipment.IsSlotOccupied(Db.Get().AssignableSlots.Suit))
 			{
-				if (GetComponent<SuitLocker>().CanDropOffSuit())
+				SuitLocker component = GetComponent<SuitLocker>();
+				if (component.CanDropOffSuit())
 				{
 					GetComponent<SuitLocker>().UnequipFrom(equipment);
 				}
 				else
 				{
-					equipment.GetAssignable(Db.Get().AssignableSlots.Suit).Unassign();
+					Assignable assignable = equipment.GetAssignable(Db.Get().AssignableSlots.Suit);
+					assignable.Unassign();
 				}
 			}
 			if (urgentChore != null)
@@ -106,7 +108,8 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 				description = DUPLICANTS.CHORES.PRECONDITIONS.HAS_SUIT_MARKER,
 				fn = delegate(ref Chore.Precondition.Context context, object data)
 				{
-					return ((SuitLocker)data).suitMarkerState == SuitMarkerState.HasMarker;
+					SuitLocker suitLocker2 = (SuitLocker)data;
+					return suitLocker2.suitMarkerState == SuitMarkerState.HasMarker;
 				}
 			};
 			HasSuitMarker = hasSuitMarker;
@@ -117,14 +120,19 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 				fn = delegate(ref Chore.Precondition.Context context, object data)
 				{
 					SuitLocker suitLocker = (SuitLocker)data;
-					AssignableSlotInstance slot = context.consumerState.equipment.GetSlot(Db.Get().AssignableSlots.Suit);
+					Equipment equipment = context.consumerState.equipment;
+					if (equipment == null)
+					{
+						return false;
+					}
+					AssignableSlotInstance slot = equipment.GetSlot(Db.Get().AssignableSlots.Suit);
 					if (slot.assignable == null)
 					{
 						return false;
 					}
-					bool num = slot.assignable.GetComponent<JetSuitTank>() != null;
-					bool flag = suitLocker.GetComponent<JetSuitLocker>() != null;
-					return num == flag;
+					bool flag = slot.assignable.GetComponent<JetSuitTank>() != null;
+					bool flag2 = suitLocker.GetComponent<JetSuitLocker>() != null;
+					return flag == flag2;
 				}
 			});
 			base._002Ector();
@@ -138,26 +146,40 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 				description = DUPLICANTS.CHORES.PRECONDITIONS.DOES_SUIT_NEED_RECHARGING_URGENT,
 				fn = delegate(ref Chore.Precondition.Context context, object data)
 				{
-					AssignableSlotInstance slot2 = context.consumerState.equipment.GetSlot(Db.Get().AssignableSlots.Suit);
+					Equipment equipment2 = context.consumerState.equipment;
+					if (equipment2 == null)
+					{
+						return false;
+					}
+					AssignableSlotInstance slot2 = equipment2.GetSlot(Db.Get().AssignableSlots.Suit);
 					if (slot2.assignable == null)
 					{
 						return false;
 					}
-					SuitTank component = slot2.assignable.GetComponent<SuitTank>();
-					if (component == null)
-					{
-						return false;
-					}
-					if (component.NeedsRecharging())
-					{
-						return true;
-					}
-					JetSuitTank component2 = slot2.assignable.GetComponent<JetSuitTank>();
+					SuitTank component2 = slot2.assignable.GetComponent<SuitTank>();
 					if (component2 == null)
 					{
 						return false;
 					}
-					return component2.NeedsRecharging() ? true : false;
+					if (component2.NeedsRecharging())
+					{
+						return true;
+					}
+					JetSuitTank component3 = slot2.assignable.GetComponent<JetSuitTank>();
+					if (component3 == null)
+					{
+						return false;
+					}
+					if (component3.NeedsRecharging())
+					{
+						return true;
+					}
+					LeadSuitTank component4 = slot2.assignable.GetComponent<LeadSuitTank>();
+					if (component4 == null)
+					{
+						return false;
+					}
+					return component4.NeedsRecharging() ? true : false;
 				}
 			};
 			DoesSuitNeedRechargingUrgent = precondition;
@@ -167,12 +189,18 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 				description = DUPLICANTS.CHORES.PRECONDITIONS.DOES_SUIT_NEED_RECHARGING_IDLE,
 				fn = delegate(ref Chore.Precondition.Context context, object data)
 				{
-					AssignableSlotInstance slot = context.consumerState.equipment.GetSlot(Db.Get().AssignableSlots.Suit);
+					Equipment equipment = context.consumerState.equipment;
+					if (equipment == null)
+					{
+						return false;
+					}
+					AssignableSlotInstance slot = equipment.GetSlot(Db.Get().AssignableSlots.Suit);
 					if (slot.assignable == null)
 					{
 						return false;
 					}
-					return (!(slot.assignable.GetComponent<SuitTank>() == null)) ? true : false;
+					SuitTank component = slot.assignable.GetComponent<SuitTank>();
+					return (!(component == null)) ? true : false;
 				}
 			};
 			DoesSuitNeedRechargingIdle = precondition;
@@ -226,7 +254,7 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = empty;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			root.Update("RefreshMeter", delegate(StatesInstance smi, float dt)
 			{
 				smi.master.RefreshMeter();
@@ -344,20 +372,32 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 
 	private MeterController meter;
 
-	private SuitMarkerState suitMarkerState;
+	private SuitMarkerState suitMarkerState = SuitMarkerState.HasMarker;
 
 	public float OxygenAvailable
 	{
 		get
 		{
-			GameObject oxygen = GetOxygen();
-			float result = 0f;
-			if (oxygen != null)
+			KPrefabID storedOutfit = GetStoredOutfit();
+			if (storedOutfit == null)
 			{
-				result = oxygen.GetComponent<PrimaryElement>().Mass / GetComponent<ConduitConsumer>().capacityKG;
-				result = Math.Min(result, 1f);
+				return 0f;
 			}
-			return result;
+			return storedOutfit.GetComponent<SuitTank>().PercentFull();
+		}
+	}
+
+	public float BatteryAvailable
+	{
+		get
+		{
+			KPrefabID storedOutfit = GetStoredOutfit();
+			if (storedOutfit == null)
+			{
+				return 0f;
+			}
+			LeadSuitTank component = storedOutfit.GetComponent<LeadSuitTank>();
+			return component.batteryCharge;
 		}
 	}
 
@@ -495,6 +535,11 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 			{
 				return false;
 			}
+			LeadSuitTank leadSuitTank = ((storedOutfit != null) ? storedOutfit.GetComponent<LeadSuitTank>() : null);
+			if (leadSuitTank != null && leadSuitTank.PercentFull() < 1f)
+			{
+				return false;
+			}
 			return true;
 		}
 		return false;
@@ -568,11 +613,7 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 
 	public bool CanDropOffSuit()
 	{
-		if (base.smi.sm.isConfigured.Get(base.smi) && !base.smi.sm.isWaitingForSuit.Get(base.smi))
-		{
-			return GetStoredOutfit() == null;
-		}
-		return false;
+		return base.smi.sm.isConfigured.Get(base.smi) && !base.smi.sm.isWaitingForSuit.Get(base.smi) && GetStoredOutfit() == null;
 	}
 
 	private GameObject GetOxygen()
@@ -583,17 +624,20 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 	private void ChargeSuit(float dt)
 	{
 		KPrefabID storedOutfit = GetStoredOutfit();
-		if (!(storedOutfit == null))
+		if (storedOutfit == null)
 		{
-			GameObject oxygen = GetOxygen();
-			if (!(oxygen == null))
+			return;
+		}
+		GameObject oxygen = GetOxygen();
+		if (!(oxygen == null))
+		{
+			SuitTank component = storedOutfit.GetComponent<SuitTank>();
+			float a = component.capacity * 15f * dt / 600f;
+			a = Mathf.Min(a, component.capacity - component.GetTankAmount());
+			a = Mathf.Min(oxygen.GetComponent<PrimaryElement>().Mass, a);
+			if (a > 0f)
 			{
-				SuitTank component = storedOutfit.GetComponent<SuitTank>();
-				float a = component.capacity * 15f * dt / 600f;
-				a = Mathf.Min(a, component.capacity - component.amount);
-				a = Mathf.Min(oxygen.GetComponent<PrimaryElement>().Mass, a);
-				oxygen.GetComponent<PrimaryElement>().Mass -= a;
-				component.amount += a;
+				GetComponent<Storage>().Transfer(component.storage, component.elementTag, a, block_events: false, hide_popups: true);
 			}
 		}
 	}
@@ -646,12 +690,11 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 		while (true)
 		{
 			int cell2 = Grid.OffsetCell(cell, num, 0);
-			if (!Grid.IsValidCell(cell2) || GatherSuitBuildingsOnCell(cell2, suit_lockers, suit_markers))
+			if (Grid.IsValidCell(cell2) && !GatherSuitBuildingsOnCell(cell2, suit_lockers, suit_markers))
 			{
-				num += dir;
-				continue;
+				break;
 			}
-			break;
+			num += dir;
 		}
 	}
 
@@ -738,13 +781,14 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 			for (int j = i + 1; j < pooledList.Count; j++)
 			{
 				SuitLockerEntry suitLockerEntry3 = pooledList[j];
-				if (Grid.CellRight(suitLockerEntry2.cell) != suitLockerEntry3.cell)
+				if (Grid.CellRight(suitLockerEntry2.cell) == suitLockerEntry3.cell)
 				{
-					break;
+					i++;
+					suitLockerEntry2 = suitLockerEntry3;
+					pooledList3.Add(suitLockerEntry3);
+					continue;
 				}
-				i++;
-				suitLockerEntry2 = suitLockerEntry3;
-				pooledList3.Add(suitLockerEntry3);
+				break;
 			}
 			int cell2 = Grid.CellLeft(suitLockerEntry.cell);
 			int cell3 = Grid.CellRight(suitLockerEntry2.cell);

@@ -75,15 +75,18 @@ namespace ProcGen.Noise
 		{
 			if (selectType == SelectType.Blend)
 			{
-				Blend obj = target as Blend;
-				obj.ControlModule = controlModule;
-				obj.RightModule = rightModule;
-				obj.LeftModule = leftModule;
+				Blend blend = target as Blend;
+				blend.ControlModule = controlModule;
+				blend.RightModule = rightModule;
+				blend.LeftModule = leftModule;
 			}
-			Select obj2 = target as Select;
-			obj2.ControlModule = controlModule;
-			obj2.RightModule = rightModule;
-			obj2.LeftModule = leftModule;
+			else if (selectType == SelectType.Select)
+			{
+				Select select = target as Select;
+				select.ControlModule = controlModule;
+				select.RightModule = rightModule;
+				select.LeftModule = leftModule;
+			}
 		}
 	}
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class NavGridUpdater
 {
@@ -14,20 +15,24 @@ public class NavGridUpdater
 
 		private NavGrid.Transition[][] transitionsByNavType;
 
-		public CreateLinkWorkItem(int start_cell, NavTable nav_table, int max_links_per_cell, NavGrid.Link[] links, NavGrid.Transition[][] transitions_by_nav_type)
+		private Dictionary<int, int> teleportTransitions;
+
+		public CreateLinkWorkItem(int start_cell, NavTable nav_table, int max_links_per_cell, NavGrid.Link[] links, NavGrid.Transition[][] transitions_by_nav_type, Dictionary<int, int> teleport_transitions)
 		{
 			startCell = start_cell;
 			navTable = nav_table;
 			maxLinksPerCell = max_links_per_cell;
 			this.links = links;
 			transitionsByNavType = transitions_by_nav_type;
+			teleportTransitions = teleport_transitions;
 		}
 
 		public void Run(object shared_data)
 		{
 			for (int i = 0; i < Grid.WidthInCells; i++)
 			{
-				CreateLinksForCell(startCell + i, navTable, maxLinksPerCell, links, transitionsByNavType);
+				int cell = startCell + i;
+				CreateLinksForCell(cell, navTable, maxLinksPerCell, links, transitionsByNavType, teleportTransitions);
 			}
 		}
 	}
@@ -56,9 +61,9 @@ public class NavGridUpdater
 			{
 				int cell = startCell + i;
 				NavTableValidator[] array = validators;
-				for (int j = 0; j < array.Length; j++)
+				foreach (NavTableValidator navTableValidator in array)
 				{
-					array[j].UpdateCell(cell, navTable, boundingOffsets);
+					navTableValidator.UpdateCell(cell, navTable, boundingOffsets);
 				}
 			}
 		}
@@ -73,55 +78,55 @@ public class NavGridUpdater
 	public static void InitializeNavGrid(NavTable nav_table, NavType[] valid_nav_types, NavTableValidator[] validators, CellOffset[] bounding_offsets, int max_links_per_cell, NavGrid.Link[] links, NavGrid.Transition[][] transitions_by_nav_type)
 	{
 		MarkValidCells(nav_table, valid_nav_types, validators, bounding_offsets);
-		CreateLinks(nav_table, max_links_per_cell, links, transitions_by_nav_type);
+		CreateLinks(nav_table, max_links_per_cell, links, transitions_by_nav_type, new Dictionary<int, int>());
 	}
 
-	public static void UpdateNavGrid(NavTable nav_table, NavType[] valid_nav_types, NavTableValidator[] validators, CellOffset[] bounding_offsets, int max_links_per_cell, NavGrid.Link[] links, NavGrid.Transition[][] transitions_by_nav_type, HashSet<int> dirty_nav_cells)
+	public static void UpdateNavGrid(NavTable nav_table, NavType[] valid_nav_types, NavTableValidator[] validators, CellOffset[] bounding_offsets, int max_links_per_cell, NavGrid.Link[] links, NavGrid.Transition[][] transitions_by_nav_type, Dictionary<int, int> teleport_transitions, HashSet<int> dirty_nav_cells)
 	{
 		UpdateValidCells(dirty_nav_cells, nav_table, valid_nav_types, validators, bounding_offsets);
-		UpdateLinks(dirty_nav_cells, nav_table, max_links_per_cell, links, transitions_by_nav_type);
+		UpdateLinks(dirty_nav_cells, nav_table, max_links_per_cell, links, transitions_by_nav_type, teleport_transitions);
 	}
 
 	private static void UpdateValidCells(HashSet<int> dirty_solid_cells, NavTable nav_table, NavType[] valid_nav_types, NavTableValidator[] validators, CellOffset[] bounding_offsets)
 	{
 		foreach (int dirty_solid_cell in dirty_solid_cells)
 		{
-			for (int i = 0; i < validators.Length; i++)
+			foreach (NavTableValidator navTableValidator in validators)
 			{
-				validators[i].UpdateCell(dirty_solid_cell, nav_table, bounding_offsets);
+				navTableValidator.UpdateCell(dirty_solid_cell, nav_table, bounding_offsets);
 			}
 		}
 	}
 
-	private static void CreateLinksForCell(int cell, NavTable nav_table, int max_links_per_cell, NavGrid.Link[] links, NavGrid.Transition[][] transitions_by_nav_type)
+	private static void CreateLinksForCell(int cell, NavTable nav_table, int max_links_per_cell, NavGrid.Link[] links, NavGrid.Transition[][] transitions_by_nav_type, Dictionary<int, int> teleport_transitions)
 	{
-		CreateLinks(cell, nav_table, max_links_per_cell, links, transitions_by_nav_type);
+		CreateLinks(cell, nav_table, max_links_per_cell, links, transitions_by_nav_type, teleport_transitions);
 	}
 
-	private static void UpdateLinks(HashSet<int> dirty_nav_cells, NavTable nav_table, int max_links_per_cell, NavGrid.Link[] links, NavGrid.Transition[][] transitions_by_nav_type)
+	private static void UpdateLinks(HashSet<int> dirty_nav_cells, NavTable nav_table, int max_links_per_cell, NavGrid.Link[] links, NavGrid.Transition[][] transitions_by_nav_type, Dictionary<int, int> teleport_transitions)
 	{
 		foreach (int dirty_nav_cell in dirty_nav_cells)
 		{
-			CreateLinksForCell(dirty_nav_cell, nav_table, max_links_per_cell, links, transitions_by_nav_type);
+			CreateLinksForCell(dirty_nav_cell, nav_table, max_links_per_cell, links, transitions_by_nav_type, teleport_transitions);
 		}
 	}
 
-	private static void CreateLinks(NavTable nav_table, int max_links_per_cell, NavGrid.Link[] links, NavGrid.Transition[][] transitions_by_nav_type)
+	private static void CreateLinks(NavTable nav_table, int max_links_per_cell, NavGrid.Link[] links, NavGrid.Transition[][] transitions_by_nav_type, Dictionary<int, int> teleport_transitions)
 	{
 		WorkItemCollection<CreateLinkWorkItem, object> workItemCollection = new WorkItemCollection<CreateLinkWorkItem, object>();
 		workItemCollection.Reset(null);
 		for (int i = 0; i < Grid.HeightInCells; i++)
 		{
-			workItemCollection.Add(new CreateLinkWorkItem(Grid.OffsetCell(0, new CellOffset(0, i)), nav_table, max_links_per_cell, links, transitions_by_nav_type));
+			workItemCollection.Add(new CreateLinkWorkItem(Grid.OffsetCell(0, new CellOffset(0, i)), nav_table, max_links_per_cell, links, transitions_by_nav_type, teleport_transitions));
 		}
 		GlobalJobManager.Run(workItemCollection);
 	}
 
-	private static void CreateLinks(int cell, NavTable nav_table, int max_links_per_cell, NavGrid.Link[] links, NavGrid.Transition[][] transitions_by_nav_type)
+	private static void CreateLinks(int cell, NavTable nav_table, int max_links_per_cell, NavGrid.Link[] links, NavGrid.Transition[][] transitions_by_nav_type, Dictionary<int, int> teleport_transitions)
 	{
 		int num = cell * max_links_per_cell;
 		int num2 = 0;
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 11; i++)
 		{
 			NavType nav_type = (NavType)i;
 			NavGrid.Transition[] array = transitions_by_nav_type[i];
@@ -133,10 +138,19 @@ public class NavGridUpdater
 			for (int j = 0; j < array2.Length; j++)
 			{
 				NavGrid.Transition transition = array2[j];
-				int num3 = transition.IsValid(cell, nav_table);
-				if (num3 != Grid.InvalidCell)
+				NavGrid.Transition transition2 = transition;
+				if (transition.start == NavType.Teleport && teleport_transitions.ContainsKey(cell))
 				{
-					links[num] = new NavGrid.Link(num3, transition.start, transition.end, transition.id, transition.cost);
+					Grid.CellToXY(cell, out var x, out var y);
+					int num3 = teleport_transitions[cell];
+					Grid.CellToXY(teleport_transitions[cell], out var x2, out var y2);
+					transition2.x = x2 - x;
+					transition2.y = y2 - y;
+				}
+				int num4 = transition2.IsValid(cell, nav_table);
+				if (num4 != Grid.InvalidCell)
+				{
+					links[num] = new NavGrid.Link(num4, transition2.start, transition2.end, transition2.id, transition2.cost);
 					num++;
 					num2++;
 				}
@@ -162,8 +176,8 @@ public class NavGridUpdater
 
 	public static void DebugDrawPath(int start_cell, int end_cell)
 	{
-		Grid.CellToPosCCF(start_cell, Grid.SceneLayer.Move);
-		Grid.CellToPosCCF(end_cell, Grid.SceneLayer.Move);
+		Vector3 vector = Grid.CellToPosCCF(start_cell, Grid.SceneLayer.Move);
+		Vector3 vector2 = Grid.CellToPosCCF(end_cell, Grid.SceneLayer.Move);
 	}
 
 	public static void DebugDrawPath(PathFinder.Path path)

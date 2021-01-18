@@ -20,18 +20,18 @@ public class Slideshow : KMonoBehaviour
 
 	public float timeFactorForLastSlide = 3f;
 
-	private int currentSlide;
+	private int currentSlide = 0;
 
-	private float timeUntilNextSlide;
+	private float timeUntilNextSlide = 0f;
 
 	private bool paused;
 
-	public bool playInThumbnail;
+	public bool playInThumbnail = false;
 
-	public SlideshowUpdateType updateType;
+	public SlideshowUpdateType updateType = SlideshowUpdateType.preloadedSprites;
 
 	[SerializeField]
-	private bool isExpandable;
+	private bool isExpandable = false;
 
 	[SerializeField]
 	private KButton button;
@@ -161,7 +161,7 @@ public class Slideshow : KMonoBehaviour
 
 	private Sprite loadSlide(string file)
 	{
-		_ = Time.realtimeSinceStartup;
+		float realtimeSinceStartup = Time.realtimeSinceStartup;
 		Texture2D texture2D = new Texture2D(512, 768);
 		texture2D.filterMode = FilterMode.Point;
 		texture2D.LoadImage(File.ReadAllBytes(file));
@@ -189,7 +189,8 @@ public class Slideshow : KMonoBehaviour
 	public void updateSize(Sprite sprite)
 	{
 		Vector2 fittedSize = GetFittedSize(sprite, 960f, 960f);
-		GetComponent<RectTransform>().sizeDelta = fittedSize;
+		RectTransform component = GetComponent<RectTransform>();
+		component.sizeDelta = fittedSize;
 	}
 
 	public void SetSprites(Sprite[] sprites)

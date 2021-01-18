@@ -24,26 +24,32 @@ public static class TemplateLoader
 
 	private static void BuildPhase1(int baseX, int baseY, System.Action callback)
 	{
-		if (Grid.WidthInCells >= 16)
+		if (Grid.WidthInCells < 16)
 		{
-			CellOffset[] array = new CellOffset[template.cells.Count];
-			for (int i = 0; i < template.cells.Count; i++)
-			{
-				array[i] = new CellOffset(template.cells[i].location_x, template.cells[i].location_y);
-			}
-			ClearPickups(baseX, baseY, array);
-			if (template.cells.Count > 0)
-			{
-				ApplyGridProperties(baseX, baseY, template);
-				PlaceCells(baseX, baseY, template, callback);
-				ClearEntities<Crop>(baseX, baseY, array);
-				ClearEntities<Health>(baseX, baseY, array);
-				ClearEntities<Geyser>(baseX, baseY, array);
-			}
-			else
-			{
-				callback();
-			}
+			return;
+		}
+		if (template.cells == null)
+		{
+			callback();
+			return;
+		}
+		CellOffset[] array = new CellOffset[template.cells.Count];
+		for (int i = 0; i < template.cells.Count; i++)
+		{
+			array[i] = new CellOffset(template.cells[i].location_x, template.cells[i].location_y);
+		}
+		ClearPickups(baseX, baseY, array);
+		if (template.cells.Count > 0)
+		{
+			ApplyGridProperties(baseX, baseY, template);
+			PlaceCells(baseX, baseY, template, callback);
+			ClearEntities<Crop>(baseX, baseY, array);
+			ClearEntities<Health>(baseX, baseY, array);
+			ClearEntities<Geyser>(baseX, baseY, array);
+		}
+		else
+		{
+			callback();
 		}
 	}
 
@@ -72,7 +78,8 @@ public static class TemplateLoader
 		{
 			return null;
 		}
-		if (Assets.GetBuildingDef(prefab.id) == null)
+		BuildingDef buildingDef = Assets.GetBuildingDef(prefab.id);
+		if (buildingDef == null)
 		{
 			return null;
 		}
@@ -82,7 +89,8 @@ public static class TemplateLoader
 		{
 			return null;
 		}
-		if (Assets.GetBuildingDef(prefab.id).WidthInCells >= 3)
+		int widthInCells = Assets.GetBuildingDef(prefab.id).WidthInCells;
+		if (widthInCells >= 3)
 		{
 			num--;
 		}
@@ -93,19 +101,20 @@ public static class TemplateLoader
 			return gameObject;
 		}
 		BuildingComplete component = gameObject.GetComponent<BuildingComplete>();
-		gameObject.GetComponent<KPrefabID>().AddTag(GameTags.TemplateBuilding, serialize: true);
+		KPrefabID component2 = gameObject.GetComponent<KPrefabID>();
+		component2.AddTag(GameTags.TemplateBuilding, serialize: true);
 		Components.TemplateBuildings.Add(component);
-		Rotatable component2 = gameObject.GetComponent<Rotatable>();
-		if (component2 != null)
+		Rotatable component3 = gameObject.GetComponent<Rotatable>();
+		if (component3 != null)
 		{
-			component2.SetOrientation(prefab.rotationOrientation);
+			component3.SetOrientation(prefab.rotationOrientation);
 		}
-		PrimaryElement component3 = component.GetComponent<PrimaryElement>();
+		PrimaryElement component4 = component.GetComponent<PrimaryElement>();
 		if (prefab.temperature > 0f)
 		{
-			component3.Temperature = prefab.temperature;
+			component4.Temperature = prefab.temperature;
 		}
-		component3.AddDisease(Db.Get().Diseases.GetIndex(prefab.diseaseName), prefab.diseaseCount, "TemplateLoader.PlaceBuilding");
+		component4.AddDisease(Db.Get().Diseases.GetIndex(prefab.diseaseName), prefab.diseaseCount, "TemplateLoader.PlaceBuilding");
 		if (prefab.id == "Door")
 		{
 			for (int i = 0; i < component.PlacementCells.Length; i++)
@@ -133,26 +142,26 @@ public static class TemplateLoader
 		}
 		if (prefab.other_values != null)
 		{
-			Prefab.template_amount_value[] amounts = prefab.other_values;
-			foreach (Prefab.template_amount_value template_amount_value2 in amounts)
+			Prefab.template_amount_value[] other_values = prefab.other_values;
+			foreach (Prefab.template_amount_value template_amount_value2 in other_values)
 			{
 				switch (template_amount_value2.id)
 				{
 				case "joulesAvailable":
 				{
-					Battery component4 = gameObject.GetComponent<Battery>();
-					if ((bool)component4)
+					Battery component5 = gameObject.GetComponent<Battery>();
+					if ((bool)component5)
 					{
-						component4.AddEnergy(template_amount_value2.value);
+						component5.AddEnergy(template_amount_value2.value);
 					}
 					break;
 				}
 				case "sealedDoorDirection":
 				{
-					Unsealable component5 = gameObject.GetComponent<Unsealable>();
-					if ((bool)component5)
+					Unsealable component6 = gameObject.GetComponent<Unsealable>();
+					if ((bool)component6)
 					{
-						component5.facingRight = ((template_amount_value2.value != 0f) ? true : false);
+						component6.facingRight = ((template_amount_value2.value != 0f) ? true : false);
 					}
 					break;
 				}
@@ -173,19 +182,20 @@ public static class TemplateLoader
 		}
 		if (prefab.storage != null && prefab.storage.Count > 0)
 		{
-			Storage component6 = component.gameObject.GetComponent<Storage>();
-			if (component6 == null)
+			Storage component7 = component.gameObject.GetComponent<Storage>();
+			if (component7 == null)
 			{
 				Debug.LogWarning("No storage component on stampTemplate building " + prefab.id + ". Saved storage contents will be ignored.");
 			}
-			for (int k = 0; k < prefab.storage.Count; k++)
+			for (int l = 0; l < prefab.storage.Count; l++)
 			{
-				StorageItem storageItem = prefab.storage[k];
+				StorageItem storageItem = prefab.storage[l];
 				string id = storageItem.id;
 				GameObject gameObject2;
 				if (storageItem.isOre)
 				{
-					gameObject2 = ElementLoader.FindElementByHash(storageItem.element).substance.SpawnResource(Vector3.zero, storageItem.units, storageItem.temperature, Db.Get().Diseases.GetIndex(storageItem.diseaseName), storageItem.diseaseCount);
+					Substance substance = ElementLoader.FindElementByHash(storageItem.element).substance;
+					gameObject2 = substance.SpawnResource(Vector3.zero, storageItem.units, storageItem.temperature, Db.Get().Diseases.GetIndex(storageItem.diseaseName), storageItem.diseaseCount);
 				}
 				else
 				{
@@ -196,20 +206,20 @@ public static class TemplateLoader
 						continue;
 					}
 					gameObject2.SetActive(value: true);
-					PrimaryElement component7 = gameObject2.GetComponent<PrimaryElement>();
-					component7.Units = storageItem.units;
-					component7.Temperature = storageItem.temperature;
-					component7.AddDisease(Db.Get().Diseases.GetIndex(storageItem.diseaseName), storageItem.diseaseCount, "TemplateLoader.PlaceBuilding");
+					PrimaryElement component8 = gameObject2.GetComponent<PrimaryElement>();
+					component8.Units = storageItem.units;
+					component8.Temperature = storageItem.temperature;
+					component8.AddDisease(Db.Get().Diseases.GetIndex(storageItem.diseaseName), storageItem.diseaseCount, "TemplateLoader.PlaceBuilding");
 					Rottable.Instance sMI = gameObject2.GetSMI<Rottable.Instance>();
 					if (sMI != null)
 					{
 						sMI.RotValue = storageItem.rottable.rotAmount;
 					}
 				}
-				GameObject gameObject3 = component6.Store(gameObject2, hide_popups: true, block_events: true);
+				GameObject gameObject3 = component7.Store(gameObject2, hide_popups: true, block_events: true);
 				if (gameObject3 != null)
 				{
-					gameObject3.GetComponent<Pickupable>().OnStore(component6);
+					gameObject3.GetComponent<Pickupable>().OnStore(component7);
 				}
 			}
 		}
@@ -229,6 +239,7 @@ public static class TemplateLoader
 		case "Wire":
 		case "InsulatedWire":
 		case "HighWattageWire":
+		case "WireRefined":
 			spawned.GetComponent<Wire>().SetFirstFrameCallback(delegate
 			{
 				Game.Instance.electricalConduitSystem.SetConnections(connection, cell, is_physical_building: true);
@@ -382,7 +393,8 @@ public static class TemplateLoader
 			return null;
 		}
 		Substance substance = ElementLoader.FindElementByHash(prefab.element).substance;
-		Vector3 position = Grid.CellToPosCCC(Grid.OffsetCell(root_cell, location_x, location_y), Grid.SceneLayer.Ore);
+		int cell = Grid.OffsetCell(root_cell, location_x, location_y);
+		Vector3 position = Grid.CellToPosCCC(cell, Grid.SceneLayer.Ore);
 		byte index = Db.Get().Diseases.GetIndex(prefab.diseaseName);
 		if (prefab.temperature <= 0f)
 		{
@@ -405,18 +417,24 @@ public static class TemplateLoader
 					component.Refresh();
 				}
 			}
-			for (int i = 0; i < template.pickupables.Count; i++)
+			if (template.pickupables != null)
 			{
-				if (template.pickupables[i] != null && !(template.pickupables[i].id == ""))
+				for (int i = 0; i < template.pickupables.Count; i++)
 				{
-					PlacePickupables(template.pickupables[i], root_cell);
+					if (template.pickupables[i] != null && !(template.pickupables[i].id == ""))
+					{
+						PlacePickupables(template.pickupables[i], root_cell);
+					}
 				}
 			}
-			for (int j = 0; j < template.elementalOres.Count; j++)
+			if (template.elementalOres != null)
 			{
-				if (template.elementalOres[j] != null && !(template.elementalOres[j].id == ""))
+				for (int j = 0; j < template.elementalOres.Count; j++)
 				{
-					PlaceElementalOres(template.elementalOres[j], root_cell);
+					if (template.elementalOres[j] != null && !(template.elementalOres[j].id == ""))
+					{
+						PlaceElementalOres(template.elementalOres[j], root_cell);
+					}
 				}
 			}
 		}
@@ -428,11 +446,14 @@ public static class TemplateLoader
 		if (template != null)
 		{
 			int root_cell = Grid.OffsetCell(0, baseX, baseY);
-			for (int i = 0; i < template.otherEntities.Count; i++)
+			if (template.otherEntities != null)
 			{
-				if (template.otherEntities[i] != null && !(template.otherEntities[i].id == ""))
+				for (int i = 0; i < template.otherEntities.Count; i++)
 				{
-					PlaceOtherEntities(template.otherEntities[i], root_cell);
+					if (template.otherEntities[i] != null && !(template.otherEntities[i].id == ""))
+					{
+						PlaceOtherEntities(template.otherEntities[i], root_cell);
+					}
 				}
 			}
 			template = null;
@@ -458,7 +479,8 @@ public static class TemplateLoader
 	private static void ClearEntities<T>(int rootX, int rootY, CellOffset[] TemplateOffsets) where T : KMonoBehaviour
 	{
 		T[] array = (T[])UnityEngine.Object.FindObjectsOfType(typeof(T));
-		foreach (T val in array)
+		T[] array2 = array;
+		foreach (T val in array2)
 		{
 			if (Grid.IsCellOffsetOf(Grid.PosToCell(val.gameObject), Grid.XYToCell(rootX, rootY), TemplateOffsets))
 			{
@@ -469,11 +491,16 @@ public static class TemplateLoader
 
 	private static void PlaceCells(int baseX, int baseY, TemplateContainer template, System.Action callback)
 	{
-		HandleVector<Game.CallbackInfo>.Handle handle = Game.Instance.callbackManager.Add(new Game.CallbackInfo(callback));
 		if (template == null)
 		{
 			Debug.LogError("Template Loader does not have template.");
 		}
+		if (template.cells == null)
+		{
+			callback();
+			return;
+		}
+		HandleVector<Game.CallbackInfo>.Handle handle = Game.Instance.callbackManager.Add(new Game.CallbackInfo(callback));
 		for (int i = 0; i < template.cells.Count; i++)
 		{
 			int num = Grid.XYToCell(template.cells[i].location_x + baseX, template.cells[i].location_y + baseY);
@@ -493,6 +520,10 @@ public static class TemplateLoader
 
 	public static void ApplyGridProperties(int baseX, int baseY, TemplateContainer template)
 	{
+		if (template.cells == null)
+		{
+			return;
+		}
 		for (int i = 0; i < template.cells.Count; i++)
 		{
 			int num = Grid.XYToCell(template.cells[i].location_x + baseX, template.cells[i].location_y + baseY);

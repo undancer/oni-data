@@ -6,9 +6,14 @@ public enum SimMessageHashes
 	ModifyCellWorldZone = -449718014,
 	Disease_CreateTable = 825301935,
 	Load = -672538170,
+	Start = -931446686,
+	AllocateCells = 1092408308,
+	ClearUnoccupiedCells = -1836204275,
+	DefineWorldOffsets = -895846551,
 	PrepareGameData = 1078620451,
-	SettleWorldGen = 970594729,
 	SimData_InitializeFromCells = 2062421945,
+	SimData_ResizeAndInitializeVacuumCells = -752676153,
+	SimData_FreeCells = -1167792921,
 	SimFrameManager_NewGameFrame = -775326397,
 	Dig = 833038498,
 	ModifyCell = -1252920804,
@@ -45,5 +50,11 @@ public enum SimMessageHashes
 	ConsumeDisease = -1019841536,
 	CellDiseaseModification = -1853671274,
 	ToggleProfiler = -409964931,
-	SetSavedOptions = 1154135737
+	SetSavedOptions = 1154135737,
+	CellRadiationModification = -1914877797,
+	RadiationSickness = -727746602,
+	AddRadiationEmitter = -1505895314,
+	ModifyRadiationEmitter = -503965465,
+	RemoveRadiationEmitter = -704259919,
+	RadiationParamsModification = 377112707
 }

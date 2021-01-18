@@ -19,11 +19,7 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			if (other is ControllerActionSetHandle_t)
-			{
-				return this == (ControllerActionSetHandle_t)other;
-			}
-			return false;
+			return other is ControllerActionSetHandle_t && this == (ControllerActionSetHandle_t)other;
 		}
 
 		public override int GetHashCode()

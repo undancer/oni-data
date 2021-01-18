@@ -121,11 +121,11 @@ public class SolidConduitFlowVisualizer
 
 	private string overlaySound;
 
-	private bool showContents;
+	private bool showContents = false;
 
 	private double animTime;
 
-	private int layer;
+	private int layer = 0;
 
 	private static Vector2 GRID_OFFSET = new Vector2(0.5f, 0.5f);
 
@@ -219,7 +219,8 @@ public class SolidConduitFlowVisualizer
 			{
 				z2 = 1f;
 			}
-			float w = (float)((int)(animTime / (1.0 / (double)tuning.framesPerSecond)) % (int)tuning.spriteCount) * (1f / tuning.spriteCount);
+			int num = (int)(animTime / (1.0 / (double)tuning.framesPerSecond)) % (int)tuning.spriteCount;
+			float w = (float)num * (1f / tuning.spriteCount);
 			movingBallMesh.Begin();
 			movingBallMesh.SetTexture("_BackgroundTex", tuning.backgroundTexture);
 			movingBallMesh.SetTexture("_ForegroundTex", tuning.foregroundTexture);
@@ -232,7 +233,8 @@ public class SolidConduitFlowVisualizer
 			staticBallMesh.SetVector("_Highlight", new Vector4((float)(int)highlightColour.r / 255f, (float)(int)highlightColour.g / 255f, (float)(int)highlightColour.b / 255f, 0f));
 			for (int j = 0; j < flowManager.GetSOAInfo().NumEntries; j++)
 			{
-				Vector2I u = Grid.CellToXY(flowManager.GetSOAInfo().GetCell(j));
+				int cell = flowManager.GetSOAInfo().GetCell(j);
+				Vector2I u = Grid.CellToXY(cell);
 				if (u < v || u > v2)
 				{
 					continue;
@@ -243,16 +245,16 @@ public class SolidConduitFlowVisualizer
 				bool flag = lastFlowInfo.direction != SolidConduitFlow.FlowDirection.None;
 				if (flag)
 				{
-					int cell = conduit.GetCell(flowManager);
-					int cellFromDirection = SolidConduitFlow.GetCellFromDirection(cell, lastFlowInfo.direction);
-					Vector2I v3 = Grid.CellToXY(cell);
+					int cell2 = conduit.GetCell(flowManager);
+					int cellFromDirection = SolidConduitFlow.GetCellFromDirection(cell2, lastFlowInfo.direction);
+					Vector2I v3 = Grid.CellToXY(cell2);
 					Vector2I vector2I = Grid.CellToXY(cellFromDirection);
 					Vector2 pos = v3;
-					if (cell != -1)
+					if (cell2 != -1)
 					{
 						pos = Vector2.Lerp(new Vector2(v3.x, v3.y), new Vector2(vector2I.x, vector2I.y), lerp_percent);
 					}
-					float a = (insulatedCells.Contains(cell) ? 1f : 0f);
+					float a = (insulatedCells.Contains(cell2) ? 1f : 0f);
 					float b = (insulatedCells.Contains(cellFromDirection) ? 1f : 0f);
 					float insulation_lerp = Mathf.Lerp(a, b, lerp_percent);
 					Color c = GetBackgroundColor(insulation_lerp);
@@ -271,14 +273,15 @@ public class SolidConduitFlowVisualizer
 					else
 					{
 						element = null;
-						if (Grid.PosToCell(new Vector3(pos.x + GRID_OFFSET.x, pos.y + GRID_OFFSET.y, 0f)) == highlightedCell)
+						int num2 = Grid.PosToCell(new Vector3(pos.x + GRID_OFFSET.x, pos.y + GRID_OFFSET.y, 0f));
+						if (num2 == highlightedCell)
 						{
 							highlight = 1f;
 						}
 					}
 					Color32 contentsColor = GetContentsColor(element, c);
-					float num = 1f;
-					movingBallMesh.AddQuad(pos, contentsColor, tuning.size * num, 1f, highlight, uvbl, uvtl, uvbr, uvtr);
+					float num3 = 1f;
+					movingBallMesh.AddQuad(pos, contentsColor, tuning.size * num3, 1f, highlight, uvbl, uvtl, uvbr, uvtr);
 					if (trigger_audio)
 					{
 						AddAudioSource(conduit, position);
@@ -288,30 +291,31 @@ public class SolidConduitFlowVisualizer
 				{
 					continue;
 				}
-				int cell2 = conduit.GetCell(flowManager);
-				Vector2 pos2 = Grid.CellToXY(cell2);
-				float insulation_lerp2 = (insulatedCells.Contains(cell2) ? 1f : 0f);
+				int cell3 = conduit.GetCell(flowManager);
+				Vector2I v4 = Grid.CellToXY(cell3);
+				Vector2 pos2 = v4;
+				float insulation_lerp2 = (insulatedCells.Contains(cell3) ? 1f : 0f);
 				Vector2I uvbl2 = new Vector2I(0, 0);
 				Vector2I uvtl2 = new Vector2I(0, 1);
 				Vector2I uvbr2 = new Vector2I(1, 0);
 				Vector2I uvtr2 = new Vector2I(1, 1);
 				float highlight2 = 0f;
 				Color c2 = GetBackgroundColor(insulation_lerp2);
-				float num2 = 1f;
+				float num4 = 1f;
 				if (showContents)
 				{
-					staticBallMesh.AddQuad(pos2, c2, tuning.size * num2, 0f, 0f, uvbl2, uvtl2, uvbr2, uvtr2);
+					staticBallMesh.AddQuad(pos2, c2, tuning.size * num4, 0f, 0f, uvbl2, uvtl2, uvbr2, uvtr2);
 				}
 				else
 				{
 					element = null;
-					if (cell2 == highlightedCell)
+					if (cell3 == highlightedCell)
 					{
 						highlight2 = 1f;
 					}
 				}
 				Color32 contentsColor2 = GetContentsColor(element, c2);
-				staticBallMesh.AddQuad(pos2, contentsColor2, tuning.size * num2, 1f, highlight2, uvbl2, uvtl2, uvbr2, uvtr2);
+				staticBallMesh.AddQuad(pos2, contentsColor2, tuning.size * num4, 1f, highlight2, uvbl2, uvtl2, uvbr2, uvtr2);
 			}
 			movingBallMesh.End(z, layer);
 			staticBallMesh.End(z, layer);

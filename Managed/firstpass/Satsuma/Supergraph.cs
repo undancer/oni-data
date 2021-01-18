@@ -230,11 +230,7 @@ namespace Satsuma
 
 		private HashSet<Arc> ArcsInternal(ArcFilter filter)
 		{
-			if (filter != 0)
-			{
-				return edges;
-			}
-			return arcs;
+			return (filter == ArcFilter.All) ? arcs : edges;
 		}
 
 		private List<Arc> ArcsInternal(Node v, ArcFilter filter)
@@ -260,20 +256,32 @@ namespace Satsuma
 
 		public IEnumerable<Node> Nodes()
 		{
+			IEnumerable<Node> result;
 			if (graph != null)
 			{
-				return nodes.Concat(graph.Nodes());
+				result = nodes.Concat(graph.Nodes());
 			}
-			return nodes;
+			else
+			{
+				IEnumerable<Node> enumerable = nodes;
+				result = enumerable;
+			}
+			return result;
 		}
 
 		public IEnumerable<Arc> Arcs(ArcFilter filter = ArcFilter.All)
 		{
+			IEnumerable<Arc> result;
 			if (graph != null)
 			{
-				return ArcsInternal(filter).Concat(graph.Arcs(filter));
+				result = ArcsInternal(filter).Concat(graph.Arcs(filter));
 			}
-			return ArcsInternal(filter);
+			else
+			{
+				IEnumerable<Arc> enumerable = ArcsInternal(filter);
+				result = enumerable;
+			}
+			return result;
 		}
 
 		public IEnumerable<Arc> Arcs(Node u, ArcFilter filter = ArcFilter.All)
@@ -287,20 +295,20 @@ namespace Satsuma
 
 		public IEnumerable<Arc> Arcs(Node u, Node v, ArcFilter filter = ArcFilter.All)
 		{
-			foreach (Arc item in ArcsInternal(u, filter))
+			foreach (Arc arc in ArcsInternal(u, filter))
 			{
-				if (this.Other(item, u) == v)
+				if (this.Other(arc, u) == v)
 				{
-					yield return item;
+					yield return arc;
 				}
 			}
 			if (graph == null || nodes.Contains(u) || nodes.Contains(v))
 			{
 				yield break;
 			}
-			foreach (Arc item2 in graph.Arcs(u, v, filter))
+			foreach (Arc item in graph.Arcs(u, v, filter))
 			{
-				yield return item2;
+				yield return item;
 			}
 		}
 
@@ -334,28 +342,12 @@ namespace Satsuma
 
 		public bool HasNode(Node node)
 		{
-			if (!nodes.Contains(node))
-			{
-				if (graph != null)
-				{
-					return graph.HasNode(node);
-				}
-				return false;
-			}
-			return true;
+			return nodes.Contains(node) || (graph != null && graph.HasNode(node));
 		}
 
 		public bool HasArc(Arc arc)
 		{
-			if (!arcs.Contains(arc))
-			{
-				if (graph != null)
-				{
-					return graph.HasArc(arc);
-				}
-				return false;
-			}
-			return true;
+			return arcs.Contains(arc) || (graph != null && graph.HasArc(arc));
 		}
 	}
 }

@@ -6,6 +6,11 @@ public class MinionSelectPreviewConfig : IEntityConfig
 {
 	public static string ID = "MinionSelectPreview";
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateEntity(ID, ID);
@@ -21,15 +26,14 @@ public class MinionSelectPreviewConfig : IEntityConfig
 		gameObject.AddOrGet<Effects>();
 		gameObject.AddOrGet<Traits>();
 		MinionModifiers minionModifiers = gameObject.AddOrGet<MinionModifiers>();
-		minionModifiers.initialTraits = new string[1]
-		{
-			MinionConfig.MINION_BASE_TRAIT_ID
-		};
+		minionModifiers.initialTraits.Add(MinionConfig.MINION_BASE_TRAIT_ID);
 		MinionConfig.AddMinionAmounts(minionModifiers);
 		gameObject.AddOrGet<AttributeLevels>();
 		gameObject.AddOrGet<AttributeConverters>();
-		gameObject.AddOrGet<MinionIdentity>().addToIdentityList = false;
-		gameObject.AddOrGet<BoxCollider2D>().size = new Vector2(1f, 1f);
+		MinionIdentity minionIdentity = gameObject.AddOrGet<MinionIdentity>();
+		minionIdentity.addToIdentityList = false;
+		BoxCollider2D boxCollider2D = gameObject.AddOrGet<BoxCollider2D>();
+		boxCollider2D.size = new Vector2(1f, 1f);
 		gameObject.AddOrGet<FaceGraph>();
 		gameObject.AddOrGet<Accessorizer>();
 		KBatchedAnimController kBatchedAnimController = gameObject.AddOrGet<KBatchedAnimController>();

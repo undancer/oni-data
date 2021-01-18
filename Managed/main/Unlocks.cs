@@ -82,7 +82,7 @@ public class Unlocks : KMonoBehaviour
 		},
 		{
 			"researchnotes",
-			new string[15]
+			new string[16]
 			{
 				"notes_clonedrats",
 				"notes_agriculture1",
@@ -98,7 +98,8 @@ public class Unlocks : KMonoBehaviour
 				"notes_agriculture4",
 				"notes_neutronium",
 				"notes_firstsuccess",
-				"notes_neutroniumapplications"
+				"notes_neutroniumapplications",
+				"notes_teleportation"
 			}
 		},
 		{
@@ -190,7 +191,7 @@ public class Unlocks : KMonoBehaviour
 		base.OnSpawn();
 		UnlockCycleCodexes();
 		GameClock.Instance.Subscribe(631075836, OnNewDay);
-		Subscribe(-1056989049, OnLaunchRocketDelegate);
+		Subscribe(-1277991738, OnLaunchRocketDelegate);
 		Subscribe(282337316, OnDuplicantDiedDelegate);
 		Subscribe(-818188514, OnDiscoveredSpaceDelegate);
 		Components.LiveMinionIdentities.OnAdd += OnNewDupe;
@@ -244,7 +245,8 @@ public class Unlocks : KMonoBehaviour
 				Thread.Sleep(num * 100);
 				using FileStream fileStream = File.Open(UnlocksFilename, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
 				flag = true;
-				byte[] bytes = new ASCIIEncoding().GetBytes(s);
+				ASCIIEncoding aSCIIEncoding = new ASCIIEncoding();
+				byte[] bytes = aSCIIEncoding.GetBytes(s);
 				fileStream.Write(bytes, 0, bytes.Length);
 			}
 			catch (Exception ex)
@@ -292,7 +294,8 @@ public class Unlocks : KMonoBehaviour
 		try
 		{
 			string[] array2 = JsonConvert.DeserializeObject<string[]>(text);
-			foreach (string text2 in array2)
+			string[] array3 = array2;
+			foreach (string text2 in array3)
 			{
 				if (!string.IsNullOrEmpty(text2) && !unlocked.Contains(text2))
 				{
@@ -344,6 +347,7 @@ public class Unlocks : KMonoBehaviour
 		{
 			text = CodexCache.FindEntry(entryForLock).title;
 		}
+		MessageNotification messageNotification = null;
 		string text2 = UI.FormatAsLink(Strings.Get(text), entryForLock);
 		if (!string.IsNullOrEmpty(text))
 		{
@@ -359,7 +363,8 @@ public class Unlocks : KMonoBehaviour
 					}
 				}
 			}
-			return new MessageNotification(new CodexUnlockedMessage(lockID, text2));
+			CodexUnlockedMessage m = new CodexUnlockedMessage(lockID, text2);
+			return new MessageNotification(m);
 		}
 		return null;
 	}
@@ -447,7 +452,8 @@ public class Unlocks : KMonoBehaviour
 				{
 					break;
 				}
-				if (World.Instance.zoneRenderData.GetSubWorldZoneType(cell2) == SubWorld.ZoneType.Space)
+				SubWorld.ZoneType subWorldZoneType = World.Instance.zoneRenderData.GetSubWorldZoneType(cell2);
+				if (subWorldZoneType == SubWorld.ZoneType.Space)
 				{
 					Unlock("nearingsurface");
 					break;
@@ -463,16 +469,16 @@ public class Unlocks : KMonoBehaviour
 		{
 			num4--;
 			int num5 = Grid.XYToCell(x2, num4);
-			if (Grid.IsValidCell(num5))
+			if (!Grid.IsValidCell(num5))
 			{
-				if (World.Instance.zoneRenderData.GetSubWorldZoneType(num5) == SubWorld.ZoneType.ToxicJungle && Grid.Element[num5].id == SimHashes.Magma)
-				{
-					Unlock("nearingmagma");
-					break;
-				}
-				continue;
+				break;
 			}
-			break;
+			SubWorld.ZoneType subWorldZoneType2 = World.Instance.zoneRenderData.GetSubWorldZoneType(num5);
+			if (subWorldZoneType2 == SubWorld.ZoneType.ToxicJungle && Grid.Element[num5].id == SimHashes.Magma)
+			{
+				Unlock("nearingmagma");
+				break;
+			}
 		}
 	}
 }

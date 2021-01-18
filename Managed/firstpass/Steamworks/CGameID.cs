@@ -71,27 +71,14 @@ namespace Steamworks
 
 		public bool IsValid()
 		{
-			switch (Type())
+			return Type() switch
 			{
-			case EGameIDType.k_EGameIDTypeApp:
-				return AppID() != AppId_t.Invalid;
-			case EGameIDType.k_EGameIDTypeGameMod:
-				if (AppID() != AppId_t.Invalid)
-				{
-					return (ModID() & 0x80000000u) != 0;
-				}
-				return false;
-			case EGameIDType.k_EGameIDTypeShortcut:
-				return (ModID() & 0x80000000u) != 0;
-			case EGameIDType.k_EGameIDTypeP2P:
-				if (AppID() == AppId_t.Invalid)
-				{
-					return (ModID() & 0x80000000u) != 0;
-				}
-				return false;
-			default:
-				return false;
-			}
+				EGameIDType.k_EGameIDTypeApp => AppID() != AppId_t.Invalid, 
+				EGameIDType.k_EGameIDTypeGameMod => AppID() != AppId_t.Invalid && (ModID() & 0x80000000u) != 0, 
+				EGameIDType.k_EGameIDTypeShortcut => (ModID() & 0x80000000u) != 0, 
+				EGameIDType.k_EGameIDTypeP2P => AppID() == AppId_t.Invalid && (ModID() & 0x80000000u) != 0, 
+				_ => false, 
+			};
 		}
 
 		public void Reset()
@@ -126,11 +113,7 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			if (other is CGameID)
-			{
-				return this == (CGameID)other;
-			}
-			return false;
+			return other is CGameID && this == (CGameID)other;
 		}
 
 		public override int GetHashCode()

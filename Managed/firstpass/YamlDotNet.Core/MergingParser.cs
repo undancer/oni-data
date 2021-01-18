@@ -113,7 +113,8 @@ namespace YamlDotNet.Core
 						_allEvents.InsertRange(num, mappingEvents);
 						continue;
 					}
-					if (_allEvents[num + 1] is SequenceStart)
+					SequenceStart sequenceStart = _allEvents[num + 1] as SequenceStart;
+					if (sequenceStart != null)
 					{
 						List<IEnumerable<ParsingEvent>> list = new List<IEnumerable<ParsingEvent>>();
 						bool flag = false;

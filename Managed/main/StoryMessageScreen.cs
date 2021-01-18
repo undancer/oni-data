@@ -36,7 +36,7 @@ public class StoryMessageScreen : KScreen
 
 	public System.Action OnClose;
 
-	private bool startFade;
+	private bool startFade = false;
 
 	public string title
 	{
@@ -157,7 +157,9 @@ public class StoryMessageScreen : KScreen
 
 	protected override void OnDeactivate()
 	{
-		IsActive();
+		if (IsActive())
+		{
+		}
 		base.OnDeactivate();
 		MusicManager.instance.StopSong("Music_Victory_01_Message");
 		if (restoreInterfaceOnClose)

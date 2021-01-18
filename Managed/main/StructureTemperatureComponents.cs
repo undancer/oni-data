@@ -1,3 +1,4 @@
+#define UNITY_ASSERTIONS
 using System;
 using System.Collections.Generic;
 using STRINGS;
@@ -55,22 +56,23 @@ public class StructureTemperatureComponents : KGameObjectSplitComponentManager<S
 				try
 				{
 					str = string.Format(str, GameUtil.GetFormattedHeatEnergy(payload.TotalEnergyProducedKW * 1000f));
-					return str;
 				}
 				catch (Exception obj)
 				{
 					Debug.LogWarning(obj);
 					Debug.LogWarning(BUILDING.STATUSITEMS.OPERATINGENERGY.TOOLTIP);
 					Debug.LogWarning(str);
-					return str;
 				}
 			}
-			string text = "";
-			foreach (StructureTemperaturePayload.EnergySource item in payload.energySourcesKW)
+			else
 			{
-				text += string.Format(BUILDING.STATUSITEMS.OPERATINGENERGY.LINEITEM, item.source, GameUtil.GetFormattedHeatEnergy(item.value * 1000f, GameUtil.HeatEnergyFormatterUnit.DTU_S));
+				string text = "";
+				foreach (StructureTemperaturePayload.EnergySource item in payload.energySourcesKW)
+				{
+					text += string.Format(BUILDING.STATUSITEMS.OPERATINGENERGY.LINEITEM, item.source, GameUtil.GetFormattedHeatEnergy(item.value * 1000f, GameUtil.HeatEnergyFormatterUnit.DTU_S));
+				}
+				str = string.Format(str, GameUtil.GetFormattedHeatEnergy(payload.TotalEnergyProducedKW * 1000f, GameUtil.HeatEnergyFormatterUnit.DTU_S), text);
 			}
-			str = string.Format(str, GameUtil.GetFormattedHeatEnergy(payload.TotalEnergyProducedKW * 1000f, GameUtil.HeatEnergyFormatterUnit.DTU_S), text);
 			return str;
 		};
 	}
@@ -179,7 +181,8 @@ public class StructureTemperatureComponents : KGameObjectSplitComponentManager<S
 						{
 							int num7 = extents.x + k;
 							int num8 = num6 * Grid.WidthInCells + num7;
-							float num9 = Mathf.Min(Grid.Mass[num8], 1.5f) / 1.5f;
+							float a = Grid.Mass[num8];
+							float num9 = Mathf.Min(a, 1.5f) / 1.5f;
 							float kilojoules = num5 * num9;
 							SimMessages.ModifyEnergy(num8, kilojoules, value3.maxTemperature, SimMessages.EnergySourceID.StructureTemperature);
 						}
@@ -205,16 +208,18 @@ public class StructureTemperatureComponents : KGameObjectSplitComponentManager<S
 		DebugUtil.Assert(Sim.IsValidHandle(payload.simHandleCopy));
 		float internalTemperature = payload.primaryElement.InternalTemperature;
 		BuildingDef def = payload.building.Def;
-		float mass = def.MassForTemperatureModification;
+		float num = def.MassForTemperatureModification;
 		float operatingKilowatts = payload.OperatingKilowatts;
 		float overheat_temperature = ((payload.overheatable != null) ? payload.overheatable.OverheatTemperature : 10000f);
+		UnityEngine.Debug.Assert(internalTemperature > 0f, "Invalid temperature");
+		UnityEngine.Debug.Assert(num > 0f);
 		if (!payload.enabled || payload.bypass)
 		{
-			mass = 0f;
+			num = 0f;
 		}
 		Extents extents = payload.GetExtents();
 		byte idx = payload.primaryElement.Element.idx;
-		SimMessages.ModifyBuildingHeatExchange(payload.simHandleCopy, extents, mass, internalTemperature, def.ThermalConductivity, overheat_temperature, operatingKilowatts, idx);
+		SimMessages.ModifyBuildingHeatExchange(payload.simHandleCopy, extents, num, internalTemperature, def.ThermalConductivity, overheat_temperature, operatingKilowatts, idx);
 	}
 
 	private unsafe static float OnGetTemperature(PrimaryElement primary_element)
@@ -308,7 +313,8 @@ public class StructureTemperatureComponents : KGameObjectSplitComponentManager<S
 		Element element = primary_element.Element;
 		if (element.highTempTransitionTarget != SimHashes.Unobtanium)
 		{
-			SimMessages.AddRemoveSubstance(Grid.PosToCell(primary_element.transform.GetPosition()), element.highTempTransitionTarget, CellEventLogger.Instance.OreMelted, primary_element.Mass, primary_element.Element.highTemp, primary_element.DiseaseIdx, primary_element.DiseaseCount);
+			int gameCell = Grid.PosToCell(primary_element.transform.GetPosition());
+			SimMessages.AddRemoveSubstance(gameCell, element.highTempTransitionTarget, CellEventLogger.Instance.OreMelted, primary_element.Mass, primary_element.Element.highTemp, primary_element.DiseaseIdx, primary_element.DiseaseCount);
 			Util.KDestroyGameObject(primary_element.gameObject);
 		}
 	}
@@ -384,7 +390,12 @@ public class StructureTemperatureComponents : KGameObjectSplitComponentManager<S
 			return;
 		}
 		PrimaryElement primaryElement = payload.primaryElement;
-		if (!(primaryElement.Mass <= 0f) && !primaryElement.Element.IsTemperatureInsulated)
+		if (primaryElement.Mass <= 0f)
+		{
+			return;
+		}
+		Element element = primaryElement.Element;
+		if (!element.IsTemperatureInsulated)
 		{
 			payload.simHandleCopy = -2;
 			string dbg_name = primaryElement.name;
@@ -396,7 +407,12 @@ public class StructureTemperatureComponents : KGameObjectSplitComponentManager<S
 			float internalTemperature = primaryElement.InternalTemperature;
 			float massForTemperatureModification = def.MassForTemperatureModification;
 			float operatingKilowatts = payload.OperatingKilowatts;
-			SimMessages.AddBuildingHeatExchange(payload.GetExtents(), elem_idx: (byte)ElementLoader.elements.IndexOf(primaryElement.Element), mass: massForTemperatureModification, temperature: internalTemperature, thermal_conductivity: def.ThermalConductivity, operating_kw: operatingKilowatts, callbackIdx: handle2.index);
+			UnityEngine.Debug.Assert(0f < internalTemperature && internalTemperature < 10000f, "Invalid temperature");
+			UnityEngine.Debug.Assert(primaryElement.Mass > 0f);
+			UnityEngine.Debug.Assert(massForTemperatureModification > 0f);
+			Extents extents = payload.GetExtents();
+			byte elem_idx = (byte)ElementLoader.elements.IndexOf(primaryElement.Element);
+			SimMessages.AddBuildingHeatExchange(extents, massForTemperatureModification, internalTemperature, def.ThermalConductivity, operatingKilowatts, elem_idx, handle2.index);
 			header.simHandle = payload.simHandleCopy;
 			SetData(handle, header, ref payload);
 		}

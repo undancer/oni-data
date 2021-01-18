@@ -25,20 +25,12 @@ namespace Satsuma
 
 		public Node U(Arc arc)
 		{
-			if (getDirection(arc) != Direction.Backward)
-			{
-				return graph.U(arc);
-			}
-			return graph.V(arc);
+			return (getDirection(arc) == Direction.Backward) ? graph.V(arc) : graph.U(arc);
 		}
 
 		public Node V(Arc arc)
 		{
-			if (getDirection(arc) != Direction.Backward)
-			{
-				return graph.V(arc);
-			}
-			return graph.U(arc);
+			return (getDirection(arc) == Direction.Backward) ? graph.U(arc) : graph.V(arc);
 		}
 
 		public bool IsEdge(Arc arc)
@@ -53,13 +45,9 @@ namespace Satsuma
 
 		public IEnumerable<Arc> Arcs(ArcFilter filter = ArcFilter.All)
 		{
-			if (filter != 0)
-			{
-				return from x in graph.Arcs()
-					where getDirection(x) == Direction.Edge
-					select x;
-			}
-			return graph.Arcs();
+			return (filter == ArcFilter.All) ? graph.Arcs() : (from x in graph.Arcs()
+				where getDirection(x) == Direction.Edge
+				select x);
 		}
 
 		private IEnumerable<Arc> FilterArcs(Node u, IEnumerable<Arc> arcs, ArcFilter filter)
@@ -100,11 +88,7 @@ namespace Satsuma
 
 		public int ArcCount(ArcFilter filter = ArcFilter.All)
 		{
-			if (filter != 0)
-			{
-				return Arcs(filter).Count();
-			}
-			return graph.ArcCount();
+			return (filter == ArcFilter.All) ? graph.ArcCount() : Arcs(filter).Count();
 		}
 
 		public int ArcCount(Node u, ArcFilter filter = ArcFilter.All)

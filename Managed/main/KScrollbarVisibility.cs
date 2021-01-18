@@ -47,9 +47,9 @@ public class KScrollbarVisibility : MonoBehaviour
 		if (others != null)
 		{
 			GameObject[] array = others;
-			for (int i = 0; i < array.Length; i++)
+			foreach (GameObject gameObject in array)
 			{
-				array[i].SetActive(flag);
+				gameObject.SetActive(flag);
 			}
 		}
 	}

@@ -41,11 +41,7 @@ public static class DiscreteShadowCaster
 	private static bool DoesOcclude(int x, int y)
 	{
 		int num = Grid.XYToCell(x, y);
-		if (Grid.IsValidCell(num) && !Grid.Transparent[num])
-		{
-			return Grid.Solid[num];
-		}
-		return false;
+		return Grid.IsValidCell(num) && !Grid.Transparent[num] && Grid.Solid[num];
 	}
 
 	private static void ScanOctant(Vector2I cellPos, int range, int depth, Octant octant, double startSlope, double endSlope, List<int> visiblePoints)

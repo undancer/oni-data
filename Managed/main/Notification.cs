@@ -7,8 +7,6 @@ public class Notification
 {
 	public delegate void ClickCallback(object data);
 
-	public HashedString Group;
-
 	public object tooltipData;
 
 	public bool expires = true;
@@ -20,6 +18,8 @@ public class Notification
 	public ClickCallback customClickCallback;
 
 	public object customClickData;
+
+	private int notificationIncrement = 0;
 
 	private string notifierName;
 
@@ -95,10 +95,9 @@ public class Notification
 		return UnityEngine.Time.time >= GameTime + Delay;
 	}
 
-	public Notification(string title, NotificationType type, HashedString group, Func<List<Notification>, object, string> tooltip = null, object tooltip_data = null, bool expires = true, float delay = 0f, ClickCallback custom_click_callback = null, object custom_click_data = null, Transform click_focus = null, bool volume_attenuation = true)
+	public Notification(string title, NotificationType type, Func<List<Notification>, object, string> tooltip = null, object tooltip_data = null, bool expires = true, float delay = 0f, ClickCallback custom_click_callback = null, object custom_click_data = null, Transform click_focus = null, bool volume_attenuation = true)
 	{
 		titleText = title;
-		Group = group;
 		Type = type;
 		ToolTip = tooltip;
 		tooltipData = tooltip_data;
@@ -108,6 +107,7 @@ public class Notification
 		customClickData = custom_click_data;
 		clickFocus = click_focus;
 		this.volume_attenuation = volume_attenuation;
+		Idx = notificationIncrement++;
 	}
 
 	public void Clear()
@@ -132,15 +132,16 @@ public class Notification
 				string value = text.Substring(num3, num - num3);
 				stringBuilder.Append(value);
 				num2 = text.IndexOf('}', num);
-				if (num >= num2)
+				if (num < num2)
 				{
-					break;
+					string tag = text.Substring(num + 1, num2 - num - 1);
+					string tagDescription = GetTagDescription(tag);
+					stringBuilder.Append(tagDescription);
+					num3 = num2 + 1;
+					num = text.IndexOf('{', num2);
+					continue;
 				}
-				string tag = text.Substring(num + 1, num2 - num - 1);
-				string tagDescription = GetTagDescription(tag);
-				stringBuilder.Append(tagDescription);
-				num3 = num2 + 1;
-				num = text.IndexOf('{', num2);
+				break;
 			}
 			stringBuilder.Append(text.Substring(num3, text.Length - num3));
 			return stringBuilder.ToString();

@@ -19,20 +19,20 @@ public class OilRefineryConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("OilRefinery", 4, 4, "oilrefinery_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: BUILDINGS.DECOR.PENALTY.TIER1);
-		obj.RequiresPowerInput = true;
-		obj.PowerInputOffset = new CellOffset(1, 0);
-		obj.EnergyConsumptionWhenActive = 480f;
-		obj.ExhaustKilowattsWhenActive = 2f;
-		obj.SelfHeatKilowattsWhenActive = 8f;
-		obj.PermittedRotations = PermittedRotations.FlipH;
-		obj.ViewMode = OverlayModes.LiquidConduits.ID;
-		obj.AudioCategory = "HollowMetal";
-		obj.InputConduitType = ConduitType.Liquid;
-		obj.UtilityInputOffset = new CellOffset(0, 0);
-		obj.OutputConduitType = ConduitType.Liquid;
-		obj.UtilityOutputOffset = new CellOffset(1, 1);
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("OilRefinery", 4, 4, "oilrefinery_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: BUILDINGS.DECOR.PENALTY.TIER1);
+		buildingDef.RequiresPowerInput = true;
+		buildingDef.PowerInputOffset = new CellOffset(1, 0);
+		buildingDef.EnergyConsumptionWhenActive = 480f;
+		buildingDef.ExhaustKilowattsWhenActive = 2f;
+		buildingDef.SelfHeatKilowattsWhenActive = 8f;
+		buildingDef.PermittedRotations = PermittedRotations.FlipH;
+		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
+		buildingDef.AudioCategory = "HollowMetal";
+		buildingDef.InputConduitType = ConduitType.Liquid;
+		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
+		buildingDef.OutputConduitType = ConduitType.Liquid;
+		buildingDef.UtilityOutputOffset = new CellOffset(1, 1);
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -56,7 +56,8 @@ public class OilRefineryConfig : IBuildingConfig
 		{
 			SimHashes.CrudeOil
 		};
-		go.AddOrGet<Storage>().showInUI = true;
+		Storage storage = go.AddOrGet<Storage>();
+		storage.showInUI = true;
 		ElementConverter elementConverter = go.AddOrGet<ElementConverter>();
 		elementConverter.consumedElements = new ElementConverter.ConsumedElement[1]
 		{

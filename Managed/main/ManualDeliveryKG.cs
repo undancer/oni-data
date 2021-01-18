@@ -25,13 +25,13 @@ public class ManualDeliveryKG : KMonoBehaviour, ISim1000ms
 	public float minimumMass = 10f;
 
 	[SerializeField]
-	public FetchOrder2.OperationalRequirement operationalRequirement;
+	public FetchOrder2.OperationalRequirement operationalRequirement = FetchOrder2.OperationalRequirement.Operational;
 
 	[SerializeField]
-	public bool allowPause;
+	public bool allowPause = false;
 
 	[SerializeField]
-	private bool paused;
+	private bool paused = false;
 
 	[SerializeField]
 	public HashedString choreTypeIDHash;
@@ -54,6 +54,13 @@ public class ManualDeliveryKG : KMonoBehaviour, ISim1000ms
 	{
 		component.OnOperationalChanged(data);
 	});
+
+	private static readonly EventSystem.IntraObjectHandler<ManualDeliveryKG> OnStorageChangedDelegate = new EventSystem.IntraObjectHandler<ManualDeliveryKG>(delegate(ManualDeliveryKG component, object data)
+	{
+		component.OnStorageChanged(data);
+	});
+
+	public bool IsPaused => paused;
 
 	public float Capacity => capacity;
 
@@ -114,10 +121,7 @@ public class ManualDeliveryKG : KMonoBehaviour, ISim1000ms
 		if (this.storage != null && base.isSpawned)
 		{
 			Debug.Assert(onStorageChangeSubscription == -1);
-			onStorageChangeSubscription = this.storage.Subscribe(-1697596308, delegate
-			{
-				OnStorageChanged(this.storage);
-			});
+			onStorageChangeSubscription = this.storage.Subscribe(-1697596308, OnStorageChangedDelegate);
 		}
 	}
 
@@ -187,9 +191,13 @@ public class ManualDeliveryKG : KMonoBehaviour, ISim1000ms
 				fetchList = null;
 			}
 		}
-		else if (fetchList == null && storage.GetMassAvailable(requestedItemTag) < refillMass)
+		else if (fetchList == null)
 		{
-			RequestDelivery();
+			float massAvailable = storage.GetMassAvailable(requestedItemTag);
+			if (massAvailable < refillMass)
+			{
+				RequestDelivery();
+			}
 		}
 	}
 
@@ -219,12 +227,9 @@ public class ManualDeliveryKG : KMonoBehaviour, ISim1000ms
 		}
 	}
 
-	private void OnStorageChanged(Storage storage)
+	protected void OnStorageChanged(object data)
 	{
-		if (storage == this.storage)
-		{
-			UpdateDeliveryState();
-		}
+		UpdateDeliveryState();
 	}
 
 	private void OnPause()

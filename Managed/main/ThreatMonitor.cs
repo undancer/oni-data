@@ -8,6 +8,8 @@ public class ThreatMonitor : GameStateMachine<ThreatMonitor, ThreatMonitor.Insta
 	public class Def : BaseDef
 	{
 		public Health.HealthState fleethresholdState = Health.HealthState.Injured;
+
+		public Tag[] friendlyCreatureTags = null;
 	}
 
 	public class ThreatenedStates : State
@@ -170,7 +172,8 @@ public class ThreatMonitor : GameStateMachine<ThreatMonitor, ThreatMonitor.Insta
 					return false;
 				}
 			}
-			return health.State < base.smi.def.fleethresholdState;
+			bool flag = health.State >= base.smi.def.fleethresholdState;
+			return !flag;
 		}
 
 		private void GotoThreatResponse()
@@ -239,15 +242,49 @@ public class ThreatMonitor : GameStateMachine<ThreatMonitor, ThreatMonitor.Insta
 				return null;
 			}
 			bool flag = WillFight();
-			if (IAmADuplicant && flag)
+			ListPool<ScenePartitionerEntry, ThreatMonitor>.PooledList pooledList = ListPool<ScenePartitionerEntry, ThreatMonitor>.Allocate();
+			int radius = 20;
+			Extents extents = new Extents(Grid.PosToCell(base.gameObject), radius);
+			GameScenePartitioner.Instance.GatherEntries(extents, GameScenePartitioner.Instance.attackableEntitiesLayer, pooledList);
+			for (int i = 0; i < pooledList.Count; i++)
 			{
-				for (int i = 0; i < 6; i++)
+				ScenePartitionerEntry scenePartitionerEntry = pooledList[i];
+				FactionAlignment factionAlignment = scenePartitionerEntry.obj as FactionAlignment;
+				if (factionAlignment.transform == null || factionAlignment == alignment || !factionAlignment.IsAlignmentActive() || FactionManager.Instance.GetDisposition(alignment.Alignment, factionAlignment.Alignment) != FactionManager.Disposition.Attack)
 				{
-					if (i == 0)
+					continue;
+				}
+				if (base.def.friendlyCreatureTags != null)
+				{
+					bool flag2 = false;
+					Tag[] friendlyCreatureTags = base.def.friendlyCreatureTags;
+					foreach (Tag tag in friendlyCreatureTags)
+					{
+						if (factionAlignment.HasTag(tag))
+						{
+							flag2 = true;
+						}
+					}
+					if (flag2)
 					{
 						continue;
 					}
-					foreach (FactionAlignment member in FactionManager.Instance.GetFaction((FactionManager.FactionID)i).Members)
+				}
+				if (navigator.CanReach(factionAlignment.attackable))
+				{
+					threats.Add(factionAlignment);
+				}
+			}
+			pooledList.Recycle();
+			if (IAmADuplicant && flag)
+			{
+				for (int k = 0; k < 6; k++)
+				{
+					if (k == 0)
+					{
+						continue;
+					}
+					foreach (FactionAlignment member in FactionManager.Instance.GetFaction((FactionManager.FactionID)k).Members)
 					{
 						if (member.targeted && !member.health.IsDefeated() && !threats.Contains(member) && navigator.CanReach(member.attackable))
 						{

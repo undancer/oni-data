@@ -4,6 +4,11 @@ public class ApproachableLocator : IEntityConfig
 {
 	public static readonly string ID = "ApproachableLocator";
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateEntity(ID, ID, is_selectable: false);

@@ -85,11 +85,11 @@ namespace Satsuma
 
 		private IEnumerable<Node> NodesInternal()
 		{
-			foreach (Node item in graph.Nodes())
+			foreach (Node node in graph.Nodes())
 			{
-				if (IsEnabled(item))
+				if (IsEnabled(node))
 				{
-					yield return item;
+					yield return node;
 				}
 			}
 		}
@@ -109,11 +109,11 @@ namespace Satsuma
 
 		public IEnumerable<Arc> Arcs(ArcFilter filter = ArcFilter.All)
 		{
-			foreach (Arc item in graph.Arcs(filter))
+			foreach (Arc arc in graph.Arcs(filter))
 			{
-				if (IsEnabled(item) && IsEnabled(graph.U(item)) && IsEnabled(graph.V(item)))
+				if (IsEnabled(arc) && IsEnabled(graph.U(arc)) && IsEnabled(graph.V(arc)))
 				{
-					yield return item;
+					yield return arc;
 				}
 			}
 		}
@@ -124,11 +124,11 @@ namespace Satsuma
 			{
 				yield break;
 			}
-			foreach (Arc item in graph.Arcs(u, filter))
+			foreach (Arc arc in graph.Arcs(u, filter))
 			{
-				if (IsEnabled(item) && IsEnabled(graph.Other(item, u)))
+				if (IsEnabled(arc) && IsEnabled(graph.Other(arc, u)))
 				{
-					yield return item;
+					yield return arc;
 				}
 			}
 		}
@@ -139,37 +139,25 @@ namespace Satsuma
 			{
 				yield break;
 			}
-			foreach (Arc item in graph.Arcs(u, v, filter))
+			foreach (Arc arc in graph.Arcs(u, v, filter))
 			{
-				if (IsEnabled(item))
+				if (IsEnabled(arc))
 				{
-					yield return item;
+					yield return arc;
 				}
 			}
 		}
 
 		public int NodeCount()
 		{
-			if (!defaultNodeEnabled)
-			{
-				return nodeExceptions.Count;
-			}
-			return graph.NodeCount() - nodeExceptions.Count;
+			return defaultNodeEnabled ? (graph.NodeCount() - nodeExceptions.Count) : nodeExceptions.Count;
 		}
 
 		public int ArcCount(ArcFilter filter = ArcFilter.All)
 		{
 			if (nodeExceptions.Count == 0 && filter == ArcFilter.All)
 			{
-				if (!defaultNodeEnabled)
-				{
-					return 0;
-				}
-				if (!defaultArcEnabled)
-				{
-					return arcExceptions.Count;
-				}
-				return graph.ArcCount() - arcExceptions.Count;
+				return defaultNodeEnabled ? (defaultArcEnabled ? (graph.ArcCount() - arcExceptions.Count) : arcExceptions.Count) : 0;
 			}
 			return Arcs(filter).Count();
 		}
@@ -186,20 +174,12 @@ namespace Satsuma
 
 		public bool HasNode(Node node)
 		{
-			if (graph.HasNode(node))
-			{
-				return IsEnabled(node);
-			}
-			return false;
+			return graph.HasNode(node) && IsEnabled(node);
 		}
 
 		public bool HasArc(Arc arc)
 		{
-			if (graph.HasArc(arc))
-			{
-				return IsEnabled(arc);
-			}
-			return false;
+			return graph.HasArc(arc) && IsEnabled(arc);
 		}
 	}
 }

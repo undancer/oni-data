@@ -42,7 +42,7 @@ public class NewGameSettingsScreen : NewGameFlowScreen
 	{
 		if (AudioDebug.Get().musicEnabled && !MusicManager.instance.SongIsPlaying("Music_FrontEnd"))
 		{
-			MusicManager.instance.StopSong("Music_TitleTheme");
+			MusicManager.instance.StopSong("Music_TitleTheme_Expansion1");
 			AudioMixer.instance.Stop(AudioMixerSnapshots.Get().FrontEndSnapshot);
 			AudioMixer.instance.Start(AudioMixerSnapshots.Get().FrontEndWorldGenerationSnapshot);
 			MusicManager.instance.PlaySong("Music_FrontEnd");

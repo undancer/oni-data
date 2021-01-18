@@ -25,7 +25,7 @@ public class JetSuitLocker : StateMachineComponent<JetSuitLocker.StatesInstance>
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = empty;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			root.Update("RefreshMeter", delegate(StatesInstance smi, float dt)
 			{
 				smi.master.RefreshMeter();
@@ -122,7 +122,8 @@ public class JetSuitLocker : StateMachineComponent<JetSuitLocker.StatesInstance>
 
 	protected override void OnCleanUp()
 	{
-		Conduit.GetNetworkManager(portInfo.conduitType).RemoveFromNetworks(secondaryInputCell, flowNetworkItem, is_endpoint: true);
+		IUtilityNetworkMgr networkManager = Conduit.GetNetworkManager(portInfo.conduitType);
+		networkManager.RemoveFromNetworks(secondaryInputCell, flowNetworkItem, is_endpoint: true);
 		base.OnCleanUp();
 	}
 
@@ -164,14 +165,18 @@ public class JetSuitLocker : StateMachineComponent<JetSuitLocker.StatesInstance>
 		}
 	}
 
-	ConduitType ISecondaryInput.GetSecondaryConduitType()
+	bool ISecondaryInput.HasSecondaryConduitType(ConduitType type)
 	{
-		return portInfo.conduitType;
+		return portInfo.conduitType == type;
 	}
 
-	CellOffset ISecondaryInput.GetSecondaryConduitOffset()
+	public CellOffset GetSecondaryConduitOffset(ConduitType type)
 	{
-		return portInfo.offset;
+		if (portInfo.conduitType == type)
+		{
+			return portInfo.offset;
+		}
+		return CellOffset.none;
 	}
 
 	public bool HasFuel()

@@ -57,7 +57,7 @@ public class SelectorModuleNodeEditor : BaseNodeEditor
 		{
 			return false;
 		}
-		IModule3D module3D = target.CreateModule(value, value3, value2);
+		IModule3D module3D = target.CreateModule(value, value2, value3);
 		if (module3D == null)
 		{
 			return false;

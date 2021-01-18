@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using KSerialization;
 using TUNING;
 using UnityEngine;
@@ -16,9 +17,9 @@ public class StickerBomber : GameStateMachine<StickerBomber, StickerBomber.Insta
 	{
 		private class StickerBombReactable : Reactable
 		{
-			private int stickersToPlace;
+			private int stickersToPlace = 0;
 
-			private int stickersPlaced;
+			private int stickersPlaced = 0;
 
 			private int placementCell;
 
@@ -174,7 +175,8 @@ public class StickerBomber : GameStateMachine<StickerBomber, StickerBomber.Insta
 				{
 					num--;
 					Vector3 position = a + new Vector3(UnityEngine.Random.Range(0f - tile_random_range, tile_random_range), UnityEngine.Random.Range(0f - tile_random_range, tile_random_range), -2.5f);
-					if (StickerBomb.CanPlaceSticker(StickerBomb.BuildCellOffsets(position)))
+					List<int> offsets = StickerBomb.BuildCellOffsets(position);
+					if (StickerBomb.CanPlaceSticker(offsets))
 					{
 						GameObject gameObject = Util.KInstantiate(Assets.GetPrefab("StickerBomb".ToTag()), position, Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0f - tile_random_rotation, tile_random_rotation)));
 						StickerBomb component = gameObject.GetComponent<StickerBomb>();
@@ -192,7 +194,7 @@ public class StickerBomber : GameStateMachine<StickerBomber, StickerBomber.Insta
 		}
 
 		[Serialize]
-		public float nextStickerBomb;
+		public float nextStickerBomb = 0f;
 
 		public Instance(IStateMachineTarget master)
 			: base(master)

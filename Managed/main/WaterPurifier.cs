@@ -72,8 +72,7 @@ public class WaterPurifier : StateMachineComponent<WaterPurifier.StatesInstance>
 		ManualDeliveryKG[] array = deliveryComponents;
 		foreach (ManualDeliveryKG manualDeliveryKG in array)
 		{
-			Element element = ElementLoader.GetElement(manualDeliveryKG.requestedItemTag);
-			if (element != null && element.IsLiquid)
+			if (ElementLoader.GetElement(manualDeliveryKG.requestedItemTag)?.IsLiquid ?? false)
 			{
 				manualDeliveryKG.Pause(pause, "pipe connected");
 			}

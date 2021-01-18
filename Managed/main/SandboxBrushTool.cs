@@ -68,7 +68,8 @@ public class SandboxBrushTool : BrushTool
 		{
 			for (int j = 0; j < brushRadius * 2; j++)
 			{
-				if (Vector2.Distance(new Vector2(i, j), new Vector2(brushRadius, brushRadius)) < (float)brushRadius - 0.8f)
+				float num = Vector2.Distance(new Vector2(i, j), new Vector2(brushRadius, brushRadius));
+				if (num < (float)brushRadius - 0.8f)
 				{
 					brushOffsets.Add(new Vector2(i - brushRadius, j - brushRadius));
 				}
@@ -102,5 +103,21 @@ public class SandboxBrushTool : BrushTool
 		float floatSetting2 = settings.GetFloatSetting("SandbosTools.Temperature");
 		int callbackIdx = index;
 		SimMessages.ReplaceElement(gameCell, id, sandBoxTool, floatSetting, floatSetting2, Db.Get().Diseases.GetIndex(Db.Get().Diseases.Get(settings.GetStringSetting("SandboxTools.SelectedDisease")).id), settings.GetIntSetting("SandboxTools.DiseaseCount"), callbackIdx);
+	}
+
+	public override void OnKeyDown(KButtonEvent e)
+	{
+		if (e.TryConsume(Action.SandboxCopyElement))
+		{
+			int cell = Grid.PosToCell(PlayerController.GetCursorPos(KInputManager.GetMousePos()));
+			if (Grid.IsValidCell(cell))
+			{
+				SandboxSampleTool.Sample(cell);
+			}
+		}
+		if (!e.Consumed)
+		{
+			base.OnKeyDown(e);
+		}
 	}
 }

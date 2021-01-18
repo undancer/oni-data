@@ -34,11 +34,11 @@ public class AirConditioner : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDe
 
 	private float lowTempLag;
 
-	private bool showingLowTemp;
+	private bool showingLowTemp = false;
 
 	public bool isLiquidConditioner;
 
-	private bool showingHotEnv;
+	private bool showingHotEnv = false;
 
 	private Guid statusHandle;
 
@@ -111,9 +111,9 @@ public class AirConditioner : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDe
 
 	private static bool UpdateStateCb(int cell, object data)
 	{
-		AirConditioner obj = data as AirConditioner;
-		obj.cellCount++;
-		obj.envTemp += Grid.Temperature[cell];
+		AirConditioner airConditioner = data as AirConditioner;
+		airConditioner.cellCount++;
+		airConditioner.envTemp += Grid.Temperature[cell];
 		return true;
 	}
 
@@ -146,16 +146,18 @@ public class AirConditioner : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDe
 				{
 					lowTempLag = Mathf.Min(lowTempLag - dt / 5f, 0f);
 				}
-				float num2 = (isLiquidConditioner ? Game.Instance.liquidConduitFlow : Game.Instance.gasConduitFlow).AddElement(cooledAirOutputCell, component.ElementID, component.Mass, num, component.DiseaseIdx, component.DiseaseCount);
+				ConduitFlow conduitFlow = (isLiquidConditioner ? Game.Instance.liquidConduitFlow : Game.Instance.gasConduitFlow);
+				float num2 = conduitFlow.AddElement(cooledAirOutputCell, component.ElementID, component.Mass, num, component.DiseaseIdx, component.DiseaseCount);
 				component.KeepZeroMassObject = true;
 				float num3 = num2 / component.Mass;
 				int num4 = (int)((float)component.DiseaseCount * num3);
 				component.Mass -= num2;
 				component.ModifyDiseaseCount(-num4, "AirConditioner.UpdateState");
-				float num5 = (num - component.Temperature) * component.Element.specificHeatCapacity * num2;
+				float num5 = num - component.Temperature;
+				float num6 = num5 * component.Element.specificHeatCapacity * num2;
 				float display_dt = ((lastSampleTime > 0f) ? (Time.time - lastSampleTime) : 1f);
 				lastSampleTime = Time.time;
-				GameComps.StructureTemperatures.ProduceEnergy(structureTemperature, 0f - num5, BUILDING.STATUSITEMS.OPERATINGENERGY.PIPECONTENTS_TRANSFER, display_dt);
+				GameComps.StructureTemperatures.ProduceEnergy(structureTemperature, 0f - num6, BUILDING.STATUSITEMS.OPERATINGENERGY.PIPECONTENTS_TRANSFER, display_dt);
 				break;
 			}
 		}

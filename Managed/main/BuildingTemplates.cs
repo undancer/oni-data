@@ -93,6 +93,7 @@ public class BuildingTemplates
 		CreateStandardBuildingDef(def);
 		def.Invincible = true;
 		def.DefaultAnimState = "grounded";
+		def.UseStructureTemperature = false;
 	}
 
 	public static void CreateMonumentBuildingDef(BuildingDef def)
@@ -103,9 +104,9 @@ public class BuildingTemplates
 
 	public static Storage CreateDefaultStorage(GameObject go, bool forceCreate = false)
 	{
-		Storage obj = (forceCreate ? go.AddComponent<Storage>() : go.AddOrGet<Storage>());
-		obj.capacityKg = 2000f;
-		return obj;
+		Storage storage = (forceCreate ? go.AddComponent<Storage>() : go.AddOrGet<Storage>());
+		storage.capacityKg = 2000f;
+		return storage;
 	}
 
 	public static void CreateComplexFabricatorStorage(GameObject go, ComplexFabricator fabricator)
@@ -126,5 +127,60 @@ public class BuildingTemplates
 
 	public static void DoPostConfigure(GameObject go)
 	{
+	}
+
+	public static GameObject ExtendBuildingToRocketModule(GameObject template, int burden, string vanillaBGAnim, float enginePower = 0f, float fuelCostPerDistance = 0f)
+	{
+		RocketModule rocketModule = template.AddOrGet<RocketModule>();
+		if (vanillaBGAnim != null)
+		{
+			rocketModule.SetBGKAnim(Assets.GetAnim(vanillaBGAnim));
+		}
+		KBatchedAnimController component = template.GetComponent<KBatchedAnimController>();
+		component.isMovable = true;
+		component.initialMode = KAnim.PlayMode.Loop;
+		template.AddOrGet<ReorderableBuilding>();
+		BuildingDef def = template.GetComponent<Building>().Def;
+		def.ShowInBuildMenu = def.ShowInBuildMenu && !DlcManager.IsExpansion1Active();
+		GameObject buildingUnderConstruction = def.BuildingUnderConstruction;
+		if (def.Cancellable)
+		{
+			Debug.LogError(def.Name + " Def should be marked 'Cancellable = false' as they implment their own cancel logic in ReorderableBuilding");
+		}
+		RocketModule rocketModule2 = buildingUnderConstruction.AddOrGet<RocketModule>();
+		buildingUnderConstruction.AddOrGet<ReorderableBuilding>();
+		AttachableBuilding component2 = template.GetComponent<AttachableBuilding>();
+		if (component2 != null)
+		{
+			AttachableBuilding attachableBuilding = buildingUnderConstruction.AddOrGet<AttachableBuilding>();
+			attachableBuilding.attachableToTag = component2.attachableToTag;
+		}
+		BuildingAttachPoint component3 = template.GetComponent<BuildingAttachPoint>();
+		if (component3 != null)
+		{
+			BuildingAttachPoint buildingAttachPoint = buildingUnderConstruction.AddOrGet<BuildingAttachPoint>();
+			buildingAttachPoint.points = component3.points;
+		}
+		template.GetComponent<ReorderableBuilding>().buildConditions.Add(new ResearchCompleted());
+		template.GetComponent<ReorderableBuilding>().buildConditions.Add(new MaterialsAvailable());
+		template.GetComponent<ReorderableBuilding>().buildConditions.Add(new PlaceSpaceAvailable());
+		template.GetComponent<ReorderableBuilding>().buildConditions.Add(new ModuleCountLimit());
+		if ((bool)template.GetComponent<RocketEngine>())
+		{
+			template.GetComponent<ReorderableBuilding>().buildConditions.Add(new LimitOneEngine());
+			template.GetComponent<ReorderableBuilding>().buildConditions.Add(new EngineOnBottom());
+		}
+		if ((bool)template.GetComponent<PassengerRocketModule>())
+		{
+			template.GetComponent<ReorderableBuilding>().buildConditions.Add(new NoFreeRocketInterior());
+		}
+		rocketModule.performanceStats = (rocketModule2.performanceStats = new RocketModulePerformance(burden, fuelCostPerDistance, enginePower));
+		template.GetComponent<Building>().Def.ThermalConductivity = 0.1f;
+		Storage component4 = template.GetComponent<Storage>();
+		if (component4 != null)
+		{
+			component4.showUnreachableStatus = true;
+		}
+		return template;
 	}
 }

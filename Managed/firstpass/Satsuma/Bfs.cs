@@ -55,7 +55,7 @@ namespace Satsuma
 					queue.Enqueue(node2);
 					level[node2] = value;
 					parentArc[node2] = item;
-					if (isTarget != null && isTarget(node2))
+					if (isTarget?.Invoke(node2) ?? false)
 					{
 						reachedTargetNode = node2;
 						return false;
@@ -106,20 +106,14 @@ namespace Satsuma
 
 		public int GetLevel(Node node)
 		{
-			if (!level.TryGetValue(node, out var value))
-			{
-				return -1;
-			}
-			return value;
+			int value;
+			return level.TryGetValue(node, out value) ? value : (-1);
 		}
 
 		public Arc GetParentArc(Node node)
 		{
-			if (!parentArc.TryGetValue(node, out var value))
-			{
-				return Arc.Invalid;
-			}
-			return value;
+			Arc value;
+			return parentArc.TryGetValue(node, out value) ? value : Arc.Invalid;
 		}
 
 		public IPath GetPath(Node node)

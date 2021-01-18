@@ -29,21 +29,21 @@ public class PetroleumGeneratorConfig : IBuildingConfig
 		{
 			"Metal"
 		};
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: new float[1]
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(construction_mass: new float[1]
 		{
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER5[0]
 		}, construction_materials: array, melting_point: 2400f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, id: "PetroleumGenerator", width: 3, height: 4, anim: "generatorpetrol_kanim", hitpoints: 100, construction_time: 480f, decor: BUILDINGS.DECOR.PENALTY.TIER2);
-		obj.GeneratorWattageRating = 2000f;
-		obj.GeneratorBaseCapacity = 2000f;
-		obj.ExhaustKilowattsWhenActive = 4f;
-		obj.SelfHeatKilowattsWhenActive = 16f;
-		obj.ViewMode = OverlayModes.Power.ID;
-		obj.AudioCategory = "Metal";
-		obj.UtilityInputOffset = new CellOffset(-1, 0);
-		obj.PowerOutputOffset = new CellOffset(1, 0);
-		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
-		obj.InputConduitType = ConduitType.Liquid;
-		return obj;
+		buildingDef.GeneratorWattageRating = 2000f;
+		buildingDef.GeneratorBaseCapacity = 2000f;
+		buildingDef.ExhaustKilowattsWhenActive = 4f;
+		buildingDef.SelfHeatKilowattsWhenActive = 16f;
+		buildingDef.ViewMode = OverlayModes.Power.ID;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.UtilityInputOffset = new CellOffset(-1, 0);
+		buildingDef.PowerOutputOffset = new CellOffset(1, 0);
+		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
+		buildingDef.InputConduitType = ConduitType.Liquid;
+		return buildingDef;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

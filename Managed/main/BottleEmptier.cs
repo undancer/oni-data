@@ -112,11 +112,12 @@ public class BottleEmptier : StateMachineComponent<BottleEmptier.StatesInstance>
 				return;
 			}
 			Storage component = GetComponent<Storage>();
-			float num = Mathf.Min(firstPrimaryElement.Mass, base.master.emptyRate * dt);
+			float mass = firstPrimaryElement.Mass;
+			float num = Mathf.Min(mass, base.master.emptyRate * dt);
 			if (!(num <= 0f))
 			{
 				Tag prefabTag = firstPrimaryElement.GetComponent<KPrefabID>().PrefabTag;
-				component.ConsumeAndGetDisease(prefabTag, num, out var disease_info, out var aggregate_temperature);
+				component.ConsumeAndGetDisease(prefabTag, num, out var amount_consumed, out var disease_info, out var aggregate_temperature);
 				Vector3 position = base.transform.GetPosition();
 				position.y += 1.8f;
 				bool flag = GetComponent<Rotatable>().GetOrientation() == Orientation.FlipH;
@@ -130,11 +131,11 @@ public class BottleEmptier : StateMachineComponent<BottleEmptier.StatesInstance>
 				byte idx = element.idx;
 				if (element.IsLiquid)
 				{
-					FallingWater.instance.AddParticle(num2, idx, num, aggregate_temperature, disease_info.idx, disease_info.count, skip_sound: true);
+					FallingWater.instance.AddParticle(num2, idx, amount_consumed, aggregate_temperature, disease_info.idx, disease_info.count, skip_sound: true);
 				}
 				else
 				{
-					SimMessages.ModifyCell(num2, idx, aggregate_temperature, num, disease_info.idx, disease_info.count);
+					SimMessages.ModifyCell(num2, idx, aggregate_temperature, amount_consumed, disease_info.idx, disease_info.count);
 				}
 			}
 		}
@@ -247,13 +248,22 @@ public class BottleEmptier : StateMachineComponent<BottleEmptier.StatesInstance>
 
 	private void OnRefreshUserMenu(object data)
 	{
-		KIconButtonMenu.ButtonInfo button = (allowManualPumpingStationFetching ? new KIconButtonMenu.ButtonInfo("action_bottler_delivery", UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.DENIED.NAME, OnChangeAllowManualPumpingStationFetching, Action.NumActions, null, null, null, UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.DENIED.TOOLTIP) : new KIconButtonMenu.ButtonInfo("action_bottler_delivery", UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.ALLOWED.NAME, OnChangeAllowManualPumpingStationFetching, Action.NumActions, null, null, null, UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.ALLOWED.TOOLTIP));
-		Game.Instance.userMenu.AddButton(base.gameObject, button, 0.4f);
+		if (isGasEmptier)
+		{
+			KIconButtonMenu.ButtonInfo button = (allowManualPumpingStationFetching ? new KIconButtonMenu.ButtonInfo("action_bottler_delivery", UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.DENIED_GAS.NAME, OnChangeAllowManualPumpingStationFetching, Action.NumActions, null, null, null, UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.DENIED_GAS.TOOLTIP) : new KIconButtonMenu.ButtonInfo("action_bottler_delivery", UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.ALLOWED_GAS.NAME, OnChangeAllowManualPumpingStationFetching, Action.NumActions, null, null, null, UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.ALLOWED_GAS.TOOLTIP));
+			Game.Instance.userMenu.AddButton(base.gameObject, button, 0.4f);
+		}
+		else
+		{
+			KIconButtonMenu.ButtonInfo button2 = (allowManualPumpingStationFetching ? new KIconButtonMenu.ButtonInfo("action_bottler_delivery", UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.DENIED.NAME, OnChangeAllowManualPumpingStationFetching, Action.NumActions, null, null, null, UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.DENIED.TOOLTIP) : new KIconButtonMenu.ButtonInfo("action_bottler_delivery", UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.ALLOWED.NAME, OnChangeAllowManualPumpingStationFetching, Action.NumActions, null, null, null, UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.ALLOWED.TOOLTIP));
+			Game.Instance.userMenu.AddButton(base.gameObject, button2, 0.4f);
+		}
 	}
 
 	private void OnCopySettings(object data)
 	{
-		BottleEmptier component = ((GameObject)data).GetComponent<BottleEmptier>();
+		GameObject gameObject = (GameObject)data;
+		BottleEmptier component = gameObject.GetComponent<BottleEmptier>();
 		allowManualPumpingStationFetching = component.allowManualPumpingStationFetching;
 		base.smi.RefreshChore();
 	}

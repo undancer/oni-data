@@ -22,17 +22,7 @@ namespace YamlDotNet.Core.Events
 
 		public bool IsQuotedImplicit => isQuotedImplicit;
 
-		public override bool IsCanonical
-		{
-			get
-			{
-				if (!isPlainImplicit)
-				{
-					return !isQuotedImplicit;
-				}
-				return false;
-			}
-		}
+		public override bool IsCanonical => !isPlainImplicit && !isQuotedImplicit;
 
 		public Scalar(string anchor, string tag, string value, ScalarStyle style, bool isPlainImplicit, bool isQuotedImplicit, Mark start, Mark end)
 			: base(anchor, tag, start, end)

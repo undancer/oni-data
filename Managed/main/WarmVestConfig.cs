@@ -12,7 +12,8 @@ public class WarmVestConfig : IEquipmentConfig
 
 	public EquipmentDef CreateEquipmentDef()
 	{
-		new Dictionary<string, float>().Add("BasicFabric", TUNING.EQUIPMENT.VESTS.WARM_VEST_MASS);
+		Dictionary<string, float> dictionary = new Dictionary<string, float>();
+		dictionary.Add("BasicFabric", TUNING.EQUIPMENT.VESTS.WARM_VEST_MASS);
 		ClothingWearer.ClothingInfo clothingInfo = ClothingWearer.ClothingInfo.WARM_CLOTHING;
 		List<AttributeModifier> attributeModifiers = new List<AttributeModifier>();
 		EquipmentDef equipmentDef = EquipmentTemplates.CreateEquipmentDef("Warm_Vest", TUNING.EQUIPMENT.CLOTHING.SLOT, SimHashes.Carbon, TUNING.EQUIPMENT.VESTS.WARM_VEST_MASS, TUNING.EQUIPMENT.VESTS.WARM_VEST_ICON0, TUNING.EQUIPMENT.VESTS.SNAPON0, TUNING.EQUIPMENT.VESTS.WARM_VEST_ANIM0, 4, attributeModifiers, TUNING.EQUIPMENT.VESTS.SNAPON1, IsBody: true, EntityTemplates.CollisionShape.RECTANGLE, 0.75f, 0.4f);
@@ -44,6 +45,7 @@ public class WarmVestConfig : IEquipmentConfig
 	public void DoPostConfigure(GameObject go)
 	{
 		SetupVest(go);
-		go.GetComponent<KPrefabID>().AddTag(GameTags.PedestalDisplayable);
+		KPrefabID component = go.GetComponent<KPrefabID>();
+		component.AddTag(GameTags.PedestalDisplayable);
 	}
 }

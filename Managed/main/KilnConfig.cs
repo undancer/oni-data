@@ -23,14 +23,14 @@ public class KilnConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("Kiln", 2, 2, "kiln_kanim", 100, 30f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER1);
-		obj.Overheatable = false;
-		obj.RequiresPowerInput = false;
-		obj.ExhaustKilowattsWhenActive = 16f;
-		obj.SelfHeatKilowattsWhenActive = 4f;
-		obj.AudioCategory = "HollowMetal";
-		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 1));
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("Kiln", 2, 2, "kiln_kanim", 100, 30f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER1);
+		buildingDef.Overheatable = false;
+		buildingDef.RequiresPowerInput = false;
+		buildingDef.ExhaustKilowattsWhenActive = 16f;
+		buildingDef.SelfHeatKilowattsWhenActive = 4f;
+		buildingDef.AudioCategory = "HollowMetal";
+		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 1));
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -39,7 +39,6 @@ public class KilnConfig : IBuildingConfig
 		go.AddOrGet<DropAllWorkable>();
 		go.AddOrGet<BuildingComplete>().isManuallyOperated = false;
 		ComplexFabricator complexFabricator = go.AddOrGet<ComplexFabricator>();
-		complexFabricator.resultState = ComplexFabricator.ResultState.Heated;
 		complexFabricator.heatedTemperature = 353.15f;
 		complexFabricator.duplicantOperated = false;
 		complexFabricator.sideScreenStyle = ComplexFabricatorSideScreen.StyleSetting.ListQueueHybrid;
@@ -64,7 +63,7 @@ public class KilnConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array2 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement(tag, num)
+			new ComplexRecipe.RecipeElement(tag, num, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
 		string obsolete_id = ComplexRecipeManager.MakeObsoleteRecipeID("Kiln", tag);
 		string text = ComplexRecipeManager.MakeRecipeID("Kiln", array, array2);
@@ -86,7 +85,7 @@ public class KilnConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array4 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement(tag2, num)
+			new ComplexRecipe.RecipeElement(tag2, num, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
 		string obsolete_id2 = ComplexRecipeManager.MakeObsoleteRecipeID("Kiln", tag2);
 		string text2 = ComplexRecipeManager.MakeRecipeID("Kiln", array3, array4);

@@ -48,47 +48,47 @@ public class SafeCellQuery : PathFinderQuery
 			return (SafeFlags)0;
 		}
 		bool flag = brain.IsCellClear(cell);
-		bool num2 = !Grid.Element[cell].IsLiquid;
-		bool flag2 = !Grid.Element[num].IsLiquid;
-		bool num3 = Grid.Temperature[cell] > 285.15f && Grid.Temperature[cell] < 303.15f;
-		bool flag3 = brain.OxygenBreather.IsBreathableElementAtCell(cell, Grid.DefaultOffset);
-		bool flag4 = !brain.Navigator.NavGrid.NavTable.IsValid(cell, NavType.Ladder) && !brain.Navigator.NavGrid.NavTable.IsValid(cell, NavType.Pole);
-		bool flag5 = !brain.Navigator.NavGrid.NavTable.IsValid(cell, NavType.Tube);
-		bool flag6 = !avoid_light || SleepChore.IsLightLevelOk(cell);
+		bool flag2 = !Grid.Element[cell].IsLiquid;
+		bool flag3 = !Grid.Element[num].IsLiquid;
+		bool flag4 = Grid.Temperature[cell] > 285.15f && Grid.Temperature[cell] < 303.15f;
+		bool flag5 = brain.OxygenBreather.IsBreathableElementAtCell(cell, Grid.DefaultOffset);
+		bool flag6 = !brain.Navigator.NavGrid.NavTable.IsValid(cell, NavType.Ladder) && !brain.Navigator.NavGrid.NavTable.IsValid(cell, NavType.Pole);
+		bool flag7 = !brain.Navigator.NavGrid.NavTable.IsValid(cell, NavType.Tube);
+		bool flag8 = !avoid_light || SleepChore.IsDarkAtCell(cell);
 		if (cell == Grid.PosToCell(brain))
 		{
-			flag3 = !brain.OxygenBreather.IsSuffocating;
+			flag5 = !brain.OxygenBreather.IsSuffocating;
 		}
 		SafeFlags safeFlags = (SafeFlags)0;
 		if (flag)
 		{
 			safeFlags |= SafeFlags.IsClear;
 		}
-		if (num3)
+		if (flag4)
 		{
 			safeFlags |= SafeFlags.CorrectTemperature;
 		}
-		if (flag3)
+		if (flag5)
 		{
 			safeFlags |= SafeFlags.IsBreathable;
 		}
-		if (flag4)
+		if (flag6)
 		{
 			safeFlags |= SafeFlags.IsNotLadder;
 		}
-		if (flag5)
+		if (flag7)
 		{
 			safeFlags |= SafeFlags.IsNotTube;
 		}
-		if (num2)
+		if (flag2)
 		{
 			safeFlags |= SafeFlags.IsNotLiquid;
 		}
-		if (flag2)
+		if (flag3)
 		{
 			safeFlags |= SafeFlags.IsNotLiquidOnMyFace;
 		}
-		if (flag6)
+		if (flag8)
 		{
 			safeFlags |= SafeFlags.IsLightOk;
 		}
@@ -98,9 +98,9 @@ public class SafeCellQuery : PathFinderQuery
 	public override bool IsMatch(int cell, int parent_cell, int cost)
 	{
 		SafeFlags flags = GetFlags(cell, brain, avoid_light);
-		bool num = flags > targetCellFlags;
-		bool flag = flags == targetCellFlags && cost < targetCost;
-		if (num || flag)
+		bool flag = flags > targetCellFlags;
+		bool flag2 = flags == targetCellFlags && cost < targetCost;
+		if (flag || flag2)
 		{
 			targetCellFlags = flags;
 			targetCost = cost;

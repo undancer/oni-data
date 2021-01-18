@@ -125,6 +125,15 @@ public class Worker : KMonoBehaviour
 			}
 			DetachAnimOverrides();
 			workable.CompleteWork(this);
+			if (workable.worker != null && !(workable is Constructable) && !(workable is Deconstructable) && !(workable is Repairable) && !(workable is Disinfectable))
+			{
+				BonusEvent.GameplayEventData gameplayEventData = new BonusEvent.GameplayEventData();
+				gameplayEventData.workable = workable;
+				gameplayEventData.worker = workable.worker;
+				gameplayEventData.building = workable.GetComponent<BuildingComplete>();
+				gameplayEventData.eventTrigger = GameHashes.UseBuilding;
+				GameplayEventManager.Instance.Trigger(1175726587, gameplayEventData);
+			}
 		}
 		InternalStopWork(workable, is_aborted: false);
 	}
@@ -187,7 +196,7 @@ public class Worker : KMonoBehaviour
 				dt = Mathf.Min(workable.WorkTimeRemaining + 0.01f, 5f);
 			}
 			Klei.AI.Attribute workAttribute = workable.GetWorkAttribute();
-			if (workAttribute != null && workAttribute.IsTrainable)
+			if (workAttribute?.IsTrainable ?? false)
 			{
 				float attributeExperienceMultiplier = workable.GetAttributeExperienceMultiplier();
 				GetComponent<AttributeLevels>().AddExperience(workAttribute.Id, dt, attributeExperienceMultiplier);
@@ -294,7 +303,8 @@ public class Worker : KMonoBehaviour
 		ChoreConsumer component = GetComponent<ChoreConsumer>();
 		if (component != null && component.choreDriver != null)
 		{
-			component.choreDriver.GetCurrentChore().Fail((text != null) ? text : "WorkChoreDisabled");
+			Chore currentChore = component.choreDriver.GetCurrentChore();
+			currentChore.Fail((text != null) ? text : "WorkChoreDisabled");
 		}
 	}
 
@@ -374,7 +384,7 @@ public class Worker : KMonoBehaviour
 				KAnim.PlayMode workAnimPlayMode = workable.GetWorkAnimPlayMode();
 				Vector3 vector = (workAnimOffset = workable.GetWorkOffset());
 				component.Offset += vector;
-				if (usesMultiTool && animInfo.smi == null && workAnims != null)
+				if (usesMultiTool && animInfo.smi == null && workAnims != null && resume != null)
 				{
 					if (workable.synchronizeAnims)
 					{
@@ -496,13 +506,15 @@ public class Worker : KMonoBehaviour
 				anim = "react",
 				startcb = GetReactionEffect
 			}).AddThought(Db.Get().Thoughts.Encourage).AddPrecondition(ReactorIsOnFloor)
-				.AddPrecondition(ReactorIsFacingMe);
+				.AddPrecondition(ReactorIsFacingMe)
+				.AddPrecondition(ReactorIsntPartying);
 		}
 	}
 
 	private void GetReactionEffect(GameObject reactor)
 	{
-		GetComponent<Effects>().Add("WorkEncouraged", should_save: true);
+		Effects component = GetComponent<Effects>();
+		component.Add("WorkEncouraged", should_save: true);
 	}
 
 	private bool ReactorIsOnFloor(GameObject reactor, Navigator.ActiveTransition transition)
@@ -514,6 +526,12 @@ public class Worker : KMonoBehaviour
 	{
 		Facing component = reactor.GetComponent<Facing>();
 		return base.transform.GetPosition().x < reactor.transform.GetPosition().x == component.GetFacing();
+	}
+
+	private bool ReactorIsntPartying(GameObject reactor, Navigator.ActiveTransition transition)
+	{
+		ChoreConsumer component = reactor.GetComponent<ChoreConsumer>();
+		return component.choreDriver.HasChore() && component.choreDriver.GetCurrentChore().choreType != Db.Get().ChoreTypes.Party;
 	}
 
 	public void ClearPasserbyReactable()

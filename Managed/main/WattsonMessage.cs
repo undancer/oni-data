@@ -38,7 +38,7 @@ public class WattsonMessage : KScreen
 
 	private List<KScreen> hideScreensWhileActive = new List<KScreen>();
 
-	private bool startFade;
+	private bool startFade = false;
 
 	private List<SchedulerHandle> scheduleHandles = new List<SchedulerHandle>();
 
@@ -48,7 +48,7 @@ public class WattsonMessage : KScreen
 		"working_loop"
 	};
 
-	private int birthsComplete;
+	private int birthsComplete = 0;
 
 	public override float GetSortKey()
 	{
@@ -103,10 +103,16 @@ public class WattsonMessage : KScreen
 		hideScreensWhileActive.Add(ManagementMenu.Instance);
 		hideScreensWhileActive.Add(ToolMenu.Instance);
 		hideScreensWhileActive.Add(ToolMenu.Instance.PriorityScreen);
-		hideScreensWhileActive.Add(ResourceCategoryScreen.Instance);
+		hideScreensWhileActive.Add(PinnedResourcesPanel.Instance);
 		hideScreensWhileActive.Add(TopLeftControlScreen.Instance);
 		hideScreensWhileActive.Add(DateTime.Instance);
 		hideScreensWhileActive.Add(BuildWatermark.Instance);
+		hideScreensWhileActive.Add(BuildWatermark.Instance);
+		hideScreensWhileActive.Add(ColonyDiagnosticScreen.Instance);
+		if (WorldSelector.Instance != null)
+		{
+			hideScreensWhileActive.Add(WorldSelector.Instance);
+		}
 		foreach (KScreen item in hideScreensWhileActive)
 		{
 			item.Show(show: false);
@@ -140,7 +146,7 @@ public class WattsonMessage : KScreen
 		};
 		dialog.GetComponent<KScreen>().Show(show: false);
 		startFade = false;
-		GameObject telepad = GameUtil.GetTelepad();
+		GameObject telepad = GameUtil.GetTelepad(0);
 		if (telepad != null)
 		{
 			KAnimControllerBase kac = telepad.GetComponent<KAnimControllerBase>();
@@ -166,7 +172,7 @@ public class WattsonMessage : KScreen
 					emoteChore.onComplete = (Action<Chore>)Delegate.Combine(emoteChore.onComplete, (Action<Chore>)delegate
 					{
 						birthsComplete++;
-						if (birthsComplete == Components.LiveMinionIdentities.Count - 1)
+						if (birthsComplete == Components.LiveMinionIdentities.Count - 1 && IsActive())
 						{
 							PauseAndShowMessage();
 						}
@@ -186,6 +192,7 @@ public class WattsonMessage : KScreen
 		else
 		{
 			Debug.LogWarning("Failed to spawn telepad - does the starting base template lack a 'Headquarters' ?");
+			PauseAndShowMessage();
 		}
 		scheduleHandles.Add(UIScheduler.Instance.Schedule("GoHome", 0.1f, delegate
 		{
@@ -225,8 +232,11 @@ public class WattsonMessage : KScreen
 		{
 			foreach (KScreen item in hideScreensWhileActive)
 			{
-				item.SetShouldFadeIn(bShouldFade: true);
-				item.Show();
+				if (!(item == null))
+				{
+					item.SetShouldFadeIn(bShouldFade: true);
+					item.Show();
+				}
 			}
 			CameraController.Instance.SetMaxOrthographicSize(20f);
 			Game.Instance.StartDelayedInitialSave();

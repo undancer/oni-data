@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using STRINGS;
 using TUNING;
 using UnityEngine;
 
@@ -10,27 +11,31 @@ public class OxidizerTankConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("OxidizerTank", 5, 5, "rocket_oxidizer_tank_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.FUEL_TANK_DRY_MASS, new string[1]
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("OxidizerTank", 5, 5, "rocket_oxidizer_tank_kanim", 1000, 60f, TUNING.BUILDINGS.ROCKETRY_MASS_KG.FUEL_TANK_DRY_MASS, new string[1]
 		{
 			SimHashes.Steel.ToString()
-		}, 9999f, BuildLocationRule.BuildingAttachPoint, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		BuildingTemplates.CreateRocketBuildingDef(obj);
-		obj.DefaultAnimState = "grounded";
-		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
-		obj.OverheatTemperature = 2273.15f;
-		obj.Floodable = false;
-		obj.AttachmentSlotTag = GameTags.Rocket;
-		obj.ObjectLayer = ObjectLayer.Building;
-		obj.RequiresPowerInput = false;
-		obj.attachablePosition = new CellOffset(0, 0);
-		obj.CanMove = true;
-		return obj;
+		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: TUNING.BUILDINGS.DECOR.NONE);
+		buildingDef.ForbiddenDlcId = "EXPANSION1_ID";
+		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
+		buildingDef.DefaultAnimState = "grounded";
+		buildingDef.SceneLayer = Grid.SceneLayer.Building;
+		buildingDef.OverheatTemperature = 2273.15f;
+		buildingDef.Floodable = false;
+		buildingDef.AttachmentSlotTag = GameTags.Rocket;
+		buildingDef.ObjectLayer = ObjectLayer.Building;
+		buildingDef.RequiresPowerInput = false;
+		buildingDef.attachablePosition = new CellOffset(0, 0);
+		buildingDef.CanMove = true;
+		buildingDef.Cancellable = false;
+		buildingDef.ShowInBuildMenu = !DlcManager.IsExpansion1Active();
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
-		go.AddOrGet<BuildingAttachPoint>().points = new BuildingAttachPoint.HardPoint[1]
+		BuildingAttachPoint buildingAttachPoint = go.AddOrGet<BuildingAttachPoint>();
+		buildingAttachPoint.points = new BuildingAttachPoint.HardPoint[1]
 		{
 			new BuildingAttachPoint.HardPoint(new CellOffset(0, 5), GameTags.Rocket, null)
 		};
@@ -42,24 +47,24 @@ public class OxidizerTankConfig : IBuildingConfig
 	{
 		Storage storage = go.AddOrGet<Storage>();
 		storage.capacityKg = 2700f;
-		storage.allowSublimation = false;
 		storage.SetDefaultStoredItemModifiers(new List<Storage.StoredItemModifier>
 		{
 			Storage.StoredItemModifier.Hide,
 			Storage.StoredItemModifier.Seal,
 			Storage.StoredItemModifier.Insulate
 		});
-		go.AddOrGet<OxidizerTank>().storage = storage;
+		FlatTagFilterable flatTagFilterable = go.AddOrGet<FlatTagFilterable>();
+		flatTagFilterable.tagOptions = new List<Tag>
+		{
+			SimHashes.OxyRock.CreateTag(),
+			SimHashes.Fertilizer.CreateTag()
+		};
+		flatTagFilterable.headerText = STRINGS.BUILDINGS.PREFABS.OXIDIZERTANK.UI_FILTER_CATEGORY;
+		OxidizerTank oxidizerTank = go.AddOrGet<OxidizerTank>();
+		oxidizerTank.consumeOnLand = !DlcManager.IsExpansion1Active();
+		oxidizerTank.storage = storage;
 		go.AddOrGet<CopyBuildingSettings>();
 		go.AddOrGet<DropToUserCapacity>();
-		ManualDeliveryKG manualDeliveryKG = go.AddOrGet<ManualDeliveryKG>();
-		manualDeliveryKG.SetStorage(storage);
-		manualDeliveryKG.requestedItemTag = ElementLoader.FindElementByHash(SimHashes.OxyRock).tag;
-		manualDeliveryKG.refillMass = storage.capacityKg;
-		manualDeliveryKG.capacity = storage.capacityKg;
-		manualDeliveryKG.operationalRequirement = FetchOrder2.OperationalRequirement.None;
-		manualDeliveryKG.choreTypeIDHash = Db.Get().ChoreTypes.MachineFetch.IdHash;
-		go.AddOrGet<RocketModule>().SetBGKAnim(Assets.GetAnim("rocket_oxidizer_tank_bg_kanim"));
-		EntityTemplates.ExtendBuildingToRocketModule(go);
+		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.MINOR, "rocket_oxidizer_tank_bg_kanim");
 	}
 }

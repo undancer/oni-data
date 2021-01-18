@@ -19,7 +19,7 @@ public class ObjectDispenser : Switch, IUserControlledCapacity
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = idle;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			idle.PlayAnim("on").EventHandler(GameHashes.OnStorageChange, delegate(ObjectDispenser.Instance smi)
 			{
 				smi.UpdateState();
@@ -43,17 +43,7 @@ public class ObjectDispenser : Switch, IUserControlledCapacity
 
 		private bool manual_on;
 
-		public bool IsOpened
-		{
-			get
-			{
-				if (!IsAutomated())
-				{
-					return manual_on;
-				}
-				return logic_on;
-			}
-		}
+		public bool IsOpened => IsAutomated() ? logic_on : manual_on;
 
 		public Instance(ObjectDispenser master, bool manual_start_state)
 			: base(master)
@@ -249,9 +239,9 @@ public class ObjectDispenser : Switch, IUserControlledCapacity
 
 	private static string ResolveInfoStatusItemString(string format_str, object data)
 	{
-		Instance obj = (Instance)data;
-		string format = (obj.IsAutomated() ? BUILDING.STATUSITEMS.OBJECTDISPENSER.AUTOMATION_CONTROL : BUILDING.STATUSITEMS.OBJECTDISPENSER.MANUAL_CONTROL);
-		string arg = (obj.IsOpened ? BUILDING.STATUSITEMS.OBJECTDISPENSER.OPENED : BUILDING.STATUSITEMS.OBJECTDISPENSER.CLOSED);
+		Instance instance = (Instance)data;
+		string format = (instance.IsAutomated() ? BUILDING.STATUSITEMS.OBJECTDISPENSER.AUTOMATION_CONTROL : BUILDING.STATUSITEMS.OBJECTDISPENSER.MANUAL_CONTROL);
+		string arg = (instance.IsOpened ? BUILDING.STATUSITEMS.OBJECTDISPENSER.OPENED : BUILDING.STATUSITEMS.OBJECTDISPENSER.CLOSED);
 		return string.Format(format, arg);
 	}
 }

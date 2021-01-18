@@ -75,11 +75,11 @@ namespace Satsuma
 				Node node2 = Graph.Other(item, node);
 				if (traversed.Contains(node2))
 				{
-					if (!BackArc(node, item))
+					if (BackArc(node, item))
 					{
-						return false;
+						continue;
 					}
-					continue;
+					return false;
 				}
 				Level++;
 				if (!Traverse(node2, item))

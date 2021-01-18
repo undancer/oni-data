@@ -31,6 +31,7 @@ public class CO2 : KMonoBehaviour
 
 	public void TriggerDestroy()
 	{
-		GetComponent<KBatchedAnimController>().Play("exhale_pst");
+		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
+		component.Play("exhale_pst");
 	}
 }

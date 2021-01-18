@@ -24,25 +24,26 @@ public class DietManager : KMonoBehaviour
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		foreach (Tag item in WorldInventory.Instance.GetDiscovered())
+		foreach (Tag item in DiscoveredResources.Instance.GetDiscovered())
 		{
 			Discover(item);
 		}
 		foreach (KeyValuePair<Tag, Diet> diet in diets)
 		{
 			Diet.Info[] infos = diet.Value.infos;
-			for (int i = 0; i < infos.Length; i++)
+			foreach (Diet.Info info in infos)
 			{
-				foreach (Tag consumedTag in infos[i].consumedTags)
+				foreach (Tag consumedTag in info.consumedTags)
 				{
-					if (Assets.GetPrefab(consumedTag) == null)
+					GameObject prefab = Assets.GetPrefab(consumedTag);
+					if (prefab == null)
 					{
-						Debug.LogError("Could not find prefab: " + consumedTag);
+						Debug.LogError($"Could not find prefab {consumedTag}, required by diet for {diet.Key}");
 					}
 				}
 			}
 		}
-		WorldInventory.Instance.OnDiscover += OnWorldInventoryDiscover;
+		DiscoveredResources.Instance.OnDiscover += OnWorldInventoryDiscover;
 	}
 
 	private void Discover(Tag tag)
@@ -51,7 +52,7 @@ public class DietManager : KMonoBehaviour
 		{
 			if (diet.Value.GetDietInfo(tag) != null)
 			{
-				WorldInventory.Instance.Discover(tag, diet.Key);
+				DiscoveredResources.Instance.Discover(tag, diet.Key);
 			}
 		}
 	}

@@ -102,7 +102,8 @@ public class RanchStation : GameStateMachine<RanchStation, RanchStation.Instance
 			{
 				return false;
 			}
-			if (ranchable.GetComponent<Navigator>().GetNavigationCost(ranch_cell) == -1)
+			int navigationCost = ranchable.GetComponent<Navigator>().GetNavigationCost(ranch_cell);
+			if (navigationCost == -1)
 			{
 				return false;
 			}

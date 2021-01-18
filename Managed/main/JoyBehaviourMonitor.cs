@@ -14,7 +14,7 @@ public class JoyBehaviourMonitor : GameStateMachine<JoyBehaviourMonitor, JoyBeha
 		public Expression happyExpression;
 
 		[Serialize]
-		public float transitionTime;
+		public float transitionTime = 0f;
 
 		private AttributeInstance expectationAttribute;
 
@@ -39,7 +39,8 @@ public class JoyBehaviourMonitor : GameStateMachine<JoyBehaviourMonitor, JoyBeha
 			if (num >= TRAITS.JOY_REACTIONS.MIN_MORALE_EXCESS)
 			{
 				float num2 = MathUtil.ReRange(num, TRAITS.JOY_REACTIONS.MIN_MORALE_EXCESS, TRAITS.JOY_REACTIONS.MAX_MORALE_EXCESS, TRAITS.JOY_REACTIONS.MIN_REACTION_CHANCE, TRAITS.JOY_REACTIONS.MAX_REACTION_CHANCE);
-				return Random.Range(0f, 100f) <= num2;
+				float num3 = Random.Range(0f, 100f);
+				return num3 <= num2;
 			}
 			return false;
 		}
@@ -60,7 +61,7 @@ public class JoyBehaviourMonitor : GameStateMachine<JoyBehaviourMonitor, JoyBeha
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = neutral;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		root.TagTransition(GameTags.Dead, null);
 		neutral.EventHandler(GameHashes.SleepFinished, delegate(Instance smi)
 		{

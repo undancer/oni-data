@@ -51,7 +51,8 @@ public class MingleChore : Chore<MingleChore.StatesInstance>, IWorkerPrioritizab
 
 		public bool IsRecTime()
 		{
-			return base.master.GetComponent<Schedulable>().IsAllowed(Db.Get().ScheduleBlockTypes.Recreation);
+			Schedulable component = base.master.GetComponent<Schedulable>();
+			return component.IsAllowed(Db.Get().ScheduleBlockTypes.Recreation);
 		}
 
 		public int GetMingleCell()
@@ -85,7 +86,8 @@ public class MingleChore : Chore<MingleChore.StatesInstance>, IWorkerPrioritizab
 		description = DUPLICANTS.CHORES.PRECONDITIONS.HAS_MINGLE_CELL,
 		fn = delegate(ref Precondition.Context context, object data)
 		{
-			return ((MingleChore)data).smi.HasMingleCell();
+			MingleChore mingleChore = (MingleChore)data;
+			return mingleChore.smi.HasMingleCell();
 		}
 	};
 

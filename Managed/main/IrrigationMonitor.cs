@@ -333,7 +333,7 @@ public class IrrigationMonitor : GameStateMachine<IrrigationMonitor, IrrigationM
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = wild;
-		base.serializable = false;
+		base.serializable = SerializeType.Never;
 		wild.ParamTransition(resourceStorage, unfertilizable, (Instance smi, GameObject p) => p != null);
 		unfertilizable.Enter(delegate(Instance smi)
 		{
@@ -345,9 +345,9 @@ public class IrrigationMonitor : GameStateMachine<IrrigationMonitor, IrrigationM
 		replanted.Enter(delegate(Instance smi)
 		{
 			ManualDeliveryKG[] components = smi.gameObject.GetComponents<ManualDeliveryKG>();
-			for (int i = 0; i < components.Length; i++)
+			foreach (ManualDeliveryKG manualDeliveryKG in components)
 			{
-				components[i].Pause(pause: false, "replanted");
+				manualDeliveryKG.Pause(pause: false, "replanted");
 			}
 			smi.UpdateIrrigation(71f / (678f * (float)Math.PI));
 		}).Target(resourceStorage).EventHandler(GameHashes.OnStorageChange, delegate(Instance smi)

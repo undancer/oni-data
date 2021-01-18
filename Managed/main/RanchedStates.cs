@@ -133,7 +133,8 @@ public class RanchedStates : GameStateMachine<RanchedStates, RanchedStates.Insta
 
 	private static int GetTargetRanchCell(Instance smi)
 	{
-		return GetRanchStation(smi).GetTargetRanchCell();
+		RanchStation.Instance ranchStation = GetRanchStation(smi);
+		return ranchStation.GetTargetRanchCell();
 	}
 
 	private static int GetRunawayCell(Instance smi)

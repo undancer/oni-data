@@ -7,7 +7,7 @@ public class BrainScheduler : KMonoBehaviour, IRenderEveryTick, ICPULoad
 {
 	private class Tuning : TuningData<Tuning>
 	{
-		public bool disableAsyncPathProbes;
+		public bool disableAsyncPathProbes = false;
 
 		public float frameTime = 5f;
 	}
@@ -22,9 +22,9 @@ public class BrainScheduler : KMonoBehaviour, IRenderEveryTick, ICPULoad
 
 		private WorkItemCollection<Navigator.PathProbeTask, object> pathProbeJob = new WorkItemCollection<Navigator.PathProbeTask, object>();
 
-		private int nextUpdateBrain;
+		private int nextUpdateBrain = 0;
 
-		private int nextPathProbeBrain;
+		private int nextPathProbeBrain = 0;
 
 		public Tag tag
 		{
@@ -139,24 +139,28 @@ public class BrainScheduler : KMonoBehaviour, IRenderEveryTick, ICPULoad
 
 		private void AsyncPathProbe()
 		{
-			_ = probeSize;
+			int probeSize = this.probeSize;
 			pathProbeJob.Reset(null);
 			for (int i = 0; i != brains.Count; i++)
 			{
 				ClampBrainIndex(ref nextPathProbeBrain);
-				Navigator component = brains[nextPathProbeBrain].GetComponent<Navigator>();
-				IncrementBrainIndex(ref nextPathProbeBrain);
-				if (component != null)
+				Brain brain = brains[nextPathProbeBrain];
+				if (brain.IsRunning())
 				{
-					component.executePathProbeTaskAsync = true;
-					component.PathProber.potentialCellsPerUpdate = probeSize;
-					component.pathProbeTask.Update();
-					pathProbeJob.Add(component.pathProbeTask);
-					if (pathProbeJob.Count == probeCount)
+					Navigator component = brain.GetComponent<Navigator>();
+					if (component != null)
 					{
-						break;
+						component.executePathProbeTaskAsync = true;
+						component.PathProber.potentialCellsPerUpdate = this.probeSize;
+						component.pathProbeTask.Update();
+						pathProbeJob.Add(component.pathProbeTask);
+						if (pathProbeJob.Count == probeCount)
+						{
+							break;
+						}
 					}
 				}
+				IncrementBrainIndex(ref nextPathProbeBrain);
 			}
 			CPUBudget.Start(this);
 			GlobalJobManager.Run(pathProbeJob);
@@ -176,14 +180,14 @@ public class BrainScheduler : KMonoBehaviour, IRenderEveryTick, ICPULoad
 				{
 					break;
 				}
-				ClampBrainIndex(ref nextPathProbeBrain);
+				ClampBrainIndex(ref nextUpdateBrain);
 				Brain brain = brains[nextUpdateBrain];
-				IncrementBrainIndex(ref nextUpdateBrain);
 				if (brain.IsRunning())
 				{
 					brain.UpdateBrain();
 					num--;
 				}
+				IncrementBrainIndex(ref nextUpdateBrain);
 			}
 		}
 

@@ -52,11 +52,7 @@ public class RoomProber : ISim1000ms
 
 		private static bool IsWall(int cell)
 		{
-			if ((Grid.BuildMasks[cell] & (Grid.BuildFlags.Solid | Grid.BuildFlags.Foundation)) == 0)
-			{
-				return Grid.HasDoor[cell];
-			}
-			return true;
+			return (Grid.BuildMasks[cell] & (Grid.BuildFlags.Solid | Grid.BuildFlags.Foundation)) != 0 || Grid.HasDoor[cell];
 		}
 
 		public bool ShouldContinue(int flood_cell)
@@ -116,6 +112,12 @@ public class RoomProber : ISim1000ms
 		GameScenePartitioner.Instance.AddGlobalLayerListener(GameScenePartitioner.Instance.objectLayers[1], OnBuildingsChanged);
 	}
 
+	public void Refresh()
+	{
+		ProcessSolidChanges();
+		RefreshRooms();
+	}
+
 	private void SolidChangedEvent(int cell)
 	{
 		SolidChangedEvent(cell, ignoreDoors: true);
@@ -123,7 +125,8 @@ public class RoomProber : ISim1000ms
 
 	private void OnBuildingsChanged(int cell, object building)
 	{
-		if (GetCavityForCell(cell) != null)
+		CavityInfo cavityForCell = GetCavityForCell(cell);
+		if (cavityForCell != null)
 		{
 			solidChanges.Add(cell);
 			dirty = true;

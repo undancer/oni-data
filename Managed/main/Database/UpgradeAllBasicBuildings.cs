@@ -1,10 +1,8 @@
-using System.IO;
-using KSerialization;
 using STRINGS;
 
 namespace Database
 {
-	public class UpgradeAllBasicBuildings : ColonyAchievementRequirement
+	public class UpgradeAllBasicBuildings : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		private Tag basicBuilding;
 
@@ -34,18 +32,12 @@ namespace Database
 			return result;
 		}
 
-		public override void Deserialize(IReader reader)
+		public void Deserialize(IReader reader)
 		{
 			string name = reader.ReadKleiString();
 			basicBuilding = new Tag(name);
 			string name2 = reader.ReadKleiString();
 			upgradeBuilding = new Tag(name2);
-		}
-
-		public override void Serialize(BinaryWriter writer)
-		{
-			writer.WriteKleiString(basicBuilding.ToString());
-			writer.WriteKleiString(upgradeBuilding.ToString());
 		}
 
 		public override string GetProgress(bool complete)

@@ -6,7 +6,7 @@ using UnityEngine;
 [SerializationConfig(MemberSerialization.OptIn)]
 public class Equippable : Assignable, ISaveLoadable, IGameObjectEffectDescriptor, IQuality
 {
-	private QualityLevel quality;
+	private QualityLevel quality = QualityLevel.Poor;
 
 	[MyCmpAdd]
 	private EquippableWorkable equippableWorkable;
@@ -19,13 +19,13 @@ public class Equippable : Assignable, ISaveLoadable, IGameObjectEffectDescriptor
 	[Serialize]
 	public bool isEquipped;
 
-	private bool destroyed;
+	private bool destroyed = false;
 
 	[Serialize]
 	public bool unequippable = true;
 
 	[Serialize]
-	public bool hideInCodex;
+	public bool hideInCodex = false;
 
 	private static readonly EventSystem.IntraObjectHandler<Equippable> SetDestroyedTrueDelegate = new EventSystem.IntraObjectHandler<Equippable>(delegate(Equippable component, object data)
 	{
@@ -109,7 +109,9 @@ public class Equippable : Assignable, ISaveLoadable, IGameObjectEffectDescriptor
 		}
 		if (new_assignee is MinionAssignablesProxy)
 		{
-			AssignableSlotInstance slot = new_assignee.GetSoleOwner().GetComponent<Equipment>().GetSlot(base.slot);
+			Ownables soleOwner = new_assignee.GetSoleOwner();
+			Equipment component = soleOwner.GetComponent<Equipment>();
+			AssignableSlotInstance slot = component.GetSlot(base.slot);
 			if (slot != null)
 			{
 				Assignable assignable = slot.assignable;
@@ -126,7 +128,8 @@ public class Equippable : Assignable, ISaveLoadable, IGameObjectEffectDescriptor
 	{
 		if (isEquipped)
 		{
-			((assignee is MinionIdentity) ? ((MinionIdentity)assignee).assignableProxy.Get().GetComponent<Equipment>() : ((KMonoBehaviour)assignee).GetComponent<Equipment>()).Unequip(this);
+			Equipment equipment = ((assignee is MinionIdentity) ? ((MinionIdentity)assignee).assignableProxy.Get().GetComponent<Equipment>() : ((KMonoBehaviour)assignee).GetComponent<Equipment>());
+			equipment.Unequip(this);
 			OnUnequip();
 		}
 		base.Unassign();
@@ -141,12 +144,14 @@ public class Equippable : Assignable, ISaveLoadable, IGameObjectEffectDescriptor
 		}
 		GetComponent<KBatchedAnimController>().enabled = false;
 		GetComponent<KSelectable>().IsSelectable = false;
-		Effects component = slot.gameObject.GetComponent<MinionAssignablesProxy>().GetTargetGameObject().GetComponent<Effects>();
-		if (component != null)
+		MinionAssignablesProxy component = slot.gameObject.GetComponent<MinionAssignablesProxy>();
+		GameObject targetGameObject = component.GetTargetGameObject();
+		Effects component2 = targetGameObject.GetComponent<Effects>();
+		if (component2 != null)
 		{
 			foreach (Effect effectImmunite in def.EffectImmunites)
 			{
-				component.AddImmunity(effectImmunite);
+				component2.AddImmunity(effectImmunite);
 			}
 		}
 		if (def.OnEquipCallBack != null)
@@ -202,7 +207,6 @@ public class Equippable : Assignable, ISaveLoadable, IGameObjectEffectDescriptor
 				{
 					equipmentEffects.Add(additionalDescriptor);
 				}
-				return equipmentEffects;
 			}
 			return equipmentEffects;
 		}

@@ -9,7 +9,7 @@ public class IncrementorToggle : MultiToggle
 
 	private const float incrementAccelerationScale = 2.5f;
 
-	private float timeToNextIncrement;
+	private float timeToNextIncrement = 0f;
 
 	protected override void Update()
 	{

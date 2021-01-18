@@ -36,7 +36,7 @@ public class ManualGenerator : Workable, ISingleSliderControl, ISliderControl
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = off;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			off.EventTransition(GameHashes.OperationalChanged, on, (Instance smi) => smi.master.GetComponent<Operational>().IsOperational).PlayAnim("off");
 			on.EventTransition(GameHashes.OperationalChanged, off, (Instance smi) => !smi.master.GetComponent<Operational>().IsOperational).EventTransition(GameHashes.ActiveChanged, working.pre, (Instance smi) => smi.master.GetComponent<Operational>().IsActive).PlayAnim("on");
 			working.DefaultState(working.pre);
@@ -60,7 +60,7 @@ public class ManualGenerator : Workable, ISingleSliderControl, ISliderControl
 	[MyCmpGet]
 	private BuildingEnabledButton buildingEnabledButton;
 
-	private Chore chore;
+	private Chore chore = null;
 
 	private int powerCell;
 
@@ -178,7 +178,8 @@ public class ManualGenerator : Workable, ISingleSliderControl, ISliderControl
 	{
 		if (operational.IsActive)
 		{
-			GetComponent<KSelectable>().SetStatusItem(Db.Get().StatusItemCategories.Power, Db.Get().BuildingStatusItems.ManualGeneratorChargingUp);
+			KSelectable component = GetComponent<KSelectable>();
+			component.SetStatusItem(Db.Get().StatusItemCategories.Power, Db.Get().BuildingStatusItems.ManualGeneratorChargingUp);
 		}
 	}
 

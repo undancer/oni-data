@@ -38,7 +38,7 @@ public class Grave : StateMachineComponent<Grave.StatesInstance>
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = empty;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			empty.PlayAnim("open").Enter("CreateFetchTask", delegate(StatesInstance smi)
 			{
 				smi.CreateFetchTask();
@@ -91,17 +91,18 @@ public class Grave : StateMachineComponent<Grave.StatesInstance>
 		while (true)
 		{
 			KAnim.Anim anim2 = anim.GetData().GetAnim(num);
-			if (anim2 == null)
+			if (anim2 != null)
 			{
-				break;
+				if (anim2.name == "working_pre")
+				{
+					float workTime = (float)(anim2.numFrames - 3) / anim2.frameRate;
+					component.SetWorkTime(workTime);
+					break;
+				}
+				num++;
+				continue;
 			}
-			if (anim2.name == "working_pre")
-			{
-				float workTime = (float)(anim2.numFrames - 3) / anim2.frameRate;
-				component.SetWorkTime(workTime);
-				break;
-			}
-			num++;
+			break;
 		}
 		base.OnSpawn();
 		base.smi.StartSM();
@@ -126,5 +127,8 @@ public class Grave : StateMachineComponent<Grave.StatesInstance>
 
 	private void OnWorkEvent(Workable.WorkableEvent evt)
 	{
+		if (evt == Workable.WorkableEvent.WorkStarted)
+		{
+		}
 	}
 }

@@ -50,10 +50,11 @@ public class OffscreenIndicator : KMonoBehaviour
 			if (component != null)
 			{
 				GameObject gameObject = Util.KInstantiateUI(IndicatorPrefab, IndicatorContainer, force_active: true);
-				gameObject.GetComponent<HierarchyReferences>().GetReference<Image>("icon").gameObject.SetActive(value: false);
-				CrewPortrait reference = gameObject.GetComponent<HierarchyReferences>().GetReference<CrewPortrait>("Portrait");
-				reference.gameObject.SetActive(value: true);
-				reference.SetIdentityObject(component);
+				Image reference = gameObject.GetComponent<HierarchyReferences>().GetReference<Image>("icon");
+				reference.gameObject.SetActive(value: false);
+				CrewPortrait reference2 = gameObject.GetComponent<HierarchyReferences>().GetReference<CrewPortrait>("Portrait");
+				reference2.gameObject.SetActive(value: true);
+				reference2.SetIdentityObject(component);
 				targets.Add(target, gameObject);
 			}
 		}

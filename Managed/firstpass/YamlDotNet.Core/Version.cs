@@ -26,11 +26,7 @@ namespace YamlDotNet.Core
 		public override bool Equals(object obj)
 		{
 			Version version = obj as Version;
-			if (version != null && Major == version.Major)
-			{
-				return Minor == version.Minor;
-			}
-			return false;
+			return version != null && Major == version.Major && Minor == version.Minor;
 		}
 
 		public override int GetHashCode()

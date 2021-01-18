@@ -14,6 +14,11 @@ public class ColdWheatConfig : IEntityConfig
 
 	public const float WATER_RATE = 71f / (678f * (float)Math.PI);
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("ColdWheat", STRINGS.CREATURES.SPECIES.COLDWHEAT.NAME, STRINGS.CREATURES.SPECIES.COLDWHEAT.DESC, 1f, decor: DECOR.BONUS.TIER1, anim: Assets.GetAnim("coldwheat_kanim"), initialAnim: "idle_empty", sceneLayer: Grid.SceneLayer.BuildingFront, width: 1, height: 1, noise: default(EffectorValues), element: SimHashes.Creature, additionalTags: null, defaultTemperature: 255f);

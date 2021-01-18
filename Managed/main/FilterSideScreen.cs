@@ -29,7 +29,7 @@ public class FilterSideScreen : SideScreenContent
 
 	public SortedDictionary<Tag, SortedDictionary<Tag, FilterSideScreenRow>> filterRowMap = new SortedDictionary<Tag, SortedDictionary<Tag, FilterSideScreenRow>>(comparer);
 
-	public bool isLogicFilter;
+	public bool isLogicFilter = false;
 
 	private Filterable targetFilterable;
 
@@ -42,11 +42,8 @@ public class FilterSideScreen : SideScreenContent
 	public override bool IsValidForTarget(GameObject target)
 	{
 		bool flag = false;
-		if ((!isLogicFilter) ? (target.GetComponent<ElementFilter>() != null) : (target.GetComponent<ConduitElementSensor>() != null || target.GetComponent<LogicElementSensor>() != null))
-		{
-			return target.GetComponent<Filterable>() != null;
-		}
-		return false;
+		flag = ((!isLogicFilter) ? (target.GetComponent<ElementFilter>() != null) : (target.GetComponent<ConduitElementSensor>() != null || target.GetComponent<LogicElementSensor>() != null));
+		return flag && target.GetComponent<Filterable>() != null;
 	}
 
 	public override void SetTarget(GameObject target)
@@ -86,7 +83,8 @@ public class FilterSideScreen : SideScreenContent
 			{
 				reference.ChangeState(1);
 			}
-			hierarchyReferences.GetReference<RectTransform>("Entries").gameObject.SetActive(reference.CurrentState != 0);
+			RectTransform reference2 = hierarchyReferences.GetReference<RectTransform>("Entries");
+			reference2.gameObject.SetActive(reference.CurrentState != 0);
 		}
 	}
 
@@ -100,8 +98,10 @@ public class FilterSideScreen : SideScreenContent
 				if (category_tags.Key != GameTags.Void)
 				{
 					HierarchyReferences hierarchyReferences = Util.KInstantiateUI<HierarchyReferences>(categoryFoldoutPrefab.gameObject, elementEntryContainer.gameObject);
-					hierarchyReferences.GetReference<LocText>("Label").text = category_tags.Key.ProperName();
-					hierarchyReferences.GetReference<MultiToggle>("Toggle").onClick = delegate
+					LocText reference = hierarchyReferences.GetReference<LocText>("Label");
+					reference.text = category_tags.Key.ProperName();
+					MultiToggle reference2 = hierarchyReferences.GetReference<MultiToggle>("Toggle");
+					reference2.onClick = delegate
 					{
 						ToggleCategory(category_tags.Key);
 					};

@@ -152,12 +152,13 @@ namespace PriorityQueueDemo
 			while (pos > 0)
 			{
 				int num = (pos - 1) / 2;
-				if (_comparer.Compare(_baseHeap[num].Key, _baseHeap[pos].Key) <= 0)
+				if (_comparer.Compare(_baseHeap[num].Key, _baseHeap[pos].Key) > 0)
 				{
-					break;
+					ExchangeElements(num, pos);
+					pos = num;
+					continue;
 				}
-				ExchangeElements(num, pos);
-				pos = num;
+				break;
 			}
 			return pos;
 		}
@@ -232,7 +233,8 @@ namespace PriorityQueueDemo
 			}
 			_baseHeap[num] = _baseHeap[_baseHeap.Count - 1];
 			_baseHeap.RemoveAt(_baseHeap.Count - 1);
-			if (HeapifyFromEndToBeginning(num) == num)
+			int num2 = HeapifyFromEndToBeginning(num);
+			if (num2 == num)
 			{
 				HeapifyFromBeginningToEnd(num);
 			}

@@ -11,7 +11,7 @@ public class Valve : Workable, ISaveLoadable
 	[Serialize]
 	private float desiredFlow = 0.5f;
 
-	private Chore chore;
+	private Chore chore = null;
 
 	[MyCmpAdd]
 	private CopyBuildingSettings copyBuildingSettings;
@@ -21,17 +21,7 @@ public class Valve : Workable, ISaveLoadable
 		component.OnCopySettings(data);
 	});
 
-	public float QueuedMaxFlow
-	{
-		get
-		{
-			if (chore == null)
-			{
-				return -1f;
-			}
-			return desiredFlow;
-		}
-	}
+	public float QueuedMaxFlow => (chore != null) ? desiredFlow : (-1f);
 
 	public float DesiredFlow => desiredFlow;
 
@@ -39,7 +29,8 @@ public class Valve : Workable, ISaveLoadable
 
 	private void OnCopySettings(object data)
 	{
-		Valve component = ((GameObject)data).GetComponent<Valve>();
+		GameObject gameObject = (GameObject)data;
+		Valve component = gameObject.GetComponent<Valve>();
 		if (component != null)
 		{
 			ChangeFlow(component.desiredFlow);

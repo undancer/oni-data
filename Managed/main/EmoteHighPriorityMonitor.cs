@@ -9,7 +9,8 @@ public class EmoteHighPriorityMonitor : GameStateMachine<EmoteHighPriorityMonito
 
 		public void OnStartChore(object o)
 		{
-			if (((Chore)o).SatisfiesUrge(Db.Get().Urges.EmoteHighPriority))
+			Chore chore = (Chore)o;
+			if (chore.SatisfiesUrge(Db.Get().Urges.EmoteHighPriority))
 			{
 				GoTo(base.sm.resetting);
 			}
@@ -23,7 +24,7 @@ public class EmoteHighPriorityMonitor : GameStateMachine<EmoteHighPriorityMonito
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = ready;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		ready.ToggleUrge(Db.Get().Urges.EmoteHighPriority).EventHandler(GameHashes.BeginChore, delegate(Instance smi, object o)
 		{
 			smi.OnStartChore(o);

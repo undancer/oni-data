@@ -110,7 +110,8 @@ public class DirectionControl : KMonoBehaviour
 
 	private void OnCopySettings(object data)
 	{
-		DirectionControl component = ((GameObject)data).GetComponent<DirectionControl>();
+		GameObject gameObject = (GameObject)data;
+		DirectionControl component = gameObject.GetComponent<DirectionControl>();
 		SetAllowedDirection(component.allowedDirection);
 	}
 

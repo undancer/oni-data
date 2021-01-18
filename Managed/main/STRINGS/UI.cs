@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace STRINGS
 {
 	public class UI
@@ -41,6 +43,291 @@ namespace STRINGS
 			public static LocString NAME_ITAL = string.Concat("<i>", NAME, "</i>");
 		}
 
+		public class DIAGNOSTICS_SCREEN
+		{
+			public class CLICK_TOGGLE_MESSAGE
+			{
+				public static LocString ALWAYS = HORIZONTAL_BR_RULE + "Click to pin this diagnostic to the sidebar -  <b>Always Visible</b>";
+
+				public static LocString ALERT_ONLY = HORIZONTAL_BR_RULE + "Click to subscribe to this diagnostic - <b>Visible On Alert Only</b>";
+
+				public static LocString NEVER = HORIZONTAL_BR_RULE + "Click to mute this diagnostic on the sidebar -  <b>Never Visible      </b>";
+			}
+
+			public static LocString TITLE = "DIAGNOSTICS";
+
+			public static LocString DIAGNOSTIC = "Diagnostic";
+
+			public static LocString TOTAL = "Total";
+
+			public static LocString RESERVED = "Reserved";
+
+			public static LocString STATUS = "Status";
+
+			public static LocString SEARCH = "Search";
+
+			public static LocString SEE_ALL = "+ See All ({0})";
+		}
+
+		public class COLONY_DIAGNOSTICS
+		{
+			public class IDLEDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = "Idleness";
+
+				public static LocString TOOLTIP_NAME = "<b>Idleness</b>";
+
+				public static LocString NORMAL = "    • All Duplicants currently have tasks";
+
+				public static LocString IDLE = "    • One or more Duplicants are idle";
+			}
+
+			public class CHOREGROUPDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = ALLCHORESDIAGNOSTIC.ALL_NAME;
+			}
+
+			public class ALLCHORESDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = "Errands";
+
+				public static LocString TOOLTIP_NAME = "<b>Errands</b>";
+
+				public static LocString NORMAL = "    • {0} total errands";
+			}
+
+			public class WORKTIMEDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = ALLCHORESDIAGNOSTIC.ALL_NAME;
+			}
+
+			public class ALLWORKTIMEDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = "Work Time";
+
+				public static LocString TOOLTIP_NAME = "<b>Work Time</b>";
+
+				public static LocString NORMAL = "    • {0} time spent working";
+			}
+
+			public class TRAVEL_TIME
+			{
+				public static LocString ALL_NAME = "Travel Time";
+
+				public static LocString TOOLTIP_NAME = "<b>Travel Time</b>";
+
+				public static LocString NORMAL = "    • {0} time spent traveling between tasks";
+			}
+
+			public class TRAPPEDDUPLICANTDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = "Trapped";
+
+				public static LocString TOOLTIP_NAME = "<b>Trapped</b>";
+
+				public static LocString NORMAL = "    • No Duplicants are currently trapped";
+
+				public static LocString STUCK = "    • One or more Duplicants are trapped";
+			}
+
+			public class BREATHABILITYDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = "Breathability";
+
+				public static LocString TOOLTIP_NAME = "<b>Breathability</b>";
+
+				public static LocString NORMAL = "    • There is currently adequate oxygen available";
+
+				public static LocString POOR = "    • Oxygen is becoming scarce or low pressure";
+
+				public static LocString SUFFOCATING = "    • One or more Duplicants are currently suffocating";
+			}
+
+			public class STRESSDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = "Max Stress";
+
+				public static LocString TOOLTIP_NAME = "<b>Max Stress</b>";
+
+				public static LocString HIGH_STRESS = "    • One or more Duplicants is suffering from high Stress";
+
+				public static LocString NORMAL = "    • All Duplicants currently have manageable stress levels";
+			}
+
+			public class DECORDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = "Decor";
+
+				public static LocString TOOLTIP_NAME = "<b>Decor</b>";
+
+				public static LocString LOW = "    • Currently has very low Decor levels";
+
+				public static LocString NORMAL = "    • Currently has adequate Decor levels";
+			}
+
+			public class TOILETDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = "Toilets";
+
+				public static LocString TOOLTIP_NAME = "<b>Toilets</b>";
+
+				public static LocString NO_TOILETS = "    • Currently has no toilets";
+
+				public static LocString NO_WORKING_TOILETS = "    • Currently has no working toilets";
+
+				public static LocString FEW_TOILETS = "    • Low toilet to Duplicant ratio";
+
+				public static LocString INOPERATIONAL = "    • One or more toilets are out of order";
+
+				public static LocString NORMAL = "    • Currently has an adequate amount of toilets";
+			}
+
+			public class BEDDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = "Beds";
+
+				public static LocString TOOLTIP_NAME = "<b>Beds</b>";
+
+				public static LocString NORMAL = "    • Currently has an adequate amount of beds";
+
+				public static LocString NOT_ENOUGH_BEDS = "    • One or more Duplicants are missing a bed";
+
+				public static LocString MISSING_ASSIGNMENT = "    • One or more Duplicants don't have beds assigned";
+			}
+
+			public class FOODDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = "Food";
+
+				public static LocString TOOLTIP_NAME = "<b>Food</b>";
+
+				public static LocString NORMAL = "    • Adequate food supply";
+
+				public static LocString LOW_CALORIES = "    • Duplicant to food ratio is low";
+
+				public static LocString HUNGRY = "    • One or more Duplicants are very hungry";
+
+				public static LocString NO_FOOD = "    • This colony has no food";
+			}
+
+			public class FARMDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = "Crops";
+
+				public static LocString TOOLTIP_NAME = "<b>Crops</b>";
+
+				public static LocString NORMAL = "    • Colony is growing adequate crops";
+
+				public static LocString NONE = "    • There are no farm plots in the colony";
+
+				public static LocString NONE_PLANTED = "    • No crops planted";
+
+				public static LocString WILTING = "    • One or more crops are wilting";
+
+				public static LocString INOPERATIONAL = "    • One or more farm plots are inoperable";
+			}
+
+			public class POWERUSEDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = "Avg Power";
+
+				public static LocString TOOLTIP_NAME = "<b>Avg Power</b>";
+
+				public static LocString NORMAL = "    • Currently has adequate power supply";
+
+				public static LocString OVERLOADED = "    • One or more power grids are damaged";
+			}
+
+			public class HEATDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = BATTERYDIAGNOSTIC.ALL_NAME;
+			}
+
+			public class BATTERYDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = "Battery";
+
+				public static LocString TOOLTIP_NAME = "<b>Battery</b>";
+
+				public static LocString NORMAL = "    • Battery";
+
+				public static LocString NONE = "    • No Batteries built";
+
+				public static LocString DEAD_BATTERY = "    • Dead battery";
+
+				public static LocString LIMITED_CAPACITY = "    • Limited battery capacity relative to power use";
+			}
+
+			public class ENTOMBEDDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = "Entombed";
+
+				public static LocString TOOLTIP_NAME = "<b>Entombed</b>";
+
+				public static LocString NORMAL = "    • No buildings are entombed";
+
+				public static LocString BUILDING_ENTOMBED = "    • One or more buildings are entombed";
+			}
+
+			public class ROCKETFUELDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = "Rocket Fuel";
+
+				public static LocString TOOLTIP_NAME = "<b>Rocket Fuel</b>";
+
+				public static LocString NORMAL = "    • Rocket has fuel";
+
+				public static LocString WARNING = "    • Rocket has no fuel";
+			}
+
+			public class ROCKETOXIDIZERDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = "Rocket Oxidizer";
+
+				public static LocString TOOLTIP_NAME = "<b>Rocket Oxidizer</b>";
+
+				public static LocString NORMAL = "    • Oxidizer requirements met";
+
+				public static LocString WARNING = "    • Insufficient oxidizer";
+			}
+
+			public class FLOATINGROCKETDIAGNOSTIC
+			{
+				public static LocString ALL_NAME = "Flight Status";
+
+				public static LocString TOOLTIP_NAME = "<b>Flight Status</b>";
+
+				public static LocString NORMAL_FLIGHT = "    • Rocket is on its way to destination";
+
+				public static LocString NORMAL_LANDED = "    • Rocket is landed";
+
+				public static LocString WARNING_NO_DESTINATION = "    • Rocket is floating in space with no destination";
+
+				public static LocString WARNING_NO_SPEED = "    • Rocket not progressing towards destination";
+			}
+
+			public static LocString NO_MINIONS = "    • There are no Duplicants on this " + CLUSTERMAP.PLANETOID_KEYWORD;
+
+			public static LocString NO_MINIONS_REQUESTED = "    • This diagnostic in not concerned with rockets that don't have their crew requested";
+
+			public static LocString NO_DATA = "    • Not enough data for evaluation";
+
+			public static LocString NO_DATA_SHORT = "    • No data";
+
+			public static LocString MUTE_TUTORIAL = "Diagnostic can be muted in the <b><color=#E5B000>See All</color></b> panel";
+		}
+
+		public class TRACKERS
+		{
+			public static LocString BREATHABILITY = "Breathability";
+
+			public static LocString FOOD = "Food";
+
+			public static LocString STRESS = "Max Stress";
+
+			public static LocString IDLE = "Idle Duplicants";
+		}
+
 		public class MATH_PICTURES
 		{
 			public class AXIS_LABELS
@@ -58,6 +345,13 @@ namespace STRINGS
 				public static LocString DESCRIPTION = "The source of our misfortune, though it may also be our shot at freedom. Traces of Neutronium are detectable in my readings.";
 			}
 
+			public class RESEARCHDESTINATION
+			{
+				public static LocString NAME = "Alluring Anomaly";
+
+				public static LocString DESCRIPTION = "Our researchers would have a field day with this if they could only get close enough.";
+			}
+
 			public class DEBRIS
 			{
 				public class SATELLITE
@@ -66,6 +360,26 @@ namespace STRINGS
 
 					public static LocString DESCRIPTION = "An artificial construct that has escaped its orbit. It no longer appears to be monitored.";
 				}
+			}
+
+			public class NONE
+			{
+				public static LocString NAME = "Unselected";
+			}
+
+			public class ORBIT
+			{
+				public static LocString NAME_FMT = "Orbiting {Name}";
+			}
+
+			public class EMPTY_SPACE
+			{
+				public static LocString NAME = "Empty Space";
+			}
+
+			public class FOG_OF_WAR_SPACE
+			{
+				public static LocString NAME = "Unexplored Space";
 			}
 
 			public class ASTEROIDS
@@ -132,6 +446,26 @@ namespace STRINGS
 				{
 					public static LocString NAME = "Gold Comet";
 				}
+
+				public class FULLERENECOMET
+				{
+					public static LocString NAME = "Fullerene Comet";
+				}
+
+				public class NUCLEAR_WASTE
+				{
+					public static LocString NAME = "Radioactive Comet";
+				}
+
+				public class SATELLITE
+				{
+					public static LocString NAME = "Defunct Satellite";
+				}
+
+				public class FOODCOMET
+				{
+					public static LocString NAME = "Snack Bomb";
+				}
 			}
 
 			public class DWARFPLANETS
@@ -192,12 +526,12 @@ namespace STRINGS
 				{
 					public static LocString NAME = "Shattered Planet";
 
-					public static LocString DESCRIPTION = "A once-habitable planet that has sustained massive damage.\n\nA powerful containment field prevents our rockets from travelling to its surface.";
+					public static LocString DESCRIPTION = "A once-habitable planet that has sustained massive damage.\n\nA powerful containment field prevents our rockets from traveling to its surface.";
 				}
 
 				public class RUSTPLANET
 				{
-					public static LocString NAME = "Oxidized Planetoid";
+					public static LocString NAME = "Oxidized Asteroid";
 
 					public static LocString DESCRIPTION = "A small planet covered in large swathes of brown rust.";
 				}
@@ -478,7 +812,7 @@ namespace STRINGS
 			{
 				public class INSTANT_BUILD
 				{
-					public static LocString NAME = "Instant build mode";
+					public static LocString NAME = "Instant build mode ON";
 
 					public static LocString TOOLTIP = "Toggle between placing construction plans and fully built buildings";
 				}
@@ -516,6 +850,20 @@ namespace STRINGS
 					public static LocString NAME = "Temperature";
 
 					public static LocString TOOLTIP = "Adjust additive temperature";
+				}
+
+				public class RADIATION
+				{
+					public static LocString NAME = "Absolute radiation";
+
+					public static LocString TOOLTIP = "Adjust absolute radiation";
+				}
+
+				public class RADIATION_ADDITIVE
+				{
+					public static LocString NAME = "Additive radiation";
+
+					public static LocString TOOLTIP = "Adjust additive radiation";
 				}
 
 				public class MASS
@@ -581,6 +929,13 @@ namespace STRINGS
 					public static LocString TOOLTIP = "Inject thermal energy into the simulation {Hotkey}";
 				}
 
+				public class RADSTOOL
+				{
+					public static LocString NAME = "Radiation Tool";
+
+					public static LocString TOOLTIP = "Inject or remove radiation from the simulation {Hotkey}";
+				}
+
 				public class SPAWNER
 				{
 					public static LocString NAME = "Spawner";
@@ -613,6 +968,13 @@ namespace STRINGS
 
 					public static LocString TOOLTIP = "Dispel the Fog of War shrouding the map {Hotkey}";
 				}
+
+				public class CRITTER
+				{
+					public static LocString NAME = "Critter Removal";
+
+					public static LocString TOOLTIP = "Remove Critters! {Hotkey}";
+				}
 			}
 
 			public class FILTERS
@@ -620,6 +982,8 @@ namespace STRINGS
 				public class ENTITIES
 				{
 					public static LocString SPECIAL = "Special";
+
+					public static LocString GRAVITAS = "Gravitas";
 
 					public static LocString PLANTS = "Plants";
 
@@ -638,6 +1002,8 @@ namespace STRINGS
 					public static LocString EXPERIMENTS = "Experimental";
 
 					public static LocString INDUSTRIAL_PRODUCTS = "Industrial";
+
+					public static LocString COMETS = "Comets";
 				}
 
 				public static LocString BACK = "Back";
@@ -809,6 +1175,30 @@ namespace STRINGS
 						public static LocString NAME = "Fast Workers Mode";
 
 						public static LocString TOOLTIP = "Dupes will finish most work immediately and require little sleep";
+					}
+
+					public class EXPANSION1ACTIVE
+					{
+						public static class LEVELS
+						{
+							public static class DISABLED
+							{
+								public static LocString NAME = "Disabled";
+
+								public static LocString TOOLTIP = string.Concat("Unchecked: ", DLC1.NAME_ITAL, " Content is turned off (Default)");
+							}
+
+							public static class ENABLED
+							{
+								public static LocString NAME = "Enabled";
+
+								public static LocString TOOLTIP = string.Concat("Checked: ", DLC1.NAME_ITAL, " Content is turned on");
+							}
+						}
+
+						public static LocString NAME = string.Concat(DLC1.NAME_ITAL, " Content Enabled");
+
+						public static LocString TOOLTIP = "FIXME";
 					}
 
 					public class SAVETOCLOUD
@@ -1029,6 +1419,13 @@ namespace STRINGS
 						public static LocString TOOLTIP = "New worlds added by mods can be selected here";
 					}
 
+					public class CLUSTER_CHOICE
+					{
+						public static LocString NAME = "Asteroid Belt";
+
+						public static LocString TOOLTIP = "New asteroid belts added by mods can be selected here";
+					}
+
 					public class STRESS
 					{
 						public static class LEVELS
@@ -1123,9 +1520,9 @@ namespace STRINGS
 
 					public static LocString ACTIVATE_EXPANSION1_DESC = "The game will need to restart in order to download and install <i>Spaced Out!</i>";
 
-					public static LocString DEACTIVATE_EXPANSION1 = "DECTIVATE DLC";
+					public static LocString DEACTIVATE_EXPANSION1 = "DEACTIVATE DLC";
 
-					public static LocString DEACTIVATE_EXPANSION1_DESC = "The game will need to restart in order to download and install the base version of the game.";
+					public static LocString DEACTIVATE_EXPANSION1_DESC = "The game will need to restart in order to download and install the <i>Oxygen Not Included</i> base game.";
 				}
 
 				public static LocString STARTDEMO = "START DEMO";
@@ -1218,13 +1615,13 @@ namespace STRINGS
 
 			public class MOTD
 			{
-				public static LocString IMAGE_HEADER = "DLC ROADMAP!";
+				public static LocString IMAGE_HEADER = "DLC EARLY ACCESS!";
 
 				public static LocString NEWS_HEADER = "JOIN THE DISCUSSION";
 
 				public static LocString NEWS_BODY = "Stay up to date by joining our mailing list, or head on over to the forums and join the discussion.";
 
-				public static LocString PATCH_NOTES_SUMMARY = "<b>Cloud Save Update for Nov 2020</b>\n\n • Added support for cloud saves. Click \"Load Game\" to open the saves menu and manage your local and cloud saves!\n • Lots of performance improvements, especially for colonies with lots of Duplicants\n • Upgraded the Unity game engine to the latest LTS version\n\nCheck out the full patch notes for more details!";
+				public static LocString PATCH_NOTES_SUMMARY = "<b><i>Spaced Out!</i> DLC comes to Early Access Dec 2020!</b>\n\n • New real-time, multi-world gameplay on brand new Planetoids\n • New mid-game rocketry technology and modular rocket construction\n • Completely overhauled Starmap for new rocket expeditions\n • New critters, resources, tech, biomes and more\n\nCheck out the full patch notes for more details and instructions on how to participate!";
 
 				public static LocString UPDATE_TEXT = "LAUNCHED!";
 			}
@@ -1253,6 +1650,8 @@ namespace STRINGS
 
 				public static LocString SAVE_TOO_NEW = "<b><color=#ff0000>Could not load file {0}. File is using build {1}, v{2}. This build is {3}, v{4}.</color></b>";
 
+				public static LocString SAVE_MISSING_CONTENT = "<b><color=#ff0000>Could not load file {0}. File was saved with content that is not currently installed.</color></b>";
+
 				public static LocString UNSUPPORTED_SAVE_VERSION = "<b><color=#ff0000>This save file is from a previous version of the game and is no longer supported.</color></b>";
 
 				public static LocString MORE_INFO = "More Info";
@@ -1270,6 +1669,18 @@ namespace STRINGS
 				public static LocString NO_FILE_SELECTED = "No file selected";
 
 				public static LocString COLONY_INFO_FMT = "{0}: {1}";
+
+				public static LocString VANILLA_RESTART = string.Concat("Loading this colony will require restarting the game with ", DLC1.NAME_ITAL, " content disabled");
+
+				public static LocString EXPANSION1_RESTART = string.Concat("Loading this colony will require restarting the game with ", DLC1.NAME_ITAL, " content enabled");
+
+				public static LocString UNSUPPORTED_VANILLA_TEMP = string.Concat("<b><color=#ff0000>This save file is from the base version of the game and currently cannot be loaded while ", DLC1.NAME_ITAL, " is installed.</color></b>");
+
+				public static LocString CONTENT = "Content";
+
+				public static LocString VANILLA_CONTENT = "Vanilla FIXME";
+
+				public static LocString EXPANSION1_CONTENT = string.Concat(DLC1.NAME_ITAL, " Expansion FIXME");
 
 				public static LocString SAVE_INFO = "{0} saves  {1} autosaves  {2}";
 
@@ -1384,6 +1795,8 @@ namespace STRINGS
 				public static LocString SAVE_EXIT = "Play time has expired and the game is exiting. Would you like to overwrite {0}?";
 
 				public static LocString WARN_EXIT = "Play time has expired and the game will now exit.";
+
+				public static LocString DLC_NOT_PURCHASED = "Spaced Out! Dlc has not yet been purchased in the Wegame store. Purchase Spaced Out! to support Oxygen Not Included and enjoy the new content!";
 			}
 
 			public class MOD_ERRORS
@@ -1462,6 +1875,8 @@ namespace STRINGS
 					public static LocString BAD_WORLD_GEN = "Encountered an error while loading file";
 
 					public static LocString DEACTIVATED = "Deactivated due to errors";
+
+					public static LocString ALL_MODS_DISABLED_EARLY_ACCESS = "Deactivated due to Early Access for Spaced Out!";
 				}
 
 				public static LocString REQUIRED = "REQUIRED";
@@ -1493,6 +1908,8 @@ namespace STRINGS
 				public static LocString BAD_WORLD_GEN = "LOAD FAILED";
 
 				public static LocString DEACTIVATED = "DEACTIVATED";
+
+				public static LocString ALL_MODS_DISABLED_EARLY_ACCESS = "DEACTIVATED";
 			}
 
 			public class MOD_DIALOGS
@@ -1530,6 +1947,13 @@ namespace STRINGS
 					public static LocString TITLE = "STEAM MODS REFRESHED";
 
 					public static LocString MESSAGE = "Refreshed Steam mods:\n{0}";
+				}
+
+				public class ALL_MODS_DISABLED_EARLY_ACCESS
+				{
+					public static LocString TITLE = "ALL MODS DISABLED";
+
+					public static LocString MESSAGE = "Mod support is temporarily suspended for the initial launch of Spaced Out! into Early Access:\n{0}";
 				}
 
 				public class LOAD_FAILURE
@@ -1609,9 +2033,9 @@ namespace STRINGS
 
 				public static LocString WORLD_SEED = "Coordinates: {0}";
 
-				public static LocString WORLD_SEED_TOOLTIP = "Share the Coordinates with a friend and they can start a colony on this same asteroid!\n\n{0} - The asteroid\n\n{1} - The world seed\n\n{2} - Difficulty and Custom settings";
+				public static LocString WORLD_SEED_TOOLTIP = "Share coordinates with a friend and they can start a colony on an identical asteroid!\n\n{0} - The asteroid\n\n{1} - The world seed\n\n{2} - Difficulty and Custom settings";
 
-				public static LocString WORLD_SEED_COPY_TOOLTIP = "Copy Coordinates to clipboard\n\nShare the Coordinates with a friend and they can start a colony on this same asteroid!";
+				public static LocString WORLD_SEED_COPY_TOOLTIP = "Copy Coordinates to clipboard\n\nShare coordinates with a friend and they can start a colony on an identical asteroid!";
 
 				public static LocString MANAGEMENT_BUTTON = "Pause Menu";
 			}
@@ -1798,6 +2222,20 @@ namespace STRINGS
 				public static LocString DEFAULT_TO_CLOUD_SAVES = "Default to cloud saves";
 
 				public static LocString DEFAULT_TO_CLOUD_SAVES_TOOLTIP = "When a new colony is created, this controls whether it will be saved into the cloud saves folder for syncing or not.";
+
+				public static LocString EXPANSION1_CONTENT_ENABLED = string.Concat(DLC1.NAME_ITAL, " Expansion Enabled");
+
+				public static LocString EXPANSION1_CONTENT_ENABLED_TOOLTIP = string.Concat("If checked, content from the ", DLC1.NAME_ITAL, " Expansion will be available");
+
+				public static LocString EXPANSION1_CONTENT_RESTART_TITLE = "RESTART REQUIRED";
+
+				public static LocString EXPANSION1_CONTENT_RESTART_BODY = "Changing this setting requires the game to restart";
+
+				public static LocString EXPANSION1_CONTENT_RESTART_CONFIRM = "RESTART";
+
+				public static LocString EXPANSION1_CONTENT_TESTING_TITLE = "DISABLED FOR TESTING";
+
+				public static LocString EXPANSION1_CONTENT_TESTING_BODY = "The testing version of this expansion does not currently allow switching to the base game.\n\nFor now, you can toggle the DLC on and off using the DLC settings for Oxygen Not Included in Steam.";
 
 				public static LocString RESET_TUTORIAL_DESCRIPTION = "Mark all tutorial messages \"unread\"";
 
@@ -2060,6 +2498,8 @@ namespace STRINGS
 					public static LocString PREVENTED_BY_TRAIT = "    • This Duplicant possesses the " + PRE_KEYWORD + "{0}" + PST_KEYWORD + " Trait and cannot learn this Skill";
 
 					public static LocString SKILL_APTITUDE = "{0} is interested in {1} and will receive a " + PRE_KEYWORD + "Morale" + PST_KEYWORD + " bonus for learning it!";
+
+					public static LocString SKILL_GRANTED = "{0} has been granted {1} by a Trait and does not have increased " + FormatAsKeyWord("Morale Requirements") + " from knowing it";
 				}
 
 				public static LocString EXPECTATION_TARGET_SKILL = "Current Morale: {0}\nSkill Morale Needs: {1}";
@@ -2185,7 +2625,7 @@ namespace STRINGS
 			{
 				public class CAN_DIG_VERY_FIRM
 				{
-					public static LocString DESCRIPTION = FormatAsLink("Very Firm Material", "HARDNESS") + " Mining";
+					public static LocString DESCRIPTION = FormatAsLink(string.Concat(ELEMENTS.HARDNESS.HARDNESS_DESCRIPTOR.VERYFIRM, " Material"), "HARDNESS") + " Mining";
 				}
 
 				public class CAN_DIG_NEARLY_IMPENETRABLE
@@ -2196,6 +2636,11 @@ namespace STRINGS
 				public class CAN_DIG_SUPER_SUPER_HARD
 				{
 					public static LocString DESCRIPTION = FormatAsLink("Diamond", "DIAMOND") + " and " + FormatAsLink("Obsidian", "OBSIDIAN") + " Mining";
+				}
+
+				public class CAN_DIG_RADIOACTIVE_MATERIALS
+				{
+					public static LocString DESCRIPTION = FormatAsLink("Corium", "CORIUM") + " Mining";
 				}
 
 				public class CAN_ART
@@ -2253,9 +2698,19 @@ namespace STRINGS
 					public static LocString DESCRIPTION = string.Concat(BUILDINGS.PREFABS.COSMICRESEARCHCENTER.NAME, " Usage");
 				}
 
+				public class NUCLEAR_RESEARCH
+				{
+					public static LocString DESCRIPTION = string.Concat(BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME, " Usage");
+				}
+
 				public class CAN_STUDY_WORLD_OBJECTS
 				{
 					public static LocString DESCRIPTION = "Geographical Analysis";
+				}
+
+				public class CAN_USE_CLUSTER_TELESCOPE
+				{
+					public static LocString DESCRIPTION = string.Concat(BUILDINGS.PREFABS.CLUSTERTELESCOPE.NAME, " Usage");
 				}
 
 				public class EXOSUIT_EXPERTISE
@@ -2281,6 +2736,11 @@ namespace STRINGS
 				public class CAN_DO_ASTRONAUT_TRAINING
 				{
 					public static LocString DESCRIPTION = string.Concat(BUILDINGS.PREFABS.ASTRONAUTTRAININGCENTER.NAME, " Usage");
+				}
+
+				public class CAN_PILOT_ROCKET
+				{
+					public static LocString DESCRIPTION = string.Concat(BUILDINGS.PREFABS.ROCKETCONTROLSTATION.NAME, " Usage");
 				}
 
 				public class CAN_COMPOUND
@@ -2560,7 +3020,7 @@ namespace STRINGS
 
 			public static LocString ROLE_PROGRESS = "<b>Job Experience: {0}/{1}</b>\nDuplicants can become eligible for specialized jobs by maxing their current job experience";
 
-			public static LocString NO_JOB_STATION_WARNING = "Build a " + PRE_KEYWORD + "Skills Board" + PST_KEYWORD + " to unlock Job Assignments" + HORIZONTAL_BR_RULE + "The " + PRE_KEYWORD + "Skills Board" + PST_KEYWORD + " can be found in the " + FormatAsBuildMenuTab("Stations Tab") + " " + FormatAsHotkey("[0]") + " of the Build Menu";
+			public static LocString NO_JOB_STATION_WARNING = "Build a " + PRE_KEYWORD + "Porta-Pod" + PST_KEYWORD + " to unlock this menu" + HORIZONTAL_BR_RULE + "The " + PRE_KEYWORD + "Porta-Pod" + PST_KEYWORD + " can be found in the " + FormatAsBuildMenuTab("Stations Tab") + " " + FormatAsHotkey("[0]") + " of the Build Menu";
 
 			public static LocString AUTO_PRIORITIZE = "Auto-Prioritize:";
 
@@ -2583,6 +3043,15 @@ namespace STRINGS
 			public static LocString HIGHEST_EXPECTATIONS_TIER = "<b>Highest Expectations</b>";
 
 			public static LocString ADDED_EXPECTATIONS_AMOUNT = " (+{0} Expectation)";
+		}
+
+		public class GAMEPLAY_EVENT_INFO_SCREEN
+		{
+			public static LocString TITLE = "New Event: {0}";
+
+			public static LocString WHERE = "WHERE: {0}";
+
+			public static LocString WHEN = "WHEN: {0}";
 		}
 
 		public class DEBUG_TOOLS
@@ -2631,6 +3100,10 @@ namespace STRINGS
 					public static LocString TOTAL_JOULES = "Total joules: {0}";
 
 					public static LocString JOULES_PER_KILOGRAM = "Joules per kilogram: {0}";
+
+					public static LocString TOTAL_RADS = "Total rads: {0}";
+
+					public static LocString AVERAGE_RADS = "Average rads: {0}";
 				}
 
 				public static LocString TITLE = "Base and World Tools";
@@ -2651,6 +3124,8 @@ namespace STRINGS
 			}
 
 			public static LocString ENTER_TEXT = "";
+
+			public static LocString DEBUG_ACTIVE = "Debug tools active";
 
 			public static LocString INVALID_LOCATION = "Invalid Location";
 		}
@@ -2831,6 +3306,8 @@ namespace STRINGS
 
 			public static LocString DRAWWORLDBORDER = "Establishing personal boundaries...";
 
+			public static LocString PLACINGTEMPLATES = "Generating interest...";
+
 			public static LocString SETTLESIM = "Infusing oxygen...";
 
 			public static LocString SETTLESIM1 = "Infusing oxygen...";
@@ -2882,9 +3359,11 @@ namespace STRINGS
 
 			public static LocString MANAGEMENTMENU_SKILLS = "Manage Duplicants' Skill assignments {Hotkey}";
 
-			public static LocString MANAGEMENTMENU_REQUIRES_SKILL_STATION = string.Concat("Build a Skills Board to unlock this menu", HORIZONTAL_BR_RULE, "The ", BUILDINGS.PREFABS.ROLESTATION.NAME, " can be found in the ", FormatAsBuildMenuTab("Stations Tab"), " ", FormatAsHotkey("[0]"), " of the Build Menu");
+			public static LocString MANAGEMENTMENU_REQUIRES_SKILL_STATION = string.Concat("Build a Porta-Pod to unlock this menu", HORIZONTAL_BR_RULE, "The ", BUILDINGS.PREFABS.EXOBASEHEADQUARTERS.NAME, " can be found in the ", FormatAsBuildMenuTab("Base Tab"), " ", FormatAsHotkey("[0]"), " of the Build Menu");
 
 			public static LocString MANAGEMENTMENU_PAUSEMENU = "Open the game menu {Hotkey}";
+
+			public static LocString MANAGEMENTMENU_RESOURCES = "Open the resource management screen {Hotkey}";
 
 			public static LocString OPEN_CODEX_ENTRY = "View full entry in database";
 
@@ -2894,7 +3373,7 @@ namespace STRINGS
 
 			public static LocString METERSCREEN_MEALHISTORY = "Calories Available: {0}";
 
-			public static LocString METERSCREEN_POPULATION = "Population: {0}";
+			public static LocString METERSCREEN_POPULATION = PRE_KEYWORD + "{0}" + PST_KEYWORD + " Population: {1}\nTotal Population: {2}";
 
 			public static LocString METERSCREEN_SICK_DUPES = "Sick Duplicants: {0}";
 
@@ -2947,6 +3426,8 @@ namespace STRINGS
 			public static LocString HELP_ROTATE_KEY = "Press " + FormatAsHotkey("[{Key}]") + " to Rotate";
 
 			public static LocString HELP_BUILDLOCATION_INVALID_CELL = "Invalid Cell";
+
+			public static LocString HELP_BUILDLOCATION_MISSING_TELEPAD = string.Concat("World has no ", BUILDINGS.PREFABS.HEADQUARTERSCOMPLETE.NAME, " or ", BUILDINGS.PREFABS.EXOBASEHEADQUARTERS.NAME);
 
 			public static LocString HELP_BUILDLOCATION_FLOOR = "Must be built on solid ground";
 
@@ -3028,6 +3509,8 @@ namespace STRINGS
 
 			public static LocString REACHABILITYOVERLAYSTRING = "Displays areas accessible by Duplicants";
 
+			public static LocString RADIATIONOVERLAYSTRING = "Displays radiation levels {Hotkey}";
+
 			public static LocString ENERGYREQUIRED = FormatAsLink("Power", "POWER") + " Required";
 
 			public static LocString ENERGYGENERATED = FormatAsLink("Power", "POWER") + " Produced";
@@ -3078,11 +3561,7 @@ namespace STRINGS
 
 			public static LocString RANDOMIZENAME = "Randomize this Duplicant's name";
 
-			public static LocString EDITCREATURENAME = "Give this lil' critter a new name";
-
-			public static LocString RANDOMIZECREATURENAME = "Randomize this critter's name";
-
-			public static LocString EDITSTORAGENAME = "Rename storage";
+			public static LocString EDITNAMEGENERIC = "Rename {0}";
 
 			public static LocString BASE_VALUE = "Base Value";
 
@@ -3113,6 +3592,135 @@ namespace STRINGS
 			public static LocString VITALS_CHECKBOX_RECEPTACLE_OPERATIONAL = "This plant is housed in an operational farm plot";
 
 			public static LocString VITALS_CHECKBOX_RECEPTACLE_INOPERATIONAL = "This plant is not housed in an operational farm plot";
+		}
+
+		public class CLUSTERMAP
+		{
+			public class ASTEROIDS
+			{
+				public class ELEMENT_AMOUNTS
+				{
+					public static LocString LOTS = "Plentiful";
+
+					public static LocString SOME = "Significant amount";
+
+					public static LocString LITTLE = "Small amount";
+
+					public static LocString VERY_LITTLE = "Trace amount";
+				}
+			}
+
+			public class ROCKETS
+			{
+				public class SPEED
+				{
+					public static LocString NAME = "Rocket Speed: ";
+
+					public static LocString TOOLTIP = "<b>Rocket Speed</b> is calculated by dividing <b>Engine Power</b> by <b>Burden</b>";
+				}
+
+				public class FUEL_REMAINING
+				{
+					public static LocString NAME = "Fuel Remaining: ";
+
+					public static LocString TOOLTIP = "This rocket has {0} fuel in its tank";
+				}
+
+				public class OXIDIZER_REMAINING
+				{
+					public static LocString NAME = "Oxidizer Power Remaining: ";
+
+					public static LocString TOOLTIP = "This rocket has enough oxidizer in its tank for {0} of fuel";
+				}
+
+				public class RANGE
+				{
+					public static LocString NAME = "Range Remaining: ";
+
+					public static LocString TOOLTIP = "<b>Range remaining</b> is calculated by dividing the lesser of <b>fuel remaining</b> and <b>oxidizer power remaining</b> by <b>fuel consumed per tile</b>";
+				}
+
+				public class FUEL_PER_HEX
+				{
+					public static LocString NAME = "Fuel consumed per Tile: {0}";
+
+					public static LocString TOOLTIP = "This rocket can travel one tile per {0} of fuel";
+				}
+
+				public class BURDEN_TOTAL
+				{
+					public static LocString NAME = "Rocket burden: ";
+
+					public static LocString TOOLTIP = "The combined burden of all the modules in this rocket";
+				}
+
+				public class BURDEN_MODULE
+				{
+					public static LocString NAME = "Module Burden: ";
+
+					public static LocString TOOLTIP = "The selected module adds {0} to the rocket's total " + DUPLICANTS.ATTRIBUTES.ROCKETBURDEN.NAME;
+				}
+
+				public class POWER_TOTAL
+				{
+					public static LocString NAME = "Rocket engine power: ";
+
+					public static LocString TOOLTIP = "The total engine power added by all the modules in this rocket";
+				}
+
+				public class POWER_MODULE
+				{
+					public static LocString NAME = "Module Engine Power: ";
+
+					public static LocString TOOLTIP = "The selected module adds {0} to the rocket's total " + DUPLICANTS.ATTRIBUTES.ROCKETENGINEPOWER.NAME;
+				}
+
+				public class MODULE_STATS
+				{
+					public static LocString NAME = "Module Stats: ";
+
+					public static LocString TOOLTIP = "Properties of the selected module";
+				}
+
+				public class MAX_MODULES
+				{
+					public static LocString NAME = "Max Modules: ";
+
+					public static LocString TOOLTIP = "The {0} can support a maximum of {1} modules (including itself)";
+				}
+			}
+
+			public static LocString PLANETOID = "Planetoid";
+
+			public static LocString PLANETOID_KEYWORD = string.Concat(PRE_KEYWORD, PLANETOID, PST_KEYWORD);
+
+			public static LocString TITLE = "STARMAP";
+
+			public static LocString LANDING_SITES = "LANDING SITES";
+
+			public static LocString DESTINATION = "DESTINATION";
+
+			public static LocString OCCUPANTS = "CREW";
+
+			public static LocString ELEMENTS = "ELEMENTS";
+
+			public static LocString UNKNOWN_DESTINATION = "Unknown";
+
+			public static LocString TILES = "Tiles";
+
+			public static LocString TILES_PER_CYCLE = "Tiles per cycle";
+
+			public static LocString CHANGE_DESTINATION = "Click to change destination";
+
+			public static LocString SELECT_DESTINATION = "Select a new destination on the map";
+
+			public static LocString TOOLTIP_INVALID_DESTINATION_FOG_OF_WAR = string.Concat("Rockets cannot travel to this hex until it has been analyzed\n\nSpace can be analyzed with a ", BUILDINGS.PREFABS.CLUSTERTELESCOPE.NAME, " or ", BUILDINGS.PREFABS.SCANNERMODULE.NAME);
+
+			public static LocString TOOLTIP_INVALID_DESTINATION_NO_PATH = string.Concat("There is no navigable rocket path to this ", PLANETOID_KEYWORD, "\n\nSpace can be analyzed with a ", BUILDINGS.PREFABS.CLUSTERTELESCOPE.NAME, " or ", BUILDINGS.PREFABS.SCANNERMODULE.NAME, " to clear the way");
+
+			public static LocString TOOLTIP_INVALID_DESTINATION_NO_LAUNCH_PAD = string.Concat("There is no ", BUILDINGS.PREFABS.LAUNCHPAD.NAME, " on this ", PLANETOID_KEYWORD, " for a rocket to land on\n\nUse a ", BUILDINGS.PREFABS.PIONEERMODULE.NAME, " or ", BUILDINGS.PREFABS.SCOUTMODULE.NAME, " to deploy a scout and make first contact");
+
+			public static LocString TOOLTIP_INVALID_DESTINATION_REQUIRE_ASTEROID = string.Concat("Must select a ", PLANETOID_KEYWORD, " destination");
 		}
 
 		public class STARMAP
@@ -3208,11 +3816,11 @@ namespace STRINGS
 
 			public class DESTINATIONSELECTION
 			{
-				public static LocString REACHABLE = "Destination selected";
+				public static LocString REACHABLE = "Destination set";
 
 				public static LocString UNREACHABLE = "Destination beyond reach";
 
-				public static LocString NOTSELECTED = "Destination not selected";
+				public static LocString NOTSELECTED = "Destination not set";
 			}
 
 			public class DESTINATIONSELECTION_TOOLTIP
@@ -3261,6 +3869,231 @@ namespace STRINGS
 
 			public class LAUNCHCHECKLIST
 			{
+				public class CONSTRUCTION_COMPLETE
+				{
+					public class STATUS
+					{
+						public static LocString READY = "Construction complete";
+
+						public static LocString FAILURE = "Construction incomplete";
+
+						public static LocString WARNING = "Construction warning";
+					}
+
+					public class TOOLTIP
+					{
+						public static LocString READY = "Construction of all modules is complete";
+
+						public static LocString FAILURE = "Construction of all modules must be completed before launch";
+
+						public static LocString WARNING = "Construction warning";
+					}
+				}
+
+				public class CREW_BOARDED
+				{
+					public class TOOLTIP
+					{
+						public static LocString READY = "Crew boarded";
+
+						public static LocString FAILURE = string.Concat("Missing crew - at least one crew member must have the ", DUPLICANTS.ROLES.ROCKETPILOT.NAME, " skill");
+
+						public static LocString WARNING = "Crew warning";
+					}
+
+					public static LocString READY = "Qualified crew boarded";
+
+					public static LocString FAILURE = "Missing qualified crew";
+
+					public static LocString WARNING = "Crew warning";
+				}
+
+				public class NO_EXTRA_PASSENGERS
+				{
+					public class TOOLTIP
+					{
+						public static LocString READY = "Crew correct";
+
+						public static LocString FAILURE = "Extra passengers";
+
+						public static LocString WARNING = "Crew warning";
+					}
+
+					public static LocString READY = "No extra passengers";
+
+					public static LocString FAILURE = "Extra passengers onboard";
+
+					public static LocString WARNING = "Crew warning";
+				}
+
+				public class FLIGHT_PATH_CLEAR
+				{
+					public class STATUS
+					{
+						public static LocString READY = "Flight path clear";
+
+						public static LocString FAILURE = "Flight path not clear";
+
+						public static LocString WARNING = "";
+					}
+
+					public class TOOLTIP
+					{
+						public static LocString READY = "Nothing is blocking the path of the rocket";
+
+						public static LocString FAILURE = "The space above this rocket is obstructed";
+
+						public static LocString WARNING = "";
+					}
+				}
+
+				public class HAS_FUEL_TANK
+				{
+					public class STATUS
+					{
+						public static LocString READY = "Fuel tank";
+
+						public static LocString FAILURE = "Needs fuel tank";
+
+						public static LocString WARNING = "Fuel tank warning";
+					}
+
+					public class TOOLTIP
+					{
+						public static LocString READY = "Rocket has Fuel tank";
+
+						public static LocString FAILURE = "Needs fuel tank";
+
+						public static LocString WARNING = "Fuel tank warning";
+					}
+				}
+
+				public class HAS_ENGINE
+				{
+					public class STATUS
+					{
+						public static LocString READY = "Engine";
+
+						public static LocString FAILURE = "Needs engine";
+
+						public static LocString WARNING = "Engine warning";
+					}
+
+					public class TOOLTIP
+					{
+						public static LocString READY = "Rocket has Engine";
+
+						public static LocString FAILURE = "Needs engine";
+
+						public static LocString WARNING = "Engine warning";
+					}
+				}
+
+				public class HAS_NOSECONE
+				{
+					public class STATUS
+					{
+						public static LocString READY = "Nosecone";
+
+						public static LocString FAILURE = "Needs nosecone";
+
+						public static LocString WARNING = "Nosecone warning";
+					}
+
+					public class TOOLTIP
+					{
+						public static LocString READY = "Rocket has Nosecone";
+
+						public static LocString FAILURE = "Needs nosecone";
+
+						public static LocString WARNING = "Nosecone warning";
+					}
+				}
+
+				public class LOADING_COMPLETE
+				{
+					public class STATUS
+					{
+						public static LocString READY = "Cargo Loading Complete";
+
+						public static LocString FAILURE = "";
+
+						public static LocString WARNING = "Cargo Loading Incomplete";
+					}
+
+					public class TOOLTIP
+					{
+						public static LocString READY = "All the cargo that can be transferred on and off this rocket has been transferred";
+
+						public static LocString FAILURE = "";
+
+						public static LocString WARNING = string.Concat("The ", BUILDINGS.PREFABS.LAUNCHPAD.NAME, " could still transfer cargo to or from this rocket");
+					}
+				}
+
+				public class INTERNAL_CONSTRUCTION_COMPLETE
+				{
+					public class STATUS
+					{
+						public static LocString READY = "Landers Ready";
+
+						public static LocString FAILURE = "Lander not constructed";
+
+						public static LocString WARNING = "";
+					}
+
+					public class TOOLTIP
+					{
+						public static LocString READY = "All requested landers are built and ready for deployment";
+
+						public static LocString FAILURE = "Some landers still require construction";
+
+						public static LocString WARNING = "";
+					}
+				}
+
+				public class MAX_MODULES
+				{
+					public class STATUS
+					{
+						public static LocString READY = "Module count";
+
+						public static LocString FAILURE = "Too many modules";
+
+						public static LocString WARNING = "Module warning";
+					}
+
+					public class TOOLTIP
+					{
+						public static LocString READY = "Module count";
+
+						public static LocString FAILURE = "This rocket's engine can not support this many modules";
+
+						public static LocString WARNING = "Construction warning";
+					}
+				}
+
+				public class PROPERLY_FUELED
+				{
+					public class STATUS
+					{
+						public static LocString READY = "Fueled";
+
+						public static LocString FAILURE = "Insufficient Fuel";
+
+						public static LocString WARNING = "Warning: Partially Fueled";
+					}
+
+					public class TOOLTIP
+					{
+						public static LocString READY = "This rocket has sufficient fuel and oxidizer a round trip to and from its selected destination (or fully fuelled if no destination selected)";
+
+						public static LocString FAILURE = "More fuel or oxidizer must be loaded before this rocket is ready for takeoff.\n\nIf the tanks are already full then this rocket can never reach that destination";
+
+						public static LocString WARNING = "This rocket has enough fuel and oxidizer to make it to its destination, but not back again.\n\nThe rocket can still be launched if necessary";
+					}
+				}
+
 				public static LocString ASTRONAUT_TITLE = "Astronaut";
 
 				public static LocString HASASTRONAUT = "Astronaut ready for liftoff";
@@ -3417,17 +4250,17 @@ namespace STRINGS
 
 			public static LocString CURRENT_MASS = "Current Mass";
 
-			public static LocString CURRENT_MASS_TOOLTIP = "Warning: Destination has {0} resources available.\nThe rocket has capacity for {1}.\n\nMissions to this destination will not return a full cargo load to avoid depleting the destination for future explorations.";
+			public static LocString CURRENT_MASS_TOOLTIP = "Warning: Missions to this destination will not return a full cargo load to avoid depleting the destination for future explorations\n\nDestination: {0} Resources Available\nRocket Capacity: {1}";
 
 			public static LocString MAXIMUM_MASS = "Maximum Mass";
 
 			public static LocString MINIMUM_MASS = "Minimum Mass";
 
-			public static LocString MINIMUM_MASS_TOOLTIP = "This destination must retain at least this much mass in order to prevent depletion and allow the future regeneration of resources.\n\nDuplicants will always maintain a destination's minimum mass requirements, potentially returning with less cargo than their rocket can hold.";
+			public static LocString MINIMUM_MASS_TOOLTIP = "This destination must retain at least this much mass in order to prevent depletion and allow the future regeneration of resources.\n\nDuplicants will always maintain a destination's minimum mass requirements, potentially returning with less cargo than their rocket can hold";
 
 			public static LocString REPLENISH_RATE = "Replenished/Cycle:";
 
-			public static LocString REPLENISH_RATE_TOOLTIP = "The rate at which this destination regenerates its resources.";
+			public static LocString REPLENISH_RATE_TOOLTIP = "The rate at which this destination regenerates resources";
 
 			public static LocString ROCKETLIST = "Rocket Hangar";
 
@@ -3454,6 +4287,46 @@ namespace STRINGS
 			public static LocString DESTINATIONTITLE = "Destination Status";
 		}
 
+		public class RESEARCHSCREEN
+		{
+			public class FILTER_BUTTONS
+			{
+				public static LocString HEADER = "Preset Filters";
+
+				public static LocString ALL = "All";
+
+				public static LocString AVAILABLE = "Next";
+
+				public static LocString COMPLETED = "Completed";
+
+				public static LocString OXYGEN = "Oxygen";
+
+				public static LocString FOOD = "Food";
+
+				public static LocString WATER = "Water";
+
+				public static LocString POWER = "Power";
+
+				public static LocString MORALE = "Morale";
+
+				public static LocString RANCHING = "Ranching";
+
+				public static LocString FILTER = "Filters";
+
+				public static LocString TILE = "Tiles";
+
+				public static LocString TRANSPORT = "Transport";
+
+				public static LocString AUTOMATION = "Automation";
+
+				public static LocString MEDICINE = "Medicine";
+
+				public static LocString ROCKET = "Rockets";
+
+				public static LocString RADIATION = "Radiation";
+			}
+		}
+
 		public class CODEX
 		{
 			public class CODEX_DISCOVERED_MESSAGE
@@ -3465,7 +4338,7 @@ namespace STRINGS
 
 			public class GEYSERS
 			{
-				public static LocString DESC = "Geysers and Fumaroles emit elements at variable intervals.They provide a sustainable, though usually low volume, source of material.\n\nThe variable factors of a geyser are:\n\n    • Emission element \n    • Emission temperature \n    • Emission mass \n    • Cycle length \n    • Dormancy duration \n    • Disease emitted";
+				public static LocString DESC = "Geysers and Fumaroles emit elements at variable intervals. They provide a sustainable source of material, albeit in typically low volumes.\n\nThe variable factors of a geyser are:\n\n    • Emission element \n    • Emission temperature \n    • Emission mass \n    • Cycle length \n    • Dormancy duration \n    • Disease emitted";
 			}
 
 			public class EQUIPMENT
@@ -3514,9 +4387,13 @@ namespace STRINGS
 
 				public static LocString EQUIPMENT = FormatAsLink("Equipment", "EQUIPMENT");
 
+				public static LocString BIOMES = FormatAsLink("Biomes", "BIOMES");
+
 				public static LocString VIDEOS = FormatAsLink("Videos", "VIDEOS");
 
-				public static LocString MISCELLANEOUSTIPS = FormatAsLink("Miscellaneous Tips", "MISCELLANEOUSTIPS");
+				public static LocString MISCELLANEOUSTIPS = FormatAsLink("Tips", "MISCELLANEOUSTIPS");
+
+				public static LocString MISCELLANEOUSITEMS = FormatAsLink("Items", "MISCELLANEOUSITEMS");
 
 				public static LocString ELEMENTS = FormatAsLink("Elements", "ELEMENTS");
 
@@ -3585,9 +4462,13 @@ namespace STRINGS
 
 				public class LOADING
 				{
-					public static LocString TITLE = "<b>Welcome to Oxygen Not Included!</b>";
+					public static LocString TITLE = "<b>Welcome to <i>Spaced Out!</i></b>";
 
-					public static LocString BODY = "This game is in the early stages of development which means you're likely to encounter strange, amusing, and occasionally just downright frustrating bugs.\n\nDuring this time Oxygen Not Included will be receiving regular updates to fix bugs, add features, and introduce additional content, so if you encounter issues or just have suggestions to share, please let us know on our forums: <u>http://forums.kleientertainment.com</u>\n\nA special thanks to those who joined us during our time in Alpha. We value your feedback and thank you for joining us in the development process. We couldn't do this without you.\n\nEnjoy your time in deep space!\n\n- Klei";
+					public static LocString BODY = "This DLC is currently in active development, which means you're likely to encounter strange, amusing, and occasionally just downright frustrating bugs.\n\n During this time Spaced Out! will be receiving regular updates to fix bugs, add features, and introduce additional content. To stay up-to-date with our latest plans, report issues, or make suggestions, please join us on the forums: http://forums.kleientertainment.com\n\n We've got lots of content old and new to add to this DLC before it's ready, and we're happy to have you along with us. Enjoy your time in deep space!\n\n - The Team at Klei";
+
+					public static LocString BODY_NOLINKS = "This DLC is currently in active development, which means you're likely to encounter strange, amusing, and occasionally just downright frustrating bugs.\n\n During this time Spaced Out! will be receiving regular updates to fix bugs, add features, and introduce additional content.\n\n We've got lots of content old and new to add to this DLC before it's ready, and we're happy to have you along with us. Enjoy your time in deep space!\n\n - The Team at Klei";
+
+					public static LocString FORUMBUTTON = "Visit Forums";
 
 					public static LocString CONTINUEBUTTON = "Okay, thanks for the heads up!";
 				}
@@ -3721,7 +4602,19 @@ namespace STRINGS
 
 			public class LIGHT
 			{
-				public static LocString LUX = "Lux";
+				public static LocString LUX = " lux";
+			}
+
+			public class RADIATION
+			{
+				public static LocString RADS = " rads";
+			}
+
+			public class HIGHENERGYPARTICLES
+			{
+				public static LocString PARTRICLE = " particle";
+
+				public static LocString PARTRICLES = " particles";
 			}
 
 			public static LocString SECOND = " s";
@@ -3735,6 +4628,8 @@ namespace STRINGS
 			public static LocString UNITS = " units";
 
 			public static LocString PERCENT = "%";
+
+			public static LocString DEGREES = " degrees";
 
 			public static LocString CRITTERS = " critters";
 
@@ -4019,7 +4914,7 @@ namespace STRINGS
 
 					public static LocString CONSUMER = "<b>Output Pipe</b>\nOutputs send liquid into pipes" + HORIZONTAL_BR_RULE + "Must be on the same network as at least one " + FormatAsLink("Intake", "LIQUIDPIPING");
 
-					public static LocString FILTERED = "<b>Filtered Output Pipe</b>\nFiltered Outputs send filtered liquid into pipes" + HORIZONTAL_BR_RULE + "Must be on the same network as at least one " + FormatAsLink("LiquidDestination", "LIQUIDPIPING");
+					public static LocString FILTERED = "<b>Filtered Output Pipe</b>\nFiltered Outputs send filtered liquid into pipes" + HORIZONTAL_BR_RULE + "Must be on the same network as at least one " + FormatAsLink("Intake", "LIQUIDPIPING");
 
 					public static LocString PRODUCER = "<b>Building Intake</b>\nIntakes send liquid into buildings" + HORIZONTAL_BR_RULE + "Must be on the same network as at least one " + FormatAsLink("Output", "LIQUIDPIPING");
 
@@ -4199,6 +5094,10 @@ namespace STRINGS
 
 				public static LocString CLOTHING = "{0}'s Outfit";
 
+				public static LocString CLOTHING_TRAIT_DECORUP = "{0}'s Outfit (Innately Stylish)";
+
+				public static LocString CLOTHING_TRAIT_DECORDOWN = "{0}'s Outfit (Shabby Dresser)";
+
 				public static LocString HOVERTITLE = "DECOR";
 
 				public static LocString MAXIMUM_DECOR = "{0}{1} (Maximum Decor)";
@@ -4359,6 +5258,34 @@ namespace STRINGS
 
 				public static LocString WATTS_CONSUMED = "Watts Consumed";
 			}
+
+			public class RADIATION
+			{
+				public class RANGES
+				{
+					public static LocString NONE = "Completely Safe";
+
+					public static LocString VERY_LOW = "Mostly Safe";
+
+					public static LocString LOW = "Barely Safe";
+
+					public static LocString MEDIUM = "Slight Hazard";
+
+					public static LocString HIGH = "Significant Hazard";
+
+					public static LocString VERY_HIGH = "Extreme Hazard";
+
+					public static LocString MAX = "Maximum Hazard";
+				}
+
+				public static LocString NAME = "RADIATION";
+
+				public static LocString BUTTON = "Radiation Overlay";
+
+				public static LocString DESC = "{rads} ({description})";
+
+				public static LocString HOVERTITLE = "RADIATION";
+			}
 		}
 
 		public class TABLESCREENS
@@ -4386,6 +5313,8 @@ namespace STRINGS
 			public static LocString NA = "N/A";
 
 			public static LocString INFORMATION_NOT_AVAILABLE_TOOLTIP = "Information is not available because {1} is in {0}";
+
+			public static LocString NOBODY_HERE = "Nobody here...";
 		}
 
 		public class CONSUMABLESSCREEN
@@ -4740,6 +5669,31 @@ namespace STRINGS
 			public static LocString CLOSEBUTTON = "CLOSE";
 		}
 
+		public class ALLRESOURCESSCREEN
+		{
+			public static LocString RESOURCES_TITLE = "RESOURCES";
+
+			public static LocString RESOURCES = "Resources";
+
+			public static LocString SEARCH = "Search";
+
+			public static LocString NAME = "Resource";
+
+			public static LocString TOTAL = "Total";
+
+			public static LocString AVAILABLE = "Available";
+
+			public static LocString RESERVED = "Reserved";
+
+			public static LocString SEARCH_PLACEHODLER = "Enter text...";
+
+			public static LocString FIRST_FRAME_NO_DATA = "...";
+
+			public static LocString PIN_TOOLTIP = "Check to pin resource to side panel";
+
+			public static LocString UNPIN_TOOLTIP = "Unpin resource";
+		}
+
 		public class PRIORITYSCREEN
 		{
 			public static LocString BASIC = "Set the order in which specific pending errands should be done" + HORIZONTAL_BR_RULE + "1: Least Urgent\n9: Most Urgent";
@@ -4764,6 +5718,22 @@ namespace STRINGS
 			public static LocString CATEGORY_TOOLTIP = "Counts all unallocated resources within reach" + HORIZONTAL_BR_RULE + "Click to expand";
 
 			public static LocString AVAILABLE_TOOLTIP = "Available: <b>{0}</b>\n({1} of {2} allocated to pending errands)";
+
+			public static LocString TREND_TOOLTIP = "The available amount of this resource has {0} {1} in the last cycle";
+
+			public static LocString TREND_TOOLTIP_NO_CHANGE = "The available amount of this resource has NOT CHANGED in the last cycle";
+
+			public static LocString FLAT_STR = "<b>NOT CHANGED</b>";
+
+			public static LocString INCREASING_STR = "<color=" + Constants.POSITIVE_COLOR_STR + ">INCREASED</color>";
+
+			public static LocString DECREASING_STR = "<color=" + Constants.NEGATIVE_COLOR_STR + ">DECREASED</color>";
+
+			public static LocString CLEAR_NEW_RESOURCES = "Clear New";
+
+			public static LocString SEE_ALL = "+ See All ({0})";
+
+			public static LocString NEW_TAG = "NEW";
 		}
 
 		public class CONFIRMDIALOG
@@ -4793,6 +5763,19 @@ namespace STRINGS
 
 		public class UISIDESCREENS
 		{
+			public class BUTTONMENUSIDESCREEN
+			{
+				public static LocString TITLE = "Building Menu";
+
+				public static LocString ALLOW_INTERNAL_CONSTRUCTOR = "Enable Auto-Delivery";
+
+				public static LocString ALLOW_INTERNAL_CONSTRUCTOR_TOOLTIP = "Order Duplicants to deliver {0}" + FormatAsLink("s", "NONE") + " to this building automatically when they need replacing";
+
+				public static LocString DISALLOW_INTERNAL_CONSTRUCTOR = "Cancel Auto-Delivery";
+
+				public static LocString DISALLOW_INTERNAL_CONSTRUCTOR_TOOLTIP = "Cancel automatic {0} deliveries to this building";
+			}
+
 			public class TREEFILTERABLESIDESCREEN
 			{
 				public static LocString TITLE = "Element Filter";
@@ -4823,6 +5806,187 @@ namespace STRINGS
 				public static LocString OPENSTARMAPBUTTON = "OPEN STARMAP";
 
 				public static LocString ANALYSIS_TARGET_HEADER = "Object Analysis";
+			}
+
+			public class RAILGUNSIDESCREEN
+			{
+				public static LocString TITLE = "Launcher Configuration";
+
+				public static LocString NO_SELECTED_LAUNCH_TARGET = "No destination selected.\nOpen the " + FormatAsManagementMenu("Starmap", "[Z]") + " to set a course.";
+
+				public static LocString LAUNCH_TARGET_SELECTED = "Launcher destination {0} set.";
+
+				public static LocString OPENSTARMAPBUTTON = "OPEN STARMAP";
+
+				public static LocString LAUNCH_RESOURCES_HEADER = "Launch Resources:";
+
+				public static LocString MINIMUM_PAYLOAD_MASS = "Minimum launch mass:";
+			}
+
+			public class CLUSTERWORLDSIDESCREEN
+			{
+				public static LocString TITLE = CLUSTERMAP.PLANETOID;
+
+				public static LocString VIEW_WORLD = "Oversee " + CLUSTERMAP.PLANETOID;
+			}
+
+			public class ROCKETMODULESIDESCREEN
+			{
+				public class MODULESTATCHANGE
+				{
+					public static LocString TITLE = "Rocket stats on construction:";
+
+					public static LocString BURDEN = string.Concat("    • ", DUPLICANTS.ATTRIBUTES.ROCKETBURDEN.NAME, ": {0} ({1})");
+
+					public static LocString RANGE = string.Concat("    • Potential ", DUPLICANTS.ATTRIBUTES.FUELRANGEPERKILOGRAM.NAME, ": {0}/1", UNITSUFFIXES.MASS.KILOGRAM, " Fuel ({1})");
+
+					public static LocString SPEED = "    • Speed: {0} ({1})";
+
+					public static LocString ENGINEPOWER = string.Concat("    • ", DUPLICANTS.ATTRIBUTES.ROCKETENGINEPOWER.NAME, ": {0} ({1})");
+
+					public static LocString POSITIVEDELTA = FormatAsPositiveModifier("{0}");
+
+					public static LocString NEGATIVEDELTA = FormatAsNegativeModifier("{0}");
+				}
+
+				public class BUTTONSWAPMODULEUP
+				{
+					public static LocString DESC = "Swap this rocket module with the one above";
+
+					public static LocString INVALID = "No module above may be swapped";
+				}
+
+				public class BUTTONVIEWINTERIOR
+				{
+					public static LocString LABEL = "View Interior";
+
+					public static LocString DESC = "What's goin' on in there?";
+
+					public static LocString INVALID = "This module does not have an interior view";
+				}
+
+				public class BUTTONVIEWEXTERIOR
+				{
+					public static LocString LABEL = "View Exterior";
+
+					public static LocString DESC = "Switch to external world view";
+
+					public static LocString INVALID = "Not available in flight";
+				}
+
+				public class BUTTONSWAPMODULEDOWN
+				{
+					public static LocString DESC = "Swap this rocket module with the one below";
+
+					public static LocString INVALID = "No module below may be swapped";
+				}
+
+				public class BUTTONCHANGEMODULE
+				{
+					public static LocString DESC = "Change this module to a different type";
+
+					public static LocString INVALID = "This module cannot be changed to a different type";
+				}
+
+				public class BUTTONREMOVEMODULE
+				{
+					public static LocString DESC = "Remove this module";
+
+					public static LocString INVALID = "This module cannot be removed";
+				}
+
+				public class ADDMODULE
+				{
+					public static LocString DESC = "Add a new module above this one";
+
+					public static LocString INVALID = "Modules cannot be added above this module, or there is no room above to add a module";
+				}
+
+				public static LocString TITLE = "Rocket Module";
+
+				public static LocString CHANGEMODULEPANEL = "Add or Change Module";
+			}
+
+			public class HABITATMODULESIDESCREEN
+			{
+				public static LocString TITLE = "Spacefarer Module";
+
+				public static LocString VIEW_BUTTON = "View Interior";
+
+				public static LocString VIEW_BUTTON_TOOLTIP = "What's goin' on in there?";
+			}
+
+			public class SELECTMODULESIDESCREEN
+			{
+				public class CONSTRAINTS
+				{
+					public class RESEARCHED
+					{
+						public static LocString COMPLETE = "Research Completed";
+
+						public static LocString FAILED = "Research Incomplete";
+					}
+
+					public class MATERIALS_AVAILABLE
+					{
+						public static LocString COMPLETE = "Materials available";
+
+						public static LocString FAILED = "Materials unavailable";
+					}
+
+					public class ONE_COMMAND_PER_ROCKET
+					{
+						public static LocString COMPLETE = "";
+
+						public static LocString FAILED = "Command module already installed";
+					}
+
+					public class ONE_ENGINE_PER_ROCKET
+					{
+						public static LocString COMPLETE = "";
+
+						public static LocString FAILED = "Engine module already installed";
+					}
+
+					public class ENGINE_AT_BOTTOM
+					{
+						public static LocString COMPLETE = "";
+
+						public static LocString FAILED = "Must install engine module at bottom of rocket";
+					}
+
+					public class TOP_ONLY
+					{
+						public static LocString COMPLETE = "";
+
+						public static LocString FAILED = "Must be installed at the top of a rocket";
+					}
+
+					public class SPACE_AVAILABLE
+					{
+						public static LocString COMPLETE = "";
+
+						public static LocString FAILED = "Space above rocket is blocked";
+					}
+
+					public class PASSENGER_MODULE_AVAILABLE
+					{
+						public static LocString COMPLETE = "";
+
+						public static LocString FAILED = "Maximum number of passenger modules reached";
+					}
+
+					public class MAX_MODULES
+					{
+						public static LocString COMPLETE = "";
+
+						public static LocString FAILED = "Exceeds engine's maximum module limit";
+					}
+				}
+
+				public static LocString TITLE = "Select Module";
+
+				public static LocString BUILDBUTTON = "Build";
 			}
 
 			public class FILTERSIDESCREEN
@@ -4860,6 +6024,11 @@ namespace STRINGS
 				public static LocString NOELEMENTSELECTED = "No element selected";
 			}
 
+			public class CONDITIONLISTSIDESCREEN
+			{
+				public static LocString TITLE = "Condition List";
+			}
+
 			public class FABRICATORSIDESCREEN
 			{
 				public class TOOLTIPS
@@ -4878,6 +6047,8 @@ namespace STRINGS
 					public static LocString OXYGEN_TANK_UNDERWATER = string.Concat(EQUIPMENT.PREFABS.OXYGEN_TANK_UNDERWATER.NAME, " ({0})");
 
 					public static LocString JETSUIT_TANK = string.Concat(EQUIPMENT.PREFABS.JET_SUIT.TANK_EFFECT_NAME, " ({0})");
+
+					public static LocString LEADSUIT_BATTERY = string.Concat(EQUIPMENT.PREFABS.LEAD_SUIT.BATTERY_EFFECT_NAME, " ({0})");
 
 					public static LocString COOL_VEST = string.Concat(EQUIPMENT.PREFABS.COOL_VEST.NAME, " ({0})");
 
@@ -4933,6 +6104,55 @@ namespace STRINGS
 				public static LocString RECIPE_QUEUE = "Order Production Quantity:";
 
 				public static LocString RECIPE_FOREVER = "Forever";
+			}
+
+			public class ASSIGNMENTGROUPCONTROLLER
+			{
+				public class TOOLTIPS
+				{
+					public static LocString DIFFERENT_WORLD = "This Duplicant is on a different " + CLUSTERMAP.PLANETOID;
+
+					public static LocString ASSIGN = "<b>Add</b> this Duplicant to rocket crew";
+
+					public static LocString UNASSIGN = "<b>Remove</b> this Duplicant from rocket crew";
+				}
+
+				public static LocString TITLE = "Duplicant Assignment";
+
+				public static LocString PILOT = "Pilot";
+
+				public static LocString OFFWORLD = "Offworld";
+			}
+
+			public class LAUNCHPADSIDESCREEN
+			{
+				public static LocString TITLE = "Rocket Platform";
+
+				public static LocString WAITING_TO_LAND_PANEL = "Waiting to land";
+
+				public static LocString NO_ROCKETS_WAITING = "No rockets in orbit";
+
+				public static LocString IN_ORBIT_ABOVE_PANEL = "Rockets in orbit";
+
+				public static LocString NEW_ROCKET_BUTTON = "NEW ROCKET";
+
+				public static LocString LAND_BUTTON = "LAND HERE";
+
+				public static LocString CANCEL_LAND_BUTTON = "CANCEL";
+
+				public static LocString LAUNCH_BUTTON = "LAUNCH";
+
+				public static LocString LAUNCH_BUTTON_TOOLTIP = "3... 2... 1... Blast off!";
+
+				public static LocString LAUNCH_BUTTON_NOT_READY_TOOLTIP = string.Concat("This rocket is not ready to launch", HORIZONTAL_BR_RULE, "Review the Launch Checklist in the ", BUILDINGS.PREFABS.LAUNCHPAD.NAME, " status panel for more detail");
+
+				public static LocString LAUNCH_WARNINGS_BUTTON = "ACKNOWLEDGE WARNINGS";
+
+				public static LocString LAUNCH_WARNINGS_BUTTON_TOOLTIP = "<b>Some items in the Launch Checklist require attention!</b>" + HORIZONTAL_BR_RULE + "Click to ignore warnings and proceed with launch";
+
+				public static LocString LAUNCH_REQUESTED_BUTTON = "AWAITING PILOT";
+
+				public static LocString LAUNCH_REQUESTED_BUTTON_TOOLTIP = "This rocket will take off as soon as a Duplicant takes the controls\n\n<b>Click to cancel launch</b>";
 			}
 
 			public class GENESHUFFLERSIDESREEN
@@ -4991,6 +6211,21 @@ namespace STRINGS
 				public static LocString TOOLTIP_NA = "--";
 
 				public static LocString CHORE_GROUP_SEPARATOR = " or ";
+			}
+
+			public class MODULEFLIGHTUTILITYSIDESCREEN
+			{
+				public static LocString TITLE = "Deployables";
+
+				public static LocString DEPLOY_BUTTON = "Deploy";
+
+				public static LocString DEPLOY_BUTTON_TOOLTIP = string.Concat("Send this module's contents to the surface of the currently orbited ", CLUSTERMAP.PLANETOID_KEYWORD, "\n\nA specific deploy location may need to be chosen for certain modules");
+
+				public static LocString REPEAT_BUTTON_TOOLTIP = "Automatically deploy this module's contents when a destination orbit is reached.";
+
+				public static LocString SELECT_DUPLICANT = "Select Duplicant...";
+
+				public static LocString PILOT_FMT = "{0} - Pilot";
 			}
 
 			public class MONUMENTSIDESCREEN
@@ -5078,6 +6313,8 @@ namespace STRINGS
 				public static LocString ROTATION_NEED_WALL = "<b>Requires sideways plot orientation.</b>";
 
 				public static LocString ROTATION_NEED_CEILING = "<b>Requires downward plot orientation.</b>";
+
+				public static LocString NO_SPECIES_SELECTED = "Select a seed species above...";
 			}
 
 			public class EGGINCUBATOR
@@ -5173,11 +6410,15 @@ namespace STRINGS
 
 				public static LocString RECIPE_FROM_TO_WITH_NEWLINES = "{0}\nto\n{1}";
 
+				public static LocString RECIPE_FROM_TO_COMPOSITE = "{0} to {1} and {2}";
+
 				public static LocString RECIPE_SIMPLE_INCLUDE_AMOUNTS = "{0} {1}";
 
 				public static LocString RECIPE_FROM_TO_INCLUDE_AMOUNTS = "{2} {0} to {3} {1}";
 
 				public static LocString RECIPE_WITH_INCLUDE_AMOUNTS = "{3} {1} ({2} {0})";
+
+				public static LocString RECIPE_FROM_TO_COMPOSITE_INCLUDE_AMOUNTS = "{3} {0} to {4} {1} and {5} {2}";
 			}
 
 			public class SEALEDDOORSIDESCREEN
@@ -5290,6 +6531,34 @@ namespace STRINGS
 				public static LocString TITLE = "Launch Conditions";
 
 				public static LocString DESTINATION_BUTTON = "Show Starmap";
+
+				public static LocString DESTINATION_BUTTON_EXPANSION = "Show Starmap";
+			}
+
+			public class CLUSTERDESTINATIONSIDESCREEN
+			{
+				public class ASSIGNMENTSTATUS
+				{
+					public static LocString LOCAL = "Current";
+
+					public static LocString DESTINATION = "Destination";
+				}
+
+				public static LocString TITLE = "Destination";
+
+				public static LocString FIRSTAVAILABLE = "Any landing pad";
+
+				public static LocString NONEAVAILABLE = "No landing site";
+
+				public static LocString CHANGE_DESTINATION_BUTTON = "Change";
+
+				public static LocString CHANGE_DESTINATION_BUTTON_TOOLTIP = "Select a new destination for this rocket";
+
+				public static LocString CLEAR_DESTINATION_BUTTON = "Clear";
+
+				public static LocString CLEAR_DESTINATION_BUTTON_TOOLTIP = "Clear this rocket's destination";
+
+				public static LocString LOOP_BUTTON_TOOLTIP = "Toggle a looping round trip for this rocket";
 			}
 
 			public class EQUIPPABLESIDESCREEN
@@ -5336,6 +6605,13 @@ namespace STRINGS
 			public class VALVESIDESCREEN
 			{
 				public static LocString TITLE = "Flow Control";
+			}
+
+			public class NUCLEAR_REACTOR_SIDE_SCREEN
+			{
+				public static LocString TITLE = "Reaction Mass Target";
+
+				public static LocString TOOLTIP = "Duplicants will attempt to keep the reactor supplied with " + PRE_KEYWORD + "{0}{1}" + PST_KEYWORD + " of " + PRE_KEYWORD + "{2}" + PST_KEYWORD;
 			}
 
 			public class MANUALGENERATORSIDESCREEN
@@ -5387,6 +6663,39 @@ namespace STRINGS
 				public static LocString TITLE = "Backpressure Release Threshold";
 
 				public static LocString TOOLTIP = "Duplicants will be requested to release backpressure buildup when it exceeds <b>{0}%</b>";
+			}
+
+			public class MODULAR_CONDUIT_PORT_SIDE_SCREEN
+			{
+				public static LocString TITLE = "Pump Control";
+
+				public static LocString LABEL_UNLOAD = "Unload Only";
+
+				public static LocString LABEL_BOTH = "Load/Unload";
+
+				public static LocString LABEL_LOAD = "Load Only";
+
+				public static readonly List<LocString> LABELS = new List<LocString>
+				{
+					LABEL_UNLOAD,
+					LABEL_BOTH,
+					LABEL_LOAD
+				};
+
+				public static LocString TOOLTIP_UNLOAD = "This pump will attempt to <b>Unload</b> cargo from the landed rocket, but not attempt to load new cargo";
+
+				public static LocString TOOLTIP_BOTH = "This pump will both <b>Load</b> and <b>Unload</b> cargo from the landed rocket";
+
+				public static LocString TOOLTIP_LOAD = "This pump will attempt to <b>Load</b> cargo onto the landed rocket, but will not unload it";
+
+				public static readonly List<LocString> TOOLTIPS = new List<LocString>
+				{
+					TOOLTIP_UNLOAD,
+					TOOLTIP_BOTH,
+					TOOLTIP_LOAD
+				};
+
+				public static LocString DESCRIPTION = "";
 			}
 
 			public class LOGIC_BUFFER_SIDE_SCREEN
@@ -5461,6 +6770,33 @@ namespace STRINGS
 				public static LocString CURRENT_COUNT_SIMPLE = "{0} of ";
 
 				public static LocString CURRENT_COUNT_ADVANCED = "{0} % ";
+			}
+
+			public class PASSENGERMODULESIDESCREEN
+			{
+				public static LocString REQUEST_CREW = "Crew";
+
+				public static LocString REQUEST_CREW_TOOLTIP = "Crew may not leave the module, non crew-must exit";
+
+				public static LocString AUTO_CREW = "Auto";
+
+				public static LocString AUTO_CREW_TOOLTIP = "All Duplicants may enter and exit the module freely until the rocket is ready for launch\n\nBefore launch the crew will automatically be requested";
+
+				public static LocString RELEASE_CREW = "All";
+
+				public static LocString RELEASE_CREW_TOOLTIP = "All Duplicants may enter and exit the module freely";
+
+				public static LocString REQUIRE_SUIT_LABEL = "Atmosuit Required";
+
+				public static LocString REQUIRE_SUIT_LABEL_TOOLTIP = "If checked, Duplicants will be required to wear an Atmo Suit when entering this rocket";
+
+				public static LocString CHANGE_CREW_BUTTON = "Change crew";
+
+				public static LocString CHANGE_CREW_BUTTON_TOOLTIP = "Assign Duplicants to crew this rocket's missions";
+
+				public static LocString ASSIGNED_TO_CREW = "Assigned to crew";
+
+				public static LocString UNASSIGNED = "Unassigned";
 			}
 
 			public class TIMEDSWITCHSIDESCREEN
@@ -5656,7 +6992,7 @@ namespace STRINGS
 
 				public static LocString STUDIED_BUTTON = "ANALYSIS COMPLETE";
 
-				public static LocString SEND_STATUS = "Send a researcher to gather data here.\n\nAnalyzing a natural feature takes time, but yields useful results.";
+				public static LocString SEND_STATUS = "Send a researcher to gather data here.\n\nAnalyzing a feature takes time, but yields useful results.";
 
 				public static LocString SEND_BUTTON = "ANALYZE";
 
@@ -5670,6 +7006,34 @@ namespace STRINGS
 				public static LocString TITLE = "Severity Requirement";
 
 				public static LocString TOOLTIP = "A Duplicant may not use this cot until their " + PRE_KEYWORD + "Health" + PST_KEYWORD + " falls below <b>{0}%</b>";
+			}
+
+			public class WARPPORTALSIDESCREEN
+			{
+				public static LocString TITLE = "Teleporter";
+
+				public static LocString IDLE = "Teleporter online.\nPlease select a passenger:";
+
+				public static LocString WAITING = "Ready to transmit passenger.";
+
+				public static LocString COMPLETE = "Passenger transmitted!";
+
+				public static LocString UNDERWAY = "Transmitting passenger...";
+
+				public static LocString CONSUMED = "Teleporter recharging:";
+
+				public static LocString BUTTON = "Teleport!";
+
+				public static LocString CANCELBUTTON = "Cancel";
+			}
+
+			public class HIGHENERGYPARTICLESPAWNERSIDESCREEN
+			{
+				public static LocString TITLE = "High Energy Particle Threshold";
+
+				public static LocString CURRENT_THRESHOLD = "Current Threshold: {0}%";
+
+				public static LocString TOOLTIP = "Emits a " + PRE_KEYWORD + "High Energy Particle" + PST_KEYWORD + " when the stored particles exceeds <b>{0} particles</b>";
 			}
 
 			public class LOGICBITSELECTORSIDESCREEN
@@ -5744,6 +7108,20 @@ namespace STRINGS
 				public static LocString NAME = "Cancel Clean";
 
 				public static LocString TOOLTIP = "Cancel this cleaning order";
+			}
+
+			public class EMPTYBEEHIVE
+			{
+				public static LocString NAME = "Harvest Hive";
+
+				public static LocString TOOLTIP = "Harvest the resources inside this hive";
+			}
+
+			public class CANCELEMPTYBEEHIVE
+			{
+				public static LocString NAME = "Cancel Harvest";
+
+				public static LocString TOOLTIP = "Cancel the harvest order on this hive";
 			}
 
 			public class EMPTYDESALINATOR
@@ -6015,7 +7393,11 @@ namespace STRINGS
 
 				public static LocString NAME = "Inspect";
 
+				public static LocString ALREADYINSPECTED = "Already inspected";
+
 				public static LocString TOOLTIP = "Recover files from this structure";
+
+				public static LocString TOOLTIP_ALREADYINSPECTED = "This structure has already been inspected";
 
 				public static LocString GOTODATABASE = "View Entry";
 
@@ -6169,14 +7551,14 @@ namespace STRINGS
 
 				public static class ALLOWED_GAS
 				{
-					public static LocString NAME = "Enable Auto-Canister";
+					public static LocString NAME = "Enable Auto-Bottle";
 
 					public static LocString TOOLTIP = "If enabled, Duplicants will deliver gas canisters to this building directly from Canister Fillers";
 				}
 
 				public static class DENIED_GAS
 				{
-					public static LocString NAME = "Disable Auto-Canister";
+					public static LocString NAME = "Disable Auto-Bottle";
 
 					public static LocString TOOLTIP = "If disabled, Duplicants will no longer deliver gas canisters directly from Canister Fillers";
 				}
@@ -6197,6 +7579,21 @@ namespace STRINGS
 
 					public static LocString TOOLTIP = "Suited Duplicants may pass even if there is no room to store their suits" + HORIZONTAL_BR_RULE + "When all available docks are full, Duplicants will unequip their suits and drop them on the floor";
 				}
+			}
+
+			public class ACTIVATEBUILDING
+			{
+				public static LocString ACTIVATE = "Activate";
+
+				public static LocString TOOLTIP_ACTIVATE = "Request a Duplicant to activate this building";
+
+				public static LocString TOOLTIP_ACTIVATED = "This building has already been activated";
+
+				public static LocString ACTIVATE_CANCEL = "Cancel Activation";
+
+				public static LocString ACTIVATED = "Activated";
+
+				public static LocString TOOLTIP_CANCEL = "Cancel activation of this building";
 			}
 		}
 
@@ -6305,6 +7702,13 @@ namespace STRINGS
 				public static LocString NAME = FormatAsLink("Automation", "BUILDCATEGORYAUTOMATION");
 
 				public static LocString TOOLTIP = "Automate my base with a wide range of sensors. {Hotkey}";
+			}
+
+			public static class HEP
+			{
+				public static LocString NAME = FormatAsLink("HEP", "BUILDCATEGORYHEP");
+
+				public static LocString TOOLTIP = "Only the highest energy particles here. {Hotkey}";
 			}
 		}
 
@@ -6672,6 +8076,13 @@ namespace STRINGS
 					public static LocString HOVERACTION = "PAINT HEAT";
 				}
 
+				public class RADSTOOL
+				{
+					public static LocString NAME = "Radiation Tool";
+
+					public static LocString HOVERACTION = "PAINT RADS";
+				}
+
 				public class SPAWNER
 				{
 					public static LocString NAME = "Spawner";
@@ -6703,6 +8114,13 @@ namespace STRINGS
 					public static LocString NAME = "Reveal";
 
 					public static LocString HOVERACTION = "DE-FOG";
+				}
+
+				public class CRITTER
+				{
+					public static LocString NAME = "Critter Removal";
+
+					public static LocString HOVERACTION = "DELETE CRITTERS";
 				}
 			}
 
@@ -6951,7 +8369,7 @@ namespace STRINGS
 				public static LocString OPERATE = "Duties";
 			}
 
-			public static LocString TOOL_AREA_FMT = "{0} x {1}";
+			public static LocString TOOL_AREA_FMT = "{0} x {1}\n{2} tiles";
 
 			public static LocString TOOL_LENGTH_FMT = "{0}";
 
@@ -6994,6 +8412,18 @@ namespace STRINGS
 				public static LocString GROUPNAME_LORE = "RECOVERED FILES";
 
 				public static LocString GROUPNAME_FERTILITY = "EGG CHANCES";
+
+				public static LocString GROUPNAME_ROCKET = "ROCKETRY";
+
+				public static LocString GROUPNAME_ELEMENTS = "RESOURCES";
+
+				public static LocString GROUPNAME_LIFE = "LIFEFORMS";
+
+				public static LocString GROUPNAME_BIOMES = "BIOMES";
+
+				public static LocString GROUPNAME_GEYSERS = "GEYSERS";
+
+				public static LocString NO_GEYSERS = "No geysers detected";
 			}
 
 			public class DETAILS
@@ -7148,7 +8578,7 @@ namespace STRINGS
 
 				public static LocString POTENTIAL_WATTAGE_CONSUMED_TOOLTIP = "The total amount of power that can be used by this circuit if all connected buildings are active";
 
-				public static LocString MAX_SAFE_WATTAGE = "Maximum Safe Wattage: {0}";
+				public static LocString MAX_SAFE_WATTAGE = "Maximum safe wattage: {0}";
 
 				public static LocString MAX_SAFE_WATTAGE_TOOLTIP = "Exceeding this value will overload the circuit and can result in damage to wiring and buildings";
 			}
@@ -7205,14 +8635,14 @@ namespace STRINGS
 						{
 							public static LocString TITLE = "    • <b>Dying off: {0}</b>";
 
-							public static LocString TOOLTIP = "Low germ count in this area is causing germs to die rapidly\n\nFewer than {0} germs are on this {1} of material.\n({2} germs/Kg)";
+							public static LocString TOOLTIP = string.Concat("Low germ count in this area is causing germs to die rapidly\n\nFewer than {0} germs are on this {1} of material.\n({2} germs/", UNITSUFFIXES.MASS.KILOGRAM, ")");
 						}
 
 						public class OVERPOPULATED
 						{
 							public static LocString TITLE = "    • <b>Overpopulated: {0}</b>";
 
-							public static LocString TOOLTIP = "Too many germs are present in this area, resulting in rapid die-off until the population stabilizes\n\nA maximum of {0} can be on this {1} of material.\n({2} germs/Kg)";
+							public static LocString TOOLTIP = string.Concat("Too many germs are present in this area, resulting in rapid die-off until the population stabilizes\n\nA maximum of {0} can be on this {1} of material.\n({2} germs/", UNITSUFFIXES.MASS.KILOGRAM, ")");
 						}
 
 						public static LocString TITLE = "\nGrowth factors:";
@@ -7330,6 +8760,27 @@ namespace STRINGS
 
 				public static LocString DUPE_TOOLTIP_DESC_INACTIVE = "\"{Errand}\" is #{Rank} on {Name}'s To Do list, after they finish their current errand";
 			}
+
+			public class PROCESS_CONDITIONS
+			{
+				public static LocString NAME = "CHECKLIST";
+
+				public static LocString ROCKETPREP = "Launch Checklist";
+
+				public static LocString ROCKETPREP_TOOLTIP = "It is recommended that all boxes on the Launch Checklist be checked before launching";
+
+				public static LocString ROCKETFLIGHT = "Flight Route";
+
+				public static LocString ROCKETFLIGHT_TOOLTIP = "A rocket requires a clear path to a set destination to conduct a mission";
+
+				public static LocString ROCKETBOARD = "Crew Checklist";
+
+				public static LocString ROCKETBOARD_TOOLTIP = "It is recommended that all boxes on the Crew Checklist be checked before launching";
+
+				public static LocString ALL = "Requirements";
+
+				public static LocString ALL_TOOLTIP = "These conditions must be fulfilled in order to launch a rocket mission";
+			}
 		}
 
 		public class BUILDINGEFFECTS
@@ -7414,7 +8865,7 @@ namespace STRINGS
 
 				public static LocString HEATCONSUMED = "Dissipates " + FormatAsNegativeRate("{0}") + " per second\n\nSum " + PRE_KEYWORD + "Temperature" + PST_KEYWORD + " change can be affected by the material attributes of the cooled substance:\n    • mass\n    • specific heat capacity\n    • surface area\n    • insulation thickness\n    • thermal conductivity";
 
-				public static LocString HEATER_TARGETTEMPERATURE = "Stops heating when the surrounding average " + PRE_KEYWORD + "Tempature" + PST_KEYWORD + " is above <b>{0}</b>";
+				public static LocString HEATER_TARGETTEMPERATURE = "Stops heating when the surrounding average " + PRE_KEYWORD + "Temperature" + PST_KEYWORD + " is above <b>{0}</b>";
 
 				public static LocString FABRICATES = "Fabrication is the production of items and equipment";
 
@@ -7464,9 +8915,9 @@ namespace STRINGS
 
 				public static LocString RECREATION = "Improves Duplicant " + PRE_KEYWORD + "Morale" + PST_KEYWORD + " during scheduled " + PRE_KEYWORD + "Downtime" + PST_KEYWORD;
 
-				public static LocString HEATGENERATED_AIRCONDITIONER = string.Concat("Generates ", PRE_KEYWORD, "Heat", PST_KEYWORD, " based on the ", PRE_KEYWORD, "Volume", PST_KEYWORD, " and ", PRE_KEYWORD, "Specific Heat Capacity", PST_KEYWORD, " of the pumped ", PRE_KEYWORD, "Gas", PST_KEYWORD, "\n\nCooling 1 Kg of ", ELEMENTS.OXYGEN.NAME, " the entire <b>{1}</b> will output <b>{0}</b>");
+				public static LocString HEATGENERATED_AIRCONDITIONER = string.Concat("Generates ", PRE_KEYWORD, "Heat", PST_KEYWORD, " based on the ", PRE_KEYWORD, "Volume", PST_KEYWORD, " and ", PRE_KEYWORD, "Specific Heat Capacity", PST_KEYWORD, " of the pumped ", PRE_KEYWORD, "Gas", PST_KEYWORD, "\n\nCooling 1 ", UNITSUFFIXES.MASS.KILOGRAM, " of ", ELEMENTS.OXYGEN.NAME, " the entire <b>{1}</b> will output <b>{0}</b>");
 
-				public static LocString HEATGENERATED_LIQUIDCONDITIONER = string.Concat("Generates ", PRE_KEYWORD, "Heat", PST_KEYWORD, " based on the ", PRE_KEYWORD, "Volume", PST_KEYWORD, " and ", PRE_KEYWORD, "Specific Heat Capacity", PST_KEYWORD, " of the pumped ", PRE_KEYWORD, "Liquid", PST_KEYWORD, "\n\nCooling 10 Kg of ", ELEMENTS.WATER.NAME, " the entire <b>{1}</b> will output <b>{0}</b>");
+				public static LocString HEATGENERATED_LIQUIDCONDITIONER = string.Concat("Generates ", PRE_KEYWORD, "Heat", PST_KEYWORD, " based on the ", PRE_KEYWORD, "Volume", PST_KEYWORD, " and ", PRE_KEYWORD, "Specific Heat Capacity", PST_KEYWORD, " of the pumped ", PRE_KEYWORD, "Liquid", PST_KEYWORD, "\n\nCooling 10 ", UNITSUFFIXES.MASS.KILOGRAM, " of ", ELEMENTS.WATER.NAME, " the entire <b>{1}</b> will output <b>{0}</b>");
 
 				public static LocString MOVEMENT_BONUS = "Increases the Runspeed of Duplicants";
 
@@ -7525,6 +8976,12 @@ namespace STRINGS
 				public static LocString TRANSFORMER_OUTPUT_WIRE = "The " + PRE_KEYWORD + "Power" + PST_KEYWORD + " provided by the the small " + PRE_KEYWORD + "Output" + PST_KEYWORD + " will be limited to {0}.";
 
 				public static LocString FABRICATOR_INGREDIENTS = "Ingredients:\n{0}";
+
+				public static LocString ACTIVE_PARTICLE_CONSUMPTION = "This building requires " + PRE_KEYWORD + "High Energy Particles" + PST_KEYWORD + ", consuming them at a rate of {Rate} while in use";
+
+				public static LocString PARTICLE_PORT_INPUT = "A HEP Port on this building allows it to absorb " + PRE_KEYWORD + "High Energy Particles" + PST_KEYWORD;
+
+				public static LocString PARTICLE_PORT_OUTPUT = "This building has a configurable HEP Port for " + PRE_KEYWORD + "High Energy Particle" + PST_KEYWORD + " emission";
 			}
 
 			public static LocString OPERATIONREQUIREMENTS = "<b>Requirements:</b>";
@@ -7718,6 +9175,12 @@ namespace STRINGS
 			public static LocString NOISE_CREATED = FormatAsLink("Noise", "SOUND") + ": {0} dB (Radius: {1} tiles)";
 
 			public static LocString MESS_TABLE_SALT = "Table Salt: +{0}";
+
+			public static LocString ACTIVE_PARTICLE_CONSUMPTION = "High Energy Particles: {Rate}";
+
+			public static LocString PARTICLE_PORT_INPUT = "Input HEP Port";
+
+			public static LocString PARTICLE_PORT_OUTPUT = "Output HEP Port";
 		}
 
 		public class LOGIC_PORTS
@@ -8002,18 +9465,18 @@ namespace STRINGS
 			{
 				public static LocString NAME = FormatAsLink("Oxygen", "OXYGEN") + " Generation:";
 
-				public static LocString POSITIVE_TOOLTIP = "My colony generated {0} of " + FormatAsLink("Oxygen", "OXYGEN") + " over the course of the day";
+				public static LocString POSITIVE_TOOLTIP = "{0} of " + FormatAsLink("Oxygen", "OXYGEN") + " was produced by {1} over the course of the day";
 
-				public static LocString NEGATIVE_TOOLTIP = "My colony consumed {0} of " + FormatAsLink("Oxygen", "OXYGEN") + " over the course of the day";
+				public static LocString NEGATIVE_TOOLTIP = "{0} of " + FormatAsLink("Oxygen", "OXYGEN") + " was consumed by {1} over the course of the day";
 			}
 
 			public class CALORIES_CREATED
 			{
 				public static LocString NAME = "Calorie Generation:";
 
-				public static LocString POSITIVE_TOOLTIP = "My colony produced {0} of " + FormatAsLink("Food", "FOOD") + " over the course of the day";
+				public static LocString POSITIVE_TOOLTIP = "{0} of " + FormatAsLink("Food", "FOOD") + " was produced by {1} over the course of the day";
 
-				public static LocString NEGATIVE_TOOLTIP = "My colony consumed {0} of " + FormatAsLink("Food", "FOOD") + " over the course of the day";
+				public static LocString NEGATIVE_TOOLTIP = "{0} of " + FormatAsLink("Food", "FOOD") + " was consumed by {1} over the course of the day";
 			}
 
 			public class NUMBER_OF_DOMESTICATED_CRITTERS
@@ -8029,9 +9492,9 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Wild Critters:";
 
-				public static LocString POSITIVE_TOOLTIP = "{0} domestic critters live in {1}";
+				public static LocString POSITIVE_TOOLTIP = "{0} wild critters live in {1}";
 
-				public static LocString NEGATIVE_TOOLTIP = "{0} domestic critters live in {1}";
+				public static LocString NEGATIVE_TOOLTIP = "{0} wild critters live in {1}";
 			}
 
 			public class ROCKETS_IN_FLIGHT
@@ -8047,9 +9510,9 @@ namespace STRINGS
 			{
 				public static LocString NAME = FormatAsLink("Stress", "STRESS") + " Change:";
 
-				public static LocString POSITIVE_TOOLTIP = "My colony's total " + FormatAsLink("Stress", "STRESS") + " has increased by {0}";
+				public static LocString POSITIVE_TOOLTIP = FormatAsLink("Stress", "STRESS") + " increased by a total of {0} for {1}";
 
-				public static LocString NEGATIVE_TOOLTIP = "My colony's total " + FormatAsLink("Stress", "STRESS") + " has decreased by {0}";
+				public static LocString NEGATIVE_TOOLTIP = FormatAsLink("Stress", "STRESS") + " decreased by a total of {0} for {1}";
 			}
 
 			public class TRAVELTIMEWARNING
@@ -8063,53 +9526,51 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Travel Time:";
 
-				public static LocString POSITIVE_TOOLTIP = "On average, my Duplicants spent {0} of their time traveling between tasks";
+				public static LocString POSITIVE_TOOLTIP = "On average, {1} spent {0} of their time traveling between tasks";
 			}
 
 			public class WORK_TIME
 			{
 				public static LocString NAME = "Work Time:";
 
-				public static LocString POSITIVE_TOOLTIP = "On average, my Duplicants spent {0} of their time working";
+				public static LocString POSITIVE_TOOLTIP = "On average, {0} of {1}'s time was spent working";
 			}
 
 			public class IDLE_TIME
 			{
 				public static LocString NAME = "Idle Time:";
 
-				public static LocString POSITIVE_TOOLTIP = "On average, my Duplicants {0} of their time idling";
+				public static LocString POSITIVE_TOOLTIP = "On average, {0} of {1}'s time was spent idling";
 			}
 
 			public class PERSONAL_TIME
 			{
 				public static LocString NAME = "Personal Time:";
 
-				public static LocString POSITIVE_TOOLTIP = "On average, my Duplicants spent {0} of their time tending to personal needs";
+				public static LocString POSITIVE_TOOLTIP = "On average, {0} of {1}'s time was spent tending to personal needs";
 			}
 
 			public class ENERGY_USAGE
 			{
 				public static LocString NAME = FormatAsLink("Power", "POWER") + " Usage:";
 
-				public static LocString POSITIVE_TOOLTIP = "My colony created {0} of " + FormatAsLink("Power", "POWER") + " over the course of the day";
+				public static LocString POSITIVE_TOOLTIP = "{0} of " + FormatAsLink("Power", "POWER") + " was created by {1} over the course of the day";
 
-				public static LocString NEGATIVE_TOOLTIP = "My colony consumed {0} of " + FormatAsLink("Power", "POWER") + " over the course of the day";
+				public static LocString NEGATIVE_TOOLTIP = "{0} of " + FormatAsLink("Power", "POWER") + " was consumed by {1} over the course of the day";
 			}
 
 			public class ENERGY_WASTED
 			{
 				public static LocString NAME = FormatAsLink("Power", "POWER") + " Wasted:";
 
-				public static LocString POSITIVE_TOOLTIP = "";
-
-				public static LocString NEGATIVE_TOOLTIP = "My colony lost {0} of " + FormatAsLink("Power", "POWER") + " today due to overproduction and battery runoff";
+				public static LocString NEGATIVE_TOOLTIP = "{0} of " + FormatAsLink("Power", "POWER") + " was lost today due to battery runoff and overproduction in {1}";
 			}
 
 			public class LEVEL_UP
 			{
 				public static LocString NAME = "Skill Increases:";
 
-				public static LocString TOOLTIP = "My Duplicants gained a total of {0} skill levels today";
+				public static LocString TOOLTIP = "Today {1} gained a total of {0} skill levels";
 			}
 
 			public class TOILET_INCIDENT
@@ -8123,52 +9584,52 @@ namespace STRINGS
 			{
 				public static LocString NAME = FormatAsLink("Diseases", "DISEASE") + " Contracted:";
 
-				public static LocString POSITIVE_TOOLTIP = "{0} Duplicant(s) contracted a " + FormatAsLink("Disease", "DISEASE");
+				public static LocString POSITIVE_TOOLTIP = "{0} " + FormatAsLink("Disease", "DISEASE") + " were contracted by {1}";
 
-				public static LocString NEGATIVE_TOOLTIP = "{0} Duplicant(s) were cured of a " + FormatAsLink("Disease", "DISEASE");
+				public static LocString NEGATIVE_TOOLTIP = "{0} " + FormatAsLink("Disease", "DISEASE") + " were cured by {1}";
 			}
 
 			public class CONTAMINATED_OXYGEN_FLATULENCE
 			{
 				public static LocString NAME = FormatAsLink("Flatulence", "CONTAMINATEDOXYGEN") + " Generation:";
 
-				public static LocString POSITIVE_TOOLTIP = "My colony generated {0} of " + FormatAsLink("Polluted Oxygen", "CONTAMINATEDOXYGEN") + " over the course of the day";
+				public static LocString POSITIVE_TOOLTIP = "{0} of " + FormatAsLink("Polluted Oxygen", "CONTAMINATEDOXYGEN") + " was generated by {1} over the course of the day";
 
-				public static LocString NEGATIVE_TOOLTIP = "My colony consumed {0} of " + FormatAsLink("Polluted Oxygen", "CONTAMINATEDOXYGEN") + " over the course of the day";
+				public static LocString NEGATIVE_TOOLTIP = "{0} of " + FormatAsLink("Polluted Oxygen", "CONTAMINATEDOXYGEN") + " was consumed by {1} over the course of the day";
 			}
 
 			public class CONTAMINATED_OXYGEN_TOILET
 			{
 				public static LocString NAME = FormatAsLink("Toilet Emissions: ", "CONTAMINATEDOXYGEN");
 
-				public static LocString POSITIVE_TOOLTIP = "My colony generated {0} of " + FormatAsLink("Polluted Oxygen", "CONTAMINATEDOXYGEN") + " over the course of the day";
+				public static LocString POSITIVE_TOOLTIP = "{0} of " + FormatAsLink("Polluted Oxygen", "CONTAMINATEDOXYGEN") + " was generated by {1} over the course of the day";
 
-				public static LocString NEGATIVE_TOOLTIP = "My colony consumed {0} of " + FormatAsLink("Polluted Oxygen", "CONTAMINATEDOXYGEN") + " over the course of the day";
+				public static LocString NEGATIVE_TOOLTIP = "{0} of " + FormatAsLink("Polluted Oxygen", "CONTAMINATEDOXYGEN") + " was consumed by {1} over the course of the day";
 			}
 
 			public class CONTAMINATED_OXYGEN_SUBLIMATION
 			{
 				public static LocString NAME = FormatAsLink("Sublimation", "CONTAMINATEDOXYGEN") + ":";
 
-				public static LocString POSITIVE_TOOLTIP = "My colony generated {0} of " + FormatAsLink("Polluted Oxygen", "CONTAMINATEDOXYGEN") + " over the course of the day";
+				public static LocString POSITIVE_TOOLTIP = "{0} of " + FormatAsLink("Polluted Oxygen", "CONTAMINATEDOXYGEN") + " was generated by {1} over the course of the day";
 
-				public static LocString NEGATIVE_TOOLTIP = "My colony consumed {0} of " + FormatAsLink("Polluted Oxygen", "CONTAMINATEDOXYGEN") + " over the course of the day";
+				public static LocString NEGATIVE_TOOLTIP = "{0} of " + FormatAsLink("Polluted Oxygen", "CONTAMINATEDOXYGEN") + " was consumed by {1} over the course of the day";
 			}
 
 			public class DISEASE_STATUS
 			{
 				public static LocString NAME = "Disease Status:";
 
-				public static LocString TOOLTIP = "My Duplicants are covered in {0}";
+				public static LocString TOOLTIP = "There are {0} covering {1}";
 			}
 
 			public class CHORE_STATUS
 			{
 				public static LocString NAME = "Errands:";
 
-				public static LocString POSITIVE_TOOLTIP = "My Duplicants have errands outstanding {0}";
+				public static LocString POSITIVE_TOOLTIP = "{0} errands are queued for {1}";
 
-				public static LocString NEGATIVE_TOOLTIP = "My Duplicants completed {0} errands over the course of the day";
+				public static LocString NEGATIVE_TOOLTIP = "{0} errands were completed over the course of the day by {1}";
 			}
 
 			public class NOTES
@@ -8202,6 +9663,8 @@ namespace STRINGS
 				public static LocString WORK_TIME = "{0}";
 
 				public static LocString PERSONAL_TIME = "{0}";
+
+				public static LocString FOODFIGHT_CONTEXT = "{0} ingested in food fight";
 			}
 
 			public static LocString REPORT_TITLE = "DAILY REPORTS";
@@ -8228,7 +9691,7 @@ namespace STRINGS
 
 			public static LocString DUPLICANT_DETAILS_HEADER = "Duplicant Details:";
 
-			public static LocString TIME_DETAILS_HEADER = "Time Details:";
+			public static LocString TIME_DETAILS_HEADER = "Total Time Details:";
 
 			public static LocString BASE_DETAILS_HEADER = "Base Details:";
 
@@ -8481,8 +9944,6 @@ namespace STRINGS
 
 			public static LocString NAME_YOUR_COLONY = "NAME THE COLONY";
 
-			public static LocString SHUFFLE_COLONY_NAME = "Randomize colony name";
-
 			public static LocString CARE_PACKAGE_ELEMENT_QUANTITY = "{0} of {1}";
 
 			public static LocString CARE_PACKAGE_ELEMENT_COUNT = "{0} x {1}";
@@ -8491,7 +9952,7 @@ namespace STRINGS
 
 			public static LocString CARE_PACKAGE_CURRENT_AMOUNT = "Available: {0}";
 
-			public static LocString DUPLICATE_COLONY_NAME = "A colony named \"{0}\" already exists!";
+			public static LocString DUPLICATE_COLONY_NAME = "A colony named \"{0}\" already exists";
 		}
 
 		public class METERS
@@ -8509,6 +9970,11 @@ namespace STRINGS
 			public class FUEL
 			{
 				public static LocString TOOLTIP = "Fuel";
+			}
+
+			public class BATTERY
+			{
+				public static LocString TOOLTIP = "Battery Charge";
 			}
 		}
 
@@ -8548,9 +10014,11 @@ namespace STRINGS
 
 		public static LocString COPY_BUILDING = "Copy";
 
-		public static LocString COPY_BUILDING_TOOLTIP = "Create new build orders for the selected building. {Hotkey}";
+		public static LocString COPY_BUILDING_TOOLTIP = "Create new build orders based off the selected building. {Hotkey}";
 
 		public static LocString NAME_WITH_UNITS = "{0} x {1}";
+
+		public static LocString NA = "N/A";
 
 		public static LocString POSITIVE_FORMAT = "+{0}";
 
@@ -8640,6 +10108,12 @@ namespace STRINGS
 
 		public static LocString PRODUCTINFO_MISSINGRESOURCES_DESC = "{0} has yet to be discovered.";
 
+		public static LocString PRODUCTINFO_UNIQUE_PER_WORLD = "Only one {0} per world.";
+
+		public static LocString PRODUCTINFO_ROCKET_INTERIOR = "Rocket interior only";
+
+		public static LocString PRODUCTINFO_ROCKET_NOT_INTERIOR = "Can't build inside rocket";
+
 		public static LocString EQUIPMENTTAB_OWNED = "Owned Items";
 
 		public static LocString EQUIPMENTTAB_HELD = "Held Items";
@@ -8705,6 +10179,8 @@ namespace STRINGS
 		public static LocString WELCOMEMESSAGETITLE = "- ALERT -";
 
 		public static LocString WELCOMEMESSAGEBODY = "I've awoken at the target location, but colonization efforts have already hit a hitch. I was supposed to land on the planet's surface, but became trapped many miles underground instead.\n\nAlthough the conditions are not ideal, it's imperative that I establish a colony here and begin mounting efforts to escape.";
+
+		public static LocString WELCOMEMESSAGEBODY_SPACEDOUT = "DLC1";
 
 		public static LocString WELCOMEMESSAGEBEGIN = "BEGIN";
 
@@ -8863,13 +10339,13 @@ namespace STRINGS
 						Debug.LogWarningFormat("String has no open link tag: {0}");
 					}
 				}
-				return text2;
 			}
 			catch
 			{
 				Debug.Log("STRIP LINK FORMATTING FAILED ON: " + text);
-				return text;
+				text2 = text;
 			}
+			return text2;
 		}
 	}
 }

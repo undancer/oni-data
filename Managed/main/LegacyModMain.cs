@@ -27,9 +27,9 @@ public class LegacyModMain
 	{
 		List<Type> list = new List<Type>();
 		Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-		for (int i = 0; i < assemblies.Length; i++)
+		foreach (Assembly assembly in assemblies)
 		{
-			Type[] types = assemblies[i].GetTypes();
+			Type[] types = assembly.GetTypes();
 			if (types != null)
 			{
 				list.AddRange(types);
@@ -51,7 +51,8 @@ public class LegacyModMain
 		UnityEngine.Object[] array = Resources.FindObjectsOfTypeAll(typeof(Component));
 		for (int i = 0; i < array.Length; i++)
 		{
-			Type type = ((Component)array[i]).GetType();
+			Component component = (Component)array[i];
+			Type type = component.GetType();
 			int value = 0;
 			dictionary.TryGetValue(type, out value);
 			dictionary[type] = value + 1;
@@ -83,7 +84,8 @@ public class LegacyModMain
 		UnityEngine.Object[] array = Resources.FindObjectsOfTypeAll(typeof(GameObject));
 		for (int i = 0; i < array.Length; i++)
 		{
-			Component[] components = ((GameObject)array[i]).GetComponents<Component>();
+			GameObject gameObject = (GameObject)array[i];
+			Component[] components = gameObject.GetComponents<Component>();
 			foreach (Component component in components)
 			{
 				if (!(component == null))
@@ -122,7 +124,8 @@ public class LegacyModMain
 	private static void DebugSelected(GameObject go)
 	{
 		Constructable component = go.GetComponent<Constructable>();
-		_ = 0 + 1;
+		int num = 0;
+		num++;
 		Debug.Log(component);
 	}
 
@@ -154,7 +157,7 @@ public class LegacyModMain
 
 	private static void ConfigElements()
 	{
-		ElementInfo[] array = new ElementInfo[19];
+		ElementInfo[] array = new ElementInfo[20];
 		ElementInfo elementInfo = new ElementInfo
 		{
 			id = SimHashes.Katairite,
@@ -233,53 +236,60 @@ public class LegacyModMain
 		array[11] = elementInfo;
 		elementInfo = new ElementInfo
 		{
-			id = SimHashes.Iron,
-			overheatMod = 50f
+			id = SimHashes.RefinedCarbon,
+			overheatMod = 900f
 		};
 		array[12] = elementInfo;
 		elementInfo = new ElementInfo
 		{
-			id = SimHashes.Tungsten,
+			id = SimHashes.Iron,
 			overheatMod = 50f
 		};
 		array[13] = elementInfo;
 		elementInfo = new ElementInfo
 		{
+			id = SimHashes.Tungsten,
+			overheatMod = 50f
+		};
+		array[14] = elementInfo;
+		elementInfo = new ElementInfo
+		{
 			id = SimHashes.Steel,
 			overheatMod = 200f
 		};
-		array[14] = elementInfo;
+		array[15] = elementInfo;
 		elementInfo = new ElementInfo
 		{
 			id = SimHashes.GoldAmalgam,
 			overheatMod = 50f,
 			decor = 0.1f
 		};
-		array[15] = elementInfo;
+		array[16] = elementInfo;
 		elementInfo = new ElementInfo
 		{
 			id = SimHashes.Diamond,
 			overheatMod = 200f,
 			decor = 1f
 		};
-		array[16] = elementInfo;
+		array[17] = elementInfo;
 		elementInfo = new ElementInfo
 		{
 			id = SimHashes.Niobium,
 			decor = 0.5f,
 			overheatMod = 500f
 		};
-		array[17] = elementInfo;
+		array[18] = elementInfo;
 		elementInfo = new ElementInfo
 		{
 			id = SimHashes.TempConductorSolid,
 			overheatMod = 900f
 		};
-		array[18] = elementInfo;
+		array[19] = elementInfo;
 		ElementInfo[] array2 = array;
-		for (int i = 0; i < array2.Length; i++)
+		ElementInfo[] array3 = array2;
+		for (int i = 0; i < array3.Length; i++)
 		{
-			ElementInfo elementInfo2 = array2[i];
+			ElementInfo elementInfo2 = array3[i];
 			Element element = ElementLoader.FindElementByHash(elementInfo2.id);
 			if (elementInfo2.decor != 0f)
 			{

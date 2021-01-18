@@ -86,18 +86,6 @@ public class EntityPreview : KMonoBehaviour
 	private static bool ValidTest(int cell, object data)
 	{
 		EntityPreview entityPreview = (EntityPreview)data;
-		if (!Grid.Solid[cell])
-		{
-			if (entityPreview.objectLayer != ObjectLayer.NumLayers)
-			{
-				if (!(Grid.Objects[cell, (int)entityPreview.objectLayer] == entityPreview.gameObject))
-				{
-					return Grid.Objects[cell, (int)entityPreview.objectLayer] == null;
-				}
-				return true;
-			}
-			return true;
-		}
-		return false;
+		return Grid.IsValidCell(cell) && !Grid.Solid[cell] && (entityPreview.objectLayer == ObjectLayer.NumLayers || Grid.Objects[cell, (int)entityPreview.objectLayer] == entityPreview.gameObject || Grid.Objects[cell, (int)entityPreview.objectLayer] == null);
 	}
 }

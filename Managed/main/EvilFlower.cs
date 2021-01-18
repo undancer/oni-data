@@ -40,7 +40,7 @@ public class EvilFlower : StateMachineComponent<EvilFlower.StatesInstance>
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = grow;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			dead.ToggleStatusItem(CREATURES.STATUSITEMS.DEAD.NAME, CREATURES.STATUSITEMS.DEAD.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, default(HashedString), 129022, null, null, Db.Get().StatusItemCategories.Main).TriggerOnEnter(GameHashes.BurstEmitDisease).ToggleTag(GameTags.PreventEmittingDisease)
 				.Enter(delegate(StatesInstance smi)
 				{
@@ -83,7 +83,7 @@ public class EvilFlower : StateMachineComponent<EvilFlower.StatesInstance>
 	[MyCmpReq]
 	private EntombVulnerable entombVulnerable;
 
-	public bool replanted;
+	public bool replanted = false;
 
 	public EffectorValues positive_decor_effect;
 

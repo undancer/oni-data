@@ -2,23 +2,13 @@ using UnityEngine;
 
 public class HealthBar : ProgressBar
 {
-	private float showTimer;
+	private float showTimer = 0f;
 
 	private float maxShowTime = 10f;
 
 	private float alwaysShowThreshold = 0.8f;
 
-	private bool ShouldShow
-	{
-		get
-		{
-			if (!(showTimer > 0f))
-			{
-				return base.PercentFull < alwaysShowThreshold;
-			}
-			return true;
-		}
-	}
+	private bool ShouldShow => showTimer > 0f || base.PercentFull < alwaysShowThreshold;
 
 	protected override void OnSpawn()
 	{

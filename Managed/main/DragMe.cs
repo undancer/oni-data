@@ -33,7 +33,8 @@ public class DragMe : MonoBehaviour, IBeginDragHandler, IEventSystemHandler, IDr
 			m_DraggingIcon.name = "dragObj";
 			m_DraggingIcon.transform.SetParent(canvas.transform, worldPositionStays: false);
 			m_DraggingIcon.transform.SetAsLastSibling();
-			m_DraggingIcon.GetComponent<RectTransform>().pivot = Vector2.zero;
+			RectTransform component2 = m_DraggingIcon.GetComponent<RectTransform>();
+			component2.pivot = Vector2.zero;
 			if (dragOnSurfaces)
 			{
 				m_DraggingPlane = base.transform as RectTransform;

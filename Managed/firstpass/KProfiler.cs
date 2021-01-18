@@ -147,7 +147,6 @@ public static class KProfiler
 	{
 		foreach (KeyValuePair<string, int> series_name_count in series_name_counts)
 		{
-			_ = series_name_count;
 			EndSampleI();
 		}
 	}

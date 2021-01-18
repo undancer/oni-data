@@ -1,3 +1,4 @@
+#define UNITY_ASSERTIONS
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,9 +19,24 @@ public class ElementLoader
 		}
 	}
 
+	public class ElementComposition
+	{
+		public string elementID
+		{
+			get;
+			set;
+		}
+
+		public float percentage
+		{
+			get;
+			set;
+		}
+	}
+
 	public class ElementEntry
 	{
-		private string description_backing;
+		private string description_backing = null;
 
 		public string elementId
 		{
@@ -88,6 +104,12 @@ public class ElementLoader
 			set;
 		}
 
+		public float radiationAbsorptionFactor
+		{
+			get;
+			set;
+		}
+
 		public string lowTempTransitionTarget
 		{
 			get;
@@ -143,6 +165,30 @@ public class ElementLoader
 		}
 
 		public string sublimateFx
+		{
+			get;
+			set;
+		}
+
+		public float sublimateRate
+		{
+			get;
+			set;
+		}
+
+		public float sublimateEfficiency
+		{
+			get;
+			set;
+		}
+
+		public float sublimateProbability
+		{
+			get;
+			set;
+		}
+
+		public float offGasPercentage
 		{
 			get;
 			set;
@@ -244,6 +290,18 @@ public class ElementLoader
 			set;
 		}
 
+		public string dlcId
+		{
+			get;
+			set;
+		}
+
+		public ElementComposition[] composition
+		{
+			get;
+			set;
+		}
+
 		public string description
 		{
 			get
@@ -297,14 +355,15 @@ public class ElementLoader
 		return list;
 	}
 
-	public static void Load(ref Hashtable substanceList, SubstanceTable substanceTable)
+	public static void Load(ref Hashtable substanceList, Dictionary<string, SubstanceTable> substanceTablesByDlc)
 	{
 		elements = new List<Element>();
 		elementTable = new Dictionary<int, Element>();
-		foreach (ElementEntry item in CollectElementsFromYAML())
+		List<ElementEntry> list = CollectElementsFromYAML();
+		foreach (ElementEntry item in list)
 		{
 			int num = Hash.SDBMLower(item.elementId);
-			if (!elementTable.ContainsKey(num))
+			if (!elementTable.ContainsKey(num) && substanceTablesByDlc.ContainsKey(item.dlcId))
 			{
 				Element element = new Element();
 				element.id = (SimHashes)num;
@@ -315,35 +374,33 @@ public class ElementLoader
 				CopyEntryToElement(item, element);
 				elements.Add(element);
 				elementTable[num] = element;
+				if (!ManifestSubstanceForElement(element, ref substanceList, substanceTablesByDlc[item.dlcId]))
+				{
+					Debug.LogWarning("Missing substance for element: " + element.id);
+				}
 			}
 		}
-		foreach (Element element2 in elements)
-		{
-			if (!ManifestSubstanceForElement(element2, ref substanceList, substanceTable))
-			{
-				Debug.LogWarning("Missing substance for element: " + element2.id);
-			}
-		}
-		FinaliseElementsTable(ref substanceList, substanceTable);
+		FinaliseElementsTable(ref substanceList);
 		WorldGen.SetupDefaultElements();
 	}
 
 	private static void CopyEntryToElement(ElementEntry entry, Element elem)
 	{
-		Hash.SDBMLower(entry.elementId);
+		int num = Hash.SDBMLower(entry.elementId);
+		UnityEngine.Debug.Assert(num == (int)elem.id);
 		elem.tag = TagManager.Create(entry.elementId.ToString());
 		elem.specificHeatCapacity = entry.specificHeatCapacity;
 		elem.thermalConductivity = entry.thermalConductivity;
 		elem.molarMass = entry.molarMass;
 		elem.strength = entry.strength;
 		elem.disabled = entry.isDisabled;
+		elem.dlcId = entry.dlcId;
 		elem.flow = entry.flow;
 		elem.maxMass = entry.maxMass;
 		elem.maxCompression = entry.liquidCompression;
 		elem.viscosity = entry.speed;
 		elem.minHorizontalFlow = entry.minHorizontalFlow;
 		elem.minVerticalFlow = entry.minVerticalFlow;
-		elem.maxMass = entry.maxMass;
 		elem.solidSurfaceAreaMultiplier = entry.solidSurfaceAreaMultiplier;
 		elem.liquidSurfaceAreaMultiplier = entry.liquidSurfaceAreaMultiplier;
 		elem.gasSurfaceAreaMultiplier = entry.gasSurfaceAreaMultiplier;
@@ -360,8 +417,14 @@ public class ElementLoader
 		elem.sublimateId = (SimHashes)Hash.SDBMLower(entry.sublimateId);
 		elem.convertId = (SimHashes)Hash.SDBMLower(entry.convertId);
 		elem.sublimateFX = (SpawnFXHashes)Hash.SDBMLower(entry.sublimateFx);
+		elem.sublimateRate = entry.sublimateRate;
+		elem.sublimateEfficiency = entry.sublimateEfficiency;
+		elem.sublimateProbability = entry.sublimateProbability;
+		elem.offGasPercentage = entry.offGasPercentage;
 		elem.lightAbsorptionFactor = entry.lightAbsorptionFactor;
+		elem.radiationAbsorptionFactor = entry.radiationAbsorptionFactor;
 		elem.toxicity = entry.toxicity;
+		elem.elementComposition = entry.composition;
 		Tag phaseTag = TagManager.Create(entry.state.ToString());
 		elem.materialCategory = CreateMaterialCategoryTag(elem.id, phaseTag, entry.materialCategory);
 		elem.oreTags = CreateOreTags(elem.materialCategory, phaseTag, entry.tags);
@@ -585,7 +648,7 @@ public class ElementLoader
 		return list.ToArray();
 	}
 
-	private static void FinaliseElementsTable(ref Hashtable substanceList, SubstanceTable substanceTable)
+	private static void FinaliseElementsTable(ref Hashtable substanceList)
 	{
 		foreach (Element element5 in elements)
 		{
@@ -595,14 +658,8 @@ public class ElementLoader
 			}
 			if (element5.substance == null)
 			{
-				if (substanceTable == null)
-				{
-					element5.substance = new Substance();
-				}
-				else
-				{
-					ManifestSubstanceForElement(element5, ref substanceList, substanceTable);
-				}
+				Debug.LogWarning("Skipping finalise for missing element: " + element5.id);
+				continue;
 			}
 			Debug.Assert(element5.substance.nameTag.IsValid);
 			if (element5.thermalConductivity == 0f)
@@ -643,9 +700,10 @@ public class ElementLoader
 				}
 			}
 		}
-		elements = (from e in elements
+		IOrderedEnumerable<Element> source = from e in elements
 			orderby (int)(e.state & Element.State.Solid) descending, e.id
-			select e).ToList();
+			select e;
+		elements = source.ToList();
 		for (int i = 0; i < elements.Count; i++)
 		{
 			if (elements[i].substance != null)
@@ -654,5 +712,42 @@ public class ElementLoader
 			}
 			elements[i].idx = (byte)i;
 		}
+	}
+
+	private static void ValidateElements()
+	{
+		Debug.Log("------ Start Validating Elements ------");
+		foreach (Element element in elements)
+		{
+			string text = $"{element.tag.ProperNameStripLink()} ({element.state})";
+			if (element.IsLiquid && element.sublimateId != 0)
+			{
+				Debug.Assert(element.sublimateRate == 0f, text + ": Liquids don't use sublimateRate, use offGasPercentage instead.");
+				Debug.Assert(element.offGasPercentage > 0f, text + ": Missing offGasPercentage");
+			}
+			if (element.IsSolid && element.sublimateId != 0)
+			{
+				Debug.Assert(element.offGasPercentage == 0f, text + ": Solids don't use offGasPercentage, use sublimateRate instead.");
+				Debug.Assert(element.sublimateRate > 0f, text + ": Missing sublimationRate");
+				Debug.Assert(element.sublimateRate * element.sublimateEfficiency > 0.001f, text + ": Sublimation rate and efficiency will result in gas that will be obliterated because its less than 1g. Increase these values and use sublimateProbability if you want a low amount of sublimation");
+			}
+			if (element.highTempTransition != null && element.highTempTransition.lowTempTransition == element)
+			{
+				Debug.Assert(element.highTemp >= element.highTempTransition.lowTemp, text + ": highTemp is higher than transition element's (" + element.highTempTransition.tag.ProperNameStripLink() + ") lowTemp");
+			}
+			Debug.Assert(element.defaultValues.mass <= element.maxMass, text + ": Default mass should be less than max mass");
+			if (false)
+			{
+				if (element.IsSolid && element.highTempTransition != null && element.highTempTransition.IsLiquid && element.defaultValues.mass > element.highTempTransition.maxMass)
+				{
+					Debug.LogWarning($"{text} defaultMass {element.defaultValues.mass} > {element.highTempTransition.tag.ProperNameStripLink()}: maxMass {element.highTempTransition.maxMass}");
+				}
+				if (element.defaultValues.mass < element.maxMass && element.IsLiquid)
+				{
+					Debug.LogWarning($"{element.tag.ProperNameStripLink()} has defaultMass: {element.defaultValues.mass} and maxMass {element.maxMass}");
+				}
+			}
+		}
+		Debug.Log("------ End Validating Elements ------");
 	}
 }

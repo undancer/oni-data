@@ -16,17 +16,7 @@ namespace YamlDotNet.Core
 
 		private bool endOfInput;
 
-		public bool EndOfInput
-		{
-			get
-			{
-				if (endOfInput)
-				{
-					return count == 0;
-				}
-				return false;
-			}
-		}
+		public bool EndOfInput => endOfInput && count == 0;
 
 		public LookAheadBuffer(TextReader input, int capacity)
 		{

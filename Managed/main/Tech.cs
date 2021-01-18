@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Database;
 using UnityEngine;
 
 public class Tech : Resource
@@ -9,13 +10,21 @@ public class Tech : Resource
 
 	public List<TechItem> unlockedItems = new List<TechItem>();
 
+	public List<string> unlockedItemIDs = new List<string>();
+
 	public int tier;
 
 	public Dictionary<string, float> costsByResearchTypeID = new Dictionary<string, float>();
 
 	public string desc;
 
+	public string category;
+
+	public Tag[] tags;
+
 	private ResourceTreeNode node;
+
+	public bool FoundNode => node != null;
 
 	public Vector2 center => node.center;
 
@@ -25,11 +34,20 @@ public class Tech : Resource
 
 	public List<ResourceTreeNode.Edge> edges => node.edges;
 
-	public Tech(string id, ResourceSet parent, string name, string desc, ResourceTreeNode node)
-		: base(id, parent, name)
+	public Tech(string id, string[] unlockedItemIDs, Techs techs)
+		: base(id, techs, Strings.Get("STRINGS.RESEARCH.TECHS." + id.ToUpper() + ".NAME"))
 	{
-		this.desc = desc;
+		desc = Strings.Get("STRINGS.RESEARCH.TECHS." + id.ToUpper() + ".DESC");
+		foreach (string item in unlockedItemIDs)
+		{
+			this.unlockedItemIDs.Add(item);
+		}
+	}
+
+	public void SetNode(ResourceTreeNode node, string categoryID)
+	{
 		this.node = node;
+		category = categoryID;
 	}
 
 	public bool CanAfford(ResearchPointInventory pointInventory)

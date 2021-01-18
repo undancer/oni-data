@@ -151,9 +151,11 @@ namespace KMod
 				}
 				pooledList.Recycle();
 				pooledList2.Recycle();
-				loadedModData.patched_methods = (from method in harmony.GetPatchedMethods()
-					where harmony.GetPatchInfo(method).Owners.Contains(harmonyId)
-					select method).ToList();
+				loadedModData.patched_methods = harmony.GetPatchedMethods().Where(delegate(MethodBase method)
+				{
+					Patches patchInfo = harmony.GetPatchInfo(method);
+					return patchInfo.Owners.Contains(harmonyId);
+				}).ToList();
 				foreach (MethodInfo item5 in pooledList3)
 				{
 					item5.Invoke(null, null);

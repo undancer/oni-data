@@ -82,22 +82,21 @@ public class CarePackageContainer : KScreen, ITelepadDeliverableContainer
 	{
 		base.OnSpawn();
 		Initialize();
-		reshuffleButton.onClick += delegate
-		{
-			Reshuffle(is_starter: true);
-		};
 		StartCoroutine(DelayedGeneration());
 	}
 
 	public override float GetSortKey()
 	{
-		return 100f;
+		return 50f;
 	}
 
 	private IEnumerator DelayedGeneration()
 	{
 		yield return new WaitForEndOfFrame();
-		GenerateCharacter(controller.IsStarterMinion);
+		if (controller != null)
+		{
+			GenerateCharacter(controller.IsStarterMinion);
+		}
 	}
 
 	protected override void OnCmpDisable()
@@ -259,19 +258,19 @@ public class CarePackageContainer : KScreen, ITelepadDeliverableContainer
 		return string.Format(UI.IMMIGRANTSCREEN.CARE_PACKAGE_ELEMENT_COUNT_ONLY, info.quantity.ToString());
 	}
 
-	private string GetCurrentQuantity()
+	private string GetCurrentQuantity(WorldInventory inventory)
 	{
 		if (ElementLoader.GetElement(info.id.ToTag()) != null)
 		{
-			float amount = WorldInventory.Instance.GetAmount(info.id.ToTag());
+			float amount = inventory.GetAmount(info.id.ToTag(), includeRelatedWorlds: false);
 			return string.Format(UI.IMMIGRANTSCREEN.CARE_PACKAGE_CURRENT_AMOUNT, GameUtil.GetFormattedMass(amount));
 		}
 		if (EdiblesManager.GetFoodInfo(info.id) != null)
 		{
-			float calories = RationTracker.Get().CountRationsByFoodType(info.id);
+			float calories = RationTracker.Get().CountRationsByFoodType(info.id, inventory);
 			return string.Format(UI.IMMIGRANTSCREEN.CARE_PACKAGE_CURRENT_AMOUNT, GameUtil.GetFormattedCalories(calories));
 		}
-		return string.Format(arg0: WorldInventory.Instance.GetAmount(info.id.ToTag()).ToString(), format: UI.IMMIGRANTSCREEN.CARE_PACKAGE_CURRENT_AMOUNT);
+		return string.Format(arg0: inventory.GetAmount(info.id.ToTag(), includeRelatedWorlds: false).ToString(), format: UI.IMMIGRANTSCREEN.CARE_PACKAGE_CURRENT_AMOUNT);
 	}
 
 	private string GetSpawnableQuantity()
@@ -313,7 +312,7 @@ public class CarePackageContainer : KScreen, ITelepadDeliverableContainer
 		description.SetText(GetSpawnableDescription());
 		itemName.SetText(GetSpawnableName());
 		quantity.SetText(GetSpawnableQuantityOnly());
-		currentQuantity.SetText(GetCurrentQuantity());
+		currentQuantity.SetText(GetCurrentQuantity(ClusterManager.Instance.activeWorld.worldInventory));
 	}
 
 	public void SelectDeliverable()
@@ -346,7 +345,8 @@ public class CarePackageContainer : KScreen, ITelepadDeliverableContainer
 		{
 			controller.RemoveDeliverable(info);
 		}
-		selectButton.GetComponent<ImageToggleState>().SetInactive();
+		ImageToggleState component = selectButton.GetComponent<ImageToggleState>();
+		component.SetInactive();
 		selectButton.Deselect();
 		selectButton.ClearOnClick();
 		selectButton.onClick += delegate
@@ -463,11 +463,7 @@ public class CarePackageContainer : KScreen, ITelepadDeliverableContainer
 
 	public string GetValueColor(bool isPositive)
 	{
-		if (!isPositive)
-		{
-			return "<color=#ff2222ff>";
-		}
-		return "<color=green>";
+		return isPositive ? "<color=green>" : "<color=#ff2222ff>";
 	}
 
 	public override void OnKeyDown(KButtonEvent e)

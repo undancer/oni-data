@@ -32,11 +32,7 @@ namespace YamlDotNet.RepresentationModel
 		public override bool Equals(object obj)
 		{
 			YamlAliasNode yamlAliasNode = obj as YamlAliasNode;
-			if (yamlAliasNode != null && Equals(yamlAliasNode))
-			{
-				return YamlNode.SafeEquals(base.Anchor, yamlAliasNode.Anchor);
-			}
-			return false;
+			return yamlAliasNode != null && Equals(yamlAliasNode) && YamlNode.SafeEquals(base.Anchor, yamlAliasNode.Anchor);
 		}
 
 		public override int GetHashCode()

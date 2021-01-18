@@ -31,8 +31,10 @@ public class VoiceSoundEvent : SoundEvent
 		}
 		if (name.Contains(":"))
 		{
-			float num = float.Parse(name.Split(':')[1]);
-			if ((float)Random.Range(0, 100) > num)
+			string[] array = name.Split(':');
+			float num = float.Parse(array[1]);
+			float num2 = Random.Range(0, 100);
+			if (num2 > num)
 			{
 				return eventInstance;
 			}
@@ -46,7 +48,8 @@ public class VoiceSoundEvent : SoundEvent
 		}
 		Vector3 vector = component2.transform.GetPosition();
 		vector.z = 0f;
-		if (SoundEvent.ObjectIsSelectedAndVisible(controller.gameObject))
+		GameObject gameObject = controller.gameObject;
+		if (SoundEvent.ObjectIsSelectedAndVisible(gameObject))
 		{
 			vector = SoundEvent.AudioHighlightListenerPosition(vector);
 		}
@@ -72,9 +75,13 @@ public class VoiceSoundEvent : SoundEvent
 			else
 			{
 				eventInstance = SoundEvent.BeginOneShot(sound, vector);
-				if (sound.Contains("sleep_") && controller.GetComponent<Traits>().HasTrait("Snorer"))
+				if (sound.Contains("sleep_"))
 				{
-					eventInstance.setParameterByName("snoring", 1f);
+					Traits component4 = controller.GetComponent<Traits>();
+					if (component4.HasTrait("Snorer"))
+					{
+						eventInstance.setParameterByName("snoring", 1f);
+					}
 				}
 				SoundEvent.EndOneShot(eventInstance);
 				component.timeLastSpoke = Time.time;
@@ -101,7 +108,8 @@ public class VoiceSoundEvent : SoundEvent
 		string d = name;
 		if (name.Contains(":"))
 		{
-			d = name.Split(':')[0];
+			string[] array = name.Split(':');
+			d = array[0];
 		}
 		return StringFormatter.Combine("DupVoc_", b, "_", d);
 	}
@@ -113,7 +121,8 @@ public class VoiceSoundEvent : SoundEvent
 			LoopingSounds component = behaviour.GetComponent<LoopingSounds>();
 			if (component != null)
 			{
-				string sound = GlobalAssets.GetSound(GetAssetName(base.name, component), force_no_warning: true);
+				string assetName = GetAssetName(base.name, component);
+				string sound = GlobalAssets.GetSound(assetName, force_no_warning: true);
 				component.StopSound(sound);
 			}
 		}

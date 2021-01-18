@@ -7,16 +7,16 @@ public class ShowerConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef(ID, 2, 4, "shower_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: BUILDINGS.DECOR.BONUS.TIER1);
-		obj.Overheatable = false;
-		obj.ExhaustKilowattsWhenActive = 0.25f;
-		obj.InputConduitType = ConduitType.Liquid;
-		obj.OutputConduitType = ConduitType.Liquid;
-		obj.ViewMode = OverlayModes.LiquidConduits.ID;
-		obj.AudioCategory = "Metal";
-		obj.UtilityInputOffset = new CellOffset(0, 0);
-		obj.UtilityOutputOffset = new CellOffset(1, 1);
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(ID, 2, 4, "shower_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: BUILDINGS.DECOR.BONUS.TIER1);
+		buildingDef.Overheatable = false;
+		buildingDef.ExhaustKilowattsWhenActive = 0.25f;
+		buildingDef.InputConduitType = ConduitType.Liquid;
+		buildingDef.OutputConduitType = ConduitType.Liquid;
+		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
+		buildingDef.UtilityOutputOffset = new CellOffset(1, 1);
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -59,7 +59,8 @@ public class ShowerConfig : IBuildingConfig
 		Storage storage = go.AddOrGet<Storage>();
 		storage.capacityKg = 10f;
 		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
-		go.AddOrGet<RequireOutputs>().ignoreFullPipe = true;
+		RequireOutputs requireOutputs = go.AddOrGet<RequireOutputs>();
+		requireOutputs.ignoreFullPipe = true;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

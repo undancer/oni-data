@@ -2,7 +2,7 @@ using System;
 
 public class KProfile : IDisposable
 {
-	private string name;
+	private string name = null;
 
 	public KProfile(string name, string group = "Game")
 	{

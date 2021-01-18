@@ -257,12 +257,11 @@ public class ToolMenu : KScreen
 	private Texture2D CreatePlaneTexture(out byte[] textureBytes, int width, int height)
 	{
 		textureBytes = new byte[width * height * 4];
-		return new Texture2D(width, height, TextureUtil.TextureFormatToGraphicsFormat(TextureFormat.RGBA32), TextureCreationFlags.None)
-		{
-			name = "toolEffectDisplayPlane",
-			wrapMode = TextureWrapMode.Clamp,
-			filterMode = FilterMode.Point
-		};
+		Texture2D texture2D = new Texture2D(width, height, TextureUtil.TextureFormatToGraphicsFormat(TextureFormat.RGBA32), TextureCreationFlags.None);
+		texture2D.name = "toolEffectDisplayPlane";
+		texture2D.wrapMode = TextureWrapMode.Clamp;
+		texture2D.filterMode = FilterMode.Point;
+		return texture2D;
 	}
 
 	private void Update()
@@ -325,10 +324,12 @@ public class ToolMenu : KScreen
 		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.FLOOD.NAME, "flood", Action.SandboxFlood, "SandboxFloodTool", UI.SANDBOXTOOLS.SETTINGS.FLOOD.TOOLTIP, largeIcon: false));
 		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.SAMPLE.NAME, "sample", Action.SandboxSample, "SandboxSampleTool", UI.SANDBOXTOOLS.SETTINGS.SAMPLE.TOOLTIP, largeIcon: false));
 		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.HEATGUN.NAME, "brush", Action.SandboxHeatGun, "SandboxHeatTool", UI.SANDBOXTOOLS.SETTINGS.HEATGUN.TOOLTIP, largeIcon: false));
+		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.RADSTOOL.NAME, "brush", Action.SandboxRadsTool, "SandboxRadsTool", UI.SANDBOXTOOLS.SETTINGS.RADSTOOL.TOOLTIP, largeIcon: false));
 		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.SPAWNER.NAME, "spawn", Action.SandboxSpawnEntity, "SandboxSpawnerTool", UI.SANDBOXTOOLS.SETTINGS.SPAWNER.TOOLTIP, largeIcon: false));
 		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.CLEAR_FLOOR.NAME, "clear_floor", Action.SandboxClearFloor, "SandboxClearFloorTool", UI.SANDBOXTOOLS.SETTINGS.CLEAR_FLOOR.TOOLTIP, largeIcon: false));
 		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.DESTROY.NAME, "destroy", Action.SandboxDestroy, "SandboxDestroyerTool", UI.SANDBOXTOOLS.SETTINGS.DESTROY.TOOLTIP, largeIcon: false));
 		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.FOW.NAME, "brush", Action.SandboxReveal, "SandboxFOWTool", UI.SANDBOXTOOLS.SETTINGS.FOW.TOOLTIP, largeIcon: false));
+		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.CRITTER.NAME, "brush", Action.SandboxCritterTool, "SandboxCritterTool", UI.SANDBOXTOOLS.SETTINGS.CRITTER.TOOLTIP, largeIcon: false));
 	}
 
 	private void CreateBasicTools()
@@ -771,28 +772,29 @@ public class ToolMenu : KScreen
 			{
 				if (icon != null && icon.name == toolCollection.icon)
 				{
-					toggle.transform.Find("FG").GetComponent<Image>().sprite = icon;
+					Image component = toggle.transform.Find("FG").GetComponent<Image>();
+					component.sprite = icon;
 					break;
 				}
 			}
 			Transform transform = toggle.transform.Find("Text");
 			if (transform != null)
 			{
-				LocText component = transform.GetComponent<LocText>();
-				if (component != null)
+				LocText component2 = transform.GetComponent<LocText>();
+				if (component2 != null)
 				{
-					component.text = toolCollection.text;
+					component2.text = toolCollection.text;
 				}
 			}
-			ToolTip component2 = toggle.GetComponent<ToolTip>();
-			if (!component2)
+			ToolTip component3 = toggle.GetComponent<ToolTip>();
+			if (!component3)
 			{
 				continue;
 			}
 			if (row[i].tools.Count == 1)
 			{
 				string newString = GameUtil.ReplaceHotkeyString(row[i].tools[0].tooltip, row[i].tools[0].hotkey);
-				component2.AddMultiStringTooltip(newString, ToggleToolTipTextStyleSetting);
+				component3.AddMultiStringTooltip(newString, ToggleToolTipTextStyleSetting);
 				continue;
 			}
 			string text = row[i].tooltip;
@@ -800,7 +802,7 @@ public class ToolMenu : KScreen
 			{
 				text = GameUtil.ReplaceHotkeyString(text, row[i].hotkey);
 			}
-			component2.AddMultiStringTooltip(text, ToggleToolTipTextStyleSetting);
+			component3.AddMultiStringTooltip(text, ToggleToolTipTextStyleSetting);
 		}
 	}
 
@@ -820,24 +822,25 @@ public class ToolMenu : KScreen
 				{
 					if (icon != null && icon.name == toolCollection.tools[j].icon)
 					{
-						gameObject.transform.Find("FG").GetComponent<Image>().sprite = icon;
+						Image component = gameObject.transform.Find("FG").GetComponent<Image>();
+						component.sprite = icon;
 						break;
 					}
 				}
 				Transform transform = gameObject.transform.Find("Text");
 				if (transform != null)
 				{
-					LocText component = transform.GetComponent<LocText>();
-					if (component != null)
+					LocText component2 = transform.GetComponent<LocText>();
+					if (component2 != null)
 					{
-						component.text = toolCollection.tools[j].text;
+						component2.text = toolCollection.tools[j].text;
 					}
 				}
-				ToolTip component2 = gameObject.GetComponent<ToolTip>();
-				if ((bool)component2)
+				ToolTip component3 = gameObject.GetComponent<ToolTip>();
+				if ((bool)component3)
 				{
 					string newString = ((toolCollection.tools.Count > 1) ? GameUtil.ReplaceHotkeyString(toolCollection.tools[j].tooltip, toolCollection.hotkey, toolCollection.tools[j].hotkey) : GameUtil.ReplaceHotkeyString(toolCollection.tools[j].tooltip, toolCollection.tools[j].hotkey));
-					component2.AddMultiStringTooltip(newString, ToggleToolTipTextStyleSetting);
+					component3.AddMultiStringTooltip(newString, ToggleToolTipTextStyleSetting);
 				}
 			}
 		}

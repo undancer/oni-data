@@ -19,7 +19,31 @@ namespace ProcGen
 			Space,
 			Ocean,
 			Rust,
-			Forest
+			Forest,
+			Radioactive,
+			Swamp,
+			Wasteland,
+			RocketInterior,
+			Metallic,
+			Barren
+		}
+
+		public string nameKey
+		{
+			get;
+			protected set;
+		}
+
+		public string descriptionKey
+		{
+			get;
+			protected set;
+		}
+
+		public string utilityKey
+		{
+			get;
+			protected set;
 		}
 
 		public string biomeNoise
@@ -83,6 +107,12 @@ namespace ProcGen
 			protected set;
 		}
 
+		public int extraBiomeChildren
+		{
+			get;
+			protected set;
+		}
+
 		public List<WeightedBiome> biomes
 		{
 			get;
@@ -96,6 +126,12 @@ namespace ProcGen
 		}
 
 		public Dictionary<string, int> featureTemplates
+		{
+			get;
+			protected set;
+		}
+
+		public List<World.FeatureSpawnRules> subworldFeatureRules
 		{
 			get;
 			protected set;
@@ -141,6 +177,20 @@ namespace ProcGen
 			pointsOfInterest = new Dictionary<string, string[]>();
 			featureTemplates = new Dictionary<string, int>();
 			pdWeight = 1f;
+		}
+
+		public void EnforceFeatureSpawnRuleSelfConsistency()
+		{
+			if (subworldFeatureRules == null)
+			{
+				return;
+			}
+			foreach (World.FeatureSpawnRules subworldFeatureRule in subworldFeatureRules)
+			{
+				World.AllowedCellsFilter allowedCellsFilter = new World.AllowedCellsFilter();
+				allowedCellsFilter.subworldNames.Add(base.name);
+				subworldFeatureRule.allowedCellsFilter.Insert(0, allowedCellsFilter);
+			}
 		}
 	}
 }

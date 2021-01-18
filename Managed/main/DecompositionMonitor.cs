@@ -63,11 +63,7 @@ public class DecompositionMonitor : GameStateMachine<DecompositionMonitor, Decom
 		public bool IsExposed()
 		{
 			KPrefabID component = base.smi.GetComponent<KPrefabID>();
-			if (!(component == null))
-			{
-				return !component.HasTag(GameTags.Preserved);
-			}
-			return true;
+			return component == null || !component.HasTag(GameTags.Preserved);
 		}
 
 		public bool IsRotten()
@@ -130,7 +126,7 @@ public class DecompositionMonitor : GameStateMachine<DecompositionMonitor, Decom
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = satisfied;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		satisfied.Update("UpdateDecomposition", delegate(Instance smi, float dt)
 		{
 			smi.UpdateDecomposition(dt);
@@ -157,7 +153,8 @@ public class DecompositionMonitor : GameStateMachine<DecompositionMonitor, Decom
 			if (remainingRotMonsters > 0)
 			{
 				remainingRotMonsters--;
-				GameUtil.KInstantiate(Assets.GetPrefab(new Tag("Glom")), smi.transform.GetPosition(), Grid.SceneLayer.Creatures).SetActive(value: true);
+				GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(new Tag("Glom")), smi.transform.GetPosition(), Grid.SceneLayer.Creatures);
+				gameObject.SetActive(value: true);
 			}
 			smi.GoTo(rotten.exposed);
 		});

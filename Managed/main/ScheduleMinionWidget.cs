@@ -77,7 +77,8 @@ public class ScheduleMinionWidget : KMonoBehaviour
 	private void DropEntryRefreshAction(DropDownEntry entry, object obj)
 	{
 		Schedule schedule = (Schedule)entry.entryData;
-		if (((Schedulable)obj).GetSchedule() == schedule)
+		Schedulable schedulable = (Schedulable)obj;
+		if (schedulable.GetSchedule() == schedule)
 		{
 			entry.label.text = string.Format(UI.SCHEDULESCREEN.SCHEDULE_DROPDOWN_ASSIGNED, schedule.name);
 			entry.button.isInteractable = false;
@@ -111,9 +112,9 @@ public class ScheduleMinionWidget : KMonoBehaviour
 
 	private void BlankDropEntryRefreshAction(DropDownEntry entry, object obj)
 	{
-		Schedule obj2 = (Schedule)obj;
+		Schedule schedule = (Schedule)obj;
 		MinionIdentity minionIdentity = (MinionIdentity)entry.entryData;
-		if (obj2.IsAssigned(minionIdentity.GetComponent<Schedulable>()))
+		if (schedule.IsAssigned(minionIdentity.GetComponent<Schedulable>()))
 		{
 			entry.label.text = string.Format(UI.SCHEDULESCREEN.SCHEDULE_DROPDOWN_ASSIGNED, minionIdentity.GetProperName());
 			entry.button.isInteractable = false;
@@ -130,11 +131,11 @@ public class ScheduleMinionWidget : KMonoBehaviour
 
 	private int BlankDropEntrySort(IListableOption a, IListableOption b, object obj)
 	{
-		Schedule obj2 = (Schedule)obj;
+		Schedule schedule = (Schedule)obj;
 		MinionIdentity minionIdentity = (MinionIdentity)a;
 		MinionIdentity minionIdentity2 = (MinionIdentity)b;
-		bool flag = obj2.IsAssigned(minionIdentity.GetComponent<Schedulable>());
-		bool flag2 = obj2.IsAssigned(minionIdentity2.GetComponent<Schedulable>());
+		bool flag = schedule.IsAssigned(minionIdentity.GetComponent<Schedulable>());
+		bool flag2 = schedule.IsAssigned(minionIdentity2.GetComponent<Schedulable>());
 		if (flag && !flag2)
 		{
 			return -1;

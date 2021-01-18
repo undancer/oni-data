@@ -17,11 +17,11 @@ public class LoopingSounds : KMonoBehaviour
 	private Dictionary<HashedString, float> lastTimePlayed = new Dictionary<HashedString, float>();
 
 	[SerializeField]
-	public bool updatePosition;
+	public bool updatePosition = false;
 
 	public float vol = 1f;
 
-	public bool objectIsSelectedAndVisible;
+	public bool objectIsSelectedAndVisible = false;
 
 	public Vector3 sound_pos;
 
@@ -222,7 +222,8 @@ public class LoopingSounds : KMonoBehaviour
 		Vector2 v = base.transform.GetPosition();
 		for (int i = 0; i < events.Count; i++)
 		{
-			SoundEvent soundEvent = events[i] as SoundEvent;
+			AnimEvent animEvent = events[i];
+			SoundEvent soundEvent = animEvent as SoundEvent;
 			if (soundEvent == null || soundEvent.sound == null)
 			{
 				break;

@@ -43,12 +43,12 @@ public class PrioritizeRowTableColumn : TableColumn
 
 	private void ConfigureButton(HierarchyReferences refs, string ref_id, int delta, GameObject widget_go)
 	{
-		KButton obj = refs.GetReference(ref_id) as KButton;
-		obj.onClick += delegate
+		KButton kButton = refs.GetReference(ref_id) as KButton;
+		kButton.onClick += delegate
 		{
 			onChangePriority(widget_go, delta);
 		};
-		ToolTip component = obj.GetComponent<ToolTip>();
+		ToolTip component = kButton.GetComponent<ToolTip>();
 		if (component != null)
 		{
 			component.OnToolTip = () => onHoverWidget(widget_go, delta);

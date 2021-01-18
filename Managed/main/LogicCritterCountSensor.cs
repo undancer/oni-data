@@ -6,7 +6,7 @@ using UnityEngine;
 [SerializationConfig(MemberSerialization.OptIn)]
 public class LogicCritterCountSensor : Switch, ISaveLoadable, IThresholdSwitch, ISim200ms
 {
-	private bool wasOn;
+	private bool wasOn = false;
 
 	[Serialize]
 	public bool countEggs = true;
@@ -15,12 +15,12 @@ public class LogicCritterCountSensor : Switch, ISaveLoadable, IThresholdSwitch, 
 	public bool countCritters = true;
 
 	[Serialize]
-	public int countThreshold;
+	public int countThreshold = 0;
 
 	[Serialize]
 	public bool activateOnGreaterThan = true;
 
-	private int currentCount;
+	private int currentCount = 0;
 
 	private KSelectable selectable;
 
@@ -87,7 +87,8 @@ public class LogicCritterCountSensor : Switch, ISaveLoadable, IThresholdSwitch, 
 
 	private void OnCopySettings(object data)
 	{
-		LogicCritterCountSensor component = ((GameObject)data).GetComponent<LogicCritterCountSensor>();
+		GameObject gameObject = (GameObject)data;
+		LogicCritterCountSensor component = gameObject.GetComponent<LogicCritterCountSensor>();
 		if (component != null)
 		{
 			countThreshold = component.countThreshold;
@@ -145,7 +146,8 @@ public class LogicCritterCountSensor : Switch, ISaveLoadable, IThresholdSwitch, 
 
 	private void UpdateLogicCircuit()
 	{
-		GetComponent<LogicPorts>().SendSignal(LogicSwitch.PORT_ID, switchedOn ? 1 : 0);
+		LogicPorts component = GetComponent<LogicPorts>();
+		component.SendSignal(LogicSwitch.PORT_ID, switchedOn ? 1 : 0);
 	}
 
 	private void UpdateVisualState(bool force = false)

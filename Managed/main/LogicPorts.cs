@@ -78,7 +78,7 @@ public class LogicPorts : KMonoBehaviour, IGameObjectEffectDescriptor, IRenderEv
 	[Serialize]
 	private int[] serializedOutputValues;
 
-	private bool isPhysical;
+	private bool isPhysical = false;
 
 	protected override void OnPrefabInit()
 	{
@@ -208,14 +208,14 @@ public class LogicPorts : KMonoBehaviour, IGameObjectEffectDescriptor, IRenderEv
 			outputPorts = new List<ILogicUIElement>();
 			for (int i = 0; i < outputPortInfo.Length; i++)
 			{
-				Port info = outputPortInfo[i];
-				LogicEventSender logicEventSender = new LogicEventSender(info.id, GetActualCell(info.cellOffset), delegate(int new_value)
+				Port info2 = outputPortInfo[i];
+				LogicEventSender logicEventSender = new LogicEventSender(info2.id, GetActualCell(info2.cellOffset), delegate(int new_value)
 				{
 					if (this != null)
 					{
-						OnLogicValueChanged(info.id, new_value);
+						OnLogicValueChanged(info2.id, new_value);
 					}
-				}, OnLogicNetworkConnectionChanged, info.spriteType);
+				}, OnLogicNetworkConnectionChanged, info2.spriteType);
 				outputPorts.Add(logicEventSender);
 				Game.Instance.logicCircuitManager.AddVisElem(logicEventSender);
 				Game.Instance.logicCircuitSystem.AddToNetworks(logicEventSender.GetLogicUICell(), logicEventSender, is_endpoint: true);
@@ -224,7 +224,8 @@ public class LogicPorts : KMonoBehaviour, IGameObjectEffectDescriptor, IRenderEv
 			{
 				for (int j = 0; j < outputPorts.Count; j++)
 				{
-					(outputPorts[j] as LogicEventSender).SetValue(serializedOutputValues[j]);
+					LogicEventSender logicEventSender2 = outputPorts[j] as LogicEventSender;
+					logicEventSender2.SetValue(serializedOutputValues[j]);
 				}
 			}
 		}
@@ -236,14 +237,14 @@ public class LogicPorts : KMonoBehaviour, IGameObjectEffectDescriptor, IRenderEv
 		inputPorts = new List<ILogicUIElement>();
 		for (int k = 0; k < inputPortInfo.Length; k++)
 		{
-			Port info2 = inputPortInfo[k];
-			LogicEventHandler logicEventHandler = new LogicEventHandler(GetActualCell(info2.cellOffset), delegate(int new_value)
+			Port info = inputPortInfo[k];
+			LogicEventHandler logicEventHandler = new LogicEventHandler(GetActualCell(info.cellOffset), delegate(int new_value)
 			{
 				if (this != null)
 				{
-					OnLogicValueChanged(info2.id, new_value);
+					OnLogicValueChanged(info.id, new_value);
 				}
-			}, OnLogicNetworkConnectionChanged, info2.spriteType);
+			}, OnLogicNetworkConnectionChanged, info.spriteType);
 			inputPorts.Add(logicEventHandler);
 			Game.Instance.logicCircuitManager.AddVisElem(logicEventHandler);
 			Game.Instance.logicCircuitSystem.AddToNetworks(logicEventHandler.GetLogicUICell(), logicEventHandler, is_endpoint: true);
@@ -261,7 +262,8 @@ public class LogicPorts : KMonoBehaviour, IGameObjectEffectDescriptor, IRenderEv
 				if (port.requiresConnection)
 				{
 					int portCell = GetPortCell(port.id);
-					if (logicCircuitManager.GetNetworkForCell(portCell) == null)
+					LogicCircuitNetwork networkForCell = logicCircuitManager.GetNetworkForCell(portCell);
+					if (networkForCell == null)
 					{
 						return true;
 					}
@@ -276,7 +278,8 @@ public class LogicPorts : KMonoBehaviour, IGameObjectEffectDescriptor, IRenderEv
 				if (port2.requiresConnection)
 				{
 					int portCell2 = GetPortCell(port2.id);
-					if (logicCircuitManager.GetNetworkForCell(portCell2) == null)
+					LogicCircuitNetwork networkForCell2 = logicCircuitManager.GetNetworkForCell(portCell2);
+					if (networkForCell2 == null)
 					{
 						return true;
 					}
@@ -286,6 +289,12 @@ public class LogicPorts : KMonoBehaviour, IGameObjectEffectDescriptor, IRenderEv
 		return false;
 	}
 
+	public void OnMove()
+	{
+		DestroyPhysicalPorts();
+		CreatePhysicalPorts();
+	}
+
 	private void OnLogicNetworkConnectionChanged(int cell, bool connected)
 	{
 		UpdateMissingWireIcon();
@@ -293,7 +302,8 @@ public class LogicPorts : KMonoBehaviour, IGameObjectEffectDescriptor, IRenderEv
 
 	private void UpdateMissingWireIcon()
 	{
-		LogicCircuitManager.ToggleNoWireConnected(ShowMissingWireIcon(), base.gameObject);
+		bool show_missing_wire = ShowMissingWireIcon();
+		LogicCircuitManager.ToggleNoWireConnected(show_missing_wire, base.gameObject);
 	}
 
 	private void DestroyPhysicalPorts()
@@ -338,7 +348,8 @@ public class LogicPorts : KMonoBehaviour, IGameObjectEffectDescriptor, IRenderEv
 		{
 			offset = component.GetRotatedCellOffset(offset);
 		}
-		return Grid.OffsetCell(Grid.PosToCell(base.transform.GetPosition()), offset);
+		int num = Grid.PosToCell(base.transform.GetPosition());
+		return Grid.OffsetCell(num, offset);
 	}
 
 	public bool TryGetPortAtCell(int cell, out Port port, out bool isInput)
@@ -347,18 +358,20 @@ public class LogicPorts : KMonoBehaviour, IGameObjectEffectDescriptor, IRenderEv
 		for (int i = 0; i < array.Length; i++)
 		{
 			Port port2 = array[i];
-			if (GetActualCell(port2.cellOffset) == cell)
+			int actualCell = GetActualCell(port2.cellOffset);
+			if (actualCell == cell)
 			{
 				port = port2;
 				isInput = true;
 				return true;
 			}
 		}
-		array = outputPortInfo;
-		for (int i = 0; i < array.Length; i++)
+		Port[] array2 = outputPortInfo;
+		for (int j = 0; j < array2.Length; j++)
 		{
-			Port port3 = array[i];
-			if (GetActualCell(port3.cellOffset) == cell)
+			Port port3 = array2[j];
+			int actualCell2 = GetActualCell(port3.cellOffset);
+			if (actualCell2 == cell)
 			{
 				port = port3;
 				isInput = false;
@@ -393,10 +406,10 @@ public class LogicPorts : KMonoBehaviour, IGameObjectEffectDescriptor, IRenderEv
 				return GetActualCell(port.cellOffset);
 			}
 		}
-		array = outputPortInfo;
-		for (int i = 0; i < array.Length; i++)
+		Port[] array2 = outputPortInfo;
+		for (int j = 0; j < array2.Length; j++)
 		{
-			Port port2 = array[i];
+			Port port2 = array2[j];
 			if (port2.id == port_id)
 			{
 				return GetActualCell(port2.cellOffset);
@@ -437,7 +450,9 @@ public class LogicPorts : KMonoBehaviour, IGameObjectEffectDescriptor, IRenderEv
 	public bool IsPortConnected(HashedString port_id)
 	{
 		int portCell = GetPortCell(port_id);
-		return Game.Instance.logicCircuitManager.GetNetworkForCell(portCell) != null;
+		LogicCircuitManager logicCircuitManager = Game.Instance.logicCircuitManager;
+		LogicCircuitNetwork networkForCell = logicCircuitManager.GetNetworkForCell(portCell);
+		return networkForCell != null;
 	}
 
 	private void OnOverlayChanged(HashedString mode)
@@ -494,10 +509,10 @@ public class LogicPorts : KMonoBehaviour, IGameObjectEffectDescriptor, IRenderEv
 			{
 				Descriptor item2 = new Descriptor(UI.LOGIC_PORTS.OUTPUT_PORTS, UI.LOGIC_PORTS.OUTPUT_PORTS_TOOLTIP);
 				list.Add(item2);
-				Port[] array = component.outputPortInfo;
-				for (int i = 0; i < array.Length; i++)
+				Port[] array2 = component.outputPortInfo;
+				for (int j = 0; j < array2.Length; j++)
 				{
-					Port port2 = array[i];
+					Port port2 = array2[j];
 					string tooltip2 = string.Format(UI.LOGIC_PORTS.OUTPUT_PORT_TOOLTIP, port2.activeDescription, port2.inactiveDescription);
 					item2 = new Descriptor(port2.description, tooltip2);
 					item2.IncreaseIndent();

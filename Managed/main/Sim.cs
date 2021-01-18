@@ -159,9 +159,9 @@ public static class Sim
 
 		public float highTempTransitionOreMassConversion;
 
-		public sbyte sublimateIndex;
+		public byte sublimateIndex;
 
-		public sbyte convertIndex;
+		public byte convertIndex;
 
 		public byte pack0;
 
@@ -171,7 +171,17 @@ public static class Sim
 
 		public SpawnFXHashes sublimateFX;
 
+		public float sublimateRate;
+
+		public float sublimateEfficiency;
+
+		public float sublimateProbability;
+
+		public float offGasProbability;
+
 		public float lightAbsorptionFactor;
+
+		public float radiationAbsorptionFactor;
 
 		public PhysicsData defaultValues;
 
@@ -206,8 +216,8 @@ public static class Sim
 			highTempTransitionOreMassConversion = e.highTempTransitionOreMassConversion;
 			lowTempTransitionOreID = e.lowTempTransitionOreID;
 			lowTempTransitionOreMassConversion = e.lowTempTransitionOreMassConversion;
-			sublimateIndex = (sbyte)elements.FindIndex((global::Element ele) => ele.id == e.sublimateId);
-			convertIndex = (sbyte)elements.FindIndex((global::Element ele) => ele.id == e.convertId);
+			sublimateIndex = (byte)elements.FindIndex((global::Element ele) => ele.id == e.sublimateId);
+			convertIndex = (byte)elements.FindIndex((global::Element ele) => ele.id == e.convertId);
 			pack0 = 0;
 			pack1 = 0;
 			if (e.substance == null)
@@ -220,7 +230,12 @@ public static class Sim
 				colour = (uint)((color.a << 24) | (color.b << 16) | (color.g << 8) | color.r);
 			}
 			sublimateFX = e.sublimateFX;
+			sublimateRate = e.sublimateRate;
+			sublimateEfficiency = e.sublimateEfficiency;
+			sublimateProbability = e.sublimateProbability;
+			offGasProbability = e.offGasPercentage;
 			lightAbsorptionFactor = e.lightAbsorptionFactor;
+			radiationAbsorptionFactor = e.radiationAbsorptionFactor;
 			defaultValues = e.defaultValues;
 		}
 
@@ -228,8 +243,8 @@ public static class Sim
 		{
 			writer.Write((int)id);
 			writer.Write(state);
-			writer.Write((sbyte)lowTempTransitionIdx);
-			writer.Write((sbyte)highTempTransitionIdx);
+			writer.Write(lowTempTransitionIdx);
+			writer.Write(highTempTransitionIdx);
 			writer.Write(elementsTableIdx);
 			writer.Write(specificHeatCapacity);
 			writer.Write(thermalConductivity);
@@ -255,7 +270,12 @@ public static class Sim
 			writer.Write(pack1);
 			writer.Write(colour);
 			writer.Write((int)sublimateFX);
+			writer.Write(sublimateRate);
+			writer.Write(sublimateEfficiency);
+			writer.Write(sublimateProbability);
+			writer.Write(offGasProbability);
 			writer.Write(lightAbsorptionFactor);
+			writer.Write(radiationAbsorptionFactor);
 			defaultValues.Write(writer);
 		}
 	}
@@ -350,6 +370,8 @@ public static class Sim
 		public unsafe byte* insulation;
 
 		public unsafe byte* strengthInfo;
+
+		public unsafe float* radiation;
 
 		public unsafe byte* diseaseIdx;
 
@@ -458,6 +480,10 @@ public static class Sim
 		public int numDiseaseConsumedInfos;
 
 		public unsafe DiseaseConsumedInfo* diseaseConsumedInfos;
+
+		public int numRadiationConsumedCallbacks;
+
+		public unsafe ConsumedRadiationCallback* radiationConsumedCallbacks;
 
 		public unsafe float* accumulatedFlow;
 
@@ -778,6 +804,16 @@ public static class Sim
 		public int count;
 	}
 
+	[StructLayout(LayoutKind.Sequential, Pack = 4)]
+	public struct ConsumedRadiationCallback
+	{
+		public int callbackIdx;
+
+		public int gameCell;
+
+		public float radiation;
+	}
+
 	public const int InvalidHandle = -1;
 
 	public const int QueuedRegisterHandle = -2;
@@ -806,6 +842,10 @@ public static class Sim
 
 	public const float MinTemperature = 0f;
 
+	public const float MaxRadiation = 9000000f;
+
+	public const float MinRadiation = 0f;
+
 	public const float MaxMass = 10000f;
 
 	public const float MinMass = 1.0001f;
@@ -822,13 +862,14 @@ public static class Sim
 
 	public const int PACKING_ALIGNMENT = 4;
 
+	public static bool IsRadiationEnabled()
+	{
+		return false;
+	}
+
 	public static bool IsValidHandle(int h)
 	{
-		if (h != -1)
-		{
-			return h != -2;
-		}
-		return false;
+		return h != -1 && h != -2;
 	}
 
 	public static int GetHandleIndex(int h)
@@ -846,7 +887,7 @@ public static class Sim
 	public unsafe static extern IntPtr SIM_HandleMessage(int sim_msg_id, int msg_length, byte* msg);
 
 	[DllImport("SimDLL")]
-	private unsafe static extern byte* SIM_BeginSave(int* size);
+	private unsafe static extern byte* SIM_BeginSave(int* size, int x, int y);
 
 	[DllImport("SimDLL")]
 	private static extern void SIM_EndSave();
@@ -864,10 +905,10 @@ public static class Sim
 		return result;
 	}
 
-	public unsafe static void Save(BinaryWriter writer)
+	public unsafe static void Save(BinaryWriter writer, int x, int y)
 	{
 		int num = default(int);
-		byte* value = SIM_BeginSave(&num);
+		byte* value = SIM_BeginSave(&num, x, y);
 		byte[] array = new byte[num];
 		Marshal.Copy((IntPtr)value, array, 0, num);
 		SIM_EndSave();
@@ -875,21 +916,55 @@ public static class Sim
 		writer.Write(array);
 	}
 
-	public unsafe static int Load(IReader reader)
+	public unsafe static int LoadWorld(IReader reader)
 	{
 		int num = reader.ReadInt32();
-		IntPtr intPtr;
+		IntPtr value;
 		fixed (byte* msg = reader.ReadBytes(num))
 		{
-			intPtr = SIM_HandleMessage(-672538170, num, msg);
+			value = SIM_HandleMessage(-672538170, num, msg);
 		}
-		if (intPtr == IntPtr.Zero)
+		if (value == IntPtr.Zero)
 		{
 			return -1;
 		}
-		GameDataUpdate* ptr = (GameDataUpdate*)(void*)intPtr;
+		return 0;
+	}
+
+	public static void AllocateCells(int width, int height, bool headless = false)
+	{
+		using MemoryStream memoryStream = new MemoryStream(8);
+		using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+		binaryWriter.Write(width);
+		binaryWriter.Write(height);
+		bool value = IsRadiationEnabled();
+		binaryWriter.Write(value);
+		binaryWriter.Write(headless);
+		binaryWriter.Flush();
+		HandleMessage(SimMessageHashes.AllocateCells, (int)memoryStream.Length, memoryStream.GetBuffer());
+	}
+
+	public unsafe static int Load(IReader reader)
+	{
+		int num = reader.ReadInt32();
+		IntPtr value;
+		fixed (byte* msg = reader.ReadBytes(num))
+		{
+			value = SIM_HandleMessage(-672538170, num, msg);
+		}
+		if (value == IntPtr.Zero)
+		{
+			return -1;
+		}
+		return 0;
+	}
+
+	public unsafe static void Start()
+	{
+		GameDataUpdate* ptr = (GameDataUpdate*)(void*)SIM_HandleMessage(-931446686, 0, null);
 		Grid.elementIdx = ptr->elementIdx;
 		Grid.temperature = ptr->temperature;
+		Grid.radiation = ptr->radiation;
 		Grid.mass = ptr->mass;
 		Grid.properties = ptr->properties;
 		Grid.strengthInfo = ptr->strengthInfo;
@@ -901,7 +976,6 @@ public static class Sim
 		PropertyTextures.externalLiquidTex = ptr->propertyTextureLiquid;
 		PropertyTextures.externalExposedToSunlight = ptr->propertyTextureExposedToSunlight;
 		Grid.InitializeCells();
-		return 0;
 	}
 
 	public unsafe static void Shutdown()

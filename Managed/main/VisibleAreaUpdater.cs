@@ -10,7 +10,7 @@ public class VisibleAreaUpdater
 
 	private Action<int> InsideViewSecondTimeCallback;
 
-	private Action<int> InsideViewRepeatCallback;
+	private Action<int> InsideViewRepeatCallback = null;
 
 	private Action<int> UpdateCallback;
 

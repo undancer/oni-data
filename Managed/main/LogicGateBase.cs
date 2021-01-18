@@ -87,7 +87,8 @@ public class LogicGateBase : KMonoBehaviour
 		{
 			offset = component.GetRotatedCellOffset(offset);
 		}
-		return Grid.OffsetCell(Grid.PosToCell(base.transform.GetPosition()), offset);
+		int cell = Grid.PosToCell(base.transform.GetPosition());
+		return Grid.OffsetCell(cell, offset);
 	}
 
 	public int PortCell(PortId port)

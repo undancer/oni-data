@@ -40,7 +40,8 @@ public class LadderSoundEvent : SoundEvent
 		}
 		if (buildingDef != null)
 		{
-			string sound = GlobalAssets.GetSound((buildingDef.PrefabID == "LadderFast") ? StringFormatter.Combine(base.name, "_Plastic") : base.name);
+			string name = ((buildingDef.PrefabID == "LadderFast") ? StringFormatter.Combine(base.name, "_Plastic") : base.name);
+			string sound = GlobalAssets.GetSound(name);
 			if (sound != null)
 			{
 				SoundEvent.PlayOneShot(sound, vector, volume);

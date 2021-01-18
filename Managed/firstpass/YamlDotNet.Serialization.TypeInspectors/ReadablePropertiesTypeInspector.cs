@@ -52,7 +52,8 @@ namespace YamlDotNet.Serialization.TypeInspectors
 
 			public T GetCustomAttribute<T>() where T : Attribute
 			{
-				return (T)_propertyInfo.GetCustomAttributes(typeof(T), inherit: true).FirstOrDefault();
+				object[] customAttributes = _propertyInfo.GetCustomAttributes(typeof(T), inherit: true);
+				return (T)customAttributes.FirstOrDefault();
 			}
 
 			public IObjectDescriptor Read(object target)
@@ -76,11 +77,7 @@ namespace YamlDotNet.Serialization.TypeInspectors
 
 		private static bool IsValidProperty(PropertyInfo property)
 		{
-			if (property.CanRead)
-			{
-				return property.GetGetMethod().GetParameters().Length == 0;
-			}
-			return false;
+			return property.CanRead && property.GetGetMethod().GetParameters().Length == 0;
 		}
 
 		public override IEnumerable<IPropertyDescriptor> GetProperties(Type type, object container)

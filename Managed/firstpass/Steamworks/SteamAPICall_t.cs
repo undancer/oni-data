@@ -21,11 +21,7 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			if (other is SteamAPICall_t)
-			{
-				return this == (SteamAPICall_t)other;
-			}
-			return false;
+			return other is SteamAPICall_t && this == (SteamAPICall_t)other;
 		}
 
 		public override int GetHashCode()

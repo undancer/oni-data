@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 [SkipSaveFileSerialization]
@@ -17,8 +16,6 @@ public class Notifier : KMonoBehaviour
 
 	public bool AutoClickFocus = true;
 
-	private Dictionary<HashedString, Notification> NotificationGroups;
-
 	protected override void OnPrefabInit()
 	{
 		Components.Notifiers.Add(this);
@@ -26,13 +23,17 @@ public class Notifier : KMonoBehaviour
 
 	protected override void OnCleanUp()
 	{
-		ClearNotifications();
 		Components.Notifiers.Remove(this);
 	}
 
 	public void Add(Notification notification, string suffix = "")
 	{
 		if (KScreenManager.Instance == null || DisableNotifications)
+		{
+			return;
+		}
+		DebugUtil.DevAssert(notification != null, "Trying to add null notification. It's safe to continue playing, the notification won't be displayed.");
+		if (notification == null)
 		{
 			return;
 		}
@@ -51,19 +52,6 @@ public class Notifier : KMonoBehaviour
 			{
 				notification.clickFocus = base.transform;
 			}
-			if (notification.Group.IsValid && notification.Group != "")
-			{
-				if (NotificationGroups == null)
-				{
-					NotificationGroups = new Dictionary<HashedString, Notification>();
-				}
-				NotificationGroups.TryGetValue(notification.Group, out var value);
-				if (value != null)
-				{
-					Remove(value);
-				}
-				NotificationGroups[notification.Group] = notification;
-			}
 			if (OnAdd != null)
 			{
 				OnAdd(notification);
@@ -79,29 +67,14 @@ public class Notifier : KMonoBehaviour
 
 	public void Remove(Notification notification)
 	{
-		if (notification.Notifier != null)
+		DebugUtil.DevAssert(notification != null, "Trying to remove null notification. It's safe to continue playing.");
+		if (notification != null && notification.Notifier != null)
 		{
 			notification.Notifier = null;
-			if (NotificationGroups != null && notification.Group.IsValid && notification.Group != "")
-			{
-				NotificationGroups.Remove(notification.Group);
-			}
 			if (OnRemove != null)
 			{
 				OnRemove(notification);
 			}
-		}
-	}
-
-	public void ClearNotifications()
-	{
-		if (NotificationGroups == null)
-		{
-			return;
-		}
-		foreach (HashedString item in new List<HashedString>(NotificationGroups.Keys))
-		{
-			Remove(NotificationGroups[item]);
 		}
 	}
 }

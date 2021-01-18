@@ -40,7 +40,7 @@ public abstract class KAnimControllerBase : MonoBehaviour
 	public GameObject showWhenMissing;
 
 	[SerializeField]
-	public KAnimBatchGroup.MaterialType materialType;
+	public KAnimBatchGroup.MaterialType materialType = KAnimBatchGroup.MaterialType.Default;
 
 	[SerializeField]
 	public string initialAnim;
@@ -64,13 +64,16 @@ public abstract class KAnimControllerBase : MonoBehaviour
 	public bool destroyOnAnimComplete;
 
 	[SerializeField]
-	public bool inactiveDisable;
+	public bool inactiveDisable = false;
 
 	[SerializeField]
-	protected bool flipX;
+	protected bool flipX = false;
 
 	[SerializeField]
-	protected bool flipY;
+	protected bool flipY = false;
+
+	[SerializeField]
+	public bool forceUseGameTime = false;
 
 	public string defaultAnim;
 
@@ -88,9 +91,9 @@ public abstract class KAnimControllerBase : MonoBehaviour
 
 	protected DeepProfiler DeepProfiler = new DeepProfiler(enable_profiling: false);
 
-	public bool randomiseLoopedOffset;
+	public bool randomiseLoopedOffset = false;
 
-	protected float elapsedTime;
+	protected float elapsedTime = 0f;
 
 	protected float playSpeed = 1f;
 
@@ -119,13 +122,13 @@ public abstract class KAnimControllerBase : MonoBehaviour
 	[SerializeField]
 	protected bool _enabled = true;
 
-	protected bool hasEnableRun;
+	protected bool hasEnableRun = false;
 
-	protected bool hasAwakeRun;
+	protected bool hasAwakeRun = false;
 
-	protected KBatchedAnimInstanceData batchInstanceData;
+	protected KBatchedAnimInstanceData batchInstanceData = null;
 
-	public VisibilityType visibilityType;
+	public VisibilityType visibilityType = VisibilityType.Default;
 
 	public Action<GameObject> onDestroySelf;
 
@@ -138,11 +141,11 @@ public abstract class KAnimControllerBase : MonoBehaviour
 
 	protected Queue<AnimData> animQueue = new Queue<AnimData>();
 
-	protected int maxSymbols;
+	protected int maxSymbols = 0;
 
 	public Grid.SceneLayer fgLayer = Grid.SceneLayer.NoLayer;
 
-	protected AnimEventManager aem;
+	protected AnimEventManager aem = null;
 
 	private static HashedString snaptoPivot = new HashedString("snapTo_pivot");
 
@@ -398,7 +401,7 @@ public abstract class KAnimControllerBase : MonoBehaviour
 			DebugUtil.Assert(value[0].buildBytes != null, "First anim file for " + base.gameObject.name + " needs to be the build file.");
 			for (int i = 0; i < value.Length; i++)
 			{
-				DebugUtil.Assert(value[i] != null, "Anim file is null");
+				DebugUtil.Assert(value[i] != null, "Anim file is null", base.name);
 			}
 			animFiles = new KAnimFile[value.Length];
 			for (int j = 0; j < value.Length; j++)
@@ -742,11 +745,12 @@ public abstract class KAnimControllerBase : MonoBehaviour
 		{
 			if (!anims.TryGetValue(animData.anim, out value))
 			{
+				bool flag = true;
 				if (showWhenMissing != null)
 				{
 					showWhenMissing.SetActive(value: true);
 				}
-				if (true)
+				if (flag)
 				{
 					TriggerStop();
 					return;
@@ -903,7 +907,8 @@ public abstract class KAnimControllerBase : MonoBehaviour
 		}
 		if (usingNewSymbolOverrideSystem && data.buildIndex != -1 && data.build.symbols != null && data.build.symbols.Length != 0)
 		{
-			GetComponent<SymbolOverrideController>().AddBuildOverride(anim_file.GetData(), -1);
+			SymbolOverrideController component = GetComponent<SymbolOverrideController>();
+			component.AddBuildOverride(anim_file.GetData(), -1);
 		}
 	}
 

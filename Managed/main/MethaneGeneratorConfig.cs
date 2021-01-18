@@ -17,20 +17,20 @@ public class MethaneGeneratorConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("MethaneGenerator", 4, 3, "generatormethane_kanim", 100, 120f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.RAW_METALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.PENALTY.TIER2);
-		obj.GeneratorWattageRating = 800f;
-		obj.GeneratorBaseCapacity = 1000f;
-		obj.ExhaustKilowattsWhenActive = 2f;
-		obj.SelfHeatKilowattsWhenActive = 8f;
-		obj.ViewMode = OverlayModes.Power.ID;
-		obj.AudioCategory = "Metal";
-		obj.UtilityInputOffset = new CellOffset(0, 0);
-		obj.UtilityOutputOffset = new CellOffset(2, 2);
-		obj.PowerOutputOffset = new CellOffset(0, 0);
-		obj.InputConduitType = ConduitType.Gas;
-		obj.OutputConduitType = ConduitType.Gas;
-		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("MethaneGenerator", 4, 3, "generatormethane_kanim", 100, 120f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.RAW_METALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.PENALTY.TIER2);
+		buildingDef.GeneratorWattageRating = 800f;
+		buildingDef.GeneratorBaseCapacity = 1000f;
+		buildingDef.ExhaustKilowattsWhenActive = 2f;
+		buildingDef.SelfHeatKilowattsWhenActive = 8f;
+		buildingDef.ViewMode = OverlayModes.Power.ID;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
+		buildingDef.UtilityOutputOffset = new CellOffset(2, 2);
+		buildingDef.PowerOutputOffset = new CellOffset(0, 0);
+		buildingDef.InputConduitType = ConduitType.Gas;
+		buildingDef.OutputConduitType = ConduitType.Gas;
+		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
+		return buildingDef;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)
@@ -38,7 +38,8 @@ public class MethaneGeneratorConfig : IBuildingConfig
 		go.AddOrGet<LogicOperationalController>();
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
 		go.AddOrGet<LoopingSounds>();
-		go.AddOrGet<Storage>().capacityKg = 50f;
+		Storage storage = go.AddOrGet<Storage>();
+		storage.capacityKg = 50f;
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
 		conduitConsumer.conduitType = ConduitType.Gas;
 		conduitConsumer.consumptionRate = 0.90000004f;

@@ -155,11 +155,7 @@ public class WarmBlooded : StateMachineComponent<WarmBlooded.StatesInstance>
 
 	public bool IsAtReasonableTemperature()
 	{
-		if (!base.smi.IsHot())
-		{
-			return !base.smi.IsCold();
-		}
-		return false;
+		return !base.smi.IsHot() && !base.smi.IsCold();
 	}
 
 	public void SetTemperatureImmediate(float t)

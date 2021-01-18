@@ -61,23 +61,19 @@ public class EventSystem
 		public abstract void Trigger(GameObject gameObject, object eventData);
 	}
 
-	public class IntraObjectHandler<ComponentType> : IntraObjectHandlerBase
+	public class IntraObjectHandler<ComponentType> : IntraObjectHandlerBase where ComponentType : Component
 	{
 		private Action<ComponentType, object> handler;
 
 		public static bool IsStatic(Delegate del)
 		{
-			if (del.Target != null)
-			{
-				return del.Target.GetType().GetCustomAttributes(inherit: false).OfType<CompilerGeneratedAttribute>()
-					.Any();
-			}
-			return true;
+			return del.Target == null || del.Target.GetType().GetCustomAttributes(inherit: false).OfType<CompilerGeneratedAttribute>()
+				.Any();
 		}
 
 		public IntraObjectHandler(Action<ComponentType, object> handler)
 		{
-			Debug.Assert(IsStatic(handler));
+			Debug.Assert(IsStatic(handler), "IntraObjectHandler method must be static to avoid allocations");
 			this.handler = handler;
 		}
 
@@ -257,10 +253,11 @@ public class EventSystem
 	public int Subscribe(GameObject target, int eventName, Action<object> handler)
 	{
 		RegisterEvent(target, eventName, handler);
-		return KObjectManager.Instance.GetOrCreateObject(target).GetEventSystem().Subscribe(eventName, handler);
+		KObject orCreateObject = KObjectManager.Instance.GetOrCreateObject(target);
+		return orCreateObject.GetEventSystem().Subscribe(eventName, handler);
 	}
 
-	public int Subscribe<ComponentType>(int eventName, IntraObjectHandler<ComponentType> handler)
+	public int Subscribe<ComponentType>(int eventName, IntraObjectHandler<ComponentType> handler) where ComponentType : Component
 	{
 		if (!intraObjectDispatcher.TryGetValue(eventName, out var value))
 		{
@@ -282,7 +279,8 @@ public class EventSystem
 		UnregisterEvent(target, eventName, handler);
 		if (!(target == null))
 		{
-			KObjectManager.Instance.GetOrCreateObject(target).GetEventSystem().Unsubscribe(eventName, handler);
+			KObject orCreateObject = KObjectManager.Instance.GetOrCreateObject(target);
+			orCreateObject.GetEventSystem().Unsubscribe(eventName, handler);
 		}
 	}
 
@@ -307,7 +305,7 @@ public class EventSystem
 		}
 	}
 
-	public void Unsubscribe<ComponentType>(int eventName, IntraObjectHandler<ComponentType> handler, bool suppressWarnings)
+	public void Unsubscribe<ComponentType>(int eventName, IntraObjectHandler<ComponentType> handler, bool suppressWarnings) where ComponentType : Component
 	{
 		if (!intraObjectDispatcher.TryGetValue(eventName, out var value))
 		{
@@ -333,9 +331,9 @@ public class EventSystem
 
 	public void Unsubscribe(string[] eventNames, Action<object> handler)
 	{
-		for (int i = 0; i < eventNames.Length; i++)
+		foreach (string s in eventNames)
 		{
-			int hash = Hash.SDBMLower(eventNames[i]);
+			int hash = Hash.SDBMLower(s);
 			Unsubscribe(hash, handler);
 		}
 	}

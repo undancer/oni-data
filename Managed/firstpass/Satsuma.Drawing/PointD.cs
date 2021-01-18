@@ -26,11 +26,7 @@ namespace Satsuma.Drawing
 
 		public bool Equals(PointD other)
 		{
-			if (X == other.X)
-			{
-				return Y == other.Y;
-			}
-			return false;
+			return X == other.X && Y == other.Y;
 		}
 
 		public override bool Equals(object obj)

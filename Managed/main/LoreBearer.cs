@@ -1,30 +1,25 @@
 using System;
+using KSerialization;
 using STRINGS;
 using UnityEngine;
 
 [AddComponentMenu("KMonoBehaviour/scripts/LoreBearer")]
-public class LoreBearer : KMonoBehaviour
+public class LoreBearer : KMonoBehaviour, ISidescreenButtonControl
 {
-	private bool BeenClicked;
+	[Serialize]
+	private bool BeenClicked = false;
 
 	public string BeenSearched = UI.USERMENUACTIONS.READLORE.ALREADY_SEARCHED;
 
-	private static readonly EventSystem.IntraObjectHandler<LoreBearer> RefreshUserMenuDelegate = new EventSystem.IntraObjectHandler<LoreBearer>(delegate(LoreBearer component, object data)
-	{
-		component.RefreshUserMenu(data);
-	});
-
 	public string content => Strings.Get("STRINGS.LORE.BUILDINGS." + base.gameObject.name + ".ENTRY");
+
+	public string SidescreenButtonText => BeenClicked ? UI.USERMENUACTIONS.READLORE.ALREADYINSPECTED : UI.USERMENUACTIONS.READLORE.NAME;
+
+	public string SidescreenButtonTooltip => BeenClicked ? UI.USERMENUACTIONS.READLORE.TOOLTIP_ALREADYINSPECTED : UI.USERMENUACTIONS.READLORE.TOOLTIP;
 
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		Subscribe(493375141, RefreshUserMenuDelegate);
-	}
-
-	private void RefreshUserMenu(object data = null)
-	{
-		Game.Instance.userMenu.AddButton(base.gameObject, new KIconButtonMenu.ButtonInfo("action_follow_cam", UI.USERMENUACTIONS.READLORE.NAME, OnClickRead, Action.NumActions, null, null, null, UI.USERMENUACTIONS.READLORE.TOOLTIP));
 	}
 
 	private Action<InfoDialogScreen> OpenCodex(string key)
@@ -145,5 +140,25 @@ public class LoreBearer : KMonoBehaviour
 				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_OBJECT_FAIL." + str6));
 			}
 		}
+	}
+
+	public bool SidescreenEnabled()
+	{
+		return true;
+	}
+
+	public void OnSidescreenButtonPressed()
+	{
+		OnClickRead();
+	}
+
+	public bool SidescreenButtonInteractable()
+	{
+		return !BeenClicked;
+	}
+
+	public int ButtonSideScreenSortOrder()
+	{
+		return 20;
 	}
 }

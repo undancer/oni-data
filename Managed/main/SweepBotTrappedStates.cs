@@ -29,7 +29,7 @@ public class SweepBotTrappedStates : GameStateMachine<SweepBotTrappedStates, Swe
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = blockedStates.evaluating;
-		blockedStates.ToggleStatusItem(Db.Get().RobotStatusItems.CantReachStation, null, Db.Get().StatusItemCategories.Main).TagTransition(GameTags.Robots.Behaviours.TrappedBehaviour, behaviourcomplete, on_remove: true);
+		blockedStates.ToggleStatusItem(Db.Get().RobotStatusItems.CantReachStation, (Instance smi) => smi.gameObject, Db.Get().StatusItemCategories.Main).TagTransition(GameTags.Robots.Behaviours.TrappedBehaviour, behaviourcomplete, on_remove: true);
 		blockedStates.evaluating.Enter(delegate(Instance smi)
 		{
 			if (smi.sm.GetSweepLocker(smi) == null)

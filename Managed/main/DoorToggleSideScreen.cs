@@ -126,10 +126,10 @@ public class DoorToggleSideScreen : SideScreenContent
 				button.button.isOn = true;
 				text = button.currentString;
 				ImageToggleState[] componentsInChildren = button.button.GetComponentsInChildren<ImageToggleState>();
-				foreach (ImageToggleState obj in componentsInChildren)
+				foreach (ImageToggleState imageToggleState in componentsInChildren)
 				{
-					obj.SetActive();
-					obj.SetActive();
+					imageToggleState.SetActive();
+					imageToggleState.SetActive();
 				}
 				button.button.GetComponent<ImageToggleStateThrobber>().enabled = false;
 			}
@@ -137,22 +137,22 @@ public class DoorToggleSideScreen : SideScreenContent
 			{
 				button.button.isOn = true;
 				text2 = button.pendingString;
-				ImageToggleState[] componentsInChildren = button.button.GetComponentsInChildren<ImageToggleState>();
-				foreach (ImageToggleState obj2 in componentsInChildren)
+				ImageToggleState[] componentsInChildren2 = button.button.GetComponentsInChildren<ImageToggleState>();
+				foreach (ImageToggleState imageToggleState2 in componentsInChildren2)
 				{
-					obj2.SetActive();
-					obj2.SetActive();
+					imageToggleState2.SetActive();
+					imageToggleState2.SetActive();
 				}
 				button.button.GetComponent<ImageToggleStateThrobber>().enabled = true;
 			}
 			else
 			{
 				button.button.isOn = false;
-				ImageToggleState[] componentsInChildren = button.button.GetComponentsInChildren<ImageToggleState>();
-				foreach (ImageToggleState obj3 in componentsInChildren)
+				ImageToggleState[] componentsInChildren3 = button.button.GetComponentsInChildren<ImageToggleState>();
+				foreach (ImageToggleState imageToggleState3 in componentsInChildren3)
 				{
-					obj3.SetInactive();
-					obj3.SetInactive();
+					imageToggleState3.SetInactive();
+					imageToggleState3.SetInactive();
 				}
 				button.button.GetComponent<ImageToggleStateThrobber>().enabled = false;
 			}

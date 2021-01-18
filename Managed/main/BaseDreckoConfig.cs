@@ -27,7 +27,8 @@ public static class BaseDreckoConfig
 		gameObject.AddOrGet<Trappable>();
 		gameObject.AddOrGetDef<CreatureFallMonitor.Def>();
 		gameObject.AddOrGet<LoopingSounds>();
-		gameObject.AddOrGetDef<ThreatMonitor.Def>().fleethresholdState = Health.HealthState.Dead;
+		ThreatMonitor.Def def = gameObject.AddOrGetDef<ThreatMonitor.Def>();
+		def.fleethresholdState = Health.HealthState.Dead;
 		gameObject.AddWeapon(1f, 1f);
 		EntityTemplates.CreateAndRegisterBaggedCreature(gameObject, must_stand_on_top_for_pickup: true, allow_mark_for_capture: true);
 		ChoreTable.Builder chore_table = new ChoreTable.Builder().Add(new DeathStates.Def()).Add(new AnimInterruptStates.Def()).Add(new GrowUpStates.Def())
@@ -48,6 +49,7 @@ public static class BaseDreckoConfig
 			.Add(new PlayAnimsStates.Def(GameTags.Creatures.Poop, loop: false, "poop", STRINGS.CREATURES.STATUSITEMS.EXPELLING_SOLID.NAME, STRINGS.CREATURES.STATUSITEMS.EXPELLING_SOLID.TOOLTIP))
 			.Add(new CallAdultStates.Def())
 			.PopInterruptGroup()
+			.Add(new CreatureSleepStates.Def())
 			.Add(new IdleStates.Def
 			{
 				customIdleAnim = CustomIdleAnim

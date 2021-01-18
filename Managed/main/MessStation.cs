@@ -46,11 +46,7 @@ public class MessStation : Workable, IGameObjectEffectDescriptor
 					return false;
 				}
 				ChoreDriver component = targetGameObject.GetComponent<ChoreDriver>();
-				if (component != null && component.HasChore())
-				{
-					return component.GetCurrentChore().choreType.urge == Db.Get().Urges.Eat;
-				}
-				return false;
+				return component != null && component.HasChore() && component.GetCurrentChore().choreType.urge == Db.Get().Urges.Eat;
 			}
 		}
 

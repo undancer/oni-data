@@ -163,16 +163,15 @@ public class DebugTool : DragTool
 		{
 			return;
 		}
-		foreach (GameObject item in new List<GameObject>
-		{
-			Grid.Objects[cell, 1],
-			Grid.Objects[cell, 2],
-			Grid.Objects[cell, 9],
-			Grid.Objects[cell, 16],
-			Grid.Objects[cell, 12],
-			Grid.Objects[cell, 16],
-			Grid.Objects[cell, 26]
-		})
+		List<GameObject> list = new List<GameObject>();
+		list.Add(Grid.Objects[cell, 1]);
+		list.Add(Grid.Objects[cell, 2]);
+		list.Add(Grid.Objects[cell, 9]);
+		list.Add(Grid.Objects[cell, 16]);
+		list.Add(Grid.Objects[cell, 12]);
+		list.Add(Grid.Objects[cell, 16]);
+		list.Add(Grid.Objects[cell, 26]);
+		foreach (GameObject item in list)
 		{
 			if (item != null)
 			{
@@ -203,15 +202,14 @@ public class DebugTool : DragTool
 
 	public void DestroyCell(int cell)
 	{
-		foreach (GameObject item in new List<GameObject>
-		{
-			Grid.Objects[cell, 2],
-			Grid.Objects[cell, 1],
-			Grid.Objects[cell, 12],
-			Grid.Objects[cell, 16],
-			Grid.Objects[cell, 0],
-			Grid.Objects[cell, 26]
-		})
+		List<GameObject> list = new List<GameObject>();
+		list.Add(Grid.Objects[cell, 2]);
+		list.Add(Grid.Objects[cell, 1]);
+		list.Add(Grid.Objects[cell, 12]);
+		list.Add(Grid.Objects[cell, 16]);
+		list.Add(Grid.Objects[cell, 0]);
+		list.Add(Grid.Objects[cell, 26]);
+		foreach (GameObject item in list)
 		{
 			if (item != null)
 			{
@@ -236,7 +234,8 @@ public class DebugTool : DragTool
 		GameScenePartitioner.Instance.GatherEntries(vector2I.x, vector2I.y, 1, 1, GameScenePartitioner.Instance.pickupablesLayer, pooledList);
 		for (int i = 0; i < pooledList.Count; i++)
 		{
-			Pickupable pickupable = pooledList[i].obj as Pickupable;
+			ScenePartitionerEntry scenePartitionerEntry = pooledList[i];
+			Pickupable pickupable = scenePartitionerEntry.obj as Pickupable;
 			if (pickupable != null && pickupable.GetComponent<MinionBrain>() == null)
 			{
 				Util.KDestroyGameObject(pickupable.gameObject);

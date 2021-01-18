@@ -4,7 +4,9 @@ using UnityEngine;
 [AddComponentMenu("KMonoBehaviour/scripts/CharacterOverlay")]
 public class CharacterOverlay : KMonoBehaviour
 {
-	private bool registered;
+	public bool shouldShowName;
+
+	private bool registered = false;
 
 	protected override void OnSpawn()
 	{

@@ -12,6 +12,8 @@ namespace Database
 
 		public Sickness Allergies;
 
+		public Sickness RadiationSickness;
+
 		public Sickness ColdBrain;
 
 		public Sickness HeatRash;
@@ -24,6 +26,7 @@ namespace Database
 			FoodSickness = Add(new FoodSickness());
 			SlimeSickness = Add(new SlimeSickness());
 			ZombieSickness = Add(new ZombieSickness());
+			RadiationSickness = Add(new RadiationSickness());
 			Allergies = Add(new Allergies());
 			ColdBrain = Add(new ColdBrain());
 			HeatRash = Add(new HeatRash());

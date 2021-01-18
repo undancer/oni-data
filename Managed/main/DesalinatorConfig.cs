@@ -19,20 +19,20 @@ public class DesalinatorConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("Desalinator", 4, 3, "desalinator_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.PENALTY.TIER0);
-		obj.RequiresPowerInput = true;
-		obj.EnergyConsumptionWhenActive = 480f;
-		obj.SelfHeatKilowattsWhenActive = 8f;
-		obj.ExhaustKilowattsWhenActive = 0f;
-		obj.InputConduitType = ConduitType.Liquid;
-		obj.OutputConduitType = ConduitType.Liquid;
-		obj.Floodable = false;
-		obj.ViewMode = OverlayModes.LiquidConduits.ID;
-		obj.AudioCategory = "Metal";
-		obj.UtilityInputOffset = new CellOffset(-1, 0);
-		obj.UtilityOutputOffset = new CellOffset(0, 0);
-		obj.PermittedRotations = PermittedRotations.FlipH;
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("Desalinator", 4, 3, "desalinator_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.PENALTY.TIER0);
+		buildingDef.RequiresPowerInput = true;
+		buildingDef.EnergyConsumptionWhenActive = 480f;
+		buildingDef.SelfHeatKilowattsWhenActive = 8f;
+		buildingDef.ExhaustKilowattsWhenActive = 0f;
+		buildingDef.InputConduitType = ConduitType.Liquid;
+		buildingDef.OutputConduitType = ConduitType.Liquid;
+		buildingDef.Floodable = false;
+		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.UtilityInputOffset = new CellOffset(-1, 0);
+		buildingDef.UtilityOutputOffset = new CellOffset(0, 0);
+		buildingDef.PermittedRotations = PermittedRotations.FlipH;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -41,7 +41,8 @@ public class DesalinatorConfig : IBuildingConfig
 		Storage storage = go.AddOrGet<Storage>();
 		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
 		storage.showInUI = true;
-		go.AddOrGet<Desalinator>().maxSalt = 945f;
+		Desalinator desalinator = go.AddOrGet<Desalinator>();
+		desalinator.maxSalt = 945f;
 		ElementConverter elementConverter = go.AddComponent<ElementConverter>();
 		elementConverter.consumedElements = new ElementConverter.ConsumedElement[1]
 		{

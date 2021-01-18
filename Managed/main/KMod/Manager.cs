@@ -61,7 +61,8 @@ namespace KMod
 
 		public static string GetDirectory()
 		{
-			return Path.Combine(Util.RootFolder(), "mods/");
+			string path = Util.RootFolder();
+			return Path.Combine(path, "mods/");
 		}
 
 		public Manager()
@@ -69,9 +70,11 @@ namespace KMod
 			string filename = GetFilename();
 			try
 			{
+				bool flag = false;
 				if (FileUtil.FileExists(filename))
 				{
-					PersistentData persistentData = JsonConvert.DeserializeObject<PersistentData>(File.ReadAllText(filename));
+					string value = File.ReadAllText(filename);
+					PersistentData persistentData = JsonConvert.DeserializeObject<PersistentData>(value);
 					mods = persistentData.mods;
 				}
 			}
@@ -87,8 +90,9 @@ namespace KMod
 					mod.SetEnabledForDlc("", mod.enabled);
 				}
 			}
+			Testing.Install install = Testing.Install.NoTesting;
 			List<Mod> list = new List<Mod>();
-			bool flag = false;
+			bool flag2 = false;
 			foreach (Mod mod2 in mods)
 			{
 				switch (mod2.status)
@@ -106,14 +110,14 @@ namespace KMod
 					}
 					if (mod2.status != Mod.Status.UninstallPending)
 					{
-						flag = true;
+						flag2 = true;
 					}
 					break;
 				case Mod.Status.ReinstallPending:
 					Debug.LogFormat("Latent reinstall of mod {0}", mod2.title);
 					if (!string.IsNullOrEmpty(mod2.reinstall_path) && File.Exists(mod2.reinstall_path))
 					{
-						mod2.IsEnabledForActiveDlc();
+						bool flag3 = mod2.IsEnabledForActiveDlc();
 						mod2.file_source = new ZipFile(mod2.reinstall_path);
 						mod2.SetEnabledForActiveDlc(enabled: false);
 						if (mod2.Uninstall())
@@ -124,19 +128,19 @@ namespace KMod
 								mod2.SetEnabledForActiveDlc(enabled: true);
 							}
 						}
-						flag = true;
+						flag2 = true;
 					}
 					else if (mod2.IsEnabledForActiveDlc())
 					{
 						mod2.SetEnabledForActiveDlc(enabled: false);
-						flag = true;
+						flag2 = true;
 					}
 					break;
 				}
 				if (!string.IsNullOrEmpty(mod2.reinstall_path))
 				{
 					mod2.reinstall_path = null;
-					flag = true;
+					flag2 = true;
 				}
 			}
 			foreach (Mod item in list)
@@ -147,7 +151,7 @@ namespace KMod
 			{
 				mod3.ScanContent();
 			}
-			if (flag)
+			if (flag2)
 			{
 				Save();
 			}
@@ -291,10 +295,10 @@ namespace KMod
 					};
 					list.Add(item);
 				}
-				bool num = mod2.label.version != mod.label.version;
-				bool flag = mod2.available_content != mod.available_content;
-				bool flag2 = num || flag || mod2.status == Mod.Status.ReinstallPending;
-				if (num)
+				bool flag = mod2.label.version != mod.label.version;
+				bool flag2 = mod2.available_content != mod.available_content;
+				bool flag3 = flag || flag2 || mod2.status == Mod.Status.ReinstallPending;
+				if (flag)
 				{
 					List<Event> list2 = events;
 					item = new Event
@@ -304,7 +308,7 @@ namespace KMod
 					};
 					list2.Add(item);
 				}
-				if (flag)
+				if (flag2)
 				{
 					List<Event> list3 = events;
 					item = new Event
@@ -319,7 +323,7 @@ namespace KMod
 				int index = mods.IndexOf(mod2);
 				mods.RemoveAt(index);
 				mods.Insert(index, mod);
-				if (flag2 || mod.status == Mod.Status.NotInstalled)
+				if (flag3 || mod.status == Mod.Status.NotInstalled)
 				{
 					if (mod.IsEnabledForActiveDlc())
 					{
@@ -335,7 +339,7 @@ namespace KMod
 					}
 					else
 					{
-						if (flag2)
+						if (flag3)
 						{
 							Uninstall(mod);
 						}
@@ -619,11 +623,7 @@ namespace KMod
 					flag3 = true;
 				}
 			}
-			if (flag2 && flag)
-			{
-				return !flag3;
-			}
-			return false;
+			return flag2 && flag && !flag3;
 		}
 
 		private string GetFilename()
@@ -633,7 +633,8 @@ namespace KMod
 
 		public static void Dialog(GameObject parent = null, string title = null, string text = null, string confirm_text = null, System.Action on_confirm = null, string cancel_text = null, System.Action on_cancel = null, string configurable_text = null, System.Action on_configurable_clicked = null, Sprite image_sprite = null)
 		{
-			((ConfirmDialogScreen)KScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, parent ?? Global.Instance.globalCanvas)).PopupConfirmDialog(text, on_confirm, on_cancel, configurable_text, on_configurable_clicked, title, confirm_text, cancel_text, image_sprite);
+			ConfirmDialogScreen confirmDialogScreen = (ConfirmDialogScreen)KScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, parent ?? Global.Instance.globalCanvas);
+			confirmDialogScreen.PopupConfirmDialog(text, on_confirm, on_cancel, configurable_text, on_configurable_clicked, title, confirm_text, cancel_text, image_sprite);
 		}
 
 		private static string MakeModList(List<Event> events, EventType event_type)
@@ -832,7 +833,9 @@ namespace KMod
 				}
 				foreach (MethodBase patched_method in mod.loaded_mod_data.patched_methods)
 				{
-					if (new Regex(Regex.Escape(patched_method.DeclaringType.ToString()) + "[.:]" + Regex.Escape(patched_method.Name.ToString())).Match(stackStr).Success)
+					string pattern = Regex.Escape(patched_method.DeclaringType.ToString()) + "[.:]" + Regex.Escape(patched_method.Name.ToString());
+					Regex regex = new Regex(pattern);
+					if (regex.Match(stackStr).Success)
 					{
 						Debug.Log($"{mod.title}'s patched_method {patched_method.DeclaringType}.{patched_method.Name} matched in the stack trace, adding to referenced mods list");
 						mod.foundInStackTrace = true;
@@ -857,18 +860,19 @@ namespace KMod
 				}
 				foreach (Mod mod in mods)
 				{
-					if (mod.IsEnabledForActiveDlc() && text.Contains(mod.label.install_path))
+					if (!mod.IsEnabledForActiveDlc() || !text.Contains(mod.label.install_path))
 					{
-						List<Event> list = events;
-						item = new Event
-						{
-							event_type = EventType.BadWorldGen,
-							mod = mod.label,
-							details = Path.GetFileName(world_gen_error.file.full_path)
-						};
-						list.Add(item);
-						break;
+						continue;
 					}
+					List<Event> list = events;
+					item = new Event
+					{
+						event_type = EventType.BadWorldGen,
+						mod = mod.label,
+						details = Path.GetFileName(world_gen_error.file.full_path)
+					};
+					list.Add(item);
+					break;
 				}
 			}
 			foreach (Mod item2 in pooledList)
@@ -957,6 +961,7 @@ namespace KMod
 
 		public bool Save()
 		{
+			bool flag = false;
 			if (!FileUtil.CreateDirectory(GetDirectory(), 5))
 			{
 				return false;

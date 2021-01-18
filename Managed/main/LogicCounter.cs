@@ -6,18 +6,18 @@ using UnityEngine;
 public class LogicCounter : Switch, ISaveLoadable
 {
 	[Serialize]
-	public int maxCount;
+	public int maxCount = 0;
 
 	[Serialize]
-	public int currentCount;
+	public int currentCount = 0;
 
 	[Serialize]
-	public bool resetCountAtMax;
+	public bool resetCountAtMax = false;
 
 	[Serialize]
-	public bool advancedMode;
+	public bool advancedMode = false;
 
-	private bool wasOn;
+	private bool wasOn = false;
 
 	[MyCmpAdd]
 	private CopyBuildingSettings copyBuildingSettings;
@@ -38,22 +38,22 @@ public class LogicCounter : Switch, ISaveLoadable
 
 	public static readonly HashedString OUTPUT_PORT_ID = new HashedString("LogicCounterOutput");
 
-	private bool resetRequested;
+	private bool resetRequested = false;
 
 	[Serialize]
-	private bool wasResetting;
+	private bool wasResetting = false;
 
 	[Serialize]
-	private bool wasIncrementing;
+	private bool wasIncrementing = false;
 
 	[Serialize]
-	public bool receivedFirstSignal;
+	public bool receivedFirstSignal = false;
 
 	private bool pulsingActive;
 
 	private const int pulseLength = 1;
 
-	private int pulseTicksRemaining;
+	private int pulseTicksRemaining = 0;
 
 	private MeterController meter;
 
@@ -65,7 +65,8 @@ public class LogicCounter : Switch, ISaveLoadable
 
 	private void OnCopySettings(object data)
 	{
-		LogicCounter component = ((GameObject)data).GetComponent<LogicCounter>();
+		GameObject gameObject = (GameObject)data;
+		LogicCounter component = gameObject.GetComponent<LogicCounter>();
 		if (component != null)
 		{
 			maxCount = component.maxCount;
@@ -109,7 +110,8 @@ public class LogicCounter : Switch, ISaveLoadable
 	{
 		if (receivedFirstSignal)
 		{
-			GetComponent<LogicPorts>().SendSignal(OUTPUT_PORT_ID, switchedOn ? 1 : 0);
+			LogicPorts component = GetComponent<LogicPorts>();
+			component.SendSignal(OUTPUT_PORT_ID, switchedOn ? 1 : 0);
 		}
 	}
 

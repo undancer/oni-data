@@ -7,6 +7,10 @@ public class FrontEndManager : KMonoBehaviour
 
 	public static bool firstInit = true;
 
+	public GameObject mainMenuVanilla;
+
+	public GameObject mainMenuExpansion1;
+
 	public GameObject[] SpawnOnLoadScreens;
 
 	public GameObject[] SpawnOnLaunchScreens;
@@ -15,10 +19,18 @@ public class FrontEndManager : KMonoBehaviour
 	{
 		base.OnPrefabInit();
 		Instance = this;
-		GameObject[] spawnOnLoadScreens;
+		string activeDlcId = DlcManager.GetActiveDlcId();
+		if ((activeDlcId != null && activeDlcId.Length == 0) || !(activeDlcId == "EXPANSION1_ID"))
+		{
+			Util.KInstantiateUI(mainMenuVanilla, base.gameObject, force_active: true);
+		}
+		else
+		{
+			Util.KInstantiateUI(mainMenuExpansion1, base.gameObject, force_active: true);
+		}
 		if (SpawnOnLoadScreens != null && SpawnOnLoadScreens.Length != 0)
 		{
-			spawnOnLoadScreens = SpawnOnLoadScreens;
+			GameObject[] spawnOnLoadScreens = SpawnOnLoadScreens;
 			foreach (GameObject gameObject in spawnOnLoadScreens)
 			{
 				if (gameObject != null)
@@ -32,12 +44,12 @@ public class FrontEndManager : KMonoBehaviour
 			return;
 		}
 		firstInit = false;
-		if (SpawnOnLaunchScreens == null || SpawnOnLoadScreens.Length == 0)
+		if (SpawnOnLaunchScreens == null || SpawnOnLaunchScreens.Length == 0)
 		{
 			return;
 		}
-		spawnOnLoadScreens = SpawnOnLaunchScreens;
-		foreach (GameObject gameObject2 in spawnOnLoadScreens)
+		GameObject[] spawnOnLaunchScreens = SpawnOnLaunchScreens;
+		foreach (GameObject gameObject2 in spawnOnLaunchScreens)
 		{
 			if (gameObject2 != null)
 			{

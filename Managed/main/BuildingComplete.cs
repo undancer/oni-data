@@ -10,9 +10,6 @@ public class BuildingComplete : Building
 	private Modifiers modifiers;
 
 	[MyCmpGet]
-	public Assignable assignable;
-
-	[MyCmpGet]
 	public KPrefabID prefabid;
 
 	public bool isManuallyOperated;
@@ -155,42 +152,41 @@ public class BuildingComplete : Building
 			Components.TemplateBuildings.Add(this);
 		}
 		Attributes attributes = this.GetAttributes();
-		if (attributes == null)
+		if (attributes != null)
 		{
-			return;
-		}
-		Deconstructable component5 = GetComponent<Deconstructable>();
-		if (!(component5 != null))
-		{
-			return;
-		}
-		for (int k = 1; k < component5.constructionElements.Length; k++)
-		{
-			Tag tag = component5.constructionElements[k];
-			Element element = ElementLoader.GetElement(tag);
-			if (element != null)
+			Deconstructable component5 = GetComponent<Deconstructable>();
+			if (component5 != null)
 			{
-				foreach (AttributeModifier attributeModifier in element.attributeModifiers)
+				for (int k = 1; k < component5.constructionElements.Length; k++)
 				{
-					attributes.Add(attributeModifier);
+					Tag tag = component5.constructionElements[k];
+					Element element = ElementLoader.GetElement(tag);
+					if (element != null)
+					{
+						foreach (AttributeModifier attributeModifier in element.attributeModifiers)
+						{
+							attributes.Add(attributeModifier);
+						}
+						continue;
+					}
+					GameObject gameObject = Assets.TryGetPrefab(tag);
+					if (!(gameObject != null))
+					{
+						continue;
+					}
+					PrefabAttributeModifiers component6 = gameObject.GetComponent<PrefabAttributeModifiers>();
+					if (!(component6 != null))
+					{
+						continue;
+					}
+					foreach (AttributeModifier descriptor in component6.descriptors)
+					{
+						attributes.Add(descriptor);
+					}
 				}
-				continue;
-			}
-			GameObject gameObject = Assets.TryGetPrefab(tag);
-			if (!(gameObject != null))
-			{
-				continue;
-			}
-			PrefabAttributeModifiers component6 = gameObject.GetComponent<PrefabAttributeModifiers>();
-			if (!(component6 != null))
-			{
-				continue;
-			}
-			foreach (AttributeModifier descriptor in component6.descriptors)
-			{
-				attributes.Add(descriptor);
 			}
 		}
+		BuildingInventory.Instance.RegisterBuilding(this);
 	}
 
 	private void OnSetTemperature(PrimaryElement primary_element, float temperature)
@@ -205,7 +201,8 @@ public class BuildingComplete : Building
 
 	private string GetInspectSound()
 	{
-		return GlobalAssets.GetSound("AI_Inspect_" + GetComponent<KPrefabID>().PrefabTag.Name);
+		string name = "AI_Inspect_" + GetComponent<KPrefabID>().PrefabTag.Name;
+		return GlobalAssets.GetSound(name);
 	}
 
 	protected override void OnCleanUp()
@@ -265,6 +262,7 @@ public class BuildingComplete : Building
 		Components.BuildingCompletes.Remove(this);
 		Components.TemplateBuildings.Remove(this);
 		UnregisterBlockTileRenderer();
+		BuildingInventory.Instance.UnregisterBuilding(this);
 		Trigger(-21016276, this);
 	}
 }

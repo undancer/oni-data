@@ -18,7 +18,7 @@ public class Filterable : KMonoBehaviour
 	private CopyBuildingSettings copyBuildingSettings;
 
 	[Serialize]
-	public ElementState filterElementState;
+	public ElementState filterElementState = ElementState.None;
 
 	[Serialize]
 	private Tag selectedTag = GameTags.Void;
@@ -52,7 +52,7 @@ public class Filterable : KMonoBehaviour
 		Dictionary<Tag, HashSet<Tag>> dictionary = new Dictionary<Tag, HashSet<Tag>>();
 		if (filterElementState == ElementState.Solid)
 		{
-			dictionary = WorldInventory.Instance.GetDiscoveredResourcesFromTagSet(filterableCategories);
+			dictionary = DiscoveredResources.Instance.GetDiscoveredResourcesFromTagSet(filterableCategories);
 		}
 		else
 		{
@@ -85,7 +85,8 @@ public class Filterable : KMonoBehaviour
 
 	private void OnCopySettings(object data)
 	{
-		Filterable component = ((GameObject)data).GetComponent<Filterable>();
+		GameObject gameObject = (GameObject)data;
+		Filterable component = gameObject.GetComponent<Filterable>();
 		if (component != null)
 		{
 			SelectedTag = component.SelectedTag;

@@ -50,7 +50,8 @@ public class DrowningStates : GameStateMachine<DrowningStates, DrowningStates.In
 	public bool UpdateSafeCell(Instance smi)
 	{
 		Navigator component = smi.GetComponent<Navigator>();
-		EscapeCellQuery escapeCellQuery = new EscapeCellQuery(smi.GetComponent<DrowningMonitor>());
+		DrowningMonitor component2 = smi.GetComponent<DrowningMonitor>();
+		EscapeCellQuery escapeCellQuery = new EscapeCellQuery(component2);
 		component.RunQuery(escapeCellQuery);
 		smi.safeCell = escapeCellQuery.GetResultCell();
 		return smi.safeCell != Grid.InvalidCell;

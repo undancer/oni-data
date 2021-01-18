@@ -96,21 +96,13 @@ namespace NodeEditorFramework.Utilities
 		public static MemoryTexture FindInMemory(Texture2D tex)
 		{
 			int num = loadedTextures.FindIndex((MemoryTexture memTex) => memTex.texture == tex);
-			if (num == -1)
-			{
-				return null;
-			}
-			return loadedTextures[num];
+			return (num != -1) ? loadedTextures[num] : null;
 		}
 
 		public static bool HasInMemory(string texturePath, params string[] modifications)
 		{
 			int num = loadedTextures.FindIndex((MemoryTexture memTex) => memTex.path == texturePath);
-			if (num != -1)
-			{
-				return EqualModifications(loadedTextures[num].modifications, modifications);
-			}
-			return false;
+			return num != -1 && EqualModifications(loadedTextures[num].modifications, modifications);
 		}
 
 		public static MemoryTexture GetMemoryTexture(string texturePath, params string[] modifications)
@@ -137,11 +129,7 @@ namespace NodeEditorFramework.Utilities
 
 		private static bool EqualModifications(string[] modsA, string[] modsB)
 		{
-			if (modsA.Length == modsB.Length)
-			{
-				return Array.TrueForAll(modsA, (string mod) => modsB.Count((string oMod) => mod == oMod) == modsA.Count((string oMod) => mod == oMod));
-			}
-			return false;
+			return modsA.Length == modsB.Length && Array.TrueForAll(modsA, (string mod) => modsB.Count((string oMod) => mod == oMod) == modsA.Count((string oMod) => mod == oMod));
 		}
 	}
 }

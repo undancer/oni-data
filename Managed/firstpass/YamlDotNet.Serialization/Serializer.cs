@@ -206,7 +206,8 @@ namespace YamlDotNet.Serialization
 			emitter.Emit(new StreamStart());
 			emitter.Emit(new DocumentStart());
 			IValueSerializer valueSerializer = backwardsCompatibleConfiguration;
-			(valueSerializer ?? this.valueSerializer).SerializeValue(emitter, graph, type);
+			IValueSerializer valueSerializer2 = valueSerializer ?? this.valueSerializer;
+			valueSerializer2.SerializeValue(emitter, graph, type);
 			emitter.Emit(new DocumentEnd(isImplicit: true));
 			emitter.Emit(new StreamEnd());
 		}

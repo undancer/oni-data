@@ -36,31 +36,27 @@ namespace YamlDotNet.Serialization.Utilities
 		{
 			if (value == null || value is DBNull)
 			{
-				if (!destinationType.IsValueType())
-				{
-					return null;
-				}
-				return Activator.CreateInstance(destinationType);
+				return destinationType.IsValueType() ? Activator.CreateInstance(destinationType) : null;
 			}
 			Type type = value.GetType();
 			if (destinationType.IsAssignableFrom(type))
 			{
 				return value;
 			}
-			if (destinationType.IsGenericType() && destinationType.GetGenericTypeDefinition() == typeof(Nullable<>))
+			if (destinationType.IsGenericType())
 			{
-				Type destinationType2 = destinationType.GetGenericArguments()[0];
-				object obj = ChangeType(value, destinationType2, culture);
-				return Activator.CreateInstance(destinationType, obj);
+				Type genericTypeDefinition = destinationType.GetGenericTypeDefinition();
+				if (genericTypeDefinition == typeof(Nullable<>))
+				{
+					Type destinationType2 = destinationType.GetGenericArguments()[0];
+					object obj = ChangeType(value, destinationType2, culture);
+					return Activator.CreateInstance(destinationType, obj);
+				}
 			}
 			if (destinationType.IsEnum())
 			{
 				string text = value as string;
-				if (text == null)
-				{
-					return value;
-				}
-				return Enum.Parse(destinationType, text, ignoreCase: true);
+				return (text != null) ? Enum.Parse(destinationType, text, ignoreCase: true) : value;
 			}
 			if (destinationType == typeof(bool))
 			{
@@ -74,12 +70,12 @@ namespace YamlDotNet.Serialization.Utilities
 				}
 			}
 			System.ComponentModel.TypeConverter converter = TypeDescriptor.GetConverter(value);
-			if (converter != null && converter.CanConvertTo(destinationType))
+			if (converter?.CanConvertTo(destinationType) ?? false)
 			{
 				return converter.ConvertTo(null, culture, value, destinationType);
 			}
 			System.ComponentModel.TypeConverter converter2 = TypeDescriptor.GetConverter(destinationType);
-			if (converter2 != null && converter2.CanConvertFrom(type))
+			if (converter2?.CanConvertFrom(type) ?? false)
 			{
 				return converter2.ConvertFrom(null, culture, value);
 			}
@@ -88,9 +84,9 @@ namespace YamlDotNet.Serialization.Utilities
 				type,
 				destinationType
 			};
-			for (int i = 0; i < array.Length; i++)
+			foreach (Type type2 in array)
 			{
-				foreach (MethodInfo publicStaticMethod2 in array[i].GetPublicStaticMethods())
+				foreach (MethodInfo publicStaticMethod2 in type2.GetPublicStaticMethods())
 				{
 					if (!publicStaticMethod2.IsSpecialName || (!(publicStaticMethod2.Name == "op_Implicit") && !(publicStaticMethod2.Name == "op_Explicit")) || !destinationType.IsAssignableFrom(publicStaticMethod2.ReturnParameter.ParameterType))
 					{

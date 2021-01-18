@@ -85,10 +85,11 @@ public class KGlobalAnimParser
 	public static void ParseAnimData(KBatchGroupData data, HashedString fileNameHash, FastReader reader, KAnimFileData animFile)
 	{
 		CheckHeader("ANIM", reader);
-		Assert(reader.ReadUInt32() == 5, "Invalid anim.bytes version");
+		uint num = reader.ReadUInt32();
+		Assert(num == 5, "Invalid anim.bytes version");
 		reader.ReadInt32();
 		reader.ReadInt32();
-		int num = reader.ReadInt32();
+		int num2 = reader.ReadInt32();
 		animFile.maxVisSymbolFrames = 0;
 		animFile.animCount = 0;
 		animFile.frameCount = 0;
@@ -97,7 +98,7 @@ public class KGlobalAnimParser
 		animFile.animBatchTag = data.groupID;
 		data.animIndex.Add(fileNameHash, data.anims.Count);
 		animFile.firstElementIndex = data.frameElements.Count;
-		for (int i = 0; i < num; i++)
+		for (int i = 0; i < num2; i++)
 		{
 			KAnim.Anim anim = new KAnim.Anim(animFile, data.anims.Count);
 			anim.name = reader.ReadKleiString();
@@ -115,21 +116,21 @@ public class KGlobalAnimParser
 			for (int j = 0; j < anim.numFrames; j++)
 			{
 				KAnim.Anim.Frame item = default(KAnim.Anim.Frame);
-				float num2 = reader.ReadSingle();
 				float num3 = reader.ReadSingle();
 				float num4 = reader.ReadSingle();
 				float num5 = reader.ReadSingle();
-				item.bbox = new AABB3(new Vector3(num2 - num4 * 0.5f, 0f - (num3 + num5 * 0.5f), 0f) * 0.005f, new Vector3(num2 + num4 * 0.5f, 0f - (num3 - num5 * 0.5f), 0f) * 0.005f);
-				float num6 = Math.Max(Math.Abs(item.bbox.max.x), Math.Abs(item.bbox.min.x));
-				float num7 = Math.Max(Math.Abs(item.bbox.max.y), Math.Abs(item.bbox.min.y));
-				float num8 = Math.Max(num6, num7);
-				anim.unScaledSize.x = Math.Max(anim.unScaledSize.x, num6 / 0.005f);
-				anim.unScaledSize.y = Math.Max(anim.unScaledSize.y, num7 / 0.005f);
-				anim.scaledBoundingRadius = Math.Max(anim.scaledBoundingRadius, Mathf.Sqrt(num8 * num8 + num8 * num8));
+				float num6 = reader.ReadSingle();
+				item.bbox = new AABB3(new Vector3(num3 - num5 * 0.5f, 0f - (num4 + num6 * 0.5f), 0f) * 0.005f, new Vector3(num3 + num5 * 0.5f, 0f - (num4 - num6 * 0.5f), 0f) * 0.005f);
+				float num7 = Math.Max(Math.Abs(item.bbox.max.x), Math.Abs(item.bbox.min.x));
+				float num8 = Math.Max(Math.Abs(item.bbox.max.y), Math.Abs(item.bbox.min.y));
+				float num9 = Math.Max(num7, num8);
+				anim.unScaledSize.x = Math.Max(anim.unScaledSize.x, num7 / 0.005f);
+				anim.unScaledSize.y = Math.Max(anim.unScaledSize.y, num8 / 0.005f);
+				anim.scaledBoundingRadius = Math.Max(anim.scaledBoundingRadius, Mathf.Sqrt(num9 * num9 + num9 * num9));
 				item.idx = data.animFrames.Count;
 				item.firstElementIdx = data.frameElements.Count;
 				item.numElements = reader.ReadInt32();
-				int num9 = 0;
+				int num10 = 0;
 				for (int k = 0; k < item.numElements; k++)
 				{
 					KAnim.Anim.FrameElement item2 = default(KAnim.Anim.FrameElement);
@@ -159,7 +160,7 @@ public class KGlobalAnimParser
 					int symbolIndex = data.GetSymbolIndex(item2.symbol);
 					if (symbolIndex == -1)
 					{
-						num9++;
+						num10++;
 						item2.symbol = MISSING_SYMBOL;
 					}
 					else
@@ -169,14 +170,14 @@ public class KGlobalAnimParser
 						animFile.elementCount++;
 					}
 				}
-				item.numElements -= num9;
+				item.numElements -= num10;
 				data.animFrames.Add(item);
 				animFile.frameCount++;
 			}
 			data.AddAnim(anim);
 			animFile.animCount++;
 		}
-		Debug.Assert(num == animFile.animCount);
+		Debug.Assert(num2 == animFile.animCount);
 		data.animCount[fileNameHash] = animFile.animCount;
 		animFile.maxVisSymbolFrames = Math.Max(animFile.maxVisSymbolFrames, reader.ReadInt32());
 		data.UpdateMaxVisibleSymbols(animFile.maxVisSymbolFrames);

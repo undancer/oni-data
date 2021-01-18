@@ -17,29 +17,9 @@ namespace Satsuma
 
 		private readonly bool directed;
 
-		public Node FirstNode
-		{
-			get
-			{
-				if (nodeCount <= 0)
-				{
-					return Node.Invalid;
-				}
-				return new Node(1L);
-			}
-		}
+		public Node FirstNode => (nodeCount > 0) ? new Node(1L) : Node.Invalid;
 
-		public Node LastNode
-		{
-			get
-			{
-				if (nodeCount <= 0)
-				{
-					return Node.Invalid;
-				}
-				return new Node(isCycle ? 1 : nodeCount);
-			}
-		}
+		public Node LastNode => (nodeCount > 0) ? new Node(isCycle ? 1 : nodeCount) : Node.Invalid;
 
 		public PathGraph(int nodeCount, Topology topology, Directedness directedness)
 		{
@@ -71,11 +51,7 @@ namespace Satsuma
 		{
 			if (node.Id == 1)
 			{
-				if (!isCycle)
-				{
-					return Arc.Invalid;
-				}
-				return new Arc(nodeCount);
+				return isCycle ? new Arc(nodeCount) : Arc.Invalid;
 			}
 			return new Arc(node.Id - 1);
 		}
@@ -134,24 +110,12 @@ namespace Satsuma
 
 		private int ArcCountInternal()
 		{
-			if (nodeCount != 0)
-			{
-				if (!isCycle)
-				{
-					return nodeCount - 1;
-				}
-				return nodeCount;
-			}
-			return 0;
+			return (nodeCount != 0) ? (isCycle ? nodeCount : (nodeCount - 1)) : 0;
 		}
 
 		public int ArcCount(ArcFilter filter = ArcFilter.All)
 		{
-			if (!directed || filter != ArcFilter.Edge)
-			{
-				return ArcCountInternal();
-			}
-			return 0;
+			return (!directed || filter != ArcFilter.Edge) ? ArcCountInternal() : 0;
 		}
 
 		public int ArcCount(Node u, ArcFilter filter = ArcFilter.All)
@@ -166,20 +130,12 @@ namespace Satsuma
 
 		public bool HasNode(Node node)
 		{
-			if (node.Id >= 1)
-			{
-				return node.Id <= nodeCount;
-			}
-			return false;
+			return node.Id >= 1 && node.Id <= nodeCount;
 		}
 
 		public bool HasArc(Arc arc)
 		{
-			if (arc.Id >= 1)
-			{
-				return arc.Id <= ArcCountInternal();
-			}
-			return false;
+			return arc.Id >= 1 && arc.Id <= ArcCountInternal();
 		}
 	}
 }

@@ -6,5 +6,6 @@ public enum NotificationType
 	Neutral = 4,
 	Tutorial = 5,
 	Messages = 6,
-	DuplicantThreatening = 7
+	DuplicantThreatening = 7,
+	Event = 8
 }

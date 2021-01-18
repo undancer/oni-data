@@ -31,8 +31,11 @@ public class AccessorySlot : Resource
 	public void AddAccessories(KAnimFile default_build, ResourceSet parent)
 	{
 		KAnim.Build build = file.GetData().build;
-		default_build.GetData().build.GetSymbol(targetSymbolId);
+		KAnim.Build.Symbol symbol = default_build.GetData().build.GetSymbol(targetSymbolId);
 		string value = Id.ToLower();
+		if (symbol != null)
+		{
+		}
 		for (int i = 0; i < build.symbols.Length; i++)
 		{
 			string text = HashCache.Get().Get(build.symbols[i].hash);

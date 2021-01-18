@@ -6,7 +6,7 @@ using UnityEngine;
 [SerializationConfig(MemberSerialization.OptIn)]
 public struct HashedString : IComparable<HashedString>, IEquatable<HashedString>, ISerializationCallbackReceiver
 {
-	public static HashedString Invalid;
+	public static HashedString Invalid = default(HashedString);
 
 	[SerializeField]
 	[Serialize]

@@ -122,19 +122,11 @@ namespace NodeEditorFramework
 		{
 			if (firstVector.x != 0f && firstVector.y == 0f)
 			{
-				if (!(startPos.x <= endPos.x))
-				{
-					return firstVector;
-				}
-				return -firstVector;
+				return (startPos.x <= endPos.x) ? (-firstVector) : firstVector;
 			}
 			if (firstVector.y != 0f && firstVector.x == 0f)
 			{
-				if (!(startPos.y <= endPos.y))
-				{
-					return firstVector;
-				}
-				return -firstVector;
+				return (startPos.y <= endPos.y) ? (-firstVector) : firstVector;
 			}
 			return -firstVector;
 		}

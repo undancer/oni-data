@@ -22,12 +22,14 @@ public class EggProtector : GameStateMachine<EggProtector, EggProtector.Instance
 		public Instance(Chore<Instance> chore, Def def)
 			: base((IStateMachineTarget)chore, def)
 		{
-			base.gameObject.GetSMI<EntityThreatMonitor.Instance>().allyTag = def.protectorTag;
+			EntityThreatMonitor.Instance sMI = base.gameObject.GetSMI<EntityThreatMonitor.Instance>();
+			sMI.allyTag = def.protectorTag;
 		}
 
 		public void CheckDistanceToEgg()
 		{
-			int navigationCost = base.smi.GetComponent<Navigator>().GetNavigationCost(Grid.PosToCell(eggToGuard));
+			Navigator component = base.smi.GetComponent<Navigator>();
+			int navigationCost = component.GetNavigationCost(Grid.PosToCell(eggToGuard));
 			if (navigationCost > 20)
 			{
 				base.sm.needsToMoveCloser.Set(value: true, base.smi);
@@ -88,7 +90,8 @@ public class EggProtector : GameStateMachine<EggProtector, EggProtector.Instance
 		public void SetEggToGuard(GameObject egg)
 		{
 			eggToGuard = egg;
-			base.gameObject.GetSMI<EntityThreatMonitor.Instance>().entityToProtect = egg;
+			EntityThreatMonitor.Instance sMI = base.gameObject.GetSMI<EntityThreatMonitor.Instance>();
+			sMI.entityToProtect = egg;
 			base.sm.hasEggToGuard.Set(egg != null, base.smi);
 		}
 

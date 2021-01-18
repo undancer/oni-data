@@ -20,14 +20,17 @@ public class EquipmentConfigManager : KMonoBehaviour
 	public void RegisterEquipment(IEquipmentConfig config)
 	{
 		EquipmentDef equipmentDef = config.CreateEquipmentDef();
-		GameObject gameObject = EntityTemplates.CreateLooseEntity(equipmentDef.Id, equipmentDef.Name, equipmentDef.RecipeDescription, equipmentDef.Mass, unitMass: true, equipmentDef.Anim, "object", Grid.SceneLayer.Ore, equipmentDef.CollisionShape, equipmentDef.width, equipmentDef.height, isPickupable: true, 0, equipmentDef.OutputElement);
-		Equippable equippable = gameObject.AddComponent<Equippable>();
-		equippable.def = equipmentDef;
-		Debug.Assert(equippable.def != null);
-		equippable.slotID = equipmentDef.Slot;
-		Debug.Assert(equippable.slot != null);
-		config.DoPostConfigure(gameObject);
-		Assets.AddPrefab(gameObject.GetComponent<KPrefabID>());
+		if (DlcManager.IsContentActive(equipmentDef.RequiredDlcId))
+		{
+			GameObject gameObject = EntityTemplates.CreateLooseEntity(equipmentDef.Id, equipmentDef.Name, equipmentDef.RecipeDescription, equipmentDef.Mass, unitMass: true, equipmentDef.Anim, "object", Grid.SceneLayer.Ore, equipmentDef.CollisionShape, equipmentDef.width, equipmentDef.height, isPickupable: true, 0, equipmentDef.OutputElement);
+			Equippable equippable = gameObject.AddComponent<Equippable>();
+			equippable.def = equipmentDef;
+			Debug.Assert(equippable.def != null);
+			equippable.slotID = equipmentDef.Slot;
+			Debug.Assert(equippable.slot != null);
+			config.DoPostConfigure(gameObject);
+			Assets.AddPrefab(gameObject.GetComponent<KPrefabID>());
+		}
 	}
 
 	private void LoadRecipe(EquipmentDef def, Equippable equippable)

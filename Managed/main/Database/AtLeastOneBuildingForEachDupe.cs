@@ -1,11 +1,9 @@
 using System.Collections.Generic;
-using System.IO;
-using KSerialization;
 using STRINGS;
 
 namespace Database
 {
-	public class AtLeastOneBuildingForEachDupe : ColonyAchievementRequirement
+	public class AtLeastOneBuildingForEachDupe : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		private List<Tag> validBuildingTypes = new List<Tag>();
 
@@ -23,7 +21,8 @@ namespace Database
 			int num = 0;
 			foreach (IBasicBuilding item in Components.BasicBuildings.Items)
 			{
-				Tag prefabTag = item.transform.GetComponent<KPrefabID>().PrefabTag;
+				KPrefabID component = item.transform.GetComponent<KPrefabID>();
+				Tag prefabTag = component.PrefabTag;
 				if (validBuildingTypes.Contains(prefabTag))
 				{
 					num++;
@@ -41,7 +40,7 @@ namespace Database
 			return false;
 		}
 
-		public override void Deserialize(IReader reader)
+		public void Deserialize(IReader reader)
 		{
 			int num = reader.ReadInt32();
 			validBuildingTypes = new List<Tag>(num);
@@ -49,15 +48,6 @@ namespace Database
 			{
 				string name = reader.ReadKleiString();
 				validBuildingTypes.Add(new Tag(name));
-			}
-		}
-
-		public override void Serialize(BinaryWriter writer)
-		{
-			writer.Write(validBuildingTypes.Count);
-			foreach (Tag validBuildingType in validBuildingTypes)
-			{
-				writer.WriteKleiString(validBuildingType.ToString());
 			}
 		}
 

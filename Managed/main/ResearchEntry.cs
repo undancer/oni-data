@@ -129,7 +129,8 @@ public class ResearchEntry : KMonoBehaviour
 				b = new Vector2(0f, -20f);
 				b2 = new Vector2(0f, 20f);
 			}
-			UILineRenderer component = Util.KInstantiateUI(linePrefab, lineContainer.gameObject, force_active: true).GetComponent<UILineRenderer>();
+			GameObject gameObject = Util.KInstantiateUI(linePrefab, lineContainer.gameObject, force_active: true);
+			UILineRenderer component = gameObject.GetComponent<UILineRenderer>();
 			component.Points = new Vector2[4]
 			{
 				new Vector2(0f, 0f) + b,
@@ -192,16 +193,22 @@ public class ResearchEntry : KMonoBehaviour
 			string text = "";
 			foreach (TechItem unlockedItem in targetTech.unlockedItems)
 			{
-				KImage componentInChildrenOnly = GetFreeIcon().GetComponentInChildrenOnly<KImage>();
-				componentInChildrenOnly.transform.parent.gameObject.SetActive(value: true);
+				HierarchyReferences component2 = GetFreeIcon().GetComponent<HierarchyReferences>();
 				if (text != "")
 				{
 					text += ", ";
 				}
 				text += unlockedItem.Name;
-				string toolTip = $"{unlockedItem.Name}\n{unlockedItem.description}";
-				componentInChildrenOnly.GetComponent<ToolTip>().toolTip = toolTip;
-				componentInChildrenOnly.sprite = unlockedItem.UISprite();
+				KImage reference = component2.GetReference<KImage>("Icon");
+				reference.sprite = unlockedItem.UISprite();
+				KImage reference2 = component2.GetReference<KImage>("DLCOverlay");
+				reference2.gameObject.SetActive(!DlcManager.IsVanillaId(unlockedItem.dlcId));
+				string text2 = $"{unlockedItem.Name}\n{unlockedItem.description}";
+				if (!DlcManager.IsVanillaId(unlockedItem.dlcId))
+				{
+					text2 += RESEARCH.MESSAGING.DLC.EXPANSION1;
+				}
+				component2.GetComponent<ToolTip>().toolTip = text2;
 			}
 			text = string.Format(UI.RESEARCHSCREEN_UNLOCKSTOOLTIP, text);
 			researchName.GetComponent<ToolTip>().toolTip = $"{targetTech.Name}\n{targetTech.desc}\n\n{text}";
@@ -252,7 +259,7 @@ public class ResearchEntry : KMonoBehaviour
 		isOn = true;
 	}
 
-	private void OnHover(bool entered, Tech hoverSource)
+	public void OnHover(bool entered, Tech hoverSource)
 	{
 		SetEverythingOn();
 		foreach (Tech item in targetTech.requiredTech)
@@ -309,12 +316,13 @@ public class ResearchEntry : KMonoBehaviour
 			}
 			foreach (KeyValuePair<string, GameObject> item in progressBarsByResearchTypeID)
 			{
-				item.Value.transform.GetChild(0).GetComponentsInChildren<Image>()[1].color = Color.white;
+				Transform child = item.Value.transform.GetChild(0);
+				child.GetComponentsInChildren<Image>()[1].color = Color.white;
 			}
 			Image[] componentsInChildren = iconPanel.GetComponentsInChildren<Image>();
-			for (int i = 0; i < componentsInChildren.Length; i++)
+			foreach (Image image in componentsInChildren)
 			{
-				componentsInChildren[i].material = StandardUIMaterial;
+				image.material = StandardUIMaterial;
 			}
 			return;
 		}
@@ -327,12 +335,13 @@ public class ResearchEntry : KMonoBehaviour
 			toggle.ClearOnClick();
 			foreach (KeyValuePair<string, GameObject> item2 in progressBarsByResearchTypeID)
 			{
-				item2.Value.transform.GetChild(0).GetComponentsInChildren<Image>()[1].color = Color.white;
+				Transform child2 = item2.Value.transform.GetChild(0);
+				child2.GetComponentsInChildren<Image>()[1].color = Color.white;
 			}
-			Image[] componentsInChildren = iconPanel.GetComponentsInChildren<Image>();
-			for (int i = 0; i < componentsInChildren.Length; i++)
+			Image[] componentsInChildren2 = iconPanel.GetComponentsInChildren<Image>();
+			foreach (Image image2 in componentsInChildren2)
 			{
-				componentsInChildren[i].material = StandardUIMaterial;
+				image2.material = StandardUIMaterial;
 			}
 			return;
 		}
@@ -343,35 +352,15 @@ public class ResearchEntry : KMonoBehaviour
 		toggle.onClick += OnResearchClicked;
 		foreach (KeyValuePair<string, GameObject> item3 in progressBarsByResearchTypeID)
 		{
-			item3.Value.transform.GetChild(0).GetComponentsInChildren<Image>()[1].color = new Color(133f / 255f, 133f / 255f, 133f / 255f);
+			Transform child3 = item3.Value.transform.GetChild(0);
+			child3.GetComponentsInChildren<Image>()[1].color = new Color(133f / 255f, 133f / 255f, 133f / 255f);
 		}
 	}
 
-	public void UpdateFilterState(string filter_string)
+	public void UpdateFilterState(bool state)
 	{
-		bool flag = false;
-		if (!string.IsNullOrEmpty(filter_string))
-		{
-			flag = UI.StripLinkFormatting(researchName.text).ToLower().Contains(filter_string);
-			if (!flag)
-			{
-				foreach (TechItem unlockedItem in targetTech.unlockedItems)
-				{
-					if (UI.StripLinkFormatting(unlockedItem.Name).ToLower().Contains(filter_string))
-					{
-						flag = true;
-						break;
-					}
-					if (UI.StripLinkFormatting(unlockedItem.description).ToLower().Contains(filter_string))
-					{
-						flag = true;
-						break;
-					}
-				}
-			}
-		}
-		filterHighlight.gameObject.SetActive(flag);
-		filterLowlight.gameObject.SetActive(!flag && !string.IsNullOrEmpty(filter_string));
+		bool flag = state;
+		filterLowlight.gameObject.SetActive(!flag);
 	}
 
 	public void SetPercentage(float percent)
@@ -406,7 +395,9 @@ public class ResearchEntry : KMonoBehaviour
 
 	private GameObject GetFreeIcon()
 	{
-		return Util.KInstantiateUI(iconPrefab, iconPanel);
+		GameObject gameObject = Util.KInstantiateUI(iconPrefab, iconPanel);
+		gameObject.SetActive(value: true);
+		return gameObject;
 	}
 
 	private Image GetFreeLine()

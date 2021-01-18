@@ -29,6 +29,7 @@ namespace TUNING
 		{
 			new Crop.CropVal("BasicPlantFood", 1800f),
 			new Crop.CropVal(PrickleFruitConfig.ID, 3600f),
+			new Crop.CropVal(SwampFruitConfig.ID, 3960f),
 			new Crop.CropVal(MushroomConfig.ID, 4500f),
 			new Crop.CropVal("ColdWheatSeed", 10800f, 18),
 			new Crop.CropVal(SpiceNutConfig.ID, 4800f, 4),
@@ -39,7 +40,11 @@ namespace TUNING
 			new Crop.CropVal("Lettuce", 7200f, 12),
 			new Crop.CropVal("BeanPlantSeed", 12600f, 12),
 			new Crop.CropVal("OxyfernSeed", 7200f),
-			new Crop.CropVal(SimHashes.Salt.ToString(), 3600f, 65)
+			new Crop.CropVal("PlantMeat", 18000f, 10),
+			new Crop.CropVal("WormBasicFruit", 2400f),
+			new Crop.CropVal("WormSuperFruit", 4800f, 8),
+			new Crop.CropVal(SimHashes.Salt.ToString(), 3600f, 65),
+			new Crop.CropVal(SimHashes.Water.ToString(), 6000f, 350)
 		};
 	}
 }

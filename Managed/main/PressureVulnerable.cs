@@ -9,12 +9,13 @@ public class PressureVulnerable : StateMachineComponent<PressureVulnerable.State
 {
 	public class StatesInstance : GameStateMachine<States, StatesInstance, PressureVulnerable, object>.GameInstance
 	{
-		public bool hasMaturity;
+		public bool hasMaturity = false;
 
 		public StatesInstance(PressureVulnerable master)
 			: base(master)
 		{
-			if (Db.Get().Amounts.Maturity.Lookup(base.gameObject) != null)
+			AmountInstance amountInstance = Db.Get().Amounts.Maturity.Lookup(base.gameObject);
+			if (amountInstance != null)
 			{
 				hasMaturity = true;
 			}
@@ -150,29 +151,9 @@ public class PressureVulnerable : StateMachineComponent<PressureVulnerable.State
 
 	public PressureState ExternalPressureState => pressureState;
 
-	public bool IsLethal
-	{
-		get
-		{
-			if (pressureState != PressureState.LethalHigh && pressureState != 0)
-			{
-				return !testAreaElementSafe;
-			}
-			return true;
-		}
-	}
+	public bool IsLethal => pressureState == PressureState.LethalHigh || pressureState == PressureState.LethalLow || !testAreaElementSafe;
 
-	public bool IsNormal
-	{
-		get
-		{
-			if (testAreaElementSafe)
-			{
-				return pressureState == PressureState.Normal;
-			}
-			return false;
-		}
-	}
+	public bool IsNormal => testAreaElementSafe && pressureState == PressureState.Normal;
 
 	WiltCondition.Condition[] IWiltCause.Conditions => new WiltCondition.Condition[2]
 	{
@@ -273,11 +254,7 @@ public class PressureVulnerable : StateMachineComponent<PressureVulnerable.State
 	{
 		if (pressure_sensitive)
 		{
-			if (pressure > pressureLethal_Low)
-			{
-				return pressure < pressureLethal_High;
-			}
-			return false;
+			return pressure > pressureLethal_Low && pressure < pressureLethal_High;
 		}
 		return true;
 	}
@@ -289,7 +266,8 @@ public class PressureVulnerable : StateMachineComponent<PressureVulnerable.State
 		float averageRate = Game.Instance.accumulators.GetAverageRate(base.smi.master.pressureAccumulator);
 		displayPressureAmount.value = averageRate;
 		Game.Instance.accumulators.Accumulate(base.smi.master.elementAccumulator, testAreaElementSafe ? 1f : 0f);
-		bool value = ((Game.Instance.accumulators.GetAverageRate(base.smi.master.elementAccumulator) > 0f) ? true : false);
+		float averageRate2 = Game.Instance.accumulators.GetAverageRate(base.smi.master.elementAccumulator);
+		bool value = ((averageRate2 > 0f) ? true : false);
 		base.smi.sm.safe_element.Set(value, base.smi);
 		base.smi.sm.pressure.Set(averageRate, base.smi);
 	}

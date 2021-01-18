@@ -39,6 +39,7 @@ public class DeathMessage : TargetMessage
 
 	public override string GetMessageBody()
 	{
-		return death.Get().description.Replace("{Target}", GetTarget().GetName());
+		string description = death.Get().description;
+		return description.Replace("{Target}", GetTarget().GetName());
 	}
 }

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using TUNING;
+using System.Linq;
 using UnityEngine;
 
 [AddComponentMenu("KMonoBehaviour/scripts/EdiblesManager")]
@@ -8,6 +8,8 @@ public class EdiblesManager : KMonoBehaviour
 	public class FoodInfo : IConsumableUIItem
 	{
 		public string Id;
+
+		public string DlcId;
 
 		public string Name;
 
@@ -39,9 +41,10 @@ public class EdiblesManager : KMonoBehaviour
 
 		public bool Display => CaloriesPerUnit != 0f;
 
-		public FoodInfo(string id, float caloriesPerUnit, int quality, float preserveTemperatue, float rotTemperature, float spoilTime, bool can_rot)
+		public FoodInfo(string id, string dlcId, float caloriesPerUnit, int quality, float preserveTemperatue, float rotTemperature, float spoilTime, bool can_rot)
 		{
 			Id = id;
+			DlcId = dlcId;
 			CaloriesPerUnit = caloriesPerUnit;
 			Quality = quality;
 			PreserveTemperature = preserveTemperatue;
@@ -52,7 +55,7 @@ public class EdiblesManager : KMonoBehaviour
 			Name = Strings.Get("STRINGS.ITEMS.FOOD." + id.ToUpper() + ".NAME");
 			Description = Strings.Get("STRINGS.ITEMS.FOOD." + id.ToUpper() + ".DESC");
 			Effects = new List<string>();
-			FOOD.FOOD_TYPES_LIST.Add(this);
+			s_allFoodTypes.Add(this);
 		}
 
 		public FoodInfo AddEffects(List<string> effects)
@@ -62,14 +65,21 @@ public class EdiblesManager : KMonoBehaviour
 		}
 	}
 
+	private static List<FoodInfo> s_allFoodTypes = new List<FoodInfo>();
+
+	public static List<FoodInfo> GetAllFoodTypes()
+	{
+		return s_allFoodTypes.Where((FoodInfo x) => DlcManager.IsContentActive(x.DlcId)).ToList();
+	}
+
 	public static FoodInfo GetFoodInfo(string foodID)
 	{
 		string b = foodID.Replace("Compost", "");
-		foreach (FoodInfo item in FOOD.FOOD_TYPES_LIST)
+		foreach (FoodInfo s_allFoodType in s_allFoodTypes)
 		{
-			if (item.Id == b)
+			if (s_allFoodType.Id == b)
 			{
-				return item;
+				return s_allFoodType;
 			}
 		}
 		return null;

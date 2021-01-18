@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class KBatchedAnimTracker : MonoBehaviour
@@ -15,25 +14,23 @@ public class KBatchedAnimTracker : MonoBehaviour
 
 	public Vector3 previousTargetPoint;
 
-	public bool useTargetPoint;
+	public bool useTargetPoint = false;
 
 	public bool fadeOut = true;
 
-	public bool skipInitialDisable;
+	public bool forceAlwaysVisible = false;
 
-	public bool forceAlwaysVisible;
-
-	public bool matchParentOffset;
+	public bool matchParentOffset = false;
 
 	private bool alive = true;
 
-	private bool forceUpdate;
+	private bool forceUpdate = false;
 
 	private Matrix2x3 previousMatrix;
 
 	private Vector3 previousPosition;
 
-	private KBatchedAnimController myAnim;
+	private KBatchedAnimController myAnim = null;
 
 	private void Start()
 	{
@@ -61,21 +58,6 @@ public class KBatchedAnimTracker : MonoBehaviour
 		controller.onLayerChanged += OnLayerChanged;
 		forceUpdate = true;
 		myAnim = GetComponent<KBatchedAnimController>();
-		List<KAnimControllerBase> list = new List<KAnimControllerBase>(GetComponentsInChildren<KAnimControllerBase>(includeInactive: true));
-		if (!skipInitialDisable)
-		{
-			for (int i = 0; i < base.transform.childCount; i++)
-			{
-				base.transform.GetChild(i).gameObject.SetActive(value: false);
-			}
-		}
-		for (int num = list.Count - 1; num >= 0; num--)
-		{
-			if (list[num].gameObject == base.gameObject)
-			{
-				list.RemoveAt(num);
-			}
-		}
 	}
 
 	private void OnDestroy()
@@ -106,7 +88,8 @@ public class KBatchedAnimTracker : MonoBehaviour
 	{
 		forceUpdate = false;
 		bool symbolVisible = false;
-		if (controller.CurrentAnim != null)
+		KAnim.Anim currentAnim = controller.CurrentAnim;
+		if (currentAnim != null)
 		{
 			Matrix2x3 symbolLocalTransform = controller.GetSymbolLocalTransform(symbol, out symbolVisible);
 			Vector3 position = controller.transform.GetPosition();

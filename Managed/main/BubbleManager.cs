@@ -53,22 +53,23 @@ public class BubbleManager : KMonoBehaviour, ISim33ms, IRenderEveryTick
 		ListPool<Bubble, BubbleManager>.PooledList pooledList2 = ListPool<Bubble, BubbleManager>.Allocate();
 		foreach (Bubble bubble in bubbles)
 		{
-			Bubble current = bubble;
-			current.position += current.velocity * dt;
-			current.elapsedTime += dt;
-			int num = Grid.PosToCell(current.position);
-			if (!Grid.IsVisiblyInLiquid(current.position) || Grid.Element[num].id == current.element)
+			Bubble item = bubble;
+			item.position += item.velocity * dt;
+			item.elapsedTime += dt;
+			int num = Grid.PosToCell(item.position);
+			if (!Grid.IsVisiblyInLiquid(item.position) || Grid.Element[num].id == item.element)
 			{
-				pooledList2.Add(current);
+				pooledList2.Add(item);
 			}
 			else
 			{
-				pooledList.Add(current);
+				pooledList.Add(item);
 			}
 		}
-		foreach (Bubble item in pooledList2)
+		foreach (Bubble item2 in pooledList2)
 		{
-			SimMessages.AddRemoveSubstance(Grid.PosToCell(item.position), item.element, CellEventLogger.Instance.FallingWaterAddToSim, item.mass, item.temperature, byte.MaxValue, 0);
+			int gameCell = Grid.PosToCell(item2.position);
+			SimMessages.AddRemoveSubstance(gameCell, item2.element, CellEventLogger.Instance.FallingWaterAddToSim, item2.mass, item2.temperature, byte.MaxValue, 0);
 		}
 		bubbles.Clear();
 		bubbles.AddRange(pooledList);
@@ -80,8 +81,9 @@ public class BubbleManager : KMonoBehaviour, ISim33ms, IRenderEveryTick
 	{
 		ListPool<SpriteSheetAnimator.AnimInfo, BubbleManager>.PooledList pooledList = ListPool<SpriteSheetAnimator.AnimInfo, BubbleManager>.Allocate();
 		SpriteSheetAnimator spriteSheetAnimator = SpriteSheetAnimManager.instance.GetSpriteSheetAnimator("liquid_splash1");
-		foreach (Bubble bubble in bubbles)
+		foreach (Bubble bubble2 in bubbles)
 		{
+			Bubble bubble = bubble2;
 			SpriteSheetAnimator.AnimInfo animInfo = default(SpriteSheetAnimator.AnimInfo);
 			animInfo.frame = spriteSheetAnimator.GetFrameFromElapsedTimeLooping(bubble.elapsedTime);
 			animInfo.elapsedTime = bubble.elapsedTime;

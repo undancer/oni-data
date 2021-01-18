@@ -9,7 +9,7 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 
 	private InterfaceTool activeTool;
 
-	private bool DebugHidingCursor;
+	private bool DebugHidingCursor = false;
 
 	private Vector3 prevMousePos = new Vector3(float.PositiveInfinity, 0f, 0f);
 
@@ -17,13 +17,13 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 
 	private const float MIN_DRAG_TIME = 0.3f;
 
-	private Action dragAction;
+	private Action dragAction = Action.Invalid;
 
 	private bool draggingAllowed = true;
 
-	private bool dragging;
+	private bool dragging = false;
 
-	private bool queueStopDrag;
+	private bool queueStopDrag = false;
 
 	private Vector3 startDragPos;
 
@@ -78,8 +78,9 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 
 	public static Vector3 GetCursorPos(Vector3 mouse_pos)
 	{
+		Ray ray = Camera.main.ScreenPointToRay(mouse_pos);
 		Vector3 result;
-		if (Physics.Raycast(Camera.main.ScreenPointToRay(mouse_pos), out var hitInfo, float.PositiveInfinity, Game.BlockSelectionLayerMask))
+		if (Physics.Raycast(ray, out var hitInfo, float.PositiveInfinity, Game.BlockSelectionLayerMask))
 		{
 			result = hitInfo.point;
 		}
@@ -185,7 +186,7 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 
 	private void StartDrag(Action action)
 	{
-		if (draggingAllowed && dragAction == Action.Invalid)
+		if (dragAction == Action.Invalid)
 		{
 			dragAction = action;
 			startDragPos = KInputManager.GetMousePos();
@@ -195,20 +196,17 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 
 	private void UpdateDrag()
 	{
-		if (draggingAllowed)
+		dragDelta = Vector2.zero;
+		Vector3 mousePos = KInputManager.GetMousePos();
+		if (!dragging && dragAction != 0 && ((mousePos - startDragPos).magnitude > 6f || Time.unscaledTime - startDragTime > 0.3f))
 		{
-			dragDelta = Vector2.zero;
-			Vector3 mousePos = KInputManager.GetMousePos();
-			if (!dragging && dragAction != 0 && ((mousePos - startDragPos).magnitude > 6f || Time.unscaledTime - startDragTime > 0.3f))
-			{
-				dragging = true;
-			}
-			if (dragging)
-			{
-				dragDelta = mousePos - startDragPos;
-				worldDragDelta = Camera.main.ScreenToWorldPoint(mousePos) - Camera.main.ScreenToWorldPoint(startDragPos);
-				startDragPos = mousePos;
-			}
+			dragging = true;
+		}
+		if (dragging)
+		{
+			dragDelta = mousePos - startDragPos;
+			worldDragDelta = Camera.main.ScreenToWorldPoint(mousePos) - Camera.main.ScreenToWorldPoint(startDragPos);
+			startDragPos = mousePos;
 		}
 	}
 
@@ -238,47 +236,52 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 		if (e.TryConsume(Action.ToggleScreenshotMode))
 		{
 			DebugHandler.ToggleScreenshotMode();
+			return;
 		}
-		else if (DebugHandler.HideUI && e.TryConsume(Action.Escape))
+		if (DebugHandler.HideUI && e.TryConsume(Action.Escape))
 		{
 			DebugHandler.ToggleScreenshotMode();
+			return;
 		}
-		else
+		if (e.IsAction(Action.MouseLeft) || e.IsAction(Action.ShiftMouseLeft))
 		{
-			if (activeTool == null || !activeTool.enabled)
+			StartDrag(Action.MouseLeft);
+		}
+		else if (e.IsAction(Action.MouseRight))
+		{
+			StartDrag(Action.MouseRight);
+		}
+		else if (e.IsAction(Action.MouseMiddle))
+		{
+			StartDrag(Action.MouseMiddle);
+		}
+		if (activeTool == null || !activeTool.enabled)
+		{
+			return;
+		}
+		List<RaycastResult> list = new List<RaycastResult>();
+		PointerEventData pointerEventData = new PointerEventData(UnityEngine.EventSystems.EventSystem.current);
+		pointerEventData.position = KInputManager.GetMousePos();
+		UnityEngine.EventSystems.EventSystem current = UnityEngine.EventSystems.EventSystem.current;
+		if (current != null)
+		{
+			current.RaycastAll(pointerEventData, list);
+			if (list.Count > 0)
 			{
 				return;
 			}
-			List<RaycastResult> list = new List<RaycastResult>();
-			PointerEventData pointerEventData = new PointerEventData(UnityEngine.EventSystems.EventSystem.current);
-			pointerEventData.position = KInputManager.GetMousePos();
-			UnityEngine.EventSystems.EventSystem current = UnityEngine.EventSystems.EventSystem.current;
-			if (current != null)
-			{
-				current.RaycastAll(pointerEventData, list);
-				if (list.Count > 0)
-				{
-					return;
-				}
-			}
-			if (e.TryConsume(Action.MouseLeft) || e.TryConsume(Action.ShiftMouseLeft))
-			{
-				StartDrag(Action.MouseLeft);
-				activeTool.OnLeftClickDown(GetCursorPos());
-			}
-			else if (e.IsAction(Action.MouseRight))
-			{
-				StartDrag(Action.MouseRight);
-				activeTool.OnRightClickDown(GetCursorPos(), e);
-			}
-			else if (e.IsAction(Action.MouseMiddle))
-			{
-				StartDrag(Action.MouseMiddle);
-			}
-			else
-			{
-				activeTool.OnKeyDown(e);
-			}
+		}
+		if (e.TryConsume(Action.MouseLeft) || e.TryConsume(Action.ShiftMouseLeft))
+		{
+			activeTool.OnLeftClickDown(GetCursorPos());
+		}
+		else if (e.IsAction(Action.MouseRight))
+		{
+			activeTool.OnRightClickDown(GetCursorPos(), e);
+		}
+		else
+		{
+			activeTool.OnKeyDown(e);
 		}
 	}
 
@@ -324,7 +327,7 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 
 	public bool IsDragging()
 	{
-		return dragAction != Action.Invalid;
+		return draggingAllowed && dragAction != Action.Invalid;
 	}
 
 	public void AllowDragging(bool allow)
@@ -339,6 +342,6 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 
 	public Vector3 GetWorldDragDelta()
 	{
-		return worldDragDelta;
+		return draggingAllowed ? worldDragDelta : Vector3.zero;
 	}
 }

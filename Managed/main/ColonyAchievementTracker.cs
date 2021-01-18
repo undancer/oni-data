@@ -21,12 +21,15 @@ public class ColonyAchievementTracker : KMonoBehaviour, ISaveLoadableDetails, IR
 	[Serialize]
 	public Dictionary<int, List<int>> dupesCompleteChoresInSuits = new Dictionary<int, List<int>>();
 
+	[Serialize]
+	public HashSet<Tag> tamedCritterTypes = new HashSet<Tag>();
+
 	private SchedulerHandle checkAchievementsHandle;
 
 	private int forceCheckAchievementHandle = -1;
 
 	[Serialize]
-	private int updatingAchievement;
+	private int updatingAchievement = 0;
 
 	[Serialize]
 	private List<string> completedAchievementsToDisplay = new List<string>();
@@ -62,9 +65,8 @@ public class ColonyAchievementTracker : KMonoBehaviour, ISaveLoadableDetails, IR
 		{
 			if (!achievements.ContainsKey(resource.Id))
 			{
-				ColonyAchievementStatus colonyAchievementStatus = new ColonyAchievementStatus();
-				colonyAchievementStatus.SetRequirements(resource.requirementChecklist);
-				achievements.Add(resource.Id, colonyAchievementStatus);
+				ColonyAchievementStatus value = new ColonyAchievementStatus(resource.Id);
+				achievements.Add(resource.Id, value);
 			}
 		}
 		forceCheckAchievementHandle = Game.Instance.Subscribe(395452326, CheckAchievements);
@@ -174,6 +176,23 @@ public class ColonyAchievementTracker : KMonoBehaviour, ISaveLoadableDetails, IR
 		});
 	}
 
+	public bool IsAchievementUnlocked(ColonyAchievement achievement)
+	{
+		foreach (KeyValuePair<string, ColonyAchievementStatus> achievement2 in achievements)
+		{
+			if (achievement2.Key == achievement.Id)
+			{
+				if (achievement2.Value.success)
+				{
+					return true;
+				}
+				achievement2.Value.UpdateAchievement();
+				return achievement2.Value.success;
+			}
+		}
+		return false;
+	}
+
 	protected override void OnCleanUp()
 	{
 		victorySchedulerHandle.ClearScheduler();
@@ -253,11 +272,10 @@ public class ColonyAchievementTracker : KMonoBehaviour, ISaveLoadableDetails, IR
 		for (int i = 0; i < num; i++)
 		{
 			string text = reader.ReadKleiString();
-			ColonyAchievementStatus colonyAchievementStatus = new ColonyAchievementStatus();
-			colonyAchievementStatus.Deserialize(reader);
+			ColonyAchievementStatus value = ColonyAchievementStatus.Deserialize(reader, text);
 			if (Db.Get().ColonyAchievements.Exists(text))
 			{
-				achievements.Add(text, colonyAchievementStatus);
+				achievements.Add(text, value);
 			}
 		}
 	}
@@ -288,6 +306,11 @@ public class ColonyAchievementTracker : KMonoBehaviour, ISaveLoadableDetails, IR
 		}
 	}
 
+	public void LogCritterTamed(Tag prefabId)
+	{
+		tamedCritterTypes.Add(prefabId);
+	}
+
 	public void LogSuitChore(ChoreDriver driver)
 	{
 		if (driver == null || driver.GetComponent<MinionIdentity>() == null)
@@ -295,7 +318,8 @@ public class ColonyAchievementTracker : KMonoBehaviour, ISaveLoadableDetails, IR
 			return;
 		}
 		bool flag = false;
-		foreach (EquipmentSlotInstance slot in driver.GetComponent<MinionIdentity>().GetEquipment().Slots)
+		Equipment equipment = driver.GetComponent<MinionIdentity>().GetEquipment();
+		foreach (EquipmentSlotInstance slot in equipment.Slots)
 		{
 			Equippable equippable = slot.assignable as Equippable;
 			if ((bool)equippable)

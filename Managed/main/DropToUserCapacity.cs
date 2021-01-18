@@ -89,7 +89,8 @@ public class DropToUserCapacity : Workable
 				component.Drop(component3.gameObject);
 				continue;
 			}
-			component3.Take(num).transform.SetPosition(base.transform.GetPosition());
+			Pickupable pickupable = component3.Take(num);
+			pickupable.transform.SetPosition(base.transform.GetPosition());
 			return;
 		}
 		chore = null;

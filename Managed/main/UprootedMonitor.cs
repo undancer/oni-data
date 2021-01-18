@@ -12,7 +12,7 @@ public class UprootedMonitor : KMonoBehaviour
 	public bool canBeUprooted = true;
 
 	[Serialize]
-	private bool uprooted;
+	private bool uprooted = false;
 
 	public CellOffset monitorCell = new CellOffset(0, -1);
 
@@ -28,17 +28,7 @@ public class UprootedMonitor : KMonoBehaviour
 		}
 	});
 
-	public bool IsUprooted
-	{
-		get
-		{
-			if (!uprooted)
-			{
-				return GetComponent<KPrefabID>().HasTag(GameTags.Uprooted);
-			}
-			return true;
-		}
-	}
+	public bool IsUprooted => uprooted || GetComponent<KPrefabID>().HasTag(GameTags.Uprooted);
 
 	protected override void OnSpawn()
 	{

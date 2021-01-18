@@ -8,7 +8,7 @@ public class CanvasWideConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("CanvasWide", 3, 2, "painting_wide_kanim", 30, 120f, new float[2]
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("CanvasWide", 3, 2, "painting_wide_kanim", 30, 120f, new float[2]
 		{
 			400f,
 			1f
@@ -21,15 +21,15 @@ public class CanvasWideConfig : IBuildingConfig
 			amount = 15,
 			radius = 6
 		});
-		obj.Floodable = false;
-		obj.SceneLayer = Grid.SceneLayer.InteriorWall;
-		obj.Overheatable = false;
-		obj.AudioCategory = "Metal";
-		obj.BaseTimeUntilRepair = -1f;
-		obj.ViewMode = OverlayModes.Decor.ID;
-		obj.DefaultAnimState = "off";
-		obj.PermittedRotations = PermittedRotations.FlipH;
-		return obj;
+		buildingDef.Floodable = false;
+		buildingDef.SceneLayer = Grid.SceneLayer.InteriorWall;
+		buildingDef.Overheatable = false;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.BaseTimeUntilRepair = -1f;
+		buildingDef.ViewMode = OverlayModes.Decor.ID;
+		buildingDef.DefaultAnimState = "off";
+		buildingDef.PermittedRotations = PermittedRotations.FlipH;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -40,13 +40,13 @@ public class CanvasWideConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		Painting painting = go.AddComponent<Painting>();
-		painting.stages.Add(new Artable.Stage("Default", STRINGS.BUILDINGS.PREFABS.CANVAS.NAME, "off", 0, cheer_on_complete: false, Artable.Status.Ready));
-		painting.stages.Add(new Artable.Stage("Bad", STRINGS.BUILDINGS.PREFABS.CANVAS.POORQUALITYNAME, "art_a", 5, cheer_on_complete: false, Artable.Status.Ugly));
-		painting.stages.Add(new Artable.Stage("Average", STRINGS.BUILDINGS.PREFABS.CANVAS.AVERAGEQUALITYNAME, "art_b", 10, cheer_on_complete: false, Artable.Status.Okay));
-		painting.stages.Add(new Artable.Stage("Good", STRINGS.BUILDINGS.PREFABS.CANVAS.EXCELLENTQUALITYNAME, "art_c", 15, cheer_on_complete: true, Artable.Status.Great));
-		painting.stages.Add(new Artable.Stage("Good2", STRINGS.BUILDINGS.PREFABS.CANVAS.EXCELLENTQUALITYNAME, "art_d", 15, cheer_on_complete: true, Artable.Status.Great));
-		painting.stages.Add(new Artable.Stage("Good3", STRINGS.BUILDINGS.PREFABS.CANVAS.EXCELLENTQUALITYNAME, "art_e", 15, cheer_on_complete: true, Artable.Status.Great));
-		painting.stages.Add(new Artable.Stage("Good4", STRINGS.BUILDINGS.PREFABS.CANVAS.EXCELLENTQUALITYNAME, "art_f", 15, cheer_on_complete: true, Artable.Status.Great));
+		Artable artable = go.AddComponent<Painting>();
+		artable.stages.Add(new Artable.Stage("Default", STRINGS.BUILDINGS.PREFABS.CANVAS.NAME, "off", 0, cheer_on_complete: false, Artable.Status.Ready));
+		artable.stages.Add(new Artable.Stage("Bad", STRINGS.BUILDINGS.PREFABS.CANVAS.POORQUALITYNAME, "art_a", 5, cheer_on_complete: false, Artable.Status.Ugly));
+		artable.stages.Add(new Artable.Stage("Average", STRINGS.BUILDINGS.PREFABS.CANVAS.AVERAGEQUALITYNAME, "art_b", 10, cheer_on_complete: false, Artable.Status.Okay));
+		artable.stages.Add(new Artable.Stage("Good", STRINGS.BUILDINGS.PREFABS.CANVAS.EXCELLENTQUALITYNAME, "art_c", 15, cheer_on_complete: true, Artable.Status.Great));
+		artable.stages.Add(new Artable.Stage("Good2", STRINGS.BUILDINGS.PREFABS.CANVAS.EXCELLENTQUALITYNAME, "art_d", 15, cheer_on_complete: true, Artable.Status.Great));
+		artable.stages.Add(new Artable.Stage("Good3", STRINGS.BUILDINGS.PREFABS.CANVAS.EXCELLENTQUALITYNAME, "art_e", 15, cheer_on_complete: true, Artable.Status.Great));
+		artable.stages.Add(new Artable.Stage("Good4", STRINGS.BUILDINGS.PREFABS.CANVAS.EXCELLENTQUALITYNAME, "art_f", 15, cheer_on_complete: true, Artable.Status.Great));
 	}
 }

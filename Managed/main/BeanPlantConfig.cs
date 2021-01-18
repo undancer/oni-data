@@ -14,6 +14,11 @@ public class BeanPlantConfig : IEntityConfig
 
 	public const float WATER_RATE = 71f / (678f * (float)Math.PI);
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("BeanPlant", STRINGS.CREATURES.SPECIES.BEAN_PLANT.NAME, STRINGS.CREATURES.SPECIES.BEAN_PLANT.DESC, 2f, decor: DECOR.BONUS.TIER1, anim: Assets.GetAnim("beanplant_kanim"), initialAnim: "idle_empty", sceneLayer: Grid.SceneLayer.BuildingFront, width: 1, height: 2, noise: default(EffectorValues), element: SimHashes.Creature, additionalTags: null, defaultTemperature: 258.15f);
@@ -34,11 +39,13 @@ public class BeanPlantConfig : IEntityConfig
 		};
 		array2[0] = consumeInfo;
 		EntityTemplates.ExtendPlantToFertilizable(gameObject, array2);
-		gameObject.AddOrGet<PressureVulnerable>().Configure(0.025f, 0f, 10f, 30f, new SimHashes[1]
+		PressureVulnerable pressureVulnerable = gameObject.AddOrGet<PressureVulnerable>();
+		pressureVulnerable.Configure(0.025f, 0f, 10f, 30f, new SimHashes[1]
 		{
 			SimHashes.CarbonDioxide
 		});
-		gameObject.GetComponent<UprootedMonitor>().monitorCell = new CellOffset(0, -1);
+		UprootedMonitor component = gameObject.GetComponent<UprootedMonitor>();
+		component.monitorCell = new CellOffset(0, -1);
 		gameObject.AddOrGet<StandardCropPlant>();
 		GameObject gameObject2 = EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Harvest, "BeanPlantSeed", STRINGS.CREATURES.SPECIES.SEEDS.BEAN_PLANT.NAME, STRINGS.CREATURES.SPECIES.SEEDS.BEAN_PLANT.DESC, Assets.GetAnim("seed_beanplant_kanim"), "object", 1, new List<Tag>
 		{

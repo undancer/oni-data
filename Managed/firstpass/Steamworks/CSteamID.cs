@@ -82,20 +82,12 @@ namespace Steamworks
 
 		public bool BBlankAnonAccount()
 		{
-			if (GetAccountID() == new AccountID_t(0u) && BAnonAccount())
-			{
-				return GetUnAccountInstance() == 0;
-			}
-			return false;
+			return GetAccountID() == new AccountID_t(0u) && BAnonAccount() && GetUnAccountInstance() == 0;
 		}
 
 		public bool BGameServerAccount()
 		{
-			if (GetEAccountType() != EAccountType.k_EAccountTypeGameServer)
-			{
-				return GetEAccountType() == EAccountType.k_EAccountTypeAnonGameServer;
-			}
-			return true;
+			return GetEAccountType() == EAccountType.k_EAccountTypeGameServer || GetEAccountType() == EAccountType.k_EAccountTypeAnonGameServer;
 		}
 
 		public bool BPersistentGameServerAccount()
@@ -125,29 +117,17 @@ namespace Steamworks
 
 		public bool IsLobby()
 		{
-			if (GetEAccountType() == EAccountType.k_EAccountTypeChat)
-			{
-				return (GetUnAccountInstance() & 0x40000) != 0;
-			}
-			return false;
+			return GetEAccountType() == EAccountType.k_EAccountTypeChat && (GetUnAccountInstance() & 0x40000) != 0;
 		}
 
 		public bool BIndividualAccount()
 		{
-			if (GetEAccountType() != EAccountType.k_EAccountTypeIndividual)
-			{
-				return GetEAccountType() == EAccountType.k_EAccountTypeConsoleUser;
-			}
-			return true;
+			return GetEAccountType() == EAccountType.k_EAccountTypeIndividual || GetEAccountType() == EAccountType.k_EAccountTypeConsoleUser;
 		}
 
 		public bool BAnonAccount()
 		{
-			if (GetEAccountType() != EAccountType.k_EAccountTypeAnonUser)
-			{
-				return GetEAccountType() == EAccountType.k_EAccountTypeAnonGameServer;
-			}
-			return true;
+			return GetEAccountType() == EAccountType.k_EAccountTypeAnonUser || GetEAccountType() == EAccountType.k_EAccountTypeAnonGameServer;
 		}
 
 		public bool BAnonUserAccount()
@@ -190,11 +170,7 @@ namespace Steamworks
 
 		public bool HasNoIndividualInstance()
 		{
-			if (BIndividualAccount())
-			{
-				return GetUnAccountInstance() == 0;
-			}
-			return false;
+			return BIndividualAccount() && GetUnAccountInstance() == 0;
 		}
 
 		public AccountID_t GetAccountID()
@@ -249,11 +225,7 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			if (other is CSteamID)
-			{
-				return this == (CSteamID)other;
-			}
-			return false;
+			return other is CSteamID && this == (CSteamID)other;
 		}
 
 		public override int GetHashCode()

@@ -125,8 +125,10 @@ public class WaterCooler : StateMachineComponent<WaterCooler.StatesInstance>, IA
 		workables = new SocialGatheringPointWorkable[socializeOffsets.Length];
 		for (int i = 0; i < workables.Length; i++)
 		{
-			Vector3 pos = Grid.CellToPosCBC(Grid.OffsetCell(Grid.PosToCell(this), socializeOffsets[i]), Grid.SceneLayer.Move);
-			SocialGatheringPointWorkable socialGatheringPointWorkable = ChoreHelpers.CreateLocator("WaterCoolerWorkable", pos).AddOrGet<SocialGatheringPointWorkable>();
+			int cell = Grid.OffsetCell(Grid.PosToCell(this), socializeOffsets[i]);
+			Vector3 pos = Grid.CellToPosCBC(cell, Grid.SceneLayer.Move);
+			GameObject go = ChoreHelpers.CreateLocator("WaterCoolerWorkable", pos);
+			SocialGatheringPointWorkable socialGatheringPointWorkable = go.AddOrGet<SocialGatheringPointWorkable>();
 			socialGatheringPointWorkable.specificEffect = "Socialized";
 			socialGatheringPointWorkable.SetWorkTime(workTime);
 			workables[i] = socialGatheringPointWorkable;
@@ -169,7 +171,7 @@ public class WaterCooler : StateMachineComponent<WaterCooler.StatesInstance>, IA
 			{
 				num2++;
 				num -= 1f;
-				if (chore == null || chore.isComplete)
+				if (chore?.isComplete ?? true)
 				{
 					chores[i] = new WaterCoolerChore(this, workables[i], null, null, OnChoreEnd);
 				}
@@ -198,9 +200,10 @@ public class WaterCooler : StateMachineComponent<WaterCooler.StatesInstance>, IA
 
 	private bool IsOffsetValid(CellOffset offset)
 	{
-		int cell = Grid.OffsetCell(Grid.PosToCell(this), offset);
-		int anchor_cell = Grid.CellBelow(cell);
-		return GameNavGrids.FloorValidator.IsWalkableCell(cell, anchor_cell, is_dupe: false);
+		int cell = Grid.PosToCell(this);
+		int cell2 = Grid.OffsetCell(cell, offset);
+		int anchor_cell = Grid.CellBelow(cell2);
+		return GameNavGrids.FloorValidator.IsWalkableCell(cell2, anchor_cell, is_dupe: false);
 	}
 
 	private void OnChoreEnd(Chore chore)

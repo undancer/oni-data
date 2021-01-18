@@ -17,7 +17,8 @@ public class OrnamentReceptacle : SingleEntityReceptacle
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		GetComponent<KBatchedAnimController>().SetSymbolVisiblity("snapTo_ornament", is_visible: false);
+		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
+		component.SetSymbolVisiblity("snapTo_ornament", is_visible: false);
 	}
 
 	protected override void PositionOccupyingObject()

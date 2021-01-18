@@ -45,7 +45,7 @@ public class ColonyDestinationSelectScreen : NewGameFlowScreen
 
 	private System.Random random;
 
-	private bool isEditingCoordinate;
+	private bool isEditingCoordinate = false;
 
 	protected override void OnPrefabInit()
 	{
@@ -73,6 +73,7 @@ public class ColonyDestinationSelectScreen : NewGameFlowScreen
 		RefreshCloudLocalIcon();
 		newGameSettings.Init();
 		newGameSettings.SetCloseAction(CustomizeClose);
+		destinationMapPanel.Init();
 		CustomGameSettings.Instance.OnSettingChanged += SettingChanged;
 		ShuffleClicked();
 	}
@@ -97,7 +98,8 @@ public class ColonyDestinationSelectScreen : NewGameFlowScreen
 		ToolTip component6 = component4.GetComponent<ToolTip>();
 		component5.toolTip = $"{UI.FRONTEND.CUSTOMGAMESETTINGSSCREEN.SETTINGS.SAVETOCLOUD.TOOLTIP}\n{UI.FRONTEND.CUSTOMGAMESETTINGSSCREEN.SETTINGS.SAVETOCLOUD.TOOLTIP_EXTRA}";
 		component6.toolTip = $"{UI.FRONTEND.CUSTOMGAMESETTINGSSCREEN.SETTINGS.SAVETOCLOUD.TOOLTIP_LOCAL}\n{UI.FRONTEND.CUSTOMGAMESETTINGSSCREEN.SETTINGS.SAVETOCLOUD.TOOLTIP_EXTRA}";
-		bool flag = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.SaveToCloud).id == "Enabled";
+		string id = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.SaveToCloud).id;
+		bool flag = id == "Enabled";
 		component2.text = (flag ? UI.FRONTEND.LOADSCREEN.CLOUD_SAVE : UI.FRONTEND.LOADSCREEN.LOCAL_SAVE);
 		component3.gameObject.SetActive(flag);
 		component3.ClearOnClick();
@@ -161,7 +163,7 @@ public class ColonyDestinationSelectScreen : NewGameFlowScreen
 	private void CoordinateChanged(string text)
 	{
 		string[] array = CustomGameSettings.Instance.ParseSettingCoordinate(text);
-		if (array.Length != 4)
+		if (array.Length != 4 || !int.TryParse(array[2], out var _))
 		{
 			return;
 		}
@@ -204,16 +206,19 @@ public class ColonyDestinationSelectScreen : NewGameFlowScreen
 		{
 			coordinate.text = CustomGameSettings.Instance.GetSettingsCoordinate();
 		}
-		string setting = newGameSettings.GetSetting(CustomGameSettingConfigs.World);
-		int.TryParse(newGameSettings.GetSetting(CustomGameSettingConfigs.WorldgenSeed), out var result);
-		ColonyDestinationAsteroidData colonyDestinationAsteroidData = destinationMapPanel.SelectAsteroid(setting, result);
-		destinationProperties.SetDescriptors(colonyDestinationAsteroidData.GetParamDescriptors());
-		startLocationProperties.SetDescriptors(colonyDestinationAsteroidData.GetTraitDescriptors());
+		string setting = newGameSettings.GetSetting(CustomGameSettingConfigs.ClusterLayout);
+		string setting2 = newGameSettings.GetSetting(CustomGameSettingConfigs.WorldgenSeed);
+		destinationMapPanel.UpdateDisplayedWorlds();
+		int.TryParse(setting2, out var result);
+		ColonyDestinationAsteroidBeltData colonyDestinationAsteroidBeltData = destinationMapPanel.SelectAsteroid(setting, result);
+		destinationProperties.SetDescriptors(colonyDestinationAsteroidBeltData.GetParamDescriptors());
+		startLocationProperties.SetDescriptors(colonyDestinationAsteroidBeltData.GetTraitDescriptors());
 	}
 
-	private void OnAsteroidClicked(ColonyDestinationAsteroidData asteroid)
+	private void OnAsteroidClicked(ColonyDestinationAsteroidBeltData asteroid)
 	{
-		newGameSettings.SetSetting(CustomGameSettingConfigs.World, asteroid.worldPath);
+		newGameSettings.SetSetting(CustomGameSettingConfigs.ClusterLayout, asteroid.beltPath);
+		newGameSettings.SetSetting(CustomGameSettingConfigs.World, asteroid.startWorldPath);
 		ShuffleClicked();
 	}
 

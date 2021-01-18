@@ -68,7 +68,8 @@ public class LogicAlarm : KMonoBehaviour, ISaveLoadable
 
 	private void OnCopySettings(object data)
 	{
-		LogicAlarm component = ((GameObject)data).GetComponent<LogicAlarm>();
+		GameObject gameObject = (GameObject)data;
+		LogicAlarm component = gameObject.GetComponent<LogicAlarm>();
 		if (component != null)
 		{
 			notificationName = component.notificationName;
@@ -98,7 +99,8 @@ public class LogicAlarm : KMonoBehaviour, ISaveLoadable
 
 	private void UpdateVisualState()
 	{
-		GetComponent<KBatchedAnimController>().Play(wasOn ? ON_ANIMS : OFF_ANIMS);
+		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
+		component.Play(wasOn ? ON_ANIMS : OFF_ANIMS);
 	}
 
 	public void OnLogicValueChanged(object data)
@@ -155,7 +157,7 @@ public class LogicAlarm : KMonoBehaviour, ISaveLoadable
 
 	public Notification CreateNotification()
 	{
-		GetComponent<KSelectable>();
-		return lastNotificationCreated = new Notification(notificationName, notificationType, HashedString.Invalid, (List<Notification> n, object d) => notificationTooltip, null, expires: true, 0f, null, null, null, volume_attenuation: false);
+		KSelectable component = GetComponent<KSelectable>();
+		return lastNotificationCreated = new Notification(notificationName, notificationType, (List<Notification> n, object d) => notificationTooltip, null, expires: true, 0f, null, null, null, volume_attenuation: false);
 	}
 }

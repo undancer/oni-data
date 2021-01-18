@@ -50,8 +50,9 @@ namespace UnityEngine.UI.Extensions
 				if (i == 0)
 				{
 					Vector2 vector = segmentPoints[i];
-					Vector2 a = segmentPoints[i + 1] - vector;
-					Vector2 item = vector + scale * a;
+					Vector2 a = segmentPoints[i + 1];
+					Vector2 a2 = a - vector;
+					Vector2 item = vector + scale * a2;
 					controlPoints.Add(vector);
 					controlPoints.Add(item);
 				}
@@ -59,8 +60,8 @@ namespace UnityEngine.UI.Extensions
 				{
 					Vector2 b = segmentPoints[i - 1];
 					Vector2 vector2 = segmentPoints[i];
-					Vector2 a2 = vector2 - b;
-					Vector2 item2 = vector2 - scale * a2;
+					Vector2 a3 = vector2 - b;
+					Vector2 item2 = vector2 - scale * a3;
 					controlPoints.Add(item2);
 					controlPoints.Add(vector2);
 				}
@@ -68,10 +69,10 @@ namespace UnityEngine.UI.Extensions
 				{
 					Vector2 b2 = segmentPoints[i - 1];
 					Vector2 vector3 = segmentPoints[i];
-					Vector2 a3 = segmentPoints[i + 1];
-					Vector2 normalized = (a3 - b2).normalized;
+					Vector2 a4 = segmentPoints[i + 1];
+					Vector2 normalized = (a4 - b2).normalized;
 					Vector2 item3 = vector3 - scale * normalized * (vector3 - b2).magnitude;
-					Vector2 item4 = vector3 + scale * normalized * (a3 - vector3).magnitude;
+					Vector2 item4 = vector3 + scale * normalized * (a4 - vector3).magnitude;
 					controlPoints.Add(item3);
 					controlPoints.Add(vector3);
 					controlPoints.Add(item4);
@@ -215,7 +216,10 @@ namespace UnityEngine.UI.Extensions
 			float num3 = num * num;
 			float d = num3 * num;
 			float d2 = num2 * t;
-			return d * p0 + 3f * num3 * t * p1 + 3f * num * num2 * p2 + d2 * p3;
+			Vector2 a = d * p0;
+			a += 3f * num3 * t * p1;
+			a += 3f * num * num2 * p2;
+			return a + d2 * p3;
 		}
 	}
 }

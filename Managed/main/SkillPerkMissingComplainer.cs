@@ -34,7 +34,7 @@ public class SkillPerkMissingComplainer : KMonoBehaviour
 		KSelectable component = GetComponent<KSelectable>();
 		if (!(component == null) && !string.IsNullOrEmpty(requiredSkillPerk))
 		{
-			bool flag = MinionResume.AnyMinionHasPerk(requiredSkillPerk);
+			bool flag = MinionResume.AnyMinionHasPerk(requiredSkillPerk, this.GetMyWorldId());
 			if (!flag && workStatusItemHandle == Guid.Empty)
 			{
 				workStatusItemHandle = component.AddStatusItem(Db.Get().BuildingStatusItems.ColonyLacksRequiredSkillPerk, requiredSkillPerk);

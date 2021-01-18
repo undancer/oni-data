@@ -18,14 +18,16 @@ public class TemplateSelectionInfoPanel : KMonoBehaviour, IRender1000ms
 	[SerializeField]
 	private KButton save_button;
 
-	private Func<List<int>, string>[] details = new Func<List<int>, string>[6]
+	private Func<List<int>, string>[] details = new Func<List<int>, string>[8]
 	{
 		TotalMass,
 		AverageMass,
 		AverageTemperature,
 		TotalJoules,
 		JoulesPerKilogram,
-		MassPerElement
+		MassPerElement,
+		TotalRadiation,
+		AverageRadiation
 	};
 
 	private static List<Tuple<Element, float>> mass_per_element = new List<Tuple<Element, float>>();
@@ -119,6 +121,27 @@ public class TemplateSelectionInfoPanel : KMonoBehaviour, IRender1000ms
 		}
 		num /= num2;
 		return string.Format(UI.DEBUG_TOOLS.SAVE_BASE_TEMPLATE.SELECTION_INFO_PANEL.JOULES_PER_KILOGRAM, GameUtil.GetFormattedJoules(num));
+	}
+
+	private static string TotalRadiation(List<int> cells)
+	{
+		float num = 0f;
+		foreach (int cell in cells)
+		{
+			num += Grid.Radiation[cell];
+		}
+		return string.Format(UI.DEBUG_TOOLS.SAVE_BASE_TEMPLATE.SELECTION_INFO_PANEL.TOTAL_RADS, GameUtil.GetFormattedRads(num));
+	}
+
+	private static string AverageRadiation(List<int> cells)
+	{
+		float num = 0f;
+		foreach (int cell in cells)
+		{
+			num += Grid.Radiation[cell];
+		}
+		num /= (float)cells.Count;
+		return string.Format(UI.DEBUG_TOOLS.SAVE_BASE_TEMPLATE.SELECTION_INFO_PANEL.AVERAGE_RADS, GameUtil.GetFormattedRads(num));
 	}
 
 	private static string MassPerElement(List<int> cells)

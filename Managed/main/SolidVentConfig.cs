@@ -9,17 +9,17 @@ public class SolidVentConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("SolidVent", 1, 1, "conveyer_dropper_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER1);
-		obj.InputConduitType = ConduitType.Solid;
-		obj.Floodable = false;
-		obj.Overheatable = false;
-		obj.ViewMode = OverlayModes.SolidConveyor.ID;
-		obj.AudioCategory = "Metal";
-		obj.UtilityInputOffset = new CellOffset(0, 0);
-		obj.UtilityOutputOffset = new CellOffset(0, 0);
-		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("SolidVent", 1, 1, "conveyer_dropper_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER1);
+		buildingDef.InputConduitType = ConduitType.Solid;
+		buildingDef.Floodable = false;
+		buildingDef.Overheatable = false;
+		buildingDef.ViewMode = OverlayModes.SolidConveyor.ID;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
+		buildingDef.UtilityOutputOffset = new CellOffset(0, 0);
+		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.SolidConveyorIDs, "SolidVent");
-		return obj;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -30,7 +30,8 @@ public class SolidVentConfig : IBuildingConfig
 	public override void DoPostConfigureUnderConstruction(GameObject go)
 	{
 		base.DoPostConfigureUnderConstruction(go);
-		go.GetComponent<Constructable>().requiredSkillPerk = Db.Get().SkillPerks.ConveyorBuild.Id;
+		Constructable component = go.GetComponent<Constructable>();
+		component.requiredSkillPerk = Db.Get().SkillPerks.ConveyorBuild.Id;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

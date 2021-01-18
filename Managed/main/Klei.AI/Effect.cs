@@ -16,6 +16,8 @@ namespace Klei.AI
 
 		public bool isBad;
 
+		public string customIcon;
+
 		public string emoteAnim;
 
 		public float emoteCooldown;
@@ -24,7 +26,7 @@ namespace Klei.AI
 
 		public string stompGroup;
 
-		public Effect(string id, string name, string description, float duration, bool show_in_ui, bool trigger_floating_text, bool is_bad, string emote_anim = null, float emote_cooldown = 0f, string stompGroup = null)
+		public Effect(string id, string name, string description, float duration, bool show_in_ui, bool trigger_floating_text, bool is_bad, string emote_anim = null, float emote_cooldown = 0f, string stompGroup = null, string custom_icon = "")
 			: base(id, name, description)
 		{
 			this.duration = duration;
@@ -34,6 +36,7 @@ namespace Klei.AI
 			emoteAnim = emote_anim;
 			emoteCooldown = emote_cooldown;
 			this.stompGroup = stompGroup;
+			customIcon = custom_icon;
 		}
 
 		public override void AddTo(Attributes attributes)
@@ -55,9 +58,9 @@ namespace Klei.AI
 			emotePreconditions.Add(precon);
 		}
 
-		public static string CreateTooltip(Effect effect, bool showDuration, string linePrefix = "\n")
+		public static string CreateTooltip(Effect effect, bool showDuration, string linePrefix = "\n    • ", bool showHeader = true)
 		{
-			string text = "";
+			string text = (showHeader ? DUPLICANTS.MODIFIERS.EFFECT_HEADER.text : "");
 			foreach (AttributeModifier selfModifier in effect.SelfModifiers)
 			{
 				Attribute attribute = Db.Get().Attributes.TryGet(selfModifier.AttributeId);
@@ -76,14 +79,20 @@ namespace Klei.AI
 			}
 			if (showDuration && effect.duration > 0f)
 			{
-				text = text + linePrefix + string.Format(DUPLICANTS.MODIFIERS.TIME_TOTAL, GameUtil.GetFormattedCycles(effect.duration));
+				text = text + "\n" + string.Format(DUPLICANTS.MODIFIERS.TIME_TOTAL, GameUtil.GetFormattedCycles(effect.duration));
 			}
 			return text;
 		}
 
+		public static string CreateFullTooltip(Effect effect, bool showDuration)
+		{
+			return effect.Name + "\n\n" + effect.description + "\n\n" + CreateTooltip(effect, showDuration);
+		}
+
 		public static void AddModifierDescriptions(GameObject parent, List<Descriptor> descs, string effect_id, bool increase_indent = false)
 		{
-			foreach (AttributeModifier selfModifier in Db.Get().effects.Get(effect_id).SelfModifiers)
+			Effect effect = Db.Get().effects.Get(effect_id);
+			foreach (AttributeModifier selfModifier in effect.SelfModifiers)
 			{
 				Descriptor item = new Descriptor(string.Concat(Strings.Get("STRINGS.DUPLICANTS.ATTRIBUTES." + selfModifier.AttributeId.ToUpper() + ".NAME"), ": ", selfModifier.GetFormattedString(parent)), "");
 				if (increase_indent)

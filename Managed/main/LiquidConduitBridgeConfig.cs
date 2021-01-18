@@ -9,30 +9,31 @@ public class LiquidConduitBridgeConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("LiquidConduitBridge", 3, 1, "utilityliquidbridge_kanim", 10, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.Conduit, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
-		obj.ObjectLayer = ObjectLayer.LiquidConduitConnection;
-		obj.SceneLayer = Grid.SceneLayer.LiquidConduitBridges;
-		obj.InputConduitType = ConduitType.Liquid;
-		obj.OutputConduitType = ConduitType.Liquid;
-		obj.Floodable = false;
-		obj.Entombable = false;
-		obj.Overheatable = false;
-		obj.ViewMode = OverlayModes.LiquidConduits.ID;
-		obj.AudioCategory = "Metal";
-		obj.AudioSize = "small";
-		obj.BaseTimeUntilRepair = -1f;
-		obj.PermittedRotations = PermittedRotations.R360;
-		obj.UtilityInputOffset = new CellOffset(-1, 0);
-		obj.UtilityOutputOffset = new CellOffset(1, 0);
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("LiquidConduitBridge", 3, 1, "utilityliquidbridge_kanim", 10, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.Conduit, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
+		buildingDef.ObjectLayer = ObjectLayer.LiquidConduitConnection;
+		buildingDef.SceneLayer = Grid.SceneLayer.LiquidConduitBridges;
+		buildingDef.InputConduitType = ConduitType.Liquid;
+		buildingDef.OutputConduitType = ConduitType.Liquid;
+		buildingDef.Floodable = false;
+		buildingDef.Entombable = false;
+		buildingDef.Overheatable = false;
+		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.AudioSize = "small";
+		buildingDef.BaseTimeUntilRepair = -1f;
+		buildingDef.PermittedRotations = PermittedRotations.R360;
+		buildingDef.UtilityInputOffset = new CellOffset(-1, 0);
+		buildingDef.UtilityOutputOffset = new CellOffset(1, 0);
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.LiquidVentIDs, "LiquidConduitBridge");
-		return obj;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		GeneratedBuildings.MakeBuildingAlwaysOperational(go);
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
-		go.AddOrGet<ConduitBridge>().type = ConduitType.Liquid;
+		ConduitBridge conduitBridge = go.AddOrGet<ConduitBridge>();
+		conduitBridge.type = ConduitType.Liquid;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

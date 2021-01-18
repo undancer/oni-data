@@ -128,20 +128,14 @@ namespace Satsuma
 
 		public Arc NextArc(Node node)
 		{
-			if (!nextArc.TryGetValue(node, out var value))
-			{
-				return Arc.Invalid;
-			}
-			return value;
+			Arc value;
+			return nextArc.TryGetValue(node, out value) ? value : Arc.Invalid;
 		}
 
 		public Arc PrevArc(Node node)
 		{
-			if (!prevArc.TryGetValue(node, out var value))
-			{
-				return Arc.Invalid;
-			}
-			return value;
+			Arc value;
+			return prevArc.TryGetValue(node, out value) ? value : Arc.Invalid;
 		}
 
 		public Node U(Arc arc)
@@ -211,11 +205,7 @@ namespace Satsuma
 
 		public int ArcCount(ArcFilter filter = ArcFilter.All)
 		{
-			if (filter != 0)
-			{
-				return edgeCount;
-			}
-			return arcs.Count;
+			return (filter == ArcFilter.All) ? arcs.Count : edgeCount;
 		}
 
 		public int ArcCount(Node u, ArcFilter filter = ArcFilter.All)
@@ -230,15 +220,7 @@ namespace Satsuma
 
 		public bool HasNode(Node node)
 		{
-			if (!prevArc.ContainsKey(node))
-			{
-				if (node != Node.Invalid)
-				{
-					return node == FirstNode;
-				}
-				return false;
-			}
-			return true;
+			return prevArc.ContainsKey(node) || (node != Node.Invalid && node == FirstNode);
 		}
 
 		public bool HasArc(Arc arc)

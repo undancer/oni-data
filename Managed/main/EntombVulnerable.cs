@@ -10,7 +10,7 @@ public class EntombVulnerable : KMonoBehaviour, IWiltCause
 	private OccupyArea _occupyArea;
 
 	[Serialize]
-	private bool isEntombed;
+	private bool isEntombed = false;
 
 	private HandleVector<int>.Handle partitionerEntry;
 
@@ -92,10 +92,6 @@ public class EntombVulnerable : KMonoBehaviour, IWiltCause
 
 	private static bool IsCellSafeCB(int cell, object data)
 	{
-		if (Grid.IsValidCell(cell))
-		{
-			return !Grid.Solid[cell];
-		}
-		return false;
+		return Grid.IsValidCell(cell) && !Grid.Solid[cell];
 	}
 }

@@ -82,15 +82,17 @@ public class ConversationManager : KMonoBehaviour, ISim200ms
 			else
 			{
 				bool flag = true;
-				if (conversation.numUtterances == 0 && GameClock.Instance.GetTime() > conversation.lastTalkedTime + TuningData<Tuning>.Get().delayBeforeStart)
+				bool flag2 = conversation.minions.Find((MinionIdentity match) => !match.HasTag(GameTags.Partying)) == null;
+				if ((conversation.numUtterances == 0 && flag2 && GameClock.Instance.GetTime() > conversation.lastTalkedTime) || GameClock.Instance.GetTime() > conversation.lastTalkedTime + TuningData<Tuning>.Get().delayBeforeStart)
 				{
 					MinionIdentity minionIdentity = conversation.minions[UnityEngine.Random.Range(0, conversation.minions.Count)];
 					conversation.conversationType.NewTarget(minionIdentity);
 					flag = DoTalking(conversation, minionIdentity);
 				}
-				else if (conversation.numUtterances > 0 && conversation.numUtterances < TuningData<Tuning>.Get().maxUtterances && GameClock.Instance.GetTime() > conversation.lastTalkedTime + TuningData<Tuning>.Get().speakTime + TuningData<Tuning>.Get().delayBetweenUtterances)
+				else if (conversation.numUtterances > 0 && conversation.numUtterances < TuningData<Tuning>.Get().maxUtterances && ((flag2 && GameClock.Instance.GetTime() > conversation.lastTalkedTime + TuningData<Tuning>.Get().speakTime / 4f) || GameClock.Instance.GetTime() > conversation.lastTalkedTime + TuningData<Tuning>.Get().speakTime + TuningData<Tuning>.Get().delayBetweenUtterances))
 				{
-					int index = (conversation.minions.IndexOf(conversation.lastTalked) + UnityEngine.Random.Range(1, conversation.minions.Count)) % conversation.minions.Count;
+					int num3 = conversation.minions.IndexOf(conversation.lastTalked);
+					int index = (num3 + UnityEngine.Random.Range(1, conversation.minions.Count)) % conversation.minions.Count;
 					MinionIdentity new_speaker = conversation.minions[index];
 					flag = DoTalking(conversation, new_speaker);
 				}
@@ -119,25 +121,34 @@ public class ConversationManager : KMonoBehaviour, ISim200ms
 				if (setupsByMinion.ContainsKey(item2))
 				{
 					Conversation conversation2 = setupsByMinion[item2];
-					if (conversation2.minions.Count < TuningData<Tuning>.Get().maxDupesPerConvo && (GetCentroid(conversation2) - item.transform.GetPosition()).magnitude < TuningData<Tuning>.Get().maxDistance * 0.5f)
+					if (conversation2.minions.Count < TuningData<Tuning>.Get().maxDupesPerConvo)
 					{
-						conversation2.minions.Add(item);
-						setupsByMinion[item] = conversation2;
-						break;
+						Vector3 centroid = GetCentroid(conversation2);
+						float magnitude = (centroid - item.transform.GetPosition()).magnitude;
+						if (magnitude < TuningData<Tuning>.Get().maxDistance * 0.5f)
+						{
+							conversation2.minions.Add(item);
+							setupsByMinion[item] = conversation2;
+							break;
+						}
 					}
 				}
-				else if (!MinionOnCooldown(item2) && (item2.transform.GetPosition() - item.transform.GetPosition()).magnitude < TuningData<Tuning>.Get().maxDistance)
+				else if (!MinionOnCooldown(item2))
 				{
-					Conversation conversation3 = new Conversation();
-					conversation3.minions.Add(item);
-					conversation3.minions.Add(item2);
-					Type type = convoTypes[UnityEngine.Random.Range(0, convoTypes.Count)];
-					conversation3.conversationType = (ConversationType)Activator.CreateInstance(type);
-					conversation3.lastTalkedTime = GameClock.Instance.GetTime();
-					activeSetups.Add(conversation3);
-					setupsByMinion[item] = conversation3;
-					setupsByMinion[item2] = conversation3;
-					break;
+					float magnitude2 = (item2.transform.GetPosition() - item.transform.GetPosition()).magnitude;
+					if (magnitude2 < TuningData<Tuning>.Get().maxDistance)
+					{
+						Conversation conversation3 = new Conversation();
+						conversation3.minions.Add(item);
+						conversation3.minions.Add(item2);
+						Type type = convoTypes[UnityEngine.Random.Range(0, convoTypes.Count)];
+						conversation3.conversationType = (ConversationType)Activator.CreateInstance(type);
+						conversation3.lastTalkedTime = GameClock.Instance.GetTime();
+						activeSetups.Add(conversation3);
+						setupsByMinion[item] = conversation3;
+						setupsByMinion[item2] = conversation3;
+						break;
+					}
 				}
 			}
 		}
@@ -234,24 +245,20 @@ public class ConversationManager : KMonoBehaviour, ISim200ms
 		{
 			return false;
 		}
-		return !minion.GetComponent<KPrefabID>().HasAnyTags(invalidConvoTags);
+		KPrefabID component = minion.GetComponent<KPrefabID>();
+		return !component.HasAnyTags(invalidConvoTags);
 	}
 
 	private bool MinionCloseEnoughToConvo(MinionIdentity minion, Conversation setup)
 	{
-		return (GetCentroid(setup) - minion.transform.GetPosition()).magnitude < TuningData<Tuning>.Get().maxDistance * 0.5f;
+		Vector3 centroid = GetCentroid(setup);
+		float magnitude = (centroid - minion.transform.GetPosition()).magnitude;
+		return magnitude < TuningData<Tuning>.Get().maxDistance * 0.5f;
 	}
 
 	private bool MinionOnCooldown(MinionIdentity minion)
 	{
-		if (!minion.GetComponent<KPrefabID>().HasTag(GameTags.AlwaysConverse))
-		{
-			if (!lastConvoTimeByMinion.ContainsKey(minion) || !(GameClock.Instance.GetTime() < lastConvoTimeByMinion[minion] + TuningData<Tuning>.Get().minionCooldownTime))
-			{
-				return GameClock.Instance.GetTime() / 600f < TuningData<Tuning>.Get().cyclesBeforeFirstConversation;
-			}
-			return true;
-		}
-		return false;
+		KPrefabID component = minion.GetComponent<KPrefabID>();
+		return !component.HasTag(GameTags.AlwaysConverse) && ((lastConvoTimeByMinion.ContainsKey(minion) && GameClock.Instance.GetTime() < lastConvoTimeByMinion[minion] + TuningData<Tuning>.Get().minionCooldownTime) || GameClock.Instance.GetTime() / 600f < TuningData<Tuning>.Get().cyclesBeforeFirstConversation);
 	}
 }

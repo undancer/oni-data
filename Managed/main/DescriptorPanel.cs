@@ -22,7 +22,8 @@ public class DescriptorPanel : KMonoBehaviour
 			GameObject gameObject = null;
 			if (i >= labels.Count)
 			{
-				gameObject = Util.KInstantiate((customLabelPrefab != null) ? customLabelPrefab : ScreenPrefabs.Instance.DescriptionLabel, base.gameObject);
+				GameObject original = ((customLabelPrefab != null) ? customLabelPrefab : ScreenPrefabs.Instance.DescriptionLabel);
+				gameObject = Util.KInstantiate(original, base.gameObject);
 				gameObject.transform.localScale = new Vector3(1f, 1f, 1f);
 				labels.Add(gameObject);
 			}

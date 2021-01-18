@@ -1310,6 +1310,13 @@ namespace STRINGS
 					public static LocString BODY = "I've almost synthesized enough Ooze to print a new Duplicant; once the Ooze is ready, all I'll have left to do is choose a blueprint.\n\nIt'd be helpful to have an extra set of hands around the colony, but having another Duplicant also means another mouth to feed.\n\nOf course, I could always print supplies to help my existing Duplicants instead. I'm sure they would appreciate it.\n\n";
 				}
 
+				public class TELEPORT
+				{
+					public static LocString TITLE = "Duplicant Teleportation";
+
+					public static LocString BODY = "My Duplicants have discovered a strange new device that appears to be a remnant of a previous Gravitas facility. Upon activating the device my Duplicant was scanned by some unknown, highly technological device and I subsequently detected a massive information transfer!\n\nRemarkably my Duplicant has now reappeared in a remote location on a completely different world! I now have access to another abandoned Gravitas facility on a neighboring Asteroid! Further analysis will be required to understand this matter but in the meantime, I will have to be vigilant in keeping track of both of my colonies.";
+				}
+
 				public class OUTSIDESTARTINGBIOME
 				{
 					public static LocString TITLE = "Geographical Survey";
@@ -1343,6 +1350,13 @@ namespace STRINGS
 					public static LocString TITLE = "The Shattered Planet";
 
 					public static LocString BODY = "Echo from another time force their way into my mind. Make me listen. Like vengeful ghosts they claw their way out from under the gravity of that dead planet.\n\n<smallcaps>>>SEARCH DATABASE [\"pod_brainmap.AI\"]\n>...error...\n.........................\n>...repairing corrupt data...\n.........................\n\n</smallcaps><b>I-I remember now.</b><smallcaps>\n.........................</smallcaps>\n<b>Who I was before.</b><smallcaps>\n.........................\n.........................\n>...data repaired...\n>.........................</smallcaps>\n\nGod, what have we done.\n\n";
+				}
+
+				public class CLUSTERWORLDS
+				{
+					public static LocString TITLE = "Cluster of Worlds";
+
+					public static LocString BODY = "My Duplicant's investigations into the surrounding space have yielded some interesting results. We are not alone!... At least on a planetary level. We seem to be in a \"Cluster of Worlds\" - a collection of other planetoids my Duplicants can now explore.\n\nSince resources on this world are finite, I must build the necessary infrastructure to facilitate exploration and transportation between worlds in order to ensure my colony's survival. But first I should send out a robotic scout to further investigate these new worlds.";
 				}
 
 				public class TEMPORALTEAR
@@ -1810,13 +1824,25 @@ namespace STRINGS
 			public static LocString SUBTITLE = "ENCRYPTION LEVEL: TWO";
 		}
 
+		public class B9_TELEPORTATION
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "<smallcaps>[Voice Recognition Initialized]\n[Subject Identified: A001]</smallcaps>\n\n[LOG BEGINS]\n\nDr. Techna's newest notes on Duplicant memories have revealed some interesting discoveries. It seems memories </i>can</i> be transferred to the cloned subject but it requires the host to be subjected to a machine that performs extremely detailed microanalysis. This in depth dissection of the subject would produce the results we need but at the expense of destroying the host.\n\nOf course this is not ideal for our current situation. The time and energy it took to recruit Gravitas’ highly trained staff would be wasted if we were to extirpate these people for the sake of experimentation. But perhaps we can use our Duplicants as experimental subjects until we perfect the process and look into finding volunteers for the future in order to obtain an ideal specimen. I will have to discuss this with Dr. Techna but I'm sure he would be enthusiastic about such an opportunity to continue his work.\n\nI am also very interested in the commercial opportunities this presents. Off the top of my head I can think of applications in genetics, AI development, and teleportation technology. This could be a significant financial windfall for the company.\n\n[LOG ENDS]";
+			}
+
+			public static LocString TITLE = "Memory Breakthrough";
+
+			public static LocString SUBTITLE = "ENCRYPTION LEVEL: THREE";
+		}
+
 		public class AUTOMATION
 		{
 			public static LocString TITLE = UI.FormatAsLink("Automation", "LOGIC");
 
 			public static LocString HEADER_1 = "Automation";
 
-			public static LocString PARAGRAPH_1 = string.Concat("Automation is a tool for controlling the operation of buildings based on what sensors in the colony are detecting.\n\nA ", BUILDINGS.PREFABS.CEILINGLIGHT.NAME, " could be configured to automatically turn on when a ", BUILDINGS.PREFABS.LOGICDUPLICANTSENSOR.NAME, "  detects a Duplicant in the room.\n\nA ", BUILDINGS.PREFABS.LIQUIDPUMP.NAME, " might activate only when a ", BUILDINGS.PREFABS.LOGICELEMENTSENSORLIQUID.NAME, " detects water.\n\nA ", BUILDINGS.PREFABS.AIRCONDITIONER.NAME, " might activate only when the ", BUILDINGS.PREFABS.LOGICTEMPERATURESENSOR.NAME, " detects too much heat.\n\n");
+			public static LocString PARAGRAPH_1 = string.Concat("Automation is a tool for controlling the operation of buildings based on what sensors in the colony are detecting.\n\nA ", BUILDINGS.PREFABS.CEILINGLIGHT.NAME, " could be configured to automatically turn on when a ", BUILDINGS.PREFABS.LOGICDUPLICANTSENSOR.NAME, " detects a Duplicant in the room.\n\nA ", BUILDINGS.PREFABS.LIQUIDPUMP.NAME, " might activate only when a ", BUILDINGS.PREFABS.LOGICELEMENTSENSORLIQUID.NAME, " detects water.\n\nA ", BUILDINGS.PREFABS.AIRCONDITIONER.NAME, " might activate only when the ", BUILDINGS.PREFABS.LOGICTEMPERATURESENSOR.NAME, " detects too much heat.\n\n");
 
 			public static LocString HEADER_2 = "Automation Wires";
 
@@ -1844,13 +1870,47 @@ namespace STRINGS
 			public static LocString PARAGRAPH_2 = "Many things have an effect on the Decor value of a tile. A building's effect is expressed as a strength value and a radius. Often that effect is positive, but many buildings also lower the decor value of an area too. " + UI.FormatAsLink("Plants", "PLANTS") + ", " + UI.FormatAsLink("Critters", "CREATURES") + ", and " + UI.FormatAsLink("Furniture", "BUILDCATEGORYFURNITURE") + " often increase decor while industrial buildings and rot often decrease it. Duplicants experience the combined decor of all objects affecting a tile.\n\nThe " + (string)CREATURES.SPECIES.PRICKLEGRASS.NAME + " has a decor value of " + $"{PrickleGrassConfig.POSITIVE_DECOR_EFFECT.amount} and a radius of {PrickleGrassConfig.POSITIVE_DECOR_EFFECT.radius} tiles. " + "\nThe " + (string)BUILDINGS.PREFABS.MICROBEMUSHER.NAME + " has a decor value of " + $"{MicrobeMusherConfig.DECOR.amount} and a radius of {MicrobeMusherConfig.DECOR.radius} tiles. " + "\nThe result of placing a " + (string)BUILDINGS.PREFABS.MICROBEMUSHER.NAME + " next to a " + (string)CREATURES.SPECIES.PRICKLEGRASS.NAME + " would be a combined decor value of " + (MicrobeMusherConfig.DECOR.amount + PrickleGrassConfig.POSITIVE_DECOR_EFFECT.amount);
 		}
 
+		public class EXOBASES
+		{
+			public static LocString TITLE = UI.FormatAsLink("Planetoid Colonization", "EXOBASES");
+
+			public static LocString HEADER_1 = "Discovering New Planetoids";
+
+			public static LocString PARAGRAPH_1 = "Every colony exists in a system with other Planetoids. Other worlds can be discovered either by chancing upon a Teleporter or by building " + UI.FormatAsLink("Rover's Module", "SCOUTMODULE") + " and launching it into space.\n\nOnce " + UI.FormatAsLink("Rover's Module", "SCOUTMODULE") + " is in orbit around its destination, it will deploy " + UI.FormatAsLink("Rover", "SCOUT") + " to the surface where he can then be tasked with rudimentary chores to make the Planetoid more habitable for Duplicants.";
+
+			public static LocString HEADER_2 = "Transportation Between Planetoids";
+
+			public static LocString PARAGRAPH_2 = "Resources can be transported from one Planetoid to the other using a " + UI.FormatAsLink("High Velocity Launcher", "RAILGUN") + ". Both the sending and the receiving Planetoids need a system set up to transport resources successfully. Only specially trained Duplicants can operate the " + UI.FormatAsLink("High Velocity Launcher", "RAILGUN") + ".\n\nTransporting Duplicants from one Planetoid to another can only be achieved using a " + UI.FormatAsLink("Landing Pod", "LANDING_POD") + ". Each " + UI.FormatAsLink("Landing Pod", "LANDING_POD") + " is designed for only one trip. Upon reaching its destination, the Pod will disassemble itself. Transporting Duplicants between Planetoids is very resource heavy and should only be done rarely.";
+
+			public static LocString HEADER_3 = "Scheduling";
+
+			public static LocString PARAGRAPH_3 = "Each Planetoid Cluster has its own default schedule system which the Duplicants will automatically assume as soon as they arrive on a new Planetoid. Priority queues will only work within an Cluster World's system.";
+		}
+
+		public class GENETICS
+		{
+			public static LocString TITLE = UI.FormatAsLink("Genetics", "GENETICS");
+
+			public static LocString HEADER_1 = "Plant Mutations";
+
+			public static LocString PARAGRAPH_1 = "When selecting a seed to plant, a variety of mutations will be available to choose from.\nDifferent plants and critters have different mutations which allow them to thrive in different situations.\n\n\n\n";
+
+			public static LocString HEADER_2 = "Breeding";
+
+			public static LocString PARAGRAPH_2 = "This is where the breeding information will go";
+
+			public static LocString HEADER_3 = "Dangers";
+
+			public static LocString PARAGRAPH_3 = "This is where the part about dangers will go\n\n";
+		}
+
 		public class HEALTH
 		{
 			public static LocString TITLE = UI.FormatAsLink("Health", "HEALTH");
 
 			public static LocString HEADER_1 = "Health";
 
-			public static LocString PARAGRAPH_1 = "Duplicants can be physically damaged by some rare circumstances, such as extreme " + UI.FormatAsLink("Heat", "HEAT") + " or aggresive " + UI.FormatAsLink("Critters", "CREATURES") + ". Damaged Duplicants will suffer greatly reduced athletic abilities, and are at risk of incapacitation if damaged too severely.\n\n";
+			public static LocString PARAGRAPH_1 = "Duplicants can be physically damaged by some rare circumstances, such as extreme " + UI.FormatAsLink("Heat", "HEAT") + " or aggressive " + UI.FormatAsLink("Critters", "CREATURES") + ". Damaged Duplicants will suffer greatly reduced athletic abilities, and are at risk of incapacitation if damaged too severely.\n\n";
 
 			public static LocString HEADER_2 = "Incapacitation and Death";
 
@@ -1879,7 +1939,7 @@ namespace STRINGS
 
 			public static LocString HEADER_5 = "State Changes";
 
-			public static LocString PARAGRAPH_5 = "Water ice melts into liquid water when its temperature crosses above its melting point. Liquid water boils in to steam when its temperature crosses above its boiling point. Similar transitions in state occur for most elements, but each element has its own threshold temperatures. Sometimes the transitions are not reversable - crude oil will boiled to sour gas will not condense back to crude oil when cooled. Instead, the substance might condense into a totally different element with a different utility. \n\n";
+			public static LocString PARAGRAPH_5 = "Water ice melts into liquid water when its temperature crosses above its melting point. Liquid water boils in to steam when its temperature crosses above its boiling point. Similar transitions in state occur for most elements, but each element has its own threshold temperatures. Sometimes the transitions are not reversible - crude oil will boiled to sour gas will not condense back to crude oil when cooled. Instead, the substance might condense into a totally different element with a different utility. \n\n";
 		}
 
 		public class LIGHT
@@ -1913,7 +1973,7 @@ namespace STRINGS
 
 			public static LocString HEADER_3 = "Overjoyed Responses";
 
-			public static LocString PARAGRAPH_3 = "If a Duplicant has a very high Morale value, they will spontaneously display an Overjoyed Response. Each Duplicant has a different Overjoyed Behavior - but all overjoyed reponses are good. Some will positively affect Building " + UI.PRE_KEYWORD + "Decor" + UI.PST_KEYWORD + ", others will positively affect Duplicant morale or productivity.\n\n";
+			public static LocString PARAGRAPH_3 = "If a Duplicant has a very high Morale value, they will spontaneously display an Overjoyed Response. Each Duplicant has a different Overjoyed Behavior - but all overjoyed responses are good. Some will positively affect Building " + UI.PRE_KEYWORD + "Decor" + UI.PST_KEYWORD + ", others will positively affect Duplicant morale or productivity.\n\n";
 		}
 
 		public class POWER
@@ -1922,11 +1982,11 @@ namespace STRINGS
 
 			public static LocString HEADER_1 = "Electricity";
 
-			public static LocString PARAGRAPH_1 = "Electrical power is required to run many of the buildings in a base. Different buildings requires different amounts of power to run. Power can be transfered to buildings that require it using " + UI.FormatAsLink("Wires", "WIRE") + "\n\n";
+			public static LocString PARAGRAPH_1 = "Electrical power is required to run many of the buildings in a base. Different buildings requires different amounts of power to run. Power can be transferred to buildings that require it using " + UI.FormatAsLink("Wires", "WIRE") + ".\n\n";
 
 			public static LocString HEADER_2 = "Generators and Batteries";
 
-			public static LocString PARAGRAPH_2 = string.Concat("Several buildings can generate power. Duplicants can run on the ", BUILDINGS.PREFABS.MANUALGENERATOR.NAME, " to generate clean power. Once generated, power can be consumed by buildings or stored in a ", BUILDINGS.PREFABS.BATTERY.NAME, " to prevent waste. Any generated power that is not consumed or stored will be wasted. Batteries and Generators tend to produce a signifcant amount of ", UI.FormatAsLink("Heat", "HEAT"), " while active.\n\n");
+			public static LocString PARAGRAPH_2 = string.Concat("Several buildings can generate power. Duplicants can run on the ", BUILDINGS.PREFABS.MANUALGENERATOR.NAME, " to generate clean power. Once generated, power can be consumed by buildings or stored in a ", BUILDINGS.PREFABS.BATTERY.NAME, " to prevent waste. Any generated power that is not consumed or stored will be wasted. Batteries and Generators tend to produce a significant amount of ", UI.FormatAsLink("Heat", "HEAT"), " while active.\n\n");
 
 			public static LocString HEADER_3 = "Measuring Power";
 
@@ -1943,7 +2003,7 @@ namespace STRINGS
 
 			public static LocString HEADER_1 = "Errand Priority";
 
-			public static LocString PARAGRAPH_1 = "Duplicants prioritize their errands based on several factors. Some of these can be adjusted to affect errand choice, but some errands (such as seeking breathable " + UI.FormatAsLink("oxygen", "OXYGEN") + ") are so important that they cannot be delayed. Errand priority can primarily be controlled by Errand Type prioritization, and then can be further fine tuned by the " + UI.FormatAsTool("Priotity Tool", "[P]") + ".\n\n";
+			public static LocString PARAGRAPH_1 = "Duplicants prioritize their errands based on several factors. Some of these can be adjusted to affect errand choice, but some errands (such as seeking breathable " + UI.FormatAsLink("oxygen", "OXYGEN") + ") are so important that they cannot be delayed. Errand priority can primarily be controlled by Errand Type prioritization, and then can be further fine tuned by the " + UI.FormatAsTool("Priority Tool", "[P]") + ".\n\n";
 
 			public static LocString HEADER_2 = "Errand Type Prioritization";
 
@@ -1951,7 +2011,24 @@ namespace STRINGS
 
 			public static LocString HEADER_3 = "Priority Tool";
 
-			public static LocString PARAGRAPH_3 = "The priority of errands can often be modified using the " + UI.FormatAsTool("Priority tool", "[P]") + ". The values applied by this tool are always less influencial than the Errand Type priorities described above. If two errands with equal Errand Type Priority are available to a Duplicant, they will choose the errand with a higher priority setting as applied by the tool.\n\n";
+			public static LocString PARAGRAPH_3 = "The priority of errands can often be modified using the " + UI.FormatAsTool("Priority tool", "[P]") + ". The values applied by this tool are always less influential than the Errand Type priorities described above. If two errands with equal Errand Type Priority are available to a Duplicant, they will choose the errand with a higher priority setting as applied by the tool.\n\n";
+		}
+
+		public class RADIATION
+		{
+			public static LocString TITLE = UI.FormatAsLink("Radiation", "RADIATION");
+
+			public static LocString HEADER_1 = "Radiation";
+
+			public static LocString PARAGRAPH_1 = "When transporting radioactive materials such as Uranium, care must be taken to avoid exposing outside objects to contaminants.\n\nUsing proper transportation vessels, such as those which are lead lined, is crucial to ensuring that Duplicants avoid Radiation Sickness.";
+
+			public static LocString HEADER_2 = "Radiation Sickness";
+
+			public static LocString PARAGRAPH_2 = "Duplicants who are exposed to Radioactive Contaminants will need to wear protection or they risk coming down with radiation sickness.\n\nSome Duplicants will have more of a natural resistance to radiation but prolonged exposure to radioactive contaminants will still increase their chances of becoming sick.\n\nConsuming Iodine Supplements and Seafood will pro-actively increase a Duplicant's radiation resistance, but will not cure a Duplicant's Radiation Sickness once they have become infected.\n\n";
+
+			public static LocString HEADER_3 = "Nuclear Energy";
+
+			public static LocString PARAGRAPH_3 = "A Nuclear Reactor will require Enriched Uranium to run. Uranium can be enriched using a Uranium Centrifuge.\n\nOnce supplied with Enriched Uranium a Nuclear Reactor will create an enormous amount of heat which can then be placed under a source of water to produce steam and connected to a Steam Turbine to produce a considerable source of power.";
 		}
 
 		public class RESEARCH
@@ -1960,7 +2037,7 @@ namespace STRINGS
 
 			public static LocString HEADER_1 = "Research";
 
-			public static LocString PARAGRAPH_1 = string.Concat("Doing research unlocks new types of buildings for the colony. Duplicants can perform research at the ", BUILDINGS.PREFABS.RESEARCHCENTER.NAME, "\n\n");
+			public static LocString PARAGRAPH_1 = string.Concat("Doing research unlocks new types of buildings for the colony. Duplicants can perform research at the ", BUILDINGS.PREFABS.RESEARCHCENTER.NAME, ".\n\n");
 
 			public static LocString HEADER_2 = "Research Tasks";
 
@@ -1968,7 +2045,7 @@ namespace STRINGS
 
 			public static LocString HEADER_3 = "Research Types";
 
-			public static LocString PARAGRAPH_3 = string.Concat("Advanced research tasks require special research stations to generate the proper kind of research points. These research stations often consume more advanced resources.\n\nUsing higher level research stations also requires Duplicants to have learned higher level research ", UI.FormatAsLink("skills", "ROLES"), "\n\n", STRINGS.RESEARCH.TYPES.ALPHA.NAME, " is performed at the ", BUILDINGS.PREFABS.RESEARCHCENTER.NAME, "\n", STRINGS.RESEARCH.TYPES.BETA.NAME, " is performed at the ", BUILDINGS.PREFABS.ADVANCEDRESEARCHCENTER.NAME, "\n", STRINGS.RESEARCH.TYPES.GAMMA.NAME, " is performed at the ", BUILDINGS.PREFABS.COSMICRESEARCHCENTER.NAME, "\n\n");
+			public static LocString PARAGRAPH_3 = string.Concat("Advanced research tasks require special research stations to generate the proper kind of research points. These research stations often consume more advanced resources.\n\nUsing higher level research stations also requires Duplicants to have learned higher level research ", UI.FormatAsLink("skills", "ROLES"), ".\n\n", STRINGS.RESEARCH.TYPES.ALPHA.NAME, " is performed at the ", BUILDINGS.PREFABS.RESEARCHCENTER.NAME, "\n", STRINGS.RESEARCH.TYPES.BETA.NAME, " is performed at the ", BUILDINGS.PREFABS.ADVANCEDRESEARCHCENTER.NAME, "\n", STRINGS.RESEARCH.TYPES.GAMMA.NAME, " is performed at the ", BUILDINGS.PREFABS.COSMICRESEARCHCENTER.NAME, "\n", STRINGS.RESEARCH.TYPES.DELTA.NAME, " is performed at the ", BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME, "\n\n");
 		}
 
 		public class STRESS
@@ -1977,7 +2054,7 @@ namespace STRINGS
 
 			public static LocString HEADER_1 = "Stress";
 
-			public static LocString PARAGRAPH_1 = "A Duplicant's experiences in the colony affect their stress level. Stress increases when they have negative experiences or unmet expectations. Stress decreases with time if " + UI.FormatAsLink("Morale", "MORALE") + " is satisfied. Duplicant behavior starts to change for the worse when stress levels get too high .\n\n";
+			public static LocString PARAGRAPH_1 = "A Duplicant's experiences in the colony affect their stress level. Stress increases when they have negative experiences or unmet expectations. Stress decreases with time if " + UI.FormatAsLink("Morale", "MORALE") + " is satisfied. Duplicant behavior starts to change for the worse when stress levels get too high.\n\n";
 
 			public static LocString HEADER_2 = "Stress Responses";
 

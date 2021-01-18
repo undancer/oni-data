@@ -220,11 +220,7 @@ namespace YamlDotNet.Core
 
 		private static bool StartsWith(StringBuilder what, char start)
 		{
-			if (what.Length > 0)
-			{
-				return what[0] == start;
-			}
-			return false;
+			return what.Length > 0 && what[0] == start;
 		}
 
 		private void StaleSimpleKeys()
@@ -362,24 +358,16 @@ namespace YamlDotNet.Core
 
 		private bool CheckWhiteSpace()
 		{
-			if (!analyzer.Check(' '))
-			{
-				if (flowLevel > 0 || !simpleKeyAllowed)
-				{
-					return analyzer.Check('\t');
-				}
-				return false;
-			}
-			return true;
+			return analyzer.Check(' ') || ((flowLevel > 0 || !simpleKeyAllowed) && analyzer.Check('\t'));
 		}
 
 		private bool IsDocumentIndicator()
 		{
 			if (cursor.LineOffset == 0 && analyzer.IsWhiteBreakOrZero(3))
 			{
-				bool num = analyzer.Check('-') && analyzer.Check('-', 1) && analyzer.Check('-', 2);
-				bool flag = analyzer.Check('.') && analyzer.Check('.', 1) && analyzer.Check('.', 2);
-				return num || flag;
+				bool flag = analyzer.Check('-') && analyzer.Check('-', 1) && analyzer.Check('-', 2);
+				bool flag2 = analyzer.Check('.') && analyzer.Check('.', 1) && analyzer.Check('.', 2);
+				return flag || flag2;
 			}
 			return false;
 		}
@@ -500,7 +488,8 @@ namespace YamlDotNet.Core
 		{
 			Mark start = cursor.Mark();
 			Skip();
-			string a = ScanDirectiveName(start);
+			string text = ScanDirectiveName(start);
+			string a = text;
 			Token result;
 			if (!(a == "YAML"))
 			{

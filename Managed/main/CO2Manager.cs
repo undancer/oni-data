@@ -69,53 +69,54 @@ public class CO2Manager : KMonoBehaviour, ISim33ms
 			cO.transform.SetPosition(cO.transform.GetPosition() + cO.velocity * dt);
 			Grid.PosToXY(cO.transform.GetPosition(), out xy2);
 			int num2 = Grid.XYToCell(xy.x, xy.y);
-			for (int num3 = xy.y; num3 >= xy2.y; num3--)
+			int num3 = num2;
+			for (int num4 = xy.y; num4 >= xy2.y; num4--)
 			{
-				int num4 = Grid.XYToCell(xy.x, num3);
-				bool flag = !Grid.IsValidCell(num4) || cO.lifetimeRemaining <= 0f;
+				int num5 = Grid.XYToCell(xy.x, num4);
+				bool flag = !Grid.IsValidCell(num5) || cO.lifetimeRemaining <= 0f;
 				if (!flag)
 				{
-					Element element = Grid.Element[num4];
+					Element element = Grid.Element[num5];
 					flag = element.IsLiquid || element.IsSolid;
 				}
 				if (flag)
 				{
-					int gameCell = num4;
+					int gameCell = num5;
 					bool flag2 = false;
-					if (num2 != num4)
+					if (num3 != num5)
 					{
-						gameCell = num2;
+						gameCell = num3;
 						flag2 = true;
 					}
 					else
 					{
 						bool flag3 = false;
-						int num5 = -1;
 						int num6 = -1;
+						int num7 = -1;
 						CellOffset[] dEFAULT_BREATHABLE_OFFSETS = OxygenBreather.DEFAULT_BREATHABLE_OFFSETS;
 						foreach (CellOffset offset in dEFAULT_BREATHABLE_OFFSETS)
 						{
-							int num7 = Grid.OffsetCell(num4, offset);
-							if (Grid.IsValidCell(num7))
+							int num8 = Grid.OffsetCell(num5, offset);
+							if (Grid.IsValidCell(num8))
 							{
-								Element element2 = Grid.Element[num7];
+								Element element2 = Grid.Element[num8];
 								if (element2.id == SimHashes.CarbonDioxide || element2.HasTag(GameTags.Breathable))
 								{
-									num5 = num7;
+									num6 = num8;
 									flag3 = true;
 									flag2 = true;
 									break;
 								}
 								if (element2.IsGas)
 								{
-									num6 = num7;
+									num7 = num8;
 									flag2 = true;
 								}
 							}
 						}
 						if (flag2)
 						{
-							gameCell = ((!flag3) ? num6 : num5);
+							gameCell = ((!flag3) ? num7 : num6);
 						}
 					}
 					cO.TriggerDestroy();
@@ -126,13 +127,9 @@ public class CO2Manager : KMonoBehaviour, ISim33ms
 						co2Items[i] = co2Items[num];
 						co2Items.RemoveAt(num);
 					}
-					else
-					{
-						DebugUtil.LogWarningArgs("Couldn't emit CO2");
-					}
 					break;
 				}
-				num2 = num4;
+				num3 = num5;
 			}
 		}
 	}

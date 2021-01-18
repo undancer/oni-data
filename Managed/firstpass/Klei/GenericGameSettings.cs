@@ -27,7 +27,7 @@ namespace Klei
 			}
 		}
 
-		private static GenericGameSettings _instance;
+		private static GenericGameSettings _instance = null;
 
 		public static GenericGameSettings instance
 		{
@@ -140,6 +140,12 @@ namespace Klei
 		}
 
 		public bool disableAutosave
+		{
+			get;
+			private set;
+		}
+
+		public bool disableExpansion1
 		{
 			get;
 			private set;

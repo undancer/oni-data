@@ -39,11 +39,7 @@ namespace YamlDotNet.Core
 		{
 			TBuffer val = buffer;
 			char c = val.Peek(offset);
-			if ((c < '0' || c > '9') && (c < 'A' || c > 'Z') && (c < 'a' || c > 'z') && c != '_')
-			{
-				return c == '-';
-			}
-			return true;
+			return (c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_' || c == '-';
 		}
 
 		public bool IsAscii(int offset = 0)
@@ -56,130 +52,14 @@ namespace YamlDotNet.Core
 		{
 			TBuffer val = buffer;
 			char c = val.Peek(offset);
-			switch (c)
-			{
-			default:
-				if (c != '\u0085' && (c < '\u00a0' || c > '\ud7ff'))
-				{
-					if (c >= '\ue000')
-					{
-						return c <= '\ufffd';
-					}
-					return false;
-				}
-				break;
-			case '\t':
-			case '\n':
-			case '\r':
-			case ' ':
-			case '!':
-			case '"':
-			case '#':
-			case '$':
-			case '%':
-			case '&':
-			case '\'':
-			case '(':
-			case ')':
-			case '*':
-			case '+':
-			case ',':
-			case '-':
-			case '.':
-			case '/':
-			case '0':
-			case '1':
-			case '2':
-			case '3':
-			case '4':
-			case '5':
-			case '6':
-			case '7':
-			case '8':
-			case '9':
-			case ':':
-			case ';':
-			case '<':
-			case '=':
-			case '>':
-			case '?':
-			case '@':
-			case 'A':
-			case 'B':
-			case 'C':
-			case 'D':
-			case 'E':
-			case 'F':
-			case 'G':
-			case 'H':
-			case 'I':
-			case 'J':
-			case 'K':
-			case 'L':
-			case 'M':
-			case 'N':
-			case 'O':
-			case 'P':
-			case 'Q':
-			case 'R':
-			case 'S':
-			case 'T':
-			case 'U':
-			case 'V':
-			case 'W':
-			case 'X':
-			case 'Y':
-			case 'Z':
-			case '[':
-			case '\\':
-			case ']':
-			case '^':
-			case '_':
-			case '`':
-			case 'a':
-			case 'b':
-			case 'c':
-			case 'd':
-			case 'e':
-			case 'f':
-			case 'g':
-			case 'h':
-			case 'i':
-			case 'j':
-			case 'k':
-			case 'l':
-			case 'm':
-			case 'n':
-			case 'o':
-			case 'p':
-			case 'q':
-			case 'r':
-			case 's':
-			case 't':
-			case 'u':
-			case 'v':
-			case 'w':
-			case 'x':
-			case 'y':
-			case 'z':
-			case '{':
-			case '|':
-			case '}':
-			case '~':
-				break;
-			}
-			return true;
+			return c == '\t' || c == '\n' || c == '\r' || (c >= ' ' && c <= '~') || c == '\u0085' || (c >= '\u00a0' && c <= '\ud7ff') || (c >= '\ue000' && c <= '\ufffd');
 		}
 
 		public bool IsDigit(int offset = 0)
 		{
 			TBuffer val = buffer;
 			char c = val.Peek(offset);
-			if (c >= '0')
-			{
-				return c <= '9';
-			}
-			return false;
+			return c >= '0' && c <= '9';
 		}
 
 		public int AsDigit(int offset = 0)
@@ -192,15 +72,7 @@ namespace YamlDotNet.Core
 		{
 			TBuffer val = buffer;
 			char c = val.Peek(offset);
-			if ((c < '0' || c > '9') && (c < 'A' || c > 'F'))
-			{
-				if (c >= 'a')
-				{
-					return c <= 'f';
-				}
-				return false;
-			}
-			return true;
+			return (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f');
 		}
 
 		public int AsHex(int offset)
@@ -235,11 +107,7 @@ namespace YamlDotNet.Core
 
 		public bool IsWhite(int offset = 0)
 		{
-			if (!IsSpace(offset))
-			{
-				return IsTab(offset);
-			}
-			return true;
+			return IsSpace(offset) || IsTab(offset);
 		}
 
 		public bool IsBreak(int offset = 0)
@@ -249,29 +117,17 @@ namespace YamlDotNet.Core
 
 		public bool IsCrLf(int offset = 0)
 		{
-			if (Check('\r', offset))
-			{
-				return Check('\n', offset + 1);
-			}
-			return false;
+			return Check('\r', offset) && Check('\n', offset + 1);
 		}
 
 		public bool IsBreakOrZero(int offset = 0)
 		{
-			if (!IsBreak(offset))
-			{
-				return IsZero(offset);
-			}
-			return true;
+			return IsBreak(offset) || IsZero(offset);
 		}
 
 		public bool IsWhiteBreakOrZero(int offset = 0)
 		{
-			if (!IsWhite(offset))
-			{
-				return IsBreakOrZero(offset);
-			}
-			return true;
+			return IsWhite(offset) || IsBreakOrZero(offset);
 		}
 
 		public bool Check(char expected, int offset = 0)

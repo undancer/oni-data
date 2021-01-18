@@ -43,7 +43,7 @@ public class ReachabilityMonitor : GameStateMachine<ReachabilityMonitor, Reachab
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = unreachable;
-		base.serializable = false;
+		base.serializable = SerializeType.Never;
 		root.FastUpdate("UpdateReachability", updateReachabilityCB, UpdateRate.SIM_1000ms, load_balance: true);
 		reachable.ToggleTag(GameTags.Reachable).Enter("TriggerEvent", delegate(Instance smi)
 		{

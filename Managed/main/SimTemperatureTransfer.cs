@@ -8,13 +8,13 @@ public class SimTemperatureTransfer : KMonoBehaviour
 {
 	private const float MIN_MASS_FOR_TEMPERATURE_TRANSFER = 0.01f;
 
-	public float deltaKJ;
+	public float deltaKJ = 0f;
 
 	public Action<SimTemperatureTransfer> onSimRegistered;
 
 	protected int simHandle = -1;
 
-	private float pendingEnergyModifications;
+	private float pendingEnergyModifications = 0f;
 
 	[SerializeField]
 	protected float surfaceArea = 10f;
@@ -79,15 +79,39 @@ public class SimTemperatureTransfer : KMonoBehaviour
 		}
 		PrimaryElement component = value.GetComponent<PrimaryElement>();
 		Element element = component.Element;
-		if (element.highTempTransitionTarget != SimHashes.Unobtanium)
+		if (element.highTempTransitionTarget == SimHashes.Unobtanium)
 		{
-			if (component.Mass > 0f)
-			{
-				SimMessages.AddRemoveSubstance(Grid.PosToCell(value.transform.GetPosition()), element.highTempTransitionTarget, CellEventLogger.Instance.OreMelted, component.Mass, component.Temperature, component.DiseaseIdx, component.DiseaseCount);
-			}
-			value.OnCleanUp();
-			Util.KDestroyGameObject(value.gameObject);
+			return;
 		}
+		if (component.Mass > 0f)
+		{
+			if (element.highTempTransitionTarget == SimHashes.COMPOSITION)
+			{
+				ElementLoader.ElementComposition[] elementComposition = element.elementComposition;
+				foreach (ElementLoader.ElementComposition elementComposition2 in elementComposition)
+				{
+					int gameCell = Grid.PosToCell(value.transform.GetPosition());
+					int disease_count = (int)((float)component.DiseaseCount * elementComposition2.percentage);
+					Element element2 = ElementLoader.FindElementByName(elementComposition2.elementID);
+					if (element2.IsSolid)
+					{
+						GameObject obj = element2.substance.SpawnResource(value.transform.GetPosition(), component.Mass * elementComposition2.percentage, component.Temperature, component.DiseaseIdx, disease_count, prevent_merge: true, forceTemperature: false, manual_activation: true);
+						element2.substance.ActivateSubstanceGameObject(obj, component.DiseaseIdx, disease_count);
+					}
+					else
+					{
+						SimMessages.AddRemoveSubstance(gameCell, element2.id, CellEventLogger.Instance.OreMelted, component.Mass * elementComposition2.percentage, component.Temperature, component.DiseaseIdx, disease_count);
+					}
+				}
+			}
+			else
+			{
+				int gameCell2 = Grid.PosToCell(value.transform.GetPosition());
+				SimMessages.AddRemoveSubstance(gameCell2, element.highTempTransitionTarget, CellEventLogger.Instance.OreMelted, component.Mass, component.Temperature, component.DiseaseIdx, component.DiseaseCount);
+			}
+		}
+		value.OnCleanUp();
+		Util.KDestroyGameObject(value.gameObject);
 	}
 
 	protected override void OnPrefabInit()
@@ -104,7 +128,8 @@ public class SimTemperatureTransfer : KMonoBehaviour
 		PrimaryElement component = GetComponent<PrimaryElement>();
 		Element element = component.Element;
 		Singleton<CellChangeMonitor>.Instance.RegisterCellChangedHandler(base.transform, OnCellChanged, "SimTemperatureTransfer.OnSpawn");
-		if (component.Element.HasTag(GameTags.Special) || element.specificHeatCapacity == 0f)
+		int cell = Grid.PosToCell(this);
+		if (!Grid.IsValidCell(cell) || component.Element.HasTag(GameTags.Special) || element.specificHeatCapacity == 0f)
 		{
 			base.enabled = false;
 		}
@@ -114,6 +139,7 @@ public class SimTemperatureTransfer : KMonoBehaviour
 	protected override void OnCmpEnable()
 	{
 		base.OnCmpEnable();
+		SimRegister();
 		if (Sim.IsValidHandle(simHandle))
 		{
 			PrimaryElement component = GetComponent<PrimaryElement>();
@@ -139,8 +165,10 @@ public class SimTemperatureTransfer : KMonoBehaviour
 		if (!Grid.IsValidCell(cell))
 		{
 			base.enabled = false;
+			return;
 		}
-		else if (Sim.IsValidHandle(simHandle))
+		SimRegister();
+		if (Sim.IsValidHandle(simHandle))
 		{
 			SimMessages.MoveElementChunk(simHandle, cell);
 		}
@@ -220,7 +248,12 @@ public class SimTemperatureTransfer : KMonoBehaviour
 			return;
 		}
 		PrimaryElement component = GetComponent<PrimaryElement>();
-		if (component.Mass > 0f && !component.Element.IsTemperatureInsulated)
+		if (!(component.Mass > 0f))
+		{
+			return;
+		}
+		Element element = component.Element;
+		if (!element.IsTemperatureInsulated)
 		{
 			int gameCell = Grid.PosToCell(base.transform.GetPosition());
 			simHandle = -2;
@@ -262,7 +295,8 @@ public class SimTemperatureTransfer : KMonoBehaviour
 		{
 			simHandle = handle;
 			int handleIndex = Sim.GetHandleIndex(handle);
-			if (Game.Instance.simData.elementChunks[handleIndex].temperature <= 0f)
+			float temperature = Game.Instance.simData.elementChunks[handleIndex].temperature;
+			if (temperature <= 0f)
 			{
 				KCrashReporter.Assert(condition: false, "Bad temperature");
 			}

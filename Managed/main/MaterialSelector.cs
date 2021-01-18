@@ -12,7 +12,7 @@ public class MaterialSelector : KScreen
 
 	public Dictionary<Tag, KToggle> ElementToggles = new Dictionary<Tag, KToggle>();
 
-	public int selectorIndex;
+	public int selectorIndex = 0;
 
 	public SelectMaterialActions selectMaterialActions;
 
@@ -115,7 +115,8 @@ public class MaterialSelector : KScreen
 				KToggle component2 = gameObject.GetComponent<KToggle>();
 				ElementToggles.Add(item2, component2);
 				component2.group = toggleGroup;
-				gameObject.gameObject.GetComponent<ToolTip>().toolTip = item2.ProperName();
+				ToolTip component3 = gameObject.gameObject.GetComponent<ToolTip>();
+				component3.toolTip = item2.ProperName();
 			}
 		}
 		RefreshToggleContents();
@@ -129,7 +130,7 @@ public class MaterialSelector : KScreen
 			toggle.GetComponent<ImageToggleState>().SetActive();
 			return;
 		}
-		if (WorldInventory.Instance.GetAmount(elem) >= activeMass || DebugHandler.InstantBuildMode || Game.Instance.SandboxModeActive)
+		if (ClusterManager.Instance.activeWorld.worldInventory.GetAmount(elem, includeRelatedWorlds: true) >= activeMass || DebugHandler.InstantBuildMode || Game.Instance.SandboxModeActive)
 		{
 			toggle.GetComponentsInChildren<Image>()[1].material = GlobalResources.Instance().AnimUIMaterial;
 			toggle.GetComponentsInChildren<Image>()[1].color = Color.white;
@@ -180,7 +181,8 @@ public class MaterialSelector : KScreen
 				list.Add(elementToggle.Key);
 			}
 			list.Sort(ElementSorter);
-			float x = (float)list.IndexOf(elem) / (float)(list.Count - 1);
+			int num = list.IndexOf(elem);
+			float x = (float)num / (float)(list.Count - 1);
 			ScrollRect.normalizedPosition = new Vector2(x, 0f);
 		}
 		RefreshToggleContents();
@@ -195,9 +197,9 @@ public class MaterialSelector : KScreen
 			GameObject gameObject = value.gameObject;
 			LocText[] componentsInChildren = gameObject.GetComponentsInChildren<LocText>();
 			LocText locText = componentsInChildren[0];
-			LocText obj = componentsInChildren[1];
+			LocText locText2 = componentsInChildren[1];
 			Image image = gameObject.GetComponentsInChildren<Image>()[1];
-			obj.text = Util.FormatWholeNumber(WorldInventory.Instance.GetAmount(elem));
+			locText2.text = Util.FormatWholeNumber(ClusterManager.Instance.activeWorld.worldInventory.GetAmount(elem, includeRelatedWorlds: true));
 			locText.text = Util.FormatWholeNumber(activeMass);
 			GameObject gameObject2 = Assets.TryGetPrefab(elementToggle.Key);
 			if (gameObject2 != null)
@@ -205,7 +207,7 @@ public class MaterialSelector : KScreen
 				KBatchedAnimController component = gameObject2.GetComponent<KBatchedAnimController>();
 				image.sprite = Def.GetUISpriteFromMultiObjectAnim(component.AnimFiles[0]);
 			}
-			gameObject.SetActive(WorldInventory.Instance.IsDiscovered(elem) || DebugHandler.InstantBuildMode || Game.Instance.SandboxModeActive);
+			gameObject.SetActive(DiscoveredResources.Instance.IsDiscovered(elem) || DebugHandler.InstantBuildMode || Game.Instance.SandboxModeActive);
 			SetToggleBGImage(elementToggle.Value, elementToggle.Key);
 			value.soundPlayer.AcceptClickCondition = () => IsEnoughMass(elem);
 			value.ClearOnClick();
@@ -224,11 +226,7 @@ public class MaterialSelector : KScreen
 
 	private bool IsEnoughMass(Tag t)
 	{
-		if (!(WorldInventory.Instance.GetAmount(t) >= activeMass) && !DebugHandler.InstantBuildMode && !Game.Instance.SandboxModeActive)
-		{
-			return AllowInsufficientMaterialBuild();
-		}
-		return true;
+		return ClusterManager.Instance.activeWorld.worldInventory.GetAmount(t, includeRelatedWorlds: true) >= activeMass || DebugHandler.InstantBuildMode || Game.Instance.SandboxModeActive || AllowInsufficientMaterialBuild();
 	}
 
 	public bool AutoSelectAvailableMaterial()
@@ -241,7 +239,7 @@ public class MaterialSelector : KScreen
 		if (previousElement != null)
 		{
 			ElementToggles.TryGetValue(previousElement, out var value);
-			if (value != null && (DebugHandler.InstantBuildMode || Game.Instance.SandboxModeActive || WorldInventory.Instance.GetAmount(previousElement) >= activeMass))
+			if (value != null && (DebugHandler.InstantBuildMode || Game.Instance.SandboxModeActive || ClusterManager.Instance.activeWorld.worldInventory.GetAmount(previousElement, includeRelatedWorlds: true) >= activeMass))
 			{
 				OnSelectMaterial(previousElement, activeRecipe, focusScrollRect: true);
 				return true;
@@ -262,7 +260,7 @@ public class MaterialSelector : KScreen
 		Tag tag = null;
 		foreach (Tag item in list)
 		{
-			float amount = WorldInventory.Instance.GetAmount(item);
+			float amount = ClusterManager.Instance.activeWorld.worldInventory.GetAmount(item, includeRelatedWorlds: true);
 			if (amount >= activeMass && amount > num)
 			{
 				num = amount;
@@ -326,7 +324,8 @@ public class MaterialSelector : KScreen
 		int num = 0;
 		foreach (KeyValuePair<Tag, KToggle> elementToggle in ElementToggles)
 		{
-			if (elementToggle.Value.gameObject.activeSelf)
+			KToggle value = elementToggle.Value;
+			if (value.gameObject.activeSelf)
 			{
 				num++;
 			}

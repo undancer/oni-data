@@ -26,7 +26,7 @@ public class Battery : KMonoBehaviour, IEnergyConsumer, IGameObjectEffectDescrip
 
 	private MeterController meter;
 
-	public float joulesLostPerSecond;
+	public float joulesLostPerSecond = 0f;
 
 	[SerializeField]
 	public int powerSortOrder;
@@ -42,7 +42,7 @@ public class Battery : KMonoBehaviour, IEnergyConsumer, IGameObjectEffectDescrip
 
 	private float dt;
 
-	private float joulesConsumed;
+	private float joulesConsumed = 0f;
 
 	public float WattsUsed
 	{
@@ -78,7 +78,14 @@ public class Battery : KMonoBehaviour, IEnergyConsumer, IGameObjectEffectDescrip
 
 	public ushort CircuitID => Game.Instance.circuitManager.GetCircuitID(PowerCell);
 
-	public bool IsConnected => Grid.Objects[PowerCell, 26] != null;
+	public bool IsConnected
+	{
+		get
+		{
+			GameObject x = Grid.Objects[PowerCell, 26];
+			return x != null;
+		}
+	}
 
 	public bool IsPowered => connectionStatus == CircuitManager.ConnectionStatus.Powered;
 

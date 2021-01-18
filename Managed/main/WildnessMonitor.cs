@@ -40,12 +40,16 @@ public class WildnessMonitor : GameStateMachine<WildnessMonitor, WildnessMonitor
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = tame;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		wild.Enter(RefreshAmounts).Enter(HideDomesticationSymbol).Transition(tame, (Instance smi) => !IsWild(smi), UpdateRate.SIM_1000ms)
 			.ToggleEffect((Instance smi) => smi.def.wildEffect)
 			.ToggleTag(GameTags.Creatures.Wild);
 		tame.Enter(RefreshAmounts).Enter(ShowDomesticationSymbol).Transition(wild, IsWild, UpdateRate.SIM_1000ms)
-			.ToggleEffect((Instance smi) => smi.def.tameEffect);
+			.ToggleEffect((Instance smi) => smi.def.tameEffect)
+			.Enter(delegate(Instance smi)
+			{
+				SaveGame.Instance.GetComponent<ColonyAchievementTracker>().LogCritterTamed(smi.PrefabID());
+			});
 	}
 
 	private static void HideDomesticationSymbol(Instance smi)
@@ -75,13 +79,25 @@ public class WildnessMonitor : GameStateMachine<WildnessMonitor, WildnessMonitor
 	{
 		bool flag = IsWild(smi);
 		smi.wildness.hide = !flag;
-		Db.Get().CritterAttributes.Happiness.Lookup(smi.gameObject).hide = flag;
-		Db.Get().Amounts.Calories.Lookup(smi.gameObject).hide = flag;
-		Db.Get().Amounts.Temperature.Lookup(smi.gameObject).hide = flag;
-		AmountInstance amountInstance = Db.Get().Amounts.Fertility.Lookup(smi.gameObject);
+		AttributeInstance attributeInstance = Db.Get().CritterAttributes.Happiness.Lookup(smi.gameObject);
+		if (attributeInstance != null)
+		{
+			attributeInstance.hide = flag;
+		}
+		AmountInstance amountInstance = Db.Get().Amounts.Calories.Lookup(smi.gameObject);
 		if (amountInstance != null)
 		{
 			amountInstance.hide = flag;
+		}
+		AmountInstance amountInstance2 = Db.Get().Amounts.Temperature.Lookup(smi.gameObject);
+		if (amountInstance2 != null)
+		{
+			amountInstance2.hide = flag;
+		}
+		AmountInstance amountInstance3 = Db.Get().Amounts.Fertility.Lookup(smi.gameObject);
+		if (amountInstance3 != null)
+		{
+			amountInstance3.hide = flag;
 		}
 	}
 }

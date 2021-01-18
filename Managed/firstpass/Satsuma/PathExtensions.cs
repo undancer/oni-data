@@ -6,11 +6,7 @@ namespace Satsuma
 	{
 		public static bool IsCycle(this IPath path)
 		{
-			if (path.FirstNode == path.LastNode)
-			{
-				return path.ArcCount() > 0;
-			}
-			return false;
+			return path.FirstNode == path.LastNode && path.ArcCount() > 0;
 		}
 
 		public static Node NextNode(this IPath path, Node node)
@@ -35,40 +31,40 @@ namespace Satsuma
 
 		internal static IEnumerable<Arc> ArcsHelper(this IPath path, Node u, ArcFilter filter)
 		{
-			Arc arc1 = path.PrevArc(u);
-			Arc arc2 = path.NextArc(u);
-			if (arc1 == arc2)
+			Arc arc2 = path.PrevArc(u);
+			Arc arc3 = path.NextArc(u);
+			if (arc2 == arc3)
 			{
-				arc2 = Arc.Invalid;
+				arc3 = Arc.Invalid;
 			}
 			for (int i = 0; i < 2; i++)
 			{
-				Arc arc3 = ((i == 0) ? arc1 : arc2);
-				if (arc3 == Arc.Invalid)
+				Arc arc = ((i == 0) ? arc2 : arc3);
+				if (arc == Arc.Invalid)
 				{
 					continue;
 				}
 				switch (filter)
 				{
 				case ArcFilter.All:
-					yield return arc3;
+					yield return arc;
 					break;
 				case ArcFilter.Edge:
-					if (path.IsEdge(arc3))
+					if (path.IsEdge(arc))
 					{
-						yield return arc3;
+						yield return arc;
 					}
 					break;
 				case ArcFilter.Forward:
-					if (path.IsEdge(arc3) || path.U(arc3) == u)
+					if (path.IsEdge(arc) || path.U(arc) == u)
 					{
-						yield return arc3;
+						yield return arc;
 					}
 					break;
 				case ArcFilter.Backward:
-					if (path.IsEdge(arc3) || path.V(arc3) == u)
+					if (path.IsEdge(arc) || path.V(arc) == u)
 					{
-						yield return arc3;
+						yield return arc;
 					}
 					break;
 				}

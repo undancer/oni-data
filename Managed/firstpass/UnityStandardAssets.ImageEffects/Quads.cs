@@ -6,7 +6,7 @@ namespace UnityStandardAssets.ImageEffects
 	{
 		private static Mesh[] meshes;
 
-		private static int currentQuads;
+		private static int currentQuads = 0;
 
 		private static bool HasMeshes()
 		{
@@ -50,14 +50,15 @@ namespace UnityStandardAssets.ImageEffects
 			}
 			int num = 10833;
 			int num2 = (currentQuads = totalWidth * totalHeight);
-			meshes = new Mesh[Mathf.CeilToInt(1f * (float)num2 / (1f * (float)num))];
-			int num3 = 0;
+			int num3 = Mathf.CeilToInt(1f * (float)num2 / (1f * (float)num));
+			meshes = new Mesh[num3];
 			int num4 = 0;
-			for (num3 = 0; num3 < num2; num3 += num)
+			int num5 = 0;
+			for (num4 = 0; num4 < num2; num4 += num)
 			{
-				int triCount = Mathf.FloorToInt(Mathf.Clamp(num2 - num3, 0, num));
-				meshes[num4] = GetMesh(triCount, num3, totalWidth, totalHeight);
-				num4++;
+				int triCount = Mathf.FloorToInt(Mathf.Clamp(num2 - num4, 0, num));
+				meshes[num5] = GetMesh(triCount, num4, totalWidth, totalHeight);
+				num5++;
 			}
 			return meshes;
 		}

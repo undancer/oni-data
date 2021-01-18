@@ -215,7 +215,7 @@ public class FertilizationMonitor : GameStateMachine<FertilizationMonitor, Ferti
 		{
 			if (!absorberHandle.IsValid() && base.def.consumedElements != null && base.def.consumedElements.Length != 0)
 			{
-				_ = base.smi.gameObject;
+				GameObject gameObject = base.smi.gameObject;
 				absorberHandle = Game.Instance.plantElementAbsorbers.Add(storage, base.def.consumedElements);
 			}
 		}
@@ -248,7 +248,7 @@ public class FertilizationMonitor : GameStateMachine<FertilizationMonitor, Ferti
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = wild;
-		base.serializable = false;
+		base.serializable = SerializeType.Never;
 		wild.ParamTransition(fertilizerStorage, unfertilizable, (Instance smi, GameObject p) => p != null);
 		unfertilizable.Enter(delegate(Instance smi)
 		{
@@ -260,9 +260,9 @@ public class FertilizationMonitor : GameStateMachine<FertilizationMonitor, Ferti
 		replanted.Enter(delegate(Instance smi)
 		{
 			ManualDeliveryKG[] components = smi.gameObject.GetComponents<ManualDeliveryKG>();
-			for (int i = 0; i < components.Length; i++)
+			foreach (ManualDeliveryKG manualDeliveryKG in components)
 			{
-				components[i].Pause(pause: false, "replanted");
+				manualDeliveryKG.Pause(pause: false, "replanted");
 			}
 			smi.UpdateFertilization(71f / (678f * (float)Math.PI));
 		}).Target(fertilizerStorage).EventHandler(GameHashes.OnStorageChange, delegate(Instance smi)

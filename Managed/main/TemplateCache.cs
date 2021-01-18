@@ -5,22 +5,30 @@ using UnityEngine;
 
 public static class TemplateCache
 {
-	private static string baseTemplatePath;
+	private static string baseTemplatePath = null;
 
-	private static Dictionary<string, TemplateContainer> templates;
+	private static Dictionary<string, TemplateContainer> templates = null;
 
 	private const string defaultAssetFolder = "bases";
+
+	public static bool Initted
+	{
+		get;
+		private set;
+	}
 
 	public static void Init()
 	{
 		templates = new Dictionary<string, TemplateContainer>();
 		baseTemplatePath = FileSystem.Normalize(Path.Combine(Application.streamingAssetsPath, "templates"));
+		Initted = true;
 	}
 
 	public static void Clear()
 	{
 		templates = null;
 		baseTemplatePath = null;
+		Initted = false;
 	}
 
 	public static string GetTemplatePath()
@@ -85,11 +93,14 @@ public static class TemplateCache
 	{
 		List<TemplateContainer> list = new List<TemplateContainer>();
 		ListPool<string, TemplateContainer>.PooledList pooledList = ListPool<string, TemplateContainer>.Allocate();
+		Debug.Log("Getting templates for " + folder + "...");
 		GetAssetPaths(folder, pooledList);
 		foreach (string item in pooledList)
 		{
-			list.Add(YamlIO.LoadFile<TemplateContainer>(item));
+			string templatePath = FileSystem.Normalize(Path.Combine(folder, Path.GetFileNameWithoutExtension(item)));
+			list.Add(GetTemplate(templatePath));
 		}
+		Debug.Log($"FINISHED getting templates for {folder} ({list.Count} total)...");
 		pooledList.Recycle();
 		list.Sort((TemplateContainer x, TemplateContainer y) => (y.priority - x.priority == 0) ? x.name.CompareTo(y.name) : (y.priority - x.priority));
 		return list;

@@ -17,6 +17,11 @@ public abstract class SideScreenContent : KScreen
 
 	public abstract bool IsValidForTarget(GameObject target);
 
+	public virtual int GetSideScreenSortOrder()
+	{
+		return 0;
+	}
+
 	public virtual string GetTitle()
 	{
 		return Strings.Get(titleKey);

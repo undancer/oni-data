@@ -59,9 +59,8 @@ public class OptionsMenuScreen : KModalButtonMenu
 	{
 		base.OnActivate();
 		GameObject[] buttonObjects = base.buttonObjects;
-		for (int i = 0; i < buttonObjects.Length; i++)
+		foreach (GameObject gameObject in buttonObjects)
 		{
-			_ = buttonObjects[i];
 		}
 	}
 

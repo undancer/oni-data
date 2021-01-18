@@ -6,15 +6,15 @@ using UnityEngine;
 [AddComponentMenu("KMonoBehaviour/scripts/Timelapser")]
 public class Timelapser : KMonoBehaviour
 {
-	private bool screenshotActive;
+	private bool screenshotActive = false;
 
-	private bool screenshotPending;
+	private bool screenshotPending = false;
 
-	private bool previewScreenshot;
+	private bool previewScreenshot = false;
 
 	private string previewSaveGamePath = "";
 
-	private bool screenshotToday;
+	private bool screenshotToday = false;
 
 	private HashedString activeOverlay;
 
@@ -277,7 +277,7 @@ public class Timelapser : KMonoBehaviour
 	private void SetPostionAndOrtho()
 	{
 		float num = 0f;
-		GameObject telepad = GameUtil.GetTelepad();
+		GameObject telepad = GameUtil.GetTelepad(0);
 		if (telepad == null)
 		{
 			return;
@@ -302,7 +302,7 @@ public class Timelapser : KMonoBehaviour
 
 	private void RenderAndPrint()
 	{
-		GameObject telepad = GameUtil.GetTelepad();
+		GameObject telepad = GameUtil.GetTelepad(0);
 		if (telepad == null)
 		{
 			Debug.Log("No telepad present, aborting screenshot.");

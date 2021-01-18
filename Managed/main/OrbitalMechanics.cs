@@ -32,11 +32,11 @@ public class OrbitalMechanics : KMonoBehaviour, IRenderEveryTick
 	private OrbitData[] orbitData;
 
 	[SerializeField]
-	private bool applyOverrides;
+	private bool applyOverrides = false;
 
 	[SerializeField]
 	[Range(0f, 100f)]
-	private float overridePercent;
+	private float overridePercent = 0f;
 
 	[SerializeField]
 	private GameObject[] orbitingObjects;
@@ -89,9 +89,9 @@ public class OrbitalMechanics : KMonoBehaviour, IRenderEveryTick
 		if (orbitingObjects != null)
 		{
 			GameObject[] array = orbitingObjects;
-			for (int i = 0; i < array.Length; i++)
+			foreach (GameObject original in array)
 			{
-				Util.KDestroyGameObject(array[i]);
+				Util.KDestroyGameObject(original);
 			}
 			orbitingObjects = null;
 		}
@@ -115,13 +115,15 @@ public class OrbitalMechanics : KMonoBehaviour, IRenderEveryTick
 	private Vector3 CalculatePos(ref OrbitData data, float time, out bool behind)
 	{
 		float num = data.periodInCycles * 600f;
-		float f = (applyOverrides ? (overridePercent / 100f) : (time / num - (float)(int)(time / num))) * 2f * (float)Math.PI;
+		float num2 = (applyOverrides ? (overridePercent / 100f) : (time / num - (float)(int)(time / num)));
+		float f = num2 * 2f * (float)Math.PI;
 		float d = 0.5f * data.radiusScale;
 		float yGridPercent = data.yGridPercent;
 		Vector3 a = new Vector3(0.5f, yGridPercent, 0f);
 		Vector3 a2 = new Vector3(Mathf.Cos(f), 0f, Mathf.Sin(f));
 		behind = a2.z > data.behindZ;
-		Vector3 b = Quaternion.Euler(data.angle, 0f, 0f) * (a2 * d);
+		Quaternion rotation = Quaternion.Euler(data.angle, 0f, 0f);
+		Vector3 b = rotation * (a2 * d);
 		Vector3 result = a + b;
 		result.z = data.renderZ;
 		return result;

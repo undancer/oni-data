@@ -167,7 +167,8 @@ public class HotTub : StateMachineComponent<HotTub.StatesInstance>, IGameObjectE
 
 		public void TestWaterTemperature()
 		{
-			GameObject gameObject = base.smi.master.waterStorage.FindFirst(new Tag(1836671383));
+			Storage waterStorage = base.smi.master.waterStorage;
+			GameObject gameObject = waterStorage.FindFirst(new Tag(1836671383));
 			float waterTemp = 0f;
 			if ((bool)gameObject)
 			{
@@ -196,12 +197,9 @@ public class HotTub : StateMachineComponent<HotTub.StatesInstance>, IGameObjectE
 
 		public bool HasBleachStone()
 		{
-			GameObject gameObject = base.smi.master.waterStorage.FindFirst(new Tag(-839728230));
-			if (gameObject != null)
-			{
-				return gameObject.GetComponent<PrimaryElement>().Mass > 0f;
-			}
-			return false;
+			Storage waterStorage = base.smi.master.waterStorage;
+			GameObject gameObject = waterStorage.FindFirst(new Tag(-839728230));
+			return gameObject != null && gameObject.GetComponent<PrimaryElement>().Mass > 0f;
 		}
 
 		public void SapHeatFromWater(float dt)
@@ -244,11 +242,11 @@ public class HotTub : StateMachineComponent<HotTub.StatesInstance>, IGameObjectE
 
 	public float hotTubCapacity = 100f;
 
-	public float minimumWaterTemperature;
+	public float minimumWaterTemperature = 0f;
 
-	public float bleachStoneConsumption;
+	public float bleachStoneConsumption = 0f;
 
-	public float maxOperatingTemperature;
+	public float maxOperatingTemperature = 0f;
 
 	[MyCmpGet]
 	public Storage waterStorage;
@@ -270,7 +268,8 @@ public class HotTub : StateMachineComponent<HotTub.StatesInstance>, IGameObjectE
 		chores = new Chore[choreOffsets.Length];
 		for (int i = 0; i < workables.Length; i++)
 		{
-			Vector3 pos = Grid.CellToPosCBC(Grid.OffsetCell(Grid.PosToCell(this), choreOffsets[i]), Grid.SceneLayer.Move);
+			int cell = Grid.OffsetCell(Grid.PosToCell(this), choreOffsets[i]);
+			Vector3 pos = Grid.CellToPosCBC(cell, Grid.SceneLayer.Move);
 			GameObject go = ChoreHelpers.CreateLocator("HotTubWorkable", pos);
 			KSelectable kSelectable = go.AddOrGet<KSelectable>();
 			kSelectable.SetName(this.GetProperName());
@@ -308,9 +307,9 @@ public class HotTub : StateMachineComponent<HotTub.StatesInstance>, IGameObjectE
 	private Chore CreateChore(int i)
 	{
 		Workable workable = workables[i];
-		WorkChore<HotTubWorkable> obj = new WorkChore<HotTubWorkable>(Db.Get().ChoreTypes.Relax, workable, null, run_until_complete: true, null, null, schedule_block: Db.Get().ScheduleBlockTypes.Recreation, on_end: OnSocialChoreEnd, allow_in_red_alert: false, ignore_schedule_block: false, only_when_operational: true, override_anims: null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, priority_class: PriorityScreen.PriorityClass.high);
-		obj.AddPrecondition(ChorePreconditions.instance.CanDoWorkerPrioritizable, workable);
-		return obj;
+		Chore chore = new WorkChore<HotTubWorkable>(Db.Get().ChoreTypes.Relax, workable, null, run_until_complete: true, null, null, schedule_block: Db.Get().ScheduleBlockTypes.Recreation, on_end: OnSocialChoreEnd, allow_in_red_alert: false, ignore_schedule_block: false, only_when_operational: true, override_anims: null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, priority_class: PriorityScreen.PriorityClass.high);
+		chore.AddPrecondition(ChorePreconditions.instance.CanDoWorkerPrioritizable, workable);
+		return chore;
 	}
 
 	private void OnSocialChoreEnd(Chore chore)
@@ -328,7 +327,7 @@ public class HotTub : StateMachineComponent<HotTub.StatesInstance>, IGameObjectE
 			Chore chore = chores[i];
 			if (update)
 			{
-				if (chore == null || chore.isComplete)
+				if (chore?.isComplete ?? true)
 				{
 					chores[i] = CreateChore(i);
 				}

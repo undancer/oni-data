@@ -95,8 +95,8 @@ public static class GarbageProfiler
 		using (StreamWriter streamWriter2 = new StreamWriter(GetFileName("memory_hierarchies")))
 		{
 			streamWriter2.WriteLine("Delta,Count,Type Hierarchy");
-			MemorySnapshot.TypeData[] array2 = array;
-			foreach (MemorySnapshot.TypeData typeData3 in array2)
+			MemorySnapshot.TypeData[] array3 = array;
+			foreach (MemorySnapshot.TypeData typeData3 in array3)
 			{
 				if (typeData3.instanceCount == 0)
 				{
@@ -150,8 +150,8 @@ public static class GarbageProfiler
 		Array.Sort(array, 0, array.Length, new RefCountComparer());
 		using (StreamWriter streamWriter2 = new StreamWriter(GetFileName("garbage_refs")))
 		{
-			MemorySnapshot.TypeData[] array2 = array;
-			foreach (MemorySnapshot.TypeData typeData3 in array2)
+			MemorySnapshot.TypeData[] array3 = array;
+			foreach (MemorySnapshot.TypeData typeData3 in array3)
 			{
 				if (typeData3.refCount != 0)
 				{
@@ -165,13 +165,13 @@ public static class GarbageProfiler
 				}
 			}
 		}
-		MemorySnapshot.FieldCount[] array3 = new MemorySnapshot.FieldCount[memorySnapshot.fieldCounts.Count];
-		memorySnapshot.fieldCounts.Values.CopyTo(array3, 0);
-		Array.Sort(array3, 0, array3.Length, new FieldCountComparer());
+		MemorySnapshot.FieldCount[] array4 = new MemorySnapshot.FieldCount[memorySnapshot.fieldCounts.Count];
+		memorySnapshot.fieldCounts.Values.CopyTo(array4, 0);
+		Array.Sort(array4, 0, array4.Length, new FieldCountComparer());
 		using (StreamWriter streamWriter3 = new StreamWriter(GetFileName("garbage_fields")))
 		{
-			MemorySnapshot.FieldCount[] array4 = array3;
-			foreach (MemorySnapshot.FieldCount fieldCount in array4)
+			MemorySnapshot.FieldCount[] array5 = array4;
+			foreach (MemorySnapshot.FieldCount fieldCount in array5)
 			{
 				int num3 = fieldCount.count;
 				if (previousSnapshot != null)
@@ -226,16 +226,22 @@ public static class GarbageProfiler
 				Assembly.GetAssembly(typeof(Game)),
 				Assembly.GetAssembly(typeof(App))
 			};
-			for (int i = 0; i < array3.Length; i++)
+			Assembly[] array4 = array3;
+			foreach (Assembly assembly in array4)
 			{
-				Type[] types = array3[i].GetTypes();
+				Type[] types = assembly.GetTypes();
 				foreach (Type type in types)
 				{
 					if (type == DEBUG_STATIC_TYPE)
 					{
 						Debugger.Break();
 					}
-					if (type.IsAbstract || type.IsGenericType || type.ToString().StartsWith("STRINGS."))
+					if (type.IsAbstract || type.IsGenericType)
+					{
+						continue;
+					}
+					string text = type.ToString();
+					if (text.StartsWith("STRINGS."))
 					{
 						continue;
 					}
@@ -264,16 +270,16 @@ public static class GarbageProfiler
 							Type genericTypeDefinition = fieldType.GetGenericTypeDefinition();
 							Type[] genericArguments = fieldType.GetGenericArguments();
 							bool flag = false;
-							Type[] array4 = array2;
-							foreach (Type right in array4)
+							Type[] array5 = array2;
+							foreach (Type right in array5)
 							{
 								if (!(genericTypeDefinition == right))
 								{
 									continue;
 								}
 								bool flag2 = true;
-								Type[] array5 = genericArguments;
-								foreach (Type type2 in array5)
+								Type[] array6 = genericArguments;
+								foreach (Type type2 in array6)
 								{
 									if (!Helper.IsPOD(type2) && Array.IndexOf(array, type2) < 0)
 									{
@@ -298,7 +304,8 @@ public static class GarbageProfiler
 							string value2;
 							if (typeof(ICollection).IsAssignableFrom(fieldType))
 							{
-								int count = (value as ICollection).Count;
+								ICollection collection = value as ICollection;
+								int count = collection.Count;
 								value2 = $"\"{type}.{fieldInfo.Name}\",\"{fieldType}\",{count}";
 							}
 							else

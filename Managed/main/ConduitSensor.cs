@@ -2,7 +2,7 @@ public abstract class ConduitSensor : Switch
 {
 	public ConduitType conduitType;
 
-	protected bool wasOn;
+	protected bool wasOn = false;
 
 	protected KBatchedAnimController animController;
 
@@ -30,11 +30,13 @@ public abstract class ConduitSensor : Switch
 		wasOn = switchedOn;
 		if (conduitType == ConduitType.Liquid || conduitType == ConduitType.Gas)
 		{
-			Conduit.GetFlowManager(conduitType).AddConduitUpdater(ConduitUpdate);
+			ConduitFlow flowManager = Conduit.GetFlowManager(conduitType);
+			flowManager.AddConduitUpdater(ConduitUpdate);
 		}
 		else
 		{
-			SolidConduit.GetFlowManager().AddConduitUpdater(ConduitUpdate);
+			SolidConduitFlow flowManager2 = SolidConduit.GetFlowManager();
+			flowManager2.AddConduitUpdater(ConduitUpdate);
 		}
 	}
 
@@ -42,11 +44,13 @@ public abstract class ConduitSensor : Switch
 	{
 		if (conduitType == ConduitType.Liquid || conduitType == ConduitType.Gas)
 		{
-			Conduit.GetFlowManager(conduitType).RemoveConduitUpdater(ConduitUpdate);
+			ConduitFlow flowManager = Conduit.GetFlowManager(conduitType);
+			flowManager.RemoveConduitUpdater(ConduitUpdate);
 		}
 		else
 		{
-			SolidConduit.GetFlowManager().RemoveConduitUpdater(ConduitUpdate);
+			SolidConduitFlow flowManager2 = SolidConduit.GetFlowManager();
+			flowManager2.RemoveConduitUpdater(ConduitUpdate);
 		}
 		base.OnCleanUp();
 	}

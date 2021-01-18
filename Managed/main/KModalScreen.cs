@@ -4,13 +4,11 @@ using UnityEngine.UI;
 
 public class KModalScreen : KScreen
 {
-	private bool shown;
+	private bool shown = false;
 
 	public bool pause = true;
 
 	private RectTransform backgroundRectTransform;
-
-	public const float SCREEN_SORT_KEY = 100f;
 
 	protected override void OnPrefabInit()
 	{
@@ -23,7 +21,8 @@ public class KModalScreen : KScreen
 		screen.ConsumeMouseScroll = true;
 		screen.activateOnSpawn = true;
 		GameObject gameObject = new GameObject("background");
-		gameObject.AddComponent<LayoutElement>().ignoreLayout = true;
+		LayoutElement layoutElement = gameObject.AddComponent<LayoutElement>();
+		layoutElement.ignoreLayout = true;
 		gameObject.AddComponent<CanvasRenderer>();
 		Image image = gameObject.AddComponent<Image>();
 		image.color = new Color32(0, 0, 0, 160);
@@ -115,39 +114,24 @@ public class KModalScreen : KScreen
 
 	public override void OnKeyDown(KButtonEvent e)
 	{
-		if (e.Consumed)
-		{
-			return;
-		}
-		if (Game.Instance != null && (e.TryConsume(Action.TogglePause) || e.TryConsume(Action.CycleSpeed)))
-		{
-			KMonoBehaviour.PlaySound(GlobalAssets.GetSound("Negative"));
-		}
-		if (!e.Consumed && e.TryConsume(Action.Escape))
-		{
-			Deactivate();
-		}
 		if (!e.Consumed)
 		{
-			KScrollRect componentInChildren = GetComponentInChildren<KScrollRect>();
-			if (componentInChildren != null)
+			if (Game.Instance != null && (e.TryConsume(Action.TogglePause) || e.TryConsume(Action.CycleSpeed)))
 			{
-				componentInChildren.OnKeyDown(e);
+				KMonoBehaviour.PlaySound(GlobalAssets.GetSound("Negative"));
 			}
+			if (!e.Consumed && e.TryConsume(Action.Escape))
+			{
+				Deactivate();
+			}
+			base.OnKeyDown(e);
+			e.Consumed = true;
 		}
-		e.Consumed = true;
 	}
 
 	public override void OnKeyUp(KButtonEvent e)
 	{
-		if (!e.Consumed)
-		{
-			KScrollRect componentInChildren = GetComponentInChildren<KScrollRect>();
-			if (componentInChildren != null)
-			{
-				componentInChildren.OnKeyUp(e);
-			}
-		}
+		base.OnKeyUp(e);
 		e.Consumed = true;
 	}
 }

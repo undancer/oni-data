@@ -27,7 +27,7 @@ public class SeedProducer : KMonoBehaviour, IGameObjectEffectDescriptor
 
 	public SeedInfo seedInfo;
 
-	private bool droppedSeedAlready;
+	private bool droppedSeedAlready = false;
 
 	private static readonly EventSystem.IntraObjectHandler<SeedProducer> DropSeedDelegate = new EventSystem.IntraObjectHandler<SeedProducer>(delegate(SeedProducer component, object data)
 	{
@@ -60,10 +60,24 @@ public class SeedProducer : KMonoBehaviour, IGameObjectEffectDescriptor
 		{
 			Vector3 position = base.gameObject.transform.GetPosition() + new Vector3(0f, 0.5f, 0f);
 			GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(new Tag(seedId)), position, Grid.SceneLayer.Ore);
-			PrimaryElement component = base.gameObject.GetComponent<PrimaryElement>();
-			PrimaryElement component2 = gameObject.GetComponent<PrimaryElement>();
-			component2.Temperature = component.Temperature;
-			component2.Units = units;
+			MutantPlant component = GetComponent<MutantPlant>();
+			if ((bool)component)
+			{
+				PlantRadiationMonitor component2 = GetComponent<PlantRadiationMonitor>();
+				MutantPlant component3 = gameObject.GetComponent<MutantPlant>();
+				if (component3 != null)
+				{
+					component3.SetSubSpecies(component.subspeciesID);
+					if (component2 != null && component2.ShouldMutate())
+					{
+						component3.Mutate();
+					}
+				}
+			}
+			PrimaryElement component4 = base.gameObject.GetComponent<PrimaryElement>();
+			PrimaryElement component5 = gameObject.GetComponent<PrimaryElement>();
+			component5.Temperature = component4.Temperature;
+			component5.Units = units;
 			Trigger(472291861, gameObject.GetComponent<PlantableSeed>());
 			gameObject.SetActive(value: true);
 			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Plus, gameObject.GetProperName(), gameObject.transform);
@@ -105,7 +119,10 @@ public class SeedProducer : KMonoBehaviour, IGameObjectEffectDescriptor
 	public List<Descriptor> GetDescriptors(GameObject go)
 	{
 		List<Descriptor> list = new List<Descriptor>();
-		_ = Assets.GetPrefab(new Tag(seedInfo.seedId)) != null;
+		GameObject prefab = Assets.GetPrefab(new Tag(seedInfo.seedId));
+		if (prefab != null)
+		{
+		}
 		switch (seedInfo.productionType)
 		{
 		default:

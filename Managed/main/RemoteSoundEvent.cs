@@ -16,7 +16,8 @@ public class RemoteSoundEvent : SoundEvent
 	{
 		Vector3 vector = behaviour.GetComponent<Transform>().GetPosition();
 		vector.z = 0f;
-		if (SoundEvent.ObjectIsSelectedAndVisible(behaviour.controller.gameObject))
+		GameObject gameObject = behaviour.controller.gameObject;
+		if (SoundEvent.ObjectIsSelectedAndVisible(gameObject))
 		{
 			vector = SoundEvent.AudioHighlightListenerPosition(vector);
 		}
@@ -30,7 +31,7 @@ public class RemoteSoundEvent : SoundEvent
 		{
 			IToggleHandler toggleHandlerForWorker = component.GetToggleHandlerForWorker(behaviour.GetComponent<Worker>());
 			float value = 1f;
-			if (toggleHandlerForWorker != null && toggleHandlerForWorker.IsHandlerOn())
+			if (toggleHandlerForWorker?.IsHandlerOn() ?? false)
 			{
 				value = 0f;
 			}

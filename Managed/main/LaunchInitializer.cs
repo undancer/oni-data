@@ -5,12 +5,19 @@ using UnityEngine;
 
 public class LaunchInitializer : MonoBehaviour
 {
-	public const string BUILD_PREFIX = "CS";
+	private const string BASE_BUILD_PREFIX = "CS";
+
+	private const string EXPANSION1_BUILD_PREFIX = "EX1";
 
 	public GameObject[] SpawnPrefabs;
 
 	[SerializeField]
 	private int numWaitFrames = 1;
+
+	public static string BuildPrefix()
+	{
+		return DlcManager.IsExpansion1Installed() ? "EX1" : "CS";
+	}
 
 	private void Update()
 	{
@@ -24,7 +31,7 @@ public class LaunchInitializer : MonoBehaviour
 		}
 		GraphicsOptionsScreen.SetSettingsFromPrefs();
 		Util.ApplyInvariantCultureToThread(Thread.CurrentThread);
-		Debug.Log("release Build: CS-" + 447596u);
+		Debug.Log("release Build: " + BuildPrefix() + "-" + 447598u);
 		UnityEngine.Object.DontDestroyOnLoad(base.gameObject);
 		KPlayerPrefs.instance.Load();
 		KFMOD.Initialize();
@@ -42,15 +49,15 @@ public class LaunchInitializer : MonoBehaviour
 
 	private static void DeleteLingeringFiles()
 	{
-		string[] obj = new string[3]
+		string[] array = new string[3]
 		{
 			"fmod.log",
 			"load_stats_0.json",
 			"OxygenNotIncluded_Data/output_log.txt"
 		};
 		string directoryName = Path.GetDirectoryName(Application.dataPath);
-		string[] array = obj;
-		foreach (string path in array)
+		string[] array2 = array;
+		foreach (string path in array2)
 		{
 			string path2 = Path.Combine(directoryName, path);
 			try
@@ -60,9 +67,9 @@ public class LaunchInitializer : MonoBehaviour
 					File.Delete(path2);
 				}
 			}
-			catch (Exception obj2)
+			catch (Exception obj)
 			{
-				Debug.LogWarning(obj2);
+				Debug.LogWarning(obj);
 			}
 		}
 	}

@@ -9,17 +9,17 @@ public class GasValveConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("GasValve", 1, 2, "valvegas_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.PENALTY.TIER0);
-		obj.InputConduitType = ConduitType.Gas;
-		obj.OutputConduitType = ConduitType.Gas;
-		obj.Floodable = false;
-		obj.ViewMode = OverlayModes.GasConduits.ID;
-		obj.AudioCategory = "Metal";
-		obj.PermittedRotations = PermittedRotations.R360;
-		obj.UtilityInputOffset = new CellOffset(0, 0);
-		obj.UtilityOutputOffset = new CellOffset(0, 1);
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("GasValve", 1, 2, "valvegas_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.PENALTY.TIER0);
+		buildingDef.InputConduitType = ConduitType.Gas;
+		buildingDef.OutputConduitType = ConduitType.Gas;
+		buildingDef.Floodable = false;
+		buildingDef.ViewMode = OverlayModes.GasConduits.ID;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.PermittedRotations = PermittedRotations.R360;
+		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
+		buildingDef.UtilityOutputOffset = new CellOffset(0, 1);
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.GasVentIDs, "GasValve");
-		return obj;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -36,7 +36,8 @@ public class GasValveConfig : IBuildingConfig
 			new ValveBase.AnimRangeInfo(0.75f, "hi")
 		};
 		go.AddOrGet<Valve>();
-		go.AddOrGet<Workable>().workTime = 5f;
+		Workable workable = go.AddOrGet<Workable>();
+		workable.workTime = 5f;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

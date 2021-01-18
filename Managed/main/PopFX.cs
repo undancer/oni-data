@@ -24,13 +24,13 @@ public class PopFX : KMonoBehaviour
 
 	private float lifetime;
 
-	private float lifeElapsed;
+	private float lifeElapsed = 0f;
 
-	private bool trackTarget;
+	private bool trackTarget = false;
 
 	private Vector3 startPos;
 
-	private bool isLive;
+	private bool isLive = false;
 
 	public void Recycle()
 	{

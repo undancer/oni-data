@@ -11,18 +11,18 @@ public class GasVentConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("GasVent", 1, 1, "ventgas_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER1);
-		obj.InputConduitType = ConduitType.Gas;
-		obj.Floodable = false;
-		obj.Overheatable = false;
-		obj.ViewMode = OverlayModes.GasConduits.ID;
-		obj.AudioCategory = "Metal";
-		obj.UtilityInputOffset = new CellOffset(0, 0);
-		obj.UtilityOutputOffset = new CellOffset(0, 0);
-		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("GasVent", 1, 1, "ventgas_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER1);
+		buildingDef.InputConduitType = ConduitType.Gas;
+		buildingDef.Floodable = false;
+		buildingDef.Overheatable = false;
+		buildingDef.ViewMode = OverlayModes.GasConduits.ID;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
+		buildingDef.UtilityOutputOffset = new CellOffset(0, 0);
+		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.GasVentIDs, "GasVent");
 		SoundEventVolumeCache.instance.AddVolume("ventgas_kanim", "GasVent_clunk", NOISE_POLLUTION.NOISY.TIER0);
-		return obj;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -37,7 +37,8 @@ public class GasVentConfig : IBuildingConfig
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
 		conduitConsumer.conduitType = ConduitType.Gas;
 		conduitConsumer.ignoreMinMassCheck = true;
-		BuildingTemplates.CreateDefaultStorage(go).showInUI = true;
+		Storage storage = BuildingTemplates.CreateDefaultStorage(go);
+		storage.showInUI = true;
 		go.AddOrGet<SimpleVent>();
 	}
 

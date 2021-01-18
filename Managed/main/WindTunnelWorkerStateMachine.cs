@@ -45,16 +45,16 @@ public class WindTunnelWorkerStateMachine : GameStateMachine<WindTunnelWorkerSta
 		default_state = pre_front;
 		Target(worker);
 		root.ToggleAnims((StatesInstance smi) => smi.OverrideAnim);
-		pre_front.PlayAnim((StatesInstance smi) => smi.PreFrontAnim, KAnim.PlayMode.Once).OnAnimQueueComplete(pre_back);
-		pre_back.PlayAnim((StatesInstance smi) => smi.PreBackAnim, KAnim.PlayMode.Once).Enter(delegate(StatesInstance smi)
+		pre_front.PlayAnim((StatesInstance smi) => smi.PreFrontAnim).OnAnimQueueComplete(pre_back);
+		pre_back.PlayAnim((StatesInstance smi) => smi.PreBackAnim).Enter(delegate(StatesInstance smi)
 		{
 			Vector3 position2 = smi.transform.GetPosition();
 			position2.z = Grid.GetLayerZ(Grid.SceneLayer.BuildingUse);
 			smi.transform.SetPosition(position2);
 		}).OnAnimQueueComplete(loop);
 		loop.PlayAnim((StatesInstance smi) => smi.LoopAnim, KAnim.PlayMode.Loop).EventTransition(GameHashes.WorkerPlayPostAnim, pst_back, (StatesInstance smi) => smi.GetComponent<Worker>().state == Worker.State.PendingCompletion);
-		pst_back.PlayAnim((StatesInstance smi) => smi.PstBackAnim, KAnim.PlayMode.Once).OnAnimQueueComplete(pst_front);
-		pst_front.PlayAnim((StatesInstance smi) => smi.PstFrontAnim, KAnim.PlayMode.Once).Enter(delegate(StatesInstance smi)
+		pst_back.PlayAnim((StatesInstance smi) => smi.PstBackAnim).OnAnimQueueComplete(pst_front);
+		pst_front.PlayAnim((StatesInstance smi) => smi.PstFrontAnim).Enter(delegate(StatesInstance smi)
 		{
 			Vector3 position = smi.transform.GetPosition();
 			position.z = Grid.GetLayerZ(Grid.SceneLayer.Move);

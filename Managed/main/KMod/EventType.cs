@@ -16,6 +16,7 @@ namespace KMod
 		AvailableContentChanged,
 		RestartRequested,
 		BadWorldGen,
-		Deactivated
+		Deactivated,
+		DisabledEarlyAccess
 	}
 }

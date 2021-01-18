@@ -43,7 +43,13 @@ public class SaveManager : KMonoBehaviour
 
 	public const int SAVE_MINOR_VERSION_ADD_GUID_TO_HEADER = 17;
 
-	public const int SAVE_MINOR_VERSION = 17;
+	public const int SAVE_MINOR_VERSION_EXPANSION_1_INTRODUCED = 20;
+
+	public const int SAVE_MINOR_VERSION_CONTENT_SETTINGS = 21;
+
+	public const int SAVE_MINOR_VERSION_COLONY_REQ_REMOVE_SERIALIZATION = 22;
+
+	public const int SAVE_MINOR_VERSION = 22;
 
 	private Dictionary<Tag, GameObject> prefabMap = new Dictionary<Tag, GameObject>();
 
@@ -143,7 +149,7 @@ public class SaveManager : KMonoBehaviour
 	{
 		writer.Write(SAVE_HEADER);
 		writer.Write(7);
-		writer.Write(17);
+		writer.Write(22);
 		int num = 0;
 		foreach (KeyValuePair<Tag, List<SaveLoadRoot>> sceneObject in sceneObjects)
 		{
@@ -165,33 +171,37 @@ public class SaveManager : KMonoBehaviour
 		foreach (Tag orderedKey in orderedKeys)
 		{
 			List<SaveLoadRoot> list = sceneObjects[orderedKey];
-			if (list.Count <= 0)
+			int count = list.Count;
+			if (count <= 0)
 			{
 				continue;
 			}
 			foreach (SaveLoadRoot item in list)
 			{
-				if (!(item == null) && item.GetComponent<SimCellOccupier>() != null)
+				if (item == null || !(item.GetComponent<SimCellOccupier>() != null))
 				{
-					Write(orderedKey, list, writer);
-					break;
+					continue;
 				}
+				Write(orderedKey, list, writer);
+				break;
 			}
 		}
 		foreach (Tag orderedKey2 in orderedKeys)
 		{
 			List<SaveLoadRoot> list2 = sceneObjects[orderedKey2];
-			if (list2.Count <= 0)
+			int count2 = list2.Count;
+			if (count2 <= 0)
 			{
 				continue;
 			}
 			foreach (SaveLoadRoot item2 in list2)
 			{
-				if (!(item2 == null) && item2.GetComponent<SimCellOccupier>() == null)
+				if (item2 == null || !(item2.GetComponent<SimCellOccupier>() == null))
 				{
-					Write(orderedKey2, list2, writer);
-					break;
+					continue;
 				}
+				Write(orderedKey2, list2, writer);
+				break;
 			}
 		}
 	}
@@ -238,9 +248,9 @@ public class SaveManager : KMonoBehaviour
 		}
 		int num = reader.ReadInt32();
 		int num2 = reader.ReadInt32();
-		if (num != 7 || num2 > 17)
+		if (num != 7 || num2 > 22)
 		{
-			DebugUtil.LogWarningArgs($"SAVE FILE VERSION MISMATCH! Expected {7}.{17} but got {num}.{num2}");
+			DebugUtil.LogWarningArgs($"SAVE FILE VERSION MISMATCH! Expected {7}.{22} but got {num}.{num2}");
 			return false;
 		}
 		ClearScene();

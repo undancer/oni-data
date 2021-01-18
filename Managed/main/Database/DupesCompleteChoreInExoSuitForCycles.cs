@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace Database
 {
-	public class DupesCompleteChoreInExoSuitForCycles : ColonyAchievementRequirement
+	public class DupesCompleteChoreInExoSuitForCycles : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
-		public int currentCycleStreak;
+		public int currentCycleStreak = 0;
 
 		public int numCycles;
 
@@ -56,12 +55,7 @@ namespace Database
 			return false;
 		}
 
-		public override void Serialize(BinaryWriter writer)
-		{
-			writer.Write(numCycles);
-		}
-
-		public override void Deserialize(IReader reader)
+		public void Deserialize(IReader reader)
 		{
 			numCycles = reader.ReadInt32();
 		}

@@ -60,7 +60,9 @@ public class Facing : KMonoBehaviour
 		if (kanimController != null && kanimController.FlipX != facingLeft)
 		{
 			kanimController.FlipX = facingLeft;
-			_ = facingLeft;
+			if (!facingLeft)
+			{
+			}
 		}
 	}
 
@@ -79,6 +81,16 @@ public class Facing : KMonoBehaviour
 	{
 		int cell = Grid.PosToCell(this);
 		if (GetFacing())
+		{
+			return Grid.CellLeft(cell);
+		}
+		return Grid.CellRight(cell);
+	}
+
+	public int GetBackCell()
+	{
+		int cell = Grid.PosToCell(this);
+		if (!GetFacing())
 		{
 			return Grid.CellLeft(cell);
 		}

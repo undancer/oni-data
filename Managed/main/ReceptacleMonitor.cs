@@ -26,14 +26,14 @@ public class ReceptacleMonitor : StateMachineComponent<ReceptacleMonitor.StatesI
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = wild;
-			base.serializable = true;
+			base.serializable = SerializeType.Never;
 			wild.TriggerOnEnter(GameHashes.ReceptacleOperational);
 			inoperational.TriggerOnEnter(GameHashes.ReceptacleInoperational);
 			operational.TriggerOnEnter(GameHashes.ReceptacleOperational);
 		}
 	}
 
-	private bool replanted;
+	private bool replanted = false;
 
 	public bool Replanted => replanted;
 
@@ -114,9 +114,8 @@ public class ReceptacleMonitor : StateMachineComponent<ReceptacleMonitor.StatesI
 
 	public List<Descriptor> GetDescriptors(GameObject go)
 	{
-		return new List<Descriptor>
-		{
-			new Descriptor(UI.GAMEOBJECTEFFECTS.REQUIRES_RECEPTACLE, UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_RECEPTACLE, Descriptor.DescriptorType.Requirement)
-		};
+		List<Descriptor> list = new List<Descriptor>();
+		list.Add(new Descriptor(UI.GAMEOBJECTEFFECTS.REQUIRES_RECEPTACLE, UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_RECEPTACLE, Descriptor.DescriptorType.Requirement));
+		return list;
 	}
 }

@@ -15,9 +15,11 @@ namespace Klei.AI
 
 		public Sicknesses sicknesses;
 
-		public string[] initialTraits;
+		public List<string> initialTraits = new List<string>();
 
 		public List<string> initialAmounts = new List<string>();
+
+		public List<string> initialAttributes = new List<string>();
 
 		protected override void OnPrefabInit()
 		{
@@ -29,15 +31,25 @@ namespace Klei.AI
 			{
 				amounts.Add(new AmountInstance(Db.Get().Amounts.Get(initialAmount), base.gameObject));
 			}
-			Traits component = GetComponent<Traits>();
-			if (initialTraits != null)
+			foreach (string initialAttribute in initialAttributes)
 			{
-				string[] array = initialTraits;
-				foreach (string id in array)
+				Attribute attribute = Db.Get().CritterAttributes.TryGet(initialAttribute);
+				if (attribute == null)
 				{
-					Trait trait = Db.Get().traits.Get(id);
-					component.Add(trait);
+					attribute = Db.Get().Attributes.TryGet(initialAttribute);
 				}
+				DebugUtil.Assert(attribute != null, "Couldn't find an attribute for id", initialAttribute);
+				attributes.Add(attribute);
+			}
+			Traits component = GetComponent<Traits>();
+			if (initialTraits == null)
+			{
+				return;
+			}
+			foreach (string initialTrait in initialTraits)
+			{
+				Trait trait = Db.Get().traits.Get(initialTrait);
+				component.Add(trait);
 			}
 		}
 

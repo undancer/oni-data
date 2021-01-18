@@ -23,11 +23,7 @@ namespace YamlDotNet.Core.Tokens
 		public override bool Equals(object obj)
 		{
 			VersionDirective versionDirective = obj as VersionDirective;
-			if (versionDirective != null)
-			{
-				return version.Equals(versionDirective.version);
-			}
-			return false;
+			return versionDirective != null && version.Equals(versionDirective.version);
 		}
 
 		public override int GetHashCode()

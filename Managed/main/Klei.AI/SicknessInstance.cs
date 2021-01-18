@@ -97,7 +97,7 @@ namespace Klei.AI
 			public override void InitializeStates(out BaseState default_state)
 			{
 				default_state = infected;
-				base.serializable = true;
+				base.serializable = SerializeType.Both_DEPRECATED;
 				infected.Enter("Infect", delegate(StatesInstance smi)
 				{
 					smi.Infect();
@@ -216,9 +216,8 @@ namespace Klei.AI
 			};
 			string name = disease.Name;
 			int type = ((disease.severity > Sickness.Severity.Minor) ? 1 : 3);
-			HashedString invalid = HashedString.Invalid;
 			object sourceInfo = exposureInfo.sourceInfo;
-			notification = new Notification(name, (NotificationType)type, invalid, tooltip, sourceInfo);
+			notification = new Notification(name, (NotificationType)type, tooltip, sourceInfo);
 			statusItem = new StatusItem(disease.Id, disease.Name, DUPLICANTS.DISEASES.STATUS_ITEM_TOOLTIP.TEMPLATE, "", (disease.severity > Sickness.Severity.Minor) ? StatusItem.IconType.Exclamation : StatusItem.IconType.Info, (disease.severity > Sickness.Severity.Minor) ? NotificationType.Bad : NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			statusItem.resolveTooltipCallback = ResolveString;
 			if (smi != null)
@@ -279,21 +278,20 @@ namespace Klei.AI
 
 		public float GetInfectedTimeRemaining()
 		{
-			return modifier.SicknessDuration * (1f - smi.sm.percentRecovered.Get(smi)) / TotalCureSpeedMultiplier;
+			float sicknessDuration = modifier.SicknessDuration;
+			float num = sicknessDuration * (1f - smi.sm.percentRecovered.Get(smi));
+			return num / TotalCureSpeedMultiplier;
 		}
 
 		public float GetFatalityTimeRemaining()
 		{
-			return modifier.fatalityDuration * (1f - smi.sm.percentDied.Get(smi));
+			float fatalityDuration = modifier.fatalityDuration;
+			return fatalityDuration * (1f - smi.sm.percentDied.Get(smi));
 		}
 
 		public float GetPercentCured()
 		{
-			if (smi == null)
-			{
-				return 0f;
-			}
-			return smi.sm.percentRecovered.Get(smi);
+			return (smi != null) ? smi.sm.percentRecovered.Get(smi) : 0f;
 		}
 
 		public void SetPercentCured(float pct)

@@ -39,8 +39,6 @@ public class MainMenu : KScreen
 
 	private static MainMenu _instance;
 
-	public RectTransform LogoAndMenu;
-
 	public KButton Button_ResumeGame;
 
 	private KButton Button_NewGame;
@@ -81,7 +79,7 @@ public class MainMenu : KScreen
 	private LocText motdNewsBody;
 
 	[SerializeField]
-	private PatchNotesScreen patchNotesScreen;
+	private PatchNotesScreen patchNotesScreenPrefab;
 
 	[SerializeField]
 	private NextUpdateTimer nextUpdateTimer;
@@ -96,7 +94,9 @@ public class MainMenu : KScreen
 
 	private bool refreshResumeButton = true;
 
-	private int m_cheatInputCounter;
+	private int m_cheatInputCounter = 0;
+
+	public const string AutoResumeSaveFileKey = "AutoResumeSaveFile";
 
 	private static int LANGUAGE_CONFIRMATION_VERSION = 2;
 
@@ -142,7 +142,7 @@ public class MainMenu : KScreen
 		CheckPlayerPrefsCorruption();
 		if (PatchNotesScreen.ShouldShowScreen())
 		{
-			patchNotesScreen.gameObject.SetActive(value: true);
+			Util.KInstantiateUI(patchNotesScreenPrefab.gameObject, FrontEndManager.Instance.gameObject, force_active: true);
 		}
 		CheckDoubleBoundKeys();
 		topLeftAlphaMessage.gameObject.SetActive(value: false);
@@ -158,15 +158,12 @@ public class MainMenu : KScreen
 				if (ownsExpansion1)
 				{
 					expansion1Toggle.gameObject.SetActive(value: true);
-				}
-				else
-				{
 					nextUpdateTimer.gameObject.SetActive(value: true);
 				}
 				motdImageHeader.text = response.image_header_text;
 				motdNewsHeader.text = response.news_header_text;
 				motdNewsBody.text = response.news_body_text;
-				patchNotesScreen.UpdatePatchNotes(response.patch_notes_summary, response.patch_notes_link_url);
+				PatchNotesScreen.UpdatePatchNotes(response.patch_notes_summary, response.patch_notes_link_url);
 				nextUpdateTimer.UpdateReleaseTimes(response.last_update_time, response.next_update_time, response.update_text_override);
 				if (response.image_texture != null)
 				{
@@ -267,8 +264,6 @@ public class MainMenu : KScreen
 		m_cheatInputCounter = 0;
 		Canvas.ForceUpdateCanvases();
 		ShowLanguageConfirmation();
-		InitLoadScreen();
-		LoadScreen.Instance.ShowMigrationIfNecessary(fromMainMenu: true);
 		string savePrefix = SaveLoader.GetSavePrefix();
 		try
 		{
@@ -287,10 +282,11 @@ public class MainMenu : KScreen
 		{
 			string format = ((!(ex is IOException)) ? string.Format(UI.FRONTEND.SUPPORTWARNINGS.SAVE_DIRECTORY_READ_ONLY, savePrefix) : string.Format(UI.FRONTEND.SUPPORTWARNINGS.SAVE_DIRECTORY_INSUFFICIENT_SPACE, savePrefix));
 			string text = string.Format(format, savePrefix);
-			Util.KInstantiateUI<ConfirmDialogScreen>(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, base.gameObject, force_active: true).PopupConfirmDialog(text, null, null);
+			ConfirmDialogScreen confirmDialogScreen = Util.KInstantiateUI<ConfirmDialogScreen>(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, base.gameObject, force_active: true);
+			confirmDialogScreen.PopupConfirmDialog(text, null, null);
 		}
 		Global.Instance.modManager.Report(base.gameObject);
-		if ((GenericGameSettings.instance.autoResumeGame && !HasAutoresumedOnce) || !string.IsNullOrEmpty(GenericGameSettings.instance.performanceCapture.saveGame))
+		if ((GenericGameSettings.instance.autoResumeGame && !HasAutoresumedOnce && !KCrashReporter.hasCrash) || !string.IsNullOrEmpty(GenericGameSettings.instance.performanceCapture.saveGame) || KPlayerPrefs.HasKey("AutoResumeSaveFile"))
 		{
 			HasAutoresumedOnce = true;
 			ResumeGame();
@@ -325,16 +321,29 @@ public class MainMenu : KScreen
 
 	private void ShowLanguageConfirmation()
 	{
-		if (SteamManager.Initialized && !(SteamUtils.GetSteamUILanguage() != "schinese") && KPlayerPrefs.GetInt("LanguageConfirmationVersion") < LANGUAGE_CONFIRMATION_VERSION)
+		if (SteamManager.Initialized)
 		{
-			KPlayerPrefs.SetInt("LanguageConfirmationVersion", LANGUAGE_CONFIRMATION_VERSION);
-			Translations();
+			string steamUILanguage = SteamUtils.GetSteamUILanguage();
+			if (!(steamUILanguage != "schinese") && KPlayerPrefs.GetInt("LanguageConfirmationVersion") < LANGUAGE_CONFIRMATION_VERSION)
+			{
+				KPlayerPrefs.SetInt("LanguageConfirmationVersion", LANGUAGE_CONFIRMATION_VERSION);
+				Translations();
+			}
 		}
 	}
 
 	private void ResumeGame()
 	{
-		string text = (string.IsNullOrEmpty(GenericGameSettings.instance.performanceCapture.saveGame) ? SaveLoader.GetLatestSaveFile() : GenericGameSettings.instance.performanceCapture.saveGame);
+		string text;
+		if (!KPlayerPrefs.HasKey("AutoResumeSaveFile"))
+		{
+			text = (string.IsNullOrEmpty(GenericGameSettings.instance.performanceCapture.saveGame) ? SaveLoader.GetLatestSaveFile() : GenericGameSettings.instance.performanceCapture.saveGame);
+		}
+		else
+		{
+			text = KPlayerPrefs.GetString("AutoResumeSaveFile");
+			KPlayerPrefs.DeleteKey("AutoResumeSaveFile");
+		}
 		if (!string.IsNullOrEmpty(text))
 		{
 			KCrashReporter.MOST_RECENT_SAVEFILE = text;
@@ -355,7 +364,8 @@ public class MainMenu : KScreen
 	{
 		if (LoadScreen.Instance == null)
 		{
-			Util.KInstantiateUI(ScreenPrefabs.Instance.LoadScreen.gameObject, base.gameObject, force_active: true).GetComponent<LoadScreen>().requireConfirmation = false;
+			GameObject gameObject = Util.KInstantiateUI(ScreenPrefabs.Instance.LoadScreen.gameObject, base.gameObject, force_active: true);
+			LoadScreen component = gameObject.GetComponent<LoadScreen>();
 		}
 	}
 
@@ -394,7 +404,8 @@ public class MainMenu : KScreen
 
 	private void SpawnVideoScreen()
 	{
-		VideoScreen.Instance = Util.KInstantiateUI(ScreenPrefabs.Instance.VideoScreen.gameObject, base.gameObject).GetComponent<VideoScreen>();
+		GameObject gameObject = Util.KInstantiateUI(ScreenPrefabs.Instance.VideoScreen.gameObject, base.gameObject);
+		VideoScreen.Instance = gameObject.GetComponent<VideoScreen>();
 	}
 
 	private void Update()
@@ -437,7 +448,12 @@ public class MainMenu : KScreen
 					header = value.header;
 					gameInfo = value.headerData;
 				}
-				if (header.buildVersion > 447596 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 17)
+				bool flag2 = true;
+				if (header.buildVersion > 447598 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 22)
+				{
+					flag = false;
+				}
+				if (gameInfo.dlcId != DlcManager.GetActiveDlcId())
 				{
 					flag = false;
 				}
@@ -472,12 +488,12 @@ public class MainMenu : KScreen
 
 	private void Translations()
 	{
-		Util.KInstantiateUI<LanguageOptionsScreen>(ScreenPrefabs.Instance.languageOptionsScreen.gameObject, base.transform.parent.gameObject);
+		LanguageOptionsScreen languageOptionsScreen = Util.KInstantiateUI<LanguageOptionsScreen>(ScreenPrefabs.Instance.languageOptionsScreen.gameObject, base.transform.parent.gameObject);
 	}
 
 	private void Mods()
 	{
-		Util.KInstantiateUI<ModsScreen>(ScreenPrefabs.Instance.modsMenu.gameObject, base.transform.parent.gameObject);
+		ModsScreen modsScreen = Util.KInstantiateUI<ModsScreen>(ScreenPrefabs.Instance.modsMenu.gameObject, base.transform.parent.gameObject);
 	}
 
 	private void Options()
@@ -498,9 +514,9 @@ public class MainMenu : KScreen
 		{
 			AudioMixer.instance.StartUserVolumesSnapshot();
 		}
-		if (AudioDebug.Get().musicEnabled && !MusicManager.instance.SongIsPlaying("Music_TitleTheme"))
+		if (AudioDebug.Get().musicEnabled && !MusicManager.instance.SongIsPlaying("Music_TitleTheme_Expansion1"))
 		{
-			MusicManager.instance.PlaySong("Music_TitleTheme");
+			MusicManager.instance.PlaySong("Music_TitleTheme_Expansion1");
 		}
 		CheckForAudioDriverIssue();
 	}
@@ -509,7 +525,8 @@ public class MainMenu : KScreen
 	{
 		if (!KFMOD.didFmodInitializeSuccessfully)
 		{
-			Util.KInstantiateUI<ConfirmDialogScreen>(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, base.gameObject, force_active: true).PopupConfirmDialog(UI.FRONTEND.SUPPORTWARNINGS.AUDIO_DRIVERS, null, null, UI.FRONTEND.SUPPORTWARNINGS.AUDIO_DRIVERS_MORE_INFO, delegate
+			ConfirmDialogScreen confirmDialogScreen = Util.KInstantiateUI<ConfirmDialogScreen>(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, base.gameObject, force_active: true);
+			confirmDialogScreen.PopupConfirmDialog(UI.FRONTEND.SUPPORTWARNINGS.AUDIO_DRIVERS, null, null, UI.FRONTEND.SUPPORTWARNINGS.AUDIO_DRIVERS_MORE_INFO, delegate
 			{
 				Application.OpenURL("http://support.kleientertainment.com/customer/en/portal/articles/2947881-no-audio-when-playing-oxygen-not-included");
 			}, null, null, null, GlobalResources.Instance().sadDupeAudio);
@@ -521,7 +538,8 @@ public class MainMenu : KScreen
 		if (KPlayerPrefs.HasCorruptedFlag())
 		{
 			KPlayerPrefs.ResetCorruptedFlag();
-			Util.KInstantiateUI<ConfirmDialogScreen>(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, base.gameObject, force_active: true).PopupConfirmDialog(UI.FRONTEND.SUPPORTWARNINGS.PLAYER_PREFS_CORRUPTED, null, null, null, null, null, null, null, GlobalResources.Instance().sadDupe);
+			ConfirmDialogScreen confirmDialogScreen = Util.KInstantiateUI<ConfirmDialogScreen>(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, base.gameObject, force_active: true);
+			confirmDialogScreen.PopupConfirmDialog(UI.FRONTEND.SUPPORTWARNINGS.PLAYER_PREFS_CORRUPTED, null, null, null, null, null, null, null, GlobalResources.Instance().sadDupe);
 		}
 	}
 
@@ -569,7 +587,8 @@ public class MainMenu : KScreen
 		}
 		if (text != "")
 		{
-			Util.KInstantiateUI<ConfirmDialogScreen>(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, base.gameObject, force_active: true).PopupConfirmDialog(string.Format(UI.FRONTEND.SUPPORTWARNINGS.DUPLICATE_KEY_BINDINGS, text), null, null, null, null, null, null, null, GlobalResources.Instance().sadDupe);
+			ConfirmDialogScreen confirmDialogScreen = Util.KInstantiateUI<ConfirmDialogScreen>(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, base.gameObject, force_active: true);
+			confirmDialogScreen.PopupConfirmDialog(string.Format(UI.FRONTEND.SUPPORTWARNINGS.DUPLICATE_KEY_BINDINGS, text), null, null, null, null, null, null, null, GlobalResources.Instance().sadDupe);
 		}
 	}
 

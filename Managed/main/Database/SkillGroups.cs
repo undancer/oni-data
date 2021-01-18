@@ -20,6 +20,8 @@ namespace Database
 
 		public SkillGroup Research;
 
+		public SkillGroup Rocketry;
+
 		public SkillGroup Suits;
 
 		public SkillGroup Hauling;
@@ -95,6 +97,15 @@ namespace Database
 			Research.requiredChoreGroups = new List<string>
 			{
 				Db.Get().ChoreGroups.Research.Id
+			};
+			Rocketry = Add(new SkillGroup("Rocketry", Db.Get().ChoreGroups.Rocketry.Id, DUPLICANTS.CHOREGROUPS.ROCKETRY.NAME, "icon_errand_tidy", "icon_archetype_tidy"));
+			Rocketry.relevantAttributes = new List<Attribute>
+			{
+				Db.Get().ChoreGroups.Rocketry.attribute
+			};
+			Rocketry.requiredChoreGroups = new List<string>
+			{
+				Db.Get().ChoreGroups.Rocketry.Id
 			};
 			Suits = Add(new SkillGroup("Suits", "", DUPLICANTS.ROLES.GROUPS.SUITS, "suit_overlay_icon", "icon_archetype_astronaut"));
 			Suits.relevantAttributes = new List<Attribute>

@@ -22,7 +22,7 @@ public class KAnimBatchManager
 
 	public static Vector2 GROUP_SIZE = new Vector2(32f, 32f);
 
-	private bool ready;
+	private bool ready = false;
 
 	private Dictionary<HashedString, KBatchGroupData> batchGroupData = new Dictionary<HashedString, KBatchGroupData>();
 
@@ -140,7 +140,8 @@ public class KAnimBatchManager
 
 	public static Vector2I ControllerToChunkXY(KAnimConverter.IAnimConverter controller)
 	{
-		return CellXYToChunkXY(controller.GetCellXY());
+		Vector2I cellXY = controller.GetCellXY();
+		return CellXYToChunkXY(cellXY);
 	}
 
 	public void Register(KAnimConverter.IAnimConverter controller)

@@ -26,25 +26,31 @@ public class SandboxSpawnerTool : InterfaceTool
 
 	private void Place(int cell)
 	{
-		if (Grid.IsValidBuildingCell(cell))
+		if (!Grid.IsValidBuildingCell(cell))
 		{
-			string stringSetting = SandboxToolParameterMenu.instance.settings.GetStringSetting("SandboxTools.SelectedEntity");
-			GameObject prefab = Assets.GetPrefab(stringSetting);
-			if (stringSetting == MinionConfig.ID)
-			{
-				SpawnMinion();
-			}
-			else if (prefab.GetComponent<Building>() != null)
-			{
-				BuildingDef def = prefab.GetComponent<Building>().Def;
-				def.Build(cell, Orientation.Neutral, null, def.DefaultElements(), 298.15f);
-			}
-			else
-			{
-				GameUtil.KInstantiate(prefab, Grid.CellToPosCBC(currentCell, Grid.SceneLayer.Creatures), Grid.SceneLayer.Creatures).SetActive(value: true);
-			}
-			UISounds.PlaySound(UISounds.Sound.ClickObject);
+			return;
 		}
+		string stringSetting = SandboxToolParameterMenu.instance.settings.GetStringSetting("SandboxTools.SelectedEntity");
+		GameObject prefab = Assets.GetPrefab(stringSetting);
+		if (stringSetting == MinionConfig.ID)
+		{
+			SpawnMinion();
+		}
+		else if (prefab.GetComponent<Building>() != null)
+		{
+			BuildingDef def = prefab.GetComponent<Building>().Def;
+			def.Build(cell, Orientation.Neutral, null, def.DefaultElements(), 298.15f);
+		}
+		else
+		{
+			GameObject gameObject = GameUtil.KInstantiate(prefab, Grid.CellToPosCBC(currentCell, Grid.SceneLayer.Creatures), Grid.SceneLayer.Creatures);
+			gameObject.SetActive(value: true);
+			if (gameObject.GetComponent<MutantPlant>() != null)
+			{
+				gameObject.GetComponent<MutantPlant>().SetSubSpecies(0);
+			}
+		}
+		UISounds.PlaySound(UISounds.Sound.ClickObject);
 	}
 
 	protected override void OnActivateTool()
@@ -69,6 +75,36 @@ public class SandboxSpawnerTool : InterfaceTool
 		Vector3 position = Grid.CellToPosCBC(currentCell, Grid.SceneLayer.Move);
 		gameObject.transform.SetLocalPosition(position);
 		gameObject.SetActive(value: true);
-		new MinionStartingStats(is_starter_minion: false).Apply(gameObject);
+		MinionStartingStats minionStartingStats = new MinionStartingStats(is_starter_minion: false);
+		minionStartingStats.Apply(gameObject);
+	}
+
+	public override void OnKeyDown(KButtonEvent e)
+	{
+		if (e.TryConsume(Action.SandboxCopyElement))
+		{
+			int cell = Grid.PosToCell(PlayerController.GetCursorPos(KInputManager.GetMousePos()));
+			List<ObjectLayer> list = new List<ObjectLayer>();
+			list.Add(ObjectLayer.Pickupables);
+			list.Add(ObjectLayer.Plants);
+			list.Add(ObjectLayer.Minion);
+			list.Add(ObjectLayer.Building);
+			if (Grid.IsValidCell(cell))
+			{
+				foreach (ObjectLayer item in list)
+				{
+					GameObject gameObject = Grid.Objects[cell, (int)item];
+					if ((bool)gameObject)
+					{
+						SandboxToolParameterMenu.instance.settings.SetStringSetting("SandboxTools.SelectedEntity", gameObject.PrefabID().ToString());
+						break;
+					}
+				}
+			}
+		}
+		if (!e.Consumed)
+		{
+			base.OnKeyDown(e);
+		}
 	}
 }

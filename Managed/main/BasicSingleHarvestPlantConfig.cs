@@ -11,6 +11,11 @@ public class BasicSingleHarvestPlantConfig : IEntityConfig
 
 	public const float DIRT_RATE = 0.016666668f;
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("BasicSingleHarvestPlant", STRINGS.CREATURES.SPECIES.BASICSINGLEHARVESTPLANT.NAME, STRINGS.CREATURES.SPECIES.BASICSINGLEHARVESTPLANT.DESC, 1f, decor: DECOR.PENALTY.TIER1, anim: Assets.GetAnim("meallice_kanim"), initialAnim: "idle_empty", sceneLayer: Grid.SceneLayer.BuildingBack, width: 1, height: 2);

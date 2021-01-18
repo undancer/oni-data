@@ -1,3 +1,4 @@
+#define UNITY_ASSERTIONS
 using System.Collections.Generic;
 using STRINGS;
 using UnityEngine;
@@ -209,6 +210,7 @@ public class Light2D : KMonoBehaviour, IGameObjectEffectDescriptor
 		Vector2I vector2I = Grid.CellToXY(origin);
 		int num = (int)Range;
 		Vector2I xy_min = new Vector2I(vector2I.x - num, vector2I.y - num);
+		UnityEngine.Debug.Assert(shape == LightShape.Circle || shape == LightShape.Cone);
 		int width = 2 * num;
 		int height = ((shape == LightShape.Circle) ? (2 * num) : num);
 		solidPartitionerEntry = AddToLayer(xy_min, width, height, GameScenePartitioner.Instance.solidChangedLayer);

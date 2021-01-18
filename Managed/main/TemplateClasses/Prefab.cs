@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace TemplateClasses
 {
 	[Serializable]
-	public class Prefab : ICloneable
+	public class Prefab
 	{
 		public enum Type
 		{
@@ -132,15 +132,11 @@ namespace TemplateClasses
 
 		public Prefab()
 		{
-			rottable = new Rottable();
-			storage = new List<StorageItem>();
 			type = Type.Other;
 		}
 
 		public Prefab(string _id, Type _type, int loc_x, int loc_y, SimHashes _element, float _temperature = -1f, float _units = 1f, string _disease = null, int _disease_count = 0, Orientation _rotation = Orientation.Neutral, template_amount_value[] _amount_values = null, template_amount_value[] _other_values = null, int _connections = 0)
 		{
-			rottable = new Rottable();
-			storage = new List<StorageItem>();
 			id = _id;
 			type = _type;
 			location_x = loc_x;
@@ -152,33 +148,33 @@ namespace TemplateClasses
 			diseaseName = _disease;
 			diseaseCount = _disease_count;
 			rotationOrientation = _rotation;
-			amounts = _amount_values;
-			other_values = _other_values;
+			if (_amount_values != null && _amount_values.Length != 0)
+			{
+				amounts = _amount_values;
+			}
+			if (_other_values != null && _other_values.Length != 0)
+			{
+				other_values = _other_values;
+			}
 		}
 
-		public object Clone()
-		{
-			return Clone(Vector2I.zero);
-		}
-
-		public object Clone(Vector2I offset)
+		public Prefab Clone(Vector2I offset)
 		{
 			Prefab prefab = new Prefab(id, type, offset.x + location_x, offset.y + location_y, element, temperature, units, diseaseName, diseaseCount, rotationOrientation, amounts, other_values, connections);
-			prefab.rottable.rotAmount = rottable.rotAmount;
-			prefab.storage = new List<StorageItem>();
-			foreach (StorageItem item in storage)
+			if (rottable != null)
 			{
-				prefab.storage.Add((StorageItem)item.Clone());
+				prefab.rottable = new Rottable();
+				prefab.rottable.rotAmount = rottable.rotAmount;
+			}
+			if (storage != null && storage.Count > 0)
+			{
+				prefab.storage = new List<StorageItem>();
+				foreach (StorageItem item in storage)
+				{
+					prefab.storage.Add(item.Clone());
+				}
 			}
 			return prefab;
-		}
-
-		public object Clone(int offset_x, int offset_y)
-		{
-			Prefab obj = (Prefab)Clone();
-			obj.location_x += offset_x;
-			obj.location_y += offset_y;
-			return obj;
 		}
 
 		public void AssignStorage(StorageItem _storage)

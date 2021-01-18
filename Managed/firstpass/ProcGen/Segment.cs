@@ -23,7 +23,8 @@ namespace ProcGen
 			Vector2 a = e1 - e0;
 			Vector2 vector = e0;
 			Vector2 vector2 = e1;
-			float num = a.magnitude / maxDistance;
+			float magnitude = a.magnitude;
+			float num = magnitude / maxDistance;
 			Vector2 normalized = new Vector2(0f - a.y, a.x).normalized;
 			for (int i = 0; (float)i < num; i++)
 			{

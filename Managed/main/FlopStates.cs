@@ -36,12 +36,9 @@ public class FlopStates : GameStateMachine<FlopStates, FlopStates.Instance, ISta
 
 	public static bool ShouldFlop(Instance smi)
 	{
-		int num = Grid.CellBelow(Grid.PosToCell(smi.transform.GetPosition()));
-		if (Grid.IsValidCell(num))
-		{
-			return Grid.Solid[num];
-		}
-		return false;
+		int cell = Grid.PosToCell(smi.transform.GetPosition());
+		int num = Grid.CellBelow(cell);
+		return Grid.IsValidCell(num) && Grid.Solid[num];
 	}
 
 	public static void ChooseDirection(Instance smi)

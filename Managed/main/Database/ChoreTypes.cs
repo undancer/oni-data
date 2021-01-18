@@ -98,6 +98,8 @@ namespace Database
 
 		public ChoreType Mourn;
 
+		public ChoreType Migrate;
+
 		public ChoreType Fetch;
 
 		public ChoreType FetchCritical;
@@ -226,6 +228,10 @@ namespace Database
 
 		public ChoreType JoyReaction;
 
+		public ChoreType RocketControl;
+
+		public ChoreType Party;
+
 		private int nextImplicitPriority = 10000;
 
 		private const int INVALID_PRIORITY = -1;
@@ -281,6 +287,7 @@ namespace Database
 			}, DUPLICANTS.CHORES.HEAL.NAME, DUPLICANTS.CHORES.HEAL.STATUS, DUPLICANTS.CHORES.HEAL.TOOLTIP, skip_implicit_priority_change: false);
 			BeIncapacitated = Add("BeIncapacitated", new string[0], "BeIncapacitated", new string[0], DUPLICANTS.CHORES.BEINCAPACITATED.NAME, DUPLICANTS.CHORES.BEINCAPACITATED.STATUS, DUPLICANTS.CHORES.BEINCAPACITATED.TOOLTIP, skip_implicit_priority_change: false);
 			GeneShuffle = Add("GeneShuffle", new string[0], "", new string[0], DUPLICANTS.CHORES.GENESHUFFLE.NAME, DUPLICANTS.CHORES.GENESHUFFLE.STATUS, DUPLICANTS.CHORES.GENESHUFFLE.TOOLTIP, skip_implicit_priority_change: false);
+			Migrate = Add("Migrate", new string[0], "", new string[0], DUPLICANTS.CHORES.MIGRATE.NAME, DUPLICANTS.CHORES.MIGRATE.STATUS, DUPLICANTS.CHORES.MIGRATE.TOOLTIP, skip_implicit_priority_change: false);
 			DebugGoTo = Add("DebugGoTo", new string[0], "", new string[0], DUPLICANTS.CHORES.DEBUGGOTO.NAME, DUPLICANTS.CHORES.DEBUGGOTO.STATUS, DUPLICANTS.CHORES.MOVETO.TOOLTIP, skip_implicit_priority_change: false);
 			MoveTo = Add("MoveTo", new string[0], "", new string[0], DUPLICANTS.CHORES.MOVETO.NAME, DUPLICANTS.CHORES.MOVETO.STATUS, DUPLICANTS.CHORES.MOVETO.TOOLTIP, skip_implicit_priority_change: false);
 			DropUnusedInventory = Add("DropUnusedInventory", new string[0], "", new string[0], DUPLICANTS.CHORES.DROPUNUSEDINVENTORY.NAME, DUPLICANTS.CHORES.DROPUNUSEDINVENTORY.STATUS, DUPLICANTS.CHORES.DROPUNUSEDINVENTORY.TOOLTIP, skip_implicit_priority_change: false);
@@ -343,11 +350,16 @@ namespace Database
 			UnlearnSkill = Add("UnlearnSkill", new string[0], "", new string[0], DUPLICANTS.CHORES.UNLEARNSKILL.NAME, DUPLICANTS.CHORES.UNLEARNSKILL.STATUS, DUPLICANTS.CHORES.UNLEARNSKILL.TOOLTIP, skip_implicit_priority_change: false);
 			Equip = Add("Equip", new string[0], "", new string[0], DUPLICANTS.CHORES.EQUIP.NAME, DUPLICANTS.CHORES.EQUIP.STATUS, DUPLICANTS.CHORES.EQUIP.TOOLTIP, skip_implicit_priority_change: false);
 			JoyReaction = Add("JoyReaction", new string[0], "", new string[0], DUPLICANTS.CHORES.JOYREACTION.NAME, DUPLICANTS.CHORES.JOYREACTION.STATUS, DUPLICANTS.CHORES.JOYREACTION.TOOLTIP, skip_implicit_priority_change: false, 5000);
+			RocketControl = Add("RocketControl", new string[0], "", new string[0], DUPLICANTS.CHORES.ROCKETCONTROL.NAME, DUPLICANTS.CHORES.ROCKETCONTROL.STATUS, DUPLICANTS.CHORES.ROCKETCONTROL.TOOLTIP, skip_implicit_priority_change: false);
 			StressHeal = Add("StressHeal", new string[0], "", new string[1]
 			{
 				""
 			}, DUPLICANTS.CHORES.STRESSHEAL.NAME, DUPLICANTS.CHORES.STRESSHEAL.STATUS, DUPLICANTS.CHORES.STRESSHEAL.TOOLTIP, skip_implicit_priority_change: false);
-			Relax = Add("Relax", new string[0], "", new string[1]
+			Party = Add("Party", new string[0], "", new string[0], DUPLICANTS.CHORES.PARTY.NAME, DUPLICANTS.CHORES.PARTY.STATUS, DUPLICANTS.CHORES.PARTY.TOOLTIP, skip_implicit_priority_change: false);
+			Relax = Add("Relax", new string[1]
+			{
+				"Recreation"
+			}, "", new string[1]
 			{
 				"Sleep"
 			}, DUPLICANTS.CHORES.RELAX.NAME, DUPLICANTS.CHORES.RELAX.STATUS, DUPLICANTS.CHORES.RELAX.TOOLTIP, skip_implicit_priority_change: false);
@@ -579,7 +591,7 @@ namespace Database
 			MoveToSafety = Add("MoveToSafety", new string[0], "MoveToSafety", new string[0], DUPLICANTS.CHORES.MOVETOSAFETY.NAME, DUPLICANTS.CHORES.MOVETOSAFETY.STATUS, DUPLICANTS.CHORES.MOVETOSAFETY.TOOLTIP, skip_implicit_priority_change: false);
 			ReturnSuitIdle = Add("ReturnSuitIdle", new string[0], "", new string[0], DUPLICANTS.CHORES.RETURNSUIT.NAME, DUPLICANTS.CHORES.RETURNSUIT.STATUS, DUPLICANTS.CHORES.RETURNSUIT.TOOLTIP, skip_implicit_priority_change: false);
 			Idle = Add("IdleChore", new string[0], "", new string[0], DUPLICANTS.CHORES.IDLE.NAME, DUPLICANTS.CHORES.IDLE.STATUS, DUPLICANTS.CHORES.IDLE.TOOLTIP, skip_implicit_priority_change: false);
-			ChoreType[][] obj = new ChoreType[30][]
+			ChoreType[][] array = new ChoreType[32][]
 			{
 				new ChoreType[1]
 				{
@@ -593,10 +605,11 @@ namespace Database
 				{
 					HealCritical
 				},
-				new ChoreType[2]
+				new ChoreType[3]
 				{
 					BeIncapacitated,
-					GeneShuffle
+					GeneShuffle,
+					Migrate
 				},
 				new ChoreType[1]
 				{
@@ -644,6 +657,10 @@ namespace Database
 				new ChoreType[1]
 				{
 					TopPriority
+				},
+				new ChoreType[1]
+				{
+					RocketControl
 				},
 				new ChoreType[1]
 				{
@@ -695,6 +712,10 @@ namespace Database
 				new ChoreType[1]
 				{
 					StressHeal
+				},
+				new ChoreType[1]
+				{
+					Party
 				},
 				new ChoreType[1]
 				{
@@ -782,10 +803,11 @@ namespace Database
 			};
 			string text = "";
 			int num = 100000;
-			ChoreType[][] array = obj;
-			foreach (ChoreType[] array2 in array)
+			ChoreType[][] array2 = array;
+			foreach (ChoreType[] array3 in array2)
 			{
-				foreach (ChoreType choreType in array2)
+				ChoreType[] array4 = array3;
+				foreach (ChoreType choreType in array4)
 				{
 					if (choreType.interruptPriority != 0)
 					{

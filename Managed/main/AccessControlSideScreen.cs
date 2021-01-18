@@ -57,11 +57,7 @@ public class AccessControlSideScreen : SideScreenContent
 				return -1;
 			}
 			int num = minionResume.CurrentRole.CompareTo(minionResume2.CurrentRole);
-			if (num != 0)
-			{
-				return num;
-			}
-			return CompareByName(a, b);
+			return (num == 0) ? CompareByName(a, b) : num;
 		}
 	}
 
@@ -126,7 +122,7 @@ public class AccessControlSideScreen : SideScreenContent
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		return target.GetComponent<AccessControl>() != null;
+		return target.GetComponent<AccessControl>() != null && target.GetComponent<AccessControl>().controlEnabled;
 	}
 
 	public override void SetTarget(GameObject target)
@@ -201,7 +197,7 @@ public class AccessControlSideScreen : SideScreenContent
 
 	private void SortByPermission(bool state)
 	{
-		ExecuteSort(sortByPermissionToggle, state, (MinionAssignablesProxy identity) => (int)((!target.IsDefaultPermission(identity)) ? target.GetSetPermission(identity) : ((AccessControl.Permission)(-1))));
+		ExecuteSort(sortByPermissionToggle, state, (MinionAssignablesProxy identity) => (int)(target.IsDefaultPermission(identity) ? ((AccessControl.Permission)(-1)) : target.GetSetPermission(identity)));
 	}
 
 	private void ExecuteSort<T>(Toggle toggle, bool state, Func<MinionAssignablesProxy, T> sortFunction, bool refresh = false)

@@ -28,9 +28,9 @@ public static class AsyncLoadManager<AsyncLoaderType>
 	{
 		List<AsyncLoader> list = new List<AsyncLoader>();
 		Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-		for (int i = 0; i < assemblies.Length; i++)
+		foreach (Assembly assembly in assemblies)
 		{
-			Type[] types = assemblies[i].GetTypes();
+			Type[] types = assembly.GetTypes();
 			foreach (Type type in types)
 			{
 				if (!type.IsAbstract && typeof(AsyncLoaderType).IsAssignableFrom(type))

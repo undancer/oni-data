@@ -10,46 +10,56 @@ public class GeneratedOre
 		HashSet<SimHashes> hashSet = new HashSet<SimHashes>();
 		foreach (Type type in types)
 		{
-			if (typeFromHandle.IsAssignableFrom(type) && !type.IsAbstract && !type.IsInterface)
+			if (!typeFromHandle.IsAssignableFrom(type) || type.IsAbstract || type.IsInterface)
 			{
-				IOreConfig obj = Activator.CreateInstance(type) as IOreConfig;
-				SimHashes elementID = obj.ElementID;
+				continue;
+			}
+			object obj = Activator.CreateInstance(type);
+			IOreConfig oreConfig = obj as IOreConfig;
+			SimHashes elementID = oreConfig.ElementID;
+			Element element = ElementLoader.FindElementByHash(elementID);
+			if (element != null && DlcManager.IsContentActive(element.dlcId))
+			{
 				if (elementID != SimHashes.Void)
 				{
 					hashSet.Add(elementID);
 				}
-				Assets.AddPrefab(obj.CreatePrefab().GetComponent<KPrefabID>());
+				GameObject gameObject = oreConfig.CreatePrefab();
+				KPrefabID component = gameObject.GetComponent<KPrefabID>();
+				Assets.AddPrefab(component);
 			}
 		}
-		foreach (Element element in ElementLoader.elements)
+		List<Element> elements = ElementLoader.elements;
+		foreach (Element item in elements)
 		{
-			if (element == null || hashSet.Contains(element.id))
+			if (item == null || hashSet.Contains(item.id) || !DlcManager.IsContentActive(item.dlcId))
 			{
 				continue;
 			}
-			if (element.substance != null && element.substance.anim != null)
+			if (item.substance != null && item.substance.anim != null)
 			{
-				GameObject gameObject = null;
-				if (element.IsSolid)
+				GameObject gameObject2 = null;
+				if (item.IsSolid)
 				{
-					gameObject = EntityTemplates.CreateSolidOreEntity(element.id);
+					gameObject2 = EntityTemplates.CreateSolidOreEntity(item.id);
 				}
-				else if (element.IsLiquid)
+				else if (item.IsLiquid)
 				{
-					gameObject = EntityTemplates.CreateLiquidOreEntity(element.id);
+					gameObject2 = EntityTemplates.CreateLiquidOreEntity(item.id);
 				}
-				else if (element.IsGas)
+				else if (item.IsGas)
 				{
-					gameObject = EntityTemplates.CreateGasOreEntity(element.id);
+					gameObject2 = EntityTemplates.CreateGasOreEntity(item.id);
 				}
-				if (gameObject != null)
+				if (gameObject2 != null)
 				{
-					Assets.AddPrefab(gameObject.GetComponent<KPrefabID>());
+					KPrefabID component2 = gameObject2.GetComponent<KPrefabID>();
+					Assets.AddPrefab(component2);
 				}
 			}
 			else
 			{
-				Debug.LogError("Missing substance or anim for element [" + element.name + "]");
+				Debug.LogError("Missing substance or anim for element [" + item.name + "]");
 			}
 		}
 	}
@@ -72,7 +82,8 @@ public class GeneratedOre
 		component2.Mass = mass;
 		component2.Temperature = temperature;
 		component2.AddDisease(diseaseIdx, diseaseCount, "GeneratedOre.CreateChunk");
-		component.GetComponent<KPrefabID>().InitializeTags();
+		KPrefabID component3 = component.GetComponent<KPrefabID>();
+		component3.InitializeTags();
 		return component;
 	}
 }

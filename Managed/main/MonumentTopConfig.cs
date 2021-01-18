@@ -8,7 +8,7 @@ public class MonumentTopConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("MonumentTop", 5, 5, "victory_monument_upper_kanim", 1000, 60f, new float[3]
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("MonumentTop", 5, 5, "victory_monument_upper_kanim", 1000, 60f, new float[3]
 		{
 			2500f,
 			2500f,
@@ -19,24 +19,25 @@ public class MonumentTopConfig : IBuildingConfig
 			SimHashes.Diamond.ToString(),
 			SimHashes.Steel.ToString()
 		}, 9999f, BuildLocationRule.BuildingAttachPoint, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.BONUS.MONUMENT.INCOMPLETE);
-		BuildingTemplates.CreateMonumentBuildingDef(obj);
-		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
-		obj.OverheatTemperature = 2273.15f;
-		obj.Floodable = false;
-		obj.PermittedRotations = PermittedRotations.FlipH;
-		obj.AttachmentSlotTag = "MonumentTop";
-		obj.ObjectLayer = ObjectLayer.Building;
-		obj.attachablePosition = new CellOffset(0, 0);
-		obj.RequiresPowerInput = false;
-		obj.CanMove = false;
-		return obj;
+		BuildingTemplates.CreateMonumentBuildingDef(buildingDef);
+		buildingDef.SceneLayer = Grid.SceneLayer.BuildingFront;
+		buildingDef.OverheatTemperature = 2273.15f;
+		buildingDef.Floodable = false;
+		buildingDef.PermittedRotations = PermittedRotations.FlipH;
+		buildingDef.AttachmentSlotTag = "MonumentTop";
+		buildingDef.ObjectLayer = ObjectLayer.Building;
+		buildingDef.attachablePosition = new CellOffset(0, 0);
+		buildingDef.RequiresPowerInput = false;
+		buildingDef.CanMove = false;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		go.AddOrGet<LoopingSounds>();
-		go.AddOrGet<MonumentPart>().part = MonumentPart.Part.Top;
+		MonumentPart monumentPart = go.AddOrGet<MonumentPart>();
+		monumentPart.part = MonumentPart.Part.Top;
 	}
 
 	public override void DoPostConfigurePreview(BuildingDef def, GameObject go)

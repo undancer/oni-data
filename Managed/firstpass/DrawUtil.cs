@@ -47,7 +47,7 @@ public static class DrawUtil
 		Vector3 forward = end - start;
 		if (!(forward.sqrMagnitude < 0.001f))
 		{
-			Quaternion.LookRotation(forward, Vector3.up);
+			Quaternion quaternion = Quaternion.LookRotation(forward, Vector3.up);
 		}
 	}
 
@@ -69,7 +69,7 @@ public static class DrawUtil
 				circlePointCache[i] = new Vector3(Mathf.Cos(num2 * (float)i), Mathf.Sin(num2 * (float)i), 0f);
 			}
 		}
-		Quaternion.FromToRotation(Vector3.forward, toDirection);
+		Quaternion quaternion = Quaternion.FromToRotation(Vector3.forward, toDirection);
 		for (int j = 0; j < num - 1; j++)
 		{
 		}
@@ -82,9 +82,20 @@ public static class DrawUtil
 
 	public static void Box(Vector3 pos, Color color, float size = 1f, float time = 1f)
 	{
+		float num = size * 0.5f;
 	}
 
 	public static void Sphere(Vector3 pos, float radius, Color color, float time = 0f)
 	{
+	}
+
+	public static void Cell(int gridWidth, int cell, Color color, float inset = 0f, float time = 0f)
+	{
+		CellXY(cell % gridWidth, cell / gridWidth, color, inset, time);
+	}
+
+	public static void CellXY(int x, int y, Color color, float inset = 0f, float time = 0f)
+	{
+		Vector2 vector = new Vector2(x, y);
 	}
 }

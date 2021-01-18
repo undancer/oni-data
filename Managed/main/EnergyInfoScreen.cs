@@ -26,11 +26,7 @@ public class EnergyInfoScreen : TargetScreen
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		if (!(target.GetComponent<Generator>() != null) && !(target.GetComponent<Wire>() != null) && !(target.GetComponent<Battery>() != null))
-		{
-			return target.GetComponent<EnergyConsumer>() != null;
-		}
-		return true;
+		return target.GetComponent<Generator>() != null || target.GetComponent<Wire>() != null || target.GetComponent<Battery>() != null || target.GetComponent<EnergyConsumer>() != null;
 	}
 
 	protected override void OnPrefabInit()
@@ -152,7 +148,8 @@ public class EnergyInfoScreen : TargetScreen
 					if (item != null && item.GetComponent<Battery>() == null)
 					{
 						gameObject = AddOrGetLabel(generatorsLabels, generatorsPanel, item.gameObject.GetInstanceID().ToString());
-						if (item.GetComponent<Operational>().IsActive)
+						Operational component3 = item.GetComponent<Operational>();
+						if (component3.IsActive)
 						{
 							gameObject.GetComponent<LocText>().text = $"{item.GetComponent<KSelectable>().entityName}: {GameUtil.GetFormattedWattage(item.WattageRating)}";
 						}

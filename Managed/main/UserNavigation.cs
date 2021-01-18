@@ -29,11 +29,59 @@ public class UserNavigation : KMonoBehaviour
 	[Serialize]
 	private List<NavPoint> hotkeyNavPoints = new List<NavPoint>();
 
+	[Serialize]
+	private Dictionary<int, NavPoint> worldCameraPositions = new Dictionary<int, NavPoint>();
+
 	public UserNavigation()
 	{
 		for (Action action = Action.SetUserNav1; action <= Action.SetUserNav10; action++)
 		{
 			hotkeyNavPoints.Add(NavPoint.Invalid);
+		}
+	}
+
+	protected override void OnSpawn()
+	{
+		base.OnSpawn();
+		Game.Instance.Subscribe(1983128072, delegate(object worlds)
+		{
+			Tuple<int, int> tuple = (Tuple<int, int>)worlds;
+			Dictionary<int, NavPoint> dictionary = worldCameraPositions;
+			int second = tuple.second;
+			NavPoint value = new NavPoint
+			{
+				pos = CameraController.Instance.transform.position,
+				orthoSize = CameraController.Instance.targetOrthographicSize
+			};
+			dictionary[second] = value;
+			if (!worldCameraPositions.ContainsKey(tuple.first))
+			{
+				WorldContainer world = ClusterManager.Instance.GetWorld(tuple.first);
+				Vector2I vector2I = world.WorldOffset + new Vector2I(world.Width / 2, world.Height / 2);
+				Dictionary<int, NavPoint> dictionary2 = worldCameraPositions;
+				int first = tuple.first;
+				value = new NavPoint
+				{
+					pos = new Vector3(vector2I.x, vector2I.y),
+					orthoSize = CameraController.Instance.targetOrthographicSize
+				};
+				dictionary2.Add(first, value);
+			}
+			CameraController.Instance.SetTargetPos(worldCameraPositions[((Tuple<int, int>)worlds).first].pos, worldCameraPositions[((Tuple<int, int>)worlds).first].orthoSize, playSound: false);
+			CameraController.Instance.SetPosition(worldCameraPositions[((Tuple<int, int>)worlds).first].pos);
+			CameraController.Instance.SetOrthographicsSize(worldCameraPositions[((Tuple<int, int>)worlds).first].orthoSize);
+		});
+	}
+
+	public void SetWorldCameraStartPosition(int world_id, Vector3 start_pos)
+	{
+		if (!worldCameraPositions.ContainsKey(world_id))
+		{
+			worldCameraPositions.Add(world_id, new NavPoint
+			{
+				pos = new Vector3(start_pos.x, start_pos.y),
+				orthoSize = CameraController.Instance.targetOrthographicSize
+			});
 		}
 	}
 
@@ -75,10 +123,11 @@ public class UserNavigation : KMonoBehaviour
 			NavPoint navPoint = hotkeyNavPoints[index];
 			if (navPoint.IsValid())
 			{
-				CameraController.Instance.SetTargetPos(navPoint.pos, navPoint.orthoSize, playSound: true);
-				EventInstance instance = KFMOD.BeginOneShot(GlobalAssets.GetSound("UserNavPoint_recall"), Vector3.zero);
-				instance.setParameterByName("userNavPoint_ID", index);
-				KFMOD.EndOneShot(instance);
+				CameraController instance = CameraController.Instance;
+				instance.SetTargetPos(navPoint.pos, navPoint.orthoSize, playSound: true);
+				EventInstance instance2 = KFMOD.BeginOneShot(GlobalAssets.GetSound("UserNavPoint_recall"), Vector3.zero);
+				instance2.setParameterByName("userNavPoint_ID", index);
+				KFMOD.EndOneShot(instance2);
 			}
 		}
 	}

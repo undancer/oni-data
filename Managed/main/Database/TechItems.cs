@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using STRINGS;
 using UnityEngine;
 
@@ -19,6 +18,14 @@ namespace Database
 
 		public TechItem jetSuit;
 
+		public const string ATMO_SUIT_ID = "AtmoSuit";
+
+		public TechItem atmoSuit;
+
+		public const string LEAD_SUIT_ID = "LeadSuit";
+
+		public TechItem leadSuit;
+
 		public const string BETA_RESEARCH_POINT_ID = "BetaResearchPoint";
 
 		public TechItem betaResearchPoint;
@@ -27,6 +34,10 @@ namespace Database
 
 		public TechItem gammaResearchPoint;
 
+		public const string DELTA_RESEARCH_POINT_ID = "DeltaResearchPoint";
+
+		public TechItem deltaResearchPoint;
+
 		public const string CONVEYOR_OVERLAY_ID = "ConveyorOverlay";
 
 		public TechItem conveyorOverlay;
@@ -34,12 +45,22 @@ namespace Database
 		public TechItems(ResourceSet parent)
 			: base("TechItems", parent)
 		{
-			automationOverlay = AddTechItem("AutomationOverlay", RESEARCH.OTHER_TECH_ITEMS.AUTOMATION_OVERLAY.NAME, RESEARCH.OTHER_TECH_ITEMS.AUTOMATION_OVERLAY.DESC, GetSpriteFnBuilder("overlay_logic"));
-			suitsOverlay = AddTechItem("SuitsOverlay", RESEARCH.OTHER_TECH_ITEMS.SUITS_OVERLAY.NAME, RESEARCH.OTHER_TECH_ITEMS.SUITS_OVERLAY.DESC, GetSpriteFnBuilder("overlay_suit"));
-			betaResearchPoint = AddTechItem("BetaResearchPoint", RESEARCH.OTHER_TECH_ITEMS.BETA_RESEARCH_POINT.NAME, RESEARCH.OTHER_TECH_ITEMS.BETA_RESEARCH_POINT.DESC, GetSpriteFnBuilder("research_type_beta_icon"));
-			gammaResearchPoint = AddTechItem("GammaResearchPoint", RESEARCH.OTHER_TECH_ITEMS.GAMMA_RESEARCH_POINT.NAME, RESEARCH.OTHER_TECH_ITEMS.GAMMA_RESEARCH_POINT.DESC, GetSpriteFnBuilder("research_type_gamma_icon"));
-			conveyorOverlay = AddTechItem("ConveyorOverlay", RESEARCH.OTHER_TECH_ITEMS.CONVEYOR_OVERLAY.NAME, RESEARCH.OTHER_TECH_ITEMS.CONVEYOR_OVERLAY.DESC, GetSpriteFnBuilder("overlay_conveyor"));
-			jetSuit = AddTechItem("JetSuit", RESEARCH.OTHER_TECH_ITEMS.JET_SUIT.NAME, RESEARCH.OTHER_TECH_ITEMS.JET_SUIT.DESC, GetSpriteFnBuilder("overlay_suit"));
+		}
+
+		public void Init()
+		{
+			automationOverlay = AddTechItem("AutomationOverlay", RESEARCH.OTHER_TECH_ITEMS.AUTOMATION_OVERLAY.NAME, RESEARCH.OTHER_TECH_ITEMS.AUTOMATION_OVERLAY.DESC, GetSpriteFnBuilder("overlay_logic"), "");
+			suitsOverlay = AddTechItem("SuitsOverlay", RESEARCH.OTHER_TECH_ITEMS.SUITS_OVERLAY.NAME, RESEARCH.OTHER_TECH_ITEMS.SUITS_OVERLAY.DESC, GetSpriteFnBuilder("overlay_suit"), "");
+			betaResearchPoint = AddTechItem("BetaResearchPoint", RESEARCH.OTHER_TECH_ITEMS.BETA_RESEARCH_POINT.NAME, RESEARCH.OTHER_TECH_ITEMS.BETA_RESEARCH_POINT.DESC, GetSpriteFnBuilder("research_type_beta_icon"), "");
+			gammaResearchPoint = AddTechItem("GammaResearchPoint", RESEARCH.OTHER_TECH_ITEMS.GAMMA_RESEARCH_POINT.NAME, RESEARCH.OTHER_TECH_ITEMS.GAMMA_RESEARCH_POINT.DESC, GetSpriteFnBuilder("research_type_gamma_icon"), "");
+			conveyorOverlay = AddTechItem("ConveyorOverlay", RESEARCH.OTHER_TECH_ITEMS.CONVEYOR_OVERLAY.NAME, RESEARCH.OTHER_TECH_ITEMS.CONVEYOR_OVERLAY.DESC, GetSpriteFnBuilder("overlay_conveyor"), "");
+			jetSuit = AddTechItem("JetSuit", RESEARCH.OTHER_TECH_ITEMS.JET_SUIT.NAME, RESEARCH.OTHER_TECH_ITEMS.JET_SUIT.DESC, GetPrefabSpriteFnBuilder("Jet_Suit".ToTag()), "");
+			atmoSuit = AddTechItem("AtmoSuit", RESEARCH.OTHER_TECH_ITEMS.ATMO_SUIT.NAME, RESEARCH.OTHER_TECH_ITEMS.ATMO_SUIT.DESC, GetPrefabSpriteFnBuilder("Atmo_Suit".ToTag()), "");
+			if (DlcManager.IsExpansion1Active())
+			{
+				deltaResearchPoint = AddTechItem("DeltaResearchPoint", RESEARCH.OTHER_TECH_ITEMS.DELTA_RESEARCH_POINT.NAME, RESEARCH.OTHER_TECH_ITEMS.DELTA_RESEARCH_POINT.DESC, GetSpriteFnBuilder("research_type_delta_icon"), "EXPANSION1_ID");
+				leadSuit = AddTechItem("LeadSuit", RESEARCH.OTHER_TECH_ITEMS.LEAD_SUIT.NAME, RESEARCH.OTHER_TECH_ITEMS.LEAD_SUIT.DESC, GetPrefabSpriteFnBuilder("Lead_Suit".ToTag()), "EXPANSION1_ID");
+			}
 		}
 
 		private Func<string, bool, Sprite> GetSpriteFnBuilder(string spriteName)
@@ -47,21 +68,26 @@ namespace Database
 			return (string anim, bool centered) => Assets.GetSprite(spriteName);
 		}
 
-		public TechItem AddTechItem(string id, string name, string description, Func<string, bool, Sprite> getUISprite)
+		private Func<string, bool, Sprite> GetPrefabSpriteFnBuilder(Tag prefabTag)
+		{
+			return (string anim, bool centered) => Def.GetUISprite(prefabTag).first;
+		}
+
+		public TechItem AddTechItem(string id, string name, string description, Func<string, bool, Sprite> getUISprite, string DLCId)
 		{
 			if (TryGet(id) != null)
 			{
 				DebugUtil.LogWarningArgs("Tried adding a tech item called", id, name, "but it was already added!");
 				return Get(id);
 			}
-			Tech tech = LookupGroupForID(id);
-			if (tech == null)
+			Tech techFromItemID = GetTechFromItemID(id);
+			if (techFromItemID == null)
 			{
 				return null;
 			}
-			TechItem techItem = new TechItem(id, this, name, description, getUISprite, tech);
+			TechItem techItem = new TechItem(id, this, name, description, getUISprite, techFromItemID.Id, DLCId);
 			Add(techItem);
-			tech.unlockedItems.Add(techItem);
+			techFromItemID.unlockedItems.Add(techItem);
 			return techItem;
 		}
 
@@ -72,22 +98,30 @@ namespace Database
 			{
 				if (resource.Id == id)
 				{
-					return resource.IsComplete();
+					result = resource.IsComplete();
+					break;
 				}
 			}
 			return result;
 		}
 
-		public Tech LookupGroupForID(string itemID)
+		private Tech GetTechFromItemID(string itemId)
 		{
-			foreach (KeyValuePair<string, string[]> item in Techs.TECH_GROUPING)
+			if (Db.Get().Techs == null)
 			{
-				if (Array.IndexOf(item.Value, itemID) != -1)
-				{
-					return Db.Get().Techs.Get(item.Key);
-				}
+				return null;
 			}
-			return null;
+			return Db.Get().Techs.TryGetTechForTechItem(itemId);
+		}
+
+		public int GetTechTierForItem(string itemId)
+		{
+			Tech techFromItemID = GetTechFromItemID(itemId);
+			if (techFromItemID != null)
+			{
+				return Techs.GetTier(techFromItemID);
+			}
+			return 0;
 		}
 	}
 }

@@ -40,6 +40,8 @@ public class LiquidReservoirConfig : IBuildingConfig
 		storage.storageFilters = STORAGEFILTERS.LIQUIDS;
 		storage.capacityKg = 5000f;
 		storage.SetDefaultStoredItemModifiers(GasReservoirConfig.ReservoirStoredItemModifiers);
+		storage.showCapacityStatusItem = true;
+		storage.showCapacityAsMainStatus = true;
 		go.AddOrGet<SmartReservoir>();
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
 		conduitConsumer.conduitType = ConduitType.Liquid;

@@ -100,9 +100,9 @@ public class RoomType : Resource
 		if (this.upgrade_paths != null)
 		{
 			RoomType[] upgrade_paths2 = this.upgrade_paths;
-			for (int i = 0; i < upgrade_paths2.Length; i++)
+			foreach (RoomType roomType in upgrade_paths2)
 			{
-				Debug.Assert(upgrade_paths2[i] != null, name + " has a null upgrade path. Maybe it wasn't initialized yet.");
+				Debug.Assert(roomType != null, name + " has a null upgrade path. Maybe it wasn't initialized yet.");
 			}
 		}
 	}
@@ -116,9 +116,9 @@ public class RoomType : Resource
 		if (this.additional_constraints != null)
 		{
 			RoomConstraints.Constraint[] additional_constraints = this.additional_constraints;
-			for (int i = 0; i < additional_constraints.Length; i++)
+			foreach (RoomConstraints.Constraint constraint in additional_constraints)
 			{
-				if (!additional_constraints[i].isSatisfied(candidate_room))
+				if (!constraint.isSatisfied(candidate_room))
 				{
 					return RoomIdentificationResult.primary_satisfied;
 				}
@@ -155,7 +155,7 @@ public class RoomType : Resource
 			foreach (string id in effects)
 			{
 				Effect effect = Db.Get().effects.Get(id);
-				text += Effect.CreateTooltip(effect, showDuration: false, "\n    • ");
+				text += Effect.CreateTooltip(effect, showDuration: false);
 			}
 			return text;
 		}

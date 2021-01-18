@@ -80,11 +80,7 @@ namespace Satsuma.IO.GraphML
 		{
 			if (key == null)
 			{
-				if (!HasDefaultValue)
-				{
-					return null;
-				}
-				return WriteValue(DefaultValue);
+				return HasDefaultValue ? WriteValue(DefaultValue) : null;
 			}
 			if (!Values.TryGetValue(key, out var value))
 			{

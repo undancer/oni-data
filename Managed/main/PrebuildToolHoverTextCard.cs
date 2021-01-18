@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using STRINGS;
+using UnityEngine;
 
 public class PrebuildToolHoverTextCard : HoverTextConfiguration
 {
-	public PlanScreen.RequirementsState currentReqState;
+	public string errorMessage;
 
 	public BuildingDef currentDef;
 
@@ -11,21 +11,26 @@ public class PrebuildToolHoverTextCard : HoverTextConfiguration
 	{
 		HoverTextScreen instance = HoverTextScreen.Instance;
 		HoverTextDrawer hoverTextDrawer = instance.BeginDrawing();
-		hoverTextDrawer.BeginShadowBar();
-		switch (currentReqState)
+		int num = Grid.PosToCell(Camera.main.ScreenToWorldPoint(KInputManager.GetMousePos()));
+		if (!Grid.IsValidCell(num) || Grid.WorldIdx[num] != ClusterManager.Instance.activeWorldId)
 		{
-		case PlanScreen.RequirementsState.Materials:
-		case PlanScreen.RequirementsState.Complete:
-			hoverTextDrawer.DrawText(UI.TOOLTIPS.NOMATERIAL.text.ToUpper(), HoverTextStyleSettings[0]);
-			hoverTextDrawer.NewLine();
-			hoverTextDrawer.DrawText(UI.TOOLTIPS.SELECTAMATERIAL, HoverTextStyleSettings[1]);
-			break;
-		case PlanScreen.RequirementsState.Tech:
-		{
-			Tech parentTech = Db.Get().TechItems.Get(currentDef.PrefabID).parentTech;
-			hoverTextDrawer.DrawText(string.Format(UI.PRODUCTINFO_RESEARCHREQUIRED, parentTech.Name).ToUpper(), HoverTextStyleSettings[0]);
-			break;
+			hoverTextDrawer.EndDrawing();
+			return;
 		}
+		hoverTextDrawer.BeginShadowBar();
+		if (!errorMessage.IsNullOrWhiteSpace())
+		{
+			bool flag = true;
+			string[] array = errorMessage.Split('\n');
+			foreach (string text in array)
+			{
+				if (!flag)
+				{
+					hoverTextDrawer.NewLine();
+				}
+				hoverTextDrawer.DrawText(text.ToUpper(), HoverTextStyleSettings[(!flag) ? 1 : 0]);
+				flag = false;
+			}
 		}
 		hoverTextDrawer.NewLine();
 		hoverTextDrawer.DrawIcon(instance.GetSprite("icon_mouse_right"));

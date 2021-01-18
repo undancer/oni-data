@@ -8,11 +8,11 @@ public class EggCrackerConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("EggCracker", 2, 2, "egg_cracker_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER0);
-		obj.AudioCategory = "Metal";
-		obj.SceneLayer = Grid.SceneLayer.Building;
-		obj.ForegroundLayer = Grid.SceneLayer.BuildingFront;
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("EggCracker", 2, 2, "egg_cracker_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER0);
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.SceneLayer = Grid.SceneLayer.Building;
+		buildingDef.ForegroundLayer = Grid.SceneLayer.BuildingFront;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

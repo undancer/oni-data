@@ -23,11 +23,7 @@ public class SingleCheckboxSideScreen : SideScreenContent
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		if (target.GetComponent<ICheckboxControl>() == null)
-		{
-			return target.GetSMI<ICheckboxControl>() != null;
-		}
-		return true;
+		return target.GetComponent<ICheckboxControl>() != null || target.GetSMI<ICheckboxControl>() != null;
 	}
 
 	public override void SetTarget(GameObject target)

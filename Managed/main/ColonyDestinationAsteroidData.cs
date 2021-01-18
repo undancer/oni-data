@@ -42,7 +42,7 @@ public class ColonyDestinationAsteroidData
 
 	public string worldPath => world.filePath;
 
-	public string sprite
+	public Sprite sprite
 	{
 		get;
 		private set;
@@ -69,7 +69,7 @@ public class ColonyDestinationAsteroidData
 		this.seed = seed;
 		paramDescriptors.Clear();
 		traitDescriptors.Clear();
-		sprite = world.spriteName;
+		sprite = Db.Get().AsteroidTypes.GetTypeOrDefault(world.asteroidType).GetUISprite();
 		difficulty = world.difficulty;
 	}
 
@@ -93,15 +93,13 @@ public class ColonyDestinationAsteroidData
 
 	private List<AsteroidDescriptor> GenerateParamDescriptors()
 	{
-		List<AsteroidDescriptor> obj = new List<AsteroidDescriptor>
-		{
-			new AsteroidDescriptor(string.Format(WORLDS.SURVIVAL_CHANCE.PLANETNAME, properName), null),
-			new AsteroidDescriptor(Strings.Get(world.description), null)
-		};
+		List<AsteroidDescriptor> list = new List<AsteroidDescriptor>();
+		list.Add(new AsteroidDescriptor(string.Format(WORLDS.SURVIVAL_CHANCE.PLANETNAME, properName), null));
+		list.Add(new AsteroidDescriptor(Strings.Get(world.description), null));
 		int index = Mathf.Clamp(difficulty, 0, survivalOptions.Count - 1);
 		Tuple<string, string, string> tuple = survivalOptions[index];
-		obj.Add(new AsteroidDescriptor(string.Format(WORLDS.SURVIVAL_CHANCE.TITLE, tuple.first, tuple.third), null));
-		return obj;
+		list.Add(new AsteroidDescriptor(string.Format(WORLDS.SURVIVAL_CHANCE.TITLE, tuple.first, tuple.third), null));
+		return list;
 	}
 
 	private List<AsteroidDescriptor> GenerateTraitDescriptors()
@@ -110,12 +108,15 @@ public class ColonyDestinationAsteroidData
 		if (world.disableWorldTraits)
 		{
 			list.Add(new AsteroidDescriptor(WORLD_TRAITS.NO_TRAITS.NAME, WORLD_TRAITS.NO_TRAITS.DESCRIPTION));
-			return list;
 		}
-		foreach (string randomTrait in SettingsCache.GetRandomTraits(seed))
+		else
 		{
-			WorldTrait cachedTrait = SettingsCache.GetCachedTrait(randomTrait, assertMissingTrait: true);
-			list.Add(new AsteroidDescriptor(string.Format("<color=#{1}>{0}</color>", Strings.Get(cachedTrait.name), cachedTrait.colorHex), Strings.Get(cachedTrait.description)));
+			List<string> randomTraits = SettingsCache.GetRandomTraits(seed);
+			foreach (string item in randomTraits)
+			{
+				WorldTrait cachedTrait = SettingsCache.GetCachedTrait(item, assertMissingTrait: true);
+				list.Add(new AsteroidDescriptor(string.Format("<color=#{1}>{0}</color>", Strings.Get(cachedTrait.name), cachedTrait.colorHex), Strings.Get(cachedTrait.description)));
+			}
 		}
 		return list;
 	}

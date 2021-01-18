@@ -12,11 +12,14 @@ public class HatchDrillSoundEvent : SoundEvent
 	{
 		Vector3 vector = behaviour.GetComponent<Transform>().GetPosition();
 		vector.z = 0f;
-		if (SoundEvent.ObjectIsSelectedAndVisible(behaviour.controller.gameObject))
+		GameObject gameObject = behaviour.controller.gameObject;
+		if (SoundEvent.ObjectIsSelectedAndVisible(gameObject))
 		{
 			vector = SoundEvent.AudioHighlightListenerPosition(vector);
 		}
-		float value = GetAudioCategory(Grid.CellBelow(Grid.PosToCell(vector)));
+		int cell = Grid.PosToCell(vector);
+		int cell2 = Grid.CellBelow(cell);
+		float value = GetAudioCategory(cell2);
 		EventInstance instance = SoundEvent.BeginOneShot(base.sound, vector);
 		instance.setParameterByName("material_ID", value);
 		SoundEvent.EndOneShot(instance);

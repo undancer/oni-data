@@ -8,7 +8,7 @@ public class MonumentBottomConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("MonumentBottom", 5, 5, "victory_monument_base_kanim", 1000, 60f, new float[2]
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("MonumentBottom", 5, 5, "victory_monument_base_kanim", 1000, 60f, new float[2]
 		{
 			7500f,
 			2500f
@@ -17,28 +17,30 @@ public class MonumentBottomConfig : IBuildingConfig
 			SimHashes.Steel.ToString(),
 			SimHashes.Obsidian.ToString()
 		}, 9999f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.BONUS.MONUMENT.INCOMPLETE);
-		BuildingTemplates.CreateMonumentBuildingDef(obj);
-		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
-		obj.OverheatTemperature = 2273.15f;
-		obj.Floodable = false;
-		obj.AttachmentSlotTag = "MonumentBottom";
-		obj.ObjectLayer = ObjectLayer.Building;
-		obj.PermittedRotations = PermittedRotations.FlipH;
-		obj.attachablePosition = new CellOffset(0, 0);
-		obj.RequiresPowerInput = false;
-		obj.CanMove = false;
-		return obj;
+		BuildingTemplates.CreateMonumentBuildingDef(buildingDef);
+		buildingDef.SceneLayer = Grid.SceneLayer.BuildingFront;
+		buildingDef.OverheatTemperature = 2273.15f;
+		buildingDef.Floodable = false;
+		buildingDef.AttachmentSlotTag = "MonumentBottom";
+		buildingDef.ObjectLayer = ObjectLayer.Building;
+		buildingDef.PermittedRotations = PermittedRotations.FlipH;
+		buildingDef.attachablePosition = new CellOffset(0, 0);
+		buildingDef.RequiresPowerInput = false;
+		buildingDef.CanMove = false;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		go.AddOrGet<LoopingSounds>();
-		go.AddOrGet<BuildingAttachPoint>().points = new BuildingAttachPoint.HardPoint[1]
+		BuildingAttachPoint buildingAttachPoint = go.AddOrGet<BuildingAttachPoint>();
+		buildingAttachPoint.points = new BuildingAttachPoint.HardPoint[1]
 		{
 			new BuildingAttachPoint.HardPoint(new CellOffset(0, 5), "MonumentMiddle", null)
 		};
-		go.AddOrGet<MonumentPart>().part = MonumentPart.Part.Bottom;
+		MonumentPart monumentPart = go.AddOrGet<MonumentPart>();
+		monumentPart.part = MonumentPart.Part.Bottom;
 	}
 
 	public override void DoPostConfigurePreview(BuildingDef def, GameObject go)

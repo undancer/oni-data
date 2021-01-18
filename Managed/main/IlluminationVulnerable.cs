@@ -8,7 +8,7 @@ public class IlluminationVulnerable : StateMachineComponent<IlluminationVulnerab
 {
 	public class StatesInstance : GameStateMachine<States, StatesInstance, IlluminationVulnerable, object>.GameInstance
 	{
-		public bool hasMaturity;
+		public bool hasMaturity = false;
 
 		public StatesInstance(IlluminationVulnerable master)
 			: base(master)
@@ -64,13 +64,13 @@ public class IlluminationVulnerable : StateMachineComponent<IlluminationVulnerab
 		}
 	}
 
-	public float lightIntensityThreshold;
+	public float lightIntensityThreshold = 0f;
 
 	private OccupyArea _occupyArea;
 
 	private SchedulerHandle handle;
 
-	public bool prefersDarkness;
+	public bool prefersDarkness = false;
 
 	private OccupyArea occupyArea
 	{
@@ -96,11 +96,11 @@ public class IlluminationVulnerable : StateMachineComponent<IlluminationVulnerab
 		{
 			if (base.smi.IsInsideState(base.smi.sm.too_bright))
 			{
-				return Db.Get().CreatureStatusItems.Crop_Too_Bright.resolveStringCallback(CREATURES.STATUSITEMS.CROP_TOO_BRIGHT.NAME, this);
+				return Db.Get().CreatureStatusItems.Crop_Too_Bright.GetName(this);
 			}
 			if (base.smi.IsInsideState(base.smi.sm.too_dark))
 			{
-				return Db.Get().CreatureStatusItems.Crop_Too_Dark.resolveStringCallback(CREATURES.STATUSITEMS.CROP_TOO_DARK.NAME, this);
+				return Db.Get().CreatureStatusItems.Crop_Too_Dark.GetName(this);
 			}
 			return "";
 		}

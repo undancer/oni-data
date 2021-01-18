@@ -25,19 +25,16 @@ public class Spacecraft
 	public string rocketName = UI.STARMAP.DEFAULT_NAME;
 
 	[Serialize]
-	public int moduleCount;
-
-	[Serialize]
 	public Ref<LaunchConditionManager> refLaunchConditions = new Ref<LaunchConditionManager>();
 
 	[Serialize]
 	public MissionState state;
 
 	[Serialize]
-	private float missionElapsed;
+	private float missionElapsed = 0f;
 
 	[Serialize]
-	private float missionDuration;
+	private float missionDuration = 0f;
 
 	public LaunchConditionManager launchConditions
 	{
@@ -54,6 +51,10 @@ public class Spacecraft
 	public Spacecraft(LaunchConditionManager launchConditions)
 	{
 		this.launchConditions = launchConditions;
+	}
+
+	public Spacecraft()
+	{
 	}
 
 	public void SetRocketName(string newName)
@@ -103,15 +104,16 @@ public class Spacecraft
 
 	private float GetPilotNavigationEfficiency()
 	{
-		List<MinionStorage.Info> storedMinionInfo = launchConditions.GetComponent<MinionStorage>().GetStoredMinionInfo();
+		MinionStorage component = launchConditions.GetComponent<MinionStorage>();
+		List<MinionStorage.Info> storedMinionInfo = component.GetStoredMinionInfo();
 		if (storedMinionInfo.Count < 1)
 		{
 			return 1f;
 		}
-		StoredMinionIdentity component = storedMinionInfo[0].serializedMinion.Get().GetComponent<StoredMinionIdentity>();
+		StoredMinionIdentity component2 = storedMinionInfo[0].serializedMinion.Get().GetComponent<StoredMinionIdentity>();
 		string b = Db.Get().Attributes.SpaceNavigation.Id;
 		float num = 1f;
-		foreach (KeyValuePair<string, bool> item in component.MasteryBySkillID)
+		foreach (KeyValuePair<string, bool> item in component2.MasteryBySkillID)
 		{
 			foreach (SkillPerk perk in Db.Get().Skills.Get(item.Key).perks)
 			{
@@ -161,12 +163,12 @@ public class Spacecraft
 
 	private void Land()
 	{
-		launchConditions.Trigger(1366341636, SpacecraftManager.instance.GetSpacecraftDestination(id));
+		launchConditions.Trigger(-1165815793, SpacecraftManager.instance.GetSpacecraftDestination(id));
 		foreach (GameObject item in AttachableBuilding.GetAttachedNetwork(launchConditions.GetComponent<AttachableBuilding>()))
 		{
 			if (item != launchConditions.gameObject)
 			{
-				item.Trigger(1366341636, SpacecraftManager.instance.GetSpacecraftDestination(id));
+				item.Trigger(-1165815793, SpacecraftManager.instance.GetSpacecraftDestination(id));
 			}
 		}
 	}

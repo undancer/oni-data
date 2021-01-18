@@ -194,11 +194,11 @@ public class DecorProvider : KMonoBehaviour, IGameObjectEffectDescriptor
 		splat.Clear();
 		splat = new Splat(this);
 		KPrefabID component = GetComponent<KPrefabID>();
-		bool num = component.HasTag(RoomConstraints.ConstraintTags.Decor20);
-		bool flag = decor.GetTotalValue() >= 20f;
-		if (num != flag)
+		bool flag = component.HasTag(RoomConstraints.ConstraintTags.Decor20);
+		bool flag2 = decor.GetTotalValue() >= 20f;
+		if (flag != flag2)
 		{
-			if (flag)
+			if (flag2)
 			{
 				component.AddTag(RoomConstraints.ConstraintTags.Decor20);
 			}
@@ -285,7 +285,8 @@ public class DecorProvider : KMonoBehaviour, IGameObjectEffectDescriptor
 
 	private void OnCollectDecorProviders(object data)
 	{
-		((List<DecorProvider>)data).Add(this);
+		List<DecorProvider> list = (List<DecorProvider>)data;
+		list.Add(this);
 	}
 
 	public string GetName()

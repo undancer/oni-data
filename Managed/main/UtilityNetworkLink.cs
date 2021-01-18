@@ -12,9 +12,9 @@ public abstract class UtilityNetworkLink : KMonoBehaviour
 	public CellOffset link2;
 
 	[SerializeField]
-	public bool visualizeOnly;
+	public bool visualizeOnly = false;
 
-	private bool connected;
+	private bool connected = false;
 
 	private static readonly EventSystem.IntraObjectHandler<UtilityNetworkLink> OnBuildingBrokenDelegate = new EventSystem.IntraObjectHandler<UtilityNetworkLink>(delegate(UtilityNetworkLink component, object data)
 	{
@@ -98,11 +98,7 @@ public abstract class UtilityNetworkLink : KMonoBehaviour
 	{
 		CellOffset rotatedCellOffset = Rotatable.GetRotatedCellOffset(link1, orientation);
 		CellOffset rotatedCellOffset2 = Rotatable.GetRotatedCellOffset(link2, orientation);
-		if (Grid.IsCellOffsetValid(cell, rotatedCellOffset))
-		{
-			return Grid.IsCellOffsetValid(cell, rotatedCellOffset2);
-		}
-		return false;
+		return Grid.IsCellOffsetValid(cell, rotatedCellOffset) && Grid.IsCellOffsetValid(cell, rotatedCellOffset2);
 	}
 
 	private void OnBuildingBroken(object data)

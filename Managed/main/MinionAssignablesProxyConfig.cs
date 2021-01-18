@@ -4,6 +4,11 @@ public class MinionAssignablesProxyConfig : IEntityConfig
 {
 	public static string ID = "MinionAssignablesProxy";
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateEntity(ID, ID);

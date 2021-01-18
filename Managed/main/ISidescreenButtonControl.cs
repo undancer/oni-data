@@ -1,19 +1,20 @@
 public interface ISidescreenButtonControl
 {
-	string SidescreenTitleKey
-	{
-		get;
-	}
-
-	string SidescreenStatusMessage
-	{
-		get;
-	}
-
 	string SidescreenButtonText
 	{
 		get;
 	}
 
+	string SidescreenButtonTooltip
+	{
+		get;
+	}
+
+	bool SidescreenEnabled();
+
+	bool SidescreenButtonInteractable();
+
 	void OnSidescreenButtonPressed();
+
+	int ButtonSideScreenSortOrder();
 }

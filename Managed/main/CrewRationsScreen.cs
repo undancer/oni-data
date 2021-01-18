@@ -33,7 +33,8 @@ public class CrewRationsScreen : CrewListScreen<CrewRationsEntry>
 		for (int i = 0; i < ColumnTitlesContainer.childCount; i++)
 		{
 			OverviewColumnIdentity component = ColumnTitlesContainer.GetChild(i).GetComponent<OverviewColumnIdentity>();
-			if (ColumnTitlesContainer.GetChild(i).GetComponent<Toggle>() == lastSortToggle)
+			Toggle component2 = ColumnTitlesContainer.GetChild(i).GetComponent<Toggle>();
+			if (component2 == lastSortToggle)
 			{
 				if (component.columnID == "name")
 				{
@@ -149,7 +150,8 @@ public class CrewRationsScreen : CrewListScreen<CrewRationsEntry>
 		base.SpawnEntries();
 		foreach (MinionIdentity item in Components.LiveMinionIdentities.Items)
 		{
-			CrewRationsEntry component = Util.KInstantiateUI(Prefab_CrewEntry, EntriesPanelTransform.gameObject).GetComponent<CrewRationsEntry>();
+			GameObject gameObject = Util.KInstantiateUI(Prefab_CrewEntry, EntriesPanelTransform.gameObject);
+			CrewRationsEntry component = gameObject.GetComponent<CrewRationsEntry>();
 			component.Populate(item);
 			EntryObjects.Add(component);
 		}

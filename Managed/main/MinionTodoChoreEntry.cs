@@ -79,7 +79,7 @@ public class MinionTodoChoreEntry : KMonoBehaviour
 			componentInChildren.bgImage.colorStyleSetting = ((context.chore.driver == consumer.choreDriver) ? buttonColorSettingCurrent : buttonColorSettingStandard);
 			componentInChildren.bgImage.ApplyColorStyleSetting();
 		}
-		_ = context.chore.target.gameObject;
+		GameObject gameObject = context.chore.target.gameObject;
 		componentInChildren.ClearOnPointerEvents();
 		componentInChildren.GetComponentInChildren<KButton>().onClick += delegate
 		{

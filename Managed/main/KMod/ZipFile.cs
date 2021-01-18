@@ -41,7 +41,8 @@ namespace KMod
 			}
 			foreach (ZipEntry item in zipfile)
 			{
-				if (FileSystem.Normalize(item.FileName).StartsWith(relative_path))
+				string text = FileSystem.Normalize(item.FileName);
+				if (text.StartsWith(relative_path))
 				{
 					return true;
 				}
@@ -65,7 +66,8 @@ namespace KMod
 			}
 			foreach (ZipEntry item in zipfile)
 			{
-				List<string> list = (from part in FileSystem.Normalize(item.FileName).Split('/')
+				string text = FileSystem.Normalize(item.FileName);
+				List<string> list = (from part in text.Split('/')
 					where !string.IsNullOrEmpty(part)
 					select part).ToList();
 				if (!IsSharedRoot(array, list))
@@ -75,12 +77,12 @@ namespace KMod
 				list = list.GetRange(array.Length, list.Count - array.Length);
 				if (list.Count != 0)
 				{
-					string text = list[0];
-					if (pooledHashSet.Add(text))
+					string text2 = list[0];
+					if (pooledHashSet.Add(text2))
 					{
 						file_system_items.Add(new FileSystemItem
 						{
-							name = text,
+							name = text2,
 							type = ((1 >= list.Count) ? FileSystemItem.ItemType.File : FileSystemItem.ItemType.Directory)
 						});
 					}

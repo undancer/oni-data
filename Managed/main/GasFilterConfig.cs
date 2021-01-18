@@ -11,26 +11,27 @@ public class GasFilterConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("GasFilter", 3, 1, "filter_gas_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.PENALTY.TIER0);
-		obj.RequiresPowerInput = true;
-		obj.EnergyConsumptionWhenActive = 120f;
-		obj.SelfHeatKilowattsWhenActive = 0f;
-		obj.ExhaustKilowattsWhenActive = 0f;
-		obj.InputConduitType = ConduitType.Gas;
-		obj.OutputConduitType = ConduitType.Gas;
-		obj.Floodable = false;
-		obj.ViewMode = OverlayModes.GasConduits.ID;
-		obj.AudioCategory = "Metal";
-		obj.UtilityInputOffset = new CellOffset(-1, 0);
-		obj.UtilityOutputOffset = new CellOffset(1, 0);
-		obj.PermittedRotations = PermittedRotations.R360;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("GasFilter", 3, 1, "filter_gas_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.PENALTY.TIER0);
+		buildingDef.RequiresPowerInput = true;
+		buildingDef.EnergyConsumptionWhenActive = 120f;
+		buildingDef.SelfHeatKilowattsWhenActive = 0f;
+		buildingDef.ExhaustKilowattsWhenActive = 0f;
+		buildingDef.InputConduitType = ConduitType.Gas;
+		buildingDef.OutputConduitType = ConduitType.Gas;
+		buildingDef.Floodable = false;
+		buildingDef.ViewMode = OverlayModes.GasConduits.ID;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.UtilityInputOffset = new CellOffset(-1, 0);
+		buildingDef.UtilityOutputOffset = new CellOffset(1, 0);
+		buildingDef.PermittedRotations = PermittedRotations.R360;
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.GasVentIDs, "GasFilter");
-		return obj;
+		return buildingDef;
 	}
 
 	private void AttachPort(GameObject go)
 	{
-		go.AddComponent<ConduitSecondaryOutput>().portInfo = secondaryPort;
+		ConduitSecondaryOutput conduitSecondaryOutput = go.AddComponent<ConduitSecondaryOutput>();
+		conduitSecondaryOutput.portInfo = secondaryPort;
 	}
 
 	public override void DoPostConfigurePreview(BuildingDef def, GameObject go)
@@ -49,8 +50,10 @@ public class GasFilterConfig : IBuildingConfig
 	{
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
 		go.AddOrGet<Structure>();
-		go.AddOrGet<ElementFilter>().portInfo = secondaryPort;
-		go.AddOrGet<Filterable>().filterElementState = Filterable.ElementState.Gas;
+		ElementFilter elementFilter = go.AddOrGet<ElementFilter>();
+		elementFilter.portInfo = secondaryPort;
+		Filterable filterable = go.AddOrGet<Filterable>();
+		filterable.filterElementState = Filterable.ElementState.Gas;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

@@ -20,7 +20,8 @@ public class Equipment : Assignables
 
 	private GameObject GetTargetGameObject()
 	{
-		MinionAssignablesProxy minionAssignablesProxy = (MinionAssignablesProxy)GetAssignableIdentity();
+		IAssignableIdentity assignableIdentity = GetAssignableIdentity();
+		MinionAssignablesProxy minionAssignablesProxy = (MinionAssignablesProxy)assignableIdentity;
 		if ((bool)minionAssignablesProxy)
 		{
 			return minionAssignablesProxy.GetTargetGameObject();
@@ -111,7 +112,8 @@ public class Equipment : Assignables
 
 	public void Unequip(Equippable equippable)
 	{
-		GetSlot(equippable.slot).Unassign();
+		AssignableSlotInstance slot = GetSlot(equippable.slot);
+		slot.Unassign();
 		equippable.Trigger(-170173755, this);
 		GameObject targetGameObject = GetTargetGameObject();
 		if (!targetGameObject)
@@ -188,21 +190,13 @@ public class Equipment : Assignables
 
 	public bool IsEquipped(Equippable equippable)
 	{
-		if (equippable.assignee is Equipment && (Equipment)equippable.assignee == this)
-		{
-			return equippable.isEquipped;
-		}
-		return false;
+		return equippable.assignee is Equipment && (Equipment)equippable.assignee == this && equippable.isEquipped;
 	}
 
 	public bool IsSlotOccupied(AssignableSlot slot)
 	{
 		EquipmentSlotInstance equipmentSlotInstance = GetSlot(slot) as EquipmentSlotInstance;
-		if (equipmentSlotInstance.IsAssigned())
-		{
-			return (equipmentSlotInstance.assignable as Equippable).isEquipped;
-		}
-		return false;
+		return equipmentSlotInstance.IsAssigned() && (equipmentSlotInstance.assignable as Equippable).isEquipped;
 	}
 
 	public void UnequipAll()

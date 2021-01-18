@@ -101,7 +101,8 @@ public class AmbienceManager : KMonoBehaviour
 					Debug.LogWarning("Could not find event: " + oneShotSound);
 					return;
 				}
-				ATTRIBUTES_3D attributes = new Vector3(emitter_position.x, emitter_position.y, 0f).To3DAttributes();
+				Vector3 pos = new Vector3(emitter_position.x, emitter_position.y, 0f);
+				ATTRIBUTES_3D attributes = pos.To3DAttributes();
 				eventInstance.set3DAttributes(attributes);
 				eventInstance.setVolume(tilePercentage * 2f);
 				eventInstance.start();
@@ -244,7 +245,8 @@ public class AmbienceManager : KMonoBehaviour
 			totalTileCount = 0;
 			for (int i = 0; i < allLayers.Count; i++)
 			{
-				allLayers[i].Reset();
+				Layer layer = allLayers[i];
+				layer.Reset();
 			}
 			for (int j = min.y; j < max.y; j++)
 			{
@@ -337,23 +339,24 @@ public class AmbienceManager : KMonoBehaviour
 			int cell_count = vector2I.x * vector2I.y;
 			for (int l = 0; l < allLayers.Count; l++)
 			{
-				allLayers[l].UpdatePercentage(cell_count);
+				Layer layer2 = allLayers[l];
+				layer2.UpdatePercentage(cell_count);
 			}
 			loopingLayers.Sort();
 			topLayers.Clear();
 			for (int m = 0; m < loopingLayers.Count; m++)
 			{
-				Layer layer = loopingLayers[m];
-				if (m < 3 && layer.tilePercentage > 0f)
+				Layer layer3 = loopingLayers[m];
+				if (m < 3 && layer3.tilePercentage > 0f)
 				{
-					layer.Start(emitter_position);
-					layer.UpdateAverageTemperature();
-					layer.UpdateParameters(emitter_position);
-					topLayers.Add(layer);
+					layer3.Start(emitter_position);
+					layer3.UpdateAverageTemperature();
+					layer3.UpdateParameters(emitter_position);
+					topLayers.Add(layer3);
 				}
 				else
 				{
-					layer.Stop();
+					layer3.Stop();
 				}
 			}
 			oneShotLayers.Sort();
@@ -367,7 +370,7 @@ public class AmbienceManager : KMonoBehaviour
 		}
 	}
 
-	private float emitterZPosition;
+	private float emitterZPosition = 0f;
 
 	public QuadrantDef[] quadrantDefs;
 
@@ -406,7 +409,8 @@ public class AmbienceManager : KMonoBehaviour
 		}
 		a = a2 + a3 / 2f;
 		vector = a2 - a3 / 2f;
-		Vector3 vector2 = a3 / 2f / 2f;
+		Vector3 a4 = a3 / 2f;
+		Vector3 vector2 = a4 / 2f;
 		quadrants[0].Update(new Vector2I(min.x, min.y), new Vector2I(vector2I.x, vector2I.y), new Vector3(vector.x + vector2.x, vector.y + vector2.y, emitterZPosition));
 		quadrants[1].Update(new Vector2I(vector2I.x, min.y), new Vector2I(max.x, vector2I.y), new Vector3(a2.x + vector2.x, vector.y + vector2.y, emitterZPosition));
 		quadrants[2].Update(new Vector2I(min.x, vector2I.y), new Vector2I(vector2I.x, max.y), new Vector3(vector.x + vector2.x, a2.y + vector2.y, emitterZPosition));

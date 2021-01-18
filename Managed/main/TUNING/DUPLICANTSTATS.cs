@@ -57,6 +57,21 @@ namespace TUNING
 			public const float CARRY_CAPACITY = 200f;
 
 			public const float HIT_POINTS = 100f;
+
+			public const float RADIATION_RESISTANCE = 0f;
+
+			public const float RADIATION_RECOVERY = -5f / 6f;
+		}
+
+		public class RADIATION_EXPOSURE_LEVELS
+		{
+			public const float LOW = 2000f;
+
+			public const float MODERATE = 5000f;
+
+			public const float HIGH = 8000f;
+
+			public const float DEADLY = 10000f;
 		}
 
 		public class CALORIES
@@ -352,11 +367,15 @@ namespace TUNING
 
 			public int statBonus;
 
-			public float probability;
+			public int impact;
+
+			public int rarity;
+
+			public string dlcId;
 
 			public List<string> mutuallyExclusiveTraits;
 
-			public List<HashedString> requiredNonPositiveAptitudes;
+			public List<HashedString> mutuallyExclusiveAptitudes;
 		}
 
 		public class ATTRIBUTE_LEVELING
@@ -412,6 +431,10 @@ namespace TUNING
 
 		public const float RANCHING_DURATION_MULTIPLIER_BONUS_PER_POINT = 0.1f;
 
+		public const float FARMING_DURATION_MULTIPLIER_BONUS_PER_POINT = 0.1f;
+
+		public const float POWER_DURATION_MULTIPLIER_BONUS_PER_POINT = 0.025f;
+
 		public const float STRESS_BELOW_EXPECTATIONS_FOOD = 0.25f;
 
 		public const float STRESS_ABOVE_EXPECTATIONS_FOOD = -0.5f;
@@ -424,7 +447,7 @@ namespace TUNING
 
 		public const float TRAVEL_TIME_WARNING_THRESHOLD = 0.4f;
 
-		public static readonly string[] ALL_ATTRIBUTES = new string[11]
+		public static readonly string[] ALL_ATTRIBUTES = new string[12]
 		{
 			"Strength",
 			"Caring",
@@ -436,7 +459,8 @@ namespace TUNING
 			"Botanist",
 			"Art",
 			"Ranching",
-			"Athletics"
+			"Athletics",
+			"SpaceNavigation"
 		};
 
 		public static readonly string[] DISTRIBUTED_ATTRIBUTES = new string[10]
@@ -469,17 +493,160 @@ namespace TUNING
 
 		public static float ROLLED_ATTRIBUTE_POWER = 4f;
 
-		public static float PROBABILITY_MINISCULE = 2f;
+		public static Dictionary<string, List<string>> ARCHETYPE_TRAIT_EXCLUSIONS = new Dictionary<string, List<string>>
+		{
+			{
+				"Mining",
+				new List<string>
+				{
+					"Anemic",
+					"DiggingDown",
+					"Narcolepsy"
+				}
+			},
+			{
+				"Building",
+				new List<string>
+				{
+					"Anemic",
+					"NoodleArms",
+					"ConstructionDown",
+					"DiggingDown",
+					"Narcolepsy"
+				}
+			},
+			{
+				"Farming",
+				new List<string>
+				{
+					"Anemic",
+					"NoodleArms",
+					"BotanistDown",
+					"RanchingDown",
+					"Narcolepsy"
+				}
+			},
+			{
+				"Ranching",
+				new List<string>
+				{
+					"RanchingDown",
+					"BotanistDown",
+					"Narcolepsy"
+				}
+			},
+			{
+				"Cooking",
+				new List<string>
+				{
+					"NoodleArms",
+					"CookingDown"
+				}
+			},
+			{
+				"Art",
+				new List<string>
+				{
+					"ArtDown",
+					"DecorDown"
+				}
+			},
+			{
+				"Research",
+				new List<string>
+				{
+					"SlowLearner"
+				}
+			},
+			{
+				"Suits",
+				new List<string>
+				{
+					"Anemic",
+					"NoodleArms"
+				}
+			},
+			{
+				"Hauling",
+				new List<string>
+				{
+					"Anemic",
+					"NoodleArms",
+					"Narcolepsy"
+				}
+			},
+			{
+				"Technicals",
+				new List<string>
+				{
+					"MachineryDown"
+				}
+			},
+			{
+				"MedicalAid",
+				new List<string>
+				{
+					"CaringDown",
+					"WeakImmuneSystem"
+				}
+			},
+			{
+				"Basekeeping",
+				new List<string>
+				{
+					"Anemic",
+					"NoodleArms"
+				}
+			},
+			{
+				"Rocketry",
+				new List<string>()
+			}
+		};
 
-		public static float PROBABILITY_LOW = 1.5f;
+		public static int RARITY_LEGENDARY = 5;
 
-		public static float PROBABILITY_MED = 1f;
+		public static int RARITY_EPIC = 4;
+
+		public static int RARITY_RARE = 3;
+
+		public static int RARITY_UNCOMMON = 2;
+
+		public static int RARITY_COMMON = 1;
+
+		public static int NO_STATPOINT_BONUS = 0;
 
 		public static int TINY_STATPOINT_BONUS = 1;
 
 		public static int SMALL_STATPOINT_BONUS = 2;
 
 		public static int MEDIUM_STATPOINT_BONUS = 3;
+
+		public static int LARGE_STATPOINT_BONUS = 4;
+
+		public static int HUGE_STATPOINT_BONUS = 5;
+
+		public static int COMMON = 1;
+
+		public static int UNCOMMON = 2;
+
+		public static int RARE = 3;
+
+		public static int EPIC = 4;
+
+		public static int LEGENDARY = 5;
+
+		public static Tuple<int, int> TRAITS_ONE_POSITIVE_ONE_NEGATIVE = new Tuple<int, int>(1, 1);
+
+		public static Tuple<int, int> TRAITS_TWO_POSITIVE_ONE_NEGATIVE = new Tuple<int, int>(2, 1);
+
+		public static Tuple<int, int> TRAITS_ONE_POSITIVE_TWO_NEGATIVE = new Tuple<int, int>(1, 2);
+
+		public static Tuple<int, int> TRAITS_TWO_POSITIVE_TWO_NEGATIVE = new Tuple<int, int>(2, 2);
+
+		public static Tuple<int, int> TRAITS_THREE_POSITIVE_ONE_NEGATIVE = new Tuple<int, int>(3, 1);
+
+		public static Tuple<int, int> TRAITS_ONE_POSITIVE_THREE_NEGATIVE = new Tuple<int, int>(1, 3);
 
 		public static int MIN_STAT_POINTS = 0;
 
@@ -488,6 +655,58 @@ namespace TUNING
 		public static int MAX_TRAITS = 4;
 
 		public static int APTITUDE_BONUS = 1;
+
+		public static List<int> RARITY_DECK = new List<int>
+		{
+			RARITY_COMMON,
+			RARITY_COMMON,
+			RARITY_COMMON,
+			RARITY_COMMON,
+			RARITY_COMMON,
+			RARITY_COMMON,
+			RARITY_COMMON,
+			RARITY_UNCOMMON,
+			RARITY_UNCOMMON,
+			RARITY_UNCOMMON,
+			RARITY_UNCOMMON,
+			RARITY_UNCOMMON,
+			RARITY_UNCOMMON,
+			RARITY_RARE,
+			RARITY_RARE,
+			RARITY_RARE,
+			RARITY_RARE,
+			RARITY_EPIC,
+			RARITY_EPIC,
+			RARITY_LEGENDARY
+		};
+
+		public static List<int> rarityDeckActive = new List<int>(RARITY_DECK);
+
+		public static List<Tuple<int, int>> POD_TRAIT_CONFIGURATIONS_DECK = new List<Tuple<int, int>>
+		{
+			TRAITS_ONE_POSITIVE_ONE_NEGATIVE,
+			TRAITS_ONE_POSITIVE_ONE_NEGATIVE,
+			TRAITS_ONE_POSITIVE_ONE_NEGATIVE,
+			TRAITS_ONE_POSITIVE_ONE_NEGATIVE,
+			TRAITS_ONE_POSITIVE_ONE_NEGATIVE,
+			TRAITS_ONE_POSITIVE_ONE_NEGATIVE,
+			TRAITS_TWO_POSITIVE_ONE_NEGATIVE,
+			TRAITS_TWO_POSITIVE_ONE_NEGATIVE,
+			TRAITS_TWO_POSITIVE_ONE_NEGATIVE,
+			TRAITS_TWO_POSITIVE_ONE_NEGATIVE,
+			TRAITS_TWO_POSITIVE_ONE_NEGATIVE,
+			TRAITS_ONE_POSITIVE_TWO_NEGATIVE,
+			TRAITS_ONE_POSITIVE_TWO_NEGATIVE,
+			TRAITS_ONE_POSITIVE_TWO_NEGATIVE,
+			TRAITS_ONE_POSITIVE_TWO_NEGATIVE,
+			TRAITS_TWO_POSITIVE_ONE_NEGATIVE,
+			TRAITS_TWO_POSITIVE_TWO_NEGATIVE,
+			TRAITS_TWO_POSITIVE_TWO_NEGATIVE,
+			TRAITS_THREE_POSITIVE_ONE_NEGATIVE,
+			TRAITS_ONE_POSITIVE_THREE_NEGATIVE
+		};
+
+		public static List<Tuple<int, int>> podTraitConfigurationsActive = new List<Tuple<int, int>>(POD_TRAIT_CONFIGURATIONS_DECK);
 
 		public static readonly List<string> CONTRACTEDTRAITS_HEALING = new List<string>
 		{
@@ -568,9 +787,10 @@ namespace TUNING
 			item = new TraitVal
 			{
 				id = "CantResearch",
-				statBonus = MEDIUM_STATPOINT_BONUS,
-				probability = PROBABILITY_LOW,
-				requiredNonPositiveAptitudes = new List<HashedString>
+				statBonus = NO_STATPOINT_BONUS,
+				rarity = RARITY_COMMON,
+				dlcId = "",
+				mutuallyExclusiveAptitudes = new List<HashedString>
 				{
 					"Research"
 				}
@@ -579,9 +799,10 @@ namespace TUNING
 			item = new TraitVal
 			{
 				id = "CantDig",
-				statBonus = MEDIUM_STATPOINT_BONUS,
-				probability = PROBABILITY_LOW,
-				requiredNonPositiveAptitudes = new List<HashedString>
+				statBonus = LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "",
+				mutuallyExclusiveAptitudes = new List<HashedString>
 				{
 					"Mining"
 				}
@@ -590,9 +811,10 @@ namespace TUNING
 			item = new TraitVal
 			{
 				id = "CantCook",
-				statBonus = MEDIUM_STATPOINT_BONUS,
-				probability = PROBABILITY_LOW,
-				requiredNonPositiveAptitudes = new List<HashedString>
+				statBonus = NO_STATPOINT_BONUS,
+				rarity = RARITY_UNCOMMON,
+				dlcId = "",
+				mutuallyExclusiveAptitudes = new List<HashedString>
 				{
 					"Cooking"
 				}
@@ -601,20 +823,26 @@ namespace TUNING
 			item = new TraitVal
 			{
 				id = "CantBuild",
-				statBonus = MEDIUM_STATPOINT_BONUS,
-				probability = PROBABILITY_LOW,
-				requiredNonPositiveAptitudes = new List<HashedString>
+				statBonus = LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "",
+				mutuallyExclusiveAptitudes = new List<HashedString>
 				{
 					"Building"
+				},
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"GrantSkill_Engineering1"
 				}
 			};
 			list2.Add(item);
 			item = new TraitVal
 			{
 				id = "Hemophobia",
-				statBonus = MEDIUM_STATPOINT_BONUS,
-				probability = PROBABILITY_LOW,
-				requiredNonPositiveAptitudes = new List<HashedString>
+				statBonus = NO_STATPOINT_BONUS,
+				rarity = RARITY_UNCOMMON,
+				dlcId = "",
+				mutuallyExclusiveAptitudes = new List<HashedString>
 				{
 					"MedicalAid"
 				}
@@ -622,91 +850,11 @@ namespace TUNING
 			list2.Add(item);
 			item = new TraitVal
 			{
-				id = "Narcolepsy",
-				statBonus = MEDIUM_STATPOINT_BONUS,
-				probability = PROBABILITY_LOW
-			};
-			list2.Add(item);
-			item = new TraitVal
-			{
-				id = "Flatulence",
-				statBonus = SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED
-			};
-			list2.Add(item);
-			item = new TraitVal
-			{
-				id = "IrritableBowel",
-				statBonus = SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED
-			};
-			list2.Add(item);
-			item = new TraitVal
-			{
-				id = "Snorer",
-				statBonus = SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED
-			};
-			list2.Add(item);
-			item = new TraitVal
-			{
-				id = "MouthBreather",
-				statBonus = SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED
-			};
-			list2.Add(item);
-			item = new TraitVal
-			{
-				id = "SmallBladder",
-				statBonus = SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED
-			};
-			list2.Add(item);
-			item = new TraitVal
-			{
-				id = "CalorieBurner",
-				statBonus = SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED
-			};
-			list2.Add(item);
-			item = new TraitVal
-			{
-				id = "Anemic",
-				statBonus = SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED
-			};
-			list2.Add(item);
-			item = new TraitVal
-			{
-				id = "WeakImmuneSystem",
-				statBonus = SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED
-			};
-			list2.Add(item);
-			item = new TraitVal
-			{
-				id = "SlowLearner",
-				statBonus = SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED,
-				requiredNonPositiveAptitudes = new List<HashedString>
-				{
-					"Research"
-				}
-			};
-			list2.Add(item);
-			item = new TraitVal
-			{
-				id = "NoodleArms",
-				statBonus = SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED
-			};
-			list2.Add(item);
-			item = new TraitVal
-			{
 				id = "ScaredyCat",
-				statBonus = SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED,
-				requiredNonPositiveAptitudes = new List<HashedString>
+				statBonus = NO_STATPOINT_BONUS,
+				rarity = RARITY_UNCOMMON,
+				dlcId = "",
+				mutuallyExclusiveAptitudes = new List<HashedString>
 				{
 					"Mining"
 				}
@@ -714,75 +862,276 @@ namespace TUNING
 			list2.Add(item);
 			item = new TraitVal
 			{
+				id = "ConstructionDown",
+				statBonus = MEDIUM_STATPOINT_BONUS,
+				rarity = RARITY_UNCOMMON,
+				dlcId = "EXPANSION1_ID",
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"CantBuild"
+				}
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "RanchingDown",
+				statBonus = SMALL_STATPOINT_BONUS,
+				rarity = RARITY_COMMON,
+				dlcId = "EXPANSION1_ID"
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "CaringDown",
+				statBonus = SMALL_STATPOINT_BONUS,
+				rarity = RARITY_COMMON,
+				dlcId = "EXPANSION1_ID",
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"Hemophobia"
+				}
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "BotanistDown",
+				statBonus = SMALL_STATPOINT_BONUS,
+				rarity = RARITY_COMMON,
+				dlcId = "EXPANSION1_ID"
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "ArtDown",
+				statBonus = SMALL_STATPOINT_BONUS,
+				rarity = RARITY_COMMON,
+				dlcId = "EXPANSION1_ID"
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "CookingDown",
+				statBonus = SMALL_STATPOINT_BONUS,
+				rarity = RARITY_COMMON,
+				dlcId = "EXPANSION1_ID",
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"CantCook"
+				}
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "MachineryDown",
+				statBonus = SMALL_STATPOINT_BONUS,
+				rarity = RARITY_COMMON,
+				dlcId = "EXPANSION1_ID"
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "DiggingDown",
+				statBonus = MEDIUM_STATPOINT_BONUS,
+				rarity = RARITY_RARE,
+				dlcId = "EXPANSION1_ID",
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"CantDig"
+				}
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "SlowLearner",
+				statBonus = MEDIUM_STATPOINT_BONUS,
+				rarity = RARITY_RARE,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"CantResearch"
+				}
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "NoodleArms",
+				statBonus = MEDIUM_STATPOINT_BONUS,
+				rarity = RARITY_RARE,
+				dlcId = ""
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "DecorDown",
+				statBonus = TINY_STATPOINT_BONUS,
+				rarity = RARITY_COMMON,
+				dlcId = "EXPANSION1_ID"
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "Anemic",
+				statBonus = HUGE_STATPOINT_BONUS,
+				rarity = RARITY_LEGENDARY,
+				dlcId = ""
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "Flatulence",
+				statBonus = MEDIUM_STATPOINT_BONUS,
+				rarity = RARITY_RARE,
+				dlcId = ""
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "IrritableBowel",
+				statBonus = TINY_STATPOINT_BONUS,
+				rarity = RARITY_UNCOMMON,
+				dlcId = ""
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "Snorer",
+				statBonus = TINY_STATPOINT_BONUS,
+				rarity = RARITY_RARE,
+				dlcId = ""
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "MouthBreather",
+				statBonus = HUGE_STATPOINT_BONUS,
+				rarity = RARITY_LEGENDARY,
+				dlcId = ""
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "SmallBladder",
+				statBonus = TINY_STATPOINT_BONUS,
+				rarity = RARITY_UNCOMMON,
+				dlcId = ""
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "CalorieBurner",
+				statBonus = LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = ""
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "WeakImmuneSystem",
+				statBonus = SMALL_STATPOINT_BONUS,
+				rarity = RARITY_UNCOMMON,
+				dlcId = ""
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
 				id = "Allergies",
 				statBonus = SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED
+				rarity = RARITY_RARE,
+				dlcId = ""
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "NightLight",
+				statBonus = SMALL_STATPOINT_BONUS,
+				rarity = RARITY_RARE,
+				dlcId = "EXPANSION1_ID"
+			};
+			list2.Add(item);
+			item = new TraitVal
+			{
+				id = "Narcolepsy",
+				statBonus = HUGE_STATPOINT_BONUS,
+				rarity = RARITY_RARE,
+				dlcId = ""
 			};
 			list2.Add(item);
 			BADTRAITS = list2;
 			List<TraitVal> list3 = new List<TraitVal>();
 			item = new TraitVal
 			{
-				id = "Aggressive"
+				id = "Aggressive",
+				dlcId = ""
 			};
 			list3.Add(item);
 			item = new TraitVal
 			{
-				id = "StressVomiter"
+				id = "StressVomiter",
+				dlcId = ""
 			};
 			list3.Add(item);
 			item = new TraitVal
 			{
-				id = "UglyCrier"
+				id = "UglyCrier",
+				dlcId = ""
 			};
 			list3.Add(item);
 			item = new TraitVal
 			{
-				id = "BingeEater"
+				id = "BingeEater",
+				dlcId = ""
 			};
 			list3.Add(item);
 			STRESSTRAITS = list3;
 			List<TraitVal> list4 = new List<TraitVal>();
 			item = new TraitVal
 			{
-				id = "BalloonArtist"
+				id = "BalloonArtist",
+				dlcId = ""
 			};
 			list4.Add(item);
 			item = new TraitVal
 			{
-				id = "SparkleStreaker"
+				id = "SparkleStreaker",
+				dlcId = ""
 			};
 			list4.Add(item);
 			item = new TraitVal
 			{
-				id = "StickerBomber"
+				id = "StickerBomber",
+				dlcId = ""
 			};
 			list4.Add(item);
 			item = new TraitVal
 			{
-				id = "SuperProductive"
+				id = "SuperProductive",
+				dlcId = ""
 			};
 			list4.Add(item);
 			JOYTRAITS = list4;
 			List<TraitVal> list5 = new List<TraitVal>();
 			item = new TraitVal
 			{
-				id = "Regeneration"
+				id = "Regeneration",
+				dlcId = ""
 			};
 			list5.Add(item);
 			item = new TraitVal
 			{
-				id = "DeeperDiversLungs"
+				id = "DeeperDiversLungs",
+				dlcId = ""
 			};
 			list5.Add(item);
 			item = new TraitVal
 			{
-				id = "SunnyDisposition"
+				id = "SunnyDisposition",
+				dlcId = ""
 			};
 			list5.Add(item);
 			item = new TraitVal
 			{
-				id = "RockCrusher"
+				id = "RockCrusher",
+				dlcId = ""
 			};
 			list5.Add(item);
 			GENESHUFFLERTRAITS = list5;
@@ -790,8 +1139,8 @@ namespace TUNING
 			item = new TraitVal
 			{
 				id = "Twinkletoes",
-				statBonus = -MEDIUM_STATPOINT_BONUS,
-				probability = PROBABILITY_MED,
+				rarity = RARITY_EPIC,
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"Anemic"
@@ -801,8 +1150,8 @@ namespace TUNING
 			item = new TraitVal
 			{
 				id = "StrongArm",
-				statBonus = -MEDIUM_STATPOINT_BONUS,
-				probability = PROBABILITY_MED,
+				rarity = RARITY_RARE,
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"NoodleArms"
@@ -812,15 +1161,19 @@ namespace TUNING
 			item = new TraitVal
 			{
 				id = "Greasemonkey",
-				statBonus = -SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED
+				rarity = RARITY_UNCOMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"MachineryDown"
+				}
 			};
 			list6.Add(item);
 			item = new TraitVal
 			{
 				id = "DiversLung",
-				statBonus = -SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED,
+				rarity = RARITY_EPIC,
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"MouthBreather"
@@ -830,15 +1183,15 @@ namespace TUNING
 			item = new TraitVal
 			{
 				id = "IronGut",
-				statBonus = -SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED
+				rarity = RARITY_COMMON,
+				dlcId = ""
 			};
 			list6.Add(item);
 			item = new TraitVal
 			{
 				id = "StrongImmuneSystem",
-				statBonus = -SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED,
+				rarity = RARITY_COMMON,
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"WeakImmuneSystem"
@@ -848,8 +1201,8 @@ namespace TUNING
 			item = new TraitVal
 			{
 				id = "EarlyBird",
-				statBonus = -SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED,
+				rarity = RARITY_RARE,
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"NightOwl"
@@ -859,8 +1212,8 @@ namespace TUNING
 			item = new TraitVal
 			{
 				id = "NightOwl",
-				statBonus = -SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED,
+				rarity = RARITY_RARE,
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"EarlyBird"
@@ -870,19 +1223,20 @@ namespace TUNING
 			item = new TraitVal
 			{
 				id = "MoleHands",
-				statBonus = -MEDIUM_STATPOINT_BONUS,
-				probability = PROBABILITY_MED,
+				rarity = RARITY_RARE,
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
-					"CantDig"
+					"CantDig",
+					"DiggingDown"
 				}
 			};
 			list6.Add(item);
 			item = new TraitVal
 			{
 				id = "FastLearner",
-				statBonus = -MEDIUM_STATPOINT_BONUS,
-				probability = PROBABILITY_MED,
+				rarity = RARITY_RARE,
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"SlowLearner",
@@ -893,24 +1247,25 @@ namespace TUNING
 			item = new TraitVal
 			{
 				id = "InteriorDecorator",
-				statBonus = -SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED,
+				rarity = RARITY_COMMON,
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
-					"Uncultured"
+					"Uncultured",
+					"ArtDown"
 				}
 			};
 			list6.Add(item);
 			item = new TraitVal
 			{
 				id = "Uncultured",
-				statBonus = -SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED,
+				rarity = RARITY_COMMON,
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"InteriorDecorator"
 				},
-				requiredNonPositiveAptitudes = new List<HashedString>
+				mutuallyExclusiveAptitudes = new List<HashedString>
 				{
 					"Art"
 				}
@@ -919,8 +1274,8 @@ namespace TUNING
 			item = new TraitVal
 			{
 				id = "SimpleTastes",
-				statBonus = -SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED,
+				rarity = RARITY_UNCOMMON,
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"Foodie"
@@ -930,14 +1285,15 @@ namespace TUNING
 			item = new TraitVal
 			{
 				id = "Foodie",
-				statBonus = -SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED,
+				rarity = RARITY_COMMON,
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"SimpleTastes",
-					"CantCook"
+					"CantCook",
+					"CookingDown"
 				},
-				requiredNonPositiveAptitudes = new List<HashedString>
+				mutuallyExclusiveAptitudes = new List<HashedString>
 				{
 					"Cooking"
 				}
@@ -946,8 +1302,208 @@ namespace TUNING
 			item = new TraitVal
 			{
 				id = "BedsideManner",
-				statBonus = -SMALL_STATPOINT_BONUS,
-				probability = PROBABILITY_MED,
+				rarity = RARITY_COMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"Hemophobia",
+					"CaringDown"
+				}
+			};
+			list6.Add(item);
+			item = new TraitVal
+			{
+				id = "DecorUp",
+				rarity = RARITY_UNCOMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"DecorDown"
+				}
+			};
+			list6.Add(item);
+			item = new TraitVal
+			{
+				id = "Thriver",
+				rarity = RARITY_EPIC,
+				dlcId = "EXPANSION1_ID"
+			};
+			list6.Add(item);
+			item = new TraitVal
+			{
+				id = "GreenThumb",
+				rarity = RARITY_COMMON,
+				dlcId = "EXPANSION1_ID",
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"BotanistDown"
+				}
+			};
+			list6.Add(item);
+			item = new TraitVal
+			{
+				id = "ConstructionUp",
+				rarity = RARITY_UNCOMMON,
+				dlcId = "EXPANSION1_ID",
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"ConstructionDown"
+				}
+			};
+			list6.Add(item);
+			item = new TraitVal
+			{
+				id = "RanchingUp",
+				rarity = RARITY_UNCOMMON,
+				dlcId = "EXPANSION1_ID",
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"RanchingDown"
+				}
+			};
+			list6.Add(item);
+			item = new TraitVal
+			{
+				id = "GrantSkill_Mining1",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_LEGENDARY,
+				dlcId = "EXPANSION1_ID",
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"CantDig"
+				}
+			};
+			list6.Add(item);
+			item = new TraitVal
+			{
+				id = "GrantSkill_Mining2",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_LEGENDARY,
+				dlcId = "EXPANSION1_ID",
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"CantDig"
+				}
+			};
+			list6.Add(item);
+			item = new TraitVal
+			{
+				id = "GrantSkill_Mining3",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_LEGENDARY,
+				dlcId = "EXPANSION1_ID",
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"CantDig"
+				}
+			};
+			list6.Add(item);
+			item = new TraitVal
+			{
+				id = "GrantSkill_Farming2",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "EXPANSION1_ID"
+			};
+			list6.Add(item);
+			item = new TraitVal
+			{
+				id = "GrantSkill_Ranching1",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "EXPANSION1_ID"
+			};
+			list6.Add(item);
+			item = new TraitVal
+			{
+				id = "GrantSkill_Cooking1",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "EXPANSION1_ID",
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"CantCook"
+				}
+			};
+			list6.Add(item);
+			item = new TraitVal
+			{
+				id = "GrantSkill_Arting1",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "EXPANSION1_ID",
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"Uncultured"
+				}
+			};
+			list6.Add(item);
+			item = new TraitVal
+			{
+				id = "GrantSkill_Arting2",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "EXPANSION1_ID",
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"Uncultured"
+				}
+			};
+			list6.Add(item);
+			item = new TraitVal
+			{
+				id = "GrantSkill_Arting3",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "EXPANSION1_ID",
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"Uncultured"
+				}
+			};
+			list6.Add(item);
+			item = new TraitVal
+			{
+				id = "GrantSkill_Suits1",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "EXPANSION1_ID"
+			};
+			list6.Add(item);
+			item = new TraitVal
+			{
+				id = "GrantSkill_Technicals2",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "EXPANSION1_ID"
+			};
+			list6.Add(item);
+			item = new TraitVal
+			{
+				id = "GrantSkill_Engineering1",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "EXPANSION1_ID"
+			};
+			list6.Add(item);
+			item = new TraitVal
+			{
+				id = "GrantSkill_Basekeeping2",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "EXPANSION1_ID",
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"Anemic"
+				}
+			};
+			list6.Add(item);
+			item = new TraitVal
+			{
+				id = "GrantSkill_Medicine2",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "EXPANSION1_ID",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"Hemophobia"
@@ -959,13 +1515,15 @@ namespace TUNING
 			item = new TraitVal
 			{
 				id = "Claustrophobic",
-				probability = PROBABILITY_MED
+				rarity = RARITY_COMMON,
+				dlcId = ""
 			};
 			list7.Add(item);
 			item = new TraitVal
 			{
 				id = "PrefersWarmer",
-				probability = PROBABILITY_MED,
+				rarity = RARITY_COMMON,
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"PrefersColder"
@@ -975,7 +1533,8 @@ namespace TUNING
 			item = new TraitVal
 			{
 				id = "PrefersColder",
-				probability = PROBABILITY_MED,
+				rarity = RARITY_COMMON,
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"PrefersWarmer"
@@ -985,31 +1544,29 @@ namespace TUNING
 			item = new TraitVal
 			{
 				id = "SensitiveFeet",
-				probability = PROBABILITY_MED
+				rarity = RARITY_COMMON,
+				dlcId = ""
 			};
 			list7.Add(item);
 			item = new TraitVal
 			{
 				id = "Fashionable",
-				probability = PROBABILITY_MED
+				rarity = RARITY_COMMON,
+				dlcId = ""
 			};
 			list7.Add(item);
 			item = new TraitVal
 			{
 				id = "Climacophobic",
-				probability = PROBABILITY_MED
+				rarity = RARITY_COMMON,
+				dlcId = ""
 			};
 			list7.Add(item);
 			item = new TraitVal
 			{
 				id = "SolitarySleeper",
-				probability = PROBABILITY_MED
-			};
-			list7.Add(item);
-			item = new TraitVal
-			{
-				id = "Workaholic",
-				probability = PROBABILITY_MED
+				rarity = RARITY_COMMON,
+				dlcId = ""
 			};
 			list7.Add(item);
 			NEEDTRAITS = list7;

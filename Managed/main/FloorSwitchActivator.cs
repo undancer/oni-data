@@ -6,7 +6,7 @@ public class FloorSwitchActivator : KMonoBehaviour
 	[MyCmpReq]
 	private PrimaryElement primaryElement;
 
-	private bool registered;
+	private bool registered = false;
 
 	private HandleVector<int>.Handle partitionerEntry;
 

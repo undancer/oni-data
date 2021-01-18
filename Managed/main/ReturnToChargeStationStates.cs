@@ -16,20 +16,12 @@ public class ReturnToChargeStationStates : GameStateMachine<ReturnToChargeStatio
 
 		public bool ChargeAborted()
 		{
-			if (!(base.smi.sm.GetSweepLocker(base.smi) == null))
-			{
-				return !base.smi.sm.GetSweepLocker(base.smi).GetComponent<Operational>().IsActive;
-			}
-			return true;
+			return base.smi.sm.GetSweepLocker(base.smi) == null || !base.smi.sm.GetSweepLocker(base.smi).GetComponent<Operational>().IsActive;
 		}
 
 		public bool StationReadyToCharge()
 		{
-			if (base.smi.sm.GetSweepLocker(base.smi) != null)
-			{
-				return base.smi.sm.GetSweepLocker(base.smi).GetComponent<Operational>().IsActive;
-			}
-			return false;
+			return base.smi.sm.GetSweepLocker(base.smi) != null && base.smi.sm.GetSweepLocker(base.smi).GetComponent<Operational>().IsActive;
 		}
 	}
 
@@ -57,12 +49,12 @@ public class ReturnToChargeStationStates : GameStateMachine<ReturnToChargeStatio
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = emote;
-		emote.ToggleStatusItem(Db.Get().RobotStatusItems.MovingToChargeStation, null, Db.Get().StatusItemCategories.Main).PlayAnim("react_lobatt", KAnim.PlayMode.Once).OnAnimQueueComplete(movingToChargingStation);
-		idle.ToggleStatusItem(Db.Get().RobotStatusItems.MovingToChargeStation, null, Db.Get().StatusItemCategories.Main).ScheduleGoTo(1f, movingToChargingStation);
-		movingToChargingStation.ToggleStatusItem(Db.Get().RobotStatusItems.MovingToChargeStation, null, Db.Get().StatusItemCategories.Main).MoveTo(delegate(Instance smi)
+		emote.ToggleStatusItem(Db.Get().RobotStatusItems.MovingToChargeStation, (Instance smi) => smi.gameObject, Db.Get().StatusItemCategories.Main).PlayAnim("react_lobatt", KAnim.PlayMode.Once).OnAnimQueueComplete(movingToChargingStation);
+		idle.ToggleStatusItem(Db.Get().RobotStatusItems.MovingToChargeStation, (Instance smi) => smi.gameObject, Db.Get().StatusItemCategories.Main).ScheduleGoTo(1f, movingToChargingStation);
+		movingToChargingStation.ToggleStatusItem(Db.Get().RobotStatusItems.MovingToChargeStation, (Instance smi) => smi.gameObject, Db.Get().StatusItemCategories.Main).MoveTo(delegate(Instance smi)
 		{
 			Storage sweepLocker = GetSweepLocker(smi);
-			return (!(sweepLocker == null)) ? Grid.PosToCell(sweepLocker) : Grid.InvalidCell;
+			return (sweepLocker == null) ? Grid.InvalidCell : Grid.PosToCell(sweepLocker);
 		}, chargingstates.waitingForCharging, idle);
 		chargingstates.Enter(delegate(Instance smi)
 		{

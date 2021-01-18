@@ -19,11 +19,7 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			if (other is AccountID_t)
-			{
-				return this == (AccountID_t)other;
-			}
-			return false;
+			return other is AccountID_t && this == (AccountID_t)other;
 		}
 
 		public override int GetHashCode()

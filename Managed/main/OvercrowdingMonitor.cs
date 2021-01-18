@@ -86,7 +86,8 @@ public class OvercrowdingMonitor : GameStateMachine<OvercrowdingMonitor, Overcro
 			{
 				return false;
 			}
-			return smi.cavity.numCells / num < smi.def.spaceRequiredPerCreature;
+			int num2 = smi.cavity.numCells / num;
+			return num2 < smi.def.spaceRequiredPerCreature;
 		}
 		return false;
 	}
@@ -103,13 +104,16 @@ public class OvercrowdingMonitor : GameStateMachine<OvercrowdingMonitor, Overcro
 			int fishCount = sMI.fishCount;
 			if (fishCount > 0)
 			{
-				return sMI.cellCount / fishCount < smi.def.spaceRequiredPerCreature;
+				int cellCount = sMI.cellCount;
+				int num = cellCount / fishCount;
+				return num < smi.def.spaceRequiredPerCreature;
 			}
 			return false;
 		}
 		if (smi.cavity != null && smi.cavity.creatures.Count > 1)
 		{
-			return smi.cavity.numCells / smi.cavity.creatures.Count < smi.def.spaceRequiredPerCreature;
+			int num2 = smi.cavity.numCells / smi.cavity.creatures.Count;
+			return num2 < smi.def.spaceRequiredPerCreature;
 		}
 		return false;
 	}

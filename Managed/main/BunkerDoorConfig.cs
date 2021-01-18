@@ -7,27 +7,27 @@ public class BunkerDoorConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("BunkerDoor", 4, 1, "door_bunker_kanim", 1000, 120f, new float[1]
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("BunkerDoor", 4, 1, "door_bunker_kanim", 1000, 120f, new float[1]
 		{
 			500f
 		}, new string[1]
 		{
 			SimHashes.Steel.ToString()
 		}, 1600f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE, temperature_modification_mass_scale: 1f);
-		obj.RequiresPowerInput = true;
-		obj.EnergyConsumptionWhenActive = 120f;
-		obj.OverheatTemperature = 1273.15f;
-		obj.Entombable = false;
-		obj.IsFoundation = true;
-		obj.AudioCategory = "Metal";
-		obj.PermittedRotations = PermittedRotations.R90;
-		obj.SceneLayer = Grid.SceneLayer.TileMain;
-		obj.ForegroundLayer = Grid.SceneLayer.InteriorWall;
-		obj.TileLayer = ObjectLayer.FoundationTile;
-		obj.LogicInputPorts = DoorConfig.CreateSingleInputPortList(new CellOffset(-1, 0));
+		buildingDef.RequiresPowerInput = true;
+		buildingDef.EnergyConsumptionWhenActive = 120f;
+		buildingDef.OverheatTemperature = 1273.15f;
+		buildingDef.Entombable = false;
+		buildingDef.IsFoundation = true;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.PermittedRotations = PermittedRotations.R90;
+		buildingDef.SceneLayer = Grid.SceneLayer.TileMain;
+		buildingDef.ForegroundLayer = Grid.SceneLayer.InteriorWall;
+		buildingDef.TileLayer = ObjectLayer.FoundationTile;
+		buildingDef.LogicInputPorts = DoorConfig.CreateSingleInputPortList(new CellOffset(-1, 0));
 		SoundEventVolumeCache.instance.AddVolume("door_internal_kanim", "Open_DoorInternal", NOISE_POLLUTION.NOISY.TIER2);
 		SoundEventVolumeCache.instance.AddVolume("door_internal_kanim", "Close_DoorInternal", NOISE_POLLUTION.NOISY.TIER2);
-		return obj;
+		return buildingDef;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)
@@ -40,7 +40,8 @@ public class BunkerDoorConfig : IBuildingConfig
 		door.doorOpeningSoundEventName = "BunkerDoor_opening";
 		door.doorClosingSoundEventName = "BunkerDoor_closing";
 		door.verticalOrientation = Orientation.R90;
-		go.AddOrGet<Workable>().workTime = 3f;
+		Workable workable = go.AddOrGet<Workable>();
+		workable.workTime = 3f;
 		KBatchedAnimController component = go.GetComponent<KBatchedAnimController>();
 		component.initialAnim = "closed";
 		component.visibilityType = KAnimControllerBase.VisibilityType.OffscreenUpdate;
@@ -48,6 +49,7 @@ public class BunkerDoorConfig : IBuildingConfig
 		go.AddOrGet<KBoxCollider2D>();
 		Prioritizable.AddRef(go);
 		Object.DestroyImmediate(go.GetComponent<BuildingEnabledButton>());
-		go.GetComponent<KPrefabID>().AddTag(GameTags.Bunker);
+		KPrefabID component2 = go.GetComponent<KPrefabID>();
+		component2.AddTag(GameTags.Bunker);
 	}
 }

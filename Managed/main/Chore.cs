@@ -205,11 +205,7 @@ public abstract class Chore
 					}
 					return chore.id - obj.chore.id;
 				}
-				if (!flag)
-				{
-					return 1;
-				}
-				return -1;
+				return (!flag) ? 1 : (-1);
 			}
 
 			public override bool Equals(object obj)
@@ -420,6 +416,7 @@ public abstract class Chore
 		AddPrecondition(ChorePreconditions.instance.IsMoreSatisfyingEarly);
 		AddPrecondition(ChorePreconditions.instance.IsMoreSatisfyingLate);
 		AddPrecondition(ChorePreconditions.instance.IsOverrideTargetNullOrMe);
+		AddPrecondition(ChorePreconditions.instance.IsInMyParentWorld);
 		chore_provider.AddChore(this);
 	}
 
@@ -469,9 +466,10 @@ public abstract class Chore
 
 	public void SetOverrideTarget(ChoreConsumer chore_consumer)
 	{
+		string text = "null";
 		if (chore_consumer != null)
 		{
-			_ = chore_consumer.name;
+			text = chore_consumer.name;
 		}
 		overrideTarget = chore_consumer;
 		Fail("New override target");

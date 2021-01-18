@@ -25,11 +25,13 @@ public class ScheduleBlockButton : KMonoBehaviour
 		this.paintStyles = paintStyles;
 		if (idx < TRAITS.EARLYBIRD_SCHEDULEBLOCK)
 		{
-			GetComponent<HierarchyReferences>().GetReference<RectTransform>("MorningIcon").gameObject.SetActive(value: true);
+			HierarchyReferences component = GetComponent<HierarchyReferences>();
+			component.GetReference<RectTransform>("MorningIcon").gameObject.SetActive(value: true);
 		}
 		else if (idx >= totalBlocks - 3)
 		{
-			GetComponent<HierarchyReferences>().GetReference<RectTransform>("NightIcon").gameObject.SetActive(value: true);
+			HierarchyReferences component2 = GetComponent<HierarchyReferences>();
+			component2.GetReference<RectTransform>("NightIcon").gameObject.SetActive(value: true);
 		}
 		base.gameObject.name = "ScheduleBlock_" + idx;
 	}

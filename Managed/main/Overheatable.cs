@@ -80,17 +80,14 @@ public class Overheatable : StateMachineComponent<Overheatable.StatesInstance>, 
 		get
 		{
 			InitializeModifiers();
-			if (overheatTemp == null)
-			{
-				return 10000f;
-			}
-			return overheatTemp.GetTotalValue();
+			return (overheatTemp != null) ? overheatTemp.GetTotalValue() : 10000f;
 		}
 	}
 
 	public void ResetTemperature()
 	{
-		GetComponent<PrimaryElement>().Temperature = 293.15f;
+		PrimaryElement component = GetComponent<PrimaryElement>();
+		component.Temperature = 293.15f;
 	}
 
 	protected override void OnPrefabInit()
@@ -128,7 +125,7 @@ public class Overheatable : StateMachineComponent<Overheatable.StatesInstance>, 
 	public Notification CreateOverheatedNotification()
 	{
 		KSelectable component = GetComponent<KSelectable>();
-		return new Notification(MISC.NOTIFICATIONS.BUILDINGOVERHEATED.NAME, NotificationType.BadMinor, HashedString.Invalid, (List<Notification> notificationList, object data) => string.Concat(MISC.NOTIFICATIONS.BUILDINGOVERHEATED.TOOLTIP, notificationList.ReduceMessages(countNames: false)), "/t• " + component.GetProperName(), expires: false);
+		return new Notification(MISC.NOTIFICATIONS.BUILDINGOVERHEATED.NAME, NotificationType.BadMinor, (List<Notification> notificationList, object data) => string.Concat(MISC.NOTIFICATIONS.BUILDINGOVERHEATED.TOOLTIP, notificationList.ReduceMessages(countNames: false)), "/t• " + component.GetProperName(), expires: false);
 	}
 
 	private static string ToolTipResolver(List<Notification> notificationList, object data)

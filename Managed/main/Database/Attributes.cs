@@ -54,6 +54,10 @@ namespace Database
 
 		public Attribute MachinerySpeed;
 
+		public Attribute RadiationResistance;
+
+		public Attribute RadiationRecovery;
+
 		public Attribute DecorExpectation;
 
 		public Attribute FoodExpectation;
@@ -81,27 +85,27 @@ namespace Database
 		public Attributes(ResourceSet parent)
 			: base("Attributes", parent)
 		{
-			Construction = Add(new Attribute("Construction", is_trainable: true, Attribute.Display.Skill, is_profession: true));
+			Construction = Add(new Attribute("Construction", is_trainable: true, Attribute.Display.Skill, is_profession: true, 0f, null, null, "mod_construction"));
 			Construction.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));
-			Digging = Add(new Attribute("Digging", is_trainable: true, Attribute.Display.Skill, is_profession: true));
+			Digging = Add(new Attribute("Digging", is_trainable: true, Attribute.Display.Skill, is_profession: true, 0f, null, null, "mod_excavation"));
 			Digging.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));
-			Machinery = Add(new Attribute("Machinery", is_trainable: true, Attribute.Display.Skill, is_profession: true));
+			Machinery = Add(new Attribute("Machinery", is_trainable: true, Attribute.Display.Skill, is_profession: true, 0f, null, null, "mod_machinery"));
 			Machinery.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));
-			Athletics = Add(new Attribute("Athletics", is_trainable: true, Attribute.Display.Skill, is_profession: true));
+			Athletics = Add(new Attribute("Athletics", is_trainable: true, Attribute.Display.Skill, is_profession: true, 0f, null, null, "mod_athletics"));
 			Athletics.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));
-			Learning = Add(new Attribute("Learning", is_trainable: true, Attribute.Display.Skill, is_profession: true));
+			Learning = Add(new Attribute("Learning", is_trainable: true, Attribute.Display.Skill, is_profession: true, 0f, null, null, "mod_science"));
 			Learning.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));
-			Cooking = Add(new Attribute("Cooking", is_trainable: true, Attribute.Display.Skill, is_profession: true));
+			Cooking = Add(new Attribute("Cooking", is_trainable: true, Attribute.Display.Skill, is_profession: true, 0f, null, null, "mod_cusine"));
 			Cooking.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));
-			Art = Add(new Attribute("Art", is_trainable: true, Attribute.Display.Skill, is_profession: true));
-			Art.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));
-			Strength = Add(new Attribute("Strength", is_trainable: true, Attribute.Display.Skill, is_profession: true));
-			Strength.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));
-			Caring = Add(new Attribute("Caring", is_trainable: true, Attribute.Display.Skill, is_profession: true));
+			Caring = Add(new Attribute("Caring", is_trainable: true, Attribute.Display.Skill, is_profession: true, 0f, null, null, "mod_medicine"));
 			Caring.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));
-			Botanist = Add(new Attribute("Botanist", is_trainable: true, Attribute.Display.Skill, is_profession: true));
+			Strength = Add(new Attribute("Strength", is_trainable: true, Attribute.Display.Skill, is_profession: true, 0f, null, null, "mod_strength"));
+			Strength.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));
+			Art = Add(new Attribute("Art", is_trainable: true, Attribute.Display.Skill, is_profession: true, 0f, null, null, "mod_creativity"));
+			Art.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));
+			Botanist = Add(new Attribute("Botanist", is_trainable: true, Attribute.Display.Skill, is_profession: true, 0f, null, null, "mod_agriculture"));
 			Botanist.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));
-			Ranching = Add(new Attribute("Ranching", is_trainable: true, Attribute.Display.Skill, is_profession: true));
+			Ranching = Add(new Attribute("Ranching", is_trainable: true, Attribute.Display.Skill, is_profession: true, 0f, null, null, "mod_husbandry"));
 			Ranching.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));
 			PowerTinker = Add(new Attribute("PowerTinker", is_trainable: true, Attribute.Display.Normal, is_profession: true));
 			PowerTinker.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));
@@ -124,6 +128,10 @@ namespace Database
 			GeneratorOutput.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.Percent, GameUtil.TimeSlice.None));
 			MachinerySpeed = Add(new Attribute("MachinerySpeed", is_trainable: false, Attribute.Display.General, is_profession: false, 1f));
 			MachinerySpeed.SetFormatter(new PercentAttributeFormatter());
+			RadiationResistance = Add(new Attribute("RadiationResistance", is_trainable: false, Attribute.Display.Details, is_profession: false));
+			RadiationResistance.SetFormatter(new PercentAttributeFormatter());
+			RadiationRecovery = Add(new Attribute("RadiationRecovery", is_trainable: false, Attribute.Display.Details, is_profession: false));
+			RadiationRecovery.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.Radiation, GameUtil.TimeSlice.PerCycle));
 			DecorExpectation = Add(new Attribute("DecorExpectation", is_trainable: false, Attribute.Display.Expectation, is_profession: false));
 			DecorExpectation.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));
 			FoodExpectation = Add(new Attribute("FoodExpectation", is_trainable: false, Attribute.Display.Expectation, is_profession: false));
@@ -144,9 +152,9 @@ namespace Database
 			DoctoredLevel = Add(new Attribute("DoctoredLevel", is_trainable: false, Attribute.Display.Never, is_profession: false));
 			CarryAmount = Add(new Attribute("CarryAmount", is_trainable: false, Attribute.Display.Details, is_profession: false));
 			CarryAmount.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.Mass, GameUtil.TimeSlice.None));
-			QualityOfLife = Add(new Attribute("QualityOfLife", is_trainable: false, Attribute.Display.Details, is_profession: false, 0f, "ui_icon_qualityoflife", "attribute_qualityoflife"));
+			QualityOfLife = Add(new Attribute("QualityOfLife", is_trainable: false, Attribute.Display.Details, is_profession: false, 0f, "ui_icon_qualityoflife", "attribute_qualityoflife", "mod_morale"));
 			QualityOfLife.SetFormatter(new QualityOfLifeAttributeFormatter());
-			GermResistance = Add(new Attribute("GermResistance", is_trainable: false, Attribute.Display.Details, is_profession: false, 0f, "ui_icon_immunelevel", "attribute_immunelevel"));
+			GermResistance = Add(new Attribute("GermResistance", is_trainable: false, Attribute.Display.Details, is_profession: false, 0f, "ui_icon_immunelevel", "attribute_immunelevel", "mod_germresistance"));
 			GermResistance.SetFormatter(new GermResistanceAttributeFormatter());
 			LifeSupport = Add(new Attribute("LifeSupport", is_trainable: true, Attribute.Display.Never, is_profession: false));
 			LifeSupport.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));

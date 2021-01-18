@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using STRINGS;
+using TUNING;
 using UnityEngine;
 
 public class AdvancedCureConfig : IEntityConfig
@@ -8,10 +9,15 @@ public class AdvancedCureConfig : IEntityConfig
 
 	public static ComplexRecipe recipe;
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
-		GameObject gameObject = EntityTemplates.CreateLooseEntity("AdvancedCure", ITEMS.PILLS.ADVANCEDCURE.NAME, ITEMS.PILLS.ADVANCEDCURE.DESC, 1f, unitMass: true, Assets.GetAnim("vial_spore_kanim"), "object", Grid.SceneLayer.Front, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.4f, isPickupable: true);
-		gameObject.GetComponent<KPrefabID>().AddTag(GameTags.MedicalSupplies);
+		GameObject template = EntityTemplates.CreateLooseEntity("AdvancedCure", ITEMS.PILLS.ADVANCEDCURE.NAME, ITEMS.PILLS.ADVANCEDCURE.DESC, 1f, unitMass: true, Assets.GetAnim("vial_spore_kanim"), "object", Grid.SceneLayer.Front, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.4f, isPickupable: true);
+		template = EntityTemplates.ExtendEntityToMedicine(template, MEDICINE.ADVANCEDCURE);
 		ComplexRecipe.RecipeElement[] array = new ComplexRecipe.RecipeElement[2]
 		{
 			new ComplexRecipe.RecipeElement(SimHashes.Steel.CreateTag(), 1f),
@@ -19,21 +25,23 @@ public class AdvancedCureConfig : IEntityConfig
 		};
 		ComplexRecipe.RecipeElement[] array2 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement("AdvancedCure", 1f)
+			new ComplexRecipe.RecipeElement("AdvancedCure", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
-		recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("Apothecary", array, array2), array, array2)
+		string text = (Sim.IsRadiationEnabled() ? "AdvancedApothecary" : "Apothecary");
+		string id = ComplexRecipeManager.MakeRecipeID(text, array, array2);
+		recipe = new ComplexRecipe(id, array, array2)
 		{
 			time = 200f,
 			description = ITEMS.PILLS.ADVANCEDCURE.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
 			fabricators = new List<Tag>
 			{
-				"Apothecary"
+				text
 			},
 			sortOrder = 20,
 			requiredTech = "MedicineIV"
 		};
-		return gameObject;
+		return template;
 	}
 
 	public void OnPrefabInit(GameObject inst)

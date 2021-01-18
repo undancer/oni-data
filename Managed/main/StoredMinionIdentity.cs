@@ -51,6 +51,9 @@ public class StoredMinionIdentity : KMonoBehaviour, ISaveLoadable, IAssignableId
 	public Dictionary<string, bool> MasteryBySkillID = new Dictionary<string, bool>();
 
 	[Serialize]
+	public List<string> grantedSkillIDs;
+
+	[Serialize]
 	public Dictionary<HashedString, float> AptitudeByRoleGroup = new Dictionary<HashedString, float>();
 
 	[Serialize]
@@ -126,11 +129,7 @@ public class StoredMinionIdentity : KMonoBehaviour, ISaveLoadable, IAssignableId
 
 	public bool HasMasteredSkill(string skillId)
 	{
-		if (MasteryBySkillID.ContainsKey(skillId))
-		{
-			return MasteryBySkillID[skillId];
-		}
-		return false;
+		return MasteryBySkillID.ContainsKey(skillId) && MasteryBySkillID[skillId];
 	}
 
 	protected override void OnPrefabInit()
@@ -237,7 +236,8 @@ public class StoredMinionIdentity : KMonoBehaviour, ISaveLoadable, IAssignableId
 				{
 					DebugUtil.LogWarningArgs("Found a minion storage with an invalid ref, rebinding.", component.InstanceID, storedName, item.gameObject.name);
 					info = (storedMinionInfo[i] = new MinionStorage.Info(storedName, new Ref<KPrefabID>(component)));
-					item.GetComponent<Assignable>().Assign(this);
+					Assignable component2 = item.GetComponent<Assignable>();
+					component2.Assign(this);
 					flag2 = true;
 					break;
 				}
@@ -255,10 +255,10 @@ public class StoredMinionIdentity : KMonoBehaviour, ISaveLoadable, IAssignableId
 		if (!flag2)
 		{
 			DebugUtil.LogWarningArgs("Found a stored minion that wasn't in any minion storage. Respawning them at the portal.", component.InstanceID, storedName);
-			GameObject telepad = GameUtil.GetTelepad();
-			if (telepad != null)
+			GameObject activeTelepad = GameUtil.GetActiveTelepad();
+			if (activeTelepad != null)
 			{
-				MinionStorage.DeserializeMinion(component.gameObject, telepad.transform.GetPosition());
+				MinionStorage.DeserializeMinion(component.gameObject, activeTelepad.transform.GetPosition());
 			}
 		}
 	}
@@ -347,9 +347,9 @@ public class StoredMinionIdentity : KMonoBehaviour, ISaveLoadable, IAssignableId
 				continue;
 			}
 			ChoreGroup[] disabledChoreGroups = trait.disabledChoreGroups;
-			for (int i = 0; i < disabledChoreGroups.Length; i++)
+			foreach (ChoreGroup choreGroup in disabledChoreGroups)
 			{
-				if (disabledChoreGroups[i].IdHash == chore_group.IdHash)
+				if (choreGroup.IdHash == chore_group.IdHash)
 				{
 					return true;
 				}

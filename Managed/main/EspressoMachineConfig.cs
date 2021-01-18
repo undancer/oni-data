@@ -7,18 +7,18 @@ public class EspressoMachineConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("EspressoMachine", 3, 3, "espresso_machine_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER1);
-		obj.ViewMode = OverlayModes.LiquidConduits.ID;
-		obj.Floodable = true;
-		obj.AudioCategory = "Metal";
-		obj.Overheatable = true;
-		obj.InputConduitType = ConduitType.Liquid;
-		obj.UtilityInputOffset = new CellOffset(1, 2);
-		obj.RequiresPowerInput = true;
-		obj.PowerInputOffset = new CellOffset(1, 2);
-		obj.EnergyConsumptionWhenActive = 480f;
-		obj.SelfHeatKilowattsWhenActive = 1f;
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("EspressoMachine", 3, 3, "espresso_machine_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER1);
+		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
+		buildingDef.Floodable = true;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.Overheatable = true;
+		buildingDef.InputConduitType = ConduitType.Liquid;
+		buildingDef.UtilityInputOffset = new CellOffset(1, 2);
+		buildingDef.RequiresPowerInput = true;
+		buildingDef.PowerInputOffset = new CellOffset(1, 2);
+		buildingDef.EnergyConsumptionWhenActive = 480f;
+		buildingDef.SelfHeatKilowattsWhenActive = 1f;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

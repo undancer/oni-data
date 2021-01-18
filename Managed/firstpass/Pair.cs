@@ -15,11 +15,7 @@ public struct Pair<T, U> : IEquatable<Pair<T, U>>
 
 	public bool Equals(Pair<T, U> other)
 	{
-		if (first.Equals(other.first))
-		{
-			return second.Equals(other.second);
-		}
-		return false;
+		return first.Equals(other.first) && second.Equals(other.second);
 	}
 
 	public override int GetHashCode()

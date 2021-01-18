@@ -110,10 +110,6 @@ public class AdditionalDetailsPanel : TargetScreen
 		{
 			drawer.NewLabel(drawer.Format(UI.ELEMENTAL.AGE.NAME, Util.FormatTwoDecimalPlace((GameClock.Instance.GetTime() - num) / 600f))).Tooltip(drawer.Format(UI.ELEMENTAL.AGE.TOOLTIP, Util.FormatTwoDecimalPlace((GameClock.Instance.GetTime() - num) / 600f)));
 		}
-		else
-		{
-			drawer.NewLabel(drawer.Format(UI.ELEMENTAL.AGE.NAME, UI.ELEMENTAL.AGE.UNKNOWN)).Tooltip(UI.ELEMENTAL.AGE.UNKNOWN_TOOLTIP);
-		}
 		int num_cycles = 5;
 		float num2;
 		float num3;
@@ -176,7 +172,8 @@ public class AdditionalDetailsPanel : TargetScreen
 		if (element.IsSolid)
 		{
 			drawer.NewLabel(drawer.Format(UI.ELEMENTAL.MELTINGPOINT.NAME, GameUtil.GetFormattedTemperature(highTemp))).Tooltip(drawer.Format(UI.ELEMENTAL.MELTINGPOINT.TOOLTIP, GameUtil.GetFormattedTemperature(highTemp)));
-			if (selectedTarget.GetComponent<ElementChunk>() != null)
+			ElementChunk component9 = selectedTarget.GetComponent<ElementChunk>();
+			if (component9 != null)
 			{
 				AttributeModifier attributeModifier = component.Element.attributeModifiers.Find((AttributeModifier m) => m.AttributeId == Db.Get().BuildingAttributes.OverheatTemperature.Id);
 				if (attributeModifier != null)

@@ -21,11 +21,7 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			if (other is ScreenshotHandle)
-			{
-				return this == (ScreenshotHandle)other;
-			}
-			return false;
+			return other is ScreenshotHandle && this == (ScreenshotHandle)other;
 		}
 
 		public override int GetHashCode()

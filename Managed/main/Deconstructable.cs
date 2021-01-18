@@ -6,9 +6,11 @@ using UnityEngine;
 [AddComponentMenu("KMonoBehaviour/Workable/Deconstructable")]
 public class Deconstructable : Workable
 {
-	private Chore chore;
+	public Chore chore = null;
 
 	public bool allowDeconstruction = true;
+
+	public string audioSize;
 
 	[Serialize]
 	private bool isMarkedForDeconstruction;
@@ -33,7 +35,28 @@ public class Deconstructable : Workable
 
 	private static readonly Vector2 INITIAL_VELOCITY_RANGE = new Vector2(0.5f, 4f);
 
-	private bool destroyed;
+	private bool destroyed = false;
+
+	private CellOffset[] placementOffsets
+	{
+		get
+		{
+			Building component = GetComponent<Building>();
+			if (component != null)
+			{
+				return component.Def.PlacementOffsets;
+			}
+			OccupyArea component2 = GetComponent<OccupyArea>();
+			if (component2 != null)
+			{
+				return component2.OccupiedCellsOffsets;
+			}
+			Debug.Assert(condition: false, "Ack! We put a Deconstructable on something that's neither a Building nor OccupyArea!", this);
+			return null;
+		}
+	}
+
+	public bool HasBeenDestroyed => destroyed;
 
 	protected override void OnPrefabInit()
 	{
@@ -50,13 +73,20 @@ public class Deconstructable : Workable
 		multitoolHitEffectTag = EffectConfigs.BuildSplashId;
 		workingPstComplete = null;
 		workingPstFailed = null;
-		Building component = GetComponent<Building>();
 		CellOffset[][] table = OffsetGroups.InvertedStandardTable;
-		if (component.Def.IsTilePiece)
+		CellOffset[] filter = null;
+		Building component = GetComponent<Building>();
+		if (component != null && component.Def.IsTilePiece)
 		{
 			table = OffsetGroups.InvertedStandardTableWithCorners;
+			filter = component.Def.ConstructionOffsetFilter;
+			SetWorkTime(component.Def.ConstructionTime * 0.5f);
 		}
-		CellOffset[][] offsetTable = OffsetGroups.BuildReachabilityTable(component.Def.PlacementOffsets, table, component.Def.ConstructionOffsetFilter);
+		else
+		{
+			SetWorkTime(30f);
+		}
+		CellOffset[][] offsetTable = OffsetGroups.BuildReachabilityTable(placementOffsets, table, filter);
 		SetOffsetTable(offsetTable);
 	}
 
@@ -78,15 +108,11 @@ public class Deconstructable : Workable
 		}
 	}
 
-	public override float GetWorkTime()
-	{
-		return GetComponent<Building>().Def.ConstructionTime * 0.5f;
-	}
-
 	protected override void OnStartWork(Worker worker)
 	{
 		progressBar.barColor = ProgressBarsConfig.Instance.GetBarColor("DeconstructBar");
 		GetComponent<KSelectable>().RemoveStatusItem(Db.Get().BuildingStatusItems.PendingDeconstruction);
+		Trigger(1830962028, this);
 	}
 
 	protected override void OnCompleteWork(Worker worker)
@@ -123,7 +149,7 @@ public class Deconstructable : Workable
 		{
 			TriggerDestroy(temperature, disease_idx, disease_count);
 		}
-		string sound = GlobalAssets.GetSound("Finish_Deconstruction_" + component.Def.AudioSize);
+		string sound = GlobalAssets.GetSound("Finish_Deconstruction_" + ((!audioSize.IsNullOrWhiteSpace()) ? audioSize : component.Def.AudioSize));
 		if (sound != null)
 		{
 			KMonoBehaviour.PlaySound3DAtLocation(sound, base.gameObject.transform.GetPosition());
@@ -143,29 +169,32 @@ public class Deconstructable : Workable
 
 	private void QueueDeconstruction()
 	{
-		if (chore != null)
-		{
-			return;
-		}
-		BuildingComplete component = GetComponent<BuildingComplete>();
-		if (component != null && component.Def.ReplacementLayer != ObjectLayer.NumLayers)
-		{
-			int cell = Grid.PosToCell(component);
-			if (Grid.Objects[cell, (int)component.Def.ReplacementLayer] != null)
-			{
-				return;
-			}
-		}
 		if (DebugHandler.InstantBuildMode)
 		{
 			OnCompleteWork(null);
-			return;
 		}
-		Prioritizable.AddRef(base.gameObject);
-		chore = new WorkChore<Deconstructable>(Db.Get().ChoreTypes.Deconstruct, this, null, run_until_complete: true, null, null, null, allow_in_red_alert: true, null, ignore_schedule_block: false, only_when_operational: false, null, is_preemptable: true, allow_in_context_menu: true, allow_prioritization: true, PriorityScreen.PriorityClass.basic, 5, ignore_building_assignment: true);
-		GetComponent<KSelectable>().AddStatusItem(Db.Get().BuildingStatusItems.PendingDeconstruction, this);
-		isMarkedForDeconstruction = true;
-		Trigger(2108245096, "Deconstruct");
+		else
+		{
+			if (chore != null)
+			{
+				return;
+			}
+			BuildingComplete component = GetComponent<BuildingComplete>();
+			if (component != null && component.Def.ReplacementLayer != ObjectLayer.NumLayers)
+			{
+				int cell = Grid.PosToCell(component);
+				GameObject x = Grid.Objects[cell, (int)component.Def.ReplacementLayer];
+				if (x != null)
+				{
+					return;
+				}
+			}
+			Prioritizable.AddRef(base.gameObject);
+			chore = new WorkChore<Deconstructable>(Db.Get().ChoreTypes.Deconstruct, this, null, run_until_complete: true, null, null, null, allow_in_red_alert: true, null, ignore_schedule_block: false, only_when_operational: false, null, is_preemptable: true, allow_in_context_menu: true, allow_prioritization: true, PriorityScreen.PriorityClass.basic, 5, ignore_building_assignment: true);
+			GetComponent<KSelectable>().AddStatusItem(Db.Get().BuildingStatusItems.PendingDeconstruction, this);
+			isMarkedForDeconstruction = true;
+			Trigger(2108245096, "Deconstruct");
+		}
 	}
 
 	private void OnDeconstruct()
@@ -206,10 +235,13 @@ public class Deconstructable : Workable
 	private void SpawnItemsFromConstruction(float temperature, byte disease_idx, int disease_count)
 	{
 		Building component = GetComponent<Building>();
-		for (int i = 0; i < constructionElements.Length && component.Def.Mass.Length > i; i++)
+		float[] array = ((!(component != null)) ? new float[1]
 		{
-			GameObject gameObject = SpawnItem(base.transform.GetPosition(), component.Def, constructionElements[i], component.Def.Mass[i], temperature, disease_idx, disease_count);
-			gameObject.transform.SetPosition(gameObject.transform.GetPosition() + Vector3.up * 0.5f);
+			GetComponent<PrimaryElement>().Mass
+		} : component.Def.Mass);
+		for (int i = 0; i < constructionElements.Length && array.Length > i; i++)
+		{
+			GameObject gameObject = SpawnItem(base.transform.GetPosition(), constructionElements[i], array[i], temperature, disease_idx, disease_count);
 			int num = Grid.PosToCell(gameObject.transform.GetPosition());
 			int num2 = Grid.CellAbove(num);
 			Vector2 initial_velocity = (((Grid.IsValidCell(num) && Grid.Solid[num]) || (Grid.IsValidCell(num2) && Grid.Solid[num2])) ? Vector2.zero : new Vector2(Random.Range(-1f, 1f) * INITIAL_VELOCITY_RANGE.x, INITIAL_VELOCITY_RANGE.y));
@@ -221,18 +253,18 @@ public class Deconstructable : Workable
 		}
 	}
 
-	private static GameObject SpawnItem(Vector3 position, BuildingDef def, Tag src_element, float src_mass, float src_temperature, byte disease_idx, int disease_count)
+	public GameObject SpawnItem(Vector3 position, Tag src_element, float src_mass, float src_temperature, byte disease_idx, int disease_count)
 	{
 		GameObject gameObject = null;
 		int cell = Grid.PosToCell(position);
-		CellOffset[] placementOffsets = def.PlacementOffsets;
+		CellOffset[] placementOffsets = this.placementOffsets;
 		Element element = ElementLoader.GetElement(src_element);
 		if (element != null)
 		{
 			float num = src_mass;
 			for (int i = 0; (float)i < src_mass / 400f; i++)
 			{
-				int num2 = i % def.PlacementOffsets.Length;
+				int num2 = i % placementOffsets.Length;
 				int cell2 = Grid.OffsetCell(cell, placementOffsets[num2]);
 				float mass = num;
 				if (num > 400f)
@@ -247,9 +279,10 @@ public class Deconstructable : Workable
 		{
 			for (int j = 0; (float)j < src_mass; j++)
 			{
-				int num3 = j % def.PlacementOffsets.Length;
+				int num3 = j % placementOffsets.Length;
 				int cell3 = Grid.OffsetCell(cell, placementOffsets[num3]);
-				gameObject = GameUtil.KInstantiate(Assets.GetPrefab(src_element), Grid.CellToPosCBC(cell3, Grid.SceneLayer.Ore), Grid.SceneLayer.Ore);
+				GameObject prefab = Assets.GetPrefab(src_element);
+				gameObject = GameUtil.KInstantiate(prefab, Grid.CellToPosCBC(cell3, Grid.SceneLayer.Ore), Grid.SceneLayer.Ore);
 				gameObject.SetActive(value: true);
 			}
 		}
@@ -285,7 +318,7 @@ public class Deconstructable : Workable
 
 	private void OnDeconstruct(object data)
 	{
-		if (allowDeconstruction)
+		if (allowDeconstruction || DebugHandler.InstantBuildMode)
 		{
 			QueueDeconstruction();
 		}

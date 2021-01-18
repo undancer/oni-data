@@ -74,11 +74,7 @@ public class ThoughtGraph : GameStateMachine<ThoughtGraph, ThoughtGraph.Instance
 		{
 			if (a.showImmediately != b.showImmediately)
 			{
-				if (!a.showImmediately)
-				{
-					return 1;
-				}
-				return -1;
+				return (!a.showImmediately) ? 1 : (-1);
 			}
 			return b.priority.CompareTo(a.priority);
 		}

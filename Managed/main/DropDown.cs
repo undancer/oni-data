@@ -7,9 +7,7 @@ using UnityEngine.UI;
 [AddComponentMenu("KMonoBehaviour/scripts/DropDown")]
 public class DropDown : KMonoBehaviour
 {
-	public RectTransform targetDropDownContainer;
-
-	public IListableOption selectedEntry;
+	public GameObject targetDropDownContainer;
 
 	public LocText selectedLabel;
 
@@ -25,7 +23,7 @@ public class DropDown : KMonoBehaviour
 
 	public bool addEmptyRow = true;
 
-	public object targetData;
+	public object targetData = null;
 
 	private List<IListableOption> entries = new List<IListableOption>();
 
@@ -43,7 +41,7 @@ public class DropDown : KMonoBehaviour
 
 	private Sprite emptyRowSprite;
 
-	private bool built;
+	private bool built = false;
 
 	private bool displaySelectedValueWhenClosed = true;
 
@@ -129,9 +127,13 @@ public class DropDown : KMonoBehaviour
 			emptyRow.GetComponent<KButton>().onClick += delegate
 			{
 				onEntrySelectedAction(null, targetData);
+				if (displaySelectedValueWhenClosed)
+				{
+					selectedLabel.text = emptyRowLabel ?? ((string)UI.DROPDOWN.NONE);
+				}
 				Close();
 			};
-			string text = ((emptyRowLabel == null) ? ((string)UI.DROPDOWN.NONE) : emptyRowLabel);
+			string text = emptyRowLabel ?? ((string)UI.DROPDOWN.NONE);
 			emptyRow.GetComponent<DropDownEntry>().label.text = text;
 			if (emptyRowSprite != null)
 			{
@@ -202,6 +204,10 @@ public class DropDown : KMonoBehaviour
 
 	public void Open()
 	{
+		if (open)
+		{
+			return;
+		}
 		if (!built)
 		{
 			Build(entries);
@@ -226,6 +232,10 @@ public class DropDown : KMonoBehaviour
 
 	public void Close()
 	{
+		if (!open)
+		{
+			return;
+		}
 		open = false;
 		foreach (KeyValuePair<IListableOption, GameObject> item in rowLookup)
 		{

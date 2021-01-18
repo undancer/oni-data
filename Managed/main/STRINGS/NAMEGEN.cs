@@ -343,6 +343,8 @@ namespace STRINGS
 					public static LocString PRINCE = "Prince";
 
 					public static LocString OL_MAN = "Ol' Man";
+
+					public static LocString DUKE = "Duke";
 				}
 
 				public class FEMALE
@@ -354,6 +356,8 @@ namespace STRINGS
 					public static LocString PRINCESS = "Princess";
 
 					public static LocString OL_WOMAN = "Ol' Woman";
+
+					public static LocString DUCHESS = "Duchess";
 				}
 
 				public class NB
@@ -380,9 +384,31 @@ namespace STRINGS
 
 					public static LocString GOOD_OL = "Good Ol'";
 
+					public static LocString WILD_OL = "Wild Ol'";
+
 					public static LocString WUNDER = "Wunder";
 
 					public static LocString EVIL = "Evil";
+
+					public static LocString LIL = "Lil";
+
+					public static LocString UNSTOPPABLE = "Unstoppable";
+
+					public static LocString DJ = "DJ";
+
+					public static LocString BONES = "Bones";
+
+					public static LocString BUSINESS = "Business";
+
+					public static LocString FUNKY = "Funky";
+
+					public static LocString DASTARDLY = "Dastardly";
+
+					public static LocString POWERFUL = "Powerful";
+
+					public static LocString DORKY = "Dorky";
+
+					public static LocString LOVABLE = "Lovable";
 				}
 			}
 
@@ -404,6 +430,8 @@ namespace STRINGS
 
 					public static LocString SR = "Sr.";
 
+					public static LocString ESQ = "Esq.";
+
 					public static LocString THE_EVIL = "The Evil";
 
 					public static LocString THE_GOOD = "The Good";
@@ -413,6 +441,12 @@ namespace STRINGS
 					public static LocString THE_UGLY = "The Ugly";
 
 					public static LocString THE_GREAT = "The Great";
+
+					public static LocString THE_UNFORTUNATE = "The Unfortunate";
+
+					public static LocString THE_BEEFY = "The Beefy";
+
+					public static LocString THE_UNDEFEATED = "The Undefeated";
 
 					public static LocString STRONG = "Strong";
 
@@ -527,6 +561,22 @@ namespace STRINGS
 					public static LocString BEARDOO = "Beardoo";
 
 					public static LocString GEOFF = "Geoff";
+
+					public static LocString CAMEMBERT = "Camembert";
+
+					public static LocString SARDO = "Sardo";
+
+					public static LocString SOURDOUGH = "Sourdough";
+
+					public static LocString REGGIANITO = "Reggianito";
+
+					public static LocString CREMOSO = "Cremoso";
+
+					public static LocString PEPPERJACK = "Pepper Jack";
+
+					public static LocString MONTEREY = "Monterey";
+
+					public static LocString TYBO = "Tybo";
 				}
 
 				public class FEMALE
@@ -634,6 +684,22 @@ namespace STRINGS
 					public static LocString STEPH = "Steph";
 
 					public static LocString KENDRA = "Kendra";
+
+					public static LocString BRIE = "Brie";
+
+					public static LocString FETA = "Feta";
+
+					public static LocString CHEESE = "Cheese";
+
+					public static LocString SALAMURA = "Salamura";
+
+					public static LocString JANI = "Jani";
+
+					public static LocString MISH = "Mish";
+
+					public static LocString PARENICA = "Parenica";
+
+					public static LocString ORDA = "Orda";
 				}
 
 				public class NB
@@ -681,6 +747,22 @@ namespace STRINGS
 					public static LocString MASON = "Mason";
 
 					public static LocString ORION = "Orion";
+
+					public static LocString JORDAN = "Jordan";
+
+					public static LocString TAYLOR = "Taylor";
+
+					public static LocString CHARLIE = "Charlie";
+
+					public static LocString BLAIR = "Blair";
+
+					public static LocString KELSEY = "Kelsey";
+
+					public static LocString QUINN = "Quinn";
+
+					public static LocString RILEY = "Riley";
+
+					public static LocString ROBIN = "Robin";
 
 					public static LocString JUPITER = "Jupiter";
 
@@ -743,6 +825,20 @@ namespace STRINGS
 					public static LocString BRUMPO = "Brumpo";
 
 					public static LocString AZPAF = "Azpaf";
+
+					public static LocString SPLUG = "Splug";
+
+					public static LocString MARIBO = "Maribo";
+
+					public static LocString NACHO = "Nacho";
+
+					public static LocString BLEU = "Bleu";
+
+					public static LocString MONDSEER = "Mondseer";
+
+					public static LocString STILTON = "Stilton";
+
+					public static LocString MOOSE = "Moose";
 				}
 			}
 		}
@@ -788,6 +884,11 @@ namespace STRINGS
 
 				public static LocString BELOVED_PET = "Beloved pet and friend.";
 			}
+		}
+
+		public class LAUNCHPAD
+		{
+			public static LocString FORMAT = "Rocket Platform {Name}";
 		}
 
 		public class ROCKET
@@ -983,6 +1084,41 @@ namespace STRINGS
 			public static LocString FMT_ADJECTIVE_NOUN_SUFFIX = "{Adjective} {Noun} {Suffix}";
 
 			public static LocString FMT_PREFIX_ADJECTIVE_NOUN_SUFFIX = "{Prefix} {Adjective} {Noun} {Suffix}";
+		}
+
+		public class WORLD
+		{
+			public class ROOTS
+			{
+				public static LocString GENERIC = "Sol\nLun\nOrb\nCosm\nGlob\nStar\nZolt\nTakar\nBeep\nBoop\nZap\nZow\nGrav\nAb\nAd\nAr\nAshk\nBan\nBubbl\nBurt\nCamil\nCatal\nDevon\nEll\nFrank\nGoss\nHar\nHass\nJean\nJosh\nLeir\nLia\nLind\nMav\nMar\nMax\nMeep\nMim\nNail\nNik\nNis\nOtt\nRen\nRow\nRub\nStink\nTrav\nTurn\n";
+
+				public static LocString FOREST = "Veget\nLeaf\nWood\nTopiar\nTimber\nShrub\nHerb\nGrow\nBark\n";
+
+				public static LocString OILY = "Greas\nSlick\nGas\nPetr\nFuel\nCombust\nPitch\n";
+
+				public static LocString SULFUR = "Sulph\nSulf\nBrim\nBrimston\nYell\nEgg\n";
+
+				public static LocString TERRA = "Earth\nFertil\nSoil\nBeaut\nEqu\nPleth\nVital\n";
+
+				public static LocString TUNDRA = "Brr'\nSnow\nTundr\nBlizz\nFreez\nChill\nFrig\nFrost\n";
+
+				public static LocString MAGMA = "Fier\nMagm\nToast\nScorch\nBurn\nChar\n";
+
+				public static LocString SWAMP = "Goop\nMud\nMuck\nGross\nStink\nSmell\nYuck\nReek\nOoz\n";
+			}
+
+			public class SUFFIXES
+			{
+				public static LocString GENERICLIST = "oni\nini\nani\nona\nina\nino\nano\nalin\nelin\nolin\nial\niol\niel\nila\nola\nera\nora\nato\nito\nilios\nista\nazon\nibo\n";
+			}
+
+			public static LocString PLANETOID_PREFIX = string.Concat(UI.CLUSTERMAP.PLANETOID, ": ");
+
+			public static LocString WORLDDIVIDER_TOOLTIP = string.Concat("Duplicants on the ", UI.CLUSTERMAP.PLANETOID_KEYWORD, " {0}");
+
+			public static LocString NO_DUPES_ON_PLANET = "Nobody here...";
+
+			public static LocString NO_DUPES_ON_PLANET_TOOLTIP = "There are no Duplicants on this " + UI.CLUSTERMAP.PLANETOID_KEYWORD;
 		}
 	}
 }

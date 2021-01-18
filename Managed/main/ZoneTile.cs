@@ -17,9 +17,9 @@ public class ZoneTile : KMonoBehaviour
 	protected override void OnSpawn()
 	{
 		int[] placementCells = building.PlacementCells;
-		for (int i = 0; i < placementCells.Length; i++)
+		foreach (int cell in placementCells)
 		{
-			SimMessages.ModifyCellWorldZone(placementCells[i], 0);
+			SimMessages.ModifyCellWorldZone(cell, 0);
 		}
 		Subscribe(1606648047, OnObjectReplacedDelegate);
 	}

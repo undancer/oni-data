@@ -13,6 +13,9 @@ public class SaveLoadRoot : KMonoBehaviour
 
 	private bool registered = true;
 
+	[SerializeField]
+	private List<string> m_optionalComponentTypeNames = new List<string>();
+
 	private static Dictionary<string, ISerializableComponentManager> serializableComponentManagers;
 
 	private static Dictionary<Type, string> sTypeToString = new Dictionary<Type, string>();
@@ -30,9 +33,10 @@ public class SaveLoadRoot : KMonoBehaviour
 		}
 		serializableComponentManagers = new Dictionary<string, ISerializableComponentManager>();
 		FieldInfo[] fields = typeof(GameComps).GetFields();
-		for (int i = 0; i < fields.Length; i++)
+		FieldInfo[] array = fields;
+		foreach (FieldInfo fieldInfo in array)
 		{
-			IComponentManager componentManager = (IComponentManager)fields[i].GetValue(null);
+			IComponentManager componentManager = (IComponentManager)fieldInfo.GetValue(null);
 			if (typeof(ISerializableComponentManager).IsAssignableFrom(componentManager.GetType()))
 			{
 				Type type = componentManager.GetType();
@@ -49,6 +53,11 @@ public class SaveLoadRoot : KMonoBehaviour
 			SaveLoader.Instance.saveManager.Register(this);
 		}
 		hasOnSpawnRun = true;
+	}
+
+	public void DeclareOptionalComponent<T>() where T : KMonoBehaviour
+	{
+		m_optionalComponentTypeNames.Add(typeof(T).ToString());
 	}
 
 	public void SetRegistered(bool registered)
@@ -112,14 +121,15 @@ public class SaveLoadRoot : KMonoBehaviour
 		}
 		foreach (KeyValuePair<string, ISerializableComponentManager> serializableComponentManager in serializableComponentManagers)
 		{
-			if (serializableComponentManager.Value.Has(base.gameObject))
+			ISerializableComponentManager value = serializableComponentManager.Value;
+			if (value.Has(base.gameObject))
 			{
 				num++;
 			}
 		}
 		writer.Write(num);
-		array = components;
-		foreach (KMonoBehaviour kMonoBehaviour2 in array)
+		KMonoBehaviour[] array2 = components;
+		foreach (KMonoBehaviour kMonoBehaviour2 in array2)
 		{
 			if ((kMonoBehaviour2 is ISaveLoadableDetails || (object)kMonoBehaviour2 != null) && !kMonoBehaviour2.GetType().IsDefined(typeof(SkipSaveFileSerialization), inherit: false))
 			{
@@ -129,9 +139,9 @@ public class SaveLoadRoot : KMonoBehaviour
 				long position2 = writer.BaseStream.Position;
 				if (kMonoBehaviour2 is ISaveLoadableDetails)
 				{
-					ISaveLoadableDetails obj = (ISaveLoadableDetails)kMonoBehaviour2;
+					ISaveLoadableDetails saveLoadableDetails = (ISaveLoadableDetails)kMonoBehaviour2;
 					Serializer.SerializeTypeless(kMonoBehaviour2, writer);
-					obj.Serialize(writer);
+					saveLoadableDetails.Serialize(writer);
 				}
 				else if ((object)kMonoBehaviour2 != null)
 				{
@@ -146,19 +156,20 @@ public class SaveLoadRoot : KMonoBehaviour
 		}
 		foreach (KeyValuePair<string, ISerializableComponentManager> serializableComponentManager2 in serializableComponentManagers)
 		{
-			ISerializableComponentManager value = serializableComponentManager2.Value;
-			if (value.Has(base.gameObject))
+			ISerializableComponentManager value2 = serializableComponentManager2.Value;
+			if (value2.Has(base.gameObject))
 			{
 				string key = serializableComponentManager2.Key;
 				writer.WriteKleiString(key);
-				value.Serialize(base.gameObject, writer);
+				value2.Serialize(base.gameObject, writer);
 			}
 		}
 	}
 
 	public static SaveLoadRoot Load(Tag tag, IReader reader)
 	{
-		return Load(SaveLoader.Instance.saveManager.GetPrefab(tag), reader);
+		GameObject prefab = SaveLoader.Instance.saveManager.GetPrefab(tag);
+		return Load(prefab, reader);
 	}
 
 	public static SaveLoadRoot Load(GameObject prefab, IReader reader)
@@ -196,15 +207,16 @@ public class SaveLoadRoot : KMonoBehaviour
 				try
 				{
 					LoadInternal(gameObject, reader);
-					return saveLoadRoot;
 				}
 				catch (ArgumentException ex)
 				{
 					DebugUtil.LogErrorArgs(gameObject, "Failed to load SaveLoadRoot ", ex.Message, "\n", ex.StackTrace);
-					return saveLoadRoot;
 				}
 			}
-			Debug.Log("missing SaveLoadRoot", gameObject);
+			else
+			{
+				Debug.Log("missing SaveLoadRoot", gameObject);
+			}
 		}
 		else
 		{
@@ -255,6 +267,17 @@ public class SaveLoadRoot : KMonoBehaviour
 			}
 			if (kMonoBehaviour == null)
 			{
+				SaveLoadRoot component = gameObject.GetComponent<SaveLoadRoot>();
+				int index;
+				if (component != null && (index = component.m_optionalComponentTypeNames.IndexOf(text)) != -1)
+				{
+					Debug.Assert(value2 == 0 && num3 == 0, $"Implementation does not support multiple components with optional components, type {text}, {value2}, {num3}");
+					Type type2 = Type.GetType(component.m_optionalComponentTypeNames[index]);
+					kMonoBehaviour = (KMonoBehaviour)gameObject.AddComponent(type2);
+				}
+			}
+			if (kMonoBehaviour == null)
+			{
 				reader.SkipBytes(num2);
 				continue;
 			}
@@ -267,9 +290,9 @@ public class SaveLoadRoot : KMonoBehaviour
 			dictionary[text] = num3 + 1;
 			if (kMonoBehaviour is ISaveLoadableDetails)
 			{
-				ISaveLoadableDetails obj = (ISaveLoadableDetails)kMonoBehaviour;
+				ISaveLoadableDetails saveLoadableDetails = (ISaveLoadableDetails)kMonoBehaviour;
 				Deserializer.DeserializeTypeless(kMonoBehaviour, reader);
-				obj.Deserialize(reader);
+				saveLoadableDetails.Deserialize(reader);
 			}
 			else
 			{

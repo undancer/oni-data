@@ -231,15 +231,16 @@ public class IceCooledFan : StateMachineComponent<IceCooledFan.StatesInstance>
 		float kilowatts = coolingRate * dt;
 		foreach (GameObject item in iceStorage.items)
 		{
-			GameUtil.DeltaThermalEnergy(item.GetComponent<PrimaryElement>(), kilowatts, targetTemperature);
+			PrimaryElement component = item.GetComponent<PrimaryElement>();
+			GameUtil.DeltaThermalEnergy(component, kilowatts, targetTemperature);
 		}
 		for (int num = iceStorage.items.Count; num > 0; num--)
 		{
 			GameObject gameObject = iceStorage.items[num - 1];
 			if (gameObject != null && gameObject.GetComponent<PrimaryElement>().Temperature > gameObject.GetComponent<PrimaryElement>().Element.highTemp && gameObject.GetComponent<PrimaryElement>().Element.HasTransitionUp)
 			{
-				PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
-				iceStorage.AddLiquid(component.Element.highTempTransitionTarget, component.Mass, component.Temperature, component.DiseaseIdx, component.DiseaseCount);
+				PrimaryElement component2 = gameObject.GetComponent<PrimaryElement>();
+				iceStorage.AddLiquid(component2.Element.highTempTransitionTarget, component2.Mass, component2.Temperature, component2.DiseaseIdx, component2.DiseaseCount);
 				iceStorage.ConsumeIgnoringDisease(gameObject);
 			}
 		}

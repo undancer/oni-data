@@ -31,7 +31,7 @@ public class AudioMixer
 
 	public List<HashedString> SnapshotDebugLog = new List<HashedString>();
 
-	public bool activeNIS;
+	public bool activeNIS = false;
 
 	public static float LOW_PRIORITY_CUTOFF_DISTANCE = 10f;
 
@@ -244,8 +244,8 @@ public class AudioMixer
 				num2++;
 				continue;
 			}
-			StaminaMonitor.Instance sMI = Components.LiveMinionIdentities[i].GetComponent<Worker>().GetSMI<StaminaMonitor.Instance>();
-			if (sMI != null && sMI.IsSleeping())
+			Worker component2 = Components.LiveMinionIdentities[i].GetComponent<Worker>();
+			if (component2.GetSMI<StaminaMonitor.Instance>()?.IsSleeping() ?? false)
 			{
 				num3++;
 			}

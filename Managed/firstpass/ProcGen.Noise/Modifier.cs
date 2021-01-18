@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using LibNoiseDotNet.Graphics.Tools.Noise;
 using LibNoiseDotNet.Graphics.Tools.Noise.Modifier;
 
@@ -86,32 +87,45 @@ namespace ProcGen.Noise
 
 		public IModule3D CreateModule()
 		{
-			return modifyType switch
+			switch (modifyType)
 			{
-				ModifyType.Abs => new Abs(), 
-				ModifyType.Clamp => new Clamp
-				{
-					LowerBound = lower,
-					UpperBound = upper
-				}, 
-				ModifyType.Exponent => new Exponent
-				{
-					ExponentValue = exponent
-				}, 
-				ModifyType.Invert => new Invert(), 
-				ModifyType.Curve => new Curve(), 
-				ModifyType.Terrace => new Terrace(), 
-				ModifyType.ScaleBias => new ScaleBias
-				{
-					Scale = scale,
-					Bias = bias
-				}, 
-				ModifyType.Scale2d => new Scale2d
-				{
-					Scale = scale2d
-				}, 
-				_ => null, 
-			};
+			case ModifyType.Abs:
+				return new Abs();
+			case ModifyType.Clamp:
+			{
+				Clamp clamp = new Clamp();
+				clamp.LowerBound = lower;
+				clamp.UpperBound = upper;
+				return clamp;
+			}
+			case ModifyType.Exponent:
+			{
+				Exponent exponent = new Exponent();
+				exponent.ExponentValue = this.exponent;
+				return exponent;
+			}
+			case ModifyType.Invert:
+				return new Invert();
+			case ModifyType.Curve:
+				return new Curve();
+			case ModifyType.Terrace:
+				return new Terrace();
+			case ModifyType.ScaleBias:
+			{
+				ScaleBias scaleBias = new ScaleBias();
+				scaleBias.Scale = scale;
+				scaleBias.Bias = bias;
+				return scaleBias;
+			}
+			case ModifyType.Scale2d:
+			{
+				Scale2d scale2d = new Scale2d();
+				scale2d.Scale = this.scale2d;
+				return scale2d;
+			}
+			default:
+				return null;
+			}
 		}
 
 		public IModule3D CreateModule(IModule3D sourceModule)
@@ -137,9 +151,10 @@ namespace ProcGen.Noise
 			{
 				Curve curve = target as Curve;
 				curve.ClearControlPoints();
-				foreach (ControlPoint control in controlPoints.GetControls())
+				List<ControlPoint> controls = controlPoints.GetControls();
+				foreach (ControlPoint item in controls)
 				{
-					curve.AddControlPoint(control);
+					curve.AddControlPoint(item);
 				}
 			}
 			else

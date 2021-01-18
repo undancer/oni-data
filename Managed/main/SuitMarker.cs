@@ -38,7 +38,8 @@ public class SuitMarker : KMonoBehaviour
 			{
 				return false;
 			}
-			if (new_reactor.GetComponent<MinionIdentity>().GetEquipment().IsSlotOccupied(Db.Get().AssignableSlots.Suit))
+			MinionIdentity component = new_reactor.GetComponent<MinionIdentity>();
+			if (component.GetEquipment().IsSlotOccupied(Db.Get().AssignableSlots.Suit))
 			{
 				if (x < 0 && suitMarker.isRotated)
 				{
@@ -112,7 +113,8 @@ public class SuitMarker : KMonoBehaviour
 				suitMarker.GetAttachedLockers(pooledList);
 				foreach (SuitLocker item in pooledList)
 				{
-					if (item.GetFullyChargedOutfit() != null && flag)
+					KPrefabID fullyChargedOutfit = item.GetFullyChargedOutfit();
+					if (fullyChargedOutfit != null && flag)
 					{
 						item.EquipTo(equipment);
 						flag2 = true;
@@ -149,7 +151,7 @@ public class SuitMarker : KMonoBehaviour
 			{
 				Assignable assignable = equipment.GetAssignable(Db.Get().AssignableSlots.Suit);
 				assignable.Unassign();
-				Notification notification = new Notification(MISC.NOTIFICATIONS.SUIT_DROPPED.NAME, NotificationType.BadMinor, HashedString.Invalid, (List<Notification> notificationList, object data) => MISC.NOTIFICATIONS.SUIT_DROPPED.TOOLTIP);
+				Notification notification = new Notification(MISC.NOTIFICATIONS.SUIT_DROPPED.NAME, NotificationType.BadMinor, (List<Notification> notificationList, object data) => MISC.NOTIFICATIONS.SUIT_DROPPED.TOOLTIP);
 				assignable.GetComponent<Notifier>().Add(notification);
 			}
 		}
@@ -301,7 +303,8 @@ public class SuitMarker : KMonoBehaviour
 
 	public static bool DoesTraversalDirectionRequireSuit(int source_cell, int dest_cell, Grid.SuitMarker.Flags flags)
 	{
-		return Grid.CellColumn(dest_cell) > Grid.CellColumn(source_cell) == ((flags & Grid.SuitMarker.Flags.Rotated) == 0);
+		bool flag = Grid.CellColumn(dest_cell) > Grid.CellColumn(source_cell);
+		return flag == ((flags & Grid.SuitMarker.Flags.Rotated) == 0);
 	}
 
 	public bool DoesTraversalDirectionRequireSuit(int source_cell, int dest_cell)

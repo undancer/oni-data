@@ -72,11 +72,7 @@ public class AudioEventManager : KMonoBehaviour
 
 	public static float LoudnessToDB(float loudness)
 	{
-		if (!(loudness > 0f))
-		{
-			return 0f;
-		}
-		return 10f * Mathf.Log10(loudness);
+		return (loudness > 0f) ? (10f * Mathf.Log10(loudness)) : 0f;
 	}
 
 	public static float DBToLoudness(float src_db)
@@ -86,7 +82,9 @@ public class AudioEventManager : KMonoBehaviour
 
 	public float GetDecibelsAtCell(int cell)
 	{
-		return Mathf.Round(LoudnessToDB(Grid.Loudness[cell]) * 2f) / 2f;
+		float loudness = Grid.Loudness[cell];
+		float num = LoudnessToDB(loudness);
+		return Mathf.Round(num * 2f) / 2f;
 	}
 
 	public static string GetLoudestNoisePolluterAtCell(int cell)
@@ -98,7 +96,8 @@ public class AudioEventManager : KMonoBehaviour
 		Vector2 pos = new Vector2(vector2I.x, vector2I.y);
 		foreach (NoiseSplat item in audioEventManager.spatialSplats.GetAllIntersecting(pos))
 		{
-			if (item.GetLoudness(cell) > num)
+			float loudness = item.GetLoudness(cell);
+			if (loudness > num)
 			{
 				result = item.GetProvider().GetName();
 			}

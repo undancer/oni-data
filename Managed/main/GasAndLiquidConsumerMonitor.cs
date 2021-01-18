@@ -41,9 +41,9 @@ public class GasAndLiquidConsumerMonitor : GameStateMachine<GasAndLiquidConsumer
 		{
 			element = Grid.Element[cell];
 			Diet.Info[] infos = base.smi.def.diet.infos;
-			for (int i = 0; i < infos.Length; i++)
+			foreach (Diet.Info info in infos)
 			{
-				if (infos[i].IsMatch(element.tag))
+				if (info.IsMatch(element.tag))
 				{
 					return true;
 				}
@@ -124,11 +124,7 @@ public class GasAndLiquidConsumerMonitor : GameStateMachine<GasAndLiquidConsumer
 		{
 			int cell2 = Grid.CellAbove(cell);
 			success = smi.IsConsumableCell(cell, out targetElement) || (Grid.IsValidCell(cell2) && smi.IsConsumableCell(cell2, out targetElement));
-			if (!success)
-			{
-				return --maxIterations <= 0;
-			}
-			return true;
+			return success || --maxIterations <= 0;
 		}
 	}
 

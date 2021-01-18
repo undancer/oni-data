@@ -45,29 +45,18 @@ public class BladderMonitor : GameStateMachine<BladderMonitor, BladderMonitor.In
 
 		public bool WantsToPee()
 		{
-			if (!NeedsToPee())
-			{
-				if (IsPeeTime())
-				{
-					return bladder.value >= 40f;
-				}
-				return false;
-			}
-			return true;
+			return NeedsToPee() || (IsPeeTime() && bladder.value >= 40f);
 		}
 
 		public bool IsPeeing()
 		{
-			if (choreDriver.HasChore())
-			{
-				return choreDriver.GetCurrentChore().SatisfiesUrge(Db.Get().Urges.Pee);
-			}
-			return false;
+			return choreDriver.HasChore() && choreDriver.GetCurrentChore().SatisfiesUrge(Db.Get().Urges.Pee);
 		}
 
 		public bool IsPeeTime()
 		{
-			return base.master.GetComponent<Schedulable>().IsAllowed(Db.Get().ScheduleBlockTypes.Hygiene);
+			Schedulable component = base.master.GetComponent<Schedulable>();
+			return component.IsAllowed(Db.Get().ScheduleBlockTypes.Hygiene);
 		}
 	}
 

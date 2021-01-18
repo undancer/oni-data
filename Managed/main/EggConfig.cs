@@ -10,7 +10,8 @@ public class EggConfig
 	{
 		GameObject gameObject = EntityTemplates.CreateLooseEntity(id, name, desc, mass, unitMass: true, Assets.GetAnim(anim), "idle", Grid.SceneLayer.Ore, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.8f, isPickupable: true);
 		gameObject.AddOrGet<KBoxCollider2D>().offset = new Vector2f(0f, 0.36f);
-		gameObject.AddOrGet<Pickupable>().sortOrder = SORTORDER.EGGS + egg_sort_order;
+		Pickupable pickupable = gameObject.AddOrGet<Pickupable>();
+		pickupable.sortOrder = SORTORDER.EGGS + egg_sort_order;
 		gameObject.AddOrGet<Effects>();
 		KPrefabID kPrefabID = gameObject.AddOrGet<KPrefabID>();
 		kPrefabID.AddTag(GameTags.Egg);
@@ -19,7 +20,8 @@ public class EggConfig
 		IncubationMonitor.Def def = gameObject.AddOrGetDef<IncubationMonitor.Def>();
 		def.spawnedCreature = creature_id;
 		def.baseIncubationRate = base_incubation_rate;
-		gameObject.AddOrGetDef<OvercrowdingMonitor.Def>().spaceRequiredPerCreature = 0;
+		OvercrowdingMonitor.Def def2 = gameObject.AddOrGetDef<OvercrowdingMonitor.Def>();
+		def2.spaceRequiredPerCreature = 0;
 		Object.Destroy(gameObject.GetComponent<EntitySplitter>());
 		Assets.AddPrefab(gameObject.GetComponent<KPrefabID>());
 		string arg = string.Format(STRINGS.BUILDINGS.PREFABS.EGGCRACKER.RESULT_DESCRIPTION, name);
@@ -29,8 +31,8 @@ public class EggConfig
 		};
 		ComplexRecipe.RecipeElement[] array2 = new ComplexRecipe.RecipeElement[2]
 		{
-			new ComplexRecipe.RecipeElement("RawEgg", 0.5f * mass),
-			new ComplexRecipe.RecipeElement("EggShell", 0.5f * mass)
+			new ComplexRecipe.RecipeElement("RawEgg", 0.5f * mass, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature),
+			new ComplexRecipe.RecipeElement("EggShell", 0.5f * mass, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
 		string obsolete_id = ComplexRecipeManager.MakeObsoleteRecipeID(id, "RawEgg");
 		string text = ComplexRecipeManager.MakeRecipeID("EggCracker", array, array2);

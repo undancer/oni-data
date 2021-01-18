@@ -8,6 +8,11 @@ public class SpiceNutConfig : IEntityConfig
 
 	public static string ID = "SpiceNut";
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateLooseEntity(ID, ITEMS.FOOD.SPICENUT.NAME, ITEMS.FOOD.SPICENUT.DESC, 1f, unitMass: false, Assets.GetAnim("spicenut_kanim"), "object", Grid.SceneLayer.Front, EntityTemplates.CollisionShape.CIRCLE, 0.3f, 0.3f, isPickupable: true);

@@ -22,13 +22,18 @@ public class FloorSoundEvent : SoundEvent
 			vector = component.GetPivotSymbolPosition();
 		}
 		int num = Grid.PosToCell(vector);
-		string sound = GlobalAssets.GetSound(StringFormatter.Combine(GetAudioCategory(Grid.CellBelow(num)), "_", base.name), force_no_warning: true);
+		int cell = Grid.CellBelow(num);
+		string audioCategory = GetAudioCategory(cell);
+		string name = StringFormatter.Combine(audioCategory, "_", base.name);
+		string sound = GlobalAssets.GetSound(name, force_no_warning: true);
 		if (sound == null)
 		{
-			sound = GlobalAssets.GetSound(StringFormatter.Combine("Rock_", base.name), force_no_warning: true);
+			name = StringFormatter.Combine("Rock_", base.name);
+			sound = GlobalAssets.GetSound(name, force_no_warning: true);
 			if (sound == null)
 			{
-				sound = GlobalAssets.GetSound(base.name, force_no_warning: true);
+				name = base.name;
+				sound = GlobalAssets.GetSound(name, force_no_warning: true);
 			}
 		}
 		GameObject gameObject = behaviour.controller.gameObject;

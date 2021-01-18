@@ -15,6 +15,8 @@ public class MinionStartingStats : ITelepadDeliverable
 
 	public List<Trait> Traits = new List<Trait>();
 
+	public int rarityBalance;
+
 	public Trait stressTrait;
 
 	public Trait joyTrait;
@@ -52,7 +54,7 @@ public class MinionStartingStats : ITelepadDeliverable
 		Traits.Add(Db.Get().traits.Get(MinionConfig.MINION_BASE_TRAIT_ID));
 		List<ChoreGroup> disabled_chore_groups = new List<ChoreGroup>();
 		GenerateAptitudes(guaranteedAptitudeID);
-		int pointsDelta = GenerateTraits(is_starter_minion, disabled_chore_groups);
+		int pointsDelta = GenerateTraits(is_starter_minion, disabled_chore_groups, guaranteedAptitudeID);
 		GenerateAttributes(pointsDelta, disabled_chore_groups);
 		KCompBuilder.BodyData bodyData = CreateBodyData(personality);
 		foreach (AccessorySlot resource in Db.Get().AccessorySlots.resources)
@@ -118,7 +120,7 @@ public class MinionStartingStats : ITelepadDeliverable
 		}
 	}
 
-	private int GenerateTraits(bool is_starter_minion, List<ChoreGroup> disabled_chore_groups)
+	private int GenerateTraits(bool is_starter_minion, List<ChoreGroup> disabled_chore_groups, string guaranteedAptitudeID = null)
 	{
 		int statDelta = 0;
 		List<string> selectedTraits = new List<string>();
@@ -135,100 +137,146 @@ public class MinionStartingStats : ITelepadDeliverable
 		{
 			congenitaltrait = trait3;
 		}
-		Func<List<DUPLICANTSTATS.TraitVal>, bool> func = delegate(List<DUPLICANTSTATS.TraitVal> traitPossibilities)
+		Func<List<DUPLICANTSTATS.TraitVal>, bool, bool> func = delegate(List<DUPLICANTSTATS.TraitVal> traitPossibilities, bool positiveTrait)
 		{
 			if (Traits.Count > DUPLICANTSTATS.MAX_TRAITS)
 			{
 				return false;
 			}
-			float num2 = Util.GaussianRandom();
-			List<DUPLICANTSTATS.TraitVal> list = new List<DUPLICANTSTATS.TraitVal>(traitPossibilities);
-			list.ShuffleSeeded(randSeed);
-			list.Sort((DUPLICANTSTATS.TraitVal t1, DUPLICANTSTATS.TraitVal t2) => -t1.probability.CompareTo(t2.probability));
-			foreach (DUPLICANTSTATS.TraitVal item in list)
+			float num5 = Mathf.Abs(Util.GaussianRandom());
+			int num6 = traitPossibilities.Count;
+			int num7;
+			if (!positiveTrait)
 			{
-				if (!selectedTraits.Contains(item.id))
+				if (DUPLICANTSTATS.rarityDeckActive.Count < 1)
 				{
-					if (item.requiredNonPositiveAptitudes != null)
+					DUPLICANTSTATS.rarityDeckActive.AddRange(DUPLICANTSTATS.RARITY_DECK);
+				}
+				if (DUPLICANTSTATS.rarityDeckActive.Count == DUPLICANTSTATS.RARITY_DECK.Count)
+				{
+					DUPLICANTSTATS.rarityDeckActive.ShuffleSeeded(randSeed);
+				}
+				num7 = DUPLICANTSTATS.rarityDeckActive[DUPLICANTSTATS.rarityDeckActive.Count - 1];
+				DUPLICANTSTATS.rarityDeckActive.RemoveAt(DUPLICANTSTATS.rarityDeckActive.Count - 1);
+			}
+			else
+			{
+				List<int> list = new List<int>();
+				if (is_starter_minion)
+				{
+					list.Add(rarityBalance - 1);
+					list.Add(rarityBalance);
+					list.Add(rarityBalance);
+					list.Add(rarityBalance + 1);
+				}
+				else
+				{
+					list.Add(rarityBalance - 2);
+					list.Add(rarityBalance - 1);
+					list.Add(rarityBalance);
+					list.Add(rarityBalance + 1);
+					list.Add(rarityBalance + 2);
+				}
+				list.ShuffleSeeded(randSeed);
+				num7 = list[0];
+				num7 = Mathf.Max(DUPLICANTSTATS.RARITY_COMMON, num7);
+				num7 = Mathf.Min(DUPLICANTSTATS.RARITY_LEGENDARY, num7);
+			}
+			List<DUPLICANTSTATS.TraitVal> list2 = new List<DUPLICANTSTATS.TraitVal>(traitPossibilities);
+			for (int num8 = list2.Count - 1; num8 > -1; num8--)
+			{
+				if (list2[num8].rarity != num7)
+				{
+					list2.RemoveAt(num8);
+					num6--;
+				}
+			}
+			list2.ShuffleSeeded(randSeed);
+			foreach (DUPLICANTSTATS.TraitVal item in list2)
+			{
+				if (!DlcManager.IsContentActive(item.dlcId))
+				{
+					num6--;
+				}
+				else if (selectedTraits.Contains(item.id))
+				{
+					num6--;
+				}
+				else
+				{
+					Trait trait4 = Db.Get().traits.TryGet(item.id);
+					if (trait4 == null)
 					{
-						bool flag2 = false;
-						foreach (KeyValuePair<SkillGroup, float> skillAptitude in skillAptitudes)
-						{
-							if (flag2)
-							{
-								break;
-							}
-							foreach (HashedString requiredNonPositiveAptitude in item.requiredNonPositiveAptitudes)
-							{
-								if (requiredNonPositiveAptitude == skillAptitude.Key.IdHash && skillAptitude.Value > 0f)
-								{
-									flag2 = true;
-									break;
-								}
-							}
-						}
-						if (flag2)
-						{
-							continue;
-						}
+						Debug.LogWarning("Trying to add nonexistent trait: " + item.id);
+						num6--;
 					}
-					if (item.mutuallyExclusiveTraits != null)
+					else if (is_starter_minion && !trait4.ValidStarterTrait)
 					{
-						bool flag3 = false;
-						foreach (string item2 in selectedTraits)
-						{
-							flag3 = item.mutuallyExclusiveTraits.Contains(item2);
-							if (flag3)
-							{
-								break;
-							}
-						}
-						if (flag3)
-						{
-							continue;
-						}
+						num6--;
 					}
-					if (num2 > item.probability)
+					else if (AreTraitAndAptitudesExclusive(item, skillAptitudes))
 					{
-						Trait trait4 = Db.Get().traits.TryGet(item.id);
-						if (trait4 == null)
-						{
-							Debug.LogWarning("Trying to add nonexistent trait: " + item.id);
-						}
-						else if (!is_starter_minion || trait4.ValidStarterTrait)
+						num6--;
+					}
+					else if (is_starter_minion && guaranteedAptitudeID != null && AreTraitAndArchetypeExclusive(item, guaranteedAptitudeID))
+					{
+						num6--;
+					}
+					else
+					{
+						if (!AreTraitsMutuallyExclusive(item, selectedTraits))
 						{
 							selectedTraits.Add(item.id);
 							statDelta += item.statBonus;
+							rarityBalance += (positiveTrait ? (-item.rarity) : item.rarity);
 							Traits.Add(trait4);
 							if (trait4.disabledChoreGroups != null)
 							{
-								for (int k = 0; k < trait4.disabledChoreGroups.Length; k++)
+								for (int i = 0; i < trait4.disabledChoreGroups.Length; i++)
 								{
-									disabled_chore_groups.Add(trait4.disabledChoreGroups[k]);
+									disabled_chore_groups.Add(trait4.disabledChoreGroups[i]);
 								}
 							}
 							return true;
 						}
+						num6--;
 					}
 				}
 			}
 			return false;
 		};
-		int num = (is_starter_minion ? 1 : 3);
-		bool flag = false;
-		while (!flag)
+		int num = 0;
+		int num2 = 0;
+		if (is_starter_minion)
 		{
-			for (int i = 0; i < num; i++)
-			{
-				flag = func(DUPLICANTSTATS.BADTRAITS) || flag;
-			}
+			num = 1;
+			num2 = 1;
 		}
-		flag = false;
-		while (!flag)
+		else
 		{
-			for (int j = 0; j < num; j++)
+			if (DUPLICANTSTATS.podTraitConfigurationsActive.Count < 1)
 			{
-				flag = func(DUPLICANTSTATS.GOODTRAITS) || flag;
+				DUPLICANTSTATS.podTraitConfigurationsActive.AddRange(DUPLICANTSTATS.POD_TRAIT_CONFIGURATIONS_DECK);
+			}
+			if (DUPLICANTSTATS.podTraitConfigurationsActive.Count == DUPLICANTSTATS.POD_TRAIT_CONFIGURATIONS_DECK.Count)
+			{
+				DUPLICANTSTATS.podTraitConfigurationsActive.ShuffleSeeded(randSeed);
+			}
+			num = DUPLICANTSTATS.podTraitConfigurationsActive[DUPLICANTSTATS.podTraitConfigurationsActive.Count - 1].first;
+			num2 = DUPLICANTSTATS.podTraitConfigurationsActive[DUPLICANTSTATS.podTraitConfigurationsActive.Count - 1].second;
+			DUPLICANTSTATS.podTraitConfigurationsActive.RemoveAt(DUPLICANTSTATS.podTraitConfigurationsActive.Count - 1);
+		}
+		int num3 = 0;
+		int num4 = 0;
+		while (num4 < num2 || num3 < num)
+		{
+			if (num4 < num2 && func(DUPLICANTSTATS.BADTRAITS, arg2: false))
+			{
+				num4++;
+			}
+			if (num3 < num && func(DUPLICANTSTATS.GOODTRAITS, arg2: true))
+			{
+				num3++;
 			}
 		}
 		return statDelta;
@@ -253,9 +301,7 @@ public class MinionStartingStats : ITelepadDeliverable
 
 	private void GenerateAttributes(int pointsDelta, List<ChoreGroup> disabled_chore_groups)
 	{
-		int num = Mathf.RoundToInt(Util.GaussianRandom() * ((float)DUPLICANTSTATS.MAX_STAT_POINTS - (float)DUPLICANTSTATS.MIN_STAT_POINTS) / 2f + (float)DUPLICANTSTATS.MIN_STAT_POINTS);
 		List<string> list = new List<string>(DUPLICANTSTATS.ALL_ATTRIBUTES);
-		int[] randomDistribution = DUPLICANTSTATS.DISTRIBUTIONS.GetRandomDistribution();
 		for (int i = 0; i < list.Count; i++)
 		{
 			if (!StartingLevels.ContainsKey(list[i]))
@@ -265,45 +311,49 @@ public class MinionStartingStats : ITelepadDeliverable
 		}
 		foreach (KeyValuePair<SkillGroup, float> skillAptitude in skillAptitudes)
 		{
-			if (skillAptitude.Key.relevantAttributes.Count > 0)
+			if (skillAptitude.Key.relevantAttributes.Count <= 0)
 			{
-				for (int j = 0; j < skillAptitude.Key.relevantAttributes.Count; j++)
+				continue;
+			}
+			for (int j = 0; j < skillAptitude.Key.relevantAttributes.Count; j++)
+			{
+				if (!StartingLevels.ContainsKey(skillAptitude.Key.relevantAttributes[j].Id))
 				{
-					StartingLevels[skillAptitude.Key.relevantAttributes[j].Id] += DUPLICANTSTATS.APTITUDE_ATTRIBUTE_BONUSES[skillAptitudes.Count - 1];
+					Debug.LogError("Need to add " + skillAptitude.Key.relevantAttributes[j].Id + " to TUNING.DUPLICANTSTATS.ALL_ATTRIBUTES");
 				}
+				StartingLevels[skillAptitude.Key.relevantAttributes[j].Id] += DUPLICANTSTATS.APTITUDE_ATTRIBUTE_BONUSES[skillAptitudes.Count - 1];
 			}
 		}
-		list.Shuffle();
-		for (int k = 0; k < list.Count; k++)
+		List<SkillGroup> list2 = new List<SkillGroup>(skillAptitudes.Keys);
+		if (pointsDelta > 0)
 		{
-			string key = list[k];
-			int b = randomDistribution[Mathf.Min(k, randomDistribution.Length - 1)];
-			int num2 = Mathf.Min(num, b);
-			if (!StartingLevels.ContainsKey(key))
+			for (int num = pointsDelta; num > 0; num--)
 			{
-				StartingLevels[key] = 0;
+				list2.Shuffle();
+				for (int k = 0; k < list2[0].relevantAttributes.Count; k++)
+				{
+					StartingLevels[list2[0].relevantAttributes[k].Id]++;
+				}
 			}
-			StartingLevels[key] += num2;
-			num -= num2;
 		}
 		if (disabled_chore_groups.Count <= 0)
 		{
 			return;
 		}
+		int num2 = 0;
 		int num3 = 0;
-		int num4 = 0;
 		foreach (KeyValuePair<string, int> startingLevel in StartingLevels)
 		{
-			if (startingLevel.Value > num3)
+			if (startingLevel.Value > num2)
 			{
-				num3 = startingLevel.Value;
+				num2 = startingLevel.Value;
 			}
 			if (startingLevel.Key == disabled_chore_groups[0].attribute.Id)
 			{
-				num4 = startingLevel.Value;
+				num3 = startingLevel.Value;
 			}
 		}
-		if (num3 != num4)
+		if (num2 != num3)
 		{
 			return;
 		}
@@ -313,13 +363,13 @@ public class MinionStartingStats : ITelepadDeliverable
 			{
 				int value = 0;
 				StartingLevels.TryGetValue(item, out value);
-				int num5 = 0;
+				int num4 = 0;
 				if (value > 0)
 				{
-					num5 = 1;
+					num4 = 1;
 				}
-				StartingLevels[disabled_chore_groups[0].attribute.Id] = value - num5;
-				StartingLevels[item] = num3 + num5;
+				StartingLevels[disabled_chore_groups[0].attribute.Id] = value - num4;
+				StartingLevels[item] = num2 + num4;
 				break;
 			}
 		}
@@ -357,7 +407,8 @@ public class MinionStartingStats : ITelepadDeliverable
 
 	public void ApplyRace(GameObject go)
 	{
-		go.GetComponent<MinionIdentity>().voiceIdx = voiceIdx;
+		MinionIdentity component = go.GetComponent<MinionIdentity>();
+		component.voiceIdx = voiceIdx;
 	}
 
 	public static KCompBuilder.BodyData CreateBodyData(Personality p)
@@ -409,7 +460,76 @@ public class MinionStartingStats : ITelepadDeliverable
 		gameObject.transform.SetLocalPosition(location);
 		Apply(gameObject);
 		Immigration.Instance.ApplyDefaultPersonalPriorities(gameObject);
-		new EmoteChore(gameObject.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_interacts_portal_kanim", Telepad.PortalBirthAnim, null);
+		ChoreProvider component = gameObject.GetComponent<ChoreProvider>();
+		new EmoteChore(component, Db.Get().ChoreTypes.EmoteHighPriority, "anim_interacts_portal_kanim", Telepad.PortalBirthAnim, null);
 		return gameObject;
+	}
+
+	private bool AreTraitAndAptitudesExclusive(DUPLICANTSTATS.TraitVal traitVal, Dictionary<SkillGroup, float> aptitudes)
+	{
+		if (traitVal.mutuallyExclusiveAptitudes == null)
+		{
+			return false;
+		}
+		foreach (KeyValuePair<SkillGroup, float> skillAptitude in skillAptitudes)
+		{
+			foreach (HashedString mutuallyExclusiveAptitude in traitVal.mutuallyExclusiveAptitudes)
+			{
+				if (mutuallyExclusiveAptitude == skillAptitude.Key.IdHash && skillAptitude.Value > 0f)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private bool AreTraitAndArchetypeExclusive(DUPLICANTSTATS.TraitVal traitVal, string guaranteedAptitudeID)
+	{
+		if (!DUPLICANTSTATS.ARCHETYPE_TRAIT_EXCLUSIONS.ContainsKey(guaranteedAptitudeID))
+		{
+			Debug.LogError("Need to add attribute " + guaranteedAptitudeID + " to ARCHETYPE_TRAIT_EXCLUSIONS");
+		}
+		foreach (string item in DUPLICANTSTATS.ARCHETYPE_TRAIT_EXCLUSIONS[guaranteedAptitudeID])
+		{
+			if (item == traitVal.id)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private bool AreTraitsMutuallyExclusive(DUPLICANTSTATS.TraitVal traitVal, List<string> selectedTraits)
+	{
+		foreach (string selectedTrait in selectedTraits)
+		{
+			foreach (DUPLICANTSTATS.TraitVal gOODTRAIT in DUPLICANTSTATS.GOODTRAITS)
+			{
+				if (selectedTrait == gOODTRAIT.id && gOODTRAIT.mutuallyExclusiveTraits != null && gOODTRAIT.mutuallyExclusiveTraits.Contains(traitVal.id))
+				{
+					return true;
+				}
+			}
+			foreach (DUPLICANTSTATS.TraitVal bADTRAIT in DUPLICANTSTATS.BADTRAITS)
+			{
+				if (selectedTrait == bADTRAIT.id && bADTRAIT.mutuallyExclusiveTraits != null && bADTRAIT.mutuallyExclusiveTraits.Contains(traitVal.id))
+				{
+					return true;
+				}
+			}
+			foreach (DUPLICANTSTATS.TraitVal cONGENITALTRAIT in DUPLICANTSTATS.CONGENITALTRAITS)
+			{
+				if (selectedTrait == cONGENITALTRAIT.id && cONGENITALTRAIT.mutuallyExclusiveTraits != null && cONGENITALTRAIT.mutuallyExclusiveTraits.Contains(traitVal.id))
+				{
+					return true;
+				}
+			}
+			if (traitVal.mutuallyExclusiveTraits != null && traitVal.mutuallyExclusiveTraits.Contains(selectedTrait))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 }

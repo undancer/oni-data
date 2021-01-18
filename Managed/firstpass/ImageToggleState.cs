@@ -22,7 +22,7 @@ public class ImageToggleState : KMonoBehaviour
 
 	public Sprite DisabledActiveSprite;
 
-	public bool useSprites;
+	public bool useSprites = false;
 
 	public Color ActiveColour = Color.white;
 
@@ -38,25 +38,15 @@ public class ImageToggleState : KMonoBehaviour
 
 	public ColorStyleSetting colorStyleSetting;
 
-	private bool isActive;
+	private bool isActive = false;
 
 	private State currentState = State.Inactive;
 
-	public bool useStartingState;
+	public bool useStartingState = false;
 
 	public State startingState = State.Inactive;
 
-	public bool IsDisabled
-	{
-		get
-		{
-			if (currentState != 0)
-			{
-				return currentState == State.DisabledActive;
-			}
-			return true;
-		}
-	}
+	public bool IsDisabled => currentState == State.Disabled || currentState == State.DisabledActive;
 
 	public new void Awake()
 	{

@@ -14,7 +14,7 @@ public class Rotatable : KMonoBehaviour, ISaveLoadable
 
 	[Serialize]
 	[SerializeField]
-	private Orientation orientation;
+	private Orientation orientation = Orientation.Neutral;
 
 	[SerializeField]
 	private Vector3 pivot = Vector3.zero;
@@ -22,7 +22,7 @@ public class Rotatable : KMonoBehaviour, ISaveLoadable
 	[SerializeField]
 	private Vector3 visualizerOffset = Vector3.zero;
 
-	public PermittedRotations permittedRotations;
+	public PermittedRotations permittedRotations = PermittedRotations.Unrotatable;
 
 	[SerializeField]
 	private int width;
@@ -193,7 +193,8 @@ public class Rotatable : KMonoBehaviour, ISaveLoadable
 			{
 				Matrix2x3 n = Matrix2x3.Translate(-pivot);
 				Matrix2x3 n2 = Matrix2x3.Rotate(num * ((float)Math.PI / 180f));
-				Matrix2x3 matrix2x = Matrix2x3.Translate(pivot) * n2 * n;
+				Matrix2x3 m = Matrix2x3.Translate(pivot);
+				Matrix2x3 matrix2x = m * n2 * n;
 				Vector2 v = new Vector2(-0.5f * (float)width, 0f);
 				Vector2 v2 = new Vector2(0.5f * (float)width, height);
 				Vector2 v3 = new Vector2(0f, 0.5f * (float)height);

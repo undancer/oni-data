@@ -22,7 +22,8 @@ public class GasConduitElementSensorConfig : ConduitSensorConfig
 	public override void DoPostConfigureComplete(GameObject go)
 	{
 		base.DoPostConfigureComplete(go);
-		go.AddOrGet<Filterable>().filterElementState = Filterable.ElementState.Gas;
+		Filterable filterable = go.AddOrGet<Filterable>();
+		filterable.filterElementState = Filterable.ElementState.Gas;
 		ConduitElementSensor conduitElementSensor = go.AddOrGet<ConduitElementSensor>();
 		conduitElementSensor.manuallyControlled = false;
 		conduitElementSensor.conduitType = ConduitType;

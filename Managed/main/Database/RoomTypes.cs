@@ -309,16 +309,18 @@ namespace Database
 				bool flag = false;
 				foreach (RoomType resource2 in resources)
 				{
-					if (resource != resource2 && resource2 != Neutral && HasAmbiguousRoomType(room, resource, resource2))
+					if (resource == resource2 || resource2 == Neutral || !HasAmbiguousRoomType(room, resource, resource2))
 					{
-						flag = true;
-						break;
+						continue;
 					}
+					flag = true;
+					break;
 				}
-				if (!flag)
+				if (flag)
 				{
-					return resource;
+					continue;
 				}
+				return resource;
 			}
 			return Neutral;
 		}

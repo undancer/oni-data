@@ -90,20 +90,12 @@ public class OilWellCap : Workable, ISingleSliderControl, ISliderControl, IEleme
 
 		private bool IsAbleToPump(StatesInstance smi)
 		{
-			if (smi.master.operational.IsOperational)
-			{
-				return smi.GetComponent<ElementConverter>().HasEnoughMassToStartConverting();
-			}
-			return false;
+			return smi.master.operational.IsOperational && smi.GetComponent<ElementConverter>().HasEnoughMassToStartConverting();
 		}
 
 		private bool MustStopPumping(StatesInstance smi)
 		{
-			if (smi.master.operational.IsOperational)
-			{
-				return !smi.GetComponent<ElementConverter>().CanConvertAtAll();
-			}
-			return true;
+			return !smi.master.operational.IsOperational || !smi.GetComponent<ElementConverter>().CanConvertAtAll();
 		}
 	}
 
@@ -146,7 +138,8 @@ public class OilWellCap : Workable, ISingleSliderControl, ISliderControl, IEleme
 		description = DUPLICANTS.CHORES.PRECONDITIONS.ALLOWED_TO_DEPRESSURIZE,
 		fn = delegate(ref Chore.Precondition.Context context, object data)
 		{
-			return ((OilWellCap)data).NeedsDepressurizing();
+			OilWellCap oilWellCap = (OilWellCap)data;
+			return oilWellCap.NeedsDepressurizing();
 		}
 	};
 
@@ -201,7 +194,8 @@ public class OilWellCap : Workable, ISingleSliderControl, ISliderControl, IEleme
 
 	private void OnCopySettings(object data)
 	{
-		OilWellCap component = ((GameObject)data).GetComponent<OilWellCap>();
+		GameObject gameObject = (GameObject)data;
+		OilWellCap component = gameObject.GetComponent<OilWellCap>();
 		if (component != null)
 		{
 			depressurizePercent = component.depressurizePercent;
@@ -265,7 +259,8 @@ public class OilWellCap : Workable, ISingleSliderControl, ISliderControl, IEleme
 
 	private void UpdatePressurePercent()
 	{
-		float value = storage.GetMassAvailable(gasElement) / maxGasPressure;
+		float massAvailable = storage.GetMassAvailable(gasElement);
+		float value = massAvailable / maxGasPressure;
 		value = Mathf.Clamp01(value);
 		smi.sm.pressurePercent.Set(value, smi);
 		pressureMeter.SetPositionPercent(value);

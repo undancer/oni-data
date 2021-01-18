@@ -15,13 +15,6 @@ namespace VoronoiTree
 		{
 		}
 
-		public override Tree Split(SplitCommand cmd)
-		{
-			Tree tree = base.parent.ReplaceLeafWithTree(this);
-			tree.Split(cmd);
-			return tree;
-		}
-
 		public void GetIntersectingSites(LineSegment edge, List<Diagram.Site> intersectingSites)
 		{
 			if (site != null && site.poly != null)

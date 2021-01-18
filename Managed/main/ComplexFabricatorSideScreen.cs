@@ -70,9 +70,9 @@ public class ComplexFabricatorSideScreen : SideScreenContent
 	[SerializeField]
 	private LocText noRecipesDiscoveredLabel;
 
-	public ScriptableObject styleTooltipHeader;
+	public TextStyleSetting styleTooltipHeader;
 
-	public ScriptableObject styleTooltipBody;
+	public TextStyleSetting styleTooltipBody;
 
 	private ComplexFabricator targetFab;
 
@@ -205,7 +205,8 @@ public class ComplexFabricatorSideScreen : SideScreenContent
 		}
 		int num = 0;
 		ComplexRecipe[] recipes = targetFab.GetRecipes();
-		foreach (ComplexRecipe recipe in recipes)
+		ComplexRecipe[] array = recipes;
+		foreach (ComplexRecipe recipe in array)
 		{
 			bool flag = false;
 			if (DebugHandler.InstantBuildMode)
@@ -253,8 +254,8 @@ public class ComplexFabricatorSideScreen : SideScreenContent
 					gameObject.GetComponent<Image>().color = Def.GetUISprite(recipeElement.material).second;
 					gameObject.gameObject.name = recipeElement.material.Name;
 				}
-				ingredients = recipe.results;
-				foreach (ComplexRecipe.RecipeElement recipeElement2 in ingredients)
+				ComplexRecipe.RecipeElement[] results = recipe.results;
+				foreach (ComplexRecipe.RecipeElement recipeElement2 in results)
 				{
 					GameObject gameObject2 = Util.KInstantiateUI(component2.GetReference("ToIconPrefab").gameObject, component2.GetReference("ToIcons").gameObject, force_active: true);
 					gameObject2.GetComponent<Image>().sprite = Def.GetUISprite(recipeElement2.material).first;
@@ -407,7 +408,7 @@ public class ComplexFabricatorSideScreen : SideScreenContent
 		ComplexRecipe.RecipeElement[] ingredients = recipe.ingredients;
 		foreach (ComplexRecipe.RecipeElement recipeElement in ingredients)
 		{
-			if (WorldInventory.Instance.GetAmount(recipeElement.material) + targetFab.inStorage.GetAmountAvailable(recipeElement.material) + targetFab.buildStorage.GetAmountAvailable(recipeElement.material) >= recipeElement.amount)
+			if (targetFab.GetMyWorld().worldInventory.GetAmount(recipeElement.material, includeRelatedWorlds: true) + targetFab.inStorage.GetAmountAvailable(recipeElement.material) + targetFab.buildStorage.GetAmountAvailable(recipeElement.material) >= recipeElement.amount)
 			{
 				return true;
 			}
@@ -421,7 +422,7 @@ public class ComplexFabricatorSideScreen : SideScreenContent
 		ComplexRecipe.RecipeElement[] ingredients = recipe.ingredients;
 		foreach (ComplexRecipe.RecipeElement recipeElement in ingredients)
 		{
-			if (WorldInventory.Instance.GetAmount(recipeElement.material) + targetFab.inStorage.GetAmountAvailable(recipeElement.material) + targetFab.buildStorage.GetAmountAvailable(recipeElement.material) < recipeElement.amount)
+			if (targetFab.GetMyWorld().worldInventory.GetAmount(recipeElement.material, includeRelatedWorlds: true) + targetFab.inStorage.GetAmountAvailable(recipeElement.material) + targetFab.buildStorage.GetAmountAvailable(recipeElement.material) < recipeElement.amount)
 			{
 				result = false;
 			}
@@ -434,7 +435,7 @@ public class ComplexFabricatorSideScreen : SideScreenContent
 		ComplexRecipe.RecipeElement[] ingredients = recipe.ingredients;
 		foreach (ComplexRecipe.RecipeElement recipeElement in ingredients)
 		{
-			if (WorldInventory.Instance.IsDiscovered(recipeElement.material))
+			if (DiscoveredResources.Instance.IsDiscovered(recipeElement.material))
 			{
 				return true;
 			}
@@ -485,7 +486,8 @@ public class ComplexFabricatorSideScreen : SideScreenContent
 			Tag tag = recipe.Ingredients[i].tag;
 			foreach (Element element in ElementLoader.elements)
 			{
-				if (GameTagExtensions.Create(element.id) == tag)
+				Tag a = GameTagExtensions.Create(element.id);
+				if (a == tag)
 				{
 					array[i] = element;
 					break;

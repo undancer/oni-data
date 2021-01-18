@@ -25,11 +25,7 @@ namespace YamlDotNet.Core
 		public char Peek(int offset)
 		{
 			int index = Position + offset;
-			if (!IsOutside(index))
-			{
-				return value[index];
-			}
-			return '\0';
+			return (!IsOutside(index)) ? value[index] : '\0';
 		}
 
 		private bool IsOutside(int index)

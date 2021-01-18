@@ -17,4 +17,12 @@ public static class PathFinderQueries
 	public static DrawNavGridQuery drawNavGridQuery = new DrawNavGridQuery();
 
 	public static PlantableCellQuery plantableCellQuery = new PlantableCellQuery();
+
+	public static MineableCellQuery mineableCellQuery = new MineableCellQuery();
+
+	public static StaterpillarCellQuery staterpillarCellQuery = new StaterpillarCellQuery();
+
+	public static FloorCellQuery floorCellQuery = new FloorCellQuery();
+
+	public static BuildingPlacementQuery buildingPlacementQuery = new BuildingPlacementQuery();
 }

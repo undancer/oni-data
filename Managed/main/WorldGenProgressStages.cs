@@ -17,6 +17,7 @@ public static class WorldGenProgressStages
 		ProcessRivers,
 		ConvertCellsToEdges,
 		DrawWorldBorder,
+		PlaceTemplates,
 		SettleSim,
 		DetectNaturalCavities,
 		PlacingCreatures,
@@ -24,7 +25,7 @@ public static class WorldGenProgressStages
 		NumberOfStages
 	}
 
-	public static KeyValuePair<Stages, float>[] StageWeights = new KeyValuePair<Stages, float>[18]
+	public static KeyValuePair<Stages, float>[] StageWeights = new KeyValuePair<Stages, float>[19]
 	{
 		new KeyValuePair<Stages, float>(Stages.Failure, 0f),
 		new KeyValuePair<Stages, float>(Stages.SetupNoise, 0.01f),
@@ -39,6 +40,7 @@ public static class WorldGenProgressStages
 		new KeyValuePair<Stages, float>(Stages.ProcessRivers, 0.1f),
 		new KeyValuePair<Stages, float>(Stages.ConvertCellsToEdges, 0f),
 		new KeyValuePair<Stages, float>(Stages.DrawWorldBorder, 0.2f),
+		new KeyValuePair<Stages, float>(Stages.PlaceTemplates, 5f),
 		new KeyValuePair<Stages, float>(Stages.SettleSim, 6f),
 		new KeyValuePair<Stages, float>(Stages.DetectNaturalCavities, 6f),
 		new KeyValuePair<Stages, float>(Stages.PlacingCreatures, 0.01f),

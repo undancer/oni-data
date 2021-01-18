@@ -4,25 +4,31 @@ using UnityEngine;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 [AddComponentMenu("KMonoBehaviour/scripts/ConduitDispenser")]
-public class ConduitDispenser : KMonoBehaviour, ISaveLoadable
+public class ConduitDispenser : KMonoBehaviour, ISaveLoadable, IConduitDispenser
 {
 	[SerializeField]
 	public ConduitType conduitType;
 
 	[SerializeField]
-	public SimHashes[] elementFilter;
+	public SimHashes[] elementFilter = null;
 
 	[SerializeField]
-	public bool invertElementFilter;
+	public bool invertElementFilter = false;
 
 	[SerializeField]
-	public bool alwaysDispense;
+	public bool alwaysDispense = false;
 
 	[SerializeField]
 	public bool isOn = true;
 
 	[SerializeField]
-	public bool blocked;
+	public bool blocked = false;
+
+	[SerializeField]
+	public bool empty = true;
+
+	[SerializeField]
+	public bool useSecondaryOutput = false;
 
 	private static readonly Operational.Flag outputConduitFlag = new Operational.Flag("output_conduit", Operational.Flag.Type.Functional);
 
@@ -36,7 +42,11 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable
 
 	private int utilityCell = -1;
 
-	private int elementOutputOffset;
+	private int elementOutputOffset = 0;
+
+	public Storage Storage => storage;
+
+	public ConduitType ConduitType => conduitType;
 
 	public ConduitType TypeOfConduit => conduitType;
 
@@ -47,11 +57,7 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable
 		get
 		{
 			GameObject gameObject = Grid.Objects[utilityCell, (conduitType == ConduitType.Gas) ? 12 : 16];
-			if (gameObject != null)
-			{
-				return gameObject.GetComponent<BuildingComplete>() != null;
-			}
-			return false;
+			return gameObject != null && gameObject.GetComponent<BuildingComplete>() != null;
 		}
 	}
 
@@ -82,7 +88,7 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable
 		{
 			Tutorial.Instance.TutorialMessage(Tutorial.TutorialMessages.TM_Plumbing);
 		});
-		utilityCell = GetComponent<Building>().GetUtilityOutputCell();
+		utilityCell = GetOutputCell();
 		ScenePartitionerLayer layer = GameScenePartitioner.Instance.objectLayers[(conduitType == ConduitType.Gas) ? 12 : 16];
 		partitionerEntry = GameScenePartitioner.Instance.Add("ConduitConsumer.OnSpawn", base.gameObject, utilityCell, layer, OnConduitConnectionChanged);
 		GetConduitManager().AddConduitUpdater(ConduitUpdate, ConduitFlowPriority.Dispense);
@@ -120,12 +126,14 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable
 		PrimaryElement primaryElement = FindSuitableElement();
 		if (primaryElement != null)
 		{
-			primaryElement.KeepZeroMassObject = true;
-			float num = GetConduitManager().AddElement(utilityCell, primaryElement.ElementID, primaryElement.Mass, primaryElement.Temperature, primaryElement.DiseaseIdx, primaryElement.DiseaseCount);
+			empty = false;
+			ConduitFlow conduitManager = GetConduitManager();
+			float num = conduitManager.AddElement(utilityCell, primaryElement.ElementID, primaryElement.Mass, primaryElement.Temperature, primaryElement.DiseaseIdx, primaryElement.DiseaseCount);
 			if (num > 0f)
 			{
-				int num2 = (int)(num / primaryElement.Mass * (float)primaryElement.DiseaseCount);
-				primaryElement.ModifyDiseaseCount(-num2, "ConduitDispenser.ConduitUpdate");
+				float num2 = num / primaryElement.Mass;
+				int num3 = (int)(num2 * (float)primaryElement.DiseaseCount);
+				primaryElement.ModifyDiseaseCount(-num3, "ConduitDispenser.ConduitUpdate");
 				primaryElement.Mass -= num;
 				Trigger(-1697596308, primaryElement.gameObject);
 			}
@@ -133,6 +141,10 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable
 			{
 				blocked = true;
 			}
+		}
+		else
+		{
+			empty = true;
 		}
 	}
 
@@ -163,5 +175,16 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable
 			}
 		}
 		return false;
+	}
+
+	private int GetOutputCell()
+	{
+		Building component = GetComponent<Building>();
+		if (useSecondaryOutput)
+		{
+			ISecondaryOutput component2 = GetComponent<ISecondaryOutput>();
+			return Grid.OffsetCell(component.NaturalBuildingCell(), component2.GetSecondaryConduitOffset(conduitType));
+		}
+		return component.GetUtilityOutputCell();
 	}
 }

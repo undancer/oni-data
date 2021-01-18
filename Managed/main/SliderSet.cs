@@ -59,6 +59,10 @@ public class SliderSet
 		numberInput.minValue = target.GetSliderMin(index);
 		numberInput.maxValue = target.GetSliderMax(index);
 		numberInput.decimalPlaces = target.SliderDecimalPlaces(index);
+		numberInput.field.characterLimit = Mathf.FloorToInt(1f + Mathf.Log10(numberInput.maxValue + (float)numberInput.decimalPlaces));
+		Vector2 sizeDelta = numberInput.GetComponent<RectTransform>().sizeDelta;
+		sizeDelta.x = (numberInput.field.characterLimit + 1) * 10;
+		numberInput.GetComponent<RectTransform>().sizeDelta = sizeDelta;
 		valueSlider.minValue = target.GetSliderMin(index);
 		valueSlider.maxValue = target.GetSliderMax(index);
 		valueSlider.value = target.GetSliderValue(index);

@@ -195,7 +195,7 @@ public class SolidTransferArm : StateMachineComponent<SolidTransferArm.SMInstanc
 
 	private bool rotation_complete;
 
-	private ArmAnim arm_anim;
+	private ArmAnim arm_anim = ArmAnim.Idle;
 
 	private HashSet<int> reachableCells = new HashSet<int>();
 
@@ -213,7 +213,7 @@ public class SolidTransferArm : StateMachineComponent<SolidTransferArm.SMInstanc
 
 	private static WorkItemCollection<BatchUpdateTask, BatchUpdateContext> batch_update_job = new WorkItemCollection<BatchUpdateTask, BatchUpdateContext>();
 
-	private int serial_no;
+	private int serial_no = 0;
 
 	private static HashedString HASH_ROTATION = "rotation";
 
@@ -244,7 +244,8 @@ public class SolidTransferArm : StateMachineComponent<SolidTransferArm.SMInstanc
 		arm_go.transform.parent = component.transform;
 		looping_sounds = arm_go.AddComponent<LoopingSounds>();
 		rotateSound = GlobalAssets.GetSound(rotateSound);
-		arm_go.AddComponent<KPrefabID>().PrefabTag = new Tag(name);
+		KPrefabID kPrefabID = arm_go.AddComponent<KPrefabID>();
+		kPrefabID.PrefabTag = new Tag(name);
 		arm_anim_ctrl = arm_go.AddComponent<KBatchedAnimController>();
 		arm_anim_ctrl.AnimFiles = new KAnimFile[1]
 		{
@@ -255,7 +256,8 @@ public class SolidTransferArm : StateMachineComponent<SolidTransferArm.SMInstanc
 		arm_anim_ctrl.sceneLayer = Grid.SceneLayer.TransferArm;
 		component.SetSymbolVisiblity("arm_target", is_visible: false);
 		bool symbolVisible;
-		Vector3 position = component.GetSymbolTransform(new HashedString("arm_target"), out symbolVisible).GetColumn(3);
+		Vector4 column = component.GetSymbolTransform(new HashedString("arm_target"), out symbolVisible).GetColumn(3);
+		Vector3 position = column;
 		position.z = Grid.GetLayerZ(Grid.SceneLayer.TransferArm);
 		arm_go.transform.SetPosition(position);
 		arm_go.SetActive(value: true);
@@ -388,7 +390,8 @@ public class SolidTransferArm : StateMachineComponent<SolidTransferArm.SMInstanc
 		pickupables.Clear();
 		foreach (CachedPickupable cached_pickupable in cached_pickupables)
 		{
-			if (Grid.GetCellRange(cell, cached_pickupable.storage_cell) <= pickupRange && IsPickupableRelevantToMyInterests(cached_pickupable.pickupable.KPrefabID, cached_pickupable.storage_cell) && cached_pickupable.pickupable.CouldBePickedUpByTransferArm(game_object))
+			int cellRange = Grid.GetCellRange(cell, cached_pickupable.storage_cell);
+			if (cellRange <= pickupRange && IsPickupableRelevantToMyInterests(cached_pickupable.pickupable.KPrefabID, cached_pickupable.storage_cell) && cached_pickupable.pickupable.CouldBePickedUpByTransferArm(game_object))
 			{
 				pickupables.Add(cached_pickupable.pickupable);
 			}
@@ -410,11 +413,7 @@ public class SolidTransferArm : StateMachineComponent<SolidTransferArm.SMInstanc
 
 	private bool IsPickupableRelevantToMyInterests(KPrefabID prefabID, int storage_cell)
 	{
-		if (prefabID.HasAnyTags(ref tagBits))
-		{
-			return IsCellReachable(storage_cell);
-		}
-		return false;
+		return prefabID.HasAnyTags(ref tagBits) && IsCellReachable(storage_cell);
 	}
 
 	public void FindFetchTarget(Storage destination, TagBits tag_bits, TagBits required_tags, TagBits forbid_tags, float required_amount, ref Pickupable target)
@@ -489,22 +488,23 @@ public class SolidTransferArm : StateMachineComponent<SolidTransferArm.SMInstanc
 
 	private void RotateArm(Vector3 target_dir, bool warp, float dt)
 	{
-		float num = MathUtil.AngleSigned(Vector3.up, target_dir, Vector3.forward) - arm_rot;
-		if (num < -180f)
+		float num = MathUtil.AngleSigned(Vector3.up, target_dir, Vector3.forward);
+		float num2 = num - arm_rot;
+		if (num2 < -180f)
 		{
-			num += 360f;
+			num2 += 360f;
 		}
-		if (num > 180f)
+		if (num2 > 180f)
 		{
-			num -= 360f;
+			num2 -= 360f;
 		}
 		if (!warp)
 		{
-			num = Mathf.Clamp(num, (0f - turn_rate) * dt, turn_rate * dt);
+			num2 = Mathf.Clamp(num2, (0f - turn_rate) * dt, turn_rate * dt);
 		}
-		arm_rot += num;
+		arm_rot += num2;
 		SetArmRotation(arm_rot);
-		rotation_complete = Mathf.Approximately(num, 0f);
+		rotation_complete = Mathf.Approximately(num2, 0f);
 		if (!warp && !rotation_complete)
 		{
 			if (!rotateSoundPlaying)

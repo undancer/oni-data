@@ -59,11 +59,7 @@ namespace Satsuma
 		public double GetDistance(Node node)
 		{
 			CheckTarget(node);
-			if (!dijkstra.Fixed(node))
-			{
-				return double.PositiveInfinity;
-			}
-			return dijkstra.GetDistance(node);
+			return dijkstra.Fixed(node) ? dijkstra.GetDistance(node) : double.PositiveInfinity;
 		}
 
 		public IPath GetPath(Node node)

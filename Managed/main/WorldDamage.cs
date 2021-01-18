@@ -71,7 +71,8 @@ public class WorldDamage : KMonoBehaviour
 					BuildingHP component = gameObject.GetComponent<BuildingHP>();
 					if (component != null)
 					{
-						int damage = Mathf.RoundToInt(Mathf.Max((float)component.HitPoints - (1f - num) * (float)component.MaxHitPoints, 0f));
+						float a = (float)component.HitPoints - (1f - num) * (float)component.MaxHitPoints;
+						int damage = Mathf.RoundToInt(Mathf.Max(a, 0f));
 						gameObject.Trigger(-794517298, new BuildingHP.DamageSourceInfo
 						{
 							damage = damage,
@@ -120,50 +121,49 @@ public class WorldDamage : KMonoBehaviour
 
 	private IEnumerator DelayedSpawnFX(int src_cell, int dest_cell, int offset, Element elem, int idx, float temperature)
 	{
-		float seconds = Random.value * 0.25f;
-		yield return new WaitForSeconds(seconds);
-		Vector3 position = Grid.CellToPosCCC(dest_cell, Grid.SceneLayer.Front);
-		GameObject gameObject = GameUtil.KInstantiate(leakEffect.gameObject, position, Grid.SceneLayer.Front);
-		KBatchedAnimController component = gameObject.GetComponent<KBatchedAnimController>();
-		component.TintColour = elem.substance.colour;
-		component.onDestroySelf = ReleaseGO;
+		float random_delay = Random.value * 0.25f;
+		yield return new WaitForSeconds(random_delay);
+		GameObject fx = GameUtil.KInstantiate(position: Grid.CellToPosCCC(dest_cell, Grid.SceneLayer.Front), original: leakEffect.gameObject, sceneLayer: Grid.SceneLayer.Front);
+		KBatchedAnimController kanim = fx.GetComponent<KBatchedAnimController>();
+		kanim.TintColour = elem.substance.colour;
+		kanim.onDestroySelf = ReleaseGO;
 		SimMessages.AddRemoveSubstance(src_cell, idx, CellEventLogger.Instance.WorldDamageDelayedSpawnFX, -1f, temperature, byte.MaxValue, 0);
 		if (offset == -1)
 		{
-			component.Play("side");
-			component.FlipX = true;
-			component.enabled = false;
-			component.enabled = true;
-			gameObject.transform.SetPosition(gameObject.transform.GetPosition() + Vector3.right * 0.5f);
+			kanim.Play("side");
+			kanim.FlipX = true;
+			kanim.enabled = false;
+			kanim.enabled = true;
+			fx.transform.SetPosition(fx.transform.GetPosition() + Vector3.right * 0.5f);
 			FallingWater.instance.AddParticle(dest_cell, (byte)idx, 1f, temperature, byte.MaxValue, 0, skip_sound: true);
 		}
 		else if (offset == Grid.WidthInCells)
 		{
-			gameObject.transform.SetPosition(gameObject.transform.GetPosition() - Vector3.up * 0.5f);
-			component.Play("floor");
-			component.enabled = false;
-			component.enabled = true;
+			fx.transform.SetPosition(fx.transform.GetPosition() - Vector3.up * 0.5f);
+			kanim.Play("floor");
+			kanim.enabled = false;
+			kanim.enabled = true;
 			SimMessages.AddRemoveSubstance(dest_cell, idx, CellEventLogger.Instance.WorldDamageDelayedSpawnFX, 1f, temperature, byte.MaxValue, 0);
 		}
 		else if (offset == -Grid.WidthInCells)
 		{
-			component.Play("ceiling");
-			component.enabled = false;
-			component.enabled = true;
-			gameObject.transform.SetPosition(gameObject.transform.GetPosition() + Vector3.up * 0.5f);
+			kanim.Play("ceiling");
+			kanim.enabled = false;
+			kanim.enabled = true;
+			fx.transform.SetPosition(fx.transform.GetPosition() + Vector3.up * 0.5f);
 			FallingWater.instance.AddParticle(dest_cell, (byte)idx, 1f, temperature, byte.MaxValue, 0, skip_sound: true);
 		}
 		else
 		{
-			component.Play("side");
-			component.enabled = false;
-			component.enabled = true;
-			gameObject.transform.SetPosition(gameObject.transform.GetPosition() - Vector3.right * 0.5f);
+			kanim.Play("side");
+			kanim.enabled = false;
+			kanim.enabled = true;
+			fx.transform.SetPosition(fx.transform.GetPosition() - Vector3.right * 0.5f);
 			FallingWater.instance.AddParticle(dest_cell, (byte)idx, 1f, temperature, byte.MaxValue, 0, skip_sound: true);
 		}
-		if (CameraController.Instance.IsAudibleSound(gameObject.transform.GetPosition(), leakSoundMigrated))
+		if (CameraController.Instance.IsAudibleSound(fx.transform.GetPosition(), leakSoundMigrated))
 		{
-			SoundEvent.PlayOneShot(leakSoundMigrated, gameObject.transform.GetPosition());
+			SoundEvent.PlayOneShot(leakSoundMigrated, fx.transform.GetPosition());
 		}
 		yield return null;
 	}
@@ -209,7 +209,8 @@ public class WorldDamage : KMonoBehaviour
 		if (!(num <= 0f))
 		{
 			GameObject gameObject = element.substance.SpawnResource(vector, num, temperature, disease_idx, disease_count);
-			if (gameObject.GetComponent<Pickupable>() != null && WorldInventory.Instance.IsReachable(gameObject.GetComponent<Pickupable>()))
+			Pickupable component = gameObject.GetComponent<Pickupable>();
+			if (component != null && component.GetMyWorld() != null && component.GetMyWorld().worldInventory.IsReachable(gameObject.GetComponent<Pickupable>()))
 			{
 				PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, Mathf.RoundToInt(num) + " " + element.name, gameObject.transform);
 			}

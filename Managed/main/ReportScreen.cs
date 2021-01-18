@@ -8,6 +8,9 @@ public class ReportScreen : KScreen
 	private LocText title;
 
 	[SerializeField]
+	private KButton closeButton;
+
+	[SerializeField]
 	private KButton prevButton;
 
 	[SerializeField]
@@ -47,6 +50,10 @@ public class ReportScreen : KScreen
 	{
 		base.OnPrefabInit();
 		Instance = this;
+		closeButton.onClick += delegate
+		{
+			ManagementMenu.Instance.CloseAll();
+		};
 		prevButton.onClick += delegate
 		{
 			ShowReport(currentReport.day - 1);
@@ -182,7 +189,8 @@ public class ReportScreen : KScreen
 			lineItems[reportGroup.stringKey] = value;
 		}
 		value.SetActive(value: true);
-		value.GetComponent<ReportScreenHeader>().SetMainEntry(reportGroup);
+		ReportScreenHeader component = value.GetComponent<ReportScreenHeader>();
+		component.SetMainEntry(reportGroup);
 		return value;
 	}
 
@@ -206,7 +214,8 @@ public class ReportScreen : KScreen
 				lineItems[reportGroup.stringKey] = value;
 			}
 			value.SetActive(value: true);
-			value.GetComponent<ReportScreenEntry>().SetMainEntry(entry, reportGroup);
+			ReportScreenEntry component = value.GetComponent<ReportScreenEntry>();
+			component.SetMainEntry(entry, reportGroup);
 		}
 		return value;
 	}

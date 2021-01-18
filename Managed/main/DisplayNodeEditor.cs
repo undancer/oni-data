@@ -25,19 +25,19 @@ public class DisplayNodeEditor : BaseNodeEditor
 	private const string Id = "displayNodeEditor";
 
 	[SerializeField]
-	public DisplayType displayType;
+	public DisplayType displayType = DisplayType.DefaultColour;
 
 	private const int width = 256;
 
 	private const int height = 256;
 
-	private Texture2D texture;
+	private Texture2D texture = null;
 
-	private ElementBandConfiguration biome;
+	private ElementBandConfiguration biome = null;
 
-	private string[] biomeOptions;
+	private string[] biomeOptions = null;
 
-	private string[] featureOptions;
+	private string[] featureOptions = null;
 
 	public override string GetID => "displayNodeEditor";
 
@@ -84,11 +84,11 @@ public class DisplayNodeEditor : BaseNodeEditor
 		switch (displayType)
 		{
 		case DisplayType.DefaultColour:
-			getColourDelegate = (int cell) => Color.HSVToRGB((40f + 320f * noise[cell]) / 360f, 1f, 1f);
+			getColourDelegate = (int cell, int exoId) => Color.HSVToRGB((40f + 320f * noise[cell]) / 360f, 1f, 1f);
 			break;
 		case DisplayType.ElementColourBiome:
 		case DisplayType.ElementColourFeature:
-			getColourDelegate = delegate(int cell)
+			getColourDelegate = delegate(int cell, int exoId)
 			{
 				if (biome == null)
 				{
@@ -120,7 +120,7 @@ public class DisplayNodeEditor : BaseNodeEditor
 		texture = SimDebugView.CreateTexture(out var textureBytes, 256, 256);
 		for (int i = 0; i < 65536; i++)
 		{
-			Color color = getColourCall(i);
+			Color color = getColourCall(i, 0);
 			int num = i * 4;
 			textureBytes[num] = (byte)(Mathf.Min(color.r, 1f) * 255f);
 			textureBytes[num + 1] = (byte)(Mathf.Min(color.g, 1f) * 255f);
@@ -135,7 +135,8 @@ public class DisplayNodeEditor : BaseNodeEditor
 	{
 		if (worldGenSettings == null)
 		{
-			worldGenSettings = SaveGame.Instance.worldGen.Settings;
+			Debug.Assert(SaveLoader.Instance.ClusterLayout != null, "Attempting to DisplayNodeEditor.InitSettings when worldgen hasn't happened for this run");
+			worldGenSettings = SaveLoader.Instance.ClusterLayout.currentWorld.Settings;
 		}
 	}
 

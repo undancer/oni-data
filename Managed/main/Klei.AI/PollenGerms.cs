@@ -6,8 +6,8 @@ namespace Klei.AI
 	{
 		public const string ID = "PollenGerms";
 
-		public PollenGerms()
-			: base("PollenGerms", 5, new RangeInfo(263.15f, 273.15f, 363.15f, 373.15f), new RangeInfo(10f, 100f, 100f, 10f), new RangeInfo(0f, 0f, 1000f, 1000f), RangeInfo.Idempotent())
+		public PollenGerms(bool statsOnly)
+			: base("PollenGerms", 5, new RangeInfo(263.15f, 273.15f, 363.15f, 373.15f), new RangeInfo(10f, 100f, 100f, 10f), new RangeInfo(0f, 0f, 1000f, 1000f), RangeInfo.Idempotent(), statsOnly)
 		{
 		}
 

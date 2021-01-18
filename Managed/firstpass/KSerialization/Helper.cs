@@ -18,7 +18,8 @@ namespace KSerialization
 
 		public static bool IsArray(SerializationTypeInfo type_info)
 		{
-			return (type_info & SerializationTypeInfo.VALUE_MASK) == SerializationTypeInfo.Array;
+			SerializationTypeInfo serializationTypeInfo = type_info & SerializationTypeInfo.VALUE_MASK;
+			return serializationTypeInfo == SerializationTypeInfo.Array;
 		}
 
 		public static bool IsGenericType(SerializationTypeInfo type_info)
@@ -212,10 +213,10 @@ namespace KSerialization
 					}
 					else if (IsValueType(typeInfo3.info))
 					{
-						SerializationTemplate serializationTemplate3 = Manager.GetSerializationTemplate(typeInfo3.type);
+						SerializationTemplate serializationTemplate4 = Manager.GetSerializationTemplate(typeInfo3.type);
 						for (int i = 0; i < array.Length; i++)
 						{
-							serializationTemplate3.SerializeData(array.GetValue(i), writer);
+							serializationTemplate4.SerializeData(array.GetValue(i), writer);
 						}
 					}
 					else
@@ -233,7 +234,7 @@ namespace KSerialization
 				}
 				else
 				{
-					writer.Write(4);
+					writer.Write(0);
 					writer.Write(-1);
 				}
 				break;
@@ -243,7 +244,8 @@ namespace KSerialization
 					long position7 = writer.BaseStream.Position;
 					writer.Write(0);
 					long position8 = writer.BaseStream.Position;
-					Manager.GetSerializationTemplate(type_info.type).SerializeData(value, writer);
+					SerializationTemplate serializationTemplate3 = Manager.GetSerializationTemplate(type_info.type);
+					serializationTemplate3.SerializeData(value, writer);
 					long position9 = writer.BaseStream.Position;
 					long num4 = position9 - position8;
 					writer.BaseStream.Position = position7;
@@ -291,7 +293,7 @@ namespace KSerialization
 				}
 				else
 				{
-					writer.Write(4);
+					writer.Write(0);
 					writer.Write(-1);
 				}
 				break;
@@ -310,10 +312,10 @@ namespace KSerialization
 					}
 					else if (IsValueType(typeInfo4.info))
 					{
-						SerializationTemplate serializationTemplate4 = Manager.GetSerializationTemplate(typeInfo4.type);
+						SerializationTemplate serializationTemplate5 = Manager.GetSerializationTemplate(typeInfo4.type);
 						foreach (object item3 in collection2)
 						{
-							serializationTemplate4.SerializeData(item3, writer);
+							serializationTemplate5.SerializeData(item3, writer);
 						}
 					}
 					else
@@ -331,7 +333,7 @@ namespace KSerialization
 				}
 				else
 				{
-					writer.Write(4);
+					writer.Write(0);
 					writer.Write(-1);
 				}
 				break;
@@ -340,9 +342,9 @@ namespace KSerialization
 				{
 					TypeInfo type_info4 = type_info.subTypes[0];
 					TypeInfo type_info5 = type_info.subTypes[1];
-					IDictionary obj = value as IDictionary;
-					ICollection keys = obj.Keys;
-					ICollection values = obj.Values;
+					IDictionary dictionary = value as IDictionary;
+					ICollection keys = dictionary.Keys;
+					ICollection values = dictionary.Values;
 					long position13 = writer.BaseStream.Position;
 					writer.Write(0);
 					writer.Write(values.Count);
@@ -363,7 +365,7 @@ namespace KSerialization
 				}
 				else
 				{
-					writer.Write(4);
+					writer.Write(0);
 					writer.Write(-1);
 				}
 				break;
@@ -429,7 +431,7 @@ namespace KSerialization
 				}
 				else
 				{
-					writer.Write(4);
+					writer.Write(0);
 					writer.Write(-1);
 				}
 				break;
@@ -629,7 +631,8 @@ namespace KSerialization
 
 		public static bool IsPOD(SerializationTypeInfo info)
 		{
-			if (info - 1 <= SerializationTypeInfo.SByte || info - 4 <= SerializationTypeInfo.UInt32)
+			SerializationTypeInfo serializationTypeInfo = info;
+			if (serializationTypeInfo - 1 <= SerializationTypeInfo.SByte || serializationTypeInfo - 4 <= SerializationTypeInfo.UInt32)
 			{
 				return true;
 			}

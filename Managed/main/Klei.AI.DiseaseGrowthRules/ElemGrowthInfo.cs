@@ -52,13 +52,15 @@ namespace Klei.AI.DiseaseGrowthRules
 			float num2 = maxCountPerKG * kg;
 			if (num <= (float)disease_count && (float)disease_count <= num2)
 			{
-				return (Disease.HalfLifeToGrowthRate(populationHalfLife, dt) - 1f) * (float)disease_count;
+				float num3 = Disease.HalfLifeToGrowthRate(populationHalfLife, dt);
+				return (num3 - 1f) * (float)disease_count;
 			}
 			if ((float)disease_count < num)
 			{
 				return (0f - underPopulationDeathRate) * dt;
 			}
-			return (Disease.HalfLifeToGrowthRate(overPopulationHalfLife, dt) - 1f) * (float)disease_count;
+			float num4 = Disease.HalfLifeToGrowthRate(overPopulationHalfLife, dt);
+			return (num4 - 1f) * (float)disease_count;
 		}
 	}
 }

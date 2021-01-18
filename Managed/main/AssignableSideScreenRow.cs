@@ -54,7 +54,7 @@ public class AssignableSideScreenRow : KMonoBehaviour
 				if (component != null)
 				{
 					AssignableSlotInstance slot = component.GetSlot(sideScreen.targetAssignable.slot);
-					if (slot != null && slot.IsAssigned())
+					if (slot?.IsAssigned() ?? false)
 					{
 						currentState = AssignableState.AssignedToOther;
 						assignmentText.text = slot.assignable.GetProperName();
@@ -65,7 +65,7 @@ public class AssignableSideScreenRow : KMonoBehaviour
 				if (component2 != null)
 				{
 					AssignableSlotInstance slot2 = component2.GetSlot(sideScreen.targetAssignable.slot);
-					if (slot2 != null && slot2.IsAssigned())
+					if (slot2?.IsAssigned() ?? false)
 					{
 						currentState = AssignableState.AssignedToOther;
 						assignmentText.text = slot2.assignable.GetProperName();

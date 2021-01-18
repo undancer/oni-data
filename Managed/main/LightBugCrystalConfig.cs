@@ -21,7 +21,7 @@ public class LightBugCrystalConfig : IEntityConfig
 	public static GameObject CreateLightBug(string id, string name, string desc, string anim_file, bool is_baby)
 	{
 		GameObject prefab = BaseLightBugConfig.BaseLightBug(id, name, desc, anim_file, "LightBugCrystalBaseTrait", LIGHT2D.LIGHTBUG_COLOR_CRYSTAL, DECOR.BONUS.TIER8, is_baby, "cry_");
-		EntityTemplates.ExtendEntityToWildCreature(prefab, LightBugTuning.PEN_SIZE_PER_CREATURE, 75f);
+		EntityTemplates.ExtendEntityToWildCreature(prefab, LightBugTuning.PEN_SIZE_PER_CREATURE);
 		Trait trait = Db.Get().CreateTrait("LightBugCrystalBaseTrait", name, name, null, should_save: false, null, positive_trait: true, is_valid_starter_trait: true);
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.maxAttribute.Id, LightBugTuning.STANDARD_STOMACH_SIZE, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.deltaAttribute.Id, (0f - LightBugTuning.STANDARD_CALORIES_PER_CYCLE) / 600f, name));
@@ -31,11 +31,17 @@ public class LightBugCrystalConfig : IEntityConfig
 		hashSet.Add(TagManager.Create("CookedMeat"));
 		hashSet.Add(SimHashes.Diamond.CreateTag());
 		prefab = BaseLightBugConfig.SetupDiet(prefab, hashSet, Tag.Invalid, CALORIES_PER_KG_OF_ORE);
-		prefab.AddOrGetDef<LureableMonitor.Def>().lures = new Tag[1]
+		LureableMonitor.Def def = prefab.AddOrGetDef<LureableMonitor.Def>();
+		def.lures = new Tag[1]
 		{
 			SimHashes.Diamond.CreateTag()
 		};
 		return prefab;
+	}
+
+	public string GetDlcId()
+	{
+		return "";
 	}
 
 	public GameObject CreatePrefab()

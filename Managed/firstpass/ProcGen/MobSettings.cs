@@ -7,7 +7,7 @@ namespace ProcGen
 	{
 		public static float AmbientMobDensity = 1f;
 
-		private TagSet mobkeys;
+		private TagSet mobkeys = null;
 
 		public ComposableDictionary<string, Mob> MobLookupTable
 		{

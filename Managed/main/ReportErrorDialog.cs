@@ -15,7 +15,7 @@ public class ReportErrorDialog : MonoBehaviour
 		DisableMods
 	}
 
-	public static string MOST_RECENT_SAVEFILE;
+	public static string MOST_RECENT_SAVEFILE = null;
 
 	private System.Action submitAction;
 
@@ -200,15 +200,16 @@ public class ReportErrorDialog : MonoBehaviour
 	{
 		yield return new WaitForEndOfFrame();
 		yield return new WaitForEndOfFrame();
-		bool flag = false;
+		bool delay = false;
 		if (MOST_RECENT_SAVEFILE != null && File.Exists(MOST_RECENT_SAVEFILE))
 		{
-			flag = true;
-			long length = new FileInfo(MOST_RECENT_SAVEFILE).Length;
+			delay = true;
+			FileInfo info = new FileInfo(MOST_RECENT_SAVEFILE);
+			long length = info.Length;
 			saveFileInfoLabel.text = Path.GetFileName(MOST_RECENT_SAVEFILE) + " " + length + " bytes";
 			uploadSaveDialog.SetActive(value: true);
 		}
-		if (!flag)
+		if (!delay)
 		{
 			Submit();
 		}

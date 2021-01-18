@@ -124,10 +124,17 @@ public class WorkChore<WorkableType> : Chore<WorkChore<WorkableType>.StatesInsta
 			AddPrecondition(ChorePreconditions.instance.IsAssignedtoMe, base.smi.sm.workable.Get<Assignable>(base.smi));
 		}
 		WorkableType val = target as WorkableType;
-		if ((UnityEngine.Object)val != (UnityEngine.Object)null && !string.IsNullOrEmpty(val.requiredSkillPerk))
+		if ((UnityEngine.Object)val != (UnityEngine.Object)null)
 		{
-			HashedString hashedString = val.requiredSkillPerk;
-			AddPrecondition(ChorePreconditions.instance.HasSkillPerk, hashedString);
+			if (!string.IsNullOrEmpty(val.requiredSkillPerk))
+			{
+				HashedString hashedString = val.requiredSkillPerk;
+				AddPrecondition(ChorePreconditions.instance.HasSkillPerk, hashedString);
+			}
+			if (val.requireMinionToWork)
+			{
+				AddPrecondition(ChorePreconditions.instance.IsMinion);
+			}
 		}
 	}
 
@@ -184,7 +191,8 @@ public class WorkChore<WorkableType> : Chore<WorkChore<WorkableType>.StatesInsta
 			{
 				return false;
 			}
-			if (context.consumerState.navigator.GetNavigationCost(workable) * 2 > navigationCost)
+			int navigationCost2 = context.consumerState.navigator.GetNavigationCost(workable);
+			if (navigationCost2 * 2 > navigationCost)
 			{
 				return false;
 			}

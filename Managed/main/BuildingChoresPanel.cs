@@ -48,22 +48,18 @@ public class BuildingChoresPanel : TargetScreen
 
 	private List<HierarchyReferences> choreEntries = new List<HierarchyReferences>();
 
-	private int activeChoreEntries;
+	private int activeChoreEntries = 0;
 
 	private List<BuildingChoresPanelDupeRow> dupeEntries = new List<BuildingChoresPanelDupeRow>();
 
-	private int activeDupeEntries;
+	private int activeDupeEntries = 0;
 
 	private List<DupeEntryData> DupeEntryDatas = new List<DupeEntryData>();
 
 	public override bool IsValidForTarget(GameObject target)
 	{
 		KPrefabID component = target.GetComponent<KPrefabID>();
-		if (component != null && component.HasTag(GameTags.HasChores))
-		{
-			return !component.HasTag(GameTags.Minion);
-		}
-		return false;
+		return component != null && component.HasTag(GameTags.HasChores) && !component.HasTag(GameTags.Minion);
 	}
 
 	protected override void OnPrefabInit()
@@ -96,11 +92,12 @@ public class BuildingChoresPanel : TargetScreen
 
 	private void RefreshDetails()
 	{
-		foreach (Chore chore in GlobalChoreProvider.Instance.chores)
+		List<Chore> chores = GlobalChoreProvider.Instance.chores;
+		foreach (Chore item in chores)
 		{
-			if (!chore.isNull && chore.gameObject == selectedTarget)
+			if (!item.isNull && item.gameObject == selectedTarget)
 			{
-				AddChoreEntry(chore);
+				AddChoreEntry(item);
 			}
 		}
 		for (int i = activeDupeEntries; i < dupeEntries.Count; i++)

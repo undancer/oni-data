@@ -89,9 +89,9 @@ public class MotdServerClient
 		}
 	}
 
-	private Action<MotdResponse, string> m_callback;
+	private Action<MotdResponse, string> m_callback = null;
 
-	private MotdResponse m_localMotd;
+	private MotdResponse m_localMotd = null;
 
 	private static string MotdServerUrl => "https://klei-motd.s3.amazonaws.com/oni/" + GetLocalePathSuffix();
 
@@ -248,7 +248,8 @@ public class MotdServerClient
 	{
 		UnityWebRequest motdRequest = UnityWebRequest.Get(url);
 		motdRequest.SetRequestHeader("Content-Type", "application/json");
-		motdRequest.SendWebRequest().completed += delegate
+		AsyncOperation asyncOperation = motdRequest.SendWebRequest();
+		asyncOperation.completed += delegate
 		{
 			cb(motdRequest.downloadHandler.text, motdRequest.error);
 			motdRequest.Dispose();

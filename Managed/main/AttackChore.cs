@@ -125,7 +125,8 @@ public class AttackChore : Chore<AttackChore.StatesInstance>
 		Workable component = base.smi.sm.attackTarget.Get(base.smi).gameObject.GetComponent<Workable>();
 		if ((bool)component)
 		{
-			return MultitoolController.GetAnimationStrings(component, gameObject.GetComponent<Worker>(), "hit")[1].Replace("_loop", "");
+			string text = MultitoolController.GetAnimationStrings(component, gameObject.GetComponent<Worker>(), "hit")[1];
+			return text.Replace("_loop", "");
 		}
 		return "hit";
 	}

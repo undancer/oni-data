@@ -9,7 +9,7 @@ using UnityEngine;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 [AddComponentMenu("KMonoBehaviour/Workable/Storage")]
-public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescriptor
+public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescriptor, IStorage
 {
 	public enum StoredItemModifier
 	{
@@ -49,17 +49,11 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 
 	public bool allowItemRemoval;
 
-	public bool onlyTransferFromLowerPriority;
-
-	public bool allowSublimation = true;
+	public bool onlyTransferFromLowerPriority = false;
 
 	public float capacityKg = 20000f;
 
-	public bool showInUI = true;
-
-	public bool showDescriptor;
-
-	public bool allowUIItemRemoval;
+	public bool showDescriptor = false;
 
 	public bool doDiseaseTransfer = true;
 
@@ -67,17 +61,30 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 
 	public bool useGunForDelivery = true;
 
-	public bool sendOnStoreOnSpawn;
+	public bool sendOnStoreOnSpawn = false;
 
-	public bool allowClearable;
+	public bool showInUI = true;
 
-	public FetchCategory fetchCategory;
+	public bool allowClearable = false;
+
+	public bool showCapacityStatusItem = false;
+
+	public bool showCapacityAsMainStatus = false;
+
+	public bool showUnreachableStatus = false;
+
+	public FetchCategory fetchCategory = FetchCategory.Building;
 
 	public int storageNetworkID = -1;
 
 	public float storageFullMargin;
 
-	public FXPrefix fxPrefix;
+	private static readonly EventSystem.IntraObjectHandler<Storage> OnReachableChangedDelegate = new EventSystem.IntraObjectHandler<Storage>(delegate(Storage component, object data)
+	{
+		component.OnReachableChanged(data);
+	});
+
+	public FXPrefix fxPrefix = FXPrefix.Delivered;
 
 	public List<GameObject> items = new List<GameObject>();
 
@@ -90,16 +97,18 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 	[MyCmpGet]
 	protected PrimaryElement primaryElement;
 
-	public bool dropOnLoad;
+	public bool dropOnLoad = false;
 
 	protected float maxKGPerItem = float.MaxValue;
 
-	private bool endOfLife;
+	private bool endOfLife = false;
 
 	public bool allowSettingOnlyFetchMarkedItems = true;
 
 	[Serialize]
 	private bool onlyFetchMarkedItems;
+
+	public float storageWorkTime = 1.5f;
 
 	private static readonly List<StoredItemModifierInfo> StoredItemModifierHandlers = new List<StoredItemModifierInfo>
 	{
@@ -134,7 +143,9 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		StoredItemModifier.Insulate
 	};
 
-	private static readonly EventSystem.IntraObjectHandler<Storage> OnDeadTagChangedDelegate = GameUtil.CreateHasTagHandler(GameTags.Dead, delegate(Storage component, object data)
+	private static StatusItem capacityStatusItem;
+
+	private static readonly EventSystem.IntraObjectHandler<Storage> OnDeadTagAddedDelegate = GameUtil.CreateHasTagHandler(GameTags.Dead, delegate(Storage component, object data)
 	{
 		component.OnDeath(data);
 	});
@@ -149,18 +160,14 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		component.OnCopySettings(data);
 	});
 
-	private List<GameObject> deleted_objects;
+	private List<GameObject> deleted_objects = null;
 
-	public bool ShouldOnlyTransferFromLowerPriority
+	public bool ShouldOnlyTransferFromLowerPriority => onlyTransferFromLowerPriority || allowItemRemoval;
+
+	public bool allowUIItemRemoval
 	{
-		get
-		{
-			if (!onlyTransferFromLowerPriority)
-			{
-				return allowItemRemoval;
-			}
-			return true;
-		}
+		get;
+		set;
 	}
 
 	public GameObject this[int idx] => items[idx];
@@ -180,6 +187,16 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 	}
 
 	public event System.Action OnStorageIncreased;
+
+	public bool ShouldShowInUI()
+	{
+		return showInUI;
+	}
+
+	public List<GameObject> GetItems()
+	{
+		return items;
+	}
 
 	public void SetDefaultStoredItemModifiers(List<StoredItemModifier> modifiers)
 	{
@@ -207,7 +224,7 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		GameUtil.SubscribeToTags(this, OnDeadTagChangedDelegate);
+		GameUtil.SubscribeToTags(this, OnDeadTagAddedDelegate, triggerImmediately: true);
 		Subscribe(1502190696, OnQueueDestroyObjectDelegate);
 		Subscribe(-905833192, OnCopySettingsDelegate);
 		workerStatusItem = Db.Get().DuplicantStatusItems.Storing;
@@ -215,6 +232,44 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		synchronizeAnims = false;
 		workingPstComplete = null;
 		workingPstFailed = null;
+		SetupStorageStatusItems();
+	}
+
+	private void SetupStorageStatusItems()
+	{
+		if (capacityStatusItem == null)
+		{
+			capacityStatusItem = new StatusItem("StorageLocker", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			capacityStatusItem.resolveStringCallback = delegate(string str, object data)
+			{
+				Storage storage = (Storage)data;
+				float num = storage.MassStored();
+				float num2 = storage.capacityKg;
+				num = ((!(num > num2 - storage.storageFullMargin) || !(num < num2)) ? Mathf.Floor(num) : num2);
+				string newValue = Util.FormatWholeNumber(num);
+				IUserControlledCapacity component = storage.GetComponent<IUserControlledCapacity>();
+				if (component != null)
+				{
+					num2 = Mathf.Min(component.UserMaxCapacity, num2);
+				}
+				string newValue2 = Util.FormatWholeNumber(num2);
+				str = str.Replace("{Stored}", newValue);
+				str = str.Replace("{Capacity}", newValue2);
+				str = ((component == null) ? str.Replace("{Units}", GameUtil.GetCurrentMassUnit()) : str.Replace("{Units}", component.CapacityUnits));
+				return str;
+			};
+		}
+		if (showCapacityStatusItem)
+		{
+			if (showCapacityAsMainStatus)
+			{
+				GetComponent<KSelectable>().SetStatusItem(Db.Get().StatusItemCategories.Main, capacityStatusItem, this);
+			}
+			else
+			{
+				GetComponent<KSelectable>().SetStatusItem(Db.Get().StatusItemCategories.Stored, capacityStatusItem, this);
+			}
+		}
 	}
 
 	[OnDeserialized]
@@ -229,7 +284,7 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 
 	protected override void OnSpawn()
 	{
-		SetWorkTime(1.5f);
+		SetWorkTime(storageWorkTime);
 		foreach (GameObject item in items)
 		{
 			ApplyStoredItemModifiers(item, is_stored: true, is_initializing: true);
@@ -249,6 +304,12 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 			component2.onPriorityChanged = (Action<PrioritySetting>)Delegate.Combine(component2.onPriorityChanged, new Action<PrioritySetting>(OnPriorityChanged));
 		}
 		UpdateFetchCategory();
+		if (showUnreachableStatus)
+		{
+			Subscribe(-1432940121, OnReachableChangedDelegate);
+			ReachabilityMonitor.Instance instance = new ReachabilityMonitor.Instance(this);
+			instance.StartSM();
+		}
 	}
 
 	public GameObject Store(GameObject go, bool hide_popups = false, bool block_events = false, bool do_disease_transfer = true, bool is_deserializing = false)
@@ -257,8 +318,8 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		{
 			return null;
 		}
+		PrimaryElement component = go.GetComponent<PrimaryElement>();
 		GameObject result = go;
-		Pickupable component = go.GetComponent<Pickupable>();
 		if (!hide_popups && PopFXManager.Instance != null)
 		{
 			LocString loc_string;
@@ -273,7 +334,7 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 				loc_string = UI.PICKEDUP;
 				transform = go.transform;
 			}
-			string text = (Assets.IsTagCountable(go.PrefabID()) ? string.Format(loc_string, (int)component.TotalAmount, go.GetProperName()) : string.Format(loc_string, GameUtil.GetFormattedMass(component.TotalAmount), go.GetProperName()));
+			string text = (Assets.IsTagCountable(go.PrefabID()) ? string.Format(loc_string, (int)component.Units, go.GetProperName()) : string.Format(loc_string, GameUtil.GetFormattedMass(component.Units), go.GetProperName()));
 			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, text, transform);
 		}
 		go.transform.parent = base.transform;
@@ -286,33 +347,38 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		}
 		if (!is_deserializing)
 		{
-			foreach (GameObject item in items)
+			Pickupable component2 = go.GetComponent<Pickupable>();
+			if (component2 != null)
 			{
-				if (!(item != null))
+				if (component2 != null && component2.prevent_absorb_until_stored)
 				{
-					continue;
+					component2.prevent_absorb_until_stored = false;
 				}
-				if (component != null && component.prevent_absorb_until_stored)
+				foreach (GameObject item in items)
 				{
-					component.prevent_absorb_until_stored = false;
-				}
-				if (!(component != null) || !item.GetComponent<Pickupable>().TryAbsorb(component, hide_popups, allow_cross_storage: true))
-				{
-					continue;
-				}
-				if (!block_events)
-				{
-					Trigger(-1697596308, go);
-					Trigger(-778359855);
-					if (this.OnStorageIncreased != null)
+					if (!(item != null))
 					{
-						this.OnStorageIncreased();
+						continue;
 					}
+					Pickupable component3 = item.GetComponent<Pickupable>();
+					if (!(component3 != null) || !component3.TryAbsorb(component2, hide_popups, allow_cross_storage: true))
+					{
+						continue;
+					}
+					if (!block_events)
+					{
+						Trigger(-1697596308, go);
+						Trigger(-778359855);
+						if (this.OnStorageIncreased != null)
+						{
+							this.OnStorageIncreased();
+						}
+					}
+					ApplyStoredItemModifiers(go, is_stored: true, is_initializing: false);
+					result = item;
+					go = null;
+					break;
 				}
-				ApplyStoredItemModifiers(go, is_stored: true, is_initializing: false);
-				result = item;
-				go = null;
-				break;
 			}
 		}
 		if (go != null)
@@ -356,7 +422,8 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		{
 			Element element2 = ElementLoader.FindElementByHash(element);
 			GameObject gameObject = element2.substance.SpawnResource(base.transform.GetPosition(), mass, temperature, disease_idx, disease_count, prevent_merge: true, forceTemperature: false, manual_activation: true);
-			gameObject.GetComponent<Pickupable>().prevent_absorb_until_stored = true;
+			Pickupable component = gameObject.GetComponent<Pickupable>();
+			component.prevent_absorb_until_stored = true;
 			element2.substance.ActivateSubstanceGameObject(gameObject, disease_idx, disease_count);
 			Store(gameObject, hide_popups: true, block_events: false, do_disease_transfer);
 		}
@@ -470,6 +537,101 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		return false;
 	}
 
+	public List<GameObject> FindSome(Tag tag, float amount)
+	{
+		float num = amount;
+		List<GameObject> list = new List<GameObject>();
+		ListPool<GameObject, Storage>.PooledList pooledList = ListPool<GameObject, Storage>.Allocate();
+		Find(tag, pooledList);
+		foreach (GameObject item in pooledList)
+		{
+			Pickupable component = item.GetComponent<Pickupable>();
+			if ((bool)component)
+			{
+				Pickupable pickupable = component.Take(num);
+				num -= pickupable.GetComponent<PrimaryElement>().Mass;
+				list.Add(pickupable.gameObject);
+			}
+		}
+		pooledList.Recycle();
+		return list;
+	}
+
+	public bool DropSome(Tag tag, float amount, bool ventGas = false, bool dumpLiquid = false, Vector3 offset = default(Vector3), bool doDiseaseTransfer = true, bool showInWorldNotification = false)
+	{
+		bool result = false;
+		float num = amount;
+		ListPool<GameObject, Storage>.PooledList pooledList = ListPool<GameObject, Storage>.Allocate();
+		Find(tag, pooledList);
+		foreach (GameObject item in pooledList)
+		{
+			Pickupable component = item.GetComponent<Pickupable>();
+			if ((bool)component)
+			{
+				Pickupable pickupable = component.Take(num);
+				if (pickupable != null)
+				{
+					bool flag = false;
+					if (ventGas || dumpLiquid)
+					{
+						Dumpable component2 = pickupable.GetComponent<Dumpable>();
+						if (component2 != null)
+						{
+							if (ventGas && pickupable.GetComponent<PrimaryElement>().Element.IsGas)
+							{
+								component2.Dump();
+								flag = true;
+								num -= pickupable.GetComponent<PrimaryElement>().Mass;
+								Trigger(-1697596308, pickupable.gameObject);
+								result = true;
+								if (showInWorldNotification)
+								{
+									PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, pickupable.GetComponent<PrimaryElement>().Element.name + " " + GameUtil.GetFormattedMass(pickupable.TotalAmount), pickupable.transform);
+								}
+							}
+							if (dumpLiquid && pickupable.GetComponent<PrimaryElement>().Element.IsLiquid)
+							{
+								component2.Dump();
+								flag = true;
+								num -= pickupable.GetComponent<PrimaryElement>().Mass;
+								Trigger(-1697596308, pickupable.gameObject);
+								result = true;
+								if (showInWorldNotification)
+								{
+									PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, pickupable.GetComponent<PrimaryElement>().Element.name + " " + GameUtil.GetFormattedMass(pickupable.TotalAmount), pickupable.transform);
+								}
+							}
+						}
+					}
+					if (!flag)
+					{
+						Vector3 position = Grid.CellToPosCCC(Grid.PosToCell(this), Grid.SceneLayer.Ore) + offset;
+						pickupable.transform.SetPosition(position);
+						KBatchedAnimController component3 = pickupable.GetComponent<KBatchedAnimController>();
+						if ((bool)component3)
+						{
+							component3.SetSceneLayer(Grid.SceneLayer.Ore);
+						}
+						num -= pickupable.GetComponent<PrimaryElement>().Mass;
+						MakeWorldActive(pickupable.gameObject);
+						Trigger(-1697596308, pickupable.gameObject);
+						result = true;
+						if (showInWorldNotification)
+						{
+							PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, pickupable.GetComponent<PrimaryElement>().Element.name + " " + GameUtil.GetFormattedMass(pickupable.TotalAmount), pickupable.transform);
+						}
+					}
+				}
+			}
+			if (num <= 0f)
+			{
+				break;
+			}
+		}
+		pooledList.Recycle();
+		return result;
+	}
+
 	public void DropAll(Vector3 position, bool vent_gas = false, bool dump_liquid = false, Vector3 offset = default(Vector3), bool do_disease_transfer = true)
 	{
 		while (items.Count > 0)
@@ -561,6 +723,15 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		}
 	}
 
+	public void Drop(Tag t, List<GameObject> obj_list)
+	{
+		Find(t, obj_list);
+		foreach (GameObject item in obj_list)
+		{
+			Drop(item);
+		}
+	}
+
 	public void Drop(Tag t)
 	{
 		ListPool<GameObject, Storage>.PooledList pooledList = ListPool<GameObject, Storage>.Allocate();
@@ -572,21 +743,34 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		pooledList.Recycle();
 	}
 
-	public void DropUnlessHasTags(TagBits any_tags, TagBits required_tags, TagBits forbidden_tags, bool do_disease_transfer = true)
+	public void DropUnlessHasTags(TagBits any_tags, TagBits required_tags, TagBits forbidden_tags, bool do_disease_transfer = true, bool dumpElements = false)
 	{
 		for (int i = 0; i < items.Count; i++)
 		{
-			KPrefabID component = items[i].GetComponent<KPrefabID>();
-			if (!component.HasAnyTags(ref any_tags) || !component.HasAllTags(ref required_tags) || component.HasAnyTags(ref forbidden_tags))
+			if (items[i] == null)
 			{
-				GameObject gameObject = items[i];
-				items.RemoveAt(i);
-				i--;
-				if (do_disease_transfer)
+				continue;
+			}
+			KPrefabID component = items[i].GetComponent<KPrefabID>();
+			if (component.HasAnyTags(ref any_tags) && component.HasAllTags(ref required_tags) && !component.HasAnyTags(ref forbidden_tags))
+			{
+				continue;
+			}
+			GameObject gameObject = items[i];
+			items.RemoveAt(i);
+			i--;
+			if (do_disease_transfer)
+			{
+				TransferDiseaseWithObject(gameObject);
+			}
+			MakeWorldActive(gameObject);
+			if (dumpElements)
+			{
+				Dumpable component2 = gameObject.GetComponent<Dumpable>();
+				if (component2 != null)
 				{
-					TransferDiseaseWithObject(gameObject);
+					component2.Dump(base.transform.GetPosition());
 				}
-				MakeWorldActive(gameObject);
 			}
 		}
 	}
@@ -754,12 +938,12 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		}
 	}
 
-	public void ConsumeAndGetDisease(Tag tag, float amount, out SimUtil.DiseaseInfo disease_info, out float aggregate_temperature)
+	public void ConsumeAndGetDisease(Tag tag, float amount, out float amount_consumed, out SimUtil.DiseaseInfo disease_info, out float aggregate_temperature)
 	{
 		DebugUtil.Assert(tag.IsValid);
+		amount_consumed = 0f;
 		disease_info = SimUtil.DiseaseInfo.Invalid;
 		aggregate_temperature = 0f;
-		float num = 0f;
 		bool flag = false;
 		for (int i = 0; i < items.Count; i++)
 		{
@@ -776,15 +960,15 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 			if (component.Units > 0f)
 			{
 				flag = true;
-				float num2 = Math.Min(component.Units, amount);
-				Debug.Assert(num2 > 0f, "Delta amount was zero, which should be impossible.");
-				aggregate_temperature = SimUtil.CalculateFinalTemperature(num, aggregate_temperature, num2, component.Temperature);
-				SimUtil.DiseaseInfo percentOfDisease = SimUtil.GetPercentOfDisease(component, num2 / component.Units);
+				float num = Math.Min(component.Units, amount);
+				Debug.Assert(num > 0f, "Delta amount was zero, which should be impossible.");
+				aggregate_temperature = SimUtil.CalculateFinalTemperature(amount_consumed, aggregate_temperature, num, component.Temperature);
+				SimUtil.DiseaseInfo percentOfDisease = SimUtil.GetPercentOfDisease(component, num / component.Units);
 				disease_info = SimUtil.CalculateFinalDiseaseInfo(disease_info, percentOfDisease);
-				component.Units -= num2;
+				component.Units -= num;
 				component.ModifyDiseaseCount(-percentOfDisease.count, "Storage.ConsumeAndGetDisease");
-				amount -= num2;
-				num += num2;
+				amount -= num;
+				amount_consumed += num;
 			}
 			if (component.Units <= 0f && !component.KeepZeroMassObject)
 			{
@@ -813,12 +997,12 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 
 	public void ConsumeAndGetDisease(Recipe.Ingredient ingredient, out SimUtil.DiseaseInfo disease_info, out float temperature)
 	{
-		ConsumeAndGetDisease(ingredient.tag, ingredient.amount, out disease_info, out temperature);
+		ConsumeAndGetDisease(ingredient.tag, ingredient.amount, out var _, out disease_info, out temperature);
 	}
 
 	public void ConsumeIgnoringDisease(Tag tag, float amount)
 	{
-		ConsumeAndGetDisease(tag, amount, out var _, out var _);
+		ConsumeAndGetDisease(tag, amount, out var _, out var _, out var _);
 	}
 
 	public void ConsumeIgnoringDisease(GameObject item_go)
@@ -910,10 +1094,14 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		bool result = false;
 		foreach (GameObject item in items)
 		{
-			PrimaryElement component = item.GetComponent<PrimaryElement>();
-			if (component.HasTag(tag) && component.Mass > 0f)
+			if (!(item == null))
 			{
-				return true;
+				PrimaryElement component = item.GetComponent<PrimaryElement>();
+				if (component.HasTag(tag) && component.Mass > 0f)
+				{
+					result = true;
+					break;
+				}
 			}
 		}
 		return result;
@@ -941,7 +1129,8 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 				PrimaryElement component = item.GetComponent<PrimaryElement>();
 				if (component.ElementID == element)
 				{
-					return component;
+					result = component;
+					break;
 				}
 			}
 		}
@@ -1083,10 +1272,15 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 	{
 		foreach (GameObject item in items)
 		{
-			if (item != null)
+			if (!(item != null))
 			{
-				Pickupable component = item.GetComponent<Pickupable>();
-				if (component != null && component.GetComponent<KPrefabID>().HasTag(tag))
+				continue;
+			}
+			Pickupable component = item.GetComponent<Pickupable>();
+			if (component != null)
+			{
+				KPrefabID component2 = component.GetComponent<KPrefabID>();
+				if (component2.HasTag(tag))
 				{
 					amount = component.TotalAmount;
 					return true;
@@ -1183,7 +1377,8 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 
 	private void OnCopySettings(object data)
 	{
-		Storage component = ((GameObject)data).GetComponent<Storage>();
+		GameObject gameObject = (GameObject)data;
+		Storage component = gameObject.GetComponent<Storage>();
 		if (component != null)
 		{
 			SetOnlyFetchMarkedItems(component.onlyFetchMarkedItems);
@@ -1198,12 +1393,30 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		}
 	}
 
+	private void OnReachableChanged(object data)
+	{
+		bool flag = (bool)data;
+		KSelectable component = GetComponent<KSelectable>();
+		if (flag)
+		{
+			component.RemoveStatusItem(Db.Get().BuildingStatusItems.StorageUnreachable);
+		}
+		else
+		{
+			component.AddStatusItem(Db.Get().BuildingStatusItems.StorageUnreachable, this);
+		}
+	}
+
 	private bool ShouldSaveItem(GameObject go)
 	{
 		bool result = false;
-		if (go != null && go.GetComponent<SaveLoadRoot>() != null && go.GetComponent<PrimaryElement>().Mass > 0f)
+		if (go != null && go.GetComponent<SaveLoadRoot>() != null)
 		{
-			result = true;
+			PrimaryElement component = go.GetComponent<PrimaryElement>();
+			if (component.Mass > 0f)
+			{
+				result = true;
+			}
 		}
 		return result;
 	}
@@ -1246,7 +1459,7 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 
 	public void Deserialize(IReader reader)
 	{
-		_ = Time.realtimeSinceStartup;
+		float realtimeSinceStartup = Time.realtimeSinceStartup;
 		float num = 0f;
 		float num2 = 0f;
 		float num3 = 0f;
@@ -1255,10 +1468,11 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		items = new List<GameObject>(num4);
 		for (int i = 0; i < num4; i++)
 		{
-			float realtimeSinceStartup = Time.realtimeSinceStartup;
-			Tag tag = TagManager.Create(reader.ReadKleiString());
+			float realtimeSinceStartup2 = Time.realtimeSinceStartup;
+			string tag_string = reader.ReadKleiString();
+			Tag tag = TagManager.Create(tag_string);
 			SaveLoadRoot saveLoadRoot = SaveLoadRoot.Load(tag, reader);
-			num += Time.realtimeSinceStartup - realtimeSinceStartup;
+			num += Time.realtimeSinceStartup - realtimeSinceStartup2;
 			if (saveLoadRoot != null)
 			{
 				KBatchedAnimController component = saveLoadRoot.GetComponent<KBatchedAnimController>();
@@ -1267,14 +1481,25 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 					component.enabled = false;
 				}
 				saveLoadRoot.SetRegistered(registered: false);
-				float realtimeSinceStartup2 = Time.realtimeSinceStartup;
+				float realtimeSinceStartup3 = Time.realtimeSinceStartup;
 				GameObject gameObject = Store(saveLoadRoot.gameObject, hide_popups: true, block_events: true, do_disease_transfer: false, is_deserializing: true);
-				num2 += Time.realtimeSinceStartup - realtimeSinceStartup2;
+				num2 += Time.realtimeSinceStartup - realtimeSinceStartup3;
 				if (gameObject != null)
 				{
-					float realtimeSinceStartup3 = Time.realtimeSinceStartup;
-					gameObject.GetComponent<Pickupable>().OnStore(this);
-					num3 += Time.realtimeSinceStartup - realtimeSinceStartup3;
+					Pickupable component2 = gameObject.GetComponent<Pickupable>();
+					if (component2 != null)
+					{
+						float realtimeSinceStartup4 = Time.realtimeSinceStartup;
+						component2.OnStore(this);
+						num3 += Time.realtimeSinceStartup - realtimeSinceStartup4;
+					}
+					Storable component3 = gameObject.GetComponent<Storable>();
+					if (component3 != null)
+					{
+						float realtimeSinceStartup5 = Time.realtimeSinceStartup;
+						component3.OnStore(this);
+						num3 += Time.realtimeSinceStartup - realtimeSinceStartup5;
+					}
 					if (dropOnLoad)
 					{
 						Drop(saveLoadRoot.gameObject);
@@ -1295,5 +1520,17 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 			item.DeleteObject();
 		}
 		items.Clear();
+	}
+
+	public void UpdateStoredItemCachedCells()
+	{
+		foreach (GameObject item in items)
+		{
+			Pickupable component = item.GetComponent<Pickupable>();
+			if (component != null)
+			{
+				component.UpdateCachedCellFromStoragePosition();
+			}
+		}
 	}
 }

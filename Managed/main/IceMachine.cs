@@ -65,7 +65,7 @@ public class IceMachine : StateMachineComponent<IceMachine.StatesInstance>
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = off;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			off.PlayAnim("off").EventTransition(GameHashes.OperationalChanged, on, (StatesInstance smi) => smi.master.operational.IsOperational);
 			on.PlayAnim("on").EventTransition(GameHashes.OperationalChanged, off, (StatesInstance smi) => !smi.master.operational.IsOperational).DefaultState(on.waiting);
 			on.waiting.EventTransition(GameHashes.OnStorageChange, on.working_pre, (StatesInstance smi) => smi.master.CanMakeIce());
@@ -125,13 +125,9 @@ public class IceMachine : StateMachineComponent<IceMachine.StatesInstance>
 
 	private bool CanMakeIce()
 	{
-		bool num = waterStorage != null && waterStorage.GetMassAvailable(SimHashes.Water) >= 0.1f;
-		bool flag = iceStorage != null && iceStorage.IsFull();
-		if (num)
-		{
-			return !flag;
-		}
-		return false;
+		bool flag = waterStorage != null && waterStorage.GetMassAvailable(SimHashes.Water) >= 0.1f;
+		bool flag2 = iceStorage != null && iceStorage.IsFull();
+		return flag && !flag2;
 	}
 
 	private void MakeIce(StatesInstance smi, float dt)
@@ -139,15 +135,16 @@ public class IceMachine : StateMachineComponent<IceMachine.StatesInstance>
 		float num = heatRemovalRate * dt / (float)waterStorage.items.Count;
 		foreach (GameObject item in waterStorage.items)
 		{
-			GameUtil.DeltaThermalEnergy(item.GetComponent<PrimaryElement>(), 0f - num, smi.master.targetTemperature);
+			PrimaryElement component = item.GetComponent<PrimaryElement>();
+			GameUtil.DeltaThermalEnergy(component, 0f - num, smi.master.targetTemperature);
 		}
 		for (int num2 = waterStorage.items.Count; num2 > 0; num2--)
 		{
 			GameObject gameObject = waterStorage.items[num2 - 1];
 			if ((bool)gameObject && gameObject.GetComponent<PrimaryElement>().Temperature < gameObject.GetComponent<PrimaryElement>().Element.lowTemp)
 			{
-				PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
-				waterStorage.AddOre(component.Element.lowTempTransitionTarget, component.Mass, component.Temperature, component.DiseaseIdx, component.DiseaseCount);
+				PrimaryElement component2 = gameObject.GetComponent<PrimaryElement>();
+				waterStorage.AddOre(component2.Element.lowTempTransitionTarget, component2.Mass, component2.Temperature, component2.DiseaseIdx, component2.DiseaseCount);
 				waterStorage.ConsumeIgnoringDisease(gameObject);
 			}
 		}

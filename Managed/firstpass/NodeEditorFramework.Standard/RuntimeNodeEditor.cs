@@ -12,7 +12,7 @@ namespace NodeEditorFramework.Standard
 
 		private NodeEditorState state;
 
-		public bool screenSize;
+		public bool screenSize = false;
 
 		private Rect canvasRect;
 

@@ -71,12 +71,9 @@ public class ConduitBridge : KMonoBehaviour, IBridgedNetworkItem
 
 	public bool IsConnectedToNetworks(ICollection<UtilityNetwork> networks)
 	{
+		bool flag = false;
 		IUtilityNetworkMgr networkManager = Conduit.GetNetworkManager(type);
-		if (0 == 0 && !networks.Contains(networkManager.GetNetworkForCell(inputCell)))
-		{
-			return networks.Contains(networkManager.GetNetworkForCell(outputCell));
-		}
-		return true;
+		return flag || networks.Contains(networkManager.GetNetworkForCell(inputCell)) || networks.Contains(networkManager.GetNetworkForCell(outputCell));
 	}
 
 	public int GetNetworkCell()

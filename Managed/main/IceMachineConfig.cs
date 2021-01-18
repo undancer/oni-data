@@ -25,14 +25,14 @@ public class IceMachineConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("IceMachine", 2, 3, "freezerator_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		obj.RequiresPowerInput = true;
-		obj.EnergyConsumptionWhenActive = energyConsumption;
-		obj.ExhaustKilowattsWhenActive = 4f;
-		obj.SelfHeatKilowattsWhenActive = 12f;
-		obj.ViewMode = OverlayModes.Temperature.ID;
-		obj.AudioCategory = "Metal";
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("IceMachine", 2, 3, "freezerator_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		buildingDef.RequiresPowerInput = true;
+		buildingDef.EnergyConsumptionWhenActive = energyConsumption;
+		buildingDef.ExhaustKilowattsWhenActive = 4f;
+		buildingDef.SelfHeatKilowattsWhenActive = 12f;
+		buildingDef.ViewMode = OverlayModes.Temperature.ID;
+		buildingDef.AudioCategory = "Metal";
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

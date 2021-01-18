@@ -55,19 +55,20 @@ namespace NodeEditorFramework.Standard
 		private void DebugOutputResults()
 		{
 			AssureCanvas();
-			foreach (Node outputNode in getOutputNodes())
+			List<Node> outputNodes = getOutputNodes();
+			foreach (Node item in outputNodes)
 			{
-				string text = "(OUT) " + outputNode.name + ": ";
-				if (outputNode.Outputs.Count == 0)
+				string text = "(OUT) " + item.name + ": ";
+				if (item.Outputs.Count == 0)
 				{
-					foreach (NodeInput input in outputNode.Inputs)
+					foreach (NodeInput input in item.Inputs)
 					{
 						text = text + input.typeID + " " + (input.IsValueNull ? "NULL" : input.GetValue().ToString()) + "; ";
 					}
 				}
 				else
 				{
-					foreach (NodeOutput output in outputNode.Outputs)
+					foreach (NodeOutput output in item.Outputs)
 					{
 						text = text + output.typeID + " " + (output.IsValueNull ? "NULL" : output.GetValue().ToString()) + "; ";
 					}

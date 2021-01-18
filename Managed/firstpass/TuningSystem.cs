@@ -62,9 +62,11 @@ public class TuningSystem
 			Type baseType = currentDomainType.BaseType;
 			if (!(baseType == null) && baseType.IsGenericType && baseType.GetGenericTypeDefinition() == typeof(TuningData<>))
 			{
-				object obj = Activator.CreateInstance(baseType.GetGenericArguments()[0]);
+				Type type = baseType.GetGenericArguments()[0];
+				object obj = Activator.CreateInstance(type);
 				_TuningValues[obj.GetType()] = obj;
-				baseType.GetField("_TuningData", BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy).SetValue(null, obj);
+				FieldInfo field = baseType.GetField("_TuningData", BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy);
+				field.SetValue(null, obj);
 			}
 		}
 	}
@@ -103,13 +105,15 @@ public class TuningSystem
 			{
 				continue;
 			}
-			foreach (KeyValuePair<string, object> item in JsonConvert.DeserializeObject<Dictionary<string, object>>(FileSystem.ConvertToText(FileSystem.ReadBytes(text))))
+			string value = FileSystem.ConvertToText(FileSystem.ReadBytes(text));
+			Dictionary<string, object> dictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(value);
+			foreach (KeyValuePair<string, object> item in dictionary)
 			{
 				Type type = null;
 				Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-				for (int j = 0; j < assemblies.Length; j++)
+				foreach (Assembly assembly in assemblies)
 				{
-					type = assemblies[j].GetType(item.Key);
+					type = assembly.GetType(item.Key);
 					if (type != null)
 					{
 						break;
@@ -122,8 +126,8 @@ public class TuningSystem
 						JsonConvert.PopulateObject(item.Value.ToString(), _TuningValues[type]);
 						continue;
 					}
-					object value = JsonConvert.DeserializeObject(item.Value.ToString(), type);
-					_TuningValues[type] = value;
+					object value2 = JsonConvert.DeserializeObject(item.Value.ToString(), type);
+					_TuningValues[type] = value2;
 				}
 			}
 		}

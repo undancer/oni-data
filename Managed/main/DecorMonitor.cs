@@ -9,10 +9,10 @@ public class DecorMonitor : GameStateMachine<DecorMonitor, DecorMonitor.Instance
 	public new class Instance : GameInstance
 	{
 		[Serialize]
-		private float cycleTotalDecor;
+		private float cycleTotalDecor = 0f;
 
 		[Serialize]
-		private float yesterdaysTotalDecor;
+		private float yesterdaysTotalDecor = 0f;
 
 		private AmountInstance amount;
 
@@ -75,7 +75,9 @@ public class DecorMonitor : GameStateMachine<DecorMonitor, DecorMonitor.Instance
 		{
 			yesterdaysTotalDecor = cycleTotalDecor;
 			cycleTotalDecor = 0f;
-			float totalValue = base.gameObject.GetAttributes().Add(Db.Get().Attributes.DecorExpectation).GetTotalValue();
+			Attributes attributes = base.gameObject.GetAttributes();
+			AttributeInstance attributeInstance = attributes.Add(Db.Get().Attributes.DecorExpectation);
+			float totalValue = attributeInstance.GetTotalValue();
 			float num = yesterdaysTotalDecor / 600f;
 			num += totalValue;
 			Effects component = base.gameObject.GetComponent<Effects>();

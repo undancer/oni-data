@@ -4,10 +4,15 @@ public class SolidBooster : RocketEngine
 {
 	public Storage fuelStorage;
 
+	private static readonly EventSystem.IntraObjectHandler<SolidBooster> OnRocketLandedDelegate = new EventSystem.IntraObjectHandler<SolidBooster>(delegate(SolidBooster component, object data)
+	{
+		component.OnRocketLanded(data);
+	});
+
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		base.gameObject.Subscribe(1366341636, OnReturn);
+		Subscribe(-887025858, OnRocketLandedDelegate);
 	}
 
 	[ContextMenu("Fill Tank")]
@@ -21,7 +26,7 @@ public class SolidBooster : RocketEngine
 		fuelStorage.Store(go);
 	}
 
-	private void OnReturn(object data)
+	private void OnRocketLanded(object data)
 	{
 		if (fuelStorage != null && fuelStorage.items != null)
 		{

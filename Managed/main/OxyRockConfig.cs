@@ -6,6 +6,11 @@ public class OxyRockConfig : IOreConfig
 
 	public SimHashes SublimeElementID => SimHashes.Oxygen;
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateSolidOreEntity(ElementID);

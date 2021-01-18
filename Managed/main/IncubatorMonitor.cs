@@ -27,7 +27,8 @@ public class IncubatorMonitor : GameStateMachine<IncubatorMonitor, IncubatorMoni
 	{
 		if ((bool)smi.gameObject.transform.parent)
 		{
-			return smi.gameObject.transform.parent.GetComponent<EggIncubator>() != null;
+			EggIncubator component = smi.gameObject.transform.parent.GetComponent<EggIncubator>();
+			return component != null;
 		}
 		return false;
 	}

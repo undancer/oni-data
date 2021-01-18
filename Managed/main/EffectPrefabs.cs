@@ -10,6 +10,10 @@ public class EffectPrefabs : MonoBehaviour
 
 	public GameObject SparkleStreakFX;
 
+	public GameObject GameplayEventDisplay;
+
+	public GameObject OpenTemporalTearBeam;
+
 	public static EffectPrefabs Instance
 	{
 		get;

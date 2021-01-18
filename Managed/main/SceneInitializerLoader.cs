@@ -22,9 +22,9 @@ public class SceneInitializerLoader : MonoBehaviour
 	private void Awake()
 	{
 		Camera[] array = Object.FindObjectsOfType<Camera>();
-		for (int i = 0; i < array.Length; i++)
+		foreach (Camera camera in array)
 		{
-			array[i].enabled = false;
+			camera.enabled = false;
 		}
 		KMonoBehaviour.isLoadingScene = false;
 		Singleton<StateMachineManager>.Instance.Clear();

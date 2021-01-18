@@ -77,7 +77,8 @@ public class SpriteListDialogScreen : KModalScreen
 		gameObject.GetComponentInChildren<LocText>().text = text;
 		Image componentInChildren = gameObject.GetComponentInChildren<Image>();
 		componentInChildren.sprite = sprite;
-		float num2 = (componentInChildren.gameObject.GetComponent<AspectRatioFitter>().aspectRatio = sprite.rect.width / sprite.rect.height);
+		AspectRatioFitter component = componentInChildren.gameObject.GetComponent<AspectRatioFitter>();
+		float num2 = (component.aspectRatio = sprite.rect.width / sprite.rect.height);
 	}
 
 	public void PopupConfirmDialog(string text, string title_text = null)

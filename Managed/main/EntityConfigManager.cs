@@ -61,7 +61,11 @@ public class EntityConfigManager : KMonoBehaviour
 			object obj = Activator.CreateInstance(item2.type);
 			if (obj is IEntityConfig)
 			{
-				RegisterEntity(obj as IEntityConfig);
+				IEntityConfig entityConfig = obj as IEntityConfig;
+				if (DlcManager.IsContentActive(entityConfig.GetDlcId()))
+				{
+					RegisterEntity(obj as IEntityConfig);
+				}
 			}
 			if (obj is IMultiEntityConfig)
 			{
@@ -72,7 +76,8 @@ public class EntityConfigManager : KMonoBehaviour
 
 	public void RegisterEntity(IEntityConfig config)
 	{
-		KPrefabID component = config.CreatePrefab().GetComponent<KPrefabID>();
+		GameObject gameObject = config.CreatePrefab();
+		KPrefabID component = gameObject.GetComponent<KPrefabID>();
 		component.prefabInitFn += config.OnPrefabInit;
 		component.prefabSpawnFn += config.OnSpawn;
 		Assets.AddPrefab(component);
@@ -80,7 +85,8 @@ public class EntityConfigManager : KMonoBehaviour
 
 	public void RegisterEntities(IMultiEntityConfig config)
 	{
-		foreach (GameObject item in config.CreatePrefabs())
+		List<GameObject> list = config.CreatePrefabs();
+		foreach (GameObject item in list)
 		{
 			KPrefabID component = item.GetComponent<KPrefabID>();
 			component.prefabInitFn += config.OnPrefabInit;

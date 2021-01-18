@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using KSerialization;
-using TUNING;
 using UnityEngine;
 
 [SerializationConfig(MemberSerialization.OptIn)]
@@ -30,7 +29,7 @@ public class ConsumerManager : KMonoBehaviour, ISaveLoadable
 		base.OnSpawn();
 		instance = this;
 		RefreshDiscovered();
-		WorldInventory.Instance.OnDiscover += OnWorldInventoryDiscover;
+		DiscoveredResources.Instance.OnDiscover += OnWorldInventoryDiscover;
 		Game.Instance.Subscribe(-107300940, RefreshDiscovered);
 	}
 
@@ -49,11 +48,11 @@ public class ConsumerManager : KMonoBehaviour, ISaveLoadable
 
 	public void RefreshDiscovered(object data = null)
 	{
-		foreach (EdiblesManager.FoodInfo item in FOOD.FOOD_TYPES_LIST)
+		foreach (EdiblesManager.FoodInfo allFoodType in EdiblesManager.GetAllFoodTypes())
 		{
-			if (!ShouldBeDiscovered(item.Id.ToTag()) && !undiscoveredConsumableTags.Contains(item.Id.ToTag()))
+			if (!ShouldBeDiscovered(allFoodType.Id.ToTag()) && !undiscoveredConsumableTags.Contains(allFoodType.Id.ToTag()))
 			{
-				undiscoveredConsumableTags.Add(item.Id.ToTag());
+				undiscoveredConsumableTags.Add(allFoodType.Id.ToTag());
 				if (this.OnDiscover != null)
 				{
 					this.OnDiscover("UndiscoveredSomething".ToTag());
@@ -61,24 +60,24 @@ public class ConsumerManager : KMonoBehaviour, ISaveLoadable
 			}
 			else
 			{
-				if (!undiscoveredConsumableTags.Contains(item.Id.ToTag()) || !ShouldBeDiscovered(item.Id.ToTag()))
+				if (!undiscoveredConsumableTags.Contains(allFoodType.Id.ToTag()) || !ShouldBeDiscovered(allFoodType.Id.ToTag()))
 				{
 					continue;
 				}
-				undiscoveredConsumableTags.Remove(item.Id.ToTag());
+				undiscoveredConsumableTags.Remove(allFoodType.Id.ToTag());
 				if (this.OnDiscover != null)
 				{
-					this.OnDiscover(item.Id.ToTag());
+					this.OnDiscover(allFoodType.Id.ToTag());
 				}
-				if (!WorldInventory.Instance.IsDiscovered(item.Id.ToTag()))
+				if (!DiscoveredResources.Instance.IsDiscovered(allFoodType.Id.ToTag()))
 				{
-					if (item.CaloriesPerUnit == 0f)
+					if (allFoodType.CaloriesPerUnit == 0f)
 					{
-						WorldInventory.Instance.Discover(item.Id.ToTag(), GameTags.CookingIngredient);
+						DiscoveredResources.Instance.Discover(allFoodType.Id.ToTag(), GameTags.CookingIngredient);
 					}
 					else
 					{
-						WorldInventory.Instance.Discover(item.Id.ToTag(), GameTags.Edible);
+						DiscoveredResources.Instance.Discover(allFoodType.Id.ToTag(), GameTags.Edible);
 					}
 				}
 			}
@@ -87,7 +86,7 @@ public class ConsumerManager : KMonoBehaviour, ISaveLoadable
 
 	private bool ShouldBeDiscovered(Tag food_id)
 	{
-		if (WorldInventory.Instance.IsDiscovered(food_id))
+		if (DiscoveredResources.Instance.IsDiscovered(food_id))
 		{
 			return true;
 		}

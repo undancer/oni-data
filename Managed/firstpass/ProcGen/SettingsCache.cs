@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Klei;
 using ObjectCloner;
 using ProcGen.Noise;
@@ -13,6 +14,8 @@ namespace ProcGen
 		public static TerrainElementBandSettings biomes = new TerrainElementBandSettings();
 
 		public static Worlds worlds = new Worlds();
+
+		public static ClusterLayouts clusterLayouts = new ClusterLayouts();
 
 		public static NoiseTreeFiles noise = new NoiseTreeFiles();
 
@@ -230,9 +233,9 @@ namespace ProcGen
 			}
 		}
 
-		public static void LoadSubworlds(List<WeightedName> subworlds, List<YamlIO.Error> errors)
+		public static void LoadSubworlds(List<WeightedSubworldName> subworlds, List<YamlIO.Error> errors)
 		{
-			foreach (WeightedName subworld in subworlds)
+			foreach (WeightedSubworldName subworld in subworlds)
 			{
 				SubWorld subWorld = null;
 				string text = subworld.name;
@@ -249,6 +252,7 @@ namespace ProcGen
 				{
 					subWorld = subWorld2;
 					subWorld.name = text;
+					subWorld.EnforceFeatureSpawnRuleSelfConsistency();
 					SettingsCache.subworlds[text] = subWorld;
 					noise.LoadTree(subWorld.biomeNoise, path);
 					noise.LoadTree(subWorld.densityNoise, path);
@@ -338,6 +342,7 @@ namespace ProcGen
 			featuresettings.Clear();
 			traits.Clear();
 			subworlds.Clear();
+			clusterLayouts.clusterCache.Clear();
 			DebugUtil.LogArgs("World Settings cleared!");
 		}
 
@@ -394,7 +399,10 @@ namespace ProcGen
 			{
 				return false;
 			}
-			worlds.LoadFiles(GetPath(), errors);
+			clusterLayouts.LoadFiles(GetPath(), errors);
+			HashSet<string> referencedWorlds = new HashSet<string>(from worldPlacment in clusterLayouts.clusterCache.Values.SelectMany((ClusterLayout clusterLayout) => clusterLayout.worldPlacements)
+				select worldPlacment.world.Substring("worlds/".Length));
+			worlds.LoadReferencedWorlds(GetPath(), referencedWorlds, errors);
 			LoadWorldTraits(errors);
 			foreach (KeyValuePair<string, World> item in worlds.worldCache)
 			{

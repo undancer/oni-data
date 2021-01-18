@@ -1,11 +1,9 @@
 using System.Collections.Generic;
-using System.IO;
-using KSerialization;
 using STRINGS;
 
 namespace Database
 {
-	public class EatXCaloriesFromY : ColonyAchievementRequirement
+	public class EatXCaloriesFromY : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		private int numCalories;
 
@@ -22,7 +20,7 @@ namespace Database
 			return RationTracker.Get().GetCaloiresConsumedByFood(fromFoodType) / 1000f > (float)numCalories;
 		}
 
-		public override void Deserialize(IReader reader)
+		public void Deserialize(IReader reader)
 		{
 			numCalories = reader.ReadInt32();
 			int num = reader.ReadInt32();
@@ -31,16 +29,6 @@ namespace Database
 			{
 				string item = reader.ReadKleiString();
 				fromFoodType.Add(item);
-			}
-		}
-
-		public override void Serialize(BinaryWriter writer)
-		{
-			writer.Write(numCalories);
-			writer.Write(fromFoodType.Count);
-			for (int i = 0; i < fromFoodType.Count; i++)
-			{
-				writer.WriteKleiString(fromFoodType[i]);
 			}
 		}
 

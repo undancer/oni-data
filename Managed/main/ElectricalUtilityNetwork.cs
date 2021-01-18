@@ -15,11 +15,11 @@ public class ElectricalUtilityNetwork : UtilityNetwork
 
 	private const float MIN_OVERLOAD_NOTIFICATION_DISPLAY_TIME = 5f;
 
-	private GameObject targetOverloadedWire;
+	private GameObject targetOverloadedWire = null;
 
-	private float timeOverloaded;
+	private float timeOverloaded = 0f;
 
-	private float timeOverloadNotificationDisplayed;
+	private float timeOverloadNotificationDisplayed = 0f;
 
 	public override void AddItem(int cell, object item)
 	{
@@ -72,7 +72,8 @@ public class ElectricalUtilityNetwork : UtilityNetwork
 		{
 			List<Wire> list3 = wireGroups[i];
 			List<WireUtilityNetworkLink> list4 = bridgeGroups[i];
-			float maxWattageAsFloat = Wire.GetMaxWattageAsFloat((Wire.WattageRating)i);
+			Wire.WattageRating rating = (Wire.WattageRating)i;
+			float maxWattageAsFloat = Wire.GetMaxWattageAsFloat(rating);
 			maxWattageAsFloat += POWER.FLOAT_FUDGE_FACTOR;
 			if (watts_used > maxWattageAsFloat && ((list4 != null && list4.Count > 0) || (list3 != null && list3.Count > 0)))
 			{
@@ -120,12 +121,13 @@ public class ElectricalUtilityNetwork : UtilityNetwork
 			if (overloadedNotification == null)
 			{
 				timeOverloadNotificationDisplayed = 0f;
-				overloadedNotification = new Notification(MISC.NOTIFICATIONS.CIRCUIT_OVERLOADED.NAME, NotificationType.BadMinor, HashedString.Invalid, null, null, expires: true, 0f, null, null, targetOverloadedWire.transform);
+				overloadedNotification = new Notification(MISC.NOTIFICATIONS.CIRCUIT_OVERLOADED.NAME, NotificationType.BadMinor, null, null, expires: true, 0f, null, null, targetOverloadedWire.transform);
 				GameScheduler.Instance.Schedule("Power Tutorial", 2f, delegate
 				{
 					Tutorial.Instance.TutorialMessage(Tutorial.TutorialMessages.TM_Power);
 				});
-				Game.Instance.FindOrAdd<Notifier>().Add(overloadedNotification);
+				Notifier notifier = Game.Instance.FindOrAdd<Notifier>();
+				notifier.Add(overloadedNotification);
 			}
 		}
 		else
@@ -143,7 +145,8 @@ public class ElectricalUtilityNetwork : UtilityNetwork
 	{
 		if (overloadedNotification != null)
 		{
-			Game.Instance.FindOrAdd<Notifier>().Remove(overloadedNotification);
+			Notifier notifier = Game.Instance.FindOrAdd<Notifier>();
+			notifier.Remove(overloadedNotification);
 			overloadedNotification = null;
 		}
 	}
@@ -155,7 +158,8 @@ public class ElectricalUtilityNetwork : UtilityNetwork
 			List<Wire> list = wireGroups[i];
 			if (list != null && list.Count > 0)
 			{
-				return Wire.GetMaxWattageAsFloat((Wire.WattageRating)i);
+				Wire.WattageRating rating = (Wire.WattageRating)i;
+				return Wire.GetMaxWattageAsFloat(rating);
 			}
 		}
 		return 0f;

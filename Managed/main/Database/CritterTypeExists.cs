@@ -1,11 +1,9 @@
 using System.Collections.Generic;
-using System.IO;
-using KSerialization;
 using STRINGS;
 
 namespace Database
 {
-	public class CritterTypeExists : ColonyAchievementRequirement
+	public class CritterTypeExists : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		private List<Tag> critterTypes = new List<Tag>();
 
@@ -26,16 +24,7 @@ namespace Database
 			return false;
 		}
 
-		public override void Serialize(BinaryWriter writer)
-		{
-			writer.Write(critterTypes.Count);
-			foreach (Tag critterType in critterTypes)
-			{
-				writer.WriteKleiString(critterType.ToString());
-			}
-		}
-
-		public override void Deserialize(IReader reader)
+		public void Deserialize(IReader reader)
 		{
 			int num = reader.ReadInt32();
 			critterTypes = new List<Tag>(num);

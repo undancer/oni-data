@@ -15,14 +15,14 @@ public class SupermaterialRefineryConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("SupermaterialRefinery", 4, 5, "supermaterial_refinery_kanim", 30, 480f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.ALL_METALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER6, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
-		obj.RequiresPowerInput = true;
-		obj.EnergyConsumptionWhenActive = 1600f;
-		obj.SelfHeatKilowattsWhenActive = 16f;
-		obj.ViewMode = OverlayModes.Power.ID;
-		obj.AudioCategory = "HollowMetal";
-		obj.AudioSize = "large";
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("SupermaterialRefinery", 4, 5, "supermaterial_refinery_kanim", 30, 480f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.ALL_METALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER6, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
+		buildingDef.RequiresPowerInput = true;
+		buildingDef.EnergyConsumptionWhenActive = 1600f;
+		buildingDef.SelfHeatKilowattsWhenActive = 16f;
+		buildingDef.ViewMode = OverlayModes.Power.ID;
+		buildingDef.AudioCategory = "HollowMetal";
+		buildingDef.AudioSize = "large";
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -30,7 +30,6 @@ public class SupermaterialRefineryConfig : IBuildingConfig
 		go.AddOrGet<DropAllWorkable>();
 		go.AddOrGet<BuildingComplete>().isManuallyOperated = true;
 		ComplexFabricator complexFabricator = go.AddOrGet<ComplexFabricator>();
-		complexFabricator.resultState = ComplexFabricator.ResultState.Heated;
 		complexFabricator.heatedTemperature = 313.15f;
 		complexFabricator.sideScreenStyle = ComplexFabricatorSideScreen.StyleSetting.ListQueueHybrid;
 		complexFabricator.duplicantOperated = true;
@@ -53,9 +52,10 @@ public class SupermaterialRefineryConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array2 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement(SimHashes.SuperCoolant.CreateTag(), 100f)
+			new ComplexRecipe.RecipeElement(SimHashes.SuperCoolant.CreateTag(), 100f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
-		new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("SupermaterialRefinery", array, array2), array, array2)
+		string id = ComplexRecipeManager.MakeRecipeID("SupermaterialRefinery", array, array2);
+		new ComplexRecipe(id, array, array2)
 		{
 			time = 80f,
 			description = STRINGS.BUILDINGS.PREFABS.SUPERMATERIALREFINERY.SUPERCOOLANT_RECIPE_DESCRIPTION,
@@ -76,9 +76,10 @@ public class SupermaterialRefineryConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array4 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement(SimHashes.SuperInsulator.CreateTag(), 100f)
+			new ComplexRecipe.RecipeElement(SimHashes.SuperInsulator.CreateTag(), 100f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
-		new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("SupermaterialRefinery", array3, array4), array3, array4)
+		string id2 = ComplexRecipeManager.MakeRecipeID("SupermaterialRefinery", array3, array4);
+		new ComplexRecipe(id2, array3, array4)
 		{
 			time = 80f,
 			description = STRINGS.BUILDINGS.PREFABS.SUPERMATERIALREFINERY.SUPERINSULATOR_RECIPE_DESCRIPTION,
@@ -96,9 +97,10 @@ public class SupermaterialRefineryConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array6 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement(SimHashes.TempConductorSolid.CreateTag(), 100f)
+			new ComplexRecipe.RecipeElement(SimHashes.TempConductorSolid.CreateTag(), 100f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
-		new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("SupermaterialRefinery", array5, array6), array5, array6)
+		string id3 = ComplexRecipeManager.MakeRecipeID("SupermaterialRefinery", array5, array6);
+		new ComplexRecipe(id3, array5, array6)
 		{
 			time = 80f,
 			description = STRINGS.BUILDINGS.PREFABS.SUPERMATERIALREFINERY.TEMPCONDUCTORSOLID_RECIPE_DESCRIPTION,
@@ -116,9 +118,10 @@ public class SupermaterialRefineryConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array8 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement(SimHashes.ViscoGel.CreateTag(), 100f)
+			new ComplexRecipe.RecipeElement(SimHashes.ViscoGel.CreateTag(), 100f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
-		new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("SupermaterialRefinery", array7, array8), array7, array8)
+		string id4 = ComplexRecipeManager.MakeRecipeID("SupermaterialRefinery", array7, array8);
+		new ComplexRecipe(id4, array7, array8)
 		{
 			time = 80f,
 			description = STRINGS.BUILDINGS.PREFABS.SUPERMATERIALREFINERY.VISCOGEL_RECIPE_DESCRIPTION,

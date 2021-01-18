@@ -11,6 +11,8 @@ public class ResearchTypes
 		public const string BETA = "beta";
 
 		public const string GAMMA = "gamma";
+
+		public const string DELTA = "delta";
 	}
 
 	public List<ResearchType> Types = new List<ResearchType>();
@@ -38,6 +40,11 @@ public class ResearchTypes
 			"CosmicResearchCenter"
 		}, RESEARCH.TYPES.GAMMA.RECIPEDESC);
 		Types.Add(item3);
+		ResearchType item4 = new ResearchType("delta", RESEARCH.TYPES.DELTA.NAME, RESEARCH.TYPES.DELTA.DESC, Assets.GetSprite("research_type_delta_icon"), new Color32(141, 240, 44, byte.MaxValue), null, 2400f, "research_center_kanim", new string[1]
+		{
+			"NuclearResearchCenter"
+		}, RESEARCH.TYPES.DELTA.RECIPEDESC);
+		Types.Add(item4);
 	}
 
 	public ResearchType GetResearchType(string id)

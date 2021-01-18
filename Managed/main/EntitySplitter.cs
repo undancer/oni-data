@@ -1,3 +1,4 @@
+#define UNITY_ASSERTIONS
 using System;
 using Klei;
 using UnityEngine;
@@ -61,6 +62,15 @@ public class EntitySplitter : KMonoBehaviour
 				return false;
 			}
 			if (!rottable.IsRotLevelStackable(sMI))
+			{
+				return false;
+			}
+		}
+		if (pickupable.HasTag(GameTags.Seed))
+		{
+			MutantPlant component3 = pickupable.GetComponent<MutantPlant>();
+			MutantPlant component4 = other.GetComponent<MutantPlant>();
+			if (component3 != null && component4 != null && (component3.subspeciesID != component4.subspeciesID || component3.GetSpeciesID() != component4.GetSpeciesID()))
 			{
 				return false;
 			}
@@ -133,6 +143,7 @@ public class EntitySplitter : KMonoBehaviour
 			temperature = primaryElement.Temperature;
 		}
 		component.SetMassTemperature(mass + mass2, temperature);
+		UnityEngine.Debug.Assert(component.Temperature > 0f || component.Mass == 0f, "OnAbsorb resulted in a temperature of 0", base.gameObject);
 		if (CameraController.Instance != null)
 		{
 			string sound = GlobalAssets.GetSound("Ore_absorb");

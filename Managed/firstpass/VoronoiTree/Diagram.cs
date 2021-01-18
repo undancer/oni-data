@@ -27,10 +27,10 @@ namespace VoronoiTree
 			public Vector2 position;
 
 			[Serialize]
-			public Polygon poly;
+			public Polygon poly = null;
 
 			[Serialize]
-			public HashSet<KeyValuePair<uint, int>> neighbours;
+			public HashSet<KeyValuePair<uint, int>> neighbours = null;
 
 			public Site()
 			{
@@ -67,7 +67,7 @@ namespace VoronoiTree
 
 		private List<uint> ids = new List<uint>();
 
-		public int siteIndex;
+		public int siteIndex = 0;
 
 		public Voronoi diagram
 		{
@@ -172,19 +172,20 @@ namespace VoronoiTree
 				num = 0f - num;
 				for (int k = 0; k < sites.Count; k++)
 				{
-					sites[k].currentWeight += num + 1f;
+					Site site3 = sites[k];
+					site3.currentWeight += num + 1f;
 				}
 			}
 			float num9 = 1f;
 			for (int l = 0; l < sites.Count; l++)
 			{
-				Site site3 = sites[l];
+				Site site4 = sites[l];
 				List<uint> neighbours = diagram.ListNeighborSitesIDsForSite(points[l]);
 				int nIndex;
 				for (nIndex = 0; nIndex < neighbours.Count; nIndex++)
 				{
-					Site site4 = sites.Find((Site s) => s.id == neighbours[nIndex]);
-					float num10 = (site3.position - site4.position).sqrMagnitude / (Mathf.Abs(site3.currentWeight - site4.currentWeight) + 1f);
+					Site site5 = sites.Find((Site s) => s.id == neighbours[nIndex]);
+					float num10 = (site4.position - site5.position).sqrMagnitude / (Mathf.Abs(site4.currentWeight - site5.currentWeight) + 1f);
 					if (num10 < num9)
 					{
 						num9 = num10;

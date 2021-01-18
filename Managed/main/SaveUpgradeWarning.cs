@@ -55,12 +55,13 @@ public class SaveUpgradeWarning : KMonoBehaviour
 
 	private void OnLoad(Game.GameSaveData data)
 	{
-		foreach (Upgrade item in new List<Upgrade>
+		List<Upgrade> list = new List<Upgrade>
 		{
 			new Upgrade(7, 5, SuddenMoraleHelper),
 			new Upgrade(7, 13, BedAndBathHelper),
 			new Upgrade(7, 16, NewAutomationWarning)
-		})
+		};
+		foreach (Upgrade item in list)
 		{
 			if (SaveLoader.Instance.GameInfo.IsVersionOlderThan(item.major, item.minor))
 			{
@@ -77,7 +78,8 @@ public class SaveUpgradeWarning : KMonoBehaviour
 		{
 			foreach (MinionIdentity item in Components.LiveMinionIdentities.Items)
 			{
-				item.GetComponent<Effects>().Add(morale_effect, should_save: true);
+				Effects component = item.GetComponent<Effects>();
+				component.Add(morale_effect, should_save: true);
 			}
 			screen.Deactivate();
 		});
@@ -117,9 +119,9 @@ public class SaveUpgradeWarning : KMonoBehaviour
 			screen.Deactivate();
 		});
 		string[] array = buildingIDsWithNewPorts;
-		for (int i = 0; i < array.Length; i++)
+		foreach (string prefab_id in array)
 		{
-			BuildingDef buildingDef = Assets.GetBuildingDef(array[i]);
+			BuildingDef buildingDef = Assets.GetBuildingDef(prefab_id);
 			screen.AddSprite(buildingDef.GetUISprite(), buildingDef.Name);
 		}
 		screen.PopupConfirmDialog(UI.FRONTEND.SAVEUPGRADEWARNINGS.NEWAUTOMATIONWARNING, UI.FRONTEND.SAVEUPGRADEWARNINGS.NEWAUTOMATIONWARNING_TITLE);
@@ -136,28 +138,28 @@ public class SaveUpgradeWarning : KMonoBehaviour
 		foreach (BuildingComplete buildingComplete in Components.BuildingCompletes)
 		{
 			string[] array = buildingIDsWithNewPorts;
-			foreach (string text in array)
+			foreach (string id in array)
 			{
-				BuildingDef buildingDef = Assets.GetBuildingDef(text);
+				BuildingDef buildingDef = Assets.GetBuildingDef(id);
 				if (!(buildingComplete.Def == buildingDef))
 				{
 					continue;
 				}
-				List<ILogicUIElement> list = new List<ILogicUIElement>();
-				LogicPorts component = buildingComplete.GetComponent<LogicPorts>();
-				if (component.outputPorts != null)
+				List<ILogicUIElement> newPorts = new List<ILogicUIElement>();
+				LogicPorts ports = buildingComplete.GetComponent<LogicPorts>();
+				if (ports.outputPorts != null)
 				{
-					list.AddRange(component.outputPorts);
+					newPorts.AddRange(ports.outputPorts);
 				}
-				if (component.inputPorts != null)
+				if (ports.inputPorts != null)
 				{
-					list.AddRange(component.inputPorts);
+					newPorts.AddRange(ports.inputPorts);
 				}
-				foreach (ILogicUIElement item in list)
+				foreach (ILogicUIElement port in newPorts)
 				{
-					if (Grid.Objects[item.GetLogicUICell(), 31] != null)
+					if (Grid.Objects[port.GetLogicUICell(), 31] != null)
 					{
-						Debug.Log("Triggering automation warning for building of type " + text);
+						Debug.Log("Triggering automation warning for building of type " + id);
 						GenericMessage message = new GenericMessage(MISC.NOTIFICATIONS.NEW_AUTOMATION_WARNING.NAME, MISC.NOTIFICATIONS.NEW_AUTOMATION_WARNING.TOOLTIP, MISC.NOTIFICATIONS.NEW_AUTOMATION_WARNING.TOOLTIP, buildingComplete);
 						Messenger.Instance.QueueMessage(message);
 					}

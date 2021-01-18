@@ -33,7 +33,6 @@ public class MicrobeMusher : ComplexFabricator
 		workable.meter = new MeterController(GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.Behind, Grid.SceneLayer.NoLayer, "meter_target", "meter_ration");
 		workable.meter.meterController.SetSymbolVisiblity(canHash, is_visible: false);
 		workable.meter.meterController.SetSymbolVisiblity(meterRationHash, is_visible: false);
-		workable.meter.meterController.GetComponent<KBatchedAnimTracker>().skipInitialDisable = true;
 	}
 
 	protected override List<GameObject> SpawnOrderProduct(ComplexRecipe recipe)

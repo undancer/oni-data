@@ -21,6 +21,7 @@ namespace Klei
 
 		public byte[] ReadBytes(string filename)
 		{
+			byte[] array = null;
 			return File.ReadAllBytes(filename);
 		}
 
@@ -37,9 +38,10 @@ namespace Klei
 				return;
 			}
 			string[] files = Directory.GetFiles(path);
-			for (int i = 0; i < files.Length; i++)
+			string[] array = files;
+			foreach (string filename in array)
 			{
-				string text = FileSystem.Normalize(files[i]);
+				string text = FileSystem.Normalize(filename);
 				if (re.IsMatch(text))
 				{
 					result.Add(text);

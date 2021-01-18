@@ -4,16 +4,16 @@ public class DiseaseDropper : GameStateMachine<DiseaseDropper, DiseaseDropper.In
 	{
 		public byte diseaseIdx = byte.MaxValue;
 
-		public int singleEmitQuantity;
+		public int singleEmitQuantity = 0;
 
-		public int averageEmitPerSecond;
+		public int averageEmitPerSecond = 0;
 
 		public float emitFrequency = 1f;
 	}
 
 	public new class Instance : GameInstance
 	{
-		private float timeSinceLastDrop;
+		private float timeSinceLastDrop = 0f;
 
 		public Instance(IStateMachineTarget master, Def def)
 			: base(master, def)

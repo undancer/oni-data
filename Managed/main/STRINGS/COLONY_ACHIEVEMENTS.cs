@@ -233,7 +233,7 @@ namespace STRINGS
 
 			public static LocString BASIC_PUMPING = "Oxygen Not Occluded";
 
-			public static LocString BASIC_PUMPING_DESCRIPTION = "Distribute 1000kg of Oxygen using gas vents.";
+			public static LocString BASIC_PUMPING_DESCRIPTION = string.Concat("Distribute 1000 ", UI.UNITSUFFIXES.MASS.KILOGRAM, " of Oxygen using gas vents.");
 
 			public static LocString MASTERPIECE_PAINTING = "Art Underground";
 
@@ -244,7 +244,7 @@ namespace STRINGS
 		{
 			public class VIDEO_TEXT
 			{
-				public static LocString FIRST = "Few civilizations throughout time have had the privilege of understading their origins.";
+				public static LocString FIRST = "Few civilizations throughout time have had the privilege of understanding their origins.";
 
 				public static LocString SECOND = "The only thing that matters is that we are here now, and we make the best of the world we've been given. I am proud to say...";
 
@@ -290,6 +290,13 @@ namespace STRINGS
 				public static LocString SECOND = "I sent my Duplicant through the Temporal Tear carrying that hope on their shoulders... Perhaps one day they'll find a place to call home, and begin a thriving colony all their own.";
 			}
 
+			public class VIDEO_TEXT_DLC1
+			{
+				public static LocString FIRST = "DLC1";
+
+				public static LocString SECOND = "DLC1";
+			}
+
 			public class REQUIREMENTS
 			{
 				public static LocString REACHED_SPACE_DESTINATION = "Breach the {0}";
@@ -306,6 +313,10 @@ namespace STRINGS
 			public static LocString MESSAGE_TITLE = "A COLONY'S HOPE";
 
 			public static LocString MESSAGE_BODY = "Our homeworld in this universe is gone, replaced by the skeleton of a planet and a wound in the sky... But I hold out hope that other worlds exist out there, tucked away in other dimensions. I sent my Duplicant through the Temporal Tear carrying that hope on their shoulders... Perhaps one day they'll find a place to call home, and begin a thriving colony all their own.";
+
+			public static LocString MESSAGE_TITLE_DLC1 = "DLC1";
+
+			public static LocString MESSAGE_BODY_DLC1 = "DLC1";
 		}
 
 		public static LocString ACHIEVED_THIS_COLONY_TOOLTIP = "The current colony fulfilled this Initiative";

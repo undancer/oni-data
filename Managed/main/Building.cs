@@ -17,7 +17,7 @@ public class Building : KMonoBehaviour, IGameObjectEffectDescriptor, IUniformGri
 	[MyCmpAdd]
 	private StateMachineController stateMachineController;
 
-	private int[] placementCells;
+	private int[] placementCells = null;
 
 	private Extents extents;
 
@@ -25,17 +25,7 @@ public class Building : KMonoBehaviour, IGameObjectEffectDescriptor, IUniformGri
 
 	private HandleVector<int>.Handle scenePartitionerEntry;
 
-	public Orientation Orientation
-	{
-		get
-		{
-			if (!(rotatable != null))
-			{
-				return Orientation.Neutral;
-			}
-			return rotatable.GetOrientation();
-		}
-	}
+	public Orientation Orientation => (rotatable != null) ? rotatable.GetOrientation() : Orientation.Neutral;
 
 	public int[] PlacementCells
 	{
@@ -71,34 +61,43 @@ public class Building : KMonoBehaviour, IGameObjectEffectDescriptor, IUniformGri
 	public void RefreshCells()
 	{
 		placementCells = new int[Def.PlacementOffsets.Length];
-		int cell = Grid.PosToCell(this);
+		int num = Grid.PosToCell(this);
+		if (num < 0)
+		{
+			extents.x = -1;
+			extents.y = -1;
+			extents.width = Def.WidthInCells;
+			extents.height = Def.HeightInCells;
+			return;
+		}
 		Orientation orientation = Orientation;
 		for (int i = 0; i < Def.PlacementOffsets.Length; i++)
 		{
-			CellOffset rotatedCellOffset = Rotatable.GetRotatedCellOffset(Def.PlacementOffsets[i], orientation);
-			int num = Grid.OffsetCell(cell, rotatedCellOffset);
-			placementCells[i] = num;
+			CellOffset offset = Def.PlacementOffsets[i];
+			CellOffset rotatedCellOffset = Rotatable.GetRotatedCellOffset(offset, orientation);
+			int num2 = Grid.OffsetCell(num, rotatedCellOffset);
+			placementCells[i] = num2;
 		}
 		int x = 0;
 		int y = 0;
 		Grid.CellToXY(placementCells[0], out x, out y);
-		int num2 = x;
-		int num3 = y;
+		int num3 = x;
+		int num4 = y;
 		int[] array = placementCells;
-		foreach (int cell2 in array)
+		foreach (int cell in array)
 		{
 			int x2 = 0;
 			int y2 = 0;
-			Grid.CellToXY(cell2, out x2, out y2);
+			Grid.CellToXY(cell, out x2, out y2);
 			x = Math.Min(x, x2);
 			y = Math.Min(y, y2);
-			num2 = Math.Max(num2, x2);
-			num3 = Math.Max(num3, y2);
+			num3 = Math.Max(num3, x2);
+			num4 = Math.Max(num4, y2);
 		}
 		extents.x = x;
 		extents.y = y;
-		extents.width = num2 - x + 1;
-		extents.height = num3 - y + 1;
+		extents.width = num3 - x + 1;
+		extents.height = num4 - y + 1;
 	}
 
 	[OnDeserialized]
@@ -136,15 +135,16 @@ public class Building : KMonoBehaviour, IGameObjectEffectDescriptor, IUniformGri
 		{
 			component2.iconOffset.y = 0.3f;
 		}
-		if (GetComponent<KPrefabID>().HasTag(RoomConstraints.ConstraintTags.IndustrialMachinery))
+		KPrefabID component3 = GetComponent<KPrefabID>();
+		if (component3.HasTag(RoomConstraints.ConstraintTags.IndustrialMachinery))
 		{
 			scenePartitionerEntry = GameScenePartitioner.Instance.Add(base.name, base.gameObject, GetExtents(), GameScenePartitioner.Instance.industrialBuildings, null);
 		}
 		if (Def.Deprecated && GetComponent<KSelectable>() != null)
 		{
-			KSelectable component3 = GetComponent<KSelectable>();
+			KSelectable component4 = GetComponent<KSelectable>();
 			deprecatedBuildingStatusItem = new StatusItem("BUILDING_DEPRECATED", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
-			component3.AddStatusItem(deprecatedBuildingStatusItem);
+			component4.AddStatusItem(deprecatedBuildingStatusItem);
 		}
 	}
 
@@ -172,16 +172,13 @@ public class Building : KMonoBehaviour, IGameObjectEffectDescriptor, IUniformGri
 
 	public CellOffset GetRotatedOffset(CellOffset offset)
 	{
-		if (!(rotatable != null))
-		{
-			return offset;
-		}
-		return rotatable.GetRotatedCellOffset(offset);
+		return (rotatable != null) ? rotatable.GetRotatedCellOffset(offset) : offset;
 	}
 
 	private int GetBottomLeftCell()
 	{
-		return Grid.PosToCell(base.transform.GetPosition());
+		Vector3 position = base.transform.GetPosition();
+		return Grid.PosToCell(position);
 	}
 
 	public int GetPowerInputCell()
@@ -202,6 +199,18 @@ public class Building : KMonoBehaviour, IGameObjectEffectDescriptor, IUniformGri
 		return Grid.OffsetCell(GetBottomLeftCell(), rotatedOffset);
 	}
 
+	public int GetHighEnergyParticleInputCell()
+	{
+		CellOffset rotatedOffset = GetRotatedOffset(Def.HighEnergyParticleInputOffset);
+		return Grid.OffsetCell(GetBottomLeftCell(), rotatedOffset);
+	}
+
+	public int GetHighEnergyParticleOutputCell()
+	{
+		CellOffset rotatedOffset = GetRotatedOffset(Def.HighEnergyParticleOutputOffset);
+		return Grid.OffsetCell(GetBottomLeftCell(), rotatedOffset);
+	}
+
 	public int GetUtilityOutputCell()
 	{
 		CellOffset rotatedOffset = GetRotatedOffset(Def.UtilityOutputOffset);
@@ -216,6 +225,16 @@ public class Building : KMonoBehaviour, IGameObjectEffectDescriptor, IUniformGri
 	public CellOffset GetUtilityOutputOffset()
 	{
 		return GetRotatedOffset(Def.UtilityOutputOffset);
+	}
+
+	public CellOffset GetHighEnergyParticleInputOffset()
+	{
+		return GetRotatedOffset(Def.HighEnergyParticleInputOffset);
+	}
+
+	public CellOffset GetHighEnergyParticleOutputOffset()
+	{
+		return GetRotatedOffset(Def.HighEnergyParticleOutputOffset);
 	}
 
 	protected void UnregisterBlockTileRenderer()
@@ -236,11 +255,7 @@ public class Building : KMonoBehaviour, IGameObjectEffectDescriptor, IUniformGri
 
 	private SimHashes GetVisualizationElementID(PrimaryElement pe)
 	{
-		if (!(this is BuildingComplete))
-		{
-			return SimHashes.Void;
-		}
-		return pe.ElementID;
+		return (this is BuildingComplete) ? pe.ElementID : SimHashes.Void;
 	}
 
 	public void RunOnArea(Action<int> callback)

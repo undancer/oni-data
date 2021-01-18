@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using KSerialization;
 using STRINGS;
 using UnityEngine;
@@ -13,11 +14,16 @@ public class SuitTank : KMonoBehaviour, IGameObjectEffectDescriptor, OxygenBreat
 	[Serialize]
 	public float amount;
 
+	public Tag elementTag;
+
+	[MyCmpReq]
+	public Storage storage;
+
 	public float capacity;
 
 	public const float REFILL_PERCENT = 0.25f;
 
-	public bool underwaterSupport;
+	public bool underwaterSupport = false;
 
 	private SuitSuffocationMonitor.Instance suitSuffocationMonitor;
 
@@ -34,19 +40,37 @@ public class SuitTank : KMonoBehaviour, IGameObjectEffectDescriptor, OxygenBreat
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		amount = capacity;
 		Subscribe(-1617557748, OnEquippedDelegate);
 		Subscribe(-170173755, OnUnequippedDelegate);
 	}
 
+	[OnDeserialized]
+	internal void OnDeserialized()
+	{
+		if (amount != 0f)
+		{
+			storage.AddGasChunk(SimHashes.Oxygen, amount, GetComponent<PrimaryElement>().Temperature, byte.MaxValue, 0, keep_zero_mass: false);
+			amount = 0f;
+		}
+	}
+
+	public float GetTankAmount()
+	{
+		if (storage == null)
+		{
+			storage = GetComponent<Storage>();
+		}
+		return storage.GetMassAvailable(elementTag);
+	}
+
 	public float PercentFull()
 	{
-		return amount / capacity;
+		return GetTankAmount() / capacity;
 	}
 
 	public bool IsEmpty()
 	{
-		return amount <= 0f;
+		return GetTankAmount() <= 0f;
 	}
 
 	public bool IsFull()
@@ -62,9 +86,9 @@ public class SuitTank : KMonoBehaviour, IGameObjectEffectDescriptor, OxygenBreat
 	public List<Descriptor> GetDescriptors(GameObject go)
 	{
 		List<Descriptor> list = new List<Descriptor>();
-		if (element.ToLower() == "oxygen")
+		if (elementTag == GameTags.Breathable)
 		{
-			string text = (underwaterSupport ? string.Format(UI.UISIDESCREENS.FABRICATORSIDESCREEN.EFFECTS.OXYGEN_TANK_UNDERWATER, GameUtil.GetFormattedMass(amount)) : string.Format(UI.UISIDESCREENS.FABRICATORSIDESCREEN.EFFECTS.OXYGEN_TANK, GameUtil.GetFormattedMass(amount)));
+			string text = (underwaterSupport ? string.Format(UI.UISIDESCREENS.FABRICATORSIDESCREEN.EFFECTS.OXYGEN_TANK_UNDERWATER, GameUtil.GetFormattedMass(GetTankAmount())) : string.Format(UI.UISIDESCREENS.FABRICATORSIDESCREEN.EFFECTS.OXYGEN_TANK, GameUtil.GetFormattedMass(GetTankAmount())));
 			list.Add(new Descriptor(text, text));
 		}
 		return list;
@@ -78,6 +102,7 @@ public class SuitTank : KMonoBehaviour, IGameObjectEffectDescriptor, OxygenBreat
 		if (component != null)
 		{
 			component.SetGasProvider(this);
+			component.AddTag(GameTags.HasSuitTank);
 		}
 	}
 
@@ -91,6 +116,7 @@ public class SuitTank : KMonoBehaviour, IGameObjectEffectDescriptor, OxygenBreat
 			if (component != null)
 			{
 				component.SetGasProvider(new GasBreatherFromWorldProvider());
+				component.RemoveTag(GameTags.HasSuitTank);
 			}
 		}
 	}
@@ -113,10 +139,10 @@ public class SuitTank : KMonoBehaviour, IGameObjectEffectDescriptor, OxygenBreat
 		{
 			return false;
 		}
-		gas_consumed = Mathf.Min(gas_consumed, amount);
-		amount -= gas_consumed;
-		Game.Instance.accumulators.Accumulate(oxygen_breather.O2Accumulator, gas_consumed);
-		ReportManager.Instance.ReportValue(ReportManager.ReportType.OxygenCreated, 0f - gas_consumed, oxygen_breather.GetProperName());
+		storage.ConsumeAndGetDisease(elementTag, gas_consumed, out var amount_consumed, out var _, out var _);
+		Game.Instance.accumulators.Accumulate(oxygen_breather.O2Accumulator, amount_consumed);
+		ReportManager.Instance.ReportValue(ReportManager.ReportType.OxygenCreated, 0f - amount_consumed, oxygen_breather.GetProperName());
+		Trigger(608245985, base.gameObject);
 		return true;
 	}
 
@@ -133,12 +159,17 @@ public class SuitTank : KMonoBehaviour, IGameObjectEffectDescriptor, OxygenBreat
 	[ContextMenu("SetToRefillAmount")]
 	public void SetToRefillAmount()
 	{
-		amount = 0.25f * capacity;
+		float tankAmount = GetTankAmount();
+		float num = 0.25f * capacity;
+		if (tankAmount > num)
+		{
+			storage.ConsumeIgnoringDisease(elementTag, tankAmount - num);
+		}
 	}
 
 	[ContextMenu("Empty")]
 	public void Empty()
 	{
-		amount = 0f;
+		storage.ConsumeIgnoringDisease(elementTag, GetTankAmount());
 	}
 }

@@ -11,11 +11,7 @@ namespace ProcGen
 
 		public bool HasWorld(string name)
 		{
-			if (name == null)
-			{
-				return false;
-			}
-			return worldCache.ContainsKey(name);
+			return name != null && worldCache.ContainsKey(name);
 		}
 
 		public World GetWorldData(string name)
@@ -37,16 +33,23 @@ namespace ProcGen
 			return "worlds/" + System.IO.Path.GetFileNameWithoutExtension(path);
 		}
 
-		public void LoadFiles(string path, List<YamlIO.Error> errors)
+		public void LoadReferencedWorlds(string path, ISet<string> referencedWorlds, List<YamlIO.Error> errors)
 		{
 			worldCache.Clear();
-			UpdateWorldCache(path, errors);
+			UpdateWorldCache(path, referencedWorlds, errors);
 		}
 
-		private void UpdateWorldCache(string path, List<YamlIO.Error> errors)
+		private void UpdateWorldCache(string path, ISet<string> referencedWorlds, List<YamlIO.Error> errors)
 		{
 			ListPool<FileHandle, Worlds>.PooledList pooledList = ListPool<FileHandle, Worlds>.Allocate();
-			FileSystem.GetFiles(FileSystem.Normalize(System.IO.Path.Combine(path, "worlds")), "*.yaml", pooledList);
+			string worldsPath = FileSystem.Normalize(System.IO.Path.Combine(path, "worlds"));
+			FileSystem.GetFiles(worldsPath, "*.yaml", pooledList);
+			pooledList.RemoveAll(delegate(FileHandle world_file)
+			{
+				string text = world_file.full_path.Substring(worldsPath.Length + 1);
+				text = text.Remove(text.LastIndexOf(".yaml"));
+				return !referencedWorlds.Contains(text);
+			});
 			foreach (FileHandle item in pooledList)
 			{
 				World world = YamlIO.LoadFile<World>(item.full_path, delegate(YamlIO.Error error, bool force_log_as_warning)

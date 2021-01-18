@@ -12,7 +12,8 @@ public class DebugCellDrawer : KMonoBehaviour
 		{
 			if (cells[i] != PathFinder.InvalidCell)
 			{
-				DebugExtension.DebugPoint(Grid.CellToPosCCF(cells[i], Grid.SceneLayer.Background));
+				Vector3 position = Grid.CellToPosCCF(cells[i], Grid.SceneLayer.Background);
+				DebugExtension.DebugPoint(position);
 			}
 		}
 	}

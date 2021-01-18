@@ -18,17 +18,17 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 
 	private Queue<int> queued = new Queue<int>();
 
-	protected UtilityNetworkGridNode[] visualGrid;
+	protected UtilityNetworkGridNode[] visualGrid = null;
 
-	private UtilityNetworkGridNode[] stashedVisualGrid;
+	private UtilityNetworkGridNode[] stashedVisualGrid = null;
 
-	protected UtilityNetworkGridNode[] physicalGrid;
+	protected UtilityNetworkGridNode[] physicalGrid = null;
 
-	protected HashSet<int> physicalNodes;
+	protected HashSet<int> physicalNodes = null;
 
-	protected HashSet<int> visualNodes;
+	protected HashSet<int> visualNodes = null;
 
-	private bool dirty;
+	private bool dirty = false;
 
 	private int tileLayer = -1;
 
@@ -86,20 +86,12 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 
 	protected UtilityNetworkGridNode[] GetGrid(bool is_physical_building)
 	{
-		if (!is_physical_building)
-		{
-			return visualGrid;
-		}
-		return physicalGrid;
+		return is_physical_building ? physicalGrid : visualGrid;
 	}
 
 	private HashSet<int> GetNodes(bool is_physical_building)
 	{
-		if (!is_physical_building)
-		{
-			return visualNodes;
-		}
-		return physicalNodes;
+		return is_physical_building ? physicalNodes : visualNodes;
 	}
 
 	public void ClearCell(int cell, bool is_physical_building)
@@ -138,10 +130,14 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 
 	private void QueueCellForVisit(UtilityNetworkGridNode[] grid, int dest_cell, UtilityConnections direction)
 	{
-		if (Grid.IsValidCell(dest_cell) && !visitedCells.Contains(dest_cell) && (direction == (UtilityConnections)0 || (grid[dest_cell].connections & direction.InverseDirection()) != 0) && Grid.Objects[dest_cell, tileLayer] != null)
+		if (Grid.IsValidCell(dest_cell) && !visitedCells.Contains(dest_cell) && (direction == (UtilityConnections)0 || (grid[dest_cell].connections & direction.InverseDirection()) != 0))
 		{
-			visitedCells.Add(dest_cell);
-			queued.Enqueue(dest_cell);
+			GameObject x = Grid.Objects[dest_cell, tileLayer];
+			if (x != null)
+			{
+				visitedCells.Add(dest_cell);
+				queued.Enqueue(dest_cell);
+			}
 		}
 	}
 
@@ -345,9 +341,13 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 				{
 					if (items.TryGetValue(num, out value))
 					{
-						if (value is IDisconnectable && (value as IDisconnectable).IsDisconnected())
+						if (value is IDisconnectable)
 						{
-							continue;
+							IDisconnectable disconnectable = value as IDisconnectable;
+							if (disconnectable.IsDisconnected())
+							{
+								continue;
+							}
 						}
 						if (value != null)
 						{
@@ -434,7 +434,8 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 		{
 			return null;
 		}
-		UtilityNetworkGridNode utilityNetworkGridNode = GetGrid(is_physical_building: true)[cell];
+		UtilityNetworkGridNode[] grid = GetGrid(is_physical_building: true);
+		UtilityNetworkGridNode utilityNetworkGridNode = grid[cell];
 		UtilityNetwork result = null;
 		if (utilityNetworkGridNode.networkIdx != -1 && utilityNetworkGridNode.networkIdx < networks.Count)
 		{
@@ -494,10 +495,11 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 
 	public UtilityConnections GetDisplayConnections(int cell)
 	{
+		UtilityConnections utilityConnections = (UtilityConnections)0;
 		UtilityNetworkGridNode[] grid = GetGrid(is_physical_building: false);
-		UtilityConnections num = (UtilityConnections)0 | grid[cell].connections;
+		utilityConnections |= grid[cell].connections;
 		grid = GetGrid(is_physical_building: true);
-		return num | grid[cell].connections;
+		return utilityConnections | grid[cell].connections;
 	}
 
 	public virtual bool CanAddConnection(UtilityConnections new_connection, int cell, bool is_physical_building, out string fail_reason)

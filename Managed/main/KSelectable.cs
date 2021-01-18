@@ -13,7 +13,7 @@ public class KSelectable : KMonoBehaviour
 
 	public string entityGender;
 
-	private bool selected;
+	private bool selected = false;
 
 	[SerializeField]
 	private bool selectable = true;
@@ -29,11 +29,7 @@ public class KSelectable : KMonoBehaviour
 	{
 		get
 		{
-			if (selectable)
-			{
-				return base.isActiveAndEnabled;
-			}
-			return false;
+			return selectable && base.isActiveAndEnabled;
 		}
 		set
 		{
@@ -47,7 +43,10 @@ public class KSelectable : KMonoBehaviour
 	{
 		base.OnPrefabInit();
 		statusItemGroup = new StatusItemGroup(base.gameObject);
-		_ = GetComponent<KPrefabID>() != null;
+		KPrefabID component = GetComponent<KPrefabID>();
+		if (component != null)
+		{
+		}
 		if (entityName == null || entityName.Length <= 0)
 		{
 			SetName(base.name);
@@ -88,12 +87,14 @@ public class KSelectable : KMonoBehaviour
 
 	public float GetZoom()
 	{
+		float num = 1f;
 		Bounds bounds = Util.GetBounds(base.gameObject);
 		return 1.05f * Mathf.Max(bounds.extents.x, bounds.extents.y);
 	}
 
 	public Vector3 GetPortraitLocation()
 	{
+		Vector3 vector = default(Vector3);
 		return Util.GetBounds(base.gameObject).center;
 	}
 

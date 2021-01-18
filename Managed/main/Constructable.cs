@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Klei.AI;
 using KSerialization;
 using STRINGS;
 using TUNING;
@@ -36,13 +37,13 @@ public class Constructable : Workable, ISaveLoadable
 
 	private Chore buildChore;
 
-	private bool materialNeedsCleared;
+	private bool materialNeedsCleared = false;
 
 	private bool hasUnreachableDigs;
 
-	private bool finished;
+	private bool finished = false;
 
-	private bool unmarked;
+	private bool unmarked = false;
 
 	public bool isDiggingRequired = true;
 
@@ -53,7 +54,7 @@ public class Constructable : Workable, ISaveLoadable
 	private Extents ladderDetectionExtents;
 
 	[Serialize]
-	public bool IsReplacementTile;
+	public bool IsReplacementTile = false;
 
 	private HandleVector<int>.Handle solidPartitionerEntry;
 
@@ -157,7 +158,7 @@ public class Constructable : Workable, ISaveLoadable
 					{
 						if (this != null && base.gameObject != null)
 						{
-							FinishConstruction(connections);
+							FinishConstruction(connections, worker);
 						}
 					});
 				}
@@ -166,20 +167,21 @@ public class Constructable : Workable, ISaveLoadable
 					Conduit component4 = replacementCandidate.GetComponent<Conduit>();
 					if (component4 != null)
 					{
-						component4.GetFlowManager().MarkForReplacement(cell);
+						ConduitFlow flowManager = component4.GetFlowManager();
+						flowManager.MarkForReplacement(cell);
 					}
 					BuildingComplete component5 = replacementCandidate.GetComponent<BuildingComplete>();
 					if (component5 != null)
 					{
 						component5.Subscribe(-21016276, delegate
 						{
-							FinishConstruction(connections);
+							FinishConstruction(connections, worker);
 						});
 					}
 					else
 					{
 						Debug.LogWarning("Why am I trying to replace a: " + replacementCandidate.name);
-						FinishConstruction(connections);
+						FinishConstruction(connections, worker);
 					}
 				}
 				KAnimGraphTileVisualizer component6 = replacementCandidate.GetComponent<KAnimGraphTileVisualizer>();
@@ -198,18 +200,24 @@ public class Constructable : Workable, ISaveLoadable
 		}
 		if (flag2)
 		{
-			FinishConstruction(connections);
+			FinishConstruction(connections, worker);
 		}
 		PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Building, GetComponent<KSelectable>().GetName(), base.transform);
 	}
 
-	private void FinishConstruction(UtilityConnections connections)
+	private void FinishConstruction(UtilityConnections connections, Worker workerForGameplayEvent)
 	{
 		Rotatable component = GetComponent<Rotatable>();
 		Orientation orientation = ((component != null) ? component.GetOrientation() : Orientation.Neutral);
 		int cell = Grid.PosToCell(base.transform.GetLocalPosition());
 		UnmarkArea();
 		GameObject gameObject = building.Def.Build(cell, orientation, storage, selectedElementsTags, initialTemperature, playsound: true, GameClock.Instance.GetTime());
+		BonusEvent.GameplayEventData gameplayEventData = new BonusEvent.GameplayEventData();
+		gameplayEventData.building = gameObject.GetComponent<BuildingComplete>();
+		gameplayEventData.workable = this;
+		gameplayEventData.worker = workerForGameplayEvent;
+		gameplayEventData.eventTrigger = GameHashes.NewBuilding;
+		GameplayEventManager.Instance.Trigger(-1661515756, gameplayEventData);
 		gameObject.transform.rotation = base.transform.rotation;
 		Rotatable component2 = gameObject.GetComponent<Rotatable>();
 		if (component2 != null)
@@ -219,18 +227,20 @@ public class Constructable : Workable, ISaveLoadable
 		KAnimGraphTileVisualizer component3 = GetComponent<KAnimGraphTileVisualizer>();
 		if (component3 != null)
 		{
-			gameObject.GetComponent<KAnimGraphTileVisualizer>().Connections = connections;
+			KAnimGraphTileVisualizer component4 = gameObject.GetComponent<KAnimGraphTileVisualizer>();
+			component4.Connections = connections;
 			component3.skipCleanup = true;
 		}
-		KSelectable component4 = GetComponent<KSelectable>();
-		if (component4 != null && component4.IsSelected && gameObject.GetComponent<KSelectable>() != null)
+		KSelectable component5 = GetComponent<KSelectable>();
+		if (component5 != null && component5.IsSelected && gameObject.GetComponent<KSelectable>() != null)
 		{
-			component4.Unselect();
+			component5.Unselect();
 			if (PlayerController.Instance.ActiveTool.name == "SelectTool")
 			{
 				((SelectTool)PlayerController.Instance.ActiveTool).SelectNextFrame(gameObject.GetComponent<KSelectable>());
 			}
 		}
+		gameObject.Trigger(2121280625, this);
 		storage.ConsumeAllIgnoringDisease();
 		finished = true;
 		this.DeleteObject();
@@ -239,7 +249,7 @@ public class Constructable : Workable, ISaveLoadable
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		invalidLocation = new Notification(MISC.NOTIFICATIONS.INVALIDCONSTRUCTIONLOCATION.NAME, NotificationType.BadMinor, HashedString.Invalid, (List<Notification> notificationList, object data) => string.Concat(MISC.NOTIFICATIONS.INVALIDCONSTRUCTIONLOCATION.TOOLTIP, notificationList.ReduceMessages(countNames: false)));
+		invalidLocation = new Notification(MISC.NOTIFICATIONS.INVALIDCONSTRUCTIONLOCATION.NAME, NotificationType.BadMinor, (List<Notification> notificationList, object data) => string.Concat(MISC.NOTIFICATIONS.INVALIDCONSTRUCTIONLOCATION.TOOLTIP, notificationList.ReduceMessages(countNames: false)));
 		CellOffset[][] table = OffsetGroups.InvertedStandardTable;
 		if (building.Def.IsTilePiece)
 		{
@@ -253,6 +263,11 @@ public class Constructable : Workable, ISaveLoadable
 		if (rotatable == null)
 		{
 			MarkArea();
+		}
+		int techTierForItem = Db.Get().TechItems.GetTechTierForItem(building.Def.PrefabID);
+		if (techTierForItem > 1)
+		{
+			requireMinionToWork = true;
 		}
 		workerStatusItem = Db.Get().DuplicantStatusItems.Building;
 		workingStatusItem = null;
@@ -287,7 +302,7 @@ public class Constructable : Workable, ISaveLoadable
 		foreach (Recipe.Ingredient ingredient in allIngredients)
 		{
 			fetchList.Add(ingredient.tag, null, null, ingredient.amount);
-			MaterialNeeds.Instance.UpdateNeed(ingredient.tag, ingredient.amount);
+			MaterialNeeds.UpdateNeed(ingredient.tag, ingredient.amount, base.gameObject.GetMyWorldId());
 		}
 		if (!building.Def.IsTilePiece)
 		{
@@ -343,7 +358,8 @@ public class Constructable : Workable, ISaveLoadable
 		{
 			int x = 0;
 			int y = 0;
-			Grid.CellToXY(Grid.PosToCell(this), out x, out y);
+			int cell2 = Grid.PosToCell(this);
+			Grid.CellToXY(cell2, out x, out y);
 			int y2 = y - 3;
 			ladderDetectionExtents = new Extents(x, y2, 1, 5);
 			ladderParititonerEntry = GameScenePartitioner.Instance.Add("Constructable.OnNearbyBuildingLayerChanged", base.gameObject, ladderDetectionExtents, GameScenePartitioner.Instance.objectLayers[1], OnNearbyBuildingLayerChanged);
@@ -351,7 +367,8 @@ public class Constructable : Workable, ISaveLoadable
 		}
 		fetchList.Submit(OnFetchListComplete, check_storage_contents: true);
 		PlaceDiggables();
-		new ReachabilityMonitor.Instance(this).StartSM();
+		ReachabilityMonitor.Instance instance = new ReachabilityMonitor.Instance(this);
+		instance.StartSM();
 		Subscribe(493375141, OnRefreshUserMenuDelegate);
 		Prioritizable component3 = GetComponent<Prioritizable>();
 		component3.onPriorityChanged = (Action<PrioritySetting>)Delegate.Combine(component3.onPriorityChanged, new Action<PrioritySetting>(OnPriorityChanged));
@@ -381,7 +398,8 @@ public class Constructable : Workable, ISaveLoadable
 		{
 			return;
 		}
-		if (Grid.Objects[num, (int)def.TileLayer] == null)
+		GameObject x = Grid.Objects[num, (int)def.TileLayer];
+		if (x == null)
 		{
 			def.MarkArea(num, orientation, def.TileLayer, base.gameObject);
 			def.RunOnArea(num, orientation, delegate(int c)
@@ -399,7 +417,8 @@ public class Constructable : Workable, ISaveLoadable
 			unmarked = true;
 			int num = Grid.PosToCell(base.transform.GetPosition());
 			BuildingDef def = building.Def;
-			def.UnmarkArea(layer: IsReplacementTile ? building.Def.ReplacementLayer : building.Def.ObjectLayer, cell: num, orientation: building.Orientation, go: base.gameObject);
+			ObjectLayer layer = (IsReplacementTile ? building.Def.ReplacementLayer : building.Def.ObjectLayer);
+			def.UnmarkArea(num, building.Orientation, layer, base.gameObject);
 			if (def.IsTilePiece)
 			{
 				Grid.IsTileUnderConstruction[num] = false;
@@ -486,9 +505,9 @@ public class Constructable : Workable, ISaveLoadable
 		}
 		UnmarkArea();
 		int[] placementCells = building.PlacementCells;
-		for (int i = 0; i < placementCells.Length; i++)
+		foreach (int cell2 in placementCells)
 		{
-			Diggable diggable = Diggable.GetDiggable(placementCells[i]);
+			Diggable diggable = Diggable.GetDiggable(cell2);
 			if (diggable != null)
 			{
 				diggable.gameObject.DeleteObject();
@@ -617,7 +636,7 @@ public class Constructable : Workable, ISaveLoadable
 			Recipe.Ingredient[] allIngredients = Recipe.GetAllIngredients(SelectedElementsTags);
 			foreach (Recipe.Ingredient ingredient in allIngredients)
 			{
-				MaterialNeeds.Instance.UpdateNeed(ingredient.tag, 0f - ingredient.amount);
+				MaterialNeeds.UpdateNeed(ingredient.tag, 0f - ingredient.amount, base.gameObject.GetMyWorldId());
 			}
 			materialNeedsCleared = true;
 		}

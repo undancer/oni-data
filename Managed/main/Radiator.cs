@@ -5,165 +5,56 @@ using UnityEngine;
 [AddComponentMenu("KMonoBehaviour/scripts/Radiator")]
 public class Radiator : KMonoBehaviour, IGameObjectEffectDescriptor
 {
-	public Color Color = Color.white;
+	public RadiationGridEmitter emitter;
 
-	public float Range = 5f;
+	public int intensity;
 
-	public float Angle;
+	public int projectionCount;
 
-	public int Lux = 1000;
+	public int direction = 0;
 
-	public Vector2 Direction;
-
-	public Vector2 Offset;
-
-	public bool drawOverlay;
-
-	public Color overlayColour;
-
-	public LightShape shape;
-
-	private int cell = Grid.InvalidCell;
-
-	public MaterialPropertyBlock materialPropertyBlock;
-
-	private bool isRegistered;
-
-	private HandleVector<int>.Handle solidPartitionerEntry;
-
-	private HandleVector<int>.Handle liquidPartitionerEntry;
-
-	private RadiationGridEmitter emitter;
-
-	private List<int> litCells = new List<int>();
-
-	private static readonly EventSystem.IntraObjectHandler<Radiator> OnOperationalChangedDelegate = new EventSystem.IntraObjectHandler<Radiator>(delegate(Radiator component, object data)
-	{
-		component.OnOperationalChanged(data);
-	});
-
-	private static readonly EventSystem.IntraObjectHandler<Radiator> OnActiveChangedDelegate = new EventSystem.IntraObjectHandler<Radiator>(delegate(Radiator component, object data)
-	{
-		component.OnOperationalChanged(data);
-	});
-
-	public float IntensityAnimation
-	{
-		get;
-		set;
-	}
-
-	protected override void OnPrefabInit()
-	{
-		Subscribe(-592767678, OnOperationalChangedDelegate);
-		Subscribe(824508782, OnActiveChangedDelegate);
-		IntensityAnimation = 1f;
-	}
-
-	protected override void OnCmpEnable()
-	{
-		materialPropertyBlock = new MaterialPropertyBlock();
-		base.OnCmpEnable();
-		Components.Radiators.Add(this);
-		if (base.isSpawned)
-		{
-			Refresh();
-		}
-		Singleton<CellChangeMonitor>.Instance.RegisterCellChangedHandler(base.transform, OnCellChanged, "Radiator.OnCmpEnable");
-	}
+	public int angle = 360;
 
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		Refresh();
-	}
-
-	protected override void OnCmpDisable()
-	{
-		Singleton<CellChangeMonitor>.Instance.UnregisterCellChangedHandler(base.transform, OnCellChanged);
-		Components.Radiators.Remove(this);
-		base.OnCmpDisable();
-		Refresh();
+		emitter = new RadiationGridEmitter(Grid.PosToCell(base.gameObject), intensity);
+		emitter.projectionCount = projectionCount;
+		emitter.direction = direction;
+		emitter.angle = angle;
+		if (GetComponent<Operational>() == null)
+		{
+			emitter.enabled = true;
+		}
+		else
+		{
+			Subscribe(824508782, OnOperationalChanged);
+		}
+		RadiationGridManager.emitters.Add(emitter);
 	}
 
 	protected override void OnCleanUp()
 	{
-		UnregisterLight();
-		GameScenePartitioner.Instance.Free(ref solidPartitionerEntry);
-		GameScenePartitioner.Instance.Free(ref liquidPartitionerEntry);
-	}
-
-	private void OnCellChanged()
-	{
-		GetComponent<Radiator>().Refresh();
-	}
-
-	private void UnregisterLight()
-	{
-		if (isRegistered && Grid.IsValidCell(cell))
-		{
-			GameScenePartitioner.Instance.Free(ref solidPartitionerEntry);
-			GameScenePartitioner.Instance.Free(ref liquidPartitionerEntry);
-			isRegistered = false;
-		}
-		if (emitter != null)
-		{
-			emitter.Remove();
-		}
-	}
-
-	[ContextMenu("Refresh")]
-	public void Refresh()
-	{
-		UnregisterLight();
-		Operational component = GetComponent<Operational>();
-		if ((component != null && !component.IsOperational) || !base.isActiveAndEnabled)
-		{
-			return;
-		}
-		Vector3 position = base.transform.GetPosition();
-		position = new Vector3(position.x + Offset.x, position.y + Offset.y, position.z);
-		int num = Grid.PosToCell(position);
-		if (Grid.IsValidCell(num))
-		{
-			Vector2I vector2I = Grid.CellToXY(num);
-			int num2 = (int)Range;
-			if (shape == LightShape.Circle)
-			{
-				Vector2I vector2I2 = new Vector2I(vector2I.x - num2, vector2I.y - num2);
-				solidPartitionerEntry = GameScenePartitioner.Instance.Add("Radiator", base.gameObject, vector2I2.x, vector2I2.y, 2 * num2, 2 * num2, GameScenePartitioner.Instance.solidChangedLayer, TriggerRefresh);
-				liquidPartitionerEntry = GameScenePartitioner.Instance.Add("Radiator", base.gameObject, vector2I2.x, vector2I2.y, 2 * num2, 2 * num2, GameScenePartitioner.Instance.liquidChangedLayer, TriggerRefresh);
-			}
-			else if (shape == LightShape.Cone)
-			{
-				Vector2I vector2I3 = new Vector2I(vector2I.x - num2, vector2I.y - num2);
-				solidPartitionerEntry = GameScenePartitioner.Instance.Add("Radiator", base.gameObject, vector2I3.x, vector2I3.y, 2 * num2, num2, GameScenePartitioner.Instance.solidChangedLayer, TriggerRefresh);
-				liquidPartitionerEntry = GameScenePartitioner.Instance.Add("Radiator", base.gameObject, vector2I3.x, vector2I3.y, 2 * num2, num2, GameScenePartitioner.Instance.liquidChangedLayer, TriggerRefresh);
-			}
-			cell = num;
-			litCells.Clear();
-			emitter = new RadiationGridEmitter(cell, litCells, Lux, Range, shape);
-			emitter.Add();
-			isRegistered = true;
-		}
-	}
-
-	private void TriggerRefresh(object data)
-	{
-		Refresh();
+		RadiationGridManager.emitters.Remove(emitter);
+		base.OnCleanUp();
 	}
 
 	private void OnOperationalChanged(object data)
 	{
-		base.enabled = GetComponent<Operational>().IsActive;
-		Refresh();
+		bool isActive = GetComponent<Operational>().IsActive;
+		emitter.enabled = isActive;
 	}
 
 	public List<Descriptor> GetDescriptors(GameObject go)
 	{
 		return new List<Descriptor>
 		{
-			new Descriptor(string.Format(UI.GAMEOBJECTEFFECTS.EMITS_LIGHT, Range), UI.GAMEOBJECTEFFECTS.TOOLTIPS.EMITS_LIGHT)
+			new Descriptor(string.Format(UI.GAMEOBJECTEFFECTS.EMITS_LIGHT, intensity), UI.GAMEOBJECTEFFECTS.TOOLTIPS.EMITS_LIGHT)
 		};
+	}
+
+	private void Update()
+	{
+		emitter.originCell = Grid.PosToCell(base.gameObject);
 	}
 }

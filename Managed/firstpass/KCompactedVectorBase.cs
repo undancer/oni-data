@@ -1,4 +1,6 @@
+#define UNITY_ASSERTIONS
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 public abstract class KCompactedVectorBase
 {
@@ -33,6 +35,7 @@ public abstract class KCompactedVectorBase
 			if (handles.Items[num] != last_idx)
 			{
 				DebugUtil.LogErrorArgs("KCompactedVector: Bad state after attempting to free handle", handle.index);
+				Assert.IsTrue(condition: false);
 			}
 			handles.Items[num] = free_component_idx;
 			dataHandleIndices[free_component_idx] = num;

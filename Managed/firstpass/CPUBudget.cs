@@ -34,17 +34,14 @@ public static class CPUBudget
 		get
 		{
 			int overrideCoreCount = TuningData<Tuning>.Get().overrideCoreCount;
-			if (0 >= overrideCoreCount || overrideCoreCount >= SystemInfo.processorCount)
-			{
-				return SystemInfo.processorCount;
-			}
-			return overrideCoreCount;
+			return (0 < overrideCoreCount && overrideCoreCount < SystemInfo.processorCount) ? overrideCoreCount : SystemInfo.processorCount;
 		}
 	}
 
 	public static float ComputeDuration(long start)
 	{
-		return (float)((stopwatch.ElapsedTicks - start) * 1000000 / Stopwatch.Frequency) / 1000f;
+		long num = (stopwatch.ElapsedTicks - start) * 1000000 / Stopwatch.Frequency;
+		return (float)num / 1000f;
 	}
 
 	public static void AddRoot(ICPULoad root)

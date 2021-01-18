@@ -19,11 +19,7 @@ public class IntSliderSideScreen : SideScreenContent
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		if (target.GetComponent<IIntSliderControl>() == null)
-		{
-			return target.GetSMI<IIntSliderControl>() != null;
-		}
-		return true;
+		return target.GetComponent<IIntSliderControl>() != null || target.GetSMI<IIntSliderControl>() != null;
 	}
 
 	public override void SetTarget(GameObject new_target)

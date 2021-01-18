@@ -5,6 +5,11 @@ public class GoldCometConfig : IEntityConfig
 {
 	public static string ID = "GoldComet";
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateEntity(ID, UI.SPACEDESTINATIONS.COMETS.GOLDCOMET.NAME);
@@ -32,8 +37,10 @@ public class GoldCometConfig : IEntityConfig
 		kBatchedAnimController.initialAnim = "fall_loop";
 		kBatchedAnimController.initialMode = KAnim.PlayMode.Loop;
 		kBatchedAnimController.visibilityType = KAnimControllerBase.VisibilityType.OffscreenUpdate;
-		gameObject.AddOrGet<KCircleCollider2D>().radius = 0.5f;
+		KCircleCollider2D kCircleCollider2D = gameObject.AddOrGet<KCircleCollider2D>();
+		kCircleCollider2D.radius = 0.5f;
 		gameObject.transform.localScale = new Vector3(0.6f, 0.6f, 1f);
+		gameObject.AddTag(GameTags.Comet);
 		return gameObject;
 	}
 

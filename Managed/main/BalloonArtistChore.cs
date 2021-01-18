@@ -113,7 +113,8 @@ public class BalloonArtistChore : Chore<BalloonArtistChore.StatesInstance>, IWor
 
 		public void GiveBalloon()
 		{
-			balloonArtist.GetSMI<BalloonArtist.Instance>().GiveBalloon();
+			BalloonArtist.Instance sMI = balloonArtist.GetSMI<BalloonArtist.Instance>();
+			sMI.GiveBalloon();
 			base.smi.sm.giveBalloonOut.Trigger(base.smi);
 		}
 	}
@@ -126,7 +127,8 @@ public class BalloonArtistChore : Chore<BalloonArtistChore.StatesInstance>, IWor
 		description = DUPLICANTS.CHORES.PRECONDITIONS.HAS_BALLOON_STALL_CELL,
 		fn = delegate(ref Precondition.Context context, object data)
 		{
-			return ((BalloonArtistChore)data).smi.HasBalloonStallCell();
+			BalloonArtistChore balloonArtistChore = (BalloonArtistChore)data;
+			return balloonArtistChore.smi.HasBalloonStallCell();
 		}
 	};
 

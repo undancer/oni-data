@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MinionTodoSideScreen : SideScreenContent
 {
-	private bool useOffscreenIndicators;
+	private bool useOffscreenIndicators = false;
 
 	public MinionTodoChoreEntry taskEntryPrefab;
 
@@ -36,7 +36,7 @@ public class MinionTodoSideScreen : SideScreenContent
 
 	private static List<JobsTableScreen.PriorityInfo> _priorityInfo;
 
-	private int activeChoreEntries;
+	private int activeChoreEntries = 0;
 
 	public static List<JobsTableScreen.PriorityInfo> priorityInfo
 	{
@@ -91,11 +91,7 @@ public class MinionTodoSideScreen : SideScreenContent
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		if (target.GetComponent<MinionIdentity>() != null)
-		{
-			return !target.HasTag(GameTags.Dead);
-		}
-		return false;
+		return target.GetComponent<MinionIdentity>() != null && !target.HasTag(GameTags.Dead);
 	}
 
 	public override void ClearTarget()
@@ -159,7 +155,8 @@ public class MinionTodoSideScreen : SideScreenContent
 		Schedule schedule = component.GetSchedule();
 		if (schedule != null)
 		{
-			arg = schedule.GetBlock(Schedule.GetBlockIdx()).name;
+			ScheduleBlock block = schedule.GetBlock(Schedule.GetBlockIdx());
+			arg = block.name;
 		}
 		currentScheduleBlockLabel.SetText(string.Format(UI.UISIDESCREENS.MINIONTODOSIDESCREEN.CURRENT_SCHEDULE_BLOCK, arg));
 		choreTargets.Clear();

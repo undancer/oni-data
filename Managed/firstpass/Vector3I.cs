@@ -18,11 +18,7 @@ public struct Vector3I
 
 	public static bool operator ==(Vector3I v1, Vector3I v2)
 	{
-		if (v1.x == v2.x && v1.y == v2.y)
-		{
-			return v1.z == v2.z;
-		}
-		return false;
+		return v1.x == v2.x && v1.y == v2.y && v1.z == v2.z;
 	}
 
 	public static bool operator !=(Vector3I v1, Vector3I v2)

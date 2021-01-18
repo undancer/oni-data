@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class BuildingCellVisualizer : KMonoBehaviour
 {
 	[Flags]
-	private enum Ports : byte
+	private enum Ports
 	{
 		PowerIn = 0x1,
 		PowerOut = 0x2,
@@ -19,7 +19,8 @@ public class BuildingCellVisualizer : KMonoBehaviour
 		LiquidIn = 0x10,
 		LiquidOut = 0x20,
 		SolidIn = 0x40,
-		SolidOut = 0x80
+		SolidOut = 0x80,
+		HighEnergyParticle = 0x100
 	}
 
 	private BuildingCellVisualizerResources resources;
@@ -41,7 +42,7 @@ public class BuildingCellVisualizer : KMonoBehaviour
 
 	private const Ports SOLID_PORTS = Ports.SolidIn | Ports.SolidOut;
 
-	private const Ports MATTER_PORTS = ~(Ports.PowerIn | Ports.PowerOut);
+	private const Ports MATTER_PORTS = Ports.GasIn | Ports.GasOut | Ports.LiquidIn | Ports.LiquidOut | Ports.SolidIn | Ports.SolidOut;
 
 	private Ports ports;
 
@@ -75,7 +76,9 @@ public class BuildingCellVisualizer : KMonoBehaviour
 
 	public bool RequiresSolid => (ports & (Ports.SolidIn | Ports.SolidOut)) != 0;
 
-	public bool RequiresUtilityConnection => (ports & ~(Ports.PowerIn | Ports.PowerOut)) != 0;
+	public bool RequiresUtilityConnection => (ports & (Ports.GasIn | Ports.GasOut | Ports.LiquidIn | Ports.LiquidOut | Ports.SolidIn | Ports.SolidOut)) != 0;
+
+	public bool RequiresHighEnergyParticles => (ports & Ports.HighEnergyParticle) != 0;
 
 	public void ConnectedEventWithDelay(float delay, int connectionCount, int cell, string soundName)
 	{
@@ -92,14 +95,15 @@ public class BuildingCellVisualizer : KMonoBehaviour
 			yield return new WaitForEndOfFrame();
 		}
 		ConnectedEvent(cell);
-		string sound = GlobalAssets.GetSound(soundName);
-		if (sound != null)
+		string connectedReleaseSound = GlobalAssets.GetSound(soundName);
+		if (connectedReleaseSound != null)
 		{
-			Vector3 position = base.transform.GetPosition();
-			position.z = 0f;
-			EventInstance instance = SoundEvent.BeginOneShot(sound, position);
-			instance.setParameterByName("connectedCount", connectionCount);
-			SoundEvent.EndOneShot(instance);
+			Vector3 sound_pos = base.transform.GetPosition();
+			sound_pos.z = 0f;
+			EventInstance ev = SoundEvent.BeginOneShot(connectedReleaseSound, sound_pos);
+			ev.setParameterByName("connectedCount", connectionCount);
+			SoundEvent.EndOneShot(ev);
+			sound_pos = default(Vector3);
 		}
 	}
 
@@ -171,6 +175,14 @@ public class BuildingCellVisualizer : KMonoBehaviour
 		{
 			ports |= Ports.SolidOut;
 		}
+		if (def.CheckRequiresHighEnergyParticleInput())
+		{
+			ports |= Ports.HighEnergyParticle;
+		}
+		if (def.CheckRequiresHighEnergyParticleOutput())
+		{
+			ports |= Ports.HighEnergyParticle;
+		}
 		DiseaseVisualization.Info info = Assets.instance.DiseaseVisualization.GetInfo(def.DiseaseCellVisName);
 		if (info.name != null)
 		{
@@ -180,33 +192,33 @@ public class BuildingCellVisualizer : KMonoBehaviour
 		ISecondaryInput component = def.BuildingComplete.GetComponent<ISecondaryInput>();
 		if (component != null)
 		{
-			switch (component.GetSecondaryConduitType())
+			if (component.HasSecondaryConduitType(ConduitType.Gas))
 			{
-			case ConduitType.Gas:
 				secondary_ports |= Ports.GasIn;
-				break;
-			case ConduitType.Liquid:
+			}
+			if (component.HasSecondaryConduitType(ConduitType.Liquid))
+			{
 				secondary_ports |= Ports.LiquidIn;
-				break;
-			case ConduitType.Solid:
+			}
+			if (component.HasSecondaryConduitType(ConduitType.Solid))
+			{
 				secondary_ports |= Ports.SolidIn;
-				break;
 			}
 		}
 		ISecondaryOutput component2 = def.BuildingComplete.GetComponent<ISecondaryOutput>();
 		if (component2 != null)
 		{
-			switch (component2.GetSecondaryConduitType())
+			if (component2.HasSecondaryConduitType(ConduitType.Gas))
 			{
-			case ConduitType.Gas:
 				secondary_ports |= Ports.GasOut;
-				break;
-			case ConduitType.Liquid:
+			}
+			if (component2.HasSecondaryConduitType(ConduitType.Liquid))
+			{
 				secondary_ports |= Ports.LiquidOut;
-				break;
-			case ConduitType.Solid:
+			}
+			if (component2.HasSecondaryConduitType(ConduitType.Solid))
+			{
 				secondary_ports |= Ports.SolidOut;
-				break;
 			}
 		}
 	}
@@ -240,11 +252,7 @@ public class BuildingCellVisualizer : KMonoBehaviour
 			return Color.white;
 		}
 		KBatchedAnimController component = gameObject.GetComponent<KBatchedAnimController>();
-		if (!(component != null))
-		{
-			return Color.white;
-		}
-		return component.TintColour;
+		return (component != null) ? ((Color)component.TintColour) : Color.white;
 	}
 
 	protected override void OnCmpEnable()
@@ -327,27 +335,27 @@ public class BuildingCellVisualizer : KMonoBehaviour
 			{
 				if ((ports & Ports.GasIn) != 0)
 				{
-					bool num = null != Grid.Objects[building.GetUtilityInputCell(), 12];
+					bool flag3 = null != Grid.Objects[building.GetUtilityInputCell(), 12];
 					BuildingCellVisualizerResources.ConnectedDisconnectedColours input = resources.gasIOColours.input;
-					Color tint2 = (num ? input.connected : input.disconnected);
+					Color tint2 = (flag3 ? input.connected : input.disconnected);
 					DrawUtilityIcon(building.GetUtilityInputCell(), resources.gasInputIcon, ref inputVisualizer, tint2);
 				}
 				if ((ports & Ports.GasOut) != 0)
 				{
-					bool num2 = null != Grid.Objects[building.GetUtilityOutputCell(), 12];
+					bool flag4 = null != Grid.Objects[building.GetUtilityOutputCell(), 12];
 					BuildingCellVisualizerResources.ConnectedDisconnectedColours output = resources.gasIOColours.output;
-					Color tint3 = (num2 ? output.connected : output.disconnected);
+					Color tint3 = (flag4 ? output.connected : output.disconnected);
 					DrawUtilityIcon(building.GetUtilityOutputCell(), resources.gasOutputIcon, ref outputVisualizer, tint3);
 				}
 				if ((secondary_ports & Ports.GasIn) != 0)
 				{
-					CellOffset secondaryConduitOffset = building.GetComponent<ISecondaryInput>().GetSecondaryConduitOffset();
+					CellOffset secondaryConduitOffset = building.GetComponent<ISecondaryInput>().GetSecondaryConduitOffset(ConduitType.Gas);
 					int visualizerCell = GetVisualizerCell(building, secondaryConduitOffset);
 					DrawUtilityIcon(visualizerCell, resources.gasInputIcon, ref secondaryInputVisualizer, secondInputColour, Color.white);
 				}
 				if ((secondary_ports & Ports.GasOut) != 0)
 				{
-					CellOffset secondaryConduitOffset2 = building.GetComponent<ISecondaryOutput>().GetSecondaryConduitOffset();
+					CellOffset secondaryConduitOffset2 = building.GetComponent<ISecondaryOutput>().GetSecondaryConduitOffset(ConduitType.Gas);
 					int visualizerCell2 = GetVisualizerCell(building, secondaryConduitOffset2);
 					DrawUtilityIcon(visualizerCell2, resources.gasOutputIcon, ref secondaryOutputVisualizer, secondOutputColour, Color.white);
 				}
@@ -363,27 +371,27 @@ public class BuildingCellVisualizer : KMonoBehaviour
 			{
 				if ((ports & Ports.LiquidIn) != 0)
 				{
-					bool num3 = null != Grid.Objects[building.GetUtilityInputCell(), 16];
+					bool flag5 = null != Grid.Objects[building.GetUtilityInputCell(), 16];
 					BuildingCellVisualizerResources.ConnectedDisconnectedColours input2 = resources.liquidIOColours.input;
-					Color tint4 = (num3 ? input2.connected : input2.disconnected);
+					Color tint4 = (flag5 ? input2.connected : input2.disconnected);
 					DrawUtilityIcon(building.GetUtilityInputCell(), resources.liquidInputIcon, ref inputVisualizer, tint4);
 				}
 				if ((ports & Ports.LiquidOut) != 0)
 				{
-					bool num4 = null != Grid.Objects[building.GetUtilityOutputCell(), 16];
+					bool flag6 = null != Grid.Objects[building.GetUtilityOutputCell(), 16];
 					BuildingCellVisualizerResources.ConnectedDisconnectedColours output2 = resources.liquidIOColours.output;
-					Color tint5 = (num4 ? output2.connected : output2.disconnected);
+					Color tint5 = (flag6 ? output2.connected : output2.disconnected);
 					DrawUtilityIcon(building.GetUtilityOutputCell(), resources.liquidOutputIcon, ref outputVisualizer, tint5);
 				}
 				if ((secondary_ports & Ports.LiquidIn) != 0)
 				{
-					CellOffset secondaryConduitOffset3 = building.GetComponent<ISecondaryInput>().GetSecondaryConduitOffset();
+					CellOffset secondaryConduitOffset3 = building.GetComponent<ISecondaryInput>().GetSecondaryConduitOffset(ConduitType.Liquid);
 					int visualizerCell3 = GetVisualizerCell(building, secondaryConduitOffset3);
 					DrawUtilityIcon(visualizerCell3, resources.liquidInputIcon, ref secondaryInputVisualizer, secondInputColour, Color.white);
 				}
 				if ((secondary_ports & Ports.LiquidOut) != 0)
 				{
-					CellOffset secondaryConduitOffset4 = building.GetComponent<ISecondaryOutput>().GetSecondaryConduitOffset();
+					CellOffset secondaryConduitOffset4 = building.GetComponent<ISecondaryOutput>().GetSecondaryConduitOffset(ConduitType.Liquid);
 					int visualizerCell4 = GetVisualizerCell(building, secondaryConduitOffset4);
 					DrawUtilityIcon(visualizerCell4, resources.liquidOutputIcon, ref secondaryOutputVisualizer, secondOutputColour, Color.white);
 				}
@@ -395,31 +403,31 @@ public class BuildingCellVisualizer : KMonoBehaviour
 		}
 		else if (mode == OverlayModes.SolidConveyor.ID)
 		{
-			if (RequiresSolid)
+			if (RequiresSolid || (secondary_ports & (Ports.SolidIn | Ports.SolidOut)) != 0)
 			{
 				if ((ports & Ports.SolidIn) != 0)
 				{
-					bool num5 = null != Grid.Objects[building.GetUtilityInputCell(), 20];
+					bool flag7 = null != Grid.Objects[building.GetUtilityInputCell(), 20];
 					BuildingCellVisualizerResources.ConnectedDisconnectedColours input3 = resources.liquidIOColours.input;
-					Color tint6 = (num5 ? input3.connected : input3.disconnected);
+					Color tint6 = (flag7 ? input3.connected : input3.disconnected);
 					DrawUtilityIcon(building.GetUtilityInputCell(), resources.liquidInputIcon, ref inputVisualizer, tint6);
 				}
 				if ((ports & Ports.SolidOut) != 0)
 				{
-					bool num6 = null != Grid.Objects[building.GetUtilityOutputCell(), 20];
+					bool flag8 = null != Grid.Objects[building.GetUtilityOutputCell(), 20];
 					BuildingCellVisualizerResources.ConnectedDisconnectedColours output3 = resources.liquidIOColours.output;
-					Color tint7 = (num6 ? output3.connected : output3.disconnected);
+					Color tint7 = (flag8 ? output3.connected : output3.disconnected);
 					DrawUtilityIcon(building.GetUtilityOutputCell(), resources.liquidOutputIcon, ref outputVisualizer, tint7);
 				}
 				if ((secondary_ports & Ports.SolidIn) != 0)
 				{
-					CellOffset secondaryConduitOffset5 = building.GetComponent<ISecondaryInput>().GetSecondaryConduitOffset();
+					CellOffset secondaryConduitOffset5 = building.GetComponent<ISecondaryInput>().GetSecondaryConduitOffset(ConduitType.Solid);
 					int visualizerCell5 = GetVisualizerCell(building, secondaryConduitOffset5);
 					DrawUtilityIcon(visualizerCell5, resources.liquidInputIcon, ref secondaryInputVisualizer, secondInputColour, Color.white);
 				}
 				if ((secondary_ports & Ports.SolidOut) != 0)
 				{
-					CellOffset secondaryConduitOffset6 = building.GetComponent<ISecondaryOutput>().GetSecondaryConduitOffset();
+					CellOffset secondaryConduitOffset6 = building.GetComponent<ISecondaryOutput>().GetSecondaryConduitOffset(ConduitType.Solid);
 					int visualizerCell6 = GetVisualizerCell(building, secondaryConduitOffset6);
 					DrawUtilityIcon(visualizerCell6, resources.liquidOutputIcon, ref secondaryOutputVisualizer, secondOutputColour, Color.white);
 				}
@@ -429,17 +437,46 @@ public class BuildingCellVisualizer : KMonoBehaviour
 				DisableIcons();
 			}
 		}
-		else if (mode == OverlayModes.Disease.ID && diseaseSourceSprite != null)
+		else if (mode == OverlayModes.Disease.ID)
 		{
-			int utilityOutputCell = building.GetUtilityOutputCell();
-			DrawUtilityIcon(utilityOutputCell, diseaseSourceSprite, ref inputVisualizer, diseaseSourceColour);
+			if (diseaseSourceSprite != null)
+			{
+				int utilityOutputCell = building.GetUtilityOutputCell();
+				DrawUtilityIcon(utilityOutputCell, diseaseSourceSprite, ref inputVisualizer, diseaseSourceColour);
+			}
+		}
+		else
+		{
+			if (!(mode == OverlayModes.Radiation.ID) || !RequiresHighEnergyParticles)
+			{
+				return;
+			}
+			int num = 3;
+			if (building.Def.UseHighEnergyParticleInputPort)
+			{
+				int highEnergyParticleInputCell = building.GetHighEnergyParticleInputCell();
+				DrawUtilityIcon(highEnergyParticleInputCell, resources.highEnergyParticleInputIcon, ref inputVisualizer, resources.highEnergyParticleInputColour, Color.white, num, hideBG: true);
+			}
+			if (building.Def.UseHighEnergyParticleOutputPort)
+			{
+				int highEnergyParticleOutputCell = building.GetHighEnergyParticleOutputCell();
+				IHighEnergyParticleDirection component4 = building.GetComponent<IHighEnergyParticleDirection>();
+				Sprite icon_img3 = resources.highEnergyParticleOutputIcons[0];
+				if (component4 != null)
+				{
+					int directionIndex = EightDirectionUtil.GetDirectionIndex(component4.Direction);
+					icon_img3 = resources.highEnergyParticleOutputIcons[directionIndex];
+				}
+				DrawUtilityIcon(highEnergyParticleOutputCell, icon_img3, ref outputVisualizer, resources.highEnergyParticleOutputColour, Color.white, num, hideBG: true);
+			}
 		}
 	}
 
 	private int GetVisualizerCell(Building building, CellOffset offset)
 	{
 		CellOffset rotatedOffset = building.GetRotatedOffset(offset);
-		return Grid.OffsetCell(building.GetCell(), rotatedOffset);
+		int cell = building.GetCell();
+		return Grid.OffsetCell(cell, rotatedOffset);
 	}
 
 	public void DisableIcons()
@@ -485,10 +522,13 @@ public class BuildingCellVisualizer : KMonoBehaviour
 		{
 			visualizerObj.gameObject.SetActive(value: true);
 		}
-		visualizerObj.GetComponent<Image>().enabled = !hideBG;
+		Image component = visualizerObj.GetComponent<Image>();
+		component.enabled = !hideBG;
 		icons[visualizerObj].raycastTarget = enableRaycast;
 		icons[visualizerObj].sprite = icon_img;
-		visualizerObj.transform.GetChild(0).gameObject.GetComponent<Image>().color = tint;
+		Transform child = visualizerObj.transform.GetChild(0);
+		component = child.gameObject.GetComponent<Image>();
+		component.color = tint;
 		visualizerObj.transform.SetPosition(position);
 		if (visualizerObj.GetComponent<SizePulse>() == null)
 		{
@@ -498,19 +538,11 @@ public class BuildingCellVisualizer : KMonoBehaviour
 
 	public Image GetOutputIcon()
 	{
-		if (!(outputVisualizer == null))
-		{
-			return outputVisualizer.transform.GetChild(0).GetComponent<Image>();
-		}
-		return null;
+		return (outputVisualizer == null) ? null : outputVisualizer.transform.GetChild(0).GetComponent<Image>();
 	}
 
 	public Image GetInputIcon()
 	{
-		if (!(inputVisualizer == null))
-		{
-			return inputVisualizer.transform.GetChild(0).GetComponent<Image>();
-		}
-		return null;
+		return (inputVisualizer == null) ? null : inputVisualizer.transform.GetChild(0).GetComponent<Image>();
 	}
 }

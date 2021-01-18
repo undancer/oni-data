@@ -52,7 +52,8 @@ public class OccupyArea : KMonoBehaviour
 
 	private void ValidatePosition()
 	{
-		if (!Grid.IsValidCell(Grid.PosToCell(this)))
+		int cell = Grid.PosToCell(this);
+		if (!Grid.IsValidCell(cell))
 		{
 			Debug.LogWarning(base.name + " is outside the grid! DELETING!");
 			Util.KDestroyGameObject(base.gameObject);
@@ -204,8 +205,8 @@ public class OccupyArea : KMonoBehaviour
 		}
 		if (AboveOccupiedCellOffsets != null)
 		{
-			CellOffset[] occupiedCellsOffsets = AboveOccupiedCellOffsets;
-			foreach (CellOffset offset2 in occupiedCellsOffsets)
+			CellOffset[] aboveOccupiedCellOffsets = AboveOccupiedCellOffsets;
+			foreach (CellOffset offset2 in aboveOccupiedCellOffsets)
 			{
 				Gizmos.color = Color.blue;
 				Gizmos.DrawWireCube(Grid.CellToPos(Grid.OffsetCell(cell, offset2)) + Vector3.right / 2f + Vector3.up / 2f, Vector3.one * 0.9f);

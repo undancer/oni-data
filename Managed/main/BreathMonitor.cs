@@ -71,11 +71,7 @@ public class BreathMonitor : GameStateMachine<BreathMonitor, BreathMonitor.Insta
 
 	private static bool IsLowBreath(Instance smi)
 	{
-		if (VignetteManager.Instance.Get().IsRedAlert())
-		{
-			return smi.breath.value < 45.454548f;
-		}
-		return smi.breath.value < 72.72727f;
+		return (!smi.master.gameObject.GetMyWorld().AlertManager.IsRedAlert()) ? (smi.breath.value < 72.72727f) : (smi.breath.value < 45.454548f);
 	}
 
 	private static Chore CreateRecoverBreathChore(Instance smi)

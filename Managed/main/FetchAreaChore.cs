@@ -720,18 +720,18 @@ public class FetchAreaChore : Chore<FetchAreaChore.StatesInstance>
 		}
 		if (!component.HasAllTags_AssumeLaundered(ref chore.requiredTagBits))
 		{
-			ISet<Tag> pickupableTags = component.Tags;
+			ISet<Tag> pickupableTags2 = component.Tags;
 			List<Tag> values = (from x in chore.requiredTagBits.GetTagsVerySlow()
-				where !pickupableTags.Contains(x)
+				where !pickupableTags2.Contains(x)
 				select x).ToList();
 			Debug.Log(string.Format("Pickupable {0} is not valid for chore because it does not have the required tags: {1}", pickupable, string.Join(",", values)));
 			return false;
 		}
 		if (component.HasAnyTags_AssumeLaundered(ref chore.forbiddenTagBits))
 		{
-			ISet<Tag> pickupableTags2 = component.Tags;
+			ISet<Tag> pickupableTags = component.Tags;
 			List<Tag> values2 = (from x in chore.forbiddenTagBits.GetTagsVerySlow()
-				where pickupableTags2.Contains(x)
+				where pickupableTags.Contains(x)
 				select x).ToList();
 			Debug.Log(string.Format("Pickupable {0} is not valid for chore because it has the forbidden tags: {1}", pickupable, string.Join(",", values2)));
 			return false;
@@ -745,7 +745,9 @@ public class FetchAreaChore : Chore<FetchAreaChore.StatesInstance>
 		GameScenePartitioner.Instance.GatherEntries(x - radius, y - radius, radius * 2 + 1, radius * 2 + 1, GameScenePartitioner.Instance.fetchChoreLayer, pooledList);
 		for (int i = 0; i < pooledList.Count; i++)
 		{
-			(pooledList[i].obj as FetchChore).CollectChoresFromGlobalChoreProvider(context.consumerState, succeeded_contexts, failed_contexts, is_attempting_override: true);
+			ScenePartitionerEntry scenePartitionerEntry = pooledList[i];
+			FetchChore fetchChore = scenePartitionerEntry.obj as FetchChore;
+			fetchChore.CollectChoresFromGlobalChoreProvider(context.consumerState, succeeded_contexts, failed_contexts, is_attempting_override: true);
 		}
 		pooledList.Recycle();
 	}

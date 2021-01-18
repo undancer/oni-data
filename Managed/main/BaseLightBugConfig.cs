@@ -20,7 +20,8 @@ public static class BaseLightBugConfig
 			inst.GetAttributes().Add(Db.Get().Attributes.MaxUnderwaterTravelCost);
 		};
 		gameObject.AddOrGet<LoopingSounds>();
-		gameObject.AddOrGetDef<LureableMonitor.Def>().lures = new Tag[1]
+		LureableMonitor.Def def = gameObject.AddOrGetDef<LureableMonitor.Def>();
+		def.lures = new Tag[1]
 		{
 			GameTags.Phosphorite
 		};
@@ -70,14 +71,21 @@ public static class BaseLightBugConfig
 
 	public static GameObject SetupDiet(GameObject prefab, HashSet<Tag> consumed_tags, Tag producedTag, float caloriesPerKg)
 	{
-		Diet diet = new Diet(new Diet.Info(consumed_tags, producedTag, caloriesPerKg));
-		prefab.AddOrGetDef<CreatureCalorieMonitor.Def>().diet = diet;
-		prefab.AddOrGetDef<SolidConsumerMonitor.Def>().diet = diet;
+		Diet.Info[] infos = new Diet.Info[1]
+		{
+			new Diet.Info(consumed_tags, producedTag, caloriesPerKg)
+		};
+		Diet diet = new Diet(infos);
+		CreatureCalorieMonitor.Def def = prefab.AddOrGetDef<CreatureCalorieMonitor.Def>();
+		def.diet = diet;
+		SolidConsumerMonitor.Def def2 = prefab.AddOrGetDef<SolidConsumerMonitor.Def>();
+		def2.diet = diet;
 		return prefab;
 	}
 
 	public static void SetupLoopingSounds(GameObject inst)
 	{
-		inst.GetComponent<LoopingSounds>().StartSound(GlobalAssets.GetSound("ShineBug_wings_LP"));
+		LoopingSounds component = inst.GetComponent<LoopingSounds>();
+		component.StartSound(GlobalAssets.GetSound("ShineBug_wings_LP"));
 	}
 }

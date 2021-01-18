@@ -4,7 +4,7 @@ using STRINGS;
 using UnityEngine;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-public class RequireAttachedComponent : RocketLaunchCondition
+public class RequireAttachedComponent : ProcessCondition
 {
 	private string typeNameString;
 
@@ -32,7 +32,7 @@ public class RequireAttachedComponent : RocketLaunchCondition
 		typeNameString = type_name_string;
 	}
 
-	public override LaunchStatus EvaluateLaunchCondition()
+	public override Status EvaluateCondition()
 	{
 		if (myAttachable != null)
 		{
@@ -40,28 +40,33 @@ public class RequireAttachedComponent : RocketLaunchCondition
 			{
 				if ((bool)item.GetComponent(requiredType))
 				{
-					return LaunchStatus.Ready;
+					return Status.Ready;
 				}
 			}
 		}
-		return LaunchStatus.Failure;
+		return Status.Failure;
 	}
 
-	public override string GetLaunchStatusMessage(bool ready)
+	public override string GetStatusMessage(Status status)
 	{
-		if (ready)
+		if (status == Status.Ready)
 		{
 			return typeNameString + " " + UI.STARMAP.LAUNCHCHECKLIST.REQUIRED;
 		}
 		return typeNameString + " " + UI.STARMAP.LAUNCHCHECKLIST.INSTALLED;
 	}
 
-	public override string GetLaunchStatusTooltip(bool ready)
+	public override string GetStatusTooltip(Status status)
 	{
-		if (ready)
+		if (status == Status.Ready)
 		{
 			return string.Format(UI.STARMAP.LAUNCHCHECKLIST.INSTALLED_TOOLTIP, typeNameString);
 		}
 		return string.Format(UI.STARMAP.LAUNCHCHECKLIST.REQUIRED_TOOLTIP, typeNameString);
+	}
+
+	public override bool ShowInUI()
+	{
+		return true;
 	}
 }

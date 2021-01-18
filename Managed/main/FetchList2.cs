@@ -49,7 +49,8 @@ public class FetchList2 : IFetchList
 			{
 				if (fetchOrder.InProgress)
 				{
-					return true;
+					result = true;
+					break;
 				}
 			}
 			return result;
@@ -178,7 +179,8 @@ public class FetchList2 : IFetchList
 			{
 				continue;
 			}
-			foreach (Tag tag in component.GetComponent<KPrefabID>().Tags)
+			KPrefabID component2 = component.GetComponent<KPrefabID>();
+			foreach (Tag tag in component2.Tags)
 			{
 				if (dictionary.ContainsKey(tag))
 				{
@@ -208,7 +210,8 @@ public class FetchList2 : IFetchList
 	public void Submit(System.Action on_complete, bool check_storage_contents)
 	{
 		OnComplete = on_complete;
-		foreach (FetchOrder2 item in FetchOrders.GetRange(0, FetchOrders.Count))
+		List<FetchOrder2> range = FetchOrders.GetRange(0, FetchOrders.Count);
+		foreach (FetchOrder2 item in range)
 		{
 			item.Submit(OnFetchOrderComplete, check_storage_contents);
 		}

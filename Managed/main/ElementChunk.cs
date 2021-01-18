@@ -1,3 +1,4 @@
+#define UNITY_ASSERTIONS
 using System;
 using Klei;
 using UnityEngine;
@@ -28,7 +29,8 @@ public class ElementChunk : KMonoBehaviour
 		PrimaryElement component = GetComponent<PrimaryElement>();
 		Element element = component.Element;
 		KSelectable component2 = GetComponent<KSelectable>();
-		component2.AddStatusItem(data: (Func<Element>)(() => element), status_item: Db.Get().MiscStatusItems.ElementalCategory);
+		Func<Element> data = () => element;
+		component2.AddStatusItem(Db.Get().MiscStatusItems.ElementalCategory, data);
 		component2.AddStatusItem(Db.Get().MiscStatusItems.OreMass, base.gameObject);
 		component2.AddStatusItem(Db.Get().MiscStatusItems.OreTemp, base.gameObject);
 	}
@@ -60,6 +62,7 @@ public class ElementChunk : KMonoBehaviour
 			float mass2 = component.Mass;
 			num = ((mass2 > 0f) ? SimUtil.CalculateFinalTemperature(mass2, component.Temperature, mass, primaryElement.Temperature) : primaryElement.Temperature);
 			component.SetMassTemperature(mass2 + mass, num);
+			UnityEngine.Debug.Assert(component.Temperature > 0f || component.Mass == 0f, "OnAbsorb resulted in a temperature of 0", base.gameObject);
 		}
 		if (CameraController.Instance != null)
 		{

@@ -153,7 +153,12 @@ public class StatusItemRenderer
 					return;
 				}
 				int cell = Grid.PosToCell(vector);
-				if ((Grid.IsValidCell(cell) && !Grid.IsVisible(cell)) || !transform.GetComponent<KSelectable>().IsSelectable)
+				if (Grid.IsValidCell(cell) && !Grid.IsVisible(cell))
+				{
+					return;
+				}
+				KSelectable component2 = transform.GetComponent<KSelectable>();
+				if (!component2.IsSelectable)
 				{
 					return;
 				}
@@ -161,9 +166,9 @@ public class StatusItemRenderer
 				if (dirty)
 				{
 					int num = 0;
-					foreach (StatusItem statusItem2 in statusItems)
+					foreach (StatusItem statusItem3 in statusItems)
 					{
-						if (statusItem2.UseConditionalCallback(overlay, transform) || !(overlay != OverlayModes.None.ID) || !(statusItem2.render_overlay != overlay))
+						if (statusItem3.UseConditionalCallback(overlay, transform) || !(overlay != OverlayModes.None.ID) || !(statusItem3.render_overlay != overlay))
 						{
 							num++;
 						}
@@ -185,7 +190,8 @@ public class StatusItemRenderer
 					{
 						for (int i = 0; i < statusItems.Count; i++)
 						{
-							if (statusItems[i].notificationType != NotificationType.Neutral)
+							StatusItem statusItem = statusItems[i];
+							if (statusItem.notificationType != NotificationType.Neutral)
 							{
 								c3 = renderer.backgroundColor;
 								break;
@@ -199,10 +205,14 @@ public class StatusItemRenderer
 					int num4 = 0;
 					for (int j = 0; j < statusItems.Count; j++)
 					{
-						StatusItem statusItem = statusItems[j];
-						if (statusItem.UseConditionalCallback(overlay, transform) || !(overlay != OverlayModes.None.ID) || !(statusItem.render_overlay != overlay))
+						StatusItem statusItem2 = statusItems[j];
+						if (statusItem2.UseConditionalCallback(overlay, transform) || !(overlay != OverlayModes.None.ID) || !(statusItem2.render_overlay != overlay))
 						{
 							float x = (float)num4 * num2 * 2f - num2 * (float)(num - 1);
+							if (statusItems[j].sprite == null)
+							{
+								Debug.LogError("Status Item " + statusItems[j].Id + " has null sprite for icon '" + statusItems[j].iconName + "', you need to add the sprite to the TintedSprites list in the GameAssets prefab manually.");
+							}
 							Sprite sprite = statusItems[j].sprite.sprite;
 							meshBuilder.AddQuad(new Vector2(x, 0f), new Vector2(num2, num2), z, sprite, c);
 							num4++;
@@ -220,9 +230,9 @@ public class StatusItemRenderer
 				return;
 			}
 			string text = "Error cleaning up status items:";
-			foreach (StatusItem statusItem3 in statusItems)
+			foreach (StatusItem statusItem4 in statusItems)
 			{
-				text += statusItem3.Id;
+				text += statusItem4.Id;
 			}
 			Debug.LogWarning(text);
 		}
@@ -262,22 +272,22 @@ public class StatusItemRenderer
 			Vector2 b = new Vector2(size.x * scale * 0.5f, size.y * scale * 0.5f);
 			Vector2 vector2 = a - b;
 			Vector2 vector3 = a + b;
-			if (pos.x >= vector2.x && pos.x <= vector3.x && pos.y >= vector2.y)
-			{
-				return pos.y <= vector3.y;
-			}
-			return false;
+			return pos.x >= vector2.x && pos.x <= vector3.x && pos.y >= vector2.y && pos.y <= vector3.y;
 		}
 
 		public void GetIntersection(Vector2 pos, List<InterfaceTool.Intersection> intersections, float scale)
 		{
-			if (Intersects(pos, scale) && transform.GetComponent<KSelectable>().IsSelectable)
+			if (Intersects(pos, scale))
 			{
-				intersections.Add(new InterfaceTool.Intersection
+				KSelectable component = transform.GetComponent<KSelectable>();
+				if (component.IsSelectable)
 				{
-					component = transform.GetComponent<KSelectable>(),
-					distance = -100f
-				});
+					intersections.Add(new InterfaceTool.Intersection
+					{
+						component = transform.GetComponent<KSelectable>(),
+						distance = -100f
+					});
+				}
 			}
 		}
 

@@ -48,10 +48,10 @@ public class MonumentPart : KMonoBehaviour
 
 	public bool IsMonumentCompleted()
 	{
-		bool num = GetMonumentPart(Part.Top) != null;
-		bool flag = GetMonumentPart(Part.Middle) != null;
-		bool flag2 = GetMonumentPart(Part.Bottom) != null;
-		return num && flag2 && flag;
+		bool flag = GetMonumentPart(Part.Top) != null;
+		bool flag2 = GetMonumentPart(Part.Middle) != null;
+		bool flag3 = GetMonumentPart(Part.Bottom) != null;
+		return flag && flag3 && flag2;
 	}
 
 	public void UpdateMonumentDecor()
@@ -61,12 +61,15 @@ public class MonumentPart : KMonoBehaviour
 		{
 			return;
 		}
-		monumentPart.GetComponent<DecorProvider>().SetValues(BUILDINGS.DECOR.BONUS.MONUMENT.COMPLETE);
-		foreach (GameObject item in AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>()))
+		DecorProvider component = monumentPart.GetComponent<DecorProvider>();
+		component.SetValues(BUILDINGS.DECOR.BONUS.MONUMENT.COMPLETE);
+		List<GameObject> attachedNetwork = AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>());
+		foreach (GameObject item in attachedNetwork)
 		{
 			if (item != monumentPart)
 			{
-				item.GetComponent<DecorProvider>().SetValues(BUILDINGS.DECOR.NONE);
+				DecorProvider component2 = item.GetComponent<DecorProvider>();
+				component2.SetValues(BUILDINGS.DECOR.NONE);
 			}
 		}
 	}
@@ -77,24 +80,28 @@ public class MonumentPart : KMonoBehaviour
 		{
 			return;
 		}
-		foreach (GameObject item in AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>()))
+		List<GameObject> attachedNetwork = AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>());
+		foreach (GameObject item in attachedNetwork)
 		{
 			if (item.GetComponent<MonumentPart>() != this)
 			{
-				item.GetComponent<DecorProvider>().SetValues(BUILDINGS.DECOR.BONUS.MONUMENT.INCOMPLETE);
+				DecorProvider component = item.GetComponent<DecorProvider>();
+				component.SetValues(BUILDINGS.DECOR.BONUS.MONUMENT.INCOMPLETE);
 			}
 		}
 	}
 
 	private GameObject GetMonumentPart(Part requestPart)
 	{
-		foreach (GameObject item in AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>()))
+		List<GameObject> attachedNetwork = AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>());
+		foreach (GameObject item in attachedNetwork)
 		{
 			MonumentPart component = item.GetComponent<MonumentPart>();
-			if (!(component == null) && component.part == requestPart)
+			if (component == null || component.part != requestPart)
 			{
-				return item;
+				continue;
 			}
+			return item;
 		}
 		return null;
 	}

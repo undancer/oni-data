@@ -71,6 +71,19 @@ public class Capturable : Workable, IGameObjectEffectDescriptor
 		base.OnCleanUp();
 	}
 
+	public override Vector3 GetTargetPoint()
+	{
+		Vector3 result = base.transform.GetPosition();
+		float num = result.y + 0.65f;
+		KBoxCollider2D component = GetComponent<KBoxCollider2D>();
+		if (component != null)
+		{
+			result = component.bounds.center;
+		}
+		result.z = 0f;
+		return result;
+	}
+
 	private void OnDeath(object data)
 	{
 		allowCapture = false;
@@ -175,12 +188,14 @@ public class Capturable : Workable, IGameObjectEffectDescriptor
 
 	protected override void OnStartWork(Worker worker)
 	{
-		GetComponent<KPrefabID>().AddTag(GameTags.Creatures.Stunned);
+		KPrefabID component = GetComponent<KPrefabID>();
+		component.AddTag(GameTags.Creatures.Stunned);
 	}
 
 	protected override void OnStopWork(Worker worker)
 	{
-		GetComponent<KPrefabID>().RemoveTag(GameTags.Creatures.Stunned);
+		KPrefabID component = GetComponent<KPrefabID>();
+		component.RemoveTag(GameTags.Creatures.Stunned);
 	}
 
 	protected override void OnCompleteWork(Worker worker)

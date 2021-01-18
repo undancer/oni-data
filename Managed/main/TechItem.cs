@@ -7,14 +7,19 @@ public class TechItem : Resource
 
 	public Func<string, bool, Sprite> getUISprite;
 
-	public Tech parentTech;
+	public string parentTechId;
 
-	public TechItem(string id, ResourceSet parent, string name, string description, Func<string, bool, Sprite> getUISprite, Tech parentTech)
+	public string dlcId;
+
+	public Tech ParentTech => Db.Get().Techs.Get(parentTechId);
+
+	public TechItem(string id, ResourceSet parent, string name, string description, Func<string, bool, Sprite> getUISprite, string parentTechId, string dlcId)
 		: base(id, parent, name)
 	{
 		this.description = description;
 		this.getUISprite = getUISprite;
-		this.parentTech = parentTech;
+		this.parentTechId = parentTechId;
+		this.dlcId = dlcId;
 	}
 
 	public Sprite UISprite()
@@ -24,6 +29,6 @@ public class TechItem : Resource
 
 	public bool IsComplete()
 	{
-		return parentTech.IsComplete();
+		return ParentTech.IsComplete();
 	}
 }

@@ -80,12 +80,13 @@ public class StateMachineUpdater : Singleton<StateMachineUpdater>
 
 		public float GetFrameTime(int frame)
 		{
-			int num = nextUpdateIndex - 1 - frame;
-			if (num <= 0)
+			int num = nextUpdateIndex - 1;
+			int num2 = num - frame;
+			if (num2 <= 0)
 			{
-				num += bucketFrames.Count;
+				num2 += bucketFrames.Count;
 			}
-			return (float)num * secondsPerSubTick;
+			return (float)num2 * secondsPerSubTick;
 		}
 	}
 

@@ -26,7 +26,7 @@ public class StationaryChoreRangeVisualizer : KMonoBehaviour
 
 	public int height;
 
-	public bool movable;
+	public bool movable = false;
 
 	public Grid.SceneLayer sceneLayer = Grid.SceneLayer.FXFront;
 
@@ -113,7 +113,8 @@ public class StationaryChoreRangeVisualizer : KMonoBehaviour
 			rotatedCellOffset = rotatable.GetRotatedCellOffset(vision_offset);
 		}
 		int cell = Grid.PosToCell(base.transform.gameObject);
-		Grid.CellToXY(Grid.OffsetCell(cell, rotatedCellOffset), out var num, out var num2);
+		int cell2 = Grid.OffsetCell(cell, rotatedCellOffset);
+		Grid.CellToXY(cell2, out var num, out var num2);
 		for (int i = 0; i < height; i++)
 		{
 			for (int j = 0; j < width; j++)

@@ -6,6 +6,8 @@ namespace ProcGen
 	[SerializationConfig(MemberSerialization.OptIn)]
 	public class Arc
 	{
+		private bool arcSet;
+
 		[Serialize]
 		public string type = "";
 
@@ -16,6 +18,18 @@ namespace ProcGen
 		{
 			get;
 			private set;
+		}
+
+		public void SetArc(Satsuma.Arc arc)
+		{
+			Debug.Assert(!arcSet, "Tried setting up an Arc twice, no go.");
+			this.arc = arc;
+			arcSet = true;
+		}
+
+		public void SetType(string type)
+		{
+			this.type = type;
 		}
 
 		public Arc()

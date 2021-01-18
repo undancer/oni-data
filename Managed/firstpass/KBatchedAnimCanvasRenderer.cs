@@ -17,13 +17,13 @@ public class KBatchedAnimCanvasRenderer : MonoBehaviour, IMaskable
 
 	public Material uiMat;
 
-	private KAnimConverter.IAnimConverter converter;
+	private KAnimConverter.IAnimConverter converter = null;
 
 	private CompareFunction _cmp = CompareFunction.Never;
 
 	private StencilOp _op = StencilOp.Zero;
 
-	private static TextureToCopyEntry[] texturesToCopy;
+	private static TextureToCopyEntry[] texturesToCopy = null;
 
 	private Vector4 _ClipRect = new Vector4(0f, 0f, 0f, 1f);
 
@@ -188,19 +188,19 @@ public class KBatchedAnimCanvasRenderer : MonoBehaviour, IMaskable
 				uiMat.SetTexture(KAnimBatchManager.instance.atlasNames[j], texture);
 			}
 		}
-		array2 = texturesToCopy;
-		for (int i = 0; i < array2.Length; i++)
+		TextureToCopyEntry[] array3 = texturesToCopy;
+		for (int k = 0; k < array3.Length; k++)
 		{
-			TextureToCopyEntry textureToCopyEntry3 = array2[i];
+			TextureToCopyEntry textureToCopyEntry3 = array3[k];
 			uiMat.SetTexture(textureToCopyEntry3.textureId, batch.matProperties.GetTexture(textureToCopyEntry3.textureId));
 			uiMat.SetVector(textureToCopyEntry3.sizeId, batch.matProperties.GetVector(textureToCopyEntry3.sizeId));
 		}
-		for (int k = 0; k < KAnimBatchManager.instance.atlasNames.Length; k++)
+		for (int l = 0; l < KAnimBatchManager.instance.atlasNames.Length; l++)
 		{
-			Texture texture2 = batch.matProperties.GetTexture(KAnimBatchManager.instance.atlasNames[k]);
+			Texture texture2 = batch.matProperties.GetTexture(KAnimBatchManager.instance.atlasNames[l]);
 			if (texture2 != null)
 			{
-				uiMat.SetTexture(KAnimBatchManager.instance.atlasNames[k], texture2);
+				uiMat.SetTexture(KAnimBatchManager.instance.atlasNames[l], texture2);
 			}
 		}
 		uiMat.SetFloat(KAnimBatch.ShaderProperty_SUPPORTS_SYMBOL_OVERRIDING, batch.matProperties.GetFloat(KAnimBatch.ShaderProperty_SUPPORTS_SYMBOL_OVERRIDING));

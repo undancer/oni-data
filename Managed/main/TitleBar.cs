@@ -20,7 +20,7 @@ public class TitleBar : KMonoBehaviour
 
 	public TitleBarPortrait portrait;
 
-	public bool userEditable;
+	public bool userEditable = false;
 
 	public bool setCameraControllerState = true;
 

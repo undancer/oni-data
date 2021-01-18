@@ -40,16 +40,16 @@ public class TimerSideScreen : SideScreenContent, IRenderEveryTick
 
 	public float phaseLength;
 
-	private bool cyclesMode;
+	private bool cyclesMode = false;
 
 	[SerializeField]
-	private float minSeconds;
+	private float minSeconds = 0f;
 
 	[SerializeField]
 	private float maxSeconds = 600f;
 
 	[SerializeField]
-	private float minCycles;
+	private float minCycles = 0f;
 
 	[SerializeField]
 	private float maxCycles = 10f;

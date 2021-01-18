@@ -73,14 +73,15 @@ public class RoleStation : Workable, IGameObjectEffectDescriptor
 	{
 		foreach (MinionResume minionResume in Components.MinionResumes)
 		{
-			if (!minionResume.HasTag(GameTags.Dead) && minionResume.TotalSkillPointsGained - minionResume.SkillsMastered > 0)
+			if (minionResume.HasTag(GameTags.Dead) || minionResume.TotalSkillPointsGained - minionResume.SkillsMastered <= 0)
 			{
-				if (skillPointAvailableStatusItem == Guid.Empty)
-				{
-					skillPointAvailableStatusItem = GetComponent<KSelectable>().AddStatusItem(Db.Get().BuildingStatusItems.SkillPointsAvailable);
-				}
-				return;
+				continue;
 			}
+			if (skillPointAvailableStatusItem == Guid.Empty)
+			{
+				skillPointAvailableStatusItem = GetComponent<KSelectable>().AddStatusItem(Db.Get().BuildingStatusItems.SkillPointsAvailable);
+			}
+			return;
 		}
 		GetComponent<KSelectable>().RemoveStatusItem(Db.Get().BuildingStatusItems.SkillPointsAvailable);
 		skillPointAvailableStatusItem = Guid.Empty;

@@ -19,12 +19,15 @@ public class MedicineInfo
 
 	public List<string> curedSicknesses;
 
-	public MedicineInfo(string id, string effect, MedicineType medicineType, string[] curedDiseases = null)
+	public string doctorStationId;
+
+	public MedicineInfo(string id, string effect, MedicineType medicineType, string doctorStationId, string[] curedDiseases = null)
 	{
 		Debug.Assert(!string.IsNullOrEmpty(effect) || (curedDiseases != null && curedDiseases.Length != 0), "Medicine should have an effect or cure diseases");
 		this.id = id;
 		this.effect = effect;
 		this.medicineType = medicineType;
+		this.doctorStationId = doctorStationId;
 		if (curedDiseases != null)
 		{
 			curedSicknesses = new List<string>(curedDiseases);
@@ -33,5 +36,15 @@ public class MedicineInfo
 		{
 			curedSicknesses = new List<string>();
 		}
+	}
+
+	public Tag GetSupplyTag()
+	{
+		return GetSupplyTagForStation(doctorStationId);
+	}
+
+	public static Tag GetSupplyTagForStation(string stationID)
+	{
+		return new Tag(stationID + GameTags.MedicalSupplies.Name);
 	}
 }

@@ -9,17 +9,17 @@ public class DoorConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("Door", 1, 2, "door_internal_kanim", 30, 10f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: TUNING.BUILDINGS.DECOR.NONE, temperature_modification_mass_scale: 1f);
-		obj.Entombable = true;
-		obj.Floodable = false;
-		obj.IsFoundation = false;
-		obj.AudioCategory = "Metal";
-		obj.PermittedRotations = PermittedRotations.R90;
-		obj.ForegroundLayer = Grid.SceneLayer.InteriorWall;
-		obj.LogicInputPorts = CreateSingleInputPortList(new CellOffset(0, 0));
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("Door", 1, 2, "door_internal_kanim", 30, 10f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: TUNING.BUILDINGS.DECOR.NONE, temperature_modification_mass_scale: 1f);
+		buildingDef.Entombable = true;
+		buildingDef.Floodable = false;
+		buildingDef.IsFoundation = false;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.PermittedRotations = PermittedRotations.R90;
+		buildingDef.ForegroundLayer = Grid.SceneLayer.InteriorWall;
+		buildingDef.LogicInputPorts = CreateSingleInputPortList(new CellOffset(0, 0));
 		SoundEventVolumeCache.instance.AddVolume("door_internal_kanim", "Open_DoorInternal", NOISE_POLLUTION.NOISY.TIER2);
 		SoundEventVolumeCache.instance.AddVolume("door_internal_kanim", "Close_DoorInternal", NOISE_POLLUTION.NOISY.TIER2);
-		return obj;
+		return buildingDef;
 	}
 
 	public static List<LogicPorts.Port> CreateSingleInputPortList(CellOffset offset)
@@ -37,10 +37,14 @@ public class DoorConfig : IBuildingConfig
 		door.doorType = Door.DoorType.Internal;
 		door.doorOpeningSoundEventName = "Open_DoorInternal";
 		door.doorClosingSoundEventName = "Close_DoorInternal";
-		go.AddOrGet<AccessControl>().controlEnabled = true;
-		go.AddOrGet<CopyBuildingSettings>().copyGroupTag = GameTags.Door;
-		go.AddOrGet<Workable>().workTime = 3f;
-		go.GetComponent<KBatchedAnimController>().initialAnim = "closed";
+		AccessControl accessControl = go.AddOrGet<AccessControl>();
+		accessControl.controlEnabled = true;
+		CopyBuildingSettings copyBuildingSettings = go.AddOrGet<CopyBuildingSettings>();
+		copyBuildingSettings.copyGroupTag = GameTags.Door;
+		Workable workable = go.AddOrGet<Workable>();
+		workable.workTime = 3f;
+		KBatchedAnimController component = go.GetComponent<KBatchedAnimController>();
+		component.initialAnim = "closed";
 		go.AddOrGet<ZoneTile>();
 		go.AddOrGet<KBoxCollider2D>();
 		Prioritizable.AddRef(go);

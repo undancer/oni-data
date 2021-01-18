@@ -1,11 +1,10 @@
-using System.IO;
 using Klei.AI;
 using STRINGS;
 using UnityEngine;
 
 namespace Database
 {
-	public class MinimumMorale : VictoryColonyAchievementRequirement
+	public class MinimumMorale : VictoryColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		public int minimumMorale;
 
@@ -39,12 +38,7 @@ namespace Database
 			return flag;
 		}
 
-		public override void Serialize(BinaryWriter writer)
-		{
-			writer.Write(minimumMorale);
-		}
-
-		public override void Deserialize(IReader reader)
+		public void Deserialize(IReader reader)
 		{
 			minimumMorale = reader.ReadInt32();
 		}

@@ -19,7 +19,7 @@ namespace Steamworks
 
 		private readonly int m_size = Marshal.SizeOf(typeof(T));
 
-		private bool m_bDisposed;
+		private bool m_bDisposed = false;
 
 		public SteamAPICall_t Handle => m_hAPICall;
 
@@ -114,7 +114,8 @@ namespace Steamworks
 
 		private void OnRunCallResult(IntPtr thisptr, IntPtr pvParam, bool bFailed, ulong hSteamAPICall_)
 		{
-			if ((SteamAPICall_t)hSteamAPICall_ == m_hAPICall)
+			SteamAPICall_t x = (SteamAPICall_t)hSteamAPICall_;
+			if (x == m_hAPICall)
 			{
 				m_hAPICall = SteamAPICall_t.Invalid;
 				try

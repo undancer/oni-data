@@ -68,7 +68,7 @@ public class OxygenBreather : KMonoBehaviour, ISim200ms
 
 	private IGasProvider gasProvider;
 
-	private static readonly EventSystem.IntraObjectHandler<OxygenBreather> OnDeadTagChangedDelegate = GameUtil.CreateHasTagHandler(GameTags.Dead, delegate(OxygenBreather component, object data)
+	private static readonly EventSystem.IntraObjectHandler<OxygenBreather> OnDeadTagAddedDelegate = GameUtil.CreateHasTagHandler(GameTags.Dead, delegate(OxygenBreather component, object data)
 	{
 		component.OnDeath(data);
 	});
@@ -96,7 +96,7 @@ public class OxygenBreather : KMonoBehaviour, ISim200ms
 
 	protected override void OnPrefabInit()
 	{
-		GameUtil.SubscribeToTags(this, OnDeadTagChangedDelegate);
+		GameUtil.SubscribeToTags(this, OnDeadTagAddedDelegate, triggerImmediately: true);
 	}
 
 	public bool IsLowOxygen()
@@ -234,18 +234,18 @@ public class OxygenBreather : KMonoBehaviour, ISim200ms
 			return SimHashes.Vacuum;
 		}
 		Element element = Grid.Element[mouthCellAtCell];
-		if (!element.IsGas || !element.HasTag(GameTags.Breathable) || !(Grid.Mass[mouthCellAtCell] > noOxygenThreshold))
-		{
-			return SimHashes.Vacuum;
-		}
-		return element.id;
+		return (element.IsGas && element.HasTag(GameTags.Breathable) && Grid.Mass[mouthCellAtCell] > noOxygenThreshold) ? element.id : SimHashes.Vacuum;
 	}
 
 	private float GetOxygenPressure(int cell)
 	{
-		if (Grid.IsValidCell(cell) && Grid.Element[cell].HasTag(GameTags.Breathable))
+		if (Grid.IsValidCell(cell))
 		{
-			return Grid.Mass[cell];
+			Element element = Grid.Element[cell];
+			if (element.HasTag(GameTags.Breathable))
+			{
+				return Grid.Mass[cell];
+			}
 		}
 		return 0f;
 	}

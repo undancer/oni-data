@@ -27,7 +27,8 @@ public class GameComps : KComponents
 	public GameComps()
 	{
 		FieldInfo[] fields = typeof(GameComps).GetFields();
-		foreach (FieldInfo fieldInfo in fields)
+		FieldInfo[] array = fields;
+		foreach (FieldInfo fieldInfo in array)
 		{
 			object obj = Activator.CreateInstance(fieldInfo.FieldType);
 			fieldInfo.SetValue(null, obj);
@@ -43,9 +44,10 @@ public class GameComps : KComponents
 	public new void Clear()
 	{
 		FieldInfo[] fields = typeof(GameComps).GetFields();
-		for (int i = 0; i < fields.Length; i++)
+		FieldInfo[] array = fields;
+		foreach (FieldInfo fieldInfo in array)
 		{
-			(fields[i].GetValue(null) as IComponentManager)?.Clear();
+			(fieldInfo.GetValue(null) as IComponentManager)?.Clear();
 		}
 	}
 

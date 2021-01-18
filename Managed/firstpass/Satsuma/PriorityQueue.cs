@@ -87,8 +87,8 @@ namespace Satsuma
 			TElement key = payloads[pos];
 			TPriority other = priorities[pos];
 			positions.Remove(key);
-			bool num = count <= 1;
-			if (!num && pos != count - 1)
+			bool flag = count <= 1;
+			if (!flag && pos != count - 1)
 			{
 				payloads[pos] = payloads[count - 1];
 				priorities[pos] = priorities[count - 1];
@@ -96,14 +96,14 @@ namespace Satsuma
 			}
 			payloads.RemoveAt(count - 1);
 			priorities.RemoveAt(count - 1);
-			if (!num && pos != count - 1)
+			if (!flag && pos != count - 1)
 			{
-				int num2 = priorities[pos].CompareTo(other);
-				if (num2 > 0)
+				int num = priorities[pos].CompareTo(other);
+				if (num > 0)
 				{
 					MoveDown(pos);
 				}
-				else if (num2 < 0)
+				else if (num < 0)
 				{
 					MoveUp(pos);
 				}
@@ -113,12 +113,12 @@ namespace Satsuma
 		public bool Remove(TElement element)
 		{
 			int value;
-			bool num = positions.TryGetValue(element, out value);
-			if (num)
+			bool flag = positions.TryGetValue(element, out value);
+			if (flag)
 			{
 				RemoveAt(value);
 			}
-			return num;
+			return flag;
 		}
 
 		public TElement Peek()

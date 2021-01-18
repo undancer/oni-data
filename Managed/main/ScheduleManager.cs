@@ -25,10 +25,10 @@ public class ScheduleManager : KMonoBehaviour, ISim33ms
 	private List<Schedule> schedules;
 
 	[Serialize]
-	private int lastIdx;
+	private int lastIdx = 0;
 
 	[Serialize]
-	private int scheduleNameIncrementor;
+	private int scheduleNameIncrementor = 0;
 
 	public static ScheduleManager Instance;
 
@@ -188,7 +188,7 @@ public class ScheduleManager : KMonoBehaviour, ISim33ms
 
 	public void PlayScheduleAlarm(Schedule schedule, ScheduleBlock block, bool forwards)
 	{
-		Notification notification = new Notification(string.Format(MISC.NOTIFICATIONS.SCHEDULE_CHANGED.NAME, schedule.name, block.name), NotificationType.Good, HashedString.Invalid, (List<Notification> notificationList, object data) => string.Format(MISC.NOTIFICATIONS.SCHEDULE_CHANGED.TOOLTIP, schedule.name, block.name, Db.Get().ScheduleGroups.Get(block.GroupId).notificationTooltip));
+		Notification notification = new Notification(string.Format(MISC.NOTIFICATIONS.SCHEDULE_CHANGED.NAME, schedule.name, block.name), NotificationType.Good, (List<Notification> notificationList, object data) => string.Format(MISC.NOTIFICATIONS.SCHEDULE_CHANGED.TOOLTIP, schedule.name, block.name, Db.Get().ScheduleGroups.Get(block.GroupId).notificationTooltip));
 		GetComponent<Notifier>().Add(notification);
 		StartCoroutine(PlayScheduleTone(schedule, forwards));
 	}
@@ -198,8 +198,8 @@ public class ScheduleManager : KMonoBehaviour, ISim33ms
 		int[] tones = schedule.GetTones();
 		for (int i = 0; i < tones.Length; i++)
 		{
-			int num = (forwards ? i : (tones.Length - 1 - i));
-			PlayTone(tones[num], forwards);
+			int t = (forwards ? i : (tones.Length - 1 - i));
+			PlayTone(tones[t], forwards);
 			yield return new WaitForSeconds(TuningData<Tuning>.Get().toneSpacingSeconds);
 		}
 	}

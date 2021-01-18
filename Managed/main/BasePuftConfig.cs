@@ -20,7 +20,8 @@ public static class BasePuftConfig
 			inst.GetAttributes().Add(Db.Get().Attributes.MaxUnderwaterTravelCost);
 		};
 		gameObject.AddOrGet<LoopingSounds>();
-		gameObject.AddOrGetDef<LureableMonitor.Def>().lures = new Tag[1]
+		LureableMonitor.Def def = gameObject.AddOrGetDef<LureableMonitor.Def>();
+		def.lures = new Tag[1]
 		{
 			GameTags.SlimeMold
 		};
@@ -82,7 +83,8 @@ public static class BasePuftConfig
 		CreatureCalorieMonitor.Def def = prefab.AddOrGetDef<CreatureCalorieMonitor.Def>();
 		def.diet = diet;
 		def.minPoopSizeInCalories = minPoopSizeInKg * caloriesPerKg;
-		prefab.AddOrGetDef<GasAndLiquidConsumerMonitor.Def>().diet = diet;
+		GasAndLiquidConsumerMonitor.Def def2 = prefab.AddOrGetDef<GasAndLiquidConsumerMonitor.Def>();
+		def2.diet = diet;
 		return prefab;
 	}
 

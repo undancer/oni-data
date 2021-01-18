@@ -7,9 +7,9 @@ public class OverviewColumnIdentity : KMonoBehaviour
 
 	public string Column_DisplayName = "";
 
-	public bool Sortable;
+	public bool Sortable = false;
 
-	public float xPivot;
+	public float xPivot = 0f;
 
-	public bool StringLookup;
+	public bool StringLookup = false;
 }

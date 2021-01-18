@@ -19,13 +19,13 @@ public class CharacterSelectionController : KModalScreen
 
 	protected int numberOfDuplicantOptions = 3;
 
-	protected int numberOfCarePackageOptions;
+	protected int numberOfCarePackageOptions = 0;
 
 	[SerializeField]
 	protected int selectableCount;
 
 	[SerializeField]
-	private bool allowsReplacing;
+	private bool allowsReplacing = false;
 
 	protected List<ITelepadDeliverable> selectedDeliverables;
 
@@ -155,10 +155,10 @@ public class CharacterSelectionController : KModalScreen
 
 	public void RemoveDeliverable(ITelepadDeliverable deliverable)
 	{
-		bool num = selectedDeliverables.Count >= selectableCount;
+		bool flag = selectedDeliverables.Count >= selectableCount;
 		selectedDeliverables.Remove(deliverable);
 		OnDeliverableRemoved();
-		if (num && selectedDeliverables.Count < selectableCount)
+		if (flag && selectedDeliverables.Count < selectableCount)
 		{
 			DisableProceedButton();
 			if (OnLimitUnreachedEvent != null)

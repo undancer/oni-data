@@ -38,6 +38,10 @@ public class MoveToLocationTool : InterfaceTool
 	protected override void OnDeactivateTool(InterfaceTool new_tool)
 	{
 		base.OnDeactivateTool(new_tool);
+		if (targetNavigator != null && new_tool == SelectTool.Instance)
+		{
+			SelectTool.Instance.SelectNextFrame(targetNavigator.GetComponent<KSelectable>(), skipSound: true);
+		}
 		visualizer.gameObject.SetActive(value: false);
 	}
 

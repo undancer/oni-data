@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using KSerialization;
 using TUNING;
@@ -39,7 +40,8 @@ namespace Klei.AI
 				return;
 			}
 			List<DUPLICANTSTATS.TraitVal> jOYTRAITS = DUPLICANTSTATS.JOYTRAITS;
-			if (!GetComponent<MinionIdentity>())
+			MinionIdentity component = GetComponent<MinionIdentity>();
+			if (!component)
 			{
 				return;
 			}
@@ -74,6 +76,7 @@ namespace Klei.AI
 
 		public void Add(Trait trait)
 		{
+			DebugUtil.Assert(IsInitialized() || GetComponent<Modifiers>().IsInitialized(), "Tried adding a trait on a prefab, use Modifiers.initialTraits instead!", trait.Name, base.gameObject.name);
 			if (trait.ShouldSave)
 			{
 				TraitIds.Add(trait.Id);
@@ -88,7 +91,8 @@ namespace Klei.AI
 			{
 				if (trait.Id == trait_id)
 				{
-					return true;
+					result = true;
+					break;
 				}
 			}
 			return result;
@@ -126,6 +130,57 @@ namespace Klei.AI
 					break;
 				}
 			}
+		}
+
+		public bool IsEffectIgnored(Effect effect)
+		{
+			foreach (Trait trait in TraitList)
+			{
+				if (trait.ignoredEffects != null && Array.IndexOf(trait.ignoredEffects, effect.Id) != -1)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public bool IsChoreGroupDisabled(ChoreGroup choreGroup)
+		{
+			Trait disablingTrait;
+			return IsChoreGroupDisabled(choreGroup, out disablingTrait);
+		}
+
+		public bool IsChoreGroupDisabled(ChoreGroup choreGroup, out Trait disablingTrait)
+		{
+			return IsChoreGroupDisabled(choreGroup.IdHash, out disablingTrait);
+		}
+
+		public bool IsChoreGroupDisabled(HashedString choreGroupId)
+		{
+			Trait disablingTrait;
+			return IsChoreGroupDisabled(choreGroupId, out disablingTrait);
+		}
+
+		public bool IsChoreGroupDisabled(HashedString choreGroupId, out Trait disablingTrait)
+		{
+			foreach (Trait trait in TraitList)
+			{
+				if (trait.disabledChoreGroups == null)
+				{
+					continue;
+				}
+				ChoreGroup[] disabledChoreGroups = trait.disabledChoreGroups;
+				foreach (ChoreGroup choreGroup in disabledChoreGroups)
+				{
+					if (choreGroup.IdHash == choreGroupId)
+					{
+						disablingTrait = trait;
+						return true;
+					}
+				}
+			}
+			disablingTrait = null;
+			return false;
 		}
 	}
 }

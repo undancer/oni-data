@@ -23,8 +23,6 @@ public class ValveSideScreen : SideScreenContent
 	[SerializeField]
 	private LocText unitsLabel;
 
-	private bool isEditing;
-
 	private float targetFlow;
 
 	protected override void OnSpawn()
@@ -111,18 +109,5 @@ public class ValveSideScreen : SideScreenContent
 			yield return new WaitForEndOfFrame();
 		}
 		OnReleaseHandle();
-	}
-
-	public override void OnKeyDown(KButtonEvent e)
-	{
-		Debug.Log("ValveSideScreen OnKeyDown");
-		if (isEditing)
-		{
-			e.Consumed = true;
-		}
-		else
-		{
-			base.OnKeyDown(e);
-		}
 	}
 }

@@ -16,13 +16,15 @@ public class TimeOfDay : KMonoBehaviour, ISaveLoadable
 	}
 
 	[Serialize]
-	private float scale;
+	private float scale = 0f;
 
-	private TimeRegion timeRegion;
+	private TimeRegion timeRegion = TimeRegion.Invalid;
 
 	private EventInstance nightLPEvent;
 
 	public static TimeOfDay Instance;
+
+	private bool isEclipse = false;
 
 	public static void DestroyInstance()
 	{
@@ -56,7 +58,7 @@ public class TimeOfDay : KMonoBehaviour, ISaveLoadable
 
 	public TimeRegion GetCurrentTimeRegion()
 	{
-		if (GameClock.Instance.GetCurrentCycleAsPercentage() >= 0.875f)
+		if (GameClock.Instance.IsNighttime())
 		{
 			return TimeRegion.Night;
 		}
@@ -100,17 +102,23 @@ public class TimeOfDay : KMonoBehaviour, ISaveLoadable
 		UpdateSunlightIntensity();
 	}
 
+	public void SetEclipse(bool eclipse)
+	{
+		isEclipse = eclipse;
+	}
+
 	private float UpdateSunlightIntensity()
 	{
-		float num = 0.875f;
-		float num2 = GameClock.Instance.GetCurrentCycleAsPercentage() / num;
-		if (num2 >= 1f)
+		float daytimeDurationInPercentage = GameClock.Instance.GetDaytimeDurationInPercentage();
+		float currentCycleAsPercentage = GameClock.Instance.GetCurrentCycleAsPercentage();
+		float num = currentCycleAsPercentage / daytimeDurationInPercentage;
+		if (num >= 1f || isEclipse)
 		{
-			num2 = 0f;
+			num = 0f;
 		}
-		float num3 = Mathf.Sin(num2 * (float)Math.PI);
-		Game.Instance.currentSunlightIntensity = num3 * 80000f;
-		return num3;
+		float num2 = Mathf.Sin(num * (float)Math.PI);
+		Game.Instance.currentSunlightIntensity = num2 * 80000f;
+		return num2;
 	}
 
 	private void TriggerSoundChange(TimeRegion new_region)

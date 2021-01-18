@@ -14,7 +14,7 @@ public class SnapOn : KMonoBehaviour
 
 		public HashedString context;
 
-		public KAnimFile buildFile;
+		public KAnimFile buildFile = null;
 
 		public HashedString overrideSymbol;
 	}
@@ -72,7 +72,8 @@ public class SnapOn : KMonoBehaviour
 				HashedString context = GetComponent<AnimEventHandler>().GetContext();
 				if (!context.IsValid || !snapPoint.context.IsValid || context == snapPoint.context)
 				{
-					GetComponent<SymbolOverrideController>().RemoveSymbolOverride(snapPoint.overrideSymbol, 5);
+					SymbolOverrideController component = GetComponent<SymbolOverrideController>();
+					component.RemoveSymbolOverride(snapPoint.overrideSymbol, 5);
 					kanimController.SetSymbolVisiblity(snapPoint.overrideSymbol, is_visible: false);
 					break;
 				}
@@ -91,7 +92,8 @@ public class SnapOn : KMonoBehaviour
 			symbol_name = value.symbolName;
 		}
 		KAnim.Build.Symbol symbol = GetSymbol(buildFile, symbol_name);
-		GetComponent<SymbolOverrideController>().AddSymbolOverride(point.overrideSymbol, symbol, 5);
+		SymbolOverrideController component = GetComponent<SymbolOverrideController>();
+		component.AddSymbolOverride(point.overrideSymbol, symbol, 5);
 		kanimController.SetSymbolVisiblity(point.overrideSymbol, is_visible: true);
 	}
 

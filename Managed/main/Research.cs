@@ -28,21 +28,21 @@ public class Research : KMonoBehaviour, ISaveLoadable
 
 	private TechInstance activeResearch;
 
-	private Notification NoResearcherRole = new Notification(RESEARCH.MESSAGING.NO_RESEARCHER_SKILL, NotificationType.Bad, HashedString.Invalid, (List<Notification> list, object data) => RESEARCH.MESSAGING.NO_RESEARCHER_SKILL_TOOLTIP, null, expires: false, 12f);
+	private Notification NoResearcherRole = new Notification(RESEARCH.MESSAGING.NO_RESEARCHER_SKILL, NotificationType.Bad, (List<Notification> list, object data) => RESEARCH.MESSAGING.NO_RESEARCHER_SKILL_TOOLTIP, null, expires: false, 12f);
 
-	private Notification MissingResearchStation = new Notification(RESEARCH.MESSAGING.MISSING_RESEARCH_STATION, NotificationType.Bad, HashedString.Invalid, (List<Notification> list, object data) => RESEARCH.MESSAGING.MISSING_RESEARCH_STATION_TOOLTIP.ToString().Replace("{0}", Instance.GetMissingResearchBuildingName()), null, expires: false, 11f);
+	private Notification MissingResearchStation = new Notification(RESEARCH.MESSAGING.MISSING_RESEARCH_STATION, NotificationType.Bad, (List<Notification> list, object data) => RESEARCH.MESSAGING.MISSING_RESEARCH_STATION_TOOLTIP.ToString().Replace("{0}", Instance.GetMissingResearchBuildingName()), null, expires: false, 11f);
 
-	private List<ResearchCenter> researchCenterPrefabs = new List<ResearchCenter>();
+	private List<IResearchCenter> researchCenterPrefabs = new List<IResearchCenter>();
 
 	public ResearchTypes researchTypes;
 
-	public bool UseGlobalPointInventory;
+	public bool UseGlobalPointInventory = false;
 
 	[Serialize]
 	public ResearchPointInventory globalPointInventory;
 
 	[Serialize]
-	private SaveData saveData;
+	private SaveData saveData = default(SaveData);
 
 	private static readonly EventSystem.IntraObjectHandler<Research> OnRolesUpdatedDelegate = new EventSystem.IntraObjectHandler<Research>(delegate(Research component, object data)
 	{
@@ -52,6 +52,11 @@ public class Research : KMonoBehaviour, ISaveLoadable
 	public static void DestroyInstance()
 	{
 		Instance = null;
+	}
+
+	public TechInstance GetTechInstance(string techID)
+	{
+		return techs.Find((TechInstance match) => match.tech.Id == techID);
 	}
 
 	public bool IsBeingResearched(Tech tech)
@@ -81,7 +86,7 @@ public class Research : KMonoBehaviour, ISaveLoadable
 		Components.ResearchCenters.OnRemove += CheckResearchBuildings;
 		foreach (KPrefabID prefab in Assets.Prefabs)
 		{
-			ResearchCenter component = prefab.GetComponent<ResearchCenter>();
+			IResearchCenter component = prefab.GetComponent<IResearchCenter>();
 			if (component != null)
 			{
 				researchCenterPrefabs.Add(component);
@@ -183,8 +188,18 @@ public class Research : KMonoBehaviour, ISaveLoadable
 		queuedTech.Remove(ti);
 		if (clickedEntry)
 		{
-			Trigger(-1914338957, queuedTech);
+			NotifyResearchCenters(GameHashes.ActiveResearchChanged, queuedTech);
 		}
+	}
+
+	private void NotifyResearchCenters(GameHashes hash, object data)
+	{
+		foreach (object researchCenter in Components.ResearchCenters)
+		{
+			KMonoBehaviour kMonoBehaviour = (KMonoBehaviour)researchCenter;
+			kMonoBehaviour.Trigger(-1914338957, data);
+		}
+		Trigger((int)hash, data);
 	}
 
 	public void SetActiveResearch(Tech tech, bool clearQueue = false)
@@ -210,7 +225,7 @@ public class Research : KMonoBehaviour, ISaveLoadable
 		{
 			queuedTech.Clear();
 		}
-		Trigger(-1914338957, queuedTech);
+		NotifyResearchCenters(GameHashes.ActiveResearchChanged, queuedTech);
 		CheckBuyResearch();
 		CheckResearchBuildings(null);
 		if (activeResearch != null)
@@ -253,9 +268,10 @@ public class Research : KMonoBehaviour, ISaveLoadable
 			Debug.LogWarning("No active research to add research points to. Global research inventory is disabled.");
 			return;
 		}
-		(UseGlobalPointInventory ? globalPointInventory : activeResearch.progressInventory).AddResearchPoints(researchTypeID, points);
+		ResearchPointInventory researchPointInventory = (UseGlobalPointInventory ? globalPointInventory : activeResearch.progressInventory);
+		researchPointInventory.AddResearchPoints(researchTypeID, points);
 		CheckBuyResearch();
-		Trigger(-125623018);
+		NotifyResearchCenters(GameHashes.ResearchPointsChanged, null);
 	}
 
 	private void CheckBuyResearch()
@@ -340,7 +356,8 @@ public class Research : KMonoBehaviour, ISaveLoadable
 				Tech tech = Db.Get().Techs.TryGet(save_data.techId);
 				if (tech != null)
 				{
-					GetOrAdd(tech).Load(save_data);
+					TechInstance orAdd = GetOrAdd(tech);
+					orAdd.Load(save_data);
 				}
 			}
 		}
@@ -381,9 +398,9 @@ public class Research : KMonoBehaviour, ISaveLoadable
 			if (item.Value > 0f)
 			{
 				flag = false;
-				foreach (ResearchCenter item2 in Components.ResearchCenters.Items)
+				foreach (IResearchCenter item2 in Components.ResearchCenters.Items)
 				{
-					if (item2.research_point_type_id == item.Key)
+					if (item2.GetResearchType() == item.Key)
 					{
 						flag = true;
 						break;
@@ -394,11 +411,11 @@ public class Research : KMonoBehaviour, ISaveLoadable
 			{
 				continue;
 			}
-			foreach (ResearchCenter researchCenterPrefab in researchCenterPrefabs)
+			foreach (IResearchCenter researchCenterPrefab in researchCenterPrefabs)
 			{
-				if (researchCenterPrefab.research_point_type_id == item.Key)
+				if (researchCenterPrefab.GetResearchType() == item.Key)
 				{
-					return researchCenterPrefab.GetProperName();
+					return ((KMonoBehaviour)researchCenterPrefab).GetProperName();
 				}
 			}
 			return null;
@@ -411,8 +428,10 @@ public class Research : KMonoBehaviour, ISaveLoadable
 		if (activeResearch == null)
 		{
 			notifier.Remove(MissingResearchStation);
+			return;
 		}
-		else if (string.IsNullOrEmpty(GetMissingResearchBuildingName()))
+		string missingResearchBuildingName = GetMissingResearchBuildingName();
+		if (string.IsNullOrEmpty(missingResearchBuildingName))
 		{
 			notifier.Remove(MissingResearchStation);
 		}

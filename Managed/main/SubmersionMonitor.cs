@@ -7,7 +7,7 @@ public class SubmersionMonitor : KMonoBehaviour, IGameObjectEffectDescriptor, IW
 {
 	private int position;
 
-	private bool dry;
+	private bool dry = false;
 
 	protected float cellLiquidThreshold = 0.2f;
 
@@ -81,6 +81,7 @@ public class SubmersionMonitor : KMonoBehaviour, IGameObjectEffectDescriptor, IW
 
 	private void CheckDry()
 	{
+		bool flag = true;
 		if (!IsCellSafe())
 		{
 			if (!dry)

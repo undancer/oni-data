@@ -62,11 +62,7 @@ namespace YamlDotNet.Core
 
 		public bool Equals(Mark other)
 		{
-			if (other != null && Index == other.Index && Line == other.Line)
-			{
-				return Column == other.Column;
-			}
-			return false;
+			return other != null && Index == other.Index && Line == other.Line && Column == other.Column;
 		}
 
 		public override int GetHashCode()

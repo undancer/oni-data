@@ -35,7 +35,9 @@ namespace KMod
 			{
 				return false;
 			}
-			return new DirectoryInfo(FileSystem.Normalize(Path.Combine(root, relative_path))).Exists;
+			string path = FileSystem.Normalize(Path.Combine(root, relative_path));
+			DirectoryInfo directoryInfo = new DirectoryInfo(path);
+			return directoryInfo.Exists;
 		}
 
 		public void GetTopLevelItems(List<FileSystemItem> file_system_items, string relative_root)
@@ -135,7 +137,8 @@ namespace KMod
 				}
 			}
 			DirectoryInfo[] directories = directoryInfo.GetDirectories();
-			foreach (DirectoryInfo directoryInfo2 in directories)
+			DirectoryInfo[] array2 = directories;
+			foreach (DirectoryInfo directoryInfo2 in array2)
 			{
 				string destDirName2 = Path.Combine(destDirName, directoryInfo2.Name);
 				num += CopyDirectory(directoryInfo2.FullName, destDirName2, extensions);

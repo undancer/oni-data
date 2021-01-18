@@ -25,11 +25,7 @@ public static class CSVUtil
 
 	public static bool IsValidColumn(string[,] grid, int col)
 	{
-		if (grid[col, 0] != null)
-		{
-			return grid[col, 0] != "";
-		}
-		return false;
+		return grid[col, 0] != null && grid[col, 0] != "";
 	}
 
 	public static void ParseData<T>(object def, string[,] grid, int row)
@@ -134,7 +130,8 @@ public static class CSVUtil
 			int num = 0;
 			for (int i = 0; i < array3.Length; i++)
 			{
-				if (array3[i].Trim() != "")
+				string a = array3[i].Trim();
+				if (a != "")
 				{
 					num++;
 				}
@@ -196,12 +193,12 @@ public static class CSVUtil
 		}
 		ulong num = 0uL;
 		string[] array2 = array;
-		for (int i = 0; i < array2.Length; i++)
+		foreach (string text in array2)
 		{
-			string text = array2[i].Trim();
-			if (text.Length != 0)
+			string text2 = text.Trim();
+			if (text2.Length != 0)
 			{
-				if (!EnumToObject(type, underlyingType, names, values, text, out var value2))
+				if (!EnumToObject(type, underlyingType, names, values, text2, out var value2))
 				{
 					value = Activator.CreateInstance(type);
 					return false;

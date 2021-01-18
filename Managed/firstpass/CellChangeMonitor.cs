@@ -143,9 +143,10 @@ public class CellChangeMonitor : Singleton<CellChangeMonitor>
 	public int PosToCell(Vector3 pos)
 	{
 		float x = pos.x;
-		int num = (int)(pos.y + 0.05f);
-		int num2 = (int)x;
-		return num * gridWidth + num2;
+		float num = pos.y + 0.05f;
+		int num2 = (int)num;
+		int num3 = (int)x;
+		return num2 * gridWidth + num3;
 	}
 
 	public void SetGridSize(int grid_width, int grid_height)

@@ -3,7 +3,7 @@ using System;
 namespace TemplateClasses
 {
 	[Serializable]
-	public class StorageItem : ICloneable
+	public class StorageItem
 	{
 		public string id
 		{
@@ -70,15 +70,11 @@ namespace TemplateClasses
 			temperature = _temp;
 		}
 
-		public object Clone()
+		public StorageItem Clone()
 		{
-			return new StorageItem(id, units, temperature, element, diseaseName, diseaseCount, isOre)
-			{
-				rottable = 
-				{
-					rotAmount = rottable.rotAmount
-				}
-			};
+			StorageItem storageItem = new StorageItem(id, units, temperature, element, diseaseName, diseaseCount, isOre);
+			storageItem.rottable.rotAmount = rottable.rotAmount;
+			return storageItem;
 		}
 	}
 }

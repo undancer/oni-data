@@ -24,7 +24,8 @@ public abstract class BaseBatteryConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		go.AddOrGet<Battery>().powerSortOrder = 1000;
+		Battery battery = go.AddOrGet<Battery>();
+		battery.powerSortOrder = 1000;
 		go.AddOrGetDef<PoweredActiveController.Def>();
 	}
 }

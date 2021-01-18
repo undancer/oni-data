@@ -9,6 +9,11 @@ public class BasicCureConfig : IEntityConfig
 
 	public static ComplexRecipe recipe;
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateLooseEntity("BasicCure", ITEMS.PILLS.BASICCURE.NAME, ITEMS.PILLS.BASICCURE.DESC, 1f, unitMass: true, Assets.GetAnim("pill_foodpoisoning_kanim"), "object", Grid.SceneLayer.Front, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.4f, isPickupable: true);
@@ -20,9 +25,10 @@ public class BasicCureConfig : IEntityConfig
 		};
 		ComplexRecipe.RecipeElement[] array2 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement("BasicCure", 1f)
+			new ComplexRecipe.RecipeElement("BasicCure", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
-		recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("Apothecary", array, array2), array, array2)
+		string id = ComplexRecipeManager.MakeRecipeID("Apothecary", array, array2);
+		recipe = new ComplexRecipe(id, array, array2)
 		{
 			time = 50f,
 			description = ITEMS.PILLS.BASICCURE.RECIPEDESC,

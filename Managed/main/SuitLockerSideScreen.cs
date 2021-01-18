@@ -79,9 +79,9 @@ public class SuitLockerSideScreen : SideScreenContent
 		initialConfigScreen.gameObject.SetActive(!flag);
 		regularConfigScreen.gameObject.SetActive(flag);
 		bool flag2 = suitLocker.GetStoredOutfit() != null;
-		bool num = suitLocker.smi.sm.isWaitingForSuit.Get(suitLocker.smi);
+		bool flag3 = suitLocker.smi.sm.isWaitingForSuit.Get(suitLocker.smi);
 		regularConfigRequestSuitButton.isInteractable = !flag2;
-		if (!num)
+		if (!flag3)
 		{
 			regularConfigRequestSuitButton.GetComponentInChildren<LocText>().text = UI.UISIDESCREENS.SUIT_SIDE_SCREEN.CONFIG_REQUEST_SUIT;
 			regularConfigRequestSuitButton.GetComponentInChildren<ToolTip>().SetSimpleTooltip(UI.UISIDESCREENS.SUIT_SIDE_SCREEN.CONFIG_REQUEST_SUIT_TOOLTIP);

@@ -84,9 +84,10 @@ public class LogicCircuitManager
 				timeSinceBridgeRefresh = 0f;
 			}
 		}
-		foreach (LogicCircuitNetwork network in Game.Instance.logicCircuitSystem.GetNetworks())
+		IList<UtilityNetwork> networks = Game.Instance.logicCircuitSystem.GetNetworks();
+		foreach (LogicCircuitNetwork item in networks)
 		{
-			CheckCircuitOverloaded(dt, network.id, network.GetBitsUsed());
+			CheckCircuitOverloaded(dt, item.id, item.GetBitsUsed());
 		}
 	}
 
@@ -138,7 +139,8 @@ public class LogicCircuitManager
 
 	private void CheckCircuitOverloaded(float dt, int id, int bits_used)
 	{
-		UtilityNetwork networkByID = Game.Instance.logicCircuitSystem.GetNetworkByID(id);
+		UtilityNetworkManager<LogicCircuitNetwork, LogicWire> logicCircuitSystem = Game.Instance.logicCircuitSystem;
+		UtilityNetwork networkByID = logicCircuitSystem.GetNetworkByID(id);
 		if (networkByID != null)
 		{
 			((LogicCircuitNetwork)networkByID)?.UpdateOverloadTime(dt, bits_used);
@@ -157,18 +159,19 @@ public class LogicCircuitManager
 
 	private void UpdateCircuitBridgeLists()
 	{
-		foreach (LogicCircuitNetwork network in Game.Instance.logicCircuitSystem.GetNetworks())
+		IList<UtilityNetwork> networks = Game.Instance.logicCircuitSystem.GetNetworks();
+		foreach (LogicCircuitNetwork item in networks)
 		{
 			if (updateEvenBridgeGroups)
 			{
-				if (network.id % 2 == 0)
+				if (item.id % 2 == 0)
 				{
-					network.UpdateRelevantBridges(bridgeGroups);
+					item.UpdateRelevantBridges(bridgeGroups);
 				}
 			}
-			else if (network.id % 2 == 1)
+			else if (item.id % 2 == 1)
 			{
-				network.UpdateRelevantBridges(bridgeGroups);
+				item.UpdateRelevantBridges(bridgeGroups);
 			}
 		}
 		updateEvenBridgeGroups = !updateEvenBridgeGroups;

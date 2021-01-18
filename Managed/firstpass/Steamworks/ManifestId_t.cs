@@ -21,11 +21,7 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			if (other is ManifestId_t)
-			{
-				return this == (ManifestId_t)other;
-			}
-			return false;
+			return other is ManifestId_t && this == (ManifestId_t)other;
 		}
 
 		public override int GetHashCode()

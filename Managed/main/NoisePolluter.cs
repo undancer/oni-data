@@ -50,15 +50,7 @@ public class NoisePolluter : KMonoBehaviour, IPolluter
 
 	public static bool IsNoiseableCell(int cell)
 	{
-		if (Grid.IsValidCell(cell))
-		{
-			if (!Grid.IsGas(cell))
-			{
-				return !Grid.IsSubstantialLiquid(cell);
-			}
-			return true;
-		}
-		return false;
+		return Grid.IsValidCell(cell) && (Grid.IsGas(cell) || !Grid.IsSubstantialLiquid(cell));
 	}
 
 	public void ResetCells()
@@ -204,7 +196,8 @@ public class NoisePolluter : KMonoBehaviour, IPolluter
 
 	private void OnCollectNoisePolluters(object data)
 	{
-		((List<NoisePolluter>)data).Add(this);
+		List<NoisePolluter> list = (List<NoisePolluter>)data;
+		list.Add(this);
 	}
 
 	public string GetName()

@@ -19,16 +19,16 @@ public class GlassForgeConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("GlassForge", 5, 4, "glassrefinery_kanim", 30, 60f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.ALL_MINERALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER6, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
-		obj.RequiresPowerInput = true;
-		obj.EnergyConsumptionWhenActive = 1200f;
-		obj.SelfHeatKilowattsWhenActive = 16f;
-		obj.OutputConduitType = ConduitType.Liquid;
-		obj.UtilityOutputOffset = outPipeOffset;
-		obj.ViewMode = OverlayModes.Power.ID;
-		obj.AudioCategory = "HollowMetal";
-		obj.AudioSize = "large";
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("GlassForge", 5, 4, "glassrefinery_kanim", 30, 60f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.ALL_MINERALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER6, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
+		buildingDef.RequiresPowerInput = true;
+		buildingDef.EnergyConsumptionWhenActive = 1200f;
+		buildingDef.SelfHeatKilowattsWhenActive = 16f;
+		buildingDef.OutputConduitType = ConduitType.Liquid;
+		buildingDef.UtilityOutputOffset = outPipeOffset;
+		buildingDef.ViewMode = OverlayModes.Power.ID;
+		buildingDef.AudioCategory = "HollowMetal";
+		buildingDef.AudioSize = "large";
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -52,7 +52,6 @@ public class GlassForgeConfig : IBuildingConfig
 		{
 			Assets.GetAnim("anim_interacts_metalrefinery_kanim")
 		};
-		glassForge.resultState = ComplexFabricator.ResultState.Melted;
 		ConduitDispenser conduitDispenser = go.AddOrGet<ConduitDispenser>();
 		conduitDispenser.storage = glassForge.outStorage;
 		conduitDispenser.conduitType = ConduitType.Liquid;
@@ -64,7 +63,7 @@ public class GlassForgeConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array2 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement(ElementLoader.FindElementByHash(SimHashes.MoltenGlass).tag, 25f)
+			new ComplexRecipe.RecipeElement(ElementLoader.FindElementByHash(SimHashes.MoltenGlass).tag, 25f, ComplexRecipe.RecipeElement.TemperatureOperation.Melted)
 		};
 		string obsolete_id = ComplexRecipeManager.MakeObsoleteRecipeID("GlassForge", array[0].material);
 		string text = ComplexRecipeManager.MakeRecipeID("GlassForge", array, array2);

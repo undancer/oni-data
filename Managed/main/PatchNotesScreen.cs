@@ -17,11 +17,13 @@ public class PatchNotesScreen : KModalScreen
 	[SerializeField]
 	private LocText changesLabel;
 
-	private string m_patchNotesUrl;
+	private static string m_patchNotesUrl;
 
-	private string m_patchNotesText;
+	private static string m_patchNotesText;
 
 	private static int PatchNotesVersion = 9;
+
+	private static PatchNotesScreen instance;
 
 	protected override void OnSpawn()
 	{
@@ -35,6 +37,12 @@ public class PatchNotesScreen : KModalScreen
 			Application.OpenURL("http://support.kleientertainment.com/customer/portal/articles/2776550");
 		};
 		fullPatchNotes.onClick += OnPatchNotesClick;
+		instance = this;
+	}
+
+	protected override void OnCleanUp()
+	{
+		instance = null;
 	}
 
 	public static bool ShouldShowScreen()
@@ -45,14 +53,17 @@ public class PatchNotesScreen : KModalScreen
 	private void MarkAsReadAndClose()
 	{
 		KPlayerPrefs.SetInt("PatchNotesVersion", PatchNotesVersion);
-		base.gameObject.SetActive(value: false);
+		Deactivate();
 	}
 
-	public void UpdatePatchNotes(string patchNotesSummary, string url)
+	public static void UpdatePatchNotes(string patchNotesSummary, string url)
 	{
 		m_patchNotesUrl = url;
 		m_patchNotesText = patchNotesSummary;
-		changesLabel.text = m_patchNotesText;
+		if (instance != null)
+		{
+			instance.changesLabel.text = m_patchNotesText;
+		}
 	}
 
 	private void OnPatchNotesClick()

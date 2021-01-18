@@ -96,19 +96,21 @@ namespace Klei.AI
 		public AttributeInstance GetProfession()
 		{
 			AttributeInstance attributeInstance = null;
-			using IEnumerator<AttributeInstance> enumerator = GetEnumerator();
-			while (enumerator.MoveNext())
+			using (IEnumerator<AttributeInstance> enumerator = GetEnumerator())
 			{
-				AttributeInstance current = enumerator.Current;
-				if (current.modifier.IsProfession)
+				while (enumerator.MoveNext())
 				{
-					if (attributeInstance == null)
+					AttributeInstance current = enumerator.Current;
+					if (current.modifier.IsProfession)
 					{
-						attributeInstance = current;
-					}
-					else if (attributeInstance.GetTotalValue() < current.GetTotalValue())
-					{
-						attributeInstance = current;
+						if (attributeInstance == null)
+						{
+							attributeInstance = current;
+						}
+						else if (attributeInstance.GetTotalValue() < current.GetTotalValue())
+						{
+							attributeInstance = current;
+						}
 					}
 				}
 			}

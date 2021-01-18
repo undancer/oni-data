@@ -57,11 +57,7 @@ public class RoomTracker : KMonoBehaviour, IGameObjectEffectDescriptor
 
 	public bool IsInCorrectRoom()
 	{
-		if (room != null)
-		{
-			return room.roomType.Id == requiredRoomType;
-		}
-		return false;
+		return room != null && room.roomType.Id == requiredRoomType;
 	}
 
 	public bool SufficientBuildLocation(int cell)
@@ -70,9 +66,13 @@ public class RoomTracker : KMonoBehaviour, IGameObjectEffectDescriptor
 		{
 			return false;
 		}
-		if ((requirement == Requirement.Required || requirement == Requirement.CustomRequired) && Game.Instance.roomProber.GetCavityForCell(cell)?.room == null)
+		if (requirement == Requirement.Required || requirement == Requirement.CustomRequired)
 		{
-			return false;
+			Room room = Game.Instance.roomProber.GetCavityForCell(cell)?.room;
+			if (room == null)
+			{
+				return false;
+			}
 		}
 		return true;
 	}

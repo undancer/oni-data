@@ -1,9 +1,15 @@
 using STRINGS;
 using UnityEngine;
 
+[EntityConfigOrder(1)]
 public class BabyPacuConfig : IEntityConfig
 {
 	public const string ID = "PacuBaby";
+
+	public string GetDlcId()
+	{
+		return "";
+	}
 
 	public GameObject CreatePrefab()
 	{

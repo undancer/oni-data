@@ -18,7 +18,14 @@ public class KCircleCollider2D : KCollider2D
 		}
 	}
 
-	public override Bounds bounds => new Bounds(base.transform.GetPosition() + new Vector3(base.offset.x, base.offset.y, 0f), new Vector3(_radius, _radius, 0f));
+	public override Bounds bounds
+	{
+		get
+		{
+			Vector3 center = base.transform.GetPosition() + new Vector3(base.offset.x, base.offset.y, 0f);
+			return new Bounds(center, new Vector3(_radius, _radius, 0f));
+		}
+	}
 
 	public override Extents GetExtents()
 	{
@@ -34,7 +41,8 @@ public class KCircleCollider2D : KCollider2D
 	{
 		Vector3 position = base.transform.GetPosition();
 		Vector2 b = new Vector2(position.x, position.y) + base.offset;
-		return (pos - b).sqrMagnitude <= _radius * _radius;
+		float sqrMagnitude = (pos - b).sqrMagnitude;
+		return sqrMagnitude <= _radius * _radius;
 	}
 
 	private void OnDrawGizmosSelected()

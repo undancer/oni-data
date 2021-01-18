@@ -42,6 +42,10 @@ public class ScreenPrefabs : KMonoBehaviour
 
 	public StoryMessageScreen StoryMessageScreen;
 
+	public SubSpeciesInfoScreen SubSpeciesInfoScreen;
+
+	public GameplayEventInfoScreen GameplayEventInfoScreen;
+
 	public FileNameDialog FileNameDialog;
 
 	public TagFilterScreen TagFilterScreen;
@@ -51,6 +55,8 @@ public class ScreenPrefabs : KMonoBehaviour
 	public MessageDialogFrame MessageDialogFrame;
 
 	public ResourceCategoryScreen ResourceCategoryScreen;
+
+	public ColonyDiagnosticScreen ColonyDiagnosticScreen;
 
 	public LanguageOptionsScreen languageOptionsScreen;
 
@@ -101,7 +107,8 @@ public class ScreenPrefabs : KMonoBehaviour
 
 	public void ConfirmDoAction(string message, System.Action action, Transform parent)
 	{
-		((ConfirmDialogScreen)KScreenManager.Instance.StartScreen(Instance.ConfirmDialogScreen.gameObject, parent.gameObject)).PopupConfirmDialog(message, action, delegate
+		ConfirmDialogScreen confirmDialogScreen = (ConfirmDialogScreen)KScreenManager.Instance.StartScreen(Instance.ConfirmDialogScreen.gameObject, parent.gameObject);
+		confirmDialogScreen.PopupConfirmDialog(message, action, delegate
 		{
 		});
 	}

@@ -87,7 +87,7 @@ public class KButtonMenu : KScreen
 
 	public GameObject buttonPrefab;
 
-	public bool ShouldConsumeMouseScroll;
+	public bool ShouldConsumeMouseScroll = false;
 
 	[NonSerialized]
 	public GameObject[] buttonObjects;
@@ -144,10 +144,10 @@ public class KButtonMenu : KScreen
 			if (componentsInChildren != null)
 			{
 				LocText[] array = componentsInChildren;
-				foreach (LocText obj in array)
+				foreach (LocText locText in array)
 				{
-					obj.text = ((obj.name == "Hotkey") ? GameUtil.GetActionString(binfo.shortcutKey) : binfo.text);
-					obj.color = (binfo.isEnabled ? new Color(1f, 1f, 1f) : new Color(0.5f, 0.5f, 0.5f));
+					locText.text = ((locText.name == "Hotkey") ? GameUtil.GetActionString(binfo.shortcutKey) : binfo.text);
+					locText.color = (binfo.isEnabled ? new Color(1f, 1f, 1f) : new Color(0.5f, 0.5f, 0.5f));
 				}
 			}
 			ToolTip componentInChildren = gameObject.GetComponentInChildren<ToolTip>();
@@ -179,7 +179,9 @@ public class KButtonMenu : KScreen
 				};
 			}
 			binfo.uibutton = button;
-			_ = binfo.onHover;
+			if (binfo.onHover != null)
+			{
+			}
 		}
 		Update();
 	}

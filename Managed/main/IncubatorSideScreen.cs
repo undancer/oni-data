@@ -33,7 +33,8 @@ public class IncubatorSideScreen : ReceptacleSideScreen
 
 	protected override Sprite GetEntityIcon(Tag prefabTag)
 	{
-		return Def.GetUISprite(Assets.GetPrefab(prefabTag)).first;
+		GameObject prefab = Assets.GetPrefab(prefabTag);
+		return Def.GetUISprite(prefab).first;
 	}
 
 	public override void SetTarget(GameObject target)

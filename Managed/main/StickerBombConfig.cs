@@ -7,6 +7,11 @@ public class StickerBombConfig : IEntityConfig
 {
 	public const string ID = "StickerBomb";
 
+	public string GetDlcId()
+	{
+		return "";
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateBasicEntity("StickerBomb", STRINGS.BUILDINGS.PREFABS.STICKERBOMB.NAME, STRINGS.BUILDINGS.PREFABS.STICKERBOMB.DESC, 1f, unitMass: true, Assets.GetAnim("sticker_kanim"), "off", Grid.SceneLayer.Backwall);
@@ -17,9 +22,11 @@ public class StickerBombConfig : IEntityConfig
 
 	public void OnPrefabInit(GameObject inst)
 	{
-		inst.AddOrGet<OccupyArea>().OccupiedCellsOffsets = new CellOffset[1];
+		OccupyArea occupyArea = inst.AddOrGet<OccupyArea>();
+		occupyArea.OccupiedCellsOffsets = new CellOffset[1];
 		inst.AddComponent<Modifiers>();
-		inst.AddOrGet<DecorProvider>().SetValues(DECOR.BONUS.TIER2);
+		DecorProvider decorProvider = inst.AddOrGet<DecorProvider>();
+		decorProvider.SetValues(DECOR.BONUS.TIER2);
 	}
 
 	public void OnSpawn(GameObject inst)

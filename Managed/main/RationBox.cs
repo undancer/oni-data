@@ -53,7 +53,7 @@ public class RationBox : KMonoBehaviour, IUserControlledCapacity, IRender1000ms
 		}, this, use_logic_meter: false, Db.Get().ChoreTypes.FoodFetch);
 		Subscribe(-592767678, OnOperationalChangedDelegate);
 		Subscribe(-905833192, OnCopySettingsDelegate);
-		WorldInventory.Instance.Discover("FieldRation".ToTag(), GameTags.Edible);
+		DiscoveredResources.Instance.Discover("FieldRation".ToTag(), GameTags.Edible);
 	}
 
 	protected override void OnSpawn()

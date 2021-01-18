@@ -16,11 +16,7 @@ public class PlantElementEmitter : StateMachineComponent<PlantElementEmitter.Sta
 			{
 				return false;
 			}
-			if (base.master.wiltCondition != null)
-			{
-				return base.master.wiltCondition.IsWilting();
-			}
-			return false;
+			return base.master.wiltCondition != null && base.master.wiltCondition.IsWilting();
 		}
 	}
 
@@ -33,7 +29,7 @@ public class PlantElementEmitter : StateMachineComponent<PlantElementEmitter.Sta
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = healthy;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			healthy.EventTransition(GameHashes.Wilt, wilted, (StatesInstance smi) => smi.IsWilting()).Update("PlantEmit", delegate(StatesInstance smi, float dt)
 			{
 				SimMessages.EmitMass(Grid.PosToCell(smi.master.gameObject), ElementLoader.FindElementByHash(smi.master.emittedElement).idx, smi.master.emitRate * dt, ElementLoader.FindElementByHash(smi.master.emittedElement).defaultValues.temperature, byte.MaxValue, 0);

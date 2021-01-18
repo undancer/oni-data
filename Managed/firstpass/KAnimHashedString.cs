@@ -99,10 +99,6 @@ public struct KAnimHashedString : IComparable<KAnimHashedString>, IEquatable<KAn
 
 	public override string ToString()
 	{
-		if (string.IsNullOrEmpty(DebuggerDisplay))
-		{
-			return "0x" + hash.ToString("X");
-		}
-		return DebuggerDisplay;
+		return (!string.IsNullOrEmpty(DebuggerDisplay)) ? DebuggerDisplay : ("0x" + hash.ToString("X"));
 	}
 }

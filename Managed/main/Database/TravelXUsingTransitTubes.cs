@@ -1,9 +1,8 @@
-using System.IO;
 using STRINGS;
 
 namespace Database
 {
-	public class TravelXUsingTransitTubes : ColonyAchievementRequirement
+	public class TravelXUsingTransitTubes : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		private int distanceToTravel;
 
@@ -29,17 +28,10 @@ namespace Database
 			return num >= distanceToTravel;
 		}
 
-		public override void Deserialize(IReader reader)
+		public void Deserialize(IReader reader)
 		{
 			byte b = (byte)(navType = (NavType)reader.ReadByte());
 			distanceToTravel = reader.ReadInt32();
-		}
-
-		public override void Serialize(BinaryWriter writer)
-		{
-			byte value = (byte)navType;
-			writer.Write(value);
-			writer.Write(distanceToTravel);
 		}
 
 		public override string GetProgress(bool complete)

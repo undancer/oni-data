@@ -160,7 +160,8 @@ public class FetchChore : Chore<FetchChore.StatesInstance>
 		{
 			if (consumer_state.hasSolidTransferArm)
 			{
-				consumer_state.solidTransferArm.FindFetchTarget(destination, tagBits, requiredTagBits, forbiddenTagBits, originalAmount, ref target);
+				SolidTransferArm solidTransferArm = consumer_state.solidTransferArm;
+				solidTransferArm.FindFetchTarget(destination, tagBits, requiredTagBits, forbiddenTagBits, originalAmount, ref target);
 			}
 			else
 			{

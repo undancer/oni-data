@@ -92,6 +92,8 @@ public class DistributionPlatform : MonoBehaviour
 
 	public static event System.Action onExitRequest;
 
+	public static event System.Action onDlcAuthenticationFailed;
+
 	public static void Initialize()
 	{
 		if (sImpl == null)
@@ -109,6 +111,14 @@ public class DistributionPlatform : MonoBehaviour
 		if (DistributionPlatform.onExitRequest != null)
 		{
 			DistributionPlatform.onExitRequest();
+		}
+	}
+
+	public static void TriggerDlcAuthenticationFailed()
+	{
+		if (DistributionPlatform.onDlcAuthenticationFailed != null)
+		{
+			DistributionPlatform.onDlcAuthenticationFailed();
 		}
 	}
 }

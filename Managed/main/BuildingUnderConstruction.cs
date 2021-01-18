@@ -11,9 +11,6 @@ public class BuildingUnderConstruction : Building
 	[MyCmpAdd]
 	private KPrefabID kPrefabID;
 
-	[MyCmpAdd]
-	private Cancellable cancellable;
-
 	protected override void OnPrefabInit()
 	{
 		Vector3 position = base.transform.GetPosition();

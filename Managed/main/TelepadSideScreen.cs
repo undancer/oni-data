@@ -181,11 +181,12 @@ public class TelepadSideScreen : SideScreenContent
 		bool active = false;
 		foreach (MinionResume minionResume in Components.MinionResumes)
 		{
-			if (!minionResume.HasTag(GameTags.Dead) && minionResume.TotalSkillPointsGained - minionResume.SkillsMastered > 0)
+			if (minionResume.HasTag(GameTags.Dead) || minionResume.TotalSkillPointsGained - minionResume.SkillsMastered <= 0)
 			{
-				active = true;
-				break;
+				continue;
 			}
+			active = true;
+			break;
 		}
 		skillPointsAvailable.gameObject.SetActive(active);
 	}

@@ -7,20 +7,20 @@ public class ShearingStationConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("ShearingStation", 3, 3, "shearing_station_kanim", 100, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
-		obj.RequiresPowerInput = true;
-		obj.EnergyConsumptionWhenActive = 60f;
-		obj.ExhaustKilowattsWhenActive = 0.125f;
-		obj.SelfHeatKilowattsWhenActive = 0.5f;
-		obj.Floodable = true;
-		obj.Entombable = true;
-		obj.AudioCategory = "Metal";
-		obj.AudioSize = "large";
-		obj.UtilityInputOffset = new CellOffset(0, 0);
-		obj.UtilityOutputOffset = new CellOffset(0, 0);
-		obj.DefaultAnimState = "on";
-		obj.ShowInBuildMenu = true;
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("ShearingStation", 3, 3, "shearing_station_kanim", 100, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
+		buildingDef.RequiresPowerInput = true;
+		buildingDef.EnergyConsumptionWhenActive = 60f;
+		buildingDef.ExhaustKilowattsWhenActive = 0.125f;
+		buildingDef.SelfHeatKilowattsWhenActive = 0.5f;
+		buildingDef.Floodable = true;
+		buildingDef.Entombable = true;
+		buildingDef.AudioCategory = "Metal";
+		buildingDef.AudioSize = "large";
+		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
+		buildingDef.UtilityOutputOffset = new CellOffset(0, 0);
+		buildingDef.DefaultAnimState = "on";
+		buildingDef.ShowInBuildMenu = true;
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

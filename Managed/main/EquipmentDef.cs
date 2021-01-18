@@ -8,6 +8,8 @@ public class EquipmentDef : Def
 
 	public string Slot;
 
+	public string RequiredDlcId;
+
 	public string FabricatorId;
 
 	public float FabricationTime;
@@ -42,7 +44,7 @@ public class EquipmentDef : Def
 
 	public Action<Equippable> OnUnequipCallBack;
 
-	public EntityTemplates.CollisionShape CollisionShape;
+	public EntityTemplates.CollisionShape CollisionShape = EntityTemplates.CollisionShape.CIRCLE;
 
 	public float width;
 

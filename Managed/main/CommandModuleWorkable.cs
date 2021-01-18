@@ -12,11 +12,6 @@ public class CommandModuleWorkable : Workable
 		new CellOffset(0, 4)
 	};
 
-	private static readonly EventSystem.IntraObjectHandler<CommandModuleWorkable> OnLaunchDelegate = new EventSystem.IntraObjectHandler<CommandModuleWorkable>(delegate(CommandModuleWorkable component, object data)
-	{
-		component.OnLaunch(data);
-	});
-
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
@@ -28,11 +23,6 @@ public class CommandModuleWorkable : Workable
 		};
 		SetWorkTime(float.PositiveInfinity);
 		showProgressBar = false;
-		Subscribe(-1056989049, OnLaunchDelegate);
-	}
-
-	private void OnLaunch(object data)
-	{
 	}
 
 	protected override void OnStartWork(Worker worker)
@@ -44,9 +34,16 @@ public class CommandModuleWorkable : Workable
 	{
 		if (worker != null)
 		{
-			GameObject gameObject = worker.gameObject;
+			if (DlcManager.IsExpansion1Active())
+			{
+				GameObject gameObject = worker.gameObject;
+				CompleteWork(worker);
+				GetComponent<ClustercraftExteriorDoor>().FerryMinion(gameObject);
+				return true;
+			}
+			GameObject gameObject2 = worker.gameObject;
 			CompleteWork(worker);
-			GetComponent<MinionStorage>().SerializeMinion(gameObject);
+			GetComponent<MinionStorage>().SerializeMinion(gameObject2);
 			return true;
 		}
 		return base.OnWorkTick(worker, dt);

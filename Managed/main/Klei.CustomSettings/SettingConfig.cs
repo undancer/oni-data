@@ -4,6 +4,10 @@ namespace Klei.CustomSettings
 {
 	public abstract class SettingConfig
 	{
+		protected string default_level_id;
+
+		protected string nosweat_default_level_id;
+
 		public string id
 		{
 			get;
@@ -22,18 +26,6 @@ namespace Klei.CustomSettings
 			private set;
 		}
 
-		public string default_level_id
-		{
-			get;
-			protected set;
-		}
-
-		public string nosweat_default_level_id
-		{
-			get;
-			protected set;
-		}
-
 		public int coordinate_dimension
 		{
 			get;
@@ -44,6 +36,18 @@ namespace Klei.CustomSettings
 		{
 			get;
 			protected set;
+		}
+
+		public string required_content
+		{
+			get;
+			private set;
+		}
+
+		public string missing_content_default
+		{
+			get;
+			private set;
 		}
 
 		public bool triggers_custom_game
@@ -58,7 +62,7 @@ namespace Klei.CustomSettings
 			protected set;
 		}
 
-		public SettingConfig(string id, string label, string tooltip, string default_level_id, string nosweat_default_level_id, int coordinate_dimension = -1, int coordinate_dimension_width = -1, bool debug_only = false, bool triggers_custom_game = true)
+		public SettingConfig(string id, string label, string tooltip, string default_level_id, string nosweat_default_level_id, int coordinate_dimension = -1, int coordinate_dimension_width = -1, bool debug_only = false, bool triggers_custom_game = true, string required_content = "", string missing_content_default = "")
 		{
 			this.id = id;
 			this.label = label;
@@ -69,6 +73,8 @@ namespace Klei.CustomSettings
 			this.coordinate_dimension_width = coordinate_dimension_width;
 			this.debug_only = debug_only;
 			this.triggers_custom_game = triggers_custom_game;
+			this.required_content = required_content;
+			this.missing_content_default = missing_content_default;
 		}
 
 		public abstract SettingLevel GetLevel(string level_id);
@@ -78,6 +84,24 @@ namespace Klei.CustomSettings
 		public bool IsDefaultLevel(string level_id)
 		{
 			return level_id == default_level_id;
+		}
+
+		public string GetDefaultLevelId()
+		{
+			if (!DlcManager.IsContentActive(required_content) && !string.IsNullOrEmpty(missing_content_default))
+			{
+				return missing_content_default;
+			}
+			return default_level_id;
+		}
+
+		public string GetNoSweatDefaultLevelId()
+		{
+			if (!DlcManager.IsContentActive(required_content) && !string.IsNullOrEmpty(missing_content_default))
+			{
+				return missing_content_default;
+			}
+			return nosweat_default_level_id;
 		}
 	}
 }

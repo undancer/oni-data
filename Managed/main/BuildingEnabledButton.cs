@@ -18,7 +18,7 @@ public class BuildingEnabledButton : KMonoBehaviour, ISaveLoadable, IToggleHandl
 	private bool buildingEnabled = true;
 
 	[Serialize]
-	private bool queuedToggle;
+	private bool queuedToggle = false;
 
 	public static readonly Operational.Flag EnabledFlag = new Operational.Flag("building_enabled", Operational.Flag.Type.Functional);
 
@@ -31,11 +31,7 @@ public class BuildingEnabledButton : KMonoBehaviour, ISaveLoadable, IToggleHandl
 	{
 		get
 		{
-			if (Operational != null)
-			{
-				return Operational.GetFlag(EnabledFlag);
-			}
-			return false;
+			return Operational != null && Operational.GetFlag(EnabledFlag);
 		}
 		set
 		{
@@ -47,17 +43,7 @@ public class BuildingEnabledButton : KMonoBehaviour, ISaveLoadable, IToggleHandl
 		}
 	}
 
-	public bool WaitingForDisable
-	{
-		get
-		{
-			if (IsEnabled)
-			{
-				return Toggleable.IsToggleQueued(ToggleIdx);
-			}
-			return false;
-		}
-	}
+	public bool WaitingForDisable => IsEnabled && Toggleable.IsToggleQueued(ToggleIdx);
 
 	protected override void OnPrefabInit()
 	{

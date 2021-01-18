@@ -91,30 +91,19 @@ public class SteppedInMonitor : GameStateMachine<SteppedInMonitor, SteppedInMoni
 			return false;
 		}
 		GameObject gameObject = Grid.Objects[cell, 9];
-		if (Grid.IsValidCell(cell) && gameObject != null)
-		{
-			return gameObject.HasTag(GameTags.Carpeted);
-		}
-		return false;
+		return Grid.IsValidCell(cell) && gameObject != null && gameObject.HasTag(GameTags.Carpeted);
 	}
 
 	private static bool IsFloorWet(Instance smi)
 	{
 		int num = Grid.PosToCell(smi);
-		if (Grid.IsValidCell(num))
-		{
-			return Grid.Element[num].IsLiquid;
-		}
-		return false;
+		return Grid.IsValidCell(num) && Grid.Element[num].IsLiquid;
 	}
 
 	private static bool IsSubmerged(Instance smi)
 	{
-		int num = Grid.CellAbove(Grid.PosToCell(smi));
-		if (Grid.IsValidCell(num))
-		{
-			return Grid.Element[num].IsLiquid;
-		}
-		return false;
+		int cell = Grid.PosToCell(smi);
+		int num = Grid.CellAbove(cell);
+		return Grid.IsValidCell(num) && Grid.Element[num].IsLiquid;
 	}
 }

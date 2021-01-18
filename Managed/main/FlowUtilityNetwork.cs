@@ -1,3 +1,4 @@
+#define UNITY_ASSERTIONS
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -114,6 +115,7 @@ public class FlowUtilityNetwork : UtilityNetwork
 			conduitCount++;
 			break;
 		default:
+			UnityEngine.Debug.Assert(condition: false, "wtf");
 			item.Network = this;
 			break;
 		}

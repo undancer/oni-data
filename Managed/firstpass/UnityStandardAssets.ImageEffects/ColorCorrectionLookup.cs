@@ -10,9 +10,9 @@ namespace UnityStandardAssets.ImageEffects
 
 		private Material material;
 
-		public Texture3D converted3DLut;
+		public Texture3D converted3DLut = null;
 
-		public Texture3D converted3DLut2;
+		public Texture3D converted3DLut2 = null;
 
 		public string basedOnTempTex = "";
 
@@ -98,7 +98,8 @@ namespace UnityStandardAssets.ImageEffects
 			{
 				return false;
 			}
-			if (tex2d.height != Mathf.FloorToInt(Mathf.Sqrt(tex2d.width)))
+			int height = tex2d.height;
+			if (height != Mathf.FloorToInt(Mathf.Sqrt(tex2d.width)))
 			{
 				return false;
 			}

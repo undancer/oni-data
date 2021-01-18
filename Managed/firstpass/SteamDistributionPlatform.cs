@@ -41,7 +41,7 @@ internal class SteamDistributionPlatform : MonoBehaviour, DistributionPlatform.I
 		}
 	}
 
-	private SteamUser mLocalUser;
+	private SteamUser mLocalUser = null;
 
 	public bool Initialized => SteamManager.Initialized;
 
@@ -73,11 +73,7 @@ internal class SteamDistributionPlatform : MonoBehaviour, DistributionPlatform.I
 		{
 			SteamApps.GetCurrentBetaName(out var pchName, 100);
 			Debug.Log("Checking which steam branch we're on. Got: [" + pchName + "]");
-			if (!(pchName == "default"))
-			{
-				return !(pchName == "release");
-			}
-			return false;
+			return !(pchName == "default") && !(pchName == "release");
 		}
 	}
 
@@ -101,17 +97,7 @@ internal class SteamDistributionPlatform : MonoBehaviour, DistributionPlatform.I
 		}
 	}
 
-	public bool IsExpansion1Active
-	{
-		get
-		{
-			if (SteamManager.Initialized)
-			{
-				return SteamApps.BIsSubscribedApp(new AppId_t(1452490u));
-			}
-			return false;
-		}
-	}
+	public bool IsExpansion1Active => SteamManager.Initialized && SteamApps.BIsSubscribedApp(new AppId_t(1452490u));
 
 	public string ApplyWordFilter(string text)
 	{

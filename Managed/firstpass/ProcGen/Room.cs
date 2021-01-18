@@ -27,7 +27,8 @@ namespace ProcGen
 			Weighted,
 			WeightedBucket,
 			WeightedResample,
-			PickOneWeighted
+			PickOneWeighted,
+			HorizontalSlice
 		}
 
 		private List<WeightedMob>.Enumerator mobIter;

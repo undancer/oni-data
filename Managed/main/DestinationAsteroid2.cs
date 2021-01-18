@@ -1,4 +1,6 @@
 using System;
+using Database;
+using ProcGen;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,9 +13,12 @@ public class DestinationAsteroid2 : KMonoBehaviour
 	[SerializeField]
 	private KButton button;
 
-	private ColonyDestinationAsteroidData asteroidData;
+	[SerializeField]
+	private KBatchedAnimController animController;
 
-	public event Action<ColonyDestinationAsteroidData> OnClicked;
+	private ColonyDestinationAsteroidBeltData asteroidData;
+
+	public event Action<ColonyDestinationAsteroidBeltData> OnClicked;
 
 	protected override void OnPrefabInit()
 	{
@@ -21,18 +26,41 @@ public class DestinationAsteroid2 : KMonoBehaviour
 		button.onClick += OnClickInternal;
 	}
 
-	public void SetAsteroid(ColonyDestinationAsteroidData newAsteroidData)
+	public void SetAsteroid(ColonyDestinationAsteroidBeltData newAsteroidData)
 	{
-		if (newAsteroidData != asteroidData)
+		if (asteroidData != null && !(newAsteroidData.beltPath != asteroidData.beltPath))
 		{
-			asteroidData = newAsteroidData;
-			asteroidImage.sprite = Assets.GetSprite(asteroidData.sprite);
+			return;
+		}
+		asteroidData = newAsteroidData;
+		if (DlcManager.IsExpansion1Active())
+		{
+			asteroidImage.gameObject.SetActive(value: false);
+			ProcGen.World getStartWorld = newAsteroidData.GetStartWorld;
+			AsteroidType typeOrDefault = Db.Get().AsteroidTypes.GetTypeOrDefault(getStartWorld.asteroidType);
+			KAnimFile anim = Assets.GetAnim(typeOrDefault.animName);
+			animController.AnimFiles = new KAnimFile[1]
+			{
+				anim
+			};
+			animController.initialMode = KAnim.PlayMode.Loop;
+			animController.initialAnim = "idle_loop";
+			animController.gameObject.SetActive(value: true);
+			if (animController.HasAnimation(animController.initialAnim))
+			{
+				animController.Play(animController.initialAnim, KAnim.PlayMode.Loop);
+			}
+		}
+		else
+		{
+			asteroidImage.gameObject.SetActive(value: true);
+			asteroidImage.sprite = asteroidData.sprite;
 		}
 	}
 
 	private void OnClickInternal()
 	{
-		DebugUtil.LogArgs("Clicked asteroid", asteroidData.worldPath);
+		DebugUtil.LogArgs("Clicked asteroid belt", asteroidData.beltPath);
 		this.OnClicked(asteroidData);
 	}
 }

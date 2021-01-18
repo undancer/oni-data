@@ -58,24 +58,28 @@ public class NavPathDrawer : KMonoBehaviour
 
 	private void DrawPath(PathFinder.Path path, Vector3 navigator_pos, Color color)
 	{
-		if (path.nodes != null && path.nodes.Count > 1)
+		if (path.nodes == null || path.nodes.Count <= 1)
 		{
-			GL.PushMatrix();
-			material.SetPass(0);
-			GL.Begin(1);
-			GL.Color(color);
-			GL.Vertex(navigator_pos);
-			GL.Vertex(NavTypeHelper.GetNavPos(path.nodes[1].cell, path.nodes[1].navType));
-			for (int i = 1; i < path.nodes.Count - 1; i++)
+			return;
+		}
+		GL.PushMatrix();
+		material.SetPass(0);
+		GL.Begin(1);
+		GL.Color(color);
+		GL.Vertex(navigator_pos);
+		GL.Vertex(NavTypeHelper.GetNavPos(path.nodes[1].cell, path.nodes[1].navType));
+		for (int i = 1; i < path.nodes.Count - 1; i++)
+		{
+			if (Grid.WorldIdx[path.nodes[i].cell] == ClusterManager.Instance.activeWorldId && Grid.WorldIdx[path.nodes[i + 1].cell] == ClusterManager.Instance.activeWorldId)
 			{
 				Vector3 navPos = NavTypeHelper.GetNavPos(path.nodes[i].cell, path.nodes[i].navType);
 				Vector3 navPos2 = NavTypeHelper.GetNavPos(path.nodes[i + 1].cell, path.nodes[i + 1].navType);
 				GL.Vertex(navPos);
 				GL.Vertex(navPos2);
 			}
-			GL.End();
-			GL.PopMatrix();
 		}
+		GL.End();
+		GL.PopMatrix();
 	}
 
 	private void OnPostRender()

@@ -4,6 +4,11 @@ namespace STRINGS
 	{
 		public class MESSAGING
 		{
+			public static class DLC
+			{
+				public static LocString EXPANSION1 = string.Concat(UI.PRE_KEYWORD, "\n\n<i>", UI.DLC1.NAME, "</i>", UI.PST_KEYWORD, " DLC Content");
+			}
+
 			public static LocString NORESEARCHSELECTED = "No research selected";
 
 			public static LocString RESEARCHTYPEREQUIRED = "{0} required";
@@ -47,6 +52,15 @@ namespace STRINGS
 
 				public static LocString RECIPEDESC = "Unlocks cutting-edge technologies.";
 			}
+
+			public class DELTA
+			{
+				public static LocString NAME = "Atomic Research";
+
+				public static LocString DESC = string.Concat(UI.FormatAsLink("Atomic Research", "RESEARCH"), " is required to unlock atomic technologies.\nIt can be conducted at a ", BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME, ".");
+
+				public static LocString RECIPEDESC = "Unlocks next wave technologies.";
+			}
 		}
 
 		public class OTHER_TECH_ITEMS
@@ -72,6 +86,27 @@ namespace STRINGS
 				public static LocString DESC = "Enables fabrication of " + UI.PRE_KEYWORD + "Jet Suits" + UI.PST_KEYWORD + " at the " + BUILDINGS.PREFABS.SUITFABRICATOR.NAME;
 			}
 
+			public class LEAD_SUIT
+			{
+				public static LocString NAME = UI.PRE_KEYWORD + "Lead Suit" + UI.PST_KEYWORD + " Pattern";
+
+				public static LocString DESC = "Enables fabrication of " + UI.PRE_KEYWORD + "Lead Suits" + UI.PST_KEYWORD + " at the " + BUILDINGS.PREFABS.SUITFABRICATOR.NAME;
+			}
+
+			public class ATMO_SUIT
+			{
+				public static LocString NAME = UI.PRE_KEYWORD + "Atmo Suit" + UI.PST_KEYWORD + " Pattern";
+
+				public static LocString DESC = "Enables fabrication of " + UI.PRE_KEYWORD + "Atmo Suits" + UI.PST_KEYWORD + " at the " + BUILDINGS.PREFABS.SUITFABRICATOR.NAME;
+			}
+
+			public class OXYGEN_MASK
+			{
+				public static LocString NAME = UI.PRE_KEYWORD + "Oxygen Mask" + UI.PST_KEYWORD + " Pattern";
+
+				public static LocString DESC = "Enables fabrication of " + UI.PRE_KEYWORD + "Oxygen Masks" + UI.PST_KEYWORD + " at the " + BUILDINGS.PREFABS.SUITFABRICATOR.NAME;
+			}
+
 			public class BETA_RESEARCH_POINT
 			{
 				public static LocString NAME = UI.PRE_KEYWORD + "Advanced Research" + UI.PST_KEYWORD + " Capability";
@@ -84,6 +119,13 @@ namespace STRINGS
 				public static LocString NAME = UI.PRE_KEYWORD + "Interstellar Research" + UI.PST_KEYWORD + " Capability";
 
 				public static LocString DESC = "Allows " + UI.PRE_KEYWORD + "Interstellar Research" + UI.PST_KEYWORD + " points to be accumulated, unlocking higher technology tiers.";
+			}
+
+			public class DELTA_RESEARCH_POINT
+			{
+				public static LocString NAME = UI.PRE_KEYWORD + "Atomic  Research" + UI.PST_KEYWORD + " Capability";
+
+				public static LocString DESC = "Allows " + UI.PRE_KEYWORD + "Atomic Research" + UI.PST_KEYWORD + " points to be accumulated, unlocking higher technology tiers.";
 			}
 
 			public class CONVEYOR_OVERLAY
@@ -238,6 +280,13 @@ namespace STRINGS
 				public static LocString NAME = UI.FormatAsLink("Pressure Management", "PRESSUREMANAGEMENT");
 
 				public static LocString DESC = "Unlock technologies to manage colony pressure and atmosphere.";
+			}
+
+			public class PORTABLEGASSES
+			{
+				public static LocString NAME = UI.FormatAsLink("Portable Gasses", "PORTABLEGASSES");
+
+				public static LocString DESC = "Unlock technologies to easily move gasses around your colony.";
 			}
 
 			public class DIRECTEDAIRSTREAMS
@@ -464,11 +513,39 @@ namespace STRINGS
 				public static LocString DESC = "The tools my colony needs to conduct more advanced, in-depth research.";
 			}
 
+			public class SPACEPROGRAM
+			{
+				public static LocString NAME = UI.FormatAsLink("Space Program", "SPACEPROGRAM");
+
+				public static LocString DESC = "Basic facilities for allowing the first Duplicant to reach space with minimal harm.";
+			}
+
+			public class CRASHPLAN
+			{
+				public static LocString NAME = UI.FormatAsLink("Crash Plan", "CRASHPLAN");
+
+				public static LocString DESC = "What goes up, must come down";
+			}
+
+			public class DURABLELIFESUPPORT
+			{
+				public static LocString NAME = UI.FormatAsLink("Durable Life Support", "DURABLELIFESUPPORT");
+
+				public static LocString DESC = "Improved construction will allow extended missions into space.";
+			}
+
 			public class ARTIFICIALFRIENDS
 			{
 				public static LocString NAME = UI.FormatAsLink("Artificial Friends", "ARTIFICIALFRIENDS");
 
 				public static LocString DESC = "Sweeping advances in companion technology.";
+			}
+
+			public class ROBOTICTOOLS
+			{
+				public static LocString NAME = UI.FormatAsLink("Robotic Tools", "ROBOTICTOOLS");
+
+				public static LocString DESC = "The goal of every great civilization is to one day make itself obsolete.";
 			}
 
 			public class LOGICCONTROL
@@ -590,6 +667,13 @@ namespace STRINGS
 				public static LocString DESC = "Craft entirely new materials by harnessing the most extreme temperatures.";
 			}
 
+			public class RADIATIONPROTECTION
+			{
+				public static LocString NAME = UI.FormatAsLink("Radiation Protection", "RADIATIONPROTECTION");
+
+				public static LocString DESC = "Shield Duplicants from dangerous amounts of radiation.";
+			}
+
 			public class SKYDETECTORS
 			{
 				public static LocString NAME = UI.FormatAsLink("Celestial Detection", "SKYDETECTORS");
@@ -658,6 +742,20 @@ namespace STRINGS
 				public static LocString NAME = UI.FormatAsLink("Notification Systems", "NOTIFICATIONSYSTEMS");
 
 				public static LocString DESC = "Get all the news you need to know about your complex colony.";
+			}
+
+			public class NUCLEARREFINEMENT
+			{
+				public static LocString NAME = UI.FormatAsLink("Radiation Refinement", "NUCLEAR");
+
+				public static LocString DESC = "Refine uranium and generate radiation.";
+			}
+
+			public class NUCLEARRESEARCH
+			{
+				public static LocString NAME = "W.I.P. Skill";
+
+				public static LocString DESC = "W.I.P. skill";
 			}
 		}
 	}

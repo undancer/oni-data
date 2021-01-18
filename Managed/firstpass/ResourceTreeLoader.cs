@@ -53,7 +53,8 @@ public class ResourceTreeLoader<T> : ResourceLoader<T> where T : ResourceTreeNod
 		}
 		XmlDocument xmlDocument = new XmlDocument();
 		xmlDocument.LoadXml(file.text);
-		foreach (XmlNode item in xmlDocument.DocumentElement.SelectNodes("/graphml/graph/edge"))
+		XmlNodeList xmlNodeList = xmlDocument.DocumentElement.SelectNodes("/graphml/graph/edge");
+		foreach (XmlNode item in xmlNodeList)
 		{
 			ResourceTreeNode value2 = null;
 			dictionary.TryGetValue(item.Attributes["source"].Value, out value2);

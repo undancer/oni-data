@@ -10,11 +10,7 @@ public class UtilityNetworkTubesManager : UtilityNetworkManager<TravelTubeNetwor
 
 	public override bool CanAddConnection(UtilityConnections new_connection, int cell, bool is_physical_building, out string fail_reason)
 	{
-		if (TestForUTurnLeft(cell, new_connection, is_physical_building, out fail_reason) && TestForUTurnRight(cell, new_connection, is_physical_building, out fail_reason))
-		{
-			return TestForNoAdjacentBridge(cell, new_connection, out fail_reason);
-		}
-		return false;
+		return TestForUTurnLeft(cell, new_connection, is_physical_building, out fail_reason) && TestForUTurnRight(cell, new_connection, is_physical_building, out fail_reason) && TestForNoAdjacentBridge(cell, new_connection, out fail_reason);
 	}
 
 	public override void SetConnections(UtilityConnections connections, int cell, bool is_physical_building)
@@ -72,15 +68,7 @@ public class UtilityNetworkTubesManager : UtilityNetworkManager<TravelTubeNetwor
 		GameObject gameObject = Grid.Objects[cell2, 9];
 		GameObject gameObject2 = Grid.Objects[cell3, 9];
 		fail_reason = UI.TOOLTIPS.HELP_TUBELOCATION_STRAIGHT_BRIDGES;
-		if (gameObject == null || gameObject.GetComponent<TravelTubeBridge>() == null)
-		{
-			if (!(gameObject2 == null))
-			{
-				return gameObject2.GetComponent<TravelTubeBridge>() == null;
-			}
-			return true;
-		}
-		return false;
+		return (gameObject == null || gameObject.GetComponent<TravelTubeBridge>() == null) && (gameObject2 == null || gameObject2.GetComponent<TravelTubeBridge>() == null);
 	}
 
 	private bool HasConnection(int cell, UtilityConnections connection, bool is_physical_building)

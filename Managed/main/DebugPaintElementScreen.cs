@@ -4,7 +4,6 @@ using Klei.AI;
 using STRINGS;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class DebugPaintElementScreen : KScreen
@@ -26,13 +25,13 @@ public class DebugPaintElementScreen : KScreen
 	public float temperature = -1f;
 
 	[NonSerialized]
-	public bool set_prevent_fow_reveal;
+	public bool set_prevent_fow_reveal = false;
 
 	[NonSerialized]
-	public bool set_allow_fow_reveal;
+	public bool set_allow_fow_reveal = false;
 
 	[NonSerialized]
-	public int diseaseCount;
+	public int diseaseCount = 0;
 
 	public byte diseaseIdx;
 
@@ -102,7 +101,7 @@ public class DebugPaintElementScreen : KScreen
 
 	private List<string> options_list = new List<string>();
 
-	private string filter;
+	private string filter = null;
 
 	public static DebugPaintElementScreen Instance
 	{
@@ -124,6 +123,17 @@ public class DebugPaintElementScreen : KScreen
 		inputFields.Add(temperatureInput);
 		inputFields.Add(diseaseCountInput);
 		inputFields.Add(filterInput);
+		foreach (TMP_InputField inputField in inputFields)
+		{
+			inputField.onFocus = (System.Action)Delegate.Combine(inputField.onFocus, (System.Action)delegate
+			{
+				base.isEditing = true;
+			});
+			inputField.onEndEdit.AddListener(delegate
+			{
+				base.isEditing = false;
+			});
+		}
 		base.gameObject.SetActive(value: false);
 		activateOnSpawn = true;
 		base.ConsumeMouseScroll = true;
@@ -148,11 +158,6 @@ public class DebugPaintElementScreen : KScreen
 		storeButton.GetComponentsInChildren<LocText>()[0].text = UI.DEBUG_TOOLS.PAINT_ELEMENTS_SCREEN.STORE;
 		affectBuildings.transform.parent.GetComponentsInChildren<LocText>()[0].text = UI.DEBUG_TOOLS.PAINT_ELEMENTS_SCREEN.BUILDINGS;
 		affectCells.transform.parent.GetComponentsInChildren<LocText>()[0].text = UI.DEBUG_TOOLS.PAINT_ELEMENTS_SCREEN.CELLS;
-	}
-
-	public override float GetSortKey()
-	{
-		return 100000f;
 	}
 
 	protected override void OnSpawn()
@@ -231,9 +236,10 @@ public class DebugPaintElementScreen : KScreen
 				SimHashes.Water,
 				SimHashes.Oxygen
 			};
-			for (int i = 0; i < array.Length; i++)
+			SimHashes[] array2 = array;
+			foreach (SimHashes hash in array2)
 			{
-				Element element = ElementLoader.FindElementByHash(array[i]);
+				Element element = ElementLoader.FindElementByHash(hash);
 				item = new ElemDisplayInfo
 				{
 					id = element.id,
@@ -397,57 +403,6 @@ public class DebugPaintElementScreen : KScreen
 	{
 		filter = (string.IsNullOrEmpty(filterInput.text) ? null : filterInput.text);
 		FilterElements(filter);
-	}
-
-	public override void OnKeyDown(KButtonEvent e)
-	{
-		if (CheckBlockedInput())
-		{
-			if (!e.Consumed)
-			{
-				e.Consumed = true;
-			}
-		}
-		else
-		{
-			base.OnKeyDown(e);
-		}
-	}
-
-	public override void OnKeyUp(KButtonEvent e)
-	{
-		if (CheckBlockedInput())
-		{
-			if (!e.Consumed)
-			{
-				e.Consumed = true;
-			}
-		}
-		else
-		{
-			base.OnKeyDown(e);
-		}
-	}
-
-	private bool CheckBlockedInput()
-	{
-		bool result = false;
-		if (UnityEngine.EventSystems.EventSystem.current != null)
-		{
-			GameObject currentSelectedGameObject = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-			if (currentSelectedGameObject != null)
-			{
-				foreach (TMP_InputField inputField in inputFields)
-				{
-					if (currentSelectedGameObject == inputField.gameObject)
-					{
-						return true;
-					}
-				}
-				return result;
-			}
-		}
-		return result;
 	}
 
 	public void SampleCell(int cell)

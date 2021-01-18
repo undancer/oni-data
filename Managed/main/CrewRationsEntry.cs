@@ -36,27 +36,29 @@ public class CrewRationsEntry : CrewListEntry
 		{
 			return;
 		}
-		foreach (AmountInstance amount in identity.GetAmounts())
+		Amounts amounts = identity.GetAmounts();
+		foreach (AmountInstance item in amounts)
 		{
-			float min = amount.GetMin();
-			float max = amount.GetMax();
+			float min = item.GetMin();
+			float max = item.GetMax();
 			float num = max - min;
-			string str = Mathf.RoundToInt((num - (max - amount.value)) / num * 100f).ToString();
-			if (amount.amount == Db.Get().Amounts.Stress)
+			float num2 = (num - (max - item.value)) / num;
+			string str = Mathf.RoundToInt(num2 * 100f).ToString();
+			if (item.amount == Db.Get().Amounts.Stress)
 			{
-				currentStressText.text = amount.GetValueString();
-				currentStressText.GetComponent<ToolTip>().toolTip = amount.GetTooltip();
-				stressTrendImage.SetValue(amount);
+				currentStressText.text = item.GetValueString();
+				currentStressText.GetComponent<ToolTip>().toolTip = item.GetTooltip();
+				stressTrendImage.SetValue(item);
 			}
-			else if (amount.amount == Db.Get().Amounts.Calories)
+			else if (item.amount == Db.Get().Amounts.Calories)
 			{
 				currentCaloriesText.text = str + "%";
-				currentCaloriesText.GetComponent<ToolTip>().toolTip = amount.GetTooltip();
+				currentCaloriesText.GetComponent<ToolTip>().toolTip = item.GetTooltip();
 			}
-			else if (amount.amount == Db.Get().Amounts.HitPoints)
+			else if (item.amount == Db.Get().Amounts.HitPoints)
 			{
 				currentHealthText.text = str + "%";
-				currentHealthText.GetComponent<ToolTip>().toolTip = amount.GetTooltip();
+				currentHealthText.GetComponent<ToolTip>().toolTip = item.GetTooltip();
 			}
 		}
 	}

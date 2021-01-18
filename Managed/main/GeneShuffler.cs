@@ -94,7 +94,7 @@ public class GeneShuffler : Workable
 		component.OnStorageChange(data);
 	});
 
-	private bool storage_recursion_guard;
+	private bool storage_recursion_guard = false;
 
 	public bool WorkComplete => geneShufflerSMI.IsInsideState(geneShufflerSMI.sm.working.complete);
 
@@ -172,7 +172,7 @@ public class GeneShuffler : Workable
 	protected override void OnStartWork(Worker worker)
 	{
 		base.OnStartWork(worker);
-		notification = new Notification(MISC.NOTIFICATIONS.GENESHUFFLER.NAME, NotificationType.Good, HashedString.Invalid, (List<Notification> notificationList, object data) => string.Concat(MISC.NOTIFICATIONS.GENESHUFFLER.TOOLTIP, notificationList.ReduceMessages(countNames: false)), null, expires: false);
+		notification = new Notification(MISC.NOTIFICATIONS.GENESHUFFLER.NAME, NotificationType.Good, (List<Notification> notificationList, object data) => string.Concat(MISC.NOTIFICATIONS.GENESHUFFLER.TOOLTIP, notificationList.ReduceMessages(countNames: false)), null, expires: false);
 		notifier.Add(notification);
 		DeSelectBuilding();
 	}
@@ -237,16 +237,16 @@ public class GeneShuffler : Workable
 			string id = list[Random.Range(0, list.Count)];
 			trait = Db.Get().traits.TryGet(id);
 			worker.GetComponent<Traits>().Add(trait);
-			InfoDialogScreen obj = (InfoDialogScreen)GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.InfoDialogScreen.gameObject, GameScreenManager.Instance.ssOverlayCanvas.gameObject);
+			InfoDialogScreen infoDialogScreen = (InfoDialogScreen)GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.InfoDialogScreen.gameObject, GameScreenManager.Instance.ssOverlayCanvas.gameObject);
 			string text = string.Format(UI.GENESHUFFLERMESSAGE.BODY_SUCCESS, worker.GetProperName(), trait.Name, trait.GetTooltip());
-			obj.SetHeader(UI.GENESHUFFLERMESSAGE.HEADER).AddPlainText(text).AddDefaultOK();
+			infoDialogScreen.SetHeader(UI.GENESHUFFLERMESSAGE.HEADER).AddPlainText(text).AddDefaultOK();
 			SetConsumed(consumed: true);
 		}
 		else
 		{
-			InfoDialogScreen obj2 = (InfoDialogScreen)GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.InfoDialogScreen.gameObject, GameScreenManager.Instance.ssOverlayCanvas.gameObject);
+			InfoDialogScreen infoDialogScreen2 = (InfoDialogScreen)GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.InfoDialogScreen.gameObject, GameScreenManager.Instance.ssOverlayCanvas.gameObject);
 			string text2 = string.Format(UI.GENESHUFFLERMESSAGE.BODY_FAILURE, worker.GetProperName());
-			obj2.SetHeader(UI.GENESHUFFLERMESSAGE.HEADER).AddPlainText(text2).AddDefaultOK();
+			infoDialogScreen2.SetHeader(UI.GENESHUFFLERMESSAGE.HEADER).AddPlainText(text2).AddDefaultOK();
 		}
 	}
 
@@ -288,7 +288,8 @@ public class GeneShuffler : Workable
 
 	public void RefreshSideScreen()
 	{
-		if (GetComponent<KSelectable>().IsSelected)
+		KSelectable component = GetComponent<KSelectable>();
+		if (component.IsSelected)
 		{
 			DetailsScreen.Instance.Refresh(base.gameObject);
 		}

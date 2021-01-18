@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using ProcGen;
+using STRINGS;
 using UnityEngine;
 
 public class MinionBrain : Brain
@@ -46,7 +48,8 @@ public class MinionBrain : Brain
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		foreach (GameObject item in GetComponent<Storage>().items)
+		Storage component = GetComponent<Storage>();
+		foreach (GameObject item in component.items)
 		{
 			AddAnimTracker(item);
 		}
@@ -96,10 +99,12 @@ public class MinionBrain : Brain
 		if (!Game.Instance.savedInfo.discoveredSurface)
 		{
 			int cell = Grid.PosToCell(base.gameObject);
-			if (World.Instance.zoneRenderData.GetSubWorldZoneType(cell) == SubWorld.ZoneType.Space)
+			SubWorld.ZoneType subWorldZoneType = World.Instance.zoneRenderData.GetSubWorldZoneType(cell);
+			if (subWorldZoneType == SubWorld.ZoneType.Space)
 			{
 				Game.Instance.savedInfo.discoveredSurface = true;
-				DiscoveredSpaceMessage message = new DiscoveredSpaceMessage(base.gameObject.transform.GetPosition());
+				Vector3 position = base.gameObject.transform.GetPosition();
+				DiscoveredSpaceMessage message = new DiscoveredSpaceMessage(position);
 				Messenger.Instance.QueueMessage(message);
 				Game.Instance.Trigger(-818188514, base.gameObject);
 			}
@@ -107,7 +112,8 @@ public class MinionBrain : Brain
 		if (!Game.Instance.savedInfo.discoveredOilField)
 		{
 			int cell2 = Grid.PosToCell(base.gameObject);
-			if (World.Instance.zoneRenderData.GetSubWorldZoneType(cell2) == SubWorld.ZoneType.OilField)
+			SubWorld.ZoneType subWorldZoneType2 = World.Instance.zoneRenderData.GetSubWorldZoneType(cell2);
+			if (subWorldZoneType2 == SubWorld.ZoneType.OilField)
 			{
 				Game.Instance.savedInfo.discoveredOilField = true;
 			}
@@ -146,9 +152,45 @@ public class MinionBrain : Brain
 		}
 	}
 
+	public Notification CreateCollapseNotification()
+	{
+		MinionIdentity component = GetComponent<MinionIdentity>();
+		return new Notification(MISC.NOTIFICATIONS.TILECOLLAPSE.NAME, NotificationType.Bad, (List<Notification> notificationList, object data) => string.Concat(MISC.NOTIFICATIONS.TILECOLLAPSE.TOOLTIP, notificationList.ReduceMessages(countNames: false)), "/t• " + component.GetProperName());
+	}
+
+	public void RemoveCollapseNotification(Notification notification)
+	{
+		Vector3 position = notification.clickFocus.GetPosition();
+		position.z = -40f;
+		WorldContainer myWorld = notification.clickFocus.gameObject.GetMyWorld();
+		if (myWorld != null && myWorld.IsDiscovered)
+		{
+			CameraController.Instance.ActiveWorldStarWipe(myWorld.id, position);
+		}
+		Notifier notifier = base.gameObject.AddOrGet<Notifier>();
+		notifier.Remove(notification);
+	}
+
 	private void OnUnstableGroundImpact(object data)
 	{
-		RegisterReactEmotePair("UnstableGroundShock", "anim_react_shock_kanim", 1f);
+		int id = base.gameObject.GetMyWorld().id;
+		GameObject telepad = GameUtil.GetTelepad(id);
+		Navigator component = GetComponent<Navigator>();
+		Ownables soleOwner = GetComponent<MinionIdentity>().GetSoleOwner();
+		Assignable assignable = soleOwner.GetAssignable(Db.Get().AssignableSlots.Bed);
+		bool flag = assignable != null && component.CanReach(Grid.PosToCell(assignable.transform.GetPosition()));
+		bool flag2 = telepad != null && component.CanReach(Grid.PosToCell(telepad.transform.GetPosition()));
+		if (!flag && !flag2)
+		{
+			RegisterReactEmotePair("UnstableGroundShock", "anim_react_shock_kanim", 1f);
+			Notification notification = CreateCollapseNotification();
+			notification.customClickCallback = delegate
+			{
+				RemoveCollapseNotification(notification);
+			};
+			Notifier notifier = base.gameObject.AddOrGet<Notifier>();
+			notifier.Add(notification);
+		}
 	}
 
 	protected override void OnCleanUp()

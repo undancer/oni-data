@@ -6,7 +6,7 @@ using UnityEngine;
 public class DesalinatorWorkableEmpty : Workable
 {
 	[Serialize]
-	public int timesCleaned;
+	public int timesCleaned = 0;
 
 	private static readonly HashedString[] WORK_ANIMS = new HashedString[2]
 	{

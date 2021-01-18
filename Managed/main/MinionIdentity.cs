@@ -84,7 +84,7 @@ public class MinionIdentity : KMonoBehaviour, ISaveLoadable, IAssignableIdentity
 
 	private static NameList femaleNameList;
 
-	private static readonly EventSystem.IntraObjectHandler<MinionIdentity> OnDeadTagChangedDelegate = GameUtil.CreateHasTagHandler(GameTags.Dead, delegate(MinionIdentity component, object data)
+	private static readonly EventSystem.IntraObjectHandler<MinionIdentity> OnDeadTagAddedDelegate = GameUtil.CreateHasTagHandler(GameTags.Dead, delegate(MinionIdentity component, object data)
 	{
 		component.OnDied(data);
 	});
@@ -124,7 +124,7 @@ public class MinionIdentity : KMonoBehaviour, ISaveLoadable, IAssignableIdentity
 		{
 			component.OnUpdateBounds = (Action<Bounds>)Delegate.Combine(component.OnUpdateBounds, new Action<Bounds>(OnUpdateBounds));
 		}
-		GameUtil.SubscribeToTags(this, OnDeadTagChangedDelegate);
+		GameUtil.SubscribeToTags(this, OnDeadTagAddedDelegate, triggerImmediately: true);
 	}
 
 	protected override void OnSpawn()
@@ -165,7 +165,8 @@ public class MinionIdentity : KMonoBehaviour, ISaveLoadable, IAssignableIdentity
 			{
 				bodyData = default(KCompBuilder.BodyData);
 				component3.GetBodySlots(ref bodyData);
-				string str = HashCache.Get().Get(component3.GetAccessory(Db.Get().AccessorySlots.HeadShape).symbol.hash).Replace("headshape", "cheek");
+				string text = HashCache.Get().Get(component3.GetAccessory(Db.Get().AccessorySlots.HeadShape).symbol.hash);
+				string str = text.Replace("headshape", "cheek");
 				component2.AddSymbolOverride("snapto_cheek", Assets.GetAnim("head_swap_kanim").GetData().build.GetSymbol(str), 1);
 				component2.AddSymbolOverride(Db.Get().AccessorySlots.HairAlways.targetSymbolId, component3.GetAccessory(Db.Get().AccessorySlots.Hair).symbol, 1);
 				component2.AddSymbolOverride(Db.Get().AccessorySlots.HatHair.targetSymbolId, Db.Get().AccessorySlots.HatHair.Lookup("hat_" + HashCache.Get().Get(component3.GetAccessory(Db.Get().AccessorySlots.Hair).symbol.hash)).symbol, 1);

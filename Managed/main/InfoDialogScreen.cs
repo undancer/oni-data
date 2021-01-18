@@ -36,7 +36,7 @@ public class InfoDialogScreen : KModalScreen
 	[SerializeField]
 	private GameObject rightButtonPanel;
 
-	private bool escapeCloses;
+	private bool escapeCloses = false;
 
 	protected override void OnPrefabInit()
 	{
@@ -108,13 +108,15 @@ public class InfoDialogScreen : KModalScreen
 
 	public InfoDialogScreen AddSprite(Sprite sprite)
 	{
-		Util.KInstantiateUI<InfoScreenSpriteItem>(spriteItemTemplate.gameObject, contentContainer).SetSprite(sprite);
+		InfoScreenSpriteItem infoScreenSpriteItem = Util.KInstantiateUI<InfoScreenSpriteItem>(spriteItemTemplate.gameObject, contentContainer);
+		infoScreenSpriteItem.SetSprite(sprite);
 		return this;
 	}
 
 	public InfoDialogScreen AddPlainText(string text)
 	{
-		Util.KInstantiateUI<InfoScreenPlainText>(plainTextTemplate.gameObject, contentContainer).SetText(text);
+		InfoScreenPlainText infoScreenPlainText = Util.KInstantiateUI<InfoScreenPlainText>(plainTextTemplate.gameObject, contentContainer);
+		infoScreenPlainText.SetText(text);
 		return this;
 	}
 
@@ -128,7 +130,8 @@ public class InfoDialogScreen : KModalScreen
 
 	public InfoDialogScreen AddSubHeader(string text)
 	{
-		Util.KInstantiateUI<InfoScreenPlainText>(subHeaderTemplate.gameObject, contentContainer).SetText(text);
+		InfoScreenPlainText infoScreenPlainText = Util.KInstantiateUI<InfoScreenPlainText>(subHeaderTemplate.gameObject, contentContainer);
+		infoScreenPlainText.SetText(text);
 		return this;
 	}
 

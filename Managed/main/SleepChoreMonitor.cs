@@ -7,7 +7,7 @@ public class SleepChoreMonitor : GameStateMachine<SleepChoreMonitor, SleepChoreM
 	{
 		private int locatorCell;
 
-		public GameObject locator;
+		public GameObject locator = null;
 
 		public Instance(IStateMachineTarget master)
 			: base(master)
@@ -31,7 +31,8 @@ public class SleepChoreMonitor : GameStateMachine<SleepChoreMonitor, SleepChoreM
 					assignable = soleOwner.AutoAssignSlot(Db.Get().AssignableSlots.Bed);
 					if (assignable != null)
 					{
-						GetComponent<Sensors>().GetSensor<AssignableReachabilitySensor>().Update();
+						AssignableReachabilitySensor sensor = GetComponent<Sensors>().GetSensor<AssignableReachabilitySensor>();
+						sensor.Update();
 					}
 				}
 			}
@@ -46,11 +47,7 @@ public class SleepChoreMonitor : GameStateMachine<SleepChoreMonitor, SleepChoreM
 		public bool IsBedReachable()
 		{
 			AssignableReachabilitySensor sensor = GetComponent<Sensors>().GetSensor<AssignableReachabilitySensor>();
-			if (!sensor.IsReachable(Db.Get().AssignableSlots.Bed))
-			{
-				return sensor.IsReachable(Db.Get().AssignableSlots.MedicalBed);
-			}
-			return true;
+			return sensor.IsReachable(Db.Get().AssignableSlots.Bed) || sensor.IsReachable(Db.Get().AssignableSlots.MedicalBed);
 		}
 
 		public GameObject CreatePassedOutLocator()
@@ -93,7 +90,7 @@ public class SleepChoreMonitor : GameStateMachine<SleepChoreMonitor, SleepChoreM
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = satisfied;
-		base.serializable = false;
+		base.serializable = SerializeType.Never;
 		root.EventHandler(GameHashes.AssignablesChanged, delegate(Instance smi)
 		{
 			smi.UpdateBed();
@@ -102,7 +99,8 @@ public class SleepChoreMonitor : GameStateMachine<SleepChoreMonitor, SleepChoreM
 		checkforbed.Enter("SetBed", delegate(Instance smi)
 		{
 			smi.UpdateBed();
-			if (smi.GetSMI<StaminaMonitor.Instance>().NeedsToSleep())
+			StaminaMonitor.Instance sMI = smi.GetSMI<StaminaMonitor.Instance>();
+			if (sMI.NeedsToSleep())
 			{
 				smi.GoTo(passingout);
 			}

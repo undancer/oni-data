@@ -7,13 +7,13 @@ public class FloorLampConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("FloorLamp", 1, 2, "floorlamp_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER1);
-		obj.RequiresPowerInput = true;
-		obj.EnergyConsumptionWhenActive = 8f;
-		obj.SelfHeatKilowattsWhenActive = 0.5f;
-		obj.ViewMode = OverlayModes.Light.ID;
-		obj.AudioCategory = "Metal";
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("FloorLamp", 1, 2, "floorlamp_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER1);
+		buildingDef.RequiresPowerInput = true;
+		buildingDef.EnergyConsumptionWhenActive = 8f;
+		buildingDef.SelfHeatKilowattsWhenActive = 0.5f;
+		buildingDef.ViewMode = OverlayModes.Light.ID;
+		buildingDef.AudioCategory = "Metal";
+		return buildingDef;
 	}
 
 	public override void DoPostConfigurePreview(BuildingDef def, GameObject go)

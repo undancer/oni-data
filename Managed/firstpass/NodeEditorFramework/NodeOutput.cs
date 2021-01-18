@@ -17,9 +17,9 @@ namespace NodeEditorFramework
 		private TypeData _typeData;
 
 		[NonSerialized]
-		private object value;
+		private object value = null;
 
-		public bool calculationBlockade;
+		public bool calculationBlockade = false;
 
 		protected override NodeSide defaultSide => NodeSide.Right;
 
@@ -189,11 +189,7 @@ namespace NodeEditorFramework
 
 		public override Node GetNodeAcrossConnection()
 		{
-			if (connections.Count <= 0)
-			{
-				return null;
-			}
-			return connections[0].body;
+			return (connections.Count > 0) ? connections[0].body : null;
 		}
 	}
 }

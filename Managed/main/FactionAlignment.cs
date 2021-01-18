@@ -11,12 +11,12 @@ public class FactionAlignment : KMonoBehaviour
 	public FactionManager.FactionID Alignment;
 
 	[Serialize]
-	public bool targeted;
+	public bool targeted = false;
 
 	[Serialize]
 	public bool targetable = true;
 
-	private static readonly EventSystem.IntraObjectHandler<FactionAlignment> OnDeadTagChangedDelegate = GameUtil.CreateHasTagHandler(GameTags.Dead, delegate(FactionAlignment component, object data)
+	private static readonly EventSystem.IntraObjectHandler<FactionAlignment> OnDeadTagAddedDelegate = GameUtil.CreateHasTagHandler(GameTags.Dead, delegate(FactionAlignment component, object data)
 	{
 		component.OnDeath(data);
 	});
@@ -56,7 +56,7 @@ public class FactionAlignment : KMonoBehaviour
 		{
 			FactionManager.Instance.GetFaction(Alignment).Members.Add(this);
 		}
-		GameUtil.SubscribeToTags(this, OnDeadTagChangedDelegate);
+		GameUtil.SubscribeToTags(this, OnDeadTagAddedDelegate, triggerImmediately: true);
 		UpdateStatusItem();
 	}
 

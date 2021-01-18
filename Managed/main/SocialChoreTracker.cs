@@ -41,7 +41,7 @@ public class SocialChoreTracker
 			if (update && num < choreCount && IsOffsetValid(offset))
 			{
 				num++;
-				if (chore == null || chore.isComplete)
+				if (chore?.isComplete ?? true)
 				{
 					chores[i] = ((CreateChoreCB != null) ? CreateChoreCB(i) : null);
 				}
@@ -71,8 +71,9 @@ public class SocialChoreTracker
 
 	private bool IsOffsetValid(CellOffset offset)
 	{
-		int cell = Grid.OffsetCell(Grid.PosToCell(owner), offset);
-		int anchor_cell = Grid.CellBelow(cell);
-		return GameNavGrids.FloorValidator.IsWalkableCell(cell, anchor_cell, is_dupe: true);
+		int cell = Grid.PosToCell(owner);
+		int cell2 = Grid.OffsetCell(cell, offset);
+		int anchor_cell = Grid.CellBelow(cell2);
+		return GameNavGrids.FloorValidator.IsWalkableCell(cell2, anchor_cell, is_dupe: true);
 	}
 }

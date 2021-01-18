@@ -25,22 +25,23 @@ public class RustDeoxidizerConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("RustDeoxidizer", 2, 3, "rust_deoxidizer_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: BUILDINGS.DECOR.PENALTY.TIER1);
-		obj.RequiresPowerInput = true;
-		obj.PowerInputOffset = new CellOffset(1, 0);
-		obj.EnergyConsumptionWhenActive = 60f;
-		obj.ExhaustKilowattsWhenActive = 0.125f;
-		obj.SelfHeatKilowattsWhenActive = 1f;
-		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(1, 1));
-		obj.ViewMode = OverlayModes.Oxygen.ID;
-		obj.AudioCategory = "HollowMetal";
-		return obj;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("RustDeoxidizer", 2, 3, "rust_deoxidizer_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: BUILDINGS.DECOR.PENALTY.TIER1);
+		buildingDef.RequiresPowerInput = true;
+		buildingDef.PowerInputOffset = new CellOffset(1, 0);
+		buildingDef.EnergyConsumptionWhenActive = 60f;
+		buildingDef.ExhaustKilowattsWhenActive = 0.125f;
+		buildingDef.SelfHeatKilowattsWhenActive = 1f;
+		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(1, 1));
+		buildingDef.ViewMode = OverlayModes.Oxygen.ID;
+		buildingDef.AudioCategory = "HollowMetal";
+		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
-		go.AddOrGet<RustDeoxidizer>().maxMass = 1.8f;
+		RustDeoxidizer rustDeoxidizer = go.AddOrGet<RustDeoxidizer>();
+		rustDeoxidizer.maxMass = 1.8f;
 		Storage storage = go.AddOrGet<Storage>();
 		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
 		storage.showInUI = true;

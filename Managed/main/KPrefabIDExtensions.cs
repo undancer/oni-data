@@ -12,6 +12,11 @@ public static class KPrefabIDExtensions
 		return go.GetComponent<KPrefabID>().PrefabTag;
 	}
 
+	public static Tag PrefabID(this StateMachine.Instance smi)
+	{
+		return smi.GetComponent<KPrefabID>().PrefabTag;
+	}
+
 	public static bool HasTag(this Component cmp, Tag tag)
 	{
 		return cmp.gameObject.HasTag(tag);
@@ -20,6 +25,16 @@ public static class KPrefabIDExtensions
 	public static bool HasTag(this GameObject go, Tag tag)
 	{
 		return go.GetComponent<KPrefabID>().HasTag(tag);
+	}
+
+	public static bool HasAnyTags(this Component cmp, Tag[] tags)
+	{
+		return cmp.gameObject.HasAnyTags(tags);
+	}
+
+	public static bool HasAnyTags(this GameObject go, Tag[] tags)
+	{
+		return go.GetComponent<KPrefabID>().HasAnyTags(tags);
 	}
 
 	public static void AddTag(this GameObject go, Tag tag)

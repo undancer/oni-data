@@ -80,7 +80,8 @@ public class PathProber : KMonoBehaviour
 		{
 			updateCount = 0;
 			PathFinder.Cell cell_data = PathGrid.GetCell(cell, nav_type, out is_cell_in_range);
-			PathFinder.AddPotential(new PathFinder.PotentialPath(cell, nav_type, flags), Grid.InvalidCell, NavType.NumNavTypes, 0, 0, -1, Potentials, PathGrid, ref cell_data);
+			PathFinder.PotentialPath potential_path = new PathFinder.PotentialPath(cell, nav_type, flags);
+			PathFinder.AddPotential(potential_path, Grid.InvalidCell, NavType.NumNavTypes, 0, 0, -1, Potentials, PathGrid, ref cell_data);
 		}
 		int num = ((potentialCellsPerUpdate <= 0 || flag) ? int.MaxValue : potentialCellsPerUpdate);
 		updateCount++;
@@ -96,10 +97,8 @@ public class PathProber : KMonoBehaviour
 		}
 		bool flag3 = Potentials.Count == 0;
 		PathGrid.EndUpdate(flag3);
-		if (flag3)
+		if (!flag3 || updateCount <= 25)
 		{
-			_ = updateCount;
-			_ = 25;
 		}
 	}
 }

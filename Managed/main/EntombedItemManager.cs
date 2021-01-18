@@ -72,9 +72,14 @@ public class EntombedItemManager : KMonoBehaviour, ISim33ms
 		{
 			return false;
 		}
-		if (pickupable.GetComponent<PrimaryElement>().Element.IsSolid && pickupable.GetComponent<ElementChunk>() != null)
+		PrimaryElement component = pickupable.GetComponent<PrimaryElement>();
+		if (component.Element.IsSolid)
 		{
-			return true;
+			ElementChunk component2 = pickupable.GetComponent<ElementChunk>();
+			if (component2 != null)
+			{
+				return true;
+			}
 		}
 		return false;
 	}
@@ -141,11 +146,12 @@ public class EntombedItemManager : KMonoBehaviour, ISim33ms
 			int num = cells[i];
 			foreach (int item in pooledList)
 			{
-				if (num == item)
+				if (num != item)
 				{
-					pooledList2.Add(i);
-					break;
+					continue;
 				}
+				pooledList2.Add(i);
+				break;
 			}
 		}
 		pooledList.Recycle();
@@ -225,7 +231,8 @@ public class EntombedItemManager : KMonoBehaviour, ISim33ms
 			Item item = GetItem(uncovered_item_index);
 			component.RemoveItem(item.cell);
 			RemoveItem(uncovered_item_index);
-			ElementLoader.FindElementByHash((SimHashes)item.elementId)?.substance.SpawnResource(Grid.CellToPosCCC(item.cell, Grid.SceneLayer.Ore), item.mass, item.temperature, item.diseaseIdx, item.diseaseCount);
+			SimHashes elementId = (SimHashes)item.elementId;
+			ElementLoader.FindElementByHash(elementId)?.substance.SpawnResource(Grid.CellToPosCCC(item.cell, Grid.SceneLayer.Ore), item.mass, item.temperature, item.diseaseIdx, item.diseaseCount);
 		}
 	}
 

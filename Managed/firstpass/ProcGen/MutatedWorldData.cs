@@ -47,7 +47,7 @@ namespace ProcGen
 		private void ApplyTrait(WorldTrait trait)
 		{
 			world.ModStartLocation(trait.startingBasePositionHorizontalMod, trait.startingBasePositionVerticalMod);
-			foreach (WeightedName additionalSubworldFile in trait.additionalSubworldFiles)
+			foreach (WeightedSubworldName additionalSubworldFile in trait.additionalSubworldFiles)
 			{
 				world.subworldFiles.Add(additionalSubworldFile);
 			}

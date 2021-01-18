@@ -36,7 +36,7 @@ public class ElementFilter : KMonoBehaviour, ISaveLoadable, ISecondaryOutput
 
 	private HandleVector<int>.Handle partitionerEntry;
 
-	private static StatusItem filterStatusItem;
+	private static StatusItem filterStatusItem = null;
 
 	protected override void OnPrefabInit()
 	{
@@ -52,9 +52,9 @@ public class ElementFilter : KMonoBehaviour, ISaveLoadable, ISecondaryOutput
 		int cell = Grid.PosToCell(base.transform.GetPosition());
 		CellOffset rotatedOffset = building.GetRotatedOffset(portInfo.offset);
 		filteredCell = Grid.OffsetCell(cell, rotatedOffset);
-		IUtilityNetworkMgr obj = ((portInfo.conduitType == ConduitType.Solid) ? SolidConduit.GetFlowManager().networkMgr : Conduit.GetNetworkManager(portInfo.conduitType));
+		IUtilityNetworkMgr utilityNetworkMgr = ((portInfo.conduitType == ConduitType.Solid) ? SolidConduit.GetFlowManager().networkMgr : Conduit.GetNetworkManager(portInfo.conduitType));
 		itemFilter = new FlowUtilityNetwork.NetworkItem(portInfo.conduitType, Endpoint.Source, filteredCell, base.gameObject);
-		obj.AddToNetworks(filteredCell, itemFilter, is_endpoint: true);
+		utilityNetworkMgr.AddToNetworks(filteredCell, itemFilter, is_endpoint: true);
 		if (portInfo.conduitType == ConduitType.Gas || portInfo.conduitType == ConduitType.Liquid)
 		{
 			GetComponent<ConduitConsumer>().isConsuming = false;
@@ -63,11 +63,13 @@ public class ElementFilter : KMonoBehaviour, ISaveLoadable, ISecondaryOutput
 		filterable.onFilterChanged += OnFilterChanged;
 		if (portInfo.conduitType == ConduitType.Solid)
 		{
-			SolidConduit.GetFlowManager().AddConduitUpdater(OnConduitTick);
+			SolidConduitFlow flowManager = SolidConduit.GetFlowManager();
+			flowManager.AddConduitUpdater(OnConduitTick);
 		}
 		else
 		{
-			Conduit.GetFlowManager(portInfo.conduitType).AddConduitUpdater(OnConduitTick);
+			ConduitFlow flowManager2 = Conduit.GetFlowManager(portInfo.conduitType);
+			flowManager2.AddConduitUpdater(OnConduitTick);
 		}
 		GetComponent<KSelectable>().SetStatusItem(Db.Get().StatusItemCategories.Main, filterStatusItem, this);
 		UpdateConduitExistsStatus();
@@ -96,14 +98,17 @@ public class ElementFilter : KMonoBehaviour, ISaveLoadable, ISecondaryOutput
 
 	protected override void OnCleanUp()
 	{
-		Conduit.GetNetworkManager(portInfo.conduitType).RemoveFromNetworks(filteredCell, itemFilter, is_endpoint: true);
+		IUtilityNetworkMgr networkManager = Conduit.GetNetworkManager(portInfo.conduitType);
+		networkManager.RemoveFromNetworks(filteredCell, itemFilter, is_endpoint: true);
 		if (portInfo.conduitType == ConduitType.Solid)
 		{
-			SolidConduit.GetFlowManager().RemoveConduitUpdater(OnConduitTick);
+			SolidConduitFlow flowManager = SolidConduit.GetFlowManager();
+			flowManager.RemoveConduitUpdater(OnConduitTick);
 		}
 		else
 		{
-			Conduit.GetFlowManager(portInfo.conduitType).RemoveConduitUpdater(OnConduitTick);
+			ConduitFlow flowManager2 = Conduit.GetFlowManager(portInfo.conduitType);
+			flowManager2.RemoveConduitUpdater(OnConduitTick);
 		}
 		if (partitionerEntry.IsValid() && GameScenePartitioner.Instance != null)
 		{
@@ -140,7 +145,8 @@ public class ElementFilter : KMonoBehaviour, ISaveLoadable, ISecondaryOutput
 				Pickupable pickupable = flowManager2.GetPickupable(flowManager2.GetContents(inputCell).pickupableHandle);
 				if (pickupable != null)
 				{
-					int num3 = ((pickupable.GetComponent<KPrefabID>().PrefabTag == filterable.SelectedTag) ? filteredCell : outputCell);
+					KPrefabID component = pickupable.GetComponent<KPrefabID>();
+					int num3 = ((component.PrefabTag == filterable.SelectedTag) ? filteredCell : outputCell);
 					Pickupable pickupable2 = flowManager2.GetPickupable(flowManager2.GetContents(num3).pickupableHandle);
 					PrimaryElement primaryElement = null;
 					if (pickupable2 != null)
@@ -185,7 +191,8 @@ public class ElementFilter : KMonoBehaviour, ISaveLoadable, ISecondaryOutput
 
 	private void UpdateConduitBlockedStatus()
 	{
-		bool flag = Conduit.GetFlowManager(portInfo.conduitType).IsConduitEmpty(filteredCell);
+		ConduitFlow flowManager = Conduit.GetFlowManager(portInfo.conduitType);
+		bool flag = flowManager.IsConduitEmpty(filteredCell);
 		StatusItem conduitBlockedMultiples = Db.Get().BuildingStatusItems.ConduitBlockedMultiples;
 		bool flag2 = conduitBlockedStatusItemGuid != Guid.Empty;
 		if (flag == flag2)
@@ -219,7 +226,8 @@ public class ElementFilter : KMonoBehaviour, ISaveLoadable, ISecondaryOutput
 	private bool ShowInUtilityOverlay(HashedString mode, object data)
 	{
 		bool result = false;
-		switch (((ElementFilter)data).portInfo.conduitType)
+		ElementFilter elementFilter = (ElementFilter)data;
+		switch (elementFilter.portInfo.conduitType)
 		{
 		case ConduitType.Gas:
 			result = mode == OverlayModes.GasConduits.ID;
@@ -234,12 +242,12 @@ public class ElementFilter : KMonoBehaviour, ISaveLoadable, ISecondaryOutput
 		return result;
 	}
 
-	public ConduitType GetSecondaryConduitType()
+	public bool HasSecondaryConduitType(ConduitType type)
 	{
-		return portInfo.conduitType;
+		return portInfo.conduitType == type;
 	}
 
-	public CellOffset GetSecondaryConduitOffset()
+	public CellOffset GetSecondaryConduitOffset(ConduitType type)
 	{
 		return portInfo.offset;
 	}

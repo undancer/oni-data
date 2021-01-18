@@ -78,7 +78,7 @@ namespace Satsuma
 					continue;
 				}
 				long num2 = ((Graph.U(item2) == Source) ? Capacity(item2) : (-Capacity(item2)));
-				if (num2 != 0L)
+				if (num2 != 0)
 				{
 					flow[item2] = num2;
 					num2 = Math.Abs(num2);
@@ -107,56 +107,56 @@ namespace Satsuma
 						continue;
 					}
 					Node key = ((node2 == node3) ? node4 : node3);
-					bool num5 = Graph.IsEdge(item3);
+					bool flag = Graph.IsEdge(item3);
 					flow.TryGetValue(item3, out var value);
-					long num6 = Capacity(item3);
-					long num7 = (num5 ? (-Capacity(item3)) : 0);
+					long num5 = Capacity(item3);
+					long num6 = (flag ? (-Capacity(item3)) : 0);
 					if (node3 == node2)
 					{
-						if (value == num6)
+						if (value == num5)
 						{
 							continue;
 						}
-						long num8 = label[key];
-						if (num8 <= priority)
+						long num7 = label[key];
+						if (num7 <= priority)
 						{
-							num4 = Math.Max(num4, num8 - 1);
+							num4 = Math.Max(num4, num7 - 1);
 							continue;
 						}
-						long num9 = (long)Math.Min((ulong)num3, (ulong)(num6 - value));
-						flow[item3] = value + num9;
-						excess[node4] += num9;
+						long num8 = (long)Math.Min((ulong)num3, (ulong)(num5 - value));
+						flow[item3] = value + num8;
+						excess[node4] += num8;
 						if (node4 != Source && node4 != Target)
 						{
 							active[node4] = label[node4];
 						}
-						num3 -= num9;
-						if (num3 == 0L)
+						num3 -= num8;
+						if (num3 == 0)
 						{
 							break;
 						}
 					}
 					else
 					{
-						if (value == num7)
+						if (value == num6)
 						{
 							continue;
 						}
-						long num10 = label[key];
-						if (num10 <= priority)
+						long num9 = label[key];
+						if (num9 <= priority)
 						{
-							num4 = Math.Max(num4, num10 - 1);
+							num4 = Math.Max(num4, num9 - 1);
 							continue;
 						}
-						long num11 = (long)Math.Min((ulong)num3, (ulong)(value - num7));
-						flow[item3] = value - num11;
-						excess[node3] += num11;
+						long num10 = (long)Math.Min((ulong)num3, (ulong)(value - num6));
+						flow[item3] = value - num10;
+						excess[node3] += num10;
 						if (node3 != Source && node3 != Target)
 						{
 							active[node3] = label[node3];
 						}
-						num3 -= num11;
-						if (num3 == 0L)
+						num3 -= num10;
+						if (num3 == 0)
 						{
 							break;
 						}
@@ -169,7 +169,7 @@ namespace Satsuma
 					{
 						throw new InvalidOperationException("Internal error.");
 					}
-					long num14 = (active[node2] = (label[node2] = (priority = num4)));
+					long num13 = (active[node2] = (label[node2] = (priority = num4)));
 				}
 			}
 			FlowSize = 0L;

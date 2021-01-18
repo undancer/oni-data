@@ -16,7 +16,7 @@ public class CircuitSwitch : Switch, IPlayerControlledToggle, ISim33ms
 		component.OnCopySettings(data);
 	});
 
-	private Wire attachedWire;
+	private Wire attachedWire = null;
 
 	private Guid wireConnectedGUID;
 
@@ -50,7 +50,8 @@ public class CircuitSwitch : Switch, IPlayerControlledToggle, ISim33ms
 		AttachWire(wire);
 		wasOn = switchedOn;
 		UpdateCircuit();
-		GetComponent<KBatchedAnimController>().Play(switchedOn ? "on" : "off");
+		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
+		component.Play(switchedOn ? "on" : "off");
 	}
 
 	protected override void OnCleanUp()
@@ -67,7 +68,8 @@ public class CircuitSwitch : Switch, IPlayerControlledToggle, ISim33ms
 
 	private void OnCopySettings(object data)
 	{
-		CircuitSwitch component = ((GameObject)data).GetComponent<CircuitSwitch>();
+		GameObject gameObject = (GameObject)data;
+		CircuitSwitch component = gameObject.GetComponent<CircuitSwitch>();
 		if (component != null)
 		{
 			switchedOn = component.switchedOn;
@@ -79,11 +81,7 @@ public class CircuitSwitch : Switch, IPlayerControlledToggle, ISim33ms
 	{
 		int cell = Grid.PosToCell(base.transform.GetPosition());
 		GameObject gameObject = Grid.Objects[cell, (int)objectLayer];
-		if (gameObject != null)
-		{
-			return gameObject.GetComponent<IDisconnectable>() != null;
-		}
-		return false;
+		return gameObject != null && gameObject.GetComponent<IDisconnectable>() != null;
 	}
 
 	private void CircuitOnToggle(bool on)
