@@ -1,8 +1,6 @@
 name: STRINGS.WORLDS.SANDSTONE_FROZEN.NAME
 description: STRINGS.WORLDS.SANDSTONE_FROZEN.DESCRIPTION
-coordinatePrefix: S-FRZ
-difficulty: 2
-tier: 2
+asteroidIcon: Asteroid_icysandstone
 
 worldsize:
   X: 256
@@ -43,8 +41,11 @@ startingBasePositionVertical:
   min: 0.45
   max: 0.55
 
-globalFeatureTemplates:
-  feature_geyser_generic: 12
+worldTemplateRules:
+- names:
+  - geysers/generic
+  listRule: TryAll
+  someCount: 12
 
 seasons:
   - MeteorShowers

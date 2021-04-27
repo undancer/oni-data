@@ -1,14 +1,18 @@
-name: STRINGS.WORLDS.TINYEMPTY.NAME
-description: STRINGS.WORLDS.TINYEMPTY.DESCRIPTION
+name: Tiny Empty
+description: Tiny Empty
+spriteName: Asteroid_sandstone
 coordinatePrefix: TNY-E
 difficulty: -1
 tier: -1
 disableWorldTraits: true
+noStart: true
+skip: EditorOnly
 
 worldsize:
   X: 32
   Y: 32
-layoutMethod: PowerTree
+layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
+#                                in order to use this.
 
 defaultsOverrides:
   data:
@@ -17,11 +21,10 @@ defaultsOverrides:
     OverworldDensityMin: 16
     OverworldDensityMax: 16
     DrawWorldBorder: true
-    DrawWorldBorderOverVacuum: true
+    DrawWorldBorderTop: true
     WorldBorderThickness: 1
     WorldBorderRange: 0
-    OverworldMinNodes: 1
-  startingWorldElements: [] # remove the algae check
+
 
 # List all the zone files to load
 subworldFiles:

@@ -1,9 +1,6 @@
 name: STRINGS.WORLDS.FOREST_DEFAULT.NAME
 description: STRINGS.WORLDS.FOREST_DEFAULT.DESCRIPTION
-coordinatePrefix: FRST-A
-difficulty: 3
-tier: 2
-
+asteroidIcon: Asteroid_forest
 worldsize:
   X: 256
   Y: 384
@@ -34,8 +31,11 @@ subworldFiles:
 startSubworldName: subworlds/forest/ForestStart
 startingBaseTemplate: bases/forestBase
 
-globalFeatureTemplates:
-  feature_geyser_generic: 12
+worldTemplateRules:
+- names:
+  - geysers/generic
+  listRule: TryAll
+  someCount: 12
 
 seasons:
   - MeteorShowers

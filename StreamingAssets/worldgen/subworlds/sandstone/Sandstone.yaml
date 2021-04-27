@@ -44,6 +44,4 @@ biomes:
 features:
   - type: features/sedimentary/SmallEmptyLake
   - type: features/sedimentary/MetalVacuumBlob
-featureTemplates:
-  # feature_geyser_generic: 2
 zoneType: Sandstone

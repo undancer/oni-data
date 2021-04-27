@@ -1,0 +1,42 @@
+biomeNoise: expansion1::noise/Metallic
+temperatureRange: Room
+density:
+  min: 10
+  max: 15
+avoidRadius: 20.0
+extraBiomeChildren: 4
+# borderOverride: rocky
+sampleBehaviour: PoissonDisk
+biomes:
+  - name: expansion1::biomes/Metallic/Golden
+    weight: 2
+    tags:
+  - name: expansion1::biomes/Metallic/Cobaltite
+    weight: 1
+    tags:
+tags:
+  - IgnoreCaveOverride
+subworldTemplateRules:
+  - names:
+    - expansion1::poi/poi_molten_gold_volcano
+    - expansion1::poi/poi_molten_cobalt_volcano
+    listRule: GuaranteeAll
+    priority: 100
+    allowedCellsFilter:
+      - command: IntersectWith
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 1
+        maxDistance: 3 
+  - names:
+    - expansion1::poi/poi_molten_gold_volcano
+    - expansion1::poi/poi_molten_cobalt_volcano
+    listRule: TryAll
+    priority: 100
+    allowedCellsFilter:
+      - command: IntersectWith
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 1
+        maxDistance: 3
+zoneType: Metallic

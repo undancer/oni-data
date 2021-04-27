@@ -19,8 +19,5 @@ tags:
   - River
 pointsOfInterest:
   geysers_a:
-    - poi_ocean_geyser_saltwater
-features:
-  - type: features/ocean/SlushPool
-  - type: features/ocean/SlushPool
+    - poi/poi_ocean_geyser_saltwater
 zoneType: Ocean

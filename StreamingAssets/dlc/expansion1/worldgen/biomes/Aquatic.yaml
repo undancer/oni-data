@@ -1,0 +1,34 @@
+TerrainBiomeLookupTable:
+  # keys to remove from in-memory structure when this file is loaded
+  remove: [] 
+  # elements to add from in-memory structure when this file is loaded
+  add:
+    Water:
+    - content: Water
+      bandSize: 0.8
+      overrides:
+        massOverride: 1200
+    - content: Vacuum
+      bandSize: 0.2
+    GraphiteCavesOxygen:
+    - content: Graphite
+      bandSize: 0.03
+    - content: IgneousRock
+      bandSize: 0.05
+    - content: Graphite
+      bandSize: 0.03
+    - content: IgneousRock
+      bandSize: 0.05
+    - content: Oxygen
+      bandSize: 0.84
+    GraphiteCavesCO2:
+    - content: Graphite
+      bandSize: 0.03
+    - content: IgneousRock
+      bandSize: 0.05
+    - content: Graphite
+      bandSize: 0.03
+    - content: IgneousRock
+      bandSize: 0.05
+    - content: CarbonDioxide
+      bandSize: 0.84

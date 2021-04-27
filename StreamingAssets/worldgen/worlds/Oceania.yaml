@@ -1,8 +1,6 @@
 name: STRINGS.WORLDS.OCEANIA.NAME
 description: STRINGS.WORLDS.OCEANIA.DESCRIPTION
-coordinatePrefix: OCAN-A
-difficulty: 1
-tier: 1
+asteroidIcon: Asteroid_oceania
 
 worldsize:
   X: 256
@@ -39,8 +37,11 @@ startingBasePositionVertical:
   min: 0.35
   max: 0.35
 
-globalFeatureTemplates:
-  feature_geyser_generic: 12
+worldTemplateRules:
+- names:
+  - geysers/generic
+  listRule: TryAll
+  someCount: 12
 
 seasons:
   - MeteorShowers

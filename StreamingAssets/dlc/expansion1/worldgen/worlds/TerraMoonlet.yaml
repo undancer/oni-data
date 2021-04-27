@@ -1,0 +1,151 @@
+name: STRINGS.WORLDS.TERRAMOONLET.NAME
+description: STRINGS.WORLDS.TERRAMOONLET.DESCRIPTION
+nameTable: TERRA
+asteroidIcon: asteroid_sandstone_start_kanim
+disableWorldTraits: true
+
+worldsize:
+  X: 160
+  Y: 274
+layoutMethod: PowerTree
+
+defaultsOverrides:
+  data:
+    OverworldDensityMin: 18
+    OverworldDensityMax: 18
+
+startSubworldName: expansion1::subworlds/sandstone/SandstoneStart
+startingBaseTemplate: bases/sandstoneBase
+startingBasePositionHorizontal:
+  min: 0.5
+  max: 0.5
+startingBasePositionVertical:
+  min: 0.45
+  max: 0.45
+
+subworldFiles:
+  - name: subworlds/space/Space
+  - name: subworlds/magma/Bottom
+  - name: expansion1::subworlds/sandstone/SandstoneMini
+    minCount: 2
+    maxCount: 3
+  - name: expansion1::subworlds/marsh/HotMarshSteamy
+    minCount: 2
+  - name: expansion1::subworlds/jungle/JungleSteamy 
+    minCount: 2
+  - name: expansion1::subworlds/sandstone/SandstoneStart
+    overridePower: 4
+  - name: expansion1::subworlds/sandstone/Sandstone
+  - name: expansion1::subworlds/space/IcySurface
+    overridePower: 1.3
+  - name: expansion1::subworlds/barren/CoalyGranite
+  - name: expansion1::subworlds/wasteland/WastelandBeetle
+  - name: expansion1::subworlds/wasteland/WastelandWorm
+
+unknownCellsAllowedSubworlds: 
+#  - tagcommand: Default
+#    command: Replace
+#    subworldNames:
+##      - subworlds/space/Space
+#      - expansion1::subworlds/sandstone/Sandstone
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/space/IcySurface
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 3
+    maxDistance: 99
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/jungle/JungleSteamy
+      - expansion1::subworlds/wasteland/WastelandBeetle
+      - expansion1::subworlds/wasteland/WastelandWorm
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:    
+      - expansion1::subworlds/marsh/HotMarshSteamy
+      - expansion1::subworlds/jungle/JungleSteamy
+#      - expansion1::subworlds/sandstone/SandstoneMiniMetal
+#      - expansion1::subworlds/sandstone/SandstoneMiniWater
+#      - expansion1::subworlds/sandstone/SandstoneMiniAlgae
+      - expansion1::subworlds/sandstone/SandstoneMini
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/barren/CoalyGranite
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 0
+    command: Replace
+    subworldNames:
+      - subworlds/magma/Bottom
+
+worldTemplateRules:
+  - names:
+    - expansion1::poi/warp/sender
+    - expansion1::poi/warp/receiver
+    - expansion1::poi/warp/teleporter
+    listRule: GuaranteeAll
+    priority: 500
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 2
+      - command: IntersectWith
+        zoneTypes: [ Wasteland, BoggyMarsh, ToxicJungle ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+  - names:
+    - expansion1::poi/poi_geyser_magma
+    - expansion1::poi/poi_geyser_magma_2
+    - expansion1::poi/poi_geyser_magma_3
+    listRule: TryAll
+    priority: 50
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 1
+        maxDistance: 1
+      - command: IntersectWith
+        zoneTypes: [ Barren ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+  # DISABLED FOR TESTING
+  # - names:
+  #   - expansion1::poi/poi_temporal_tear_analyzer
+  #   listRule: GuaranteeAll
+  #   priority: 500
+  #   allowedCellsFilter:
+  #     - command: Replace
+  #       tagcommand: DistanceFromTag
+  #       tag: AtSurface
+  #       minDistance: 1
+  #       maxDistance: 1

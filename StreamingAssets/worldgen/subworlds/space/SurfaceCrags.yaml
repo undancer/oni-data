@@ -1,7 +1,7 @@
 biomeNoise: noise/subworldFrozen
 temperatureRange: VeryCold
 minChildCount: 1
-# pdWeight: 0.5
+pdWeight: 0.5
 density:
   min: 70
   max: 70
@@ -12,12 +12,11 @@ biomes:
     weight: 1
     tags:
       - Mole
-      - LightBugRadioactive
     #overrides:
     #  massMultiplier: 50
 pointsOfInterest:
   gravitas:
-    - poi_gravitas 
+    - poi/poi_gravitas 
 tags:
   - IgnoreCaveOverride
   - ErodePointToBorderInv

@@ -24,8 +24,6 @@ tags:
   - River
 pointsOfInterest:
   ruins_a:
-    - poi_ladder_tunnel
-    - poi_dining_room
-featureTemplates:
-  # feature_geyser_generic: 2
+    - poi/poi_ladder_tunnel
+    - poi/poi_dining_room
 zoneType: Ocean

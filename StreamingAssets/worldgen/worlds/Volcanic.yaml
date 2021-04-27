@@ -1,9 +1,7 @@
 name: STRINGS.WORLDS.VOLCANIC.NAME
 description: STRINGS.WORLDS.VOLCANIC.DESCRIPTION
 nameTable: MAGMA
-coordinatePrefix: VOLCA
-difficulty: 3
-tier: 2
+asteroidIcon: Asteroid_volcanic
 
 worldsize:
   X: 256
@@ -33,8 +31,11 @@ subworldFiles:
 startSubworldName: subworlds/sandstone/SandstoneStart
 startingBaseTemplate: bases/sandstoneBase
 
-globalFeatureTemplates:
-  feature_geyser_generic: 12
+worldTemplateRules:
+- names:
+  - geysers/generic
+  listRule: TryAll
+  someCount: 12
 
 seasons:
   - MeteorShowers

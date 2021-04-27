@@ -1,10 +1,7 @@
 name: STRINGS.WORLDS.THE_ROCK.NAME
 description: STRINGS.WORLDS.THE_ROCK.DESCRIPTION
-coordinatePrefix: T-ROCK
-difficulty: 6
-tier: 2
-
 skip: true
+asteroidIcon: Asteroid_sandstone
 
 defaultsOverrides:
   data:
@@ -25,8 +22,11 @@ subworldFiles:
 startSubworldName: subworlds/sandstone/SandstoneStart
 startingBaseTemplate: bases/sandstoneBase
 
-globalFeatureTemplates:
-  feature_geyser_generic: 12
+worldTemplateRules:
+- names:
+  - geysers/generic
+  listRule: TryAll
+  someCount: 12
 
 seasons:
   - MeteorShowers

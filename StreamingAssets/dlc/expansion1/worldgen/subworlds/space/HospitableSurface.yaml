@@ -1,0 +1,18 @@
+biomeNoise: expansion1::noise/HospitableSurface
+temperatureRange: VeryCold
+minChildCount: 1
+# pdWeight: 0.5
+density:
+  min: 70
+  max: 70
+avoidRadius: 50.0
+sampleBehaviour: PoissonDisk
+biomes:
+  - name: expansion1::biomes/Misc/HospitableSurface
+    weight: 1
+tags:
+  - IgnoreCaveOverride
+#  - ErodePointToBorderInv
+  - ErodePointToWorldTop
+  - NoGlobalFeatureSpawning
+zoneType: Sandstone

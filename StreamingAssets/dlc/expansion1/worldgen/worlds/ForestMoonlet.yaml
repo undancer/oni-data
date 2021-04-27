@@ -1,0 +1,146 @@
+name: STRINGS.WORLDS.FORESTMOONLET.NAME
+description: STRINGS.WORLDS.FORESTMOONLET.DESCRIPTION
+nameTable: FOREST
+asteroidIcon: asteroid_forest_start_kanim # needs icon!
+disableWorldTraits: true
+
+worldsize:
+  X: 160
+  Y: 274
+layoutMethod: PowerTree
+
+defaultsOverrides:
+  data:
+    OverworldDensityMin: 18
+    OverworldDensityMax: 18
+  startingWorldElements: [] # remove the algae check
+
+startSubworldName: expansion1::subworlds/forest/med_ForestStart
+startingBaseTemplate: bases/forestBase
+startingBasePositionHorizontal:
+  min: 0.5
+  max: 0.5
+startingBasePositionVertical:
+  min: 0.45
+  max: 0.45
+
+# List all the zone files to load
+subworldFiles:
+  - name: expansion1::subworlds/forest/med_ForestStart
+  - name: expansion1::subworlds/forest/med_Forest
+    minCount: 2
+    maxCount: 3
+  - name: subworlds/space/Space
+  - name: subworlds/space/Surface
+  - name: subworlds/magma/Bottom
+  - name: expansion1::subworlds/space/HospitableSurface
+  - name: expansion1::subworlds/barren/CoalyGranite
+  - name: subworlds/rust/Rust
+    minCount: 2
+  - name: expansion1::subworlds/frozen/FrozenSlush
+  - name: expansion1::subworlds/jungle/JungleGassy
+  - name: expansion1::subworlds/wasteland/WastelandWorm
+    minCount: 3
+    
+unknownCellsAllowedSubworlds: 
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/forest/med_Forest
+  - tagcommand: DistanceFromTag # two tall space
+    tag: AtSurface
+    minDistance: 0
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag # surface under space
+    tag: AtSurface
+    minDistance: 2 
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/space/HospitableSurface
+  - tagcommand: DistanceFromTag # general world filler (rings 2/3)
+    tag: AtSurface
+    minDistance: 3
+    maxDistance: 99
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/wasteland/WastelandWorm
+      - expansion1::subworlds/frozen/FrozenSlush
+      - expansion1::subworlds/jungle/JungleGassy
+  - tagcommand: DistanceFromTag # Ring-1 around start
+    tag: AtStart
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/forest/med_Forest
+      - expansion1::subworlds/jungle/JungleGassy
+      - subworlds/rust/Rust
+  - tagcommand: DistanceFromTag # above bottom node
+    tag: AtDepths
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/barren/CoalyGranite
+  - tagcommand: DistanceFromTag # bottom node
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 0
+    command: Replace
+    subworldNames:
+      - subworlds/magma/Bottom
+worldTemplateRules:
+  - names: # Generic geysers
+    - geysers/chlorine_gas
+    - geysers/hot_hydrogen
+    - geysers/small_volcano
+    - expansion1::geysers/liquid_sulfur
+    listRule: TrySome
+    someCount: 1
+    priority: 10
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 2
+        maxDistance: 10
+      - command: ExceptWith
+        zoneTypes: [ Space ]
+  - names:
+    - expansion1::poi/poi_geyser_magma
+    - expansion1::poi/poi_geyser_magma_2
+    - expansion1::poi/poi_geyser_magma_3
+    listRule: TryAll
+    priority: 50
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 1
+        maxDistance: 1
+      - command: IntersectWith
+        zoneTypes: [ Barren ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+  - names:
+    - expansion1::poi/warp/sender
+    - expansion1::poi/warp/receiver
+    - expansion1::poi/warp/teleporter
+    listRule: GuaranteeAll
+    priority: 500
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 2
+      - command: IntersectWith
+        zoneTypes: [ Wasteland, FrozenWastes, ToxicJungle ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures

@@ -1,0 +1,35 @@
+# Variant with different POIs and one Grubgrub spawns
+biomeNoise: expansion1::noise/subworldWasteland
+temperatureRange: HumanWarm
+minChildCount: 4
+density:
+  min: 10
+  max: 20
+avoidRadius: 20
+doAvoidPoints: false
+dontRelaxChildren: false
+sampleBehaviour: PoissonDisk
+biomes:
+  - name: expansion1::biomes/Wasteland/Sulfur
+    weight: 3
+    tags:
+      - Cylindrica #decor
+      - WormPlantSeed
+      - WormPlant
+pointsOfInterest:
+  oasis_a:
+    - expansion1::poi/wasteland/oasis_a
+  oasis_b:
+    - expansion1::poi/wasteland/oasis_b
+  worm_1:
+    - expansion1::poi/wasteland/worm_a
+    - expansion1::poi/wasteland/worm_cuprite
+    - expansion1::poi/wasteland/worm_wide
+features:
+  - type: expansion1::features/wasteland/WormPlantCave  
+  - type: expansion1::features/wasteland/BeetleCave  
+  - type: expansion1::features/wasteland/MetalBlob
+  - type: expansion1::features/wasteland/SucroseBlob
+tags:
+  - IgnoreCaveOverride
+zoneType: Wasteland

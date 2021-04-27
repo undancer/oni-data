@@ -1,8 +1,6 @@
 name: STRINGS.WORLDS.BADLANDS.NAME
 description: STRINGS.WORLDS.BADLANDS.DESCRIPTION
-coordinatePrefix: BAD-A
-difficulty: 4
-tier: 2
+asteroidIcon: Asteroid_badlands
 
 worldsize:
   X: 256
@@ -36,8 +34,11 @@ startingBasePositionVertical:
   min: 0.45
   max: 0.55
 
-globalFeatureTemplates:
-  feature_geyser_generic: 12
+worldTemplateRules:
+- names:
+  - geysers/generic
+  listRule: TryAll
+  someCount: 12
 
 seasons:
   - MeteorShowers

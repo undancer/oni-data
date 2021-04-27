@@ -1,0 +1,216 @@
+name: STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.NAME
+description: STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
+nameTable: SWAMP
+asteroidIcon: asteroid_vanilla_sandstone_warp_kanim
+disableWorldTraits: true
+
+worldsize:
+  X: 160
+  Y: 176
+layoutMethod: PowerTree
+
+defaultsOverrides:
+  data:
+    DrawWorldBorderOverVacuum: false
+    DrawWorldBorder: true
+    WorldBorderThickness: 3
+    WorldBorderRange: 1
+    OverworldDensityMin: 18
+    OverworldDensityMax: 18
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+    POIPadding: 1
+
+startSubworldName: expansion1::subworlds/swamp/SwampWarpStart
+startingBaseTemplate:  expansion1::bases/warpworldBase
+startingBasePositionHorizontal:
+  min: 0.45
+  max: 0.55
+startingBasePositionVertical:
+  min: 0.50
+  max: 0.55
+
+# List all the zone files to load
+subworldFiles:
+  - name: subworlds/space/Space
+  - name: expansion1::subworlds/space/SpaceWithFrozenBorder    
+  - name: expansion1::subworlds/swamp/Swamp
+  - name: expansion1::subworlds/swamp/SwampWarpStart
+  - name: expansion1::subworlds/rust/med_Rust
+    minCount: 3
+  - name: expansion1::subworlds/radioactive/med_Radioactive
+  - name: expansion1::subworlds/radioactive/med_UraniumFields
+  - name: expansion1::subworlds/radioactive/med_FrozenUraniumFields
+  - name: expansion1::subworlds/frozen/FrozenSlush
+    minCount: 3
+  - name: expansion1::subworlds/frozen/FrozenCore
+  - name: expansion1::subworlds/jungle/JungleSteamy
+  - name: expansion1::subworlds/marsh/HotMarshSteamy
+    
+unknownCellsAllowedSubworlds: 
+  - tagcommand: Default # Sides & surface
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/swamp/Swamp
+  - tagcommand: DistanceFromTag
+    tag: AtEdge
+    minDistance: 0
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/jungle/JungleSteamy
+      - expansion1::subworlds/rust/med_Rust
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag # Space with crust
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/space/SpaceWithFrozenBorder
+  - tagcommand: DistanceFromTag # Swamp surrounds Start
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/marsh/HotMarshSteamy
+      - expansion1::subworlds/frozen/FrozenSlush
+  - tagcommand: DistanceFromTag # Oil
+    tag: AtDepths
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/radioactive/med_Radioactive
+      - expansion1::subworlds/radioactive/med_UraniumFields
+  - tagcommand: DistanceFromTag # Core
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 0
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/radioactive/med_FrozenUraniumFields
+      - expansion1::subworlds/frozen/FrozenCore
+
+worldTemplateRules:
+  - names:
+    - expansion1::poi/warp/sender
+    - expansion1::poi/warp/receiver
+    listRule: GuaranteeAll
+    priority: 500
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 2
+      - command: IntersectWith
+        zoneTypes: [ Swamp, Rust, ToxicJungle ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+  - names:
+    - expansion1::poi/boon/bedroom
+    - expansion1::poi/boon/washroom
+    - expansion1::poi/boon/power
+    - expansion1::poi/boon/kitchen
+    listRule: TrySome
+    someCount: 2
+    priority: 50
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtSurface
+        minDistance: 2
+        maxDistance: 2
+      - command: IntersectWith
+        zoneTypes: [ Swamp, Rust, ToxicJungle ]
+  - names:
+    - expansion1::poi/boon/bedroom
+    - expansion1::poi/boon/washroom
+    - expansion1::poi/boon/power
+    - expansion1::poi/boon/kitchen
+    - expansion1::poi/boon/well
+    - expansion1::poi/boon/farm
+    listRule: TrySome
+    someCount: 2
+    priority: 50
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 3
+      - command: IntersectWith
+        zoneTypes: [ Swamp, Rust, ToxicJungle ]
+  - names:
+    - expansion1::geysers/molten_aluminum
+    - expansion1::geysers/molten_cobalt
+    - geysers/molten_copper
+    - geysers/molten_gold
+    - geysers/molten_iron
+    - geysers/steam
+    - geysers/hot_steam
+    - geysers/hot_water
+    listRule: TrySome
+    someCount: 3
+    priority: 50
+    allowedCellsFilter:
+    - command: Replace
+      tagcommand: DistanceFromTag
+      tag: AtStart
+      minDistance: 1
+      maxDistance: 99
+    - command: ExceptWith
+      tagcommand: DistanceFromTag
+      tag: AtSurface
+      minDistance: 0
+      maxDistance: 2
+  - names:
+    - geysers/filthy_water
+    - geysers/salt_water
+    - geysers/slush_water
+    - expansion1::geysers/slush_salt_water
+    listRule: TrySome
+    someCount: 1
+    priority: 50
+    allowedCellsFilter:
+    - command: Replace
+      tagcommand: DistanceFromTag
+      tag: AtStart
+      minDistance: 1
+      maxDistance: 99
+    - command: ExceptWith
+      tagcommand: DistanceFromTag
+      tag: AtSurface
+      minDistance: 0
+      maxDistance: 2
+  - names:
+    - geysers/slimy_po2
+    - geysers/methane
+    - geysers/chlorine_gas
+    - geysers/hot_co2
+    - geysers/hot_hydrogen
+    - geysers/hot_po2
+    - expansion1::geysers/liquid_sulfur
+    - geysers/liquid_co2
+    - geysers/small_volcano
+    listRule: TrySome
+    someCount: 2
+    priority: 50
+    allowedCellsFilter:
+    - command: Replace
+      tagcommand: DistanceFromTag
+      tag: AtStart
+      minDistance: 1
+      maxDistance: 99
+    - command: ExceptWith
+      tagcommand: DistanceFromTag
+      tag: AtSurface
+      minDistance: 0
+      maxDistance: 2

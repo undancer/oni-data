@@ -5,4 +5,4 @@ exclusiveWith:
   - traits/GeoActive
 
 globalFeatureTemplateMods:
-  feature_geyser_generic: -3
+  geysers/generic: -3

@@ -1,0 +1,172 @@
+name: STRINGS.WORLDS.SWAMPMOONLET.NAME
+description: STRINGS.WORLDS.SWAMPMOONLET.DESCRIPTION
+nameTable: SWAMP
+asteroidIcon: asteroid_swamp_start_kanim
+disableWorldTraits: true
+
+worldsize:
+  X: 160
+  Y: 274
+layoutMethod: PowerTree
+
+defaultsOverrides:
+  data:
+    OverworldDensityMin: 18
+    OverworldDensityMax: 18
+  startingWorldElements: [] # remove the algae check
+
+startSubworldName: expansion1::subworlds/swamp/SwampStart
+startingBaseTemplate: expansion1::bases/swampBase
+startingBasePositionHorizontal:
+  min: 0.5
+  max: 0.5
+startingBasePositionVertical:
+  min: 0.45
+  max: 0.45
+
+# List all the zone files to load
+subworldFiles:
+  - name: expansion1::subworlds/swamp/SwampMini
+    minCount: 2
+    maxCount: 3
+  - name: expansion1::subworlds/swamp/SwampStart
+    overridePower: 4
+  - name: subworlds/space/Space
+  - name: expansion1::subworlds/space/HospitableSurface
+    overridePower: 1.3
+  - name: expansion1::subworlds/wasteland/WastelandBeetle
+    minCount: 2
+  - name: expansion1::subworlds/wasteland/WastelandWorm
+  - name: expansion1::subworlds/jungle/JungleGassy
+  - name: expansion1::subworlds/frozen/FrozenSlush
+    minCount: 2
+  - name: expansion1::subworlds/barren/CoalyGranite
+    overridePower: 1 # by default these are 'uge
+  - name: expansion1::subworlds/magma/BottomSmall
+    
+unknownCellsAllowedSubworlds: 
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/space/HospitableSurface
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 3
+    maxDistance: 99
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/wasteland/WastelandWorm
+      - expansion1::subworlds/jungle/JungleGassy
+  - tagcommand: DistanceFromTag # Ring-1 around start
+    tag: AtStart
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/wasteland/WastelandBeetle
+      - expansion1::subworlds/frozen/FrozenSlush
+      - expansion1::subworlds/swamp/SwampMini
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/barren/CoalyGranite
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/magma/BottomSmall
+
+worldTemplateRules:
+  - names:
+    - expansion1::poi/warp/sender
+    - expansion1::poi/warp/receiver
+    - expansion1::poi/warp/teleporter
+    listRule: GuaranteeAll
+    priority: 500
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 3
+      - command: ExceptWith
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 0
+      - command: IntersectWith
+        zoneTypes: [ BoggyMarsh, Rust, Wasteland, ToxicJungle, Ocean ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+  - names:
+    - expansion1::poi/poi_geyser_magma
+    - expansion1::poi/poi_geyser_magma_2
+    - expansion1::poi/poi_geyser_magma_3
+    listRule: TryAll
+    priority: 50
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 1
+        maxDistance: 1
+      - command: IntersectWith
+        zoneTypes: [ Barren ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+  # DISABLED FOR TESTING
+  # - names:
+  #   - expansion1::poi/poi_temporal_tear_analyzer
+  #   listRule: GuaranteeAll
+  #   priority: 500
+  #   allowedCellsFilter:
+  #     - command: Replace
+  #       tagcommand: DistanceFromTag
+  #       tag: AtSurface
+  #       minDistance: 1
+  #       maxDistance: 1
+
+  # - names:
+  #   - geysers/generic
+  #   listRule: GuaranteeAll
+  #   times: 12
+  #   priority: 200
+  #   allowedCellsFilter:
+  #     - command: Replace 
+  #       tagcommand: NotAtTag
+  #       tag: NoGlobalFeatureSpawning
+  #     - command: ExceptWith
+  #       tagcommand: DistanceFromTag
+  #       tag: AtSurface
+  #       minDistance: 0
+  #       maxDistance: 1
+  #     - command: ExceptWith
+  #       tagcommand: DistanceFromTag
+  #       tag: AtDepths
+  #       minDistance: 0
+  #       maxDistance: 0
+  #     - command: ExceptWith
+  #       tagcommand: DistanceFromTag
+  #       tag: AtEdge
+  #       minDistance: 0
+  #       maxDistance: 0

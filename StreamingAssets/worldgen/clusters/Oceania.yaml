@@ -1,8 +1,11 @@
 name: STRINGS.CLUSTER_NAMES.DEFAULT.NAME
 description: STRINGS.CLUSTER_NAMES.DEFAULT.DESCRIPTION
-forbiddenDlcId: EXPANSION1_ID
-menuOrder: 1
 coordinatePrefix: OCAN-A
+forbiddenDlcId: EXPANSION1_ID
+
+difficulty: 1
+menuOrder: 1
+
 startWorldIndex: 0
 worldPlacements:
 - world: worlds/Oceania

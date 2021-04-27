@@ -1,0 +1,18 @@
+biomeNoise: noise/Generic
+temperatureRange: VeryCold
+minChildCount: 1
+density:
+  min: 35
+  max: 45
+avoidRadius: 50.0
+sampleBehaviour: PoissonDisk
+biomes:
+  - name: biomes/Misc/Space
+    weight: 1      
+pointsOfInterest:
+  module:
+    - expansion1::poi/poi_module_interior
+tags:
+  - IgnoreCaveOverride
+  - NoGlobalFeatureSpawning
+zoneType: Space

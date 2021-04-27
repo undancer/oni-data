@@ -15,6 +15,4 @@ features: []
 pointsOfInterest:
 tags:
   - IgnoreCaveOverride
-# featureTemplates:
-  # feature_geyser_generic: 2
 zoneType: Sandstone

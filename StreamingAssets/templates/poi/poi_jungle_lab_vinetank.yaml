@@ -167,6 +167,29 @@ cells:
   location_x: -4
   location_y: -4
   preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 313.391266
+  location_x: -3
+  location_y: -4
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 313.453339
+  location_x: -2
+  location_y: -4
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 313.188324
+  location_x: -1
+  location_y: -4
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 312.809631
+  location_y: -4
+  preventFoWReveal: true
 - element: IgneousRock
   mass: 1840
   temperature: 313.803558
@@ -424,6 +447,12 @@ cells:
   temperature: 308.400269
   location_x: 11
   location_y: -2
+- element: Obsidian
+  mass: 100
+  temperature: 312.688873
+  location_x: -7
+  location_y: -1
+  preventFoWReveal: true
 - element: Water
   mass: 487.679047
   temperature: 314.951965
@@ -458,6 +487,11 @@ cells:
   mass: 487.506165
   temperature: 314.928314
   location_x: -1
+  location_y: -1
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 312.827087
   location_y: -1
   preventFoWReveal: true
 - element: IgneousRock
@@ -516,15 +550,49 @@ cells:
   temperature: 310.218262
   location_x: 11
   location_y: -1
+- element: Obsidian
+  mass: 100
+  temperature: 311.661987
+  location_x: -7
+  preventFoWReveal: true
 - element: Oxygen
   mass: 0.551915169
   temperature: 309.097229
   location_x: -6
   preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 306.98703
+  location_x: -5
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 305.937103
+  location_x: -4
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 305.564178
+  location_x: -3
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 306.584198
+  location_x: -2
+  preventFoWReveal: true
 - element: CarbonDioxide
   mass: 0.0292398185
   temperature: 309.165497
   location_x: -1
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 311.848755
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 312.648895
+  location_x: 1
   preventFoWReveal: true
 - element: IronOre
   mass: 800
@@ -546,6 +614,41 @@ cells:
   temperature: 267.248749
   location_x: 5
   preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 295.774048
+  location_x: 6
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 305.515198
+  location_x: 7
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 307.592102
+  location_x: 8
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 307.648834
+  location_x: 9
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 307.187134
+  location_x: 10
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 307.320282
+  location_x: 11
+- element: Obsidian
+  mass: 100
+  temperature: 311.068024
+  location_x: -7
+  location_y: 1
+  preventFoWReveal: true
 - element: Oxygen
   mass: 0.551910937
   temperature: 309.278381
@@ -558,6 +661,18 @@ cells:
   location_x: -5
   location_y: 1
   preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 304.194977
+  location_x: -4
+  location_y: 1
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 303.899963
+  location_x: -3
+  location_y: 1
+  preventFoWReveal: true
 - element: Oxygen
   mass: 0.489849806
   temperature: 305.312653
@@ -568,6 +683,11 @@ cells:
   mass: 0.481754035
   temperature: 308.11264
   location_x: -1
+  location_y: 1
+  preventFoWReveal: true
+- element: CarbonDioxide
+  mass: 0.0307601914
+  temperature: 310.691986
   location_y: 1
   preventFoWReveal: true
 - element: Oxygen
@@ -624,11 +744,22 @@ cells:
   location_x: 9
   location_y: 1
   preventFoWReveal: true
+- element: Iron
+  mass: 400
+  temperature: 308.174347
+  location_x: 10
+  location_y: 1
 - element: Oxygen
   mass: 0.000664452848
   temperature: 309.782654
   location_x: 11
   location_y: 1
+- element: Obsidian
+  mass: 100
+  temperature: 310.85495
+  location_x: -7
+  location_y: 2
+  preventFoWReveal: true
 - element: Oxygen
   mass: 0.553387105
   temperature: 310.024475
@@ -663,6 +794,11 @@ cells:
   mass: 0.489617199
   temperature: 309.104553
   location_x: -1
+  location_y: 2
+  preventFoWReveal: true
+- element: Oxygen
+  mass: 0.4739649
+  temperature: 310.120605
   location_y: 2
   preventFoWReveal: true
 - element: Oxygen
@@ -719,11 +855,22 @@ cells:
   location_x: 9
   location_y: 2
   preventFoWReveal: true
+- element: Iron
+  mass: 400
+  temperature: 308.476776
+  location_x: 10
+  location_y: 2
 - element: Oxygen
   mass: 0.000582396984
   temperature: 311.818939
   location_x: 11
   location_y: 2
+- element: Obsidian
+  mass: 100
+  temperature: 311.387604
+  location_x: -7
+  location_y: 3
+  preventFoWReveal: true
 - element: Oxygen
   mass: 0.55521661
   temperature: 310.524536
@@ -760,6 +907,11 @@ cells:
   location_x: -1
   location_y: 3
   preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 309.801086
+  location_y: 3
+  preventFoWReveal: true
 - element: Phosphorite
   mass: 600
   temperature: 310.602905
@@ -770,6 +922,12 @@ cells:
   mass: 0.452138275
   temperature: 311.633209
   location_x: 2
+  location_y: 3
+  preventFoWReveal: true
+- element: Oxygen
+  mass: 0.450135678
+  temperature: 311.160431
+  location_x: 3
   location_y: 3
   preventFoWReveal: true
 - element: Oxygen
@@ -808,11 +966,23 @@ cells:
   location_x: 9
   location_y: 3
   preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 311.896393
+  location_x: 10
+  location_y: 3
+  preventFoWReveal: true
 - element: Oxygen
   mass: 0.000505988544
   temperature: 312.514618
   location_x: 11
   location_y: 3
+- element: Obsidian
+  mass: 100
+  temperature: 311.984711
+  location_x: -7
+  location_y: 4
+  preventFoWReveal: true
 - element: Phosphorite
   mass: 600
   temperature: 310.968445
@@ -843,6 +1013,17 @@ cells:
   location_x: -2
   location_y: 4
   preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 311.307983
+  location_x: -1
+  location_y: 4
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 310.819061
+  location_y: 4
+  preventFoWReveal: true
 - element: Phosphorite
   mass: 600
   temperature: 311.602051
@@ -855,10 +1036,52 @@ cells:
   location_x: 2
   location_y: 4
   preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 312.095123
+  location_x: 3
+  location_y: 4
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 311.318817
+  location_x: 4
+  location_y: 4
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 311.444153
+  location_x: 5
+  location_y: 4
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 312.470917
+  location_x: 6
+  location_y: 4
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 313.942078
+  location_x: 7
+  location_y: 4
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 316.612366
+  location_x: 8
+  location_y: 4
+  preventFoWReveal: true
 - element: IgneousRock
   mass: 1209.05554
   temperature: 318.231049
   location_x: 9
+  location_y: 4
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 315.072876
+  location_x: 10
   location_y: 4
   preventFoWReveal: true
 - element: IgneousRock
@@ -878,6 +1101,12 @@ cells:
   location_x: -6
   location_y: 5
   preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 310.871765
+  location_x: -5
+  location_y: 5
+  preventFoWReveal: true
 - element: Oxygen
   mass: 0.554666162
   temperature: 311.674438
@@ -894,6 +1123,12 @@ cells:
   mass: 1840
   temperature: 313.142273
   location_x: -2
+  location_y: 5
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 312.303345
+  location_x: -1
   location_y: 5
   preventFoWReveal: true
 - element: IgneousRock
@@ -966,6 +1201,12 @@ cells:
   mass: 1840
   temperature: 312.268768
   location_x: -6
+  location_y: 6
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 311.856964
+  location_x: -5
   location_y: 6
   preventFoWReveal: true
 - element: Carbon
@@ -1052,6 +1293,18 @@ cells:
   temperature: 313.109375
   location_x: -6
   location_y: 7
+- element: Obsidian
+  mass: 100
+  temperature: 312.851318
+  location_x: -5
+  location_y: 7
+  preventFoWReveal: true
+- element: Obsidian
+  mass: 100
+  temperature: 313.23819
+  location_x: -4
+  location_y: 7
+  preventFoWReveal: true
 - element: IgneousRock
   mass: 1840
   temperature: 313.851746
@@ -1249,6 +1502,26 @@ cells:
   location_y: 3
 - element: Obsidian
   mass: 100
+  temperature: 312.095123
+  location_x: 3
+  location_y: 4
+- element: Obsidian
+  mass: 100
+  temperature: 311.318817
+  location_x: 4
+  location_y: 4
+- element: Obsidian
+  mass: 100
+  temperature: 311.444153
+  location_x: 5
+  location_y: 4
+- element: Obsidian
+  mass: 100
+  temperature: 312.470917
+  location_x: 6
+  location_y: 4
+- element: Obsidian
+  mass: 100
   temperature: 295.774048
   location_x: 6
 - element: Obsidian
@@ -1367,6 +1640,16 @@ cells:
   location_y: 2
 - element: Obsidian
   mass: 100
+  temperature: 313.942078
+  location_x: 7
+  location_y: 4
+- element: Obsidian
+  mass: 100
+  temperature: 316.612366
+  location_x: 8
+  location_y: 4
+- element: Obsidian
+  mass: 100
   temperature: 307.592102
   location_x: 8
 - element: Obsidian
@@ -1451,188 +1734,351 @@ buildings:
   location_y: 3
   element: Obsidian
   temperature: 311.107971
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   element: Obsidian
   temperature: 311.727356
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_y: 3
   element: Obsidian
   temperature: 309.506378
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 3
   location_y: 4
   element: Obsidian
   temperature: 312.036865
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 4
   location_y: 4
   element: Obsidian
   temperature: 311.240265
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 5
   location_y: 4
   element: Obsidian
   temperature: 311.16452
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 6
   location_y: 4
   element: Obsidian
   temperature: 312.100006
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 6
   element: Obsidian
   temperature: 302.950897
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -7
   location_y: 4
   element: Obsidian
   temperature: 311.823853
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -1
   location_y: 5
   element: Obsidian
   temperature: 312.142212
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -1
   location_y: 4
   element: Obsidian
   temperature: 310.990845
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -5
   element: Obsidian
   temperature: 306.25119
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -4
   location_y: 1
   element: Obsidian
   temperature: 303.209442
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -3
   location_y: 1
   element: Obsidian
   temperature: 303.046173
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -2
   element: Obsidian
   temperature: 305.89682
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -7
   location_y: -1
   element: Obsidian
   temperature: 312.570618
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_y: -1
   element: Obsidian
   temperature: 312.727905
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -4
   element: Obsidian
   temperature: 305.186798
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -3
   element: Obsidian
   temperature: 304.887299
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -7
   element: Obsidian
   temperature: 311.522278
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -7
   location_y: 1
   element: Obsidian
   temperature: 310.919281
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -7
   location_y: 2
   element: Obsidian
   temperature: 310.473236
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 7
   element: Obsidian
   temperature: 306.977356
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -3
   location_y: -4
   element: Obsidian
   temperature: 313.432312
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -1
   location_y: -4
   element: Obsidian
   temperature: 313.10141
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_y: -4
   element: Obsidian
   temperature: 312.805023
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -5
   location_y: 6
   element: Obsidian
   temperature: 311.68631
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -5
   location_y: 5
   element: Obsidian
   temperature: 310.698151
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_y: 4
   element: Obsidian
   temperature: 310.56662
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -5
   location_y: 7
   element: Obsidian
   temperature: 312.670288
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -4
   location_y: 7
   element: Obsidian
   temperature: 313.196869
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: POIDoorInternal
   location_y: 1
   element: Cuprite
   temperature: 310.691986
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 7
   location_y: 4
   element: Obsidian
   temperature: 313.368652
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 8
   location_y: 4
   element: Obsidian
   temperature: 316.098419
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 8
   element: Obsidian
   temperature: 307.3461
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 9
   element: Obsidian
   temperature: 307.074127
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 10
   location_y: 4
   element: Obsidian
   temperature: 314.826538
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 10
   location_y: 3
   element: Obsidian
   temperature: 311.699677
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 10
   element: Obsidian
   temperature: 307.177307
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: 11
   element: Obsidian
   temperature: 307.318756
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: POIBunkerExteriorDoor
   location_x: 10
   location_y: 1
   element: Cuprite
   temperature: 308.174347
+  storage: []
+  rottable: {}
+  amounts: []
   other_values:
   - id: sealedDoorDirection
     value: 1
@@ -1640,53 +2086,89 @@ buildings:
   location_x: 1
   element: Obsidian
   temperature: 312.638702
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: TilePOI
   location_x: -2
   location_y: -4
   element: Obsidian
   temperature: 313.27417
+  storage: []
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: Wire
   location_x: 3
   location_y: 3
   element: Cuprite
   temperature: 299.718384
+  storage: []
   connections: 4
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: Wire
   location_x: 3
   location_y: 4
   element: Cuprite
   temperature: 312.095123
+  storage: []
   connections: 10
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: Wire
   location_x: 4
   location_y: 4
   element: Cuprite
   temperature: 311.318817
+  storage: []
   connections: 3
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: Wire
   location_x: 5
   location_y: 4
   element: Cuprite
   temperature: 311.444153
+  storage: []
   connections: 3
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: Wire
   location_x: 6
   location_y: 4
   element: Cuprite
   temperature: 312.470917
+  storage: []
   connections: 3
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: Wire
   location_x: 7
   location_y: 4
   element: Cuprite
   temperature: 313.942078
+  storage: []
   connections: 3
+  rottable: {}
+  amounts: []
+  other_values: []
 - id: Wire
   location_x: 8
   location_y: 4
   element: Cuprite
   temperature: 316.612366
+  storage: []
   connections: 1
+  rottable: {}
+  amounts: []
+  other_values: []
 pickupables:
 - id: SpiceVineSeed
   location_x: 8
@@ -1694,14 +2176,18 @@ pickupables:
   element: Creature
   temperature: 272.004028
   units: 1
+  storage: []
   type: Pickupable
+  rottable: {}
 - id: SpiceVineSeed
   location_x: -5
   location_y: 1
   element: Creature
   temperature: 271.184204
   units: 1
+  storage: []
   type: Pickupable
+  rottable: {}
 elementalOres:
 - id: IgneousRock
   location_x: 7
@@ -1709,14 +2195,18 @@ elementalOres:
   element: IgneousRock
   temperature: 313.281342
   units: 920
+  storage: []
   type: Ore
+  rottable: {}
 - id: Phosphorite
   location_x: -2
   location_y: -3
   element: Phosphorite
   temperature: 314.467224
   units: 300
+  storage: []
   type: Ore
+  rottable: {}
 otherEntities:
 - id: SpiceVine
   location_x: -2
@@ -1724,7 +2214,9 @@ otherEntities:
   element: Creature
   temperature: 310.015259
   units: 1
+  storage: []
   type: Other
+  rottable: {}
   amounts:
   - id: AirPressure
     value: 0.520049989
@@ -1741,7 +2233,9 @@ otherEntities:
   element: Creature
   temperature: 310.021973
   units: 1
+  storage: []
   type: Other
+  rottable: {}
   amounts:
   - id: AirPressure
     value: 0.544225037
@@ -1758,7 +2252,9 @@ otherEntities:
   element: Creature
   temperature: 310.012695
   units: 1
+  storage: []
   type: Other
+  rottable: {}
   amounts:
   - id: AirPressure
     value: 0.55100584
@@ -1775,7 +2271,9 @@ otherEntities:
   element: Creature
   temperature: 310.003082
   units: 1
+  storage: []
   type: Other
+  rottable: {}
   amounts:
   - id: AirPressure
     value: 0.553504884
@@ -1792,39 +2290,57 @@ otherEntities:
   element: Unobtanium
   temperature: 300
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []
 - id: PropTable
   location_x: 3
   location_y: 1
   element: Unobtanium
   temperature: 300
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []
 - id: VendingMachine
   location_x: 6
   location_y: 1
   element: Unobtanium
   temperature: 300
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []
 - id: PropLadder
   location_x: -1
   location_y: -3
   element: Unobtanium
   temperature: 300
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []
 - id: PropLadder
   location_x: -1
   location_y: -2
   element: Unobtanium
   temperature: 300
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []
 - id: PropLadder
   location_x: -1
   location_y: -1
   element: Unobtanium
   temperature: 300
   units: 1
+  storage: []
   type: Other
+  rottable: {}
+  amounts: []

@@ -14,7 +14,8 @@ elements:
     molarMass: 63.546
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.07
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     - Metal
@@ -39,7 +40,8 @@ elements:
     molarMass: 44.01
     toxicity: 0.0001
     lightAbsorptionFactor: 0.1
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.08
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     isDisabled: false
     state: Gas
@@ -60,7 +62,8 @@ elements:
     molarMass: 12.0107
     toxicity: 0
     lightAbsorptionFactor: 0.3
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.08
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     - EmitsLight
@@ -83,7 +86,8 @@ elements:
     molarMass: 34.453
     toxicity: 0
     lightAbsorptionFactor: 0.2
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.07
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     isDisabled: false
@@ -105,7 +109,8 @@ elements:
     molarMass: 15.9994
     toxicity: 0.01
     lightAbsorptionFactor: 0.1
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.08
+    radiationPer1000Mass: 0
     materialCategory: Breathable
     tags:
     isDisabled: false
@@ -127,7 +132,8 @@ elements:
     molarMass: 63.546
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.06
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     - Metal
@@ -152,7 +158,8 @@ elements:
     molarMass: 196.966569
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.03
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     - Metal
@@ -177,7 +184,8 @@ elements:
     molarMass: 4
     toxicity: 0
     lightAbsorptionFactor: 0.1
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.09
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     isDisabled: true
     state: Gas
@@ -198,7 +206,8 @@ elements:
     molarMass: 1.00794
     toxicity: 0
     lightAbsorptionFactor: 0.1
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.09
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     isDisabled: false
@@ -220,7 +229,8 @@ elements:
     molarMass: 55.845
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.06
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     - Metal
@@ -246,7 +256,8 @@ elements:
     molarMass: 58.9
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.06
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     - Metal
@@ -271,7 +282,8 @@ elements:
     molarMass: 196.966569
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.08
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     - Metal
@@ -296,7 +308,8 @@ elements:
     molarMass: 200.59
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.02
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     - Metal
@@ -319,7 +332,8 @@ elements:
     molarMass: 16.044
     toxicity: 0
     lightAbsorptionFactor: 0.25
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.07
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     - CombustibleGas
@@ -342,7 +356,8 @@ elements:
     molarMass: 92.9
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.05
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     - Metal
@@ -367,7 +382,8 @@ elements:
     molarMass: 92.9
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.03
+    radiationPer1000Mass: 15
     materialCategory: Unbreathable
     tags:
     - EmitsLight
@@ -390,7 +406,8 @@ elements:
     molarMass: 15.9994
     toxicity: 0
     lightAbsorptionFactor: 0
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.08
+    radiationPer1000Mass: 0
     materialCategory: Breathable
     isDisabled: false
     state: Gas
@@ -411,7 +428,8 @@ elements:
     molarMass: 30.973762
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.07
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     - EmitsLight
@@ -434,7 +452,8 @@ elements:
     molarMass: 44.1
     toxicity: 0
     lightAbsorptionFactor: 0.25
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.07
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     isDisabled: false
@@ -456,7 +475,8 @@ elements:
     molarMass: 50
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.07
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     - EmitsLight
@@ -479,7 +499,8 @@ elements:
     molarMass: 50
     toxicity: 0
     lightAbsorptionFactor: 0.1
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.07
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     isDisabled: false
     state: Gas
@@ -502,7 +523,8 @@ elements:
     molarMass: 19.044
     toxicity: 0
     lightAbsorptionFactor: 0.25
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.05
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     isDisabled: false
@@ -524,7 +546,8 @@ elements:
     molarMass: 13.01528
     toxicity: 0
     lightAbsorptionFactor: 0.1
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.08
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     isDisabled: false
     state: Gas
@@ -545,7 +568,8 @@ elements:
     molarMass: 54.97
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.07
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     - Metal
@@ -571,7 +595,8 @@ elements:
     molarMass: 32
     toxicity: 0
     lightAbsorptionFactor: 0.1
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.07
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     isDisabled: false
@@ -593,7 +618,8 @@ elements:
     molarMass: 190
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.06
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     state: Gas
     localizationID: STRINGS.ELEMENTS.SUPERCOOLANTGAS.NAME
@@ -613,7 +639,8 @@ elements:
     molarMass: 183.84
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.03
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     - Metal
@@ -637,7 +664,8 @@ elements:
     molarMass: 46.07
     toxicity: 0
     lightAbsorptionFactor: 0.5
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.07
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     isDisabled: false
@@ -659,7 +687,8 @@ elements:
     molarMass: 26.96
     toxicity: 0
     lightAbsorptionFactor: 0.1
-    radiationAbsorptionFactor: 0.1
+    radiationAbsorptionFactor: 0.07
+    radiationPer1000Mass: 0
     materialCategory: Unbreathable
     tags:
     - CombustibleGas

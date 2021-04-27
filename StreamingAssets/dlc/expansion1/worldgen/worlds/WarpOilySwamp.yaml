@@ -1,0 +1,176 @@
+name: STRINGS.WORLDS.WARPOILYSWAMP.NAME
+description: STRINGS.WORLDS.WARPOILYSWAMP.DESCRIPTION
+nameTable: SWAMP
+asteroidIcon: asteroid_swamp_oil_kanim
+disableWorldTraits: true
+
+worldsize:
+  X: 128
+  Y: 153
+layoutMethod: PowerTree
+
+defaultsOverrides:
+  data:
+    DrawWorldBorderOverVacuum: false
+    DrawWorldBorder: true
+    WorldBorderThickness: 6
+    WorldBorderRange: 2
+    OverworldDensityMin: 18
+    OverworldDensityMax: 18
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+    # POIPadding: 1
+
+startSubworldName: expansion1::subworlds/swamp/SwampWarpStart
+startingBaseTemplate:  expansion1::bases/warpworldBase
+startingBasePositionHorizontal:
+  min: 0.3
+  max: 0.7
+startingBasePositionVertical:
+  min: 0.50
+  max: 0.55
+
+# List all the zone files to load
+subworldFiles:
+  - name: subworlds/space/Space
+  - name: expansion1::subworlds/space/SpaceWithFrozenBorder    
+  - name: expansion1::subworlds/swamp/Swamp
+  - name: expansion1::subworlds/swamp/SwampWarpStart
+  - name: expansion1::subworlds/frozen/FrozenMedium
+  - name: expansion1::subworlds/rust/med_Rust
+  - name: expansion1::subworlds/oil/OilSparse
+  - name: expansion1::subworlds/oil/OilWells
+  - name: expansion1::subworlds/barren/BarrenCore
+    
+unknownCellsAllowedSubworlds: 
+  - tagcommand: Default # Sides & surface
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/rust/med_Rust
+      - expansion1::subworlds/frozen/FrozenMedium
+  - tagcommand: DistanceFromTag # Swamp surrounds Start
+    tag: AtStart
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/swamp/Swamp
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag # Space with crust
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/space/SpaceWithFrozenBorder
+  - tagcommand: DistanceFromTag # Oil
+    tag: AtDepths
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/oil/OilSparse
+      - expansion1::subworlds/oil/OilWells
+  - tagcommand: DistanceFromTag # Core
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 0
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/barren/BarrenCore
+
+worldTemplateRules:
+  - names:
+    - expansion1::poi/warp/sender
+    - expansion1::poi/warp/receiver
+    listRule: GuaranteeAll
+    priority: 500
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 2
+      - command: IntersectWith
+        zoneTypes: [ Swamp, Rust, FrozenWastes ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+  - names:
+    - expansion1::poi/boon/bedroom
+    - expansion1::poi/boon/washroom
+    - expansion1::poi/boon/power
+    - expansion1::poi/boon/kitchen
+    listRule: TrySome
+    someCount: 2
+    priority: 50
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 3
+      - command: IntersectWith
+        zoneTypes: [ Rust, FrozenWastes ]
+  - names:
+    - expansion1::poi/boon/bedroom
+    - expansion1::poi/boon/washroom
+    - expansion1::poi/boon/power
+    - expansion1::poi/boon/kitchen
+    - expansion1::poi/boon/well
+    - expansion1::poi/boon/farm
+    listRule: TrySome
+    someCount: 2
+    priority: 50
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 3
+      - command: IntersectWith
+        zoneTypes: [ Swamp ]
+  - names:
+    - expansion1::geysers/liquid_sulfur
+    listRule: GuaranteeAll
+    priority: 200
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [ Barren ]
+  - names: # Generic geysers
+    - geysers/chlorine_gas
+    - geysers/methane
+    - geysers/hot_co2
+    - geysers/hot_hydrogen
+    - geysers/small_volcano
+    - geysers/liquid_co2
+    - expansion1::geysers/liquid_sulfur
+    listRule: TrySome
+    someCount: 2
+    priority: 10
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [ Rust, FrozenWastes, Barren ]
+  - names:
+    - expansion1::poi/oil/small_oilpockets_geyser_a
+    - expansion1::poi/oil/small_oilpockets_geyser_b
+    - expansion1::poi/oil/small_oilpockets_geyser_c
+    - expansion1::poi/oil/small_oilpockets_geyser_d
+    - expansion1::poi/oil/small_oilpockets_geyser_e
+    - expansion1::poi/oil/small_oilpockets_geyser_f
+    listRule: GuaranteeSomeTryMore
+    someCount: 2
+    moreCount: 3
+    priority: 105
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [ OilField ]
+      - command: IntersectWith
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 2   

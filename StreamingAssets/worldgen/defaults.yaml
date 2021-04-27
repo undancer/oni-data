@@ -30,8 +30,6 @@ data:
   OverworldDensityMax: 20
   OverworldAvoidRadius: 72.0
   OverworldSampleBehaviour: PoissonDisk
-  OverworldRelaxIterations: 0
-  OverworldRelaxEnergyMin: 10000.0
   OverworldMinNodes: 5
   OverworldMaxNodes: 200
   DrawWorldBorder: true

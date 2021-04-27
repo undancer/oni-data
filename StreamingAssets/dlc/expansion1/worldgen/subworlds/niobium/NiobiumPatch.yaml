@@ -1,0 +1,19 @@
+biomeNoise: noise/OilPockets
+temperatureRange: ExtremelyHot
+pdWeight: .5
+minChildCount: 2
+density:
+  min: 15
+  max: 25
+avoidRadius: 30
+sampleBehaviour: PoissonDisk
+biomes:
+  - name: expansion1::biomes/Niobium/NiobiumPatch
+    weight: 1
+subworldTemplateRules:
+  - names:
+    - expansion1::geysers/molten_niobium
+    listRule: GuaranteeAll
+tags:
+  - IgnoreCaveOverride
+zoneType: OilField

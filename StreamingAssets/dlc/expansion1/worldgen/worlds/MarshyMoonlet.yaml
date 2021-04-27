@@ -1,0 +1,137 @@
+name: STRINGS.WORLDS.MARSHYMOONLET.NAME
+description: STRINGS.WORLDS.MARSHYMOONLET.DESCRIPTION
+nameTable: SWAMP
+asteroidIcon: asteroid_marshy_moonlet_kanim
+disableWorldTraits: true
+
+worldsize:
+  X: 64
+  Y: 96
+layoutMethod: PowerTree
+
+defaultsOverrides:
+  data:
+    DrawWorldBorderOverVacuum: false
+    DrawWorldBorder: true
+    WorldBorderThickness: 2
+    WorldBorderRange: 1
+    OverworldDensityMin: 15
+    OverworldDensityMax: 15
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+
+startSubworldName: expansion1::subworlds/marsh/med_HotMarshStart
+startingBaseTemplate: expansion1::poi/sap_tree_room
+startingBasePositionHorizontal:
+  min: 0.35
+  max: 0.65
+startingBasePositionVertical:
+  min: 0.45
+  max: 0.75
+
+# List all the zone files to load
+subworldFiles:
+  - name: subworlds/space/Space
+  - name: expansion1::subworlds/space/SpaceWithOrganicBorder
+  - name: expansion1::subworlds/marsh/med_HotMarshStart
+  - name: expansion1::subworlds/marsh/med_HotMarshLandingSite
+  - name: expansion1::subworlds/marsh/med_HotMarshInactive
+  - name: expansion1::subworlds/jungle/med_JungleInactive
+    minCount: 2
+  - name: expansion1::subworlds/magma/BottomSmall
+  
+unknownCellsAllowedSubworlds: 
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/marsh/med_HotMarshInactive
+      - expansion1::subworlds/jungle/med_JungleInactive
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag # Space with crust
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/space/SpaceWithOrganicBorder
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/marsh/med_HotMarshLandingSite
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 3
+    maxDistance: 3
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/marsh/med_HotMarshInactive
+      - expansion1::subworlds/jungle/med_JungleInactive
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 0
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/magma/BottomSmall
+
+worldTemplateRules:
+  - names:
+    - expansion1::geysers/molten_tungsten
+    listRule: GuaranteeAll
+    times: 1
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 2
+      - command: ExceptWith
+        zoneTypes: [ Space ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+  - names:
+    - expansion1::geysers/molten_tungsten_exposed
+    listRule: TryAll
+    times: 2
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 2
+      - command: IntersectWith
+        zoneTypes: [ MagmaCore ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+  - names:
+    - geysers/slimy_po2
+    - geysers/methane
+    - geysers/chlorine_gas
+    - geysers/hot_co2
+    - geysers/hot_hydrogen
+    - geysers/hot_po2
+    listRule: TrySome
+    someCount: 1
+    priority: 50
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 99
+      - command: ExceptWith
+        zoneTypes: [ Space ]        
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures

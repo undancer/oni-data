@@ -1,0 +1,24 @@
+biomeNoise: noise/Default
+temperatureRange: HumanHot
+minChildCount: 3
+pdWeight: 1
+density:
+  min: 35
+  max: 45
+avoidRadius: 50.0
+sampleBehaviour: PoissonDisk
+borderOverride: NONE
+biomes:
+  #- name: biomes/Misc/Empty
+  - name: expansion1::biomes/Aquatic/Water
+    weight: 1
+tags:
+  - IgnoreCaveOverride
+subworldTemplateRules:
+  - names:
+    - expansion1::poi/aquatic/metal_boon
+    - expansion1::poi/aquatic/oasis
+    listRule: TryAll
+    priority: 50
+
+zoneType: Barren # todo

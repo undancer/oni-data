@@ -1,8 +1,11 @@
 name: STRINGS.CLUSTER_NAMES.DEFAULT.NAME
 description: STRINGS.CLUSTER_NAMES.DEFAULT.DESCRIPTION
-forbiddenDlcId: EXPANSION1_ID
-menuOrder: 6
 coordinatePrefix: VOLCA
+forbiddenDlcId: EXPANSION1_ID
+
+difficulty: 3
+menuOrder: 6
+
 startWorldIndex: 0
 worldPlacements:
 - world: worlds/Volcanic

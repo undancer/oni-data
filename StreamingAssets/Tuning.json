@@ -66,6 +66,10 @@
     "maxToneIndex": 14,
     "firstLastToneSpacing": 3
   },
+  "ClusterMapTravelAnimator+Tuning": {
+    "visualizerTransitionSpeed": 0.5,
+    "visualizerRotationSpeed": 50.0
+  },
   "WattsonMessage+Tuning": {
     "initialOrthographicSize": 20.0
   },

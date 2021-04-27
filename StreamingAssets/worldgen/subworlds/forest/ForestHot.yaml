@@ -24,6 +24,4 @@ tags:
 pointsOfInterest:
 features:
   - type: features/forest/SmallLake
-# featureTemplates:
-  # feature_geyser_generic: 2
 zoneType: Forest

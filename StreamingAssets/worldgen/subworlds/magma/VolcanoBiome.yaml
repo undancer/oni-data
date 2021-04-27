@@ -15,5 +15,5 @@ tags:
   - IgnoreCaveOverride
   - NoGlobalFeatureSpawning
 featureTemplates:
-  feature_geyser_volcanohole: 8
+  geysers/volcanohole: 8
 zoneType: MagmaCore

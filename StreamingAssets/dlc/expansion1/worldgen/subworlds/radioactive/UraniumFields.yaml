@@ -1,0 +1,24 @@
+biomeNoise: noise/OilPockets
+temperatureRange: VeryCold
+pdWeight: .5
+minChildCount: 2
+density:
+  min: 10
+  max: 20
+avoidRadius: 20.0
+sampleBehaviour: PoissonDisk
+biomes:
+  - name: expansion1::biomes/Radioactive/Nuclear
+    weight: 1
+    tags:
+      - LightBug
+      - ColdBreather
+      - ColdBreatherSeed
+tags:
+  - IgnoreCaveOverride
+pointsOfInterest:
+  geysers_a:
+    - expansion1::poi/radioactive/uranium_fields_liquid_co2_geyser
+  geysers_b:
+    - expansion1::poi/radioactive/uranium_fields_liquid_co2_geyser_b
+zoneType: Radioactive

@@ -25,5 +25,4 @@ features:
 pointsOfInterest:
 tags:
   - IgnoreCaveOverride
-featureTemplates:
 zoneType: OilField

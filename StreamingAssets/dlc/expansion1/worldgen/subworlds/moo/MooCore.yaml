@@ -1,0 +1,25 @@
+biomeNoise: expansion1::noise/subworldMooCore
+temperatureRange: ExtremelyCold
+density:
+  min: 10
+  max: 15
+avoidRadius: 15.0
+doAvoidPoints: false
+dontRelaxChildren: true
+extraBiomeChildren: 0
+sampleBehaviour: PoissonDisk
+borderOverride: hardToDig
+# centralFeature:
+#   type: expansion1::features/moo/MooCaveLarge
+features: []
+  # - type: expansion1::features/moo/MooBubbleSmall
+  # - type: expansion1::features/moo/MooBubbleSmall
+  # - type: expansion1::features/moo/MooBubbleSmall
+  # - type: expansion1::features/moo/MooBubbleSmall
+biomes:
+  - name: expansion1::biomes/Moo/Core
+    weight: 1
+    tags: []
+tags:
+  - IgnoreCaveOverride
+zoneType: FrozenWastes

@@ -1,0 +1,78 @@
+# keys to remove from in-memory structure when this file is loaded
+remove: [] 
+# elements to add from in-memory structure when this file is loaded
+add:
+  # More in base: impenetrable, hardToDig, rocky
+  NONE: [] # special, will prevent a border from drawing
+  softRock:
+    - element: SedimentaryRock
+      weight: 1
+  softDirt:
+    - element: Dirt
+      weight: 2
+    - element: IgneousRock
+      weight: 1
+  ice:
+    - element: Ice
+      weight: 1
+    - element: Snow
+      weight: 1
+  oil:
+    - element: UraniumOre
+      weight: 1
+    - element: IgneousRock
+      weight: 1
+  metalCrust:
+    - element: GoldAmalgam
+      weight: 1
+    - element: AluminumOre
+      weight: 1
+    - element: IgneousRock
+      weight: 0.5
+  swampyMetalCrust:
+    - element: Cobaltite
+      weight: 0.5
+    - element: ToxicSand
+      weight: 1
+    - element: SedimentaryRock
+      weight: 1
+  saltyCrust:
+    - element: Salt
+      weight: 1
+    - element: Granite
+      weight: 0.5
+    - element: Sand
+      weight: 1
+  organicCrust:
+    - element: SlimeMold
+      weight: 1
+    - element: Algae
+      weight: 1
+    - element: GoldAmalgam
+      weight: 0.5
+  frozenCrust:
+    - element: Ice
+      weight: 1
+    - element: Snow
+      weight: 1
+    - element: MaficRock
+      weight: 0.5
+  seaBed:
+    - element: Lime
+      weight: 0.4
+      overrides:
+        massOverride: 250
+    - element: Fossil
+      weight: 0.3
+    - element: IgneousRock
+      weight: 0.3
+  regolith:
+    - element: Regolith
+      weight: 1
+  mooWorld:
+    - element: IgneousRock
+      weight: 0.4
+    - element: BleachStone
+      weight: 0.3
+    - element: Regolith
+      weight: 0.3

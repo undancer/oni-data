@@ -1,8 +1,11 @@
 name: STRINGS.CLUSTER_NAMES.DEFAULT.NAME
 description: STRINGS.CLUSTER_NAMES.DEFAULT.DESCRIPTION
-forbiddenDlcId: EXPANSION1_ID
-menuOrder: 9
 coordinatePrefix: OASIS-A
+forbiddenDlcId: EXPANSION1_ID
+
+difficulty: 5
+menuOrder: 9
+
 startWorldIndex: 0
 worldPlacements:
 - world: worlds/Oasis

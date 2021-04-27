@@ -1,0 +1,80 @@
+name: STRINGS.WORLDS.WATERMOONLET.NAME
+description: STRINGS.WORLDS.WATERMOONLET.DESCRIPTION
+nameTable: WATER
+asteroidIcon: asteroid_water_moonlet_kanim
+disableWorldTraits: true
+
+worldsize:
+  X: 80
+  Y: 174
+layoutMethod: PowerTree
+
+startSubworldName: expansion1::subworlds/aquatic/OpenWaterStart
+startingBaseTemplate: expansion1::bases/waterBase
+startingBasePositionHorizontal:
+  min: 0.3
+  max: 0.7
+startingBasePositionVertical:
+  min: 0.80
+  max: 0.80
+
+defaultsOverrides:
+  data:
+    DrawWorldBorderOverVacuum: false
+    DrawWorldBorder: true
+    WorldBorderThickness: 4
+    WorldBorderRange: 2
+    OverworldDensityMin: 15
+    OverworldDensityMax: 15
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+    POIPadding: 2
+
+subworldFiles:
+  - name: subworlds/space/Space
+  - name: expansion1::subworlds/aquatic/SurfaceBeach
+  - name: expansion1::subworlds/aquatic/OpenWaterStart
+  - name: expansion1::subworlds/aquatic/OpenWater  
+  - name: expansion1::subworlds/aquatic/GraphiteCaves
+  - name: expansion1::subworlds/barren/BarrenCore # placeholder until core is developed further
+  #- name: expansion1::subworlds/barren/BarrenFullereneCore
+
+  
+unknownCellsAllowedSubworlds: 
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/aquatic/OpenWater
+  - tagcommand: DistanceFromTag # Surface
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 2 
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/aquatic/SurfaceBeach
+  - tagcommand: AtTag # Space
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag # Caves
+    tag: AtDepths
+    minDistance: 1
+    maxDistance: 1 
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/aquatic/GraphiteCaves
+  - tagcommand: AtTag # Core
+    tag: AtDepths
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/barren/BarrenCore
+
+worldTemplateRules:

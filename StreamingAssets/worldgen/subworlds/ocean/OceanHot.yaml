@@ -31,10 +31,8 @@ tags:
   - River
 pointsOfInterest:
   geysers_a:
-    - poi_ocean_geyser_saltwater
+    - poi/poi_ocean_geyser_saltwater
   ruins_a:
-    - poi_ladder_tunnel
-    - poi_dining_room
-featureTemplates:
-  # feature_geyser_generic: 2
+    - poi/poi_ladder_tunnel
+    - poi/poi_dining_room
 zoneType: Ocean

@@ -33,14 +33,12 @@ tags:
   - IgnoreCaveOverride
 pointsOfInterest:
   ruins_a:
-    - poi_broken_farm
-    - poi_old_pool
+    - poi/poi_broken_farm
+    - poi/poi_old_pool
   ruins_b:
-    - poi_dupe_sensor_puzzle
+    - poi/poi_dupe_sensor_puzzle
   spiral_a:
-    - poi_salt_spiral
-    - poi_salt_spiral_2
-    - poi_salt_spiral_3
-featureTemplates:
-  # feature_geyser_generic: 2
+    - poi/poi_salt_spiral
+    - poi/poi_salt_spiral_2
+    - poi/poi_salt_spiral_3
 zoneType: Rust

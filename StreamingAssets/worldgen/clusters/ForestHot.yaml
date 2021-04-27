@@ -1,8 +1,11 @@
 name: STRINGS.CLUSTER_NAMES.DEFAULT.NAME
 description: STRINGS.CLUSTER_NAMES.DEFAULT.DESCRIPTION
+coordinatePrefix: HTFST-A
 forbiddenDlcId: EXPANSION1_ID
+
+difficulty: 5
 menuOrder: 8
-coordinatePrefix: FRST-A
+
 startWorldIndex: 0
 worldPlacements:
 - world: worlds/ForestHot

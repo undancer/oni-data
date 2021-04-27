@@ -1,0 +1,61 @@
+name: STRINGS.WORLDS.TWINMOONLET.NAME
+description: STRINGS.WORLDS.TWINMOONLET.DESCRIPTION
+nameTable: TERRA
+disableWorldTraits: true
+
+worldsize:
+  X: 96
+  Y: 160
+layoutMethod: PowerTree
+
+defaultsOverrides:
+  data:
+    DrawWorldBorder: true
+    DrawWorldBorderOverVacuum: false
+    WorldBorderThickness: 1
+    WorldBorderRange: 0
+    OverworldDensityMin: 15
+    OverworldDensityMax: 15
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+
+# List all the zone files to load
+subworldFiles:
+  - name: subworlds/forest/Forest
+  - name: expansion1::subworlds/forest/med_ForestSurface
+  - name: subworlds/space/Space
+  - name: subworlds/space/Surface
+  - name: subworlds/magma/Bottom
+  - name: subworlds/marsh/HotMarsh
+  - name: subworlds/jungle/Jungle
+  - name: subworlds/frozen/Frozen
+  - name: subworlds/ocean/Ocean
+
+unknownCellsAllowedSubworlds: 
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - subworlds/forest/Forest
+      - subworlds/marsh/HotMarsh
+      - subworlds/jungle/Jungle
+      - subworlds/frozen/Frozen
+      - subworlds/ocean/Ocean
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/forest/med_ForestSurface
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 0
+    command: Replace
+    subworldNames:
+      - subworlds/magma/Bottom
