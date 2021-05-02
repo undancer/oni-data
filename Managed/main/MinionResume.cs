@@ -91,7 +91,7 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 		}
 	}
 
-	public int AvailableSkillpoints => TotalSkillPointsGained - SkillsMastered + GrantedSkillIDs.Count;
+	public int AvailableSkillpoints => TotalSkillPointsGained - SkillsMastered + ((GrantedSkillIDs != null) ? GrantedSkillIDs.Count : 0);
 
 	public string CurrentRole => currentRole;
 
@@ -137,6 +137,10 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
+		if (GrantedSkillIDs == null)
+		{
+			GrantedSkillIDs = new List<string>();
+		}
 		List<string> list = new List<string>();
 		foreach (KeyValuePair<string, bool> item in MasteryBySkillID)
 		{
@@ -182,7 +186,7 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 	public void RestoreResume(Dictionary<string, bool> MasteryBySkillID, Dictionary<HashedString, float> AptitudeBySkillGroup, List<string> GrantedSkillIDs, float totalExperienceGained)
 	{
 		this.MasteryBySkillID = MasteryBySkillID;
-		this.GrantedSkillIDs = GrantedSkillIDs;
+		this.GrantedSkillIDs = ((GrantedSkillIDs != null) ? GrantedSkillIDs : new List<string>());
 		this.AptitudeBySkillGroup = AptitudeBySkillGroup;
 		this.totalExperienceGained = totalExperienceGained;
 	}
@@ -321,6 +325,10 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 
 	public bool HasBeenGrantedSkill(Skill skill)
 	{
+		if (GrantedSkillIDs == null)
+		{
+			return false;
+		}
 		if (GrantedSkillIDs.Contains(skill.Id))
 		{
 			return true;
@@ -330,6 +338,10 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 
 	public bool HasBeenGrantedSkill(string id)
 	{
+		if (GrantedSkillIDs == null)
+		{
+			return false;
+		}
 		if (GrantedSkillIDs.Contains(id))
 		{
 			return true;
@@ -434,6 +446,10 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 
 	public void GrantSkill(string skillId)
 	{
+		if (GrantedSkillIDs == null)
+		{
+			GrantedSkillIDs = new List<string>();
+		}
 		if (!HasBeenGrantedSkill(skillId))
 		{
 			MasteryBySkillID[skillId] = true;

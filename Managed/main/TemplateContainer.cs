@@ -177,21 +177,11 @@ public class TemplateContainer
 
 	public void SaveToYaml(string save_name)
 	{
-		string text = save_name;
-		while (text.Contains("/"))
+		string text = TemplateCache.RewriteTemplatePath(save_name);
+		if (!Directory.Exists(Path.GetDirectoryName(text)))
 		{
-			int num = text.IndexOf('/') + 1;
-			if (text.Length > num)
-			{
-				text = text.Substring(num);
-			}
+			Directory.CreateDirectory(Path.GetDirectoryName(text));
 		}
-		name = text;
-		string templatePath = TemplateCache.GetTemplatePath();
-		if (!File.Exists(templatePath))
-		{
-			Directory.CreateDirectory(templatePath);
-		}
-		YamlIO.Save(this, templatePath + "/" + save_name + ".yaml");
+		YamlIO.Save(this, text + ".yaml");
 	}
 }

@@ -5,7 +5,7 @@ public class GasCargoBaySmallConfig : IBuildingConfig
 {
 	public const string ID = "GasCargoBaySmall";
 
-	public const float CAPACITY = 50f;
+	public float CAPACITY = 360f * ROCKETRY.CARGO_CAPACITY_SCALE;
 
 	public override BuildingDef CreateBuildingDef()
 	{
@@ -37,12 +37,7 @@ public class GasCargoBaySmallConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		CargoBay cargoBay = go.AddOrGet<CargoBay>();
-		cargoBay.storage = go.AddOrGet<Storage>();
-		cargoBay.storageType = CargoBay.CargoType.Gasses;
-		cargoBay.storage.capacityKg = 50f;
-		cargoBay.storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
-		cargoBay.storage.showCapacityStatusItem = true;
-		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.MINOR_PLUS, null);
+		go = BuildingTemplates.ExtendBuildingToClusterCargoBay(go, CAPACITY, STORAGEFILTERS.GASES, CargoBay.CargoType.Gasses);
+		BuildingTemplates.ExtendBuildingToRocketModuleCluster(go, null, ROCKETRY.BURDEN.MINOR);
 	}
 }

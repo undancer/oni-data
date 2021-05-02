@@ -60,7 +60,10 @@ public class RobotBatteryMonitor : GameStateMachine<RobotBatteryMonitor, RobotBa
 		needsRechargeStates.trickleCharge.Transition(needsRechargeStates.mediumBattery, GameStateMachine<RobotBatteryMonitor, Instance, IStateMachineTarget, Def>.Not(ChargeFull));
 		deadBattery.ToggleStatusItem(Db.Get().RobotStatusItems.DeadBattery, (Instance smi) => smi.gameObject).Enter(delegate(Instance smi)
 		{
-			smi.GetSMI<DeathMonitor.Instance>().Kill(Db.Get().Deaths.DeadBattery);
+			if (smi.GetSMI<DeathMonitor.Instance>() != null)
+			{
+				smi.GetSMI<DeathMonitor.Instance>().Kill(Db.Get().Deaths.DeadBattery);
+			}
 		});
 	}
 

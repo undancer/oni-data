@@ -11,7 +11,9 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 		Creature,
 		Minion,
 		Captured,
-		HighEnergyParticle
+		HighEnergyParticle,
+		CaptureAndRelease,
+		PassThrough
 	}
 
 	public class StatesInstance : GameStateMachine<States, StatesInstance, HighEnergyParticle, object>.GameInstance
@@ -46,6 +48,8 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 
 		public DestructionStates destroying;
 
+		public State catchAndRelease;
+
 		public Signal destroySignal;
 
 		public Signal destroySimpleSignal;
@@ -54,11 +58,11 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 		{
 			default_state = ready.pre;
 			base.serializable = SerializeType.Both_DEPRECATED;
-			ready.PlayAnim("travel_loop", KAnim.PlayMode.Loop).OnSignal(destroySimpleSignal, destroying.instant).OnSignal(destroySignal, destroying.explode, (StatesInstance smi) => smi.master.collision == CollisionType.Creature)
-				.OnSignal(destroySignal, destroying.explode, (StatesInstance smi) => smi.master.collision == CollisionType.Minion)
+			ready.OnSignal(destroySimpleSignal, destroying.instant).OnSignal(destroySignal, destroying.explode, (StatesInstance smi) => smi.master.collision == CollisionType.Creature).OnSignal(destroySignal, destroying.explode, (StatesInstance smi) => smi.master.collision == CollisionType.Minion)
 				.OnSignal(destroySignal, destroying.explode, (StatesInstance smi) => smi.master.collision == CollisionType.Solid)
 				.OnSignal(destroySignal, destroying.blackhole, (StatesInstance smi) => smi.master.collision == CollisionType.HighEnergyParticle)
 				.OnSignal(destroySignal, destroying.captured, (StatesInstance smi) => smi.master.collision == CollisionType.Captured)
+				.OnSignal(destroySignal, catchAndRelease, (StatesInstance smi) => smi.master.collision == CollisionType.CaptureAndRelease)
 				.Enter(delegate(StatesInstance smi)
 				{
 					smi.master.emitter.SetEmitting(emitting: true);
@@ -71,6 +75,10 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 				}, UpdateRate.SIM_EVERY_TICK);
 			ready.pre.PlayAnim("travel_pre").OnAnimQueueComplete(ready.moving);
 			ready.moving.PlayAnim("travel_loop", KAnim.PlayMode.Loop);
+			catchAndRelease.Enter(delegate(StatesInstance smi)
+			{
+				smi.master.collision = CollisionType.None;
+			}).PlayAnim("explode", KAnim.PlayMode.Once).OnAnimQueueComplete(ready.pre);
 			destroying.Enter(delegate(StatesInstance smi)
 			{
 				smi.master.isCollideable = false;
@@ -96,14 +104,9 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 		private void EmitRemainingPayload(StatesInstance smi, float emitDurration, short emitRadius)
 		{
 			KAnim.Anim currentAnim = smi.master.GetComponent<KBatchedAnimController>().GetCurrentAnim();
-			if (emitDurration < currentAnim.totalTime)
-			{
-				DebugUtil.LogErrorArgs("HEP anim is shorter than emitDurration, change the animation to match.");
-			}
-			smi.master.emitter.emitRate = emitDurration;
 			smi.master.emitter.emitRadiusX = emitRadius;
 			smi.master.emitter.emitRadiusY = emitRadius;
-			smi.master.emitter.emitRads = smi.master.payload;
+			smi.master.emitter.emitRads = smi.master.payload * 0.5f * (600f / emitDurration);
 			smi.master.emitter.Refresh();
 			smi.Schedule(emitDurration, delegate
 			{
@@ -126,9 +129,6 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 
 	[Serialize]
 	public float perCellFalloff;
-
-	[Serialize]
-	public float radioactiveRatio;
 
 	[Serialize]
 	public CollisionType collision;
@@ -190,7 +190,40 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 	public void Collide(CollisionType collisionType)
 	{
 		collision = collisionType;
-		base.smi.sm.destroySignal.Trigger(base.smi);
+		GameObject gameObject = new GameObject("HEPcollideFX");
+		gameObject.SetActive(value: false);
+		gameObject.transform.SetPosition(Grid.CellToPosCCC(Grid.PosToCell(base.smi.master.transform.position), Grid.SceneLayer.FXFront));
+		KBatchedAnimController fxAnim = gameObject.AddComponent<KBatchedAnimController>();
+		fxAnim.AnimFiles = new KAnimFile[1]
+		{
+			Assets.GetAnim("hep_impact_kanim")
+		};
+		fxAnim.initialAnim = "graze";
+		gameObject.SetActive(value: true);
+		switch (collisionType)
+		{
+		case CollisionType.CaptureAndRelease:
+			fxAnim.Play("partial");
+			break;
+		case CollisionType.Captured:
+			fxAnim.Play("full");
+			break;
+		case CollisionType.PassThrough:
+			fxAnim.Play("graze");
+			break;
+		}
+		fxAnim.onAnimComplete += delegate
+		{
+			Util.KDestroyGameObject(fxAnim);
+		};
+		if (collisionType == CollisionType.PassThrough)
+		{
+			collision = CollisionType.None;
+		}
+		else
+		{
+			base.smi.sm.destroySignal.Trigger(base.smi);
+		}
 	}
 
 	public void DestroyNow()
@@ -215,6 +248,11 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 			capturedBy = null;
 			Collide(CollisionType.Captured);
 		}
+		else
+		{
+			capturedBy = null;
+			Collide(CollisionType.CaptureAndRelease);
+		}
 	}
 
 	public void Uncapture()
@@ -238,13 +276,17 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 		{
 			Operational component = gameObject.GetComponent<Operational>();
 			HighEnergyParticlePort component2 = gameObject.GetComponent<HighEnergyParticlePort>();
-			if (component2 != null && component2.InputActive())
+			if (component2 != null)
 			{
 				Vector2 pos = Grid.CellToPosCCC(component2.GetHighEnergyParticleInputPortPosition(), Grid.SceneLayer.NoLayer);
-				if (GetComponent<KCircleCollider2D>().Intersects(pos) && component2.AllowCapture(this))
+				if (GetComponent<KCircleCollider2D>().Intersects(pos))
 				{
-					Capture(component2);
-					return;
+					if (component2.InputActive() && component2.AllowCapture(this))
+					{
+						Capture(component2);
+						return;
+					}
+					Collide(CollisionType.PassThrough);
 				}
 			}
 		}
@@ -295,10 +337,12 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 			Health component7 = gameObject4.GetComponent<Health>();
 			if (component7 != null && !component7.IsDefeated())
 			{
-				if (component7.CanBeIncapacitated)
+				component7.Damage(20f);
+				if (!component7.IsDefeated())
 				{
-					component7.Incapacitate(GameTags.HitByHighEnergyParticle);
+					gameObject4.GetSMI<WoundMonitor.Instance>().PlayKnockedOverImpactAnimation();
 				}
+				gameObject4.GetComponent<PrimaryElement>().AddDisease(Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.Id), Mathf.FloorToInt(payload * 0.5f / 0.001f), "HEPImpact");
 				Collide(CollisionType.Minion);
 				return;
 			}
@@ -327,14 +371,12 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 		}
 		if (num != num2)
 		{
-			payload -= perCellFalloff;
+			payload -= 1f;
+			byte index = Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.Id);
+			int disease_delta = Mathf.FloorToInt(499.99997f);
+			SimMessages.ModifyDiseaseOnCell(num2, index, disease_delta);
 		}
-		if (payload > 0f)
-		{
-			emitter.emitRads = payload * radioactiveRatio;
-			emitter.Refresh();
-		}
-		else
+		if (!(payload > 0f))
 		{
 			base.smi.sm.destroySimpleSignal.Trigger(base.smi);
 		}

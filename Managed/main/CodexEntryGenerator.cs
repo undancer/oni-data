@@ -384,9 +384,9 @@ public static class CodexEntryGenerator
 			string text10 = Strings.Get("STRINGS.SUBWORLDS." + text6.ToUpper() + ".UTILITY");
 			ContentContainer item = new ContentContainer(new List<ICodexWidget>
 			{
-				new CodexText(string.IsNullOrEmpty(text9) ? "Basic description of the biome. Basic description of the biome. Basic description of the biome. Basic description of the biome. Basic description of the biome. " : text9),
+				new CodexText(string.IsNullOrEmpty(text9) ? "Basic description of the biome." : text9),
 				new CodexSpacer(),
-				new CodexText(string.IsNullOrEmpty(text10) ? "Description of the biomes utility. Description of the biomes utility. Description of the biomes utility. Description of the biomes utility." : text10),
+				new CodexText(string.IsNullOrEmpty(text10) ? "Description of the biomes utility." : text10),
 				new CodexSpacer()
 			}, ContentContainer.ContentLayout.Vertical);
 			list.Add(item);
@@ -394,7 +394,7 @@ public static class CodexEntryGenerator
 			ContentContainer item2 = new ContentContainer(new List<ICodexWidget>
 			{
 				new CodexSpacer(),
-				new CodexText("ELEMENTS", CodexTextStyle.Subtitle),
+				new CodexText(UI.CODEX.SUBWORLDS.ELEMENTS, CodexTextStyle.Subtitle),
 				new CodexSpacer()
 			}, ContentContainer.ContentLayout.Vertical);
 			list.Add(item2);
@@ -459,7 +459,7 @@ public static class CodexEntryGenerator
 			ContentContainer item3 = new ContentContainer(new List<ICodexWidget>
 			{
 				new CodexSpacer(),
-				new CodexText("PLANTS", CodexTextStyle.Subtitle),
+				new CodexText(UI.CODEX.SUBWORLDS.PLANTS, CodexTextStyle.Subtitle),
 				new CodexSpacer()
 			}, ContentContainer.ContentLayout.Vertical);
 			list.Add(item3);
@@ -507,13 +507,13 @@ public static class CodexEntryGenerator
 			}
 			if (list2.Count == 0)
 			{
-				contentContainer2.content.Add(new CodexIndentedLabelWithIcon("No plants", CodexTextStyle.Body, new Tuple<Sprite, Color>(Assets.GetSprite("inspectorUI_cannot_build"), Color.red)));
+				contentContainer2.content.Add(new CodexIndentedLabelWithIcon(UI.CODEX.SUBWORLDS.NONE, CodexTextStyle.Body, new Tuple<Sprite, Color>(Assets.GetSprite("inspectorUI_cannot_build"), Color.red)));
 			}
 			List<Tag> list3 = new List<Tag>();
 			ContentContainer item4 = new ContentContainer(new List<ICodexWidget>
 			{
 				new CodexSpacer(),
-				new CodexText("CRITTERS", CodexTextStyle.Subtitle),
+				new CodexText(UI.CODEX.SUBWORLDS.CRITTERS, CodexTextStyle.Subtitle),
 				new CodexSpacer()
 			}, ContentContainer.ContentLayout.Vertical);
 			list.Add(item4);
@@ -561,7 +561,7 @@ public static class CodexEntryGenerator
 			}
 			if (list3.Count == 0)
 			{
-				contentContainer3.content.Add(new CodexIndentedLabelWithIcon("No critters", CodexTextStyle.Body, new Tuple<Sprite, Color>(Assets.GetSprite("inspectorUI_cannot_build"), Color.red)));
+				contentContainer3.content.Add(new CodexIndentedLabelWithIcon(UI.CODEX.SUBWORLDS.NONE, CodexTextStyle.Body, new Tuple<Sprite, Color>(Assets.GetSprite("inspectorUI_cannot_build"), Color.red)));
 			}
 			string text11 = "BIOME" + text6;
 			CodexEntry codexEntry = new CodexEntry("BIOMES", list, text11);
@@ -1196,8 +1196,8 @@ public static class CodexEntryGenerator
 			{
 				new CodexSpacer(),
 				new CodexText(CODEX.HEADERS.COMFORTRANGE, CodexTextStyle.Subtitle),
-				new CodexText("    • " + string.Format(CODEX.CREATURE_DESCRIPTORS.TEMPERATURE.COMFORT_RANGE, GameUtil.GetFormattedTemperature(component.internalTemperatureWarning_Low), GameUtil.GetFormattedTemperature(component.internalTemperatureWarning_High))),
-				new CodexText("    • " + string.Format(CODEX.CREATURE_DESCRIPTORS.TEMPERATURE.NON_LETHAL_RANGE, GameUtil.GetFormattedTemperature(component.internalTemperatureLethal_Low), GameUtil.GetFormattedTemperature(component.internalTemperatureLethal_High)))
+				new CodexText("    • " + string.Format(CODEX.CREATURE_DESCRIPTORS.TEMPERATURE.COMFORT_RANGE, GameUtil.GetFormattedTemperature(component.TemperatureWarningLow), GameUtil.GetFormattedTemperature(component.TemperatureWarningHigh))),
+				new CodexText("    • " + string.Format(CODEX.CREATURE_DESCRIPTORS.TEMPERATURE.NON_LETHAL_RANGE, GameUtil.GetFormattedTemperature(component.TemperatureLethalLow), GameUtil.GetFormattedTemperature(component.TemperatureLethalHigh)))
 			}, ContentContainer.ContentLayout.Vertical));
 		}
 		List<Tag> list = new List<Tag>();

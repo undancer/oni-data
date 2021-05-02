@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TUNING;
 using UnityEngine;
 
@@ -5,9 +6,9 @@ public class OrbitalCargoModuleConfig : IBuildingConfig
 {
 	public const string ID = "OrbitalCargoModule";
 
-	public const float NUM_CAPSULES = 3f;
+	public static int NUM_CAPSULES = 3 * Mathf.RoundToInt(ROCKETRY.CARGO_CAPACITY_SCALE);
 
-	public const float TOTAL_STORAGE_MASS = 600f;
+	public static float TOTAL_STORAGE_MASS = 200f * (float)NUM_CAPSULES;
 
 	public override BuildingDef CreateBuildingDef()
 	{
@@ -32,16 +33,19 @@ public class OrbitalCargoModuleConfig : IBuildingConfig
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		go.AddOrGet<LoopingSounds>();
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
+		List<Tag> list = new List<Tag>();
+		list.AddRange(STORAGEFILTERS.NOT_EDIBLE_SOLIDS);
+		list.AddRange(STORAGEFILTERS.FOOD);
 		Storage storage = go.AddComponent<Storage>();
 		storage.showInUI = true;
-		storage.capacityKg = 600f;
+		storage.capacityKg = TOTAL_STORAGE_MASS;
 		storage.showCapacityStatusItem = true;
 		storage.showDescriptor = true;
-		storage.storageFilters = STORAGEFILTERS.NOT_EDIBLE_SOLIDS;
+		storage.storageFilters = list;
 		storage.SetDefaultStoredItemModifiers(Storage.StandardInsulatedStorage);
 		go.AddOrGet<StorageLocker>();
 		OrbitalDeployCargoModule.Def def = go.AddOrGetDef<OrbitalDeployCargoModule.Def>();
-		def.launchMass = 200f;
+		def.numCapsules = NUM_CAPSULES;
 		BuildingAttachPoint buildingAttachPoint = go.AddOrGet<BuildingAttachPoint>();
 		buildingAttachPoint.points = new BuildingAttachPoint.HardPoint[1]
 		{
@@ -52,7 +56,7 @@ public class OrbitalCargoModuleConfig : IBuildingConfig
 	public override void DoPostConfigureComplete(GameObject go)
 	{
 		Prioritizable.AddRef(go);
-		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.MODERATE, null);
+		BuildingTemplates.ExtendBuildingToRocketModuleCluster(go, null, ROCKETRY.BURDEN.MODERATE);
 		FakeFloorAdder fakeFloorAdder = go.AddOrGet<FakeFloorAdder>();
 		fakeFloorAdder.floorOffsets = new CellOffset[3]
 		{

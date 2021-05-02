@@ -406,28 +406,28 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Wildlife";
 
-				public static LocString DESCRIPTION = "At least one wild creature.";
+				public static LocString DESCRIPTION = "Requires at least one wild critter";
 			}
 
 			public class WILDANIMALS
 			{
-				public static LocString NAME = "More Wildlife";
+				public static LocString NAME = "More wildlife";
 
-				public static LocString DESCRIPTION = "At least two wild creatures.";
+				public static LocString DESCRIPTION = "Requires two or more wild critters";
 			}
 
 			public class WILDPLANT
 			{
-				public static LocString NAME = "At least two Wild Plants";
+				public static LocString NAME = "Two wild plants";
 
-				public static LocString DESCRIPTION = "At least two wild plants.";
+				public static LocString DESCRIPTION = "Requires two or more wild plants";
 			}
 
 			public class WILDPLANTS
 			{
-				public static LocString NAME = "At least four Wild Plants";
+				public static LocString NAME = "Four wild plants";
 
-				public static LocString DESCRIPTION = "At least two wild plants.";
+				public static LocString DESCRIPTION = "Requires four or more wild plants";
 			}
 
 			public static LocString HEADER = "<b>Requirements:</b>";

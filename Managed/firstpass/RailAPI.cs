@@ -47,7 +47,7 @@ public static class RailAPI
 	public static extern bool Initialize();
 
 	[DllImport("RailAPI")]
-	public static extern bool NotifyWindowAntiAddiction();
+	public static extern uint NotifyWindowAntiAddiction();
 
 	[DllImport("RailAPI")]
 	public static extern void Shutdown();

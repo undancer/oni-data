@@ -65,7 +65,7 @@ public class LogicCircuitNetwork : UtilityNetwork
 
 	public ReadOnlyCollection<ILogicEventReceiver> Receivers => receivers.AsReadOnly();
 
-	public override void AddItem(int cell, object item)
+	public override void AddItem(object item)
 	{
 		if (item is LogicWire)
 		{
@@ -91,7 +91,7 @@ public class LogicCircuitNetwork : UtilityNetwork
 		}
 	}
 
-	public override void RemoveItem(int cell, object item)
+	public override void RemoveItem(object item)
 	{
 		if (item is LogicWire)
 		{
@@ -110,7 +110,7 @@ public class LogicCircuitNetwork : UtilityNetwork
 		}
 	}
 
-	public override void ConnectItem(int cell, object item)
+	public override void ConnectItem(object item)
 	{
 		if (item is ILogicEventReceiver)
 		{
@@ -124,7 +124,7 @@ public class LogicCircuitNetwork : UtilityNetwork
 		}
 	}
 
-	public override void DisconnectItem(int cell, object item)
+	public override void DisconnectItem(object item)
 	{
 		if (item is ILogicEventReceiver)
 		{

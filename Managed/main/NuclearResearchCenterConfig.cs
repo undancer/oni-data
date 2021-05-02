@@ -5,11 +5,11 @@ public class NuclearResearchCenterConfig : IBuildingConfig
 {
 	public const string ID = "NuclearResearchCenter";
 
-	public const float BASE_TIME_PER_POINT = 102f;
+	public const float BASE_TIME_PER_POINT = 100f;
 
-	public const float PARTICLES_PER_POINT = 50f;
+	public const float PARTICLES_PER_POINT = 10f;
 
-	public const float CAPACITY = 250f;
+	public const float CAPACITY = 100f;
 
 	public static readonly Tag INPUT_MATERIAL = GameTags.HighEnergyParticle;
 
@@ -37,7 +37,7 @@ public class NuclearResearchCenterConfig : IBuildingConfig
 		Prioritizable.AddRef(go);
 		HighEnergyParticleStorage highEnergyParticleStorage = go.AddOrGet<HighEnergyParticleStorage>();
 		highEnergyParticleStorage.autoStore = true;
-		highEnergyParticleStorage.capacity = 250f;
+		highEnergyParticleStorage.capacity = 100f;
 		NuclearResearchCenterWorkable nuclearResearchCenterWorkable = go.AddOrGet<NuclearResearchCenterWorkable>();
 		nuclearResearchCenterWorkable.overrideAnims = new KAnimFile[1]
 		{
@@ -45,9 +45,9 @@ public class NuclearResearchCenterConfig : IBuildingConfig
 		};
 		nuclearResearchCenterWorkable.requiredSkillPerk = Db.Get().SkillPerks.AllowNuclearResearch.Id;
 		NuclearResearchCenter nuclearResearchCenter = go.AddOrGet<NuclearResearchCenter>();
-		nuclearResearchCenter.researchTypeID = "delta";
-		nuclearResearchCenter.materialPerPoint = 50f;
-		nuclearResearchCenter.timePerPoint = 102f;
+		nuclearResearchCenter.researchTypeID = "nuclear";
+		nuclearResearchCenter.materialPerPoint = 10f;
+		nuclearResearchCenter.timePerPoint = 100f;
 		nuclearResearchCenter.inputMaterial = INPUT_MATERIAL;
 		go.AddOrGetDef<PoweredController.Def>();
 	}

@@ -13,11 +13,11 @@ public class LimitOneEngine : SelectModuleCondition
 		{
 			if (selectionContext != SelectionContext.ReplaceModule || !(item == existingModule.gameObject))
 			{
-				if (item.GetComponent<RocketEngine>() != null)
+				if (item.GetComponent<RocketEngineCluster>() != null)
 				{
 					return false;
 				}
-				if (item.GetComponent<BuildingUnderConstruction>() != null && item.GetComponent<BuildingUnderConstruction>().Def.BuildingComplete.GetComponent<RocketEngine>() != null)
+				if (item.GetComponent<BuildingUnderConstruction>() != null && item.GetComponent<BuildingUnderConstruction>().Def.BuildingComplete.GetComponent<RocketEngineCluster>() != null)
 				{
 					return false;
 				}

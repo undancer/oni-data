@@ -1,6 +1,5 @@
 using KSerialization;
 using STRINGS;
-using TUNING;
 using UnityEngine;
 
 [SerializationConfig(MemberSerialization.OptIn)]
@@ -54,9 +53,6 @@ public class RocketEngine : StateMachineComponent<RocketEngine.StatesInstance>
 							SimMessages.ModifyEnergy(num5, smi.master.exhaustTemperature / (float)(i + 1), 3200f, SimMessages.EnergySourceID.Burner);
 						}
 					}
-				})
-				.Exit(delegate
-				{
 				});
 			burnComplete.PlayAnim("grounded", KAnim.PlayMode.Loop).EventTransition(GameHashes.IgniteEngine, burning);
 		}
@@ -76,11 +72,7 @@ public class RocketEngine : StateMachineComponent<RocketEngine.StatesInstance>
 
 	public bool requireOxidizer = true;
 
-	public int maxModules = 32;
-
 	public bool mainEngine = true;
-
-	public Light2D flameLight;
 
 	protected override void OnSpawn()
 	{
@@ -89,45 +81,6 @@ public class RocketEngine : StateMachineComponent<RocketEngine.StatesInstance>
 		if (mainEngine)
 		{
 			GetComponent<RocketModule>().AddModuleCondition(ProcessCondition.ProcessConditionType.RocketPrep, new RequireAttachedComponent(base.gameObject.GetComponent<AttachableBuilding>(), typeof(FuelTank), UI.STARMAP.COMPONENT.FUEL_TANK));
-			GetComponent<RocketModule>().AddModuleCondition(ProcessCondition.ProcessConditionType.RocketPrep, new ConditionModuleCount(this));
 		}
-	}
-
-	private void ConfigureFlameLight()
-	{
-		flameLight = base.gameObject.AddOrGet<Light2D>();
-		flameLight.Color = Color.white;
-		flameLight.overlayColour = LIGHT2D.LIGHTBUG_OVERLAYCOLOR;
-		flameLight.Range = 10f;
-		flameLight.Angle = 0f;
-		flameLight.Direction = LIGHT2D.LIGHTBUG_DIRECTION;
-		flameLight.Offset = LIGHT2D.LIGHTBUG_OFFSET;
-		flameLight.shape = LightShape.Circle;
-		flameLight.drawOverlay = true;
-		flameLight.Lux = 80000;
-		flameLight.emitter.RemoveFromGrid();
-		base.gameObject.AddOrGet<LightSymbolTracker>().targetSymbol = GetComponent<KBatchedAnimController>().CurrentAnim.rootSymbol;
-		flameLight.enabled = false;
-	}
-
-	private void UpdateFlameLight(int cell)
-	{
-		base.smi.master.flameLight.RefreshShapeAndPosition();
-		if (Grid.IsValidCell(cell))
-		{
-			if (!base.smi.master.flameLight.enabled && base.smi.timeinstate > 3f)
-			{
-				base.smi.master.flameLight.enabled = true;
-			}
-		}
-		else
-		{
-			base.smi.master.flameLight.enabled = false;
-		}
-	}
-
-	protected override void OnCleanUp()
-	{
-		base.OnCleanUp();
 	}
 }

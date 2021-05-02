@@ -196,5 +196,11 @@ namespace Steamworks
 			InteropHelp.TestIfAvailableClient();
 			return (SteamAPICall_t)NativeMethods.ISteamUser_GetDurationControl(CSteamAPIContext.GetSteamUser());
 		}
+
+		public static bool BSetDurationControlOnlineState(EDurationControlOnlineState eNewState)
+		{
+			InteropHelp.TestIfAvailableClient();
+			return NativeMethods.ISteamUser_BSetDurationControlOnlineState(CSteamAPIContext.GetSteamUser(), eNewState);
+		}
 	}
 }

@@ -59,7 +59,7 @@ public class NewGameSettingsPanel : KMonoBehaviour
 		widgets = new List<NewGameSettingWidget>();
 		foreach (KeyValuePair<string, SettingConfig> qualitySetting in settings.QualitySettings)
 		{
-			if (qualitySetting.Key == "World" || qualitySetting.Key == "ClusterLayout" || (qualitySetting.Value.debug_only && !DebugHandler.enabled) || !DlcManager.IsContentActive(qualitySetting.Value.required_content))
+			if ((qualitySetting.Value.debug_only && !DebugHandler.enabled) || (qualitySetting.Value.editor_only && !Application.isEditor) || !DlcManager.IsContentActive(qualitySetting.Value.required_content))
 			{
 				continue;
 			}

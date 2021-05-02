@@ -574,6 +574,18 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 		return value;
 	}
 
+	public static bool TryGetAnim(HashedString name, out KAnimFile anim)
+	{
+		if (!name.IsValid)
+		{
+			Debug.LogWarning("Invalid hash name");
+			anim = null;
+			return false;
+		}
+		AnimTable.TryGetValue(name, out anim);
+		return anim != null;
+	}
+
 	public void OnAfterDeserialize()
 	{
 		TintedSpriteAssets = TintedSpriteAssets.Where((TintedSprite x) => x != null && x.sprite != null).ToList();

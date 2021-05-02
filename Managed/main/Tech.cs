@@ -34,13 +34,18 @@ public class Tech : Resource
 
 	public List<ResourceTreeNode.Edge> edges => node.edges;
 
-	public Tech(string id, string[] unlockedItemIDs, Techs techs)
+	public Tech(string id, List<string> unlockedItemIDs, Techs techs, Dictionary<string, float> overrideDefaultCosts = null)
 		: base(id, techs, Strings.Get("STRINGS.RESEARCH.TECHS." + id.ToUpper() + ".NAME"))
 	{
 		desc = Strings.Get("STRINGS.RESEARCH.TECHS." + id.ToUpper() + ".DESC");
-		foreach (string item in unlockedItemIDs)
+		this.unlockedItemIDs = unlockedItemIDs;
+		if (overrideDefaultCosts == null || !DlcManager.IsExpansion1Active())
 		{
-			this.unlockedItemIDs.Add(item);
+			return;
+		}
+		foreach (KeyValuePair<string, float> overrideDefaultCost in overrideDefaultCosts)
+		{
+			costsByResearchTypeID.Add(overrideDefaultCost.Key, overrideDefaultCost.Value);
 		}
 	}
 

@@ -8,6 +8,8 @@ public class OxygenMaskConfig : IEquipmentConfig
 {
 	public const string ID = "Oxygen_Mask";
 
+	public const string WORN_ID = "Worn_Oxygen_Mask";
+
 	private const PathFinder.PotentialPath.Flags suit_flags = PathFinder.PotentialPath.Flags.HasOxygenMask;
 
 	private AttributeModifier expertAthleticsModifier;
@@ -17,10 +19,12 @@ public class OxygenMaskConfig : IEquipmentConfig
 		List<AttributeModifier> list = new List<AttributeModifier>();
 		list.Add(new AttributeModifier(TUNING.EQUIPMENT.ATTRIBUTE_MOD_IDS.ATHLETICS, TUNING.EQUIPMENT.SUITS.OXYGEN_MASK_ATHLETICS, STRINGS.EQUIPMENT.PREFABS.OXYGEN_MASK.NAME));
 		expertAthleticsModifier = new AttributeModifier(TUNING.EQUIPMENT.ATTRIBUTE_MOD_IDS.ATHLETICS, -TUNING.EQUIPMENT.SUITS.OXYGEN_MASK_ATHLETICS, Db.Get().Skills.Suits1.Name);
-		EquipmentDef equipmentDef = EquipmentTemplates.CreateEquipmentDef("Oxygen_Mask", TUNING.EQUIPMENT.SUITS.SLOT, SimHashes.Dirt, 15f, "oxygen_mask_kanim", "mask_oxygen", "", 6, list, null, IsBody: false, EntityTemplates.CollisionShape.CIRCLE, 0.325f, 0.325f, new Tag[1]
+		EquipmentDef equipmentDef = EquipmentTemplates.CreateEquipmentDef("Oxygen_Mask", TUNING.EQUIPMENT.SUITS.SLOT, SimHashes.Dirt, 15f, "oxygen_mask_kanim", "mask_oxygen", "", 6, list, null, IsBody: false, EntityTemplates.CollisionShape.CIRCLE, 0.325f, 0.325f, new Tag[2]
 		{
-			GameTags.Suit
+			GameTags.Suit,
+			GameTags.Clothes
 		});
+		equipmentDef.wornID = "Worn_Oxygen_Mask";
 		equipmentDef.RequiredDlcId = "EXPANSION1_ID";
 		equipmentDef.RecipeDescription = STRINGS.EQUIPMENT.PREFABS.OXYGEN_MASK.RECIPE_DESC;
 		equipmentDef.OnEquipCallBack = delegate(Equippable eq)
@@ -73,13 +77,14 @@ public class OxygenMaskConfig : IEquipmentConfig
 		storage.showInUI = true;
 		SuitTank suitTank = go.AddComponent<SuitTank>();
 		suitTank.element = "Oxygen";
-		suitTank.capacity = 75f;
+		suitTank.capacity = 20f;
 		suitTank.elementTag = GameTags.Breathable;
-		go.AddComponent<HelmetController>();
+		Durability durability = go.AddComponent<Durability>();
+		durability.wornEquipmentPrefabID = "Worn_Oxygen_Mask";
+		durability.durabilityLossPerCycle = TUNING.EQUIPMENT.SUITS.OXYGEN_MASK_DECAY;
 		KPrefabID component = go.GetComponent<KPrefabID>();
 		component.AddTag(GameTags.Clothes);
 		component.AddTag(GameTags.PedestalDisplayable);
-		go.AddOrGet<OxygenMask>();
 		go.AddComponent<SuitDiseaseHandler>();
 	}
 }

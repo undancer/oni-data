@@ -10,6 +10,8 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 	{
 		private LaunchPad pad;
 
+		private KAnimLink animLink;
+
 		private Coroutine activeAnimationRoutine = null;
 
 		private string[] towerBGAnimNames = new string[10]
@@ -61,6 +63,7 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 			gameObject.SetActive(value: true);
 			towerAnimControllers.Add(kBatchedAnimController);
 			kBatchedAnimController.initialAnim = towerBGAnimNames[towerAnimControllers.Count % towerBGAnimNames.Length] + towerBGAnimSuffix_off;
+			animLink = new KAnimLink(pad.GetComponent<KAnimControllerBase>(), kBatchedAnimController);
 		}
 
 		public void RemoveTowerRow()
@@ -132,7 +135,7 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 
 	private CellOffset baseModulePosition = new CellOffset(0, 2);
 
-	private RocketModule landedRocket;
+	private RocketModuleCluster landedRocket;
 
 	private AttachableBuilding lastBaseAttachable;
 
@@ -145,7 +148,9 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 
 	private HandleVector<int>.Handle partitionerEntry;
 
-	public RocketModule LandedRocket => landedRocket;
+	private Guid landedRocketPassengerModuleStatusItem = Guid.Empty;
+
+	public RocketModuleCluster LandedRocket => landedRocket;
 
 	public int PadPosition => Grid.OffsetCell(Grid.PosToCell(this), baseModulePosition);
 
@@ -169,6 +174,12 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 		{
 			landedRocket.CraftInterface.SetCurrentPad(this);
 		}
+		CheckLandedRocketPassengerModuleStatus();
+		int num = ConditionFlightPathIsClear.PadPositionDistanceToCeiling(base.gameObject);
+		if (num < ConditionFlightPathIsClear.maximumRocketHeight)
+		{
+			GetComponent<KSelectable>().AddStatusItem(Db.Get().BuildingStatusItems.RocketPlatformCloseToCeiling, num);
+		}
 	}
 
 	protected override void OnCleanUp()
@@ -184,16 +195,61 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 		base.OnCleanUp();
 	}
 
+	private void CheckLandedRocketPassengerModuleStatus()
+	{
+		if (landedRocket == null)
+		{
+			GetComponent<KSelectable>().RemoveStatusItem(landedRocketPassengerModuleStatusItem);
+			landedRocketPassengerModuleStatusItem = Guid.Empty;
+		}
+		else if (landedRocket.CraftInterface.GetPassengerModule() == null)
+		{
+			if (landedRocketPassengerModuleStatusItem == Guid.Empty)
+			{
+				landedRocketPassengerModuleStatusItem = GetComponent<KSelectable>().AddStatusItem(Db.Get().BuildingStatusItems.LandedRocketLacksPassengerModule);
+			}
+		}
+		else if (landedRocketPassengerModuleStatusItem != Guid.Empty)
+		{
+			GetComponent<KSelectable>().RemoveStatusItem(landedRocketPassengerModuleStatusItem);
+			landedRocketPassengerModuleStatusItem = Guid.Empty;
+		}
+	}
+
+	public bool IsLogicInputConnected()
+	{
+		LogicPorts component = GetComponent<LogicPorts>();
+		int portCell = component.GetPortCell(triggerPort);
+		LogicCircuitManager logicCircuitManager = Game.Instance.logicCircuitManager;
+		LogicCircuitNetwork networkForCell = logicCircuitManager.GetNetworkForCell(portCell);
+		return networkForCell != null;
+	}
+
 	public void Sim1000ms(float dt)
 	{
 		LogicPorts component = base.gameObject.GetComponent<LogicPorts>();
-		if (component.GetInputValue(triggerPort) == 1 && landedRocket != null)
+		if (landedRocket != null && IsLogicInputConnected())
 		{
-			landedRocket.CraftInterface.TriggerLaunch(automated: true);
+			if (component.GetInputValue(triggerPort) == 1)
+			{
+				if (landedRocket.CraftInterface.CheckReadyForAutomatedLaunchCommand())
+				{
+					landedRocket.CraftInterface.TriggerLaunch(automated: true);
+				}
+				else
+				{
+					landedRocket.CraftInterface.CancelLaunch();
+				}
+			}
+			else
+			{
+				landedRocket.CraftInterface.CancelLaunch();
+			}
 		}
+		CheckLandedRocketPassengerModuleStatus();
 		if (landedRocket != null)
 		{
-			component.SendSignal(statusPort, (landedRocket.CraftInterface.CheckReadyToLaunch() || landedRocket.CraftInterface.HasTag(GameTags.RocketNotOnGround)) ? 1 : 0);
+			component.SendSignal(statusPort, (landedRocket.CraftInterface.CheckReadyForAutomatedLaunch() || landedRocket.CraftInterface.HasTag(GameTags.RocketNotOnGround)) ? 1 : 0);
 		}
 		else
 		{
@@ -210,7 +266,7 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 		gameObject2.SetActive(value: true);
 		Clustercraft component = gameObject2.GetComponent<Clustercraft>();
 		CraftModuleInterface component2 = component.GetComponent<CraftModuleInterface>();
-		component2.AddModule(gameObject.GetComponent<RocketModule>());
+		component2.AddModule(gameObject.GetComponent<RocketModuleCluster>());
 		component.Init(this.GetMyWorldLocation(), this);
 		if (gameObject.GetComponent<BuildingUnderConstruction>() != null)
 		{
@@ -227,13 +283,13 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 		{
 			AttachableBuilding component = gameObject.GetComponent<AttachableBuilding>();
 			BuildingAttachPoint component2 = gameObject.GetComponent<BuildingAttachPoint>();
-			landedRocket = gameObject.GetComponent<RocketModule>();
+			landedRocket = gameObject.GetComponent<RocketModuleCluster>();
 			Trigger(-887025858, landedRocket);
 		}
 		else if (landedRocket != null && gameObject == null)
 		{
 			Trigger(-1277991738, landedRocket);
-			AttachableBuilding component3 = landedRocket.CraftInterface.Modules[0].Get().GetComponent<AttachableBuilding>();
+			AttachableBuilding component3 = landedRocket.CraftInterface.ClusterModules[0].Get().GetComponent<AttachableBuilding>();
 			component3.onAttachmentNetworkChanged = (Action<AttachableBuilding>)Delegate.Remove(component3.onAttachmentNetworkChanged, new Action<AttachableBuilding>(OnRocketLayoutChanged));
 			landedRocket = null;
 		}
@@ -287,7 +343,7 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 	{
 		if (landedRocket != null)
 		{
-			tower.SetTowerHeight(landedRocket.CraftInterface.RocketHeight);
+			tower.SetTowerHeight(landedRocket.CraftInterface.MaxHeight);
 		}
 		dirtyTowerHeight = false;
 	}
@@ -302,9 +358,9 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 		RocketProcessConditionDisplayTarget rocketProcessConditionDisplayTarget = null;
 		if (landedRocket != null)
 		{
-			for (int i = 0; i < landedRocket.CraftInterface.Modules.Count; i++)
+			for (int i = 0; i < landedRocket.CraftInterface.ClusterModules.Count; i++)
 			{
-				RocketProcessConditionDisplayTarget component = landedRocket.CraftInterface.Modules[i].Get().GetComponent<RocketProcessConditionDisplayTarget>();
+				RocketProcessConditionDisplayTarget component = landedRocket.CraftInterface.ClusterModules[i].Get().GetComponent<RocketProcessConditionDisplayTarget>();
 				if (component != null)
 				{
 					rocketProcessConditionDisplayTarget = component;
@@ -317,5 +373,18 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 			return ((IProcessConditionSet)rocketProcessConditionDisplayTarget).GetConditionSet(conditionType);
 		}
 		return new List<ProcessCondition>();
+	}
+
+	public static List<LaunchPad> GetLaunchPadsForDestination(AxialI destination)
+	{
+		List<LaunchPad> list = new List<LaunchPad>();
+		foreach (LaunchPad launchPad in Components.LaunchPads)
+		{
+			if (launchPad.GetMyWorldLocation() == destination)
+			{
+				list.Add(launchPad);
+			}
+		}
+		return list;
 	}
 }

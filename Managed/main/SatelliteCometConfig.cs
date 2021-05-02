@@ -24,7 +24,7 @@ public class SatelliteCometConfig : IEntityConfig
 		comet.totalTileDamage = 2f;
 		comet.splashRadius = 1;
 		comet.impactSound = "Meteor_Large_Impact";
-		comet.flyingSoundID = 0;
+		comet.flyingSoundID = 1;
 		comet.explosionEffectHash = SpawnFXHashes.MeteorImpactDust;
 		comet.addTiles = 0;
 		comet.craterPrefabs = new string[3]

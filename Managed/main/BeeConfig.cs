@@ -11,12 +11,11 @@ public class BeeConfig : IEntityConfig
 
 	public static GameObject CreateBee(string id, string name, string desc, string anim_file, bool is_baby)
 	{
-		GameObject gameObject = BaseBeeConfig.BaseBee(id, name, desc, anim_file, "BeeBaseTrait", DECOR.BONUS.TIER4, is_baby);
-		EntityTemplates.ExtendEntityToWildCreature(gameObject, BeeTuning.PEN_SIZE_PER_CREATURE);
+		GameObject result = BaseBeeConfig.BaseBee(id, name, desc, anim_file, "BeeBaseTrait", DECOR.BONUS.TIER4, is_baby);
 		Trait trait = Db.Get().CreateTrait("BeeBaseTrait", name, name, null, should_save: false, null, positive_trait: true, is_valid_starter_trait: true);
 		trait.Add(new AttributeModifier(Db.Get().Amounts.HitPoints.maxAttribute.Id, 5f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Age.maxAttribute.Id, 5f, name));
-		return gameObject;
+		return result;
 	}
 
 	public string GetDlcId()

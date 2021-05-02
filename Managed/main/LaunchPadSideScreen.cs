@@ -16,13 +16,13 @@ public class LaunchPadSideScreen : SideScreenContent
 
 	public KButton startNewRocketbutton;
 
-	public KButton launchRocketButton;
-
 	public GameObject landableRowContainer;
 
 	public GameObject nothingWaitingRow;
 
 	public KScreen changeModuleSideScreen;
+
+	private int refreshEventHandle = -1;
 
 	public List<GameObject> waitingToLandRows = new List<GameObject>();
 
@@ -30,7 +30,6 @@ public class LaunchPadSideScreen : SideScreenContent
 	{
 		base.OnSpawn();
 		startNewRocketbutton.onClick += ClickStartNewRocket;
-		launchRocketButton.onClick += ClickLaunchRocket;
 	}
 
 	protected override void OnShow(bool show)
@@ -59,17 +58,22 @@ public class LaunchPadSideScreen : SideScreenContent
 			Debug.LogError("Invalid gameObject received");
 			return;
 		}
+		if (refreshEventHandle != -1)
+		{
+			selectedPad.Unsubscribe(refreshEventHandle);
+		}
 		selectedPad = new_target.GetComponent<LaunchPad>();
 		if (selectedPad == null)
 		{
 			Debug.LogError("The gameObject received does not contain a LaunchPad component");
 			return;
 		}
+		refreshEventHandle = selectedPad.Subscribe(-887025858, RefreshWaitingToLandList);
 		RefreshRocketButton();
 		RefreshWaitingToLandList();
 	}
 
-	private void RefreshWaitingToLandList()
+	private void RefreshWaitingToLandList(object data = null)
 	{
 		for (int num = waitingToLandRows.Count - 1; num >= 0; num--)
 		{
@@ -81,20 +85,29 @@ public class LaunchPadSideScreen : SideScreenContent
 		foreach (ClusterGridEntity item in ClusterGrid.Instance.GetEntitiesInRange(myWorldLocation))
 		{
 			Clustercraft craft = item as Clustercraft;
-			if (!(craft == null) && craft.Status != 0 && (!craft.IsFlightInProgress() || !(craft.Destination != myWorldLocation)))
+			if (craft == null || craft.Status != Clustercraft.CraftStatus.InFlight || (craft.IsFlightInProgress() && craft.Destination != myWorldLocation))
 			{
-				GameObject gameObject = Util.KInstantiateUI(landableRocketRowPrefab, landableRowContainer, force_active: true);
-				gameObject.GetComponentInChildren<LocText>().text = craft.Name;
-				waitingToLandRows.Add(gameObject);
-				KButton componentInChildren = gameObject.GetComponentInChildren<KButton>();
-				componentInChildren.onClick += delegate
+				continue;
+			}
+			GameObject gameObject = Util.KInstantiateUI(landableRocketRowPrefab, landableRowContainer, force_active: true);
+			gameObject.GetComponentInChildren<LocText>().text = craft.Name;
+			waitingToLandRows.Add(gameObject);
+			KButton componentInChildren = gameObject.GetComponentInChildren<KButton>();
+			componentInChildren.GetComponentInChildren<LocText>().SetText((craft.ModuleInterface.GetClusterDestinationSelector().GetDestinationPad() == selectedPad) ? UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.CANCEL_LAND_BUTTON : UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAND_BUTTON);
+			componentInChildren.isInteractable = craft.CanLandAtPad(selectedPad, out var _) != Clustercraft.PadLandingStatus.CanNeverLand;
+			componentInChildren.onClick += delegate
+			{
+				if (craft.ModuleInterface.GetClusterDestinationSelector().GetDestinationPad() == selectedPad)
+				{
+					craft.GetComponent<ClusterDestinationSelector>().SetDestination(craft.Location);
+				}
+				else
 				{
 					craft.LandAtPad(selectedPad);
-					RefreshWaitingToLandList();
-				};
-				componentInChildren.gameObject.SetActive(craft.Destination != myWorldLocation);
-				nothingWaitingRow.SetActive(value: false);
-			}
+				}
+				RefreshWaitingToLandList();
+			};
+			nothingWaitingRow.SetActive(value: false);
 		}
 	}
 
@@ -102,10 +115,6 @@ public class LaunchPadSideScreen : SideScreenContent
 	{
 		SelectModuleSideScreen selectModuleSideScreen = (SelectModuleSideScreen)DetailsScreen.Instance.SetSecondarySideScreen(changeModuleSideScreen, UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.CHANGEMODULEPANEL);
 		selectModuleSideScreen.SetLaunchPad(selectedPad);
-	}
-
-	private void ClickLaunchRocket()
-	{
 	}
 
 	private void RefreshRocketButton()

@@ -5,12 +5,15 @@ public class RadiationEmitter : SimComponent
 {
 	public enum RadiationEmitterType
 	{
+		Constant,
 		Pulsing,
 		PulsingAveraged,
 		SimplePulse,
 		RadialBeams,
 		Attractor
 	}
+
+	public bool radiusProportionalToRads = false;
 
 	[SerializeField]
 	public short emitRadiusX = 4;
@@ -19,7 +22,7 @@ public class RadiationEmitter : SimComponent
 	public short emitRadiusY = 4;
 
 	[SerializeField]
-	public float emitRads = 1000f;
+	public float emitRads = 10f;
 
 	[SerializeField]
 	public float emitRate = 1f;
@@ -28,7 +31,13 @@ public class RadiationEmitter : SimComponent
 	public float emitSpeed = 1f;
 
 	[SerializeField]
-	public RadiationEmitterType emitType = RadiationEmitterType.Pulsing;
+	public float emitDirection = 0f;
+
+	[SerializeField]
+	public float emitAngle = 360f;
+
+	[SerializeField]
+	public RadiationEmitterType emitType = RadiationEmitterType.Constant;
 
 	[SerializeField]
 	public Vector3 emissionOffset = Vector3.zero;
@@ -58,7 +67,11 @@ public class RadiationEmitter : SimComponent
 	public void Refresh()
 	{
 		int emissionCell = GetEmissionCell();
-		SimMessages.ModifyRadiationEmitter(simHandle, emissionCell, emitRadiusX, emitRadiusY, emitRads, emitRate, emitSpeed, emitType);
+		if (radiusProportionalToRads)
+		{
+			SetRadiusProportionalToRads();
+		}
+		SimMessages.ModifyRadiationEmitter(simHandle, emissionCell, emitRadiusX, emitRadiusY, emitRads, emitRate, emitSpeed, emitDirection, emitAngle, emitType);
 	}
 
 	private void OnCellChange()
@@ -66,23 +79,33 @@ public class RadiationEmitter : SimComponent
 		Refresh();
 	}
 
+	private void SetRadiusProportionalToRads()
+	{
+		emitRadiusX = (short)Mathf.Clamp(Mathf.RoundToInt(emitRads * 1f), 1, 128);
+		emitRadiusY = (short)Mathf.Clamp(Mathf.RoundToInt(emitRads * 1f), 1, 128);
+	}
+
 	protected override void OnSimActivate()
 	{
 		int emissionCell = GetEmissionCell();
-		SimMessages.ModifyRadiationEmitter(simHandle, emissionCell, emitRadiusX, emitRadiusY, emitRads, emitRate, emitSpeed, emitType);
+		if (radiusProportionalToRads)
+		{
+			SetRadiusProportionalToRads();
+		}
+		SimMessages.ModifyRadiationEmitter(simHandle, emissionCell, emitRadiusX, emitRadiusY, emitRads, emitRate, emitSpeed, emitDirection, emitAngle, emitType);
 	}
 
 	protected override void OnSimDeactivate()
 	{
 		int emissionCell = GetEmissionCell();
-		SimMessages.ModifyRadiationEmitter(simHandle, emissionCell, 0, 0, 0f, 0f, 0f, emitType);
+		SimMessages.ModifyRadiationEmitter(simHandle, emissionCell, 0, 0, 0f, 0f, 0f, 0f, 0f, emitType);
 	}
 
 	protected override void OnSimRegister(HandleVector<Game.ComplexCallbackInfo<int>>.Handle cb_handle)
 	{
 		Game.Instance.simComponentCallbackManager.GetItem(cb_handle);
 		int emissionCell = GetEmissionCell();
-		SimMessages.AddRadiationEmitter(cb_handle.index, emissionCell, emitRadiusX, emitRadiusY, emitRads, emitRate, emitSpeed, emitType);
+		SimMessages.AddRadiationEmitter(cb_handle.index, emissionCell, emitRadiusX, emitRadiusY, emitRads, emitRate, emitSpeed, emitDirection, emitAngle, emitType);
 	}
 
 	protected override void OnSimUnregister()

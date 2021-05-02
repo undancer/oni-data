@@ -39,6 +39,7 @@ namespace Steamworks
 		k_EHTTPStatusCode417ExpectationFailed = 417,
 		k_EHTTPStatusCode4xxUnknown = 418,
 		k_EHTTPStatusCode429TooManyRequests = 429,
+		k_EHTTPStatusCode444ConnectionClosed = 444,
 		k_EHTTPStatusCode500InternalServerError = 500,
 		k_EHTTPStatusCode501NotImplemented = 501,
 		k_EHTTPStatusCode502BadGateway = 502,

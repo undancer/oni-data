@@ -2,13 +2,6 @@ namespace Steamworks
 {
 	public static class SteamGameServer
 	{
-		public static bool InitGameServer(uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId_t nGameAppId, string pchVersionString)
-		{
-			InteropHelp.TestIfAvailableGameServer();
-			using InteropHelp.UTF8StringHandle pchVersionString2 = new InteropHelp.UTF8StringHandle(pchVersionString);
-			return NativeMethods.ISteamGameServer_InitGameServer(CSteamGameServerAPIContext.GetSteamGameServer(), unIP, usGamePort, usQueryPort, unFlags, nGameAppId, pchVersionString2);
-		}
-
 		public static void SetProduct(string pszProduct)
 		{
 			InteropHelp.TestIfAvailableGameServer();
@@ -232,7 +225,7 @@ namespace Steamworks
 			return (SteamAPICall_t)NativeMethods.ISteamGameServer_GetServerReputation(CSteamGameServerAPIContext.GetSteamGameServer());
 		}
 
-		public static uint GetPublicIP()
+		public static SteamIPAddress_t GetPublicIP()
 		{
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamGameServer_GetPublicIP(CSteamGameServerAPIContext.GetSteamGameServer());

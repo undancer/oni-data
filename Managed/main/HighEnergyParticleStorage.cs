@@ -9,7 +9,6 @@ public class HighEnergyParticleStorage : KMonoBehaviour, IStorage
 	[SerializeField]
 	private float particles;
 
-	[Serialize]
 	public float capacity;
 
 	public bool showInUI = true;
@@ -31,6 +30,7 @@ public class HighEnergyParticleStorage : KMonoBehaviour, IStorage
 		{
 			HighEnergyParticlePort component = base.gameObject.GetComponent<HighEnergyParticlePort>();
 			component.onParticleCapture = (HighEnergyParticlePort.OnParticleCapture)Delegate.Combine(component.onParticleCapture, new HighEnergyParticlePort.OnParticleCapture(OnParticleCapture));
+			component.onParticleCaptureAllowed = (HighEnergyParticlePort.OnParticleCaptureAllowed)Delegate.Combine(component.onParticleCaptureAllowed, new HighEnergyParticlePort.OnParticleCaptureAllowed(OnParticleCaptureAllowed));
 		}
 	}
 
@@ -51,7 +51,18 @@ public class HighEnergyParticleStorage : KMonoBehaviour, IStorage
 
 	private void OnParticleCapture(HighEnergyParticle particle)
 	{
-		Store(particle.payload);
+		float num = Mathf.Min(particle.payload, capacity - particles);
+		Store(num);
+		particle.payload -= num;
+		if (particle.payload > 0f)
+		{
+			base.gameObject.GetComponent<HighEnergyParticlePort>().Uncapture(particle);
+		}
+	}
+
+	private bool OnParticleCaptureAllowed(HighEnergyParticle particle)
+	{
+		return particles < capacity;
 	}
 
 	public void Store(float amount)
@@ -135,5 +146,20 @@ public class HighEnergyParticleStorage : KMonoBehaviour, IStorage
 	public bool ShouldShowInUI()
 	{
 		return showInUI;
+	}
+
+	public float GetAmountAvailable(Tag tag)
+	{
+		if (tag != GameTags.HighEnergyParticle)
+		{
+			return 0f;
+		}
+		return Particles;
+	}
+
+	public void ConsumeIgnoringDisease(Tag tag, float amount)
+	{
+		DebugUtil.DevAssert(tag == GameTags.HighEnergyParticle, "Consuming non-particle tag as amount");
+		ConsumeAndGet(amount);
 	}
 }

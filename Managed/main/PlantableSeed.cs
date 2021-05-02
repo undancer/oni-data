@@ -24,9 +24,9 @@ public class PlantableSeed : KMonoBehaviour, IReceptacleDirection, IGameObjectEf
 		component.OnAbsorb(data);
 	});
 
-	private static readonly EventSystem.IntraObjectHandler<PlantableSeed> OnSplitDelegate = new EventSystem.IntraObjectHandler<PlantableSeed>(delegate(PlantableSeed component, object data)
+	private static readonly EventSystem.IntraObjectHandler<PlantableSeed> OnSplitFromChunkDelegate = new EventSystem.IntraObjectHandler<PlantableSeed>(delegate(PlantableSeed component, object data)
 	{
-		component.OnSplit(data);
+		component.OnSplitFromChunk(data);
 	});
 
 	public SingleEntityReceptacle.ReceptacleDirection Direction => direction;
@@ -34,8 +34,11 @@ public class PlantableSeed : KMonoBehaviour, IReceptacleDirection, IGameObjectEf
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		Subscribe(-2064133523, OnAbsorbDelegate);
-		Subscribe(1335436905, OnSplitDelegate);
+		if (GetComponent<MutantPlant>() != null)
+		{
+			Subscribe(-2064133523, OnAbsorbDelegate);
+			Subscribe(1335436905, OnSplitFromChunkDelegate);
+		}
 		timeUntilSelfPlant = Util.RandomVariance(2400f, 600f);
 	}
 
@@ -53,11 +56,14 @@ public class PlantableSeed : KMonoBehaviour, IReceptacleDirection, IGameObjectEf
 
 	private void OnAbsorb(object data)
 	{
+		Pickupable pickupable = data as Pickupable;
+		Debug.Assert(GetComponent<MutantPlant>().SubSpeciesID == pickupable.GetComponent<MutantPlant>().SubSpeciesID, "Two seeds of different subspecies just absorbed!");
 	}
 
-	private void OnSplit(object data)
+	private void OnSplitFromChunk(object data)
 	{
-		GetComponent<MutantPlant>().SetSubSpecies(((Pickupable)data).GetComponent<MutantPlant>().subspeciesID);
+		Pickupable pickupable = data as Pickupable;
+		pickupable.GetComponent<MutantPlant>().CopyMutationsTo(GetComponent<MutantPlant>());
 	}
 
 	public void TryPlant(bool allow_plant_from_storage = false)
@@ -75,9 +81,9 @@ public class PlantableSeed : KMonoBehaviour, IReceptacleDirection, IGameObjectEf
 		Vector3 position = Grid.CellToPosCBC(cell, Grid.SceneLayer.BuildingFront);
 		GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(PlantID), position, Grid.SceneLayer.BuildingFront);
 		MutantPlant component = gameObject.GetComponent<MutantPlant>();
-		if ((bool)component)
+		if (component != null)
 		{
-			component.SetSubSpecies(GetComponent<MutantPlant>().subspeciesID);
+			GetComponent<MutantPlant>().CopyMutationsTo(component);
 		}
 		gameObject.SetActive(value: true);
 		Pickupable component2 = GetComponent<Pickupable>();
@@ -136,7 +142,7 @@ public class PlantableSeed : KMonoBehaviour, IReceptacleDirection, IGameObjectEf
 			return false;
 		}
 		UprootedMonitor component4 = prefab.GetComponent<UprootedMonitor>();
-		if (component4 != null && !component4.IsCellSafe(cell))
+		if (component4 != null && !component4.IsSuitableFoundation(cell))
 		{
 			return false;
 		}

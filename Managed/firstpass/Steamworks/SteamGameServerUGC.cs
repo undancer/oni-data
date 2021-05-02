@@ -15,14 +15,14 @@ namespace Steamworks
 		public static UGCQueryHandle_t CreateQueryAllUGCRequest(EUGCQuery eQueryType, EUGCMatchingUGCType eMatchingeMatchingUGCTypeFileType, AppId_t nCreatorAppID, AppId_t nConsumerAppID, uint unPage)
 		{
 			InteropHelp.TestIfAvailableGameServer();
-			return (UGCQueryHandle_t)NativeMethods.ISteamUGC_CreateQueryAllUGCRequest(CSteamGameServerAPIContext.GetSteamUGC(), eQueryType, eMatchingeMatchingUGCTypeFileType, nCreatorAppID, nConsumerAppID, unPage);
+			return (UGCQueryHandle_t)NativeMethods.ISteamUGC_CreateQueryAllUGCRequestPage(CSteamGameServerAPIContext.GetSteamUGC(), eQueryType, eMatchingeMatchingUGCTypeFileType, nCreatorAppID, nConsumerAppID, unPage);
 		}
 
 		public static UGCQueryHandle_t CreateQueryAllUGCRequest(EUGCQuery eQueryType, EUGCMatchingUGCType eMatchingeMatchingUGCTypeFileType, AppId_t nCreatorAppID, AppId_t nConsumerAppID, string pchCursor = null)
 		{
 			InteropHelp.TestIfAvailableGameServer();
 			using InteropHelp.UTF8StringHandle pchCursor2 = new InteropHelp.UTF8StringHandle(pchCursor);
-			return (UGCQueryHandle_t)NativeMethods.ISteamUGC_CreateQueryAllUGCRequest0(CSteamGameServerAPIContext.GetSteamUGC(), eQueryType, eMatchingeMatchingUGCTypeFileType, nCreatorAppID, nConsumerAppID, pchCursor2);
+			return (UGCQueryHandle_t)NativeMethods.ISteamUGC_CreateQueryAllUGCRequestCursor(CSteamGameServerAPIContext.GetSteamUGC(), eQueryType, eMatchingeMatchingUGCTypeFileType, nCreatorAppID, nConsumerAppID, pchCursor2);
 		}
 
 		public static UGCQueryHandle_t CreateQueryUGCDetailsRequest(PublishedFileId_t[] pvecPublishedFileID, uint unNumPublishedFileIDs)
@@ -41,6 +41,32 @@ namespace Steamworks
 		{
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamUGC_GetQueryUGCResult(CSteamGameServerAPIContext.GetSteamUGC(), handle, index, out pDetails);
+		}
+
+		public static uint GetQueryUGCNumTags(UGCQueryHandle_t handle, uint index)
+		{
+			InteropHelp.TestIfAvailableGameServer();
+			return NativeMethods.ISteamUGC_GetQueryUGCNumTags(CSteamGameServerAPIContext.GetSteamUGC(), handle, index);
+		}
+
+		public static bool GetQueryUGCTag(UGCQueryHandle_t handle, uint index, uint indexTag, out string pchValue, uint cchValueSize)
+		{
+			InteropHelp.TestIfAvailableGameServer();
+			IntPtr intPtr = Marshal.AllocHGlobal((int)cchValueSize);
+			bool flag = NativeMethods.ISteamUGC_GetQueryUGCTag(CSteamGameServerAPIContext.GetSteamUGC(), handle, index, indexTag, intPtr, cchValueSize);
+			pchValue = (flag ? InteropHelp.PtrToStringUTF8(intPtr) : null);
+			Marshal.FreeHGlobal(intPtr);
+			return flag;
+		}
+
+		public static bool GetQueryUGCTagDisplayName(UGCQueryHandle_t handle, uint index, uint indexTag, out string pchValue, uint cchValueSize)
+		{
+			InteropHelp.TestIfAvailableGameServer();
+			IntPtr intPtr = Marshal.AllocHGlobal((int)cchValueSize);
+			bool flag = NativeMethods.ISteamUGC_GetQueryUGCTagDisplayName(CSteamGameServerAPIContext.GetSteamUGC(), handle, index, indexTag, intPtr, cchValueSize);
+			pchValue = (flag ? InteropHelp.PtrToStringUTF8(intPtr) : null);
+			Marshal.FreeHGlobal(intPtr);
+			return flag;
 		}
 
 		public static bool GetQueryUGCPreviewURL(UGCQueryHandle_t handle, uint index, out string pchURL, uint cchURLSize)
@@ -118,7 +144,7 @@ namespace Steamworks
 			InteropHelp.TestIfAvailableGameServer();
 			IntPtr intPtr = Marshal.AllocHGlobal((int)cchValueSize);
 			using InteropHelp.UTF8StringHandle pchKey2 = new InteropHelp.UTF8StringHandle(pchKey);
-			bool flag = NativeMethods.ISteamUGC_GetQueryUGCKeyValueTag0(CSteamGameServerAPIContext.GetSteamUGC(), handle, index, pchKey2, intPtr, cchValueSize);
+			bool flag = NativeMethods.ISteamUGC_GetQueryFirstUGCKeyValueTag(CSteamGameServerAPIContext.GetSteamUGC(), handle, index, pchKey2, intPtr, cchValueSize);
 			pchValue = (flag ? InteropHelp.PtrToStringUTF8(intPtr) : null);
 			Marshal.FreeHGlobal(intPtr);
 			return flag;
@@ -135,6 +161,12 @@ namespace Steamworks
 			InteropHelp.TestIfAvailableGameServer();
 			using InteropHelp.UTF8StringHandle pTagName2 = new InteropHelp.UTF8StringHandle(pTagName);
 			return NativeMethods.ISteamUGC_AddRequiredTag(CSteamGameServerAPIContext.GetSteamUGC(), handle, pTagName2);
+		}
+
+		public static bool AddRequiredTagGroup(UGCQueryHandle_t handle, IList<string> pTagGroups)
+		{
+			InteropHelp.TestIfAvailableGameServer();
+			return NativeMethods.ISteamUGC_AddRequiredTagGroup(CSteamGameServerAPIContext.GetSteamUGC(), handle, new InteropHelp.SteamParamStringArray(pTagGroups));
 		}
 
 		public static bool AddExcludedTag(UGCQueryHandle_t handle, string pTagName)

@@ -23,7 +23,7 @@ public class KCircleCollider2D : KCollider2D
 		get
 		{
 			Vector3 center = base.transform.GetPosition() + new Vector3(base.offset.x, base.offset.y, 0f);
-			return new Bounds(center, new Vector3(_radius, _radius, 0f));
+			return new Bounds(center, new Vector3(_radius * 2f, _radius * 2f, 0f));
 		}
 	}
 

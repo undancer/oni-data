@@ -46,7 +46,7 @@ public class Unlocks : KMonoBehaviour
 		},
 		{
 			"journals",
-			new string[30]
+			new string[31]
 			{
 				"journal_timesarrowthoughts",
 				"journal_A046_1",
@@ -77,12 +77,13 @@ public class Unlocks : KMonoBehaviour
 				"journal_elliesbirthday2",
 				"journal_B111_1",
 				"journal_revisitednumbers2",
-				"journal_timemusings"
+				"journal_timemusings",
+				"journal_evil"
 			}
 		},
 		{
 			"researchnotes",
-			new string[16]
+			new string[17]
 			{
 				"notes_clonedrats",
 				"notes_agriculture1",
@@ -99,7 +100,8 @@ public class Unlocks : KMonoBehaviour
 				"notes_neutronium",
 				"notes_firstsuccess",
 				"notes_neutroniumapplications",
-				"notes_teleportation"
+				"notes_teleportation",
+				"notes_AI"
 			}
 		},
 		{

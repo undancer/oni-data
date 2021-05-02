@@ -37,20 +37,42 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 
 		private LaunchStates launch;
 
+		public Signal pilotSuccessful;
+
+		public FloatParameter timeRemaining;
+
 		public override void InitializeStates(out BaseState default_state)
 		{
+			base.serializable = SerializeType.ParamsOnly;
 			default_state = unoperational;
 			root.Enter("SetTarget", delegate(StatesInstance smi)
 			{
 				clusterCraft.Set(GetRocket(smi), smi);
+			}).Exit(delegate(StatesInstance smi)
+			{
+				SetRocketSpeed(smi, 0.5f);
 			});
 			unoperational.PlayAnim("off").TagTransition(GameTags.Operational, operational);
-			operational.PlayAnim("on").TagTransition(GameTags.Operational, unoperational, on_remove: true).Transition(ready, IsInFlight, UpdateRate.SIM_4000ms)
+			operational.Enter(delegate(StatesInstance smi)
+			{
+				SetRocketSpeed(smi, 1f);
+			}).PlayAnim("on").TagTransition(GameTags.Operational, unoperational, on_remove: true)
+				.Transition(ready, IsInFlight, UpdateRate.SIM_4000ms)
 				.Target(clusterCraft)
-				.EventTransition(GameHashes.RocketRequestLaunch, launch, (StatesInstance smi) => clusterCraft.Get(smi).GetComponent<Clustercraft>().LaunchRequested)
-				.Target(masterTarget);
-			launch.ToggleChore(CreateLaunchChore, operational).Transition(launch.fadein, IsInFlight).Target(clusterCraft)
-				.EventTransition(GameHashes.RocketRequestLaunch, operational, (StatesInstance smi) => !clusterCraft.Get(smi).GetComponent<Clustercraft>().LaunchRequested)
+				.EventTransition(GameHashes.RocketRequestLaunch, launch, RocketReadyForLaunch)
+				.EventTransition(GameHashes.LaunchConditionChanged, launch, RocketReadyForLaunch)
+				.Target(masterTarget)
+				.Exit(delegate(StatesInstance smi)
+				{
+					timeRemaining.Set(120f, smi);
+				});
+			launch.Enter(delegate(StatesInstance smi)
+			{
+				SetRocketSpeed(smi, 1f);
+			}).ToggleChore(CreateLaunchChore, operational).Transition(launch.fadein, IsInFlight)
+				.Target(clusterCraft)
+				.EventTransition(GameHashes.RocketRequestLaunch, operational, GameStateMachine<States, StatesInstance, RocketControlStation, object>.Not(RocketReadyForLaunch))
+				.EventTransition(GameHashes.LaunchConditionChanged, launch, GameStateMachine<States, StatesInstance, RocketControlStation, object>.Not(RocketReadyForLaunch))
 				.Target(masterTarget);
 			launch.fadein.Enter(delegate(StatesInstance smi)
 			{
@@ -60,39 +82,48 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 				}
 			});
 			running.PlayAnim("on").TagTransition(GameTags.Operational, unoperational, on_remove: true).Transition(operational, GameStateMachine<States, StatesInstance, RocketControlStation, object>.Not(IsInFlight))
-				.ScheduleGoTo(120f, ready);
-			ready.TagTransition(GameTags.Operational, unoperational, on_remove: true).DefaultState(ready.idle).ToggleChore(CreateChore, running)
-				.Transition(operational, GameStateMachine<States, StatesInstance, RocketControlStation, object>.Not(IsInFlight));
-			ready.idle.PlayAnim("on", KAnim.PlayMode.Loop).WorkableStartTransition((StatesInstance smi) => smi.master.GetComponent<RocketControlStationIdleWorkable>(), ready.working).ScheduleGoTo(30f, ready.warning)
+				.ParamTransition(timeRemaining, ready, (StatesInstance smi, float p) => p <= 0f)
 				.Enter(delegate(StatesInstance smi)
 				{
-					smi.master.TimeRemaining = 30f;
+					SetRocketSpeed(smi, 1f);
 				})
-				.Update(delegate(StatesInstance smi, float dt)
+				.Update("Decrement time", DecrementTime)
+				.Exit(delegate(StatesInstance smi)
 				{
-					smi.master.TimeRemaining -= dt;
+					timeRemaining.Set(30f, smi);
+				});
+			ready.TagTransition(GameTags.Operational, unoperational, on_remove: true).DefaultState(ready.idle).ToggleChore(CreateChore, ready.post, ready)
+				.Transition(operational, GameStateMachine<States, StatesInstance, RocketControlStation, object>.Not(IsInFlight))
+				.OnSignal(pilotSuccessful, ready.post)
+				.Update("Decrement time", DecrementTime);
+			ready.idle.PlayAnim("on", KAnim.PlayMode.Loop).WorkableStartTransition((StatesInstance smi) => smi.master.GetComponent<RocketControlStationIdleWorkable>(), ready.working).ParamTransition(timeRemaining, ready.warning, (StatesInstance smi, float p) => p <= 15f);
+			ready.warning.PlayAnim("on_alert", KAnim.PlayMode.Loop).WorkableStartTransition((StatesInstance smi) => smi.master.GetComponent<RocketControlStationIdleWorkable>(), ready.working).ToggleMainStatusItem(Db.Get().BuildingStatusItems.PilotNeeded)
+				.ParamTransition(timeRemaining, ready.autopilot, (StatesInstance smi, float p) => p <= 0f);
+			ready.autopilot.PlayAnim("on_failed", KAnim.PlayMode.Loop).ToggleMainStatusItem(Db.Get().BuildingStatusItems.AutoPilotActive).WorkableStartTransition((StatesInstance smi) => smi.master.GetComponent<RocketControlStationIdleWorkable>(), ready.working)
+				.Enter(delegate(StatesInstance smi)
+				{
+					SetRocketSpeed(smi, 0.5f);
 				});
 			ready.working.PlayAnim("working_pre").QueueAnim("working_loop", loop: true).Enter(delegate(StatesInstance smi)
 			{
 				SetRocketSpeed(smi, 1f);
 			})
-				.WorkableStopTransition((StatesInstance smi) => smi.master.GetComponent<RocketControlStationIdleWorkable>(), ready.post);
-			ready.post.PlayAnim("working_pst").OnAnimQueueComplete(running);
-			ready.warning.PlayAnim("on_alert").WorkableStartTransition((StatesInstance smi) => smi.master.GetComponent<RocketControlStationIdleWorkable>(), ready.working).ToggleMainStatusItem(Db.Get().BuildingStatusItems.PilotNeeded)
-				.ScheduleGoTo(30f, ready.autopilot)
-				.Enter(delegate(StatesInstance smi)
-				{
-					smi.master.TimeRemaining = 30f;
-				})
-				.Update(delegate(StatesInstance smi, float dt)
-				{
-					smi.master.TimeRemaining -= dt;
-				});
-			ready.autopilot.PlayAnim("on_failed").ToggleMainStatusItem(Db.Get().BuildingStatusItems.AutoPilotActive).WorkableStartTransition((StatesInstance smi) => smi.master.GetComponent<RocketControlStationIdleWorkable>(), ready.working)
-				.Enter(delegate(StatesInstance smi)
-				{
-					SetRocketSpeed(smi, 0.5f);
-				});
+				.WorkableStopTransition((StatesInstance smi) => smi.master.GetComponent<RocketControlStationIdleWorkable>(), ready.idle);
+			ready.post.PlayAnim("working_pst").OnAnimQueueComplete(running).Exit(delegate(StatesInstance smi)
+			{
+				timeRemaining.Set(120f, smi);
+			});
+		}
+
+		private void DecrementTime(StatesInstance smi, float dt)
+		{
+			timeRemaining.Delta(0f - dt, smi);
+		}
+
+		private bool RocketReadyForLaunch(StatesInstance smi)
+		{
+			Clustercraft component = clusterCraft.Get(smi).GetComponent<Clustercraft>();
+			return component.LaunchRequested && component.CheckReadyToLaunch();
 		}
 
 		private GameObject GetRocket(StatesInstance smi)
@@ -158,5 +189,12 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 	{
 		base.OnSpawn();
 		base.smi.StartSM();
+		Components.RocketControlStations.Add(this);
+	}
+
+	protected override void OnCleanUp()
+	{
+		base.OnCleanUp();
+		Components.RocketControlStations.Remove(this);
 	}
 }

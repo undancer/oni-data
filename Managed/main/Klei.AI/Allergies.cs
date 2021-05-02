@@ -20,7 +20,7 @@ namespace Klei.AI
 			AddSicknessComponent(new AnimatedSickness(new HashedString[1]
 			{
 				"anim_idle_allergies_kanim"
-			}, Db.Get().Expressions.Uncomfortable));
+			}, Db.Get().Expressions.Pollen));
 			AddSicknessComponent(new AttributeModifierSickness(new AttributeModifier[2]
 			{
 				new AttributeModifier(Db.Get().Amounts.Stress.deltaAttribute.Id, value, DUPLICANTS.DISEASES.ALLERGIES.NAME),

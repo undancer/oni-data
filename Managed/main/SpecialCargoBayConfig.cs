@@ -11,6 +11,7 @@ public class SpecialCargoBayConfig : IBuildingConfig
 		{
 			SimHashes.Steel.ToString()
 		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		buildingDef.ForbiddenDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;
 		buildingDef.OverheatTemperature = 2273.15f;
@@ -21,7 +22,6 @@ public class SpecialCargoBayConfig : IBuildingConfig
 		buildingDef.attachablePosition = new CellOffset(0, 0);
 		buildingDef.CanMove = true;
 		buildingDef.Cancellable = false;
-		buildingDef.ShowInBuildMenu = !DlcManager.IsExpansion1Active();
 		return buildingDef;
 	}
 
@@ -43,6 +43,6 @@ public class SpecialCargoBayConfig : IBuildingConfig
 		cargoBay.storage = go.AddOrGet<Storage>();
 		cargoBay.storageType = CargoBay.CargoType.Entities;
 		cargoBay.storage.capacityKg = 100f;
-		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.MAJOR, "rocket_storage_live_bg_kanim");
+		BuildingTemplates.ExtendBuildingToRocketModule(go, "rocket_storage_live_bg_kanim");
 	}
 }

@@ -68,11 +68,12 @@ public class PropSurfaceSatellite1Config : IEntityConfig
 		{
 			Grid.GravitasFacility[Grid.OffsetCell(cell, offset)] = true;
 		}
-		Radiator radiator = inst.AddOrGet<Radiator>();
-		radiator.intensity = 100;
-		radiator.projectionCount = 24;
-		radiator.angle = 360;
-		radiator.direction = 0;
+		RadiationEmitter radiationEmitter = inst.AddOrGet<RadiationEmitter>();
+		radiationEmitter.emitType = RadiationEmitter.RadiationEmitterType.Constant;
+		radiationEmitter.radiusProportionalToRads = false;
+		radiationEmitter.emitRadiusX = 12;
+		radiationEmitter.emitRadiusY = 12;
+		radiationEmitter.emitRads = 240f / ((float)radiationEmitter.emitRadiusX / 6f);
 	}
 
 	public void OnSpawn(GameObject inst)

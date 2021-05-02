@@ -41,9 +41,19 @@ public class ClusterGrid
 		m_onClusterLocationChangedDelegate = OnClusterLocationChanged;
 	}
 
+	public ClusterRevealLevel GetCellRevealLevel(AxialI cell)
+	{
+		return GetFOWManager().GetCellRevealLevel(cell);
+	}
+
 	public bool IsCellVisible(AxialI cell)
 	{
 		return GetFOWManager().IsLocationRevealed(cell);
+	}
+
+	public float GetRevealCompleteFraction(AxialI cell)
+	{
+		return GetFOWManager().GetRevealCompleteFraction(cell);
 	}
 
 	public bool IsVisible(ClusterGridEntity entity)
@@ -53,7 +63,7 @@ public class ClusterGrid
 
 	public List<ClusterGridEntity> GetVisibleEntitiesAtCell(AxialI cell)
 	{
-		if (GetFOWManager().IsLocationRevealed(cell))
+		if (IsValidCell(cell) && GetFOWManager().IsLocationRevealed(cell))
 		{
 			return cellContents[cell].Where((ClusterGridEntity entity) => entity.IsVisible).ToList();
 		}
@@ -71,6 +81,22 @@ public class ClusterGrid
 		return (from entity in AxialUtil.GetRing(cell, 1).SelectMany((AxialI c) => GetVisibleEntitiesAtCell(c))
 			where entity.Layer == EntityLayer.Asteroid
 			select entity).FirstOrDefault();
+	}
+
+	public List<ClusterGridEntity> GetHiddenEntitiesAtCell(AxialI cell)
+	{
+		if (cellContents.ContainsKey(cell) && !GetFOWManager().IsLocationRevealed(cell))
+		{
+			return cellContents[cell].Where((ClusterGridEntity entity) => entity.IsVisible).ToList();
+		}
+		return new List<ClusterGridEntity>();
+	}
+
+	public List<ClusterGridEntity> GetNotVisibleAsteroidsAtAdjacentCell(AxialI cell)
+	{
+		return (from entity in AxialUtil.GetRing(cell, 1).SelectMany((AxialI c) => GetHiddenEntitiesAtCell(c))
+			where entity.Layer == EntityLayer.Asteroid
+			select entity).ToList();
 	}
 
 	public bool HasVisibleAsteroidAtCell(AxialI cell)
@@ -167,7 +193,7 @@ public class ClusterGrid
 		float num = entity.Location.R;
 		float num2 = entity.Location.Q;
 		List<ClusterGridEntity> list = cellContents[entity.Location];
-		if (list.Count > 1 && entity.GetComponent<Clustercraft>() != null)
+		if (list.Count > 1 && entity.SpaceOutInSameHex())
 		{
 			int num3 = 0;
 			int num4 = 0;
@@ -177,7 +203,7 @@ public class ClusterGrid
 				{
 					num3 = num4;
 				}
-				if (!(item.GetComponent<Clustercraft>() == null))
+				if (item.SpaceOutInSameHex())
 				{
 					num4++;
 				}
@@ -209,7 +235,7 @@ public class ClusterGrid
 
 	public List<AxialI> GetPath(AxialI start, AxialI end, ClusterDestinationSelector destination_selector, out string fail_reason)
 	{
-		fail_reason = "";
+		fail_reason = null;
 		if (!destination_selector.canNavigateFogOfWar && !IsCellVisible(end))
 		{
 			fail_reason = UI.CLUSTERMAP.TOOLTIP_INVALID_DESTINATION_FOG_OF_WAR;

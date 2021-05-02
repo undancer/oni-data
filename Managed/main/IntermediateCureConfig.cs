@@ -27,7 +27,7 @@ public class IntermediateCureConfig : IEntityConfig
 		{
 			new ComplexRecipe.RecipeElement("IntermediateCure", 1f)
 		};
-		string text = (Sim.IsRadiationEnabled() ? "AdvancedApothecary" : "Apothecary");
+		string text = "Apothecary";
 		string id = ComplexRecipeManager.MakeRecipeID(text, array, array2);
 		recipe = new ComplexRecipe(id, array, array2)
 		{

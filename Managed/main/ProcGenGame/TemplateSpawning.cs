@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ProcGen;
 using STRINGS;
@@ -13,7 +14,11 @@ namespace ProcGenGame
 
 		private static int m_poiPadding;
 
-		public static List<KeyValuePair<Vector2I, TemplateContainer>> DetermineTemplatesForWorld(WorldGenSettings settings, List<TerrainCell> terrainCells, SeededRandom myRandom, ref List<RectInt> placedPOIBounds, WorldGen.OfflineCallbackFunction successCallbackFn)
+		private const int TEMPERATURE_PADDING = 3;
+
+		private static float EXTREME_POI_OVERLAP_TEMPERATURE_RANGE = 100f;
+
+		public static List<KeyValuePair<Vector2I, TemplateContainer>> DetermineTemplatesForWorld(WorldGenSettings settings, List<TerrainCell> terrainCells, SeededRandom myRandom, ref List<RectInt> placedPOIBounds, bool isRunningDebugGen, WorldGen.OfflineCallbackFunction successCallbackFn)
 		{
 			successCallbackFn(UI.WORLDGEN.PLACINGTEMPLATES.key, 0f, WorldGenProgressStages.Stages.PlaceTemplates);
 			List<KeyValuePair<Vector2I, TemplateContainer>> templateSpawnTargets = new List<KeyValuePair<Vector2I, TemplateContainer>>();
@@ -23,7 +28,7 @@ namespace ProcGenGame
 			SpawnStartingTemplate(settings, terrainCells, ref templateSpawnTargets, ref placedPOIBounds, successCallbackFn);
 			minProgressPercent = maxProgressPercent;
 			maxProgressPercent = 0.5f;
-			SpawnTemplatesFromFeatureRules(settings, terrainCells, myRandom, ref templateSpawnTargets, ref placedPOIBounds, successCallbackFn);
+			SpawnTemplatesFromTemplateRules(settings, terrainCells, myRandom, ref templateSpawnTargets, ref placedPOIBounds, isRunningDebugGen, successCallbackFn);
 			minProgressPercent = maxProgressPercent;
 			maxProgressPercent = 0.75f;
 			SpawnPOITemplates(settings, terrainCells, myRandom, ref templateSpawnTargets, ref placedPOIBounds, successCallbackFn);
@@ -88,9 +93,13 @@ namespace ProcGenGame
 							pooledList.Add(item);
 						}
 					}
-					string str = pooledList[myRandom.RandomRange(0, pooledList.Count - 1)];
-					str = "poi/" + str;
-					TemplateContainer template = TemplateCache.GetTemplate(str);
+					if (pooledList.Count == 0)
+					{
+						DebugUtil.LogWarningArgs("Template spawning for subworld " + subWorld.name + ", not enough candidates for poiSet " + item3.Key + ", skipping.");
+						continue;
+					}
+					string text = pooledList[myRandom.RandomRange(0, pooledList.Count - 1)];
+					TemplateContainer template = TemplateCache.GetTemplate(text);
 					if (template != null)
 					{
 						TerrainCell terrainCell = null;
@@ -98,15 +107,15 @@ namespace ProcGenGame
 						{
 							TerrainCell terrainCell2 = list[j];
 							RectInt templateBounds = template.GetTemplateBounds(terrainCell2.poly.Centroid(), m_poiPadding);
-							if (!IsPOIOverlappingBounds(placedPOIBounds, templateBounds))
+							if (!IsPOIOverlappingBounds(placedPOIBounds, templateBounds) && !IsPOIOverlappingHighTemperatureDelta(templateBounds, subWorld, ref terrainCells, settings))
 							{
 								KeyValuePair<Vector2I, TemplateContainer> item2 = new KeyValuePair<Vector2I, TemplateContainer>(new Vector2I((int)terrainCell2.poly.Centroid().x, (int)terrainCell2.poly.Centroid().y), template);
 								templateSpawnTargets.Add(item2);
 								placedPOIBounds.Add(templateBounds);
-								terrainCell2.node.tags.Add(str.ToTag());
+								terrainCell2.node.tags.Add(text.ToTag());
 								terrainCell2.node.tags.Add(WorldGenTags.POI);
 								terrainCell = terrainCell2;
-								hashSet.Add(str);
+								hashSet.Add(text);
 								break;
 							}
 						}
@@ -153,10 +162,9 @@ namespace ProcGenGame
 					{
 						continue;
 					}
-					string str = list[list.Count - 1];
-					str = "features/" + str;
+					string text = list[list.Count - 1];
 					list.RemoveAt(list.Count - 1);
-					TemplateContainer template = TemplateCache.GetTemplate(str);
+					TemplateContainer template = TemplateCache.GetTemplate(text);
 					if (template != null)
 					{
 						RectInt templateBounds = template.GetTemplateBounds(item2.poly.Centroid(), m_poiPadding);
@@ -165,29 +173,34 @@ namespace ProcGenGame
 							DebugUtil.LogArgs(" -> Cannot place here");
 							break;
 						}
+						if (IsPOIOverlappingHighTemperatureDelta(templateBounds, subWorld, ref terrainCells, settings))
+						{
+							DebugUtil.LogArgs(" -> Cannot place here");
+							break;
+						}
 						KeyValuePair<Vector2I, TemplateContainer> item = new KeyValuePair<Vector2I, TemplateContainer>(new Vector2I((int)item2.poly.Centroid().x, (int)item2.poly.Centroid().y), template);
 						templateSpawnTargets.Add(item);
 						placedPOIBounds.Add(template.GetTemplateBounds(item.Key, m_poiPadding));
-						item2.node.tags.Add(str.ToTag());
+						item2.node.tags.Add(text.ToTag());
 						item2.node.tags.Add(WorldGenTags.POI);
 					}
 				}
 			}
 		}
 
-		private static void SpawnTemplatesFromFeatureRules(WorldGenSettings settings, List<TerrainCell> terrainCells, SeededRandom myRandom, ref List<KeyValuePair<Vector2I, TemplateContainer>> templateSpawnTargets, ref List<RectInt> placedPOIBounds, WorldGen.OfflineCallbackFunction successCallbackFn)
+		private static void SpawnTemplatesFromTemplateRules(WorldGenSettings settings, List<TerrainCell> terrainCells, SeededRandom myRandom, ref List<KeyValuePair<Vector2I, TemplateContainer>> templateSpawnTargets, ref List<RectInt> placedPOIBounds, bool isRunningDebugGen, WorldGen.OfflineCallbackFunction successCallbackFn)
 		{
-			List<ProcGen.World.FeatureSpawnRules> list = new List<ProcGen.World.FeatureSpawnRules>();
-			if (settings.world.worldFeatureRules != null)
+			List<ProcGen.World.TemplateSpawnRules> list = new List<ProcGen.World.TemplateSpawnRules>();
+			if (settings.world.worldTemplateRules != null)
 			{
-				list.AddRange(settings.world.worldFeatureRules);
+				list.AddRange(settings.world.worldTemplateRules);
 			}
 			foreach (WeightedSubworldName subworldFile in settings.world.subworldFiles)
 			{
 				SubWorld subWorld = settings.GetSubWorld(subworldFile.name);
-				if (subWorld.subworldFeatureRules != null)
+				if (subWorld.subworldTemplateRules != null)
 				{
-					list.AddRange(subWorld.subworldFeatureRules);
+					list.AddRange(subWorld.subworldTemplateRules);
 				}
 			}
 			if (list.Count == 0)
@@ -196,9 +209,9 @@ namespace ProcGenGame
 			}
 			int num = 0;
 			float num2 = list.Count;
-			list.Sort((ProcGen.World.FeatureSpawnRules a, ProcGen.World.FeatureSpawnRules b) => b.priority.CompareTo(a.priority));
+			list.Sort((ProcGen.World.TemplateSpawnRules a, ProcGen.World.TemplateSpawnRules b) => b.priority.CompareTo(a.priority));
 			HashSet<string> hashSet = new HashSet<string>();
-			foreach (ProcGen.World.FeatureSpawnRules item in list)
+			foreach (ProcGen.World.TemplateSpawnRules item in list)
 			{
 				successCallbackFn(UI.WORLDGEN.PLACINGTEMPLATES.key, ProgressPercent((float)num++ / num2), WorldGenProgressStages.Stages.PlaceTemplates);
 				for (int i = 0; i < item.times; i++)
@@ -217,33 +230,47 @@ namespace ProcGenGame
 						pooledList.Recycle();
 						continue;
 					}
-					bool flag = false;
+					int num3 = 0;
 					switch (item.listRule)
 					{
-					case ProcGen.World.FeatureSpawnRules.ListRule.GuaranteeAll:
-						flag = true;
+					case ProcGen.World.TemplateSpawnRules.ListRule.GuaranteeAll:
+						num3 = pooledList.Count;
 						break;
-					case ProcGen.World.FeatureSpawnRules.ListRule.GuaranteeSome:
-						flag = true;
+					case ProcGen.World.TemplateSpawnRules.ListRule.GuaranteeSome:
+						num3 = item.someCount;
 						pooledList.RemoveRange(item.someCount, pooledList.Count - item.someCount);
 						break;
-					case ProcGen.World.FeatureSpawnRules.ListRule.GuaranteeOne:
-						flag = true;
+					case ProcGen.World.TemplateSpawnRules.ListRule.GuaranteeSomeTryMore:
+						num3 = item.someCount;
+						pooledList.RemoveRange(item.someCount + item.moreCount, pooledList.Count - item.someCount - item.moreCount);
+						break;
+					case ProcGen.World.TemplateSpawnRules.ListRule.GuaranteeOne:
+						num3 = 1;
 						pooledList.RemoveRange(1, pooledList.Count - 1);
 						break;
-					case ProcGen.World.FeatureSpawnRules.ListRule.TrySome:
+					case ProcGen.World.TemplateSpawnRules.ListRule.TrySome:
 						pooledList.RemoveRange(item.someCount, pooledList.Count - item.someCount);
 						break;
-					case ProcGen.World.FeatureSpawnRules.ListRule.TryOne:
+					case ProcGen.World.TemplateSpawnRules.ListRule.TryOne:
 						pooledList.RemoveRange(1, pooledList.Count - 1);
 						break;
 					}
 					foreach (string item2 in pooledList)
 					{
-						bool flag2 = FindTargetForTemplate(item2, item, terrainCells, myRandom, ref templateSpawnTargets, ref placedPOIBounds, flag);
+						bool flag = num3 > 0;
+						bool flag2 = FindTargetForTemplate(item2, item, terrainCells, myRandom, ref templateSpawnTargets, ref placedPOIBounds, flag, settings);
 						if (flag && !flag2)
 						{
-							Debug.LogError("Could not place template " + item2 + ", but it's supposed to be guaranteed.");
+							string text = "TemplateSpawning: Could not place template " + item2 + ", but it's supposed to be guaranteed on " + settings.world.filePath;
+							DebugUtil.LogErrorArgs(text);
+							if (!isRunningDebugGen)
+							{
+								throw new Exception(text);
+							}
+						}
+						else
+						{
+							num3--;
 						}
 					}
 					pooledList.Recycle();
@@ -251,38 +278,38 @@ namespace ProcGenGame
 			}
 		}
 
-		private static bool FindTargetForTemplate(string template, ProcGen.World.FeatureSpawnRules rule, List<TerrainCell> terrainCells, SeededRandom myRandom, ref List<KeyValuePair<Vector2I, TemplateContainer>> templateSpawnTargets, ref List<RectInt> placedPOIBounds, bool guarantee)
+		private static bool FindTargetForTemplate(string template, ProcGen.World.TemplateSpawnRules rule, List<TerrainCell> terrainCells, SeededRandom myRandom, ref List<KeyValuePair<Vector2I, TemplateContainer>> templateSpawnTargets, ref List<RectInt> placedPOIBounds, bool guarantee, WorldGenSettings settings)
 		{
 			TemplateContainer template2 = TemplateCache.GetTemplate(template);
 			if (template2 == null)
 			{
 				return false;
 			}
-			List<TerrainCell> terrainCells2 = terrainCells.FindAll(delegate(TerrainCell tc)
+			List<TerrainCell> filteredTerrainCells = terrainCells.FindAll(delegate(TerrainCell tc)
 			{
 				tc.LogInfo("Filtering", template, 0f);
 				return tc.IsSafeToSpawnPOI(terrainCells) && DoesCellMatchFilters(tc, rule.allowedCellsFilter);
 			});
-			RemoveOverlappingPOIs(ref terrainCells2, ref placedPOIBounds, template2);
-			if (terrainCells2.Count == 0)
+			RemoveOverlappingPOIs(ref filteredTerrainCells, ref terrainCells, ref placedPOIBounds, template2, settings);
+			if (filteredTerrainCells.Count == 0)
 			{
 				if (guarantee)
 				{
 					DebugUtil.LogWarningArgs("Could not place " + template + " using normal rules, trying relaxed");
-					terrainCells2 = terrainCells.FindAll(delegate(TerrainCell tc)
+					filteredTerrainCells = terrainCells.FindAll(delegate(TerrainCell tc)
 					{
 						tc.LogInfo("Filtering Relaxed", template, 0f);
 						return tc.IsSafeToSpawnPOIRelaxed(terrainCells) && DoesCellMatchFilters(tc, rule.allowedCellsFilter);
 					});
-					RemoveOverlappingPOIs(ref terrainCells2, ref placedPOIBounds, template2);
+					RemoveOverlappingPOIs(ref filteredTerrainCells, ref terrainCells, ref placedPOIBounds, template2, settings);
 				}
-				if (terrainCells2.Count == 0)
+				if (filteredTerrainCells.Count == 0)
 				{
 					return false;
 				}
 			}
-			terrainCells2.ShuffleSeeded(myRandom.RandomSource());
-			TerrainCell terrainCell = terrainCells2[terrainCells2.Count - 1];
+			filteredTerrainCells.ShuffleSeeded(myRandom.RandomSource());
+			TerrainCell terrainCell = filteredTerrainCells[filteredTerrainCells.Count - 1];
 			KeyValuePair<Vector2I, TemplateContainer> item = new KeyValuePair<Vector2I, TemplateContainer>(new Vector2I((int)terrainCell.poly.Centroid().x, (int)terrainCell.poly.Centroid().y), template2);
 			templateSpawnTargets.Add(item);
 			placedPOIBounds.Add(template2.GetTemplateBounds(item.Key, m_poiPadding));
@@ -303,15 +330,55 @@ namespace ProcGenGame
 			return false;
 		}
 
-		private static void RemoveOverlappingPOIs(ref List<TerrainCell> terrainCells, ref List<RectInt> placedPOIBounds, TemplateContainer container)
+		private static bool IsPOIOverlappingHighTemperatureDelta(RectInt paddedTemplateBounds, SubWorld subworld, ref List<TerrainCell> allCells, WorldGenSettings settings)
 		{
-			for (int num = terrainCells.Count - 1; num >= 0; num--)
+			Vector2 b = 2f * Vector2.one * m_poiPadding;
+			Vector2 b2 = 2f * Vector2.one * 3f;
+			Rect rect = new Rect(paddedTemplateBounds.position, paddedTemplateBounds.size - b + b2);
+			Temperature temperature = SettingsCache.temperatures[subworld.temperatureRange];
+			for (int i = 0; i < allCells.Count; i++)
 			{
-				RectInt templateBounds = container.GetTemplateBounds(terrainCells[num].poly.Centroid(), m_poiPadding);
+				TerrainCell terrainCell = allCells[i];
+				SubWorld subWorld = settings.GetSubWorld(terrainCell.node.GetSubworld());
+				Temperature temperature2 = SettingsCache.temperatures[subWorld.temperatureRange];
+				if (subWorld.temperatureRange != subworld.temperatureRange)
+				{
+					float num = Mathf.Min(temperature.min, temperature2.min);
+					float num2 = Mathf.Max(temperature.max, temperature2.max);
+					float num3 = num2 - num;
+					bool flag = rect.Overlaps(terrainCell.poly.bounds);
+					bool flag2 = num3 > EXTREME_POI_OVERLAP_TEMPERATURE_RANGE;
+					if (flag && flag2)
+					{
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		private static void RemoveOverlappingPOIs(ref List<TerrainCell> filteredTerrainCells, ref List<TerrainCell> allCells, ref List<RectInt> placedPOIBounds, TemplateContainer container, WorldGenSettings settings)
+		{
+			for (int num = filteredTerrainCells.Count - 1; num >= 0; num--)
+			{
+				TerrainCell terrainCell = filteredTerrainCells[num];
+				int index = num;
+				SubWorld subWorld = settings.GetSubWorld(terrainCell.node.GetSubworld());
+				RectInt templateBounds = container.GetTemplateBounds(terrainCell.poly.Centroid(), m_poiPadding);
+				bool flag = false;
 				if (IsPOIOverlappingBounds(placedPOIBounds, templateBounds))
 				{
-					terrainCells[num].LogInfo("-> Removed due to overlapping POIs", "", 0f);
-					terrainCells.RemoveAt(num);
+					terrainCell.LogInfo("-> Removed due to overlapping POIs", "", 0f);
+					flag = true;
+				}
+				else if (IsPOIOverlappingHighTemperatureDelta(templateBounds, subWorld, ref allCells, settings))
+				{
+					terrainCell.LogInfo("-> Removed due to overlapping extreme temperature delta", "", 0f);
+					flag = true;
+				}
+				if (flag)
+				{
+					filteredTerrainCells.RemoveAt(index);
 				}
 			}
 		}

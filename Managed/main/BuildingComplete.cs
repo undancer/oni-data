@@ -74,6 +74,12 @@ public class BuildingComplete : Building
 		Subscribe(1606648047, OnObjectReplacedDelegate);
 	}
 
+	public override void UpdatePosition(int cell)
+	{
+		GameScenePartitioner.Instance.UpdatePosition(scenePartitionerEntry, cell);
+		base.UpdatePosition(cell);
+	}
+
 	private void OnObjectReplaced(object data)
 	{
 		replacingTileLayer = (ObjectLayer)data;
@@ -96,17 +102,25 @@ public class BuildingComplete : Building
 			component3.offset += new Vector2(visualizerOffset.x, visualizerOffset.y);
 		}
 		int cell = Grid.PosToCell(base.transform.GetPosition());
+		int[] placementCells = base.PlacementCells;
+		foreach (int gameCell in placementCells)
+		{
+			SimMessages.SetCellProperties(gameCell, 128);
+		}
 		if (Def.IsFoundation)
 		{
-			int[] placementCells = base.PlacementCells;
-			foreach (int num in placementCells)
+			int[] placementCells2 = base.PlacementCells;
+			foreach (int num in placementCells2)
 			{
 				Grid.Foundation[num] = true;
 				Game.Instance.roomProber.SolidChangedEvent(num, ignoreDoors: false);
 			}
 		}
-		Vector3 position = Grid.CellToPosCBC(cell, Def.SceneLayer);
-		base.transform.SetPosition(position);
+		if (Grid.IsValidCell(cell))
+		{
+			Vector3 position = Grid.CellToPosCBC(cell, Def.SceneLayer);
+			base.transform.SetPosition(position);
+		}
 		if (primaryElement != null)
 		{
 			if (primaryElement.Mass == 0f)
@@ -133,9 +147,9 @@ public class BuildingComplete : Building
 		RegisterBlockTileRenderer();
 		if (Def.PreventIdleTraversalPastBuilding)
 		{
-			for (int j = 0; j < base.PlacementCells.Length; j++)
+			for (int k = 0; k < base.PlacementCells.Length; k++)
 			{
-				Grid.PreventIdleTraversal[base.PlacementCells[j]] = true;
+				Grid.PreventIdleTraversal[base.PlacementCells[k]] = true;
 			}
 		}
 		KSelectable component4 = GetComponent<KSelectable>();
@@ -157,9 +171,9 @@ public class BuildingComplete : Building
 			Deconstructable component5 = GetComponent<Deconstructable>();
 			if (component5 != null)
 			{
-				for (int k = 1; k < component5.constructionElements.Length; k++)
+				for (int l = 1; l < component5.constructionElements.Length; l++)
 				{
-					Tag tag = component5.constructionElements[k];
+					Tag tag = component5.constructionElements[l];
 					Element element = ElementLoader.GetElement(tag);
 					if (element != null)
 					{

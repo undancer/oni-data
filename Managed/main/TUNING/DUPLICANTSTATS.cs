@@ -60,18 +60,18 @@ namespace TUNING
 
 			public const float RADIATION_RESISTANCE = 0f;
 
-			public const float RADIATION_RECOVERY = -5f / 6f;
+			public const float RADIATION_RECOVERY = -355f / (678f * (float)Math.PI);
 		}
 
 		public class RADIATION_EXPOSURE_LEVELS
 		{
-			public const float LOW = 2000f;
+			public const float LOW = 100f;
 
-			public const float MODERATE = 5000f;
+			public const float MODERATE = 300f;
 
-			public const float HIGH = 8000f;
+			public const float HIGH = 600f;
 
-			public const float DEADLY = 10000f;
+			public const float DEADLY = 900f;
 		}
 
 		public class CALORIES

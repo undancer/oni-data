@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.IO;
 using Klei;
 using LibNoiseDotNet.Graphics.Tools.Noise;
-using UnityEngine;
 
 namespace ProcGen.Noise
 {
@@ -18,19 +16,19 @@ namespace ProcGen.Noise
 			set;
 		}
 
-		public static string GetDirectory()
+		public static string GetDirectoryRel()
 		{
-			return System.IO.Path.Combine(Application.streamingAssetsPath, "worldgen/noise/");
+			return "worldgen/noise/";
 		}
 
-		public static string GetPath()
+		public static string GetPathRel()
 		{
-			return System.IO.Path.Combine(Application.streamingAssetsPath, "worldgen/" + NOISE_FILE + ".yaml");
+			return "worldgen/" + NOISE_FILE + ".yaml";
 		}
 
-		public static string GetTreeFilePath(string filename)
+		public static string GetTreeFilePathRel(string filename)
 		{
-			return System.IO.Path.Combine(Application.streamingAssetsPath, "worldgen/noise/" + filename + ".yaml");
+			return "worldgen/noise/" + filename + ".yaml";
 		}
 
 		public void Clear()
@@ -45,25 +43,13 @@ namespace ProcGen.Noise
 			tree_files = new List<string>();
 		}
 
-		public void LoadAllTrees()
-		{
-			for (int i = 0; i < tree_files.Count; i++)
-			{
-				Tree tree = YamlIO.LoadFile<Tree>(GetTreeFilePath(tree_files[i]));
-				if (tree != null)
-				{
-					trees.Add(tree_files[i], tree);
-				}
-			}
-		}
-
-		public Tree LoadTree(string name, string path)
+		public Tree LoadTree(string name)
 		{
 			if (name != null && name.Length > 0)
 			{
 				if (!trees.ContainsKey(name))
 				{
-					Tree tree = YamlIO.LoadFile<Tree>(path + name + ".yaml");
+					Tree tree = YamlIO.LoadFile<Tree>(SettingsCache.RewriteWorldgenPathYaml(name));
 					if (tree != null)
 					{
 						trees.Add(name, tree);
@@ -103,25 +89,18 @@ namespace ProcGen.Noise
 			return array;
 		}
 
-		public Tree GetTree(string name, string path)
-		{
-			if (!trees.ContainsKey(name))
-			{
-				Tree tree = YamlIO.LoadFile<Tree>(path + "/" + name + ".yaml");
-				if (tree == null)
-				{
-					return null;
-				}
-				trees.Add(name, tree);
-			}
-			return trees[name];
-		}
-
 		public Tree GetTree(string name)
 		{
 			if (!trees.ContainsKey(name))
 			{
-				return null;
+				string text = SettingsCache.RewriteWorldgenPathYaml(name);
+				Tree tree = YamlIO.LoadFile<Tree>(text);
+				if (tree == null)
+				{
+					DebugUtil.LogArgs("NoiseArgs.GetTree failed to load " + name + " at " + text);
+					return null;
+				}
+				trees.Add(name, tree);
 			}
 			return trees[name];
 		}

@@ -14,6 +14,8 @@ public class BuildingInternalConstructor : GameStateMachine<BuildingInternalCons
 		public List<string> outputIDs;
 
 		public bool spawnIntoStorage;
+
+		public string constructionSymbol;
 	}
 
 	public class OperationalStates : State
@@ -130,6 +132,15 @@ public class BuildingInternalConstructor : GameStateMachine<BuildingInternalCons
 			return new WorkChore<BuildingInternalConstructorWorkable>(Db.Get().ChoreTypes.Build, base.master);
 		}
 
+		public void ShowConstructionSymbol(bool show)
+		{
+			KBatchedAnimController component = base.master.GetComponent<KBatchedAnimController>();
+			if (component != null)
+			{
+				component.SetSymbolVisiblity(base.def.constructionSymbol, show);
+			}
+		}
+
 		public void OnSidescreenButtonPressed()
 		{
 			base.smi.sm.constructionRequested.Set(!base.smi.sm.constructionRequested.Get(base.smi), base.smi);
@@ -165,12 +176,31 @@ public class BuildingInternalConstructor : GameStateMachine<BuildingInternalCons
 	{
 		default_state = inoperational;
 		base.serializable = SerializeType.ParamsOnly;
-		inoperational.EventTransition(GameHashes.OperationalChanged, operational, (Instance smi) => smi.GetComponent<Operational>().IsOperational);
+		inoperational.EventTransition(GameHashes.OperationalChanged, operational, (Instance smi) => smi.GetComponent<Operational>().IsOperational).Enter(delegate(Instance smi)
+		{
+			smi.ShowConstructionSymbol(show: false);
+		});
 		operational.DefaultState(operational.constructionRequired).EventTransition(GameHashes.OperationalChanged, inoperational, (Instance smi) => !smi.GetComponent<Operational>().IsOperational);
 		operational.constructionRequired.EventTransition(GameHashes.OnStorageChange, operational.constructionHappening, (Instance smi) => smi.GetMassForConstruction() != null).EventTransition(GameHashes.OnStorageChange, operational.constructionSatisfied, (Instance smi) => smi.HasOutputInStorage()).ToggleFetch((Instance smi) => smi.CreateFetchList(), operational.constructionHappening)
-			.ParamTransition(constructionRequested, operational.constructionSatisfied, GameStateMachine<BuildingInternalConstructor, Instance, IStateMachineTarget, Def>.IsFalse);
+			.ParamTransition(constructionRequested, operational.constructionSatisfied, GameStateMachine<BuildingInternalConstructor, Instance, IStateMachineTarget, Def>.IsFalse)
+			.Enter(delegate(Instance smi)
+			{
+				smi.ShowConstructionSymbol(show: true);
+			})
+			.Exit(delegate(Instance smi)
+			{
+				smi.ShowConstructionSymbol(show: false);
+			});
 		operational.constructionHappening.EventTransition(GameHashes.OnStorageChange, operational.constructionSatisfied, (Instance smi) => smi.HasOutputInStorage()).EventTransition(GameHashes.OnStorageChange, operational.constructionRequired, (Instance smi) => smi.GetMassForConstruction() == null).ToggleChore((Instance smi) => smi.CreateWorkChore(), operational.constructionHappening, operational.constructionHappening)
-			.ParamTransition(constructionRequested, operational.constructionSatisfied, GameStateMachine<BuildingInternalConstructor, Instance, IStateMachineTarget, Def>.IsFalse);
+			.ParamTransition(constructionRequested, operational.constructionSatisfied, GameStateMachine<BuildingInternalConstructor, Instance, IStateMachineTarget, Def>.IsFalse)
+			.Enter(delegate(Instance smi)
+			{
+				smi.ShowConstructionSymbol(show: true);
+			})
+			.Exit(delegate(Instance smi)
+			{
+				smi.ShowConstructionSymbol(show: false);
+			});
 		operational.constructionSatisfied.EventTransition(GameHashes.OnStorageChange, operational.constructionRequired, (Instance smi) => !smi.HasOutputInStorage() && constructionRequested.Get(smi)).ParamTransition(constructionRequested, operational.constructionRequired, (Instance smi, bool p) => p && !smi.HasOutputInStorage());
 	}
 }

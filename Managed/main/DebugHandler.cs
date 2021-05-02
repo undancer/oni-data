@@ -41,6 +41,8 @@ public class DebugHandler : IInputHandler
 
 	private bool slowTestMode = false;
 
+	private static int activeWorldBeforeOverride = -1;
+
 	public static bool enabled
 	{
 		get;
@@ -100,12 +102,18 @@ public class DebugHandler : IInputHandler
 		{
 			GameObject gameObject2 = GameUtil.KInstantiate(Assets.GetPrefab("Atmo_Suit"), position, Grid.SceneLayer.Creatures);
 			gameObject2.SetActive(value: true);
-			Equippable component = gameObject2.GetComponent<Equippable>();
+			SuitTank component = gameObject2.GetComponent<SuitTank>();
+			GameObject gameObject3 = GameUtil.KInstantiate(Assets.GetPrefab(GameTags.Oxygen), position, Grid.SceneLayer.Ore);
+			PrimaryElement component2 = gameObject3.GetComponent<PrimaryElement>();
+			component2.Units = component.capacity;
+			gameObject3.SetActive(value: true);
+			component.storage.Store(gameObject3, hide_popups: true);
+			Equippable component3 = gameObject2.GetComponent<Equippable>();
 			gameObject.GetComponent<MinionIdentity>().ValidateProxy();
-			Equipment component2 = gameObject.GetComponent<MinionIdentity>().assignableProxy.Get().GetComponent<Equipment>();
-			component.Assign(component2.GetComponent<IAssignableIdentity>());
+			Equipment component4 = gameObject.GetComponent<MinionIdentity>().assignableProxy.Get().GetComponent<Equipment>();
+			component3.Assign(component4.GetComponent<IAssignableIdentity>());
 			gameObject2.GetComponent<EquippableWorkable>().CancelChore();
-			component2.Equip(component);
+			component4.Equip(component3);
 		}
 	}
 
@@ -518,6 +526,16 @@ public class DebugHandler : IInputHandler
 	public static void SetTimelapseMode(bool enabled)
 	{
 		TimelapseMode = enabled;
+		if (enabled)
+		{
+			activeWorldBeforeOverride = ClusterManager.Instance.activeWorldId;
+			ClusterManager.Instance.TimelapseModeOverrideActiveWorld(0);
+		}
+		else
+		{
+			ClusterManager.Instance.TimelapseModeOverrideActiveWorld(activeWorldBeforeOverride);
+		}
+		World.Instance.zoneRenderData.OnActiveWorldChanged();
 		UpdateUI();
 	}
 

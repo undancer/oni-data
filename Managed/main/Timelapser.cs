@@ -241,8 +241,8 @@ public class Timelapser : KMonoBehaviour
 					freezeCamera.enabled = true;
 					screenshotActive = true;
 					RefreshRenderTextureSize();
-					SetPostionAndOrtho();
 					DebugHandler.SetTimelapseMode(enabled: true);
+					SetPostionAndOrtho();
 					activeOverlay = OverlayScreen.Instance.mode;
 					OverlayScreen.Instance.ToggleOverlay(OverlayModes.None.ID, allowSound: false);
 				}
@@ -297,7 +297,6 @@ public class Timelapser : KMonoBehaviour
 		CameraController.Instance.SetOrthographicsSize(num);
 		camPosition = CameraController.Instance.transform.position;
 		CameraController.Instance.SetPosition(new Vector3(telepad.transform.position.x, telepad.transform.position.y, CameraController.Instance.transform.position.z));
-		CameraController.Instance.SetTargetPos(new Vector3(telepad.transform.position.x, telepad.transform.position.y, CameraController.Instance.transform.position.z), camSize, playSound: false);
 	}
 
 	private void RenderAndPrint()
@@ -315,7 +314,6 @@ public class Timelapser : KMonoBehaviour
 		WriteToPng(bufferRenderTexture);
 		CameraController.Instance.SetOrthographicsSize(camSize);
 		CameraController.Instance.SetPosition(camPosition);
-		CameraController.Instance.SetTargetPos(camPosition, camSize, playSound: false);
 		RenderTexture.active = active;
 	}
 

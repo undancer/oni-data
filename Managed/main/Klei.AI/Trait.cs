@@ -68,7 +68,7 @@ namespace Klei.AI
 				{
 					text += DUPLICANTS.TRAITS.TRAIT_DESCRIPTION_LIST_ENTRY;
 				}
-				text += string.Format(DUPLICANTS.TRAITS.ATTRIBUTE_MODIFIERS, attribute.Name, selfModifier.GetFormattedString(null));
+				text += string.Format(DUPLICANTS.TRAITS.ATTRIBUTE_MODIFIERS, attribute.Name, selfModifier.GetFormattedString());
 			}
 			return text;
 		}

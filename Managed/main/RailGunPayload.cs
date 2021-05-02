@@ -31,28 +31,42 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 
 	public class GroundedStates : State
 	{
-		public State full;
+		public State crater;
+
+		public State idle;
 	}
 
 	public class StatesInstance : GameInstance
 	{
-		private float velocity;
+		[Serialize]
+		public float takeoffVelocity;
 
-		private Vector3 previousPosition;
+		public KAnimControllerBase animController;
 
 		public StatesInstance(IStateMachineTarget master, Def def)
 			: base(master, def)
 		{
+			animController = GetComponent<KAnimControllerBase>();
 		}
 
-		public void Launch(int dest)
+		public void Launch(AxialI source, AxialI destination)
 		{
-			base.sm.destinationWorld.Set(dest, this);
+			GetComponent<RailgunPayloadClusterGridEntity>().Configure(source, destination);
+			int asteroidWorldIdAtLocation = ClusterUtil.GetAsteroidWorldIdAtLocation(destination);
+			base.sm.destinationWorld.Set(asteroidWorldIdAtLocation, this);
+			GoTo(base.sm.takeoff);
 		}
 
-		public void StartLaunch()
+		public void Land(AxialI source, AxialI destination)
 		{
-			velocity = 35f;
+			GetComponent<RailgunPayloadClusterGridEntity>().Configure(source, destination);
+			int asteroidWorldIdAtLocation = ClusterUtil.GetAsteroidWorldIdAtLocation(destination);
+			base.sm.destinationWorld.Set(asteroidWorldIdAtLocation, this);
+			GoTo(base.sm.travel);
+		}
+
+		public void StartTakeoff()
+		{
 			if (GameComps.Fallers.Has(base.gameObject))
 			{
 				GameComps.Fallers.Remove(base.gameObject);
@@ -62,13 +76,25 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 		public void StartLand()
 		{
 			WorldContainer world = ClusterManager.Instance.GetWorld(base.sm.destinationWorld.Get(this));
-			int num = (int)Random.Range(world.minimumBounds.x, world.maximumBounds.x);
-			TransformExtensions.SetPosition(position: new Vector2(num, world.Height), transform: base.transform);
+			int num = 0;
+			int landingBeaconLocation = ClusterManager.Instance.GetLandingBeaconLocation(world.id);
+			Grid.CellToXY(landingBeaconLocation, out var x, out var _);
+			if (landingBeaconLocation != Grid.InvalidCell)
+			{
+				int min = Mathf.Max(x - 3, (int)world.minimumBounds.x);
+				int max = Mathf.Min(x + 3, (int)world.maximumBounds.x);
+				num = Mathf.RoundToInt(Random.Range(min, max));
+			}
+			else
+			{
+				num = Mathf.RoundToInt(Random.Range(world.minimumBounds.x + 3f, world.maximumBounds.x - 3f));
+			}
+			TransformExtensions.SetPosition(position: new Vector3((float)num + 0.5f, world.maximumBounds.y - 1f, Grid.GetLayerZ(Grid.SceneLayer.Front)), transform: base.transform);
 			if (GameComps.Fallers.Has(base.gameObject))
 			{
 				GameComps.Fallers.Remove(base.gameObject);
 			}
-			GameComps.Fallers.Add(base.gameObject, new Vector2(0f, 10f));
+			GameComps.Fallers.Add(base.gameObject, new Vector2(0f, -10f));
 			base.sm.destinationWorld.Set(-1, this);
 		}
 
@@ -78,12 +104,13 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 			if (myWorld != null)
 			{
 				Vector3 position = base.transform.GetPosition();
-				Vector3 position2 = position + new Vector3(0f, velocity * dt, 0f);
+				Vector3 position2 = position + new Vector3(0f, takeoffVelocity * dt, 0f);
 				base.transform.SetPosition(position2);
 			}
 			else
 			{
 				base.sm.beginTravelling.Trigger(this);
+				GetComponent<ClusterTraveler>().AdvancePathOneStep();
 			}
 		}
 
@@ -106,6 +133,21 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 		{
 			base.gameObject.DeleteObject();
 		}
+
+		public bool IsTraveling()
+		{
+			return IsInsideState(base.sm.travel.travelling);
+		}
+
+		public void MoveToSpace()
+		{
+			base.gameObject.transform.SetPosition(new Vector3(-1f, -1f, 0f));
+		}
+
+		public void MoveToWorld()
+		{
+			GetComponent<Pickupable>().deleteOffGrid = true;
+		}
 	}
 
 	public IntParameter destinationWorld = new IntParameter(-1);
@@ -113,6 +155,8 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 	public BoolParameter onSurface = new BoolParameter(default_value: false);
 
 	public Signal beginTravelling;
+
+	public Signal launch;
 
 	public TakeoffStates takeoff;
 
@@ -124,36 +168,55 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 
 	public override void InitializeStates(out BaseState default_state)
 	{
-		default_state = takeoff;
+		default_state = grounded.idle;
 		base.serializable = SerializeType.Both_DEPRECATED;
-		takeoff.DefaultState(takeoff.launch).ParamTransition(destinationWorld, landing, (StatesInstance smi, int p) => p == -1).OnSignal(beginTravelling, travel);
+		grounded.DefaultState(grounded.idle).Enter(delegate(StatesInstance smi)
+		{
+			onSurface.Set(value: true, smi);
+		}).ToggleMainStatusItem(Db.Get().BuildingStatusItems.RailgunpayloadNeedsEmptying)
+			.ToggleTag(GameTags.RailGunPayloadEmptyable)
+			.EventHandler(GameHashes.DroppedAll, delegate(StatesInstance smi)
+			{
+				smi.OnDroppedAll();
+			})
+			.OnSignal(launch, takeoff);
+		grounded.idle.PlayAnim("idle");
+		grounded.crater.Enter(delegate(StatesInstance smi)
+		{
+			smi.animController.randomiseLoopedOffset = true;
+		}).Exit(delegate(StatesInstance smi)
+		{
+			smi.animController.randomiseLoopedOffset = false;
+		}).PlayAnim("landed", KAnim.PlayMode.Loop)
+			.EventTransition(GameHashes.OnStore, grounded.idle);
+		takeoff.DefaultState(takeoff.launch).PlayAnim("launching").OnSignal(beginTravelling, travel)
+			.Enter(delegate(StatesInstance smi)
+			{
+				smi.GetComponent<Pickupable>().deleteOffGrid = false;
+			});
 		takeoff.launch.Enter(delegate(StatesInstance smi)
 		{
-			smi.StartLaunch();
+			smi.StartTakeoff();
 		}).GoTo(takeoff.airborne);
 		takeoff.airborne.Update("Launch", delegate(StatesInstance smi, float dt)
 		{
 			smi.UpdateLaunch(dt);
+		}, UpdateRate.SIM_EVERY_TICK);
+		travel.DefaultState(travel.travelling).PlayAnim("idle").ToggleTag(GameTags.EntityInSpace)
+			.ToggleMainStatusItem(Db.Get().BuildingStatusItems.InFlight, (StatesInstance smi) => smi.GetComponent<ClusterTraveler>());
+		travel.travelling.EventTransition(GameHashes.ClusterDestinationReached, travel.transferWorlds).Enter(delegate(StatesInstance smi)
+		{
+			smi.MoveToSpace();
 		});
-		travel.DefaultState(travel.travelling);
-		travel.travelling.GoTo(travel.transferWorlds);
 		travel.transferWorlds.Enter(delegate(StatesInstance smi)
 		{
 			smi.StartLand();
 		}).GoTo(landing.landing);
-		landing.DefaultState(landing.landing).ParamTransition(onSurface, grounded, GameStateMachine<RailGunPayload, StatesInstance, IStateMachineTarget, Def>.IsTrue).ParamTransition(destinationWorld, takeoff, (StatesInstance smi, int p) => p != -1);
-		landing.landing.Update("Landing", delegate(StatesInstance smi, float dt)
+		landing.DefaultState(landing.landing).ParamTransition(onSurface, grounded.crater, GameStateMachine<RailGunPayload, StatesInstance, IStateMachineTarget, Def>.IsTrue).ParamTransition(destinationWorld, takeoff, (StatesInstance smi, int p) => p != -1);
+		landing.landing.PlayAnim("falling").Update("Landing", delegate(StatesInstance smi, float dt)
 		{
 			smi.UpdateLanding(dt);
 		}).ToggleGravity(landing.impact);
-		landing.impact.Enter(delegate(StatesInstance smi)
-		{
-			onSurface.Set(value: true, smi);
-		});
-		grounded.DefaultState(grounded.full).EventHandler(GameHashes.DroppedAll, delegate(StatesInstance smi)
-		{
-			smi.OnDroppedAll();
-		});
-		grounded.full.ToggleMainStatusItem(Db.Get().BuildingStatusItems.RailgunpayloadNeedsEmptying).ToggleTag(GameTags.RailGunPayloadEmptyable);
+		landing.impact.PlayAnim("land").OnAnimQueueComplete(grounded.crater);
 	}
 }

@@ -22,6 +22,8 @@ namespace Database
 
 		public Amount Decor;
 
+		public Amount RadiationBalance;
+
 		public Amount Temperature;
 
 		public Amount HitPoints;
@@ -54,8 +56,6 @@ namespace Database
 
 		public Amount ScaleGrowth;
 
-		public Amount YieldBonus;
-
 		public Amount InternalBattery;
 
 		public Amount InternalChemicalBattery;
@@ -80,6 +80,8 @@ namespace Database
 			Bladder.SetDisplayer(new StandardAmountDisplayer(GameUtil.UnitClass.Percent, GameUtil.TimeSlice.PerCycle));
 			Decor = CreateAmount("Decor", -1000f, 1000f, show_max: false, Units.Flat, 0.016666668f, show_in_ui: true, "STRINGS.DUPLICANTS", "ui_icon_decor", null, "mod_decor");
 			Decor.SetDisplayer(new DecorDisplayer());
+			RadiationBalance = CreateAmount("RadiationBalance", 0f, 10000f, show_max: false, Units.Flat, 0.5f, show_in_ui: true, "STRINGS.DUPLICANTS", "ui_icon_radiation", null, "mod_health");
+			RadiationBalance.SetDisplayer(new RadiationBalanceDisplayer());
 			Temperature = CreateAmount("Temperature", 0f, 10000f, show_max: false, Units.Kelvin, 0.5f, show_in_ui: true, "STRINGS.DUPLICANTS", "ui_icon_temperature");
 			Temperature.SetDisplayer(new DuplicantTemperatureDeltaAsEnergyAmountDisplayer(GameUtil.UnitClass.Temperature, GameUtil.TimeSlice.PerSecond));
 			HitPoints = CreateAmount("HitPoints", 0f, 0f, show_max: true, Units.Flat, 0.1675f, show_in_ui: true, "STRINGS.DUPLICANTS", "ui_icon_hitpoints", "attribute_hitpoints", "mod_health");
@@ -87,7 +89,7 @@ namespace Database
 			AirPressure = CreateAmount("AirPressure", 0f, 1E+09f, show_max: false, Units.Flat, 0f, show_in_ui: true, "STRINGS.CREATURES");
 			AirPressure.SetDisplayer(new StandardAmountDisplayer(GameUtil.UnitClass.Mass, GameUtil.TimeSlice.PerSecond));
 			Maturity = CreateAmount("Maturity", 0f, 0f, show_max: true, Units.Flat, 0.0009166667f, show_in_ui: true, "STRINGS.CREATURES", "ui_icon_maturity");
-			Maturity.SetDisplayer(new MaturityDisplayer());
+			Maturity.SetDisplayer(new StandardAmountDisplayer(GameUtil.UnitClass.Cycles, GameUtil.TimeSlice.None));
 			OldAge = CreateAmount("OldAge", 0f, 0f, show_max: false, Units.Flat, 0f, show_in_ui: false, "STRINGS.CREATURES");
 			Fertilization = CreateAmount("Fertilization", 0f, 100f, show_max: true, Units.Flat, 0.1675f, show_in_ui: true, "STRINGS.CREATURES");
 			Fertilization.SetDisplayer(new StandardAmountDisplayer(GameUtil.UnitClass.Percent, GameUtil.TimeSlice.PerSecond));
@@ -113,8 +115,6 @@ namespace Database
 			Illumination.SetDisplayer(new StandardAmountDisplayer(GameUtil.UnitClass.SimpleFloat, GameUtil.TimeSlice.None));
 			ScaleGrowth = CreateAmount("ScaleGrowth", 0f, 100f, show_max: true, Units.Flat, 0.1675f, show_in_ui: true, "STRINGS.CREATURES", "ui_icon_scale_growth");
 			ScaleGrowth.SetDisplayer(new AsPercentAmountDisplayer(GameUtil.TimeSlice.PerCycle));
-			YieldBonus = CreateAmount("YieldBonus", 0f, 0f, show_max: false, Units.Flat, 0f, show_in_ui: true, "STRINGS.CREATURES");
-			YieldBonus.SetDisplayer(new StandardAmountDisplayer(GameUtil.UnitClass.SimpleFloat, GameUtil.TimeSlice.None));
 			InternalBattery = CreateAmount("InternalBattery", 0f, 0f, show_max: true, Units.Flat, 4000f, show_in_ui: true, "STRINGS.ROBOTS", "ui_icon_battery");
 			InternalBattery.SetDisplayer(new StandardAmountDisplayer(GameUtil.UnitClass.Energy, GameUtil.TimeSlice.PerSecond));
 			InternalChemicalBattery = CreateAmount("InternalChemicalBattery", 0f, 0f, show_max: true, Units.Flat, 4000f, show_in_ui: true, "STRINGS.ROBOTS", "ui_icon_battery");
@@ -125,12 +125,26 @@ namespace Database
 		{
 			string text = Strings.Get(string.Format("{1}.STATS.{0}.NAME", id.ToUpper(), string_root.ToUpper()));
 			string description = Strings.Get(string.Format("{1}.STATS.{0}.TOOLTIP", id.ToUpper(), string_root.ToUpper()));
-			Attribute attribute = new Attribute(id + "Min", "Minimum" + text, "", "", min, Attribute.Display.Normal, is_trainable: false, null, null, uiFullColourSprite);
-			Attribute attribute2 = new Attribute(id + "Max", "Maximum" + text, "", "", max, Attribute.Display.Normal, is_trainable: false, null, null, uiFullColourSprite);
-			string text2 = id + "Delta";
-			string name = Strings.Get(string.Format("{1}.ATTRIBUTES.{0}.NAME", text2.ToUpper(), string_root));
-			string attribute_description = Strings.Get(string.Format("{1}.ATTRIBUTES.{0}.DESC", text2.ToUpper(), string_root));
-			Attribute attribute3 = new Attribute(text2, name, "", attribute_description, 0f, Attribute.Display.Normal, is_trainable: false, null, null, uiFullColourSprite);
+			string text2 = id + "Min";
+			StringKey key = new StringKey(string.Format("{1}.ATTRIBUTES.{0}.NAME", text2.ToUpper(), string_root));
+			StringEntry result;
+			string name = (Strings.TryGet(key, out result) ? result.String : ("Minimum" + text));
+			StringKey key2 = new StringKey(string.Format("{1}.ATTRIBUTES.{0}.DESC", text2.ToUpper(), string_root));
+			StringEntry result2;
+			string attribute_description = (Strings.TryGet(key2, out result2) ? result2.String : ("Minimum" + text));
+			Attribute attribute = new Attribute(id + "Min", name, "", attribute_description, min, Attribute.Display.Normal, is_trainable: false, null, null, uiFullColourSprite);
+			string text3 = id + "Max";
+			StringKey key3 = new StringKey(string.Format("{1}.ATTRIBUTES.{0}.NAME", text3.ToUpper(), string_root));
+			StringEntry result3;
+			string name2 = (Strings.TryGet(key3, out result3) ? result3.String : ("Maximum" + text));
+			StringKey key4 = new StringKey(string.Format("{1}.ATTRIBUTES.{0}.DESC", text3.ToUpper(), string_root));
+			StringEntry result4;
+			string attribute_description2 = (Strings.TryGet(key4, out result4) ? result4.String : ("Maximum" + text));
+			Attribute attribute2 = new Attribute(id + "Max", name2, "", attribute_description2, max, Attribute.Display.Normal, is_trainable: false, null, null, uiFullColourSprite);
+			string text4 = id + "Delta";
+			string name3 = Strings.Get(string.Format("{1}.ATTRIBUTES.{0}.NAME", text4.ToUpper(), string_root));
+			string attribute_description3 = Strings.Get(string.Format("{1}.ATTRIBUTES.{0}.DESC", text4.ToUpper(), string_root));
+			Attribute attribute3 = new Attribute(text4, name3, "", attribute_description3, 0f, Attribute.Display.Normal, is_trainable: false, null, null, uiFullColourSprite);
 			Amount amount = new Amount(id, text, description, attribute, attribute2, attribute3, show_max, units, delta_threshold, show_in_ui, uiSprite, thoughtSprite);
 			Db.Get().Attributes.Add(attribute);
 			Db.Get().Attributes.Add(attribute2);

@@ -7,7 +7,7 @@ using UnityEngine;
 [SerializationConfig(MemberSerialization.OptIn)]
 [DebuggerDisplay("{name}")]
 [AddComponentMenu("KMonoBehaviour/scripts/Battery")]
-public class Battery : KMonoBehaviour, IEnergyConsumer, IGameObjectEffectDescriptor, IEnergyProducer
+public class Battery : KMonoBehaviour, IEnergyConsumer, ICircuitConnected, IGameObjectEffectDescriptor, IEnergyProducer
 {
 	[SerializeField]
 	public float capacity;
@@ -24,7 +24,7 @@ public class Battery : KMonoBehaviour, IEnergyConsumer, IGameObjectEffectDescrip
 	[MyCmpGet]
 	public PowerTransformer powerTransformer;
 
-	private MeterController meter;
+	protected MeterController meter;
 
 	public float joulesLostPerSecond = 0f;
 
@@ -35,9 +35,17 @@ public class Battery : KMonoBehaviour, IEnergyConsumer, IGameObjectEffectDescrip
 
 	private CircuitManager.ConnectionStatus connectionStatus;
 
-	private static readonly EventSystem.IntraObjectHandler<Battery> OnOperationalChangedDelegate = new EventSystem.IntraObjectHandler<Battery>(delegate(Battery component, object data)
+	public static readonly Tag[] DEFAULT_CONNECTED_TAGS = new Tag[1]
 	{
-		component.OnOperationalChanged(data);
+		GameTags.Operational
+	};
+
+	[SerializeField]
+	public Tag[] connectedTags = DEFAULT_CONNECTED_TAGS;
+
+	private static readonly EventSystem.IntraObjectHandler<Battery> OnTagsChangedDelegate = new EventSystem.IntraObjectHandler<Battery>(delegate(Battery component, object data)
+	{
+		component.OnTagsChanged(data);
 	});
 
 	private float dt;
@@ -76,18 +84,23 @@ public class Battery : KMonoBehaviour, IEnergyConsumer, IGameObjectEffectDescrip
 		private set;
 	}
 
-	public ushort CircuitID => Game.Instance.circuitManager.GetCircuitID(PowerCell);
+	public ushort CircuitID => Game.Instance.circuitManager.GetCircuitID(this);
 
-	public bool IsConnected
-	{
-		get
-		{
-			GameObject x = Grid.Objects[PowerCell, 26];
-			return x != null;
-		}
-	}
+	public bool IsConnected => connectionStatus != CircuitManager.ConnectionStatus.NotConnected;
 
 	public bool IsPowered => connectionStatus == CircuitManager.ConnectionStatus.Powered;
+
+	public bool IsVirtual
+	{
+		get;
+		protected set;
+	}
+
+	public object VirtualCircuitKey
+	{
+		get;
+		protected set;
+	}
 
 	protected override void OnSpawn()
 	{
@@ -95,24 +108,24 @@ public class Battery : KMonoBehaviour, IEnergyConsumer, IGameObjectEffectDescrip
 		Components.Batteries.Add(this);
 		Building component = GetComponent<Building>();
 		PowerCell = component.GetPowerInputCell();
-		Subscribe(-592767678, OnOperationalChangedDelegate);
-		OnOperationalChanged(null);
+		Subscribe(-1582839653, OnTagsChangedDelegate);
+		OnTagsChanged(null);
 		bool flag = GetComponent<PowerTransformer>();
 		meter = (flag ? null : new MeterController(GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.Infront, Grid.SceneLayer.NoLayer, "meter_target", "meter_fill", "meter_frame", "meter_OL"));
 		Game.Instance.circuitManager.Connect(this);
 		Game.Instance.energySim.AddBattery(this);
 	}
 
-	private void OnOperationalChanged(object data)
+	private void OnTagsChanged(object data)
 	{
-		if (operational.IsOperational)
+		if (this.HasAllTags(connectedTags))
 		{
 			Game.Instance.circuitManager.Connect(this);
 			GetComponent<KSelectable>().SetStatusItem(Db.Get().StatusItemCategories.Power, Db.Get().BuildingStatusItems.JoulesAvailable, this);
 		}
 		else
 		{
-			Game.Instance.circuitManager.Disconnect(this);
+			Game.Instance.circuitManager.Disconnect(this, isDestroy: false);
 			GetComponent<KSelectable>().RemoveStatusItem(Db.Get().BuildingStatusItems.JoulesAvailable);
 		}
 	}
@@ -120,7 +133,7 @@ public class Battery : KMonoBehaviour, IEnergyConsumer, IGameObjectEffectDescrip
 	protected override void OnCleanUp()
 	{
 		Game.Instance.energySim.RemoveBattery(this);
-		Game.Instance.circuitManager.Disconnect(this);
+		Game.Instance.circuitManager.Disconnect(this, isDestroy: true);
 		Components.Batteries.Remove(this);
 		base.OnCleanUp();
 	}

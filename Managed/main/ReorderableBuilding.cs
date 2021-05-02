@@ -21,6 +21,8 @@ public class ReorderableBuilding : KMonoBehaviour
 
 	private KBatchedAnimController reorderArmController;
 
+	private KAnimLink m_animLink;
+
 	[MyCmpAdd]
 	private LoopingSounds loopingSounds;
 
@@ -46,6 +48,21 @@ public class ReorderableBuilding : KMonoBehaviour
 		};
 		reorderArmController.initialAnim = "off";
 		gameObject.SetActive(value: true);
+		int cell = Grid.PosToCell(gameObject);
+		ShowReorderArm(Grid.IsValidCell(cell));
+		RocketModuleCluster component = GetComponent<RocketModuleCluster>();
+		if (component != null)
+		{
+			LaunchPad currentPad = component.CraftInterface.CurrentPad;
+			if (currentPad != null)
+			{
+				m_animLink = new KAnimLink(currentPad.GetComponent<KAnimControllerBase>(), reorderArmController);
+			}
+		}
+		if (m_animLink == null)
+		{
+			m_animLink = new KAnimLink(GetComponent<KAnimControllerBase>(), reorderArmController);
+		}
 	}
 
 	private void OnCancel(object data)
@@ -108,8 +125,8 @@ public class ReorderableBuilding : KMonoBehaviour
 
 	private void RocketSpecificPostAdd(GameObject obj, int cell)
 	{
-		RocketModule component = GetComponent<RocketModule>();
-		RocketModule component2 = obj.GetComponent<RocketModule>();
+		RocketModuleCluster component = GetComponent<RocketModuleCluster>();
+		RocketModuleCluster component2 = obj.GetComponent<RocketModuleCluster>();
 		if (component != null && component2 != null)
 		{
 			component.CraftInterface.AddModule(component2);
@@ -256,6 +273,10 @@ public class ReorderableBuilding : KMonoBehaviour
 		{
 			RemoveModule();
 		}
+		if (m_animLink != null)
+		{
+			m_animLink.Unregister();
+		}
 		base.OnCleanUp();
 	}
 
@@ -373,8 +394,8 @@ public class ReorderableBuilding : KMonoBehaviour
 		}
 		GameObject gameObject2 = null;
 		gameObject2 = ((!DebugHandler.InstantBuildMode && (!Game.Instance.SandboxModeActive || !SandboxToolParameterMenu.instance.settings.InstantBuild)) ? toModule.TryPlace(base.gameObject, Grid.CellToPosCBC(cell, toModule.SceneLayer), Orientation.Neutral, materials) : toModule.Build(cell, Orientation.Neutral, null, materials, 273.15f, playsound: true, GameClock.Instance.GetTime()));
-		RocketModule component3 = GetComponent<RocketModule>();
-		RocketModule component4 = gameObject2.GetComponent<RocketModule>();
+		RocketModuleCluster component3 = GetComponent<RocketModuleCluster>();
+		RocketModuleCluster component4 = gameObject2.GetComponent<RocketModuleCluster>();
 		if (component3 != null && component4 != null)
 		{
 			component3.CraftInterface.AddModule(component4);
@@ -397,7 +418,7 @@ public class ReorderableBuilding : KMonoBehaviour
 	{
 		string text = "";
 		text = ((!(GetComponent<BuildingUnderConstruction>() != null)) ? GetComponent<Building>().Def.PrefabID : GetComponent<BuildingUnderConstruction>().Def.PrefabID);
-		RocketModule component = GetComponent<RocketModule>();
+		RocketModuleCluster component = GetComponent<RocketModuleCluster>();
 		if (component != null)
 		{
 			if (component.CraftInterface != null)
@@ -428,7 +449,7 @@ public class ReorderableBuilding : KMonoBehaviour
 			return false;
 		}
 		AttachableBuilding component2 = GetComponent<AttachableBuilding>();
-		if (component2 == null || GetComponent<RocketEngine>() != null)
+		if (component2 == null || GetComponent<RocketEngineCluster>() != null)
 		{
 			return false;
 		}
@@ -462,11 +483,19 @@ public class ReorderableBuilding : KMonoBehaviour
 		{
 			return false;
 		}
-		if (component.GetAttachedTo().GetComponent<AttachableBuilding>() == null || component.GetAttachedTo().GetComponent<RocketEngine>() != null)
+		if (component.GetAttachedTo().GetComponent<AttachableBuilding>() == null || component.GetAttachedTo().GetComponent<RocketEngineCluster>() != null)
 		{
 			return false;
 		}
 		return true;
+	}
+
+	public void ShowReorderArm(bool show)
+	{
+		if (reorderArmController != null)
+		{
+			reorderArmController.gameObject.SetActive(show);
+		}
 	}
 
 	private static void RebuildNetworks()
@@ -522,6 +551,11 @@ public class ReorderableBuilding : KMonoBehaviour
 		if (component3 != null)
 		{
 			component3.RegisterComponents();
+		}
+		VerticalModuleTiler component4 = go.GetComponent<VerticalModuleTiler>();
+		if (component4 != null)
+		{
+			component4.PostReorderMove();
 		}
 	}
 }

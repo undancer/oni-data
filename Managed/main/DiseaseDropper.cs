@@ -1,6 +1,10 @@
+using System.Collections.Generic;
+using STRINGS;
+using UnityEngine;
+
 public class DiseaseDropper : GameStateMachine<DiseaseDropper, DiseaseDropper.Instance, IStateMachineTarget, DiseaseDropper.Def>
 {
-	public class Def : BaseDef
+	public class Def : BaseDef, IGameObjectEffectDescriptor
 	{
 		public byte diseaseIdx = byte.MaxValue;
 
@@ -9,6 +13,20 @@ public class DiseaseDropper : GameStateMachine<DiseaseDropper, DiseaseDropper.In
 		public int averageEmitPerSecond = 0;
 
 		public float emitFrequency = 1f;
+
+		public List<Descriptor> GetDescriptors(GameObject go)
+		{
+			List<Descriptor> list = new List<Descriptor>();
+			if (singleEmitQuantity > 0)
+			{
+				list.Add(new Descriptor(UI.UISIDESCREENS.PLANTERSIDESCREEN.DISEASE_DROPPER_BURST.Replace("{Disease}", GameUtil.GetFormattedDiseaseName(diseaseIdx)).Replace("{DiseaseAmount}", GameUtil.GetFormattedDiseaseAmount(singleEmitQuantity)), UI.UISIDESCREENS.PLANTERSIDESCREEN.TOOLTIPS.DISEASE_DROPPER_BURST.Replace("{Disease}", GameUtil.GetFormattedDiseaseName(diseaseIdx)).Replace("{DiseaseAmount}", GameUtil.GetFormattedDiseaseAmount(singleEmitQuantity))));
+			}
+			if (averageEmitPerSecond > 0)
+			{
+				list.Add(new Descriptor(UI.UISIDESCREENS.PLANTERSIDESCREEN.DISEASE_DROPPER_CONSTANT.Replace("{Disease}", GameUtil.GetFormattedDiseaseName(diseaseIdx)).Replace("{DiseaseAmount}", GameUtil.GetFormattedDiseaseAmount(averageEmitPerSecond, GameUtil.TimeSlice.PerSecond)), UI.UISIDESCREENS.PLANTERSIDESCREEN.TOOLTIPS.DISEASE_DROPPER_CONSTANT.Replace("{Disease}", GameUtil.GetFormattedDiseaseName(diseaseIdx)).Replace("{DiseaseAmount}", GameUtil.GetFormattedDiseaseAmount(averageEmitPerSecond, GameUtil.TimeSlice.PerSecond))));
+			}
+			return list;
+		}
 	}
 
 	public new class Instance : GameInstance

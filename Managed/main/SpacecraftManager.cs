@@ -334,11 +334,11 @@ public class SpacecraftManager : KMonoBehaviour, ISim1000ms
 		savedSpacecraftDestinations[spacecraftFromLaunchConditionManager.id] = destination.id;
 	}
 
-	public int GetSpacecraftID(LaunchableRocket rocket)
+	public int GetSpacecraftID(ILaunchableRocket rocket)
 	{
 		foreach (Spacecraft item in spacecraft)
 		{
-			if (item.launchConditions.gameObject == rocket.gameObject)
+			if (item.launchConditions.gameObject == rocket.LaunchableGameObject)
 			{
 				return item.id;
 			}

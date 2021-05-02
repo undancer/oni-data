@@ -14,6 +14,7 @@ public class OxidizerTankLiquidConfig : IBuildingConfig
 		{
 			SimHashes.Steel.ToString()
 		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		buildingDef.ForbiddenDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.DefaultAnimState = "grounded";
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;
@@ -27,7 +28,6 @@ public class OxidizerTankLiquidConfig : IBuildingConfig
 		buildingDef.attachablePosition = new CellOffset(0, 0);
 		buildingDef.CanMove = true;
 		buildingDef.Cancellable = false;
-		buildingDef.ShowInBuildMenu = !DlcManager.IsExpansion1Active();
 		return buildingDef;
 	}
 
@@ -56,6 +56,8 @@ public class OxidizerTankLiquidConfig : IBuildingConfig
 		OxidizerTank oxidizerTank = go.AddOrGet<OxidizerTank>();
 		oxidizerTank.consumeOnLand = !DlcManager.IsExpansion1Active();
 		oxidizerTank.storage = storage;
+		oxidizerTank.maxFillMass = 2700f;
+		oxidizerTank.supportsMultipleOxidizers = false;
 		go.AddOrGet<CopyBuildingSettings>();
 		go.AddOrGet<DropToUserCapacity>();
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
@@ -65,6 +67,6 @@ public class OxidizerTankLiquidConfig : IBuildingConfig
 		conduitConsumer.capacityKG = storage.capacityKg;
 		conduitConsumer.forceAlwaysSatisfied = true;
 		conduitConsumer.wrongElementResult = ConduitConsumer.WrongElementResult.Dump;
-		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.MINOR, "rocket_oxidizer_tank_liquid_bg_kanim");
+		BuildingTemplates.ExtendBuildingToRocketModule(go, "rocket_oxidizer_tank_liquid_bg_kanim");
 	}
 }

@@ -415,35 +415,49 @@ public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 		{
 			HierarchyReferences component = categoryRow.Value.GetComponent<HierarchyReferences>();
 			ResourceTracker resourceStatistic = TrackerTool.Instance.GetResourceStatistic(ClusterManager.Instance.activeWorldId, categoryRow.Key);
-			SparkLayer reference = component.GetReference<SparkLayer>("Chart");
-			Tuple<float, float>[] array = resourceStatistic.ChartableData(num);
-			if (array.Length != 0)
+			if (resourceStatistic != null)
 			{
-				reference.graph.axis_x.max_value = array[array.Length - 1].first;
+				SparkLayer reference = component.GetReference<SparkLayer>("Chart");
+				Tuple<float, float>[] array = resourceStatistic.ChartableData(num);
+				if (array.Length != 0)
+				{
+					reference.graph.axis_x.max_value = array[array.Length - 1].first;
+				}
+				else
+				{
+					reference.graph.axis_x.max_value = 0f;
+				}
+				reference.graph.axis_x.min_value = time - num;
+				reference.RefreshLine(array, "resourceAmount");
 			}
 			else
 			{
-				reference.graph.axis_x.max_value = 0f;
+				DebugUtil.DevLogError("DevError: No tracker found for resource category " + categoryRow.Key);
 			}
-			reference.graph.axis_x.min_value = time - num;
-			reference.RefreshLine(array, "resourceAmount");
 		}
 		foreach (KeyValuePair<Tag, GameObject> resourceRow in resourceRows)
 		{
 			HierarchyReferences component = resourceRow.Value.GetComponent<HierarchyReferences>();
 			ResourceTracker resourceStatistic2 = TrackerTool.Instance.GetResourceStatistic(ClusterManager.Instance.activeWorldId, resourceRow.Key);
-			SparkLayer reference2 = component.GetReference<SparkLayer>("Chart");
-			Tuple<float, float>[] array2 = resourceStatistic2.ChartableData(num);
-			if (array2.Length != 0)
+			if (resourceStatistic2 != null)
 			{
-				reference2.graph.axis_x.max_value = array2[array2.Length - 1].first;
+				SparkLayer reference2 = component.GetReference<SparkLayer>("Chart");
+				Tuple<float, float>[] array2 = resourceStatistic2.ChartableData(num);
+				if (array2.Length != 0)
+				{
+					reference2.graph.axis_x.max_value = array2[array2.Length - 1].first;
+				}
+				else
+				{
+					reference2.graph.axis_x.max_value = 0f;
+				}
+				reference2.graph.axis_x.min_value = time - num;
+				reference2.RefreshLine(array2, "resourceAmount");
 			}
 			else
 			{
-				reference2.graph.axis_x.max_value = 0f;
+				DebugUtil.DevLogError("DevError: No tracker found for resource " + resourceRow.Key);
 			}
-			reference2.graph.axis_x.min_value = time - num;
-			reference2.RefreshLine(array2, "resourceAmount");
 		}
 	}
 

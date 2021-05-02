@@ -20,6 +20,8 @@ public class RocketWallTileConfig : IBuildingConfig
 		buildingDef.Entombable = false;
 		buildingDef.Overheatable = false;
 		buildingDef.UseStructureTemperature = false;
+		buildingDef.Replaceable = false;
+		buildingDef.Invincible = true;
 		buildingDef.AudioCategory = "Metal";
 		buildingDef.AudioSize = "small";
 		buildingDef.BaseTimeUntilRepair = -1f;
@@ -55,6 +57,8 @@ public class RocketWallTileConfig : IBuildingConfig
 		KPrefabID component = go.GetComponent<KPrefabID>();
 		component.AddTag(GameTags.Bunker);
 		component.AddTag(GameTags.FloorTiles);
+		component.AddTag(GameTags.RocketEnvelopeTile);
+		component.AddTag(GameTags.NoRocketRefund);
 		Deconstructable component2 = go.GetComponent<Deconstructable>();
 		component2.allowDeconstruction = false;
 	}

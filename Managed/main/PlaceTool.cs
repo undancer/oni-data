@@ -31,26 +31,23 @@ public class PlaceTool : DragTool
 	{
 		active = true;
 		base.OnActivateTool();
-		visualizer = GameUtil.KInstantiate(Assets.GetPrefab(source.previewTag), Grid.SceneLayer.Front, null, LayerMask.NameToLayer("Place"));
-		KBatchedAnimController component = visualizer.GetComponent<KBatchedAnimController>();
-		if (component != null)
+		visualizer = new GameObject("PlaceToolVisualizer");
+		visualizer.SetActive(value: false);
+		visualizer.SetLayerRecursively(LayerMask.NameToLayer("Place"));
+		KBatchedAnimController kBatchedAnimController = visualizer.AddComponent<KBatchedAnimController>();
+		kBatchedAnimController.visibilityType = KAnimControllerBase.VisibilityType.Always;
+		kBatchedAnimController.isMovable = true;
+		kBatchedAnimController.SetLayer(LayerMask.NameToLayer("Place"));
+		kBatchedAnimController.AnimFiles = new KAnimFile[1]
 		{
-			component.visibilityType = KAnimControllerBase.VisibilityType.Always;
-			component.isMovable = true;
-		}
+			Assets.GetAnim(source.kAnimName)
+		};
+		kBatchedAnimController.initialAnim = source.animName;
 		visualizer.SetActive(value: true);
 		ShowToolTip();
-		BuildToolHoverTextCard component2 = GetComponent<BuildToolHoverTextCard>();
-		component2.currentDef = null;
+		PlaceToolHoverTextCard component = GetComponent<PlaceToolHoverTextCard>();
+		component.currentPlaceable = source;
 		ResourceRemainingDisplayScreen.instance.ActivateDisplay(visualizer);
-		if (component == null)
-		{
-			visualizer.SetLayerRecursively(LayerMask.NameToLayer("Place"));
-		}
-		else
-		{
-			component.SetLayer(LayerMask.NameToLayer("Place"));
-		}
 		GridCompositor.Instance.ToggleMajor(on: true);
 	}
 
@@ -79,8 +76,7 @@ public class PlaceTool : DragTool
 		if (!(visualizer == null))
 		{
 			bool flag = false;
-			EntityPreview component = visualizer.GetComponent<EntityPreview>();
-			if (component.Valid)
+			if (source.IsValidPlaceLocation(cell, out var _))
 			{
 				onPlacedCallback(source, cell);
 				flag = true;
@@ -105,6 +101,22 @@ public class PlaceTool : DragTool
 	private void HideToolTip()
 	{
 		ToolTipScreen.Instance.ClearToolTip(tooltip);
+	}
+
+	public override void OnMouseMove(Vector3 cursorPos)
+	{
+		cursorPos = ClampPositionToWorld(cursorPos, ClusterManager.Instance.activeWorld);
+		int cell = Grid.PosToCell(cursorPos);
+		KBatchedAnimController component = visualizer.GetComponent<KBatchedAnimController>();
+		if (source.IsValidPlaceLocation(cell, out var _))
+		{
+			component.TintColour = Color.white;
+		}
+		else
+		{
+			component.TintColour = Color.red;
+		}
+		base.OnMouseMove(cursorPos);
 	}
 
 	public void Update()

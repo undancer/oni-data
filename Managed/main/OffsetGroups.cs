@@ -358,6 +358,200 @@ public static class OffsetGroups
 		}
 	});
 
+	public static CellOffset[][] InvertedWideTable = OffsetTable.Mirror(new CellOffset[33][]
+	{
+		new CellOffset[1]
+		{
+			new CellOffset(0, 0)
+		},
+		new CellOffset[1]
+		{
+			new CellOffset(0, 1)
+		},
+		new CellOffset[2]
+		{
+			new CellOffset(0, 2),
+			new CellOffset(0, 1)
+		},
+		new CellOffset[3]
+		{
+			new CellOffset(0, 3),
+			new CellOffset(0, 1),
+			new CellOffset(0, 2)
+		},
+		new CellOffset[1]
+		{
+			new CellOffset(0, -1)
+		},
+		new CellOffset[1]
+		{
+			new CellOffset(0, -2)
+		},
+		new CellOffset[3]
+		{
+			new CellOffset(0, -3),
+			new CellOffset(0, -2),
+			new CellOffset(0, -1)
+		},
+		new CellOffset[1]
+		{
+			new CellOffset(1, 0)
+		},
+		new CellOffset[2]
+		{
+			new CellOffset(1, 1),
+			new CellOffset(0, 1)
+		},
+		new CellOffset[2]
+		{
+			new CellOffset(1, 1),
+			new CellOffset(1, 0)
+		},
+		new CellOffset[3]
+		{
+			new CellOffset(1, 2),
+			new CellOffset(1, 0),
+			new CellOffset(1, 1)
+		},
+		new CellOffset[3]
+		{
+			new CellOffset(1, 2),
+			new CellOffset(0, 1),
+			new CellOffset(0, 2)
+		},
+		new CellOffset[3]
+		{
+			new CellOffset(1, 3),
+			new CellOffset(1, 2),
+			new CellOffset(1, 1)
+		},
+		new CellOffset[4]
+		{
+			new CellOffset(1, 3),
+			new CellOffset(0, 1),
+			new CellOffset(0, 2),
+			new CellOffset(0, 3)
+		},
+		new CellOffset[1]
+		{
+			new CellOffset(1, -1)
+		},
+		new CellOffset[3]
+		{
+			new CellOffset(1, -2),
+			new CellOffset(1, 0),
+			new CellOffset(1, -1)
+		},
+		new CellOffset[3]
+		{
+			new CellOffset(1, -2),
+			new CellOffset(1, -1),
+			new CellOffset(0, -1)
+		},
+		new CellOffset[3]
+		{
+			new CellOffset(1, -3),
+			new CellOffset(1, 0),
+			new CellOffset(1, -1)
+		},
+		new CellOffset[3]
+		{
+			new CellOffset(1, -3),
+			new CellOffset(0, -1),
+			new CellOffset(0, -2)
+		},
+		new CellOffset[3]
+		{
+			new CellOffset(1, -3),
+			new CellOffset(0, -1),
+			new CellOffset(-1, -1)
+		},
+		new CellOffset[2]
+		{
+			new CellOffset(2, 0),
+			new CellOffset(1, 0)
+		},
+		new CellOffset[3]
+		{
+			new CellOffset(2, 1),
+			new CellOffset(1, 1),
+			new CellOffset(0, 1)
+		},
+		new CellOffset[3]
+		{
+			new CellOffset(2, 1),
+			new CellOffset(1, 1),
+			new CellOffset(1, 0)
+		},
+		new CellOffset[3]
+		{
+			new CellOffset(2, 2),
+			new CellOffset(1, 2),
+			new CellOffset(1, 1)
+		},
+		new CellOffset[4]
+		{
+			new CellOffset(2, 3),
+			new CellOffset(1, 1),
+			new CellOffset(1, 2),
+			new CellOffset(1, 3)
+		},
+		new CellOffset[3]
+		{
+			new CellOffset(2, -1),
+			new CellOffset(2, 0),
+			new CellOffset(1, 0)
+		},
+		new CellOffset[4]
+		{
+			new CellOffset(2, -2),
+			new CellOffset(1, 0),
+			new CellOffset(1, -1),
+			new CellOffset(2, -1)
+		},
+		new CellOffset[4]
+		{
+			new CellOffset(2, -3),
+			new CellOffset(1, 0),
+			new CellOffset(1, -1),
+			new CellOffset(1, -2)
+		},
+		new CellOffset[3]
+		{
+			new CellOffset(3, 0),
+			new CellOffset(2, 0),
+			new CellOffset(1, 0)
+		},
+		new CellOffset[4]
+		{
+			new CellOffset(3, 1),
+			new CellOffset(2, 1),
+			new CellOffset(1, 1),
+			new CellOffset(0, 1)
+		},
+		new CellOffset[4]
+		{
+			new CellOffset(3, 1),
+			new CellOffset(2, 1),
+			new CellOffset(1, 1),
+			new CellOffset(1, 0)
+		},
+		new CellOffset[4]
+		{
+			new CellOffset(3, -1),
+			new CellOffset(2, -1),
+			new CellOffset(1, -1),
+			new CellOffset(0, -1)
+		},
+		new CellOffset[4]
+		{
+			new CellOffset(3, -1),
+			new CellOffset(2, -1),
+			new CellOffset(1, -1),
+			new CellOffset(1, 0)
+		}
+	});
+
 	private static Dictionary<CellOffset[], Dictionary<CellOffset[][], Dictionary<CellOffset[], CellOffset[][]>>> reachabilityTableCache = new Dictionary<CellOffset[], Dictionary<CellOffset[][], Dictionary<CellOffset[], CellOffset[][]>>>();
 
 	private static readonly CellOffset[] nullFilter = new CellOffset[0];

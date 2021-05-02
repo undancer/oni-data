@@ -8,16 +8,16 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Printing Pod", "HEADQUARTERS");
 
-				public static LocString UNIQUE_POPTEXT = "Only one {0} allowed!";
+				public static LocString UNIQUE_POPTEXT = "A clone of the cloning machine? What a novel thought.\n\nAlas, it won't work.";
 			}
 
 			public class EXOBASEHEADQUARTERS
 			{
-				public static LocString NAME = UI.FormatAsLink("Porta-Pod", "EXOBASEHEADQUARTERS");
+				public static LocString NAME = UI.FormatAsLink("Mini-Pod", "EXOBASEHEADQUARTERS");
 
 				public static LocString DESC = "A quick and easy substitute, though it'll never live up to the original.";
 
-				public static LocString EFFECT = "A portable bioprinter that produces new Duplicants or care packages containing resources.\n\nOnly one Porta-Pod is permitted per Planetoid.";
+				public static LocString EFFECT = "A portable bioprinter that produces new Duplicants or care packages containing resources.\n\nOnly one Printing Pod or Mini-Pod is permitted per Planetoid.";
 			}
 
 			public class AIRCONDITIONER
@@ -52,9 +52,9 @@ namespace STRINGS
 
 			public class BEEHIVE
 			{
-				public static LocString NAME = UI.FormatAsLink("Beetafinery", "BEEHIVE");
+				public static LocString NAME = UI.FormatAsLink("Beeta Hive", "BEEHIVE");
 
-				public static LocString DESC = "A nest made by " + UI.FormatAsLink("Beetas", "BEE") + ".\n\nConverts " + UI.FormatAsLink("Uranium", "URANIUMORE") + " into " + UI.FormatAsLink("Enriched Uranium", "ENRICHEDURANIUM") + " when worked by a Beeta.\n\nEmits moderate " + UI.FormatAsLink("Radiation", "RADIATION") + ".";
+				public static LocString DESC = "A moderately " + UI.FormatAsLink("Radioactive", "RADIATION") + " nest made by " + UI.FormatAsLink("Beetas", "BEE") + ".\n\nConverts " + UI.FormatAsLink("Uranium", "URANIUMORE") + " into " + UI.FormatAsLink("Enriched Uranium", "ENRICHEDURANIUM") + " when worked by a Beeta.\nWill not function if ground below has been destroyed.";
 
 				public static LocString EFFECT = "The cozy home of a Beeta.";
 			}
@@ -112,7 +112,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Batteries allow power from generators to be stored for later.";
 
-				public static LocString EFFECT = "Stores " + UI.FormatAsLink("Power", "POWER") + " from generators, then provides that " + UI.FormatAsLink("Power", "POWER") + " to buildings.\n\nLoses charge over time.";
+				public static LocString EFFECT = "Stores " + UI.FormatAsLink("Power", "POWER") + " from generators, then provides that power to buildings.\n\nLoses charge over time.";
 
 				public static LocString CHARGE_LOSS = "{Battery} charge loss";
 			}
@@ -141,7 +141,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Larger batteries hold more power and keep systems running longer before recharging.";
 
-				public static LocString EFFECT = "Stores " + UI.FormatAsLink("Power", "POWER") + " from generators, then provides that " + UI.FormatAsLink("Power", "POWER") + " to buildings.\n\nSlightly loses charge over time.";
+				public static LocString EFFECT = "Stores " + UI.FormatAsLink("Power", "POWER") + " from generators, then provides that power to buildings.\n\nSlightly loses charge over time.";
 			}
 
 			public class BATTERYSMART
@@ -150,7 +150,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Smart batteries send a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " when they require charging.";
 
-				public static LocString EFFECT = "Stores " + UI.FormatAsLink("Power", "POWER") + " from generators, then provides that " + UI.FormatAsLink("Power", "POWER") + " to buildings.\n\nSends a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " or " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + " based on the configuration of the Logic Activation Parameters.\n\nVery slightly loses charge over time.";
+				public static LocString EFFECT = "Stores " + UI.FormatAsLink("Power", "POWER") + " from generators, then provides that power to buildings.\n\nSends a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " or " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + " based on the configuration of the Logic Activation Parameters.\n\nVery slightly loses charge over time.";
 
 				public static LocString LOGIC_PORT = "Charge Parameters";
 
@@ -205,6 +205,15 @@ namespace STRINGS
 				public static LocString EFFECT = "Allows Duplicants to store most of the " + UI.FormatAsLink("Solid Materials", "ELEMENTS_SOLID") + " found during space missions.\n\nStored resources become available to the colony upon the rocket's return.";
 			}
 
+			public class CARGOBAYCLUSTER
+			{
+				public static LocString NAME = UI.FormatAsLink("Large Cargo Bay", "CARGOBAY");
+
+				public static LocString DESC = "Holds more than a regular cargo bay.";
+
+				public static LocString EFFECT = "Allows Duplicants to store most of the " + UI.FormatAsLink("Solid Materials", "ELEMENTS_SOLID") + " found during space missions.\n\nStored resources become available to the colony upon the rocket's return.";
+			}
+
 			public class SOLIDCARGOBAYSMALL
 			{
 				public static LocString NAME = UI.FormatAsLink("Cargo Bay", "SOLIDCARGOBAYSMALL");
@@ -229,7 +238,7 @@ namespace STRINGS
 
 				public static LocString DESC = "At least one astronaut must be assigned to the command module to pilot a rocket.";
 
-				public static LocString EFFECT = "Contains passenger seating for Duplicant " + UI.FormatAsLink("Astronauts", "ASTRONAUT") + ".\n\nA Command Capsule must be the last module installed at the top of a rocket";
+				public static LocString EFFECT = "Contains passenger seating for Duplicant " + UI.FormatAsLink("Astronauts", "ASTRONAUT") + ".\n\nA Command Capsule must be the last module installed at the top of a rocket.";
 
 				public static LocString LOGIC_PORT_READY = "Rocket Checklist";
 
@@ -343,7 +352,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Rockets can be used to send Duplicants into space and retrieve rare resources.";
 
-				public static LocString EFFECT = "Uses pressurized " + UI.FormatAsLink("Carbon Dioxide", "CARBONDIOXIDE") + " to propel rockets for space exploration.\n\nThe engine of a rocket must be built first before more rocket modules can be added.";
+				public static LocString EFFECT = "Uses pressurized " + UI.FormatAsLink("Carbon Dioxide", "CARBONDIOXIDE") + " to propel rockets for short range space exploration.\n\nCarbon Dioxide Engines are relatively fast engine for their size but with limited height restrictions.\n\nThe engine of a rocket must be built first before more rocket modules can be added.";
 			}
 
 			public class KEROSENEENGINE
@@ -352,7 +361,25 @@ namespace STRINGS
 
 				public static LocString DESC = "Rockets can be used to send Duplicants into space and retrieve rare resources.";
 
-				public static LocString EFFECT = "Burns " + UI.FormatAsLink("Petroleum", "PETROLEUM") + " to propel rockets for space exploration.\n\nThe engine of a rocket must be built first before more rocket modules can be added.";
+				public static LocString EFFECT = "Burns " + UI.FormatAsLink("Petroleum", "PETROLEUM") + " to propel rockets for mid-range space exploration.\n\nPetroleum Engines have generous height restrictions, ideal for hauling many modules.\n\nThe engine of a rocket must be built first before more rocket modules can be added.";
+			}
+
+			public class KEROSENEENGINECLUSTER
+			{
+				public static LocString NAME = UI.FormatAsLink("Petroleum Engine", "KEROSENEENGINECLUSTER");
+
+				public static LocString DESC = "More powerful rocket engines can propel heavier burdens.";
+
+				public static LocString EFFECT = "Burns " + UI.FormatAsLink("Petroleum", "PETROLEUM") + " to propel rockets for mid-range space exploration.\n\nPetroleum Engines have generous height restrictions, ideal for hauling many modules.\n\nThe engine of a rocket must be built first before more rocket modules can be added.";
+			}
+
+			public class KEROSENEENGINECLUSTERSMALL
+			{
+				public static LocString NAME = UI.FormatAsLink("Small Petroleum Engine", "KEROSENEENGINECLUSTERSMALL");
+
+				public static LocString DESC = "Rockets can be used to send Duplicants into space and retrieve rare resources.";
+
+				public static LocString EFFECT = "Burns " + UI.FormatAsLink("Petroleum", "PETROLEUM") + " to propel rockets for mid-range space exploration.\n\nSmall Petroleum Engines possess the same speed as a " + UI.FormatAsLink("Petroleum Engines", "KEROSENEENGINE") + " but have smaller height restrictions.\n\nThe engine of a rocket must be built first before more rocket modules can be added.";
 			}
 
 			public class HYDROGENENGINE
@@ -361,7 +388,16 @@ namespace STRINGS
 
 				public static LocString DESC = "Hydrogen engines can propel rockets further than steam or petroleum engines.";
 
-				public static LocString EFFECT = "Burns " + UI.FormatAsLink("Liquid Hydrogen", "LIQUIDHYDROGEN") + " to propel rockets for space exploration.\n\nThe engine of a rocket must be built first before more rocket modules can be added.";
+				public static LocString EFFECT = "Burns " + UI.FormatAsLink("Liquid Hydrogen", "LIQUIDHYDROGEN") + " to propel rockets for long-range space exploration.\n\nHydrogen Engines have the same generous height restrictions as " + UI.FormatAsLink("Petroleum Engines", "KEROSENEENGINE") + " but are slightly faster.\n\nThe engine of a rocket must be built first before more rocket modules can be added.";
+			}
+
+			public class HYDROGENENGINECLUSTER
+			{
+				public static LocString NAME = UI.FormatAsLink("Hydrogen Engine", "HYDROGENENGINE");
+
+				public static LocString DESC = "Hydrogen engines can propel rockets further than steam or petroleum engines.";
+
+				public static LocString EFFECT = "Burns " + UI.FormatAsLink("Liquid Hydrogen", "LIQUIDHYDROGEN") + " to propel rockets for long-range space exploration.\n\nHydrogen Engines have the same generous height restrictions as " + UI.FormatAsLink("Petroleum Engines", "KEROSENEENGINE") + " but are slightly faster.\n\nThe engine of a rocket must be built first before more rocket modules can be added.";
 			}
 
 			public class SUGARENGINE
@@ -370,7 +406,16 @@ namespace STRINGS
 
 				public static LocString DESC = "Not the most stylish way to travel space, but certainly the tastiest.";
 
-				public static LocString EFFECT = "Burns " + UI.FormatAsLink("Sucrose", "SUCROSE") + " to propel rockets for space exploration.\n\nThe engine of a rocket must be built first before more rocket modules can be added.";
+				public static LocString EFFECT = "Burns " + UI.FormatAsLink("Sucrose", "SUCROSE") + " to propel rockets for short range space exploration.\n\nSugar Engines have higher height restrictions than " + UI.FormatAsLink("Carbon Dioxide Engines", "CO2ENGINE") + ", but move slower.\n\nThe engine of a rocket must be built first before more rocket modules can be added.";
+			}
+
+			public class HEPENGINE
+			{
+				public static LocString NAME = UI.FormatAsLink("Radbolt Engine", "HEPENGINE");
+
+				public static LocString DESC = "Radbolt-fueled rockets support few modules, but travel exceptionally far.";
+
+				public static LocString EFFECT = "Injects " + UI.FormatAsLink("Radbolts", "HEP") + " into a reaction chamber to propel rockets for long-range space exploration.\n\nRadbolt Engines are faster than " + UI.FormatAsLink("Hydrogen Engines", "HYDROGENENGINE") + " but with a more restrictive height allowance.\n\nThe engine of a rocket must be built first before more rocket modules can be added.";
 			}
 
 			public class ORBITALCARGOMODULE
@@ -382,6 +427,15 @@ namespace STRINGS
 				public static LocString EFFECT = string.Concat("Delivers cargo to the surface of Planetoids that do not yet have a ", LAUNCHPAD.NAME, ".");
 			}
 
+			public class BATTERYMODULE
+			{
+				public static LocString NAME = UI.FormatAsLink("Battery Module", "BATTERYMODULE");
+
+				public static LocString DESC = "Charging a battery module before takeoff makes it easier to power buildings during flight.";
+
+				public static LocString EFFECT = string.Concat("Stores the excess ", UI.FormatAsLink("Power", "POWER"), " generated by a Rocket Engine or ", LAUNCHPAD.NAME, ".\n\nProvides stored power to ", UI.FormatAsLink("Interior Rocket Outlets", "ROCKETINTERIORPOWERPLUG"), ".\n\nLoses charge over time.");
+			}
+
 			public class PIONEERMODULE
 			{
 				public static LocString NAME = UI.FormatAsLink("Trailblazer Module", "PIONEERMODULE");
@@ -389,6 +443,15 @@ namespace STRINGS
 				public static LocString DESC = "That's one small step for Dupekind.";
 
 				public static LocString EFFECT = string.Concat("Enables travel to Planetoids that do not yet have a ", LAUNCHPAD.NAME, ".\n\nCan hold one Duplicant traveller.\n\nDeployment is available while in a Starmap hex adjacent to a Planetoid.");
+			}
+
+			public class SOLARPANELMODULE
+			{
+				public static LocString NAME = UI.FormatAsLink("Solar Panel Module", "SOLARPANELMODULE");
+
+				public static LocString DESC = "Collect solar energy before takeoff and during flight.";
+
+				public static LocString EFFECT = "Converts " + UI.FormatAsLink("Sunlight", "LIGHT") + " into electrical " + UI.FormatAsLink("Power", "POWER") + " for use on rockets.\n\nMust be exposed to space.";
 			}
 
 			public class SCOUTMODULE
@@ -427,6 +490,69 @@ namespace STRINGS
 				public static LocString LOGIC_PORT_ACTIVE = "<b>Extends gantry</b> when a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " signal is received";
 
 				public static LocString LOGIC_PORT_INACTIVE = "<b>Retracts gantry</b> when a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + " signal is received";
+			}
+
+			public class ROCKETINTERIORPOWERPLUG
+			{
+				public static LocString NAME = UI.FormatAsLink("Power Outlet Fitting", "ROCKETINTERIORPOWERPLUG");
+
+				public static LocString DESC = "Outlets conveniently power buildings inside a cockpit using their rocket's power stores.";
+
+				public static LocString EFFECT = "Provides " + UI.FormatAsLink("Power", "POWER") + " to connected buildings.\n\nPulls power from " + UI.FormatAsLink("Battery Modules", "BATTERYMODULE") + " and Rocket Engines.\n\nMust be built within the interior of a Rocket Module.";
+			}
+
+			public class ROCKETINTERIORLIQUIDINPUT
+			{
+				public static LocString NAME = UI.FormatAsLink("Liquid Intake Fitting", "ROCKETINTERIORLIQUIDINPUT");
+
+				public static LocString DESC = "Begone, foul waters!";
+
+				public static LocString EFFECT = "Allows " + UI.FormatAsLink("Liquids", "ELEMENTS_LIQUID") + " to be pumped into rocket storage via " + UI.FormatAsLink("Pipes", "LIQUIDCONDUIT") + ".\n\nSends liquid to the first Rocket Module with available space.\n\nMust be built within the interior of a Rocket Module.";
+			}
+
+			public class ROCKETINTERIORLIQUIDOUTPUT
+			{
+				public static LocString NAME = UI.FormatAsLink("Liquid Output Fitting", "ROCKETINTERIORLIQUIDOUTPUT");
+
+				public static LocString DESC = "Now if only we had some water balloons...";
+
+				public static LocString EFFECT = "Allows " + UI.FormatAsLink("Liquids", "ELEMENTS_LIQUID") + " to be drawn from rocket storage via " + UI.FormatAsLink("Pipes", "LIQUIDCONDUIT") + ".\n\nDraws liquid from the first Rocket Module with the requested material.\n\nMust be built within the interior of a Rocket Module.";
+			}
+
+			public class ROCKETINTERIORGASINPUT
+			{
+				public static LocString NAME = UI.FormatAsLink("Gas Intake Fitting", "ROCKETINTERIORGASINPUT");
+
+				public static LocString DESC = "It's basically central-vac.";
+
+				public static LocString EFFECT = "Allows " + UI.FormatAsLink("Gases", "ELEMENTS_GAS") + " to be pumped into rocket storage via " + UI.FormatAsLink("Pipes", "GASCONDUIT") + ".\n\nSends gas to the first Rocket Module with available space.\n\nMust be built within the interior of a Rocket Module.";
+			}
+
+			public class ROCKETINTERIORGASOUTPUT
+			{
+				public static LocString NAME = UI.FormatAsLink("Gas Output Fitting", "ROCKETINTERIORGASOUTPUT");
+
+				public static LocString DESC = "Refreshing breezes, on-demand.";
+
+				public static LocString EFFECT = "Allows " + UI.FormatAsLink("Gases", "ELEMENTS_GAS") + " to be drawn from rocket storage via " + UI.FormatAsLink("Pipes", "GASCONDUIT") + ".\n\nDraws gas from the first Rocket Module with the requested material.\n\nMust be built within the interior of a Rocket Module.";
+			}
+
+			public class ROCKETINTERIORSOLIDINPUT
+			{
+				public static LocString NAME = UI.FormatAsLink("Conveyor Receptacle Fitting", "ROCKETINTERIORSOLIDINPUT");
+
+				public static LocString DESC = "Why organize your shelves when you can just shove everything in here?";
+
+				public static LocString EFFECT = "Allows " + UI.FormatAsLink("Solid Materials", "ELEMENTS_SOLID") + " to be moved into rocket storage via " + UI.FormatAsLink("Conveyor Rails", "SOLIDCONDUIT") + ".\n\nSends solid material to the first Rocket Module with available space.\n\nMust be built within the interior of a Rocket Module.";
+			}
+
+			public class ROCKETINTERIORSOLIDOUTPUT
+			{
+				public static LocString NAME = UI.FormatAsLink("Conveyor Loader Fitting", "ROCKETINTERIORSOLIDOUTPUT");
+
+				public static LocString DESC = "For accessing your stored luggage mid-flight.";
+
+				public static LocString EFFECT = "Allows " + UI.FormatAsLink("Solid Materials", "ELEMENTS_SOLID") + " to be moved out of rocket storage via " + UI.FormatAsLink("Conveyor Rails", "SOLIDCONDUIT") + ".\n\nDraws solid material from the first Rocket Module with the requested material.\n\nMust be built within the interior of a Rocket Module.";
 			}
 
 			public class WATERCOOLER
@@ -628,6 +754,15 @@ namespace STRINGS
 				public static LocString EFFECT = "Stores the " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + " fuel piped into it to supply rocket engines.\n\nThe stored fuel type is determined by the rocket engine it is built upon.";
 			}
 
+			public class LIQUIDFUELTANKCLUSTER
+			{
+				public static LocString NAME = UI.FormatAsLink("Large Liquid Fuel Tank", "LIQUIDFUELTANKCLUSTER");
+
+				public static LocString DESC = "Storing additional fuel increases the distance a rocket can travel before returning.";
+
+				public static LocString EFFECT = "Stores the " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + " fuel piped into it to supply rocket engines.\n\nThe stored fuel type is determined by the rocket engine it is built upon.";
+			}
+
 			public class LANDING_POD
 			{
 				public static LocString NAME = "Spacefarer Deploy Pod";
@@ -693,7 +828,7 @@ namespace STRINGS
 
 			public class SMALLOXIDIZERTANK
 			{
-				public static LocString NAME = UI.FormatAsLink("Small Oxidizer Tank", "SMALLOXIDIZERTANK");
+				public static LocString NAME = UI.FormatAsLink("Small Solid Oxidizer Tank", "SMALLOXIDIZERTANK");
 
 				public static LocString DESC = "Solid oxidizers allows rocket fuel to be efficiently burned in the vacuum of space.";
 
@@ -713,9 +848,29 @@ namespace STRINGS
 				public static LocString UI_FILTER_CATEGORY = "Accepted Oxidizers";
 			}
 
+			public class OXIDIZERTANKCLUSTER
+			{
+				public static LocString NAME = UI.FormatAsLink("Large Solid Oxidizer Tank", "OXIDIZERTANKCLUSTER");
+
+				public static LocString DESC = "Solid oxidizers allows rocket fuel to be efficiently burned in the vacuum of space.";
+
+				public static LocString EFFECT = "Stores " + UI.FormatAsLink("Oxylite", "OXYROCK") + " and other oxidizers for burning rocket fuels.";
+
+				public static LocString UI_FILTER_CATEGORY = "Accepted Oxidizers";
+			}
+
 			public class OXIDIZERTANKLIQUID
 			{
 				public static LocString NAME = UI.FormatAsLink("Liquid Oxidizer Tank", "LIQUIDOXIDIZERTANK");
+
+				public static LocString DESC = "Liquid oxygen improves the thrust-to-mass ratio of rocket fuels.";
+
+				public static LocString EFFECT = "Stores " + UI.FormatAsLink("Liquid Oxygen", "LIQUIDOXYGEN") + " for burning rocket fuels.";
+			}
+
+			public class OXIDIZERTANKLIQUIDCLUSTER
+			{
+				public static LocString NAME = UI.FormatAsLink("Liquid Oxidizer Tank", "LIQUIDOXIDIZERTANKCLUSTER");
 
 				public static LocString DESC = "Liquid oxygen improves the thrust-to-mass ratio of rocket fuels.";
 
@@ -732,6 +887,15 @@ namespace STRINGS
 			}
 
 			public class LIQUIDCARGOBAY
+			{
+				public static LocString NAME = UI.FormatAsLink("Large Liquid Cargo Tank", "LIQUIDCARGOBAY");
+
+				public static LocString DESC = "Holds more than a regular cargo tank.";
+
+				public static LocString EFFECT = "Allows Duplicants to store most of the " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + " resources found during space missions.\n\nStored resources become available to the colony upon the rocket's return.";
+			}
+
+			public class LIQUIDCARGOBAYCLUSTER
 			{
 				public static LocString NAME = UI.FormatAsLink("Large Liquid Cargo Tank", "LIQUIDCARGOBAY");
 
@@ -1104,6 +1268,15 @@ namespace STRINGS
 				public static LocString EFFECT = "Allows Duplicants to store most of the " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " resources found during space missions.\n\nStored resources become available to the colony upon the rocket's return.";
 			}
 
+			public class GASCARGOBAYCLUSTER
+			{
+				public static LocString NAME = UI.FormatAsLink("Large Gas Cargo Canister", "GASCARGOBAY");
+
+				public static LocString DESC = "Holds more than a typical gas cargo canister.";
+
+				public static LocString EFFECT = "Allows Duplicants to store most of the " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " resources found during space missions.\n\nStored resources become available to the colony upon the rocket's return.";
+			}
+
 			public class GASCARGOBAYSMALL
 			{
 				public static LocString NAME = UI.FormatAsLink("Gas Cargo Canister", "GASCARGOBAYSMALL");
@@ -1174,6 +1347,18 @@ namespace STRINGS
 				public static LocString DESC = "A platform from which rockets can be launched and on which they can land.";
 
 				public static LocString EFFECT = string.Concat("Enables Rocket construction.\n\nAllows Rockets to launch from or land on the host Planetoid.\n\nAutomatically links up to ", MODULARLAUNCHPADPORT.NAME, UI.FormatAsLink("s", "MODULARLAUNCHPADPORTSOLID"), " built to either side of the platform.");
+
+				public static LocString LOGIC_PORT_READY = "Rocket Checklist";
+
+				public static LocString LOGIC_PORT_READY_ACTIVE = "Sends a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " when its rocket is ready for flight";
+
+				public static LocString LOGIC_PORT_READY_INACTIVE = "Otherwise, sends a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby);
+
+				public static LocString LOGIC_PORT_LAUNCH = "Launch Rocket";
+
+				public static LocString LOGIC_PORT_LAUNCH_ACTIVE = UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + ": Launch rocket";
+
+				public static LocString LOGIC_PORT_LAUNCH_INACTIVE = UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ": Cancel launch";
 			}
 
 			public class GASFILTER
@@ -1356,11 +1541,17 @@ namespace STRINGS
 
 			public class NUCLEARREACTOR
 			{
-				public static LocString NAME = UI.FormatAsLink("Nuclear Reactor", "NUCLEARREACTOR");
+				public static LocString NAME = UI.FormatAsLink("Research Reactor", "NUCLEARREACTOR");
 
-				public static LocString DESC = "Nuclear reactors can be paired with particle generators to produce high energy particles.";
+				public static LocString DESC = "Radbolt generators and reflectors make radiation useable by other buildings.";
 
-				public static LocString EFFECT = "Uses " + UI.FormatAsLink("Enriched Uranium", "ENRICHEDURANIUM") + " to produce " + UI.FormatAsLink("Radiation", "RADIATION") + ".\n\nGenerates a massive amount of " + UI.FormatAsLink("Heat", "HEAT") + ".";
+				public static LocString EFFECT = "Uses " + UI.FormatAsLink("Enriched Uranium", "ENRICHEDURANIUM") + " to produce " + UI.FormatAsLink("Radiation", "RADIATION") + " for Radbolt production.\n\nGenerates a massive amount of " + UI.FormatAsLink("Heat", "HEAT") + ".";
+
+				public static LocString LOGIC_PORT = "Fuel Delivery Control";
+
+				public static LocString INPUT_PORT_ACTIVE = "Fuel Delivery Enabled";
+
+				public static LocString INPUT_PORT_INACTIVE = "Fuel Delivery Disabled";
 			}
 
 			public class WOODGASGENERATOR
@@ -1834,7 +2025,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Duplicants can become sick if exposed to radiation without protection.";
 
-				public static LocString EFFECT = "Emits " + UI.FormatAsLink("Radiation", "RADIATION") + " when " + UI.FormatAsLink("Powered", "POWER") + " that can be collected by a " + UI.FormatAsLink("Particle Generator", "HIGHENERGYPARTICLESPAWNER") + ".";
+				public static LocString EFFECT = "Emits " + UI.FormatAsLink("Radiation", "RADIATION") + " when " + UI.FormatAsLink("Powered", "POWER") + " that can be collected by a " + UI.FormatAsLink("Radbolt Generator", "HIGHENERGYPARTICLESPAWNER") + ".";
 			}
 
 			public class REFRIGERATOR
@@ -1876,7 +2067,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Research stations are necessary for unlocking all research tiers.";
 
-				public static LocString EFFECT = "Conducts " + UI.FormatAsLink("Novice Research", "RESEARCH") + " to unlock new technologies.";
+				public static LocString EFFECT = "Conducts " + UI.FormatAsLink("Novice Research", "RESEARCH") + " to unlock new technologies.\n\nConsumes " + UI.FormatAsLink("Dirt", "DIRT") + ".";
 			}
 
 			public class ADVANCEDRESEARCHCENTER
@@ -1885,7 +2076,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Super computers unlock higher technology tiers than research stations alone.";
 
-				public static LocString EFFECT = "Conducts " + UI.FormatAsLink("Advanced Research", "RESEARCH") + " to unlock new technologies.\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Advanced Research", "JUNIOR_RESEARCHER") + " skill.";
+				public static LocString EFFECT = "Conducts " + UI.FormatAsLink("Advanced Research", "RESEARCH") + " to unlock new technologies.\n\nConsumes " + UI.FormatAsLink("Water", "WATER") + ".\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Advanced Research", "JUNIOR_RESEARCHER") + " skill.";
 			}
 
 			public class NUCLEARRESEARCHCENTER
@@ -1894,7 +2085,16 @@ namespace STRINGS
 
 				public static LocString DESC = "Comes with a few ions thrown in, free of charge.";
 
-				public static LocString EFFECT = "Conducts " + UI.FormatAsLink("Atomic Research", "RESEARCH") + " to unlock new technologies.\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Atomic Research", "ATOMIC_RESEARCHER") + " skill.";
+				public static LocString EFFECT = "Conducts " + UI.FormatAsLink("Atomic Research", "RESEARCH") + " to unlock new technologies.\n\nConsumes Radbolts.\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Atomic Research", "ATOMIC_RESEARCHER") + " skill.";
+			}
+
+			public class ORBITALRESEARCHCENTER
+			{
+				public static LocString NAME = UI.FormatAsLink("Orbital Microlab", "ORBITALRESEARCHCENTER");
+
+				public static LocString DESC = "Orbital Microlabs perform research from the orbit around a Planetoid.";
+
+				public static LocString EFFECT = "Conducts " + UI.FormatAsLink("Interstellar Research", "RESEARCH") + " to unlock new technologies.\n\nConsumes " + UI.FormatAsLink("Plastic", "POLYPROPYLENE") + " and " + UI.FormatAsLink("Power", "POWER") + ".\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Orbital Researcher", "COSMIC_RESEARCHER") + " skill.";
 			}
 
 			public class COSMICRESEARCHCENTER
@@ -1903,7 +2103,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Planetariums allow the simulated exploration of locations discovered with a telescope.";
 
-				public static LocString EFFECT = "Conducts " + UI.FormatAsLink("Interstellar Research", "RESEARCH") + " using data from " + UI.FormatAsLink("Telescopes", "TELESCOPE") + " and " + UI.FormatAsLink("Research Modules", "RESEARCHMODULE") + ".\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Astronomy", "SENIOR_RESEARCHER") + " skill.";
+				public static LocString EFFECT = "Conducts " + UI.FormatAsLink("Interstellar Research", "RESEARCH") + " to unlock new technologies.\n\nConsumes data from " + UI.FormatAsLink("Telescopes", "TELESCOPE") + " and " + UI.FormatAsLink("Research Modules", "RESEARCHMODULE") + ".\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Astronomy", "SENIOR_RESEARCHER") + " skill.";
 			}
 
 			public class TELESCOPE
@@ -2032,11 +2232,29 @@ namespace STRINGS
 				public static LocString EFFECT = "Deploys an automated " + UI.FormatAsLink("Sweepy Bot", "SWEEPBOT") + " to sweep up " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + " debris and " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + " spills.\n\nDock stores " + UI.FormatAsLink("Liquids", "ELEMENTS_LIQUID") + " and " + UI.FormatAsLink("Solids", "ELEMENTS_SOLID") + " gathered by the Sweepy.\n\nUses " + UI.FormatAsLink("Power", "POWER") + " to recharge the Sweepy.\n\nDuplicants will empty Dock storage into available storage bins.";
 			}
 
+			public class OXYGENMASKMARKER
+			{
+				public static LocString NAME = UI.FormatAsLink("Oxygen Mask Checkpoint", "OXYGENMASKMARKER");
+
+				public static LocString DESC = "A checkpoint must have a correlating dock built on the opposite side its arrow faces.";
+
+				public static LocString EFFECT = "Marks a threshold where Duplicants must put on or take off an " + UI.FormatAsLink("Oxygen Mask", "OXYGEN_MASK") + ".\n\nMust be built next to an " + UI.FormatAsLink("Oxygen Mask Dock", "OXYGENMASKLOCKER") + ".\n\nCan be rotated before construction.";
+			}
+
+			public class OXYGENMASKLOCKER
+			{
+				public static LocString NAME = UI.FormatAsLink("Oxygen Mask Dock", "OXYGENMASKLOCKER");
+
+				public static LocString DESC = "An oxygen mask dock will store and refill masks while they're not in use.";
+
+				public static LocString EFFECT = "Stores " + UI.FormatAsLink("Oxygen Masks", "OXYGEN_MASK") + " and refuels them with " + UI.FormatAsLink("Oxygen", "OXYGEN") + ".\n\nBuild next to an " + UI.FormatAsLink("Oxygen Mask Checkpoint", "OXYGENMASKMARKER") + " to make Duplicants put on masks when passing by.";
+			}
+
 			public class SUITMARKER
 			{
 				public static LocString NAME = UI.FormatAsLink("Atmo Suit Checkpoint", "SUITMARKER");
 
-				public static LocString DESC = "A checkpoint must have an atmo suit dock built on the opposite side its arrow faces.";
+				public static LocString DESC = "A checkpoint must have a correlating dock built on the opposite side its arrow faces.";
 
 				public static LocString EFFECT = "Marks a threshold where Duplicants must change into or out of " + UI.FormatAsLink("Atmo Suits", "ATMO_SUIT") + ".\n\nMust be built next to an " + UI.FormatAsLink("Atmo Suit Dock", "SUITLOCKER") + ".\n\nCan be rotated before construction.";
 			}
@@ -2084,6 +2302,15 @@ namespace STRINGS
 				public static LocString DESC = "Lead suit docks can refill lead suits with air and empty them of waste.";
 
 				public static LocString EFFECT = "Stores " + UI.FormatAsLink("Lead Suits", "LEAD_SUIT") + " and refuels them  with " + UI.FormatAsLink("Oxygen", "OXYGEN") + ".\n\nEmpties suits of " + UI.FormatAsLink("Polluted Water", "DIRTYWATER") + ".\n\nBuild next to a " + UI.FormatAsLink("Lead Suit Checkpoint", "LEADSUITMARKER") + " to make Duplicants change into suits when passing by.";
+			}
+
+			public class CRAFTINGTABLE
+			{
+				public static LocString NAME = UI.FormatAsLink("Crafting Station", "CRAFTINGTABLE");
+
+				public static LocString DESC = "Crafting stations allow Duplicants to make oxygen masks to wear in low breathability areas.";
+
+				public static LocString EFFECT = "Produces items and equipment for Duplicant use.\n\nDuplicants will not fabricate items unless recipes are queued.";
 			}
 
 			public class SUITFABRICATOR
@@ -2459,6 +2686,15 @@ namespace STRINGS
 				public static LocString EFFECT = "Utilizes " + UI.FormatAsLink("Steam", "STEAM") + " to propel rockets for space exploration.\n\nThe engine of a rocket must be built first before more rocket modules may be added.";
 			}
 
+			public class STEAMENGINECLUSTER
+			{
+				public static LocString NAME = UI.FormatAsLink("Steam Engine", "STEAMENGINECLUSTER");
+
+				public static LocString DESC = "Rockets can be used to send Duplicants into space and retrieve rare resources.";
+
+				public static LocString EFFECT = "Utilizes " + UI.FormatAsLink("Steam", "STEAM") + " to propel rockets for space exploration.\n\nThe engine of a rocket must be built first before more rocket modules may be added.";
+			}
+
 			public class SOLARPANEL
 			{
 				public static LocString NAME = UI.FormatAsLink("Solar Panel", "SOLARPANEL");
@@ -2562,6 +2798,8 @@ namespace STRINGS
 				public static LocString VISCOGEL_RECIPE_DESCRIPTION = "Visco-Gel is a " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + " polymer with high surface tension.";
 
 				public static LocString YELLOWCAKE_RECIPE_DESCRIPTION = "Yellowcake is a " + UI.FormatAsLink("Solid Material", "ELEMENTS_SOLID") + " used in uranium enrichment.";
+
+				public static LocString FULLERENE_RECIPE_DESCRIPTION = "Fullerene is a " + UI.FormatAsLink("Solid Material", "ELEMENTS_SOLID") + " used in the production of " + UI.FormatAsLink("Super Coolant", "SUPERCOOLANT") + ".";
 			}
 
 			public class THERMALBLOCK
@@ -3021,6 +3259,21 @@ namespace STRINGS
 				public static LocString LOGIC_PORT_INACTIVE = "Otherwise, sends a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby);
 			}
 
+			public class LOGICRADIATIONSENSOR
+			{
+				public static LocString NAME = UI.FormatAsLink("Radiation Sensor", "LOGICRADIATIONSENSOR");
+
+				public static LocString DESC = "Radiation sensors can disable buildings when they detect dangerous levels of radiation.";
+
+				public static LocString EFFECT = "Sends a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " or a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + " when ambient " + UI.FormatAsLink("Radiation", "RADIATION") + " enters the chosen range.";
+
+				public static LocString LOGIC_PORT = "Ambient " + UI.FormatAsLink("Radiation", "RADIATION");
+
+				public static LocString LOGIC_PORT_ACTIVE = "Sends a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " if ambient " + UI.FormatAsLink("Radiation", "RADIATION") + " is within the selected range";
+
+				public static LocString LOGIC_PORT_INACTIVE = "Otherwise, sends a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby);
+			}
+
 			public class GASCONDUITDISEASESENSOR
 			{
 				public static LocString NAME = UI.FormatAsLink("Gas Pipe Germ Sensor", "GASCONDUITDISEASESENSOR");
@@ -3464,32 +3717,32 @@ namespace STRINGS
 
 			public class HIGHENERGYPARTICLEREDIRECTOR
 			{
-				public static LocString NAME = UI.FormatAsLink("Particle Redirector", "HIGHENERGYPARTICLEREDIRECTOR");
+				public static LocString NAME = UI.FormatAsLink("Radbolt Reflector", "HIGHENERGYPARTICLEREDIRECTOR");
 
-				public static LocString DESC = "It's like playing the most dangerous game of ping pong.";
+				public static LocString DESC = "We were all out of mirrors.";
 
-				public static LocString EFFECT = "Receives and redirects " + UI.PRE_KEYWORD + "High Energy Particles" + UI.PST_KEYWORD + " from " + UI.FormatAsLink("Particle Generators", "HIGHENERGYPARTICLESPAWNER") + ".";
+				public static LocString EFFECT = "Receives and redirects Radbolts from " + UI.FormatAsLink("Radbolt Generators", "HIGHENERGYPARTICLESPAWNER") + ".";
 
-				public static LocString LOGIC_PORT = "Ignore incoming particles";
+				public static LocString LOGIC_PORT = "Ignore incoming Radbolts";
 
-				public static LocString LOGIC_PORT_ACTIVE = UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + ": Allow incoming particles";
+				public static LocString LOGIC_PORT_ACTIVE = UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + ": Allow incoming Radbolts";
 
-				public static LocString LOGIC_PORT_INACTIVE = UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ": Ignore incoming particles";
+				public static LocString LOGIC_PORT_INACTIVE = UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ": Ignore incoming Radbolts";
 			}
 
 			public class HIGHENERGYPARTICLESPAWNER
 			{
-				public static LocString NAME = UI.FormatAsLink("Particle Generator", "HIGHENERGYPARTICLESPAWNER");
+				public static LocString NAME = UI.FormatAsLink("Radbolt Generator", "HIGHENERGYPARTICLESPAWNER");
 
-				public static LocString DESC = "High energy particles are necessary for producing atomic research.";
+				public static LocString DESC = "Radbolts are necessary for producing atomic research.";
 
-				public static LocString EFFECT = "Attracts nearby " + UI.FormatAsLink("Radiation", "RADIATION") + " to generates " + UI.PRE_KEYWORD + "High Energy Particles" + UI.PST_KEYWORD + ".\n\nEmits generated particles in the direction of your choosing.";
+				public static LocString EFFECT = "Attracts nearby " + UI.FormatAsLink("Radiation", "RADIATION") + " to generate Radbolts.\n\nEmits generated Radbolts in the direction of your choosing.";
 
-				public static LocString LOGIC_PORT = "Do not emit High Energy Particles";
+				public static LocString LOGIC_PORT = "Do not emit Radbolts";
 
-				public static LocString LOGIC_PORT_ACTIVE = UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + ": Emit High Energy Particles";
+				public static LocString LOGIC_PORT_ACTIVE = UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + ": Emit Radbolts";
 
-				public static LocString LOGIC_PORT_INACTIVE = UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ": Do not emit High Energy Particles";
+				public static LocString LOGIC_PORT_INACTIVE = UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ": Do not emit Radbolts";
 			}
 
 			public class ASTRONAUTTRAININGCENTER
@@ -3539,33 +3792,62 @@ namespace STRINGS
 			public class MODULARLAUNCHPADPORT
 			{
 				public static LocString NAME = UI.FormatAsLink("Rocket Port", "MODULARLAUNCHPADPORTSOLID");
+
+				public static LocString NAME_PLURAL = UI.FormatAsLink("Rocket Ports", "MODULARLAUNCHPADPORTSOLID");
 			}
 
 			public class MODULARLAUNCHPADPORTGAS
 			{
-				public static LocString NAME = UI.FormatAsLink("Gas Rocket Port", "MODULARLAUNCHPADPORTGAS");
+				public static LocString NAME = UI.FormatAsLink("Gas Rocket Port Loader", "MODULARLAUNCHPADPORTGAS");
 
 				public static LocString DESC = "Rockets must be landed to load or unload resources.";
 
-				public static LocString EFFECT = string.Concat("Allows ", UI.FormatAsLink("Gases", "ELEMENTS_GAS"), " to be loaded and unloaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the gas filters set on the linked Rocket Platform.");
+				public static LocString EFFECT = string.Concat("Allows ", UI.FormatAsLink("Gases", "ELEMENTS_GAS"), " to be loaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the gas filters set on the rocket's cargo bays.");
 			}
 
 			public class MODULARLAUNCHPADPORTLIQUID
 			{
-				public static LocString NAME = UI.FormatAsLink("Liquid Rocket Port", "MODULARLAUNCHPADPORTLIQUID");
+				public static LocString NAME = UI.FormatAsLink("Liquid Rocket Port Loader", "MODULARLAUNCHPADPORTLIQUID");
 
 				public static LocString DESC = "Rockets must be landed to load or unload resources.";
 
-				public static LocString EFFECT = string.Concat("Allows ", UI.FormatAsLink("Liquids", "ELEMENTS_LIQUID"), " to be loaded and unloaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the liquid filters set on the linked Rocket Platform.");
+				public static LocString EFFECT = string.Concat("Allows ", UI.FormatAsLink("Liquids", "ELEMENTS_LIQUID"), " to be loaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the liquid filters set on the rocket's cargo bays.");
 			}
 
 			public class MODULARLAUNCHPADPORTSOLID
 			{
-				public static LocString NAME = UI.FormatAsLink("Solid Rocket Port", "MODULARLAUNCHPADPORTSOLID");
+				public static LocString NAME = UI.FormatAsLink("Solid Rocket Port Loader", "MODULARLAUNCHPADPORTSOLID");
 
 				public static LocString DESC = "Rockets must be landed to load or unload resources.";
 
-				public static LocString EFFECT = string.Concat("Allows ", UI.FormatAsLink("Solids", "ELEMENTS_SOLID"), " to be loaded and unloaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the solid material filters set on the linked Rocket Platform.");
+				public static LocString EFFECT = string.Concat("Allows ", UI.FormatAsLink("Solids", "ELEMENTS_SOLID"), " to be loaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the solid material filters set on the rocket's cargo bays.");
+			}
+
+			public class MODULARLAUNCHPADPORTGASUNLOADER
+			{
+				public static LocString NAME = UI.FormatAsLink("Gas Rocket Port Unloader", "MODULARLAUNCHPADPORTGASUNLOADER");
+
+				public static LocString DESC = "Rockets must be landed to load or unload resources.";
+
+				public static LocString EFFECT = string.Concat("Allows ", UI.FormatAsLink("Gases", "ELEMENTS_GAS"), " to be unloaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the gas filters set on this unloader.");
+			}
+
+			public class MODULARLAUNCHPADPORTLIQUIDUNLOADER
+			{
+				public static LocString NAME = UI.FormatAsLink("Liquid Rocket Port Unloader", "MODULARLAUNCHPADPORTLIQUIDUNLOADER");
+
+				public static LocString DESC = "Rockets must be landed to load or unload resources.";
+
+				public static LocString EFFECT = string.Concat("Allows ", UI.FormatAsLink("Liquids", "ELEMENTS_LIQUID"), " to be unloaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the liquid filters set on this unloader.");
+			}
+
+			public class MODULARLAUNCHPADPORTSOLIDUNLOADER
+			{
+				public static LocString NAME = UI.FormatAsLink("Solid Rocket Port Unloader", "MODULARLAUNCHPADPORTSOLIDUNLOADER");
+
+				public static LocString DESC = "Rockets must be landed to load or unload resources.";
+
+				public static LocString EFFECT = string.Concat("Allows ", UI.FormatAsLink("Solids", "ELEMENTS_SOLID"), " to be unloaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the solid material filters set on this unloader.");
 			}
 
 			public class STICKERBOMB
@@ -3600,6 +3882,14 @@ namespace STRINGS
 				public static LocString DESC = "It's tempting to climb inside but trust me... don't.";
 
 				public static LocString EFFECT = "Launches " + UI.FormatAsLink("Interplanetary Payloads", "RAILGUNPAYLOAD") + " between Planetoids.\n\nPayloads can contain " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + ", " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + ", or " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " materials.\n\nCannot transport Duplicants.";
+
+				public static LocString SIDESCREEN_HEP_REQUIRED = "Launch cost: {current} / {required} radbolts";
+
+				public static LocString LOGIC_PORT = "Launch Toggle";
+
+				public static LocString LOGIC_PORT_ACTIVE = UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + ": Enable payload launching.";
+
+				public static LocString LOGIC_PORT_INACTIVE = UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ": Disable payload launching.";
 			}
 
 			public class RAILGUNPAYLOADOPENER
@@ -3609,6 +3899,15 @@ namespace STRINGS
 				public static LocString DESC = "Payload openers can be hooked up to conveyors, plumbing and ventilation for improved sorting.";
 
 				public static LocString EFFECT = "Unpacks " + UI.FormatAsLink("Interplanetary Payloads", "RAILGUNPAYLOAD") + " delivered by Duplicants.\n\nAutomatically separates " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + ", " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + ", and " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " materials and distributes them to the appropriate systems.";
+			}
+
+			public class LANDINGBEACON
+			{
+				public static LocString NAME = UI.FormatAsLink("Targeting Beacon", "LANDINGBEACON");
+
+				public static LocString DESC = "Microtarget where your " + UI.FormatAsLink("Interplanetary Payload", "RAILGUNPAYLOAD") + " lands on a Planetoid surface.";
+
+				public static LocString EFFECT = "Guides " + UI.FormatAsLink("Interplanetary Payloads", "RAILGUNPAYLOAD") + " and " + UI.FormatAsLink("Orbital Cargo Modules", "ORBITALCARGOMODULE") + "to land nearby.\n\n" + UI.FormatAsLink("Interplanetary Payloads", "RAILGUNPAYLOAD") + " must be launched from a " + UI.FormatAsLink("Interplanetary Launcher", "RAILGUN") + ".";
 			}
 
 			public class MASSIVEHEATSINK
@@ -3668,6 +3967,13 @@ namespace STRINGS
 				public static LocString NAME = "Neural Vacillator";
 
 				public static LocString DESC = "A massive synthetic brain, suspended in saline solution.\n\nThere is a chair attached to the device with room for one person.";
+			}
+
+			public class PROPTALLPLANT
+			{
+				public static LocString NAME = "Potted Plant";
+
+				public static LocString DESC = "Looking closely, it appears to be fake.";
 			}
 
 			public class PROPTABLE
@@ -3865,7 +4171,7 @@ namespace STRINGS
 
 				public static LocString DESC = "The tubes at the back disappear into nowhere.";
 
-				public static LocString EFFECT = "A machine capable of taking " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + ", " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + ", and " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " resources.\n\nIt can be activated by a Duplicant with the " + UI.FormatAsLink("Field Research", "RESEARCHER") + " skill.\n\nThis is the receiving side.";
+				public static LocString EFFECT = "A machine capable of teleporting " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + ", " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + ", and " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " resources.\n\nIt can be activated by a Duplicant with the " + UI.FormatAsLink("Field Research", "RESEARCHER") + " skill.\n\nThis is the receiving side.";
 			}
 
 			public class WARPCONDUITSENDER
@@ -3874,7 +4180,7 @@ namespace STRINGS
 
 				public static LocString DESC = "The tubes at the back disappear into nowhere.";
 
-				public static LocString EFFECT = "A machine capable of taking " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + ", " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + ", and " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " resources.\n\nIt can be activated by a Duplicant with the " + UI.FormatAsLink("Field Research", "RESEARCHER") + " skill.\n\nThis is the transmitting side.";
+				public static LocString EFFECT = "A machine capable of teleporting " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + ", " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + ", and " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " resources.\n\nIt can be activated by a Duplicant with the " + UI.FormatAsLink("Field Research", "RESEARCHER") + " skill.\n\nThis is the transmitting side.";
 			}
 
 			public class WARPPORTAL

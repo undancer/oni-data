@@ -13,6 +13,7 @@ public class SolidBoosterConfig : IBuildingConfig
 		{
 			SimHashes.Steel.ToString()
 		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		buildingDef.ForbiddenDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;
 		buildingDef.Invincible = true;
@@ -24,7 +25,6 @@ public class SolidBoosterConfig : IBuildingConfig
 		buildingDef.attachablePosition = new CellOffset(0, 0);
 		buildingDef.CanMove = true;
 		buildingDef.Cancellable = false;
-		buildingDef.ShowInBuildMenu = !DlcManager.IsExpansion1Active();
 		return buildingDef;
 	}
 
@@ -70,6 +70,6 @@ public class SolidBoosterConfig : IBuildingConfig
 		manualDeliveryKG2.refillMass = storage.capacityKg / 2f;
 		manualDeliveryKG2.capacity = storage.capacityKg / 2f;
 		manualDeliveryKG2.choreTypeIDHash = Db.Get().ChoreTypes.MachineFetch.IdHash;
-		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.MINOR_PLUS, "rocket_solid_booster_bg_kanim");
+		BuildingTemplates.ExtendBuildingToRocketModule(go, "rocket_solid_booster_bg_kanim");
 	}
 }

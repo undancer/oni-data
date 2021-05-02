@@ -71,32 +71,35 @@ public class RockCrusherConfig : IBuildingConfig
 		List<Element> list2 = ElementLoader.elements.FindAll((Element e) => e.IsSolid && e.HasTag(GameTags.Metal));
 		foreach (Element item2 in list2)
 		{
-			Element highTempTransition = item2.highTempTransition;
-			Element lowTempTransition = highTempTransition.lowTempTransition;
-			if (lowTempTransition != item2)
+			if (!item2.HasTag(GameTags.Noncrushable))
 			{
-				ComplexRecipe.RecipeElement[] array3 = new ComplexRecipe.RecipeElement[1]
+				Element highTempTransition = item2.highTempTransition;
+				Element lowTempTransition = highTempTransition.lowTempTransition;
+				if (lowTempTransition != item2)
 				{
-					new ComplexRecipe.RecipeElement(item2.tag, 100f)
-				};
-				ComplexRecipe.RecipeElement[] array4 = new ComplexRecipe.RecipeElement[2]
-				{
-					new ComplexRecipe.RecipeElement(lowTempTransition.tag, 50f),
-					new ComplexRecipe.RecipeElement(tag, 50f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
-				};
-				string obsolete_id2 = ComplexRecipeManager.MakeObsoleteRecipeID("RockCrusher", lowTempTransition.tag);
-				string text2 = ComplexRecipeManager.MakeRecipeID("RockCrusher", array3, array4);
-				new ComplexRecipe(text2, array3, array4)
-				{
-					time = 40f,
-					description = string.Format(STRINGS.BUILDINGS.PREFABS.ROCKCRUSHER.METAL_RECIPE_DESCRIPTION, lowTempTransition.name, item2.name),
-					nameDisplay = ComplexRecipe.RecipeNameDisplay.IngredientToResult,
-					fabricators = new List<Tag>
+					ComplexRecipe.RecipeElement[] array3 = new ComplexRecipe.RecipeElement[1]
 					{
-						TagManager.Create("RockCrusher")
-					}
-				};
-				ComplexRecipeManager.Get().AddObsoleteIDMapping(obsolete_id2, text2);
+						new ComplexRecipe.RecipeElement(item2.tag, 100f)
+					};
+					ComplexRecipe.RecipeElement[] array4 = new ComplexRecipe.RecipeElement[2]
+					{
+						new ComplexRecipe.RecipeElement(lowTempTransition.tag, 50f),
+						new ComplexRecipe.RecipeElement(tag, 50f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
+					};
+					string obsolete_id2 = ComplexRecipeManager.MakeObsoleteRecipeID("RockCrusher", lowTempTransition.tag);
+					string text2 = ComplexRecipeManager.MakeRecipeID("RockCrusher", array3, array4);
+					new ComplexRecipe(text2, array3, array4)
+					{
+						time = 40f,
+						description = string.Format(STRINGS.BUILDINGS.PREFABS.ROCKCRUSHER.METAL_RECIPE_DESCRIPTION, lowTempTransition.name, item2.name),
+						nameDisplay = ComplexRecipe.RecipeNameDisplay.IngredientToResult,
+						fabricators = new List<Tag>
+						{
+							TagManager.Create("RockCrusher")
+						}
+					};
+					ComplexRecipeManager.Get().AddObsoleteIDMapping(obsolete_id2, text2);
+				}
 			}
 		}
 		Element element = ElementLoader.FindElementByHash(SimHashes.Lime);
@@ -196,6 +199,27 @@ public class RockCrusherConfig : IBuildingConfig
 		{
 			time = 40f,
 			description = string.Format(STRINGS.BUILDINGS.PREFABS.ROCKCRUSHER.RECIPE_DESCRIPTION, SimHashes.Salt.CreateTag().ProperName(), ITEMS.INDUSTRIAL_PRODUCTS.TABLE_SALT.NAME),
+			nameDisplay = ComplexRecipe.RecipeNameDisplay.IngredientToResult,
+			fabricators = new List<Tag>
+			{
+				TagManager.Create("RockCrusher")
+			}
+		};
+		float num2 = 0.9f;
+		ComplexRecipe.RecipeElement[] array15 = new ComplexRecipe.RecipeElement[1]
+		{
+			new ComplexRecipe.RecipeElement(SimHashes.Fullerene.CreateTag(), 100f)
+		};
+		ComplexRecipe.RecipeElement[] array16 = new ComplexRecipe.RecipeElement[2]
+		{
+			new ComplexRecipe.RecipeElement(SimHashes.Graphite.CreateTag(), 100f * num2, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature),
+			new ComplexRecipe.RecipeElement(SimHashes.Sand.CreateTag(), 100f * (1f - num2), ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
+		};
+		string id5 = ComplexRecipeManager.MakeRecipeID("RockCrusher", array15, array16);
+		new ComplexRecipe(id5, array15, array16)
+		{
+			time = 40f,
+			description = string.Format(STRINGS.BUILDINGS.PREFABS.ROCKCRUSHER.RECIPE_DESCRIPTION, SimHashes.Fullerene.CreateTag().ProperName(), SimHashes.Graphite.CreateTag().ProperName()),
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.IngredientToResult,
 			fabricators = new List<Tag>
 			{

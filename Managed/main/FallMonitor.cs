@@ -29,17 +29,20 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 
 		private bool shouldPlayEmotes;
 
+		public string entombedAnimOverride;
+
 		private List<int> safeCells = new List<int>();
 
 		private int MAX_CELLS_TRACKED = 5;
 
 		private bool flipRecoverEmote = false;
 
-		public Instance(IStateMachineTarget master, bool shouldPlayEmotes)
+		public Instance(IStateMachineTarget master, bool shouldPlayEmotes, string entombedAnimOverride = null)
 			: base(master)
 		{
 			navigator = GetComponent<Navigator>();
 			this.shouldPlayEmotes = shouldPlayEmotes;
+			this.entombedAnimOverride = entombedAnimOverride;
 			Pathfinding.Instance.FlushNavGridsOnLoad();
 			Subscribe(915392638, OnCellChanged);
 			Subscribe(1027377649, OnMovementStateChanged);
@@ -184,16 +187,36 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 		{
 			bool value = false;
 			bool flag = false;
-			if (!navigator.IsMoving())
+			if (!navigator.IsMoving() && navigator.CurrentNavType != NavType.Tube)
 			{
 				int num = Grid.PosToCell(base.transform.GetPosition());
 				int num2 = Grid.CellAbove(num);
-				bool flag2 = IsValidNavCell(num) && (!base.gameObject.HasTag(GameTags.Incapacitated) || (navigator.CurrentNavType != NavType.Ladder && navigator.CurrentNavType != NavType.Pole));
-				flag = (!flag2 && ((Grid.IsValidCell(num) && Grid.Solid[num]) || (Grid.IsValidCell(num2) && Grid.Solid[num2]))) || Grid.DupeImpassable[num] || Grid.DupeImpassable[num2];
-				value = !flag2 && !flag;
+				bool flag2 = Grid.IsValidCell(num);
+				bool flag3 = Grid.IsValidCell(num2);
+				bool flag4 = IsValidNavCell(num) && (!base.gameObject.HasTag(GameTags.Incapacitated) || (navigator.CurrentNavType != NavType.Ladder && navigator.CurrentNavType != NavType.Pole));
+				flag = (!flag4 && flag2 && Grid.Solid[num]) || (flag3 && Grid.Solid[num2]) || (flag2 && Grid.DupeImpassable[num]) || (flag3 && Grid.DupeImpassable[num2]);
+				value = !flag4 && !flag;
+				if ((!flag2 && flag3) || Grid.WorldIdx[num] != Grid.WorldIdx[num2])
+				{
+					TeleportInWorld(num);
+				}
 			}
 			base.sm.isFalling.Set(value, base.smi);
 			base.sm.isEntombed.Set(flag, base.smi);
+		}
+
+		private void TeleportInWorld(int cell)
+		{
+			WorldContainer worldContainer = null;
+			do
+			{
+				int num = Grid.CellAbove(cell);
+				worldContainer = ClusterManager.Instance.GetWorld(Grid.WorldIdx[num]);
+			}
+			while (worldContainer == null);
+			int safeCell = worldContainer.GetSafeCell();
+			Debug.Log($"Teleporting {navigator.name} to {safeCell}");
+			MoveToCell(safeCell);
 		}
 
 		private bool IsValidNavCell(int cell)
@@ -203,14 +226,15 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 
 		public void TryEntombedEscape()
 		{
+			int num = Grid.PosToCell(base.transform.GetPosition());
 			int backCell = GetComponent<Facing>().GetBackCell();
-			int num = Grid.CellAbove(backCell);
-			int num2 = Grid.CellBelow(backCell);
+			int num2 = Grid.CellAbove(backCell);
+			int num3 = Grid.CellBelow(backCell);
 			int[] array = new int[3]
 			{
 				backCell,
-				num,
-				num2
+				num2,
+				num3
 			};
 			foreach (int cell in array)
 			{
@@ -221,12 +245,12 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 				}
 			}
 			int cell2 = Grid.PosToCell(base.transform.GetPosition());
-			for (int num3 = safeCells.Count - 1; num3 >= 0; num3--)
+			for (int num4 = safeCells.Count - 1; num4 >= 0; num4--)
 			{
-				int cell3 = safeCells[num3];
-				if (IsValidNavCell(cell3))
+				int num5 = safeCells[num4];
+				if (num5 != num && IsValidNavCell(num5))
 				{
-					MoveToCell(cell3);
+					MoveToCell(num5);
 					return;
 				}
 			}
@@ -235,10 +259,10 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 			{
 				if (Grid.IsCellOffsetValid(cell2, offset))
 				{
-					int cell4 = Grid.OffsetCell(cell2, offset);
-					if (IsValidNavCell(cell4))
+					int cell3 = Grid.OffsetCell(cell2, offset);
+					if (IsValidNavCell(cell3))
 					{
-						MoveToCell(cell4);
+						MoveToCell(cell3);
 						return;
 					}
 				}
@@ -248,15 +272,11 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 			{
 				if (Grid.IsCellOffsetValid(cell2, offset2))
 				{
-					int num4 = Grid.OffsetCell(cell2, offset2);
-					int num5 = Grid.CellAbove(num4);
-					if (Grid.IsValidCell(num5) && !Grid.Solid[num4] && !Grid.Solid[num5] && !Grid.DupeImpassable[num4] && !Grid.DupeImpassable[num5])
+					int num6 = Grid.OffsetCell(cell2, offset2);
+					int num7 = Grid.CellAbove(num6);
+					if (Grid.IsValidCell(num7) && !Grid.Solid[num6] && !Grid.Solid[num7] && !Grid.DupeImpassable[num6] && !Grid.DupeImpassable[num7])
 					{
-						base.transform.SetPosition(Grid.CellToPosCBC(num4, Grid.SceneLayer.Move));
-						base.transform.GetComponent<Navigator>().Stop();
-						base.transform.GetComponent<Navigator>().SetCurrentNavType(NavType.Floor);
-						UpdateFalling();
-						GoTo(base.sm.standing);
+						MoveToCell(num6, forceFloorNav: true);
 						return;
 					}
 				}
@@ -264,16 +284,23 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 			GoTo(base.sm.entombed.stuck);
 		}
 
-		private void MoveToCell(int cell)
+		private void MoveToCell(int cell, bool forceFloorNav = false)
 		{
 			base.transform.SetPosition(Grid.CellToPosCBC(cell, Grid.SceneLayer.Move));
 			base.transform.GetComponent<Navigator>().Stop();
-			if (base.gameObject.HasTag(GameTags.Incapacitated))
+			if (base.gameObject.HasTag(GameTags.Incapacitated) || forceFloorNav)
 			{
 				base.transform.GetComponent<Navigator>().SetCurrentNavType(NavType.Floor);
 			}
 			UpdateFalling();
-			GoTo(base.sm.standing);
+			if (base.sm.isEntombed.Get(base.smi))
+			{
+				GoTo(base.sm.entombed.stuck);
+			}
+			else
+			{
+				GoTo(base.sm.standing);
+			}
 		}
 	}
 
@@ -352,6 +379,6 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 		entombed.stuck.Enter("StopNavigator", delegate(Instance smi)
 		{
 			smi.GetComponent<Navigator>().Stop();
-		}).ToggleChore((Instance smi) => new EntombedChore(smi.master), standing).ParamTransition(isEntombed, standing, GameStateMachine<FallMonitor, Instance, IStateMachineTarget, object>.IsFalse);
+		}).ToggleChore((Instance smi) => new EntombedChore(smi.master, smi.entombedAnimOverride), standing).ParamTransition(isEntombed, standing, GameStateMachine<FallMonitor, Instance, IStateMachineTarget, object>.IsFalse);
 	}
 }

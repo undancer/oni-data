@@ -14,7 +14,10 @@ public class ResourceTracker : WorldTracker
 
 	public override void UpdateData()
 	{
-		AddPoint(ClusterManager.Instance.GetWorld(base.WorldID).worldInventory.GetAmount(tag, includeRelatedWorlds: false));
+		if (!(ClusterManager.Instance.GetWorld(base.WorldID).worldInventory == null))
+		{
+			AddPoint(ClusterManager.Instance.GetWorld(base.WorldID).worldInventory.GetAmount(tag, includeRelatedWorlds: false));
+		}
 	}
 
 	public override string FormatValueString(float value)

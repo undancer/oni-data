@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class FallerComponents : KGameObjectComponentManager<FallerComponent>
 {
+	private const float EPSILON = 0.07f;
+
 	public HandleVector<int>.Handle Add(GameObject go, Vector2 initial_velocity)
 	{
 		return Add(go, new FallerComponent(go.transform, initial_velocity));
@@ -31,9 +33,9 @@ public class FallerComponents : KGameObjectComponentManager<FallerComponent>
 		{
 			OnSolidChanged(h);
 		};
-		float num2 = 0f - GravityComponent.GetRadius(data.transform) - 0.07f;
-		int num3 = Grid.PosToCell(new Vector3(position.x, position.y + num2, position.z));
-		bool flag = Grid.IsValidCell(num3) && Grid.Solid[num3] && data.initialVelocity.sqrMagnitude == 0f;
+		float groundOffset = GravityComponent.GetGroundOffset(data.transform.GetComponent<KCollider2D>());
+		int num2 = Grid.PosToCell(new Vector3(position.x, position.y - groundOffset - 0.07f, position.z));
+		bool flag = Grid.IsValidCell(num2) && Grid.Solid[num2] && data.initialVelocity.sqrMagnitude == 0f;
 		if ((Grid.IsValidCell(num) && Grid.Solid[num]) || flag)
 		{
 			data.solidChangedCB = delegate

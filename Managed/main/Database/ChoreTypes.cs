@@ -76,6 +76,8 @@ namespace Database
 
 		public ChoreType Relax;
 
+		public ChoreType RadiationPain;
+
 		public ChoreType StressHeal;
 
 		public ChoreType MoveToSafety;
@@ -196,6 +198,8 @@ namespace Database
 
 		public ChoreType MoveTo;
 
+		public ChoreType RocketEnterExit;
+
 		public ChoreType UglyCry;
 
 		public ChoreType BingeEat;
@@ -261,7 +265,7 @@ namespace Database
 			pooledList.Recycle();
 			if (!skip_implicit_priority_change)
 			{
-				nextImplicitPriority -= 100;
+				nextImplicitPriority -= 50;
 			}
 			if (report_name != null)
 			{
@@ -290,6 +294,7 @@ namespace Database
 			Migrate = Add("Migrate", new string[0], "", new string[0], DUPLICANTS.CHORES.MIGRATE.NAME, DUPLICANTS.CHORES.MIGRATE.STATUS, DUPLICANTS.CHORES.MIGRATE.TOOLTIP, skip_implicit_priority_change: false);
 			DebugGoTo = Add("DebugGoTo", new string[0], "", new string[0], DUPLICANTS.CHORES.DEBUGGOTO.NAME, DUPLICANTS.CHORES.DEBUGGOTO.STATUS, DUPLICANTS.CHORES.MOVETO.TOOLTIP, skip_implicit_priority_change: false);
 			MoveTo = Add("MoveTo", new string[0], "", new string[0], DUPLICANTS.CHORES.MOVETO.NAME, DUPLICANTS.CHORES.MOVETO.STATUS, DUPLICANTS.CHORES.MOVETO.TOOLTIP, skip_implicit_priority_change: false);
+			RocketEnterExit = Add("RocketEnterExit", new string[0], "", new string[0], DUPLICANTS.CHORES.ROCKETENTEREXIT.NAME, DUPLICANTS.CHORES.ROCKETENTEREXIT.STATUS, DUPLICANTS.CHORES.ROCKETENTEREXIT.TOOLTIP, skip_implicit_priority_change: false);
 			DropUnusedInventory = Add("DropUnusedInventory", new string[0], "", new string[0], DUPLICANTS.CHORES.DROPUNUSEDINVENTORY.NAME, DUPLICANTS.CHORES.DROPUNUSEDINVENTORY.STATUS, DUPLICANTS.CHORES.DROPUNUSEDINVENTORY.TOOLTIP, skip_implicit_priority_change: false);
 			Pee = Add("Pee", new string[0], "Pee", new string[0], DUPLICANTS.CHORES.PEE.NAME, DUPLICANTS.CHORES.PEE.STATUS, DUPLICANTS.CHORES.PEE.TOOLTIP, skip_implicit_priority_change: false);
 			RecoverBreath = Add("RecoverBreath", new string[0], "RecoverBreath", new string[0], DUPLICANTS.CHORES.RECOVERBREATH.NAME, DUPLICANTS.CHORES.RECOVERBREATH.STATUS, DUPLICANTS.CHORES.RECOVERBREATH.TOOLTIP, skip_implicit_priority_change: false);
@@ -314,6 +319,7 @@ namespace Database
 			}, DUPLICANTS.CHORES.STRESSACTINGOUT.NAME, DUPLICANTS.CHORES.STRESSACTINGOUT.STATUS, DUPLICANTS.CHORES.STRESSACTINGOUT.TOOLTIP, skip_implicit_priority_change: false);
 			Vomit = Add("Vomit", new string[0], "EmoteHighPriority", new string[0], DUPLICANTS.CHORES.VOMIT.NAME, DUPLICANTS.CHORES.VOMIT.STATUS, DUPLICANTS.CHORES.VOMIT.TOOLTIP, skip_implicit_priority_change: false);
 			Cough = Add("Cough", new string[0], "EmoteHighPriority", new string[0], DUPLICANTS.CHORES.COUGH.NAME, DUPLICANTS.CHORES.COUGH.STATUS, DUPLICANTS.CHORES.COUGH.TOOLTIP, skip_implicit_priority_change: false);
+			RadiationPain = Add("RadiationPain", new string[0], "EmoteHighPriority", new string[0], DUPLICANTS.CHORES.RADIATIONPAIN.NAME, DUPLICANTS.CHORES.RADIATIONPAIN.STATUS, DUPLICANTS.CHORES.RADIATIONPAIN.TOOLTIP, skip_implicit_priority_change: false);
 			SwitchHat = Add("SwitchHat", new string[0], "", new string[0], DUPLICANTS.CHORES.LEARNSKILL.NAME, DUPLICANTS.CHORES.LEARNSKILL.STATUS, DUPLICANTS.CHORES.LEARNSKILL.TOOLTIP, skip_implicit_priority_change: false);
 			StressIdle = Add("StressIdle", new string[0], "", new string[0], DUPLICANTS.CHORES.STRESSIDLE.NAME, DUPLICANTS.CHORES.STRESSIDLE.STATUS, DUPLICANTS.CHORES.STRESSIDLE.TOOLTIP, skip_implicit_priority_change: false);
 			RescueIncapacitated = Add("RescueIncapacitated", new string[0], "", new string[0], DUPLICANTS.CHORES.RESCUEINCAPACITATED.NAME, DUPLICANTS.CHORES.RESCUEINCAPACITATED.STATUS, DUPLICANTS.CHORES.RESCUEINCAPACITATED.TOOLTIP, skip_implicit_priority_change: false);
@@ -619,9 +625,10 @@ namespace Database
 				{
 					StressVomit
 				},
-				new ChoreType[1]
+				new ChoreType[2]
 				{
-					MoveTo
+					MoveTo,
+					RocketEnterExit
 				},
 				new ChoreType[1]
 				{
@@ -639,7 +646,7 @@ namespace Database
 				{
 					BingeEat
 				},
-				new ChoreType[8]
+				new ChoreType[9]
 				{
 					EmoteHighPriority,
 					StressActingOut,
@@ -648,7 +655,8 @@ namespace Database
 					Pee,
 					StressIdle,
 					RescueIncapacitated,
-					SwitchHat
+					SwitchHat,
+					RadiationPain
 				},
 				new ChoreType[1]
 				{

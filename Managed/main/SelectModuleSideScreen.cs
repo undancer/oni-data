@@ -1,5 +1,6 @@
 #define ENABLE_PROFILER
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using STRINGS;
 using TMPro;
@@ -54,16 +55,30 @@ public class SelectModuleSideScreen : KScreen
 	{
 		"CO2Engine",
 		"SugarEngine",
+		"SteamEngineCluster",
+		"KeroseneEngineClusterSmall",
+		"KeroseneEngineCluster",
+		"HEPEngine",
+		"HydrogenEngineCluster",
 		"HabitatModuleSmall",
 		"HabitatModuleMedium",
 		"NoseconeBasic",
 		"OrbitalCargoModule",
 		"ScoutModule",
 		"PioneerModule",
+		"LiquidFuelTankCluster",
 		"SmallOxidizerTank",
+		"OxidizerTankCluster",
+		"OxidizerTankLiquidCluster",
 		"SolidCargoBaySmall",
+		"LiquidCargoBaySmall",
 		"GasCargoBaySmall",
-		"LiquidCargoBaySmall"
+		"CargoBayCluster",
+		"LiquidCargoBayCluster",
+		"GasCargoBayCluster",
+		"BatteryModule",
+		"SolarPanelModule",
+		"ScannerModule"
 	};
 
 	protected override void OnShow(bool show)
@@ -122,6 +137,10 @@ public class SelectModuleSideScreen : KScreen
 		launchPad = pad;
 		module = null;
 		UpdateBuildableStates();
+		foreach (KeyValuePair<BuildingDef, GameObject> button in buttons)
+		{
+			SetupBuildingTooltip(button.Value.GetComponent<ToolTip>(), button.Key);
+		}
 	}
 
 	public void SetTarget(GameObject new_target)
@@ -131,13 +150,17 @@ public class SelectModuleSideScreen : KScreen
 			Debug.LogError("Invalid gameObject received");
 			return;
 		}
-		module = new_target.GetComponent<RocketModule>();
+		module = new_target.GetComponent<RocketModuleCluster>();
 		if (module == null)
 		{
-			Debug.LogError("The gameObject received does not contain a RocketModule component");
+			Debug.LogError("The gameObject received does not contain a RocketModuleCluster component");
 			return;
 		}
 		launchPad = null;
+		foreach (KeyValuePair<BuildingDef, GameObject> button in buttons)
+		{
+			SetupBuildingTooltip(button.Value.GetComponent<ToolTip>(), button.Key);
+		}
 		UpdateBuildableStates();
 		buildSelectedModuleButton.isInteractable = false;
 		if (selectedModuleDef != null)
@@ -297,7 +320,7 @@ public class SelectModuleSideScreen : KScreen
 		categories.Add(gameObject);
 		LocText reference = component.GetReference<LocText>("label");
 		Transform reference2 = component.GetReference<Transform>("content");
-		List<GameObject> prefabsWithComponent = Assets.GetPrefabsWithComponent<RocketModule>();
+		List<GameObject> prefabsWithComponent = Assets.GetPrefabsWithComponent<RocketModuleCluster>();
 		foreach (string id in moduleButtonSortOrder)
 		{
 			GameObject part = prefabsWithComponent.Find((GameObject p) => p.PrefabID().Name == id);
@@ -317,8 +340,6 @@ public class SelectModuleSideScreen : KScreen
 			{
 				SelectModule(part.GetComponent<Building>().Def);
 			});
-			BuildingDef def = part.GetComponent<Building>().Def;
-			SetupBuildingTooltip(component2.GetComponent<ToolTip>(), def);
 			buttons.Add(part.GetComponent<Building>().Def, gameObject2);
 			if (selectedModuleDef != null)
 			{
@@ -333,47 +354,76 @@ public class SelectModuleSideScreen : KScreen
 		tooltip.ClearMultiStringTooltip();
 		string name = def.Name;
 		string text = def.Effect;
-		RocketModule component = def.BuildingComplete.GetComponent<RocketModule>();
+		RocketModuleCluster component = def.BuildingComplete.GetComponent<RocketModuleCluster>();
+		BuildingDef buildingDef = ((GetSelectionContext(def) == SelectModuleCondition.SelectionContext.ReplaceModule) ? module.GetComponent<Building>().Def : null);
 		if (component != null)
 		{
 			text = text + "\n\n" + UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.TITLE;
 			float burden = component.performanceStats.burden;
 			float fuelKilogramPerDistance = component.performanceStats.FuelKilogramPerDistance;
 			float enginePower = component.performanceStats.enginePower;
+			int heightInCells = component.GetComponent<Building>().Def.HeightInCells;
 			CraftModuleInterface craftModuleInterface = null;
-			if (GetComponentInParent<DetailsScreen>().target.GetComponent<RocketModule>() != null)
+			float num = 0f;
+			float num2 = 0f;
+			float num3 = 0f;
+			float num4 = 0f;
+			int num5 = 0;
+			if (GetComponentInParent<DetailsScreen>().target.GetComponent<RocketModuleCluster>() != null)
 			{
-				craftModuleInterface = GetComponentInParent<DetailsScreen>().target.GetComponent<RocketModule>().CraftInterface;
+				craftModuleInterface = GetComponentInParent<DetailsScreen>().target.GetComponent<RocketModuleCluster>().CraftInterface;
 			}
-			float num;
-			float num2;
-			float num3;
-			float num4;
-			float num5;
+			int num6 = -1;
+			if (craftModuleInterface != null)
+			{
+				num6 = craftModuleInterface.MaxHeight;
+			}
+			RocketEngineCluster component2 = component.GetComponent<RocketEngineCluster>();
+			if (component2 != null)
+			{
+				num6 = component2.maxHeight;
+			}
+			float num7;
 			if (craftModuleInterface == null)
 			{
 				num = burden;
 				num2 = fuelKilogramPerDistance;
 				num3 = enginePower;
 				num4 = num3 / num;
-				num5 = num4;
+				num7 = num4;
+				num5 = heightInCells;
 			}
 			else
 			{
+				if (buildingDef != null)
+				{
+					RocketModulePerformance performanceStats = module.GetComponent<RocketModuleCluster>().performanceStats;
+					num -= performanceStats.burden;
+					num2 -= performanceStats.fuelKilogramPerDistance;
+					num3 -= performanceStats.enginePower;
+					num5 -= buildingDef.HeightInCells;
+				}
 				num = burden + craftModuleInterface.TotalBurden;
 				num2 = fuelKilogramPerDistance + craftModuleInterface.Range;
 				num3 = component.performanceStats.enginePower + craftModuleInterface.EnginePower;
 				num4 = (component.performanceStats.enginePower + craftModuleInterface.EnginePower) / num;
-				num5 = num4 - craftModuleInterface.EnginePower / craftModuleInterface.TotalBurden;
+				num7 = num4 - craftModuleInterface.EnginePower / craftModuleInterface.TotalBurden;
+				num5 = craftModuleInterface.RocketHeight + heightInCells;
 			}
 			string arg = ((burden >= 0f) ? GameUtil.AddPositiveSign(string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.NEGATIVEDELTA, burden), positive: true) : string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.POSITIVEDELTA, burden));
 			string arg2 = ((fuelKilogramPerDistance >= 0f) ? GameUtil.AddPositiveSign(string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.POSITIVEDELTA, Math.Round(fuelKilogramPerDistance, 2)), positive: true) : string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.NEGATIVEDELTA, Math.Round(fuelKilogramPerDistance, 2)));
 			string arg3 = ((enginePower >= 0f) ? GameUtil.AddPositiveSign(string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.POSITIVEDELTA, enginePower), positive: true) : string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.NEGATIVEDELTA, enginePower));
-			string arg4 = ((num5 >= num4) ? GameUtil.AddPositiveSign(string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.POSITIVEDELTA, Math.Round(num5, 2)), positive: true) : string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.NEGATIVEDELTA, Math.Round(num5, 2)));
+			string arg4 = ((num7 >= num4) ? GameUtil.AddPositiveSign(string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.POSITIVEDELTA, Math.Round(num7, 3)), positive: true) : string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.NEGATIVEDELTA, Math.Round(num7, 2)));
+			string arg5 = ((heightInCells >= 0) ? GameUtil.AddPositiveSign(string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.POSITIVEDELTA, heightInCells), positive: true) : string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.NEGATIVEDELTA, heightInCells));
+			text = ((num6 == -1) ? (text + "\n" + string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.HEIGHT_NOMAX, num5, arg5)) : (text + "\n" + string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.HEIGHT, num5, arg5, num6)));
 			text = text + "\n" + string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.BURDEN, num, arg);
 			text = text + "\n" + string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.RANGE, Math.Round(num2, 2), arg2);
 			text = text + "\n" + string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.ENGINEPOWER, num3, arg3);
-			text = text + "\n" + string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.SPEED, Math.Round(num4, 2), arg4);
+			text = text + "\n" + string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.SPEED, Math.Round(num4, 3), arg4);
+			if (component.GetComponent<RocketEngineCluster>() != null)
+			{
+				text = text + "\n\n" + string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.ENGINE_MAX_HEIGHT, num6);
+			}
 		}
 		tooltip.AddMultiStringTooltip(name, PlanScreen.Instance.buildingToolTipSettings.BuildButtonName);
 		tooltip.AddMultiStringTooltip(text, PlanScreen.Instance.buildingToolTipSettings.BuildButtonDescription);
@@ -389,9 +439,17 @@ public class SelectModuleSideScreen : KScreen
 			{
 				result = SelectModuleCondition.SelectionContext.ReplaceModule;
 			}
-			else if (Assets.GetPrefab(module.GetComponent<KPrefabID>().PrefabID()).GetComponent<ReorderableBuilding>().buildConditions.Find((SelectModuleCondition match) => match is TopOnly) != null || def.BuildingComplete.GetComponent<ReorderableBuilding>().buildConditions.Find((SelectModuleCondition match) => match is EngineOnBottom) != null)
+			else
 			{
-				result = SelectModuleCondition.SelectionContext.AddModuleBelow;
+				GameObject gameObject = null;
+				gameObject = Assets.GetPrefab(module.GetComponent<KPrefabID>().PrefabID());
+				ReorderableBuilding component = gameObject.GetComponent<ReorderableBuilding>();
+				List<SelectModuleCondition> buildConditions = component.buildConditions;
+				ReorderableBuilding component2 = def.BuildingComplete.GetComponent<ReorderableBuilding>();
+				if (buildConditions.Find((SelectModuleCondition match) => match is TopOnly) != null || component2.buildConditions.Find((SelectModuleCondition match) => match is EngineOnBottom) != null)
+				{
+					result = SelectModuleCondition.SelectionContext.AddModuleBelow;
+				}
 			}
 		}
 		return result;
@@ -447,7 +505,7 @@ public class SelectModuleSideScreen : KScreen
 
 	private void OrderBuildSelectedModule()
 	{
-		BuildingDef autoSelectDef = selectedModuleDef;
+		BuildingDef previousSelectedDef = selectedModuleDef;
 		GameObject gameObject = null;
 		if (module != null)
 		{
@@ -460,8 +518,14 @@ public class SelectModuleSideScreen : KScreen
 		}
 		if (gameObject != null)
 		{
-			SelectTool.Instance.Select(gameObject.GetComponent<KSelectable>());
-			RocketModuleSideScreen.instance.ClickAddNew(autoSelectDef);
+			SelectTool.Instance.StartCoroutine(SelectNextFrame(gameObject.GetComponent<KSelectable>(), previousSelectedDef));
 		}
+	}
+
+	private IEnumerator SelectNextFrame(KSelectable selectable, BuildingDef previousSelectedDef)
+	{
+		yield return 0;
+		SelectTool.Instance.Select(selectable);
+		RocketModuleSideScreen.instance.ClickAddNew(previousSelectedDef);
 	}
 }

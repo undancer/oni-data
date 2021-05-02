@@ -42,7 +42,7 @@ public class FilterSideScreen : SideScreenContent
 	public override bool IsValidForTarget(GameObject target)
 	{
 		bool flag = false;
-		flag = ((!isLogicFilter) ? (target.GetComponent<ElementFilter>() != null) : (target.GetComponent<ConduitElementSensor>() != null || target.GetComponent<LogicElementSensor>() != null));
+		flag = ((!isLogicFilter) ? (target.GetComponent<ElementFilter>() != null || (bool)target.GetComponent<RocketConduitStorageAccess>()) : (target.GetComponent<ConduitElementSensor>() != null || target.GetComponent<LogicElementSensor>() != null));
 		return flag && target.GetComponent<Filterable>() != null;
 	}
 

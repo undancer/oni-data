@@ -71,7 +71,7 @@ public class StandardCropPlant : StateMachineComponent<StandardCropPlant.StatesI
 				Harvestable component = smi.master.GetComponent<Harvestable>();
 				if (component != null && component.CanBeHarvested && GameScheduler.Instance != null)
 				{
-					GameScheduler.Instance.Schedule("SpawnFruit", 0.2f, smi.master.crop.SpawnFruit);
+					GameScheduler.Instance.Schedule("SpawnFruit", 0.2f, smi.master.crop.SpawnConfiguredFruit);
 				}
 				smi.master.Trigger(1623392196);
 				smi.master.GetComponent<KBatchedAnimController>().StopAndClear();
@@ -118,7 +118,7 @@ public class StandardCropPlant : StateMachineComponent<StandardCropPlant.StatesI
 			{
 				if (GameScheduler.Instance != null && smi.master != null)
 				{
-					GameScheduler.Instance.Schedule("SpawnFruit", 0.2f, smi.master.crop.SpawnFruit);
+					GameScheduler.Instance.Schedule("SpawnFruit", 0.2f, smi.master.crop.SpawnConfiguredFruit);
 				}
 				if (smi.master.harvestable != null)
 				{

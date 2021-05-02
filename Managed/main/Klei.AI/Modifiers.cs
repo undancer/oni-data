@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using KSerialization;
+using STRINGS;
 using UnityEngine;
 
 namespace Klei.AI
@@ -36,6 +37,10 @@ namespace Klei.AI
 				Attribute attribute = Db.Get().CritterAttributes.TryGet(initialAttribute);
 				if (attribute == null)
 				{
+					attribute = Db.Get().PlantAttributes.TryGet(initialAttribute);
+				}
+				if (attribute == null)
+				{
 					attribute = Db.Get().Attributes.TryGet(initialAttribute);
 				}
 				DebugUtil.Assert(attribute != null, "Couldn't find an attribute for id", initialAttribute);
@@ -51,6 +56,60 @@ namespace Klei.AI
 				Trait trait = Db.Get().traits.Get(initialTrait);
 				component.Add(trait);
 			}
+		}
+
+		public float GetPreModifiedAttributeValue(Attribute attribute)
+		{
+			return AttributeInstance.GetTotalValue(attribute, GetPreModifiers(attribute));
+		}
+
+		public string GetPreModifiedAttributeFormattedValue(Attribute attribute)
+		{
+			float totalValue = AttributeInstance.GetTotalValue(attribute, GetPreModifiers(attribute));
+			return attribute.formatter.GetFormattedValue(totalValue, attribute.formatter.DeltaTimeSlice);
+		}
+
+		public string GetPreModifiedAttributeDescription(Attribute attribute)
+		{
+			float totalValue = AttributeInstance.GetTotalValue(attribute, GetPreModifiers(attribute));
+			return string.Format(DUPLICANTS.ATTRIBUTES.VALUE, attribute.Name, attribute.formatter.GetFormattedValue(totalValue, GameUtil.TimeSlice.None));
+		}
+
+		public string GetPreModifiedAttributeToolTip(Attribute attribute)
+		{
+			return attribute.formatter.GetTooltip(attribute, GetPreModifiers(attribute), null);
+		}
+
+		private List<AttributeModifier> GetPreModifiers(Attribute attribute)
+		{
+			List<AttributeModifier> list = new List<AttributeModifier>();
+			foreach (string initialTrait in initialTraits)
+			{
+				Trait trait = Db.Get().traits.Get(initialTrait);
+				foreach (AttributeModifier selfModifier in trait.SelfModifiers)
+				{
+					if (selfModifier.AttributeId == attribute.Id)
+					{
+						list.Add(selfModifier);
+					}
+				}
+			}
+			MutantPlant component = GetComponent<MutantPlant>();
+			if (component != null && component.MutationIDs != null)
+			{
+				foreach (string mutationID in component.MutationIDs)
+				{
+					PlantMutation plantMutation = Db.Get().PlantMutations.Get(mutationID);
+					foreach (AttributeModifier selfModifier2 in plantMutation.SelfModifiers)
+					{
+						if (selfModifier2.AttributeId == attribute.Id)
+						{
+							list.Add(selfModifier2);
+						}
+					}
+				}
+			}
+			return list;
 		}
 
 		public void Serialize(BinaryWriter writer)

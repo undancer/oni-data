@@ -65,7 +65,7 @@ namespace TUNING
 			new ExposureType
 			{
 				germ_id = "RadiationSickness",
-				sickness_id = "RadiationSickness",
+				sickness_id = null,
 				exposure_threshold = 1,
 				base_resistance = -2,
 				excluded_effects = new List<string>

@@ -11,7 +11,7 @@ public class Comet : KMonoBehaviour, ISim33ms
 {
 	public SimHashes EXHAUST_ELEMENT = SimHashes.CarbonDioxide;
 
-	private const float EXHAUST_RATE = 50f;
+	public float EXHAUST_RATE = 50f;
 
 	public Vector2 spawnVelocity = new Vector2(12f, 15f);
 
@@ -64,7 +64,7 @@ public class Comet : KMonoBehaviour, ISim33ms
 	private HashedString FLYING_SOUND_ID_PARAMETER = "meteorType";
 
 	[Serialize]
-	private Vector2 velocity;
+	protected Vector2 velocity;
 
 	[Serialize]
 	private float remainingTileDamage;
@@ -80,6 +80,8 @@ public class Comet : KMonoBehaviour, ISim33ms
 	private float age = 0f;
 
 	public System.Action OnImpact;
+
+	public Ref<KPrefabID> ignoreObstacleForDamage = new Ref<KPrefabID>();
 
 	private LoopingSounds loopingSounds;
 
@@ -127,7 +129,7 @@ public class Comet : KMonoBehaviour, ISim33ms
 		StartLoopingSound();
 	}
 
-	public void RandomizeVelocity()
+	public virtual void RandomizeVelocity()
 	{
 		float num = UnityEngine.Random.Range(spawnAngle.x, spawnAngle.y);
 		float f = num * (float)Math.PI / 180f;
@@ -291,15 +293,20 @@ public class Comet : KMonoBehaviour, ISim33ms
 			pooledHashSet2.Recycle();
 			pooledQueue.Recycle();
 		}
-		if (craterPrefabs != null && craterPrefabs.Length != 0)
-		{
-			GameObject gameObject2 = Util.KInstantiate(Assets.GetPrefab(craterPrefabs[UnityEngine.Random.Range(0, craterPrefabs.Length)]), Grid.CellToPos(Grid.PosToCell(this)));
-			gameObject2.transform.position = new Vector3(gameObject2.transform.position.x, gameObject2.transform.position.y, -19.5f);
-			gameObject2.SetActive(value: true);
-		}
+		SpawnCraterPrefabs();
 		if (OnImpact != null)
 		{
 			OnImpact();
+		}
+	}
+
+	protected virtual void SpawnCraterPrefabs()
+	{
+		if (craterPrefabs != null && craterPrefabs.Length != 0)
+		{
+			GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(craterPrefabs[UnityEngine.Random.Range(0, craterPrefabs.Length)]), Grid.CellToPos(Grid.PosToCell(this)));
+			gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, -19.5f);
+			gameObject.SetActive(value: true);
 		}
 	}
 
@@ -380,14 +387,14 @@ public class Comet : KMonoBehaviour, ISim33ms
 		return input_damage * (1f - num4);
 	}
 
-	private void DamageThings(Vector3 pos, int cell, int damage)
+	private void DamageThings(Vector3 pos, int cell, int damage, GameObject ignoreObject = null)
 	{
 		if (!Grid.IsValidCell(cell))
 		{
 			return;
 		}
 		GameObject gameObject = Grid.Objects[cell, 1];
-		if (gameObject != null)
+		if (gameObject != null && gameObject != ignoreObject)
 		{
 			BuildingHP component = gameObject.GetComponent<BuildingHP>();
 			Building component2 = gameObject.GetComponent<Building>();
@@ -501,7 +508,7 @@ public class Comet : KMonoBehaviour, ISim33ms
 		Element element = ElementLoader.FindElementByHash(EXHAUST_ELEMENT);
 		if (EXHAUST_ELEMENT != SimHashes.Void && Grid.IsValidCell(num) && !Grid.Solid[num])
 		{
-			SimMessages.EmitMass(num, element.idx, dt * 50f, element.defaultValues.temperature, diseaseIdx, Mathf.RoundToInt((float)addDiseaseCount * dt));
+			SimMessages.EmitMass(num, element.idx, dt * EXHAUST_RATE, element.defaultValues.temperature, diseaseIdx, Mathf.RoundToInt((float)addDiseaseCount * dt));
 		}
 		if (vector3.x < vector.x || vector2.x < vector3.x || vector3.y < vector.y)
 		{
@@ -525,7 +532,8 @@ public class Comet : KMonoBehaviour, ISim33ms
 			}
 			else
 			{
-				DamageThings(position, num2, entityDamage);
+				GameObject ignoreObject = ((ignoreObstacleForDamage.Get() == null) ? null : ignoreObstacleForDamage.Get().gameObject);
+				DamageThings(position, num2, entityDamage, ignoreObject);
 			}
 		}
 		if (canHitDuplicants && age > 0.25f && Grid.Objects[Grid.PosToCell(position), 0] != null)

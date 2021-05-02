@@ -19,11 +19,11 @@ namespace Steamworks
 		k_EAppType_Franchise = 0x400,
 		k_EAppType_Video = 0x800,
 		k_EAppType_Plugin = 0x1000,
-		k_EAppType_Music = 0x2000,
+		k_EAppType_MusicAlbum = 0x2000,
 		k_EAppType_Series = 0x4000,
-		k_EAppType_Comic = 0x8000,
+		k_EAppType_Comic_UNUSED = 0x8000,
 		k_EAppType_Beta = 0x10000,
 		k_EAppType_Shortcut = 0x40000000,
-		k_EAppType_DepotOnly = -2147483647
+		k_EAppType_DepotOnly_DEPRECATED = -2147483647
 	}
 }

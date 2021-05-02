@@ -25,7 +25,7 @@ public class ClustercraftExteriorDoor : KMonoBehaviour
 		base.OnSpawn();
 		if (targetWorldId < 0)
 		{
-			GameObject gameObject = GetComponent<RocketModule>().CraftInterface.gameObject;
+			GameObject gameObject = GetComponent<RocketModuleCluster>().CraftInterface.gameObject;
 			WorldContainer worldContainer = ClusterManager.Instance.CreateRocketInteriorWorld(gameObject, interiorTemplateName, delegate
 			{
 				PairWithInteriorDoor();

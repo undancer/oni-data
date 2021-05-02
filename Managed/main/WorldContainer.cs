@@ -31,10 +31,22 @@ public class WorldContainer : KMonoBehaviour
 	private bool isModuleInterior;
 
 	[Serialize]
+	private WorldDetailSave.OverworldCell overworldCell;
+
+	[Serialize]
 	private bool isDiscovered;
 
 	[Serialize]
 	private bool isDupeVisited;
+
+	[Serialize]
+	private float dupeVisitedTimestamp;
+
+	[Serialize]
+	private float discoveryTimestamp;
+
+	[Serialize]
+	public string worldName;
 
 	[Serialize]
 	public string nameTable;
@@ -75,9 +87,25 @@ public class WorldContainer : KMonoBehaviour
 
 	public bool IsDupeVisited => isDupeVisited;
 
+	public float DupeVisitedTimestamp => dupeVisitedTimestamp;
+
+	public float DiscoveryTimestamp => discoveryTimestamp;
+
 	public List<string> Biomes => m_subworldNames;
 
-	public AlertStateManager.Instance AlertManager => m_alertManager;
+	public AlertStateManager.Instance AlertManager
+	{
+		get
+		{
+			if (m_alertManager == null && DlcManager.IsVanillaId(""))
+			{
+				StateMachineController component = GetComponent<StateMachineController>();
+				m_alertManager = component.GetSMI<AlertStateManager.Instance>();
+			}
+			Debug.Assert(m_alertManager != null, "AlertStateManager should never be null.");
+			return m_alertManager;
+		}
+	}
 
 	public int ParentWorldId
 	{
@@ -87,7 +115,7 @@ public class WorldContainer : KMonoBehaviour
 
 	public Vector2 minimumBounds => new Vector2(worldOffset.x, worldOffset.y);
 
-	public Vector2 maximumBounds => new Vector2(worldOffset.x - 1 + worldSize.x, worldOffset.y - 1 + worldSize.y);
+	public Vector2 maximumBounds => new Vector2(worldOffset.x + (worldSize.x - 1), worldOffset.y + (worldSize.y - 1));
 
 	public Vector2I WorldSize => worldSize;
 
@@ -190,6 +218,10 @@ public class WorldContainer : KMonoBehaviour
 
 	public void SetDiscovered(bool reveal_surface = false)
 	{
+		if (!isDiscovered)
+		{
+			discoveryTimestamp = GameUtil.GetCurrentTimeInCycles();
+		}
 		isDiscovered = true;
 		if (reveal_surface)
 		{
@@ -201,6 +233,10 @@ public class WorldContainer : KMonoBehaviour
 
 	public void SetDupeVisited()
 	{
+		if (!isDupeVisited)
+		{
+			dupeVisitedTimestamp = GameUtil.GetCurrentTimeInCycles();
+		}
 		isDupeVisited = true;
 		Game.Instance.Trigger(-434755240, this);
 	}
@@ -247,7 +283,7 @@ public class WorldContainer : KMonoBehaviour
 		float num3 = Math.Max(num, num2);
 		GridVisibility.Reveal((int)pos.x, (int)pos.y, (int)num3 + 3 + 5, num3 + 3f);
 		WorldDetailSave clusterDetailSave = SaveLoader.Instance.clusterDetailSave;
-		WorldDetailSave.OverworldCell overworldCell = new WorldDetailSave.OverworldCell();
+		overworldCell = new WorldDetailSave.OverworldCell();
 		List<Vector2> list = new List<Vector2>(template.cells.Count);
 		foreach (Prefab building in template.buildings)
 		{
@@ -268,6 +304,10 @@ public class WorldContainer : KMonoBehaviour
 		list.Sort((Vector2 v1, Vector2 v2) => IsClockwise(v1, v2, pos));
 		overworldCell.poly = new Polygon(list);
 		overworldCell.zoneType = SubWorld.ZoneType.RocketInterior;
+		overworldCell.tags = new TagSet
+		{
+			WorldGenTags.RocketInterior
+		};
 		clusterDetailSave.overworldCells.Add(overworldCell);
 		Rect rect = new Rect(pos.x - num + 1f, pos.y - num2 + 1f, template.info.size.X, template.info.size.Y);
 		for (int i = (int)rect.yMin; (float)i < rect.yMax; i++)
@@ -288,6 +328,7 @@ public class WorldContainer : KMonoBehaviour
 			worldOffset = world.GetPosition();
 			worldSize = world.GetSize();
 			isDiscovered = world.isStartingWorld;
+			worldName = world.Settings.world.filePath;
 			nameTable = world.Settings.world.nameTable;
 			worldDescription = world.Settings.world.description;
 			worldType = world.Settings.world.name;
@@ -348,7 +389,7 @@ public class WorldContainer : KMonoBehaviour
 			{
 				int num3 = num2 + worldOffset.y;
 				int num4 = Grid.XYToCell(i + worldOffset.x, num3);
-				if (Grid.IsValidCell(num4) && Grid.Solid[num4])
+				if (Grid.IsValidCell(num4) && (Grid.Solid[num4] || Grid.IsLiquid(num4)))
 				{
 					num = Math.Min(num, num3);
 					break;
@@ -369,24 +410,26 @@ public class WorldContainer : KMonoBehaviour
 		}
 	}
 
-	public void DestroyWorldBuildings(Vector3 spawn_pos)
+	public void DestroyWorldBuildings(Vector3 spawn_pos, out HashSet<int> noRefundTiles)
 	{
-		TransferBuildingMaterials(spawn_pos);
+		TransferBuildingMaterials(spawn_pos, out noRefundTiles);
 		List<ClustercraftInteriorDoor> worldItems = Components.ClusterCraftInteriorDoors.GetWorldItems(id);
 		foreach (ClustercraftInteriorDoor item in worldItems)
 		{
 			item.DeleteObject();
 		}
+		ClearWorldZones();
 	}
 
-	public void TransferResourcesToParentWorld(Vector3 spawn_pos)
+	public void TransferResourcesToParentWorld(Vector3 spawn_pos, HashSet<int> noRefundTiles)
 	{
 		TransferPickupables(spawn_pos);
-		TransferLiquidsSolidsAndGases(spawn_pos);
+		TransferLiquidsSolidsAndGases(spawn_pos, noRefundTiles);
 	}
 
-	private void TransferBuildingMaterials(Vector3 pos)
+	private void TransferBuildingMaterials(Vector3 pos, out HashSet<int> noRefundTiles)
 	{
+		HashSet<int> retTemplateFoundationCells = new HashSet<int>();
 		ListPool<ScenePartitionerEntry, ClusterManager>.PooledList pooledList = ListPool<ScenePartitionerEntry, ClusterManager>.Allocate();
 		GameScenePartitioner.Instance.GatherEntries((int)minimumBounds.x, (int)minimumBounds.y, Width, Height, GameScenePartitioner.Instance.completeBuildings, pooledList);
 		foreach (ScenePartitionerEntry item in pooledList)
@@ -397,7 +440,7 @@ public class WorldContainer : KMonoBehaviour
 				continue;
 			}
 			Deconstructable component = buildingComplete.GetComponent<Deconstructable>();
-			if (component != null && component.allowDeconstruction)
+			if (component != null && !buildingComplete.HasTag(GameTags.NoRocketRefund))
 			{
 				PrimaryElement component2 = buildingComplete.GetComponent<PrimaryElement>();
 				float temperature = component2.Temperature;
@@ -419,15 +462,23 @@ public class WorldContainer : KMonoBehaviour
 					}
 				}
 			}
-			Storage component3 = buildingComplete.GetComponent<Storage>();
-			if (component3 != null)
+			SimCellOccupier component3 = buildingComplete.GetComponent<SimCellOccupier>();
+			if (component3 != null && component3.doReplaceElement)
 			{
-				component3.DropAll(pos);
+				buildingComplete.RunOnArea(delegate(int cell)
+				{
+					retTemplateFoundationCells.Add(cell);
+				});
 			}
-			PlantablePlot component4 = buildingComplete.GetComponent<PlantablePlot>();
+			Storage component4 = buildingComplete.GetComponent<Storage>();
 			if (component4 != null)
 			{
-				SeedProducer seedProducer = ((component4.Occupant != null) ? component4.Occupant.GetComponent<SeedProducer>() : null);
+				component4.DropAll(pos);
+			}
+			PlantablePlot component5 = buildingComplete.GetComponent<PlantablePlot>();
+			if (component5 != null)
+			{
+				SeedProducer seedProducer = ((component5.Occupant != null) ? component5.Occupant.GetComponent<SeedProducer>() : null);
 				if (seedProducer != null)
 				{
 					seedProducer.DropSeed();
@@ -436,6 +487,7 @@ public class WorldContainer : KMonoBehaviour
 			buildingComplete.DeleteObject();
 		}
 		pooledList.Clear();
+		noRefundTiles = retTemplateFoundationCells;
 	}
 
 	private void TransferPickupables(Vector3 pos)
@@ -457,17 +509,20 @@ public class WorldContainer : KMonoBehaviour
 		pooledList.Recycle();
 	}
 
-	private void TransferLiquidsSolidsAndGases(Vector3 pos)
+	private void TransferLiquidsSolidsAndGases(Vector3 pos, HashSet<int> noRefundTiles)
 	{
-		for (int i = (int)minimumBounds.x; (float)i < maximumBounds.x; i++)
+		for (int i = (int)minimumBounds.x; (float)i <= maximumBounds.x; i++)
 		{
-			for (int j = (int)minimumBounds.y; (float)j < maximumBounds.y; j++)
+			for (int j = (int)minimumBounds.y; (float)j <= maximumBounds.y; j++)
 			{
 				int num = Grid.XYToCell(i, j);
-				Element element = Grid.Element[num];
-				if (element != null && !element.IsVacuum)
+				if (!noRefundTiles.Contains(num))
 				{
-					element.substance.SpawnResource(pos, Grid.Mass[num], Grid.Temperature[num], Grid.DiseaseIdx[num], Grid.DiseaseCount[num]);
+					Element element = Grid.Element[num];
+					if (element != null && !element.IsVacuum)
+					{
+						element.substance.SpawnResource(pos, Grid.Mass[num], Grid.Temperature[num], Grid.DiseaseIdx[num], Grid.DiseaseCount[num]);
+					}
 				}
 			}
 		}
@@ -475,11 +530,11 @@ public class WorldContainer : KMonoBehaviour
 
 	public void CancelChores()
 	{
-		for (int i = 0; i < 40; i++)
+		for (int i = 0; i < 42; i++)
 		{
-			for (int j = (int)minimumBounds.x; (float)j < maximumBounds.x; j++)
+			for (int j = (int)minimumBounds.x; (float)j <= maximumBounds.x; j++)
 			{
-				for (int k = (int)minimumBounds.y; (float)k < maximumBounds.y; k++)
+				for (int k = (int)minimumBounds.y; (float)k <= maximumBounds.y; k++)
 				{
 					int cell = Grid.XYToCell(j, k);
 					GameObject gameObject = Grid.Objects[cell, i];
@@ -502,5 +557,60 @@ public class WorldContainer : KMonoBehaviour
 		{
 			item.Cancel("World destroyed");
 		}
+	}
+
+	public void ClearWorldZones()
+	{
+		if (this.overworldCell != null)
+		{
+			WorldDetailSave clusterDetailSave = SaveLoader.Instance.clusterDetailSave;
+			int num = -1;
+			for (int i = 0; i < SaveLoader.Instance.clusterDetailSave.overworldCells.Count; i++)
+			{
+				WorldDetailSave.OverworldCell overworldCell = SaveLoader.Instance.clusterDetailSave.overworldCells[i];
+				if (overworldCell.zoneType == this.overworldCell.zoneType && overworldCell.tags != null && this.overworldCell.tags != null && overworldCell.tags.ContainsAll(this.overworldCell.tags) && overworldCell.poly.bounds == this.overworldCell.poly.bounds)
+				{
+					num = i;
+					break;
+				}
+			}
+			if (num >= 0)
+			{
+				clusterDetailSave.overworldCells.RemoveAt(num);
+			}
+		}
+		for (int j = (int)minimumBounds.y; (float)j <= maximumBounds.y; j++)
+		{
+			for (int k = (int)minimumBounds.x; (float)k <= maximumBounds.x; k++)
+			{
+				int cell = Grid.XYToCell(k, j);
+				SimMessages.ModifyCellWorldZone(cell, byte.MaxValue);
+			}
+		}
+	}
+
+	public int GetSafeCell()
+	{
+		if (IsModuleInterior)
+		{
+			foreach (RocketControlStation item in Components.RocketControlStations.Items)
+			{
+				if (item.GetMyWorldId() == id)
+				{
+					return Grid.PosToCell(item);
+				}
+			}
+		}
+		else
+		{
+			foreach (Telepad item2 in Components.Telepads.Items)
+			{
+				if (item2.GetMyWorldId() == id)
+				{
+					return Grid.PosToCell(item2);
+				}
+			}
+		}
+		return Grid.XYToCell(worldOffset.x + worldSize.x / 2, worldOffset.y + worldSize.y / 2);
 	}
 }

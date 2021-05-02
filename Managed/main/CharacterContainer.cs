@@ -306,7 +306,7 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 				}
 				Klei.AI.Attribute attribute = Db.Get().Attributes.Get(trait.SelfModifiers[j].AttributeId);
 				string text = attribute.Description;
-				text = string.Concat(text, "\n\n", Strings.Get("STRINGS.DUPLICANTS.ATTRIBUTES." + trait.SelfModifiers[j].AttributeId.ToUpper() + ".NAME"), ": ", trait.SelfModifiers[j].GetFormattedString(null));
+				text = string.Concat(text, "\n\n", Strings.Get("STRINGS.DUPLICANTS.ATTRIBUTES." + trait.SelfModifiers[j].AttributeId.ToUpper() + ".NAME"), ": ", trait.SelfModifiers[j].GetFormattedString());
 				List<AttributeConverter> convertersForAttribute = Db.Get().AttributeConverters.GetConvertersForAttribute(attribute);
 				for (int k = 0; k < convertersForAttribute.Count; k++)
 				{
@@ -641,7 +641,7 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 
 	private bool IsCharacterRedundant()
 	{
-		return containers.Find((CharacterContainer c) => c != null && c.stats != null && c != this && c.stats.Name == stats.Name) != null || Components.LiveMinionIdentities.Items.Any((MinionIdentity id) => id.GetProperName() == stats.Name);
+		return containers.Find((CharacterContainer c) => c != null && c.stats != null && c != this && c.stats.Name == stats.Name && c.stats.IsValid) != null || Components.LiveMinionIdentities.Items.Any((MinionIdentity id) => id.GetProperName() == stats.Name);
 	}
 
 	public string GetValueColor(bool isPositive)

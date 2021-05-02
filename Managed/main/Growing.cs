@@ -139,8 +139,6 @@ public class Growing : StateMachineComponent<Growing.StatesInstance>, IGameObjec
 		}
 	}
 
-	public float growthTime;
-
 	public bool shouldGrowOld = true;
 
 	public float maxAge = 2400f;
@@ -148,8 +146,6 @@ public class Growing : StateMachineComponent<Growing.StatesInstance>, IGameObjec
 	private AmountInstance maturity;
 
 	private AmountInstance oldAge;
-
-	private AttributeModifier baseMaturityMax;
 
 	[MyCmpGet]
 	private WiltCondition wiltCondition;
@@ -190,9 +186,7 @@ public class Growing : StateMachineComponent<Growing.StatesInstance>, IGameObjec
 	protected override void OnPrefabInit()
 	{
 		Amounts amounts = base.gameObject.GetAmounts();
-		maturity = amounts.Add(new AmountInstance(Db.Get().Amounts.Maturity, base.gameObject));
-		baseMaturityMax = new AttributeModifier(maturity.maxAttribute.Id, growthTime / 600f);
-		maturity.maxAttribute.Add(baseMaturityMax);
+		maturity = amounts.Get(Db.Get().Amounts.Maturity);
 		oldAge = amounts.Add(new AmountInstance(Db.Get().Amounts.OldAge, base.gameObject));
 		oldAge.maxAttribute.ClearModifiers();
 		oldAge.maxAttribute.Add(new AttributeModifier(Db.Get().Amounts.OldAge.maxAttribute.Id, maxAge));
@@ -288,7 +282,8 @@ public class Growing : StateMachineComponent<Growing.StatesInstance>, IGameObjec
 	public List<Descriptor> GetDescriptors(GameObject go)
 	{
 		List<Descriptor> list = new List<Descriptor>();
-		list.Add(new Descriptor(string.Format(UI.GAMEOBJECTEFFECTS.GROWTHTIME_SIMPLE, GameUtil.GetFormattedCycles(growthTime, "")), string.Format(UI.GAMEOBJECTEFFECTS.TOOLTIPS.GROWTHTIME_SIMPLE, GameUtil.GetFormattedCycles(growthTime, "")), Descriptor.DescriptorType.Requirement));
+		Attribute maxAttribute = Db.Get().Amounts.Maturity.maxAttribute;
+		list.Add(new Descriptor(go.GetComponent<Modifiers>().GetPreModifiedAttributeDescription(maxAttribute), go.GetComponent<Modifiers>().GetPreModifiedAttributeToolTip(maxAttribute), Descriptor.DescriptorType.Requirement));
 		return list;
 	}
 

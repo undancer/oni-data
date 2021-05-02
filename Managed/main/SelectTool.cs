@@ -74,7 +74,14 @@ public class SelectTool : InterfaceTool
 		pos.z = -40f;
 		pos += offset;
 		WorldContainer worldFromPosition = ClusterManager.Instance.GetWorldFromPosition(pos);
-		CameraController.Instance.ActiveWorldStarWipe(worldFromPosition.id, pos);
+		if (worldFromPosition != null)
+		{
+			CameraController.Instance.ActiveWorldStarWipe(worldFromPosition.id, pos);
+		}
+		else
+		{
+			DebugUtil.DevLogError("DevError: specified camera focus position has null world - possible out of bounds location");
+		}
 	}
 
 	public void SelectAndFocus(Vector3 pos, KSelectable selectable, Vector3 offset)

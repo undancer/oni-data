@@ -2,34 +2,43 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using KSerialization;
+using STRINGS;
 using UnityEngine;
 
-public class Clustercraft : ClusterGridEntity, ISim200ms
+public class Clustercraft : ClusterGridEntity
 {
 	public enum CraftStatus
 	{
 		Grounded,
 		Launching,
-		InFlight
+		InFlight,
+		Landing
+	}
+
+	public enum CombustionResource
+	{
+		Fuel,
+		Oxidizer,
+		All
+	}
+
+	public enum PadLandingStatus
+	{
+		CanLandImmediately,
+		CanLandEventually,
+		CanNeverLand
 	}
 
 	[Serialize]
 	private string m_name;
 
-	[Serialize]
-	private AxialI m_location;
+	[MyCmpReq]
+	private ClusterTraveler m_clusterTraveler;
 
 	[MyCmpReq]
 	private CraftModuleInterface m_moduleInterface;
 
 	private Guid mainStatusHandle;
-
-	private List<AxialI> m_cachedPath;
-
-	private AxialI m_cachedPathDestination;
-
-	[Serialize]
-	private float movePotential = 0f;
 
 	[Serialize]
 	[Range(0f, 1f)]
@@ -41,9 +50,19 @@ public class Clustercraft : ClusterGridEntity, ISim200ms
 	[Serialize]
 	private CraftStatus status;
 
+	private static EventSystem.IntraObjectHandler<Clustercraft> RocketModuleChangedHandler = new EventSystem.IntraObjectHandler<Clustercraft>(delegate(Clustercraft cmp, object data)
+	{
+		cmp.RocketModuleChanged(data);
+	});
+
 	private static EventSystem.IntraObjectHandler<Clustercraft> ClusterDestinationChangedHandler = new EventSystem.IntraObjectHandler<Clustercraft>(delegate(Clustercraft cmp, object data)
 	{
-		cmp.ClusterDestinationChanged(data);
+		cmp.OnClusterDestinationChanged(data);
+	});
+
+	private static EventSystem.IntraObjectHandler<Clustercraft> ClusterDestinationReachedHandler = new EventSystem.IntraObjectHandler<Clustercraft>(delegate(Clustercraft cmp, object data)
+	{
+		cmp.OnClusterDestinationReached(data);
 	});
 
 	public override string Name => m_name;
@@ -59,29 +78,13 @@ public class Clustercraft : ClusterGridEntity, ISim200ms
 		}
 	};
 
-	public override AxialI Location => m_location;
-
 	public override bool IsVisible => status == CraftStatus.InFlight;
+
+	public override ClusterRevealLevel IsVisibleInFOW => ClusterRevealLevel.Hidden;
 
 	public CraftModuleInterface ModuleInterface => m_moduleInterface;
 
 	public AxialI Destination => m_moduleInterface.GetClusterDestinationSelector().GetDestination();
-
-	public List<AxialI> CurrentPath
-	{
-		get
-		{
-			if (m_cachedPath == null || Destination != m_cachedPathDestination)
-			{
-				ClusterDestinationSelector clusterDestinationSelector = m_moduleInterface.GetClusterDestinationSelector();
-				m_cachedPathDestination = Destination;
-				m_cachedPath = ClusterGrid.Instance.GetPath(Location, m_cachedPathDestination, clusterDestinationSelector);
-			}
-			return m_cachedPath;
-		}
-	}
-
-	public float MovePotential => movePotential;
 
 	public float Speed => EnginePower / TotalBurden * AutoPilotMultiplier;
 
@@ -90,9 +93,9 @@ public class Clustercraft : ClusterGridEntity, ISim200ms
 		get
 		{
 			float num = 0f;
-			foreach (Ref<RocketModule> module in m_moduleInterface.Modules)
+			foreach (Ref<RocketModuleCluster> clusterModule in m_moduleInterface.ClusterModules)
 			{
-				num += module.Get().performanceStats.EnginePower;
+				num += clusterModule.Get().performanceStats.EnginePower;
 			}
 			return num;
 		}
@@ -103,9 +106,9 @@ public class Clustercraft : ClusterGridEntity, ISim200ms
 		get
 		{
 			float num = 0f;
-			foreach (Ref<RocketModule> module in m_moduleInterface.Modules)
+			foreach (Ref<RocketModuleCluster> clusterModule in m_moduleInterface.ClusterModules)
 			{
-				num += module.Get().performanceStats.FuelKilogramPerDistance;
+				num += clusterModule.Get().performanceStats.FuelKilogramPerDistance;
 			}
 			return num;
 		}
@@ -116,9 +119,9 @@ public class Clustercraft : ClusterGridEntity, ISim200ms
 		get
 		{
 			float num = 0f;
-			foreach (Ref<RocketModule> module in m_moduleInterface.Modules)
+			foreach (Ref<RocketModuleCluster> clusterModule in m_moduleInterface.ClusterModules)
 			{
-				num += module.Get().performanceStats.Burden;
+				num += clusterModule.Get().performanceStats.Burden;
 			}
 			Debug.Assert(num > 0f);
 			return num;
@@ -134,24 +137,21 @@ public class Clustercraft : ClusterGridEntity, ISim200ms
 		private set
 		{
 			m_launchRequested = value;
+			m_moduleInterface.TriggerEventOnCraftAndRocket(GameHashes.RocketRequestLaunch, this);
 		}
 	}
 
-	public CraftStatus Status
+	public CraftStatus Status => status;
+
+	public override bool SpaceOutInSameHex()
 	{
-		get
-		{
-			return status;
-		}
-		private set
-		{
-			status = value;
-		}
+		return true;
 	}
 
 	public void SetCraftStatus(CraftStatus craft_status)
 	{
 		status = craft_status;
+		UpdateGroundTags();
 	}
 
 	protected override void OnPrefabInit()
@@ -163,8 +163,16 @@ public class Clustercraft : ClusterGridEntity, ISim200ms
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
+		m_clusterTraveler.getSpeedCB = GetSpeed;
+		m_clusterTraveler.getCanTravelCB = CanTravel;
+		m_clusterTraveler.onTravelCB = BurnFuelForTravel;
+		m_clusterTraveler.validateTravelCB = CanTravelToCell;
+		UpdateGroundTags();
+		Subscribe(1512695988, RocketModuleChangedHandler);
 		Subscribe(543433792, ClusterDestinationChangedHandler);
+		Subscribe(1796608350, ClusterDestinationReachedHandler);
 		SetRocketName(m_name);
+		UpdateStatusItem();
 	}
 
 	public void Init(AxialI location, LaunchPad pad)
@@ -175,8 +183,9 @@ public class Clustercraft : ClusterGridEntity, ISim200ms
 		SetRocketName(GameUtil.GenerateRandomRocketName());
 		if (pad != null)
 		{
-			Land(pad);
+			Land(pad, forceGrounded: true);
 		}
+		UpdateStatusItem();
 	}
 
 	protected override void OnCleanUp()
@@ -185,11 +194,48 @@ public class Clustercraft : ClusterGridEntity, ISim200ms
 		base.OnCleanUp();
 	}
 
-	private void ClusterDestinationChanged(object data)
+	private bool CanTravel(bool tryingToLand)
 	{
-		if (Destination == Location)
+		return this.HasTag(GameTags.RocketInSpace) && (tryingToLand || HasResourcesToMove());
+	}
+
+	private bool CanTravelToCell(AxialI location)
+	{
+		ClusterGridEntity visibleAsteroidAtCell = ClusterGrid.Instance.GetVisibleAsteroidAtCell(location);
+		if (visibleAsteroidAtCell != null)
 		{
-			movePotential = 0f;
+			return CanLandAtAsteroid(location, mustLandImmediately: true);
+		}
+		return true;
+	}
+
+	private float GetSpeed()
+	{
+		return Speed;
+	}
+
+	private void RocketModuleChanged(object data)
+	{
+		RocketModuleCluster rocketModuleCluster = (RocketModuleCluster)data;
+		if (rocketModuleCluster != null)
+		{
+			UpdateGroundTags(rocketModuleCluster.gameObject);
+		}
+	}
+
+	private void OnClusterDestinationChanged(object data)
+	{
+		UpdateStatusItem();
+	}
+
+	private void OnClusterDestinationReached(object data)
+	{
+		RocketClusterDestinationSelector clusterDestinationSelector = m_moduleInterface.GetClusterDestinationSelector();
+		Debug.Assert(base.Location == clusterDestinationSelector.GetDestination());
+		if (clusterDestinationSelector.HasAsteroidDestination())
+		{
+			LaunchPad destinationPad = clusterDestinationSelector.GetDestinationPad();
+			Land(base.Location, destinationPad);
 		}
 		UpdateStatusItem();
 	}
@@ -198,9 +244,9 @@ public class Clustercraft : ClusterGridEntity, ISim200ms
 	{
 		m_name = newName;
 		base.name = "Clustercraft: " + newName;
-		foreach (Ref<RocketModule> module in m_moduleInterface.Modules)
+		foreach (Ref<RocketModuleCluster> clusterModule in m_moduleInterface.ClusterModules)
 		{
-			CharacterOverlay component = module.Get().GetComponent<CharacterOverlay>();
+			CharacterOverlay component = clusterModule.Get().GetComponent<CharacterOverlay>();
 			if (component != null)
 			{
 				NameDisplayScreen.Instance.UpdateName(component.gameObject);
@@ -209,19 +255,19 @@ public class Clustercraft : ClusterGridEntity, ISim200ms
 		}
 	}
 
+	public bool CheckPreppedForLaunch()
+	{
+		return m_moduleInterface.CheckPreppedForLaunch();
+	}
+
 	public bool CheckReadyToLaunch()
 	{
 		return m_moduleInterface.CheckReadyToLaunch();
 	}
 
-	public bool CheckAbleToFly()
-	{
-		return m_moduleInterface.CheckAbleToFly();
-	}
-
 	public bool IsFlightInProgress()
 	{
-		return Status == CraftStatus.InFlight && !m_moduleInterface.GetClusterDestinationSelector().IsAtDestination();
+		return Status == CraftStatus.InFlight && m_clusterTraveler.IsTraveling();
 	}
 
 	public ClusterGridEntity GetStableOrbitAsteroid()
@@ -242,90 +288,29 @@ public class Clustercraft : ClusterGridEntity, ISim200ms
 		return ClusterGrid.Instance.GetVisibleAsteroidAtAdjacentCell(m_location);
 	}
 
-	public float TravelETA()
+	private bool CheckDesinationInRange()
 	{
-		if (!IsFlightInProgress())
-		{
-			return 0f;
-		}
-		return RemainingTravelDistance() / Speed;
+		return Speed * m_clusterTraveler.TravelETA() <= ModuleInterface.Range;
 	}
 
-	public float RemainingTravelDistance()
+	public bool HasResourcesToMove(int hexes = 1, CombustionResource combustionResource = CombustionResource.All)
 	{
-		int num = RemainingTravelNodes();
-		return (float)num * 600f - movePotential;
+		return combustionResource switch
+		{
+			CombustionResource.All => m_moduleInterface.BurnableMassRemaining / FuelPerDistance >= 600f * (float)hexes - 0.001f, 
+			CombustionResource.Fuel => m_moduleInterface.FuelRemaining / FuelPerDistance >= 600f * (float)hexes - 0.001f, 
+			CombustionResource.Oxidizer => m_moduleInterface.OxidizerPowerRemaining / FuelPerDistance >= 600f * (float)hexes - 0.001f, 
+			_ => false, 
+		};
 	}
 
-	public int RemainingTravelNodes()
+	private void BurnFuelForTravel()
 	{
-		int num = CurrentPath.Count;
-		if (ClusterGrid.Instance.HasVisibleAsteroidAtCell(m_location))
+		float num = 600f;
+		foreach (Ref<RocketModuleCluster> clusterModule in m_moduleInterface.ClusterModules)
 		{
-			num--;
-		}
-		if (m_moduleInterface.GetClusterDestinationSelector().HasAsteroidDestination())
-		{
-			num--;
-		}
-		return Mathf.Max(0, num);
-	}
-
-	public bool CheckDesinationInRange()
-	{
-		return Speed * TravelETA() <= ModuleInterface.Range;
-	}
-
-	public bool HasResourcesToMove(int hexes = 1)
-	{
-		return m_moduleInterface.BurnableMassRemaining / FuelPerDistance >= 600f * (float)hexes - 0.001f;
-	}
-
-	public void Sim200ms(float dt)
-	{
-		if (!IsFlightInProgress() || !this.HasTag(GameTags.RocketInSpace))
-		{
-			return;
-		}
-		AxialI location = m_location;
-		if (CurrentPath != null && CurrentPath.Count > 0)
-		{
-			if (!m_moduleInterface.GetClusterDestinationSelector().HasAsteroidDestination() || CurrentPath.Count > 1)
-			{
-				float num = dt * Speed;
-				if (HasResourcesToMove())
-				{
-					movePotential += num;
-					if (movePotential >= 600f)
-					{
-						movePotential -= 600f;
-						TryTravel(600f);
-						m_location = CurrentPath[0];
-						CurrentPath.RemoveAt(0);
-						Debug.Assert(ClusterGrid.Instance.GetVisibleAsteroidAtCell(m_location) == null, $"Somehow this clustercraft pathed through an asteroid at {m_location}");
-					}
-				}
-			}
-			else
-			{
-				LaunchPad destinationPad = m_moduleInterface.GetClusterDestinationSelector().GetDestinationPad();
-				Land(CurrentPath[0], destinationPad);
-			}
-		}
-		if (location != m_location)
-		{
-			SendClusterLocationChangedEvent(location, m_location);
-		}
-		UpdateStatusItem();
-	}
-
-	private float TryTravel(float targetTravelAmount)
-	{
-		float num = targetTravelAmount;
-		foreach (Ref<RocketModule> module in m_moduleInterface.Modules)
-		{
-			RocketModule rocketModule = module.Get();
-			RocketEngine component = rocketModule.GetComponent<RocketEngine>();
+			RocketModuleCluster rocketModuleCluster = clusterModule.Get();
+			RocketEngineCluster component = rocketModuleCluster.GetComponent<RocketEngineCluster>();
 			if (!(component != null))
 			{
 				continue;
@@ -340,12 +325,12 @@ public class Clustercraft : ClusterGridEntity, ISim200ms
 			{
 				continue;
 			}
-			foreach (Ref<RocketModule> module2 in m_moduleInterface.Modules)
+			foreach (Ref<RocketModuleCluster> clusterModule2 in m_moduleInterface.ClusterModules)
 			{
-				FuelTank component2 = module2.Get().GetComponent<FuelTank>();
-				if (component2 != null)
+				IFuelTank component2 = clusterModule2.Get().GetComponent<IFuelTank>();
+				if (!component2.IsNullOrDestroyed())
 				{
-					num -= BurnFromTank(num, component, fuelTag, component2.storage, ref totalOxidizerRemaining);
+					num -= BurnFromTank(num, component, fuelTag, component2.Storage, ref totalOxidizerRemaining);
 				}
 				if (num <= 0f)
 				{
@@ -353,12 +338,12 @@ public class Clustercraft : ClusterGridEntity, ISim200ms
 				}
 			}
 		}
-		return targetTravelAmount - num;
+		UpdateStatusItem();
 	}
 
-	private float BurnFromTank(float attemptTravelAmount, RocketEngine engine, Tag fuelTag, Storage storage, ref float totalOxidizerRemaining)
+	private float BurnFromTank(float attemptTravelAmount, RocketEngineCluster engine, Tag fuelTag, IStorage storage, ref float totalOxidizerRemaining)
 	{
-		float b = attemptTravelAmount * engine.GetComponent<RocketModule>().performanceStats.FuelKilogramPerDistance;
+		float b = attemptTravelAmount * engine.GetComponent<RocketModuleCluster>().performanceStats.FuelKilogramPerDistance;
 		b = Mathf.Min(storage.GetAmountAvailable(fuelTag), b);
 		if (engine.requireOxidizer)
 		{
@@ -370,50 +355,39 @@ public class Clustercraft : ClusterGridEntity, ISim200ms
 			BurnOxidizer(b);
 			totalOxidizerRemaining -= b;
 		}
-		return b / engine.GetComponent<RocketModule>().performanceStats.FuelKilogramPerDistance;
+		return b / engine.GetComponent<RocketModuleCluster>().performanceStats.FuelKilogramPerDistance;
 	}
 
-	private void BurnOxidizer(float amount)
+	private void BurnOxidizer(float fuelEquivalentKGs)
 	{
-		foreach (Ref<RocketModule> module in m_moduleInterface.Modules)
+		foreach (Ref<RocketModuleCluster> clusterModule in m_moduleInterface.ClusterModules)
 		{
-			OxidizerTank component = module.Get().GetComponent<OxidizerTank>();
+			OxidizerTank component = clusterModule.Get().GetComponent<OxidizerTank>();
 			if (component != null)
 			{
 				foreach (KeyValuePair<Tag, float> item in component.GetOxidizersAvailable())
 				{
-					float num = Mathf.Min(amount, item.Value);
-					if (num > 0f)
+					float num = RocketStats.oxidizerEfficiencies[item.Key];
+					float a = fuelEquivalentKGs / num;
+					float num2 = Mathf.Min(a, item.Value);
+					if (num2 > 0f)
 					{
-						component.storage.ConsumeIgnoringDisease(item.Key, num);
-						amount -= num;
+						component.storage.ConsumeIgnoringDisease(item.Key, num2);
+						fuelEquivalentKGs -= num2 * num;
 					}
 				}
 			}
-			if (amount <= 0f)
+			if (fuelEquivalentKGs <= 0f)
 			{
 				break;
 			}
 		}
-		Debug.Assert(amount <= 0f, "Tried to burn more oxidizer than was available in rocket " + amount + ":" + Name);
-	}
-
-	private void SendClusterLocationChangedEvent(AxialI oldLocation, AxialI newLocation)
-	{
-		Debug.Assert(oldLocation != m_location);
-		ClusterLocationChangedEvent clusterLocationChangedEvent = default(ClusterLocationChangedEvent);
-		clusterLocationChangedEvent.entity = this;
-		clusterLocationChangedEvent.oldLocation = oldLocation;
-		clusterLocationChangedEvent.newLocation = newLocation;
-		ClusterLocationChangedEvent clusterLocationChangedEvent2 = clusterLocationChangedEvent;
-		Trigger(-1298331547, clusterLocationChangedEvent2);
-		Game.Instance.Trigger(-1298331547, clusterLocationChangedEvent2);
 	}
 
 	public void DestroyCraftAndModules()
 	{
-		List<RocketModule> list = m_moduleInterface.Modules.Select((Ref<RocketModule> x) => x.Get()).ToList();
-		foreach (RocketModule item in list)
+		List<RocketModuleCluster> list = m_moduleInterface.ClusterModules.Select((Ref<RocketModuleCluster> x) => x.Get()).ToList();
+		foreach (RocketModuleCluster item in list)
 		{
 			Storage component = item.GetComponent<Storage>();
 			if (component != null)
@@ -438,32 +412,44 @@ public class Clustercraft : ClusterGridEntity, ISim200ms
 	{
 		if (LaunchRequested)
 		{
+			Debug.Log("Cancelling launch!");
 			LaunchRequested = false;
-			Trigger(191901966, this);
 		}
 	}
 
 	public void RequestLaunch(bool automated = false)
 	{
-		if (!this.HasTag(GameTags.RocketNotOnGround) && !m_moduleInterface.GetClusterDestinationSelector().IsAtDestination() && ((DebugHandler.InstantBuildMode && !automated) || (CheckReadyToLaunch() && CheckAbleToFly())))
+		if (!this.HasTag(GameTags.RocketNotOnGround) && !m_moduleInterface.GetClusterDestinationSelector().IsAtDestination())
 		{
-			LaunchRequested = true;
-			Trigger(191901966, this);
+			if (DebugHandler.InstantBuildMode && !automated)
+			{
+				Launch();
+			}
+			if (!LaunchRequested && CheckPreppedForLaunch())
+			{
+				Debug.Log("Triggering launch!");
+				LaunchRequested = true;
+			}
 		}
 	}
 
 	public void Launch(bool automated = false)
 	{
-		LaunchRequested = false;
-		if (!this.HasTag(GameTags.RocketNotOnGround) && !m_moduleInterface.GetClusterDestinationSelector().IsAtDestination() && ((DebugHandler.InstantBuildMode && !automated) || (CheckReadyToLaunch() && CheckAbleToFly())))
+		if (this.HasTag(GameTags.RocketNotOnGround) || m_moduleInterface.GetClusterDestinationSelector().IsAtDestination())
 		{
-			Status = CraftStatus.Launching;
+			LaunchRequested = false;
+		}
+		else if ((DebugHandler.InstantBuildMode && !automated) || CheckReadyToLaunch())
+		{
+			if (automated && !m_moduleInterface.CheckReadyForAutomatedLaunchCommand())
+			{
+				LaunchRequested = false;
+				return;
+			}
+			LaunchRequested = false;
+			SetCraftStatus(CraftStatus.Launching);
 			m_moduleInterface.DoLaunch();
-			Debug.Assert(CurrentPath.Count > 0, "Cannot launch a rocket if it has no destination");
-			AxialI location = m_location;
-			m_location = CurrentPath[0];
-			CurrentPath.RemoveAt(0);
-			SendClusterLocationChangedEvent(location, m_location);
+			m_clusterTraveler.AdvancePathOneStep();
 			UpdateStatusItem();
 		}
 	}
@@ -473,36 +459,112 @@ public class Clustercraft : ClusterGridEntity, ISim200ms
 		m_moduleInterface.GetClusterDestinationSelector().SetDestinationPad(pad);
 	}
 
-	private void Land(LaunchPad pad)
+	public PadLandingStatus CanLandAtPad(LaunchPad pad, out string failReason)
 	{
-		if (!(pad == null) && (!pad.HasRocket() || !(pad.LandedRocket.CraftInterface != m_moduleInterface)))
+		if (pad == null)
+		{
+			failReason = UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.NONEAVAILABLE;
+			return PadLandingStatus.CanNeverLand;
+		}
+		if (pad.HasRocket() && pad.LandedRocket.CraftInterface != m_moduleInterface)
+		{
+			failReason = "<TEMP>The pad already has a rocket on it!<TEMP>";
+			return PadLandingStatus.CanLandEventually;
+		}
+		int num = ConditionFlightPathIsClear.PadPositionDistanceToCeiling(pad.gameObject);
+		if (num < ModuleInterface.RocketHeight)
+		{
+			failReason = UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_TOO_SHORT;
+			return PadLandingStatus.CanNeverLand;
+		}
+		int obstruction = -1;
+		if (!ConditionFlightPathIsClear.CheckFlightPathClear(ModuleInterface, pad.gameObject, out obstruction))
+		{
+			failReason = string.Format(UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_PATH_OBSTRUCTED, pad.GetProperName());
+			return PadLandingStatus.CanNeverLand;
+		}
+		int padPosition = pad.PadPosition;
+		foreach (Ref<RocketModuleCluster> clusterModule in ModuleInterface.ClusterModules)
+		{
+			RocketModuleCluster rocketModuleCluster = clusterModule.Get();
+			GameObject gameObject = rocketModuleCluster.gameObject;
+			int moduleRelativeVerticalPosition = ModuleInterface.GetModuleRelativeVerticalPosition(gameObject);
+			Building component = gameObject.GetComponent<Building>();
+			BuildingUnderConstruction component2 = gameObject.GetComponent<BuildingUnderConstruction>();
+			BuildingDef buildingDef = ((component != null) ? component.Def : component2.Def);
+			for (int i = 0; i < buildingDef.WidthInCells; i++)
+			{
+				for (int j = 0; j < buildingDef.HeightInCells; j++)
+				{
+					int cell = Grid.OffsetCell(padPosition, 0, moduleRelativeVerticalPosition);
+					cell = Grid.OffsetCell(cell, -(buildingDef.WidthInCells / 2) + i, j);
+					if (Grid.Solid[cell])
+					{
+						obstruction = cell;
+						failReason = string.Format(UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_SITE_OBSTRUCTED, pad.GetProperName());
+						return PadLandingStatus.CanNeverLand;
+					}
+				}
+			}
+		}
+		failReason = null;
+		return PadLandingStatus.CanLandImmediately;
+	}
+
+	private LaunchPad FindValidLandingPad(AxialI location, bool mustLandImmediately)
+	{
+		LaunchPad result = null;
+		foreach (LaunchPad launchPad in Components.LaunchPads)
+		{
+			if (launchPad.GetMyWorldLocation() == location)
+			{
+				string failReason;
+				PadLandingStatus padLandingStatus = CanLandAtPad(launchPad, out failReason);
+				if (padLandingStatus == PadLandingStatus.CanLandImmediately)
+				{
+					return launchPad;
+				}
+				if (!mustLandImmediately && padLandingStatus == PadLandingStatus.CanLandEventually)
+				{
+					result = launchPad;
+				}
+			}
+		}
+		return result;
+	}
+
+	private bool CanLandAtAsteroid(AxialI location, bool mustLandImmediately)
+	{
+		LaunchPad destinationPad = m_moduleInterface.GetClusterDestinationSelector().GetDestinationPad();
+		Debug.Assert(destinationPad == null || destinationPad.GetMyWorldLocation() == location, "A rocket is trying to travel to an asteroid but has selected a landing pad at a different asteroid!");
+		if (destinationPad != null)
+		{
+			string failReason;
+			PadLandingStatus padLandingStatus = CanLandAtPad(destinationPad, out failReason);
+			return padLandingStatus == PadLandingStatus.CanLandImmediately || (!mustLandImmediately && padLandingStatus == PadLandingStatus.CanLandEventually);
+		}
+		return FindValidLandingPad(location, mustLandImmediately) != null;
+	}
+
+	private void Land(LaunchPad pad, bool forceGrounded)
+	{
+		if (CanLandAtPad(pad, out var _) == PadLandingStatus.CanLandImmediately)
 		{
 			m_location = pad.GetMyWorldLocation();
-			if (CurrentPath != null)
-			{
-				CurrentPath.Clear();
-			}
-			Status = CraftStatus.Grounded;
+			SetCraftStatus((!forceGrounded) ? CraftStatus.Landing : CraftStatus.Grounded);
 			m_moduleInterface.DoLand(pad);
 			UpdateStatusItem();
 		}
 	}
 
-	private void Land(AxialI destination, LaunchPad pad)
+	private void Land(AxialI destination, LaunchPad chosenPad)
 	{
-		if (pad == null)
+		if (chosenPad == null)
 		{
-			foreach (LaunchPad launchPad in Components.LaunchPads)
-			{
-				if (launchPad.GetMyWorldLocation() == destination && !launchPad.HasRocket())
-				{
-					pad = launchPad;
-					break;
-				}
-			}
+			chosenPad = FindValidLandingPad(destination, mustLandImmediately: true);
 		}
-		Debug.Assert(pad == null || pad.GetMyWorldLocation().IsAdjacent(m_location), "Attempting to land on a pad that isn't adjacent to our current position");
-		Land(pad);
+		Debug.Assert(chosenPad == null || chosenPad.GetMyWorldLocation() == m_location, "Attempting to land on a pad that isn't at our current position");
+		Land(chosenPad, forceGrounded: false);
 	}
 
 	private void UpdateStatusItem()
@@ -512,34 +574,90 @@ public class Clustercraft : ClusterGridEntity, ISim200ms
 		{
 			component.RemoveStatusItem(mainStatusHandle);
 		}
-		ClusterGridEntity stableOrbitAsteroid = GetStableOrbitAsteroid();
+		ClusterGridEntity visibleAsteroidAtCell = ClusterGrid.Instance.GetVisibleAsteroidAtCell(m_location);
+		ClusterGridEntity orbitAsteroid = GetOrbitAsteroid();
 		bool flag = false;
-		if (stableOrbitAsteroid != null)
+		if (orbitAsteroid != null)
 		{
 			foreach (LaunchPad launchPad in Components.LaunchPads)
 			{
-				if (launchPad.GetMyWorldLocation() == stableOrbitAsteroid.Location)
+				if (launchPad.GetMyWorldLocation() == orbitAsteroid.Location)
 				{
 					flag = true;
 					break;
 				}
 			}
 		}
-		if (!HasResourcesToMove() && !flag)
+		if (visibleAsteroidAtCell != null)
 		{
-			mainStatusHandle = component.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.RocketStranded, stableOrbitAsteroid);
+			mainStatusHandle = component.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.InFlight, m_clusterTraveler);
+		}
+		else if (!HasResourcesToMove() && !flag)
+		{
+			mainStatusHandle = component.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.RocketStranded, orbitAsteroid);
 		}
 		else if (!m_moduleInterface.GetClusterDestinationSelector().IsAtDestination() && !CheckDesinationInRange())
 		{
-			mainStatusHandle = component.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.DestinationOutOfRange, this);
+			mainStatusHandle = component.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.DestinationOutOfRange, m_clusterTraveler);
 		}
-		else if (IsFlightInProgress())
+		else if (IsFlightInProgress() || Status == CraftStatus.Launching)
 		{
-			mainStatusHandle = component.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.InFlight, this);
+			mainStatusHandle = component.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.InFlight, m_clusterTraveler);
 		}
-		else if (stableOrbitAsteroid != null)
+		else if (orbitAsteroid != null)
 		{
-			mainStatusHandle = component.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.InOrbit, stableOrbitAsteroid);
+			mainStatusHandle = component.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.InOrbit, orbitAsteroid);
 		}
+		else
+		{
+			mainStatusHandle = component.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.Normal);
+		}
+	}
+
+	private void UpdateGroundTags()
+	{
+		foreach (Ref<RocketModuleCluster> clusterModule in ModuleInterface.ClusterModules)
+		{
+			if (clusterModule != null && !(clusterModule.Get() == null))
+			{
+				UpdateGroundTags(clusterModule.Get().gameObject);
+			}
+		}
+		UpdateGroundTags(base.gameObject);
+	}
+
+	private void UpdateGroundTags(GameObject go)
+	{
+		SetTagOnGameObject(go, GameTags.RocketOnGround, status == CraftStatus.Grounded);
+		SetTagOnGameObject(go, GameTags.RocketNotOnGround, status != CraftStatus.Grounded);
+		SetTagOnGameObject(go, GameTags.RocketInSpace, status == CraftStatus.InFlight);
+		SetTagOnGameObject(go, GameTags.EntityInSpace, status == CraftStatus.InFlight);
+	}
+
+	private void SetTagOnGameObject(GameObject go, Tag tag, bool set)
+	{
+		if (set)
+		{
+			go.AddTag(tag);
+		}
+		else
+		{
+			go.RemoveTag(tag);
+		}
+	}
+
+	public override bool ShowName()
+	{
+		return true;
+	}
+
+	public override bool ShowProgressBar()
+	{
+		return HasResourcesToMove() && m_clusterTraveler.IsTraveling();
+	}
+
+	public override float GetProgress()
+	{
+		return m_clusterTraveler.GetMoveProgress();
 	}
 }

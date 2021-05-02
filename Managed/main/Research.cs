@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Database;
 using KSerialization;
 using STRINGS;
 using UnityEngine;
@@ -28,7 +29,7 @@ public class Research : KMonoBehaviour, ISaveLoadable
 
 	private TechInstance activeResearch;
 
-	private Notification NoResearcherRole = new Notification(RESEARCH.MESSAGING.NO_RESEARCHER_SKILL, NotificationType.Bad, (List<Notification> list, object data) => RESEARCH.MESSAGING.NO_RESEARCHER_SKILL_TOOLTIP, null, expires: false, 12f);
+	private Notification NoResearcherRole;
 
 	private Notification MissingResearchStation = new Notification(RESEARCH.MESSAGING.MISSING_RESEARCH_STATION, NotificationType.Bad, (List<Notification> list, object data) => RESEARCH.MESSAGING.MISSING_RESEARCH_STATION_TOOLTIP.ToString().Replace("{0}", Instance.GetMissingResearchBuildingName()), null, expires: false, 11f);
 
@@ -228,37 +229,42 @@ public class Research : KMonoBehaviour, ISaveLoadable
 		NotifyResearchCenters(GameHashes.ActiveResearchChanged, queuedTech);
 		CheckBuyResearch();
 		CheckResearchBuildings(null);
-		if (activeResearch != null)
-		{
-			if (activeResearch.tech.costsByResearchTypeID.Count > 1)
-			{
-				if (!MinionResume.AnyMinionHasPerk(Db.Get().SkillPerks.AllowAdvancedResearch.Id))
-				{
-					notifier.Remove(NoResearcherRole);
-					notifier.Add(NoResearcherRole);
-				}
-			}
-			else
-			{
-				notifier.Remove(NoResearcherRole);
-			}
-			if (activeResearch.tech.costsByResearchTypeID.Count > 2)
-			{
-				if (!MinionResume.AnyMinionHasPerk(Db.Get().SkillPerks.AllowInterstellarResearch.Id))
-				{
-					notifier.Remove(NoResearcherRole);
-					notifier.Add(NoResearcherRole);
-				}
-			}
-			else
-			{
-				notifier.Remove(NoResearcherRole);
-			}
-		}
-		else
+		if (NoResearcherRole != null)
 		{
 			notifier.Remove(NoResearcherRole);
+			NoResearcherRole = null;
 		}
+		if (activeResearch != null)
+		{
+			Skill skill = null;
+			if (activeResearch.tech.costsByResearchTypeID.ContainsKey("advanced") && activeResearch.tech.costsByResearchTypeID["advanced"] > 0f && !MinionResume.AnyMinionHasPerk(Db.Get().SkillPerks.AllowAdvancedResearch.Id))
+			{
+				skill = Db.Get().Skills.GetSkillsWithPerk(Db.Get().SkillPerks.AllowAdvancedResearch)[0];
+			}
+			else if (activeResearch.tech.costsByResearchTypeID.ContainsKey("space") && activeResearch.tech.costsByResearchTypeID["space"] > 0f && !MinionResume.AnyMinionHasPerk(Db.Get().SkillPerks.AllowInterstellarResearch.Id))
+			{
+				skill = Db.Get().Skills.GetSkillsWithPerk(Db.Get().SkillPerks.AllowInterstellarResearch)[0];
+			}
+			else if (activeResearch.tech.costsByResearchTypeID.ContainsKey("nuclear") && activeResearch.tech.costsByResearchTypeID["nuclear"] > 0f && !MinionResume.AnyMinionHasPerk(Db.Get().SkillPerks.AllowNuclearResearch.Id))
+			{
+				skill = Db.Get().Skills.GetSkillsWithPerk(Db.Get().SkillPerks.AllowNuclearResearch)[0];
+			}
+			else if (activeResearch.tech.costsByResearchTypeID.ContainsKey("orbital") && activeResearch.tech.costsByResearchTypeID["orbital"] > 0f && !MinionResume.AnyMinionHasPerk(Db.Get().SkillPerks.AllowOrbitalResearch.Id))
+			{
+				skill = Db.Get().Skills.GetSkillsWithPerk(Db.Get().SkillPerks.AllowOrbitalResearch)[0];
+			}
+			if (skill != null)
+			{
+				NoResearcherRole = new Notification(RESEARCH.MESSAGING.NO_RESEARCHER_SKILL, NotificationType.Bad, NoResearcherRoleTooltip, skill, expires: false, 12f);
+				notifier.Add(NoResearcherRole);
+			}
+		}
+	}
+
+	private string NoResearcherRoleTooltip(List<Notification> list, object data)
+	{
+		Skill skill = (Skill)data;
+		return RESEARCH.MESSAGING.NO_RESEARCHER_SKILL_TOOLTIP.Replace("{ResearchType}", skill.Name);
 	}
 
 	public void AddResearchPoints(string researchTypeID, float points)

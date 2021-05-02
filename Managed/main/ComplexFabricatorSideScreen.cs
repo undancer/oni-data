@@ -213,9 +213,12 @@ public class ComplexFabricatorSideScreen : SideScreenContent
 			{
 				flag = true;
 			}
-			else if (recipe.RequiresTechUnlock() && recipe.IsRequiredTechUnlocked())
+			else if (recipe.RequiresTechUnlock())
 			{
-				flag = true;
+				if (recipe.IsRequiredTechUnlocked())
+				{
+					flag = true;
+				}
 			}
 			else if (target.GetRecipeQueueCount(recipe) != 0)
 			{

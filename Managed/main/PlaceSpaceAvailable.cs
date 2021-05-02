@@ -45,15 +45,19 @@ public class PlaceSpaceAvailable : SelectModuleCondition
 		case SelectionContext.ReplaceModule:
 		{
 			int moveAmount = selectedPart.HeightInCells - existingModule.GetComponent<Building>().Def.HeightInCells;
-			if (component != null && component.points[0].attachedBuilding != null && !component.points[0].attachedBuilding.GetComponent<ReorderableBuilding>().CanMoveVertically(moveAmount))
+			if (component != null && component.points[0].attachedBuilding != null)
 			{
-				return false;
+				ReorderableBuilding component2 = existingModule.GetComponent<ReorderableBuilding>();
+				if (!component.points[0].attachedBuilding.GetComponent<ReorderableBuilding>().CanMoveVertically(moveAmount, component2.gameObject))
+				{
+					return false;
+				}
 			}
-			ReorderableBuilding component2 = existingModule.GetComponent<ReorderableBuilding>();
+			ReorderableBuilding component3 = existingModule.GetComponent<ReorderableBuilding>();
 			CellOffset[] placementOffsets = selectedPart.PlacementOffsets;
 			foreach (CellOffset offset in placementOffsets)
 			{
-				if (!ReorderableBuilding.CheckCellClear(Grid.OffsetCell(Grid.PosToCell(component2), offset), component2.gameObject))
+				if (!ReorderableBuilding.CheckCellClear(Grid.OffsetCell(Grid.PosToCell(component3), offset), component3.gameObject))
 				{
 					return false;
 				}

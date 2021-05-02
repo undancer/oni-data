@@ -64,6 +64,8 @@ public class GameTags
 
 		public static class Behaviours
 		{
+			public static readonly Tag HarvestHiveBehaviour = TagManager.Create("HarvestHiveBehaviour");
+
 			public static readonly Tag GrowUpBehaviour = TagManager.Create("GrowUpBehaviour");
 
 			public static readonly Tag SleepBehaviour = TagManager.Create("SleepBehaviour");
@@ -73,6 +75,8 @@ public class GameTags
 			public static readonly Tag SearchForEggBehaviour = TagManager.Create("SearchForEggBehaviour");
 
 			public static readonly Tag PlayInterruptAnim = TagManager.Create("PlayInterruptAnim");
+
+			public static readonly Tag DisableCreature = TagManager.Create("DisableCreature");
 		}
 
 		public static readonly Tag ReservedByCreature = TagManager.Create("ReservedByCreature");
@@ -180,6 +184,8 @@ public class GameTags
 		public static readonly Tag CanMolt = TagManager.Create("CanMolt");
 
 		public static readonly Tag CantReachEgg = TagManager.Create("CantReachEgg");
+
+		public static readonly Tag HasNoFoundation = TagManager.Create("HasNoFoundation");
 	}
 
 	public static class Robots
@@ -218,8 +224,6 @@ public class GameTags
 	public static readonly Tag Specimen = TagManager.Create("Specimen");
 
 	public static readonly Tag Seed = TagManager.Create("Seed");
-
-	public static readonly Tag Mutatable = TagManager.Create("Mutatable");
 
 	public static readonly Tag Edible = TagManager.Create("Edible");
 
@@ -296,6 +300,8 @@ public class GameTags
 	public static readonly Tag FlyingCritterEdible = TagManager.Create("FlyingCritterEdible");
 
 	public static readonly Tag Comet = TagManager.Create("Comet");
+
+	public static readonly Tag DeadReactor = TagManager.Create("DeadReactor");
 
 	public static readonly Tag Incapacitated = TagManager.Create("Incapacitated");
 
@@ -412,6 +418,8 @@ public class GameTags
 	public static readonly Tag Gas = TagManager.Create("Gas");
 
 	public static readonly Tag Crushable = TagManager.Create("Crushable");
+
+	public static readonly Tag Noncrushable = TagManager.Create("Noncrushable");
 
 	public static readonly Tag IronOre = TagManager.Create("IronOre");
 
@@ -619,11 +627,21 @@ public class GameTags
 
 	public static readonly Tag NoseRocketModule = TagManager.Create("NoseRocketModule");
 
+	public static readonly Tag LaunchButtonRocketModule = TagManager.Create("LaunchButtonRocketModule");
+
 	public static readonly Tag RocketInteriorBuilding = TagManager.Create("RocketInteriorBuilding");
 
 	public static readonly Tag NotRocketInteriorBuilding = TagManager.Create("NotRocketInteriorBuilding");
 
 	public static readonly Tag UniquePerWorld = TagManager.Create("UniquePerWorld");
+
+	public static readonly Tag RocketEnvelopeTile = TagManager.Create("RocketEnvelopeTile");
+
+	public static readonly Tag NoRocketRefund = TagManager.Create("NoRocketRefund");
+
+	public static readonly Tag DontBlockRockets = TagManager.Create("DontBlockRockets ");
+
+	public static readonly Tag EntityInSpace = TagManager.Create("EntityInSpace");
 
 	public static readonly Tag Monument = TagManager.Create("Monument");
 

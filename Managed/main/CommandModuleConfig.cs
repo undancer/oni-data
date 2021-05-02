@@ -17,6 +17,7 @@ public class CommandModuleConfig : IBuildingConfig
 		{
 			SimHashes.Steel.ToString()
 		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: TUNING.BUILDINGS.DECOR.NONE);
+		buildingDef.ForbiddenDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.ForbiddenDlcId = "EXPANSION1_ID";
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;
@@ -36,7 +37,6 @@ public class CommandModuleConfig : IBuildingConfig
 		{
 			LogicPorts.Port.OutputPort("LaunchReady", new CellOffset(0, 2), STRINGS.BUILDINGS.PREFABS.COMMANDMODULE.LOGIC_PORT_READY, STRINGS.BUILDINGS.PREFABS.COMMANDMODULE.LOGIC_PORT_READY_ACTIVE, STRINGS.BUILDINGS.PREFABS.COMMANDMODULE.LOGIC_PORT_READY_INACTIVE)
 		};
-		buildingDef.ShowInBuildMenu = !DlcManager.IsExpansion1Active();
 		return buildingDef;
 	}
 
@@ -60,13 +60,12 @@ public class CommandModuleConfig : IBuildingConfig
 		go.AddOrGet<RocketCommandConditions>();
 		go.AddOrGet<MinionStorage>();
 		go.AddOrGet<ArtifactFinder>();
-		LaunchableRocket launchableRocket = go.AddOrGet<LaunchableRocket>();
-		launchableRocket.registerType = LaunchableRocket.RegisterType.Spacecraft;
+		go.AddOrGet<LaunchableRocket>();
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.MODERATE, "rocket_command_module_bg_kanim");
+		BuildingTemplates.ExtendBuildingToRocketModule(go, "rocket_command_module_bg_kanim");
 		Ownable ownable = go.AddOrGet<Ownable>();
 		ownable.slotID = Db.Get().AssignableSlots.RocketCommandModule.Id;
 		ownable.canBePublic = false;

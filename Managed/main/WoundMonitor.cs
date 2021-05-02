@@ -64,6 +64,26 @@ public class WoundMonitor : GameStateMachine<WoundMonitor, WoundMonitor.Instance
 			}
 		}
 
+		public void PlayKnockedOverImpactAnimation()
+		{
+			string text = null;
+			KBatchedAnimController kBatchedAnimController = base.smi.Get<KBatchedAnimController>();
+			if (kBatchedAnimController.CurrentAnim != null)
+			{
+				text = kBatchedAnimController.CurrentAnim.name;
+			}
+			KAnim.PlayMode playMode = kBatchedAnimController.PlayMode;
+			if (text == null || (!text.Contains("impact") && !text.Contains("2_0") && !text.Contains("2_1") && !text.Contains("2_-1") && !text.Contains("2_-2") && !text.Contains("1_-1") && !text.Contains("1_-2") && !text.Contains("1_1") && !text.Contains("1_2") && !text.Contains("breathe_") && !text.Contains("death_")))
+			{
+				string s = "impact";
+				kBatchedAnimController.Play(s);
+				if (text != null)
+				{
+					kBatchedAnimController.Queue(text, playMode);
+				}
+			}
+		}
+
 		public void GoToProperHeathState()
 		{
 			switch (base.smi.health.State)
@@ -113,7 +133,7 @@ public class WoundMonitor : GameStateMachine<WoundMonitor, WoundMonitor.Instance
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = healthy;
-		root.ToggleAnims("anim_hits_kanim").EventHandler(GameHashes.HealthChanged, delegate(Instance smi, object data)
+		root.ToggleAnims("anim_hits_kanim").ToggleAnims("anim_impact_kanim", 0f, "EXPANSION1_ID").EventHandler(GameHashes.HealthChanged, delegate(Instance smi, object data)
 		{
 			smi.OnHealthChanged(data);
 		});

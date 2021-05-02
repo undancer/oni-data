@@ -28,10 +28,20 @@ public class ComplexRecipe
 
 		public bool storeElement;
 
+		public bool inheritElement = false;
+
 		public float amount
 		{
 			get;
 			private set;
+		}
+
+		public RecipeElement(Tag material, float amount, bool inheritElement)
+		{
+			this.material = material;
+			this.amount = amount;
+			temperatureOperation = TemperatureOperation.AverageTemperature;
+			this.inheritElement = inheritElement;
 		}
 
 		public RecipeElement(Tag material, float amount)

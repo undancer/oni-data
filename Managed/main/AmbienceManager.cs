@@ -184,7 +184,7 @@ public class AmbienceManager : KMonoBehaviour
 
 		public Layer facilityLayer;
 
-		public Layer[] solidLayers = new Layer[13];
+		public Layer[] solidLayers = new Layer[14];
 
 		private List<Layer> allLayers = new List<Layer>();
 

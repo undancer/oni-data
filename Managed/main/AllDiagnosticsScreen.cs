@@ -135,8 +135,8 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 			{
 				if (!diagnosticRows.ContainsKey(item.Key))
 				{
-					ColonyDiagnosticUtility.ColonyDiagnostic diagnostic = ColonyDiagnosticUtility.Instance.GetDiagnostic(item.Key, diagnosticDisplaySetting.Key);
-					if (!(diagnostic is ColonyDiagnosticUtility.WorkTimeDiagnostic) && !(diagnostic is ColonyDiagnosticUtility.ChoreGroupDiagnostic))
+					ColonyDiagnostic diagnostic = ColonyDiagnosticUtility.Instance.GetDiagnostic(item.Key, diagnosticDisplaySetting.Key);
+					if (!(diagnostic is WorkTimeDiagnostic) && !(diagnostic is ChoreGroupDiagnostic))
 					{
 						SpawnRow(diagnostic, rootListContainer);
 					}
@@ -155,7 +155,7 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 		}
 	}
 
-	private void SpawnRow(ColonyDiagnosticUtility.ColonyDiagnostic diagnostic, GameObject container)
+	private void SpawnRow(ColonyDiagnostic diagnostic, GameObject container)
 	{
 		if (diagnostic == null || diagnosticRows.ContainsKey(diagnostic.id))
 		{
@@ -261,7 +261,7 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 			{
 				HierarchyReferences component = diagnosticRow.Value.GetComponent<HierarchyReferences>();
 				component.GetReference<LocText>("AvailableLabel").SetText(diagnosticRow.Key);
-				ColonyDiagnosticUtility.ColonyDiagnostic diagnostic = ColonyDiagnosticUtility.Instance.GetDiagnostic(diagnosticRow.Key, ClusterManager.Instance.activeWorldId);
+				ColonyDiagnostic diagnostic = ColonyDiagnosticUtility.Instance.GetDiagnostic(diagnosticRow.Key, ClusterManager.Instance.activeWorldId);
 				if (diagnostic != null)
 				{
 					component.GetReference<LocText>("AvailableLabel").SetText(diagnostic.GetAverageValueString());
@@ -293,7 +293,7 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 		foreach (KeyValuePair<string, GameObject> diagnosticRow in diagnosticRows)
 		{
 			HierarchyReferences component = diagnosticRow.Value.GetComponent<HierarchyReferences>();
-			ColonyDiagnosticUtility.ColonyDiagnostic diagnostic = ColonyDiagnosticUtility.Instance.GetDiagnostic(diagnosticRow.Key, ClusterManager.Instance.activeWorldId);
+			ColonyDiagnostic diagnostic = ColonyDiagnosticUtility.Instance.GetDiagnostic(diagnosticRow.Key, ClusterManager.Instance.activeWorldId);
 			if (diagnostic != null)
 			{
 				SparkLayer reference = component.GetReference<SparkLayer>("Chart");

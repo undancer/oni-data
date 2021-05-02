@@ -96,6 +96,8 @@ public class Element : IComparable<Element>
 
 	public float radiationAbsorptionFactor;
 
+	public float radiationPer1000Mass;
+
 	public Sim.PhysicsData defaultValues;
 
 	public float toxicity;
@@ -224,7 +226,7 @@ public class Element : IComparable<Element>
 			foreach (AttributeModifier attributeModifier in attributeModifiers)
 			{
 				string name = Db.Get().BuildingAttributes.Get(attributeModifier.AttributeId).Name;
-				string formattedString = attributeModifier.GetFormattedString(null);
+				string formattedString = attributeModifier.GetFormattedString();
 				str = str + "\n" + string.Format(DUPLICANTS.MODIFIERS.MODIFIER_FORMAT, name, formattedString);
 			}
 		}

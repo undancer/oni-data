@@ -73,11 +73,15 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 
 	public bool showUnreachableStatus = false;
 
+	public bool useWideOffsets = false;
+
 	public FetchCategory fetchCategory = FetchCategory.Building;
 
 	public int storageNetworkID = -1;
 
 	public float storageFullMargin;
+
+	public Vector3 storageFXOffset = Vector3.zero;
 
 	private static readonly EventSystem.IntraObjectHandler<Storage> OnReachableChangedDelegate = new EventSystem.IntraObjectHandler<Storage>(delegate(Storage component, object data)
 	{
@@ -214,15 +218,18 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		return base.GetAnim(worker);
 	}
 
-	protected Storage()
-	{
-		SetOffsetTable(OffsetGroups.InvertedStandardTable);
-		showProgressBar = false;
-		faceTargetWhenWorking = true;
-	}
-
 	protected override void OnPrefabInit()
 	{
+		if (useWideOffsets)
+		{
+			SetOffsetTable(OffsetGroups.InvertedWideTable);
+		}
+		else
+		{
+			SetOffsetTable(OffsetGroups.InvertedStandardTable);
+		}
+		showProgressBar = false;
+		faceTargetWhenWorking = true;
 		base.OnPrefabInit();
 		GameUtil.SubscribeToTags(this, OnDeadTagAddedDelegate, triggerImmediately: true);
 		Subscribe(1502190696, OnQueueDestroyObjectDelegate);
@@ -335,7 +342,7 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 				transform = go.transform;
 			}
 			string text = (Assets.IsTagCountable(go.PrefabID()) ? string.Format(loc_string, (int)component.Units, go.GetProperName()) : string.Format(loc_string, GameUtil.GetFormattedMass(component.Units), go.GetProperName()));
-			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, text, transform);
+			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, text, transform, storageFXOffset);
 		}
 		go.transform.parent = base.transform;
 		Vector3 position = Grid.CellToPosCCC(Grid.PosToCell(this), Grid.SceneLayer.Move);
@@ -368,7 +375,7 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 					if (!block_events)
 					{
 						Trigger(-1697596308, go);
-						Trigger(-778359855);
+						Trigger(-778359855, this);
 						if (this.OnStorageIncreased != null)
 						{
 							this.OnStorageIncreased();
@@ -392,7 +399,7 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 			{
 				go.Trigger(856640610, this);
 				Trigger(-1697596308, go);
-				Trigger(-778359855);
+				Trigger(-778359855, this);
 				if (this.OnStorageIncreased != null)
 				{
 					this.OnStorageIncreased();
@@ -579,26 +586,26 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 						{
 							if (ventGas && pickupable.GetComponent<PrimaryElement>().Element.IsGas)
 							{
-								component2.Dump();
+								component2.Dump(base.transform.GetPosition() + offset);
 								flag = true;
 								num -= pickupable.GetComponent<PrimaryElement>().Mass;
 								Trigger(-1697596308, pickupable.gameObject);
 								result = true;
 								if (showInWorldNotification)
 								{
-									PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, pickupable.GetComponent<PrimaryElement>().Element.name + " " + GameUtil.GetFormattedMass(pickupable.TotalAmount), pickupable.transform);
+									PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, pickupable.GetComponent<PrimaryElement>().Element.name + " " + GameUtil.GetFormattedMass(pickupable.TotalAmount), pickupable.transform, storageFXOffset);
 								}
 							}
 							if (dumpLiquid && pickupable.GetComponent<PrimaryElement>().Element.IsLiquid)
 							{
-								component2.Dump();
+								component2.Dump(base.transform.GetPosition() + offset);
 								flag = true;
 								num -= pickupable.GetComponent<PrimaryElement>().Mass;
 								Trigger(-1697596308, pickupable.gameObject);
 								result = true;
 								if (showInWorldNotification)
 								{
-									PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, pickupable.GetComponent<PrimaryElement>().Element.name + " " + GameUtil.GetFormattedMass(pickupable.TotalAmount), pickupable.transform);
+									PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, pickupable.GetComponent<PrimaryElement>().Element.name + " " + GameUtil.GetFormattedMass(pickupable.TotalAmount), pickupable.transform, storageFXOffset);
 								}
 							}
 						}
@@ -618,7 +625,7 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 						result = true;
 						if (showInWorldNotification)
 						{
-							PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, pickupable.GetComponent<PrimaryElement>().Element.name + " " + GameUtil.GetFormattedMass(pickupable.TotalAmount), pickupable.transform);
+							PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, pickupable.GetComponent<PrimaryElement>().Element.name + " " + GameUtil.GetFormattedMass(pickupable.TotalAmount), pickupable.transform, storageFXOffset);
 						}
 					}
 				}

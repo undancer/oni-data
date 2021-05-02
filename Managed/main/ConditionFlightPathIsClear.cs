@@ -11,6 +11,8 @@ public class ConditionFlightPathIsClear : ProcessCondition
 
 	private int obstructedTile = -1;
 
+	public static int maximumRocketHeight = 35;
+
 	public ConditionFlightPathIsClear(GameObject module, int bufferWidth)
 	{
 		this.module = module;
@@ -20,7 +22,7 @@ public class ConditionFlightPathIsClear : ProcessCondition
 	public override Status EvaluateCondition()
 	{
 		Update();
-		return (!hasClearSky) ? Status.Failure : Status.Ready;
+		return hasClearSky ? Status.Ready : Status.Failure;
 	}
 
 	public override StatusItem GetStatusItem(Status status)
@@ -38,7 +40,7 @@ public class ConditionFlightPathIsClear : ProcessCondition
 		{
 			return (status == Status.Ready) ? UI.STARMAP.LAUNCHCHECKLIST.FLIGHT_PATH_CLEAR.STATUS.READY : UI.STARMAP.LAUNCHCHECKLIST.FLIGHT_PATH_CLEAR.STATUS.FAILURE;
 		}
-		if (status != 0)
+		if (status != Status.Ready)
 		{
 			return Db.Get().BuildingStatusItems.PathNotClear.notificationText;
 		}
@@ -50,9 +52,9 @@ public class ConditionFlightPathIsClear : ProcessCondition
 	{
 		if (DlcManager.IsExpansion1Active())
 		{
-			return (status == Status.Ready) ? UI.STARMAP.LAUNCHCHECKLIST.FLIGHT_PATH_CLEAR.STATUS.READY : UI.STARMAP.LAUNCHCHECKLIST.FLIGHT_PATH_CLEAR.STATUS.FAILURE;
+			return (status == Status.Ready) ? UI.STARMAP.LAUNCHCHECKLIST.FLIGHT_PATH_CLEAR.TOOLTIP.READY : UI.STARMAP.LAUNCHCHECKLIST.FLIGHT_PATH_CLEAR.TOOLTIP.FAILURE;
 		}
-		if (status != 0)
+		if (status != Status.Ready)
 		{
 			return Db.Get().BuildingStatusItems.PathNotClear.notificationTooltipText;
 		}
@@ -62,7 +64,7 @@ public class ConditionFlightPathIsClear : ProcessCondition
 
 	public override bool ShowInUI()
 	{
-		return false;
+		return DlcManager.IsExpansion1Active();
 	}
 
 	public void Update()
@@ -78,7 +80,7 @@ public class ConditionFlightPathIsClear : ProcessCondition
 		obstructedTile = -1;
 		for (int i = num; i <= num2; i++)
 		{
-			if (!CanReachSpace(i))
+			if (!CanReachSpace(i, out obstructedTile))
 			{
 				hasClearSky = false;
 				break;
@@ -86,17 +88,61 @@ public class ConditionFlightPathIsClear : ProcessCondition
 		}
 	}
 
-	private bool CanReachSpace(int startCell)
+	public static int PadPositionDistanceToCeiling(GameObject launchpad)
+	{
+		return (int)launchpad.GetMyWorld().maximumBounds.y - Grid.TopBorderHeight - Grid.CellToXY(launchpad.GetComponent<LaunchPad>().PadPosition).y;
+	}
+
+	public static bool CheckFlightPathClear(CraftModuleInterface craft, GameObject launchpad, out int obstruction)
+	{
+		Vector2I vector2I = Grid.CellToXY(launchpad.GetComponent<LaunchPad>().PadPosition);
+		int num = PadPositionDistanceToCeiling(launchpad);
+		foreach (Ref<RocketModuleCluster> clusterModule in craft.ClusterModules)
+		{
+			Building component = clusterModule.Get().GetComponent<Building>();
+			int widthInCells = component.Def.WidthInCells;
+			int moduleRelativeVerticalPosition = craft.GetModuleRelativeVerticalPosition(clusterModule.Get().gameObject);
+			if (moduleRelativeVerticalPosition + component.Def.HeightInCells <= num)
+			{
+				for (int i = moduleRelativeVerticalPosition; i < num; i++)
+				{
+					for (int j = 0; j < widthInCells; j++)
+					{
+						int num2 = Grid.XYToCell(j + (vector2I.x - widthInCells / 2), i + vector2I.y);
+						GameObject gameObject = Grid.Objects[num2, 1];
+						bool flag = Grid.Solid[num2] && (gameObject == null || !gameObject.HasTag(GameTags.DontBlockRockets));
+						if (!Grid.IsValidCell(num2) || Grid.WorldIdx[num2] != Grid.WorldIdx[launchpad.GetComponent<LaunchPad>().PadPosition] || flag)
+						{
+							obstruction = num2;
+							return false;
+						}
+					}
+				}
+				continue;
+			}
+			int num3 = (obstruction = Grid.XYToCell(vector2I.x, moduleRelativeVerticalPosition + vector2I.y));
+			return false;
+		}
+		obstruction = -1;
+		return true;
+	}
+
+	private static bool CanReachSpace(int startCell, out int obstruction)
 	{
 		WorldContainer worldContainer = ((startCell >= 0) ? ClusterManager.Instance.GetWorld(Grid.WorldIdx[startCell]) : null);
 		int num = ((worldContainer == null) ? Grid.HeightInCells : ((int)worldContainer.maximumBounds.y));
+		obstruction = -1;
 		int num2 = startCell;
 		while (Grid.CellRow(num2) < num)
 		{
 			if (!Grid.IsValidCell(num2) || Grid.Solid[num2])
 			{
-				obstructedTile = num2;
-				return false;
+				GameObject gameObject = Grid.Objects[num2, 1];
+				if (gameObject == null || !gameObject.HasTag(GameTags.DontBlockRockets))
+				{
+					obstruction = num2;
+					return false;
+				}
 			}
 			num2 = Grid.CellAbove(num2);
 		}

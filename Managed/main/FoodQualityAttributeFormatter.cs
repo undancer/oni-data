@@ -1,5 +1,4 @@
 using Klei.AI;
-using UnityEngine;
 
 public class FoodQualityAttributeFormatter : StandardAttributeFormatter
 {
@@ -10,15 +9,15 @@ public class FoodQualityAttributeFormatter : StandardAttributeFormatter
 
 	public override string GetFormattedAttribute(AttributeInstance instance)
 	{
-		return GetFormattedValue(instance.GetTotalDisplayValue(), GameUtil.TimeSlice.None, instance.gameObject);
+		return GetFormattedValue(instance.GetTotalDisplayValue(), GameUtil.TimeSlice.None);
 	}
 
-	public override string GetFormattedModifier(AttributeModifier modifier, GameObject parent_instance)
+	public override string GetFormattedModifier(AttributeModifier modifier)
 	{
 		return GameUtil.GetFormattedInt(modifier.Value);
 	}
 
-	public override string GetFormattedValue(float value, GameUtil.TimeSlice timeSlice, GameObject parent_instance)
+	public override string GetFormattedValue(float value, GameUtil.TimeSlice timeSlice)
 	{
 		int quality = (int)value;
 		return Util.StripTextFormatting(GameUtil.GetFormattedFoodQuality(quality));

@@ -861,7 +861,7 @@ public class StarmapScreen : KModalScreen
 				break;
 			}
 			breakdownListRow.ShowCheckmarkData(statusMessage, "", status2);
-			if (status != 0)
+			if (status != ProcessCondition.Status.Ready)
 			{
 				breakdownListRow.SetHighlighted(highlighted: true);
 			}
@@ -1065,15 +1065,15 @@ public class StarmapScreen : KModalScreen
 		Tag engineFuelTag = currentCommandModule.rocketStats.GetEngineFuelTag();
 		foreach (GameObject item in AttachableBuilding.GetAttachedNetwork(currentCommandModule.GetComponent<AttachableBuilding>()))
 		{
-			FuelTank component = item.GetComponent<FuelTank>();
-			if (component != null)
+			IFuelTank component = item.GetComponent<IFuelTank>();
+			if (!component.IsNullOrDestroyed())
 			{
 				BreakdownListRow breakdownListRow = rocketDetailsFuel.AddRow();
 				if (engineFuelTag.IsValid)
 				{
 					Element element = ElementLoader.GetElement(engineFuelTag);
 					Debug.Assert(element != null, "fuel_element");
-					breakdownListRow.ShowData(item.gameObject.GetProperName() + " (" + element.name + ")", GameUtil.GetFormattedMass(component.storage.GetAmountAvailable(engineFuelTag), GameUtil.TimeSlice.None, GameUtil.MetricMassFormat.Tonne));
+					breakdownListRow.ShowData(item.gameObject.GetProperName() + " (" + element.name + ")", GameUtil.GetFormattedMass(component.Storage.GetAmountAvailable(engineFuelTag), GameUtil.TimeSlice.None, GameUtil.MetricMassFormat.Tonne));
 				}
 				else
 				{

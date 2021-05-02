@@ -8,6 +8,7 @@ public class UnconstructedRocketModuleConfig : IBuildingConfig
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("UnconstructedRocketModule", 5, 5, "rocket_oxidizer_tank_bg_kanim", 1000, 0f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.ALL_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;
 		buildingDef.DefaultAnimState = "on";
@@ -46,6 +47,6 @@ public class UnconstructedRocketModuleConfig : IBuildingConfig
 	public override void DoPostConfigureComplete(GameObject go)
 	{
 		go.AddOrGet<CopyBuildingSettings>();
-		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.INSIGNIFICANT, null);
+		BuildingTemplates.ExtendBuildingToRocketModuleCluster(go, null, ROCKETRY.BURDEN.INSIGNIFICANT);
 	}
 }

@@ -1,62 +1,65 @@
+using System;
+using System.Collections.Generic;
 using Klei.AI;
 using KSerialization;
 using UnityEngine;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-public class MutantPlant : KMonoBehaviour
+public class MutantPlant : KMonoBehaviour, IGameObjectEffectDescriptor
 {
 	[Serialize]
-	private int _subspeciesID = -1;
+	private List<string> mutationIDs;
 
-	public int subspeciesID
+	private List<Guid> statusItemHandles = new List<Guid>();
+
+	private const int MAX_MUTATIONS = 1;
+
+	private Tag cachedSpeciesID;
+
+	private Tag cachedSubspeciesID;
+
+	public List<string> MutationIDs => mutationIDs;
+
+	public Tag SpeciesID
 	{
 		get
 		{
-			return _subspeciesID;
-		}
-		private set
-		{
-			_subspeciesID = value;
+			if (cachedSpeciesID == null)
+			{
+				PlantableSeed component = GetComponent<PlantableSeed>();
+				if (component != null)
+				{
+					cachedSpeciesID = component.PlantID;
+				}
+				else
+				{
+					cachedSpeciesID = this.PrefabID();
+				}
+			}
+			return cachedSpeciesID;
 		}
 	}
 
-	public string GetSpeciesID()
+	public Tag SubSpeciesID
 	{
-		return PlantSubSpeciesCatalog.instance.EntityToSpeciesID(base.gameObject);
-	}
-
-	private void CheckTags()
-	{
-		if (_subspeciesID == -1)
+		get
 		{
-			_subspeciesID = PlantSubSpeciesCatalog.instance.subspeciesBySpecies[PlantSubSpeciesCatalog.instance.EntityToSpeciesID(base.gameObject)][0].id;
-			base.gameObject.AddTag(PlantSubSpeciesCatalog.instance.GetSubSpecies(GetSpeciesID(), subspeciesID).GetFilterTag());
-		}
-		else if (!base.gameObject.HasTag(PlantSubSpeciesCatalog.instance.GetSubSpecies(GetSpeciesID(), subspeciesID).GetFilterTag()))
-		{
-			base.gameObject.AddTag(PlantSubSpeciesCatalog.instance.GetSubSpecies(GetSpeciesID(), subspeciesID).GetFilterTag());
+			if (cachedSubspeciesID == null)
+			{
+				cachedSubspeciesID = GetSubSpeciesInfo().ID;
+			}
+			return cachedSubspeciesID;
 		}
 	}
 
 	protected override void OnSpawn()
 	{
-		if (_subspeciesID > 0)
-		{
-			_subspeciesID = 0;
-		}
-		CheckTags();
+		this.AddTag(SubSpeciesID);
 		Components.MutantPlants.Add(this);
 		base.OnSpawn();
-		Traits component = GetComponent<Traits>();
-		PlantSubSpeciesCatalog.PlantSubSpecies subSpecies = PlantSubSpeciesCatalog.instance.GetSubSpecies(GetSpeciesID(), subspeciesID);
-		if (subSpecies != null && component != null)
-		{
-			foreach (Trait mutation in subSpecies.mutations)
-			{
-				component.Add(mutation);
-			}
-		}
-		SetNameBasedOnSpecies();
+		ApplyMutations();
+		UpdateNameAndTags();
+		PlantSubSpeciesCatalog.instance.DiscoverSubSpecies(GetSubSpeciesInfo(), this);
 	}
 
 	protected override void OnCleanUp()
@@ -67,34 +70,100 @@ public class MutantPlant : KMonoBehaviour
 
 	public void Mutate()
 	{
-		PlantSubSpeciesCatalog.PlantSubSpecies subSpecies = PlantSubSpeciesCatalog.instance.GetSubSpecies(GetSpeciesID(), subspeciesID);
-		GameObject prefab = Assets.GetPrefab(GetComponent<PlantableSeed>().PlantID);
-		StateMachineController component = prefab.GetComponent<StateMachineController>();
-		SetSubSpecies(PlantSubSpeciesCatalog.instance.MutateSpecies(subSpecies, component.GetDef<IrrigationMonitor.Def>() != null, component.GetDef<FertilizationMonitor.Def>() != null));
+		List<string> list = ((mutationIDs != null) ? new List<string>(mutationIDs) : new List<string>());
+		while (list.Count >= 1 && list.Count > 0)
+		{
+			list.RemoveAt(UnityEngine.Random.Range(0, list.Count));
+		}
+		list.Add(Db.Get().PlantMutations.GetRandomMutation(this.PrefabID().Name).Id);
+		SetSubSpecies(list);
 	}
 
-	public void SetSubSpecies(int id)
+	public void ApplyMutations()
 	{
-		if (subspeciesID != -1)
+		if (mutationIDs == null || mutationIDs.Count == 0)
 		{
-			Tag filterTag = PlantSubSpeciesCatalog.instance.GetSubSpecies(GetSpeciesID(), subspeciesID).GetFilterTag();
-			if (base.gameObject.HasTag(filterTag))
-			{
-				base.gameObject.RemoveTag(filterTag);
-			}
+			return;
 		}
-		subspeciesID = id;
-		base.gameObject.AddTag(PlantSubSpeciesCatalog.instance.GetSubSpecies(GetSpeciesID(), subspeciesID).GetFilterTag());
-		if (!PlantSubSpeciesCatalog.instance.IsSubspeciesIdentified(PlantSubSpeciesCatalog.instance.EntityToSpeciesID(base.gameObject), id))
+		foreach (string mutationID in mutationIDs)
 		{
-			base.gameObject.AddTag(GameTags.UnidentifiedSeed);
+			PlantMutation plantMutation = Db.Get().PlantMutations.Get(mutationID);
+			plantMutation.ApplyTo(this);
 		}
-		SetNameBasedOnSpecies();
 	}
 
-	private void SetNameBasedOnSpecies()
+	public void DummySetSubspecies(List<string> mutations)
 	{
-		string properName = Assets.GetPrefab(GetComponent<KPrefabID>().PrefabID()).GetProperName();
-		GetComponent<KSelectable>().SetName(properName);
+		mutationIDs = mutations;
+	}
+
+	public void SetSubSpecies(List<string> mutations)
+	{
+		if (base.gameObject.HasTag(SubSpeciesID))
+		{
+			base.gameObject.RemoveTag(SubSpeciesID);
+		}
+		cachedSubspeciesID = Tag.Invalid;
+		mutationIDs = mutations;
+		UpdateNameAndTags();
+	}
+
+	public PlantSubSpeciesCatalog.SubSpeciesInfo GetSubSpeciesInfo()
+	{
+		return new PlantSubSpeciesCatalog.SubSpeciesInfo(SpeciesID, mutationIDs);
+	}
+
+	public void CopyMutationsTo(MutantPlant target)
+	{
+		target.SetSubSpecies(mutationIDs);
+	}
+
+	public void UpdateNameAndTags()
+	{
+		bool flag = !IsInitialized() || PlantSubSpeciesCatalog.instance.IsSubSpeciesIdentified(SubSpeciesID);
+		bool flag2 = PlantSubSpeciesCatalog.instance == null || PlantSubSpeciesCatalog.instance.GetAllSubSpeciesForSpecies(SpeciesID).Count == 1;
+		KPrefabID component = GetComponent<KPrefabID>();
+		component.AddTag(SubSpeciesID);
+		component.SetTag(GameTags.UnidentifiedSeed, flag);
+		GetComponent<KSelectable>().SetName(GetSubSpeciesInfo().GetNameWithMutations(component.PrefabTag.ProperName(), flag, flag2));
+		KSelectable component2 = GetComponent<KSelectable>();
+		foreach (Guid statusItemHandle in statusItemHandles)
+		{
+			component2.RemoveStatusItem(statusItemHandle);
+		}
+		statusItemHandles.Clear();
+		if (flag2)
+		{
+			return;
+		}
+		if (mutationIDs == null || mutationIDs.Count == 0)
+		{
+			statusItemHandles.Add(component2.AddStatusItem(Db.Get().CreatureStatusItems.OriginalPlantMutation));
+			return;
+		}
+		if (!PlantSubSpeciesCatalog.instance.IsSubSpeciesIdentified(SubSpeciesID))
+		{
+			statusItemHandles.Add(component2.AddStatusItem(Db.Get().CreatureStatusItems.UnknownMutation));
+			return;
+		}
+		foreach (string mutationID in mutationIDs)
+		{
+			statusItemHandles.Add(component2.AddStatusItem(Db.Get().CreatureStatusItems.SpecificPlantMutation, Db.Get().PlantMutations.Get(mutationID)));
+		}
+	}
+
+	public List<Descriptor> GetDescriptors(GameObject go)
+	{
+		if (mutationIDs == null || mutationIDs.Count == 0)
+		{
+			return null;
+		}
+		List<Descriptor> descriptors = new List<Descriptor>();
+		foreach (string mutationID in mutationIDs)
+		{
+			PlantMutation plantMutation = Db.Get().PlantMutations.Get(mutationID);
+			plantMutation.GetDescriptors(ref descriptors, go);
+		}
+		return descriptors;
 	}
 }

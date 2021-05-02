@@ -60,7 +60,7 @@ public class ColonyDestinationAsteroidBeltData
 
 	public string properName => (cluster != null) ? cluster.name : "";
 
-	public string beltPath => (cluster != null) ? cluster.filePath : "worlds/SandstoneDefault";
+	public string beltPath => (cluster != null) ? cluster.filePath : WorldGenSettings.ClusterDefaultName;
 
 	public List<ProcGen.World> worlds
 	{
@@ -90,13 +90,27 @@ public class ColonyDestinationAsteroidBeltData
 		ReInitialize(seed);
 	}
 
+	private Sprite GetUISprite(string filename)
+	{
+		if (filename.IsNullOrWhiteSpace())
+		{
+			filename = (DlcManager.IsExpansion1Active() ? "asteroid_sandstone_start_kanim" : "Asteroid_sandstone");
+		}
+		Assets.TryGetAnim(filename, out var anim);
+		if (anim != null)
+		{
+			return Def.GetUISpriteFromMultiObjectAnim(anim);
+		}
+		return Assets.GetSprite(filename);
+	}
+
 	public void ReInitialize(int seed)
 	{
 		this.seed = seed;
 		paramDescriptors.Clear();
 		traitDescriptors.Clear();
-		sprite = Db.Get().AsteroidTypes.GetTypeOrDefault(startWorld.asteroidType).GetUISprite();
-		difficulty = startWorld.difficulty;
+		sprite = GetUISprite(startWorld.asteroidIcon);
+		difficulty = cluster.difficulty;
 	}
 
 	public List<AsteroidDescriptor> GetParamDescriptors()

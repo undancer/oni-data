@@ -12,7 +12,7 @@ namespace STRINGS
 
 			public static LocString PRINTING_POD = BUILDINGS.PREFABS.HEADQUARTERS.NAME;
 
-			public static LocString COLONY_WIDE = "Colony-Wide";
+			public static LocString COLONY_WIDE = "Colonywide";
 		}
 
 		public class TIMES
@@ -102,27 +102,27 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Plant Blight: {plant}";
 
-				public static LocString DESCRIPTION = "A fungal sickness is attacking your {plant} crops! Uproot and compost the sick plants to save your farms.";
+				public static LocString DESCRIPTION = "Our {plant} crops have been afflicted by a fungal sickness!\n\nI must get the Duplicants to uproot and compost the sick plants to save our farms.";
 
 				public static LocString SUCCESS = "Blight Managed: {plant}";
 
-				public static LocString SUCCESS_TOOLTIP = "All the blighted {plant} plants have been dealt with and the infection has been stopped.";
+				public static LocString SUCCESS_TOOLTIP = "All the blighted {plant} plants have been dealt with, halting the infection.";
 			}
 
 			public class CRYOFRIEND
 			{
 				public static LocString NAME = "A Frozen Friend";
 
-				public static LocString DESCRIPTION = string.Concat("{dupe} has made an amazing discovery! A barely working ", BUILDINGS.PREFABS.CRYOTANK.NAME, " has been uncovered containing a {friend} Duplicant inside in a frozen state.\n\n{dupe} was successful in thawing {friend} and this encounter has filled both Duplicants with a sense of hope, something they will desperately need to keep their ", UI.FormatAsLink("Morale", "MORALE"), " up when facing the dangers ahead.");
+				public static LocString DESCRIPTION = string.Concat("{dupe} has made an amazing discovery! A barely working ", BUILDINGS.PREFABS.CRYOTANK.NAME, " has been uncovered containing a {friend} inside in a frozen state.\n\n{dupe} was successful in thawing {friend} and this encounter has filled both Duplicants with a sense of hope, something they will desperately need to keep their ", UI.FormatAsLink("Morale", "MORALE"), " up when facing the dangers ahead.");
 
 				public static LocString BUTTON = "{friend} is thawed!";
 			}
 
 			public class WARPWORLDREVEAL
 			{
-				public static LocString NAME = "Personal Teleporter";
+				public static LocString NAME = "Personnel Teleporter";
 
-				public static LocString DESCRIPTION = "I've discovered a functioning teleportation device with a pre-programmed destination.\n\nIt appears to go to another Planetoid, and I'm fairly certain there's a return device on the other end.\n\nI could send a Duplicant through safely if I desired.";
+				public static LocString DESCRIPTION = string.Concat("I've discovered a functioning teleportation device with a pre-programmed destination.\n\nIt appears to go to another ", UI.CLUSTERMAP.PLANETOID, ", and I'm fairly certain there's a return device on the other end.\n\nI could send a Duplicant through safely if I desired.");
 
 				public static LocString BUTTON = "See Destination";
 			}

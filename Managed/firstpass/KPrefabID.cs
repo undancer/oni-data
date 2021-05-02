@@ -275,6 +275,32 @@ public class KPrefabID : KMonoBehaviour, ISaveLoadable
 		return tagBits.HasAny(ref search_tags);
 	}
 
+	public bool HasAllTags(List<Tag> search_tags)
+	{
+		InitializeTags();
+		foreach (Tag search_tag in search_tags)
+		{
+			if (!tags.Contains(search_tag))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public bool HasAllTags(Tag[] search_tags)
+	{
+		InitializeTags();
+		foreach (Tag item in search_tags)
+		{
+			if (!tags.Contains(item))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public bool HasAllTags(ref TagBits search_tags)
 	{
 		UpdateTagBits();

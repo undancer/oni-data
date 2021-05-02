@@ -8,6 +8,10 @@ public class SugarEngineConfig : IBuildingConfig
 
 	public const SimHashes FUEL = SimHashes.Sucrose;
 
+	public const float FUEL_CAPACITY = 450f;
+
+	public static float FUEL_EFFICIENCY = 0.1875f;
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("SugarEngine", 3, 3, "rocket_sugar_engine_kanim", 1000, 30f, BUILDINGS.ROCKETRY_MASS_KG.DENSE_TIER1, MATERIALS.RAW_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
@@ -20,7 +24,10 @@ public class SugarEngineConfig : IBuildingConfig
 		buildingDef.attachablePosition = new CellOffset(0, 0);
 		buildingDef.ObjectLayer = ObjectLayer.Building;
 		buildingDef.InputConduitType = ConduitType.None;
+		buildingDef.GeneratorWattageRating = 60f;
+		buildingDef.GeneratorBaseCapacity = 2000f;
 		buildingDef.RequiresPowerInput = false;
+		buildingDef.RequiresPowerOutput = false;
 		buildingDef.CanMove = true;
 		buildingDef.Cancellable = false;
 		return buildingDef;
@@ -48,15 +55,17 @@ public class SugarEngineConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		RocketEngine rocketEngine = go.AddOrGet<RocketEngine>();
-		rocketEngine.maxModules = 5;
-		rocketEngine.fuelTag = SimHashes.Sucrose.CreateTag();
-		rocketEngine.efficiency = ROCKETRY.ENGINE_EFFICIENCY.STRONG;
-		rocketEngine.explosionEffectHash = SpawnFXHashes.MeteorImpactDust;
-		rocketEngine.requireOxidizer = true;
-		rocketEngine.exhaustElement = SimHashes.CarbonDioxide;
+		RocketEngineCluster rocketEngineCluster = go.AddOrGet<RocketEngineCluster>();
+		rocketEngineCluster.maxModules = 5;
+		rocketEngineCluster.maxHeight = 16;
+		rocketEngineCluster.fuelTag = SimHashes.Sucrose.CreateTag();
+		rocketEngineCluster.efficiency = ROCKETRY.ENGINE_EFFICIENCY.STRONG;
+		rocketEngineCluster.explosionEffectHash = SpawnFXHashes.MeteorImpactDust;
+		rocketEngineCluster.requireOxidizer = true;
+		rocketEngineCluster.exhaustElement = SimHashes.CarbonDioxide;
+		ModuleGenerator moduleGenerator = go.AddOrGet<ModuleGenerator>();
 		Storage storage = go.AddOrGet<Storage>();
-		storage.capacityKg = BUILDINGS.ROCKETRY_MASS_KG.FUEL_TANK_WET_MASS_SMALL[0];
+		storage.capacityKg = 450f;
 		storage.SetDefaultStoredItemModifiers(new List<Storage.StoredItemModifier>
 		{
 			Storage.StoredItemModifier.Hide,
@@ -77,7 +86,7 @@ public class SugarEngineConfig : IBuildingConfig
 		manualDeliveryKG.capacity = storage.capacityKg;
 		manualDeliveryKG.operationalRequirement = FetchOrder2.OperationalRequirement.None;
 		manualDeliveryKG.choreTypeIDHash = Db.Get().ChoreTypes.MachineFetch.IdHash;
-		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.MINOR_PLUS, null, ROCKETRY.ENGINE_POWER.EARLY_WEAK, ROCKETRY.FUEL_COST_PER_DISTANCE.VERY_HIGH);
+		BuildingTemplates.ExtendBuildingToRocketModuleCluster(go, null, ROCKETRY.BURDEN.MINOR_PLUS, ROCKETRY.ENGINE_POWER.EARLY_WEAK, FUEL_EFFICIENCY);
 		go.GetComponent<KPrefabID>().prefabInitFn += delegate
 		{
 		};

@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
-using Klei;
 using Klei.CustomSettings;
 using KSerialization;
 using ProcGen;
@@ -81,6 +79,29 @@ public class CustomGameSettings : KMonoBehaviour
 				}
 			}
 		}
+		CurrentQualityLevelsBySetting.TryGetValue(CustomGameSettingConfigs.ClusterLayout.id, out var value2);
+		if (value2.IsNullOrWhiteSpace())
+		{
+			DebugUtil.DevAssert(!DlcManager.IsExpansion1Active(), "Deserializing CustomGameSettings.ClusterLayout: ClusterLayout is blank, using default cluster instead");
+			value2 = WorldGenSettings.ClusterDefaultName;
+			SetQualitySetting(CustomGameSettingConfigs.ClusterLayout, value2);
+		}
+		if (!SettingsCache.clusterLayouts.clusterCache.ContainsKey(value2))
+		{
+			Debug.Log("Deserializing CustomGameSettings.ClusterLayout: '" + value2 + "' doesn't exist in the clusterCache, trying to rewrite path to scoped path.");
+			string text = SettingsCache.GetScope("EXPANSION1_ID") + value2;
+			if (SettingsCache.clusterLayouts.clusterCache.ContainsKey(text))
+			{
+				Debug.Log("Deserializing CustomGameSettings.ClusterLayout: Success in rewriting ClusterLayout '" + value2 + "' to '" + text + "'");
+				SetQualitySetting(CustomGameSettingConfigs.ClusterLayout, text);
+			}
+			else
+			{
+				DebugUtil.DevLogError("Deserializing CustomGameSettings.ClusterLayout: Failed to find cluster '" + value2 + "' including the scoped path, setting to default cluster name.");
+				Debug.Log("ClusterCache: " + string.Join(",", SettingsCache.clusterLayouts.clusterCache.Keys));
+				SetQualitySetting(CustomGameSettingConfigs.ClusterLayout, "worlds/SandstoneDefault");
+			}
+		}
 		CheckCustomGameMode();
 	}
 
@@ -93,6 +114,7 @@ public class CustomGameSettings : KMonoBehaviour
 		AddSettingConfig(CustomGameSettingConfigs.ImmuneSystem);
 		AddSettingConfig(CustomGameSettingConfigs.CalorieBurn);
 		AddSettingConfig(CustomGameSettingConfigs.Morale);
+		AddSettingConfig(CustomGameSettingConfigs.Durability);
 		AddSettingConfig(CustomGameSettingConfigs.Stress);
 		AddSettingConfig(CustomGameSettingConfigs.StressBreaks);
 		AddSettingConfig(CustomGameSettingConfigs.CarePackages);
@@ -199,7 +221,7 @@ public class CustomGameSettings : KMonoBehaviour
 		{
 			CurrentQualityLevelsBySetting[setting_id] = QualitySettings[setting_id].GetDefaultLevelId();
 		}
-		string level_id = CurrentQualityLevelsBySetting[setting_id];
+		string level_id = (DlcManager.IsContentActive(settingConfig.required_content) ? CurrentQualityLevelsBySetting[setting_id] : settingConfig.GetDefaultLevelId());
 		return QualitySettings[setting_id].GetLevel(level_id);
 	}
 
@@ -245,20 +267,6 @@ public class CustomGameSettings : KMonoBehaviour
 		{
 			CurrentQualityLevelsBySetting[config.id] = config.GetDefaultLevelId();
 		}
-	}
-
-	private static void AddWorldMods(object user_data, List<SettingLevel> levels)
-	{
-		string path = FileSystem.Normalize(System.IO.Path.Combine(SettingsCache.GetPath(), "worlds"));
-		ListPool<string, CustomGameSettings>.PooledList pooledList = ListPool<string, CustomGameSettings>.Allocate();
-		FileSystem.GetFiles(path, "*.yaml", pooledList);
-		foreach (string item in pooledList)
-		{
-			ProcGen.World world = YamlIO.LoadFile<ProcGen.World>(item);
-			string worldName = Worlds.GetWorldName(item);
-			levels.Add(new SettingLevel(worldName, world.name, world.description, 0, user_data));
-		}
-		pooledList.Recycle();
 	}
 
 	public void LoadWorlds()
@@ -425,7 +433,7 @@ public class CustomGameSettings : KMonoBehaviour
 		return result;
 	}
 
-	public string[] ParseSettingCoordinate(string coord)
+	public static string[] ParseSettingCoordinate(string coord)
 	{
 		Regex regex = new Regex("(.*)-(.*)-(.*)");
 		Match match = regex.Match(coord);
@@ -439,10 +447,18 @@ public class CustomGameSettings : KMonoBehaviour
 
 	public string GetSettingsCoordinate()
 	{
-		ClusterLayout clusterData = SettingsCache.clusterLayouts.GetClusterData(Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.ClusterLayout).id);
-		SettingLevel currentQualitySetting = Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.WorldgenSeed);
+		SettingLevel currentQualitySetting = Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.ClusterLayout);
+		if (currentQualitySetting == null)
+		{
+			DebugUtil.DevLogError("GetSettingsCoordinate: clusterLayoutSetting is null, returning '0' coordinate");
+			Instance.Print();
+			Debug.Log("ClusterCache: " + string.Join(",", SettingsCache.clusterLayouts.clusterCache.Keys));
+			return "0-0-0";
+		}
+		ClusterLayout clusterData = SettingsCache.clusterLayouts.GetClusterData(currentQualitySetting.id);
+		SettingLevel currentQualitySetting2 = Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.WorldgenSeed);
 		string otherSettingsCode = GetOtherSettingsCode();
-		return $"{clusterData.GetCoordinatePrefix()}-{currentQualitySetting.id}-{otherSettingsCode}";
+		return $"{clusterData.GetCoordinatePrefix()}-{currentQualitySetting2.id}-{otherSettingsCode}";
 	}
 
 	public void ParseAndApplySettingsCode(string code)

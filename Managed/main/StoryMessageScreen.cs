@@ -115,8 +115,10 @@ public class StoryMessageScreen : KScreen
 		ManagementMenu.Instance.Show(!hide);
 		ToolMenu.Instance.Show(!hide);
 		ToolMenu.Instance.PriorityScreen.Show(!hide);
-		ResourceCategoryScreen.Instance.Show(!hide);
+		ColonyDiagnosticScreen.Instance.Show(!hide);
+		PinnedResourcesPanel.Instance.Show(!hide);
 		TopLeftControlScreen.Instance.Show(!hide);
+		WorldSelector.Instance.Show(!hide);
 		DateTime.Instance.Show(!hide);
 		BuildWatermark.Instance.Show(!hide);
 		PopFXManager.Instance.Show(!hide);

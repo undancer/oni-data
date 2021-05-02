@@ -1,19 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WireUtilityNetworkLink : UtilityNetworkLink, IWattageRating, IHaveUtilityNetworkMgr, IUtilityNetworkItem, IBridgedNetworkItem
+public class WireUtilityNetworkLink : UtilityNetworkLink, IWattageRating, IHaveUtilityNetworkMgr, IBridgedNetworkItem, ICircuitConnected
 {
 	[SerializeField]
 	public Wire.WattageRating maxWattageRating;
 
-	public ushort NetworkID
+	public bool IsVirtual
 	{
-		get
-		{
-			GetCells(out var linked_cell, out var _);
-			ElectricalUtilityNetwork electricalUtilityNetwork = Game.Instance.electricalConduitSystem.GetNetworkForCell(linked_cell) as ElectricalUtilityNetwork;
-			return (electricalUtilityNetwork != null) ? ((ushort)electricalUtilityNetwork.id) : ushort.MaxValue;
-		}
+		get;
+		private set;
+	}
+
+	public int PowerCell => GetNetworkCell();
+
+	public object VirtualCircuitKey
+	{
+		get;
+		private set;
 	}
 
 	public Wire.WattageRating GetMaxWattageRating()
@@ -45,9 +49,9 @@ public class WireUtilityNetworkLink : UtilityNetworkLink, IWattageRating, IHaveU
 
 	public void AddNetworks(ICollection<UtilityNetwork> networks)
 	{
-		GetCells(out var linked_cell, out var _);
+		int networkCell = GetNetworkCell();
 		IUtilityNetworkMgr networkManager = GetNetworkManager();
-		UtilityNetwork networkForCell = networkManager.GetNetworkForCell(linked_cell);
+		UtilityNetwork networkForCell = networkManager.GetNetworkForCell(networkCell);
 		if (networkForCell != null)
 		{
 			networks.Add(networkForCell);
@@ -56,9 +60,9 @@ public class WireUtilityNetworkLink : UtilityNetworkLink, IWattageRating, IHaveU
 
 	public bool IsConnectedToNetworks(ICollection<UtilityNetwork> networks)
 	{
-		GetCells(out var linked_cell, out var _);
+		int networkCell = GetNetworkCell();
 		IUtilityNetworkMgr networkManager = GetNetworkManager();
-		UtilityNetwork networkForCell = networkManager.GetNetworkForCell(linked_cell);
+		UtilityNetwork networkForCell = networkManager.GetNetworkForCell(networkCell);
 		return networks.Contains(networkForCell);
 	}
 }

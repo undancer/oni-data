@@ -96,8 +96,6 @@ public class ColdBreather : StateMachineComponent<ColdBreather.StatesInstance>, 
 
 	public float consumptionRate = 0f;
 
-	public float radiationRate = 0f;
-
 	public float deltaEmitTemperature = -5f;
 
 	public Vector3 emitOffsetCell = new Vector3(0f, 0f);
@@ -138,15 +136,13 @@ public class ColdBreather : StateMachineComponent<ColdBreather.StatesInstance>, 
 			if (component.Replanted)
 			{
 				component2.consumptionRate = consumptionRate;
-				radiationEmitter.emitRads = radiationRate;
-				radiationEmitter.Refresh();
 			}
 			else
 			{
 				component2.consumptionRate = consumptionRate * 0.25f;
-				radiationEmitter.emitRads = radiationRate * 0.25f;
-				radiationEmitter.Refresh();
 			}
+			radiationEmitter.emitRads = 48f;
+			radiationEmitter.Refresh();
 		}
 	}
 

@@ -11,7 +11,7 @@ public class ConditionSufficientFood : ProcessCondition
 
 	public override Status EvaluateCondition()
 	{
-		return (!(module.storage.GetAmountAvailable(GameTags.Edible) > 1f)) ? Status.Failure : Status.Ready;
+		return (module.storage.GetAmountAvailable(GameTags.Edible) > 1f) ? Status.Ready : Status.Failure;
 	}
 
 	public override string GetStatusMessage(Status status)

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Klei;
+using ProcGen;
 using STRINGS;
 using UnityEngine;
 
@@ -76,15 +77,32 @@ public class PauseScreen : KModalButtonMenu
 		base.OnSpawn();
 		clipboard.GetText = GetClipboardText;
 		title.SetText(UI.FRONTEND.PAUSE_SCREEN.TITLE);
-		string settingsCoordinate = CustomGameSettings.Instance.GetSettingsCoordinate();
-		string[] array = CustomGameSettings.Instance.ParseSettingCoordinate(settingsCoordinate);
-		worldSeed.SetText(string.Format(UI.FRONTEND.PAUSE_SCREEN.WORLD_SEED, settingsCoordinate));
-		worldSeed.GetComponent<ToolTip>().toolTip = string.Format(UI.FRONTEND.PAUSE_SCREEN.WORLD_SEED_TOOLTIP, array[1], array[2], array[3]);
+		try
+		{
+			string settingsCoordinate = CustomGameSettings.Instance.GetSettingsCoordinate();
+			string[] array = CustomGameSettings.ParseSettingCoordinate(settingsCoordinate);
+			worldSeed.SetText(string.Format(UI.FRONTEND.PAUSE_SCREEN.WORLD_SEED, settingsCoordinate));
+			worldSeed.GetComponent<ToolTip>().toolTip = string.Format(UI.FRONTEND.PAUSE_SCREEN.WORLD_SEED_TOOLTIP, array[1], array[2], array[3]);
+		}
+		catch (Exception arg)
+		{
+			Debug.LogWarning($"Failed to load Coordinates on ClusterLayout {arg}, please report this error on the forums");
+			CustomGameSettings.Instance.Print();
+			Debug.Log("ClusterCache: " + string.Join(",", SettingsCache.clusterLayouts.clusterCache.Keys));
+			worldSeed.SetText(string.Format(UI.FRONTEND.PAUSE_SCREEN.WORLD_SEED, "0"));
+		}
 	}
 
 	private string GetClipboardText()
 	{
-		return CustomGameSettings.Instance.GetSettingsCoordinate();
+		try
+		{
+			return CustomGameSettings.Instance.GetSettingsCoordinate();
+		}
+		catch
+		{
+			return "";
+		}
 	}
 
 	private void OnResume()
@@ -128,7 +146,7 @@ public class PauseScreen : KModalButtonMenu
 		{
 			base.gameObject.SetActive(value: false);
 			ConfirmDialogScreen confirmDialogScreen = (ConfirmDialogScreen)GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, base.transform.parent.gameObject);
-			confirmDialogScreen.PopupConfirmDialog(string.Format(UI.FRONTEND.SAVESCREEN.OVERWRITEMESSAGE, Path.GetFileNameWithoutExtension(filename)), delegate
+			confirmDialogScreen.PopupConfirmDialog(string.Format(UI.FRONTEND.SAVESCREEN.OVERWRITEMESSAGE, System.IO.Path.GetFileNameWithoutExtension(filename)), delegate
 			{
 				DoSave(filename);
 				base.gameObject.SetActive(value: true);

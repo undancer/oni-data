@@ -42,6 +42,8 @@ namespace ProcGen
 
 		public static readonly Tag ErodePointToWorldTop = TagManager.Create("ErodePointToWorldTop");
 
+		public static readonly Tag ErodePointToWorldTopOrSide = TagManager.Create("ErodePointToWorldTopOrSide");
+
 		public static readonly Tag DistFunctionPointCentroid = TagManager.Create("DistFunctionPointCentroid");
 
 		public static readonly Tag DistFunctionPointEdge = TagManager.Create("DistFunctionPointEdge");
@@ -121,6 +123,8 @@ namespace ProcGen
 		public static readonly Tag SprinkleOfMetal = TagManager.Create("SprinkleOfMetal");
 
 		public static readonly Tag SprinkleOfOxyRock = TagManager.Create("SprinkleOfOxyRock");
+
+		public static readonly Tag RocketInterior = TagManager.Create("RocketInterior");
 
 		public static readonly Tag DEBUG_Split = TagManager.Create("DEBUG_Split");
 

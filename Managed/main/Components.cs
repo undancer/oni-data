@@ -229,7 +229,7 @@ public class Components
 
 	public static Cmps<MutantPlant> MutantPlants = new Cmps<MutantPlant>();
 
-	public static Cmps<LandingBeacon> LandingBeacons = new Cmps<LandingBeacon>();
+	public static Cmps<LandingBeacon.Instance> LandingBeacons = new Cmps<LandingBeacon.Instance>();
 
 	public static Cmps<HighEnergyParticle> HighEnergyParticles = new Cmps<HighEnergyParticle>();
 
@@ -243,11 +243,15 @@ public class Components
 
 	public static Cmps<LaunchPad> LaunchPads = new Cmps<LaunchPad>();
 
-	public static Cmps<BeeHive> BeeHives = new Cmps<BeeHive>();
-
 	public static Cmps<WarpReceiver> WarpReceivers = new Cmps<WarpReceiver>();
+
+	public static Cmps<RocketControlStation> RocketControlStations = new Cmps<RocketControlStation>();
+
+	public static Cmps<Reactor> NuclearReactors = new Cmps<Reactor>();
 
 	public static Cmps<IncubationMonitor.Instance> IncubationMonitors = new Cmps<IncubationMonitor.Instance>();
 
 	public static Cmps<FixedCapturableMonitor.Instance> FixedCapturableMonitors = new Cmps<FixedCapturableMonitor.Instance>();
+
+	public static Cmps<BeeHive.StatesInstance> BeeHives = new Cmps<BeeHive.StatesInstance>();
 }

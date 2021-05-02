@@ -1,17 +1,29 @@
 using System.Collections.Generic;
+using Klei.AI;
+using STRINGS;
 using UnityEngine;
 
 public class CropSleepingMonitor : GameStateMachine<CropSleepingMonitor, CropSleepingMonitor.Instance, IStateMachineTarget, CropSleepingMonitor.Def>
 {
 	public class Def : BaseDef, IGameObjectEffectDescriptor
 	{
-		public float lightIntensityThreshold = 0f;
-
 		public bool prefersDarkness = false;
 
 		public List<Descriptor> GetDescriptors(GameObject obj)
 		{
-			return null;
+			if (prefersDarkness)
+			{
+				return new List<Descriptor>
+				{
+					new Descriptor(UI.GAMEOBJECTEFFECTS.REQUIRES_DARKNESS, UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_DARKNESS, Descriptor.DescriptorType.Requirement)
+				};
+			}
+			Attribute minLightLux = Db.Get().PlantAttributes.MinLightLux;
+			int lux = Mathf.RoundToInt(minLightLux.Lookup(obj)?.GetTotalValue() ?? obj.GetComponent<Modifiers>().GetPreModifiedAttributeValue(minLightLux));
+			return new List<Descriptor>
+			{
+				new Descriptor(UI.GAMEOBJECTEFFECTS.REQUIRES_LIGHT.Replace("{Lux}", GameUtil.GetFormattedLux(lux)), UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_LIGHT.Replace("{Lux}", GameUtil.GetFormattedLux(lux)), Descriptor.DescriptorType.Requirement)
+			};
 		}
 	}
 
@@ -30,8 +42,10 @@ public class CropSleepingMonitor : GameStateMachine<CropSleepingMonitor, CropSle
 
 		public bool IsCellSafe(int cell)
 		{
-			float num = Grid.LightIntensity[cell];
-			return base.def.prefersDarkness ? (num <= base.def.lightIntensityThreshold) : (num >= base.def.lightIntensityThreshold);
+			Attribute minLightLux = Db.Get().PlantAttributes.MinLightLux;
+			AttributeInstance attributeInstance = minLightLux.Lookup(base.gameObject);
+			int num = Grid.LightIntensity[cell];
+			return base.def.prefersDarkness ? (num == 0) : ((float)num >= attributeInstance.GetTotalValue());
 		}
 	}
 

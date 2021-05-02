@@ -47,12 +47,6 @@ namespace Steamworks
 			return NativeMethods.ISteamUtils_GetImageRGBA(CSteamAPIContext.GetSteamUtils(), iImage, pubDest, nDestBufferSize);
 		}
 
-		public static bool GetCSERIPPort(out uint unIP, out ushort usPort)
-		{
-			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamUtils_GetCSERIPPort(CSteamAPIContext.GetSteamUtils(), out unIP, out usPort);
-		}
-
 		public static byte GetCurrentBatteryPower()
 		{
 			InteropHelp.TestIfAvailableClient();
@@ -192,21 +186,27 @@ namespace Steamworks
 			return NativeMethods.ISteamUtils_IsSteamChinaLauncher(CSteamAPIContext.GetSteamUtils());
 		}
 
-		public static bool InitFilterText()
+		public static bool InitFilterText(uint unFilterOptions = 0u)
 		{
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamUtils_InitFilterText(CSteamAPIContext.GetSteamUtils());
+			return NativeMethods.ISteamUtils_InitFilterText(CSteamAPIContext.GetSteamUtils(), unFilterOptions);
 		}
 
-		public static int FilterText(out string pchOutFilteredText, uint nByteSizeOutFilteredText, string pchInputMessage, bool bLegalOnly)
+		public static int FilterText(ETextFilteringContext eContext, CSteamID sourceSteamID, string pchInputMessage, out string pchOutFilteredText, uint nByteSizeOutFilteredText)
 		{
 			InteropHelp.TestIfAvailableClient();
 			IntPtr intPtr = Marshal.AllocHGlobal((int)nByteSizeOutFilteredText);
 			using InteropHelp.UTF8StringHandle pchInputMessage2 = new InteropHelp.UTF8StringHandle(pchInputMessage);
-			int num = NativeMethods.ISteamUtils_FilterText(CSteamAPIContext.GetSteamUtils(), intPtr, nByteSizeOutFilteredText, pchInputMessage2, bLegalOnly);
+			int num = NativeMethods.ISteamUtils_FilterText(CSteamAPIContext.GetSteamUtils(), eContext, sourceSteamID, pchInputMessage2, intPtr, nByteSizeOutFilteredText);
 			pchOutFilteredText = ((num != -1) ? InteropHelp.PtrToStringUTF8(intPtr) : null);
 			Marshal.FreeHGlobal(intPtr);
 			return num;
+		}
+
+		public static ESteamIPv6ConnectivityState GetIPv6ConnectivityState(ESteamIPv6ConnectivityProtocol eProtocol)
+		{
+			InteropHelp.TestIfAvailableClient();
+			return NativeMethods.ISteamUtils_GetIPv6ConnectivityState(CSteamAPIContext.GetSteamUtils(), eProtocol);
 		}
 	}
 }

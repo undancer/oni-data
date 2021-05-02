@@ -8,8 +8,6 @@ public class RequestCrewSideScreen : SideScreenContent
 
 	public KToggle crewReleaseButton;
 
-	public KToggle crewAutoButton;
-
 	public KToggle crewRequestButton;
 
 	private Dictionary<KToggle, PassengerRocketModule.RequestCrewState> toggleMap = new Dictionary<KToggle, PassengerRocketModule.RequestCrewState>();
@@ -24,10 +22,8 @@ public class RequestCrewSideScreen : SideScreenContent
 	{
 		changeCrewButton.onClick += OnChangeCrewButtonPressed;
 		crewReleaseButton.onClick += CrewRelease;
-		crewAutoButton.onClick += CrewAuto;
 		crewRequestButton.onClick += CrewRequest;
 		toggleMap.Add(crewReleaseButton, PassengerRocketModule.RequestCrewState.Release);
-		toggleMap.Add(crewAutoButton, PassengerRocketModule.RequestCrewState.Auto);
 		toggleMap.Add(crewRequestButton, PassengerRocketModule.RequestCrewState.Request);
 	}
 
@@ -73,12 +69,6 @@ public class RequestCrewSideScreen : SideScreenContent
 	private void CrewRelease()
 	{
 		rocketModule.RequestCrewBoard(PassengerRocketModule.RequestCrewState.Release);
-		RefreshRequestButtons();
-	}
-
-	private void CrewAuto()
-	{
-		rocketModule.RequestCrewBoard(PassengerRocketModule.RequestCrewState.Auto);
 		RefreshRequestButtons();
 	}
 

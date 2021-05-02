@@ -45,8 +45,6 @@ public class AgeMonitor : GameStateMachine<AgeMonitor, AgeMonitor.Instance, ISta
 		}
 	}
 
-	private const float OLD_WARNING = 5f;
-
 	public State alive;
 
 	public State time_to_die;
@@ -74,7 +72,7 @@ public class AgeMonitor : GameStateMachine<AgeMonitor, AgeMonitor.Instance, ISta
 	private static void UpdateOldStatusItem(Instance smi, float dt)
 	{
 		KSelectable component = smi.GetComponent<KSelectable>();
-		bool show = smi.age.value > smi.age.GetMax() - 5f;
+		bool show = smi.age.value > smi.age.GetMax() * 0.9f;
 		smi.oldStatusGuid = component.ToggleStatusItem(Db.Get().CreatureStatusItems.Old, smi.oldStatusGuid, show, smi);
 	}
 }

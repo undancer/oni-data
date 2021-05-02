@@ -12,7 +12,19 @@ namespace Steamworks
 
 		public EDenyReason m_eDenyReason;
 
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-		public string m_rgchOptionalText;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
+		private byte[] m_rgchOptionalText_;
+
+		public string m_rgchOptionalText
+		{
+			get
+			{
+				return InteropHelp.ByteArrayToStringUTF8(m_rgchOptionalText_);
+			}
+			set
+			{
+				InteropHelp.StringToByteArrayUTF8(value, m_rgchOptionalText_, 128);
+			}
+		}
 	}
 }

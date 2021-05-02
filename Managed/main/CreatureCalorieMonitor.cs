@@ -26,6 +26,8 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 
 		public float deathTimer = 6000f;
 
+		public bool storePoop = false;
+
 		public override void Configure(GameObject prefab)
 		{
 			prefab.GetComponent<Modifiers>().initialAmounts.Add(Db.Get().Amounts.Calories.Id);
@@ -106,17 +108,20 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 
 		private GameObject owner;
 
+		private bool storePoop;
+
 		public Diet diet
 		{
 			get;
 			private set;
 		}
 
-		public Stomach(Diet diet, GameObject owner, float min_poop_size_in_calories)
+		public Stomach(Diet diet, GameObject owner, float min_poop_size_in_calories, bool storePoop)
 		{
 			this.diet = diet;
 			this.owner = owner;
 			minPoopSizeInCalories = min_poop_size_in_calories;
+			this.storePoop = storePoop;
 		}
 
 		public void Poop()
@@ -152,7 +157,24 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 			Debug.Assert(element != null, "TODO: implement non-element tag spawning");
 			int num3 = Grid.PosToCell(owner.transform.GetPosition());
 			float temperature = owner.GetComponent<PrimaryElement>().Temperature;
-			if (element.IsLiquid)
+			DebugUtil.DevAssert(!(storePoop && flag), "Stomach cannot both store poop & create a solid tile.");
+			if (storePoop)
+			{
+				Storage component = owner.GetComponent<Storage>();
+				if (element.IsLiquid)
+				{
+					component.AddLiquid(element.id, num, temperature, disease_idx, num2);
+				}
+				else if (element.IsGas)
+				{
+					component.AddGasChunk(element.id, num, temperature, disease_idx, num2, keep_zero_mass: false);
+				}
+				else
+				{
+					component.AddOre(element.id, num, temperature, disease_idx, num2);
+				}
+			}
+			else if (element.IsLiquid)
 			{
 				FallingWater.instance.AddParticle(num3, element.idx, num, temperature, disease_idx, num2, skip_sound: true);
 			}
@@ -162,8 +184,8 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 			}
 			else if (flag)
 			{
-				Facing component = owner.GetComponent<Facing>();
-				int num4 = component.GetFrontCell();
+				Facing component2 = owner.GetComponent<Facing>();
+				int num4 = component2.GetFrontCell();
 				if (!Grid.IsValidCell(num4))
 				{
 					Debug.LogWarningFormat("{0} attemping to Poop {1} on invalid cell {2} from cell {3}", owner, element.name, num4, num3);
@@ -175,12 +197,12 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 			{
 				element.substance.SpawnResource(Grid.CellToPosCCC(num3, Grid.SceneLayer.Ore), num, temperature, disease_idx, num2);
 			}
-			KPrefabID component2 = owner.GetComponent<KPrefabID>();
-			if (!Game.Instance.savedInfo.creaturePoopAmount.ContainsKey(component2.PrefabTag))
+			KPrefabID component3 = owner.GetComponent<KPrefabID>();
+			if (!Game.Instance.savedInfo.creaturePoopAmount.ContainsKey(component3.PrefabTag))
 			{
-				Game.Instance.savedInfo.creaturePoopAmount.Add(component2.PrefabTag, 0f);
+				Game.Instance.savedInfo.creaturePoopAmount.Add(component3.PrefabTag, 0f);
 			}
-			Game.Instance.savedInfo.creaturePoopAmount[component2.PrefabTag] += num;
+			Game.Instance.savedInfo.creaturePoopAmount[component3.PrefabTag] += num;
 			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, element.name, owner.transform);
 		}
 
@@ -274,7 +296,7 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 		{
 			calories = Db.Get().Amounts.Calories.Lookup(base.gameObject);
 			calories.value = calories.GetMax() * 0.9f;
-			stomach = new Stomach(def.diet, master.gameObject, def.minPoopSizeInCalories);
+			stomach = new Stomach(def.diet, master.gameObject, def.minPoopSizeInCalories, def.storePoop);
 			metabolism = base.gameObject.GetAttributes().Add(Db.Get().CritterAttributes.Metabolism);
 			deltaCalorieMetabolismModifier = new AttributeModifier(Db.Get().Amounts.Calories.deltaAttribute.Id, 1f, DUPLICANTS.MODIFIERS.METABOLISM_CALORIE_MODIFIER.NAME, is_multiplier: true, uiOnly: false, is_readonly: false);
 			calories.deltaAttribute.Add(deltaCalorieMetabolismModifier);

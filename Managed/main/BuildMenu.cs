@@ -324,7 +324,8 @@ public class BuildMenu : KScreen
 				new BuildingInfo("LiquidFilter", Action.BuildMenuKeyF),
 				new BuildingInfo("LiquidConduitPreferentialFlow", Action.BuildMenuKeyW),
 				new BuildingInfo("LiquidConduitOverflow", Action.BuildMenuKeyR),
-				new BuildingInfo("ModularLaunchpadPortLiquid", Action.BuildMenuKeyM)
+				new BuildingInfo("ModularLaunchpadPortLiquid", Action.BuildMenuKeyM),
+				new BuildingInfo("ModularLaunchpadPortLiquidUnloader", Action.BuildMenuKeyU)
 			}),
 			new DisplayInfo(CacheHashString("Ventilation Structures"), "icon_category_ventilation", Action.BuildCategoryVentilationStructures, KKeyCode.V, new List<BuildingInfo>
 			{
@@ -339,7 +340,8 @@ public class BuildMenu : KScreen
 				new BuildingInfo("BottleEmptierGas", Action.BuildMenuKeyB),
 				new BuildingInfo("GasConduitPreferentialFlow", Action.BuildMenuKeyW),
 				new BuildingInfo("GasConduitOverflow", Action.BuildMenuKeyR),
-				new BuildingInfo("ModularLaunchpadPortGas", Action.BuildMenuKeyG)
+				new BuildingInfo("ModularLaunchpadPortGas", Action.BuildMenuKeyG),
+				new BuildingInfo("ModularLaunchpadPortGasUnloader", Action.BuildMenuKeyU)
 			})
 		}),
 		new DisplayInfo(CacheHashString("Industrial"), "icon_category_refinery", Action.Plan5, KKeyCode.None, new List<DisplayInfo>
@@ -391,7 +393,9 @@ public class BuildMenu : KScreen
 				new BuildingInfo("PowerControlStation", Action.BuildMenuKeyC),
 				new BuildingInfo("AstronautTrainingCenter", Action.BuildMenuKeyA),
 				new BuildingInfo("ResetSkillsStation", Action.BuildMenuKeyR),
-				new BuildingInfo("OxygenMaskStation", Action.BuildMenuKeyO),
+				new BuildingInfo("CraftingTable", Action.BuildMenuKeyZ),
+				new BuildingInfo("OxygenMaskMarker", Action.BuildMenuKeyQ),
+				new BuildingInfo("OxygenMaskLocker", Action.BuildMenuKeyY),
 				new BuildingInfo("ClothingFabricator", Action.BuildMenuKeyT),
 				new BuildingInfo("SuitFabricator", Action.BuildMenuKeyX),
 				new BuildingInfo("SuitMarker", Action.BuildMenuKeyE),
@@ -416,7 +420,8 @@ public class BuildMenu : KScreen
 				new BuildingInfo("TouristModule", Action.BuildMenuKeyY),
 				new BuildingInfo("ResearchModule", Action.BuildMenuKeyR),
 				new BuildingInfo("HydrogenEngine", Action.BuildMenuKeyH),
-				new BuildingInfo("RailGun", Action.BuildMenuKeyP)
+				new BuildingInfo("RailGun", Action.BuildMenuKeyP),
+				new BuildingInfo("LandingBeacon", Action.BuildMenuKeyL)
 			})
 		}),
 		new DisplayInfo(CacheHashString("Logistics"), "icon_category_ventilation", Action.Plan6, KKeyCode.None, new List<DisplayInfo>
@@ -437,7 +442,8 @@ public class BuildMenu : KScreen
 				new BuildingInfo("SolidLogicValve", Action.BuildMenuKeyL),
 				new BuildingInfo("SolidConduitBridge", Action.BuildMenuKeyB),
 				new BuildingInfo("AutoMiner", Action.BuildMenuKeyM),
-				new BuildingInfo("ModularLaunchpadPortSolid", Action.BuildMenuKeyS)
+				new BuildingInfo("ModularLaunchpadPortSolid", Action.BuildMenuKeyS),
+				new BuildingInfo("ModularLaunchpadPortSolidUnloader", Action.BuildMenuKeyU)
 			}),
 			new DisplayInfo(CacheHashString("LogicWiring"), "icon_category_automation", Action.BuildCategoryLogicWiring, KKeyCode.W, new List<BuildingInfo>
 			{

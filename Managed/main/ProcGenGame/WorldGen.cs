@@ -68,6 +68,10 @@ namespace ProcGenGame
 
 		public const int WORLDGEN_SAVE_MINOR_VERSION = 1;
 
+		private const float EXTREME_TEMPERATURE_BORDER_RANGE = 150f;
+
+		private const float EXTREME_TEMPERATURE_BORDER_MIN_WIDTH = 2f;
+
 		public static Element voidElement;
 
 		public static Element vacuumElement;
@@ -233,7 +237,7 @@ namespace ProcGenGame
 		public static void LoadSettings()
 		{
 			ListPool<YamlIO.Error, WorldGen>.PooledList pooledList = ListPool<YamlIO.Error, WorldGen>.Allocate();
-			if (SettingsCache.LoadFiles(pooledList) && !TemplateCache.Initted)
+			if (SettingsCache.LoadFiles(pooledList))
 			{
 				TemplateCache.Init();
 			}
@@ -254,11 +258,6 @@ namespace ProcGenGame
 			pooledList.Recycle();
 		}
 
-		public void SaveSettings(string newpath = null)
-		{
-			SettingsCache.Save((newpath == null) ? SettingsCache.GetPath() : newpath);
-		}
-
 		public void InitRandom(int worldSeed, int layoutSeed, int terrainSeed, int noiseSeed)
 		{
 			data.globalWorldSeed = worldSeed;
@@ -269,7 +268,7 @@ namespace ProcGenGame
 			myRandom = new SeededRandom(worldSeed);
 		}
 
-		public void Initialise(OfflineCallbackFunction callbackFn, Action<OfflineWorldGen.ErrorInfo> error_cb, int worldSeed = -1, int layoutSeed = -1, int terrainSeed = -1, int noiseSeed = -1)
+		public void Initialise(OfflineCallbackFunction callbackFn, Action<OfflineWorldGen.ErrorInfo> error_cb, int worldSeed = -1, int layoutSeed = -1, int terrainSeed = -1, int noiseSeed = -1, bool debug = false)
 		{
 			if (wasLoaded)
 			{
@@ -279,7 +278,7 @@ namespace ProcGenGame
 			successCallbackFn = callbackFn;
 			errorCallback = error_cb;
 			Debug.Assert(successCallbackFn != null);
-			isRunningDebugGen = false;
+			isRunningDebugGen = debug;
 			running = false;
 			int num = UnityEngine.Random.Range(0, int.MaxValue);
 			if (worldSeed == -1)
@@ -299,7 +298,7 @@ namespace ProcGenGame
 				noiseSeed = num;
 			}
 			data.gameSpawnData = new GameSpawnData();
-			DebugUtil.LogArgs($"World seeds: [{worldSeed}/{layoutSeed}/{terrainSeed}/{noiseSeed}]");
+			DebugUtil.LogArgs(string.Format("World Seeds: {0} for world {1} [{2}/{3}/{4}/{5}]", worldSeed, Settings.world.name.Replace("STRINGS.WORLDS.", "").Replace(".NAME", ""), worldSeed, layoutSeed, terrainSeed, noiseSeed));
 			InitRandom(worldSeed, layoutSeed, terrainSeed, noiseSeed);
 			successCallbackFn(UI.WORLDGEN.COMPLETE.key, 0f, WorldGenProgressStages.Stages.Failure);
 			stats["GenerateTime"] = 0;
@@ -333,7 +332,7 @@ namespace ProcGenGame
 			data.gameSpawnData.AddTemplate(template, position, ref claimedCells);
 		}
 
-		public void RenderOffline(bool doSettle, ref Sim.Cell[] cells, ref Sim.DiseaseCell[] dc, int baseId, bool isStartingWorld = false)
+		public bool RenderOffline(bool doSettle, ref Sim.Cell[] cells, ref Sim.DiseaseCell[] dc, int baseId, bool isStartingWorld = false)
 		{
 			float[] bgTemp = null;
 			dc = null;
@@ -343,14 +342,29 @@ namespace ProcGenGame
 			if (!RenderToMap(successCallbackFn, ref cells, ref bgTemp, ref dc, ref borderCells, ref POIBounds))
 			{
 				successCallbackFn(UI.WORLDGEN.FAILED.key, -100f, WorldGenProgressStages.Stages.Failure);
-				return;
+				if (!isRunningDebugGen)
+				{
+					return false;
+				}
 			}
 			foreach (int item in borderCells)
 			{
 				cells[item].SetValues(unobtaniumElement, ElementLoader.elements);
 				claimedPOICells[item] = 1;
 			}
-			List<KeyValuePair<Vector2I, TemplateContainer>> list = TemplateSpawning.DetermineTemplatesForWorld(Settings, data.terrainCells, myRandom, ref POIBounds, successCallbackFn);
+			List<KeyValuePair<Vector2I, TemplateContainer>> list = null;
+			try
+			{
+				list = TemplateSpawning.DetermineTemplatesForWorld(Settings, data.terrainCells, myRandom, ref POIBounds, isRunningDebugGen, successCallbackFn);
+			}
+			catch (Exception e)
+			{
+				if (!isRunningDebugGen)
+				{
+					ReportWorldGenError(e);
+					return false;
+				}
+			}
 			if (isStartingWorld)
 			{
 				EnsureEnoughElementsInStartingBiome(cells);
@@ -381,6 +395,7 @@ namespace ProcGenGame
 			}
 			successCallbackFn(UI.WORLDGEN.COMPLETE.key, 1f, WorldGenProgressStages.Stages.Complete);
 			running = false;
+			return true;
 		}
 
 		private void SpawnMobsAndTemplates(Sim.Cell[] cells, float[] bgTemp, Sim.DiseaseCell[] dc, HashSet<int> claimedCells)
@@ -409,12 +424,13 @@ namespace ProcGenGame
 		private void ReportWorldGenError(Exception e)
 		{
 			string settingsCoordinate = CustomGameSettings.Instance.GetSettingsCoordinate();
+			Debug.LogWarning("Worldgen Failure on seed " + settingsCoordinate);
 			errorCallback(new OfflineWorldGen.ErrorInfo
 			{
 				errorDesc = string.Format(UI.FRONTEND.SUPPORTWARNINGS.WORLD_GEN_FAILURE, settingsCoordinate),
 				exception = e
 			});
-			KCrashReporter.ReportErrorDevNotification("WorldgenFailure", e.StackTrace, settingsCoordinate);
+			KCrashReporter.ReportErrorDevNotification("WorldgenFailure", e.StackTrace, "{coordinate} - {e.Message}");
 		}
 
 		public void SetWorldSize(int width, int height)
@@ -500,7 +516,7 @@ namespace ProcGenGame
 				data.voronoiTree = null;
 				try
 				{
-					data.voronoiTree = WorldLayout.GenerateOverworld(Settings.world.layoutMethod == ProcGen.World.LayoutMethod.PowerTree);
+					data.voronoiTree = WorldLayout.GenerateOverworld(Settings.world.layoutMethod == ProcGen.World.LayoutMethod.PowerTree, isRunningDebugGen);
 					WorldLayout.PopulateSubworlds();
 					CompleteLayout(updateProgressFn);
 				}
@@ -980,41 +996,59 @@ namespace ProcGenGame
 				for (int k = 0; k < edgesWithTag2.Count; k++)
 				{
 					Edge edge2 = edgesWithTag2[k];
-					if (!edgesWithTag.Contains(edge2))
+					if (edgesWithTag.Contains(edge2))
 					{
-						List<Cell> cells = data.worldLayout.overworldGraph.GetNodes(edge2);
-						Debug.Assert(cells[0] != cells[1], "Both nodes on an arc were the same. Allegedly this means it was a world border but I don't think we do that anymore.");
-						TerrainCell terrainCell3 = data.overworldCells.Find((TerrainCell c) => c.node == cells[0]);
-						TerrainCell terrainCell4 = data.overworldCells.Find((TerrainCell c) => c.node == cells[1]);
-						Debug.Assert(terrainCell3 != null && terrainCell4 != null, "NULL Terraincell nodes with EdgeClosed");
-						string borderOverride = Settings.GetSubWorld(terrainCell3.node.type).borderOverride;
-						string borderOverride2 = Settings.GetSubWorld(terrainCell4.node.type).borderOverride;
-						string text;
-						if (!string.IsNullOrEmpty(borderOverride2) && !string.IsNullOrEmpty(borderOverride))
+						continue;
+					}
+					List<Cell> cells = data.worldLayout.overworldGraph.GetNodes(edge2);
+					Debug.Assert(cells[0] != cells[1], "Both nodes on an arc were the same. Allegedly this means it was a world border but I don't think we do that anymore.");
+					TerrainCell terrainCell3 = data.overworldCells.Find((TerrainCell c) => c.node == cells[0]);
+					TerrainCell terrainCell4 = data.overworldCells.Find((TerrainCell c) => c.node == cells[1]);
+					Debug.Assert(terrainCell3 != null && terrainCell4 != null, "NULL Terraincell nodes with EdgeClosed");
+					string borderOverride = Settings.GetSubWorld(terrainCell3.node.type).borderOverride;
+					string borderOverride2 = Settings.GetSubWorld(terrainCell4.node.type).borderOverride;
+					string text;
+					if (!string.IsNullOrEmpty(borderOverride2) && !string.IsNullOrEmpty(borderOverride))
+					{
+						text = ((seededRandom.RandomValue() > 0.5f) ? borderOverride2 : borderOverride);
+						terrainCell3.LogInfo("BORDER WITH " + terrainCell4.site.id, "Picked Random:" + text, 0f);
+						terrainCell4.LogInfo("BORDER WITH " + terrainCell3.site.id, "Picked Random:" + text, 0f);
+					}
+					else if (string.IsNullOrEmpty(borderOverride2) && string.IsNullOrEmpty(borderOverride))
+					{
+						text = "hardToDig";
+						terrainCell3.LogInfo("BORDER WITH " + terrainCell4.site.id, "Both null", 0f);
+						terrainCell4.LogInfo("BORDER WITH " + terrainCell3.site.id, "Both null", 0f);
+					}
+					else
+					{
+						text = ((!string.IsNullOrEmpty(borderOverride2)) ? borderOverride2 : borderOverride);
+						terrainCell3.LogInfo("BORDER WITH " + terrainCell4.site.id, "Picked specific " + text, 0f);
+						terrainCell4.LogInfo("BORDER WITH " + terrainCell3.site.id, "Picked specific " + text, 0f);
+					}
+					if (!(text == "NONE"))
+					{
+						Border border2 = new Border(new Neighbors(terrainCell3, terrainCell4), edge2.corner0.position, edge2.corner1.position);
+						border2.element = SettingsCache.borders[text];
+						MinMax minMax = new MinMax(1.5f, 2f);
+						MinMax borderSizeOverride = Settings.GetSubWorld(terrainCell3.node.type).borderSizeOverride;
+						MinMax borderSizeOverride2 = Settings.GetSubWorld(terrainCell4.node.type).borderSizeOverride;
+						bool flag = borderSizeOverride.min != 0f || borderSizeOverride.max != 0f;
+						bool flag2 = borderSizeOverride2.min != 0f || borderSizeOverride2.max != 0f;
+						if (flag && flag2)
 						{
-							text = ((seededRandom.RandomValue() > 0.5f) ? borderOverride2 : borderOverride);
-							terrainCell3.LogInfo("BORDER WITH " + terrainCell4.site.id, "Picked Random:" + text, 0f);
-							terrainCell4.LogInfo("BORDER WITH " + terrainCell3.site.id, "Picked Random:" + text, 0f);
+							minMax = ((borderSizeOverride.max > borderSizeOverride2.max) ? borderSizeOverride : borderSizeOverride2);
 						}
-						else if (string.IsNullOrEmpty(borderOverride2) && string.IsNullOrEmpty(borderOverride))
+						else if (flag)
 						{
-							text = "hardToDig";
-							terrainCell3.LogInfo("BORDER WITH " + terrainCell4.site.id, "Both null", 0f);
-							terrainCell4.LogInfo("BORDER WITH " + terrainCell3.site.id, "Both null", 0f);
+							minMax = borderSizeOverride;
 						}
-						else
+						else if (flag2)
 						{
-							text = ((!string.IsNullOrEmpty(borderOverride2)) ? borderOverride2 : borderOverride);
-							terrainCell3.LogInfo("BORDER WITH " + terrainCell4.site.id, "Picked specific " + text, 0f);
-							terrainCell4.LogInfo("BORDER WITH " + terrainCell3.site.id, "Picked specific " + text, 0f);
+							minMax = borderSizeOverride2;
 						}
-						if (!(text == "NONE"))
-						{
-							Border border2 = new Border(new Neighbors(terrainCell3, terrainCell4), edge2.corner0.position, edge2.corner1.position);
-							border2.element = SettingsCache.borders[text];
-							border2.width = seededRandom.RandomRange(1f, 2.5f);
-							list.Add(border2);
-						}
+						border2.width = seededRandom.RandomRange(minMax.min, minMax.max);
+						list.Add(border2);
 					}
 				}
 			}
@@ -1069,11 +1103,23 @@ namespace ProcGenGame
 					Border border3 = list[m];
 					SubWorld subWorld = Settings.GetSubWorld(border3.neighbors.n0.node.type);
 					SubWorld subWorld2 = Settings.GetSubWorld(border3.neighbors.n1.node.type);
+					float neighbour0Temperature = (SettingsCache.temperatures[subWorld.temperatureRange].min + SettingsCache.temperatures[subWorld.temperatureRange].max) / 2f;
+					float neighbour1Temperature = (SettingsCache.temperatures[subWorld2.temperatureRange].min + SettingsCache.temperatures[subWorld2.temperatureRange].max) / 2f;
 					float num = Mathf.Min(SettingsCache.temperatures[subWorld.temperatureRange].min, SettingsCache.temperatures[subWorld2.temperatureRange].min);
 					float num2 = Mathf.Max(SettingsCache.temperatures[subWorld.temperatureRange].max, SettingsCache.temperatures[subWorld2.temperatureRange].max);
-					float temperatureRange = num2 - num;
-					border3.Stagger(seededRandom, seededRandom.RandomRange(8, 13), seededRandom.RandomRange(2, 5));
-					border3.ConvertToMap(data.world, setValues, num, temperatureRange, seededRandom);
+					float num3 = num2 - num;
+					float rangeLow = 2f;
+					float rangeHigh = 5f;
+					int snapLastCells = 1;
+					if (num3 >= 150f)
+					{
+						rangeLow = 0f;
+						rangeHigh = border3.width * 0.2f;
+						snapLastCells = 2;
+						border3.width = Mathf.Max(border3.width, 2f);
+					}
+					border3.Stagger(seededRandom, seededRandom.RandomRange(8, 13), seededRandom.RandomRange(rangeLow, rangeHigh));
+					border3.ConvertToMap(data.world, setValues, neighbour0Temperature, neighbour1Temperature, num3, seededRandom, snapLastCells);
 				}
 			}
 			catch (Exception ex4)
@@ -1174,7 +1220,7 @@ namespace ProcGenGame
 
 		public NoiseMapBuilderPlane BuildNoiseSource(int width, int height, string name)
 		{
-			ProcGen.Noise.Tree tree = SettingsCache.noise.GetTree(name, SettingsCache.GetPath());
+			ProcGen.Noise.Tree tree = SettingsCache.noise.GetTree(name);
 			Debug.Assert(tree != null, name);
 			return BuildNoiseSource(width, height, tree);
 		}
@@ -1277,9 +1323,9 @@ namespace ProcGenGame
 			float currentProgress = 0f;
 			foreach (TerrainCell overworldCell in OverworldCells)
 			{
-				ProcGen.Noise.Tree tree = SettingsCache.noise.GetTree("noise/Default", SettingsCache.GetPath());
-				ProcGen.Noise.Tree tree2 = SettingsCache.noise.GetTree("noise/DefaultCave", SettingsCache.GetPath());
-				ProcGen.Noise.Tree tree3 = SettingsCache.noise.GetTree("noise/DefaultDensity", SettingsCache.GetPath());
+				ProcGen.Noise.Tree tree = SettingsCache.noise.GetTree("noise/Default");
+				ProcGen.Noise.Tree tree2 = SettingsCache.noise.GetTree("noise/DefaultCave");
+				ProcGen.Noise.Tree tree3 = SettingsCache.noise.GetTree("noise/DefaultDensity");
 				string s = "noise/Default";
 				string s2 = "noise/DefaultCave";
 				string s3 = "noise/DefaultDensity";

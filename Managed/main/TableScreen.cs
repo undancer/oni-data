@@ -200,17 +200,17 @@ public class TableScreen : KScreen
 				}
 			}
 		}
-		foreach (int worldID in ClusterManager.Instance.GetWorldIDs())
+		foreach (int item3 in ClusterManager.Instance.GetWorldIDsSorted())
 		{
-			AddWorldDivider(worldID);
+			AddWorldDivider(item3);
 		}
 		foreach (KeyValuePair<int, GameObject> worldDivider in worldDividers)
 		{
 			Component reference = worldDivider.Value.GetComponent<HierarchyReferences>().GetReference("NobodyRow");
 			reference.gameObject.SetActive(value: true);
-			foreach (MinionAssignablesProxy item3 in Components.MinionAssignablesProxy)
+			foreach (MinionAssignablesProxy item4 in Components.MinionAssignablesProxy)
 			{
-				if (item3.GetTargetGameObject().GetComponent<KMonoBehaviour>().GetMyWorld()
+				if (item4.GetTargetGameObject().GetComponent<KMonoBehaviour>().GetMyWorld()
 					.id == worldDivider.Key)
 				{
 					reference.gameObject.SetActive(value: false);
@@ -404,6 +404,7 @@ public class TableScreen : KScreen
 			ClusterGridEntity component2 = ClusterManager.Instance.GetWorld(worldId).GetComponent<ClusterGridEntity>();
 			gameObject.GetComponentInChildren<LocText>().SetText(string.Concat(NAMEGEN.WORLD.PLANETOID_PREFIX, component2.Name));
 			gameObject.GetComponentInChildren<ToolTip>().SetSimpleTooltip(string.Format(NAMEGEN.WORLD.WORLDDIVIDER_TOOLTIP, component2.Name));
+			gameObject.GetComponent<HierarchyReferences>().GetReference<Image>("Icon").sprite = component2.GetUISprite();
 			worldDividers.Add(worldId, gameObject);
 		}
 	}

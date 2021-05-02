@@ -9,11 +9,13 @@ public class HighEnergyParticleSpawnerConfig : IBuildingConfig
 
 	public const float MIN_LAUNCH_INTERVAL = 2f;
 
-	public const float RADIATION_SAMPLE_RATE = 1f;
+	public const float RADIATION_SAMPLE_RATE = 0.2f;
 
-	public const int MIN_SLIDER = 10;
+	public const int MIN_SLIDER = 50;
 
-	public const int MAX_SLIDER = 5000;
+	public const int MAX_SLIDER = 50;
+
+	public const float DISABLED_CONSUMPTION_RATE = 1f;
 
 	public override BuildingDef CreateBuildingDef()
 	{
@@ -28,7 +30,7 @@ public class HighEnergyParticleSpawnerConfig : IBuildingConfig
 		buildingDef.HighEnergyParticleOutputOffset = new CellOffset(0, 1);
 		buildingDef.RequiresPowerInput = true;
 		buildingDef.PowerInputOffset = new CellOffset(0, 0);
-		buildingDef.EnergyConsumptionWhenActive = 240f;
+		buildingDef.EnergyConsumptionWhenActive = 480f;
 		buildingDef.ExhaustKilowattsWhenActive = 1f;
 		buildingDef.SelfHeatKilowattsWhenActive = 4f;
 		buildingDef.LogicInputPorts = new List<LogicPorts.Port>
@@ -47,16 +49,9 @@ public class HighEnergyParticleSpawnerConfig : IBuildingConfig
 		go.AddOrGet<HighEnergyParticleStorage>();
 		HighEnergyParticleSpawner highEnergyParticleSpawner = go.AddOrGet<HighEnergyParticleSpawner>();
 		highEnergyParticleSpawner.minLaunchInterval = 2f;
-		highEnergyParticleSpawner.radiationSampleRate = 1f;
-		highEnergyParticleSpawner.minSlider = 10;
-		highEnergyParticleSpawner.maxSlider = 5000;
-		RadiationEmitter radiationEmitter = go.AddOrGet<RadiationEmitter>();
-		radiationEmitter.emitRadiusX = 6;
-		radiationEmitter.emitRadiusY = 4;
-		radiationEmitter.emitRads = 10f;
-		radiationEmitter.emitRate = 2f;
-		radiationEmitter.emitSpeed = 2f;
-		radiationEmitter.emitType = RadiationEmitter.RadiationEmitterType.Attractor;
+		highEnergyParticleSpawner.radiationSampleRate = 0.2f;
+		highEnergyParticleSpawner.minSlider = 50;
+		highEnergyParticleSpawner.maxSlider = 50;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

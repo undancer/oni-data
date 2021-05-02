@@ -20,16 +20,30 @@ public class EquipmentConfigManager : KMonoBehaviour
 	public void RegisterEquipment(IEquipmentConfig config)
 	{
 		EquipmentDef equipmentDef = config.CreateEquipmentDef();
-		if (DlcManager.IsContentActive(equipmentDef.RequiredDlcId))
+		if (!DlcManager.IsContentActive(equipmentDef.RequiredDlcId))
 		{
-			GameObject gameObject = EntityTemplates.CreateLooseEntity(equipmentDef.Id, equipmentDef.Name, equipmentDef.RecipeDescription, equipmentDef.Mass, unitMass: true, equipmentDef.Anim, "object", Grid.SceneLayer.Ore, equipmentDef.CollisionShape, equipmentDef.width, equipmentDef.height, isPickupable: true, 0, equipmentDef.OutputElement);
-			Equippable equippable = gameObject.AddComponent<Equippable>();
-			equippable.def = equipmentDef;
-			Debug.Assert(equippable.def != null);
-			equippable.slotID = equipmentDef.Slot;
-			Debug.Assert(equippable.slot != null);
-			config.DoPostConfigure(gameObject);
-			Assets.AddPrefab(gameObject.GetComponent<KPrefabID>());
+			return;
+		}
+		GameObject gameObject = EntityTemplates.CreateLooseEntity(equipmentDef.Id, equipmentDef.Name, equipmentDef.RecipeDescription, equipmentDef.Mass, unitMass: true, equipmentDef.Anim, "object", Grid.SceneLayer.Ore, equipmentDef.CollisionShape, equipmentDef.width, equipmentDef.height, isPickupable: true, 0, equipmentDef.OutputElement);
+		Equippable equippable = gameObject.AddComponent<Equippable>();
+		equippable.def = equipmentDef;
+		Debug.Assert(equippable.def != null);
+		equippable.slotID = equipmentDef.Slot;
+		Debug.Assert(equippable.slot != null);
+		config.DoPostConfigure(gameObject);
+		Assets.AddPrefab(gameObject.GetComponent<KPrefabID>());
+		if (equipmentDef.wornID != null)
+		{
+			GameObject gameObject2 = EntityTemplates.CreateLooseEntity(equipmentDef.wornID, equipmentDef.WornName, equipmentDef.WornDesc, equipmentDef.Mass, unitMass: true, equipmentDef.Anim, "worn_out", Grid.SceneLayer.Ore, equipmentDef.CollisionShape, equipmentDef.width, equipmentDef.height, isPickupable: true);
+			RepairableEquipment repairableEquipment = gameObject2.AddComponent<RepairableEquipment>();
+			repairableEquipment.def = equipmentDef;
+			Debug.Assert(repairableEquipment.def != null);
+			Tag[] additionalTags = equipmentDef.AdditionalTags;
+			foreach (Tag tag in additionalTags)
+			{
+				gameObject2.GetComponent<KPrefabID>().AddTag(tag);
+			}
+			Assets.AddPrefab(gameObject2.GetComponent<KPrefabID>());
 		}
 	}
 

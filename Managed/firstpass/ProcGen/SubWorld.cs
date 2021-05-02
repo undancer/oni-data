@@ -25,7 +25,8 @@ namespace ProcGen
 			Wasteland,
 			RocketInterior,
 			Metallic,
-			Barren
+			Barren,
+			Moo
 		}
 
 		public string nameKey
@@ -65,6 +66,12 @@ namespace ProcGen
 		}
 
 		public string borderOverride
+		{
+			get;
+			protected set;
+		}
+
+		public MinMax borderSizeOverride
 		{
 			get;
 			protected set;
@@ -131,7 +138,7 @@ namespace ProcGen
 			protected set;
 		}
 
-		public List<World.FeatureSpawnRules> subworldFeatureRules
+		public List<World.TemplateSpawnRules> subworldTemplateRules
 		{
 			get;
 			protected set;
@@ -177,19 +184,25 @@ namespace ProcGen
 			pointsOfInterest = new Dictionary<string, string[]>();
 			featureTemplates = new Dictionary<string, int>();
 			pdWeight = 1f;
+			borderSizeOverride = new MinMax(1f, 2.5f);
 		}
 
-		public void EnforceFeatureSpawnRuleSelfConsistency()
+		public void EnforceTemplateSpawnRuleSelfConsistency()
 		{
-			if (subworldFeatureRules == null)
+			if (subworldTemplateRules == null)
 			{
 				return;
 			}
-			foreach (World.FeatureSpawnRules subworldFeatureRule in subworldFeatureRules)
+			foreach (World.TemplateSpawnRules subworldTemplateRule in subworldTemplateRules)
 			{
+				foreach (World.AllowedCellsFilter item in subworldTemplateRule.allowedCellsFilter)
+				{
+					DebugUtil.DevAssert(item.command != World.AllowedCellsFilter.Command.Replace, "subworldTemplateRules in " + base.name + " contains an AllowedCellsFilter with Command.Replace, which replaces the implicit subworld filter.");
+					DebugUtil.Assert(item.zoneTypes == null || item.zoneTypes.Count == 0, "subworldTemplateRules in " + base.name + " contains zoneTypes, which is unsupported since there is an implicit subworld filter. Use worldTemplateRules instead.");
+				}
 				World.AllowedCellsFilter allowedCellsFilter = new World.AllowedCellsFilter();
 				allowedCellsFilter.subworldNames.Add(base.name);
-				subworldFeatureRule.allowedCellsFilter.Insert(0, allowedCellsFilter);
+				subworldTemplateRule.allowedCellsFilter.Insert(0, allowedCellsFilter);
 			}
 		}
 	}

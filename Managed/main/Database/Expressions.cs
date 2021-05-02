@@ -38,6 +38,8 @@ namespace Database
 
 		public Expression SickCold;
 
+		public Expression Pollen;
+
 		public Expression Relief;
 
 		public Expression Productive;
@@ -52,6 +54,14 @@ namespace Database
 
 		public Expression Tickled;
 
+		public Expression Radiation1;
+
+		public Expression Radiation2;
+
+		public Expression Radiation3;
+
+		public Expression Radiation4;
+
 		public Expressions(ResourceSet parent)
 			: base("Expressions", parent)
 		{
@@ -61,10 +71,15 @@ namespace Database
 			RecoverBreath = new Expression("RecoverBreath", this, faces.Uncomfortable);
 			RedAlert = new Expression("RedAlert", this, faces.Hot);
 			Hungry = new Expression("Hungry", this, faces.Hungry);
+			Radiation1 = new Expression("Radiation1", this, faces.Radiation1);
+			Radiation2 = new Expression("Radiation2", this, faces.Radiation2);
+			Radiation3 = new Expression("Radiation3", this, faces.Radiation3);
+			Radiation4 = new Expression("Radiation4", this, faces.Radiation4);
 			SickSpores = new Expression("SickSpores", this, faces.SickSpores);
 			Zombie = new Expression("Zombie", this, faces.Zombie);
 			SickFierySkin = new Expression("SickFierySkin", this, faces.SickFierySkin);
 			SickCold = new Expression("SickCold", this, faces.SickCold);
+			Pollen = new Expression("Pollen", this, faces.Pollen);
 			Sick = new Expression("Sick", this, faces.Sick);
 			Cold = new Expression("Cold", this, faces.Cold);
 			Hot = new Expression("Hot", this, faces.Hot);

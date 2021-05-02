@@ -1,5 +1,4 @@
 using System;
-using Database;
 using ProcGen;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,12 +32,12 @@ public class DestinationAsteroid2 : KMonoBehaviour
 			return;
 		}
 		asteroidData = newAsteroidData;
-		if (DlcManager.IsExpansion1Active())
+		ProcGen.World getStartWorld = newAsteroidData.GetStartWorld;
+		string s = (getStartWorld.asteroidIcon.IsNullOrWhiteSpace() ? AsteroidGridEntity.DEFAULT_ASTEROID_ICON_ANIM : getStartWorld.asteroidIcon);
+		Assets.TryGetAnim(s, out var anim);
+		if (DlcManager.IsExpansion1Active() && anim != null)
 		{
 			asteroidImage.gameObject.SetActive(value: false);
-			ProcGen.World getStartWorld = newAsteroidData.GetStartWorld;
-			AsteroidType typeOrDefault = Db.Get().AsteroidTypes.GetTypeOrDefault(getStartWorld.asteroidType);
-			KAnimFile anim = Assets.GetAnim(typeOrDefault.animName);
 			animController.AnimFiles = new KAnimFile[1]
 			{
 				anim
@@ -53,6 +52,7 @@ public class DestinationAsteroid2 : KMonoBehaviour
 		}
 		else
 		{
+			animController.gameObject.SetActive(value: false);
 			asteroidImage.gameObject.SetActive(value: true);
 			asteroidImage.sprite = asteroidData.sprite;
 		}

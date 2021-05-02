@@ -12,29 +12,29 @@ public class GeneticAnalysisStationConfig : IBuildingConfig
 		BuildingTemplates.CreateElectricalBuildingDef(buildingDef);
 		buildingDef.AudioCategory = "Metal";
 		buildingDef.AudioSize = "large";
-		buildingDef.EnergyConsumptionWhenActive = 60f;
+		buildingDef.EnergyConsumptionWhenActive = 480f;
 		buildingDef.ExhaustKilowattsWhenActive = 0.5f;
 		buildingDef.SelfHeatKilowattsWhenActive = 4f;
-		buildingDef.Deprecated = true;
+		buildingDef.Deprecated = !DlcManager.FeaturePlantMutationsEnabled();
 		return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		go.AddOrGet<BuildingComplete>().isManuallyOperated = true;
-		go.AddOrGet<GeneticAnalysisStation>();
+		go.AddOrGetDef<GeneticAnalysisStation.Def>();
+		go.AddOrGet<GeneticAnalysisStationWorkable>();
 		Prioritizable.AddRef(go);
 		go.AddOrGet<DropAllWorkable>();
-		go.AddOrGetDef<PoweredController.Def>();
+		go.AddOrGetDef<PoweredActiveController.Def>();
 		Storage storage = go.AddOrGet<Storage>();
-		storage.dropOnLoad = true;
 		ManualDeliveryKG manualDeliveryKG = go.AddOrGet<ManualDeliveryKG>();
 		manualDeliveryKG.SetStorage(storage);
 		manualDeliveryKG.choreTypeIDHash = Db.Get().ChoreTypes.MachineFetch.IdHash;
-		manualDeliveryKG.requestedItemTag = GameTags.UnidentifiedSeed;
+		manualDeliveryKG.requestedItemTag = Tag.Invalid;
 		manualDeliveryKG.refillMass = 1f;
 		manualDeliveryKG.minimumMass = 1f;
-		manualDeliveryKG.capacity = 1f;
+		manualDeliveryKG.capacity = 3f;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

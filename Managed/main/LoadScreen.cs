@@ -869,19 +869,11 @@ public class LoadScreen : KModalScreen
 		{
 			display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_MISSING_CONTENT, save.FileName);
 		}
-		if (DlcManager.IsVanillaId(save.FileInfo.dlcId))
-		{
-			if (display != null)
-			{
-				display.text = UI.FRONTEND.LOADSCREEN.UNSUPPORTED_VANILLA_TEMP;
-			}
-			return false;
-		}
 		if (IsSaveFileFromUnsupportedFutureBuild(save.FileHeader, save.FileInfo))
 		{
 			if (display != null)
 			{
-				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 447598u, 22);
+				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 461546u, 22);
 			}
 			return false;
 		}
@@ -903,8 +895,22 @@ public class LoadScreen : KModalScreen
 		component2.text = save.BaseName;
 		LocText component3 = component.GetReference<RectTransform>("Date").GetComponent<LocText>();
 		component3.text = string.Format("{0:H:mm:ss} - " + Localization.GetFileDateFormat(0), save.FileDate);
-		string clusterId = save.FileInfo.clusterId;
-		ProcGen.World world = ((clusterId != null) ? SettingsCache.clusterLayouts.GetWorldData(clusterId, 0) : null);
+		string text = save.FileInfo.clusterId;
+		if (text != null && !SettingsCache.clusterLayouts.clusterCache.ContainsKey(text))
+		{
+			string text2 = SettingsCache.GetScope("EXPANSION1_ID") + text;
+			if (SettingsCache.clusterLayouts.clusterCache.ContainsKey(text2))
+			{
+				text = text2;
+			}
+			else
+			{
+				DebugUtil.DevLogError("Failed to find cluster " + text + " including the scoped path, setting to default cluster name.");
+				Debug.Log("ClusterCache: " + string.Join(",", SettingsCache.clusterLayouts.clusterCache.Keys));
+				text = "worlds/SandstoneDefault";
+			}
+		}
+		ProcGen.World world = ((text != null) ? SettingsCache.clusterLayouts.GetWorldData(text, 0) : null);
 		string arg = ((world != null) ? ((string)Strings.Get(world.name)) : " - ");
 		LocText reference = component.GetReference<LocText>("InfoWorld");
 		reference.text = string.Format(UI.FRONTEND.LOADSCREEN.COLONY_INFO_FMT, UI.FRONTEND.LOADSCREEN.WORLD_NAME, arg);
@@ -1036,7 +1042,7 @@ public class LoadScreen : KModalScreen
 		saves.Sort((SaveGameFileDetails x, SaveGameFileDetails y) => y.FileDate.CompareTo(x.FileDate));
 		SaveGameFileDetails firstSave = saves[0];
 		string saveDlcName;
-		bool flag = IsSaveFromCurrentDLC(firstSave.FileInfo, out saveDlcName);
+		bool isInteractable = IsSaveFromCurrentDLC(firstSave.FileInfo, out saveDlcName);
 		string colonyName = firstSave.BaseName;
 		(int, int, ulong) savesSizeAndCounts = GetSavesSizeAndCounts(saves);
 		int item = savesSizeAndCounts.Item1;
@@ -1054,9 +1060,9 @@ public class LoadScreen : KModalScreen
 		KImage reference = freeElement.GetReference<KImage>("DlcIcon");
 		reference.GetComponent<ToolTip>().SetSimpleTooltip(UI.FRONTEND.LOADSCREEN.SAVE_FROM_SPACED_OUT_TOOLTIP);
 		RectTransform reference2 = freeElement.GetReference<RectTransform>("LocationIcons");
-		bool flag2 = CloudSavesVisible();
-		reference2.gameObject.SetActive(flag2);
-		if (flag2)
+		bool flag = CloudSavesVisible();
+		reference2.gameObject.SetActive(flag);
+		if (flag)
 		{
 			LocText locationText = freeElement.GetReference<RectTransform>("LocationText").GetComponent<LocText>();
 			bool isLocal = SaveLoader.IsSaveLocal(firstSave.FileName);
@@ -1096,8 +1102,8 @@ public class LoadScreen : KModalScreen
 		}
 		KButton component5 = freeElement.GetReference<RectTransform>("Button").GetComponent<KButton>();
 		component5.ClearOnClick();
-		component5.isInteractable = flag;
-		reference.gameObject.SetActive(flag);
+		component5.isInteractable = isInteractable;
+		reference.gameObject.SetActive(DlcManager.IsExpansion1Id(firstSave.FileInfo.dlcId));
 		component5.onClick += delegate
 		{
 			ShowColony(saves);
@@ -1157,7 +1163,7 @@ public class LoadScreen : KModalScreen
 		{
 			return true;
 		}
-		return header.buildVersion > 447598;
+		return header.buildVersion > 461546;
 	}
 
 	private static bool IsSaveFromCurrentDLC(SaveGame.GameInfo gameInfo, out string saveDlcName)
@@ -1237,10 +1243,10 @@ public class LoadScreen : KModalScreen
 		SaveGame.GameInfo gameInfo = SaveLoader.LoadHeader(filename, out header);
 		string arg = null;
 		string arg2 = null;
-		if (header.buildVersion > 447598)
+		if (header.buildVersion > 461546)
 		{
 			arg = header.buildVersion.ToString();
-			arg2 = 447598u.ToString();
+			arg2 = 461546u.ToString();
 		}
 		else if (gameInfo.saveMajorVersion < 7)
 		{

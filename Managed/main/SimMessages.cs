@@ -108,6 +108,10 @@ public static class SimMessages
 
 		public float emitSpeed;
 
+		public float emitDirection;
+
+		public float emitAngle;
+
 		public int emitType;
 	}
 
@@ -129,6 +133,10 @@ public static class SimMessages
 		public float emitRate;
 
 		public float emitSpeed;
+
+		public float emitDirection;
+
+		public float emitAngle;
 
 		public int emitType;
 	}
@@ -698,7 +706,7 @@ public static class SimMessages
 		Sim.SIM_HandleMessage(-1524118282, sizeof(RemoveElementEmitterMessage), (byte*)ptr);
 	}
 
-	public unsafe static void AddRadiationEmitter(int on_registered, int game_cell, short emitRadiusX, short emitRadiusY, float emitRads, float emitRate, float emitSpeed, RadiationEmitter.RadiationEmitterType emitType)
+	public unsafe static void AddRadiationEmitter(int on_registered, int game_cell, short emitRadiusX, short emitRadiusY, float emitRads, float emitRate, float emitSpeed, float emitDirection, float emitAngle, RadiationEmitter.RadiationEmitterType emitType)
 	{
 		AddRadiationEmitterMessage* ptr = stackalloc AddRadiationEmitterMessage[1];
 		ptr->callbackIdx = on_registered;
@@ -708,11 +716,13 @@ public static class SimMessages
 		ptr->emitRads = emitRads;
 		ptr->emitRate = emitRate;
 		ptr->emitSpeed = emitSpeed;
+		ptr->emitDirection = emitDirection;
+		ptr->emitAngle = emitAngle;
 		ptr->emitType = (int)emitType;
 		Sim.SIM_HandleMessage(-1505895314, sizeof(AddRadiationEmitterMessage), (byte*)ptr);
 	}
 
-	public unsafe static void ModifyRadiationEmitter(int sim_handle, int game_cell, short emitRadiusX, short emitRadiusY, float emitRads, float emitRate, float emitSpeed, RadiationEmitter.RadiationEmitterType emitType)
+	public unsafe static void ModifyRadiationEmitter(int sim_handle, int game_cell, short emitRadiusX, short emitRadiusY, float emitRads, float emitRate, float emitSpeed, float emitDirection, float emitAngle, RadiationEmitter.RadiationEmitterType emitType)
 	{
 		Debug.Assert(Grid.IsValidCell(game_cell));
 		if (Grid.IsValidCell(game_cell))
@@ -726,6 +736,8 @@ public static class SimMessages
 			ptr->emitRads = emitRads;
 			ptr->emitRate = emitRate;
 			ptr->emitSpeed = emitSpeed;
+			ptr->emitDirection = emitDirection;
+			ptr->emitAngle = emitAngle;
 			ptr->emitType = (int)emitType;
 			Sim.SIM_HandleMessage(-503965465, sizeof(ModifyRadiationEmitterMessage), (byte*)ptr);
 		}
@@ -1383,7 +1395,7 @@ public static class SimMessages
 		{
 			Pair<Vector2I, Vector2I> pair = activeRegion;
 			pair.first = new Vector2I(MathUtil.Clamp(0, Grid.WidthInCells - 1, activeRegion.first.x), MathUtil.Clamp(0, Grid.HeightInCells - 1, activeRegion.first.y));
-			pair.second = new Vector2I(MathUtil.Clamp(0, Grid.WidthInCells - 1, activeRegion.second.x + activeRegion.first.x), MathUtil.Clamp(0, Grid.HeightInCells - 1, activeRegion.second.y + activeRegion.first.y));
+			pair.second = new Vector2I(MathUtil.Clamp(0, Grid.WidthInCells - 1, activeRegion.second.x), MathUtil.Clamp(0, Grid.HeightInCells - 1, activeRegion.second.y));
 			ptr2->elapsedSeconds = elapsed_seconds;
 			ptr2->minX = pair.first.x;
 			ptr2->minY = pair.first.y;

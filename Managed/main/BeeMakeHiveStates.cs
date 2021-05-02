@@ -8,27 +8,26 @@ public class BeeMakeHiveStates : GameStateMachine<BeeMakeHiveStates, BeeMakeHive
 
 	public new class Instance : GameInstance
 	{
-		public Bee bee;
-
-		private GameObject hive;
-
 		public int targetBuildCell;
+
+		public bool builtHome;
 
 		public Instance(Chore<Instance> chore, Def def)
 			: base((IStateMachineTarget)chore, def)
 		{
-			bee = base.smi.master.GetComponent<Bee>();
 			chore.AddPrecondition(ChorePreconditions.instance.CheckBehaviourPrecondition, GameTags.Creatures.WantsToMakeHome);
 		}
 
 		public void BuildHome()
 		{
 			Vector3 position = Grid.CellToPos(targetBuildCell);
-			hive = Util.KInstantiate(Assets.GetPrefab("BeeHive".ToTag()), position, Quaternion.identity);
-			PrimaryElement component = hive.GetComponent<PrimaryElement>();
+			GameObject gameObject = Util.KInstantiate(Assets.GetPrefab("BeeHive".ToTag()), position, Quaternion.identity);
+			PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
 			component.ElementID = SimHashes.Creature;
 			component.Temperature = base.gameObject.GetComponent<PrimaryElement>().Temperature;
-			hive.SetActive(value: true);
+			gameObject.SetActive(value: true);
+			BeeHive.StatesInstance sMI = gameObject.GetSMI<BeeHive.StatesInstance>();
+			sMI.SetUpNewHive();
 		}
 	}
 
@@ -57,17 +56,27 @@ public class BeeMakeHiveStates : GameStateMachine<BeeMakeHiveStates, BeeMakeHive
 			}
 		});
 		moveToBuildLocation.MoveTo((Instance smi) => smi.targetBuildCell, doBuild, behaviourcomplete);
-		doBuild.Enter(delegate(Instance smi)
+		doBuild.PlayAnim("hive_grow_pre").EventHandler(GameHashes.AnimQueueComplete, delegate(Instance smi)
 		{
-			smi.BuildHome();
-		}).GoTo(behaviourcomplete);
+			Bee component = smi.gameObject.GetComponent<Bee>();
+			KPrefabID x = component.FindHiveInRoom();
+			if (x == null)
+			{
+				smi.builtHome = true;
+				smi.BuildHome();
+			}
+			smi.GoTo(behaviourcomplete);
+		});
 		behaviourcomplete.BehaviourComplete(GameTags.Creatures.WantsToMakeHome).Exit(delegate(Instance smi)
 		{
-			Util.KDestroyGameObject(smi.master.gameObject);
+			if (smi.builtHome)
+			{
+				Util.KDestroyGameObject(smi.master.gameObject);
+			}
 		});
 	}
 
-	private static void FindBuildLocation(Instance smi)
+	private void FindBuildLocation(Instance smi)
 	{
 		smi.targetBuildCell = Grid.InvalidCell;
 		GameObject prefab = Assets.GetPrefab("BeeHive".ToTag());

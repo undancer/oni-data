@@ -56,6 +56,11 @@ public class TrackerTool : KMonoBehaviour
 		worldTrackers.RemoveAll((WorldTracker match) => match.WorldID == world_id);
 	}
 
+	public bool IsRocketInterior(int worldID)
+	{
+		return ClusterManager.Instance.GetWorld(worldID).IsModuleInterior;
+	}
+
 	private void AddNewWorldTrackers(int worldID)
 	{
 		worldTrackers.Add(new StressTracker(worldID));
@@ -159,7 +164,7 @@ public class TrackerTool : KMonoBehaviour
 
 	public void Update()
 	{
-		if (!trackerActive)
+		if (SpeedControlScreen.Instance.IsPaused || !trackerActive)
 		{
 			return;
 		}

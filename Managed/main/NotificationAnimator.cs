@@ -19,14 +19,42 @@ public class NotificationAnimator : MonoBehaviour
 
 	private LayoutElement layoutElement;
 
-	public void Init()
+	[SerializeField]
+	private bool animating = true;
+
+	public void Begin(bool startOffset = true)
 	{
+		Reset();
+		animating = true;
+		if (startOffset)
+		{
+			layoutElement.minWidth = 100f;
+			return;
+		}
+		layoutElement.minWidth = 1f;
+		speed = -10f;
+	}
+
+	private void Reset()
+	{
+		bounceCount = 2;
 		layoutElement = GetComponent<LayoutElement>();
-		layoutElement.minWidth = 100f;
+		layoutElement.minWidth = 0f;
+		speed = 1f;
+	}
+
+	public void Stop()
+	{
+		Reset();
+		animating = false;
 	}
 
 	private void LateUpdate()
 	{
+		if (!animating)
+		{
+			return;
+		}
 		layoutElement.minWidth -= speed;
 		speed += 0.5f;
 		if (layoutElement.minWidth <= 0f)
@@ -40,7 +68,7 @@ public class NotificationAnimator : MonoBehaviour
 			else
 			{
 				layoutElement.minWidth = 0f;
-				base.enabled = false;
+				Stop();
 			}
 		}
 	}

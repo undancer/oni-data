@@ -289,7 +289,8 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 					smi.master.CancelFetchChore();
 				})
 				.ToggleStatusItem(BUILDING.STATUSITEMS.SUIT_LOCKER.SUIT_REQUESTED.NAME, BUILDING.STATUSITEMS.SUIT_LOCKER.SUIT_REQUESTED.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, default(HashedString), 129022, null, null, Db.Get().StatusItemCategories.Main);
-			charging.DefaultState(charging.pre).RefreshUserMenuOnEnter().EventTransition(GameHashes.OnStorageChange, empty, (StatesInstance smi) => smi.master.GetStoredOutfit() == null);
+			charging.DefaultState(charging.pre).RefreshUserMenuOnEnter().EventTransition(GameHashes.OnStorageChange, empty, (StatesInstance smi) => smi.master.GetStoredOutfit() == null)
+				.ToggleStatusItem(Db.Get().MiscStatusItems.StoredItemDurability, (StatesInstance smi) => smi.master.GetStoredOutfit().gameObject);
 			charging.pre.Enter(delegate(StatesInstance smi)
 			{
 				if (smi.master.IsSuitFullyCharged())
@@ -324,6 +325,7 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 				.ToggleStatusItem(BUILDING.STATUSITEMS.SUIT_LOCKER.NOT_OPERATIONAL.NAME, BUILDING.STATUSITEMS.SUIT_LOCKER.NOT_OPERATIONAL.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, default(HashedString), 129022, null, null, Db.Get().StatusItemCategories.Main);
 			charging.pst.PlayAnim("charging_pst").OnAnimQueueComplete(suitfullycharged);
 			suitfullycharged.EventTransition(GameHashes.OnStorageChange, empty, (StatesInstance smi) => smi.master.GetStoredOutfit() == null).PlayAnim("has_suit").RefreshUserMenuOnEnter()
+				.ToggleStatusItem(Db.Get().MiscStatusItems.StoredItemDurability, (StatesInstance smi) => smi.master.GetStoredOutfit().gameObject)
 				.ToggleStatusItem(BUILDING.STATUSITEMS.SUIT_LOCKER.FULLY_CHARGED.NAME, BUILDING.STATUSITEMS.SUIT_LOCKER.FULLY_CHARGED.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, default(HashedString), 129022, null, null, Db.Get().StatusItemCategories.Main);
 		}
 	}
@@ -596,7 +598,13 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 	{
 		Assignable assignable = equipment.GetAssignable(Db.Get().AssignableSlots.Suit);
 		assignable.Unassign();
-		GetComponent<Storage>().Store(assignable.gameObject);
+		Storage component = GetComponent<Storage>();
+		component.Store(assignable.gameObject);
+		Durability component2 = assignable.GetComponent<Durability>();
+		if (component2 != null && component2.IsWornOut())
+		{
+			ConfigRequestSuit();
+		}
 	}
 
 	public void ConfigRequestSuit()

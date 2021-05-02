@@ -26,7 +26,7 @@ public class PrickleGrassConfig : IEntityConfig
 			SimHashes.Oxygen,
 			SimHashes.ContaminatedOxygen,
 			SimHashes.CarbonDioxide
-		}, pressure_sensitive: true, 0f, 0.15f, null, can_drown: true, can_tinker: false);
+		}, pressure_sensitive: true, 0f, 0.15f, null, can_drown: true, can_tinker: false, require_solid_tile: true, should_grow_old: true, 2400f, "PrickleGrassOriginal", STRINGS.CREATURES.SPECIES.PRICKLEGRASS.NAME);
 		PrickleGrass prickleGrass = gameObject.AddOrGet<PrickleGrass>();
 		prickleGrass.positive_decor_effect = POSITIVE_DECOR_EFFECT;
 		prickleGrass.negative_decor_effect = NEGATIVE_DECOR_EFFECT;

@@ -14,7 +14,19 @@ namespace Steamworks
 
 		public CSteamID m_SteamIDBeaconOwner;
 
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		public string m_rgchConnectString;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
+		private byte[] m_rgchConnectString_;
+
+		public string m_rgchConnectString
+		{
+			get
+			{
+				return InteropHelp.ByteArrayToStringUTF8(m_rgchConnectString_);
+			}
+			set
+			{
+				InteropHelp.StringToByteArrayUTF8(value, m_rgchConnectString_, 256);
+			}
+		}
 	}
 }

@@ -55,7 +55,7 @@ public class NuclearResearchCenter : StateMachineComponent<NuclearResearchCenter
 			}).Exit("SetActive(false)", delegate(StatesInstance smi)
 			{
 				smi.master.operational.SetActive(value: false);
-			}).WorkableStopTransition((StatesInstance smi) => smi.master.GetComponent<NuclearResearchCenterWorkable>(), inoperational);
+			}).WorkableStopTransition((StatesInstance smi) => smi.master.GetComponent<NuclearResearchCenterWorkable>(), ready.idle);
 		}
 
 		private bool IsReady(StatesInstance smi)

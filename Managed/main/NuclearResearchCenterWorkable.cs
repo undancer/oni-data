@@ -46,8 +46,8 @@ public class NuclearResearchCenterWorkable : Workable
 		{
 			int num2 = Mathf.FloorToInt(pointsProduced);
 			pointsProduced -= num2;
-			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Research, Research.Instance.GetResearchType("delta").name, base.transform);
-			Research.Instance.AddResearchPoints("delta", num2);
+			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Research, Research.Instance.GetResearchType("nuclear").name, base.transform);
+			Research.Instance.AddResearchPoints("nuclear", num2);
 		}
 		return false;
 	}
@@ -58,9 +58,9 @@ public class NuclearResearchCenterWorkable : Workable
 		{
 			return 0f;
 		}
-		float num = Research.Instance.GetActiveResearch().progressInventory.PointsByTypeID["delta"];
+		float num = Research.Instance.GetActiveResearch().progressInventory.PointsByTypeID["nuclear"];
 		float value = 0f;
-		if (!Research.Instance.GetActiveResearch().tech.costsByResearchTypeID.TryGetValue("delta", out value))
+		if (!Research.Instance.GetActiveResearch().tech.costsByResearchTypeID.TryGetValue("nuclear", out value))
 		{
 			return 1f;
 		}

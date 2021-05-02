@@ -14,7 +14,7 @@ public class AdvancedApothecaryConfig : IBuildingConfig
 		buildingDef.ExhaustKilowattsWhenActive = 0.5f;
 		buildingDef.SelfHeatKilowattsWhenActive = 2f;
 		buildingDef.UseHighEnergyParticleInputPort = true;
-		buildingDef.HighEnergyParticleInputOffset = new CellOffset(1, 2);
+		buildingDef.HighEnergyParticleInputOffset = new CellOffset(0, 2);
 		buildingDef.ViewMode = OverlayModes.Radiation.ID;
 		buildingDef.AudioCategory = "Glass";
 		buildingDef.AudioSize = "large";

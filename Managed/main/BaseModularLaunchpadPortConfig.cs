@@ -6,12 +6,10 @@ public class BaseModularLaunchpadPortConfig
 {
 	public static Tag LinkTag = new Tag("ModularLaunchpadPort");
 
-	private const float STORAGE_SIZE = 10f;
-
-	public static BuildingDef CreateBaseLaunchpadPort(string id, string anim, ConduitType conduitType)
+	public static BuildingDef CreateBaseLaunchpadPort(string id, string anim, ConduitType conduitType, bool isLoader)
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(id, 2, 3, anim, 1000, 60f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.REFINED_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.SceneLayer = Grid.SceneLayer.BuildingFront;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(id, 2, 3, anim, 1000, 60f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.REFINED_METALS, 9999f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		buildingDef.SceneLayer = Grid.SceneLayer.BuildingBack;
 		buildingDef.OverheatTemperature = 2273.15f;
 		buildingDef.Floodable = false;
 		switch (conduitType)
@@ -26,12 +24,18 @@ public class BaseModularLaunchpadPortConfig
 			buildingDef.ViewMode = OverlayModes.SolidConveyor.ID;
 			break;
 		}
-		buildingDef.InputConduitType = conduitType;
-		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
-		buildingDef.OutputConduitType = conduitType;
-		buildingDef.UtilityOutputOffset = new CellOffset(1, 2);
+		if (isLoader)
+		{
+			buildingDef.InputConduitType = conduitType;
+			buildingDef.UtilityInputOffset = new CellOffset(0, 0);
+		}
+		else
+		{
+			buildingDef.OutputConduitType = conduitType;
+			buildingDef.UtilityOutputOffset = new CellOffset(1, 2);
+		}
 		buildingDef.PowerInputOffset = new CellOffset(1, 0);
-		buildingDef.EnergyConsumptionWhenActive = 480f;
+		buildingDef.EnergyConsumptionWhenActive = 240f;
 		buildingDef.SelfHeatKilowattsWhenActive = 1f;
 		buildingDef.ExhaustKilowattsWhenActive = 0.25f;
 		buildingDef.ObjectLayer = ObjectLayer.Building;
@@ -42,60 +46,91 @@ public class BaseModularLaunchpadPortConfig
 		return buildingDef;
 	}
 
-	public static void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag, ConduitType conduitType)
+	public static void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag, ConduitType conduitType, float storageSize, bool isLoader)
 	{
 		go.AddOrGet<LoopingSounds>();
 		KPrefabID component = go.GetComponent<KPrefabID>();
 		component.AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
 		component.AddTag(LinkTag);
-		go.AddOrGetDef<ModularConduitPortController.Def>();
-		Storage storage = go.AddComponent<Storage>();
-		storage.capacityKg = 10f;
-		storage.SetDefaultStoredItemModifiers(new List<Storage.StoredItemModifier>
+		component.AddTag(GameTags.ModularConduitPort);
+		component.AddTag(GameTags.NotRocketInteriorBuilding);
+		ModularConduitPortController.Def def = go.AddOrGetDef<ModularConduitPortController.Def>();
+		def.mode = (isLoader ? ModularConduitPortController.Mode.Load : ModularConduitPortController.Mode.Unload);
+		if (!isLoader)
 		{
-			Storage.StoredItemModifier.Hide,
-			Storage.StoredItemModifier.Seal,
-			Storage.StoredItemModifier.Insulate
-		});
-		Storage storage2 = go.AddComponent<Storage>();
-		storage2.capacityKg = 10f;
-		storage2.SetDefaultStoredItemModifiers(new List<Storage.StoredItemModifier>
-		{
-			Storage.StoredItemModifier.Hide,
-			Storage.StoredItemModifier.Seal,
-			Storage.StoredItemModifier.Insulate
-		});
-		if (conduitType == ConduitType.Solid)
-		{
-			SolidConduitConsumer solidConduitConsumer = go.AddOrGet<SolidConduitConsumer>();
-			solidConduitConsumer.storage = storage;
-			solidConduitConsumer.capacityTag = GameTags.Any;
-			solidConduitConsumer.capacityKG = 10f;
-			SolidConduitDispenser solidConduitDispenser = go.AddOrGet<SolidConduitDispenser>();
-			solidConduitDispenser.storage = storage2;
-			solidConduitDispenser.elementFilter = null;
+			Storage storage = go.AddComponent<Storage>();
+			storage.capacityKg = storageSize;
+			storage.allowSettingOnlyFetchMarkedItems = false;
+			storage.SetDefaultStoredItemModifiers(new List<Storage.StoredItemModifier>
+			{
+				Storage.StoredItemModifier.Hide,
+				Storage.StoredItemModifier.Seal,
+				Storage.StoredItemModifier.Insulate
+			});
+			switch (conduitType)
+			{
+			case ConduitType.Gas:
+				storage.storageFilters = STORAGEFILTERS.GASES;
+				break;
+			case ConduitType.Liquid:
+				storage.storageFilters = STORAGEFILTERS.LIQUIDS;
+				break;
+			default:
+				storage.storageFilters = STORAGEFILTERS.NOT_EDIBLE_SOLIDS;
+				break;
+			}
+			TreeFilterable treeFilterable = go.AddOrGet<TreeFilterable>();
+			treeFilterable.dropIncorrectOnFilterChange = false;
+			treeFilterable.autoSelectStoredOnLoad = false;
+			if (conduitType == ConduitType.Solid)
+			{
+				SolidConduitDispenser solidConduitDispenser = go.AddOrGet<SolidConduitDispenser>();
+				solidConduitDispenser.storage = storage;
+				solidConduitDispenser.elementFilter = null;
+			}
+			else
+			{
+				ConduitDispenser conduitDispenser = go.AddOrGet<ConduitDispenser>();
+				conduitDispenser.storage = storage;
+				conduitDispenser.conduitType = conduitType;
+				conduitDispenser.elementFilter = null;
+				conduitDispenser.alwaysDispense = true;
+			}
 		}
 		else
 		{
-			ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
-			conduitConsumer.storage = storage;
-			conduitConsumer.conduitType = conduitType;
-			conduitConsumer.capacityTag = GameTags.Any;
-			conduitConsumer.capacityKG = 10f;
-			ConduitDispenser conduitDispenser = go.AddOrGet<ConduitDispenser>();
-			conduitDispenser.storage = storage2;
-			conduitDispenser.conduitType = conduitType;
-			conduitDispenser.elementFilter = null;
+			Storage storage2 = go.AddComponent<Storage>();
+			storage2.capacityKg = storageSize;
+			storage2.SetDefaultStoredItemModifiers(new List<Storage.StoredItemModifier>
+			{
+				Storage.StoredItemModifier.Hide,
+				Storage.StoredItemModifier.Seal,
+				Storage.StoredItemModifier.Insulate
+			});
+			if (conduitType == ConduitType.Solid)
+			{
+				SolidConduitConsumer solidConduitConsumer = go.AddOrGet<SolidConduitConsumer>();
+				solidConduitConsumer.storage = storage2;
+				solidConduitConsumer.capacityTag = GameTags.Any;
+				solidConduitConsumer.capacityKG = storageSize;
+			}
+			else
+			{
+				ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
+				conduitConsumer.storage = storage2;
+				conduitConsumer.conduitType = conduitType;
+				conduitConsumer.capacityTag = GameTags.Any;
+				conduitConsumer.capacityKG = storageSize;
+			}
 		}
-		ChainedBuilding.Def def = go.AddOrGetDef<ChainedBuilding.Def>();
-		def.headBuildingTag = "LaunchPad".ToTag();
-		def.linkBuildingTag = LinkTag;
-		def.objectLayer = ObjectLayer.Building;
-		go.AddOrGet<ModularConduitPortTiler>();
+		ChainedBuilding.Def def2 = go.AddOrGetDef<ChainedBuilding.Def>();
+		def2.headBuildingTag = "LaunchPad".ToTag();
+		def2.linkBuildingTag = LinkTag;
+		def2.objectLayer = ObjectLayer.Building;
+		go.AddOrGet<LogicOperationalController>();
 	}
 
-	public static void DoPostConfigureComplete(GameObject go)
+	public static void DoPostConfigureComplete(GameObject go, bool isLoader)
 	{
-		go.GetComponent<RequireInputs>().requireConduitHasMass = false;
 	}
 }

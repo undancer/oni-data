@@ -6,7 +6,6 @@ public class PassengerRocketModule : KMonoBehaviour
 	public enum RequestCrewState
 	{
 		Release,
-		Auto,
 		Request
 	}
 
@@ -41,6 +40,7 @@ public class PassengerRocketModule : KMonoBehaviour
 		Game.Instance.Subscribe(-1123234494, OnAssignmentGroupChanged);
 		GameUtil.SubscribeToTags(this, OnRocketOnGroundTagDelegate, triggerImmediately: false);
 		Subscribe(1655598572, RefreshDelegate);
+		Subscribe(191901966, RefreshDelegate);
 		Subscribe(-71801987, RefreshDelegate);
 		Subscribe(-1277991738, OnLaunchDelegate);
 		Subscribe(-1432940121, OnReachableChangedDelegate);
@@ -81,12 +81,13 @@ public class PassengerRocketModule : KMonoBehaviour
 
 	public bool ShouldCrewGetIn()
 	{
-		return passengersRequested == RequestCrewState.Request || (passengersRequested == RequestCrewState.Auto && GetComponent<RocketModule>().CraftInterface.CheckCrewShouldBoard());
+		CraftModuleInterface craftInterface = GetComponent<RocketModuleCluster>().CraftInterface;
+		return passengersRequested == RequestCrewState.Request || (craftInterface.IsLaunchRequested() && craftInterface.CheckPreppedForLaunch());
 	}
 
 	private void RefreshOrders()
 	{
-		if (this.HasTag(GameTags.RocketNotOnGround) || !GetComponent<ClustercraftExteriorDoor>().HasTargetWorld())
+		if (!this.HasTag(GameTags.RocketOnGround) || !GetComponent<ClustercraftExteriorDoor>().HasTargetWorld())
 		{
 			return;
 		}
@@ -150,6 +151,58 @@ public class PassengerRocketModule : KMonoBehaviour
 			component.SetPermission(minion.assignableProxy.Get(), AccessControl.Permission.Both);
 			component2.SetPermission(minion.assignableProxy.Get(), AccessControl.Permission.Both);
 		}
+	}
+
+	public bool CheckPilotBoarded()
+	{
+		ICollection<IAssignableIdentity> members = GetComponent<AssignmentGroupController>().GetMembers();
+		if (members.Count == 0)
+		{
+			return false;
+		}
+		List<IAssignableIdentity> list = new List<IAssignableIdentity>();
+		foreach (IAssignableIdentity item in members)
+		{
+			MinionAssignablesProxy minionAssignablesProxy = (MinionAssignablesProxy)item;
+			if (minionAssignablesProxy != null)
+			{
+				MinionResume component = minionAssignablesProxy.GetTargetGameObject().GetComponent<MinionResume>();
+				if (component != null && component.HasPerk(Db.Get().SkillPerks.CanUseRocketControlStation))
+				{
+					list.Add(item);
+				}
+			}
+		}
+		if (list.Count == 0)
+		{
+			return false;
+		}
+		foreach (IAssignableIdentity item2 in list)
+		{
+			if (((MinionAssignablesProxy)item2).GetTargetGameObject().GetMyWorldId() == Grid.WorldIdx[GetComponent<ClustercraftExteriorDoor>().TargetCell()])
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Tuple<int, int> GetCrewBoardedFraction()
+	{
+		ICollection<IAssignableIdentity> members = GetComponent<AssignmentGroupController>().GetMembers();
+		if (members.Count == 0)
+		{
+			return new Tuple<int, int>(0, 0);
+		}
+		int num = 0;
+		foreach (IAssignableIdentity item in members)
+		{
+			if (((MinionAssignablesProxy)item).GetTargetGameObject().GetMyWorldId() != Grid.WorldIdx[GetComponent<ClustercraftExteriorDoor>().TargetCell()])
+			{
+				num++;
+			}
+		}
+		return new Tuple<int, int>(members.Count - num, members.Count);
 	}
 
 	public bool CheckPassengersBoarded()

@@ -129,9 +129,10 @@ public class BuildingTemplates
 	{
 	}
 
-	public static GameObject ExtendBuildingToRocketModule(GameObject template, int burden, string vanillaBGAnim, float enginePower = 0f, float fuelCostPerDistance = 0f)
+	public static GameObject ExtendBuildingToRocketModule(GameObject template, string vanillaBGAnim, bool clusterRocket = false)
 	{
-		RocketModule rocketModule = template.AddOrGet<RocketModule>();
+		RocketModule rocketModule = null;
+		rocketModule = ((!clusterRocket) ? template.AddOrGet<RocketModule>() : template.AddOrGet<RocketModuleCluster>());
 		if (vanillaBGAnim != null)
 		{
 			rocketModule.SetBGKAnim(Assets.GetAnim(vanillaBGAnim));
@@ -139,16 +140,25 @@ public class BuildingTemplates
 		KBatchedAnimController component = template.GetComponent<KBatchedAnimController>();
 		component.isMovable = true;
 		component.initialMode = KAnim.PlayMode.Loop;
-		template.AddOrGet<ReorderableBuilding>();
 		BuildingDef def = template.GetComponent<Building>().Def;
 		def.ShowInBuildMenu = def.ShowInBuildMenu && !DlcManager.IsExpansion1Active();
+		if (def.WidthInCells == 3)
+		{
+			template.AddOrGet<VerticalModuleTiler>();
+		}
 		GameObject buildingUnderConstruction = def.BuildingUnderConstruction;
 		if (def.Cancellable)
 		{
 			Debug.LogError(def.Name + " Def should be marked 'Cancellable = false' as they implment their own cancel logic in ReorderableBuilding");
 		}
-		RocketModule rocketModule2 = buildingUnderConstruction.AddOrGet<RocketModule>();
-		buildingUnderConstruction.AddOrGet<ReorderableBuilding>();
+		if (clusterRocket)
+		{
+			RocketModule rocketModule2 = buildingUnderConstruction.AddOrGet<RocketModuleCluster>();
+		}
+		else
+		{
+			RocketModule rocketModule2 = buildingUnderConstruction.AddOrGet<RocketModule>();
+		}
 		AttachableBuilding component2 = template.GetComponent<AttachableBuilding>();
 		if (component2 != null)
 		{
@@ -161,11 +171,28 @@ public class BuildingTemplates
 			BuildingAttachPoint buildingAttachPoint = buildingUnderConstruction.AddOrGet<BuildingAttachPoint>();
 			buildingAttachPoint.points = component3.points;
 		}
+		template.GetComponent<Building>().Def.ThermalConductivity = 0.1f;
+		Storage component4 = template.GetComponent<Storage>();
+		if (component4 != null)
+		{
+			component4.showUnreachableStatus = true;
+		}
+		return template;
+	}
+
+	public static GameObject ExtendBuildingToRocketModuleCluster(GameObject template, string vanillaBGAnim, int burden, float enginePower = 0f, float fuelCostPerDistance = 0f)
+	{
+		template = ExtendBuildingToRocketModule(template, vanillaBGAnim, clusterRocket: true);
+		BuildingDef def = template.GetComponent<Building>().Def;
+		GameObject buildingUnderConstruction = def.BuildingUnderConstruction;
+		DebugUtil.Assert(def.RequiredDlcId == "EXPANSION1_ID", "Only expansion1 rocket engines should be expanded to Cluster Modules.");
+		template.AddOrGet<ReorderableBuilding>();
+		buildingUnderConstruction.AddOrGet<ReorderableBuilding>();
 		template.GetComponent<ReorderableBuilding>().buildConditions.Add(new ResearchCompleted());
 		template.GetComponent<ReorderableBuilding>().buildConditions.Add(new MaterialsAvailable());
 		template.GetComponent<ReorderableBuilding>().buildConditions.Add(new PlaceSpaceAvailable());
-		template.GetComponent<ReorderableBuilding>().buildConditions.Add(new ModuleCountLimit());
-		if ((bool)template.GetComponent<RocketEngine>())
+		template.GetComponent<ReorderableBuilding>().buildConditions.Add(new RocketHeightLimit());
+		if ((bool)template.GetComponent<RocketEngineCluster>())
 		{
 			template.GetComponent<ReorderableBuilding>().buildConditions.Add(new LimitOneEngine());
 			template.GetComponent<ReorderableBuilding>().buildConditions.Add(new EngineOnBottom());
@@ -174,13 +201,30 @@ public class BuildingTemplates
 		{
 			template.GetComponent<ReorderableBuilding>().buildConditions.Add(new NoFreeRocketInterior());
 		}
-		rocketModule.performanceStats = (rocketModule2.performanceStats = new RocketModulePerformance(burden, fuelCostPerDistance, enginePower));
-		template.GetComponent<Building>().Def.ThermalConductivity = 0.1f;
-		Storage component4 = template.GetComponent<Storage>();
-		if (component4 != null)
+		if ((bool)template.GetComponent<CargoBay>())
 		{
-			component4.showUnreachableStatus = true;
+			template.AddOrGet<CargoBayConduit>();
 		}
+		RocketModulePerformance performanceStats = new RocketModulePerformance(burden, fuelCostPerDistance, enginePower);
+		template.GetComponent<RocketModuleCluster>().performanceStats = performanceStats;
+		template.GetComponent<Building>().Def.BuildingUnderConstruction.GetComponent<RocketModuleCluster>().performanceStats = performanceStats;
+		return template;
+	}
+
+	public static GameObject ExtendBuildingToClusterCargoBay(GameObject template, float capacity, List<Tag> storageFilters, CargoBay.CargoType cargoType)
+	{
+		Storage storage = template.AddOrGet<Storage>();
+		storage.capacityKg = capacity;
+		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
+		storage.showCapacityStatusItem = true;
+		storage.storageFilters = storageFilters;
+		storage.allowSettingOnlyFetchMarkedItems = false;
+		CargoBayCluster cargoBayCluster = template.AddOrGet<CargoBayCluster>();
+		cargoBayCluster.storage = storage;
+		cargoBayCluster.storageType = cargoType;
+		TreeFilterable treeFilterable = template.AddOrGet<TreeFilterable>();
+		treeFilterable.dropIncorrectOnFilterChange = false;
+		treeFilterable.autoSelectStoredOnLoad = false;
 		return template;
 	}
 }

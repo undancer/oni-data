@@ -666,9 +666,9 @@ namespace STRINGS
 		{
 			public class HIGHENERGYPARITCLE
 			{
-				public static LocString NAME = "High Energy Particles";
+				public static LocString NAME = "Radbolts";
 
-				public static LocString DESC = "A concentrated field of " + UI.FormatAsLink("High Enery Particles", "HIGHENERGYPARTICLES") + " that can be largely redirected using a " + UI.FormatAsLink("Particle Reflector", "PARTICLEREFLECTOR") + ".";
+				public static LocString DESC = "A concentrated field of " + UI.FormatAsKeyWord("Radbolts") + " that can be largely redirected using a " + UI.FormatAsLink("Radbolt Reflector", "HIGHENERGYPARTICLEREDIRECTOR") + ".";
 			}
 		}
 	}

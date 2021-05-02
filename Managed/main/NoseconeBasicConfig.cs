@@ -38,7 +38,7 @@ public class NoseconeBasicConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.MINOR, null);
+		BuildingTemplates.ExtendBuildingToRocketModuleCluster(go, null, ROCKETRY.BURDEN.MINOR);
 		go.GetComponent<ReorderableBuilding>().buildConditions.Add(new TopOnly());
 	}
 }

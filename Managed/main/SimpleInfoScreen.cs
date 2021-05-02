@@ -302,6 +302,8 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
+		processConditionContainer = Util.KInstantiateUI(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
+		processConditionContainer.GetComponent<CollapsibleDetailContentPanel>().HeaderLabel.text = UI.DETAILTABS.PROCESS_CONDITIONS.NAME;
 		statusItemPanel = Util.KInstantiateUI<CollapsibleDetailContentPanel>(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
 		statusItemPanel.Content.GetComponent<VerticalLayoutGroup>().padding.bottom = 10;
 		statusItemPanel.HeaderLabel.text = UI.DETAILTABS.SIMPLEINFO.GROUPNAME_STATUS;
@@ -309,7 +311,6 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		statusItemsFolder = statusItemPanel.Content.gameObject;
 		rocketStatusContainer = Util.KInstantiateUI<CollapsibleDetailContentPanel>(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
 		rocketStatusContainer.SetTitle(UI.DETAILTABS.SIMPLEINFO.GROUPNAME_ROCKET);
-		processConditionContainer = Util.KInstantiateUI(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
 		vitalsPanel = Util.KInstantiateUI<CollapsibleDetailContentPanel>(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
 		vitalsPanel.SetTitle(UI.DETAILTABS.SIMPLEINFO.GROUPNAME_CONDITION);
 		vitalsContainer = Util.KInstantiateUI(VitalsPanelTemplate, vitalsPanel.Content.gameObject).GetComponent<MinionVitalsPanel>();
@@ -759,7 +760,7 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 			storagePanel.gameObject.SetActive(value: false);
 			return;
 		}
-		RocketModule component = selectedTarget.GetComponent<RocketModule>();
+		RocketModuleCluster component = selectedTarget.GetComponent<RocketModuleCluster>();
 		Clustercraft component2 = selectedTarget.GetComponent<Clustercraft>();
 		CraftModuleInterface craftModuleInterface = null;
 		if (component != null)
@@ -773,14 +774,27 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		rocketStatusContainer.gameObject.SetActive(craftModuleInterface != null || component != null);
 		if (craftModuleInterface != null)
 		{
-			string tooltip = string.Concat(UI.CLUSTERMAP.ROCKETS.RANGE.TOOLTIP, "\n    • ", string.Format(UI.CLUSTERMAP.ROCKETS.FUEL_PER_HEX.NAME, GameUtil.GetFormattedMass(craftModuleInterface.FuelPerHex * 1000f)), "\n    • ", UI.CLUSTERMAP.ROCKETS.FUEL_REMAINING.NAME, GameUtil.GetFormattedMass(craftModuleInterface.FuelRemaining), "\n    • ", UI.CLUSTERMAP.ROCKETS.OXIDIZER_REMAINING.NAME, GameUtil.GetFormattedMass(craftModuleInterface.OxidizerPowerRemaining));
+			RocketEngineCluster engine = craftModuleInterface.GetEngine();
+			string arg;
+			string text;
+			if (engine != null && engine.GetComponent<HEPFuelTank>() != null)
+			{
+				arg = GameUtil.GetFormattedHighEnergyParticles(craftModuleInterface.FuelPerHex);
+				text = GameUtil.GetFormattedHighEnergyParticles(craftModuleInterface.FuelRemaining);
+			}
+			else
+			{
+				arg = GameUtil.GetFormattedMass(craftModuleInterface.FuelPerHex);
+				text = GameUtil.GetFormattedMass(craftModuleInterface.FuelRemaining);
+			}
+			string tooltip = string.Concat(UI.CLUSTERMAP.ROCKETS.RANGE.TOOLTIP, "\n    • ", string.Format(UI.CLUSTERMAP.ROCKETS.FUEL_PER_HEX.NAME, arg), "\n    • ", UI.CLUSTERMAP.ROCKETS.FUEL_REMAINING.NAME, text, "\n    • ", UI.CLUSTERMAP.ROCKETS.OXIDIZER_REMAINING.NAME, GameUtil.GetFormattedMass(craftModuleInterface.OxidizerPowerRemaining));
 			rocketStatusContainer.SetLabel("RangeRemaining", string.Concat(UI.CLUSTERMAP.ROCKETS.RANGE.NAME, GameUtil.GetFormattedRocketRange(craftModuleInterface.Range, GameUtil.TimeSlice.None)), tooltip);
 			string tooltip2 = string.Concat(UI.CLUSTERMAP.ROCKETS.SPEED.TOOLTIP, "\n    • ", UI.CLUSTERMAP.ROCKETS.POWER_TOTAL.NAME, craftModuleInterface.EnginePower.ToString(), "\n    • ", UI.CLUSTERMAP.ROCKETS.BURDEN_TOTAL.NAME, craftModuleInterface.TotalBurden.ToString());
 			rocketStatusContainer.SetLabel("Speed", string.Concat(UI.CLUSTERMAP.ROCKETS.SPEED.NAME, GameUtil.GetFormattedRocketRange(craftModuleInterface.Speed, GameUtil.TimeSlice.PerCycle)), tooltip2);
 			if (craftModuleInterface.GetEngine() != null)
 			{
-				string tooltip3 = string.Format(UI.CLUSTERMAP.ROCKETS.MAX_MODULES.TOOLTIP, craftModuleInterface.GetEngine().GetProperName(), craftModuleInterface.MaxModules.ToString());
-				rocketStatusContainer.SetLabel("MaxModules", string.Concat(UI.CLUSTERMAP.ROCKETS.MAX_MODULES.NAME, craftModuleInterface.MaxModules.ToString()), tooltip3);
+				string tooltip3 = string.Format(UI.CLUSTERMAP.ROCKETS.MAX_HEIGHT.TOOLTIP, craftModuleInterface.GetEngine().GetProperName(), craftModuleInterface.MaxHeight.ToString());
+				rocketStatusContainer.SetLabel("MaxHeight", string.Format(UI.CLUSTERMAP.ROCKETS.MAX_HEIGHT.NAME, craftModuleInterface.RocketHeight.ToString(), craftModuleInterface.MaxHeight.ToString()), tooltip3);
 			}
 			rocketStatusContainer.SetLabel("RocketSpacer2", "", "");
 		}
@@ -889,6 +903,7 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 			if (selectedTarget.GetComponent<LaunchableRocket>() != null)
 			{
 				RefreshProcessConditionsForType(ProcessCondition.ProcessConditionType.RocketPrep);
+				RefreshProcessConditionsForType(ProcessCondition.ProcessConditionType.RocketStorage);
 				RefreshProcessConditionsForType(ProcessCondition.ProcessConditionType.RocketBoard);
 			}
 			else
@@ -898,9 +913,10 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		}
 		else if (selectedTarget.GetComponent<LaunchPad>() != null || selectedTarget.GetComponent<RocketProcessConditionDisplayTarget>() != null)
 		{
-			RefreshProcessConditionsForType(ProcessCondition.ProcessConditionType.RocketPrep);
-			RefreshProcessConditionsForType(ProcessCondition.ProcessConditionType.RocketBoard);
 			RefreshProcessConditionsForType(ProcessCondition.ProcessConditionType.RocketFlight);
+			RefreshProcessConditionsForType(ProcessCondition.ProcessConditionType.RocketPrep);
+			RefreshProcessConditionsForType(ProcessCondition.ProcessConditionType.RocketStorage);
+			RefreshProcessConditionsForType(ProcessCondition.ProcessConditionType.RocketBoard);
 		}
 		else
 		{
@@ -919,11 +935,16 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		hierarchyReferences.GetReference<LocText>("Label").text = Strings.Get("STRINGS.UI.DETAILTABS.PROCESS_CONDITIONS." + conditionType.ToString().ToUpper());
 		hierarchyReferences.GetComponent<ToolTip>().toolTip = Strings.Get("STRINGS.UI.DETAILTABS.PROCESS_CONDITIONS." + conditionType.ToString().ToUpper() + "_TOOLTIP");
 		processConditionRows.Add(hierarchyReferences.gameObject);
-		foreach (ProcessCondition item in conditionSet)
+		List<ProcessCondition> list = new List<ProcessCondition>();
+		foreach (ProcessCondition condition in conditionSet)
 		{
-			GameObject gameObject = Util.KInstantiateUI(processConditionRow, processConditionContainer.GetComponent<CollapsibleDetailContentPanel>().Content.gameObject, force_active: true);
-			processConditionRows.Add(gameObject);
-			ConditionListSideScreen.SetRowState(gameObject, item);
+			if (condition.ShowInUI() && (condition.GetType() == typeof(RequireAttachedComponent) || list.Find((ProcessCondition match) => match.GetType() == condition.GetType()) == null))
+			{
+				list.Add(condition);
+				GameObject gameObject = Util.KInstantiateUI(processConditionRow, processConditionContainer.GetComponent<CollapsibleDetailContentPanel>().Content.gameObject, force_active: true);
+				processConditionRows.Add(gameObject);
+				ConditionListSideScreen.SetRowState(gameObject, condition);
+			}
 		}
 	}
 

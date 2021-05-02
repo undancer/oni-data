@@ -1,6 +1,5 @@
 using Klei.AI;
 using STRINGS;
-using UnityEngine;
 
 public class AsPercentAmountDisplayer : IAmountDisplayer
 {
@@ -59,18 +58,18 @@ public class AsPercentAmountDisplayer : IAmountDisplayer
 		return formatter.GetFormattedAttribute(instance);
 	}
 
-	public string GetFormattedModifier(AttributeModifier modifier, GameObject parent_instance)
+	public string GetFormattedModifier(AttributeModifier modifier)
 	{
 		if (modifier.IsMultiplier)
 		{
 			return GameUtil.GetFormattedPercent(modifier.Value * 100f);
 		}
-		return formatter.GetFormattedModifier(modifier, parent_instance);
+		return formatter.GetFormattedModifier(modifier);
 	}
 
-	public string GetFormattedValue(float value, GameUtil.TimeSlice timeSlice, GameObject parent_instance)
+	public string GetFormattedValue(float value, GameUtil.TimeSlice timeSlice)
 	{
-		return formatter.GetFormattedValue(value, timeSlice, parent_instance);
+		return formatter.GetFormattedValue(value, timeSlice);
 	}
 
 	protected float ToPercent(float value, AmountInstance instance)

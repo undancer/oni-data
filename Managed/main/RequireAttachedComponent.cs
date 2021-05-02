@@ -51,18 +51,18 @@ public class RequireAttachedComponent : ProcessCondition
 	{
 		if (status == Status.Ready)
 		{
-			return typeNameString + " " + UI.STARMAP.LAUNCHCHECKLIST.REQUIRED;
+			return typeNameString;
 		}
-		return typeNameString + " " + UI.STARMAP.LAUNCHCHECKLIST.INSTALLED;
+		return typeNameString;
 	}
 
 	public override string GetStatusTooltip(Status status)
 	{
 		if (status == Status.Ready)
 		{
-			return string.Format(UI.STARMAP.LAUNCHCHECKLIST.INSTALLED_TOOLTIP, typeNameString);
+			return string.Format(UI.STARMAP.LAUNCHCHECKLIST.INSTALLED_TOOLTIP, typeNameString.ToLower());
 		}
-		return string.Format(UI.STARMAP.LAUNCHCHECKLIST.REQUIRED_TOOLTIP, typeNameString);
+		return string.Format(UI.STARMAP.LAUNCHCHECKLIST.MISSING_TOOLTIP, typeNameString.ToLower());
 	}
 
 	public override bool ShowInUI()

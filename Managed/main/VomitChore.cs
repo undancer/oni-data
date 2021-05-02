@@ -1,6 +1,7 @@
 using System;
 using Klei;
 using Klei.AI;
+using STRINGS;
 using TUNING;
 using UnityEngine;
 
@@ -119,7 +120,24 @@ public class VomitChore : Chore<VomitChore.StatesInstance>
 				.MoveTo((StatesInstance smi) => smi.GetVomitCell(), vomit, vomit);
 			vomit.DefaultState(vomit.buildup).ToggleAnims("anim_vomit_kanim").ToggleStatusItem((StatesInstance smi) => smi.statusItem)
 				.DoNotification((StatesInstance smi) => smi.notification)
-				.DoTutorial(Tutorial.TutorialMessages.TM_Mopping);
+				.DoTutorial(Tutorial.TutorialMessages.TM_Mopping)
+				.Enter(delegate(StatesInstance smi)
+				{
+					if (smi.master.gameObject.GetAmounts().Get(Db.Get().Amounts.RadiationBalance).value > 0f)
+					{
+						smi.master.gameObject.GetComponent<KSelectable>().AddStatusItem(Db.Get().DuplicantStatusItems.ExpellingRads);
+					}
+				})
+				.Exit(delegate(StatesInstance smi)
+				{
+					smi.master.gameObject.GetComponent<KSelectable>().RemoveStatusItem(Db.Get().DuplicantStatusItems.ExpellingRads);
+					float num = Mathf.Min(smi.master.gameObject.GetAmounts().Get(Db.Get().Amounts.RadiationBalance.Id).value, 20f);
+					smi.master.gameObject.GetAmounts().Get(Db.Get().Amounts.RadiationBalance.Id).ApplyDelta(0f - num);
+					if (num >= 1f)
+					{
+						PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Negative, Mathf.FloorToInt(num).ToString() + UI.UNITSUFFIXES.RADIATION.RADS, smi.master.transform);
+					}
+				});
 			vomit.buildup.PlayAnim("vomit_pre", KAnim.PlayMode.Once).OnAnimQueueComplete(vomit.release);
 			vomit.release.ToggleEffect("Vomiting").PlayAnim("vomit_loop", KAnim.PlayMode.Once).Update("SpawnDirtyWater", delegate(StatesInstance smi, float dt)
 			{

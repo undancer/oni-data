@@ -513,7 +513,7 @@ namespace STRINGS
 		{
 			public class BODY
 			{
-				public static LocString CONTAINER1 = "The Sweepy is a domesticated sweeping robot programmed to clean solid and liquid debris. The Sweepy Dock will automatically launch the Sweepy, store the debris the robot picks up, and recharge the Sweepy's battery provided it has been plugged into a power source.\n\nThough the Sweepy can not travel over gaps or uneven ground, it is programmed to feel really bad about this.";
+				public static LocString CONTAINER1 = "The Sweepy is a domesticated sweeping robot programmed to clean solid and liquid debris. The Sweepy Dock will automatically launch the Sweepy, store the debris the robot picks up, and recharge the Sweepy's battery, provided it has been plugged into a power source.\n\nThough the Sweepy can not travel over gaps or uneven ground, it is programmed to feel really bad about this.";
 			}
 
 			public static LocString TITLE = "Sweepy";
@@ -1089,6 +1089,22 @@ namespace STRINGS
 			public static LocString SUBTITLE = "ENCRYPTION LEVEL: ONE";
 		}
 
+		public class C01_Evil
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "Clearly Nikola is evil. He has some kind of scheme going on that he\ufffds keeping secret from the rest of Gravitas and I haven\ufffdt been able to crack what that is because it\ufffds offline and he\ufffds always at his computer. Whenever I ask him what he\ufffds up to he says I wouldn\ufffdt understand. Pfft! We both went through the same particle physics classes, buddy. Just because you mash a keyboard and I adjust knobs does not mean I don\ufffdt know what the Time Containment Field does.\n\nAnd then today I dropped a wrench and Nikola nearly jumped out of his skin! He spun around and screamed at me never to do that again. And then when I said, \"Geez, it\ufffds not the end of the world,\" he was like, \"Yeah, it\ufffds not like the world will blow up if I get this wrong\" really sarcastic like.\n\nWhich technically is true. If the Time Containment Field were to break down the Temporal Bow could theoretically blow up the world but that\ufffds why there are safety systems in place. And safety systems on safety systems. And then safety systems on top of that. But then he built all the safety systems so if he wanted to\ufffd\n------------------\n";
+
+				public static LocString CONTAINER2 = "I decided to get into work early today but when I got in Nikola was already there and it looked like he hadn\ufffdt been home all weekend. He was pacing back-and-forth in the lab, monologuing but not like an evil villain. Like someone who hadn\ufffdt slept in a week.\n\n\"Ruby,\" he said. \"You have to promise me that if anything goes wrong you\ufffdll turn on this machine. They\ufffdre pushing it too far. The printing pods are pushing the...It\ufffds too much - TOO MUCH! Something\ufffds going to blow. I tried\ufffd I\ufffdm trying to save it. Not the Earth. There\ufffds no hope for the Earth, it\ufffds all going to\ufffd\" then he made this exploding sound. \"But the Universe. Time itself. It could all go, don\ufffdt you see? This machine can contain it. Put a Temporal Containment Field around the Earth so time itself doesn\ufffdt break down and...and\ufffd\"\n\nThen all of a sudden these security guys came in. New guys. People I haven\ufffdt seen before. And they just took him away. Then they took me to a room and asked me all kinds of questions and I answered them, I guess. I don\ufffdt remember much because the whole time I was thinking - What if I was wrong? What if he\ufffds not evil, but Gravitas is?\n\nWhat if I was wrong and what if he\ufffds right?\\n------------------\n";
+
+				public static LocString CONTAINER3 = "No seriously - what if he's right?\n------------------\n";
+			}
+
+			public static LocString TITLE = "Evil";
+
+			public static LocString SUBTITLE = "ENCRYPTION LEVEL: NONE";
+		}
+
 		public class B3_MOVEDRATS
 		{
 			public class BODY
@@ -1356,7 +1372,7 @@ namespace STRINGS
 				{
 					public static LocString TITLE = "Cluster of Worlds";
 
-					public static LocString BODY = "My Duplicant's investigations into the surrounding space have yielded some interesting results. We are not alone!... At least on a planetary level. We seem to be in a \"Cluster of Worlds\" - a collection of other planetoids my Duplicants can now explore.\n\nSince resources on this world are finite, I must build the necessary infrastructure to facilitate exploration and transportation between worlds in order to ensure my colony's survival. But first I should send out a robotic scout to further investigate these new worlds.";
+					public static LocString BODY = "My Duplicant's investigations into the surrounding space have yielded some interesting results. We are not alone!... At least on a planetary level. We seem to be in a \"Cluster of Worlds\" - a collection of other planetoids my Duplicants can now explore.\n\nSince resources on this world are finite, I must build the necessary infrastructure to facilitate exploration and transportation between worlds in order to ensure my colony's survival.";
 				}
 
 				public class TEMPORALTEAR
@@ -1724,6 +1740,18 @@ namespace STRINGS
 			public static LocString SUBTITLE = "Plant?";
 		}
 
+		public class B10_AI
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "<smallcaps>[Voice Recognition Initialized]\n[Subject Identified: B111-1]</smallcaps>\n\n[LOG BEGINS]\n\nI made a horrible discovery today while reviewing work on the artificial intelligence programming. It seems Dr. Ali mixed up a file when uploading a program onto a rudimentary robot and discovered that the device displayed the characteristics of what he called \"a puppy that was lost in a teleportation experiment weeks ago\".\n\n.This unbelivable! Jackie has been hiding the nature of the teleportation experiments from me. What's worse is I know from previous conversations that she knows I would never approve of pursuing this line of experimentation. The societal benefits of teleportaion aside, you <i>cannot</i> kill a living being every time you want to send them to another room. The moral and ethical implications of this are horrendous.\n\nI know she has been keeping this information from me. When I searched through the Gravitas database I found nothing to do with these teleportation experiments. It was only because this reference showed up in Dr. Ali's AI paper that I was able to discover what has been happening.\n\nJackie has to be stopped.\n\nBut I know she is beyond reasonable discussion. I hope this is the only thing she is hiding from me, but I fear it is not.\n\n[LOG ENDS]\n\n[LOG BEGINS]\n\nDespite myself, I can't help thinking of the intriguing possiblities this presents for the AI development. It haunts me.\n\nI fear I may be sliding down a slippery slope, at the bottom of which Jackie is waiting for me with open arms.\n\n[LOG ENDS]";
+			}
+
+			public static LocString TITLE = "A Paradox";
+
+			public static LocString SUBTITLE = "ENCRYPTION LEVEL: THREE";
+		}
+
 		public class A2_AGRICULTURALNOTES
 		{
 			public class BODY
@@ -1872,19 +1900,19 @@ namespace STRINGS
 
 		public class EXOBASES
 		{
-			public static LocString TITLE = UI.FormatAsLink("Planetoid Colonization", "EXOBASES");
+			public static LocString TITLE = UI.FormatAsLink("Space Travel", "EXOBASES");
 
-			public static LocString HEADER_1 = "Discovering New Planetoids";
+			public static LocString HEADER_1 = "Building Rockets";
 
-			public static LocString PARAGRAPH_1 = "Every colony exists in a system with other Planetoids. Other worlds can be discovered either by chancing upon a Teleporter or by building " + UI.FormatAsLink("Rover's Module", "SCOUTMODULE") + " and launching it into space.\n\nOnce " + UI.FormatAsLink("Rover's Module", "SCOUTMODULE") + " is in orbit around its destination, it will deploy " + UI.FormatAsLink("Rover", "SCOUT") + " to the surface where he can then be tasked with rudimentary chores to make the Planetoid more habitable for Duplicants.";
+			public static LocString PARAGRAPH_1 = "Building a rocket first requires constructing a " + UI.FormatAsLink("Rocket Platform", "LAUNCHPLATFORM") + " and adding modules from the menu. All rockets will require an engine, a nosecone and a Command Module piloted by a Duplicant possessing the " + UI.FormatAsLink("Rocket Piloting", "ASTRONAUTTRAINEE") + " skill or higher. Note that the " + UI.FormatAsLink("Solo Spacefarer Nosecone", "HABITATMODULESMALL") + " functions as both a Command Module and a nosecone.\n\n";
 
-			public static LocString HEADER_2 = "Transportation Between Planetoids";
+			public static LocString HEADER_2 = "Space Travel";
 
-			public static LocString PARAGRAPH_2 = "Resources can be transported from one Planetoid to the other using a " + UI.FormatAsLink("High Velocity Launcher", "RAILGUN") + ". Both the sending and the receiving Planetoids need a system set up to transport resources successfully. Only specially trained Duplicants can operate the " + UI.FormatAsLink("High Velocity Launcher", "RAILGUN") + ".\n\nTransporting Duplicants from one Planetoid to another can only be achieved using a " + UI.FormatAsLink("Landing Pod", "LANDING_POD") + ". Each " + UI.FormatAsLink("Landing Pod", "LANDING_POD") + " is designed for only one trip. Upon reaching its destination, the Pod will disassemble itself. Transporting Duplicants between Planetoids is very resource heavy and should only be done rarely.";
+			public static LocString PARAGRAPH_2 = "To scan space and see nearby intersteller destinations a " + UI.FormatAsLink("Telescope", "TELESCOPE") + " must first be built on the surface of a Planetoid. " + UI.FormatAsLink("Orbital Microlabs", "ORBITALRESEARCHCENTER") + " in orbit around a Planetoid, and " + UI.FormatAsLink("Cartographic Module", "SCANNERMODULE") + " attached to a rocket can also reveal places on a Starmap.\n\nAlways check engine fuel to determine if your rocket can reach its destination, keeping in mind rockets can only land on Plantoids with a " + UI.FormatAsLink("Rocket Platform", "LAUNCHPLATFORM") + " on it although some modules like " + UI.FormatAsLink("Rover's Modules", "SCOUTMODULE") + " and " + UI.FormatAsLink("Trailblazer Modules", "PIONEERMODULE") + " can be sent to the surface of a Planetoid from a rocket in orbit.\n\n";
 
-			public static LocString HEADER_3 = "Scheduling";
+			public static LocString HEADER_3 = "Space Transport";
 
-			public static LocString PARAGRAPH_3 = "Each Planetoid Cluster has its own default schedule system which the Duplicants will automatically assume as soon as they arrive on a new Planetoid. Priority queues will only work within an Cluster World's system.";
+			public static LocString PARAGRAPH_3 = "Goods can be teleported between worlds with connected Supply Teleporters through " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + ", " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + ", and " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + " conduits.\n\nPlanetoids not connected through Supply Teleporters can use rockets to transport goods, either by landing on a " + UI.FormatAsLink("Rocket Platform", "LAUNCHPLATFORM") + " or a " + UI.FormatAsLink("Orbital Cargo Module", "ORBITALCARGOMODULE") + " deployed from a rocket in orbit. Additionally, the " + UI.FormatAsLink("Interplanetary Launcher", "RAILGUN") + " can send " + UI.FormatAsLink("Interplanetary Payloads", "RAILGUNPAYLOAD") + " full of goods through space but must be opened by a " + UI.FormatAsLink("Payload Opener", "RAILGUNPAYLOADOPENER") + ". A " + UI.FormatAsLink("Targeting Beacon", "LANDINGBEACON") + " can guide payloads and orbital modules to land at a specific location on a Planetoid surface.";
 		}
 
 		public class GENETICS
@@ -1893,7 +1921,7 @@ namespace STRINGS
 
 			public static LocString HEADER_1 = "Plant Mutations";
 
-			public static LocString PARAGRAPH_1 = "When selecting a seed to plant, a variety of mutations will be available to choose from.\nDifferent plants and critters have different mutations which allow them to thrive in different situations.\n\n\n\n";
+			public static LocString PARAGRAPH_1 = "When selecting a seed to plant, a variety of mutations will be available to choose from that will affect how the plant develops.\n\nDifferent plants and critters have different mutations which allow them to thrive in different situations and produce different materials for harvest.\n\n";
 
 			public static LocString HEADER_2 = "Breeding";
 
@@ -2028,7 +2056,7 @@ namespace STRINGS
 
 			public static LocString HEADER_3 = "Nuclear Energy";
 
-			public static LocString PARAGRAPH_3 = "A Nuclear Reactor will require Enriched Uranium to run. Uranium can be enriched using a Uranium Centrifuge.\n\nOnce supplied with Enriched Uranium a Nuclear Reactor will create an enormous amount of heat which can then be placed under a source of water to produce steam and connected to a Steam Turbine to produce a considerable source of power.";
+			public static LocString PARAGRAPH_3 = "A Research Reactor will require Enriched Uranium to run. Uranium can be enriched using a Uranium Centrifuge.\n\nOnce supplied with Enriched Uranium a Nuclear Reactor will create an enormous amount of heat which can then be placed under a source of water to produce steam and connected to a Steam Turbine to produce a considerable source of power.";
 		}
 
 		public class RESEARCH

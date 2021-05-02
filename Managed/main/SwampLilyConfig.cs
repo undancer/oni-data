@@ -20,7 +20,7 @@ public class SwampLilyConfig : IEntityConfig
 		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 258.15f, 308.15f, 358.15f, 448.15f, new SimHashes[1]
 		{
 			SimHashes.ChlorineGas
-		}, pressure_sensitive: true, 0f, 0.15f, SwampLilyFlowerConfig.ID);
+		}, pressure_sensitive: true, 0f, 0.15f, SwampLilyFlowerConfig.ID, can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, 2400f, ID + "Original", STRINGS.CREATURES.SPECIES.SWAMPLILY.NAME);
 		gameObject.AddOrGet<StandardCropPlant>();
 		GameObject seed = EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Harvest, "SwampLilySeed", STRINGS.CREATURES.SPECIES.SEEDS.SWAMPLILY.NAME, STRINGS.CREATURES.SPECIES.SEEDS.SWAMPLILY.DESC, Assets.GetAnim("seed_swampLily_kanim"), "object", 1, new List<Tag>
 		{

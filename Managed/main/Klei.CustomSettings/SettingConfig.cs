@@ -62,7 +62,13 @@ namespace Klei.CustomSettings
 			protected set;
 		}
 
-		public SettingConfig(string id, string label, string tooltip, string default_level_id, string nosweat_default_level_id, int coordinate_dimension = -1, int coordinate_dimension_width = -1, bool debug_only = false, bool triggers_custom_game = true, string required_content = "", string missing_content_default = "")
+		public bool editor_only
+		{
+			get;
+			protected set;
+		}
+
+		public SettingConfig(string id, string label, string tooltip, string default_level_id, string nosweat_default_level_id, int coordinate_dimension = -1, int coordinate_dimension_width = -1, bool debug_only = false, bool triggers_custom_game = true, string required_content = "", string missing_content_default = "", bool editor_only = false)
 		{
 			this.id = id;
 			this.label = label;
@@ -75,6 +81,7 @@ namespace Klei.CustomSettings
 			this.triggers_custom_game = triggers_custom_game;
 			this.required_content = required_content;
 			this.missing_content_default = missing_content_default;
+			this.editor_only = editor_only;
 		}
 
 		public abstract SettingLevel GetLevel(string level_id);

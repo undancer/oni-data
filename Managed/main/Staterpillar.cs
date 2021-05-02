@@ -87,7 +87,7 @@ public class Staterpillar : KMonoBehaviour
 	{
 		KPrefabID generator = GetGenerator();
 		Generator component = generator.GetComponent<Generator>();
-		if (component.CircuitID == ushort.MaxValue && !component.HasWire)
+		if (component.CircuitID == ushort.MaxValue)
 		{
 			return false;
 		}

@@ -7,6 +7,12 @@ public class GantryConfig : IBuildingConfig
 {
 	public const string ID = "Gantry";
 
+	private static readonly CellOffset[] SOLID_OFFSETS = new CellOffset[2]
+	{
+		new CellOffset(-2, 1),
+		new CellOffset(-1, 1)
+	};
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("Gantry", 6, 2, "gantry_kanim", 30, 30f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, new string[1]
@@ -24,7 +30,6 @@ public class GantryConfig : IBuildingConfig
 		buildingDef.ExhaustKilowattsWhenActive = 1f;
 		buildingDef.SelfHeatKilowattsWhenActive = 1f;
 		buildingDef.OverheatTemperature = 2273.15f;
-		buildingDef.ShowInBuildMenu = !DlcManager.IsExpansion1Active();
 		buildingDef.AudioCategory = "Metal";
 		buildingDef.LogicInputPorts = new List<LogicPorts.Port>
 		{
@@ -41,6 +46,24 @@ public class GantryConfig : IBuildingConfig
 	public override void DoPostConfigureComplete(GameObject go)
 	{
 		go.AddOrGet<Gantry>();
+		MakeBaseSolid.Def def = go.AddOrGetDef<MakeBaseSolid.Def>();
+		def.solidOffsets = SOLID_OFFSETS;
+		FakeFloorAdder fakeFloorAdder = go.AddOrGet<FakeFloorAdder>();
+		fakeFloorAdder.floorOffsets = new CellOffset[4]
+		{
+			new CellOffset(0, 1),
+			new CellOffset(1, 1),
+			new CellOffset(2, 1),
+			new CellOffset(3, 1)
+		};
+		fakeFloorAdder.initiallyActive = false;
 		Object.DestroyImmediate(go.GetComponent<LogicOperationalController>());
+	}
+
+	public override void DoPostConfigurePreview(BuildingDef def, GameObject go)
+	{
+		base.DoPostConfigurePreview(def, go);
+		MakeBaseSolid.Def def2 = go.AddOrGetDef<MakeBaseSolid.Def>();
+		def2.solidOffsets = SOLID_OFFSETS;
 	}
 }

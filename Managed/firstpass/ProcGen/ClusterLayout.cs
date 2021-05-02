@@ -15,6 +15,13 @@ namespace ProcGen
 			EditorOnly = 100
 		}
 
+		public enum ClusterCategory
+		{
+			vanilla,
+			spacedOutVanillaStyle,
+			spacedOutStyle
+		}
+
 		public const string directory = "clusters";
 
 		public string filePath;
@@ -49,7 +56,19 @@ namespace ProcGen
 			set;
 		}
 
+		public int difficulty
+		{
+			get;
+			set;
+		}
+
 		public Skip skip
+		{
+			get;
+			private set;
+		}
+
+		public int clusterCategory
 		{
 			get;
 			private set;
@@ -96,9 +115,9 @@ namespace ProcGen
 			numRings = 9;
 		}
 
-		public static string GetName(string path)
+		public static string GetName(string path, string addPrefix)
 		{
-			string filename = System.IO.Path.Combine("clusters", System.IO.Path.GetFileNameWithoutExtension(path));
+			string filename = System.IO.Path.Combine(addPrefix + "clusters", System.IO.Path.GetFileNameWithoutExtension(path));
 			return FileSystem.Normalize(filename);
 		}
 

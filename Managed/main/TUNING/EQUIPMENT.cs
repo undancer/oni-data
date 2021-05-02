@@ -48,6 +48,8 @@ namespace TUNING
 
 			public static string SNAPON = "snapTo_neck";
 
+			public static int OXYMASK_FABTIME = 20;
+
 			public static int ATMOSUIT_FABTIME = 40;
 
 			public static int ATMOSUIT_INSULATION = 50;
@@ -65,6 +67,8 @@ namespace TUNING
 			public static int ATMOSUIT_MASS = 200;
 
 			public static int ATMOSUIT_SCALDING = 1000;
+
+			public static float ATMOSUIT_DECAY = -0.1f;
 
 			public static float LEADSUIT_THERMAL_CONDUCTIVITY_BARRIER = 0.3f;
 
@@ -99,6 +103,16 @@ namespace TUNING
 			public const int OXYGEN_MASK_MASS = 15;
 
 			public static int OXYGEN_MASK_ATHLETICS = -2;
+
+			public static float OXYGEN_MASK_DECAY = -0.2f;
+
+			public static float INDESTRUCTIBLE_DURABILITY_MOD = 0f;
+
+			public static float REINFORCED_DURABILITY_MOD = 0.5f;
+
+			public static float FLIMSY_DURABILITY_MOD = 1.5f;
+
+			public static float THREADBARE_DURABILITY_MOD = 2f;
 
 			public static float MINIMUM_USABLE_SUIT_CHARGE = 0.95f;
 		}

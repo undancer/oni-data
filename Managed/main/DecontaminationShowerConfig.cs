@@ -5,15 +5,11 @@ public class DecontaminationShowerConfig : IBuildingConfig
 {
 	public const string ID = "DecontaminationShower";
 
-	private const float STORAGE_SIZE = 15f;
+	private const float MASS_PER_USE = 100f;
 
-	private const float MASS_PER_USE = 400f;
+	private const int DISEASE_REMOVAL_COUNT = 1000000;
 
-	private const int DISEASE_REMOVAL_COUNT = 100000;
-
-	private const int RADS_REMOVAL_COUNT = 100000;
-
-	private const float WATER_PER_USE = 400f;
+	private const float WATER_PER_USE = 100f;
 
 	private const int USES_PER_FLUSH = 1;
 
@@ -45,13 +41,14 @@ public class DecontaminationShowerConfig : IBuildingConfig
 		kBatchedAnimController.sceneLayer = Grid.SceneLayer.BuildingBack;
 		kBatchedAnimController.fgLayer = Grid.SceneLayer.BuildingFront;
 		HandSanitizer handSanitizer = go.AddOrGet<HandSanitizer>();
-		handSanitizer.massConsumedPerUse = 400f;
+		handSanitizer.massConsumedPerUse = 100f;
 		handSanitizer.consumedElement = SimHashes.Water;
-		handSanitizer.diseaseRemovalCount = 100000;
 		handSanitizer.outputElement = SimHashes.DirtyWater;
-		handSanitizer.diseaseRemovalCount = 100000;
+		handSanitizer.diseaseRemovalCount = 1000000;
 		handSanitizer.maxUses = 1;
-		handSanitizer.alwaysUse = true;
+		handSanitizer.canSanitizeSuit = true;
+		handSanitizer.canSanitizeStorage = true;
+		go.AddOrGet<DirectionControl>();
 		HandSanitizer.Work work = go.AddOrGet<HandSanitizer.Work>();
 		work.overrideAnims = new KAnimFile[1]
 		{
@@ -64,14 +61,13 @@ public class DecontaminationShowerConfig : IBuildingConfig
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
 		conduitConsumer.conduitType = ConduitType.Liquid;
 		conduitConsumer.capacityTag = ElementLoader.FindElementByHash(SimHashes.Water).tag;
-		conduitConsumer.capacityKG = 400f;
+		conduitConsumer.capacityKG = 100f;
 		conduitConsumer.wrongElementResult = ConduitConsumer.WrongElementResult.Store;
 		AutoStorageDropper.Def def = go.AddOrGetDef<AutoStorageDropper.Def>();
 		def.dropTag = SimHashes.DirtyWater.CreateTag();
 		def.dropOffset = new CellOffset(1, 0);
 		Storage storage = go.AddOrGet<Storage>();
 		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
-		go.AddOrGet<DirectionControl>();
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

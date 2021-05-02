@@ -1374,11 +1374,11 @@ public abstract class OverlayModes
 									{
 										KBatchedAnimController component6 = root.GetComponent<KBatchedAnimController>();
 										LogicUtilityNetworkLink component7 = root.GetComponent<LogicUtilityNetworkLink>();
-										component7.GetCells(out var linked_cell, out var _);
+										int networkCell2 = component7.GetNetworkCell();
 										HashSet<BridgeInfo> hashSet = bridgeControllers;
 										item = new BridgeInfo
 										{
-											cell = linked_cell,
+											cell = networkCell2,
 											controller = component6
 										};
 										hashSet.Add(item);
@@ -1387,11 +1387,11 @@ public abstract class OverlayModes
 									{
 										KBatchedAnimController component8 = root.GetComponent<KBatchedAnimController>();
 										LogicUtilityNetworkLink component9 = root.GetComponent<LogicUtilityNetworkLink>();
-										component9.GetCells(out var linked_cell3, out var _);
+										int networkCell3 = component9.GetNetworkCell();
 										HashSet<BridgeInfo> hashSet2 = ribbonBridgeControllers;
 										item = new BridgeInfo
 										{
-											cell = linked_cell3,
+											cell = networkCell3,
 											controller = component8
 										};
 										hashSet2.Add(item);
@@ -2567,16 +2567,20 @@ public abstract class OverlayModes
 					powerLabel.text = ((num != 0) ? ("+" + num) : num.ToString());
 					BuildingEnabledButton component2 = item.GetComponent<BuildingEnabledButton>();
 					Color color3 = (unitLabel.color = (powerLabel.color = ((component2 != null && !component2.IsEnabled) ? GlobalAssets.Instance.colorSet.powerBuildingDisabled : GlobalAssets.Instance.colorSet.powerGenerator)));
-					Image outputIcon = generator.GetComponent<BuildingCellVisualizer>().GetOutputIcon();
-					if (outputIcon != null)
+					BuildingCellVisualizer component3 = generator.GetComponent<BuildingCellVisualizer>();
+					if (component3 != null)
 					{
-						outputIcon.color = color3;
+						Image outputIcon = component3.GetOutputIcon();
+						if (outputIcon != null)
+						{
+							outputIcon.color = color3;
+						}
 					}
 				}
 				if (consumer != null)
 				{
-					BuildingEnabledButton component3 = item.GetComponent<BuildingEnabledButton>();
-					Color color4 = ((component3 != null && !component3.IsEnabled) ? GlobalAssets.Instance.colorSet.powerBuildingDisabled : GlobalAssets.Instance.colorSet.powerConsumer);
+					BuildingEnabledButton component4 = item.GetComponent<BuildingEnabledButton>();
+					Color color4 = ((component4 != null && !component4.IsEnabled) ? GlobalAssets.Instance.colorSet.powerBuildingDisabled : GlobalAssets.Instance.colorSet.powerConsumer);
 					int num2 = Mathf.Max(0, Mathf.RoundToInt(consumer.WattsNeededWhenActive));
 					string text = num2.ToString();
 					powerLabel.text = ((num2 != 0) ? ("-" + text) : text);

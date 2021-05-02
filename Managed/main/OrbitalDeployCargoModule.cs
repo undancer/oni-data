@@ -5,11 +5,13 @@ public class OrbitalDeployCargoModule : GameStateMachine<OrbitalDeployCargoModul
 {
 	public class Def : BaseDef
 	{
-		public float launchMass;
+		public float numCapsules;
 	}
 
 	public class GroundedStates : State
 	{
+		public State loading;
+
 		public State loaded;
 
 		public State empty;
@@ -63,23 +65,64 @@ public class OrbitalDeployCargoModule : GameStateMachine<OrbitalDeployCargoModul
 		{
 			storage = GetComponent<Storage>();
 			RocketModule component = GetComponent<RocketModule>();
-			component.AddModuleCondition(ProcessCondition.ProcessConditionType.RocketPrep, new LoadingCompleteCondition(storage));
+			component.AddModuleCondition(ProcessCondition.ProcessConditionType.RocketStorage, new LoadingCompleteCondition(storage));
+		}
+
+		public bool NeedsVisualUpdate()
+		{
+			int num = base.sm.numVisualCapsules.Get(this);
+			int num2 = Mathf.FloorToInt(storage.MassStored() / 200f);
+			if (num < num2)
+			{
+				base.sm.numVisualCapsules.Delta(1, this);
+				return true;
+			}
+			return false;
+		}
+
+		public string GetLoadingAnimName()
+		{
+			int num = base.sm.numVisualCapsules.Get(this);
+			int num2 = Mathf.RoundToInt(storage.capacityKg / 200f);
+			if (num == num2)
+			{
+				return "loading6_full";
+			}
+			if (num == num2 - 1)
+			{
+				return "loading5";
+			}
+			if (num == num2 - 2)
+			{
+				return "loading4";
+			}
+			if (num == num2 - 3 || num > 2)
+			{
+				return "loading3_repeat";
+			}
+			return num switch
+			{
+				2 => "loading2", 
+				1 => "loading1", 
+				_ => "deployed", 
+			};
 		}
 
 		public void DeployCargoPods()
 		{
-			RocketModule component = base.master.GetComponent<RocketModule>();
+			RocketModuleCluster component = base.master.GetComponent<RocketModuleCluster>();
 			Clustercraft component2 = component.CraftInterface.GetComponent<Clustercraft>();
 			ClusterGridEntity orbitAsteroid = component2.GetOrbitAsteroid();
 			if (orbitAsteroid != null)
 			{
 				WorldContainer component3 = orbitAsteroid.GetComponent<WorldContainer>();
 				int id = component3.id;
-				Vector3 position = new Vector3(component3.minimumBounds.x, component3.maximumBounds.y, 0f);
+				Vector3 position = new Vector3(component3.minimumBounds.x + 1f, component3.maximumBounds.y, Grid.GetLayerZ(Grid.SceneLayer.Front));
 				while (storage.MassStored() > 0f)
 				{
 					GameObject gameObject = Util.KInstantiate(Assets.GetPrefab("RailGunPayload"), position);
-					for (float num = 0f; num < base.def.launchMass; num += storage.Transfer(gameObject.GetComponent<Storage>(), GameTags.Stored, base.def.launchMass - num, block_events: false, hide_popups: true))
+					gameObject.GetComponent<Pickupable>().deleteOffGrid = false;
+					for (float num = 0f; num < 200f; num += storage.Transfer(gameObject.GetComponent<Storage>(), GameTags.Stored, 200f - num, block_events: false, hide_popups: true))
 					{
 						if (!(storage.MassStored() > 0f))
 						{
@@ -87,7 +130,8 @@ public class OrbitalDeployCargoModule : GameStateMachine<OrbitalDeployCargoModul
 						}
 					}
 					gameObject.SetActive(value: true);
-					gameObject.GetSMI<RailGunPayload.StatesInstance>().Launch(id);
+					RailGunPayload.StatesInstance sMI = gameObject.GetSMI<RailGunPayload.StatesInstance>();
+					sMI.Land(component2.Location, component3.GetMyWorldLocation());
 				}
 			}
 			CheckIfLoaded();
@@ -105,7 +149,7 @@ public class OrbitalDeployCargoModule : GameStateMachine<OrbitalDeployCargoModul
 
 		public bool IsValidDropLocation()
 		{
-			Clustercraft component = GetComponent<RocketModule>().CraftInterface.GetComponent<Clustercraft>();
+			Clustercraft component = GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>();
 			return component.GetOrbitAsteroid() != null;
 		}
 
@@ -128,6 +172,8 @@ public class OrbitalDeployCargoModule : GameStateMachine<OrbitalDeployCargoModul
 
 	public NotGroundedStates not_grounded;
 
+	public IntParameter numVisualCapsules;
+
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = grounded;
@@ -145,8 +191,12 @@ public class OrbitalDeployCargoModule : GameStateMachine<OrbitalDeployCargoModul
 			}
 		});
 		grounded.DefaultState(grounded.loaded).TagTransition(GameTags.RocketNotOnGround, not_grounded);
-		grounded.loaded.PlayAnim("loaded").ParamTransition(hasCargo, grounded.empty, GameStateMachine<OrbitalDeployCargoModule, StatesInstance, IStateMachineTarget, Def>.IsFalse);
-		grounded.empty.PlayAnim("deployed").ParamTransition(hasCargo, grounded.loaded, GameStateMachine<OrbitalDeployCargoModule, StatesInstance, IStateMachineTarget, Def>.IsTrue);
+		grounded.loading.PlayAnim((StatesInstance smi) => smi.GetLoadingAnimName()).ParamTransition(hasCargo, grounded.empty, GameStateMachine<OrbitalDeployCargoModule, StatesInstance, IStateMachineTarget, Def>.IsFalse).OnAnimQueueComplete(grounded.loaded);
+		grounded.loaded.ParamTransition(hasCargo, grounded.empty, GameStateMachine<OrbitalDeployCargoModule, StatesInstance, IStateMachineTarget, Def>.IsFalse).EventTransition(GameHashes.OnStorageChange, grounded.loading, (StatesInstance smi) => smi.NeedsVisualUpdate());
+		grounded.empty.Enter(delegate(StatesInstance smi)
+		{
+			numVisualCapsules.Set(0, smi);
+		}).PlayAnim("deployed").ParamTransition(hasCargo, grounded.loaded, GameStateMachine<OrbitalDeployCargoModule, StatesInstance, IStateMachineTarget, Def>.IsTrue);
 		not_grounded.DefaultState(not_grounded.loaded).TagTransition(GameTags.RocketNotOnGround, grounded, on_remove: true);
 		not_grounded.loaded.PlayAnim("loaded").ParamTransition(hasCargo, not_grounded.empty, GameStateMachine<OrbitalDeployCargoModule, StatesInstance, IStateMachineTarget, Def>.IsFalse).OnSignal(emptyCargo, not_grounded.emptying);
 		not_grounded.emptying.PlayAnim("deploying").GoTo(not_grounded.empty);

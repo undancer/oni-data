@@ -1,4 +1,4 @@
-public interface IEnergyConsumer
+public interface IEnergyConsumer : ICircuitConnected
 {
 	float WattsUsed
 	{
@@ -16,11 +16,6 @@ public interface IEnergyConsumer
 	}
 
 	string Name
-	{
-		get;
-	}
-
-	int PowerCell
 	{
 		get;
 	}

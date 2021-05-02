@@ -11,6 +11,7 @@ public class TouristModuleConfig : IBuildingConfig
 		{
 			SimHashes.Steel.ToString()
 		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		buildingDef.ForbiddenDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;
 		buildingDef.OverheatTemperature = 2273.15f;
@@ -22,7 +23,6 @@ public class TouristModuleConfig : IBuildingConfig
 		buildingDef.attachablePosition = new CellOffset(0, 0);
 		buildingDef.CanMove = true;
 		buildingDef.Cancellable = false;
-		buildingDef.ShowInBuildMenu = !DlcManager.IsExpansion1Active();
 		return buildingDef;
 	}
 
@@ -45,7 +45,7 @@ public class TouristModuleConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.INSIGNIFICANT, "rocket_tourist_bg_kanim");
+		BuildingTemplates.ExtendBuildingToRocketModule(go, "rocket_tourist_bg_kanim");
 		Ownable ownable = go.AddOrGet<Ownable>();
 		ownable.slotID = Db.Get().AssignableSlots.RocketCommandModule.Id;
 		ownable.canBePublic = false;

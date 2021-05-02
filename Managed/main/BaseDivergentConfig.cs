@@ -30,6 +30,7 @@ public static class BaseDivergentConfig
 			gameObject.AddOrGet<SymbolOverrideController>().ApplySymbolOverridesByAffix(Assets.GetAnim(anim_file), symbolOverridePrefix);
 		}
 		gameObject.AddOrGet<Trappable>();
+		gameObject.AddOrGet<LoopingSounds>();
 		gameObject.AddOrGetDef<CreatureFallMonitor.Def>();
 		gameObject.AddOrGetDef<BurrowMonitor.Def>();
 		CropTendingMonitor.Def def = gameObject.AddOrGetDef<CropTendingMonitor.Def>();

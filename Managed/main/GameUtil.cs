@@ -20,7 +20,11 @@ public static class GameUtil
 		Disease,
 		Radiation,
 		Energy,
-		Power
+		Power,
+		Lux,
+		Time,
+		Seconds,
+		Cycles
 	}
 
 	public enum TemperatureUnit
@@ -266,6 +270,15 @@ public static class GameUtil
 		if (timeSlice == TimeSlice.PerCycle)
 		{
 			return val * 600f;
+		}
+		return val;
+	}
+
+	public static float ApplyTimeSlice(int val, TimeSlice timeSlice)
+	{
+		if (timeSlice == TimeSlice.PerCycle)
+		{
+			return (float)val * 600f;
 		}
 		return val;
 	}
@@ -711,29 +724,29 @@ public static class GameUtil
 		return UI.OVERLAYS.LIGHTING.RANGES.MAX_LIGHT;
 	}
 
-	public static string GetRadiationDescription(float roentgen)
+	public static string GetRadiationDescription(float radsPerCycle)
 	{
-		if (roentgen == 0f)
+		if (radsPerCycle == 0f)
 		{
 			return UI.OVERLAYS.RADIATION.RANGES.NONE;
 		}
-		if (roentgen < 10f)
+		if (radsPerCycle < 50f)
 		{
 			return UI.OVERLAYS.RADIATION.RANGES.VERY_LOW;
 		}
-		if (roentgen < 50f)
+		if (radsPerCycle < 100f)
 		{
 			return UI.OVERLAYS.RADIATION.RANGES.LOW;
 		}
-		if (roentgen < 100f)
+		if (radsPerCycle < 200f)
 		{
 			return UI.OVERLAYS.RADIATION.RANGES.MEDIUM;
 		}
-		if (roentgen < 500f)
+		if (radsPerCycle < 1000f)
 		{
 			return UI.OVERLAYS.RADIATION.RANGES.HIGH;
 		}
-		if (roentgen < 1000f)
+		if (radsPerCycle < 2000f)
 		{
 			return UI.OVERLAYS.RADIATION.RANGES.VERY_HIGH;
 		}
@@ -1982,7 +1995,7 @@ public static class GameUtil
 			{
 				Klei.AI.Attribute attribute = Db.Get().Attributes.Get(item.AttributeId);
 				string name = attribute.Name;
-				string formattedString = item.GetFormattedString(null);
+				string formattedString = item.GetFormattedString();
 				string newValue = ((item.Value >= 0f) ? "produced" : "consumed");
 				string text = UI.GAMEOBJECTEFFECTS.EQUIPMENT_MODS.text.Replace("{Attribute}", name).Replace("{Style}", newValue).Replace("{Value}", formattedString);
 				list.Add(new Descriptor(text, text));
@@ -2000,7 +2013,7 @@ public static class GameUtil
 		}
 		if (text == null)
 		{
-			text = "MISSING RECIPEDESCRIPTION";
+			text = RESEARCH.TYPES.MISSINGRECIPEDESC;
 			Debug.LogWarning("Missing recipeDescription");
 		}
 		return text;
@@ -2341,9 +2354,10 @@ public static class GameUtil
 		return UI.OVERLAYS.DISEASE.NO_DISEASE;
 	}
 
-	public static string GetFormattedDiseaseAmount(int units)
+	public static string GetFormattedDiseaseAmount(int units, TimeSlice timeSlice = TimeSlice.None)
 	{
-		return units.ToString("#,##0") + UI.UNITSUFFIXES.DISEASE.UNITS;
+		float num = ApplyTimeSlice(units, timeSlice);
+		return AddTimeSliceText(units.ToString("#,##0") + UI.UNITSUFFIXES.DISEASE.UNITS, timeSlice);
 	}
 
 	public static string ColourizeString(Color32 colour, string str)
@@ -2393,8 +2407,8 @@ public static class GameUtil
 		{
 			foreach (AttributeModifier attributeModifier in element.attributeModifiers)
 			{
-				string txt = string.Format(Strings.Get(new StringKey("STRINGS.ELEMENTS.MATERIAL_MODIFIERS." + attributeModifier.AttributeId.ToUpper())), attributeModifier.GetFormattedString(null));
-				string tooltip = string.Format(Strings.Get(new StringKey("STRINGS.ELEMENTS.MATERIAL_MODIFIERS.TOOLTIP." + attributeModifier.AttributeId.ToUpper())), attributeModifier.GetFormattedString(null));
+				string txt = string.Format(Strings.Get(new StringKey("STRINGS.ELEMENTS.MATERIAL_MODIFIERS." + attributeModifier.AttributeId.ToUpper())), attributeModifier.GetFormattedString());
+				string tooltip = string.Format(Strings.Get(new StringKey("STRINGS.ELEMENTS.MATERIAL_MODIFIERS.TOOLTIP." + attributeModifier.AttributeId.ToUpper())), attributeModifier.GetFormattedString());
 				Descriptor item = default(Descriptor);
 				item.SetupDescriptor(txt, tooltip);
 				item.IncreaseIndent();
@@ -2411,7 +2425,7 @@ public static class GameUtil
 		foreach (AttributeModifier attributeModifier in element.attributeModifiers)
 		{
 			string name = Db.Get().BuildingAttributes.Get(attributeModifier.AttributeId).Name;
-			string formattedString = attributeModifier.GetFormattedString(null);
+			string formattedString = attributeModifier.GetFormattedString();
 			str = str + "\n    • " + string.Format(DUPLICANTS.MODIFIERS.MODIFIER_FORMAT, name, formattedString);
 		}
 		return str + GetSignificantMaterialPropertyTooltips(element);
@@ -2481,8 +2495,8 @@ public static class GameUtil
 			{
 				foreach (AttributeModifier attributeModifier in element.attributeModifiers)
 				{
-					string txt = string.Format(Strings.Get(new StringKey("STRINGS.ELEMENTS.MATERIAL_MODIFIERS." + attributeModifier.AttributeId.ToUpper())), attributeModifier.GetFormattedString(null));
-					string tooltip = string.Format(Strings.Get(new StringKey("STRINGS.ELEMENTS.MATERIAL_MODIFIERS.TOOLTIP." + attributeModifier.AttributeId.ToUpper())), attributeModifier.GetFormattedString(null));
+					string txt = string.Format(Strings.Get(new StringKey("STRINGS.ELEMENTS.MATERIAL_MODIFIERS." + attributeModifier.AttributeId.ToUpper())), attributeModifier.GetFormattedString());
+					string tooltip = string.Format(Strings.Get(new StringKey("STRINGS.ELEMENTS.MATERIAL_MODIFIERS.TOOLTIP." + attributeModifier.AttributeId.ToUpper())), attributeModifier.GetFormattedString());
 					Descriptor item = default(Descriptor);
 					item.SetupDescriptor(txt, tooltip);
 					item.IncreaseIndent();
@@ -2501,8 +2515,8 @@ public static class GameUtil
 				{
 					foreach (AttributeModifier descriptor in component.descriptors)
 					{
-						string txt2 = string.Format(Strings.Get(new StringKey("STRINGS.ELEMENTS.MATERIAL_MODIFIERS." + descriptor.AttributeId.ToUpper())), descriptor.GetFormattedString(null));
-						string tooltip2 = string.Format(Strings.Get(new StringKey("STRINGS.ELEMENTS.MATERIAL_MODIFIERS.TOOLTIP." + descriptor.AttributeId.ToUpper())), descriptor.GetFormattedString(null));
+						string txt2 = string.Format(Strings.Get(new StringKey("STRINGS.ELEMENTS.MATERIAL_MODIFIERS." + descriptor.AttributeId.ToUpper())), descriptor.GetFormattedString());
+						string tooltip2 = string.Format(Strings.Get(new StringKey("STRINGS.ELEMENTS.MATERIAL_MODIFIERS.TOOLTIP." + descriptor.AttributeId.ToUpper())), descriptor.GetFormattedString());
 						Descriptor item2 = default(Descriptor);
 						item2.SetupDescriptor(txt2, tooltip2);
 						item2.IncreaseIndent();
@@ -2523,7 +2537,7 @@ public static class GameUtil
 			foreach (AttributeModifier attributeModifier in element.attributeModifiers)
 			{
 				string name = Db.Get().BuildingAttributes.Get(attributeModifier.AttributeId).Name;
-				string formattedString = attributeModifier.GetFormattedString(null);
+				string formattedString = attributeModifier.GetFormattedString();
 				text = text + "\n    • " + string.Format(DUPLICANTS.MODIFIERS.MODIFIER_FORMAT, name, formattedString);
 			}
 			text += GetSignificantMaterialPropertyTooltips(element);
@@ -2539,7 +2553,7 @@ public static class GameUtil
 					foreach (AttributeModifier descriptor in component.descriptors)
 					{
 						string name2 = Db.Get().BuildingAttributes.Get(descriptor.AttributeId).Name;
-						string formattedString2 = descriptor.GetFormattedString(null);
+						string formattedString2 = descriptor.GetFormattedString();
 						text = text + "\n    • " + string.Format(DUPLICANTS.MODIFIERS.MODIFIER_FORMAT, name2, formattedString2);
 					}
 				}
@@ -2651,6 +2665,10 @@ public static class GameUtil
 		{
 			if (disease.id == GERM_EXPOSURE.TYPES[i].germ_id)
 			{
+				if (GERM_EXPOSURE.TYPES[i].sickness_id == null)
+				{
+					return null;
+				}
 				return Db.Get().Sicknesses.Get(GERM_EXPOSURE.TYPES[i].sickness_id);
 			}
 		}
@@ -2664,6 +2682,11 @@ public static class GameUtil
 			handler.Trigger(target.gameObject, new TagChangedEventData(Tag.Invalid, added: false));
 		}
 		target.Subscribe(-1582839653, handler);
+	}
+
+	public static void UnsubscribeToTags<T>(T target, EventSystem.IntraObjectHandler<T> handler) where T : KMonoBehaviour
+	{
+		target.Unsubscribe(-1582839653, handler);
 	}
 
 	public static EventSystem.IntraObjectHandler<T> CreateHasTagHandler<T>(Tag tag, Action<T, object> callback) where T : KMonoBehaviour

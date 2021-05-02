@@ -21,7 +21,7 @@ public class Structure : KMonoBehaviour
 
 	private static EventSystem.IntraObjectHandler<Structure> RocketLandedDelegate = new EventSystem.IntraObjectHandler<Structure>(delegate(Structure cmp, object data)
 	{
-		cmp.RocketLanded(data);
+		cmp.RocketChanged(data);
 	});
 
 	public bool IsEntombed()
@@ -31,6 +31,10 @@ public class Structure : KMonoBehaviour
 
 	public static bool IsBuildingEntombed(Building building)
 	{
+		if (!Grid.IsValidCell(Grid.PosToCell(building)))
+		{
+			return false;
+		}
 		for (int i = 0; i < building.PlacementCells.Length; i++)
 		{
 			int num = building.PlacementCells[i];
@@ -51,7 +55,12 @@ public class Structure : KMonoBehaviour
 		Subscribe(-887025858, RocketLandedDelegate);
 	}
 
-	private void RocketLanded(object data)
+	public void UpdatePosition(int cell)
+	{
+		GameScenePartitioner.Instance.UpdatePosition(partitionerEntry, cell);
+	}
+
+	private void RocketChanged(object data)
 	{
 		OnSolidChanged(data);
 	}

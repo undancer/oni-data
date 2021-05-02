@@ -7,15 +7,11 @@ public class HighEnergyParticleConfig : IEntityConfig
 
 	public const float PARTICLE_COLLISION_SIZE = 0.2f;
 
-	public const int PER_CELL_FALLOFF = 50;
+	public const int PER_CELL_FALLOFF = 1;
 
-	public const float RADIOACTIVE_RATIO = 0.5f;
+	public const float FALLOUT_RATIO = 0.5f;
 
-	public const short EMITTER_RADIUS = 2;
-
-	public const float EMITTER_RATE = 0.2f;
-
-	public const float EMITTER_SPEED = 1f;
+	public const int MAX_PAYLOAD = 50;
 
 	public const float BLACKHOLE_EMIT_DURRATION = 1f;
 
@@ -38,15 +34,13 @@ public class HighEnergyParticleConfig : IEntityConfig
 		EntityTemplates.AddCollision(gameObject, EntityTemplates.CollisionShape.CIRCLE, 0.2f, 0.2f);
 		Assets.AddPrefab(gameObject.GetComponent<KPrefabID>());
 		RadiationEmitter radiationEmitter = gameObject.AddOrGet<RadiationEmitter>();
-		radiationEmitter.emitType = RadiationEmitter.RadiationEmitterType.PulsingAveraged;
-		radiationEmitter.emitRadiusX = 2;
-		radiationEmitter.emitRadiusY = 2;
-		radiationEmitter.emitRate = 0.2f;
-		radiationEmitter.emitSpeed = 1f;
+		radiationEmitter.emitType = RadiationEmitter.RadiationEmitterType.Constant;
+		radiationEmitter.radiusProportionalToRads = false;
+		radiationEmitter.emitRadiusX = 3;
+		radiationEmitter.emitRadiusY = 3;
+		radiationEmitter.emitRads = 4f * ((float)radiationEmitter.emitRadiusX / 6f);
 		HighEnergyParticle highEnergyParticle = gameObject.AddComponent<HighEnergyParticle>();
 		highEnergyParticle.speed = 8f;
-		highEnergyParticle.perCellFalloff = 50f;
-		highEnergyParticle.radioactiveRatio = 0.5f;
 		highEnergyParticle.explodeEmitDurration = 1f;
 		highEnergyParticle.explodeEmitRadius = 6;
 		highEnergyParticle.blackholeEmitDurration = 1f;

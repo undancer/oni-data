@@ -1,210 +1,146 @@
-using System.Collections;
-using STRINGS;
+using Klei.AI;
 using UnityEngine;
 
-public class BeeHive : StateMachineComponent<BeeHive.StatesInstance>
+public class BeeHive : GameStateMachine<BeeHive, BeeHive.StatesInstance, IStateMachineTarget, BeeHive.Def>
 {
-	public class StatesInstance : GameStateMachine<States, StatesInstance, BeeHive, object>.GameInstance
+	public class Def : BaseDef
 	{
-		public Chore emptyChore;
+		public string beePrefabID;
 
-		public StatesInstance(BeeHive smi)
-			: base(smi)
-		{
-		}
-
-		public void CreateEmptyChore()
-		{
-			if (emptyChore != null)
-			{
-				emptyChore.Cancel("dupe");
-			}
-			HiveWorkableEmpty component = base.master.GetComponent<HiveWorkableEmpty>();
-			emptyChore = new WorkChore<HiveWorkableEmpty>(Db.Get().ChoreTypes.EmptyStorage, component, null, run_until_complete: true, OnEmptyComplete, null, null, allow_in_red_alert: true, null, ignore_schedule_block: false, only_when_operational: true, null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: true, PriorityScreen.PriorityClass.basic, 5, ignore_building_assignment: true);
-		}
-
-		public void CancelEmptyChore()
-		{
-			if (emptyChore != null)
-			{
-				emptyChore.Cancel("Cancelled");
-				emptyChore = null;
-			}
-		}
-
-		private void OnEmptyComplete(Chore chore)
-		{
-			emptyChore = null;
-			base.master.storage.Drop(SimHashes.UraniumOre.CreateTag());
-		}
+		public string larvaPrefabID;
 	}
 
-	public class States : GameStateMachine<States, StatesInstance, BeeHive>
+	public class GrowingStates : State
+	{
+		public State idle;
+	}
+
+	public class GrownStates : State
 	{
 		public State dayTime;
 
 		public State nightTime;
+	}
 
-		public override void InitializeStates(out BaseState default_state)
+	public class EnabledStates : State
+	{
+		public GrowingStates growingStates;
+
+		public GrownStates grownStates;
+	}
+
+	public class StatesInstance : GameInstance
+	{
+		private Coroutine newGameSpawnRoutine;
+
+		public StatesInstance(IStateMachineTarget master, Def def)
+			: base(master, def)
 		{
-			default_state = dayTime;
-			dayTime.EventTransition(GameHashes.Nighttime, (StatesInstance smi) => GameClock.Instance, nightTime).Enter(delegate(StatesInstance smi)
-			{
-				smi.master.ReleaseBees();
-			});
-			nightTime.EventTransition(GameHashes.NewDay, (StatesInstance smi) => GameClock.Instance, dayTime).Exit(delegate(StatesInstance smi)
-			{
-				smi.master.AddNewLarvaToHive();
-			});
+			Subscribe(1119167081, OnNewGameSpawn);
+			Components.BeeHives.Add(this);
 		}
-	}
 
-	public string beePrefabID;
-
-	public string larvaPrefabID;
-
-	public Storage storage;
-
-	private static readonly EventSystem.IntraObjectHandler<BeeHive> OnNewGameSpawnDelegate = new EventSystem.IntraObjectHandler<BeeHive>(delegate(BeeHive component, object data)
-	{
-		component.OnNewGameSpawn(data);
-	});
-
-	private static readonly EventSystem.IntraObjectHandler<BeeHive> OnRefreshUserMenuDelegate = new EventSystem.IntraObjectHandler<BeeHive>(delegate(BeeHive component, object data)
-	{
-		component.OnRefreshUserMenu(data);
-	});
-
-	private static readonly EventSystem.IntraObjectHandler<BeeHive> OnStartDeconstructDelegate = new EventSystem.IntraObjectHandler<BeeHive>(delegate(BeeHive component, object data)
-	{
-		component.OnStartDeconstruct(data);
-	});
-
-	private Coroutine newGameSpawnRoutine;
-
-	protected override void OnPrefabInit()
-	{
-		base.OnPrefabInit();
-		Subscribe(1119167081, OnNewGameSpawnDelegate);
-	}
-
-	protected override void OnSpawn()
-	{
-		base.OnSpawn();
-		base.smi.StartSM();
-		Components.BeeHives.Add(this);
-		Subscribe(493375141, OnRefreshUserMenuDelegate);
-		Subscribe(1830962028, OnStartDeconstructDelegate);
-	}
-
-	protected override void OnCleanUp()
-	{
-		if (newGameSpawnRoutine != null)
+		public void SetUpNewHive()
 		{
-			StopCoroutine(newGameSpawnRoutine);
+			base.sm.hiveGrowth.Set(0f, this);
 		}
-		Components.BeeHives.Remove(this);
-		base.OnCleanUp();
-	}
 
-	public void OnStartDeconstruct(object data)
-	{
-		ReleaseBees();
-	}
-
-	public void DEBUG_SpawnBees()
-	{
-		if (storage.IsEmpty())
+		protected override void OnCleanUp()
 		{
-			int num = 3;
+			Components.BeeHives.Remove(this);
+			base.OnCleanUp();
+		}
+
+		private void OnNewGameSpawn(object data)
+		{
+			NewGamePopulateHive();
+		}
+
+		private void NewGamePopulateHive()
+		{
+			int num = 1;
 			for (int i = 0; i < num; i++)
 			{
-				AddNewBeeToHive();
+				SpawnNewBeeFromHive();
 			}
-			num = 2;
+			num = 1;
 			for (int j = 0; j < num; j++)
 			{
-				AddNewLarvaToHive();
+				SpawnNewLarvaFromHive();
 			}
 		}
-		ReleaseBees();
-	}
 
-	private void OnNewGameSpawn(object data)
-	{
-		newGameSpawnRoutine = StartCoroutine(NewGamePopulateHiveRoutine());
-	}
-
-	private IEnumerator NewGamePopulateHiveRoutine()
-	{
-		int numBees2 = 3;
-		for (int j = 0; j < numBees2; j++)
+		public bool IsFullyGrown()
 		{
-			yield return new WaitForEndOfFrame();
-			AddNewBeeToHive();
+			return base.sm.hiveGrowth.Get(this) >= 1f;
 		}
-		numBees2 = 2;
-		for (int i = 0; i < numBees2; i++)
+
+		public void DeltaGrowth(float delta)
 		{
-			yield return new WaitForEndOfFrame();
-			AddNewLarvaToHive();
+			float num = base.sm.hiveGrowth.Get(this);
+			num += delta;
+			Mathf.Clamp01(num);
+			base.sm.hiveGrowth.Set(num, this);
 		}
-		newGameSpawnRoutine = null;
-		yield return 0;
-	}
 
-	public void ReleaseBees()
-	{
-		ListPool<GameObject, Storage>.PooledList pooledList = ListPool<GameObject, Storage>.Allocate();
-		storage.Drop(beePrefabID.ToTag(), pooledList);
-		foreach (GameObject item in pooledList)
+		public void SpawnNewLarvaFromHive()
 		{
-			item.Trigger(-1220248099);
+			GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(base.def.larvaPrefabID), base.transform.GetPosition());
+			gameObject.SetActive(value: true);
 		}
-		pooledList.Clear();
-		storage.Drop(larvaPrefabID.ToTag(), pooledList);
-		foreach (GameObject item2 in pooledList)
+
+		public void SpawnNewBeeFromHive()
 		{
-			item2.Trigger(-1220248099);
+			GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(base.def.beePrefabID), base.transform.GetPosition());
+			gameObject.SetActive(value: true);
 		}
-		pooledList.Recycle();
-	}
 
-	public void AddNewLarvaToHive()
-	{
-		GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(larvaPrefabID), base.transform.GetPosition());
-		gameObject.SetActive(value: true);
-		EnterHive(gameObject);
-	}
-
-	public void AddNewBeeToHive()
-	{
-		GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(beePrefabID), base.transform.GetPosition());
-		gameObject.SetActive(value: true);
-		EnterHive(gameObject);
-	}
-
-	public void EnterHive(GameObject bee)
-	{
-		storage.Store(bee, hide_popups: true);
-		bee.Trigger(-2099923209);
-	}
-
-	private void OnRefreshUserMenu(object data)
-	{
-		if (base.smi.emptyChore != null)
+		public bool IsDisabled()
 		{
-			Game.Instance.userMenu.AddButton(base.gameObject, new KIconButtonMenu.ButtonInfo("status_item_barren", UI.USERMENUACTIONS.CANCELEMPTYBEEHIVE.NAME, delegate
+			KPrefabID component = GetComponent<KPrefabID>();
+			return component.HasTag(GameTags.Creatures.HasNoFoundation) || component.HasTag(GameTags.Entombed) || component.HasTag(GameTags.Creatures.Drowning);
+		}
+	}
+
+	public State disabled;
+
+	public EnabledStates enabled;
+
+	public FloatParameter hiveGrowth = new FloatParameter(1f);
+
+	public override void InitializeStates(out BaseState default_state)
+	{
+		base.serializable = SerializeType.ParamsOnly;
+		default_state = enabled.grownStates;
+		root.Enter(delegate(StatesInstance smi)
+		{
+			AmountInstance amountInstance = Db.Get().Amounts.Calories.Lookup(smi.gameObject);
+			if (amountInstance != null)
 			{
-				base.smi.CancelEmptyChore();
-			}, Action.NumActions, null, null, null, UI.USERMENUACTIONS.CANCELEMPTYBEEHIVE.TOOLTIP));
-		}
-		else
+				amountInstance.hide = true;
+			}
+		}).EventHandler(GameHashes.Died, delegate(StatesInstance smi)
 		{
-			Game.Instance.userMenu.AddButton(base.gameObject, new KIconButtonMenu.ButtonInfo("status_item_fabricator_empty", UI.USERMENUACTIONS.EMPTYBEEHIVE.NAME, delegate
-			{
-				base.smi.CreateEmptyChore();
-			}, Action.NumActions, null, null, null, UI.USERMENUACTIONS.EMPTYBEEHIVE.TOOLTIP));
-		}
+			PrimaryElement component = smi.GetComponent<PrimaryElement>();
+			Storage component2 = smi.GetComponent<Storage>();
+			byte index = Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.id);
+			component2.AddOre(SimHashes.NuclearWaste, BeeHiveTuning.WASTE_DROPPED_ON_DEATH, component.Temperature, index, BeeHiveTuning.GERMS_DROPPED_ON_DEATH);
+			component2.DropAll(smi.master.transform.position, vent_gas: true, dump_liquid: true);
+		});
+		disabled.ToggleTag(GameTags.Creatures.Behaviours.DisableCreature).EventTransition(GameHashes.FoundationChanged, enabled, (StatesInstance smi) => !smi.IsDisabled()).EventTransition(GameHashes.EntombedChanged, enabled, (StatesInstance smi) => !smi.IsDisabled())
+			.EventTransition(GameHashes.EnteredBreathableArea, enabled, (StatesInstance smi) => !smi.IsDisabled());
+		enabled.EventTransition(GameHashes.FoundationChanged, disabled, (StatesInstance smi) => smi.IsDisabled()).EventTransition(GameHashes.EntombedChanged, disabled, (StatesInstance smi) => smi.IsDisabled()).EventTransition(GameHashes.Drowning, disabled, (StatesInstance smi) => smi.IsDisabled())
+			.DefaultState(enabled.grownStates);
+		enabled.growingStates.ParamTransition(hiveGrowth, enabled.grownStates, (StatesInstance smi, float f) => f >= 1f).DefaultState(enabled.growingStates.idle);
+		enabled.growingStates.idle.Update(delegate(StatesInstance smi, float dt)
+		{
+			smi.DeltaGrowth(dt / 600f / BeeHiveTuning.HIVE_GROWTH_TIME);
+		}, UpdateRate.SIM_4000ms);
+		enabled.grownStates.ParamTransition(hiveGrowth, enabled.growingStates, (StatesInstance smi, float f) => f < 1f).DefaultState(enabled.grownStates.dayTime);
+		enabled.grownStates.dayTime.EventTransition(GameHashes.Nighttime, (StatesInstance smi) => GameClock.Instance, enabled.grownStates.nightTime, (StatesInstance smi) => GameClock.Instance.IsNighttime());
+		enabled.grownStates.nightTime.EventTransition(GameHashes.NewDay, (StatesInstance smi) => GameClock.Instance, enabled.grownStates.dayTime, (StatesInstance smi) => GameClock.Instance.GetTimeSinceStartOfCycle() <= 1f).Exit(delegate(StatesInstance smi)
+		{
+			smi.SpawnNewLarvaFromHive();
+		});
 	}
 }

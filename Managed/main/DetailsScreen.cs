@@ -348,8 +348,8 @@ public class DetailsScreen : KTabMenu
 					if (currentSideScreen == null || !currentSideScreen.gameObject.activeSelf || sideScreenSortOrder > sortedSideScreens.Find((KeyValuePair<GameObject, int> match) => match.Key == currentSideScreen.gameObject).Value)
 					{
 						currentSideScreen = scn.screenInstance;
-						RefreshTitle();
 					}
+					RefreshTitle();
 				}
 			});
 		}

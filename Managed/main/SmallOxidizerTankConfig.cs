@@ -7,7 +7,7 @@ public class SmallOxidizerTankConfig : IBuildingConfig
 {
 	public const string ID = "SmallOxidizerTank";
 
-	public const float FuelCapacity = 900f;
+	public const float FuelCapacity = 450f;
 
 	public override BuildingDef CreateBuildingDef()
 	{
@@ -44,7 +44,7 @@ public class SmallOxidizerTankConfig : IBuildingConfig
 	public override void DoPostConfigureComplete(GameObject go)
 	{
 		Storage storage = go.AddOrGet<Storage>();
-		storage.capacityKg = 900f;
+		storage.capacityKg = 450f;
 		storage.SetDefaultStoredItemModifiers(new List<Storage.StoredItemModifier>
 		{
 			Storage.StoredItemModifier.Hide,
@@ -61,9 +61,12 @@ public class SmallOxidizerTankConfig : IBuildingConfig
 		OxidizerTank oxidizerTank = go.AddOrGet<OxidizerTank>();
 		oxidizerTank.consumeOnLand = !DlcManager.IsExpansion1Active();
 		oxidizerTank.storage = storage;
+		oxidizerTank.targetFillMass = 450f;
+		oxidizerTank.maxFillMass = 450f;
+		oxidizerTank.supportsMultipleOxidizers = true;
 		go.AddOrGet<Prioritizable>();
 		go.AddOrGet<CopyBuildingSettings>();
 		go.AddOrGet<DropToUserCapacity>();
-		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.MINOR, null);
+		BuildingTemplates.ExtendBuildingToRocketModuleCluster(go, null, ROCKETRY.BURDEN.MINOR);
 	}
 }

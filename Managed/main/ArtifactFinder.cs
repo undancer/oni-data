@@ -78,7 +78,7 @@ public class ArtifactFinder : KMonoBehaviour
 
 	public void OnLand(object data)
 	{
-		SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(SpacecraftManager.instance.GetSpacecraftID(GetComponent<RocketModule>().conditionManager.GetComponent<LaunchableRocket>()));
+		SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(SpacecraftManager.instance.GetSpacecraftID(GetComponent<RocketModule>().conditionManager.GetComponent<ILaunchableRocket>()));
 		foreach (MinionStorage.Info item in minionStorage.GetStoredMinionInfo())
 		{
 			StoredMinionIdentity minionID = item.serializedMinion.Get<StoredMinionIdentity>();

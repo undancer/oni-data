@@ -17,11 +17,14 @@ public class PlanScreen : KIconToggleMenu
 
 		public List<string> data;
 
-		public PlanInfo(HashedString category, bool hideIfNotResearched, List<string> data)
+		public string RequiredDlcId;
+
+		public PlanInfo(HashedString category, bool hideIfNotResearched, List<string> data, string RequiredDlcId = "")
 		{
 			this.category = category;
 			this.hideIfNotResearched = hideIfNotResearched;
 			this.data = data;
+			this.RequiredDlcId = RequiredDlcId;
 		}
 	}
 
@@ -209,7 +212,7 @@ public class PlanScreen : KIconToggleMenu
 		},
 		{
 			CacheHashedString("HEP"),
-			"icon_category_rocketry"
+			"icon_category_radiation"
 		}
 	};
 
@@ -436,6 +439,10 @@ public class PlanScreen : KIconToggleMenu
 		for (int i = 0; i < TUNING.BUILDINGS.PLANORDER.Count; i++)
 		{
 			PlanInfo planInfo = TUNING.BUILDINGS.PLANORDER[i];
+			if (!DlcManager.IsContentActive(planInfo.RequiredDlcId))
+			{
+				continue;
+			}
 			Action action = (Action)((i < 14) ? (36 + i) : 266);
 			string icon = iconNameMap[planInfo.category];
 			string str = HashCache.Get().Get(planInfo.category).ToUpper();
@@ -1113,7 +1120,7 @@ public class PlanScreen : KIconToggleMenu
 				text = string.Format(UI.PRODUCTINFO_REQUIRESRESEARCHDESC, techItem.ParentTech.Name);
 				break;
 			case RequirementsState.TelepadBuilt:
-				text = string.Format(UI.PRODUCTINFO_UNIQUE_PER_WORLD, def.BuildingComplete.GetProperName());
+				text = UI.PRODUCTINFO_UNIQUE_PER_WORLD;
 				break;
 			case RequirementsState.RocketInteriorOnly:
 				text = UI.PRODUCTINFO_ROCKET_INTERIOR;
@@ -1122,7 +1129,7 @@ public class PlanScreen : KIconToggleMenu
 				text = UI.PRODUCTINFO_ROCKET_NOT_INTERIOR;
 				break;
 			case RequirementsState.UniquePerWorld:
-				text = string.Format(UI.PRODUCTINFO_UNIQUE_PER_WORLD, def.BuildingComplete.GetProperName());
+				text = UI.PRODUCTINFO_UNIQUE_PER_WORLD;
 				break;
 			case RequirementsState.Materials:
 				text = UI.PRODUCTINFO_MISSINGRESOURCES_HOVER;

@@ -283,21 +283,24 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 			LoopingSoundManager.Get().UpdateSecondParameter(value.handle, HASH_LIQUIDVOLUME, SoundUtil.GetLiquidVolume(base_mass));
 			topSounds[num] = value;
 		}
+		int num2 = base_disease_count;
 		while (base_mass > 0f)
 		{
-			float num2 = UnityEngine.Random.value * 2f * particleMassVariation - particleMassVariation;
-			float num3 = Mathf.Max(0f, Mathf.Min(base_mass, particleMassToSplit + num2));
-			float num4 = num3 / base_mass;
-			base_mass -= num3;
-			int disease_count = (int)(num4 * (float)base_disease_count);
+			float num3 = UnityEngine.Random.value * 2f * particleMassVariation - particleMassVariation;
+			float num4 = Mathf.Max(0f, Mathf.Min(base_mass, particleMassToSplit + num3));
+			float num5 = num4 / base_mass;
+			base_mass -= num4;
+			int b = (int)(num5 * (float)base_disease_count);
+			b = Mathf.Min(num2, b);
+			num2 = Mathf.Max(0, num2 - b);
 			int frame = UnityEngine.Random.Range(0, numFrames);
-			Vector2 b = (disable_randomness ? Vector2.zero : new Vector2(jitterStep * Mathf.Sin(offset), jitterStep * Mathf.Sin(offset + 17f)));
-			Vector2 b2 = (disable_randomness ? Vector2.zero : new Vector2(UnityEngine.Random.Range(0f - multipleOffsetRange.x, multipleOffsetRange.x), UnityEngine.Random.Range(0f - multipleOffsetRange.y, multipleOffsetRange.y)));
+			Vector2 b2 = (disable_randomness ? Vector2.zero : new Vector2(jitterStep * Mathf.Sin(offset), jitterStep * Mathf.Sin(offset + 17f)));
+			Vector2 b3 = (disable_randomness ? Vector2.zero : new Vector2(UnityEngine.Random.Range(0f - multipleOffsetRange.x, multipleOffsetRange.x), UnityEngine.Random.Range(0f - multipleOffsetRange.y, multipleOffsetRange.y)));
 			Element element = ElementLoader.elements[elementIdx];
 			Vector2 vector = root_pos;
 			bool flag = !skip_decor && SpawnLiquidTopDecor(time, Grid.CellLeft(num), flip: false, element);
 			bool flag2 = !skip_decor && SpawnLiquidTopDecor(time, Grid.CellRight(num), flip: true, element);
-			Vector2 vector2 = Vector2.ClampMagnitude(initialOffset + b + b2, 1f);
+			Vector2 vector2 = Vector2.ClampMagnitude(initialOffset + b2 + b3, 1f);
 			if (flag || flag2)
 			{
 				if (flag && flag2)
@@ -320,15 +323,15 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 				vector += vector2;
 				vector.x += 0.5f;
 			}
-			int num5 = Grid.PosToCell(vector);
-			Element element2 = Grid.Element[num5];
+			int num6 = Grid.PosToCell(vector);
+			Element element2 = Grid.Element[num6];
 			Element.State state = element2.state & Element.State.Solid;
-			if (state == Element.State.Solid || (Grid.Properties[num5] & 2u) != 0)
+			if (state == Element.State.Solid || (Grid.Properties[num6] & 2u) != 0)
 			{
 				vector.y = Mathf.Floor(vector.y + 1f);
 			}
 			physics.Add(new ParticlePhysics(vector, Vector2.zero, frame, elementIdx));
-			particleProperties.Add(new ParticleProperties(elementIdx, num3, temperature, disease_idx, disease_count, debug_track));
+			particleProperties.Add(new ParticleProperties(elementIdx, num4, temperature, disease_idx, b, debug_track));
 		}
 	}
 

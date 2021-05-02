@@ -14,6 +14,20 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 	[MyCmpAdd]
 	private CopyBuildingSettings copyBuildingSettings;
 
+	public static readonly Color32 FILTER_TINT = Color.white;
+
+	public static readonly Color32 NO_FILTER_TINT = new Color(128f / 255f, 128f / 255f, 128f / 255f, 1f);
+
+	public Color32 filterTint = FILTER_TINT;
+
+	public Color32 noFilterTint = NO_FILTER_TINT;
+
+	[SerializeField]
+	public bool dropIncorrectOnFilterChange = true;
+
+	[SerializeField]
+	public bool autoSelectStoredOnLoad = true;
+
 	public bool showUserMenu = true;
 
 	public bool filterByStorageCategoriesOnSpawn = true;
@@ -80,7 +94,7 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 	protected override void OnSpawn()
 	{
 		DiscoveredResources.Instance.OnDiscover += OnDiscover;
-		if (storage != null)
+		if (autoSelectStoredOnLoad && storage != null)
 		{
 			List<Tag> list = new List<Tag>();
 			list.AddRange(acceptedTags);
@@ -91,6 +105,7 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 		{
 			OnFilterChanged(acceptedTags.ToArray());
 		}
+		RefreshTint();
 		if (filterByStorageCategoriesOnSpawn)
 		{
 			RemoveIncorrectAcceptedTags();
@@ -176,7 +191,8 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 		{
 			OnFilterChanged(acceptedTags.ToArray());
 		}
-		if (!(storage != null) || storage.items == null)
+		RefreshTint();
+		if (!dropIncorrectOnFilterChange || !(storage != null) || storage.items == null)
 		{
 			return;
 		}
@@ -231,5 +247,13 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 			text = "No tags selected";
 		}
 		return text;
+	}
+
+	private void RefreshTint()
+	{
+		bool flag = acceptedTags != null && acceptedTags.Count != 0;
+		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
+		component.TintColour = (flag ? filterTint : noFilterTint);
+		GetComponent<KSelectable>().ToggleStatusItem(Db.Get().BuildingStatusItems.NoStorageFilterSet, !flag, this);
 	}
 }

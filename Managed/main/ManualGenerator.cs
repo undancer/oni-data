@@ -203,7 +203,7 @@ public class ManualGenerator : Workable, ISingleSliderControl, ISliderControl
 		{
 			return;
 		}
-		ushort circuitID = circuitManager.GetCircuitID(powerCell);
+		ushort circuitID = circuitManager.GetCircuitID(generator);
 		bool flag = circuitManager.HasBatteries(circuitID);
 		bool flag2 = false;
 		if (!flag && circuitManager.HasConsumers(circuitID))
@@ -248,7 +248,7 @@ public class ManualGenerator : Workable, ISingleSliderControl, ISliderControl
 		bool flag = false;
 		if (circuitManager != null)
 		{
-			ushort circuitID = circuitManager.GetCircuitID(powerCell);
+			ushort circuitID = circuitManager.GetCircuitID(generator);
 			bool flag2 = circuitManager.HasBatteries(circuitID);
 			flag = (flag2 && circuitManager.GetMinBatteryPercentFullOnCircuit(circuitID) < 1f) || (!flag2 && circuitManager.HasConsumers(circuitID));
 		}

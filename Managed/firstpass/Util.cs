@@ -29,6 +29,8 @@ public static class Util
 
 	private static string defaultRootFolder = Application.persistentDataPath;
 
+	private static string consoleLogPath = Application.consoleLogPath;
+
 	public static void Swap<T>(ref T a, ref T b)
 	{
 		T val = a;
@@ -579,12 +581,12 @@ public static class Util
 
 	public static string LogFilePath()
 	{
-		return Application.consoleLogPath;
+		return consoleLogPath;
 	}
 
 	public static string LogsFolder()
 	{
-		return Path.GetDirectoryName(Application.consoleLogPath);
+		return Path.GetDirectoryName(consoleLogPath);
 	}
 
 	public static string CacheFolder()
@@ -654,5 +656,18 @@ public static class Util
 		{
 			thread.CurrentCulture = CultureInfo.InvariantCulture;
 		}
+	}
+
+	public static bool IsNullOrDestroyed(this object obj)
+	{
+		if (obj == null)
+		{
+			return true;
+		}
+		if (obj is UnityEngine.Object)
+		{
+			return obj as UnityEngine.Object == null;
+		}
+		return false;
 	}
 }

@@ -134,7 +134,7 @@ namespace Klei.AI
 				foreach (AttributeModifier selfModifier in effect.SelfModifiers)
 				{
 					Attribute attribute = Db.Get().Attributes.TryGet(selfModifier.AttributeId);
-					string str = string.Format(DUPLICANTS.MODIFIERS.MODIFIER_FORMAT, attribute.Name, selfModifier.GetFormattedString(null));
+					string str = string.Format(DUPLICANTS.MODIFIERS.MODIFIER_FORMAT, attribute.Name, selfModifier.GetFormattedString());
 					str = str + "\n" + string.Format(DUPLICANTS.MODIFIERS.TIME_TOTAL, GameUtil.GetFormattedCycles(effect.duration));
 					Sprite sprite = Assets.GetSprite(attribute.uiFullColourSprite);
 					popupOption.AddPositiveIcon(sprite, str, 1.75f);

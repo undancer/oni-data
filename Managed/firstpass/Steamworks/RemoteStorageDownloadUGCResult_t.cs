@@ -16,9 +16,21 @@ namespace Steamworks
 
 		public int m_nSizeInBytes;
 
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-		public string m_pchFileName;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)]
+		private byte[] m_pchFileName_;
 
 		public ulong m_ulSteamIDOwner;
+
+		public string m_pchFileName
+		{
+			get
+			{
+				return InteropHelp.ByteArrayToStringUTF8(m_pchFileName_);
+			}
+			set
+			{
+				InteropHelp.StringToByteArrayUTF8(value, m_pchFileName_, 260);
+			}
+		}
 	}
 }

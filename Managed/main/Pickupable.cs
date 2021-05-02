@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using FMOD.Studio;
+using KSerialization;
 using STRINGS;
 using UnityEngine;
 
@@ -114,6 +115,9 @@ public class Pickupable : Workable, IHasSortOrder
 	public bool trackOnPickup = true;
 
 	private int nextTicketNumber;
+
+	[Serialize]
+	public bool deleteOffGrid = true;
 
 	private List<Reservation> reservations = new List<Reservation>();
 
@@ -370,7 +374,7 @@ public class Pickupable : Workable, IHasSortOrder
 	{
 		base.OnSpawn();
 		int num = Grid.PosToCell(this);
-		if (!Grid.IsValidCell(num))
+		if (!Grid.IsValidCell(num) && deleteOffGrid)
 		{
 			base.gameObject.DeleteObject();
 			return;
@@ -491,7 +495,7 @@ public class Pickupable : Workable, IHasSortOrder
 		{
 			Vector2 vector = new Vector2(-0.1f * (float)Grid.WidthInCells, 1.1f * (float)Grid.WidthInCells);
 			Vector2 vector2 = new Vector2(-0.1f * (float)Grid.HeightInCells, 1.1f * (float)Grid.HeightInCells);
-			if (position.x < vector.x || vector.y < position.x || position.y < vector2.x || vector2.y < position.y)
+			if (deleteOffGrid && (position.x < vector.x || vector.y < position.x || position.y < vector2.x || vector2.y < position.y))
 			{
 				this.DeleteObject();
 			}
@@ -586,7 +590,7 @@ public class Pickupable : Workable, IHasSortOrder
 			return false;
 		}
 		Absorb(other);
-		if (!hide_effects && EffectPrefabs.Instance != null)
+		if (!hide_effects && EffectPrefabs.Instance != null && !storage)
 		{
 			Vector3 position = base.transform.GetPosition();
 			position.z = Grid.GetLayerZ(Grid.SceneLayer.Front);
@@ -666,7 +670,12 @@ public class Pickupable : Workable, IHasSortOrder
 
 	private void RefreshStorageTags(object data = null)
 	{
-		if (data is Storage || (data != null && (bool)data))
+		bool flag = data is Storage || (data != null && (bool)data);
+		if (flag && data is Storage && ((Storage)data).gameObject == base.gameObject)
+		{
+			return;
+		}
+		if (flag)
 		{
 			KPrefabID.AddTag(GameTags.Stored);
 			if ((object)storage == null || !storage.allowItemRemoval)

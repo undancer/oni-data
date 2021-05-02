@@ -22,6 +22,10 @@ namespace Database
 
 		public TechItem atmoSuit;
 
+		public const string OXYGEN_MASK_ID = "OxygenMask";
+
+		public TechItem oxygenMask;
+
 		public const string LEAD_SUIT_ID = "LeadSuit";
 
 		public TechItem leadSuit;
@@ -38,6 +42,10 @@ namespace Database
 
 		public TechItem deltaResearchPoint;
 
+		public const string ORBITAL_RESEARCH_POINT_ID = "OrbitalResearchPoint";
+
+		public TechItem orbitalResearchPoint;
+
 		public const string CONVEYOR_OVERLAY_ID = "ConveyorOverlay";
 
 		public TechItem conveyorOverlay;
@@ -53,6 +61,7 @@ namespace Database
 			suitsOverlay = AddTechItem("SuitsOverlay", RESEARCH.OTHER_TECH_ITEMS.SUITS_OVERLAY.NAME, RESEARCH.OTHER_TECH_ITEMS.SUITS_OVERLAY.DESC, GetSpriteFnBuilder("overlay_suit"), "");
 			betaResearchPoint = AddTechItem("BetaResearchPoint", RESEARCH.OTHER_TECH_ITEMS.BETA_RESEARCH_POINT.NAME, RESEARCH.OTHER_TECH_ITEMS.BETA_RESEARCH_POINT.DESC, GetSpriteFnBuilder("research_type_beta_icon"), "");
 			gammaResearchPoint = AddTechItem("GammaResearchPoint", RESEARCH.OTHER_TECH_ITEMS.GAMMA_RESEARCH_POINT.NAME, RESEARCH.OTHER_TECH_ITEMS.GAMMA_RESEARCH_POINT.DESC, GetSpriteFnBuilder("research_type_gamma_icon"), "");
+			orbitalResearchPoint = AddTechItem("OrbitalResearchPoint", RESEARCH.OTHER_TECH_ITEMS.ORBITAL_RESEARCH_POINT.NAME, RESEARCH.OTHER_TECH_ITEMS.ORBITAL_RESEARCH_POINT.DESC, GetSpriteFnBuilder("research_type_orbital_icon"), "");
 			conveyorOverlay = AddTechItem("ConveyorOverlay", RESEARCH.OTHER_TECH_ITEMS.CONVEYOR_OVERLAY.NAME, RESEARCH.OTHER_TECH_ITEMS.CONVEYOR_OVERLAY.DESC, GetSpriteFnBuilder("overlay_conveyor"), "");
 			jetSuit = AddTechItem("JetSuit", RESEARCH.OTHER_TECH_ITEMS.JET_SUIT.NAME, RESEARCH.OTHER_TECH_ITEMS.JET_SUIT.DESC, GetPrefabSpriteFnBuilder("Jet_Suit".ToTag()), "");
 			atmoSuit = AddTechItem("AtmoSuit", RESEARCH.OTHER_TECH_ITEMS.ATMO_SUIT.NAME, RESEARCH.OTHER_TECH_ITEMS.ATMO_SUIT.DESC, GetPrefabSpriteFnBuilder("Atmo_Suit".ToTag()), "");
@@ -60,6 +69,7 @@ namespace Database
 			{
 				deltaResearchPoint = AddTechItem("DeltaResearchPoint", RESEARCH.OTHER_TECH_ITEMS.DELTA_RESEARCH_POINT.NAME, RESEARCH.OTHER_TECH_ITEMS.DELTA_RESEARCH_POINT.DESC, GetSpriteFnBuilder("research_type_delta_icon"), "EXPANSION1_ID");
 				leadSuit = AddTechItem("LeadSuit", RESEARCH.OTHER_TECH_ITEMS.LEAD_SUIT.NAME, RESEARCH.OTHER_TECH_ITEMS.LEAD_SUIT.DESC, GetPrefabSpriteFnBuilder("Lead_Suit".ToTag()), "EXPANSION1_ID");
+				oxygenMask = AddTechItem("OxygenMask", RESEARCH.OTHER_TECH_ITEMS.OXYGEN_MASK.NAME, RESEARCH.OTHER_TECH_ITEMS.OXYGEN_MASK.DESC, GetPrefabSpriteFnBuilder("Oxygen_Mask".ToTag()), "EXPANSION1_ID");
 			}
 		}
 

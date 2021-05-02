@@ -15,28 +15,28 @@ namespace Steamworks
 		{
 			InteropHelp.TestIfAvailableClient();
 			using InteropHelp.UTF8StringHandle pchName2 = new InteropHelp.UTF8StringHandle(pchName);
-			return NativeMethods.ISteamUserStats_GetStat(CSteamAPIContext.GetSteamUserStats(), pchName2, out pData);
+			return NativeMethods.ISteamUserStats_GetStatInt32(CSteamAPIContext.GetSteamUserStats(), pchName2, out pData);
 		}
 
 		public static bool GetStat(string pchName, out float pData)
 		{
 			InteropHelp.TestIfAvailableClient();
 			using InteropHelp.UTF8StringHandle pchName2 = new InteropHelp.UTF8StringHandle(pchName);
-			return NativeMethods.ISteamUserStats_GetStat0(CSteamAPIContext.GetSteamUserStats(), pchName2, out pData);
+			return NativeMethods.ISteamUserStats_GetStatFloat(CSteamAPIContext.GetSteamUserStats(), pchName2, out pData);
 		}
 
 		public static bool SetStat(string pchName, int nData)
 		{
 			InteropHelp.TestIfAvailableClient();
 			using InteropHelp.UTF8StringHandle pchName2 = new InteropHelp.UTF8StringHandle(pchName);
-			return NativeMethods.ISteamUserStats_SetStat(CSteamAPIContext.GetSteamUserStats(), pchName2, nData);
+			return NativeMethods.ISteamUserStats_SetStatInt32(CSteamAPIContext.GetSteamUserStats(), pchName2, nData);
 		}
 
 		public static bool SetStat(string pchName, float fData)
 		{
 			InteropHelp.TestIfAvailableClient();
 			using InteropHelp.UTF8StringHandle pchName2 = new InteropHelp.UTF8StringHandle(pchName);
-			return NativeMethods.ISteamUserStats_SetStat0(CSteamAPIContext.GetSteamUserStats(), pchName2, fData);
+			return NativeMethods.ISteamUserStats_SetStatFloat(CSteamAPIContext.GetSteamUserStats(), pchName2, fData);
 		}
 
 		public static bool UpdateAvgRateStat(string pchName, float flCountThisSession, double dSessionLength)
@@ -124,14 +124,14 @@ namespace Steamworks
 		{
 			InteropHelp.TestIfAvailableClient();
 			using InteropHelp.UTF8StringHandle pchName2 = new InteropHelp.UTF8StringHandle(pchName);
-			return NativeMethods.ISteamUserStats_GetUserStat(CSteamAPIContext.GetSteamUserStats(), steamIDUser, pchName2, out pData);
+			return NativeMethods.ISteamUserStats_GetUserStatInt32(CSteamAPIContext.GetSteamUserStats(), steamIDUser, pchName2, out pData);
 		}
 
 		public static bool GetUserStat(CSteamID steamIDUser, string pchName, out float pData)
 		{
 			InteropHelp.TestIfAvailableClient();
 			using InteropHelp.UTF8StringHandle pchName2 = new InteropHelp.UTF8StringHandle(pchName);
-			return NativeMethods.ISteamUserStats_GetUserStat0(CSteamAPIContext.GetSteamUserStats(), steamIDUser, pchName2, out pData);
+			return NativeMethods.ISteamUserStats_GetUserStatFloat(CSteamAPIContext.GetSteamUserStats(), steamIDUser, pchName2, out pData);
 		}
 
 		public static bool GetUserAchievement(CSteamID steamIDUser, string pchName, out bool pbAchieved)
@@ -271,28 +271,42 @@ namespace Steamworks
 		{
 			InteropHelp.TestIfAvailableClient();
 			using InteropHelp.UTF8StringHandle pchStatName2 = new InteropHelp.UTF8StringHandle(pchStatName);
-			return NativeMethods.ISteamUserStats_GetGlobalStat(CSteamAPIContext.GetSteamUserStats(), pchStatName2, out pData);
+			return NativeMethods.ISteamUserStats_GetGlobalStatInt64(CSteamAPIContext.GetSteamUserStats(), pchStatName2, out pData);
 		}
 
 		public static bool GetGlobalStat(string pchStatName, out double pData)
 		{
 			InteropHelp.TestIfAvailableClient();
 			using InteropHelp.UTF8StringHandle pchStatName2 = new InteropHelp.UTF8StringHandle(pchStatName);
-			return NativeMethods.ISteamUserStats_GetGlobalStat0(CSteamAPIContext.GetSteamUserStats(), pchStatName2, out pData);
+			return NativeMethods.ISteamUserStats_GetGlobalStatDouble(CSteamAPIContext.GetSteamUserStats(), pchStatName2, out pData);
 		}
 
 		public static int GetGlobalStatHistory(string pchStatName, long[] pData, uint cubData)
 		{
 			InteropHelp.TestIfAvailableClient();
 			using InteropHelp.UTF8StringHandle pchStatName2 = new InteropHelp.UTF8StringHandle(pchStatName);
-			return NativeMethods.ISteamUserStats_GetGlobalStatHistory(CSteamAPIContext.GetSteamUserStats(), pchStatName2, pData, cubData);
+			return NativeMethods.ISteamUserStats_GetGlobalStatHistoryInt64(CSteamAPIContext.GetSteamUserStats(), pchStatName2, pData, cubData);
 		}
 
 		public static int GetGlobalStatHistory(string pchStatName, double[] pData, uint cubData)
 		{
 			InteropHelp.TestIfAvailableClient();
 			using InteropHelp.UTF8StringHandle pchStatName2 = new InteropHelp.UTF8StringHandle(pchStatName);
-			return NativeMethods.ISteamUserStats_GetGlobalStatHistory0(CSteamAPIContext.GetSteamUserStats(), pchStatName2, pData, cubData);
+			return NativeMethods.ISteamUserStats_GetGlobalStatHistoryDouble(CSteamAPIContext.GetSteamUserStats(), pchStatName2, pData, cubData);
+		}
+
+		public static bool GetAchievementProgressLimits(string pchName, out int pnMinProgress, out int pnMaxProgress)
+		{
+			InteropHelp.TestIfAvailableClient();
+			using InteropHelp.UTF8StringHandle pchName2 = new InteropHelp.UTF8StringHandle(pchName);
+			return NativeMethods.ISteamUserStats_GetAchievementProgressLimitsInt32(CSteamAPIContext.GetSteamUserStats(), pchName2, out pnMinProgress, out pnMaxProgress);
+		}
+
+		public static bool GetAchievementProgressLimits(string pchName, out float pfMinProgress, out float pfMaxProgress)
+		{
+			InteropHelp.TestIfAvailableClient();
+			using InteropHelp.UTF8StringHandle pchName2 = new InteropHelp.UTF8StringHandle(pchName);
+			return NativeMethods.ISteamUserStats_GetAchievementProgressLimitsFloat(CSteamAPIContext.GetSteamUserStats(), pchName2, out pfMinProgress, out pfMaxProgress);
 		}
 	}
 }

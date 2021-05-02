@@ -11,6 +11,8 @@ public class OccupyArea : KMonoBehaviour
 
 	private CellOffset[] AboveOccupiedCellOffsets;
 
+	private CellOffset[] BelowOccupiedCellOffsets;
+
 	private int[] occupiedGridCells;
 
 	public ObjectLayer[] objectLayers = new ObjectLayer[0];
@@ -212,6 +214,15 @@ public class OccupyArea : KMonoBehaviour
 				Gizmos.DrawWireCube(Grid.CellToPos(Grid.OffsetCell(cell, offset2)) + Vector3.right / 2f + Vector3.up / 2f, Vector3.one * 0.9f);
 			}
 		}
+		if (BelowOccupiedCellOffsets != null)
+		{
+			CellOffset[] belowOccupiedCellOffsets = BelowOccupiedCellOffsets;
+			foreach (CellOffset offset3 in belowOccupiedCellOffsets)
+			{
+				Gizmos.color = Color.yellow;
+				Gizmos.DrawWireCube(Grid.CellToPos(Grid.OffsetCell(cell, offset3)) + Vector3.right / 2f + Vector3.up / 2f, Vector3.one * 0.9f);
+			}
+		}
 	}
 
 	public bool CanOccupyArea(int rootCell, ObjectLayer layer)
@@ -260,6 +271,32 @@ public class OccupyArea : KMonoBehaviour
 		for (int j = 0; j < AboveOccupiedCellOffsets.Length; j++)
 		{
 			int arg = Grid.OffsetCell(rootCell, AboveOccupiedCellOffsets[j]);
+			if (!testDelegate(arg, data))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public bool TestAreaBelow(int rootCell, object data, Func<int, object, bool> testDelegate)
+	{
+		if (BelowOccupiedCellOffsets == null)
+		{
+			List<CellOffset> list = new List<CellOffset>();
+			for (int i = 0; i < OccupiedCellsOffsets.Length; i++)
+			{
+				CellOffset cellOffset = new CellOffset(OccupiedCellsOffsets[i].x, OccupiedCellsOffsets[i].y - 1);
+				if (Array.IndexOf(OccupiedCellsOffsets, cellOffset) == -1)
+				{
+					list.Add(cellOffset);
+				}
+			}
+			BelowOccupiedCellOffsets = list.ToArray();
+		}
+		for (int j = 0; j < BelowOccupiedCellOffsets.Length; j++)
+		{
+			int arg = Grid.OffsetCell(rootCell, BelowOccupiedCellOffsets[j]);
 			if (!testDelegate(arg, data))
 			{
 				return false;

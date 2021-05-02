@@ -48,12 +48,16 @@ namespace Klei.AI
 			private float timeRemaining;
 
 			[Serialize]
+			private float timeBetweenMeteors;
+
+			[Serialize]
 			private int m_worldId;
 
 			public StatesInstance(GameplayEventManager master, GameplayEventInstance eventInstance, MeteorShowerEvent meteorShowerEvent)
 				: base(master, eventInstance, meteorShowerEvent)
 			{
 				timeRemaining = gameplayEvent.duration;
+				timeBetweenMeteors = gameplayEvent.secondsPerMeteor;
 				m_worldId = eventInstance.worldId;
 				if (activeMeteorBackground == null)
 				{
@@ -90,7 +94,7 @@ namespace Klei.AI
 				while (nextMeteorTime < 0f)
 				{
 					DoBombardment(gameplayEvent.bombardmentInfo);
-					nextMeteorTime += 0.33f;
+					nextMeteorTime += timeBetweenMeteors;
 				}
 				timeRemaining -= dt;
 				if (timeRemaining <= 0f)
@@ -122,7 +126,7 @@ namespace Klei.AI
 			{
 				WorldContainer world = ClusterManager.Instance.GetWorld(m_worldId);
 				float x = (float)world.Width * Random.value + (float)world.WorldOffset.x;
-				float y = world.Height + world.WorldOffset.y;
+				float y = world.Height + world.WorldOffset.y - 1;
 				float layerZ = Grid.GetLayerZ(Grid.SceneLayer.FXFront);
 				GameObject gameObject = Util.KInstantiate(position: new Vector3(x, y, layerZ), original: Assets.GetPrefab(prefab), rotation: Quaternion.identity);
 				gameObject.SetActive(value: true);
@@ -132,14 +136,15 @@ namespace Klei.AI
 
 		private List<BombardmentInfo> bombardmentInfo;
 
-		private const float SECONDS_PER_METEOR = 0.33f;
+		private float secondsPerMeteor = 0.33f;
 
 		private float duration;
 
-		public MeteorShowerEvent(string id, float duration)
+		public MeteorShowerEvent(string id, float duration, float secondsPerMeteor = 0.33f)
 			: base(id, 0, 0)
 		{
 			this.duration = duration;
+			this.secondsPerMeteor = secondsPerMeteor;
 			bombardmentInfo = new List<BombardmentInfo>();
 			tags.Add(GameTags.SpaceDanger);
 		}

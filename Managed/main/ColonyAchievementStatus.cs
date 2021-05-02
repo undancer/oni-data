@@ -16,7 +16,7 @@ public class ColonyAchievementStatus
 
 	public ColonyAchievementStatus(string achievementId)
 	{
-		m_achievement = Db.Get().ColonyAchievements.Get(achievementId);
+		m_achievement = Db.Get().ColonyAchievements.TryGet(achievementId);
 	}
 
 	public void UpdateAchievement()

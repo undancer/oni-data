@@ -41,6 +41,10 @@ namespace TUNING
 
 		public class TEMPERATURE
 		{
+			public static float FREEZING_10 = 173f;
+
+			public static float FREEZING_9 = 183f;
+
 			public static float FREEZING_3 = 243f;
 
 			public static float FREEZING_2 = 253f;
@@ -96,6 +100,8 @@ namespace TUNING
 
 		public class SPACE_REQUIREMENTS
 		{
+			public static int TIER1 = 4;
+
 			public static int TIER2 = 8;
 
 			public static int TIER3 = 12;

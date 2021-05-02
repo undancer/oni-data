@@ -20,13 +20,13 @@ public class ToePlantConfig : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject gameObject = EntityTemplates.CreatePlacedEntity("ToePlant", STRINGS.CREATURES.SPECIES.TOEPLANT.NAME, STRINGS.CREATURES.SPECIES.TOEPLANT.DESC, 1f, decor: POSITIVE_DECOR_EFFECT, anim: Assets.GetAnim("potted_toes_kanim"), initialAnim: "grow_seed", sceneLayer: Grid.SceneLayer.BuildingFront, width: 1, height: 1);
-		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 218.15f, 283.15f, 303.15f, 398.15f, new SimHashes[3]
+		GameObject gameObject = EntityTemplates.CreatePlacedEntity("ToePlant", STRINGS.CREATURES.SPECIES.TOEPLANT.NAME, STRINGS.CREATURES.SPECIES.TOEPLANT.DESC, 1f, decor: POSITIVE_DECOR_EFFECT, anim: Assets.GetAnim("potted_toes_kanim"), initialAnim: "grow_seed", sceneLayer: Grid.SceneLayer.BuildingFront, width: 1, height: 1, noise: default(EffectorValues), element: SimHashes.Creature, additionalTags: null, defaultTemperature: TUNING.CREATURES.TEMPERATURE.FREEZING_3);
+		EntityTemplates.ExtendEntityToBasicPlant(gameObject, safe_elements: new SimHashes[3]
 		{
 			SimHashes.Oxygen,
 			SimHashes.ContaminatedOxygen,
 			SimHashes.CarbonDioxide
-		}, pressure_sensitive: true, 0f, 0.15f, null, can_drown: true, can_tinker: false);
+		}, temperature_lethal_low: TUNING.CREATURES.TEMPERATURE.FREEZING_10, temperature_warning_low: TUNING.CREATURES.TEMPERATURE.FREEZING_9, temperature_warning_high: TUNING.CREATURES.TEMPERATURE.FREEZING, temperature_lethal_high: TUNING.CREATURES.TEMPERATURE.COOL, pressure_sensitive: true, pressure_lethal_low: 0f, pressure_warning_low: 0.15f, crop_id: null, can_drown: true, can_tinker: false, require_solid_tile: true, should_grow_old: true, max_age: 2400f, baseTraitId: "ToePlantOriginal", baseTraitName: STRINGS.CREATURES.SPECIES.TOEPLANT.NAME);
 		PrickleGrass prickleGrass = gameObject.AddOrGet<PrickleGrass>();
 		prickleGrass.positive_decor_effect = POSITIVE_DECOR_EFFECT;
 		prickleGrass.negative_decor_effect = NEGATIVE_DECOR_EFFECT;

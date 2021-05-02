@@ -146,6 +146,8 @@ public class CameraController : KMonoBehaviour, IInputHandler
 
 	private Coroutine activeFadeRoutine;
 
+	private float smoothDt = 0f;
+
 	public string handlerName => base.gameObject.name;
 
 	public KInputHandler inputHandler
@@ -377,15 +379,15 @@ public class CameraController : KMonoBehaviour, IInputHandler
 
 	public void ActiveWorldStarWipe(int id, System.Action callback = null)
 	{
-		ActiveWorldStarWipe(id, useForcePosition: false, default(Vector3), callback);
+		ActiveWorldStarWipe(id, useForcePosition: false, default(Vector3), 10f, callback);
 	}
 
-	public void ActiveWorldStarWipe(int id, Vector3 position, System.Action callback = null)
+	public void ActiveWorldStarWipe(int id, Vector3 position, float forceOrthgraphicSize = 10f, System.Action callback = null)
 	{
-		ActiveWorldStarWipe(id, useForcePosition: true, position, callback);
+		ActiveWorldStarWipe(id, useForcePosition: true, position, forceOrthgraphicSize, callback);
 	}
 
-	private void ActiveWorldStarWipe(int id, bool useForcePosition, Vector3 forcePosition, System.Action callback)
+	private void ActiveWorldStarWipe(int id, bool useForcePosition, Vector3 forcePosition, float forceOrthgraphicSize, System.Action callback)
 	{
 		if (activeFadeRoutine != null)
 		{
@@ -393,7 +395,7 @@ public class CameraController : KMonoBehaviour, IInputHandler
 		}
 		if (ClusterManager.Instance.activeWorldId != id)
 		{
-			activeFadeRoutine = StartCoroutine(SwapToWorldFade(id, useForcePosition, forcePosition, callback));
+			activeFadeRoutine = StartCoroutine(SwapToWorldFade(id, useForcePosition, forcePosition, forceOrthgraphicSize, callback));
 			return;
 		}
 		ManagementMenu.Instance.CloseAll();
@@ -404,14 +406,14 @@ public class CameraController : KMonoBehaviour, IInputHandler
 		}
 	}
 
-	private IEnumerator SwapToWorldFade(int worldId, bool useForcePosition, Vector3 forcePosition, System.Action newWorldCallback)
+	private IEnumerator SwapToWorldFade(int worldId, bool useForcePosition, Vector3 forcePosition, float forceOrthgraphicSize, System.Action newWorldCallback)
 	{
 		AudioMixer.instance.Start(AudioMixerSnapshots.Get().ActiveBaseChangeSnapshot);
 		yield return StartCoroutine(FadeWithBlack(fadeUI: false, 0f, 1f, 3f));
 		ClusterManager.Instance.SetActiveWorld(worldId);
 		if (useForcePosition)
 		{
-			Instance.SetTargetPos(forcePosition, 10f, playSound: false);
+			Instance.SetTargetPos(forcePosition, forceOrthgraphicSize, playSound: false);
 			Instance.SetPosition(forcePosition);
 		}
 		newWorldCallback?.Invoke();
@@ -484,14 +486,14 @@ public class CameraController : KMonoBehaviour, IInputHandler
 			}
 			else if (e.TryConsume(Action.ZoomIn))
 			{
-				float a = targetOrthographicSize - zoomFactor * targetOrthographicSize;
+				float a = targetOrthographicSize * (1f / zoomFactor);
 				targetOrthographicSize = Mathf.Max(a, minOrthographicSize);
 				overrideZoomSpeed = 0f;
 				isTargetPosSet = false;
 			}
 			else if (e.TryConsume(Action.ZoomOut))
 			{
-				float a2 = targetOrthographicSize + zoomFactor * targetOrthographicSize;
+				float a2 = targetOrthographicSize * zoomFactor;
 				targetOrthographicSize = Mathf.Min(a2, FreeCameraEnabled ? TuningData<Tuning>.Get().maxOrthographicSizeDebug : maxOrthographicSize);
 				overrideZoomSpeed = 0f;
 				isTargetPosSet = false;
@@ -645,10 +647,15 @@ public class CameraController : KMonoBehaviour, IInputHandler
 		}
 		if (num != -1)
 		{
-			WorldContainer world = ClusterManager.Instance.GetWorld(num);
-			if (world != null && world.IsDiscovered && ClusterManager.Instance.activeWorldId != world.id)
+			List<int> discoveredAsteroidIDsSorted = ClusterManager.Instance.GetDiscoveredAsteroidIDsSorted();
+			if (num < discoveredAsteroidIDsSorted.Count && num >= 0)
 			{
-				ActiveWorldStarWipe(world.id);
+				num = discoveredAsteroidIDsSorted[num];
+				WorldContainer world = ClusterManager.Instance.GetWorld(num);
+				if (world != null && world.IsDiscovered && ClusterManager.Instance.activeWorldId != world.id)
+				{
+					ActiveWorldStarWipe(world.id);
+				}
 			}
 			return true;
 		}
@@ -753,15 +760,34 @@ public class CameraController : KMonoBehaviour, IInputHandler
 
 	public void SetTargetPos(Vector3 pos, float orthographic_size, bool playSound)
 	{
+		int num = Grid.WorldIdx[Grid.PosToCell(pos)];
+		if (num == ClusterManager.INVALID_WORLD_IDX || ClusterManager.Instance.GetWorld(num) == null)
+		{
+			return;
+		}
 		ClearFollowTarget();
 		if (playSound && !isTargetPosSet)
 		{
 			KMonoBehaviour.PlaySound(GlobalAssets.GetSound("Click_Notification"));
 		}
-		isTargetPosSet = true;
 		pos.z = -100f;
-		targetPos = pos;
-		targetOrthographicSize = orthographic_size;
+		if (num != ClusterManager.Instance.activeWorldId)
+		{
+			targetOrthographicSize = 20f;
+			ActiveWorldStarWipe(num, pos, 10f, delegate
+			{
+				targetPos = pos;
+				isTargetPosSet = true;
+				SetOrthographicsSize(orthographic_size + 5f);
+				targetOrthographicSize = orthographic_size;
+			});
+		}
+		else
+		{
+			targetPos = pos;
+			isTargetPosSet = true;
+			targetOrthographicSize = orthographic_size;
+		}
 		PlayerController.Instance.CancelDragging();
 		CheckMoveUnpause();
 	}
@@ -934,13 +960,14 @@ public class CameraController : KMonoBehaviour, IInputHandler
 	{
 		float unscaledDeltaTime = Time.unscaledDeltaTime;
 		Camera main = Camera.main;
+		smoothDt = smoothDt * 2f / 3f + unscaledDeltaTime / 3f;
 		float num = ((overrideZoomSpeed != 0f) ? overrideZoomSpeed : zoomSpeed);
 		Vector3 localPosition = base.transform.GetLocalPosition();
 		Vector3 vector = ((overrideZoomSpeed != 0f) ? new Vector3((float)Screen.width / 2f, (float)Screen.height / 2f, 0f) : KInputManager.GetMousePos());
 		Vector3 position = PointUnderCursor(vector, main);
 		Vector3 position2 = main.ScreenToViewportPoint(vector);
 		float num2 = keyPanningSpeed / 20f * main.orthographicSize;
-		float t = Mathf.Min(num * unscaledDeltaTime, 0.1f);
+		float t = num * Mathf.Min(smoothDt, 0.3f);
 		SetOrthographicsSize(Mathf.Lerp(main.orthographicSize, targetOrthographicSize, t));
 		base.transform.SetLocalPosition(localPosition);
 		Vector3 position3 = main.WorldToViewportPoint(position);
@@ -948,7 +975,7 @@ public class CameraController : KMonoBehaviour, IInputHandler
 		Vector3 b = main.ViewportToWorldPoint(position3) - main.ViewportToWorldPoint(position2);
 		if (isTargetPosSet)
 		{
-			b = Vector3.Lerp(localPosition, targetPos, num * unscaledDeltaTime) - localPosition;
+			b = Vector3.Lerp(localPosition, targetPos, num * smoothDt) - localPosition;
 			if (b.magnitude < 0.001f)
 			{
 				isTargetPosSet = false;
@@ -1004,7 +1031,7 @@ public class CameraController : KMonoBehaviour, IInputHandler
 				isTargetPosSet = false;
 				overrideZoomSpeed = 0f;
 			}
-			Vector3 vector3 = new Vector3(Mathf.Lerp(0f, keyPanDelta.x, unscaledDeltaTime * keyPanningEasing), Mathf.Lerp(0f, keyPanDelta.y, unscaledDeltaTime * keyPanningEasing), 0f);
+			Vector3 vector3 = new Vector3(Mathf.Lerp(0f, keyPanDelta.x, smoothDt * keyPanningEasing), Mathf.Lerp(0f, keyPanDelta.y, smoothDt * keyPanningEasing), 0f);
 			keyPanDelta -= vector3;
 			vector2.x += vector3.x;
 			vector2.y += vector3.y;

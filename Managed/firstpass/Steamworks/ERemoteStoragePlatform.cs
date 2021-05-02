@@ -10,7 +10,7 @@ namespace Steamworks
 		k_ERemoteStoragePlatformOSX = 0x2,
 		k_ERemoteStoragePlatformPS3 = 0x4,
 		k_ERemoteStoragePlatformLinux = 0x8,
-		k_ERemoteStoragePlatformReserved2 = 0x10,
+		k_ERemoteStoragePlatformSwitch = 0x10,
 		k_ERemoteStoragePlatformAndroid = 0x20,
 		k_ERemoteStoragePlatformIOS = 0x40,
 		k_ERemoteStoragePlatformAll = -1

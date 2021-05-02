@@ -75,58 +75,83 @@ namespace STRINGS
 				public static LocString NAME = "Original";
 			}
 
-			public class BASIC_MUTATION_A
+			public class MODERATELYLOOSE
 			{
-				public static LocString NAME = "Plentiful";
+				public static LocString NAME = "Easygoing";
 
-				public static LocString DESCRIPTION = "A plant with this mutation produces a higher yield of crop";
+				public static LocString DESCRIPTION = "Plants with this mutation are easier to take care of, but don't yield as much produce.";
 			}
 
-			public class BASIC_MUTATION_B
+			public class MODERATELYTIGHT
 			{
-				public static LocString NAME = "Tropical";
+				public static LocString NAME = "Specialized";
 
-				public static LocString DESCRIPTION = "A plant with this mutation prefers an environment with higher temperatures";
+				public static LocString DESCRIPTION = "Plants with this mutation are pickier about their conditions but yield more produce.";
 			}
 
-			public class BASIC_MUTATION_C
+			public class EXTREMELYTIGHT
 			{
-				public static LocString NAME = "Gluttonous";
+				public static LocString NAME = "Superspecialized";
 
-				public static LocString DESCRIPTION = "A plant with this mutation requires more " + UI.FormatAsLink("Fertilizer", "FERTILIZER");
+				public static LocString DESCRIPTION = "Plants with this mutation are very difficult to keep alive, but produce a bounty.";
 			}
 
-			public class BASIC_MUTATION_D
+			public class BONUSLICE
 			{
-				public static LocString NAME = "Guzzling";
+				public static LocString NAME = "Licey";
 
-				public static LocString DESCRIPTION = "A plant with this mutation requires more irrigation";
+				public static LocString DESCRIPTION = "Something about this mutation causes Meal Lice to pupate on this plant.";
 			}
 
-			public class BASIC_MUTATION_E
+			public class SUNNYSPEED
 			{
-				public static LocString NAME = "Fasting";
+				public static LocString NAME = "Leafy";
 
-				public static LocString DESCRIPTION = "A plant with this mutation requires less " + UI.FormatAsLink("Fertilizer", "FERTILIZER");
+				public static LocString DESCRIPTION = "This mutation provides the plant with sun-collecting leaves, allowing faster growth.";
 			}
 
-			public class BASIC_MUTATION_F
+			public class SLOWBURN
 			{
-				public static LocString NAME = "Arid";
+				public static LocString NAME = "Wildish";
 
-				public static LocString DESCRIPTION = "A plant with this mutation requires less irrigation";
+				public static LocString DESCRIPTION = "These plants grow almost as slow as their wild cousins, but also consume almost no fertilizer.";
 			}
 
-			public class BASIC_MUTATION_G
+			public class BLOOMS
 			{
-				public static LocString NAME = "Precocious";
+				public static LocString NAME = "Blooming";
 
-				public static LocString DESCRIPTION = "A plant with this mutation requires less growing time";
+				public static LocString DESCRIPTION = "Vestigial flowers increase the beauty of this plant. Don't inhale the pollen, though!";
 			}
+
+			public class LOADEDWITHFRUIT
+			{
+				public static LocString NAME = "Bountiful";
+
+				public static LocString DESCRIPTION = "This mutation produces lots of extra produce, though it also takes a long time to pick it all!";
+			}
+
+			public class ROTTENHEAPS
+			{
+				public static LocString NAME = "Exuberant";
+
+				public static LocString DESCRIPTION = "Plants with this mutation grow extremely quickly, though the produce they make is sometimes questionable.";
+			}
+
+			public class HEAVYFRUIT
+			{
+				public static LocString NAME = "Juicy Fruits";
+
+				public static LocString DESCRIPTION = "Extra water in these plump mutant veggies causes them to fall right off the plant! There's no extra nutritional value, though...";
+			}
+
+			public static LocString PLANT_NAME_FMT = "{PlantName} ({MutationList})";
 
 			public static LocString UNIDENTIFIED = "Unidentified Subspecies";
 
 			public static LocString UNIDENTIFIED_DESC = string.Concat("This seed must be identified at the ", BUILDINGS.PREFABS.GENETICANALYSISSTATION.NAME, " before it can be planted.");
+
+			public static LocString BONUS_CROP_FMT = "Bonus Crop: +{Amount} {Crop}";
 		}
 
 		public class SPECIES
@@ -151,14 +176,14 @@ namespace STRINGS
 			{
 				public class BABY
 				{
-					public static LocString NAME = UI.FormatAsLink("Beeta Larva", "BEE");
+					public static LocString NAME = UI.FormatAsLink("Beetiny", "BEE");
 
-					public static LocString DESC = "A squirmy little Beeta Larva.\n\nIn time, it will mature into an adult " + UI.FormatAsLink("Beeta", "BEE") + ".";
+					public static LocString DESC = "A harmless little Beetiny.\n\nIn time, it will mature into a vicious adult " + UI.FormatAsLink("Beeta", "BEE") + ".";
 				}
 
 				public static LocString NAME = UI.FormatAsLink("Beeta", "BEE");
 
-				public static LocString DESC = "Beetas are busy critters who harvest and refine " + UI.FormatAsLink("Metals", "METAL") + " to use as building materials, and to feed their young.";
+				public static LocString DESC = "Beetas are hostile critters that thrive in " + UI.FormatAsLink("Radioactive", "RADIATION") + " environments.\n\nThey commonly gather " + UI.FormatAsLink("Uranium", "URANIUM") + " for their " + UI.FormatAsLink("Beeta Hives", "BEEHIVE") + " to produce " + UI.FormatAsLink("Enriched Uranium", "ENRICHEDURANIUM") + ".";
 			}
 
 			public class CHLORINEGEYSER
@@ -814,6 +839,13 @@ namespace STRINGS
 					public static LocString DESC = "A large volcano that periodically erupts with molten " + UI.FormatAsLink("Gold", "MOLTENGOLD") + ".";
 				}
 
+				public class MOLTEN_COBALT
+				{
+					public static LocString NAME = UI.FormatAsLink("Cobalt Volcano", "GeyserGeneric_MOLTEN_COBALT");
+
+					public static LocString DESC = "A large volcano that periodically erupts with molten " + UI.FormatAsLink("Cobalt", "MOLTENCOBALT") + ".";
+				}
+
 				public class MOLTEN_NIOBIUM
 				{
 					public static LocString NAME = UI.FormatAsLink("Niobium Volcano", "NiobiumGeyser");
@@ -881,7 +913,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Oil Spout", "OILSPOUT");
 
-				public static LocString DESC = "A rocky vent that spouts crude oil.";
+				public static LocString DESC = "A rocky vent that spouts " + UI.FormatAsLink("Crude Oil", "CRUDEOIL") + ".";
 			}
 
 			public class HEATBULB
@@ -957,24 +989,6 @@ namespace STRINGS
 				public static LocString DOMESTICATEDDESC = "An alien grass variety that is eaten by " + UI.FormatAsLink("Gassy Moos", "MOO") + ".";
 			}
 
-			public class SPACEPLANT
-			{
-				public static LocString NAME = UI.FormatAsLink("Space Plant", "SPACEPLANT");
-
-				public static LocString DESC = "Space Plant.";
-
-				public static LocString DOMESTICATEDDESC = "It's a plant, but in space.";
-			}
-
-			public class SPACEDECORPLANT
-			{
-				public static LocString NAME = UI.FormatAsLink("Space Decor Plant", "SPACEDECORPLANT");
-
-				public static LocString DESC = "Space Decor Plants are super duper pretty.";
-
-				public static LocString DOMESTICATEDDESC = "This plant improves " + UI.FormatAsLink("Decor", "DECOR") + ".";
-			}
-
 			public class PRICKLEGRASS
 			{
 				public static LocString NAME = UI.FormatAsLink("Bluff Briar", "PRICKLEGRASS");
@@ -992,9 +1006,9 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Bliss Burst", "CYLINDRICA");
 
-				public static LocString DESC = "Bliss Bursts release an explosion of " + UI.FormatAsLink("Decor", "DECOR") + " into an otherwise dull environment.";
+				public static LocString DESC = "Bliss Bursts release an explosion of " + UI.FormatAsLink("Decor", "DECOR") + " into otherwise dull environments.";
 
-				public static LocString DOMESTICATEDDESC = "This plant improves " + UI.FormatAsLink("Decor", "DECOR") + ".";
+				public static LocString DOMESTICATEDDESC = "This plant improves ambient " + UI.FormatAsLink("Decor", "DECOR") + ".";
 
 				public static LocString GROWTH_BONUS = "Growth Bonus";
 
@@ -1007,7 +1021,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Tranquil Toes improve " + UI.FormatAsLink("Decor", "DECOR") + " by giving their surroundings the visual equivalent of a foot rub.";
 
-				public static LocString DOMESTICATEDDESC = "This plant improves " + UI.FormatAsLink("Decor", "DECOR") + ".";
+				public static LocString DOMESTICATEDDESC = "This plant improves ambient " + UI.FormatAsLink("Decor", "DECOR") + ".";
 
 				public static LocString GROWTH_BONUS = "Growth Bonus";
 
@@ -1020,7 +1034,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Mellow Mallows heighten " + UI.FormatAsLink("Decor", "DECOR") + " and alleviate " + UI.FormatAsLink("Stress", "STRESS") + " with their calming color and cradle shape.";
 
-				public static LocString DOMESTICATEDDESC = "This plant improves " + UI.FormatAsLink("Decor", "DECOR") + ".";
+				public static LocString DOMESTICATEDDESC = "This plant improves ambient " + UI.FormatAsLink("Decor", "DECOR") + ".";
 
 				public static LocString GROWTH_BONUS = "Growth Bonus";
 
@@ -1033,7 +1047,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Sporechids have an eerily alluring appearance to mask the fact that they host particularly nasty strain of brain fungus.";
 
-				public static LocString DOMESTICATEDDESC = "This plant improves " + UI.FormatAsLink("Decor", "DECOR") + " but produces high quantities of " + UI.FormatAsLink("Zombie Spores", "ZOMBIESPORES") + ".";
+				public static LocString DOMESTICATEDDESC = "This plant improves ambient " + UI.FormatAsLink("Decor", "DECOR") + " but produces high quantities of " + UI.FormatAsLink("Zombie Spores", "ZOMBIESPORES") + ".";
 
 				public static LocString GROWTH_BONUS = "Growth Bonus";
 
@@ -1046,7 +1060,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Mirth Leaves sport a calm green hue known for alleviating " + UI.FormatAsLink("Stress", "STRESS") + " and improving " + UI.FormatAsLink("Morale", "MORALE") + ".";
 
-				public static LocString DOMESTICATEDDESC = "This plant improves " + UI.FormatAsLink("Decor", "DECOR") + ".";
+				public static LocString DOMESTICATEDDESC = "This plant improves ambient " + UI.FormatAsLink("Decor", "DECOR") + ".";
 
 				public static LocString GROWTH_BONUS = "Growth Bonus";
 
@@ -1059,7 +1073,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Joyas are " + UI.FormatAsLink("Decorative", "DECOR") + " " + UI.FormatAsLink("Plants", "PLANTS") + " that are colloquially said to make gardeners \"jump for joy\".";
 
-				public static LocString DOMESTICATEDDESC = "This plant improves " + UI.FormatAsLink("Decor", "DECOR") + ".";
+				public static LocString DOMESTICATEDDESC = "This plant improves ambient " + UI.FormatAsLink("Decor", "DECOR") + ".";
 
 				public static LocString GROWTH_BONUS = "Growth Bonus";
 
@@ -1072,7 +1086,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Buddy Buds are leafy plants that have a positive effect on " + UI.FormatAsLink("Morale", "MORALE") + ", much like a friend.";
 
-				public static LocString DOMESTICATEDDESC = "This plant improves " + UI.FormatAsLink("Decor", "DECOR") + ".";
+				public static LocString DOMESTICATEDDESC = "This plant improves ambient " + UI.FormatAsLink("Decor", "DECOR") + ".";
 
 				public static LocString GROWTH_BONUS = "Growth Bonus";
 
@@ -1142,12 +1156,21 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Swamp Chard", "SWAMPFORAGEPLANTPLANTED");
 
-				public static LocString DESC = "Swamp Chards are incapable of propagating but can be harvested for a single high quality and calorie dense " + UI.FormatAsLink("Food", "FOOD") + " serving.";
+				public static LocString DESC = "Swamp Chards are incapable of propagating but can be harvested for a single low quality and calorie dense " + UI.FormatAsLink("Food", "FOOD") + " serving.";
 			}
 
 			public class COLDBREATHER
 			{
 				public static LocString NAME = UI.FormatAsLink("Wheezewort", "COLDBREATHER");
+
+				public static LocString DESC = "Wheezeworts can be planted in " + UI.FormatAsLink("Planter Boxes", "PLANTERBOX") + ", " + UI.FormatAsLink("Farm Tiles", "FARMTILE") + " or " + UI.FormatAsLink("Hydroponic Farms", "HYDROPONICFARM") + ", and absorb " + UI.FormatAsLink("Heat", "Heat") + " by respiring through their porous outer membranes.";
+
+				public static LocString DOMESTICATEDDESC = "This plant absorbs " + UI.FormatAsLink("Heat", "Heat") + ".";
+			}
+
+			public class COLDBREATHERCLUSTER
+			{
+				public static LocString NAME = UI.FormatAsLink("Wheezewort", "COLDBREATHERCLUSTER");
 
 				public static LocString DESC = "Wheezeworts can be planted in " + UI.FormatAsLink("Planter Boxes", "PLANTERBOX") + ", " + UI.FormatAsLink("Farm Tiles", "FARMTILE") + " or " + UI.FormatAsLink("Hydroponic Farms", "HYDROPONICFARM") + ", and absorb " + UI.FormatAsLink("Heat", "Heat") + " by respiring through their porous outer membranes.";
 
@@ -1176,9 +1199,9 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Hydrocactus", "FILTERPLANT");
 
-				public static LocString DESC = "Hydrocacti filter " + UI.FormatAsLink("Polluted Water", "DIRTYWATER") + " into " + UI.FormatAsLink("Water", "WATER") + " with the help of " + UI.FormatAsLink("Sand", "SAND") + ".";
+				public static LocString DESC = "Hydrocacti act as natural " + UI.FormatAsLink("Water", "WATER") + " filters when given access to " + UI.FormatAsLink("Sand", "SAND") + ".";
 
-				public static LocString DOMESTICATEDDESC = "This plant converts " + UI.FormatAsLink("Polluted Water", "DIRTYWATER") + " into " + UI.FormatAsLink("Water", "WATER") + ".";
+				public static LocString DOMESTICATEDDESC = "This plant uses " + UI.FormatAsLink("Sand", "SAND") + " to convert " + UI.FormatAsLink("Polluted Water", "DIRTYWATER") + " into " + UI.FormatAsLink("Water", "WATER") + ".";
 			}
 
 			public class OXYFERN
@@ -1228,9 +1251,16 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Saturn Critter Trap", "CRITTERTRAPPLANT");
 
-				public static LocString DESC = "Saturn Critter Traps eat unsuspecting critters and digest them, releasing unused " + UI.FormatAsLink("Hydrogen", "HYDROGEN") + ".";
+				public static LocString DESC = "Critter Traps are carnivorous plants that trap unsuspecting critters and consume them, releasing " + UI.FormatAsLink("Hydrogen", "HYDROGEN") + " as waste.";
 
-				public static LocString DOMESTICATEDDESC = "Saturn Critter Traps eat unsuspecting critters and digest them, releasing unused Hydrogen.";
+				public static LocString DOMESTICATEDDESC = "This plant eats critters and produces " + UI.FormatAsLink("Hydrogen", "HYDROGEN") + ".";
+			}
+
+			public class SAPTREE
+			{
+				public static LocString NAME = UI.FormatAsLink("Experiment 52B", "SAPTREE");
+
+				public static LocString DESC = "An " + UI.FormatAsLink("Isoresin", "ISORESIN") + "-producing, cybernetic tree that shows signs of sentience.\n\nIt is rooted firmly in place, and appears to have been here for some time.";
 			}
 
 			public class SEEDS
@@ -1286,20 +1316,6 @@ namespace STRINGS
 					public static LocString NAME = UI.FormatAsLink("Gas Grass Seed", "GASGRASS");
 
 					public static LocString DESC = string.Concat("The ", UI.FormatAsLink("Seed", "PLANTS"), " of a ", SPECIES.GASGRASS.NAME, " plant.\n\nUsed as feed for ", UI.FormatAsLink("Gassy Moos", "MOO"), ".");
-				}
-
-				public class SPACEPLANT
-				{
-					public static LocString NAME = UI.FormatAsLink("Space Plant Seed", "SPACEPLANT");
-
-					public static LocString DESC = string.Concat("The ", UI.FormatAsLink("Seed", "PLANTS"), " of a ", SPECIES.SPACEPLANT.NAME, ".");
-				}
-
-				public class SPACEDECORPLANT
-				{
-					public static LocString NAME = UI.FormatAsLink("Space Decor Plant Seed", "SPACEDECORPLANT");
-
-					public static LocString DESC = string.Concat("The ", UI.FormatAsLink("Seed", "PLANTS"), " of a ", SPECIES.SPACEDECORPLANT.NAME, ".");
 				}
 
 				public class PRICKLEGRASS
@@ -1682,7 +1698,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Foraging for Materials";
 
-				public static LocString TOOLTIP = "This critter is foraging materials for later use.";
+				public static LocString TOOLTIP = "This critter is stocking up on supplies for later use";
 			}
 
 			public class PLANTINGSEED
@@ -1961,6 +1977,13 @@ namespace STRINGS
 				public static LocString TOOLTIP = "This critter can't breathe in " + UI.PRE_KEYWORD + "Liquid" + UI.PST_KEYWORD + "!";
 			}
 
+			public class DISABLED
+			{
+				public static LocString NAME = "Disabled";
+
+				public static LocString TOOLTIP = "Something is preventing this critter from functioning!";
+			}
+
 			public class SATURATED
 			{
 				public static LocString NAME = "Too Wet!";
@@ -2207,6 +2230,41 @@ namespace STRINGS
 			{
 			}
 
+			public class ORIGINALPLANTMUTATION
+			{
+				public static LocString NAME = "Original Plant";
+
+				public static LocString TOOLTIP = "This is the original, unmutated variant of this species.";
+			}
+
+			public class UNKNOWNMUTATION
+			{
+				public static LocString NAME = "Unknown Mutation";
+
+				public static LocString TOOLTIP = "This seed carries some unexpected genetic markers. Analyze it at the " + UI.FormatAsLink(BUILDINGS.PREFABS.GENETICANALYSISSTATION.NAME, "GENETICANALYSISSTATION") + " to learn its secrets.";
+			}
+
+			public class SPECIFICPLANTMUTATION
+			{
+				public static LocString NAME = "Mutant Plant: {MutationName}";
+
+				public static LocString TOOLTIP = "This plant is mutated with a genetic variant I call {MutationName}.";
+			}
+
+			public class CROP_TOO_NONRADIATED
+			{
+				public static LocString NAME = "    • Low Radiation Levels";
+
+				public static LocString TOOLTIP = "Growth will resume when " + UI.PRE_KEYWORD + "Radiation" + UI.PST_KEYWORD + " requirements are met";
+			}
+
+			public class CROP_TOO_RADIATED
+			{
+				public static LocString NAME = "    • High Radiation Levels";
+
+				public static LocString TOOLTIP = "Growth will resume when " + UI.PRE_KEYWORD + "Radiation" + UI.PST_KEYWORD + " requirements are met";
+			}
+
 			public static LocString NAME_NON_GROWING_PLANT = "Wilted";
 		}
 
@@ -2388,6 +2446,13 @@ namespace STRINGS
 				public static LocString NAME = "Growth Speed";
 
 				public static LocString DESC = "Determines the amount of time needed to reach maturation.";
+			}
+
+			public class MATURITYMAX
+			{
+				public static LocString NAME = "Life Cycle";
+
+				public static LocString DESC = "The amount of time it takes this plant to grow.";
 			}
 		}
 

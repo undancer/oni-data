@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using KSerialization;
 using STRINGS;
 using UnityEngine;
@@ -58,6 +59,15 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 	public bool AcceptsFertilizer => accepts_fertilizer;
 
 	public bool AcceptsIrrigation => accepts_irrigation;
+
+	[OnDeserialized]
+	private void OnDeserialized()
+	{
+		if (requestedEntityAdditionalFilterTag.IsValid && !PlantSubSpeciesCatalog.instance.IsSubSpeciesIdentified(requestedEntityAdditionalFilterTag))
+		{
+			requestedEntityAdditionalFilterTag = Tag.Invalid;
+		}
+	}
 
 	protected override void OnPrefabInit()
 	{
@@ -178,9 +188,10 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 		{
 			Vector3 position = Grid.CellToPosCBC(Grid.PosToCell(this), plantLayer);
 			GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(component.PlantID), position, plantLayer);
-			if (gameObject.HasTag(GameTags.Mutatable))
+			MutantPlant component2 = gameObject.GetComponent<MutantPlant>();
+			if (component2 != null)
 			{
-				gameObject.GetComponent<MutantPlant>().SetSubSpecies(component.GetComponent<MutantPlant>().subspeciesID);
+				component.GetComponent<MutantPlant>().CopyMutationsTo(component2);
 			}
 			gameObject.SetActive(value: true);
 			destroyEntityOnDeposit = true;

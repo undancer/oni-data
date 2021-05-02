@@ -59,10 +59,7 @@ namespace ProcGenGame
 
 		public Cluster(string name, int seed, bool assertMissingTraits)
 		{
-			if (string.IsNullOrEmpty(name))
-			{
-				name = WorldGenSettings.ClusterDefaultName;
-			}
+			DebugUtil.Assert(!string.IsNullOrEmpty(name), "Cluster file is missing");
 			this.seed = seed;
 			WorldGen.LoadSettings();
 			clusterLayout = SettingsCache.clusterLayouts.clusterCache[name];
@@ -115,12 +112,12 @@ namespace ProcGenGame
 			worlds.Clear();
 		}
 
-		public void Generate(WorldGen.OfflineCallbackFunction callbackFn, Action<OfflineWorldGen.ErrorInfo> error_cb, int worldSeed = -1, int layoutSeed = -1, int terrainSeed = -1, int noiseSeed = -1, bool doSimSettle = true)
+		public void Generate(WorldGen.OfflineCallbackFunction callbackFn, Action<OfflineWorldGen.ErrorInfo> error_cb, int worldSeed = -1, int layoutSeed = -1, int terrainSeed = -1, int noiseSeed = -1, bool doSimSettle = true, bool debug = false)
 		{
 			this.doSimSettle = doSimSettle;
 			for (int i = 0; i != worlds.Count; i++)
 			{
-				worlds[i].Initialise(callbackFn, error_cb, worldSeed + i, layoutSeed + i, terrainSeed + i, noiseSeed + i);
+				worlds[i].Initialise(callbackFn, error_cb, worldSeed + i, layoutSeed + i, terrainSeed + i, noiseSeed + i, debug);
 			}
 			IsGenerationComplete = false;
 			thread = new Thread(ThreadMain);
@@ -149,7 +146,11 @@ namespace ProcGenGame
 				worldGen.FinalizeStartLocation();
 				array = null;
 				array2 = null;
-				worldGen.RenderOffline(doSimSettle, ref array, ref array2, i, worldGen.isStartingWorld);
+				if (!worldGen.RenderOffline(doSimSettle, ref array, ref array2, i, worldGen.isStartingWorld))
+				{
+					thread = null;
+					return;
+				}
 				if (PerWorldGenCompleteCallback != null)
 				{
 					PerWorldGenCompleteCallback(i, worldGen, array, array2);
@@ -231,6 +232,10 @@ namespace ProcGenGame
 				worldGen.SetClusterLocation(axialI3);
 				assignedLocations.Add(axialI3);
 				worldForbiddenLocations.UnionWith(AxialUtil.GetRings(axialI3, 1, worldPlacement.buffer));
+			}
+			if (!DlcManager.IsExpansion1Active())
+			{
+				return;
 			}
 			poiLocations[ClusterLayoutSave.POIType.ResearchDestination] = new List<AxialI>();
 			for (int j = 1; j < numRings; j += 3)

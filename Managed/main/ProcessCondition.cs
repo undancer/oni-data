@@ -2,17 +2,18 @@ public abstract class ProcessCondition
 {
 	public enum ProcessConditionType
 	{
-		RocketPrep,
-		RocketBoard,
 		RocketFlight,
+		RocketPrep,
+		RocketStorage,
+		RocketBoard,
 		All
 	}
 
 	public enum Status
 	{
-		Ready,
+		Failure,
 		Warning,
-		Failure
+		Ready
 	}
 
 	protected ProcessCondition parentCondition = null;

@@ -11,6 +11,7 @@ public class KeroseneEngineConfig : IBuildingConfig
 		{
 			SimHashes.Steel.ToString()
 		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		buildingDef.ForbiddenDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;
 		buildingDef.OverheatTemperature = 2273.15f;
@@ -21,7 +22,6 @@ public class KeroseneEngineConfig : IBuildingConfig
 		buildingDef.RequiresPowerInput = false;
 		buildingDef.CanMove = true;
 		buildingDef.Cancellable = false;
-		buildingDef.ShowInBuildMenu = !DlcManager.IsExpansion1Active();
 		return buildingDef;
 	}
 
@@ -43,7 +43,7 @@ public class KeroseneEngineConfig : IBuildingConfig
 		rocketEngine.fuelTag = ElementLoader.FindElementByHash(SimHashes.Petroleum).tag;
 		rocketEngine.efficiency = ROCKETRY.ENGINE_EFFICIENCY.MEDIUM;
 		rocketEngine.explosionEffectHash = SpawnFXHashes.MeteorImpactDust;
-		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.MAJOR, "rocket_petroleum_engine_bg_kanim", ROCKETRY.ENGINE_POWER.AVERAGE, ROCKETRY.FUEL_COST_PER_DISTANCE.HIGH);
+		BuildingTemplates.ExtendBuildingToRocketModule(go, "rocket_petroleum_engine_bg_kanim");
 		go.GetComponent<KPrefabID>().prefabInitFn += delegate
 		{
 		};

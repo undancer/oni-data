@@ -74,6 +74,8 @@ public class ModifierSet : ScriptableObject
 
 	public CritterAttributes CritterAttributes;
 
+	public PlantAttributes PlantAttributes;
+
 	public Database.Amounts Amounts;
 
 	public Database.AttributeConverters AttributeConverters;
@@ -91,6 +93,7 @@ public class ModifierSet : ScriptableObject
 		Attributes = new Database.Attributes(Root);
 		BuildingAttributes = new BuildingAttributes(Root);
 		CritterAttributes = new CritterAttributes(Root);
+		PlantAttributes = new PlantAttributes(Root);
 		effects = new ResourceSet<Effect>("Effects", Root);
 		traits = new TraitSet();
 		traitGroups = new TraitGroupSet();

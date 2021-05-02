@@ -5,9 +5,11 @@ public class CosmicResearchCenterConfig : IBuildingConfig
 {
 	public const string ID = "CosmicResearchCenter";
 
-	public const float BASE_RESEARCH_SPEED = 0.02f;
+	public const float BASE_SECONDS_PER_POINT = 50f;
 
 	public const float MASS_PER_POINT = 1f;
+
+	public const float BASE_MASS_PER_SECOND = 0.02f;
 
 	public const float CAPACITY = 300f;
 
@@ -16,7 +18,6 @@ public class CosmicResearchCenterConfig : IBuildingConfig
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("CosmicResearchCenter", 4, 4, "research_space_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.ForbiddenDlcId = "EXPANSION1_ID";
 		buildingDef.RequiresPowerInput = true;
 		buildingDef.EnergyConsumptionWhenActive = 120f;
 		buildingDef.ExhaustKilowattsWhenActive = 0.5f;
@@ -24,6 +25,7 @@ public class CosmicResearchCenterConfig : IBuildingConfig
 		buildingDef.ViewMode = OverlayModes.Power.ID;
 		buildingDef.AudioCategory = "Metal";
 		buildingDef.AudioSize = "large";
+		buildingDef.Deprecated = DlcManager.IsExpansion1Active();
 		return buildingDef;
 	}
 
@@ -45,7 +47,7 @@ public class CosmicResearchCenterConfig : IBuildingConfig
 		{
 			Assets.GetAnim("anim_interacts_research_space_kanim")
 		};
-		researchCenter.research_point_type_id = "gamma";
+		researchCenter.research_point_type_id = "space";
 		researchCenter.inputMaterial = INPUT_MATERIAL;
 		researchCenter.mass_per_point = 1f;
 		researchCenter.requiredSkillPerk = Db.Get().SkillPerks.AllowInterstellarResearch.Id;

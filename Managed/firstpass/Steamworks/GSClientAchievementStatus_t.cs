@@ -10,10 +10,22 @@ namespace Steamworks
 
 		public ulong m_SteamID;
 
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-		public string m_pchAchievement;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
+		private byte[] m_pchAchievement_;
 
 		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bUnlocked;
+
+		public string m_pchAchievement
+		{
+			get
+			{
+				return InteropHelp.ByteArrayToStringUTF8(m_pchAchievement_);
+			}
+			set
+			{
+				InteropHelp.StringToByteArrayUTF8(value, m_pchAchievement_, 128);
+			}
+		}
 	}
 }

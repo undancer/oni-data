@@ -63,8 +63,11 @@ public class OxidizerTankConfig : IBuildingConfig
 		OxidizerTank oxidizerTank = go.AddOrGet<OxidizerTank>();
 		oxidizerTank.consumeOnLand = !DlcManager.IsExpansion1Active();
 		oxidizerTank.storage = storage;
+		oxidizerTank.supportsMultipleOxidizers = true;
+		oxidizerTank.maxFillMass = 2700f;
+		oxidizerTank.targetFillMass = 2700f;
 		go.AddOrGet<CopyBuildingSettings>();
 		go.AddOrGet<DropToUserCapacity>();
-		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.MINOR, "rocket_oxidizer_tank_bg_kanim");
+		BuildingTemplates.ExtendBuildingToRocketModule(go, "rocket_oxidizer_tank_bg_kanim");
 	}
 }

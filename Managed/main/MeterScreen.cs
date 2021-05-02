@@ -153,7 +153,7 @@ public class MeterScreen : KScreen, IRender1000ms
 			currentMinions.text = $"{count2}/{count}";
 			MinionsTooltip.ClearMultiStringTooltip();
 			ClusterGridEntity component = ClusterManager.Instance.activeWorld.GetComponent<ClusterGridEntity>();
-			MinionsTooltip.AddMultiStringTooltip(string.Format(UI.TOOLTIPS.METERSCREEN_POPULATION, component.Name, count2, count), ToolTipStyle_Header);
+			MinionsTooltip.AddMultiStringTooltip(string.Format(UI.TOOLTIPS.METERSCREEN_POPULATION_CLUSTER, component.Name, count2, count), ToolTipStyle_Header);
 		}
 	}
 

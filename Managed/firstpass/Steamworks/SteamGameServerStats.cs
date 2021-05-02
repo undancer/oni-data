@@ -12,14 +12,14 @@ namespace Steamworks
 		{
 			InteropHelp.TestIfAvailableGameServer();
 			using InteropHelp.UTF8StringHandle pchName2 = new InteropHelp.UTF8StringHandle(pchName);
-			return NativeMethods.ISteamGameServerStats_GetUserStat(CSteamGameServerAPIContext.GetSteamGameServerStats(), steamIDUser, pchName2, out pData);
+			return NativeMethods.ISteamGameServerStats_GetUserStatInt32(CSteamGameServerAPIContext.GetSteamGameServerStats(), steamIDUser, pchName2, out pData);
 		}
 
 		public static bool GetUserStat(CSteamID steamIDUser, string pchName, out float pData)
 		{
 			InteropHelp.TestIfAvailableGameServer();
 			using InteropHelp.UTF8StringHandle pchName2 = new InteropHelp.UTF8StringHandle(pchName);
-			return NativeMethods.ISteamGameServerStats_GetUserStat0(CSteamGameServerAPIContext.GetSteamGameServerStats(), steamIDUser, pchName2, out pData);
+			return NativeMethods.ISteamGameServerStats_GetUserStatFloat(CSteamGameServerAPIContext.GetSteamGameServerStats(), steamIDUser, pchName2, out pData);
 		}
 
 		public static bool GetUserAchievement(CSteamID steamIDUser, string pchName, out bool pbAchieved)
@@ -33,14 +33,14 @@ namespace Steamworks
 		{
 			InteropHelp.TestIfAvailableGameServer();
 			using InteropHelp.UTF8StringHandle pchName2 = new InteropHelp.UTF8StringHandle(pchName);
-			return NativeMethods.ISteamGameServerStats_SetUserStat(CSteamGameServerAPIContext.GetSteamGameServerStats(), steamIDUser, pchName2, nData);
+			return NativeMethods.ISteamGameServerStats_SetUserStatInt32(CSteamGameServerAPIContext.GetSteamGameServerStats(), steamIDUser, pchName2, nData);
 		}
 
 		public static bool SetUserStat(CSteamID steamIDUser, string pchName, float fData)
 		{
 			InteropHelp.TestIfAvailableGameServer();
 			using InteropHelp.UTF8StringHandle pchName2 = new InteropHelp.UTF8StringHandle(pchName);
-			return NativeMethods.ISteamGameServerStats_SetUserStat0(CSteamGameServerAPIContext.GetSteamGameServerStats(), steamIDUser, pchName2, fData);
+			return NativeMethods.ISteamGameServerStats_SetUserStatFloat(CSteamGameServerAPIContext.GetSteamGameServerStats(), steamIDUser, pchName2, fData);
 		}
 
 		public static bool UpdateUserAvgRateStat(CSteamID steamIDUser, string pchName, float flCountThisSession, double dSessionLength)

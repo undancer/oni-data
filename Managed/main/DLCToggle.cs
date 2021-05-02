@@ -31,7 +31,7 @@ public class DLCToggle : KMonoBehaviour
 			.AddPlainText(expansion1Active ? UI.FRONTEND.MAINMENU.DLC.DEACTIVATE_EXPANSION1_DESC : UI.FRONTEND.MAINMENU.DLC.ACTIVATE_EXPANSION1_DESC)
 			.AddOption(UI.CONFIRMDIALOG.OK, delegate
 			{
-				DistributionPlatform.Inst.ToggleDLC();
+				DlcManager.ToggleDLC();
 			}, rightSide: true);
 	}
 }

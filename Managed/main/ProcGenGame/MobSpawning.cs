@@ -211,13 +211,57 @@ namespace ProcGenGame
 			case Mob.Location.Solid:
 				return !isNaturalCavity(cell) && element.IsSolid;
 			case Mob.Location.Ceiling:
-				return isNaturalCavity(cell) && !element.IsSolid && element2.IsSolid && !element3.IsSolid && !element.IsLiquid;
+			{
+				bool result4 = true;
+				for (int num6 = 0; num6 < mob.width; num6++)
+				{
+					int num7 = MobWidthOffset(cell, num6);
+					Element element15 = ElementLoader.elements[cells[num7].elementIdx];
+					Element element16 = ElementLoader.elements[cells[Grid.CellAbove(num7)].elementIdx];
+					Element element17 = ElementLoader.elements[cells[Grid.CellBelow(num7)].elementIdx];
+					result4 = isNaturalCavity(num7) && !element15.IsSolid && element16.IsSolid && !element17.IsSolid && !element15.IsLiquid;
+				}
+				return result4;
+			}
 			case Mob.Location.Floor:
-				return isNaturalCavity(cell) && !element.IsSolid && !element2.IsSolid && element3.IsSolid && !element.IsLiquid;
+			{
+				bool result2 = true;
+				for (int l = 0; l < mob.width; l++)
+				{
+					int num3 = MobWidthOffset(cell, l);
+					Element element7 = ElementLoader.elements[cells[num3].elementIdx];
+					Element element8 = ElementLoader.elements[cells[Grid.CellAbove(num3)].elementIdx];
+					Element element9 = ElementLoader.elements[cells[Grid.CellBelow(num3)].elementIdx];
+					result2 = isNaturalCavity(num3) && !element7.IsSolid && !element8.IsSolid && element9.IsSolid && !element7.IsLiquid;
+				}
+				return result2;
+			}
 			case Mob.Location.LiquidFloor:
-				return isNaturalCavity(cell) && !element.IsSolid && !element2.IsSolid && element3.IsSolid && element.IsLiquid;
+			{
+				bool result = true;
+				for (int k = 0; k < mob.width; k++)
+				{
+					int num2 = MobWidthOffset(cell, k);
+					Element element4 = ElementLoader.elements[cells[num2].elementIdx];
+					Element element5 = ElementLoader.elements[cells[Grid.CellAbove(num2)].elementIdx];
+					Element element6 = ElementLoader.elements[cells[Grid.CellBelow(num2)].elementIdx];
+					result = isNaturalCavity(num2) && !element4.IsSolid && !element5.IsSolid && element6.IsSolid && element4.IsLiquid;
+				}
+				return result;
+			}
 			case Mob.Location.AnyFloor:
-				return isNaturalCavity(cell) && !element.IsSolid && !element2.IsSolid && element3.IsSolid;
+			{
+				bool result3 = true;
+				for (int n = 0; n < mob.width; n++)
+				{
+					int num5 = MobWidthOffset(cell, n);
+					Element element12 = ElementLoader.elements[cells[num5].elementIdx];
+					Element element13 = ElementLoader.elements[cells[Grid.CellAbove(num5)].elementIdx];
+					Element element14 = ElementLoader.elements[cells[Grid.CellBelow(num5)].elementIdx];
+					result3 = isNaturalCavity(num5) && !element12.IsSolid && !element13.IsSolid && element14.IsSolid;
+				}
+				return result3;
+			}
 			case Mob.Location.Air:
 				return !element.IsSolid && !element2.IsSolid && !element.IsLiquid;
 			case Mob.Location.Water:
@@ -225,12 +269,12 @@ namespace ProcGenGame
 			case Mob.Location.Surface:
 			{
 				bool flag = true;
-				for (int k = 0; k < mob.width; k++)
+				for (int m = 0; m < mob.width; m++)
 				{
-					int num2 = MobWidthOffset(cell, k);
-					Element element4 = ElementLoader.elements[cells[num2].elementIdx];
-					Element element5 = ElementLoader.elements[cells[Grid.CellBelow(num2)].elementIdx];
-					flag = flag && element4.id == SimHashes.Vacuum && element5.IsSolid;
+					int num4 = MobWidthOffset(cell, m);
+					Element element10 = ElementLoader.elements[cells[num4].elementIdx];
+					Element element11 = ElementLoader.elements[cells[Grid.CellBelow(num4)].elementIdx];
+					flag = flag && element10.id == SimHashes.Vacuum && element11.IsSolid;
 				}
 				return flag;
 			}

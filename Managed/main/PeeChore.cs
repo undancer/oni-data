@@ -67,7 +67,24 @@ public class PeeChore : Chore<PeeChore.StatesInstance>
 					smi.SpawnDirtyWater(dt);
 				})
 				.PlayAnim("working_loop", KAnim.PlayMode.Loop)
-				.ToggleTag(GameTags.MakingMess);
+				.ToggleTag(GameTags.MakingMess)
+				.Enter(delegate(StatesInstance smi)
+				{
+					if (smi.master.gameObject.GetAmounts().Get(Db.Get().Amounts.RadiationBalance).value > 0f)
+					{
+						smi.master.gameObject.GetComponent<KSelectable>().AddStatusItem(Db.Get().DuplicantStatusItems.ExpellingRads);
+					}
+				})
+				.Exit(delegate(StatesInstance smi)
+				{
+					smi.master.gameObject.GetComponent<KSelectable>().RemoveStatusItem(Db.Get().DuplicantStatusItems.ExpellingRads);
+					float num = Mathf.Min(smi.master.gameObject.GetAmounts().Get(Db.Get().Amounts.RadiationBalance.Id).value, 60f);
+					smi.master.gameObject.GetAmounts().Get(Db.Get().Amounts.RadiationBalance.Id).ApplyDelta(0f - num);
+					if (num >= 1f)
+					{
+						PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Negative, Mathf.FloorToInt(num).ToString() + UI.UNITSUFFIXES.RADIATION.RADS, smi.master.transform);
+					}
+				});
 		}
 	}
 

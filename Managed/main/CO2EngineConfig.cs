@@ -22,6 +22,7 @@ public class CO2EngineConfig : IBuildingConfig
 		buildingDef.UtilityInputOffset = new CellOffset(0, 1);
 		buildingDef.InputConduitType = ConduitType.Gas;
 		buildingDef.RequiresPowerInput = false;
+		buildingDef.RequiresPowerOutput = false;
 		buildingDef.CanMove = true;
 		buildingDef.Cancellable = false;
 		return buildingDef;
@@ -49,14 +50,15 @@ public class CO2EngineConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		RocketEngine rocketEngine = go.AddOrGet<RocketEngine>();
-		rocketEngine.maxModules = 3;
-		rocketEngine.fuelTag = SimHashes.CarbonDioxide.CreateTag();
-		rocketEngine.efficiency = ROCKETRY.ENGINE_EFFICIENCY.WEAK;
-		rocketEngine.explosionEffectHash = SpawnFXHashes.MeteorImpactDust;
-		rocketEngine.requireOxidizer = false;
-		rocketEngine.exhaustElement = SimHashes.CarbonDioxide;
-		rocketEngine.exhaustTemperature = ElementLoader.FindElementByHash(SimHashes.CarbonDioxide).lowTemp + 20f;
+		RocketEngineCluster rocketEngineCluster = go.AddOrGet<RocketEngineCluster>();
+		rocketEngineCluster.maxModules = 3;
+		rocketEngineCluster.maxHeight = 10;
+		rocketEngineCluster.fuelTag = SimHashes.CarbonDioxide.CreateTag();
+		rocketEngineCluster.efficiency = ROCKETRY.ENGINE_EFFICIENCY.WEAK;
+		rocketEngineCluster.explosionEffectHash = SpawnFXHashes.MeteorImpactDust;
+		rocketEngineCluster.requireOxidizer = false;
+		rocketEngineCluster.exhaustElement = SimHashes.CarbonDioxide;
+		rocketEngineCluster.exhaustTemperature = ElementLoader.FindElementByHash(SimHashes.CarbonDioxide).lowTemp + 20f;
 		Storage storage = go.AddOrGet<Storage>();
 		storage.capacityKg = BUILDINGS.ROCKETRY_MASS_KG.FUEL_TANK_WET_MASS_GAS[0];
 		storage.SetDefaultStoredItemModifiers(new List<Storage.StoredItemModifier>
@@ -79,7 +81,7 @@ public class CO2EngineConfig : IBuildingConfig
 		conduitConsumer.capacityKG = storage.capacityKg;
 		conduitConsumer.forceAlwaysSatisfied = true;
 		conduitConsumer.wrongElementResult = ConduitConsumer.WrongElementResult.Dump;
-		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.MINOR_PLUS, null, ROCKETRY.ENGINE_POWER.EARLY_STRONG, ROCKETRY.FUEL_COST_PER_DISTANCE.GAS_HIGH);
+		BuildingTemplates.ExtendBuildingToRocketModuleCluster(go, null, ROCKETRY.BURDEN.MINOR_PLUS, ROCKETRY.ENGINE_POWER.EARLY_STRONG, ROCKETRY.FUEL_COST_PER_DISTANCE.GAS_HIGH);
 		go.GetComponent<KPrefabID>().prefabInitFn += delegate
 		{
 		};

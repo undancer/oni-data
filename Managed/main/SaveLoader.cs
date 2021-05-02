@@ -326,7 +326,6 @@ public class SaveLoader : KMonoBehaviour
 				saveFileRoot.active_mods.Add(mod.label);
 			}
 		}
-		string text = (saveFileRoot.clusterID = ((Game.clusterId != null) ? Game.clusterId : CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.ClusterLayout).id));
 		using (MemoryStream memoryStream = new MemoryStream())
 		{
 			using (BinaryWriter writer = new BinaryWriter(memoryStream))
@@ -397,6 +396,7 @@ public class SaveLoader : KMonoBehaviour
 				catch
 				{
 					gameInfo.clusterId = WorldGenSettings.ClusterDefaultName;
+					CustomGameSettings.Instance.SetQualitySetting(CustomGameSettingConfigs.ClusterLayout, gameInfo.clusterId);
 				}
 			}
 			GameInfo = gameInfo;
@@ -745,6 +745,22 @@ public class SaveLoader : KMonoBehaviour
 			return null;
 		}
 		return allFiles[0];
+	}
+
+	public static string GetLatestSaveForCurrentDLC()
+	{
+		List<string> allFiles = GetAllFiles();
+		for (int i = 0; i < allFiles.Count; i++)
+		{
+			Tuple<SaveGame.Header, SaveGame.GameInfo> fileInfo = SaveGame.GetFileInfo(allFiles[i]);
+			SaveGame.Header first = fileInfo.first;
+			SaveGame.GameInfo second = fileInfo.second;
+			if (second.saveMajorVersion >= 7 && DlcManager.GetActiveDlcId() == second.dlcId)
+			{
+				return allFiles[i];
+			}
+		}
+		return null;
 	}
 
 	public void InitialSave()

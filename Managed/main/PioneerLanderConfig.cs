@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using STRINGS;
 using TUNING;
 using UnityEngine;
@@ -28,7 +29,14 @@ public class PioneerLanderConfig : IEntityConfig
 		deconstructable.audioSize = "large";
 		gameObject.AddOrGet<Storable>();
 		Placeable placeable = gameObject.AddOrGet<Placeable>();
-		placeable.previewTag = "PioneerLander_Preview".ToTag();
+		placeable.kAnimName = "rocket_pioneer_cargo_lander_kanim";
+		placeable.animName = "place";
+		placeable.placementRules = new List<Placeable.PlacementRules>
+		{
+			Placeable.PlacementRules.OnFoundation,
+			Placeable.PlacementRules.VisibleToSpace,
+			Placeable.PlacementRules.RestrictToWorld
+		};
 		GameObject gameObject2 = EntityTemplates.CreateAndRegisterPreview("PioneerLander_Preview", Assets.GetAnim("rocket_pioneer_cargo_lander_kanim"), "place", ObjectLayer.Building, 3, 3);
 		return gameObject;
 	}

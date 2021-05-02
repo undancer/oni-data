@@ -19,6 +19,7 @@ public class WiltCondition : KMonoBehaviour
 		Receptacle,
 		Entombed,
 		UnhealthyRoot,
+		Radiation,
 		Count
 	}
 
@@ -141,6 +142,16 @@ public class WiltCondition : KMonoBehaviour
 		component.SetCondition(Condition.UnhealthyRoot, (bool)data);
 	});
 
+	private static readonly EventSystem.IntraObjectHandler<WiltCondition> SetRadiationComfortFalseDelegate = new EventSystem.IntraObjectHandler<WiltCondition>(delegate(WiltCondition component, object data)
+	{
+		component.SetCondition(Condition.Radiation, satisfiedState: false);
+	});
+
+	private static readonly EventSystem.IntraObjectHandler<WiltCondition> SetRadiationComfortTrueDelegate = new EventSystem.IntraObjectHandler<WiltCondition>(delegate(WiltCondition component, object data)
+	{
+		component.SetCondition(Condition.Radiation, satisfiedState: true);
+	});
+
 	public bool IsWilting()
 	{
 		return wilting;
@@ -173,6 +184,7 @@ public class WiltCondition : KMonoBehaviour
 		WiltConditions.Add(9, value: true);
 		WiltConditions.Add(10, value: true);
 		WiltConditions.Add(11, value: true);
+		WiltConditions.Add(12, value: true);
 		Subscribe(-107174716, SetTemperatureFalseDelegate);
 		Subscribe(-1758196852, SetTemperatureFalseDelegate);
 		Subscribe(-1234705021, SetTemperatureFalseDelegate);
@@ -199,6 +211,8 @@ public class WiltCondition : KMonoBehaviour
 		Subscribe(960378201, SetReceptacleFalseDelegate);
 		Subscribe(-1089732772, SetEntombedDelegate);
 		Subscribe(912965142, SetRootHealthDelegate);
+		Subscribe(874353739, SetRadiationComfortTrueDelegate);
+		Subscribe(1788072223, SetRadiationComfortFalseDelegate);
 	}
 
 	protected override void OnSpawn()

@@ -52,9 +52,15 @@ public class EquipmentDef : Def
 
 	public Tag[] AdditionalTags;
 
+	public string wornID;
+
 	public List<Descriptor> additionalDescriptors = new List<Descriptor>();
 
 	public override string Name => Strings.Get("STRINGS.EQUIPMENT.PREFABS." + Id.ToUpper() + ".NAME");
 
 	public string GenericName => Strings.Get("STRINGS.EQUIPMENT.PREFABS." + Id.ToUpper() + ".GENERICNAME");
+
+	public string WornName => Strings.Get("STRINGS.EQUIPMENT.PREFABS." + Id.ToUpper() + ".WORN_NAME");
+
+	public string WornDesc => Strings.Get("STRINGS.EQUIPMENT.PREFABS." + Id.ToUpper() + ".WORN_DESC");
 }

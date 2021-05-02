@@ -145,7 +145,7 @@ namespace ProcGen
 			return name;
 		}
 
-		public Tree GenerateOverworld(bool usePD)
+		public Tree GenerateOverworld(bool usePD, bool isRunningDebugGen)
 		{
 			Debug.Assert(mapWidth != 0 && mapHeight != 0, "Map size has not been set");
 			Debug.Assert(worldGen.Settings.world != null, "You need to set a world");
@@ -159,31 +159,28 @@ namespace ProcGen
 			VoronoiTree.Node.maxIndex = 0u;
 			float floatSetting = worldGen.Settings.GetFloatSetting("OverworldDensityMin");
 			float floatSetting2 = worldGen.Settings.GetFloatSetting("OverworldDensityMax");
-			float num = myRandom.RandomRange(floatSetting, floatSetting2);
+			float density = myRandom.RandomRange(floatSetting, floatSetting2);
 			float floatSetting3 = worldGen.Settings.GetFloatSetting("OverworldAvoidRadius");
 			PointGenerator.SampleBehaviour enumSetting = worldGen.Settings.GetEnumSetting<PointGenerator.SampleBehaviour>("OverworldSampleBehaviour");
-			Debug.Log($"Generating overworld points using {enumSetting.ToString()}, density {num}");
 			Cell cell = null;
 			if (!string.IsNullOrEmpty(worldGen.Settings.world.startSubworldName))
 			{
 				WeightedSubworldName weightedSubworldName = worldGen.Settings.world.subworldFiles.Find((WeightedSubworldName x) => x.name == worldGen.Settings.world.startSubworldName);
 				Debug.Assert(weightedSubworldName != null, "The start subworld must be listed in the subworld files for a world.");
-				Vector2 vector = new Vector2((float)mapWidth * worldGen.Settings.world.startingBasePositionHorizontal.GetRandomValueWithinRange(myRandom), (float)mapHeight * worldGen.Settings.world.startingBasePositionVertical.GetRandomValueWithinRange(myRandom));
-				Debug.Log("Start node position is " + vector);
-				cell = overworldGraph.AddNode(weightedSubworldName.name, vector);
+				Vector2 position = new Vector2((float)mapWidth * worldGen.Settings.world.startingBasePositionHorizontal.GetRandomValueWithinRange(myRandom), (float)mapHeight * worldGen.Settings.world.startingBasePositionVertical.GetRandomValueWithinRange(myRandom));
+				cell = overworldGraph.AddNode(weightedSubworldName.name, position);
 				SubWorld subWorld = worldGen.Settings.GetSubWorld(weightedSubworldName.name);
-				float num2 = ((weightedSubworldName.overridePower > 0f) ? weightedSubworldName.overridePower : subWorld.pdWeight);
-				VoronoiTree.Node node = voronoiTree.AddSite(new Diagram.Site((uint)cell.NodeId, cell.position, num2), VoronoiTree.Node.NodeType.Internal);
+				float num = ((weightedSubworldName.overridePower > 0f) ? weightedSubworldName.overridePower : subWorld.pdWeight);
+				VoronoiTree.Node node = voronoiTree.AddSite(new Diagram.Site((uint)cell.NodeId, cell.position, num), VoronoiTree.Node.NodeType.Internal);
 				node.AddTag(WorldGenTags.AtStart);
-				ApplySubworldToNode(node, subWorld, num2);
+				ApplySubworldToNode(node, subWorld, num);
 			}
 			List<Vector2> list = new List<Vector2>();
 			if (cell != null)
 			{
 				list.Add(cell.position);
 			}
-			List<Vector2> randomPoints = PointGenerator.GetRandomPoints(site.poly, num, floatSetting3, list, enumSetting, testInsideBounds: false, myRandom, doShuffle: false);
-			Debug.Log($" -> Generated {randomPoints.Count} points");
+			List<Vector2> randomPoints = PointGenerator.GetRandomPoints(site.poly, density, floatSetting3, list, enumSetting, testInsideBounds: false, myRandom, doShuffle: false);
 			int intSetting = worldGen.Settings.GetIntSetting("OverworldMinNodes");
 			int intSetting2 = worldGen.Settings.GetIntSetting("OverworldMaxNodes");
 			if (randomPoints.Count > intSetting2)
@@ -225,7 +222,7 @@ namespace ProcGen
 			TagEdgeSites(WorldGenTags.AtEdge, WorldGenTags.AtEdge);
 			ResetMapGraphFromVoronoiTree(voronoiTree.ImmediateChildren(), overworldGraph, clear: true);
 			PropagateDistanceTags(voronoiTree, WorldGenTags.DistanceTags);
-			ConvertUnknownCells();
+			ConvertUnknownCells(myRandom, isRunningDebugGen);
 			if (worldGen.Settings.GetOverworldAddTags() != null)
 			{
 				foreach (string overworldAddTag in worldGen.Settings.GetOverworldAddTags())
@@ -544,10 +541,11 @@ namespace ProcGen
 			return hashSet;
 		}
 
-		private void ConvertUnknownCells()
+		private void ConvertUnknownCells(SeededRandom myRandom, bool isRunningDebugGen)
 		{
 			List<VoronoiTree.Node> list = new List<VoronoiTree.Node>();
 			voronoiTree.GetNodesWithTag(WorldGenTags.UnassignedNode, list);
+			list.ShuffleSeeded(myRandom.RandomSource());
 			List<WeightedSubworldName> subworldList = new List<WeightedSubworldName>(worldGen.Settings.world.subworldFiles);
 			List<WeightedSubWorld> subworldsForWorld = worldGen.Settings.GetSubworldsForWorld(subworldList);
 			Dictionary<string, List<WeightedSubWorld>> dictionary = new Dictionary<string, List<WeightedSubWorld>>();
@@ -567,19 +565,52 @@ namespace ProcGen
 				node.tags.Remove(WorldGenTags.UnassignedNode);
 				HashSet<WeightedSubWorld> collection = Filter(item, subworldsForWorld, dictionary, dictionary2);
 				List<WeightedSubWorld> list2 = new List<WeightedSubWorld>(collection);
-				WeightedSubWorld weightedSubWorld = WeightedRandom.Choose(list2, myRandom);
+				List<WeightedSubWorld> list3 = list2.FindAll((WeightedSubWorld x) => x.minCount > 0);
+				WeightedSubWorld weightedSubWorld;
+				if (list3.Count > 0)
+				{
+					weightedSubWorld = list3[0];
+					foreach (WeightedSubWorld item2 in list3)
+					{
+						if (item2.minCount > weightedSubWorld.minCount)
+						{
+							weightedSubWorld = item2;
+						}
+					}
+					weightedSubWorld.minCount--;
+				}
+				else
+				{
+					weightedSubWorld = WeightedRandom.Choose(list2, myRandom);
+				}
 				if (weightedSubWorld != null)
 				{
 					ApplySubworldToNode(item, weightedSubWorld.subWorld, weightedSubWorld.overridePower);
+					weightedSubWorld.maxCount--;
+					if (weightedSubWorld.maxCount <= 0)
+					{
+						subworldsForWorld.Remove(weightedSubWorld);
+					}
 					continue;
 				}
 				string text = "";
-				foreach (KeyValuePair<Tag, int> item2 in item.minDistanceToTag)
+				foreach (KeyValuePair<Tag, int> item3 in item.minDistanceToTag)
 				{
-					text = text + item2.Key.Name + ":" + item2.Value + ", ";
+					text = text + item3.Key.Name + ":" + item3.Value + ", ";
 				}
 				DebugUtil.LogWarningArgs("No allowed Subworld types. Using default. ", node.tags.ToString(), "Distances:", text);
 				node.SetType("Default");
+			}
+			foreach (WeightedSubWorld item4 in subworldsForWorld)
+			{
+				if (item4.minCount > 0)
+				{
+					if (!isRunningDebugGen)
+					{
+						throw new Exception($"Could not guarantee minCount of Subworld {item4.subWorld.name}, {item4.minCount} remaining.");
+					}
+					DebugUtil.DevLogError($"Could not guarantee minCount of Subworld {item4.subWorld.name}, {item4.minCount} remaining.");
+				}
 			}
 		}
 
@@ -988,7 +1019,7 @@ namespace ProcGen
 		{
 			if (string.IsNullOrEmpty(worldGen.Settings.world.startSubworldName))
 			{
-				Debug.Log("World does not have a starting subworld specified");
+				Debug.Log("World (" + worldGen.Settings.world.filePath + ") does not have a starting subworld specified");
 				return new Vector2I(mapWidth / 2, mapHeight / 2);
 			}
 			Node node2 = FindFirstNodeWithTag(WorldGenTags.StartLocation);

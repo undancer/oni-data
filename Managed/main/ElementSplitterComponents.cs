@@ -71,7 +71,7 @@ public class ElementSplitterComponents : KGameObjectComponentManager<ElementSpli
 		if (storage != null)
 		{
 			storage.Trigger(-1697596308, data.primaryElement.gameObject);
-			storage.Trigger(-778359855);
+			storage.Trigger(-778359855, storage);
 		}
 		return pickupable;
 	}

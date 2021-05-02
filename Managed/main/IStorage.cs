@@ -22,4 +22,8 @@ public interface IStorage
 	float Capacity();
 
 	float RemainingCapacity();
+
+	float GetAmountAvailable(Tag tag);
+
+	void ConsumeIgnoringDisease(Tag tag, float amount);
 }

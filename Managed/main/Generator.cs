@@ -7,7 +7,7 @@ using UnityEngine;
 [SerializationConfig(MemberSerialization.OptIn)]
 [DebuggerDisplay("{name}")]
 [AddComponentMenu("KMonoBehaviour/scripts/Generator")]
-public class Generator : KMonoBehaviour, ISaveLoadable, IEnergyProducer
+public class Generator : KMonoBehaviour, ISaveLoadable, IEnergyProducer, ICircuitConnected
 {
 	protected const int SimUpdateSortKey = 1001;
 
@@ -32,22 +32,30 @@ public class Generator : KMonoBehaviour, ISaveLoadable, IEnergyProducer
 
 	private float capacity;
 
+	public static readonly Tag[] DEFAULT_CONNECTED_TAGS = new Tag[1]
+	{
+		GameTags.Operational
+	};
+
+	[SerializeField]
+	public Tag[] connectedTags = DEFAULT_CONNECTED_TAGS;
+
+	public bool showConnectedConsumerStatusItems = true;
+
 	private StatusItem currentStatusItem;
 
 	private Guid statusItemID;
 
 	private AttributeInstance generatorOutputAttribute;
 
-	private static readonly EventSystem.IntraObjectHandler<Generator> OnOperationalChangedDelegate = new EventSystem.IntraObjectHandler<Generator>(delegate(Generator component, object data)
+	private static readonly EventSystem.IntraObjectHandler<Generator> OnTagsChangedDelegate = new EventSystem.IntraObjectHandler<Generator>(delegate(Generator component, object data)
 	{
-		component.OnOperationalChanged(data);
+		component.OnTagsChanged(data);
 	});
 
 	public int PowerDistributionOrder => powerDistributionOrder;
 
 	public virtual float Capacity => capacity;
-
-	public virtual float BaseCapacity => capacity;
 
 	public virtual bool IsEmpty => joulesAvailable <= 0f;
 
@@ -69,29 +77,27 @@ public class Generator : KMonoBehaviour, ISaveLoadable, IEnergyProducer
 		}
 	}
 
-	public bool HasWire
-	{
-		get
-		{
-			bool result = false;
-			GameObject gameObject = Grid.Objects[PowerCell, 26];
-			if (gameObject != null && gameObject.GetComponent<BuildingComplete>() != null)
-			{
-				result = true;
-			}
-			return result;
-		}
-	}
-
 	public int PowerCell
 	{
 		get;
 		private set;
 	}
 
-	public ushort CircuitID => Game.Instance.circuitManager.GetCircuitID(PowerCell);
+	public ushort CircuitID => Game.Instance.circuitManager.GetCircuitID(this);
 
 	private float Efficiency => Mathf.Max(1f + generatorOutputAttribute.GetTotalValue() / 100f, 0f);
+
+	public bool IsVirtual
+	{
+		get;
+		protected set;
+	}
+
+	public object VirtualCircuitKey
+	{
+		get;
+		protected set;
+	}
 
 	protected override void OnPrefabInit()
 	{
@@ -104,12 +110,29 @@ public class Generator : KMonoBehaviour, ISaveLoadable, IEnergyProducer
 	{
 		base.OnSpawn();
 		Components.Generators.Add(this);
-		Subscribe(-592767678, OnOperationalChangedDelegate);
+		Subscribe(-1582839653, OnTagsChangedDelegate);
+		OnTagsChanged(null);
 		capacity = CalculateCapacity(building.Def, null);
 		PowerCell = building.GetPowerOutputCell();
 		CheckConnectionStatus();
-		OnOperationalChanged(null);
 		Game.Instance.energySim.AddGenerator(this);
+	}
+
+	private void OnTagsChanged(object data)
+	{
+		if (this.HasAllTags(connectedTags))
+		{
+			Game.Instance.circuitManager.Connect(this);
+		}
+		else
+		{
+			Game.Instance.circuitManager.Disconnect(this);
+		}
+	}
+
+	public virtual bool IsProducingPower()
+	{
+		return operational.IsActive;
 	}
 
 	public virtual void EnergySim200ms(float dt)
@@ -134,16 +157,19 @@ public class Generator : KMonoBehaviour, ISaveLoadable, IEnergyProducer
 	{
 		if (CircuitID == ushort.MaxValue)
 		{
-			if (HasWire)
-			{
-				SetStatusItem(Db.Get().BuildingStatusItems.NoPowerConsumers);
-				operational.SetFlag(generatorConnectedFlag, value: true);
-			}
-			else
+			if (showConnectedConsumerStatusItems)
 			{
 				SetStatusItem(Db.Get().BuildingStatusItems.NoWireConnected);
-				operational.SetFlag(generatorConnectedFlag, value: false);
 			}
+			operational.SetFlag(generatorConnectedFlag, value: false);
+		}
+		else if (!Game.Instance.circuitManager.HasConsumers(CircuitID) && !Game.Instance.circuitManager.HasBatteries(CircuitID))
+		{
+			if (showConnectedConsumerStatusItems)
+			{
+				SetStatusItem(Db.Get().BuildingStatusItems.NoPowerConsumers);
+			}
+			operational.SetFlag(generatorConnectedFlag, value: true);
 		}
 		else
 		{
@@ -195,18 +221,6 @@ public class Generator : KMonoBehaviour, ISaveLoadable, IEnergyProducer
 	{
 		Debug.Assert(GetComponent<PowerTransformer>() != null);
 		this.joulesAvailable = joulesAvailable;
-	}
-
-	private void OnOperationalChanged(object data)
-	{
-		if (operational.IsOperational)
-		{
-			Game.Instance.circuitManager.Connect(this);
-		}
-		else
-		{
-			Game.Instance.circuitManager.Disconnect(this);
-		}
 	}
 
 	public virtual void ConsumeEnergy(float joules)

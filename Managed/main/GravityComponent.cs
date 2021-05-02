@@ -7,13 +7,15 @@ public struct GravityComponent
 
 	public Vector2 velocity;
 
-	public float radius;
-
 	public float elapsedTime;
 
 	public System.Action onLanded;
 
 	public bool landOnFakeFloors;
+
+	public Vector2 extents;
+
+	public float yOffset;
 
 	public GravityComponent(Transform transform, System.Action on_landed, Vector2 initial_velocity, bool land_on_fake_floors)
 	{
@@ -21,22 +23,36 @@ public struct GravityComponent
 		elapsedTime = 0f;
 		velocity = initial_velocity;
 		onLanded = on_landed;
-		radius = GetRadius(transform);
 		landOnFakeFloors = land_on_fake_floors;
+		KCollider2D component = transform.GetComponent<KCollider2D>();
+		extents = GetExtents(component);
+		yOffset = GetOffset(component).y;
 	}
 
-	public static float GetRadius(Transform transform)
+	public static float GetGroundOffset(KCollider2D collider)
 	{
-		KCircleCollider2D component = transform.GetComponent<KCircleCollider2D>();
-		if (component != null)
+		if (collider != null)
 		{
-			return component.radius;
-		}
-		KCollider2D component2 = transform.GetComponent<KCollider2D>();
-		if (component2 != null)
-		{
-			return transform.GetPosition().y - component2.bounds.min.y;
+			return collider.bounds.extents.y - collider.offset.y;
 		}
 		return 0f;
+	}
+
+	public static Vector2 GetExtents(KCollider2D collider)
+	{
+		if (collider != null)
+		{
+			return collider.bounds.extents;
+		}
+		return Vector2.zero;
+	}
+
+	public static Vector2 GetOffset(KCollider2D collider)
+	{
+		if (collider != null)
+		{
+			return collider.offset;
+		}
+		return Vector2.zero;
 	}
 }

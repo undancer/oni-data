@@ -7,7 +7,7 @@ public class UraniumCentrifugeConfig : IBuildingConfig
 {
 	public const string ID = "UraniumCentrifuge";
 
-	public const float OUTPUT_TEMP = 1573.15f;
+	public const float OUTPUT_TEMP = 1173.15f;
 
 	public const float REFILL_RATE = 2400f;
 
@@ -36,7 +36,7 @@ public class UraniumCentrifugeConfig : IBuildingConfig
 		buildingDef.Overheatable = false;
 		buildingDef.RequiresPowerInput = true;
 		buildingDef.PowerInputOffset = new CellOffset(0, 0);
-		buildingDef.EnergyConsumptionWhenActive = 120f;
+		buildingDef.EnergyConsumptionWhenActive = 480f;
 		buildingDef.ExhaustKilowattsWhenActive = 0.125f;
 		buildingDef.SelfHeatKilowattsWhenActive = 0.5f;
 		buildingDef.AudioCategory = "HollowMetal";
@@ -66,12 +66,12 @@ public class UraniumCentrifugeConfig : IBuildingConfig
 		conduitDispenser.storage = uraniumCentrifuge.outStorage;
 		ComplexRecipe.RecipeElement[] array = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement(ElementLoader.FindElementByHash(SimHashes.UraniumOre).tag, 100f)
+			new ComplexRecipe.RecipeElement(ElementLoader.FindElementByHash(SimHashes.UraniumOre).tag, 10f)
 		};
 		ComplexRecipe.RecipeElement[] array2 = new ComplexRecipe.RecipeElement[2]
 		{
 			new ComplexRecipe.RecipeElement(ElementLoader.FindElementByHash(SimHashes.EnrichedUranium).tag, 2f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature),
-			new ComplexRecipe.RecipeElement(ElementLoader.FindElementByHash(SimHashes.MoltenUranium).tag, 98f, ComplexRecipe.RecipeElement.TemperatureOperation.Melted)
+			new ComplexRecipe.RecipeElement(ElementLoader.FindElementByHash(SimHashes.MoltenUranium).tag, 8f, ComplexRecipe.RecipeElement.TemperatureOperation.Melted)
 		};
 		string id = ComplexRecipeManager.MakeRecipeID("UraniumCentrifuge", array, array2);
 		new ComplexRecipe(id, array, array2)

@@ -54,9 +54,27 @@ public class BeeSleepStates : GameStateMachine<BeeSleepStates, BeeSleepStates.In
 			}
 		});
 		moveToSleepLocation.MoveTo((Instance smi) => smi.targetSleepCell, sleep.pre, behaviourcomplete);
-		sleep.TriggerOnEnter(GameHashes.SleepStarted).TriggerOnExit(GameHashes.SleepFinished).Transition(sleep.pst, ShouldWakeUp, UpdateRate.SIM_1000ms);
+		sleep.Enter("EnableGravity", delegate(Instance smi)
+		{
+			GameComps.Gravities.Add(smi.gameObject, Vector2.zero, delegate
+			{
+				if (GameComps.Gravities.Has(smi.gameObject))
+				{
+					GameComps.Gravities.Remove(smi.gameObject);
+				}
+			});
+		}).TriggerOnEnter(GameHashes.SleepStarted).TriggerOnExit(GameHashes.SleepFinished)
+			.Transition(sleep.pst, ShouldWakeUp, UpdateRate.SIM_1000ms);
 		sleep.pre.QueueAnim("sleep_pre").OnAnimQueueComplete(sleep.loop);
-		sleep.loop.QueueAnim("sleep_loop", loop: true);
+		sleep.loop.Enter(delegate(Instance smi)
+		{
+			LoopingSounds component2 = smi.GetComponent<LoopingSounds>();
+			component2.PauseSound(GlobalAssets.GetSound("Bee_wings_LP"), paused: true);
+		}).QueueAnim("sleep_loop", loop: true).Exit(delegate(Instance smi)
+		{
+			LoopingSounds component = smi.GetComponent<LoopingSounds>();
+			component.PauseSound(GlobalAssets.GetSound("Bee_wings_LP"), paused: false);
+		});
 		sleep.pst.QueueAnim("sleep_pst").OnAnimQueueComplete(behaviourcomplete);
 		behaviourcomplete.BehaviourComplete(GameTags.Creatures.BeeWantsToSleep);
 	}

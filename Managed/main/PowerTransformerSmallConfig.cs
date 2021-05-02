@@ -9,6 +9,7 @@ public class PowerTransformerSmallConfig : IBuildingConfig
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("PowerTransformerSmall", 2, 2, "transformer_small_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.RAW_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.PENALTY.TIER1);
 		buildingDef.RequiresPowerInput = true;
+		buildingDef.RequiresPowerOutput = true;
 		buildingDef.UseWhitePowerOutputConnectorColour = true;
 		buildingDef.PowerInputOffset = new CellOffset(0, 1);
 		buildingDef.PowerOutputOffset = new CellOffset(1, 0);

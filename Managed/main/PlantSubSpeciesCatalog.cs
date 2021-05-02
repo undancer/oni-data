@@ -1,6 +1,7 @@
+using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using Database;
+using System.Linq;
+using System.Text;
 using Klei.AI;
 using KSerialization;
 using STRINGS;
@@ -9,208 +10,276 @@ using UnityEngine;
 [SerializationConfig(MemberSerialization.OptIn)]
 public class PlantSubSpeciesCatalog : KMonoBehaviour
 {
-	public class PlantSubSpecies
+	[Serializable]
+	public struct SubSpeciesInfo : IEquatable<SubSpeciesInfo>
 	{
-		[Serialize]
-		public int id;
+		public Tag speciesID;
 
-		[Serialize]
-		public string rootSpeciesID;
+		public Tag ID;
 
-		[Serialize]
-		public List<Trait> mutations = new List<Trait>();
+		public List<string> mutationIDs;
 
-		public PlantSubSpecies(int id, string rootSpeciesID)
+		private const string ORIGINAL_SUFFIX = "_Original";
+
+		public bool IsValid => ID.IsValid;
+
+		public bool IsOriginal => mutationIDs == null || mutationIDs.Count == 0;
+
+		public SubSpeciesInfo(Tag speciesID, List<string> mutationIDs)
 		{
-			this.id = id;
-			this.rootSpeciesID = rootSpeciesID;
+			this.speciesID = speciesID;
+			this.mutationIDs = ((mutationIDs != null) ? new List<string>(mutationIDs) : new List<string>());
+			ID = SubSpeciesIDFromMutations(speciesID, mutationIDs);
 		}
 
-		public Tag GetFilterTag()
+		public static Tag SubSpeciesIDFromMutations(Tag speciesID, List<string> mutationIDs)
 		{
-			return new Tag(rootSpeciesID + "_" + id);
+			if (mutationIDs == null || mutationIDs.Count == 0)
+			{
+				return string.Concat(speciesID, "_Original");
+			}
+			StringBuilder stringBuilder = new StringBuilder();
+			stringBuilder.Append(speciesID);
+			foreach (string mutationID in mutationIDs)
+			{
+				stringBuilder.Append("_");
+				stringBuilder.Append(mutationID);
+			}
+			return stringBuilder.ToString().ToTag();
 		}
 
-		public string ProperName()
+		public string GetNameWithMutations(string properName, bool identified, bool cleanOriginal)
 		{
-			if (mutations.Count == 0)
+			if (mutationIDs == null || mutationIDs.Count == 0)
 			{
-				return CREATURES.PLANT_MUTATIONS.NONE.NAME;
-			}
-			if (!instance.IsSubspeciesIdentified(rootSpeciesID, id))
-			{
-				return CREATURES.PLANT_MUTATIONS.UNIDENTIFIED;
-			}
-			string text = "";
-			for (int i = 0; i < mutations.Count; i++)
-			{
-				text += mutations[i].Name;
-				if (i != mutations.Count - 1)
+				if (cleanOriginal)
 				{
-					text += ", ";
+					return properName;
 				}
+				return CREATURES.PLANT_MUTATIONS.PLANT_NAME_FMT.Replace("{PlantName}", properName).Replace("{MutationList}", CREATURES.PLANT_MUTATIONS.NONE.NAME);
 			}
-			return text;
+			if (!identified)
+			{
+				return CREATURES.PLANT_MUTATIONS.PLANT_NAME_FMT.Replace("{PlantName}", properName).Replace("{MutationList}", CREATURES.PLANT_MUTATIONS.UNIDENTIFIED);
+			}
+			return CREATURES.PLANT_MUTATIONS.PLANT_NAME_FMT.Replace("{PlantName}", properName).Replace("{MutationList}", string.Join(", ", Db.Get().PlantMutations.GetNamesForMutations(mutationIDs)));
 		}
 
-		[OnDeserialized]
-		private void OnDeserialized()
+		public static bool operator ==(SubSpeciesInfo obj1, SubSpeciesInfo obj2)
 		{
-			if (mutations == null)
+			return obj1.Equals(obj2);
+		}
+
+		public static bool operator !=(SubSpeciesInfo obj1, SubSpeciesInfo obj2)
+		{
+			return !(obj1 == obj2);
+		}
+
+		public override bool Equals(object other)
+		{
+			if (!(other is SubSpeciesInfo))
 			{
-				mutations = new List<Trait>();
+				return false;
 			}
+			return this == (SubSpeciesInfo)other;
+		}
+
+		public bool Equals(SubSpeciesInfo other)
+		{
+			return ID == other.ID;
+		}
+
+		public override int GetHashCode()
+		{
+			return ID.GetHashCode();
+		}
+
+		public string GetMutationsTooltip()
+		{
+			if (mutationIDs == null || mutationIDs.Count == 0)
+			{
+				return CREATURES.STATUSITEMS.ORIGINALPLANTMUTATION.TOOLTIP;
+			}
+			if (!instance.IsSubSpeciesIdentified(ID))
+			{
+				return CREATURES.STATUSITEMS.UNKNOWNMUTATION.TOOLTIP;
+			}
+			string id = mutationIDs[0];
+			PlantMutation plantMutation = Db.Get().PlantMutations.Get(id);
+			return CREATURES.STATUSITEMS.SPECIFICPLANTMUTATION.TOOLTIP.Replace("{MutationName}", plantMutation.Name) + "\n" + plantMutation.GetTooltip();
 		}
 	}
 
 	public static PlantSubSpeciesCatalog instance;
 
 	[Serialize]
-	private Dictionary<Tag, int> nextID = new Dictionary<Tag, int>();
-
-	public Dictionary<string, List<PlantSubSpecies>> subspeciesBySpecies = new Dictionary<string, List<PlantSubSpecies>>();
+	private Dictionary<Tag, List<SubSpeciesInfo>> discoveredSubspeciesBySpecies = new Dictionary<Tag, List<SubSpeciesInfo>>();
 
 	[Serialize]
-	public Dictionary<string, List<int>> identifiedSubspecies = new Dictionary<string, List<int>>();
+	private Dictionary<Tag, float> identificationProgress = new Dictionary<Tag, float>();
+
+	[Serialize]
+	private Dictionary<Tag, bool> identifiedSubSpecies = new Dictionary<Tag, bool>();
+
+	public bool AnyNonOriginalDiscovered
+	{
+		get
+		{
+			foreach (KeyValuePair<Tag, List<SubSpeciesInfo>> discoveredSubspeciesBySpecy in discoveredSubspeciesBySpecies)
+			{
+				if (discoveredSubspeciesBySpecy.Value.Find((SubSpeciesInfo ss) => !ss.IsOriginal).IsValid)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+	}
 
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
 		instance = this;
-		CollectSubSpecies();
 	}
 
-	private void CollectSubSpecies()
+	private void EnsureOriginalSubSpecies()
 	{
 		foreach (GameObject item in Assets.GetPrefabsWithComponent<MutantPlant>())
 		{
-			string key = EntityToSpeciesID(item);
-			if (!subspeciesBySpecies.ContainsKey(key))
+			MutantPlant component = item.GetComponent<MutantPlant>();
+			Tag speciesID = component.SpeciesID;
+			if (!discoveredSubspeciesBySpecies.ContainsKey(speciesID))
 			{
-				subspeciesBySpecies.Add(key, new List<PlantSubSpecies>());
+				discoveredSubspeciesBySpecies[speciesID] = new List<SubSpeciesInfo>();
+				discoveredSubspeciesBySpecies[speciesID].Add(component.GetSubSpeciesInfo());
 			}
-			if (!identifiedSubspecies.ContainsKey(key))
+			if (identifiedSubSpecies == null)
 			{
-				identifiedSubspecies.Add(key, new List<int>());
+				identifiedSubSpecies = new Dictionary<Tag, bool>();
 			}
-		}
-		foreach (KeyValuePair<string, List<PlantSubSpecies>> subspeciesBySpecy in subspeciesBySpecies)
-		{
-			if (subspeciesBySpecy.Value.Count == 0)
-			{
-				PlantSubSpecies plantSubSpecies = new PlantSubSpecies(NextSubSpeciesID(subspeciesBySpecy.Key), subspeciesBySpecy.Key);
-				subspeciesBySpecies[subspeciesBySpecy.Key].Add(plantSubSpecies);
-				if (!identifiedSubspecies[subspeciesBySpecy.Key].Contains(plantSubSpecies.id))
-				{
-					identifiedSubspecies[subspeciesBySpecy.Key].Add(plantSubSpecies.id);
-				}
-			}
+			identifiedSubSpecies[component.SubSpeciesID] = true;
 		}
 	}
 
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
+		EnsureOriginalSubSpecies();
 	}
 
-	public string EntityToSpeciesID(GameObject entity)
+	public List<Tag> GetAllDiscoveredSpecies()
 	{
-		PlantableSeed component = entity.GetComponent<PlantableSeed>();
-		if (component != null)
-		{
-			return component.PlantID.ToString();
-		}
-		return entity.PrefabID().ToString();
+		return discoveredSubspeciesBySpecies.Keys.ToList();
 	}
 
-	public PlantSubSpecies GetSubSpecies(string speciesID, int subSpeciesID)
+	public List<SubSpeciesInfo> GetAllSubSpeciesForSpecies(Tag speciesID)
 	{
-		foreach (PlantSubSpecies item in subspeciesBySpecies[speciesID])
+		if (discoveredSubspeciesBySpecies.TryGetValue(speciesID, out var value))
 		{
-			if (item.id == subSpeciesID)
-			{
-				return item;
-			}
+			return value;
 		}
 		return null;
 	}
 
-	public PlantSubSpecies GetSubSpecies(Tag tag)
+	public bool GetOriginalSubSpecies(Tag speciesID, out SubSpeciesInfo subSpeciesInfo)
 	{
-		foreach (KeyValuePair<string, List<PlantSubSpecies>> subspeciesBySpecy in subspeciesBySpecies)
+		if (!discoveredSubspeciesBySpecies.ContainsKey(speciesID))
 		{
-			foreach (PlantSubSpecies item in subspeciesBySpecy.Value)
-			{
-				if (item.GetFilterTag() == tag)
-				{
-					return item;
-				}
-			}
+			subSpeciesInfo = default(SubSpeciesInfo);
+			return false;
 		}
-		return null;
+		subSpeciesInfo = discoveredSubspeciesBySpecies[speciesID][0];
+		return true;
 	}
 
-	public void IdentifySubSpecies(string speciesID, int subSpeciesID)
+	public SubSpeciesInfo GetSubSpecies(Tag speciesID, Tag subSpeciesID)
 	{
-		if (identifiedSubspecies[speciesID].Contains(subSpeciesID))
+		return discoveredSubspeciesBySpecies[speciesID].Find((SubSpeciesInfo i) => i.ID == subSpeciesID);
+	}
+
+	public SubSpeciesInfo FindSubSpecies(Tag subSpeciesID)
+	{
+		foreach (KeyValuePair<Tag, List<SubSpeciesInfo>> discoveredSubspeciesBySpecy in discoveredSubspeciesBySpecies)
+		{
+			SubSpeciesInfo result = discoveredSubspeciesBySpecy.Value.Find((SubSpeciesInfo i) => i.ID == subSpeciesID);
+			if (result.ID.IsValid)
+			{
+				return result;
+			}
+		}
+		return default(SubSpeciesInfo);
+	}
+
+	public void DiscoverSubSpecies(SubSpeciesInfo newSubSpeciesInfo, MutantPlant source)
+	{
+		if (!discoveredSubspeciesBySpecies[newSubSpeciesInfo.speciesID].Contains(newSubSpeciesInfo))
+		{
+			discoveredSubspeciesBySpecies[newSubSpeciesInfo.speciesID].Add(newSubSpeciesInfo);
+			Notification notification = new Notification(MISC.NOTIFICATIONS.NEWMUTANTSEED.NAME, NotificationType.Good, NewSubspeciesTooltipCB, newSubSpeciesInfo, expires: true, 0f, null, null, source.transform);
+			base.gameObject.AddOrGet<Notifier>().Add(notification);
+		}
+	}
+
+	private string NewSubspeciesTooltipCB(List<Notification> notifications, object data)
+	{
+		SubSpeciesInfo subSpeciesInfo = (SubSpeciesInfo)data;
+		return MISC.NOTIFICATIONS.NEWMUTANTSEED.TOOLTIP.Replace("{Plant}", subSpeciesInfo.speciesID.ProperName());
+	}
+
+	public bool PartiallyIdentifySpecies(Tag speciesID, float amount)
+	{
+		if (!identificationProgress.ContainsKey(speciesID))
+		{
+			identificationProgress[speciesID] = 0f;
+		}
+		identificationProgress[speciesID] += amount;
+		if (identificationProgress[speciesID] >= 1f)
+		{
+			List<SubSpeciesInfo> allUnidentifiedSubSpecies = GetAllUnidentifiedSubSpecies(speciesID);
+			IdentifySubSpecies(allUnidentifiedSubSpecies.GetRandom());
+			identificationProgress[speciesID] = 0f;
+			Trigger(-98362560, speciesID);
+			return true;
+		}
+		Trigger(-1531232972, speciesID);
+		return false;
+	}
+
+	public void IdentifySubSpecies(SubSpeciesInfo subSpeciesInfo)
+	{
+		if (!identifiedSubSpecies.ContainsKey(subSpeciesInfo.ID))
+		{
+			identifiedSubSpecies[subSpeciesInfo.ID] = false;
+		}
+		bool flag = identifiedSubSpecies[subSpeciesInfo.ID];
+		identifiedSubSpecies[subSpeciesInfo.ID] = true;
+		if (flag)
 		{
 			return;
 		}
-		identifiedSubspecies[speciesID].Add(subSpeciesID);
-		Tag filterTag = GetSubSpecies(speciesID, subSpeciesID).GetFilterTag();
 		foreach (MutantPlant mutantPlant in Components.MutantPlants)
 		{
-			if (mutantPlant.HasTag(filterTag) && mutantPlant.gameObject.HasTag(GameTags.UnidentifiedSeed))
+			if (mutantPlant.HasTag(subSpeciesInfo.ID))
 			{
-				mutantPlant.gameObject.RemoveTag(GameTags.UnidentifiedSeed);
+				mutantPlant.UpdateNameAndTags();
 			}
 		}
+		GeneticAnalysisCompleteMessage message = new GeneticAnalysisCompleteMessage(subSpeciesInfo.ID);
+		Messenger.Instance.QueueMessage(message);
 	}
 
-	public int MutateSpecies(PlantSubSpecies fromSubSpecies, bool irrigated, bool fertilized)
+	public bool IsSubSpeciesIdentified(Tag subSpeciesID)
 	{
-		Trait plantMutation = PlantMutations.GetPlantMutation(fromSubSpecies, irrigated, fertilized);
-		foreach (PlantSubSpecies item in subspeciesBySpecies[fromSubSpecies.rootSpeciesID])
-		{
-			bool flag = true;
-			foreach (Trait mutation in fromSubSpecies.mutations)
-			{
-				if (!item.mutations.Contains(mutation))
-				{
-					flag = false;
-				}
-			}
-			if (flag && item.mutations.Contains(plantMutation))
-			{
-				return item.id;
-			}
-		}
-		PlantSubSpecies plantSubSpecies = new PlantSubSpecies(NextSubSpeciesID(fromSubSpecies.rootSpeciesID), fromSubSpecies.rootSpeciesID);
-		foreach (Trait mutation2 in fromSubSpecies.mutations)
-		{
-			plantSubSpecies.mutations.Add(mutation2);
-		}
-		plantSubSpecies.mutations.Add(plantMutation);
-		subspeciesBySpecies[fromSubSpecies.rootSpeciesID].Add(plantSubSpecies);
-		return plantSubSpecies.id;
+		return identifiedSubSpecies.ContainsKey(subSpeciesID) && identifiedSubSpecies[subSpeciesID];
 	}
 
-	public bool IsSubspeciesIdentified(string speciesID, int ID)
+	public float GetIdentificationProgress(Tag speciesID)
 	{
-		PlantSubSpecies subSpecies = GetSubSpecies(speciesID, ID);
-		if (subSpecies == null)
-		{
-			return false;
-		}
-		return identifiedSubspecies[speciesID].Contains(ID);
+		return identificationProgress.ContainsKey(speciesID) ? identificationProgress[speciesID] : 0f;
 	}
 
-	private int NextSubSpeciesID(string speciesID)
+	public List<SubSpeciesInfo> GetAllUnidentifiedSubSpecies(Tag speciesID)
 	{
-		if (!nextID.ContainsKey(speciesID))
-		{
-			nextID.Add(speciesID.ToTag(), 0);
-		}
-		return nextID[speciesID]++;
+		return discoveredSubspeciesBySpecies[speciesID].FindAll((SubSpeciesInfo ss) => !IsSubSpeciesIdentified(ss.ID));
 	}
 }

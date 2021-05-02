@@ -287,7 +287,7 @@ public class NotificationScreen : KScreen
 		if (entry == null)
 		{
 			HierarchyReferences hierarchyReferences = ((notification.Type != NotificationType.Messages) ? Util.KInstantiateUI<HierarchyReferences>(LabelPrefab, LabelsFolder) : Util.KInstantiateUI<HierarchyReferences>(MessagesPrefab, MessagesFolder));
-			hierarchyReferences.GetReference<NotificationAnimator>("Animator").Init();
+			hierarchyReferences.GetReference<NotificationAnimator>("Animator").Begin();
 			hierarchyReferences.gameObject.SetActive(value: true);
 			Button reference = hierarchyReferences.GetReference<Button>("MainButton");
 			ColorBlock colors = reference.colors;
@@ -502,14 +502,28 @@ public class NotificationScreen : KScreen
 		{
 			Vector3 position = nextClickedNotification.clickFocus.GetPosition();
 			position.z = -40f;
+			ClusterGridEntity component = nextClickedNotification.clickFocus.GetComponent<ClusterGridEntity>();
+			KSelectable component2 = nextClickedNotification.clickFocus.GetComponent<KSelectable>();
 			int myWorldId = nextClickedNotification.clickFocus.gameObject.GetMyWorldId();
 			if (myWorldId != -1)
 			{
 				CameraController.Instance.ActiveWorldStarWipe(myWorldId, position);
 			}
-			if (nextClickedNotification.clickFocus.GetComponent<KSelectable>() != null)
+			else if (component != null && component.IsVisible)
 			{
-				SelectTool.Instance.Select(nextClickedNotification.clickFocus.GetComponent<KSelectable>());
+				ManagementMenu.Instance.OpenClusterMap();
+				ClusterMapScreen.Instance.SetTargetFocusPosition(component.Location);
+			}
+			if (component2 != null)
+			{
+				if (component != null && component.IsVisible)
+				{
+					ClusterMapSelectTool.Instance.Select(component2);
+				}
+				else
+				{
+					SelectTool.Instance.Select(component2);
+				}
 			}
 		}
 		else if (nextClickedNotification.Notifier != null)

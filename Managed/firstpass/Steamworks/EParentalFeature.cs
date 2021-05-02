@@ -15,6 +15,7 @@ namespace Steamworks
 		k_EFeatureParentalSetup,
 		k_EFeatureLibrary,
 		k_EFeatureTest,
+		k_EFeatureSiteLicense,
 		k_EFeatureMax
 	}
 }

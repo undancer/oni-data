@@ -1,3 +1,4 @@
+using STRINGS;
 using UnityEngine;
 
 public class RailGunSideScreen : SideScreenContent
@@ -19,10 +20,15 @@ public class RailGunSideScreen : SideScreenContent
 	[SerializeField]
 	private LocText unitsLabel;
 
+	[SerializeField]
+	private LocText hepStorageInfo;
+
+	private int targetRailgunHEPStorageSubHandle = -1;
+
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		unitsLabel.text = selectedGun.CapacityUnits;
+		unitsLabel.text = GameUtil.GetCurrentMassUnit();
 		slider.onDrag += delegate
 		{
 			ReceiveValueFromSlider(slider.value);
@@ -78,16 +84,32 @@ public class RailGunSideScreen : SideScreenContent
 			Debug.LogError("The gameObject received does not contain a RailGun component");
 			return;
 		}
+		if (targetRailgunHEPStorageSubHandle != -1)
+		{
+			Unsubscribe(targetRailgunHEPStorageSubHandle);
+		}
+		targetRailgunHEPStorageSubHandle = selectedGun.Subscribe(-1837862626, UpdateHEPLabels);
 		slider.minValue = selectedGun.MinLaunchMass;
 		slider.maxValue = selectedGun.MaxLaunchMass;
 		slider.value = selectedGun.launchMass;
-		slider.GetComponentInChildren<ToolTip>();
-		unitsLabel.text = selectedGun.CapacityUnits;
+		unitsLabel.text = GameUtil.GetCurrentMassUnit();
 		numberInput.minValue = selectedGun.MinLaunchMass;
 		numberInput.maxValue = selectedGun.MaxLaunchMass;
 		numberInput.currentValue = Mathf.Max(selectedGun.MinLaunchMass, Mathf.Min(selectedGun.MaxLaunchMass, selectedGun.launchMass));
-		numberInput.Activate();
 		UpdateMaxCapacityLabel();
+		numberInput.Activate();
+		UpdateHEPLabels();
+	}
+
+	public void UpdateHEPLabels(object data = null)
+	{
+		if (!(selectedGun == null))
+		{
+			string text = BUILDINGS.PREFABS.RAILGUN.SIDESCREEN_HEP_REQUIRED;
+			text = text.Replace("{current}", selectedGun.CurrentEnergy.ToString());
+			text = text.Replace("{required}", selectedGun.EnergyCost.ToString());
+			hepStorageInfo.text = text;
+		}
 	}
 
 	private void ReceiveValueFromSlider(float newValue)

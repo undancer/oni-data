@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public class ScannerModule : GameStateMachine<ScannerModule, ScannerModule.Instance, IStateMachineTarget, ScannerModule.Def>
 {
 	public class Def : BaseDef
@@ -14,18 +16,24 @@ public class ScannerModule : GameStateMachine<ScannerModule, ScannerModule.Insta
 
 		public void Scan()
 		{
-			Clustercraft component = GetComponent<RocketModule>().CraftInterface.GetComponent<Clustercraft>();
-			if (component.Status == Clustercraft.CraftStatus.InFlight)
+			Clustercraft component = GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>();
+			if (component.Status != Clustercraft.CraftStatus.InFlight)
 			{
-				ClusterFogOfWarManager.Instance sMI = SaveGame.Instance.GetSMI<ClusterFogOfWarManager.Instance>();
-				AxialI location = component.Location;
-				sMI.RevealLocation(location, base.def.scanRadius);
+				return;
+			}
+			ClusterFogOfWarManager.Instance sMI = SaveGame.Instance.GetSMI<ClusterFogOfWarManager.Instance>();
+			AxialI location = component.Location;
+			sMI.RevealLocation(location, base.def.scanRadius);
+			List<ClusterGridEntity> notVisibleAsteroidsAtAdjacentCell = ClusterGrid.Instance.GetNotVisibleAsteroidsAtAdjacentCell(location);
+			foreach (ClusterGridEntity item in notVisibleAsteroidsAtAdjacentCell)
+			{
+				sMI.RevealLocation(item.Location);
 			}
 		}
 
 		public void SetFogOfWarAllowed()
 		{
-			CraftModuleInterface craftInterface = GetComponent<RocketModule>().CraftInterface;
+			CraftModuleInterface craftInterface = GetComponent<RocketModuleCluster>().CraftInterface;
 			if (craftInterface.HasClusterDestinationSelector())
 			{
 				ClusterDestinationSelector clusterDestinationSelector = craftInterface.GetClusterDestinationSelector();
@@ -43,11 +51,11 @@ public class ScannerModule : GameStateMachine<ScannerModule, ScannerModule.Insta
 		}).EventHandler(GameHashes.RocketLaunched, delegate(Instance smi)
 		{
 			smi.Scan();
-		}).EventHandler(GameHashes.ClusterLocationChanged, (Instance smi) => smi.GetComponent<RocketModule>().CraftInterface, delegate(Instance smi)
+		}).EventHandler(GameHashes.ClusterLocationChanged, (Instance smi) => smi.GetComponent<RocketModuleCluster>().CraftInterface, delegate(Instance smi)
 		{
 			smi.Scan();
 		})
-			.EventHandler(GameHashes.RocketModuleAdded, (Instance smi) => smi.GetComponent<RocketModule>().CraftInterface, delegate(Instance smi)
+			.EventHandler(GameHashes.RocketModuleChanged, (Instance smi) => smi.GetComponent<RocketModuleCluster>().CraftInterface, delegate(Instance smi)
 			{
 				smi.SetFogOfWarAllowed();
 			});

@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class ConditionHasEngine : ProcessCondition
 {
-	private LaunchableRocket launchable;
+	private ILaunchableRocket launchable;
 
-	public ConditionHasEngine(LaunchableRocket launchable)
+	public ConditionHasEngine(ILaunchableRocket launchable)
 	{
 		this.launchable = launchable;
 	}
 
 	public override Status EvaluateCondition()
 	{
-		List<GameObject> attachedNetwork = AttachableBuilding.GetAttachedNetwork(launchable.GetComponent<AttachableBuilding>());
+		List<GameObject> attachedNetwork = AttachableBuilding.GetAttachedNetwork(launchable.LaunchableGameObject.GetComponent<AttachableBuilding>());
 		foreach (GameObject item in attachedNetwork)
 		{
-			if (item.GetComponent<RocketEngine>() != null)
+			if (item.GetComponent<RocketEngine>() != null || (bool)item.GetComponent<RocketEngineCluster>())
 			{
 				return Status.Ready;
 			}

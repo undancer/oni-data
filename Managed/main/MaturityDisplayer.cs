@@ -1,6 +1,5 @@
 using Klei.AI;
 using STRINGS;
-using UnityEngine;
 
 public class MaturityDisplayer : AsPercentAmountDisplayer
 {
@@ -11,7 +10,7 @@ public class MaturityDisplayer : AsPercentAmountDisplayer
 		{
 		}
 
-		public override string GetFormattedModifier(AttributeModifier modifier, GameObject parent_instance)
+		public override string GetFormattedModifier(AttributeModifier modifier)
 		{
 			float num = modifier.Value;
 			GameUtil.TimeSlice timeSlice = base.DeltaTimeSlice;
@@ -20,7 +19,7 @@ public class MaturityDisplayer : AsPercentAmountDisplayer
 				num *= 100f;
 				timeSlice = GameUtil.TimeSlice.None;
 			}
-			return GetFormattedValue(num, timeSlice, parent_instance);
+			return GetFormattedValue(num, timeSlice);
 		}
 	}
 

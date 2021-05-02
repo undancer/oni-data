@@ -74,7 +74,8 @@ public class ClusterDestinationSideScreen : SideScreenContent
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		return target.GetComponent<ClusterDestinationSelector>() != null || (target.GetComponent<RocketModule>() != null && target.HasTag(GameTags.NoseRocketModule)) || (target.GetComponent<RocketControlStation>() != null && target.GetComponent<RocketControlStation>().GetMyWorld().GetComponent<Clustercraft>()
+		ClusterDestinationSelector component = target.GetComponent<ClusterDestinationSelector>();
+		return (component != null && component.assignable) || (target.GetComponent<RocketModule>() != null && target.HasTag(GameTags.LaunchButtonRocketModule)) || (target.GetComponent<RocketControlStation>() != null && target.GetComponent<RocketControlStation>().GetMyWorld().GetComponent<Clustercraft>()
 			.Status != Clustercraft.CraftStatus.Launching);
 	}
 
@@ -83,9 +84,9 @@ public class ClusterDestinationSideScreen : SideScreenContent
 		targetSelector = target.GetComponent<ClusterDestinationSelector>();
 		if (targetSelector == null)
 		{
-			if (target.GetComponent<RocketModule>() != null)
+			if (target.GetComponent<RocketModuleCluster>() != null)
 			{
-				targetSelector = target.GetComponent<RocketModule>().CraftInterface.GetClusterDestinationSelector();
+				targetSelector = target.GetComponent<RocketModuleCluster>().CraftInterface.GetClusterDestinationSelector();
 			}
 			else if (target.GetComponent<RocketControlStation>() != null)
 			{
@@ -112,7 +113,7 @@ public class ClusterDestinationSideScreen : SideScreenContent
 		}
 		if (targetRocketSelector != null)
 		{
-			List<LaunchPad> launchPadsForDestination = targetRocketSelector.GetLaunchPadsForDestination();
+			List<LaunchPad> launchPadsForDestination = LaunchPad.GetLaunchPadsForDestination(targetRocketSelector.GetDestination());
 			launchPadDropDown.gameObject.SetActive(value: true);
 			repeatButton.gameObject.SetActive(value: true);
 			launchPadDropDown.Initialize(launchPadsForDestination, OnLaunchPadEntryClick, PadDropDownSort, PadDropDownEntryRefreshAction, displaySelectedValueWhenClosed: true, targetRocketSelector);
@@ -131,8 +132,8 @@ public class ClusterDestinationSideScreen : SideScreenContent
 			}
 			else
 			{
+				launchPadDropDown.selectedLabel.text = UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.FIRSTAVAILABLE;
 				launchPadDropDown.openButton.isInteractable = false;
-				launchPadDropDown.selectedLabel.text = UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.NONEAVAILABLE;
 			}
 			StyleRepeatButton();
 		}
@@ -170,6 +171,29 @@ public class ClusterDestinationSideScreen : SideScreenContent
 
 	private void PadDropDownEntryRefreshAction(DropDownEntry entry, object targetData)
 	{
+		LaunchPad launchPad = (LaunchPad)entry.entryData;
+		Clustercraft component = targetRocketSelector.GetComponent<Clustercraft>();
+		if (launchPad != null)
+		{
+			if (component.CanLandAtPad(launchPad, out var failReason) == Clustercraft.PadLandingStatus.CanNeverLand)
+			{
+				entry.button.isInteractable = false;
+				entry.image.sprite = Assets.GetSprite("iconWarning");
+				entry.tooltip.SetSimpleTooltip(failReason);
+			}
+			else
+			{
+				entry.button.isInteractable = true;
+				entry.image.sprite = launchPad.GetComponent<Building>().Def.GetUISprite();
+				entry.tooltip.SetSimpleTooltip(string.Format(UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_VALID_SITE, launchPad.GetProperName()));
+			}
+		}
+		else
+		{
+			entry.button.isInteractable = true;
+			entry.image.sprite = Assets.GetBuildingDef("LaunchPad").GetUISprite();
+			entry.tooltip.SetSimpleTooltip(UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_FIRST_AVAILABLE);
+		}
 	}
 
 	private int PadDropDownSort(IListableOption a, IListableOption b, object targetData)

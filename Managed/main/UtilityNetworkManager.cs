@@ -8,11 +8,23 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 
 	private Dictionary<int, object> endpoints = new Dictionary<int, object>();
 
+	private Dictionary<object, List<object>> virtualItems = new Dictionary<object, List<object>>();
+
+	private Dictionary<object, List<object>> virtualEndpoints = new Dictionary<object, List<object>>();
+
 	private Dictionary<int, int> links = new Dictionary<int, int>();
+
+	private Dictionary<int, object> semiVirtualLinks = new Dictionary<int, object>();
 
 	private List<UtilityNetwork> networks;
 
+	private Dictionary<object, int> virtualKeyToNetworkIdx = new Dictionary<object, int>();
+
 	private HashSet<int> visitedCells;
+
+	private HashSet<object> visitedVirtualKeys;
+
+	private HashSet<object> queuedVirtualKeys;
 
 	private Action<IList<UtilityNetwork>, ICollection<int>> onNetworksRebuilt;
 
@@ -50,6 +62,8 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 		physicalNodes = new HashSet<int>();
 		visualNodes = new HashSet<int>();
 		visitedCells = new HashSet<int>();
+		visitedVirtualKeys = new HashSet<object>();
+		queuedVirtualKeys = new HashSet<object>();
 		for (int i = 0; i < visualGrid.Length; i++)
 		{
 			UtilityNetworkGridNode utilityNetworkGridNode = (visualGrid[i] = new UtilityNetworkGridNode
@@ -75,6 +89,7 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 				networks[i].Reset(physicalGrid);
 			}
 			networks.Clear();
+			virtualKeyToNetworkIdx.Clear();
 			RebuildNetworks(tileLayer, is_physical: false);
 			RebuildNetworks(tileLayer, is_physical: true);
 			if (onNetworksRebuilt != null)
@@ -180,6 +195,30 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 		dirty = true;
 	}
 
+	public void AddToVirtualNetworks(object key, object item, bool is_endpoint)
+	{
+		if (item != null)
+		{
+			if (is_endpoint)
+			{
+				if (!virtualEndpoints.ContainsKey(key))
+				{
+					virtualEndpoints[key] = new List<object>();
+				}
+				virtualEndpoints[key].Add(item);
+			}
+			else
+			{
+				if (!virtualItems.ContainsKey(key))
+				{
+					virtualItems[key] = new List<object>();
+				}
+				virtualItems[key].Add(item);
+			}
+		}
+		dirty = true;
+	}
+
 	private unsafe void Reconnect(int cell)
 	{
 		Vector2I vector2I = Grid.CellToXY(cell);
@@ -240,6 +279,36 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 		}
 	}
 
+	public void RemoveFromVirtualNetworks(object key, object item, bool is_endpoint)
+	{
+		if (Game.IsQuitting())
+		{
+			return;
+		}
+		dirty = true;
+		if (item == null)
+		{
+			return;
+		}
+		if (is_endpoint)
+		{
+			virtualEndpoints[key].Remove(item);
+			if (virtualEndpoints[key].Count == 0)
+			{
+				virtualEndpoints.Remove(key);
+			}
+		}
+		else
+		{
+			virtualItems[key].Remove(item);
+			if (virtualItems[key].Count == 0)
+			{
+				virtualItems.Remove(key);
+			}
+		}
+		GetNetworkForVirtualKey(key)?.RemoveItem(item);
+	}
+
 	public void RemoveFromNetworks(int cell, object item, bool is_endpoint)
 	{
 		if (Game.IsQuitting())
@@ -257,7 +326,7 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 			int networkIdx = physicalGrid[cell].networkIdx;
 			if (networkIdx != -1)
 			{
-				networks[networkIdx].RemoveItem(cell, item);
+				networks[networkIdx].RemoveItem(item);
 			}
 			return;
 		}
@@ -268,7 +337,7 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 		Disconnect(cell);
 		if (endpoints.TryGetValue(cell, out var value) && networkIdx2 != -1)
 		{
-			networks[networkIdx2].DisconnectItem(cell, value);
+			networks[networkIdx2].DisconnectItem(value);
 		}
 	}
 
@@ -316,6 +385,8 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 		UtilityNetworkGridNode[] grid = GetGrid(is_physical);
 		HashSet<int> nodes = GetNodes(is_physical);
 		visitedCells.Clear();
+		visitedVirtualKeys.Clear();
+		queuedVirtualKeys.Clear();
 		queued.Clear();
 		int* ptr = stackalloc int[4];
 		int* ptr2 = stackalloc int[4];
@@ -351,18 +422,18 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 						}
 						if (value != null)
 						{
-							val.AddItem(num, value);
+							val.AddItem(value);
 						}
 					}
 					if (endpoints.TryGetValue(num, out value2) && value2 != null)
 					{
-						val.AddItem(num, value2);
+						val.AddItem(value2);
 					}
 				}
 				grid[num].networkIdx = val.id;
 				if (value != null && value2 != null)
 				{
-					val.ConnectItem(num, value2);
+					val.ConnectItem(value2);
 				}
 				Vector2I vector2I = Grid.CellToXY(num);
 				int num2 = 0;
@@ -403,8 +474,85 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 				{
 					QueueCellForVisit(grid, value3, (UtilityConnections)0);
 				}
+				if (!semiVirtualLinks.TryGetValue(num, out var value4) || visitedVirtualKeys.Contains(value4))
+				{
+					continue;
+				}
+				visitedVirtualKeys.Add(value4);
+				virtualKeyToNetworkIdx[value4] = val.id;
+				if (virtualItems.ContainsKey(value4))
+				{
+					foreach (object item2 in virtualItems[value4])
+					{
+						val.AddItem(item2);
+						val.ConnectItem(item2);
+					}
+				}
+				if (virtualEndpoints.ContainsKey(value4))
+				{
+					foreach (object item3 in virtualEndpoints[value4])
+					{
+						val.AddItem(item3);
+						val.ConnectItem(item3);
+					}
+				}
+				foreach (KeyValuePair<int, object> semiVirtualLink in semiVirtualLinks)
+				{
+					if (semiVirtualLink.Value == value4)
+					{
+						QueueCellForVisit(grid, semiVirtualLink.Key, (UtilityConnections)0);
+					}
+				}
 			}
 		}
+		foreach (KeyValuePair<object, List<object>> virtualItem in virtualItems)
+		{
+			if (visitedVirtualKeys.Contains(virtualItem.Key))
+			{
+				continue;
+			}
+			NetworkType val2 = new NetworkType();
+			val2.id = networks.Count;
+			visitedVirtualKeys.Add(virtualItem.Key);
+			virtualKeyToNetworkIdx[virtualItem.Key] = val2.id;
+			foreach (object item4 in virtualItem.Value)
+			{
+				val2.AddItem(item4);
+				val2.ConnectItem(item4);
+			}
+			foreach (object item5 in virtualEndpoints[virtualItem.Key])
+			{
+				val2.AddItem(item5);
+				val2.ConnectItem(item5);
+			}
+			networks.Add(val2);
+		}
+		foreach (KeyValuePair<object, List<object>> virtualEndpoint in virtualEndpoints)
+		{
+			if (visitedVirtualKeys.Contains(virtualEndpoint.Key))
+			{
+				continue;
+			}
+			NetworkType val3 = new NetworkType();
+			val3.id = networks.Count;
+			visitedVirtualKeys.Add(virtualEndpoint.Key);
+			virtualKeyToNetworkIdx[virtualEndpoint.Key] = val3.id;
+			foreach (object item6 in virtualEndpoints[virtualEndpoint.Key])
+			{
+				val3.AddItem(item6);
+				val3.ConnectItem(item6);
+			}
+			networks.Add(val3);
+		}
+	}
+
+	public UtilityNetwork GetNetworkForVirtualKey(object key)
+	{
+		if (virtualKeyToNetworkIdx.TryGetValue(key, out var value))
+		{
+			return networks[value];
+		}
+		return null;
 	}
 
 	public UtilityNetwork GetNetworkByID(int id)
@@ -569,6 +717,20 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 		object value = null;
 		endpoints.TryGetValue(cell, out value);
 		return value;
+	}
+
+	public void AddSemiVirtualLink(int cell1, object virtualKey)
+	{
+		Debug.Assert(virtualKey != null, "Can not use a null key for a virtual network");
+		semiVirtualLinks[cell1] = virtualKey;
+		dirty = true;
+	}
+
+	public void RemoveSemiVirtualLink(int cell1, object virtualKey)
+	{
+		Debug.Assert(virtualKey != null, "Can not use a null key for a virtual network");
+		semiVirtualLinks.Remove(cell1);
+		dirty = true;
 	}
 
 	public void AddLink(int cell1, int cell2)

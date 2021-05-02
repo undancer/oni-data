@@ -59,12 +59,6 @@ public class CreatureDeliveryPoint : StateMachineComponent<CreatureDeliveryPoint
 	[MyCmpAdd]
 	private Prioritizable prioritizable;
 
-	[SerializeField]
-	public Color noFilterTint = FilteredStorage.NO_FILTER_TINT;
-
-	[SerializeField]
-	public Color filterTint = FilteredStorage.FILTER_TINT;
-
 	[Serialize]
 	private int creatureLimit = 20;
 
@@ -167,9 +161,6 @@ public class CreatureDeliveryPoint : StateMachineComponent<CreatureDeliveryPoint
 
 	private void OnFilterChanged(Tag[] tags)
 	{
-		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
-		bool flag = tags != null && tags.Length != 0;
-		component.TintColour = (flag ? filterTint : noFilterTint);
 		ClearFetches();
 		RebalanceFetches();
 	}

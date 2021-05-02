@@ -26,6 +26,7 @@ public class OxygenMaskStationConfig : IBuildingConfig
 		buildingDef.SelfHeatKilowattsWhenActive = 1f;
 		buildingDef.PermittedRotations = PermittedRotations.FlipH;
 		buildingDef.PreventIdleTraversalPastBuilding = true;
+		buildingDef.Deprecated = true;
 		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		return buildingDef;
 	}

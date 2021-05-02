@@ -20,7 +20,7 @@ namespace ProcGen
 			{
 				return value;
 			}
-			return worldCache["worlds/SandstoneDefault"];
+			return null;
 		}
 
 		public List<string> GetNames()
@@ -28,45 +28,57 @@ namespace ProcGen
 			return new List<string>(worldCache.Keys);
 		}
 
-		public static string GetWorldName(string path)
+		public static string GetWorldName(string path, string prefix)
 		{
-			return "worlds/" + System.IO.Path.GetFileNameWithoutExtension(path);
+			return prefix + "worlds/" + System.IO.Path.GetFileNameWithoutExtension(path);
 		}
 
-		public void LoadReferencedWorlds(string path, ISet<string> referencedWorlds, List<YamlIO.Error> errors)
+		public string GetIconFilename(string iconName)
 		{
-			worldCache.Clear();
-			UpdateWorldCache(path, referencedWorlds, errors);
+			return DlcManager.IsExpansion1Active() ? "asteroid_sandstone_start_kanim" : "Asteroid_sandstone";
 		}
 
-		private void UpdateWorldCache(string path, ISet<string> referencedWorlds, List<YamlIO.Error> errors)
+		public void LoadReferencedWorlds(string path, string prefix, ISet<string> referencedWorlds, List<YamlIO.Error> errors)
+		{
+			UpdateWorldCache(path, prefix, referencedWorlds, errors);
+		}
+
+		private void UpdateWorldCache(string path, string prefix, ISet<string> referencedWorlds, List<YamlIO.Error> errors)
 		{
 			ListPool<FileHandle, Worlds>.PooledList pooledList = ListPool<FileHandle, Worlds>.Allocate();
-			string worldsPath = FileSystem.Normalize(System.IO.Path.Combine(path, "worlds"));
-			FileSystem.GetFiles(worldsPath, "*.yaml", pooledList);
-			pooledList.RemoveAll(delegate(FileHandle world_file)
+			string path2 = FileSystem.Normalize(System.IO.Path.Combine(path, "worlds/"));
+			FileSystem.GetFiles(path2, "*.yaml", pooledList);
+			foreach (FileHandle item2 in pooledList)
 			{
-				string text = world_file.full_path.Substring(worldsPath.Length + 1);
+				string text = item2.full_path.Substring(path.Length);
 				text = text.Remove(text.LastIndexOf(".yaml"));
-				return !referencedWorlds.Contains(text);
-			});
-			foreach (FileHandle item in pooledList)
-			{
-				World world = YamlIO.LoadFile<World>(item.full_path, delegate(YamlIO.Error error, bool force_log_as_warning)
+				string item = prefix + text;
+				if (referencedWorlds.Contains(item))
 				{
-					errors.Add(error);
-				});
-				if (world == null)
-				{
-					DebugUtil.LogWarningArgs("Failed to load world: ", item.full_path);
-				}
-				else if (world.skip != World.Skip.Always && (world.skip != World.Skip.EditorOnly || Application.isEditor))
-				{
-					world.filePath = GetWorldName(item.full_path);
-					worldCache[world.filePath] = world;
+					World world = YamlIO.LoadFile<World>(item2.full_path, delegate(YamlIO.Error error, bool force_log_as_warning)
+					{
+						errors.Add(error);
+					});
+					if (world == null)
+					{
+						DebugUtil.LogWarningArgs("Failed to load world: ", item2.full_path);
+					}
+					else if (world.skip != World.Skip.Always && (world.skip != World.Skip.EditorOnly || Application.isEditor))
+					{
+						world.filePath = GetWorldName(item2.full_path, prefix);
+						worldCache[world.filePath] = world;
+					}
 				}
 			}
 			pooledList.Recycle();
+		}
+
+		public void Validate()
+		{
+			foreach (KeyValuePair<string, World> item in worldCache)
+			{
+				item.Value.Validate();
+			}
 		}
 	}
 }

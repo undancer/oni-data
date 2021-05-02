@@ -100,7 +100,7 @@ public class TreeFilterableSideScreenRow : KMonoBehaviour
 	protected override void OnCmpEnable()
 	{
 		base.OnCmpEnable();
-		SetArrowToggleState(state: false);
+		SetArrowToggleState(GetState() != State.Off);
 	}
 
 	protected override void OnCmpDisable()

@@ -2,16 +2,16 @@ using STRINGS;
 
 public class ConditionHasNosecone : ProcessCondition
 {
-	private LaunchableRocket launchable;
+	private LaunchableRocketCluster launchable;
 
-	public ConditionHasNosecone(LaunchableRocket launchable)
+	public ConditionHasNosecone(LaunchableRocketCluster launchable)
 	{
 		this.launchable = launchable;
 	}
 
 	public override Status EvaluateCondition()
 	{
-		foreach (Ref<RocketModule> part in launchable.parts)
+		foreach (Ref<RocketModuleCluster> part in launchable.parts)
 		{
 			if (part.Get().HasTag(GameTags.NoseRocketModule))
 			{

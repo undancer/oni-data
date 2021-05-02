@@ -135,7 +135,18 @@ public class KScreenManager : KMonoBehaviour, IInputHandler
 		string text = "";
 		foreach (KScreen item in screenStack)
 		{
-			text = text + item.name + "\n";
+			if (item != null)
+			{
+				if (!item.isActiveAndEnabled)
+				{
+					text += "Not isActiveAndEnabled: ";
+				}
+				text = text + item.name + "\n";
+			}
+			else
+			{
+				text += "Null screen in screenStack\n";
+			}
 		}
 		return text;
 	}

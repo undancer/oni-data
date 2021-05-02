@@ -75,7 +75,7 @@ public class JettisonableCargoModule : GameStateMachine<JettisonableCargoModule,
 
 		private void ChooseLanderLocation()
 		{
-			RocketModule component = base.master.GetComponent<RocketModule>();
+			RocketModuleCluster component = base.master.GetComponent<RocketModuleCluster>();
 			Clustercraft component2 = component.CraftInterface.GetComponent<Clustercraft>();
 			ClusterGridEntity stableOrbitAsteroid = component2.GetStableOrbitAsteroid();
 			if (stableOrbitAsteroid != null)
@@ -83,6 +83,7 @@ public class JettisonableCargoModule : GameStateMachine<JettisonableCargoModule,
 				int id = stableOrbitAsteroid.GetComponent<WorldContainer>().id;
 				GameObject gameObject = landerContainer.FindFirst(base.def.landerPrefabID);
 				Placeable component3 = gameObject.GetComponent<Placeable>();
+				component3.restrictWorldId = id;
 				ClusterManager.Instance.SetActiveWorld(id);
 				ManagementMenu.Instance.CloseAll();
 				PlaceTool.Instance.Activate(component3, OnLanderPlaced);
@@ -111,7 +112,7 @@ public class JettisonableCargoModule : GameStateMachine<JettisonableCargoModule,
 			MinionStorage component4 = lander.GetComponent<MinionStorage>();
 			if (component4 != null)
 			{
-				CraftModuleInterface craftInterface = GetComponent<RocketModule>().CraftInterface;
+				CraftModuleInterface craftInterface = GetComponent<RocketModuleCluster>().CraftInterface;
 				WorldContainer worldContainer = ((craftInterface != null) ? craftInterface.GetComponent<WorldContainer>() : null);
 				if (worldContainer != null)
 				{
@@ -133,7 +134,7 @@ public class JettisonableCargoModule : GameStateMachine<JettisonableCargoModule,
 			lander.gameObject.SetActive(value: true);
 			lander.Trigger(1792516731, base.gameObject);
 			ManagementMenu.Instance.ToggleClusterMap();
-			ClusterMapScreen.Instance.SelectEntity(GetComponent<RocketModule>().CraftInterface.GetComponent<ClusterGridEntity>(), frameDelay: true);
+			ClusterMapScreen.Instance.SelectEntity(GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<ClusterGridEntity>(), frameDelay: true);
 		}
 
 		public bool CheckIfLoaded()
@@ -156,7 +157,7 @@ public class JettisonableCargoModule : GameStateMachine<JettisonableCargoModule,
 
 		public bool IsValidDropLocation()
 		{
-			Clustercraft component = GetComponent<RocketModule>().CraftInterface.GetComponent<Clustercraft>();
+			Clustercraft component = GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>();
 			return component.GetStableOrbitAsteroid() != null;
 		}
 

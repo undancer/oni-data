@@ -34,7 +34,6 @@ public class OxyfernConfig : IEntityConfig
 		gameObject.AddOrGet<Uprootable>();
 		gameObject.AddOrGet<UprootedMonitor>();
 		gameObject.AddOrGet<DrowningMonitor>();
-		gameObject.AddOrGet<MutantPlant>();
 		TemperatureVulnerable temperatureVulnerable = gameObject.AddOrGet<TemperatureVulnerable>();
 		temperatureVulnerable.Configure(273.15f, 253.15f, 313.15f, 373.15f);
 		Tag tag = ElementLoader.FindElementByHash(SimHashes.Water).tag;

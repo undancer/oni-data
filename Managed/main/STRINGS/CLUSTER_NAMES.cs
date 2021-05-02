@@ -27,14 +27,28 @@ namespace STRINGS
 		{
 			public static LocString NAME = "Terra Cluster";
 
-			public static LocString DESCRIPTION = "";
+			public static LocString DESCRIPTION = "An earthy cluster of visitable planetoids made from the remains of an anomalous planet.";
 		}
 
 		public static class SWAMP_START_CLUSTER
 		{
 			public static LocString NAME = "Swamp Cluster";
 
-			public static LocString DESCRIPTION = "";
+			public static LocString DESCRIPTION = "A swampy cluster of visitable planetoids made from the remains of an anomalous planet.";
+		}
+
+		public static class FOREST_START_CLUSTER
+		{
+			public static LocString NAME = "Forest Cluster";
+
+			public static LocString DESCRIPTION = "A foresty cluster of visitable planetoids made from the remains of an anomalous planet.";
+		}
+
+		public static class VANILLA_SANDSTONE_CLUSTER
+		{
+			public static LocString NAME = "Large Terra Cluster";
+
+			public static LocString DESCRIPTION = "A cluster of planets with a larger earthy planetoid to start on.";
 		}
 	}
 }

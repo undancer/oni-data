@@ -9,6 +9,8 @@ public class HighEnergyParticleRedirectorConfig : IBuildingConfig
 
 	public const float TRAVEL_DELAY = 0.5f;
 
+	public const float REDIRECT_PARTICLE_COST = 1f;
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("HighEnergyParticleRedirector", 1, 2, "orb_transporter_kanim", 30, 10f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.NotInTiles, noise: NOISE_POLLUTION.NONE, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER1);
@@ -38,6 +40,7 @@ public class HighEnergyParticleRedirectorConfig : IBuildingConfig
 		HighEnergyParticleStorage highEnergyParticleStorage = go.AddOrGet<HighEnergyParticleStorage>();
 		highEnergyParticleStorage.autoStore = true;
 		highEnergyParticleStorage.showInUI = false;
+		highEnergyParticleStorage.capacity = 51f;
 		HighEnergyParticleRedirector highEnergyParticleRedirector = go.AddOrGet<HighEnergyParticleRedirector>();
 		highEnergyParticleRedirector.directorDelay = 0.5f;
 	}

@@ -7,6 +7,10 @@ public class DlcManager
 
 	public const string EXPANSION1_ID = "EXPANSION1_ID";
 
+	public const string VANILLA_DIRECTORY = "";
+
+	public const string EXPANSION1_DIRECTORY = "expansion1";
+
 	public static List<string> RELEASE_ORDER = new List<string>
 	{
 		"",
@@ -23,6 +27,11 @@ public class DlcManager
 		return dlcId == null || dlcId == "";
 	}
 
+	public static bool IsExpansion1Id(string dlcId)
+	{
+		return dlcId == "EXPANSION1_ID";
+	}
+
 	public static string GetContentBundleName(string dlcId)
 	{
 		if (dlcId == "EXPANSION1_ID")
@@ -35,12 +44,30 @@ public class DlcManager
 
 	public static string GetContentDirectoryName(string dlcId)
 	{
-		if (dlcId == "EXPANSION1_ID")
+		if (dlcId == null || dlcId.Length != 0)
 		{
-			return "expansion1";
+			if (dlcId == "EXPANSION1_ID")
+			{
+				return "expansion1";
+			}
+			Debug.LogError("No content directory name exists for " + dlcId);
+			return null;
 		}
-		Debug.LogError("No content directory name exists for " + dlcId);
-		return null;
+		return "";
+	}
+
+	public static string GetDlcIdFromContentDirectory(string contentDirectory)
+	{
+		if (contentDirectory == null || contentDirectory.Length != 0)
+		{
+			if (contentDirectory == "expansion1")
+			{
+				return "EXPANSION1_ID";
+			}
+			Debug.LogError("No dlcId matches content directory " + contentDirectory);
+			return null;
+		}
+		return "";
 	}
 
 	public static bool IsExpansion1Installed()
@@ -70,6 +97,14 @@ public class DlcManager
 	{
 		Debug.Assert(!active || IsExpansion1Installed(), "Cannot set Expansion1 active if it isn't installed");
 		SetContentSettingEnabled("EXPANSION1_ID", active);
+	}
+
+	public static void ToggleDLC()
+	{
+		if (DistributionPlatform.Inst.PurchasedDLC)
+		{
+			DistributionPlatform.Inst.ToggleDLC();
+		}
 	}
 
 	public static bool IsExpansion1Active()
@@ -127,5 +162,15 @@ public class DlcManager
 	{
 		Debug.Assert(dlcId != "", "There is no KPlayerPrefs value for vanilla - it is always enabled");
 		KPlayerPrefs.SetInt(dlcId + ".ENABLED", enabled ? 1 : 0);
+	}
+
+	public static bool FeatureRadiationEnabled()
+	{
+		return IsExpansion1Active();
+	}
+
+	public static bool FeaturePlantMutationsEnabled()
+	{
+		return false;
 	}
 }

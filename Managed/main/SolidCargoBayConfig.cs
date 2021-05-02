@@ -12,6 +12,7 @@ public class SolidCargoBayConfig : IBuildingConfig
 			"BuildableRaw",
 			SimHashes.Steel.ToString()
 		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		buildingDef.ForbiddenDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;
 		buildingDef.Invincible = true;
@@ -25,7 +26,6 @@ public class SolidCargoBayConfig : IBuildingConfig
 		buildingDef.Cancellable = false;
 		buildingDef.OutputConduitType = ConduitType.Solid;
 		buildingDef.UtilityOutputOffset = new CellOffset(0, 3);
-		buildingDef.ShowInBuildMenu = !DlcManager.IsExpansion1Active();
 		return buildingDef;
 	}
 
@@ -48,7 +48,7 @@ public class SolidCargoBayConfig : IBuildingConfig
 		cargoBay.storageType = CargoBay.CargoType.Solids;
 		cargoBay.storage.capacityKg = 1000f;
 		cargoBay.storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
-		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.MODERATE_PLUS, "rocket_storage_solid_bg_kanim");
+		BuildingTemplates.ExtendBuildingToRocketModule(go, "rocket_storage_solid_bg_kanim");
 		go.AddOrGet<SolidConduitDispenser>();
 	}
 }

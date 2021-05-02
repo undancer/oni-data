@@ -34,6 +34,14 @@ public class ModeSelectScreen : NewGameFlowScreen
 	[SerializeField]
 	private KBatchedAnimController survivalAnim;
 
+	private static bool dataLoaded = false;
+
+	protected override void OnPrefabInit()
+	{
+		base.OnPrefabInit();
+		LoadWorldAndClusterData();
+	}
+
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
@@ -77,18 +85,22 @@ public class ModeSelectScreen : NewGameFlowScreen
 	private void OnClickSurvival()
 	{
 		Deactivate();
-		LoadWorldsData();
 		CustomGameSettings.Instance.SetSurvivalDefaults();
 		NavigateForward();
 	}
 
-	private void LoadWorldsData()
+	private void LoadWorldAndClusterData()
 	{
-		Global.Instance.modManager.Load(Content.LayerableFiles);
-		SettingsCache.Clear();
-		WorldGen.LoadSettings();
-		CustomGameSettings.Instance.LoadWorlds();
-		Global.Instance.modManager.Report(base.gameObject);
+		if (!dataLoaded)
+		{
+			Global.Instance.modManager.Load(Content.LayerableFiles);
+			SettingsCache.Clear();
+			WorldGen.LoadSettings();
+			CustomGameSettings.Instance.LoadWorlds();
+			CustomGameSettings.Instance.LoadClusters();
+			Global.Instance.modManager.Report(base.gameObject);
+			dataLoaded = true;
+		}
 	}
 
 	private void OnHoverEnterNosweat()
@@ -110,7 +122,6 @@ public class ModeSelectScreen : NewGameFlowScreen
 	private void OnClickNosweat()
 	{
 		Deactivate();
-		LoadWorldsData();
 		CustomGameSettings.Instance.SetNosweatDefaults();
 		NavigateForward();
 	}

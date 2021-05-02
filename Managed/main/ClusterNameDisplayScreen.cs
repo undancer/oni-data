@@ -48,20 +48,23 @@ public class ClusterNameDisplayScreen : KScreen
 
 	public void AddNewEntry(ClusterGridEntity representedObject)
 	{
-		Entry entry = new Entry();
-		entry.grid_entity = representedObject;
-		GameObject original = nameAndBarsPrefab;
-		GameObject gameObject = (entry.display_go = Util.KInstantiateUI(original, base.gameObject, force_active: true));
-		gameObject.name = representedObject.name + " cluster overlay";
-		entry.Name = representedObject.name;
-		entry.refs = gameObject.GetComponent<HierarchyReferences>();
-		entry.bars_go = entry.refs.GetReference<RectTransform>("Bars").gameObject;
-		m_entries.Add(entry);
-		KSelectable component = representedObject.GetComponent<KSelectable>();
-		if (component != null)
+		if (GetEntry(representedObject) == null)
 		{
-			UpdateName(representedObject);
-			UpdateBars(representedObject);
+			Entry entry = new Entry();
+			entry.grid_entity = representedObject;
+			GameObject original = nameAndBarsPrefab;
+			GameObject gameObject = (entry.display_go = Util.KInstantiateUI(original, base.gameObject, force_active: true));
+			gameObject.name = representedObject.name + " cluster overlay";
+			entry.Name = representedObject.name;
+			entry.refs = gameObject.GetComponent<HierarchyReferences>();
+			entry.bars_go = entry.refs.GetReference<RectTransform>("Bars").gameObject;
+			m_entries.Add(entry);
+			KSelectable component = representedObject.GetComponent<KSelectable>();
+			if (component != null)
+			{
+				UpdateName(representedObject);
+				UpdateBars(representedObject);
+			}
 		}
 	}
 
@@ -75,7 +78,7 @@ public class ClusterNameDisplayScreen : KScreen
 		int num2 = 0;
 		while (num2 < num)
 		{
-			if (m_entries[num2].grid_entity != null)
+			if (m_entries[num2].grid_entity != null && ClusterMapScreen.GetRevealLevel(m_entries[num2].grid_entity) == ClusterRevealLevel.Visible && m_entries[num2].grid_entity.ShowName())
 			{
 				Transform gridEntityNameTarget = ClusterMapScreen.Instance.GetGridEntityNameTarget(m_entries[num2].grid_entity);
 				if (gridEntityNameTarget != null)
@@ -134,21 +137,13 @@ public class ClusterNameDisplayScreen : KScreen
 			return;
 		}
 		GenericUIProgressBar componentInChildren = entry.bars_go.GetComponentInChildren<GenericUIProgressBar>(includeInactive: true);
-		Clustercraft clustercraft = entry.grid_entity as Clustercraft;
-		if (clustercraft != null)
+		if (entry.grid_entity.ShowProgressBar())
 		{
-			if (clustercraft.HasResourcesToMove() && clustercraft.CurrentPath != null && clustercraft.CurrentPath.Count > 0)
+			if (!componentInChildren.gameObject.activeSelf)
 			{
-				if (!componentInChildren.gameObject.activeSelf)
-				{
-					componentInChildren.gameObject.SetActive(value: true);
-				}
-				componentInChildren.SetFillPercentage(clustercraft.MovePotential / 600f);
+				componentInChildren.gameObject.SetActive(value: true);
 			}
-			else if (componentInChildren.gameObject.activeSelf)
-			{
-				componentInChildren.gameObject.SetActive(value: false);
-			}
+			componentInChildren.SetFillPercentage(entry.grid_entity.GetProgress());
 		}
 		else if (componentInChildren.gameObject.activeSelf)
 		{

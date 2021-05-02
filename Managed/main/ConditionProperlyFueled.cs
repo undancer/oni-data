@@ -2,34 +2,31 @@ using STRINGS;
 
 public class ConditionProperlyFueled : ProcessCondition
 {
-	private FuelTank fuelTank;
+	private IFuelTank fuelTank;
 
-	public ConditionProperlyFueled(FuelTank fuelTank)
+	public ConditionProperlyFueled(IFuelTank fuelTank)
 	{
 		this.fuelTank = fuelTank;
 	}
 
 	public override Status EvaluateCondition()
 	{
-		RocketModule component = fuelTank.GetComponent<RocketModule>();
+		RocketModuleCluster component = ((KMonoBehaviour)fuelTank).GetComponent<RocketModuleCluster>();
 		if (component != null && component.CraftInterface != null)
 		{
 			Clustercraft component2 = component.CraftInterface.GetComponent<Clustercraft>();
-			if (component2 == null)
+			ClusterTraveler component3 = component.CraftInterface.GetComponent<ClusterTraveler>();
+			if (component2 == null || component3 == null)
 			{
 				return Status.Failure;
 			}
-			if (component2.CurrentPath == null)
-			{
-				return Status.Failure;
-			}
-			int num = component2.RemainingTravelNodes();
+			int num = component3.RemainingTravelNodes();
 			if (num == 0)
 			{
-				return Status.Ready;
+				return component2.HasResourcesToMove(1, Clustercraft.CombustionResource.Fuel) ? Status.Ready : Status.Failure;
 			}
-			bool flag = component2.HasResourcesToMove(num * 2);
-			bool flag2 = component2.HasResourcesToMove(num);
+			bool flag = component2.HasResourcesToMove(num * 2, Clustercraft.CombustionResource.Fuel);
+			bool flag2 = component2.HasResourcesToMove(num, Clustercraft.CombustionResource.Fuel);
 			if (flag)
 			{
 				return Status.Ready;
@@ -55,13 +52,21 @@ public class ConditionProperlyFueled : ProcessCondition
 
 	public override string GetStatusTooltip(Status status)
 	{
+		Clustercraft component = ((KMonoBehaviour)fuelTank).GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>();
 		string text = "";
-		return status switch
+		switch (status)
 		{
-			Status.Ready => UI.STARMAP.LAUNCHCHECKLIST.PROPERLY_FUELED.TOOLTIP.READY, 
-			Status.Failure => UI.STARMAP.LAUNCHCHECKLIST.PROPERLY_FUELED.TOOLTIP.FAILURE, 
-			_ => UI.STARMAP.LAUNCHCHECKLIST.PROPERLY_FUELED.TOOLTIP.WARNING, 
-		};
+		case Status.Ready:
+			if (component.Destination == component.Location)
+			{
+				return UI.STARMAP.LAUNCHCHECKLIST.PROPERLY_FUELED.TOOLTIP.READY_NO_DESTINATION;
+			}
+			return UI.STARMAP.LAUNCHCHECKLIST.PROPERLY_FUELED.TOOLTIP.READY;
+		case Status.Failure:
+			return UI.STARMAP.LAUNCHCHECKLIST.PROPERLY_FUELED.TOOLTIP.FAILURE;
+		default:
+			return UI.STARMAP.LAUNCHCHECKLIST.PROPERLY_FUELED.TOOLTIP.WARNING;
+		}
 	}
 
 	public override bool ShowInUI()

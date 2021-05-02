@@ -24,7 +24,7 @@ public class EvilFlowerConfig : IEntityConfig
 		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 168.15f, 258.15f, 513.15f, 563.15f, new SimHashes[1]
 		{
 			SimHashes.CarbonDioxide
-		}, pressure_sensitive: true, 0f, 0.15f, null, can_drown: true, can_tinker: false);
+		}, pressure_sensitive: true, 0f, 0.15f, null, can_drown: true, can_tinker: false, require_solid_tile: true, should_grow_old: true, 2400f, "EvilFlowerOriginal", STRINGS.CREATURES.SPECIES.EVILFLOWER.NAME);
 		EvilFlower evilFlower = gameObject.AddOrGet<EvilFlower>();
 		evilFlower.positive_decor_effect = POSITIVE_DECOR_EFFECT;
 		evilFlower.negative_decor_effect = NEGATIVE_DECOR_EFFECT;

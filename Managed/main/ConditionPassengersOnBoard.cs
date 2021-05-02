@@ -11,7 +11,12 @@ public class ConditionPassengersOnBoard : ProcessCondition
 
 	public override Status EvaluateCondition()
 	{
-		return (!module.CheckPassengersBoarded()) ? Status.Failure : Status.Ready;
+		Tuple<int, int> crewBoardedFraction = module.GetCrewBoardedFraction();
+		if (crewBoardedFraction.first != crewBoardedFraction.second)
+		{
+			return Status.Failure;
+		}
+		return Status.Ready;
 	}
 
 	public override string GetStatusMessage(Status status)
@@ -25,11 +30,20 @@ public class ConditionPassengersOnBoard : ProcessCondition
 
 	public override string GetStatusTooltip(Status status)
 	{
+		Tuple<int, int> crewBoardedFraction = module.GetCrewBoardedFraction();
 		if (status == Status.Ready)
 		{
-			return UI.STARMAP.LAUNCHCHECKLIST.CREW_BOARDED.TOOLTIP.READY;
+			if (crewBoardedFraction.second != 0)
+			{
+				return string.Format(UI.STARMAP.LAUNCHCHECKLIST.CREW_BOARDED.TOOLTIP.READY, crewBoardedFraction.first, crewBoardedFraction.second);
+			}
+			return string.Format(UI.STARMAP.LAUNCHCHECKLIST.CREW_BOARDED.TOOLTIP.NONE, crewBoardedFraction.first, crewBoardedFraction.second);
 		}
-		return UI.STARMAP.LAUNCHCHECKLIST.CREW_BOARDED.TOOLTIP.FAILURE;
+		if (crewBoardedFraction.first == 0)
+		{
+			return string.Format(UI.STARMAP.LAUNCHCHECKLIST.CREW_BOARDED.TOOLTIP.FAILURE, crewBoardedFraction.first, crewBoardedFraction.second);
+		}
+		return string.Format(UI.STARMAP.LAUNCHCHECKLIST.CREW_BOARDED.TOOLTIP.WARNING, crewBoardedFraction.first, crewBoardedFraction.second);
 	}
 
 	public override bool ShowInUI()

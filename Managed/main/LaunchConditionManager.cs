@@ -16,7 +16,7 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 
 	public HashedString statusPort;
 
-	private LaunchableRocket launchable;
+	private ILaunchableRocket launchable;
 
 	[Serialize]
 	private List<Tuple<string, string, string>> DEBUG_ModuleDestructions;
@@ -61,7 +61,7 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		launchable = GetComponent<LaunchableRocket>();
+		launchable = GetComponent<ILaunchableRocket>();
 		FindModules();
 		GetComponent<AttachableBuilding>().onAttachmentNetworkChanged = delegate
 		{
@@ -125,6 +125,10 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 			{
 				list.Add(item);
 			}
+			foreach (ProcessCondition item2 in rocketModule.GetConditionSet(ProcessCondition.ProcessConditionType.RocketStorage))
+			{
+				list.Add(item2);
+			}
 		}
 		return list;
 	}
@@ -138,7 +142,7 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 		Spacecraft spacecraftFromLaunchConditionManager = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(this);
 		if (spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.Grounded && (DebugHandler.InstantBuildMode || (CheckReadyToLaunch() && CheckAbleToFly())))
 		{
-			launchable.Trigger(705820818);
+			launchable.LaunchableGameObject.Trigger(705820818);
 			SpacecraftManager.instance.SetSpacecraftDestination(this, destination);
 			Spacecraft spacecraftFromLaunchConditionManager2 = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(this);
 			spacecraftFromLaunchConditionManager2.BeginMission(destination);
@@ -155,6 +159,17 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 				{
 					return false;
 				}
+			}
+			foreach (ProcessCondition item2 in rocketModule.GetConditionSet(ProcessCondition.ProcessConditionType.RocketStorage))
+			{
+				if (item2.EvaluateCondition() == ProcessCondition.Status.Failure)
+				{
+					return false;
+				}
+			}
+			if (launchable.registerType == LaunchableRocketRegisterType.Spacecraft)
+			{
+				return CheckAbleToFly();
 			}
 		}
 		return true;

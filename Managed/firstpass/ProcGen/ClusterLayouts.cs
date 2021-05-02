@@ -15,7 +15,7 @@ namespace ProcGen
 			{
 				return value;
 			}
-			return clusterCache[WorldGenSettings.ClusterDefaultName];
+			return null;
 		}
 
 		public Dictionary<string, string> GetStartingBaseNames()
@@ -28,18 +28,17 @@ namespace ProcGen
 			return dictionary;
 		}
 
-		public static string GetClusterName(string path)
+		public List<string> GetNames()
 		{
-			return "clusters/" + System.IO.Path.GetFileNameWithoutExtension(path);
+			return new List<string>(clusterCache.Keys);
 		}
 
-		public void LoadFiles(string path, List<YamlIO.Error> errors)
+		public void LoadFiles(string path, string addPrefix, List<YamlIO.Error> errors)
 		{
-			clusterCache.Clear();
-			UpdateClusterCache(path, errors);
+			UpdateClusterCache(path, addPrefix, errors);
 		}
 
-		private void UpdateClusterCache(string path, List<YamlIO.Error> errors)
+		private void UpdateClusterCache(string path, string addPrefix, List<YamlIO.Error> errors)
 		{
 			ListPool<FileHandle, Worlds>.PooledList pooledList = ListPool<FileHandle, Worlds>.Allocate();
 			FileSystem.GetFiles(FileSystem.Normalize(System.IO.Path.Combine(path, "clusters")), "*.yaml", pooledList);
@@ -52,11 +51,11 @@ namespace ProcGen
 				});
 				if (clusterLayout == null)
 				{
-					DebugUtil.LogWarningArgs("Failed to load solar system: ", cluster_file.full_path);
+					DebugUtil.LogWarningArgs("Failed to load cluster: ", cluster_file.full_path);
 				}
 				else if (clusterLayout.skip != ClusterLayout.Skip.Always && (clusterLayout.skip != ClusterLayout.Skip.EditorOnly || Application.isEditor) && (clusterLayout.requiredDlcId == null || DlcManager.IsContentActive(clusterLayout.requiredDlcId)) && (clusterLayout.forbiddenDlcId == null || !DlcManager.IsContentActive(clusterLayout.forbiddenDlcId)))
 				{
-					string key = (clusterLayout.filePath = ClusterLayout.GetName(cluster_file.full_path));
+					string key = (clusterLayout.filePath = ClusterLayout.GetName(cluster_file.full_path, addPrefix));
 					clusterCache[key] = clusterLayout;
 				}
 			}

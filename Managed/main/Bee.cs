@@ -4,21 +4,6 @@ public class Bee : KMonoBehaviour
 {
 	public float radiationAmount;
 
-	private static readonly EventSystem.IntraObjectHandler<Bee> OnSpawnedFromLarvaDelegate = new EventSystem.IntraObjectHandler<Bee>(delegate(Bee component, object data)
-	{
-		component.OnSpawnedFromLarva(data);
-	});
-
-	private static readonly EventSystem.IntraObjectHandler<Bee> EnterHiveDelegate = new EventSystem.IntraObjectHandler<Bee>(delegate(Bee component, object data)
-	{
-		component.TurnOffRadiation(data);
-	});
-
-	private static readonly EventSystem.IntraObjectHandler<Bee> ExitHiveDelegate = new EventSystem.IntraObjectHandler<Bee>(delegate(Bee component, object data)
-	{
-		component.TurnOnRadiation(data);
-	});
-
 	private static readonly EventSystem.IntraObjectHandler<Bee> OnAttackDelegate = new EventSystem.IntraObjectHandler<Bee>(delegate(Bee component, object data)
 	{
 		component.OnAttack(data);
@@ -34,23 +19,29 @@ public class Bee : KMonoBehaviour
 		component.StopSleep(data);
 	});
 
+	private static readonly EventSystem.IntraObjectHandler<Bee> OnDeathDelegate = new EventSystem.IntraObjectHandler<Bee>(delegate(Bee component, object data)
+	{
+		component.OnDeath(data);
+	});
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		Subscribe(-2027483228, OnSpawnedFromLarvaDelegate);
-		Subscribe(-2099923209, EnterHiveDelegate);
-		Subscribe(-1220248099, ExitHiveDelegate);
 		Subscribe(-739654666, OnAttackDelegate);
 		Subscribe(-1283701846, OnSleepDelegate);
 		Subscribe(-2090444759, OnWakeUpDelegate);
+		Subscribe(1623392196, OnDeathDelegate);
+		GetComponent<KBatchedAnimController>().SetSymbolVisiblity("tag", is_visible: false);
+		GetComponent<KBatchedAnimController>().SetSymbolVisiblity("snapto_tag", is_visible: false);
 	}
 
-	protected override void OnCleanUp()
+	private void OnDeath(object data)
 	{
-	}
-
-	private void OnSpawnedFromLarva(object data)
-	{
+		PrimaryElement component = GetComponent<PrimaryElement>();
+		Storage component2 = GetComponent<Storage>();
+		byte index = Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.id);
+		component2.AddOre(SimHashes.NuclearWaste, BeeTuning.WASTE_DROPPED_ON_DEATH, component.Temperature, index, BeeTuning.GERMS_DROPPED_ON_DEATH);
+		component2.DropAll(base.transform.position, vent_gas: true, dump_liquid: true);
 	}
 
 	private void TurnOffRadiation(object data)
@@ -90,9 +81,9 @@ public class Bee : KMonoBehaviour
 
 	public KPrefabID FindHiveInRoom()
 	{
-		List<BeeHive> list = new List<BeeHive>();
+		List<BeeHive.StatesInstance> list = new List<BeeHive.StatesInstance>();
 		Room roomOfGameObject = Game.Instance.roomProber.GetRoomOfGameObject(base.gameObject);
-		foreach (BeeHive item in Components.BeeHives.Items)
+		foreach (BeeHive.StatesInstance item in Components.BeeHives.Items)
 		{
 			if (Game.Instance.roomProber.GetRoomOfGameObject(item.gameObject) == roomOfGameObject)
 			{
@@ -101,7 +92,7 @@ public class Bee : KMonoBehaviour
 		}
 		int num = int.MaxValue;
 		KPrefabID result = null;
-		foreach (BeeHive item2 in list)
+		foreach (BeeHive.StatesInstance item2 in list)
 		{
 			int navigationCost = base.gameObject.GetComponent<Navigator>().GetNavigationCost(Grid.PosToCell(item2.transform.GetLocalPosition()));
 			if (navigationCost < num)

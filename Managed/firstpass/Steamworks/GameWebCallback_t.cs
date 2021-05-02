@@ -8,7 +8,19 @@ namespace Steamworks
 	{
 		public const int k_iCallback = 164;
 
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		public string m_szURL;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
+		private byte[] m_szURL_;
+
+		public string m_szURL
+		{
+			get
+			{
+				return InteropHelp.ByteArrayToStringUTF8(m_szURL_);
+			}
+			set
+			{
+				InteropHelp.StringToByteArrayUTF8(value, m_szURL_, 256);
+			}
+		}
 	}
 }

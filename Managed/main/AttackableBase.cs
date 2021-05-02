@@ -69,8 +69,9 @@ public class AttackableBase : Workable, IApproachable
 
 	protected override void OnCleanUp()
 	{
+		Unsubscribe(1088554450, OnCellChangedDelegate);
+		GameUtil.UnsubscribeToTags(this, OnDeadTagAddedDelegate);
 		Unsubscribe(-1506500077, OnDefeatedDelegate);
-		Unsubscribe(1623392196, OnDefeatedDelegate);
 		Unsubscribe(-1256572400, SetupScenePartitionerDelegate);
 		GameScenePartitioner.Instance.Free(ref scenePartitionerEntry);
 		base.OnCleanUp();

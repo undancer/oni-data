@@ -96,6 +96,7 @@ public class AlertStateManager : GameStateMachine<AlertStateManager, AlertStateM
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = off;
+		base.serializable = SerializeType.ParamsOnly;
 		off.ParamTransition(isOn, on, GameStateMachine<AlertStateManager, Instance, IStateMachineTarget, Def>.IsTrue);
 		on.Exit("VignetteOff", delegate
 		{

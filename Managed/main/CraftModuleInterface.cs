@@ -10,6 +10,9 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 	private List<Ref<RocketModule>> modules = new List<Ref<RocketModule>>();
 
 	[Serialize]
+	private List<Ref<RocketModuleCluster>> clusterModules = new List<Ref<RocketModuleCluster>>();
+
+	[Serialize]
 	public Ref<LaunchPad> currentPad = new Ref<LaunchPad>();
 
 	[MyCmpReq]
@@ -18,14 +21,16 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 	private List<ProcessCondition.ProcessConditionType> conditionsToCheck = new List<ProcessCondition.ProcessConditionType>
 	{
 		ProcessCondition.ProcessConditionType.RocketPrep,
-		ProcessCondition.ProcessConditionType.RocketBoard
+		ProcessCondition.ProcessConditionType.RocketStorage,
+		ProcessCondition.ProcessConditionType.RocketBoard,
+		ProcessCondition.ProcessConditionType.RocketFlight
 	};
 
 	private int lastConditionTypeSucceeded = -1;
 
 	private List<ProcessCondition> returnConditions = new List<ProcessCondition>();
 
-	public IList<Ref<RocketModule>> Modules => modules.AsReadOnly();
+	public IList<Ref<RocketModuleCluster>> ClusterModules => clusterModules.AsReadOnly();
 
 	public LaunchPad CurrentPad => currentPad.Get();
 
@@ -35,13 +40,13 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 	{
 		get
 		{
-			foreach (Ref<RocketModule> module in modules)
+			foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 			{
-				RocketEngine component = module.Get().GetComponent<RocketEngine>();
+				RocketEngineCluster component = clusterModule.Get().GetComponent<RocketEngineCluster>();
 				if (component != null)
 				{
 					float burnableMassRemaining = BurnableMassRemaining;
-					return burnableMassRemaining / component.GetComponent<RocketModule>().performanceStats.FuelKilogramPerDistance;
+					return burnableMassRemaining / component.GetComponent<RocketModuleCluster>().performanceStats.FuelKilogramPerDistance;
 				}
 			}
 			return 0f;
@@ -52,12 +57,12 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 	{
 		get
 		{
-			foreach (Ref<RocketModule> module in modules)
+			foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 			{
-				RocketEngine component = module.Get().GetComponent<RocketEngine>();
+				RocketEngineCluster component = clusterModule.Get().GetComponent<RocketEngineCluster>();
 				if (component != null)
 				{
-					return component.GetComponent<RocketModule>().performanceStats.FuelKilogramPerDistance;
+					return component.GetComponent<RocketModuleCluster>().performanceStats.FuelKilogramPerDistance * 600f;
 				}
 			}
 			return float.PositiveInfinity;
@@ -68,20 +73,20 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 	{
 		get
 		{
-			RocketEngine rocketEngine = null;
-			foreach (Ref<RocketModule> module in modules)
+			RocketEngineCluster rocketEngineCluster = null;
+			foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 			{
-				rocketEngine = module.Get().GetComponent<RocketEngine>();
-				if (rocketEngine != null)
+				rocketEngineCluster = clusterModule.Get().GetComponent<RocketEngineCluster>();
+				if (rocketEngineCluster != null)
 				{
 					break;
 				}
 			}
-			if (rocketEngine == null)
+			if (rocketEngineCluster == null)
 			{
 				return 0f;
 			}
-			return rocketEngine.requireOxidizer ? Mathf.Min(FuelRemaining, OxidizerPowerRemaining) : FuelRemaining;
+			return rocketEngineCluster.requireOxidizer ? Mathf.Min(FuelRemaining, OxidizerPowerRemaining) : FuelRemaining;
 		}
 	}
 
@@ -89,16 +94,21 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 	{
 		get
 		{
-			float num = 0f;
-			foreach (Ref<RocketModule> module in modules)
+			RocketEngineCluster engine = GetEngine();
+			if (engine == null)
 			{
-				FuelTank component = module.Get().GetComponent<FuelTank>();
-				if (component != null)
+				return 0f;
+			}
+			float num = 0f;
+			foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
+			{
+				IFuelTank component = clusterModule.Get().GetComponent<IFuelTank>();
+				if (!component.IsNullOrDestroyed())
 				{
-					num += component.AmountStored;
+					num += component.Storage.GetAmountAvailable(engine.fuelTag);
 				}
 			}
-			return num;
+			return Mathf.CeilToInt(num);
 		}
 	}
 
@@ -107,26 +117,26 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 		get
 		{
 			float num = 0f;
-			foreach (Ref<RocketModule> module in modules)
+			foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 			{
-				OxidizerTank component = module.Get().GetComponent<OxidizerTank>();
+				OxidizerTank component = clusterModule.Get().GetComponent<OxidizerTank>();
 				if (component != null)
 				{
 					num += component.TotalOxidizerPower;
 				}
 			}
-			return num;
+			return Mathf.CeilToInt(num);
 		}
 	}
 
-	public int MaxModules
+	public int MaxHeight
 	{
 		get
 		{
-			RocketEngine engine = GetEngine();
+			RocketEngineCluster engine = GetEngine();
 			if (engine != null)
 			{
-				return engine.maxModules;
+				return engine.maxHeight;
 			}
 			return -1;
 		}
@@ -141,11 +151,27 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 		get
 		{
 			int num = 0;
-			foreach (Ref<RocketModule> module in Modules)
+			foreach (Ref<RocketModuleCluster> clusterModule in ClusterModules)
 			{
-				num += module.Get().GetComponent<Building>().Def.HeightInCells;
+				num += clusterModule.Get().GetComponent<Building>().Def.HeightInCells;
 			}
 			return num;
+		}
+	}
+
+	public bool HasCargoModule
+	{
+		get
+		{
+			foreach (Ref<RocketModuleCluster> clusterModule in ClusterModules)
+			{
+				if ((object)clusterModule.Get().GetComponent<CargoBayCluster>() == null)
+				{
+					continue;
+				}
+				return true;
+			}
+			return false;
 		}
 	}
 
@@ -169,54 +195,101 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 	{
 		foreach (Ref<RocketModule> module in modules)
 		{
-			if (!(module.Get() == null))
+			clusterModules.Add(new Ref<RocketModuleCluster>(module.Get().GetComponent<RocketModuleCluster>()));
+		}
+		modules.Clear();
+		foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
+		{
+			if (!(clusterModule.Get() == null))
 			{
-				module.Get().CraftInterface = this;
+				clusterModule.Get().CraftInterface = this;
 			}
 		}
-		for (int num = modules.Count - 1; num >= 0; num--)
+		bool flag = false;
+		for (int num = clusterModules.Count - 1; num >= 0; num--)
 		{
-			if (modules[num] == null || modules[num].Get() == null)
+			if (clusterModules[num] == null || clusterModules[num].Get() == null)
 			{
 				Debug.LogWarning($"Rocket {base.name} had a null module at index {num} on load! Why????", this);
-				modules.RemoveAt(num);
+				clusterModules.RemoveAt(num);
+				flag = true;
+			}
+		}
+		if (!flag || m_clustercraft.Status != 0)
+		{
+			return;
+		}
+		Debug.LogWarning("The module stack was broken. Collapsing " + base.name + "...", this);
+		SortModuleListByPosition();
+		LaunchPad launchPad = currentPad.Get();
+		if (launchPad != null)
+		{
+			int num2 = launchPad.PadPosition;
+			for (int i = 0; i < clusterModules.Count; i++)
+			{
+				RocketModuleCluster rocketModuleCluster = clusterModules[i].Get();
+				if (num2 != Grid.PosToCell(rocketModuleCluster.transform.GetPosition()))
+				{
+					Debug.LogWarning($"Collapsing space under module {i}:{rocketModuleCluster.name}");
+					rocketModuleCluster.transform.SetPosition(Grid.CellToPos(num2, CellAlignment.Bottom, Grid.SceneLayer.Building));
+				}
+				num2 = Grid.OffsetCell(num2, 0, clusterModules[i].Get().GetComponent<Building>().Def.HeightInCells);
+			}
+		}
+		for (int j = 0; j < clusterModules.Count - 1; j++)
+		{
+			BuildingAttachPoint component = clusterModules[j].Get().GetComponent<BuildingAttachPoint>();
+			if (component != null)
+			{
+				AttachableBuilding component2 = clusterModules[j + 1].Get().GetComponent<AttachableBuilding>();
+				if (component.points[0].attachedBuilding != component2)
+				{
+					Debug.LogWarning("Reattaching " + component.name + " & " + component2.name);
+					component.points[0].attachedBuilding = component2;
+				}
 			}
 		}
 	}
 
-	public void AddModule(RocketModule newModule)
+	public void AddModule(RocketModuleCluster newModule)
 	{
-		for (int i = 0; i < modules.Count; i++)
+		for (int i = 0; i < clusterModules.Count; i++)
 		{
-			if (modules[i].Get() == newModule)
+			if (clusterModules[i].Get() == newModule)
 			{
 				Debug.LogError(string.Concat("Adding module ", newModule, " to the same rocket (", m_clustercraft.Name, ") twice"));
 			}
 		}
-		modules.Add(new Ref<RocketModule>(newModule));
+		clusterModules.Add(new Ref<RocketModuleCluster>(newModule));
 		newModule.CraftInterface = this;
-		Trigger(826910016, newModule);
-		foreach (Ref<RocketModule> module in modules)
+		Trigger(1512695988, newModule);
+		foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 		{
-			RocketModule rocketModule = module.Get();
-			if (rocketModule != null && rocketModule != newModule)
+			RocketModuleCluster rocketModuleCluster = clusterModule.Get();
+			if (rocketModuleCluster != null && rocketModuleCluster != newModule)
 			{
-				rocketModule.Trigger(826910016, newModule);
+				rocketModuleCluster.Trigger(1512695988, newModule);
 			}
 		}
 	}
 
-	public void RemoveModule(RocketModule module)
+	public void RemoveModule(RocketModuleCluster module)
 	{
-		for (int num = modules.Count - 1; num >= 0; num--)
+		for (int num = clusterModules.Count - 1; num >= 0; num--)
 		{
-			if (modules[num].Get() == module)
+			if (clusterModules[num].Get() == module)
 			{
-				modules.RemoveAt(num);
+				clusterModules.RemoveAt(num);
 				break;
 			}
 		}
-		if (modules.Count == 0)
+		Trigger(1512695988);
+		foreach (Ref<RocketModule> module2 in modules)
+		{
+			RocketModule rocketModule = module2.Get();
+			rocketModule.Trigger(1512695988);
+		}
+		if (clusterModules.Count == 0)
 		{
 			base.gameObject.DeleteObject();
 		}
@@ -224,7 +297,22 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 
 	private void SortModuleListByPosition()
 	{
-		modules.Sort((Ref<RocketModule> a, Ref<RocketModule> b) => (!(Grid.CellToPos(Grid.PosToCell(a.Get())).y < Grid.CellToPos(Grid.PosToCell(b.Get())).y)) ? 1 : (-1));
+		clusterModules.Sort((Ref<RocketModuleCluster> a, Ref<RocketModuleCluster> b) => (!(Grid.CellToPos(Grid.PosToCell(a.Get())).y < Grid.CellToPos(Grid.PosToCell(b.Get())).y)) ? 1 : (-1));
+	}
+
+	public int GetModuleRelativeVerticalPosition(GameObject module)
+	{
+		int num = 0;
+		for (int i = 0; i < ClusterModules.Count; i++)
+		{
+			if (clusterModules[i].Get().gameObject == module)
+			{
+				return num;
+			}
+			num += clusterModules[i].Get().GetComponent<Building>().Def.HeightInCells;
+		}
+		Debug.LogError("Could not find module " + module.GetProperName() + " in CraftModuleInterface craft " + m_clustercraft.Name);
+		return 0;
 	}
 
 	public void Sim4000ms(float dt)
@@ -232,21 +320,15 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 		int num = 0;
 		foreach (ProcessCondition.ProcessConditionType item in conditionsToCheck)
 		{
-			if (EvaluateConditionSet(item))
+			if (EvaluateConditionSet(item) != 0)
 			{
 				num++;
-				continue;
 			}
-			break;
 		}
 		if (num != lastConditionTypeSucceeded)
 		{
 			lastConditionTypeSucceeded = num;
 			TriggerEventOnCraftAndRocket(GameHashes.LaunchConditionChanged, null);
-		}
-		if (num != conditionsToCheck.Count && IsLaunchRequested())
-		{
-			m_clustercraft.CancelLaunch();
 		}
 	}
 
@@ -255,27 +337,37 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 		return m_clustercraft.LaunchRequested;
 	}
 
-	public bool CheckCrewShouldBoard()
+	public bool CheckPreppedForLaunch()
 	{
-		return EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketPrep);
+		return EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketPrep) != 0 && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketStorage) != 0 && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketFlight) != ProcessCondition.Status.Failure;
 	}
 
 	public bool CheckReadyToLaunch()
 	{
-		return EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketPrep) && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketBoard);
+		return EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketPrep) != 0 && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketStorage) != 0 && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketFlight) != 0 && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketBoard) != ProcessCondition.Status.Failure;
 	}
 
-	public bool CheckAbleToFly()
+	public bool HasLaunchWarnings()
 	{
-		return EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketFlight);
+		return EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketPrep) == ProcessCondition.Status.Warning || EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketStorage) == ProcessCondition.Status.Warning || EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketBoard) == ProcessCondition.Status.Warning;
+	}
+
+	public bool CheckReadyForAutomatedLaunchCommand()
+	{
+		return EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketPrep) == ProcessCondition.Status.Ready && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketStorage) == ProcessCondition.Status.Ready;
+	}
+
+	public bool CheckReadyForAutomatedLaunch()
+	{
+		return EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketPrep) == ProcessCondition.Status.Ready && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketStorage) == ProcessCondition.Status.Ready && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketBoard) == ProcessCondition.Status.Ready;
 	}
 
 	public void TriggerEventOnCraftAndRocket(GameHashes evt, object data)
 	{
 		Trigger((int)evt, data);
-		foreach (Ref<RocketModule> module in modules)
+		foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 		{
-			module.Get().Trigger((int)evt, data);
+			clusterModule.Get().Trigger((int)evt, data);
 		}
 	}
 
@@ -293,9 +385,9 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 	{
 		SortModuleListByPosition();
 		currentPad.Get().Trigger(705820818, this);
-		foreach (Ref<RocketModule> module in modules)
+		foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 		{
-			module.Get().Trigger(705820818, this);
+			clusterModule.Get().Trigger(705820818, this);
 		}
 		currentPad.Set(null);
 	}
@@ -304,18 +396,14 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 	{
 		SetCurrentPad(pad);
 		int num = pad.PadPosition;
-		for (int i = 0; i < modules.Count; i++)
+		for (int i = 0; i < clusterModules.Count; i++)
 		{
-			modules[i].Get().MoveToPad(num);
-			num = Grid.OffsetCell(num, 0, modules[i].Get().GetComponent<Building>().Def.HeightInCells);
+			clusterModules[i].Get().MoveToPad(num);
+			num = Grid.OffsetCell(num, 0, clusterModules[i].Get().GetComponent<Building>().Def.HeightInCells);
 		}
-		foreach (Ref<RocketModule> module in modules)
+		foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 		{
-			if (module.Get().GetComponent<LaunchableRocket>() != null)
-			{
-				module.Get().Trigger(-1165815793, pad);
-				break;
-			}
+			clusterModule.Get().Trigger(-1165815793, pad);
 		}
 		pad.Trigger(-1165815793, this);
 	}
@@ -327,9 +415,9 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 
 	public LaunchConditionManager FindLaunchConditionManager()
 	{
-		foreach (Ref<RocketModule> module in modules)
+		foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 		{
-			LaunchConditionManager component = module.Get().GetComponent<LaunchConditionManager>();
+			LaunchConditionManager component = clusterModule.Get().GetComponent<LaunchConditionManager>();
 			if (component != null)
 			{
 				return component;
@@ -338,11 +426,11 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 		return null;
 	}
 
-	public LaunchableRocket FindLaunchableRocket()
+	public LaunchableRocketCluster FindLaunchableRocket()
 	{
-		foreach (Ref<RocketModule> module in modules)
+		foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 		{
-			LaunchableRocket component = module.Get().GetComponent<LaunchableRocket>();
+			LaunchableRocketCluster component = clusterModule.Get().GetComponent<LaunchableRocketCluster>();
 			if (component != null)
 			{
 				return component;
@@ -354,18 +442,18 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 	public List<GameObject> GetParts()
 	{
 		List<GameObject> list = new List<GameObject>();
-		foreach (Ref<RocketModule> module in modules)
+		foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 		{
-			list.Add(module.Get().gameObject);
+			list.Add(clusterModule.Get().gameObject);
 		}
 		return list;
 	}
 
-	public RocketEngine GetEngine()
+	public RocketEngineCluster GetEngine()
 	{
-		foreach (Ref<RocketModule> module in modules)
+		foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 		{
-			RocketEngine component = module.Get().GetComponent<RocketEngine>();
+			RocketEngineCluster component = clusterModule.Get().GetComponent<RocketEngineCluster>();
 			if (component != null)
 			{
 				return component;
@@ -376,9 +464,9 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 
 	public PassengerRocketModule GetPassengerModule()
 	{
-		foreach (Ref<RocketModule> module in modules)
+		foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 		{
-			PassengerRocketModule component = module.Get().GetComponent<PassengerRocketModule>();
+			PassengerRocketModule component = clusterModule.Get().GetComponent<PassengerRocketModule>();
 			if (component != null)
 			{
 				return component;
@@ -415,9 +503,9 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 	public List<ProcessCondition> GetConditionSet(ProcessCondition.ProcessConditionType conditionType)
 	{
 		returnConditions.Clear();
-		foreach (Ref<RocketModule> module in modules)
+		foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 		{
-			List<ProcessCondition> conditionSet = module.Get().GetConditionSet(conditionType);
+			List<ProcessCondition> conditionSet = clusterModule.Get().GetConditionSet(conditionType);
 			if (conditionSet != null)
 			{
 				returnConditions.AddRange(conditionSet);
@@ -434,50 +522,37 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 		return returnConditions;
 	}
 
-	public bool HasLaunchWarnings()
+	private ProcessCondition.Status EvaluateConditionSet(ProcessCondition.ProcessConditionType conditionType)
 	{
-		foreach (ProcessCondition item in GetConditionSet(ProcessCondition.ProcessConditionType.RocketPrep))
-		{
-			if (item.EvaluateCondition() == ProcessCondition.Status.Warning)
-			{
-				return true;
-			}
-		}
-		foreach (ProcessCondition item2 in GetConditionSet(ProcessCondition.ProcessConditionType.RocketBoard))
-		{
-			if (item2.EvaluateCondition() == ProcessCondition.Status.Warning)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private bool EvaluateConditionSet(ProcessCondition.ProcessConditionType conditionType)
-	{
+		ProcessCondition.Status status = ProcessCondition.Status.Ready;
 		foreach (ProcessCondition item in GetConditionSet(conditionType))
 		{
-			if (item.EvaluateCondition() == ProcessCondition.Status.Failure)
+			ProcessCondition.Status status2 = item.EvaluateCondition();
+			if (status2 < status)
 			{
-				return false;
+				status = status2;
+			}
+			if (status == ProcessCondition.Status.Failure)
+			{
+				break;
 			}
 		}
-		return true;
+		return status;
 	}
 
 	private void ForceAttachmentNetwork()
 	{
-		RocketModule rocketModule = null;
-		foreach (Ref<RocketModule> module in modules)
+		RocketModuleCluster rocketModuleCluster = null;
+		foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 		{
-			RocketModule rocketModule2 = module.Get();
-			if (rocketModule != null)
+			RocketModuleCluster rocketModuleCluster2 = clusterModule.Get();
+			if (rocketModuleCluster != null)
 			{
-				BuildingAttachPoint component = rocketModule.GetComponent<BuildingAttachPoint>();
-				AttachableBuilding component2 = rocketModule2.GetComponent<AttachableBuilding>();
+				BuildingAttachPoint component = rocketModuleCluster.GetComponent<BuildingAttachPoint>();
+				AttachableBuilding component2 = rocketModuleCluster2.GetComponent<AttachableBuilding>();
 				component.points[0].attachedBuilding = component2;
 			}
-			rocketModule = rocketModule2;
+			rocketModuleCluster = rocketModuleCluster2;
 		}
 	}
 }

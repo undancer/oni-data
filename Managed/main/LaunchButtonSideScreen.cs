@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using STRINGS;
 using UnityEngine;
 
@@ -5,7 +6,11 @@ public class LaunchButtonSideScreen : SideScreenContent
 {
 	public KButton launchButton;
 
-	private RocketModule rocketModule;
+	public LocText statusText;
+
+	private RocketModuleCluster rocketModule;
+
+	private LaunchPad selectedPad;
 
 	private bool acknowledgeWarnings = false;
 
@@ -31,27 +36,32 @@ public class LaunchButtonSideScreen : SideScreenContent
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		return (target.GetComponent<RocketModule>() != null && target.HasTag(GameTags.NoseRocketModule)) || ((bool)target.GetComponent<LaunchPad>() && target.GetComponent<LaunchPad>().HasRocketWithCommandModule());
+		return (target.GetComponent<RocketModule>() != null && target.HasTag(GameTags.LaunchButtonRocketModule)) || ((bool)target.GetComponent<LaunchPad>() && target.GetComponent<LaunchPad>().HasRocketWithCommandModule());
 	}
 
 	public override void SetTarget(GameObject target)
 	{
-		rocketModule = target.GetComponent<RocketModule>();
+		rocketModule = target.GetComponent<RocketModuleCluster>();
 		if (rocketModule == null)
 		{
-			LaunchPad component = target.GetComponent<LaunchPad>();
-			if (component != null)
+			selectedPad = target.GetComponent<LaunchPad>();
+			if (selectedPad != null)
 			{
-				CraftModuleInterface craftInterface = component.LandedRocket.CraftInterface;
-				foreach (Ref<RocketModule> module in craftInterface.Modules)
+				CraftModuleInterface craftInterface = selectedPad.LandedRocket.CraftInterface;
+				foreach (Ref<RocketModuleCluster> clusterModule in craftInterface.ClusterModules)
 				{
-					if ((bool)module.Get().GetComponent<LaunchableRocket>())
+					if ((bool)clusterModule.Get().GetComponent<LaunchableRocketCluster>())
 					{
-						rocketModule = module.Get().GetComponent<RocketModule>();
+						rocketModule = clusterModule.Get().GetComponent<RocketModuleCluster>();
 						break;
 					}
 				}
 			}
+		}
+		if (selectedPad == null)
+		{
+			CraftModuleInterface craftInterface2 = rocketModule.CraftInterface;
+			selectedPad = craftInterface2.currentPad.Get();
 		}
 		acknowledgeWarnings = false;
 		rocketModule.CraftInterface.Subscribe(543433792, RefreshDelegate);
@@ -100,25 +110,37 @@ public class LaunchButtonSideScreen : SideScreenContent
 
 	private void Refresh()
 	{
-		bool flag = DebugHandler.InstantBuildMode || rocketModule.CraftInterface.CheckReadyToLaunch();
-		bool flag2 = !acknowledgeWarnings && rocketModule.CraftInterface.HasLaunchWarnings();
-		bool flag3 = rocketModule.CraftInterface.IsLaunchRequested();
-		if (flag)
+		if (rocketModule == null || selectedPad == null)
+		{
+			return;
+		}
+		bool flag = !acknowledgeWarnings && rocketModule.CraftInterface.HasLaunchWarnings();
+		bool flag2 = rocketModule.CraftInterface.IsLaunchRequested();
+		bool flag3 = selectedPad.IsLogicInputConnected();
+		bool flag4 = (flag3 ? rocketModule.CraftInterface.CheckReadyForAutomatedLaunchCommand() : rocketModule.CraftInterface.CheckPreppedForLaunch());
+		if (flag3)
+		{
+			launchButton.isInteractable = false;
+			launchButton.GetComponentInChildren<LocText>().text = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_AUTOMATION_CONTROLLED;
+			launchButton.GetComponentInChildren<ToolTip>().toolTip = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_AUTOMATION_CONTROLLED_TOOLTIP;
+		}
+		else if (DebugHandler.InstantBuildMode || flag4)
 		{
 			launchButton.isInteractable = true;
 			if (flag2)
 			{
-				launchButton.GetComponentInChildren<LocText>().text = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_WARNINGS_BUTTON;
-				launchButton.GetComponentInChildren<ToolTip>().toolTip = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_WARNINGS_BUTTON_TOOLTIP;
-			}
-			else if (flag3)
-			{
 				launchButton.GetComponentInChildren<LocText>().text = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_REQUESTED_BUTTON;
 				launchButton.GetComponentInChildren<ToolTip>().toolTip = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_REQUESTED_BUTTON_TOOLTIP;
 			}
+			else if (flag)
+			{
+				launchButton.GetComponentInChildren<LocText>().text = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_WARNINGS_BUTTON;
+				launchButton.GetComponentInChildren<ToolTip>().toolTip = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_WARNINGS_BUTTON_TOOLTIP;
+			}
 			else
 			{
-				launchButton.GetComponentInChildren<LocText>().text = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_BUTTON;
+				LocString loc_string = (DebugHandler.InstantBuildMode ? UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_BUTTON_DEBUG : UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_BUTTON);
+				launchButton.GetComponentInChildren<LocText>().text = loc_string;
 				launchButton.GetComponentInChildren<ToolTip>().toolTip = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_BUTTON_TOOLTIP;
 			}
 		}
@@ -127,6 +149,56 @@ public class LaunchButtonSideScreen : SideScreenContent
 			launchButton.isInteractable = false;
 			launchButton.GetComponentInChildren<LocText>().text = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_BUTTON;
 			launchButton.GetComponentInChildren<ToolTip>().toolTip = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_BUTTON_NOT_READY_TOOLTIP;
+		}
+		if (rocketModule.CraftInterface.GetInteriorWorld() == null)
+		{
+			statusText.text = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.STATUS.STILL_PREPPING;
+			return;
+		}
+		PassengerRocketModule component = rocketModule.GetComponent<PassengerRocketModule>();
+		List<RocketControlStation> worldItems = Components.RocketControlStations.GetWorldItems(rocketModule.CraftInterface.GetInteriorWorld().id);
+		RocketControlStationLaunchWorkable rocketControlStationLaunchWorkable = null;
+		if (worldItems != null && worldItems.Count > 0)
+		{
+			RocketControlStation rocketControlStation = worldItems[0];
+			rocketControlStationLaunchWorkable = rocketControlStation.GetComponent<RocketControlStationLaunchWorkable>();
+		}
+		if (component == null || rocketControlStationLaunchWorkable == null)
+		{
+			statusText.text = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.STATUS.STILL_PREPPING;
+			return;
+		}
+		bool flag5 = component.CheckPassengersBoarded();
+		bool flag6 = !component.CheckExtraPassengers();
+		bool flag7 = rocketControlStationLaunchWorkable.worker != null;
+		bool flag8 = rocketModule.CraftInterface.HasTag(GameTags.RocketNotOnGround);
+		if (!flag4)
+		{
+			statusText.text = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.STATUS.STILL_PREPPING;
+		}
+		else if (!flag2)
+		{
+			statusText.text = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.STATUS.READY_FOR_LAUNCH;
+		}
+		else if (!flag5)
+		{
+			statusText.text = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.STATUS.LOADING_CREW;
+		}
+		else if (!flag6)
+		{
+			statusText.text = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.STATUS.UNLOADING_PASSENGERS;
+		}
+		else if (!flag7)
+		{
+			statusText.text = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.STATUS.WAITING_FOR_PILOT;
+		}
+		else if (!flag8)
+		{
+			statusText.text = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.STATUS.COUNTING_DOWN;
+		}
+		else
+		{
+			statusText.text = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.STATUS.TAKING_OFF;
 		}
 	}
 }

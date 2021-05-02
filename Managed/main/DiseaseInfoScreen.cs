@@ -102,6 +102,10 @@ public class DiseaseInfoScreen : TargetScreen
 				Disease disease = Db.Get().Diseases[i];
 				ExposureType exposureTypeForDisease = GameUtil.GetExposureTypeForDisease(disease);
 				Sickness sicknessForDisease = GameUtil.GetSicknessForDisease(disease);
+				if (sicknessForDisease == null)
+				{
+					continue;
+				}
 				bool flag = true;
 				List<string> list = new List<string>();
 				if (exposureTypeForDisease.required_traits != null && exposureTypeForDisease.required_traits.Count > 0)
@@ -184,7 +188,11 @@ public class DiseaseInfoScreen : TargetScreen
 					}
 					text += string.Format(DUPLICANTS.DISEASES.IMMUNE_FROM_HAVING_EXLCLUDED_TRAIT, text3);
 				}
-				else if (flag2)
+				else if (!flag2)
+				{
+					num = ((!exposureTypeForDisease.infect_immediately) ? GermExposureMonitor.GetContractionChance(sMI.GetResistanceToExposureType(exposureTypeForDisease, 3f)) : 1f);
+				}
+				else
 				{
 					num = 0f;
 					string text4 = "";
@@ -201,10 +209,6 @@ public class DiseaseInfoScreen : TargetScreen
 						text += "\n";
 					}
 					text += string.Format(DUPLICANTS.DISEASES.IMMUNE_FROM_HAVING_EXCLUDED_EFFECT, text4);
-				}
-				else
-				{
-					num = ((!exposureTypeForDisease.infect_immediately) ? GermExposureMonitor.GetContractionChance(sMI.GetResistanceToExposureType(exposureTypeForDisease, 3f)) : 1f);
 				}
 				string arg = ((text != "") ? text : string.Format(DUPLICANTS.DISEASES.CONTRACTION_PROBABILITY, GameUtil.GetFormattedPercent(num * 100f), selectedTarget.GetProperName(), sicknessForDisease.Name));
 				immuneSystemPanel.SetLabel("disease_" + disease.Id, "    • " + disease.Name + ": " + GameUtil.GetFormattedPercent(num * 100f), string.Format(DUPLICANTS.DISEASES.RESISTANCES_PANEL_TOOLTIP, arg, sicknessForDisease.Name));

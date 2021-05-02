@@ -172,6 +172,11 @@ namespace TUNING
 				100f
 			};
 
+			public static float[] FUEL_TANK_WET_MASS_GAS_LARGE = new float[1]
+			{
+				150f
+			};
+
 			public static float[] OXIDIZER_TANK_OXIDIZER_MASS = new float[1]
 			{
 				900f
@@ -766,7 +771,8 @@ namespace TUNING
 				LiquidConduitElementSensorConfig.ID,
 				LiquidConduitDiseaseSensorConfig.ID,
 				LiquidConduitTemperatureSensorConfig.ID,
-				"ModularLaunchpadPortLiquid"
+				"ModularLaunchpadPortLiquid",
+				"ModularLaunchpadPortLiquidUnloader"
 			}),
 			new PlanScreen.PlanInfo(new HashedString("HVAC"), hideIfNotResearched: false, new List<string>
 			{
@@ -786,6 +792,7 @@ namespace TUNING
 				"GasBottler",
 				"BottleEmptierGas",
 				"ModularLaunchpadPortGas",
+				"ModularLaunchpadPortGasUnloader",
 				GasConduitElementSensorConfig.ID,
 				GasConduitDiseaseSensorConfig.ID,
 				GasConduitTemperatureSensorConfig.ID
@@ -806,15 +813,14 @@ namespace TUNING
 				"OilRefinery",
 				"Polymerizer",
 				"OxyliteRefinery",
-				"SupermaterialRefinery",
-				"NuclearReactor",
-				"UraniumCentrifuge"
+				"SupermaterialRefinery"
 			}),
 			new PlanScreen.PlanInfo(new HashedString("Medical"), hideIfNotResearched: false, new List<string>
 			{
 				"WashBasin",
 				"WashSink",
 				"HandSanitizer",
+				"DecontaminationShower",
 				"Apothecary",
 				"DoctorStation",
 				"AdvancedDoctorStation",
@@ -867,17 +873,21 @@ namespace TUNING
 				"ResearchCenter",
 				"AdvancedResearchCenter",
 				"NuclearResearchCenter",
+				"OrbitalResearchCenter",
 				"CosmicResearchCenter",
 				"Telescope",
 				"PowerControlStation",
 				"FarmStation",
+				"GeneticAnalysisStation",
 				"RanchStation",
 				"ShearingStation",
 				"RoleStation",
 				"ResetSkillsStation",
-				"OxygenMaskStation",
+				"CraftingTable",
 				"ClothingFabricator",
 				"SuitFabricator",
+				"OxygenMaskMarker",
+				"OxygenMaskLocker",
 				"SuitMarker",
 				"SuitLocker",
 				"JetSuitMarker",
@@ -919,6 +929,7 @@ namespace TUNING
 				LogicElementSensorGasConfig.ID,
 				LogicElementSensorLiquidConfig.ID,
 				LogicCritterCountSensorConfig.ID,
+				LogicRadiationSensorConfig.ID,
 				LogicCounterConfig.ID,
 				LogicAlarmConfig.ID,
 				LogicHammerConfig.ID,
@@ -951,7 +962,8 @@ namespace TUNING
 				SolidConduitElementSensorConfig.ID,
 				SolidConduitTemperatureSensorConfig.ID,
 				"AutoMiner",
-				"ModularLaunchpadPortSolid"
+				"ModularLaunchpadPortSolid",
+				"ModularLaunchpadPortSolidUnloader"
 			}),
 			new PlanScreen.PlanInfo(new HashedString("Rocketry"), hideIfNotResearched: true, new List<string>
 			{
@@ -973,9 +985,24 @@ namespace TUNING
 				"SpecialCargoBay",
 				"HydrogenEngine",
 				RocketControlStationConfig.ID,
+				"RocketInteriorPowerPlug",
+				"RocketInteriorLiquidInput",
+				"RocketInteriorLiquidOutput",
+				"RocketInteriorGasInput",
+				"RocketInteriorGasOutput",
+				"RocketInteriorSolidInput",
+				"RocketInteriorSolidOutput",
 				"RailGun",
-				"RailGunPayloadOpener"
-			})
+				"RailGunPayloadOpener",
+				"LandingBeacon"
+			}),
+			new PlanScreen.PlanInfo(new HashedString("HEP"), hideIfNotResearched: true, new List<string>
+			{
+				"NuclearReactor",
+				"UraniumCentrifuge",
+				"HighEnergyParticleSpawner",
+				"HighEnergyParticleRedirector"
+			}, "EXPANSION1_ID")
 		};
 
 		public static List<Type> COMPONENT_DESCRIPTION_ORDER = new List<Type>
@@ -1048,12 +1075,10 @@ namespace TUNING
 			typeof(BottleEmptier),
 			typeof(AccessControl),
 			typeof(GammaRayOven),
-			typeof(RailGunPayload),
 			typeof(Reactor),
 			typeof(HighEnergyParticlePort),
 			typeof(LeadSuitTank),
 			typeof(ActiveParticleConsumer.Def),
-			typeof(FuelTank),
 			typeof(WaterCooler),
 			typeof(Edible),
 			typeof(PlantableSeed),

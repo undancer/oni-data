@@ -718,6 +718,7 @@ public class RetiredColonyInfoScreen : KModalScreen
 			componentInChildren.SetSymbolVisiblity("snapTo_neck", is_visible: false);
 			componentInChildren.SetSymbolVisiblity("snapTo_goggles", is_visible: false);
 			componentInChildren.SetSymbolVisiblity("snapTo_hat", is_visible: false);
+			componentInChildren.SetSymbolVisiblity("snapTo_headfx", is_visible: false);
 			componentInChildren.SetSymbolVisiblity("snapTo_hat_hair", is_visible: false);
 			foreach (KeyValuePair<string, string> accessory in retiredDuplicantData.accessories)
 			{

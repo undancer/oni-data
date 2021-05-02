@@ -29,9 +29,22 @@ namespace ProcGen
 			set;
 		}
 
+		public int minCount
+		{
+			get;
+			set;
+		}
+
+		public int maxCount
+		{
+			get;
+			set;
+		}
+
 		public WeightedSubworldName()
 		{
 			weight = 1f;
+			maxCount = int.MaxValue;
 		}
 
 		public WeightedSubworldName(string name, float weight)

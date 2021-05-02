@@ -70,9 +70,16 @@ public class EntitySplitter : KMonoBehaviour
 		{
 			MutantPlant component3 = pickupable.GetComponent<MutantPlant>();
 			MutantPlant component4 = other.GetComponent<MutantPlant>();
-			if (component3 != null && component4 != null && (component3.subspeciesID != component4.subspeciesID || component3.GetSpeciesID() != component4.GetSpeciesID()))
+			if (component3 != null || component4 != null)
 			{
-				return false;
+				if (component3 == null != (component4 == null))
+				{
+					return false;
+				}
+				if (component3.SubSpeciesID != component4.SubSpeciesID)
+				{
+					return false;
+				}
 			}
 		}
 		return true;
@@ -113,7 +120,7 @@ public class EntitySplitter : KMonoBehaviour
 		if (storage != null)
 		{
 			storage.Trigger(-1697596308, pickupable.gameObject);
-			storage.Trigger(-778359855);
+			storage.Trigger(-778359855, storage);
 		}
 		return component;
 	}

@@ -12,29 +12,41 @@ public class TransferCargoCompleteCondition : ProcessCondition
 
 	public override Status EvaluateCondition()
 	{
+		CraftModuleInterface craftModuleInterface = null;
+		LaunchPad component = target.GetComponent<LaunchPad>();
+		if (component == null)
+		{
+			Clustercraft component2 = target.GetComponent<Clustercraft>();
+			craftModuleInterface = component2.ModuleInterface;
+		}
+		else
+		{
+			RocketModuleCluster landedRocket = component.LandedRocket;
+			craftModuleInterface = landedRocket.CraftInterface;
+		}
+		if (!craftModuleInterface.HasCargoModule)
+		{
+			return Status.Ready;
+		}
 		return (!target.HasTag(GameTags.TransferringCargoComplete)) ? Status.Warning : Status.Ready;
 	}
 
 	public override string GetStatusMessage(Status status)
 	{
-		return status switch
+		if (status == Status.Ready)
 		{
-			Status.Ready => UI.STARMAP.LAUNCHCHECKLIST.LOADING_COMPLETE.STATUS.READY, 
-			Status.Warning => UI.STARMAP.LAUNCHCHECKLIST.LOADING_COMPLETE.STATUS.WARNING, 
-			Status.Failure => UI.STARMAP.LAUNCHCHECKLIST.LOADING_COMPLETE.STATUS.FAILURE, 
-			_ => "", 
-		};
+			return UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.STATUS.READY;
+		}
+		return UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.STATUS.WARNING;
 	}
 
 	public override string GetStatusTooltip(Status status)
 	{
-		return status switch
+		if (status == Status.Ready)
 		{
-			Status.Ready => UI.STARMAP.LAUNCHCHECKLIST.LOADING_COMPLETE.TOOLTIP.READY, 
-			Status.Warning => UI.STARMAP.LAUNCHCHECKLIST.LOADING_COMPLETE.TOOLTIP.WARNING, 
-			Status.Failure => UI.STARMAP.LAUNCHCHECKLIST.LOADING_COMPLETE.TOOLTIP.FAILURE, 
-			_ => "", 
-		};
+			return UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.TOOLTIP.READY;
+		}
+		return UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.TOOLTIP.WARNING;
 	}
 
 	public override bool ShowInUI()

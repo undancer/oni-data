@@ -95,6 +95,10 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 
 		private ClusterFogOfWarManager.Instance m_fowManager = null;
 
+		private GameObject telescopeTargetMarker;
+
+		private AxialI currentTarget;
+
 		protected override void OnPrefabInit()
 		{
 			base.OnPrefabInit();
@@ -108,6 +112,15 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 			};
 			requiredSkillPerk = Db.Get().SkillPerks.CanUseClusterTelescope.Id;
 			workLayer = Grid.SceneLayer.BuildingFront;
+		}
+
+		protected override void OnCleanUp()
+		{
+			if (telescopeTargetMarker != null)
+			{
+				Util.KDestroyGameObject(telescopeTargetMarker);
+			}
+			base.OnCleanUp();
 		}
 
 		protected override void OnSpawn()
@@ -130,13 +143,14 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 			{
 			case WorkableEvent.WorkStarted:
 				ShowProgressBar(show: true);
-				progressBar.SetUpdateFunc(delegate
-				{
-					AxialI analyzeTarget = m_telescope.GetAnalyzeTarget();
-					return m_fowManager.GetRevealCompleteFraction(analyzeTarget);
-				});
+				telescopeTargetMarker = GameUtil.KInstantiate(Assets.GetPrefab("TelescopeTarget"), Grid.SceneLayer.Background);
+				telescopeTargetMarker.SetActive(value: true);
+				progressBar.SetUpdateFunc(() => m_fowManager.GetRevealCompleteFraction(currentTarget));
+				currentTarget = m_telescope.GetAnalyzeTarget();
+				telescopeTargetMarker.GetComponent<TelescopeTarget>().Init(currentTarget);
 				break;
 			case WorkableEvent.WorkStopped:
+				Util.KDestroyGameObject(telescopeTargetMarker);
 				ShowProgressBar(show: false);
 				break;
 			}
@@ -155,10 +169,15 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 		protected override bool OnWorkTick(Worker worker, float dt)
 		{
 			AxialI analyzeTarget = m_telescope.GetAnalyzeTarget();
+			if (analyzeTarget != currentTarget)
+			{
+				telescopeTargetMarker.GetComponent<TelescopeTarget>().Init(analyzeTarget);
+				currentTarget = analyzeTarget;
+			}
 			float num = ROCKETRY.CLUSTER_FOW.POINTS_TO_REVEAL / ROCKETRY.CLUSTER_FOW.DEFAULT_CYCLES_PER_REVEAL;
 			float num2 = num / 600f;
 			float points = dt * num2;
-			m_fowManager.EarnRevealPointsForLocation(analyzeTarget, points);
+			m_fowManager.EarnRevealPointsForLocation(currentTarget, points);
 			return base.OnWorkTick(worker, dt);
 		}
 	}

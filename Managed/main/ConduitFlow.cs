@@ -767,7 +767,7 @@ public class ConduitFlow : IConduitFlow
 		public float GetEffectiveCapacity(float maximum_capacity)
 		{
 			float mass = this.mass;
-			DebugUtil.DevAssert(mass <= maximum_capacity, "Effective mass cannot be greater than capacity!");
+			DebugUtil.DevAssert(mass <= maximum_capacity, $"Effective mass cannot be greater than capacity! mass={mass}, capcity={maximum_capacity}");
 			return Mathf.Max(0f, maximum_capacity - mass);
 		}
 

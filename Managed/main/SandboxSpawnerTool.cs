@@ -26,31 +26,26 @@ public class SandboxSpawnerTool : InterfaceTool
 
 	private void Place(int cell)
 	{
-		if (!Grid.IsValidBuildingCell(cell))
+		if (Grid.IsValidBuildingCell(cell))
 		{
-			return;
-		}
-		string stringSetting = SandboxToolParameterMenu.instance.settings.GetStringSetting("SandboxTools.SelectedEntity");
-		GameObject prefab = Assets.GetPrefab(stringSetting);
-		if (stringSetting == MinionConfig.ID)
-		{
-			SpawnMinion();
-		}
-		else if (prefab.GetComponent<Building>() != null)
-		{
-			BuildingDef def = prefab.GetComponent<Building>().Def;
-			def.Build(cell, Orientation.Neutral, null, def.DefaultElements(), 298.15f);
-		}
-		else
-		{
-			GameObject gameObject = GameUtil.KInstantiate(prefab, Grid.CellToPosCBC(currentCell, Grid.SceneLayer.Creatures), Grid.SceneLayer.Creatures);
-			gameObject.SetActive(value: true);
-			if (gameObject.GetComponent<MutantPlant>() != null)
+			string stringSetting = SandboxToolParameterMenu.instance.settings.GetStringSetting("SandboxTools.SelectedEntity");
+			GameObject prefab = Assets.GetPrefab(stringSetting);
+			if (stringSetting == MinionConfig.ID)
 			{
-				gameObject.GetComponent<MutantPlant>().SetSubSpecies(0);
+				SpawnMinion();
 			}
+			else if (prefab.GetComponent<Building>() != null)
+			{
+				BuildingDef def = prefab.GetComponent<Building>().Def;
+				def.Build(cell, Orientation.Neutral, null, def.DefaultElements(), 298.15f);
+			}
+			else
+			{
+				GameObject gameObject = GameUtil.KInstantiate(prefab, Grid.CellToPosCBC(currentCell, Grid.SceneLayer.Creatures), Grid.SceneLayer.Creatures);
+				gameObject.SetActive(value: true);
+			}
+			UISounds.PlaySound(UISounds.Sound.ClickObject);
 		}
-		UISounds.PlaySound(UISounds.Sound.ClickObject);
 	}
 
 	protected override void OnActivateTool()

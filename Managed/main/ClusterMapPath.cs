@@ -17,6 +17,12 @@ public class ClusterMapPath : MonoBehaviour
 
 	public Image pathEnd;
 
+	public void Init()
+	{
+		lineRenderer = base.gameObject.GetComponentInChildren<UILineRenderer>();
+		base.gameObject.SetActive(value: true);
+	}
+
 	public void Init(List<Vector2> nodes, Color color)
 	{
 		m_nodes = nodes;
@@ -27,11 +33,23 @@ public class ClusterMapPath : MonoBehaviour
 		base.gameObject.SetActive(value: true);
 	}
 
+	public void SetColor(Color color)
+	{
+		m_color = color;
+		UpdateColor();
+	}
+
 	private void UpdateColor()
 	{
 		lineRenderer.color = m_color;
 		pathStart.color = m_color;
 		pathEnd.color = m_color;
+	}
+
+	public void SetPoints(List<Vector2> points)
+	{
+		m_nodes = points;
+		UpdateRenderer();
 	}
 
 	private void UpdateRenderer()
@@ -56,18 +74,15 @@ public class ClusterMapPath : MonoBehaviour
 		}
 	}
 
-	public void RotateTransformAlongPath(Transform transform)
+	public float GetRotationForNextSegment()
 	{
-		if (lineRenderer.Points.Length > 1)
+		if (m_nodes.Count > 1)
 		{
-			Vector2 b = lineRenderer.Points[0];
-			Vector2 a = lineRenderer.Points[1];
-			Vector2 v = a - b;
-			transform.rotation = Quaternion.LookRotation(Vector3.forward, v);
+			Vector2 b = m_nodes[0];
+			Vector2 a = m_nodes[1];
+			Vector2 to = a - b;
+			return Vector2.SignedAngle(Vector2.up, to);
 		}
-		else
-		{
-			transform.rotation = Quaternion.identity;
-		}
+		return 0f;
 	}
 }

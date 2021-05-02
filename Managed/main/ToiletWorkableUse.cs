@@ -1,5 +1,7 @@
+using System;
 using Klei.AI;
 using KSerialization;
+using STRINGS;
 using UnityEngine;
 
 [AddComponentMenu("KMonoBehaviour/Workable/ToiletWorkableUse")]
@@ -25,6 +27,10 @@ public class ToiletWorkableUse : Workable, IGameObjectEffectDescriptor
 	protected override void OnStartWork(Worker worker)
 	{
 		base.OnStartWork(worker);
+		if (worker.GetAmounts().Get(Db.Get().Amounts.RadiationBalance).value > 0f)
+		{
+			worker.gameObject.GetComponent<KSelectable>().AddStatusItem(Db.Get().DuplicantStatusItems.ExpellingRads);
+		}
 		Room roomOfGameObject = Game.Instance.roomProber.GetRoomOfGameObject(base.gameObject);
 		if (roomOfGameObject != null)
 		{
@@ -33,10 +39,30 @@ public class ToiletWorkableUse : Workable, IGameObjectEffectDescriptor
 		}
 	}
 
+	protected override void OnStopWork(Worker worker)
+	{
+		worker.gameObject.GetComponent<KSelectable>().RemoveStatusItem(Db.Get().DuplicantStatusItems.ExpellingRads);
+		base.OnStopWork(worker);
+	}
+
+	protected override void OnAbortWork(Worker worker)
+	{
+		worker.gameObject.GetComponent<KSelectable>().RemoveStatusItem(Db.Get().DuplicantStatusItems.ExpellingRads);
+		base.OnAbortWork(worker);
+	}
+
 	protected override void OnCompleteWork(Worker worker)
 	{
 		AmountInstance amountInstance = Db.Get().Amounts.Bladder.Lookup(worker);
 		amountInstance.SetValue(0f);
+		worker.gameObject.GetComponent<KSelectable>().RemoveStatusItem(Db.Get().DuplicantStatusItems.ExpellingRads);
+		AmountInstance amountInstance2 = Db.Get().Amounts.RadiationBalance.Lookup(worker);
+		float num = Math.Min(amountInstance2.value, 60f);
+		if (num >= 1f)
+		{
+			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Negative, Math.Floor(num).ToString() + UI.UNITSUFFIXES.RADIATION.RADS, worker.transform, Vector3.up * 2f);
+		}
+		amountInstance2.ApplyDelta(0f - num);
 		timesUsed++;
 		Trigger(-350347868, worker);
 		base.OnCompleteWork(worker);

@@ -6,7 +6,7 @@ public class LaunchPadConditions : KMonoBehaviour, IProcessConditionSet
 
 	public List<ProcessCondition> GetConditionSet(ProcessCondition.ProcessConditionType conditionType)
 	{
-		return (conditionType == ProcessCondition.ProcessConditionType.RocketPrep) ? conditions : null;
+		return (conditionType == ProcessCondition.ProcessConditionType.RocketStorage) ? conditions : null;
 	}
 
 	protected override void OnSpawn()

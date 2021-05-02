@@ -414,6 +414,15 @@ public class LoopingSoundManager : KMonoBehaviour, IRenderEveryTick
 		Get().sounds.Free(handle);
 	}
 
+	public static void PauseSound(HandleVector<int>.Handle handle, bool paused)
+	{
+		Sound data = Get().sounds.GetData(handle);
+		if (data.IsPlaying)
+		{
+			data.ev.setPaused(paused);
+		}
+	}
+
 	private void OnPauseChanged(object data)
 	{
 		bool flag = (bool)data;

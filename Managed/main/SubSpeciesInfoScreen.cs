@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Klei.AI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,8 +35,6 @@ public class SubSpeciesInfoScreen : KModalScreen
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		saveButton.onClick += OnPressSave;
-		discardButton.onClick += OnPressDiscard;
 	}
 
 	private void ClearMutations()
@@ -47,36 +46,25 @@ public class SubSpeciesInfoScreen : KModalScreen
 		mutationLineItems.Clear();
 	}
 
-	public void DisplayDiscovery(string speciesID, int subSpeciesID, GeneticAnalysisStation station)
+	public void DisplayDiscovery(Tag speciesID, Tag subSpeciesID, GeneticAnalysisStation station)
 	{
 		SetSubspecies(speciesID, subSpeciesID);
 		targetStation = station;
 	}
 
-	private void SetSubspecies(string speciesID, int subSpeciesID)
+	private void SetSubspecies(Tag speciesID, Tag subSpeciesID)
 	{
 		ClearMutations();
-		PlantSubSpeciesCatalog.PlantSubSpecies subSpecies = PlantSubSpeciesCatalog.instance.GetSubSpecies(speciesID, subSpeciesID);
-		plantIcon.sprite = Def.GetUISprite(Assets.GetPrefab(subSpecies.rootSpeciesID)).first;
-		for (int i = 0; i < subSpecies.mutations.Count; i++)
+		PlantSubSpeciesCatalog.SubSpeciesInfo subSpecies = PlantSubSpeciesCatalog.instance.GetSubSpecies(speciesID, subSpeciesID);
+		plantIcon.sprite = Def.GetUISprite(Assets.GetPrefab(speciesID)).first;
+		foreach (string mutationID in subSpecies.mutationIDs)
 		{
+			PlantMutation plantMutation = Db.Get().PlantMutations.Get(mutationID);
 			GameObject gameObject = Util.KInstantiateUI(mutationsItemPrefab, mutationsList.gameObject, force_active: true);
 			HierarchyReferences component = gameObject.GetComponent<HierarchyReferences>();
-			component.GetReference<LocText>("nameLabel").text = subSpecies.mutations[i].Name;
-			component.GetReference<LocText>("descriptionLabel").text = subSpecies.mutations[i].description;
+			component.GetReference<LocText>("nameLabel").text = plantMutation.Name;
+			component.GetReference<LocText>("descriptionLabel").text = plantMutation.description;
 			mutationLineItems.Add(gameObject);
 		}
-	}
-
-	private void OnPressSave()
-	{
-		targetStation.EjectSeed();
-		Deactivate();
-	}
-
-	private void OnPressDiscard()
-	{
-		targetStation.DiscardSeed();
-		Deactivate();
 	}
 }

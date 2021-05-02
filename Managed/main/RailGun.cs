@@ -1,10 +1,16 @@
+using System.Collections.Generic;
 using KSerialization;
+using STRINGS;
 using UnityEngine;
 
-public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms, IUserControlledCapacity, ISecondaryInput
+public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms, ISecondaryInput
 {
 	public class StatesInstance : GameStateMachine<States, StatesInstance, RailGun, object>.GameInstance
 	{
+		public const int INVALID_PATH_LENGTH = -1;
+
+		private List<AxialI> m_cachedPath;
+
 		public StatesInstance(RailGun smi)
 			: base(smi)
 		{
@@ -17,24 +23,77 @@ public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms,
 
 		public bool HasEnergy()
 		{
-			return base.smi.master.particleStorage.Particles > 200f;
+			return base.smi.master.particleStorage.Particles > EnergyCost();
+		}
+
+		public bool HasDestination()
+		{
+			return base.smi.master.destinationSelector.GetDestinationWorld() != base.smi.master.GetMyWorldId();
+		}
+
+		public bool IsDestinationReachable(bool forceRefresh = false)
+		{
+			if (forceRefresh)
+			{
+				UpdatePath();
+			}
+			return base.smi.master.destinationSelector.GetDestinationWorld() != base.smi.master.GetMyWorldId() && PathLength() != -1;
+		}
+
+		public int PathLength()
+		{
+			if (base.smi.m_cachedPath == null)
+			{
+				UpdatePath();
+			}
+			if (base.smi.m_cachedPath == null)
+			{
+				return -1;
+			}
+			int num = base.smi.m_cachedPath.Count;
+			if (base.master.FreeStartHex)
+			{
+				num--;
+			}
+			if (base.master.FreeDestinationHex)
+			{
+				num--;
+			}
+			return num;
+		}
+
+		public void UpdatePath()
+		{
+			m_cachedPath = ClusterGrid.Instance.GetPath(base.gameObject.GetMyWorldLocation(), base.smi.master.destinationSelector.GetDestination(), base.smi.master.destinationSelector);
+		}
+
+		public float EnergyCost()
+		{
+			return Mathf.Max(0f, 10f + (float)PathLength() * 10f);
+		}
+
+		public bool MayTurnOn()
+		{
+			return HasEnergy() && IsDestinationReachable() && base.master.operational.IsOperational && base.sm.allowedFromLogic.Get(this);
 		}
 	}
 
 	public class States : GameStateMachine<States, StatesInstance, RailGun>
 	{
-		public class PowerStates : State
+		public class WorkingStates : State
 		{
-			public State on;
+			public State pre;
 
-			public State off;
+			public State loop;
 
-			public State power_on;
+			public State fire;
 
-			public State power_off;
+			public State bounce;
+
+			public State pst;
 		}
 
-		public class WorkingStates : State
+		public class CooldownStates : State
 		{
 			public State pre;
 
@@ -43,51 +102,100 @@ public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms,
 			public State pst;
 		}
 
-		public PowerStates power;
+		public class OnStates : State
+		{
+			public State power_on;
 
-		public WorkingStates working;
+			public State wait_for_storage;
+
+			public State power_off;
+
+			public WorkingStates working;
+
+			public CooldownStates cooldown;
+		}
+
+		public State off;
+
+		public OnStates on;
+
+		public FloatParameter cooldownTimer;
+
+		public IntParameter payloadsFiredSinceCooldown;
+
+		public BoolParameter allowedFromLogic;
+
+		public BoolParameter updatePath;
 
 		public override void InitializeStates(out BaseState default_state)
 		{
-			default_state = power.off;
-			base.serializable = SerializeType.Both_DEPRECATED;
-			power.off.PlayAnim("off").EventTransition(GameHashes.OnParticleStorageChanged, power.power_on, (StatesInstance smi) => smi.HasEnergy());
-			power.power_on.PlayAnim("power_on").OnAnimQueueComplete(power.on);
-			power.on.PlayAnim("on").EventTransition(GameHashes.OnParticleStorageEmpty, power.power_off).EventTransition(GameHashes.OnStorageChange, working.pre, (StatesInstance smi) => smi.HasResources() && smi.master.operational.IsOperational)
-				.EventTransition(GameHashes.OperationalChanged, working.pre, (StatesInstance smi) => smi.HasResources() && smi.master.operational.IsOperational);
-			power.power_off.PlayAnim("power_off").OnAnimQueueComplete(power.off);
-			working.pre.PlayAnim("working_pre").OnAnimQueueComplete(working.loop);
-			working.loop.PlayAnim("working_loop").OnAnimQueueComplete(working.pst).Exit(delegate(StatesInstance smi)
+			default_state = off;
+			base.serializable = SerializeType.ParamsOnly;
+			root.EventHandler(GameHashes.ClusterDestinationChanged, delegate(StatesInstance smi)
 			{
-				smi.master.LaunchProjectile();
+				smi.UpdatePath();
 			});
-			working.pst.PlayAnim("working_pst").Enter(delegate(StatesInstance smi)
+			off.PlayAnim("off").EventTransition(GameHashes.OnParticleStorageChanged, on, (StatesInstance smi) => smi.MayTurnOn()).EventTransition(GameHashes.ClusterDestinationChanged, on, (StatesInstance smi) => smi.MayTurnOn())
+				.EventTransition(GameHashes.OperationalChanged, on, (StatesInstance smi) => smi.MayTurnOn())
+				.ParamTransition(allowedFromLogic, on, (StatesInstance smi, bool p) => smi.MayTurnOn());
+			on.DefaultState(on.power_on).EventTransition(GameHashes.OperationalChanged, on.power_off, (StatesInstance smi) => !smi.master.operational.IsOperational).EventTransition(GameHashes.ClusterDestinationChanged, on.power_off, (StatesInstance smi) => !smi.IsDestinationReachable())
+				.EventTransition(GameHashes.ClusterFogOfWarRevealed, (StatesInstance smi) => Game.Instance, on.power_off, (StatesInstance smi) => !smi.IsDestinationReachable(forceRefresh: true))
+				.ParamTransition(allowedFromLogic, on.power_off, (StatesInstance smi, bool p) => !p)
+				.ToggleMainStatusItem(Db.Get().BuildingStatusItems.Normal);
+			on.power_on.PlayAnim("power_on").OnAnimQueueComplete(on.wait_for_storage);
+			on.power_off.PlayAnim("power_off").OnAnimQueueComplete(off);
+			on.wait_for_storage.PlayAnim("on", KAnim.PlayMode.Loop).EventTransition(GameHashes.ClusterDestinationChanged, on.power_off, (StatesInstance smi) => !smi.HasEnergy()).EventTransition(GameHashes.OnStorageChange, on.working, (StatesInstance smi) => smi.HasResources() && smi.sm.cooldownTimer.Get(smi) <= 0f)
+				.EventTransition(GameHashes.OperationalChanged, on.working, (StatesInstance smi) => smi.HasResources() && smi.sm.cooldownTimer.Get(smi) <= 0f)
+				.ParamTransition(cooldownTimer, on.cooldown, (StatesInstance smi, float p) => p > 0f);
+			on.working.DefaultState(on.working.pre).Enter(delegate(StatesInstance smi)
 			{
-				if (!smi.HasEnergy())
+				smi.master.operational.SetActive(value: true);
+			}).Exit(delegate(StatesInstance smi)
+			{
+				smi.master.operational.SetActive(value: false);
+			});
+			on.working.pre.PlayAnim("working_pre").OnAnimQueueComplete(on.working.loop);
+			on.working.loop.PlayAnim("working_loop").OnAnimQueueComplete(on.working.fire);
+			on.working.fire.Enter(delegate(StatesInstance smi)
+			{
+				if (smi.IsDestinationReachable())
 				{
-					smi.GoTo(power.power_off);
+					smi.master.LaunchProjectile();
+					smi.sm.payloadsFiredSinceCooldown.Delta(1, smi);
+					if (smi.sm.payloadsFiredSinceCooldown.Get(smi) >= 6)
+					{
+						smi.sm.cooldownTimer.Set(30f, smi);
+					}
 				}
-				else if (!smi.HasResources())
-				{
-					smi.GoTo(power.on);
-				}
-				else
-				{
-					smi.GoTo(working.pre);
-				}
+			}).GoTo(on.working.bounce);
+			on.working.bounce.ParamTransition(cooldownTimer, on.working.pst, (StatesInstance smi, float p) => p > 0f || !smi.HasResources()).ParamTransition(payloadsFiredSinceCooldown, on.working.loop, (StatesInstance smi, int p) => p < 6 && smi.HasResources());
+			on.working.pst.PlayAnim("working_pst").OnAnimQueueComplete(on.wait_for_storage);
+			on.cooldown.DefaultState(on.cooldown.pre).ToggleMainStatusItem(Db.Get().BuildingStatusItems.RailGunCooldown);
+			on.cooldown.pre.PlayAnim("cooldown_pre").OnAnimQueueComplete(on.cooldown.loop);
+			on.cooldown.loop.PlayAnim("cooldown_loop", KAnim.PlayMode.Loop).ParamTransition(cooldownTimer, on.cooldown.pst, (StatesInstance smi, float p) => p <= 0f).Update(delegate(StatesInstance smi, float dt)
+			{
+				cooldownTimer.Delta(0f - dt, smi);
+			}, UpdateRate.SIM_1000ms);
+			on.cooldown.pst.PlayAnim("cooldown_pst").OnAnimQueueComplete(on.wait_for_storage).Exit(delegate(StatesInstance smi)
+			{
+				smi.sm.payloadsFiredSinceCooldown.Set(0, smi);
 			});
 		}
 	}
 
 	[Serialize]
-	private float userMaxCapacity = float.PositiveInfinity;
-
 	public float launchMass = 200f;
 
 	public float MinLaunchMass = 2f;
 
 	[MyCmpGet]
 	private Operational operational;
+
+	[MyCmpGet]
+	private KAnimControllerBase kac;
+
+	[MyCmpGet]
+	public HighEnergyParticleStorage hepStorage;
 
 	public Storage resourceStorage;
 
@@ -134,30 +242,34 @@ public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms,
 
 	private SolidConduitConsumer solidConsumer;
 
-	public virtual float UserMaxCapacity
+	public static readonly HashedString PORT_ID = "LogicLaunching";
+
+	private bool hasLogicWire = false;
+
+	private bool isLogicActive = false;
+
+	private static StatusItem infoStatusItemLogic;
+
+	public bool FreeStartHex;
+
+	public bool FreeDestinationHex;
+
+	private static readonly EventSystem.IntraObjectHandler<RailGun> OnLogicValueChangedDelegate = new EventSystem.IntraObjectHandler<RailGun>(delegate(RailGun component, object data)
 	{
-		get
-		{
-			return Mathf.Min(userMaxCapacity, GetComponent<Storage>().capacityKg);
-		}
-		set
-		{
-			userMaxCapacity = value;
-			resourceStorage.capacityKg = value;
-		}
-	}
-
-	public float AmountStored => GetComponent<Storage>().MassStored();
-
-	public float MinCapacity => 0f;
-
-	public float MaxCapacity => GetComponent<Storage>().capacityKg;
-
-	public bool WholeValues => false;
-
-	public LocString CapacityUnits => GameUtil.GetCurrentMassUnit();
+		component.OnLogicValueChanged(data);
+	});
 
 	public float MaxLaunchMass => 200f;
+
+	public float EnergyCost => base.smi.EnergyCost();
+
+	public float CurrentEnergy => hepStorage.Particles;
+
+	public bool AllowLaunchingFromLogic => !hasLogicWire || (hasLogicWire && isLogicActive);
+
+	public bool HasLogicWire => hasLogicWire;
+
+	public bool IsLogicActive => isLogicActive;
 
 	protected override void OnSpawn()
 	{
@@ -181,6 +293,13 @@ public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms,
 		solidConsumer = CreateSolidConduitConsumer(solidInputCell, out solidNetworkItem);
 		CreateMeters();
 		base.smi.StartSM();
+		if (infoStatusItemLogic == null)
+		{
+			infoStatusItemLogic = new StatusItem("LogicOperationalInfo", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			infoStatusItemLogic.resolveStringCallback = ResolveInfoStatusItemString;
+		}
+		CheckLogicWireState();
+		Subscribe(-801688580, OnLogicValueChangedDelegate);
 	}
 
 	protected override void OnCleanUp()
@@ -219,6 +338,39 @@ public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms,
 			return solidPortInfo.offset;
 		}
 		return CellOffset.none;
+	}
+
+	private LogicCircuitNetwork GetNetwork()
+	{
+		LogicPorts component = GetComponent<LogicPorts>();
+		int portCell = component.GetPortCell(PORT_ID);
+		LogicCircuitManager logicCircuitManager = Game.Instance.logicCircuitManager;
+		return logicCircuitManager.GetNetworkForCell(portCell);
+	}
+
+	private void CheckLogicWireState()
+	{
+		LogicCircuitNetwork network = GetNetwork();
+		hasLogicWire = network != null;
+		int value = network?.OutputValue ?? 1;
+		bool flag = (isLogicActive = LogicCircuitNetwork.IsBitActive(0, value));
+		base.smi.sm.allowedFromLogic.Set(AllowLaunchingFromLogic, base.smi);
+		GetComponent<KSelectable>().ToggleStatusItem(infoStatusItemLogic, network != null, this);
+	}
+
+	private void OnLogicValueChanged(object data)
+	{
+		if (((LogicValueChanged)data).portID == PORT_ID)
+		{
+			CheckLogicWireState();
+		}
+	}
+
+	private static string ResolveInfoStatusItemString(string format_str, object data)
+	{
+		RailGun railGun = (RailGun)data;
+		Operational operational = railGun.operational;
+		return railGun.AllowLaunchingFromLogic ? BUILDING.STATUSITEMS.LOGIC.LOGIC_CONTROLLED_ENABLED : BUILDING.STATUSITEMS.LOGIC.LOGIC_CONTROLLED_DISABLED;
 	}
 
 	public void Sim200ms(float dt)
@@ -264,7 +416,7 @@ public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms,
 		Vector2I vector2I = Grid.PosToXY(base.transform.position);
 		vector2I.y += extents.height + 1;
 		int cell = Grid.XYToCell(vector2I.x, vector2I.y);
-		GameObject gameObject = Util.KInstantiate(Assets.GetPrefab("RailGunPayload"), Grid.CellToPos(cell));
+		GameObject gameObject = Util.KInstantiate(Assets.GetPrefab("RailGunPayload"), Grid.CellToPosCBC(cell, Grid.SceneLayer.Front));
 		for (float num = 0f; num < launchMass; num += resourceStorage.Transfer(gameObject.GetComponent<Storage>(), GameTags.Stored, launchMass - num, block_events: false, hide_popups: true))
 		{
 			if (!(resourceStorage.MassStored() > 0f))
@@ -272,11 +424,14 @@ public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms,
 				break;
 			}
 		}
-		particleStorage.ConsumeAndGet(200f);
+		particleStorage.ConsumeAndGet(base.smi.EnergyCost());
 		gameObject.SetActive(value: true);
 		if (destinationSelector.GetDestinationWorld() >= 0)
 		{
-			gameObject.GetSMI<RailGunPayload.StatesInstance>().Launch(destinationSelector.GetDestinationWorld());
+			RailGunPayload.StatesInstance sMI = gameObject.GetSMI<RailGunPayload.StatesInstance>();
+			sMI.takeoffVelocity = 35f;
+			sMI.StartSM();
+			sMI.Launch(base.gameObject.GetMyWorldLocation(), destinationSelector.GetDestination());
 		}
 	}
 

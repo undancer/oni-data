@@ -7,7 +7,7 @@ using UnityEngine;
 [SerializationConfig(MemberSerialization.OptIn)]
 [DebuggerDisplay("{name} {WattsUsed}W")]
 [AddComponentMenu("KMonoBehaviour/scripts/EnergyConsumer")]
-public class EnergyConsumer : KMonoBehaviour, ISaveLoadable, IEnergyConsumer, IGameObjectEffectDescriptor
+public class EnergyConsumer : KMonoBehaviour, ISaveLoadable, IEnergyConsumer, ICircuitConnected, IGameObjectEffectDescriptor
 {
 	[MyCmpReq]
 	private Building building = null;
@@ -57,6 +57,18 @@ public class EnergyConsumer : KMonoBehaviour, ISaveLoadable, IEnergyConsumer, IG
 	public bool IsConnected => CircuitID != ushort.MaxValue;
 
 	public string Name => selectable.GetName();
+
+	public bool IsVirtual
+	{
+		get;
+		private set;
+	}
+
+	public object VirtualCircuitKey
+	{
+		get;
+		private set;
+	}
 
 	public ushort CircuitID
 	{
@@ -112,14 +124,14 @@ public class EnergyConsumer : KMonoBehaviour, ISaveLoadable, IEnergyConsumer, IG
 	protected override void OnCleanUp()
 	{
 		Game.Instance.energySim.RemoveEnergyConsumer(this);
-		Game.Instance.circuitManager.Disconnect(this);
+		Game.Instance.circuitManager.Disconnect(this, isDestroy: true);
 		Components.EnergyConsumers.Remove(this);
 		base.OnCleanUp();
 	}
 
 	public virtual void EnergySim200ms(float dt)
 	{
-		CircuitID = Game.Instance.circuitManager.GetCircuitID(PowerCell);
+		CircuitID = Game.Instance.circuitManager.GetCircuitID(this);
 		if (!IsConnected)
 		{
 			IsPowered = false;

@@ -51,4 +51,9 @@ public abstract class AssignableSlotInstance
 	{
 		return assignable != null;
 	}
+
+	public bool IsUnassigning()
+	{
+		return unassigning;
+	}
 }

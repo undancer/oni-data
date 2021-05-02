@@ -123,8 +123,7 @@ public class LogicAlarm : KMonoBehaviour, ISaveLoadable
 				}
 				if (zoomOnNotify)
 				{
-					Vector3 position = base.transform.position;
-					CameraController.Instance.SetTargetPos(position, 8f, playSound: true);
+					CameraController.Instance.ActiveWorldStarWipe(base.gameObject.GetMyWorldId(), base.transform.GetPosition(), 8f);
 				}
 				UpdateVisualState();
 			}

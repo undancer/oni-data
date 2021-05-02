@@ -1105,6 +1105,10 @@ namespace STRINGS
 				public static LocString MAGMA = "Fier\nMagm\nToast\nScorch\nBurn\nChar\n";
 
 				public static LocString SWAMP = "Goop\nMud\nMuck\nGross\nStink\nSmell\nYuck\nReek\nOoz\n";
+
+				public static LocString MOO = "Moom\nGas\nUdder\nCalf\nBull\n";
+
+				public static LocString WATER = "Wat\nHydrAu\n";
 			}
 
 			public class SUFFIXES

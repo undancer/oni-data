@@ -14,7 +14,19 @@ namespace Steamworks
 
 		public uint m_cchKeyLength;
 
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 240)]
-		public string m_rgchKey;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 240)]
+		private byte[] m_rgchKey_;
+
+		public string m_rgchKey
+		{
+			get
+			{
+				return InteropHelp.ByteArrayToStringUTF8(m_rgchKey_);
+			}
+			set
+			{
+				InteropHelp.StringToByteArrayUTF8(value, m_rgchKey_, 240);
+			}
+		}
 	}
 }

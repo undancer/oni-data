@@ -7,6 +7,8 @@ public class OxidizerTank : KMonoBehaviour, IUserControlledCapacity
 {
 	public Storage storage;
 
+	public bool supportsMultipleOxidizers;
+
 	private MeterController meter;
 
 	private bool isSuspended = false;
@@ -14,7 +16,10 @@ public class OxidizerTank : KMonoBehaviour, IUserControlledCapacity
 	public bool consumeOnLand = true;
 
 	[Serialize]
-	public float targetFillMass = 2700f;
+	public float maxFillMass;
+
+	[Serialize]
+	public float targetFillMass;
 
 	[SerializeField]
 	private Tag[] oxidizerTypes = new Tag[3]
@@ -69,7 +74,7 @@ public class OxidizerTank : KMonoBehaviour, IUserControlledCapacity
 
 	public float MinCapacity => 0f;
 
-	public float MaxCapacity => 2700f;
+	public float MaxCapacity => maxFillMass;
 
 	public float AmountStored => storage.MassStored();
 
@@ -95,14 +100,18 @@ public class OxidizerTank : KMonoBehaviour, IUserControlledCapacity
 	{
 		base.OnPrefabInit();
 		Subscribe(-905833192, OnCopySettingsDelegate);
-		filteredStorage = new FilteredStorage(this, null, null, this, use_logic_meter: true, Db.Get().ChoreTypes.Fetch);
+		if (supportsMultipleOxidizers)
+		{
+			filteredStorage = new FilteredStorage(this, null, null, this, use_logic_meter: true, Db.Get().ChoreTypes.Fetch);
+		}
 	}
 
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
 		GetComponent<KBatchedAnimController>().Play("grounded", KAnim.PlayMode.Loop);
-		UserMaxCapacity = UserMaxCapacity;
+		GetComponent<RocketModule>().AddModuleCondition(ProcessCondition.ProcessConditionType.RocketStorage, new ConditionSufficientOxidizer(this));
+		UserMaxCapacity = Mathf.Min(UserMaxCapacity, maxFillMass);
 		Subscribe(-887025858, OnRocketLandedDelegate);
 		Subscribe(-1697596308, OnStorageChangeDelegate);
 		meter = new MeterController(GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.Infront, Grid.SceneLayer.NoLayer, "meter_target", "meter_fill", "meter_frame", "meter_OL");

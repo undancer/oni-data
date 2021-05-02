@@ -4,21 +4,6 @@ using UnityEngine;
 
 public class CritterTrapPlant : StateMachineComponent<CritterTrapPlant.StatesInstance>
 {
-	public class AnimSet
-	{
-		public string grow;
-
-		public string grow_pst;
-
-		public string idle_full;
-
-		public string wilt_base;
-
-		public string harvest;
-
-		public string waning;
-	}
-
 	public class StatesInstance : GameStateMachine<States, StatesInstance, CritterTrapPlant, object>.GameInstance
 	{
 		public StatesInstance(CritterTrapPlant master)
@@ -107,10 +92,11 @@ public class CritterTrapPlant : StateMachineComponent<CritterTrapPlant.StatesIns
 			base.serializable = SerializeType.Both_DEPRECATED;
 			default_state = trap;
 			trap.DefaultState(trap.open);
-			trap.open.EventHandler(GameHashes.TrapTriggered, delegate(StatesInstance smi, object data)
+			trap.open.ToggleComponent<TrapTrigger>().EventHandler(GameHashes.TrapTriggered, delegate(StatesInstance smi, object data)
 			{
 				smi.OnTrapTriggered(data);
-			}).OnSignal(trapTriggered, trap.trigger).ParamTransition(hasEatenCreature, trap.digesting, GameStateMachine<States, StatesInstance, CritterTrapPlant, object>.IsTrue)
+			}).OnSignal(trapTriggered, trap.trigger)
+				.ParamTransition(hasEatenCreature, trap.digesting, GameStateMachine<States, StatesInstance, CritterTrapPlant, object>.IsTrue)
 				.PlayAnim("idle_open", KAnim.PlayMode.Loop)
 				.EventTransition(GameHashes.Wilt, trap.wilting);
 			trap.trigger.PlayAnim("trap", KAnim.PlayMode.Once).Enter(delegate(StatesInstance smi)
@@ -157,7 +143,7 @@ public class CritterTrapPlant : StateMachineComponent<CritterTrapPlant.StatesIns
 			{
 				if (GameScheduler.Instance != null && smi.master != null)
 				{
-					GameScheduler.Instance.Schedule("SpawnFruit", 0.2f, smi.master.crop.SpawnFruit);
+					GameScheduler.Instance.Schedule("SpawnFruit", 0.2f, smi.master.crop.SpawnConfiguredFruit);
 				}
 				smi.master.harvestable.SetCanBeHarvested(state: false);
 			}).Exit(delegate(StatesInstance smi)
@@ -177,7 +163,7 @@ public class CritterTrapPlant : StateMachineComponent<CritterTrapPlant.StatesIns
 				Harvestable harvestable = smi.master.harvestable;
 				if (harvestable != null && harvestable.CanBeHarvested && GameScheduler.Instance != null)
 				{
-					GameScheduler.Instance.Schedule("SpawnFruit", 0.2f, smi.master.crop.SpawnFruit);
+					GameScheduler.Instance.Schedule("SpawnFruit", 0.2f, smi.master.crop.SpawnConfiguredFruit);
 				}
 				smi.master.Trigger(1623392196);
 				smi.master.GetComponent<KBatchedAnimController>().StopAndClear();

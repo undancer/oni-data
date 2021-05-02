@@ -515,9 +515,10 @@ public class BuildingDef : Def
 			if (layer == ObjectLayer.Gantry)
 			{
 				bool flag3 = false;
-				for (int j = 0; j < Gantry.TileOffsets.Length; j++)
+				MakeBaseSolid.Def def = source_go.GetDef<MakeBaseSolid.Def>();
+				for (int j = 0; j < def.solidOffsets.Length; j++)
 				{
-					CellOffset rotatedCellOffset2 = Rotatable.GetRotatedCellOffset(Gantry.TileOffsets[j], orientation);
+					CellOffset rotatedCellOffset2 = Rotatable.GetRotatedCellOffset(def.solidOffsets[j], orientation);
 					flag3 |= rotatedCellOffset2 == rotatedCellOffset;
 				}
 				if (flag3 && !IsValidTileLocation(source_go, num, ref fail_reason))
@@ -712,7 +713,7 @@ public class BuildingDef : Def
 			MarkOverlappingPorts(Grid.Objects[cell5, 29], go);
 			Grid.Objects[cell5, 29] = go;
 		}
-		if (RequiresPowerOutput || GeneratorWattageRating > 0f)
+		if (RequiresPowerOutput)
 		{
 			CellOffset rotatedCellOffset5 = Rotatable.GetRotatedCellOffset(PowerOutputOffset, orientation);
 			int cell6 = Grid.OffsetCell(cell, rotatedCellOffset5);
@@ -835,7 +836,7 @@ public class BuildingDef : Def
 				Grid.Objects[cell5, 29] = null;
 			}
 		}
-		if (RequiresPowerOutput || GeneratorWattageRating > 0f)
+		if (RequiresPowerOutput)
 		{
 			CellOffset rotatedCellOffset5 = Rotatable.GetRotatedCellOffset(PowerOutputOffset, orientation);
 			int cell6 = Grid.OffsetCell(cell, rotatedCellOffset5);
@@ -935,7 +936,15 @@ public class BuildingDef : Def
 			fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_INVALID_CELL;
 			return false;
 		}
-		if (BuildLocationRule == BuildLocationRule.OnWall)
+		if (BuildLocationRule == BuildLocationRule.OnRocketEnvelope)
+		{
+			if (!CheckFoundation(cell, orientation, BuildLocationRule, WidthInCells, HeightInCells, GameTags.RocketEnvelopeTile))
+			{
+				fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_ONROCKETENVELOPE;
+				return false;
+			}
+		}
+		else if (BuildLocationRule == BuildLocationRule.OnWall)
 		{
 			if (!CheckFoundation(cell, orientation, BuildLocationRule, WidthInCells, HeightInCells))
 			{
@@ -943,10 +952,22 @@ public class BuildingDef : Def
 				return false;
 			}
 		}
-		else if (BuildLocationRule == BuildLocationRule.InCorner && !CheckFoundation(cell, orientation, BuildLocationRule, WidthInCells, HeightInCells))
+		else if (BuildLocationRule == BuildLocationRule.InCorner)
 		{
-			fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_CORNER;
-			return false;
+			if (!CheckFoundation(cell, orientation, BuildLocationRule, WidthInCells, HeightInCells))
+			{
+				fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_CORNER;
+				return false;
+			}
+		}
+		else if (BuildLocationRule == BuildLocationRule.BelowRocketCeiling)
+		{
+			WorldContainer world = ClusterManager.Instance.GetWorld(Grid.WorldIdx[cell]);
+			if ((float)(Grid.CellToXY(cell).y + 35 + source_go.GetComponent<Building>().Def.HeightInCells) >= world.maximumBounds.y - (float)Grid.TopBorderHeight)
+			{
+				fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_BELOWROCKETCEILING;
+				return false;
+			}
 		}
 		return IsAreaClear(source_go, cell, orientation, ObjectLayer, TileLayer, replace_tile, out fail_reason);
 	}
@@ -1039,23 +1060,30 @@ public class BuildingDef : Def
 				fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_SPACE;
 			}
 			break;
+		case BuildLocationRule.OnRocketEnvelope:
+			if (!CheckFoundation(cell, orientation, BuildLocationRule, WidthInCells, HeightInCells, GameTags.RocketEnvelopeTile))
+			{
+				flag = false;
+				fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_ONROCKETENVELOPE;
+			}
+			break;
 		case BuildLocationRule.NotInTiles:
 		{
 			GameObject x = Grid.Objects[cell, 9];
 			flag = (x == null || x == source_go) && !Grid.HasDoor[cell];
 			if (flag)
 			{
-				GameObject gameObject = Grid.Objects[cell, (int)ObjectLayer];
-				if (gameObject != null)
+				GameObject gameObject2 = Grid.Objects[cell, (int)ObjectLayer];
+				if (gameObject2 != null)
 				{
 					if (ReplacementLayer == ObjectLayer.NumLayers)
 					{
-						flag = flag && (gameObject == null || gameObject == source_go);
+						flag = flag && (gameObject2 == null || gameObject2 == source_go);
 					}
 					else
 					{
-						Building component = gameObject.GetComponent<Building>();
-						flag = component == null || component.Def.ReplacementLayer == ReplacementLayer;
+						Building component3 = gameObject2.GetComponent<Building>();
+						flag = component3 == null || component3.Def.ReplacementLayer == ReplacementLayer;
 					}
 				}
 			}
@@ -1065,20 +1093,20 @@ public class BuildingDef : Def
 		case BuildLocationRule.Tile:
 		{
 			flag = true;
-			GameObject gameObject2 = Grid.Objects[cell, 27];
-			if (gameObject2 != null)
+			GameObject gameObject = Grid.Objects[cell, 27];
+			if (gameObject != null)
 			{
-				Building component2 = gameObject2.GetComponent<Building>();
-				if (component2 != null && component2.Def.BuildLocationRule == BuildLocationRule.NotInTiles)
+				Building component = gameObject.GetComponent<Building>();
+				if (component != null && component.Def.BuildLocationRule == BuildLocationRule.NotInTiles)
 				{
 					flag = false;
 				}
 			}
-			gameObject2 = Grid.Objects[cell, 2];
-			if (gameObject2 != null)
+			gameObject = Grid.Objects[cell, 2];
+			if (gameObject != null)
 			{
-				Building component3 = gameObject2.GetComponent<Building>();
-				if (component3 != null && component3.Def.BuildLocationRule == BuildLocationRule.NotInTiles)
+				Building component2 = gameObject.GetComponent<Building>();
+				if (component2 != null && component2.Def.BuildLocationRule == BuildLocationRule.NotInTiles)
 				{
 					flag = false;
 				}
@@ -1197,7 +1225,7 @@ public class BuildingDef : Def
 				return false;
 			}
 		}
-		if (RequiresPowerOutput || GeneratorWattageRating > 0f)
+		if (RequiresPowerOutput)
 		{
 			CellOffset rotatedCellOffset2 = Rotatable.GetRotatedCellOffset(PowerOutputOffset, orientation);
 			int cell3 = Grid.OffsetCell(cell, rotatedCellOffset2);
@@ -1436,17 +1464,17 @@ public class BuildingDef : Def
 		return -(width - 1) / 2;
 	}
 
-	public static bool CheckFoundation(int cell, Orientation orientation, BuildLocationRule location_rule, int width, int height)
+	public static bool CheckFoundation(int cell, Orientation orientation, BuildLocationRule location_rule, int width, int height, Tag optionalFoundationRequiredTag = default(Tag))
 	{
 		return location_rule switch
 		{
 			BuildLocationRule.OnWall => CheckWallFoundation(cell, width, height, orientation != Orientation.FlipH), 
-			BuildLocationRule.InCorner => CheckBaseFoundation(cell, orientation, BuildLocationRule.OnCeiling, width, height) && CheckWallFoundation(cell, width, height, orientation != Orientation.FlipH), 
-			_ => CheckBaseFoundation(cell, orientation, location_rule, width, height), 
+			BuildLocationRule.InCorner => CheckBaseFoundation(cell, orientation, BuildLocationRule.OnCeiling, width, height, optionalFoundationRequiredTag) && CheckWallFoundation(cell, width, height, orientation != Orientation.FlipH), 
+			_ => CheckBaseFoundation(cell, orientation, location_rule, width, height, optionalFoundationRequiredTag), 
 		};
 	}
 
-	public static bool CheckBaseFoundation(int cell, Orientation orientation, BuildLocationRule location_rule, int width, int height)
+	public static bool CheckBaseFoundation(int cell, Orientation orientation, BuildLocationRule location_rule, int width, int height, Tag optionalFoundationRequiredTag = default(Tag))
 	{
 		int num = -(width - 1) / 2;
 		int num2 = width / 2;
@@ -1456,6 +1484,10 @@ public class BuildingDef : Def
 			CellOffset rotatedCellOffset = Rotatable.GetRotatedCellOffset(offset, orientation);
 			int num3 = Grid.OffsetCell(cell, rotatedCellOffset);
 			if (!Grid.IsValidBuildingCell(num3) || !Grid.Solid[num3])
+			{
+				return false;
+			}
+			if (optionalFoundationRequiredTag.IsValid && (!Grid.ObjectLayers[9].ContainsKey(num3) || !Grid.ObjectLayers[9][num3].HasTag(optionalFoundationRequiredTag)))
 			{
 				return false;
 			}
@@ -1585,7 +1617,7 @@ public class BuildingDef : Def
 
 	public bool CheckRequiresPowerOutput()
 	{
-		return GeneratorWattageRating > 0f || RequiresPowerOutput;
+		return RequiresPowerOutput;
 	}
 
 	public bool CheckRequiresGasInput()

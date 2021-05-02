@@ -13,16 +13,11 @@ namespace ProcGen
 
 		public World world => mutatedWorldData.world;
 
-		public static string ClusterDefaultName => DlcManager.IsExpansion1Active() ? "clusters/SandstoneStartCluster" : "clusters/SandstoneDefault";
+		public static string ClusterDefaultName => DlcManager.IsExpansion1Active() ? "expansion1::clusters/SandstoneStartCluster" : "clusters/SandstoneDefault";
 
 		public WorldGenSettings(string worldName, List<string> traits, bool assertMissingTraits)
 		{
-			if (!SettingsCache.worlds.HasWorld(worldName))
-			{
-				DebugUtil.LogWarningArgs(string.Format("Failed to get worldGen data for {0}. Using {1} instead", worldName, "worlds/SandstoneDefault"));
-				DebugUtil.Assert(SettingsCache.worlds.HasWorld("worlds/SandstoneDefault"));
-				worldName = "worlds/SandstoneDefault";
-			}
+			DebugUtil.Assert(SettingsCache.worlds.HasWorld(worldName), "Failed to load world " + worldName);
 			World worldData = SettingsCache.worlds.GetWorldData(worldName);
 			List<WorldTrait> list = new List<WorldTrait>();
 			if (!worldData.disableWorldTraits && traits != null)
@@ -42,7 +37,7 @@ namespace ProcGen
 				Debug.Log("Generating a world without traits. Either this world has traits disabled or none were specified.");
 			}
 			mutatedWorldData = new MutatedWorldData(worldData, list);
-			Debug.Log("Set world to [" + worldName + "] " + SettingsCache.GetPath());
+			Debug.Log("Set world to [" + worldName + "]");
 		}
 
 		public BaseLocation GetBaseLocation()
@@ -231,7 +226,7 @@ namespace ProcGen
 				{
 					if (subworld.Key == subworld2.name)
 					{
-						list.Add(new WeightedSubWorld(subworld2.weight, subworld.Value, subworld2.overridePower));
+						list.Add(new WeightedSubWorld(subworld2.weight, subworld.Value, subworld2.overridePower, subworld2.minCount, subworld2.maxCount));
 					}
 				}
 			}

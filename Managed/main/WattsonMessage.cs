@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using FMODUnity;
+using STRINGS;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,9 @@ public class WattsonMessage : KScreen
 
 	[SerializeField]
 	private RectTransform content;
+
+	[SerializeField]
+	private LocText message;
 
 	[SerializeField]
 	private Image bg;
@@ -59,6 +63,14 @@ public class WattsonMessage : KScreen
 	{
 		base.OnPrefabInit();
 		Game.Instance.Subscribe(-122303817, OnNewBaseCreated);
+		if (DlcManager.IsExpansion1Active())
+		{
+			message.SetText(UI.WELCOMEMESSAGEBODY_SPACEDOUT);
+		}
+		else
+		{
+			message.SetText(UI.WELCOMEMESSAGEBODY);
+		}
 	}
 
 	private IEnumerator ExpandPanel()

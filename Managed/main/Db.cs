@@ -69,8 +69,6 @@ public class Db : EntityModifierSet
 
 	public ArtifactDropRates ArtifactDropRates;
 
-	public AsteroidTypes AsteroidTypes;
-
 	public SpaceDestinationTypes SpaceDestinationTypes;
 
 	public SkillPerks SkillPerks;
@@ -128,7 +126,6 @@ public class Db : EntityModifierSet
 		RoomTypeCategories = new RoomTypeCategories(Root);
 		RoomTypes = new RoomTypes(Root);
 		ArtifactDropRates = new ArtifactDropRates(Root);
-		AsteroidTypes = new AsteroidTypes(Root);
 		SpaceDestinationTypes = new SpaceDestinationTypes(Root);
 		Diseases = new Diseases(Root);
 		Sicknesses = new Database.Sicknesses(Root);

@@ -11,7 +11,7 @@ public class RocketProcessConditionDisplayTarget : KMonoBehaviour, IProcessCondi
 	{
 		if (craftModuleInterface == null)
 		{
-			craftModuleInterface = GetComponent<RocketModule>().CraftInterface;
+			craftModuleInterface = GetComponent<RocketModuleCluster>().CraftInterface;
 		}
 		return craftModuleInterface.GetConditionSet(conditionType);
 	}

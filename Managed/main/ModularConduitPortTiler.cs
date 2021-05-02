@@ -15,6 +15,14 @@ public class ModularConduitPortTiler : KMonoBehaviour
 
 	public Tag[] tags;
 
+	public bool manageLeftCap = true;
+
+	public bool manageRightCap = true;
+
+	public int leftCapDefaultSceneLayerAdjust;
+
+	public int rightCapDefaultSceneLayerAdjust;
+
 	private Extents extents;
 
 	private AnimCapType leftCapSetting = AnimCapType.Default;
@@ -67,15 +75,22 @@ public class ModularConduitPortTiler : KMonoBehaviour
 			this.extents = component.GetExtents();
 		}
 		KBatchedAnimController component2 = GetComponent<KBatchedAnimController>();
-		leftCapDefault = new KAnimSynchronizedController(component2, (Grid.SceneLayer)component2.GetLayer(), leftCapDefaultStr);
-		leftCapLaunchpad = new KAnimSynchronizedController(component2, (Grid.SceneLayer)component2.GetLayer(), leftCapLaunchpadStr);
-		leftCapConduit = new KAnimSynchronizedController(component2, (Grid.SceneLayer)(component2.GetLayer() + 1), leftCapConduitStr);
-		rightCapDefault = new KAnimSynchronizedController(component2, (Grid.SceneLayer)component2.GetLayer(), rightCapDefaultStr);
-		rightCapLaunchpad = new KAnimSynchronizedController(component2, (Grid.SceneLayer)component2.GetLayer(), rightCapLaunchpadStr);
-		rightCapConduit = new KAnimSynchronizedController(component2, (Grid.SceneLayer)component2.GetLayer(), rightCapConduitStr);
+		leftCapDefault = new KAnimSynchronizedController(component2, (Grid.SceneLayer)(component2.GetLayer() + leftCapDefaultSceneLayerAdjust), leftCapDefaultStr);
+		if (manageLeftCap)
+		{
+			leftCapLaunchpad = new KAnimSynchronizedController(component2, (Grid.SceneLayer)component2.GetLayer(), leftCapLaunchpadStr);
+			leftCapConduit = new KAnimSynchronizedController(component2, (Grid.SceneLayer)(component2.GetLayer() + 1), leftCapConduitStr);
+		}
+		rightCapDefault = new KAnimSynchronizedController(component2, (Grid.SceneLayer)(component2.GetLayer() + rightCapDefaultSceneLayerAdjust), rightCapDefaultStr);
+		if (manageRightCap)
+		{
+			rightCapLaunchpad = new KAnimSynchronizedController(component2, (Grid.SceneLayer)component2.GetLayer(), rightCapLaunchpadStr);
+			rightCapConduit = new KAnimSynchronizedController(component2, (Grid.SceneLayer)component2.GetLayer(), rightCapConduitStr);
+		}
 		Extents extents = new Extents(this.extents.x - 1, this.extents.y, this.extents.width + 2, this.extents.height);
 		partitionerEntry = GameScenePartitioner.Instance.Add("ModularConduitPort.OnSpawn", base.gameObject, extents, GameScenePartitioner.Instance.objectLayers[(int)objectLayer], OnNeighbourCellsUpdated);
 		UpdateEndCaps();
+		CorrectAdjacentLaunchPads();
 	}
 
 	protected override void OnCleanUp()
@@ -87,18 +102,16 @@ public class ModularConduitPortTiler : KMonoBehaviour
 	private void UpdateEndCaps()
 	{
 		int cell = Grid.PosToCell(this);
-		Grid.CellToXY(cell, out var x, out var _);
-		CellOffset offset = new CellOffset(extents.x - x - 1, 0);
-		CellOffset offset2 = new CellOffset(extents.x - x + extents.width, 0);
-		int num = Grid.OffsetCell(cell, offset);
-		int num2 = Grid.OffsetCell(cell, offset2);
-		if (Grid.IsValidCell(num))
+		Grid.CellToXY(cell, out var _, out var _);
+		int cellLeft = GetCellLeft();
+		int cellRight = GetCellRight();
+		if (Grid.IsValidCell(cellLeft))
 		{
-			if (HasTileableNeighbour(num))
+			if (HasTileableNeighbour(cellLeft))
 			{
 				leftCapSetting = AnimCapType.Conduit;
 			}
-			else if (HasLaunchpadNeighbour(num))
+			else if (HasLaunchpadNeighbour(cellLeft))
 			{
 				leftCapSetting = AnimCapType.Launchpad;
 			}
@@ -107,13 +120,13 @@ public class ModularConduitPortTiler : KMonoBehaviour
 				leftCapSetting = AnimCapType.Default;
 			}
 		}
-		if (Grid.IsValidCell(num2))
+		if (Grid.IsValidCell(cellRight))
 		{
-			if (HasTileableNeighbour(num2))
+			if (HasTileableNeighbour(cellRight))
 			{
 				rightCapSetting = AnimCapType.Conduit;
 			}
-			else if (HasLaunchpadNeighbour(num2))
+			else if (HasLaunchpadNeighbour(cellRight))
 			{
 				rightCapSetting = AnimCapType.Launchpad;
 			}
@@ -122,12 +135,34 @@ public class ModularConduitPortTiler : KMonoBehaviour
 				rightCapSetting = AnimCapType.Default;
 			}
 		}
-		leftCapDefault.Enable(leftCapSetting == AnimCapType.Default);
-		leftCapConduit.Enable(leftCapSetting == AnimCapType.Conduit);
-		leftCapLaunchpad.Enable(leftCapSetting == AnimCapType.Launchpad);
-		rightCapDefault.Enable(rightCapSetting == AnimCapType.Default);
-		rightCapConduit.Enable(rightCapSetting == AnimCapType.Conduit);
-		rightCapLaunchpad.Enable(rightCapSetting == AnimCapType.Launchpad);
+		if (manageLeftCap)
+		{
+			leftCapDefault.Enable(leftCapSetting == AnimCapType.Default);
+			leftCapConduit.Enable(leftCapSetting == AnimCapType.Conduit);
+			leftCapLaunchpad.Enable(leftCapSetting == AnimCapType.Launchpad);
+		}
+		if (manageRightCap)
+		{
+			rightCapDefault.Enable(rightCapSetting == AnimCapType.Default);
+			rightCapConduit.Enable(rightCapSetting == AnimCapType.Conduit);
+			rightCapLaunchpad.Enable(rightCapSetting == AnimCapType.Launchpad);
+		}
+	}
+
+	private int GetCellLeft()
+	{
+		int cell = Grid.PosToCell(this);
+		Grid.CellToXY(cell, out var x, out var _);
+		CellOffset offset = new CellOffset(extents.x - x - 1, 0);
+		return Grid.OffsetCell(cell, offset);
+	}
+
+	private int GetCellRight()
+	{
+		int cell = Grid.PosToCell(this);
+		Grid.CellToXY(cell, out var x, out var _);
+		CellOffset offset = new CellOffset(extents.x - x + extents.width, 0);
+		return Grid.OffsetCell(cell, offset);
 	}
 
 	private bool HasTileableNeighbour(int neighbour_cell)
@@ -164,6 +199,24 @@ public class ModularConduitPortTiler : KMonoBehaviour
 		if (!(this == null) && !(base.gameObject == null) && partitionerEntry.IsValid())
 		{
 			UpdateEndCaps();
+		}
+	}
+
+	private void CorrectAdjacentLaunchPads()
+	{
+		int cellRight = GetCellRight();
+		if (Grid.IsValidCell(cellRight) && HasLaunchpadNeighbour(cellRight))
+		{
+			GameObject gameObject = Grid.Objects[cellRight, 1];
+			ModularConduitPortTiler component = gameObject.GetComponent<ModularConduitPortTiler>();
+			component.UpdateEndCaps();
+		}
+		int cellLeft = GetCellLeft();
+		if (Grid.IsValidCell(cellLeft) && HasLaunchpadNeighbour(cellLeft))
+		{
+			GameObject gameObject2 = Grid.Objects[cellLeft, 1];
+			ModularConduitPortTiler component2 = gameObject2.GetComponent<ModularConduitPortTiler>();
+			component2.UpdateEndCaps();
 		}
 	}
 }

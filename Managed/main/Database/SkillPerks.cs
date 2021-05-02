@@ -33,6 +33,8 @@ namespace Database
 
 		public SkillPerk IncreaseLearningLarge;
 
+		public SkillPerk IncreaseLearningLargeSpace;
+
 		public SkillPerk IncreaseBotanySmall;
 
 		public SkillPerk IncreaseBotanyMedium;
@@ -52,6 +54,8 @@ namespace Database
 		public SkillPerk IncreaseAthleticsSmall;
 
 		public SkillPerk IncreaseAthleticsMedium;
+
+		public SkillPerk IncreaseAthleticsLarge;
 
 		public SkillPerk IncreaseStrengthSmall;
 
@@ -119,6 +123,8 @@ namespace Database
 
 		public SkillPerk AllowNuclearResearch;
 
+		public SkillPerk AllowOrbitalResearch;
+
 		public SkillPerk CanStudyWorldObjects;
 
 		public SkillPerk CanUseClusterTelescope;
@@ -152,6 +158,7 @@ namespace Database
 			IncreaseLearningSmall = Add(new SkillAttributePerk("IncreaseLearningSmall", Db.Get().Attributes.Learning.Id, ROLES.ATTRIBUTE_BONUS_FIRST, DUPLICANTS.ROLES.JUNIOR_RESEARCHER.NAME));
 			IncreaseLearningMedium = Add(new SkillAttributePerk("IncreaseLearningMedium", Db.Get().Attributes.Learning.Id, ROLES.ATTRIBUTE_BONUS_SECOND, DUPLICANTS.ROLES.RESEARCHER.NAME));
 			IncreaseLearningLarge = Add(new SkillAttributePerk("IncreaseLearningLarge", Db.Get().Attributes.Learning.Id, ROLES.ATTRIBUTE_BONUS_THIRD, DUPLICANTS.ROLES.SENIOR_RESEARCHER.NAME));
+			IncreaseLearningLargeSpace = Add(new SkillAttributePerk("IncreaseLearningLargeSpace", Db.Get().Attributes.Learning.Id, ROLES.ATTRIBUTE_BONUS_THIRD, DUPLICANTS.ROLES.SPACE_RESEARCHER.NAME));
 			IncreaseBotanySmall = Add(new SkillAttributePerk("IncreaseBotanySmall", Db.Get().Attributes.Botanist.Id, ROLES.ATTRIBUTE_BONUS_FIRST, DUPLICANTS.ROLES.JUNIOR_FARMER.NAME));
 			IncreaseBotanyMedium = Add(new SkillAttributePerk("IncreaseBotanyMedium", Db.Get().Attributes.Botanist.Id, ROLES.ATTRIBUTE_BONUS_SECOND, DUPLICANTS.ROLES.FARMER.NAME));
 			IncreaseBotanyLarge = Add(new SkillAttributePerk("IncreaseBotanyLarge", Db.Get().Attributes.Botanist.Id, ROLES.ATTRIBUTE_BONUS_THIRD, DUPLICANTS.ROLES.SENIOR_FARMER.NAME));
@@ -162,6 +169,7 @@ namespace Database
 			CanUseRanchStation = Add(new SimpleSkillPerk("CanUseRanchStation", UI.ROLES_SCREEN.PERKS.CAN_USE_RANCH_STATION.DESCRIPTION));
 			IncreaseAthleticsSmall = Add(new SkillAttributePerk("IncreaseAthleticsSmall", Db.Get().Attributes.Athletics.Id, ROLES.ATTRIBUTE_BONUS_FIRST, DUPLICANTS.ROLES.HAULER.NAME));
 			IncreaseAthleticsMedium = Add(new SkillAttributePerk("IncreaseAthletics", Db.Get().Attributes.Athletics.Id, ROLES.ATTRIBUTE_BONUS_SECOND, DUPLICANTS.ROLES.SUIT_EXPERT.NAME));
+			IncreaseAthleticsLarge = Add(new SkillAttributePerk("IncreaseAthleticsLarge", Db.Get().Attributes.Athletics.Id, ROLES.ATTRIBUTE_BONUS_SECOND, DUPLICANTS.ROLES.THERMAL_SUIT_WEARER.NAME));
 			IncreaseStrengthGofer = Add(new SkillAttributePerk("IncreaseStrengthGofer", Db.Get().Attributes.Strength.Id, ROLES.ATTRIBUTE_BONUS_FIRST, DUPLICANTS.ROLES.HAULER.NAME));
 			IncreaseStrengthCourier = Add(new SkillAttributePerk("IncreaseStrengthCourier", Db.Get().Attributes.Strength.Id, ROLES.ATTRIBUTE_BONUS_SECOND, DUPLICANTS.ROLES.MATERIALS_MANAGER.NAME));
 			IncreaseStrengthGroundskeeper = Add(new SkillAttributePerk("IncreaseStrengthGroundskeeper", Db.Get().Attributes.Strength.Id, ROLES.ATTRIBUTE_BONUS_FIRST, DUPLICANTS.ROLES.HANDYMAN.NAME));
@@ -193,6 +201,7 @@ namespace Database
 			AllowAdvancedResearch = Add(new SimpleSkillPerk("AllowAdvancedResearch", UI.ROLES_SCREEN.PERKS.ADVANCED_RESEARCH.DESCRIPTION));
 			AllowInterstellarResearch = Add(new SimpleSkillPerk("AllowInterStellarResearch", UI.ROLES_SCREEN.PERKS.INTERSTELLAR_RESEARCH.DESCRIPTION));
 			AllowNuclearResearch = Add(new SimpleSkillPerk("AllowNuclearResearch", UI.ROLES_SCREEN.PERKS.NUCLEAR_RESEARCH.DESCRIPTION));
+			AllowOrbitalResearch = Add(new SimpleSkillPerk("AllowOrbitalResearch", UI.ROLES_SCREEN.PERKS.ORBITAL_RESEARCH.DESCRIPTION));
 			CanStudyWorldObjects = Add(new SimpleSkillPerk("CanStudyWorldObjects", UI.ROLES_SCREEN.PERKS.CAN_STUDY_WORLD_OBJECTS.DESCRIPTION));
 			CanUseClusterTelescope = Add(new SimpleSkillPerk("CanUseClusterTelescope", UI.ROLES_SCREEN.PERKS.CAN_USE_CLUSTER_TELESCOPE.DESCRIPTION));
 			CanDoPlumbing = Add(new SimpleSkillPerk("CanDoPlumbing", UI.ROLES_SCREEN.PERKS.CAN_DO_PLUMBING.DESCRIPTION));

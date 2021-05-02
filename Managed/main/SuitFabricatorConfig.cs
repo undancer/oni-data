@@ -41,7 +41,7 @@ public class SuitFabricatorConfig : IBuildingConfig
 	{
 		ComplexRecipe.RecipeElement[] array = new ComplexRecipe.RecipeElement[2]
 		{
-			new ComplexRecipe.RecipeElement(SimHashes.Copper.CreateTag(), 300f),
+			new ComplexRecipe.RecipeElement(SimHashes.Copper.CreateTag(), 300f, inheritElement: true),
 			new ComplexRecipe.RecipeElement("BasicFabric".ToTag(), 2f)
 		};
 		ComplexRecipe.RecipeElement[] array2 = new ComplexRecipe.RecipeElement[1]
@@ -62,7 +62,7 @@ public class SuitFabricatorConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array3 = new ComplexRecipe.RecipeElement[2]
 		{
-			new ComplexRecipe.RecipeElement(SimHashes.Aluminum.CreateTag(), 300f),
+			new ComplexRecipe.RecipeElement(SimHashes.Aluminum.CreateTag(), 300f, inheritElement: true),
 			new ComplexRecipe.RecipeElement("BasicFabric".ToTag(), 2f)
 		};
 		ComplexRecipe.RecipeElement[] array4 = new ComplexRecipe.RecipeElement[1]
@@ -83,7 +83,7 @@ public class SuitFabricatorConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array5 = new ComplexRecipe.RecipeElement[2]
 		{
-			new ComplexRecipe.RecipeElement(SimHashes.Iron.CreateTag(), 300f),
+			new ComplexRecipe.RecipeElement(SimHashes.Iron.CreateTag(), 300f, inheritElement: true),
 			new ComplexRecipe.RecipeElement("BasicFabric".ToTag(), 2f)
 		};
 		ComplexRecipe.RecipeElement[] array6 = new ComplexRecipe.RecipeElement[1]
@@ -104,15 +104,57 @@ public class SuitFabricatorConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array7 = new ComplexRecipe.RecipeElement[2]
 		{
-			new ComplexRecipe.RecipeElement(SimHashes.Steel.ToString(), 200f),
-			new ComplexRecipe.RecipeElement(SimHashes.Petroleum.ToString(), 25f)
+			new ComplexRecipe.RecipeElement("Worn_Atmo_Suit".ToTag(), 1f, inheritElement: true),
+			new ComplexRecipe.RecipeElement("BasicFabric".ToTag(), 1f)
 		};
 		ComplexRecipe.RecipeElement[] array8 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement("Jet_Suit".ToTag(), 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
+			new ComplexRecipe.RecipeElement("Atmo_Suit".ToTag(), 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
 		string id4 = ComplexRecipeManager.MakeRecipeID("SuitFabricator", array7, array8);
-		JetSuitConfig.recipe = new ComplexRecipe(id4, array7, array8)
+		AtmoSuitConfig.recipe = new ComplexRecipe(id4, array7, array8)
+		{
+			time = TUNING.EQUIPMENT.SUITS.ATMOSUIT_FABTIME,
+			description = STRINGS.EQUIPMENT.PREFABS.ATMO_SUIT.RECIPE_DESC,
+			nameDisplay = ComplexRecipe.RecipeNameDisplay.ResultWithIngredient,
+			fabricators = new List<Tag>
+			{
+				"SuitFabricator"
+			},
+			requiredTech = Db.Get().TechItems.atmoSuit.parentTechId
+		};
+		ComplexRecipe.RecipeElement[] array9 = new ComplexRecipe.RecipeElement[2]
+		{
+			new ComplexRecipe.RecipeElement(SimHashes.Steel.ToString(), 200f),
+			new ComplexRecipe.RecipeElement(SimHashes.Petroleum.ToString(), 25f)
+		};
+		ComplexRecipe.RecipeElement[] array10 = new ComplexRecipe.RecipeElement[1]
+		{
+			new ComplexRecipe.RecipeElement("Jet_Suit".ToTag(), 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
+		};
+		string id5 = ComplexRecipeManager.MakeRecipeID("SuitFabricator", array9, array10);
+		JetSuitConfig.recipe = new ComplexRecipe(id5, array9, array10)
+		{
+			time = TUNING.EQUIPMENT.SUITS.ATMOSUIT_FABTIME,
+			description = STRINGS.EQUIPMENT.PREFABS.JET_SUIT.RECIPE_DESC,
+			nameDisplay = ComplexRecipe.RecipeNameDisplay.ResultWithIngredient,
+			fabricators = new List<Tag>
+			{
+				"SuitFabricator"
+			},
+			requiredTech = Db.Get().TechItems.jetSuit.parentTechId
+		};
+		ComplexRecipe.RecipeElement[] array11 = new ComplexRecipe.RecipeElement[2]
+		{
+			new ComplexRecipe.RecipeElement("Worn_Jet_Suit".ToTag(), 1f),
+			new ComplexRecipe.RecipeElement("BasicFabric".ToTag(), 1f)
+		};
+		ComplexRecipe.RecipeElement[] array12 = new ComplexRecipe.RecipeElement[1]
+		{
+			new ComplexRecipe.RecipeElement("Jet_Suit".ToTag(), 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
+		};
+		string id6 = ComplexRecipeManager.MakeRecipeID("SuitFabricator", array11, array12);
+		JetSuitConfig.recipe = new ComplexRecipe(id6, array11, array12)
 		{
 			time = TUNING.EQUIPMENT.SUITS.ATMOSUIT_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.JET_SUIT.RECIPE_DESC,
@@ -125,17 +167,41 @@ public class SuitFabricatorConfig : IBuildingConfig
 		};
 		if (Sim.IsRadiationEnabled())
 		{
-			ComplexRecipe.RecipeElement[] array9 = new ComplexRecipe.RecipeElement[2]
+			ComplexRecipe.RecipeElement[] array13 = new ComplexRecipe.RecipeElement[2]
+			{
+				new ComplexRecipe.RecipeElement("Worn_Lead_Suit".ToTag(), 1f),
+				new ComplexRecipe.RecipeElement(SimHashes.Glass.ToString(), 5f)
+			};
+			ComplexRecipe.RecipeElement[] array14 = new ComplexRecipe.RecipeElement[1]
+			{
+				new ComplexRecipe.RecipeElement("Lead_Suit".ToTag(), 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
+			};
+			string id7 = ComplexRecipeManager.MakeRecipeID("SuitFabricator", array13, array14);
+			LeadSuitConfig.recipe = new ComplexRecipe(id7, array13, array14)
+			{
+				time = TUNING.EQUIPMENT.SUITS.ATMOSUIT_FABTIME,
+				description = STRINGS.EQUIPMENT.PREFABS.LEAD_SUIT.RECIPE_DESC,
+				nameDisplay = ComplexRecipe.RecipeNameDisplay.ResultWithIngredient,
+				fabricators = new List<Tag>
+				{
+					"SuitFabricator"
+				},
+				requiredTech = Db.Get().TechItems.leadSuit.parentTechId
+			};
+		}
+		if (Sim.IsRadiationEnabled())
+		{
+			ComplexRecipe.RecipeElement[] array15 = new ComplexRecipe.RecipeElement[2]
 			{
 				new ComplexRecipe.RecipeElement(SimHashes.Lead.ToString(), 200f),
 				new ComplexRecipe.RecipeElement(SimHashes.Glass.ToString(), 10f)
 			};
-			ComplexRecipe.RecipeElement[] array10 = new ComplexRecipe.RecipeElement[1]
+			ComplexRecipe.RecipeElement[] array16 = new ComplexRecipe.RecipeElement[1]
 			{
 				new ComplexRecipe.RecipeElement("Lead_Suit".ToTag(), 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 			};
-			string id5 = ComplexRecipeManager.MakeRecipeID("SuitFabricator", array9, array10);
-			LeadSuitConfig.recipe = new ComplexRecipe(id5, array9, array10)
+			string id8 = ComplexRecipeManager.MakeRecipeID("SuitFabricator", array15, array16);
+			LeadSuitConfig.recipe = new ComplexRecipe(id8, array15, array16)
 			{
 				time = TUNING.EQUIPMENT.SUITS.ATMOSUIT_FABTIME,
 				description = STRINGS.EQUIPMENT.PREFABS.LEAD_SUIT.RECIPE_DESC,

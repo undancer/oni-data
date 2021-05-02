@@ -850,10 +850,16 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 		{
 			num2 += recipeElement.amount;
 		}
+		Element element = null;
 		ComplexRecipe.RecipeElement[] ingredients2 = recipe.ingredients;
 		foreach (ComplexRecipe.RecipeElement recipeElement2 in ingredients2)
 		{
 			float num3 = recipeElement2.amount / num2;
+			if (recipeElement2.inheritElement)
+			{
+				GameObject gameObject = buildStorage.FindFirst(recipeElement2.material);
+				element = gameObject.GetComponent<PrimaryElement>().Element;
+			}
 			buildStorage.ConsumeAndGetDisease(recipeElement2.material, recipeElement2.amount, out var _, out var disease_info, out var aggregate_temperature);
 			if (disease_info.count > diseaseInfo.count)
 			{
@@ -864,10 +870,10 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 		ComplexRecipe.RecipeElement[] results = recipe.results;
 		foreach (ComplexRecipe.RecipeElement recipeElement3 in results)
 		{
-			GameObject gameObject = buildStorage.FindFirst(recipeElement3.material);
-			if (gameObject != null)
+			GameObject gameObject2 = buildStorage.FindFirst(recipeElement3.material);
+			if (gameObject2 != null)
 			{
-				Edible component = gameObject.GetComponent<Edible>();
+				Edible component = gameObject2.GetComponent<Edible>();
 				if ((bool)component)
 				{
 					ReportManager.Instance.ReportValue(ReportManager.ReportType.CaloriesCreated, 0f - component.Calories, StringFormatter.Replace(UI.ENDOFDAYREPORT.NOTES.CRAFTED_USED, "{0}", component.GetProperName()), UI.ENDOFDAYREPORT.NOTES.CRAFTED_CONTEXT);
@@ -879,27 +885,31 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 			case ComplexRecipe.RecipeElement.TemperatureOperation.Heated:
 			{
 				GameObject prefab = Assets.GetPrefab(recipeElement3.material);
-				GameObject gameObject2 = GameUtil.KInstantiate(prefab, Grid.SceneLayer.Ore);
+				GameObject gameObject3 = GameUtil.KInstantiate(prefab, Grid.SceneLayer.Ore);
 				int cell = Grid.PosToCell(this);
-				gameObject2.transform.SetPosition(Grid.CellToPosCCC(cell, Grid.SceneLayer.Ore) + outputOffset);
-				PrimaryElement component2 = gameObject2.GetComponent<PrimaryElement>();
+				gameObject3.transform.SetPosition(Grid.CellToPosCCC(cell, Grid.SceneLayer.Ore) + outputOffset);
+				PrimaryElement component2 = gameObject3.GetComponent<PrimaryElement>();
 				component2.Units = recipeElement3.amount;
 				component2.Temperature = ((recipeElement3.temperatureOperation == ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature) ? num : heatedTemperature);
-				gameObject2.SetActive(value: true);
+				if (element != null)
+				{
+					component2.SetElement(element.id, addTags: false);
+				}
+				gameObject3.SetActive(value: true);
 				float num4 = recipeElement3.amount / recipe.TotalResultUnits();
 				component2.AddDisease(diseaseInfo.idx, Mathf.RoundToInt((float)diseaseInfo.count * num4), "ComplexFabricator.CompleteOrder");
-				gameObject2.GetComponent<KMonoBehaviour>().Trigger(748399584);
-				list.Add(gameObject2);
+				gameObject3.GetComponent<KMonoBehaviour>().Trigger(748399584);
+				list.Add(gameObject3);
 				if (storeProduced || recipeElement3.storeElement)
 				{
-					outStorage.Store(gameObject2);
+					outStorage.Store(gameObject3);
 				}
 				break;
 			}
 			case ComplexRecipe.RecipeElement.TemperatureOperation.Melted:
 				if (storeProduced || recipeElement3.storeElement)
 				{
-					float temperature = ElementLoader.GetElement(recipeElement3.material).lowTemp + (ElementLoader.GetElement(recipeElement3.material).highTemp - ElementLoader.GetElement(recipeElement3.material).lowTemp) / 2f;
+					float temperature = ElementLoader.GetElement(recipeElement3.material).defaultValues.temperature;
 					outStorage.AddLiquid(ElementLoader.GetElementID(recipeElement3.material), recipeElement3.amount, temperature, 0, 0);
 				}
 				break;

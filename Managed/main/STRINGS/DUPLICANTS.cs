@@ -93,7 +93,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Decor";
 
-				public static LocString TOOLTIP = "Duplicants become stressed in areas with " + UI.PRE_KEYWORD + "Decor" + UI.PST_KEYWORD + " lower than their expectations\nOpen the " + UI.FormatAsOverlay("Decor Overlay", "[F8]") + " to view current " + UI.PRE_KEYWORD + "Decor" + UI.PST_KEYWORD + " values";
+				public static LocString TOOLTIP = "Duplicants become stressed in areas with " + UI.PRE_KEYWORD + "Decor" + UI.PST_KEYWORD + " lower than their expectations\n\nOpen the " + UI.FormatAsOverlay("Decor Overlay", "[F8]") + " to view current " + UI.PRE_KEYWORD + "Decor" + UI.PST_KEYWORD + " values";
 
 				public static LocString TOOLTIP_CURRENT = "\n\nCurrent Environmental Decor: <b>{0}</b>";
 
@@ -107,6 +107,19 @@ namespace STRINGS
 				public static LocString NAME = "Stress";
 
 				public static LocString TOOLTIP = "Duplicants exhibit their Stress Reactions at one hundred percent " + UI.PRE_KEYWORD + "Stress" + UI.PST_KEYWORD;
+			}
+
+			public class RADIATIONBALANCE
+			{
+				public static LocString NAME = "Absorbed Rad Dose";
+
+				public static LocString TOOLTIP = "Duplicants accumulate Rads in areas with " + UI.PRE_KEYWORD + "Radiation" + UI.PST_KEYWORD + " and recover when using the toilet\n\nOpen the " + UI.FormatAsOverlay("Radiation Overlay", "[L-SHIFT + F4]") + " to view current " + UI.PRE_KEYWORD + "Rad" + UI.PST_KEYWORD + " readings";
+
+				public static LocString TOOLTIP_CURRENT_BALANCE = "Duplicants accumulate Rads in areas with " + UI.PRE_KEYWORD + "Radiation" + UI.PST_KEYWORD + " and recover when using the toilet\n\nOpen the " + UI.FormatAsOverlay("Radiation Overlay", "[L-SHIFT + F4]") + " to view current " + UI.PRE_KEYWORD + "Rad" + UI.PST_KEYWORD + " readings";
+
+				public static LocString CURRENT_EXPOSURE = "Current Exposure: {0}/cycle";
+
+				public static LocString CURRENT_REJUVENATION = "Current Rejuvenation: {0}/cycle";
 			}
 
 			public class BLADDER
@@ -220,16 +233,9 @@ namespace STRINGS
 
 			public class HITBYHIGHENERGYPARTICLE
 			{
-				public static LocString NAME = "Struck by HEP";
+				public static LocString NAME = "Struck by Radbolt";
 
-				public static LocString DESCRIPTION = "{Target} was struck by a " + UI.PRE_KEYWORD + "High Energy Particle" + UI.PST_KEYWORD + " and perished.";
-			}
-
-			public class DEADBATTERY
-			{
-				public static LocString NAME = "Battery Ran Out";
-
-				public static LocString DESCRIPTION = "{Target} had a limited battery and that battery has depleted.";
+				public static LocString DESCRIPTION = "{Target} was struck by a radioactive " + UI.PRE_KEYWORD + "Radbolt" + UI.PST_KEYWORD + " and perished.";
 			}
 		}
 
@@ -291,9 +297,9 @@ namespace STRINGS
 
 			public class MIGRATE
 			{
-				public static LocString NAME = "Use Teleportal";
+				public static LocString NAME = "Use Teleporter";
 
-				public static LocString STATUS = "Using Teleportal";
+				public static LocString STATUS = "Using Teleporter";
 
 				public static LocString TOOLTIP = "This Duplicant's molecules are hurtling through the air!";
 			}
@@ -339,6 +345,15 @@ namespace STRINGS
 				public static LocString STATUS = "Moving to location";
 
 				public static LocString TOOLTIP = "This Duplicant was manually directed to move to a specific location";
+			}
+
+			public class ROCKETENTEREXIT
+			{
+				public static LocString NAME = "Rocket Recrewing";
+
+				public static LocString STATUS = "Recrewing Rocket";
+
+				public static LocString TOOLTIP = "This Duplicant is getting into (or out of) their assigned rocket";
 			}
 
 			public class DROPUNUSEDINVENTORY
@@ -519,6 +534,15 @@ namespace STRINGS
 				public static LocString STATUS = "Vomiting";
 
 				public static LocString TOOLTIP = string.Concat("Vomiting produces ", ELEMENTS.DIRTYWATER.NAME, " and can spread ", UI.PRE_KEYWORD, "Disease", UI.PST_KEYWORD);
+			}
+
+			public class RADIATIONPAIN
+			{
+				public static LocString NAME = "Radiation Aches";
+
+				public static LocString STATUS = "Feeling radiation aches";
+
+				public static LocString TOOLTIP = "Radiation Aches are a symptom of " + DISEASES.RADIATIONSICKNESS.NAME;
 			}
 
 			public class COUGH
@@ -997,7 +1021,7 @@ namespace STRINGS
 
 				public static LocString STATUS = "Overjoyed";
 
-				public static LocString TOOLTIP = "This Duplicant is doing something because they are " + UI.PRE_KEYWORD + "Overjoyed" + UI.PST_KEYWORD;
+				public static LocString TOOLTIP = "This Duplicant is taking a moment to relish in their own happiness";
 
 				public static LocString REPORT_NAME = "Overjoyed Reaction";
 			}
@@ -1618,7 +1642,7 @@ namespace STRINGS
 
 			public class COUGHING
 			{
-				public static LocString NAME = "Coughing";
+				public static LocString NAME = "Yucky Lungs Coughing";
 
 				public static LocString TOOLTIP = "Hey! Do that into your elbow\n• Coughing fit was caused by " + MODIFIERS.CONTAMINATEDLUNGS.NAME;
 			}
@@ -2704,6 +2728,20 @@ namespace STRINGS
 
 				public static LocString TOOLTIP = "This Duplicant is handing out balloons to other Duplicants";
 			}
+
+			public class EXPELLINGRADS
+			{
+				public static LocString NAME = "Cleansing Rads";
+
+				public static LocString TOOLTIP = "This Duplicant is, uh... \"expelling\" absorbed radiation from their system";
+			}
+
+			public class ANALYZINGGENES
+			{
+				public static LocString NAME = "Analyzing Plant Genes";
+
+				public static LocString TOOLTIP = "This duplicant is peering deep into the genetic code of an odd seed";
+			}
 		}
 
 		public class DISEASES
@@ -2750,6 +2788,10 @@ namespace STRINGS
 				public static LocString DOCTOR_ADMINISTERED_CURE = "Doctor Administered: Sick Only";
 
 				public static LocString DOCTOR_ADMINISTERED_CURE_TOOLTIP = "Duplicants can receive this medicine at a {Station}, but only while they are sick" + UI.HORIZONTAL_BR_RULE + "They cannot give it to themselves and must receive it from a friend with " + UI.PRE_KEYWORD + "Doctoring Skills" + UI.PST_KEYWORD;
+
+				public static LocString BOOSTER = UI.FormatAsLink("Immune Booster", "IMMUNE SYSTEM");
+
+				public static LocString BOOSTER_TOOLTIP = "Boosters can be taken by both healthy and sick Duplicants to prevent potential disease";
 
 				public static LocString CURES_ANY = "Alleviates " + UI.FormatAsLink("All Diseases", "DISEASE");
 
@@ -3286,7 +3328,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Soiled Suit";
 
-				public static LocString TOOLTIP = "This Duplicant's suit needs to be emptied of waste\n\nPreferably soon";
+				public static LocString TOOLTIP = "This Duplicant's suit needs to be emptied of waste\n\n(Preferably soon)";
 
 				public static LocString CAUSE = "Obtained when a Duplicant wears a suit filled with... \"fluids\"";
 			}
@@ -5040,7 +5082,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Deep Diver's Lungs";
 
-				public static LocString DESC = "This Duplicant has a frankly impressive ability to hold this breath";
+				public static LocString DESC = "This Duplicant has a frankly impressive ability to hold their breath";
 			}
 
 			public class SUNNYDISPOSITION
@@ -5082,7 +5124,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Innately Stylish";
 
-				public static LocString DESC = "This Duplicant's radiant self-confidence makes even the rattiest outfits look trendy on them";
+				public static LocString DESC = "This Duplicant's radiant self-confidence makes even the rattiest outfits look trendy";
 			}
 
 			public class DECORDOWN
@@ -6048,6 +6090,13 @@ namespace STRINGS
 				public static LocString DESC = "Contented " + UI.FormatAsLink("Critters", "CREATURES") + " produce usable materials with increased frequency.";
 			}
 
+			public class RADIATIONBALANCEDELTA
+			{
+				public static LocString NAME = "Absorbed Radiation Dose";
+
+				public static LocString TOOLTIP = "Duplicants accumulate Rads in areas with " + UI.PRE_KEYWORD + "Radiation" + UI.PST_KEYWORD + " and recover at very slow rates\n\nOpen the " + UI.FormatAsOverlay("Radiation Overlay", "[L-SHIFT + F4]") + " to view current " + UI.PRE_KEYWORD + "Rad" + UI.PST_KEYWORD + " readings";
+			}
+
 			public class INSULATION
 			{
 				public static LocString NAME = "Insulation";
@@ -6356,11 +6405,72 @@ namespace STRINGS
 				public static LocString NAME = "Range";
 			}
 
+			public abstract class HEIGHT
+			{
+				public static LocString NAME = "Height";
+			}
+
 			public class HAPPINESS
 			{
 				public static LocString NAME = "Happiness";
 
 				public static LocString DESC = "";
+			}
+
+			public class WILTTEMPRANGEMOD
+			{
+				public static LocString NAME = "Viable Temperature Range";
+
+				public static LocString DESC = "Variance growth temperature relative to the base crop";
+			}
+
+			public class YIELDAMOUNT
+			{
+				public static LocString NAME = "Yield Amount";
+
+				public static LocString DESC = "Plant production relative to the base crop";
+			}
+
+			public class HARVESTTIME
+			{
+				public static LocString NAME = "Harvest Duration";
+
+				public static LocString DESC = "Time it takes an unskilled Duplicant to harvest this plant's fruit";
+			}
+
+			public class DECORBONUS
+			{
+				public static LocString NAME = "Decor Bonus";
+
+				public static LocString DESC = "Change in Decor relative to the base crop";
+			}
+
+			public class MINLIGHTLUX
+			{
+				public static LocString NAME = "Light";
+
+				public static LocString DESC = "Minimum lux this plant requires for growth";
+			}
+
+			public class FERTILIZERUSAGEMOD
+			{
+				public static LocString NAME = "Fertilizer Usage";
+
+				public static LocString DESC = "Fertilizer and irrigation amounts this plant requires relative to the base crop";
+			}
+
+			public class MINRADIATIONTHRESHOLD
+			{
+				public static LocString NAME = "Minimum Radiation";
+
+				public static LocString DESC = "Smallest amount of ambient Radiation required for this plant to grow";
+			}
+
+			public class MAXRADIATIONTHRESHOLD
+			{
+				public static LocString NAME = "Maximum Radiation";
+
+				public static LocString DESC = "Largest amount of ambient Radiation this plant can tolerate";
 			}
 
 			public static LocString VALUE = "{0}: {1}";
@@ -6458,14 +6568,21 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Astronomy", "SENIOR_RESEARCHER");
 
-				public static LocString DESCRIPTION = "Enables Duplicants to study outer space using the " + BUILDINGS.PREFABS.COSMICRESEARCHCENTER.NAME;
+				public static LocString DESCRIPTION = "Enables Duplicants to study outer space using the " + BUILDINGS.PREFABS.CLUSTERTELESCOPE.NAME;
 			}
 
 			public class NUCLEAR_RESEARCHER
 			{
-				public static LocString NAME = "W.I.P. Skill";
+				public static LocString NAME = UI.FormatAsLink("Atomic Research", "NUCLEAR_RESEARCHER");
 
-				public static LocString DESCRIPTION = "W.I.P. Skill";
+				public static LocString DESCRIPTION = "Enables Duplicants to study sub-atomic particles using the " + BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME;
+			}
+
+			public class SPACE_RESEARCHER
+			{
+				public static LocString NAME = UI.FormatAsLink("Orbital Researcher", "SPACE_RESEARCHER");
+
+				public static LocString DESCRIPTION = "Enables Duplicants to conduct research from within a rocket using the " + BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.NAME;
 			}
 
 			public class JUNIOR_COOK
@@ -6577,7 +6694,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Hazmat Digging", "MASTER_MINER");
 
-				public static LocString DESCRIPTION = "Allows the excavation of dangerous materials like " + ELEMENTS.SOLIDNUCLEARWASTE.NAME;
+				public static LocString DESCRIPTION = "Allows the excavation of dangerous materials like " + ELEMENTS.CORIUM.NAME;
 			}
 
 			public class THERMAL_SUIT_WEARER
@@ -6654,7 +6771,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Rocket Piloting", "PILOT");
 
-				public static LocString DESCRIPTION = string.Concat("Allows a Duplicant to operate a ", BUILDINGS.PREFABS.ROCKETCOMMANDCONSOLE.NAME, " and pilot rockets");
+				public static LocString DESCRIPTION = string.Concat("Allows a Duplicant to operate a ", BUILDINGS.PREFABS.ROCKETCONTROLSTATION.NAME, " and pilot rockets");
 			}
 
 			public class SENIOR_ROCKETPILOT

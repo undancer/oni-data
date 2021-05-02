@@ -81,7 +81,17 @@ public class MinionConfig : IEntityConfig
 		gridVisibility.innerRadius = 20f;
 		gameObject.AddOrGet<MiningSounds>();
 		gameObject.AddOrGet<SaveLoadRoot>();
-		gameObject.AddOrGet<AntiCluster>();
+		MoverLayerOccupier moverLayerOccupier = gameObject.AddOrGet<MoverLayerOccupier>();
+		moverLayerOccupier.objectLayers = new ObjectLayer[2]
+		{
+			ObjectLayer.Minion,
+			ObjectLayer.Mover
+		};
+		moverLayerOccupier.cellOffsets = new CellOffset[2]
+		{
+			CellOffset.none,
+			new CellOffset(0, 1)
+		};
 		Navigator navigator = gameObject.AddOrGet<Navigator>();
 		navigator.NavGridName = MINION_NAV_GRID_NAME;
 		navigator.CurrentNavType = NavType.Floor;
@@ -521,6 +531,7 @@ public class MinionConfig : IEntityConfig
 		modifiers.initialAmounts.Add(Db.Get().Amounts.Temperature.Id);
 		modifiers.initialAmounts.Add(Db.Get().Amounts.ExternalTemperature.Id);
 		modifiers.initialAmounts.Add(Db.Get().Amounts.Decor.Id);
+		modifiers.initialAmounts.Add(Db.Get().Amounts.RadiationBalance.Id);
 	}
 
 	public static void AddMinionTraits(string name, Modifiers modifiers)
@@ -537,7 +548,6 @@ public class MinionConfig : IEntityConfig
 		trait.Add(new AttributeModifier(Db.Get().Attributes.SpaceNavigation.Id, 1f, name));
 		trait.Add(new AttributeModifier(Db.Get().Attributes.Sneezyness.Id, 0f, name));
 		trait.Add(new AttributeModifier(Db.Get().Attributes.RadiationResistance.Id, 0f, name));
-		trait.Add(new AttributeModifier(Db.Get().Attributes.RadiationRecovery.Id, -5f / 6f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Stamina.deltaAttribute.Id, -7f / 60f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.deltaAttribute.Id, -1666.6666f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.maxAttribute.Id, 4000000f, name));
@@ -553,6 +563,7 @@ public class MinionConfig : IEntityConfig
 		KBatchedAnimController component = go.GetComponent<KBatchedAnimController>();
 		component.SetSymbolVisiblity("snapto_hat", is_visible: false);
 		component.SetSymbolVisiblity("snapTo_hat_hair", is_visible: false);
+		component.SetSymbolVisiblity("snapTo_headfx", is_visible: false);
 		component.SetSymbolVisiblity("snapto_chest", is_visible: false);
 		component.SetSymbolVisiblity("snapto_neck", is_visible: false);
 		component.SetSymbolVisiblity("snapto_goggles", is_visible: false);

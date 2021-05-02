@@ -20,6 +20,8 @@ namespace Database
 
 		public AccessorySlot HairAlways;
 
+		public AccessorySlot HeadEffects;
+
 		public AccessorySlots(ResourceSet parent, KAnimFile default_build = null, KAnimFile swap_build = null, KAnimFile torso_swap_build = null)
 			: base("AccessorySlots", parent)
 		{
@@ -43,6 +45,7 @@ namespace Database
 			Hat = new AccessorySlot("Hat", this, swap_build);
 			HatHair = new AccessorySlot("Hat_Hair", this, swap_build);
 			HairAlways = new AccessorySlot("Hair_Always", this, swap_build, "hair");
+			HeadEffects = new AccessorySlot("HeadFX", this, swap_build);
 			Body = new AccessorySlot("Body", this, torso_swap_build);
 			Arm = new AccessorySlot("Arm", this, torso_swap_build);
 			foreach (AccessorySlot resource in resources)

@@ -17,7 +17,7 @@ public class ColdBreatherConfig : IEntityConfig
 
 	public const float CONSUMPTION_RATE = 1f;
 
-	public const float RADIATION_RATE = 5f;
+	public const float RADIATION_STRENGTH = 48f;
 
 	public const string SEED_ID = "ColdBreatherSeed";
 
@@ -38,7 +38,6 @@ public class ColdBreatherConfig : IEntityConfig
 		gameObject.AddOrGet<Uprootable>();
 		gameObject.AddOrGet<UprootedMonitor>();
 		gameObject.AddOrGet<DrowningMonitor>();
-		gameObject.AddOrGet<MutantPlant>();
 		EntityTemplates.ExtendPlantToFertilizable(gameObject, new PlantElementAbsorber.ConsumeInfo[1]
 		{
 			new PlantElementAbsorber.ConsumeInfo
@@ -57,7 +56,6 @@ public class ColdBreatherConfig : IEntityConfig
 		coldBreather.deltaEmitTemperature = -5f;
 		coldBreather.emitOffsetCell = new Vector3(0f, 1f);
 		coldBreather.consumptionRate = 1f;
-		coldBreather.radiationRate = 5f;
 		gameObject.AddOrGet<KBatchedAnimController>().randomiseLoopedOffset = true;
 		Storage storage = BuildingTemplates.CreateDefaultStorage(gameObject);
 		storage.showInUI = false;
@@ -72,11 +70,12 @@ public class ColdBreatherConfig : IEntityConfig
 		component.SurfaceArea = 10f;
 		component.Thickness = 0.001f;
 		RadiationEmitter radiationEmitter = gameObject.AddComponent<RadiationEmitter>();
-		radiationEmitter.emitRadiusX = 2;
-		radiationEmitter.emitRadiusY = 2;
-		radiationEmitter.emitRads = 5f;
-		radiationEmitter.emitRate = 7f;
-		radiationEmitter.emissionOffset = new Vector3(0f, 1f, 0f);
+		radiationEmitter.emitType = RadiationEmitter.RadiationEmitterType.Constant;
+		radiationEmitter.radiusProportionalToRads = false;
+		radiationEmitter.emitRadiusX = 6;
+		radiationEmitter.emitRadiusY = radiationEmitter.emitRadiusX;
+		radiationEmitter.emitRads = 48f;
+		radiationEmitter.emissionOffset = new Vector3(0f, 0f, 0f);
 		GameObject seed = EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Hidden, "ColdBreatherSeed", STRINGS.CREATURES.SPECIES.SEEDS.COLDBREATHER.NAME, STRINGS.CREATURES.SPECIES.SEEDS.COLDBREATHER.DESC, Assets.GetAnim("seed_coldbreather_kanim"), "object", 1, new List<Tag>
 		{
 			GameTags.CropSeed

@@ -5,6 +5,8 @@ public class NuclearWasteCometConfig : IEntityConfig
 {
 	public static string ID = "NuclearWasteComet";
 
+	public static float MASS = 0.1f;
+
 	public string GetDlcId()
 	{
 		return "EXPANSION1_ID";
@@ -16,25 +18,26 @@ public class NuclearWasteCometConfig : IEntityConfig
 		gameObject.AddOrGet<SaveLoadRoot>();
 		gameObject.AddOrGet<LoopingSounds>();
 		Comet comet = gameObject.AddOrGet<Comet>();
-		comet.massRange = new Vector2(100f, 200f);
+		comet.massRange = new Vector2(MASS, MASS);
 		comet.EXHAUST_ELEMENT = SimHashes.Fallout;
+		comet.EXHAUST_RATE = MASS * 0.2f;
 		comet.temperatureRange = new Vector2(473.15f, 573.15f);
 		comet.entityDamage = 2;
 		comet.totalTileDamage = 0.45f;
 		comet.splashRadius = 0;
-		comet.impactSound = "Meteor_Small_Impact";
-		comet.flyingSoundID = 0;
+		comet.impactSound = "Meteor_Nuclear_Impact";
+		comet.flyingSoundID = 3;
 		comet.explosionEffectHash = SpawnFXHashes.MeteorImpactDust;
 		comet.addTiles = 1;
 		comet.diseaseIdx = Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.Id);
-		comet.addDiseaseCount = 10000000;
+		comet.addDiseaseCount = 1000000;
 		PrimaryElement primaryElement = gameObject.AddOrGet<PrimaryElement>();
-		primaryElement.SetElement(SimHashes.SolidNuclearWaste);
+		primaryElement.SetElement(SimHashes.Corium);
 		primaryElement.Temperature = (comet.temperatureRange.x + comet.temperatureRange.y) / 2f;
 		KBatchedAnimController kBatchedAnimController = gameObject.AddOrGet<KBatchedAnimController>();
 		kBatchedAnimController.AnimFiles = new KAnimFile[1]
 		{
-			Assets.GetAnim("meteor_sand_kanim")
+			Assets.GetAnim("nuclear_metldown_comet_fx_kanim")
 		};
 		kBatchedAnimController.isMovable = true;
 		kBatchedAnimController.initialAnim = "fall_loop";

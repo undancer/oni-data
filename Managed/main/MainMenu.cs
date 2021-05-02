@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using FMOD.Studio;
 using Klei;
 using Steamworks;
 using STRINGS;
@@ -62,6 +63,11 @@ public class MainMenu : KScreen
 
 	[SerializeField]
 	private ColorStyleSetting normalButtonStyle;
+
+	[SerializeField]
+	private string ambientLoopEventName;
+
+	private EventInstance ambientLoop;
 
 	[SerializeField]
 	private LocText motdImageHeader;
@@ -164,7 +170,14 @@ public class MainMenu : KScreen
 				motdNewsHeader.text = response.news_header_text;
 				motdNewsBody.text = response.news_body_text;
 				PatchNotesScreen.UpdatePatchNotes(response.patch_notes_summary, response.patch_notes_link_url);
-				nextUpdateTimer.UpdateReleaseTimes(response.last_update_time, response.next_update_time, response.update_text_override);
+				if (DlcManager.IsExpansion1Active())
+				{
+					nextUpdateTimer.UpdateReleaseTimes(response.expansion1_update_data.last_update_time, response.expansion1_update_data.next_update_time, response.expansion1_update_data.update_text_override);
+				}
+				else
+				{
+					nextUpdateTimer.UpdateReleaseTimes(response.vanilla_update_data.last_update_time, response.vanilla_update_data.next_update_time, response.vanilla_update_data.update_text_override);
+				}
 				if (response.image_texture != null)
 				{
 					motdImage.sprite = Sprite.Create(response.image_texture, new Rect(0f, 0f, response.image_texture.width, response.image_texture.height), Vector2.zero);
@@ -302,6 +315,18 @@ public class MainMenu : KScreen
 		}
 	}
 
+	protected override void OnActivate()
+	{
+		if (!ambientLoopEventName.IsNullOrWhiteSpace())
+		{
+			ambientLoop = KFMOD.CreateInstance(GlobalAssets.GetSound(ambientLoopEventName));
+			if (ambientLoop.isValid())
+			{
+				ambientLoop.start();
+			}
+		}
+	}
+
 	protected override void OnDeactivate()
 	{
 		base.OnDeactivate();
@@ -316,6 +341,7 @@ public class MainMenu : KScreen
 	protected override void OnLoadLevel()
 	{
 		base.OnLoadLevel();
+		StopAmbience();
 		UnregisterMotdRequest();
 	}
 
@@ -337,7 +363,7 @@ public class MainMenu : KScreen
 		string text;
 		if (!KPlayerPrefs.HasKey("AutoResumeSaveFile"))
 		{
-			text = (string.IsNullOrEmpty(GenericGameSettings.instance.performanceCapture.saveGame) ? SaveLoader.GetLatestSaveFile() : GenericGameSettings.instance.performanceCapture.saveGame);
+			text = (string.IsNullOrEmpty(GenericGameSettings.instance.performanceCapture.saveGame) ? SaveLoader.GetLatestSaveForCurrentDLC() : GenericGameSettings.instance.performanceCapture.saveGame);
 		}
 		else
 		{
@@ -419,8 +445,8 @@ public class MainMenu : KScreen
 
 	public void RefreshResumeButton()
 	{
-		string latestSaveFile = SaveLoader.GetLatestSaveFile();
-		bool flag = !string.IsNullOrEmpty(latestSaveFile) && File.Exists(latestSaveFile);
+		string latestSaveForCurrentDLC = SaveLoader.GetLatestSaveForCurrentDLC();
+		bool flag = !string.IsNullOrEmpty(latestSaveForCurrentDLC) && File.Exists(latestSaveForCurrentDLC);
 		if (flag)
 		{
 			try
@@ -429,19 +455,19 @@ public class MainMenu : KScreen
 				{
 					flag = false;
 				}
-				System.DateTime lastWriteTime = File.GetLastWriteTime(latestSaveFile);
+				System.DateTime lastWriteTime = File.GetLastWriteTime(latestSaveForCurrentDLC);
 				SaveFileEntry value = default(SaveFileEntry);
 				SaveGame.Header header = default(SaveGame.Header);
 				SaveGame.GameInfo gameInfo = default(SaveGame.GameInfo);
-				if (!saveFileEntries.TryGetValue(latestSaveFile, out value) || value.timeStamp != lastWriteTime)
+				if (!saveFileEntries.TryGetValue(latestSaveForCurrentDLC, out value) || value.timeStamp != lastWriteTime)
 				{
-					gameInfo = SaveLoader.LoadHeader(latestSaveFile, out header);
+					gameInfo = SaveLoader.LoadHeader(latestSaveForCurrentDLC, out header);
 					SaveFileEntry saveFileEntry = default(SaveFileEntry);
 					saveFileEntry.timeStamp = lastWriteTime;
 					saveFileEntry.header = header;
 					saveFileEntry.headerData = gameInfo;
 					value = saveFileEntry;
-					saveFileEntries[latestSaveFile] = value;
+					saveFileEntries[latestSaveForCurrentDLC] = value;
 				}
 				else
 				{
@@ -449,7 +475,7 @@ public class MainMenu : KScreen
 					gameInfo = value.headerData;
 				}
 				bool flag2 = true;
-				if (header.buildVersion > 447598 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 22)
+				if (header.buildVersion > 461546 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 22)
 				{
 					flag = false;
 				}
@@ -457,7 +483,7 @@ public class MainMenu : KScreen
 				{
 					flag = false;
 				}
-				string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(latestSaveFile);
+				string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(latestSaveForCurrentDLC);
 				if (!string.IsNullOrEmpty(gameInfo.baseName))
 				{
 					Button_ResumeGame.GetComponentsInChildren<LocText>()[1].text = string.Format(UI.FRONTEND.MAINMENU.RESUMEBUTTON_BASENAME, gameInfo.baseName, gameInfo.numberOfCycles + 1);
@@ -519,6 +545,16 @@ public class MainMenu : KScreen
 			MusicManager.instance.PlaySong("Music_TitleTheme_Expansion1");
 		}
 		CheckForAudioDriverIssue();
+	}
+
+	public void StopAmbience()
+	{
+		if (ambientLoop.isValid())
+		{
+			ambientLoop.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+			ambientLoop.release();
+			ambientLoop.clearHandle();
+		}
 	}
 
 	private void CheckForAudioDriverIssue()

@@ -65,7 +65,7 @@ public class RocketPassengerMonitor : GameStateMachine<RocketPassengerMonitor, R
 
 	public Chore CreateChore(Instance smi)
 	{
-		Chore chore = new MoveChore(smi.master, Db.Get().ChoreTypes.MoveTo, (MoveChore.StatesInstance mover_smi) => targetCell.Get(smi));
+		Chore chore = new MoveChore(smi.master, Db.Get().ChoreTypes.RocketEnterExit, (MoveChore.StatesInstance mover_smi) => targetCell.Get(smi));
 		chore.AddPrecondition(ChorePreconditions.instance.CanMoveToCell, targetCell.Get(smi));
 		return chore;
 	}

@@ -41,9 +41,9 @@ public class HabitatModuleSideScreen : SideScreenContent
 	private PassengerRocketModule GetPassengerModule(Clustercraft craft)
 	{
 		CraftModuleInterface component = craft.GetComponent<CraftModuleInterface>();
-		foreach (Ref<RocketModule> module in component.Modules)
+		foreach (Ref<RocketModuleCluster> clusterModule in component.ClusterModules)
 		{
-			PassengerRocketModule component2 = module.Get().GetComponent<PassengerRocketModule>();
+			PassengerRocketModule component2 = clusterModule.Get().GetComponent<PassengerRocketModule>();
 			if (component2 != null)
 			{
 				return component2;

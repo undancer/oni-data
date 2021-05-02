@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ProcGenGame
 {
-	public class Border : Path, SymbolicMapElement
+	public class Border : Path
 	{
 		public Neighbors neighbors;
 
@@ -15,54 +15,65 @@ namespace ProcGenGame
 		public Border(Neighbors neighbors, Vector2 e0, Vector2 e1)
 		{
 			this.neighbors = neighbors;
-			AddSegment(e0, e1);
+			Vector2 vector = neighbors.n1.site.position - neighbors.n0.site.position;
+			Vector2 vector2 = e0 - neighbors.n0.site.position;
+			float num = vector.x * vector2.y - vector2.x * vector.y;
+			if (num < 0f)
+			{
+				AddSegment(e0, e1);
+			}
+			else
+			{
+				AddSegment(e1, e0);
+			}
 		}
 
-		public Border(TerrainCell a, TerrainCell b, Vector2 e0, Vector2 e1)
+		private void SetCell(int gridCell, float defaultTemperature, TerrainCell.SetValuesFunction SetValues, SeededRandom rnd)
 		{
-			Debug.Assert(a != null && b != null, "NULL neighbor for Border");
-			neighbors.n0 = a;
-			neighbors.n1 = b;
-			AddSegment(e0, e1);
+			WeightedSimHash weightedSimHash = WeightedRandom.Choose(element, rnd);
+			TerrainCell.ElementOverride elementOverride = TerrainCell.GetElementOverride(weightedSimHash.element, weightedSimHash.overrides);
+			if (!elementOverride.overrideTemperature)
+			{
+				elementOverride.pdelement.temperature = defaultTemperature;
+			}
+			SetValues(gridCell, elementOverride.element, elementOverride.pdelement, elementOverride.dc);
 		}
 
-		public void ConvertToMap(Chunk world, TerrainCell.SetValuesFunction SetValues, float temperatureMin, float temperatureRange, SeededRandom rnd)
+		public void ConvertToMap(Chunk world, TerrainCell.SetValuesFunction SetValues, float neighbour0Temperature, float neighbour1Temperature, float temperatureRange, SeededRandom rnd, int snapLastCells)
 		{
-			Sim.DiseaseCell invalid = Sim.DiseaseCell.Invalid;
 			for (int i = 0; i < pathElements.Count; i++)
 			{
 				Vector2 vector = pathElements[i].e1 - pathElements[i].e0;
 				Vector2 normalized = new Vector2(0f - vector.y, vector.x).normalized;
+				float num = (neighbour0Temperature + neighbour1Temperature) / 2f;
 				List<Vector2I> line = ProcGen.Util.GetLine(pathElements[i].e0, pathElements[i].e1);
 				for (int j = 0; j < line.Count; j++)
 				{
-					int num = Grid.XYToCell(line[j].x, line[j].y);
-					if (Grid.IsValidCell(num))
+					int num2 = Grid.XYToCell(line[j].x, line[j].y);
+					if (Grid.IsValidCell(num2))
 					{
-						Element element = ElementLoader.FindElementByName(WeightedRandom.Choose(this.element, rnd).element);
-						Sim.PhysicsData defaultValues = element.defaultValues;
-						defaultValues.temperature = temperatureMin + world.heatOffset[num] * temperatureRange;
-						SetValues(num, element, defaultValues, invalid);
+						SetCell(num2, num, SetValues, rnd);
 					}
-					for (float num2 = 0.5f; num2 <= width; num2 += 1f)
+					for (float num3 = 0.5f; num3 <= width; num3 += 1f)
 					{
-						Vector2 vector2 = line[j] + normalized * num2;
-						num = Grid.XYToCell((int)vector2.x, (int)vector2.y);
-						if (Grid.IsValidCell(num))
+						float num4 = Mathf.Clamp01((num3 - 0.5f) / (width - 0.5f));
+						if (num3 + (float)snapLastCells > width)
 						{
-							Element element2 = ElementLoader.FindElementByName(WeightedRandom.Choose(this.element, rnd).element);
-							Sim.PhysicsData defaultValues2 = element2.defaultValues;
-							defaultValues2.temperature = temperatureMin + world.heatOffset[num] * temperatureRange;
-							SetValues(num, element2, defaultValues2, invalid);
+							num4 = 1f;
 						}
-						Vector2 vector3 = line[j] - normalized * num2;
-						num = Grid.XYToCell((int)vector3.x, (int)vector3.y);
-						if (Grid.IsValidCell(num))
+						Vector2 vector2 = line[j] + normalized * num3;
+						float defaultTemperature = num + (neighbour0Temperature - num) * num4;
+						num2 = Grid.XYToCell((int)vector2.x, (int)vector2.y);
+						if (Grid.IsValidCell(num2))
 						{
-							Element element3 = ElementLoader.FindElementByName(WeightedRandom.Choose(this.element, rnd).element);
-							Sim.PhysicsData defaultValues3 = element3.defaultValues;
-							defaultValues3.temperature = temperatureMin + world.heatOffset[num] * temperatureRange;
-							SetValues(num, element3, defaultValues3, invalid);
+							SetCell(num2, defaultTemperature, SetValues, rnd);
+						}
+						Vector2 vector3 = line[j] - normalized * num3;
+						float defaultTemperature2 = num + (neighbour1Temperature - num) * num4;
+						num2 = Grid.XYToCell((int)vector3.x, (int)vector3.y);
+						if (Grid.IsValidCell(num2))
+						{
+							SetCell(num2, defaultTemperature2, SetValues, rnd);
 						}
 					}
 				}

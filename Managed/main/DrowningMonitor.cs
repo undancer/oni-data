@@ -138,8 +138,8 @@ public class DrowningMonitor : KMonoBehaviour, IWiltCause, ISlicedSim1000ms
 			if (!drowning)
 			{
 				drowning = true;
-				Trigger(1949704522);
 				GetComponent<KPrefabID>().AddTag(GameTags.Creatures.Drowning);
+				Trigger(1949704522);
 			}
 			if (timeToDrown <= 0f && canDrownToDeath)
 			{

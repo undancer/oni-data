@@ -35,6 +35,12 @@ public class PlanterSideScreen : ReceptacleSideScreen
 
 	private Coroutine activeAnimationRoutine = null;
 
+	private const float EXPAND_DURATION = 0.33f;
+
+	private const float EXPAND_MIN = 24f;
+
+	private const float EXPAND_MAX = 118f;
+
 	private Tag selectedSubspecies
 	{
 		get
@@ -59,28 +65,30 @@ public class PlanterSideScreen : ReceptacleSideScreen
 	private void LoadTargetSubSpeciesRequest()
 	{
 		PlantablePlot plantablePlot = (PlantablePlot)targetReceptacle;
-		string text = "";
+		Tag tag = Tag.Invalid;
 		if (plantablePlot.requestedEntityTag != Tag.Invalid && plantablePlot.requestedEntityTag != GameTags.Empty)
 		{
-			text = plantablePlot.requestedEntityTag.ToString();
+			tag = plantablePlot.requestedEntityTag;
 		}
 		else if (selectedEntityToggle != null)
 		{
-			text = depositObjectMap[selectedEntityToggle].tag.ToString();
+			tag = depositObjectMap[selectedEntityToggle].tag;
 		}
-		if (!string.IsNullOrEmpty(text))
+		if (!DlcManager.FeaturePlantMutationsEnabled() || !tag.IsValid)
 		{
-			text = Assets.GetPrefab(text).GetComponent<PlantableSeed>().PlantID.ToString();
-			if (plantablePlot.requestedEntityAdditionalFilterTag != Tag.Invalid && plantablePlot.requestedEntityAdditionalFilterTag != GameTags.Empty)
+			return;
+		}
+		tag = Assets.GetPrefab(tag).GetComponent<PlantableSeed>().PlantID;
+		if (plantablePlot.requestedEntityAdditionalFilterTag != Tag.Invalid && plantablePlot.requestedEntityAdditionalFilterTag != GameTags.Empty)
+		{
+			selectedSubspecies = plantablePlot.requestedEntityAdditionalFilterTag;
+		}
+		else if (selectedSubspecies == Tag.Invalid)
+		{
+			if (PlantSubSpeciesCatalog.instance.GetOriginalSubSpecies(tag, out var subSpeciesInfo))
 			{
-				selectedSubspecies = plantablePlot.requestedEntityAdditionalFilterTag;
+				selectedSubspecies = subSpeciesInfo.ID;
 			}
-			else if (selectedSubspecies == Tag.Invalid)
-			{
-				selectedSubspecies = PlantSubSpeciesCatalog.instance.subspeciesBySpecies[text][0].GetFilterTag();
-				plantablePlot.requestedEntityAdditionalFilterTag = selectedSubspecies;
-			}
-			selectedSubspecies = PlantSubSpeciesCatalog.instance.subspeciesBySpecies[text][0].GetFilterTag();
 			plantablePlot.requestedEntityAdditionalFilterTag = selectedSubspecies;
 		}
 	}
@@ -113,41 +121,31 @@ public class PlanterSideScreen : ReceptacleSideScreen
 
 	private void UpdatePlantButtonState()
 	{
-		if (!(selectedEntityToggle != null))
+		if (selectedEntityToggle != null)
 		{
-			return;
-		}
-		if (selectedDepositObjectAdditionalTag == Tag.Invalid)
-		{
-			requestSelectedEntityBtn.isInteractable = false;
-		}
-		else if (selectedDepositObjectTag != Tag.Invalid)
-		{
-			Tag plantID = Assets.GetPrefab(selectedDepositObjectTag).GetComponent<PlantableSeed>().PlantID;
-			PlantSubSpeciesCatalog.PlantSubSpecies plantSubSpecies = PlantSubSpeciesCatalog.instance.subspeciesBySpecies[plantID.ToString()].Find((PlantSubSpeciesCatalog.PlantSubSpecies match) => match.GetFilterTag() == selectedDepositObjectAdditionalTag);
-			if (plantSubSpecies == null || !PlantSubSpeciesCatalog.instance.IsSubspeciesIdentified(plantID.ToString(), plantSubSpecies.id))
+			if (DlcManager.FeaturePlantMutationsEnabled())
 			{
-				requestSelectedEntityBtn.isInteractable = false;
+				requestSelectedEntityBtn.isInteractable = selectedDepositObjectTag.IsValid && selectedDepositObjectAdditionalTag.IsValid && PlantSubSpeciesCatalog.instance.IsSubSpeciesIdentified(selectedDepositObjectAdditionalTag);
+			}
+			else
+			{
+				requestSelectedEntityBtn.isInteractable = selectedDepositObjectTag.IsValid;
 			}
 		}
 	}
 
 	private IEnumerator ExpandMutations()
 	{
-		float elasped = 0f;
-		float duration = 0.33f;
 		LayoutElement le = mutationViewport.GetComponent<LayoutElement>();
-		le.minHeight = 24f;
-		le.preferredHeight = 24f;
-		while (elasped < duration)
+		float totalTravel = 94f;
+		float travelPerSecond = totalTravel / 0.33f;
+		while (le.minHeight < 118f)
 		{
-			elasped += Time.unscaledDeltaTime;
-			le.minHeight = Mathf.Min(118f, 24f + 94f * (elasped / duration));
-			le.preferredHeight = Mathf.Min(118f, 24f + 94f * (elasped / duration));
+			float pos2 = le.minHeight;
+			float delta = Time.unscaledDeltaTime * travelPerSecond;
+			pos2 = (le.preferredHeight = (le.minHeight = Mathf.Min(pos2 + delta, 118f)));
 			yield return new WaitForEndOfFrame();
 		}
-		le.minHeight = 118f;
-		le.preferredHeight = 118f;
 		mutationPanelCollapsed = false;
 		activeAnimationRoutine = null;
 		yield return 0;
@@ -155,18 +153,16 @@ public class PlanterSideScreen : ReceptacleSideScreen
 
 	private IEnumerator CollapseMutations()
 	{
-		float elasped = 0f;
-		float duration = 0f;
 		LayoutElement le = mutationViewport.GetComponent<LayoutElement>();
-		while (elasped < duration)
+		float totalTravel = -94f;
+		float travelPerSecond = totalTravel / 0.33f;
+		while (le.minHeight > 24f)
 		{
-			elasped += Time.unscaledDeltaTime;
-			le.minHeight = Mathf.Max(24f, 140f - 140f * (elasped / duration));
-			le.preferredHeight = Mathf.Max(24f, 140f - 140f * (elasped / duration));
+			float pos2 = le.minHeight;
+			float delta = Time.unscaledDeltaTime * travelPerSecond;
+			pos2 = (le.preferredHeight = (le.minHeight = Mathf.Max(pos2 + delta, 24f)));
 			yield return new WaitForEndOfFrame();
 		}
-		le.minHeight = 24f;
-		le.preferredHeight = 24f;
 		mutationPanelCollapsed = true;
 		activeAnimationRoutine = null;
 		yield return 0;
@@ -179,30 +175,44 @@ public class PlanterSideScreen : ReceptacleSideScreen
 			UnityEngine.Object.Destroy(subspeciesToggle.Key);
 		}
 		subspeciesToggles.Clear();
+		if (!PlantSubSpeciesCatalog.instance.AnyNonOriginalDiscovered)
+		{
+			mutationPanel.SetActive(value: false);
+			return;
+		}
+		mutationPanel.SetActive(value: true);
 		foreach (GameObject blankMutationObject in blankMutationObjects)
 		{
 			UnityEngine.Object.Destroy(blankMutationObject);
 		}
 		blankMutationObjects.Clear();
 		selectSpeciesPrompt.SetActive(value: false);
-		if (selectedDepositObjectTag.IsValid && selectedDepositObjectTag != Tag.Invalid)
+		if (selectedDepositObjectTag.IsValid)
 		{
-			string key = Assets.GetPrefab(selectedDepositObjectTag).GetComponent<PlantableSeed>().PlantID.ToString();
-			List<PlantSubSpeciesCatalog.PlantSubSpecies> list = PlantSubSpeciesCatalog.instance.subspeciesBySpecies[key];
-			foreach (PlantSubSpeciesCatalog.PlantSubSpecies item in list)
+			Tag plantID = Assets.GetPrefab(selectedDepositObjectTag).GetComponent<PlantableSeed>().PlantID;
+			List<PlantSubSpeciesCatalog.SubSpeciesInfo> allSubSpeciesForSpecies = PlantSubSpeciesCatalog.instance.GetAllSubSpeciesForSpecies(plantID);
+			if (allSubSpeciesForSpecies != null)
 			{
-				GameObject option = Util.KInstantiateUI(mutationOption, mutationContainer, force_active: true);
-				option.GetComponentInChildren<LocText>().text = item.ProperName();
-				MultiToggle component = option.GetComponent<MultiToggle>();
-				component.onClick = (System.Action)Delegate.Combine(component.onClick, (System.Action)delegate
+				foreach (PlantSubSpeciesCatalog.SubSpeciesInfo item in allSubSpeciesForSpecies)
 				{
-					MutationToggleClicked(option);
-				});
-				subspeciesToggles.Add(option, item.GetFilterTag());
-			}
-			for (int i = list.Count; i < 5; i++)
-			{
-				blankMutationObjects.Add(Util.KInstantiateUI(blankMutationOption, mutationContainer, force_active: true));
+					GameObject option = Util.KInstantiateUI(mutationOption, mutationContainer, force_active: true);
+					option.GetComponentInChildren<LocText>().text = item.GetNameWithMutations(plantID.ProperName(), PlantSubSpeciesCatalog.instance.IsSubSpeciesIdentified(item.ID), cleanOriginal: false);
+					MultiToggle component = option.GetComponent<MultiToggle>();
+					component.onClick = (System.Action)Delegate.Combine(component.onClick, (System.Action)delegate
+					{
+						MutationToggleClicked(option);
+					});
+					option.GetComponent<ToolTip>().SetSimpleTooltip(item.GetMutationsTooltip());
+					subspeciesToggles.Add(option, item.ID);
+				}
+				for (int i = allSubSpeciesForSpecies.Count; i < 5; i++)
+				{
+					blankMutationObjects.Add(Util.KInstantiateUI(blankMutationOption, mutationContainer, force_active: true));
+				}
+				if (!selectedSubspecies.IsValid || !subspeciesToggles.ContainsValue(selectedSubspecies))
+				{
+					selectedSubspecies = allSubSpeciesForSpecies[0].ID;
+				}
 			}
 		}
 		else
@@ -217,7 +227,7 @@ public class PlanterSideScreen : ReceptacleSideScreen
 		foreach (KeyValuePair<GameObject, Tag> subspeciesToggle2 in subspeciesToggles)
 		{
 			float num = 0f;
-			bool flag3 = PlantSubSpeciesCatalog.instance.IsSubspeciesIdentified(PlantSubSpeciesCatalog.instance.GetSubSpecies(subspeciesToggle2.Value).rootSpeciesID, PlantSubSpeciesCatalog.instance.GetSubSpecies(subspeciesToggle2.Value).id);
+			bool flag3 = PlantSubSpeciesCatalog.instance.IsSubSpeciesIdentified(subspeciesToggle2.Value);
 			if (collection != null)
 			{
 				foreach (Pickupable item2 in collection)
@@ -254,29 +264,22 @@ public class PlanterSideScreen : ReceptacleSideScreen
 				subspeciesToggle2.Key.SetActive(selectedEntityToggle != null);
 			}
 		}
-		if (!mutationPanelCollapsed && !flag && !flag2 && selectedEntityToggle == null)
-		{
-			if (activeAnimationRoutine != null)
-			{
-				StopCoroutine(activeAnimationRoutine);
-			}
-			activeAnimationRoutine = StartCoroutine(CollapseMutations());
-		}
-		else if (!mutationPanelCollapsed && (flag || flag2))
-		{
-			if (activeAnimationRoutine != null)
-			{
-				StopCoroutine(activeAnimationRoutine);
-			}
-			activeAnimationRoutine = StartCoroutine(CollapseMutations());
-		}
-		else if (mutationPanelCollapsed && !flag && !flag2 && selectedEntityToggle != null)
+		bool flag4 = !flag && !flag2 && selectedEntityToggle != null && subspeciesToggles.Count >= 1;
+		if (flag4 && mutationPanelCollapsed)
 		{
 			if (activeAnimationRoutine != null)
 			{
 				StopCoroutine(activeAnimationRoutine);
 			}
 			activeAnimationRoutine = StartCoroutine(ExpandMutations());
+		}
+		else if (!flag4 && !mutationPanelCollapsed)
+		{
+			if (activeAnimationRoutine != null)
+			{
+				StopCoroutine(activeAnimationRoutine);
+			}
+			activeAnimationRoutine = StartCoroutine(CollapseMutations());
 		}
 	}
 
@@ -298,9 +301,9 @@ public class PlanterSideScreen : ReceptacleSideScreen
 		PlantableSeed component = seed_or_plant.GetComponent<PlantableSeed>();
 		List<Descriptor> list = new List<Descriptor>();
 		bool flag = true;
-		if (selectedDepositObjectAdditionalTag != Tag.Invalid)
+		if (seed_or_plant.GetComponent<MutantPlant>() != null && selectedDepositObjectAdditionalTag != Tag.Invalid)
 		{
-			flag = PlantSubSpeciesCatalog.instance.IsSubspeciesIdentified(PlantSubSpeciesCatalog.instance.EntityToSpeciesID(seed_or_plant), PlantSubSpeciesCatalog.instance.GetSubSpecies(selectedDepositObjectAdditionalTag).id);
+			flag = PlantSubSpeciesCatalog.instance.IsSubSpeciesIdentified(selectedDepositObjectAdditionalTag);
 		}
 		if (!flag)
 		{
@@ -326,6 +329,11 @@ public class PlanterSideScreen : ReceptacleSideScreen
 				text += "\n\n";
 			}
 			gameObject = Assets.GetPrefab(component.PlantID);
+			MutantPlant component2 = gameObject.GetComponent<MutantPlant>();
+			if (component2 != null && selectedDepositObjectAdditionalTag.IsValid)
+			{
+				component2.DummySetSubspecies(PlantSubSpeciesCatalog.instance.GetSubSpecies(component.PlantID, selectedDepositObjectAdditionalTag).mutationIDs);
+			}
 			if (!string.IsNullOrEmpty(component.domesticatedDescription))
 			{
 				text += component.domesticatedDescription;
@@ -333,10 +341,10 @@ public class PlanterSideScreen : ReceptacleSideScreen
 		}
 		else
 		{
-			InfoDescription component2 = gameObject.GetComponent<InfoDescription>();
-			if ((bool)component2)
+			InfoDescription component3 = gameObject.GetComponent<InfoDescription>();
+			if ((bool)component3)
 			{
-				text += component2.description;
+				text += component3.description;
 			}
 		}
 		descriptionLabel.SetText(text);
@@ -391,7 +399,6 @@ public class PlanterSideScreen : ReceptacleSideScreen
 		LoadTargetSubSpeciesRequest();
 		RefreshSubspeciesToggles();
 		UpdatePlantButtonState();
-		mutationPanel.SetActive(value: false);
 	}
 
 	protected override void RestoreSelectionFromOccupant()
@@ -407,7 +414,7 @@ public class PlanterSideScreen : ReceptacleSideScreen
 			MutantPlant component = plantablePlot.Occupant.GetComponent<MutantPlant>();
 			if (component != null)
 			{
-				tag2 = PlantSubSpeciesCatalog.instance.GetSubSpecies(component.GetSpeciesID(), component.subspeciesID).GetFilterTag();
+				tag2 = component.SubSpeciesID;
 			}
 		}
 		else if (plantablePlot.GetActiveRequest != null)

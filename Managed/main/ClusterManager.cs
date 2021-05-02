@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using KSerialization;
 using ProcGenGame;
@@ -16,9 +15,6 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 
 	[Serialize]
 	private int m_numRings = 9;
-
-	[Serialize]
-	private int nextWorldId = 0;
 
 	[Serialize]
 	private int activeWorldIdx;
@@ -90,14 +86,29 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 		m_worldContainers.Remove(worldContainer);
 	}
 
-	public List<int> GetWorldIDs()
+	public List<int> GetWorldIDsSorted()
 	{
+		m_worldContainers.Sort((WorldContainer a, WorldContainer b) => a.DiscoveryTimestamp.CompareTo(b.DiscoveryTimestamp));
 		_worldIDs.Clear();
 		foreach (WorldContainer worldContainer in m_worldContainers)
 		{
 			_worldIDs.Add(worldContainer.id);
 		}
 		return _worldIDs;
+	}
+
+	public List<int> GetDiscoveredAsteroidIDsSorted()
+	{
+		m_worldContainers.Sort((WorldContainer a, WorldContainer b) => a.DiscoveryTimestamp.CompareTo(b.DiscoveryTimestamp));
+		List<int> list = new List<int>();
+		for (int i = 0; i < m_worldContainers.Count; i++)
+		{
+			if (m_worldContainers[i].IsDiscovered && !m_worldContainers[i].IsModuleInterior)
+			{
+				list.Add(m_worldContainers[i].id);
+			}
+		}
+		return list;
 	}
 
 	protected override void OnPrefabInit()
@@ -152,22 +163,37 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 
 	private int GetNextWorldId()
 	{
-		return nextWorldId++;
+		HashSetPool<int, ClusterManager>.PooledHashSet pooledHashSet = HashSetPool<int, ClusterManager>.Allocate();
+		foreach (WorldContainer worldContainer in m_worldContainers)
+		{
+			pooledHashSet.Add(worldContainer.id);
+		}
+		Debug.Assert(m_worldContainers.Count < 255, "Oh no! We're trying to generate our 255th world in this save, things are going to start going badly...");
+		for (int i = 0; i < 255; i++)
+		{
+			if (!pooledHashSet.Contains(i))
+			{
+				pooledHashSet.Recycle();
+				return i;
+			}
+		}
+		pooledHashSet.Recycle();
+		return INVALID_WORLD_IDX;
 	}
 
 	private WorldContainer CreateAsteroidWorldContainer(WorldGen world)
 	{
-		int iD = GetNextWorldId();
+		int nextWorldId = GetNextWorldId();
 		GameObject gameObject = Util.KInstantiate(Assets.GetPrefab("Asteroid"));
 		WorldContainer component = gameObject.GetComponent<WorldContainer>();
-		component.SetID(iD);
+		component.SetID(nextWorldId);
 		component.SetWorldDetails(world);
 		AsteroidGridEntity component2 = gameObject.GetComponent<AsteroidGridEntity>();
 		if (world != null)
 		{
 			AxialI clusterLocation = world.GetClusterLocation();
 			Debug.Assert(clusterLocation != AxialI.ZERO || world.isStartingWorld, "Only starting world should be at zero");
-			component2.Init(component.GetRandomName(), clusterLocation, world.Settings.world.asteroidType);
+			component2.Init(component.GetRandomName(), clusterLocation, world.Settings.world.asteroidIcon);
 		}
 		else
 		{
@@ -186,9 +212,9 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 		Debug.LogWarning("Cluster manager has no world containers, create a default using Grid settings.");
 		WorldContainer worldContainer = CreateAsteroidWorldContainer(null);
 		int id = worldContainer.id;
-		for (int i = (int)worldContainer.minimumBounds.y; (float)i < worldContainer.maximumBounds.y; i++)
+		for (int i = (int)worldContainer.minimumBounds.y; (float)i <= worldContainer.maximumBounds.y; i++)
 		{
-			for (int j = (int)worldContainer.minimumBounds.x; (float)j < worldContainer.maximumBounds.x; j++)
+			for (int j = (int)worldContainer.minimumBounds.x; (float)j <= worldContainer.maximumBounds.x; j++)
 			{
 				int num = Grid.XYToCell(j, i);
 				Grid.WorldIdx[num] = (byte)id;
@@ -235,6 +261,11 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 			activeWorldIdx = worldIdx;
 			Game.Instance.Trigger(1983128072, new Tuple<int, int>(activeWorldIdx, num));
 		}
+	}
+
+	public void TimelapseModeOverrideActiveWorld(int overrideValue)
+	{
+		activeWorldIdx = overrideValue;
 	}
 
 	public WorldContainer GetWorld(int id)
@@ -307,9 +338,9 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 
 	public int GetLandingBeaconLocation(int worldId)
 	{
-		foreach (LandingBeacon landingBeacon in Components.LandingBeacons)
+		foreach (LandingBeacon.Instance landingBeacon in Components.LandingBeacons)
 		{
-			if (landingBeacon.GetMyWorldId() == worldId && !landingBeacon.isInUse)
+			if (landingBeacon.GetMyWorldId() == worldId && landingBeacon.CanBeTargeted())
 			{
 				return Grid.PosToCell(landingBeacon);
 			}
@@ -365,33 +396,37 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 		return Grid.Solid[i] || Grid.Foundation[i];
 	}
 
-	public int GetRandomSurfaceCell(int worldID, int width = 1)
+	public int GetRandomSurfaceCell(int worldID, int width = 1, bool excludeTopBorderHeight = true)
 	{
 		WorldContainer worldContainer = m_worldContainers.Find((WorldContainer match) => match.id == worldID);
 		int num = Mathf.RoundToInt(UnityEngine.Random.Range(worldContainer.minimumBounds.x + (float)(worldContainer.Width / 10), worldContainer.maximumBounds.x - (float)(worldContainer.Width / 10)));
-		int topCellYPos = Mathf.RoundToInt(worldContainer.maximumBounds.y - 1f);
-		int num2 = num;
-		int num3 = LowestYThatSeesSky(topCellYPos, num2);
-		int num4 = 0;
-		num4 = (NotObstructedCell(num2, num3) ? 1 : 0);
-		while (num2 + 1 != num && num4 < width)
+		int num2 = Mathf.RoundToInt(worldContainer.maximumBounds.y);
+		if (excludeTopBorderHeight)
 		{
-			num2++;
-			if ((float)num2 >= worldContainer.maximumBounds.x)
-			{
-				num4 = 0;
-				num2 = (int)worldContainer.minimumBounds.x;
-			}
-			int num5 = LowestYThatSeesSky(topCellYPos, num2);
-			bool flag = NotObstructedCell(num2, num5);
-			num4 = ((!(num5 == num3 && flag)) ? (flag ? 1 : 0) : (num4 + 1));
-			num3 = num5;
+			num2 -= Grid.TopBorderHeight;
 		}
-		if (num4 < width)
+		int num3 = num;
+		int num4 = LowestYThatSeesSky(num2, num3);
+		int num5 = 0;
+		num5 = (NotObstructedCell(num3, num4) ? 1 : 0);
+		while (num3 + 1 != num && num5 < width)
+		{
+			num3++;
+			if ((float)num3 > worldContainer.maximumBounds.x)
+			{
+				num5 = 0;
+				num3 = (int)worldContainer.minimumBounds.x;
+			}
+			int num6 = LowestYThatSeesSky(num2, num3);
+			bool flag = NotObstructedCell(num3, num6);
+			num5 = ((!(num6 == num4 && flag)) ? (flag ? 1 : 0) : (num5 + 1));
+			num4 = num6;
+		}
+		if (num5 < width)
 		{
 			return -1;
 		}
-		return Grid.XYToCell(num2, num3);
+		return Grid.XYToCell(num3, num4);
 	}
 
 	public bool IsPositionInActiveWorld(Vector3 pos)
@@ -413,20 +448,21 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 		Vector2I rOCKET_INTERIOR_SIZE = ROCKETRY.ROCKET_INTERIOR_SIZE;
 		if (Grid.GetFreeGridSpace(rOCKET_INTERIOR_SIZE, out var offset))
 		{
-			int num = GetNextWorldId();
+			int nextWorldId = GetNextWorldId();
 			craft_go.AddComponent<WorldInventory>();
 			WorldContainer worldContainer = craft_go.AddComponent<WorldContainer>();
-			worldContainer.SetRocketInteriorWorldDetails(num, rOCKET_INTERIOR_SIZE, offset);
+			worldContainer.SetRocketInteriorWorldDetails(nextWorldId, rOCKET_INTERIOR_SIZE, offset);
 			Vector2I vector2I = offset + rOCKET_INTERIOR_SIZE;
 			for (int i = offset.y; i < vector2I.y; i++)
 			{
 				for (int j = offset.x; j < vector2I.x; j++)
 				{
-					int num2 = Grid.XYToCell(j, i);
-					Grid.WorldIdx[num2] = (byte)num;
-					Pathfinding.Instance.AddDirtyNavGridCell(num2);
+					int num = Grid.XYToCell(j, i);
+					Grid.WorldIdx[num] = (byte)nextWorldId;
+					Pathfinding.Instance.AddDirtyNavGridCell(num);
 				}
 			}
+			Debug.Log($"Created new rocket interior id: {nextWorldId}, at {offset} with size {rOCKET_INTERIOR_SIZE}");
 			worldContainer.PlaceInteriorTemplate(interiorTemplateName, delegate
 			{
 				if (callback != null)
@@ -450,40 +486,42 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 			Debug.LogError($"Attempting to destroy world id {world_id}. The world is not a valid rocket interior");
 			return;
 		}
-		GameObject gameObject = door.GetComponent<RocketModule>().CraftInterface.gameObject;
+		GameObject craft_go = door.GetComponent<RocketModuleCluster>().CraftInterface.gameObject;
 		if (activeWorldId == world_id)
 		{
-			int parentWorldId = gameObject.GetComponent<WorldContainer>().ParentWorldId;
+			int parentWorldId = craft_go.GetComponent<WorldContainer>().ParentWorldId;
 			if (parentWorldId != INVALID_WORLD_IDX)
 			{
 				Debug.LogWarning($"Destroying rocket interior while it is the active world id {world_id}. Setting parent world {parentWorldId}");
-				SetActiveWorld(gameObject.GetComponent<WorldContainer>().ParentWorldId);
+				SetActiveWorld(craft_go.GetComponent<WorldContainer>().ParentWorldId);
 			}
 			else
 			{
 				Debug.LogError($"Destroying a rocket world {world_id} with no parent world.");
 			}
 		}
-		Vector3 position = door.transform.position;
-		world.EjectAllDupes(position);
+		Vector3 spawn_pos = door.transform.position;
+		world.EjectAllDupes(spawn_pos);
 		world.CancelChores();
-		world.DestroyWorldBuildings(position);
-		StartCoroutine(DeleteWorldObjects(world, gameObject, position));
+		world.DestroyWorldBuildings(spawn_pos, out var noRefundTiles);
+		GameScheduler.Instance.ScheduleNextFrame("ClusterManager.DeleteWorldObjects", delegate
+		{
+			DeleteWorldObjects(world, craft_go, spawn_pos, noRefundTiles);
+		});
 	}
 
-	private IEnumerator DeleteWorldObjects(WorldContainer world, GameObject craft_go, Vector3 spawn_pos)
+	private void DeleteWorldObjects(WorldContainer world, GameObject craft_go, Vector3 spawn_pos, HashSet<int> noRefundTiles)
 	{
-		yield return new WaitForEndOfFrame();
-		world.TransferResourcesToParentWorld(spawn_pos);
+		world.TransferResourcesToParentWorld(spawn_pos, noRefundTiles);
 		Grid.FreeGridSpace(world.WorldSize, world.WorldOffset);
-		WorldInventory inventory = null;
+		WorldInventory worldInventory = null;
 		if (world != null)
 		{
-			inventory = world.GetComponent<WorldInventory>();
+			worldInventory = world.GetComponent<WorldInventory>();
 		}
-		if (inventory != null)
+		if (worldInventory != null)
 		{
-			UnityEngine.Object.Destroy(inventory);
+			UnityEngine.Object.Destroy(worldInventory);
 		}
 		if (world != null)
 		{

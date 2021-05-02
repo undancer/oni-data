@@ -418,7 +418,7 @@ public class GermExposureMonitor : GameStateMachine<GermExposureMonitor, GermExp
 				contactStatusItemHandles.TryGetValue(exposureType.germ_id, out var value);
 				statusItemHandles.TryGetValue(exposureType.germ_id, out var value2);
 				ExposureState exposureState = GetExposureState(exposureType.germ_id);
-				if (value2 == Guid.Empty && (exposureState == ExposureState.Exposed || exposureState == ExposureState.Contracted))
+				if (value2 == Guid.Empty && (exposureState == ExposureState.Exposed || exposureState == ExposureState.Contracted) && !string.IsNullOrEmpty(exposureType.sickness_id))
 				{
 					KSelectable component = GetComponent<KSelectable>();
 					value2 = component.AddStatusItem(Db.Get().DuplicantStatusItems.ExposedToGerms, new ExposureStatusData
@@ -435,12 +435,15 @@ public class GermExposureMonitor : GameStateMachine<GermExposureMonitor, GermExp
 				statusItemHandles[exposureType.germ_id] = value2;
 				if (value == Guid.Empty && exposureState == ExposureState.Contact)
 				{
-					KSelectable component3 = GetComponent<KSelectable>();
-					value = component3.AddStatusItem(Db.Get().DuplicantStatusItems.ContactWithGerms, new ExposureStatusData
+					if (!string.IsNullOrEmpty(exposureType.sickness_id))
 					{
-						exposure_type = exposureType,
-						owner = this
-					});
+						KSelectable component3 = GetComponent<KSelectable>();
+						value = component3.AddStatusItem(Db.Get().DuplicantStatusItems.ContactWithGerms, new ExposureStatusData
+						{
+							exposure_type = exposureType,
+							owner = this
+						});
+					}
 				}
 				else if (value != Guid.Empty && exposureState != ExposureState.Contact)
 				{
@@ -481,7 +484,7 @@ public class GermExposureMonitor : GameStateMachine<GermExposureMonitor, GermExp
 			ExposureType[] tYPES = GERM_EXPOSURE.TYPES;
 			foreach (ExposureType exposureType in tYPES)
 			{
-				if (!exposureType.infect_immediately)
+				if (!exposureType.infect_immediately && exposureType.sickness_id != null)
 				{
 					ExposureState exposureState = GetExposureState(exposureType.germ_id);
 					if (exposureState == ExposureState.Exposed)

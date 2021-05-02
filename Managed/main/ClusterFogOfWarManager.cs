@@ -22,11 +22,51 @@ public class ClusterFogOfWarManager : GameStateMachine<ClusterFogOfWarManager, C
 		public void Initialize()
 		{
 			UpdateRevealedCellsFromDiscoveredWorlds();
+			EnsureRevealedTilesHavePeek();
+		}
+
+		public ClusterRevealLevel GetCellRevealLevel(AxialI location)
+		{
+			if (GetRevealCompleteFraction(location) >= 1f)
+			{
+				return ClusterRevealLevel.Visible;
+			}
+			if (GetRevealCompleteFraction(location) > 0f)
+			{
+				return ClusterRevealLevel.Peeked;
+			}
+			return ClusterRevealLevel.Hidden;
 		}
 
 		public bool IsLocationRevealed(AxialI location)
 		{
 			return GetRevealCompleteFraction(location) >= 1f;
+		}
+
+		private void EnsureRevealedTilesHavePeek()
+		{
+			foreach (KeyValuePair<AxialI, List<ClusterGridEntity>> cellContent in ClusterGrid.Instance.cellContents)
+			{
+				if (IsLocationRevealed(cellContent.Key))
+				{
+					PeekLocation(cellContent.Key, 2);
+				}
+			}
+		}
+
+		public void PeekLocation(AxialI location, int radius)
+		{
+			foreach (AxialI item in AxialUtil.GetAllPointsWithinRadius(location, radius))
+			{
+				if (m_revealPointsByCell.ContainsKey(item))
+				{
+					m_revealPointsByCell[item] = Mathf.Max(m_revealPointsByCell[item], 0.01f);
+				}
+				else
+				{
+					m_revealPointsByCell[item] = 0.01f;
+				}
+			}
 		}
 
 		public void RevealLocation(AxialI location, int radius = 0)
@@ -54,9 +94,11 @@ public class ClusterFogOfWarManager : GameStateMachine<ClusterFogOfWarManager, C
 				else
 				{
 					m_revealPointsByCell[location] = points;
+					Game.Instance.Trigger(-1554423969, location);
 				}
 				if (IsLocationRevealed(location))
 				{
+					PeekLocation(location, 2);
 					Game.Instance.Trigger(-1991583975, location);
 				}
 			}
@@ -85,6 +127,7 @@ public class ClusterFogOfWarManager : GameStateMachine<ClusterFogOfWarManager, C
 					return false;
 				}
 				m_revealPointsByCell[cell] = ROCKETRY.CLUSTER_FOW.POINTS_TO_REVEAL;
+				PeekLocation(cell, 2);
 				return true;
 			}
 			return false;
@@ -119,6 +162,8 @@ public class ClusterFogOfWarManager : GameStateMachine<ClusterFogOfWarManager, C
 			}
 		}
 	}
+
+	public const int AUTOMATIC_PEEK_RADIUS = 2;
 
 	public override void InitializeStates(out BaseState defaultState)
 	{

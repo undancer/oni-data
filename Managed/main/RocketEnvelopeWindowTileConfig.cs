@@ -55,6 +55,7 @@ public class RocketEnvelopeWindowTileConfig : IBuildingConfig
 		KPrefabID component = go.GetComponent<KPrefabID>();
 		component.AddTag(GameTags.Bunker);
 		component.AddTag(GameTags.FloorTiles);
+		component.AddTag(GameTags.NoRocketRefund);
 		go.GetComponent<Deconstructable>().allowDeconstruction = false;
 	}
 

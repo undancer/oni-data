@@ -46,26 +46,28 @@ public class UserNavigation : KMonoBehaviour
 		Game.Instance.Subscribe(1983128072, delegate(object worlds)
 		{
 			Tuple<int, int> tuple = (Tuple<int, int>)worlds;
-			Dictionary<int, NavPoint> dictionary = worldCameraPositions;
-			int second = tuple.second;
-			NavPoint value = new NavPoint
+			int num = Grid.WorldIdx[Grid.PosToCell(CameraController.Instance.transform.position)];
+			if (num != tuple.second)
+			{
+				DebugUtil.DevLogError($"Position {CameraController.Instance.transform.position} is not inside of worldIdx {tuple.second}");
+			}
+			NavPoint value = (worldCameraPositions[tuple.second] = new NavPoint
 			{
 				pos = CameraController.Instance.transform.position,
 				orthoSize = CameraController.Instance.targetOrthographicSize
-			};
-			dictionary[second] = value;
+			});
 			if (!worldCameraPositions.ContainsKey(tuple.first))
 			{
 				WorldContainer world = ClusterManager.Instance.GetWorld(tuple.first);
 				Vector2I vector2I = world.WorldOffset + new Vector2I(world.Width / 2, world.Height / 2);
-				Dictionary<int, NavPoint> dictionary2 = worldCameraPositions;
+				Dictionary<int, NavPoint> dictionary = worldCameraPositions;
 				int first = tuple.first;
 				value = new NavPoint
 				{
 					pos = new Vector3(vector2I.x, vector2I.y),
 					orthoSize = CameraController.Instance.targetOrthographicSize
 				};
-				dictionary2.Add(first, value);
+				dictionary.Add(first, value);
 			}
 			CameraController.Instance.SetTargetPos(worldCameraPositions[((Tuple<int, int>)worlds).first].pos, worldCameraPositions[((Tuple<int, int>)worlds).first].orthoSize, playSound: false);
 			CameraController.Instance.SetPosition(worldCameraPositions[((Tuple<int, int>)worlds).first].pos);

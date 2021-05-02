@@ -453,7 +453,7 @@ public class ManagementMenu : KIconToggleMenu
 		return Components.RoleStations.Count > 0 || DebugHandler.InstantBuildMode;
 	}
 
-	private bool StarmapAvailable()
+	public static bool StarmapAvailable()
 	{
 		return Components.Telescopes.Count > 0 || DebugHandler.InstantBuildMode;
 	}
@@ -633,6 +633,14 @@ public class ManagementMenu : KIconToggleMenu
 		if (activeScreen != ScreenInfoMatch[Instance.starmapInfo])
 		{
 			ToggleScreen(ScreenInfoMatch[Instance.starmapInfo]);
+		}
+	}
+
+	public void OpenClusterMap()
+	{
+		if (activeScreen != ScreenInfoMatch[Instance.clusterMapInfo])
+		{
+			ToggleScreen(ScreenInfoMatch[Instance.clusterMapInfo]);
 		}
 	}
 

@@ -154,6 +154,7 @@ public class DebugPaintElementScreen : KScreen
 		diseaseButton.GetComponentsInChildren<LocText>()[0].text = UI.DEBUG_TOOLS.PAINT_ELEMENTS_SCREEN.DISEASE;
 		paintButton.GetComponentsInChildren<LocText>()[0].text = UI.DEBUG_TOOLS.PAINT_ELEMENTS_SCREEN.PAINT;
 		fillButton.GetComponentsInChildren<LocText>()[0].text = UI.DEBUG_TOOLS.PAINT_ELEMENTS_SCREEN.FILL;
+		spawnButton.GetComponentsInChildren<LocText>()[0].text = UI.DEBUG_TOOLS.PAINT_ELEMENTS_SCREEN.SPAWN_ALL;
 		sampleButton.GetComponentsInChildren<LocText>()[0].text = UI.DEBUG_TOOLS.PAINT_ELEMENTS_SCREEN.SAMPLE;
 		storeButton.GetComponentsInChildren<LocText>()[0].text = UI.DEBUG_TOOLS.PAINT_ELEMENTS_SCREEN.STORE;
 		affectBuildings.transform.parent.GetComponentsInChildren<LocText>()[0].text = UI.DEBUG_TOOLS.PAINT_ELEMENTS_SCREEN.BUILDINGS;
@@ -180,7 +181,10 @@ public class DebugPaintElementScreen : KScreen
 		fillButton.onClick += OnClickFill;
 		sampleButton.onClick += OnClickSample;
 		storeButton.onClick += OnClickStore;
-		spawnButton.enabled = false;
+		if (SaveGame.Instance.worldGenSpawner.SpawnsRemain())
+		{
+			spawnButton.onClick += OnClickSpawn;
+		}
 		KPopupMenu kPopupMenu2 = elementPopup;
 		kPopupMenu2.OnSelect = (Action<string, int>)Delegate.Combine(kPopupMenu2.OnSelect, new Action<string, int>(OnSelectElement));
 		elementButton.onClick += elementPopup.OnClick;
@@ -268,8 +272,12 @@ public class DebugPaintElementScreen : KScreen
 
 	private void OnClickSpawn()
 	{
+		foreach (WorldContainer worldContainer in ClusterManager.Instance.WorldContainers)
+		{
+			worldContainer.SetDiscovered(reveal_surface: true);
+		}
 		SaveGame.Instance.worldGenSpawner.SpawnEverything();
-		spawnButton.enabled = false;
+		spawnButton.GetComponent<KButton>().isInteractable = false;
 	}
 
 	private void OnClickPaint()

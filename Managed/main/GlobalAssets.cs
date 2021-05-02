@@ -81,25 +81,31 @@ public class GlobalAssets : KMonoBehaviour
 		SetDefaults.Initialize();
 		GraphicsOptionsScreen.SetColorModeFromPrefs();
 		AddColorModeStyles();
-		LocString.CreateLocStringKeys(typeof(DUPLICANTS));
-		LocString.CreateLocStringKeys(typeof(MISC));
 		LocString.CreateLocStringKeys(typeof(UI));
-		LocString.CreateLocStringKeys(typeof(ELEMENTS));
-		LocString.CreateLocStringKeys(typeof(CREATURES));
-		LocString.CreateLocStringKeys(typeof(SETITEMS));
-		LocString.CreateLocStringKeys(typeof(RESEARCH));
-		LocString.CreateLocStringKeys(typeof(ITEMS));
 		LocString.CreateLocStringKeys(typeof(INPUT));
-		LocString.CreateLocStringKeys(typeof(INPUT_BINDINGS));
+		LocString.CreateLocStringKeys(typeof(GAMEPLAY_EVENTS));
+		LocString.CreateLocStringKeys(typeof(ROOMS));
 		LocString.CreateLocStringKeys(typeof(BUILDING.STATUSITEMS), "STRINGS.BUILDING.");
 		LocString.CreateLocStringKeys(typeof(BUILDING.DETAILS), "STRINGS.BUILDING.");
+		LocString.CreateLocStringKeys(typeof(SETITEMS));
+		LocString.CreateLocStringKeys(typeof(COLONY_ACHIEVEMENTS));
+		LocString.CreateLocStringKeys(typeof(CREATURES));
+		LocString.CreateLocStringKeys(typeof(RESEARCH));
+		LocString.CreateLocStringKeys(typeof(DUPLICANTS));
+		LocString.CreateLocStringKeys(typeof(ITEMS));
 		LocString.CreateLocStringKeys(typeof(ROBOTS));
+		LocString.CreateLocStringKeys(typeof(ELEMENTS));
+		LocString.CreateLocStringKeys(typeof(MISC));
+		LocString.CreateLocStringKeys(typeof(VIDEOS));
+		LocString.CreateLocStringKeys(typeof(NAMEGEN));
+		LocString.CreateLocStringKeys(typeof(WORLDS));
+		LocString.CreateLocStringKeys(typeof(CLUSTER_NAMES));
+		LocString.CreateLocStringKeys(typeof(SUBWORLDS));
+		LocString.CreateLocStringKeys(typeof(WORLD_TRAITS));
+		LocString.CreateLocStringKeys(typeof(INPUT_BINDINGS));
 		LocString.CreateLocStringKeys(typeof(LORE));
 		LocString.CreateLocStringKeys(typeof(CODEX));
-		LocString.CreateLocStringKeys(typeof(WORLDS));
-		LocString.CreateLocStringKeys(typeof(WORLD_TRAITS));
-		LocString.CreateLocStringKeys(typeof(COLONY_ACHIEVEMENTS));
-		LocString.CreateLocStringKeys(typeof(VIDEOS));
+		LocString.CreateLocStringKeys(typeof(SUBWORLDS));
 	}
 
 	private void AddColorModeStyles()

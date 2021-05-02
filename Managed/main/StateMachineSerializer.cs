@@ -24,7 +24,7 @@ public class StateMachineSerializer
 				return false;
 			}
 			int num = (int)writer.BaseStream.Position;
-			writer.Write(smi.GetStateMachine().version);
+			writer.Write(0);
 			writer.WriteKleiString(smi.GetType().FullName);
 			writer.WriteKleiString(smi.serializationSuffix);
 			writer.WriteKleiString(smi.GetCurrentState().name);
@@ -69,7 +69,8 @@ public class StateMachineSerializer
 		public static Entry Deserialize(IReader reader, int serializerVersion)
 		{
 			Entry entry = new Entry();
-			entry.version = reader.ReadInt32();
+			reader.ReadInt32();
+			entry.version = serializerVersion;
 			string typeName = reader.ReadKleiString();
 			entry.type = Type.GetType(typeName);
 			entry.typeSuffix = (DoesVersionHaveTypeSuffix(serializerVersion) ? reader.ReadKleiString() : null);
@@ -85,10 +86,6 @@ public class StateMachineSerializer
 
 		public bool Restore(StateMachine.Instance smi)
 		{
-			if (version != smi.GetStateMachine().version)
-			{
-				return false;
-			}
 			if (Manager.HasDeserializationMapping(smi.GetType()))
 			{
 				Deserializer.DeserializeTypeless(smi, entryData);
@@ -121,7 +118,7 @@ public class StateMachineSerializer
 					StateMachine.Parameter.Context[] array = parameterContexts;
 					foreach (StateMachine.Parameter.Context context in array)
 					{
-						if (context.parameter.name == b && context.GetType().FullName == text)
+						if (context.parameter.name == b && (version > 10 || !(context.parameter.GetType().Name == "TargetParameter")) && context.GetType().FullName == text)
 						{
 							context.Deserialize(entryData, smi);
 							break;
@@ -173,7 +170,7 @@ public class StateMachineSerializer
 			foreach (OldEntryV11 item in list)
 			{
 				Entry entry = new Entry();
-				entry.version = item.version;
+				entry.version = serializerVersion;
 				entry.type = item.type;
 				entry.typeSuffix = item.typeSuffix;
 				entry.currentState = item.currentState;
@@ -230,6 +227,8 @@ public class StateMachineSerializer
 	public const int SERIALIZER_EXPANSION1 = 20;
 
 	private static int SERIALIZER_VERSION = 20;
+
+	private const string TargetParameterName = "TargetParameter";
 
 	private List<Entry> entries = new List<Entry>();
 

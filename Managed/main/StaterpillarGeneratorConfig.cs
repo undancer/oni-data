@@ -26,6 +26,7 @@ public class StaterpillarGeneratorConfig : IBuildingConfig
 		buildingDef.PermittedRotations = PermittedRotations.FlipV;
 		buildingDef.ViewMode = OverlayModes.Power.ID;
 		buildingDef.AudioCategory = "Plastic";
+		buildingDef.RequiresPowerOutput = true;
 		buildingDef.PowerOutputOffset = new CellOffset(0, 1);
 		return buildingDef;
 	}

@@ -24,21 +24,28 @@ public class SparkLayer : LineLayer
 
 	public bool scaleWidthToData = true;
 
-	public void SetColor(ColonyDiagnosticUtility.ColonyDiagnostic.DiagnosticResult result)
+	public void SetColor(ColonyDiagnostic.DiagnosticResult result)
 	{
 		switch (result.opinion)
 		{
-		case ColonyDiagnosticUtility.ColonyDiagnostic.DiagnosticResult.Opinion.Bad:
+		case ColonyDiagnostic.DiagnosticResult.Opinion.DuplicantThreatening:
+		case ColonyDiagnostic.DiagnosticResult.Opinion.Bad:
 			SetColor(Constants.NEGATIVE_COLOR);
 			break;
-		case ColonyDiagnosticUtility.ColonyDiagnostic.DiagnosticResult.Opinion.Warning:
+		case ColonyDiagnostic.DiagnosticResult.Opinion.Warning:
+		case ColonyDiagnostic.DiagnosticResult.Opinion.Concern:
 			SetColor(Constants.WARNING_COLOR);
 			break;
-		case ColonyDiagnosticUtility.ColonyDiagnostic.DiagnosticResult.Opinion.Normal:
+		case ColonyDiagnostic.DiagnosticResult.Opinion.Suggestion:
+		case ColonyDiagnostic.DiagnosticResult.Opinion.Tutorial:
+		case ColonyDiagnostic.DiagnosticResult.Opinion.Normal:
 			SetColor(Constants.NEUTRAL_COLOR);
 			break;
-		case ColonyDiagnosticUtility.ColonyDiagnostic.DiagnosticResult.Opinion.Good:
+		case ColonyDiagnostic.DiagnosticResult.Opinion.Good:
 			SetColor(Constants.POSITIVE_COLOR);
+			break;
+		default:
+			SetColor(Constants.NEUTRAL_COLOR);
 			break;
 		}
 	}

@@ -227,10 +227,7 @@ public class SkillsScreen : KModalScreen
 		base.OnActivate();
 		BuildMinions();
 		RefreshAll();
-		if (active_sort_method == null)
-		{
-			SortRows(compareByMinion);
-		}
+		SortRows((active_sort_method == null) ? compareByMinion : active_sort_method);
 		Components.LiveMinionIdentities.OnAdd += OnAddMinionIdentity;
 		Components.LiveMinionIdentities.OnRemove += OnRemoveMinionIdentity;
 		CloseButton.onClick += delegate
@@ -262,7 +259,9 @@ public class SkillsScreen : KModalScreen
 			{
 				CurrentlySelectedMinion = Components.LiveMinionIdentities.Items[0];
 			}
+			BuildMinions();
 			RefreshAll();
+			SortRows((active_sort_method == null) ? compareByMinion : active_sort_method);
 		}
 		base.OnShow(show);
 	}
@@ -450,7 +449,7 @@ public class SkillsScreen : KModalScreen
 		text = text + GameUtil.ApplyBoldString(UI.SKILLS_SCREEN.MORALE_EXPECTATION) + ": " + attributeInstance2.GetTotalValue() + "\n";
 		for (int l = 0; l < attributeInstance2.Modifiers.Count; l++)
 		{
-			text = text + "    • " + attributeInstance2.Modifiers[l].GetDescription() + ": " + ((attributeInstance2.Modifiers[l].Value > 0f) ? UIConstants.ColorPrefixRed : UIConstants.ColorPrefixGreen) + attributeInstance2.Modifiers[l].GetFormattedString(component2.gameObject) + UIConstants.ColorSuffix + "\n";
+			text = text + "    • " + attributeInstance2.Modifiers[l].GetDescription() + ": " + ((attributeInstance2.Modifiers[l].Value > 0f) ? UIConstants.ColorPrefixRed : UIConstants.ColorPrefixGreen) + attributeInstance2.Modifiers[l].GetFormattedString() + UIConstants.ColorSuffix + "\n";
 		}
 		expectationsTooltip.SetSimpleTooltip(text);
 	}
@@ -719,20 +718,21 @@ public class SkillsScreen : KModalScreen
 				}
 			}
 		}
-		foreach (int worldID in ClusterManager.Instance.GetWorldIDs())
+		foreach (int item4 in ClusterManager.Instance.GetWorldIDsSorted())
 		{
-			if (ClusterManager.Instance.GetWorld(worldID).IsDiscovered)
+			if (ClusterManager.Instance.GetWorld(item4).IsDiscovered)
 			{
-				AddWorldDivider(worldID);
+				AddWorldDivider(item4);
 			}
 		}
 		foreach (KeyValuePair<int, GameObject> worldDivider in worldDividers)
 		{
+			worldDivider.Value.SetActive(ClusterManager.Instance.GetWorld(worldDivider.Key).IsDiscovered);
 			Component reference = worldDivider.Value.GetComponent<HierarchyReferences>().GetReference("NobodyRow");
 			reference.gameObject.SetActive(value: true);
-			foreach (MinionAssignablesProxy item4 in Components.MinionAssignablesProxy)
+			foreach (MinionAssignablesProxy item5 in Components.MinionAssignablesProxy)
 			{
-				if (item4.GetTargetGameObject().GetComponent<KMonoBehaviour>().GetMyWorld()
+				if (item5.GetTargetGameObject().GetComponent<KMonoBehaviour>().GetMyWorld()
 					.id == worldDivider.Key)
 				{
 					reference.gameObject.SetActive(value: false);
@@ -754,6 +754,7 @@ public class SkillsScreen : KModalScreen
 			gameObject.GetComponentInChildren<Image>().color = ClusterManager.worldColors[worldId % ClusterManager.worldColors.Length];
 			ClusterGridEntity component = ClusterManager.Instance.GetWorld(worldId).GetComponent<ClusterGridEntity>();
 			gameObject.GetComponentInChildren<LocText>().SetText(component.Name);
+			gameObject.GetComponent<HierarchyReferences>().GetReference<Image>("Icon").sprite = component.GetUISprite();
 			worldDividers.Add(worldId, gameObject);
 		}
 	}
@@ -773,7 +774,7 @@ public class SkillsScreen : KModalScreen
 		List<Skill> list = new List<Skill>();
 		foreach (Skill resource in Db.Get().Skills.resources)
 		{
-			if (resource.skillGroup == skillGrp)
+			if (resource.skillGroup == skillGrp && !resource.deprecated)
 			{
 				list.Add(resource);
 			}

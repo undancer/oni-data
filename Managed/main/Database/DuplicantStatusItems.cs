@@ -198,6 +198,10 @@ namespace Database
 
 		public StatusItem GasLiquidIrritation;
 
+		public StatusItem ExpellingRads;
+
+		public StatusItem AnalyzingGenes;
+
 		private const int NONE_OVERLAY = 0;
 
 		public DuplicantStatusItems(ResourceSet parent)
@@ -416,7 +420,7 @@ namespace Database
 				{
 					AttributeModifier attributeModifier2 = attributeInstance3.Modifiers[j];
 					text6 += "\n";
-					text6 = text6 + "    • " + attributeModifier2.GetDescription() + " <b>" + attributeModifier2.GetFormattedString(attributeInstance3.gameObject) + "</b>";
+					text6 = text6 + "    • " + attributeModifier2.GetDescription() + " <b>" + attributeModifier2.GetFormattedString() + "</b>";
 				}
 				str = str.Replace("{conductivityBarrier}", text6);
 				return str;
@@ -433,7 +437,7 @@ namespace Database
 				{
 					AttributeModifier attributeModifier = attributeInstance2.Modifiers[i];
 					text5 += "\n";
-					text5 = text5 + "    • " + attributeModifier.GetDescription() + " <b>" + attributeModifier.GetFormattedString(attributeInstance2.gameObject) + "</b>";
+					text5 = text5 + "    • " + attributeModifier.GetDescription() + " <b>" + attributeModifier.GetFormattedString() + "</b>";
 				}
 				str = str.Replace("{conductivityBarrier}", text5);
 				return str;
@@ -567,6 +571,8 @@ namespace Database
 				string text4 = DUPLICANTS.STATUSITEMS.GASLIQUIDEXPOSURE.TOOLTIP_EXPOSURE_LEVEL.Replace("{time}", GameUtil.GetFormattedTime(seconds));
 				return text + "\n\n" + text2 + "\n\n" + text3 + "\n\n" + text4;
 			};
+			ExpellingRads = CreateStatusItem("ExpellingRads", "DUPLICANTS", "", StatusItem.IconType.Exclamation, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			AnalyzingGenes = CreateStatusItem("AnalyzingGenes", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Good, allow_multiples: false, OverlayModes.None.ID);
 		}
 	}
 }

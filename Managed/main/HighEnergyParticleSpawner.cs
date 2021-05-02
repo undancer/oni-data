@@ -1,9 +1,10 @@
+using System;
 using KSerialization;
 using STRINGS;
 using UnityEngine;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticleSpawner.StatesInstance>, IHighEnergyParticleDirection, ISingleSliderControl, ISliderControl
+public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticleSpawner.StatesInstance>, IHighEnergyParticleDirection
 {
 	public class StatesInstance : GameStateMachine<States, StatesInstance, HighEnergyParticleSpawner, object>.GameInstance
 	{
@@ -33,7 +34,10 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = inoperational;
-			inoperational.PlayAnim("off").TagTransition(GameTags.Operational, ready);
+			inoperational.PlayAnim("off").TagTransition(GameTags.Operational, ready).Update(delegate(StatesInstance smi, float dt)
+			{
+				smi.master.DoConsumeParticlesWhileDisabled(dt);
+			});
 			ready.TagTransition(GameTags.Operational, inoperational, on_remove: true).DefaultState(ready.idle).Update(delegate(StatesInstance smi, float dt)
 			{
 				smi.master.LauncherUpdate(dt);
@@ -58,6 +62,10 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 	[MyCmpGet]
 	private Operational operational;
 
+	private Guid HEPStatusHandle;
+
+	private float recentPerSecondConsumptionRate;
+
 	public int minSlider;
 
 	public int maxSlider;
@@ -71,8 +79,7 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 
 	public float radiationSampleRate;
 
-	[Serialize]
-	public float particleThreshold = 500f;
+	public float particleThreshold = 50f;
 
 	private EightDirectionController directionController;
 
@@ -106,6 +113,8 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 
 	private static StatusItem infoStatusItem_Logic;
 
+	public float PredictedPerCycleConsumptionRate => Mathf.FloorToInt(recentPerSecondConsumptionRate * 600f);
+
 	public EightDirection Direction
 	{
 		get
@@ -129,10 +138,6 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 	public bool HasLogicWire => hasLogicWire;
 
 	public bool IsLogicActive => isLogicActive;
-
-	public string SliderTitleKey => "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.TITLE";
-
-	public string SliderUnits => UI.UNITSUFFIXES.HIGHENERGYPARTICLES.PARTRICLES;
 
 	private void OnCopySettings(object data)
 	{
@@ -164,6 +169,7 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 			infoStatusItem_Logic.resolveTooltipCallback = ResolveInfoStatusItemTooltip;
 		}
 		component.AddStatusItem(infoStatusItem_Logic, this);
+		HEPStatusHandle = component.AddStatusItem(Db.Get().BuildingStatusItems.CollectingHEP, this);
 		directionController = new EightDirectionController(GetComponent<KBatchedAnimController>(), "redirector_target", "redirect", EightDirectionController.Offset.Infront);
 		Direction = Direction;
 		particleController = new MeterController(GetComponent<KBatchedAnimController>(), "orb_target", "orb_off", Meter.Offset.NoChange, Grid.SceneLayer.NoLayer);
@@ -171,22 +177,26 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 
 	private void OnSimConsumeRadiationCallback(Sim.ConsumedRadiationCallback radiationCBInfo, object data)
 	{
-		float amount = Mathf.Abs(radiationCBInfo.radiation);
-		particleStorage.Store(amount);
+	}
+
+	public void DoConsumeParticlesWhileDisabled(float dt)
+	{
+		particleStorage.ConsumeAndGet(dt * 1f);
 	}
 
 	public void LauncherUpdate(float dt)
 	{
 		radiationSampleTimer += dt;
-		if (radiationSampleTimer > radiationSampleRate)
+		if (radiationSampleTimer >= radiationSampleRate)
 		{
-			radiationSampleTimer = 0f;
-			int num = Grid.PosToCell(this);
-			float num2 = Grid.Radiation[num];
-			if (num2 != 0f)
+			radiationSampleTimer -= radiationSampleRate;
+			int i = Grid.PosToCell(this);
+			float num = Grid.Radiation[i];
+			if (num != 0f)
 			{
 				base.smi.sm.isAbsorbingRadiation.Set(value: true, base.smi);
-				SimMessages.ModifyRadiationOnCell(num, 0f - num2, Game.Instance.radiationConsumedCallbackManager.Add(OnSimConsumeRadiationCallback, this, "HighEneryParticleSpawner").index);
+				recentPerSecondConsumptionRate = num / 600f;
+				particleStorage.Store(recentPerSecondConsumptionRate * radiationSampleRate);
 			}
 			else
 			{
@@ -269,40 +279,5 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 			return BUILDING.STATUSITEMS.HIGHENERGYPARTICLESPAWNER.TOOLTIPS.LOGIC_CONTROLLED_ACTIVE;
 		}
 		return BUILDING.STATUSITEMS.HIGHENERGYPARTICLESPAWNER.TOOLTIPS.LOGIC_CONTROLLED_STANDBY;
-	}
-
-	public int SliderDecimalPlaces(int index)
-	{
-		return 0;
-	}
-
-	public float GetSliderMin(int index)
-	{
-		return minSlider;
-	}
-
-	public float GetSliderMax(int index)
-	{
-		return maxSlider;
-	}
-
-	public float GetSliderValue(int index)
-	{
-		return particleThreshold;
-	}
-
-	public void SetSliderValue(float value, int index)
-	{
-		particleThreshold = value;
-	}
-
-	public string GetSliderTooltipKey(int index)
-	{
-		return "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.TOOLTIP";
-	}
-
-	string ISliderControl.GetSliderTooltip()
-	{
-		return string.Format(Strings.Get("STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.TOOLTIP"), particleThreshold);
 	}
 }

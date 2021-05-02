@@ -48,10 +48,10 @@ namespace Steamworks
 			return NativeMethods.ISteamClient_GetISteamGameServer(CSteamGameServerAPIContext.GetSteamClient(), hSteamUser, hSteamPipe, pchVersion2);
 		}
 
-		public static void SetLocalIPBinding(uint unIP, ushort usPort)
+		public static void SetLocalIPBinding(ref SteamIPAddress_t unIP, ushort usPort)
 		{
 			InteropHelp.TestIfAvailableGameServer();
-			NativeMethods.ISteamClient_SetLocalIPBinding(CSteamGameServerAPIContext.GetSteamClient(), unIP, usPort);
+			NativeMethods.ISteamClient_SetLocalIPBinding(CSteamGameServerAPIContext.GetSteamClient(), ref unIP, usPort);
 		}
 
 		public static IntPtr GetISteamFriends(HSteamUser hSteamUser, HSteamPipe hSteamPipe, string pchVersion)

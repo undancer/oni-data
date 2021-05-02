@@ -11,7 +11,7 @@ public class ConditionNoExtraPassengers : ProcessCondition
 
 	public override Status EvaluateCondition()
 	{
-		return module.CheckExtraPassengers() ? Status.Failure : Status.Ready;
+		return (!module.CheckExtraPassengers()) ? Status.Ready : Status.Failure;
 	}
 
 	public override string GetStatusMessage(Status status)
@@ -27,9 +27,9 @@ public class ConditionNoExtraPassengers : ProcessCondition
 	{
 		if (status == Status.Ready)
 		{
-			return UI.STARMAP.LAUNCHCHECKLIST.NO_EXTRA_PASSENGERS.READY;
+			return UI.STARMAP.LAUNCHCHECKLIST.NO_EXTRA_PASSENGERS.TOOLTIP.READY;
 		}
-		return UI.STARMAP.LAUNCHCHECKLIST.NO_EXTRA_PASSENGERS.FAILURE;
+		return UI.STARMAP.LAUNCHCHECKLIST.NO_EXTRA_PASSENGERS.TOOLTIP.FAILURE;
 	}
 
 	public override bool ShowInUI()

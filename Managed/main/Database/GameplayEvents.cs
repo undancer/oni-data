@@ -23,6 +23,8 @@ namespace Database
 
 		public GameplayEvent MeteorShowerFullereneEvent;
 
+		public GameplayEvent GassyMooteorEvent;
+
 		public GameplayEvent PrickleFlowerBlightEvent;
 
 		public GameplayEvent BonusDream1;
@@ -79,6 +81,7 @@ namespace Database
 			MeteorShowerGoldEvent = Add(new MeteorShowerEvent("MeteorShowerGoldEvent", 80f).AddMeteor(GoldCometConfig.ID, 2f).AddMeteor(RockCometConfig.ID, 0.5f).AddMeteor(DustCometConfig.ID, 5f));
 			MeteorShowerCopperEvent = Add(new MeteorShowerEvent("MeteorShowerCopperEvent", 25f).AddMeteor(CopperCometConfig.ID, 1f).AddMeteor(RockCometConfig.ID, 1f));
 			MeteorShowerFullereneEvent = Add(new MeteorShowerEvent("MeteorShowerFullereneEvent", 80f).AddMeteor(FullereneCometConfig.ID, 1f).AddMeteor(RockCometConfig.ID, 4f).AddMeteor(DustCometConfig.ID, 10f));
+			GassyMooteorEvent = Add(new MeteorShowerEvent("GassyMooteorEvent ", 15f, 5f).AddMeteor(GassyMooCometConfig.ID, 1f));
 			PrickleFlowerBlightEvent = Add(new PlantBlightEvent("PrickleFlowerBlightEvent", "PrickleFlower", 3600f, 30f));
 			CryoFriend = Add(new SimpleEvent("CryoFriend", GAMEPLAY_EVENTS.EVENT_TYPES.CRYOFRIEND.NAME, GAMEPLAY_EVENTS.EVENT_TYPES.CRYOFRIEND.DESCRIPTION, GAMEPLAY_EVENTS.EVENT_TYPES.CRYOFRIEND.BUTTON).SetVisuals(null, "cryofriend_kanim"));
 			WarpWorldReveal = Add(new SimpleEvent("WarpWorldReveal", GAMEPLAY_EVENTS.EVENT_TYPES.WARPWORLDREVEAL.NAME, GAMEPLAY_EVENTS.EVENT_TYPES.WARPWORLDREVEAL.DESCRIPTION, GAMEPLAY_EVENTS.EVENT_TYPES.WARPWORLDREVEAL.BUTTON).SetVisuals(null, "warpworldreveal_kanim"));

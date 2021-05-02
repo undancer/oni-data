@@ -4,9 +4,13 @@ using UnityEngine;
 
 public abstract class Tracker
 {
+	private const int standardSampleRate = 4;
+
+	private const int defaultCyclesTracked = 5;
+
 	protected List<DataPoint> dataPoints = new List<DataPoint>();
 
-	private int maxPoints = 150;
+	private int maxPoints = Mathf.CeilToInt(750f);
 
 	public Tuple<float, float>[] ChartableData(float periodLength)
 	{

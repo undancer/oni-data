@@ -46,9 +46,22 @@ public class ClusterMapHex : MultiToggle, ICanvasRaycastFilter
 		this.location = location;
 	}
 
-	public void SetRevealed(bool revealed)
+	public void SetRevealed(ClusterRevealLevel level)
 	{
-		fogOfWar.gameObject.SetActive(!revealed);
+		switch (level)
+		{
+		case ClusterRevealLevel.Hidden:
+			fogOfWar.color = new Color(0f, 0f, 0f, 0.86f);
+			fogOfWar.gameObject.SetActive(value: true);
+			break;
+		case ClusterRevealLevel.Peeked:
+			fogOfWar.color = new Color(0f, 0f, 0f, 0.56f);
+			fogOfWar.gameObject.SetActive(value: true);
+			break;
+		case ClusterRevealLevel.Visible:
+			fogOfWar.gameObject.SetActive(value: false);
+			break;
+		}
 	}
 
 	public void SetDestinationStatus(string fail_reason)

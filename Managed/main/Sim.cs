@@ -63,7 +63,8 @@ public static class Sim
 			Unbreakable = 8,
 			Transparent = 0x10,
 			Opaque = 0x20,
-			NotifyOnMelt = 0x40
+			NotifyOnMelt = 0x40,
+			Constructed = 0x80
 		}
 
 		public byte elementIdx;
@@ -99,6 +100,7 @@ public static class Sim
 			temperature = pd.temperature;
 			mass = pd.mass;
 			insulation = byte.MaxValue;
+			DebugUtil.Assert(temperature > 0f || mass == 0f, "A non-zero mass cannot have a <= 0 temperature");
 		}
 
 		public void SetValues(byte new_elem_idx, float new_temperature, float new_mass)
@@ -107,6 +109,7 @@ public static class Sim
 			temperature = new_temperature;
 			mass = new_mass;
 			insulation = byte.MaxValue;
+			DebugUtil.Assert(temperature > 0f || mass == 0f, "A non-zero mass cannot have a <= 0 temperature");
 		}
 	}
 
@@ -183,6 +186,8 @@ public static class Sim
 
 		public float radiationAbsorptionFactor;
 
+		public float radiationPer1000Mass;
+
 		public PhysicsData defaultValues;
 
 		public Element(global::Element e, List<global::Element> elements)
@@ -236,6 +241,7 @@ public static class Sim
 			offGasProbability = e.offGasPercentage;
 			lightAbsorptionFactor = e.lightAbsorptionFactor;
 			radiationAbsorptionFactor = e.radiationAbsorptionFactor;
+			radiationPer1000Mass = e.radiationPer1000Mass;
 			defaultValues = e.defaultValues;
 		}
 
@@ -276,6 +282,7 @@ public static class Sim
 			writer.Write(offGasProbability);
 			writer.Write(lightAbsorptionFactor);
 			writer.Write(radiationAbsorptionFactor);
+			writer.Write(radiationPer1000Mass);
 			defaultValues.Write(writer);
 		}
 	}
@@ -864,7 +871,7 @@ public static class Sim
 
 	public static bool IsRadiationEnabled()
 	{
-		return false;
+		return DlcManager.FeatureRadiationEnabled();
 	}
 
 	public static bool IsValidHandle(int h)

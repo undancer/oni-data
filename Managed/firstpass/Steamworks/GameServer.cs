@@ -2,17 +2,21 @@ namespace Steamworks
 {
 	public static class GameServer
 	{
-		public static bool Init(uint unIP, ushort usSteamPort, ushort usGamePort, ushort usQueryPort, EServerMode eServerMode, string pchVersionString)
+		public static bool Init(uint unIP, ushort usGamePort, ushort usQueryPort, EServerMode eServerMode, string pchVersionString)
 		{
 			InteropHelp.TestIfPlatformSupported();
 			bool flag;
 			using (InteropHelp.UTF8StringHandle pchVersionString2 = new InteropHelp.UTF8StringHandle(pchVersionString))
 			{
-				flag = NativeMethods.SteamGameServer_Init(unIP, usSteamPort, usGamePort, usQueryPort, eServerMode, pchVersionString2);
+				flag = NativeMethods.SteamGameServer_Init(unIP, usGamePort, usQueryPort, eServerMode, pchVersionString2);
 			}
 			if (flag)
 			{
 				flag = CSteamGameServerAPIContext.Init();
+			}
+			if (flag)
+			{
+				CallbackDispatcher.Initialize();
 			}
 			return flag;
 		}
@@ -22,12 +26,12 @@ namespace Steamworks
 			InteropHelp.TestIfPlatformSupported();
 			NativeMethods.SteamGameServer_Shutdown();
 			CSteamGameServerAPIContext.Clear();
+			CallbackDispatcher.Shutdown();
 		}
 
 		public static void RunCallbacks()
 		{
-			InteropHelp.TestIfPlatformSupported();
-			NativeMethods.SteamGameServer_RunCallbacks();
+			CallbackDispatcher.RunFrame(isGameServer: true);
 		}
 
 		public static void ReleaseCurrentThreadMemory()

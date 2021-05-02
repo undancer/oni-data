@@ -193,10 +193,17 @@ public class Prioritizable : KMonoBehaviour
 	protected override void OnCleanUp()
 	{
 		WorldContainer myWorld = base.gameObject.GetMyWorld();
-		DebugUtil.DevAssert(myWorld != null, "World has been destroyed before this prioritizable");
 		if (myWorld != null)
 		{
 			myWorld.RemoveTopPriorityPrioritizable(this);
+		}
+		else
+		{
+			Debug.LogWarning("World has been destroyed before prioritizable " + base.name);
+			foreach (WorldContainer worldContainer in ClusterManager.Instance.WorldContainers)
+			{
+				worldContainer.RemoveTopPriorityPrioritizable(this);
+			}
 		}
 		base.OnCleanUp();
 		GameScenePartitioner.Instance.Free(ref scenePartitionerEntry);

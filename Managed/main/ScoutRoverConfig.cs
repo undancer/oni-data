@@ -24,10 +24,10 @@ public class ScoutRoverConfig : IEntityConfig
 		KBatchedAnimController component = gameObject.GetComponent<KBatchedAnimController>();
 		component.isMovable = true;
 		gameObject.AddOrGet<Modifiers>();
+		gameObject.AddOrGet<LoopingSounds>();
 		KBoxCollider2D kBoxCollider2D = gameObject.AddOrGet<KBoxCollider2D>();
 		kBoxCollider2D.size = new Vector2(1f, 2f);
 		kBoxCollider2D.offset = new Vector2f(0f, 1f);
-		gameObject.AddOrGetDef<RobotAi.Def>();
 		Modifiers component2 = gameObject.GetComponent<Modifiers>();
 		component2.initialAmounts.Add(Db.Get().Amounts.HitPoints.Id);
 		component2.initialAmounts.Add(Db.Get().Amounts.InternalChemicalBattery.Id);
@@ -71,6 +71,17 @@ public class ScoutRoverConfig : IEntityConfig
 		gameObject.AddOrGet<Traits>();
 		gameObject.AddOrGet<AnimEventHandler>();
 		gameObject.AddOrGet<Health>();
+		MoverLayerOccupier moverLayerOccupier = gameObject.AddOrGet<MoverLayerOccupier>();
+		moverLayerOccupier.objectLayers = new ObjectLayer[2]
+		{
+			ObjectLayer.Rover,
+			ObjectLayer.Mover
+		};
+		moverLayerOccupier.cellOffsets = new CellOffset[2]
+		{
+			CellOffset.none,
+			new CellOffset(0, 1)
+		};
 		RobotBatteryMonitor.Def def = gameObject.AddOrGetDef<RobotBatteryMonitor.Def>();
 		def.batteryAmountId = Db.Get().Amounts.InternalChemicalBattery.Id;
 		def.canCharge = false;
@@ -84,7 +95,9 @@ public class ScoutRoverConfig : IEntityConfig
 			Storage.StoredItemModifier.Seal
 		});
 		gameObject.AddOrGetDef<CreatureDebugGoToMonitor.Def>();
-		ChoreTable.Builder chore_table = new ChoreTable.Builder().Add(new RobotDeathStates.Def()).Add(new FallStates.Def()).Add(new DebugGoToStates.Def());
+		gameObject.AddOrGetDef<RobotAi.Def>();
+		ChoreTable.Builder chore_table = new ChoreTable.Builder().Add(new RobotDeathStates.Def()).Add(new FallStates.Def()).Add(new DebugGoToStates.Def())
+			.Add(new IdleStates.Def(), condition: true, Db.Get().ChoreTypes.Idle.priority);
 		EntityTemplates.AddCreatureBrain(gameObject, chore_table, GameTags.Robots.Models.ScoutRover, null);
 		Navigator navigator = gameObject.AddOrGet<Navigator>();
 		string text = (navigator.NavGridName = "RobotNavGrid");
@@ -97,6 +110,7 @@ public class ScoutRoverConfig : IEntityConfig
 		pickupable.SetWorkTime(5f);
 		SnapOn snapOn = gameObject.AddOrGet<SnapOn>();
 		snapOn.snapPoints = new List<SnapOn.SnapPoint>(new SnapOn.SnapPoint[0]);
+		component.SetSymbolVisiblity("snapto_pivot", is_visible: false);
 		return gameObject;
 	}
 

@@ -59,7 +59,10 @@ namespace Database
 					text += COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.PREPARED_SEPARATOR;
 				}
 				BuildingDef buildingDef = Assets.GetBuildingDef(foodProducers[i].Name);
-				text += buildingDef.Name;
+				if (buildingDef != null)
+				{
+					text += buildingDef.Name;
+				}
 			}
 			return string.Format(COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.CONSUME_ITEM, text);
 		}

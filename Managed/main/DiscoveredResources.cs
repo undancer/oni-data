@@ -29,7 +29,10 @@ public class DiscoveredResources : KMonoBehaviour, ISaveLoadable, ISim4000ms
 			{
 				this.OnDiscover(categoryTag, tag);
 			}
-			newDiscoveries.Add(tag, (float)GameClock.Instance.GetCycle() + GameClock.Instance.GetCurrentCycleAsPercentage());
+			if (!newDiscoveries.ContainsKey(tag))
+			{
+				newDiscoveries.Add(tag, (float)GameClock.Instance.GetCycle() + GameClock.Instance.GetCurrentCycleAsPercentage());
+			}
 		}
 	}
 

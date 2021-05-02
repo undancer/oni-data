@@ -10,7 +10,7 @@ public class WorldSelector : KScreen, ISim4000ms
 {
 	public static WorldSelector Instance;
 
-	public Dictionary<MultiToggle, int> worldRows;
+	public Dictionary<int, MultiToggle> worldRows;
 
 	public TextStyleSetting titleTextSetting;
 
@@ -20,7 +20,7 @@ public class WorldSelector : KScreen, ISim4000ms
 
 	public GameObject worldRowContainer;
 
-	private Dictionary<int, ColonyDiagnosticUtility.ColonyDiagnostic.DiagnosticResult.Opinion> previousWorldDiagnosticStatus = new Dictionary<int, ColonyDiagnosticUtility.ColonyDiagnostic.DiagnosticResult.Opinion>();
+	private Dictionary<int, ColonyDiagnostic.DiagnosticResult.Opinion> previousWorldDiagnosticStatus = new Dictionary<int, ColonyDiagnostic.DiagnosticResult.Opinion>();
 
 	protected override void OnPrefabInit()
 	{
@@ -36,7 +36,7 @@ public class WorldSelector : KScreen, ISim4000ms
 			return;
 		}
 		base.OnSpawn();
-		worldRows = new Dictionary<MultiToggle, int>();
+		worldRows = new Dictionary<int, MultiToggle>();
 		SpawnToggles();
 		RefreshToggles();
 		Game.Instance.Subscribe(1983128072, delegate
@@ -63,23 +63,23 @@ public class WorldSelector : KScreen, ISim4000ms
 
 	private void SpawnToggles()
 	{
-		foreach (KeyValuePair<MultiToggle, int> worldRow in worldRows)
+		foreach (KeyValuePair<int, MultiToggle> worldRow in worldRows)
 		{
-			Util.KDestroyGameObject(worldRow.Key);
+			Util.KDestroyGameObject(worldRow.Value);
 		}
 		worldRows.Clear();
-		foreach (int worldID in ClusterManager.Instance.GetWorldIDs())
+		foreach (int item in ClusterManager.Instance.GetWorldIDsSorted())
 		{
 			GameObject gameObject = Util.KInstantiateUI(worldRowPrefab, worldRowContainer);
 			MultiToggle component = gameObject.GetComponent<MultiToggle>();
-			worldRows.Add(component, worldID);
-			previousWorldDiagnosticStatus.Add(worldID, ColonyDiagnosticUtility.ColonyDiagnostic.DiagnosticResult.Opinion.Normal);
-			int id = worldID;
+			worldRows.Add(item, component);
+			previousWorldDiagnosticStatus.Add(item, ColonyDiagnostic.DiagnosticResult.Opinion.Normal);
+			int id = item;
 			component.onClick = (System.Action)Delegate.Combine(component.onClick, (System.Action)delegate
 			{
 				OnWorldRowClicked(id);
 			});
-			component.GetComponentInChildren<AlertVignette>().worldID = worldID;
+			component.GetComponentInChildren<AlertVignette>().worldID = item;
 		}
 	}
 
@@ -88,8 +88,8 @@ public class WorldSelector : KScreen, ISim4000ms
 		int num = (int)data;
 		GameObject gameObject = Util.KInstantiateUI(worldRowPrefab, worldRowContainer);
 		MultiToggle component = gameObject.GetComponent<MultiToggle>();
-		worldRows.Add(component, num);
-		previousWorldDiagnosticStatus.Add(num, ColonyDiagnosticUtility.ColonyDiagnostic.DiagnosticResult.Opinion.Normal);
+		worldRows.Add(num, component);
+		previousWorldDiagnosticStatus.Add(num, ColonyDiagnostic.DiagnosticResult.Opinion.Normal);
 		int id = num;
 		component.onClick = (System.Action)Delegate.Combine(component.onClick, (System.Action)delegate
 		{
@@ -101,13 +101,13 @@ public class WorldSelector : KScreen, ISim4000ms
 
 	private void RemoveWorld(object data)
 	{
-		int world_id = (int)data;
-		foreach (KeyValuePair<MultiToggle, int> item in worldRows.Where((KeyValuePair<MultiToggle, int> kvp) => kvp.Value == world_id).ToList())
+		int key = (int)data;
+		if (worldRows.TryGetValue(key, out var value))
 		{
-			worldRows.Remove(item.Key);
-			item.Key.DeleteObject();
+			value.DeleteObject();
 		}
-		previousWorldDiagnosticStatus.Remove(world_id);
+		worldRows.Remove(key);
+		previousWorldDiagnosticStatus.Remove(key);
 		RefreshToggles();
 	}
 
@@ -122,11 +122,11 @@ public class WorldSelector : KScreen, ISim4000ms
 
 	private void RefreshToggles()
 	{
-		foreach (KeyValuePair<MultiToggle, int> worldRow in worldRows)
+		foreach (KeyValuePair<int, MultiToggle> worldRow in worldRows)
 		{
-			WorldContainer world = ClusterManager.Instance.GetWorld(worldRow.Value);
+			WorldContainer world = ClusterManager.Instance.GetWorld(worldRow.Key);
 			ClusterGridEntity component = world.GetComponent<ClusterGridEntity>();
-			HierarchyReferences component2 = worldRow.Key.GetComponent<HierarchyReferences>();
+			HierarchyReferences component2 = worldRow.Value.GetComponent<HierarchyReferences>();
 			if (world != null)
 			{
 				component2.GetReference<Image>("Icon").sprite = component.GetUISprite();
@@ -136,23 +136,23 @@ public class WorldSelector : KScreen, ISim4000ms
 			{
 				component2.GetReference<Image>("Icon").sprite = Assets.GetSprite("unknown_far");
 			}
-			if (worldRow.Value == CameraController.Instance.cameraActiveCluster)
+			if (worldRow.Key == CameraController.Instance.cameraActiveCluster)
 			{
-				worldRow.Key.ChangeState(1);
-				worldRow.Key.gameObject.SetActive(value: true);
+				worldRow.Value.ChangeState(1);
+				worldRow.Value.gameObject.SetActive(value: true);
 			}
 			else if (world != null && world.IsDiscovered)
 			{
-				worldRow.Key.ChangeState(0);
-				worldRow.Key.gameObject.SetActive(value: true);
+				worldRow.Value.ChangeState(0);
+				worldRow.Value.gameObject.SetActive(value: true);
 			}
 			else
 			{
-				worldRow.Key.ChangeState(0);
-				worldRow.Key.gameObject.SetActive(value: false);
+				worldRow.Value.ChangeState(0);
+				worldRow.Value.gameObject.SetActive(value: false);
 			}
 			RefreshToggleTooltips();
-			worldRow.Key.GetComponentInChildren<AlertVignette>().worldID = worldRow.Value;
+			worldRow.Value.GetComponentInChildren<AlertVignette>().worldID = worldRow.Key;
 		}
 		SortRows();
 	}
@@ -160,29 +160,32 @@ public class WorldSelector : KScreen, ISim4000ms
 	private void RefreshToggleTooltips()
 	{
 		int num = 0;
-		int num2 = 0;
-		foreach (KeyValuePair<MultiToggle, int> worldRow in worldRows)
+		List<int> discoveredAsteroidIDsSorted = ClusterManager.Instance.GetDiscoveredAsteroidIDsSorted();
+		foreach (KeyValuePair<int, MultiToggle> worldRow in worldRows)
 		{
-			WorldContainer world = ClusterManager.Instance.GetWorld(worldRow.Value);
+			WorldContainer world = ClusterManager.Instance.GetWorld(worldRow.Key);
 			ClusterGridEntity component = world.GetComponent<ClusterGridEntity>();
-			ToolTip component2 = worldRow.Key.GetComponent<ToolTip>();
+			ToolTip component2 = worldRow.Value.GetComponent<ToolTip>();
 			component2.ClearMultiStringTooltip();
-			WorldContainer world2 = ClusterManager.Instance.GetWorld(worldRow.Value);
+			WorldContainer world2 = ClusterManager.Instance.GetWorld(worldRow.Key);
 			if (world2 != null)
 			{
 				component2.AddMultiStringTooltip(component.Name, titleTextSetting);
 				if (!world2.IsModuleInterior)
 				{
-					component2.AddMultiStringTooltip(" ", bodyTextSetting);
-					component2.AddMultiStringTooltip(UI.FormatAsHotkey("[" + GameUtil.GetActionString(IdxToHotkeyAction(num2)) + "]"), bodyTextSetting);
-					num2++;
+					int num2 = discoveredAsteroidIDsSorted.IndexOf(world2.id);
+					if (num2 != -1 && num2 <= 9)
+					{
+						component2.AddMultiStringTooltip(" ", bodyTextSetting);
+						component2.AddMultiStringTooltip(UI.FormatAsHotkey("[" + GameUtil.GetActionString(IdxToHotkeyAction(num2)) + "]"), bodyTextSetting);
+					}
 				}
 			}
 			else
 			{
 				component2.AddMultiStringTooltip(UI.CLUSTERMAP.UNKNOWN_DESTINATION, titleTextSetting);
 			}
-			if (ColonyDiagnosticUtility.Instance.GetWorldDiagnosticResult(world2.id) < ColonyDiagnosticUtility.ColonyDiagnostic.DiagnosticResult.Opinion.Normal)
+			if (ColonyDiagnosticUtility.Instance.GetWorldDiagnosticResult(world2.id) < ColonyDiagnostic.DiagnosticResult.Opinion.Normal)
 			{
 				component2.AddMultiStringTooltip(ColonyDiagnosticUtility.Instance.GetWorldDiagnosticResultTooltip(world2.id), bodyTextSetting);
 			}
@@ -192,30 +195,33 @@ public class WorldSelector : KScreen, ISim4000ms
 
 	private void SortRows()
 	{
-		foreach (KeyValuePair<MultiToggle, int> worldRow in worldRows)
+		List<KeyValuePair<int, MultiToggle>> list = worldRows.ToList();
+		list.Sort(delegate(KeyValuePair<int, MultiToggle> x, KeyValuePair<int, MultiToggle> y)
 		{
-			WorldContainer world = ClusterManager.Instance.GetWorld(worldRow.Value);
-			if (world.IsModuleInterior)
-			{
-				worldRow.Key.transform.SetAsLastSibling();
-			}
+			float num2 = (ClusterManager.Instance.GetWorld(x.Key).IsModuleInterior ? float.PositiveInfinity : ClusterManager.Instance.GetWorld(x.Key).DiscoveryTimestamp);
+			float value = (ClusterManager.Instance.GetWorld(y.Key).IsModuleInterior ? float.PositiveInfinity : ClusterManager.Instance.GetWorld(y.Key).DiscoveryTimestamp);
+			return num2.CompareTo(value);
+		});
+		for (int i = 0; i < list.Count; i++)
+		{
+			list[i].Value.transform.SetSiblingIndex(i);
 		}
-		foreach (KeyValuePair<MultiToggle, int> worldRow2 in worldRows)
+		foreach (KeyValuePair<int, MultiToggle> item in list)
 		{
-			worldRow2.Key.GetComponent<HierarchyReferences>().GetReference<RectTransform>("Indent").anchoredPosition = Vector2.zero;
-			WorldContainer world2 = ClusterManager.Instance.GetWorld(worldRow2.Value);
-			if (world2.ParentWorldId == world2.id || world2.ParentWorldId == ClusterManager.INVALID_WORLD_IDX)
+			item.Value.GetComponent<HierarchyReferences>().GetReference<RectTransform>("Indent").anchoredPosition = Vector2.zero;
+			WorldContainer world = ClusterManager.Instance.GetWorld(item.Key);
+			if (world.ParentWorldId == world.id || world.ParentWorldId == ClusterManager.INVALID_WORLD_IDX)
 			{
 				continue;
 			}
 			int num = -1;
-			foreach (KeyValuePair<MultiToggle, int> worldRow3 in worldRows)
+			foreach (KeyValuePair<int, MultiToggle> item2 in list)
 			{
-				if (worldRow3.Value == world2.ParentWorldId)
+				if (item2.Key == world.ParentWorldId)
 				{
-					num = worldRow3.Key.gameObject.transform.GetSiblingIndex();
-					worldRow2.Key.gameObject.transform.SetSiblingIndex(num + 1);
-					worldRow2.Key.GetComponent<HierarchyReferences>().GetReference<RectTransform>("Indent").anchoredPosition = Vector2.right * 32f;
+					num = item2.Value.gameObject.transform.GetSiblingIndex();
+					item.Value.gameObject.transform.SetSiblingIndex(num + 1);
+					item.Value.GetComponent<HierarchyReferences>().GetReference<RectTransform>("Indent").anchoredPosition = Vector2.right * 32f;
 					break;
 				}
 			}
@@ -254,57 +260,55 @@ public class WorldSelector : KScreen, ISim4000ms
 
 	public void Sim4000ms(float dt)
 	{
-		foreach (KeyValuePair<MultiToggle, int> worldRow in worldRows)
+		foreach (KeyValuePair<int, MultiToggle> worldRow in worldRows)
 		{
-			ColonyDiagnosticUtility.ColonyDiagnostic.DiagnosticResult.Opinion worldDiagnosticResult = ColonyDiagnosticUtility.Instance.GetWorldDiagnosticResult(worldRow.Value);
-			ColonyDiagnosticScreen.SetIndication(worldDiagnosticResult, worldRow.Key.GetComponent<HierarchyReferences>().GetReference("Indicator").gameObject);
-			if (previousWorldDiagnosticStatus[worldRow.Value] > worldDiagnosticResult && ClusterManager.Instance.activeWorldId != worldRow.Value)
+			ColonyDiagnostic.DiagnosticResult.Opinion worldDiagnosticResult = ColonyDiagnosticUtility.Instance.GetWorldDiagnosticResult(worldRow.Key);
+			ColonyDiagnosticScreen.SetIndication(worldDiagnosticResult, worldRow.Value.GetComponent<HierarchyReferences>().GetReference("Indicator").gameObject);
+			if (previousWorldDiagnosticStatus[worldRow.Key] > worldDiagnosticResult && ClusterManager.Instance.activeWorldId != worldRow.Key)
 			{
-				TriggerVisualNotification(worldRow.Value, worldDiagnosticResult);
+				TriggerVisualNotification(worldRow.Key, worldDiagnosticResult);
 			}
-			previousWorldDiagnosticStatus[worldRow.Value] = worldDiagnosticResult;
+			previousWorldDiagnosticStatus[worldRow.Key] = worldDiagnosticResult;
 		}
 		RefreshToggleTooltips();
 	}
 
-	public void TriggerVisualNotification(int worldID, ColonyDiagnosticUtility.ColonyDiagnostic.DiagnosticResult.Opinion result)
+	public void TriggerVisualNotification(int worldID, ColonyDiagnostic.DiagnosticResult.Opinion result)
 	{
-		foreach (KeyValuePair<MultiToggle, int> worldRow in worldRows)
+		foreach (KeyValuePair<int, MultiToggle> worldRow in worldRows)
 		{
-			if (worldRow.Value == worldID)
+			if (worldRow.Key == worldID)
 			{
 				KFMOD.PlayUISound(GlobalAssets.GetSound(ColonyDiagnosticScreen.notificationSoundsInactive[result]));
-				if (worldRow.Key.gameObject.activeInHierarchy)
+				if (worldRow.Value.gameObject.activeInHierarchy)
 				{
-					worldRow.Key.StartCoroutine(VisualNotificationRoutine(worldRow.Key.GetComponent<HierarchyReferences>().GetReference<RectTransform>("Content").gameObject, worldRow.Key.GetComponent<HierarchyReferences>().GetReference<RectTransform>("Indicator")));
+					worldRow.Value.StartCoroutine(VisualNotificationRoutine(worldRow.Value.GetComponent<HierarchyReferences>().GetReference<RectTransform>("Content").gameObject, worldRow.Value.GetComponent<HierarchyReferences>().GetReference<RectTransform>("Indicator"), worldRow.Value.GetComponent<HierarchyReferences>().GetReference<RectTransform>("Spacer").gameObject));
 				}
 			}
 		}
 	}
 
-	private IEnumerator VisualNotificationRoutine(GameObject contentGameObject, RectTransform indicator)
+	private IEnumerator VisualNotificationRoutine(GameObject contentGameObject, RectTransform indicator, GameObject spacer)
 	{
-		Vector2 defaultIndicatorSize = new Vector2(indicator.sizeDelta.x, indicator.sizeDelta.y);
+		spacer.GetComponent<NotificationAnimator>().Begin(startOffset: false);
+		Vector2 defaultIndicatorSize2 = new Vector2(8f, 8f);
 		float bounceDuration = 1.5f;
 		for (float k = 0f; k < bounceDuration; k += Time.unscaledDeltaTime)
 		{
-			contentGameObject.rectTransform().localPosition = Vector2.left * Mathf.RoundToInt(Mathf.Sin((float)Math.PI * (k / bounceDuration)) * 108f);
-			indicator.sizeDelta = defaultIndicatorSize + defaultIndicatorSize * Mathf.RoundToInt(Mathf.Sin(6f * ((float)Math.PI * (k / bounceDuration))));
+			indicator.sizeDelta = defaultIndicatorSize2 + Vector2.one * Mathf.RoundToInt(Mathf.Sin(6f * ((float)Math.PI * (k / bounceDuration))));
 			yield return 0;
 		}
 		for (float j = 0f; j < bounceDuration; j += Time.unscaledDeltaTime)
 		{
-			contentGameObject.rectTransform().localPosition = Vector2.left * Mathf.RoundToInt(Mathf.Sin((float)Math.PI * (j / bounceDuration)) * 80f);
-			indicator.sizeDelta = defaultIndicatorSize + defaultIndicatorSize * Mathf.RoundToInt(Mathf.Sin(6f * ((float)Math.PI * (j / bounceDuration))));
+			indicator.sizeDelta = defaultIndicatorSize2 + Vector2.one * Mathf.RoundToInt(Mathf.Sin(6f * ((float)Math.PI * (j / bounceDuration))));
 			yield return 0;
 		}
 		for (float i = 0f; i < bounceDuration; i += Time.unscaledDeltaTime)
 		{
-			contentGameObject.rectTransform().localPosition = Vector2.left * Mathf.RoundToInt(Mathf.Sin((float)Math.PI * (i / bounceDuration)) * 60f);
-			indicator.sizeDelta = defaultIndicatorSize + defaultIndicatorSize * Mathf.RoundToInt(Mathf.Sin(6f * ((float)Math.PI * (i / bounceDuration))));
+			indicator.sizeDelta = defaultIndicatorSize2 + Vector2.one * Mathf.RoundToInt(Mathf.Sin(6f * ((float)Math.PI * (i / bounceDuration))));
 			yield return 0;
 		}
-		indicator.sizeDelta = defaultIndicatorSize;
+		defaultIndicatorSize2 = (indicator.sizeDelta = new Vector2(8f, 8f));
 		contentGameObject.rectTransform().localPosition = Vector2.zero;
 	}
 }

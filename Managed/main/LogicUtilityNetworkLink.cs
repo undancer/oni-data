@@ -34,9 +34,9 @@ public class LogicUtilityNetworkLink : UtilityNetworkLink, IHaveUtilityNetworkMg
 
 	public void AddNetworks(ICollection<UtilityNetwork> networks)
 	{
-		GetCells(out var linked_cell, out var _);
+		int networkCell = GetNetworkCell();
 		IUtilityNetworkMgr networkManager = GetNetworkManager();
-		UtilityNetwork networkForCell = networkManager.GetNetworkForCell(linked_cell);
+		UtilityNetwork networkForCell = networkManager.GetNetworkForCell(networkCell);
 		if (networkForCell != null)
 		{
 			networks.Add(networkForCell);
@@ -45,9 +45,9 @@ public class LogicUtilityNetworkLink : UtilityNetworkLink, IHaveUtilityNetworkMg
 
 	public bool IsConnectedToNetworks(ICollection<UtilityNetwork> networks)
 	{
-		GetCells(out var linked_cell, out var _);
+		int networkCell = GetNetworkCell();
 		IUtilityNetworkMgr networkManager = GetNetworkManager();
-		UtilityNetwork networkForCell = networkManager.GetNetworkForCell(linked_cell);
+		UtilityNetwork networkForCell = networkManager.GetNetworkForCell(networkCell);
 		return networks.Contains(networkForCell);
 	}
 }

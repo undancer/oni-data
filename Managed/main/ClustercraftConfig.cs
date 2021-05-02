@@ -21,7 +21,9 @@ public class ClustercraftConfig : IEntityConfig
 		rocketClusterDestinationSelector.requireLaunchPadOnAsteroidDestination = true;
 		rocketClusterDestinationSelector.assignable = true;
 		rocketClusterDestinationSelector.shouldPointTowardsPath = true;
+		gameObject.AddOrGet<ClusterTraveler>();
 		gameObject.AddOrGetDef<AlertStateManager.Def>();
+		gameObject.AddOrGet<Notifier>();
 		return gameObject;
 	}
 

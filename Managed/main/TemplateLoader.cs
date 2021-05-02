@@ -1,28 +1,71 @@
 using System;
+using System.Collections.Generic;
 using Klei.AI;
 using TemplateClasses;
 using UnityEngine;
 
 public static class TemplateLoader
 {
-	private static TemplateContainer template;
+	private class ActiveStamp
+	{
+		private TemplateContainer m_template;
+
+		private Vector2I m_rootLocation;
+
+		private System.Action m_onCompleteCallback;
+
+		private int currentPhase = 0;
+
+		public ActiveStamp(TemplateContainer template, Vector2 rootLocation, System.Action onCompleteCallback)
+		{
+			m_template = template;
+			m_rootLocation = new Vector2I((int)rootLocation.x, (int)rootLocation.y);
+			m_onCompleteCallback = onCompleteCallback;
+			NextPhase();
+		}
+
+		private void NextPhase()
+		{
+			currentPhase++;
+			switch (currentPhase)
+			{
+			case 1:
+				BuildPhase1(m_rootLocation.x, m_rootLocation.y, m_template, NextPhase);
+				break;
+			case 2:
+				BuildPhase2(m_rootLocation.x, m_rootLocation.y, m_template, NextPhase);
+				break;
+			case 3:
+				BuildPhase3(m_rootLocation.x, m_rootLocation.y, m_template, NextPhase);
+				break;
+			case 4:
+				BuildPhase4(m_rootLocation.x, m_rootLocation.y, m_template, NextPhase);
+				break;
+			case 5:
+				m_onCompleteCallback();
+				StampComplete(this);
+				break;
+			default:
+				Debug.Assert(condition: false, "How did we get here?? Something's wrong!");
+				break;
+			}
+		}
+	}
+
+	private static List<ActiveStamp> activeStamps = new List<ActiveStamp>();
 
 	public static void Stamp(TemplateContainer template, Vector2 rootLocation, System.Action on_complete_callback)
 	{
-		TemplateLoader.template = template;
-		BuildPhase1((int)rootLocation.x, (int)rootLocation.y, delegate
-		{
-			BuildPhase2((int)rootLocation.x, (int)rootLocation.y, delegate
-			{
-				BuildPhase3((int)rootLocation.x, (int)rootLocation.y, delegate
-				{
-					BuildPhase4((int)rootLocation.x, (int)rootLocation.y, on_complete_callback);
-				});
-			});
-		});
+		ActiveStamp item = new ActiveStamp(template, rootLocation, on_complete_callback);
+		activeStamps.Add(item);
 	}
 
-	private static void BuildPhase1(int baseX, int baseY, System.Action callback)
+	private static void StampComplete(ActiveStamp stamp)
+	{
+		activeStamps.Remove(stamp);
+	}
+
+	private static void BuildPhase1(int baseX, int baseY, TemplateContainer template, System.Action callback)
 	{
 		if (Grid.WidthInCells < 16)
 		{
@@ -53,7 +96,7 @@ public static class TemplateLoader
 		}
 	}
 
-	private static void BuildPhase2(int baseX, int baseY, System.Action callback)
+	private static void BuildPhase2(int baseX, int baseY, TemplateContainer template, System.Action callback)
 	{
 		int num = Grid.OffsetCell(0, baseX, baseY);
 		if (template == null)
@@ -404,7 +447,7 @@ public static class TemplateLoader
 		return substance.SpawnResource(position, prefab.units, prefab.temperature, index, prefab.diseaseCount);
 	}
 
-	private static void BuildPhase3(int baseX, int baseY, System.Action callback)
+	private static void BuildPhase3(int baseX, int baseY, TemplateContainer template, System.Action callback)
 	{
 		if (template != null)
 		{
@@ -441,7 +484,7 @@ public static class TemplateLoader
 		callback?.Invoke();
 	}
 
-	private static void BuildPhase4(int baseX, int baseY, System.Action callback)
+	private static void BuildPhase4(int baseX, int baseY, TemplateContainer template, System.Action callback)
 	{
 		if (template != null)
 		{

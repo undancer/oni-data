@@ -51,7 +51,7 @@ public class StoredMinionIdentity : KMonoBehaviour, ISaveLoadable, IAssignableId
 	public Dictionary<string, bool> MasteryBySkillID = new Dictionary<string, bool>();
 
 	[Serialize]
-	public List<string> grantedSkillIDs;
+	public List<string> grantedSkillIDs = new List<string>();
 
 	[Serialize]
 	public Dictionary<HashedString, float> AptitudeByRoleGroup = new Dictionary<HashedString, float>();

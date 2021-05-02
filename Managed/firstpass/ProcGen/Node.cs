@@ -52,7 +52,7 @@ namespace ProcGen
 		{
 			foreach (Tag tag in tags)
 			{
-				if (tag.Name.StartsWith("subworlds/"))
+				if (tag.Name.Contains("subworlds/"))
 				{
 					return tag.Name;
 				}
@@ -64,7 +64,7 @@ namespace ProcGen
 		{
 			foreach (Tag tag in tags)
 			{
-				if (tag.Name.StartsWith("biomes/"))
+				if (tag.Name.Contains("biomes/"))
 				{
 					return tag.Name;
 				}

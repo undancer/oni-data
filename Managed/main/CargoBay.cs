@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using STRINGS;
 using UnityEngine;
@@ -20,22 +19,6 @@ public class CargoBay : KMonoBehaviour
 
 	public CargoType storageType = CargoType.Solids;
 
-	public static Dictionary<ConduitType, CargoType> ElementToCargoMap = new Dictionary<ConduitType, CargoType>
-	{
-		{
-			ConduitType.Solid,
-			CargoType.Solids
-		},
-		{
-			ConduitType.Liquid,
-			CargoType.Liquids
-		},
-		{
-			ConduitType.Gas,
-			CargoType.Gasses
-		}
-	};
-
 	private static readonly EventSystem.IntraObjectHandler<CargoBay> OnLaunchDelegate = new EventSystem.IntraObjectHandler<CargoBay>(delegate(CargoBay component, object data)
 	{
 		component.OnLaunch(data);
@@ -56,35 +39,10 @@ public class CargoBay : KMonoBehaviour
 		component.OnStorageChange(data);
 	});
 
-	private static StatusItem connectedPortStatus;
-
-	private static StatusItem connectedWrongPortStatus;
-
-	private static StatusItem connectedNoPortStatus;
-
-	private Guid connectedConduitPortStatusItem;
-
-	protected override void OnPrefabInit()
-	{
-		base.OnPrefabInit();
-	}
-
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		if (connectedPortStatus == null)
-		{
-			connectedPortStatus = new StatusItem("CONNECTED_ROCKET_PORT", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: true, OverlayModes.None.ID);
-			connectedWrongPortStatus = new StatusItem("CONNECTED_ROCKET_WRONG_PORT", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: true, OverlayModes.None.ID);
-			connectedNoPortStatus = new StatusItem("CONNECTED_ROCKET_NO_PORT", "BUILDING", "status_item_no_liquid_to_pump", StatusItem.IconType.Custom, NotificationType.Bad, allow_multiples: true, OverlayModes.None.ID);
-		}
 		GetComponent<KBatchedAnimController>().Play("grounded", KAnim.PlayMode.Loop);
-		LaunchPad currentPad = GetComponent<RocketModule>().CraftInterface.CurrentPad;
-		if (currentPad != null)
-		{
-			OnLaunchpadChainChanged(null);
-			GetComponent<RocketModule>().CraftInterface.CurrentPad.Subscribe(-1009905786, OnLaunchpadChainChanged);
-		}
 		Subscribe(-1277991738, OnLaunchDelegate);
 		Subscribe(-887025858, OnLandDelegate);
 		Subscribe(493375141, OnRefreshUserMenuDelegate);
@@ -92,7 +50,6 @@ public class CargoBay : KMonoBehaviour
 		meter.gameObject.GetComponent<KBatchedAnimTracker>().matchParentOffset = true;
 		OnStorageChange(null);
 		Subscribe(-1697596308, OnStorageChangeDelegate);
-		UpdateStatusItems();
 	}
 
 	private void OnRefreshUserMenu(object data)
@@ -109,23 +66,18 @@ public class CargoBay : KMonoBehaviour
 		meter.SetPositionPercent(storage.MassStored() / storage.Capacity());
 	}
 
-	protected override void OnCleanUp()
-	{
-		LaunchPad currentPad = GetComponent<RocketModule>().CraftInterface.CurrentPad;
-		if (currentPad != null)
-		{
-			currentPad.Unsubscribe(-1009905786, OnLaunchpadChainChanged);
-		}
-		base.OnCleanUp();
-	}
-
 	public void SpawnResources(object data)
 	{
 		if (DlcManager.IsExpansion1Active())
 		{
 			return;
 		}
-		SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(SpacecraftManager.instance.GetSpacecraftID(GetComponent<RocketModule>().conditionManager.GetComponent<LaunchableRocket>()));
+		ILaunchableRocket component = GetComponent<RocketModule>().conditionManager.GetComponent<ILaunchableRocket>();
+		if (component.registerType == LaunchableRocketRegisterType.Clustercraft)
+		{
+			return;
+		}
+		SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(SpacecraftManager.instance.GetSpacecraftID(component));
 		int rootCell = Grid.PosToCell(base.gameObject);
 		foreach (KeyValuePair<SimHashes, float> item in spacecraftDestination.GetMissionResourceResult(storage.RemainingCapacity(), storageType == CargoType.Solids, storageType == CargoType.Liquids, storageType == CargoType.Gasses))
 		{
@@ -164,10 +116,10 @@ public class CargoBay : KMonoBehaviour
 				GameObject gameObject2 = Util.KInstantiate(prefab, base.transform.position);
 				gameObject2.SetActive(value: true);
 				storage.Store(gameObject2);
-				Baggable component = gameObject2.GetComponent<Baggable>();
-				if (component != null)
+				Baggable component2 = gameObject2.GetComponent<Baggable>();
+				if (component2 != null)
 				{
-					component.SetWrangled();
+					component2.SetWrangled();
 				}
 			}
 		}
@@ -175,23 +127,26 @@ public class CargoBay : KMonoBehaviour
 
 	public void OnLaunch(object data)
 	{
-		if (!DlcManager.IsExpansion1Active())
-		{
-			ReserveResources();
-		}
+		ReserveResources();
 		ConduitDispenser component = GetComponent<ConduitDispenser>();
 		if (component != null)
 		{
 			component.conduitType = ConduitType.None;
 		}
-		GetComponent<RocketModule>().CraftInterface.CurrentPad.Unsubscribe(-1009905786, OnLaunchpadChainChanged);
 	}
 
 	private void ReserveResources()
 	{
-		int spacecraftID = SpacecraftManager.instance.GetSpacecraftID(GetComponent<RocketModule>().conditionManager.GetComponent<LaunchableRocket>());
-		SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(spacecraftID);
-		spacecraftDestination.UpdateRemainingResources(this);
+		if (!DlcManager.IsExpansion1Active())
+		{
+			ILaunchableRocket component = GetComponent<RocketModule>().conditionManager.GetComponent<ILaunchableRocket>();
+			if (component.registerType != LaunchableRocketRegisterType.Clustercraft)
+			{
+				int spacecraftID = SpacecraftManager.instance.GetSpacecraftID(component);
+				SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(spacecraftID);
+				spacecraftDestination.UpdateRemainingResources(this);
+			}
+		}
 	}
 
 	public void OnLand(object data)
@@ -213,58 +168,5 @@ public class CargoBay : KMonoBehaviour
 				break;
 			}
 		}
-		GetComponent<RocketModule>().CraftInterface.CurrentPad.Subscribe(-1009905786, OnLaunchpadChainChanged);
-		UpdateStatusItems();
-	}
-
-	private void OnLaunchpadChainChanged(object data)
-	{
-		UpdateStatusItems();
-	}
-
-	private void UpdateStatusItems()
-	{
-		bool flag = false;
-		bool flag2 = false;
-		IEnumerable<GameObject> connectedConduitPorts = GetConnectedConduitPorts();
-		if (connectedConduitPorts != null)
-		{
-			foreach (GameObject item in connectedConduitPorts)
-			{
-				IConduitDispenser component = item.GetComponent<IConduitDispenser>();
-				if (component != null)
-				{
-					flag = true;
-					if (ElementToCargoMap[component.ConduitType] == storageType)
-					{
-						flag2 = true;
-						break;
-					}
-				}
-			}
-		}
-		KSelectable component2 = GetComponent<KSelectable>();
-		if (flag2)
-		{
-			connectedConduitPortStatusItem = component2.ReplaceStatusItem(connectedConduitPortStatusItem, connectedPortStatus, this);
-		}
-		else if (flag)
-		{
-			connectedConduitPortStatusItem = component2.ReplaceStatusItem(connectedConduitPortStatusItem, connectedWrongPortStatus, this);
-		}
-		else
-		{
-			connectedConduitPortStatusItem = component2.ReplaceStatusItem(connectedConduitPortStatusItem, connectedNoPortStatus, this);
-		}
-	}
-
-	private IEnumerable<GameObject> GetConnectedConduitPorts()
-	{
-		LaunchPad currentPad = GetComponent<RocketModule>().CraftInterface.CurrentPad;
-		if (currentPad == null)
-		{
-			return null;
-		}
-		return currentPad.GetSMI<ChainedBuilding.StatesInstance>()?.GetLinkedBuildings();
 	}
 }

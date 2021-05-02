@@ -13,7 +13,7 @@ public class RocketModule : KMonoBehaviour
 
 	public static Operational.Flag landedFlag = new Operational.Flag("landed", Operational.Flag.Type.Requirement);
 
-	public RocketModulePerformance performanceStats;
+	public bool operationalLandedRequired = true;
 
 	private string rocket_module_bg_base_string = "{0}{1}";
 
@@ -41,16 +41,15 @@ public class RocketModule : KMonoBehaviour
 		component.OnRocketNotOnGroundTag(data);
 	});
 
-	private static readonly EventSystem.IntraObjectHandler<RocketModule> OnNewConstructionDelegate = new EventSystem.IntraObjectHandler<RocketModule>(delegate(RocketModule component, object data)
+	private static readonly EventSystem.IntraObjectHandler<RocketModule> OnLaunchConditionChangedDelegate = new EventSystem.IntraObjectHandler<RocketModule>(delegate(RocketModule component, object data)
 	{
-		component.OnNewConstruction(data);
+		component.OnLaunchConditionChanged(data);
 	});
 
-	public CraftModuleInterface CraftInterface
+	private static readonly EventSystem.IntraObjectHandler<RocketModule> OnLandDelegate = new EventSystem.IntraObjectHandler<RocketModule>(delegate(RocketModule component, object data)
 	{
-		get;
-		set;
-	}
+		component.OnLand(data);
+	});
 
 	public ProcessCondition AddModuleCondition(ProcessCondition.ProcessConditionType conditionType, ProcessCondition condition)
 	{
@@ -67,20 +66,19 @@ public class RocketModule : KMonoBehaviour
 
 	public List<ProcessCondition> GetConditionSet(ProcessCondition.ProcessConditionType conditionType)
 	{
-		List<ProcessCondition> value;
+		List<ProcessCondition> list = new List<ProcessCondition>();
 		if (conditionType == ProcessCondition.ProcessConditionType.All)
 		{
-			value = new List<ProcessCondition>();
 			foreach (KeyValuePair<ProcessCondition.ProcessConditionType, List<ProcessCondition>> moduleCondition in moduleConditions)
 			{
-				value.AddRange(moduleCondition.Value);
+				list.AddRange(moduleCondition.Value);
 			}
 		}
-		else
+		else if (moduleConditions.ContainsKey(conditionType))
 		{
-			moduleConditions.TryGetValue(conditionType, out value);
+			list = moduleConditions[conditionType];
 		}
-		return value;
+		return list;
 	}
 
 	public void SetBGKAnim(KAnimFile anim_file)
@@ -88,38 +86,16 @@ public class RocketModule : KMonoBehaviour
 		bgAnimFile = anim_file;
 	}
 
-	private void RegisterWithCraftModuleInterface()
-	{
-		List<GameObject> attachedNetwork = AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>());
-		foreach (GameObject item in attachedNetwork)
-		{
-			if (!(item == base.gameObject))
-			{
-				RocketModule component = item.GetComponent<RocketModule>();
-				if (component != null)
-				{
-					component.CraftInterface.AddModule(this);
-					break;
-				}
-			}
-		}
-	}
-
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
 		GameUtil.SubscribeToTags(this, OnRocketOnGroundTagDelegate, triggerImmediately: false);
 		GameUtil.SubscribeToTags(this, OnRocketNotOnGroundTagDelegate, triggerImmediately: false);
-		Subscribe(2121280625, OnNewConstructionDelegate);
 	}
 
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		if (CraftInterface == null && DlcManager.IsExpansion1Active())
-		{
-			RegisterWithCraftModuleInterface();
-		}
 		if (!DlcManager.IsExpansion1Active())
 		{
 			conditionManager = FindLaunchConditionManager();
@@ -136,6 +112,11 @@ public class RocketModule : KMonoBehaviour
 			component.AddStatusItem(Db.Get().BuildingStatusItems.RocketName, this);
 		}
 		Subscribe(1502190696, DEBUG_OnDestroyDelegate);
+		if (GetComponent<RocketEngine>() == null && GetComponent<RocketEngineCluster>() == null && GetComponent<BuildingUnderConstruction>() == null)
+		{
+			Subscribe(1655598572, OnLaunchConditionChangedDelegate);
+			Subscribe(-887025858, OnLandDelegate);
+		}
 		FixSorting();
 		AttachableBuilding component2 = GetComponent<AttachableBuilding>();
 		component2.onAttachmentNetworkChanged = (Action<AttachableBuilding>)Delegate.Combine(component2.onAttachmentNetworkChanged, new Action<AttachableBuilding>(OnAttachmentNetworkChanged));
@@ -212,7 +193,7 @@ public class RocketModule : KMonoBehaviour
 	{
 		RegisterComponents();
 		Operational component = GetComponent<Operational>();
-		if (component != null)
+		if (operationalLandedRequired && component != null)
 		{
 			component.SetFlag(landedFlag, value: true);
 		}
@@ -222,27 +203,48 @@ public class RocketModule : KMonoBehaviour
 	{
 		DeregisterComponents();
 		Operational component = GetComponent<Operational>();
-		if (component != null)
+		if (operationalLandedRequired && component != null)
 		{
 			component.SetFlag(landedFlag, value: false);
 		}
 	}
 
-	private void OnNewConstruction(object data)
+	private void OnLaunchConditionChanged(object data)
 	{
-		Constructable constructable = (Constructable)data;
-		if (!(constructable == null))
+		UpdateAnimations();
+	}
+
+	private void OnLand(object data)
+	{
+		UpdateAnimations();
+	}
+
+	private void UpdateAnimations()
+	{
+		RocketModuleCluster component = GetComponent<RocketModuleCluster>();
+		KBatchedAnimController component2 = GetComponent<KBatchedAnimController>();
+		CraftModuleInterface craftInterface = component.CraftInterface;
+		if (craftInterface.CheckPreppedForLaunch())
 		{
-			RocketModule component = constructable.GetComponent<RocketModule>();
-			if (!(component == null) && component.CraftInterface != null)
-			{
-				component.CraftInterface.AddModule(this);
-			}
+			component2.initialAnim = "ready_to_launch";
+			component2.Play("pre_ready_to_launch");
+			component2.Queue("ready_to_launch", KAnim.PlayMode.Loop);
+		}
+		else if (craftInterface.CurrentPad == null)
+		{
+			component2.Play("launch", KAnim.PlayMode.Loop);
+		}
+		else
+		{
+			component2.initialAnim = "grounded";
+			component2.Play("pst_ready_to_launch");
+			component2.Queue("grounded", KAnim.PlayMode.Loop);
 		}
 	}
 
 	public void DeregisterComponents()
 	{
+		int cell = Grid.PosToCell(this);
 		KSelectable component = GetComponent<KSelectable>();
 		component.IsSelectable = false;
 		if (SelectTool.Instance.selected == component)
@@ -282,10 +284,36 @@ public class RocketModule : KMonoBehaviour
 		{
 			buildingConduitEndpoints.RemoveEndPoint();
 		}
+		ReorderableBuilding component5 = GetComponent<ReorderableBuilding>();
+		if (component5 != null)
+		{
+			component5.ShowReorderArm(show: false);
+		}
+		BuildingComplete component6 = GetComponent<BuildingComplete>();
+		if (component6 != null)
+		{
+			component6.UpdatePosition(cell);
+		}
+		Workable component7 = GetComponent<Workable>();
+		if (component7 != null)
+		{
+			component7.RefreshReachability();
+		}
+		Structure component8 = GetComponent<Structure>();
+		if (component8 != null)
+		{
+			component8.UpdatePosition(cell);
+		}
+		WireUtilitySemiVirtualNetworkLink component9 = GetComponent<WireUtilitySemiVirtualNetworkLink>();
+		if (component9 != null)
+		{
+			component9.SetLinkConnected(connect: false);
+		}
 	}
 
 	public void RegisterComponents()
 	{
+		int cell = Grid.PosToCell(this);
 		KSelectable component = GetComponent<KSelectable>();
 		component.IsSelectable = true;
 		Deconstructable component2 = GetComponent<Deconstructable>();
@@ -326,6 +354,31 @@ public class RocketModule : KMonoBehaviour
 		{
 			buildingConduitEndpoints.AddEndpoint();
 		}
+		ReorderableBuilding component5 = GetComponent<ReorderableBuilding>();
+		if (component5 != null)
+		{
+			component5.ShowReorderArm(show: true);
+		}
+		BuildingComplete component6 = GetComponent<BuildingComplete>();
+		if (component6 != null)
+		{
+			component6.UpdatePosition(cell);
+		}
+		Workable component7 = GetComponent<Workable>();
+		if (component7 != null)
+		{
+			component7.RefreshReachability();
+		}
+		Structure component8 = GetComponent<Structure>();
+		if (component8 != null)
+		{
+			component8.UpdatePosition(cell);
+		}
+		WireUtilitySemiVirtualNetworkLink component9 = GetComponent<WireUtilitySemiVirtualNetworkLink>();
+		if (component9 != null)
+		{
+			component9.SetLinkConnected(connect: true);
+		}
 	}
 
 	private void ToggleComponent(Type cmpType, bool enabled)
@@ -344,10 +397,6 @@ public class RocketModule : KMonoBehaviour
 		{
 			conditionManager.RegisterRocketModule(this);
 		}
-		else
-		{
-			Debug.LogWarning("Module conditionManager is null");
-		}
 	}
 
 	protected override void OnCleanUp()
@@ -356,26 +405,21 @@ public class RocketModule : KMonoBehaviour
 		{
 			conditionManager.UnregisterRocketModule(this);
 		}
-		if (DlcManager.IsExpansion1Active())
-		{
-			CraftInterface.RemoveModule(this);
-		}
 		base.OnCleanUp();
 	}
 
-	public LaunchConditionManager FindLaunchConditionManager()
+	public virtual LaunchConditionManager FindLaunchConditionManager()
 	{
-		if (DlcManager.IsExpansion1Active())
+		if (!DlcManager.IsExpansion1Active())
 		{
-			return CraftInterface.FindLaunchConditionManager();
-		}
-		List<GameObject> attachedNetwork = AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>());
-		foreach (GameObject item in attachedNetwork)
-		{
-			LaunchConditionManager component = item.GetComponent<LaunchConditionManager>();
-			if (component != null)
+			List<GameObject> attachedNetwork = AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>());
+			foreach (GameObject item in attachedNetwork)
 			{
-				return component;
+				LaunchConditionManager component = item.GetComponent<LaunchConditionManager>();
+				if (component != null)
+				{
+					return component;
+				}
 			}
 		}
 		return null;
@@ -387,27 +431,30 @@ public class RocketModule : KMonoBehaviour
 		NameDisplayScreen.Instance.UpdateName(base.gameObject);
 	}
 
-	public string GetParentRocketName()
+	public virtual string GetParentRocketName()
 	{
-		if (CraftInterface != null)
-		{
-			return CraftInterface.GetComponent<Clustercraft>().Name;
-		}
 		return parentRocketName;
 	}
 
 	public void MoveToSpace()
 	{
-		int cell = Grid.PosToCell(base.transform.GetPosition());
-		Building component = GetComponent<Building>();
-		BuildingDef def = component.Def;
-		def.UnmarkArea(cell, component.Orientation, component.Def.ObjectLayer, base.gameObject);
-		TransformExtensions.SetPosition(position: new Vector3(-1f, -1f, 0f), transform: base.gameObject.transform);
-		LogicPorts component2 = GetComponent<LogicPorts>();
-		if (component2 != null)
+		Prioritizable component = GetComponent<Prioritizable>();
+		if (component != null && component.GetMyWorld() != null)
 		{
-			component2.OnMove();
+			component.GetMyWorld().RemoveTopPriorityPrioritizable(component);
 		}
+		int cell = Grid.PosToCell(base.transform.GetPosition());
+		Building component2 = GetComponent<Building>();
+		BuildingDef def = component2.Def;
+		def.UnmarkArea(cell, component2.Orientation, component2.Def.ObjectLayer, base.gameObject);
+		TransformExtensions.SetPosition(position: new Vector3(-1f, -1f, 0f), transform: base.gameObject.transform);
+		LogicPorts component3 = GetComponent<LogicPorts>();
+		if (component3 != null)
+		{
+			component3.OnMove();
+		}
+		KSelectable component4 = GetComponent<KSelectable>();
+		component4.ToggleStatusItem(Db.Get().BuildingStatusItems.Entombed, on: false, this);
 	}
 
 	public void MoveToPad(int newCell)
@@ -422,6 +469,11 @@ public class RocketModule : KMonoBehaviour
 		if (component2 != null)
 		{
 			component2.OnMove();
+		}
+		Prioritizable component3 = GetComponent<Prioritizable>();
+		if (component3 != null && component3.IsTopPriority())
+		{
+			component3.GetMyWorld().AddTopPriorityPrioritizable(component3);
 		}
 	}
 }

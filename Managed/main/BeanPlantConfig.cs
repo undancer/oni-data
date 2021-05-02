@@ -22,7 +22,7 @@ public class BeanPlantConfig : IEntityConfig
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("BeanPlant", STRINGS.CREATURES.SPECIES.BEAN_PLANT.NAME, STRINGS.CREATURES.SPECIES.BEAN_PLANT.DESC, 2f, decor: DECOR.BONUS.TIER1, anim: Assets.GetAnim("beanplant_kanim"), initialAnim: "idle_empty", sceneLayer: Grid.SceneLayer.BuildingFront, width: 1, height: 2, noise: default(EffectorValues), element: SimHashes.Creature, additionalTags: null, defaultTemperature: 258.15f);
-		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 198.15f, 248.15f, 273.15f, 323.15f, null, pressure_sensitive: true, 0f, 0.15f, "BeanPlantSeed");
+		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 198.15f, 248.15f, 273.15f, 323.15f, null, pressure_sensitive: true, 0f, 0.15f, "BeanPlantSeed", can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, 2400f, "BeanPlantOriginal", STRINGS.CREATURES.SPECIES.BEAN_PLANT.NAME);
 		PlantElementAbsorber.ConsumeInfo[] array = new PlantElementAbsorber.ConsumeInfo[1];
 		PlantElementAbsorber.ConsumeInfo consumeInfo = new PlantElementAbsorber.ConsumeInfo
 		{
@@ -44,8 +44,6 @@ public class BeanPlantConfig : IEntityConfig
 		{
 			SimHashes.CarbonDioxide
 		});
-		UprootedMonitor component = gameObject.GetComponent<UprootedMonitor>();
-		component.monitorCell = new CellOffset(0, -1);
 		gameObject.AddOrGet<StandardCropPlant>();
 		GameObject gameObject2 = EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Harvest, "BeanPlantSeed", STRINGS.CREATURES.SPECIES.SEEDS.BEAN_PLANT.NAME, STRINGS.CREATURES.SPECIES.SEEDS.BEAN_PLANT.DESC, Assets.GetAnim("seed_beanplant_kanim"), "object", 1, new List<Tag>
 		{

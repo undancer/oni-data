@@ -2,5 +2,7 @@ public enum EntityLayer
 {
 	Asteroid,
 	Craft,
-	POI
+	POI,
+	Telescope,
+	Payload
 }

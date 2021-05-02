@@ -137,6 +137,10 @@ public class StatusItem : Resource
 		{
 			OverlayModes.TileMode.ID,
 			StatusItemOverlays.None
+		},
+		{
+			OverlayModes.Radiation.ID,
+			StatusItemOverlays.Radiation
 		}
 	};
 

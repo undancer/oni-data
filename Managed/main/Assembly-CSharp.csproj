@@ -66,9 +66,6 @@
     <Reference Include="LibNoiseDotNet">
       <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/LibNoiseDotNet.dll</HintPath>
     </Reference>
-    <Reference Include="Boo.Lang">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/Boo.Lang.dll</HintPath>
-    </Reference>
     <Reference Include="0Harmony">
       <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/0Harmony.dll</HintPath>
     </Reference>

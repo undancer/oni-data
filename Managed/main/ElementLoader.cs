@@ -110,6 +110,12 @@ public class ElementLoader
 			set;
 		}
 
+		public float radiationPer1000Mass
+		{
+			get;
+			set;
+		}
+
 		public string lowTempTransitionTarget
 		{
 			get;
@@ -423,6 +429,7 @@ public class ElementLoader
 		elem.offGasPercentage = entry.offGasPercentage;
 		elem.lightAbsorptionFactor = entry.lightAbsorptionFactor;
 		elem.radiationAbsorptionFactor = entry.radiationAbsorptionFactor;
+		elem.radiationPer1000Mass = entry.radiationPer1000Mass;
 		elem.toxicity = entry.toxicity;
 		elem.elementComposition = entry.composition;
 		Tag phaseTag = TagManager.Create(entry.state.ToString());

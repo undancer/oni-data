@@ -61,17 +61,13 @@ public class SeedProducer : KMonoBehaviour, IGameObjectEffectDescriptor
 			Vector3 position = base.gameObject.transform.GetPosition() + new Vector3(0f, 0.5f, 0f);
 			GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(new Tag(seedId)), position, Grid.SceneLayer.Ore);
 			MutantPlant component = GetComponent<MutantPlant>();
-			if ((bool)component)
+			if (component != null)
 			{
 				PlantRadiationMonitor component2 = GetComponent<PlantRadiationMonitor>();
 				MutantPlant component3 = gameObject.GetComponent<MutantPlant>();
-				if (component3 != null)
+				if (component3 != null && component2 != null && component2.ShouldMutate())
 				{
-					component3.SetSubSpecies(component.subspeciesID);
-					if (component2 != null && component2.ShouldMutate())
-					{
-						component3.Mutate();
-					}
+					component3.Mutate();
 				}
 			}
 			PrimaryElement component4 = base.gameObject.GetComponent<PrimaryElement>();

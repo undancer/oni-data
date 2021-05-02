@@ -454,6 +454,20 @@ namespace STRINGS
 			public static LocString DESC = "Granite is a dense composite of " + UI.FormatAsLink("Igneous Rock", "IGNEOUSROCK") + ".\n\nIt is useful as a <b>Construction Material</b>.";
 		}
 
+		public class GRAPHITE
+		{
+			public static LocString NAME = UI.FormatAsLink("Graphite", "GRAPHITE");
+
+			public static LocString DESC = "(C) Graphite is the most stable form of carbon.\n\nIt has high thermal conductivity and is useful as a <b>Construction Material</b>.";
+		}
+
+		public class SOLIDNUCLEARWASTE
+		{
+			public static LocString NAME = UI.FormatAsLink("Solid Nuclear Waste", "SOLIDNUCLEARWASTE");
+
+			public static LocString DESC = "Highly toxic liquid full of " + UI.FormatAsLink("Radioactive Contaminants", "RADIATION") + ". Formed in an " + UI.FormatAsLink("Nuclear Meltdown", "MELTDOWN") + ".";
+		}
+
 		public class HELIUM
 		{
 			public static LocString NAME = UI.FormatAsLink("Helium", "HELIUM");
@@ -487,6 +501,20 @@ namespace STRINGS
 			public static LocString NAME = UI.FormatAsLink("Isoresin", "ISORESIN");
 
 			public static LocString DESC = "Isoresin is a crystallized sap composed of long-chain polymers.\n\nIt is used in the production of rare, high grade materials.";
+		}
+
+		public class RESIN
+		{
+			public static LocString NAME = UI.FormatAsLink("Resin", "RESIN");
+
+			public static LocString DESC = "Sticky goo harvested from a grumpy tree.\n\nIt can be polymerized into " + UI.FormatAsLink("Isoresin", "ISORESIN") + " by boiling away its excess moisture.";
+		}
+
+		public class SOLIDRESIN
+		{
+			public static LocString NAME = UI.FormatAsLink("Resin", "SOLIDRESIN");
+
+			public static LocString DESC = "Solidified goo harvested from a grumpy tree.\n\nIt is used in the production of " + UI.FormatAsLink("Isoresin", "ISORESIN") + ".";
 		}
 
 		public class IRON
@@ -836,7 +864,7 @@ namespace STRINGS
 		{
 			public static LocString NAME = UI.FormatAsLink("Yellowcake", "YELLOWCAKE");
 
-			public static LocString DESC = "(U<sub>3</sub>O<sub>8</sub>) Yellowcake is a byproduct of " + UI.FormatAsLink("Uranium", "URANIUM") + " mining.\n\nIt is useful in preparing fuel for nuclear reactors.\n\nNote: Do not eat.";
+			public static LocString DESC = "(U<sub>3</sub>O<sub>8</sub>) Yellowcake is a byproduct of " + UI.FormatAsLink("Uranium", "URANIUM") + " mining.\n\nIt is useful in preparing fuel for " + UI.FormatAsLink("Research Reactors", "NUCLEARREACTOR") + ".\n\nNote: Do not eat.";
 		}
 
 		public class ROCKGAS
@@ -986,9 +1014,9 @@ namespace STRINGS
 			public static LocString DESC = "Naphtha is a distilled hydrocarbon mixture in a " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + " state.";
 		}
 
-		public class SOLIDNUCLEARWASTE
+		public class CORIUM
 		{
-			public static LocString NAME = UI.FormatAsLink("Corium", "SOLIDNUCLEARWASTE");
+			public static LocString NAME = UI.FormatAsLink("Corium", "CORIUM");
 
 			public static LocString DESC = "A radioactive mixture of nuclear waste and melted reactor materials.\n\nReleases " + UI.FormatAsLink("Nuclear Fallout", "FALLOUT") + " gas.";
 		}

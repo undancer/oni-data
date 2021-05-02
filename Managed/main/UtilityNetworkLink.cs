@@ -42,7 +42,7 @@ public abstract class UtilityNetworkLink : KMonoBehaviour
 		base.OnCleanUp();
 	}
 
-	private void Connect()
+	protected void Connect()
 	{
 		if (!visualizeOnly && !connected)
 		{
@@ -56,7 +56,7 @@ public abstract class UtilityNetworkLink : KMonoBehaviour
 	{
 	}
 
-	private void Disconnect()
+	protected void Disconnect()
 	{
 		if (!visualizeOnly && connected)
 		{

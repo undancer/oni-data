@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using KSerialization;
 
 public class RocketClusterDestinationSelector : ClusterDestinationSelector
@@ -20,11 +19,6 @@ public class RocketClusterDestinationSelector : ClusterDestinationSelector
 		cmp.OnLaunch(data);
 	});
 
-	private EventSystem.IntraObjectHandler<RocketClusterDestinationSelector> OnClusterLocationChangedDelegate = new EventSystem.IntraObjectHandler<RocketClusterDestinationSelector>(delegate(RocketClusterDestinationSelector cmp, object data)
-	{
-		cmp.OnClusterLocationChanged(data);
-	});
-
 	public bool Repeat
 	{
 		get
@@ -41,20 +35,6 @@ public class RocketClusterDestinationSelector : ClusterDestinationSelector
 	{
 		base.OnPrefabInit();
 		Subscribe(-1277991738, OnLaunchDelegate);
-		Subscribe(-1298331547, OnClusterLocationChangedDelegate);
-	}
-
-	public List<LaunchPad> GetLaunchPadsForDestination()
-	{
-		List<LaunchPad> list = new List<LaunchPad>();
-		foreach (LaunchPad launchPad in Components.LaunchPads)
-		{
-			if (launchPad.GetMyWorldLocation() == m_destination)
-			{
-				list.Add(launchPad);
-			}
-		}
-		return list;
 	}
 
 	public LaunchPad GetDestinationPad()
@@ -79,7 +59,7 @@ public class RocketClusterDestinationSelector : ClusterDestinationSelector
 		GetComponent<CraftModuleInterface>().TriggerEventOnCraftAndRocket(GameHashes.ClusterDestinationChanged, null);
 	}
 
-	private void OnClusterLocationChanged(object data)
+	protected override void OnClusterLocationChanged(object data)
 	{
 		ClusterLocationChangedEvent clusterLocationChangedEvent = (ClusterLocationChangedEvent)data;
 		if (clusterLocationChangedEvent.newLocation == m_destination)

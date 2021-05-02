@@ -7,7 +7,7 @@ public class HabitatModuleSmallConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("HabitatModuleSmall", 3, 3, "rocket_nosecone_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.HOLLOW_TIER1, MATERIALS.RAW_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("HabitatModuleSmall", 3, 3, "rocket_nosecone_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.DENSE_TIER0, MATERIALS.RAW_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
 		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.AttachmentSlotTag = GameTags.Rocket;
@@ -30,15 +30,16 @@ public class HabitatModuleSmallConfig : IBuildingConfig
 		go.AddOrGet<LoopingSounds>();
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
 		go.GetComponent<KPrefabID>().AddTag(GameTags.NoseRocketModule);
+		go.GetComponent<KPrefabID>().AddTag(GameTags.LaunchButtonRocketModule);
 		AssignmentGroupController assignmentGroupController = go.AddOrGet<AssignmentGroupController>();
 		assignmentGroupController.generateGroupOnStart = true;
 		go.AddOrGet<PassengerRocketModule>();
 		ClustercraftExteriorDoor clustercraftExteriorDoor = go.AddOrGet<ClustercraftExteriorDoor>();
-		clustercraftExteriorDoor.interiorTemplateName = "interiors/habitat_small";
+		clustercraftExteriorDoor.interiorTemplateName = "expansion1::interiors/habitat_small";
+		go.AddOrGetDef<SimpleDoorController.Def>();
 		go.AddOrGet<NavTeleporter>();
 		go.AddOrGet<AccessControl>();
-		LaunchableRocket launchableRocket = go.AddOrGet<LaunchableRocket>();
-		launchableRocket.registerType = LaunchableRocket.RegisterType.Clustercraft;
+		go.AddOrGet<LaunchableRocketCluster>();
 		go.AddOrGet<RocketCommandConditions>();
 		go.AddOrGet<RocketProcessConditionDisplayTarget>();
 		CharacterOverlay characterOverlay = go.AddOrGet<CharacterOverlay>();
@@ -47,7 +48,7 @@ public class HabitatModuleSmallConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.MINOR_PLUS, null);
+		BuildingTemplates.ExtendBuildingToRocketModuleCluster(go, null, ROCKETRY.BURDEN.MINOR_PLUS);
 		Ownable ownable = go.AddOrGet<Ownable>();
 		ownable.slotID = Db.Get().AssignableSlots.HabitatModule.Id;
 		ownable.canBePublic = false;

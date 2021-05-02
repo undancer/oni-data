@@ -485,13 +485,13 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 			TargetParameter state_target = GetStateTarget();
 			Enter("EnableAnims()", delegate(StateMachineInstanceType smi)
 			{
-				HashedString hashedString = chooser_callback(smi);
-				if (hashedString.IsValid)
+				HashedString hashedString2 = chooser_callback(smi);
+				if (!(hashedString2 == null) && hashedString2.IsValid)
 				{
-					KAnimFile anim2 = Assets.GetAnim(hashedString);
+					KAnimFile anim2 = Assets.GetAnim(hashedString2);
 					if (anim2 == null)
 					{
-						Debug.LogWarning("Missing anims: " + hashedString);
+						Debug.LogWarning("Missing anims: " + hashedString2);
 					}
 					else
 					{
@@ -501,10 +501,10 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 			});
 			Exit("Disableanims()", delegate(StateMachineInstanceType smi)
 			{
-				HashedString name = chooser_callback(smi);
-				if (name.IsValid)
+				HashedString hashedString = chooser_callback(smi);
+				if (!(hashedString == null) && hashedString.IsValid)
 				{
-					KAnimFile anim = Assets.GetAnim(name);
+					KAnimFile anim = Assets.GetAnim(hashedString);
 					if (anim != null)
 					{
 						state_target.Get<KAnimControllerBase>(smi).RemoveAnimOverrides(anim);
@@ -514,22 +514,28 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 			return this;
 		}
 
-		public State ToggleAnims(string anim_file, float priority = 0f)
+		public State ToggleAnims(string anim_file, float priority = 0f, string RequiredDlc = "")
 		{
 			TargetParameter state_target = GetStateTarget();
 			Toggle("ToggleAnims(" + anim_file + ")", delegate(StateMachineInstanceType smi)
 			{
-				KAnimFile anim2 = Assets.GetAnim(anim_file);
-				if (anim2 == null)
+				if (DlcManager.IsContentActive(RequiredDlc))
 				{
-					Debug.LogError("Trying to add missing override anims:" + anim_file);
+					KAnimFile anim2 = Assets.GetAnim(anim_file);
+					if (anim2 == null)
+					{
+						Debug.LogError("Trying to add missing override anims:" + anim_file);
+					}
+					KAnimControllerBase kAnimControllerBase = state_target.Get<KAnimControllerBase>(smi);
+					kAnimControllerBase.AddAnimOverrides(anim2, priority);
 				}
-				KAnimControllerBase kAnimControllerBase = state_target.Get<KAnimControllerBase>(smi);
-				kAnimControllerBase.AddAnimOverrides(anim2, priority);
 			}, delegate(StateMachineInstanceType smi)
 			{
-				KAnimFile anim = Assets.GetAnim(anim_file);
-				state_target.Get<KAnimControllerBase>(smi).RemoveAnimOverrides(anim);
+				if (DlcManager.IsContentActive(RequiredDlc))
+				{
+					KAnimFile anim = Assets.GetAnim(anim_file);
+					state_target.Get<KAnimControllerBase>(smi).RemoveAnimOverrides(anim);
+				}
 			});
 			return this;
 		}
@@ -2375,6 +2381,10 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 	protected static Parameter<float>.Callback IsGTOne = (StateMachineInstanceType smi, float p) => p > 1f;
 
 	protected static Parameter<float>.Callback IsGTEOne = (StateMachineInstanceType smi, float p) => p >= 1f;
+
+	protected static Parameter<GameObject>.Callback IsNotNull = (StateMachineInstanceType smi, GameObject p) => p != null;
+
+	protected static Parameter<GameObject>.Callback IsNull = (StateMachineInstanceType smi, GameObject p) => p == null;
 
 	public override void InitializeStates(out BaseState default_state)
 	{

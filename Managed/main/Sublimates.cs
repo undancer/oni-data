@@ -36,6 +36,13 @@ public class Sublimates : KMonoBehaviour, ISim200ms
 		}
 	}
 
+	private enum EmitState
+	{
+		Emitting,
+		BlockedOnPressure,
+		BlockedOnTemperature
+	}
+
 	[MyCmpReq]
 	private PrimaryElement primaryElement;
 
@@ -52,6 +59,8 @@ public class Sublimates : KMonoBehaviour, ISim200ms
 	private float sublimatedMass;
 
 	private HandleVector<int>.Handle flowAccumulator = HandleVector<int>.InvalidHandle;
+
+	private EmitState lastEmitState = (EmitState)(-1);
 
 	private static readonly EventSystem.IntraObjectHandler<Sublimates> OnAbsorbDelegate = new EventSystem.IntraObjectHandler<Sublimates>(delegate(Sublimates component, object data)
 	{
@@ -76,14 +85,7 @@ public class Sublimates : KMonoBehaviour, ISim200ms
 	{
 		base.OnSpawn();
 		flowAccumulator = Game.Instance.accumulators.Add("EmittedMass", this);
-		if (info.sublimatedElement == SimHashes.Oxygen)
-		{
-			selectable.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.EmittingOxygenAvg, this);
-		}
-		else
-		{
-			selectable.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.EmittingGasAvg, this);
-		}
+		RefreshStatusItem(EmitState.Emitting);
 	}
 
 	protected override void OnCleanUp()
@@ -128,61 +130,80 @@ public class Sublimates : KMonoBehaviour, ISim200ms
 		{
 			return;
 		}
-		float num2 = Grid.Mass[num];
-		if (!(num2 < info.maxDestinationMass))
+		Element element = ElementLoader.FindElementByHash(info.sublimatedElement);
+		if (primaryElement.Temperature <= element.lowTemp)
 		{
+			RefreshStatusItem(EmitState.BlockedOnTemperature);
 			return;
 		}
-		float mass = primaryElement.Mass;
-		if (mass > 0f)
+		float num2 = Grid.Mass[num];
+		if (num2 < info.maxDestinationMass)
 		{
-			float num3 = Mathf.Pow(mass, info.massPower);
-			float num4 = Mathf.Max(info.sublimationRate, info.sublimationRate * num3);
-			num4 *= dt;
-			num4 = Mathf.Min(num4, mass);
-			sublimatedMass += num4;
-			mass -= num4;
-			if (sublimatedMass > info.minSublimationAmount)
+			float mass = primaryElement.Mass;
+			if (mass > 0f)
 			{
-				float num5 = sublimatedMass / primaryElement.Mass;
-				byte b = byte.MaxValue;
-				int num6 = 0;
-				if (info.diseaseIdx == byte.MaxValue)
+				float num3 = Mathf.Pow(mass, info.massPower);
+				float num4 = Mathf.Max(info.sublimationRate, info.sublimationRate * num3);
+				num4 *= dt;
+				num4 = Mathf.Min(num4, mass);
+				sublimatedMass += num4;
+				mass -= num4;
+				if (sublimatedMass > info.minSublimationAmount)
 				{
-					b = primaryElement.DiseaseIdx;
-					num6 = (int)((float)primaryElement.DiseaseCount * num5);
-					primaryElement.ModifyDiseaseCount(-num6, "Sublimates.SimUpdate");
+					float num5 = sublimatedMass / primaryElement.Mass;
+					byte b = byte.MaxValue;
+					int num6 = 0;
+					if (info.diseaseIdx == byte.MaxValue)
+					{
+						b = primaryElement.DiseaseIdx;
+						num6 = (int)((float)primaryElement.DiseaseCount * num5);
+						primaryElement.ModifyDiseaseCount(-num6, "Sublimates.SimUpdate");
+					}
+					else
+					{
+						float num7 = sublimatedMass / info.sublimationRate;
+						b = info.diseaseIdx;
+						num6 = (int)((float)info.diseaseCount * num7);
+					}
+					float num8 = Mathf.Min(sublimatedMass, info.maxDestinationMass - num2);
+					if (num8 > 0f)
+					{
+						Emit(num, num8, primaryElement.Temperature, b, num6);
+						sublimatedMass = Mathf.Max(0f, sublimatedMass - num8);
+						primaryElement.Mass = Mathf.Max(0f, primaryElement.Mass - num8);
+						UpdateStorage();
+						RefreshStatusItem(EmitState.Emitting);
+					}
+					else
+					{
+						RefreshStatusItem(EmitState.BlockedOnPressure);
+					}
+				}
+			}
+			else if (sublimatedMass > 0f)
+			{
+				float num9 = Mathf.Min(sublimatedMass, info.maxDestinationMass - num2);
+				if (num9 > 0f)
+				{
+					Emit(num, num9, primaryElement.Temperature, primaryElement.DiseaseIdx, primaryElement.DiseaseCount);
+					sublimatedMass = Mathf.Max(0f, sublimatedMass - num9);
+					primaryElement.Mass = Mathf.Max(0f, primaryElement.Mass - num9);
+					UpdateStorage();
+					RefreshStatusItem(EmitState.Emitting);
 				}
 				else
 				{
-					float num7 = sublimatedMass / info.sublimationRate;
-					b = info.diseaseIdx;
-					num6 = (int)((float)info.diseaseCount * num7);
-				}
-				float num8 = Mathf.Min(sublimatedMass, info.maxDestinationMass - num2);
-				if (num8 > 0f)
-				{
-					Emit(num, num8, primaryElement.Temperature, b, num6);
-					sublimatedMass = Mathf.Max(0f, sublimatedMass - num8);
-					primaryElement.Mass = Mathf.Max(0f, primaryElement.Mass - num8);
-					UpdateStorage();
+					RefreshStatusItem(EmitState.BlockedOnPressure);
 				}
 			}
-		}
-		else if (sublimatedMass > 0f)
-		{
-			float num9 = Mathf.Min(sublimatedMass, info.maxDestinationMass - num2);
-			if (num9 > 0f)
+			else if (!primaryElement.KeepZeroMassObject)
 			{
-				Emit(num, num9, primaryElement.Temperature, primaryElement.DiseaseIdx, primaryElement.DiseaseCount);
-				sublimatedMass = Mathf.Max(0f, sublimatedMass - num9);
-				primaryElement.Mass = Mathf.Max(0f, primaryElement.Mass - num9);
-				UpdateStorage();
+				Util.KDestroyGameObject(base.gameObject);
 			}
 		}
-		else if (!primaryElement.KeepZeroMassObject)
+		else
 		{
-			Util.KDestroyGameObject(base.gameObject);
+			RefreshStatusItem(EmitState.BlockedOnPressure);
 		}
 	}
 
@@ -210,5 +231,33 @@ public class Sublimates : KMonoBehaviour, ISim200ms
 	public float AvgFlowRate()
 	{
 		return Game.Instance.accumulators.GetAverageRate(flowAccumulator);
+	}
+
+	private void RefreshStatusItem(EmitState newEmitState)
+	{
+		if (newEmitState == lastEmitState)
+		{
+			return;
+		}
+		switch (newEmitState)
+		{
+		case EmitState.Emitting:
+			if (info.sublimatedElement == SimHashes.Oxygen)
+			{
+				selectable.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.EmittingOxygenAvg, this);
+			}
+			else
+			{
+				selectable.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.EmittingGasAvg, this);
+			}
+			break;
+		case EmitState.BlockedOnPressure:
+			selectable.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.EmittingBlockedHighPressure, this);
+			break;
+		case EmitState.BlockedOnTemperature:
+			selectable.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.EmittingBlockedLowTemperature, this);
+			break;
+		}
+		lastEmitState = newEmitState;
 	}
 }

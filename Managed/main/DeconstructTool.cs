@@ -37,7 +37,7 @@ public class DeconstructTool : FilteredDragTool
 
 	public void DeconstructCell(int cell)
 	{
-		for (int i = 0; i < 40; i++)
+		for (int i = 0; i < 42; i++)
 		{
 			GameObject gameObject = Grid.Objects[cell, i];
 			if (!(gameObject != null))

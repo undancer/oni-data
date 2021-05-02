@@ -55,7 +55,11 @@ public class FishFeederConfig : IBuildingConfig
 	{
 		go.AddOrGetDef<StorageController.Def>();
 		go.AddOrGetDef<FishFeeder.Def>();
-		go.AddOrGetDef<MakeBaseSolid.Def>();
+		MakeBaseSolid.Def def = go.AddOrGetDef<MakeBaseSolid.Def>();
+		def.solidOffsets = new CellOffset[1]
+		{
+			new CellOffset(0, 0)
+		};
 		SymbolOverrideControllerUtil.AddToPrefab(go);
 	}
 

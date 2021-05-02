@@ -34,7 +34,7 @@ public class GridSettings : KMonoBehaviour
 		Grid.Loudness = new float[Grid.CellCount];
 		Grid.GravitasFacility = new bool[Grid.CellCount];
 		Grid.WorldIdx = new byte[Grid.CellCount];
-		Grid.ObjectLayers = new Dictionary<int, GameObject>[40];
+		Grid.ObjectLayers = new Dictionary<int, GameObject>[42];
 		for (int i = 0; i < Grid.ObjectLayers.Length; i++)
 		{
 			Grid.ObjectLayers[i] = new Dictionary<int, GameObject>();

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LaunchPadMaterialDistributor : GameStateMachine<LaunchPadMaterialDistributor, LaunchPadMaterialDistributor.Instance, IStateMachineTarget, LaunchPadMaterialDistributor.Def>
@@ -9,16 +8,23 @@ public class LaunchPadMaterialDistributor : GameStateMachine<LaunchPadMaterialDi
 
 	public class HasRocketStates : State
 	{
-		public State emptying;
+		public class TransferringStates : State
+		{
+			public State actual;
 
-		public State filling;
+			public State delay;
+		}
 
-		public State full;
+		public TransferringStates transferring;
+
+		public State transferComplete;
 	}
 
 	public class OperationalStates : State
 	{
 		public State noRocket;
+
+		public State rocketLanding;
 
 		public HasRocketStates hasRocket;
 
@@ -27,85 +33,45 @@ public class LaunchPadMaterialDistributor : GameStateMachine<LaunchPadMaterialDi
 
 	public new class Instance : GameInstance
 	{
-		private Dictionary<CargoBay.CargoType, bool> rocketCanTransfer = new Dictionary<CargoBay.CargoType, bool>
-		{
-			{
-				CargoBay.CargoType.Solids,
-				false
-			},
-			{
-				CargoBay.CargoType.Liquids,
-				false
-			},
-			{
-				CargoBay.CargoType.Gasses,
-				false
-			}
-		};
-
-		private Dictionary<CargoBay.CargoType, bool> modulesCanPump = new Dictionary<CargoBay.CargoType, bool>
-		{
-			{
-				CargoBay.CargoType.Solids,
-				false
-			},
-			{
-				CargoBay.CargoType.Liquids,
-				false
-			},
-			{
-				CargoBay.CargoType.Gasses,
-				false
-			}
-		};
-
 		public Instance(IStateMachineTarget master, Def def)
 			: base(master, def)
 		{
 		}
 
-		public RocketModule GetLandedRocketFromPad()
+		public RocketModuleCluster GetLandedRocketFromPad()
 		{
 			return GetComponent<LaunchPad>().LandedRocket;
 		}
 
 		public void EmptyRocket(float dt)
 		{
-			CraftModuleInterface craftInterface = base.sm.attachedRocket.Get<RocketModule>(base.smi).CraftInterface;
-			DictionaryPool<CargoBay.CargoType, ListPool<CargoBay, LaunchPadMaterialDistributor>.PooledList, LaunchPadMaterialDistributor>.PooledDictionary pooledDictionary = DictionaryPool<CargoBay.CargoType, ListPool<CargoBay, LaunchPadMaterialDistributor>.PooledList, LaunchPadMaterialDistributor>.Allocate();
-			pooledDictionary[CargoBay.CargoType.Solids] = ListPool<CargoBay, LaunchPadMaterialDistributor>.Allocate();
-			pooledDictionary[CargoBay.CargoType.Liquids] = ListPool<CargoBay, LaunchPadMaterialDistributor>.Allocate();
-			pooledDictionary[CargoBay.CargoType.Gasses] = ListPool<CargoBay, LaunchPadMaterialDistributor>.Allocate();
-			rocketCanTransfer[CargoBay.CargoType.Solids] = false;
-			rocketCanTransfer[CargoBay.CargoType.Liquids] = false;
-			rocketCanTransfer[CargoBay.CargoType.Gasses] = false;
-			modulesCanPump[CargoBay.CargoType.Solids] = false;
-			modulesCanPump[CargoBay.CargoType.Liquids] = false;
-			modulesCanPump[CargoBay.CargoType.Gasses] = false;
-			foreach (Ref<RocketModule> module in craftInterface.Modules)
+			CraftModuleInterface craftInterface = base.sm.attachedRocket.Get<RocketModuleCluster>(base.smi).CraftInterface;
+			DictionaryPool<CargoBay.CargoType, ListPool<CargoBayCluster, LaunchPadMaterialDistributor>.PooledList, LaunchPadMaterialDistributor>.PooledDictionary pooledDictionary = DictionaryPool<CargoBay.CargoType, ListPool<CargoBayCluster, LaunchPadMaterialDistributor>.PooledList, LaunchPadMaterialDistributor>.Allocate();
+			pooledDictionary[CargoBay.CargoType.Solids] = ListPool<CargoBayCluster, LaunchPadMaterialDistributor>.Allocate();
+			pooledDictionary[CargoBay.CargoType.Liquids] = ListPool<CargoBayCluster, LaunchPadMaterialDistributor>.Allocate();
+			pooledDictionary[CargoBay.CargoType.Gasses] = ListPool<CargoBayCluster, LaunchPadMaterialDistributor>.Allocate();
+			foreach (Ref<RocketModuleCluster> clusterModule in craftInterface.ClusterModules)
 			{
-				RocketModule rocketModule = module.Get();
-				CargoBay component = rocketModule.GetComponent<CargoBay>();
+				RocketModuleCluster rocketModuleCluster = clusterModule.Get();
+				CargoBayCluster component = rocketModuleCluster.GetComponent<CargoBayCluster>();
 				if (component != null && component.storageType != CargoBay.CargoType.Entities && component.storage.MassStored() > 0f)
 				{
 					pooledDictionary[component.storageType].Add(component);
-					rocketCanTransfer[component.storageType] = true;
 				}
 			}
+			bool flag = false;
 			foreach (GameObject linkedBuilding in base.gameObject.GetSMI<ChainedBuilding.StatesInstance>().GetLinkedBuildings())
 			{
 				ModularConduitPortController.Instance sMI = linkedBuilding.GetSMI<ModularConduitPortController.Instance>();
 				IConduitDispenser component2 = linkedBuilding.GetComponent<IConduitDispenser>();
-				if (component2 != null && (sMI == null || sMI.SelectedMode == ModularConduitPortController.Mode.Unload || sMI.SelectedMode == ModularConduitPortController.Mode.Both))
+				Operational component3 = linkedBuilding.GetComponent<Operational>();
+				bool unloading = false;
+				if (component2 != null && (sMI == null || sMI.SelectedMode == ModularConduitPortController.Mode.Unload || sMI.SelectedMode == ModularConduitPortController.Mode.Both) && (component3 == null || component3.IsOperational))
 				{
-					modulesCanPump[CargoBay.ElementToCargoMap[component2.ConduitType]] = true;
+					TreeFilterable component4 = linkedBuilding.GetComponent<TreeFilterable>();
 					float num = component2.Storage.RemainingCapacity();
-					foreach (CargoBay item in pooledDictionary[CargoBay.ElementToCargoMap[component2.ConduitType]])
+					foreach (CargoBayCluster item in pooledDictionary[CargoBayConduit.ElementToCargoMap[component2.ConduitType]])
 					{
-						if (num <= 0f)
-						{
-							break;
-						}
 						if (item.storage.Count == 0)
 						{
 							continue;
@@ -113,119 +79,90 @@ public class LaunchPadMaterialDistributor : GameStateMachine<LaunchPadMaterialDi
 						for (int num2 = item.storage.items.Count - 1; num2 >= 0; num2--)
 						{
 							GameObject gameObject = item.storage.items[num2];
-							Pickupable pickupable = gameObject.GetComponent<Pickupable>().Take(num);
-							if (pickupable != null)
+							if (component4.AcceptedTags.Contains(gameObject.PrefabID()))
 							{
-								component2.Storage.Store(pickupable.gameObject);
-								num -= pickupable.PrimaryElement.Mass;
+								unloading = true;
+								flag = true;
+								if (num <= 0f)
+								{
+									break;
+								}
+								Pickupable pickupable = gameObject.GetComponent<Pickupable>().Take(num);
+								if (pickupable != null)
+								{
+									component2.Storage.Store(pickupable.gameObject);
+									num -= pickupable.PrimaryElement.Mass;
+								}
 							}
 						}
 					}
 				}
-				if (sMI != null && component2 != null)
-				{
-					sMI.SetUnloading(rocketCanTransfer[CargoBay.ElementToCargoMap[component2.ConduitType]]);
-				}
-			}
-			bool flag = true;
-			foreach (KeyValuePair<CargoBay.CargoType, bool> item2 in rocketCanTransfer)
-			{
-				if (item2.Value && modulesCanPump.ContainsKey(item2.Key))
-				{
-					flag = false;
-				}
+				sMI?.SetUnloading(unloading);
 			}
 			pooledDictionary[CargoBay.CargoType.Solids].Recycle();
 			pooledDictionary[CargoBay.CargoType.Liquids].Recycle();
 			pooledDictionary[CargoBay.CargoType.Gasses].Recycle();
 			pooledDictionary.Recycle();
-			if (!flag)
-			{
-				return;
-			}
-			foreach (GameObject linkedBuilding2 in base.gameObject.GetSMI<ChainedBuilding.StatesInstance>().GetLinkedBuildings())
-			{
-				linkedBuilding2.GetSMI<ModularConduitPortController.Instance>()?.SetUnloading(isUnloading: false);
-			}
-			base.sm.emptyComplete.Set(value: true, this);
+			base.sm.emptyComplete.Set(!flag, this);
 		}
 
 		public void FillRocket(float dt)
 		{
-			CraftModuleInterface craftInterface = base.sm.attachedRocket.Get<RocketModule>(base.smi).CraftInterface;
-			DictionaryPool<CargoBay.CargoType, ListPool<CargoBay, LaunchPadMaterialDistributor>.PooledList, LaunchPadMaterialDistributor>.PooledDictionary pooledDictionary = DictionaryPool<CargoBay.CargoType, ListPool<CargoBay, LaunchPadMaterialDistributor>.PooledList, LaunchPadMaterialDistributor>.Allocate();
-			pooledDictionary[CargoBay.CargoType.Solids] = ListPool<CargoBay, LaunchPadMaterialDistributor>.Allocate();
-			pooledDictionary[CargoBay.CargoType.Liquids] = ListPool<CargoBay, LaunchPadMaterialDistributor>.Allocate();
-			pooledDictionary[CargoBay.CargoType.Gasses] = ListPool<CargoBay, LaunchPadMaterialDistributor>.Allocate();
-			rocketCanTransfer[CargoBay.CargoType.Solids] = false;
-			rocketCanTransfer[CargoBay.CargoType.Liquids] = false;
-			rocketCanTransfer[CargoBay.CargoType.Gasses] = false;
-			modulesCanPump[CargoBay.CargoType.Solids] = false;
-			modulesCanPump[CargoBay.CargoType.Liquids] = false;
-			modulesCanPump[CargoBay.CargoType.Gasses] = false;
-			foreach (Ref<RocketModule> module in craftInterface.Modules)
+			CraftModuleInterface craftInterface = base.sm.attachedRocket.Get<RocketModuleCluster>(base.smi).CraftInterface;
+			DictionaryPool<CargoBay.CargoType, ListPool<CargoBayCluster, LaunchPadMaterialDistributor>.PooledList, LaunchPadMaterialDistributor>.PooledDictionary pooledDictionary = DictionaryPool<CargoBay.CargoType, ListPool<CargoBayCluster, LaunchPadMaterialDistributor>.PooledList, LaunchPadMaterialDistributor>.Allocate();
+			pooledDictionary[CargoBay.CargoType.Solids] = ListPool<CargoBayCluster, LaunchPadMaterialDistributor>.Allocate();
+			pooledDictionary[CargoBay.CargoType.Liquids] = ListPool<CargoBayCluster, LaunchPadMaterialDistributor>.Allocate();
+			pooledDictionary[CargoBay.CargoType.Gasses] = ListPool<CargoBayCluster, LaunchPadMaterialDistributor>.Allocate();
+			foreach (Ref<RocketModuleCluster> clusterModule in craftInterface.ClusterModules)
 			{
-				RocketModule rocketModule = module.Get();
-				CargoBay component = rocketModule.GetComponent<CargoBay>();
-				if (component != null && component.storageType != CargoBay.CargoType.Entities && component.storage.RemainingCapacity() > 0f)
+				RocketModuleCluster rocketModuleCluster = clusterModule.Get();
+				CargoBayCluster component = rocketModuleCluster.GetComponent<CargoBayCluster>();
+				if (component != null && component.storageType != CargoBay.CargoType.Entities && component.RemainingCapacity > 0f)
 				{
 					pooledDictionary[component.storageType].Add(component);
-					rocketCanTransfer[component.storageType] = true;
 				}
 			}
+			bool flag = false;
 			foreach (GameObject linkedBuilding in base.gameObject.GetSMI<ChainedBuilding.StatesInstance>().GetLinkedBuildings())
 			{
 				ModularConduitPortController.Instance sMI = linkedBuilding.GetSMI<ModularConduitPortController.Instance>();
 				IConduitConsumer component2 = linkedBuilding.GetComponent<IConduitConsumer>();
+				bool loading = false;
 				if (component2 != null && (sMI == null || sMI.SelectedMode == ModularConduitPortController.Mode.Load || sMI.SelectedMode == ModularConduitPortController.Mode.Both))
 				{
-					modulesCanPump[CargoBay.ElementToCargoMap[component2.ConduitType]] = true;
-					foreach (CargoBay item in pooledDictionary[CargoBay.ElementToCargoMap[component2.ConduitType]])
+					for (int num = component2.Storage.items.Count - 1; num >= 0; num--)
 					{
-						float num = item.storage.RemainingCapacity();
-						float num2 = component2.Storage.MassStored();
-						if (num <= 0f || num2 <= 0f)
+						GameObject gameObject = component2.Storage.items[num];
+						foreach (CargoBayCluster item in pooledDictionary[CargoBayConduit.ElementToCargoMap[component2.ConduitType]])
 						{
-							continue;
-						}
-						for (int num3 = component2.Storage.items.Count - 1; num3 >= 0; num3--)
-						{
-							GameObject gameObject = component2.Storage.items[num3];
-							Pickupable pickupable = gameObject.GetComponent<Pickupable>().Take(num);
-							if (pickupable != null)
+							float remainingCapacity = item.RemainingCapacity;
+							float num2 = component2.Storage.MassStored();
+							if (remainingCapacity <= 0f || num2 <= 0f)
 							{
-								item.storage.Store(pickupable.gameObject);
-								num -= pickupable.PrimaryElement.Mass;
+								continue;
+							}
+							TreeFilterable component3 = item.GetComponent<TreeFilterable>();
+							if (component3.AcceptedTags.Contains(gameObject.PrefabID()))
+							{
+								loading = true;
+								flag = true;
+								Pickupable pickupable = gameObject.GetComponent<Pickupable>().Take(remainingCapacity);
+								if (pickupable != null)
+								{
+									item.storage.Store(pickupable.gameObject);
+									remainingCapacity -= pickupable.PrimaryElement.Mass;
+								}
 							}
 						}
 					}
 				}
-				if (sMI != null && component2 != null)
-				{
-					sMI.SetLoading(rocketCanTransfer[CargoBay.ElementToCargoMap[component2.ConduitType]]);
-				}
-			}
-			bool flag = true;
-			foreach (KeyValuePair<CargoBay.CargoType, bool> item2 in rocketCanTransfer)
-			{
-				if (item2.Value && modulesCanPump.ContainsKey(item2.Key))
-				{
-					flag = false;
-				}
+				sMI?.SetLoading(loading);
 			}
 			pooledDictionary[CargoBay.CargoType.Solids].Recycle();
 			pooledDictionary[CargoBay.CargoType.Liquids].Recycle();
 			pooledDictionary[CargoBay.CargoType.Gasses].Recycle();
 			pooledDictionary.Recycle();
-			if (flag == base.sm.fillComplete.Get(base.smi))
-			{
-				return;
-			}
-			foreach (GameObject linkedBuilding2 in base.gameObject.GetSMI<ChainedBuilding.StatesInstance>().GetLinkedBuildings())
-			{
-				linkedBuilding2.GetSMI<ModularConduitPortController.Instance>()?.SetLoading(isLoading: false);
-			}
-			base.sm.fillComplete.Set(flag, base.smi);
+			base.sm.fillComplete.Set(!flag, base.smi);
 		}
 	}
 
@@ -251,23 +188,24 @@ public class LaunchPadMaterialDistributor : GameStateMachine<LaunchPadMaterialDi
 		operational.noRocket.EventHandler(GameHashes.RocketLanded, delegate(Instance smi, object data)
 		{
 			SetAttachedRocket(smi.GetLandedRocketFromPad(), smi);
-		}).ParamTransition(attachedRocket, operational.hasRocket, (Instance smi, GameObject p) => p != null);
-		operational.hasRocket.DefaultState(operational.hasRocket.emptying).OnTargetLost(attachedRocket, operational.rocketLost).Target(attachedRocket)
-			.EventTransition(GameHashes.DoLaunchRocket, operational.rocketLost)
-			.Target(masterTarget);
-		operational.hasRocket.emptying.ToggleStatusItem(Db.Get().BuildingStatusItems.RocketCargoEmptying).Update(delegate(Instance smi, float dt)
+		}).ParamTransition(attachedRocket, operational.rocketLanding, (Instance smi, GameObject p) => p != null);
+		operational.rocketLanding.Target(attachedRocket).TagTransition(GameTags.RocketOnGround, operational.hasRocket).Target(masterTarget);
+		operational.hasRocket.DefaultState(operational.hasRocket.transferring).Update(delegate(Instance smi, float dt)
 		{
 			smi.EmptyRocket(dt);
-		}, UpdateRate.SIM_1000ms).ParamTransition(emptyComplete, operational.hasRocket.filling, GameStateMachine<LaunchPadMaterialDistributor, Instance, IStateMachineTarget, Def>.IsTrue);
-		operational.hasRocket.filling.ToggleStatusItem(Db.Get().BuildingStatusItems.RocketCargoFilling).ParamTransition(fillComplete, operational.hasRocket.full, GameStateMachine<LaunchPadMaterialDistributor, Instance, IStateMachineTarget, Def>.IsTrue).Update(delegate(Instance smi, float dt)
+		}, UpdateRate.SIM_1000ms).Update(delegate(Instance smi, float dt)
 		{
 			smi.FillRocket(dt);
-		}, UpdateRate.SIM_1000ms);
-		operational.hasRocket.full.ToggleStatusItem(Db.Get().BuildingStatusItems.RocketCargoFull).ToggleTag(GameTags.TransferringCargoComplete).ParamTransition(fillComplete, operational.hasRocket.filling, GameStateMachine<LaunchPadMaterialDistributor, Instance, IStateMachineTarget, Def>.IsFalse)
-			.Update(delegate(Instance smi, float dt)
-			{
-				smi.FillRocket(dt);
-			}, UpdateRate.SIM_1000ms);
+		}, UpdateRate.SIM_1000ms)
+			.OnTargetLost(attachedRocket, operational.rocketLost)
+			.Target(attachedRocket)
+			.EventTransition(GameHashes.DoLaunchRocket, operational.rocketLost)
+			.Target(masterTarget);
+		operational.hasRocket.transferring.DefaultState(operational.hasRocket.transferring.actual).ToggleStatusItem(Db.Get().BuildingStatusItems.RocketCargoEmptying).ToggleStatusItem(Db.Get().BuildingStatusItems.RocketCargoFilling);
+		operational.hasRocket.transferring.actual.ParamTransition(emptyComplete, operational.hasRocket.transferring.delay, (Instance smi, bool p) => emptyComplete.Get(smi) && fillComplete.Get(smi)).ParamTransition(fillComplete, operational.hasRocket.transferring.delay, (Instance smi, bool p) => emptyComplete.Get(smi) && fillComplete.Get(smi));
+		operational.hasRocket.transferring.delay.ParamTransition(fillComplete, operational.hasRocket.transferring.actual, GameStateMachine<LaunchPadMaterialDistributor, Instance, IStateMachineTarget, Def>.IsFalse).ParamTransition(emptyComplete, operational.hasRocket.transferring.actual, GameStateMachine<LaunchPadMaterialDistributor, Instance, IStateMachineTarget, Def>.IsFalse).ScheduleGoTo(4f, operational.hasRocket.transferComplete);
+		operational.hasRocket.transferComplete.ToggleStatusItem(Db.Get().BuildingStatusItems.RocketCargoFull).ToggleTag(GameTags.TransferringCargoComplete).ParamTransition(fillComplete, operational.hasRocket.transferring, GameStateMachine<LaunchPadMaterialDistributor, Instance, IStateMachineTarget, Def>.IsFalse)
+			.ParamTransition(emptyComplete, operational.hasRocket.transferring, GameStateMachine<LaunchPadMaterialDistributor, Instance, IStateMachineTarget, Def>.IsFalse);
 		operational.rocketLost.Enter(delegate(Instance smi)
 		{
 			emptyComplete.Set(value: false, smi);

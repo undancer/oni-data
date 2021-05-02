@@ -39,7 +39,7 @@ public class LineLayer : GraphLayer
 
 	private Texture2D areaTexture;
 
-	private int compressDataToPointCount = 128;
+	private int compressDataToPointCount = 256;
 
 	private DataScalingType compressType = DataScalingType.DropValues;
 

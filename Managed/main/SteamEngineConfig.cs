@@ -12,6 +12,7 @@ public class SteamEngineConfig : IBuildingConfig
 		{
 			SimHashes.Steel.ToString()
 		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		buildingDef.ForbiddenDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;
 		buildingDef.OverheatTemperature = 2273.15f;
@@ -24,7 +25,6 @@ public class SteamEngineConfig : IBuildingConfig
 		buildingDef.RequiresPowerInput = false;
 		buildingDef.CanMove = true;
 		buildingDef.Cancellable = false;
-		buildingDef.ShowInBuildMenu = !DlcManager.IsExpansion1Active();
 		return buildingDef;
 	}
 
@@ -51,7 +51,6 @@ public class SteamEngineConfig : IBuildingConfig
 	public override void DoPostConfigureComplete(GameObject go)
 	{
 		RocketEngine rocketEngine = go.AddOrGet<RocketEngine>();
-		rocketEngine.maxModules = 5;
 		rocketEngine.fuelTag = ElementLoader.FindElementByHash(SimHashes.Steam).tag;
 		rocketEngine.efficiency = ROCKETRY.ENGINE_EFFICIENCY.WEAK;
 		rocketEngine.explosionEffectHash = SpawnFXHashes.MeteorImpactDust;
@@ -79,7 +78,7 @@ public class SteamEngineConfig : IBuildingConfig
 		conduitConsumer.capacityKG = storage.capacityKg;
 		conduitConsumer.forceAlwaysSatisfied = true;
 		conduitConsumer.wrongElementResult = ConduitConsumer.WrongElementResult.Dump;
-		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.MODERATE, "rocket_steam_engine_bg_kanim", ROCKETRY.ENGINE_POWER.WEAKER, ROCKETRY.FUEL_COST_PER_DISTANCE.LOW);
+		BuildingTemplates.ExtendBuildingToRocketModule(go, "rocket_steam_engine_bg_kanim");
 		go.GetComponent<KPrefabID>().prefabInitFn += delegate
 		{
 		};

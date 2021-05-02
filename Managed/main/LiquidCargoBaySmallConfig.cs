@@ -5,7 +5,7 @@ public class LiquidCargoBaySmallConfig : IBuildingConfig
 {
 	public const string ID = "LiquidCargoBaySmall";
 
-	public const float CAPACITY = 500f;
+	public float CAPACITY = 900f * ROCKETRY.CARGO_CAPACITY_SCALE;
 
 	public override BuildingDef CreateBuildingDef()
 	{
@@ -38,12 +38,7 @@ public class LiquidCargoBaySmallConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		CargoBay cargoBay = go.AddOrGet<CargoBay>();
-		cargoBay.storage = go.AddOrGet<Storage>();
-		cargoBay.storageType = CargoBay.CargoType.Liquids;
-		cargoBay.storage.capacityKg = 500f;
-		cargoBay.storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
-		cargoBay.storage.showCapacityStatusItem = true;
-		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.MINOR_PLUS, null);
+		go = BuildingTemplates.ExtendBuildingToClusterCargoBay(go, CAPACITY, STORAGEFILTERS.LIQUIDS, CargoBay.CargoType.Liquids);
+		BuildingTemplates.ExtendBuildingToRocketModuleCluster(go, null, ROCKETRY.BURDEN.MINOR_PLUS);
 	}
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using KSerialization;
 using UnityEngine;
 
 public abstract class ClusterGridEntity : KMonoBehaviour
@@ -10,11 +11,16 @@ public abstract class ClusterGridEntity : KMonoBehaviour
 		public string initialAnim;
 	}
 
+	[Serialize]
+	protected AxialI m_location;
+
 	[MyCmpGet]
 	private KSelectable m_selectable;
 
 	[MyCmpReq]
 	private Transform m_transform;
+
+	public bool isWorldEntity;
 
 	public abstract string Name
 	{
@@ -31,14 +37,56 @@ public abstract class ClusterGridEntity : KMonoBehaviour
 		get;
 	}
 
-	public abstract AxialI Location
+	public abstract bool IsVisible
 	{
 		get;
 	}
 
-	public abstract bool IsVisible
+	public abstract ClusterRevealLevel IsVisibleInFOW
 	{
 		get;
+	}
+
+	public AxialI Location
+	{
+		get
+		{
+			return m_location;
+		}
+		set
+		{
+			if (value != m_location)
+			{
+				AxialI location = m_location;
+				m_location = value;
+				SendClusterLocationChangedEvent(location, m_location);
+			}
+		}
+	}
+
+	public virtual bool ShowName()
+	{
+		return false;
+	}
+
+	public virtual bool ShowProgressBar()
+	{
+		return false;
+	}
+
+	public virtual float GetProgress()
+	{
+		return 0f;
+	}
+
+	public virtual bool SpaceOutInSameHex()
+	{
+		return false;
+	}
+
+	public virtual bool ShowPath()
+	{
+		return true;
 	}
 
 	protected override void OnSpawn()
@@ -48,7 +96,10 @@ public abstract class ClusterGridEntity : KMonoBehaviour
 		{
 			m_selectable.SetName(Name);
 		}
-		m_transform.SetLocalPosition(new Vector3(-1f, 0f, 0f));
+		if (!isWorldEntity)
+		{
+			m_transform.SetLocalPosition(new Vector3(-1f, 0f, 0f));
+		}
 	}
 
 	protected override void OnCleanUp()
@@ -64,5 +115,16 @@ public abstract class ClusterGridEntity : KMonoBehaviour
 			return Def.GetUISpriteFromMultiObjectAnim(animConfigs[0].animFile);
 		}
 		return null;
+	}
+
+	public void SendClusterLocationChangedEvent(AxialI oldLocation, AxialI newLocation)
+	{
+		ClusterLocationChangedEvent clusterLocationChangedEvent = default(ClusterLocationChangedEvent);
+		clusterLocationChangedEvent.entity = this;
+		clusterLocationChangedEvent.oldLocation = oldLocation;
+		clusterLocationChangedEvent.newLocation = newLocation;
+		ClusterLocationChangedEvent clusterLocationChangedEvent2 = clusterLocationChangedEvent;
+		Trigger(-1298331547, clusterLocationChangedEvent2);
+		Game.Instance.Trigger(-1298331547, clusterLocationChangedEvent2);
 	}
 }

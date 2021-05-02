@@ -19,6 +19,10 @@ public class WorldGenScreen : NewGameFlowScreen
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
+		if (MainMenu.Instance != null)
+		{
+			MainMenu.Instance.StopAmbience();
+		}
 		TriggerLoadingMusic();
 		UnityEngine.Object.FindObjectOfType<FrontEndBackground>().gameObject.SetActive(value: false);
 		SaveLoader.SetActiveSaveFilePath(null);

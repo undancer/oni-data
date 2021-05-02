@@ -24,7 +24,7 @@ public class BasicSingleHarvestPlantConfig : IEntityConfig
 			SimHashes.Oxygen,
 			SimHashes.ContaminatedOxygen,
 			SimHashes.CarbonDioxide
-		}, pressure_sensitive: true, 0f, 0.15f, "BasicPlantFood", can_drown: true, can_tinker: false);
+		}, pressure_sensitive: true, 0f, 0.15f, "BasicPlantFood", can_drown: true, can_tinker: false, require_solid_tile: true, should_grow_old: true, 2400f, "BasicSingleHarvestPlantOriginal", STRINGS.CREATURES.SPECIES.BASICSINGLEHARVESTPLANT.NAME);
 		gameObject.AddOrGet<StandardCropPlant>();
 		gameObject.AddOrGet<KAnimControllerBase>().randomiseLoopedOffset = true;
 		gameObject.AddOrGet<LoopingSounds>();

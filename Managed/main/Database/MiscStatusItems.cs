@@ -90,6 +90,10 @@ namespace Database
 
 		public StatusItem HighEnergyParticleCount;
 
+		public StatusItem Durability;
+
+		public StatusItem StoredItemDurability;
+
 		public MiscStatusItems(ResourceSet parent)
 			: base("MiscStatusItems", parent)
 		{
@@ -126,15 +130,15 @@ namespace Database
 			OreMass = CreateStatusItem("OreMass", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			OreMass.resolveStringCallback = delegate(string str, object data)
 			{
-				GameObject gameObject3 = (GameObject)data;
-				str = str.Replace("{Mass}", GameUtil.GetFormattedMass(gameObject3.GetComponent<PrimaryElement>().Mass));
+				GameObject gameObject5 = (GameObject)data;
+				str = str.Replace("{Mass}", GameUtil.GetFormattedMass(gameObject5.GetComponent<PrimaryElement>().Mass));
 				return str;
 			};
 			OreTemp = CreateStatusItem("OreTemp", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			OreTemp.resolveStringCallback = delegate(string str, object data)
 			{
-				GameObject gameObject2 = (GameObject)data;
-				str = str.Replace("{Temp}", GameUtil.GetFormattedTemperature(gameObject2.GetComponent<PrimaryElement>().Temperature));
+				GameObject gameObject4 = (GameObject)data;
+				str = str.Replace("{Temp}", GameUtil.GetFormattedTemperature(gameObject4.GetComponent<PrimaryElement>().Temperature));
 				return str;
 			};
 			ElementalState = CreateStatusItem("ElementalState", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
@@ -229,32 +233,32 @@ namespace Database
 			SpoutOverPressure.resolveStringCallback = delegate(string str, object data)
 			{
 				Geyser.StatesInstance statesInstance4 = (Geyser.StatesInstance)data;
-				Studyable component5 = statesInstance4.GetComponent<Studyable>();
-				str = ((statesInstance4 == null || !(component5 != null) || !component5.Studied) ? str.Replace("{StudiedDetails}", "") : str.Replace("{StudiedDetails}", MISC.STATUSITEMS.SPOUTOVERPRESSURE.STUDIED.text.Replace("{Time}", GameUtil.GetFormattedCycles(statesInstance4.master.RemainingEruptTime()))));
+				Studyable component7 = statesInstance4.GetComponent<Studyable>();
+				str = ((statesInstance4 == null || !(component7 != null) || !component7.Studied) ? str.Replace("{StudiedDetails}", "") : str.Replace("{StudiedDetails}", MISC.STATUSITEMS.SPOUTOVERPRESSURE.STUDIED.text.Replace("{Time}", GameUtil.GetFormattedCycles(statesInstance4.master.RemainingEruptTime()))));
 				return str;
 			};
 			SpoutEmitting = CreateStatusItem("SpoutEmitting", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			SpoutEmitting.resolveStringCallback = delegate(string str, object data)
 			{
 				Geyser.StatesInstance statesInstance3 = (Geyser.StatesInstance)data;
-				Studyable component4 = statesInstance3.GetComponent<Studyable>();
-				str = ((statesInstance3 == null || !(component4 != null) || !component4.Studied) ? str.Replace("{StudiedDetails}", "") : str.Replace("{StudiedDetails}", MISC.STATUSITEMS.SPOUTEMITTING.STUDIED.text.Replace("{Time}", GameUtil.GetFormattedCycles(statesInstance3.master.RemainingEruptTime()))));
+				Studyable component6 = statesInstance3.GetComponent<Studyable>();
+				str = ((statesInstance3 == null || !(component6 != null) || !component6.Studied) ? str.Replace("{StudiedDetails}", "") : str.Replace("{StudiedDetails}", MISC.STATUSITEMS.SPOUTEMITTING.STUDIED.text.Replace("{Time}", GameUtil.GetFormattedCycles(statesInstance3.master.RemainingEruptTime()))));
 				return str;
 			};
 			SpoutPressureBuilding = CreateStatusItem("SpoutPressureBuilding", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			SpoutPressureBuilding.resolveStringCallback = delegate(string str, object data)
 			{
 				Geyser.StatesInstance statesInstance2 = (Geyser.StatesInstance)data;
-				Studyable component3 = statesInstance2.GetComponent<Studyable>();
-				str = ((statesInstance2 == null || !(component3 != null) || !component3.Studied) ? str.Replace("{StudiedDetails}", "") : str.Replace("{StudiedDetails}", MISC.STATUSITEMS.SPOUTPRESSUREBUILDING.STUDIED.text.Replace("{Time}", GameUtil.GetFormattedCycles(statesInstance2.master.RemainingNonEruptTime()))));
+				Studyable component5 = statesInstance2.GetComponent<Studyable>();
+				str = ((statesInstance2 == null || !(component5 != null) || !component5.Studied) ? str.Replace("{StudiedDetails}", "") : str.Replace("{StudiedDetails}", MISC.STATUSITEMS.SPOUTPRESSUREBUILDING.STUDIED.text.Replace("{Time}", GameUtil.GetFormattedCycles(statesInstance2.master.RemainingNonEruptTime()))));
 				return str;
 			};
 			SpoutIdle = CreateStatusItem("SpoutIdle", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			SpoutIdle.resolveStringCallback = delegate(string str, object data)
 			{
 				Geyser.StatesInstance statesInstance = (Geyser.StatesInstance)data;
-				Studyable component2 = statesInstance.GetComponent<Studyable>();
-				str = ((statesInstance == null || !(component2 != null) || !component2.Studied) ? str.Replace("{StudiedDetails}", "") : str.Replace("{StudiedDetails}", MISC.STATUSITEMS.SPOUTIDLE.STUDIED.text.Replace("{Time}", GameUtil.GetFormattedCycles(statesInstance.master.RemainingNonEruptTime()))));
+				Studyable component4 = statesInstance.GetComponent<Studyable>();
+				str = ((statesInstance == null || !(component4 != null) || !component4.Studied) ? str.Replace("{StudiedDetails}", "") : str.Replace("{StudiedDetails}", MISC.STATUSITEMS.SPOUTIDLE.STUDIED.text.Replace("{Time}", GameUtil.GetFormattedCycles(statesInstance.master.RemainingNonEruptTime()))));
 				return str;
 			};
 			SpoutDormant = CreateStatusItem("SpoutDormant", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
@@ -272,10 +276,10 @@ namespace Database
 				Workable workable = (Workable)data;
 				if (workable != null)
 				{
-					KSelectable component = workable.GetComponent<KSelectable>();
-					if (component != null)
+					KSelectable component3 = workable.GetComponent<KSelectable>();
+					if (component3 != null)
 					{
-						str = str.Replace("{Target}", component.GetName());
+						str = str.Replace("{Target}", component3.GetName());
 					}
 				}
 				return str;
@@ -288,8 +292,25 @@ namespace Database
 			HighEnergyParticleCount = CreateStatusItem("HighEnergyParticleCount", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			HighEnergyParticleCount.resolveStringCallback = delegate(string str, object data)
 			{
+				GameObject gameObject3 = (GameObject)data;
+				str = GameUtil.GetFormattedHighEnergyParticles(gameObject3.GetComponent<HighEnergyParticle>().payload);
+				return str;
+			};
+			Durability = CreateStatusItem("Durability", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			Durability.resolveStringCallback = delegate(string str, object data)
+			{
+				GameObject gameObject2 = (GameObject)data;
+				Durability component2 = gameObject2.GetComponent<Durability>();
+				str = str.Replace("{durability}", GameUtil.GetFormattedPercent(component2.GetDurability() * 100f));
+				return str;
+			};
+			StoredItemDurability = CreateStatusItem("StoredItemDurability", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			StoredItemDurability.resolveStringCallback = delegate(string str, object data)
+			{
 				GameObject gameObject = (GameObject)data;
-				str = GameUtil.GetFormattedHighEnergyParticles(gameObject.GetComponent<HighEnergyParticle>().payload);
+				Durability component = gameObject.GetComponent<Durability>();
+				float percent = ((component != null) ? (component.GetDurability() * 100f) : 100f);
+				str = str.Replace("{durability}", GameUtil.GetFormattedPercent(percent));
 				return str;
 			};
 		}

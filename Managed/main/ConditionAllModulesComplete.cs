@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class ConditionAllModulesComplete : ProcessCondition
 {
-	private LaunchableRocket launchable;
+	private ILaunchableRocket launchable;
 
-	public ConditionAllModulesComplete(LaunchableRocket launchable)
+	public ConditionAllModulesComplete(ILaunchableRocket launchable)
 	{
 		this.launchable = launchable;
 	}
 
 	public override Status EvaluateCondition()
 	{
-		List<GameObject> attachedNetwork = AttachableBuilding.GetAttachedNetwork(launchable.GetComponent<AttachableBuilding>());
+		List<GameObject> attachedNetwork = AttachableBuilding.GetAttachedNetwork(launchable.LaunchableGameObject.GetComponent<AttachableBuilding>());
 		foreach (GameObject item in attachedNetwork)
 		{
 			if (item.GetComponent<Constructable>() != null || item.GetComponent<Building>().Def.PrefabID == "UnconstructedRocketModule")

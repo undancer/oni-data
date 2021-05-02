@@ -431,7 +431,25 @@ namespace ProcGenGame
 			return result;
 		}
 
-		private void ApplyPlaceElementForRoom(FeatureSettings feature, string group, List<Vector2I> cells, Chunk world, SetValuesFunction SetValues, float temperatureMin, float temperatureRange, SeededRandom rnd, HashSet<int> highPriorityClaims)
+		private bool IsAllowed(Vector2 point, WorldGen worldGen)
+		{
+			if (!poly.Contains(point) && node.tags.Contains(WorldGenTags.AllowExceedNodeBorders))
+			{
+				TerrainCell terrainCell = worldGen.TerrainCells.Find((TerrainCell x) => x.poly.Contains(point));
+				if (terrainCell != null)
+				{
+					SubWorld subWorld = worldGen.Settings.GetSubWorld(node.GetSubworld());
+					SubWorld subWorld2 = worldGen.Settings.GetSubWorld(terrainCell.node.GetSubworld());
+					if (subWorld.zoneType != subWorld2.zoneType)
+					{
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
+		private void ApplyPlaceElementForRoom(FeatureSettings feature, string group, List<Vector2I> cells, WorldGen worldGen, Chunk world, SetValuesFunction SetValues, float temperatureMin, float temperatureRange, SeededRandom rnd, HashSet<int> highPriorityClaims)
 		{
 			if (cells == null || cells.Count == 0 || !feature.HasGroup(group))
 			{
@@ -445,7 +463,7 @@ namespace ProcGenGame
 				for (int i = 0; i < cells.Count; i++)
 				{
 					int num = Grid.XYToCell(cells[i].x, cells[i].y);
-					if (Grid.IsValidCell(num) && !highPriorityClaims.Contains(num))
+					if (Grid.IsValidCell(num) && !highPriorityClaims.Contains(num) && IsAllowed(cells[i], worldGen))
 					{
 						WeightedSimHash oneWeightedSimHash = feature.GetOneWeightedSimHash(group, rnd);
 						ElementOverride elementOverride = GetElementOverride(oneWeightedSimHash.element, oneWeightedSimHash.overrides);
@@ -475,7 +493,7 @@ namespace ProcGenGame
 				for (int k = 0; k < cells.Count; k++)
 				{
 					int num5 = Grid.XYToCell(cells[k].x, cells[k].y);
-					if (Grid.IsValidCell(num5) && !highPriorityClaims.Contains(num5))
+					if (Grid.IsValidCell(num5) && !highPriorityClaims.Contains(num5) && IsAllowed(cells[k], worldGen))
 					{
 						float percentage = 1f - (float)(cells[k].y - num2) / (float)num4;
 						WeightedSimHash weightedSimHashAtChoice = feature.GetWeightedSimHashAtChoice(group, percentage);
@@ -499,7 +517,7 @@ namespace ProcGenGame
 			for (int l = 0; l < cells.Count; l++)
 			{
 				int num6 = Grid.XYToCell(cells[l].x, cells[l].y);
-				if (Grid.IsValidCell(num6) && !highPriorityClaims.Contains(num6))
+				if (Grid.IsValidCell(num6) && !highPriorityClaims.Contains(num6) && IsAllowed(cells[l], worldGen))
 				{
 					ElementOverride elementOverride3 = GetElementOverride(oneWeightedSimHash2.element, oneWeightedSimHash2.overrides);
 					if (!elementOverride3.overrideTemperature)
@@ -677,12 +695,12 @@ namespace ProcGenGame
 			}
 			LogInfo("\t\t", "claimed points", featureSpawnPoints.Count);
 			availableTerrainPoints.ExceptWith(featureSpawnPoints);
-			ApplyPlaceElementForRoom(featureSettings, "RoomCenterElements", featureCenterPoints, world, SetValues, temperatureMin, temperatureRange, rnd, worldGen.HighPriorityClaimedCells);
+			ApplyPlaceElementForRoom(featureSettings, "RoomCenterElements", featureCenterPoints, worldGen, world, SetValues, temperatureMin, temperatureRange, rnd, worldGen.HighPriorityClaimedCells);
 			if (featureBorders != null)
 			{
 				for (int i = 0; i < featureBorders.Count; i++)
 				{
-					ApplyPlaceElementForRoom(featureSettings, "RoomBorderChoices" + i, featureBorders[i], world, SetValues, temperatureMin, temperatureRange, rnd, worldGen.HighPriorityClaimedCells);
+					ApplyPlaceElementForRoom(featureSettings, "RoomBorderChoices" + i, featureBorders[i], worldGen, world, SetValues, temperatureMin, temperatureRange, rnd, worldGen.HighPriorityClaimedCells);
 				}
 			}
 			if (featureSettings.tags.Contains(WorldGenTags.HighPriorityFeature.Name))
@@ -706,8 +724,9 @@ namespace ProcGenGame
 			bool flag7 = leafForTerrainCell.tags.Contains(WorldGenTags.ErodePointToBorder);
 			bool flag8 = leafForTerrainCell.tags.Contains(WorldGenTags.ErodePointToBorderInv);
 			bool flag9 = leafForTerrainCell.tags.Contains(WorldGenTags.ErodePointToWorldTop);
-			bool flag10 = leafForTerrainCell.tags.Contains(WorldGenTags.DistFunctionPointCentroid);
-			bool flag11 = leafForTerrainCell.tags.Contains(WorldGenTags.DistFunctionPointEdge);
+			bool flag10 = leafForTerrainCell.tags.Contains(WorldGenTags.ErodePointToWorldTopOrSide);
+			bool flag11 = leafForTerrainCell.tags.Contains(WorldGenTags.DistFunctionPointCentroid);
+			bool flag12 = leafForTerrainCell.tags.Contains(WorldGenTags.DistFunctionPointEdge);
 			LogInfo("Getting Element Bands", node.type, 0f);
 			ElementBandConfiguration elementBandConfiguration = worldGen.Settings.GetElementBandForBiome(node.type);
 			if (elementBandConfiguration == null && node.biomeSpecificTags != null)
@@ -760,7 +779,7 @@ namespace ProcGenGame
 				if (flag3 || flag4)
 				{
 					float num4 = 15f;
-					if (flag11)
+					if (flag12)
 					{
 						float timeOnEdge = 0f;
 						MathUtil.Pair<Vector2, Vector2> closestEdge = poly.GetClosestEdge(vector, ref timeOnEdge);
@@ -780,7 +799,7 @@ namespace ProcGenGame
 					MathUtil.Pair<Vector2, Vector2> closestEdge2 = poly.GetClosestEdge(vector, ref timeOnEdge2);
 					Vector2 a2 = closestEdge2.First + (closestEdge2.Second - closestEdge2.First) * timeOnEdge2;
 					float num5 = 15f;
-					if (flag10)
+					if (flag11)
 					{
 						num5 = Vector2.Distance(poly.Centroid(), vector);
 					}
@@ -803,7 +822,7 @@ namespace ProcGenGame
 						num6 = Mathf.Min(a3, num6);
 					}
 					float num7 = 20f;
-					if (flag10)
+					if (flag11)
 					{
 						num7 = Vector2.Distance(poly.Centroid(), vector);
 					}
@@ -822,15 +841,27 @@ namespace ProcGenGame
 					float num10 = (float)y - vector.y;
 					num3 = ((num10 < num8) ? 0f : ((!(num10 < num9)) ? 1f : Mathf.Clamp01((num10 - num8) / (num9 - num8))));
 				}
+				if (flag10)
+				{
+					int y2 = worldGen.WorldSize.y;
+					int x = worldGen.WorldSize.x;
+					float num11 = 2f;
+					float num12 = 10f;
+					float num13 = (float)y2 - vector.y;
+					float x2 = vector.x;
+					float num14 = (float)x - vector.x;
+					float num15 = Mathf.Min(num13, x2, num14);
+					num3 = ((num15 < num11) ? 0f : ((!(num15 < num12)) ? 1f : Mathf.Clamp01((num15 - num11) / (num12 - num11))));
+				}
 				worldGen.GetElementForBiomePoint(world, elementBandConfiguration, pos, out var element, out var pd, out var dc, num3);
 				if (!element.IsVacuum && element.id != SimHashes.Katairite && element.id != SimHashes.Unobtanium)
 				{
-					float num11 = temperatureMin;
+					float num16 = temperatureMin;
 					if (element.lowTempTransition != null && temperatureMin < element.lowTemp)
 					{
-						num11 = element.lowTemp;
+						num16 = element.lowTemp;
 					}
-					pd.temperature = num11 + world.heatOffset[availableTerrainPoint] * temperatureRange;
+					pd.temperature = num16 + world.heatOffset[availableTerrainPoint] * temperatureRange;
 				}
 				if (element.IsSolid && !flag && num2 > floatSetting && num2 < 100f)
 				{

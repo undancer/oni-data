@@ -1512,6 +1512,45 @@ public class StateMachine<StateMachineType, StateMachineInstanceType, MasterType
 		}
 	}
 
+	public class TagParameter : Parameter<Tag>
+	{
+		public new class Context : Parameter<Tag>.Context
+		{
+			public Context(Parameter parameter, Tag default_value)
+				: base(parameter, default_value)
+			{
+			}
+
+			public override void Serialize(BinaryWriter writer)
+			{
+				writer.Write(value.GetHash());
+			}
+
+			public override void Deserialize(IReader reader, Instance smi)
+			{
+				value = new Tag(reader.ReadInt32());
+			}
+
+			public override void ShowEditor(Instance base_smi)
+			{
+			}
+		}
+
+		public TagParameter()
+		{
+		}
+
+		public TagParameter(Tag default_value)
+			: base(default_value)
+		{
+		}
+
+		public override Parameter.Context CreateContext()
+		{
+			return new Context(this, defaultValue);
+		}
+	}
+
 	public class ObjectParameter<ObjectType> : Parameter<ObjectType> where ObjectType : class
 	{
 		public new class Context : Parameter<ObjectType>.Context

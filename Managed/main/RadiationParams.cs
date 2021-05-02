@@ -1,4 +1,9 @@
 public enum RadiationParams
 {
-	RadiationDecay
+	LingerRate,
+	CosmicRads,
+	BaseWeight,
+	DensityWeight,
+	ConstructedFactor,
+	MaxMass
 }

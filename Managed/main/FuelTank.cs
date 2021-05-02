@@ -2,21 +2,19 @@ using System.Collections.Generic;
 using KSerialization;
 using UnityEngine;
 
-public class FuelTank : KMonoBehaviour, IUserControlledCapacity
+public class FuelTank : KMonoBehaviour, IUserControlledCapacity, IFuelTank
 {
 	public Storage storage;
-
-	private bool isSuspended = false;
 
 	private MeterController meter;
 
 	[Serialize]
-	public float targetFillMass;
+	public float targetFillMass = -1f;
 
 	[SerializeField]
 	public float physicalFuelCapacity;
 
-	public bool consumeFuelOnLand = true;
+	public bool consumeFuelOnLand;
 
 	[SerializeField]
 	private Tag fuelType;
@@ -36,7 +34,9 @@ public class FuelTank : KMonoBehaviour, IUserControlledCapacity
 		component.OnStorageChange(data);
 	});
 
-	public bool IsSuspended => isSuspended;
+	public IStorage Storage => storage;
+
+	public bool ConsumeFuelOnLand => consumeFuelOnLand;
 
 	public float UserMaxCapacity
 	{
@@ -103,8 +103,15 @@ public class FuelTank : KMonoBehaviour, IUserControlledCapacity
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
+		if (targetFillMass == -1f)
+		{
+			targetFillMass = physicalFuelCapacity;
+		}
 		GetComponent<KBatchedAnimController>().Play("grounded", KAnim.PlayMode.Loop);
-		GetComponent<RocketModule>().AddModuleCondition(ProcessCondition.ProcessConditionType.RocketPrep, new ConditionProperlyFueled(this));
+		if (DlcManager.IsExpansion1Active())
+		{
+			GetComponent<RocketModule>().AddModuleCondition(ProcessCondition.ProcessConditionType.RocketStorage, new ConditionProperlyFueled(this));
+		}
 		Subscribe(-887025858, OnRocketLandedDelegate);
 		UserMaxCapacity = UserMaxCapacity;
 		meter = new MeterController(GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.Infront, Grid.SceneLayer.NoLayer, "meter_target", "meter_fill", "meter_frame", "meter_OL");
@@ -120,7 +127,7 @@ public class FuelTank : KMonoBehaviour, IUserControlledCapacity
 
 	private void OnRocketLanded(object data)
 	{
-		if (consumeFuelOnLand)
+		if (ConsumeFuelOnLand)
 		{
 			storage.ConsumeAllIgnoringDisease();
 		}
@@ -138,10 +145,43 @@ public class FuelTank : KMonoBehaviour, IUserControlledCapacity
 
 	public void DEBUG_FillTank()
 	{
-		RocketEngine rocketEngine = null;
-		foreach (GameObject item in AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>()))
+		if (DlcManager.IsExpansion1Active())
 		{
-			rocketEngine = item.GetComponent<RocketEngine>();
+			RocketEngineCluster rocketEngineCluster = null;
+			foreach (GameObject item in AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>()))
+			{
+				rocketEngineCluster = item.GetComponent<RocketEngineCluster>();
+				if (rocketEngineCluster != null && rocketEngineCluster.mainEngine)
+				{
+					break;
+				}
+			}
+			if (rocketEngineCluster != null)
+			{
+				Element element = ElementLoader.GetElement(rocketEngineCluster.fuelTag);
+				if (element.IsLiquid)
+				{
+					storage.AddLiquid(element.id, targetFillMass - storage.MassStored(), element.defaultValues.temperature, 0, 0);
+				}
+				else if (element.IsGas)
+				{
+					storage.AddGasChunk(element.id, targetFillMass - storage.MassStored(), element.defaultValues.temperature, 0, 0, keep_zero_mass: false);
+				}
+				else if (element.IsSolid)
+				{
+					storage.AddOre(element.id, targetFillMass - storage.MassStored(), element.defaultValues.temperature, 0, 0);
+				}
+			}
+			else
+			{
+				Debug.LogWarning("Fuel tank couldn't find rocket engine");
+			}
+			return;
+		}
+		RocketEngine rocketEngine = null;
+		foreach (GameObject item2 in AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>()))
+		{
+			rocketEngine = item2.GetComponent<RocketEngine>();
 			if (rocketEngine != null && rocketEngine.mainEngine)
 			{
 				break;
@@ -149,18 +189,18 @@ public class FuelTank : KMonoBehaviour, IUserControlledCapacity
 		}
 		if (rocketEngine != null)
 		{
-			Element element = ElementLoader.GetElement(rocketEngine.fuelTag);
-			if (element.IsLiquid)
+			Element element2 = ElementLoader.GetElement(rocketEngine.fuelTag);
+			if (element2.IsLiquid)
 			{
-				storage.AddLiquid(element.id, targetFillMass - storage.MassStored(), element.defaultValues.temperature, 0, 0);
+				storage.AddLiquid(element2.id, targetFillMass - storage.MassStored(), element2.defaultValues.temperature, 0, 0);
 			}
-			else if (element.IsGas)
+			else if (element2.IsGas)
 			{
-				storage.AddGasChunk(element.id, targetFillMass - storage.MassStored(), element.defaultValues.temperature, 0, 0, keep_zero_mass: false);
+				storage.AddGasChunk(element2.id, targetFillMass - storage.MassStored(), element2.defaultValues.temperature, 0, 0, keep_zero_mass: false);
 			}
-			else if (element.IsSolid)
+			else if (element2.IsSolid)
 			{
-				storage.AddOre(element.id, targetFillMass - storage.MassStored(), element.defaultValues.temperature, 0, 0);
+				storage.AddOre(element2.id, targetFillMass - storage.MassStored(), element2.defaultValues.temperature, 0, 0);
 			}
 		}
 		else

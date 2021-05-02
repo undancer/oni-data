@@ -23,14 +23,20 @@ public class HandSanitizer : StateMachineComponent<HandSanitizer.SMInstance>, IG
 				{
 					return false;
 				}
+				MinionIdentity component2 = new_reactor.GetComponent<MinionIdentity>();
+				bool flag = component2.GetEquipment().IsSlotOccupied(Db.Get().AssignableSlots.Suit);
+				if (!component.canSanitizeSuit && flag)
+				{
+					return false;
+				}
 				if (component.alwaysUse)
 				{
 					return true;
 				}
-				PrimaryElement component2 = new_reactor.GetComponent<PrimaryElement>();
-				if (component2 != null)
+				PrimaryElement component3 = new_reactor.GetComponent<PrimaryElement>();
+				if (component3 != null)
 				{
-					return component2.DiseaseIdx != byte.MaxValue;
+					return component3.DiseaseIdx != byte.MaxValue;
 				}
 			}
 			return false;
@@ -191,6 +197,20 @@ public class HandSanitizer : StateMachineComponent<HandSanitizer.SMInstance>, IG
 			invalid.count = num;
 			component3.ModifyDiseaseCount(-num, "HandSanitizer.OnWorkTick");
 			component.maxPossiblyRemoved += num;
+			if (component.canSanitizeStorage && (bool)worker.GetComponent<Storage>())
+			{
+				Storage component4 = worker.GetComponent<Storage>();
+				foreach (GameObject item in component4.GetItems())
+				{
+					PrimaryElement component5 = item.GetComponent<PrimaryElement>();
+					if ((bool)component5)
+					{
+						int num2 = Math.Min((int)(dt / workTime * (float)component.diseaseRemovalCount), component5.DiseaseCount);
+						component5.ModifyDiseaseCount(-num2, "HandSanitizer.OnWorkTick");
+						component.maxPossiblyRemoved += num2;
+					}
+				}
+			}
 			SimUtil.DiseaseInfo disease_info = SimUtil.DiseaseInfo.Invalid;
 			component2.ConsumeAndGetDisease(ElementLoader.FindElementByHash(component.consumedElement).tag, amount, out var amount_consumed, out disease_info, out var aggregate_temperature);
 			if (component.outputElement != SimHashes.Vacuum)
@@ -224,6 +244,10 @@ public class HandSanitizer : StateMachineComponent<HandSanitizer.SMInstance>, IG
 	public bool dumpWhenFull = false;
 
 	public bool alwaysUse = false;
+
+	public bool canSanitizeSuit = false;
+
+	public bool canSanitizeStorage = false;
 
 	private WorkableReactable reactable;
 

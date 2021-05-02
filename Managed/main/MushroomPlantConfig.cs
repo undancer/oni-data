@@ -22,7 +22,7 @@ public class MushroomPlantConfig : IEntityConfig
 		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 228.15f, 278.15f, 308.15f, 398.15f, new SimHashes[1]
 		{
 			SimHashes.CarbonDioxide
-		}, pressure_sensitive: true, 0f, 0.15f, MushroomConfig.ID);
+		}, pressure_sensitive: true, 0f, 0.15f, MushroomConfig.ID, can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, 2400f, "MushroomPlantOriginal", STRINGS.CREATURES.SPECIES.MUSHROOMPLANT.NAME);
 		EntityTemplates.ExtendPlantToFertilizable(gameObject, new PlantElementAbsorber.ConsumeInfo[1]
 		{
 			new PlantElementAbsorber.ConsumeInfo

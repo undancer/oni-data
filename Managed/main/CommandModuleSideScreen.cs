@@ -13,8 +13,6 @@ public class CommandModuleSideScreen : SideScreenContent
 
 	public MultiToggle destinationButton;
 
-	public MultiToggle destinationButtonExpansion;
-
 	public MultiToggle debugVictoryButton;
 
 	[Tooltip("This list is indexed by the ProcessCondition.Status enum")]
@@ -120,10 +118,11 @@ public class CommandModuleSideScreen : SideScreenContent
 					gameObject.SetActive(value: true);
 				}
 				ProcessCondition.Status status = item.EvaluateCondition();
+				bool flag2 = status == ProcessCondition.Status.Ready;
 				component.GetReference<LocText>("Label").text = item.GetStatusMessage(status);
-				component.GetReference<LocText>("Label").color = statusColors[(int)status];
-				component.GetReference<Image>("Box").color = statusColors[(int)status];
-				component.GetReference<Image>("Check").gameObject.SetActive(status != ProcessCondition.Status.Failure);
+				component.GetReference<LocText>("Label").color = (flag2 ? Color.black : Color.red);
+				component.GetReference<Image>("Box").color = (flag2 ? Color.black : Color.red);
+				component.GetReference<Image>("Check").gameObject.SetActive(flag2);
 				gameObject.GetComponent<ToolTip>().SetSimpleTooltip(item.GetStatusTooltip(status));
 				continue;
 			}
@@ -143,13 +142,10 @@ public class CommandModuleSideScreen : SideScreenContent
 			ClearConditions();
 			ConfigureConditions();
 		}
+		destinationButton.gameObject.SetActive(ManagementMenu.StarmapAvailable());
 		destinationButton.onClick = delegate
 		{
 			ManagementMenu.Instance.ToggleStarmap();
-		};
-		destinationButtonExpansion.onClick = delegate
-		{
-			ClusterMapScreen.Instance.Show();
 		};
 	}
 

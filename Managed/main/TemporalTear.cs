@@ -5,9 +5,6 @@ using KSerialization;
 public class TemporalTear : ClusterGridEntity
 {
 	[Serialize]
-	private AxialI m_location;
-
-	[Serialize]
 	private bool m_open;
 
 	[Serialize]
@@ -26,13 +23,13 @@ public class TemporalTear : ClusterGridEntity
 		}
 	};
 
-	public override AxialI Location => m_location;
-
 	public override bool IsVisible => true;
+
+	public override ClusterRevealLevel IsVisibleInFOW => ClusterRevealLevel.Peeked;
 
 	public void Init(AxialI location)
 	{
-		m_location = location;
+		base.Location = location;
 	}
 
 	protected override void OnSpawn()
@@ -51,7 +48,7 @@ public class TemporalTear : ClusterGridEntity
 	{
 		Clustercraft clustercraft = ((ClusterLocationChangedEvent)data).entity as Clustercraft;
 		Debug.Assert(clustercraft != null, $"ClusterLocationChanged sent for a non-Clustercraft object: {data}");
-		if (m_open && clustercraft.Location == Location && !clustercraft.IsFlightInProgress())
+		if (m_open && clustercraft.Location == base.Location && !clustercraft.IsFlightInProgress())
 		{
 			clustercraft.DestroyCraftAndModules();
 			m_hasConsumedCraft = true;

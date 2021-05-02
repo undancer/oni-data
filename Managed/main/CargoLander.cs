@@ -108,14 +108,14 @@ public class CargoLander : GameStateMachine<CargoLander, CargoLander.StatesInsta
 				List<MinionStorage.Info> storedMinionInfo = component.GetStoredMinionInfo();
 				for (int num = storedMinionInfo.Count - 1; num >= 0; num--)
 				{
-					GameObject gameObject = component.DeserializeMinion(storedMinionInfo[num].id, base.transform.GetPosition() + base.def.cargoDropOffset);
+					GameObject gameObject = component.DeserializeMinion(storedMinionInfo[num].id, base.transform.GetPosition());
 					gameObject.GetComponent<Navigator>().SetCurrentNavType(NavType.Floor);
 					ChoreProvider component2 = gameObject.GetComponent<ChoreProvider>();
 					if (component2 != null)
 					{
-						new EmoteChore(component2, Db.Get().ChoreTypes.EmoteHighPriority, "anim_loco_new_kanim", new HashedString[1]
+						new EmoteChore(component2, Db.Get().ChoreTypes.EmoteHighPriority, "anim_interacts_pioneer_cargo_lander_kanim", new HashedString[1]
 						{
-							"fall_pst"
+							"enter"
 						}, KAnim.PlayMode.Once);
 					}
 				}
@@ -123,6 +123,27 @@ public class CargoLander : GameStateMachine<CargoLander, CargoLander.StatesInsta
 			Storage component3 = GetComponent<Storage>();
 			if (component3 != null)
 			{
+				GameObject gameObject2 = component3.FindFirst("ScoutRover");
+				if (gameObject2 != null)
+				{
+					component3.Drop(gameObject2);
+					Vector3 position2 = base.master.transform.GetPosition();
+					position2.z = Grid.GetLayerZ(Grid.SceneLayer.Creatures);
+					gameObject2.transform.SetPosition(position2);
+					ChoreProvider component4 = gameObject2.GetComponent<ChoreProvider>();
+					if (component4 != null)
+					{
+						KBatchedAnimController component5 = gameObject2.GetComponent<KBatchedAnimController>();
+						if (component5 != null)
+						{
+							component5.Play("enter");
+						}
+						new EmoteChore(component4, Db.Get().ChoreTypes.EmoteHighPriority, null, new HashedString[1]
+						{
+							"enter"
+						}, KAnim.PlayMode.Once);
+					}
+				}
 				component3.DropAll(position);
 			}
 			Trigger(-602000519, base.gameObject);
@@ -196,7 +217,7 @@ public class CargoLander : GameStateMachine<CargoLander, CargoLander.StatesInsta
 		{
 			smi.OnJettisoned();
 		});
-		landing.PlayAnim("launch", KAnim.PlayMode.Loop).Enter(delegate(StatesInstance smi)
+		landing.PlayAnim("landing", KAnim.PlayMode.Loop).Enter(delegate(StatesInstance smi)
 		{
 			smi.ShowLandingPreview(show: true);
 		}).Exit(delegate(StatesInstance smi)
@@ -217,7 +238,7 @@ public class CargoLander : GameStateMachine<CargoLander, CargoLander.StatesInsta
 		{
 			smi.CheckIfLoaded();
 		});
-		grounded.loaded.PlayAnim("loaded").ParamTransition(hasCargo, grounded.empty, GameStateMachine<CargoLander, StatesInstance, IStateMachineTarget, Def>.IsFalse).OnSignal(emptyCargo, grounded.emptying)
+		grounded.loaded.PlayAnim("grounded").ParamTransition(hasCargo, grounded.empty, GameStateMachine<CargoLander, StatesInstance, IStateMachineTarget, Def>.IsFalse).OnSignal(emptyCargo, grounded.emptying)
 			.Enter(delegate(StatesInstance smi)
 			{
 				smi.DoLand();

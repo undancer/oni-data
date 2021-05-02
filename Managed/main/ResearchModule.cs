@@ -30,7 +30,7 @@ public class ResearchModule : KMonoBehaviour
 	{
 		if (!DlcManager.IsExpansion1Active())
 		{
-			SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(SpacecraftManager.instance.GetSpacecraftID(GetComponent<RocketModule>().conditionManager.GetComponent<LaunchableRocket>()));
+			SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(SpacecraftManager.instance.GetSpacecraftID(GetComponent<RocketModule>().conditionManager.GetComponent<ILaunchableRocket>()));
 			SpaceDestination.ResearchOpportunity researchOpportunity = spacecraftDestination.TryCompleteResearchOpportunity();
 			if (researchOpportunity != null)
 			{

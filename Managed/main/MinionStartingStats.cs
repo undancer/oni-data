@@ -33,6 +33,8 @@ public class MinionStartingStats : ITelepadDeliverable
 
 	public List<Accessory> accessories = new List<Accessory>();
 
+	public bool IsValid;
+
 	public Dictionary<SkillGroup, float> skillAptitudes = new Dictionary<SkillGroup, float>();
 
 	public MinionStartingStats(bool is_starter_minion, string guaranteedAptitudeID = null)
@@ -143,9 +145,9 @@ public class MinionStartingStats : ITelepadDeliverable
 			{
 				return false;
 			}
-			float num5 = Mathf.Abs(Util.GaussianRandom());
-			int num6 = traitPossibilities.Count;
-			int num7;
+			float num6 = Mathf.Abs(Util.GaussianRandom());
+			int num7 = traitPossibilities.Count;
+			int num8;
 			if (!positiveTrait)
 			{
 				if (DUPLICANTSTATS.rarityDeckActive.Count < 1)
@@ -156,7 +158,7 @@ public class MinionStartingStats : ITelepadDeliverable
 				{
 					DUPLICANTSTATS.rarityDeckActive.ShuffleSeeded(randSeed);
 				}
-				num7 = DUPLICANTSTATS.rarityDeckActive[DUPLICANTSTATS.rarityDeckActive.Count - 1];
+				num8 = DUPLICANTSTATS.rarityDeckActive[DUPLICANTSTATS.rarityDeckActive.Count - 1];
 				DUPLICANTSTATS.rarityDeckActive.RemoveAt(DUPLICANTSTATS.rarityDeckActive.Count - 1);
 			}
 			else
@@ -178,17 +180,17 @@ public class MinionStartingStats : ITelepadDeliverable
 					list.Add(rarityBalance + 2);
 				}
 				list.ShuffleSeeded(randSeed);
-				num7 = list[0];
-				num7 = Mathf.Max(DUPLICANTSTATS.RARITY_COMMON, num7);
-				num7 = Mathf.Min(DUPLICANTSTATS.RARITY_LEGENDARY, num7);
+				num8 = list[0];
+				num8 = Mathf.Max(DUPLICANTSTATS.RARITY_COMMON, num8);
+				num8 = Mathf.Min(DUPLICANTSTATS.RARITY_LEGENDARY, num8);
 			}
 			List<DUPLICANTSTATS.TraitVal> list2 = new List<DUPLICANTSTATS.TraitVal>(traitPossibilities);
-			for (int num8 = list2.Count - 1; num8 > -1; num8--)
+			for (int num9 = list2.Count - 1; num9 > -1; num9--)
 			{
-				if (list2[num8].rarity != num7)
+				if (list2[num9].rarity != num8)
 				{
-					list2.RemoveAt(num8);
-					num6--;
+					list2.RemoveAt(num9);
+					num7--;
 				}
 			}
 			list2.ShuffleSeeded(randSeed);
@@ -196,11 +198,11 @@ public class MinionStartingStats : ITelepadDeliverable
 			{
 				if (!DlcManager.IsContentActive(item.dlcId))
 				{
-					num6--;
+					num7--;
 				}
 				else if (selectedTraits.Contains(item.id))
 				{
-					num6--;
+					num7--;
 				}
 				else
 				{
@@ -208,19 +210,19 @@ public class MinionStartingStats : ITelepadDeliverable
 					if (trait4 == null)
 					{
 						Debug.LogWarning("Trying to add nonexistent trait: " + item.id);
-						num6--;
+						num7--;
 					}
 					else if (is_starter_minion && !trait4.ValidStarterTrait)
 					{
-						num6--;
+						num7--;
 					}
 					else if (AreTraitAndAptitudesExclusive(item, skillAptitudes))
 					{
-						num6--;
+						num7--;
 					}
 					else if (is_starter_minion && guaranteedAptitudeID != null && AreTraitAndArchetypeExclusive(item, guaranteedAptitudeID))
 					{
-						num6--;
+						num7--;
 					}
 					else
 					{
@@ -239,7 +241,7 @@ public class MinionStartingStats : ITelepadDeliverable
 							}
 							return true;
 						}
-						num6--;
+						num7--;
 					}
 				}
 			}
@@ -268,7 +270,8 @@ public class MinionStartingStats : ITelepadDeliverable
 		}
 		int num3 = 0;
 		int num4 = 0;
-		while (num4 < num2 || num3 < num)
+		int num5 = (num2 + num) * 4;
+		while (num5 > 0 && (num4 < num2 || num3 < num))
 		{
 			if (num4 < num2 && func(DUPLICANTSTATS.BADTRAITS, arg2: false))
 			{
@@ -278,6 +281,22 @@ public class MinionStartingStats : ITelepadDeliverable
 			{
 				num3++;
 			}
+			num5--;
+		}
+		if (num5 <= 0)
+		{
+			IsValid = false;
+			string report = $"Failed to generate minion positive={num}, negative={num2}";
+			Traits.ForEach(delegate(Trait x)
+			{
+				report = report + "\n" + x.Id;
+			});
+			DebugUtil.DevLogError("MinionStartingStats Failure" + report);
+			KCrashReporter.ReportErrorDevNotification("MinionStartingStats Failure", "", report);
+		}
+		else
+		{
+			IsValid = true;
 		}
 		return statDelta;
 	}
@@ -422,6 +441,7 @@ public class MinionStartingStats : ITelepadDeliverable
 		result.arms = HashCache.Get().Add($"arm_{p.body:000}");
 		result.body = HashCache.Get().Add($"body_{p.body:000}");
 		result.hat = HashedString.Invalid;
+		result.faceFX = HashedString.Invalid;
 		return result;
 	}
 

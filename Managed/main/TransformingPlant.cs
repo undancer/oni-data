@@ -44,7 +44,7 @@ public class TransformingPlant : KMonoBehaviour
 		MutantPlant component2 = gameObject.GetComponent<MutantPlant>();
 		if (component != null && gameObject != null)
 		{
-			gameObject.GetComponent<MutantPlant>().SetSubSpecies(GetComponent<MutantPlant>().subspeciesID);
+			component.CopyMutationsTo(component2);
 		}
 		gameObject.SetActive(value: true);
 		Growing component3 = GetComponent<Growing>();
@@ -54,7 +54,9 @@ public class TransformingPlant : KMonoBehaviour
 			float num = component3.PercentGrown();
 			if (useGrowthTimeRatio)
 			{
-				float num2 = component3.growthTime / component4.growthTime;
+				AmountInstance amountInstance = component3.GetAmounts().Get(Db.Get().Amounts.Maturity);
+				AmountInstance amountInstance2 = component4.GetAmounts().Get(Db.Get().Amounts.Maturity);
+				float num2 = amountInstance.GetMax() / amountInstance2.GetMax();
 				num = Mathf.Clamp01(num * num2);
 			}
 			component4.OverrideMaturityLevel(num);
@@ -64,7 +66,6 @@ public class TransformingPlant : KMonoBehaviour
 		component5.Temperature = component6.Temperature;
 		component5.AddDisease(component6.DiseaseIdx, component6.DiseaseCount, "TransformedPlant");
 		gameObject.GetComponent<Effects>().CopyEffects(GetComponent<Effects>());
-		gameObject.GetComponent<PlantRadiationMonitor>().totalRadiationExposure = GetComponent<PlantRadiationMonitor>().totalRadiationExposure;
 		HarvestDesignatable component7 = GetComponent<HarvestDesignatable>();
 		HarvestDesignatable component8 = gameObject.GetComponent<HarvestDesignatable>();
 		if (component7 != null && component8 != null)

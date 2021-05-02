@@ -31,18 +31,12 @@ public class BottleEmptier : StateMachineComponent<BottleEmptier.StatesInstance>
 		{
 			KBatchedAnimController component = GetComponent<KBatchedAnimController>();
 			Tag[] tags = GetComponent<TreeFilterable>().GetTags();
-			if (tags == null || tags.Length == 0)
-			{
-				component.TintColour = base.master.noFilterTint;
-				return;
-			}
-			component.TintColour = base.master.filterTint;
 			Tag[] forbidden_tags = (base.master.allowManualPumpingStationFetching ? new Tag[0] : new Tag[1]
 			{
 				GameTags.LiquidSource
 			});
 			Storage component2 = GetComponent<Storage>();
-			chore = new FetchChore(Db.Get().ChoreTypes.StorageFetch, component2, component2.Capacity(), GetComponent<TreeFilterable>().GetTags(), null, forbidden_tags);
+			chore = new FetchChore(Db.Get().ChoreTypes.StorageFetch, component2, component2.Capacity(), tags, null, forbidden_tags);
 		}
 
 		public void CancelChore()
@@ -210,12 +204,6 @@ public class BottleEmptier : StateMachineComponent<BottleEmptier.StatesInstance>
 	public bool allowManualPumpingStationFetching;
 
 	public bool isGasEmptier;
-
-	[SerializeField]
-	public Color noFilterTint = FilteredStorage.NO_FILTER_TINT;
-
-	[SerializeField]
-	public Color filterTint = FilteredStorage.FILTER_TINT;
 
 	private static readonly EventSystem.IntraObjectHandler<BottleEmptier> OnRefreshUserMenuDelegate = new EventSystem.IntraObjectHandler<BottleEmptier>(delegate(BottleEmptier component, object data)
 	{

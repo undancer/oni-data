@@ -19,14 +19,6 @@ public class FilteredStorage
 
 	private MeterController logicMeter;
 
-	public static readonly Color32 FILTER_TINT = Color.white;
-
-	public static readonly Color32 NO_FILTER_TINT = new Color(128f / 255f, 128f / 255f, 128f / 255f, 1f);
-
-	public Color32 filterTint = FILTER_TINT;
-
-	public Color32 noFilterTint = NO_FILTER_TINT;
-
 	private Tag[] requiredTags;
 
 	private Tag[] forbiddenTags;
@@ -34,8 +26,6 @@ public class FilteredStorage
 	private bool hasMeter = true;
 
 	private bool useLogicMeter = false;
-
-	private static StatusItem noFilterStatusItem;
 
 	private ChoreType choreType;
 
@@ -60,10 +50,6 @@ public class FilteredStorage
 		storage = root.GetComponent<Storage>();
 		storage.Subscribe(644822890, OnOnlyFetchMarkedItemsSettingChanged);
 		storage.Subscribe(-1852328367, OnFunctionalChanged);
-		if (noFilterStatusItem == null)
-		{
-			noFilterStatusItem = new StatusItem("NoStorageFilterSet", "BUILDING", "status_item_no_filter_set", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
-		}
 	}
 
 	private void OnOnlyFetchMarkedItemsSettingChanged(object data)
@@ -196,9 +182,7 @@ public class FilteredStorage
 
 	private void OnFilterChanged(Tag[] tags)
 	{
-		KBatchedAnimController component = root.GetComponent<KBatchedAnimController>();
 		bool flag = tags != null && tags.Length != 0;
-		component.TintColour = (flag ? filterTint : noFilterTint);
 		if (fetchList != null)
 		{
 			fetchList.Cancel("");
@@ -215,7 +199,6 @@ public class FilteredStorage
 			fetchList.Add(tags, requiredTags, forbiddenTags, num, FetchOrder2.OperationalRequirement.Functional);
 			fetchList.Submit(OnFetchComplete, check_storage_contents: false);
 		}
-		root.GetComponent<KSelectable>().ToggleStatusItem(noFilterStatusItem, !flag, this);
 	}
 
 	public void SetLogicMeter(bool on)

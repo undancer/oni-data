@@ -14,5 +14,12 @@ namespace TUNING
 
 			public const float TIER4 = 8f;
 		}
+
+		public static class RADIATION_THRESHOLDS
+		{
+			public const float NORMAL = 500f;
+
+			public const float MUTANT_BASELINE = 25f;
+		}
 	}
 }

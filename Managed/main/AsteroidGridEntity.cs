@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
-using Database;
 using KSerialization;
 
 public class AsteroidGridEntity : ClusterGridEntity
 {
+	public static string DEFAULT_ASTEROID_ICON_ANIM = "asteroid_sandstone_start_kanim";
+
 	[MyCmpReq]
 	private WorldContainer m_worldContainer;
 
@@ -12,14 +12,7 @@ public class AsteroidGridEntity : ClusterGridEntity
 	private string m_name;
 
 	[Serialize]
-	private string m_asteroidTypeId;
-
-	[Serialize]
-	private AxialI m_location;
-
-	private Action<object> m_onClusterLocationChangedDelegate;
-
-	private Action<object> m_onFogOfWarRevealedDelegate;
+	private string m_asteroidAnim;
 
 	public override string Name => m_name;
 
@@ -29,11 +22,10 @@ public class AsteroidGridEntity : ClusterGridEntity
 	{
 		get
 		{
-			AsteroidType typeOrDefault = Db.Get().AsteroidTypes.GetTypeOrDefault(m_asteroidTypeId);
 			List<AnimConfig> list = new List<AnimConfig>();
 			AnimConfig item = new AnimConfig
 			{
-				animFile = Assets.GetAnim(typeOrDefault.animName),
+				animFile = Assets.GetAnim(m_asteroidAnim.IsNullOrWhiteSpace() ? DEFAULT_ASTEROID_ICON_ANIM : m_asteroidAnim),
 				initialAnim = "idle_loop"
 			};
 			list.Add(item);
@@ -47,39 +39,42 @@ public class AsteroidGridEntity : ClusterGridEntity
 		}
 	}
 
-	public override AxialI Location => m_location;
-
 	public override bool IsVisible => true;
+
+	public override ClusterRevealLevel IsVisibleInFOW => ClusterRevealLevel.Peeked;
+
+	public override bool ShowName()
+	{
+		return true;
+	}
 
 	public void Init(string name, AxialI location, string asteroidTypeId)
 	{
 		m_name = name;
 		m_location = location;
-		m_asteroidTypeId = asteroidTypeId;
+		m_asteroidAnim = asteroidTypeId;
 	}
 
 	protected override void OnSpawn()
 	{
-		m_onClusterLocationChangedDelegate = OnClusterLocationChanged;
-		m_onFogOfWarRevealedDelegate = OnFogOfWarRevealed;
-		Game.Instance.Subscribe(-1298331547, m_onClusterLocationChangedDelegate);
-		Game.Instance.Subscribe(-1991583975, m_onFogOfWarRevealedDelegate);
+		Game.Instance.Subscribe(-1298331547, OnClusterLocationChanged);
+		Game.Instance.Subscribe(-1991583975, OnFogOfWarRevealed);
 		base.OnSpawn();
 	}
 
 	protected override void OnCleanUp()
 	{
-		Game.Instance.Unsubscribe(-1298331547, m_onClusterLocationChangedDelegate);
-		Game.Instance.Unsubscribe(-1991583975, m_onFogOfWarRevealedDelegate);
+		Game.Instance.Unsubscribe(-1298331547, OnClusterLocationChanged);
+		Game.Instance.Unsubscribe(-1991583975, OnFogOfWarRevealed);
 		base.OnCleanUp();
 	}
 
 	public void OnClusterLocationChanged(object data)
 	{
-		if (!m_worldContainer.IsDiscovered && ClusterGrid.Instance.IsCellVisible(Location))
+		if (!m_worldContainer.IsDiscovered && ClusterGrid.Instance.IsCellVisible(base.Location))
 		{
 			Clustercraft component = ((ClusterLocationChangedEvent)data).entity.GetComponent<Clustercraft>();
-			if (!(component == null) && component.GetStableOrbitAsteroid() == this)
+			if (!(component == null) && component.GetOrbitAsteroid() == this)
 			{
 				m_worldContainer.SetDiscovered(reveal_surface: true);
 			}
@@ -88,23 +83,29 @@ public class AsteroidGridEntity : ClusterGridEntity
 
 	public void OnFogOfWarRevealed(object data = null)
 	{
-		if (m_worldContainer.IsDiscovered || !ClusterGrid.Instance.IsCellVisible(Location))
+		if (data == null)
+		{
+			return;
+		}
+		AxialI u = (AxialI)data;
+		if (u != m_location || !ClusterGrid.Instance.IsCellVisible(base.Location))
+		{
+			return;
+		}
+		WorldDetectedMessage message = new WorldDetectedMessage(m_worldContainer);
+		MusicManager.instance.PlaySong("Stinger_WorldDetected");
+		Messenger.Instance.QueueMessage(message);
+		if (m_worldContainer.IsDiscovered)
 		{
 			return;
 		}
 		foreach (Clustercraft clustercraft in Components.Clustercrafts)
 		{
-			if (clustercraft.GetStableOrbitAsteroid() == this)
+			if (clustercraft.GetOrbitAsteroid() == this)
 			{
 				m_worldContainer.SetDiscovered(reveal_surface: true);
 				break;
 			}
-		}
-		if (data != null && (AxialI)data == m_location)
-		{
-			WorldDetectedMessage message = new WorldDetectedMessage(m_worldContainer);
-			MusicManager.instance.PlaySong("Stinger_ResearchComplete");
-			Messenger.Instance.QueueMessage(message);
 		}
 	}
 }

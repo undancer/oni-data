@@ -6,11 +6,11 @@ public class HiveWorkableEmpty : Workable
 {
 	private static readonly HashedString[] WORK_ANIMS = new HashedString[2]
 	{
-		"unclog_pre",
-		"unclog_loop"
+		"working_pre",
+		"working_loop"
 	};
 
-	private static readonly HashedString PST_ANIM = new HashedString("unclog_pst");
+	private static readonly HashedString PST_ANIM = new HashedString("working_pst");
 
 	protected override void OnPrefabInit()
 	{

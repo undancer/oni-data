@@ -14,5 +14,7 @@ public enum BuildLocationRule
 	HighWattBridgeTile,
 	BuildingAttachPoint,
 	OnFloorOrBuildingAttachPoint,
-	OnFoundationRotatable
+	OnFoundationRotatable,
+	BelowRocketCeiling,
+	OnRocketEnvelope
 }

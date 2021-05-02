@@ -48,9 +48,9 @@ public class ModuleFlightUtilitySideScreen : SideScreenContent
 
 	private bool HasFlightUtilityModule(CraftModuleInterface craftModuleInterface)
 	{
-		foreach (Ref<RocketModule> module in craftModuleInterface.Modules)
+		foreach (Ref<RocketModuleCluster> clusterModule in craftModuleInterface.ClusterModules)
 		{
-			if (module.Get().GetSMI<IEmptyableCargo>() != null)
+			if (clusterModule.Get().GetSMI<IEmptyableCargo>() != null)
 			{
 				return true;
 			}
@@ -86,9 +86,9 @@ public class ModuleFlightUtilitySideScreen : SideScreenContent
 	private void BuildModules()
 	{
 		ClearModules();
-		foreach (Ref<RocketModule> module in craftModuleInterface.Modules)
+		foreach (Ref<RocketModuleCluster> clusterModule in craftModuleInterface.ClusterModules)
 		{
-			IEmptyableCargo sMI = module.Get().GetSMI<IEmptyableCargo>();
+			IEmptyableCargo sMI = clusterModule.Get().GetSMI<IEmptyableCargo>();
 			if (sMI != null)
 			{
 				HierarchyReferences value = Util.KInstantiateUI<HierarchyReferences>(modulePanelPrefab, moduleContentContainer, force_active: true);
@@ -131,11 +131,11 @@ public class ModuleFlightUtilitySideScreen : SideScreenContent
 		reference4.targetDropDownContainer = GameScreenManager.Instance.ssOverlayCanvas;
 		reference4.Close();
 		CrewPortrait reference5 = hierarchyReferences.GetReference<CrewPortrait>("selectedPortrait");
-		if (module.ChooseDuplicant)
+		RocketModuleCluster component = (module as StateMachine.Instance).GetMaster().GetComponent<RocketModuleCluster>();
+		CraftModuleInterface craftInterface = component.CraftInterface;
+		WorldContainer component2 = craftInterface.GetComponent<WorldContainer>();
+		if (component2 != null && module.ChooseDuplicant)
 		{
-			RocketModule component = (module as StateMachine.Instance).GetMaster().GetComponent<RocketModule>();
-			CraftModuleInterface craftInterface = component.CraftInterface;
-			WorldContainer component2 = craftInterface.GetComponent<WorldContainer>();
 			int id = component2.id;
 			reference4.gameObject.SetActive(value: true);
 			reference4.Initialize(Components.LiveMinionIdentities.GetWorldItems(id), OnDuplicantEntryClick, null, PadDropDownEntryRefreshAction, displaySelectedValueWhenClosed: true, module);

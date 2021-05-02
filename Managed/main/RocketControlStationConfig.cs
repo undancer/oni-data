@@ -22,7 +22,6 @@ public class RocketControlStationConfig : IBuildingConfig
 		buildingDef.Overheatable = false;
 		buildingDef.Repairable = false;
 		buildingDef.Floodable = false;
-		buildingDef.Invincible = true;
 		buildingDef.AudioCategory = "Metal";
 		buildingDef.AudioSize = "large";
 		buildingDef.DefaultAnimState = "off";
@@ -32,8 +31,9 @@ public class RocketControlStationConfig : IBuildingConfig
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
-		go.GetComponent<KPrefabID>().AddTag(GameTags.RocketInteriorBuilding);
-		go.GetComponent<KPrefabID>().AddTag(GameTags.UniquePerWorld);
+		KPrefabID component = go.GetComponent<KPrefabID>();
+		component.AddTag(GameTags.RocketInteriorBuilding);
+		component.AddTag(GameTags.UniquePerWorld);
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)
@@ -44,7 +44,6 @@ public class RocketControlStationConfig : IBuildingConfig
 		RocketControlStationLaunchWorkable rocketControlStationLaunchWorkable = go.AddOrGet<RocketControlStationLaunchWorkable>();
 		rocketControlStationLaunchWorkable.workLayer = Grid.SceneLayer.BuildingUse;
 		go.AddOrGet<RocketControlStation>();
-		go.GetComponent<Deconstructable>().allowDeconstruction = false;
 		go.AddOrGetDef<PoweredController.Def>();
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.RocketInterior);
 	}

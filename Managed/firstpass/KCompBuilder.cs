@@ -21,5 +21,7 @@ public class KCompBuilder : MonoBehaviour
 		public HashedString arms;
 
 		public HashedString hat;
+
+		public HashedString faceFX;
 	}
 }

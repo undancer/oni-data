@@ -25,7 +25,7 @@ public class SpiceVineConfig : IEntityConfig
 			GameTags.Hanging
 		}, defaultTemperature: 320f);
 		EntityTemplates.MakeHangingOffsets(gameObject, 1, 3);
-		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 258.15f, 308.15f, 358.15f, 448.15f, null, pressure_sensitive: true, 0f, 0.15f, SpiceNutConfig.ID);
+		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 258.15f, 308.15f, 358.15f, 448.15f, null, pressure_sensitive: true, 0f, 0.15f, SpiceNutConfig.ID, can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, 2400f, "SpiceVineOriginal", STRINGS.CREATURES.SPECIES.SPICE_VINE.NAME);
 		Tag tag = ElementLoader.FindElementByHash(SimHashes.DirtyWater).tag;
 		PlantElementAbsorber.ConsumeInfo[] array = new PlantElementAbsorber.ConsumeInfo[1];
 		PlantElementAbsorber.ConsumeInfo consumeInfo = new PlantElementAbsorber.ConsumeInfo
@@ -44,7 +44,10 @@ public class SpiceVineConfig : IEntityConfig
 		array2[0] = consumeInfo;
 		EntityTemplates.ExtendPlantToFertilizable(gameObject, array2);
 		UprootedMonitor component = gameObject.GetComponent<UprootedMonitor>();
-		component.monitorCell = new CellOffset(0, 1);
+		component.monitorCells = new CellOffset[1]
+		{
+			new CellOffset(0, 1)
+		};
 		gameObject.AddOrGet<StandardCropPlant>();
 		GameObject seed = EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Harvest, "SpiceVineSeed", STRINGS.CREATURES.SPECIES.SEEDS.SPICE_VINE.NAME, STRINGS.CREATURES.SPECIES.SEEDS.SPICE_VINE.DESC, Assets.GetAnim("seed_spicenut_kanim"), "object", 1, new List<Tag>
 		{

@@ -187,7 +187,7 @@ public class WarpPortal : Workable
 			};
 			statesInstance.callback = delegate
 			{
-				ManagementMenu.Instance.ToggleClusterMap();
+				ManagementMenu.Instance.OpenClusterMap();
 				ClusterMapScreen.Instance.SetTargetFocusPosition(ClusterManager.Instance.GetWorld(GetTargetWorldID()).GetMyWorldLocation());
 			};
 			statesInstance.ShowEventPopup(GetTargetWorldID());

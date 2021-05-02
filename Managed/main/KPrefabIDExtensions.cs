@@ -37,6 +37,16 @@ public static class KPrefabIDExtensions
 		return go.GetComponent<KPrefabID>().HasAnyTags(tags);
 	}
 
+	public static bool HasAllTags(this Component cmp, Tag[] tags)
+	{
+		return cmp.gameObject.HasAllTags(tags);
+	}
+
+	public static bool HasAllTags(this GameObject go, Tag[] tags)
+	{
+		return go.GetComponent<KPrefabID>().HasAllTags(tags);
+	}
+
 	public static void AddTag(this GameObject go, Tag tag)
 	{
 		go.GetComponent<KPrefabID>().AddTag(tag);

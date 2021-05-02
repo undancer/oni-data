@@ -1255,7 +1255,13 @@ public class Grid
 
 	public static bool IsValidBuildingCell(int cell)
 	{
-		return cell >= 0 && cell < CellCount - WidthInCells * TopBorderHeight;
+		if (!IsWorldValidCell(cell))
+		{
+			return false;
+		}
+		WorldContainer world = ClusterManager.Instance.GetWorld(WorldIdx[cell]);
+		Vector2I vector2I = CellToXY(cell);
+		return (float)vector2I.x >= world.minimumBounds.x && (float)vector2I.x <= world.maximumBounds.x && (float)vector2I.y >= world.minimumBounds.y && (float)vector2I.y <= world.maximumBounds.y - (float)TopBorderHeight;
 	}
 
 	public static bool IsWorldValidCell(int cell)
@@ -1271,6 +1277,11 @@ public class Grid
 	public static bool IsActiveWorld(int cell)
 	{
 		return ClusterManager.Instance != null && ClusterManager.Instance.activeWorldId == WorldIdx[cell];
+	}
+
+	public static bool AreCellsInSameWorld(int cell, int world_cell)
+	{
+		return IsValidCell(cell) && IsValidCell(world_cell) && WorldIdx[cell] == WorldIdx[world_cell];
 	}
 
 	public static bool IsCellOpenToSpace(int cell)

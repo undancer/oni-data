@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Klei.AI;
 using STRINGS;
 using TUNING;
 using UnityEngine;
@@ -19,7 +20,7 @@ public class GasGrassConfig : IEntityConfig
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("GasGrass", STRINGS.CREATURES.SPECIES.GASGRASS.NAME, STRINGS.CREATURES.SPECIES.GASGRASS.DESC, 1f, decor: DECOR.BONUS.TIER3, anim: Assets.GetAnim("gassygrass_kanim"), initialAnim: "idle_empty", sceneLayer: Grid.SceneLayer.BuildingFront, width: 1, height: 3, noise: default(EffectorValues), element: SimHashes.Creature, additionalTags: null, defaultTemperature: 255f);
-		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 218.15f, 0f, 348.15f, 373.15f, null, pressure_sensitive: true, 0f, 0.15f, "GasGrassHarvested");
+		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 218.15f, 0f, 348.15f, 373.15f, null, pressure_sensitive: true, 0f, 0.15f, "GasGrassHarvested", can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, 2400f, "GasGrassOriginal", STRINGS.CREATURES.SPECIES.GASGRASS.NAME);
 		EntityTemplates.ExtendPlantToIrrigated(gameObject, new PlantElementAbsorber.ConsumeInfo[1]
 		{
 			new PlantElementAbsorber.ConsumeInfo
@@ -31,8 +32,11 @@ public class GasGrassConfig : IEntityConfig
 		gameObject.AddOrGet<StandardCropPlant>();
 		HarvestDesignatable harvestDesignatable = gameObject.AddOrGet<HarvestDesignatable>();
 		harvestDesignatable.defaultHarvestStateWhenPlanted = false;
+		Modifiers component = gameObject.GetComponent<Modifiers>();
+		Trait trait = Db.Get().traits.Get(component.initialTraits[0]);
+		trait.Add(new AttributeModifier(Db.Get().PlantAttributes.MinLightLux.Id, 20000f, STRINGS.CREATURES.SPECIES.GASGRASS.NAME));
+		component.initialAttributes.Add(Db.Get().PlantAttributes.MinLightLux.Id);
 		CropSleepingMonitor.Def def = gameObject.AddOrGetDef<CropSleepingMonitor.Def>();
-		def.lightIntensityThreshold = 20000f;
 		def.prefersDarkness = false;
 		GameObject seed = EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Hidden, "GasGrassSeed", STRINGS.CREATURES.SPECIES.SEEDS.GASGRASS.NAME, STRINGS.CREATURES.SPECIES.SEEDS.GASGRASS.DESC, Assets.GetAnim("seed_gassygrass_kanim"), "object", 1, new List<Tag>
 		{

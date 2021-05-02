@@ -181,6 +181,18 @@ public class LoopingSounds : KMonoBehaviour
 		}
 	}
 
+	public void PauseSound(string asset, bool paused)
+	{
+		for (int i = 0; i < loopingSounds.Count; i++)
+		{
+			if (loopingSounds[i].asset == asset)
+			{
+				LoopingSoundManager.PauseSound(loopingSounds[i].handle, paused);
+				break;
+			}
+		}
+	}
+
 	public void StopAllSounds()
 	{
 		for (int i = 0; i < loopingSounds.Count; i++)

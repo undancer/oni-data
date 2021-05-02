@@ -32,10 +32,12 @@ public class AtmoSuit : KMonoBehaviour
 		GameObject targetGameObject = soleOwner.GetComponent<MinionAssignablesProxy>().GetTargetGameObject();
 		if ((bool)targetGameObject)
 		{
-			Effects component3 = targetGameObject.GetComponent<Effects>();
-			if (!component3.HasEffect("SoiledSuit"))
+			Equipment component3 = ((KMonoBehaviour)component.assignee).GetComponent<Equipment>();
+			AssignableSlotInstance slot = component3.GetSlot(component.slot);
+			Effects component4 = targetGameObject.GetComponent<Effects>();
+			if (!component4.HasEffect("SoiledSuit") && !slot.IsUnassigning())
 			{
-				component3.Add("SoiledSuit", should_save: true);
+				component4.Add("SoiledSuit", should_save: true);
 			}
 		}
 	}

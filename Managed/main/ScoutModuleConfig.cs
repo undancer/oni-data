@@ -40,6 +40,7 @@ public class ScoutModuleConfig : IBuildingConfig
 		};
 		def.spawnIntoStorage = true;
 		def.storage = storage;
+		def.constructionSymbol = "under_construction";
 		BuildingInternalConstructorWorkable buildingInternalConstructorWorkable = go.AddOrGet<BuildingInternalConstructorWorkable>();
 		buildingInternalConstructorWorkable.SetWorkTime(30f);
 		JettisonableCargoModule.Def def2 = go.AddOrGetDef<JettisonableCargoModule.Def>();
@@ -55,6 +56,6 @@ public class ScoutModuleConfig : IBuildingConfig
 	public override void DoPostConfigureComplete(GameObject go)
 	{
 		Prioritizable.AddRef(go);
-		BuildingTemplates.ExtendBuildingToRocketModule(go, ROCKETRY.BURDEN.MODERATE, null);
+		BuildingTemplates.ExtendBuildingToRocketModuleCluster(go, null, ROCKETRY.BURDEN.MODERATE);
 	}
 }

@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using Klei.AI;
-using UnityEngine;
 
 public interface IAttributeFormatter
 {
@@ -11,9 +11,11 @@ public interface IAttributeFormatter
 
 	string GetFormattedAttribute(AttributeInstance instance);
 
-	string GetFormattedModifier(AttributeModifier modifier, GameObject parent_instance);
+	string GetFormattedModifier(AttributeModifier modifier);
 
-	string GetFormattedValue(float value, GameUtil.TimeSlice timeSlice, GameObject parent_instance);
+	string GetFormattedValue(float value, GameUtil.TimeSlice timeSlice);
 
 	string GetTooltip(Attribute master, AttributeInstance instance);
+
+	string GetTooltip(Attribute master, List<AttributeModifier> modifiers, AttributeConverters converters);
 }
