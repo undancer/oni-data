@@ -453,16 +453,11 @@ public class ClusterMapScreen : KScreen
 					clusterMapVisualizer.Init(item, pathDrawer);
 					m_gridEntityAnims.Add(item, clusterMapVisualizer);
 					m_gridEntityVis.Add(item, clusterMapVisualizer);
+					item.Subscribe(1502190696, RemoveDeletedEntities);
 				}
 			}
 		}
-		List<ClusterGridEntity> list = m_gridEntityVis.Keys.Where((ClusterGridEntity x) => x == null).ToList();
-		foreach (ClusterGridEntity item2 in list)
-		{
-			Util.KDestroyGameObject(m_gridEntityVis[item2]);
-			m_gridEntityVis.Remove(item2);
-			m_gridEntityAnims.Remove(item2);
-		}
+		RemoveDeletedEntities();
 		foreach (KeyValuePair<ClusterGridEntity, ClusterMapVisualizer> gridEntityVi in m_gridEntityVis)
 		{
 			ClusterGridEntity key = gridEntityVi.Key;
@@ -471,6 +466,17 @@ public class ClusterMapScreen : KScreen
 				int id = key.GetComponent<WorldContainer>().id;
 				gridEntityVi.Value.alertVignette.worldID = id;
 			}
+		}
+	}
+
+	private void RemoveDeletedEntities(object obj = null)
+	{
+		List<ClusterGridEntity> list = m_gridEntityVis.Keys.Where((ClusterGridEntity x) => x == null || x.gameObject == (GameObject)obj).ToList();
+		foreach (ClusterGridEntity item in list)
+		{
+			Util.KDestroyGameObject(m_gridEntityVis[item]);
+			m_gridEntityVis.Remove(item);
+			m_gridEntityAnims.Remove(item);
 		}
 	}
 
@@ -525,6 +531,11 @@ public class ClusterMapScreen : KScreen
 		}
 		UpdateHexToggleStates();
 		FloatyAsteroidAnimation();
+	}
+
+	private void OnEntityDestroyed(object obj)
+	{
+		RemoveDeletedEntities();
 	}
 
 	private void UpdateHexToggleStates()

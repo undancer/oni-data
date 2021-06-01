@@ -215,7 +215,6 @@ public class CritterTrapPlant : StateMachineComponent<CritterTrapPlant.StatesIns
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		base.smi.Get<KBatchedAnimController>().randomiseLoopedOffset = true;
 		base.smi.master.growing.enabled = false;
 		Subscribe(-216549700, OnUprootedDelegate);
 		base.smi.StartSM();

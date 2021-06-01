@@ -77,6 +77,8 @@ public class Comet : KMonoBehaviour, ISim33ms
 
 	public string[] craterPrefabs = null;
 
+	public bool destroyOnExplode = true;
+
 	private float age = 0f;
 
 	public System.Action OnImpact;
@@ -526,7 +528,10 @@ public class Comet : KMonoBehaviour, ISim33ms
 				{
 					Explode(position, num2, num3, component.Element);
 					hasExploded = true;
-					Util.KDestroyGameObject(base.gameObject);
+					if (destroyOnExplode)
+					{
+						Util.KDestroyGameObject(base.gameObject);
+					}
 					return;
 				}
 			}
@@ -540,7 +545,10 @@ public class Comet : KMonoBehaviour, ISim33ms
 		{
 			base.transform.position = Grid.CellToPos(Grid.PosToCell(position));
 			Explode(position, num2, num3, GetComponent<PrimaryElement>().Element);
-			Util.KDestroyGameObject(base.gameObject);
+			if (destroyOnExplode)
+			{
+				Util.KDestroyGameObject(base.gameObject);
+			}
 		}
 		else
 		{

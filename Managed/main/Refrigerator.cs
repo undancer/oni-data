@@ -15,7 +15,7 @@ public class Refrigerator : KMonoBehaviour, IUserControlledCapacity, IGameObject
 	private LogicPorts ports;
 
 	[SerializeField]
-	public float simulatedInternalTemperature = 277.15f;
+	public float simulatedInternalTemperature = 275.15f;
 
 	[SerializeField]
 	public float simulatedInternalHeatCapacity = 400f;

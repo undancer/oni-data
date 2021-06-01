@@ -189,12 +189,19 @@ public class WorldInventory : KMonoBehaviour, ISaveLoadable
 		int num = 0;
 		if (collection2 != null)
 		{
-			foreach (Pickupable item in collection2)
+			if (additionalTag.IsValid)
 			{
-				if (item.HasTag(additionalTag))
+				foreach (Pickupable item in collection2)
 				{
-					num++;
+					if (item.HasTag(additionalTag))
+					{
+						num++;
+					}
 				}
+			}
+			else
+			{
+				num = collection2.Count;
 			}
 		}
 		return num;

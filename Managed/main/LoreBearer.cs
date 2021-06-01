@@ -137,6 +137,12 @@ public class LoreBearer : KMonoBehaviour, ISidescreenButtonControl
 			infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_TELEPORTER_SENDER"));
 			infoDialogScreen.AddOption(UI.USERMENUACTIONS.READLORE.GOTODATABASE, OpenCodexByLockKeyID("notes_teleportation"));
 		}
+		else if (base.gameObject.GetProperName() == (string)BUILDINGS.PREFABS.CRYOTANK.NAME)
+		{
+			Game.Instance.unlocks.Unlock("cryotank_warning");
+			infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_CRYO_TANK"));
+			infoDialogScreen.AddOption(UI.USERMENUACTIONS.READLORE.GOTODATABASE, OpenCodexByLockKeyID("cryotank_warning"));
+		}
 		else
 		{
 			string text3 = Game.Instance.unlocks.UnlockNext("journals");

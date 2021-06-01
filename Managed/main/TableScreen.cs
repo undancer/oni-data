@@ -217,7 +217,7 @@ public class TableScreen : KScreen
 					break;
 				}
 			}
-			worldDivider.Value.SetActive(ClusterManager.Instance.GetWorld(worldDivider.Key).IsDiscovered);
+			worldDivider.Value.SetActive(ClusterManager.Instance.GetWorld(worldDivider.Key).IsDiscovered && DlcManager.IsExpansion1Active());
 		}
 		SortRows();
 		rows_dirty = false;
@@ -402,7 +402,8 @@ public class TableScreen : KScreen
 			RectTransform component = gameObject.GetComponentInChildren<LocText>().GetComponent<RectTransform>();
 			component.sizeDelta = new Vector2(150f, component.sizeDelta.y);
 			ClusterGridEntity component2 = ClusterManager.Instance.GetWorld(worldId).GetComponent<ClusterGridEntity>();
-			gameObject.GetComponentInChildren<LocText>().SetText(string.Concat(NAMEGEN.WORLD.PLANETOID_PREFIX, component2.Name));
+			string str = ((component2 is Clustercraft) ? NAMEGEN.WORLD.SPACECRAFT_PREFIX : NAMEGEN.WORLD.PLANETOID_PREFIX);
+			gameObject.GetComponentInChildren<LocText>().SetText(str + component2.Name);
 			gameObject.GetComponentInChildren<ToolTip>().SetSimpleTooltip(string.Format(NAMEGEN.WORLD.WORLDDIVIDER_TOOLTIP, component2.Name));
 			gameObject.GetComponent<HierarchyReferences>().GetReference<Image>("Icon").sprite = component2.GetUISprite();
 			worldDividers.Add(worldId, gameObject);

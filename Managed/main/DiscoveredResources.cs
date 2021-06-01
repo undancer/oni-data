@@ -58,8 +58,8 @@ public class DiscoveredResources : KMonoBehaviour, ISaveLoadable, ISim4000ms
 				hashSet.Add(item);
 				continue;
 			}
-			GameObject prefab = Assets.GetPrefab(item);
-			if (prefab != null && prefab.HasTag(GameTags.DeprecatedContent))
+			GameObject gameObject = Assets.TryGetPrefab(item);
+			if (gameObject != null && gameObject.HasTag(GameTags.DeprecatedContent))
 			{
 				hashSet.Add(item);
 			}

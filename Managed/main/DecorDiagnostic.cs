@@ -7,7 +7,7 @@ public class DecorDiagnostic : ColonyDiagnostic
 		: base(worldID, UI.COLONY_DIAGNOSTICS.DECORDIAGNOSTIC.ALL_NAME)
 	{
 		icon = "icon_category_decor";
-		AddCriterion("CheckDecor", new DiagnosticCriterion(CheckDecor));
+		AddCriterion("CheckDecor", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckDecor));
 	}
 
 	private DiagnosticResult CheckDecor()

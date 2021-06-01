@@ -2,7 +2,7 @@ using KSerialization;
 using UnityEngine;
 
 [AddComponentMenu("KMonoBehaviour/scripts/RationBox")]
-public class RationBox : KMonoBehaviour, IUserControlledCapacity, IRender1000ms
+public class RationBox : KMonoBehaviour, IUserControlledCapacity, IRender1000ms, IRottable
 {
 	[MyCmpReq]
 	private Storage storage;
@@ -44,6 +44,10 @@ public class RationBox : KMonoBehaviour, IUserControlledCapacity, IRender1000ms
 	public bool WholeValues => false;
 
 	public LocString CapacityUnits => GameUtil.GetCurrentMassUnit();
+
+	public float RotTemperature => 277.15f;
+
+	public float PreserveTemperature => 255.15f;
 
 	protected override void OnPrefabInit()
 	{
@@ -89,6 +93,11 @@ public class RationBox : KMonoBehaviour, IUserControlledCapacity, IRender1000ms
 
 	public void Render1000ms(float dt)
 	{
-		Rottable.SetStatusItems(GetComponent<KSelectable>(), Rottable.IsRefrigerated(base.gameObject), Rottable.AtmosphereQuality(base.gameObject));
+		Rottable.SetStatusItems(this);
+	}
+
+	GameObject IRottable.get_gameObject()
+	{
+		return base.gameObject;
 	}
 }

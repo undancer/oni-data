@@ -378,7 +378,6 @@ public class SaveLoader : KMonoBehaviour
 		}
 		Global.Instance.modManager.SendMetricsEvent();
 		WorldGen.LoadSettings();
-		CustomGameSettings.Instance.LoadWorlds();
 		CustomGameSettings.Instance.LoadClusters();
 		if (GameInfo.clusterId == null)
 		{
@@ -753,11 +752,14 @@ public class SaveLoader : KMonoBehaviour
 		for (int i = 0; i < allFiles.Count; i++)
 		{
 			Tuple<SaveGame.Header, SaveGame.GameInfo> fileInfo = SaveGame.GetFileInfo(allFiles[i]);
-			SaveGame.Header first = fileInfo.first;
-			SaveGame.GameInfo second = fileInfo.second;
-			if (second.saveMajorVersion >= 7 && DlcManager.GetActiveDlcId() == second.dlcId)
+			if (fileInfo != null)
 			{
-				return allFiles[i];
+				SaveGame.Header first = fileInfo.first;
+				SaveGame.GameInfo second = fileInfo.second;
+				if (second.saveMajorVersion >= 7 && DlcManager.GetActiveDlcId() == second.dlcId)
+				{
+					return allFiles[i];
+				}
 			}
 		}
 		return null;
@@ -898,7 +900,7 @@ public class SaveLoader : KMonoBehaviour
 	{
 		byte[] bytes = File.ReadAllBytes(filename);
 		IReader br = new FastReader(bytes);
-		return SaveGame.GetHeader(br, out header);
+		return SaveGame.GetHeader(br, out header, filename);
 	}
 
 	public bool Load(string filename)
@@ -909,7 +911,7 @@ public class SaveLoader : KMonoBehaviour
 			KSerialization.Manager.Clear();
 			byte[] array = File.ReadAllBytes(filename);
 			IReader reader = new FastReader(array);
-			GameInfo = SaveGame.GetHeader(reader, out var header);
+			GameInfo = SaveGame.GetHeader(reader, out var header, filename);
 			DebugUtil.LogArgs(string.Format("Loading save file: {4}\n headerVersion:{0}, buildVersion:{1}, headerSize:{2}, IsCompressed:{3}", header.headerVersion, header.buildVersion, header.headerSize, header.IsCompressed, filename));
 			DebugUtil.LogArgs(string.Format("GameInfo loaded from save header:\n  numberOfCycles:{0},\n  numberOfDuplicants:{1},\n  baseName:{2},\n  isAutoSave:{3},\n  originalSaveName:{4},\n  clusterId:{5},\n  worldTraits:{6},\n  colonyGuid:{7},\n  saveVersion:{8}.{9}", GameInfo.numberOfCycles, GameInfo.numberOfDuplicants, GameInfo.baseName, GameInfo.isAutoSave, GameInfo.originalSaveName, GameInfo.clusterId, (GameInfo.worldTraits != null && GameInfo.worldTraits.Length != 0) ? string.Join(", ", GameInfo.worldTraits) : "<i>none</i>", GameInfo.colonyGuid, GameInfo.saveMajorVersion, GameInfo.saveMinorVersion));
 			string originalSaveName = GameInfo.originalSaveName;

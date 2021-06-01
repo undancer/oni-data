@@ -22,7 +22,7 @@ public class GeneticAnalysisCompleteMessage : Message
 
 	public override string GetMessageBody()
 	{
-		PlantSubSpeciesCatalog.SubSpeciesInfo subSpeciesInfo = PlantSubSpeciesCatalog.instance.FindSubSpecies(subSpeciesID);
+		PlantSubSpeciesCatalog.SubSpeciesInfo subSpeciesInfo = PlantSubSpeciesCatalog.Instance.FindSubSpecies(subSpeciesID);
 		return MISC.NOTIFICATIONS.GENETICANALYSISCOMPLETE.MESSAGEBODY.Replace("{Plant}", subSpeciesInfo.speciesID.ProperName()).Replace("{Subspecies}", subSpeciesInfo.GetNameWithMutations(subSpeciesInfo.speciesID.ProperName(), identified: true, cleanOriginal: false)).Replace("{Info}", subSpeciesInfo.GetMutationsTooltip());
 	}
 
@@ -33,7 +33,7 @@ public class GeneticAnalysisCompleteMessage : Message
 
 	public override string GetTooltip()
 	{
-		PlantSubSpeciesCatalog.SubSpeciesInfo subSpeciesInfo = PlantSubSpeciesCatalog.instance.FindSubSpecies(subSpeciesID);
+		PlantSubSpeciesCatalog.SubSpeciesInfo subSpeciesInfo = PlantSubSpeciesCatalog.Instance.FindSubSpecies(subSpeciesID);
 		return MISC.NOTIFICATIONS.GENETICANALYSISCOMPLETE.TOOLTIP.Replace("{Plant}", subSpeciesInfo.speciesID.ProperName());
 	}
 

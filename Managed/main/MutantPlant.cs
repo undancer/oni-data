@@ -8,6 +8,9 @@ using UnityEngine;
 public class MutantPlant : KMonoBehaviour, IGameObjectEffectDescriptor
 {
 	[Serialize]
+	private bool analyzed = false;
+
+	[Serialize]
 	private List<string> mutationIDs;
 
 	private List<Guid> statusItemHandles = new List<Guid>();
@@ -19,6 +22,10 @@ public class MutantPlant : KMonoBehaviour, IGameObjectEffectDescriptor
 	private Tag cachedSubspeciesID;
 
 	public List<string> MutationIDs => mutationIDs;
+
+	public bool IsOriginal => mutationIDs == null || mutationIDs.Count == 0;
+
+	public bool IsIdentified => analyzed && PlantSubSpeciesCatalog.Instance.IsSubSpeciesIdentified(SubSpeciesID);
 
 	public Tag SpeciesID
 	{
@@ -54,12 +61,16 @@ public class MutantPlant : KMonoBehaviour, IGameObjectEffectDescriptor
 
 	protected override void OnSpawn()
 	{
+		if (IsOriginal || this.HasTag(GameTags.Plant))
+		{
+			analyzed = true;
+		}
 		this.AddTag(SubSpeciesID);
 		Components.MutantPlants.Add(this);
 		base.OnSpawn();
 		ApplyMutations();
 		UpdateNameAndTags();
-		PlantSubSpeciesCatalog.instance.DiscoverSubSpecies(GetSubSpeciesInfo(), this);
+		PlantSubSpeciesCatalog.Instance.DiscoverSubSpecies(GetSubSpeciesInfo(), this);
 	}
 
 	protected override void OnCleanUp()
@@ -79,9 +90,15 @@ public class MutantPlant : KMonoBehaviour, IGameObjectEffectDescriptor
 		SetSubSpecies(list);
 	}
 
+	public void Analyze()
+	{
+		analyzed = true;
+		UpdateNameAndTags();
+	}
+
 	public void ApplyMutations()
 	{
-		if (mutationIDs == null || mutationIDs.Count == 0)
+		if (IsOriginal)
 		{
 			return;
 		}
@@ -116,15 +133,17 @@ public class MutantPlant : KMonoBehaviour, IGameObjectEffectDescriptor
 	public void CopyMutationsTo(MutantPlant target)
 	{
 		target.SetSubSpecies(mutationIDs);
+		target.analyzed = analyzed;
 	}
 
 	public void UpdateNameAndTags()
 	{
-		bool flag = !IsInitialized() || PlantSubSpeciesCatalog.instance.IsSubSpeciesIdentified(SubSpeciesID);
-		bool flag2 = PlantSubSpeciesCatalog.instance == null || PlantSubSpeciesCatalog.instance.GetAllSubSpeciesForSpecies(SpeciesID).Count == 1;
+		bool flag = !IsInitialized() || IsIdentified;
+		bool flag2 = PlantSubSpeciesCatalog.Instance == null || PlantSubSpeciesCatalog.Instance.GetAllSubSpeciesForSpecies(SpeciesID).Count == 1;
 		KPrefabID component = GetComponent<KPrefabID>();
 		component.AddTag(SubSpeciesID);
-		component.SetTag(GameTags.UnidentifiedSeed, flag);
+		component.SetTag(GameTags.UnidentifiedSeed, !flag);
+		base.gameObject.name = component.PrefabTag.ToString() + " (" + SubSpeciesID.ToString() + ")";
 		GetComponent<KSelectable>().SetName(GetSubSpeciesInfo().GetNameWithMutations(component.PrefabTag.ProperName(), flag, flag2));
 		KSelectable component2 = GetComponent<KSelectable>();
 		foreach (Guid statusItemHandle in statusItemHandles)
@@ -136,12 +155,12 @@ public class MutantPlant : KMonoBehaviour, IGameObjectEffectDescriptor
 		{
 			return;
 		}
-		if (mutationIDs == null || mutationIDs.Count == 0)
+		if (IsOriginal)
 		{
 			statusItemHandles.Add(component2.AddStatusItem(Db.Get().CreatureStatusItems.OriginalPlantMutation));
 			return;
 		}
-		if (!PlantSubSpeciesCatalog.instance.IsSubSpeciesIdentified(SubSpeciesID))
+		if (!flag)
 		{
 			statusItemHandles.Add(component2.AddStatusItem(Db.Get().CreatureStatusItems.UnknownMutation));
 			return;
@@ -154,7 +173,7 @@ public class MutantPlant : KMonoBehaviour, IGameObjectEffectDescriptor
 
 	public List<Descriptor> GetDescriptors(GameObject go)
 	{
-		if (mutationIDs == null || mutationIDs.Count == 0)
+		if (IsOriginal)
 		{
 			return null;
 		}

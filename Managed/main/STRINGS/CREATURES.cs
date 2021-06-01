@@ -2061,11 +2061,25 @@ namespace STRINGS
 				public static LocString TOOLTIP = "This critter is trying to escape\nGet'em!";
 			}
 
+			public class REFRIGERATEDFROZEN
+			{
+				public static LocString NAME = "Deep Freeze";
+
+				public static LocString TOOLTIP = UI.PRE_KEYWORD + "Temperatures" + UI.PST_KEYWORD + " below <b>{PreserveTemperature}</b> are greatly prolonging the shelf-life of this food\n\n" + UI.PRE_KEYWORD + "Temperatures" + UI.PST_KEYWORD + " above <b>{RotTemperature}</b> spoil food more quickly";
+			}
+
+			public class REFRIGERATED
+			{
+				public static LocString NAME = "Refrigerated";
+
+				public static LocString TOOLTIP = "Ideal " + UI.PRE_KEYWORD + "Temperature" + UI.PST_KEYWORD + " storage is slowing this food's " + UI.PRE_KEYWORD + "Decay Rate" + UI.PST_KEYWORD + "\n\n" + UI.PRE_KEYWORD + "Temperatures" + UI.PST_KEYWORD + " above <b>{RotTemperature}</b> spoil food more quickly\n\nStore food below {PreserveTemperature} to further reduce spoilage.";
+			}
+
 			public class UNREFRIGERATED
 			{
 				public static LocString NAME = "Unrefrigerated";
 
-				public static LocString TOOLTIP = UI.PRE_KEYWORD + "Temperatures" + UI.PST_KEYWORD + " above <b>{RotTemperature}</b> spoil food more quickly";
+				public static LocString TOOLTIP = "This food is warm\n\n" + UI.PRE_KEYWORD + "Temperatures" + UI.PST_KEYWORD + " above <b>{RotTemperature}</b> spoil food more quickly";
 			}
 
 			public class CONTAMINATEDATMOSPHERE
@@ -2122,13 +2136,6 @@ namespace STRINGS
 				public static LocString NAME = "Stunted Scales";
 
 				public static LocString TOOLTIP = "This critter's " + UI.PRE_KEYWORD + "Scale Growth" + UI.PST_KEYWORD + " is being stunted by an unfavorable environment";
-			}
-
-			public class REFRIGERATED
-			{
-				public static LocString NAME = "Refrigerated";
-
-				public static LocString TOOLTIP = "Ideal " + UI.PRE_KEYWORD + "Temperature" + UI.PST_KEYWORD + " storage is slowing this food's " + UI.PRE_KEYWORD + "Decay Rate" + UI.PST_KEYWORD;
 			}
 
 			public class RECEPTACLEINOPERATIONAL

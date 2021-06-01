@@ -41,6 +41,12 @@ namespace ProcGen
 			set;
 		}
 
+		public int priority
+		{
+			get;
+			set;
+		}
+
 		public WeightedSubworldName()
 		{
 			weight = 1f;

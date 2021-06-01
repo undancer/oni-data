@@ -792,6 +792,27 @@ public class CameraController : KMonoBehaviour, IInputHandler
 		CheckMoveUnpause();
 	}
 
+	public void SetTargetPosForWorldChange(Vector3 pos, float orthographic_size, bool playSound)
+	{
+		int num = Grid.WorldIdx[Grid.PosToCell(pos)];
+		if (num != ClusterManager.INVALID_WORLD_IDX && !(ClusterManager.Instance.GetWorld(num) == null))
+		{
+			ClearFollowTarget();
+			if (playSound && !isTargetPosSet)
+			{
+				KMonoBehaviour.PlaySound(GlobalAssets.GetSound("Click_Notification"));
+			}
+			pos.z = -100f;
+			targetPos = pos;
+			isTargetPosSet = true;
+			targetOrthographicSize = orthographic_size;
+			PlayerController.Instance.CancelDragging();
+			CheckMoveUnpause();
+			SetPosition(pos);
+			SetOrthographicsSize(orthographic_size);
+		}
+	}
+
 	public void SetMaxOrthographicSize(float size)
 	{
 		maxOrthographicSize = size;

@@ -106,6 +106,7 @@ public class ClusterMapTravelAnimator : GameStateMachine<ClusterMapTravelAnimato
 	public override void InitializeStates(out BaseState defaultState)
 	{
 		defaultState = idle;
+		root.OnTargetLost(entityTarget, null);
 		idle.Enter(delegate(StatesInstance smi)
 		{
 			smi.PlayVisAnim("idle_loop", KAnim.PlayMode.Loop);

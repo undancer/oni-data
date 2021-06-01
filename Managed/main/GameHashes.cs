@@ -324,6 +324,7 @@ public enum GameHashes
 	RocketInteriorComplete = -71801987,
 	RocketRequestLaunch = 191901966,
 	RocketReadyToLaunch = -849456099,
+	UpdateRocketStatus = -688990705,
 	StoragePriorityChanged = -1626373771,
 	StorageCapacityChanged = -945020481,
 	AttachmentNetworkChanged = 486707561,
@@ -387,5 +388,6 @@ public enum GameHashes
 	ChainedNetworkChanged = -1009905786,
 	FoundationChanged = -1960061727,
 	PlantSubspeciesProgress = -1531232972,
-	PlantSubspeciesComplete = -98362560
+	PlantSubspeciesComplete = -98362560,
+	LimitValveAmountChanged = -1722241721
 }

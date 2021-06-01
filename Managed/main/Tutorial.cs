@@ -78,6 +78,8 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 
 	private int focusedOxygenGenerator = 0;
 
+	private int focusedUnrefrigFood = -1;
+
 	public static Tutorial Instance
 	{
 		get;
@@ -212,7 +214,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 		{
 			notification = new Notification(MISC.NOTIFICATIONS.UNREFRIGERATEDFOOD.NAME, NotificationType.Tutorial, UnrefrigeratedFoodTooltip, null, expires: false, 0f, delegate
 			{
-				PlanScreen.Instance.OpenCategoryByName("Food");
+				ZoomToNextUnrefrigeratedFood();
 			}),
 			requirementSatisfied = FoodIsRefrigerated,
 			minTimeToNotify = 6f,
@@ -349,12 +351,13 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 	private string UnrefrigeratedFoodTooltip(List<Notification> notifications, object data)
 	{
 		string text = MISC.NOTIFICATIONS.UNREFRIGERATEDFOOD.TOOLTIP;
-		List<string> list = new List<string>();
-		GetUnrefrigeratedFood(list);
-		for (int i = 0; i < list.Count; i++)
+		ListPool<Pickupable, Tutorial>.PooledList pooledList = ListPool<Pickupable, Tutorial>.Allocate();
+		GetUnrefrigeratedFood(pooledList);
+		for (int i = 0; i < pooledList.Count; i++)
 		{
-			text = text + "\n" + list[i];
+			text = text + "\n" + pooledList[i].GetProperName();
 		}
+		pooledList.Recycle();
 		return text;
 	}
 
@@ -489,7 +492,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 		return true;
 	}
 
-	private int GetUnrefrigeratedFood(List<string> foods)
+	private int GetUnrefrigeratedFood(List<Pickupable> foods)
 	{
 		int num = 0;
 		if (ClusterManager.Instance.activeWorld.worldInventory != null)
@@ -501,13 +504,13 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 			}
 			foreach (Pickupable item in pickupables)
 			{
-				if (item.storage != null && (item.storage.GetComponent<RationBox>() != null || item.storage.GetComponent<Refrigerator>() != null) && !Rottable.IsRefrigerated(item.gameObject) && Rottable.AtmosphereQuality(item.gameObject) != Rottable.RotAtmosphereQuality.Sterilizing)
+				if (item.storage != null && (item.storage.GetComponent<RationBox>() != null || item.storage.GetComponent<Refrigerator>() != null))
 				{
 					Rottable.Instance sMI = item.GetSMI<Rottable.Instance>();
-					if (sMI != null && sMI.RotConstitutionPercentage < 0.8f)
+					if (sMI != null && Rottable.RefrigerationLevel(sMI) == Rottable.RotRefrigerationLevel.Normal && Rottable.AtmosphereQuality(sMI) != Rottable.RotAtmosphereQuality.Sterilizing && sMI != null && sMI.RotConstitutionPercentage < 0.8f)
 					{
 						num++;
-						foods?.Add(item.GetProperName());
+						foods?.Add(item);
 					}
 				}
 			}
@@ -608,7 +611,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 			GameObject gameObject = oxygenGenerators[focusedOxygenGenerator];
 			if (gameObject != null)
 			{
-				Vector3 position = gameObject.transform.position;
+				Vector3 position = gameObject.transform.GetPosition();
 				CameraController.Instance.SetTargetPos(position, 8f, playSound: true);
 			}
 			else
@@ -617,5 +620,22 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 			}
 			focusedOxygenGenerator++;
 		}
+	}
+
+	private void ZoomToNextUnrefrigeratedFood()
+	{
+		ListPool<Pickupable, Tutorial>.PooledList pooledList = ListPool<Pickupable, Tutorial>.Allocate();
+		int unrefrigeratedFood = GetUnrefrigeratedFood(pooledList);
+		focusedUnrefrigFood++;
+		if (focusedUnrefrigFood >= unrefrigeratedFood)
+		{
+			focusedUnrefrigFood = 0;
+		}
+		Pickupable pickupable = pooledList[focusedUnrefrigFood];
+		if (pickupable != null)
+		{
+			CameraController.Instance.SetTargetPos(pickupable.transform.GetPosition(), 8f, playSound: true);
+		}
+		pooledList.Recycle();
 	}
 }

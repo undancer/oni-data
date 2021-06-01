@@ -509,6 +509,8 @@ public class SolidConduitFlow : IConduitFlow
 		}
 	}
 
+	public const float MAX_SOLID_MASS = 20f;
+
 	public const float TickRate = 1f;
 
 	public const float WaitTime = 1f;

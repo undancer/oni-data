@@ -873,7 +873,7 @@ public class LoadScreen : KModalScreen
 		{
 			if (display != null)
 			{
-				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 461546u, 22);
+				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 464434u, 23);
 			}
 			return false;
 		}
@@ -881,7 +881,7 @@ public class LoadScreen : KModalScreen
 		{
 			if (display != null)
 			{
-				display.text = string.Format(UI.FRONTEND.LOADSCREEN.UNSUPPORTED_SAVE_VERSION, save.FileName, save.FileInfo.saveMajorVersion, save.FileInfo.saveMinorVersion, 7, 22);
+				display.text = string.Format(UI.FRONTEND.LOADSCREEN.UNSUPPORTED_SAVE_VERSION, save.FileName, save.FileInfo.saveMajorVersion, save.FileInfo.saveMinorVersion, 7, 23);
 			}
 			return false;
 		}
@@ -907,7 +907,7 @@ public class LoadScreen : KModalScreen
 			{
 				DebugUtil.DevLogError("Failed to find cluster " + text + " including the scoped path, setting to default cluster name.");
 				Debug.Log("ClusterCache: " + string.Join(",", SettingsCache.clusterLayouts.clusterCache.Keys));
-				text = "worlds/SandstoneDefault";
+				text = WorldGenSettings.ClusterDefaultName;
 			}
 		}
 		ProcGen.World world = ((text != null) ? SettingsCache.clusterLayouts.GetWorldData(text, 0) : null);
@@ -1159,11 +1159,11 @@ public class LoadScreen : KModalScreen
 
 	private static bool IsSaveFileFromUnsupportedFutureBuild(SaveGame.Header header, SaveGame.GameInfo gameInfo)
 	{
-		if (gameInfo.saveMajorVersion > 7 || (gameInfo.saveMajorVersion == 7 && gameInfo.saveMinorVersion > 22))
+		if (gameInfo.saveMajorVersion > 7 || (gameInfo.saveMajorVersion == 7 && gameInfo.saveMinorVersion > 23))
 		{
 			return true;
 		}
-		return header.buildVersion > 461546;
+		return header.buildVersion > 464434;
 	}
 
 	private static bool IsSaveFromCurrentDLC(SaveGame.GameInfo gameInfo, out string saveDlcName)
@@ -1243,15 +1243,15 @@ public class LoadScreen : KModalScreen
 		SaveGame.GameInfo gameInfo = SaveLoader.LoadHeader(filename, out header);
 		string arg = null;
 		string arg2 = null;
-		if (header.buildVersion > 461546)
+		if (header.buildVersion > 464434)
 		{
 			arg = header.buildVersion.ToString();
-			arg2 = 461546u.ToString();
+			arg2 = 464434u.ToString();
 		}
 		else if (gameInfo.saveMajorVersion < 7)
 		{
 			arg = $"v{gameInfo.saveMajorVersion}.{gameInfo.saveMinorVersion}";
-			arg2 = $"v{7}.{22}";
+			arg2 = $"v{7}.{23}";
 		}
 		if (!flag)
 		{

@@ -570,11 +570,13 @@ namespace ProcGen
 				if (list3.Count > 0)
 				{
 					weightedSubWorld = list3[0];
+					int priority = weightedSubWorld.priority;
 					foreach (WeightedSubWorld item2 in list3)
 					{
-						if (item2.minCount > weightedSubWorld.minCount)
+						if (item2.priority > priority || (item2.priority == priority && item2.minCount > weightedSubWorld.minCount))
 						{
 							weightedSubWorld = item2;
+							priority = item2.priority;
 						}
 					}
 					weightedSubWorld.minCount--;
@@ -607,9 +609,9 @@ namespace ProcGen
 				{
 					if (!isRunningDebugGen)
 					{
-						throw new Exception($"Could not guarantee minCount of Subworld {item4.subWorld.name}, {item4.minCount} remaining.");
+						throw new Exception($"Could not guarantee minCount of Subworld {item4.subWorld.name}, {item4.minCount} remaining on world {worldGen.Settings.world.filePath}.");
 					}
-					DebugUtil.DevLogError($"Could not guarantee minCount of Subworld {item4.subWorld.name}, {item4.minCount} remaining.");
+					DebugUtil.DevLogError($"Could not guarantee minCount of Subworld {item4.subWorld.name}, {item4.minCount} remaining on world {worldGen.Settings.world.filePath}.");
 				}
 			}
 		}

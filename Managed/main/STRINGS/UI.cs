@@ -76,8 +76,18 @@ namespace STRINGS
 
 		public class COLONY_DIAGNOSTICS
 		{
+			public class GENERIC_CRITERIA
+			{
+				public static LocString CHECKWORLDHASMINIONS = "Check world has Duplicants";
+			}
+
 			public class IDLEDIAGNOSTIC
 			{
+				public static class CRITERIA
+				{
+					public static LocString CHECKIDLE = "Check idle";
+				}
+
 				public static LocString ALL_NAME = "Idleness";
 
 				public static LocString TOOLTIP_NAME = "<b>Idleness</b>";
@@ -89,11 +99,19 @@ namespace STRINGS
 
 			public class CHOREGROUPDIAGNOSTIC
 			{
+				public static class CRITERIA
+				{
+				}
+
 				public static LocString ALL_NAME = ALLCHORESDIAGNOSTIC.ALL_NAME;
 			}
 
 			public class ALLCHORESDIAGNOSTIC
 			{
+				public static class CRITERIA
+				{
+				}
+
 				public static LocString ALL_NAME = "Errands";
 
 				public static LocString TOOLTIP_NAME = "<b>Errands</b>";
@@ -103,11 +121,19 @@ namespace STRINGS
 
 			public class WORKTIMEDIAGNOSTIC
 			{
+				public static class CRITERIA
+				{
+				}
+
 				public static LocString ALL_NAME = ALLCHORESDIAGNOSTIC.ALL_NAME;
 			}
 
 			public class ALLWORKTIMEDIAGNOSTIC
 			{
+				public static class CRITERIA
+				{
+				}
+
 				public static LocString ALL_NAME = "Work Time";
 
 				public static LocString TOOLTIP_NAME = "<b>Work Time</b>";
@@ -117,6 +143,10 @@ namespace STRINGS
 
 			public class TRAVEL_TIME
 			{
+				public static class CRITERIA
+				{
+				}
+
 				public static LocString ALL_NAME = "Travel Time";
 
 				public static LocString TOOLTIP_NAME = "<b>Travel Time</b>";
@@ -126,6 +156,11 @@ namespace STRINGS
 
 			public class TRAPPEDDUPLICANTDIAGNOSTIC
 			{
+				public static class CRITERIA
+				{
+					public static LocString CHECKTRAPPED = "Check Trapped";
+				}
+
 				public static LocString ALL_NAME = "Trapped";
 
 				public static LocString TOOLTIP_NAME = "<b>Trapped</b>";
@@ -137,6 +172,13 @@ namespace STRINGS
 
 			public class BREATHABILITYDIAGNOSTIC
 			{
+				public static class CRITERIA
+				{
+					public static LocString CHECKSUFFOCATION = "Check suffocation";
+
+					public static LocString CHECKLOWBREATHABILITY = "Check low breathability";
+				}
+
 				public static LocString ALL_NAME = "Breathability";
 
 				public static LocString TOOLTIP_NAME = "<b>Breathability</b>";
@@ -150,6 +192,11 @@ namespace STRINGS
 
 			public class STRESSDIAGNOSTIC
 			{
+				public static class CRITERIA
+				{
+					public static LocString CHECKSTRESSED = "Check stressed";
+				}
+
 				public static LocString ALL_NAME = "Max Stress";
 
 				public static LocString TOOLTIP_NAME = "<b>Max Stress</b>";
@@ -161,6 +208,11 @@ namespace STRINGS
 
 			public class DECORDIAGNOSTIC
 			{
+				public static class CRITERIA
+				{
+					public static LocString CHECKDECOR = "Check decor";
+				}
+
 				public static LocString ALL_NAME = "Decor";
 
 				public static LocString TOOLTIP_NAME = "<b>Decor</b>";
@@ -172,6 +224,13 @@ namespace STRINGS
 
 			public class TOILETDIAGNOSTIC
 			{
+				public static class CRITERIA
+				{
+					public static LocString CHECKHASANYTOILETS = "Check has any toilets";
+
+					public static LocString CHECKENOUGHTOILETS = "Check enough toilets";
+				}
+
 				public static LocString ALL_NAME = "Toilets";
 
 				public static LocString TOOLTIP_NAME = "<b>Toilets</b>";
@@ -189,6 +248,11 @@ namespace STRINGS
 
 			public class BEDDIAGNOSTIC
 			{
+				public static class CRITERIA
+				{
+					public static LocString CHECKENOUGHBEDS = "Check enough beds";
+				}
+
 				public static LocString ALL_NAME = "Beds";
 
 				public static LocString TOOLTIP_NAME = "<b>Beds</b>";
@@ -209,6 +273,13 @@ namespace STRINGS
 					public static LocString FAIL = "    • Duplicants have no food";
 				}
 
+				public static class CRITERIA
+				{
+					public static LocString CHECKENOUGHFOOD = "Check enough food";
+
+					public static LocString CHECKSTARVATION = "Check starvation";
+				}
+
 				public static LocString ALL_NAME = "Food";
 
 				public static LocString TOOLTIP_NAME = "<b>Food</b>";
@@ -224,6 +295,17 @@ namespace STRINGS
 
 			public class FARMDIAGNOSTIC
 			{
+				public static class CRITERIA
+				{
+					public static LocString CHECKHASFARMS = "Check colony has farms";
+
+					public static LocString CHECKPLANTED = "Check farms are planted";
+
+					public static LocString CHECKWILTING = "Check crops wilting";
+
+					public static LocString CHECKOPERATIONAL = "Check farm plots operational";
+				}
+
 				public static LocString ALL_NAME = "Crops";
 
 				public static LocString TOOLTIP_NAME = "<b>Crops</b>";
@@ -241,6 +323,11 @@ namespace STRINGS
 
 			public class POWERUSEDIAGNOSTIC
 			{
+				public static class CRITERIA
+				{
+					public static LocString CHECKPOWER = "Check power";
+				}
+
 				public static LocString ALL_NAME = "Avg Power";
 
 				public static LocString TOOLTIP_NAME = "<b>Avg Power</b>";
@@ -252,6 +339,11 @@ namespace STRINGS
 
 			public class HEATDIAGNOSTIC
 			{
+				public static class CRITERIA
+				{
+					public static LocString CHECKHEAT = "Check heat";
+				}
+
 				public static LocString ALL_NAME = BATTERYDIAGNOSTIC.ALL_NAME;
 			}
 
@@ -262,6 +354,13 @@ namespace STRINGS
 					public static LocString PASS = "";
 
 					public static LocString FAIL = "";
+				}
+
+				public static class CRITERIA
+				{
+					public static LocString CHECKCAPACITY = "Check capacity";
+
+					public static LocString CHECKDEAD = "Check dead";
 				}
 
 				public static LocString ALL_NAME = "Battery";
@@ -295,6 +394,13 @@ namespace STRINGS
 					public static LocString FAIL_WARNING = "One or more Duplicants are being exposed to extreme levels of radiation";
 				}
 
+				public static class CRITERIA
+				{
+					public static LocString CHECKSICK = "Check sick";
+
+					public static LocString CHECKEXPOSED = "Check exposed";
+				}
+
 				public static LocString ALL_NAME = "Radiation";
 
 				public static LocString TOOLTIP_NAME = "<b>Radiation</b>";
@@ -304,6 +410,11 @@ namespace STRINGS
 
 			public class ENTOMBEDDIAGNOSTIC
 			{
+				public static class CRITERIA
+				{
+					public static LocString CHECKENTOMBED = "Check entombed";
+				}
+
 				public static LocString ALL_NAME = "Entombed";
 
 				public static LocString TOOLTIP_NAME = "<b>Entombed</b>";
@@ -315,6 +426,10 @@ namespace STRINGS
 
 			public class ROCKETFUELDIAGNOSTIC
 			{
+				public static class CRITERIA
+				{
+				}
+
 				public static LocString ALL_NAME = "Rocket Fuel";
 
 				public static LocString TOOLTIP_NAME = "<b>Rocket Fuel</b>";
@@ -326,6 +441,10 @@ namespace STRINGS
 
 			public class ROCKETOXIDIZERDIAGNOSTIC
 			{
+				public static class CRITERIA
+				{
+				}
+
 				public static LocString ALL_NAME = "Rocket Oxidizer";
 
 				public static LocString TOOLTIP_NAME = "<b>Rocket Oxidizer</b>";
@@ -337,6 +456,13 @@ namespace STRINGS
 
 			public class REACTORDIAGNOSTIC
 			{
+				public static class CRITERIA
+				{
+					public static LocString CHECKTEMPERATURE = "Check temperature";
+
+					public static LocString CHECKCOOLANT = "Check coolant";
+				}
+
 				public static LocString ALL_NAME = BUILDINGS.PREFABS.NUCLEARREACTOR.NAME;
 
 				public static LocString TOOLTIP_NAME = BUILDINGS.PREFABS.NUCLEARREACTOR.NAME;
@@ -344,10 +470,16 @@ namespace STRINGS
 				public static LocString NORMAL = "    • Safe";
 
 				public static LocString CRITERIA_TEMPERATURE_WARNING = "    • Temperature dangerously high";
+
+				public static LocString CRITERIA_COOLANT_WARNING = "    • Coolant tank low";
 			}
 
 			public class FLOATINGROCKETDIAGNOSTIC
 			{
+				public static class CRITERIA
+				{
+				}
+
 				public static LocString ALL_NAME = "Flight Status";
 
 				public static LocString TOOLTIP_NAME = "<b>Flight Status</b>";
@@ -374,6 +506,8 @@ namespace STRINGS
 			public static LocString MUTE_TUTORIAL = "Diagnostic can be muted in the <b><color=#E5B000>See All</color></b> panel";
 
 			public static LocString GENERIC_STATUS_NORMAL = "All values nominal";
+
+			public static LocString PLACEHOLDER_CRITERIA_NAME = "Placeholder Criteria Name";
 
 			public static LocString GENERIC_CRITERIA_PASS = "Criteria met";
 
@@ -1756,13 +1890,13 @@ namespace STRINGS
 
 			public class MOTD
 			{
-				public static LocString IMAGE_HEADER = "BIGGER WORLDS";
+				public static LocString IMAGE_HEADER = "PECULIAR PLANTS UPDATE";
 
 				public static LocString NEWS_HEADER = "JOIN THE DISCUSSION";
 
 				public static LocString NEWS_BODY = "Stay up to date by joining our mailing list, or head on over to the forums and join the discussion.";
 
-				public static LocString PATCH_NOTES_SUMMARY = "<b>Big Asteroid Update</b>\n\nAdded a <b>Bigger, More Inclusive Terra Style</b> and <b>Spaced Out! Style Forest</b> cluster.\n\nRebalanced rocketry to allow for easier and more customizable space travel.\n\nBug fixes, animation updates, and more. Check out the full patch notes for more details!";
+				public static LocString PATCH_NOTES_SUMMARY = "Welcome to the <b>Peculiar Plants Update!</b>\n\n   •<indent=20px>Crop plants now drop <b>Mutant Seeds</b> when exposed to radiation.</indent>\n\n   •<indent=20px>Food spoilage and refrigeration have been rebalanced.</indent>\n\n   •<indent=20px>New <b>Meter Valves</b> allow precise plumbing deliveries.</indent>\n\n   •<indent=20px>Bug fixes, animation updates, and more.</indent>\n\nCheck out the full patch notes for more details!";
 
 				public static LocString UPDATE_TEXT = "LAUNCHED!";
 
@@ -2811,6 +2945,11 @@ namespace STRINGS
 					public static LocString DESCRIPTION = string.Concat(FormatAsLink("Crop Tending", "PLANTS"), " and ", ITEMS.INDUSTRIAL_PRODUCTS.FARM_STATION_TOOLS.NAME, " Crafting");
 				}
 
+				public class CAN_IDENTIFY_MUTANT_SEEDS
+				{
+					public static LocString DESCRIPTION = "Can identify " + PRE_KEYWORD + "Mutant Seeds" + PST_KEYWORD + " at the " + BUILDINGS.PREFABS.GENETICANALYSISSTATION.NAME;
+				}
+
 				public class CAN_WRANGLE_CREATURES
 				{
 					public static LocString DESCRIPTION = "Critter Wrangling";
@@ -3750,6 +3889,10 @@ namespace STRINGS
 			public static LocString VITALS_CHECKBOX_RECEPTACLE_OPERATIONAL = "This plant is housed in an operational farm plot";
 
 			public static LocString VITALS_CHECKBOX_RECEPTACLE_INOPERATIONAL = "This plant is not housed in an operational farm plot";
+
+			public static LocString VITALS_CHECKBOX_RADIATION = "This plant is sitting in <b>{rads}</b> of ambient " + PRE_KEYWORD + "Radiation" + PST_KEYWORD + ". It needs at between {minRads} and {maxRads} to grow";
+
+			public static LocString VITALS_CHECKBOX_RADIATION_NO_MIN = "This plant is sitting in <b>{rads}</b> of ambient " + PRE_KEYWORD + "Radiation" + PST_KEYWORD + ". It needs less than {maxRads} to grow";
 		}
 
 		public class CLUSTERMAP
@@ -4638,7 +4781,7 @@ namespace STRINGS
 
 				public static LocString CALORIES = "Calories: {0}";
 
-				public static LocString SPOILPROPERTIES = "Preserve temperature: {0}\nSpoil time: {1}";
+				public static LocString SPOILPROPERTIES = "Refrigeration temperature: {0}\nDeep Freeze temperature: {1}\nSpoil time: {2}";
 
 				public static LocString NON_PERISHABLE = "Spoil time: Never";
 			}
@@ -6579,6 +6722,29 @@ namespace STRINGS
 				public static LocString PILOT_FMT = "{0} - Pilot";
 			}
 
+			public class HIGHENERGYPARTICLEDIRECTIONSIDESCREEN
+			{
+				public static LocString TITLE = "Emitting Particle Direction";
+
+				public static LocString SELECTED_DIRECTION = "Selected direction: {0}";
+
+				public static LocString DIRECTION_N = "N";
+
+				public static LocString DIRECTION_NE = "NE";
+
+				public static LocString DIRECTION_E = "E";
+
+				public static LocString DIRECTION_SE = "SE";
+
+				public static LocString DIRECTION_S = "S";
+
+				public static LocString DIRECTION_SW = "SW";
+
+				public static LocString DIRECTION_W = "W";
+
+				public static LocString DIRECTION_NW = "NW";
+			}
+
 			public class MONUMENTSIDESCREEN
 			{
 				public static LocString TITLE = "Great Monument";
@@ -6927,7 +7093,7 @@ namespace STRINGS
 
 				public static LocString DROPDOWN_TOOLTIP_FIRST_AVAILABLE = "Select the first available landing site";
 
-				public static LocString DROPDOWN_TOOLTIP_TOO_SHORT = "Landing site too short for this rocket's height";
+				public static LocString DROPDOWN_TOOLTIP_TOO_SHORT = "This rocket's height exceeds the space available in this landing site";
 
 				public static LocString DROPDOWN_TOOLTIP_PATH_OBSTRUCTED = "Landing path obstructed";
 
@@ -6988,6 +7154,19 @@ namespace STRINGS
 			public class VALVESIDESCREEN
 			{
 				public static LocString TITLE = "Flow Control";
+			}
+
+			public class LIMIT_VALVE_SIDE_SCREEN
+			{
+				public static LocString TITLE = "Meter Control";
+
+				public static LocString AMOUNT = "Amount: {0}";
+
+				public static LocString LIMIT = "Limit:";
+
+				public static LocString RESET_BUTTON = "Reset Amount";
+
+				public static LocString SLIDER_TOOLTIP_UNITS = "The amount of Units or Mass passing through the sensor.";
 			}
 
 			public class NUCLEAR_REACTOR_SIDE_SCREEN
@@ -7438,6 +7617,10 @@ namespace STRINGS
 				public static LocString CURRENT_THRESHOLD = "Current Threshold: {0}%";
 
 				public static LocString TOOLTIP = "Releases a " + PRE_KEYWORD + "Radbolt" + PST_KEYWORD + " when stored Radbolts exceed <b>{0}</b>";
+
+				public static LocString PROGRESS_BAR_LABEL = "Radbolt Generation";
+
+				public static LocString PROGRESS_BAR_TOOLTIP = "The building will emit a " + PRE_KEYWORD + "Radbolt" + PST_KEYWORD + " in the chosen direction when fully charged";
 			}
 
 			public class LOGICBITSELECTORSIDESCREEN
@@ -7503,17 +7686,13 @@ namespace STRINGS
 
 				public static LocString NONE_DISCOVERED = "No mutant seeds have been found.";
 
-				public static LocString PICK_TARGET = "Select a plant for study";
+				public static LocString SELECT_SEEDS = "Select which seed types to analyze:";
 
-				public static LocString CURRENT_TARGET = "Currently studying:";
+				public static LocString SEED_NO_MUTANTS = "</i>No mutants found</i>";
 
-				public static LocString SEED_PROGRESS_FMT = "{0}/{1} seeds";
+				public static LocString SEED_FORBIDDEN = "</i>Won't analyze</i>";
 
-				public static LocString SEED_COMPLETE = "<i>Complete</i>";
-
-				public static LocString SELECT_SEED = "Select Analysis Target";
-
-				public static LocString CANCEL_SEED = "Clear Analysis Target";
+				public static LocString SEED_ALLOWED = "</i>Will analyze</i>";
 			}
 		}
 
@@ -7841,6 +8020,8 @@ namespace STRINGS
 				public static LocString SEARCH_TELEPORTER_SENDER = "While scanning the antiquated computer code of this machine I uncovered some research notes. I add them to my database.\n\nNew Database Entry discovered.";
 
 				public static LocString SEARCH_TELEPORTER_RECEIVER = "Incongruously placed research notes are hidden within the operating instructions of this device. I add them to my database.\n\nNew Database Entry discovered.";
+
+				public static LocString SEARCH_CRYO_TANK = "There are some safety instructions included in the operating instructions of this Cryotank. I add them to my database.\n\nNew Database Entry discoverd.";
 			}
 
 			public class OPENPOI
@@ -9807,6 +9988,10 @@ namespace STRINGS
 				public static LocString REQUIRES_NO_MIN_RADIATION = "This plant will stop growing if exposed to more than {MaxRads} of " + FormatAsLink("Radiation", "RADIATION");
 
 				public static LocString REQUIRES_RADIATION = "This plant will only grow if it has between {MinRads} and {MaxRads} of " + FormatAsLink("Radiation", "RADIATION");
+
+				public static LocString MUTANT_SEED_TOOLTIP = "\n\nGrowing near its maximum radiation increases the chance of mutant seeds being produced";
+
+				public static LocString MUTANT_STERILE = "Due to changes to its DNA this plant will not produce seeds of its own";
 			}
 
 			public class DAMAGE_POPS
@@ -9884,9 +10069,17 @@ namespace STRINGS
 
 			public static LocString EMITS_LIGHT_LUX = FormatAsLink("Brightness", "LIGHT") + ": {0} Lux";
 
+			public static LocString AMBIENT_RADIATION = "Ambient Radiation";
+
+			public static LocString AMBIENT_RADIATION_FMT = "{minRads} - {maxRads}";
+
+			public static LocString AMBIENT_NO_MIN_RADIATION_FMT = "Less than {maxRads}";
+
 			public static LocString REQUIRES_NO_MIN_RADIATION = "Maximum " + FormatAsLink("Radiation", "RADIATION") + ": {MaxRads}";
 
 			public static LocString REQUIRES_RADIATION = FormatAsLink("Radiation", "RADIATION") + ": {MinRads} to {MaxRads}";
+
+			public static LocString MUTANT_STERILE = "Doesn't Drop " + FormatAsLink("Seeds", "PLANTS");
 
 			public static LocString DARKNESS = "Darkness";
 

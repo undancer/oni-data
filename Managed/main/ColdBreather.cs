@@ -70,7 +70,10 @@ public class ColdBreather : StateMachineComponent<ColdBreather.StatesInstance>, 
 					smi.master.elementConsumer.EnableConsumption(enabled: false);
 					smi.master.radiationEmitter.SetEmitting(emitting: false);
 				});
-			alive.wilting.PlayAnim("wilt1").EventTransition(GameHashes.WiltRecover, alive.mature, (StatesInstance smi) => !smi.master.wiltCondition.IsWilting());
+			alive.wilting.PlayAnim("wilt1").EventTransition(GameHashes.WiltRecover, alive.mature, (StatesInstance smi) => !smi.master.wiltCondition.IsWilting()).Enter(delegate(StatesInstance smi)
+			{
+				smi.master.radiationEmitter.SetEmitting(emitting: false);
+			});
 		}
 	}
 

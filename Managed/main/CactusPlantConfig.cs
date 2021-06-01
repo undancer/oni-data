@@ -26,16 +26,15 @@ public class CactusPlantConfig : IEntityConfig
 			SimHashes.Oxygen,
 			SimHashes.ContaminatedOxygen,
 			SimHashes.CarbonDioxide
-		}, pressure_sensitive: false, 0f, 0.15f, null, can_drown: true, can_tinker: false, require_solid_tile: true, should_grow_old: true, 2400f, "CactusPlantOriginal", STRINGS.CREATURES.SPECIES.CACTUSPLANT.NAME);
+		}, pressure_sensitive: false, 0f, 0.15f, null, can_drown: true, can_tinker: false, require_solid_tile: true, should_grow_old: true, 2400f, 0f, 220f, "CactusPlantOriginal", STRINGS.CREATURES.SPECIES.CACTUSPLANT.NAME);
 		PrickleGrass prickleGrass = gameObject.AddOrGet<PrickleGrass>();
 		prickleGrass.positive_decor_effect = POSITIVE_DECOR_EFFECT;
 		prickleGrass.negative_decor_effect = NEGATIVE_DECOR_EFFECT;
 		GameObject seed = EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Hidden, "CactusPlantSeed", STRINGS.CREATURES.SPECIES.SEEDS.CACTUSPLANT.NAME, STRINGS.CREATURES.SPECIES.SEEDS.CACTUSPLANT.DESC, Assets.GetAnim("seed_potted_cactus_kanim"), "object", 1, new List<Tag>
 		{
 			GameTags.DecorSeed
-		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 8, STRINGS.CREATURES.SPECIES.CACTUSPLANT.DOMESTICATEDDESC);
+		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 13, STRINGS.CREATURES.SPECIES.CACTUSPLANT.DOMESTICATEDDESC);
 		EntityTemplates.CreateAndRegisterPreviewForPlant(seed, "CactusPlant_preview", Assets.GetAnim("potted_cactus_kanim"), "place", 1, 1);
-		gameObject.AddOrGet<KBatchedAnimController>().randomiseLoopedOffset = true;
 		return gameObject;
 	}
 

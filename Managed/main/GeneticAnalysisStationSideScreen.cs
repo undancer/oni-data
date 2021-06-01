@@ -9,12 +9,6 @@ public class GeneticAnalysisStationSideScreen : SideScreenContent
 	private LocText message;
 
 	[SerializeField]
-	private KButton button;
-
-	[SerializeField]
-	private LocText buttonLabel;
-
-	[SerializeField]
 	private GameObject contents;
 
 	[SerializeField]
@@ -27,12 +21,11 @@ public class GeneticAnalysisStationSideScreen : SideScreenContent
 
 	private GeneticAnalysisStation.StatesInstance target;
 
-	private Tag selectedSpecies;
+	private Dictionary<Tag, bool> expandedSeeds = new Dictionary<Tag, bool>();
 
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		button.onClick += OnButtonClick;
 		Refresh();
 	}
 
@@ -45,103 +38,33 @@ public class GeneticAnalysisStationSideScreen : SideScreenContent
 	{
 		this.target = target.GetSMI<GeneticAnalysisStation.StatesInstance>();
 		GeneticAnalysisStationWorkable component = target.GetComponent<GeneticAnalysisStationWorkable>();
-		selectedSpecies = this.target.GetTargetPlant();
-		PlantSubSpeciesCatalog.instance.Subscribe(-1531232972, OnPlantSubspeciesProgress);
-		PlantSubSpeciesCatalog.instance.Subscribe(-98362560, OnPlantSubspeciesProgress);
 		Refresh();
-	}
-
-	public override void ClearTarget()
-	{
-		if (PlantSubSpeciesCatalog.instance != null)
-		{
-			PlantSubSpeciesCatalog.instance.Unsubscribe(-1531232972, OnPlantSubspeciesProgress);
-			PlantSubSpeciesCatalog.instance.Unsubscribe(-98362560, OnPlantSubspeciesProgress);
-		}
-	}
-
-	private void OnPlantSubspeciesProgress(object data)
-	{
-		Refresh();
-	}
-
-	private void OnButtonClick()
-	{
-		if (target != null)
-		{
-			if (DebugHandler.InstantBuildMode)
-			{
-				PlantSubSpeciesCatalog.instance.PartiallyIdentifySpecies(selectedSpecies, 1f);
-				target.SetTargetPlant(Tag.Invalid);
-			}
-			else if (target.GetTargetPlant().IsValid)
-			{
-				target.SetTargetPlant(Tag.Invalid);
-			}
-			else
-			{
-				target.SetTargetPlant(selectedSpecies);
-			}
-			Refresh();
-		}
 	}
 
 	private void Refresh()
 	{
 		if (target != null)
 		{
-			Tag targetPlant = target.GetTargetPlant();
-			if (targetPlant.IsValid)
-			{
-				DrawSelectedPlant(targetPlant);
-			}
-			else
-			{
-				DrawPickerMenu();
-			}
+			DrawPickerMenu();
 		}
-	}
-
-	private void DrawSelectedPlant(Tag targetPlant)
-	{
-		button.GetComponentInChildren<LocText>().text = UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.CANCEL_SEED;
-		HierarchyReferences item;
-		if (0 < rows.Count)
-		{
-			item = rows[0];
-		}
-		else
-		{
-			item = Util.KInstantiateUI<HierarchyReferences>(rowPrefab.gameObject, rowContainer);
-			rows.Add(item);
-		}
-		ConfigureButton(item, targetPlant);
-		rows[0].gameObject.SetActive(value: true);
-		for (int i = 1; i < rows.Count; i++)
-		{
-			rows[i].gameObject.SetActive(value: false);
-		}
-		contents.gameObject.SetActive(value: true);
-		message.text = UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.CURRENT_TARGET;
 	}
 
 	private void DrawPickerMenu()
 	{
 		Dictionary<Tag, List<PlantSubSpeciesCatalog.SubSpeciesInfo>> dictionary = new Dictionary<Tag, List<PlantSubSpeciesCatalog.SubSpeciesInfo>>();
-		foreach (Tag allDiscoveredSpecy in PlantSubSpeciesCatalog.instance.GetAllDiscoveredSpecies())
+		foreach (Tag allDiscoveredSpecy in PlantSubSpeciesCatalog.Instance.GetAllDiscoveredSpecies())
 		{
-			dictionary[allDiscoveredSpecy] = new List<PlantSubSpeciesCatalog.SubSpeciesInfo>(PlantSubSpeciesCatalog.instance.GetAllSubSpeciesForSpecies(allDiscoveredSpecy));
+			dictionary[allDiscoveredSpecy] = new List<PlantSubSpeciesCatalog.SubSpeciesInfo>(PlantSubSpeciesCatalog.Instance.GetAllSubSpeciesForSpecies(allDiscoveredSpecy));
 		}
-		button.GetComponentInChildren<LocText>().text = UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SELECT_SEED;
 		int num = 0;
-		foreach (KeyValuePair<Tag, List<PlantSubSpeciesCatalog.SubSpeciesInfo>> item2 in dictionary)
+		foreach (KeyValuePair<Tag, List<PlantSubSpeciesCatalog.SubSpeciesInfo>> item in dictionary)
 		{
-			List<PlantSubSpeciesCatalog.SubSpeciesInfo> allSubSpeciesForSpecies = PlantSubSpeciesCatalog.instance.GetAllSubSpeciesForSpecies(item2.Key);
+			List<PlantSubSpeciesCatalog.SubSpeciesInfo> allSubSpeciesForSpecies = PlantSubSpeciesCatalog.Instance.GetAllSubSpeciesForSpecies(item.Key);
 			if (allSubSpeciesForSpecies.Count <= 1)
 			{
 				continue;
 			}
-			GameObject prefab = Assets.GetPrefab(item2.Key);
+			GameObject prefab = Assets.GetPrefab(item.Key);
 			if (prefab == null)
 			{
 				continue;
@@ -155,17 +78,17 @@ public class GeneticAnalysisStationSideScreen : SideScreenContent
 			Tag tag = seedInfo.seedId.ToTag();
 			if (DiscoveredResources.Instance.IsDiscovered(tag))
 			{
-				HierarchyReferences item;
+				HierarchyReferences hierarchyReferences;
 				if (num < rows.Count)
 				{
-					item = rows[num];
+					hierarchyReferences = rows[num];
 				}
 				else
 				{
-					item = Util.KInstantiateUI<HierarchyReferences>(rowPrefab.gameObject, rowContainer);
-					rows.Add(item);
+					hierarchyReferences = Util.KInstantiateUI<HierarchyReferences>(rowPrefab.gameObject, rowContainer);
+					rows.Add(hierarchyReferences);
 				}
-				ConfigureButton(item, item2.Key);
+				ConfigureButton(hierarchyReferences, item.Key);
 				rows[num].gameObject.SetActive(value: true);
 				num++;
 			}
@@ -178,13 +101,11 @@ public class GeneticAnalysisStationSideScreen : SideScreenContent
 		{
 			message.text = UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.NONE_DISCOVERED;
 			contents.gameObject.SetActive(value: false);
-			button.isInteractable = false;
 		}
 		else
 		{
-			message.text = UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.PICK_TARGET;
+			message.text = UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SELECT_SEEDS;
 			contents.gameObject.SetActive(value: true);
-			button.isInteractable = selectedSpecies.IsValid;
 		}
 	}
 
@@ -193,31 +114,35 @@ public class GeneticAnalysisStationSideScreen : SideScreenContent
 		LocText reference = button.GetReference<LocText>("Label");
 		Image reference2 = button.GetReference<Image>("Icon");
 		LocText reference3 = button.GetReference<LocText>("ProgressLabel");
-		KSlider reference4 = button.GetReference<KSlider>("ProgressBar");
-		ToolTip reference5 = button.GetReference<ToolTip>("ToolTip");
-		reference.text = speciesID.ProperName();
-		reference2.sprite = Def.GetUISprite(speciesID).first;
-		if (PlantSubSpeciesCatalog.instance.GetAllUnidentifiedSubSpecies(speciesID).Count > 0)
+		ToolTip reference4 = button.GetReference<ToolTip>("ToolTip");
+		Tag seedID = GetSeedIDFromPlantID(speciesID);
+		bool isForbidden = target.GetSeedForbidden(seedID);
+		reference.text = seedID.ProperName();
+		reference2.sprite = Def.GetUISprite(seedID).first;
+		List<PlantSubSpeciesCatalog.SubSpeciesInfo> allSubSpeciesForSpecies = PlantSubSpeciesCatalog.Instance.GetAllSubSpeciesForSpecies(speciesID);
+		if (allSubSpeciesForSpecies.Count > 0)
 		{
-			float identificationProgress = PlantSubSpeciesCatalog.instance.GetIdentificationProgress(speciesID);
-			int num = 20;
-			float num2 = Mathf.Floor(identificationProgress * (float)num);
-			reference4.value = identificationProgress;
-			reference3.text = string.Format(UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_PROGRESS_FMT, num2, num);
-			reference4.gameObject.SetActive(value: true);
+			reference3.text = (isForbidden ? UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_FORBIDDEN : UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_ALLOWED);
 		}
 		else
 		{
-			reference3.text = UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_COMPLETE;
-			reference4.gameObject.SetActive(value: false);
+			reference3.text = UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_NO_MUTANTS;
 		}
 		KToggle component = button.GetComponent<KToggle>();
-		component.isOn = speciesID == selectedSpecies;
+		component.isOn = !isForbidden;
 		component.ClearOnClick();
 		component.onClick += delegate
 		{
-			selectedSpecies = speciesID;
+			target.SetSeedForbidden(seedID, !isForbidden);
 			Refresh();
 		};
+	}
+
+	private Tag GetSeedIDFromPlantID(Tag speciesID)
+	{
+		GameObject prefab = Assets.GetPrefab(speciesID);
+		SeedProducer component = prefab.GetComponent<SeedProducer>();
+		string seedId = component.seedInfo.seedId;
+		return seedId;
 	}
 }

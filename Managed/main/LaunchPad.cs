@@ -152,7 +152,7 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 
 	public RocketModuleCluster LandedRocket => landedRocket;
 
-	public int PadPosition => Grid.OffsetCell(Grid.PosToCell(this), baseModulePosition);
+	public int RocketBottomPosition => Grid.OffsetCell(Grid.PosToCell(this), baseModulePosition);
 
 	protected override void OnPrefabInit()
 	{
@@ -168,15 +168,15 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 		base.OnSpawn();
 		tower = new LaunchPadTower(this, maxTowerHeight);
 		OnRocketBuildingChanged(GetRocketBaseModule());
-		partitionerEntry = GameScenePartitioner.Instance.Add("LaunchPad.OnSpawn", base.gameObject, Extents.OneCell(PadPosition), GameScenePartitioner.Instance.objectLayers[1], OnRocketBuildingChanged);
+		partitionerEntry = GameScenePartitioner.Instance.Add("LaunchPad.OnSpawn", base.gameObject, Extents.OneCell(RocketBottomPosition), GameScenePartitioner.Instance.objectLayers[1], OnRocketBuildingChanged);
 		Components.LaunchPads.Add(this);
 		if (landedRocket != null && landedRocket.CraftInterface.CurrentPad == null)
 		{
 			landedRocket.CraftInterface.SetCurrentPad(this);
 		}
 		CheckLandedRocketPassengerModuleStatus();
-		int num = ConditionFlightPathIsClear.PadPositionDistanceToCeiling(base.gameObject);
-		if (num < ConditionFlightPathIsClear.maximumRocketHeight)
+		int num = ConditionFlightPathIsClear.PadTopEdgeDistanceToCeilingEdge(base.gameObject);
+		if (num < 35)
 		{
 			GetComponent<KSelectable>().AddStatusItem(Db.Get().BuildingStatusItems.RocketPlatformCloseToCeiling, num);
 		}

@@ -9,7 +9,7 @@ public class PowerUseDiagnostic : ColonyDiagnostic
 		tracker = TrackerTool.Instance.GetWorldTracker<PowerUseTracker>(worldID);
 		trackerSampleCountSeconds = 30f;
 		icon = "overlay_power";
-		AddCriterion("CheckPower", new DiagnosticCriterion(CheckPower));
+		AddCriterion("CheckPower", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckPower));
 	}
 
 	private DiagnosticResult CheckPower()

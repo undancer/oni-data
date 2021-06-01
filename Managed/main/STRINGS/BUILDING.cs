@@ -258,6 +258,13 @@ namespace STRINGS
 				public static LocString TOOLTIP = "Output " + UI.PRE_KEYWORD + "Pipe" + UI.PST_KEYWORD + " is blocked";
 			}
 
+			public class SOLIDCONDUITBLOCKEDMULTIPLES
+			{
+				public static LocString NAME = "Conveyor Rail Blocked";
+
+				public static LocString TOOLTIP = "Output " + UI.PRE_KEYWORD + "Conveyor Rail" + UI.PST_KEYWORD + " is blocked";
+			}
+
 			public class OUTPUTPIPEFULL
 			{
 				public static LocString NAME = "Output Pipe Full";
@@ -460,6 +467,20 @@ namespace STRINGS
 				public static LocString NAME = "Manually Controlled";
 
 				public static LocString TOOLTIP = "This Duplicant is under my control";
+			}
+
+			public class LIMITVALVELIMITREACHED
+			{
+				public static LocString NAME = "Limit Reached";
+
+				public static LocString TOOLTIP = "No more Mass can be transferred";
+			}
+
+			public class LIMITVALVELIMITNOTREACHED
+			{
+				public static LocString NAME = "Amount remaining: {0}";
+
+				public static LocString TOOLTIP = "This building will stop transferring Mass when the amount remaining reaches 0";
 			}
 
 			public class MATERIALSUNAVAILABLE
@@ -2008,7 +2029,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "No Line of Sight";
 
-				public static LocString TOOLTIP = "This building has no view of space\n\nEnsure an unblocked view of the sky";
+				public static LocString TOOLTIP = "This building has no view of space\n\nTo properly function, this building requires an unblocked view of space";
 			}
 
 			public class TOP_PRIORITY_CHORE

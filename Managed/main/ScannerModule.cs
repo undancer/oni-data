@@ -34,11 +34,22 @@ public class ScannerModule : GameStateMachine<ScannerModule, ScannerModule.Insta
 		public void SetFogOfWarAllowed()
 		{
 			CraftModuleInterface craftInterface = GetComponent<RocketModuleCluster>().CraftInterface;
-			if (craftInterface.HasClusterDestinationSelector())
+			if (!craftInterface.HasClusterDestinationSelector())
 			{
-				ClusterDestinationSelector clusterDestinationSelector = craftInterface.GetClusterDestinationSelector();
-				clusterDestinationSelector.canNavigateFogOfWar = true;
+				return;
 			}
+			bool canNavigateFogOfWar = false;
+			ClusterDestinationSelector clusterDestinationSelector = craftInterface.GetClusterDestinationSelector();
+			foreach (Ref<RocketModuleCluster> clusterModule in craftInterface.ClusterModules)
+			{
+				if (clusterModule.Get() != null && clusterModule.Get().GetDef<Def>() != null)
+				{
+					canNavigateFogOfWar = true;
+					break;
+				}
+			}
+			clusterDestinationSelector.canNavigateFogOfWar = canNavigateFogOfWar;
+			craftInterface.GetComponent<Clustercraft>().Trigger(-688990705);
 		}
 	}
 
@@ -56,6 +67,10 @@ public class ScannerModule : GameStateMachine<ScannerModule, ScannerModule.Insta
 			smi.Scan();
 		})
 			.EventHandler(GameHashes.RocketModuleChanged, (Instance smi) => smi.GetComponent<RocketModuleCluster>().CraftInterface, delegate(Instance smi)
+			{
+				smi.SetFogOfWarAllowed();
+			})
+			.Exit(delegate(Instance smi)
 			{
 				smi.SetFogOfWarAllowed();
 			});

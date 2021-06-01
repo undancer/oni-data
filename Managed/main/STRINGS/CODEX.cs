@@ -921,6 +921,18 @@ namespace STRINGS
 			public static LocString SUBTITLE = "ENCRYPTION LEVEL: NONE";
 		}
 
+		public class CRYOTANKWARNINGS
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "    • Do not leave the contents of the Cryotank 3000 unattended unless an apocalyptic disaster has left you no choice.\n\n    • Ensure that the Cryotank 3000 has enough battery power to remain active for at least 6000 years.\n\n    • Do not attempt to defrost the contents of the Cryotank 3000 while it is submerged in molten hot lava.\n\n    • Use only a qualified Gravitas Cryotank repair facility to repair your Cryotank 3000. Attempting to service the device yourself will void the warranty.\n\n    • Do not put food in the Cryotank 3000. The Cryotank 3000 is not a refrigerator.\n\n    • Do not allow children to play in the Cryotank 3000. The Cryotank 3000 is not a toy.\n\n    • While the Cryotank 3000 is able to withstand a nuclear blast, Gravitas and its subsidiaries are not responsible for what may happen in the resulting nuclear fallout.\n\n    • Wait at least 5 minutes after being unfrozen from the Cryotank 3000 before operating heavy machinery.\n\n    • Each Cryotank 3000 is good for only one use.\n\n";
+			}
+
+			public static LocString TITLE = "CRYOTANK SAFETY";
+
+			public static LocString SUBTITLE = "IMPORTANT OPERATING INSTRUCTIONS FOR THE CRYOTANK 3000";
+		}
+
 		public class EVACUATION
 		{
 			public class BODY
@@ -1548,6 +1560,18 @@ namespace STRINGS
 			public static LocString SUBTITLE = "PUBLIC RELEASE";
 		}
 
+		public class ARBORTREE
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "";
+			}
+
+			public static LocString TITLE = "Arbor Tree";
+
+			public static LocString SUBTITLE = "Lumber Tree";
+		}
+
 		public class BALMLILY
 		{
 			public class BODY
@@ -1558,6 +1582,18 @@ namespace STRINGS
 			public static LocString TITLE = "Balm Lily";
 
 			public static LocString SUBTITLE = "Medicinal Herb";
+		}
+
+		public class BLISSBURST
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "The Bliss Burst is a succulent in the genus Haworthia and is a hardy plant well-suited for beginner gardeners.\n\nThey require little in the way of upkeep, to the point that the most common cause of death for Bliss Bursts is overwatering from over-eager carers.";
+			}
+
+			public static LocString TITLE = "Bliss Burst";
+
+			public static LocString SUBTITLE = "Decorative Plant";
 		}
 
 		public class BLUFFBRIAR
@@ -1572,6 +1608,18 @@ namespace STRINGS
 			public static LocString TITLE = "Bluff Briar";
 
 			public static LocString SUBTITLE = "Decorative Plant";
+		}
+
+		public class BOGBUCKET
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "";
+			}
+
+			public static LocString TITLE = "Bog Bucket";
+
+			public static LocString SUBTITLE = "Edible Plant";
 		}
 
 		public class BRISTLEBLOSSOM
@@ -1590,12 +1638,24 @@ namespace STRINGS
 		{
 			public class BODY
 			{
-				public static LocString CONTAINER1 = "";
+				public static LocString CONTAINER1 = "As a byproduct of photosynthesis, the Buddy Bud naturally secretes a compound that is chemically similar to the neuropeptide created in the human brain after receiving a hug.";
 			}
 
 			public static LocString TITLE = "Buddy Bud";
 
 			public static LocString SUBTITLE = "Decorative Plant";
+		}
+
+		public class DASHASALTVINE
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "The Dasha Saltvine is a unique plant that needs large amounts of salt to balance the levels of water in its body.\n\nIn order to keep a supply of salt on hand, the end of the vine is coated in microscopic formations which bind with sodium atoms, forming large crystals over time.";
+			}
+
+			public static LocString TITLE = "Balm Lily";
+
+			public static LocString SUBTITLE = "Edible Spice Plant";
 		}
 
 		public class DUSKCAP
@@ -1620,6 +1680,42 @@ namespace STRINGS
 			}
 
 			public static LocString TITLE = "Gas Grass";
+
+			public static LocString SUBTITLE = "Critter Feed";
+		}
+
+		public class GRUBFRUITPLANT
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "";
+			}
+
+			public static LocString TITLE = "Grubfruit Plant";
+
+			public static LocString SUBTITLE = "Edible Plant";
+		}
+
+		public class HEXALENT
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "While most plants grow new sections and leaves according to the Fibonacci Sequence, the Hexalent forms new sections similar to how atoms form into crystal structures.\n\nThe result is a geometric pattern that resembles a honeycomb.";
+			}
+
+			public static LocString TITLE = "Hexalent";
+
+			public static LocString SUBTITLE = "Decorative Plant";
+		}
+
+		public class HYDROCACTUS
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "";
+			}
+
+			public static LocString TITLE = "Hydrocactus";
 
 			public static LocString SUBTITLE = "Plant";
 		}
@@ -1650,6 +1746,18 @@ namespace STRINGS
 			public static LocString SUBTITLE = "Edible Plant";
 		}
 
+		public class MELLOWMALLOW
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "The Mellow Mallow is a type of fungus that is known for its ease of propagation when cut.\n\nIt is deadly when consumed, however creatures that mistakenly eat it are said to experience a state of extreme calm before death.";
+			}
+
+			public static LocString TITLE = "Mellow Mallow";
+
+			public static LocString SUBTITLE = "Decorative Plant";
+		}
+
 		public class MIRTHLEAF
 		{
 			public class BODY
@@ -1674,6 +1782,30 @@ namespace STRINGS
 			public static LocString SUBTITLE = "Edible Plant";
 		}
 
+		public class NOSHBEAN
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "";
+			}
+
+			public static LocString TITLE = "Nosh Bean Plant";
+
+			public static LocString SUBTITLE = "Edible Plant";
+		}
+
+		public class OXYFERN
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "Oxyferns have perhaps the highest metabolism in the plant kingdom, absorbing relatively large amounts of carbon dioxide and converting it into oxygen in quantities disproportionate to their small size.\n\nThey subsequently thrive in areas with abundant animal wildlife or ambiently high carbon dioxide concentrations.";
+			}
+
+			public static LocString TITLE = "Oxyfern";
+
+			public static LocString SUBTITLE = "Plant";
+		}
+
 		public class PINCHAPEPPERPLANT
 		{
 			public class BODY
@@ -1684,6 +1816,18 @@ namespace STRINGS
 			public static LocString TITLE = "Pincha Pepperplant";
 
 			public static LocString SUBTITLE = "Edible Spice Plant";
+		}
+
+		public class SATURNCRITTERTRAP
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "";
+			}
+
+			public static LocString TITLE = "Saturn Critter Trap";
+
+			public static LocString SUBTITLE = "Carnivorous Plant";
 		}
 
 		public class SLEETWHEAT
@@ -1700,6 +1844,42 @@ namespace STRINGS
 			public static LocString SUBTITLE = "Edible Plant";
 		}
 
+		public class SPINDLYGRUBFRUITPLANT
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "";
+			}
+
+			public static LocString TITLE = "Spindly Grubfruit Plant";
+
+			public static LocString SUBTITLE = "Edible Plant";
+		}
+
+		public class SPORECHID
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "";
+			}
+
+			public static LocString TITLE = "Sporechid";
+
+			public static LocString SUBTITLE = "Poisonous Plant";
+		}
+
+		public class SWAMPCHARD
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "Swamp Chard is a unique member of the Amaranthaceae family that has adapted to grow in humid environments, in or near pools of standing water.\n\nWhile the leaves are technically edible, the most nutritious and palatable part of the plant is the heart, which is rich in a number of essential vitamins.";
+			}
+
+			public static LocString TITLE = "Swamp Chard";
+
+			public static LocString SUBTITLE = "Edible Plant";
+		}
+
 		public class THIMBLEREED
 		{
 			public class BODY
@@ -1710,6 +1890,18 @@ namespace STRINGS
 			public static LocString TITLE = "Thimble Reed";
 
 			public static LocString SUBTITLE = "Textile Plant";
+		}
+
+		public class TRANQUILTOES
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "";
+			}
+
+			public static LocString TITLE = "Tranquil Toes";
+
+			public static LocString SUBTITLE = "Decorative Plant";
 		}
 
 		public class WATERWEED

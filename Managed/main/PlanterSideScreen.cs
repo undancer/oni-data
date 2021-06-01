@@ -78,14 +78,18 @@ public class PlanterSideScreen : ReceptacleSideScreen
 		{
 			return;
 		}
-		tag = Assets.GetPrefab(tag).GetComponent<PlantableSeed>().PlantID;
-		if (plantablePlot.requestedEntityAdditionalFilterTag != Tag.Invalid && plantablePlot.requestedEntityAdditionalFilterTag != GameTags.Empty)
+		MutantPlant component = Assets.GetPrefab(tag).GetComponent<MutantPlant>();
+		if (component == null)
+		{
+			selectedSubspecies = Tag.Invalid;
+		}
+		else if (plantablePlot.requestedEntityAdditionalFilterTag != Tag.Invalid && plantablePlot.requestedEntityAdditionalFilterTag != GameTags.Empty)
 		{
 			selectedSubspecies = plantablePlot.requestedEntityAdditionalFilterTag;
 		}
 		else if (selectedSubspecies == Tag.Invalid)
 		{
-			if (PlantSubSpeciesCatalog.instance.GetOriginalSubSpecies(tag, out var subSpeciesInfo))
+			if (PlantSubSpeciesCatalog.Instance.GetOriginalSubSpecies(component.SpeciesID, out var subSpeciesInfo))
 			{
 				selectedSubspecies = subSpeciesInfo.ID;
 			}
@@ -116,22 +120,6 @@ public class PlanterSideScreen : ReceptacleSideScreen
 		base.UpdateState(data);
 		requestSelectedEntityBtn.onClick += RefreshSubspeciesToggles;
 		RefreshSubspeciesToggles();
-		UpdatePlantButtonState();
-	}
-
-	private void UpdatePlantButtonState()
-	{
-		if (selectedEntityToggle != null)
-		{
-			if (DlcManager.FeaturePlantMutationsEnabled())
-			{
-				requestSelectedEntityBtn.isInteractable = selectedDepositObjectTag.IsValid && selectedDepositObjectAdditionalTag.IsValid && PlantSubSpeciesCatalog.instance.IsSubSpeciesIdentified(selectedDepositObjectAdditionalTag);
-			}
-			else
-			{
-				requestSelectedEntityBtn.isInteractable = selectedDepositObjectTag.IsValid;
-			}
-		}
 	}
 
 	private IEnumerator ExpandMutations()
@@ -175,7 +163,7 @@ public class PlanterSideScreen : ReceptacleSideScreen
 			UnityEngine.Object.Destroy(subspeciesToggle.Key);
 		}
 		subspeciesToggles.Clear();
-		if (!PlantSubSpeciesCatalog.instance.AnyNonOriginalDiscovered)
+		if (!PlantSubSpeciesCatalog.Instance.AnyNonOriginalDiscovered)
 		{
 			mutationPanel.SetActive(value: false);
 			return;
@@ -190,13 +178,13 @@ public class PlanterSideScreen : ReceptacleSideScreen
 		if (selectedDepositObjectTag.IsValid)
 		{
 			Tag plantID = Assets.GetPrefab(selectedDepositObjectTag).GetComponent<PlantableSeed>().PlantID;
-			List<PlantSubSpeciesCatalog.SubSpeciesInfo> allSubSpeciesForSpecies = PlantSubSpeciesCatalog.instance.GetAllSubSpeciesForSpecies(plantID);
+			List<PlantSubSpeciesCatalog.SubSpeciesInfo> allSubSpeciesForSpecies = PlantSubSpeciesCatalog.Instance.GetAllSubSpeciesForSpecies(plantID);
 			if (allSubSpeciesForSpecies != null)
 			{
 				foreach (PlantSubSpeciesCatalog.SubSpeciesInfo item in allSubSpeciesForSpecies)
 				{
 					GameObject option = Util.KInstantiateUI(mutationOption, mutationContainer, force_active: true);
-					option.GetComponentInChildren<LocText>().text = item.GetNameWithMutations(plantID.ProperName(), PlantSubSpeciesCatalog.instance.IsSubSpeciesIdentified(item.ID), cleanOriginal: false);
+					option.GetComponentInChildren<LocText>().text = item.GetNameWithMutations(plantID.ProperName(), PlantSubSpeciesCatalog.Instance.IsSubSpeciesIdentified(item.ID), cleanOriginal: false);
 					MultiToggle component = option.GetComponent<MultiToggle>();
 					component.onClick = (System.Action)Delegate.Combine(component.onClick, (System.Action)delegate
 					{
@@ -227,7 +215,7 @@ public class PlanterSideScreen : ReceptacleSideScreen
 		foreach (KeyValuePair<GameObject, Tag> subspeciesToggle2 in subspeciesToggles)
 		{
 			float num = 0f;
-			bool flag3 = PlantSubSpeciesCatalog.instance.IsSubSpeciesIdentified(subspeciesToggle2.Value);
+			bool flag3 = PlantSubSpeciesCatalog.Instance.IsSubSpeciesIdentified(subspeciesToggle2.Value);
 			if (collection != null)
 			{
 				foreach (Pickupable item2 in collection)
@@ -303,7 +291,7 @@ public class PlanterSideScreen : ReceptacleSideScreen
 		bool flag = true;
 		if (seed_or_plant.GetComponent<MutantPlant>() != null && selectedDepositObjectAdditionalTag != Tag.Invalid)
 		{
-			flag = PlantSubSpeciesCatalog.instance.IsSubSpeciesIdentified(selectedDepositObjectAdditionalTag);
+			flag = PlantSubSpeciesCatalog.Instance.IsSubSpeciesIdentified(selectedDepositObjectAdditionalTag);
 		}
 		if (!flag)
 		{
@@ -332,7 +320,7 @@ public class PlanterSideScreen : ReceptacleSideScreen
 			MutantPlant component2 = gameObject.GetComponent<MutantPlant>();
 			if (component2 != null && selectedDepositObjectAdditionalTag.IsValid)
 			{
-				component2.DummySetSubspecies(PlantSubSpeciesCatalog.instance.GetSubSpecies(component.PlantID, selectedDepositObjectAdditionalTag).mutationIDs);
+				component2.DummySetSubspecies(PlantSubSpeciesCatalog.Instance.GetSubSpecies(component.PlantID, selectedDepositObjectAdditionalTag).mutationIDs);
 			}
 			if (!string.IsNullOrEmpty(component.domesticatedDescription))
 			{
@@ -387,9 +375,14 @@ public class PlanterSideScreen : ReceptacleSideScreen
 
 	protected override bool AdditionalCanDepositTest()
 	{
+		bool flag = false;
+		if (selectedDepositObjectTag.IsValid)
+		{
+			flag = ((!DlcManager.FeaturePlantMutationsEnabled()) ? selectedDepositObjectTag.IsValid : PlantSubSpeciesCatalog.Instance.IsValidPlantableSeed(selectedDepositObjectTag, selectedDepositObjectAdditionalTag));
+		}
 		PlantablePlot plantablePlot = targetReceptacle as PlantablePlot;
 		WorldContainer myWorld = targetReceptacle.GetMyWorld();
-		return plantablePlot.ValidPlant && selectedDepositObjectAdditionalTag.IsValid && myWorld.worldInventory.GetCountWithAdditionalTag(selectedDepositObjectTag, selectedDepositObjectAdditionalTag, myWorld.IsModuleInterior) > 0;
+		return flag && plantablePlot.ValidPlant && myWorld.worldInventory.GetCountWithAdditionalTag(selectedDepositObjectTag, selectedDepositObjectAdditionalTag, myWorld.IsModuleInterior) > 0;
 	}
 
 	public override void SetTarget(GameObject target)
@@ -398,7 +391,6 @@ public class PlanterSideScreen : ReceptacleSideScreen
 		base.SetTarget(target);
 		LoadTargetSubSpeciesRequest();
 		RefreshSubspeciesToggles();
-		UpdatePlantButtonState();
 	}
 
 	protected override void RestoreSelectionFromOccupant()

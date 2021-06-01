@@ -25,7 +25,7 @@ public class SaltPlantConfig : IEntityConfig
 			GameTags.Hanging
 		}, defaultTemperature: 258.15f);
 		EntityTemplates.MakeHangingOffsets(gameObject, 1, 2);
-		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 198.15f, 248.15f, 323.15f, 393.15f, null, pressure_sensitive: true, 0f, 0.15f, SimHashes.Salt.ToString(), can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, 2400f, "SaltPlantOriginal", STRINGS.CREATURES.SPECIES.SALTPLANT.NAME);
+		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 198.15f, 248.15f, 323.15f, 393.15f, null, pressure_sensitive: true, 0f, 0.15f, SimHashes.Salt.ToString(), can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, 2400f, 0f, 740f, "SaltPlantOriginal", STRINGS.CREATURES.SPECIES.SALTPLANT.NAME);
 		gameObject.AddOrGet<SaltPlant>();
 		EntityTemplates.ExtendPlantToFertilizable(gameObject, new PlantElementAbsorber.ConsumeInfo[1]
 		{
@@ -67,7 +67,7 @@ public class SaltPlantConfig : IEntityConfig
 		GameObject seed = EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Harvest, "SaltPlantSeed", STRINGS.CREATURES.SPECIES.SEEDS.SALTPLANT.NAME, STRINGS.CREATURES.SPECIES.SEEDS.SALTPLANT.DESC, Assets.GetAnim("seed_saltplant_kanim"), "object", 1, new List<Tag>
 		{
 			GameTags.CropSeed
-		}, SingleEntityReceptacle.ReceptacleDirection.Bottom, default(Tag), 4, STRINGS.CREATURES.SPECIES.SALTPLANT.DOMESTICATEDDESC, EntityTemplates.CollisionShape.CIRCLE, 0.35f, 0.35f);
+		}, SingleEntityReceptacle.ReceptacleDirection.Bottom, default(Tag), 5, STRINGS.CREATURES.SPECIES.SALTPLANT.DOMESTICATEDDESC, EntityTemplates.CollisionShape.CIRCLE, 0.35f, 0.35f);
 		GameObject template = EntityTemplates.CreateAndRegisterPreviewForPlant(seed, "SaltPlant_preview", Assets.GetAnim("saltplant_kanim"), "place", 1, 2);
 		EntityTemplates.MakeHangingOffsets(template, 1, 2);
 		return gameObject;

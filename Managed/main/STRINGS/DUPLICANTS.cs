@@ -3741,12 +3741,20 @@ namespace STRINGS
 
 			public class ROTTEMPERATURE
 			{
-				public static LocString NAME = "Unrefrigerated";
+				public static LocString UNREFRIGERATED = "Unrefrigerated";
+
+				public static LocString REFRIGERATED = "Refrigerated";
+
+				public static LocString FROZEN = "Frozen";
 			}
 
 			public class ROTATMOSPHERE
 			{
-				public static LocString NAME = "Contaminated Air";
+				public static LocString CONTAMINATED = "Contaminated Air";
+
+				public static LocString NORMAL = "Normal Atmosphere";
+
+				public static LocString STERILE = "Sterile Atmosphere";
 			}
 
 			public class BASEROT

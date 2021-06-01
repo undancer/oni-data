@@ -97,9 +97,9 @@ public class CustomGameSettings : KMonoBehaviour
 			}
 			else
 			{
-				DebugUtil.DevLogError("Deserializing CustomGameSettings.ClusterLayout: Failed to find cluster '" + value2 + "' including the scoped path, setting to default cluster name.");
+				Debug.LogWarning("Deserializing CustomGameSettings.ClusterLayout: Failed to find cluster '" + value2 + "' including the scoped path, setting to default cluster name.");
 				Debug.Log("ClusterCache: " + string.Join(",", SettingsCache.clusterLayouts.clusterCache.Keys));
-				SetQualitySetting(CustomGameSettingConfigs.ClusterLayout, "worlds/SandstoneDefault");
+				SetQualitySetting(CustomGameSettingConfigs.ClusterLayout, WorldGenSettings.ClusterDefaultName);
 			}
 		}
 		CheckCustomGameMode();
@@ -109,7 +109,6 @@ public class CustomGameSettings : KMonoBehaviour
 	{
 		instance = this;
 		AddSettingConfig(CustomGameSettingConfigs.ClusterLayout);
-		AddSettingConfig(CustomGameSettingConfigs.World);
 		AddSettingConfig(CustomGameSettingConfigs.WorldgenSeed);
 		AddSettingConfig(CustomGameSettingConfigs.ImmuneSystem);
 		AddSettingConfig(CustomGameSettingConfigs.CalorieBurn);
@@ -267,20 +266,6 @@ public class CustomGameSettings : KMonoBehaviour
 		{
 			CurrentQualityLevelsBySetting[config.id] = config.GetDefaultLevelId();
 		}
-	}
-
-	public void LoadWorlds()
-	{
-		Dictionary<string, ProcGen.World> worldCache = SettingsCache.worlds.worldCache;
-		List<SettingLevel> list = new List<SettingLevel>(worldCache.Count);
-		foreach (KeyValuePair<string, ProcGen.World> item in worldCache)
-		{
-			StringEntry result;
-			string label = (Strings.TryGet(new StringKey(item.Value.name), out result) ? result.ToString() : item.Value.name);
-			string tooltip = (Strings.TryGet(new StringKey(item.Value.description), out result) ? result.ToString() : item.Value.description);
-			list.Add(new SettingLevel(item.Key, label, tooltip));
-		}
-		CustomGameSettingConfigs.World.StompLevels(list, "worlds/SandstoneDefault", "worlds/SandstoneDefault");
 	}
 
 	public void LoadClusters()

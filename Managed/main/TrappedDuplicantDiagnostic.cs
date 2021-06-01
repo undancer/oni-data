@@ -8,7 +8,7 @@ public class TrappedDuplicantDiagnostic : ColonyDiagnostic
 		: base(worldID, UI.COLONY_DIAGNOSTICS.TRAPPEDDUPLICANTDIAGNOSTIC.ALL_NAME)
 	{
 		icon = "overlay_power";
-		AddCriterion("CheckTrapped", new DiagnosticCriterion(CheckTrapped));
+		AddCriterion("CheckTrapped", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckTrapped));
 	}
 
 	public DiagnosticResult CheckTrapped()

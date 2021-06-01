@@ -224,7 +224,7 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 		LaunchPad launchPad = currentPad.Get();
 		if (launchPad != null)
 		{
-			int num2 = launchPad.PadPosition;
+			int num2 = launchPad.RocketBottomPosition;
 			for (int i = 0; i < clusterModules.Count; i++)
 			{
 				RocketModuleCluster rocketModuleCluster = clusterModules[i].Get();
@@ -389,13 +389,12 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 		{
 			clusterModule.Get().Trigger(705820818, this);
 		}
-		currentPad.Set(null);
 	}
 
 	public void DoLand(LaunchPad pad)
 	{
 		SetCurrentPad(pad);
-		int num = pad.PadPosition;
+		int num = pad.RocketBottomPosition;
 		for (int i = 0; i < clusterModules.Count; i++)
 		{
 			clusterModules[i].Get().MoveToPad(num);
@@ -430,8 +429,9 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 	{
 		foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 		{
-			LaunchableRocketCluster component = clusterModule.Get().GetComponent<LaunchableRocketCluster>();
-			if (component != null)
+			RocketModuleCluster rocketModuleCluster = clusterModule.Get();
+			LaunchableRocketCluster component = rocketModuleCluster.GetComponent<LaunchableRocketCluster>();
+			if (component != null && rocketModuleCluster.CraftInterface != null && rocketModuleCluster.CraftInterface.GetComponent<Clustercraft>().Status == Clustercraft.CraftStatus.Grounded)
 			{
 				return component;
 			}

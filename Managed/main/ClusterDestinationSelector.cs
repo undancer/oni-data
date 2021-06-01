@@ -9,6 +9,7 @@ public class ClusterDestinationSelector : KMonoBehaviour
 
 	public bool requireAsteroidDestination;
 
+	[Serialize]
 	public bool canNavigateFogOfWar;
 
 	public bool requireLaunchPadOnAsteroidDestination;

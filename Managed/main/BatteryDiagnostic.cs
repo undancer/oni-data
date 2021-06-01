@@ -11,8 +11,8 @@ public class BatteryDiagnostic : ColonyDiagnostic
 		trackerSampleCountSeconds = 4f;
 		icon = "overlay_power";
 		AddCriterion(UI.COLONY_DIAGNOSTICS.NO_MINIONS, ColonyDiagnosticUtility.GetWorldHasMinionCriterion(worldID));
-		AddCriterion("CheckCapacity", new DiagnosticCriterion(CheckCapacity));
-		AddCriterion("CheckDead", new DiagnosticCriterion(CheckDead));
+		AddCriterion("CheckCapacity", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckCapacity));
+		AddCriterion("CheckDead", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckDead));
 	}
 
 	public DiagnosticResult CheckCapacity()

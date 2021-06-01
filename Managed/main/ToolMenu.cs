@@ -116,9 +116,6 @@ public class ToolMenu : KScreen
 
 	public GameObject sandboxToolSet;
 
-	[SerializeField]
-	private List<Sprite> icons = new List<Sprite>();
-
 	private PriorityScreen priorityScreen;
 
 	public ToolParameterMenu toolParameterMenu;
@@ -323,13 +320,13 @@ public class ToolMenu : KScreen
 		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.SPRINKLE.NAME, "sprinkle", Action.SandboxSprinkle, "SandboxSprinkleTool", UI.SANDBOXTOOLS.SETTINGS.SPRINKLE.TOOLTIP, largeIcon: false));
 		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.FLOOD.NAME, "flood", Action.SandboxFlood, "SandboxFloodTool", UI.SANDBOXTOOLS.SETTINGS.FLOOD.TOOLTIP, largeIcon: false));
 		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.SAMPLE.NAME, "sample", Action.SandboxSample, "SandboxSampleTool", UI.SANDBOXTOOLS.SETTINGS.SAMPLE.TOOLTIP, largeIcon: false));
-		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.HEATGUN.NAME, "brush", Action.SandboxHeatGun, "SandboxHeatTool", UI.SANDBOXTOOLS.SETTINGS.HEATGUN.TOOLTIP, largeIcon: false));
-		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.RADSTOOL.NAME, "brush", Action.SandboxRadsTool, "SandboxRadsTool", UI.SANDBOXTOOLS.SETTINGS.RADSTOOL.TOOLTIP, largeIcon: false));
+		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.HEATGUN.NAME, "temperature", Action.SandboxHeatGun, "SandboxHeatTool", UI.SANDBOXTOOLS.SETTINGS.HEATGUN.TOOLTIP, largeIcon: false));
+		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.RADSTOOL.NAME, "radiation", Action.SandboxRadsTool, "SandboxRadsTool", UI.SANDBOXTOOLS.SETTINGS.RADSTOOL.TOOLTIP, largeIcon: false));
 		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.SPAWNER.NAME, "spawn", Action.SandboxSpawnEntity, "SandboxSpawnerTool", UI.SANDBOXTOOLS.SETTINGS.SPAWNER.TOOLTIP, largeIcon: false));
 		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.CLEAR_FLOOR.NAME, "clear_floor", Action.SandboxClearFloor, "SandboxClearFloorTool", UI.SANDBOXTOOLS.SETTINGS.CLEAR_FLOOR.TOOLTIP, largeIcon: false));
 		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.DESTROY.NAME, "destroy", Action.SandboxDestroy, "SandboxDestroyerTool", UI.SANDBOXTOOLS.SETTINGS.DESTROY.TOOLTIP, largeIcon: false));
-		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.FOW.NAME, "brush", Action.SandboxReveal, "SandboxFOWTool", UI.SANDBOXTOOLS.SETTINGS.FOW.TOOLTIP, largeIcon: false));
-		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.CRITTER.NAME, "brush", Action.SandboxCritterTool, "SandboxCritterTool", UI.SANDBOXTOOLS.SETTINGS.CRITTER.TOOLTIP, largeIcon: false));
+		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.FOW.NAME, "reveal", Action.SandboxReveal, "SandboxFOWTool", UI.SANDBOXTOOLS.SETTINGS.FOW.TOOLTIP, largeIcon: false));
+		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.CRITTER.NAME, "critter", Action.SandboxCritterTool, "SandboxCritterTool", UI.SANDBOXTOOLS.SETTINGS.CRITTER.TOOLTIP, largeIcon: false));
 	}
 
 	private void CreateBasicTools()
@@ -768,14 +765,11 @@ public class ToolMenu : KScreen
 				continue;
 			}
 			GameObject toggle = toolCollection.toggle;
-			foreach (Sprite icon in icons)
+			Sprite sprite = Assets.GetSprite(toolCollection.icon);
+			if (sprite != null)
 			{
-				if (icon != null && icon.name == toolCollection.icon)
-				{
-					Image component = toggle.transform.Find("FG").GetComponent<Image>();
-					component.sprite = icon;
-					break;
-				}
+				Image component = toggle.transform.Find("FG").GetComponent<Image>();
+				component.sprite = sprite;
 			}
 			Transform transform = toggle.transform.Find("Text");
 			if (transform != null)
@@ -818,14 +812,11 @@ public class ToolMenu : KScreen
 			for (int j = 0; j < toolCollection.tools.Count; j++)
 			{
 				GameObject gameObject = toolCollection.tools[j].toggle.gameObject;
-				foreach (Sprite icon in icons)
+				Sprite sprite = Assets.GetSprite(toolCollection.icon);
+				if (sprite != null)
 				{
-					if (icon != null && icon.name == toolCollection.tools[j].icon)
-					{
-						Image component = gameObject.transform.Find("FG").GetComponent<Image>();
-						component.sprite = icon;
-						break;
-					}
+					Image component = gameObject.transform.Find("FG").GetComponent<Image>();
+					component.sprite = sprite;
 				}
 				Transform transform = gameObject.transform.Find("Text");
 				if (transform != null)

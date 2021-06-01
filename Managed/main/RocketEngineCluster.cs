@@ -10,6 +10,8 @@ public class RocketEngineCluster : StateMachineComponent<RocketEngineCluster.Sta
 	{
 		public Vector3 radiationEmissionBaseOffset;
 
+		private int pad_cell;
+
 		public StatesInstance(RocketEngineCluster smi)
 			: base(smi)
 		{
@@ -18,6 +20,93 @@ public class RocketEngineCluster : StateMachineComponent<RocketEngineCluster.Sta
 				DebugUtil.Assert(smi.radiationEmitter != null, "emitRadiation enabled but no RadiationEmitter component");
 				radiationEmissionBaseOffset = smi.radiationEmitter.emissionOffset;
 			}
+		}
+
+		public void BeginBurn()
+		{
+			if (base.smi.master.emitRadiation)
+			{
+				base.smi.master.radiationEmitter.SetEmitting(emitting: true);
+			}
+			LaunchPad currentPad = base.smi.master.GetComponent<RocketModuleCluster>().CraftInterface.CurrentPad;
+			if (currentPad != null)
+			{
+				pad_cell = Grid.PosToCell(currentPad.gameObject.transform.GetPosition());
+				if (base.smi.master.exhaustDiseaseIdx != byte.MaxValue)
+				{
+					currentPad.GetComponent<PrimaryElement>().AddDisease(base.smi.master.exhaustDiseaseIdx, base.smi.master.exhaustDiseaseCount, "rocket exhaust");
+				}
+			}
+			else
+			{
+				Debug.LogWarning("RocketEngineCluster missing LaunchPad for burn.");
+				pad_cell = Grid.InvalidCell;
+			}
+		}
+
+		public void DoBurn(float dt)
+		{
+			Vector3 pos = base.smi.master.gameObject.transform.GetPosition() + base.smi.master.animController.Offset;
+			int num = Grid.PosToCell(pos);
+			if (Grid.AreCellsInSameWorld(num, pad_cell))
+			{
+				SimMessages.EmitMass(num, (byte)ElementLoader.GetElementIndex(base.smi.master.exhaustElement), dt * base.smi.master.exhaustEmitRate, base.smi.master.exhaustTemperature, base.smi.master.exhaustDiseaseIdx, base.smi.master.exhaustDiseaseCount);
+			}
+			if (base.smi.master.emitRadiation)
+			{
+				Vector3 emissionOffset = base.smi.master.radiationEmitter.emissionOffset;
+				base.smi.master.radiationEmitter.emissionOffset = base.smi.radiationEmissionBaseOffset + base.smi.master.animController.Offset;
+				if (Grid.AreCellsInSameWorld(base.smi.master.radiationEmitter.GetEmissionCell(), pad_cell))
+				{
+					base.smi.master.radiationEmitter.Refresh();
+				}
+				else
+				{
+					base.smi.master.radiationEmitter.emissionOffset = emissionOffset;
+					base.smi.master.radiationEmitter.SetEmitting(emitting: false);
+				}
+			}
+			int num2 = 10;
+			for (int i = 1; i < num2; i++)
+			{
+				int num3 = Grid.OffsetCell(num, -1, -i);
+				int num4 = Grid.OffsetCell(num, 0, -i);
+				int num5 = Grid.OffsetCell(num, 1, -i);
+				if (Grid.AreCellsInSameWorld(num3, pad_cell))
+				{
+					if (base.smi.master.exhaustDiseaseIdx != byte.MaxValue)
+					{
+						SimMessages.ModifyDiseaseOnCell(num3, base.smi.master.exhaustDiseaseIdx, (int)((float)base.smi.master.exhaustDiseaseCount / ((float)i + 1f)));
+					}
+					SimMessages.ModifyEnergy(num3, base.smi.master.exhaustTemperature / (float)(i + 1), 3200f, SimMessages.EnergySourceID.Burner);
+				}
+				if (Grid.AreCellsInSameWorld(num4, pad_cell))
+				{
+					if (base.smi.master.exhaustDiseaseIdx != byte.MaxValue)
+					{
+						SimMessages.ModifyDiseaseOnCell(num4, base.smi.master.exhaustDiseaseIdx, (int)((float)base.smi.master.exhaustDiseaseCount / (float)i));
+					}
+					SimMessages.ModifyEnergy(num4, base.smi.master.exhaustTemperature / (float)i, 3200f, SimMessages.EnergySourceID.Burner);
+				}
+				if (Grid.AreCellsInSameWorld(num5, pad_cell))
+				{
+					if (base.smi.master.exhaustDiseaseIdx != byte.MaxValue)
+					{
+						SimMessages.ModifyDiseaseOnCell(num5, base.smi.master.exhaustDiseaseIdx, (int)((float)base.smi.master.exhaustDiseaseCount / ((float)i + 1f)));
+					}
+					SimMessages.ModifyEnergy(num5, base.smi.master.exhaustTemperature / (float)(i + 1), 3200f, SimMessages.EnergySourceID.Burner);
+				}
+			}
+		}
+
+		public void EndBurn()
+		{
+			if (base.smi.master.emitRadiation)
+			{
+				base.smi.master.radiationEmitter.emissionOffset = base.smi.radiationEmissionBaseOffset;
+				base.smi.master.radiationEmitter.SetEmitting(emitting: false);
+			}
+			pad_cell = Grid.InvalidCell;
 		}
 	}
 
@@ -32,18 +121,18 @@ public class RocketEngineCluster : StateMachineComponent<RocketEngineCluster.Sta
 
 		public IdleStates idle;
 
+		public State burning_pre;
+
 		public State burning;
 
 		public State burnComplete;
 
 		public State space;
 
-		private int pad_cell;
-
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = idle;
-			idle.DefaultState(idle.grounded).EventTransition(GameHashes.IgniteEngine, burning);
+			idle.DefaultState(idle.grounded).EventTransition(GameHashes.RocketLaunched, burning_pre);
 			idle.grounded.EventTransition(GameHashes.LaunchConditionChanged, idle.ready, IsReadyToLaunch).QueueAnim("grounded", loop: true);
 			idle.ready.EventTransition(GameHashes.LaunchConditionChanged, idle.grounded, GameStateMachine<States, StatesInstance, RocketEngineCluster, object>.Not(IsReadyToLaunch)).PlayAnim("pre_ready_to_launch", KAnim.PlayMode.Once).QueueAnim("ready_to_launch", loop: true)
 				.Exit(delegate(StatesInstance smi)
@@ -54,90 +143,18 @@ public class RocketEngineCluster : StateMachineComponent<RocketEngineCluster.Sta
 						component.Play("pst_ready_to_launch");
 					}
 				});
-			burning.EventTransition(GameHashes.RocketLanded, burnComplete).PlayAnim("launch_pre").QueueAnim("launch_loop", loop: true)
-				.Enter(delegate(StatesInstance smi)
-				{
-					if (smi.master.emitRadiation)
-					{
-						smi.master.radiationEmitter.SetEmitting(emitting: true);
-					}
-					LaunchPad currentPad = smi.master.GetComponent<RocketModuleCluster>().CraftInterface.CurrentPad;
-					if (currentPad != null)
-					{
-						pad_cell = Grid.PosToCell(currentPad.gameObject.transform.GetPosition());
-						if (smi.master.exhaustDiseaseIdx != byte.MaxValue)
-						{
-							currentPad.GetComponent<PrimaryElement>().AddDisease(smi.master.exhaustDiseaseIdx, smi.master.exhaustDiseaseCount, "rocket exhaust");
-						}
-					}
-					else
-					{
-						Debug.LogWarning("RocketEngineCluster missing LaunchPad for burn.");
-						pad_cell = Grid.InvalidCell;
-					}
-				})
+			burning_pre.PlayAnim("launch_pre").GoTo(burning);
+			burning.EventTransition(GameHashes.RocketLanded, burnComplete).QueueAnim("launch_loop", loop: true).Enter(delegate(StatesInstance smi)
+			{
+				smi.BeginBurn();
+			})
 				.Update(delegate(StatesInstance smi, float dt)
 				{
-					Vector3 pos = smi.master.gameObject.transform.GetPosition() + smi.master.animController.Offset;
-					int num = Grid.PosToCell(pos);
-					if (Grid.AreCellsInSameWorld(num, pad_cell))
-					{
-						SimMessages.EmitMass(num, (byte)ElementLoader.GetElementIndex(smi.master.exhaustElement), dt * smi.master.exhaustEmitRate, smi.master.exhaustTemperature, smi.master.exhaustDiseaseIdx, smi.master.exhaustDiseaseCount);
-					}
-					if (smi.master.emitRadiation)
-					{
-						Vector3 emissionOffset = smi.master.radiationEmitter.emissionOffset;
-						smi.master.radiationEmitter.emissionOffset = smi.radiationEmissionBaseOffset + smi.master.animController.Offset;
-						if (Grid.AreCellsInSameWorld(smi.master.radiationEmitter.GetEmissionCell(), pad_cell))
-						{
-							smi.master.radiationEmitter.Refresh();
-						}
-						else
-						{
-							smi.master.radiationEmitter.emissionOffset = emissionOffset;
-							smi.master.radiationEmitter.SetEmitting(emitting: false);
-						}
-					}
-					int num2 = 10;
-					for (int i = 1; i < num2; i++)
-					{
-						int num3 = Grid.OffsetCell(num, -1, -i);
-						int num4 = Grid.OffsetCell(num, 0, -i);
-						int num5 = Grid.OffsetCell(num, 1, -i);
-						if (Grid.AreCellsInSameWorld(num3, pad_cell))
-						{
-							if (smi.master.exhaustDiseaseIdx != byte.MaxValue)
-							{
-								SimMessages.ModifyDiseaseOnCell(num3, smi.master.exhaustDiseaseIdx, (int)((float)smi.master.exhaustDiseaseCount / ((float)i + 1f)));
-							}
-							SimMessages.ModifyEnergy(num3, smi.master.exhaustTemperature / (float)(i + 1), 3200f, SimMessages.EnergySourceID.Burner);
-						}
-						if (Grid.AreCellsInSameWorld(num4, pad_cell))
-						{
-							if (smi.master.exhaustDiseaseIdx != byte.MaxValue)
-							{
-								SimMessages.ModifyDiseaseOnCell(num4, smi.master.exhaustDiseaseIdx, (int)((float)smi.master.exhaustDiseaseCount / (float)i));
-							}
-							SimMessages.ModifyEnergy(num4, smi.master.exhaustTemperature / (float)i, 3200f, SimMessages.EnergySourceID.Burner);
-						}
-						if (Grid.AreCellsInSameWorld(num5, pad_cell))
-						{
-							if (smi.master.exhaustDiseaseIdx != byte.MaxValue)
-							{
-								SimMessages.ModifyDiseaseOnCell(num5, smi.master.exhaustDiseaseIdx, (int)((float)smi.master.exhaustDiseaseCount / ((float)i + 1f)));
-							}
-							SimMessages.ModifyEnergy(num5, smi.master.exhaustTemperature / (float)(i + 1), 3200f, SimMessages.EnergySourceID.Burner);
-						}
-					}
+					smi.DoBurn(dt);
 				})
 				.Exit(delegate(StatesInstance smi)
 				{
-					if (smi.master.emitRadiation)
-					{
-						smi.master.radiationEmitter.emissionOffset = smi.radiationEmissionBaseOffset;
-						smi.master.radiationEmitter.SetEmitting(emitting: false);
-					}
-					pad_cell = Grid.InvalidCell;
+					smi.EndBurn();
 				})
 				.TagTransition(GameTags.RocketInSpace, space);
 			space.EventTransition(GameHashes.DoReturnRocket, burning);

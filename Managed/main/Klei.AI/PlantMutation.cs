@@ -7,6 +7,15 @@ namespace Klei.AI
 {
 	public class PlantMutation : Modifier
 	{
+		private class SymbolOverrideInfo
+		{
+			public string targetSymbolName;
+
+			public string sourceAnim;
+
+			public string sourceSymbol;
+		}
+
 		public string desc;
 
 		public bool originalMutation;
@@ -35,6 +44,22 @@ namespace Klei.AI
 
 		private PlantElementAbsorber.ConsumeInfo ensureIrrigationInfo;
 
+		private Color plantTint = Color.white;
+
+		private List<string> symbolTintTargets = new List<string>();
+
+		private List<Color> symbolTints = new List<Color>();
+
+		private List<SymbolOverrideInfo> symbolOverrideInfo;
+
+		private List<string> symbolScaleTargets = new List<string>();
+
+		private List<float> symbolScales = new List<float>();
+
+		private string bGFXAnim;
+
+		private string fGFXAnim;
+
 		public PlantMutation(string id, string name, string desc)
 			: base(id, name, desc)
 		{
@@ -42,24 +67,33 @@ namespace Klei.AI
 
 		public void ApplyTo(MutantPlant target)
 		{
+			ApplyFunctionalTo(target);
+			if (!target.HasTag(GameTags.Seed) && !target.HasTag(GameTags.CropSeed))
+			{
+				ApplyVisualTo(target);
+			}
+		}
+
+		private void ApplyFunctionalTo(MutantPlant target)
+		{
+			SeedProducer component = target.GetComponent<SeedProducer>();
+			if (component != null && component.seedInfo.productionType == SeedProducer.ProductionType.Harvest)
+			{
+				component.Configure(component.seedInfo.seedId, SeedProducer.ProductionType.Sterile, 0);
+			}
 			if (bonusCropID.IsValid)
 			{
 				target.Subscribe(-1072826864, OnHarvestBonusCrop);
 			}
 			if (forcePrefersDarkness || SelfModifiers.Find((AttributeModifier m) => m.AttributeId == Db.Get().PlantAttributes.MinLightLux.Id) != null)
 			{
-				CropSleepingMonitor.Def def = target.GetDef<CropSleepingMonitor.Def>();
 				IlluminationVulnerable illuminationVulnerable = target.GetComponent<IlluminationVulnerable>();
-				if (def == null && illuminationVulnerable == null)
+				if (illuminationVulnerable == null)
 				{
 					illuminationVulnerable = target.gameObject.AddComponent<IlluminationVulnerable>();
 				}
 				if (forcePrefersDarkness)
 				{
-					if (def != null)
-					{
-						def.prefersDarkness = true;
-					}
 					if (illuminationVulnerable != null)
 					{
 						illuminationVulnerable.SetPrefersDarkness(prefersDarkness: true);
@@ -67,10 +101,6 @@ namespace Klei.AI
 				}
 				else
 				{
-					if (def != null)
-					{
-						def.prefersDarkness = false;
-					}
 					if (illuminationVulnerable != null)
 					{
 						illuminationVulnerable.SetPrefersDarkness();
@@ -90,6 +120,77 @@ namespace Klei.AI
 			}
 			Attributes attributes = target.GetAttributes();
 			AddTo(attributes);
+		}
+
+		private void ApplyVisualTo(MutantPlant target)
+		{
+			KBatchedAnimController component = target.GetComponent<KBatchedAnimController>();
+			if (symbolOverrideInfo != null && symbolOverrideInfo.Count > 0)
+			{
+				SymbolOverrideController component2 = target.GetComponent<SymbolOverrideController>();
+				foreach (SymbolOverrideInfo item in symbolOverrideInfo)
+				{
+					KAnimFile anim = Assets.GetAnim(item.sourceAnim);
+					KAnim.Build.Symbol symbol = anim.GetData().build.GetSymbol(item.sourceSymbol);
+					component2.AddSymbolOverride(item.targetSymbolName, symbol);
+				}
+			}
+			if (bGFXAnim != null)
+			{
+				CreateFXObject(target, bGFXAnim, "_BGFX", 0.1f);
+			}
+			if (fGFXAnim != null)
+			{
+				CreateFXObject(target, fGFXAnim, "_FGFX", -0.1f);
+			}
+			if (plantTint != Color.white)
+			{
+				component.TintColour = plantTint;
+			}
+			if (symbolTints.Count > 0)
+			{
+				for (int i = 0; i < symbolTints.Count; i++)
+				{
+					component.SetSymbolTint(symbolTintTargets[i], symbolTints[i]);
+				}
+			}
+			if (symbolScales.Count > 0)
+			{
+				for (int j = 0; j < symbolScales.Count; j++)
+				{
+					component.SetSymbolScale(symbolScaleTargets[j], symbolScales[j]);
+				}
+			}
+		}
+
+		private static void CreateFXObject(MutantPlant target, string anim, string nameSuffix, float offset)
+		{
+			GameObject gameObject = Object.Instantiate(Assets.GetPrefab(SimpleFXConfig.ID));
+			gameObject.name = target.name + nameSuffix;
+			gameObject.transform.parent = target.transform;
+			KPrefabID component = gameObject.GetComponent<KPrefabID>();
+			component.PrefabTag = new Tag(gameObject.name);
+			OccupyArea component2 = target.GetComponent<OccupyArea>();
+			Extents extents = component2.GetExtents();
+			Vector3 position = target.transform.GetPosition();
+			position.x = (float)extents.x + (float)extents.width / 2f;
+			position.y = (float)extents.y + (float)extents.height / 2f;
+			position.z += offset;
+			gameObject.transform.SetPosition(position);
+			KBatchedAnimController component3 = gameObject.GetComponent<KBatchedAnimController>();
+			component3.AnimFiles = new KAnimFile[1]
+			{
+				Assets.GetAnim(anim)
+			};
+			component3.initialAnim = "idle";
+			component3.initialMode = KAnim.PlayMode.Loop;
+			component3.randomiseLoopedOffset = true;
+			component3.fgLayer = Grid.SceneLayer.NoLayer;
+			if (target.HasTag(GameTags.Hanging))
+			{
+				component3.Rotation = 180f;
+			}
+			gameObject.SetActive(value: true);
 		}
 
 		private void OnHarvestBonusCrop(object data)
@@ -166,6 +267,11 @@ namespace Klei.AI
 			{
 				stringBuilder.Append(DUPLICANTS.TRAITS.TRAIT_DESCRIPTION_LIST_ENTRY);
 				stringBuilder.Append(string.Format(UI.GAMEOBJECTEFFECTS.IDEAL_FERTILIZER, ensureIrrigationInfo.tag.ProperName(), GameUtil.GetFormattedMass(0f - ensureIrrigationInfo.massConsumptionRate, GameUtil.TimeSlice.PerCycle), true));
+			}
+			if (!originalMutation)
+			{
+				stringBuilder.Append(DUPLICANTS.TRAITS.TRAIT_DESCRIPTION_LIST_ENTRY);
+				stringBuilder.Append(UI.GAMEOBJECTEFFECTS.MUTANT_STERILE);
 			}
 			return stringBuilder.ToString();
 		}
@@ -251,31 +357,57 @@ namespace Klei.AI
 
 		public PlantMutation VisualTint(float r, float g, float b)
 		{
+			Debug.Assert(Mathf.Sign(r) == Mathf.Sign(g) && Mathf.Sign(r) == Mathf.Sign(b), "Vales for tints must be all positive or all negative for the shader to work correctly!");
+			if (r < 0f)
+			{
+				plantTint = Color.white + new Color(r, g, b, 0f);
+			}
+			else
+			{
+				plantTint = new Color(r, g, b, 0f);
+			}
 			return this;
 		}
 
 		public PlantMutation VisualSymbolTint(string targetSymbolName, float r, float g, float b)
 		{
+			Debug.Assert(Mathf.Sign(r) == Mathf.Sign(g) && Mathf.Sign(r) == Mathf.Sign(b), "Vales for tints must be all positive or all negative for the shader to work correctly!");
+			symbolTintTargets.Add(targetSymbolName);
+			symbolTints.Add(Color.white + new Color(r, g, b, 0f));
 			return this;
 		}
 
 		public PlantMutation VisualSymbolOverride(string targetSymbolName, string sourceAnim, string sourceSymbol)
 		{
+			if (symbolOverrideInfo == null)
+			{
+				symbolOverrideInfo = new List<SymbolOverrideInfo>();
+			}
+			symbolOverrideInfo.Add(new SymbolOverrideInfo
+			{
+				targetSymbolName = targetSymbolName,
+				sourceAnim = sourceAnim,
+				sourceSymbol = sourceSymbol
+			});
 			return this;
 		}
 
 		public PlantMutation VisualSymbolScale(string targetSymbolName, float scale)
 		{
+			symbolScaleTargets.Add(targetSymbolName);
+			symbolScales.Add(scale);
 			return this;
 		}
 
 		public PlantMutation VisualBGFX(string animName)
 		{
+			bGFXAnim = animName;
 			return this;
 		}
 
 		public PlantMutation VisualFGFX(string animName)
 		{
+			fGFXAnim = animName;
 			return this;
 		}
 	}

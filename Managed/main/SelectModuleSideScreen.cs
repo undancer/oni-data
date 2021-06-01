@@ -369,7 +369,7 @@ public class SelectModuleSideScreen : KScreen
 			float num3 = 0f;
 			float num4 = 0f;
 			int num5 = 0;
-			if (GetComponentInParent<DetailsScreen>().target.GetComponent<RocketModuleCluster>() != null)
+			if (GetComponentInParent<DetailsScreen>() != null && GetComponentInParent<DetailsScreen>().target.GetComponent<RocketModuleCluster>() != null)
 			{
 				craftModuleInterface = GetComponentInParent<DetailsScreen>().target.GetComponent<RocketModuleCluster>().CraftInterface;
 			}

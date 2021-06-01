@@ -9,10 +9,10 @@ public class FarmDiagnostic : ColonyDiagnostic
 	{
 		icon = "icon_errand_farm";
 		AddCriterion(UI.COLONY_DIAGNOSTICS.NO_MINIONS, ColonyDiagnosticUtility.GetWorldHasMinionCriterion(worldID));
-		AddCriterion("CheckHasFarms", new DiagnosticCriterion(CheckHasFarms));
-		AddCriterion("CheckPlanted", new DiagnosticCriterion(CheckPlanted));
-		AddCriterion("CheckWilting", new DiagnosticCriterion(CheckWilting));
-		AddCriterion("CheckOperational", new DiagnosticCriterion(CheckOperational));
+		AddCriterion("CheckHasFarms", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckHasFarms));
+		AddCriterion("CheckPlanted", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckPlanted));
+		AddCriterion("CheckWilting", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckWilting));
+		AddCriterion("CheckOperational", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckOperational));
 	}
 
 	private DiagnosticResult CheckHasFarms()

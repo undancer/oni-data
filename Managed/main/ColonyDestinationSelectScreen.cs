@@ -228,7 +228,6 @@ public class ColonyDestinationSelectScreen : NewGameFlowScreen
 	private void OnAsteroidClicked(ColonyDestinationAsteroidBeltData asteroid)
 	{
 		newGameSettings.SetSetting(CustomGameSettingConfigs.ClusterLayout, asteroid.beltPath);
-		newGameSettings.SetSetting(CustomGameSettingConfigs.World, asteroid.startWorldPath);
 		ShuffleClicked();
 	}
 

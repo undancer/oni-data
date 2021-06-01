@@ -5,7 +5,7 @@ public class NuclearWasteCometConfig : IEntityConfig
 {
 	public static string ID = "NuclearWasteComet";
 
-	public static float MASS = 0.1f;
+	public static float MASS = 1f;
 
 	public string GetDlcId()
 	{

@@ -7,15 +7,17 @@ public class NuclearReactorConfig : IBuildingConfig
 {
 	public const string ID = "NuclearReactor";
 
-	private const float FUEL_CAPACITY = 10f;
+	private const float FUEL_CAPACITY = 180f;
 
 	public const float VENT_STEAM_TEMPERATURE = 673.15f;
 
-	public const float MELT_DOWN_TEMPERATURE = 1173.15f;
+	public const float MELT_DOWN_TEMPERATURE = 3000f;
 
 	public const float MAX_VENT_PRESSURE = 150f;
 
-	public const float REACTION_STRENGTH = 10f;
+	public const float INCREASED_CONDUCTION_SCALE = 5f;
+
+	public const float REACTION_STRENGTH = 100f;
 
 	public const int RADIATION_EMITTER_RANGE = 25;
 
@@ -33,11 +35,13 @@ public class NuclearReactorConfig : IBuildingConfig
 
 	public const float WASTE_MASS_MULTIPLIER = 100f;
 
+	public const float REACTION_MASS_TARGET = 60f;
+
 	public const float COOLANT_AMOUNT = 30f;
 
-	public const float COOLANT_CAPACITY = 60f;
+	public const float COOLANT_CAPACITY = 90f;
 
-	public const float MINIMUM_COOLANT_MASS = 3f;
+	public const float MINIMUM_COOLANT_MASS = 30f;
 
 	public const float WASTE_GERMS_PER_KG = 499.99997f;
 
@@ -47,7 +51,7 @@ public class NuclearReactorConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("NuclearReactor", 5, 6, "generatornuclear_kanim", 100, 480f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.REFINED_METALS, 3200f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("NuclearReactor", 5, 6, "generatornuclear_kanim", 100, 480f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.REFINED_METALS, 9999f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
 		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		buildingDef.GeneratorWattageRating = 0f;
 		buildingDef.GeneratorBaseCapacity = 10000f;
@@ -110,7 +114,7 @@ public class NuclearReactorConfig : IBuildingConfig
 		manualDeliveryKG.RequestedItemTag = ElementLoader.FindElementByHash(SimHashes.EnrichedUranium).tag;
 		manualDeliveryKG.SetStorage(storage);
 		manualDeliveryKG.choreTypeIDHash = Db.Get().ChoreTypes.PowerFetch.IdHash;
-		manualDeliveryKG.capacity = 10f;
+		manualDeliveryKG.capacity = 180f;
 		manualDeliveryKG.minimumMass = 0.5f;
 		go.AddOrGet<Reactor>();
 		go.AddOrGet<LoopingSounds>();
@@ -118,7 +122,7 @@ public class NuclearReactorConfig : IBuildingConfig
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
 		conduitConsumer.conduitType = ConduitType.Liquid;
 		conduitConsumer.consumptionRate = 10f;
-		conduitConsumer.capacityKG = 60f;
+		conduitConsumer.capacityKG = 90f;
 		conduitConsumer.capacityTag = GameTags.AnyWater;
 		conduitConsumer.forceAlwaysSatisfied = true;
 		conduitConsumer.wrongElementResult = ConduitConsumer.WrongElementResult.Dump;

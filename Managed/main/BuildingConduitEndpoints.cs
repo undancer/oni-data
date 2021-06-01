@@ -31,6 +31,7 @@ public class BuildingConduitEndpoints : KMonoBehaviour
 			{
 				Conduit.GetNetworkManager(itemInput.ConduitType).RemoveFromNetworks(itemInput.Cell, itemInput, is_endpoint: true);
 			}
+			itemInput = null;
 		}
 		if (itemOutput != null)
 		{
@@ -42,6 +43,7 @@ public class BuildingConduitEndpoints : KMonoBehaviour
 			{
 				Conduit.GetNetworkManager(itemOutput.ConduitType).RemoveFromNetworks(itemOutput.Cell, itemOutput, is_endpoint: true);
 			}
+			itemOutput = null;
 		}
 	}
 

@@ -7,7 +7,7 @@ public class BedDiagnostic : ColonyDiagnostic
 		: base(worldID, UI.COLONY_DIAGNOSTICS.BEDDIAGNOSTIC.ALL_NAME)
 	{
 		icon = "icon_action_region_bedroom";
-		AddCriterion("CheckEnoughBeds", new DiagnosticCriterion(CheckEnoughBeds));
+		AddCriterion("CheckEnoughBeds", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckEnoughBeds));
 	}
 
 	private DiagnosticResult CheckEnoughBeds()

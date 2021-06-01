@@ -49,7 +49,9 @@ public class SaveManager : KMonoBehaviour
 
 	public const int SAVE_MINOR_VERSION_COLONY_REQ_REMOVE_SERIALIZATION = 22;
 
-	public const int SAVE_MINOR_VERSION = 22;
+	public const int SAVE_MINOR_VERSION_ROTTABLE_TUNING = 23;
+
+	public const int SAVE_MINOR_VERSION = 23;
 
 	private Dictionary<Tag, GameObject> prefabMap = new Dictionary<Tag, GameObject>();
 
@@ -149,7 +151,7 @@ public class SaveManager : KMonoBehaviour
 	{
 		writer.Write(SAVE_HEADER);
 		writer.Write(7);
-		writer.Write(22);
+		writer.Write(23);
 		int num = 0;
 		foreach (KeyValuePair<Tag, List<SaveLoadRoot>> sceneObject in sceneObjects)
 		{
@@ -248,9 +250,9 @@ public class SaveManager : KMonoBehaviour
 		}
 		int num = reader.ReadInt32();
 		int num2 = reader.ReadInt32();
-		if (num != 7 || num2 > 22)
+		if (num != 7 || num2 > 23)
 		{
-			DebugUtil.LogWarningArgs($"SAVE FILE VERSION MISMATCH! Expected {7}.{22} but got {num}.{num2}");
+			DebugUtil.LogWarningArgs($"SAVE FILE VERSION MISMATCH! Expected {7}.{23} but got {num}.{num2}");
 			return false;
 		}
 		ClearScene();

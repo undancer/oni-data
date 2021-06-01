@@ -24,7 +24,7 @@ public class SeaLettuceConfig : IEntityConfig
 			SimHashes.Water,
 			SimHashes.SaltWater,
 			SimHashes.Brine
-		}, pressure_sensitive: false, 0f, 0.15f, "Lettuce", can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, 2400f, ID + "Original", STRINGS.CREATURES.SPECIES.SEALETTUCE.NAME);
+		}, pressure_sensitive: false, 0f, 0.15f, "Lettuce", can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, 2400f, 0f, 740f, ID + "Original", STRINGS.CREATURES.SPECIES.SEALETTUCE.NAME);
 		PlantElementAbsorber.ConsumeInfo[] array = new PlantElementAbsorber.ConsumeInfo[1];
 		PlantElementAbsorber.ConsumeInfo consumeInfo = new PlantElementAbsorber.ConsumeInfo
 		{
@@ -44,12 +44,11 @@ public class SeaLettuceConfig : IEntityConfig
 		gameObject.GetComponent<DrowningMonitor>().canDrownToDeath = false;
 		gameObject.GetComponent<DrowningMonitor>().livesUnderWater = true;
 		gameObject.AddOrGet<StandardCropPlant>();
-		gameObject.AddOrGet<KAnimControllerBase>().randomiseLoopedOffset = true;
 		gameObject.AddOrGet<LoopingSounds>();
 		GameObject seed = EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Harvest, ID + "Seed", STRINGS.CREATURES.SPECIES.SEEDS.SEALETTUCE.NAME, STRINGS.CREATURES.SPECIES.SEEDS.SEALETTUCE.DESC, Assets.GetAnim("seed_sealettuce_kanim"), "object", 0, new List<Tag>
 		{
 			GameTags.WaterSeed
-		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 1, STRINGS.CREATURES.SPECIES.SEALETTUCE.DOMESTICATEDDESC);
+		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 3, STRINGS.CREATURES.SPECIES.SEALETTUCE.DOMESTICATEDDESC);
 		EntityTemplates.CreateAndRegisterPreviewForPlant(seed, ID + "_preview", Assets.GetAnim("sea_lettuce_kanim"), "place", 1, 2);
 		SoundEventVolumeCache.instance.AddVolume("sea_lettuce_kanim", "SeaLettuce_grow", NOISE_POLLUTION.CREATURES.TIER3);
 		SoundEventVolumeCache.instance.AddVolume("sea_lettuce_kanim", "SeaLettuce_harvest", NOISE_POLLUTION.CREATURES.TIER3);

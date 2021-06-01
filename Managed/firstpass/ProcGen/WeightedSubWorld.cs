@@ -32,13 +32,20 @@ namespace ProcGen
 			set;
 		}
 
-		public WeightedSubWorld(float weight, SubWorld subWorld, float overridePower = -1f, int minCount = 0, int maxCount = int.MaxValue)
+		public int priority
+		{
+			get;
+			set;
+		}
+
+		public WeightedSubWorld(float weight, SubWorld subWorld, float overridePower = -1f, int minCount = 0, int maxCount = int.MaxValue, int priority = 0)
 		{
 			this.weight = weight;
 			this.subWorld = subWorld;
 			this.overridePower = overridePower;
 			this.minCount = minCount;
 			this.maxCount = maxCount;
+			this.priority = priority;
 		}
 
 		public override int GetHashCode()

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using STRINGS;
 using UnityEngine;
 
 public class HighEnergyParticleDirectionSideScreen : SideScreenContent
@@ -9,9 +10,23 @@ public class HighEnergyParticleDirectionSideScreen : SideScreenContent
 
 	private KButton activeButton = null;
 
+	public LocText directionLabel;
+
+	private string[] directionStrings = new string[8]
+	{
+		UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_N,
+		UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_NW,
+		UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_W,
+		UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_SW,
+		UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_S,
+		UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_SE,
+		UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_E,
+		UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_NE
+	};
+
 	public override string GetTitle()
 	{
-		return Strings.Get("STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLEREDIRECTOR.NAME");
+		return UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.TITLE;
 	}
 
 	protected override void OnSpawn()
@@ -33,9 +48,15 @@ public class HighEnergyParticleDirectionSideScreen : SideScreenContent
 				{
 					target.Direction = EightDirectionUtil.AngleToDirection(num * 45);
 					Game.Instance.ForceOverlayUpdate();
+					Refresh();
 				}
 			};
 		}
+	}
+
+	public override int GetSideScreenSortOrder()
+	{
+		return 10;
 	}
 
 	public override bool IsValidForTarget(GameObject target)
@@ -56,19 +77,29 @@ public class HighEnergyParticleDirectionSideScreen : SideScreenContent
 		if (target == null)
 		{
 			Debug.LogError("The gameObject received does not contain IHighEnergyParticleDirection component");
-			return;
 		}
+		else
+		{
+			Refresh();
+		}
+	}
+
+	private void Refresh()
+	{
 		int directionIndex = EightDirectionUtil.GetDirectionIndex(target.Direction);
 		if (directionIndex >= 0 && directionIndex < Buttons.Count)
 		{
 			KButton kButton = Buttons[directionIndex];
 			kButton.SignalClick(KKeyCode.Mouse0);
-			return;
 		}
-		if ((bool)activeButton)
+		else
 		{
-			activeButton.isInteractable = true;
+			if ((bool)activeButton)
+			{
+				activeButton.isInteractable = true;
+			}
+			activeButton = null;
 		}
-		activeButton = null;
+		directionLabel.SetText(string.Format(UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.SELECTED_DIRECTION, directionStrings[directionIndex]));
 	}
 }

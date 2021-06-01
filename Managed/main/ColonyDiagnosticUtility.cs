@@ -312,7 +312,7 @@ public class ColonyDiagnosticUtility : KMonoBehaviour, ISim4000ms
 
 	public static DiagnosticCriterion GetWorldHasMinionCriterion(int worldID)
 	{
-		return new DiagnosticCriterion(delegate
+		return new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, delegate
 		{
 			ColonyDiagnostic.DiagnosticResult result = new ColonyDiagnostic.DiagnosticResult(ColonyDiagnostic.DiagnosticResult.Opinion.Normal, "");
 			List<MinionIdentity> worldItems = Components.LiveMinionIdentities.GetWorldItems(worldID);

@@ -727,7 +727,7 @@ public class SkillsScreen : KModalScreen
 		}
 		foreach (KeyValuePair<int, GameObject> worldDivider in worldDividers)
 		{
-			worldDivider.Value.SetActive(ClusterManager.Instance.GetWorld(worldDivider.Key).IsDiscovered);
+			worldDivider.Value.SetActive(ClusterManager.Instance.GetWorld(worldDivider.Key).IsDiscovered && DlcManager.IsExpansion1Active());
 			Component reference = worldDivider.Value.GetComponent<HierarchyReferences>().GetReference("NobodyRow");
 			reference.gameObject.SetActive(value: true);
 			foreach (MinionAssignablesProxy item5 in Components.MinionAssignablesProxy)

@@ -9,6 +9,9 @@ public class GeneticAnalysisStationWorkable : Workable
 	[MyCmpReq]
 	public Storage storage;
 
+	[SerializeField]
+	public Vector3 finishedSeedDropOffset;
+
 	private Notification notification;
 
 	public GeneticAnalysisStation.StatesInstance statesInstance;
@@ -16,7 +19,7 @@ public class GeneticAnalysisStationWorkable : Workable
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		requiredSkillPerk = Db.Get().SkillPerks.AllowNuclearResearch.Id;
+		requiredSkillPerk = Db.Get().SkillPerks.CanIdentifyMutantSeeds.Id;
 		workerStatusItem = Db.Get().DuplicantStatusItems.AnalyzingGenes;
 		attributeConverter = Db.Get().AttributeConverters.ResearchSpeed;
 		attributeExperienceMultiplier = DUPLICANTSTATS.ATTRIBUTE_LEVELING.PART_DAY_EXPERIENCE;
@@ -31,16 +34,6 @@ public class GeneticAnalysisStationWorkable : Workable
 		lightEfficiencyBonus = true;
 	}
 
-	protected override bool OnWorkTick(Worker worker, float dt)
-	{
-		return !statesInstance.GetTargetPlant().IsValid;
-	}
-
-	protected override void OnStopWork(Worker worker)
-	{
-		base.OnStopWork(worker);
-	}
-
 	protected override void OnCompleteWork(Worker worker)
 	{
 		base.OnCompleteWork(worker);
@@ -49,21 +42,16 @@ public class GeneticAnalysisStationWorkable : Workable
 
 	public void IdentifyMutant()
 	{
-		Tag targetPlant = statesInstance.GetTargetPlant();
-		if (!targetPlant.IsValid)
+		GameObject gameObject = storage.FindFirst(GameTags.UnidentifiedSeed);
+		DebugUtil.DevAssertArgs(gameObject != null, "AAACCCCKKK!! GeneticAnalysisStation finished studying a seed but we don't have one in storage??");
+		if (gameObject != null)
 		{
-			return;
-		}
-		Tag targetAsSeed = statesInstance.GetTargetAsSeed();
-		GameObject x = storage.FindFirst(targetAsSeed);
-		DebugUtil.DevAssertArgs(x != null, "AAACCCCKKK!! GeneticAnalysisStation finished studying a ", targetAsSeed, " but we don't have one in storage??");
-		if (x != null)
-		{
-			if (PlantSubSpeciesCatalog.instance.PartiallyIdentifySpecies(targetPlant, 0.05f))
-			{
-				statesInstance.SetTargetPlant(Tag.Invalid);
-			}
-			storage.ConsumeIgnoringDisease(targetAsSeed, 1f);
+			Pickupable component = gameObject.GetComponent<Pickupable>();
+			Pickupable pickupable = ((!(component.PrimaryElement.Units > 1f)) ? storage.Drop(gameObject).GetComponent<Pickupable>() : component.Take(1f));
+			pickupable.transform.SetPosition(base.transform.GetPosition() + finishedSeedDropOffset);
+			MutantPlant component2 = pickupable.GetComponent<MutantPlant>();
+			PlantSubSpeciesCatalog.Instance.IdentifySubSpecies(component2.SubSpeciesID);
+			component2.Analyze();
 		}
 	}
 }

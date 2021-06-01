@@ -4,7 +4,7 @@ using STRINGS;
 using UnityEngine;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticleSpawner.StatesInstance>, IHighEnergyParticleDirection
+public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticleSpawner.StatesInstance>, IHighEnergyParticleDirection, IProgressBarSideScreen
 {
 	public class StatesInstance : GameStateMachine<States, StatesInstance, HighEnergyParticleSpawner, object>.GameInstance
 	{
@@ -91,6 +91,8 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 
 	private bool particleVisualPlaying;
 
+	private MeterController progressMeterController;
+
 	[Serialize]
 	public Ref<HighEnergyParticlePort> capturedByRef = new Ref<HighEnergyParticlePort>();
 
@@ -173,6 +175,33 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 		directionController = new EightDirectionController(GetComponent<KBatchedAnimController>(), "redirector_target", "redirect", EightDirectionController.Offset.Infront);
 		Direction = Direction;
 		particleController = new MeterController(GetComponent<KBatchedAnimController>(), "orb_target", "orb_off", Meter.Offset.NoChange, Grid.SceneLayer.NoLayer);
+		particleController.gameObject.AddOrGet<LoopingSounds>();
+		progressMeterController = new MeterController(GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.NoChange, Grid.SceneLayer.NoLayer);
+	}
+
+	public float GetProgressBarMaxValue()
+	{
+		return particleThreshold;
+	}
+
+	public float GetProgressBarFillPercentage()
+	{
+		return particleStorage.Particles / particleThreshold;
+	}
+
+	public string GetProgressBarTitleLabel()
+	{
+		return UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.PROGRESS_BAR_LABEL;
+	}
+
+	public string GetProgressBarLabel()
+	{
+		return Mathf.FloorToInt(particleStorage.Particles) + "/" + Mathf.FloorToInt(particleThreshold);
+	}
+
+	public string GetProgressBarTooltip()
+	{
+		return UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.PROGRESS_BAR_TOOLTIP;
 	}
 
 	private void OnSimConsumeRadiationCallback(Sim.ConsumedRadiationCallback radiationCBInfo, object data)
@@ -203,7 +232,8 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 				base.smi.sm.isAbsorbingRadiation.Set(value: false, base.smi);
 			}
 		}
-		if (!particleVisualPlaying && particleStorage.Particles > particleThreshold / 2f && launcherTimer < minLaunchInterval / 2f)
+		progressMeterController.SetPositionPercent(GetProgressBarFillPercentage());
+		if (!particleVisualPlaying && particleStorage.Particles > particleThreshold / 2f)
 		{
 			particleController.meterController.Play("orb_pre");
 			particleController.meterController.Queue("orb_idle", KAnim.PlayMode.Loop);

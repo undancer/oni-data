@@ -15,6 +15,8 @@ public class ManualDeliveryKG : KMonoBehaviour, ISim1000ms
 	[SerializeField]
 	public Tag requestedItemTag;
 
+	private Tag[] forbiddenTags;
+
 	[SerializeField]
 	public float capacity = 100f;
 
@@ -74,6 +76,19 @@ public class ManualDeliveryKG : KMonoBehaviour, ISim1000ms
 		{
 			requestedItemTag = value;
 			AbortDelivery("Requested Item Tag Changed");
+		}
+	}
+
+	public Tag[] ForbiddenTags
+	{
+		get
+		{
+			return forbiddenTags;
+		}
+		set
+		{
+			forbiddenTags = value;
+			AbortDelivery("Forbidden Tags Changed");
 		}
 	}
 
@@ -153,7 +168,7 @@ public class ManualDeliveryKG : KMonoBehaviour, ISim1000ms
 
 	public void RequestDelivery()
 	{
-		if (fetchList == null)
+		if (this.fetchList == null)
 		{
 			float massAvailable = storage.GetMassAvailable(requestedItemTag);
 			if (massAvailable < capacity)
@@ -161,14 +176,17 @@ public class ManualDeliveryKG : KMonoBehaviour, ISim1000ms
 				float b = capacity - massAvailable;
 				b = Mathf.Max(PICKUPABLETUNING.MINIMUM_PICKABLE_AMOUNT, b);
 				ChoreType byHash = Db.Get().ChoreTypes.GetByHash(choreTypeIDHash);
-				fetchList = new FetchList2(storage, byHash);
-				fetchList.ShowStatusItem = ShowStatusItem;
-				fetchList.MinimumAmount[requestedItemTag] = Mathf.Max(PICKUPABLETUNING.MINIMUM_PICKABLE_AMOUNT, minimumMass);
-				fetchList.Add(new Tag[1]
+				this.fetchList = new FetchList2(storage, byHash);
+				this.fetchList.ShowStatusItem = ShowStatusItem;
+				this.fetchList.MinimumAmount[requestedItemTag] = Mathf.Max(PICKUPABLETUNING.MINIMUM_PICKABLE_AMOUNT, minimumMass);
+				FetchList2 fetchList = this.fetchList;
+				Tag[] tags = new Tag[1]
 				{
 					requestedItemTag
-				}, null, null, b);
-				fetchList.Submit(null, check_storage_contents: false);
+				};
+				float amount = b;
+				fetchList.Add(tags, null, forbiddenTags, amount);
+				this.fetchList.Submit(null, check_storage_contents: false);
 			}
 		}
 	}

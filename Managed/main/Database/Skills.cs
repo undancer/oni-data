@@ -153,6 +153,10 @@ namespace Database
 			{
 				Farming2.Id
 			}));
+			if (DlcManager.FeaturePlantMutationsEnabled())
+			{
+				Farming3.perks.Add(Db.Get().SkillPerks.CanIdentifyMutantSeeds);
+			}
 			Ranching1 = AddSkill(new Skill("Ranching1", DUPLICANTS.ROLES.RANCHER.NAME, DUPLICANTS.ROLES.RANCHER.DESCRIPTION, "", 1, "hat_role_rancher1", "skillbadge_role_rancher1", Db.Get().SkillGroups.Ranching.Id, new List<SkillPerk>
 			{
 				Db.Get().SkillPerks.CanWrangleCreatures,

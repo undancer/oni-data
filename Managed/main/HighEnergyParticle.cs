@@ -82,6 +82,7 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 			destroying.Enter(delegate(StatesInstance smi)
 			{
 				smi.master.isCollideable = false;
+				smi.master.StopLoopingSound();
 			});
 			destroying.instant.Enter(delegate(StatesInstance smi)
 			{
@@ -150,10 +151,16 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 
 	public float blackholeEmitDurration;
 
+	private LoopingSounds loopingSounds;
+
+	public string flyingSound;
+
 	public bool isCollideable;
 
 	protected override void OnPrefabInit()
 	{
+		loopingSounds = base.gameObject.GetComponent<LoopingSounds>();
+		flyingSound = GlobalAssets.GetSound("Radbolt_travel_LP");
 		base.OnPrefabInit();
 	}
 
@@ -167,12 +174,14 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 		emitter.Refresh();
 		SetDirection(direction);
 		base.gameObject.layer = LayerMask.NameToLayer("PlaceWithDepth");
+		StartLoopingSound();
 		base.smi.StartSM();
 	}
 
 	protected override void OnCleanUp()
 	{
 		base.OnCleanUp();
+		StopLoopingSound();
 		Components.HighEnergyParticles.Remove(this);
 		if (capturedBy != null && capturedBy.currentParticle == this)
 		{
@@ -335,12 +344,13 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 		if (gameObject4 != null)
 		{
 			Health component7 = gameObject4.GetComponent<Health>();
-			if (component7 != null && !component7.IsDefeated())
+			if (component7 != null && !component7.IsDefeated() && !gameObject4.HasTag(GameTags.Dead) && !gameObject4.HasTag(GameTags.Dying))
 			{
 				component7.Damage(20f);
-				if (!component7.IsDefeated())
+				WoundMonitor.Instance sMI = gameObject4.GetSMI<WoundMonitor.Instance>();
+				if (sMI != null && !component7.IsDefeated())
 				{
-					gameObject4.GetSMI<WoundMonitor.Instance>().PlayKnockedOverImpactAnimation();
+					sMI.PlayKnockedOverImpactAnimation();
 				}
 				gameObject4.GetComponent<PrimaryElement>().AddDisease(Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.Id), Mathf.FloorToInt(payload * 0.5f / 0.001f), "HEPImpact");
 				Collide(CollisionType.Minion);
@@ -363,6 +373,7 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 		int num = Grid.PosToCell(position);
 		Vector3 vector = position + EightDirectionUtil.GetNormal(direction) * speed * dt;
 		int num2 = Grid.PosToCell(vector);
+		loopingSounds.UpdateVelocity(flyingSound, vector - position);
 		if (!Grid.IsValidCell(num2))
 		{
 			Debug.LogWarning("High energy particle moved into invalid cell and is destroyed with no radiation");
@@ -381,5 +392,15 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 			base.smi.sm.destroySimpleSignal.Trigger(base.smi);
 		}
 		base.transform.SetPosition(vector);
+	}
+
+	private void StartLoopingSound()
+	{
+		loopingSounds.StartSound(flyingSound);
+	}
+
+	private void StopLoopingSound()
+	{
+		loopingSounds.StopSound(flyingSound);
 	}
 }

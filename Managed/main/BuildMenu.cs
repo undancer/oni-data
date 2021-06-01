@@ -324,6 +324,7 @@ public class BuildMenu : KScreen
 				new BuildingInfo("LiquidFilter", Action.BuildMenuKeyF),
 				new BuildingInfo("LiquidConduitPreferentialFlow", Action.BuildMenuKeyW),
 				new BuildingInfo("LiquidConduitOverflow", Action.BuildMenuKeyR),
+				new BuildingInfo("LiquidLimitValve", Action.BuildMenuKeyC),
 				new BuildingInfo("ModularLaunchpadPortLiquid", Action.BuildMenuKeyM),
 				new BuildingInfo("ModularLaunchpadPortLiquidUnloader", Action.BuildMenuKeyU)
 			}),
@@ -340,6 +341,7 @@ public class BuildMenu : KScreen
 				new BuildingInfo("BottleEmptierGas", Action.BuildMenuKeyB),
 				new BuildingInfo("GasConduitPreferentialFlow", Action.BuildMenuKeyW),
 				new BuildingInfo("GasConduitOverflow", Action.BuildMenuKeyR),
+				new BuildingInfo("GasLimitValve", Action.BuildMenuKeyL),
 				new BuildingInfo("ModularLaunchpadPortGas", Action.BuildMenuKeyG),
 				new BuildingInfo("ModularLaunchpadPortGasUnloader", Action.BuildMenuKeyU)
 			})
@@ -440,6 +442,7 @@ public class BuildMenu : KScreen
 				new BuildingInfo("SolidConduitOutbox", Action.BuildMenuKeyO),
 				new BuildingInfo("SolidVent", Action.BuildMenuKeyV),
 				new BuildingInfo("SolidLogicValve", Action.BuildMenuKeyL),
+				new BuildingInfo("SolidLimitValve", Action.BuildMenuKeyD),
 				new BuildingInfo("SolidConduitBridge", Action.BuildMenuKeyB),
 				new BuildingInfo("AutoMiner", Action.BuildMenuKeyM),
 				new BuildingInfo("ModularLaunchpadPortSolid", Action.BuildMenuKeyS),

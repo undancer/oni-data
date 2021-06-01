@@ -44,7 +44,7 @@ public class SublimationStationConfig : IBuildingConfig
 		};
 		elementConverter.outputElements = new ElementConverter.OutputElement[1]
 		{
-			new ElementConverter.OutputElement(0.66f, SimHashes.ContaminatedOxygen, 303.15f, useEntityTemperature: false, storeOutput: false, 0f, 1f)
+			new ElementConverter.OutputElement(0.66f, SimHashes.ContaminatedOxygen, 303.15f, useEntityTemperature: false, storeOutput: false, 0f, 0f)
 		};
 		ManualDeliveryKG manualDeliveryKG = go.AddOrGet<ManualDeliveryKG>();
 		manualDeliveryKG.SetStorage(storage);

@@ -2,22 +2,22 @@ using System;
 
 public class DiagnosticCriterion
 {
-	private string id;
+	private Func<ColonyDiagnostic.DiagnosticResult> evaluateAction;
 
-	private Func<ColonyDiagnostic.DiagnosticResult> action;
-
-	public DiagnosticCriterion(Func<ColonyDiagnostic.DiagnosticResult> action)
+	public string name
 	{
-		this.action = action;
+		get;
+		private set;
 	}
 
-	public void SetName(string id)
+	public DiagnosticCriterion(string name, Func<ColonyDiagnostic.DiagnosticResult> action)
 	{
-		this.id = id;
+		this.name = name;
+		evaluateAction = action;
 	}
 
 	public ColonyDiagnostic.DiagnosticResult Evaluate()
 	{
-		return action();
+		return evaluateAction();
 	}
 }

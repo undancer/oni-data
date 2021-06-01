@@ -1,4 +1,5 @@
-using UnityEngine;
+using System.Collections.Generic;
+using KSerialization;
 
 public class GeneticAnalysisStation : GameStateMachine<GeneticAnalysisStation, GeneticAnalysisStation.StatesInstance, IStateMachineTarget, GeneticAnalysisStation.Def>
 {
@@ -17,6 +18,9 @@ public class GeneticAnalysisStation : GameStateMachine<GeneticAnalysisStation, G
 		[MyCmpReq]
 		public GeneticAnalysisStationWorkable workable;
 
+		[Serialize]
+		private HashSet<Tag> forbiddenSeeds;
+
 		public StatesInstance(IStateMachineTarget master, Def def)
 			: base(master, def)
 		{
@@ -26,86 +30,74 @@ public class GeneticAnalysisStation : GameStateMachine<GeneticAnalysisStation, G
 		public override void StartSM()
 		{
 			base.StartSM();
-			Tag targetAsSeed = GetTargetAsSeed();
-			if (targetAsSeed.IsValid)
+			RefreshFetchTags();
+		}
+
+		public void SetSeedForbidden(Tag seedID, bool forbidden)
+		{
+			if (forbiddenSeeds == null)
 			{
-				manualDelivery.RequestedItemTag = targetAsSeed;
+				forbiddenSeeds = new HashSet<Tag>();
+			}
+			if ((!forbidden) ? forbiddenSeeds.Remove(seedID) : forbiddenSeeds.Add(seedID))
+			{
+				RefreshFetchTags();
 			}
 		}
 
-		public void SetTargetPlant(Tag targetPlantID)
+		public bool GetSeedForbidden(Tag seedID)
 		{
-			Tag a = base.sm.selectedPlant.Get(this);
-			if (a != targetPlantID)
+			if (forbiddenSeeds == null)
 			{
-				if (!targetPlantID.IsValid)
-				{
-					base.sm.selectedPlant.Set(Tag.Invalid, this);
-					manualDelivery.RequestedItemTag = Tag.Invalid;
-					return;
-				}
-				base.sm.selectedPlant.Set(targetPlantID, this);
-				Tag targetAsSeed = GetTargetAsSeed();
-				storage.DropAll();
-				manualDelivery.RequestedItemTag = targetAsSeed;
+				forbiddenSeeds = new HashSet<Tag>();
 			}
+			return forbiddenSeeds.Contains(seedID);
 		}
 
-		public Tag GetTargetPlant()
+		private void RefreshFetchTags()
 		{
-			return base.sm.selectedPlant.Get(this);
-		}
-
-		public Tag GetTargetAsSeed()
-		{
-			Tag tag = base.sm.selectedPlant.Get(this);
-			if (!tag.IsValid)
+			if (forbiddenSeeds == null)
 			{
-				return Tag.Invalid;
+				manualDelivery.ForbiddenTags = null;
+				return;
 			}
-			GameObject prefab = Assets.GetPrefab(tag);
-			SeedProducer component = prefab.GetComponent<SeedProducer>();
-			SeedProducer.SeedInfo seedInfo = component.seedInfo;
-			return seedInfo.seedId.ToTag();
+			Tag[] array = new Tag[forbiddenSeeds.Count];
+			int num = 0;
+			foreach (Tag forbiddenSeed in forbiddenSeeds)
+			{
+				array[num++] = forbiddenSeed;
+				storage.Drop(forbiddenSeed);
+			}
+			manualDelivery.ForbiddenTags = array;
 		}
 	}
 
-	public const int SEEDS_TO_COMPLETE = 20;
+	public State inoperational;
 
-	public State idle;
-
-	public State mutationSelected;
+	public State operational;
 
 	public State ready;
 
-	public TagParameter selectedPlant;
-
 	public override void InitializeStates(out BaseState default_state)
 	{
-		base.serializable = SerializeType.ParamsOnly;
-		default_state = idle;
-		root.EventHandler(GameHashes.PlantSubspeciesComplete, (StatesInstance smi) => PlantSubSpeciesCatalog.instance, OnPlantSubspeciesComplete);
-		idle.ParamTransition(selectedPlant, ready, (StatesInstance smi, Tag p) => p.IsValid);
-		mutationSelected.ParamTransition(selectedPlant, idle, (StatesInstance smi, Tag p) => !p.IsValid).EventTransition(GameHashes.OnStorageChange, ready, HasSeedToStudy);
-		ready.ParamTransition(selectedPlant, idle, (StatesInstance smi, Tag p) => !p.IsValid).EventTransition(GameHashes.OnStorageChange, mutationSelected, GameStateMachine<GeneticAnalysisStation, StatesInstance, IStateMachineTarget, Def>.Not(HasSeedToStudy)).ToggleChore(CreateChore, mutationSelected);
+		default_state = inoperational;
+		inoperational.EventTransition(GameHashes.OperationalChanged, ready, IsOperational);
+		operational.EventTransition(GameHashes.OperationalChanged, inoperational, GameStateMachine<GeneticAnalysisStation, StatesInstance, IStateMachineTarget, Def>.Not(IsOperational)).EventTransition(GameHashes.OnStorageChange, ready, HasSeedToStudy);
+		ready.EventTransition(GameHashes.OperationalChanged, inoperational, GameStateMachine<GeneticAnalysisStation, StatesInstance, IStateMachineTarget, Def>.Not(IsOperational)).EventTransition(GameHashes.OnStorageChange, operational, GameStateMachine<GeneticAnalysisStation, StatesInstance, IStateMachineTarget, Def>.Not(HasSeedToStudy)).ToggleChore(CreateChore, operational);
 	}
 
 	private bool HasSeedToStudy(StatesInstance smi)
 	{
-		return smi.storage.GetMassAvailable(GameTags.Seed) >= 1f;
+		return smi.storage.GetMassAvailable(GameTags.UnidentifiedSeed) >= 1f;
+	}
+
+	private bool IsOperational(StatesInstance smi)
+	{
+		return smi.GetComponent<Operational>().IsOperational;
 	}
 
 	private Chore CreateChore(StatesInstance smi)
 	{
 		return new WorkChore<GeneticAnalysisStationWorkable>(Db.Get().ChoreTypes.Research, smi.workable);
-	}
-
-	private void OnPlantSubspeciesComplete(StatesInstance smi, object data)
-	{
-		Tag a = (Tag)data;
-		if (a == selectedPlant.Get(smi))
-		{
-			selectedPlant.Set(Tag.Invalid, smi);
-		}
 	}
 }

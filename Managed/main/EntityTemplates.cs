@@ -165,10 +165,11 @@ public class EntityTemplates
 		return template;
 	}
 
-	public static GameObject ExtendEntityToBasicPlant(GameObject template, float temperature_lethal_low = 218.15f, float temperature_warning_low = 283.15f, float temperature_warning_high = 303.15f, float temperature_lethal_high = 398.15f, SimHashes[] safe_elements = null, bool pressure_sensitive = true, float pressure_lethal_low = 0f, float pressure_warning_low = 0.15f, string crop_id = null, bool can_drown = true, bool can_tinker = true, bool require_solid_tile = true, bool should_grow_old = true, float max_age = 2400f, string baseTraitId = null, string baseTraitName = null)
+	public static GameObject ExtendEntityToBasicPlant(GameObject template, float temperature_lethal_low = 218.15f, float temperature_warning_low = 283.15f, float temperature_warning_high = 303.15f, float temperature_lethal_high = 398.15f, SimHashes[] safe_elements = null, bool pressure_sensitive = true, float pressure_lethal_low = 0f, float pressure_warning_low = 0.15f, string crop_id = null, bool can_drown = true, bool can_tinker = true, bool require_solid_tile = true, bool should_grow_old = true, float max_age = 2400f, float min_radiation = 0f, float max_radiation = 220f, string baseTraitId = null, string baseTraitName = null)
 	{
 		Modifiers component = template.GetComponent<Modifiers>();
 		Trait trait = Db.Get().CreateTrait(baseTraitId, baseTraitName, baseTraitName, null, should_save: false, null, positive_trait: true, is_valid_starter_trait: true);
+		template.AddTag(GameTags.Plant);
 		template.AddOrGet<EntombVulnerable>();
 		PressureVulnerable pressureVulnerable = template.AddOrGet<PressureVulnerable>();
 		if (pressure_sensitive)
@@ -189,19 +190,23 @@ public class EntityTemplates
 		}
 		template.AddOrGet<ReceptacleMonitor>();
 		template.AddOrGet<Notifier>();
-		template.AddOrGet<PlantRadiationMonitor>();
 		if (can_drown)
 		{
 			template.AddOrGet<DrowningMonitor>();
 		}
+		template.AddOrGet<KAnimControllerBase>().randomiseLoopedOffset = true;
 		component.initialAttributes.Add(Db.Get().PlantAttributes.WiltTempRangeMod.Id);
 		TemperatureVulnerable temperatureVulnerable = template.AddOrGet<TemperatureVulnerable>();
 		temperatureVulnerable.Configure(temperature_warning_low, temperature_lethal_low, temperature_warning_high, temperature_lethal_high);
 		if (DlcManager.FeaturePlantMutationsEnabled())
 		{
 			component.initialAttributes.Add(Db.Get().PlantAttributes.MinRadiationThreshold.Id);
+			if (min_radiation != 0f)
+			{
+				trait.Add(new AttributeModifier(Db.Get().PlantAttributes.MinRadiationThreshold.Id, min_radiation, baseTraitName));
+			}
 			component.initialAttributes.Add(Db.Get().PlantAttributes.MaxRadiationThreshold.Id);
-			trait.Add(new AttributeModifier(Db.Get().PlantAttributes.MaxRadiationThreshold.Id, 500f, baseTraitName));
+			trait.Add(new AttributeModifier(Db.Get().PlantAttributes.MaxRadiationThreshold.Id, max_radiation, baseTraitName));
 			template.AddOrGetDef<RadiationVulnerable.Def>();
 		}
 		template.AddOrGet<OccupyArea>().objectLayers = new ObjectLayer[1]
@@ -214,15 +219,14 @@ public class EntityTemplates
 			GeneratedBuildings.RegisterWithOverlay(OverlayScreen.HarvestableIDs, component2.PrefabID().ToString());
 			Crop.CropVal cropval = CROPS.CROP_TYPES.Find((Crop.CropVal m) => m.cropId == crop_id);
 			Debug.Assert(baseTraitId != null && baseTraitName != null, "Extending " + template.name + " to a crop plant failed because the base trait wasn't specified.");
-			template.AddOrGet<Traits>();
 			component.initialAttributes.Add(Db.Get().PlantAttributes.YieldAmount.Id);
 			component.initialAmounts.Add(Db.Get().Amounts.Maturity.Id);
 			trait.Add(new AttributeModifier(Db.Get().PlantAttributes.YieldAmount.Id, cropval.numProduced, baseTraitName));
 			trait.Add(new AttributeModifier(Db.Get().Amounts.Maturity.maxAttribute.Id, cropval.cropDuration / 600f, baseTraitName));
-			component.initialTraits.Add(baseTraitId);
 			if (DlcManager.FeaturePlantMutationsEnabled())
 			{
 				template.AddOrGet<MutantPlant>();
+				SymbolOverrideControllerUtil.AddToPrefab(template);
 			}
 			Crop crop = template.AddOrGet<Crop>();
 			crop.Configure(cropval);
@@ -231,6 +235,11 @@ public class EntityTemplates
 			growing.maxAge = max_age;
 			template.AddOrGet<Harvestable>();
 			template.AddOrGet<HarvestDesignatable>();
+		}
+		if (trait.SelfModifiers != null && trait.SelfModifiers.Count > 0)
+		{
+			template.AddOrGet<Traits>();
+			component.initialTraits.Add(baseTraitId);
 		}
 		component2.prefabInitFn += delegate(GameObject inst)
 		{
@@ -266,7 +275,6 @@ public class EntityTemplates
 		def.tameEffect.Add(new AttributeModifier(Db.Get().CritterAttributes.Metabolism.Id, 100f, STRINGS.CREATURES.MODIFIERS.TAME.NAME));
 		OvercrowdingMonitor.Def def2 = prefab.AddOrGetDef<OvercrowdingMonitor.Def>();
 		def2.spaceRequiredPerCreature = space_required_per_creature;
-		prefab.AddTag(GameTags.Plant);
 		return prefab;
 	}
 
@@ -545,6 +553,7 @@ public class EntityTemplates
 		if (foodInfo.CanRot)
 		{
 			Rottable.Def def = template.AddOrGetDef<Rottable.Def>();
+			def.preserveTemperature = foodInfo.PreserveTemperature;
 			def.rotTemperature = foodInfo.RotTemperature;
 			def.spoilTime = foodInfo.SpoilTime;
 			def.staleTime = foodInfo.StaleTime;
@@ -701,13 +710,12 @@ public class EntityTemplates
 		MutantPlant component2 = plant.GetComponent<MutantPlant>();
 		if (component2 != null)
 		{
-			MutantPlant target = gameObject.AddOrGet<MutantPlant>();
-			component2.CopyMutationsTo(target);
+			MutantPlant mutantPlant = gameObject.AddOrGet<MutantPlant>();
 		}
 		KPrefabID component3 = gameObject.GetComponent<KPrefabID>();
 		Assets.AddPrefab(component3);
 		SeedProducer seedProducer = plant.AddOrGet<SeedProducer>();
-		seedProducer.Configure(gameObject.name, productionType, numberOfSeeds);
+		seedProducer.Configure(id, productionType, numberOfSeeds);
 		return gameObject;
 	}
 

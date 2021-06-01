@@ -34,6 +34,17 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 			public VentingStates venting;
 		}
 
+		public class MeltdownStates : State
+		{
+			public State almost_pre;
+
+			public State almost_loop;
+
+			public State pre;
+
+			public State loop;
+		}
+
 		public Signal doVent;
 
 		public BoolParameter canVent = new BoolParameter(default_value: true);
@@ -54,7 +65,7 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 
 		public ReactingStates on;
 
-		public State meltdown;
+		public MeltdownStates meltdown;
 
 		public State dead;
 
@@ -71,7 +82,7 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 				}
 				else
 				{
-					smi.master.waterMeter.SetPositionPercent(storedCoolant.Mass / 60f);
+					smi.master.waterMeter.SetPositionPercent(storedCoolant.Mass / 90f);
 				}
 			});
 			off_pre.QueueAnim("working_pst").OnAnimQueueComplete(off);
@@ -125,16 +136,14 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 				PrimaryElement activeFuel = smi.master.GetActiveFuel();
 				if (activeFuel != null)
 				{
-					float num4 = 500f;
-					float num5 = Mathf.Max(activeFuel.Temperature - 673.15f, 0f) + 50f;
-					smi.master.temperatureMeter.SetPositionPercent(num5 / num4);
-					if (activeFuel.Temperature >= 1173.15f)
+					smi.master.temperatureMeter.SetPositionPercent(Mathf.Clamp01(activeFuel.Temperature / 3000f) / meterFrameScaleHack);
+					if (activeFuel.Temperature >= 3000f)
 					{
 						smi.sm.meltdownMassRemaining.Set(10f + smi.master.supplyStorage.MassStored() + smi.master.reactionStorage.MassStored() + smi.master.wasteStorage.MassStored(), smi);
 						smi.master.supplyStorage.ConsumeAllIgnoringDisease();
 						smi.master.reactionStorage.ConsumeAllIgnoringDisease();
 						smi.master.wasteStorage.ConsumeAllIgnoringDisease();
-						smi.GoTo(meltdown);
+						smi.GoTo(meltdown.pre);
 					}
 					else if (activeFuel.Mass <= 0.25f)
 					{
@@ -161,38 +170,39 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 					activeCoolant.GetComponent<Dumpable>().Dump(Grid.CellToPos(smi.master.GetVentCell()));
 				}
 			}).OnAnimQueueComplete(on.reacting);
-			meltdown.PlayAnim("meltdown", KAnim.PlayMode.Loop).ParamTransition(meltdownMassRemaining, dead, (StatesInstance smi, float p) => p <= 0f).ToggleStatusItem(Db.Get().BuildingStatusItems.ReactorMeltdown)
-				.ToggleNotification((StatesInstance smi) => smi.master.CreateMeltdownNotification())
+			meltdown.ToggleStatusItem(Db.Get().BuildingStatusItems.ReactorMeltdown).ToggleNotification((StatesInstance smi) => smi.master.CreateMeltdownNotification()).ParamTransition(meltdownMassRemaining, dead, (StatesInstance smi, float p) => p <= 0f)
 				.ToggleTag(GameTags.DeadReactor)
-				.Enter(delegate(StatesInstance smi)
+				.DefaultState(meltdown.loop);
+			meltdown.pre.PlayAnim("almost_meltdown_pre", KAnim.PlayMode.Once).QueueAnim("almost_meltdown_loop").QueueAnim("meltdown_pre")
+				.OnAnimQueueComplete(meltdown.loop);
+			meltdown.loop.PlayAnim("meltdown_loop", KAnim.PlayMode.Loop).Enter(delegate(StatesInstance smi)
+			{
+				smi.master.radEmitter.SetEmitting(emitting: true);
+				smi.master.SetEmitRads(210f);
+				smi.master.temperatureMeter.SetPositionPercent(1f / meterFrameScaleHack);
+				smi.master.UpdateCoolantStatus();
+				if (meltingDown.Get(smi))
 				{
-					smi.master.radEmitter.SetEmitting(emitting: true);
-					smi.master.SetEmitRads(210f);
-					smi.master.temperatureMeter.SetPositionPercent(1f);
-					smi.master.UpdateCoolantStatus();
-					if (meltingDown.Get(smi))
-					{
-						MusicManager.instance.PlaySong(MELTDOWN_STINGER);
-						MusicManager.instance.StopDynamicMusic();
-					}
-					else
-					{
-						MusicManager.instance.PlaySong(MELTDOWN_STINGER);
-						MusicManager.instance.SetSongParameter(MELTDOWN_STINGER, "Music_PlayStinger", 1f);
-						MusicManager.instance.StopDynamicMusic();
-					}
-					meltingDown.Set(value: true, smi);
-				})
-				.Exit(delegate(StatesInstance smi)
+					MusicManager.instance.PlaySong(MELTDOWN_STINGER);
+					MusicManager.instance.StopDynamicMusic();
+				}
+				else
 				{
-					meltingDown.Set(value: false, smi);
-					MusicManager.instance.SetSongParameter(MELTDOWN_STINGER, "Music_NuclearMeltdownActive", 0f);
-				})
+					MusicManager.instance.PlaySong(MELTDOWN_STINGER);
+					MusicManager.instance.SetSongParameter(MELTDOWN_STINGER, "Music_PlayStinger", 1f);
+					MusicManager.instance.StopDynamicMusic();
+				}
+				meltingDown.Set(value: true, smi);
+			}).Exit(delegate(StatesInstance smi)
+			{
+				meltingDown.Set(value: false, smi);
+				MusicManager.instance.SetSongParameter(MELTDOWN_STINGER, "Music_NuclearMeltdownActive", 0f);
+			})
 				.Update(delegate(StatesInstance smi, float dt)
 				{
 					smi.master.timeSinceMeltdownEmit += dt;
 					float num = 0.5f;
-					float b = 1f;
+					float b = 5f;
 					if (smi.master.timeSinceMeltdownEmit > num && smi.sm.meltdownMassRemaining.Get(smi) > 0f)
 					{
 						smi.master.timeSinceMeltdownEmit -= num;
@@ -223,14 +233,14 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 						{
 							if (num2 >= 0.001f)
 							{
-								SimMessages.AddRemoveSubstance(Grid.PosToCell(smi.master.transform.position + Vector3.up * 3f + Vector3.right * j * 2f), SimHashes.NuclearWaste, CellEventLogger.Instance.ElementEmitted, num2 / 3f, 1173.15f, Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.Id), Mathf.RoundToInt(499.99997f * (num2 / 3f)));
+								SimMessages.AddRemoveSubstance(Grid.PosToCell(smi.master.transform.position + Vector3.up * 3f + Vector3.right * j * 2f), SimHashes.NuclearWaste, CellEventLogger.Instance.ElementEmitted, num2 / 3f, 3000f, Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.Id), Mathf.RoundToInt(499.99997f * (num2 / 3f)));
 							}
 						}
 					}
 				});
 			dead.PlayAnim("dead").ToggleTag(GameTags.DeadReactor).Enter(delegate(StatesInstance smi)
 			{
-				smi.master.temperatureMeter.SetPositionPercent(1f);
+				smi.master.temperatureMeter.SetPositionPercent(1f / meterFrameScaleHack);
 				smi.master.GetComponent<KSelectable>().AddStatusItem(Db.Get().BuildingStatusItems.DeadReactorCoolingOff, smi);
 				melted.Set(value: true, smi);
 			})
@@ -274,6 +284,8 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 
 	public static string MELTDOWN_STINGER = "Stinger_Loop_NuclearMeltdown";
 
+	private static float meterFrameScaleHack = 3f;
+
 	[Serialize]
 	private float spentFuel = 0f;
 
@@ -290,7 +302,7 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 
 	public Guid refuelStausHandle;
 
-	private float reactionMassTarget = 3f;
+	private float reactionMassTarget = 60f;
 
 	private int[] ventCells = null;
 
@@ -309,14 +321,28 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 		}
 	}
 
-	public float GetFuelTemperature()
+	public float FuelTemperature
 	{
-		if (reactionStorage.items.Count > 0)
+		get
 		{
-			return reactionStorage.items[0].GetComponent<PrimaryElement>().Temperature;
+			if (reactionStorage.items.Count > 0)
+			{
+				return reactionStorage.items[0].GetComponent<PrimaryElement>().Temperature;
+			}
+			return -1f;
 		}
-		return -1f;
 	}
+
+	public float ReserveCoolantMass
+	{
+		get
+		{
+			PrimaryElement storedCoolant = GetStoredCoolant();
+			return (storedCoolant == null) ? 0f : storedCoolant.Mass;
+		}
+	}
+
+	public bool On => base.smi.IsInsideState(base.smi.sm.on);
 
 	protected override void OnSpawn()
 	{
@@ -404,10 +430,10 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 		PrimaryElement activeCoolant = GetActiveCoolant();
 		PrimaryElement storedCoolant = GetStoredCoolant();
 		float num = ((activeCoolant != null) ? activeCoolant.Mass : 0f);
-		float num2 = ((storedCoolant != null) ? storedCoolant.Mass : 0f);
+		float a = ((storedCoolant != null) ? storedCoolant.Mass : 0f);
 		float b = 30f - num;
-		b = Mathf.Min(num2, b);
-		if (b > 3f || b == num2)
+		b = Mathf.Min(a, b);
+		if (b > 0f)
 		{
 			supplyStorage.Transfer(reactionStorage, coolantTag, b, block_events: false, hide_popups: true);
 		}
@@ -457,7 +483,7 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 	{
 		PrimaryElement activeCoolant = GetActiveCoolant();
 		PrimaryElement activeFuel = GetActiveFuel();
-		if ((bool)activeCoolant && (bool)activeFuel && activeCoolant.Mass > 3f && activeFuel.Mass > 0.5f)
+		if ((bool)activeCoolant && (bool)activeFuel && activeCoolant.Mass >= 30f && activeFuel.Mass >= 0.5f)
 		{
 			return true;
 		}
@@ -474,7 +500,7 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 		PrimaryElement activeCoolant = GetActiveCoolant();
 		if (!(activeCoolant == null))
 		{
-			GameUtil.ForceConduction(activeFuel, activeCoolant, dt);
+			GameUtil.ForceConduction(activeFuel, activeCoolant, dt * 5f);
 			if (activeCoolant.Temperature > 673.15f)
 			{
 				base.smi.sm.doVent.Trigger(base.smi);
@@ -487,7 +513,7 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 		PrimaryElement activeFuel = GetActiveFuel();
 		if (activeFuel != null && activeFuel.Mass >= 0.25f)
 		{
-			float num = GameUtil.EnergyToTemperatureDelta(-10f * dt * activeFuel.Mass, activeFuel);
+			float num = GameUtil.EnergyToTemperatureDelta(-100f * dt * activeFuel.Mass, activeFuel);
 			activeFuel.Temperature += num;
 			spentFuel += dt * 0.016666668f;
 		}

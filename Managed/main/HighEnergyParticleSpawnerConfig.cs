@@ -47,6 +47,7 @@ public class HighEnergyParticleSpawnerConfig : IBuildingConfig
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		Prioritizable.AddRef(go);
 		go.AddOrGet<HighEnergyParticleStorage>();
+		go.AddOrGet<LoopingSounds>();
 		HighEnergyParticleSpawner highEnergyParticleSpawner = go.AddOrGet<HighEnergyParticleSpawner>();
 		highEnergyParticleSpawner.minLaunchInterval = 2f;
 		highEnergyParticleSpawner.radiationSampleRate = 0.2f;

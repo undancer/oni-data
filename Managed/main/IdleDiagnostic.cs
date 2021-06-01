@@ -9,7 +9,7 @@ public class IdleDiagnostic : ColonyDiagnostic
 	{
 		tracker = TrackerTool.Instance.GetWorldTracker<IdleTracker>(worldID);
 		icon = "icon_errand_operate";
-		AddCriterion("CheckIdle", new DiagnosticCriterion(CheckIdle));
+		AddCriterion("CheckIdle", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckIdle));
 	}
 
 	private DiagnosticResult CheckIdle()

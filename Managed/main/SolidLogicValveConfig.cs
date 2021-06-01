@@ -43,8 +43,8 @@ public class SolidLogicValveConfig : IBuildingConfig
 	{
 		LogicOperationalController logicOperationalController = go.AddOrGet<LogicOperationalController>();
 		logicOperationalController.unNetworkedValue = 0;
-		RequireOutputs requireOutputs = go.AddOrGet<RequireOutputs>();
-		requireOutputs.ignoreFullPipe = true;
+		RequireInputs component = go.GetComponent<RequireInputs>();
+		component.SetRequirements(power: true, conduit: false);
 		go.AddOrGet<SolidConduitBridge>();
 		go.AddOrGet<SolidLogicValve>();
 	}

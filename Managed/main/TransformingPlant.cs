@@ -45,6 +45,7 @@ public class TransformingPlant : KMonoBehaviour
 		if (component != null && gameObject != null)
 		{
 			component.CopyMutationsTo(component2);
+			PlantSubSpeciesCatalog.Instance.IdentifySubSpecies(component2.SubSpeciesID);
 		}
 		gameObject.SetActive(value: true);
 		Growing component3 = GetComponent<Growing>();

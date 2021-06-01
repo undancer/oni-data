@@ -171,6 +171,6 @@ public class DlcManager
 
 	public static bool FeaturePlantMutationsEnabled()
 	{
-		return false;
+		return IsExpansion1Active();
 	}
 }

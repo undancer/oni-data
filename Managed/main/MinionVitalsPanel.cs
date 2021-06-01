@@ -149,6 +149,11 @@ public class MinionVitalsPanel : KMonoBehaviour
 			return (!(component != null) || !component.Replanted) ? CheckboxLineDisplayType.Diminished : CheckboxLineDisplayType.Normal;
 		}, (GameObject go) => check_irrigation(go), (GameObject go) => GetIrrigationTooltip(go));
 		AddCheckboxLine(Db.Get().Amounts.Illumination, conditionsContainerNormal, (GameObject go) => GetIlluminationLabel(go), (GameObject go) => CheckboxLineDisplayType.Normal, (GameObject go) => check_illumination(go), (GameObject go) => GetIlluminationTooltip(go));
+		AddCheckboxLine(null, conditionsContainerNormal, (GameObject go) => GetRadiationLabel(go), delegate(GameObject go)
+		{
+			AttributeInstance attributeInstance = go.GetAttributes().Get(Db.Get().PlantAttributes.MaxRadiationThreshold);
+			return (attributeInstance == null || !(attributeInstance.GetTotalValue() > 0f)) ? CheckboxLineDisplayType.Hidden : CheckboxLineDisplayType.Normal;
+		}, (GameObject go) => check_radiation(go), (GameObject go) => GetRadiationTooltip(go));
 	}
 
 	protected override void OnCmpEnable()
@@ -428,6 +433,22 @@ public class MinionVitalsPanel : KMonoBehaviour
 		return UI.TOOLTIPS.VITALS_CHECKBOX_ILLUMINATION_LIGHT;
 	}
 
+	private string GetRadiationTooltip(GameObject go)
+	{
+		int num = Grid.PosToCell(go);
+		float rads = (Grid.IsValidCell(num) ? Grid.Radiation[num] : 0f);
+		AttributeInstance attributeInstance = go.GetAttributes().Get(Db.Get().PlantAttributes.MinRadiationThreshold);
+		AttributeInstance attributeInstance2 = go.GetAttributes().Get(Db.Get().PlantAttributes.MaxRadiationThreshold);
+		MutantPlant component = go.GetComponent<MutantPlant>();
+		bool flag = component != null && component.IsOriginal;
+		string text = ((attributeInstance.GetTotalValue() != 0f) ? UI.TOOLTIPS.VITALS_CHECKBOX_RADIATION.Replace("{rads}", GameUtil.GetFormattedRads(rads)).Replace("{minRads}", attributeInstance.GetFormattedValue()).Replace("{maxRads}", attributeInstance2.GetFormattedValue()) : UI.TOOLTIPS.VITALS_CHECKBOX_RADIATION_NO_MIN.Replace("{rads}", GameUtil.GetFormattedRads(rads)).Replace("{maxRads}", attributeInstance2.GetFormattedValue()));
+		if (flag)
+		{
+			text += UI.GAMEOBJECTEFFECTS.TOOLTIPS.MUTANT_SEED_TOOLTIP;
+		}
+		return text;
+	}
+
 	private string GetReceptacleTooltip(GameObject go)
 	{
 		ReceptacleMonitor component = go.GetComponent<ReceptacleMonitor>();
@@ -511,6 +532,17 @@ public class MinionVitalsPanel : KMonoBehaviour
 		return text;
 	}
 
+	private string GetRadiationLabel(GameObject go)
+	{
+		AttributeInstance attributeInstance = go.GetAttributes().Get(Db.Get().PlantAttributes.MinRadiationThreshold);
+		AttributeInstance attributeInstance2 = go.GetAttributes().Get(Db.Get().PlantAttributes.MaxRadiationThreshold);
+		if (attributeInstance.GetTotalValue() == 0f)
+		{
+			return string.Concat(UI.GAMEOBJECTEFFECTS.AMBIENT_RADIATION, "\n    • ", UI.GAMEOBJECTEFFECTS.AMBIENT_NO_MIN_RADIATION_FMT.Replace("{maxRads}", attributeInstance2.GetFormattedValue()));
+		}
+		return string.Concat(UI.GAMEOBJECTEFFECTS.AMBIENT_RADIATION, "\n    • ", UI.GAMEOBJECTEFFECTS.AMBIENT_RADIATION_FMT.Replace("{minRads}", attributeInstance.GetFormattedValue()).Replace("{maxRads}", attributeInstance2.GetFormattedValue()));
+	}
+
 	private bool check_pressure(GameObject go)
 	{
 		PressureVulnerable component = go.GetComponent<PressureVulnerable>();
@@ -547,6 +579,18 @@ public class MinionVitalsPanel : KMonoBehaviour
 		if (component != null)
 		{
 			return component.IsComfortable();
+		}
+		return true;
+	}
+
+	private bool check_radiation(GameObject go)
+	{
+		AttributeInstance attributeInstance = go.GetAttributes().Get(Db.Get().PlantAttributes.MinRadiationThreshold);
+		if (attributeInstance != null && attributeInstance.GetTotalValue() != 0f)
+		{
+			int num = Grid.PosToCell(go);
+			float num2 = (Grid.IsValidCell(num) ? Grid.Radiation[num] : 0f);
+			return num2 >= attributeInstance.GetTotalValue();
 		}
 		return true;
 	}

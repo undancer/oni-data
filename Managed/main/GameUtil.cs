@@ -404,14 +404,19 @@ public static class GameUtil
 
 	public static void ForceConduction(PrimaryElement a, PrimaryElement b, float dt)
 	{
-		float num = Mathf.Min(a.Element.thermalConductivity, b.Element.thermalConductivity) * dt;
-		float num2 = a.Temperature * a.Element.specificHeatCapacity * a.Mass;
-		float temperature = a.Temperature;
-		float num3 = b.Temperature * b.Element.specificHeatCapacity * b.Mass;
-		float temperature2 = b.Temperature;
-		float num4 = num3 / (num2 + num3) * num;
-		a.Temperature = (temperature2 - temperature) * num4 + temperature;
-		b.Temperature = (temperature - temperature2) * (1f - num4) + temperature2;
+		float num = a.Temperature * a.Element.specificHeatCapacity * a.Mass;
+		float num2 = b.Temperature * b.Element.specificHeatCapacity * b.Mass;
+		float num3 = Math.Min(a.Element.thermalConductivity, b.Element.thermalConductivity);
+		float num4 = Math.Min(a.Mass, b.Mass);
+		float val = (b.Temperature - a.Temperature) * (num3 * num4) * dt;
+		float num5 = (num + num2) / (a.Element.specificHeatCapacity * a.Mass + b.Element.specificHeatCapacity * b.Mass);
+		float val2 = Math.Abs((num5 - a.Temperature) * a.Element.specificHeatCapacity * a.Mass);
+		float val3 = Math.Abs((num5 - b.Temperature) * b.Element.specificHeatCapacity * b.Mass);
+		float num6 = Math.Min(val2, val3);
+		val = Math.Min(val, num6);
+		val = Math.Max(val, 0f - num6);
+		a.Temperature = (num + val) / a.Element.specificHeatCapacity / a.Mass;
+		b.Temperature = (num2 - val) / b.Element.specificHeatCapacity / b.Mass;
 	}
 
 	public static string FloatToString(float f, string format = null)
@@ -454,11 +459,15 @@ public static class GameUtil
 		return StringFormatter.Replace(UI.NAME_WITH_UNITS, "{0}", name).Replace("{1}", $"{count:0.##}");
 	}
 
-	public static string GetFormattedUnits(float units, TimeSlice timeSlice = TimeSlice.None, bool displaySuffix = true)
+	public static string GetFormattedUnits(float units, TimeSlice timeSlice = TimeSlice.None, bool displaySuffix = true, string floatFormatOverride = "")
 	{
 		string str = ((units == 1f) ? UI.UNITSUFFIXES.UNIT : UI.UNITSUFFIXES.UNITS);
 		units = ApplyTimeSlice(units, timeSlice);
 		string text = GetStandardFloat(units);
+		if (!floatFormatOverride.IsNullOrWhiteSpace())
+		{
+			text = string.Format(floatFormatOverride, units);
+		}
 		if (displaySuffix)
 		{
 			text += str;

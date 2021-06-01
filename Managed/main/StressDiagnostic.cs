@@ -11,7 +11,7 @@ public class StressDiagnostic : ColonyDiagnostic
 	{
 		tracker = TrackerTool.Instance.GetWorldTracker<StressTracker>(worldID);
 		icon = "mod_stress";
-		AddCriterion("CheckStressed", new DiagnosticCriterion(CheckStressed));
+		AddCriterion("CheckStressed", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckStressed));
 	}
 
 	private DiagnosticResult CheckStressed()

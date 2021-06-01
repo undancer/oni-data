@@ -15,10 +15,11 @@ namespace ProcGenGame
 		public Border(Neighbors neighbors, Vector2 e0, Vector2 e1)
 		{
 			this.neighbors = neighbors;
-			Vector2 vector = neighbors.n1.site.position - neighbors.n0.site.position;
-			Vector2 vector2 = e0 - neighbors.n0.site.position;
-			float num = vector.x * vector2.y - vector2.x * vector.y;
-			if (num < 0f)
+			Vector2 a = e1 - e0;
+			Vector2 normalized = new Vector2(0f - a.y, a.x).normalized;
+			Vector2 a2 = e0 + a / 2f;
+			Vector2 point = a2 + normalized;
+			if (neighbors.n0.poly.Contains(point))
 			{
 				AddSegment(e0, e1);
 			}
@@ -39,41 +40,40 @@ namespace ProcGenGame
 			SetValues(gridCell, elementOverride.element, elementOverride.pdelement, elementOverride.dc);
 		}
 
-		public void ConvertToMap(Chunk world, TerrainCell.SetValuesFunction SetValues, float neighbour0Temperature, float neighbour1Temperature, float temperatureRange, SeededRandom rnd, int snapLastCells)
+		public void ConvertToMap(Chunk world, TerrainCell.SetValuesFunction SetValues, float neighbour0Temperature, float neighbour1Temperature, float midTemp, SeededRandom rnd, int snapLastCells)
 		{
 			for (int i = 0; i < pathElements.Count; i++)
 			{
 				Vector2 vector = pathElements[i].e1 - pathElements[i].e0;
 				Vector2 normalized = new Vector2(0f - vector.y, vector.x).normalized;
-				float num = (neighbour0Temperature + neighbour1Temperature) / 2f;
 				List<Vector2I> line = ProcGen.Util.GetLine(pathElements[i].e0, pathElements[i].e1);
 				for (int j = 0; j < line.Count; j++)
 				{
-					int num2 = Grid.XYToCell(line[j].x, line[j].y);
-					if (Grid.IsValidCell(num2))
+					int num = Grid.XYToCell(line[j].x, line[j].y);
+					if (Grid.IsValidCell(num))
 					{
-						SetCell(num2, num, SetValues, rnd);
+						SetCell(num, midTemp, SetValues, rnd);
 					}
-					for (float num3 = 0.5f; num3 <= width; num3 += 1f)
+					for (float num2 = 0.5f; num2 <= width; num2 += 1f)
 					{
-						float num4 = Mathf.Clamp01((num3 - 0.5f) / (width - 0.5f));
-						if (num3 + (float)snapLastCells > width)
+						float num3 = Mathf.Clamp01((num2 - 0.5f) / (width - 0.5f));
+						if (num2 + (float)snapLastCells > width)
 						{
-							num4 = 1f;
+							num3 = 1f;
 						}
-						Vector2 vector2 = line[j] + normalized * num3;
-						float defaultTemperature = num + (neighbour0Temperature - num) * num4;
-						num2 = Grid.XYToCell((int)vector2.x, (int)vector2.y);
-						if (Grid.IsValidCell(num2))
+						Vector2 vector2 = line[j] + normalized * num2;
+						float defaultTemperature = midTemp + (neighbour0Temperature - midTemp) * num3;
+						num = Grid.XYToCell((int)vector2.x, (int)vector2.y);
+						if (Grid.IsValidCell(num))
 						{
-							SetCell(num2, defaultTemperature, SetValues, rnd);
+							SetCell(num, defaultTemperature, SetValues, rnd);
 						}
-						Vector2 vector3 = line[j] - normalized * num3;
-						float defaultTemperature2 = num + (neighbour1Temperature - num) * num4;
-						num2 = Grid.XYToCell((int)vector3.x, (int)vector3.y);
-						if (Grid.IsValidCell(num2))
+						Vector2 vector3 = line[j] - normalized * num2;
+						float defaultTemperature2 = midTemp + (neighbour1Temperature - midTemp) * num3;
+						num = Grid.XYToCell((int)vector3.x, (int)vector3.y);
+						if (Grid.IsValidCell(num))
 						{
-							SetCell(num2, defaultTemperature2, SetValues, rnd);
+							SetCell(num, defaultTemperature2, SetValues, rnd);
 						}
 					}
 				}

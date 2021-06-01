@@ -101,6 +101,8 @@ namespace Database
 
 		public StatusItem Refrigerated;
 
+		public StatusItem RefrigeratedFrozen;
+
 		public StatusItem Unrefrigerated;
 
 		public StatusItem SterilizingAtmosphere;
@@ -420,9 +422,17 @@ namespace Database
 				return str.Replace("{RotTooltip}", instance3.GetToolTip());
 			};
 			Spoiled = new StatusItem("Spoiled", "CREATURES", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			Func<string, object, string> resolveStringCallback5 = delegate(string str, object data)
+			{
+				IRottable rottable = (IRottable)data;
+				return str.Replace("{RotTemperature}", GameUtil.GetFormattedTemperature(rottable.RotTemperature)).Replace("{PreserveTemperature}", GameUtil.GetFormattedTemperature(rottable.PreserveTemperature));
+			};
 			Refrigerated = new StatusItem("Refrigerated", "CREATURES", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			Refrigerated.resolveStringCallback = resolveStringCallback5;
+			RefrigeratedFrozen = new StatusItem("RefrigeratedFrozen", "CREATURES", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			RefrigeratedFrozen.resolveStringCallback = resolveStringCallback5;
 			Unrefrigerated = new StatusItem("Unrefrigerated", "CREATURES", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
-			Unrefrigerated.resolveStringCallback = (string str, object data) => str.Replace("{RotTemperature}", GameUtil.GetFormattedTemperature(277.15f));
+			Unrefrigerated.resolveStringCallback = resolveStringCallback5;
 			SterilizingAtmosphere = new StatusItem("SterilizingAtmosphere", "CREATURES", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			ContaminatedAtmosphere = new StatusItem("ContaminatedAtmosphere", "CREATURES", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			Old = new StatusItem("Old", "CREATURES", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);

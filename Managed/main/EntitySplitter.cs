@@ -66,13 +66,17 @@ public class EntitySplitter : KMonoBehaviour
 				return false;
 			}
 		}
-		if (pickupable.HasTag(GameTags.Seed))
+		if (pickupable.HasTag(GameTags.Seed) || pickupable.HasTag(GameTags.CropSeed))
 		{
 			MutantPlant component3 = pickupable.GetComponent<MutantPlant>();
 			MutantPlant component4 = other.GetComponent<MutantPlant>();
 			if (component3 != null || component4 != null)
 			{
 				if (component3 == null != (component4 == null))
+				{
+					return false;
+				}
+				if (component3.HasTag(GameTags.UnidentifiedSeed) != component4.HasTag(GameTags.UnidentifiedSeed))
 				{
 					return false;
 				}

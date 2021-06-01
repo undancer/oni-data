@@ -63,7 +63,11 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 	[OnDeserialized]
 	private void OnDeserialized()
 	{
-		if (requestedEntityAdditionalFilterTag.IsValid && !PlantSubSpeciesCatalog.instance.IsSubSpeciesIdentified(requestedEntityAdditionalFilterTag))
+		if (!DlcManager.IsExpansion1Active())
+		{
+			requestedEntityAdditionalFilterTag = Tag.Invalid;
+		}
+		else if (requestedEntityTag.IsValid && requestedEntityAdditionalFilterTag.IsValid && !PlantSubSpeciesCatalog.Instance.IsValidPlantableSeed(requestedEntityTag, requestedEntityAdditionalFilterTag))
 		{
 			requestedEntityAdditionalFilterTag = Tag.Invalid;
 		}
@@ -78,6 +82,20 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 		plantRef = new Ref<KPrefabID>();
 		Subscribe(-905833192, OnCopySettingsDelegate);
 		Subscribe(144050788, OnUpdateRoomDelegate);
+		if (this.HasTag(GameTags.FarmTiles))
+		{
+			storage.SetOffsetTable(OffsetGroups.InvertedStandardTableWithCorners);
+			DropAllWorkable component = GetComponent<DropAllWorkable>();
+			if (component != null)
+			{
+				component.SetOffsetTable(OffsetGroups.InvertedStandardTableWithCorners);
+			}
+			Toggleable component2 = GetComponent<Toggleable>();
+			if (component2 != null)
+			{
+				component2.SetOffsetTable(OffsetGroups.InvertedStandardTableWithCorners);
+			}
+		}
 	}
 
 	private void OnCopySettings(object data)

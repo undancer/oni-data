@@ -10,7 +10,7 @@ public class EntombedDiagnostic : ColonyDiagnostic
 		: base(worldID, UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.ALL_NAME)
 	{
 		icon = "icon_action_dig";
-		AddCriterion("CheckEntombed", new DiagnosticCriterion(CheckEntombed));
+		AddCriterion("CheckEntombed", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckEntombed));
 	}
 
 	private DiagnosticResult CheckEntombed()

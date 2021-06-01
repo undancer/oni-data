@@ -9,8 +9,6 @@ namespace ProcGen
 
 		private MutatedWorldData mutatedWorldData;
 
-		public const string defaultWorldName = "worlds/SandstoneDefault";
-
 		public World world => mutatedWorldData.world;
 
 		public static string ClusterDefaultName => DlcManager.IsExpansion1Active() ? "expansion1::clusters/SandstoneStartCluster" : "clusters/SandstoneDefault";
@@ -226,7 +224,7 @@ namespace ProcGen
 				{
 					if (subworld.Key == subworld2.name)
 					{
-						list.Add(new WeightedSubWorld(subworld2.weight, subworld.Value, subworld2.overridePower, subworld2.minCount, subworld2.maxCount));
+						list.Add(new WeightedSubWorld(subworld2.weight, subworld.Value, subworld2.overridePower, subworld2.minCount, subworld2.maxCount, subworld2.priority));
 					}
 				}
 			}

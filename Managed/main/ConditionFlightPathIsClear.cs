@@ -11,7 +11,7 @@ public class ConditionFlightPathIsClear : ProcessCondition
 
 	private int obstructedTile = -1;
 
-	public static int maximumRocketHeight = 35;
+	public const int MAXIMUM_ROCKET_HEIGHT = 35;
 
 	public ConditionFlightPathIsClear(GameObject module, int bufferWidth)
 	{
@@ -88,15 +88,18 @@ public class ConditionFlightPathIsClear : ProcessCondition
 		}
 	}
 
-	public static int PadPositionDistanceToCeiling(GameObject launchpad)
+	public static int PadTopEdgeDistanceToCeilingEdge(GameObject launchpad)
 	{
-		return (int)launchpad.GetMyWorld().maximumBounds.y - Grid.TopBorderHeight - Grid.CellToXY(launchpad.GetComponent<LaunchPad>().PadPosition).y;
+		float y = launchpad.GetMyWorld().maximumBounds.y;
+		int num = (int)launchpad.GetMyWorld().maximumBounds.y;
+		int y2 = Grid.CellToXY(launchpad.GetComponent<LaunchPad>().RocketBottomPosition).y;
+		return num - Grid.TopBorderHeight - y2 + 1;
 	}
 
 	public static bool CheckFlightPathClear(CraftModuleInterface craft, GameObject launchpad, out int obstruction)
 	{
-		Vector2I vector2I = Grid.CellToXY(launchpad.GetComponent<LaunchPad>().PadPosition);
-		int num = PadPositionDistanceToCeiling(launchpad);
+		Vector2I vector2I = Grid.CellToXY(launchpad.GetComponent<LaunchPad>().RocketBottomPosition);
+		int num = PadTopEdgeDistanceToCeilingEdge(launchpad);
 		foreach (Ref<RocketModuleCluster> clusterModule in craft.ClusterModules)
 		{
 			Building component = clusterModule.Get().GetComponent<Building>();
@@ -111,7 +114,7 @@ public class ConditionFlightPathIsClear : ProcessCondition
 						int num2 = Grid.XYToCell(j + (vector2I.x - widthInCells / 2), i + vector2I.y);
 						GameObject gameObject = Grid.Objects[num2, 1];
 						bool flag = Grid.Solid[num2] && (gameObject == null || !gameObject.HasTag(GameTags.DontBlockRockets));
-						if (!Grid.IsValidCell(num2) || Grid.WorldIdx[num2] != Grid.WorldIdx[launchpad.GetComponent<LaunchPad>().PadPosition] || flag)
+						if (!Grid.IsValidCell(num2) || Grid.WorldIdx[num2] != Grid.WorldIdx[launchpad.GetComponent<LaunchPad>().RocketBottomPosition] || flag)
 						{
 							obstruction = num2;
 							return false;

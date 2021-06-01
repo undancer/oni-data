@@ -171,6 +171,8 @@ namespace Database
 
 		public StatusItem ConduitBlockedMultiples;
 
+		public StatusItem SolidConduitBlockedMultiples;
+
 		public StatusItem MeltingDown;
 
 		public StatusItem DeadReactorCoolingOff;
@@ -439,6 +441,10 @@ namespace Database
 
 		public StatusItem NoSurfaceSight;
 
+		public StatusItem LimitValveLimitReached;
+
+		public StatusItem LimitValveLimitNotReached;
+
 		public BuildingStatusItems(ResourceSet parent)
 			: base("BuildingStatusItems", parent)
 		{
@@ -507,6 +513,7 @@ namespace Database
 			OutputPipeFull = CreateStatusItem("OutputPipeFull", "BUILDING", "status_item_no_liquid_to_pump", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			ConstructionUnreachable = CreateStatusItem("ConstructionUnreachable", "BUILDING", "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			ConduitBlockedMultiples = CreateStatusItem("ConduitBlockedMultiples", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: true, OverlayModes.None.ID);
+			SolidConduitBlockedMultiples = CreateStatusItem("SolidConduitBlockedMultiples", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: true, OverlayModes.None.ID);
 			DigUnreachable = CreateStatusItem("DigUnreachable", "BUILDING", "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			MopUnreachable = CreateStatusItem("MopUnreachable", "BUILDING", "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			StorageUnreachable = CreateStatusItem("StorageUnreachable", "BUILDING", "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
@@ -552,7 +559,7 @@ namespace Database
 			MaterialsUnavailable.AddNotification();
 			MaterialsUnavailable.resolveStringCallback = delegate(string str, object data)
 			{
-				string text7 = "";
+				string text8 = "";
 				Dictionary<Tag, float> dictionary = null;
 				if (data is IFetchList)
 				{
@@ -572,21 +579,21 @@ namespace Database
 						{
 							if (!flag4)
 							{
-								text7 += "\n";
+								text8 += "\n";
 							}
-							text7 = ((!Assets.IsTagCountable(item.Key)) ? (text7 + string.Format(BUILDING.STATUSITEMS.MATERIALSUNAVAILABLE.LINE_ITEM_MASS, item.Key.ProperName(), GameUtil.GetFormattedMass(item.Value))) : (text7 + string.Format(BUILDING.STATUSITEMS.MATERIALSUNAVAILABLE.LINE_ITEM_UNITS, GameUtil.GetUnitFormattedName(item.Key.ProperName(), item.Value))));
+							text8 = ((!Assets.IsTagCountable(item.Key)) ? (text8 + string.Format(BUILDING.STATUSITEMS.MATERIALSUNAVAILABLE.LINE_ITEM_MASS, item.Key.ProperName(), GameUtil.GetFormattedMass(item.Value))) : (text8 + string.Format(BUILDING.STATUSITEMS.MATERIALSUNAVAILABLE.LINE_ITEM_UNITS, GameUtil.GetUnitFormattedName(item.Key.ProperName(), item.Value))));
 							flag4 = false;
 						}
 					}
 				}
-				str = str.Replace("{ItemsRemaining}", text7);
+				str = str.Replace("{ItemsRemaining}", text8);
 				return str;
 			};
 			MaterialsUnavailableForRefill = new MaterialsStatusItem("MaterialsUnavailableForRefill", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: true, OverlayModes.None.ID);
 			MaterialsUnavailableForRefill.resolveStringCallback = delegate(string str, object data)
 			{
 				IFetchList fetchList2 = (IFetchList)data;
-				string text6 = "";
+				string text7 = "";
 				Dictionary<Tag, float> remaining2 = fetchList2.GetRemaining();
 				if (remaining2.Count > 0)
 				{
@@ -597,14 +604,14 @@ namespace Database
 						{
 							if (!flag3)
 							{
-								text6 += "\n";
+								text7 += "\n";
 							}
-							text6 += string.Format(BUILDING.STATUSITEMS.MATERIALSUNAVAILABLEFORREFILL.LINE_ITEM, item2.Key.ProperName());
+							text7 += string.Format(BUILDING.STATUSITEMS.MATERIALSUNAVAILABLEFORREFILL.LINE_ITEM, item2.Key.ProperName());
 							flag3 = false;
 						}
 					}
 				}
-				str = str.Replace("{ItemsRemaining}", text6);
+				str = str.Replace("{ItemsRemaining}", text7);
 				return str;
 			};
 			Func<string, object, string> resolveStringCallback = delegate(string str, object data)
@@ -633,7 +640,7 @@ namespace Database
 			WaitingForMaterials.resolveStringCallback = delegate(string str, object data)
 			{
 				IFetchList fetchList = (IFetchList)data;
-				string text5 = "";
+				string text6 = "";
 				Dictionary<Tag, float> remaining = fetchList.GetRemaining();
 				if (remaining.Count > 0)
 				{
@@ -644,14 +651,14 @@ namespace Database
 						{
 							if (!flag2)
 							{
-								text5 += "\n";
+								text6 += "\n";
 							}
-							text5 = ((!Assets.IsTagCountable(item3.Key)) ? (text5 + string.Format(BUILDING.STATUSITEMS.WAITINGFORMATERIALS.LINE_ITEM_MASS, item3.Key.ProperName(), GameUtil.GetFormattedMass(item3.Value))) : (text5 + string.Format(BUILDING.STATUSITEMS.WAITINGFORMATERIALS.LINE_ITEM_UNITS, GameUtil.GetUnitFormattedName(item3.Key.ProperName(), item3.Value))));
+							text6 = ((!Assets.IsTagCountable(item3.Key)) ? (text6 + string.Format(BUILDING.STATUSITEMS.WAITINGFORMATERIALS.LINE_ITEM_MASS, item3.Key.ProperName(), GameUtil.GetFormattedMass(item3.Value))) : (text6 + string.Format(BUILDING.STATUSITEMS.WAITINGFORMATERIALS.LINE_ITEM_UNITS, GameUtil.GetUnitFormattedName(item3.Key.ProperName(), item3.Value))));
 							flag2 = false;
 						}
 					}
 				}
-				str = str.Replace("{ItemsRemaining}", text5);
+				str = str.Replace("{ItemsRemaining}", text6);
 				return str;
 			};
 			WaitingForHighEnergyParticles = new StatusItem("WaitingForRadiation", "BUILDING", "status_item_need_high_energy_particles", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
@@ -681,7 +688,7 @@ namespace Database
 			NeedResourceMass = CreateStatusItem("NeedResourceMass", "BUILDING", "status_item_need_resource", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			NeedResourceMass.resolveStringCallback = delegate(string str, object data)
 			{
-				string text4 = "";
+				string text5 = "";
 				EnergyGenerator.Formula formula = (EnergyGenerator.Formula)data;
 				if (formula.inputs.Length != 0)
 				{
@@ -692,13 +699,13 @@ namespace Database
 						EnergyGenerator.InputItem inputItem = inputs[j];
 						if (!flag)
 						{
-							text4 += "\n";
+							text5 += "\n";
 							flag = false;
 						}
-						text4 += string.Format(BUILDING.STATUSITEMS.NEEDRESOURCEMASS.LINE_ITEM, inputItem.tag.ProperName());
+						text5 += string.Format(BUILDING.STATUSITEMS.NEEDRESOURCEMASS.LINE_ITEM, inputItem.tag.ProperName());
 					}
 				}
-				str = str.Replace("{ResourcesRequired}", text4);
+				str = str.Replace("{ResourcesRequired}", text5);
 				return str;
 			};
 			LiquidPipeEmpty = CreateStatusItem("LiquidPipeEmpty", "BUILDING", "status_item_no_liquid_to_pump", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.LiquidConduits.ID);
@@ -837,17 +844,17 @@ namespace Database
 				int cell2 = Grid.PosToCell(conduit);
 				ConduitFlow flowManager = conduit.GetFlowManager();
 				ConduitFlow.ConduitContents contents2 = flowManager.GetContents(cell2);
-				string text3 = BUILDING.STATUSITEMS.PIPECONTENTS.EMPTY;
+				string text4 = BUILDING.STATUSITEMS.PIPECONTENTS.EMPTY;
 				if (contents2.mass > 0f)
 				{
 					Element element3 = ElementLoader.FindElementByHash(contents2.element);
-					text3 = string.Format(BUILDING.STATUSITEMS.PIPECONTENTS.CONTENTS, GameUtil.GetFormattedMass(contents2.mass), element3.name, GameUtil.GetFormattedTemperature(contents2.temperature));
+					text4 = string.Format(BUILDING.STATUSITEMS.PIPECONTENTS.CONTENTS, GameUtil.GetFormattedMass(contents2.mass), element3.name, GameUtil.GetFormattedTemperature(contents2.temperature));
 					if (OverlayScreen.Instance != null && OverlayScreen.Instance.mode == OverlayModes.Disease.ID && contents2.diseaseIdx != byte.MaxValue)
 					{
-						text3 += string.Format(BUILDING.STATUSITEMS.PIPECONTENTS.CONTENTS_WITH_DISEASE, GameUtil.GetFormattedDisease(contents2.diseaseIdx, contents2.diseaseCount, color: true));
+						text4 += string.Format(BUILDING.STATUSITEMS.PIPECONTENTS.CONTENTS_WITH_DISEASE, GameUtil.GetFormattedDisease(contents2.diseaseIdx, contents2.diseaseCount, color: true));
 					}
 				}
-				str = str.Replace("{Contents}", text3);
+				str = str.Replace("{Contents}", text4);
 				return str;
 			};
 			Conveyor = CreateStatusItem("Conveyor", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.SolidConveyor.ID);
@@ -857,7 +864,7 @@ namespace Database
 				int cell = Grid.PosToCell(cmp);
 				SolidConduitFlow solidConduitFlow = Game.Instance.solidConduitFlow;
 				SolidConduitFlow.ConduitContents contents = solidConduitFlow.GetContents(cell);
-				string text2 = BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.EMPTY;
+				string text3 = BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.EMPTY;
 				if (contents.pickupableHandle.IsValid())
 				{
 					Pickupable pickupable = solidConduitFlow.GetPickupable(contents.pickupableHandle);
@@ -867,15 +874,15 @@ namespace Database
 						float mass = component4.Mass;
 						if (mass > 0f)
 						{
-							text2 = string.Format(BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.CONTENTS, GameUtil.GetFormattedMass(mass), pickupable.GetProperName(), GameUtil.GetFormattedTemperature(component4.Temperature));
+							text3 = string.Format(BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.CONTENTS, GameUtil.GetFormattedMass(mass), pickupable.GetProperName(), GameUtil.GetFormattedTemperature(component4.Temperature));
 							if (OverlayScreen.Instance != null && OverlayScreen.Instance.mode == OverlayModes.Disease.ID && component4.DiseaseIdx != byte.MaxValue)
 							{
-								text2 += string.Format(BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.CONTENTS_WITH_DISEASE, GameUtil.GetFormattedDisease(component4.DiseaseIdx, component4.DiseaseCount, color: true));
+								text3 += string.Format(BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.CONTENTS_WITH_DISEASE, GameUtil.GetFormattedDisease(component4.DiseaseIdx, component4.DiseaseCount, color: true));
 							}
 						}
 					}
 				}
-				str = str.Replace("{Contents}", text2);
+				str = str.Replace("{Contents}", text3);
 				return str;
 			};
 			FabricatorIdle = CreateStatusItem("FabricatorIdle", "BUILDING", "status_item_fabricator_select", StatusItem.IconType.Custom, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
@@ -1129,10 +1136,10 @@ namespace Database
 			Grave.resolveStringCallback = delegate(string str, object data)
 			{
 				Grave.StatesInstance statesInstance6 = (Grave.StatesInstance)data;
-				string text = str.Replace("{DeadDupe}", statesInstance6.master.graveName);
+				string text2 = str.Replace("{DeadDupe}", statesInstance6.master.graveName);
 				string[] strings = LocString.GetStrings(typeof(NAMEGEN.GRAVE.EPITAPHS));
 				int num = statesInstance6.master.epitaphIdx % strings.Length;
-				return text.Replace("{Epitaph}", strings[num]);
+				return text2.Replace("{Epitaph}", strings[num]);
 			};
 			GraveEmpty = CreateStatusItem("GraveEmpty", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			CannotCoolFurther = CreateStatusItem("CannotCoolFurther", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
@@ -1330,6 +1337,15 @@ namespace Database
 				return str;
 			};
 			NoSurfaceSight = new StatusItem("NOSURFACESIGHT", "BUILDING", "status_item_no_sky", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			LimitValveLimitReached = CreateStatusItem("LimitValveLimitReached", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			LimitValveLimitNotReached = CreateStatusItem("LimitValveLimitNotReached", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			LimitValveLimitNotReached.resolveStringCallback = delegate(string str, object data)
+			{
+				LimitValve limitValve = (LimitValve)data;
+				string text = "";
+				return string.Format(arg0: (!limitValve.displayUnitsInsteadOfMass) ? GameUtil.GetFormattedMass(limitValve.RemainingCapacity, GameUtil.TimeSlice.None, GameUtil.MetricMassFormat.Kilogram, includeSuffix: true, LimitValveSideScreen.FLOAT_FORMAT) : GameUtil.GetFormattedUnits(limitValve.RemainingCapacity, GameUtil.TimeSlice.None, displaySuffix: true, LimitValveSideScreen.FLOAT_FORMAT), format: BUILDING.STATUSITEMS.LIMITVALVELIMITNOTREACHED.NAME);
+			};
+			LimitValveLimitNotReached.resolveTooltipCallback = (string str, object data) => BUILDING.STATUSITEMS.LIMITVALVELIMITNOTREACHED.TOOLTIP;
 		}
 
 		private static bool ShowInUtilityOverlay(HashedString mode, object data)

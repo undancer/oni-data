@@ -281,10 +281,10 @@ namespace KMod
 			}
 			list2 = list2.Where((ArchivedVersion v) => DoesModSupportCurrentContent(v.info)).ToList();
 			IEnumerable<ArchivedVersion> source = (from v in list2
-				where (long)v.info.lastWorkingBuild >= 461546L
+				where (long)v.info.lastWorkingBuild >= 464434L
 				orderby v.info.lastWorkingBuild
 				select v).Concat(from v in list2
-				where (long)v.info.lastWorkingBuild < 461546L
+				where (long)v.info.lastWorkingBuild < 464434L
 				orderby v.info.lastWorkingBuild descending
 				select v);
 			return source.FirstOrDefault()?.relativePath;

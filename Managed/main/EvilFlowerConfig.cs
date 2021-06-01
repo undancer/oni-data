@@ -24,16 +24,15 @@ public class EvilFlowerConfig : IEntityConfig
 		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 168.15f, 258.15f, 513.15f, 563.15f, new SimHashes[1]
 		{
 			SimHashes.CarbonDioxide
-		}, pressure_sensitive: true, 0f, 0.15f, null, can_drown: true, can_tinker: false, require_solid_tile: true, should_grow_old: true, 2400f, "EvilFlowerOriginal", STRINGS.CREATURES.SPECIES.EVILFLOWER.NAME);
+		}, pressure_sensitive: true, 0f, 0.15f, null, can_drown: true, can_tinker: false, require_solid_tile: true, should_grow_old: true, 2400f, 0f, 1220f, "EvilFlowerOriginal", STRINGS.CREATURES.SPECIES.EVILFLOWER.NAME);
 		EvilFlower evilFlower = gameObject.AddOrGet<EvilFlower>();
 		evilFlower.positive_decor_effect = POSITIVE_DECOR_EFFECT;
 		evilFlower.negative_decor_effect = NEGATIVE_DECOR_EFFECT;
 		GameObject seed = EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Hidden, "EvilFlowerSeed", STRINGS.CREATURES.SPECIES.SEEDS.EVILFLOWER.NAME, STRINGS.CREATURES.SPECIES.SEEDS.EVILFLOWER.DESC, Assets.GetAnim("seed_potted_evilflower_kanim"), "object", 1, new List<Tag>
 		{
 			GameTags.DecorSeed
-		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 5, STRINGS.CREATURES.SPECIES.EVILFLOWER.DOMESTICATEDDESC, EntityTemplates.CollisionShape.CIRCLE, 0.4f, 0.4f);
+		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 19, STRINGS.CREATURES.SPECIES.EVILFLOWER.DOMESTICATEDDESC, EntityTemplates.CollisionShape.CIRCLE, 0.4f, 0.4f);
 		EntityTemplates.CreateAndRegisterPreviewForPlant(seed, "EvilFlower_preview", Assets.GetAnim("potted_evilflower_kanim"), "place", 1, 1);
-		gameObject.AddOrGet<KBatchedAnimController>().randomiseLoopedOffset = true;
 		DiseaseDropper.Def def = gameObject.AddOrGetDef<DiseaseDropper.Def>();
 		def.diseaseIdx = Db.Get().Diseases.GetIndex("ZombieSpores");
 		def.emitFrequency = 1f;

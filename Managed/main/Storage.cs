@@ -845,8 +845,8 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 	private void MakeWorldActive(GameObject go)
 	{
 		go.transform.parent = null;
-		Trigger(-1697596308, go);
 		go.Trigger(856640610);
+		Trigger(-1697596308, go);
 		ApplyStoredItemModifiers(go, is_stored: false, is_initializing: false);
 		if (!(go != null))
 		{

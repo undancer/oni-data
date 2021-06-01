@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TUNING;
 using UnityEngine;
 
@@ -23,7 +24,8 @@ public class GeneticAnalysisStationConfig : IBuildingConfig
 	{
 		go.AddOrGet<BuildingComplete>().isManuallyOperated = true;
 		go.AddOrGetDef<GeneticAnalysisStation.Def>();
-		go.AddOrGet<GeneticAnalysisStationWorkable>();
+		GeneticAnalysisStationWorkable geneticAnalysisStationWorkable = go.AddOrGet<GeneticAnalysisStationWorkable>();
+		geneticAnalysisStationWorkable.finishedSeedDropOffset = new Vector3(-3f, 1.5f, 0f);
 		Prioritizable.AddRef(go);
 		go.AddOrGet<DropAllWorkable>();
 		go.AddOrGetDef<PoweredActiveController.Def>();
@@ -31,13 +33,26 @@ public class GeneticAnalysisStationConfig : IBuildingConfig
 		ManualDeliveryKG manualDeliveryKG = go.AddOrGet<ManualDeliveryKG>();
 		manualDeliveryKG.SetStorage(storage);
 		manualDeliveryKG.choreTypeIDHash = Db.Get().ChoreTypes.MachineFetch.IdHash;
-		manualDeliveryKG.requestedItemTag = Tag.Invalid;
-		manualDeliveryKG.refillMass = 1f;
+		manualDeliveryKG.requestedItemTag = GameTags.UnidentifiedSeed;
+		manualDeliveryKG.refillMass = 1.1f;
 		manualDeliveryKG.minimumMass = 1f;
-		manualDeliveryKG.capacity = 3f;
+		manualDeliveryKG.capacity = 5f;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
+	}
+
+	public override void ConfigurePost(BuildingDef def)
+	{
+		List<Tag> list = new List<Tag>();
+		foreach (GameObject item in Assets.GetPrefabsWithTag(GameTags.CropSeed))
+		{
+			if (item.GetComponent<MutantPlant>() != null)
+			{
+				list.Add(item.PrefabID());
+			}
+		}
+		def.BuildingComplete.GetComponent<Storage>().storageFilters = list;
 	}
 }

@@ -10,10 +10,22 @@ public class RocketModuleCluster : RocketModule
 		component.OnNewConstruction(data);
 	});
 
+	private CraftModuleInterface _craftInterface;
+
 	public CraftModuleInterface CraftInterface
 	{
-		get;
-		set;
+		get
+		{
+			return _craftInterface;
+		}
+		set
+		{
+			_craftInterface = value;
+			if (_craftInterface != null)
+			{
+				base.name = base.name + ": " + GetParentRocketName();
+			}
+		}
 	}
 
 	protected override void OnPrefabInit()

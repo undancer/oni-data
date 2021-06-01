@@ -6,7 +6,7 @@ public class OffsetTracker
 
 	protected CellOffset[] offsets;
 
-	private int previousCell = Grid.InvalidCell;
+	protected int previousCell = Grid.InvalidCell;
 
 	public virtual CellOffset[] GetOffsets(int current_cell)
 	{
@@ -52,14 +52,18 @@ public class OffsetTracker
 	{
 	}
 
-	public void DebugDrawOffsets(int cell)
+	public virtual void DebugDrawEditor()
+	{
+	}
+
+	public virtual void DebugDrawOffsets(int cell)
 	{
 		CellOffset[] array = GetOffsets(cell);
 		foreach (CellOffset offset in array)
 		{
 			int cell2 = Grid.OffsetCell(cell, offset);
 			Gizmos.color = new Color(0f, 1f, 0f, 0.25f);
-			Gizmos.DrawCube(Grid.CellToPosCCC(cell2, Grid.SceneLayer.Move), new Vector3(1f, 1f, 1f));
+			Gizmos.DrawWireCube(Grid.CellToPosCCC(cell2, Grid.SceneLayer.Move), new Vector3(0.95f, 0.95f, 0.95f));
 		}
 	}
 }

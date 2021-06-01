@@ -60,25 +60,28 @@ public class LaunchPadMaterialDistributor : GameStateMachine<LaunchPadMaterialDi
 				}
 			}
 			bool flag = false;
-			foreach (GameObject linkedBuilding in base.gameObject.GetSMI<ChainedBuilding.StatesInstance>().GetLinkedBuildings())
+			HashSetPool<ChainedBuilding.StatesInstance, ChainedBuilding.StatesInstance>.PooledHashSet chain = HashSetPool<ChainedBuilding.StatesInstance, ChainedBuilding.StatesInstance>.Allocate();
+			base.smi.GetSMI<ChainedBuilding.StatesInstance>().GetLinkedBuildings(ref chain);
+			foreach (ChainedBuilding.StatesInstance item in chain)
 			{
-				ModularConduitPortController.Instance sMI = linkedBuilding.GetSMI<ModularConduitPortController.Instance>();
-				IConduitDispenser component2 = linkedBuilding.GetComponent<IConduitDispenser>();
-				Operational component3 = linkedBuilding.GetComponent<Operational>();
+				ModularConduitPortController.Instance sMI = item.GetSMI<ModularConduitPortController.Instance>();
+				IConduitDispenser component2 = item.GetComponent<IConduitDispenser>();
+				Operational component3 = item.GetComponent<Operational>();
 				bool unloading = false;
 				if (component2 != null && (sMI == null || sMI.SelectedMode == ModularConduitPortController.Mode.Unload || sMI.SelectedMode == ModularConduitPortController.Mode.Both) && (component3 == null || component3.IsOperational))
 				{
-					TreeFilterable component4 = linkedBuilding.GetComponent<TreeFilterable>();
+					sMI.SetRocket(hasRocket: true);
+					TreeFilterable component4 = item.GetComponent<TreeFilterable>();
 					float num = component2.Storage.RemainingCapacity();
-					foreach (CargoBayCluster item in pooledDictionary[CargoBayConduit.ElementToCargoMap[component2.ConduitType]])
+					foreach (CargoBayCluster item2 in pooledDictionary[CargoBayConduit.ElementToCargoMap[component2.ConduitType]])
 					{
-						if (item.storage.Count == 0)
+						if (item2.storage.Count == 0)
 						{
 							continue;
 						}
-						for (int num2 = item.storage.items.Count - 1; num2 >= 0; num2--)
+						for (int num2 = item2.storage.items.Count - 1; num2 >= 0; num2--)
 						{
-							GameObject gameObject = item.storage.items[num2];
+							GameObject gameObject = item2.storage.items[num2];
 							if (component4.AcceptedTags.Contains(gameObject.PrefabID()))
 							{
 								unloading = true;
@@ -99,6 +102,7 @@ public class LaunchPadMaterialDistributor : GameStateMachine<LaunchPadMaterialDi
 				}
 				sMI?.SetUnloading(unloading);
 			}
+			chain.Recycle();
 			pooledDictionary[CargoBay.CargoType.Solids].Recycle();
 			pooledDictionary[CargoBay.CargoType.Liquids].Recycle();
 			pooledDictionary[CargoBay.CargoType.Gasses].Recycle();
@@ -123,25 +127,28 @@ public class LaunchPadMaterialDistributor : GameStateMachine<LaunchPadMaterialDi
 				}
 			}
 			bool flag = false;
-			foreach (GameObject linkedBuilding in base.gameObject.GetSMI<ChainedBuilding.StatesInstance>().GetLinkedBuildings())
+			HashSetPool<ChainedBuilding.StatesInstance, ChainedBuilding.StatesInstance>.PooledHashSet chain = HashSetPool<ChainedBuilding.StatesInstance, ChainedBuilding.StatesInstance>.Allocate();
+			base.smi.GetSMI<ChainedBuilding.StatesInstance>().GetLinkedBuildings(ref chain);
+			foreach (ChainedBuilding.StatesInstance item in chain)
 			{
-				ModularConduitPortController.Instance sMI = linkedBuilding.GetSMI<ModularConduitPortController.Instance>();
-				IConduitConsumer component2 = linkedBuilding.GetComponent<IConduitConsumer>();
+				ModularConduitPortController.Instance sMI = item.GetSMI<ModularConduitPortController.Instance>();
+				IConduitConsumer component2 = item.GetComponent<IConduitConsumer>();
 				bool loading = false;
 				if (component2 != null && (sMI == null || sMI.SelectedMode == ModularConduitPortController.Mode.Load || sMI.SelectedMode == ModularConduitPortController.Mode.Both))
 				{
+					sMI.SetRocket(hasRocket: true);
 					for (int num = component2.Storage.items.Count - 1; num >= 0; num--)
 					{
 						GameObject gameObject = component2.Storage.items[num];
-						foreach (CargoBayCluster item in pooledDictionary[CargoBayConduit.ElementToCargoMap[component2.ConduitType]])
+						foreach (CargoBayCluster item2 in pooledDictionary[CargoBayConduit.ElementToCargoMap[component2.ConduitType]])
 						{
-							float remainingCapacity = item.RemainingCapacity;
+							float remainingCapacity = item2.RemainingCapacity;
 							float num2 = component2.Storage.MassStored();
 							if (remainingCapacity <= 0f || num2 <= 0f)
 							{
 								continue;
 							}
-							TreeFilterable component3 = item.GetComponent<TreeFilterable>();
+							TreeFilterable component3 = item2.GetComponent<TreeFilterable>();
 							if (component3.AcceptedTags.Contains(gameObject.PrefabID()))
 							{
 								loading = true;
@@ -149,7 +156,7 @@ public class LaunchPadMaterialDistributor : GameStateMachine<LaunchPadMaterialDi
 								Pickupable pickupable = gameObject.GetComponent<Pickupable>().Take(remainingCapacity);
 								if (pickupable != null)
 								{
-									item.storage.Store(pickupable.gameObject);
+									item2.storage.Store(pickupable.gameObject);
 									remainingCapacity -= pickupable.PrimaryElement.Mass;
 								}
 							}
@@ -158,6 +165,7 @@ public class LaunchPadMaterialDistributor : GameStateMachine<LaunchPadMaterialDi
 				}
 				sMI?.SetLoading(loading);
 			}
+			chain.Recycle();
 			pooledDictionary[CargoBay.CargoType.Solids].Recycle();
 			pooledDictionary[CargoBay.CargoType.Liquids].Recycle();
 			pooledDictionary[CargoBay.CargoType.Gasses].Recycle();
@@ -181,15 +189,20 @@ public class LaunchPadMaterialDistributor : GameStateMachine<LaunchPadMaterialDi
 		default_state = inoperational;
 		base.serializable = SerializeType.ParamsOnly;
 		inoperational.EventTransition(GameHashes.OperationalChanged, operational, (Instance smi) => smi.GetComponent<Operational>().IsOperational);
-		operational.DefaultState(operational.noRocket).Enter(delegate(Instance smi)
+		operational.DefaultState(operational.noRocket).EventTransition(GameHashes.OperationalChanged, inoperational, (Instance smi) => !smi.GetComponent<Operational>().IsOperational).EventHandler(GameHashes.ChainedNetworkChanged, delegate(Instance smi, object data)
 		{
 			SetAttachedRocket(smi.GetLandedRocketFromPad(), smi);
-		}).EventTransition(GameHashes.OperationalChanged, inoperational, (Instance smi) => !smi.GetComponent<Operational>().IsOperational);
-		operational.noRocket.EventHandler(GameHashes.RocketLanded, delegate(Instance smi, object data)
+		});
+		operational.noRocket.Enter(delegate(Instance smi)
+		{
+			SetAttachedRocket(smi.GetLandedRocketFromPad(), smi);
+		}).EventHandler(GameHashes.RocketLanded, delegate(Instance smi, object data)
 		{
 			SetAttachedRocket(smi.GetLandedRocketFromPad(), smi);
 		}).ParamTransition(attachedRocket, operational.rocketLanding, (Instance smi, GameObject p) => p != null);
-		operational.rocketLanding.Target(attachedRocket).TagTransition(GameTags.RocketOnGround, operational.hasRocket).Target(masterTarget);
+		operational.rocketLanding.EventTransition(GameHashes.RocketLaunched, operational.rocketLost).OnTargetLost(attachedRocket, operational.rocketLost).Target(attachedRocket)
+			.TagTransition(GameTags.RocketOnGround, operational.hasRocket)
+			.Target(masterTarget);
 		operational.hasRocket.DefaultState(operational.hasRocket.transferring).Update(delegate(Instance smi, float dt)
 		{
 			smi.EmptyRocket(dt);
@@ -197,6 +210,7 @@ public class LaunchPadMaterialDistributor : GameStateMachine<LaunchPadMaterialDi
 		{
 			smi.FillRocket(dt);
 		}, UpdateRate.SIM_1000ms)
+			.EventTransition(GameHashes.RocketLaunched, operational.rocketLost)
 			.OnTargetLost(attachedRocket, operational.rocketLost)
 			.Target(attachedRocket)
 			.EventTransition(GameHashes.DoLaunchRocket, operational.rocketLost)
@@ -214,12 +228,15 @@ public class LaunchPadMaterialDistributor : GameStateMachine<LaunchPadMaterialDi
 		}).GoTo(operational.noRocket);
 	}
 
-	private void SetAttachedRocket(RocketModule attached, Instance smi)
+	private void SetAttachedRocket(RocketModuleCluster attached, Instance smi)
 	{
-		foreach (GameObject linkedBuilding in smi.GetSMI<ChainedBuilding.StatesInstance>().GetLinkedBuildings())
+		HashSetPool<ChainedBuilding.StatesInstance, ChainedBuilding.StatesInstance>.PooledHashSet chain = HashSetPool<ChainedBuilding.StatesInstance, ChainedBuilding.StatesInstance>.Allocate();
+		smi.GetSMI<ChainedBuilding.StatesInstance>().GetLinkedBuildings(ref chain);
+		foreach (ChainedBuilding.StatesInstance item in chain)
 		{
-			linkedBuilding.GetSMI<ModularConduitPortController.Instance>()?.SetRocket(attached != null);
+			item.GetSMI<ModularConduitPortController.Instance>()?.SetRocket(attached != null);
 		}
 		attachedRocket.Set(attached, smi);
+		chain.Recycle();
 	}
 }

@@ -64,6 +64,9 @@ public class Pickupable : Workable, IHasSortOrder
 
 	public const float WorkTime = 1.5f;
 
+	[SerializeField]
+	private int _sortOrder;
+
 	[NonSerialized]
 	[MyCmpReq]
 	public KPrefabID KPrefabID;
@@ -163,8 +166,14 @@ public class Pickupable : Workable, IHasSortOrder
 
 	public int sortOrder
 	{
-		get;
-		set;
+		get
+		{
+			return _sortOrder;
+		}
+		set
+		{
+			_sortOrder = value;
+		}
 	}
 
 	public Storage storage

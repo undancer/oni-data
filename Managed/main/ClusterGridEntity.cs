@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using KSerialization;
+using ProcGen;
 using UnityEngine;
 
 public abstract class ClusterGridEntity : KMonoBehaviour
@@ -107,12 +108,24 @@ public abstract class ClusterGridEntity : KMonoBehaviour
 		ClusterGrid.Instance.UnregisterEntity(this);
 	}
 
-	public Sprite GetUISprite()
+	public virtual Sprite GetUISprite()
 	{
-		List<AnimConfig> animConfigs = AnimConfigs;
-		if (animConfigs.Count > 0)
+		if (DlcManager.IsExpansion1Active())
 		{
-			return Def.GetUISpriteFromMultiObjectAnim(animConfigs[0].animFile);
+			List<AnimConfig> animConfigs = AnimConfigs;
+			if (animConfigs.Count > 0)
+			{
+				return Def.GetUISpriteFromMultiObjectAnim(animConfigs[0].animFile);
+			}
+		}
+		else
+		{
+			WorldContainer component = GetComponent<WorldContainer>();
+			if (component != null)
+			{
+				ProcGen.World worldData = SettingsCache.worlds.GetWorldData(component.worldName);
+				return (worldData != null) ? Assets.GetSprite(worldData.asteroidIcon) : null;
+			}
 		}
 		return null;
 	}

@@ -16,8 +16,6 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 
 		private const float WARMUP_TIME = 5f;
 
-		public const float EXTRA_CEILING_HEIGHT = 1f;
-
 		private float landingDistancePartsTimeConstant;
 
 		private float partsLaunchSpeedRatio => base.master.parts.Count / 2;
@@ -136,7 +134,7 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 		public void FinalizeLaunch()
 		{
 			base.master.rocketSpeed = 0f;
-			DistanceAboveGround = base.sm.distanceToSpace.Get(base.smi) + 1f;
+			DistanceAboveGround = base.sm.distanceToSpace.Get(base.smi);
 			foreach (Ref<RocketModuleCluster> part in base.master.parts)
 			{
 				if (part != null && !(part.Get() == null))
@@ -147,7 +145,9 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 					rocketModuleCluster.GetComponent<RocketModule>().MoveToSpace();
 				}
 			}
-			base.smi.master.GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>().SetCraftStatus(Clustercraft.CraftStatus.InFlight);
+			CraftModuleInterface craftInterface = base.smi.master.GetComponent<RocketModuleCluster>().CraftInterface;
+			craftInterface.GetComponent<Clustercraft>().SetCraftStatus(Clustercraft.CraftStatus.InFlight);
+			craftInterface.SetCurrentPad(null);
 		}
 
 		public void SetupLanding()
@@ -156,11 +156,6 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 			landingDistancePartsTimeConstant = Mathf.Pow(f, 0.25f) * partsLaunchSpeedRatio;
 			base.master.isLanding = true;
 			base.master.rocketSpeed = 0f;
-			List<GameObject> engines = base.smi.master.GetEngines();
-			if (engines.Count > 0)
-			{
-				engines[engines.Count - 1].Trigger(-1358394196);
-			}
 		}
 
 		public void LandingLoop(float dt)
@@ -225,8 +220,9 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 					KBatchedAnimController component = rocketModuleCluster.GetComponent<KBatchedAnimController>();
 					component.Offset = Vector3.up * DistanceAboveGround;
 					Vector3 positionIncludingOffset = component.PositionIncludingOffset;
-					bool flag = Grid.IsValidCell(Grid.PosToCell(positionIncludingOffset));
-					bool flag2 = ClusterManager.Instance.activeWorldId == myWorldId;
+					int num2 = Grid.PosToCell(positionIncludingOffset);
+					bool flag = Grid.IsValidCell(num2);
+					bool flag2 = flag && Grid.WorldIdx[num2] == myWorldId;
 					if (component.enabled != flag2)
 					{
 						component.enabled = flag2;
@@ -280,7 +276,7 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 			not_grounded.launch_setup.Enter(delegate(StatesInstance smi)
 			{
 				smi.SetupLaunch();
-				distanceToSpace.Set(ConditionFlightPathIsClear.PadPositionDistanceToCeiling(smi.master.gameObject.GetComponent<RocketModuleCluster>().CraftInterface.CurrentPad.gameObject), smi);
+				distanceToSpace.Set(ConditionFlightPathIsClear.PadTopEdgeDistanceToCeilingEdge(smi.master.gameObject.GetComponent<RocketModuleCluster>().CraftInterface.CurrentPad.gameObject), smi);
 				smi.GoTo(not_grounded.launch_loop);
 			});
 			not_grounded.launch_loop.EventTransition(GameHashes.DoReturnRocket, not_grounded.landing_setup).Update(delegate(StatesInstance smi, float dt)

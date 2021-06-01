@@ -11,8 +11,8 @@ public class BreathabilityDiagnostic : ColonyDiagnostic
 		trackerSampleCountSeconds = 50f;
 		icon = "overlay_oxygen";
 		AddCriterion(UI.COLONY_DIAGNOSTICS.NO_MINIONS, ColonyDiagnosticUtility.GetWorldHasMinionCriterion(worldID));
-		AddCriterion("CheckSuffocation", new DiagnosticCriterion(CheckSuffocation));
-		AddCriterion("CheckLowBreathability", new DiagnosticCriterion(CheckLowBreathability));
+		AddCriterion("CheckSuffocation", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckSuffocation));
+		AddCriterion("CheckLowBreathability", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckLowBreathability));
 	}
 
 	private DiagnosticResult CheckSuffocation()

@@ -64,7 +64,7 @@ public class SaveGame : KMonoBehaviour, ISaveLoadable
 			this.sandboxEnabled = sandboxEnabled;
 			this.dlcId = dlcId;
 			saveMajorVersion = 7;
-			saveMinorVersion = 22;
+			saveMinorVersion = 23;
 		}
 
 		public bool IsVersionOlderThan(int major, int minor)
@@ -109,6 +109,8 @@ public class SaveGame : KMonoBehaviour, ISaveLoadable
 
 	[MyCmpReq]
 	public MaterialSelectorSerializer materialSelectorSerializer;
+
+	private static bool debug_SaveFileHeaderBlank_sent;
 
 	public int AutoSaveCycleInterval
 	{
@@ -177,7 +179,7 @@ public class SaveGame : KMonoBehaviour, ISaveLoadable
 		text = JsonConvert.SerializeObject(new GameInfo(GameClock.Instance.GetCycle(), Components.LiveMinionIdentities.Count, baseName, isAutoSave, originalSaveFileName, SaveLoader.Instance.GameInfo.clusterId, SaveLoader.Instance.GameInfo.worldTraits, SaveLoader.Instance.GameInfo.colonyGuid, DlcManager.GetActiveDlcId(), sandboxEnabled));
 		byte[] bytes = Encoding.UTF8.GetBytes(text);
 		header = default(Header);
-		header.buildVersion = 461546u;
+		header.buildVersion = 464434u;
 		header.headerSize = bytes.Length;
 		header.headerVersion = 1u;
 		header.compression = (isCompressed ? 1 : 0);
@@ -202,12 +204,13 @@ public class SaveGame : KMonoBehaviour, ISaveLoadable
 		}
 		catch (Exception obj)
 		{
+			Debug.LogWarning("Exception while loading " + filename);
 			Debug.LogWarning(obj);
 		}
 		return null;
 	}
 
-	public static GameInfo GetHeader(IReader br, out Header header)
+	public static GameInfo GetHeader(IReader br, out Header header, string debugFileName)
 	{
 		header = default(Header);
 		header.buildVersion = br.ReadUInt32();
@@ -218,6 +221,12 @@ public class SaveGame : KMonoBehaviour, ISaveLoadable
 			header.compression = br.ReadInt32();
 		}
 		byte[] data = br.ReadBytes(header.headerSize);
+		if (header.headerSize == 0 && !debug_SaveFileHeaderBlank_sent)
+		{
+			debug_SaveFileHeaderBlank_sent = true;
+			Debug.LogWarning("SaveFileHeaderBlank - " + debugFileName);
+			KCrashReporter.ReportErrorDevNotification("SaveFileHeaderBlank", Environment.StackTrace, debugFileName);
+		}
 		GameInfo gameInfo = GetGameInfo(data);
 		if (gameInfo.IsVersionOlderThan(7, 14) && gameInfo.worldTraits != null)
 		{

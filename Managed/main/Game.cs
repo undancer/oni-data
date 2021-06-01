@@ -1419,7 +1419,7 @@ public class Game : KMonoBehaviour
 		{
 			return;
 		}
-		uint num = 461546u;
+		uint num = 464434u;
 		string text = System.DateTime.Now.ToShortDateString();
 		string text2 = System.DateTime.Now.ToShortTimeString();
 		string fileName = Path.GetFileName(GenericGameSettings.instance.performanceCapture.saveGame);
@@ -1977,6 +1977,7 @@ public class Game : KMonoBehaviour
 		SpacecraftManager.DestroyInstance();
 		GameplayEventManager.DestroyInstance();
 		BuildingInventory.DestroyInstance();
+		PlantSubSpeciesCatalog.DestroyInstance();
 		SandboxDestroyerTool.DestroyInstance();
 		SandboxFOWTool.DestroyInstance();
 		SandboxFloodTool.DestroyInstance();

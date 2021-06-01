@@ -96,7 +96,6 @@ public class ModeSelectScreen : NewGameFlowScreen
 			Global.Instance.modManager.Load(Content.LayerableFiles);
 			SettingsCache.Clear();
 			WorldGen.LoadSettings();
-			CustomGameSettings.Instance.LoadWorlds();
 			CustomGameSettings.Instance.LoadClusters();
 			Global.Instance.modManager.Report(base.gameObject);
 			dataLoaded = true;

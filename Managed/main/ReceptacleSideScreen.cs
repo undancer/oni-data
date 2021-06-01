@@ -229,7 +229,6 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 					UpdateState(null);
 				};
 				requestSelectedEntityBtn.GetComponentInChildren<LocText>().text = Strings.Get(requestStringCancelRemove).ToString();
-				requestSelectedEntityBtn.isInteractable = true;
 				subtitleLabel.SetText(string.Format(Strings.Get(subtitleStringAwaitingRemoval).ToString(), targetReceptacle.Occupant.GetProperName()));
 			}
 			else
@@ -240,9 +239,9 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 					UpdateState(null);
 				};
 				requestSelectedEntityBtn.GetComponentInChildren<LocText>().text = Strings.Get(requestStringRemove).ToString();
-				requestSelectedEntityBtn.isInteractable = true;
 				subtitleLabel.SetText(string.Format(Strings.Get(subtitleStringEntityDeposited).ToString(), targetReceptacle.Occupant.GetProperName()));
 			}
+			requestSelectedEntityBtn.isInteractable = true;
 			ToggleObjectPicker(Show: false);
 			Tag tag = targetReceptacle.Occupant.GetComponent<KSelectable>().PrefabID();
 			ConfigureActiveEntity(tag);

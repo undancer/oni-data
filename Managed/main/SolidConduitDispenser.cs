@@ -37,8 +37,6 @@ public class SolidConduitDispenser : KMonoBehaviour, ISaveLoadable, IConduitDisp
 
 	private int round_robin_index;
 
-	private const float MaxMass = 20f;
-
 	public Storage Storage => storage;
 
 	public ConduitType ConduitType => ConduitType.Solid;

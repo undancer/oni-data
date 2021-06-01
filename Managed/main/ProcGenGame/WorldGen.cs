@@ -430,7 +430,7 @@ namespace ProcGenGame
 				errorDesc = string.Format(UI.FRONTEND.SUPPORTWARNINGS.WORLD_GEN_FAILURE, settingsCoordinate),
 				exception = e
 			});
-			KCrashReporter.ReportErrorDevNotification("WorldgenFailure", e.StackTrace, "{coordinate} - {e.Message}");
+			KCrashReporter.ReportErrorDevNotification("WorldgenFailure", e.StackTrace, settingsCoordinate + " - " + e.Message);
 		}
 
 		public void SetWorldSize(int width, int height)
@@ -1103,23 +1103,27 @@ namespace ProcGenGame
 					Border border3 = list[m];
 					SubWorld subWorld = Settings.GetSubWorld(border3.neighbors.n0.node.type);
 					SubWorld subWorld2 = Settings.GetSubWorld(border3.neighbors.n1.node.type);
-					float neighbour0Temperature = (SettingsCache.temperatures[subWorld.temperatureRange].min + SettingsCache.temperatures[subWorld.temperatureRange].max) / 2f;
-					float neighbour1Temperature = (SettingsCache.temperatures[subWorld2.temperatureRange].min + SettingsCache.temperatures[subWorld2.temperatureRange].max) / 2f;
-					float num = Mathf.Min(SettingsCache.temperatures[subWorld.temperatureRange].min, SettingsCache.temperatures[subWorld2.temperatureRange].min);
-					float num2 = Mathf.Max(SettingsCache.temperatures[subWorld.temperatureRange].max, SettingsCache.temperatures[subWorld2.temperatureRange].max);
-					float num3 = num2 - num;
+					float num = (SettingsCache.temperatures[subWorld.temperatureRange].min + SettingsCache.temperatures[subWorld.temperatureRange].max) / 2f;
+					float num2 = (SettingsCache.temperatures[subWorld2.temperatureRange].min + SettingsCache.temperatures[subWorld2.temperatureRange].max) / 2f;
+					float num3 = Mathf.Min(SettingsCache.temperatures[subWorld.temperatureRange].min, SettingsCache.temperatures[subWorld2.temperatureRange].min);
+					float num4 = Mathf.Max(SettingsCache.temperatures[subWorld.temperatureRange].max, SettingsCache.temperatures[subWorld2.temperatureRange].max);
+					float midTemp = (num + num2) / 2f;
+					float num5 = num4 - num3;
 					float rangeLow = 2f;
 					float rangeHigh = 5f;
 					int snapLastCells = 1;
-					if (num3 >= 150f)
+					if (num5 >= 150f)
 					{
 						rangeLow = 0f;
 						rangeHigh = border3.width * 0.2f;
 						snapLastCells = 2;
 						border3.width = Mathf.Max(border3.width, 2f);
+						float f = num - 273.15f;
+						float f2 = num2 - 273.15f;
+						midTemp = ((!(Mathf.Abs(f) < Mathf.Abs(f2))) ? num2 : num);
 					}
 					border3.Stagger(seededRandom, seededRandom.RandomRange(8, 13), seededRandom.RandomRange(rangeLow, rangeHigh));
-					border3.ConvertToMap(data.world, setValues, neighbour0Temperature, neighbour1Temperature, num3, seededRandom, snapLastCells);
+					border3.ConvertToMap(data.world, setValues, num, num2, midTemp, seededRandom, snapLastCells);
 				}
 			}
 			catch (Exception ex4)

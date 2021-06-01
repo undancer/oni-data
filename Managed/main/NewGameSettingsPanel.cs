@@ -52,7 +52,6 @@ public class NewGameSettingsPanel : KMonoBehaviour
 		Global.Instance.modManager.Load(Content.LayerableFiles);
 		SettingsCache.Clear();
 		WorldGen.LoadSettings();
-		CustomGameSettings.Instance.LoadWorlds();
 		CustomGameSettings.Instance.LoadClusters();
 		Global.Instance.modManager.Report(base.gameObject);
 		settings = CustomGameSettings.Instance;

@@ -1118,6 +1118,8 @@ namespace STRINGS
 
 			public static LocString PLANETOID_PREFIX = string.Concat(UI.CLUSTERMAP.PLANETOID, ": ");
 
+			public static LocString SPACECRAFT_PREFIX = "Spacecraft: ";
+
 			public static LocString WORLDDIVIDER_TOOLTIP = string.Concat("Duplicants on the ", UI.CLUSTERMAP.PLANETOID_KEYWORD, " {0}");
 
 			public static LocString NO_DUPES_ON_PLANET = "Nobody here...";

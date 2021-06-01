@@ -48,6 +48,15 @@ public class PlantSubSpeciesCatalog : KMonoBehaviour
 			return stringBuilder.ToString().ToTag();
 		}
 
+		public string GetMutationsNames()
+		{
+			if (mutationIDs == null || mutationIDs.Count == 0)
+			{
+				return CREATURES.PLANT_MUTATIONS.NONE.NAME;
+			}
+			return string.Join(", ", Db.Get().PlantMutations.GetNamesForMutations(mutationIDs));
+		}
+
 		public string GetNameWithMutations(string properName, bool identified, bool cleanOriginal)
 		{
 			if (mutationIDs == null || mutationIDs.Count == 0)
@@ -100,7 +109,7 @@ public class PlantSubSpeciesCatalog : KMonoBehaviour
 			{
 				return CREATURES.STATUSITEMS.ORIGINALPLANTMUTATION.TOOLTIP;
 			}
-			if (!instance.IsSubSpeciesIdentified(ID))
+			if (!Instance.IsSubSpeciesIdentified(ID))
 			{
 				return CREATURES.STATUSITEMS.UNKNOWNMUTATION.TOOLTIP;
 			}
@@ -110,16 +119,13 @@ public class PlantSubSpeciesCatalog : KMonoBehaviour
 		}
 	}
 
-	public static PlantSubSpeciesCatalog instance;
+	public static PlantSubSpeciesCatalog Instance;
 
 	[Serialize]
 	private Dictionary<Tag, List<SubSpeciesInfo>> discoveredSubspeciesBySpecies = new Dictionary<Tag, List<SubSpeciesInfo>>();
 
 	[Serialize]
-	private Dictionary<Tag, float> identificationProgress = new Dictionary<Tag, float>();
-
-	[Serialize]
-	private Dictionary<Tag, bool> identifiedSubSpecies = new Dictionary<Tag, bool>();
+	private HashSet<Tag> identifiedSubSpecies = new HashSet<Tag>();
 
 	public bool AnyNonOriginalDiscovered
 	{
@@ -136,29 +142,15 @@ public class PlantSubSpeciesCatalog : KMonoBehaviour
 		}
 	}
 
+	public static void DestroyInstance()
+	{
+		Instance = null;
+	}
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		instance = this;
-	}
-
-	private void EnsureOriginalSubSpecies()
-	{
-		foreach (GameObject item in Assets.GetPrefabsWithComponent<MutantPlant>())
-		{
-			MutantPlant component = item.GetComponent<MutantPlant>();
-			Tag speciesID = component.SpeciesID;
-			if (!discoveredSubspeciesBySpecies.ContainsKey(speciesID))
-			{
-				discoveredSubspeciesBySpecies[speciesID] = new List<SubSpeciesInfo>();
-				discoveredSubspeciesBySpecies[speciesID].Add(component.GetSubSpeciesInfo());
-			}
-			if (identifiedSubSpecies == null)
-			{
-				identifiedSubSpecies = new Dictionary<Tag, bool>();
-			}
-			identifiedSubSpecies[component.SubSpeciesID] = true;
-		}
+		Instance = this;
 	}
 
 	protected override void OnSpawn()
@@ -188,7 +180,7 @@ public class PlantSubSpeciesCatalog : KMonoBehaviour
 			subSpeciesInfo = default(SubSpeciesInfo);
 			return false;
 		}
-		subSpeciesInfo = discoveredSubspeciesBySpecies[speciesID][0];
+		subSpeciesInfo = discoveredSubspeciesBySpecies[speciesID].Find((SubSpeciesInfo i) => i.IsOriginal);
 		return true;
 	}
 
@@ -226,60 +218,62 @@ public class PlantSubSpeciesCatalog : KMonoBehaviour
 		return MISC.NOTIFICATIONS.NEWMUTANTSEED.TOOLTIP.Replace("{Plant}", subSpeciesInfo.speciesID.ProperName());
 	}
 
-	public bool PartiallyIdentifySpecies(Tag speciesID, float amount)
+	public void IdentifySubSpecies(Tag subSpeciesID)
 	{
-		if (!identificationProgress.ContainsKey(speciesID))
-		{
-			identificationProgress[speciesID] = 0f;
-		}
-		identificationProgress[speciesID] += amount;
-		if (identificationProgress[speciesID] >= 1f)
-		{
-			List<SubSpeciesInfo> allUnidentifiedSubSpecies = GetAllUnidentifiedSubSpecies(speciesID);
-			IdentifySubSpecies(allUnidentifiedSubSpecies.GetRandom());
-			identificationProgress[speciesID] = 0f;
-			Trigger(-98362560, speciesID);
-			return true;
-		}
-		Trigger(-1531232972, speciesID);
-		return false;
-	}
-
-	public void IdentifySubSpecies(SubSpeciesInfo subSpeciesInfo)
-	{
-		if (!identifiedSubSpecies.ContainsKey(subSpeciesInfo.ID))
-		{
-			identifiedSubSpecies[subSpeciesInfo.ID] = false;
-		}
-		bool flag = identifiedSubSpecies[subSpeciesInfo.ID];
-		identifiedSubSpecies[subSpeciesInfo.ID] = true;
-		if (flag)
+		if (!identifiedSubSpecies.Add(subSpeciesID))
 		{
 			return;
 		}
+		SubSpeciesInfo subSpeciesInfo = FindSubSpecies(subSpeciesID);
 		foreach (MutantPlant mutantPlant in Components.MutantPlants)
 		{
-			if (mutantPlant.HasTag(subSpeciesInfo.ID))
+			if (mutantPlant.HasTag(subSpeciesID))
 			{
 				mutantPlant.UpdateNameAndTags();
 			}
 		}
-		GeneticAnalysisCompleteMessage message = new GeneticAnalysisCompleteMessage(subSpeciesInfo.ID);
+		GeneticAnalysisCompleteMessage message = new GeneticAnalysisCompleteMessage(subSpeciesID);
 		Messenger.Instance.QueueMessage(message);
 	}
 
 	public bool IsSubSpeciesIdentified(Tag subSpeciesID)
 	{
-		return identifiedSubSpecies.ContainsKey(subSpeciesID) && identifiedSubSpecies[subSpeciesID];
-	}
-
-	public float GetIdentificationProgress(Tag speciesID)
-	{
-		return identificationProgress.ContainsKey(speciesID) ? identificationProgress[speciesID] : 0f;
+		return identifiedSubSpecies.Contains(subSpeciesID);
 	}
 
 	public List<SubSpeciesInfo> GetAllUnidentifiedSubSpecies(Tag speciesID)
 	{
 		return discoveredSubspeciesBySpecies[speciesID].FindAll((SubSpeciesInfo ss) => !IsSubSpeciesIdentified(ss.ID));
+	}
+
+	public bool IsValidPlantableSeed(Tag seedID, Tag subspeciesID)
+	{
+		if (!seedID.IsValid)
+		{
+			return false;
+		}
+		GameObject prefab = Assets.GetPrefab(seedID);
+		MutantPlant component = prefab.GetComponent<MutantPlant>();
+		if (component == null)
+		{
+			return !subspeciesID.IsValid;
+		}
+		List<SubSpeciesInfo> allSubSpeciesForSpecies = Instance.GetAllSubSpeciesForSpecies(component.SpeciesID);
+		return allSubSpeciesForSpecies != null && allSubSpeciesForSpecies.FindIndex((SubSpeciesInfo s) => s.ID == subspeciesID) != -1 && Instance.IsSubSpeciesIdentified(subspeciesID);
+	}
+
+	private void EnsureOriginalSubSpecies()
+	{
+		foreach (GameObject item in Assets.GetPrefabsWithComponent<MutantPlant>())
+		{
+			MutantPlant component = item.GetComponent<MutantPlant>();
+			Tag speciesID = component.SpeciesID;
+			if (!discoveredSubspeciesBySpecies.ContainsKey(speciesID))
+			{
+				discoveredSubspeciesBySpecies[speciesID] = new List<SubSpeciesInfo>();
+				discoveredSubspeciesBySpecies[speciesID].Add(component.GetSubSpeciesInfo());
+			}
+			identifiedSubSpecies.Add(component.SubSpeciesID);
+		}
 	}
 }

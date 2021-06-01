@@ -159,4 +159,14 @@ public static class ClusterUtil
 		}
 		return list;
 	}
+
+	public static string DebugGetMyWorldName(this GameObject gameObject)
+	{
+		WorldContainer myWorld = gameObject.GetMyWorld();
+		if (myWorld != null)
+		{
+			return myWorld.worldName;
+		}
+		return $"InvalidWorld(pos={gameObject.transform.GetPosition()})";
+	}
 }

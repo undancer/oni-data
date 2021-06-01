@@ -13,20 +13,11 @@ public class ChainedBuilding : GameStateMachine<ChainedBuilding, ChainedBuilding
 		public ObjectLayer objectLayer;
 	}
 
-	public enum Direction
-	{
-		Left = -1,
-		None,
-		Right
-	}
-
 	public class StatesInstance : GameInstance
 	{
 		private int widthInCells;
 
-		private Dictionary<Direction, StatesInstance> neighbours;
-
-		private Direction headDirection = Direction.None;
+		private List<int> neighbourCheckCells;
 
 		public StatesInstance(IStateMachineTarget master, Def def)
 			: base(master, def)
@@ -34,168 +25,108 @@ public class ChainedBuilding : GameStateMachine<ChainedBuilding, ChainedBuilding
 			Building component = master.GetComponent<Building>();
 			BuildingDef def2 = component.Def;
 			widthInCells = def2.WidthInCells;
-			neighbours = new Dictionary<Direction, StatesInstance>();
-			neighbours[Direction.Left] = null;
-			neighbours[Direction.Right] = null;
+			int cell = Grid.PosToCell(this);
+			neighbourCheckCells = new List<int>
+			{
+				Grid.OffsetCell(cell, -(widthInCells - 1) / 2 - 1, 0),
+				Grid.OffsetCell(cell, widthInCells / 2 + 1, 0)
+			};
 		}
 
 		public override void StartSM()
 		{
 			base.StartSM();
-			SetLinks();
+			bool foundHead = false;
+			HashSetPool<StatesInstance, StatesInstance>.PooledHashSet chain = HashSetPool<StatesInstance, StatesInstance>.Allocate();
+			CollectToChain(ref chain, ref foundHead);
+			PropogateFoundHead(foundHead, chain);
+			PropagateChangedEvent(this, chain);
+			chain.Recycle();
+		}
+
+		public void DEBUG_Relink()
+		{
+			bool foundHead = false;
+			HashSetPool<StatesInstance, StatesInstance>.PooledHashSet chain = HashSetPool<StatesInstance, StatesInstance>.Allocate();
+			CollectToChain(ref chain, ref foundHead);
+			PropogateFoundHead(foundHead, chain);
+			chain.Recycle();
 		}
 
 		protected override void OnCleanUp()
 		{
-			ClearLinks();
+			HashSetPool<StatesInstance, StatesInstance>.PooledHashSet chain = HashSetPool<StatesInstance, StatesInstance>.Allocate();
+			foreach (int neighbourCheckCell in neighbourCheckCells)
+			{
+				bool foundHead = false;
+				CollectNeighbourToChain(neighbourCheckCell, ref chain, ref foundHead, this);
+				PropogateFoundHead(foundHead, chain);
+				PropagateChangedEvent(this, chain);
+				chain.Clear();
+			}
+			chain.Recycle();
 			base.OnCleanUp();
 		}
 
-		public IEnumerable<GameObject> GetLinkedBuildings()
+		public HashSet<StatesInstance> GetLinkedBuildings(ref HashSetPool<StatesInstance, StatesInstance>.PooledHashSet chain)
 		{
-			if (neighbours[Direction.Left] != null)
-			{
-				foreach (GameObject linkedBuilding in neighbours[Direction.Left].GetLinkedBuildings(Direction.Left))
-				{
-					yield return linkedBuilding;
-				}
-			}
-			if (neighbours[Direction.Right] != null)
-			{
-				foreach (GameObject linkedBuilding2 in neighbours[Direction.Right].GetLinkedBuildings(Direction.Right))
-				{
-					yield return linkedBuilding2;
-				}
-			}
-			yield return base.gameObject;
+			bool foundHead = false;
+			CollectToChain(ref chain, ref foundHead);
+			return chain;
 		}
 
-		public IEnumerable<GameObject> GetLinkedBuildings(Direction direction)
+		private void PropogateFoundHead(bool foundHead, HashSet<StatesInstance> chain)
 		{
-			if (neighbours[direction] != null)
+			foreach (StatesInstance item in chain)
 			{
-				foreach (GameObject linkedBuilding in neighbours[direction].GetLinkedBuildings(direction))
-				{
-					yield return linkedBuilding;
-				}
-			}
-			yield return base.gameObject;
-		}
-
-		public void SetLinks()
-		{
-			Direction[] allDirections = ChainedBuilding.allDirections;
-			foreach (Direction direction in allDirections)
-			{
-				neighbours[direction] = FindNeighbour(direction);
-				if (neighbours[direction] != null)
-				{
-					neighbours[direction].neighbours[Opposite(direction)] = this;
-				}
-			}
-			if (base.gameObject.HasTag(base.def.headBuildingTag))
-			{
-				Direction[] allDirections2 = ChainedBuilding.allDirections;
-				foreach (Direction direction2 in allDirections2)
-				{
-					PropagateSetHead(direction2, this);
-				}
-				headDirection = Direction.None;
-			}
-			else
-			{
-				Direction[] allDirections3 = ChainedBuilding.allDirections;
-				foreach (Direction key in allDirections3)
-				{
-					StatesInstance statesInstance = CheckNeighbourForHead(neighbours[key]);
-					if (statesInstance != null)
-					{
-						PropagateSetHead(key, statesInstance);
-						break;
-					}
-				}
-			}
-			base.sm.cachedHeadBuilding.Get(this)?.Trigger(-1009905786);
-		}
-
-		private void PropagateSetHead(Direction headDirection, StatesInstance newHead)
-		{
-			if (base.sm.cachedHeadBuilding.Get(this) == null || base.sm.cachedHeadBuilding.Get(this) == this)
-			{
-				StatesInstance statesInstance = base.sm.cachedHeadBuilding.Get(this);
-				this.headDirection = headDirection;
-				base.sm.cachedHeadBuilding.Set(newHead, this);
-				neighbours[Opposite(headDirection)]?.PropagateSetHead(headDirection, newHead);
+				item.sm.isConnectedToHead.Set(foundHead, item);
 			}
 		}
 
-		public void ClearLinks()
+		private void PropagateChangedEvent(StatesInstance changedLink, HashSet<StatesInstance> chain)
 		{
-			StatesInstance statesInstance = base.sm.cachedHeadBuilding.Get(this);
-			PropagateClearHead(statesInstance);
-			Direction[] allDirections = ChainedBuilding.allDirections;
-			foreach (Direction direction in allDirections)
+			foreach (StatesInstance item in chain)
 			{
-				if (neighbours[direction] != null)
-				{
-					neighbours[direction].neighbours[Opposite(direction)] = null;
-				}
-			}
-			statesInstance?.Trigger(-1009905786);
-		}
-
-		private void PropagateClearHead(StatesInstance expectedHead)
-		{
-			if (expectedHead == base.sm.cachedHeadBuilding.Get(this))
-			{
-				neighbours[Opposite(headDirection)]?.PropagateClearHead(expectedHead);
-				headDirection = Direction.None;
-				base.sm.cachedHeadBuilding.Set(null, this);
+				item.Trigger(-1009905786, changedLink);
 			}
 		}
 
-		private StatesInstance CheckNeighbourForHead(StatesInstance neighbour)
+		private void CollectToChain(ref HashSetPool<StatesInstance, StatesInstance>.PooledHashSet chain, ref bool foundHead, StatesInstance ignoredLink = null)
 		{
-			return neighbour?.sm.cachedHeadBuilding.Get(neighbour);
+			if ((ignoredLink != null && ignoredLink == this) || chain.Contains(this))
+			{
+				return;
+			}
+			chain.Add(this);
+			if (HasTag(base.def.headBuildingTag))
+			{
+				foundHead = true;
+			}
+			foreach (int neighbourCheckCell in neighbourCheckCells)
+			{
+				CollectNeighbourToChain(neighbourCheckCell, ref chain, ref foundHead);
+			}
 		}
 
-		private StatesInstance FindNeighbour(Direction direction)
+		private void CollectNeighbourToChain(int cell, ref HashSetPool<StatesInstance, StatesInstance>.PooledHashSet chain, ref bool foundHead, StatesInstance ignoredLink = null)
 		{
-			int cell = Grid.PosToCell(this);
-			CellOffset offset = ((direction == Direction.Left) ? new CellOffset(-(widthInCells - 1) / 2 - 1, 0) : new CellOffset(widthInCells / 2 + 1, 0));
-			GameObject gameObject = Grid.Objects[Grid.OffsetCell(cell, offset), (int)base.def.objectLayer];
-			if (gameObject == null)
+			GameObject gameObject = Grid.Objects[cell, (int)base.def.objectLayer];
+			if (!(gameObject == null) && (gameObject.HasTag(base.def.linkBuildingTag) || gameObject.HasTag(base.def.headBuildingTag)))
 			{
-				return null;
+				gameObject.GetSMI<StatesInstance>()?.CollectToChain(ref chain, ref foundHead, ignoredLink);
 			}
-			if (!gameObject.HasAnyTags(new Tag[2]
-			{
-				base.def.linkBuildingTag,
-				base.def.headBuildingTag
-			}))
-			{
-				return null;
-			}
-			return gameObject.GetSMI<StatesInstance>();
 		}
 	}
-
-	public static Direction[] allDirections = new Direction[2]
-	{
-		Direction.Left,
-		Direction.Right
-	};
-
-	private ObjectParameter<StatesInstance> cachedHeadBuilding;
 
 	private State unlinked;
 
 	private State linked;
 
-	public static Direction Opposite(Direction direction)
-	{
-		return (direction == Direction.Left) ? Direction.Right : Direction.Left;
-	}
+	private State DEBUG_relink;
+
+	private BoolParameter isConnectedToHead = new BoolParameter();
+
+	private Signal doRelink;
 
 	public override void InitializeStates(out BaseState defaultState)
 	{
@@ -206,7 +137,12 @@ public class ChainedBuilding : GameStateMachine<ChainedBuilding, ChainedBuilding
 			StatesInstance statesInstance = (StatesInstance)obj;
 			return tooltip.Replace("{headBuilding}", Strings.Get("STRINGS.BUILDINGS.PREFABS." + statesInstance.def.headBuildingTag.Name.ToUpper() + ".NAME")).Replace("{linkBuilding}", Strings.Get("STRINGS.BUILDINGS.PREFABS." + statesInstance.def.linkBuildingTag.Name.ToUpper() + ".NAME"));
 		};
-		unlinked.ParamTransition(cachedHeadBuilding, linked, (StatesInstance smi, StatesInstance p) => p != null).ToggleStatusItem(statusItem, (StatesInstance smi) => smi).TriggerOnEnter(GameHashes.ChainedNetworkChanged);
-		linked.ParamTransition(cachedHeadBuilding, unlinked, (StatesInstance smi, StatesInstance p) => p == null).TriggerOnEnter(GameHashes.ChainedNetworkChanged);
+		root.OnSignal(doRelink, DEBUG_relink);
+		unlinked.ParamTransition(isConnectedToHead, linked, GameStateMachine<ChainedBuilding, StatesInstance, IStateMachineTarget, Def>.IsTrue).ToggleStatusItem(statusItem, (StatesInstance smi) => smi);
+		linked.ParamTransition(isConnectedToHead, unlinked, GameStateMachine<ChainedBuilding, StatesInstance, IStateMachineTarget, Def>.IsFalse);
+		DEBUG_relink.Enter(delegate(StatesInstance smi)
+		{
+			smi.DEBUG_Relink();
+		});
 	}
 }

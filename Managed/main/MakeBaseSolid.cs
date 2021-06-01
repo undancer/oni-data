@@ -63,7 +63,7 @@ public class MakeBaseSolid : GameStateMachine<MakeBaseSolid, MakeBaseSolid.Insta
 				Grid.Objects[num, 9] = null;
 				Grid.Foundation[num] = false;
 				Grid.SetSolid(num, solid: false, CellEventLogger.Instance.SimCellOccupierDestroy);
-				SimMessages.ClearCellProperties(num, 64);
+				SimMessages.ClearCellProperties(num, 103);
 				Grid.RenderedByWorld[num] = true;
 				World.Instance.OnSolidChanged(num);
 				GameScenePartitioner.Instance.TriggerEvent(num, GameScenePartitioner.Instance.solidChangedLayer, null);

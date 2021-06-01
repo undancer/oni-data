@@ -17,9 +17,25 @@ namespace TUNING
 
 		public static class RADIATION_THRESHOLDS
 		{
-			public const float NORMAL = 500f;
+			public const float NONE = 0f;
+
+			public const float TIER_0 = 25f;
+
+			public const float TIER_1 = 90f;
+
+			public const float TIER_2 = 220f;
+
+			public const float TIER_3 = 460f;
+
+			public const float TIER_4 = 740f;
+
+			public const float TIER_5 = 980f;
+
+			public const float TIER_6 = 1220f;
 
 			public const float MUTANT_BASELINE = 25f;
 		}
+
+		public const float MAX_MUTATION_CHANCE = 0.8f;
 	}
 }

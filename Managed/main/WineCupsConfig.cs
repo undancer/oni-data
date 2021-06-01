@@ -26,16 +26,15 @@ public class WineCupsConfig : IEntityConfig
 			SimHashes.Oxygen,
 			SimHashes.ContaminatedOxygen,
 			SimHashes.CarbonDioxide
-		}, pressure_sensitive: true, 0f, 0.15f, null, can_drown: true, can_tinker: false, require_solid_tile: true, should_grow_old: true, 2400f, "WineCupsOriginal", STRINGS.CREATURES.SPECIES.WINECUPS.NAME);
+		}, pressure_sensitive: true, 0f, 0.15f, null, can_drown: true, can_tinker: false, require_solid_tile: true, should_grow_old: true, 2400f, 0f, 90f, "WineCupsOriginal", STRINGS.CREATURES.SPECIES.WINECUPS.NAME);
 		PrickleGrass prickleGrass = gameObject.AddOrGet<PrickleGrass>();
 		prickleGrass.positive_decor_effect = POSITIVE_DECOR_EFFECT;
 		prickleGrass.negative_decor_effect = NEGATIVE_DECOR_EFFECT;
 		GameObject seed = EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Hidden, "WineCupsSeed", STRINGS.CREATURES.SPECIES.SEEDS.WINECUPS.NAME, STRINGS.CREATURES.SPECIES.SEEDS.WINECUPS.DESC, Assets.GetAnim("seed_potted_cups_kanim"), "object", 1, new List<Tag>
 		{
 			GameTags.DecorSeed
-		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 5, STRINGS.CREATURES.SPECIES.WINECUPS.DOMESTICATEDDESC);
+		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 11, STRINGS.CREATURES.SPECIES.WINECUPS.DOMESTICATEDDESC);
 		EntityTemplates.CreateAndRegisterPreviewForPlant(seed, "WineCups_preview", Assets.GetAnim("potted_cups_kanim"), "place", 1, 1);
-		gameObject.AddOrGet<KBatchedAnimController>().randomiseLoopedOffset = true;
 		return gameObject;
 	}
 

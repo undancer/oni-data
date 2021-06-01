@@ -143,6 +143,11 @@ public class Clustercraft : ClusterGridEntity
 
 	public CraftStatus Status => status;
 
+	public override Sprite GetUISprite()
+	{
+		return Assets.GetSprite("ic_rocket");
+	}
+
 	public override bool SpaceOutInSameHex()
 	{
 		return true;
@@ -171,6 +176,10 @@ public class Clustercraft : ClusterGridEntity
 		Subscribe(1512695988, RocketModuleChangedHandler);
 		Subscribe(543433792, ClusterDestinationChangedHandler);
 		Subscribe(1796608350, ClusterDestinationReachedHandler);
+		Subscribe(-688990705, delegate
+		{
+			UpdateStatusItem();
+		});
 		SetRocketName(m_name);
 		UpdateStatusItem();
 	}
@@ -290,7 +299,7 @@ public class Clustercraft : ClusterGridEntity
 
 	private bool CheckDesinationInRange()
 	{
-		return Speed * m_clusterTraveler.TravelETA() <= ModuleInterface.Range;
+		return m_clusterTraveler.CurrentPath != null && Speed * m_clusterTraveler.TravelETA() <= ModuleInterface.Range;
 	}
 
 	public bool HasResourcesToMove(int hexes = 1, CombustionResource combustionResource = CombustionResource.All)
@@ -471,7 +480,7 @@ public class Clustercraft : ClusterGridEntity
 			failReason = "<TEMP>The pad already has a rocket on it!<TEMP>";
 			return PadLandingStatus.CanLandEventually;
 		}
-		int num = ConditionFlightPathIsClear.PadPositionDistanceToCeiling(pad.gameObject);
+		int num = ConditionFlightPathIsClear.PadTopEdgeDistanceToCeilingEdge(pad.gameObject);
 		if (num < ModuleInterface.RocketHeight)
 		{
 			failReason = UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_TOO_SHORT;
@@ -483,7 +492,7 @@ public class Clustercraft : ClusterGridEntity
 			failReason = string.Format(UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_PATH_OBSTRUCTED, pad.GetProperName());
 			return PadLandingStatus.CanNeverLand;
 		}
-		int padPosition = pad.PadPosition;
+		int rocketBottomPosition = pad.RocketBottomPosition;
 		foreach (Ref<RocketModuleCluster> clusterModule in ModuleInterface.ClusterModules)
 		{
 			RocketModuleCluster rocketModuleCluster = clusterModule.Get();
@@ -496,7 +505,7 @@ public class Clustercraft : ClusterGridEntity
 			{
 				for (int j = 0; j < buildingDef.HeightInCells; j++)
 				{
-					int cell = Grid.OffsetCell(padPosition, 0, moduleRelativeVerticalPosition);
+					int cell = Grid.OffsetCell(rocketBottomPosition, 0, moduleRelativeVerticalPosition);
 					cell = Grid.OffsetCell(cell, -(buildingDef.WidthInCells / 2) + i, j);
 					if (Grid.Solid[cell])
 					{

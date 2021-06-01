@@ -136,7 +136,7 @@ namespace STRINGS
 		{
 			public static LocString NAME = "Forest Moonlet";
 
-			public static LocString DESCRIPTION = "A small moon with a forest start.\n\n<smallcaps>Forest Moonlets have plenty of organic material but Duplicants will have to venture outside their starting biome quickly to find any metal.";
+			public static LocString DESCRIPTION = "A small moon with a forest start.\n\n<smallcaps>Forest Moonlets have plenty of organic material but Duplicants will have to venture outside their starting biome quickly to find any metal.</smallcaps>";
 		}
 
 		public class TERRAMOONLET
@@ -218,16 +218,16 @@ namespace STRINGS
 
 		public class MOOMOONLET
 		{
-			public static LocString NAME = "Moo Moonlet";
+			public static LocString NAME = "Moo Asteroid";
 
-			public static LocString DESCRIPTION = "A small world with unique local lifeforms.\n\n<smallcaps>Moo Moonlets are the natural breeding ground of Gassy Moos due to their abundance of Gas Grass and Methane.</smallcaps>";
+			public static LocString DESCRIPTION = "A small world with unique local lifeforms.\n\n<smallcaps>Moo Asteroids are the natural breeding ground of Gassy Moos due to their abundance of Gas Grass and Methane.</smallcaps>";
 		}
 
 		public class WATERMOONLET
 		{
-			public static LocString NAME = "Water Moonlet";
+			public static LocString NAME = "Water Asteroid";
 
-			public static LocString DESCRIPTION = "A small, water-submerged world.\n\n<smallcaps>Water Moonlets possess a variety of liquid resources and are a natural source of Graphite. However, its thin surface and sparse construction material means Duplicants should come prepared for a swim.</smallcaps>";
+			public static LocString DESCRIPTION = "A small, water-submerged world.\n\n<smallcaps>Water Asteroids possess a variety of liquid resources and are a natural source of Graphite. However, its thin surface and sparse construction material means Duplicants should come prepared for a swim.</smallcaps>";
 		}
 
 		public class TINYSTART

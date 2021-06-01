@@ -98,8 +98,8 @@ namespace ProcGenGame
 						DebugUtil.LogWarningArgs("Template spawning for subworld " + subWorld.name + ", not enough candidates for poiSet " + item3.Key + ", skipping.");
 						continue;
 					}
-					string text = pooledList[myRandom.RandomRange(0, pooledList.Count - 1)];
-					TemplateContainer template = TemplateCache.GetTemplate(text);
+					string random = pooledList.GetRandom(myRandom);
+					TemplateContainer template = TemplateCache.GetTemplate(random);
 					if (template != null)
 					{
 						TerrainCell terrainCell = null;
@@ -112,10 +112,10 @@ namespace ProcGenGame
 								KeyValuePair<Vector2I, TemplateContainer> item2 = new KeyValuePair<Vector2I, TemplateContainer>(new Vector2I((int)terrainCell2.poly.Centroid().x, (int)terrainCell2.poly.Centroid().y), template);
 								templateSpawnTargets.Add(item2);
 								placedPOIBounds.Add(templateBounds);
-								terrainCell2.node.tags.Add(text.ToTag());
+								terrainCell2.node.tags.Add(random.ToTag());
 								terrainCell2.node.tags.Add(WorldGenTags.POI);
 								terrainCell = terrainCell2;
-								hashSet.Add(text);
+								hashSet.Add(random);
 								break;
 							}
 						}
@@ -231,46 +231,60 @@ namespace ProcGenGame
 						continue;
 					}
 					int num3 = 0;
+					int num4 = 0;
 					switch (item.listRule)
 					{
 					case ProcGen.World.TemplateSpawnRules.ListRule.GuaranteeAll:
 						num3 = pooledList.Count;
+						num4 = pooledList.Count;
 						break;
 					case ProcGen.World.TemplateSpawnRules.ListRule.GuaranteeSome:
 						num3 = item.someCount;
-						pooledList.RemoveRange(item.someCount, pooledList.Count - item.someCount);
+						num4 = pooledList.Count - item.someCount;
 						break;
 					case ProcGen.World.TemplateSpawnRules.ListRule.GuaranteeSomeTryMore:
 						num3 = item.someCount;
-						pooledList.RemoveRange(item.someCount + item.moreCount, pooledList.Count - item.someCount - item.moreCount);
+						num4 = item.someCount + item.moreCount;
 						break;
 					case ProcGen.World.TemplateSpawnRules.ListRule.GuaranteeOne:
 						num3 = 1;
-						pooledList.RemoveRange(1, pooledList.Count - 1);
+						num4 = 1;
+						break;
+					case ProcGen.World.TemplateSpawnRules.ListRule.TryAll:
+						num4 = pooledList.Count;
 						break;
 					case ProcGen.World.TemplateSpawnRules.ListRule.TrySome:
-						pooledList.RemoveRange(item.someCount, pooledList.Count - item.someCount);
+						num4 = pooledList.Count - item.someCount;
 						break;
 					case ProcGen.World.TemplateSpawnRules.ListRule.TryOne:
-						pooledList.RemoveRange(1, pooledList.Count - 1);
+						num4 = 1;
 						break;
 					}
+					string text = "";
 					foreach (string item2 in pooledList)
 					{
-						bool flag = num3 > 0;
-						bool flag2 = FindTargetForTemplate(item2, item, terrainCells, myRandom, ref templateSpawnTargets, ref placedPOIBounds, flag, settings);
-						if (flag && !flag2)
+						if (num4 <= 0)
 						{
-							string text = "TemplateSpawning: Could not place template " + item2 + ", but it's supposed to be guaranteed on " + settings.world.filePath;
-							DebugUtil.LogErrorArgs(text);
-							if (!isRunningDebugGen)
-							{
-								throw new Exception(text);
-							}
+							break;
+						}
+						bool guarantee = num3 > 0;
+						if (FindTargetForTemplate(item2, item, terrainCells, myRandom, ref templateSpawnTargets, ref placedPOIBounds, guarantee, settings))
+						{
+							num4--;
+							num3--;
 						}
 						else
 						{
-							num3--;
+							text = text + "\n    - " + item2;
+						}
+					}
+					if (num3 > 0)
+					{
+						string text2 = "TemplateSpawning: Guaranteed placement failiure on " + settings.world.filePath + "\n" + $"    listRule={item.listRule} someCount={item.someCount} moreCount={item.moreCount} count={pooledList.Count}\n" + "    Could not place templates:" + text;
+						DebugUtil.LogErrorArgs(text2);
+						if (!isRunningDebugGen)
+						{
+							throw new Exception(text2);
 						}
 					}
 					pooledList.Recycle();

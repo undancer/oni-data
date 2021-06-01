@@ -55,7 +55,7 @@ public class SubSpeciesInfoScreen : KModalScreen
 	private void SetSubspecies(Tag speciesID, Tag subSpeciesID)
 	{
 		ClearMutations();
-		PlantSubSpeciesCatalog.SubSpeciesInfo subSpecies = PlantSubSpeciesCatalog.instance.GetSubSpecies(speciesID, subSpeciesID);
+		PlantSubSpeciesCatalog.SubSpeciesInfo subSpecies = PlantSubSpeciesCatalog.Instance.GetSubSpecies(speciesID, subSpeciesID);
 		plantIcon.sprite = Def.GetUISprite(Assets.GetPrefab(speciesID)).first;
 		foreach (string mutationID in subSpecies.mutationIDs)
 		{

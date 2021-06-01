@@ -431,9 +431,13 @@ namespace ProcGenGame
 			return result;
 		}
 
-		private bool IsAllowed(Vector2 point, WorldGen worldGen)
+		private bool IsFeaturePointContainedInBorder(Vector2 point, WorldGen worldGen)
 		{
-			if (!poly.Contains(point) && node.tags.Contains(WorldGenTags.AllowExceedNodeBorders))
+			if (!node.tags.Contains(WorldGenTags.AllowExceedNodeBorders))
+			{
+				return true;
+			}
+			if (!poly.Contains(point))
 			{
 				TerrainCell terrainCell = worldGen.TerrainCells.Find((TerrainCell x) => x.poly.Contains(point));
 				if (terrainCell != null)
@@ -463,7 +467,7 @@ namespace ProcGenGame
 				for (int i = 0; i < cells.Count; i++)
 				{
 					int num = Grid.XYToCell(cells[i].x, cells[i].y);
-					if (Grid.IsValidCell(num) && !highPriorityClaims.Contains(num) && IsAllowed(cells[i], worldGen))
+					if (Grid.IsValidCell(num) && !highPriorityClaims.Contains(num) && IsFeaturePointContainedInBorder(cells[i], worldGen))
 					{
 						WeightedSimHash oneWeightedSimHash = feature.GetOneWeightedSimHash(group, rnd);
 						ElementOverride elementOverride = GetElementOverride(oneWeightedSimHash.element, oneWeightedSimHash.overrides);
@@ -493,7 +497,7 @@ namespace ProcGenGame
 				for (int k = 0; k < cells.Count; k++)
 				{
 					int num5 = Grid.XYToCell(cells[k].x, cells[k].y);
-					if (Grid.IsValidCell(num5) && !highPriorityClaims.Contains(num5) && IsAllowed(cells[k], worldGen))
+					if (Grid.IsValidCell(num5) && !highPriorityClaims.Contains(num5) && IsFeaturePointContainedInBorder(cells[k], worldGen))
 					{
 						float percentage = 1f - (float)(cells[k].y - num2) / (float)num4;
 						WeightedSimHash weightedSimHashAtChoice = feature.GetWeightedSimHashAtChoice(group, percentage);
@@ -517,7 +521,7 @@ namespace ProcGenGame
 			for (int l = 0; l < cells.Count; l++)
 			{
 				int num6 = Grid.XYToCell(cells[l].x, cells[l].y);
-				if (Grid.IsValidCell(num6) && !highPriorityClaims.Contains(num6) && IsAllowed(cells[l], worldGen))
+				if (Grid.IsValidCell(num6) && !highPriorityClaims.Contains(num6) && IsFeaturePointContainedInBorder(cells[l], worldGen))
 				{
 					ElementOverride elementOverride3 = GetElementOverride(oneWeightedSimHash2.element, oneWeightedSimHash2.overrides);
 					if (!elementOverride3.overrideTemperature)

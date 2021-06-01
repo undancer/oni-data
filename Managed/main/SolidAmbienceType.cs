@@ -15,5 +15,7 @@ public enum SolidAmbienceType
 	Salt,
 	Rust,
 	UraniumOre,
+	Mud,
+	ToxicMud,
 	NumTypes
 }

@@ -374,7 +374,8 @@ namespace Database
 			new Tech("LiquidDistribution", new List<string>
 			{
 				"RocketInteriorLiquidInput",
-				"RocketInteriorLiquidOutput"
+				"RocketInteriorLiquidOutput",
+				"LiquidLimitValve"
 			}, this);
 			new Tech("AdvancedSanitation", new List<string>
 			{
@@ -679,7 +680,8 @@ namespace Database
 			{
 				"RocketInteriorGasInput",
 				"RocketInteriorGasOutput",
-				"OxidizerTankCluster"
+				"OxidizerTankCluster",
+				"GasLimitValve"
 			}, this);
 			new Tech("LiquidTemperature", new List<string>
 			{
@@ -763,13 +765,13 @@ namespace Database
 				"SolidConduit",
 				"SolidConduitBridge",
 				"SolidConduitInbox",
-				"SolidConduitOutbox"
+				"SolidVent"
 			};
 			if (!DlcManager.IsExpansion1Active())
 			{
 				list5.AddRange(new List<string>
 				{
-					"SolidVent",
+					"SolidConduitOutbox",
 					"SolidLogicValve",
 					"AutoMiner"
 				});
@@ -779,13 +781,14 @@ namespace Database
 			{
 				new Tech("SolidSpace", new List<string>
 				{
-					"SolidVent",
 					"SolidLogicValve",
+					"SolidConduitOutbox",
 					"ModularLaunchpadPortSolid",
 					"ModularLaunchpadPortSolidUnloader",
 					"SolidCargoBaySmall",
 					"RocketInteriorSolidInput",
-					"RocketInteriorSolidOutput"
+					"RocketInteriorSolidOutput",
+					"SolidLimitValve"
 				}, this, TIER_5_ORBITAL_DOMINANT);
 			}
 			new Tech("SolidManagement", new List<string>

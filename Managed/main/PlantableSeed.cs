@@ -57,13 +57,23 @@ public class PlantableSeed : KMonoBehaviour, IReceptacleDirection, IGameObjectEf
 	private void OnAbsorb(object data)
 	{
 		Pickupable pickupable = data as Pickupable;
-		Debug.Assert(GetComponent<MutantPlant>().SubSpeciesID == pickupable.GetComponent<MutantPlant>().SubSpeciesID, "Two seeds of different subspecies just absorbed!");
+		MutantPlant component = GetComponent<MutantPlant>();
+		if (component != null)
+		{
+			MutantPlant component2 = pickupable.GetComponent<MutantPlant>();
+			Debug.Assert(component2 != null && component.SubSpeciesID == component2.SubSpeciesID, "Two seeds of different subspecies just absorbed!");
+		}
 	}
 
 	private void OnSplitFromChunk(object data)
 	{
 		Pickupable pickupable = data as Pickupable;
-		pickupable.GetComponent<MutantPlant>().CopyMutationsTo(GetComponent<MutantPlant>());
+		MutantPlant component = GetComponent<MutantPlant>();
+		MutantPlant component2 = pickupable.GetComponent<MutantPlant>();
+		if (component != null && component2 != null)
+		{
+			component2.CopyMutationsTo(component);
+		}
 	}
 
 	public void TryPlant(bool allow_plant_from_storage = false)

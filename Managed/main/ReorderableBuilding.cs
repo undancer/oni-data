@@ -372,6 +372,7 @@ public class ReorderableBuilding : KMonoBehaviour
 		{
 			gameObject = component2.points[0].attachedBuilding.gameObject;
 			component2.points[0].attachedBuilding = null;
+			Components.BuildingAttachPoints.Remove(component2);
 		}
 		UnmarkBuilding(base.gameObject, null);
 		if (materials == null)

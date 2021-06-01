@@ -1701,6 +1701,10 @@ public class ConduitFlow : IConduitFlow
 		}
 	}
 
+	public const float MAX_LIQUID_MASS = 10f;
+
+	public const float MAX_GAS_MASS = 1f;
+
 	private ConduitType conduitType;
 
 	private float MaxMass = 10f;
@@ -1980,7 +1984,7 @@ public class ConduitFlow : IConduitFlow
 		}
 		if (contents.mass > 0f && contents.temperature <= 0f)
 		{
-			Debug.LogError("unexpected temperature");
+			Debug.LogError($"unexpected temperature {contents.temperature}");
 		}
 		return contents;
 	}

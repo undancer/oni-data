@@ -11,7 +11,9 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 
 	public GameObject rootListContainer;
 
-	public GameObject resourceLinePrefab;
+	public GameObject diagnosticLinePrefab;
+
+	public GameObject subDiagnosticLinePrefab;
 
 	public KButton closeButton;
 
@@ -161,7 +163,7 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 		{
 			return;
 		}
-		GameObject gameObject = Util.KInstantiateUI(resourceLinePrefab, container, force_active: true);
+		GameObject gameObject = Util.KInstantiateUI(diagnosticLinePrefab, container, force_active: true);
 		HierarchyReferences component = gameObject.GetComponent<HierarchyReferences>();
 		component.GetReference<LocText>("NameLabel").SetText(diagnostic.name);
 		string id2 = diagnostic.id;
@@ -196,6 +198,15 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 		currentlyDisplayedRows.Add(id2, value: true);
 		component.GetReference<Image>("Icon").sprite = Assets.GetSprite(diagnostic.icon);
 		RefreshPinnedState(id2);
+		RectTransform reference2 = component.GetReference<RectTransform>("SubRows");
+		DiagnosticCriterion[] criteria = diagnostic.GetCriteria();
+		foreach (DiagnosticCriterion diagnosticCriterion in criteria)
+		{
+			GameObject gameObject2 = Util.KInstantiateUI(subDiagnosticLinePrefab, reference2.gameObject, force_active: true);
+			HierarchyReferences component2 = gameObject2.GetComponent<HierarchyReferences>();
+			LocText reference3 = component2.GetReference<LocText>("Label");
+			reference3.SetText(diagnosticCriterion.name);
+		}
 	}
 
 	private void FilterRowBySearch(Tag tag, string filter)
@@ -261,6 +272,7 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 			{
 				HierarchyReferences component = diagnosticRow.Value.GetComponent<HierarchyReferences>();
 				component.GetReference<LocText>("AvailableLabel").SetText(diagnosticRow.Key);
+				component.GetReference<RectTransform>("SubRows").gameObject.SetActive(value: false);
 				ColonyDiagnostic diagnostic = ColonyDiagnosticUtility.Instance.GetDiagnostic(diagnosticRow.Key, ClusterManager.Instance.activeWorldId);
 				if (diagnostic != null)
 				{

@@ -104,15 +104,25 @@ public class Crop : KMonoBehaviour, IGameObjectEffectDescriptor
 		GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(cropID), base.transform.GetPosition() + new Vector3(0f, 0.75f, 0f), Grid.SceneLayer.Ore);
 		if (gameObject != null)
 		{
-			gameObject.SetActive(value: true);
-			PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
-			component.Units = amount;
-			component.Temperature = base.gameObject.GetComponent<PrimaryElement>().Temperature;
-			Trigger(35625290, gameObject);
-			Edible component2 = gameObject.GetComponent<Edible>();
-			if ((bool)component2)
+			MutantPlant component = GetComponent<MutantPlant>();
+			MutantPlant component2 = gameObject.GetComponent<MutantPlant>();
+			if (component != null && component.IsOriginal && component2 != null)
 			{
-				ReportManager.Instance.ReportValue(ReportManager.ReportType.CaloriesCreated, component2.Calories, StringFormatter.Replace(UI.ENDOFDAYREPORT.NOTES.HARVESTED, "{0}", component2.GetProperName()), UI.ENDOFDAYREPORT.NOTES.HARVESTED_CONTEXT);
+				SeedProducer component3 = GetComponent<SeedProducer>();
+				if (component3.RollForMutation())
+				{
+					component2.Mutate();
+				}
+			}
+			gameObject.SetActive(value: true);
+			PrimaryElement component4 = gameObject.GetComponent<PrimaryElement>();
+			component4.Units = amount;
+			component4.Temperature = base.gameObject.GetComponent<PrimaryElement>().Temperature;
+			Trigger(35625290, gameObject);
+			Edible component5 = gameObject.GetComponent<Edible>();
+			if ((bool)component5)
+			{
+				ReportManager.Instance.ReportValue(ReportManager.ReportType.CaloriesCreated, component5.Calories, StringFormatter.Replace(UI.ENDOFDAYREPORT.NOTES.HARVESTED, "{0}", component5.GetProperName()), UI.ENDOFDAYREPORT.NOTES.HARVESTED_CONTEXT);
 			}
 		}
 		else

@@ -850,7 +850,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = string.Concat("New ", UI.CLUSTERMAP.PLANETOID, " detected");
 
-				public static LocString MESSAGEBODY = string.Concat("My Duplicants' astronomical efforts have uncovered a new ", UI.CLUSTERMAP.PLANETOID, "s:\n{0}");
+				public static LocString MESSAGEBODY = string.Concat("My Duplicants' astronomical efforts have uncovered a new ", UI.CLUSTERMAP.PLANETOID, ":\n{0}");
 
 				public static LocString TOOLTIP = "{0} discovered";
 			}

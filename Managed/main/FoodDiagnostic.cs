@@ -12,8 +12,8 @@ public class FoodDiagnostic : ColonyDiagnostic
 		trackerSampleCountSeconds = 150f;
 		presentationSetting = PresentationSetting.CurrentValue;
 		AddCriterion(UI.COLONY_DIAGNOSTICS.NO_MINIONS, ColonyDiagnosticUtility.GetWorldHasMinionCriterion(worldID));
-		AddCriterion("CheckEnoughFood", new DiagnosticCriterion(CheckEnoughFood));
-		AddCriterion("CheckStarvation", new DiagnosticCriterion(CheckStarvation));
+		AddCriterion("CheckEnoughFood", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckEnoughFood));
+		AddCriterion("CheckStarvation", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckStarvation));
 	}
 
 	private DiagnosticResult CheckAnyFood()

@@ -112,6 +112,13 @@ public abstract class ColonyDiagnostic
 		colors.Add(DiagnosticResult.Opinion.Good, Constants.POSITIVE_COLOR);
 	}
 
+	public DiagnosticCriterion[] GetCriteria()
+	{
+		DiagnosticCriterion[] array = new DiagnosticCriterion[criteria.Values.Count];
+		criteria.Values.CopyTo(array, 0);
+		return array;
+	}
+
 	public virtual string GetAverageValueString()
 	{
 		if (tracker != null)

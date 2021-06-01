@@ -111,47 +111,51 @@ public class CargoBayConduit : KMonoBehaviour
 
 	private void UpdateStatusItems()
 	{
-		bool flag = false;
-		bool flag2 = false;
-		IEnumerable<GameObject> connectedConduitPorts = GetConnectedConduitPorts();
-		if (connectedConduitPorts != null)
+		HasMatchingConduitPort(out var hasMatch, out var hasAny);
+		KSelectable component = GetComponent<KSelectable>();
+		if (hasMatch)
 		{
-			foreach (GameObject item in connectedConduitPorts)
-			{
-				IConduitDispenser component = item.GetComponent<IConduitDispenser>();
-				if (component != null)
-				{
-					flag = true;
-					if (ElementToCargoMap[component.ConduitType] == storageType)
-					{
-						flag2 = true;
-						break;
-					}
-				}
-			}
+			connectedConduitPortStatusItem = component.ReplaceStatusItem(connectedConduitPortStatusItem, connectedPortStatus, this);
 		}
-		KSelectable component2 = GetComponent<KSelectable>();
-		if (flag2)
+		else if (hasAny)
 		{
-			connectedConduitPortStatusItem = component2.ReplaceStatusItem(connectedConduitPortStatusItem, connectedPortStatus, this);
-		}
-		else if (flag)
-		{
-			connectedConduitPortStatusItem = component2.ReplaceStatusItem(connectedConduitPortStatusItem, connectedWrongPortStatus, this);
+			connectedConduitPortStatusItem = component.ReplaceStatusItem(connectedConduitPortStatusItem, connectedWrongPortStatus, this);
 		}
 		else
 		{
-			connectedConduitPortStatusItem = component2.ReplaceStatusItem(connectedConduitPortStatusItem, connectedNoPortStatus, this);
+			connectedConduitPortStatusItem = component.ReplaceStatusItem(connectedConduitPortStatusItem, connectedNoPortStatus, this);
 		}
 	}
 
-	private IEnumerable<GameObject> GetConnectedConduitPorts()
+	private void HasMatchingConduitPort(out bool hasMatch, out bool hasAny)
 	{
+		hasMatch = false;
+		hasAny = false;
 		LaunchPad currentPad = GetComponent<RocketModuleCluster>().CraftInterface.CurrentPad;
 		if (currentPad == null)
 		{
-			return null;
+			return;
 		}
-		return currentPad.GetSMI<ChainedBuilding.StatesInstance>()?.GetLinkedBuildings();
+		ChainedBuilding.StatesInstance sMI = currentPad.GetSMI<ChainedBuilding.StatesInstance>();
+		if (sMI == null)
+		{
+			return;
+		}
+		HashSetPool<ChainedBuilding.StatesInstance, ChainedBuilding.StatesInstance>.PooledHashSet chain = HashSetPool<ChainedBuilding.StatesInstance, ChainedBuilding.StatesInstance>.Allocate();
+		sMI.GetLinkedBuildings(ref chain);
+		foreach (ChainedBuilding.StatesInstance item in chain)
+		{
+			IConduitDispenser component = item.GetComponent<IConduitDispenser>();
+			if (component != null)
+			{
+				hasAny = true;
+				if (ElementToCargoMap[component.ConduitType] == storageType)
+				{
+					hasMatch = true;
+					break;
+				}
+			}
+		}
+		chain.Recycle();
 	}
 }

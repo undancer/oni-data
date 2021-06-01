@@ -679,7 +679,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Duplicants love the feeling of high-powered wind through their hair.";
 
-				public static LocString EFFECT = "Must be placed above an open space and connected to a " + UI.FormatAsLink("Power Source", "POWER") + ".\n\nIncreases Duplicants " + UI.FormatAsLink("Morale", "MORALE") + ".";
+				public static LocString EFFECT = "Must be connected to a " + UI.FormatAsLink("Power Source", "POWER") + ". To properly function, the area under this building must be left vacant.\n\nIncreases Duplicants " + UI.FormatAsLink("Morale", "MORALE") + ".";
 
 				public static LocString DISPLACEMENTEFFECT = "Gas Displacement: {amount}";
 
@@ -1054,7 +1054,7 @@ namespace STRINGS
 
 			public class CRYOTANK
 			{
-				public static LocString NAME = UI.FormatAsLink("Cryotank", "CRYOTANK");
+				public static LocString NAME = UI.FormatAsLink("Cryotank 3000", "CRYOTANK");
 
 				public static LocString DESC = "The tank appears impossibly old, but smells crisp and brand new.\n\nA silhouette just barely visible through the frost of the glass.";
 
@@ -1438,6 +1438,27 @@ namespace STRINGS
 				public static LocString LOGIC_PORT_INACTIVE = UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ": Prevent gas flow";
 			}
 
+			public class GASLIMITVALVE
+			{
+				public static LocString NAME = UI.FormatAsLink("Gas Meter Valve", "GASLIMITVALVE");
+
+				public static LocString DESC = "Meter Valves let an exact amount of gas pass through before shutting off.";
+
+				public static LocString EFFECT = "Connects to an " + UI.FormatAsLink("Automation", "LOGIC") + " grid to automatically turn " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " flow off when the specified amount has passed through it.";
+
+				public static LocString LOGIC_PORT_OUTPUT = "Limit Reached";
+
+				public static LocString OUTPUT_PORT_ACTIVE = "Sends a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " if limit has been reached";
+
+				public static LocString OUTPUT_PORT_INACTIVE = "Otherwise, sends a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby);
+
+				public static LocString LOGIC_PORT_RESET = "Reset Meter";
+
+				public static LocString RESET_PORT_ACTIVE = UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + ": Reset the amount";
+
+				public static LocString RESET_PORT_INACTIVE = UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ": Nothing";
+			}
+
 			public class GASVENT
 			{
 				public static LocString NAME = UI.FormatAsLink("Gas Vent", "GASVENT");
@@ -1792,6 +1813,27 @@ namespace STRINGS
 				public static LocString LOGIC_PORT_ACTIVE = UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + ": Allow Liquid flow";
 
 				public static LocString LOGIC_PORT_INACTIVE = UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ": Prevent Liquid flow";
+			}
+
+			public class LIQUIDLIMITVALVE
+			{
+				public static LocString NAME = UI.FormatAsLink("Liquid Meter Valve", "LIQUIDLIMITVALVE");
+
+				public static LocString DESC = "Meter Valves let an exact amount of liquid pass through before shutting off.";
+
+				public static LocString EFFECT = "Connects to an " + UI.FormatAsLink("Automation", "LOGIC") + " grid to automatically turn " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + " flow off when the specified amount has passed through it.";
+
+				public static LocString LOGIC_PORT_OUTPUT = "Limit Reached";
+
+				public static LocString OUTPUT_PORT_ACTIVE = "Sends a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " if limit has been reached";
+
+				public static LocString OUTPUT_PORT_INACTIVE = "Otherwise, sends a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby);
+
+				public static LocString LOGIC_PORT_RESET = "Reset Meter";
+
+				public static LocString RESET_PORT_ACTIVE = UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + ": Reset the amount";
+
+				public static LocString RESET_PORT_INACTIVE = UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ": Nothing";
 			}
 
 			public class LIQUIDVENT
@@ -3635,6 +3677,27 @@ namespace STRINGS
 				public static LocString LOGIC_PORT_INACTIVE = UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ": Prevent material transport";
 			}
 
+			public class SOLIDLIMITVALVE
+			{
+				public static LocString NAME = UI.FormatAsLink("Conveyor Meter", "SOLIDLIMITVALVE");
+
+				public static LocString DESC = "Conveyor Meters let an exact amount of materials pass through before shutting off.";
+
+				public static LocString EFFECT = "Connects to an " + UI.FormatAsLink("Automation", "LOGIC") + " grid to automatically turn material transfer off when the specified amount has passed through it.";
+
+				public static LocString LOGIC_PORT_OUTPUT = "Limit Reached";
+
+				public static LocString OUTPUT_PORT_ACTIVE = "Sends a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " if limit has been reached";
+
+				public static LocString OUTPUT_PORT_INACTIVE = "Otherwise, sends a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby);
+
+				public static LocString LOGIC_PORT_RESET = "Reset Meter";
+
+				public static LocString RESET_PORT_ACTIVE = UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + ": Reset the amount";
+
+				public static LocString RESET_PORT_INACTIVE = UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ": Nothing";
+			}
+
 			public class AUTOMINER
 			{
 				public static LocString NAME = UI.FormatAsLink("Robo-Miner", "AUTOMINER");
@@ -3802,7 +3865,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Rockets must be landed to load or unload resources.";
 
-				public static LocString EFFECT = string.Concat("Allows ", UI.FormatAsLink("Gases", "ELEMENTS_GAS"), " to be loaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the gas filters set on the rocket's cargo bays.");
+				public static LocString EFFECT = string.Concat("Loads ", UI.FormatAsLink("Gases", "ELEMENTS_GAS"), " to the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the gas filters set on the rocket's cargo bays.");
 			}
 
 			public class MODULARLAUNCHPADPORTLIQUID
@@ -3811,7 +3874,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Rockets must be landed to load or unload resources.";
 
-				public static LocString EFFECT = string.Concat("Allows ", UI.FormatAsLink("Liquids", "ELEMENTS_LIQUID"), " to be loaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the liquid filters set on the rocket's cargo bays.");
+				public static LocString EFFECT = string.Concat("Loads ", UI.FormatAsLink("Liquids", "ELEMENTS_LIQUID"), " to the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the liquid filters set on the rocket's cargo bays.");
 			}
 
 			public class MODULARLAUNCHPADPORTSOLID
@@ -3820,7 +3883,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Rockets must be landed to load or unload resources.";
 
-				public static LocString EFFECT = string.Concat("Allows ", UI.FormatAsLink("Solids", "ELEMENTS_SOLID"), " to be loaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the solid material filters set on the rocket's cargo bays.");
+				public static LocString EFFECT = string.Concat("Loads ", UI.FormatAsLink("Solids", "ELEMENTS_SOLID"), " to the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the solid material filters set on the rocket's cargo bays.");
 			}
 
 			public class MODULARLAUNCHPADPORTGASUNLOADER
@@ -3829,7 +3892,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Rockets must be landed to load or unload resources.";
 
-				public static LocString EFFECT = string.Concat("Allows ", UI.FormatAsLink("Gases", "ELEMENTS_GAS"), " to be unloaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the gas filters set on this unloader.");
+				public static LocString EFFECT = string.Concat("Unloads ", UI.FormatAsLink("Gases", "ELEMENTS_GAS"), " from the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the gas filters set on this unloader.");
 			}
 
 			public class MODULARLAUNCHPADPORTLIQUIDUNLOADER
@@ -3838,7 +3901,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Rockets must be landed to load or unload resources.";
 
-				public static LocString EFFECT = string.Concat("Allows ", UI.FormatAsLink("Liquids", "ELEMENTS_LIQUID"), " to be unloaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the liquid filters set on this unloader.");
+				public static LocString EFFECT = string.Concat("Unloads ", UI.FormatAsLink("Liquids", "ELEMENTS_LIQUID"), " from the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the liquid filters set on this unloader.");
 			}
 
 			public class MODULARLAUNCHPADPORTSOLIDUNLOADER
@@ -3847,7 +3910,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Rockets must be landed to load or unload resources.";
 
-				public static LocString EFFECT = string.Concat("Allows ", UI.FormatAsLink("Solids", "ELEMENTS_SOLID"), " to be unloaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the solid material filters set on this unloader.");
+				public static LocString EFFECT = string.Concat("Unloads ", UI.FormatAsLink("Solids", "ELEMENTS_SOLID"), " from the storage of a linked rocket.\n\nAutomatically links when built to the side of a ", LAUNCHPAD.NAME, " or another ", MODULARLAUNCHPADPORT.NAME, ".\n\nUses the solid material filters set on this unloader.");
 			}
 
 			public class STICKERBOMB

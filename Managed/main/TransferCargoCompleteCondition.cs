@@ -22,6 +22,10 @@ public class TransferCargoCompleteCondition : ProcessCondition
 		else
 		{
 			RocketModuleCluster landedRocket = component.LandedRocket;
+			if (landedRocket == null)
+			{
+				return Status.Ready;
+			}
 			craftModuleInterface = landedRocket.CraftInterface;
 		}
 		if (!craftModuleInterface.HasCargoModule)

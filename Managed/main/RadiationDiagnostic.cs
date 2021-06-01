@@ -8,8 +8,8 @@ public class RadiationDiagnostic : ColonyDiagnostic
 		: base(worldID, UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.ALL_NAME)
 	{
 		icon = "overlay_radiation";
-		AddCriterion("CheckSick", new DiagnosticCriterion(CheckSick));
-		AddCriterion("CheckExposed", new DiagnosticCriterion(CheckExposure));
+		AddCriterion("CheckSick", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckSick));
+		AddCriterion("CheckExposed", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckExposure));
 	}
 
 	private DiagnosticResult CheckSick()

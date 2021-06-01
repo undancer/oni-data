@@ -83,7 +83,7 @@ public class Unlocks : KMonoBehaviour
 		},
 		{
 			"researchnotes",
-			new string[17]
+			new string[18]
 			{
 				"notes_clonedrats",
 				"notes_agriculture1",
@@ -101,7 +101,8 @@ public class Unlocks : KMonoBehaviour
 				"notes_firstsuccess",
 				"notes_neutroniumapplications",
 				"notes_teleportation",
-				"notes_AI"
+				"notes_AI",
+				"cryotank_warnings"
 			}
 		},
 		{

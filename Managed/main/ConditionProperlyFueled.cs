@@ -16,7 +16,7 @@ public class ConditionProperlyFueled : ProcessCondition
 		{
 			Clustercraft component2 = component.CraftInterface.GetComponent<Clustercraft>();
 			ClusterTraveler component3 = component.CraftInterface.GetComponent<ClusterTraveler>();
-			if (component2 == null || component3 == null)
+			if (component2 == null || component3 == null || component3.CurrentPath == null)
 			{
 				return Status.Failure;
 			}

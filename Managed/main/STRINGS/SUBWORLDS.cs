@@ -60,9 +60,9 @@ namespace STRINGS
 		{
 			public static LocString NAME = "Metallic";
 
-			public static LocString DESC = "";
+			public static LocString DESC = "A plethora of metals pervade the Metallic Biome making it the go-to destination for a colony ramping up production for technological advancement.";
 
-			public static LocString UTILITY = "";
+			public static LocString UTILITY = UI.FormatAsLink("Gold Amalgam", "GOLDAMALGAM") + " " + UI.FormatAsLink("Aluminum Ore", "ALUMINUMORE") + " and " + UI.FormatAsLink("Cobalt Ore", "COBALTITE") + " are in abundant supply throughout this entire biome. Refining these metals with a " + UI.FormatAsLink("Metal Refinery", "METALREFINERY") + " will make them available for building advanced technologies.\n\nThough " + UI.FormatAsLink("Chlorine", "CHLORINEGAS") + " and " + UI.FormatAsLink("Hydrogen", "HYDROGEN") + " are the prevailing gasses in this biome, " + UI.FormatAsLink("Oxylite", "OXYROCK") + " exists in rock form and can provide " + UI.FormatAsLink("Oxygen", "OXYGEN") + " for Duplicants once they uncover it.\n\n" + UI.FormatAsLink("Dirt", "DIRT") + ", " + UI.FormatAsLink("Coal", "CARBON") + " and " + UI.FormatAsLink("Igneous Rock", "IGNEOUSROCK") + " round out the rest of this biome, making it a great deposit of resources for a budding industrialized colony.";
 		}
 
 		public static class OCEAN
@@ -87,9 +87,9 @@ namespace STRINGS
 		{
 			public static LocString NAME = "Radioactive";
 
-			public static LocString DESC = "";
+			public static LocString DESC = "A highly volatile environment containing a highly useful resource, this biome is invaluable when venturing into Nuclear technologies.";
 
-			public static LocString UTILITY = "";
+			public static LocString UTILITY = UI.FormatAsLink("Lead Suits", "LEAD_SUIT") + " are imperative if my Duplicants are going to start exploring this biome as " + UI.FormatAsLink("Radioactive Contaminants", "RADIATIONSICKNESS") + " is a constant danger here.\n\n" + UI.FormatAsLink("Beetas", "BEE") + " pose a double threat as they are both highly radioactive and very aggressive. If they can be domesticated, however, " + UI.FormatAsLink("Beeta Hives", "BEEHIVE") + ", provide a great service turning " + UI.FormatAsLink("Uranium", "URANIUMORE") + " into " + UI.FormatAsLink("Enriched Uranium", "ENRICHEDURANIUM") + ".\n\nWhile the Radioactive Biome, and the Beetas contained within it, should be avoided at all costs if my Duplicants do not have the correct protection, my colony will need to trek into this dangerous biome if we are going to build any higher tier nuclear technologies.";
 		}
 
 		public static class RUST

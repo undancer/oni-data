@@ -200,7 +200,6 @@ public class StandardCropPlant : StateMachineComponent<StandardCropPlant.StatesI
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		base.smi.Get<KBatchedAnimController>().randomiseLoopedOffset = true;
 		base.smi.StartSM();
 	}
 
