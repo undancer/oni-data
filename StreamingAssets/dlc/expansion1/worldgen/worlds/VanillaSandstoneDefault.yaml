@@ -257,6 +257,7 @@ worldTemplateRules:
     - expansion1::poi/oil/small_oilpockets_geyser_d
     - expansion1::poi/oil/small_oilpockets_geyser_e
     - expansion1::poi/oil/small_oilpockets_geyser_f
+    - expansion1::poi/oil/small_oilpockets_geyser_g
     listRule: GuaranteeSome
     someCount: 3
     priority: 105

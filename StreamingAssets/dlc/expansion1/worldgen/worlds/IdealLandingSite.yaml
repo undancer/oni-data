@@ -40,15 +40,16 @@ subworldFiles:
   - name: expansion1::subworlds/forest/med_ForestSurface
   - name: expansion1::subworlds/ocean/med_Ocean
     overridePower: 1.5  
-    minCount: 2
+    minCount: 1
   - name: subworlds/ocean/OceanDeep
     overridePower: 1.5    
+    minCount: 1
   - name: expansion1::subworlds/radioactive/med_Radioactive
     minCount: 3
   - name: expansion1::subworlds/radioactive/med_UraniumFields
   - name: expansion1::subworlds/radioactive/med_FrozenUraniumFields
     minCount: 2
-  - name: expansion1::subworlds/metallic/RenewableMetallicNoCritters
+  - name: expansion1::subworlds/metallic/RenewableMetallic
     minCount: 4
   - name: expansion1::subworlds/frozen/FrozenCore
     weight: 0.4
@@ -94,7 +95,7 @@ unknownCellsAllowedSubworlds:
     maxDistance: 2
     command: Replace
     subworldNames:
-      - expansion1::subworlds/metallic/RenewableMetallicNoCritters
+      - expansion1::subworlds/metallic/RenewableMetallic
       - subworlds/forest/ForestMiniWater
       - subworlds/ocean/OceanDeep
   - tagcommand: DistanceFromTag
@@ -106,7 +107,7 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/radioactive/med_Radioactive
       - expansion1::subworlds/radioactive/med_UraniumFields
       - expansion1::subworlds/radioactive/med_FrozenUraniumFields
-      - expansion1::subworlds/metallic/RenewableMetallicNoCritters
+      - expansion1::subworlds/metallic/RenewableMetallic
   - tagcommand: DistanceFromTag
     tag: AtDepths
     minDistance: 0

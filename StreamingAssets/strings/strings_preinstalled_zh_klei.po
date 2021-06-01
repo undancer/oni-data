@@ -906,7 +906,7 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.DISEMBARKINGDUPLICANT.TOOLTIP"
 msgid ""
 "The Duplicant inside this rocket can't come out until the <link=\"GANTRY"
 "\">Gantry</link> is extended"
-msgstr "<link=\"GANTRY\">龙门架</link>伸出之前，这艘火箭中的复制人无法出来"
+msgstr "<link=\"GANTRY\">发射支架</link>伸出之前，这艘火箭中的复制人无法出来"
 
 #. STRINGS.BUILDING.STATUSITEMS.DUPLICANTACTIVATIONREQUIRED.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.DUPLICANTACTIVATIONREQUIRED.NAME"
@@ -1382,7 +1382,7 @@ msgstr ""
 #. STRINGS.BUILDING.STATUSITEMS.HASGANTRY.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.HASGANTRY.NAME"
 msgid "Has Gantry"
-msgstr "存在龙门架"
+msgstr "存在发射支架"
 
 #. STRINGS.BUILDING.STATUSITEMS.HASGANTRY.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.HASGANTRY.TOOLTIP"
@@ -1725,6 +1725,27 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.LANDEDROCKETLACKSPASSENGERMODULE.TOOLTIP"
 msgid "A rocket must have a spacefarer module"
 msgstr "火箭必须有一个太空员舱块"
 
+#. STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITNOTREACHED.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITNOTREACHED.NAME"
+msgid "Amount remaining: {0}"
+msgstr "剩余量：{0}"
+
+#. STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITNOTREACHED.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITNOTREACHED.TOOLTIP"
+msgid ""
+"This building will stop transferring Mass when the amount remaining reaches 0"
+msgstr "当剩余量达到0时，这个建筑就会停止转移物质"
+
+#. STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITREACHED.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITREACHED.NAME"
+msgid "Limit Reached"
+msgstr "达到限制"
+
+#. STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITREACHED.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITREACHED.TOOLTIP"
+msgid "No more Mass can be transferred"
+msgstr "不能再转移更多物质"
+
 #. STRINGS.BUILDING.STATUSITEMS.LIQUIDPIPEEMPTY.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.LIQUIDPIPEEMPTY.NAME"
 msgid "Empty Pipe"
@@ -2029,7 +2050,7 @@ msgstr ""
 #. STRINGS.BUILDING.STATUSITEMS.MISSINGGANTRY.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.MISSINGGANTRY.NAME"
 msgid "Missing Gantry"
-msgstr "缺少龙门架"
+msgstr "缺少发射支架"
 
 #. STRINGS.BUILDING.STATUSITEMS.MISSINGGANTRY.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.MISSINGGANTRY.TOOLTIP"
@@ -2039,7 +2060,7 @@ msgid ""
 "link> for Duplicant access"
 msgstr ""
 "必须在<link=\"COMMANDMODULE\">指挥舱</link>和<link=\"TOURISTMODULE\">观光舱</"
-"link>的下方建造<link=\"GANTRY\">龙门架</link>才能让复制人进入"
+"link>的下方建造<link=\"GANTRY\">发射支架</link>才能让复制人进入"
 
 #. STRINGS.BUILDING.STATUSITEMS.MISSINGREQUIREMENTS.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.MISSINGREQUIREMENTS.NAME"
@@ -2632,11 +2653,11 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.NOSURFACESIGHT.TOOLTIP"
 msgid ""
 "This building has no view of space\n"
 "\n"
-"Ensure an unblocked view of the sky"
+"To properly function, this building requires an unblocked view of space"
 msgstr ""
 "这个建筑没有太空的视野\n"
 "\n"
-"确保天空视野畅通无阻"
+"为正常工作，需要确保这个建筑的天空视野畅通无阻"
 
 #. STRINGS.BUILDING.STATUSITEMS.NOTENOUGHPOWER.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.NOTENOUGHPOWER.NAME"
@@ -3381,6 +3402,16 @@ msgid ""
 msgstr ""
 "这个发电板可产生<style=\"produced\">{Wattage}</style>的<style=\"KKeyword\">电"
 "力</style>"
+
+#. STRINGS.BUILDING.STATUSITEMS.SOLIDCONDUITBLOCKEDMULTIPLES.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.SOLIDCONDUITBLOCKEDMULTIPLES.NAME"
+msgid "Conveyor Rail Blocked"
+msgstr "运输轨道阻塞"
+
+#. STRINGS.BUILDING.STATUSITEMS.SOLIDCONDUITBLOCKEDMULTIPLES.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.SOLIDCONDUITBLOCKEDMULTIPLES.TOOLTIP"
+msgid "Output <style=\"KKeyword\">Conveyor Rail</style> is blocked"
+msgstr "输出<style=\"KKeyword\">运输轨道</style>受阻"
 
 #. STRINGS.BUILDING.STATUSITEMS.SOLIDPIPEOBSTRUCTED.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.SOLIDPIPEOBSTRUCTED.NAME"
@@ -5819,8 +5850,8 @@ msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.CRYOTANK.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.CRYOTANK.NAME"
-msgid "<link=\"CRYOTANK\">Cryotank</link>"
-msgstr "<link=\"CRYOTANK\">低温箱</link>"
+msgid "<link=\"CRYOTANK\">Cryotank 3000</link>"
+msgstr "<link=\"CRYOTANK\">低温箱3000</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.DECONTAMINATIONSHOWER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.DECONTAMINATIONSHOWER.DESC"
@@ -6648,7 +6679,7 @@ msgstr "<link=\"GAMMARAYOVEN\">伽马射线烤炉</link>"
 #. STRINGS.BUILDINGS.PREFABS.GANTRY.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.GANTRY.DESC"
 msgid "A gantry can be built over rocket pieces where ladders and tile cannot."
-msgstr "龙门架可以建造在无法使用梯子和砖块的火箭各舱块之间。"
+msgstr "发射支架可以建造在无法使用梯子和砖块的火箭各舱块之间。"
 
 #. STRINGS.BUILDINGS.PREFABS.GANTRY.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.GANTRY.EFFECT"
@@ -6666,7 +6697,7 @@ msgid ""
 "<b>Extends gantry</b> when a <b><style=\"logic_on\">Green Signal</style></b> "
 "signal is received"
 msgstr ""
-"当接收到<b><style=\"logic_on\">绿色信号</style></b>时，<b>伸展龙门架</b>"
+"当接收到<b><style=\"logic_on\">绿色信号</style></b>时，<b>伸展发射支架</b>"
 
 #. STRINGS.BUILDINGS.PREFABS.GANTRY.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.GANTRY.LOGIC_PORT_INACTIVE"
@@ -6674,12 +6705,12 @@ msgid ""
 "<b>Retracts gantry</b> when a <b><style=\"logic_off\">Red Signal</style></b> "
 "signal is received"
 msgstr ""
-"当接收到<b><style=\"logic_off\">红色信号</style></b>时，<b>缩回龙门架</b>"
+"当接收到<b><style=\"logic_off\">红色信号</style></b>时，<b>缩回发射支架</b>"
 
 #. STRINGS.BUILDINGS.PREFABS.GANTRY.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.GANTRY.NAME"
 msgid "<link=\"GANTRY\">Gantry</link>"
-msgstr "<link=\"GANTRY\">龙门架</link>"
+msgstr "<link=\"GANTRY\">发射支架</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.GASBOTTLER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASBOTTLER.DESC"
@@ -7033,6 +7064,59 @@ msgstr "<link=\"GASFILTER\">气体过滤器</link>"
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASFILTER.STATUS_ITEM"
 msgid "Filters: {0}"
 msgstr "筛选项：{0}"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.DESC"
+msgid ""
+"Meter Valves let an exact amount of gas pass through before shutting off."
+msgstr "计量阀可以在通过精确量的气体后关闭。"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.EFFECT"
+msgid ""
+"Connects to an <link=\"LOGIC\">Automation</link> grid to automatically turn "
+"<link=\"ELEMENTSGAS\">Gas</link> flow off when the specified amount has "
+"passed through it."
+msgstr ""
+"连入到<link=\"LOGIC\">自动化</link>电路中，当特定量的<link=\"ELEMENTSGAS\">气"
+"体</link>通过后自动地阻断气体流通。"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.LOGIC_PORT_OUTPUT
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.LOGIC_PORT_OUTPUT"
+msgid "Limit Reached"
+msgstr "达到限制"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.LOGIC_PORT_RESET
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.LOGIC_PORT_RESET"
+msgid "Reset Meter"
+msgstr "重置计量器"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.NAME"
+msgid "<link=\"GASLIMITVALVE\">Gas Meter Valve</link>"
+msgstr "<link=\"GASLIMITVALVE\">气体计量阀</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.OUTPUT_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.OUTPUT_PORT_ACTIVE"
+msgid ""
+"Sends a <b><style=\"logic_on\">Green Signal</style></b> if limit has been "
+"reached"
+msgstr "当达到限制时，输出<b><style=\"logic_on\">绿色信号</style></b>"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.OUTPUT_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.OUTPUT_PORT_INACTIVE"
+msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
+msgstr "否则，输出<b><style=\"logic_off\">红色信号</style></b>"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.RESET_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.RESET_PORT_ACTIVE"
+msgid "<b><style=\"logic_on\">Green Signal</style></b>: Reset the amount"
+msgstr "<b><style=\"logic_on\">绿色信号</style></b>：重置数量"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.RESET_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.RESET_PORT_INACTIVE"
+msgid "<b><style=\"logic_off\">Red Signal</style></b>: Nothing"
+msgstr "<b><style=\"logic_off\">红色信号</style></b>：无效果"
 
 #. STRINGS.BUILDINGS.PREFABS.GASLOGICVALVE.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASLOGICVALVE.DESC"
@@ -8841,6 +8925,59 @@ msgstr ""
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDHEATER.NAME"
 msgid "<link=\"LIQUIDHEATER\">Liquid Tepidizer</link>"
 msgstr "<link=\"LIQUIDHEATER\">液体加热器</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.DESC"
+msgid ""
+"Meter Valves let an exact amount of liquid pass through before shutting off."
+msgstr "计量阀可以在通过精确量的液体后关闭。"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.EFFECT"
+msgid ""
+"Connects to an <link=\"LOGIC\">Automation</link> grid to automatically turn "
+"<link=\"ELEMENTSLIQUID\">Liquid</link> flow off when the specified amount "
+"has passed through it."
+msgstr ""
+"连入到<link=\"LOGIC\">自动化</link>电路中，当特定量的<link=\"ELEMENTSLIQUID"
+"\">液体</link>通过后自动地阻断液体流通。"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.LOGIC_PORT_OUTPUT
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.LOGIC_PORT_OUTPUT"
+msgid "Limit Reached"
+msgstr "达到限制"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.LOGIC_PORT_RESET
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.LOGIC_PORT_RESET"
+msgid "Reset Meter"
+msgstr "重置计量器"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.NAME"
+msgid "<link=\"LIQUIDLIMITVALVE\">Liquid Meter Valve</link>"
+msgstr "<link=\"LIQUIDLIMITVALVE\">液体计量阀</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.OUTPUT_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.OUTPUT_PORT_ACTIVE"
+msgid ""
+"Sends a <b><style=\"logic_on\">Green Signal</style></b> if limit has been "
+"reached"
+msgstr "当达到限制时，输出<b><style=\"logic_on\">绿色信号</style></b>"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.OUTPUT_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.OUTPUT_PORT_INACTIVE"
+msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
+msgstr "否则，输出<b><style=\"logic_off\">红色信号</style></b>"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.RESET_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.RESET_PORT_ACTIVE"
+msgid "<b><style=\"logic_on\">Green Signal</style></b>: Reset the amount"
+msgstr "<b><style=\"logic_on\">绿色信号</style></b>：重置数量"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.RESET_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.RESET_PORT_INACTIVE"
+msgid "<b><style=\"logic_off\">Red Signal</style></b>: Nothing"
+msgstr "<b><style=\"logic_off\">红色信号</style></b>：无效果"
 
 #. STRINGS.BUILDINGS.PREFABS.LIQUIDLOGICVALVE.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLOGICVALVE.DESC"
@@ -13980,6 +14117,59 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDFILTER.STATUS_ITEM"
 msgid "Filters: {0}"
 msgstr "筛选项：{0}"
 
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.DESC"
+msgid ""
+"Conveyor Meters let an exact amount of materials pass through before "
+"shutting off."
+msgstr "轨道计量器可以在通过精确量的材料后关闭。"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.EFFECT"
+msgid ""
+"Connects to an <link=\"LOGIC\">Automation</link> grid to automatically turn "
+"material transfer off when the specified amount has passed through it."
+msgstr ""
+"连入到<link=\"LOGIC\">自动化</link>电路中，当特定量的材料通过后自动地阻断运"
+"输。"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.LOGIC_PORT_OUTPUT
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.LOGIC_PORT_OUTPUT"
+msgid "Limit Reached"
+msgstr "达到限制"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.LOGIC_PORT_RESET
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.LOGIC_PORT_RESET"
+msgid "Reset Meter"
+msgstr "重置计量器"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.NAME"
+msgid "<link=\"SOLIDLIMITVALVE\">Conveyor Meter</link>"
+msgstr "<link=\"SOLIDLIMITVALVE\">轨道计量器</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.OUTPUT_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.OUTPUT_PORT_ACTIVE"
+msgid ""
+"Sends a <b><style=\"logic_on\">Green Signal</style></b> if limit has been "
+"reached"
+msgstr "当达到限制时，输出<b><style=\"logic_on\">绿色信号</style></b>"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.OUTPUT_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.OUTPUT_PORT_INACTIVE"
+msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
+msgstr "否则，输出<b><style=\"logic_off\">红色信号</style></b>"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.RESET_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.RESET_PORT_ACTIVE"
+msgid "<b><style=\"logic_on\">Green Signal</style></b>: Reset the amount"
+msgstr "<b><style=\"logic_on\">绿色信号</style></b>：重置数量"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.RESET_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.RESET_PORT_INACTIVE"
+msgid "<b><style=\"logic_off\">Red Signal</style></b>: Nothing"
+msgstr "<b><style=\"logic_off\">红色信号</style></b>：无效果"
+
 #. STRINGS.BUILDINGS.PREFABS.SOLIDLOGICVALVE.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLOGICVALVE.DESC"
 msgid ""
@@ -14016,7 +14206,7 @@ msgstr "<b><style=\"logic_off\">红色信号</style></b>：阻止材料运输"
 #. STRINGS.BUILDINGS.PREFABS.SOLIDLOGICVALVE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLOGICVALVE.NAME"
 msgid "<link=\"SOLIDLOGICVALVE\">Conveyor Shutoff</link>"
-msgstr "<link=\"SOLIDLOGICVALVE\">轨道开关阀</link>"
+msgstr "<link=\"SOLIDLOGICVALVE\">轨道开关</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.SOLIDTRANSFERARM.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDTRANSFERARM.DESC"
@@ -15008,12 +15198,13 @@ msgstr "这个建筑在使用时会置换{amount}的气体。"
 #. STRINGS.BUILDINGS.PREFABS.VERTICALWINDTUNNEL.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.VERTICALWINDTUNNEL.EFFECT"
 msgid ""
-"Must be placed above an open space and connected to a <link=\"POWER\">Power "
-"Source</link>.\n"
+"Must be connected to a <link=\"POWER\">Power Source</link>. To properly "
+"function, the area under this building must be left vacant.\n"
 "\n"
 "Increases Duplicants <link=\"MORALE\">Morale</link>."
 msgstr ""
-"必须置于开放空间上，并连入<link=\"POWER\">电源</link>。\n"
+"必须置于开放空间上，并连入<link=\"POWER\">电源</link>。为正常工作，这个建筑的"
+"下方区域必须留空。\n"
 "\n"
 "提升复制人的<link=\"MORALE\">士气</link>。"
 
@@ -18119,6 +18310,21 @@ msgctxt "STRINGS.CODEX.A9_PIPEDREAM.TITLE"
 msgid "Pipedream"
 msgstr "白日梦"
 
+#. STRINGS.CODEX.ARBORTREE.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.ARBORTREE.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.ARBORTREE.SUBTITLE
+msgctxt "STRINGS.CODEX.ARBORTREE.SUBTITLE"
+msgid "Lumber Tree"
+msgstr "木料树"
+
+#. STRINGS.CODEX.ARBORTREE.TITLE
+msgctxt "STRINGS.CODEX.ARBORTREE.TITLE"
+msgid "Arbor Tree"
+msgstr "乔木树"
+
 #. STRINGS.CODEX.AUTOMATION.HEADER_1
 msgctxt "STRINGS.CODEX.AUTOMATION.HEADER_1"
 msgid "Automation"
@@ -19703,6 +19909,29 @@ msgctxt "STRINGS.CODEX.BALMLILY.TITLE"
 msgid "Balm Lily"
 msgstr "芳香百合"
 
+#. STRINGS.CODEX.BLISSBURST.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.BLISSBURST.BODY.CONTAINER1"
+msgid ""
+"The Bliss Burst is a succulent in the genus Haworthia and is a hardy plant "
+"well-suited for beginner gardeners.\n"
+"\n"
+"They require little in the way of upkeep, to the point that the most common "
+"cause of death for Bliss Bursts is overwatering from over-eager carers."
+msgstr ""
+"极乐刺是一种十二卷属的多肉植物，是非常适合园艺初学者的抗逆植物。\n"
+"\n"
+"它们几乎不需要照料，以至于极乐刺的最常见死因是过度热情的照料者浇了太多水。"
+
+#. STRINGS.CODEX.BLISSBURST.SUBTITLE
+msgctxt "STRINGS.CODEX.BLISSBURST.SUBTITLE"
+msgid "Decorative Plant"
+msgstr "装饰性植物"
+
+#. STRINGS.CODEX.BLISSBURST.TITLE
+msgctxt "STRINGS.CODEX.BLISSBURST.TITLE"
+msgid "Bliss Burst"
+msgstr "极乐刺"
+
 #. STRINGS.CODEX.BLUFFBRIAR.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.BLUFFBRIAR.BODY.CONTAINER1"
 msgid ""
@@ -19745,6 +19974,21 @@ msgctxt "STRINGS.CODEX.BLUFFBRIAR.TITLE"
 msgid "Bluff Briar"
 msgstr "诱人荆棘"
 
+#. STRINGS.CODEX.BOGBUCKET.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.BOGBUCKET.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.BOGBUCKET.SUBTITLE
+msgctxt "STRINGS.CODEX.BOGBUCKET.SUBTITLE"
+msgid "Edible Plant"
+msgstr "食用性植物"
+
+#. STRINGS.CODEX.BOGBUCKET.TITLE
+msgctxt "STRINGS.CODEX.BOGBUCKET.TITLE"
+msgid "Bog Bucket"
+msgstr "沼浆笼"
+
 #. STRINGS.CODEX.BRISTLEBLOSSOM.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.BRISTLEBLOSSOM.BODY.CONTAINER1"
 msgid ""
@@ -19778,7 +20022,12 @@ msgstr "毛刺花"
 #. STRINGS.CODEX.BUDDYBUD.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.BUDDYBUD.BODY.CONTAINER1"
 msgid ""
+"As a byproduct of photosynthesis, the Buddy Bud naturally secretes a "
+"compound that is chemically similar to the neuropeptide created in the human "
+"brain after receiving a hug."
 msgstr ""
+"同伴芽会分泌出一种化合物，这是一种光合作用的副产物，在化学上类似于接受拥抱后"
+"人脑产生的神经肽。"
 
 #. STRINGS.CODEX.BUDDYBUD.SUBTITLE
 msgctxt "STRINGS.CODEX.BUDDYBUD.SUBTITLE"
@@ -19923,6 +20172,70 @@ msgctxt "STRINGS.CODEX.CREATURE_DESCRIPTORS.TEMPERATURE.NON_LETHAL_RANGE"
 msgid "Livable range: <b>{0}</b> to <b>{1}</b>"
 msgstr "存活范围：<b>{0}</b>到<b>{1}</b>"
 
+#. STRINGS.CODEX.CRYOTANKWARNINGS.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.CRYOTANKWARNINGS.BODY.CONTAINER1"
+msgid ""
+"    • Do not leave the contents of the Cryotank 3000 unattended unless an "
+"apocalyptic disaster has left you no choice.\n"
+"\n"
+"    • Ensure that the Cryotank 3000 has enough battery power to remain "
+"active for at least 6000 years.\n"
+"\n"
+"    • Do not attempt to defrost the contents of the Cryotank 3000 while it "
+"is submerged in molten hot lava.\n"
+"\n"
+"    • Use only a qualified Gravitas Cryotank repair facility to repair your "
+"Cryotank 3000. Attempting to service the device yourself will void the "
+"warranty.\n"
+"\n"
+"    • Do not put food in the Cryotank 3000. The Cryotank 3000 is not a "
+"refrigerator.\n"
+"\n"
+"    • Do not allow children to play in the Cryotank 3000. The Cryotank 3000 "
+"is not a toy.\n"
+"\n"
+"    • While the Cryotank 3000 is able to withstand a nuclear blast, Gravitas "
+"and its subsidiaries are not responsible for what may happen in the "
+"resulting nuclear fallout.\n"
+"\n"
+"    • Wait at least 5 minutes after being unfrozen from the Cryotank 3000 "
+"before operating heavy machinery.\n"
+"\n"
+"    • Each Cryotank 3000 is good for only one use.\n"
+"\n"
+msgstr ""
+"    • 除非世界末日使你别无选择，否则不要将低温箱3000的内容物置于无人看管的状"
+"态。\n"
+"\n"
+"    • 确保低温箱3000有足够的电力能维持至少6000年。\n"
+"\n"
+"    • 当低温箱3000浸没在热熔岩中时，不要尝试解冻内容物。\n"
+"\n"
+"    • 仅能使用合格的庄严科技低温箱维修设备来对你的低温箱3000进行维修。尝试自"
+"己维修设备会使保修失效。\n"
+"\n"
+"    • 不要将食物放到低温箱3000中。低温箱3000不是冰箱。\n"
+"\n"
+"    • 不要让孩子在低温箱3000中玩。低温箱3000不是玩具。\n"
+"\n"
+"    • 虽然低温箱3000能够承受核爆炸，但庄严科技及其子公司不对核尘埃导致出现的"
+"任何结果负责。\n"
+"\n"
+"    • 从低温箱3000解冻后等待至少5分钟后才能操作重型机器。\n"
+"\n"
+"    • 每台低温箱3000最好只使用一次。\n"
+"\n"
+
+#. STRINGS.CODEX.CRYOTANKWARNINGS.SUBTITLE
+msgctxt "STRINGS.CODEX.CRYOTANKWARNINGS.SUBTITLE"
+msgid "IMPORTANT OPERATING INSTRUCTIONS FOR THE CRYOTANK 3000"
+msgstr "低温箱3000的重要操作说明"
+
+#. STRINGS.CODEX.CRYOTANKWARNINGS.TITLE
+msgctxt "STRINGS.CODEX.CRYOTANKWARNINGS.TITLE"
+msgid "CRYOTANK SAFETY"
+msgstr "低温箱安全规范"
+
 #. STRINGS.CODEX.CRYSTAL.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.CRYSTAL.BODY.CONTAINER1"
 msgid "<smallcaps>Pictured: \"Radiant\" Shine Bug variant</smallcaps>"
@@ -19937,6 +20250,31 @@ msgstr "动物变种"
 msgctxt "STRINGS.CODEX.CRYSTAL.TITLE"
 msgid "Radiant Bug"
 msgstr "光耀虫"
+
+#. STRINGS.CODEX.DASHASALTVINE.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.DASHASALTVINE.BODY.CONTAINER1"
+msgid ""
+"The Dasha Saltvine is a unique plant that needs large amounts of salt to "
+"balance the levels of water in its body.\n"
+"\n"
+"In order to keep a supply of salt on hand, the end of the vine is coated in "
+"microscopic formations which bind with sodium atoms, forming large crystals "
+"over time."
+msgstr ""
+"沙盐藤是一种独特的植物，需要大量的盐分来平衡体内的水含量。\n"
+"\n"
+"为了保持盐的供应，藤蔓的末端覆有能够与钠原子结合的微观结构，随着时间流逝会形"
+"成大晶体。"
+
+#. STRINGS.CODEX.DASHASALTVINE.SUBTITLE
+msgctxt "STRINGS.CODEX.DASHASALTVINE.SUBTITLE"
+msgid "Edible Spice Plant"
+msgstr "食用性香料植物"
+
+#. STRINGS.CODEX.DASHASALTVINE.TITLE
+msgctxt "STRINGS.CODEX.DASHASALTVINE.TITLE"
+msgid "Balm Lily"
+msgstr "芳香百合"
 
 #. STRINGS.CODEX.DECOR.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.DECOR.BODY.CONTAINER1"
@@ -20275,8 +20613,8 @@ msgstr ""
 
 #. STRINGS.CODEX.GASGRASS.SUBTITLE
 msgctxt "STRINGS.CODEX.GASGRASS.SUBTITLE"
-msgid "Plant"
-msgstr "植物"
+msgid "Critter Feed"
+msgstr "小动物饲料"
 
 #. STRINGS.CODEX.GASGRASS.TITLE
 msgctxt "STRINGS.CODEX.GASGRASS.TITLE"
@@ -20391,6 +20729,21 @@ msgstr "动物变种"
 msgctxt "STRINGS.CODEX.GLOSSY.TITLE"
 msgid "Glossy Drecko"
 msgstr "滑鳞壁虎"
+
+#. STRINGS.CODEX.GRUBFRUITPLANT.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.GRUBFRUITPLANT.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.GRUBFRUITPLANT.SUBTITLE
+msgctxt "STRINGS.CODEX.GRUBFRUITPLANT.SUBTITLE"
+msgid "Edible Plant"
+msgstr "食用性植物"
+
+#. STRINGS.CODEX.GRUBFRUITPLANT.TITLE
+msgctxt "STRINGS.CODEX.GRUBFRUITPLANT.TITLE"
+msgid "Grubfruit Plant"
+msgstr "虫果植株"
 
 #. STRINGS.CODEX.HATCH.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.HATCH.BODY.CONTAINER1"
@@ -20744,6 +21097,45 @@ msgctxt "STRINGS.CODEX.HEAT.TITLE"
 msgid "<link=\"HEAT\">Heat</link>"
 msgstr "<link=\"HEALTH\">热量</link>"
 
+#. STRINGS.CODEX.HEXALENT.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.HEXALENT.BODY.CONTAINER1"
+msgid ""
+"While most plants grow new sections and leaves according to the Fibonacci "
+"Sequence, the Hexalent forms new sections similar to how atoms form into "
+"crystal structures.\n"
+"\n"
+"The result is a geometric pattern that resembles a honeycomb."
+msgstr ""
+"虽然大多数植物都是根据斐波那契数列长出新的枝节和叶子，但六角根是类似原子形成"
+"晶体结构的方式来形成新的枝节的。\n"
+"\n"
+"其结果是长成了类似于蜂巢的几何图案结构。"
+
+#. STRINGS.CODEX.HEXALENT.SUBTITLE
+msgctxt "STRINGS.CODEX.HEXALENT.SUBTITLE"
+msgid "Decorative Plant"
+msgstr "装饰性植物"
+
+#. STRINGS.CODEX.HEXALENT.TITLE
+msgctxt "STRINGS.CODEX.HEXALENT.TITLE"
+msgid "Hexalent"
+msgstr "六角根"
+
+#. STRINGS.CODEX.HYDROCACTUS.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.HYDROCACTUS.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.HYDROCACTUS.SUBTITLE
+msgctxt "STRINGS.CODEX.HYDROCACTUS.SUBTITLE"
+msgid "Plant"
+msgstr "植物"
+
+#. STRINGS.CODEX.HYDROCACTUS.TITLE
+msgctxt "STRINGS.CODEX.HYDROCACTUS.TITLE"
+msgid "Hydrocactus"
+msgstr "仙水掌"
+
 #. STRINGS.CODEX.JUMPINGJOYA.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.JUMPINGJOYA.BODY.CONTAINER1"
 msgid ""
@@ -20846,6 +21238,29 @@ msgstr "食用性植物"
 msgctxt "STRINGS.CODEX.MEALWOOD.TITLE"
 msgid "Mealwood"
 msgstr "米虱木"
+
+#. STRINGS.CODEX.MELLOWMALLOW.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.MELLOWMALLOW.BODY.CONTAINER1"
+msgid ""
+"The Mellow Mallow is a type of fungus that is known for its ease of "
+"propagation when cut.\n"
+"\n"
+"It is deadly when consumed, however creatures that mistakenly eat it are "
+"said to experience a state of extreme calm before death."
+msgstr ""
+"醇锦菇是一种真菌，以切割时易于繁殖而闻名。\n"
+"\n"
+"食用它是致命的，然而据说误食了醇锦菇的生物死亡前会体验到一种极度平静的状态。"
+
+#. STRINGS.CODEX.MELLOWMALLOW.SUBTITLE
+msgctxt "STRINGS.CODEX.MELLOWMALLOW.SUBTITLE"
+msgid "Decorative Plant"
+msgstr "装饰性植物"
+
+#. STRINGS.CODEX.MELLOWMALLOW.TITLE
+msgctxt "STRINGS.CODEX.MELLOWMALLOW.TITLE"
+msgid "Mellow Mallow"
+msgstr "醇锦菇"
 
 #. STRINGS.CODEX.MIRTHLEAF.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.MIRTHLEAF.BODY.CONTAINER1"
@@ -21763,6 +22178,46 @@ msgctxt "STRINGS.CODEX.NEGA.TITLE"
 msgid "Abyss Bug"
 msgstr "深渊虫"
 
+#. STRINGS.CODEX.NOSHBEAN.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.NOSHBEAN.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.NOSHBEAN.SUBTITLE
+msgctxt "STRINGS.CODEX.NOSHBEAN.SUBTITLE"
+msgid "Edible Plant"
+msgstr "食用性植物"
+
+#. STRINGS.CODEX.NOSHBEAN.TITLE
+msgctxt "STRINGS.CODEX.NOSHBEAN.TITLE"
+msgid "Nosh Bean Plant"
+msgstr "小吃豆植株"
+
+#. STRINGS.CODEX.OXYFERN.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.OXYFERN.BODY.CONTAINER1"
+msgid ""
+"Oxyferns have perhaps the highest metabolism in the plant kingdom, absorbing "
+"relatively large amounts of carbon dioxide and converting it into oxygen in "
+"quantities disproportionate to their small size.\n"
+"\n"
+"They subsequently thrive in areas with abundant animal wildlife or ambiently "
+"high carbon dioxide concentrations."
+msgstr ""
+"氧齿蕨可能是植物王国中代谢量最高的，吸收大量二氧化碳并将其转化成氧气，而这在"
+"数量上与它们的大小不成比例。\n"
+"\n"
+"它们会在野生动物丰富或二氧化碳含量高的地区旺盛生长。"
+
+#. STRINGS.CODEX.OXYFERN.SUBTITLE
+msgctxt "STRINGS.CODEX.OXYFERN.SUBTITLE"
+msgid "Plant"
+msgstr "植物"
+
+#. STRINGS.CODEX.OXYFERN.TITLE
+msgctxt "STRINGS.CODEX.OXYFERN.TITLE"
+msgid "Oxyfern"
+msgstr "氧齿蕨"
+
 #. STRINGS.CODEX.PACU.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.PACU.BODY.CONTAINER1"
 msgid ""
@@ -22548,6 +23003,21 @@ msgctxt "STRINGS.CODEX.SAGE.TITLE"
 msgid "Sage Hatch"
 msgstr "草壳哈奇"
 
+#. STRINGS.CODEX.SATURNCRITTERTRAP.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.SATURNCRITTERTRAP.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.SATURNCRITTERTRAP.SUBTITLE
+msgctxt "STRINGS.CODEX.SATURNCRITTERTRAP.SUBTITLE"
+msgid "Carnivorous Plant"
+msgstr "食肉植物"
+
+#. STRINGS.CODEX.SATURNCRITTERTRAP.TITLE
+msgctxt "STRINGS.CODEX.SATURNCRITTERTRAP.TITLE"
+msgid "Saturn Critter Trap"
+msgstr "土星动物捕草"
+
 #. STRINGS.CODEX.SCHOOLNEWSPAPER.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.SCHOOLNEWSPAPER.BODY.CONTAINER1"
 msgid "<b>Party Time for Local Students</b>"
@@ -22718,6 +23188,36 @@ msgctxt "STRINGS.CODEX.SMOOTH.TITLE"
 msgid "Smooth Hatch"
 msgstr "光滑哈奇"
 
+#. STRINGS.CODEX.SPINDLYGRUBFRUITPLANT.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.SPINDLYGRUBFRUITPLANT.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.SPINDLYGRUBFRUITPLANT.SUBTITLE
+msgctxt "STRINGS.CODEX.SPINDLYGRUBFRUITPLANT.SUBTITLE"
+msgid "Edible Plant"
+msgstr "食用性植物"
+
+#. STRINGS.CODEX.SPINDLYGRUBFRUITPLANT.TITLE
+msgctxt "STRINGS.CODEX.SPINDLYGRUBFRUITPLANT.TITLE"
+msgid "Spindly Grubfruit Plant"
+msgstr "贫瘠虫果植株"
+
+#. STRINGS.CODEX.SPORECHID.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.SPORECHID.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.SPORECHID.SUBTITLE
+msgctxt "STRINGS.CODEX.SPORECHID.SUBTITLE"
+msgid "Poisonous Plant"
+msgstr "有毒植物"
+
+#. STRINGS.CODEX.SPORECHID.TITLE
+msgctxt "STRINGS.CODEX.SPORECHID.TITLE"
+msgid "Sporechid"
+msgstr "孢子兰"
+
 #. STRINGS.CODEX.SQUEAKY.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.SQUEAKY.BODY.CONTAINER1"
 msgid "<smallcaps>Pictured: \"Squeaky\" Puft variant</smallcaps>"
@@ -22854,6 +23354,31 @@ msgctxt "STRINGS.CODEX.SUNNY.TITLE"
 msgid "Sun Bug"
 msgstr "阳光虫"
 
+#. STRINGS.CODEX.SWAMPCHARD.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.SWAMPCHARD.BODY.CONTAINER1"
+msgid ""
+"Swamp Chard is a unique member of the Amaranthaceae family that has adapted "
+"to grow in humid environments, in or near pools of standing water.\n"
+"\n"
+"While the leaves are technically edible, the most nutritious and palatable "
+"part of the plant is the heart, which is rich in a number of essential "
+"vitamins."
+msgstr ""
+"沼泽甜菜是苋科的独特一员，在潮湿环境，水池或水池旁生长。\n"
+"\n"
+"虽然叶子理论上是可食用的，但最有营养和可口的部分是植株的心，含有许多必需的维"
+"生素。"
+
+#. STRINGS.CODEX.SWAMPCHARD.SUBTITLE
+msgctxt "STRINGS.CODEX.SWAMPCHARD.SUBTITLE"
+msgid "Edible Plant"
+msgstr "食用性植物"
+
+#. STRINGS.CODEX.SWAMPCHARD.TITLE
+msgctxt "STRINGS.CODEX.SWAMPCHARD.TITLE"
+msgid "Swamp Chard"
+msgstr "沼泽甜菜"
+
 #. STRINGS.CODEX.SWEEPY.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.SWEEPY.BODY.CONTAINER1"
 msgid ""
@@ -22964,6 +23489,21 @@ msgstr "休假申请已批准"
 msgctxt "STRINGS.CODEX.TIMEOFFAPPROVED.TITLE2"
 msgid "SUBJECT: Vacation Request Approved"
 msgstr "主题：休假申请已批准"
+
+#. STRINGS.CODEX.TRANQUILTOES.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.TRANQUILTOES.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.TRANQUILTOES.SUBTITLE
+msgctxt "STRINGS.CODEX.TRANQUILTOES.SUBTITLE"
+msgid "Decorative Plant"
+msgstr "装饰性植物"
+
+#. STRINGS.CODEX.TRANQUILTOES.TITLE
+msgctxt "STRINGS.CODEX.TRANQUILTOES.TITLE"
+msgid "Tranquil Toes"
+msgstr "安宁芷"
 
 #. STRINGS.CODEX.TROPICAL.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.TROPICAL.BODY.CONTAINER1"
@@ -24593,7 +25133,7 @@ msgstr "作物加成：+{Amount}{Crop}"
 #. STRINGS.CREATURES.PLANT_MUTATIONS.BONUSLICE.DESCRIPTION
 msgctxt "STRINGS.CREATURES.PLANT_MUTATIONS.BONUSLICE.DESCRIPTION"
 msgid "Something about this mutation causes Meal Lice to pupate on this plant."
-msgstr "这种变异其妙地导致了米虱会在这株植物上化蛹。"
+msgstr "这种变异奇妙地导致了米虱会在这株植物上化蛹。"
 
 #. STRINGS.CREATURES.PLANT_MUTATIONS.BONUSLICE.NAME
 msgctxt "STRINGS.CREATURES.PLANT_MUTATIONS.BONUSLICE.NAME"
@@ -24624,7 +25164,7 @@ msgstr ""
 #. STRINGS.CREATURES.PLANT_MUTATIONS.HEAVYFRUIT.NAME
 msgctxt "STRINGS.CREATURES.PLANT_MUTATIONS.HEAVYFRUIT.NAME"
 msgid "Juicy Fruits"
-msgstr "多汁果实"
+msgstr "硕果"
 
 #. STRINGS.CREATURES.PLANT_MUTATIONS.LOADEDWITHFRUIT.DESCRIPTION
 msgctxt "STRINGS.CREATURES.PLANT_MUTATIONS.LOADEDWITHFRUIT.DESCRIPTION"
@@ -27391,13 +27931,12 @@ msgid ""
 "Swamp Chards are incapable of propagating but can be harvested for a single "
 "low quality and calorie dense <link=\"FOOD\">Food</link> serving."
 msgstr ""
-"沼泽甜菜叶无法繁育，但可以收获作为一次性的低卡路里<link=\"FOOD\">食物</"
-"link>。"
+"沼泽甜菜无法繁育，但可以收获作为一次性的低卡路里<link=\"FOOD\">食物</link>。"
 
 #. STRINGS.CREATURES.SPECIES.SWAMPFORAGEPLANTPLANTED.NAME
 msgctxt "STRINGS.CREATURES.SPECIES.SWAMPFORAGEPLANTPLANTED.NAME"
 msgid "<link=\"SWAMPFORAGEPLANTPLANTED\">Swamp Chard</link>"
-msgstr "<link=\"SWAMPFORAGEPLANTPLANTED\">沼泽甜菜叶</link>"
+msgstr "<link=\"SWAMPFORAGEPLANTPLANTED\">沼泽甜菜</link>"
 
 #. STRINGS.CREATURES.SPECIES.SWAMPHARVESTPLANT.DESC
 msgctxt "STRINGS.CREATURES.SPECIES.SWAMPHARVESTPLANT.DESC"
@@ -28835,10 +29374,38 @@ msgstr "冷藏"
 msgctxt "STRINGS.CREATURES.STATUSITEMS.REFRIGERATED.TOOLTIP"
 msgid ""
 "Ideal <style=\"KKeyword\">Temperature</style> storage is slowing this food's "
-"<style=\"KKeyword\">Decay Rate</style>"
+"<style=\"KKeyword\">Decay Rate</style>\n"
+"\n"
+"<style=\"KKeyword\">Temperatures</style> above <b>{RotTemperature}</b> spoil "
+"food more quickly\n"
+"\n"
+"Store food below {PreserveTemperature} to further reduce spoilage."
 msgstr ""
-"理想的储存<style=\"KKeyword\">温度</style>可以减慢食物<style=\"KKeyword\">腐"
-"烂速度</style>"
+"理想<style=\"KKeyword\">温度</style>存储条件使这种食物的<style=\"KKeyword\">"
+"腐烂速率</style>减慢\n"
+"\n"
+"<style=\"KKeyword\">温度</style>高于<b>{RotTemperature}</b>会让食物腐烂更快\n"
+"\n"
+"将食物在低于{PreserveTemperature}的条件下储存可进一步减慢腐烂。"
+
+#. STRINGS.CREATURES.STATUSITEMS.REFRIGERATEDFROZEN.NAME
+msgctxt "STRINGS.CREATURES.STATUSITEMS.REFRIGERATEDFROZEN.NAME"
+msgid "Deep Freeze"
+msgstr "深度冷冻"
+
+#. STRINGS.CREATURES.STATUSITEMS.REFRIGERATEDFROZEN.TOOLTIP
+msgctxt "STRINGS.CREATURES.STATUSITEMS.REFRIGERATEDFROZEN.TOOLTIP"
+msgid ""
+"<style=\"KKeyword\">Temperatures</style> below <b>{PreserveTemperature}</b> "
+"are greatly prolonging the shelf-life of this food\n"
+"\n"
+"<style=\"KKeyword\">Temperatures</style> above <b>{RotTemperature}</b> spoil "
+"food more quickly"
+msgstr ""
+"<style=\"KKeyword\">温度</style>低于<b>{PreserveTemperature}</b>会大大延长这"
+"种食物的保质期\n"
+"\n"
+"<style=\"KKeyword\">温度</style>高于<b>{RotTemperature}</b>会让食物腐烂更快"
 
 #. STRINGS.CREATURES.STATUSITEMS.RUMMAGINGSEED.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.RUMMAGINGSEED.NAME"
@@ -28961,7 +29528,7 @@ msgstr "这只小动物很饿，如果没人喂食很快就要饿死了"
 #. STRINGS.CREATURES.STATUSITEMS.STERILIZINGATMOSPHERE.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.STERILIZINGATMOSPHERE.NAME"
 msgid "Sterile Atmosphere"
-msgstr "保鲜环境"
+msgstr "抑菌大气环境"
 
 #. STRINGS.CREATURES.STATUSITEMS.STERILIZINGATMOSPHERE.TOOLTIP
 msgctxt "STRINGS.CREATURES.STATUSITEMS.STERILIZINGATMOSPHERE.TOOLTIP"
@@ -29055,9 +29622,13 @@ msgstr "未冷藏"
 #. STRINGS.CREATURES.STATUSITEMS.UNREFRIGERATED.TOOLTIP
 msgctxt "STRINGS.CREATURES.STATUSITEMS.UNREFRIGERATED.TOOLTIP"
 msgid ""
+"This food is warm\n"
+"\n"
 "<style=\"KKeyword\">Temperatures</style> above <b>{RotTemperature}</b> spoil "
 "food more quickly"
 msgstr ""
+"这个食物不冷\n"
+"\n"
 "<style=\"KKeyword\">温度</style>高于<b>{RotTemperature}</b>时食物变质得更快"
 
 #. STRINGS.CREATURES.STATUSITEMS.WILTING.NAME
@@ -35731,13 +36302,33 @@ msgstr ""
 "\n"
 "哇，大自然确实很整洁！"
 
-#. STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.NAME
-msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.NAME"
+#. STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.CONTAMINATED
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.CONTAMINATED"
 msgid "Contaminated Air"
 msgstr "受污染的空气"
 
-#. STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.NAME
-msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.NAME"
+#. STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.NORMAL
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.NORMAL"
+msgid "Normal Atmosphere"
+msgstr "正常大气环境"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.STERILE
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.STERILE"
+msgid "Sterile Atmosphere"
+msgstr "抑菌大气环境"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.FROZEN
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.FROZEN"
+msgid "Frozen"
+msgstr "冷冻"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.REFRIGERATED
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.REFRIGERATED"
+msgid "Refrigerated"
+msgstr "冷藏"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.UNREFRIGERATED
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.UNREFRIGERATED"
 msgid "Unrefrigerated"
 msgstr "未冷藏"
 
@@ -45704,15 +46295,15 @@ msgstr "{friend}被解冻了！"
 msgctxt "STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.CRYOFRIEND.DESCRIPTION"
 msgid ""
 "{dupe} has made an amazing discovery! A barely working <link=\"CRYOTANK"
-"\">Cryotank</link> has been uncovered containing a {friend} inside in a "
+"\">Cryotank 3000</link> has been uncovered containing a {friend} inside in a "
 "frozen state.\n"
 "\n"
 "{dupe} was successful in thawing {friend} and this encounter has filled both "
 "Duplicants with a sense of hope, something they will desperately need to "
 "keep their <link=\"MORALE\">Morale</link> up when facing the dangers ahead."
 msgstr ""
-"{dupe}有了惊人的发现！一个勉强还能运作的<link=\"CRYOTANK\">低温箱</link>被发"
-"现其中包含了一名处于冰冻状态的{friend}。\n"
+"{dupe}有了惊人的发现！一个勉强还能运作的<link=\"CRYOTANK\">低温箱3000</link>"
+"被发现其中包含了一名处于冰冻状态的{friend}。\n"
 "\n"
 "{dupe}将{friend}解冻成功，并且这次遭遇使两名复制人都充满了希望，而这种希望正"
 "是面对前方危险时保持<link=\"MORALE\">士气</link>高涨所需要的东西。"
@@ -50340,7 +50931,7 @@ msgstr "让复制人遵照我的指示行动的说明"
 #. STRINGS.MISC.NOTIFICATIONS.WORLDDETECTED.MESSAGEBODY
 msgctxt "STRINGS.MISC.NOTIFICATIONS.WORLDDETECTED.MESSAGEBODY"
 msgid ""
-"My Duplicants' astronomical efforts have uncovered a new Planetoids:\n"
+"My Duplicants' astronomical efforts have uncovered a new Planetoid:\n"
 "{0}"
 msgstr ""
 "我的复制人通过对太空的努力观察，发现了新的小行星：\n"
@@ -54313,6 +54904,11 @@ msgstr ""
 "水域\n"
 "水力\n"
 
+#. STRINGS.NAMEGEN.WORLD.SPACECRAFT_PREFIX
+msgctxt "STRINGS.NAMEGEN.WORLD.SPACECRAFT_PREFIX"
+msgid "Spacecraft: "
+msgstr "飞船："
+
 #. STRINGS.NAMEGEN.WORLD.SUFFIXES.GENERICLIST
 msgctxt "STRINGS.NAMEGEN.WORLD.SUFFIXES.GENERICLIST"
 msgid ""
@@ -57097,6 +57693,8 @@ msgstr ""
 #. STRINGS.SUBWORLDS.METALLIC.DESC
 msgctxt "STRINGS.SUBWORLDS.METALLIC.DESC"
 msgid ""
+"A plethora of metals pervade the Metallic Biome making it the go-to "
+"destination for a colony ramping up production for technological advancement."
 msgstr ""
 
 #. STRINGS.SUBWORLDS.METALLIC.NAME
@@ -57107,6 +57705,20 @@ msgstr "金属"
 #. STRINGS.SUBWORLDS.METALLIC.UTILITY
 msgctxt "STRINGS.SUBWORLDS.METALLIC.UTILITY"
 msgid ""
+"<link=\"GOLDAMALGAM\">Gold Amalgam</link> <link=\"ALUMINUMORE\">Aluminum "
+"Ore</link> and <link=\"COBALTITE\">Cobalt Ore</link> are in abundant supply "
+"throughout this entire biome. Refining these metals with a <link="
+"\"METALREFINERY\">Metal Refinery</link> will make them available for "
+"building advanced technologies.\n"
+"\n"
+"Though <link=\"CHLORINEGAS\">Chlorine</link> and <link=\"HYDROGEN"
+"\">Hydrogen</link> are the prevailing gasses in this biome, <link=\"OXYROCK"
+"\">Oxylite</link> exists in rock form and can provide <link=\"OXYGEN"
+"\">Oxygen</link> for Duplicants once they uncover it.\n"
+"\n"
+"<link=\"DIRT\">Dirt</link>, <link=\"CARBON\">Coal</link> and <link="
+"\"IGNEOUSROCK\">Igneous Rock</link> round out the rest of this biome, making "
+"it a great deposit of resources for a budding industrialized colony."
 msgstr ""
 
 #. STRINGS.SUBWORLDS.MOO.DESC
@@ -57231,7 +57843,11 @@ msgstr ""
 #. STRINGS.SUBWORLDS.RADIOACTIVE.DESC
 msgctxt "STRINGS.SUBWORLDS.RADIOACTIVE.DESC"
 msgid ""
+"A highly volatile environment containing a highly useful resource, this "
+"biome is invaluable when venturing into Nuclear technologies."
 msgstr ""
+"这种生态的环境高度不稳定，但含有非常有用的资源，对于核技术的探索来说是无价"
+"的。"
 
 #. STRINGS.SUBWORLDS.RADIOACTIVE.NAME
 msgctxt "STRINGS.SUBWORLDS.RADIOACTIVE.NAME"
@@ -57241,7 +57857,32 @@ msgstr "辐射"
 #. STRINGS.SUBWORLDS.RADIOACTIVE.UTILITY
 msgctxt "STRINGS.SUBWORLDS.RADIOACTIVE.UTILITY"
 msgid ""
+"<link=\"LEADSUIT\">Lead Suits</link> are imperative if my Duplicants are "
+"going to start exploring this biome as <link=\"RADIATIONSICKNESS"
+"\">Radioactive Contaminants</link> is a constant danger here.\n"
+"\n"
+"<link=\"BEE\">Beetas</link> pose a double threat as they are both highly "
+"radioactive and very aggressive. If they can be domesticated, however, <link="
+"\"BEEHIVE\">Beeta Hives</link>, provide a great service turning <link="
+"\"URANIUMORE\">Uranium</link> into <link=\"ENRICHEDURANIUM\">Enriched "
+"Uranium</link>.\n"
+"\n"
+"While the Radioactive Biome, and the Beetas contained within it, should be "
+"avoided at all costs if my Duplicants do not have the correct protection, my "
+"colony will need to trek into this dangerous biome if we are going to build "
+"any higher tier nuclear technologies."
 msgstr ""
+"如果我的复制人要开始探索这片生态，<link=\"LEADSUIT\">铅服</link>是非常必要"
+"的，因为这里<link=\"RADIATIONSICKNESS\">放射性污染物</link>是常在的危险。\n"
+"\n"
+"<link=\"BEE\">辐射蜂</link>有着双重威胁，因为它们有着高放射性同时具有攻击性。"
+"然而，<link=\"BEEHIVE\">辐射蜂巢</link>如果能够被\"驯化\"，就能提供将<link="
+"\"URANIUMORE\">铀</link>变成<link=\"ENRICHEDURANIUM\">浓缩铀</link>的极佳作"
+"用。\n"
+"\n"
+"如果我的复制人没有适当的防护，那就应该不惜一切代价避免接触辐射生态和其中的辐"
+"射蜂，但如果我们想要建立更高等级的核技术，我的殖民地就必须前往这片危险的生"
+"态。"
 
 #. STRINGS.SUBWORLDS.RUST.DESC
 msgctxt "STRINGS.SUBWORLDS.RUST.DESC"
@@ -59624,11 +60265,13 @@ msgstr "品质：{0}"
 #. STRINGS.UI.CODEX.FOOD.SPOILPROPERTIES
 msgctxt "STRINGS.UI.CODEX.FOOD.SPOILPROPERTIES"
 msgid ""
-"Preserve temperature: {0}\n"
-"Spoil time: {1}"
+"Refrigeration temperature: {0}\n"
+"Deep Freeze temperature: {1}\n"
+"Spoil time: {2}"
 msgstr ""
-"存放温度：{0}\n"
-"腐烂时间：{1}"
+"冷藏温度：{0}\n"
+"深度冷冻温度：{1}\n"
+"腐烂时间：{2}"
 
 #. STRINGS.UI.CODEX.FORWARD_BUTTON_NO_HISTORY_TOOLTIP
 msgctxt "STRINGS.UI.CODEX.FORWARD_BUTTON_NO_HISTORY_TOOLTIP"
@@ -59769,6 +60412,17 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.ALL_NAME"
 msgid "Battery"
 msgstr "电池"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA.CHECKCAPACITY
+msgctxt ""
+"STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA.CHECKCAPACITY"
+msgid "Check capacity"
+msgstr "检查容量"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA.CHECKDEAD
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA.CHECKDEAD"
+msgid "Check dead"
+msgstr "检查耗尽"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA_CHECK_CAPACITY.FAIL
 msgctxt ""
 "STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA_CHECK_CAPACITY.FAIL"
@@ -59811,6 +60465,11 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BEDDIAGNOSTIC.ALL_NAME"
 msgid "Beds"
 msgstr "床铺"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.BEDDIAGNOSTIC.CRITERIA.CHECKENOUGHBEDS
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BEDDIAGNOSTIC.CRITERIA.CHECKENOUGHBEDS"
+msgid "Check enough beds"
+msgstr "检查足够的床铺"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.BEDDIAGNOSTIC.MISSING_ASSIGNMENT
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BEDDIAGNOSTIC.MISSING_ASSIGNMENT"
 msgid "    • One or more Duplicants don't have an assigned bed"
@@ -59835,6 +60494,20 @@ msgstr "<b>床铺</b>"
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.ALL_NAME"
 msgid "Breathability"
 msgstr "可呼吸度"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.CRITERIA.CHECKLOWBREATHABILITY
+msgctxt ""
+"STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.CRITERIA."
+"CHECKLOWBREATHABILITY"
+msgid "Check low breathability"
+msgstr "检查低呼吸度"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.CRITERIA.CHECKSUFFOCATION
+msgctxt ""
+"STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.CRITERIA."
+"CHECKSUFFOCATION"
+msgid "Check suffocation"
+msgstr "检查窒息"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.NORMAL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.NORMAL"
@@ -59866,6 +60539,11 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.DECORDIAGNOSTIC.ALL_NAME"
 msgid "Decor"
 msgstr "装饰度"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.DECORDIAGNOSTIC.CRITERIA.CHECKDECOR
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.DECORDIAGNOSTIC.CRITERIA.CHECKDECOR"
+msgid "Check decor"
+msgstr "检查装饰"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.DECORDIAGNOSTIC.LOW
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.DECORDIAGNOSTIC.LOW"
 msgid "    • Decor levels are low"
@@ -59891,6 +60569,12 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.BUILDING_ENTOMBED"
 msgid "    • One or more buildings are entombed"
 msgstr "    • 至少有一个建筑被掩埋"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.CRITERIA.CHECKENTOMBED
+msgctxt ""
+"STRINGS.UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.CRITERIA.CHECKENTOMBED"
+msgid "Check entombed"
+msgstr "检查掩埋"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.NORMAL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.NORMAL"
 msgid "    • No buildings are entombed"
@@ -59905,6 +60589,27 @@ msgstr "<b>掩埋</b>"
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.ALL_NAME"
 msgid "Crops"
 msgstr "作物"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKHASFARMS
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKHASFARMS"
+msgid "Check colony has farms"
+msgstr "检查殖民地有农场"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKOPERATIONAL
+msgctxt ""
+"STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKOPERATIONAL"
+msgid "Check farm plots operational"
+msgstr "检查可运作的农地"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKPLANTED
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKPLANTED"
+msgid "Check farms are planted"
+msgstr "检查种植的农场"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKWILTING
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKWILTING"
+msgid "Check crops wilting"
+msgstr "检查作物枯萎"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.INOPERATIONAL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.INOPERATIONAL"
@@ -59975,6 +60680,16 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.ALL_NAME"
 msgid "Food"
 msgstr "食物"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA.CHECKENOUGHFOOD
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA.CHECKENOUGHFOOD"
+msgid "Check enough food"
+msgstr "检查足够的食物"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA.CHECKSTARVATION
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA.CHECKSTARVATION"
+msgid "Check starvation"
+msgstr "检查饥饿"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA_HAS_FOOD.FAIL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA_HAS_FOOD.FAIL"
 msgid "    • Duplicants have no food"
@@ -60010,6 +60725,11 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.TOOLTIP_NAME"
 msgid "<b>Food</b>"
 msgstr "<b>食物</b>"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA.CHECKWORLDHASMINIONS
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA.CHECKWORLDHASMINIONS"
+msgid "Check world has Duplicants"
+msgstr "检查世界有复制人"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_FAIL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_FAIL"
 msgid "Criteria not met"
@@ -60030,10 +60750,20 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.HEATDIAGNOSTIC.ALL_NAME"
 msgid "Battery"
 msgstr "电池"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.HEATDIAGNOSTIC.CRITERIA.CHECKHEAT
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.HEATDIAGNOSTIC.CRITERIA.CHECKHEAT"
+msgid "Check heat"
+msgstr "检查热量"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.IDLEDIAGNOSTIC.ALL_NAME
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.IDLEDIAGNOSTIC.ALL_NAME"
 msgid "Idleness"
 msgstr "闲置"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.IDLEDIAGNOSTIC.CRITERIA.CHECKIDLE
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.IDLEDIAGNOSTIC.CRITERIA.CHECKIDLE"
+msgid "Check idle"
+msgstr "检查闲置"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.IDLEDIAGNOSTIC.IDLE
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.IDLEDIAGNOSTIC.IDLE"
@@ -60076,10 +60806,20 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.NO_MINIONS_REQUESTED"
 msgid "    • Crew must be requested to update this diagnostic"
 msgstr "    • 需要成员来更新这项诊断"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME"
+msgid "Placeholder Criteria Name"
+msgstr "占位符标准名"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.ALL_NAME
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.ALL_NAME"
 msgid "Avg Power"
 msgstr "平均电力"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKPOWER
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKPOWER"
+msgid "Check power"
+msgstr "检查电力"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.NORMAL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.NORMAL"
@@ -60100,6 +60840,17 @@ msgstr "<b>平均电力</b>"
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.ALL_NAME"
 msgid "Radiation"
 msgstr "辐射"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA.CHECKEXPOSED
+msgctxt ""
+"STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA.CHECKEXPOSED"
+msgid "Check exposed"
+msgstr "检查暴露"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA.CHECKSICK
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA.CHECKSICK"
+msgid "Check sick"
+msgstr "检查生病"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA_RADIATION_EXPOSURE.FAIL_CONCERN
 msgctxt ""
@@ -60150,6 +60901,23 @@ msgstr "<b>辐射</b>"
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.ALL_NAME"
 msgid "<link=\"NUCLEARREACTOR\">Research Reactor</link>"
 msgstr "<link=\"NUCLEARREACTOR\">研究性反应堆</link>"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA.CHECKCOOLANT
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA.CHECKCOOLANT"
+msgid "Check coolant"
+msgstr "检查冷却剂"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA.CHECKTEMPERATURE
+msgctxt ""
+"STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA.CHECKTEMPERATURE"
+msgid "Check temperature"
+msgstr "检查温度"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA_COOLANT_WARNING
+msgctxt ""
+"STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA_COOLANT_WARNING"
+msgid "    • Coolant tank low"
+msgstr "    • 冷却液较少"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA_TEMPERATURE_WARNING
 msgctxt ""
@@ -60217,6 +60985,11 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.STRESSDIAGNOSTIC.ALL_NAME"
 msgid "Max Stress"
 msgstr "最大压力"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.STRESSDIAGNOSTIC.CRITERIA.CHECKSTRESSED
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.STRESSDIAGNOSTIC.CRITERIA.CHECKSTRESSED"
+msgid "Check stressed"
+msgstr "检查压力"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.STRESSDIAGNOSTIC.HIGH_STRESS
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.STRESSDIAGNOSTIC.HIGH_STRESS"
 msgid "    • One or more Duplicants is suffering high stress"
@@ -60236,6 +61009,18 @@ msgstr "<b>最大压力</b>"
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.ALL_NAME"
 msgid "Toilets"
 msgstr "厕所"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.CRITERIA.CHECKENOUGHTOILETS
+msgctxt ""
+"STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.CRITERIA.CHECKENOUGHTOILETS"
+msgid "Check enough toilets"
+msgstr "检查足够的厕所"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.CRITERIA.CHECKHASANYTOILETS
+msgctxt ""
+"STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.CRITERIA.CHECKHASANYTOILETS"
+msgid "Check has any toilets"
+msgstr "检查有厕所"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.FEW_TOILETS
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.FEW_TOILETS"
@@ -60271,6 +61056,13 @@ msgstr "<b>厕所</b>"
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.TRAPPEDDUPLICANTDIAGNOSTIC.ALL_NAME"
 msgid "Trapped"
 msgstr "受困"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.TRAPPEDDUPLICANTDIAGNOSTIC.CRITERIA.CHECKTRAPPED
+msgctxt ""
+"STRINGS.UI.COLONY_DIAGNOSTICS.TRAPPEDDUPLICANTDIAGNOSTIC.CRITERIA."
+"CHECKTRAPPED"
+msgid "Check Trapped"
+msgstr "检查受困"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.TRAPPEDDUPLICANTDIAGNOSTIC.NORMAL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.TRAPPEDDUPLICANTDIAGNOSTIC.NORMAL"
@@ -65437,8 +66229,8 @@ msgstr "Steam创意工坊"
 
 #. STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER
 msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
-msgid "BIGGER WORLDS"
-msgstr "更大的世界"
+msgid "PECULIAR PLANTS UPDATE"
+msgstr "奇花异草更新"
 
 #. STRINGS.UI.FRONTEND.MOTD.NEWS_BODY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.NEWS_BODY"
@@ -65456,24 +66248,32 @@ msgstr "加入讨论"
 #. STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY"
 msgid ""
-"<b>Big Asteroid Update</b>\n"
+"Welcome to the <b>Peculiar Plants Update!</b>\n"
 "\n"
-"Added a <b>Bigger, More Inclusive Terra Style</b> and <b>Spaced Out! Style "
-"Forest</b> cluster.\n"
+"   •<indent=20px>Crop plants now drop <b>Mutant Seeds</b> when exposed to "
+"radiation.</indent>\n"
 "\n"
-"Rebalanced rocketry to allow for easier and more customizable space travel.\n"
+"   •<indent=20px>Food spoilage and refrigeration have been rebalanced.</"
+"indent>\n"
 "\n"
-"Bug fixes, animation updates, and more. Check out the full patch notes for "
-"more details!"
+"   •<indent=20px>New <b>Meter Valves</b> allow precise plumbing deliveries.</"
+"indent>\n"
+"\n"
+"   •<indent=20px>Bug fixes, animation updates, and more.</indent>\n"
+"\n"
+"Check out the full patch notes for more details!"
 msgstr ""
-"<b>大小行星更新</b>\n"
+"欢迎来到<b>奇花异草更新！</b>\n"
 "\n"
-"添加了一个<b>更大，包含更多内容的类地风格</b>和<b>眼冒金星风格森林</b>星"
-"群。\n"
+"   •<indent=20px>现在作物植物暴露在辐射中可以掉落<b>变异种子</b>。</indent>\n"
 "\n"
-"重新平衡了火箭，使之更容易更能自定地进行太空旅行。\n"
+"   •<indent=20px>食物变质和冷藏以重新平衡。</indent>\n"
 "\n"
-"问题修复，动画更新，以及更多。请查看完整的更新日志了解详情！"
+"   •<indent=20px>新的<b>计量阀</b>能进行准确的管道输送。</indent>\n"
+"\n"
+"   •<indent=20px>漏洞修复，动画更新，以及更多。</indent>\n"
+"\n"
+"请查看完整的更新日志了解详情！"
 
 #. STRINGS.UI.FRONTEND.MOTD.UPDATE_TEXT
 msgctxt "STRINGS.UI.FRONTEND.MOTD.UPDATE_TEXT"
@@ -66288,6 +67088,21 @@ msgctxt "STRINGS.UI.FRONTEND.WORLDGENSCREEN.TITLE"
 msgid "NEW GAME"
 msgstr "新游戏"
 
+#. STRINGS.UI.GAMEOBJECTEFFECTS.AMBIENT_NO_MIN_RADIATION_FMT
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.AMBIENT_NO_MIN_RADIATION_FMT"
+msgid "Less than {maxRads}"
+msgstr "低于{maxRads}"
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.AMBIENT_RADIATION
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.AMBIENT_RADIATION"
+msgid "Ambient Radiation"
+msgstr "环境辐射"
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.AMBIENT_RADIATION_FMT
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.AMBIENT_RADIATION_FMT"
+msgid "{minRads} - {maxRads}"
+msgstr "{minRads} - {maxRads}"
+
 #. STRINGS.UI.GAMEOBJECTEFFECTS.CALORIES
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.CALORIES"
 msgid "+{0}"
@@ -66442,6 +67257,11 @@ msgstr "生长："
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.LIGHT"
 msgid "Light"
 msgstr "照明"
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.MUTANT_STERILE
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.MUTANT_STERILE"
+msgid "Doesn't Drop <link=\"PLANTS\">Seeds</link>"
+msgstr "不掉落<link=\"PLANTS\">种子</link>"
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.PLANT_DO_NOT_HARVEST
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.PLANT_DO_NOT_HARVEST"
@@ -66635,6 +67455,23 @@ msgstr ""
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.INITIALGROWTHTIME"
 msgid "This plant takes <b>{0}</b> to mature again once replanted"
 msgstr "这株植物在移植后，需要<b>{0}</b>才会再次成熟"
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.MUTANT_SEED_TOOLTIP
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.MUTANT_SEED_TOOLTIP"
+msgid ""
+"\n"
+"\n"
+"Growing near its maximum radiation increases the chance of mutant seeds "
+"being produced"
+msgstr ""
+"\n"
+"\n"
+"在其最大辐射环境附近生长会提高产生变异种子的几率"
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.MUTANT_STERILE
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.MUTANT_STERILE"
+msgid "Due to changes to its DNA this plant will not produce seeds of its own"
+msgstr "由于这株植物的DNA发生了变化，它自己不能再产生种子了"
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.REGROWTHTIME
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.REGROWTHTIME"
@@ -70947,6 +71784,15 @@ msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_FARM_TINKER.DESCRIPTION"
 msgid ""
 "<link=\"PLANTS\">Crop Tending</link> and Micronutrient Fertilizer Crafting"
 msgstr "<link=\"PLANTS\">作物照料</link>和微肥的制作"
+
+#. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_IDENTIFY_MUTANT_SEEDS.DESCRIPTION
+msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_IDENTIFY_MUTANT_SEEDS.DESCRIPTION"
+msgid ""
+"Can identify <style=\"KKeyword\">Mutant Seeds</style> at the <link="
+"\"GENETICANALYSISSTATION\">Botanical Analyzer</link>"
+msgstr ""
+"可以在在<link=\"GENETICANALYSISSTATION\">植物分析仪</link>中分析<style="
+"\"KKeyword\">变异种子</style>"
 
 #. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_PILOT_ROCKET.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_PILOT_ROCKET.DESCRIPTION"
@@ -75594,6 +76440,24 @@ msgid ""
 "The current <style=\"KKeyword\">Gas</style> pressure is <b>{pressure}</b>"
 msgstr "当前<style=\"KKeyword\">气压</style>为<b>{pressure}</b>"
 
+#. STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_RADIATION
+msgctxt "STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_RADIATION"
+msgid ""
+"This plant is sitting in <b>{rads}</b> of ambient <style=\"KKeyword"
+"\">Radiation</style>. It needs at between {minRads} and {maxRads} to grow"
+msgstr ""
+"这株植物正处于<b>{rads}</b>的环境<style=\"KKeyword\">辐射</style>中。它需要辐"
+"射在{minRads}和{maxRads}之间才能生长"
+
+#. STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_RADIATION_NO_MIN
+msgctxt "STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_RADIATION_NO_MIN"
+msgid ""
+"This plant is sitting in <b>{rads}</b> of ambient <style=\"KKeyword"
+"\">Radiation</style>. It needs less than {maxRads} to grow"
+msgstr ""
+"这株植物正处于<b>{rads}</b>的环境<style=\"KKeyword\">辐射</style>中。它需要辐"
+"射低于{maxRads}才能生长"
+
 #. STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_RECEPTACLE_INOPERATIONAL
 msgctxt "STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_RECEPTACLE_INOPERATIONAL"
 msgid "This plant is not housed in an operational farm plot"
@@ -76069,19 +76933,26 @@ msgctxt ""
 msgid "Select the first available landing site"
 msgstr "选择第一个可用着陆点"
 
-#. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_OBSTRUCTED
+#. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_PATH_OBSTRUCTED
 msgctxt ""
 "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN."
-"DROPDOWN_TOOLTIP_OBSTRUCTED"
+"DROPDOWN_TOOLTIP_PATH_OBSTRUCTED"
 msgid "Landing path obstructed"
 msgstr "着陆路径受阻"
+
+#. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_SITE_OBSTRUCTED
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN."
+"DROPDOWN_TOOLTIP_SITE_OBSTRUCTED"
+msgid "Landing site obstructed"
+msgstr "着陆点受阻"
 
 #. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_TOO_SHORT
 msgctxt ""
 "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN."
 "DROPDOWN_TOOLTIP_TOO_SHORT"
-msgid "Landing site too short for this rocket's height"
-msgstr "着陆点提供的高度太矮，不适合这艘火箭的高度"
+msgid "This rocket's height exceeds the space available in this landing site"
+msgstr "这艘火箭的高度超过了着陆点可用空间"
 
 #. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_VALID_SITE
 msgctxt ""
@@ -76822,40 +77693,30 @@ msgctxt "STRINGS.UI.UISIDESCREENS.GENESHUFFLERSIDESREEN.UNDERWAY"
 msgid "Neural Vacillation in progress."
 msgstr "神经振荡正在进行。"
 
-#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.CANCEL_SEED
-msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.CANCEL_SEED"
-msgid "Clear Analysis Target"
-msgstr "清除研究目标"
-
-#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.CURRENT_TARGET
-msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.CURRENT_TARGET"
-msgid "Currently studying:"
-msgstr "当前正在研究："
-
 #. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.NONE_DISCOVERED
 msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.NONE_DISCOVERED"
 msgid "No mutant seeds have been found."
 msgstr "尚未发现变异种子。"
 
-#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.PICK_TARGET
-msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.PICK_TARGET"
-msgid "Select a plant for study"
-msgstr "选择一种植物来研究"
+#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_ALLOWED
+msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_ALLOWED"
+msgid "</i>Will analyze</i>"
+msgstr "</i>将会分析</i>"
 
-#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_COMPLETE
-msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_COMPLETE"
-msgid "<i>Complete</i>"
-msgstr "<i>完成</i>"
+#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_FORBIDDEN
+msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_FORBIDDEN"
+msgid "</i>Won't analyze</i>"
+msgstr "</i>不会分析</i>"
 
-#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_PROGRESS_FMT
-msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_PROGRESS_FMT"
-msgid "{0}/{1} seeds"
-msgstr "{0}/{1}种子"
+#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_NO_MUTANTS
+msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_NO_MUTANTS"
+msgid "</i>No mutants found</i>"
+msgstr "</i>未找到变异</i>"
 
-#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SELECT_SEED
-msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SELECT_SEED"
-msgid "Select Analysis Target"
-msgstr "选择分析目标"
+#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SELECT_SEEDS
+msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SELECT_SEEDS"
+msgid "Select which seed types to analyze:"
+msgstr "选择要分析的种子类型："
 
 #. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.TITLE
 msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.TITLE"
@@ -76877,12 +77738,89 @@ msgctxt "STRINGS.UI.UISIDESCREENS.HABITATMODULESIDESCREEN.VIEW_BUTTON_TOOLTIP"
 msgid "What's goin' on in there?"
 msgstr "那里发生了什么？"
 
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_E
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_E"
+msgid "E"
+msgstr "东"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_N
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_N"
+msgid "N"
+msgstr "北"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_NE
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_NE"
+msgid "NE"
+msgstr "东北"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_NW
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_NW"
+msgid "NW"
+msgstr "西北"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_S
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_S"
+msgid "S"
+msgstr "南"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_SE
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_SE"
+msgid "SE"
+msgstr "东南"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_SW
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_SW"
+msgid "SW"
+msgstr "西南"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_W
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_W"
+msgid "W"
+msgstr "西"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.SELECTED_DIRECTION
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN."
+"SELECTED_DIRECTION"
+msgid "Selected direction: {0}"
+msgstr "已选方向：{0}"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.TITLE
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.TITLE"
+msgid "Emitting Particle Direction"
+msgstr "发射粒子方向"
+
 #. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.CURRENT_THRESHOLD
 msgctxt ""
 "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN."
 "CURRENT_THRESHOLD"
 msgid "Current Threshold: {0}%"
 msgstr "当前阈值：{0}%"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.PROGRESS_BAR_LABEL
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN."
+"PROGRESS_BAR_LABEL"
+msgid "Radbolt Generation"
+msgstr "辐射粒子生成"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.PROGRESS_BAR_TOOLTIP
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN."
+"PROGRESS_BAR_TOOLTIP"
+msgid ""
+"The building will emit a <style=\"KKeyword\">Radbolt</style> in the chosen "
+"direction when fully charged"
+msgstr ""
+"当完全充能后，建筑会向所选方向发射一个<style=\"KKeyword\">辐射粒子</style>"
 
 #. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.TITLE
 msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.TITLE"
@@ -77042,6 +77980,31 @@ msgstr "火箭平台"
 msgctxt "STRINGS.UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.WAITING_TO_LAND_PANEL"
 msgid "Waiting to land"
 msgstr "等待着陆"
+
+#. STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.AMOUNT
+msgctxt "STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.AMOUNT"
+msgid "Amount: {0}"
+msgstr "数量：{0}"
+
+#. STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.LIMIT
+msgctxt "STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.LIMIT"
+msgid "Limit:"
+msgstr "限制："
+
+#. STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.RESET_BUTTON
+msgctxt "STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.RESET_BUTTON"
+msgid "Reset Amount"
+msgstr "重置数量"
+
+#. STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.SLIDER_TOOLTIP_UNITS
+msgctxt "STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.SLIDER_TOOLTIP_UNITS"
+msgid "The amount of Units or Mass passing through the sensor."
+msgstr "通过传感器的单位或质量数量。"
+
+#. STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.TITLE
+msgctxt "STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.TITLE"
+msgid "Meter Control"
+msgstr "计量控制"
 
 #. STRINGS.UI.UISIDESCREENS.LOGIC_BUFFER_SIDE_SCREEN.TITLE
 msgctxt "STRINGS.UI.UISIDESCREENS.LOGIC_BUFFER_SIDE_SCREEN.TITLE"
@@ -77783,7 +78746,7 @@ msgstr "<b>需要侧向的地基。</b>"
 #. STRINGS.UI.UISIDESCREENS.PLANTERSIDESCREEN.SELECT_DESC
 msgctxt "STRINGS.UI.UISIDESCREENS.PLANTERSIDESCREEN.SELECT_DESC"
 msgid "Select a seed to plant."
-msgstr "选择要播的种子。"
+msgstr "选择要种植的种子。"
 
 #. STRINGS.UI.UISIDESCREENS.PLANTERSIDESCREEN.SELECT_TITLE
 msgctxt "STRINGS.UI.UISIDESCREENS.PLANTERSIDESCREEN.SELECT_TITLE"
@@ -78663,7 +79626,7 @@ msgstr ""
 #. STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.PRESSURE
 msgctxt "STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.PRESSURE"
 msgid "Ambient Pressure"
-msgstr "环境气压"
+msgstr "环境压力"
 
 #. STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.PRESSURE_TOOLTIP_ABOVE
 msgctxt ""
@@ -80055,6 +81018,18 @@ msgstr ""
 "件。\n"
 "\n"
 "新的数据库条目已解锁。"
+
+#. STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_CRYO_TANK
+msgctxt "STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_CRYO_TANK"
+msgid ""
+"There are some safety instructions included in the operating instructions of "
+"this Cryotank. I add them to my database.\n"
+"\n"
+"New Database Entry discoverd."
+msgstr ""
+"这个低温箱的操作说明上还包括安全说明。我将其添加到了我的数据库。\n"
+"\n"
+"发现新的数据库条目。"
 
 #. STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_DISPLAY
 msgctxt "STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_DISPLAY"
@@ -81574,6 +82549,7 @@ msgid ""
 "\n"
 "<smallcaps>Forest Moonlets have plenty of organic material but Duplicants "
 "will have to venture outside their starting biome quickly to find any metal."
+"</smallcaps>"
 msgstr ""
 "一个有着森林初始生态的小月球。\n"
 "\n"
@@ -81682,18 +82658,18 @@ msgctxt "STRINGS.WORLDS.MOOMOONLET.DESCRIPTION"
 msgid ""
 "A small world with unique local lifeforms.\n"
 "\n"
-"<smallcaps>Moo Moonlets are the natural breeding ground of Gassy Moos due to "
-"their abundance of Gas Grass and Methane.</smallcaps>"
+"<smallcaps>Moo Asteroids are the natural breeding ground of Gassy Moos due "
+"to their abundance of Gas Grass and Methane.</smallcaps>"
 msgstr ""
 "一个有着独特本体生物形态的小世界。\n"
 "\n"
-"<smallcaps>海牛小卫星是释气海牛的天然栖息地，因为这里有丰富的释气草和甲烷</"
+"<smallcaps>海牛小行星是释气海牛的天然栖息地，因为这里有丰富的释气草和甲烷</"
 "smallcaps>"
 
 #. STRINGS.WORLDS.MOOMOONLET.NAME
 msgctxt "STRINGS.WORLDS.MOOMOONLET.NAME"
-msgid "Moo Moonlet"
-msgstr "海牛小卫星"
+msgid "Moo Asteroid"
+msgstr "海牛小行星"
 
 #. STRINGS.WORLDS.MOON_BARREN.DESCRIPTION
 msgctxt "STRINGS.WORLDS.MOON_BARREN.DESCRIPTION"
@@ -82160,20 +83136,115 @@ msgctxt "STRINGS.WORLDS.WATERMOONLET.DESCRIPTION"
 msgid ""
 "A small, water-submerged world.\n"
 "\n"
-"<smallcaps>Water Moonlets possess a variety of liquid resources and are a "
+"<smallcaps>Water Asteroids possess a variety of liquid resources and are a "
 "natural source of Graphite. However, its thin surface and sparse "
 "construction material means Duplicants should come prepared for a swim.</"
 "smallcaps>"
 msgstr ""
 "一个充满着水的小型世界。\n"
 "\n"
-"<smallcaps>水域小卫星可以提供各种液体资源，并且是石墨的来源。然而，地表很小且"
+"<smallcaps>水域小行星可以提供各种液体资源，并且是石墨的来源。然而，地表很小且"
 "建筑材料稀疏，这意味着复制人得准备游泳了。</smallcaps>"
 
 #. STRINGS.WORLDS.WATERMOONLET.NAME
 msgctxt "STRINGS.WORLDS.WATERMOONLET.NAME"
-msgid "Water Moonlet"
-msgstr "水域小卫星"
+msgid "Water Asteroid"
+msgstr "水域小行星"
+
+#~ msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
+#~ msgid "BIGGER WORLDS"
+#~ msgstr "更大的世界"
+
+#~ msgctxt "STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY"
+#~ msgid ""
+#~ "<b>Big Asteroid Update</b>\n"
+#~ "\n"
+#~ "Added a <b>Bigger, More Inclusive Terra Style</b> and <b>Spaced Out! "
+#~ "Style Forest</b> cluster.\n"
+#~ "\n"
+#~ "Rebalanced rocketry to allow for easier and more customizable space "
+#~ "travel.\n"
+#~ "\n"
+#~ "Bug fixes, animation updates, and more. Check out the full patch notes "
+#~ "for more details!"
+#~ msgstr ""
+#~ "<b>大小行星更新</b>\n"
+#~ "\n"
+#~ "添加了一个<b>更大，包含更多内容的类地风格</b>和<b>眼冒金星风格森林</b>星"
+#~ "群。\n"
+#~ "\n"
+#~ "重新平衡了火箭，使之更容易更能自定地进行太空旅行。\n"
+#~ "\n"
+#~ "问题修复，动画更新，以及更多。请查看完整的更新日志了解详情！"
+
+#~ msgctxt ""
+#~ "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN."
+#~ "DROPDOWN_TOOLTIP_TOO_SHORT"
+#~ msgid "Landing site too short for this rocket's height"
+#~ msgstr "着陆点提供的高度太矮，不适合这艘火箭的高度"
+
+#~ msgctxt "STRINGS.CREATURES.STATUSITEMS.REFRIGERATED.TOOLTIP"
+#~ msgid ""
+#~ "Ideal <style=\"KKeyword\">Temperature</style> storage is slowing this "
+#~ "food's <style=\"KKeyword\">Decay Rate</style>"
+#~ msgstr ""
+#~ "理想的储存<style=\"KKeyword\">温度</style>可以减慢食物<style=\"KKeyword\">"
+#~ "腐烂速度</style>"
+
+#~ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.NAME"
+#~ msgid "Unrefrigerated"
+#~ msgstr "未冷藏"
+
+#~ msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.RESET_PORT_ACTIVE"
+#~ msgid ""
+#~ "<b><style=\"logic_on\">Green Signal</style></b>: Reset the amount "
+#~ "processed"
+#~ msgstr "<b><style=\"logic_on\">绿色信号</style></b>：重置已通过量"
+
+#~ msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.RESET_PORT_INACTIVE"
+#~ msgid "<b><style=\"logic_off\">Red Signal</style></b>: No effect"
+#~ msgstr "<b><style=\"logic_off\">红色信号</style></b>：无效果"
+
+#~ msgctxt "STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.LIMIT"
+#~ msgid "Amount Processed:"
+#~ msgstr "已通过量："
+
+#~ msgctxt "STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.RESET_BUTTON"
+#~ msgid "Reset"
+#~ msgstr "重置"
+
+#~ msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.CANCEL_SEED"
+#~ msgid "Clear Analysis Target"
+#~ msgstr "清除研究目标"
+
+#~ msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.CURRENT_TARGET"
+#~ msgid "Currently studying:"
+#~ msgstr "当前正在研究："
+
+#~ msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.PICK_TARGET"
+#~ msgid "Select a plant for study"
+#~ msgstr "选择一种植物来研究"
+
+#~ msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_COMPLETE"
+#~ msgid "<i>Complete</i>"
+#~ msgstr "<i>完成</i>"
+
+#~ msgctxt ""
+#~ "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_PROGRESS_FMT"
+#~ msgid "{0}/{1} seeds"
+#~ msgstr "{0}/{1}种子"
+
+#~ msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SELECT_SEED"
+#~ msgid "Select Analysis Target"
+#~ msgstr "选择分析目标"
+
+#~ msgctxt "STRINGS.WORLDS.MOOMOONLET.NAME"
+#~ msgid "Moo Moonlet"
+#~ msgstr "海牛小卫星"
+
+#~ msgctxt "STRINGS.WORLDS.WATERMOONLET.NAME"
+#~ msgid "Water Moonlet"
+#~ msgstr "水域小卫星"
 
 #~ msgctxt "STRINGS.CODEX.B10_AI.TITLE"
 #~ msgid "Artificial Intelligence"
@@ -82939,14 +84010,6 @@ msgstr "水域小卫星"
 #~ msgctxt "STRINGS.WORLDS.MOOMOONLET.DESCRIPTION"
 #~ msgid "..."
 #~ msgstr "……"
-
-#~ msgctxt "STRINGS.WORLDS.MOOMOONLET.NAME"
-#~ msgid "Moo Asteroid"
-#~ msgstr "海牛小行星"
-
-#~ msgctxt "STRINGS.WORLDS.WATERMOONLET.NAME"
-#~ msgid "Water Asteroid"
-#~ msgstr "水域小行星"
 
 #~ msgctxt ""
 #~ "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.SUFFICIENT_OXIDIZER.TOOLTIP.FAILURE"
@@ -91575,10 +92638,6 @@ msgstr "水域小卫星"
 #~ msgctxt "STRINGS.UI.TOOLTIPS.CANCELDECONSTRUCTIONBUTTON"
 #~ msgid "Cancel queued orders or deconstruct existing buildings"
 #~ msgstr "取消队列中的指令或拆除现有建筑"
-
-#~ msgctxt "STRINGS.UI.TOOLTIPS.CAPTUREBUTTON"
-#~ msgid "Capture critters"
-#~ msgstr "捕捉小动物"
 
 #~ msgctxt "STRINGS.UI.TOOLTIPS.CLEANUPMAINBUTTON"
 #~ msgid "Mop and sweep messy floors"

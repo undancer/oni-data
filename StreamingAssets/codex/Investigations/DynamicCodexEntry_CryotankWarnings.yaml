@@ -1,21 +1,23 @@
-id: "LeafyPlant"
-title: STRINGS.CODEX.MIRTHLEAF.TITLE
+id: "CryotankWarnings"
+title: STRINGS.CODEX.CRYOTANKWARNINGS.TITLE
 
 contentContainers:
 #-----------------------------
   - contentLayout: Vertical
+    lockID: cryotank_warning
     content:
       - !CodexText
-          stringKey: STRINGS.CODEX.MIRTHLEAF.TITLE
+          stringKey: STRINGS.CODEX.CRYOTANKWARNINGS.TITLE
           style: Title
       - !CodexText
-          stringKey: STRINGS.CODEX.MIRTHLEAF.SUBTITLE
+          stringKey: STRINGS.CODEX.CRYOTANKWARNINGS.SUBTITLE
           style: Subtitle
       - !CodexDividerLine
           preferredWidth: -1
 #-----------------------------
   - contentLayout: Vertical
+    lockID: cryotank_warning
     content:
       - !CodexText
-          stringKey: STRINGS.CODEX.MIRTHLEAF.BODY.CONTAINER1
+          stringKey: STRINGS.CODEX.CRYOTANKWARNINGS.BODY.CONTAINER1
           style: Body

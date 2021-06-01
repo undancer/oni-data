@@ -40,5 +40,5 @@ subworldTemplateRules:
         tagcommand: DistanceFromTag
         tag: AtStart
         minDistance: 1
-        maxDistance: 2
+        maxDistance: 3
 zoneType: FrozenWastes

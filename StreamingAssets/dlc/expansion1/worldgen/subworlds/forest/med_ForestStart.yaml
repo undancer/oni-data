@@ -1,11 +1,12 @@
 biomeNoise: noise/subworldForest
 temperatureRange: Room
-pdWeight: 2
+pdWeight: 4
 density:
   min: 10
-  max: 15
+  max: 20
 avoidRadius: 20.0
-minChildCount: 5
+extraBiomeChildren: 4
+doAvoidPoints: false
 dontRelaxChildren: true
 sampleBehaviour: PoissonDisk
 borderOverride: rocky
@@ -29,7 +30,7 @@ biomes:
       - med_ForestTree     
       - med_BasicSingleHarvestPlant
       - forestCluster_BasicSingleHarvestPlantSeed
-      - ForestForagePlantPlanted
+      - med_ForestForagePlantPlanted
       - med_LightBug
       - LeafyPlant        
       - LeafyPlantSeed

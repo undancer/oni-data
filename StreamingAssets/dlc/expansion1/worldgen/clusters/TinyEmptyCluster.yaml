@@ -4,6 +4,7 @@ requiredDlcId: EXPANSION1_ID
 menuOrder: 102
 coordinatePrefix: TNY-E-C
 skip: EditorOnly
+clusterCategory: 2
 
 startWorldIndex: 0 
 worldPlacements:

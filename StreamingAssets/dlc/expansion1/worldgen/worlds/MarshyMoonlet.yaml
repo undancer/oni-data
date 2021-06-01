@@ -37,7 +37,7 @@ subworldFiles:
   - name: expansion1::subworlds/marsh/med_HotMarshLandingSite
   - name: expansion1::subworlds/marsh/med_HotMarshInactive
   - name: expansion1::subworlds/jungle/med_JungleInactive
-    minCount: 2
+    minCount: 1
   - name: expansion1::subworlds/magma/BottomSmall
   
 unknownCellsAllowedSubworlds: 

@@ -44,6 +44,7 @@ subworldFiles:
     minCount: 4
   - name: expansion1::subworlds/radioactive/med_Radioactive
     minCount: 3
+    priority: 1
   - name: expansion1::subworlds/frozen/FrozenCore
   - name: expansion1::subworlds/radioactive/med_UraniumFields
   - name: expansion1::subworlds/radioactive/med_FrozenUraniumFields

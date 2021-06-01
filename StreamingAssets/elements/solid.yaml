@@ -513,7 +513,7 @@ elements:
     tags:
     - BuildableAny
     - RefinedMetal
-    buildMenuSort: 1
+    buildMenuSort: 10
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.DEPLETEDURANIUM.NAME
@@ -647,7 +647,7 @@ elements:
     radiationPer1000Mass: 25
     tags:
     materialCategory: ManufacturedMaterial
-    buildMenuSort: 1
+    buildMenuSort: 20
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.ENRICHEDURANIUM.NAME
@@ -2231,7 +2231,7 @@ elements:
     - BuildableAny
     - Metal
     - Noncrushable
-    buildMenuSort: 1
+    buildMenuSort: 10
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.URANIUMORE.NAME

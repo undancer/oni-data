@@ -21,8 +21,8 @@ startingBasePositionHorizontal:
   min: 0.5
   max: 0.5
 startingBasePositionVertical:
-  min: 0.45
-  max: 0.45
+  min: 0.46
+  max: 0.46
 
 # List all the zone files to load
 subworldFiles:
@@ -38,6 +38,7 @@ subworldFiles:
   - name: subworlds/rust/Rust
     minCount: 2
   - name: expansion1::subworlds/frozen/FrozenSlush
+    minCount: 2
   - name: expansion1::subworlds/jungle/JungleGassy
   - name: expansion1::subworlds/wasteland/WastelandWorm
     minCount: 3

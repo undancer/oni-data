@@ -1,7 +1,7 @@
 biomeNoise: noise/OilPockets
 temperatureRange: ExtremelyHot
 pdWeight: .5
-minChildCount: 2
+minChildCount: 6
 density:
   min: 15
   max: 25
