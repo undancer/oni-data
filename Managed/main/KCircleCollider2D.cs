@@ -18,7 +18,7 @@ public class KCircleCollider2D : KCollider2D
 		}
 	}
 
-	public override Bounds bounds => new Bounds(base.transform.GetPosition() + new Vector3(base.offset.x, base.offset.y, 0f), new Vector3(_radius, _radius, 0f));
+	public override Bounds bounds => new Bounds(base.transform.GetPosition() + new Vector3(base.offset.x, base.offset.y, 0f), new Vector3(_radius * 2f, _radius * 2f, 0f));
 
 	public override Extents GetExtents()
 	{

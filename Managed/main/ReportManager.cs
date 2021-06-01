@@ -545,7 +545,7 @@ public class ReportManager : KMonoBehaviour
 		},
 		{
 			ReportType.EnergyWasted,
-			new ReportGroup(GameUtil.GetFormattedRoundedJoules, reportIfZero: true, 3, UI.ENDOFDAYREPORT.ENERGY_WASTED.NAME, UI.ENDOFDAYREPORT.ENERGY_WASTED.POSITIVE_TOOLTIP, UI.ENDOFDAYREPORT.ENERGY_WASTED.NEGATIVE_TOOLTIP, ReportEntry.Order.Descending, ReportEntry.Order.Descending)
+			new ReportGroup(GameUtil.GetFormattedRoundedJoules, reportIfZero: true, 3, UI.ENDOFDAYREPORT.ENERGY_WASTED.NAME, UI.ENDOFDAYREPORT.NONE, UI.ENDOFDAYREPORT.ENERGY_WASTED.NEGATIVE_TOOLTIP, ReportEntry.Order.Descending, ReportEntry.Order.Descending)
 		},
 		{
 			ReportType.ContaminatedOxygenToilet,

@@ -13,11 +13,23 @@ namespace Steamworks
 		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bGroupAchievement;
 
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-		public string m_rgchAchievementName;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
+		private byte[] m_rgchAchievementName_;
 
 		public uint m_nCurProgress;
 
 		public uint m_nMaxProgress;
+
+		public string m_rgchAchievementName
+		{
+			get
+			{
+				return InteropHelp.ByteArrayToStringUTF8(m_rgchAchievementName_);
+			}
+			set
+			{
+				InteropHelp.StringToByteArrayUTF8(value, m_rgchAchievementName_, 128);
+			}
+		}
 	}
 }

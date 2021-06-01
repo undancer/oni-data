@@ -159,22 +159,33 @@ public class CellSelectionObject : KMonoBehaviour
 		mSelectable.SetName(Grid.Element[selectedCell].name);
 		DetailsScreen.Instance.Trigger(-1514841199);
 		UpdateStatusItem();
-		if (element.id == SimHashes.OxyRock)
+		int num = Grid.CellAbove(selectedCell);
+		bool flag = element.IsLiquid && Grid.IsValidCell(num) && (Grid.Element[num].IsGas || Grid.Element[num].IsVacuum);
+		if (element.sublimateId != 0 && (element.IsSolid || flag))
 		{
-			mSelectable.AddStatusItem(Db.Get().MiscStatusItems.OxyRockEmitting, this);
-			if (FlowRate <= 0f)
+			mSelectable.AddStatusItem(Db.Get().MiscStatusItems.SublimationEmitting, this);
+			GameUtil.IsEmissionBlocked(selectedCell, out var all_not_gaseous, out var all_over_pressure);
+			if (all_not_gaseous)
 			{
-				mSelectable.AddStatusItem(Db.Get().MiscStatusItems.OxyRockBlocked, this);
+				mSelectable.AddStatusItem(Db.Get().MiscStatusItems.SublimationBlocked, this);
+				mSelectable.RemoveStatusItem(Db.Get().MiscStatusItems.SublimationOverpressure);
+			}
+			else if (all_over_pressure)
+			{
+				mSelectable.AddStatusItem(Db.Get().MiscStatusItems.SublimationOverpressure, this);
+				mSelectable.RemoveStatusItem(Db.Get().MiscStatusItems.SublimationBlocked);
 			}
 			else
 			{
-				mSelectable.RemoveStatusItem(Db.Get().MiscStatusItems.OxyRockBlocked);
+				mSelectable.RemoveStatusItem(Db.Get().MiscStatusItems.SublimationOverpressure);
+				mSelectable.RemoveStatusItem(Db.Get().MiscStatusItems.SublimationBlocked);
 			}
 		}
 		else
 		{
-			mSelectable.RemoveStatusItem(Db.Get().MiscStatusItems.OxyRockEmitting);
-			mSelectable.RemoveStatusItem(Db.Get().MiscStatusItems.OxyRockBlocked);
+			mSelectable.RemoveStatusItem(Db.Get().MiscStatusItems.SublimationEmitting);
+			mSelectable.RemoveStatusItem(Db.Get().MiscStatusItems.SublimationBlocked);
+			mSelectable.RemoveStatusItem(Db.Get().MiscStatusItems.SublimationOverpressure);
 		}
 		if (Game.Instance.GetComponent<EntombedItemVisualizer>().IsEntombedItem(selectedCell))
 		{

@@ -37,7 +37,7 @@ public class RobotBatteryMonitor : GameStateMachine<RobotBatteryMonitor, RobotBa
 		lowBatteryStates.ToggleBehaviour(GameTags.Robots.Behaviours.RechargeBehaviour, (Instance data) => true).Enter(delegate
 		{
 		});
-		lowBatteryStates.lowBattery.ToggleStatusItem(Db.Get().RobotStatusItems.LowBattery).Transition(lowBatteryStates.mediumBattery, ChargeDecent).Exit(delegate
+		lowBatteryStates.lowBattery.ToggleStatusItem(Db.Get().RobotStatusItems.LowBattery, (Instance smi) => smi.gameObject).Transition(lowBatteryStates.mediumBattery, ChargeDecent).Exit(delegate
 		{
 		});
 		lowBatteryStates.mediumBattery.Transition(lowBatteryStates.lowBattery, GameStateMachine<RobotBatteryMonitor, Instance, IStateMachineTarget, Def>.Not(ChargeDecent)).Transition(highBattery, ChargeComplete);

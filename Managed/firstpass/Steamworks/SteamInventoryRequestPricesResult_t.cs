@@ -10,7 +10,19 @@ namespace Steamworks
 
 		public EResult m_result;
 
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-		public string m_rgchCurrency;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+		private byte[] m_rgchCurrency_;
+
+		public string m_rgchCurrency
+		{
+			get
+			{
+				return InteropHelp.ByteArrayToStringUTF8(m_rgchCurrency_);
+			}
+			set
+			{
+				InteropHelp.StringToByteArrayUTF8(value, m_rgchCurrency_, 4);
+			}
+		}
 	}
 }

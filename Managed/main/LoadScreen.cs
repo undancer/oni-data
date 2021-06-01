@@ -871,7 +871,7 @@ public class LoadScreen : KModalScreen
 		{
 			if (display != null)
 			{
-				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 447596u, 17);
+				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 464364u, 17);
 			}
 			return false;
 		}
@@ -1132,7 +1132,7 @@ public class LoadScreen : KModalScreen
 		{
 			return true;
 		}
-		return header.buildVersion > 447596;
+		return header.buildVersion > 464364;
 	}
 
 	private static bool IsSaveFileFromSpacedOut(SaveGame.Header header, SaveGame.GameInfo gameInfo)
@@ -1183,10 +1183,10 @@ public class LoadScreen : KModalScreen
 		SaveGame.GameInfo gameInfo = SaveLoader.LoadHeader(filename, out header);
 		string arg = null;
 		string arg2 = null;
-		if (header.buildVersion > 447596)
+		if (header.buildVersion > 464364)
 		{
 			arg = header.buildVersion.ToString();
-			arg2 = 447596u.ToString();
+			arg2 = 464364u.ToString();
 		}
 		else if (gameInfo.saveMajorVersion < 7)
 		{

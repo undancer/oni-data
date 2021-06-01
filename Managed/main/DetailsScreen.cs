@@ -172,6 +172,7 @@ public class DetailsScreen : KTabMenu
 			{
 				component2.SetName(newName);
 			}
+			TabTitle.UpdateRenameTooltip(target);
 		}
 	}
 
@@ -587,6 +588,7 @@ public class DetailsScreen : KTabMenu
 				TabTitle.SetSubText("");
 				TabTitle.SetUserEditable(editable: false);
 			}
+			TabTitle.UpdateRenameTooltip(target);
 		}
 	}
 

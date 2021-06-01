@@ -272,7 +272,11 @@ public class SandboxToolParameterMenu : KScreen
 		SandboxSettings sandboxSettings3 = settings;
 		sandboxSettings3.OnChangeDisease = (System.Action)Delegate.Combine(sandboxSettings3.OnChangeDisease, (System.Action)delegate
 		{
-			Disease disease = Db.Get().Diseases.Get(instance.settings.GetStringSetting("SandboxTools.SelectedDisease"));
+			Disease disease = Db.Get().Diseases.TryGet(instance.settings.GetStringSetting("SandboxTools.SelectedDisease"));
+			if (disease == null)
+			{
+				disease = Db.Get().Diseases.Get("FoodPoisoning");
+			}
 			diseaseSelector.button.GetComponentInChildren<LocText>().text = disease.Name;
 			diseaseSelector.button.GetComponentsInChildren<Image>()[1].sprite = Assets.GetSprite("germ");
 			diseaseCountSlider.SetRange(0f, 1000000f, resetCurrentValue: false);

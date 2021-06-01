@@ -460,5 +460,25 @@ namespace Steamworks
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_GetNumChatsWithUnreadPriorityMessages(CSteamAPIContext.GetSteamFriends());
 		}
+
+		public static void ActivateGameOverlayRemotePlayTogetherInviteDialog(CSteamID steamIDLobby)
+		{
+			InteropHelp.TestIfAvailableClient();
+			NativeMethods.ISteamFriends_ActivateGameOverlayRemotePlayTogetherInviteDialog(CSteamAPIContext.GetSteamFriends(), steamIDLobby);
+		}
+
+		public static bool RegisterProtocolInOverlayBrowser(string pchProtocol)
+		{
+			InteropHelp.TestIfAvailableClient();
+			using InteropHelp.UTF8StringHandle pchProtocol2 = new InteropHelp.UTF8StringHandle(pchProtocol);
+			return NativeMethods.ISteamFriends_RegisterProtocolInOverlayBrowser(CSteamAPIContext.GetSteamFriends(), pchProtocol2);
+		}
+
+		public static void ActivateGameOverlayInviteDialogConnectString(string pchConnectString)
+		{
+			InteropHelp.TestIfAvailableClient();
+			using InteropHelp.UTF8StringHandle pchConnectString2 = new InteropHelp.UTF8StringHandle(pchConnectString);
+			NativeMethods.ISteamFriends_ActivateGameOverlayInviteDialogConnectString(CSteamAPIContext.GetSteamFriends(), pchConnectString2);
+		}
 	}
 }

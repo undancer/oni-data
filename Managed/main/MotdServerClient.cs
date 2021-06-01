@@ -7,6 +7,27 @@ using UnityEngine.Networking;
 
 public class MotdServerClient
 {
+	public class MotdUpdateData
+	{
+		public string last_update_time
+		{
+			get;
+			set;
+		}
+
+		public string next_update_time
+		{
+			get;
+			set;
+		}
+
+		public string update_text_override
+		{
+			get;
+			set;
+		}
+	}
+
 	public class MotdResponse
 	{
 		public int version
@@ -63,19 +84,13 @@ public class MotdServerClient
 			set;
 		}
 
-		public string last_update_time
+		public MotdUpdateData vanilla_update_data
 		{
 			get;
 			set;
 		}
 
-		public string next_update_time
-		{
-			get;
-			set;
-		}
-
-		public string update_text_override
+		public MotdUpdateData expansion1_update_data
 		{
 			get;
 			set;
@@ -160,7 +175,8 @@ public class MotdServerClient
 				motdResponse.news_header_text = UI.FRONTEND.MOTD.NEWS_HEADER;
 				motdResponse.news_body_text = UI.FRONTEND.MOTD.NEWS_BODY;
 				motdResponse.patch_notes_summary = UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY;
-				motdResponse.update_text_override = UI.FRONTEND.MOTD.UPDATE_TEXT;
+				motdResponse.vanilla_update_data.update_text_override = UI.FRONTEND.MOTD.UPDATE_TEXT;
+				motdResponse.expansion1_update_data.update_text_override = UI.FRONTEND.MOTD.UPDATE_TEXT_EXPANSION1;
 			}
 			doCallback(motdResponse, null);
 		});

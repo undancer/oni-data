@@ -66,15 +66,40 @@ namespace STRINGS
 
 				public static LocString RECIPEDESC = string.Concat("An extremely powerful medication created to treat severe ", UI.FormatAsLink("Diseases", "DISEASE"), ". ", NAME, " is very effective against ", UI.FormatAsLink("Slimelung", "SLIMESICKNESS"), ".\n\nMust be administered by a Duplicant with the ", DUPLICANTS.ROLES.SENIOR_MEDIC.NAME, " Skill.");
 			}
+
+			public class BASICRADPILL
+			{
+				public static LocString NAME = "Basic Rad Pill";
+
+				public static LocString DESC = "Increases a Duplicant's natural radiation absorption rate.";
+
+				public static LocString RECIPEDESC = "A supplement that speeds up the rate at which a Duplicant body absorbs radiation, allowing them to manage increased radiation exposure.\n\nMust be taken daily.";
+			}
+
+			public class INTERMEDIATERADPILL
+			{
+				public static LocString NAME = "Intermediate Rad Pill";
+
+				public static LocString DESC = "Increases a Duplicant's natural radiation absorption rate.";
+
+				public static LocString RECIPEDESC = "A supplement that speeds up the rate at which a Duplicant body absorbs radiation, allowing them to manage increased radiation exposure.\n\nMust be taken daily.";
+			}
 		}
 
 		public class FOOD
 		{
+			public class FOODSPLAT
+			{
+				public static LocString NAME = "Food Splatter";
+
+				public static LocString DESC = "Food smeared on the wall from a recent Food Fight";
+			}
+
 			public class BURGER
 			{
 				public static LocString NAME = UI.FormatAsLink("Frost Burger", "BURGER");
 
-				public static LocString DESC = UI.FormatAsLink("Meat", "MEAT") + " and " + UI.FormatAsLink("Lettuce", "LETTUCE") + " on a chilled " + UI.FormatAsLink("Frost Bun", "COLDWHEATBREAD") + ".\n\nIt's the only burger ever to be served cold.";
+				public static LocString DESC = UI.FormatAsLink("Meat", "MEAT") + " and " + UI.FormatAsLink("Lettuce", "LETTUCE") + " on a chilled " + UI.FormatAsLink("Frost Bun", "COLDWHEATBREAD") + ".\n\nIt's the only burger best served cold.";
 
 				public static LocString RECIPEDESC = UI.FormatAsLink("Meat", "MEAT") + " and " + UI.FormatAsLink("Lettuce", "LETTUCE") + " on a chilled " + UI.FormatAsLink("Frost Bun", "COLDWHEATBREAD") + ".";
 			}
@@ -104,6 +129,24 @@ namespace STRINGS
 				public static LocString RECIPEDESC = "Flavorful " + UI.FormatAsLink("Mushrooms", "MUSHROOM") + " wrapped in " + UI.FormatAsLink("Lettuce", "LETTUCE") + ".";
 			}
 
+			public class MICROWAVEDLETTUCE
+			{
+				public static LocString NAME = UI.FormatAsLink("Microwaved Lettuce", "MICROWAVEDLETTUCE");
+
+				public static LocString DESC = string.Concat(UI.FormatAsLink("Lettuce", "LETTUCE"), " scrumptiously wilted in the ", BUILDINGS.PREFABS.GAMMARAYOVEN.NAME, ".");
+
+				public static LocString RECIPEDESC = string.Concat(UI.FormatAsLink("Lettuce", "LETTUCE"), " scrumptiously wilted in the ", BUILDINGS.PREFABS.GAMMARAYOVEN.NAME, ".");
+			}
+
+			public class GAMMAMUSH
+			{
+				public static LocString NAME = UI.FormatAsLink("Gamma Mush", "GAMMAMUSH");
+
+				public static LocString DESC = "A disturbingly delicious mixture of irradiated dirt and water.";
+
+				public static LocString RECIPEDESC = string.Concat(UI.FormatAsLink("Mush Fry", "FRIEDMUSHBAR"), " reheated in a ", BUILDINGS.PREFABS.GAMMARAYOVEN.NAME, ".");
+			}
+
 			public class FRUITCAKE
 			{
 				public static LocString NAME = UI.FormatAsLink("Berry Sludge", "FRUITCAKE");
@@ -111,6 +154,15 @@ namespace STRINGS
 				public static LocString DESC = "A mashed up " + UI.FormatAsLink("Bristle Berry", "PRICKLEFRUIT") + " sludge with an exceptionally long shelf life.\n\nIts aggressive, overbearing sweetness can leave the tongue feeling temporarily numb.";
 
 				public static LocString RECIPEDESC = "A mashed up " + UI.FormatAsLink("Bristle Berry", "PRICKLEFRUIT") + " sludge with an exceptionally long shelf life.";
+			}
+
+			public class POPCORN
+			{
+				public static LocString NAME = UI.FormatAsLink("Popcorn", "POPCORN");
+
+				public static LocString DESC = string.Concat(UI.FormatAsLink("Sleet Wheat Grain", "COLDWHEATSEED"), " popped in a ", BUILDINGS.PREFABS.GAMMARAYOVEN.NAME, ".\n\nCompletely devoid of any fancy flavorings.");
+
+				public static LocString RECIPEDESC = "Gamma radiated " + UI.FormatAsLink("Sleet Wheat Grain", "COLDWHEATSEED") + ".";
 			}
 
 			public class SUSHI
@@ -188,6 +240,13 @@ namespace STRINGS
 				public static LocString NAME = UI.FormatAsLink("Meat", "MEAT");
 
 				public static LocString DESC = "Uncooked meat from a very dead critter. Yum!";
+			}
+
+			public class PLANTMEAT
+			{
+				public static LocString NAME = UI.FormatAsLink("Plant Meat", "PLANTMEAT");
+
+				public static LocString DESC = "Planty plant meat from a plant. How nice!";
 			}
 
 			public class MUSHROOM
@@ -274,6 +333,63 @@ namespace STRINGS
 				public static LocString DESC = "The grilled bud of a " + UI.FormatAsLink("Bristle Berry", "PRICKLEFRUIT") + ".\n\nHeat unlocked an exquisite taste in the fruit, though the burnt spines leave something to be desired.";
 
 				public static LocString RECIPEDESC = "The grilled bud of a " + UI.FormatAsLink("Bristle Berry", "PRICKLEFRUIT") + ".";
+			}
+
+			public class SWAMPFRUIT
+			{
+				public static LocString NAME = UI.FormatAsLink("Bog Jelly", "SWAMPFRUIT");
+
+				public static LocString DESC = "A fruit with an outer film that contains chewy gelatinous cubes.";
+			}
+
+			public class SWAMPDELIGHTS
+			{
+				public static LocString NAME = UI.FormatAsLink("Swampy Delights", "SWAMPDELIGHTS");
+
+				public static LocString DESC = "Dried gelatinous cubes from a " + UI.FormatAsLink("Bog Jelly", "SWAMPFRUIT") + ".\n\nEach cube has a wonderfully chewy texture and is lightly coated in a delicate powder.";
+
+				public static LocString RECIPEDESC = "Dried gelatinous cubes from a " + UI.FormatAsLink("Bog Jelly", "SWAMPFRUIT") + ".";
+			}
+
+			public class WORMBASICFRUIT
+			{
+				public static LocString NAME = UI.FormatAsLink("Spindly Grubfruit", "WORMBASICFRUIT");
+
+				public static LocString DESC = "A " + UI.FormatAsLink("Grubfruit", "WORMSUPERFRUIT") + " that failed to develop properly.\n\nIt is nonetheless edible, and vaguely tasty.";
+			}
+
+			public class WORMBASICFOOD
+			{
+				public static LocString NAME = UI.FormatAsLink("Roast Grubfruit Nut", "WORMBASICFOOD");
+
+				public static LocString DESC = "Slow roasted " + UI.FormatAsLink("Spindly Grubfruit", "WORMBASICFRUIT") + ".\n\nIt has a smoky aroma and tastes of coziness.";
+
+				public static LocString RECIPEDESC = "Slow roasted " + UI.FormatAsLink("Spindly Grubfruit", "WORMBASICFRUIT") + ".";
+			}
+
+			public class WORMSUPERFRUIT
+			{
+				public static LocString NAME = UI.FormatAsLink("Grubfruit", "WORMSUPERFRUIT");
+
+				public static LocString DESC = "A plump, healthy fruit with a honey-like taste.";
+			}
+
+			public class WORMSUPERFOOD
+			{
+				public static LocString NAME = UI.FormatAsLink("Grubfruit Preserve", "WORMSUPERFOOD");
+
+				public static LocString DESC = "A long lasting " + UI.FormatAsLink("Grubfruit", "WORMSUPERFRUIT") + " jam preserved in " + UI.FormatAsLink("Sucrose", "SUCROSE") + ".\n\nThe thick, goopy jam retains the shape of the jar when poured out, but the sweet taste can't be matched.";
+
+				public static LocString RECIPEDESC = "A long lasting " + UI.FormatAsLink("Grubfruit", "WORMSUPERFRUIT") + " jam preserved in " + UI.FormatAsLink("Sucrose", "SUCROSE") + ".";
+			}
+
+			public class BERRYPIE
+			{
+				public static LocString NAME = UI.FormatAsLink("Mixed Berry Pie", "BERRYPIE");
+
+				public static LocString DESC = "A pie made primarily of " + UI.FormatAsLink("Grubfruit", "WORMSUPERFRUIT") + " and " + UI.FormatAsLink("Gristle Berries", "PRICKLEFRUIT") + ".\n\nThe mixture of berries creates a fragrant, colorful filling that packs a sweet punch.";
+
+				public static LocString RECIPEDESC = "A pie made primarily of " + UI.FormatAsLink("Grubfruit", "WORMSUPERFRUIT") + " and " + UI.FormatAsLink("Gristle Berries", "PRICKLEFRUIT") + ".";
 			}
 
 			public class COLDWHEATBREAD
@@ -372,6 +488,13 @@ namespace STRINGS
 				public static LocString NAME = UI.FormatAsLink("Hexalent Fruit", "FORESTFORAGEPLANT");
 
 				public static LocString DESC = "A seedless fruit with an unusual rubbery texture.\n\nIt cannot be replanted.\n\nHexalent fruit is much more calorie dense than Muckroot fruit.";
+			}
+
+			public class SWAMPFORAGEPLANT
+			{
+				public static LocString NAME = UI.FormatAsLink("Swamp Chard Heart", "SWAMPFORAGEPLANT");
+
+				public static LocString DESC = "A seedless plant with a squishy, juicy center and an awful smell.\n\nIt cannot be replanted.";
 			}
 
 			public class ROTPILE
@@ -516,6 +639,13 @@ namespace STRINGS
 
 				public static LocString DESC = string.Concat("A seasoning that Duplicants can add to their ", UI.FormatAsLink("Food", "FOOD"), " to boost ", UI.FormatAsLink("Morale", "MORALE"), ".\n\nDuplicants will automatically use Table Salt while sitting at a ", BUILDINGS.PREFABS.DININGTABLE.NAME, " during mealtime.\n\n<i>Only the finest grains are chosen.</i>");
 			}
+
+			public class REFINED_SUGAR
+			{
+				public static LocString NAME = "Refined Sugar";
+
+				public static LocString DESC = string.Concat("A seasoning that Duplicants can add to their ", UI.FormatAsLink("Food", "FOOD"), " to boost ", UI.FormatAsLink("Morale", "MORALE"), ".\n\nDuplicants will automatically use Refined Sugar while sitting at a ", BUILDINGS.PREFABS.DININGTABLE.NAME, " during mealtime.\n\n<i>Only the finest grains are chosen.</i>");
+			}
 		}
 
 		public class CARGO_CAPSULE
@@ -523,6 +653,23 @@ namespace STRINGS
 			public static LocString NAME = "Care Package";
 
 			public static LocString DESC = "A delivery system for recently printed resources.\n\nIt will dematerialize shortly.";
+		}
+
+		public class RAILGUNPAYLOAD
+		{
+			public static LocString NAME = UI.FormatAsLink("Interplanetary Payload", "RAILGUNPAYLOAD");
+
+			public static LocString DESC = string.Concat("Contains resources packed for interstellar shipping.\n\nCan be launched by a ", BUILDINGS.PREFABS.RAILGUN.NAME, " or unpacked with a ", BUILDINGS.PREFABS.RAILGUNPAYLOADOPENER.NAME, ".");
+		}
+
+		public class RADIATION
+		{
+			public class HIGHENERGYPARITCLE
+			{
+				public static LocString NAME = "High Energy Particles";
+
+				public static LocString DESC = "A concentrated field of " + UI.FormatAsLink("High Enery Particles", "HIGHENERGYPARTICLES") + " that can be largely redirected using a " + UI.FormatAsLink("Particle Reflector", "PARTICLEREFLECTOR") + ".";
+			}
 		}
 	}
 }

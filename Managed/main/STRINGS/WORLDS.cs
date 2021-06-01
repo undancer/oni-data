@@ -4,9 +4,13 @@ namespace STRINGS
 	{
 		public static class SURVIVAL_CHANCE
 		{
-			public static LocString TITLE = "Survival Chance: <color=#{1}>{0}</color></b>";
+			public static LocString TITLE = "\nSurvival Chance: <b><color=#{1}>{0}</color></b>";
 
-			public static LocString PLANETNAME = "Name: {0}";
+			public static LocString PLANETNAME = "<b>Starting Asteroid</b>: {0}\n";
+
+			public static LocString CLUSTERNAME = "<b>Cluster Name</b>: {0}";
+
+			public static LocString MOONNAMES = string.Concat("\n<b>Surrounding ", UI.CLUSTERMAP.PLANETOID, "s</b>:");
 
 			public static LocString MOSTHOSPITABLE = "Ideal";
 
@@ -90,14 +94,154 @@ namespace STRINGS
 		{
 			public static LocString NAME = "Helicona";
 
-			public static LocString DESCRIPTION = "Due to its highly eliptical orbit around its host star, this rock is cold. Oh so very cold.";
+			public static LocString DESCRIPTION = "Due to its highly elliptical orbit around its host star, this rock is cold. Oh so very cold.\n\n<smallcaps></smallcaps>\n\n";
 		}
 
 		public static class THE_ROCK
 		{
 			public static LocString NAME = "The Rock";
 
-			public static LocString DESCRIPTION = "This place really rocks.";
+			public static LocString DESCRIPTION = "This place really rocks.\n\n<smallcaps></smallcaps>\n\n";
+		}
+
+		public static class MOON_BARREN
+		{
+			public static LocString NAME = "Barren Moon";
+
+			public static LocString DESCRIPTION = "A smaller planetoid in orbit around a larger, resource rich world.\n\n<smallcaps>Barren Moons are rich in minerals, but Duplicants will need to branch out into space early to find the resources the colony needs to stay alive.</smallcaps>\n\n";
+		}
+
+		public static class IDEALLANDINGSITE
+		{
+			public static LocString NAME = "Irradiated Forest Asteroid";
+
+			public static LocString DESCRIPTION = "A mid-sized sandstone and forest world with significant radiation.\n\n<smallcaps>Irradiated Forest Asteroids have an abundance of metal for the taking if Duplicants can withstand the planetoid's radiation.</smallcaps>";
+		}
+
+		public class METALHEAVYLANDINGSITE
+		{
+			public static LocString NAME = "Irradiated Marsh Asteroid";
+
+			public static LocString DESCRIPTION = "A marshy world with significant radiation.\n\n<smallcaps>Irradiated Marsh Asteroids have an abundance of metal for the taking if Duplicants can withstand the planetoid's radiation.</smallcaps>";
+		}
+
+		public class TERRAMOONLET
+		{
+			public static LocString NAME = "Sandstone Asteroid";
+
+			public static LocString DESCRIPTION = "A balanced variety of resources on a smaller world.\n\n<smallcaps>Terra Asteroids have everything needed to start a colony in a compact area. With a short distance to the surface, inter-world travel can be achieved quickly.</smallcaps>";
+		}
+
+		public class WARPOILYSWAMP
+		{
+			public static LocString NAME = "Oily Swamp Asteroid";
+
+			public static LocString DESCRIPTION = "A partially frozen world with an oily core.\n\n<smallcaps>While Oily Swamp Asteroids are largely swampy, they also contain a great deal of rust.</smallcaps>";
+		}
+
+		public class OILRICHWARPTARGET
+		{
+			public static LocString NAME = "Rusty Oil Asteroid";
+
+			public static LocString DESCRIPTION = "A rusty mid-sized world with an oily core.\n\n<smallcaps>Duplicants must sift through a great deal of rust and ocean to reach the prize of this planetoid's oil.</smallcaps>";
+		}
+
+		public class STRANGERICHSANDSTONE
+		{
+			public static LocString NAME = "Rocky Asteroid";
+
+			public static LocString DESCRIPTION = "A petite rocky world with an oily core.\n\n<smallcaps>Though it looks deceptively nondescript from space, readings from this planet suggest a strong fuel source lurks somewhere beneath the surface.</smallcaps>";
+		}
+
+		public class SULFURMOONLET
+		{
+			public static LocString NAME = "Brimstonia Asteroid";
+
+			public static LocString DESCRIPTION = "A smaller landmass with a distinct odor.\n\n<smallcaps>Brimstonia Asteroids contain an abundant supply of Sulfur.</smallcaps>";
+		}
+
+		public class NIOBIUMMOONLET
+		{
+			public static LocString NAME = "Superconductive Asteroid";
+
+			public static LocString DESCRIPTION = "A small location with an abundance of Niobium.\n\n<smallcaps>Superconductive Asteroids offer rich veins of Niobium to Duplicants that can withstand its molten rivers of magma.</smallcaps>";
+		}
+
+		public class OILYMOONLET
+		{
+			public static LocString NAME = "Viscosia Asteroid";
+
+			public static LocString DESCRIPTION = "A small location with an abundance of fossil fuels.\n\n<smallcaps>Viscosia Asteroids are filled with valuable crude oil, natural gas, and ethanol deposits at the expense of other essential resources. Early expansion to other planetoids will be essential for survival.</smallcaps>";
+		}
+
+		public class MARSHYMOONLET
+		{
+			public static LocString NAME = "Marshy Asteroid";
+
+			public static LocString DESCRIPTION = "A small location with an abundance of marshland.\n\n<smallcaps>While Marshy Asteroids offer an abundance of organic resources like Slime Mold and Algae, their air quality poses a significant disease risk for Duplicants.</smallcaps>";
+		}
+
+		public class TUNDRAMOONLET
+		{
+			public static LocString NAME = "Tundra Asteroid";
+
+			public static LocString DESCRIPTION = "A small frozen planetoid with sub-zero temperatures.\n\n<smallcaps>Duplicants that travel to Tundra Asteroids will need to wear protective gear due to its harsh environment.</smallcaps>";
+		}
+
+		public class SWAMPMOONLET
+		{
+			public static LocString NAME = "Swampy Asteroid";
+
+			public static LocString DESCRIPTION = "A large, polluted swamp world.\n\n<smallcaps>Swampy Asteroids are a great mass of frozen slush and wasteland. With a short distance to the surface, inter-world travel can be achieved quickly.</smallcaps>";
+		}
+
+		public class TINYSTART
+		{
+			public static LocString NAME = "Tiny Start FOR DEVS";
+
+			public static LocString DESCRIPTION = "A cozy little starter location, just for Devs.";
+		}
+
+		public class TINYEMPTY
+		{
+			public static LocString NAME = "Tiny Empty FOR DEVS";
+
+			public static LocString DESCRIPTION = "A fun-sized 'fixer upper', perfect for Game Devs.";
+		}
+
+		public class TINYSURFACE
+		{
+			public static LocString NAME = "Tiny Surface FOR DEVS";
+
+			public static LocString DESCRIPTION = "A cute little Dev location, with scenic space views.";
+		}
+
+		public class TINYMAGMA
+		{
+			public static LocString NAME = "Tiny Magma FOR DEVS";
+
+			public static LocString DESCRIPTION = "A small hellscape just for devs.";
+		}
+
+		public class TINYICE
+		{
+			public static LocString NAME = "Tiny Ice FOR DEVS";
+
+			public static LocString DESCRIPTION = "A tiny ice cold world for dev snow forts.";
+		}
+
+		public class TINYFOREST
+		{
+			public static LocString NAME = "Tiny Forest FOR DEVS";
+
+			public static LocString DESCRIPTION = "A petite forest world for nature loving devs.";
+		}
+
+		public class TWINMOONLET
+		{
+			public static LocString NAME = "Tiny Twin Asteroid FOR DEVS";
+
+			public static LocString DESCRIPTION = "Two small dev worlds for the price of one.";
 		}
 	}
 }

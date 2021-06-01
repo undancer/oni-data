@@ -50,7 +50,7 @@ public class GravityComponents : KGameObjectComponentManager<GravityComponent>
 				vector2 *= tuning.maxVelocity / Mathf.Sqrt(sqrMagnitude);
 			}
 			int num2 = Grid.PosToCell(vector);
-			bool flag = Grid.IsVisiblyInLiquid(vector + new Vector2(0f, value.radius));
+			bool flag = Grid.IsVisiblyInLiquid(vector + new Vector2(0f, value.yOffset + value.extents.y));
 			if (flag)
 			{
 				flag = true;
@@ -66,8 +66,8 @@ public class GravityComponents : KGameObjectComponentManager<GravityComponent>
 			value.elapsedTime += dt;
 			Vector2 vector3 = vector + vector2 * dt;
 			Vector2 pos = vector3;
-			pos.y -= value.radius;
-			bool flag2 = Grid.IsVisiblyInLiquid(vector3 + new Vector2(0f, value.radius));
+			pos.y = vector3.y + value.yOffset - value.extents.y;
+			bool flag2 = Grid.IsVisiblyInLiquid(vector3 + new Vector2(0f, value.yOffset + value.extents.y));
 			if (!flag && flag2)
 			{
 				KBatchedAnimController kBatchedAnimController = FXHelpers.CreateEffect("splash_step_kanim", new Vector3(vector3.x, vector3.y, 0f) + new Vector3(-0.38f, 0.75f, -0.1f), null, update_looping_sounds_position: false, Grid.SceneLayer.FXFront);
@@ -105,7 +105,9 @@ public class GravityComponents : KGameObjectComponentManager<GravityComponent>
 				}
 				if (flag3)
 				{
-					vector3.y = Grid.CellToPosCBC(Grid.CellAbove(num6), Grid.SceneLayer.Move).y + value.radius;
+					Vector3 vector4 = Grid.CellToPosCBC(Grid.CellAbove(num6), Grid.SceneLayer.Move);
+					float num7 = value.extents.y - value.yOffset;
+					vector3.y = vector4.y + num7;
 					value.velocity.x = 0f;
 					value.elapsedTime = -1f;
 					value.transform.SetPosition(new Vector3(vector3.x, vector3.y, position.z));
@@ -118,22 +120,22 @@ public class GravityComponents : KGameObjectComponentManager<GravityComponent>
 					continue;
 				}
 				Vector2 pos2 = vector3;
-				pos2.x -= value.radius;
-				int num7 = Grid.PosToCell(pos2);
-				if (Grid.IsValidCell(num7) && Grid.Solid[num7])
+				pos2.x -= value.extents.x;
+				int num8 = Grid.PosToCell(pos2);
+				if (Grid.IsValidCell(num8) && Grid.Solid[num8])
 				{
-					vector3.x = Mathf.Floor(vector3.x - value.radius) + (1f + value.radius);
+					vector3.x = Mathf.Floor(vector3.x - value.extents.x) + (1f + value.extents.x);
 					value.velocity.x = -0.1f * value.velocity.x;
 					data[i] = value;
 				}
 				else
 				{
 					Vector3 pos3 = vector3;
-					pos3.x += value.radius;
-					int num8 = Grid.PosToCell(pos3);
-					if (Grid.IsValidCell(num8) && Grid.Solid[num8])
+					pos3.x += value.extents.x;
+					int num9 = Grid.PosToCell(pos3);
+					if (Grid.IsValidCell(num9) && Grid.Solid[num9])
 					{
-						vector3.x = Mathf.Floor(vector3.x + value.radius) - value.radius;
+						vector3.x = Mathf.Floor(vector3.x + value.extents.x) - value.extents.x;
 						value.velocity.x = -0.1f * value.velocity.x;
 						data[i] = value;
 					}

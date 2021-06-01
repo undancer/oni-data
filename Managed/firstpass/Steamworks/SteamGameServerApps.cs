@@ -190,5 +190,11 @@ namespace Steamworks
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamApps_BIsSubscribedFromFamilySharing(CSteamGameServerAPIContext.GetSteamApps());
 		}
+
+		public static bool BIsTimedTrial(out uint punSecondsAllowed, out uint punSecondsPlayed)
+		{
+			InteropHelp.TestIfAvailableGameServer();
+			return NativeMethods.ISteamApps_BIsTimedTrial(CSteamGameServerAPIContext.GetSteamApps(), out punSecondsAllowed, out punSecondsPlayed);
+		}
 	}
 }

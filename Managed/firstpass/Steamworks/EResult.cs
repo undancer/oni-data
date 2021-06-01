@@ -2,6 +2,7 @@ namespace Steamworks
 {
 	public enum EResult
 	{
+		k_EResultNone = 0,
 		k_EResultOK = 1,
 		k_EResultFail = 2,
 		k_EResultNoConnection = 3,
@@ -113,6 +114,12 @@ namespace Steamworks
 		k_EResultWGNetworkSendExceeded = 110,
 		k_EResultAccountNotFriends = 111,
 		k_EResultLimitedUserAccount = 112,
-		k_EResultCantRemoveItem = 113
+		k_EResultCantRemoveItem = 113,
+		k_EResultAccountDeleted = 114,
+		k_EResultExistingUserCancelledLicense = 115,
+		k_EResultCommunityCooldown = 116,
+		k_EResultNoLauncherSpecified = 117,
+		k_EResultMustAgreeToSSA = 118,
+		k_EResultLauncherMigrated = 119
 	}
 }

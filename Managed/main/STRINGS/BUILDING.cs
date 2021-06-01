@@ -4,11 +4,25 @@ namespace STRINGS
 	{
 		public class STATUSITEMS
 		{
+			public class NOTLINKEDTOHEAD
+			{
+				public static LocString NAME = "Not Linked";
+
+				public static LocString TOOLTIP = "This building must be built adjacent to a {headBuilding} or another {linkBuilding} in order to function";
+			}
+
 			public class BAITED
 			{
 				public static LocString NAME = "{0} Bait";
 
 				public static LocString TOOLTIP = "This lure is baited with {0}\n\nBait material is set during the construction of the building";
+			}
+
+			public class NOCOOLANT
+			{
+				public static LocString NAME = "No Coolant";
+
+				public static LocString TOOLTIP = "This building needs coolant";
 			}
 
 			public class ANGERDAMAGE
@@ -103,14 +117,14 @@ namespace STRINGS
 			{
 				public static class ALLOWED
 				{
-					public static LocString NAME = "Auto-Canister: On";
+					public static LocString NAME = "Auto-Bottle: On";
 
 					public static LocString TOOLTIP = string.Concat("Duplicants may specifically fetch ", UI.PRE_KEYWORD, "Gas", UI.PST_KEYWORD, " from a ", BUILDINGS.PREFABS.GASBOTTLER.NAME, " to bring to this location");
 				}
 
 				public static class DENIED
 				{
-					public static LocString NAME = "Auto-Canister: Off";
+					public static LocString NAME = "Auto-Bottle: Off";
 
 					public static LocString TOOLTIP = string.Concat("Duplicants may not specifically fetch ", UI.PRE_KEYWORD, "Gas", UI.PST_KEYWORD, " from a ", BUILDINGS.PREFABS.GASBOTTLER.NAME, " to bring to this location");
 				}
@@ -172,6 +186,13 @@ namespace STRINGS
 					public static LocString NAME = "Current Status: No Fuel";
 
 					public static LocString TOOLTIP = string.Concat("This dock does not contain enough ", ELEMENTS.PETROLEUM.NAME, " to refill a ", UI.PRE_KEYWORD, "Suit", UI.PST_KEYWORD);
+				}
+
+				public class NO_COOLANT
+				{
+					public static LocString NAME = "Current Status: No Coolant";
+
+					public static LocString TOOLTIP = string.Concat("This dock does not contain enough ", ELEMENTS.WATER.NAME, " to refill a ", UI.PRE_KEYWORD, "Suit", UI.PST_KEYWORD);
 				}
 
 				public class NOT_OPERATIONAL
@@ -258,6 +279,20 @@ namespace STRINGS
 				public static LocString TOOLTIP = "Duplicants cannot reach this area";
 			}
 
+			public class STORAGEUNREACHABLE
+			{
+				public static LocString NAME = "Unreachable Storage";
+
+				public static LocString TOOLTIP = "Duplicants cannot reach this storage unit";
+			}
+
+			public class PASSENGERMODULEUNREACHABLE
+			{
+				public static LocString NAME = "Unreachable Module";
+
+				public static LocString TOOLTIP = "Duplicants cannot reach this rocket module";
+			}
+
 			public class CONSTRUCTABLEDIGUNREACHABLE
 			{
 				public static LocString NAME = "Unreachable Dig";
@@ -319,7 +354,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Damage: Overloading";
 
-				public static LocString TOOLTIP = "This " + UI.PRE_KEYWORD + "Logic Wire" + UI.PST_KEYWORD + " is taking damage.\n\nUse a " + UI.PRE_KEYWORD + "Logic Ribbon" + UI.PST_KEYWORD + " instead, or limit the output to one Bit.";
+				public static LocString TOOLTIP = "This " + UI.PRE_KEYWORD + "Logic Wire" + UI.PST_KEYWORD + " is taking damage\n\nLimit the output to one Bit, or replace it with " + UI.PRE_KEYWORD + "Logic Ribbon" + UI.PST_KEYWORD + " to prevent further damage";
 			}
 
 			public class OPERATINGENERGY
@@ -352,7 +387,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Gas Vent Obstructed";
 
-				public static LocString TOOLTIP = "A " + UI.PRE_KEYWORD + "Pipe" + UI.PST_KEYWORD + " has been obstructed and is preventing gas flow to this vent";
+				public static LocString TOOLTIP = "A " + UI.PRE_KEYWORD + "Pipe" + UI.PST_KEYWORD + " has been obstructed and is preventing " + UI.PRE_KEYWORD + "Gas" + UI.PST_KEYWORD + " flow to this vent";
 			}
 
 			public class GASVENTOVERPRESSURE
@@ -375,7 +410,7 @@ namespace STRINGS
 
 				public static LocString NAME = "Use Direction: {Direction}";
 
-				public static LocString TOOLTIP = "Duplicants will only use this building when walking by it. Currently allowed direction: <b>{Direction}</b>";
+				public static LocString TOOLTIP = "Duplicants will only use this building when walking by it\n\nCurrently allowed direction: <b>{Direction}</b>";
 			}
 
 			public class WATTSONGAMEOVER
@@ -389,14 +424,14 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Invalid Building Location";
 
-				public static LocString TOOLTIP = "Cannot construct building in this location";
+				public static LocString TOOLTIP = "Cannot construct a building in this location";
 			}
 
 			public class LIQUIDVENTOBSTRUCTED
 			{
 				public static LocString NAME = "Liquid Vent Obstructed";
 
-				public static LocString TOOLTIP = "A " + UI.PRE_KEYWORD + "Pipe" + UI.PST_KEYWORD + " has been obstructed and is preventing liquid flow to this vent";
+				public static LocString TOOLTIP = "A " + UI.PRE_KEYWORD + "Pipe" + UI.PST_KEYWORD + " has been obstructed and is preventing " + UI.PRE_KEYWORD + "Liquid" + UI.PST_KEYWORD + " flow to this vent";
 			}
 
 			public class LIQUIDVENTOVERPRESSURE
@@ -443,7 +478,7 @@ namespace STRINGS
 
 				public static LocString TOOLTIP = "This building is collapsing";
 
-				public static LocString NOTIFICATION_NAME = "Building break down";
+				public static LocString NOTIFICATION_NAME = "Building breakdown";
 
 				public static LocString NOTIFICATION_TOOLTIP = "These buildings are collapsing:";
 			}
@@ -452,7 +487,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Missing Tile";
 
-				public static LocString TOOLTIP = "Build " + UI.FormatAsLink("Tile", "TILE") + " beneath this building" + UI.HORIZONTAL_BR_RULE + "Tile can be found in the " + UI.FormatAsBuildMenuTab("Base Tab") + " " + UI.FormatAsHotkey("[1]") + " of the Build Menu";
+				public static LocString TOOLTIP = "Build " + UI.PRE_KEYWORD + "Tile" + UI.PST_KEYWORD + " beneath this building to regain function" + UI.HORIZONTAL_BR_RULE + "Tile can be found in the " + UI.FormatAsBuildMenuTab("Base Tab") + " " + UI.FormatAsHotkey("[1]") + " of the Build Menu";
 			}
 
 			public class NEUTRONIUMUNMINABLE
@@ -526,21 +561,21 @@ namespace STRINGS
 			{
 				public static LocString NAME = "No Conveyor Loader";
 
-				public static LocString TOOLTIP = "Material cannot be fed onto this Conveyor system for transport" + UI.HORIZONTAL_BR_RULE + "Enter the " + UI.FormatAsBuildMenuTab("Shipping Tab") + " " + UI.FormatAsHotkey("[7]") + " of the Build Menu to build and connect a " + BUILDINGS.PREFABS.SOLIDCONDUITINBOX.NAME;
+				public static LocString TOOLTIP = "Material cannot be fed onto this Conveyor system for transport" + UI.HORIZONTAL_BR_RULE + "Enter the " + UI.FormatAsBuildMenuTab("Shipping Tab") + " " + UI.FormatAsHotkey("[7]") + " of the Build Menu to build and connect a " + UI.PRE_KEYWORD + "Conveyor Loader" + UI.PST_KEYWORD;
 			}
 
 			public class NEEDSOLIDOUT
 			{
 				public static LocString NAME = "No Conveyor Receptacle";
 
-				public static LocString TOOLTIP = "Material cannot be offloaded from this Conveyor system and will backup the rails" + UI.HORIZONTAL_BR_RULE + "Enter the " + UI.FormatAsBuildMenuTab("Shipping Tab") + " " + UI.FormatAsHotkey("[7]") + " of the Build Menu to build and connect a " + UI.FormatAsLink("Conveyor Receptacle", "SOLIDCONDUITOUTBOX");
+				public static LocString TOOLTIP = "Material cannot be offloaded from this Conveyor system and will backup the rails" + UI.HORIZONTAL_BR_RULE + "Enter the " + UI.FormatAsBuildMenuTab("Shipping Tab") + " " + UI.FormatAsHotkey("[7]") + " of the Build Menu to build and connect a " + UI.PRE_KEYWORD + "Conveyor Receptacle" + UI.PST_KEYWORD;
 			}
 
 			public class SOLIDPIPEOBSTRUCTED
 			{
 				public static LocString NAME = "Conveyor Rail Backup";
 
-				public static LocString TOOLTIP = "This Conveyor Rail cannot carry anymore material" + UI.HORIZONTAL_BR_RULE + "Remove material from the " + UI.FormatAsLink("Conveyor Receptacle", "SOLIDCONDUITOUTBOX") + " to free space for more objects";
+				public static LocString TOOLTIP = "This " + UI.PRE_KEYWORD + "Conveyor Rail" + UI.PST_KEYWORD + " cannot carry anymore material" + UI.HORIZONTAL_BR_RULE + "Remove material from the " + UI.PRE_KEYWORD + "Conveyor Receptacle" + UI.PST_KEYWORD + " to free space for more objects";
 			}
 
 			public class NEEDPLANT
@@ -575,7 +610,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Power Loop Detected";
 
-				public static LocString TOOLTIP = "A Transformer's " + UI.PRE_KEYWORD + "Power Output " + UI.PST_KEYWORD + "should not be connected back to its own " + UI.PRE_KEYWORD + "Input" + UI.PST_KEYWORD;
+				public static LocString TOOLTIP = "A " + UI.PRE_KEYWORD + "Transformer's" + UI.PST_KEYWORD + " " + UI.PRE_KEYWORD + "Power Output" + UI.PST_KEYWORD + " has been connected back to its own " + UI.PRE_KEYWORD + "Input" + UI.PST_KEYWORD;
 			}
 
 			public class NEEDRESOURCE
@@ -734,7 +769,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Function Suspended";
 
-				public static LocString TOOLTIP = "This building has been toggled off\nPress " + UI.PRE_KEYWORD + "Enable Building" + UI.PST_KEYWORD + " " + UI.FormatAsHotkey("[ENTER]") + "to resume its use";
+				public static LocString TOOLTIP = "This building has been toggled off\nPress " + UI.PRE_KEYWORD + "Enable Building" + UI.PST_KEYWORD + " " + UI.FormatAsHotkey("[ENTER]") + " to resume its use";
 			}
 
 			public class PUMPINGSTATION
@@ -767,14 +802,14 @@ namespace STRINGS
 
 			public class SKILL_POINTS_AVAILABLE
 			{
-				public static LocString NAME = "Skill Points available";
+				public static LocString NAME = "Skill Points Available";
 
 				public static LocString TOOLTIP = "A Duplicant has " + UI.PRE_KEYWORD + "Skill Points" + UI.PST_KEYWORD + " available";
 			}
 
 			public class TANNINGLIGHTSUFFICIENT
 			{
-				public static LocString NAME = "Tanning Light available";
+				public static LocString NAME = "Tanning Light Available";
 
 				public static LocString TOOLTIP = "There is sufficient " + UI.FormatAsLink("Light", "LIGHT") + " here to create pleasing skin crisping";
 			}
@@ -818,6 +853,11 @@ namespace STRINGS
 				public static LocString LINE_ITEM_UNITS = "• {0}";
 			}
 
+			public class WAITINGFORRADIATION
+			{
+				public static LocString NAME = "Awaiting " + UI.PRE_KEYWORD + "High Energy Particles" + UI.PST_KEYWORD;
+			}
+
 			public class WAITINGFORREPAIRMATERIALS
 			{
 				public static LocString NAME = "Awaiting Repair Delivery\n{ItemsRemaining}\n";
@@ -831,7 +871,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Missing Gantry";
 
-				public static LocString TOOLTIP = "A " + UI.FormatAsLink("Gantry", "GANTRY") + " must be built below " + UI.FormatAsLink("Command Capsules", "COMMANDMODULE") + " and " + UI.FormatAsLink("Sight-Seeing Modules", "TOURISTMODULE") + " for Duplicants access";
+				public static LocString TOOLTIP = "A " + UI.FormatAsLink("Gantry", "GANTRY") + " must be built below " + UI.FormatAsLink("Command Capsules", "COMMANDMODULE") + " and " + UI.FormatAsLink("Sight-Seeing Modules", "TOURISTMODULE") + " for Duplicant access";
 			}
 
 			public class DISEMBARKINGDUPLICANT
@@ -1073,6 +1113,13 @@ namespace STRINGS
 				public static LocString TOOLTIP = "This pump must be submerged in " + UI.PRE_KEYWORD + "Gas" + UI.PST_KEYWORD + " to work";
 			}
 
+			public class INVALIDMASKSTATIONCONSUMPTIONSTATE
+			{
+				public static LocString NAME = "Station Not In Oxygen";
+
+				public static LocString TOOLTIP = "This station must be submerged in " + UI.PRE_KEYWORD + "Oxygen" + UI.PST_KEYWORD + " to work";
+			}
+
 			public class PIPEMAYMELT
 			{
 				public static LocString NAME = "High Melt Risk";
@@ -1211,7 +1258,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Wire Nominal";
 
-				public static LocString TOOLTIP = "This wire is in good condition";
+				public static LocString TOOLTIP = "This wire is able to handle the wattage it is receiving";
 			}
 
 			public class WIREDISCONNECTED
@@ -1295,7 +1342,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Missing Requirements";
 
-				public static LocString TOOLTIP = "There are some problems that need to be fixed before this building is operational.";
+				public static LocString TOOLTIP = "There are some problems that need to be fixed before this building is operational";
 			}
 
 			public class GETTINGREADY
@@ -1473,9 +1520,18 @@ namespace STRINGS
 
 			public class COLONYLACKSREQUIREDSKILLPERK
 			{
-				public static LocString NAME = "Colony Lacks {Skills} Skill";
+				public static LocString NAME = "Local Colony Lacks {Skills}";
 
-				public static LocString TOOLTIP = "Open the " + UI.FormatAsManagementMenu("Skills Panel", "[L]") + " and teach a Duplicant the {Skills} Skill to use this";
+				public static LocString TOOLTIP = "{Skills} Skill required to operate" + UI.HORIZONTAL_BR_RULE + "Open the " + UI.FormatAsManagementMenu("Skills Panel", "[L]") + " to teach {Skills} to a Duplicant";
+
+				public static LocString TOOLTIP_CLUSTER = string.Concat(" on this ", UI.CLUSTERMAP.PLANETOID_KEYWORD, ", or bring in a Duplicant with the appropriate skill from another ", UI.CLUSTERMAP.PLANETOID);
+			}
+
+			public class WORKREQUIRESMINION
+			{
+				public static LocString NAME = "Duplicant Operation Required";
+
+				public static LocString TOOLTIP = "A Duplicant must be present to complete this operation";
 			}
 
 			public class SWITCHSTATUSACTIVE
@@ -1559,7 +1615,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "{Blocked}/{Total} Inputs Blocked";
 
-				public static LocString TOOLTIP = "<b>{Blocked}</b> of this turbine's <b>{Total}</b> inputs have been blocked, resulting in reduced throughput.";
+				public static LocString TOOLTIP = "<b>{Blocked}</b> of this turbine's <b>{Total}</b> inputs have been blocked, resulting in reduced throughput";
 			}
 
 			public class TURBINE_TOO_HOT
@@ -1594,7 +1650,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Current Wattage: {Wattage}";
 
-				public static LocString TOOLTIP = "This turbine is generating " + UI.FormatAsPositiveRate("{Wattage}") + " of " + UI.PRE_KEYWORD + "Power" + UI.PST_KEYWORD + "\n\nIt is running at <b>{Efficiency}</b> of full capacity. Increase {Src_Element} " + UI.PRE_KEYWORD + "Mass" + UI.PST_KEYWORD + " and " + UI.PRE_KEYWORD + "Temperature" + UI.PST_KEYWORD + " to improve output.";
+				public static LocString TOOLTIP = "This turbine is generating " + UI.FormatAsPositiveRate("{Wattage}") + " of " + UI.PRE_KEYWORD + "Power" + UI.PST_KEYWORD + "\n\nIt is running at <b>{Efficiency}</b> of full capacity\n\nIncrease {Src_Element} " + UI.PRE_KEYWORD + "Mass" + UI.PST_KEYWORD + " and " + UI.PRE_KEYWORD + "Temperature" + UI.PST_KEYWORD + " to improve output";
 			}
 
 			public class TURBINE_SPINNING_UP
@@ -1728,6 +1784,42 @@ namespace STRINGS
 				public static LocString LOGIC_CONTROLLED_DISCONNECTED = "No Automation";
 			}
 
+			public class HIGHENERGYPARTICLEREDIRECTOR
+			{
+				public class TOOLTIPS
+				{
+					public static LocString LOGIC_CONTROLLED_STANDBY = "Particle Redirector is receiving a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ", ignoring incoming " + UI.PRE_KEYWORD + "High Energy Particles" + UI.PST_KEYWORD;
+
+					public static LocString LOGIC_CONTROLLED_ACTIVE = "Particle Redirector is receiving a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + ", accepting incoming " + UI.PRE_KEYWORD + "High Energy Particles" + UI.PST_KEYWORD;
+
+					public static LocString NORMAL = "Incoming particles will be accepted and redirected";
+				}
+
+				public static LocString LOGIC_CONTROLLED_STANDBY = "Incoming HEP: Ignore";
+
+				public static LocString LOGIC_CONTROLLED_ACTIVE = "Incoming HEP: Redirect";
+
+				public static LocString NORMAL = "Normal";
+			}
+
+			public class HIGHENERGYPARTICLESPAWNER
+			{
+				public class TOOLTIPS
+				{
+					public static LocString LOGIC_CONTROLLED_STANDBY = "Particle Generator is receiving a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ", ignoring incoming " + UI.PRE_KEYWORD + "High Energy Particles" + UI.PST_KEYWORD;
+
+					public static LocString LOGIC_CONTROLLED_ACTIVE = "Particle Generator is receiving a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + ", accepting incoming " + UI.PRE_KEYWORD + "High Energy Particles" + UI.PST_KEYWORD;
+
+					public static LocString NORMAL = "Incoming " + UI.PRE_KEYWORD + "High Energy Particles" + UI.PST_KEYWORD + " will be accepted and redirected";
+				}
+
+				public static LocString LOGIC_CONTROLLED_STANDBY = "Launch HEP: Off";
+
+				public static LocString LOGIC_CONTROLLED_ACTIVE = "Launch HEP: On";
+
+				public static LocString NORMAL = "Normal";
+			}
+
 			public class AWAITINGFUEL
 			{
 				public static LocString NAME = "Awaiting Fuel: {0}";
@@ -1833,13 +1925,34 @@ namespace STRINGS
 				public static LocString TOOLTIP = "This building has an inadequate or obscured view of space\n\nEnsure an unblocked view of the sky is available to collect " + UI.FormatAsManagementMenu("Starmap") + " data\n    • Visibility: <b>{VISIBILITY}</b>\n    • Scan Radius: <b>{RADIUS}</b> cells";
 			}
 
+			public class LANDEDROCKETLACKSPASSENGERMODULE
+			{
+				public static LocString NAME = "Rocket lacks spacefarer module";
+
+				public static LocString TOOLTIP = "A rocket must have a spacefarer module";
+			}
+
 			public class PATH_NOT_CLEAR
 			{
 				public static LocString NAME = "Launch Path Blocked";
 
-				public static LocString TOOLTIP = "There are solid obstructions in this rocket's launch trajectory:\n    • {0}\n\nThis rocket requires a clear flight path for launch";
+				public static LocString TOOLTIP = "There are obstructions in the launch trajectory of this rocket:\n    • {0}\n\nThis rocket requires a clear flight path for launch";
 
 				public static LocString TILE_FORMAT = "Solid {0}";
+			}
+
+			public class RAILGUN_PATH_NOT_CLEAR
+			{
+				public static LocString NAME = "Launch Path Blocked";
+
+				public static LocString TOOLTIP = "There are obstructions in the launch trajectory of this " + UI.FormatAsLink("Interplanetary Launcher", "RAILGUN") + ":\n    • {0}\n\nThis launcher requires a clear path to launch payloads";
+			}
+
+			public class RAILGUN_NO_DESTINATION
+			{
+				public static LocString NAME = "No Delivery Destination";
+
+				public static LocString TOOLTIP = "A delivery destination has not been set    • {0}\n\nSet destination for this payload using the ";
 			}
 
 			public class TOP_PRIORITY_CHORE
@@ -1857,28 +1970,224 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Water Too Cold";
 
-				public static LocString TOOLTIP = "This Hot Tub's water is below <b>{temperature}</b>.\n\nThe water is being drained so that it can be replaced with warmer water.";
+				public static LocString TOOLTIP = "This tub's " + UI.PRE_KEYWORD + "Water" + UI.PST_KEYWORD + " is below <b>{temperature}</b>\n\nIt is draining so it can be refilled with warmer " + UI.PRE_KEYWORD + "Water" + UI.PST_KEYWORD;
 			}
 
 			public class HOTTUBTOOHOT
 			{
 				public static LocString NAME = "Building Too Hot";
 
-				public static LocString TOOLTIP = "This Hot Tub's temperature is above <b>{temperature}</b>.\n\nIt needs to cool down before it can be safely used.";
+				public static LocString TOOLTIP = "This tub's " + UI.PRE_KEYWORD + "Temperature" + UI.PST_KEYWORD + " is above <b>{temperature}</b>\n\nIt needs to cool before it can safely be used";
 			}
 
 			public class HOTTUBFILLING
 			{
-				public static LocString NAME = "Filling Up ({fullness})";
+				public static LocString NAME = "Filling Up: ({fullness})";
 
-				public static LocString TOOLTIP = "This Hot Tub is currently filling with water.\n\nIt will be available to use when water level reaches <b>100%</b>";
+				public static LocString TOOLTIP = "This tub is currently filling with " + UI.PRE_KEYWORD + "Water" + UI.PST_KEYWORD + "\n\nIt will be available to use when the " + UI.PRE_KEYWORD + "Water" + UI.PST_KEYWORD + " level reaches <b>100%</b>";
 			}
 
 			public class WINDTUNNELINTAKE
 			{
 				public static LocString NAME = "Intake Requires Gas";
 
-				public static LocString TOOLTIP = "A wind tunnel requires Gas at the top and bottom intakes in order to operate.\n\nThe intakes for this wind tunnel don't have enough gas to operate.";
+				public static LocString TOOLTIP = "A wind tunnel requires " + UI.PRE_KEYWORD + "Gas" + UI.PST_KEYWORD + " at the top and bottom intakes in order to operate\n\nThe intakes for this wind tunnel don't have enough gas to operate";
+			}
+
+			public class TEMPORAL_TEAR_OPENER_NO_TARGET
+			{
+				public static LocString NAME = "Target: None";
+
+				public static LocString TOOLTIP = "\"Awaiting transmission of coordinates...\"";
+			}
+
+			public class TEMPORAL_TEAR_OPENER_NO_LOS
+			{
+				public static LocString NAME = "Line of Sight: Obstructed";
+
+				public static LocString TOOLTIP = "This device needs a clear view of space to operate.";
+			}
+
+			public class TEMPORAL_TEAR_OPENER_PROGRESS
+			{
+				public static LocString NAME = "Progress: {progress}";
+
+				public static LocString TOOLTIP = "Operation will commence once this meter fills all the way up.";
+			}
+
+			public class TEMPORAL_TEAR_OPENER_READY
+			{
+				public static LocString NOTIFICATION = "Temporal Ripper fully charged";
+
+				public static LocString NOTIFICATION_TOOLTIP = "All that's left is to push the big red button.";
+			}
+
+			public class WARPPORTALCHARGING
+			{
+				public static LocString NAME = "Recharging: {charge}";
+
+				public static LocString TOOLTIP = "This teleporter will be ready for use in {cycles} cycles";
+			}
+
+			public class WARPCONDUITPARTNERDISABLED
+			{
+				public static LocString NAME = "Teleporter Disabled ({x}/2)";
+
+				public static LocString TOOLTIP = "This teleporter cannot be used until both the transmitting and receiving sides have been activated";
+			}
+
+			public class INORBIT
+			{
+				public static LocString NAME = "In Orbit: {Destination}";
+
+				public static LocString TOOLTIP = "This rocket is currently in orbit around {Destination}";
+			}
+
+			public class INFLIGHT
+			{
+				public static LocString NAME = "In Flight To {Destination_Asteroid}: {ETA}";
+
+				public static LocString TOOLTIP = "This rocket is currently traveling to {Destination_Pad} on {Destination_Asteroid}\n\nIt arrive in {ETA}";
+			}
+
+			public class DESTINATIONOUTOFRANGE
+			{
+				public static LocString NAME = "Destination Out Of Range";
+
+				public static LocString TOOLTIP = "This rocket lacks the range to reach its destination" + UI.HORIZONTAL_BR_RULE + "Rocket Range: {Range}\nDestination Distance: {Distance}";
+			}
+
+			public class ROCKETSTRANDED
+			{
+				public static LocString NAME = "Stranded";
+
+				public static LocString TOOLTIP = "This rocket has run out of fuel and cannot move";
+			}
+
+			public class RAILGUNPAYLOADNEEDSEMPTYING
+			{
+				public static LocString NAME = "Ready To Unpack";
+
+				public static LocString TOOLTIP = "This payload has reached its destination and is ready to be unloaded\n\nIt can be marked for unpacking manually, or automatically unpacked on arrival using a " + BUILDINGS.PREFABS.RAILGUNPAYLOADOPENER.NAME;
+			}
+
+			public class AWAITINGEMPTYBUILDING
+			{
+				public static LocString NAME = "Empty Errand";
+
+				public static LocString TOOLTIP = "Building will be emptied once a Duplicant is available";
+			}
+
+			public class DUPLICANTACTIVATIONREQUIRED
+			{
+				public static LocString NAME = "Activation Required";
+
+				public static LocString TOOLTIP = "A Duplicant is required to bring this building online";
+			}
+
+			public class PILOTNEEDED
+			{
+				public static LocString NAME = "Switching to Autopilot";
+
+				public static LocString TOOLTIP = "Autopilot will engage in {timeRemaining} if a Duplicant pilot does not assume control";
+			}
+
+			public class AUTOPILOTACTIVE
+			{
+				public static LocString NAME = "Autopilot Engaged";
+
+				public static LocString TOOLTIP = "This rocket has entered autopilot mode and will fly at reduced speed\n\nIt can resume full speed once a Duplicant pilot takes over";
+			}
+
+			public class ROCKETCHECKLISTINCOMPLETE
+			{
+				public static LocString NAME = "Launch Checklist Incomplete";
+
+				public static LocString TOOLTIP = "A critical launch task has not been completed yet - check the Launch Checklist in the status panel";
+			}
+
+			public class ROCKETCARGOEMPTYING
+			{
+				public static LocString NAME = "Cargo Emptying";
+
+				public static LocString TOOLTIP = "This " + UI.PRE_KEYWORD + "Rocket Platform" + UI.PST_KEYWORD + " is unloading available resources from the rocket to the material ports\n\nLoading will proceed afterwards";
+			}
+
+			public class ROCKETCARGOFILLING
+			{
+				public static LocString NAME = "Cargo Loading";
+
+				public static LocString TOOLTIP = "This " + UI.PRE_KEYWORD + "Rocket Platform" + UI.PST_KEYWORD + " is loading available resources from the material ports to the rocket\n\nUnloading has been completed";
+			}
+
+			public class ROCKETCARGOFULL
+			{
+				public static LocString NAME = "Platform Ready";
+
+				public static LocString TOOLTIP = "All cargo operations are complete";
+			}
+
+			public class ROCKET_PORT_IDLE
+			{
+				public static LocString NAME = "Idle";
+
+				public static LocString TOOLTIP = "This port is idle because there is no rocket on the connected " + UI.PRE_KEYWORD + "Rocket Platform" + UI.PST_KEYWORD;
+			}
+
+			public class ROCKET_PORT_UNLOADING
+			{
+				public static LocString NAME = "Unloading";
+
+				public static LocString TOOLTIP = "This port is unloading resources from the " + UI.PRE_KEYWORD + "Rocket Platform" + UI.PST_KEYWORD + " to the connected pipe network";
+			}
+
+			public class ROCKET_PORT_LOADING
+			{
+				public static LocString NAME = "Loading";
+
+				public static LocString TOOLTIP = "This port is transferring resources into the connected " + UI.PRE_KEYWORD + "Rocket Platform's" + UI.PST_KEYWORD + " landed rocket";
+			}
+
+			public class ROCKET_PORT_LOADED
+			{
+				public static LocString NAME = "Transfer Complete";
+
+				public static LocString TOOLTIP = "The rocket on the connected " + UI.PRE_KEYWORD + "Rocket Platform" + UI.PST_KEYWORD + " is either full of this type of resource or has no matching storage modules";
+			}
+
+			public class CONNECTED_ROCKET_PORT
+			{
+				public static LocString NAME = "Rocket Network Attached";
+
+				public static LocString TOOLTIP = string.Concat("The current ", UI.PRE_KEYWORD, "Rocket Platform", UI.PST_KEYWORD, " has a ", BUILDINGS.PREFABS.MODULARLAUNCHPADPORT.NAME, " which can load or unload from this module");
+			}
+
+			public class CONNECTED_ROCKET_WRONG_PORT
+			{
+				public static LocString NAME = "Unconnected Port Network";
+
+				public static LocString TOOLTIP = string.Concat("The ", BUILDINGS.PREFABS.MODULARLAUNCHPADPORT.NAME, " attached to the current ", UI.PRE_KEYWORD, "Rocket Platform", UI.PST_KEYWORD, " are not the correct type for this ", UI.PRE_KEYWORD, "Cargo Bay", UI.PST_KEYWORD);
+			}
+
+			public class CONNECTED_ROCKET_NO_PORT
+			{
+				public static LocString NAME = "No Rocket Ports";
+
+				public static LocString TOOLTIP = string.Concat("The current ", UI.PRE_KEYWORD, "Rocket Platform", UI.PST_KEYWORD, " has no ", BUILDINGS.PREFABS.MODULARLAUNCHPADPORT.NAME, " attached\n\n", UI.PRE_KEYWORD, "Solid", UI.PST_KEYWORD, ", ", UI.PRE_KEYWORD, "Gas", UI.PST_KEYWORD, ", and ", UI.PRE_KEYWORD, "Liquid", UI.PST_KEYWORD, " ", BUILDINGS.PREFABS.MODULARLAUNCHPADPORT.NAME, " are required to load and unload materials from a landed rocket's ", UI.PRE_KEYWORD, "Cargo Bays", UI.PST_KEYWORD);
+			}
+
+			public class CLUSTERTELESCOPEALLWORKCOMPLETE
+			{
+				public static LocString NAME = "Area Complete";
+
+				public static LocString TOOLTIP = "This " + UI.PRE_KEYWORD + "Telescope" + UI.PST_KEYWORD + " has analyzed all the space visible from its current location";
+			}
+
+			public class ROCKETPLATFORMCLOSETOCEILING
+			{
+				public static LocString NAME = "Close To Ceiling ({distance} Tiles)";
+
+				public static LocString TOOLTIP = "Tall rockets may not be able to land on this " + UI.PRE_KEYWORD + "Rocket Platform" + UI.PST_KEYWORD;
 			}
 		}
 

@@ -94,10 +94,11 @@ public class SteamUGCService : MonoBehaviour
 
 	private Dictionary<PublishedFileId_t, int> retry_counts = new Dictionary<PublishedFileId_t, int>();
 
-	private static readonly string[] previewFileNames = new string[4]
+	private static readonly string[] previewFileNames = new string[5]
 	{
 		"preview.png",
-		"preview.png",
+		"Preview.png",
+		"PREVIEW.png",
 		".png",
 		".jpg"
 	};
@@ -200,7 +201,7 @@ public class SteamUGCService : MonoBehaviour
 				array = null;
 			}
 		}
-		else
+		if (array == null)
 		{
 			array = GetBytesFromZip(details.m_nPublishedFileId, previewFileNames, out var _);
 		}

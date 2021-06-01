@@ -20,6 +20,8 @@ public class Element : IComparable<Element>
 		TemperatureInsulated = 0x10
 	}
 
+	public const int INVALID_ID = 0;
+
 	public SimHashes id;
 
 	public Tag tag;

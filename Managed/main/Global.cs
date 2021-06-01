@@ -30,7 +30,7 @@ public class Global : MonoBehaviour
 
 	private bool updated_with_initialized_distribution_platform;
 
-	public static readonly string LanguagePackKey = "LanguagePack";
+	public static readonly string LanguageModKey = "LanguageMod";
 
 	public static readonly string LanguageCodeKey = "LanguageCode";
 
@@ -451,7 +451,7 @@ public class Global : MonoBehaviour
 	private void SetONIStaticSessionVariables()
 	{
 		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Branch", "release");
-		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Build", 447596u);
+		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Build", 464364u);
 		if (KPlayerPrefs.HasKey(UnitConfigurationScreen.MassUnitKey))
 		{
 			ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable(UnitConfigurationScreen.MassUnitKey, ((GameUtil.MassUnit)KPlayerPrefs.GetInt(UnitConfigurationScreen.MassUnitKey)).ToString());
@@ -464,7 +464,7 @@ public class Global : MonoBehaviour
 		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable(LanguageCodeKey, Localization.GetCurrentLanguageCode());
 		if (selectedLanguageType == Localization.SelectedLanguageType.UGC)
 		{
-			ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable(LanguagePackKey, LanguageOptionsScreen.GetSavedLanguageMod());
+			ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable(LanguageModKey, LanguageOptionsScreen.GetSavedLanguageMod());
 		}
 	}
 

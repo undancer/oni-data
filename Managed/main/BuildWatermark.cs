@@ -38,7 +38,7 @@ public class BuildWatermark : KScreen
 		}
 		else
 		{
-			str += 447596u;
+			str += 464364u;
 			if (DebugHandler.enabled)
 			{
 				str += "-D";

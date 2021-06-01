@@ -489,7 +489,7 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 		Game.Instance.Trigger(1505456302, this);
 		if (AvailableSkillpoints == 1)
 		{
-			lastSkillNotification = new Notification(MISC.NOTIFICATIONS.SKILL_POINT_EARNED.NAME, NotificationType.Good, HashedString.Invalid, GetSkillPointGainedTooltip, null, expires: true, 0f, delegate
+			lastSkillNotification = new Notification(MISC.NOTIFICATIONS.SKILL_POINT_EARNED.NAME.Replace("{Duplicant}", identity.GetProperName()), NotificationType.Good, HashedString.Invalid, GetSkillPointGainedTooltip, identity, expires: true, 0f, delegate
 			{
 				ManagementMenu.Instance.OpenSkills(identity);
 			});
@@ -497,14 +497,14 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 		}
 		if (PopFXManager.Instance != null)
 		{
-			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Plus, MISC.NOTIFICATIONS.SKILL_POINT_EARNED.NAME, base.transform, new Vector3(0f, 0.5f, 0f));
+			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Plus, MISC.NOTIFICATIONS.SKILL_POINT_EARNED.NAME.Replace("{Duplicant}", identity.GetProperName()), base.transform, new Vector3(0f, 0.5f, 0f));
 		}
 		new UpgradeFX.Instance(base.gameObject.GetComponent<KMonoBehaviour>(), new Vector3(0f, 0f, -0.1f)).StartSM();
 	}
 
 	private string GetSkillPointGainedTooltip(List<Notification> notifications, object data)
 	{
-		return string.Format(MISC.NOTIFICATIONS.SKILL_POINT_EARNED.TOOLTIP);
+		return MISC.NOTIFICATIONS.SKILL_POINT_EARNED.TOOLTIP.Replace("{Duplicant}", ((MinionIdentity)data).GetProperName());
 	}
 
 	public void SetAptitude(HashedString skillGroupID, float amount)

@@ -24,7 +24,7 @@ public class StorageUnloadMonitor : GameStateMachine<StorageUnloadMonitor, Stora
 	{
 		default_state = notFull;
 		notFull.Transition(full, WantsToUnload);
-		full.ToggleStatusItem(Db.Get().RobotStatusItems.DustBinFull).ToggleBehaviour(GameTags.Robots.Behaviours.UnloadBehaviour, (Instance data) => true).Transition(notFull, GameStateMachine<StorageUnloadMonitor, Instance, IStateMachineTarget, Def>.Not(WantsToUnload), UpdateRate.SIM_1000ms)
+		full.ToggleStatusItem(Db.Get().RobotStatusItems.DustBinFull, (Instance smi) => smi.gameObject).ToggleBehaviour(GameTags.Robots.Behaviours.UnloadBehaviour, (Instance data) => true).Transition(notFull, GameStateMachine<StorageUnloadMonitor, Instance, IStateMachineTarget, Def>.Not(WantsToUnload), UpdateRate.SIM_1000ms)
 			.Enter(delegate(Instance smi)
 			{
 				if (smi.master.gameObject.GetComponents<Storage>()[1].RemainingCapacity() <= 0f)

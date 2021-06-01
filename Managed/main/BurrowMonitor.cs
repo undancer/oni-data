@@ -10,7 +10,7 @@ public class BurrowMonitor : GameStateMachine<BurrowMonitor, BurrowMonitor.Insta
 
 		public Vector2 moundColliderSize = new Vector2f(1f, 1.5f);
 
-		public Vector2 moundColliderOffset = new Vector2(0f, 0.75f);
+		public Vector2 moundColliderOffset = new Vector2(0f, -0.25f);
 	}
 
 	public new class Instance : GameInstance
@@ -53,6 +53,10 @@ public class BurrowMonitor : GameStateMachine<BurrowMonitor, BurrowMonitor.Insta
 				return false;
 			}
 			if (!CanBurrowInto(Grid.CellBelow(Grid.PosToCell(base.gameObject))))
+			{
+				return false;
+			}
+			if (HasTag(GameTags.Creatures.Bagged))
 			{
 				return false;
 			}
@@ -114,15 +118,18 @@ public class BurrowMonitor : GameStateMachine<BurrowMonitor, BurrowMonitor.Insta
 		public void SetCollider(bool original_size)
 		{
 			KBoxCollider2D component = base.master.GetComponent<KBoxCollider2D>();
+			AnimEventHandler component2 = base.master.GetComponent<AnimEventHandler>();
 			if (original_size)
 			{
 				component.size = originalColliderSize;
 				component.offset = originalColliderOffset;
+				component2.baseOffset = originalColliderOffset;
 			}
 			else
 			{
 				component.size = base.def.moundColliderSize;
 				component.offset = base.def.moundColliderOffset;
+				component2.baseOffset = base.def.moundColliderOffset;
 			}
 		}
 	}
@@ -131,31 +138,20 @@ public class BurrowMonitor : GameStateMachine<BurrowMonitor, BurrowMonitor.Insta
 
 	public State entombed;
 
-	public State burrowcomplete;
-
-	public State exitburrowcomplete;
-
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = openair;
 		openair.ToggleBehaviour(GameTags.Creatures.WantsToEnterBurrow, (Instance smi) => smi.ShouldBurrow() && smi.timeinstate > smi.def.minimumAwakeTime, delegate(Instance smi)
 		{
 			smi.BurrowComplete();
-		}).Transition(entombed, (Instance smi) => smi.IsEntombed()).Enter("SetFallAnim", delegate(Instance smi)
+		}).Transition(entombed, (Instance smi) => smi.IsEntombed() && !smi.HasTag(GameTags.Creatures.Bagged)).Enter("SetCollider", delegate(Instance smi)
 		{
-			smi.GetSMI<CreatureFallMonitor.Instance>().anim = "fall";
-		})
-			.Enter("SetCollider", delegate(Instance smi)
-			{
-				smi.SetCollider(original_size: true);
-			});
-		entombed.Enter("SetFallAnim", delegate(Instance smi)
-		{
-			smi.GetSMI<CreatureFallMonitor.Instance>().anim = "dormant_pre";
-		}).Enter("SetCollider", delegate(Instance smi)
+			smi.SetCollider(original_size: true);
+		});
+		entombed.Enter("SetCollider", delegate(Instance smi)
 		{
 			smi.SetCollider(original_size: false);
-		}).Transition(openair, (Instance smi) => !smi.IsEntombed())
+		}).Transition(openair, (Instance smi) => !smi.IsEntombed()).TagTransition(GameTags.Creatures.Bagged, openair)
 			.ToggleBehaviour(GameTags.Creatures.Burrowed, (Instance smi) => smi.IsEntombed(), delegate(Instance smi)
 			{
 				smi.GoTo(openair);

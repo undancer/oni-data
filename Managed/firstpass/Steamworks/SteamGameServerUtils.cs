@@ -47,12 +47,6 @@ namespace Steamworks
 			return NativeMethods.ISteamUtils_GetImageRGBA(CSteamGameServerAPIContext.GetSteamUtils(), iImage, pubDest, nDestBufferSize);
 		}
 
-		public static bool GetCSERIPPort(out uint unIP, out ushort usPort)
-		{
-			InteropHelp.TestIfAvailableGameServer();
-			return NativeMethods.ISteamUtils_GetCSERIPPort(CSteamGameServerAPIContext.GetSteamUtils(), out unIP, out usPort);
-		}
-
 		public static byte GetCurrentBatteryPower()
 		{
 			InteropHelp.TestIfAvailableGameServer();
@@ -192,21 +186,27 @@ namespace Steamworks
 			return NativeMethods.ISteamUtils_IsSteamChinaLauncher(CSteamGameServerAPIContext.GetSteamUtils());
 		}
 
-		public static bool InitFilterText()
+		public static bool InitFilterText(uint unFilterOptions = 0u)
 		{
 			InteropHelp.TestIfAvailableGameServer();
-			return NativeMethods.ISteamUtils_InitFilterText(CSteamGameServerAPIContext.GetSteamUtils());
+			return NativeMethods.ISteamUtils_InitFilterText(CSteamGameServerAPIContext.GetSteamUtils(), unFilterOptions);
 		}
 
-		public static int FilterText(out string pchOutFilteredText, uint nByteSizeOutFilteredText, string pchInputMessage, bool bLegalOnly)
+		public static int FilterText(ETextFilteringContext eContext, CSteamID sourceSteamID, string pchInputMessage, out string pchOutFilteredText, uint nByteSizeOutFilteredText)
 		{
 			InteropHelp.TestIfAvailableGameServer();
 			IntPtr intPtr = Marshal.AllocHGlobal((int)nByteSizeOutFilteredText);
 			using InteropHelp.UTF8StringHandle pchInputMessage2 = new InteropHelp.UTF8StringHandle(pchInputMessage);
-			int num = NativeMethods.ISteamUtils_FilterText(CSteamGameServerAPIContext.GetSteamUtils(), intPtr, nByteSizeOutFilteredText, pchInputMessage2, bLegalOnly);
+			int num = NativeMethods.ISteamUtils_FilterText(CSteamGameServerAPIContext.GetSteamUtils(), eContext, sourceSteamID, pchInputMessage2, intPtr, nByteSizeOutFilteredText);
 			pchOutFilteredText = ((num != -1) ? InteropHelp.PtrToStringUTF8(intPtr) : null);
 			Marshal.FreeHGlobal(intPtr);
 			return num;
+		}
+
+		public static ESteamIPv6ConnectivityState GetIPv6ConnectivityState(ESteamIPv6ConnectivityProtocol eProtocol)
+		{
+			InteropHelp.TestIfAvailableGameServer();
+			return NativeMethods.ISteamUtils_GetIPv6ConnectivityState(CSteamGameServerAPIContext.GetSteamUtils(), eProtocol);
 		}
 	}
 }

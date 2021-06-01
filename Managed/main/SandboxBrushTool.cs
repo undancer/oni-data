@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Klei.AI;
 using UnityEngine;
 
 public class SandboxBrushTool : BrushTool
@@ -95,12 +96,18 @@ public class SandboxBrushTool : BrushTool
 			recentAffectedCellColor.Remove(cell);
 		});
 		int index = Game.Instance.callbackManager.Add(item).index;
+		byte index2 = Db.Get().Diseases.GetIndex(Db.Get().Diseases.Get("FoodPoisoning").id);
+		Disease disease = Db.Get().Diseases.TryGet(settings.GetStringSetting("SandboxTools.SelectedDisease"));
+		if (disease != null)
+		{
+			index2 = Db.Get().Diseases.GetIndex(disease.id);
+		}
 		int gameCell = cell;
 		SimHashes id = element.id;
 		CellElementEvent sandBoxTool = CellEventLogger.Instance.SandBoxTool;
 		float floatSetting = settings.GetFloatSetting("SandboxTools.Mass");
 		float floatSetting2 = settings.GetFloatSetting("SandbosTools.Temperature");
 		int callbackIdx = index;
-		SimMessages.ReplaceElement(gameCell, id, sandBoxTool, floatSetting, floatSetting2, Db.Get().Diseases.GetIndex(Db.Get().Diseases.Get(settings.GetStringSetting("SandboxTools.SelectedDisease")).id), settings.GetIntSetting("SandboxTools.DiseaseCount"), callbackIdx);
+		SimMessages.ReplaceElement(gameCell, id, sandBoxTool, floatSetting, floatSetting2, index2, settings.GetIntSetting("SandboxTools.DiseaseCount"), callbackIdx);
 	}
 }

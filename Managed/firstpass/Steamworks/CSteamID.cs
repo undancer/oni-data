@@ -180,23 +180,6 @@ namespace Steamworks
 			m_SteamID = (m_SteamID & 0xFFFFFFFFFFFFFFuL) | (((ulong)other & 0xFFuL) << 56);
 		}
 
-		public void ClearIndividualInstance()
-		{
-			if (BIndividualAccount())
-			{
-				SetAccountInstance(0u);
-			}
-		}
-
-		public bool HasNoIndividualInstance()
-		{
-			if (BIndividualAccount())
-			{
-				return GetUnAccountInstance() == 0;
-			}
-			return false;
-		}
-
 		public AccountID_t GetAccountID()
 		{
 			return new AccountID_t((uint)(m_SteamID & 0xFFFFFFFFu));
@@ -227,7 +210,7 @@ namespace Steamworks
 			{
 				return false;
 			}
-			if (GetEAccountType() == EAccountType.k_EAccountTypeIndividual && (GetAccountID() == new AccountID_t(0u) || GetUnAccountInstance() > 4))
+			if (GetEAccountType() == EAccountType.k_EAccountTypeIndividual && (GetAccountID() == new AccountID_t(0u) || GetUnAccountInstance() > 1))
 			{
 				return false;
 			}

@@ -11,12 +11,12 @@ public class RotPile : StateMachineComponent<RotPile.StatesInstance>
 
 		private static string OnRottenTooltip(List<Notification> notifications, object data)
 		{
-			string text = "\n";
+			string text = "";
 			foreach (Notification notification in notifications)
 			{
 				if (notification.tooltipData != null)
 				{
-					text = text + "\n" + (string)notification.tooltipData;
+					text = text + "\n• " + (string)notification.tooltipData + " ";
 				}
 			}
 			return string.Format(MISC.NOTIFICATIONS.FOODROT.TOOLTIP, text);

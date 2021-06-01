@@ -4,6 +4,23 @@ namespace STRINGS
 	{
 		public class PREFABS
 		{
+			public class OXYGEN_MASK
+			{
+				public static LocString NAME = UI.FormatAsLink("Oxygen Mask", "OXYGEN_MASK");
+
+				public static LocString DESC = "Ensures my Duplicants can breathe easy... for a little while, anyways.";
+
+				public static LocString EFFECT = "Supplies Duplicants with <style=\"oxygen\">Oxygen</style> in toxic and low breathability environments.\n\nMust be refilled with oxygen at an Atmo Suit Dock when depleted.";
+
+				public static LocString RECIPE_DESC = "Supplies Duplicants with <style=\"oxygen\">Oxygen</style> in toxic and low breathability environments.";
+
+				public static LocString GENERICNAME = "Suit";
+
+				public static LocString WORN_NAME = UI.FormatAsLink("Worn Oxygen Mask", "OXYGEN_MASK");
+
+				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Oxygen Mask", "OXYGEN_MASK") + ".\nNeeds to be repaired.";
+			}
+
 			public class ATMO_SUIT
 			{
 				public static LocString NAME = UI.FormatAsLink("Atmo Suit", "ATMO_SUIT");
@@ -15,6 +32,10 @@ namespace STRINGS
 				public static LocString RECIPE_DESC = "Supplies Duplicants with <style=\"oxygen\">Oxygen</style> in toxic and low breathability environments.";
 
 				public static LocString GENERICNAME = "Suit";
+
+				public static LocString WORN_NAME = UI.FormatAsLink("Worn Atmo Suit", "ATMO_SUIT");
+
+				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Atmo Suit", "ATMO_SUIT") + ".\nNeeds to be repaired.";
 			}
 
 			public class AQUA_SUIT
@@ -52,6 +73,31 @@ namespace STRINGS
 				public static LocString GENERICNAME = "Jet Suit";
 
 				public static LocString TANK_EFFECT_NAME = "Fuel Tank";
+
+				public static LocString WORN_NAME = UI.FormatAsLink("Worn Jet Suit", "JET_SUIT");
+
+				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Jet Suit", "JET_SUIT") + ".\nNeeds to be repaired.";
+			}
+
+			public class LEAD_SUIT
+			{
+				public static LocString NAME = UI.FormatAsLink("Lead Suit", "LEAD_SUIT");
+
+				public static LocString DESC = "Because exposure to radiation doesn't grant Duplicants superpowers.";
+
+				public static LocString EFFECT = "Supplies Duplicants with " + UI.FormatAsLink("Oxygen", "OXYGEN") + " and protection in areas with " + UI.FormatAsLink("Radiation", "RADIATION") + ".\n\nMust be refilled with " + UI.FormatAsLink("Oxygen", "OXYGEN") + " at a Lead Suit Dock when depleted.";
+
+				public static LocString RECIPE_DESC = "Supplies Duplicants with " + UI.FormatAsLink("Oxygen", "OXYGEN") + " in toxic and low breathability environments.\n\nProtects duplicants from Radiation.";
+
+				public static LocString GENERICNAME = "Lead Suit";
+
+				public static LocString BATTERY_EFFECT_NAME = "Suit Battery";
+
+				public static LocString SUIT_OUT_OF_BATTERIES = "Suit Batteries Empty";
+
+				public static LocString WORN_NAME = UI.FormatAsLink("Worn Lead Suit", "LEAD_SUIT");
+
+				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Lead Suit", "LEAD_SUIT") + ".\nNeeds to be repaired.";
 			}
 
 			public class COOL_VEST

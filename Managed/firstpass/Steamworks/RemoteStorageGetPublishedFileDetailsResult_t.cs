@@ -16,11 +16,11 @@ namespace Steamworks
 
 		public AppId_t m_nConsumerAppID;
 
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
-		public string m_rgchTitle;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 129)]
+		private byte[] m_rgchTitle_;
 
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8000)]
-		public string m_rgchDescription;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 8000)]
+		private byte[] m_rgchDescription_;
 
 		public UGCHandle_t m_hFile;
 
@@ -37,25 +37,85 @@ namespace Steamworks
 		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bBanned;
 
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1025)]
-		public string m_rgchTags;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1025)]
+		private byte[] m_rgchTags_;
 
 		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bTagsTruncated;
 
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-		public string m_pchFileName;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)]
+		private byte[] m_pchFileName_;
 
 		public int m_nFileSize;
 
 		public int m_nPreviewFileSize;
 
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		public string m_rgchURL;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
+		private byte[] m_rgchURL_;
 
 		public EWorkshopFileType m_eFileType;
 
 		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bAcceptedForUse;
+
+		public string m_rgchTitle
+		{
+			get
+			{
+				return InteropHelp.ByteArrayToStringUTF8(m_rgchTitle_);
+			}
+			set
+			{
+				InteropHelp.StringToByteArrayUTF8(value, m_rgchTitle_, 129);
+			}
+		}
+
+		public string m_rgchDescription
+		{
+			get
+			{
+				return InteropHelp.ByteArrayToStringUTF8(m_rgchDescription_);
+			}
+			set
+			{
+				InteropHelp.StringToByteArrayUTF8(value, m_rgchDescription_, 8000);
+			}
+		}
+
+		public string m_rgchTags
+		{
+			get
+			{
+				return InteropHelp.ByteArrayToStringUTF8(m_rgchTags_);
+			}
+			set
+			{
+				InteropHelp.StringToByteArrayUTF8(value, m_rgchTags_, 1025);
+			}
+		}
+
+		public string m_pchFileName
+		{
+			get
+			{
+				return InteropHelp.ByteArrayToStringUTF8(m_pchFileName_);
+			}
+			set
+			{
+				InteropHelp.StringToByteArrayUTF8(value, m_pchFileName_, 260);
+			}
+		}
+
+		public string m_rgchURL
+		{
+			get
+			{
+				return InteropHelp.ByteArrayToStringUTF8(m_rgchURL_);
+			}
+			set
+			{
+				InteropHelp.StringToByteArrayUTF8(value, m_rgchURL_, 256);
+			}
+		}
 	}
 }

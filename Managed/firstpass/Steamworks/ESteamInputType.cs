@@ -15,7 +15,8 @@ namespace Steamworks
 		k_ESteamInputType_SwitchProController = 10,
 		k_ESteamInputType_MobileTouch = 11,
 		k_ESteamInputType_PS3Controller = 12,
-		k_ESteamInputType_Count = 13,
+		k_ESteamInputType_PS5Controller = 13,
+		k_ESteamInputType_Count = 14,
 		k_ESteamInputType_MaximumPossibleValue = 0xFF
 	}
 }

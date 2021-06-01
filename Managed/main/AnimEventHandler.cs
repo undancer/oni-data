@@ -11,7 +11,7 @@ public class AnimEventHandler : KMonoBehaviour
 
 	private Vector3 targetPos;
 
-	private Vector2 baseOffset;
+	public Vector2 baseOffset;
 
 	private HashedString context;
 

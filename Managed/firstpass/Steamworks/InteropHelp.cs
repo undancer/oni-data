@@ -133,5 +133,21 @@ namespace Steamworks
 			Marshal.Copy(nativeUtf8, array, 0, array.Length);
 			return Encoding.UTF8.GetString(array);
 		}
+
+		public static string ByteArrayToStringUTF8(byte[] buffer)
+		{
+			int i;
+			for (i = 0; i < buffer.Length && buffer[i] != 0; i++)
+			{
+			}
+			return Encoding.UTF8.GetString(buffer, 0, i);
+		}
+
+		public static void StringToByteArrayUTF8(string str, byte[] outArrayBuffer, int outArrayBufferSize)
+		{
+			outArrayBuffer = new byte[outArrayBufferSize];
+			int bytes = Encoding.UTF8.GetBytes(str, 0, str.Length, outArrayBuffer, 0);
+			outArrayBuffer[bytes] = 0;
+		}
 	}
 }

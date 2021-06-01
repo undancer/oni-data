@@ -20,5 +20,9 @@ namespace Steamworks
 		public EDurationControlProgress m_progress;
 
 		public EDurationControlNotification m_notification;
+
+		public int m_csecsToday;
+
+		public int m_csecsRemaining;
 	}
 }
