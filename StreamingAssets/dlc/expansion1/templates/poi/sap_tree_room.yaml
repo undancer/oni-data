@@ -1,8 +1,8 @@
 info:
   size:
-    X: 11
+    X: 21
     Y: 12
-  area: 131
+  area: 172
 cells:
 - element: Katairite
   mass: 500
@@ -11,15 +11,15 @@ cells:
   location_y: -5
 - element: SandStone
   mass: 100
-  temperature: 305.221039
+  temperature: 304.663116
   location_x: -3
   location_y: -5
   preventFoWReveal: true
 - element: SlimeMold
   mass: 211.529999
-  temperature: 305.617676
+  temperature: 305.627136
   diseaseName: FoodPoisoning
-  diseaseCount: 100000
+  diseaseCount: 99862
   location_x: -2
   location_y: -5
   preventFoWReveal: true
@@ -27,62 +27,62 @@ cells:
   mass: 211.529999
   temperature: 304.948242
   diseaseName: FoodPoisoning
-  diseaseCount: 100000
+  diseaseCount: 99862
   location_x: -1
   location_y: -5
   preventFoWReveal: true
 - element: Clay
   mass: 1000
-  temperature: 305.554199
+  temperature: 305.55304
   location_y: -5
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 304.611176
+  temperature: 304.501953
   location_x: 1
   location_y: -5
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 304.573608
+  temperature: 304.002136
   location_x: 2
   location_y: -5
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 305.004333
+  temperature: 304.307709
   location_x: 3
   location_y: -5
   preventFoWReveal: true
 - element: Algae
   mass: 191.389999
-  temperature: 305.994629
+  temperature: 305.971497
   diseaseName: FoodPoisoning
-  diseaseCount: -912
+  diseaseCount: -913
   location_x: 4
   location_y: -5
   preventFoWReveal: true
 - element: CarbonDioxide
-  mass: 2.23203182
+  mass: 1.21199322
   temperature: 305.196777
   location_x: 5
   location_y: -5
   preventFoWReveal: true
 - element: DirtyWater
-  mass: 1020.06049
-  temperature: 307.35083
+  mass: 1016.92883
+  temperature: 307.349945
   location_x: -4
   location_y: -4
   preventFoWReveal: true
 - element: DirtyWater
-  mass: 1020.04395
-  temperature: 307.594086
+  mass: 1016.76654
+  temperature: 307.594147
   location_x: -3
   location_y: -4
   preventFoWReveal: true
 - element: SedimentaryRock
   mass: 1840
-  temperature: 306.616699
+  temperature: 306.617432
   location_x: -2
   location_y: -4
   preventFoWReveal: true
@@ -94,458 +94,447 @@ cells:
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 304.729614
+  temperature: 304.737213
   location_y: -4
   preventFoWReveal: true
 - element: Clay
   mass: 1000
-  temperature: 305.610199
+  temperature: 305.609039
   location_x: 1
   location_y: -4
   preventFoWReveal: true
 - element: SlimeMold
   mass: 200
-  temperature: 305.899292
+  temperature: 305.891968
   diseaseName: SlimeLung
-  diseaseCount: 902825
+  diseaseCount: 902700
   location_x: 2
   location_y: -4
   preventFoWReveal: true
 - element: DirtyWater
-  mass: 1000
-  temperature: 307.502197
+  mass: 1009.36865
+  temperature: 307.504883
   location_x: 3
   location_y: -4
   preventFoWReveal: true
 - element: DirtyWater
-  mass: 1000
-  temperature: 307.359222
+  mass: 1003.75
+  temperature: 307.361755
   location_x: 4
   location_y: -4
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 306.125214
+  temperature: 305.502716
   location_x: 5
   location_y: -4
   preventFoWReveal: true
 - element: DirtyWater
-  mass: 1000
-  temperature: 307.404663
+  mass: 1006.78845
+  temperature: 307.403809
   location_x: -4
   location_y: -3
   preventFoWReveal: true
 - element: DirtyWater
-  mass: 1000
-  temperature: 307.830963
+  mass: 1006.7085
+  temperature: 307.829498
   location_x: -3
   location_y: -3
   preventFoWReveal: true
 - element: DirtyWater
-  mass: 1000
-  temperature: 307.658752
+  mass: 1005.36145
+  temperature: 307.658447
   location_x: -2
   location_y: -3
   preventFoWReveal: true
 - element: SedimentaryRock
   mass: 1840
-  temperature: 305.807373
+  temperature: 305.810486
   location_x: -1
   location_y: -3
   preventFoWReveal: true
 - element: SlimeMold
   mass: 200
-  temperature: 305.545929
+  temperature: 305.545685
   diseaseName: SlimeLung
-  diseaseCount: 902825
+  diseaseCount: 902700
   location_y: -3
   preventFoWReveal: true
 - element: Clay
   mass: 1000
-  temperature: 306.541351
+  temperature: 306.542175
   location_x: 1
   location_y: -3
   preventFoWReveal: true
 - element: DirtyWater
-  mass: 1000
-  temperature: 307.729523
+  mass: 1003.71875
+  temperature: 307.729095
   location_x: 2
   location_y: -3
   preventFoWReveal: true
 - element: DirtyWater
-  mass: 1000
-  temperature: 307.881927
+  mass: 993.098633
+  temperature: 307.881653
   location_x: 3
   location_y: -3
   preventFoWReveal: true
 - element: DirtyWater
-  mass: 1000
-  temperature: 307.766022
+  mass: 949.970459
+  temperature: 307.76535
   location_x: 4
   location_y: -3
   preventFoWReveal: true
 - element: DirtyWater
-  mass: 1000
-  temperature: 307.385803
+  mass: 702.806274
+  temperature: 307.41925
   location_x: 5
   location_y: -3
   preventFoWReveal: true
 - element: DirtyWater
-  mass: 1000
-  temperature: 307.45816
+  mass: 996.186768
+  temperature: 307.457489
   location_x: -4
   location_y: -2
   preventFoWReveal: true
 - element: DirtyWater
-  mass: 1000
-  temperature: 307.829437
+  mass: 995.798462
+  temperature: 307.829498
   location_x: -3
   location_y: -2
   preventFoWReveal: true
 - element: DirtyWater
-  mass: 1000
-  temperature: 307.675171
+  mass: 995.565552
+  temperature: 307.674988
   location_x: -2
   location_y: -2
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 306.507935
+  temperature: 306.070465
   location_x: -1
   location_y: -2
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 305.803101
+  temperature: 305.361603
   location_y: -2
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 306.750824
+  temperature: 306.358307
   location_x: 1
   location_y: -2
   preventFoWReveal: true
 - element: DirtyWater
-  mass: 1000
-  temperature: 307.732697
+  mass: 993.931274
+  temperature: 307.732513
   location_x: 2
   location_y: -2
   preventFoWReveal: true
 - element: DirtyWater
-  mass: 1000
-  temperature: 307.881744
+  mass: 992.381104
+  temperature: 307.881683
   location_x: 3
   location_y: -2
   preventFoWReveal: true
 - element: DirtyWater
-  mass: 1000
-  temperature: 307.766022
+  mass: 975.974854
+  temperature: 307.7659
   location_x: 4
   location_y: -2
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 306.973236
+  temperature: 306.653015
   location_x: 5
   location_y: -2
   preventFoWReveal: true
 - element: CarbonDioxide
   mass: 0.579999983
-  temperature: 306
-  diseaseName: FoodPoisoning
+  temperature: 306.259399
   location_x: -4
   location_y: -1
   preventFoWReveal: true
 - element: CarbonDioxide
   mass: 0.579999983
   temperature: 306
-  diseaseName: FoodPoisoning
   location_x: -3
   location_y: -1
   preventFoWReveal: true
 - element: CarbonDioxide
   mass: 0.579999983
   temperature: 306
-  diseaseName: FoodPoisoning
   location_x: -2
   location_y: -1
   preventFoWReveal: true
 - element: CarbonDioxide
-  mass: 0.579999983
-  temperature: 306
-  diseaseName: FoodPoisoning
+  mass: 0.581277549
+  temperature: 306.839874
   location_x: -1
   location_y: -1
   preventFoWReveal: true
 - element: CarbonDioxide
-  mass: 0.579999983
-  temperature: 306
-  diseaseName: FoodPoisoning
+  mass: 0.594088793
+  temperature: 305.948547
   location_y: -1
   preventFoWReveal: true
 - element: CarbonDioxide
-  mass: 0.579999983
-  temperature: 306
-  diseaseName: FoodPoisoning
+  mass: 0.777635634
+  temperature: 305.64209
   location_x: 1
   location_y: -1
   preventFoWReveal: true
 - element: CarbonDioxide
-  mass: 0.579999983
-  temperature: 306
-  diseaseName: FoodPoisoning
+  mass: 0.705177128
+  temperature: 305.514832
   location_x: 2
   location_y: -1
   preventFoWReveal: true
 - element: CarbonDioxide
-  mass: 0.579999983
-  temperature: 306
-  diseaseName: FoodPoisoning
+  mass: 0.728657901
+  temperature: 305.583008
   location_x: 3
   location_y: -1
   preventFoWReveal: true
 - element: CarbonDioxide
-  mass: 0.579999983
-  temperature: 306
-  diseaseName: FoodPoisoning
+  mass: 1.54143083
+  temperature: 304.795013
   location_x: 4
   location_y: -1
   preventFoWReveal: true
-- element: CarbonDioxide
-  mass: 0.579999983
-  temperature: 306
-  diseaseName: FoodPoisoning
+- element: Cuprite
+  mass: 100
+  temperature: 303.571808
   location_x: 5
   location_y: -1
-  preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 2.02395129
-  temperature: 306.012177
+  mass: 2.02214432
+  temperature: 305.943359
   location_x: -4
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 2.01777458
-  temperature: 306.004578
+  mass: 2.02320123
+  temperature: 305.993591
   location_x: -3
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 2.02136827
-  temperature: 306.0112
+  mass: 2.06002927
+  temperature: 305.983398
   location_x: -2
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 2.19300365
-  temperature: 305.758911
+  mass: 2.127774
+  temperature: 305.666595
   location_x: -1
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 2.54744005
-  temperature: 304.229218
+  mass: 1.88280022
+  temperature: 304.221771
   preventFoWReveal: true
-- element: ContaminatedOxygen
-  mass: 0.45680961
-  temperature: 304.191803
+- element: CarbonDioxide
+  mass: 0.077335313
+  temperature: 305.525269
   location_x: 1
   preventFoWReveal: true
 - element: CarbonDioxide
-  mass: 2.58256865
-  temperature: 304.036621
+  mass: 1.20914078
+  temperature: 304.109589
   location_x: 2
   preventFoWReveal: true
-- element: ContaminatedOxygen
-  mass: 0.48751238
-  temperature: 302.905457
+- element: CarbonDioxide
+  mass: 0.451157153
+  temperature: 304.78656
   location_x: 3
   preventFoWReveal: true
-- element: CarbonDioxide
-  mass: 0.580270648
-  temperature: 305.530151
+- element: ContaminatedOxygen
+  mass: 0.427447677
+  temperature: 301.185638
   location_x: 4
   preventFoWReveal: true
-- element: ContaminatedOxygen
-  mass: 0.0500435531
-  temperature: 303.453857
+- element: Cuprite
+  mass: 100
+  temperature: 303.353485
   location_x: 5
 - element: Algae
   mass: 191.389999
-  temperature: 304.831635
+  temperature: 304.856018
   diseaseName: FoodPoisoning
-  diseaseCount: -912
+  diseaseCount: -913
   location_x: -4
   location_y: 1
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 2.0149169
-  temperature: 304.657623
+  mass: 2.01116323
+  temperature: 304.657318
   location_x: -3
   location_y: 1
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 2.0076611
-  temperature: 303.852875
+  mass: 2.03584981
+  temperature: 303.893982
   location_x: -2
   location_y: 1
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.98851597
-  temperature: 304.012024
+  mass: 2.10153675
+  temperature: 304.038849
   location_x: -1
   location_y: 1
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 2.09913182
-  temperature: 303.216919
+  mass: 2.14136934
+  temperature: 301.707306
   location_y: 1
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 2.0641017
-  temperature: 302.931885
+  mass: 2.41199684
+  temperature: 303.456818
   location_x: 1
   location_y: 1
   preventFoWReveal: true
-- element: ContaminatedOxygen
-  mass: 0.350412011
-  temperature: 301.9841
+- element: CarbonDioxide
+  mass: 0.583814621
+  temperature: 304.011383
   location_x: 2
   location_y: 1
   preventFoWReveal: true
-- element: CarbonDioxide
-  mass: 0.142876282
-  temperature: 303.609772
+- element: ContaminatedOxygen
+  mass: 0.427447677
+  temperature: 301.333374
   location_x: 3
   location_y: 1
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 2.34156227
-  temperature: 301.409485
+  mass: 2.37186241
+  temperature: 301.185638
   location_x: 4
   location_y: 1
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 300.716034
+  temperature: 300.115051
   location_x: 5
   location_y: 1
   preventFoWReveal: true
 - element: Algae
   mass: 191.389999
-  temperature: 303.832336
+  temperature: 303.843018
   diseaseName: FoodPoisoning
-  diseaseCount: -912
+  diseaseCount: -913
   location_x: -4
   location_y: 2
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.99891472
-  temperature: 302.894043
+  mass: 1.99429035
+  temperature: 302.909882
   location_x: -3
   location_y: 2
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.99586952
-  temperature: 303.296753
+  mass: 2.01501679
+  temperature: 303.272552
   location_x: -2
   location_y: 2
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.98476267
-  temperature: 302.715149
+  mass: 2.06706309
+  temperature: 302.752899
   location_x: -1
   location_y: 2
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.9513489
-  temperature: 301.46637
+  mass: 2.12901783
+  temperature: 303.285706
   location_y: 2
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.99263704
-  temperature: 302.239014
+  mass: 2.10962558
+  temperature: 302.259033
   location_x: 1
   location_y: 2
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.97039735
-  temperature: 301.9841
+  mass: 2.70794487
+  temperature: 301.911713
   location_x: 2
   location_y: 2
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 2.08382344
-  temperature: 300.71582
+  mass: 1.70650506
+  temperature: 300.23587
   location_x: 3
   location_y: 2
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.88806045
-  temperature: 300.529846
+  mass: 2.01533175
+  temperature: 300.212921
   location_x: 4
   location_y: 2
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 299.69455
+  temperature: 299.115051
   location_x: 5
   location_y: 2
   preventFoWReveal: true
 - element: Algae
   mass: 191.389999
-  temperature: 302.840546
+  temperature: 302.851013
   diseaseName: FoodPoisoning
-  diseaseCount: -912
+  diseaseCount: -913
   location_x: -4
   location_y: 3
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.97741055
-  temperature: 302.098846
+  mass: 1.98018992
+  temperature: 302.102264
   location_x: -3
   location_y: 3
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.98273289
-  temperature: 301.171387
+  mass: 1.99044323
+  temperature: 301.202545
   location_x: -2
   location_y: 3
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.97964549
-  temperature: 302.165314
+  mass: 2.02090049
+  temperature: 302.204712
   location_x: -1
   location_y: 3
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.98448992
-  temperature: 301.878357
+  mass: 2.06278706
+  temperature: 301.941437
   location_y: 3
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.98962617
-  temperature: 300.936401
+  mass: 2.10040975
+  temperature: 301.006012
   location_x: 1
   location_y: 3
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 2.13350654
-  temperature: 300.625458
+  mass: 2.06604886
+  temperature: 300.696014
   location_x: 2
   location_y: 3
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 2.22257185
-  temperature: 300.91217
+  mass: 2.02573395
+  temperature: 300.63147
   location_x: 3
   location_y: 3
   preventFoWReveal: true
 - element: Algae
   mass: 197.973541
-  temperature: 299.731445
+  temperature: 299.718048
   location_x: 4
   location_y: 3
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 298.717957
+  temperature: 298.501007
   location_x: 5
   location_y: 3
   preventFoWReveal: true
@@ -553,48 +542,48 @@ cells:
   mass: 211.529999
   temperature: 302.968018
   diseaseName: FoodPoisoning
-  diseaseCount: 100000
+  diseaseCount: 99862
   location_x: -4
   location_y: 4
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.96370411
-  temperature: 302.082428
+  mass: 1.97102571
+  temperature: 302.078125
   location_x: -3
   location_y: 4
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.96640635
-  temperature: 302.158569
+  mass: 1.97141075
+  temperature: 301.99234
   location_x: -2
   location_y: 4
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.97124469
-  temperature: 301.98288
+  mass: 1.9843781
+  temperature: 302.158844
   location_x: -1
   location_y: 4
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.97797322
-  temperature: 302.291168
+  mass: 2.00021625
+  temperature: 302.281647
   location_y: 4
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.98911142
-  temperature: 301.165558
+  mass: 2.01770067
+  temperature: 301.189423
   location_x: 1
   location_y: 4
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 2.02613473
-  temperature: 301.391479
+  mass: 2.05115819
+  temperature: 301.385406
   location_x: 2
   location_y: 4
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 2.06035805
-  temperature: 301.047943
+  mass: 2.08328342
+  temperature: 301.039917
   location_x: 3
   location_y: 4
   preventFoWReveal: true
@@ -602,13 +591,13 @@ cells:
   mass: 1000
   temperature: 300.227356
   diseaseName: FoodPoisoning
-  diseaseCount: -912
+  diseaseCount: -913
   location_x: 4
   location_y: 4
   preventFoWReveal: true
 - element: SedimentaryRock
   mass: 1840
-  temperature: 299.595734
+  temperature: 299.594238
   location_x: 5
   location_y: 4
   preventFoWReveal: true
@@ -616,84 +605,84 @@ cells:
   mass: 211.529999
   temperature: 303.561432
   diseaseName: FoodPoisoning
-  diseaseCount: 95244
+  diseaseCount: 95113
   location_x: -4
   location_y: 5
   preventFoWReveal: true
 - element: SlimeMold
   mass: 211.529999
-  temperature: 302.815094
+  temperature: 302.815765
   diseaseName: FoodPoisoning
-  diseaseCount: 95551
+  diseaseCount: 95419
   location_x: -3
   location_y: 5
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.95585775
-  temperature: 303.006256
+  mass: 1.96314764
+  temperature: 303.000366
   location_x: -2
   location_y: 5
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.96094537
-  temperature: 304.012878
+  mass: 1.9694556
+  temperature: 303.989105
   location_x: -1
   location_y: 5
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.96762109
-  temperature: 303.390289
+  mass: 1.98118353
+  temperature: 303.398712
   location_y: 5
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.97568846
-  temperature: 304.198547
+  mass: 1.98119903
+  temperature: 303.776062
   location_x: 1
   location_y: 5
   preventFoWReveal: true
 - element: ContaminatedOxygen
-  mass: 1.98177373
-  temperature: 302.42868
+  mass: 1.9919368
+  temperature: 302.661774
   location_x: 2
   location_y: 5
   preventFoWReveal: true
 - element: Clay
   mass: 1000
-  temperature: 300.753967
+  temperature: 300.76123
   diseaseName: FoodPoisoning
-  diseaseCount: -912
+  diseaseCount: -913
   location_x: 3
   location_y: 5
   preventFoWReveal: true
 - element: Clay
   mass: 1000
-  temperature: 299.967804
+  temperature: 299.970642
   diseaseName: FoodPoisoning
-  diseaseCount: -912
+  diseaseCount: -913
   location_x: 4
   location_y: 5
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 300.59903
+  temperature: 300.349426
   location_x: 5
   location_y: 5
   preventFoWReveal: true
 - element: SlimeMold
   mass: 200
-  temperature: 304.544708
+  temperature: 304.516632
   location_x: -4
   location_y: 6
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 303.804474
+  temperature: 303.38269
   location_x: -3
   location_y: 6
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 303.832458
+  temperature: 303.354065
   location_x: -2
   location_y: 6
   preventFoWReveal: true
@@ -705,95 +694,91 @@ cells:
   preventFoWReveal: true
 - element: Diamond
   mass: 100
-  temperature: 304.277557
+  temperature: 304.266144
   location_y: 6
   preventFoWReveal: true
 - element: Diamond
   mass: 100
-  temperature: 305.098816
+  temperature: 304.990387
   location_x: 1
   location_y: 6
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 304.179321
+  temperature: 304.007019
   location_x: 2
   location_y: 6
   preventFoWReveal: true
 - element: SlimeMold
   mass: 211.529999
-  temperature: 303.149506
+  temperature: 303.084747
   diseaseName: FoodPoisoning
-  diseaseCount: 100000
+  diseaseCount: 99862
   location_x: 3
   location_y: 6
   preventFoWReveal: true
 - element: Algae
   mass: 200
-  temperature: 302.157288
+  temperature: 302.102356
   location_x: 4
   location_y: 6
   preventFoWReveal: true
 - element: Algae
   mass: 200
-  temperature: 301.749329
+  temperature: 301.702026
   location_x: 5
   location_y: 6
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 300.342407
+  temperature: 299.335754
   location_x: -5
   location_y: -5
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 302.274994
+  temperature: 301.387238
   location_x: -5
   location_y: -4
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 303.612885
+  temperature: 302.840546
   location_x: -5
   location_y: -3
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 304.681366
+  temperature: 304.062073
   location_x: -5
   location_y: -2
   preventFoWReveal: true
-- element: Algae
-  mass: 191.389999
-  temperature: 307.037537
-  diseaseName: FoodPoisoning
-  diseaseCount: -912
+- element: Cuprite
+  mass: 100
+  temperature: 306.945374
   location_x: -5
   location_y: -1
-- element: Algae
-  mass: 191.389999
-  temperature: 307.037537
-  diseaseName: FoodPoisoning
-  diseaseCount: -912
+- element: Cuprite
+  mass: 100
+  temperature: 306.973297
   location_x: -5
 - element: Algae
   mass: 191.389999
-  temperature: 305.484222
+  temperature: 305.499481
   diseaseName: FoodPoisoning
-  diseaseCount: -912
+  diseaseCount: -913
   location_x: -5
   location_y: 1
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 304.470825
+  temperature: 304.132355
   location_x: -5
   location_y: 2
   preventFoWReveal: true
 - element: SandStone
   mass: 100
-  temperature: 303.795502
+  temperature: 303.333557
   location_x: -5
   location_y: 3
   preventFoWReveal: true
@@ -809,85 +794,317 @@ cells:
   location_x: -5
   location_y: 5
   preventFoWReveal: true
+- element: Clay
+  mass: 1000
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: -7
+  location_y: 2
+- element: Clay
+  mass: 1000
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: -6
+  location_y: 2
+- element: SlimeMold
+  mass: 211.529999
+  temperature: 303.149994
+  diseaseName: PollenGerms
+  diseaseCount: 99862
+  location_x: -7
+  location_y: 3
+- element: SandStone
+  mass: 100
+  temperature: 293.149994
+  location_x: -6
+  location_y: 3
+- element: Clay
+  mass: 1000
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: -9
+  location_y: -2
+- element: SandStone
+  mass: 100
+  temperature: 293.149994
+  location_x: -8
+  location_y: -2
+- element: SandStone
+  mass: 100
+  temperature: 293.149994
+  location_x: -7
+  location_y: -2
+- element: SandStone
+  mass: 100
+  temperature: 293.149994
+  location_x: -6
+  location_y: -2
+- element: SedimentaryRock
+  mass: 1840
+  temperature: 306.149994
+  diseaseName: PollenGerms
+  location_x: -10
+  location_y: -3
+- element: SedimentaryRock
+  mass: 1840
+  temperature: 306.149994
+  diseaseName: PollenGerms
+  location_x: -9
+  location_y: -3
+- element: SedimentaryRock
+  mass: 1840
+  temperature: 306.149994
+  diseaseName: PollenGerms
+  location_x: -8
+  location_y: -3
+- element: ContaminatedOxygen
+  mass: 2.00999999
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: -8
+  location_y: -1
+- element: ContaminatedOxygen
+  mass: 2.00999999
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: -7
+  location_y: -1
+- element: ContaminatedOxygen
+  mass: 2.00999999
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: -6
+  location_y: -1
+- element: ContaminatedOxygen
+  mass: 2.00999999
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: -7
+- element: ContaminatedOxygen
+  mass: 2.00999999
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: -6
+- element: ContaminatedOxygen
+  mass: 2.00999999
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: -7
+  location_y: 1
+- element: ContaminatedOxygen
+  mass: 2.00999999
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: -6
+  location_y: 1
+- element: SandStone
+  mass: 100
+  temperature: 293.149994
+  location_x: 6
+  location_y: -2
+- element: ContaminatedOxygen
+  mass: 2.00999999
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: 6
+  location_y: -1
+- element: ContaminatedOxygen
+  mass: 2.00999999
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: 6
+- element: ContaminatedOxygen
+  mass: 2.00999999
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: 6
+  location_y: 1
+- element: ContaminatedOxygen
+  mass: 2.00999999
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: 6
+  location_y: 2
+- element: Clay
+  mass: 1000
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: 6
+  location_y: 3
+- element: Clay
+  mass: 1000
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: 7
+  location_y: -2
+- element: CarbonDioxide
+  mass: 0.00869999919
+  temperature: 305.177673
+  location_x: 7
+  location_y: -1
+- element: CarbonDioxide
+  mass: 0.0127599984
+  temperature: 305.080994
+  location_x: 7
+- element: ContaminatedOxygen
+  mass: 2.00999999
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: 7
+  location_y: 1
+- element: ContaminatedOxygen
+  mass: 2.00999999
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: 7
+  location_y: 2
+- element: ContaminatedOxygen
+  mass: 2.00999999
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: 8
+- element: ContaminatedOxygen
+  mass: 2.00999999
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: 8
+  location_y: 1
+- element: SlimeMold
+  mass: 211.529999
+  temperature: 303.149994
+  diseaseName: PollenGerms
+  diseaseCount: 99862
+  location_x: 8
+  location_y: 2
+- element: SandStone
+  mass: 100
+  temperature: 293.149994
+  location_x: 8
+  location_y: 3
+- element: SandStone
+  mass: 100
+  temperature: 293.149994
+  location_x: 7
+  location_y: 3
+- element: SandStone
+  mass: 100
+  temperature: 293.149994
+  location_x: 9
+  location_y: 3
+- element: Clay
+  mass: 1000
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: 6
+  location_y: 4
+- element: SedimentaryRock
+  mass: 1840
+  temperature: 306.149994
+  diseaseName: PollenGerms
+  location_x: 8
+  location_y: 4
+- element: SedimentaryRock
+  mass: 1840
+  temperature: 306.149994
+  diseaseName: PollenGerms
+  location_x: 9
+  location_y: 4
+- element: SedimentaryRock
+  mass: 1840
+  temperature: 306.149994
+  diseaseName: PollenGerms
+  location_x: 10
+  location_y: 3
+- element: ContaminatedOxygen
+  mass: 2.00999999
+  temperature: 305.149994
+  diseaseName: PollenGerms
+  location_x: 9
+  location_y: 1
+- element: SandStone
+  mass: 100
+  temperature: 293.149994
+  location_x: 9
+  location_y: 2
 buildings:
 - id: TilePOI
   location_x: -1
   location_y: -2
   element: SandStone
-  temperature: 306.050598
+  temperature: 306.050659
 - id: TilePOI
   location_y: -2
   element: SandStone
-  temperature: 305.361603
+  temperature: 305.361725
 - id: TilePOI
   location_x: 1
   location_y: -2
   element: SandStone
-  temperature: 306.349457
+  temperature: 306.349548
 - id: TilePOI
   location_x: 5
   location_y: 1
   element: SandStone
-  temperature: 300.033356
+  temperature: 300.037231
 - id: TilePOI
   location_x: 5
   location_y: 2
   element: SandStone
-  temperature: 299.097015
+  temperature: 299.098083
 - id: TilePOI
   location_x: 5
   location_y: 3
   element: SandStone
-  temperature: 298.47287
+  temperature: 298.473755
 - id: TilePOI
   location_x: 5
   location_y: 5
   element: SandStone
-  temperature: 300.332886
+  temperature: 300.332581
 - id: TilePOI
   location_x: -5
   location_y: 3
   element: SandStone
-  temperature: 303.333557
+  temperature: 303.33429
 - id: TilePOI
   location_x: -5
   location_y: 2
   element: SandStone
-  temperature: 304.116791
+  temperature: 304.117828
 - id: TilePOI
   location_x: -5
   location_y: -5
   element: SandStone
-  temperature: 299.304535
+  temperature: 299.304871
 - id: TilePOI
   location_x: -3
   location_y: -5
   element: SandStone
-  temperature: 304.644257
+  temperature: 304.64447
 - id: TilePOI
   location_y: -4
   element: SandStone
-  temperature: 304.737213
+  temperature: 304.737701
 - id: TilePOI
   location_x: 1
   location_y: -5
   element: SandStone
-  temperature: 304.476288
+  temperature: 304.476563
 - id: TilePOI
   location_x: 2
   location_y: -5
   element: SandStone
-  temperature: 303.97934
+  temperature: 303.979584
 - id: TilePOI
   location_x: 3
   location_y: -5
   element: SandStone
-  temperature: 304.267365
+  temperature: 304.267822
 - id: TilePOI
   location_x: -3
   location_y: 6
   element: SandStone
-  temperature: 303.368805
+  temperature: 303.368591
 - id: TilePOI
   location_x: -2
   location_y: 6
@@ -897,12 +1114,12 @@ buildings:
   location_x: 2
   location_y: 6
   element: SandStone
-  temperature: 303.964447
+  temperature: 303.965057
 - id: POIBunkerExteriorDoor
   location_x: 5
   location_y: -1
   element: Cuprite
-  temperature: 303.453857
+  temperature: 303.571808
   other_values:
   - id: sealedDoorDirection
     value: 1
@@ -910,204 +1127,263 @@ buildings:
   location_x: 5
   location_y: -2
   element: SandStone
-  temperature: 306.70401
+  temperature: 306.703461
 - id: POIBunkerExteriorDoor
   location_x: -5
   location_y: -1
   element: Cuprite
-  temperature: 307.037537
+  temperature: 306.945374
+  other_values:
+  - id: sealedDoorDirection
 - id: TilePOI
   location_x: -5
   location_y: -2
   element: SandStone
-  temperature: 304.003723
+  temperature: 304.003326
 - id: TilePOI
   location_x: -5
   location_y: -3
   element: SandStone
-  temperature: 302.814636
+  temperature: 302.813629
 - id: TilePOI
   location_x: -5
   location_y: -4
   element: SandStone
-  temperature: 301.35614
+  temperature: 301.354675
 - id: TilePOI
   location_x: 5
   location_y: -4
   element: SandStone
-  temperature: 305.479034
+  temperature: 305.479309
 - id: LogicRibbon
   location_x: -1
   location_y: -1
   element: Copper
-  temperature: 307.560638
+  temperature: 307.346069
 - id: LogicRibbon
   location_x: -1
   location_y: -2
   element: Copper
-  temperature: 306.507935
+  temperature: 306.070465
 - id: LogicRibbon
   location_x: -2
   location_y: -2
   element: Copper
-  temperature: 307.675323
+  temperature: 307.674988
 - id: LogicRibbon
   location_x: -3
   location_y: -2
   element: Copper
-  temperature: 307.830963
+  temperature: 307.829407
 - id: LogicRibbon
   location_x: -3
   location_y: -3
   element: Copper
-  temperature: 307.830963
+  temperature: 307.829559
 - id: LogicWire
   location_x: 1
   element: Copper
-  temperature: 304.015656
+  temperature: 304.065887
   connections: 2
 - id: LogicWire
   location_x: 2
   element: Copper
-  temperature: 304.021179
+  temperature: 304.076141
   connections: 1
 - id: WireRefined
   location_x: -2
   location_y: 5
   element: Copper
-  temperature: 302.709808
+  temperature: 302.714172
   connections: 8
 - id: LogicWire
   location_x: 3
   location_y: 1
   element: Copper
-  temperature: 302.309296
+  temperature: 302.17041
   connections: 4
 - id: LogicWire
   location_x: 3
   location_y: 2
   element: Copper
-  temperature: 301.095795
+  temperature: 300.931213
   connections: 12
 - id: LogicWire
   location_x: 3
   location_y: 3
   element: Copper
-  temperature: 300.906677
+  temperature: 300.830414
   connections: 8
 - id: LogicWire
   location_x: 1
   location_y: -1
   element: Copper
-  temperature: 307.914063
+  temperature: 307.495117
   connections: 2
 - id: LogicWire
   location_x: 2
   location_y: -1
   element: Copper
-  temperature: 307.966614
+  temperature: 307.566071
   connections: 3
 - id: LogicWire
   location_x: 3
   location_y: -1
   element: Copper
-  temperature: 307.881317
+  temperature: 307.461609
   connections: 9
 - id: LogicWire
   location_x: 3
   location_y: -2
   element: Copper
-  temperature: 307.881836
+  temperature: 307.881683
   connections: 4
 - id: WireRefined
   location_x: -3
   location_y: 4
   element: Copper
-  temperature: 301.840027
+  temperature: 301.843597
   connections: 2
 - id: WireRefined
   location_x: -2
   location_y: 4
   element: Copper
-  temperature: 301.676575
+  temperature: 301.682495
   connections: 5
 - id: WireRefined
   location_x: -2
   location_y: 2
   element: Copper
-  temperature: 302.618744
+  temperature: 302.628784
   connections: 9
 - id: WireRefined
   location_x: -2
   location_y: 1
   element: Copper
-  temperature: 303.856293
+  temperature: 303.856842
   connections: 4
 - id: WireRefined
   location_x: -1
   element: Copper
-  temperature: 304.781403
+  temperature: 304.795929
   connections: 2
 - id: WireRefined
   element: Copper
-  temperature: 304.284515
+  temperature: 304.283691
   connections: 1
 - id: WireRefined
   location_x: 1
   location_y: -1
   element: Copper
-  temperature: 307.914063
+  temperature: 307.893494
   connections: 2
 - id: WireRefined
   location_x: 2
   location_y: -1
   element: Copper
-  temperature: 307.966614
+  temperature: 307.946838
   connections: 3
 - id: WireRefined
   location_x: 3
   location_y: -1
   element: Copper
-  temperature: 307.881744
+  temperature: 307.860901
   connections: 1
 - id: WireRefined
   location_x: 3
   location_y: -2
   element: Copper
-  temperature: 307.882019
+  temperature: 307.881897
   connections: 2
 - id: WireRefined
   location_x: 4
   location_y: -2
   element: Copper
-  temperature: 307.766083
+  temperature: 307.766022
   connections: 9
 - id: WireRefined
   location_x: 4
   location_y: -3
   element: Copper
-  temperature: 307.766083
+  temperature: 307.765961
   connections: 4
 - id: WireRefined
   location_x: -3
   location_y: 2
   element: Copper
-  temperature: 302.767914
+  temperature: 302.77002
   connections: 2
 - id: GlassTile
   location_x: 1
   location_y: 6
   element: Diamond
-  temperature: 305.098816
+  temperature: 304.990387
 - id: GlassTile
   location_y: 6
   element: Diamond
-  temperature: 304.277557
+  temperature: 304.266144
 - id: GlassTile
   location_x: -1
   location_y: 6
   element: Diamond
   temperature: 303.777618
+- id: TilePOI
+  location_x: 6
+  location_y: -2
+  element: SandStone
+  temperature: 293.149994
+- id: TilePOI
+  location_x: -6
+  location_y: -2
+  element: SandStone
+  temperature: 293.149994
+- id: TilePOI
+  location_x: -8
+  location_y: -2
+  element: SandStone
+  temperature: 293.149994
+- id: TilePOI
+  location_x: -7
+  location_y: -2
+  element: SandStone
+  temperature: 293.149994
+- id: TilePOI
+  location_x: -6
+  location_y: 3
+  element: SandStone
+  temperature: 293.149994
+- id: TilePOI
+  location_x: 7
+  location_y: 3
+  element: SandStone
+  temperature: 293.149994
+- id: TilePOI
+  location_x: 9
+  location_y: 3
+  element: SandStone
+  temperature: 293.149994
+- id: TilePOI
+  location_x: 8
+  location_y: 3
+  element: SandStone
+  temperature: 293.149994
+- id: TilePOI
+  location_x: 9
+  location_y: 2
+  element: SandStone
+  temperature: 293.149994
+- id: GravitasPedestal
+  location_x: 7
+  location_y: -1
+  element: SandStone
+  temperature: 293.149994
+  storage:
+- id: GravitasPedestal
+  location_x: -7
+  location_y: -1
+  element: SandStone
+  temperature: 293.149994
+  storage:
 pickupables:
 - id: Puft
   location_x: -1
@@ -1126,67 +1402,67 @@ pickupables:
   type: Pickupable
   rottable: {}
 otherEntities:
-- id: SapTree
-  location_y: -1
-  element: Creature
-  temperature: 307.966614
-  units: 1
-  type: Other
-  amounts:
-  - id: Temperature
-    value: 307.490082
-- id: PropLight
-  location_x: -2
-  location_y: 5
-  element: Steel
-  temperature: 295.165833
-  units: 1
-  type: Other
-- id: PropLight
-  location_y: 5
-  element: Steel
-  temperature: 295.425812
-  units: 1
-  type: Other
-- id: PropLight
-  location_x: 2
-  location_y: 5
-  element: Steel
-  temperature: 295.247833
-  units: 1
-  type: Other
 - id: PropLadder
-  location_x: -4
+  location_x: 2
   location_y: -2
   element: Polypropylene
-  temperature: 297.160675
-  units: 1
-  type: Other
-- id: PropLadder
-  location_x: -4
-  location_y: -3
-  element: Polypropylene
-  temperature: 297.128571
-  units: 1
-  type: Other
-- id: PropLadder
-  location_x: -4
-  location_y: -4
-  element: Polypropylene
-  temperature: 297.108917
+  temperature: 294.149994
   units: 1
   type: Other
 - id: PropLadder
   location_x: 4
   location_y: -4
   element: Polypropylene
-  temperature: 297.201416
+  temperature: 294.149994
   units: 1
   type: Other
 - id: PropLadder
-  location_x: 2
-  location_y: -2
+  location_x: -4
+  location_y: -4
   element: Polypropylene
-  temperature: 297.233582
+  temperature: 294.149994
   units: 1
   type: Other
+- id: PropLadder
+  location_x: -4
+  location_y: -3
+  element: Polypropylene
+  temperature: 294.149994
+  units: 1
+  type: Other
+- id: PropLadder
+  location_x: -4
+  location_y: -2
+  element: Polypropylene
+  temperature: 294.149994
+  units: 1
+  type: Other
+- id: PropLight
+  location_x: 2
+  location_y: 5
+  element: Steel
+  temperature: 294.149994
+  units: 1
+  type: Other
+- id: PropLight
+  location_y: 5
+  element: Steel
+  temperature: 294.149994
+  units: 1
+  type: Other
+- id: PropLight
+  location_x: -2
+  location_y: 5
+  element: Steel
+  temperature: 294.149994
+  units: 1
+  type: Other
+- id: SapTree
+  location_y: -1
+  element: Creature
+  temperature: 293
+  units: 1
+  type: Other
+  amounts:
+  - id: Temperature
+    value: 307.490082

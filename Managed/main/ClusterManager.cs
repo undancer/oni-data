@@ -33,8 +33,8 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 
 	private List<WorldContainer> m_worldContainers = new List<WorldContainer>();
 
-	[Serialize]
-	private ClusterPOIManager m_clusterPOIsManager = new ClusterPOIManager();
+	[MyCmpGet]
+	private ClusterPOIManager m_clusterPOIsManager;
 
 	private Dictionary<int, List<IAssignableIdentity>> minionsByWorld = new Dictionary<int, List<IAssignableIdentity>>();
 

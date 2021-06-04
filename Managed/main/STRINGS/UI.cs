@@ -47,11 +47,13 @@ namespace STRINGS
 		{
 			public class CLICK_TOGGLE_MESSAGE
 			{
-				public static LocString ALWAYS = HORIZONTAL_BR_RULE + "Click to pin this diagnostic to the sidebar -  <b>Always Visible</b>";
+				public static LocString ALWAYS = "Click to pin this diagnostic to the sidebar - Current State: <b>Visible On Alert Only</b>";
 
-				public static LocString ALERT_ONLY = HORIZONTAL_BR_RULE + "Click to subscribe to this diagnostic - <b>Visible On Alert Only</b>";
+				public static LocString ALERT_ONLY = "Click to subscribe to this diagnostic - Current State:  <b>Never Visible      </b>";
 
-				public static LocString NEVER = HORIZONTAL_BR_RULE + "Click to mute this diagnostic on the sidebar -  <b>Never Visible      </b>";
+				public static LocString NEVER = "Click to mute this diagnostic on the sidebar -  Current State: <b>Always Visible</b>";
+
+				public static LocString TUTORIAL_DISABLED = "Click to enable this diagnostic -  Current State: <b>Tutorial Disabled</b>";
 			}
 
 			public static LocString TITLE = "Diagnostics";
@@ -66,7 +68,13 @@ namespace STRINGS
 
 			public static LocString SEARCH = "Search";
 
+			public static LocString CRITERIA_HEADER_TOOLTIP = "Expand or collapse diagnostic criteria panel";
+
 			public static LocString SEE_ALL = "+ See All ({0})";
+
+			public static LocString CRITERIA_TOOLTIP = "Toggle the <b>{0}</b> diagnostics evaluation of the <b>{1}</b> criteria.";
+
+			public static LocString CRITERIA_ENABLED_COUNT = "{0}/{1} criteria enabled";
 		}
 
 		public class WORLD_SELECTOR_SCREEN
@@ -325,16 +333,22 @@ namespace STRINGS
 			{
 				public static class CRITERIA
 				{
-					public static LocString CHECKPOWER = "Check power";
+					public static LocString CHECKOVERWATTAGE = "Check circuit overloaded";
+
+					public static LocString CHECKPOWERUSECHANGE = "Check power use change";
 				}
 
-				public static LocString ALL_NAME = "Avg Power";
+				public static LocString ALL_NAME = "Power use";
 
-				public static LocString TOOLTIP_NAME = "<b>Avg Power</b>";
+				public static LocString TOOLTIP_NAME = "<b>Power use</b>";
 
 				public static LocString NORMAL = "    • Power supply is satisfactory";
 
 				public static LocString OVERLOADED = "    • One or more power grids are damaged";
+
+				public static LocString SIGNIFICANT_POWER_CHANGE_DETECTED = "Significant power use change detected. (Average:{0}, Current:{1})";
+
+				public static LocString CIRCUIT_OVER_CAPACITY = "Circuit overloaded {0}/{1}";
 			}
 
 			public class HEATDIAGNOSTIC
@@ -406,6 +420,8 @@ namespace STRINGS
 				public static LocString TOOLTIP_NAME = "<b>Radiation</b>";
 
 				public static LocString NORMAL = "    • No Radiation concerns";
+
+				public static LocString AVERAGE_RADS = "Avg. {0}";
 			}
 
 			public class ENTOMBEDDIAGNOSTIC
@@ -579,6 +595,245 @@ namespace STRINGS
 				public static LocString NAME = "Unexplored Space";
 			}
 
+			public class ARTIFACT_POI
+			{
+				public class GRAVITASSPACESTATION1
+				{
+					public static LocString NAME = "Gravitas Spacejunk";
+
+					public static LocString DESC = "Default Description!";
+				}
+
+				public class GRAVITASSPACESTATION2
+				{
+					public static LocString NAME = "Gravitas Spacejunk";
+
+					public static LocString DESC = "Default Description!";
+				}
+
+				public class GRAVITASSPACESTATION3
+				{
+					public static LocString NAME = "Gravitas Spacejunk";
+
+					public static LocString DESC = "Default Description!";
+				}
+
+				public class GRAVITASSPACESTATION4
+				{
+					public static LocString NAME = "Gravitas Spacejunk";
+
+					public static LocString DESC = "Default Description!";
+				}
+
+				public class GRAVITASSPACESTATION5
+				{
+					public static LocString NAME = "Gravitas Spacejunk";
+
+					public static LocString DESC = "Default Description!";
+				}
+
+				public class GRAVITASSPACESTATION6
+				{
+					public static LocString NAME = "Gravitas Spacejunk";
+
+					public static LocString DESC = "Default Description!";
+				}
+
+				public class GRAVITASSPACESTATION7
+				{
+					public static LocString NAME = "Gravitas Spacejunk";
+
+					public static LocString DESC = "Default Description!";
+				}
+
+				public class GRAVITASSPACESTATION8
+				{
+					public static LocString NAME = "Gravitas Spacejunk";
+
+					public static LocString DESC = "Default Description!";
+				}
+
+				public class RUSSELLSTEAPOT
+				{
+					public static LocString NAME = "Russell's Teapot";
+
+					public static LocString DESC = "Default Description!";
+				}
+			}
+
+			public class HARVESTABLE_POI
+			{
+				public class CARBONASTEROIDFIELD
+				{
+					public static LocString NAME = "Carbon Asteroid Field";
+
+					public static LocString DESC = "An asteroid containing " + FormatAsLink("Refined Carbon", "REFINEDCARBON") + " and " + FormatAsLink("Coal", "CARBON") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class METALLICASTEROIDFIELD
+				{
+					public static LocString NAME = "Metallic Asteroid Field";
+
+					public static LocString DESC = "An asteroid containing " + FormatAsLink("Iron", "IRON") + ", " + FormatAsLink("Copper", "COPPER") + " and " + FormatAsLink("Obsidian", "OBSIDIAN") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class SATELLITEFIELD
+				{
+					public static LocString NAME = "Satellite Asteroid Field";
+
+					public static LocString DESC = "\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class ROCKYASTEROIDFIELD
+				{
+					public static LocString NAME = "Rocky Asteroid Field";
+
+					public static LocString DESC = "An asteroid field containing " + FormatAsLink("Copper Ore", "CUPRITE") + ", " + FormatAsLink("Sedimentary Rock", "SEDIMENTARYROCK") + " and " + FormatAsLink("Igneous Rock", "IGNEOUSROCK") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class INTERSTELLARICEFIELD
+				{
+					public static LocString NAME = "Ice Asteroid Field";
+
+					public static LocString DESC = "An asteroid field containing " + FormatAsLink("Ice", "ICE") + ", " + FormatAsLink("Carbon Dioxide", "CARBONDIOXIDE") + " and " + FormatAsLink("Oxygen", "OXYGEN") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class ORGANICMASSFIELD
+				{
+					public static LocString NAME = "Organic Mass Field";
+
+					public static LocString DESC = "A mass of harvestable resources containing " + FormatAsLink("Algae", "ALGAE") + ", " + FormatAsLink("Slime", "SLIMEMOLD") + ", " + FormatAsLink("Polluted Oxygen", "CONTAMINATEDOXYGEN") + " and " + FormatAsLink("Dirt", "DIRT") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class ICEASTEROIDFIELD
+				{
+					public static LocString NAME = "Exploded Ice Giant";
+
+					public static LocString DESC = "A cloud of planetary remains containing " + FormatAsLink("Ice", "ICE") + ", " + FormatAsLink("Carbon Dioxide", "CARBONDIOXIDE") + ", " + FormatAsLink("Oxygen", "OXYGEN") + " and " + FormatAsLink("Methane", "METHANE") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class GASGIANTCLOUD
+				{
+					public static LocString NAME = "Exploded Gas Giant";
+
+					public static LocString DESC = "The harvestable remains of a planet containing " + FormatAsLink("Hydrogen", "HYDROGEN") + " in " + FormatAsLink("gas", "ELEMENTS_GAS") + " and " + FormatAsLink("solid", "ELEMENTS_SOLID") + " form, and " + FormatAsLink("Methane", "SOLIDMETHANE") + " in " + FormatAsLink("gas", "ELEMENTS_GAS") + ", " + FormatAsLink("solid", "ELEMENTS_SOLID") + " and " + FormatAsLink("liquid", "ELEMENTS_LIQUID") + " form.\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class CHLORINECLOUD
+				{
+					public static LocString NAME = "Chlorine Cloud";
+
+					public static LocString DESC = "A cloud of harvestable debris containing " + FormatAsLink("Chlorine", "CHLORINEGAS") + " and " + FormatAsLink("Bleach Stone", "BLEACHSTONE") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class GILDEDASTEROIDFIELD
+				{
+					public static LocString NAME = "Gilded Asteroid Field";
+
+					public static LocString DESC = "An asteroid field containing " + FormatAsLink("Gold", "GOLD") + ", " + FormatAsLink("Fullerene", "FULLERENE") + " and " + FormatAsLink("Pyrite", "FOOLSGOLD") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class GLIMMERINGASTEROIDFIELD
+				{
+					public static LocString NAME = "Glimmering Asteroid Field";
+
+					public static LocString DESC = "An asteroid field containing " + FormatAsLink("Tungsten", "TUNGSTEN") + " and " + FormatAsLink("Wolframite", "WOLFRAMITE") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class HELIUMCLOUD
+				{
+					public static LocString NAME = "Helium Cloud";
+
+					public static LocString DESC = "A cloud of resources containing " + FormatAsLink("Water", "WATER") + ", " + FormatAsLink("Hydrogen", "HYDROGEN") + ", and " + FormatAsLink("Niobium", "NIOBIUM") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class OILYASTEROIDFIELD
+				{
+					public static LocString NAME = "Oily Asteroid Field";
+
+					public static LocString DESC = "An asteroid field containing " + FormatAsLink("Natural Gas", "METHANE") + ", " + FormatAsLink("Carbon Dioxide", "CARBONDIOXIDE") + ", " + FormatAsLink("Crude Oil", "CRUDEOIL") + " and " + FormatAsLink("Petroleum", "PETROLEUM") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class OXIDIZEDASTEROIDFIELD
+				{
+					public static LocString NAME = "Oxidized Asteroid Field";
+
+					public static LocString DESC = "An asteroid field containing " + FormatAsLink("Carbon Dioxide", "CARBONDIOXIDE") + " and " + FormatAsLink("Rust", "RUST") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class SALTYASTEROIDFIELD
+				{
+					public static LocString NAME = "Salty Asteroid Field";
+
+					public static LocString DESC = "A field of harvestable resources containing " + FormatAsLink("Salt Water", "SALTWATER") + "," + FormatAsLink("Brine", "BRINE") + " and " + FormatAsLink("Carbon Dioxide", "CARBONDIOXIDE") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class FROZENOREFIELD
+				{
+					public static LocString NAME = "Frozen Ore Asteroid Field";
+
+					public static LocString DESC = "An asteroid field containing " + FormatAsLink("Copper Ore", "CUPRITE") + ", " + FormatAsLink("Ice", "ICE") + ", " + FormatAsLink("Cobalt Ore", "COBALTITE") + " and " + FormatAsLink("Aluminum Ore", "ALUMINUMORE") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class FORESTYOREFIELD
+				{
+					public static LocString NAME = "Forested Ore Field";
+
+					public static LocString DESC = "A field of harvestable resources containing " + FormatAsLink("Carbon Dioxide", "CARBONDIOXIDE") + ", " + FormatAsLink("Igneous Rock", "IGNEOUSROCK") + " and " + FormatAsLink("Aluminum Ore", "ALUMINUMORE") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class SWAMPYOREFIELD
+				{
+					public static LocString NAME = "Swampy Ore Field";
+
+					public static LocString DESC = "An asteroid field containing " + FormatAsLink("Mud", "MUD") + ", " + FormatAsLink("Polluted Dirt", "TOXICSAND") + " and " + FormatAsLink("Cobalt Ore", "COBALTITE") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class SANDYOREFIELD
+				{
+					public static LocString NAME = "Sandy Ore Field";
+
+					public static LocString DESC = "An asteroid field containing " + FormatAsLink("Sandstone", "SANDSTONE") + ", " + FormatAsLink("Algae", "ALGAE") + ", " + FormatAsLink("Copper Ore", "CUPRITE") + " and " + FormatAsLink("Sand", "SAND") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class RADIOACTIVEGASCLOUD
+				{
+					public static LocString NAME = "Radioactive Gas Cloud";
+
+					public static LocString DESC = "A cloud of resources containing " + FormatAsLink("Chlorine", "CHLORINEGAS") + ", " + FormatAsLink("Uranium Ore", "URANIUMORE") + " and " + FormatAsLink("Carbon Dioxide", "CARBONDIOXIDE") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class RADIOACTIVEASTEROIDFIELD
+				{
+					public static LocString NAME = "Radioactive Asteroid Field";
+
+					public static LocString DESC = "An asteroid field containing " + FormatAsLink("Bleach Stone", "BLEACHSTONE") + ", " + FormatAsLink("Rust", "RUST") + "," + FormatAsLink("Uranium Ore", "URANIUMORE") + " and " + FormatAsLink("Sulfur", "SULFUR") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class OXYGENRICHASTEROIDFIELD
+				{
+					public static LocString NAME = "Oxygen Rich Asteroid Field";
+
+					public static LocString DESC = "An asteroid field containing " + FormatAsLink("Ice", "ICE") + ", " + FormatAsLink("Polluted Oxygen", "CONTAMINATEDOXYGEN") + " and " + FormatAsLink("Water", "WATER") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public class INTERSTELLAROCEAN
+				{
+					public static LocString NAME = "Interstellar Ocean";
+
+					public static LocString DESC = "An interplanetary body that consists of " + FormatAsLink("Salt Water", "SALTWATER") + "," + FormatAsLink("Brine", "BRINE") + ", " + FormatAsLink("Salt", "SALT") + " and " + FormatAsLink("Ice", "ICE") + ".\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+				}
+
+				public static LocString POI_PRODUCTION = "{0}";
+
+				public static LocString POI_PRODUCTION_TOOLTIP = "{0}";
+			}
+
+			public class GRAVITAS_SPACE_POI
+			{
+				public static LocString STATION = "Destroyed Gravitas Space Station";
+			}
+
 			public class TELESCOPE_TARGET
 			{
 				public static LocString NAME = "Telescope Target";
@@ -652,6 +907,11 @@ namespace STRINGS
 				public class FULLERENECOMET
 				{
 					public static LocString NAME = "Fullerene Comet";
+				}
+
+				public class URANIUMORECOMET
+				{
+					public static LocString NAME = "Unanium Comet";
 				}
 
 				public class NUCLEAR_WASTE
@@ -1769,6 +2029,30 @@ namespace STRINGS
 
 						public static LocString TOOLTIP = "This number chooses the procedural parameters that create your unique map\n\nWorldgen seeds can be copied and pasted so others can play a replica of your world configuration";
 					}
+
+					public class TELEPORTERS
+					{
+						public static class LEVELS
+						{
+							public static class ENABLED
+							{
+								public static LocString NAME = "Enabled";
+
+								public static LocString TOOLTIP = "Checked: Teleporters will be spawned during Worldgen (Default)";
+							}
+
+							public static class DISABLED
+							{
+								public static LocString NAME = "Disabled";
+
+								public static LocString TOOLTIP = "Unchecked: No Teleporters will be spawned during Worldgen";
+							}
+						}
+
+						public static LocString NAME = "Teleporters";
+
+						public static LocString TOOLTIP = "Affects whether teleporters are spawned during Worldgen.";
+					}
 				}
 			}
 
@@ -1890,13 +2174,13 @@ namespace STRINGS
 
 			public class MOTD
 			{
-				public static LocString IMAGE_HEADER = "PECULIAR PLANTS UPDATE";
+				public static LocString IMAGE_HEADER = "MINE THE GAP UPDATE";
 
 				public static LocString NEWS_HEADER = "JOIN THE DISCUSSION";
 
 				public static LocString NEWS_BODY = "Stay up to date by joining our mailing list, or head on over to the forums and join the discussion.";
 
-				public static LocString PATCH_NOTES_SUMMARY = "Welcome to the <b>Peculiar Plants Update!</b>\n\n   •<indent=20px>Crop plants now drop <b>Mutant Seeds</b> when exposed to radiation.</indent>\n\n   •<indent=20px>Food spoilage and refrigeration have been rebalanced.</indent>\n\n   •<indent=20px>New <b>Meter Valves</b> allow precise plumbing deliveries.</indent>\n\n   •<indent=20px>Bug fixes, animation updates, and more.</indent>\n\nCheck out the full patch notes for more details!";
+				public static LocString PATCH_NOTES_SUMMARY = "Welcome to the <b>Mine The Gap Update!</b>\n\n   •<indent=20px>New Space Points-of-Interest can be mined using the Drillcone for renewable resources.</indent>\n\n   •<indent=20px>Gravitas Artifacts have been added back in to the game.</indent>\n\n   •<indent=20px>Tech Tree rebalance and updates.</indent>\n\n   •<indent=20px>New sound effects, Diagnostics panel improvements, bug fixes and new lore entries.</indent>\n\nCheck out the full patch notes for more details!";
 
 				public static LocString UPDATE_TEXT = "LAUNCHED!";
 
@@ -2995,6 +3279,11 @@ namespace STRINGS
 					public static LocString DESCRIPTION = "Geographical Analysis";
 				}
 
+				public class CAN_STUDY_ARTIFACTS
+				{
+					public static LocString DESCRIPTION = "Artifact Analysis";
+				}
+
 				public class CAN_USE_CLUSTER_TELESCOPE
 				{
 					public static LocString DESCRIPTION = string.Concat(BUILDINGS.PREFABS.CLUSTERTELESCOPE.NAME, " Usage");
@@ -3043,6 +3332,11 @@ namespace STRINGS
 				public class CAN_ADVANCED_MEDICINE
 				{
 					public static LocString DESCRIPTION = string.Concat(BUILDINGS.PREFABS.ADVANCEDDOCTORSTATION.NAME, " Usage");
+				}
+
+				public class CAN_DEMOLISH
+				{
+					public static LocString DESCRIPTION = "Demolish Gravitas Buildings";
 				}
 
 				public static LocString TITLE_BASICTRAINING = "Basic Job Training";
@@ -3897,6 +4191,22 @@ namespace STRINGS
 
 		public class CLUSTERMAP
 		{
+			public class STATUS
+			{
+				public class ROCKET
+				{
+					public static LocString GROUNDED = "Normal";
+
+					public static LocString TRAVELING = "Traveling";
+
+					public static LocString STRANDED = "Stranded";
+
+					public static LocString IDLE = "Idle";
+				}
+
+				public static LocString NORMAL = "Normal";
+			}
+
 			public class ASTEROIDS
 			{
 				public class ELEMENT_AMOUNTS
@@ -3909,6 +4219,21 @@ namespace STRINGS
 
 					public static LocString VERY_LITTLE = "Trace amount";
 				}
+			}
+
+			public class POI
+			{
+				public static LocString TITLE = "POINT OF INTEREST";
+
+				public static LocString MASS_REMAINING = "<b>Total Mass Remaining</b>";
+
+				public static LocString ROCKETS_AT_THIS_LOCATION = "<b>Rockets at this location</b>";
+
+				public static LocString ARTIFACTS = "Artifact";
+
+				public static LocString ARTIFACTS_AVAILABLE = "Available";
+
+				public static LocString ARTIFACTS_DEPLETED = "Collected";
 			}
 
 			public class ROCKETS
@@ -3995,6 +4320,11 @@ namespace STRINGS
 					public static LocString NAME = "Height: {0}/{1}";
 
 					public static LocString TOOLTIP = "The {0} can support a total rocket height {1}";
+				}
+
+				public class ARTIFACT_MODULE
+				{
+					public static LocString EMPTY = "Empty";
 				}
 			}
 
@@ -4442,6 +4772,27 @@ namespace STRINGS
 						public static LocString FAILURE = "The number of installed modules exceeds the engine's module limit" + HORIZONTAL_BR_RULE + "Excess modules must be removed";
 
 						public static LocString WARNING = "Module limit warning";
+					}
+				}
+
+				public class HAS_RESOURCE
+				{
+					public class STATUS
+					{
+						public static LocString READY = "{0} {1} supplied";
+
+						public static LocString FAILURE = "{0} missing {1}";
+
+						public static LocString WARNING = "{0} missing {1}";
+					}
+
+					public class TOOLTIP
+					{
+						public static LocString READY = "{0} {1} supplied";
+
+						public static LocString FAILURE = "{0} has less than {1} {2}";
+
+						public static LocString WARNING = "{0} has less than {1} {2}";
 					}
 				}
 
@@ -6380,6 +6731,19 @@ namespace STRINGS
 				public static LocString VIEW_BUTTON_TOOLTIP = "What's goin' on in there?";
 			}
 
+			public class HARVESTMODULESIDESCREEN
+			{
+				public static LocString TITLE = "Resource Gathering";
+
+				public static LocString MINING_IN_PROGRESS = "Drilling...";
+
+				public static LocString MINING_STOPPED = "Not drilling";
+
+				public static LocString ENABLE = "Enable Drill";
+
+				public static LocString DISABLE = "Disable Drill";
+			}
+
 			public class SELECTMODULESIDESCREEN
 			{
 				public class CONSTRAINTS
@@ -7065,7 +7429,7 @@ namespace STRINGS
 
 			public class COMMAND_MODULE_SIDE_SCREEN
 			{
-				public static LocString TITLE = "Launch Conditions";
+				public static LocString TITLE = "Launch Conditiothisns";
 
 				public static LocString DESTINATION_BUTTON = "Show Starmap";
 
@@ -7875,15 +8239,26 @@ namespace STRINGS
 				public static LocString TOOLTIP = "Refund all resources currently in use by this building";
 			}
 
-			public class DEMOLISH
+			public class DECONSTRUCT
 			{
 				public static LocString NAME = "Deconstruct";
 
-				public static LocString TOOLTIP = "Demolish this building and refund all resources";
+				public static LocString TOOLTIP = "Deconstruct this building and refund all resources";
 
 				public static LocString NAME_OFF = "Cancel Deconstruct";
 
 				public static LocString TOOLTIP_OFF = "Cancel this deconstruct order";
+			}
+
+			public class DEMOLISH
+			{
+				public static LocString NAME = "Demolish";
+
+				public static LocString TOOLTIP = "Demolish this building";
+
+				public static LocString NAME_OFF = "Cancel Demolition";
+
+				public static LocString TOOLTIP_OFF = "Cancel this demolition order";
 			}
 
 			public class MANUAL_DELIVERY
@@ -9043,6 +9418,8 @@ namespace STRINGS
 
 				public static LocString GROUPNAME_ROCKET = "ROCKETRY";
 
+				public static LocString GROUPNAME_CARGOBAY = "CARGO BAYS";
+
 				public static LocString GROUPNAME_ELEMENTS = "RESOURCES";
 
 				public static LocString GROUPNAME_LIFE = "LIFEFORMS";
@@ -9050,6 +9427,8 @@ namespace STRINGS
 				public static LocString GROUPNAME_BIOMES = "BIOMES";
 
 				public static LocString GROUPNAME_GEYSERS = "GEYSERS";
+
+				public static LocString GROUPNAME_CLUSTER_POI = "POINT OF INTEREST";
 
 				public static LocString NO_GEYSERS = "No geysers detected";
 			}
@@ -9991,7 +10370,7 @@ namespace STRINGS
 
 				public static LocString MUTANT_SEED_TOOLTIP = "\n\nGrowing near its maximum radiation increases the chance of mutant seeds being produced";
 
-				public static LocString MUTANT_STERILE = "Due to changes to its DNA this plant will not produce seeds of its own";
+				public static LocString MUTANT_STERILE = "This plant will not produce seeds of its own due to changes to its DNA";
 			}
 
 			public class DAMAGE_POPS

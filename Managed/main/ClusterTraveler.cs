@@ -124,7 +124,7 @@ public class ClusterTraveler : KMonoBehaviour, ISim200ms
 					m_movePotential = 600f;
 					if (AdvancePathOneStep())
 					{
-						Debug.Assert(ClusterGrid.Instance.GetVisibleAsteroidAtCell(m_clusterGridEntity.Location) == null, $"Somehow this clustercraft pathed through an asteroid at {m_clusterGridEntity.Location}");
+						Debug.Assert(ClusterGrid.Instance.GetVisibleEntityOfLayerAtCell(m_clusterGridEntity.Location, EntityLayer.Asteroid) == null, $"Somehow this clustercraft pathed through an asteroid at {m_clusterGridEntity.Location}");
 						m_movePotential -= 600f;
 						if (onTravelCB != null)
 						{

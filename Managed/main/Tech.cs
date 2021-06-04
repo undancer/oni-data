@@ -49,6 +49,30 @@ public class Tech : Resource
 		}
 	}
 
+	public void AddUnlockedItemIDs(params string[] ids)
+	{
+		foreach (string item in ids)
+		{
+			unlockedItemIDs.Add(item);
+		}
+	}
+
+	public void RemoveUnlockedItemIDs(params string[] ids)
+	{
+		foreach (string text in ids)
+		{
+			if (!unlockedItemIDs.Remove(text))
+			{
+				DebugUtil.DevLogError("Tech item '" + text + "' does not exist to remove");
+			}
+		}
+	}
+
+	public bool RequiresResearchType(string type)
+	{
+		return costsByResearchTypeID.ContainsKey(type);
+	}
+
 	public void SetNode(ResourceTreeNode node, string categoryID)
 	{
 		this.node = node;

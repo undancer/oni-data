@@ -163,7 +163,6 @@ public class PauseScreen : KModalButtonMenu
 		try
 		{
 			SaveLoader.Instance.Save(filename);
-			ReportErrorDialog.MOST_RECENT_SAVEFILE = filename;
 		}
 		catch (IOException ex)
 		{

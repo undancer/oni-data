@@ -202,6 +202,10 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 
 	public Sprite statusWarningIcon;
 
+	private RocketSimpleInfoPanel rocketSimpleInfoPanel;
+
+	private SpacePOISimpleInfoPanel spaceSimpleInfoPOIPanel;
+
 	[SerializeField]
 	private HierarchyReferences processConditionHeader;
 
@@ -224,13 +228,13 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 
 	private CollapsibleDetailContentPanel worldGeysersPanel;
 
-	[SerializeField]
-	private GameObject iconLabelRow;
+	private CollapsibleDetailContentPanel spacePOIPanel;
 
 	[SerializeField]
-	private GameObject bigIconLabelRow;
+	public GameObject iconLabelRow;
 
-	private Dictionary<Tag, GameObject> elementRows = new Dictionary<Tag, GameObject>();
+	[SerializeField]
+	public GameObject bigIconLabelRow;
 
 	private Dictionary<Tag, GameObject> lifeformRows = new Dictionary<Tag, GameObject>();
 
@@ -238,7 +242,8 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 
 	private Dictionary<Tag, GameObject> geyserRows = new Dictionary<Tag, GameObject>();
 
-	private GameObject storagePanel;
+	[SerializeField]
+	public GameObject spacerRow;
 
 	private GameObject infoPanel;
 
@@ -289,6 +294,12 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		component.OnRefreshData(data);
 	});
 
+	public GameObject StoragePanel
+	{
+		get;
+		private set;
+	}
+
 	public SimpleInfoScreen()
 	{
 		onStorageChangeDelegate = OnStorageChange;
@@ -309,6 +320,9 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		statusItemPanel.HeaderLabel.text = UI.DETAILTABS.SIMPLEINFO.GROUPNAME_STATUS;
 		statusItemPanel.scalerMask.hoverLock = true;
 		statusItemsFolder = statusItemPanel.Content.gameObject;
+		spaceSimpleInfoPOIPanel = new SpacePOISimpleInfoPanel(this);
+		spacePOIPanel = Util.KInstantiateUI<CollapsibleDetailContentPanel>(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
+		rocketSimpleInfoPanel = new RocketSimpleInfoPanel(this);
 		rocketStatusContainer = Util.KInstantiateUI<CollapsibleDetailContentPanel>(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
 		rocketStatusContainer.SetTitle(UI.DETAILTABS.SIMPLEINFO.GROUPNAME_ROCKET);
 		vitalsPanel = Util.KInstantiateUI<CollapsibleDetailContentPanel>(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
@@ -328,7 +342,7 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		worldGeysersPanel.SetTitle(UI.DETAILTABS.SIMPLEINFO.GROUPNAME_GEYSERS);
 		worldBiomesPanel = Util.KInstantiateUI<CollapsibleDetailContentPanel>(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
 		worldBiomesPanel.SetTitle(UI.DETAILTABS.SIMPLEINFO.GROUPNAME_BIOMES);
-		storagePanel = Util.KInstantiateUI(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
+		StoragePanel = Util.KInstantiateUI(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
 		stressPanel = Util.KInstantiateUI(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
 		stressDrawer = new DetailsPanelDrawer(attributesLabelTemplate, stressPanel.GetComponent<CollapsibleDetailContentPanel>().Content.gameObject);
 		stampContainer = Util.KInstantiateUI(StampContainerTemplate, gameObject);
@@ -372,6 +386,7 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		statusItemPanel.scalerMask.UpdateSize();
 		Refresh(force: true);
 		RefreshWorld();
+		spaceSimpleInfoPOIPanel.Refresh(spacePOIPanel, selectedTarget);
 	}
 
 	public override void OnDeselectTarget(GameObject target)
@@ -510,7 +525,7 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		}
 		RefreshStress();
 		RefreshStorage();
-		RefreshRocket();
+		rocketSimpleInfoPanel.Refresh(rocketStatusContainer, selectedTarget);
 	}
 
 	private void SetPanels(GameObject target)
@@ -597,7 +612,8 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		}
 		descriptionContainer.description.text = text;
 		descriptionContainer.flavour.text = text2;
-		infoPanel.gameObject.SetActive(component == null);
+		bool flag2 = text.IsNullOrWhiteSpace() && text2.IsNullOrWhiteSpace() && !flag;
+		infoPanel.gameObject.SetActive(component == null && !flag2);
 		descriptionContainer.gameObject.SetActive(infoPanel.activeSelf);
 		descriptionContainer.flavour.gameObject.SetActive(text2 != "" && text2 != "\n");
 		if (vitalsPanel.gameObject.activeSelf && amounts.Count == 0)
@@ -644,24 +660,24 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 	{
 		if (selectedTarget == null)
 		{
-			storagePanel.gameObject.SetActive(value: false);
+			StoragePanel.gameObject.SetActive(value: false);
 			return;
 		}
 		IStorage[] componentsInChildren = selectedTarget.GetComponentsInChildren<IStorage>();
 		if (componentsInChildren == null)
 		{
-			storagePanel.gameObject.SetActive(value: false);
+			StoragePanel.gameObject.SetActive(value: false);
 			return;
 		}
 		componentsInChildren = Array.FindAll(componentsInChildren, (IStorage n) => n.ShouldShowInUI());
 		if (componentsInChildren.Length == 0)
 		{
-			storagePanel.gameObject.SetActive(value: false);
+			StoragePanel.gameObject.SetActive(value: false);
 			return;
 		}
-		storagePanel.gameObject.SetActive(value: true);
+		StoragePanel.gameObject.SetActive(value: true);
 		string text = ((selectedTarget.GetComponent<MinionIdentity>() != null) ? UI.DETAILTABS.DETAILS.GROUPNAME_MINION_CONTENTS : UI.DETAILTABS.DETAILS.GROUPNAME_CONTENTS);
-		storagePanel.GetComponent<CollapsibleDetailContentPanel>().HeaderLabel.text = text;
+		StoragePanel.GetComponent<CollapsibleDetailContentPanel>().HeaderLabel.text = text;
 		foreach (KeyValuePair<string, GameObject> storageLabel in storageLabels)
 		{
 			storageLabel.Value.SetActive(value: false);
@@ -712,7 +728,7 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 					string formattedDisease = GameUtil.GetFormattedDisease(component.DiseaseIdx, component.DiseaseCount, color: true);
 					pooledList.Add(new Tuple<string, TextStyleSetting>(formattedDisease, PluginAssets.Instance.defaultTextStyleSetting));
 				}
-				GameObject gameObject = AddOrGetStorageLabel(storageLabels, storagePanel, "storage_" + num);
+				GameObject gameObject = AddOrGetStorageLabel(storageLabels, StoragePanel, "storage_" + num);
 				num++;
 				gameObject.GetComponentInChildren<LocText>().text = text2;
 				gameObject.GetComponentInChildren<ToolTip>().ClearMultiStringTooltip();
@@ -748,71 +764,9 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		}
 		if (num == 0)
 		{
-			GameObject gameObject2 = AddOrGetStorageLabel(storageLabels, storagePanel, "empty");
+			GameObject gameObject2 = AddOrGetStorageLabel(storageLabels, StoragePanel, "empty");
 			gameObject2.GetComponentInChildren<LocText>().text = UI.DETAILTABS.DETAILS.STORAGE_EMPTY;
 		}
-	}
-
-	private void RefreshRocket()
-	{
-		if (selectedTarget == null)
-		{
-			storagePanel.gameObject.SetActive(value: false);
-			return;
-		}
-		RocketModuleCluster component = selectedTarget.GetComponent<RocketModuleCluster>();
-		Clustercraft component2 = selectedTarget.GetComponent<Clustercraft>();
-		CraftModuleInterface craftModuleInterface = null;
-		if (component != null)
-		{
-			craftModuleInterface = component.CraftInterface;
-		}
-		else if (component2 != null)
-		{
-			craftModuleInterface = component2.ModuleInterface;
-		}
-		rocketStatusContainer.gameObject.SetActive(craftModuleInterface != null || component != null);
-		if (craftModuleInterface != null)
-		{
-			RocketEngineCluster engine = craftModuleInterface.GetEngine();
-			string arg;
-			string text;
-			if (engine != null && engine.GetComponent<HEPFuelTank>() != null)
-			{
-				arg = GameUtil.GetFormattedHighEnergyParticles(craftModuleInterface.FuelPerHex);
-				text = GameUtil.GetFormattedHighEnergyParticles(craftModuleInterface.FuelRemaining);
-			}
-			else
-			{
-				arg = GameUtil.GetFormattedMass(craftModuleInterface.FuelPerHex);
-				text = GameUtil.GetFormattedMass(craftModuleInterface.FuelRemaining);
-			}
-			string tooltip = string.Concat(UI.CLUSTERMAP.ROCKETS.RANGE.TOOLTIP, "\n    • ", string.Format(UI.CLUSTERMAP.ROCKETS.FUEL_PER_HEX.NAME, arg), "\n    • ", UI.CLUSTERMAP.ROCKETS.FUEL_REMAINING.NAME, text, "\n    • ", UI.CLUSTERMAP.ROCKETS.OXIDIZER_REMAINING.NAME, GameUtil.GetFormattedMass(craftModuleInterface.OxidizerPowerRemaining));
-			rocketStatusContainer.SetLabel("RangeRemaining", string.Concat(UI.CLUSTERMAP.ROCKETS.RANGE.NAME, GameUtil.GetFormattedRocketRange(craftModuleInterface.Range, GameUtil.TimeSlice.None)), tooltip);
-			string tooltip2 = string.Concat(UI.CLUSTERMAP.ROCKETS.SPEED.TOOLTIP, "\n    • ", UI.CLUSTERMAP.ROCKETS.POWER_TOTAL.NAME, craftModuleInterface.EnginePower.ToString(), "\n    • ", UI.CLUSTERMAP.ROCKETS.BURDEN_TOTAL.NAME, craftModuleInterface.TotalBurden.ToString());
-			rocketStatusContainer.SetLabel("Speed", string.Concat(UI.CLUSTERMAP.ROCKETS.SPEED.NAME, GameUtil.GetFormattedRocketRange(craftModuleInterface.Speed, GameUtil.TimeSlice.PerCycle)), tooltip2);
-			if (craftModuleInterface.GetEngine() != null)
-			{
-				string tooltip3 = string.Format(UI.CLUSTERMAP.ROCKETS.MAX_HEIGHT.TOOLTIP, craftModuleInterface.GetEngine().GetProperName(), craftModuleInterface.MaxHeight.ToString());
-				rocketStatusContainer.SetLabel("MaxHeight", string.Format(UI.CLUSTERMAP.ROCKETS.MAX_HEIGHT.NAME, craftModuleInterface.RocketHeight.ToString(), craftModuleInterface.MaxHeight.ToString()), tooltip3);
-			}
-			rocketStatusContainer.SetLabel("RocketSpacer2", "", "");
-		}
-		if (component != null)
-		{
-			rocketStatusContainer.SetLabel("ModuleStats", string.Concat(UI.CLUSTERMAP.ROCKETS.MODULE_STATS.NAME, selectedTarget.GetProperName()), UI.CLUSTERMAP.ROCKETS.MODULE_STATS.TOOLTIP);
-			float burden = component.performanceStats.Burden;
-			float enginePower = component.performanceStats.EnginePower;
-			if (burden != 0f)
-			{
-				rocketStatusContainer.SetLabel("LocalBurden", "    • " + (string)UI.CLUSTERMAP.ROCKETS.BURDEN_MODULE.NAME + burden, string.Format(UI.CLUSTERMAP.ROCKETS.BURDEN_MODULE.TOOLTIP, burden));
-			}
-			if (enginePower != 0f)
-			{
-				rocketStatusContainer.SetLabel("LocalPower", "    • " + (string)UI.CLUSTERMAP.ROCKETS.POWER_MODULE.NAME + enginePower, string.Format(UI.CLUSTERMAP.ROCKETS.POWER_MODULE.TOOLTIP, enginePower));
-			}
-		}
-		rocketStatusContainer.Commit();
 	}
 
 	private void RefreshWorld()
@@ -948,7 +902,7 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		}
 	}
 
-	private GameObject AddOrGetStorageLabel(Dictionary<string, GameObject> labels, GameObject panel, string id)
+	public GameObject AddOrGetStorageLabel(Dictionary<string, GameObject> labels, GameObject panel, string id)
 	{
 		GameObject gameObject = null;
 		if (labels.ContainsKey(id))
@@ -1055,5 +1009,6 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 	public void Sim4000ms(float dt)
 	{
 		RefreshWorld();
+		spaceSimpleInfoPOIPanel.Refresh(spacePOIPanel, selectedTarget);
 	}
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WarpPortalConfig : IEntityConfig
 {
+	public const string ID = "WarpPortal";
+
 	public string GetDlcId()
 	{
 		return "EXPANSION1_ID";

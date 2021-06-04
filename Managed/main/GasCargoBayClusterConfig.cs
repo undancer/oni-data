@@ -5,7 +5,7 @@ public class GasCargoBayClusterConfig : IBuildingConfig
 {
 	public const string ID = "GasCargoBayCluster";
 
-	public float CAPACITY = 1100f * ROCKETRY.CARGO_CAPACITY_SCALE;
+	public float CAPACITY = ROCKETRY.GAS_CARGO_BAY_CLUSTER_CAPACITY * ROCKETRY.CARGO_CAPACITY_SCALE;
 
 	public override BuildingDef CreateBuildingDef()
 	{

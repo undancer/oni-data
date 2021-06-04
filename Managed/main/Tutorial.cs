@@ -626,16 +626,19 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 	{
 		ListPool<Pickupable, Tutorial>.PooledList pooledList = ListPool<Pickupable, Tutorial>.Allocate();
 		int unrefrigeratedFood = GetUnrefrigeratedFood(pooledList);
-		focusedUnrefrigFood++;
-		if (focusedUnrefrigFood >= unrefrigeratedFood)
+		if (pooledList.Count != 0)
 		{
-			focusedUnrefrigFood = 0;
+			focusedUnrefrigFood++;
+			if (focusedUnrefrigFood >= unrefrigeratedFood)
+			{
+				focusedUnrefrigFood = 0;
+			}
+			Pickupable pickupable = pooledList[focusedUnrefrigFood];
+			if (pickupable != null)
+			{
+				CameraController.Instance.SetTargetPos(pickupable.transform.GetPosition(), 8f, playSound: true);
+			}
+			pooledList.Recycle();
 		}
-		Pickupable pickupable = pooledList[focusedUnrefrigFood];
-		if (pickupable != null)
-		{
-			CameraController.Instance.SetTargetPos(pickupable.transform.GetPosition(), 8f, playSound: true);
-		}
-		pooledList.Recycle();
 	}
 }

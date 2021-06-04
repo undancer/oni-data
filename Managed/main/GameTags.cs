@@ -289,6 +289,8 @@ public class GameTags
 
 	public static readonly Tag Artifact = TagManager.Create("Artifact");
 
+	public static readonly Tag CharmedArtifact = TagManager.Create("CharmedArtifact");
+
 	public static readonly Tag MiscPickupable = TagManager.Create("MiscPickupable");
 
 	public static readonly Tag CombustibleGas = TagManager.Create("CombustibleGas");
@@ -640,6 +642,8 @@ public class GameTags
 	public static readonly Tag NoRocketRefund = TagManager.Create("NoRocketRefund");
 
 	public static readonly Tag DontBlockRockets = TagManager.Create("DontBlockRockets ");
+
+	public static readonly Tag RocketModule = TagManager.Create("RocketModule");
 
 	public static readonly Tag EntityInSpace = TagManager.Create("EntityInSpace");
 

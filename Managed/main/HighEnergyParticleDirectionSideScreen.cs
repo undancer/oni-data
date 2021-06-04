@@ -47,7 +47,7 @@ public class HighEnergyParticleDirectionSideScreen : SideScreenContent
 				if (target != null)
 				{
 					target.Direction = EightDirectionUtil.AngleToDirection(num * 45);
-					Game.Instance.ForceOverlayUpdate();
+					Game.Instance.ForceOverlayUpdate(clearLastMode: true);
 					Refresh();
 				}
 			};

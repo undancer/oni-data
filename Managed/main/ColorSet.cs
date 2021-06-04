@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
@@ -164,5 +165,11 @@ public class ColorSet : ScriptableObject
 	{
 		namedLookup = null;
 		Init();
+	}
+
+	public bool IsDefaultColorSet()
+	{
+		int num = Array.IndexOf(GlobalAssets.Instance.colorSetOptions, this);
+		return num == 0;
 	}
 }

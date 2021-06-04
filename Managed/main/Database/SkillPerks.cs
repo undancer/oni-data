@@ -27,6 +27,8 @@ namespace Database
 
 		public SkillPerk IncreaseConstructionMechatronics;
 
+		public SkillPerk CanDemolish;
+
 		public SkillPerk IncreaseLearningSmall;
 
 		public SkillPerk IncreaseLearningMedium;
@@ -88,6 +90,8 @@ namespace Database
 		public SkillPerk CanArtOkay;
 
 		public SkillPerk CanArtGreat;
+
+		public SkillPerk CanStudyArtifact;
 
 		public SkillPerk IncreaseMachinerySmall;
 
@@ -157,6 +161,7 @@ namespace Database
 			IncreaseConstructionMedium = Add(new SkillAttributePerk("IncreaseConstructionMedium", Db.Get().Attributes.Construction.Id, ROLES.ATTRIBUTE_BONUS_SECOND, DUPLICANTS.ROLES.BUILDER.NAME));
 			IncreaseConstructionLarge = Add(new SkillAttributePerk("IncreaseConstructionLarge", Db.Get().Attributes.Construction.Id, ROLES.ATTRIBUTE_BONUS_THIRD, DUPLICANTS.ROLES.SENIOR_BUILDER.NAME));
 			IncreaseConstructionMechatronics = Add(new SkillAttributePerk("IncreaseConstructionMechatronics", Db.Get().Attributes.Construction.Id, ROLES.ATTRIBUTE_BONUS_THIRD, DUPLICANTS.ROLES.MECHATRONIC_ENGINEER.NAME));
+			CanDemolish = Add(new SimpleSkillPerk("CanDemonlish", UI.ROLES_SCREEN.PERKS.CAN_DEMOLISH.DESCRIPTION));
 			IncreaseLearningSmall = Add(new SkillAttributePerk("IncreaseLearningSmall", Db.Get().Attributes.Learning.Id, ROLES.ATTRIBUTE_BONUS_FIRST, DUPLICANTS.ROLES.JUNIOR_RESEARCHER.NAME));
 			IncreaseLearningMedium = Add(new SkillAttributePerk("IncreaseLearningMedium", Db.Get().Attributes.Learning.Id, ROLES.ATTRIBUTE_BONUS_SECOND, DUPLICANTS.ROLES.RESEARCHER.NAME));
 			IncreaseLearningLarge = Add(new SkillAttributePerk("IncreaseLearningLarge", Db.Get().Attributes.Learning.Id, ROLES.ATTRIBUTE_BONUS_THIRD, DUPLICANTS.ROLES.SENIOR_RESEARCHER.NAME));
@@ -186,6 +191,7 @@ namespace Database
 			CanArtUgly = Add(new SimpleSkillPerk("CanArtUgly", UI.ROLES_SCREEN.PERKS.CAN_ART_UGLY.DESCRIPTION));
 			CanArtOkay = Add(new SimpleSkillPerk("CanArtOkay", UI.ROLES_SCREEN.PERKS.CAN_ART_OKAY.DESCRIPTION));
 			CanArtGreat = Add(new SimpleSkillPerk("CanArtGreat", UI.ROLES_SCREEN.PERKS.CAN_ART_GREAT.DESCRIPTION));
+			CanStudyArtifact = Add(new SimpleSkillPerk("CanStudyArtifact", UI.ROLES_SCREEN.PERKS.CAN_STUDY_ARTIFACTS.DESCRIPTION));
 			IncreaseMachinerySmall = Add(new SkillAttributePerk("IncreaseMachinerySmall", Db.Get().Attributes.Machinery.Id, ROLES.ATTRIBUTE_BONUS_FIRST, DUPLICANTS.ROLES.MACHINE_TECHNICIAN.NAME));
 			IncreaseMachineryMedium = Add(new SkillAttributePerk("IncreaseMachineryMedium", Db.Get().Attributes.Machinery.Id, ROLES.ATTRIBUTE_BONUS_SECOND, DUPLICANTS.ROLES.POWER_TECHNICIAN.NAME));
 			IncreaseMachineryLarge = Add(new SkillAttributePerk("IncreaseMachineryLarge", Db.Get().Attributes.Machinery.Id, ROLES.ATTRIBUTE_BONUS_THIRD, DUPLICANTS.ROLES.MECHATRONIC_ENGINEER.NAME));

@@ -166,7 +166,6 @@ public class LiquidPumpingStation : Workable, ISim200ms
 	{
 		base.OnSpawn();
 		infos = new LiquidInfo[liquidOffsets.Length * 2];
-		GetComponent<KSelectable>().SetStatusIndicatorOffset(GetComponent<Building>().Def.placementPivot);
 		RefreshStatusItem();
 		Sim200ms(0f);
 		SetWorkTime(10f);

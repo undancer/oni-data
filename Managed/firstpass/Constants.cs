@@ -54,6 +54,8 @@ public static class Constants
 
 	public static readonly string WARNING_COLOR_STR = "#" + WARNING_COLOR.ToHexString();
 
+	public static readonly string WHITE_COLOR_STR = "#" + Color.white.ToHexString();
+
 	public const float W2KW = 0.001f;
 
 	public const float KW2W = 1000f;

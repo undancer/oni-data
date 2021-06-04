@@ -426,7 +426,7 @@ public class Rottable : GameStateMachine<Rottable, Rottable.Instance, IStateMach
 			return RotRefrigerationLevel.Normal;
 		}
 		PrimaryElement component = rottable.gameObject.GetComponent<PrimaryElement>();
-		float num2 = Mathf.Min(Grid.Temperature[num], component.Temperature);
+		float num2 = ((Grid.Element[num].id != SimHashes.Vacuum) ? Mathf.Min(Grid.Temperature[num], component.Temperature) : component.Temperature);
 		if (num2 < rottable.PreserveTemperature)
 		{
 			return RotRefrigerationLevel.Frozen;

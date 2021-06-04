@@ -19,6 +19,22 @@ public class CargoBay : KMonoBehaviour
 
 	public CargoType storageType = CargoType.Solids;
 
+	public static Dictionary<Element.State, CargoType> ElementStateToCargoTypes = new Dictionary<Element.State, CargoType>
+	{
+		{
+			Element.State.Gas,
+			CargoType.Gasses
+		},
+		{
+			Element.State.Liquid,
+			CargoType.Liquids
+		},
+		{
+			Element.State.Solid,
+			CargoType.Solids
+		}
+	};
+
 	private static readonly EventSystem.IntraObjectHandler<CargoBay> OnLaunchDelegate = new EventSystem.IntraObjectHandler<CargoBay>(delegate(CargoBay component, object data)
 	{
 		component.OnLaunch(data);

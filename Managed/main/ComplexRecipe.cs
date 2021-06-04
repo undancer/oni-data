@@ -70,6 +70,8 @@ public class ComplexRecipe
 
 	public GameObject FabricationVisualizer;
 
+	public int consumedHEP = 0;
+
 	public RecipeNameDisplay nameDisplay = RecipeNameDisplay.Ingredient;
 
 	public string description;
@@ -82,11 +84,12 @@ public class ComplexRecipe
 
 	public Tag FirstResult => results[0].material;
 
-	public ComplexRecipe(string id, RecipeElement[] ingredients, RecipeElement[] results)
+	public ComplexRecipe(string id, RecipeElement[] ingredients, RecipeElement[] results, int consumedHEP = 0)
 	{
 		this.id = id;
 		this.ingredients = ingredients;
 		this.results = results;
+		this.consumedHEP = consumedHEP;
 		ComplexRecipeManager.Get().Add(this);
 	}
 

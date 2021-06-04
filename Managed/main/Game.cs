@@ -528,6 +528,11 @@ public class Game : KMonoBehaviour
 		component.MarkStatusItemRendererDirty(data);
 	});
 
+	private static readonly EventSystem.IntraObjectHandler<Game> ActiveWorldChangedDelegate = new EventSystem.IntraObjectHandler<Game>(delegate(Game component, object data)
+	{
+		component.ForceOverlayUpdate(clearLastMode: true);
+	});
+
 	private ushort[] activeFX;
 
 	public bool debugWasUsed = false;
@@ -721,6 +726,7 @@ public class Game : KMonoBehaviour
 	protected override void OnLoadLevel()
 	{
 		Unsubscribe(1798162660, MarkStatusItemRendererDirtyDelegate);
+		Unsubscribe(1983128072, ActiveWorldChangedDelegate);
 		base.OnLoadLevel();
 	}
 
@@ -797,6 +803,7 @@ public class Game : KMonoBehaviour
 			meshRenderer.reflectionProbeUsage = ReflectionProbeUsage.Off;
 		}
 		Subscribe(1798162660, MarkStatusItemRendererDirtyDelegate);
+		Subscribe(1983128072, ActiveWorldChangedDelegate);
 		solidConduitFlow.Initialize();
 		SimAndRenderScheduler.instance.Add(roomProber);
 		SimAndRenderScheduler.instance.Add(KComponentSpawn.instance);
@@ -1074,7 +1081,7 @@ public class Game : KMonoBehaviour
 			for (int num10 = 0; num10 < numElementChunkMeltedInfos; num10++)
 			{
 				Sim.MeltedInfo meltedInfo = ptr->elementChunkMeltedInfos[num10];
-				SimTemperatureTransfer.DoStateTransition(meltedInfo.handle);
+				SimTemperatureTransfer.DoOreMeltTransition(meltedInfo.handle);
 			}
 			int numBuildingOverheatInfos = ptr->numBuildingOverheatInfos;
 			for (int num11 = 0; num11 < numBuildingOverheatInfos; num11++)
@@ -1311,10 +1318,10 @@ public class Game : KMonoBehaviour
 		lastDrawnOverlayMode = mode;
 	}
 
-	public void ForceOverlayUpdate()
+	public void ForceOverlayUpdate(bool clearLastMode = false)
 	{
 		previousOverlayMode = OverlayModes.None.ID;
-		if (lastDrawnOverlayMode == OverlayModes.Radiation.ID)
+		if (clearLastMode)
 		{
 			lastDrawnOverlayMode = OverlayModes.None.ID;
 		}
@@ -1419,7 +1426,7 @@ public class Game : KMonoBehaviour
 		{
 			return;
 		}
-		uint num = 464434u;
+		uint num = 466411u;
 		string text = System.DateTime.Now.ToShortDateString();
 		string text2 = System.DateTime.Now.ToShortTimeString();
 		string fileName = Path.GetFileName(GenericGameSettings.instance.performanceCapture.saveGame);

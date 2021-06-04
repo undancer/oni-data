@@ -1260,7 +1260,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Experiment 52B", "SAPTREE");
 
-				public static LocString DESC = "An " + UI.FormatAsLink("Isoresin", "ISORESIN") + "-producing, cybernetic tree that shows signs of sentience.\n\nIt is rooted firmly in place, and appears to have been here for some time.";
+				public static LocString DESC = "An " + UI.FormatAsLink("Resin", "RESIN") + "-producing, cybernetic tree that shows signs of sentience.\n\nIt is rooted firmly in place, and appears to have been here for some time.";
 			}
 
 			public class SEEDS

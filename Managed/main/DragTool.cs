@@ -115,7 +115,6 @@ public class DragTool : InterfaceTool
 	public override void OnLeftClickDown(Vector3 cursor_pos)
 	{
 		cursor_pos = ClampPositionToWorld(cursor_pos, ClusterManager.Instance.activeWorld);
-		cursor_pos -= placementPivot;
 		dragging = true;
 		downPos = cursor_pos;
 		previousCursorPos = cursor_pos;
@@ -174,7 +173,6 @@ public class DragTool : InterfaceTool
 	public override void OnLeftClickUp(Vector3 cursor_pos)
 	{
 		cursor_pos = ClampPositionToWorld(cursor_pos, ClusterManager.Instance.activeWorld);
-		cursor_pos -= placementPivot;
 		KScreenManager.Instance.SetEventSystemEnabled(state: true);
 		dragAxis = DragAxis.Invalid;
 		if (!dragging)

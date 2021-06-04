@@ -97,6 +97,11 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 		component.OnStorageChange(data);
 	});
 
+	private static readonly EventSystem.IntraObjectHandler<ComplexFabricator> OnParticleStorageChangedDelegate = new EventSystem.IntraObjectHandler<ComplexFabricator>(delegate(ComplexFabricator component, object data)
+	{
+		component.OnStorageChange(data);
+	});
+
 	private static readonly EventSystem.IntraObjectHandler<ComplexFabricator> OnDroppedAllDelegate = new EventSystem.IntraObjectHandler<ComplexFabricator>(delegate(ComplexFabricator component, object data)
 	{
 		component.OnDroppedAll(data);
@@ -171,6 +176,7 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 		Subscribe(-592767678, OnOperationalChangedDelegate);
 		Subscribe(-905833192, OnCopySettingsDelegate);
 		Subscribe(-1697596308, OnStorageChangeDelegate);
+		Subscribe(-1837862626, OnParticleStorageChangedDelegate);
 		workable = GetComponent<ComplexFabricatorWorkable>();
 		Components.ComplexFabricators.Add(this);
 	}
@@ -824,6 +830,14 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 	protected virtual bool HasIngredients(ComplexRecipe recipe, Storage storage)
 	{
 		ComplexRecipe.RecipeElement[] ingredients = recipe.ingredients;
+		if (recipe.consumedHEP > 0)
+		{
+			HighEnergyParticleStorage component = GetComponent<HighEnergyParticleStorage>();
+			if (component == null || component.Particles < (float)recipe.consumedHEP)
+			{
+				return false;
+			}
+		}
 		ComplexRecipe.RecipeElement[] array = ingredients;
 		foreach (ComplexRecipe.RecipeElement recipeElement in array)
 		{
@@ -866,6 +880,10 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 				diseaseInfo = disease_info;
 			}
 			num += aggregate_temperature * num3;
+		}
+		if (recipe.consumedHEP > 0)
+		{
+			GetComponent<HighEnergyParticleStorage>().ConsumeAndGet(recipe.consumedHEP);
 		}
 		ComplexRecipe.RecipeElement[] results = recipe.results;
 		foreach (ComplexRecipe.RecipeElement recipeElement3 in results)
@@ -981,5 +999,29 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 			}
 		}
 		return null;
+	}
+
+	public bool NeedsMoreHEPForQueuedRecipe()
+	{
+		if (hasOpenOrders)
+		{
+			HighEnergyParticleStorage component = GetComponent<HighEnergyParticleStorage>();
+			foreach (KeyValuePair<string, int> recipeQueueCount in recipeQueueCounts)
+			{
+				if (recipeQueueCount.Value <= 0)
+				{
+					continue;
+				}
+				ComplexRecipe[] recipes = GetRecipes();
+				foreach (ComplexRecipe complexRecipe in recipes)
+				{
+					if (complexRecipe.id == recipeQueueCount.Key && (float)complexRecipe.consumedHEP > component.Particles)
+					{
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

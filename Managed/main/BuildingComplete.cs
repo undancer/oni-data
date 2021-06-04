@@ -48,6 +48,18 @@ public class BuildingComplete : Building
 		position.z = Grid.GetLayerZ(Def.SceneLayer);
 		base.transform.SetPosition(position);
 		base.gameObject.SetLayerRecursively(LayerMask.NameToLayer("Default"));
+		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
+		Rotatable component2 = GetComponent<Rotatable>();
+		if (component != null && component2 == null)
+		{
+			component.Offset = Def.GetVisualizerOffset();
+		}
+		KBoxCollider2D component3 = GetComponent<KBoxCollider2D>();
+		if (component3 != null)
+		{
+			Vector3 visualizerOffset = Def.GetVisualizerOffset();
+			component3.offset += new Vector2(visualizerOffset.x, visualizerOffset.y);
+		}
 		Attributes attributes = this.GetAttributes();
 		foreach (Klei.AI.Attribute attribute2 in Def.attributes)
 		{
@@ -89,18 +101,6 @@ public class BuildingComplete : Building
 	{
 		base.OnSpawn();
 		primaryElement = GetComponent<PrimaryElement>();
-		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
-		Rotatable component2 = GetComponent<Rotatable>();
-		if (component != null && component2 == null)
-		{
-			component.Offset = Def.GetVisualizerOffset() + Def.placementPivot;
-		}
-		KBoxCollider2D component3 = GetComponent<KBoxCollider2D>();
-		if (component3 != null)
-		{
-			Vector3 visualizerOffset = Def.GetVisualizerOffset();
-			component3.offset += new Vector2(visualizerOffset.x, visualizerOffset.y);
-		}
 		int cell = Grid.PosToCell(base.transform.GetPosition());
 		int[] placementCells = base.PlacementCells;
 		foreach (int gameCell in placementCells)
@@ -152,11 +152,6 @@ public class BuildingComplete : Building
 				Grid.PreventIdleTraversal[base.PlacementCells[k]] = true;
 			}
 		}
-		KSelectable component4 = GetComponent<KSelectable>();
-		if (component4 != null)
-		{
-			component4.SetStatusIndicatorOffset(Def.placementPivot);
-		}
 		Components.BuildingCompletes.Add(this);
 		BuildingConfigManager.Instance.AddBuildingCompleteKComponents(base.gameObject, Def.Tag);
 		hasSpawnedKComponents = true;
@@ -168,12 +163,12 @@ public class BuildingComplete : Building
 		Attributes attributes = this.GetAttributes();
 		if (attributes != null)
 		{
-			Deconstructable component5 = GetComponent<Deconstructable>();
-			if (component5 != null)
+			Deconstructable component = GetComponent<Deconstructable>();
+			if (component != null)
 			{
-				for (int l = 1; l < component5.constructionElements.Length; l++)
+				for (int l = 1; l < component.constructionElements.Length; l++)
 				{
-					Tag tag = component5.constructionElements[l];
+					Tag tag = component.constructionElements[l];
 					Element element = ElementLoader.GetElement(tag);
 					if (element != null)
 					{
@@ -188,12 +183,12 @@ public class BuildingComplete : Building
 					{
 						continue;
 					}
-					PrefabAttributeModifiers component6 = gameObject.GetComponent<PrefabAttributeModifiers>();
-					if (!(component6 != null))
+					PrefabAttributeModifiers component2 = gameObject.GetComponent<PrefabAttributeModifiers>();
+					if (!(component2 != null))
 					{
 						continue;
 					}
-					foreach (AttributeModifier descriptor in component6.descriptors)
+					foreach (AttributeModifier descriptor in component2.descriptors)
 					{
 						attributes.Add(descriptor);
 					}

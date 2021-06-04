@@ -31,6 +31,7 @@ public class SetLockerConfig : IEntityConfig
 		{
 			ObjectLayer.Building
 		};
+		gameObject.AddOrGet<Demolishable>();
 		return gameObject;
 	}
 

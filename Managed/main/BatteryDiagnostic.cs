@@ -10,9 +10,8 @@ public class BatteryDiagnostic : ColonyDiagnostic
 		tracker = TrackerTool.Instance.GetWorldTracker<BatteryTracker>(worldID);
 		trackerSampleCountSeconds = 4f;
 		icon = "overlay_power";
-		AddCriterion(UI.COLONY_DIAGNOSTICS.NO_MINIONS, ColonyDiagnosticUtility.GetWorldHasMinionCriterion(worldID));
-		AddCriterion("CheckCapacity", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckCapacity));
-		AddCriterion("CheckDead", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckDead));
+		AddCriterion("CheckCapacity", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA.CHECKCAPACITY, CheckCapacity));
+		AddCriterion("CheckDead", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA.CHECKDEAD, CheckDead));
 	}
 
 	public DiagnosticResult CheckCapacity()

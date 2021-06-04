@@ -393,22 +393,24 @@ public class ColonyDiagnosticScreen : KScreen, ISim4000ms
 		return gameObject;
 	}
 
-	public static void SetIndication(ColonyDiagnostic.DiagnosticResult.Opinion pinion, GameObject indicatorGameObject)
+	public static void SetIndication(ColonyDiagnostic.DiagnosticResult.Opinion opinion, GameObject indicatorGameObject)
 	{
 		Image componentInChildren = indicatorGameObject.GetComponentInChildren<Image>();
-		switch (pinion)
+		componentInChildren.color = GetDiagnosticIndicationColor(opinion);
+	}
+
+	public static Color GetDiagnosticIndicationColor(ColonyDiagnostic.DiagnosticResult.Opinion opinion)
+	{
+		switch (opinion)
 		{
 		case ColonyDiagnostic.DiagnosticResult.Opinion.DuplicantThreatening:
 		case ColonyDiagnostic.DiagnosticResult.Opinion.Bad:
 		case ColonyDiagnostic.DiagnosticResult.Opinion.Warning:
-			componentInChildren.color = Constants.NEGATIVE_COLOR;
-			break;
+			return Constants.NEGATIVE_COLOR;
 		case ColonyDiagnostic.DiagnosticResult.Opinion.Concern:
-			componentInChildren.color = Constants.WARNING_COLOR;
-			break;
+			return Constants.WARNING_COLOR;
 		default:
-			componentInChildren.color = Constants.NEUTRAL_COLOR;
-			break;
+			return Color.white;
 		}
 	}
 

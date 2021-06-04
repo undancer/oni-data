@@ -71,6 +71,7 @@ public class TrackerTool : KMonoBehaviour
 		worldTrackers.Add(new BatteryTracker(worldID));
 		worldTrackers.Add(new CropTracker(worldID));
 		worldTrackers.Add(new WorkingToiletTracker(worldID));
+		worldTrackers.Add(new RadiationTracker(worldID));
 		if (ClusterManager.Instance.GetWorld(worldID).IsModuleInterior)
 		{
 			worldTrackers.Add(new RocketFuelTracker(worldID));

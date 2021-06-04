@@ -40,7 +40,7 @@ public class HighEnergyParticleRedirectorConfig : IBuildingConfig
 		HighEnergyParticleStorage highEnergyParticleStorage = go.AddOrGet<HighEnergyParticleStorage>();
 		highEnergyParticleStorage.autoStore = true;
 		highEnergyParticleStorage.showInUI = false;
-		highEnergyParticleStorage.capacity = 51f;
+		highEnergyParticleStorage.capacity = 501f;
 		HighEnergyParticleRedirector highEnergyParticleRedirector = go.AddOrGet<HighEnergyParticleRedirector>();
 		highEnergyParticleRedirector.directorDelay = 0.5f;
 	}

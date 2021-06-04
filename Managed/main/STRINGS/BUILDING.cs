@@ -758,6 +758,13 @@ namespace STRINGS
 				public static LocString TOOLTIP = "Building will be deconstructed once a Duplicant is available";
 			}
 
+			public class PENDINGDEMOLITION
+			{
+				public static LocString NAME = "Demolition Errand";
+
+				public static LocString TOOLTIP = "Object will be permanently demolished once a Duplicant is available";
+			}
+
 			public class PENDINGFISH
 			{
 				public static LocString NAME = "Fishing Errand";
@@ -993,6 +1000,13 @@ namespace STRINGS
 				public static LocString NAME = "Waiting For Materials";
 
 				public static LocString TOOLTIP = "Fabrication will begin once materials have been delivered";
+			}
+
+			public class FABRICATORLACKSHEP
+			{
+				public static LocString NAME = "Waiting For Radbolts";
+
+				public static LocString TOOLTIP = "A queued recipe requires more Radbolts than are currently stored";
 			}
 
 			public class TOILET
@@ -2150,6 +2164,20 @@ namespace STRINGS
 				public static LocString TOOLTIP = "This rocket has run out of fuel and cannot move";
 			}
 
+			public class SPACEPOIHARVESTING
+			{
+				public static LocString NAME = "Extracting Resources: {0}";
+
+				public static LocString TOOLTIP = "Resources are being mined from this space POI";
+			}
+
+			public class SPACEPOIWASTING
+			{
+				public static LocString NAME = "Cannot store resources: {0}";
+
+				public static LocString TOOLTIP = "Some portion of the resources being mined from this space POI cannot be stored in this rocket";
+			}
+
 			public class RAILGUNPAYLOADNEEDSEMPTYING
 			{
 				public static LocString NAME = "Ready To Unpack";
@@ -2211,6 +2239,20 @@ namespace STRINGS
 				public static LocString NAME = "Platform Ready";
 
 				public static LocString TOOLTIP = "All cargo operations are complete";
+			}
+
+			public class FLIGHTALLCARGOFULL
+			{
+				public static LocString NAME = "All cargo bays full to capacity";
+
+				public static LocString TOOLTIP = "Rocket cannot store anymore materials";
+			}
+
+			public class FLIGHTCARGOREMAINING
+			{
+				public static LocString NAME = "Cargo capacity remaining {0}";
+
+				public static LocString TOOLTIP = "Rocket can store up to {0} more materials";
 			}
 
 			public class ROCKET_PORT_IDLE

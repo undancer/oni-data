@@ -216,8 +216,16 @@ public class WarpConduitReceiver : StateMachineComponent<WarpConduitReceiver.Sta
 	{
 		IUtilityNetworkMgr networkManager = Conduit.GetNetworkManager(liquidPortInfo.conduitType);
 		networkManager.RemoveFromNetworks(liquidPort.outputCell, liquidPort.networkItem, is_endpoint: true);
-		networkManager = Conduit.GetNetworkManager(gasPort.portInfo.conduitType);
-		networkManager.RemoveFromNetworks(gasPort.outputCell, gasPort.networkItem, is_endpoint: true);
+		if (gasPort.portInfo != null)
+		{
+			ConduitType conduitType = gasPort.portInfo.conduitType;
+			networkManager = Conduit.GetNetworkManager(conduitType);
+			networkManager.RemoveFromNetworks(gasPort.outputCell, gasPort.networkItem, is_endpoint: true);
+		}
+		else
+		{
+			Debug.LogWarning("Conduit Receiver gasPort portInfo is null in OnCleanUp");
+		}
 		Game.Instance.solidConduitSystem.RemoveFromNetworks(solidPort.outputCell, solidPort.networkItem, is_endpoint: true);
 		base.OnCleanUp();
 	}

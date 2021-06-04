@@ -28,6 +28,7 @@ public class StaterpillarGeneratorConfig : IBuildingConfig
 		buildingDef.AudioCategory = "Plastic";
 		buildingDef.RequiresPowerOutput = true;
 		buildingDef.PowerOutputOffset = new CellOffset(0, 1);
+		buildingDef.PlayConstructionSounds = false;
 		return buildingDef;
 	}
 
@@ -41,7 +42,6 @@ public class StaterpillarGeneratorConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		go.AddOrGet<LoopingSounds>();
 		StaterpillarGenerator staterpillarGenerator = go.AddOrGet<StaterpillarGenerator>();
 		staterpillarGenerator.powerDistributionOrder = 9;
 		Deconstructable component = go.GetComponent<Deconstructable>();

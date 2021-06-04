@@ -32,6 +32,8 @@ public class PopFX : KMonoBehaviour
 
 	private bool isLive = false;
 
+	private bool isActiveWorld = false;
+
 	public void Recycle()
 	{
 		icon = null;
@@ -46,6 +48,8 @@ public class PopFX : KMonoBehaviour
 		canvasGroup.alpha = 0f;
 		base.gameObject.SetActive(value: false);
 		isLive = false;
+		isActiveWorld = false;
+		Game.Instance.Unsubscribe(1983128072, OnActiveWorldChanged);
 	}
 
 	public void Spawn(Sprite Icon, string Text, Transform TargetTransform, Vector3 Offset, float LifeTime = 1.5f, bool TrackTarget = false)
@@ -69,7 +73,25 @@ public class PopFX : KMonoBehaviour
 		IconDisplay.sprite = icon;
 		canvasGroup.alpha = 1f;
 		isLive = true;
+		Game.Instance.Subscribe(1983128072, OnActiveWorldChanged);
+		SetWorldActive(ClusterManager.Instance.activeWorldId);
 		Update();
+	}
+
+	private void OnActiveWorldChanged(object data)
+	{
+		Tuple<int, int> tuple = (Tuple<int, int>)data;
+		if (isLive)
+		{
+			SetWorldActive(tuple.first);
+		}
+	}
+
+	private void SetWorldActive(int worldId)
+	{
+		Vector3 pos = ((trackTarget && targetTransform != null) ? targetTransform.position : startPos);
+		int num = Grid.PosToCell(pos);
+		isActiveWorld = !Grid.IsValidCell(num) || Grid.WorldIdx[num] == worldId;
 	}
 
 	private void Update()
@@ -93,7 +115,7 @@ public class PopFX : KMonoBehaviour
 				v2.z = 0f;
 				base.gameObject.rectTransform().anchoredPosition = v2;
 			}
-			canvasGroup.alpha = 1.5f * ((lifetime - lifeElapsed) / lifetime);
+			canvasGroup.alpha = (isActiveWorld ? (1.5f * ((lifetime - lifeElapsed) / lifetime)) : 0f);
 		}
 	}
 }

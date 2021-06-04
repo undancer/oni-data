@@ -821,7 +821,7 @@ namespace STRINGS
 
 				public static LocString STATUS = "Going to deconstruct";
 
-				public static LocString TOOLTIP = "This Duplicant is demolishing a building";
+				public static LocString TOOLTIP = "This Duplicant is deconstructing a building";
 			}
 
 			public class RESEARCH
@@ -1231,6 +1231,15 @@ namespace STRINGS
 				public static LocString STATUS = "Tending plant";
 
 				public static LocString TOOLTIP = "Tending to plants increases their " + UI.PRE_KEYWORD + "Growth Rate" + UI.PST_KEYWORD;
+			}
+
+			public class DEMOLISH
+			{
+				public static LocString NAME = "Demolish";
+
+				public static LocString STATUS = "Demolishing object";
+
+				public static LocString TOOLTIP = "Demolishing an object removes it permanently";
 			}
 
 			public class IDLE
@@ -2571,6 +2580,13 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Deconstructing {Target}";
 
+				public static LocString TOOLTIP = "This Duplicant is deconstructing the <b>{Target}</b>";
+			}
+
+			public class DEMOLISHING
+			{
+				public static LocString NAME = "Demolishing {Target}";
+
 				public static LocString TOOLTIP = "This Duplicant is demolishing the <b>{Target}</b>";
 			}
 
@@ -2741,6 +2757,13 @@ namespace STRINGS
 				public static LocString NAME = "Analyzing Plant Genes";
 
 				public static LocString TOOLTIP = "This duplicant is peering deep into the genetic code of an odd seed";
+			}
+
+			public class ANALYZINGARTIFACT
+			{
+				public static LocString NAME = "Analyzing Artifact";
+
+				public static LocString TOOLTIP = "This duplicant is studying an artifact";
 			}
 		}
 
@@ -6553,9 +6576,9 @@ namespace STRINGS
 
 			public class SENIOR_BUILDER
 			{
-				public static LocString NAME = UI.FormatAsLink("Improved Construction III", "SENIOR_BUILDER");
+				public static LocString NAME = UI.FormatAsLink("Demolition", "SENIOR_BUILDER");
 
-				public static LocString DESCRIPTION = "Further increases a Duplicant's construction speeds";
+				public static LocString DESCRIPTION = "Enables a Duplicant to deconstruct Gravitas buildings";
 			}
 
 			public class JUNIOR_RESEARCHER
@@ -6581,9 +6604,9 @@ namespace STRINGS
 
 			public class NUCLEAR_RESEARCHER
 			{
-				public static LocString NAME = UI.FormatAsLink("Atomic Research", "NUCLEAR_RESEARCHER");
+				public static LocString NAME = UI.FormatAsLink("Materials Science Research", "NUCLEAR_RESEARCHER");
 
-				public static LocString DESCRIPTION = "Enables Duplicants to study sub-atomic particles using the " + BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME;
+				public static LocString DESCRIPTION = "Enables Duplicants to study matter using the " + BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME;
 			}
 
 			public class SPACE_RESEARCHER

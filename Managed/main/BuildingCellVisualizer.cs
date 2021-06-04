@@ -279,7 +279,11 @@ public class BuildingCellVisualizer : KMonoBehaviour
 
 	public void DrawIcons(HashedString mode)
 	{
-		if (mode == OverlayModes.Power.ID)
+		if (base.gameObject.GetMyWorldId() != ClusterManager.Instance.activeWorldId)
+		{
+			DisableIcons();
+		}
+		else if (mode == OverlayModes.Power.ID)
 		{
 			if (RequiresPower)
 			{

@@ -38,6 +38,11 @@ public class ClusterFogOfWarManager : GameStateMachine<ClusterFogOfWarManager, C
 			return ClusterRevealLevel.Hidden;
 		}
 
+		public void DEBUG_REVEAL_ENTIRE_MAP()
+		{
+			RevealLocation(AxialI.ZERO, 100);
+		}
+
 		public bool IsLocationRevealed(AxialI location)
 		{
 			return GetRevealCompleteFraction(location) >= 1f;

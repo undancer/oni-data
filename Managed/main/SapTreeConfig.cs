@@ -49,6 +49,7 @@ public class SapTreeConfig : IEntityConfig
 		TemperatureVulnerable temperatureVulnerable = gameObject.AddOrGet<TemperatureVulnerable>();
 		temperatureVulnerable.Configure(173.15f, 0f, 373.15f, 1023.15f);
 		gameObject.AddOrGet<EntombVulnerable>();
+		gameObject.AddOrGet<LoopingSounds>();
 		gameObject.AddOrGet<OccupyArea>().objectLayers = new ObjectLayer[1]
 		{
 			ObjectLayer.Building

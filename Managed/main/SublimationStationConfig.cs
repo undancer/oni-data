@@ -31,9 +31,11 @@ public class SublimationStationConfig : IBuildingConfig
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		Prioritizable.AddRef(go);
+		CellOffset emissionOffset = new CellOffset(0, 0);
 		Electrolyzer electrolyzer = go.AddOrGet<Electrolyzer>();
 		electrolyzer.maxMass = 1.8f;
 		electrolyzer.hasMeter = false;
+		electrolyzer.emissionOffset = emissionOffset;
 		Storage storage = go.AddOrGet<Storage>();
 		storage.capacityKg = 600f;
 		storage.showInUI = true;
@@ -44,7 +46,7 @@ public class SublimationStationConfig : IBuildingConfig
 		};
 		elementConverter.outputElements = new ElementConverter.OutputElement[1]
 		{
-			new ElementConverter.OutputElement(0.66f, SimHashes.ContaminatedOxygen, 303.15f, useEntityTemperature: false, storeOutput: false, 0f, 0f)
+			new ElementConverter.OutputElement(0.66f, SimHashes.ContaminatedOxygen, 303.15f, useEntityTemperature: false, storeOutput: false, emissionOffset.x, emissionOffset.y)
 		};
 		ManualDeliveryKG manualDeliveryKG = go.AddOrGet<ManualDeliveryKG>();
 		manualDeliveryKG.SetStorage(storage);

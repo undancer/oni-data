@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Klei.CustomSettings;
 using KSerialization;
 using TemplateClasses;
 
@@ -32,11 +33,12 @@ namespace ProcGenGame
 		public void AddTemplate(TemplateContainer template, Vector2I position, ref Dictionary<int, int> claimedCells)
 		{
 			int cell = Grid.XYToCell(position.x, position.y);
+			bool flag = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.Teleporters).id == "Enabled";
 			if (template.buildings != null)
 			{
 				foreach (Prefab building in template.buildings)
 				{
-					if (!claimedCells.ContainsKey(Grid.OffsetCell(cell, building.location_x, building.location_y)))
+					if (!claimedCells.ContainsKey(Grid.OffsetCell(cell, building.location_x, building.location_y)) && (flag || !IsWarpTeleporter(building)))
 					{
 						buildings.Add(building.Clone(position));
 					}
@@ -66,7 +68,7 @@ namespace ProcGenGame
 			{
 				foreach (Prefab otherEntity in template.otherEntities)
 				{
-					if (!claimedCells.ContainsKey(Grid.OffsetCell(cell, otherEntity.location_x, otherEntity.location_y)))
+					if (!claimedCells.ContainsKey(Grid.OffsetCell(cell, otherEntity.location_x, otherEntity.location_y)) && (flag || !IsWarpTeleporter(otherEntity)))
 					{
 						otherEntities.Add(otherEntity.Clone(position));
 					}
@@ -89,6 +91,11 @@ namespace ProcGenGame
 					claimedCells[key]++;
 				}
 			}
+		}
+
+		private bool IsWarpTeleporter(Prefab prefab)
+		{
+			return prefab.id == "WarpPortal" || prefab.id == WarpReceiverConfig.ID || prefab.id == "WarpConduitSender" || prefab.id == "WarpConduitReceiver";
 		}
 	}
 }

@@ -164,6 +164,11 @@ public class SelectedRecipeQueueScreen : KScreen
 			string text = ((amount >= recipeElement.amount) ? string.Format(UI.UISIDESCREENS.FABRICATORSIDESCREEN.RECIPERQUIREMENT, prefab.GetProperName(), formattedByTag, formattedByTag2) : ("<color=#F44A47>" + string.Format(UI.UISIDESCREENS.FABRICATORSIDESCREEN.RECIPERQUIREMENT, prefab.GetProperName(), formattedByTag, formattedByTag2) + "</color>"));
 			list.Add(new Descriptor(text, text, Descriptor.DescriptorType.Requirement));
 		}
+		if (recipe.consumedHEP > 0)
+		{
+			HighEnergyParticleStorage component = target.GetComponent<HighEnergyParticleStorage>();
+			list.Add(new Descriptor($"<b>{ITEMS.RADIATION.HIGHENERGYPARITCLE.NAME}</b>: {recipe.consumedHEP} / {component.Particles}", $"<b>{ITEMS.RADIATION.HIGHENERGYPARITCLE.NAME}</b>: {recipe.consumedHEP} / {component.Particles}", Descriptor.DescriptorType.Requirement));
+		}
 		return list;
 	}
 }

@@ -90,11 +90,11 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 			});
 			destroying.explode.PlayAnim("explode").Enter(delegate(StatesInstance smi)
 			{
-				EmitRemainingPayload(smi, smi.master.explodeEmitDurration, smi.master.explodeEmitRadius);
+				EmitRemainingPayload(smi);
 			});
 			destroying.blackhole.PlayAnim("collision").Enter(delegate(StatesInstance smi)
 			{
-				EmitRemainingPayload(smi, smi.master.blackholeEmitDurration, smi.master.blackholeEmitRadius);
+				EmitRemainingPayload(smi);
 			});
 			destroying.captured.PlayAnim("travel_pst").OnAnimQueueComplete(destroying.instant).Enter(delegate(StatesInstance smi)
 			{
@@ -102,14 +102,15 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 			});
 		}
 
-		private void EmitRemainingPayload(StatesInstance smi, float emitDurration, short emitRadius)
+		private void EmitRemainingPayload(StatesInstance smi)
 		{
 			KAnim.Anim currentAnim = smi.master.GetComponent<KBatchedAnimController>().GetCurrentAnim();
-			smi.master.emitter.emitRadiusX = emitRadius;
-			smi.master.emitter.emitRadiusY = emitRadius;
-			smi.master.emitter.emitRads = smi.master.payload * 0.5f * (600f / emitDurration);
+			smi.master.emitter.emitRadiusX = 6;
+			smi.master.emitter.emitRadiusY = 6;
+			smi.master.emitter.emitRads = smi.master.payload * 0.5f * 600f / 9f;
 			smi.master.emitter.Refresh();
-			smi.Schedule(emitDurration, delegate
+			SimMessages.AddRemoveSubstance(Grid.PosToCell(smi.master.gameObject), SimHashes.Fallout, CellEventLogger.Instance.ElementEmitted, smi.master.payload * 0.001f, 5000f, Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.Id), Mathf.FloorToInt(smi.master.payload * 0.5f / 0.001f));
+			smi.Schedule(1f, delegate
 			{
 				Object.Destroy(smi.master.gameObject);
 			});
@@ -142,14 +143,6 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 	public float emitRate;
 
 	public float emitSpeed;
-
-	public short explodeEmitRadius;
-
-	public float explodeEmitDurration;
-
-	public short blackholeEmitRadius;
-
-	public float blackholeEmitDurration;
 
 	private LoopingSounds loopingSounds;
 

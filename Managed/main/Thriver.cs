@@ -25,7 +25,14 @@ public class Thriver : StateMachineComponent<Thriver.StatesInstance>
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = idle;
-			root.EventTransition(GameHashes.NotStressed, idle).EventTransition(GameHashes.Stressed, stressed).EventTransition(GameHashes.StressedHadEnough, stressed);
+			root.EventTransition(GameHashes.NotStressed, idle).EventTransition(GameHashes.Stressed, stressed).EventTransition(GameHashes.StressedHadEnough, stressed)
+				.Enter(delegate(StatesInstance smi)
+				{
+					if (smi.master.GetSMI<StressMonitor.Instance>()?.IsStressed() ?? false)
+					{
+						smi.GoTo(stressed);
+					}
+				});
 			idle.DoNothing();
 			stressed.ToggleEffect("Thriver");
 			toostressed.DoNothing();

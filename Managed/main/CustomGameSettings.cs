@@ -123,6 +123,10 @@ public class CustomGameSettings : KMonoBehaviour
 		{
 			AddSettingConfig(CustomGameSettingConfigs.SaveToCloud);
 		}
+		if (DlcManager.IsExpansion1Active())
+		{
+			AddSettingConfig(CustomGameSettingConfigs.Teleporters);
+		}
 		VerifySettingCoordinates();
 	}
 

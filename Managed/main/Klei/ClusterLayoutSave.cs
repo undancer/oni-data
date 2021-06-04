@@ -37,6 +37,8 @@ namespace Klei
 
 		public Dictionary<POIType, List<AxialI>> poiLocations = new Dictionary<POIType, List<AxialI>>();
 
+		public Dictionary<AxialI, string> poiPlacements = new Dictionary<AxialI, string>();
+
 		public ClusterLayoutSave()
 		{
 			worlds = new List<World>();

@@ -15,7 +15,7 @@ public class NuclearResearchCenterConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("NuclearResearchCenter", 5, 3, "research_center_nuclear_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.NONE);
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("NuclearResearchCenter", 5, 3, "material_research_centre_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.NONE);
 		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		buildingDef.RequiresPowerInput = true;
 		buildingDef.EnergyConsumptionWhenActive = 120f;
@@ -41,7 +41,7 @@ public class NuclearResearchCenterConfig : IBuildingConfig
 		NuclearResearchCenterWorkable nuclearResearchCenterWorkable = go.AddOrGet<NuclearResearchCenterWorkable>();
 		nuclearResearchCenterWorkable.overrideAnims = new KAnimFile[1]
 		{
-			Assets.GetAnim("anim_interacts_research_nuclear_kanim")
+			Assets.GetAnim("anim_interacts_material_research_centre_kanim")
 		};
 		nuclearResearchCenterWorkable.requiredSkillPerk = Db.Get().SkillPerks.AllowNuclearResearch.Id;
 		NuclearResearchCenter nuclearResearchCenter = go.AddOrGet<NuclearResearchCenter>();

@@ -61,7 +61,7 @@ public class LaunchButtonSideScreen : SideScreenContent
 		if (selectedPad == null)
 		{
 			CraftModuleInterface craftInterface2 = rocketModule.CraftInterface;
-			selectedPad = craftInterface2.currentPad.Get();
+			selectedPad = craftInterface2.CurrentPad;
 		}
 		acknowledgeWarnings = false;
 		rocketModule.CraftInterface.Subscribe(543433792, RefreshDelegate);

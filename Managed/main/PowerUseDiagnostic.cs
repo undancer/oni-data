@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using STRINGS;
+using UnityEngine;
 
 public class PowerUseDiagnostic : ColonyDiagnostic
 {
@@ -9,22 +10,63 @@ public class PowerUseDiagnostic : ColonyDiagnostic
 		tracker = TrackerTool.Instance.GetWorldTracker<PowerUseTracker>(worldID);
 		trackerSampleCountSeconds = 30f;
 		icon = "overlay_power";
-		AddCriterion("CheckPower", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckPower));
+		AddCriterion("CheckOverWattage", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKOVERWATTAGE, CheckOverWattage));
+		AddCriterion("CheckPowerUseChange", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKPOWERUSECHANGE, CheckPowerChange));
 	}
 
-	private DiagnosticResult CheckPower()
+	private DiagnosticResult CheckOverWattage()
 	{
-		List<MinionIdentity> worldItems = Components.LiveMinionIdentities.GetWorldItems(base.worldID);
 		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS);
-		if (worldItems.Count == 0)
+		result.opinion = DiagnosticResult.Opinion.Normal;
+		result.Message = UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.NORMAL;
+		IList<UtilityNetwork> networks = Game.Instance.electricalConduitSystem.GetNetworks();
+		foreach (ElectricalUtilityNetwork item in networks)
 		{
-			result.opinion = DiagnosticResult.Opinion.Normal;
-			result.Message = UI.COLONY_DIAGNOSTICS.NO_MINIONS;
+			if (item.allWires == null || item.allWires.Count == 0)
+			{
+				continue;
+			}
+			int num = Grid.PosToCell(item.allWires[0]);
+			if (Grid.WorldIdx[num] == base.worldID)
+			{
+				ushort circuitID = Game.Instance.circuitManager.GetCircuitID(num);
+				float maxSafeWattageForCircuit = Game.Instance.circuitManager.GetMaxSafeWattageForCircuit(circuitID);
+				float wattsUsedByCircuit = Game.Instance.circuitManager.GetWattsUsedByCircuit(circuitID);
+				if (wattsUsedByCircuit > maxSafeWattageForCircuit)
+				{
+					GameObject gameObject = item.allWires[0].gameObject;
+					result.clickThroughTarget = new Tuple<Vector3, GameObject>(gameObject.transform.position, gameObject);
+					result.opinion = DiagnosticResult.Opinion.Concern;
+					result.Message = string.Format(UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CIRCUIT_OVER_CAPACITY, GameUtil.GetFormattedWattage(wattsUsedByCircuit), GameUtil.GetFormattedWattage(maxSafeWattageForCircuit));
+					break;
+				}
+			}
 		}
-		else
+		return result;
+	}
+
+	private DiagnosticResult CheckPowerChange()
+	{
+		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS);
+		result.opinion = DiagnosticResult.Opinion.Normal;
+		result.Message = UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.NORMAL;
+		float num = 60f;
+		if (tracker.GetDataTimeLength() < num)
 		{
-			result.opinion = DiagnosticResult.Opinion.Normal;
-			result.Message = UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.NORMAL;
+			return result;
+		}
+		float averageValue = tracker.GetAverageValue(1f);
+		float averageValue2 = tracker.GetAverageValue(Mathf.Min(60f, trackerSampleCountSeconds));
+		float num2 = 240f;
+		if (averageValue < num2 && averageValue2 < num2)
+		{
+			return result;
+		}
+		float num3 = 0.5f;
+		if (Mathf.Abs(averageValue - averageValue2) / averageValue2 > num3)
+		{
+			result.opinion = DiagnosticResult.Opinion.Concern;
+			result.Message = string.Format(UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.SIGNIFICANT_POWER_CHANGE_DETECTED, GameUtil.GetFormattedWattage(averageValue2), GameUtil.GetFormattedWattage(averageValue));
 		}
 		return result;
 	}

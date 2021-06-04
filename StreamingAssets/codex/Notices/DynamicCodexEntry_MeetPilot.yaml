@@ -1,0 +1,31 @@
+id: "MeetThePilot"
+title: STRINGS.CODEX.B2_MEETTHEPILOT.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notice_pilot
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B2_MEETTHEPILOT.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B2_MEETTHEPILOT.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notice_pilot
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notice_pilot
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER2
+          style: Body

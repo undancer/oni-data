@@ -27,10 +27,12 @@ public class ElectrolyzerConfig : IBuildingConfig
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
+		CellOffset emissionOffset = new CellOffset(0, 1);
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
 		Electrolyzer electrolyzer = go.AddOrGet<Electrolyzer>();
 		electrolyzer.maxMass = 1.8f;
 		electrolyzer.hasMeter = true;
+		electrolyzer.emissionOffset = emissionOffset;
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
 		conduitConsumer.conduitType = ConduitType.Liquid;
 		conduitConsumer.consumptionRate = 1f;
@@ -46,8 +48,8 @@ public class ElectrolyzerConfig : IBuildingConfig
 		};
 		elementConverter.outputElements = new ElementConverter.OutputElement[2]
 		{
-			new ElementConverter.OutputElement(0.888f, SimHashes.Oxygen, 343.15f, useEntityTemperature: false, storeOutput: false, 0f, 1f),
-			new ElementConverter.OutputElement(0.11199999f, SimHashes.Hydrogen, 343.15f, useEntityTemperature: false, storeOutput: false, 0f, 1f)
+			new ElementConverter.OutputElement(0.888f, SimHashes.Oxygen, 343.15f, useEntityTemperature: false, storeOutput: false, emissionOffset.x, emissionOffset.y),
+			new ElementConverter.OutputElement(0.11199999f, SimHashes.Hydrogen, 343.15f, useEntityTemperature: false, storeOutput: false, emissionOffset.x, emissionOffset.y)
 		};
 		Prioritizable.AddRef(go);
 	}

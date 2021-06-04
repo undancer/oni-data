@@ -4,6 +4,12 @@ public class DiagnosticCriterion
 {
 	private Func<ColonyDiagnostic.DiagnosticResult> evaluateAction;
 
+	public string id
+	{
+		get;
+		private set;
+	}
+
 	public string name
 	{
 		get;
@@ -14,6 +20,11 @@ public class DiagnosticCriterion
 	{
 		this.name = name;
 		evaluateAction = action;
+	}
+
+	public void SetID(string id)
+	{
+		this.id = id;
 	}
 
 	public ColonyDiagnostic.DiagnosticResult Evaluate()

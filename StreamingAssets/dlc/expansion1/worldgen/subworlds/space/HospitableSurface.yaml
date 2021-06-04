@@ -12,7 +12,7 @@ biomes:
     weight: 1
 tags:
   - IgnoreCaveOverride
-#  - ErodePointToBorderInv
-  - ErodePointToWorldTop
+  - ErodePointToBorderInv
+#  - ErodePointToWorldTop
   - NoGlobalFeatureSpawning
 zoneType: Sandstone

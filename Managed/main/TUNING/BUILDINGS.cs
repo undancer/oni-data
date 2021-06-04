@@ -815,7 +815,8 @@ namespace TUNING
 				"OilRefinery",
 				"Polymerizer",
 				"OxyliteRefinery",
-				"SupermaterialRefinery"
+				"SupermaterialRefinery",
+				"DiamondPress"
 			}),
 			new PlanScreen.PlanInfo(new HashedString("Medical"), hideIfNotResearched: false, new List<string>
 			{
@@ -885,6 +886,7 @@ namespace TUNING
 				"ShearingStation",
 				"RoleStation",
 				"ResetSkillsStation",
+				"ArtifactAnalysisStation",
 				"CraftingTable",
 				"ClothingFabricator",
 				"SuitFabricator",
@@ -1004,7 +1006,8 @@ namespace TUNING
 				"NuclearReactor",
 				"UraniumCentrifuge",
 				"HighEnergyParticleSpawner",
-				"HighEnergyParticleRedirector"
+				"HighEnergyParticleRedirector",
+				"DevRadiationGenerator"
 			}, "EXPANSION1_ID")
 		};
 

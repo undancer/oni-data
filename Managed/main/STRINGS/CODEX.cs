@@ -1117,6 +1117,30 @@ namespace STRINGS
 			public static LocString SUBTITLE = "ENCRYPTION LEVEL: NONE";
 		}
 
+		public class B3_MOVEDRABBITS
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "<smallcaps>[Voice Recognition Initialized]\n[Subjects Identified: A001, B111]</smallcaps>\n\n[LOG BEGINS]\n\nBroussard: Director, do you know where my rabbits have been moved to? I asked around the bioengineering division but I was referred back to you.\n\nDirector: Hm? Oh, yes, they've been removed.\n\nBroussard: \"Removed\"?\n\nDirector: Discarded. I'm sorry, did you still need them? The reports showed your experiments with them were completed.\n\nBroussard: No, I-I... I'd collected all the data I needed, I just --\n\nDirector: -- Doctor. You weren't making pets out of test subjects, were you?\n\nBroussard: Don't be ridiculous, I --\n\nDirector: -- Good.They were horrible to look at anyway. All those red eyes looking at me.\n\nBroussard: In the future, please do not mess with my things. It... disturbs me.\n\nDirector: I will notify you beforehand next time, doctor.\n\n[LOG ENDS]";
+			}
+
+			public static LocString TITLE = "Moved Rabbits";
+
+			public static LocString SUBTITLE = "ENCRYPTION LEVEL: ONE";
+		}
+
+		public class B3_MOVEDRACCOONS
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "<smallcaps>[Voice Recognition Initialized]\n[Subjects Identified: A001, B111]</smallcaps>\n\n[LOG BEGINS]\n\nBroussard: Director, do you know where my raccoons have been moved to? I asked around the bioengineering division but I was referred back to you.\n\nDirector: Hm? Oh, yes, they've been removed.\n\nBroussard: \"Removed\"?\n\nDirector: Discarded. I'm sorry, did you still need them? The reports showed your experiments with them were completed.\n\nBroussard: No, I-I... I'd collected all the data I needed, I just --\n\nDirector: -- Doctor. You weren't making pets out of test subjects, were you?\n\nBroussard: Don't be ridiculous, I --\n\nDirector: -- Good.They were horrible to look at anyway. All that mangy fur.\n\nBroussard: In the future, please do not mess with my things. It... disturbs me.\n\nDirector: I will notify you beforehand next time, doctor.\n\n[LOG ENDS]";
+			}
+
+			public static LocString TITLE = "Moved Raccoons";
+
+			public static LocString SUBTITLE = "ENCRYPTION LEVEL: ONE";
+		}
+
 		public class B3_MOVEDRATS
 		{
 			public class BODY
@@ -1245,6 +1269,30 @@ namespace STRINGS
 			public static LocString TITLE = "Revisited Numbers";
 
 			public static LocString SUBTITLE = "ENCRYPTION LEVEL: THREE";
+		}
+
+		public class A5_SHRIMP
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "<smallcaps>[Voice Recognition Initialized]\n[Subject Identified: B111]</smallcaps>\n\n[LOG BEGINS]\n\n\"A-and how are you clever little guys today?\n\n(trilling)\n\nLook! I brought some pink shrimp for you to eat. Your favorite! Are you hungry?\n\n(excited trilling)\n\nOh, one moment, my keen eager pals. I left the recorder on --\n\n(rustling)\"\n\n[LOG ENDS]";
+			}
+
+			public static LocString TITLE = "Shrimp";
+
+			public static LocString SUBTITLE = "ENCRYPTION LEVEL: ZERO";
+		}
+
+		public class A5_STRAWBERRIES
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "<smallcaps>[Voice Recognition Initialized]\n[Subject Identified: B111]</smallcaps>\n\n[LOG BEGINS]\n\n\"A-and how are you bouncy little critters today?\n\n(chattering)\n\nLook! I brought strawberries. Your favorite! Are you hungry?\n\n(excited chattering)\n\nOh, one moment, my precious, little pals. I left the recorder on --\n\n(rustling)\"\n\n[LOG ENDS]";
+			}
+
+			public static LocString TITLE = "Strawberries";
+
+			public static LocString SUBTITLE = "ENCRYPTION LEVEL: ZERO";
 		}
 
 		public class A5_SUNFLOWERSEEDS
@@ -1387,6 +1435,13 @@ namespace STRINGS
 					public static LocString BODY = "My Duplicant's investigations into the surrounding space have yielded some interesting results. We are not alone!... At least on a planetary level. We seem to be in a \"Cluster of Worlds\" - a collection of other planetoids my Duplicants can now explore.\n\nSince resources on this world are finite, I must build the necessary infrastructure to facilitate exploration and transportation between worlds in order to ensure my colony's survival.";
 				}
 
+				public class OTHERDIMENSIONS
+				{
+					public static LocString TITLE = "Leaking Dimensions";
+
+					public static LocString BODY = "A closer analysis of some documents my Duplicants encountered while searching artifacts has uncovered some curious similarities between multiple entries. These similarities are too strong to be coincidences, yet just divergent enough to raise questions.\n\nThe most logical conclusion is that these artifacts are coming from different dimensions. That is, separate universes that exists concurrently with one another but exhibit tiny disparities in their histories.\n\nThe most likely explaination is the material and matter from multiple dimensions is leaking into our current timeline through the Temporal Tear. Further analysis is required.";
+				}
+
 				public class TEMPORALTEAR
 				{
 					public static LocString TITLE = "The Temporal Tear";
@@ -1506,6 +1561,20 @@ namespace STRINGS
 			public static LocString SUBTITLE = "ENCRYPTION LEVEL: NONE";
 		}
 
+		public class B2_MEETTHEPILOT
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "Meet The Pilot:\nCaptain Mae Johannsen\n\nFrom the time she was old enough to walk Captain Johannsen dreamed of reaching the sky. Growing up on an air force base she came to love the sound jet engines roaring overhead.\n\nAt 16 she became the youngest pilot to fly a fighter jet and at 22 she had already entered the space flight program.\n\nFour years later Gravitas nabbed her for an exclusive contract piloting our space shuttles. In her time at Gravitas, Captain Johannsen has logged over 1,000 hours space flight time shuttling and deploying satellites to low Earth Orbits and has just been named the pilot of our inaugural civilian space tourist program, slated to begin in the next year.\n\nGravitas is excited to have Captain Johannsen in the pilot seat as we reach for the stars...and beyond!";
+
+				public static LocString CONTAINER2 = "\n\nBrought to you by the Gravitas Facility.";
+			}
+
+			public static LocString TITLE = "The Future of Space Flight";
+
+			public static LocString SUBTITLE = "PUBLIC RELEASE";
+		}
+
 		public class A3_NEWSECURITY
 		{
 			public class BODY
@@ -1560,11 +1629,25 @@ namespace STRINGS
 			public static LocString SUBTITLE = "PUBLIC RELEASE";
 		}
 
+		public class B1_SPACEFACILITYDISPLAY1
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "Bring your office to the stars with Gravitas new corporate space stations.\n\nEnjoy a captivated workforce with over 600 square feet of office space in low earth orbit. Stunning views, a low gravity gym and a cafeteria serving the finest nutritional bars await your personnel.\n\nDaily to and from missions to your satellite office via our luxury space shuttles.\n\nRest assured our space stations and shuttles utilize only the extremely efficient, environmentally friendly Gravitas proprietary power sources.\n\nThe workplace revolution starts now!";
+
+				public static LocString CONTAINER2 = "Taking reservations now for the first orbital office spaces.\n100% money back guarantee (minus 10% filing fee)";
+			}
+
+			public static LocString TITLE = "Office Space in Space!";
+
+			public static LocString SUBTITLE = "PUBLIC RELEASE";
+		}
+
 		public class ARBORTREE
 		{
 			public class BODY
 			{
-				public static LocString CONTAINER1 = "";
+				public static LocString CONTAINER1 = "Arbor Trees have been cultivated to spread horizontally when they grow so as to produce a high yield of lumber in vertically cramped spaces.\n\nArbor Trees are related to the oak tree, specifically the Japanese Evergreen, though they have been genetically hybridized significantly.\n\nDespite having many hardy, evenly spaced branches, the short stature of the Arbor Tree makes climbing it rather irrelevant.";
 			}
 
 			public static LocString TITLE = "Arbor Tree";
@@ -1614,7 +1697,7 @@ namespace STRINGS
 		{
 			public class BODY
 			{
-				public static LocString CONTAINER1 = "";
+				public static LocString CONTAINER1 = "Bog Buckets get their name from their bucket-like flowers and their propensity to grow in swampy, bog-like environments.\n\nThe flower secretes a thick, sweet liquid which collects at the bottom of the bucket and can be gathered for consumption.\n\nThough not inherently dangerous, the interior of the Bog Bucket flower is so warm and inviting that it has tempted individuals to climb inside for a nap, only to awake trapped in its sticky sap.";
 			}
 
 			public static LocString TITLE = "Bog Bucket";
@@ -1688,7 +1771,7 @@ namespace STRINGS
 		{
 			public class BODY
 			{
-				public static LocString CONTAINER1 = "";
+				public static LocString CONTAINER1 = "The Grubfruit Plant exhibits a coevolutionary relationship with the Divergent species.\n\nThough capable of producing fruit without the help of the Divergent, the Spindly Grubfruit is a substandard version of the Grubfruit in both taste and caloric value.\n\nThe mechanism for how the Divergent inspires Grubfruit Plant growth is not entirely known but is thought to be somehow tied to the infrasonic 'songs' these insects lovingly purr to their plants.";
 			}
 
 			public static LocString TITLE = "Grubfruit Plant";
@@ -1724,7 +1807,7 @@ namespace STRINGS
 		{
 			public class BODY
 			{
-				public static LocString CONTAINER1 = "";
+				public static LocString CONTAINER1 = "The Jumping Joya is a decorative plant that brings a feeling of calmness and wellbeing to individuals in its vacinity.\n\nTheir rounded appendages and eccentrically shaped polyps are a favorite of interior designers looking to offset the rigid straight walls of an institutional setting.\n\nThe Jumping Joya's capacity to thrive in many environments and the ease in which they propagate make them the go-to house plant for the lazy gardener.";
 			}
 
 			public static LocString TITLE = "Jumping Joya";
@@ -1736,9 +1819,7 @@ namespace STRINGS
 		{
 			public class BODY
 			{
-				public static LocString CONTAINER1 = "";
-
-				public static LocString CONTAINER2 = "";
+				public static LocString CONTAINER1 = "Mealwood is an bramble-like plant that has a parasitic symbiotic relationship with the nutrient-rich Meal Lice that inhabit it.\n\nMealwood experience a rapid growth rate in its first stages, but once the Meal Lice become active they consume all the new fruiting spurs on the plant before they can fully mature.\n\nTheoretically the flowers of this plant are a beautiful color of fuchsia, however no Mealwood has ever reached the point of flowering without being overrun by the parasitic Meal Lice.";
 			}
 
 			public static LocString TITLE = "Mealwood";
@@ -1762,7 +1843,7 @@ namespace STRINGS
 		{
 			public class BODY
 			{
-				public static LocString CONTAINER1 = "";
+				public static LocString CONTAINER1 = "The Mirth Leaf is a broad-leafed house plant used for decorating living spaces.\n\nThe joyous bobbing of the wide green leaves provides hours of amusement for those desperate for entertainment.\n\nAlthough the Mirth Leaf can inspire laughter and joy, it is not cut out for a career in stand-up comedy.";
 			}
 
 			public static LocString TITLE = "Mirth Leaf";
@@ -1786,7 +1867,7 @@ namespace STRINGS
 		{
 			public class BODY
 			{
-				public static LocString CONTAINER1 = "";
+				public static LocString CONTAINER1 = "The Nosh Bean Plant produces a nutritious bean that can function as a delicious meat substitute provided it is properly processed.\n\nThough the bean is a food source, it also functions as the seed for the Nosh Bean plant.\n\nWhile using the Nosh Bean for nourishment would seem like the more practical application, doing so would deprive individuals of the immense gratification experienced by planting this bean and watching it flourish into maturity.";
 			}
 
 			public static LocString TITLE = "Nosh Bean Plant";
@@ -1822,7 +1903,7 @@ namespace STRINGS
 		{
 			public class BODY
 			{
-				public static LocString CONTAINER1 = "";
+				public static LocString CONTAINER1 = "The Saturn Critter Trap plant is a carnivorous plant that lays in wait for unsuspecting critters to happen by, then traps them in its mouth for consumption.\n\nThe Saturn Trap Plant's predatory mechanism is reflective of the harsh radioactive habitat it resides in.\n\nOnce trapped in the deadly maw of the plant, creatures are gently asphyxiated then digested through powerful acidic enzymes which coat the inner sides of the Saturn Trap Plant's leaves.";
 			}
 
 			public static LocString TITLE = "Saturn Critter Trap";
@@ -1936,7 +2017,7 @@ namespace STRINGS
 		{
 			public class BODY
 			{
-				public static LocString CONTAINER1 = "<smallcaps>[Voice Recognition Initialized]\n[Subject Identified: B111-1]</smallcaps>\n\n[LOG BEGINS]\n\nI made a horrible discovery today while reviewing work on the artificial intelligence programming. It seems Dr. Ali mixed up a file when uploading a program onto a rudimentary robot and discovered that the device displayed the characteristics of what he called \"a puppy that was lost in a teleportation experiment weeks ago\".\n\n.This unbelivable! Jackie has been hiding the nature of the teleportation experiments from me. What's worse is I know from previous conversations that she knows I would never approve of pursuing this line of experimentation. The societal benefits of teleportaion aside, you <i>cannot</i> kill a living being every time you want to send them to another room. The moral and ethical implications of this are horrendous.\n\nI know she has been keeping this information from me. When I searched through the Gravitas database I found nothing to do with these teleportation experiments. It was only because this reference showed up in Dr. Ali's AI paper that I was able to discover what has been happening.\n\nJackie has to be stopped.\n\nBut I know she is beyond reasonable discussion. I hope this is the only thing she is hiding from me, but I fear it is not.\n\n[LOG ENDS]\n\n[LOG BEGINS]\n\nDespite myself, I can't help thinking of the intriguing possiblities this presents for the AI development. It haunts me.\n\nI fear I may be sliding down a slippery slope, at the bottom of which Jackie is waiting for me with open arms.\n\n[LOG ENDS]";
+				public static LocString CONTAINER1 = "<smallcaps>[Voice Recognition Initialized]\n[Subject Identified: B111-1]</smallcaps>\n\n[LOG BEGINS]\n\nI made a horrible discovery today while reviewing work on the artificial intelligence programming. It seems Dr. Ali mixed up a file when uploading a program onto a rudimentary robot and discovered that the device displayed the characteristics of what he called \"a puppy that was lost in a teleportation experiment weeks ago\".\n\nThis unbelivable! Jackie has been hiding the nature of the teleportation experiments from me. What's worse is I know from previous conversations that she knows I would never approve of pursuing this line of experimentation. The societal benefits of teleportaion aside, you <i>cannot</i> kill a living being every time you want to send them to another room. The moral and ethical implications of this are horrendous.\n\nI know she has been keeping this information from me. When I searched through the Gravitas database I found nothing to do with these teleportation experiments. It was only because this reference showed up in Dr. Ali's AI paper that I was able to discover what has been happening.\n\nJackie has to be stopped.\n\nBut I know she is beyond reasonable discussion. I hope this is the only thing she is hiding from me, but I fear it is not.\n\n[LOG ENDS]\n\n[LOG BEGINS]\n\nDespite myself, I can't help thinking of the intriguing possiblities this presents for the AI development. It haunts me.\n\nI fear I may be sliding down a slippery slope, at the bottom of which Jackie is waiting for me with open arms.\n\n[LOG ENDS]";
 			}
 
 			public static LocString TITLE = "A Paradox";
@@ -1966,6 +2047,30 @@ namespace STRINGS
 			public static LocString TITLE = "Agricultural Notes";
 
 			public static LocString SUBTITLE = "ENCRYPTION LEVEL: THREE";
+		}
+
+		public class A1_CLONEDRABBITS
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "<smallcaps>[Voice Recognition Initialized]\n[Subject Identified: B111]</smallcaps>\n\n[LOG BEGINS]\n\n[A throat clears.]\n\nB111: We are now reliably printing healthy, living subjects, though all have exhibited unusual qualities as a result of the cloning process.\n\n[Chattering sounds can be heard.]\n\nB111: Odd communications, abnormal excrescenses, and vestigal limbs have been seen in all subjects thus far, to varying degrees of severity. It seems that bypassing or accelerating juvenility halts certain critical stages of development. Brain function, however, appears typical.\n\n[Chattering.]\n\nB111: T-They also seem quite happy.\n\nB111: Dr. Broussard, signing off.\n\n[LOG ENDS]";
+			}
+
+			public static LocString TITLE = "Initial Success";
+
+			public static LocString SUBTITLE = "ENCRYPTION LEVEL: TWO";
+		}
+
+		public class A1_CLONEDRACCOONS
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "<smallcaps>[Voice Recognition Initialized]\n[Subject Identified: B111]</smallcaps>\n\n[LOG BEGINS]\n\n[A throat clears.]\n\nB111: We are now reliably printing healthy, living subjects, though all have exhibited unusual qualities as a result of the cloning process.\n\n[Trilling sounds can be heard.]\n\nB111: Unusual mewings, benign neoplasms, and atavistic extremities have been seen in all subjects thus far, to varying degrees of severity. It seems that bypassing or accelerating juvenility halts certain critical stages of development. Brain function, however, appears typical.\n\n[Trilling.]\n\nB111: T-They also seem quite happy.\n\nB111: Dr. Broussard, signing off.\n\n[LOG ENDS]";
+			}
+
+			public static LocString TITLE = "Initial Success";
+
+			public static LocString SUBTITLE = "ENCRYPTION LEVEL: TWO";
 		}
 
 		public class A1_CLONEDRATS

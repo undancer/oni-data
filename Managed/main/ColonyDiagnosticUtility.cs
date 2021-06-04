@@ -22,6 +22,9 @@ public class ColonyDiagnosticUtility : KMonoBehaviour, ISim4000ms
 	public Dictionary<int, Dictionary<string, DisplaySetting>> diagnosticDisplaySettings = new Dictionary<int, Dictionary<string, DisplaySetting>>();
 
 	[Serialize]
+	public Dictionary<int, Dictionary<string, List<string>>> diagnosticCriteriaDisabled = new Dictionary<int, Dictionary<string, List<string>>>();
+
+	[Serialize]
 	private Dictionary<string, float> diagnosticTutorialStatus = new Dictionary<string, float>
 	{
 		{
@@ -83,6 +86,34 @@ public class ColonyDiagnosticUtility : KMonoBehaviour, ISim4000ms
 		return opinion;
 	}
 
+	public string GetWorldDiagnosticResultStatus(int worldID)
+	{
+		ColonyDiagnostic colonyDiagnostic = null;
+		foreach (ColonyDiagnostic item in worldDiagnostics[worldID])
+		{
+			DisplaySetting displaySetting = Instance.diagnosticDisplaySettings[worldID][item.id];
+			if (displaySetting == DisplaySetting.Never || Instance.IsDiagnosticTutorialDisabled(item.id))
+			{
+				continue;
+			}
+			switch (diagnosticDisplaySettings[worldID][item.id])
+			{
+			case DisplaySetting.Always:
+			case DisplaySetting.AlertOnly:
+				if (colonyDiagnostic == null || item.LatestResult.opinion < colonyDiagnostic.LatestResult.opinion)
+				{
+					colonyDiagnostic = item;
+				}
+				break;
+			}
+		}
+		if (colonyDiagnostic.LatestResult.opinion == ColonyDiagnostic.DiagnosticResult.Opinion.Normal)
+		{
+			return "";
+		}
+		return colonyDiagnostic.name;
+	}
+
 	public string GetWorldDiagnosticResultTooltip(int worldID)
 	{
 		string text = "";
@@ -121,6 +152,31 @@ public class ColonyDiagnosticUtility : KMonoBehaviour, ISim4000ms
 		if (Instance.diagnosticTutorialStatus.ContainsKey(id))
 		{
 			Instance.diagnosticTutorialStatus[id] = -1f;
+		}
+	}
+
+	public bool IsCriteriaEnabled(int worldID, string diagnosticID, string criteriaID)
+	{
+		Dictionary<string, List<string>> dictionary = diagnosticCriteriaDisabled[worldID];
+		if (!dictionary.ContainsKey(diagnosticID))
+		{
+			return false;
+		}
+		return !dictionary[diagnosticID].Contains(criteriaID);
+	}
+
+	public void SetCriteriaEnabled(int worldID, string diagnosticID, string criteriaID, bool enabled)
+	{
+		Dictionary<string, List<string>> dictionary = diagnosticCriteriaDisabled[worldID];
+		Debug.Assert(dictionary.ContainsKey(diagnosticID), $"Trying to set criteria on World {worldID} lacks diagnostic {diagnosticID} that criteria {criteriaID} relates to");
+		List<string> list = dictionary[diagnosticID];
+		if (enabled && list.Contains(criteriaID))
+		{
+			list.Remove(criteriaID);
+		}
+		if (!enabled && !list.Contains(criteriaID))
+		{
+			list.Add(criteriaID);
 		}
 	}
 
@@ -200,6 +256,10 @@ public class ColonyDiagnosticUtility : KMonoBehaviour, ISim4000ms
 			diagnosticDisplaySettings.Add(worldID, new Dictionary<string, DisplaySetting>());
 			flag = true;
 		}
+		if (!diagnosticCriteriaDisabled.ContainsKey(worldID))
+		{
+			diagnosticCriteriaDisabled.Add(worldID, new Dictionary<string, List<string>>());
+		}
 		List<ColonyDiagnostic> list = new List<ColonyDiagnostic>();
 		list.Add(new BreathabilityDiagnostic(worldID));
 		list.Add(new FoodDiagnostic(worldID));
@@ -236,6 +296,10 @@ public class ColonyDiagnosticUtility : KMonoBehaviour, ISim4000ms
 			if (!diagnosticDisplaySettings[worldID].ContainsKey(item.id))
 			{
 				diagnosticDisplaySettings[worldID].Add(item.id, DisplaySetting.AlertOnly);
+			}
+			if (!diagnosticCriteriaDisabled[worldID].ContainsKey(item.id))
+			{
+				diagnosticCriteriaDisabled[worldID].Add(item.id, new List<string>());
 			}
 		}
 		if (flag)
@@ -308,20 +372,5 @@ public class ColonyDiagnosticUtility : KMonoBehaviour, ISim4000ms
 			}
 		}
 		return false;
-	}
-
-	public static DiagnosticCriterion GetWorldHasMinionCriterion(int worldID)
-	{
-		return new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, delegate
-		{
-			ColonyDiagnostic.DiagnosticResult result = new ColonyDiagnostic.DiagnosticResult(ColonyDiagnostic.DiagnosticResult.Opinion.Normal, "");
-			List<MinionIdentity> worldItems = Components.LiveMinionIdentities.GetWorldItems(worldID);
-			if (worldItems.Count == 0)
-			{
-				result.opinion = ColonyDiagnostic.DiagnosticResult.Opinion.Normal;
-				result.Message = UI.COLONY_DIAGNOSTICS.NO_MINIONS;
-			}
-			return result;
-		});
 	}
 }

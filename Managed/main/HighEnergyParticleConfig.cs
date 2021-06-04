@@ -11,11 +11,11 @@ public class HighEnergyParticleConfig : IEntityConfig
 
 	public const float FALLOUT_RATIO = 0.5f;
 
-	public const int MAX_PAYLOAD = 50;
+	public const int MAX_PAYLOAD = 500;
 
-	public const float BLACKHOLE_EMIT_DURRATION = 1f;
+	public const int EXPLOSION_FALLOUT_TEMPERATURE = 5000;
 
-	public const short BLACKHOLE_EMIT_RADIUS = 6;
+	public const float EXPLOSION_FALLOUT_MASS_PER_PARTICLE = 0.001f;
 
 	public const float EXPLOSION_EMIT_DURRATION = 1f;
 
@@ -42,10 +42,6 @@ public class HighEnergyParticleConfig : IEntityConfig
 		radiationEmitter.emitRads = 4f * ((float)radiationEmitter.emitRadiusX / 6f);
 		HighEnergyParticle highEnergyParticle = gameObject.AddComponent<HighEnergyParticle>();
 		highEnergyParticle.speed = 8f;
-		highEnergyParticle.explodeEmitDurration = 1f;
-		highEnergyParticle.explodeEmitRadius = 6;
-		highEnergyParticle.blackholeEmitDurration = 1f;
-		highEnergyParticle.blackholeEmitRadius = 6;
 		return gameObject;
 	}
 

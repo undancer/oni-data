@@ -15,6 +15,7 @@ public class RocketEnvelopeWindowTileConfig : IBuildingConfig
 		buildingDef.Entombable = false;
 		buildingDef.Overheatable = false;
 		buildingDef.UseStructureTemperature = false;
+		buildingDef.Replaceable = false;
 		buildingDef.Invincible = true;
 		buildingDef.BaseTimeUntilRepair = -1f;
 		buildingDef.AudioCategory = "Glass";

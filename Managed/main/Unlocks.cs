@@ -116,6 +116,26 @@ public class Unlocks : KMonoBehaviour
 				"misc_casualfriday",
 				"misc_dishbot"
 			}
+		},
+		{
+			"dimensionallore",
+			new string[6]
+			{
+				"notes_clonedrabbits",
+				"notes_clonedraccoons",
+				"journal_movedrabbits",
+				"journal_movedraccoons",
+				"journal_strawberries",
+				"journal_shrimp"
+			}
+		},
+		{
+			"space",
+			new string[2]
+			{
+				"display_spaceprop1",
+				"notice_pilot"
+			}
 		}
 	};
 

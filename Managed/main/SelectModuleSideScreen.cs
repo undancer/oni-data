@@ -63,6 +63,7 @@ public class SelectModuleSideScreen : KScreen
 		"HabitatModuleSmall",
 		"HabitatModuleMedium",
 		"NoseconeBasic",
+		"NoseconeHarvest",
 		"OrbitalCargoModule",
 		"ScoutModule",
 		"PioneerModule",
@@ -78,6 +79,7 @@ public class SelectModuleSideScreen : KScreen
 		"GasCargoBayCluster",
 		"BatteryModule",
 		"SolarPanelModule",
+		"ArtifactCargoBay",
 		"ScannerModule"
 	};
 

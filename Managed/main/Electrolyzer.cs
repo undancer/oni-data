@@ -51,6 +51,9 @@ public class Electrolyzer : StateMachineComponent<Electrolyzer.StatesInstance>
 	[SerializeField]
 	public bool hasMeter = true;
 
+	[SerializeField]
+	public CellOffset emissionOffset = CellOffset.none;
+
 	[MyCmpAdd]
 	private Storage storage;
 
@@ -67,7 +70,7 @@ public class Electrolyzer : StateMachineComponent<Electrolyzer.StatesInstance>
 		get
 		{
 			int cell = Grid.PosToCell(base.transform.GetPosition());
-			cell = Grid.CellAbove(cell);
+			cell = Grid.OffsetCell(cell, emissionOffset);
 			return !GameUtil.FloodFillCheck(OverPressure, this, cell, 3, stop_at_solid: true, stop_at_liquid: true);
 		}
 	}

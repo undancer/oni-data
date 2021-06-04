@@ -12,6 +12,8 @@ public class Def : ScriptableObject
 
 	private static Dictionary<Tuple<KAnimFile, string, bool>, Sprite> knownUISprites = new Dictionary<Tuple<KAnimFile, string, bool>, Sprite>();
 
+	private const string DEFAULT_SPRITE = "unknown";
+
 	public virtual string Name => null;
 
 	public virtual void InitDef()
@@ -90,7 +92,7 @@ public class Def : ScriptableObject
 				return new Tuple<Sprite, Color>(uISprite, (uISprite != null) ? Color.white : Color.clear);
 			}
 			Debug.LogWarningFormat("Can't get sprite for type {0} (no KBatchedAnimController)", item.ToString());
-			return null;
+			return new Tuple<Sprite, Color>(Assets.GetSprite("unknown"), Color.grey);
 		}
 		if (item is string)
 		{
@@ -122,7 +124,7 @@ public class Def : ScriptableObject
 			}
 		}
 		DebugUtil.DevAssertArgs(false, "Can't get sprite for type ", item.ToString());
-		return null;
+		return new Tuple<Sprite, Color>(Assets.GetSprite("unknown"), Color.grey);
 	}
 
 	public static Sprite GetUISpriteFromMultiObjectAnim(KAnimFile animFile, string animName = "ui", bool centered = false, string symbolName = "")
@@ -135,17 +137,17 @@ public class Def : ScriptableObject
 		if (animFile == null)
 		{
 			DebugUtil.LogWarningArgs(animName, "missing Anim File");
-			return null;
+			return Assets.GetSprite("unknown");
 		}
 		KAnimFileData data = animFile.GetData();
 		if (data == null)
 		{
 			DebugUtil.LogWarningArgs(animName, "KAnimFileData is null");
-			return null;
+			return Assets.GetSprite("unknown");
 		}
 		if (data.build == null)
 		{
-			return null;
+			return Assets.GetSprite("unknown");
 		}
 		KAnim.Anim.Frame frame = KAnim.Anim.Frame.InvalidFrame;
 		for (int i = 0; i < data.animCount; i++)
@@ -159,11 +161,11 @@ public class Def : ScriptableObject
 		if (!frame.IsValid())
 		{
 			DebugUtil.LogWarningArgs($"missing '{animName}' anim in '{animFile}'");
-			return null;
+			return Assets.GetSprite("unknown");
 		}
 		if (data.elementCount == 0)
 		{
-			return null;
+			return Assets.GetSprite("unknown");
 		}
 		KAnim.Anim.FrameElement frameElement = default(KAnim.Anim.FrameElement);
 		if (string.IsNullOrEmpty(symbolName))
@@ -175,14 +177,14 @@ public class Def : ScriptableObject
 		if (symbol == null)
 		{
 			DebugUtil.LogWarningArgs(animFile.name, animName, "placeSymbol [", frameElement.symbol, "] is missing");
-			return null;
+			return Assets.GetSprite("unknown");
 		}
 		int frame2 = frameElement.frame;
 		KAnim.Build.SymbolFrame symbolFrame = symbol.GetFrame(frame2).symbolFrame;
 		if (symbolFrame == null)
 		{
 			DebugUtil.LogWarningArgs(animName, "SymbolFrame [", frameElement.frame, "] is missing");
-			return null;
+			return Assets.GetSprite("unknown");
 		}
 		Texture2D texture = data.build.GetTexture(0);
 		Debug.Assert(texture != null, "Invalid texture on " + animFile.name);

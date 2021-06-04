@@ -475,14 +475,14 @@ public static class CodexEntryGenerator
 					{
 						continue;
 					}
-					foreach (string tag in biome2.tags)
+					foreach (string tag3 in biome2.tags)
 					{
-						if (!list2.Contains(tag))
+						if (!list2.Contains(tag3))
 						{
-							GameObject gameObject = Assets.TryGetPrefab(tag);
+							GameObject gameObject = Assets.TryGetPrefab(tag3);
 							if (gameObject != null && (gameObject.GetComponent<Harvestable>() != null || gameObject.GetComponent<SeedProducer>() != null))
 							{
-								list2.Add(tag);
+								list2.Add(tag3);
 								contentContainer2.content.Add(new CodexIndentedLabelWithIcon(gameObject.GetProperName(), CodexTextStyle.Body, Def.GetUISprite(gameObject)));
 							}
 						}
@@ -491,14 +491,15 @@ public static class CodexEntryGenerator
 				foreach (Feature feature2 in SettingsCache.subworlds[item10.name].features)
 				{
 					FeatureSettings cachedFeature2 = SettingsCache.GetCachedFeature(feature2.type);
-					foreach (string tag2 in cachedFeature2.tags)
+					foreach (MobReference internalMob in cachedFeature2.internalMobs)
 					{
-						if (!list2.Contains(tag2))
+						Tag tag = internalMob.type.ToTag();
+						if (!list2.Contains(tag))
 						{
-							GameObject gameObject2 = Assets.TryGetPrefab(tag2);
+							GameObject gameObject2 = Assets.TryGetPrefab(tag);
 							if (gameObject2 != null && (gameObject2.GetComponent<Harvestable>() != null || gameObject2.GetComponent<SeedProducer>() != null))
 							{
-								list2.Add(tag2);
+								list2.Add(tag);
 								contentContainer2.content.Add(new CodexIndentedLabelWithIcon(gameObject2.GetProperName(), CodexTextStyle.Body, Def.GetUISprite(gameObject2)));
 							}
 						}
@@ -529,14 +530,14 @@ public static class CodexEntryGenerator
 					{
 						continue;
 					}
-					foreach (string tag3 in biome3.tags)
+					foreach (string tag4 in biome3.tags)
 					{
-						if (!list3.Contains(tag3))
+						if (!list3.Contains(tag4))
 						{
-							GameObject gameObject3 = Assets.TryGetPrefab(tag3);
+							GameObject gameObject3 = Assets.TryGetPrefab(tag4);
 							if (gameObject3 != null && gameObject3.HasTag(GameTags.Creature))
 							{
-								list3.Add(tag3);
+								list3.Add(tag4);
 								contentContainer3.content.Add(new CodexIndentedLabelWithIcon(gameObject3.GetProperName(), CodexTextStyle.Body, Def.GetUISprite(gameObject3)));
 							}
 						}
@@ -545,14 +546,15 @@ public static class CodexEntryGenerator
 				foreach (Feature feature3 in SettingsCache.subworlds[item11.name].features)
 				{
 					FeatureSettings cachedFeature3 = SettingsCache.GetCachedFeature(feature3.type);
-					foreach (string tag4 in cachedFeature3.tags)
+					foreach (MobReference internalMob2 in cachedFeature3.internalMobs)
 					{
-						if (!list3.Contains(tag4))
+						Tag tag2 = internalMob2.type.ToTag();
+						if (!list3.Contains(tag2))
 						{
-							GameObject gameObject4 = Assets.TryGetPrefab(tag4);
+							GameObject gameObject4 = Assets.TryGetPrefab(tag2);
 							if (gameObject4 != null && gameObject4.HasTag(GameTags.Creature))
 							{
-								list3.Add(tag4);
+								list3.Add(tag2);
 								contentContainer3.content.Add(new CodexIndentedLabelWithIcon(gameObject4.GetProperName(), CodexTextStyle.Body, Def.GetUISprite(gameObject4)));
 							}
 						}

@@ -8,17 +8,26 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 {
 	public class StatesInstance : GameStateMachine<States, StatesInstance, LaunchableRocketCluster, object>.GameInstance
 	{
-		private const float TAKEOFF_ACCEL_POWER = 4f;
+		public class Tuning : TuningData<Tuning>
+		{
+			public float takeoffAccelPower = 4f;
 
-		private const float MAX_ACCELERATION_DISTANCE = 25f;
+			public float maxAccelerationDistance = 25f;
 
-		private const float TAKEOFF_ACCEL_POWER_INV = 0.25f;
+			public float warmupTime = 5f;
 
-		private const float WARMUP_TIME = 5f;
+			public float heightSpeedPower = 0.5f;
 
-		private float landingDistancePartsTimeConstant;
+			public float heightSpeedFactor = 4f;
 
-		private float partsLaunchSpeedRatio => base.master.parts.Count / 2;
+			public int maxAccelHeight = 40;
+		}
+
+		private float takeoffAccelPowerInv;
+
+		private float constantVelocityPhase_maxSpeed;
+
+		private float heightLaunchSpeedRatio => Mathf.Pow(base.master.GetRocketHeight(), TuningData<Tuning>.Get().heightSpeedPower) * TuningData<Tuning>.Get().heightSpeedFactor;
 
 		public float DistanceAboveGround
 		{
@@ -35,6 +44,7 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 		public StatesInstance(LaunchableRocketCluster master)
 			: base(master)
 		{
+			takeoffAccelPowerInv = 1f / TuningData<Tuning>.Get().takeoffAccelPower;
 		}
 
 		public void SetMissionState(Spacecraft.MissionState state)
@@ -80,10 +90,6 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 				base.master.soundSpeakerObject = new GameObject("rocketSpeaker");
 				base.master.soundSpeakerObject.transform.SetParent(base.master.gameObject.transform);
 			}
-			foreach (GameObject engine in base.master.GetEngines())
-			{
-				engine.Trigger(-1358394196);
-			}
 			foreach (Ref<RocketModuleCluster> part in base.master.parts)
 			{
 				if (part != null)
@@ -97,32 +103,34 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 			{
 				craftInterface.Trigger(-1277991738, base.master.gameObject);
 			}
+			constantVelocityPhase_maxSpeed = 0f;
 		}
 
 		public void LaunchLoop(float dt)
 		{
 			base.master.isLanding = false;
+			if (constantVelocityPhase_maxSpeed == 0f)
+			{
+				float num = Mathf.Pow(TuningData<Tuning>.Get().maxAccelerationDistance, takeoffAccelPowerInv) * heightLaunchSpeedRatio;
+				float num2 = Mathf.Pow((num - 0.033f) / heightLaunchSpeedRatio, TuningData<Tuning>.Get().takeoffAccelPower);
+				constantVelocityPhase_maxSpeed = (TuningData<Tuning>.Get().maxAccelerationDistance - num2) / 0.033f;
+			}
 			if (base.sm.warmupTimeRemaining.Get(this) > 0f)
 			{
 				base.sm.warmupTimeRemaining.Delta(0f - dt, this);
 			}
+			else if (DistanceAboveGround < TuningData<Tuning>.Get().maxAccelerationDistance)
+			{
+				float num3 = Mathf.Pow(DistanceAboveGround, takeoffAccelPowerInv) * heightLaunchSpeedRatio;
+				num3 += dt;
+				DistanceAboveGround = Mathf.Pow(num3 / heightLaunchSpeedRatio, TuningData<Tuning>.Get().takeoffAccelPower);
+				float num4 = Mathf.Pow((num3 - 0.033f) / heightLaunchSpeedRatio, TuningData<Tuning>.Get().takeoffAccelPower);
+				base.master.rocketSpeed = (DistanceAboveGround - num4) / 0.033f;
+			}
 			else
 			{
-				float num = base.smi.timeinstate - 5f;
-				float distanceAboveGround = DistanceAboveGround;
-				if (DistanceAboveGround < 25f)
-				{
-					DistanceAboveGround = Mathf.Pow(num / partsLaunchSpeedRatio, 4f);
-					base.master.rocketSpeed = (DistanceAboveGround - distanceAboveGround) / dt;
-				}
-				else
-				{
-					if (base.master.rocketSpeed == 0f)
-					{
-						base.master.rocketSpeed = 25f - Mathf.Pow((base.smi.timeinstate - 1f) / partsLaunchSpeedRatio, 4f);
-					}
-					DistanceAboveGround += base.master.rocketSpeed * dt;
-				}
+				base.master.rocketSpeed = constantVelocityPhase_maxSpeed;
+				DistanceAboveGround += base.master.rocketSpeed * dt;
 			}
 			UpdateSoundSpeakerObject();
 			if (UpdatePartsAnimPositionsAndDamage() == 0)
@@ -147,29 +155,44 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 			}
 			CraftModuleInterface craftInterface = base.smi.master.GetComponent<RocketModuleCluster>().CraftInterface;
 			craftInterface.GetComponent<Clustercraft>().SetCraftStatus(Clustercraft.CraftStatus.InFlight);
-			craftInterface.SetCurrentPad(null);
 		}
 
 		public void SetupLanding()
 		{
-			float f = (DistanceAboveGround = base.master.InitialFlightAnimOffsetForLanding());
-			landingDistancePartsTimeConstant = Mathf.Pow(f, 0.25f) * partsLaunchSpeedRatio;
+			float num2 = (DistanceAboveGround = base.master.InitialFlightAnimOffsetForLanding());
+			base.sm.warmupTimeRemaining.Set(2f, this);
 			base.master.isLanding = true;
 			base.master.rocketSpeed = 0f;
+			constantVelocityPhase_maxSpeed = 0f;
 		}
 
 		public void LandingLoop(float dt)
 		{
 			base.master.isLanding = true;
-			if (base.smi.timeinstate > landingDistancePartsTimeConstant)
+			if (constantVelocityPhase_maxSpeed == 0f)
 			{
+				float num = Mathf.Pow(TuningData<Tuning>.Get().maxAccelerationDistance, takeoffAccelPowerInv) * heightLaunchSpeedRatio;
+				float num2 = Mathf.Pow((num - 0.033f) / heightLaunchSpeedRatio, TuningData<Tuning>.Get().takeoffAccelPower);
+				constantVelocityPhase_maxSpeed = (num2 - TuningData<Tuning>.Get().maxAccelerationDistance) / 0.033f;
+			}
+			if (DistanceAboveGround > TuningData<Tuning>.Get().maxAccelerationDistance)
+			{
+				base.master.rocketSpeed = constantVelocityPhase_maxSpeed;
+				DistanceAboveGround += base.master.rocketSpeed * dt;
+			}
+			else if (DistanceAboveGround > 0.0025f)
+			{
+				float num3 = Mathf.Pow(DistanceAboveGround, takeoffAccelPowerInv) * heightLaunchSpeedRatio;
+				num3 -= dt;
+				DistanceAboveGround = Mathf.Pow(num3 / heightLaunchSpeedRatio, TuningData<Tuning>.Get().takeoffAccelPower);
+				float num4 = Mathf.Pow((num3 - 0.033f) / heightLaunchSpeedRatio, TuningData<Tuning>.Get().takeoffAccelPower);
+				base.master.rocketSpeed = (DistanceAboveGround - num4) / 0.033f;
+			}
+			else if (base.sm.warmupTimeRemaining.Get(this) > 0f)
+			{
+				base.sm.warmupTimeRemaining.Delta(0f - dt, this);
 				DistanceAboveGround = 0f;
 			}
-			else
-			{
-				DistanceAboveGround = Mathf.Pow((0f - base.smi.timeinstate + landingDistancePartsTimeConstant) / partsLaunchSpeedRatio, 4f);
-			}
-			base.master.rocketSpeed = DistanceAboveGround - Mathf.Pow((0f - (base.smi.timeinstate - 1f) + landingDistancePartsTimeConstant) / partsLaunchSpeedRatio, 4f);
 			UpdateSoundSpeakerObject();
 			UpdatePartsAnimPositionsAndDamage();
 		}
@@ -199,7 +222,7 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 			base.master.soundSpeakerObject.transform.SetLocalPosition(DistanceAboveGround * Vector3.up);
 		}
 
-		private int UpdatePartsAnimPositionsAndDamage()
+		public int UpdatePartsAnimPositionsAndDamage(bool doDamage = true)
 		{
 			int myWorldId = base.gameObject.GetMyWorldId();
 			if (myWorldId == -1)
@@ -227,7 +250,7 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 					{
 						component.enabled = flag2;
 					}
-					if (flag)
+					if (doDamage && flag)
 					{
 						num++;
 						States.DoWorldDamage(rocketModuleCluster.gameObject, positionIncludingOffset, myWorldId);
@@ -279,10 +302,14 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 				distanceToSpace.Set(ConditionFlightPathIsClear.PadTopEdgeDistanceToCeilingEdge(smi.master.gameObject.GetComponent<RocketModuleCluster>().CraftInterface.CurrentPad.gameObject), smi);
 				smi.GoTo(not_grounded.launch_loop);
 			});
-			not_grounded.launch_loop.EventTransition(GameHashes.DoReturnRocket, not_grounded.landing_setup).Update(delegate(StatesInstance smi, float dt)
+			not_grounded.launch_loop.EventTransition(GameHashes.DoReturnRocket, not_grounded.landing_setup).Enter(delegate(StatesInstance smi)
+			{
+				smi.UpdatePartsAnimPositionsAndDamage(doDamage: false);
+			}).Update(delegate(StatesInstance smi, float dt)
 			{
 				smi.LaunchLoop(dt);
-			}, UpdateRate.SIM_EVERY_TICK).ParamTransition(distanceAboveGround, not_grounded.space, (StatesInstance smi, float p) => p >= distanceToSpace.Get(smi));
+			}, UpdateRate.SIM_EVERY_TICK)
+				.ParamTransition(distanceAboveGround, not_grounded.space, (StatesInstance smi, float p) => p >= distanceToSpace.Get(smi));
 			not_grounded.space.EnterTransition(not_grounded.landing_setup, (StatesInstance smi) => smi.IsNotSpaceBound()).EventTransition(GameHashes.DoReturnRocket, not_grounded.landing_setup).Enter(delegate(StatesInstance smi)
 			{
 				smi.FinalizeLaunch();
@@ -292,10 +319,14 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 				smi.SetupLanding();
 				smi.GoTo(not_grounded.landing_loop);
 			});
-			not_grounded.landing_loop.Update(delegate(StatesInstance smi, float dt)
+			not_grounded.landing_loop.Enter(delegate(StatesInstance smi)
+			{
+				smi.UpdatePartsAnimPositionsAndDamage(doDamage: false);
+			}).Update(delegate(StatesInstance smi, float dt)
 			{
 				smi.LandingLoop(dt);
-			}, UpdateRate.SIM_EVERY_TICK).ParamTransition(distanceAboveGround, not_grounded.land, (StatesInstance smi, float p) => p < 0.0025f);
+			}, UpdateRate.SIM_EVERY_TICK).ParamTransition(distanceAboveGround, not_grounded.land, IsFullyLanded)
+				.ParamTransition(warmupTimeRemaining, not_grounded.land, IsFullyLanded);
 			not_grounded.land.Enter(delegate(StatesInstance smi)
 			{
 				foreach (Ref<RocketModuleCluster> part in smi.master.parts)
@@ -312,6 +343,11 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 				}
 				smi.GoTo(grounded);
 			});
+		}
+
+		public bool IsFullyLanded<T>(StatesInstance smi, T p)
+		{
+			return distanceAboveGround.Get(smi) <= 0.0025f && warmupTimeRemaining.Get(smi) <= 0f;
 		}
 
 		public static void DoWorldDamage(GameObject part, Vector3 apparentPosition, int actualWorld)
@@ -401,16 +437,21 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 		return list;
 	}
 
+	private int GetRocketHeight()
+	{
+		int num = 0;
+		foreach (Ref<RocketModuleCluster> part in parts)
+		{
+			num += part.Get().GetComponent<Building>().Def.HeightInCells;
+		}
+		return num;
+	}
+
 	private float InitialFlightAnimOffsetForLanding()
 	{
 		int num = Grid.PosToCell(base.gameObject);
 		WorldContainer world = ClusterManager.Instance.GetWorld(Grid.WorldIdx[num]);
 		float num2 = world.maximumBounds.y - base.gameObject.transform.GetPosition().y;
-		float num3 = 0f;
-		foreach (Ref<RocketModuleCluster> part in parts)
-		{
-			num3 += (float)part.Get().GetComponent<Building>().Def.HeightInCells;
-		}
-		return num2 + num3 + 100f;
+		return num2 + (float)GetRocketHeight() + 100f;
 	}
 }

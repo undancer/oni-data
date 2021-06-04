@@ -53,6 +53,20 @@ public class NavTeleporter : KMonoBehaviour
 		}
 	}
 
+	public void EnableTwoWayTarget(bool enable)
+	{
+		if (enable)
+		{
+			target.SetLink();
+			SetLink();
+		}
+		else
+		{
+			target.BreakLink();
+			BreakLink();
+		}
+	}
+
 	public void SetTarget(NavTeleporter nt)
 	{
 		if (target != null)

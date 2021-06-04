@@ -7,9 +7,22 @@ public class RadiationDiagnostic : ColonyDiagnostic
 	public RadiationDiagnostic(int worldID)
 		: base(worldID, UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.ALL_NAME)
 	{
+		tracker = TrackerTool.Instance.GetWorldTracker<RadiationTracker>(worldID);
+		trackerSampleCountSeconds = 150f;
+		presentationSetting = PresentationSetting.CurrentValue;
 		icon = "overlay_radiation";
-		AddCriterion("CheckSick", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckSick));
-		AddCriterion("CheckExposed", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckExposure));
+		AddCriterion("CheckSick", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA.CHECKSICK, CheckSick));
+		AddCriterion("CheckExposed", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA.CHECKEXPOSED, CheckExposure));
+	}
+
+	public override string GetCurrentValueString()
+	{
+		return string.Format(UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.AVERAGE_RADS, GameUtil.GetFormattedRads(TrackerTool.Instance.GetWorldTracker<RadiationTracker>(base.worldID).GetCurrentValue()));
+	}
+
+	public override string GetAverageValueString()
+	{
+		return string.Format(UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.AVERAGE_RADS, GameUtil.GetFormattedRads(TrackerTool.Instance.GetWorldTracker<RadiationTracker>(base.worldID).GetCurrentValue()));
 	}
 
 	private DiagnosticResult CheckSick()
@@ -47,26 +60,29 @@ public class RadiationDiagnostic : ColonyDiagnostic
 		{
 			result.opinion = DiagnosticResult.Opinion.Normal;
 			result.Message = UI.COLONY_DIAGNOSTICS.NO_MINIONS;
+			return result;
 		}
-		else
+		result.opinion = DiagnosticResult.Opinion.Normal;
+		result.Message = UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA_RADIATION_EXPOSURE.PASS;
+		foreach (MinionIdentity item in worldItems)
 		{
-			result.opinion = DiagnosticResult.Opinion.Normal;
-			result.Message = UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA_RADIATION_EXPOSURE.PASS;
-			foreach (MinionIdentity item in worldItems)
+			RadiationMonitor.Instance sMI = item.GetSMI<RadiationMonitor.Instance>();
+			RadiationMonitor sm = sMI.sm;
+			GameObject gameObject = item.gameObject;
+			Vector3 position = gameObject.transform.position;
+			float num = sm.currentExposurePerCycle.Get(sMI);
+			float num2 = sm.radiationExposure.Get(sMI);
+			if (num > 60f && num2 > 30f)
 			{
-				RadiationMonitor.Instance sMI = item.GetSMI<RadiationMonitor.Instance>();
-				if (sMI.sm.currentExposurePerCycle.Get(sMI) > 600f)
-				{
-					result.clickThroughTarget = new Tuple<Vector3, GameObject>(item.gameObject.transform.position, item.gameObject);
-					result.opinion = DiagnosticResult.Opinion.Warning;
-					result.Message = UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA_RADIATION_EXPOSURE.FAIL_WARNING;
-				}
-				else if (sMI.sm.currentExposurePerCycle.Get(sMI) > 60f)
-				{
-					result.clickThroughTarget = new Tuple<Vector3, GameObject>(item.gameObject.transform.position, item.gameObject);
-					result.opinion = DiagnosticResult.Opinion.Concern;
-					result.Message = UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA_RADIATION_EXPOSURE.FAIL_CONCERN;
-				}
+				result.clickThroughTarget = new Tuple<Vector3, GameObject>(position, gameObject);
+				result.opinion = DiagnosticResult.Opinion.Concern;
+				result.Message = UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA_RADIATION_EXPOSURE.FAIL_CONCERN;
+			}
+			if (num > 600f)
+			{
+				result.clickThroughTarget = new Tuple<Vector3, GameObject>(position, item.gameObject);
+				result.opinion = DiagnosticResult.Opinion.Warning;
+				result.Message = UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA_RADIATION_EXPOSURE.FAIL_WARNING;
 			}
 		}
 		return result;

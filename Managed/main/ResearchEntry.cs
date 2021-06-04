@@ -131,11 +131,12 @@ public class ResearchEntry : KMonoBehaviour
 			}
 			GameObject gameObject = Util.KInstantiateUI(linePrefab, lineContainer.gameObject, force_active: true);
 			UILineRenderer component = gameObject.GetComponent<UILineRenderer>();
+			float num2 = 32f;
 			component.Points = new Vector2[4]
 			{
 				new Vector2(0f, 0f) + b,
-				new Vector2(0f - (targetTech.center.x - num - (item.center.x + num)) / 2f, 0f) + b,
-				new Vector2(0f - (targetTech.center.x - num - (item.center.x + num)) / 2f, item.center.y - targetTech.center.y) + b2,
+				new Vector2(0f - num2, 0f) + b,
+				new Vector2(0f - num2, item.center.y - targetTech.center.y) + b2,
 				new Vector2(0f - (targetTech.center.x - num - (item.center.x + num)) + 2f, item.center.y - targetTech.center.y) + b2
 			};
 			component.LineThickness = lineThickness_inactive;
@@ -201,8 +202,9 @@ public class ResearchEntry : KMonoBehaviour
 				text += unlockedItem.Name;
 				KImage reference = component2.GetReference<KImage>("Icon");
 				reference.sprite = unlockedItem.UISprite();
-				KImage reference2 = component2.GetReference<KImage>("DLCOverlay");
-				reference2.gameObject.SetActive(!DlcManager.IsVanillaId(unlockedItem.dlcId));
+				KImage reference2 = component2.GetReference<KImage>("Background");
+				KImage reference3 = component2.GetReference<KImage>("DLCOverlay");
+				reference3.gameObject.SetActive(!DlcManager.IsVanillaId(unlockedItem.dlcId));
 				string text2 = $"{unlockedItem.Name}\n{unlockedItem.description}";
 				if (!DlcManager.IsVanillaId(unlockedItem.dlcId))
 				{

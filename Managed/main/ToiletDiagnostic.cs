@@ -8,9 +8,8 @@ public class ToiletDiagnostic : ColonyDiagnostic
 	{
 		icon = "icon_action_region_toilet";
 		tracker = TrackerTool.Instance.GetWorldTracker<WorkingToiletTracker>(worldID);
-		AddCriterion(UI.COLONY_DIAGNOSTICS.NO_MINIONS, ColonyDiagnosticUtility.GetWorldHasMinionCriterion(worldID));
-		AddCriterion("CheckHasAnyToilets", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckHasAnyToilets));
-		AddCriterion("CheckEnoughToilets", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckEnoughToilets));
+		AddCriterion("CheckHasAnyToilets", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.CRITERIA.CHECKHASANYTOILETS, CheckHasAnyToilets));
+		AddCriterion("CheckEnoughToilets", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.CRITERIA.CHECKENOUGHTOILETS, CheckEnoughToilets));
 	}
 
 	private DiagnosticResult CheckHasAnyToilets()

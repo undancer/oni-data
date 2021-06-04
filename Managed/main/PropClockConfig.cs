@@ -24,6 +24,7 @@ public class PropClockConfig : IEntityConfig
 		{
 			ObjectLayer.Building
 		};
+		gameObject.AddOrGet<Demolishable>();
 		return gameObject;
 	}
 

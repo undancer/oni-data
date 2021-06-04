@@ -78,3 +78,18 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/barren/BarrenCore
 
 worldTemplateRules:
+  - names:
+    - expansion1::poi/genericGravitas/poi_thermo_building
+    listRule: GuaranteeAll
+    priority: 450
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 1
+        maxDistance: 1
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+      - command: IntersectWith
+        zoneTypes: [ Swamp ]

@@ -8,61 +8,6 @@ namespace Database
 	{
 		private readonly List<List<Tuple<string, float>>> TECH_TIERS;
 
-		public static readonly Dictionary<string, float> TIER_5_ORBITAL_DOMINANT = new Dictionary<string, float>
-		{
-			{
-				"nuclear",
-				0f
-			}
-		};
-
-		public static readonly Dictionary<string, float> TIER_5_NUCLEAR_DOMINANT = new Dictionary<string, float>
-		{
-			{
-				"orbital",
-				0f
-			}
-		};
-
-		public static readonly Dictionary<string, float> TIER_6_ORBITAL_DOMINANT = new Dictionary<string, float>
-		{
-			{
-				"nuclear",
-				10f
-			}
-		};
-
-		public static readonly Dictionary<string, float> TIER_6_NUCLEAR_DOMINANT = new Dictionary<string, float>
-		{
-			{
-				"orbital",
-				10f
-			}
-		};
-
-		public static readonly Dictionary<string, float> TIER_7_ORBITAL_DOMINANT = new Dictionary<string, float>
-		{
-			{
-				"nuclear",
-				150f
-			}
-		};
-
-		public static readonly Dictionary<string, float> TIER_7_NUCLEAR_DOMINANT = new Dictionary<string, float>
-		{
-			{
-				"orbital",
-				150f
-			}
-		};
-
-		public static readonly List<string> RADIATION_IGNORED_TECHS = new List<string>
-		{
-			"NuclearResearch",
-			"RadiationProtection",
-			"NuclearRefinement"
-		};
-
 		public Techs(ResourceSet parent)
 			: base("Techs", parent)
 		{
@@ -157,35 +102,35 @@ namespace Database
 					{
 						new Tuple<string, float>("basic", 40f),
 						new Tuple<string, float>("advanced", 50f),
-						new Tuple<string, float>("orbital", 5f),
-						new Tuple<string, float>("nuclear", 5f)
+						new Tuple<string, float>("orbital", 0f),
+						new Tuple<string, float>("nuclear", 20f)
 					},
 					new List<Tuple<string, float>>
 					{
 						new Tuple<string, float>("basic", 50f),
 						new Tuple<string, float>("advanced", 70f),
-						new Tuple<string, float>("orbital", 40f),
+						new Tuple<string, float>("orbital", 30f),
 						new Tuple<string, float>("nuclear", 40f)
 					},
 					new List<Tuple<string, float>>
 					{
 						new Tuple<string, float>("basic", 70f),
 						new Tuple<string, float>("advanced", 100f),
-						new Tuple<string, float>("orbital", 300f),
-						new Tuple<string, float>("nuclear", 300f)
+						new Tuple<string, float>("orbital", 250f),
+						new Tuple<string, float>("nuclear", 370f)
 					},
 					new List<Tuple<string, float>>
 					{
 						new Tuple<string, float>("basic", 100f),
 						new Tuple<string, float>("advanced", 130f),
-						new Tuple<string, float>("orbital", 340f),
-						new Tuple<string, float>("nuclear", 340f)
+						new Tuple<string, float>("orbital", 400f),
+						new Tuple<string, float>("nuclear", 435f)
 					},
 					new List<Tuple<string, float>>
 					{
 						new Tuple<string, float>("basic", 100f),
 						new Tuple<string, float>("advanced", 130f),
-						new Tuple<string, float>("orbital", 400f)
+						new Tuple<string, float>("orbital", 600f)
 					},
 					new List<Tuple<string, float>>
 					{
@@ -214,10 +159,10 @@ namespace Database
 			}, this);
 			new Tech("FineDining", new List<string>
 			{
-				"DiningTable",
-				"FarmTile",
 				"CookingStation",
-				"EggCracker"
+				"EggCracker",
+				"DiningTable",
+				"FarmTile"
 			}, this);
 			new Tech("FoodRepurposing", new List<string>
 			{
@@ -225,32 +170,30 @@ namespace Database
 			}, this);
 			new Tech("FinerDining", new List<string>
 			{
-				"GourmetCookingStation",
-				"GeneticAnalysisStation"
-			}, this, TIER_5_NUCLEAR_DOMINANT);
+				"GourmetCookingStation"
+			}, this);
 			new Tech("Agriculture", new List<string>
 			{
-				"FertilizerMaker",
-				"HydroponicFarm",
-				"Refrigerator",
 				"FarmStation",
+				"FertilizerMaker",
+				"Refrigerator",
+				"HydroponicFarm",
 				"ParkSign"
 			}, this);
 			new Tech("Ranching", new List<string>
 			{
-				"CreatureDeliveryPoint",
-				"FishDeliveryPoint",
-				"CreatureFeeder",
-				"FishFeeder",
 				"RanchStation",
+				"CreatureDeliveryPoint",
 				"ShearingStation",
-				"FlyingCreatureBait"
+				"CreatureFeeder",
+				"FlyingCreatureBait",
+				"FishDeliveryPoint",
+				"FishFeeder"
 			}, this);
 			new Tech("AnimalControl", new List<string>
 			{
 				"CreatureTrap",
 				"FishTrap",
-				"AirborneCreatureLure",
 				"EggIncubator",
 				LogicCritterCountSensorConfig.ID
 			}, this);
@@ -262,52 +205,37 @@ namespace Database
 			new Tech("GasPiping", new List<string>
 			{
 				"GasConduit",
+				"GasConduitBridge",
 				"GasPump",
-				"GasVent",
-				"GasConduitBridge"
+				"GasVent"
 			}, this);
-			List<string> list = new List<string>
+			new Tech("ImprovedGasPiping", new List<string>
 			{
 				"InsulatedGasConduit",
 				LogicPressureSensorGasConfig.ID,
-				"GasVentHighPressure",
 				"GasLogicValve",
-				"GasConduitPreferentialFlow",
-				"GasConduitOverflow",
+				"GasVentHighPressure",
+				"GasBottler"
+			}, this);
+			new Tech("SpaceGas", new List<string>
+			{
+				"CO2Engine",
 				"ModularLaunchpadPortGas",
 				"ModularLaunchpadPortGasUnloader",
 				"GasCargoBaySmall"
-			};
-			if (!DlcManager.IsExpansion1Active())
-			{
-				list.Add("GasBottler");
-			}
-			new Tech("ImprovedGasPiping", list, this);
+			}, this);
 			new Tech("PressureManagement", new List<string>
 			{
 				"LiquidValve",
 				"GasValve",
-				"ManualPressureDoor",
-				"GasPermeableMembrane"
+				"GasPermeableMembrane",
+				"ManualPressureDoor"
 			}, this);
-			List<string> list2 = new List<string>
-			{
-				"OxygenMask",
-				"OxygenMaskLocker",
-				"OxygenMaskMarker",
-				"CO2Engine"
-			};
-			if (DlcManager.IsExpansion1Active())
-			{
-				list2.Add("GasBottler");
-				list2.Add("BottleEmptierGas");
-			}
-			new Tech("PortableGasses", list2, this);
 			new Tech("DirectedAirStreams", new List<string>
 			{
-				"PressureDoor",
 				"AirFilter",
-				"CO2Scrubber"
+				"CO2Scrubber",
+				"PressureDoor"
 			}, this);
 			new Tech("LiquidFiltering", new List<string>
 			{
@@ -325,9 +253,9 @@ namespace Database
 			}, this);
 			new Tech("MedicineIII", new List<string>
 			{
-				LogicDiseaseSensorConfig.ID,
 				GasConduitDiseaseSensorConfig.ID,
-				LiquidConduitDiseaseSensorConfig.ID
+				LiquidConduitDiseaseSensorConfig.ID,
+				LogicDiseaseSensorConfig.ID
 			}, this);
 			new Tech("MedicineIV", new List<string>
 			{
@@ -339,9 +267,9 @@ namespace Database
 			new Tech("LiquidPiping", new List<string>
 			{
 				"LiquidConduit",
+				"LiquidConduitBridge",
 				"LiquidPump",
-				"LiquidVent",
-				"LiquidConduitBridge"
+				"LiquidVent"
 			}, this);
 			new Tech("ImprovedLiquidPiping", new List<string>
 			{
@@ -356,11 +284,11 @@ namespace Database
 			{
 				"EspressoMachine",
 				"LiquidFuelTankCluster"
-			}, this, TIER_5_ORBITAL_DOMINANT);
+			}, this);
 			new Tech("SanitationSciences", new List<string>
 			{
-				"WashSink",
 				"FlushToilet",
+				"WashSink",
 				ShowerConfig.ID,
 				"MeshTile"
 			}, this);
@@ -373,51 +301,51 @@ namespace Database
 			}, this);
 			new Tech("LiquidDistribution", new List<string>
 			{
+				"LiquidLimitValve",
 				"RocketInteriorLiquidInput",
-				"RocketInteriorLiquidOutput",
-				"LiquidLimitValve"
+				"RocketInteriorLiquidOutput"
 			}, this);
 			new Tech("AdvancedSanitation", new List<string>
 			{
 				"DecontaminationShower"
-			}, this, TIER_5_ORBITAL_DOMINANT);
+			}, this);
 			new Tech("AdvancedFiltration", new List<string>
 			{
 				"GasFilter",
 				"LiquidFilter",
 				"SludgePress"
 			}, this);
-			List<string> list3 = new List<string>
+			new Tech("Distillation", new List<string>
 			{
-				"WaterPurifier",
 				"AlgaeDistillery",
-				"EthanolDistillery"
-			};
-			if (!DlcManager.IsExpansion1Active())
-			{
-				list3.Add("BottleEmptierGas");
-			}
-			new Tech("Distillation", list3, this);
+				"EthanolDistillery",
+				"WaterPurifier",
+				"BottleEmptierGas"
+			}, this);
 			new Tech("Catalytics", new List<string>
 			{
 				"OxyliteRefinery",
 				"SupermaterialRefinery",
 				"SodaFountain",
 				"GasCargoBayCluster"
-			}, this, TIER_5_NUCLEAR_DOMINANT);
+			}, this);
+			new Tech("AdvancedResourceExtraction", new List<string>
+			{
+				"NoseconeHarvest"
+			}, this);
 			new Tech("PowerRegulation", new List<string>
 			{
-				SwitchConfig.ID,
 				"BatteryMedium",
+				SwitchConfig.ID,
 				"WireBridge"
 			}, this);
 			new Tech("AdvancedPowerRegulation", new List<string>
 			{
-				"HydrogenGenerator",
 				"HighWattageWire",
 				"WireBridgeHighWattage",
-				"PowerTransformerSmall",
+				"HydrogenGenerator",
 				LogicPowerRelayConfig.ID,
+				"PowerTransformerSmall",
 				LogicWattageSensorConfig.ID
 			}, this);
 			new Tech("PrettyGoodConductors", new List<string>
@@ -430,18 +358,15 @@ namespace Database
 			}, this);
 			new Tech("RenewableEnergy", new List<string>
 			{
-				"SteamTurbine",
 				"SteamTurbine2",
 				"SolarPanel",
 				"Sauna",
 				"SteamEngineCluster"
-			}, this, TIER_5_NUCLEAR_DOMINANT);
+			}, this);
 			new Tech("Combustion", new List<string>
 			{
 				"Generator",
-				"WoodGasGenerator",
-				"SugarEngine",
-				"SmallOxidizerTank"
+				"WoodGasGenerator"
 			}, this);
 			new Tech("ImprovedCombustion", new List<string>
 			{
@@ -457,13 +382,13 @@ namespace Database
 			}, this);
 			new Tech("Artistry", new List<string>
 			{
-				"CrownMoulding",
-				"CornerMoulding",
-				"SmallSculpture",
-				"IceSculpture",
-				"ItemPedestal",
 				"FlowerVaseWall",
-				"FlowerVaseHanging"
+				"FlowerVaseHanging",
+				"CornerMoulding",
+				"CrownMoulding",
+				"ItemPedestal",
+				"SmallSculpture",
+				"IceSculpture"
 			}, this);
 			new Tech("Clothing", new List<string>
 			{
@@ -472,21 +397,21 @@ namespace Database
 			}, this);
 			new Tech("Acoustics", new List<string>
 			{
-				"Phonobox",
 				"BatterySmart",
+				"Phonobox",
 				"PowerControlStation"
 			}, this);
 			new Tech("SpacePower", new List<string>
 			{
-				"RocketInteriorPowerPlug",
 				"BatteryModule",
-				"SolarPanelModule"
-			}, this, TIER_5_NUCLEAR_DOMINANT);
+				"SolarPanelModule",
+				"RocketInteriorPowerPlug"
+			}, this);
 			new Tech("NuclearRefinement", new List<string>
 			{
 				"NuclearReactor",
 				"UraniumCentrifuge"
-			}, this, TIER_6_NUCLEAR_DOMINANT);
+			}, this);
 			new Tech("FineArt", new List<string>
 			{
 				"Canvas",
@@ -495,7 +420,7 @@ namespace Database
 			new Tech("EnvironmentalAppreciation", new List<string>
 			{
 				"BeachChair"
-			}, this, TIER_6_ORBITAL_DOMINANT);
+			}, this);
 			new Tech("Luxury", new List<string>
 			{
 				LuxuryBedConfig.ID,
@@ -504,43 +429,27 @@ namespace Database
 			}, this);
 			new Tech("RefractiveDecor", new List<string>
 			{
-				"MetalSculpture",
-				"CanvasWide"
+				"CanvasWide",
+				"MetalSculpture"
 			}, this);
 			new Tech("GlassFurnishings", new List<string>
 			{
 				"GlassTile",
 				"FlowerVaseHangingFancy",
 				"SunLamp"
-			}, this, TIER_5_NUCLEAR_DOMINANT);
+			}, this);
 			new Tech("Screens", new List<string>
 			{
 				PixelPackConfig.ID
-			}, this, TIER_6_NUCLEAR_DOMINANT);
-			List<string> list4 = new List<string>
+			}, this);
+			new Tech("RenaissanceArt", new List<string>
 			{
+				"CanvasTall",
 				"MarbleSculpture",
-				"CanvasTall"
-			};
-			if (!DlcManager.IsExpansion1Active())
-			{
-				list4.AddRange(new List<string>
-				{
-					"MonumentBottom",
-					"MonumentMiddle",
-					"MonumentTop"
-				});
-			}
-			new Tech("RenaissanceArt", list4, this, TIER_5_ORBITAL_DOMINANT);
-			if (DlcManager.IsExpansion1Active())
-			{
-				new Tech("Monuments", new List<string>
-				{
-					"MonumentBottom",
-					"MonumentMiddle",
-					"MonumentTop"
-				}, this);
-			}
+				"MonumentBottom",
+				"MonumentMiddle",
+				"MonumentTop"
+			}, this);
 			new Tech("Plastics", new List<string>
 			{
 				"Polymerizer",
@@ -549,13 +458,16 @@ namespace Database
 			new Tech("ValveMiniaturization", new List<string>
 			{
 				"LiquidMiniPump",
-				"GasMiniPump",
-				"KeroseneEngineClusterSmall"
-			}, this, TIER_5_ORBITAL_DOMINANT);
+				"GasMiniPump"
+			}, this);
 			new Tech("HydrocarbonPropulsion", new List<string>
 			{
+				"KeroseneEngineClusterSmall"
+			}, this);
+			new Tech("BetterHydroCarbonPropulsion", new List<string>
+			{
 				"KeroseneEngineCluster"
-			}, this, TIER_6_ORBITAL_DOMINANT);
+			}, this);
 			new Tech("CryoFuelPropulsion", new List<string>
 			{
 				"HydrogenEngineCluster",
@@ -563,23 +475,22 @@ namespace Database
 			}, this);
 			new Tech("Suits", new List<string>
 			{
+				"SuitsOverlay",
+				"AtmoSuit",
+				"SuitFabricator",
 				"ExteriorWall",
 				"SuitMarker",
-				"SuitLocker",
-				"SuitFabricator",
-				"SuitsOverlay",
-				"AtmoSuit"
+				"SuitLocker"
 			}, this);
 			new Tech("Jobs", new List<string>
 			{
-				"RoleStation",
 				"WaterCooler",
 				"CraftingTable"
 			}, this);
 			new Tech("AdvancedResearch", new List<string>
 			{
-				"AdvancedResearchCenter",
 				"BetaResearchPoint",
+				"AdvancedResearchCenter",
 				"ResetSkillsStation",
 				"ClusterTelescope",
 				"ExobaseHeadquarters"
@@ -593,15 +504,17 @@ namespace Database
 			}, this);
 			new Tech("CrashPlan", new List<string>
 			{
+				"OrbitalResearchPoint",
 				"PioneerModule",
-				"OrbitalResearchCenter",
-				"OrbitalResearchPoint"
+				"OrbitalResearchCenter"
 			}, this);
 			new Tech("DurableLifeSupport", new List<string>
 			{
 				"NoseconeBasic",
-				"HabitatModuleMedium"
-			}, this, TIER_5_ORBITAL_DOMINANT);
+				"HabitatModuleMedium",
+				"ArtifactAnalysisStation",
+				"ArtifactCargoBay"
+			}, this);
 			new Tech("NuclearResearch", new List<string>
 			{
 				"DeltaResearchPoint",
@@ -623,14 +536,6 @@ namespace Database
 				"SweepBotStation",
 				"ScoutModule"
 			}, this);
-			if (DlcManager.IsExpansion1Active())
-			{
-				new Tech("RoboticTools", new List<string>
-				{
-					"AutoMiner",
-					"RailGunPayloadOpener"
-				}, this);
-			}
 			new Tech("BasicRefinement", new List<string>
 			{
 				"RockCrusher",
@@ -638,8 +543,8 @@ namespace Database
 			}, this);
 			new Tech("RefinedObjects", new List<string>
 			{
-				"ThermalBlock",
-				"FirePole"
+				"FirePole",
+				"ThermalBlock"
 			}, this);
 			new Tech("Smelting", new List<string>
 			{
@@ -652,61 +557,58 @@ namespace Database
 				"BunkerTile",
 				"BunkerDoor",
 				"Gantry"
-			}, this, TIER_5_NUCLEAR_DOMINANT);
+			}, this);
+			new Tech("HighPressureForging", new List<string>
+			{
+				"DiamondPress"
+			}, this);
 			new Tech("RadiationProtection", new List<string>
 			{
 				"LeadSuit",
 				"LeadSuitMarker",
 				"LeadSuitLocker"
-			}, this, TIER_5_NUCLEAR_DOMINANT);
+			}, this);
 			new Tech("TemperatureModulation", new List<string>
 			{
 				"LiquidCooledFan",
 				"IceCooledFan",
 				"IceMachine",
-				"SpaceHeater",
-				"InsulationTile"
+				"InsulationTile",
+				"SpaceHeater"
 			}, this);
 			new Tech("HVAC", new List<string>
 			{
 				"AirConditioner",
 				LogicTemperatureSensorConfig.ID,
-				"GasConduitRadiant",
 				GasConduitTemperatureSensorConfig.ID,
 				GasConduitElementSensorConfig.ID,
+				"GasConduitRadiant",
 				"GasReservoir"
-			}, this);
-			new Tech("GasDistribution", new List<string>
-			{
-				"RocketInteriorGasInput",
-				"RocketInteriorGasOutput",
-				"OxidizerTankCluster",
-				"GasLimitValve"
 			}, this);
 			new Tech("LiquidTemperature", new List<string>
 			{
-				"LiquidHeater",
-				"LiquidConditioner",
 				"LiquidConduitRadiant",
+				"LiquidConditioner",
 				LiquidConduitTemperatureSensorConfig.ID,
-				LiquidConduitElementSensorConfig.ID
+				LiquidConduitElementSensorConfig.ID,
+				"LiquidHeater"
 			}, this);
 			new Tech("LogicControl", new List<string>
 			{
-				"LogicWire",
-				"LogicDuplicantSensor",
+				"AutomationOverlay",
 				LogicSwitchConfig.ID,
+				"LogicWire",
 				"LogicWireBridge",
-				"AutomationOverlay"
+				"LogicDuplicantSensor"
 			}, this);
 			new Tech("GenericSensors", new List<string>
 			{
-				LogicTimeOfDaySensorConfig.ID,
-				LogicTimerSensorConfig.ID,
 				"FloorSwitch",
 				LogicElementSensorGasConfig.ID,
 				LogicElementSensorLiquidConfig.ID,
-				"LogicGateNOT"
+				"LogicGateNOT",
+				LogicTimeOfDaySensorConfig.ID,
+				LogicTimerSensorConfig.ID
 			}, this);
 			new Tech("LogicCircuits", new List<string>
 			{
@@ -724,22 +626,18 @@ namespace Database
 			}, this);
 			new Tech("DupeTrafficControl", new List<string>
 			{
-				"Checkpoint",
+				LogicCounterConfig.ID,
 				LogicMemoryConfig.ID,
-				"ArcadeMachine",
-				"CosmicResearchCenter",
 				"LogicGateXOR",
-				LogicCounterConfig.ID
-			}, this, TIER_5_ORBITAL_DOMINANT);
-			new Tech("AdvancedScanners", new List<string>
-			{
-				"ScannerModule"
-			}, this, TIER_6_ORBITAL_DOMINANT);
+				"ArcadeMachine",
+				"Checkpoint",
+				"CosmicResearchCenter"
+			}, this);
 			new Tech("Multiplexing", new List<string>
 			{
 				"LogicGateMultiplexer",
 				"LogicGateDemultiplexer"
-			}, this, TIER_6_NUCLEAR_DOMINANT);
+			}, this);
 			new Tech("SkyDetectors", new List<string>
 			{
 				CometDetectorConfig.ID,
@@ -752,45 +650,14 @@ namespace Database
 				"TravelTube",
 				"TravelTubeWallBridge",
 				"VerticalWindTunnel"
-			}, this, TIER_5_NUCLEAR_DOMINANT);
+			}, this);
 			new Tech("SmartStorage", new List<string>
 			{
-				"StorageLockerSmart",
+				"ConveyorOverlay",
 				"SolidTransferArm",
-				"ObjectDispenser",
-				"ConveyorOverlay"
+				"StorageLockerSmart",
+				"ObjectDispenser"
 			}, this);
-			List<string> list5 = new List<string>
-			{
-				"SolidConduit",
-				"SolidConduitBridge",
-				"SolidConduitInbox",
-				"SolidVent"
-			};
-			if (!DlcManager.IsExpansion1Active())
-			{
-				list5.AddRange(new List<string>
-				{
-					"SolidConduitOutbox",
-					"SolidLogicValve",
-					"AutoMiner"
-				});
-			}
-			new Tech("SolidTransport", list5, this);
-			if (DlcManager.IsExpansion1Active())
-			{
-				new Tech("SolidSpace", new List<string>
-				{
-					"SolidLogicValve",
-					"SolidConduitOutbox",
-					"ModularLaunchpadPortSolid",
-					"ModularLaunchpadPortSolidUnloader",
-					"SolidCargoBaySmall",
-					"RocketInteriorSolidInput",
-					"RocketInteriorSolidOutput",
-					"SolidLimitValve"
-				}, this, TIER_5_ORBITAL_DOMINANT);
-			}
 			new Tech("SolidManagement", new List<string>
 			{
 				"SolidFilter",
@@ -798,12 +665,12 @@ namespace Database
 				SolidConduitElementSensorConfig.ID,
 				SolidConduitDiseaseSensorConfig.ID,
 				"CargoBayCluster"
-			}, this, TIER_6_ORBITAL_DOMINANT);
+			}, this);
 			new Tech("HighVelocityTransport", new List<string>
 			{
 				"RailGun",
 				"LandingBeacon"
-			}, this, TIER_6_NUCLEAR_DOMINANT);
+			}, this);
 			new Tech("BasicRocketry", new List<string>
 			{
 				"CommandModule",
@@ -823,8 +690,7 @@ namespace Database
 			new Tech("CargoIII", new List<string>
 			{
 				"TouristModule",
-				"SpecialCargoBay",
-				"ScannerModule"
+				"SpecialCargoBay"
 			}, this);
 			new Tech("EnginesI", new List<string>
 			{
@@ -840,8 +706,7 @@ namespace Database
 			{
 				"OxidizerTankLiquid",
 				"OxidizerTankCluster",
-				"HydrogenEngine",
-				"HEPEngine"
+				"HydrogenEngine"
 			}, this);
 			new Tech("Jetpacks", new List<string>
 			{
@@ -849,76 +714,138 @@ namespace Database
 				"JetSuitMarker",
 				"JetSuitLocker",
 				"LiquidCargoBayCluster"
-			}, this, TIER_6_ORBITAL_DOMINANT);
+			}, this);
+			new Tech("SolidTransport", new List<string>
+			{
+				"SolidConduitInbox",
+				"SolidConduit",
+				"SolidConduitBridge",
+				"SolidVent",
+				"SolidConduitOutbox",
+				"SolidLogicValve",
+				"AutoMiner"
+			}, this);
+			InitExpansion1();
+		}
+
+		private void InitExpansion1()
+		{
+			if (DlcManager.IsExpansion1Active())
+			{
+				Get("SolidTransport").RemoveUnlockedItemIDs("SolidConduitOutbox", "SolidLogicValve", "AutoMiner");
+				Get("ImprovedGasPiping").RemoveUnlockedItemIDs("GasBottler");
+				Get("Distillation").RemoveUnlockedItemIDs("BottleEmptierGas");
+				Get("RenaissanceArt").RemoveUnlockedItemIDs("MonumentBottom", "MonumentMiddle", "MonumentTop");
+				new Tech("PortableGasses", new List<string>
+				{
+					"GasBottler",
+					"BottleEmptierGas",
+					"OxygenMask",
+					"OxygenMaskLocker",
+					"OxygenMaskMarker"
+				}, this);
+				new Tech("Bioengineering", new List<string>
+				{
+					"GeneticAnalysisStation"
+				}, this);
+				new Tech("SpaceCombustion", new List<string>
+				{
+					"SugarEngine",
+					"SmallOxidizerTank"
+				}, this);
+				new Tech("SolidSpace", new List<string>
+				{
+					"SolidLogicValve",
+					"SolidConduitOutbox",
+					"SolidLimitValve",
+					"SolidCargoBaySmall",
+					"RocketInteriorSolidInput",
+					"RocketInteriorSolidOutput",
+					"ModularLaunchpadPortSolid",
+					"ModularLaunchpadPortSolidUnloader"
+				}, this);
+				new Tech("RoboticTools", new List<string>
+				{
+					"AutoMiner",
+					"RailGunPayloadOpener"
+				}, this);
+				new Tech("HighVelocityDestruction", new List<string>
+				{
+					"NoseconeHarvest"
+				}, this);
+				new Tech("GasDistribution", new List<string>
+				{
+					"GasLimitValve",
+					"RocketInteriorGasInput",
+					"RocketInteriorGasOutput",
+					"OxidizerTankCluster"
+				}, this);
+				new Tech("Monuments", new List<string>
+				{
+					"MonumentBottom",
+					"MonumentMiddle",
+					"MonumentTop"
+				}, this);
+				new Tech("AdvancedScanners", new List<string>
+				{
+					"ScannerModule"
+				}, this);
+			}
+		}
+
+		public void PostProcess()
+		{
+			foreach (Tech resource in resources)
+			{
+				List<TechItem> list = new List<TechItem>();
+				foreach (string unlockedItemID in resource.unlockedItemIDs)
+				{
+					TechItem techItem = Db.Get().TechItems.TryGet(unlockedItemID);
+					if (techItem != null)
+					{
+						list.Add(techItem);
+					}
+				}
+				resource.unlockedItems = list;
+			}
 		}
 
 		public void Load(TextAsset tree_file)
 		{
 			ResourceTreeLoader<ResourceTreeNode> resourceTreeLoader = new ResourceTreeLoader<ResourceTreeNode>(tree_file);
-			if (!Sim.IsRadiationEnabled())
-			{
-				foreach (ResourceTreeNode item in new List<ResourceTreeNode>(resourceTreeLoader.resources))
-				{
-					if (RADIATION_IGNORED_TECHS.Contains(item.Id))
-					{
-						resourceTreeLoader.resources.Remove(item);
-						continue;
-					}
-					for (int num = item.edges.Count - 1; num >= 0; num--)
-					{
-						ResourceTreeNode.Edge edge = item.edges[num];
-						if (RADIATION_IGNORED_TECHS.Contains(edge.source.Id) || RADIATION_IGNORED_TECHS.Contains(edge.target.Id))
-						{
-							item.edges.RemoveAt(num);
-						}
-					}
-					for (int num2 = item.references.Count - 1; num2 >= 0; num2--)
-					{
-						ResourceTreeNode resourceTreeNode = item.references[num2];
-						if (RADIATION_IGNORED_TECHS.Contains(resourceTreeNode.Id))
-						{
-							item.references.RemoveAt(num2);
-						}
-					}
-				}
-				foreach (List<Tuple<string, float>> tECH_TIER in TECH_TIERS)
-				{
-					tECH_TIER.RemoveAll((Tuple<string, float> m) => m.first == "nuclear");
-				}
-			}
 			List<TechTreeTitle> list = new List<TechTreeTitle>();
 			for (int i = 0; i < Db.Get().TechTreeTitles.Count; i++)
 			{
 				list.Add(Db.Get().TechTreeTitles[i]);
 			}
 			list.Sort((TechTreeTitle a, TechTreeTitle b) => a.center.y.CompareTo(b.center.y));
-			foreach (ResourceTreeNode item2 in resourceTreeLoader)
+			foreach (ResourceTreeNode item in resourceTreeLoader)
 			{
-				string a2 = item2.Id.Substring(0, 1);
+				string a2 = item.Id.Substring(0, 1);
 				if (string.Equals(a2, "_"))
 				{
 					continue;
 				}
-				Tech tech = TryGet(item2.Id);
-				Debug.Assert(tech != null, "Tech node found in yEd that is not found in DbTechs constructor: " + item2.Id);
+				Tech tech = TryGet(item.Id);
+				Debug.Assert(tech != null, "Tech node found in yEd that is not found in DbTechs constructor: " + item.Id);
 				string categoryID = "";
 				for (int j = 0; j < list.Count; j++)
 				{
-					if (list[j].center.y >= item2.center.y)
+					if (list[j].center.y >= item.center.y)
 					{
 						categoryID = list[j].Id;
 						break;
 					}
 				}
-				tech.SetNode(item2, categoryID);
-				foreach (ResourceTreeNode reference in item2.references)
+				tech.SetNode(item, categoryID);
+				foreach (ResourceTreeNode reference in item.references)
 				{
 					Tech tech2 = TryGet(reference.Id);
 					Debug.Assert(tech2 != null, "Tech node found in yEd that is not found in DbTechs constructor: " + reference.Id);
 					categoryID = "";
 					for (int k = 0; k < list.Count; k++)
 					{
-						if (list[k].center.y >= item2.center.y)
+						if (list[k].center.y >= item.center.y)
 						{
 							categoryID = list[k].Id;
 							break;
@@ -933,19 +860,19 @@ namespace Database
 			{
 				resource.tier = GetTier(resource);
 				List<Tuple<string, float>> list2 = TECH_TIERS[resource.tier];
-				foreach (Tuple<string, float> item3 in list2)
+				foreach (Tuple<string, float> item2 in list2)
 				{
-					if (!resource.costsByResearchTypeID.ContainsKey(item3.first))
+					if (!resource.costsByResearchTypeID.ContainsKey(item2.first))
 					{
-						resource.costsByResearchTypeID.Add(item3.first, item3.second);
+						resource.costsByResearchTypeID.Add(item2.first, item2.second);
 					}
 				}
 			}
-			for (int num3 = Count - 1; num3 >= 0; num3--)
+			for (int num = Count - 1; num >= 0; num--)
 			{
-				if (!((Tech)GetResource(num3)).FoundNode)
+				if (!((Tech)GetResource(num)).FoundNode)
 				{
-					Remove((Tech)GetResource(num3));
+					Remove((Tech)GetResource(num));
 				}
 			}
 		}
@@ -978,9 +905,10 @@ namespace Database
 		{
 			for (int i = 0; i < Count; i++)
 			{
-				if (((Tech)GetResource(i)).unlockedItemIDs.Find((string match) => match == itemId) != null)
+				Tech tech = (Tech)GetResource(i);
+				if (tech.unlockedItemIDs.Find((string match) => match == itemId) != null)
 				{
-					return (Tech)GetResource(i);
+					return tech;
 				}
 			}
 			return null;

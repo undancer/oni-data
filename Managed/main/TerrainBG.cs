@@ -186,7 +186,7 @@ public class TerrainBG : KMonoBehaviour
 		if (ClusterManager.Instance.activeWorld.IsModuleInterior)
 		{
 			Clustercraft component = ClusterManager.Instance.activeWorld.GetComponent<Clustercraft>();
-			material = ((component.Status != Clustercraft.CraftStatus.InFlight) ? starsMaterial_surface : ((!(ClusterGrid.Instance.GetVisibleAsteroidAtAdjacentCell(component.Location) != null)) ? starsMaterial_space : starsMaterial_orbit));
+			material = ((component.Status != Clustercraft.CraftStatus.InFlight) ? starsMaterial_surface : ((!(ClusterGrid.Instance.GetVisibleEntityOfLayerAtAdjacentCell(component.Location, EntityLayer.Asteroid) != null)) ? starsMaterial_space : starsMaterial_orbit));
 		}
 		material.renderQueue = RenderQueues.Stars;
 		material.SetTexture("_NoiseVolume", noiseVolume);

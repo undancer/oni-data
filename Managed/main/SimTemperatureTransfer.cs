@@ -6,6 +6,8 @@ using UnityEngine;
 [AddComponentMenu("KMonoBehaviour/scripts/SimTemperatureTransfer")]
 public class SimTemperatureTransfer : KMonoBehaviour
 {
+	private const float SIM_FREEZE_SPAWN_ORE_PERCENT = 0.8f;
+
 	private const float MIN_MASS_FOR_TEMPERATURE_TRANSFER = 0.01f;
 
 	public float deltaKJ = 0f;
@@ -70,7 +72,7 @@ public class SimTemperatureTransfer : KMonoBehaviour
 		handleInstanceMap.Clear();
 	}
 
-	public static void DoStateTransition(int sim_handle)
+	public static void DoOreMeltTransition(int sim_handle)
 	{
 		SimTemperatureTransfer value = null;
 		if (!handleInstanceMap.TryGetValue(sim_handle, out value) || value == null || value.HasTag(GameTags.Sealed))
@@ -79,36 +81,42 @@ public class SimTemperatureTransfer : KMonoBehaviour
 		}
 		PrimaryElement component = value.GetComponent<PrimaryElement>();
 		Element element = component.Element;
-		if (element.highTempTransitionTarget == SimHashes.Unobtanium)
+		bool flag = component.Temperature >= element.highTemp;
+		bool flag2 = component.Temperature <= element.lowTemp;
+		DebugUtil.DevAssert(flag || flag2, "An ore got a melt message from the sim but it's still the correct temperature for its state!", component);
+		if ((flag && element.highTempTransitionTarget == SimHashes.Unobtanium) || (flag2 && element.lowTempTransitionTarget == SimHashes.Unobtanium))
 		{
 			return;
 		}
 		if (component.Mass > 0f)
 		{
-			if (element.highTempTransitionTarget == SimHashes.COMPOSITION)
+			int gameCell = Grid.PosToCell(value.transform.GetPosition());
+			float num = component.Mass;
+			int num2 = component.DiseaseCount;
+			SimHashes new_element = (flag ? element.highTempTransitionTarget : element.lowTempTransitionTarget);
+			SimHashes simHashes = (flag ? element.highTempTransitionOreID : element.lowTempTransitionOreID);
+			float num3 = (flag ? element.highTempTransitionOreMassConversion : element.lowTempTransitionOreMassConversion);
+			if ((byte)simHashes != byte.MaxValue)
 			{
-				ElementLoader.ElementComposition[] elementComposition = element.elementComposition;
-				foreach (ElementLoader.ElementComposition elementComposition2 in elementComposition)
+				float num4 = num * num3;
+				int num5 = (int)((float)num2 * num3);
+				if (num4 > 0.001f)
 				{
-					int gameCell = Grid.PosToCell(value.transform.GetPosition());
-					int disease_count = (int)((float)component.DiseaseCount * elementComposition2.percentage);
-					Element element2 = ElementLoader.FindElementByName(elementComposition2.elementID);
+					num -= num4;
+					num2 -= num5;
+					Element element2 = ElementLoader.FindElementByHash(simHashes);
 					if (element2.IsSolid)
 					{
-						GameObject obj = element2.substance.SpawnResource(value.transform.GetPosition(), component.Mass * elementComposition2.percentage, component.Temperature, component.DiseaseIdx, disease_count, prevent_merge: true, forceTemperature: false, manual_activation: true);
-						element2.substance.ActivateSubstanceGameObject(obj, component.DiseaseIdx, disease_count);
+						GameObject obj = element2.substance.SpawnResource(value.transform.GetPosition(), num4, component.Temperature, component.DiseaseIdx, num5, prevent_merge: true, forceTemperature: false, manual_activation: true);
+						element2.substance.ActivateSubstanceGameObject(obj, component.DiseaseIdx, num5);
 					}
 					else
 					{
-						SimMessages.AddRemoveSubstance(gameCell, element2.id, CellEventLogger.Instance.OreMelted, component.Mass * elementComposition2.percentage, component.Temperature, component.DiseaseIdx, disease_count);
+						SimMessages.AddRemoveSubstance(gameCell, element2.id, CellEventLogger.Instance.OreMelted, num4, component.Temperature, component.DiseaseIdx, num5);
 					}
 				}
 			}
-			else
-			{
-				int gameCell2 = Grid.PosToCell(value.transform.GetPosition());
-				SimMessages.AddRemoveSubstance(gameCell2, element.highTempTransitionTarget, CellEventLogger.Instance.OreMelted, component.Mass, component.Temperature, component.DiseaseIdx, component.DiseaseCount);
-			}
+			SimMessages.AddRemoveSubstance(gameCell, new_element, CellEventLogger.Instance.OreMelted, num, component.Temperature, component.DiseaseIdx, num2);
 		}
 		value.OnCleanUp();
 		Util.KDestroyGameObject(value.gameObject);

@@ -131,6 +131,7 @@ public class BuildingTemplates
 
 	public static GameObject ExtendBuildingToRocketModule(GameObject template, string vanillaBGAnim, bool clusterRocket = false)
 	{
+		template.AddTag(GameTags.RocketModule);
 		RocketModule rocketModule = null;
 		rocketModule = ((!clusterRocket) ? template.AddOrGet<RocketModule>() : template.AddOrGet<RocketModuleCluster>());
 		if (vanillaBGAnim != null)
@@ -182,6 +183,7 @@ public class BuildingTemplates
 
 	public static GameObject ExtendBuildingToRocketModuleCluster(GameObject template, string vanillaBGAnim, int burden, float enginePower = 0f, float fuelCostPerDistance = 0f)
 	{
+		template.AddTag(GameTags.RocketModule);
 		template = ExtendBuildingToRocketModule(template, vanillaBGAnim, clusterRocket: true);
 		BuildingDef def = template.GetComponent<Building>().Def;
 		GameObject buildingUnderConstruction = def.BuildingUnderConstruction;

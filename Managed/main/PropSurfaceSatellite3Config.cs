@@ -78,5 +78,16 @@ public class PropSurfaceSatellite3Config : IEntityConfig
 
 	public void OnSpawn(GameObject inst)
 	{
+		inst.Subscribe(-372600542, delegate
+		{
+			OnLockerLooted(inst);
+		});
+	}
+
+	private void OnLockerLooted(GameObject inst)
+	{
+		string uniqueArtifactID = ArtifactSelector.Instance.GetUniqueArtifactID();
+		GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(uniqueArtifactID), inst.transform.position);
+		gameObject.SetActive(value: true);
 	}
 }

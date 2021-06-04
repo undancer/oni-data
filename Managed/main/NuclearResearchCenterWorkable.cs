@@ -49,6 +49,15 @@ public class NuclearResearchCenterWorkable : Workable
 			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Research, Research.Instance.GetResearchType("nuclear").name, base.transform);
 			Research.Instance.AddResearchPoints("nuclear", num2);
 		}
+		TechInstance activeResearch = Research.Instance.GetActiveResearch();
+		if (radiationStorage.IsEmpty() || activeResearch == null)
+		{
+			return true;
+		}
+		if (activeResearch.PercentageCompleteResearchType("nuclear") >= 1f)
+		{
+			return true;
+		}
 		return false;
 	}
 

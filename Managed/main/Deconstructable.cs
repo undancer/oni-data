@@ -149,10 +149,13 @@ public class Deconstructable : Workable
 		{
 			TriggerDestroy(temperature, disease_idx, disease_count);
 		}
-		string sound = GlobalAssets.GetSound("Finish_Deconstruction_" + ((!audioSize.IsNullOrWhiteSpace()) ? audioSize : component.Def.AudioSize));
-		if (sound != null)
+		if (component == null || component.Def.PlayConstructionSounds)
 		{
-			KMonoBehaviour.PlaySound3DAtLocation(sound, base.gameObject.transform.GetPosition());
+			string sound = GlobalAssets.GetSound("Finish_Deconstruction_" + ((!audioSize.IsNullOrWhiteSpace()) ? audioSize : component.Def.AudioSize));
+			if (sound != null)
+			{
+				KMonoBehaviour.PlaySound3DAtLocation(sound, base.gameObject.transform.GetPosition());
+			}
 		}
 		Trigger(-702296337, this);
 	}
@@ -293,7 +296,7 @@ public class Deconstructable : Workable
 	{
 		if (allowDeconstruction)
 		{
-			KIconButtonMenu.ButtonInfo button = ((chore == null) ? new KIconButtonMenu.ButtonInfo("action_deconstruct", UI.USERMENUACTIONS.DEMOLISH.NAME, OnDeconstruct, Action.NumActions, null, null, null, UI.USERMENUACTIONS.DEMOLISH.TOOLTIP) : new KIconButtonMenu.ButtonInfo("action_deconstruct", UI.USERMENUACTIONS.DEMOLISH.NAME_OFF, OnDeconstruct, Action.NumActions, null, null, null, UI.USERMENUACTIONS.DEMOLISH.TOOLTIP_OFF));
+			KIconButtonMenu.ButtonInfo button = ((chore == null) ? new KIconButtonMenu.ButtonInfo("action_deconstruct", UI.USERMENUACTIONS.DECONSTRUCT.NAME, OnDeconstruct, Action.NumActions, null, null, null, UI.USERMENUACTIONS.DECONSTRUCT.TOOLTIP) : new KIconButtonMenu.ButtonInfo("action_deconstruct", UI.USERMENUACTIONS.DECONSTRUCT.NAME_OFF, OnDeconstruct, Action.NumActions, null, null, null, UI.USERMENUACTIONS.DECONSTRUCT.TOOLTIP_OFF));
 			Game.Instance.userMenu.AddButton(base.gameObject, button, 0f);
 		}
 	}

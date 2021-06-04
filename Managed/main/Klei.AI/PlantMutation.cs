@@ -18,6 +18,8 @@ namespace Klei.AI
 
 		public string desc;
 
+		public string animationSoundEvent;
+
 		public bool originalMutation;
 
 		public List<string> requiredPrefabIDs = new List<string>();
@@ -59,6 +61,10 @@ namespace Klei.AI
 		private string bGFXAnim;
 
 		private string fGFXAnim;
+
+		private List<string> additionalSoundEvents = new List<string>();
+
+		public List<string> AdditionalSoundEvents => additionalSoundEvents;
 
 		public PlantMutation(string id, string name, string desc)
 			: base(id, name, desc)
@@ -161,6 +167,12 @@ namespace Klei.AI
 					component.SetSymbolScale(symbolScaleTargets[j], symbolScales[j]);
 				}
 			}
+			if (additionalSoundEvents.Count > 0)
+			{
+				for (int k = 0; k < additionalSoundEvents.Count; k++)
+				{
+				}
+			}
 		}
 
 		private static void CreateFXObject(MutantPlant target, string anim, string nameSuffix, float offset)
@@ -168,6 +180,7 @@ namespace Klei.AI
 			GameObject gameObject = Object.Instantiate(Assets.GetPrefab(SimpleFXConfig.ID));
 			gameObject.name = target.name + nameSuffix;
 			gameObject.transform.parent = target.transform;
+			gameObject.AddComponent<LoopingSounds>();
 			KPrefabID component = gameObject.GetComponent<KPrefabID>();
 			component.PrefabTag = new Tag(gameObject.name);
 			OccupyArea component2 = target.GetComponent<OccupyArea>();
@@ -408,6 +421,12 @@ namespace Klei.AI
 		public PlantMutation VisualFGFX(string animName)
 		{
 			fGFXAnim = animName;
+			return this;
+		}
+
+		public PlantMutation AddSoundEvent(string soundEventName)
+		{
+			additionalSoundEvents.Add(soundEventName);
 			return this;
 		}
 	}

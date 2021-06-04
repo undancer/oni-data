@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ko\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 2.4.3\n"
 
 #. STRINGS.BUILDING.DETAILS.USE_COUNT
 msgctxt "STRINGS.BUILDING.DETAILS.USE_COUNT"
@@ -445,6 +445,16 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.CONDUITBLOCKED.TOOLTIP"
 msgid "Output <style=\"KKeyword\">Pipe</style> is blocked"
 msgstr "배출 <style=\"KKeyword\">파이프</style> 차단됨"
 
+#. STRINGS.BUILDING.STATUSITEMS.CONDUITBLOCKEDMULTIPLES.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.CONDUITBLOCKEDMULTIPLES.NAME"
+msgid "Pipe Blocked"
+msgstr "파이프 차단됨"
+
+#. STRINGS.BUILDING.STATUSITEMS.CONDUITBLOCKEDMULTIPLES.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.CONDUITBLOCKEDMULTIPLES.TOOLTIP"
+msgid "Output <style=\"KKeyword\">Pipe</style> is blocked"
+msgstr "배출 <style=\"KKeyword\">파이프</style> 차단됨"
+
 #. STRINGS.BUILDING.STATUSITEMS.CONNECTED_ROCKET_NO_PORT.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.CONNECTED_ROCKET_NO_PORT.NAME"
 msgid "No Rocket Ports"
@@ -538,7 +548,7 @@ msgstr ""
 #. STRINGS.BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.EMPTY
 msgctxt "STRINGS.BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.EMPTY"
 msgid "Empty"
-msgstr "비어있음"
+msgstr "비우기"
 
 #. STRINGS.BUILDING.STATUSITEMS.COOLING.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.COOLING.NAME"
@@ -939,7 +949,7 @@ msgstr "<style=\"produced\">{FlowRate}</style>의 속도로 <link=\"OXYGEN\">산
 #. STRINGS.BUILDING.STATUSITEMS.EMPTYPUMPINGSTATION.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.EMPTYPUMPINGSTATION.NAME"
 msgid "Empty"
-msgstr "비어있음"
+msgstr "비우기"
 
 #. STRINGS.BUILDING.STATUSITEMS.EMPTYPUMPINGSTATION.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.EMPTYPUMPINGSTATION.TOOLTIP"
@@ -1139,7 +1149,7 @@ msgstr "퇴피"
 #. STRINGS.BUILDING.STATUSITEMS.GASPIPEEMPTY.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.GASPIPEEMPTY.NAME"
 msgid "Empty Pipe"
-msgstr "파이프 비우기"
+msgstr "Empty Pipe"
 
 #. STRINGS.BUILDING.STATUSITEMS.GASPIPEEMPTY.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.GASPIPEEMPTY.TOOLTIP"
@@ -1223,7 +1233,7 @@ msgstr "{Epitaph}"
 #. STRINGS.BUILDING.STATUSITEMS.GRAVEEMPTY.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.GRAVEEMPTY.NAME"
 msgid "Empty"
-msgstr "비어있음"
+msgstr "비우기"
 
 #. STRINGS.BUILDING.STATUSITEMS.GRAVEEMPTY.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.GRAVEEMPTY.TOOLTIP"
@@ -1539,10 +1549,30 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.LANDEDROCKETLACKSPASSENGERMODULE.TOOLTIP"
 msgid "A rocket must have a spacefarer module"
 msgstr "로켓에는 우주여행자 모듈이 있어야 합니다."
 
+#. STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITNOTREACHED.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITNOTREACHED.NAME"
+msgid "Amount remaining: {0}"
+msgstr "남은 수량: {0}"
+
+#. STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITNOTREACHED.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITNOTREACHED.TOOLTIP"
+msgid "This building will stop transferring Mass when the amount remaining reaches 0"
+msgstr "이 건조물은 남은 양이 0이 되면 질량 전송을 중단합니다."
+
+#. STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITREACHED.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITREACHED.NAME"
+msgid "Limit Reached"
+msgstr "한도 도달"
+
+#. STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITREACHED.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITREACHED.TOOLTIP"
+msgid "No more Mass can be transferred"
+msgstr "더 이상 질량을 전송할 수 없습니다."
+
 #. STRINGS.BUILDING.STATUSITEMS.LIQUIDPIPEEMPTY.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.LIQUIDPIPEEMPTY.NAME"
 msgid "Empty Pipe"
-msgstr "파이프 비우기"
+msgstr "Empty Pipe"
 
 #. STRINGS.BUILDING.STATUSITEMS.LIQUIDPIPEEMPTY.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.LIQUIDPIPEEMPTY.TOOLTIP"
@@ -2325,11 +2355,11 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.NOSURFACESIGHT.TOOLTIP"
 msgid ""
 "This building has no view of space\n"
 "\n"
-"Ensure an unblocked view of the sky"
+"To properly function, this building requires an unblocked view of space"
 msgstr ""
 "이 건조물에서는 우주가 보이지 않습니다.\n"
 "\n"
-"하늘이 잘 보이도록 합니다."
+"올바르게 작동하려면 막히지 않고 우주가 보여야 합니다."
 
 #. STRINGS.BUILDING.STATUSITEMS.NOTENOUGHPOWER.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.NOTENOUGHPOWER.NAME"
@@ -2457,7 +2487,7 @@ msgstr "초과 생산됨"
 #. STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.LINEITEM
 msgctxt "STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.LINEITEM"
 msgid "    • {0}: {1}\n"
-msgstr "• {0}: {1}\n"
+msgstr " • {0}: {1}\n"
 
 #. STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.NAME"
@@ -2666,7 +2696,7 @@ msgstr ""
 #. STRINGS.BUILDING.STATUSITEMS.PIPECONTENTS.EMPTY
 msgctxt "STRINGS.BUILDING.STATUSITEMS.PIPECONTENTS.EMPTY"
 msgid "Empty"
-msgstr "비어있음"
+msgstr "비우기"
 
 #. STRINGS.BUILDING.STATUSITEMS.PIPEMAYMELT.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.PIPEMAYMELT.NAME"
@@ -3013,6 +3043,16 @@ msgstr "현재 와트수: {Wattage}"
 msgctxt "STRINGS.BUILDING.STATUSITEMS.SOLARPANELWATTAGE.TOOLTIP"
 msgid "This panel is generating <style=\"produced\">{Wattage}</style> of <style=\"KKeyword\">Power</style>"
 msgstr "이 패널은 <style=\"produced\">{Wattage}</style> <style=\"KKeyword\">전력</style>을 생성 중입니다."
+
+#. STRINGS.BUILDING.STATUSITEMS.SOLIDCONDUITBLOCKEDMULTIPLES.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.SOLIDCONDUITBLOCKEDMULTIPLES.NAME"
+msgid "Conveyor Rail Blocked"
+msgstr "컨베이어 레일 차단됨"
+
+#. STRINGS.BUILDING.STATUSITEMS.SOLIDCONDUITBLOCKEDMULTIPLES.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.SOLIDCONDUITBLOCKEDMULTIPLES.TOOLTIP"
+msgid "Output <style=\"KKeyword\">Conveyor Rail</style> is blocked"
+msgstr "출력 <style=\"KKeyword\">컨베이어 레일</style> 차단됨"
 
 #. STRINGS.BUILDING.STATUSITEMS.SOLIDPIPEOBSTRUCTED.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.SOLIDPIPEOBSTRUCTED.NAME"
@@ -5180,8 +5220,8 @@ msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.CRYOTANK.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.CRYOTANK.NAME"
-msgid "<link=\"CRYOTANK\">Cryotank</link>"
-msgstr "<link=\"CRYOTANK\">냉동탱크</link>"
+msgid "<link=\"CRYOTANK\">Cryotank 3000</link>"
+msgstr "<link=\"CRYOTANK\">크라이오탱크 3000</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.DECONTAMINATIONSHOWER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.DECONTAMINATIONSHOWER.DESC"
@@ -6242,6 +6282,51 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.GASFILTER.STATUS_ITEM"
 msgid "Filters: {0}"
 msgstr "필터: {0}"
 
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.DESC"
+msgid "Meter Valves let an exact amount of gas pass through before shutting off."
+msgstr "미터 밸브는 차단하기 전에 정확한 양의 기체를 통과시킵니다."
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.EFFECT"
+msgid "Connects to an <link=\"LOGIC\">Automation</link> grid to automatically turn <link=\"ELEMENTSGAS\">Gas</link> flow off when the specified amount has passed through it."
+msgstr "<link=\"LOGIC\">자동화</link>망에 연결하여 지정된 양이 통과될 때 자동으로 <link=\"ELEMENTSGAS\">기체</link> 흐름을 끕니다."
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.LOGIC_PORT_OUTPUT
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.LOGIC_PORT_OUTPUT"
+msgid "Limit Reached"
+msgstr "한도 도달"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.LOGIC_PORT_RESET
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.LOGIC_PORT_RESET"
+msgid "Reset Meter"
+msgstr "미터 재설정"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.NAME"
+msgid "<link=\"GASLIMITVALVE\">Gas Meter Valve</link>"
+msgstr "<link=\"GASLIMITVALVE\">기체 미터 밸브</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.OUTPUT_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.OUTPUT_PORT_ACTIVE"
+msgid "Sends a <b><style=\"logic_on\">Green Signal</style></b> if limit has been reached"
+msgstr "한계에 도달하면 <b><style=\"logic_on\">녹색 신호</style></b>를 보냄"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.OUTPUT_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.OUTPUT_PORT_INACTIVE"
+msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.RESET_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.RESET_PORT_ACTIVE"
+msgid "<b><style=\"logic_on\">Green Signal</style></b>: Reset the amount"
+msgstr "<b><style=\"logic_on\">녹색 신호</style></b>: 수량 재설정"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.RESET_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.RESET_PORT_INACTIVE"
+msgid "<b><style=\"logic_off\">Red Signal</style></b>: Nothing"
+msgstr "<b><style=\"logic_off\">적색 신호</style></b>: 없음"
+
 #. STRINGS.BUILDINGS.PREFABS.GASLOGICVALVE.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASLOGICVALVE.DESC"
 msgid "Automated piping saves power and time by removing the need for Duplicant input."
@@ -6414,7 +6499,7 @@ msgstr ""
 #. STRINGS.BUILDINGS.PREFABS.GENERATOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.GENERATOR.NAME"
 msgid "<link=\"GENERATOR\">Coal Generator</link>"
-msgstr "<link=\"GENERATOR\">석탄 발생기</link>"
+msgstr "<link=\"GENERATOR\">석탄 발전기</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.GENERATOR.OVERPRODUCTION
 msgctxt "STRINGS.BUILDINGS.PREFABS.GENERATOR.OVERPRODUCTION"
@@ -7366,7 +7451,7 @@ msgstr ""
 "\n"
 "로켓이 수용 미행성에 발사하거나 착륙할 수 있습니다.\n"
 "\n"
-"플랫폼의 양쪽에 만들어진 <link=\"MODULARLAUNCHPADPORTSOLID\">로켓 포트</link><link=\"MODULARLAUNCHPADPORTSOLID\"></link>에 자동으로 연결됩니다."
+"플랫폼의 양쪽에 만들어진 <link=\"MODULARLAUNCHPADPORTSOLID\">로켓 포</link><link=\"MODULARLAUNCHPADPORTSOLID\">트</link>에 자동으로 연결됩니다."
 
 #. STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_LAUNCH
 msgctxt "STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_LAUNCH"
@@ -7812,6 +7897,51 @@ msgstr ""
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDHEATER.NAME"
 msgid "<link=\"LIQUIDHEATER\">Liquid Tepidizer</link>"
 msgstr "<link=\"LIQUIDHEATER\">액체 미온기</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.DESC"
+msgid "Meter Valves let an exact amount of liquid pass through before shutting off."
+msgstr "미터 밸브는 차단하기 전에 정확한 양의 액체를 통과시킵니다."
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.EFFECT"
+msgid "Connects to an <link=\"LOGIC\">Automation</link> grid to automatically turn <link=\"ELEMENTSLIQUID\">Liquid</link> flow off when the specified amount has passed through it."
+msgstr "<link=\"LOGIC\">자동화</link>망에 연결하여 지정된 양이 통과될 때 자동으로 <link=\"ELEMENTSLIQUID\">액체</link> 흐름을 끕니다."
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.LOGIC_PORT_OUTPUT
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.LOGIC_PORT_OUTPUT"
+msgid "Limit Reached"
+msgstr "한도 도달"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.LOGIC_PORT_RESET
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.LOGIC_PORT_RESET"
+msgid "Reset Meter"
+msgstr "미터 재설정"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.NAME"
+msgid "<link=\"LIQUIDLIMITVALVE\">Liquid Meter Valve</link>"
+msgstr "<link=\"LIQUIDLIMITVALVE\">액체 미터 밸브</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.OUTPUT_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.OUTPUT_PORT_ACTIVE"
+msgid "Sends a <b><style=\"logic_on\">Green Signal</style></b> if limit has been reached"
+msgstr "한계에 도달하면 <b><style=\"logic_on\">녹색 신호</style></b>를 보냄"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.OUTPUT_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.OUTPUT_PORT_INACTIVE"
+msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.RESET_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.RESET_PORT_ACTIVE"
+msgid "<b><style=\"logic_on\">Green Signal</style></b>: Reset the amount"
+msgstr "<b><style=\"logic_on\">녹색 신호</style></b>: 수량 재설정"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.RESET_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.RESET_PORT_INACTIVE"
+msgid "<b><style=\"logic_off\">Red Signal</style></b>: Nothing"
+msgstr "<b><style=\"logic_off\">적색 신호</style></b>: 없음"
 
 #. STRINGS.BUILDINGS.PREFABS.LIQUIDLOGICVALVE.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLOGICVALVE.DESC"
@@ -9585,22 +9715,47 @@ msgstr "자원을 싣거나 내리려면 로켓을 착륙시켜야 합니다."
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGAS.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGAS.EFFECT"
 msgid ""
-"Allows <link=\"ELEMENTSGAS\">Gases</link> to be loaded and unloaded from the storage of a linked rocket.\n"
+"Allows <link=\"ELEMENTSGAS\">Gases</link> to be loaded from the storage of a linked rocket.\n"
 "\n"
 "Automatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n"
 "\n"
-"Uses the gas filters set on the linked Rocket Platform."
+"Uses the gas filters set on the rocket's cargo bays."
+msgstr ""
+"연결된 로켓의 저장소에서 <link=\"ELEMENTSGAS\">기체</link>를 실을 수 있습니다.\n"
+"\n"
+"<link=\"LAUNCHPLATFORM\">로켓 플랫폼</link> 또는 다른 <link=\"MODULARLAUNCHPADPORTSOLID\">로켓 포트</link>의 측면에 만들어지면 자동으로 연결됩니다.\n"
+"\n"
+"로켓 화물칸에 설정된 기체 필터를 사용합니다."
+
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGAS.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGAS.NAME"
+msgid "<link=\"MODULARLAUNCHPADPORTGAS\">Gas Rocket Port Loader</link>"
+msgstr "<link=\"MODULARLAUNCHPADPORTGAS\">기체 로켓 포트 로더</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGASUNLOADER.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGASUNLOADER.DESC"
+msgid "Rockets must be landed to load or unload resources."
+msgstr "자원을 싣거나 내리려면 로켓을 착륙시켜야 합니다."
+
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGASUNLOADER.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGASUNLOADER.EFFECT"
+msgid ""
+"Allows <link=\"ELEMENTSGAS\">Gases</link> to be unloaded from the storage of a linked rocket.\n"
+"\n"
+"Automatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n"
+"\n"
+"Uses the gas filters set on this unloader."
 msgstr ""
 "연결된 로켓의 저장소에서 <link=\"ELEMENTSGAS\">기체</link>를 싣거나 내릴 수 있습니다.\n"
 "\n"
 "<link=\"LAUNCHPLATFORM\">로켓 플랫폼</link> 또는 다른 <link=\"MODULARLAUNCHPADPORTSOLID\">로켓 포트</link>의 측면에 만들어지면 자동으로 연결됩니다.\n"
 "\n"
-"연결된 로켓 플랫폼에 설정된 기체 필터를 사용합니다."
+"이 언로더에 설정된 기체 필터를 사용합니다."
 
-#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGAS.NAME
-msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGAS.NAME"
-msgid "<link=\"MODULARLAUNCHPADPORTGAS\">Gas Rocket Port</link>"
-msgstr "<link=\"MODULARLAUNCHPADPORTGAS\">기체 로켓 포트</link>"
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGASUNLOADER.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGASUNLOADER.NAME"
+msgid "<link=\"MODULARLAUNCHPADPORTGASUNLOADER\">Gas Rocket Port Unloader</link>"
+msgstr "<link=\"MODULARLAUNCHPADPORTGASUNLOADER\">기체 로켓 포트 언로더</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.DESC"
@@ -9610,22 +9765,47 @@ msgstr "자원을 싣거나 내리려면 로켓을 착륙시켜야 합니다."
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.EFFECT"
 msgid ""
-"Allows <link=\"ELEMENTSLIQUID\">Liquids</link> to be loaded and unloaded from the storage of a linked rocket.\n"
+"Allows <link=\"ELEMENTSLIQUID\">Liquids</link> to be loaded from the storage of a linked rocket.\n"
 "\n"
 "Automatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n"
 "\n"
-"Uses the liquid filters set on the linked Rocket Platform."
+"Uses the liquid filters set on the rocket's cargo bays."
+msgstr ""
+"연결된 로켓의 저장소에서 <link=\"ELEMENTSLIQUID\">액체</link>를 실을 수 있습니다.\n"
+"\n"
+"<link=\"LAUNCHPLATFORM\">로켓 플랫폼</link> 또는 다른 <link=\"MODULARLAUNCHPADPORTSOLID\">로켓 포트</link>의 측면에 만들어지면 자동으로 연결됩니다.\n"
+"\n"
+"로켓 화물칸에 설정된 액체 필터를 사용합니다."
+
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.NAME"
+msgid "<link=\"MODULARLAUNCHPADPORTLIQUID\">Liquid Rocket Port Loader</link>"
+msgstr "<link=\"MODULARLAUNCHPADPORTLIQUID\">액체 로켓 포트 로더</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUIDUNLOADER.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUIDUNLOADER.DESC"
+msgid "Rockets must be landed to load or unload resources."
+msgstr "자원을 싣거나 내리려면 로켓을 착륙시켜야 합니다."
+
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUIDUNLOADER.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUIDUNLOADER.EFFECT"
+msgid ""
+"Allows <link=\"ELEMENTSLIQUID\">Liquids</link> to be unloaded from the storage of a linked rocket.\n"
+"\n"
+"Automatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n"
+"\n"
+"Uses the liquid filters set on this unloader."
 msgstr ""
 "연결된 로켓의 저장소에서 <link=\"ELEMENTSLIQUID\">액체</link>를 싣거나 내릴 수 있습니다.\n"
 "\n"
 "<link=\"LAUNCHPLATFORM\">로켓 플랫폼</link> 또는 다른 <link=\"MODULARLAUNCHPADPORTSOLID\">로켓 포트</link>의 측면에 만들어지면 자동으로 연결됩니다.\n"
 "\n"
-"연결된 로켓 플랫폼에 설정된 액체 필터를 사용합니다."
+"이 언로더에 설정된 액체 필터를 사용합니다."
 
-#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.NAME
-msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.NAME"
-msgid "<link=\"MODULARLAUNCHPADPORTLIQUID\">Liquid Rocket Port</link>"
-msgstr "<link=\"MODULARLAUNCHPADPORTLIQUID\">액체 로켓 포트</link>"
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUIDUNLOADER.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUIDUNLOADER.NAME"
+msgid "<link=\"MODULARLAUNCHPADPORTLIQUIDUNLOADER\">Liquid Rocket Port Unloader</link>"
+msgstr "<link=\"MODULARLAUNCHPADPORTLIQUIDUNLOADER\">액체 로켓 포트 언로더</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLID.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLID.DESC"
@@ -9635,22 +9815,47 @@ msgstr "자원을 싣거나 내리려면 로켓을 착륙시켜야 합니다."
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLID.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLID.EFFECT"
 msgid ""
-"Allows <link=\"ELEMENTSSOLID\">Solids</link> to be loaded and unloaded from the storage of a linked rocket.\n"
+"Allows <link=\"ELEMENTSSOLID\">Solids</link> to be loaded from the storage of a linked rocket.\n"
 "\n"
 "Automatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n"
 "\n"
-"Uses the solid material filters set on the linked Rocket Platform."
+"Uses the solid material filters set on the rocket's cargo bays."
 msgstr ""
-"연결된 로켓의 저장소에서 <link=\"ELEMENTSSOLID\">고체</link>를 싣거나 내릴 수 있습니다.\n"
+"연결된 로켓의 저장소에서 <link=\"ELEMENTSSOLID\">고체</link>를 실을 수 있습니다.\n"
 "\n"
 "<link=\"LAUNCHPLATFORM\">로켓 플랫폼</link> 또는 다른 <link=\"MODULARLAUNCHPADPORTSOLID\">로켓 포트</link>의 측면에 만들어지면 자동으로 연결됩니다.\n"
 "\n"
-"연결된 로켓 플랫폼에 설정된 고체 재료 필터를 사용합니다."
+"로켓 화물칸에 설정된 고체 물질 필터를 사용합니다."
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLID.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLID.NAME"
-msgid "<link=\"MODULARLAUNCHPADPORTSOLID\">Solid Rocket Port</link>"
-msgstr "<link=\"MODULARLAUNCHPADPORTSOLID\">고체 로켓 포트</link>"
+msgid "<link=\"MODULARLAUNCHPADPORTSOLID\">Solid Rocket Port Loader</link>"
+msgstr "<link=\"MODULARLAUNCHPADPORTSOLID\">고체 로켓 포트 로더</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLIDUNLOADER.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLIDUNLOADER.DESC"
+msgid "Rockets must be landed to load or unload resources."
+msgstr "자원을 싣거나 내리려면 로켓을 착륙시켜야 합니다."
+
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLIDUNLOADER.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLIDUNLOADER.EFFECT"
+msgid ""
+"Allows <link=\"ELEMENTSSOLID\">Solids</link> to be unloaded from the storage of a linked rocket.\n"
+"\n"
+"Automatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n"
+"\n"
+"Uses the solid material filters set on this unloader."
+msgstr ""
+"연결된 로켓의 저장소에서 <link=\"ELEMENTSSOLID\">고체</link>를 내릴 수 있습니다.\n"
+"\n"
+"<link=\"LAUNCHPLATFORM\">로켓 플랫폼</link> 또는 다른 <link=\"MODULARLAUNCHPADPORTSOLID\">로켓 포트</link>의 측면에 만들어지면 자동으로 연결됩니다.\n"
+"\n"
+"이 언로더에 설정된 고체 물질 필터를 사용합니다."
+
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLIDUNLOADER.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLIDUNLOADER.NAME"
+msgid "<link=\"MODULARLAUNCHPADPORTSOLIDUNLOADER\">Solid Rocket Port Unloader</link>"
+msgstr "<link=\"MODULARLAUNCHPADPORTSOLIDUNLOADER\">고체 로켓 포트 언로더</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLIQUIDINPUT.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLIQUIDINPUT.DESC"
@@ -9953,9 +10158,9 @@ msgid ""
 msgstr ""
 "<link=\"RESEARCH\">성간 연구</link>를 수행하여 새로운 기술을 잠금 해제합니다.\n"
 "\n"
-"<link=\"POLYPROPYLENE\">플라스틱</link>과 <link=\"POWER\">전력<link=\"COSMICRESEARCHER\">을 소비합니다.\n"
+"<link=\"POLYPROPYLENE\">플라스틱</link>과 <link=\"POWER\">전력</link>을 소비합니다.\n"
 "\n"
-"할당된 복제체는 </link>궤도 연구원</link> 기술을 가지고 있어야 합니다."
+"할당된 복제체는 <link=\"COSMICRESEARCHER\">궤도 연구원</link> 기술을 가지고 있어야 합니다."
 
 #. STRINGS.BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.NAME"
@@ -12083,6 +12288,51 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDFILTER.STATUS_ITEM"
 msgid "Filters: {0}"
 msgstr "필터: {0}"
 
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.DESC"
+msgid "Conveyor Meters let an exact amount of materials pass through before shutting off."
+msgstr "컨베이어 미터는 차단하기 전에 정확한 양의 물질을 통과시킵니다."
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.EFFECT"
+msgid "Connects to an <link=\"LOGIC\">Automation</link> grid to automatically turn material transfer off when the specified amount has passed through it."
+msgstr "<link=\"LOGIC\">자동화</link>망에 연결하여 지정된 양이 통과될 때 자동으로 물질 전송을 끕니다."
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.LOGIC_PORT_OUTPUT
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.LOGIC_PORT_OUTPUT"
+msgid "Limit Reached"
+msgstr "한도 도달"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.LOGIC_PORT_RESET
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.LOGIC_PORT_RESET"
+msgid "Reset Meter"
+msgstr "미터 재설정"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.NAME"
+msgid "<link=\"SOLIDLIMITVALVE\">Conveyor Meter</link>"
+msgstr "<link=\"SOLIDLIMITVALVE\">컨베이어 미터</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.OUTPUT_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.OUTPUT_PORT_ACTIVE"
+msgid "Sends a <b><style=\"logic_on\">Green Signal</style></b> if limit has been reached"
+msgstr "한계에 도달하면 <b><style=\"logic_on\">녹색 신호</style></b>를 보냄"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.OUTPUT_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.OUTPUT_PORT_INACTIVE"
+msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.RESET_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.RESET_PORT_ACTIVE"
+msgid "<b><style=\"logic_on\">Green Signal</style></b>: Reset the amount"
+msgstr "<b><style=\"logic_on\">녹색 신호</style></b>: 수량 재설정"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.RESET_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.RESET_PORT_INACTIVE"
+msgid "<b><style=\"logic_off\">Red Signal</style></b>: Nothing"
+msgstr "<b><style=\"logic_off\">적색 신호</style></b>: 없음"
+
 #. STRINGS.BUILDINGS.PREFABS.SOLIDLOGICVALVE.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLOGICVALVE.DESC"
 msgid "Automated conveyors save power and time by removing the need for Duplicant input."
@@ -12989,11 +13239,11 @@ msgstr "이 건조물은 사용 중에 기체를 {amount} 배출합니다."
 #. STRINGS.BUILDINGS.PREFABS.VERTICALWINDTUNNEL.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.VERTICALWINDTUNNEL.EFFECT"
 msgid ""
-"Must be placed above an open space and connected to a <link=\"POWER\">Power Source</link>.\n"
+"Must be connected to a <link=\"POWER\">Power Source</link>. To properly function, the area under this building must be left vacant.\n"
 "\n"
 "Increases Duplicants <link=\"MORALE\">Morale</link>."
 msgstr ""
-"열린 공간 위에 배치해야 하며 <link=\"POWER\">전력원</link>에 연결되어 있어야 합니다.\n"
+"<link=\"POWER\">전력원</link>에 연결되어 있어야 합니다. 올바르게 작동하려면 이 건조물 아래의 영역이 비어있어야 합니다.\n"
 "\n"
 "복제체 <link=\"MORALE\">사기</link>를 증가합니다."
 
@@ -15625,6 +15875,21 @@ msgctxt "STRINGS.CODEX.A9_PIPEDREAM.TITLE"
 msgid "Pipedream"
 msgstr "몽상"
 
+#. STRINGS.CODEX.ARBORTREE.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.ARBORTREE.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.ARBORTREE.SUBTITLE
+msgctxt "STRINGS.CODEX.ARBORTREE.SUBTITLE"
+msgid "Lumber Tree"
+msgstr "재목 나무"
+
+#. STRINGS.CODEX.ARBORTREE.TITLE
+msgctxt "STRINGS.CODEX.ARBORTREE.TITLE"
+msgid "Arbor Tree"
+msgstr "수목 나무"
+
 #. STRINGS.CODEX.AUTOMATION.HEADER_1
 msgctxt "STRINGS.CODEX.AUTOMATION.HEADER_1"
 msgid "Automation"
@@ -15811,7 +16076,9 @@ msgid ""
 "<smallcaps>[Voice Recognition Initialized]\n"
 "[Subject Identified: B111-1]</smallcaps>\n"
 "\n"
-"[LOG BEGINS]I made a horrible discovery today while reviewing work on the artificial intelligence programming. It seems Dr. Ali mixed up a file when uploading a program onto a rudimentary robot and discovered that the device displayed the characteristics of what he called \"a puppy that was lost in a teleportation experiment weeks ago\".\n"
+"[LOG BEGINS]\n"
+"\n"
+"I made a horrible discovery today while reviewing work on the artificial intelligence programming. It seems Dr. Ali mixed up a file when uploading a program onto a rudimentary robot and discovered that the device displayed the characteristics of what he called \"a puppy that was lost in a teleportation experiment weeks ago\".\n"
 "\n"
 ".This unbelivable! Jackie has been hiding the nature of the teleportation experiments from me. What's worse is I know from previous conversations that she knows I would never approve of pursuing this line of experimentation. The societal benefits of teleportaion aside, you <i>cannot</i> kill a living being every time you want to send them to another room. The moral and ethical implications of this are horrendous.\n"
 "\n"
@@ -15823,9 +16090,11 @@ msgid ""
 "\n"
 "[LOG ENDS]\n"
 "\n"
-"[LOG BEGINS]Despite myself, I can't help thinking of the intriguing possiblities this presents for the AI development. It haunts me.\n"
+"[LOG BEGINS]\n"
 "\n"
-"I fear I may be sending me down a slippery slope, at the bottom of which is Jackie waiting for me with open arms.\n"
+"Despite myself, I can't help thinking of the intriguing possiblities this presents for the AI development. It haunts me.\n"
+"\n"
+"I fear I may be sliding down a slippery slope, at the bottom of which Jackie is waiting for me with open arms.\n"
 "\n"
 "[LOG ENDS]"
 msgstr ""
@@ -15843,7 +16112,7 @@ msgstr ""
 "\n"
 "[로그 시작] 이러면 안 된다고 생각하면서도 이것이 AI 개발에 제시하는 흥미로운 가능성을 생각하는 것을 멈출 수 없습니다. 그래서 괴롭습니다.\n"
 "\n"
-"내가 미끄러운 비탈길 아래로 내려가고 있고 그 밑에는 재키가 두 팔을 벌리고 나를 기다리고 있을 것 같습니다.\n"
+"내가 비탈길 아래로 미끄러지고 있고 그 밑에는 재키가 두 팔을 벌리고 나를 기다리고 있을 것 같습니다.\n"
 "\n"
 "[로그 종료]"
 
@@ -15854,8 +16123,8 @@ msgstr "암호화 수준: 3"
 
 #. STRINGS.CODEX.B10_AI.TITLE
 msgctxt "STRINGS.CODEX.B10_AI.TITLE"
-msgid "Artificial Intelligence"
-msgstr "인공 지능"
+msgid "A Paradox"
+msgstr "역설"
 
 #. STRINGS.CODEX.B2_ELLIESBIRTHDAY.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.B2_ELLIESBIRTHDAY.BODY.CONTAINER1"
@@ -16938,6 +17207,27 @@ msgctxt "STRINGS.CODEX.BALMLILY.TITLE"
 msgid "Balm Lily"
 msgstr "아물나리"
 
+#. STRINGS.CODEX.BLISSBURST.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.BLISSBURST.BODY.CONTAINER1"
+msgid ""
+"The Bliss Burst is a succulent in the genus Haworthia and is a hardy plant well-suited for beginner gardeners.\n"
+"\n"
+"They require little in the way of upkeep, to the point that the most common cause of death for Bliss Bursts is overwatering from over-eager carers."
+msgstr ""
+"지복파열은 하워디아속의 즙이 많은 식물로 초보 정원사에게 적합합니다.\n"
+"\n"
+"이는 관리가 많이 필요하지 않으며 지복파열의 가장 흔한 사망 원인은 지나치게 열성적으로 관리하여 물을 너무 주는 것입니다."
+
+#. STRINGS.CODEX.BLISSBURST.SUBTITLE
+msgctxt "STRINGS.CODEX.BLISSBURST.SUBTITLE"
+msgid "Decorative Plant"
+msgstr "장식 식물"
+
+#. STRINGS.CODEX.BLISSBURST.TITLE
+msgctxt "STRINGS.CODEX.BLISSBURST.TITLE"
+msgid "Bliss Burst"
+msgstr "지복파열"
+
 #. STRINGS.CODEX.BLUFFBRIAR.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.BLUFFBRIAR.BODY.CONTAINER1"
 msgid ""
@@ -16970,6 +17260,21 @@ msgctxt "STRINGS.CODEX.BLUFFBRIAR.TITLE"
 msgid "Bluff Briar"
 msgstr "깎아지른찔레"
 
+#. STRINGS.CODEX.BOGBUCKET.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.BOGBUCKET.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.BOGBUCKET.SUBTITLE
+msgctxt "STRINGS.CODEX.BOGBUCKET.SUBTITLE"
+msgid "Edible Plant"
+msgstr "식용 식물"
+
+#. STRINGS.CODEX.BOGBUCKET.TITLE
+msgctxt "STRINGS.CODEX.BOGBUCKET.TITLE"
+msgid "Bog Bucket"
+msgstr "수렁박"
+
 #. STRINGS.CODEX.BRISTLEBLOSSOM.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.BRISTLEBLOSSOM.BODY.CONTAINER1"
 msgid ""
@@ -16997,8 +17302,8 @@ msgstr "센털꽃"
 
 #. STRINGS.CODEX.BUDDYBUD.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.BUDDYBUD.BODY.CONTAINER1"
-msgid ""
-msgstr ""
+msgid "As a byproduct of photosynthesis, the Buddy Bud naturally secretes a compound that is chemically similar to the neuropeptide created in the human brain after receiving a hug."
+msgstr "광합성의 부산물인 친구눈은 포옹을 받은 후 인간의 뇌에서 생성되는 신경펩티드와 화학적으로 유사한 화합물을 자연적으로 분비합니다."
 
 #. STRINGS.CODEX.BUDDYBUD.SUBTITLE
 msgctxt "STRINGS.CODEX.BUDDYBUD.SUBTITLE"
@@ -17009,6 +17314,63 @@ msgstr "장식 식물"
 msgctxt "STRINGS.CODEX.BUDDYBUD.TITLE"
 msgid "Buddy Bud"
 msgstr "친구눈"
+
+#. STRINGS.CODEX.C01_Evil.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.C01_Evil.BODY.CONTAINER1"
+msgid ""
+"Clearly Nikola is evil. He has some kind of scheme going on that he’s keeping secret from the rest of Gravitas and I haven’t been able to crack what that is because it’s offline and he’s always at his computer. Whenever I ask him what he’s up to he says I wouldn’t understand. Pfft! We both went through the same particle physics classes, buddy. Just because you mash a keyboard and I adjust knobs does not mean I don’t know what the Time Containment Field does.\n"
+"\n"
+"And then today I dropped a wrench and Nikola nearly jumped out of his skin! He spun around and screamed at me never to do that again. And then when I said, \"Geez, it’s not the end of the world,\" he was like, \"Yeah, it’s not like the world will blow up if I get this wrong\" really sarcastic like.\n"
+"\n"
+"Which technically is true. If the Time Containment Field were to break down the Temporal Bow could theoretically blow up the world but that’s why there are safety systems in place. And safety systems on safety systems. And then safety systems on top of that. But then he built all the safety systems so if he wanted to…\n"
+"------------------\n"
+msgstr ""
+"분명히 니콜라는 나쁜 의도가 있습니다. 그는 다른 그라비타스 직원들로부터 숨기고 있는 계획이 있는데 그것은 오프라인 상태이고 그가 항상 컴퓨터 앞에 있기 때문에 그게 무엇인지 해독할 수 없었습니다. 그가 무엇을 하는지 물을 때마다 그는 내가 이해할 수 없을 것이라고 말합니다. 쳇! 우리는 둘 다 같은 입자 물리학 수업을 들었습니다. 그가 키보드를 두드리고 내가 노브를 조정한다고 해서 내가 시간봉쇄장을 모른다는 의미는 아닙니다.\n"
+"\n"
+"그리고 오늘 나는 렌치를 떨어뜨렸는데 니콜라는 자지러지게 놀랐습니다! 그는 돌아 서서 다시는 그러지 말라고 나에게 소리쳤습니다. 그래서 내가 \"세상의 끝이 아니잖아\"라고 말했을 때 그는 \"그렇지, 내가 잘못하면 세상이 끝나지 않을 것 같지\"라고 빈정대며 말했습니다.\n"
+"\n"
+"그것은 사실입니다. 시간봉쇄장이 붕괴된다면 시간 활은 이론적으로 세계를 파괴할 수 있지만, 그래서 안전 시스템이 있습니다. 그리고 안전 시스템의 안전 시스템이 있고, 그 위에 안전 시스템이 있습니다. 하지만 그가 모든 안전 시스템을 구축했으니까 그가 원한다면...\n"
+"------------------\n"
+
+#. STRINGS.CODEX.C01_Evil.BODY.CONTAINER2
+msgctxt "STRINGS.CODEX.C01_Evil.BODY.CONTAINER2"
+msgid ""
+"I decided to get into work early today but when I got in Nikola was already there and it looked like he hadn’t been home all weekend. He was pacing back-and-forth in the lab, monologuing but not like an evil villain. Like someone who hadn’t slept in a week.\n"
+"\n"
+"\"Ruby,\" he said. \"You have to promise me that if anything goes wrong you’ll turn on this machine. They’re pushing it too far. The printing pods are pushing the...It’s too much - TOO MUCH! Something’s going to blow. I tried… I’m trying to save it. Not the Earth. There’s no hope for the Earth, it’s all going to…\" then he made this exploding sound. \"But the Universe. Time itself. It could all go, don’t you see? This machine can contain it. Put a Temporal Containment Field around the Earth so time itself doesn’t break down and...and…\"\n"
+"\n"
+"Then all of a sudden these security guys came in. New guys. People I haven’t seen before. And they just took him away. Then they took me to a room and asked me all kinds of questions and I answered them, I guess. I don’t remember much because the whole time I was thinking - What if I was wrong? What if he’s not evil, but Gravitas is?\n"
+"\n"
+"What if I was wrong and what if he’s right?\n"
+"------------------\n"
+msgstr ""
+"오늘 일찍 출근하기로 했는데 사무실에 가자 니콜라에 이미 그곳에 있었고 그는 주말 내내 집에 돌아가지 않은 것처럼 보였습니다. 그는 혼자 연구실에서 앞뒤로 맴돌며 중얼거리고 있었지만 사악한 느낌은 아니었습니다. 일주일 동안 잠을 못 잤던 사람 같았습니다.\n"
+"\n"
+"\"루비\" 그가 말했다. \"무슨 일이 생기면 이 기계를 켜겠다고 약속해야 해요. 그들은 너무 과도해요. 프린팅 팟을 너무... 너무 심해요, 심해! 뭔가 터질 거예요. 나는 시도했어요… 나는 그것을 구하려고 노력하고 있어요. 지구 말고. 지구에 대한 희망은 없습니다. 모든 것이...\" 그리고 나서 그는 폭발하는 소리를 냈습니다. \"하지만 우주. 시간 자체. 모든 것이 끝날 수 있어요. 이 기계는 그것을 봉쇄할 수 있어요. 시간 자체가 무너지지 않도록 지구 주위에 시간봉쇄장을 둔다면... 그렇다면...\"\n"
+"\n"
+"그러다 갑자기 보안 요원들이 들어왔습니다. 새로운 직원들. 내가 본 적 없는 사람들. 그리고 그들은 그를 데려갔습니다. 그런 다음 그들은 나를 방으로 데려가 온갖 질문을 했고 나는 그들에게 대답했습니다. 그 때 많은 것이 기억나지는 못합니다. 만약 내가 틀렸다면? 그가 악한 것이 아니라 그라비타스가 그런 것이라면?\n"
+"\n"
+"내가 틀렸고 그가 옳았다면?\n"
+"------------------\n"
+
+#. STRINGS.CODEX.C01_Evil.BODY.CONTAINER3
+msgctxt "STRINGS.CODEX.C01_Evil.BODY.CONTAINER3"
+msgid ""
+"No seriously - what if he's right?\n"
+"------------------\n"
+msgstr ""
+"정말로, 그가 옳다면?\n"
+"------------------\n"
+
+#. STRINGS.CODEX.C01_Evil.SUBTITLE
+msgctxt "STRINGS.CODEX.C01_Evil.SUBTITLE"
+msgid "ENCRYPTION LEVEL: NONE"
+msgstr "암호화 수준: 없음"
+
+#. STRINGS.CODEX.C01_Evil.TITLE
+msgctxt "STRINGS.CODEX.C01_Evil.TITLE"
+msgid "Evil"
+msgstr "사악한"
 
 #. STRINGS.CODEX.CLEANER.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.CLEANER.BODY.CONTAINER1"
@@ -17040,6 +17402,57 @@ msgctxt "STRINGS.CODEX.CREATURE_DESCRIPTORS.TEMPERATURE.NON_LETHAL_RANGE"
 msgid "Livable range: <b>{0}</b> to <b>{1}</b>"
 msgstr "생존 범위: <b>{0}</b> ~ <b>{1}</b>"
 
+#. STRINGS.CODEX.CRYOTANKWARNINGS.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.CRYOTANKWARNINGS.BODY.CONTAINER1"
+msgid ""
+"    • Do not leave the contents of the Cryotank 3000 unattended unless an apocalyptic disaster has left you no choice.\n"
+"\n"
+"    • Ensure that the Cryotank 3000 has enough battery power to remain active for at least 6000 years.\n"
+"\n"
+"    • Do not attempt to defrost the contents of the Cryotank 3000 while it is submerged in molten hot lava.\n"
+"\n"
+"    • Use only a qualified Gravitas Cryotank repair facility to repair your Cryotank 3000. Attempting to service the device yourself will void the warranty.\n"
+"\n"
+"    • Do not put food in the Cryotank 3000. The Cryotank 3000 is not a refrigerator.\n"
+"\n"
+"    • Do not allow children to play in the Cryotank 3000. The Cryotank 3000 is not a toy.\n"
+"\n"
+"    • While the Cryotank 3000 is able to withstand a nuclear blast, Gravitas and its subsidiaries are not responsible for what may happen in the resulting nuclear fallout.\n"
+"\n"
+"    • Wait at least 5 minutes after being unfrozen from the Cryotank 3000 before operating heavy machinery.\n"
+"\n"
+"    • Each Cryotank 3000 is good for only one use.\n"
+"\n"
+msgstr ""
+"• 재앙스러운 재난으로 인해 선택의 여지가 없는 경우가 아니면 크라이오탱크 3000의 내용물을 방치하지 마십시오.\n"
+"\n"
+"    • 크라이오탱크 3000에 최소 6000년 동안 활성 상태를 유지하기에 충분한 배터리 전력이 있는지 확인하십시오.\n"
+"\n"
+"    • 녹은 뜨거운 용암에 잠겨있는 동안 크라이오탱크 3000의 내용물을 해동하려고 하지 마십시오.\n"
+"\n"
+"• 공인 그라비타스 수리 시설만 사용하여 크라이오탱크 3000을 수리하십시오. 장치를 직접 수리하려고 시도하면 보증이 무효화됩니다.\n"
+"\n"
+"     • 크라이오탱크 3000에 음식을 넣지 마십시오. 크라이오탱크 3000은 냉장고가 아닙니다.\n"
+"\n"
+"     • 아이들이 크라이오탱크 3000 안에서 놀지 못하게 하십시오. 크라이오탱크 3000은 장난감이 아닙니다.\n"
+"\n"
+"    • 크라이오탱크 3000은 핵폭발을 견딜 수 있지만 Gravitas와 그 자회사는 핵폭발로 인해 발생할 수 있는 일에 대해 책임을 지지 않습니다.\n"
+"\n"
+"    • 중장비를 작동하기 전에 크라이오탱크 3000에서 냉동 해제 한 후 최소 5분을 기다리십시오.\n"
+"\n"
+"    • 각 크라이오탱크 3000은 한 번만 사용할 수 있습니다.\n"
+"\n"
+
+#. STRINGS.CODEX.CRYOTANKWARNINGS.SUBTITLE
+msgctxt "STRINGS.CODEX.CRYOTANKWARNINGS.SUBTITLE"
+msgid "IMPORTANT OPERATING INSTRUCTIONS FOR THE CRYOTANK 3000"
+msgstr "크라이오탱크 3000의 중요 작동 지침"
+
+#. STRINGS.CODEX.CRYOTANKWARNINGS.TITLE
+msgctxt "STRINGS.CODEX.CRYOTANKWARNINGS.TITLE"
+msgid "CRYOTANK SAFETY"
+msgstr "크라이오탱크 안전"
+
 #. STRINGS.CODEX.CRYSTAL.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.CRYSTAL.BODY.CONTAINER1"
 msgid "<smallcaps>Pictured: \"Radiant\" Shine Bug variant</smallcaps>"
@@ -17054,6 +17467,27 @@ msgstr "크리터 이형태"
 msgctxt "STRINGS.CODEX.CRYSTAL.TITLE"
 msgid "Radiant Bug"
 msgstr "발광 벌레"
+
+#. STRINGS.CODEX.DASHASALTVINE.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.DASHASALTVINE.BODY.CONTAINER1"
+msgid ""
+"The Dasha Saltvine is a unique plant that needs large amounts of salt to balance the levels of water in its body.\n"
+"\n"
+"In order to keep a supply of salt on hand, the end of the vine is coated in microscopic formations which bind with sodium atoms, forming large crystals over time."
+msgstr ""
+"뿌림 소금덩굴은 체내 수분의 균형을 맞추기 위해 다량의 소금이 필요한 독특한 식물입니다.\n"
+"\n"
+"소금 공급을 유지하기 위해 덩굴의 끝 부분은 소듐 원자와 결합하여 시간이 지남에 따라 큰 결정을 형성하는 미세한 형태로 덮여있습니다."
+
+#. STRINGS.CODEX.DASHASALTVINE.SUBTITLE
+msgctxt "STRINGS.CODEX.DASHASALTVINE.SUBTITLE"
+msgid "Edible Spice Plant"
+msgstr "향신료 식물"
+
+#. STRINGS.CODEX.DASHASALTVINE.TITLE
+msgctxt "STRINGS.CODEX.DASHASALTVINE.TITLE"
+msgid "Balm Lily"
+msgstr "아물나리"
 
 #. STRINGS.CODEX.DECOR.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.DECOR.BODY.CONTAINER1"
@@ -17300,8 +17734,8 @@ msgstr "초기에 가스풀 표본을 행성이나 중력이 있는 육지로 �
 
 #. STRINGS.CODEX.GASGRASS.SUBTITLE
 msgctxt "STRINGS.CODEX.GASGRASS.SUBTITLE"
-msgid "Plant"
-msgstr "식물"
+msgid "Critter Feed"
+msgstr "크리터 사료"
 
 #. STRINGS.CODEX.GASGRASS.TITLE
 msgctxt "STRINGS.CODEX.GASGRASS.TITLE"
@@ -17407,6 +17841,21 @@ msgstr "크리터 이형태"
 msgctxt "STRINGS.CODEX.GLOSSY.TITLE"
 msgid "Glossy Drecko"
 msgstr "번질한 기끌이"
+
+#. STRINGS.CODEX.GRUBFRUITPLANT.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.GRUBFRUITPLANT.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.GRUBFRUITPLANT.SUBTITLE
+msgctxt "STRINGS.CODEX.GRUBFRUITPLANT.SUBTITLE"
+msgid "Edible Plant"
+msgstr "식용 식물"
+
+#. STRINGS.CODEX.GRUBFRUITPLANT.TITLE
+msgctxt "STRINGS.CODEX.GRUBFRUITPLANT.TITLE"
+msgid "Grubfruit Plant"
+msgstr "벵이과실 식물"
 
 #. STRINGS.CODEX.HATCH.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.HATCH.BODY.CONTAINER1"
@@ -17698,6 +18147,42 @@ msgctxt "STRINGS.CODEX.HEAT.TITLE"
 msgid "<link=\"HEAT\">Heat</link>"
 msgstr "<link=\"HEAT\">열</link>"
 
+#. STRINGS.CODEX.HEXALENT.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.HEXALENT.BODY.CONTAINER1"
+msgid ""
+"While most plants grow new sections and leaves according to the Fibonacci Sequence, the Hexalent forms new sections similar to how atoms form into crystal structures.\n"
+"\n"
+"The result is a geometric pattern that resembles a honeycomb."
+msgstr ""
+"대부분의 식물은 피보나치 수열에 따라 새로운 부분과 잎을 재배하지만, 육각식은 원자가 결정 구조로 형성되는 것과 유사한 새로운 부분을 형성합니다.\n"
+"\n"
+"결과는 벌집 모양의 기하학적 패턴입니다."
+
+#. STRINGS.CODEX.HEXALENT.SUBTITLE
+msgctxt "STRINGS.CODEX.HEXALENT.SUBTITLE"
+msgid "Decorative Plant"
+msgstr "장식 식물"
+
+#. STRINGS.CODEX.HEXALENT.TITLE
+msgctxt "STRINGS.CODEX.HEXALENT.TITLE"
+msgid "Hexalent"
+msgstr "육각식"
+
+#. STRINGS.CODEX.HYDROCACTUS.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.HYDROCACTUS.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.HYDROCACTUS.SUBTITLE
+msgctxt "STRINGS.CODEX.HYDROCACTUS.SUBTITLE"
+msgid "Plant"
+msgstr "식물"
+
+#. STRINGS.CODEX.HYDROCACTUS.TITLE
+msgctxt "STRINGS.CODEX.HYDROCACTUS.TITLE"
+msgid "Hydrocactus"
+msgstr "수선인장"
+
 #. STRINGS.CODEX.JUMPINGJOYA.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.JUMPINGJOYA.BODY.CONTAINER1"
 msgid ""
@@ -17778,6 +18263,27 @@ msgstr "식용 식물"
 msgctxt "STRINGS.CODEX.MEALWOOD.TITLE"
 msgid "Mealwood"
 msgstr "끼니나무"
+
+#. STRINGS.CODEX.MELLOWMALLOW.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.MELLOWMALLOW.BODY.CONTAINER1"
+msgid ""
+"The Mellow Mallow is a type of fungus that is known for its ease of propagation when cut.\n"
+"\n"
+"It is deadly when consumed, however creatures that mistakenly eat it are said to experience a state of extreme calm before death."
+msgstr ""
+"말랑당아욱은 잘릴 때 번식하기 쉬운 것으로 알려진 진균류입니다.\n"
+"\n"
+"먹으면 치명적이지만 잘못 먹은 생물은 죽기 전에 극도로 평온한 상태를 경험한다고 합니다."
+
+#. STRINGS.CODEX.MELLOWMALLOW.SUBTITLE
+msgctxt "STRINGS.CODEX.MELLOWMALLOW.SUBTITLE"
+msgid "Decorative Plant"
+msgstr "장식 식물"
+
+#. STRINGS.CODEX.MELLOWMALLOW.TITLE
+msgctxt "STRINGS.CODEX.MELLOWMALLOW.TITLE"
+msgid "Mellow Mallow"
+msgstr "말랑당아욱"
 
 #. STRINGS.CODEX.MIRTHLEAF.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.MIRTHLEAF.BODY.CONTAINER1"
@@ -18538,6 +19044,42 @@ msgctxt "STRINGS.CODEX.NEGA.TITLE"
 msgid "Abyss Bug"
 msgstr "심연 벌레"
 
+#. STRINGS.CODEX.NOSHBEAN.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.NOSHBEAN.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.NOSHBEAN.SUBTITLE
+msgctxt "STRINGS.CODEX.NOSHBEAN.SUBTITLE"
+msgid "Edible Plant"
+msgstr "식용 식물"
+
+#. STRINGS.CODEX.NOSHBEAN.TITLE
+msgctxt "STRINGS.CODEX.NOSHBEAN.TITLE"
+msgid "Nosh Bean Plant"
+msgstr "오물오물 콩 식물"
+
+#. STRINGS.CODEX.OXYFERN.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.OXYFERN.BODY.CONTAINER1"
+msgid ""
+"Oxyferns have perhaps the highest metabolism in the plant kingdom, absorbing relatively large amounts of carbon dioxide and converting it into oxygen in quantities disproportionate to their small size.\n"
+"\n"
+"They subsequently thrive in areas with abundant animal wildlife or ambiently high carbon dioxide concentrations."
+msgstr ""
+"산고사리는 아마도 식물계에서 가장 높은 신진 대사를 가지고 있으며 상대적으로 많은 양의 이산화탄소를 흡수하고 작은 크기에 비해 불균형한 양을 산소로 전환합니다.\n"
+"\n"
+"야생 생물이 풍부하거나 이산화탄소 농도가 높은 지역에서 번성합니다."
+
+#. STRINGS.CODEX.OXYFERN.SUBTITLE
+msgctxt "STRINGS.CODEX.OXYFERN.SUBTITLE"
+msgid "Plant"
+msgstr "식물"
+
+#. STRINGS.CODEX.OXYFERN.TITLE
+msgctxt "STRINGS.CODEX.OXYFERN.TITLE"
+msgid "Oxyfern"
+msgstr "산고사리"
+
 #. STRINGS.CODEX.PACU.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.PACU.BODY.CONTAINER1"
 msgid "The Pacu fish is often interpreted as possessing a vacant stare due to its large and unblinking eyes, yet they are remarkably bright and friendly creatures."
@@ -19178,6 +19720,21 @@ msgctxt "STRINGS.CODEX.SAGE.TITLE"
 msgid "Sage Hatch"
 msgstr "슬기로운 주둥가리"
 
+#. STRINGS.CODEX.SATURNCRITTERTRAP.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.SATURNCRITTERTRAP.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.SATURNCRITTERTRAP.SUBTITLE
+msgctxt "STRINGS.CODEX.SATURNCRITTERTRAP.SUBTITLE"
+msgid "Carnivorous Plant"
+msgstr "육식 식물"
+
+#. STRINGS.CODEX.SATURNCRITTERTRAP.TITLE
+msgctxt "STRINGS.CODEX.SATURNCRITTERTRAP.TITLE"
+msgid "Saturn Critter Trap"
+msgstr "새턴 크리터 트랩"
+
 #. STRINGS.CODEX.SCHOOLNEWSPAPER.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.SCHOOLNEWSPAPER.BODY.CONTAINER1"
 msgid "<b>Party Time for Local Students</b>"
@@ -19316,6 +19873,36 @@ msgctxt "STRINGS.CODEX.SMOOTH.TITLE"
 msgid "Smooth Hatch"
 msgstr "매끄러운 주둥가리"
 
+#. STRINGS.CODEX.SPINDLYGRUBFRUITPLANT.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.SPINDLYGRUBFRUITPLANT.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.SPINDLYGRUBFRUITPLANT.SUBTITLE
+msgctxt "STRINGS.CODEX.SPINDLYGRUBFRUITPLANT.SUBTITLE"
+msgid "Edible Plant"
+msgstr "식용 식물"
+
+#. STRINGS.CODEX.SPINDLYGRUBFRUITPLANT.TITLE
+msgctxt "STRINGS.CODEX.SPINDLYGRUBFRUITPLANT.TITLE"
+msgid "Spindly Grubfruit Plant"
+msgstr "호리호리한 벵이과실 식물"
+
+#. STRINGS.CODEX.SPORECHID.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.SPORECHID.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.SPORECHID.SUBTITLE
+msgctxt "STRINGS.CODEX.SPORECHID.SUBTITLE"
+msgid "Poisonous Plant"
+msgstr "독성 식물"
+
+#. STRINGS.CODEX.SPORECHID.TITLE
+msgctxt "STRINGS.CODEX.SPORECHID.TITLE"
+msgid "Sporechid"
+msgstr "포자난"
+
 #. STRINGS.CODEX.SQUEAKY.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.SQUEAKY.BODY.CONTAINER1"
 msgid "<smallcaps>Pictured: \"Squeaky\" Puft variant</smallcaps>"
@@ -19425,6 +20012,27 @@ msgctxt "STRINGS.CODEX.SUNNY.TITLE"
 msgid "Sun Bug"
 msgstr "해 벌레"
 
+#. STRINGS.CODEX.SWAMPCHARD.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.SWAMPCHARD.BODY.CONTAINER1"
+msgid ""
+"Swamp Chard is a unique member of the Amaranthaceae family that has adapted to grow in humid environments, in or near pools of standing water.\n"
+"\n"
+"While the leaves are technically edible, the most nutritious and palatable part of the plant is the heart, which is rich in a number of essential vitamins."
+msgstr ""
+"늪근대는 비름과의 독특한 식물로 습한 환경, 고인 물 웅덩이 또는 그 근처에서 자라도록 적응했습니다.\n"
+"\n"
+"잎은 먹을 수 있지만 식물의 가장 영양가 있고 맛이 좋은 부분은 많은 필수 비타민이 풍부한 심입니다."
+
+#. STRINGS.CODEX.SWAMPCHARD.SUBTITLE
+msgctxt "STRINGS.CODEX.SWAMPCHARD.SUBTITLE"
+msgid "Edible Plant"
+msgstr "식용 식물"
+
+#. STRINGS.CODEX.SWAMPCHARD.TITLE
+msgctxt "STRINGS.CODEX.SWAMPCHARD.TITLE"
+msgid "Swamp Chard"
+msgstr "늪근대"
+
 #. STRINGS.CODEX.SWEEPY.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.SWEEPY.BODY.CONTAINER1"
 msgid ""
@@ -19520,6 +20128,21 @@ msgstr "휴가 요청 승인됨"
 msgctxt "STRINGS.CODEX.TIMEOFFAPPROVED.TITLE2"
 msgid "SUBJECT: Vacation Request Approved"
 msgstr "제목: 휴가 요청 승인됨"
+
+#. STRINGS.CODEX.TRANQUILTOES.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.TRANQUILTOES.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.TRANQUILTOES.SUBTITLE
+msgctxt "STRINGS.CODEX.TRANQUILTOES.SUBTITLE"
+msgid "Decorative Plant"
+msgstr "장식 식물"
+
+#. STRINGS.CODEX.TRANQUILTOES.TITLE
+msgctxt "STRINGS.CODEX.TRANQUILTOES.TITLE"
+msgid "Tranquil Toes"
+msgstr "잔잔발가락"
 
 #. STRINGS.CODEX.TROPICAL.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.TROPICAL.BODY.CONTAINER1"
@@ -23409,8 +24032,8 @@ msgstr "<link=\"WORMPLANT\">벵이과실 식물</link>"
 
 #. STRINGS.CREATURES.SPECIES.SWAMPFORAGEPLANTPLANTED.DESC
 msgctxt "STRINGS.CREATURES.SPECIES.SWAMPFORAGEPLANTPLANTED.DESC"
-msgid "Swamp Chards are incapable of propagating but can be harvested for a single high quality and calorie dense <link=\"FOOD\">Food</link> serving."
-msgstr "늪근대는 번식할 수 없지만 고품질의 칼로리 밀도가 높은 <link=\"FOOD\">식품</link> 한 끼분을 위해 수확할 수 있습니다."
+msgid "Swamp Chards are incapable of propagating but can be harvested for a single low quality and calorie dense <link=\"FOOD\">Food</link> serving."
+msgstr "늪근대는 번식할 수 없지만 저품질의 칼로리 밀도가 높은 <link=\"FOOD\">식품</link> 한 끼분을 위해 수확할 수 있습니다."
 
 #. STRINGS.CREATURES.SPECIES.SWAMPFORAGEPLANTPLANTED.NAME
 msgctxt "STRINGS.CREATURES.SPECIES.SWAMPFORAGEPLANTPLANTED.NAME"
@@ -24746,8 +25369,34 @@ msgstr "냉장됨"
 
 #. STRINGS.CREATURES.STATUSITEMS.REFRIGERATED.TOOLTIP
 msgctxt "STRINGS.CREATURES.STATUSITEMS.REFRIGERATED.TOOLTIP"
-msgid "Ideal <style=\"KKeyword\">Temperature</style> storage is slowing this food's <style=\"KKeyword\">Decay Rate</style>"
-msgstr "이상적인 <style=\"KKeyword\">온도</style> 저장으로 식품의 <style=\"KKeyword\">부패율</style>을 느리게 하고 있습니다."
+msgid ""
+"Ideal <style=\"KKeyword\">Temperature</style> storage is slowing this food's <style=\"KKeyword\">Decay Rate</style>\n"
+"\n"
+"<style=\"KKeyword\">Temperatures</style> above <b>{RotTemperature}</b> spoil food more quickly\n"
+"\n"
+"Store food below {PreserveTemperature} to further reduce spoilage."
+msgstr ""
+"이상적인 <style=\"KKeyword\">온도</style> 저장으로 식품의 <style=\"KKeyword\">부패율</style>을 느리게 하고 있습니다.\n"
+"\n"
+"<b>{RotTemperature}</b>을(를) 초과하는 <style=\"KKeyword\">온도</style>는 식품을 더 빠르게 상하게 합니다.\n"
+"\n"
+"식품을 {PreserveTemperature} 미만으로 저장하여 부패를 더욱 줄입니다."
+
+#. STRINGS.CREATURES.STATUSITEMS.REFRIGERATEDFROZEN.NAME
+msgctxt "STRINGS.CREATURES.STATUSITEMS.REFRIGERATEDFROZEN.NAME"
+msgid "Deep Freeze"
+msgstr "저온 냉동"
+
+#. STRINGS.CREATURES.STATUSITEMS.REFRIGERATEDFROZEN.TOOLTIP
+msgctxt "STRINGS.CREATURES.STATUSITEMS.REFRIGERATEDFROZEN.TOOLTIP"
+msgid ""
+"<style=\"KKeyword\">Temperatures</style> below <b>{PreserveTemperature}</b> are greatly prolonging the shelf-life of this food\n"
+"\n"
+"<style=\"KKeyword\">Temperatures</style> above <b>{RotTemperature}</b> spoil food more quickly"
+msgstr ""
+"<b>{PreserveTemperature}</b> 이하의 <style=\"KKeyword\">온도</style>는 이 식품의 사용 기간을 크게 연장시킵니다.\n"
+"\n"
+"<b>{RotTemperature}</b>을(를) 초과하는 <style=\"KKeyword\">온도</style>는 식품을 더 빠르게 상하게 합니다."
 
 #. STRINGS.CREATURES.STATUSITEMS.RUMMAGINGSEED.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.RUMMAGINGSEED.NAME"
@@ -24944,8 +25593,14 @@ msgstr "냉장하지 않음"
 
 #. STRINGS.CREATURES.STATUSITEMS.UNREFRIGERATED.TOOLTIP
 msgctxt "STRINGS.CREATURES.STATUSITEMS.UNREFRIGERATED.TOOLTIP"
-msgid "<style=\"KKeyword\">Temperatures</style> above <b>{RotTemperature}</b> spoil food more quickly"
-msgstr "<b>{RotTemperature}</b>을(를) 초과하는 <style=\"KKeyword\">온도</style>는 식품을 더 빠르게 상하게 합니다."
+msgid ""
+"This food is warm\n"
+"\n"
+"<style=\"KKeyword\">Temperatures</style> above <b>{RotTemperature}</b> spoil food more quickly"
+msgstr ""
+"이 식품은 따뜻합니다.\n"
+"\n"
+"<b>{RotTemperature}</b>을(를) 초과하는 <style=\"KKeyword\">온도</style>는 식품을 더 빠르게 상하게 합니다."
 
 #. STRINGS.CREATURES.STATUSITEMS.WILTING.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.WILTING.NAME"
@@ -24990,7 +25645,9 @@ msgstr "다음 <style=\"KKeyword\">기체</style> 중 하나에 담겨 있으면
 #. STRINGS.CREATURES.STATUSITEMS.WRONGFERTILIZER.LINE_ITEM
 msgctxt "STRINGS.CREATURES.STATUSITEMS.WRONGFERTILIZER.LINE_ITEM"
 msgid "            • {0}: {1}\n"
-msgstr "            • {0}: {1}\n"
+msgstr ""
+"            • {0}: {1}\n"
+"\n"
 
 #. STRINGS.CREATURES.STATUSITEMS.WRONGFERTILIZER.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.WRONGFERTILIZER.NAME"
@@ -25032,7 +25689,9 @@ msgstr ""
 #. STRINGS.CREATURES.STATUSITEMS.WRONGIRRIGATION.LINE_ITEM
 msgctxt "STRINGS.CREATURES.STATUSITEMS.WRONGIRRIGATION.LINE_ITEM"
 msgid "            • {0}: {1}\n"
-msgstr "            • {0}: {1}\n"
+msgstr ""
+"            • {0}: {1}\n"
+"\n"
 
 #. STRINGS.CREATURES.STATUSITEMS.WRONGIRRIGATION.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.WRONGIRRIGATION.NAME"
@@ -25946,7 +26605,7 @@ msgstr "덩어리"
 #. STRINGS.DUPLICANTS.ATTRIBUTES.VALUE
 msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.VALUE"
 msgid "{0}: {1}"
-msgstr "{0}: {1}"
+msgstr "{0} {1}"
 
 #. STRINGS.DUPLICANTS.ATTRIBUTES.WILTTEMPRANGEMOD.DESC
 msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.WILTTEMPRANGEMOD.DESC"
@@ -27924,6 +28583,21 @@ msgctxt "STRINGS.DUPLICANTS.CHORES.ROCKETCONTROL.TOOLTIP"
 msgid "This Duplicant is keeping their spacecraft on course"
 msgstr "이 복제체는 우주선의 항로를 유지하고 있습니다."
 
+#. STRINGS.DUPLICANTS.CHORES.ROCKETENTEREXIT.NAME
+msgctxt "STRINGS.DUPLICANTS.CHORES.ROCKETENTEREXIT.NAME"
+msgid "Rocket Recrewing"
+msgstr "로켓 탑승/하승 중"
+
+#. STRINGS.DUPLICANTS.CHORES.ROCKETENTEREXIT.STATUS
+msgctxt "STRINGS.DUPLICANTS.CHORES.ROCKETENTEREXIT.STATUS"
+msgid "Recrewing Rocket"
+msgstr "로켓에서 탑승/하승 중"
+
+#. STRINGS.DUPLICANTS.CHORES.ROCKETENTEREXIT.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.CHORES.ROCKETENTEREXIT.TOOLTIP"
+msgid "This Duplicant is getting into (or out of) their assigned rocket"
+msgstr "이 복제체는 할당된 로켓에 들어가고 (나가고) 있습니다."
+
 #. STRINGS.DUPLICANTS.CHORES.SCRUBORE.NAME
 msgctxt "STRINGS.DUPLICANTS.CHORES.SCRUBORE.NAME"
 msgid "Scrub Ore"
@@ -28502,7 +29176,7 @@ msgstr "<link=\"ALLERGIES\">알레르기성 반응</link>"
 #. STRINGS.DUPLICANTS.DISEASES.ATTRIBUTE_MODIFIER_SYMPTOMS
 msgctxt "STRINGS.DUPLICANTS.DISEASES.ATTRIBUTE_MODIFIER_SYMPTOMS"
 msgid "{0}: {1}"
-msgstr "{0}: {1}"
+msgstr "{0} {1}"
 
 #. STRINGS.DUPLICANTS.DISEASES.ATTRIBUTE_MODIFIER_SYMPTOMS_TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.DISEASES.ATTRIBUTE_MODIFIER_SYMPTOMS_TOOLTIP"
@@ -31128,13 +31802,33 @@ msgstr ""
 "\n"
 "우와, 자연은 굉장합니다!"
 
-#. STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.NAME
-msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.NAME"
+#. STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.CONTAMINATED
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.CONTAMINATED"
 msgid "Contaminated Air"
 msgstr "오염된 공기"
 
-#. STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.NAME
-msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.NAME"
+#. STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.NORMAL
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.NORMAL"
+msgid "Normal Atmosphere"
+msgstr "정상 공기"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.STERILE
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.STERILE"
+msgid "Sterile Atmosphere"
+msgstr "멸균 공기"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.FROZEN
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.FROZEN"
+msgid "Frozen"
+msgstr "얼어붙음"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.REFRIGERATED
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.REFRIGERATED"
+msgid "Refrigerated"
+msgstr "냉장됨"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.UNREFRIGERATED
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.UNREFRIGERATED"
 msgid "Unrefrigerated"
 msgstr "냉장하지 않음"
 
@@ -35143,7 +35837,7 @@ msgstr "미숙한 아티스트"
 #. STRINGS.DUPLICANTS.TRAITS.ATTRIBUTE_MODIFIERS
 msgctxt "STRINGS.DUPLICANTS.TRAITS.ATTRIBUTE_MODIFIERS"
 msgid "{0}: {1}"
-msgstr "{0}: {1}"
+msgstr "{0} {1}"
 
 #. STRINGS.DUPLICANTS.TRAITS.BALLOONARTIST.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.BALLOONARTIST.DESC"
@@ -35203,7 +35897,7 @@ msgstr "<b>{0} 용무</b>를 할 수 없음"
 #. STRINGS.DUPLICANTS.TRAITS.CANNOT_DO_TASK_TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.TRAITS.CANNOT_DO_TASK_TOOLTIP"
 msgid "{0}: {1}"
-msgstr "{0}: {1}"
+msgstr "{0} {1}"
 
 #. STRINGS.DUPLICANTS.TRAITS.CANTBUILD.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.CANTBUILD.DESC"
@@ -36159,7 +36853,7 @@ msgstr "<b>{0}</b>에 면역임"
 #. STRINGS.DUPLICANTS.TRAITS.IGNORED_EFFECTS_TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.TRAITS.IGNORED_EFFECTS_TOOLTIP"
 msgid "{0}: {1}"
-msgstr "{0}: {1}"
+msgstr "{0} {1}"
 
 #. STRINGS.DUPLICANTS.TRAITS.INTERIORDECORATOR.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.INTERIORDECORATOR.DESC"
@@ -39944,11 +40638,11 @@ msgstr "{friend}이(가) 해동되었습니다!"
 #. STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.CRYOFRIEND.DESCRIPTION
 msgctxt "STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.CRYOFRIEND.DESCRIPTION"
 msgid ""
-"{dupe} has made an amazing discovery! A barely working <link=\"CRYOTANK\">Cryotank</link> has been uncovered containing a {friend} inside in a frozen state.\n"
+"{dupe} has made an amazing discovery! A barely working <link=\"CRYOTANK\">Cryotank 3000</link> has been uncovered containing a {friend} inside in a frozen state.\n"
 "\n"
 "{dupe} was successful in thawing {friend} and this encounter has filled both Duplicants with a sense of hope, something they will desperately need to keep their <link=\"MORALE\">Morale</link> up when facing the dangers ahead."
 msgstr ""
-"{dupe}이(가) 놀라운 발견을 했습니다! 간신히 작동하는 <link=\"CRYOTANK\">냉동탱크</link>가 발견되었으며 안에 {friend}이(가) 동결된 상태로 들어 있습니다.\n"
+"{dupe}이(가) 놀라운 발견을 했습니다! 간신히 작동하는 <link=\"CRYOTANK\">크라이오탱크 3000</link>이 발견되었으며 안에 {friend}이(가) 동결된 상태로 들어 있습니다.\n"
 "\n"
 "{dupe}이(가) {friend} 해동에 성공했으며 이 만남으로 두 복제체 모두 희망의 느낌이 충만했습니다. 희망은 앞으로 위험에 직면하여 <link=\"MORALE\">사기</link>를 유지하는 데 있어서 그들에게 절실히 필요한 것입니다."
 
@@ -40276,7 +40970,7 @@ msgstr "R-Shift"
 #. STRINGS.INPUT.SPACE
 msgctxt "STRINGS.INPUT.SPACE"
 msgid "Space"
-msgstr "스페이스"
+msgstr "우주"
 
 #. STRINGS.INPUT.TAB
 msgctxt "STRINGS.INPUT.TAB"
@@ -40821,7 +41515,7 @@ msgstr "Dig"
 #. STRINGS.INPUT_BINDINGS.ROOT.DISINFECT
 msgctxt "STRINGS.INPUT_BINDINGS.ROOT.DISINFECT"
 msgid "Disinfect"
-msgstr "Disinfect"
+msgstr "소독"
 
 #. STRINGS.INPUT_BINDINGS.ROOT.EMPTYPIPE
 msgctxt "STRINGS.INPUT_BINDINGS.ROOT.EMPTYPIPE"
@@ -44122,10 +44816,10 @@ msgstr "복제체의 지시 실행에 대한 사항"
 #. STRINGS.MISC.NOTIFICATIONS.WORLDDETECTED.MESSAGEBODY
 msgctxt "STRINGS.MISC.NOTIFICATIONS.WORLDDETECTED.MESSAGEBODY"
 msgid ""
-"The Duplicants' astronomical efforts have uncovered new Planetoids:\n"
+"My Duplicants' astronomical efforts have uncovered a new Planetoid:\n"
 "{0}"
 msgstr ""
-"복제체의 하늘을 찌르는 노력으로 새로운 미행성이 발견되었습니다:\n"
+"복제체의 천문학적 노력으로 새로운 미행성 발견:\n"
 "{0}"
 
 #. STRINGS.MISC.NOTIFICATIONS.WORLDDETECTED.NAME
@@ -45622,7 +46316,7 @@ msgstr "재채기하는"
 #. STRINGS.NAMEGEN.COLONY.ADJECTIVE.SPACE
 msgctxt "STRINGS.NAMEGEN.COLONY.ADJECTIVE.SPACE"
 msgid "Space"
-msgstr "스페이스"
+msgstr "우주"
 
 #. STRINGS.NAMEGEN.COLONY.ADJECTIVE.SPACEFARING
 msgctxt "STRINGS.NAMEGEN.COLONY.ADJECTIVE.SPACEFARING"
@@ -48052,6 +48746,11 @@ msgid ""
 msgstr ""
 "웟\n"
 "히드라우\n"
+
+#. STRINGS.NAMEGEN.WORLD.SPACECRAFT_PREFIX
+msgctxt "STRINGS.NAMEGEN.WORLD.SPACECRAFT_PREFIX"
+msgid "Spacecraft: "
+msgstr "우주선: "
 
 #. STRINGS.NAMEGEN.WORLD.SUFFIXES.GENERICLIST
 msgctxt "STRINGS.NAMEGEN.WORLD.SUFFIXES.GENERICLIST"
@@ -50546,8 +51245,8 @@ msgstr ""
 
 #. STRINGS.SUBWORLDS.METALLIC.DESC
 msgctxt "STRINGS.SUBWORLDS.METALLIC.DESC"
-msgid ""
-msgstr ""
+msgid "A plethora of metals pervade the Metallic Biome making it the go-to destination for a colony ramping up production for technological advancement."
+msgstr "금속성 생물군계에는 수많은 금속이 있어 기술 발전을 위한 생산량을 늘리려는 콜로니의 목적지점이 되었습니다."
 
 #. STRINGS.SUBWORLDS.METALLIC.NAME
 msgctxt "STRINGS.SUBWORLDS.METALLIC.NAME"
@@ -50557,7 +51256,17 @@ msgstr "금속성"
 #. STRINGS.SUBWORLDS.METALLIC.UTILITY
 msgctxt "STRINGS.SUBWORLDS.METALLIC.UTILITY"
 msgid ""
+"<link=\"GOLDAMALGAM\">Gold Amalgam</link> <link=\"ALUMINUMORE\">Aluminum Ore</link> and <link=\"COBALTITE\">Cobalt Ore</link> are in abundant supply throughout this entire biome. Refining these metals with a <link=\"METALREFINERY\">Metal Refinery</link> will make them available for building advanced technologies.\n"
+"\n"
+"Though <link=\"CHLORINEGAS\">Chlorine</link> and <link=\"HYDROGEN\">Hydrogen</link> are the prevailing gasses in this biome, <link=\"OXYROCK\">Oxylite</link> exists in rock form and can provide <link=\"OXYGEN\">Oxygen</link> for Duplicants once they uncover it.\n"
+"\n"
+"<link=\"DIRT\">Dirt</link>, <link=\"CARBON\">Coal</link> and <link=\"IGNEOUSROCK\">Igneous Rock</link> round out the rest of this biome, making it a great deposit of resources for a budding industrialized colony."
 msgstr ""
+"<link=\"GOLDAMALGAM\">금 아말감</link>, <link=\"ALUMINUMORE\">알루미늄 광석</link>, <link=\"COBALTITE\">코발트 광석</link>은 이 전체 생물군계에 걸쳐 풍부하게 공급됩니다. <link=\"METALREFINERY\">금속 제련소</link>로 이러한 금속을 정제하면 고급 테크놀로지를 구축하는 데 사용할 수 있습니다.\n"
+"\n"
+"<link=\"CHLORINEGAS\">염소</link>와 <link=\"HYDROGEN\">수소</link>가 이 생물군계에 주로 있는 기체이지만, <link=\"OXYROCK\">산소석</link>이 암석 형태로 존재하며 일단 발견되면 복제체에게 <link=\"OXYGEN\">산소</link>를 제공할 수 있습니다.\n"
+"\n"
+"나머지로는 <link=\"DIRT\">흙</link>, <link=\"CARBON\">석탄</link>, <link=\"IGNEOUSROCK\">화성암</link>이 있으며 새로운 산업화된 콜로니를 위한 엄청난 자원 매장지로 이용될 수 있습니다."
 
 #. STRINGS.SUBWORLDS.MOO.DESC
 msgctxt "STRINGS.SUBWORLDS.MOO.DESC"
@@ -50645,8 +51354,8 @@ msgstr ""
 
 #. STRINGS.SUBWORLDS.RADIOACTIVE.DESC
 msgctxt "STRINGS.SUBWORLDS.RADIOACTIVE.DESC"
-msgid ""
-msgstr ""
+msgid "A highly volatile environment containing a highly useful resource, this biome is invaluable when venturing into Nuclear technologies."
+msgstr "매우 유용한 자원을 포함하는 매우 불안정한 환경인 이 생물군계는 원자력 테크놀로지를 탐구할 때 매우 중요합니다."
 
 #. STRINGS.SUBWORLDS.RADIOACTIVE.NAME
 msgctxt "STRINGS.SUBWORLDS.RADIOACTIVE.NAME"
@@ -50656,7 +51365,17 @@ msgstr "방사능"
 #. STRINGS.SUBWORLDS.RADIOACTIVE.UTILITY
 msgctxt "STRINGS.SUBWORLDS.RADIOACTIVE.UTILITY"
 msgid ""
+"<link=\"LEADSUIT\">Lead Suits</link> are imperative if my Duplicants are going to start exploring this biome as <link=\"RADIATIONSICKNESS\">Radioactive Contaminants</link> is a constant danger here.\n"
+"\n"
+"<link=\"BEE\">Beetas</link> pose a double threat as they are both highly radioactive and very aggressive. If they can be domesticated, however, <link=\"BEEHIVE\">Beeta Hives</link>, provide a great service turning <link=\"URANIUMORE\">Uranium</link> into <link=\"ENRICHEDURANIUM\">Enriched Uranium</link>.\n"
+"\n"
+"While the Radioactive Biome, and the Beetas contained within it, should be avoided at all costs if my Duplicants do not have the correct protection, my colony will need to trek into this dangerous biome if we are going to build any higher tier nuclear technologies."
 msgstr ""
+"<link=\"RADIATIONSICKNESS\">방사성 오염 물질</link>이 여기에서 끊임없이 위협을 주기 때문에 복제체가 이 생물군계를 탐색하기 시작하려면 <link=\"LEADSUIT\">납 특수복</link>이 필수적입니다.\n"
+"\n"
+"<link=\"BEE\">벌타</link>는 방사능이 높고 공격적이기 때문에 이중 위협이 됩니다. 그러나 이를 길들일 수 있다면 <link=\"BEEHIVE\">벌타 통</link>은 <link=\"URANIUMORE\">우라늄</link>을 <link=\"ENRICHEDURANIUM\">농축 우라늄</link>으로 바꾸는 훌륭한 서비스를 제공합니다.\n"
+"\n"
+"방사성 생물군계와 이곳의 벌타는 복제체가 올바른 보호 장치를 가지고 있지 않다면 절대로 피해야 하지만, 더 높은 단계의 핵 테크놀로지를 구축하려면 콜로니가 이 위험한 생물군계로 들어가야 합니다."
 
 #. STRINGS.SUBWORLDS.RUST.DESC
 msgctxt "STRINGS.SUBWORLDS.RUST.DESC"
@@ -50699,8 +51418,26 @@ msgstr "사암"
 
 #. STRINGS.SUBWORLDS.SANDSTONE.UTILITY
 msgctxt "STRINGS.SUBWORLDS.SANDSTONE.UTILITY"
-msgid "<link=\"OXYROCK\">Oxylite</link> and <link=\"BASICFORAGEPLANTPLANTED\">Buried Muckroot</link> are in sufficient supply to sustain your colony while <link=\"DIRT\">Dirt</link>, <link=\"ALGAE\">Algae</link> and <link=\"COPPER\">Copper</link> provide the basic materials required to get a colony up and running."
-msgstr "<link=\"OXYROCK\">산소석</link> 및 <link=\"BASICFORAGEPLANTPLANTED\">묻힌 진창뿌리</link>는 콜로니를 유지하기에 충분히 있으며 <link=\"DIRT\">흙</link>, <link=\"ALGAE\">조류</link>, <link=\"COPPER\">구리</link>는 콜로니를 시작하고 운영하는 데 필요한 기본 재료를 제공합니다."
+msgid ""
+"<link=\"OXYROCK\">Oxylite</link> and <link=\"BASICFORAGEPLANTPLANTED\">Buried Muckroot</link> are in sufficient supply to sustain your colony while you gather more resources.\n"
+"\n"
+"<link=\"DIRT\">Dirt</link>, <link=\"ALGAE\">Algae</link>, <link=\"COPPER\">Copper</link> and, of course, <link=\"SANDSTONE\">Sandstone</link> provide all the materials to get basic colony essentials built.\n"
+"\n"
+"Random <link=\"LIGHTBUGSPECIES\">Shine Bugs</link> provide Morale boosts for my Duplicants but are not a reliable light source.\n"
+"\n"
+"<link=\"HATCHSPECIES\">Hatch</link> can be domesticated for food or <link=\"CARBON\">Coal</link>, which will be useful if using a <link=\"GENERATOR\">Coal Generator</link> for power.\n"
+"\n"
+"All-in-all this biome is the perfect starting spot for my colony to establish a base full of essentials, from which they can then venture out and explore."
+msgstr ""
+"<link=\"OXYROCK\">산소석</link>과 <link=\"BASICFORAGEPLANTPLANTED\">묻힌 진창뿌리</link>는 더 많은 자원을 수집하는 동안 콜로니를 유지하기에 충분히 있습니다.\n"
+"\n"
+"<link=\"DIRT\">흙</link>, <link=\"ALGAE\">조류</link>, <link=\"COPPER\">구리</link> 그리고 물론 <link=\"SANDSTONE\">사암</link>은 기본적인 콜로니 필수 요소를 만드는 데 필요한 모든 재료를 제공합니다.\n"
+"\n"
+"무작위로 있는 <link=\"LIGHTBUGSPECIES\">빛벌레</link>는 복제체에 사기 향상을 제공하지만 신뢰할 수 있는 광원은 아닙니다.\n"
+"\n"
+"<link=\"HATCHSPECIES\">주둥가리</link>는 식량이나 <link=\"CARBON\">석탄</link>을 위해 길들여질 수 있으며, 전력을 위해 <link=\"GENERATOR\">석탄 발전기</link>를 사용할 때 유용합니다.\n"
+"\n"
+"종합적으로 봤을 때 이 생물군계는 콜로니가 필수 요소로 가득 찬 기지를 구축하고 외부로 탐험할 수 있는 완벽한 출발점입니다."
 
 #. STRINGS.SUBWORLDS.SPACE.DESC
 msgctxt "STRINGS.SUBWORLDS.SPACE.DESC"
@@ -50710,7 +51447,7 @@ msgstr "우주 생물군계는 소행성의 아름다운 풍경이 보이는 표
 #. STRINGS.SUBWORLDS.SPACE.NAME
 msgctxt "STRINGS.SUBWORLDS.SPACE.NAME"
 msgid "Space"
-msgstr "스페이스"
+msgstr "우주"
 
 #. STRINGS.SUBWORLDS.SPACE.UTILITY
 msgctxt "STRINGS.SUBWORLDS.SPACE.UTILITY"
@@ -50719,8 +51456,8 @@ msgstr "표면에 <link=\"SOLARPANELS\">솔라 패널</link>을 설치하면 재
 
 #. STRINGS.SUBWORLDS.SWAMP.DESC
 msgctxt "STRINGS.SUBWORLDS.SWAMP.DESC"
-msgid ""
-msgstr ""
+msgid "With its abundence of <link=\"CONTAMINATEDOXYGEN\">Polluted Oxygen</link> and lack of clean <style=\"KKeyword\">Water</style> the Swampy Biome presents some challenges for a budding colony. But, with a little hard work, it can also turn into a great starting biome with some valuable resources."
+msgstr "<link=\"CONTAMINATEDOXYGEN\">오염된 산소</link>가 풍부하고 깨끗한 <style=\"KKeyword\">물</style>이 부족한 늪지대 생물군계는 새로운 콜로니에 몇 가지 도전 과제를 제시합니다. 그러나 약간의 노력을 기울이면 귀중한 자원이 있는 훌륭한 시작 생물군계로 바뀔 수도 있습니다."
 
 #. STRINGS.SUBWORLDS.SWAMP.NAME
 msgctxt "STRINGS.SUBWORLDS.SWAMP.NAME"
@@ -50730,7 +51467,25 @@ msgstr "늪지대"
 #. STRINGS.SUBWORLDS.SWAMP.UTILITY
 msgctxt "STRINGS.SUBWORLDS.SWAMP.UTILITY"
 msgid ""
+"<link=\"SWAMPFORAGEPLANTPLANTED\">Swamp Chard</link> can provide adequate nutrients for my Duplicants while they establish farms, but it cannot be planted or propogated. <link=\"SWAMPHARVESTPLANT\">Bog Buckets</link>, however, provide a sweet source of nutrients that are fairly easy to farm using <link=\"DIRTYWATER\">Polluted Water</link> and require no extra light to grow.\n"
+"\n"
+"Fortunately <link=\"DIRTYWATER\">Polluted Water</link> is abundant in this biome and will require a <link=\"LIQUIDFILTER\">Liquid Filter</link> to turn into something my Duplicants can drink. Additionally my Duplicants can use a <link=\"SLUDGEPRESS\">Sludge Press</link> to filter clean water from <link=\"MUD\">Mud</link> (NOTE: <link=\"TOXICMUD\">Polluted Mud</link>, however, does not make clean water).\n"
+"\n"
+"Meanwhile, rudimentary power can be gained from the energy producing <link=\"STATERPILLAR\">Plug Slugs</link> that inhabit this biome.\n"
+"\n"
+"Shiny <link=\"COBALTITE\">Cobalt Ore</link> can be found here, providing a adequate source of metal.\n"
+"\n"
+"While much of this biome is dangerous for a new colony with some deliberate research and careful planning my Duplicants can not only survive but thrive here."
 msgstr ""
+"<link=\"SWAMPFORAGEPLANTPLANTED\">늪근대</link>는 복제체가 농장을 짓는 동안 적절한 영양분을 공급할 수 있지만 심거나 번식할 수는 없습니다. 그러나 <link=\"SWAMPHARVESTPLANT\">수렁박</link>은 <link=\"DIRTYWATER\">오염된 물</link>을 사용하여 쉽게 재배할 수 있는 달콤한 영양소를 제공하며 성장하는 데 추가로 빛이 필요하지 않습니다.\n"
+"\n"
+"다행스럽게도 <link=\"DIRTYWATER\">오염된 물</link>은 이 생물군계에 풍부하며 복제체가 마실 수 있는 것으로 바꾸려면 <link=\"LIQUIDFILTER\">액체 필터</link>가 필요합니다. 또한 복제체는 <link=\"SLUDGEPRESS\">슬러지 프레스</link>를 사용하여 <link=\"MUD\">진흙</link>에서 깨끗한 물을 걸러낼 수 있습니다(참고: <link=\"TOXICMUD\">오염된 진흙</link>은 깨끗한 물을 만들 수 없습니다).\n"
+"\n"
+"한편 이 생물군계에 서식하며 에너지를 생성하는 <link=\"STATERPILLAR\">플러그팽</link>을 사용하여 기초적인 전력을 얻을 수 있습니다.\n"
+"\n"
+"반짝이는 <link=\"COBALTITE\">코발트 광석</link>은 여기에서 찾을 수 있으며 적절한 금속 공급원을 제공합니다.\n"
+"\n"
+"이 생물군계는 새로운 콜로니로서는 위험하지만 특정한 연구와 조심스러운 계획으로 복제체는 여기에서 생존하고 활기차게 살아나갈 수 있습니다."
 
 #. STRINGS.SUBWORLDS.WASTELAND.DESC
 msgctxt "STRINGS.SUBWORLDS.WASTELAND.DESC"
@@ -50830,7 +51585,7 @@ msgstr "이 콜로니는 {0} 주기가 지났습니다."
 #. STRINGS.UI.ASTEROIDCLOCK.SCHEDULE_BUTTON_TOOLTIP
 msgctxt "STRINGS.UI.ASTEROIDCLOCK.SCHEDULE_BUTTON_TOOLTIP"
 msgid "Manage Schedule"
-msgstr "스케줄 관리"
+msgstr "수케줄 관리"
 
 #. STRINGS.UI.ASTEROIDCLOCK.TIME_PLAYED
 msgctxt "STRINGS.UI.ASTEROIDCLOCK.TIME_PLAYED"
@@ -51145,7 +51900,7 @@ msgstr "달리기 속도: {0}"
 #. STRINGS.UI.BUILDINGEFFECTS.ELEMENTCONSUMED
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.ELEMENTCONSUMED"
 msgid "{0}: {1}"
-msgstr "{0}: {1}"
+msgstr "{0} {1}"
 
 #. STRINGS.UI.BUILDINGEFFECTS.ELEMENTCONSUMEDPERUSE
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.ELEMENTCONSUMEDPERUSE"
@@ -51155,27 +51910,27 @@ msgstr "{0}: 사용당 {1}"
 #. STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_ENTITYTEMP
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_ENTITYTEMP"
 msgid "{0}: {1}"
-msgstr "{0}: {1}"
+msgstr "{0} {1}"
 
 #. STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_FIXEDTEMP
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_FIXEDTEMP"
 msgid "{0}: {1}"
-msgstr "{0}: {1}"
+msgstr "{0} {1}"
 
 #. STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_INPUTTEMP
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_INPUTTEMP"
 msgid "{0}: {1}"
-msgstr "{0}: {1}"
+msgstr "{0} {1}"
 
 #. STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_MINORENTITYTEMP
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_MINORENTITYTEMP"
 msgid "{0}: {1}"
-msgstr "{0}: {1}"
+msgstr "{0} {1}"
 
 #. STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_MINTEMP
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_MINTEMP"
 msgid "{0}: {1}"
-msgstr "{0}: {1}"
+msgstr "{0} {1}"
 
 #. STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_TOILET
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_TOILET"
@@ -52252,7 +53007,7 @@ msgstr "넘치는 기쁨 반응: {0}"
 #. STRINGS.UI.CHARACTERCONTAINER_NEED
 msgctxt "STRINGS.UI.CHARACTERCONTAINER_NEED"
 msgid "{0}: {1}"
-msgstr "{0}: {1}"
+msgstr "{0} {1}"
 
 #. STRINGS.UI.CHARACTERCONTAINER_NOARCHETYPESELECTED
 msgctxt "STRINGS.UI.CHARACTERCONTAINER_NOARCHETYPESELECTED"
@@ -52262,7 +53017,7 @@ msgstr "무작위"
 #. STRINGS.UI.CHARACTERCONTAINER_SKILL_VALUE
 msgctxt "STRINGS.UI.CHARACTERCONTAINER_SKILL_VALUE"
 msgid " {0} {1}"
-msgstr "{0} {1}"
+msgstr " {0} {1}"
 
 #. STRINGS.UI.CHARACTERCONTAINER_SKILLS_TITLE
 msgctxt "STRINGS.UI.CHARACTERCONTAINER_SKILLS_TITLE"
@@ -52456,8 +53211,12 @@ msgstr "로켓 속도: "
 
 #. STRINGS.UI.CLUSTERMAP.ROCKETS.SPEED.TOOLTIP
 msgctxt "STRINGS.UI.CLUSTERMAP.ROCKETS.SPEED.TOOLTIP"
-msgid "<b>Rocket Speed</b> is calculated by dividing <b>Engine Power</b> by <b>Burden</b>"
-msgstr "<b>로켓 속도</b>는 <b>엔진 출력</b>을 <b>적재량</b>으로 나누어 계산합니다."
+msgid ""
+"<b>Rocket Speed</b> is calculated by dividing <b>Engine Power</b> by <b>Burden</b>.\n"
+"Rockets operating on autopilot will have a reduced speed."
+msgstr ""
+"<b>로켓 속도</b>는 <b>엔진 출력</b>을 <b>적재량</b>으로 나누어 계산합니다.\n"
+"오토파일럿으로 작동하는 로켓은 속도가 느립니다."
 
 #. STRINGS.UI.CLUSTERMAP.SELECT_DESTINATION
 msgctxt "STRINGS.UI.CLUSTERMAP.SELECT_DESTINATION"
@@ -52723,11 +53482,13 @@ msgstr "품질: {0}"
 #. STRINGS.UI.CODEX.FOOD.SPOILPROPERTIES
 msgctxt "STRINGS.UI.CODEX.FOOD.SPOILPROPERTIES"
 msgid ""
-"Preserve temperature: {0}\n"
-"Spoil time: {1}"
+"Refrigeration temperature: {0}\n"
+"Deep Freeze temperature: {1}\n"
+"Spoil time: {2}"
 msgstr ""
-"보존 온도: {0}\n"
-"상하는 시간: {1}"
+"냉장 온도: {0}\n"
+"저온 냉동 온도: {1}\n"
+"부패 시간: {2}"
 
 #. STRINGS.UI.CODEX.FORWARD_BUTTON_NO_HISTORY_TOOLTIP
 msgctxt "STRINGS.UI.CODEX.FORWARD_BUTTON_NO_HISTORY_TOOLTIP"
@@ -52867,6 +53628,16 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.ALL_NAME"
 msgid "Battery"
 msgstr "배터리"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA.CHECKCAPACITY
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA.CHECKCAPACITY"
+msgid "Check capacity"
+msgstr "용량 확인"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA.CHECKDEAD
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA.CHECKDEAD"
+msgid "Check dead"
+msgstr "소진 확인"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA_CHECK_CAPACITY.FAIL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA_CHECK_CAPACITY.FAIL"
 msgid ""
@@ -52907,6 +53678,11 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BEDDIAGNOSTIC.ALL_NAME"
 msgid "Beds"
 msgstr "침대"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.BEDDIAGNOSTIC.CRITERIA.CHECKENOUGHBEDS
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BEDDIAGNOSTIC.CRITERIA.CHECKENOUGHBEDS"
+msgid "Check enough beds"
+msgstr "충분한 침대 수량 확인"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.BEDDIAGNOSTIC.MISSING_ASSIGNMENT
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BEDDIAGNOSTIC.MISSING_ASSIGNMENT"
 msgid "    • One or more Duplicants don't have an assigned bed"
@@ -52931,6 +53707,16 @@ msgstr "<b>침대</b>"
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.ALL_NAME"
 msgid "Breathability"
 msgstr "호흡성"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.CRITERIA.CHECKLOWBREATHABILITY
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.CRITERIA.CHECKLOWBREATHABILITY"
+msgid "Check low breathability"
+msgstr "낮은 통기성 확인"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.CRITERIA.CHECKSUFFOCATION
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.CRITERIA.CHECKSUFFOCATION"
+msgid "Check suffocation"
+msgstr "질식 확인"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.NORMAL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.NORMAL"
@@ -52962,6 +53748,11 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.DECORDIAGNOSTIC.ALL_NAME"
 msgid "Decor"
 msgstr "장식"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.DECORDIAGNOSTIC.CRITERIA.CHECKDECOR
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.DECORDIAGNOSTIC.CRITERIA.CHECKDECOR"
+msgid "Check decor"
+msgstr "장식 확인"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.DECORDIAGNOSTIC.LOW
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.DECORDIAGNOSTIC.LOW"
 msgid "    • Decor levels are low"
@@ -52987,6 +53778,11 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.BUILDING_ENTOMBED"
 msgid "    • One or more buildings are entombed"
 msgstr "    • 건조물 1개 이상이 매몰되었습니다."
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.CRITERIA.CHECKENTOMBED
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.CRITERIA.CHECKENTOMBED"
+msgid "Check entombed"
+msgstr "매몰 확인"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.NORMAL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.NORMAL"
 msgid "    • No buildings are entombed"
@@ -53001,6 +53797,26 @@ msgstr "<b>매몰되었음</b>"
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.ALL_NAME"
 msgid "Crops"
 msgstr "작물"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKHASFARMS
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKHASFARMS"
+msgid "Check colony has farms"
+msgstr "콜로니에 재배지가 있는지 확인"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKOPERATIONAL
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKOPERATIONAL"
+msgid "Check farm plots operational"
+msgstr "재배 구획이 운영 중인지 확인"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKPLANTED
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKPLANTED"
+msgid "Check farms are planted"
+msgstr "재배지에 식물이 심어져 있는지 확인"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKWILTING
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKWILTING"
+msgid "Check crops wilting"
+msgstr "작물이 시들었는지 확인"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.INOPERATIONAL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.INOPERATIONAL"
@@ -53067,6 +53883,16 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.ALL_NAME"
 msgid "Food"
 msgstr "식품"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA.CHECKENOUGHFOOD
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA.CHECKENOUGHFOOD"
+msgid "Check enough food"
+msgstr "식품이 충분한지 확인"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA.CHECKSTARVATION
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA.CHECKSTARVATION"
+msgid "Check starvation"
+msgstr "기아 확인"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA_HAS_FOOD.FAIL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA_HAS_FOOD.FAIL"
 msgid "    • Duplicants have no food"
@@ -53102,6 +53928,11 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.TOOLTIP_NAME"
 msgid "<b>Food</b>"
 msgstr "<b>식품</b>"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA.CHECKWORLDHASMINIONS
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA.CHECKWORLDHASMINIONS"
+msgid "Check world has Duplicants"
+msgstr "세계에 복제체가 있는지 확인"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_FAIL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_FAIL"
 msgid "Criteria not met"
@@ -53122,10 +53953,20 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.HEATDIAGNOSTIC.ALL_NAME"
 msgid "Battery"
 msgstr "배터리"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.HEATDIAGNOSTIC.CRITERIA.CHECKHEAT
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.HEATDIAGNOSTIC.CRITERIA.CHECKHEAT"
+msgid "Check heat"
+msgstr "열 확인"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.IDLEDIAGNOSTIC.ALL_NAME
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.IDLEDIAGNOSTIC.ALL_NAME"
 msgid "Idleness"
 msgstr "유휴"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.IDLEDIAGNOSTIC.CRITERIA.CHECKIDLE
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.IDLEDIAGNOSTIC.CRITERIA.CHECKIDLE"
+msgid "Check idle"
+msgstr "유휴 확인"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.IDLEDIAGNOSTIC.IDLE
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.IDLEDIAGNOSTIC.IDLE"
@@ -53167,10 +54008,20 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.NO_MINIONS_REQUESTED"
 msgid "    • Crew must be requested to update this diagnostic"
 msgstr "    •이 진단을 업데이트하려면 승무원을 요청해야 합니다."
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME"
+msgid "Placeholder Criteria Name"
+msgstr "자리 표시자 기준 이름"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.ALL_NAME
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.ALL_NAME"
 msgid "Avg Power"
 msgstr "평균 전력"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKPOWER
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKPOWER"
+msgid "Check power"
+msgstr "전력 확인"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.NORMAL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.NORMAL"
@@ -53191,6 +54042,16 @@ msgstr "<b>평균 전력</b>"
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.ALL_NAME"
 msgid "Radiation"
 msgstr "방사선"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA.CHECKEXPOSED
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA.CHECKEXPOSED"
+msgid "Check exposed"
+msgstr "노출 확인"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA.CHECKSICK
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA.CHECKSICK"
+msgid "Check sick"
+msgstr "앓음 확인"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA_RADIATION_EXPOSURE.FAIL_CONCERN
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA_RADIATION_EXPOSURE.FAIL_CONCERN"
@@ -53231,6 +54092,21 @@ msgstr "<b>방사선</b>"
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.ALL_NAME"
 msgid "<link=\"NUCLEARREACTOR\">Research Reactor</link>"
 msgstr "<link=\"NUCLEARREACTOR\">연구용 반응로</link>"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA.CHECKCOOLANT
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA.CHECKCOOLANT"
+msgid "Check coolant"
+msgstr "냉각제 확인"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA.CHECKTEMPERATURE
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA.CHECKTEMPERATURE"
+msgid "Check temperature"
+msgstr "온도 확인"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA_COOLANT_WARNING
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA_COOLANT_WARNING"
+msgid "    • Coolant tank low"
+msgstr "    • 냉각제 탱크 부족"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA_TEMPERATURE_WARNING
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA_TEMPERATURE_WARNING"
@@ -53297,6 +54173,11 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.STRESSDIAGNOSTIC.ALL_NAME"
 msgid "Max Stress"
 msgstr "최대 스트레스"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.STRESSDIAGNOSTIC.CRITERIA.CHECKSTRESSED
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.STRESSDIAGNOSTIC.CRITERIA.CHECKSTRESSED"
+msgid "Check stressed"
+msgstr "스트레스 확인"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.STRESSDIAGNOSTIC.HIGH_STRESS
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.STRESSDIAGNOSTIC.HIGH_STRESS"
 msgid "    • One or more Duplicants is suffering high stress"
@@ -53316,6 +54197,16 @@ msgstr "<b>최대 스트레스</b>"
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.ALL_NAME"
 msgid "Toilets"
 msgstr "화장실"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.CRITERIA.CHECKENOUGHTOILETS
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.CRITERIA.CHECKENOUGHTOILETS"
+msgid "Check enough toilets"
+msgstr "화장실이 충분한지 확인"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.CRITERIA.CHECKHASANYTOILETS
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.CRITERIA.CHECKHASANYTOILETS"
+msgid "Check has any toilets"
+msgstr "화장실이 있는지 확인"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.FEW_TOILETS
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.FEW_TOILETS"
@@ -53351,6 +54242,11 @@ msgstr "<b>화장실</b>"
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.TRAPPEDDUPLICANTDIAGNOSTIC.ALL_NAME"
 msgid "Trapped"
 msgstr "갇혔음"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.TRAPPEDDUPLICANTDIAGNOSTIC.CRITERIA.CHECKTRAPPED
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.TRAPPEDDUPLICANTDIAGNOSTIC.CRITERIA.CHECKTRAPPED"
+msgid "Check Trapped"
+msgstr "갇혔는지 확인"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.TRAPPEDDUPLICANTDIAGNOSTIC.NORMAL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.TRAPPEDDUPLICANTDIAGNOSTIC.NORMAL"
@@ -53958,12 +54854,12 @@ msgid ""
 " • {0}"
 msgstr ""
 "\n"
-" • {0}"
+"• {0}"
 
 #. STRINGS.UI.DETAILTABS.DETAILS.CONTENTS_MASS
 msgctxt "STRINGS.UI.DETAILTABS.DETAILS.CONTENTS_MASS"
 msgid "{0}: {1}"
-msgstr "{0}: {1}"
+msgstr "{0} {1}"
 
 #. STRINGS.UI.DETAILTABS.DETAILS.CONTENTS_ROTTABLE
 msgctxt "STRINGS.UI.DETAILTABS.DETAILS.CONTENTS_ROTTABLE"
@@ -53972,7 +54868,7 @@ msgid ""
 " • {0}"
 msgstr ""
 "\n"
-" • {0}"
+"• {0}"
 
 #. STRINGS.UI.DETAILTABS.DETAILS.CONTENTS_TEMPERATURE
 msgctxt "STRINGS.UI.DETAILTABS.DETAILS.CONTENTS_TEMPERATURE"
@@ -54047,7 +54943,7 @@ msgstr "{0}/주기로 세균 수 감소 중"
 #. STRINGS.UI.DETAILTABS.DISEASE.DETAILS.DISEASE_AMOUNT
 msgctxt "STRINGS.UI.DETAILTABS.DISEASE.DETAILS.DISEASE_AMOUNT"
 msgid "{0}: {1}"
-msgstr "{0}: {1}"
+msgstr "{0} {1}"
 
 #. STRINGS.UI.DETAILTABS.DISEASE.DETAILS.DISEASE_AMOUNT_TOOLTIP
 msgctxt "STRINGS.UI.DETAILTABS.DISEASE.DETAILS.DISEASE_AMOUNT_TOOLTIP"
@@ -54302,7 +55198,7 @@ msgstr "선택한 물체의 질병 위험 보기"
 #. STRINGS.UI.DETAILTABS.EGG_CHANCES.CHANCE_FORMAT
 msgctxt "STRINGS.UI.DETAILTABS.EGG_CHANCES.CHANCE_FORMAT"
 msgid "{0}: {1}"
-msgstr "{0}: {1}"
+msgstr "{0} {1}"
 
 #. STRINGS.UI.DETAILTABS.EGG_CHANCES.CHANCE_FORMAT_TOOLTIP
 msgctxt "STRINGS.UI.DETAILTABS.EGG_CHANCES.CHANCE_FORMAT_TOOLTIP"
@@ -56925,7 +57821,7 @@ msgstr "크기: {0}"
 #. STRINGS.UI.FRONTEND.LOADSCREEN.COLONY_INFO_FMT
 msgctxt "STRINGS.UI.FRONTEND.LOADSCREEN.COLONY_INFO_FMT"
 msgid "{0}: {1}"
-msgstr "{0}: {1}"
+msgstr "{0} {1}"
 
 #. STRINGS.UI.FRONTEND.LOADSCREEN.COLONY_TITLE
 msgctxt "STRINGS.UI.FRONTEND.LOADSCREEN.COLONY_TITLE"
@@ -58017,8 +58913,8 @@ msgstr "Steam 창작마당"
 
 #. STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER
 msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
-msgid "RADBOLT FROM THE BLUE"
-msgstr "RADBOLT FROM THE BLUE"
+msgid "PECULIAR PLANTS UPDATE"
+msgstr "PECULIAR PLANTS 업데이트"
 
 #. STRINGS.UI.FRONTEND.MOTD.NEWS_BODY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.NEWS_BODY"
@@ -58033,19 +58929,29 @@ msgstr "토론에 참여하기"
 #. STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY"
 msgid ""
-"<b>A Radbolt From The Blue Update</b>\n"
+"Welcome to the <b>Peculiar Plants Update!</b>\n"
 "\n"
-"Added the Radbolt Engine for using nuclear energy to explore space\n"
-"Added Interplanetary Payload Launcher to improve multi-asteroid infrastrucutre\n"
+"   •<indent=20px>Crop plants now drop <b>Mutant Seeds</b> when exposed to radiation.</indent>\n"
+"\n"
+"   •<indent=20px>Food spoilage and refrigeration have been rebalanced.</indent>\n"
+"\n"
+"   •<indent=20px>New <b>Meter Valves</b> allow precise plumbing deliveries.</indent>\n"
+"\n"
+"   •<indent=20px>Bug fixes, animation updates, and more.</indent>\n"
 "\n"
 "Check out the full patch notes for more details!"
 msgstr ""
-"<b>A Radbolt From The Blue 업데이트</b>\n"
+"<b>Peculiar Plants 업데이트</b>를 이용해 주셔서 감사합니다!\n"
 "\n"
-"핵 에너지를 사용하여 우주를 탐험하기 위한 래드볼트 엔진을 추가했습니다.\n"
-"다중 소행성 인프라를 개선하기 위해 행성 간 적재물 런처를 추가했습니다.\n"
+"    •<indent=20px> 작물은 이제 방사선에 노출되면 <b>돌연변이 씨</b>를 떨어뜨립니다. </indent>\n"
 "\n"
-"자세한 내용은 패치 전문을 확인하세요!"
+"    •<indent=20px>식품 부패와 냉장의 균형이 재조정되었습니다. </indent>\n"
+"\n"
+"    •<indent=20px>새로운 <b>미터 밸브</b>로 정확한 배관 수송이 가능합니다. </indent>\n"
+"\n"
+"    •<indent=20px>버그 수정, 애니메이션 업데이트 등</indent>\n"
+"\n"
+"자세한 내용은 패치 노트 전문을 확인하세요!"
 
 #. STRINGS.UI.FRONTEND.MOTD.UPDATE_TEXT
 msgctxt "STRINGS.UI.FRONTEND.MOTD.UPDATE_TEXT"
@@ -58822,6 +59728,21 @@ msgctxt "STRINGS.UI.FRONTEND.WORLDGENSCREEN.TITLE"
 msgid "NEW GAME"
 msgstr "새로운 게임"
 
+#. STRINGS.UI.GAMEOBJECTEFFECTS.AMBIENT_NO_MIN_RADIATION_FMT
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.AMBIENT_NO_MIN_RADIATION_FMT"
+msgid "Less than {maxRads}"
+msgstr "{maxRads} 미만"
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.AMBIENT_RADIATION
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.AMBIENT_RADIATION"
+msgid "Ambient Radiation"
+msgstr "주변 방사선"
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.AMBIENT_RADIATION_FMT
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.AMBIENT_RADIATION_FMT"
+msgid "{minRads} - {maxRads}"
+msgstr "{minRads} - {maxRads}"
+
 #. STRINGS.UI.GAMEOBJECTEFFECTS.CALORIES
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.CALORIES"
 msgid "+{0}"
@@ -58940,7 +59861,7 @@ msgstr "생명 주기: {0}"
 #. STRINGS.UI.GAMEOBJECTEFFECTS.IDEAL_FERTILIZER
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.IDEAL_FERTILIZER"
 msgid "{0}: {1}"
-msgstr "{0}: {1}"
+msgstr "{0} {1}"
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.IDEAL_PRESSURE
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.IDEAL_PRESSURE"
@@ -58976,6 +59897,11 @@ msgstr "생장:"
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.LIGHT"
 msgid "Light"
 msgstr "점화"
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.MUTANT_STERILE
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.MUTANT_STERILE"
+msgid "Doesn't Drop <link=\"PLANTS\">Seeds</link>"
+msgstr "<link=\"PLANTS\">씨</link>를 떨어뜨리지 않음"
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.PLANT_DO_NOT_HARVEST
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.PLANT_DO_NOT_HARVEST"
@@ -59040,7 +59966,7 @@ msgstr "<link=\"HEAT\">온도</link>: {0} ~ {1}"
 #. STRINGS.UI.GAMEOBJECTEFFECTS.REQUIRESFERTILIZER
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.REQUIRESFERTILIZER"
 msgid "{0}: {1}"
-msgstr "{0}: {1}"
+msgstr "{0} {1}"
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.ROTTEN
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.ROTTEN"
@@ -59158,6 +60084,22 @@ msgstr "이 식물은 기본적인 생장을 위해 내부 <style=\"KKeyword\">�
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.INITIALGROWTHTIME"
 msgid "This plant takes <b>{0}</b> to mature again once replanted"
 msgstr "이 식물은 다시 심은 후 다시 성숙하는 데 <b>{0}</b>이(가) 걸립니다."
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.MUTANT_SEED_TOOLTIP
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.MUTANT_SEED_TOOLTIP"
+msgid ""
+"\n"
+"\n"
+"Growing near its maximum radiation increases the chance of mutant seeds being produced"
+msgstr ""
+"\n"
+"\n"
+"최대 방사선 근처에서 성장하면 돌연변이 씨가 생길 가능성이 높아집니다."
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.MUTANT_STERILE
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.MUTANT_STERILE"
+msgid "Due to changes to its DNA this plant will not produce seeds of its own"
+msgstr "DNA의 변화로 인해 이 식물은 자신의 씨를 생성하지 않습니다."
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.REGROWTHTIME
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.REGROWTHTIME"
@@ -63290,6 +64232,11 @@ msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_FARM_TINKER.DESCRIPTION"
 msgid "<link=\"PLANTS\">Crop Tending</link> and Micronutrient Fertilizer Crafting"
 msgstr "<link=\"PLANTS\">작물 재배</link> 및 미량 영양소 비료 제작"
 
+#. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_IDENTIFY_MUTANT_SEEDS.DESCRIPTION
+msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_IDENTIFY_MUTANT_SEEDS.DESCRIPTION"
+msgid "Can identify <style=\"KKeyword\">Mutant Seeds</style> at the <link=\"GENETICANALYSISSTATION\">Botanical Analyzer</link>"
+msgstr "<link=\"GENETICANALYSISSTATION\">식물 분석기</link>에서 <style=\"KKeyword\">돌연변이 씨</style>를 식별할 수 있습니다."
+
 #. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_PILOT_ROCKET.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_PILOT_ROCKET.DESCRIPTION"
 msgid "<link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link> Usage"
@@ -64739,6 +65686,11 @@ msgctxt "STRINGS.UI.SPACEDESTINATIONS.COMETS.FULLERENECOMET.NAME"
 msgid "Fullerene Comet"
 msgstr "풀러렌 혜성"
 
+#. STRINGS.UI.SPACEDESTINATIONS.COMETS.GASSYMOOCOMET.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.COMETS.GASSYMOOCOMET.NAME"
+msgid "Gassy Mooteor"
+msgstr "가스질 음메유성"
+
 #. STRINGS.UI.SPACEDESTINATIONS.COMETS.GOLDCOMET.NAME
 msgctxt "STRINGS.UI.SPACEDESTINATIONS.COMETS.GOLDCOMET.NAME"
 msgid "Gold Comet"
@@ -65280,6 +66232,36 @@ msgstr "우주비행사가 할당되지 않음"
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.ASTRONAUT_TITLE"
 msgid "Astronaut"
 msgstr "우주비행사"
+
+#. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.STATUS.FAILURE
+msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.STATUS.FAILURE"
+msgid ""
+msgstr ""
+
+#. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.STATUS.READY
+msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.STATUS.READY"
+msgid "Cargo Transfer Complete"
+msgstr "화물 이전 완료"
+
+#. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.STATUS.WARNING
+msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.STATUS.WARNING"
+msgid "Cargo Transfer Complete"
+msgstr "화물 이전 완료"
+
+#. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.TOOLTIP.FAILURE
+msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.TOOLTIP.FAILURE"
+msgid ""
+msgstr ""
+
+#. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.TOOLTIP.READY
+msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.TOOLTIP.READY"
+msgid "All possible loading and unloading has been completed"
+msgstr "가능한 모든 싣기 및 내리기가 완료되었습니다."
+
+#. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.TOOLTIP.WARNING
+msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.TOOLTIP.WARNING"
+msgid "The <link=\"LAUNCHPLATFORM\">Rocket Platform</link> could still transfer cargo to or from this rocket"
+msgstr "<link=\"LAUNCHPLATFORM\">로켓 플랫폼</link>은 여전히 이 로켓과 화물을 옮길 수 있음"
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CONSTRUCTION_COMPLETE.STATUS.FAILURE
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CONSTRUCTION_COMPLETE.STATUS.FAILURE"
@@ -66495,7 +67477,7 @@ msgstr "굴착 도구"
 #. STRINGS.UI.TOOLS.DISINFECT.NAME
 msgctxt "STRINGS.UI.TOOLS.DISINFECT.NAME"
 msgid "Disinfect"
-msgstr "소독"
+msgstr "Disinfect"
 
 #. STRINGS.UI.TOOLS.DISINFECT.TOOLACTION
 msgctxt "STRINGS.UI.TOOLS.DISINFECT.TOOLACTION"
@@ -66510,7 +67492,7 @@ msgstr "소독 도구"
 #. STRINGS.UI.TOOLS.EMPTY_PIPE.NAME
 msgctxt "STRINGS.UI.TOOLS.EMPTY_PIPE.NAME"
 msgid "Empty Pipe"
-msgstr "파이프 비우기"
+msgstr "Empty Pipe"
 
 #. STRINGS.UI.TOOLS.EMPTY_PIPE.TOOLACTION
 msgctxt "STRINGS.UI.TOOLS.EMPTY_PIPE.TOOLACTION"
@@ -67693,6 +68675,16 @@ msgctxt "STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_PRESSURE"
 msgid "The current <style=\"KKeyword\">Gas</style> pressure is <b>{pressure}</b>"
 msgstr "현재 <style=\"KKeyword\">기체</style> 압력은 <b>{pressure}</b>입니다."
 
+#. STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_RADIATION
+msgctxt "STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_RADIATION"
+msgid "This plant is sitting in <b>{rads}</b> of ambient <style=\"KKeyword\">Radiation</style>. It needs at between {minRads} and {maxRads} to grow"
+msgstr "이 식물은 <b>{rads}</b> <style=\"KKeyword\">주변 방사선</style>에 있습니다. 성장하려면 {minRads}~{maxRads} 사이에 있어야 합니다."
+
+#. STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_RADIATION_NO_MIN
+msgctxt "STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_RADIATION_NO_MIN"
+msgid "This plant is sitting in <b>{rads}</b> of ambient <style=\"KKeyword\">Radiation</style>. It needs less than {maxRads} to grow"
+msgstr "이 식물은 <b>{rads}</b> <style=\"KKeyword\">주변 방사선</style>에 있습니다. 성장하려면 {maxRads} 미만이어야 합니다."
+
 #. STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_RECEPTACLE_INOPERATIONAL
 msgctxt "STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_RECEPTACLE_INOPERATIONAL"
 msgid "This plant is not housed in an operational farm plot"
@@ -68125,7 +69117,7 @@ msgstr "이 로켓의 새 목적지점을 선택합니다."
 #. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.CLEAR_DESTINATION_BUTTON
 msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.CLEAR_DESTINATION_BUTTON"
 msgid "Clear"
-msgstr "Clear"
+msgstr "지우기"
 
 #. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.CLEAR_DESTINATION_BUTTON_TOOLTIP
 msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.CLEAR_DESTINATION_BUTTON_TOOLTIP"
@@ -68135,17 +69127,22 @@ msgstr "이 로켓의 선택된 목적지점 지우기"
 #. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_FIRST_AVAILABLE
 msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_FIRST_AVAILABLE"
 msgid "Select the first available landing site"
-msgstr "사용 가능한 첫 번째 착륙 장소 선택"
+msgstr "사용 가능한 첫 번째 착륙장 선택"
 
-#. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_OBSTRUCTED
-msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_OBSTRUCTED"
+#. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_PATH_OBSTRUCTED
+msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_PATH_OBSTRUCTED"
 msgid "Landing path obstructed"
 msgstr "착륙 경로가 차단됨"
 
+#. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_SITE_OBSTRUCTED
+msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_SITE_OBSTRUCTED"
+msgid "Landing site obstructed"
+msgstr "착륙장이 차단됨"
+
 #. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_TOO_SHORT
 msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_TOO_SHORT"
-msgid "Landing site too short for this rocket's height"
-msgstr "이 로켓의 높이에 비해 착륙 장소 높이가 너무 낮습니다."
+msgid "This rocket's height exceeds the space available in this landing site"
+msgstr "이 로켓의 높이는 이 착륙장에서 사용할 수 있는 공간을 초과합니다."
 
 #. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_VALID_SITE
 msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_VALID_SITE"
@@ -68165,7 +69162,7 @@ msgstr "이 로켓의 목적지점과 원래 이륙 위치 간 왕복 비행을 
 #. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.NO_TALL_SITES_AVAILABLE
 msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.NO_TALL_SITES_AVAILABLE"
 msgid "No landing sites fit the height of this rocket"
-msgstr "이 로켓의 높이에 맞는 착륙 장소가 없습니다."
+msgstr "이 로켓의 높이에 맞는 착륙장이 없습니다."
 
 #. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.NONEAVAILABLE
 msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.NONEAVAILABLE"
@@ -68290,7 +69287,7 @@ msgstr "{0} % "
 #. STRINGS.UI.UISIDESCREENS.COUNTER_SIDE_SCREEN.CURRENT_COUNT_SIMPLE
 msgctxt "STRINGS.UI.UISIDESCREENS.COUNTER_SIDE_SCREEN.CURRENT_COUNT_SIMPLE"
 msgid "{0} of "
-msgstr "{0} /"
+msgstr "다음 중 {0}:"
 
 #. STRINGS.UI.UISIDESCREENS.COUNTER_SIDE_SCREEN.DECREMENT_MODE
 msgctxt "STRINGS.UI.UISIDESCREENS.COUNTER_SIDE_SCREEN.DECREMENT_MODE"
@@ -68662,7 +69659,7 @@ msgstr "지시 생산 수량:"
 #. STRINGS.UI.UISIDESCREENS.FABRICATORSIDESCREEN.RECIPEPRODUCT
 msgctxt "STRINGS.UI.UISIDESCREENS.FABRICATORSIDESCREEN.RECIPEPRODUCT"
 msgid "{0}: {1}"
-msgstr "{0}: {1}"
+msgstr "{0} {1}"
 
 #. STRINGS.UI.UISIDESCREENS.FABRICATORSIDESCREEN.RECIPERQUIREMENT
 msgctxt "STRINGS.UI.UISIDESCREENS.FABRICATORSIDESCREEN.RECIPERQUIREMENT"
@@ -68847,40 +69844,30 @@ msgctxt "STRINGS.UI.UISIDESCREENS.GENESHUFFLERSIDESREEN.UNDERWAY"
 msgid "Neural Vacillation in progress."
 msgstr "신경 변동이 진행 중입니다."
 
-#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.CANCEL_SEED
-msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.CANCEL_SEED"
-msgid "Clear Analysis Target"
-msgstr "명확한 분석 대상"
-
-#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.CURRENT_TARGET
-msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.CURRENT_TARGET"
-msgid "Currently studying:"
-msgstr "현재 연구 중:"
-
 #. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.NONE_DISCOVERED
 msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.NONE_DISCOVERED"
 msgid "No mutant seeds have been found."
 msgstr "돌연변이 씨는 발견되지 않았습니다."
 
-#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.PICK_TARGET
-msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.PICK_TARGET"
-msgid "Select a plant for study"
-msgstr "연구할 식물 선택"
+#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_ALLOWED
+msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_ALLOWED"
+msgid "</i>Will analyze</i>"
+msgstr "</i>분석할 수 있음</i>"
 
-#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_COMPLETE
-msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_COMPLETE"
-msgid "<i>Complete</i>"
-msgstr "<i>완료</i>"
+#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_FORBIDDEN
+msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_FORBIDDEN"
+msgid "</i>Won't analyze</i>"
+msgstr "</i>분석할 수 없음</i>"
 
-#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_PROGRESS_FMT
-msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_PROGRESS_FMT"
-msgid "{0}/{1} seeds"
-msgstr "{0}/{1} 씨"
+#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_NO_MUTANTS
+msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_NO_MUTANTS"
+msgid "</i>No mutants found</i>"
+msgstr "</i>돌연변이가 없음</i>"
 
-#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SELECT_SEED
-msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SELECT_SEED"
-msgid "Select Analysis Target"
-msgstr "분석 대상 선택"
+#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SELECT_SEEDS
+msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SELECT_SEEDS"
+msgid "Select which seed types to analyze:"
+msgstr "분석할 씨 유형 선택:"
 
 #. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.TITLE
 msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.TITLE"
@@ -68902,10 +69889,70 @@ msgctxt "STRINGS.UI.UISIDESCREENS.HABITATMODULESIDESCREEN.VIEW_BUTTON_TOOLTIP"
 msgid "What's goin' on in there?"
 msgstr "그 안에서 무슨 일이 일어나고 있나요?"
 
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_E
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_E"
+msgid "E"
+msgstr "E"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_N
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_N"
+msgid "N"
+msgstr "N"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_NE
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_NE"
+msgid "NE"
+msgstr "NE"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_NW
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_NW"
+msgid "NW"
+msgstr "NW"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_S
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_S"
+msgid "S"
+msgstr "S"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_SE
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_SE"
+msgid "SE"
+msgstr "SE"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_SW
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_SW"
+msgid "SW"
+msgstr "SW"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_W
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_W"
+msgid "W"
+msgstr "W"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.SELECTED_DIRECTION
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.SELECTED_DIRECTION"
+msgid "Selected direction: {0}"
+msgstr "선택한 방향: {0}"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.TITLE
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.TITLE"
+msgid "Emitting Particle Direction"
+msgstr "방출 입자 방향"
+
 #. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.CURRENT_THRESHOLD
 msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.CURRENT_THRESHOLD"
 msgid "Current Threshold: {0}%"
 msgstr "현재 임계값: {0}%"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.PROGRESS_BAR_LABEL
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.PROGRESS_BAR_LABEL"
+msgid "Radbolt Generation"
+msgstr "래드볼트 생성"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.PROGRESS_BAR_TOOLTIP
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.PROGRESS_BAR_TOOLTIP"
+msgid "The building will emit a <style=\"KKeyword\">Radbolt</style> in the chosen direction when fully charged"
+msgstr "건조물은 완전히 충전되면 선택한 방향으로 <style=\"KKeyword\">래드볼트</style>를 방출합니다."
 
 #. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.TITLE
 msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.TITLE"
@@ -69054,6 +70101,31 @@ msgstr "로켓 플랫폼"
 msgctxt "STRINGS.UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.WAITING_TO_LAND_PANEL"
 msgid "Waiting to land"
 msgstr "착륙 대기 중"
+
+#. STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.AMOUNT
+msgctxt "STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.AMOUNT"
+msgid "Amount: {0}"
+msgstr "수량: {0}"
+
+#. STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.LIMIT
+msgctxt "STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.LIMIT"
+msgid "Limit:"
+msgstr "한도:"
+
+#. STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.RESET_BUTTON
+msgctxt "STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.RESET_BUTTON"
+msgid "Reset Amount"
+msgstr "수량 재설정"
+
+#. STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.SLIDER_TOOLTIP_UNITS
+msgctxt "STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.SLIDER_TOOLTIP_UNITS"
+msgid "The amount of Units or Mass passing through the sensor."
+msgstr "센서를 통과하는 단위 또는 질량의 수량입니다."
+
+#. STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.TITLE
+msgctxt "STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.TITLE"
+msgid "Meter Control"
+msgstr "미터 제어"
 
 #. STRINGS.UI.UISIDESCREENS.LOGIC_BUFFER_SIDE_SCREEN.TITLE
 msgctxt "STRINGS.UI.UISIDESCREENS.LOGIC_BUFFER_SIDE_SCREEN.TITLE"
@@ -70187,8 +71259,8 @@ msgstr ""
 
 #. STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_HEIGHT.FAILED
 msgctxt "STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_HEIGHT.FAILED"
-msgid "    • Engine's height limit of reached"
-msgstr "    • 엔진의 높이 제한 도달"
+msgid "    • Engine's height limit reached"
+msgstr "    • 엔진의 높이 제한에 도달했습니다."
 
 #. STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_MODULES.COMPLETE
 msgctxt "STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_MODULES.COMPLETE"
@@ -71402,7 +72474,7 @@ msgstr "이 복제체의 도달 범위 안에 있는 영역을 숨깁니다."
 #. STRINGS.UI.USERMENUACTIONS.DUMP.NAME
 msgctxt "STRINGS.UI.USERMENUACTIONS.DUMP.NAME"
 msgid "Empty"
-msgstr "비어있음"
+msgstr "비우기"
 
 #. STRINGS.UI.USERMENUACTIONS.DUMP.NAME_OFF
 msgctxt "STRINGS.UI.USERMENUACTIONS.DUMP.NAME_OFF"
@@ -71792,6 +72864,17 @@ msgstr ""
 "\n"
 "새로운 데이터베이스 항목이 잠금 해제되었습니다."
 
+#. STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_CRYO_TANK
+msgctxt "STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_CRYO_TANK"
+msgid ""
+"There are some safety instructions included in the operating instructions of this Cryotank. I add them to my database.\n"
+"\n"
+"New Database Entry discoverd."
+msgstr ""
+"이 크라이오탱크의 작동 지침에는 몇 가지 안전 지침이 포함되어 있습니다. 데이터베이스에 이를 추가합니다.\n"
+"\n"
+"새 데이터베이스 항목이 발견되었습니다."
+
 #. STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_DISPLAY
 msgctxt "STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_DISPLAY"
 msgid ""
@@ -71939,6 +73022,28 @@ msgstr ""
 "버려진 기계에서 흥미로운 것을 찾아 내 데이터베이스에 추가합니다.\n"
 "\n"
 "새로운 데이터베이스 항목이 발견되었습니다."
+
+#. STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_TELEPORTER_RECEIVER
+msgctxt "STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_TELEPORTER_RECEIVER"
+msgid ""
+"Incongruously placed research notes are hidden within the operating instructions of this device. I add them to my database.\n"
+"\n"
+"New Database Entry discovered."
+msgstr ""
+"부주의하게 배치된 연구 메모가 이 장치의 작동 지침 내에 숨겨져 있습니다. 데이터베이스에 이를 추가합니다.\n"
+"\n"
+"새 데이터베이스 항목이 발견되었습니다."
+
+#. STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_TELEPORTER_SENDER
+msgctxt "STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_TELEPORTER_SENDER"
+msgid ""
+"While scanning the antiquated computer code of this machine I uncovered some research notes. I add them to my database.\n"
+"\n"
+"New Database Entry discovered."
+msgstr ""
+"이 기계의 구식 컴퓨터 코드를 스캔하는 동안 몇 가지 연구 메모를 발견했습니다. 데이터베이스에 이를 추가합니다.\n"
+"\n"
+"새 데이터베이스 항목이 발견되었습니다."
 
 #. STRINGS.UI.USERMENUACTIONS.READLORE.TOOLTIP
 msgctxt "STRINGS.UI.USERMENUACTIONS.READLORE.TOOLTIP"
@@ -73207,11 +74312,11 @@ msgctxt "STRINGS.WORLDS.FORESTMOONLET.DESCRIPTION"
 msgid ""
 "A small moon with a forest start.\n"
 "\n"
-"<smallcaps>Forest Moonlets have plenty of organic material but Duplicants will have to venture outside their starting biome quickly to find any metal."
+"<smallcaps>Forest Moonlets have plenty of organic material but Duplicants will have to venture outside their starting biome quickly to find any metal.</smallcaps>"
 msgstr ""
 "숲으로 시작되는 작은 달.\n"
 "\n"
-"<smallcaps>숲 소위성은 많은 유기물을 가지고 있지만 복제체는 금속을 찾기 위해 빠르게 시작 생물군계 밖으로 모험을 떠나야 합니다."
+"<smallcaps>숲 소위성은 많은 유기물을 가지고 있지만 복제체는 금속을 찾기 위해 빠르게 시작 생물군계 밖으로 모험을 떠나야 합니다.</smallcaps>"
 
 #. STRINGS.WORLDS.FORESTMOONLET.NAME
 msgctxt "STRINGS.WORLDS.FORESTMOONLET.NAME"
@@ -73268,6 +74373,22 @@ msgctxt "STRINGS.WORLDS.MARSHYMOONLET.NAME"
 msgid "Marshy Asteroid"
 msgstr "습지 소행성"
 
+#. STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
+msgctxt "STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION"
+msgid ""
+"A large-ish partially frozen world with a radioactive core.\n"
+"\n"
+"<smallcaps>While Radioactive Swamp Asteroid are largely swampy, they also contain a great deal of rust.</smallcaps>"
+msgstr ""
+"방사성 핵을 가진 부분적으로 약간 큰 얼어 붙은 세계.\n"
+"\n"
+"<smallcaps>방사성 늪 소행성은 대부분 늪지대이지만 녹이 많이 포함되어 있습니다.</smallcaps>"
+
+#. STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.NAME
+msgctxt "STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.NAME"
+msgid "Radioactive Swamp Asteroid"
+msgstr "방사성 늪 소행성"
+
 #. STRINGS.WORLDS.METALHEAVYLANDINGSITE.DESCRIPTION
 msgctxt "STRINGS.WORLDS.METALHEAVYLANDINGSITE.DESCRIPTION"
 msgid ""
@@ -73289,16 +74410,16 @@ msgctxt "STRINGS.WORLDS.MOOMOONLET.DESCRIPTION"
 msgid ""
 "A small world with unique local lifeforms.\n"
 "\n"
-"<smallcaps>Moo Moonlets are the natural breeding ground of Gassy Moos due to their abundance of Gas Grass and Methane.</smallcaps>"
+"<smallcaps>Moo Asteroids are the natural breeding ground of Gassy Moos due to their abundance of Gas Grass and Methane.</smallcaps>"
 msgstr ""
 "독특한 현지 생명체가 있는 작은 세계.\n"
 "\n"
-"<smallcaps>음메 소위성은 가스풀과 메탄이 풍부하여 가스질 음메의 자연 번식지입니다.</smallcaps>"
+"<smallcaps>음메 소행성은 가스풀과 메탄이 풍부하여 가스질 음메의 자연 번식지입니다.</smallcaps>"
 
 #. STRINGS.WORLDS.MOOMOONLET.NAME
 msgctxt "STRINGS.WORLDS.MOOMOONLET.NAME"
-msgid "Moo Moonlet"
-msgstr "음메 소위성"
+msgid "Moo Asteroid"
+msgstr "음메 소행성"
 
 #. STRINGS.WORLDS.MOON_BARREN.DESCRIPTION
 msgctxt "STRINGS.WORLDS.MOON_BARREN.DESCRIPTION"
@@ -73724,13 +74845,13 @@ msgctxt "STRINGS.WORLDS.WATERMOONLET.DESCRIPTION"
 msgid ""
 "A small, water-submerged world.\n"
 "\n"
-"<smallcaps>Water Moonlets possess a variety of liquid resources and are a natural source of Graphite. However, its thin surface and sparse construction material means Duplicants should come prepared for a swim.</smallcaps>"
+"<smallcaps>Water Asteroids possess a variety of liquid resources and are a natural source of Graphite. However, its thin surface and sparse construction material means Duplicants should come prepared for a swim.</smallcaps>"
 msgstr ""
 "물에 잠긴 작은 세계.\n"
 "\n"
-"<smallcaps>물 소위성은 다양한 액체 자원을 보유하고 있으며 그래파이트의 천연 공급원입니다. 그러나 얇은 표면과 많지 않은 건조 재료로 인해 복제체는 수영할 준비를 해야 합니다.</smallcaps>"
+"<smallcaps>물 소행성은 다양한 액체 자원을 보유하고 있으며 그래파이트의 천연 공급원입니다. 그러나 얇은 표면과 많지 않은 건조 재료로 인해 복제체는 수영할 준비를 해야 합니다.</smallcaps>"
 
 #. STRINGS.WORLDS.WATERMOONLET.NAME
 msgctxt "STRINGS.WORLDS.WATERMOONLET.NAME"
-msgid "Water Moonlet"
-msgstr "물 소위성"
+msgid "Water Asteroid"
+msgstr "물 소행성"

@@ -145,3 +145,26 @@ worldTemplateRules:
       - command: ExceptWith
         tagcommand: AtTag
         tag: NoGravitasFeatures
+  - names:
+    - expansion1::poi/genericGravitas/poi_office
+    listRule: GuaranteeAll
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 2
+        maxDistance: 99
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+      - command: ExceptWith
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 2
+      - command: ExceptWith
+        tagcommand: DistanceFromTag
+        tag: AtSurface
+        minDistance: 0
+        maxDistance: 2

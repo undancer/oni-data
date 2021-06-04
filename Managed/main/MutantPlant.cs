@@ -185,4 +185,18 @@ public class MutantPlant : KMonoBehaviour, IGameObjectEffectDescriptor
 		}
 		return descriptors;
 	}
+
+	public List<string> GetSoundEvents()
+	{
+		List<string> list = new List<string>();
+		if (mutationIDs != null)
+		{
+			foreach (string mutationID in mutationIDs)
+			{
+				PlantMutation plantMutation = Db.Get().PlantMutations.Get(mutationID);
+				list.AddRange(plantMutation.AdditionalSoundEvents);
+			}
+		}
+		return list;
+	}
 }

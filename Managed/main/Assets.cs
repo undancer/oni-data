@@ -219,6 +219,7 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 	{
 		Db.Get();
 		LegacyModMain.Load();
+		Db.Get().Techs.PostProcess();
 	}
 
 	protected override void OnSpawn()

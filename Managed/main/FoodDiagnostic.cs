@@ -11,23 +11,26 @@ public class FoodDiagnostic : ColonyDiagnostic
 		icon = "icon_category_food";
 		trackerSampleCountSeconds = 150f;
 		presentationSetting = PresentationSetting.CurrentValue;
-		AddCriterion(UI.COLONY_DIAGNOSTICS.NO_MINIONS, ColonyDiagnosticUtility.GetWorldHasMinionCriterion(worldID));
-		AddCriterion("CheckEnoughFood", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckEnoughFood));
-		AddCriterion("CheckStarvation", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckStarvation));
+		AddCriterion("CheckEnoughFood", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA.CHECKENOUGHFOOD, CheckEnoughFood));
+		AddCriterion("CheckStarvation", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA.CHECKSTARVATION, CheckStarvation));
 	}
 
 	private DiagnosticResult CheckAnyFood()
 	{
 		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA_HAS_FOOD.PASS);
-		if (tracker.GetDataTimeLength() < 10f)
+		List<MinionIdentity> worldItems = Components.LiveMinionIdentities.GetWorldItems(base.worldID);
+		if (worldItems.Count != 0)
 		{
-			result.opinion = DiagnosticResult.Opinion.Normal;
-			result.Message = UI.COLONY_DIAGNOSTICS.NO_DATA;
-		}
-		else if (tracker.GetAverageValue(trackerSampleCountSeconds) == 0f)
-		{
-			result.opinion = DiagnosticResult.Opinion.Bad;
-			result.Message = UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA_HAS_FOOD.FAIL;
+			if (tracker.GetDataTimeLength() < 10f)
+			{
+				result.opinion = DiagnosticResult.Opinion.Normal;
+				result.Message = UI.COLONY_DIAGNOSTICS.NO_DATA;
+			}
+			else if (tracker.GetAverageValue(trackerSampleCountSeconds) == 0f)
+			{
+				result.opinion = DiagnosticResult.Opinion.Bad;
+				result.Message = UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA_HAS_FOOD.FAIL;
+			}
 		}
 		return result;
 	}

@@ -13,6 +13,11 @@ public class ProgressBarSideScreen : SideScreenContent, IRender1000ms
 		base.OnSpawn();
 	}
 
+	public override int GetSideScreenSortOrder()
+	{
+		return -10;
+	}
+
 	public override bool IsValidForTarget(GameObject target)
 	{
 		return target.GetComponent<IProgressBarSideScreen>() != null;

@@ -131,6 +131,12 @@ namespace TUNING
 
 		public static float CARGO_CAPACITY_SCALE = 10f;
 
+		public static float LIQUID_CARGO_BAY_CLUSTER_CAPACITY = 2700f;
+
+		public static float SOLID_CARGO_BAY_CLUSTER_CAPACITY = 2700f;
+
+		public static float GAS_CARGO_BAY_CLUSTER_CAPACITY = 1100f;
+
 		public static Vector2I ROCKET_INTERIOR_SIZE = new Vector2I(32, 32);
 
 		public static float MassFromPenaltyPercentage(float penaltyPercentage = 0.5f)

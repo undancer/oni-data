@@ -224,15 +224,20 @@ public class RocketModule : KMonoBehaviour
 		RocketModuleCluster component = GetComponent<RocketModuleCluster>();
 		KBatchedAnimController component2 = GetComponent<KBatchedAnimController>();
 		CraftModuleInterface craftInterface = component.CraftInterface;
-		if (craftInterface.CheckPreppedForLaunch())
+		Clustercraft clustercraft = ((craftInterface == null) ? null : craftInterface.GetComponent<Clustercraft>());
+		if (clustercraft != null && clustercraft.Status == Clustercraft.CraftStatus.Launching && component2.HasAnimation("launch"))
+		{
+			if (component2.HasAnimation("launch_pre"))
+			{
+				component2.Queue("launch_pre");
+			}
+			component2.Queue("launch", KAnim.PlayMode.Loop);
+		}
+		else if (craftInterface != null && craftInterface.CheckPreppedForLaunch())
 		{
 			component2.initialAnim = "ready_to_launch";
 			component2.Play("pre_ready_to_launch");
 			component2.Queue("ready_to_launch", KAnim.PlayMode.Loop);
-		}
-		else if (craftInterface.CurrentPad == null)
-		{
-			component2.Play("launch", KAnim.PlayMode.Loop);
 		}
 		else
 		{

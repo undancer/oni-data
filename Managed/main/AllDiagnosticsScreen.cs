@@ -9,6 +9,8 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 {
 	private Dictionary<string, GameObject> diagnosticRows = new Dictionary<string, GameObject>();
 
+	private Dictionary<string, Dictionary<string, GameObject>> criteriaRows = new Dictionary<string, Dictionary<string, GameObject>>();
+
 	public GameObject rootListContainer;
 
 	public GameObject diagnosticLinePrefab;
@@ -28,6 +30,8 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 	public static AllDiagnosticsScreen Instance;
 
 	public Dictionary<Tag, bool> currentlyDisplayedRows = new Dictionary<Tag, bool>();
+
+	public Dictionary<Tag, bool> subrowContainerOpen = new Dictionary<Tag, bool>();
 
 	protected override void OnPrefabInit()
 	{
@@ -73,6 +77,7 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 		{
 			ManagementMenu.Instance.CloseAll();
 			AllResourcesScreen.Instance.Show(show: false);
+			RefreshSubrows();
 		}
 	}
 
@@ -127,6 +132,7 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 			currentlyDisplayedRows[key] = true;
 		}
 		SearchFilter(searchInputField.text);
+		RefreshRows();
 	}
 
 	private void SpawnRows()
@@ -177,36 +183,55 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 			}
 			else
 			{
-				int activeWorldId = ClusterManager.Instance.activeWorldId;
-				int num = (int)ColonyDiagnosticUtility.Instance.diagnosticDisplaySettings[activeWorldId][id];
+				int activeWorldId2 = ClusterManager.Instance.activeWorldId;
+				int num = (int)ColonyDiagnosticUtility.Instance.diagnosticDisplaySettings[activeWorldId2][id];
 				int num2 = num - 1;
 				if (num2 < 0)
 				{
 					num2 = 2;
 				}
-				ColonyDiagnosticUtility.Instance.diagnosticDisplaySettings[activeWorldId][id] = (ColonyDiagnosticUtility.DisplaySetting)num2;
+				ColonyDiagnosticUtility.Instance.diagnosticDisplaySettings[activeWorldId2][id] = (ColonyDiagnosticUtility.DisplaySetting)num2;
 			}
 			RefreshRows();
 			ColonyDiagnosticScreen.Instance.RefreshAll();
 		});
-		gameObject.GetComponent<MultiToggle>().onClick = reference.onClick;
-		component.GetReference<SparkLayer>("Chart").GetComponent<GraphBase>().axis_x.min_value = 0f;
-		component.GetReference<SparkLayer>("Chart").GetComponent<GraphBase>().axis_x.max_value = 600f;
-		component.GetReference<SparkLayer>("Chart").GetComponent<GraphBase>().axis_x.guide_frequency = 120f;
-		component.GetReference<SparkLayer>("Chart").GetComponent<GraphBase>().RefreshGuides();
+		GraphBase component2 = component.GetReference<SparkLayer>("Chart").GetComponent<GraphBase>();
+		component2.axis_x.min_value = 0f;
+		component2.axis_x.max_value = 600f;
+		component2.axis_x.guide_frequency = 120f;
+		component2.RefreshGuides();
 		diagnosticRows.Add(id2, gameObject);
+		criteriaRows.Add(id2, new Dictionary<string, GameObject>());
 		currentlyDisplayedRows.Add(id2, value: true);
 		component.GetReference<Image>("Icon").sprite = Assets.GetSprite(diagnostic.icon);
 		RefreshPinnedState(id2);
 		RectTransform reference2 = component.GetReference<RectTransform>("SubRows");
 		DiagnosticCriterion[] criteria = diagnostic.GetCriteria();
-		foreach (DiagnosticCriterion diagnosticCriterion in criteria)
+		foreach (DiagnosticCriterion sub in criteria)
 		{
 			GameObject gameObject2 = Util.KInstantiateUI(subDiagnosticLinePrefab, reference2.gameObject, force_active: true);
-			HierarchyReferences component2 = gameObject2.GetComponent<HierarchyReferences>();
-			LocText reference3 = component2.GetReference<LocText>("Label");
-			reference3.SetText(diagnosticCriterion.name);
+			gameObject2.GetComponent<ToolTip>().SetSimpleTooltip(string.Format(UI.DIAGNOSTICS_SCREEN.CRITERIA_TOOLTIP, diagnostic.name, sub.name));
+			HierarchyReferences component3 = gameObject2.GetComponent<HierarchyReferences>();
+			LocText reference3 = component3.GetReference<LocText>("Label");
+			reference3.SetText(sub.name);
+			criteriaRows[diagnostic.id].Add(sub.id, gameObject2);
+			MultiToggle reference4 = component3.GetReference<MultiToggle>("PinToggle");
+			reference4.onClick = (System.Action)Delegate.Combine(reference4.onClick, (System.Action)delegate
+			{
+				int activeWorldId = ClusterManager.Instance.activeWorldId;
+				bool flag = ColonyDiagnosticUtility.Instance.IsCriteriaEnabled(activeWorldId, diagnostic.id, sub.id);
+				ColonyDiagnosticUtility.Instance.SetCriteriaEnabled(activeWorldId, diagnostic.id, sub.id, !flag);
+				RefreshSubrows();
+			});
 		}
+		subrowContainerOpen.Add(diagnostic.id, value: false);
+		MultiToggle reference5 = component.GetReference<MultiToggle>("SubrowToggle");
+		reference5.onClick = (System.Action)Delegate.Combine(reference5.onClick, (System.Action)delegate
+		{
+			subrowContainerOpen[diagnostic.id] = !subrowContainerOpen[diagnostic.id];
+			RefreshSubrows();
+		});
+		component.GetReference<MultiToggle>("MainToggle").onClick = reference5.onClick;
 	}
 
 	private void FilterRowBySearch(Tag tag, string filter)
@@ -229,13 +254,31 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 
 	private bool PassesSearchFilter(Tag tag, string filter)
 	{
-		filter = filter.ToUpper();
-		string text = ColonyDiagnosticUtility.Instance.GetDiagnosticName(tag.ToString()).ToUpper();
-		if (filter != "" && !text.Contains(filter) && !tag.Name.ToUpper().Contains(filter))
+		if (string.IsNullOrEmpty(filter))
 		{
-			return false;
+			return true;
 		}
-		return true;
+		filter = filter.ToUpper();
+		string id = tag.ToString();
+		string text = ColonyDiagnosticUtility.Instance.GetDiagnosticName(id).ToUpper();
+		if (text.Contains(filter) || tag.Name.ToUpper().Contains(filter))
+		{
+			return true;
+		}
+		ColonyDiagnostic diagnostic = ColonyDiagnosticUtility.Instance.GetDiagnostic(id, ClusterManager.Instance.activeWorldId);
+		DiagnosticCriterion[] criteria = diagnostic.GetCriteria();
+		if (diagnostic != null && criteria != null)
+		{
+			DiagnosticCriterion[] array = criteria;
+			foreach (DiagnosticCriterion diagnosticCriterion in array)
+			{
+				if (diagnosticCriterion.name.ToUpper().Contains(filter))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private void RefreshPinnedState(string diagnosticID)
@@ -244,23 +287,47 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 		{
 			return;
 		}
+		MultiToggle reference = diagnosticRows[diagnosticID].GetComponent<HierarchyReferences>().GetReference<MultiToggle>("PinToggle");
 		if (ColonyDiagnosticUtility.Instance.IsDiagnosticTutorialDisabled(diagnosticID))
 		{
-			diagnosticRows[diagnosticID].GetComponent<HierarchyReferences>().GetReference<MultiToggle>("PinToggle").ChangeState(3);
-			return;
+			reference.ChangeState(3);
 		}
-		switch (ColonyDiagnosticUtility.Instance.diagnosticDisplaySettings[ClusterManager.Instance.activeWorldId][diagnosticID])
+		else
 		{
-		case ColonyDiagnosticUtility.DisplaySetting.Never:
-			diagnosticRows[diagnosticID].GetComponent<HierarchyReferences>().GetReference<MultiToggle>("PinToggle").ChangeState(0);
-			break;
-		case ColonyDiagnosticUtility.DisplaySetting.AlertOnly:
-			diagnosticRows[diagnosticID].GetComponent<HierarchyReferences>().GetReference<MultiToggle>("PinToggle").ChangeState(1);
-			break;
-		case ColonyDiagnosticUtility.DisplaySetting.Always:
-			diagnosticRows[diagnosticID].GetComponent<HierarchyReferences>().GetReference<MultiToggle>("PinToggle").ChangeState(2);
-			break;
+			switch (ColonyDiagnosticUtility.Instance.diagnosticDisplaySettings[ClusterManager.Instance.activeWorldId][diagnosticID])
+			{
+			case ColonyDiagnosticUtility.DisplaySetting.Never:
+				reference.ChangeState(0);
+				break;
+			case ColonyDiagnosticUtility.DisplaySetting.AlertOnly:
+				reference.ChangeState(1);
+				break;
+			case ColonyDiagnosticUtility.DisplaySetting.Always:
+				reference.ChangeState(2);
+				break;
+			}
 		}
+		string simpleTooltip = "";
+		if (ColonyDiagnosticUtility.Instance.IsDiagnosticTutorialDisabled(diagnosticID))
+		{
+			simpleTooltip = UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.TUTORIAL_DISABLED;
+		}
+		else
+		{
+			switch (ColonyDiagnosticUtility.Instance.diagnosticDisplaySettings[ClusterManager.Instance.activeWorldId][diagnosticID])
+			{
+			case ColonyDiagnosticUtility.DisplaySetting.Always:
+				simpleTooltip = UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.NEVER;
+				break;
+			case ColonyDiagnosticUtility.DisplaySetting.AlertOnly:
+				simpleTooltip = UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.ALWAYS;
+				break;
+			case ColonyDiagnosticUtility.DisplaySetting.Never:
+				simpleTooltip = UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.ALERT_ONLY;
+				break;
+			}
+		}
+		reference.GetComponent<ToolTip>().SetSimpleTooltip(simpleTooltip);
 	}
 
 	public void RefreshRows()
@@ -278,26 +345,44 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 				{
 					component.GetReference<LocText>("AvailableLabel").SetText(diagnostic.GetAverageValueString());
 					component.GetReference<Image>("Indicator").color = diagnostic.colors[diagnostic.LatestResult.opinion];
-					string str = "";
-					switch (ColonyDiagnosticUtility.Instance.diagnosticDisplaySettings[ClusterManager.Instance.activeWorldId][diagnostic.id])
-					{
-					case ColonyDiagnosticUtility.DisplaySetting.Always:
-						str = UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.NEVER;
-						break;
-					case ColonyDiagnosticUtility.DisplaySetting.AlertOnly:
-						str = UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.ALWAYS;
-						break;
-					case ColonyDiagnosticUtility.DisplaySetting.Never:
-						str = UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.ALERT_ONLY;
-						break;
-					}
-					diagnosticRow.Value.GetComponent<ToolTip>().refreshWhileHovering = true;
-					diagnosticRow.Value.GetComponent<ToolTip>().SetSimpleTooltip(string.Concat(Strings.Get(new StringKey("STRINGS.UI.COLONY_DIAGNOSTICS." + diagnostic.id.ToUpper() + ".TOOLTIP_NAME")), "\n", diagnostic.LatestResult.Message, str));
+					ToolTip reference = component.GetReference<ToolTip>("Tooltip");
+					reference.refreshWhileHovering = true;
+					reference.SetSimpleTooltip(string.Concat(Strings.Get(new StringKey("STRINGS.UI.COLONY_DIAGNOSTICS." + diagnostic.id.ToUpper() + ".TOOLTIP_NAME")), "\n", diagnostic.LatestResult.Message));
 				}
 				RefreshPinnedState(diagnosticRow.Key);
 			}
 		}
 		SetRowsActive();
+		RefreshSubrows();
+	}
+
+	private void RefreshSubrows()
+	{
+		foreach (KeyValuePair<string, GameObject> diagnosticRow in diagnosticRows)
+		{
+			DebugUtil.DevAssert(subrowContainerOpen.ContainsKey(diagnosticRow.Key), "AllDiagnosticsScreen subrowContainerOpen does not contain key " + diagnosticRow.Key + " - it should have been added in SpawnRows");
+			HierarchyReferences component = diagnosticRow.Value.GetComponent<HierarchyReferences>();
+			component.GetReference<MultiToggle>("SubrowToggle").ChangeState(subrowContainerOpen[diagnosticRow.Key] ? 1 : 0);
+			RectTransform reference = component.GetReference<RectTransform>("SubRows");
+			reference.gameObject.SetActive(subrowContainerOpen[diagnosticRow.Key]);
+			int num = 0;
+			foreach (KeyValuePair<string, GameObject> item in criteriaRows[diagnosticRow.Key])
+			{
+				GameObject value = item.Value;
+				HierarchyReferences component2 = value.GetComponent<HierarchyReferences>();
+				MultiToggle reference2 = component2.GetReference<MultiToggle>("PinToggle");
+				int activeWorldId = ClusterManager.Instance.activeWorldId;
+				string key = diagnosticRow.Key;
+				string key2 = item.Key;
+				bool flag = ColonyDiagnosticUtility.Instance.IsCriteriaEnabled(activeWorldId, key, key2);
+				reference2.ChangeState(flag ? 1 : 0);
+				if (flag)
+				{
+					num++;
+				}
+			}
+			component.GetReference<LocText>("SubrowHeaderLabel").SetText(string.Format(UI.DIAGNOSTICS_SCREEN.CRITERIA_ENABLED_COUNT, num, criteriaRows[diagnosticRow.Key].Count));
+		}
 	}
 
 	private void RefreshCharts()

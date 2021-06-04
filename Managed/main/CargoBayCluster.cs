@@ -78,5 +78,24 @@ public class CargoBayCluster : KMonoBehaviour, IUserControlledCapacity
 	private void OnStorageChange(object data)
 	{
 		meter.SetPositionPercent(storage.MassStored() / storage.Capacity());
+		UpdateCargoStatusItem();
+	}
+
+	private void UpdateCargoStatusItem()
+	{
+		RocketModuleCluster component = GetComponent<RocketModuleCluster>();
+		if (component == null)
+		{
+			return;
+		}
+		CraftModuleInterface craftInterface = component.CraftInterface;
+		if (!(craftInterface == null))
+		{
+			Clustercraft component2 = craftInterface.GetComponent<Clustercraft>();
+			if (!(component2 == null))
+			{
+				component2.UpdateStatusItem();
+			}
+		}
 	}
 }

@@ -40,6 +40,8 @@ public class Clustercraft : ClusterGridEntity
 
 	private Guid mainStatusHandle;
 
+	private Guid cargoStatusHandle;
+
 	[Serialize]
 	[Range(0f, 1f)]
 	public float AutoPilotMultiplier = 1f;
@@ -210,8 +212,8 @@ public class Clustercraft : ClusterGridEntity
 
 	private bool CanTravelToCell(AxialI location)
 	{
-		ClusterGridEntity visibleAsteroidAtCell = ClusterGrid.Instance.GetVisibleAsteroidAtCell(location);
-		if (visibleAsteroidAtCell != null)
+		ClusterGridEntity visibleEntityOfLayerAtCell = ClusterGrid.Instance.GetVisibleEntityOfLayerAtCell(location, EntityLayer.Asteroid);
+		if (visibleEntityOfLayerAtCell != null)
 		{
 			return CanLandAtAsteroid(location, mustLandImmediately: true);
 		}
@@ -279,13 +281,22 @@ public class Clustercraft : ClusterGridEntity
 		return Status == CraftStatus.InFlight && m_clusterTraveler.IsTraveling();
 	}
 
+	public ClusterGridEntity GetPOIAtCurrentLocation()
+	{
+		if (status != CraftStatus.InFlight || IsFlightInProgress())
+		{
+			return null;
+		}
+		return ClusterGrid.Instance.GetVisibleEntityOfLayerAtCell(m_location, EntityLayer.POI);
+	}
+
 	public ClusterGridEntity GetStableOrbitAsteroid()
 	{
 		if (status != CraftStatus.InFlight || IsFlightInProgress())
 		{
 			return null;
 		}
-		return ClusterGrid.Instance.GetVisibleAsteroidAtAdjacentCell(m_location);
+		return ClusterGrid.Instance.GetVisibleEntityOfLayerAtAdjacentCell(m_location, EntityLayer.Asteroid);
 	}
 
 	public ClusterGridEntity GetOrbitAsteroid()
@@ -294,7 +305,7 @@ public class Clustercraft : ClusterGridEntity
 		{
 			return null;
 		}
-		return ClusterGrid.Instance.GetVisibleAsteroidAtAdjacentCell(m_location);
+		return ClusterGrid.Instance.GetVisibleEntityOfLayerAtAdjacentCell(m_location, EntityLayer.Asteroid);
 	}
 
 	private bool CheckDesinationInRange()
@@ -391,6 +402,34 @@ public class Clustercraft : ClusterGridEntity
 				break;
 			}
 		}
+	}
+
+	public List<CargoBayCluster> GetAllCargoBays()
+	{
+		List<CargoBayCluster> list = new List<CargoBayCluster>();
+		foreach (Ref<RocketModuleCluster> clusterModule in m_moduleInterface.ClusterModules)
+		{
+			CargoBayCluster component = clusterModule.Get().GetComponent<CargoBayCluster>();
+			if (component != null)
+			{
+				list.Add(component);
+			}
+		}
+		return list;
+	}
+
+	public List<CargoBayCluster> GetCargoBaysOfType(CargoBay.CargoType cargoType)
+	{
+		List<CargoBayCluster> list = new List<CargoBayCluster>();
+		foreach (Ref<RocketModuleCluster> clusterModule in m_moduleInterface.ClusterModules)
+		{
+			CargoBayCluster component = clusterModule.Get().GetComponent<CargoBayCluster>();
+			if (component != null && component.storageType == cargoType)
+			{
+				list.Add(component);
+			}
+		}
+		return list;
 	}
 
 	public void DestroyCraftAndModules()
@@ -576,14 +615,14 @@ public class Clustercraft : ClusterGridEntity
 		Land(chosenPad, forceGrounded: false);
 	}
 
-	private void UpdateStatusItem()
+	public void UpdateStatusItem()
 	{
 		KSelectable component = GetComponent<KSelectable>();
 		if (mainStatusHandle != Guid.Empty)
 		{
 			component.RemoveStatusItem(mainStatusHandle);
 		}
-		ClusterGridEntity visibleAsteroidAtCell = ClusterGrid.Instance.GetVisibleAsteroidAtCell(m_location);
+		ClusterGridEntity visibleEntityOfLayerAtCell = ClusterGrid.Instance.GetVisibleEntityOfLayerAtCell(m_location, EntityLayer.Asteroid);
 		ClusterGridEntity orbitAsteroid = GetOrbitAsteroid();
 		bool flag = false;
 		if (orbitAsteroid != null)
@@ -597,7 +636,7 @@ public class Clustercraft : ClusterGridEntity
 				}
 			}
 		}
-		if (visibleAsteroidAtCell != null)
+		if (visibleEntityOfLayerAtCell != null)
 		{
 			mainStatusHandle = component.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.InFlight, m_clusterTraveler);
 		}
@@ -620,6 +659,35 @@ public class Clustercraft : ClusterGridEntity
 		else
 		{
 			mainStatusHandle = component.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.Normal);
+		}
+		float num = 0f;
+		float num2 = 0f;
+		foreach (CargoBayCluster allCargoBay in GetAllCargoBays())
+		{
+			num += allCargoBay.MaxCapacity;
+			num2 += allCargoBay.RemainingCapacity;
+		}
+		if (Status != 0 && num > 0f)
+		{
+			if (num2 == 0f)
+			{
+				component.AddStatusItem(Db.Get().BuildingStatusItems.FlightAllCargoFull);
+				component.RemoveStatusItem(Db.Get().BuildingStatusItems.FlightCargoRemaining);
+				return;
+			}
+			component.RemoveStatusItem(Db.Get().BuildingStatusItems.FlightAllCargoFull);
+			if (cargoStatusHandle == Guid.Empty)
+			{
+				cargoStatusHandle = component.AddStatusItem(Db.Get().BuildingStatusItems.FlightCargoRemaining, num2);
+				return;
+			}
+			component.RemoveStatusItem(Db.Get().BuildingStatusItems.FlightCargoRemaining, immediate: true);
+			cargoStatusHandle = component.AddStatusItem(Db.Get().BuildingStatusItems.FlightCargoRemaining, num2);
+		}
+		else
+		{
+			component.RemoveStatusItem(Db.Get().BuildingStatusItems.FlightCargoRemaining);
+			component.RemoveStatusItem(Db.Get().BuildingStatusItems.FlightAllCargoFull);
 		}
 	}
 

@@ -10,22 +10,24 @@ public class BreathabilityDiagnostic : ColonyDiagnostic
 		tracker = TrackerTool.Instance.GetWorldTracker<BreathabilityTracker>(worldID);
 		trackerSampleCountSeconds = 50f;
 		icon = "overlay_oxygen";
-		AddCriterion(UI.COLONY_DIAGNOSTICS.NO_MINIONS, ColonyDiagnosticUtility.GetWorldHasMinionCriterion(worldID));
-		AddCriterion("CheckSuffocation", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckSuffocation));
-		AddCriterion("CheckLowBreathability", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckLowBreathability));
+		AddCriterion("CheckSuffocation", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.CRITERIA.CHECKSUFFOCATION, CheckSuffocation));
+		AddCriterion("CheckLowBreathability", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.CRITERIA.CHECKLOWBREATHABILITY, CheckLowBreathability));
 	}
 
 	private DiagnosticResult CheckSuffocation()
 	{
 		List<MinionIdentity> worldItems = Components.LiveMinionIdentities.GetWorldItems(base.worldID);
-		foreach (MinionIdentity item in worldItems)
+		if (worldItems.Count != 0)
 		{
-			OxygenBreather component = item.GetComponent<OxygenBreather>();
-			OxygenBreather.IGasProvider gasProvider = component.GetGasProvider();
-			SuffocationMonitor.Instance sMI = item.GetSMI<SuffocationMonitor.Instance>();
-			if (sMI != null && sMI.IsInsideState(sMI.sm.nooxygen.suffocating))
+			foreach (MinionIdentity item in worldItems)
 			{
-				return new DiagnosticResult(DiagnosticResult.Opinion.DuplicantThreatening, UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.SUFFOCATING, new Tuple<Vector3, GameObject>(sMI.transform.position, sMI.gameObject));
+				OxygenBreather component = item.GetComponent<OxygenBreather>();
+				OxygenBreather.IGasProvider gasProvider = component.GetGasProvider();
+				SuffocationMonitor.Instance sMI = item.GetSMI<SuffocationMonitor.Instance>();
+				if (sMI != null && sMI.IsInsideState(sMI.sm.nooxygen.suffocating))
+				{
+					return new DiagnosticResult(DiagnosticResult.Opinion.DuplicantThreatening, UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.SUFFOCATING, new Tuple<Vector3, GameObject>(sMI.transform.position, sMI.gameObject));
+				}
 			}
 		}
 		return new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS);
@@ -33,7 +35,8 @@ public class BreathabilityDiagnostic : ColonyDiagnostic
 
 	private DiagnosticResult CheckLowBreathability()
 	{
-		if (tracker.GetAverageValue(trackerSampleCountSeconds) < 60f)
+		List<MinionIdentity> worldItems = Components.LiveMinionIdentities.GetWorldItems(base.worldID);
+		if (worldItems.Count != 0 && tracker.GetAverageValue(trackerSampleCountSeconds) < 60f)
 		{
 			return new DiagnosticResult(DiagnosticResult.Opinion.Concern, UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.POOR);
 		}

@@ -202,6 +202,8 @@ namespace Database
 
 		public StatusItem AnalyzingGenes;
 
+		public StatusItem AnalyzingArtifact;
+
 		private const int NONE_OVERLAY = 0;
 
 		public DuplicantStatusItems(ResourceSet parent)
@@ -573,6 +575,7 @@ namespace Database
 			};
 			ExpellingRads = CreateStatusItem("ExpellingRads", "DUPLICANTS", "", StatusItem.IconType.Exclamation, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			AnalyzingGenes = CreateStatusItem("AnalyzingGenes", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Good, allow_multiples: false, OverlayModes.None.ID);
+			AnalyzingArtifact = CreateStatusItem("AnalyzingArtifact", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Good, allow_multiples: false, OverlayModes.None.ID);
 		}
 	}
 }

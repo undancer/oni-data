@@ -22,6 +22,8 @@ public class WorldSelector : KScreen, ISim4000ms
 
 	private Dictionary<int, ColonyDiagnostic.DiagnosticResult.Opinion> previousWorldDiagnosticStatus = new Dictionary<int, ColonyDiagnostic.DiagnosticResult.Opinion>();
 
+	private Dictionary<int, List<GameObject>> worldStatusIcons = new Dictionary<int, List<GameObject>>();
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
@@ -154,7 +156,27 @@ public class WorldSelector : KScreen, ISim4000ms
 			RefreshToggleTooltips();
 			worldRow.Value.GetComponentInChildren<AlertVignette>().worldID = worldRow.Key;
 		}
+		RefreshWorldStatus();
 		SortRows();
+	}
+
+	private void RefreshWorldStatus()
+	{
+		foreach (KeyValuePair<int, MultiToggle> worldRow in worldRows)
+		{
+			if (!worldStatusIcons.ContainsKey(worldRow.Key))
+			{
+				worldStatusIcons.Add(worldRow.Key, new List<GameObject>());
+			}
+			foreach (GameObject item in worldStatusIcons[worldRow.Key])
+			{
+				Util.KDestroyGameObject(item);
+			}
+			HierarchyReferences component = worldRow.Value.GetComponent<HierarchyReferences>();
+			LocText reference = component.GetReference<LocText>("StatusLabel");
+			reference.SetText(ClusterManager.Instance.GetWorld(worldRow.Key).GetStatus());
+			reference.color = ColonyDiagnosticScreen.GetDiagnosticIndicationColor(ColonyDiagnosticUtility.Instance.GetWorldDiagnosticResult(worldRow.Key));
+		}
 	}
 
 	private void RefreshToggleTooltips()
@@ -209,6 +231,7 @@ public class WorldSelector : KScreen, ISim4000ms
 		foreach (KeyValuePair<int, MultiToggle> item in list)
 		{
 			item.Value.GetComponent<HierarchyReferences>().GetReference<RectTransform>("Indent").anchoredPosition = Vector2.zero;
+			item.Value.GetComponent<HierarchyReferences>().GetReference<RectTransform>("Status").anchoredPosition = Vector2.right * 24f;
 			WorldContainer world = ClusterManager.Instance.GetWorld(item.Key);
 			if (world.ParentWorldId == world.id || world.ParentWorldId == ClusterManager.INVALID_WORLD_IDX)
 			{
@@ -222,6 +245,7 @@ public class WorldSelector : KScreen, ISim4000ms
 					num = item2.Value.gameObject.transform.GetSiblingIndex();
 					item.Value.gameObject.transform.SetSiblingIndex(num + 1);
 					item.Value.GetComponent<HierarchyReferences>().GetReference<RectTransform>("Indent").anchoredPosition = Vector2.right * 32f;
+					item.Value.GetComponent<HierarchyReferences>().GetReference<RectTransform>("Status").anchoredPosition = Vector2.right * -8f;
 					break;
 				}
 			}
@@ -270,6 +294,7 @@ public class WorldSelector : KScreen, ISim4000ms
 			}
 			previousWorldDiagnosticStatus[worldRow.Key] = worldDiagnosticResult;
 		}
+		RefreshWorldStatus();
 		RefreshToggleTooltips();
 	}
 

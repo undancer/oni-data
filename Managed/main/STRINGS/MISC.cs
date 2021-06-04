@@ -184,7 +184,9 @@ namespace STRINGS
 
 			public static LocString COMBUSTIBLESOLID = "Combustible Solid";
 
-			public static LocString UNIDENTIFIEDSEED = "Strange Seed";
+			public static LocString UNIDENTIFIEDSEED = "Seed (Unidentified Mutation)";
+
+			public static LocString CHARMEDARTIFACT = "Artifact of Interest";
 
 			public static LocString GENE_SHUFFLER = "Neural Vacillator";
 

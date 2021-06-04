@@ -1,0 +1,47 @@
+using STRINGS;
+
+public class DevRadiationEmitter : KMonoBehaviour, ISingleSliderControl, ISliderControl
+{
+	[MyCmpReq]
+	private RadiationEmitter radiationEmitter;
+
+	public string SliderTitleKey => BUILDINGS.PREFABS.DEVRADIATIONGENERATOR.NAME;
+
+	public string SliderUnits => UI.UNITSUFFIXES.RADIATION.RADS;
+
+	public float GetSliderMax(int index)
+	{
+		return 5000f;
+	}
+
+	public float GetSliderMin(int index)
+	{
+		return 0f;
+	}
+
+	public string GetSliderTooltip()
+	{
+		return "";
+	}
+
+	public string GetSliderTooltipKey(int index)
+	{
+		return "";
+	}
+
+	public float GetSliderValue(int index)
+	{
+		return radiationEmitter.emitRads;
+	}
+
+	public void SetSliderValue(float percent, int index)
+	{
+		radiationEmitter.emitRads = GetSliderMax(index) * percent / 600f / 12f;
+		radiationEmitter.Refresh();
+	}
+
+	public int SliderDecimalPlaces(int index)
+	{
+		return 0;
+	}
+}

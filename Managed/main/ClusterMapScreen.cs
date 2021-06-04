@@ -30,6 +30,10 @@ public class ClusterMapScreen : KScreen
 
 	public GameObject telescopeVisContainer;
 
+	public ClusterMapVisualizer POIVisPrefab;
+
+	public GameObject POIVisContainer;
+
 	public Color rocketPathColor;
 
 	public Color rocketSelectedPathColor;
@@ -264,7 +268,10 @@ public class ClusterMapScreen : KScreen
 			SetShowingNonClusterMapHud(show: true);
 			CameraController.Instance.DisableUserCameraControl = false;
 			AudioMixer.instance.Stop(AudioMixerSnapshots.Get().MENUStarmapNotPausedSnapshot);
-			MusicManager.instance.StopSong("Music_Starmap");
+			if (MusicManager.instance.SongIsPlaying("Music_Starmap"))
+			{
+				MusicManager.instance.StopSong("Music_Starmap");
+			}
 		}
 	}
 
@@ -436,8 +443,8 @@ public class ClusterMapScreen : KScreen
 						gameObject = mobileVisContainer;
 						break;
 					case EntityLayer.POI:
-						original = terrainVisPrefab;
-						gameObject = terrainVisContainer;
+						original = POIVisPrefab;
+						gameObject = POIVisContainer;
 						break;
 					case EntityLayer.Telescope:
 						original = telescopeVisPrefab;
@@ -540,7 +547,7 @@ public class ClusterMapScreen : KScreen
 
 	private void UpdateHexToggleStates()
 	{
-		bool flag = m_hoveredHex != null && (bool)ClusterGrid.Instance.GetVisibleAsteroidAtCell(m_hoveredHex.location);
+		bool flag = m_hoveredHex != null && (bool)ClusterGrid.Instance.GetVisibleEntityOfLayerAtCell(m_hoveredHex.location, EntityLayer.Asteroid);
 		foreach (KeyValuePair<AxialI, ClusterMapVisualizer> item in m_cellVisByLocation)
 		{
 			ClusterMapHex component = item.Value.GetComponent<ClusterMapHex>();
@@ -675,7 +682,7 @@ public class ClusterMapScreen : KScreen
 		{
 			return component;
 		}
-		component = ClusterGrid.Instance.GetVisibleAsteroidAtCell(selector.GetMyWorldLocation());
+		component = ClusterGrid.Instance.GetVisibleEntityOfLayerAtCell(selector.GetMyWorldLocation(), EntityLayer.Asteroid);
 		Debug.Assert(component != null, $"{selector} has no grid entity and isn't located at a visible asteroid at {selector.GetMyWorldLocation()}");
 		return component;
 	}

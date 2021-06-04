@@ -129,7 +129,8 @@ namespace Database
 			}));
 			Building3 = AddSkill(new Skill("Building3", DUPLICANTS.ROLES.SENIOR_BUILDER.NAME, DUPLICANTS.ROLES.SENIOR_BUILDER.DESCRIPTION, "", 2, "hat_role_building3", "skillbadge_role_building3", Db.Get().SkillGroups.Building.Id, new List<SkillPerk>
 			{
-				Db.Get().SkillPerks.IncreaseConstructionLarge
+				Db.Get().SkillPerks.IncreaseConstructionLarge,
+				Db.Get().SkillPerks.CanDemolish
 			}, new List<string>
 			{
 				Building2.Id
@@ -263,7 +264,8 @@ namespace Database
 			Arting2 = AddSkill(new Skill("Arting2", DUPLICANTS.ROLES.ARTIST.NAME, DUPLICANTS.ROLES.ARTIST.DESCRIPTION, "", 1, "hat_role_art2", "skillbadge_role_art2", Db.Get().SkillGroups.Art.Id, new List<SkillPerk>
 			{
 				Db.Get().SkillPerks.CanArtOkay,
-				Db.Get().SkillPerks.IncreaseArtMedium
+				Db.Get().SkillPerks.IncreaseArtMedium,
+				Db.Get().SkillPerks.CanStudyArtifact
 			}, new List<string>
 			{
 				Arting1.Id

@@ -865,6 +865,7 @@ public class SaveLoader : KMonoBehaviour
 				{
 					binaryWriter.Write(memoryStream.ToArray());
 				}
+				KCrashReporter.MOST_RECENT_SAVEFILE = filename;
 				Stats.Print();
 			}
 			catch (Exception ex4)
@@ -943,6 +944,7 @@ public class SaveLoader : KMonoBehaviour
 				lastUncompressedSize = array.Length;
 				Load(reader);
 			}
+			KCrashReporter.MOST_RECENT_SAVEFILE = filename;
 			if (GameInfo.isAutoSave && !string.IsNullOrEmpty(GameInfo.originalSaveName))
 			{
 				string text = null;

@@ -98,6 +98,7 @@ public class SetLocker : StateMachineComponent<SetLocker.StatesInstance>, ISides
 				Scenario.SpawnPrefab(Grid.PosToCell(base.gameObject), dropOffset.x, dropOffset.y, contents[i], Grid.SceneLayer.Front).SetActive(value: true);
 				PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Plus, Assets.GetPrefab(contents[i].ToTag()).GetProperName(), base.smi.master.transform);
 			}
+			base.gameObject.Trigger(-372600542, this);
 		}
 	}
 

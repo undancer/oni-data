@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.IO;
 using Klei;
 using STRINGS;
@@ -443,10 +442,7 @@ public class DebugHandler : IInputHandler
 				{
 					if (GenericGameSettings.instance.developerDebugEnable)
 					{
-						string str = Guid.NewGuid().ToString();
-						StackTrace stackTrace = new StackTrace(1, fNeedFileInfo: true);
-						str = str + "\n" + stackTrace.ToString();
-						KCrashReporter.ReportError("Debug crash with random stack", str, null, ScreenPrefabs.Instance.ConfirmDialogScreen, GameObject.Find("ScreenSpaceOverlayCanvas"));
+						throw new ArgumentException("My test exception");
 					}
 				}
 				else if (e.TryConsume(Action.DebugTriggerError))

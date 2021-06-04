@@ -86,7 +86,6 @@ public class SaveScreen : KModalScreen
 
 	private void DoSave(string filename)
 	{
-		ReportErrorDialog.MOST_RECENT_SAVEFILE = filename;
 		try
 		{
 			SaveLoader.Instance.Save(filename);

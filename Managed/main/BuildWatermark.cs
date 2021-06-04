@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BuildWatermark : KScreen
 {
+	public bool interactable = true;
+
 	public LocText textDisplay;
 
 	public ToolTip toolTip;
@@ -38,7 +40,7 @@ public class BuildWatermark : KScreen
 		}
 		else
 		{
-			str += 464434u;
+			str += 466411u;
 			if (DebugHandler.enabled)
 			{
 				str += "-D";
@@ -53,7 +55,10 @@ public class BuildWatermark : KScreen
 		{
 			textDisplay.SetText(string.Format(UI.DEVELOPMENTBUILDS.TESTING_WATERMARK, str));
 			toolTip.SetSimpleTooltip(UI.DEVELOPMENTBUILDS.TESTING_TOOLTIP);
-			button.onClick += ShowTestingMessage;
+			if (interactable)
+			{
+				button.onClick += ShowTestingMessage;
+			}
 		}
 		foreach (GameObject archiveIcon in archiveIcons)
 		{

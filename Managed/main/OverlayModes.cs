@@ -2036,13 +2036,13 @@ public abstract class OverlayModes
 					continue;
 				}
 				Vector2I vector2I = Grid.PosToXY(target.transform.GetPosition());
-				if (!(vis_min <= vector2I) || !(vector2I <= vis_max))
+				if (!(vis_min <= vector2I) || !(vector2I <= vis_max) || target.gameObject.GetMyWorldId() != ClusterManager.Instance.activeWorldId)
 				{
 					workingTargets.Add(target);
 					continue;
 				}
 				KPrefabID component = target.GetComponent<KPrefabID>();
-				if (item_ids != null && !item_ids.Contains(component.PrefabTag))
+				if (item_ids != null && !item_ids.Contains(component.PrefabTag) && target.gameObject.GetMyWorldId() != ClusterManager.Instance.activeWorldId)
 				{
 					workingTargets.Add(target);
 				}
@@ -2211,7 +2211,7 @@ public abstract class OverlayModes
 				for (int j = (int)vector.x; (float)j <= vector2.x; j++)
 				{
 					int num = Grid.XYToCell(j, i);
-					if ((Grid.IsValidCell(num) && Grid.Visible[num] > 20) || !PropertyTextures.IsFogOfWarEnabled)
+					if ((Grid.IsValidCell(num) && Grid.Visible[num] > 20 && Grid.WorldIdx[num] == ClusterManager.Instance.activeWorldId) || !PropertyTextures.IsFogOfWarEnabled)
 					{
 						flag = true;
 						break;
@@ -2471,7 +2471,7 @@ public abstract class OverlayModes
 				foreach (Battery item2 in Components.Batteries.Items)
 				{
 					Vector2I vector2I = Grid.PosToXY(item2.transform.GetPosition());
-					if (min <= vector2I && vector2I <= max)
+					if (min <= vector2I && vector2I <= max && item2.GetMyWorldId() == ClusterManager.Instance.activeWorldId)
 					{
 						SaveLoadRoot component4 = item2.GetComponent<SaveLoadRoot>();
 						if (!privateTargets.Contains(component4))
@@ -2484,7 +2484,7 @@ public abstract class OverlayModes
 				foreach (Generator item3 in Components.Generators.Items)
 				{
 					Vector2I vector2I2 = Grid.PosToXY(item3.transform.GetPosition());
-					if (!(min <= vector2I2) || !(vector2I2 <= max))
+					if (!(min <= vector2I2) || !(vector2I2 <= max) || item3.GetMyWorldId() != ClusterManager.Instance.activeWorldId)
 					{
 						continue;
 					}
@@ -2501,7 +2501,7 @@ public abstract class OverlayModes
 				foreach (EnergyConsumer item4 in Components.EnergyConsumers.Items)
 				{
 					Vector2I vector2I3 = Grid.PosToXY(item4.transform.GetPosition());
-					if (min <= vector2I3 && vector2I3 <= max)
+					if (min <= vector2I3 && vector2I3 <= max && item4.GetMyWorldId() == ClusterManager.Instance.activeWorldId)
 					{
 						SaveLoadRoot component6 = item4.GetComponent<SaveLoadRoot>();
 						if (!privateTargets.Contains(component6))
@@ -2546,11 +2546,12 @@ public abstract class OverlayModes
 				LocText unitLabel = item2.unitLabel;
 				Generator generator = item2.generator;
 				IEnergyConsumer consumer = item2.consumer;
-				if (item2.item == null)
+				if (item2.item == null || item2.item.gameObject.GetMyWorldId() != ClusterManager.Instance.activeWorldId)
 				{
 					powerLabel.gameObject.SetActive(value: false);
 					continue;
 				}
+				powerLabel.gameObject.SetActive(value: true);
 				if (generator != null && consumer == null)
 				{
 					int num = int.MaxValue;
@@ -2601,6 +2602,10 @@ public abstract class OverlayModes
 
 		private void AddPowerLabels(KMonoBehaviour item)
 		{
+			if (item.gameObject.GetMyWorldId() != ClusterManager.Instance.activeWorldId)
+			{
+				return;
+			}
 			IEnergyConsumer componentInChildren = item.gameObject.GetComponentInChildren<IEnergyConsumer>();
 			Generator componentInChildren2 = item.gameObject.GetComponentInChildren<Generator>();
 			if (componentInChildren == null && !(componentInChildren2 != null))

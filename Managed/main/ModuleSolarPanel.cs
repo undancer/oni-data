@@ -23,7 +23,7 @@ public class ModuleSolarPanel : Generator
 		{
 			default_state = idle;
 			idle.EventTransition(GameHashes.DoLaunchRocket, launch).DoNothing();
-			launch.EventTransition(GameHashes.RocketLanded, idle).PlayAnim("launch", KAnim.PlayMode.Loop);
+			launch.EventTransition(GameHashes.RocketLanded, idle);
 		}
 	}
 

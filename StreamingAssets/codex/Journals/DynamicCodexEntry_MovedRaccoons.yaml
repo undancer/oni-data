@@ -1,0 +1,23 @@
+id: "MovedRaccoons"
+title: STRINGS.CODEX.B3_MOVEDRACCOONS.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_movedraccoons
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B3_MOVEDRACCOONS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B3_MOVEDRACCOONS.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_movedraccoons
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B3_MOVEDRACCOONS.BODY.CONTAINER1
+          style: Body

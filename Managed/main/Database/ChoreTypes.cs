@@ -142,6 +142,8 @@ namespace Database
 
 		public ChoreType Deconstruct;
 
+		public ChoreType Demolish;
+
 		public ChoreType Art;
 
 		public ChoreType Research;
@@ -441,6 +443,10 @@ namespace Database
 			{
 				"Build"
 			}, "", new string[0], DUPLICANTS.CHORES.DECONSTRUCT.NAME, DUPLICANTS.CHORES.DECONSTRUCT.STATUS, DUPLICANTS.CHORES.DECONSTRUCT.TOOLTIP, skip_implicit_priority_change: false, 5000);
+			Demolish = Add("Demolish", new string[1]
+			{
+				"Build"
+			}, "", new string[0], DUPLICANTS.CHORES.DEMOLISH.NAME, DUPLICANTS.CHORES.DEMOLISH.STATUS, DUPLICANTS.CHORES.DEMOLISH.TOOLTIP, skip_implicit_priority_change: false, 5000);
 			Research = Add("Research", new string[1]
 			{
 				"Research"
@@ -734,7 +740,7 @@ namespace Database
 					Equip,
 					Unequip
 				},
-				new ChoreType[62]
+				new ChoreType[63]
 				{
 					DeliverFood,
 					Sigh,
@@ -758,6 +764,7 @@ namespace Database
 					Mop,
 					Toggle,
 					Deconstruct,
+					Demolish,
 					Capture,
 					EggSing,
 					Art,

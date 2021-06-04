@@ -227,7 +227,14 @@ namespace STRINGS
 		{
 			public static LocString NAME = "Water Asteroid";
 
-			public static LocString DESCRIPTION = "A small, water-submerged world.\n\n<smallcaps>Water Asteroids possess a variety of liquid resources and are a natural source of Graphite. However, its thin surface and sparse construction material means Duplicants should come prepared for a swim.</smallcaps>";
+			public static LocString DESCRIPTION = "A small, water-submerged world.\n\n<smallcaps>Water Asteroids possess a variety of liquid resources and are a natural source of Graphite, but Duplicants should come prepared for a swim.</smallcaps>";
+		}
+
+		public class REGOLITHMOONLET
+		{
+			public static LocString NAME = "Regolith Asteroid";
+
+			public static LocString DESCRIPTION = "A small, dusty world with plenty of craters.\n\n<smallcaps>Regolith Asteroids have frequent meteor showers</smallcaps>";
 		}
 
 		public class TINYSTART

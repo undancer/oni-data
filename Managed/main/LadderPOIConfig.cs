@@ -33,6 +33,7 @@ public class LadderPOIConfig : IEntityConfig
 		{
 			ObjectLayer.Building
 		};
+		gameObject.AddOrGet<Demolishable>();
 		return gameObject;
 	}
 

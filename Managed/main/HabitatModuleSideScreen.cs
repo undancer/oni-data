@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +8,6 @@ public class HabitatModuleSideScreen : SideScreenContent
 	public GameObject moduleContentContainer;
 
 	public GameObject modulePanelPrefab;
-
-	private Dictionary<JettisonableCargoModule.StatesInstance, GameObject> modulePanels = new Dictionary<JettisonableCargoModule.StatesInstance, GameObject>();
 
 	private CraftModuleInterface craftModuleInterface => targetCraft.GetComponent<CraftModuleInterface>();
 

@@ -173,6 +173,9 @@ public class GameAudioSheets : AudioSheets
 				case "PhonoboxSoundEvent":
 					soundEvent = new PhonoboxSoundEvent(file_name, sound_name, frame, min_interval);
 					break;
+				case "PlantMutationSoundEvent":
+					soundEvent = new PlantMutationSoundEvent(file_name, sound_name, frame, min_interval);
+					break;
 				}
 				break;
 			}

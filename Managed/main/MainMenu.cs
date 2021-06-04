@@ -140,7 +140,6 @@ public class MainMenu : KScreen
 		}
 		MakeButton(new ButtonInfo(UI.FRONTEND.MAINMENU.OPTIONS, Options, 14, normalButtonStyle));
 		MakeButton(new ButtonInfo(UI.FRONTEND.MAINMENU.QUITTODESKTOP, QuitGame, 14, normalButtonStyle));
-		KCrashReporter.MOST_RECENT_SAVEFILE = null;
 		RefreshResumeButton();
 		Button_ResumeGame.onClick += ResumeGame;
 		StartFEAudio();
@@ -475,7 +474,7 @@ public class MainMenu : KScreen
 					gameInfo = value.headerData;
 				}
 				bool flag2 = true;
-				if (header.buildVersion > 464434 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 23)
+				if (header.buildVersion > 466411 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 23)
 				{
 					flag = false;
 				}

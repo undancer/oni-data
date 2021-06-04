@@ -58,3 +58,20 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - expansion1::subworlds/magma/BottomSmall
+
+worldTemplateRules:
+  - names:
+      - expansion1::poi/genericGravitas/poi_mining_room
+    listRule: GuaranteeAll
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtSurface
+        minDistance: 1
+        maxDistance: 99
+      - command: IntersectWith
+        zoneTypes: [ OilField ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures

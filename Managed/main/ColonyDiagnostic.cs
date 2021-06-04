@@ -36,15 +36,22 @@ public abstract class ColonyDiagnostic
 			get
 			{
 				string text = "";
-				return opinion switch
+				switch (opinion)
 				{
-					Opinion.Bad => "<color=" + Constants.NEGATIVE_COLOR_STR + ">" + message + "</color>", 
-					Opinion.Warning => "<color=" + Constants.NEGATIVE_COLOR_STR + ">" + message + "</color>", 
-					Opinion.Concern => "<color=" + Constants.WARNING_COLOR_STR + ">" + message + "</color>", 
-					Opinion.Normal => message, 
-					Opinion.Good => string.Concat("<color=", Constants.POSITIVE_COLOR, ">", message, "</color>"), 
-					_ => message, 
-				};
+				case Opinion.Bad:
+					return "<color=" + Constants.NEGATIVE_COLOR_STR + ">" + message + "</color>";
+				case Opinion.Warning:
+					return "<color=" + Constants.NEGATIVE_COLOR_STR + ">" + message + "</color>";
+				case Opinion.Concern:
+					return "<color=" + Constants.WARNING_COLOR_STR + ">" + message + "</color>";
+				case Opinion.Suggestion:
+				case Opinion.Normal:
+					return "<color=" + Constants.WHITE_COLOR_STR + ">" + message + "</color>";
+				case Opinion.Good:
+					return "<color=" + Constants.POSITIVE_COLOR_STR + ">" + message + "</color>";
+				default:
+					return message;
+				}
 			}
 			set
 			{
@@ -107,8 +114,8 @@ public abstract class ColonyDiagnostic
 		colors.Add(DiagnosticResult.Opinion.Warning, Constants.NEGATIVE_COLOR);
 		colors.Add(DiagnosticResult.Opinion.Concern, Constants.WARNING_COLOR);
 		colors.Add(DiagnosticResult.Opinion.Normal, Constants.NEUTRAL_COLOR);
-		colors.Add(DiagnosticResult.Opinion.Suggestion, new Color(62f / 255f, 67f / 255f, 29f / 85f));
-		colors.Add(DiagnosticResult.Opinion.Tutorial, new Color(62f / 255f, 67f / 255f, 29f / 85f));
+		colors.Add(DiagnosticResult.Opinion.Suggestion, Constants.NEUTRAL_COLOR);
+		colors.Add(DiagnosticResult.Opinion.Tutorial, Constants.NEUTRAL_COLOR);
 		colors.Add(DiagnosticResult.Opinion.Good, Constants.POSITIVE_COLOR);
 	}
 
@@ -137,6 +144,7 @@ public abstract class ColonyDiagnostic
 	{
 		if (!criteria.ContainsKey(id))
 		{
+			criterion.SetID(id);
 			criteria.Add(id, criterion);
 		}
 	}
@@ -146,12 +154,15 @@ public abstract class ColonyDiagnostic
 		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, "");
 		foreach (KeyValuePair<string, DiagnosticCriterion> criterion in criteria)
 		{
-			DiagnosticResult diagnosticResult = criterion.Value.Evaluate();
-			if (diagnosticResult.opinion < result.opinion)
+			if (ColonyDiagnosticUtility.Instance.IsCriteriaEnabled(worldID, id, criterion.Key))
 			{
-				result.opinion = diagnosticResult.opinion;
-				result.Message = diagnosticResult.Message;
-				result.clickThroughTarget = diagnosticResult.clickThroughTarget;
+				DiagnosticResult diagnosticResult = criterion.Value.Evaluate();
+				if (diagnosticResult.opinion < result.opinion)
+				{
+					result.opinion = diagnosticResult.opinion;
+					result.Message = diagnosticResult.Message;
+					result.clickThroughTarget = diagnosticResult.clickThroughTarget;
+				}
 			}
 		}
 		return result;

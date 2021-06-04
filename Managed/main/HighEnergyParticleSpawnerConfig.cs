@@ -13,7 +13,7 @@ public class HighEnergyParticleSpawnerConfig : IBuildingConfig
 
 	public const int MIN_SLIDER = 50;
 
-	public const int MAX_SLIDER = 50;
+	public const int MAX_SLIDER = 500;
 
 	public const float DISABLED_CONSUMPTION_RATE = 1f;
 
@@ -52,7 +52,7 @@ public class HighEnergyParticleSpawnerConfig : IBuildingConfig
 		highEnergyParticleSpawner.minLaunchInterval = 2f;
 		highEnergyParticleSpawner.radiationSampleRate = 0.2f;
 		highEnergyParticleSpawner.minSlider = 50;
-		highEnergyParticleSpawner.maxSlider = 50;
+		highEnergyParticleSpawner.maxSlider = 500;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

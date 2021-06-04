@@ -206,7 +206,11 @@ public class DecorProvider : KMonoBehaviour, IGameObjectEffectDescriptor
 			{
 				component.RemoveTag(RoomConstraints.ConstraintTags.Decor20);
 			}
-			Game.Instance.roomProber.SolidChangedEvent(Grid.PosToCell(this), ignoreDoors: true);
+			int cell = Grid.PosToCell(this);
+			if (Grid.IsValidCell(cell))
+			{
+				Game.Instance.roomProber.SolidChangedEvent(cell, ignoreDoors: true);
+			}
 		}
 	}
 

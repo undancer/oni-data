@@ -196,6 +196,15 @@ namespace STRINGS
 				public static LocString EFFECT = "Empties " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " canisters back into the world.";
 			}
 
+			public class ARTIFACTCARGOBAY
+			{
+				public static LocString NAME = UI.FormatAsLink("Artifact Transport Module", "ARTIFACTCARGOBAY");
+
+				public static LocString DESC = "Holds artifacts found in space.";
+
+				public static LocString EFFECT = "Allows Duplicants to store any artifacts they uncover during space missions.\n\nArtifacts become available to the colony upon the rocket's return.";
+			}
+
 			public class CARGOBAY
 			{
 				public static LocString NAME = UI.FormatAsLink("Large Cargo Bay", "CARGOBAY");
@@ -344,6 +353,15 @@ namespace STRINGS
 				public static LocString DESC = "Every rocket requires a nosecone to fly.";
 
 				public static LocString EFFECT = "Protects a rocket during takeoff and entry, enabling space travel.\n\nMust be built at the top of a rocket.";
+			}
+
+			public class NOSECONEHARVEST
+			{
+				public static LocString NAME = UI.FormatAsLink("Drillcone", "NOSECONEHARVEST");
+
+				public static LocString DESC = "Harvests resources from the universe.";
+
+				public static LocString EFFECT = "Enables a rocket to drill into interstellar debris and collect " + UI.FormatAsLink("gas", "ELEMENTS_GAS") + ", " + UI.FormatAsLink("liquid", "ELEMENTS_LIQUID") + " and " + UI.FormatAsLink("solid", "ELEMENTS_SOLID") + " resources from space.\n\nMust be built at the top of a rocket.";
 			}
 
 			public class CO2ENGINE
@@ -980,6 +998,15 @@ namespace STRINGS
 				public static LocString EFFECT = "Uses " + UI.FormatAsLink("Sand", "SAND") + " to filter " + UI.FormatAsLink("Polluted Oxygen", "CONTAMINATEDOXYGEN") + " from the air, reducing " + UI.FormatAsLink("Disease", "DISEASE") + " spread.";
 			}
 
+			public class ARTIFACTANALYSISSTATION
+			{
+				public static LocString NAME = UI.FormatAsLink("Artifact Analysis Station", "ARTIFACTANALYSISSTATION");
+
+				public static LocString DESC = "Discover the mysteries of the past.";
+
+				public static LocString EFFECT = "Analysis artifacts and extracts the " + UI.FormatAsLink("Neutronium", "UNOBTANIUM") + " from their shell.";
+			}
+
 			public class CANVAS
 			{
 				public static LocString NAME = UI.FormatAsLink("Blank Canvas", "CANVAS");
@@ -1513,6 +1540,15 @@ namespace STRINGS
 				public static LocString DESC = "Runs on coffee.";
 
 				public static LocString EFFECT = "Generates testing power for late nights.";
+			}
+
+			public class DEVRADIATIONGENERATOR
+			{
+				public static LocString NAME = "Dev Radiation Emitter";
+
+				public static LocString DESC = "That's some <i>strong</i> coffee.";
+
+				public static LocString EFFECT = "Generates on-demand radiation to keep you cosy.";
 			}
 
 			public class GENERICFABRICATOR
@@ -2123,11 +2159,11 @@ namespace STRINGS
 
 			public class NUCLEARRESEARCHCENTER
 			{
-				public static LocString NAME = UI.FormatAsLink("Atomic Collider", "NUCLEARLABORATORY");
+				public static LocString NAME = UI.FormatAsLink("Materials Study Terminal", "NUCLEARLABORATORY");
 
 				public static LocString DESC = "Comes with a few ions thrown in, free of charge.";
 
-				public static LocString EFFECT = "Conducts " + UI.FormatAsLink("Atomic Research", "RESEARCH") + " to unlock new technologies.\n\nConsumes Radbolts.\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Atomic Research", "ATOMIC_RESEARCHER") + " skill.";
+				public static LocString EFFECT = "Conducts " + UI.FormatAsLink("Materials Science Research", "RESEARCH") + " to unlock new technologies.\n\nConsumes Radbolts.\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Materials Science Research", "ATOMIC_RESEARCHER") + " skill.";
 			}
 
 			public class ORBITALRESEARCHCENTER
@@ -3716,6 +3752,17 @@ namespace STRINGS
 				public static LocString EFFECT = "Automatically dispenses food for hungry " + UI.FormatAsLink("Critters", "CRITTERS") + ".";
 			}
 
+			public class GRAVITASPEDESTAL
+			{
+				public static LocString NAME = UI.FormatAsLink("Pedestal", "ITEMPEDESTAL");
+
+				public static LocString DESC = "Perception can be drastically changed by a bit of thoughtful presentation.";
+
+				public static LocString EFFECT = "Displays a single object, doubling its " + UI.FormatAsLink("Decor", "DECOR") + " value.\n\nObjects with negative Decor will gain some positive Decor when displayed.";
+
+				public static LocString DISPLAYED_ITEM_FMT = "Displayed {0}";
+			}
+
 			public class ITEMPEDESTAL
 			{
 				public static LocString NAME = UI.FormatAsLink("Pedestal", "ITEMPEDESTAL");
@@ -3797,7 +3844,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Radbolt Generator", "HIGHENERGYPARTICLESPAWNER");
 
-				public static LocString DESC = "Radbolts are necessary for producing atomic research.";
+				public static LocString DESC = "Radbolts are necessary for producing Materials Science research.";
 
 				public static LocString EFFECT = "Attracts nearby " + UI.FormatAsLink("Radiation", "RADIATION") + " to generate Radbolts.\n\nEmits generated Radbolts in the direction of your choosing.";
 
@@ -3971,6 +4018,17 @@ namespace STRINGS
 				public static LocString DESC = "Microtarget where your " + UI.FormatAsLink("Interplanetary Payload", "RAILGUNPAYLOAD") + " lands on a Planetoid surface.";
 
 				public static LocString EFFECT = "Guides " + UI.FormatAsLink("Interplanetary Payloads", "RAILGUNPAYLOAD") + " and " + UI.FormatAsLink("Orbital Cargo Modules", "ORBITALCARGOMODULE") + "to land nearby.\n\n" + UI.FormatAsLink("Interplanetary Payloads", "RAILGUNPAYLOAD") + " must be launched from a " + UI.FormatAsLink("Interplanetary Launcher", "RAILGUN") + ".";
+			}
+
+			public class DIAMONDPRESS
+			{
+				public static LocString NAME = UI.FormatAsLink("Diamond Press", "DIAMONDPRESS");
+
+				public static LocString DESC = "Crushes carbon into diamonds";
+
+				public static LocString EFFECT = "Crushes carbon into diamonds";
+
+				public static LocString REFINED_CARBON_RECIPE_DESCRIPTION = "Converts {1} to {0}";
 			}
 
 			public class MASSIVEHEATSINK
@@ -4234,7 +4292,7 @@ namespace STRINGS
 
 				public static LocString DESC = "The tubes at the back disappear into nowhere.";
 
-				public static LocString EFFECT = "A machine capable of teleporting " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + ", " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + ", and " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " resources.\n\nIt can be activated by a Duplicant with the " + UI.FormatAsLink("Field Research", "RESEARCHER") + " skill.\n\nThis is the receiving side.";
+				public static LocString EFFECT = "A machine capable of teleporting " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + ", " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + ", and " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " resources to another asteroid.\n\nIt can be activated by a Duplicant with the " + UI.FormatAsLink("Field Research", "RESEARCHER") + " skill.\n\nThis is the receiving side.";
 			}
 
 			public class WARPCONDUITSENDER
@@ -4243,7 +4301,7 @@ namespace STRINGS
 
 				public static LocString DESC = "The tubes at the back disappear into nowhere.";
 
-				public static LocString EFFECT = "A machine capable of teleporting " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + ", " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + ", and " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " resources.\n\nIt can be activated by a Duplicant with the " + UI.FormatAsLink("Field Research", "RESEARCHER") + " skill.\n\nThis is the transmitting side.";
+				public static LocString EFFECT = "A machine capable of teleporting " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + ", " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + ", and " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " resources to another asteroid.\n\nIt can be activated by a Duplicant with the " + UI.FormatAsLink("Field Research", "RESEARCHER") + " skill.\n\nThis is the transmitting side.";
 			}
 
 			public class WARPPORTAL

@@ -114,9 +114,9 @@ namespace STRINGS
 		{
 			public static LocString NAME = "Wasteland";
 
-			public static LocString DESC = "";
+			public static LocString DESC = "While the Wasteland Biome does not look particularly interesting, a pragmatic colony can take advantage of its selection of construction resources.";
 
-			public static LocString UTILITY = "";
+			public static LocString UTILITY = "The prevalance of " + UI.FormatAsLink("Copper", "COPPER") + ", " + UI.FormatAsLink("Sandstone", "SANDSTONE") + ", " + UI.FormatAsLink("Igneous Rock", "IGNEOUSROCK") + " and its " + UI.FormatAsLink("Iron", "IRON") + " rich counterpart " + UI.FormatAsLink("Mafic Rock", "MAFICROCK") + ", make this a fruitful biome to explore for construction material. " + UI.FormatAsLink("Sand", "SAND") + " is also in abundance here which is useful as a filtering material.\n\nWhile the wildlife is not in abundance in the Wasteland Biome, the " + UI.FormatAsLink("Sweetle", "DIVERGENTBEETLE") + " and " + UI.FormatAsLink("Grubgrub", "DIVERGENTWORM") + " make interesting creatures to domesticate as they co-exist with the  " + UI.FormatAsLink("Grubfruit Plants", "WORMPLANT") + " to produce a much higher quality food than the " + UI.FormatAsLink("Spindly Grubfruit Plant", "WORMPLANT") + " found in the wild. Additionally, the " + UI.FormatAsLink("Sulfur", "SULFUR") + " found here works both as food for the GrubGrubs and fertilizer for the Grubfruit Plants.\n\nThe abundance of " + UI.FormatAsLink("Oxygen", "OXYGEN") + " found in the Wasteland Biome makes for a low-risk area to send my Duplicants into to collect useful resources to continue with their construction projects.";
 		}
 
 		public static class SPACE
@@ -141,27 +141,27 @@ namespace STRINGS
 		{
 			public static LocString NAME = "Niobium";
 
-			public static LocString DESC = "";
+			public static LocString DESC = "The Niobium Biome features only two resources yet, because " + UI.FormatAsLink("Niobium", "NIOBIUM") + " is an extremely rare and valuable element, it is worth making a special visit.";
 
-			public static LocString UTILITY = "";
+			public static LocString UTILITY = "By itself " + UI.FormatAsLink("Niobium", "NIOBIUM") + " is not a particularly useful resource, but if processed through a " + UI.FormatAsLink("Metal Refinery", "METALREFINERY") + " it produces the extremely thermal conductive " + UI.FormatAsLink("Thermium", "TEMPCONDUCTORSOLID") + " which goes a long way in solving many extreme temperature issues in a colony.\n\nThe edges of this biome are filled with " + UI.FormatAsLink("Obsidian", "OBSIDIAN") + " so a Duplicant with the " + UI.FormatAsLink("Super-Duperhard Digging", "SENIOR_MINER") + " skill will be required before my colony can explore here.";
 		}
 
 		public static class AQUATIC
 		{
 			public static LocString NAME = "Aquatic";
 
-			public static LocString DESC = "";
+			public static LocString DESC = "The Aquatic Biome is flush with a huge deposit of precious " + UI.FormatAsLink("Water", "WATER") + ".";
 
-			public static LocString UTILITY = "";
+			public static LocString UTILITY = "Initially there is very little solid ground in this biome to establish a temporary base, but once a transportation network can be established to send the " + UI.FormatAsLink("Water", "WATER") + " of the Aquatic Biome to the rest of the colony, the other elements will be easier to reach.\n\n" + UI.FormatAsLink("Sandstone", "SANDSTONE") + ", " + UI.FormatAsLink("Mafic Rock", "MAFICROCK") + ", " + UI.FormatAsLink("Sand", "SAND") + " and " + UI.FormatAsLink("Sedimentary Rock", "SEDIMENTARYROCK") + " provide readily available construction materials for setting up elementary infrastructure. The presence of " + UI.FormatAsLink("Oxylite", "OXYROCK") + " provides invaluable " + UI.FormatAsLink("Oxygen", "OXYGEN") + " which, through careful planning, should be able to sustain any Duplicants working in the area for a limited amount of time.";
 		}
 
 		public static class MOO
 		{
 			public static LocString NAME = "Moo";
 
-			public static LocString DESC = "";
+			public static LocString DESC = "The Moo Biome is the natural habitat of the charismatic " + UI.FormatAsLink("Gassy Moo", "MOO") + ", a great source of " + UI.FormatAsLink("Natural Gas", "METHANE") + ".";
 
-			public static LocString UTILITY = "";
+			public static LocString UTILITY = "In addition to " + UI.FormatAsLink("Natural Gas", "METHANE") + ", the highly toxic " + UI.FormatAsLink("Chlorine", "CHLORINEGAS") + " is also present in gas form. In fact, Chlorine is present here in " + UI.FormatAsLink("gas", "ELEMENTS_GAS") + ", " + UI.FormatAsLink("liquid", "ELEMENTS_LIQUID") + ", and " + UI.FormatAsLink("solid", "ELEMENTS_SOLID") + " states, largely due to the presence of " + UI.FormatAsLink("Bleach Stone", "BLEACHSTONE") + ".\n\n" + UI.FormatAsLink("Igneous Rock", "IGNEOUSROCK") + " and its denser form, " + UI.FormatAsLink("Granite", "GRANITE") + ", provide some useful construction materials, but the real star of this biome are the " + UI.FormatAsLink("Gassy Moos", "MOO") + " who consume " + UI.FormatAsLink("Gas Grass", "GASGRASS") + " and excrete " + UI.FormatAsLink("Natural Gas", "METHANE") + ". While Gassy Moos cannot be bred domestically, Gassy Mooteors regularly fall from space onto this biome, making it the best way to find a reliable source of these elusive creatures.\n\nWith no breathable " + UI.FormatAsLink("Oxygen", "OXYGEN") + " in this biome my Duplicants will need to be properly prepared before they venture too far into its depths.";
 		}
 	}
 }

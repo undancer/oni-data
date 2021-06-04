@@ -1,9 +1,8 @@
-name: boon_greathall
 info:
   size:
     X: 12
     Y: 7
-  area: 188
+  area: 78
 cells:
 - element: Vacuum
   location_x: -4
@@ -373,11 +372,6 @@ buildings:
   location_y: 1
   element: SandStone
   temperature: 293.149994
-- id: FlowerVase
-  location_x: -4
-  location_y: -1
-  element: SandStone
-  temperature: 293.149994
 - id: CornerMoulding
   location_x: -1
   location_y: 3
@@ -406,11 +400,6 @@ buildings:
 - id: CrownMoulding
   location_x: -3
   location_y: 2
-  element: SandStone
-  temperature: 293.149994
-- id: FlowerVase
-  location_x: 5
-  location_y: -1
   element: SandStone
   temperature: 293.149994
 - id: ExteriorWall
@@ -523,11 +512,6 @@ buildings:
   element: Cuprite
   temperature: 293.149994
 - id: ExteriorWall
-  location_x: -4
-  location_y: -1
-  element: SandStone
-  temperature: 293.149994
-- id: ExteriorWall
   location_x: -3
   location_y: -1
   element: SandStone
@@ -543,11 +527,6 @@ buildings:
   element: SandStone
   temperature: 293.149994
 - id: ExteriorWall
-  location_y: -1
-  element: SandStone
-  temperature: 293.149994
-- id: ExteriorWall
-  location_x: 5
   location_y: -1
   element: SandStone
   temperature: 293.149994
@@ -737,6 +716,25 @@ buildings:
   location_y: 2
   element: Cuprite
   temperature: 293.149994
-pickupables: []
-elementalOres: []
-otherEntities: []
+- id: ExteriorWall
+  location_x: 5
+  location_y: -1
+  element: SandStone
+  temperature: 293.149994
+- id: ExteriorWall
+  location_x: -4
+  location_y: -1
+  element: SandStone
+  temperature: 293.149994
+- id: GravitasPedestal
+  location_x: -4
+  location_y: -1
+  element: SandStone
+  temperature: 293.149994
+  storage:
+- id: GravitasPedestal
+  location_x: 5
+  location_y: -1
+  element: SandStone
+  temperature: 293.149994
+  storage:

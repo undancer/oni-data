@@ -195,6 +195,8 @@ public class CargoLander : GameStateMachine<CargoLander, CargoLander.StatesInsta
 
 	public Signal emptyCargo;
 
+	public State init;
+
 	public State stored;
 
 	public State landing;
@@ -203,9 +205,12 @@ public class CargoLander : GameStateMachine<CargoLander, CargoLander.StatesInsta
 
 	public CrashedStates grounded;
 
+	public BoolParameter isLanded = new BoolParameter(default_value: false);
+
 	public override void InitializeStates(out BaseState default_state)
 	{
-		default_state = stored;
+		default_state = init;
+		base.serializable = SerializeType.ParamsOnly;
 		root.InitializeOperationalFlag(RocketModule.landedFlag).Enter(delegate(StatesInstance smi)
 		{
 			smi.CheckIfLoaded();
@@ -213,6 +218,7 @@ public class CargoLander : GameStateMachine<CargoLander, CargoLander.StatesInsta
 		{
 			smi.CheckIfLoaded();
 		});
+		init.ParamTransition(isLanded, grounded, GameStateMachine<CargoLander, StatesInstance, IStateMachineTarget, Def>.IsTrue).GoTo(stored);
 		stored.TagTransition(GameTags.Stored, landing, on_remove: true).EventHandler(GameHashes.JettisonedLander, delegate(StatesInstance smi)
 		{
 			smi.OnJettisoned();
@@ -237,7 +243,11 @@ public class CargoLander : GameStateMachine<CargoLander, CargoLander.StatesInsta
 		grounded.DefaultState(grounded.loaded).ToggleOperationalFlag(RocketModule.landedFlag).Enter(delegate(StatesInstance smi)
 		{
 			smi.CheckIfLoaded();
-		});
+		})
+			.Enter(delegate(StatesInstance smi)
+			{
+				smi.sm.isLanded.Set(value: true, smi);
+			});
 		grounded.loaded.PlayAnim("grounded").ParamTransition(hasCargo, grounded.empty, GameStateMachine<CargoLander, StatesInstance, IStateMachineTarget, Def>.IsFalse).OnSignal(emptyCargo, grounded.emptying)
 			.Enter(delegate(StatesInstance smi)
 			{

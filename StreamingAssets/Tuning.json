@@ -96,5 +96,12 @@
     "probeSizeStep": 100,
     "estimatedFrameTime": 1.0,
     "loadBalanceThreshold": 0.1
+  },
+  "LaunchableRocketCluster+StatesInstance+Tuning": {
+    "takeoffAccelPower": 4.0,
+    "maxAccelerationDistance": 25.0,
+    "warmupTime": 5.0,
+    "heightSpeedPower": 0.5,
+    "heightSpeedFactor": 1.0
   }
 }

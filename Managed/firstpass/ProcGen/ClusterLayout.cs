@@ -32,6 +32,12 @@ namespace ProcGen
 			set;
 		}
 
+		public List<SpaceMapPOIPlacement> poiPlacements
+		{
+			get;
+			set;
+		}
+
 		public string name
 		{
 			get;

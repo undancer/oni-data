@@ -39,23 +39,22 @@ public class NuclearResearchCenter : StateMachineComponent<NuclearResearchCenter
 			ready.Enter(delegate(StatesInstance smi)
 			{
 				smi.CreateChore();
-			}).TagTransition(GameTags.Operational, inoperational, on_remove: true).EventTransition(GameHashes.ActiveResearchChanged, requirements.noResearchSelected, GameStateMachine<States, StatesInstance, NuclearResearchCenter, object>.Not(IsResearchSelected))
-				.EventTransition(GameHashes.ActiveResearchChanged, requirements.noApplicableResearch, GameStateMachine<States, StatesInstance, NuclearResearchCenter, object>.Not(IsResearchApplicable))
-				.EventTransition(GameHashes.ResearchPointsChanged, requirements.noApplicableResearch, GameStateMachine<States, StatesInstance, NuclearResearchCenter, object>.Not(IsResearchApplicable))
-				.EventTransition(GameHashes.OnParticleStorageEmpty, requirements.highEnergyParticlesNeeded, GameStateMachine<States, StatesInstance, NuclearResearchCenter, object>.Not(HasRadiation))
-				.DefaultState(ready.idle)
+			}).TagTransition(GameTags.Operational, inoperational, on_remove: true).DefaultState(ready.idle)
 				.Exit(delegate(StatesInstance smi)
 				{
 					smi.DestroyChore();
 				});
-			ready.idle.WorkableStartTransition((StatesInstance smi) => smi.master.GetComponent<NuclearResearchCenterWorkable>(), ready.working);
+			ready.idle.WorkableStartTransition((StatesInstance smi) => smi.master.GetComponent<NuclearResearchCenterWorkable>(), ready.working).EventTransition(GameHashes.ActiveResearchChanged, requirements.noResearchSelected, GameStateMachine<States, StatesInstance, NuclearResearchCenter, object>.Not(IsResearchSelected)).EventTransition(GameHashes.ActiveResearchChanged, requirements.noApplicableResearch, GameStateMachine<States, StatesInstance, NuclearResearchCenter, object>.Not(IsResearchApplicable))
+				.EventTransition(GameHashes.ResearchPointsChanged, requirements.noApplicableResearch, GameStateMachine<States, StatesInstance, NuclearResearchCenter, object>.Not(IsResearchApplicable))
+				.EventTransition(GameHashes.OnParticleStorageEmpty, requirements.highEnergyParticlesNeeded, GameStateMachine<States, StatesInstance, NuclearResearchCenter, object>.Not(HasRadiation));
 			ready.working.Enter("SetActive(true)", delegate(StatesInstance smi)
 			{
 				smi.master.operational.SetActive(value: true);
 			}).Exit("SetActive(false)", delegate(StatesInstance smi)
 			{
 				smi.master.operational.SetActive(value: false);
-			}).WorkableStopTransition((StatesInstance smi) => smi.master.GetComponent<NuclearResearchCenterWorkable>(), ready.idle);
+			}).WorkableStopTransition((StatesInstance smi) => smi.master.GetComponent<NuclearResearchCenterWorkable>(), ready.idle)
+				.WorkableCompleteTransition((StatesInstance smi) => smi.master.GetComponent<NuclearResearchCenterWorkable>(), ready.idle);
 		}
 
 		private bool IsReady(StatesInstance smi)
@@ -130,7 +129,7 @@ public class NuclearResearchCenter : StateMachineComponent<NuclearResearchCenter
 	[MyCmpReq]
 	private HighEnergyParticleStorage particleStorage;
 
-	public Meter.Offset particleMeterOffset = Meter.Offset.Behind;
+	public Meter.Offset particleMeterOffset = Meter.Offset.Infront;
 
 	private MeterController particleMeter;
 

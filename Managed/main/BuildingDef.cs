@@ -92,6 +92,8 @@ public class BuildingDef : Def
 
 	public bool OnePerWorld = false;
 
+	public bool PlayConstructionSounds = true;
+
 	public List<Tag> ReplacementTags;
 
 	public List<ObjectLayer> ReplacementCandidateLayers;
@@ -109,8 +111,6 @@ public class BuildingDef : Def
 	public ObjectLayer TileLayer = ObjectLayer.NumLayers;
 
 	public ObjectLayer ReplacementLayer = ObjectLayer.NumLayers;
-
-	public Vector3 placementPivot;
 
 	public string DiseaseCellVisName;
 
@@ -385,12 +385,15 @@ public class BuildingDef : Def
 				TileVisualizer.RefreshCell(c, TileLayer, ReplacementLayer);
 			});
 		}
-		string sound = GlobalAssets.GetSound("Finish_Building_" + AudioSize);
-		if (playsound && sound != null)
+		if (PlayConstructionSounds)
 		{
-			Vector3 position = gameObject.transform.GetPosition();
-			position.z = 0f;
-			KFMOD.PlayOneShot(sound, position);
+			string sound = GlobalAssets.GetSound("Finish_Building_" + AudioSize);
+			if (playsound && sound != null)
+			{
+				Vector3 position = gameObject.transform.GetPosition();
+				position.z = 0f;
+				KFMOD.PlayOneShot(sound, position);
+			}
 		}
 		Deconstructable component2 = gameObject.GetComponent<Deconstructable>();
 		if (component2 != null)

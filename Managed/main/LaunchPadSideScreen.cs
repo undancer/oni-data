@@ -16,6 +16,8 @@ public class LaunchPadSideScreen : SideScreenContent
 
 	public KButton startNewRocketbutton;
 
+	public KButton devAutoRocketButton;
+
 	public GameObject landableRowContainer;
 
 	public GameObject nothingWaitingRow;
@@ -30,6 +32,7 @@ public class LaunchPadSideScreen : SideScreenContent
 	{
 		base.OnSpawn();
 		startNewRocketbutton.onClick += ClickStartNewRocket;
+		devAutoRocketButton.onClick += ClickAutoRocket;
 	}
 
 	protected override void OnShow(bool show)
@@ -120,5 +123,12 @@ public class LaunchPadSideScreen : SideScreenContent
 	private void RefreshRocketButton()
 	{
 		startNewRocketbutton.isInteractable = selectedPad.LandedRocket == null;
+		devAutoRocketButton.isInteractable = selectedPad.LandedRocket == null;
+		devAutoRocketButton.gameObject.SetActive(DebugHandler.InstantBuildMode);
+	}
+
+	private void ClickAutoRocket()
+	{
+		AutoRocketUtility.StartAutoRocket(selectedPad);
 	}
 }

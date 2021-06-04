@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using KSerialization;
 using UnityEngine;
 
-[SkipSaveFileSerialization]
 [AddComponentMenu("KMonoBehaviour/scripts/SpaceArtifact")]
 public class SpaceArtifact : KMonoBehaviour, IGameObjectEffectDescriptor
 {
@@ -12,6 +12,24 @@ public class SpaceArtifact : KMonoBehaviour, IGameObjectEffectDescriptor
 
 	[SerializeField]
 	private ArtifactTier artifactTier;
+
+	[Serialize]
+	private bool loadCharmed = true;
+
+	protected override void OnSpawn()
+	{
+		base.OnSpawn();
+		if (loadCharmed)
+		{
+			base.gameObject.AddTag(GameTags.CharmedArtifact);
+		}
+	}
+
+	public void RemoveCharm()
+	{
+		base.gameObject.RemoveTag(GameTags.CharmedArtifact);
+		loadCharmed = false;
+	}
 
 	public void SetArtifactTier(ArtifactTier tier)
 	{

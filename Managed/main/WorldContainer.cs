@@ -613,4 +613,9 @@ public class WorldContainer : KMonoBehaviour
 		}
 		return Grid.XYToCell(worldOffset.x + worldSize.x / 2, worldOffset.y + worldSize.y / 2);
 	}
+
+	public string GetStatus()
+	{
+		return ColonyDiagnosticUtility.Instance.GetWorldDiagnosticResultStatus(id);
+	}
 }

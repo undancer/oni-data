@@ -32,7 +32,7 @@ public class SingleSliderSideScreen : SideScreenContent
 		target = new_target.GetComponent<ISingleSliderControl>();
 		if (target == null)
 		{
-			Debug.LogError("The gameObject received does not contain a Manual Generator component");
+			Debug.LogError("The gameObject received does not contain a ISingleSliderControl implementation");
 			return;
 		}
 		titleKey = target.SliderTitleKey;

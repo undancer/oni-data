@@ -56,7 +56,6 @@ public class BuildTool : DragTool
 		}
 		active = true;
 		base.OnActivateTool();
-		placementPivot = def.placementPivot;
 		Vector3 vector = ClampPositionToWorld(PlayerController.GetCursorPos(KInputManager.GetMousePos()), ClusterManager.Instance.activeWorld);
 		visualizer = GameUtil.KInstantiate(def.BuildingPreview, vector, Grid.SceneLayer.Ore, null, LayerMask.NameToLayer("Place"));
 		KBatchedAnimController component = visualizer.GetComponent<KBatchedAnimController>();
@@ -65,7 +64,6 @@ public class BuildTool : DragTool
 			component.visibilityType = KAnimControllerBase.VisibilityType.Always;
 			component.isMovable = true;
 			component.Offset = def.GetVisualizerOffset();
-			component.Offset += def.placementPivot;
 			component.name = component.GetComponent<KPrefabID>().GetDebugName() + "_visualizer";
 		}
 		Rotatable component2 = visualizer.GetComponent<Rotatable>();
@@ -157,7 +155,6 @@ public class BuildTool : DragTool
 
 	public override void OnMouseMove(Vector3 cursorPos)
 	{
-		cursorPos -= placementPivot;
 		base.OnMouseMove(cursorPos);
 		cursorPos = ClampPositionToWorld(cursorPos, ClusterManager.Instance.activeWorld);
 		UpdateVis(cursorPos);

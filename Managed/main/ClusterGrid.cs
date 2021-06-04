@@ -70,16 +70,16 @@ public class ClusterGrid
 		return new List<ClusterGridEntity>();
 	}
 
-	public ClusterGridEntity GetVisibleAsteroidAtCell(AxialI cell)
+	public ClusterGridEntity GetVisibleEntityOfLayerAtCell(AxialI cell, EntityLayer entityLayer)
 	{
 		List<ClusterGridEntity> visibleEntitiesAtCell = GetVisibleEntitiesAtCell(cell);
-		return visibleEntitiesAtCell.Find((ClusterGridEntity x) => x.Layer == EntityLayer.Asteroid);
+		return visibleEntitiesAtCell.Find((ClusterGridEntity x) => x.Layer == entityLayer);
 	}
 
-	public ClusterGridEntity GetVisibleAsteroidAtAdjacentCell(AxialI cell)
+	public ClusterGridEntity GetVisibleEntityOfLayerAtAdjacentCell(AxialI cell, EntityLayer entityLayer)
 	{
 		return (from entity in AxialUtil.GetRing(cell, 1).SelectMany((AxialI c) => GetVisibleEntitiesAtCell(c))
-			where entity.Layer == EntityLayer.Asteroid
+			where entity.Layer == entityLayer
 			select entity).FirstOrDefault();
 	}
 
@@ -92,16 +92,16 @@ public class ClusterGrid
 		return new List<ClusterGridEntity>();
 	}
 
-	public List<ClusterGridEntity> GetNotVisibleAsteroidsAtAdjacentCell(AxialI cell)
+	public List<ClusterGridEntity> GetNotVisibleEntitiesOfLayerAtAdjacentCell(AxialI cell, EntityLayer entityLayer)
 	{
 		return (from entity in AxialUtil.GetRing(cell, 1).SelectMany((AxialI c) => GetHiddenEntitiesAtCell(c))
-			where entity.Layer == EntityLayer.Asteroid
+			where entity.Layer == entityLayer
 			select entity).ToList();
 	}
 
 	public bool HasVisibleAsteroidAtCell(AxialI cell)
 	{
-		return GetVisibleAsteroidAtCell(cell) != null;
+		return GetVisibleEntityOfLayerAtCell(cell, EntityLayer.Asteroid) != null;
 	}
 
 	public void RegisterEntity(ClusterGridEntity entity)
@@ -162,6 +162,11 @@ public class ClusterGrid
 			}
 		}
 		return list;
+	}
+
+	public List<ClusterGridEntity> GetEntitiesOnCell(AxialI cell)
+	{
+		return cellContents[cell];
 	}
 
 	public bool IsInRange(AxialI a, AxialI b, int range = 1)
@@ -241,13 +246,13 @@ public class ClusterGrid
 			fail_reason = UI.CLUSTERMAP.TOOLTIP_INVALID_DESTINATION_FOG_OF_WAR;
 			return null;
 		}
-		ClusterGridEntity visibleAsteroidAtCell = GetVisibleAsteroidAtCell(end);
-		if (visibleAsteroidAtCell != null && destination_selector.requireLaunchPadOnAsteroidDestination)
+		ClusterGridEntity visibleEntityOfLayerAtCell = GetVisibleEntityOfLayerAtCell(end, EntityLayer.Asteroid);
+		if (visibleEntityOfLayerAtCell != null && destination_selector.requireLaunchPadOnAsteroidDestination)
 		{
 			bool flag = false;
 			foreach (LaunchPad launchPad in Components.LaunchPads)
 			{
-				if (launchPad.GetMyWorldLocation() == visibleAsteroidAtCell.Location)
+				if (launchPad.GetMyWorldLocation() == visibleEntityOfLayerAtCell.Location)
 				{
 					flag = true;
 					break;
@@ -259,7 +264,7 @@ public class ClusterGrid
 				return null;
 			}
 		}
-		if (visibleAsteroidAtCell == null && destination_selector.requireAsteroidDestination)
+		if (visibleEntityOfLayerAtCell == null && destination_selector.requireAsteroidDestination)
 		{
 			fail_reason = UI.CLUSTERMAP.TOOLTIP_INVALID_DESTINATION_REQUIRE_ASTEROID;
 			return null;
@@ -316,7 +321,7 @@ public class ClusterGrid
 	{
 		List<ClusterGridEntity> visibleEntitiesAtCell = GetVisibleEntitiesAtCell(location);
 		ClusterGridEntity clusterGridEntity = visibleEntitiesAtCell.Find((ClusterGridEntity x) => x.Layer == EntityLayer.Asteroid);
-		ClusterGridEntity visibleAsteroidAtAdjacentCell = GetVisibleAsteroidAtAdjacentCell(location);
+		ClusterGridEntity visibleEntityOfLayerAtAdjacentCell = GetVisibleEntityOfLayerAtAdjacentCell(location, EntityLayer.Asteroid);
 		if (clusterGridEntity != null)
 		{
 			sprite = clusterGridEntity.GetUISprite();
@@ -324,11 +329,11 @@ public class ClusterGrid
 			WorldContainer component = clusterGridEntity.GetComponent<WorldContainer>();
 			sublabel = Strings.Get(component.worldType);
 		}
-		else if (visibleAsteroidAtAdjacentCell != null)
+		else if (visibleEntityOfLayerAtAdjacentCell != null)
 		{
-			sprite = visibleAsteroidAtAdjacentCell.GetUISprite();
-			label = UI.SPACEDESTINATIONS.ORBIT.NAME_FMT.Replace("{Name}", visibleAsteroidAtAdjacentCell.Name);
-			WorldContainer component2 = visibleAsteroidAtAdjacentCell.GetComponent<WorldContainer>();
+			sprite = visibleEntityOfLayerAtAdjacentCell.GetUISprite();
+			label = UI.SPACEDESTINATIONS.ORBIT.NAME_FMT.Replace("{Name}", visibleEntityOfLayerAtAdjacentCell.Name);
+			WorldContainer component2 = visibleEntityOfLayerAtAdjacentCell.GetComponent<WorldContainer>();
 			sublabel = Strings.Get(component2.worldType);
 		}
 		else if (IsCellVisible(location))

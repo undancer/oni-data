@@ -19,6 +19,7 @@ public class PropSkeletonConfig : IEntityConfig
 		PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
 		component.SetElement(SimHashes.Creature);
 		component.Temperature = 294.15f;
+		gameObject.AddOrGet<Demolishable>();
 		return gameObject;
 	}
 

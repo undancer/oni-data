@@ -20,6 +20,7 @@ public class PropFacilityDisplay : IEntityConfig
 		component.SetElement(SimHashes.Steel);
 		component.Temperature = 294.15f;
 		gameObject.AddOrGet<LoreBearer>();
+		gameObject.AddOrGet<Demolishable>();
 		return gameObject;
 	}
 

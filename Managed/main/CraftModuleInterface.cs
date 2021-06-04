@@ -12,8 +12,7 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 	[Serialize]
 	private List<Ref<RocketModuleCluster>> clusterModules = new List<Ref<RocketModuleCluster>>();
 
-	[Serialize]
-	public Ref<LaunchPad> currentPad = new Ref<LaunchPad>();
+	private Ref<RocketModuleCluster> bottomModule;
 
 	[MyCmpReq]
 	private Clustercraft m_clustercraft;
@@ -32,7 +31,31 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 
 	public IList<Ref<RocketModuleCluster>> ClusterModules => clusterModules.AsReadOnly();
 
-	public LaunchPad CurrentPad => currentPad.Get();
+	public LaunchPad CurrentPad
+	{
+		get
+		{
+			if (m_clustercraft != null && m_clustercraft.Status != Clustercraft.CraftStatus.InFlight && clusterModules.Count > 0)
+			{
+				if (bottomModule == null)
+				{
+					SetBottomModule();
+				}
+				Debug.Assert(bottomModule != null && bottomModule.Get() != null, "More than one cluster module but no bottom module found.");
+				int num = Grid.CellBelow(Grid.PosToCell(bottomModule.Get().transform.position));
+				if (Grid.IsValidCell(num))
+				{
+					GameObject value = null;
+					Grid.ObjectLayers[1].TryGetValue(num, out value);
+					if (value != null)
+					{
+						return value.GetComponent<LaunchPad>();
+					}
+				}
+			}
+			return null;
+		}
+	}
 
 	public float Speed => m_clustercraft.Speed;
 
@@ -189,6 +212,7 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 		{
 			ForceAttachmentNetwork();
 		}
+		SetBottomModule();
 	}
 
 	private void OnLoad(Game.GameSaveData data)
@@ -215,16 +239,17 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 				flag = true;
 			}
 		}
+		SetBottomModule();
 		if (!flag || m_clustercraft.Status != 0)
 		{
 			return;
 		}
 		Debug.LogWarning("The module stack was broken. Collapsing " + base.name + "...", this);
 		SortModuleListByPosition();
-		LaunchPad launchPad = currentPad.Get();
-		if (launchPad != null)
+		LaunchPad currentPad = CurrentPad;
+		if (currentPad != null)
 		{
-			int num2 = launchPad.RocketBottomPosition;
+			int num2 = currentPad.RocketBottomPosition;
 			for (int i = 0; i < clusterModules.Count; i++)
 			{
 				RocketModuleCluster rocketModuleCluster = clusterModules[i].Get();
@@ -271,6 +296,7 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 				rocketModuleCluster.Trigger(1512695988, newModule);
 			}
 		}
+		SetBottomModule();
 	}
 
 	public void RemoveModule(RocketModuleCluster module)
@@ -289,6 +315,7 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 			RocketModule rocketModule = module2.Get();
 			rocketModule.Trigger(1512695988);
 		}
+		SetBottomModule();
 		if (clusterModules.Count == 0)
 		{
 			base.gameObject.DeleteObject();
@@ -298,6 +325,28 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 	private void SortModuleListByPosition()
 	{
 		clusterModules.Sort((Ref<RocketModuleCluster> a, Ref<RocketModuleCluster> b) => (!(Grid.CellToPos(Grid.PosToCell(a.Get())).y < Grid.CellToPos(Grid.PosToCell(b.Get())).y)) ? 1 : (-1));
+	}
+
+	private void SetBottomModule()
+	{
+		if (clusterModules.Count > 0)
+		{
+			bottomModule = clusterModules[0];
+			Vector3 vector = bottomModule.Get().transform.position;
+			foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
+			{
+				Vector3 position = clusterModule.Get().transform.position;
+				if (position.y < vector.y)
+				{
+					bottomModule = clusterModule;
+					vector = position;
+				}
+			}
+		}
+		else
+		{
+			bottomModule = null;
+		}
 	}
 
 	public int GetModuleRelativeVerticalPosition(GameObject module)
@@ -384,7 +433,7 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 	public void DoLaunch()
 	{
 		SortModuleListByPosition();
-		currentPad.Get().Trigger(705820818, this);
+		CurrentPad.Trigger(705820818, this);
 		foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 		{
 			clusterModule.Get().Trigger(705820818, this);
@@ -393,23 +442,18 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 
 	public void DoLand(LaunchPad pad)
 	{
-		SetCurrentPad(pad);
 		int num = pad.RocketBottomPosition;
 		for (int i = 0; i < clusterModules.Count; i++)
 		{
 			clusterModules[i].Get().MoveToPad(num);
 			num = Grid.OffsetCell(num, 0, clusterModules[i].Get().GetComponent<Building>().Def.HeightInCells);
 		}
+		SetBottomModule();
 		foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 		{
 			clusterModule.Get().Trigger(-1165815793, pad);
 		}
 		pad.Trigger(-1165815793, this);
-	}
-
-	public void SetCurrentPad(LaunchPad pad)
-	{
-		currentPad.Set(pad);
 	}
 
 	public LaunchConditionManager FindLaunchConditionManager()
@@ -511,9 +555,9 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 				returnConditions.AddRange(conditionSet);
 			}
 		}
-		if (currentPad.Get() != null)
+		if (CurrentPad != null)
 		{
-			List<ProcessCondition> conditionSet2 = currentPad.Get().GetComponent<LaunchPadConditions>().GetConditionSet(conditionType);
+			List<ProcessCondition> conditionSet2 = CurrentPad.GetComponent<LaunchPadConditions>().GetConditionSet(conditionType);
 			if (conditionSet2 != null)
 			{
 				returnConditions.AddRange(conditionSet2);

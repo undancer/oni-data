@@ -163,6 +163,7 @@ worldTemplateRules:
     - expansion1::poi/oil/small_oilpockets_geyser_e
     - expansion1::poi/oil/small_oilpockets_geyser_f
     - expansion1::poi/oil/small_oilpockets_geyser_g
+    - expansion1::poi/oil/small_oilpockets_geyser_h
     listRule: GuaranteeSomeTryMore
     someCount: 2
     moreCount: 3

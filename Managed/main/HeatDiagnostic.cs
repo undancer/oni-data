@@ -7,7 +7,7 @@ public class HeatDiagnostic : ColonyDiagnostic
 	{
 		tracker = TrackerTool.Instance.GetWorldTracker<BatteryTracker>(worldID);
 		trackerSampleCountSeconds = 4f;
-		AddCriterion("CheckHeat", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME, CheckHeat));
+		AddCriterion("CheckHeat", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.HEATDIAGNOSTIC.CRITERIA.CHECKHEAT, CheckHeat));
 	}
 
 	private DiagnosticResult CheckHeat()

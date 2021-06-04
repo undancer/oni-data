@@ -4,7 +4,7 @@ using STRINGS;
 using UnityEngine;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticleSpawner.StatesInstance>, IHighEnergyParticleDirection, IProgressBarSideScreen
+public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticleSpawner.StatesInstance>, IHighEnergyParticleDirection, IProgressBarSideScreen, ISingleSliderControl, ISliderControl
 {
 	public class StatesInstance : GameStateMachine<States, StatesInstance, HighEnergyParticleSpawner, object>.GameInstance
 	{
@@ -79,6 +79,7 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 
 	public float radiationSampleRate;
 
+	[Serialize]
 	public float particleThreshold = 50f;
 
 	private EightDirectionController directionController;
@@ -140,6 +141,10 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 	public bool HasLogicWire => hasLogicWire;
 
 	public bool IsLogicActive => isLogicActive;
+
+	public string SliderTitleKey => "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.TITLE";
+
+	public string SliderUnits => UI.UNITSUFFIXES.HIGHENERGYPARTICLES.PARTRICLES;
 
 	private void OnCopySettings(object data)
 	{
@@ -309,5 +314,40 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 			return BUILDING.STATUSITEMS.HIGHENERGYPARTICLESPAWNER.TOOLTIPS.LOGIC_CONTROLLED_ACTIVE;
 		}
 		return BUILDING.STATUSITEMS.HIGHENERGYPARTICLESPAWNER.TOOLTIPS.LOGIC_CONTROLLED_STANDBY;
+	}
+
+	public int SliderDecimalPlaces(int index)
+	{
+		return 0;
+	}
+
+	public float GetSliderMin(int index)
+	{
+		return minSlider;
+	}
+
+	public float GetSliderMax(int index)
+	{
+		return maxSlider;
+	}
+
+	public float GetSliderValue(int index)
+	{
+		return particleThreshold;
+	}
+
+	public void SetSliderValue(float value, int index)
+	{
+		particleThreshold = value;
+	}
+
+	public string GetSliderTooltipKey(int index)
+	{
+		return "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.TOOLTIP";
+	}
+
+	string ISliderControl.GetSliderTooltip()
+	{
+		return string.Format(Strings.Get("STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.TOOLTIP"), particleThreshold);
 	}
 }

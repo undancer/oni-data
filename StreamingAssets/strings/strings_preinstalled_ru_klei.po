@@ -393,6 +393,16 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.CONDUITBLOCKED.TOOLTIP"
 msgid "Output <style=\"KKeyword\">Pipe</style> is blocked"
 msgstr "Выходная <style=\"KKeyword\">труба</style> заблокирована"
 
+#. STRINGS.BUILDING.STATUSITEMS.CONDUITBLOCKEDMULTIPLES.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.CONDUITBLOCKEDMULTIPLES.NAME"
+msgid "Pipe Blocked"
+msgstr "Труба заблокирована"
+
+#. STRINGS.BUILDING.STATUSITEMS.CONDUITBLOCKEDMULTIPLES.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.CONDUITBLOCKEDMULTIPLES.TOOLTIP"
+msgid "Output <style=\"KKeyword\">Pipe</style> is blocked"
+msgstr "Выходная <style=\"KKeyword\">труба</style> заблокирована"
+
 #. STRINGS.BUILDING.STATUSITEMS.CONNECTED_ROCKET_NO_PORT.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.CONNECTED_ROCKET_NO_PORT.NAME"
 msgid "No Rocket Ports"
@@ -1353,6 +1363,26 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.LANDEDROCKETLACKSPASSENGERMODULE.TOOLTIP"
 msgid "A rocket must have a spacefarer module"
 msgstr "Ракета должна иметь модуль для космонавтов."
 
+#. STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITNOTREACHED.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITNOTREACHED.NAME"
+msgid "Amount remaining: {0}"
+msgstr "Оставшееся количество: {0}"
+
+#. STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITNOTREACHED.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITNOTREACHED.TOOLTIP"
+msgid "This building will stop transferring Mass when the amount remaining reaches 0"
+msgstr "Это здание перестанет передавать массу, когда оставшееся количество достигнет 0"
+
+#. STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITREACHED.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITREACHED.NAME"
+msgid "Limit Reached"
+msgstr "Лимит достигнут"
+
+#. STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITREACHED.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.LIMITVALVELIMITREACHED.TOOLTIP"
+msgid "No more Mass can be transferred"
+msgstr "Больше невозможно передавать массу"
+
 #. STRINGS.BUILDING.STATUSITEMS.LIQUIDPIPEEMPTY.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.LIQUIDPIPEEMPTY.NAME"
 msgid "Empty Pipe"
@@ -2050,8 +2080,8 @@ msgstr "Нет прямого обзора"
 
 #. STRINGS.BUILDING.STATUSITEMS.NOSURFACESIGHT.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.NOSURFACESIGHT.TOOLTIP"
-msgid "This building has no view of space\n\nEnsure an unblocked view of the sky"
-msgstr "Эта постройка не дает обзора на космос\n\nТребуется открытый обзор неба"
+msgid "This building has no view of space\n\nTo properly function, this building requires an unblocked view of space"
+msgstr "Это здание не имеет обзора на космос\n\nДля работы этому зданию требуется незаблокированный обзор на космос"
 
 #. STRINGS.BUILDING.STATUSITEMS.NOTENOUGHPOWER.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.NOTENOUGHPOWER.NAME"
@@ -2642,6 +2672,16 @@ msgstr "Напряжение в данный момент: {Wattage}"
 msgctxt "STRINGS.BUILDING.STATUSITEMS.SOLARPANELWATTAGE.TOOLTIP"
 msgid "This panel is generating <style=\"produced\">{Wattage}</style> of <style=\"KKeyword\">Power</style>"
 msgstr "Эта панель вырабатывает <style=\"produced\">{Wattage}</style> <style=\"KKeyword\">энергии</style>"
+
+#. STRINGS.BUILDING.STATUSITEMS.SOLIDCONDUITBLOCKEDMULTIPLES.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.SOLIDCONDUITBLOCKEDMULTIPLES.NAME"
+msgid "Conveyor Rail Blocked"
+msgstr "Блокировка рельсов конвейера"
+
+#. STRINGS.BUILDING.STATUSITEMS.SOLIDCONDUITBLOCKEDMULTIPLES.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.SOLIDCONDUITBLOCKEDMULTIPLES.TOOLTIP"
+msgid "Output <style=\"KKeyword\">Conveyor Rail</style> is blocked"
+msgstr "Выходные <style=\"KKeyword\">рельсы конвейера</style> заблокированы"
 
 #. STRINGS.BUILDING.STATUSITEMS.SOLIDPIPEOBSTRUCTED.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.SOLIDPIPEOBSTRUCTED.NAME"
@@ -4435,8 +4475,8 @@ msgstr "Камера выглядит очень старой, но пахнет
 
 #. STRINGS.BUILDINGS.PREFABS.CRYOTANK.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.CRYOTANK.NAME"
-msgid "<link=\"CRYOTANK\">Cryotank</link>"
-msgstr "<link=\"CRYOTANK\">Криокамера</link>"
+msgid "<link=\"CRYOTANK\">Cryotank 3000</link>"
+msgstr "<link=\"CRYOTANK\">Криокамера 3000</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.DECONTAMINATIONSHOWER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.DECONTAMINATIONSHOWER.DESC"
@@ -5287,6 +5327,51 @@ msgstr "<link=\"GASFILTER\">Газовый фильтр</link>"
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASFILTER.STATUS_ITEM"
 msgid "Filters: {0}"
 msgstr "Фильтры: {0}"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.DESC"
+msgid "Meter Valves let an exact amount of gas pass through before shutting off."
+msgstr "Дозирующие клапаны пропускают определенный объем газа, а затем отключаются."
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.EFFECT"
+msgid "Connects to an <link=\"LOGIC\">Automation</link> grid to automatically turn <link=\"ELEMENTSGAS\">Gas</link> flow off when the specified amount has passed through it."
+msgstr "Подключается к <link=\"LOGIC\">автоматической сети</link>, чтобы самостоятельно перекрывать и открывать поток <link=\"ELEMENTSGAS\">газа</link>, когда через него проходит указанный объем."
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.LOGIC_PORT_OUTPUT
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.LOGIC_PORT_OUTPUT"
+msgid "Limit Reached"
+msgstr "Лимит достигнут"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.LOGIC_PORT_RESET
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.LOGIC_PORT_RESET"
+msgid "Reset Meter"
+msgstr "Сбросить счетчик"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.NAME"
+msgid "<link=\"GASLIMITVALVE\">Gas Meter Valve</link>"
+msgstr "<link=\"GASLIMITVALVE\">Клапан-счетчик газа</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.OUTPUT_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.OUTPUT_PORT_ACTIVE"
+msgid "Sends a <b><style=\"logic_on\">Green Signal</style></b> if limit has been reached"
+msgstr "Посылает <b><style=\"logic_on\">зеленый сигнал</style></b>, если лимит был достигнут"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.OUTPUT_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.OUTPUT_PORT_INACTIVE"
+msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
+msgstr "В противном случае отправляет <b><style=\"logic_off\">красный сигнал</style></b>"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.RESET_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.RESET_PORT_ACTIVE"
+msgid "<b><style=\"logic_on\">Green Signal</style></b>: Reset the amount"
+msgstr "<b><style=\"logic_on\">Зеленый сигнал</style></b>: сброс объема"
+
+#. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.RESET_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.RESET_PORT_INACTIVE"
+msgid "<b><style=\"logic_off\">Red Signal</style></b>: Nothing"
+msgstr "<b><style=\"logic_off\">Красный сигнал</style></b>: не делать ничего"
 
 #. STRINGS.BUILDINGS.PREFABS.GASLOGICVALVE.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASLOGICVALVE.DESC"
@@ -6497,6 +6582,51 @@ msgstr "Нагревает большое количество <link=\"ELEMENTSL
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDHEATER.NAME"
 msgid "<link=\"LIQUIDHEATER\">Liquid Tepidizer</link>"
 msgstr "<link=\"LIQUIDHEATER\">Жидкостной нагреватель</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.DESC"
+msgid "Meter Valves let an exact amount of liquid pass through before shutting off."
+msgstr "Дозирующие клапаны пропускают определенный объем жидкости, а затем отключаются."
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.EFFECT"
+msgid "Connects to an <link=\"LOGIC\">Automation</link> grid to automatically turn <link=\"ELEMENTSLIQUID\">Liquid</link> flow off when the specified amount has passed through it."
+msgstr "Подключается к <link=\"LOGIC\">автоматической сети</link>, чтобы самостоятельно перекрывать и открывать поток <link=\"ELEMENTSLIQUID\">жидкости</link>, когда через него проходит указанный объем."
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.LOGIC_PORT_OUTPUT
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.LOGIC_PORT_OUTPUT"
+msgid "Limit Reached"
+msgstr "Лимит достигнут"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.LOGIC_PORT_RESET
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.LOGIC_PORT_RESET"
+msgid "Reset Meter"
+msgstr "Сбросить счетчик"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.NAME"
+msgid "<link=\"LIQUIDLIMITVALVE\">Liquid Meter Valve</link>"
+msgstr "<link=\"LIQUIDLIMITVALVE\">Клапан-счетчик жидкости</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.OUTPUT_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.OUTPUT_PORT_ACTIVE"
+msgid "Sends a <b><style=\"logic_on\">Green Signal</style></b> if limit has been reached"
+msgstr "Посылает <b><style=\"logic_on\">зеленый сигнал</style></b>, если лимит был достигнут"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.OUTPUT_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.OUTPUT_PORT_INACTIVE"
+msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
+msgstr "В противном случае отправляет <b><style=\"logic_off\">красный сигнал</style></b>"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.RESET_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.RESET_PORT_ACTIVE"
+msgid "<b><style=\"logic_on\">Green Signal</style></b>: Reset the amount"
+msgstr "<b><style=\"logic_on\">Зеленый сигнал</style></b>: сброс объема"
+
+#. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.RESET_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.RESET_PORT_INACTIVE"
+msgid "<b><style=\"logic_off\">Red Signal</style></b>: Nothing"
+msgstr "<b><style=\"logic_off\">Красный сигнал</style></b>: не делать ничего"
 
 #. STRINGS.BUILDINGS.PREFABS.LIQUIDLOGICVALVE.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLOGICVALVE.DESC"
@@ -8025,13 +8155,28 @@ msgstr "Чтобы загружать или выгружать ресурсы, 
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGAS.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGAS.EFFECT"
-msgid "Allows <link=\"ELEMENTSGAS\">Gases</link> to be loaded and unloaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the gas filters set on the linked Rocket Platform."
-msgstr "Позволяет подавать и откачивать <link=\"ELEMENTSGAS\">газ</link> из отсеков подсоединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует газовые фильтры, установленные на подсоединенной ракетной платформе."
+msgid "Allows <link=\"ELEMENTSGAS\">Gases</link> to be loaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the gas filters set on the rocket's cargo bays."
+msgstr "Позволяет подавать <link=\"ELEMENTSGAS\">газ</link> из отсеков подсоединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует газовые фильтры, установленные в грузовых отсеках ракеты."
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGAS.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGAS.NAME"
-msgid "<link=\"MODULARLAUNCHPADPORTGAS\">Gas Rocket Port</link>"
-msgstr "<link=\"MODULARLAUNCHPADPORTGAS\">Ракетный порт газа</link>"
+msgid "<link=\"MODULARLAUNCHPADPORTGAS\">Gas Rocket Port Loader</link>"
+msgstr "<link=\"MODULARLAUNCHPADPORTGAS\">Раздатчик газа из ракетного порта</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGASUNLOADER.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGASUNLOADER.DESC"
+msgid "Rockets must be landed to load or unload resources."
+msgstr "Чтобы загружать или выгружать ресурсы, ракета должна приземлиться."
+
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGASUNLOADER.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGASUNLOADER.EFFECT"
+msgid "Allows <link=\"ELEMENTSGAS\">Gases</link> to be unloaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the gas filters set on this unloader."
+msgstr "Позволяет откачивать <link=\"ELEMENTSGAS\">газ</link> из отсеков подсоединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует газовые фильтры, установленные в погрузчике."
+
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGASUNLOADER.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGASUNLOADER.NAME"
+msgid "<link=\"MODULARLAUNCHPADPORTGASUNLOADER\">Gas Rocket Port Unloader</link>"
+msgstr "<link=\"MODULARLAUNCHPADPORTGASUNLOADER\">Разгрузчик газа из ракетного порта</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.DESC"
@@ -8040,13 +8185,28 @@ msgstr "Чтобы загружать или выгружать ресурсы, 
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.EFFECT"
-msgid "Allows <link=\"ELEMENTSLIQUID\">Liquids</link> to be loaded and unloaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the liquid filters set on the linked Rocket Platform."
-msgstr "Позволяет подавать и откачивать <link=\"ELEMENTSLIQUID\">жидкие</link> материалы из отсеков соединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует фильтры для жидкостей, установленные на подсоединенной ракетной платформе."
+msgid "Allows <link=\"ELEMENTSLIQUID\">Liquids</link> to be loaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the liquid filters set on the rocket's cargo bays."
+msgstr "Позволяет подавать <link=\"ELEMENTSLIQUID\">жидкости</link> из отсеков подсоединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует фильтры жидкости, установленные в грузовых отсеках ракеты."
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.NAME"
-msgid "<link=\"MODULARLAUNCHPADPORTLIQUID\">Liquid Rocket Port</link>"
-msgstr "<link=\"MODULARLAUNCHPADPORTLIQUID\">Ракетный порт для жидкостей</link>"
+msgid "<link=\"MODULARLAUNCHPADPORTLIQUID\">Liquid Rocket Port Loader</link>"
+msgstr "<link=\"MODULARLAUNCHPADPORTLIQUID\">Раздатчик жидкости из ракетного порта</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUIDUNLOADER.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUIDUNLOADER.DESC"
+msgid "Rockets must be landed to load or unload resources."
+msgstr "Чтобы загружать или выгружать ресурсы, ракета должна приземлиться."
+
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUIDUNLOADER.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUIDUNLOADER.EFFECT"
+msgid "Allows <link=\"ELEMENTSLIQUID\">Liquids</link> to be unloaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the liquid filters set on this unloader."
+msgstr "Позволяет откачивать <link=\"ELEMENTSLIQUID\">жидкости</link> из отсеков подсоединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует жидкостные фильтры, установленные в погрузчике."
+
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUIDUNLOADER.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUIDUNLOADER.NAME"
+msgid "<link=\"MODULARLAUNCHPADPORTLIQUIDUNLOADER\">Liquid Rocket Port Unloader</link>"
+msgstr "<link=\"MODULARLAUNCHPADPORTLIQUIDUNLOADER\">Погрузчик жидкости из ракетного порта</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLID.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLID.DESC"
@@ -8055,13 +8215,28 @@ msgstr "Чтобы загружать или выгружать ресурсы, 
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLID.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLID.EFFECT"
-msgid "Allows <link=\"ELEMENTSSOLID\">Solids</link> to be loaded and unloaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the solid material filters set on the linked Rocket Platform."
-msgstr "Позволяет загружать и выгружать <link=\"ELEMENTSSOLID\">твердые</link> ресурсы из отсеков соединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует фильтры для ресурсов, установленные на подсоединенной ракетной платформе."
+msgid "Allows <link=\"ELEMENTSSOLID\">Solids</link> to be loaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the solid material filters set on the rocket's cargo bays."
+msgstr "Позволяет подавать <link=\"ELEMENTSSOLID\">твердые вещества</link> из отсеков подсоединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует фильтры твердых веществ, установленные в грузовых отсеках ракеты."
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLID.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLID.NAME"
-msgid "<link=\"MODULARLAUNCHPADPORTSOLID\">Solid Rocket Port</link>"
-msgstr "<link=\"MODULARLAUNCHPADPORTSOLID\">Ракетный порт для твердых ресурсов</link>"
+msgid "<link=\"MODULARLAUNCHPADPORTSOLID\">Solid Rocket Port Loader</link>"
+msgstr "<link=\"MODULARLAUNCHPADPORTSOLID\">Раздатчик твердых веществ из ракетного порта</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLIDUNLOADER.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLIDUNLOADER.DESC"
+msgid "Rockets must be landed to load or unload resources."
+msgstr "Чтобы загружать или выгружать ресурсы, ракета должна приземлиться."
+
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLIDUNLOADER.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLIDUNLOADER.EFFECT"
+msgid "Allows <link=\"ELEMENTSSOLID\">Solids</link> to be unloaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the solid material filters set on this unloader."
+msgstr "Позволяет выгружать <link=\"ELEMENTSSOLID\">твердые вещества</link> из отсеков подсоединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует фильтры твердых веществ, установленные в погрузчике."
+
+#. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLIDUNLOADER.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLIDUNLOADER.NAME"
+msgid "<link=\"MODULARLAUNCHPADPORTSOLIDUNLOADER\">Solid Rocket Port Unloader</link>"
+msgstr "<link=\"MODULARLAUNCHPADPORTSOLIDUNLOADER\">Погрузчик твердых веществ из ракетного порта</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLIQUIDINPUT.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLIQUIDINPUT.DESC"
@@ -9958,6 +10133,51 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDFILTER.STATUS_ITEM"
 msgid "Filters: {0}"
 msgstr "Фильтры: {0}"
 
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.DESC"
+msgid "Conveyor Meters let an exact amount of materials pass through before shutting off."
+msgstr "Счетчики конвейеров пропускают определенный объем материалов, а затем отключают подачу."
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.EFFECT"
+msgid "Connects to an <link=\"LOGIC\">Automation</link> grid to automatically turn material transfer off when the specified amount has passed through it."
+msgstr "Подключается к <link=\"LOGIC\">автоматической сети</link>, чтобы самостоятельно прекращать подачу материалов, когда через него проходит указанный объем."
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.LOGIC_PORT_OUTPUT
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.LOGIC_PORT_OUTPUT"
+msgid "Limit Reached"
+msgstr "Лимит достигнут"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.LOGIC_PORT_RESET
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.LOGIC_PORT_RESET"
+msgid "Reset Meter"
+msgstr "Сбросить счетчик"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.NAME"
+msgid "<link=\"SOLIDLIMITVALVE\">Conveyor Meter</link>"
+msgstr "<link=\"SOLIDLIMITVALVE\">Счетчик конвейера</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.OUTPUT_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.OUTPUT_PORT_ACTIVE"
+msgid "Sends a <b><style=\"logic_on\">Green Signal</style></b> if limit has been reached"
+msgstr "Посылает <b><style=\"logic_on\">зеленый сигнал</style></b>, если лимит был достигнут"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.OUTPUT_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.OUTPUT_PORT_INACTIVE"
+msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
+msgstr "В противном случае отправляет <b><style=\"logic_off\">красный сигнал</style></b>"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.RESET_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.RESET_PORT_ACTIVE"
+msgid "<b><style=\"logic_on\">Green Signal</style></b>: Reset the amount"
+msgstr "<b><style=\"logic_on\">Зеленый сигнал</style></b>: сброс объема"
+
+#. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.RESET_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.RESET_PORT_INACTIVE"
+msgid "<b><style=\"logic_off\">Red Signal</style></b>: Nothing"
+msgstr "<b><style=\"logic_off\">Красный сигнал</style></b>: не делать ничего"
+
 #. STRINGS.BUILDINGS.PREFABS.SOLIDLOGICVALVE.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLOGICVALVE.DESC"
 msgid "Automated conveyors save power and time by removing the need for Duplicant input."
@@ -10665,8 +10885,8 @@ msgstr "При использовании это строение вытесни
 
 #. STRINGS.BUILDINGS.PREFABS.VERTICALWINDTUNNEL.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.VERTICALWINDTUNNEL.EFFECT"
-msgid "Must be placed above an open space and connected to a <link=\"POWER\">Power Source</link>.\n\nIncreases Duplicants <link=\"MORALE\">Morale</link>."
-msgstr "Должна размещаться на открытом пространстве и быть подключена к <link=\"POWER\">источнику энергии</link>.\n\nПоднимает <link=\"MORALE\">моральный дух</link> дубликантов."
+msgid "Must be connected to a <link=\"POWER\">Power Source</link>. To properly function, the area under this building must be left vacant.\n\nIncreases Duplicants <link=\"MORALE\">Morale</link>."
+msgstr "Необходимо подключенем к <link=\"POWER\">источнику энергии</link>. Для нормальной работы здания под ним необходимо оставить свободное место.\n\nПоднимает <link=\"MORALE\">моральный дух</link> дубликантов."
 
 #. STRINGS.BUILDINGS.PREFABS.VERTICALWINDTUNNEL.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.VERTICALWINDTUNNEL.NAME"
@@ -11888,6 +12108,21 @@ msgctxt "STRINGS.CODEX.A9_PIPEDREAM.TITLE"
 msgid "Pipedream"
 msgstr "Несбыточная фантазия"
 
+#. STRINGS.CODEX.ARBORTREE.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.ARBORTREE.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.ARBORTREE.SUBTITLE
+msgctxt "STRINGS.CODEX.ARBORTREE.SUBTITLE"
+msgid "Lumber Tree"
+msgstr "Дроводерево"
+
+#. STRINGS.CODEX.ARBORTREE.TITLE
+msgctxt "STRINGS.CODEX.ARBORTREE.TITLE"
+msgid "Arbor Tree"
+msgstr "Ветведрево"
+
 #. STRINGS.CODEX.AUTOMATION.HEADER_1
 msgctxt "STRINGS.CODEX.AUTOMATION.HEADER_1"
 msgid "Automation"
@@ -11985,8 +12220,8 @@ msgstr "собака доктора холланда"
 
 #. STRINGS.CODEX.B10_AI.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.B10_AI.BODY.CONTAINER1"
-msgid "<smallcaps>[Voice Recognition Initialized]\n[Subject Identified: B111-1]</smallcaps>\n\n[LOG BEGINS]I made a horrible discovery today while reviewing work on the artificial intelligence programming. It seems Dr. Ali mixed up a file when uploading a program onto a rudimentary robot and discovered that the device displayed the characteristics of what he called \"a puppy that was lost in a teleportation experiment weeks ago\".\n\n.This unbelivable! Jackie has been hiding the nature of the teleportation experiments from me. What's worse is I know from previous conversations that she knows I would never approve of pursuing this line of experimentation. The societal benefits of teleportaion aside, you <i>cannot</i> kill a living being every time you want to send them to another room. The moral and ethical implications of this are horrendous.\n\nI know she has been keeping this information from me. When I searched through the Gravitas database I found nothing to do with these teleportation experiments. It was only because this reference showed up in Dr. Ali's AI paper that I was able to discover what has been happening.\n\nJackie has to be stopped.\n\nBut I know she is beyond reasonable discussion. I hope this is the only thing she is hiding from me, but I fear it is not.\n\n[LOG ENDS]\n\n[LOG BEGINS]Despite myself, I can't help thinking of the intriguing possiblities this presents for the AI development. It haunts me.\n\nI fear I may be sending me down a slippery slope, at the bottom of which is Jackie waiting for me with open arms.\n\n[LOG ENDS]"
-msgstr "<smallcaps>[Активировано распознавание голоса]\n[Опознаны субъекты: B111-1]</smallcaps>\n\n[НАЧАЛО ЗАПИСИ]Сегодня меня ждала ужасная находка. При просмотре работы над программированием искусственного интеллекта оказалось, что доктор Али перепутал файлы, которые нужно было загрузить в примитивного робота и обнаружил, что машина демонстрирует характеристики, по его словам, \"щенка, которого потеряли в эксперименте с телепортацией много недель назад\".\n\nНевероятно! Джеки скрывала от меня, какие на самом деле она проводила опыты с телепортацией. Хуже того, мы уже обсуждали это в прошлом, и она знала, что на такой курс экспериментов я никогда не соглашусь. Оставляя в стороне социальные возможности, которые открывает телепортация, <i>нельзя</i> просто убивать живое существо каждый раз, когда ты отправляешь его в другую комнату. Это ужасно и с точки зрения морали, и с точки зрения этики.\n\nЯ точно знаю, что она скрывала это от меня. Поиск информации об этих экспериментах в базе данных Gravitas не дал никаких результатов. Мне стало известно о них только благодаря этому случайному упоминанию в отчете доктора Али.\n\nДжеки нужно остановить.\n\nНо я знаю: время увещеваний прошло. Я надеюсь, это единственное, что она скрывала от меня, но боюсь, что это не так.\n\n[КОНЕЦ ЗАПИСИ]\n\n[НАЧАЛО ЗАПИСИ]Ничего не могу поделать с мыслями о том, какие заманчивые перспективы это открывает для разработки ИИ. Постоянно об этом думаю.\n\nБоюсь, что начинаю катиться по наклонной прямо в распростертые объятья Джеки.\n\n[КОНЕЦ ЗАПИСИ]"
+msgid "<smallcaps>[Voice Recognition Initialized]\n[Subject Identified: B111-1]</smallcaps>\n\n[LOG BEGINS]\n\nI made a horrible discovery today while reviewing work on the artificial intelligence programming. It seems Dr. Ali mixed up a file when uploading a program onto a rudimentary robot and discovered that the device displayed the characteristics of what he called \"a puppy that was lost in a teleportation experiment weeks ago\".\n\n.This unbelivable! Jackie has been hiding the nature of the teleportation experiments from me. What's worse is I know from previous conversations that she knows I would never approve of pursuing this line of experimentation. The societal benefits of teleportaion aside, you <i>cannot</i> kill a living being every time you want to send them to another room. The moral and ethical implications of this are horrendous.\n\nI know she has been keeping this information from me. When I searched through the Gravitas database I found nothing to do with these teleportation experiments. It was only because this reference showed up in Dr. Ali's AI paper that I was able to discover what has been happening.\n\nJackie has to be stopped.\n\nBut I know she is beyond reasonable discussion. I hope this is the only thing she is hiding from me, but I fear it is not.\n\n[LOG ENDS]\n\n[LOG BEGINS]\n\nDespite myself, I can't help thinking of the intriguing possiblities this presents for the AI development. It haunts me.\n\nI fear I may be sliding down a slippery slope, at the bottom of which Jackie is waiting for me with open arms.\n\n[LOG ENDS]"
+msgstr "<smallcaps>[Активировано распознавание голоса]\n[Опознаны субъекты: B111-1]</smallcaps>\n\n[НАЧАЛО ЗАПИСИ]\n\nСегодня меня ждала ужасная находка. При просмотре работы над программированием искусственного интеллекта оказалось, что доктор Али перепутал файлы, которые нужно было загрузить в примитивного робота и обнаружил, что машина демонстрирует характеристики, по его словам, \"щенка, которого потеряли в эксперименте с телепортацией много недель назад\".\n\nНевероятно! Джеки скрывала от меня, какие на самом деле она проводила опыты с телепортацией. Хуже того, мы уже обсуждали это в прошлом, и она знала, что на такой курс экспериментов я никогда не соглашусь. Оставляя в стороне социальные возможности, которые открывает телепортация, <i>нельзя</i> просто убивать живое существо каждый раз, когда ты отправляешь его в другую комнату. Это ужасно и с точки зрения морали, и с точки зрения этики.\n\nЯ точно знаю, что она скрывала это от меня. Поиск информации об этих экспериментах в базе данных Gravitas не дал никаких результатов. Мне стало известно о них только благодаря этому случайному упоминанию в отчете доктора Али.\n\nДжеки нужно остановить.\n\nНо я знаю: время увещеваний прошло. Я надеюсь, это единственное, что она скрывала от меня, но боюсь, что это не так.\n\n[КОНЕЦ ЗАПИСИ]\n\n[НАЧАЛО ЗАПИСИ]\n\nНичего не могу поделать с мыслями о том, какие заманчивые перспективы это открывает для разработки ИИ. Постоянно об этом думаю.\n\nБоюсь, что начинаю катиться по наклонной прямо в распростертые объятья Джеки.\n\n[КОНЕЦ ЗАПИСИ]"
 
 #. STRINGS.CODEX.B10_AI.SUBTITLE
 msgctxt "STRINGS.CODEX.B10_AI.SUBTITLE"
@@ -11995,8 +12230,8 @@ msgstr "УРОВЕНЬ ШИФРОВАНИЯ: ТРЕТИЙ"
 
 #. STRINGS.CODEX.B10_AI.TITLE
 msgctxt "STRINGS.CODEX.B10_AI.TITLE"
-msgid "Artificial Intelligence"
-msgstr "Искусственный интеллект"
+msgid "A Paradox"
+msgstr "Парадокс"
 
 #. STRINGS.CODEX.B2_ELLIESBIRTHDAY.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.B2_ELLIESBIRTHDAY.BODY.CONTAINER1"
@@ -12438,6 +12673,21 @@ msgctxt "STRINGS.CODEX.BALMLILY.TITLE"
 msgid "Balm Lily"
 msgstr "Бальзамилия"
 
+#. STRINGS.CODEX.BLISSBURST.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.BLISSBURST.BODY.CONTAINER1"
+msgid "The Bliss Burst is a succulent in the genus Haworthia and is a hardy plant well-suited for beginner gardeners.\n\nThey require little in the way of upkeep, to the point that the most common cause of death for Bliss Bursts is overwatering from over-eager carers."
+msgstr "Вспышка блаженства — это суккулент из рода хавортий, выносливое растение, хорошо подходящее для начинающих садоводов.\n\nЗа ними почти не нужно ухаживать, так что самой распространенной причиной смерти этих растений является чрезмерный полив."
+
+#. STRINGS.CODEX.BLISSBURST.SUBTITLE
+msgctxt "STRINGS.CODEX.BLISSBURST.SUBTITLE"
+msgid "Decorative Plant"
+msgstr "Декоративное растение"
+
+#. STRINGS.CODEX.BLISSBURST.TITLE
+msgctxt "STRINGS.CODEX.BLISSBURST.TITLE"
+msgid "Bliss Burst"
+msgstr "Вспышка блаженства"
+
 #. STRINGS.CODEX.BLUFFBRIAR.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.BLUFFBRIAR.BODY.CONTAINER1"
 msgid "Bluff Briars have formed a symbiotic relationship with a closely related plant strain, the <link=\"PRICKLEFLOWER\">Bristle Blossom</link>.\n\nThey tend to thrive in areas where the Bristle Blossom is present, as the berry it produces emits a rare chemical while decaying that the Briar is capable of absorbing to supplement its own pheromone production."
@@ -12458,6 +12708,21 @@ msgctxt "STRINGS.CODEX.BLUFFBRIAR.TITLE"
 msgid "Bluff Briar"
 msgstr "Понтоцвет"
 
+#. STRINGS.CODEX.BOGBUCKET.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.BOGBUCKET.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.BOGBUCKET.SUBTITLE
+msgctxt "STRINGS.CODEX.BOGBUCKET.SUBTITLE"
+msgid "Edible Plant"
+msgstr "Съедобное растение"
+
+#. STRINGS.CODEX.BOGBUCKET.TITLE
+msgctxt "STRINGS.CODEX.BOGBUCKET.TITLE"
+msgid "Bog Bucket"
+msgstr "Болотник"
+
 #. STRINGS.CODEX.BRISTLEBLOSSOM.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.BRISTLEBLOSSOM.BODY.CONTAINER1"
 msgid "The Bristle Blossom is frequently cultivated for its calorie dense and relatively fast growing Bristle Berries.\n\nConsumption of the berry requires special preparation due to the thick barbs surrounding the edible fruit.\n\nThe term \"Bristle Berry\" is, in fact, a misnomer, as it is not a \"berry\" by botanical definition but an aggregate fruit made up of many smaller fruitlets."
@@ -12475,8 +12740,8 @@ msgstr "Иглоцвет"
 
 #. STRINGS.CODEX.BUDDYBUD.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.BUDDYBUD.BODY.CONTAINER1"
-msgid ""
-msgstr ""
+msgid "As a byproduct of photosynthesis, the Buddy Bud naturally secretes a compound that is chemically similar to the neuropeptide created in the human brain after receiving a hug."
+msgstr "В ходе фотосинтеза дружок естественным образом выделяет соединение, которое химически похоже на нейропептид, который человеческий мозг вырабатывает во время объятий."
 
 #. STRINGS.CODEX.BUDDYBUD.SUBTITLE
 msgctxt "STRINGS.CODEX.BUDDYBUD.SUBTITLE"
@@ -12487,6 +12752,31 @@ msgstr "Декоративное растение"
 msgctxt "STRINGS.CODEX.BUDDYBUD.TITLE"
 msgid "Buddy Bud"
 msgstr "Дружок"
+
+#. STRINGS.CODEX.C01_Evil.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.C01_Evil.BODY.CONTAINER1"
+msgid "Clearly Nikola is evil. He has some kind of scheme going on that he’s keeping secret from the rest of Gravitas and I haven’t been able to crack what that is because it’s offline and he’s always at his computer. Whenever I ask him what he’s up to he says I wouldn’t understand. Pfft! We both went through the same particle physics classes, buddy. Just because you mash a keyboard and I adjust knobs does not mean I don’t know what the Time Containment Field does.\n\nAnd then today I dropped a wrench and Nikola nearly jumped out of his skin! He spun around and screamed at me never to do that again. And then when I said, \"Geez, it’s not the end of the world,\" he was like, \"Yeah, it’s not like the world will blow up if I get this wrong\" really sarcastic like.\n\nWhich technically is true. If the Time Containment Field were to break down the Temporal Bow could theoretically blow up the world but that’s why there are safety systems in place. And safety systems on safety systems. And then safety systems on top of that. But then he built all the safety systems so if he wanted to…\n------------------\n"
+msgstr "Никола явно злой. Он разработал какую-то схему, которую он держит в секрете от остальной части Gravitas, и я не могу до нее добраться, потому что она хранится в его компьютере, а к нему он никого не подпускает. Когда я спрашиваю его, чем он занимается, он отвечает, что я не пойму. Пф-ф! Мы же оба учили физику элементарных частиц! Да, я весь день кручу рукоятки, а ты стучишь по клавиатуре, но это не значит, что я не разбираюсь в работе Поля сдерживания времени.\n\nА сегодня я уронил гаечный ключ, и Никола чуть из штанов не выпрыгнул! Он повернулся и закричал, мол, никогда больше так не делай. А когда я сказал: «Да боже мой, это не конец света», он саркастически сказал: «Да, мир же не взорвется от одной моей ошибки!».\n\nЧто технически верно. Если бы Поле сдерживания времени сломалось, Временная дуга теоретически могла бы взорвать весь мир, но именно на такой случай придуманы системы безопасности. И системы безопасности для систем безопасности. А потом еще один слой систем безопасности. Но все системы безопасности он придумал сам, так что если бы ему захотелось...\n------------------\n"
+
+#. STRINGS.CODEX.C01_Evil.BODY.CONTAINER2
+msgctxt "STRINGS.CODEX.C01_Evil.BODY.CONTAINER2"
+msgid "I decided to get into work early today but when I got in Nikola was already there and it looked like he hadn’t been home all weekend. He was pacing back-and-forth in the lab, monologuing but not like an evil villain. Like someone who hadn’t slept in a week.\n\n\"Ruby,\" he said. \"You have to promise me that if anything goes wrong you’ll turn on this machine. They’re pushing it too far. The printing pods are pushing the...It’s too much - TOO MUCH! Something’s going to blow. I tried… I’m trying to save it. Not the Earth. There’s no hope for the Earth, it’s all going to…\" then he made this exploding sound. \"But the Universe. Time itself. It could all go, don’t you see? This machine can contain it. Put a Temporal Containment Field around the Earth so time itself doesn’t break down and...and…\"\n\nThen all of a sudden these security guys came in. New guys. People I haven’t seen before. And they just took him away. Then they took me to a room and asked me all kinds of questions and I answered them, I guess. I don’t remember much because the whole time I was thinking - What if I was wrong? What if he’s not evil, but Gravitas is?\n\nWhat if I was wrong and what if he’s right?\n------------------\n"
+msgstr "Сегодня я решил прийти на работу пораньше, но когда я приехал, я увидел, что Никола уже там, и, похоже, он не был дома все выходные. Он расхаживал взад и вперед по лаборатории и что-то бормотал, но не как злодей, а как тот, кто не спал неделю.\n\n«Руби», — сказал он. «Пообещай мне, что если что-то пойдет не так, ты включишь эту машину. Они зашли слишком далеко. Печатные станки слишком... Это слишком — СЛИШКОМ! Что-то взорвется. Я пытался... Я пытаюсь спасти его. Не Землю. Земле конец в любом случае, скоро все...» — а потом изобразил звук взрыва. «Вселенная. Само время. Все исчезнет, разве ты не видишь? Машина может сдержать катастрофу. Укройте Землю Полем сдерживания времени, чтобы само время не разрушилось, и...».\n\nИ тогда внезапно вошли охранники. Новые какие-то, я их прежде не видел. И они забрали его. Затем они отвели меня в комнату и задавали мне разные вопросы, и я, наверное, на них ответил. Я мало что помню, потому что все время думал: а что, если я был неправ? Что, если злой не он, а Gravitas?\n\nЧто, если я был неправ, а он прав?\n------------------\n"
+
+#. STRINGS.CODEX.C01_Evil.BODY.CONTAINER3
+msgctxt "STRINGS.CODEX.C01_Evil.BODY.CONTAINER3"
+msgid "No seriously - what if he's right?\n------------------\n"
+msgstr "Нет, серьезно — а если он прав?\n------------------\n"
+
+#. STRINGS.CODEX.C01_Evil.SUBTITLE
+msgctxt "STRINGS.CODEX.C01_Evil.SUBTITLE"
+msgid "ENCRYPTION LEVEL: NONE"
+msgstr "УРОВЕНЬ ШИФРОВАНИЯ: НЕТ"
+
+#. STRINGS.CODEX.C01_Evil.TITLE
+msgctxt "STRINGS.CODEX.C01_Evil.TITLE"
+msgid "Evil"
+msgstr "Зло"
 
 #. STRINGS.CODEX.CLEANER.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.CLEANER.BODY.CONTAINER1"
@@ -12518,6 +12808,21 @@ msgctxt "STRINGS.CODEX.CREATURE_DESCRIPTORS.TEMPERATURE.NON_LETHAL_RANGE"
 msgid "Livable range: <b>{0}</b> to <b>{1}</b>"
 msgstr "Радиус зоны, пригодной для жизни: от <b>{0}</b> до <b>{1}</b>"
 
+#. STRINGS.CODEX.CRYOTANKWARNINGS.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.CRYOTANKWARNINGS.BODY.CONTAINER1"
+msgid "    • Do not leave the contents of the Cryotank 3000 unattended unless an apocalyptic disaster has left you no choice.\n\n    • Ensure that the Cryotank 3000 has enough battery power to remain active for at least 6000 years.\n\n    • Do not attempt to defrost the contents of the Cryotank 3000 while it is submerged in molten hot lava.\n\n    • Use only a qualified Gravitas Cryotank repair facility to repair your Cryotank 3000. Attempting to service the device yourself will void the warranty.\n\n    • Do not put food in the Cryotank 3000. The Cryotank 3000 is not a refrigerator.\n\n    • Do not allow children to play in the Cryotank 3000. The Cryotank 3000 is not a toy.\n\n    • While the Cryotank 3000 is able to withstand a nuclear blast, Gravitas and its subsidiaries are not responsible for what may happen in the resulting nuclear fallout.\n\n    • Wait at least 5 minutes after being unfrozen from the Cryotank 3000 before operating heavy machinery.\n\n    • Each Cryotank 3000 is good for only one use.\n\n"
+msgstr "    • Не оставляйте содержимое Криокамеры 3000 без присмотра, оправданием может быть только апокалипсис.\n\n    • Убедитесь, что у Криокамеры 3000 достаточно заряда батареи для работы на протяжении не менее 6000 лет.\n\n    • Не пытайтесь разморозить содержимое Криокамеры 3000, когда она погружена в горячую лаву.\n\n    • Для ремонта Криокамеры 3000 обращайтесь только в квалифицированную ремонтные мастерские Gravitas. Самостоятельный ремонт устройства приведет к аннулированию гарантии.\n\n    • Не кладите продукты в Криокамеру 3000. Криокамера 3000 не холодильник.\n\n    • Не позволяйте детям играть в Криокамере 3000. Криокамера 3000 не игрушка.\n\n    • Хотя Криокамера 3000 способна выдержать воздействие ядерного взрыва, Gravitas и дочерние компании не несут ответственности за воздействие радиоактивных осадков.\n\n    • Подождите не менее 5 минут после размораживания из Криокамеры 3000 перед тем, как приступить к работе с тяжелой техникой.\n\n    • Каждая Криокамера 3000 пригодна только для одного использования.\n\n"
+
+#. STRINGS.CODEX.CRYOTANKWARNINGS.SUBTITLE
+msgctxt "STRINGS.CODEX.CRYOTANKWARNINGS.SUBTITLE"
+msgid "IMPORTANT OPERATING INSTRUCTIONS FOR THE CRYOTANK 3000"
+msgstr "ВАЖНЫЕ ИНСТРУКЦИИ ПО ЭКСПЛУАТАЦИИ КРИОКАМЕРЫ 3000"
+
+#. STRINGS.CODEX.CRYOTANKWARNINGS.TITLE
+msgctxt "STRINGS.CODEX.CRYOTANKWARNINGS.TITLE"
+msgid "CRYOTANK SAFETY"
+msgstr "БЕЗОПАСНОСТЬ КРИОКАМЕРЫ"
+
 #. STRINGS.CODEX.CRYSTAL.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.CRYSTAL.BODY.CONTAINER1"
 msgid "<smallcaps>Pictured: \"Radiant\" Shine Bug variant</smallcaps>"
@@ -12532,6 +12837,21 @@ msgstr "Морфа существа"
 msgctxt "STRINGS.CODEX.CRYSTAL.TITLE"
 msgid "Radiant Bug"
 msgstr "Сияющий блестячок"
+
+#. STRINGS.CODEX.DASHASALTVINE.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.DASHASALTVINE.BODY.CONTAINER1"
+msgid "The Dasha Saltvine is a unique plant that needs large amounts of salt to balance the levels of water in its body.\n\nIn order to keep a supply of salt on hand, the end of the vine is coated in microscopic formations which bind with sodium atoms, forming large crystals over time."
+msgstr "Лоза-солевик — уникальное растение, которому требуется большое количество соли для поддержания уровня воды в организме.\n\nЗапасы соли оно хранит на кончике лозы: он покрыт микроскопическими образованиями, которые связывают атомы натрия и формируют со временем крупные кристаллы."
+
+#. STRINGS.CODEX.DASHASALTVINE.SUBTITLE
+msgctxt "STRINGS.CODEX.DASHASALTVINE.SUBTITLE"
+msgid "Edible Spice Plant"
+msgstr "Съедобное пряное растение"
+
+#. STRINGS.CODEX.DASHASALTVINE.TITLE
+msgctxt "STRINGS.CODEX.DASHASALTVINE.TITLE"
+msgid "Balm Lily"
+msgstr "Бальзамилия"
 
 #. STRINGS.CODEX.DECOR.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.DECOR.BODY.CONTAINER1"
@@ -12705,8 +13025,8 @@ msgstr "Было высказано опасение, что высадка га
 
 #. STRINGS.CODEX.GASGRASS.SUBTITLE
 msgctxt "STRINGS.CODEX.GASGRASS.SUBTITLE"
-msgid "Plant"
-msgstr "Растение"
+msgid "Critter Feed"
+msgstr "Корм для существ"
 
 #. STRINGS.CODEX.GASGRASS.TITLE
 msgctxt "STRINGS.CODEX.GASGRASS.TITLE"
@@ -12787,6 +13107,21 @@ msgstr "Морфа существа"
 msgctxt "STRINGS.CODEX.GLOSSY.TITLE"
 msgid "Glossy Drecko"
 msgstr "Блестящий дреккон"
+
+#. STRINGS.CODEX.GRUBFRUITPLANT.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.GRUBFRUITPLANT.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.GRUBFRUITPLANT.SUBTITLE
+msgctxt "STRINGS.CODEX.GRUBFRUITPLANT.SUBTITLE"
+msgid "Edible Plant"
+msgstr "Съедобное растение"
+
+#. STRINGS.CODEX.GRUBFRUITPLANT.TITLE
+msgctxt "STRINGS.CODEX.GRUBFRUITPLANT.TITLE"
+msgid "Grubfruit Plant"
+msgstr "Растение личинкокоса"
 
 #. STRINGS.CODEX.HATCH.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.HATCH.BODY.CONTAINER1"
@@ -13033,6 +13368,36 @@ msgctxt "STRINGS.CODEX.HEAT.TITLE"
 msgid "<link=\"HEAT\">Heat</link>"
 msgstr "<link=\"HEAT\">Жара</link>"
 
+#. STRINGS.CODEX.HEXALENT.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.HEXALENT.BODY.CONTAINER1"
+msgid "While most plants grow new sections and leaves according to the Fibonacci Sequence, the Hexalent forms new sections similar to how atoms form into crystal structures.\n\nThe result is a geometric pattern that resembles a honeycomb."
+msgstr "Большинство растений отращивают новые побеги и листья в соответствии с последовательностью Фибоначчи, но гексалент формирует новые побеги по схеме, схожей со схемой образования кристаллических структур.\n\nВ результате получается геометрический узор, напоминающий соты."
+
+#. STRINGS.CODEX.HEXALENT.SUBTITLE
+msgctxt "STRINGS.CODEX.HEXALENT.SUBTITLE"
+msgid "Decorative Plant"
+msgstr "Декоративное растение"
+
+#. STRINGS.CODEX.HEXALENT.TITLE
+msgctxt "STRINGS.CODEX.HEXALENT.TITLE"
+msgid "Hexalent"
+msgstr "Гексалент"
+
+#. STRINGS.CODEX.HYDROCACTUS.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.HYDROCACTUS.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.HYDROCACTUS.SUBTITLE
+msgctxt "STRINGS.CODEX.HYDROCACTUS.SUBTITLE"
+msgid "Plant"
+msgstr "Растение"
+
+#. STRINGS.CODEX.HYDROCACTUS.TITLE
+msgctxt "STRINGS.CODEX.HYDROCACTUS.TITLE"
+msgid "Hydrocactus"
+msgstr "Водокачкус"
+
 #. STRINGS.CODEX.JUMPINGJOYA.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.JUMPINGJOYA.BODY.CONTAINER1"
 msgid ""
@@ -13107,6 +13472,21 @@ msgstr "Съедобное растение"
 msgctxt "STRINGS.CODEX.MEALWOOD.TITLE"
 msgid "Mealwood"
 msgstr "Пищевое дерево"
+
+#. STRINGS.CODEX.MELLOWMALLOW.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.MELLOWMALLOW.BODY.CONTAINER1"
+msgid "The Mellow Mallow is a type of fungus that is known for its ease of propagation when cut.\n\nIt is deadly when consumed, however creatures that mistakenly eat it are said to experience a state of extreme calm before death."
+msgstr "Мягкая мальва — это грибок, который известен своей способностью к размножению. Для посадки его достаточно просто разрезать.\n\nОн смертельно ядовит, однако существа, которые его нечаянно сьедают, перед смертью испытывают невероятное спокойствие."
+
+#. STRINGS.CODEX.MELLOWMALLOW.SUBTITLE
+msgctxt "STRINGS.CODEX.MELLOWMALLOW.SUBTITLE"
+msgid "Decorative Plant"
+msgstr "Декоративное растение"
+
+#. STRINGS.CODEX.MELLOWMALLOW.TITLE
+msgctxt "STRINGS.CODEX.MELLOWMALLOW.TITLE"
+msgid "Mellow Mallow"
+msgstr "Мягкая мальва"
 
 #. STRINGS.CODEX.MIRTHLEAF.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.MIRTHLEAF.BODY.CONTAINER1"
@@ -13533,6 +13913,36 @@ msgctxt "STRINGS.CODEX.NEGA.TITLE"
 msgid "Abyss Bug"
 msgstr "Блестячок бездны"
 
+#. STRINGS.CODEX.NOSHBEAN.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.NOSHBEAN.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.NOSHBEAN.SUBTITLE
+msgctxt "STRINGS.CODEX.NOSHBEAN.SUBTITLE"
+msgid "Edible Plant"
+msgstr "Съедобное растение"
+
+#. STRINGS.CODEX.NOSHBEAN.TITLE
+msgctxt "STRINGS.CODEX.NOSHBEAN.TITLE"
+msgid "Nosh Bean Plant"
+msgstr "Закусочный боб"
+
+#. STRINGS.CODEX.OXYFERN.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.OXYFERN.BODY.CONTAINER1"
+msgid "Oxyferns have perhaps the highest metabolism in the plant kingdom, absorbing relatively large amounts of carbon dioxide and converting it into oxygen in quantities disproportionate to their small size.\n\nThey subsequently thrive in areas with abundant animal wildlife or ambiently high carbon dioxide concentrations."
+msgstr "Кислоротник, пожалуй, обладает самым эффективным метаболизмом в царстве растений. Он поглощает относительно большое количество углекислого газа и превращает его в кислород в объемах, непропорциональных своему небольшому размеру.\n\nКак следствие, они процветают там, где живут дикие существа, и в областях с высокими концентрациями углекислого газа в окружающей среде."
+
+#. STRINGS.CODEX.OXYFERN.SUBTITLE
+msgctxt "STRINGS.CODEX.OXYFERN.SUBTITLE"
+msgid "Plant"
+msgstr "Растение"
+
+#. STRINGS.CODEX.OXYFERN.TITLE
+msgctxt "STRINGS.CODEX.OXYFERN.TITLE"
+msgid "Oxyfern"
+msgstr "Кислоротник"
+
 #. STRINGS.CODEX.PACU.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.PACU.BODY.CONTAINER1"
 msgid "The Pacu fish is often interpreted as possessing a vacant stare due to its large and unblinking eyes, yet they are remarkably bright and friendly creatures."
@@ -13933,6 +14343,21 @@ msgctxt "STRINGS.CODEX.SAGE.TITLE"
 msgid "Sage Hatch"
 msgstr "Шалфейный копатель"
 
+#. STRINGS.CODEX.SATURNCRITTERTRAP.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.SATURNCRITTERTRAP.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.SATURNCRITTERTRAP.SUBTITLE
+msgctxt "STRINGS.CODEX.SATURNCRITTERTRAP.SUBTITLE"
+msgid "Carnivorous Plant"
+msgstr "Плотоядное растение"
+
+#. STRINGS.CODEX.SATURNCRITTERTRAP.TITLE
+msgctxt "STRINGS.CODEX.SATURNCRITTERTRAP.TITLE"
+msgid "Saturn Critter Trap"
+msgstr "Сатурновая существоловка"
+
 #. STRINGS.CODEX.SCHOOLNEWSPAPER.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.SCHOOLNEWSPAPER.BODY.CONTAINER1"
 msgid "<b>Party Time for Local Students</b>"
@@ -14043,6 +14468,36 @@ msgctxt "STRINGS.CODEX.SMOOTH.TITLE"
 msgid "Smooth Hatch"
 msgstr "Полированный копатель"
 
+#. STRINGS.CODEX.SPINDLYGRUBFRUITPLANT.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.SPINDLYGRUBFRUITPLANT.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.SPINDLYGRUBFRUITPLANT.SUBTITLE
+msgctxt "STRINGS.CODEX.SPINDLYGRUBFRUITPLANT.SUBTITLE"
+msgid "Edible Plant"
+msgstr "Съедобное растение"
+
+#. STRINGS.CODEX.SPINDLYGRUBFRUITPLANT.TITLE
+msgctxt "STRINGS.CODEX.SPINDLYGRUBFRUITPLANT.TITLE"
+msgid "Spindly Grubfruit Plant"
+msgstr "Растение хилого личинкокоса"
+
+#. STRINGS.CODEX.SPORECHID.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.SPORECHID.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.SPORECHID.SUBTITLE
+msgctxt "STRINGS.CODEX.SPORECHID.SUBTITLE"
+msgid "Poisonous Plant"
+msgstr "Ядовитое растение"
+
+#. STRINGS.CODEX.SPORECHID.TITLE
+msgctxt "STRINGS.CODEX.SPORECHID.TITLE"
+msgid "Sporechid"
+msgstr "Споровик"
+
 #. STRINGS.CODEX.SQUEAKY.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.SQUEAKY.BODY.CONTAINER1"
 msgid "<smallcaps>Pictured: \"Squeaky\" Puft variant</smallcaps>"
@@ -14128,6 +14583,21 @@ msgctxt "STRINGS.CODEX.SUNNY.TITLE"
 msgid "Sun Bug"
 msgstr "Солнечный блестячок"
 
+#. STRINGS.CODEX.SWAMPCHARD.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.SWAMPCHARD.BODY.CONTAINER1"
+msgid "Swamp Chard is a unique member of the Amaranthaceae family that has adapted to grow in humid environments, in or near pools of standing water.\n\nWhile the leaves are technically edible, the most nutritious and palatable part of the plant is the heart, which is rich in a number of essential vitamins."
+msgstr "Болотный мангольд — уникальный представитель семейства амарантовых, приспособившийся к влажным средам. Обычно он растет в прудах со стоячей водой или рядом с ними.\n\nХотя его листья технически съедобны, наиболее питательной и вкусной частью растения является сердцевина, которая богата рядом незаменимых витаминов."
+
+#. STRINGS.CODEX.SWAMPCHARD.SUBTITLE
+msgctxt "STRINGS.CODEX.SWAMPCHARD.SUBTITLE"
+msgid "Edible Plant"
+msgstr "Съедобное растение"
+
+#. STRINGS.CODEX.SWAMPCHARD.TITLE
+msgctxt "STRINGS.CODEX.SWAMPCHARD.TITLE"
+msgid "Swamp Chard"
+msgstr "Болотный мангольд"
+
 #. STRINGS.CODEX.SWEEPY.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.SWEEPY.BODY.CONTAINER1"
 msgid "The Sweepy is a domesticated sweeping robot programmed to clean solid and liquid debris. The Sweepy Dock will automatically launch the Sweepy, store the debris the robot picks up, and recharge the Sweepy's battery, provided it has been plugged into a power source.\n\nThough the Sweepy can not travel over gaps or uneven ground, it is programmed to feel really bad about this."
@@ -14187,6 +14657,21 @@ msgstr "Одобрено заявление на отпуск"
 msgctxt "STRINGS.CODEX.TIMEOFFAPPROVED.TITLE2"
 msgid "SUBJECT: Vacation Request Approved"
 msgstr "ТЕМА: Одобрено заявление на отпуск"
+
+#. STRINGS.CODEX.TRANQUILTOES.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.TRANQUILTOES.BODY.CONTAINER1"
+msgid ""
+msgstr ""
+
+#. STRINGS.CODEX.TRANQUILTOES.SUBTITLE
+msgctxt "STRINGS.CODEX.TRANQUILTOES.SUBTITLE"
+msgid "Decorative Plant"
+msgstr "Декоративное растение"
+
+#. STRINGS.CODEX.TRANQUILTOES.TITLE
+msgctxt "STRINGS.CODEX.TRANQUILTOES.TITLE"
+msgid "Tranquil Toes"
+msgstr "Легкопальцы"
 
 #. STRINGS.CODEX.TROPICAL.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.TROPICAL.BODY.CONTAINER1"
@@ -17535,8 +18020,8 @@ msgstr "<link=\"WORMPLANT\">Растение личинкокоса</link>"
 
 #. STRINGS.CREATURES.SPECIES.SWAMPFORAGEPLANTPLANTED.DESC
 msgctxt "STRINGS.CREATURES.SPECIES.SWAMPFORAGEPLANTPLANTED.DESC"
-msgid "Swamp Chards are incapable of propagating but can be harvested for a single high quality and calorie dense <link=\"FOOD\">Food</link> serving."
-msgstr "Болотные мангольды не способны давать несколько всходов, но с них можно получить урожай — одну порцию калорийной <link=\"FOOD\">еды</link>."
+msgid "Swamp Chards are incapable of propagating but can be harvested for a single low quality and calorie dense <link=\"FOOD\">Food</link> serving."
+msgstr "Болотные мангольды не способны давать несколько всходов, но с них можно получить урожай — одну порцию низкокачественной калорийной <link=\"FOOD\">еды</link>."
 
 #. STRINGS.CREATURES.SPECIES.SWAMPFORAGEPLANTPLANTED.NAME
 msgctxt "STRINGS.CREATURES.SPECIES.SWAMPFORAGEPLANTPLANTED.NAME"
@@ -18750,8 +19235,18 @@ msgstr "Хранится в холоде"
 
 #. STRINGS.CREATURES.STATUSITEMS.REFRIGERATED.TOOLTIP
 msgctxt "STRINGS.CREATURES.STATUSITEMS.REFRIGERATED.TOOLTIP"
-msgid "Ideal <style=\"KKeyword\">Temperature</style> storage is slowing this food's <style=\"KKeyword\">Decay Rate</style>"
-msgstr "Идеальная <style=\"KKeyword\">температура</style> хранения замедляет скорость, с которой <style=\"KKeyword\">портится</style> еда"
+msgid "Ideal <style=\"KKeyword\">Temperature</style> storage is slowing this food's <style=\"KKeyword\">Decay Rate</style>\n\n<style=\"KKeyword\">Temperatures</style> above <b>{RotTemperature}</b> spoil food more quickly\n\nStore food below {PreserveTemperature} to further reduce spoilage."
+msgstr "Идеальная <style=\"KKeyword\">температура</style> хранения замедляет скорость, с которой <style=\"KKeyword\">портится</style> еда.\n\nПри <style=\"KKeyword\">температурах</style> выше <b>{RotTemperature}</b> еда портится быстрее.\n\nХраните еду при температуре до {PreserveTemperature}, чтобы она дольше сохраняла свои свойства."
+
+#. STRINGS.CREATURES.STATUSITEMS.REFRIGERATEDFROZEN.NAME
+msgctxt "STRINGS.CREATURES.STATUSITEMS.REFRIGERATEDFROZEN.NAME"
+msgid "Deep Freeze"
+msgstr "Глубокая заморозка"
+
+#. STRINGS.CREATURES.STATUSITEMS.REFRIGERATEDFROZEN.TOOLTIP
+msgctxt "STRINGS.CREATURES.STATUSITEMS.REFRIGERATEDFROZEN.TOOLTIP"
+msgid "<style=\"KKeyword\">Temperatures</style> below <b>{PreserveTemperature}</b> are greatly prolonging the shelf-life of this food\n\n<style=\"KKeyword\">Temperatures</style> above <b>{RotTemperature}</b> spoil food more quickly"
+msgstr "Хранение при <style=\"KKeyword\">температурах</style> ниже <b>{PreserveTemperature}</b> позволяет еде надолго остаться свежей.\n\nПри <style=\"KKeyword\">температуре</style> выше <b>{RotTemperature}</b> еда портится быстрее."
 
 #. STRINGS.CREATURES.STATUSITEMS.RUMMAGINGSEED.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.RUMMAGINGSEED.NAME"
@@ -18940,8 +19435,8 @@ msgstr "Не охлаждается"
 
 #. STRINGS.CREATURES.STATUSITEMS.UNREFRIGERATED.TOOLTIP
 msgctxt "STRINGS.CREATURES.STATUSITEMS.UNREFRIGERATED.TOOLTIP"
-msgid "<style=\"KKeyword\">Temperatures</style> above <b>{RotTemperature}</b> spoil food more quickly"
-msgstr "При <style=\"KKeyword\">температуре</style> выше <b>{RotTemperature}</b> еда портится быстрее"
+msgid "This food is warm\n\n<style=\"KKeyword\">Temperatures</style> above <b>{RotTemperature}</b> spoil food more quickly"
+msgstr "Эта еда теплая.\n\nПри <style=\"KKeyword\">температуре</style> выше <b>{RotTemperature}</b> еда портится быстрее."
 
 #. STRINGS.CREATURES.STATUSITEMS.WILTING.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.WILTING.NAME"
@@ -21817,6 +22312,21 @@ msgstr "Управляет ракетой"
 msgctxt "STRINGS.DUPLICANTS.CHORES.ROCKETCONTROL.TOOLTIP"
 msgid "This Duplicant is keeping their spacecraft on course"
 msgstr "Этот дубликант ведет космический аппарат строго по курсу"
+
+#. STRINGS.DUPLICANTS.CHORES.ROCKETENTEREXIT.NAME
+msgctxt "STRINGS.DUPLICANTS.CHORES.ROCKETENTEREXIT.NAME"
+msgid "Rocket Recrewing"
+msgstr "Набор экипажа"
+
+#. STRINGS.DUPLICANTS.CHORES.ROCKETENTEREXIT.STATUS
+msgctxt "STRINGS.DUPLICANTS.CHORES.ROCKETENTEREXIT.STATUS"
+msgid "Recrewing Rocket"
+msgstr "Идет набор экипажа"
+
+#. STRINGS.DUPLICANTS.CHORES.ROCKETENTEREXIT.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.CHORES.ROCKETENTEREXIT.TOOLTIP"
+msgid "This Duplicant is getting into (or out of) their assigned rocket"
+msgstr "Этот дубликант идет к назначенной ракете или выходит из нее."
 
 #. STRINGS.DUPLICANTS.CHORES.SCRUBORE.NAME
 msgctxt "STRINGS.DUPLICANTS.CHORES.SCRUBORE.NAME"
@@ -24758,13 +25268,33 @@ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROOMPARK.TOOLTIP"
 msgid "This Duplicant recently passed through a Park\n\nWow, nature sure is neat!"
 msgstr "Этот дубликант недавно побывал в парке\n\nА природа — это так круто!"
 
-#. STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.NAME
-msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.NAME"
+#. STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.CONTAMINATED
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.CONTAMINATED"
 msgid "Contaminated Air"
 msgstr "Зараженный воздух"
 
-#. STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.NAME
-msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.NAME"
+#. STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.NORMAL
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.NORMAL"
+msgid "Normal Atmosphere"
+msgstr "Нормальная атмосфера"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.STERILE
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.STERILE"
+msgid "Sterile Atmosphere"
+msgstr "Стерильная атмосфера"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.FROZEN
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.FROZEN"
+msgid "Frozen"
+msgstr "Смерть от холода"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.REFRIGERATED
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.REFRIGERATED"
+msgid "Refrigerated"
+msgstr "Хранится в холоде"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.UNREFRIGERATED
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.UNREFRIGERATED"
 msgid "Unrefrigerated"
 msgstr "Не охлаждается"
 
@@ -32405,8 +32935,8 @@ msgstr "{friend} оттаивает!"
 
 #. STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.CRYOFRIEND.DESCRIPTION
 msgctxt "STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.CRYOFRIEND.DESCRIPTION"
-msgid "{dupe} has made an amazing discovery! A barely working <link=\"CRYOTANK\">Cryotank</link> has been uncovered containing a {friend} inside in a frozen state.\n\n{dupe} was successful in thawing {friend} and this encounter has filled both Duplicants with a sense of hope, something they will desperately need to keep their <link=\"MORALE\">Morale</link> up when facing the dangers ahead."
-msgstr "{dupe} совершает потрясающее открытие и находит едва работающую <link=\"CRYOTANK\">криокамеру</link>, внутри которой находится {friend} в замороженном состоянии.\n\n{dupe} успешно размораживает камеру, и {friend} возвращается к жизни. Эта встреча наполняет обоих дубликантов чувством надежды, которое им очень пригодится, чтобы сохранить <link=\"MORALE\">моральный дух</link> при встрече с новыми опасностями."
+msgid "{dupe} has made an amazing discovery! A barely working <link=\"CRYOTANK\">Cryotank 3000</link> has been uncovered containing a {friend} inside in a frozen state.\n\n{dupe} was successful in thawing {friend} and this encounter has filled both Duplicants with a sense of hope, something they will desperately need to keep their <link=\"MORALE\">Morale</link> up when facing the dangers ahead."
+msgstr "{dupe} совершает потрясающее открытие и находит едва работающую <link=\"CRYOTANK\">Криокамеру 3000</link>, внутри которой находится {friend} в замороженном состоянии.\n\n{dupe} успешно размораживает камеру, и {friend} возвращается к жизни. Эта встреча наполняет обоих дубликантов чувством надежды, которое им очень пригодится, чтобы сохранить <link=\"MORALE\">моральный дух</link> при встрече с новыми опасностями."
 
 #. STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.CRYOFRIEND.NAME
 msgctxt "STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.CRYOFRIEND.NAME"
@@ -35825,8 +36355,8 @@ msgstr "Заметки о том, как заставить дубликанто
 
 #. STRINGS.MISC.NOTIFICATIONS.WORLDDETECTED.MESSAGEBODY
 msgctxt "STRINGS.MISC.NOTIFICATIONS.WORLDDETECTED.MESSAGEBODY"
-msgid "The Duplicants' astronomical efforts have uncovered new Planetoids:\n{0}"
-msgstr "Астрономические изыскания дубликантов обернулись успехом — открыты новые планетоиды:\n{0}"
+msgid "My Duplicants' astronomical efforts have uncovered a new Planetoid:\n{0}"
+msgstr "Астрономические изыскания дубликантов обернулись успехом — открыт новый планетоид:\n{0}"
 
 #. STRINGS.MISC.NOTIFICATIONS.WORLDDETECTED.NAME
 msgctxt "STRINGS.MISC.NOTIFICATIONS.WORLDDETECTED.NAME"
@@ -39503,6 +40033,11 @@ msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.WATER"
 msgid "Wat\nHydrAu\n"
 msgstr "Вод\nГидро\n"
 
+#. STRINGS.NAMEGEN.WORLD.SPACECRAFT_PREFIX
+msgctxt "STRINGS.NAMEGEN.WORLD.SPACECRAFT_PREFIX"
+msgid "Spacecraft: "
+msgstr "Космический корабль: "
+
 #. STRINGS.NAMEGEN.WORLD.SUFFIXES.GENERICLIST
 msgctxt "STRINGS.NAMEGEN.WORLD.SUFFIXES.GENERICLIST"
 msgid "oni\nini\nani\nona\nina\nino\nano\nalin\nelin\nolin\nial\niol\niel\nila\nola\nera\nora\nato\nito\nilios\nista\nazon\nibo\n"
@@ -41810,8 +42345,8 @@ msgstr "В биомах топи в больших количествах вст
 
 #. STRINGS.SUBWORLDS.METALLIC.DESC
 msgctxt "STRINGS.SUBWORLDS.METALLIC.DESC"
-msgid ""
-msgstr ""
+msgid "A plethora of metals pervade the Metallic Biome making it the go-to destination for a colony ramping up production for technological advancement."
+msgstr "В металлическом биоме можно найти изрядное количество разнообразных металлов, благодаря чему здесь будет процветать колония, нацеленная на массовое производство и технический прогресс."
 
 #. STRINGS.SUBWORLDS.METALLIC.NAME
 msgctxt "STRINGS.SUBWORLDS.METALLIC.NAME"
@@ -41820,8 +42355,8 @@ msgstr "Металлический"
 
 #. STRINGS.SUBWORLDS.METALLIC.UTILITY
 msgctxt "STRINGS.SUBWORLDS.METALLIC.UTILITY"
-msgid ""
-msgstr ""
+msgid "<link=\"GOLDAMALGAM\">Gold Amalgam</link> <link=\"ALUMINUMORE\">Aluminum Ore</link> and <link=\"COBALTITE\">Cobalt Ore</link> are in abundant supply throughout this entire biome. Refining these metals with a <link=\"METALREFINERY\">Metal Refinery</link> will make them available for building advanced technologies.\n\nThough <link=\"CHLORINEGAS\">Chlorine</link> and <link=\"HYDROGEN\">Hydrogen</link> are the prevailing gasses in this biome, <link=\"OXYROCK\">Oxylite</link> exists in rock form and can provide <link=\"OXYGEN\">Oxygen</link> for Duplicants once they uncover it.\n\n<link=\"DIRT\">Dirt</link>, <link=\"CARBON\">Coal</link> and <link=\"IGNEOUSROCK\">Igneous Rock</link> round out the rest of this biome, making it a great deposit of resources for a budding industrialized colony."
+msgstr "<link=\"GOLDAMALGAM\">Золотая амальгама</link>, <link=\"ALUMINUMORE\">алюминиевая руда</link> и <link=\"COBALTITE\">кобальтовая руда</link> в изобилии встречаются по всему биому. Обрабатывайте эти металлы на <link=\"METALREFINERY\">металлургическом станке</link>, чтобы получить доступ к передовым технологиям.\n\nХотя в атмосфере этого биома преобладают <link=\"CHLORINEGAS\">хлор</link> и <link=\"HYDROGEN\">водород</link>, здесь можно найти и каменный <link=\"OXYROCK\">кислолит</link>, который позволит обеспечить дубликантов <link=\"OXYGEN\">кислородом</link>.\n\nВ этом биоме также много <link=\"CARBON\">угля</link>, <link=\"DIRT\">грязи</link> и <link=\"IGNEOUSROCK\">магматических пород</link>, так что колония, нацеленная на промышленное производство, найдет здесь все необходимые ресурсы."
 
 #. STRINGS.SUBWORLDS.MOO.DESC
 msgctxt "STRINGS.SUBWORLDS.MOO.DESC"
@@ -41885,8 +42420,8 @@ msgstr "Хотя в этом биоме меньше <link=\"OXYGEN\">кисло
 
 #. STRINGS.SUBWORLDS.RADIOACTIVE.DESC
 msgctxt "STRINGS.SUBWORLDS.RADIOACTIVE.DESC"
-msgid ""
-msgstr ""
+msgid "A highly volatile environment containing a highly useful resource, this biome is invaluable when venturing into Nuclear technologies."
+msgstr "Изменчивая среда, где можно получить очень полезный ресурс. Здесь будет легко освоить ядерные технологии."
 
 #. STRINGS.SUBWORLDS.RADIOACTIVE.NAME
 msgctxt "STRINGS.SUBWORLDS.RADIOACTIVE.NAME"
@@ -41895,8 +42430,8 @@ msgstr "Радиоактивный"
 
 #. STRINGS.SUBWORLDS.RADIOACTIVE.UTILITY
 msgctxt "STRINGS.SUBWORLDS.RADIOACTIVE.UTILITY"
-msgid ""
-msgstr ""
+msgid "<link=\"LEADSUIT\">Lead Suits</link> are imperative if my Duplicants are going to start exploring this biome as <link=\"RADIATIONSICKNESS\">Radioactive Contaminants</link> is a constant danger here.\n\n<link=\"BEE\">Beetas</link> pose a double threat as they are both highly radioactive and very aggressive. If they can be domesticated, however, <link=\"BEEHIVE\">Beeta Hives</link>, provide a great service turning <link=\"URANIUMORE\">Uranium</link> into <link=\"ENRICHEDURANIUM\">Enriched Uranium</link>.\n\nWhile the Radioactive Biome, and the Beetas contained within it, should be avoided at all costs if my Duplicants do not have the correct protection, my colony will need to trek into this dangerous biome if we are going to build any higher tier nuclear technologies."
+msgstr "<link=\"LEADSUIT\">Свинцовые костюмы</link> необходимы, если дубликанты собираются исследовать этот биом, поскольку <link=\"RADIATIONSICKNESS\">радиоактивные загрязнители</link> представляют постоянную опасность.\n\n<link=\"BEE\">Беты</link> опасны вдвойне, поскольку они не только радиоактивны, но и очень агрессивны. Однако <link=\"BEEHIVE\">ульи</link> прирученных бет позволяют перерабатывать <link=\"URANIUMORE\">уран</link> и превращать его в <link=\"ENRICHEDURANIUM\">обогащенный уран</link>.\n\nБез соответствующей защиты дубликантам категорически не рекомендуется заходить в радиоактивный биом, но колонии рано или поздно придется отправиться туда за ресурсами, без которых невозможна разработка технологий высокого уровня."
 
 #. STRINGS.SUBWORLDS.RUST.DESC
 msgctxt "STRINGS.SUBWORLDS.RUST.DESC"
@@ -41925,8 +42460,8 @@ msgstr "Песчаный"
 
 #. STRINGS.SUBWORLDS.SANDSTONE.UTILITY
 msgctxt "STRINGS.SUBWORLDS.SANDSTONE.UTILITY"
-msgid "<link=\"OXYROCK\">Oxylite</link> and <link=\"BASICFORAGEPLANTPLANTED\">Buried Muckroot</link> are in sufficient supply to sustain your colony while <link=\"DIRT\">Dirt</link>, <link=\"ALGAE\">Algae</link> and <link=\"COPPER\">Copper</link> provide the basic materials required to get a colony up and running."
-msgstr "Достаточное количество <link=\"OXYROCK\">кислолита</link> и <link=\"BASICFORAGEPLANTPLANTED\">грязекорня в земле</link> поможет поддерживать жизнь вашей колонии, в то время как <link=\"DIRT\">грязь</link>, <link=\"ALGAE\">водоросли</link> и <link=\"COPPER\">медь</link> являются базовыми материалами, необходимыми для поднятия колонии на ноги."
+msgid "<link=\"OXYROCK\">Oxylite</link> and <link=\"BASICFORAGEPLANTPLANTED\">Buried Muckroot</link> are in sufficient supply to sustain your colony while you gather more resources.\n\n<link=\"DIRT\">Dirt</link>, <link=\"ALGAE\">Algae</link>, <link=\"COPPER\">Copper</link> and, of course, <link=\"SANDSTONE\">Sandstone</link> provide all the materials to get basic colony essentials built.\n\nRandom <link=\"LIGHTBUGSPECIES\">Shine Bugs</link> provide Morale boosts for my Duplicants but are not a reliable light source.\n\n<link=\"HATCHSPECIES\">Hatch</link> can be domesticated for food or <link=\"CARBON\">Coal</link>, which will be useful if using a <link=\"GENERATOR\">Coal Generator</link> for power.\n\nAll-in-all this biome is the perfect starting spot for my colony to establish a base full of essentials, from which they can then venture out and explore."
+msgstr "<link=\"OXYROCK\">Кислолита</link> и <link=\"BASICFORAGEPLANTPLANTED\">грязекорня</link> здесь достаточно, чтобы поддерживать вашу колонию, пока вы собираете ресурсы.\n\n<link=\"DIRT\">Грязь</link>, <link=\"ALGAE\">водоросли</link>, <link=\"COPPER\">медь</link> и, конечно же, <link=\"SANDSTONE\">песчаник</link> обеспечат вас материалами для постройки основных объектов первой необходимости.\n\nСлучайные <link=\"LIGHTBUGSPECIES\">блестячки</link> повышают боевой дух дубликантов, но не считаются надежным источником света.\n\n<link=\"HATCHSPECIES\">Копателей</link> можно приручить и получить с их помощью еду и <link=\"CARBON\">уголь</link>, который пригодится для получения энергии с помощью <link=\"GENERATOR\">угольного генератора</link>.\n\nЭто идеальная отправная точка для колонии: здесь можно создать базу на первое время, а после отправиться на исследования."
 
 #. STRINGS.SUBWORLDS.SPACE.DESC
 msgctxt "STRINGS.SUBWORLDS.SPACE.DESC"
@@ -41945,8 +42480,8 @@ msgstr "Если установить <link=\"SOLARPANELS\">солнечные �
 
 #. STRINGS.SUBWORLDS.SWAMP.DESC
 msgctxt "STRINGS.SUBWORLDS.SWAMP.DESC"
-msgid ""
-msgstr ""
+msgid "With its abundence of <link=\"CONTAMINATEDOXYGEN\">Polluted Oxygen</link> and lack of clean <style=\"KKeyword\">Water</style> the Swampy Biome presents some challenges for a budding colony. But, with a little hard work, it can also turn into a great starting biome with some valuable resources."
+msgstr "Из-за обилия <link=\"CONTAMINATEDOXYGEN\">загрязненного кислорода</link> и недостатка чистой <style=\"KKeyword\">воды</style> болотный биом не слишком благоприятен для молодой колонии. Но если вы приложите немного усилий, здесь можно найти ценные ресурсы для легкого старта."
 
 #. STRINGS.SUBWORLDS.SWAMP.NAME
 msgctxt "STRINGS.SUBWORLDS.SWAMP.NAME"
@@ -41955,8 +42490,8 @@ msgstr "Болотный"
 
 #. STRINGS.SUBWORLDS.SWAMP.UTILITY
 msgctxt "STRINGS.SUBWORLDS.SWAMP.UTILITY"
-msgid ""
-msgstr ""
+msgid "<link=\"SWAMPFORAGEPLANTPLANTED\">Swamp Chard</link> can provide adequate nutrients for my Duplicants while they establish farms, but it cannot be planted or propogated. <link=\"SWAMPHARVESTPLANT\">Bog Buckets</link>, however, provide a sweet source of nutrients that are fairly easy to farm using <link=\"DIRTYWATER\">Polluted Water</link> and require no extra light to grow.\n\nFortunately <link=\"DIRTYWATER\">Polluted Water</link> is abundant in this biome and will require a <link=\"LIQUIDFILTER\">Liquid Filter</link> to turn into something my Duplicants can drink. Additionally my Duplicants can use a <link=\"SLUDGEPRESS\">Sludge Press</link> to filter clean water from <link=\"MUD\">Mud</link> (NOTE: <link=\"TOXICMUD\">Polluted Mud</link>, however, does not make clean water).\n\nMeanwhile, rudimentary power can be gained from the energy producing <link=\"STATERPILLAR\">Plug Slugs</link> that inhabit this biome.\n\nShiny <link=\"COBALTITE\">Cobalt Ore</link> can be found here, providing a adequate source of metal.\n\nWhile much of this biome is dangerous for a new colony with some deliberate research and careful planning my Duplicants can not only survive but thrive here."
+msgstr "<link=\"SWAMPFORAGEPLANTPLANTED\">Болотный мангольд</link> может обеспечить дубликантов достаточным количеством питательных веществ, пока они строят фермы, но его нельзя сажать или разводить. <link=\"SWAMPHARVESTPLANT\">Болотник</link> же — отличный источник питательных веществ, его довольно легко выращивать с помощью <link=\"DIRTYWATER\">загрязненной воды</link>, и он не требует дополнительного света для выращивания.\n\nК счастью, <link=\"DIRTYWATER\">загрязненной воды</link> в этом биоме много, настолько много, что дубликантам потребуется <link=\"LIQUIDFILTER\">фильтр</link> для получения питьевой воды. Кроме того, дубликанты могут использовать <link=\"SLUDGEPRESS\">осадочный пресс</link> для фильтрации чистой воды из <link=\"MUD\">жижи</link> (ПРИМЕЧАНИЕ: из <link=\"TOXICMUD\">загрязненной жижи</link> нельзя получить чистую воду).\n\nИз <link=\"STATERPILLAR\">розеточных слизней</link>, населяющих этот биом, можно получить немного электроэнергии.\n\nЗдесь можно найти блестящую <link=\"COBALTITE\">кобальтовую руду</link> и добыть из нее достаточно металла.\n\nХотя большая часть этого биома опасна для новой колонии, при разумном подходе к исследованиям и тщательном планировании дубликанты смогут не только выживать здесь, но и процветать."
 
 #. STRINGS.SUBWORLDS.WASTELAND.DESC
 msgctxt "STRINGS.SUBWORLDS.WASTELAND.DESC"
@@ -43520,8 +44055,8 @@ msgstr "Скорость ракеты: "
 
 #. STRINGS.UI.CLUSTERMAP.ROCKETS.SPEED.TOOLTIP
 msgctxt "STRINGS.UI.CLUSTERMAP.ROCKETS.SPEED.TOOLTIP"
-msgid "<b>Rocket Speed</b> is calculated by dividing <b>Engine Power</b> by <b>Burden</b>"
-msgstr "<b>Скорость ракеты</b> вычисляется путем деления <b>мощности двигателя</b> на степень <b>нагрузки</b>."
+msgid "<b>Rocket Speed</b> is calculated by dividing <b>Engine Power</b> by <b>Burden</b>.\nRockets operating on autopilot will have a reduced speed."
+msgstr "<b>Скорость ракеты</b> вычисляется путем деления <b>мощности двигателя</b> на степень <b>нагрузки</b>.\nСкорость ракеты снижается при полете на автопилоте."
 
 #. STRINGS.UI.CLUSTERMAP.SELECT_DESTINATION
 msgctxt "STRINGS.UI.CLUSTERMAP.SELECT_DESTINATION"
@@ -43760,8 +44295,8 @@ msgstr "Качество: {0}"
 
 #. STRINGS.UI.CODEX.FOOD.SPOILPROPERTIES
 msgctxt "STRINGS.UI.CODEX.FOOD.SPOILPROPERTIES"
-msgid "Preserve temperature: {0}\nSpoil time: {1}"
-msgstr "Температура хранения: {0}\nСрок хранения: {1}"
+msgid "Refrigeration temperature: {0}\nDeep Freeze temperature: {1}\nSpoil time: {2}"
+msgstr "Температура хранения: {0}\nТемпература глубокой заморозки: {1}\nСрок хранения: {2}"
 
 #. STRINGS.UI.CODEX.FORWARD_BUTTON_NO_HISTORY_TOOLTIP
 msgctxt "STRINGS.UI.CODEX.FORWARD_BUTTON_NO_HISTORY_TOOLTIP"
@@ -43873,6 +44408,16 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.ALL_NAME"
 msgid "Battery"
 msgstr "Батарейка"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA.CHECKCAPACITY
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA.CHECKCAPACITY"
+msgid "Check capacity"
+msgstr "Проверить емкость"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA.CHECKDEAD
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA.CHECKDEAD"
+msgid "Check dead"
+msgstr "Проверить мертвых"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA_CHECK_CAPACITY.FAIL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.CRITERIA_CHECK_CAPACITY.FAIL"
 msgid ""
@@ -43913,6 +44458,11 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BEDDIAGNOSTIC.ALL_NAME"
 msgid "Beds"
 msgstr "Кровати"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.BEDDIAGNOSTIC.CRITERIA.CHECKENOUGHBEDS
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BEDDIAGNOSTIC.CRITERIA.CHECKENOUGHBEDS"
+msgid "Check enough beds"
+msgstr "Проверить, достаточно ли кроватей"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.BEDDIAGNOSTIC.MISSING_ASSIGNMENT
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BEDDIAGNOSTIC.MISSING_ASSIGNMENT"
 msgid "    • One or more Duplicants don't have an assigned bed"
@@ -43937,6 +44487,16 @@ msgstr "<b>Кровати</b>"
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.ALL_NAME"
 msgid "Breathability"
 msgstr "Воздухопроницаемость"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.CRITERIA.CHECKLOWBREATHABILITY
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.CRITERIA.CHECKLOWBREATHABILITY"
+msgid "Check low breathability"
+msgstr "Проверить низкую пригодность для дыхания"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.CRITERIA.CHECKSUFFOCATION
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.CRITERIA.CHECKSUFFOCATION"
+msgid "Check suffocation"
+msgstr "Проверить удушье"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.NORMAL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.NORMAL"
@@ -43968,6 +44528,11 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.DECORDIAGNOSTIC.ALL_NAME"
 msgid "Decor"
 msgstr "Декор"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.DECORDIAGNOSTIC.CRITERIA.CHECKDECOR
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.DECORDIAGNOSTIC.CRITERIA.CHECKDECOR"
+msgid "Check decor"
+msgstr "Проверить красоту"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.DECORDIAGNOSTIC.LOW
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.DECORDIAGNOSTIC.LOW"
 msgid "    • Decor levels are low"
@@ -43993,6 +44558,11 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.BUILDING_ENTOMBED"
 msgid "    • One or more buildings are entombed"
 msgstr "    • Одно или несколько строений находятся под завалом"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.CRITERIA.CHECKENTOMBED
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.CRITERIA.CHECKENTOMBED"
+msgid "Check entombed"
+msgstr "Проверить погребение"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.NORMAL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.NORMAL"
 msgid "    • No buildings are entombed"
@@ -44007,6 +44577,26 @@ msgstr "<b>Под завалом</b>"
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.ALL_NAME"
 msgid "Crops"
 msgstr "Урожай"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKHASFARMS
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKHASFARMS"
+msgid "Check colony has farms"
+msgstr "Проверить, что в колонии есть фермы"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKOPERATIONAL
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKOPERATIONAL"
+msgid "Check farm plots operational"
+msgstr "Проверить работу грядок"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKPLANTED
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKPLANTED"
+msgid "Check farms are planted"
+msgstr "Проверить, выращивают ли растения на ферме"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKWILTING
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKWILTING"
+msgid "Check crops wilting"
+msgstr "Проверить увядание посевов"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.INOPERATIONAL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.INOPERATIONAL"
@@ -44073,6 +44663,16 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.ALL_NAME"
 msgid "Food"
 msgstr "Еда"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA.CHECKENOUGHFOOD
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA.CHECKENOUGHFOOD"
+msgid "Check enough food"
+msgstr "Проверить, достаточно ли еды"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA.CHECKSTARVATION
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA.CHECKSTARVATION"
+msgid "Check starvation"
+msgstr "Проверить голодание"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA_HAS_FOOD.FAIL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA_HAS_FOOD.FAIL"
 msgid "    • Duplicants have no food"
@@ -44108,6 +44708,11 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.TOOLTIP_NAME"
 msgid "<b>Food</b>"
 msgstr "<b>Еда</b>"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA.CHECKWORLDHASMINIONS
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA.CHECKWORLDHASMINIONS"
+msgid "Check world has Duplicants"
+msgstr "Проверить, есть ли в мире дубликанты"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_FAIL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_FAIL"
 msgid "Criteria not met"
@@ -44128,10 +44733,20 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.HEATDIAGNOSTIC.ALL_NAME"
 msgid "Battery"
 msgstr "Батарейка"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.HEATDIAGNOSTIC.CRITERIA.CHECKHEAT
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.HEATDIAGNOSTIC.CRITERIA.CHECKHEAT"
+msgid "Check heat"
+msgstr "Проверить тепло"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.IDLEDIAGNOSTIC.ALL_NAME
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.IDLEDIAGNOSTIC.ALL_NAME"
 msgid "Idleness"
 msgstr "Безделье"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.IDLEDIAGNOSTIC.CRITERIA.CHECKIDLE
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.IDLEDIAGNOSTIC.CRITERIA.CHECKIDLE"
+msgid "Check idle"
+msgstr "Проверить простой"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.IDLEDIAGNOSTIC.IDLE
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.IDLEDIAGNOSTIC.IDLE"
@@ -44173,10 +44788,20 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.NO_MINIONS_REQUESTED"
 msgid "    • Crew must be requested to update this diagnostic"
 msgstr "    • Чтобы обновить показатели, требуется команда"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.PLACEHOLDER_CRITERIA_NAME"
+msgid "Placeholder Criteria Name"
+msgstr "Заполнитель названия критерия"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.ALL_NAME
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.ALL_NAME"
 msgid "Avg Power"
 msgstr "Средн. уровень энергии"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKPOWER
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKPOWER"
+msgid "Check power"
+msgstr "Проверить электроснабжение"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.NORMAL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.NORMAL"
@@ -44197,6 +44822,16 @@ msgstr "<b>Средн. уровень энергии</b>"
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.ALL_NAME"
 msgid "Radiation"
 msgstr "Радиация"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA.CHECKEXPOSED
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA.CHECKEXPOSED"
+msgid "Check exposed"
+msgstr "Проверить контакт со средой"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA.CHECKSICK
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA.CHECKSICK"
+msgid "Check sick"
+msgstr "Проверить, есть ли больные"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA_RADIATION_EXPOSURE.FAIL_CONCERN
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA_RADIATION_EXPOSURE.FAIL_CONCERN"
@@ -44237,6 +44872,21 @@ msgstr "<b>Радиация</b>"
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.ALL_NAME"
 msgid "<link=\"NUCLEARREACTOR\">Research Reactor</link>"
 msgstr "<link=\"NUCLEARREACTOR\">Исследовательский реактор</link>"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA.CHECKCOOLANT
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA.CHECKCOOLANT"
+msgid "Check coolant"
+msgstr "Проверить хладагент"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA.CHECKTEMPERATURE
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA.CHECKTEMPERATURE"
+msgid "Check temperature"
+msgstr "Проверить температуру"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA_COOLANT_WARNING
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA_COOLANT_WARNING"
+msgid "    • Coolant tank low"
+msgstr "    • Низкий уровень хладагента в баке"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA_TEMPERATURE_WARNING
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA_TEMPERATURE_WARNING"
@@ -44303,6 +44953,11 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.STRESSDIAGNOSTIC.ALL_NAME"
 msgid "Max Stress"
 msgstr "Макс. стресс"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.STRESSDIAGNOSTIC.CRITERIA.CHECKSTRESSED
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.STRESSDIAGNOSTIC.CRITERIA.CHECKSTRESSED"
+msgid "Check stressed"
+msgstr "Проверить уровень стресса"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.STRESSDIAGNOSTIC.HIGH_STRESS
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.STRESSDIAGNOSTIC.HIGH_STRESS"
 msgid "    • One or more Duplicants is suffering high stress"
@@ -44322,6 +44977,16 @@ msgstr "<b>Макс. стресс</b>"
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.ALL_NAME"
 msgid "Toilets"
 msgstr "Туалеты"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.CRITERIA.CHECKENOUGHTOILETS
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.CRITERIA.CHECKENOUGHTOILETS"
+msgid "Check enough toilets"
+msgstr "Проверить, достаточно ли туалетов"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.CRITERIA.CHECKHASANYTOILETS
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.CRITERIA.CHECKHASANYTOILETS"
+msgid "Check has any toilets"
+msgstr "Проверить, есть ли туалеты"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.FEW_TOILETS
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.TOILETDIAGNOSTIC.FEW_TOILETS"
@@ -44357,6 +45022,11 @@ msgstr "<b>Туалеты</b>"
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.TRAPPEDDUPLICANTDIAGNOSTIC.ALL_NAME"
 msgid "Trapped"
 msgstr "В ловушке"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.TRAPPEDDUPLICANTDIAGNOSTIC.CRITERIA.CHECKTRAPPED
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.TRAPPEDDUPLICANTDIAGNOSTIC.CRITERIA.CHECKTRAPPED"
+msgid "Check Trapped"
+msgstr "Проверить застрявших"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.TRAPPEDDUPLICANTDIAGNOSTIC.NORMAL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.TRAPPEDDUPLICANTDIAGNOSTIC.NORMAL"
@@ -48550,8 +49220,8 @@ msgstr "МАСТЕРСКАЯ STEAM"
 
 #. STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER
 msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
-msgid "RADBOLT FROM THE BLUE"
-msgstr "РАДБОЛТ СРЕДИ ЯСНОГО НЕБА"
+msgid "PECULIAR PLANTS UPDATE"
+msgstr "Обновление «Необычные растения»"
 
 #. STRINGS.UI.FRONTEND.MOTD.NEWS_BODY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.NEWS_BODY"
@@ -48565,8 +49235,8 @@ msgstr "ПРИСОЕДИНИТЬСЯ К ОБСУЖДЕНИЮ"
 
 #. STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY"
-msgid "<b>A Radbolt From The Blue Update</b>\n\nAdded the Radbolt Engine for using nuclear energy to explore space\nAdded Interplanetary Payload Launcher to improve multi-asteroid infrastrucutre\n\nCheck out the full patch notes for more details!"
-msgstr "<b>Обновление \"Радболт среди ясного неба\"</b>\n\nДобавлен радболтовый двигатель, который позволяет использовать для исследования космоса ядерную энергию.\nДобавлен межпланетный транспортировщик, который позволяет оптимизировать инфраструктуру, разбросанную по нескольким астероидам.\n\nДля получения более подробной информации ознакомьтесь с полными примечаниями к обновлению!"
+msgid "Welcome to the <b>Peculiar Plants Update!</b>\n\n   •<indent=20px>Crop plants now drop <b>Mutant Seeds</b> when exposed to radiation.</indent>\n\n   •<indent=20px>Food spoilage and refrigeration have been rebalanced.</indent>\n\n   •<indent=20px>New <b>Meter Valves</b> allow precise plumbing deliveries.</indent>\n\n   •<indent=20px>Bug fixes, animation updates, and more.</indent>\n\nCheck out the full patch notes for more details!"
+msgstr "Добро пожаловать в обновление <b>Необычные растения</b>!\n\n   •<indent=20px>Теперь культурные растения, подвергнутые воздействию радиации, могут дать <b>мутировавшие семена</b>.</indent>\n\n   •<indent=20px>Изменен баланс порчи продуктов и охлаждения.</indent>\n\n   •<indent=20px>Новые <b>дозирующие клапаны</b> позволяют управлять движением содержимого по трубам.</indent>\n\n   •<indent=20px>Исправления ошибок, обновления анимации и многое другое.</indent>\n\nОзнакомьтесь с полным списком изменений в обновлении для получения более подробной информации!"
 
 #. STRINGS.UI.FRONTEND.MOTD.UPDATE_TEXT
 msgctxt "STRINGS.UI.FRONTEND.MOTD.UPDATE_TEXT"
@@ -49198,6 +49868,21 @@ msgctxt "STRINGS.UI.FRONTEND.WORLDGENSCREEN.TITLE"
 msgid "NEW GAME"
 msgstr "НОВАЯ ИГРА"
 
+#. STRINGS.UI.GAMEOBJECTEFFECTS.AMBIENT_NO_MIN_RADIATION_FMT
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.AMBIENT_NO_MIN_RADIATION_FMT"
+msgid "Less than {maxRads}"
+msgstr "Меньше, чем {maxRads}"
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.AMBIENT_RADIATION
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.AMBIENT_RADIATION"
+msgid "Ambient Radiation"
+msgstr "Окружающая радиация"
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.AMBIENT_RADIATION_FMT
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.AMBIENT_RADIATION_FMT"
+msgid "{minRads} - {maxRads}"
+msgstr "{minRads}—{maxRads}"
+
 #. STRINGS.UI.GAMEOBJECTEFFECTS.CALORIES
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.CALORIES"
 msgid "+{0}"
@@ -49352,6 +50037,11 @@ msgstr "Созревание:"
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.LIGHT"
 msgid "Light"
 msgstr "Свет"
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.MUTANT_STERILE
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.MUTANT_STERILE"
+msgid "Doesn't Drop <link=\"PLANTS\">Seeds</link>"
+msgstr "Не дает <link=\"PLANTS\">семена</link>"
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.PLANT_DO_NOT_HARVEST
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.PLANT_DO_NOT_HARVEST"
@@ -49522,6 +50212,16 @@ msgstr "Требуется внутренняя <style=\"KKeyword\">темпер
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.INITIALGROWTHTIME"
 msgid "This plant takes <b>{0}</b> to mature again once replanted"
 msgstr "Это растение будет созревать в течение <b>{0}</b> после пересадки"
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.MUTANT_SEED_TOOLTIP
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.MUTANT_SEED_TOOLTIP"
+msgid "\n\nGrowing near its maximum radiation increases the chance of mutant seeds being produced"
+msgstr "\n\nРост около сильного источника радиации увеличивает шанс получения мутировавших семян."
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.MUTANT_STERILE
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.MUTANT_STERILE"
+msgid "Due to changes to its DNA this plant will not produce seeds of its own"
+msgstr "Из-за изменений в ДНК это растение не дает собственные семена."
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.REGROWTHTIME
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.REGROWTHTIME"
@@ -53153,6 +53853,11 @@ msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_FARM_TINKER.DESCRIPTION"
 msgid "<link=\"PLANTS\">Crop Tending</link> and Micronutrient Fertilizer Crafting"
 msgstr "<link=\"PLANTS\">Уход за растениями</link> и создание микроудобрений"
 
+#. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_IDENTIFY_MUTANT_SEEDS.DESCRIPTION
+msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_IDENTIFY_MUTANT_SEEDS.DESCRIPTION"
+msgid "Can identify <style=\"KKeyword\">Mutant Seeds</style> at the <link=\"GENETICANALYSISSTATION\">Botanical Analyzer</link>"
+msgstr "<style=\"KKeyword\">Мутировавшие семена</style> можно выявить с помощью <link=\"GENETICANALYSISSTATION\">Ботанического анализатора</link>"
+
 #. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_PILOT_ROCKET.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_PILOT_ROCKET.DESCRIPTION"
 msgid "<link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link> Usage"
@@ -54488,6 +55193,11 @@ msgctxt "STRINGS.UI.SPACEDESTINATIONS.COMETS.FULLERENECOMET.NAME"
 msgid "Fullerene Comet"
 msgstr "Фуллереновая комета"
 
+#. STRINGS.UI.SPACEDESTINATIONS.COMETS.GASSYMOOCOMET.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.COMETS.GASSYMOOCOMET.NAME"
+msgid "Gassy Mooteor"
+msgstr "Газовый му-теор"
+
 #. STRINGS.UI.SPACEDESTINATIONS.COMETS.GOLDCOMET.NAME
 msgctxt "STRINGS.UI.SPACEDESTINATIONS.COMETS.GOLDCOMET.NAME"
 msgid "Gold Comet"
@@ -55002,6 +55712,36 @@ msgstr "Не назначен астронавт"
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.ASTRONAUT_TITLE"
 msgid "Astronaut"
 msgstr "Астронавт"
+
+#. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.STATUS.FAILURE
+msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.STATUS.FAILURE"
+msgid ""
+msgstr ""
+
+#. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.STATUS.READY
+msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.STATUS.READY"
+msgid "Cargo Transfer Complete"
+msgstr "Погрузка завершена"
+
+#. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.STATUS.WARNING
+msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.STATUS.WARNING"
+msgid "Cargo Transfer Complete"
+msgstr "Погрузка завершена"
+
+#. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.TOOLTIP.FAILURE
+msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.TOOLTIP.FAILURE"
+msgid ""
+msgstr ""
+
+#. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.TOOLTIP.READY
+msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.TOOLTIP.READY"
+msgid "All possible loading and unloading has been completed"
+msgstr "Загрузка и выгрузка завершены."
+
+#. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.TOOLTIP.WARNING
+msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CARGO_TRANSFER_COMPLETE.TOOLTIP.WARNING"
+msgid "The <link=\"LAUNCHPLATFORM\">Rocket Platform</link> could still transfer cargo to or from this rocket"
+msgstr "<link=\"LAUNCHPLATFORM\">Ракетная платформа</link> все еще может транспортировать груз на ракету или с нее"
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CONSTRUCTION_COMPLETE.STATUS.FAILURE
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CONSTRUCTION_COMPLETE.STATUS.FAILURE"
@@ -57238,6 +57978,16 @@ msgctxt "STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_PRESSURE"
 msgid "The current <style=\"KKeyword\">Gas</style> pressure is <b>{pressure}</b>"
 msgstr "Давление <style=\"KKeyword\">газа</style> в данный момент: <b>{pressure}</b>"
 
+#. STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_RADIATION
+msgctxt "STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_RADIATION"
+msgid "This plant is sitting in <b>{rads}</b> of ambient <style=\"KKeyword\">Radiation</style>. It needs at between {minRads} and {maxRads} to grow"
+msgstr "Это растение <b>{rads}</b>находится под воздействием <style=\"KKeyword\">радиации</style>. Для роста уровень радиации должен составлять от {minRads} до {maxRads}."
+
+#. STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_RADIATION_NO_MIN
+msgctxt "STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_RADIATION_NO_MIN"
+msgid "This plant is sitting in <b>{rads}</b> of ambient <style=\"KKeyword\">Radiation</style>. It needs less than {maxRads} to grow"
+msgstr "Это растение <b>{rads}</b>находится под воздействием <style=\"KKeyword\">радиации</style>. Для роста уровень радиации должен составлять не более {maxRads}."
+
 #. STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_RECEPTACLE_INOPERATIONAL
 msgctxt "STRINGS.UI.TOOLTIPS.VITALS_CHECKBOX_RECEPTACLE_INOPERATIONAL"
 msgid "This plant is not housed in an operational farm plot"
@@ -57628,15 +58378,20 @@ msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_
 msgid "Select the first available landing site"
 msgstr "Выберите первую доступную посадочную площадку"
 
-#. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_OBSTRUCTED
-msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_OBSTRUCTED"
+#. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_PATH_OBSTRUCTED
+msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_PATH_OBSTRUCTED"
 msgid "Landing path obstructed"
 msgstr "Путь для посадки заблокирован"
 
+#. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_SITE_OBSTRUCTED
+msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_SITE_OBSTRUCTED"
+msgid "Landing site obstructed"
+msgstr "Посадочная площадка заблокирована"
+
 #. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_TOO_SHORT
 msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_TOO_SHORT"
-msgid "Landing site too short for this rocket's height"
-msgstr "Посадочная площадка слишком коротка для ракеты этой длины"
+msgid "This rocket's height exceeds the space available in this landing site"
+msgstr "Ракета слишком высока для посадки на этой площадке."
 
 #. STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_VALID_SITE
 msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_VALID_SITE"
@@ -58298,40 +59053,30 @@ msgctxt "STRINGS.UI.UISIDESCREENS.GENESHUFFLERSIDESREEN.UNDERWAY"
 msgid "Neural Vacillation in progress."
 msgstr "Идет нейронная калибровка."
 
-#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.CANCEL_SEED
-msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.CANCEL_SEED"
-msgid "Clear Analysis Target"
-msgstr "Очистить цель анализа"
-
-#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.CURRENT_TARGET
-msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.CURRENT_TARGET"
-msgid "Currently studying:"
-msgstr "В настоящее время изучается:"
-
 #. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.NONE_DISCOVERED
 msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.NONE_DISCOVERED"
 msgid "No mutant seeds have been found."
 msgstr "Не обнаружено семен-мутантов."
 
-#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.PICK_TARGET
-msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.PICK_TARGET"
-msgid "Select a plant for study"
-msgstr "Выберите растение для исследования"
+#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_ALLOWED
+msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_ALLOWED"
+msgid "</i>Will analyze</i>"
+msgstr "</i>Будет проанализировано</i>"
 
-#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_COMPLETE
-msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_COMPLETE"
-msgid "<i>Complete</i>"
-msgstr "<i>Завершено</i>"
+#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_FORBIDDEN
+msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_FORBIDDEN"
+msgid "</i>Won't analyze</i>"
+msgstr "</i>Не будет проанализировано</i>"
 
-#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_PROGRESS_FMT
-msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_PROGRESS_FMT"
-msgid "{0}/{1} seeds"
-msgstr "{0}/{1} семян"
+#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_NO_MUTANTS
+msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_NO_MUTANTS"
+msgid "</i>No mutants found</i>"
+msgstr "</i>Мутаций не найдено</i>"
 
-#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SELECT_SEED
-msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SELECT_SEED"
-msgid "Select Analysis Target"
-msgstr "Выберите цель анализа"
+#. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SELECT_SEEDS
+msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SELECT_SEEDS"
+msgid "Select which seed types to analyze:"
+msgstr "Выберите типы семян для анализа:"
 
 #. STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.TITLE
 msgctxt "STRINGS.UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.TITLE"
@@ -58353,10 +59098,70 @@ msgctxt "STRINGS.UI.UISIDESCREENS.HABITATMODULESIDESCREEN.VIEW_BUTTON_TOOLTIP"
 msgid "What's goin' on in there?"
 msgstr "Что там такое происходит?"
 
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_E
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_E"
+msgid "E"
+msgstr "В"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_N
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_N"
+msgid "N"
+msgstr "С"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_NE
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_NE"
+msgid "NE"
+msgstr "СВ"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_NW
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_NW"
+msgid "NW"
+msgstr "СЗ"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_S
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_S"
+msgid "S"
+msgstr "Ю"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_SE
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_SE"
+msgid "SE"
+msgstr "ЮВ"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_SW
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_SW"
+msgid "SW"
+msgstr "ЮЗ"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_W
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_W"
+msgid "W"
+msgstr "З"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.SELECTED_DIRECTION
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.SELECTED_DIRECTION"
+msgid "Selected direction: {0}"
+msgstr "Выбранное направление: {0}"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.TITLE
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.TITLE"
+msgid "Emitting Particle Direction"
+msgstr "Направление испускаемых частиц"
+
 #. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.CURRENT_THRESHOLD
 msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.CURRENT_THRESHOLD"
 msgid "Current Threshold: {0}%"
 msgstr "Текущее пороговое значение: {0}%"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.PROGRESS_BAR_LABEL
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.PROGRESS_BAR_LABEL"
+msgid "Radbolt Generation"
+msgstr "Генерация радболтов"
+
+#. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.PROGRESS_BAR_TOOLTIP
+msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.PROGRESS_BAR_TOOLTIP"
+msgid "The building will emit a <style=\"KKeyword\">Radbolt</style> in the chosen direction when fully charged"
+msgstr "После полной зарядки здание выпустит <style=\"KKeyword\">радболт</style> в выбранном направлении."
 
 #. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.TITLE
 msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.TITLE"
@@ -58487,6 +59292,31 @@ msgstr "Ракетная платформа"
 msgctxt "STRINGS.UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.WAITING_TO_LAND_PANEL"
 msgid "Waiting to land"
 msgstr "Ожидает посадки"
+
+#. STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.AMOUNT
+msgctxt "STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.AMOUNT"
+msgid "Amount: {0}"
+msgstr "Количество: {0}"
+
+#. STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.LIMIT
+msgctxt "STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.LIMIT"
+msgid "Limit:"
+msgstr "Лимит:"
+
+#. STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.RESET_BUTTON
+msgctxt "STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.RESET_BUTTON"
+msgid "Reset Amount"
+msgstr "Сбросить количество"
+
+#. STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.SLIDER_TOOLTIP_UNITS
+msgctxt "STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.SLIDER_TOOLTIP_UNITS"
+msgid "The amount of Units or Mass passing through the sensor."
+msgstr "Количество единиц или массы, проходящих через датчик."
+
+#. STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.TITLE
+msgctxt "STRINGS.UI.UISIDESCREENS.LIMIT_VALVE_SIDE_SCREEN.TITLE"
+msgid "Meter Control"
+msgstr "Управление счетчиком"
 
 #. STRINGS.UI.UISIDESCREENS.LOGIC_BUFFER_SIDE_SCREEN.TITLE
 msgctxt "STRINGS.UI.UISIDESCREENS.LOGIC_BUFFER_SIDE_SCREEN.TITLE"
@@ -59510,7 +60340,7 @@ msgstr ""
 
 #. STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_HEIGHT.FAILED
 msgctxt "STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_HEIGHT.FAILED"
-msgid "    • Engine's height limit of reached"
+msgid "    • Engine's height limit reached"
 msgstr "    • Достигнут предел высоты двигателя"
 
 #. STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_MODULES.COMPLETE
@@ -61003,6 +61833,11 @@ msgctxt "STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_COMPUTER_SUCCESS.SEARCH6"
 msgid "This computer is broken and requires some finessing to get working. Still, I recover a handful of interesting files.\n\nNew Database Entry unlocked."
 msgstr "Компьютер почти сломан, и для его включения пришлось приложить немало сил. И все же мне удалось найти несколько интересных файлов.\n\nРазблокирована новая запись в базе данных."
 
+#. STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_CRYO_TANK
+msgctxt "STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_CRYO_TANK"
+msgid "There are some safety instructions included in the operating instructions of this Cryotank. I add them to my database.\n\nNew Database Entry discoverd."
+msgstr "В инструкции по эксплуатации криокамеры есть правила техники безопасности. Я добавлю их в свою базу данных.\n\nРазблокирована новая запись в базе данных."
+
 #. STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_DISPLAY
 msgctxt "STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_DISPLAY"
 msgid "The display is still functional. I copy its message into my database.\n\nNew Database Entry discovered."
@@ -61072,6 +61907,16 @@ msgstr "Я проверяю, смогу ли найти что-то полезн
 msgctxt "STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_TECHNOLOGY_SUCCESS.SEARCH3"
 msgid "I look for anything of interest within the abandoned machinery and add what I find to my database.\n\nNew Database Entry discovered."
 msgstr "Я ищу хоть что-то интересное среди брошенных приборов. Найденное я добавляю в кодекс.\n\nРазблокирована новая запись в базе данных."
+
+#. STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_TELEPORTER_RECEIVER
+msgctxt "STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_TELEPORTER_RECEIVER"
+msgid "Incongruously placed research notes are hidden within the operating instructions of this device. I add them to my database.\n\nNew Database Entry discovered."
+msgstr "В инструкции по эксплуатации устройства найдены хаотичные заметки об исследованиях. Я добавлю их в свою базу данных.\n\nРазблокирована новая запись в базе данных."
+
+#. STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_TELEPORTER_SENDER
+msgctxt "STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_TELEPORTER_SENDER"
+msgid "While scanning the antiquated computer code of this machine I uncovered some research notes. I add them to my database.\n\nNew Database Entry discovered."
+msgstr "При сканировании устаревшего компьютерного кода этой машины я обнаружил заметки об исследованиях. Я добавлю их в свою базу данных.\n\nРазблокирована новая запись в базе данных."
 
 #. STRINGS.UI.USERMENUACTIONS.READLORE.TOOLTIP
 msgctxt "STRINGS.UI.USERMENUACTIONS.READLORE.TOOLTIP"
@@ -62255,8 +63100,8 @@ msgstr "Изумрудия"
 
 #. STRINGS.WORLDS.FORESTMOONLET.DESCRIPTION
 msgctxt "STRINGS.WORLDS.FORESTMOONLET.DESCRIPTION"
-msgid "A small moon with a forest start.\n\n<smallcaps>Forest Moonlets have plenty of organic material but Duplicants will have to venture outside their starting biome quickly to find any metal."
-msgstr "Маленькая луна со стартом в лесистой местности.\n\n<smallcaps>На лесистых спутниках можно найти много органических материалов, но дубликантам быстро придется покинуть пределы своего начального биома, чтобы найти хоть какие-то металлы."
+msgid "A small moon with a forest start.\n\n<smallcaps>Forest Moonlets have plenty of organic material but Duplicants will have to venture outside their starting biome quickly to find any metal.</smallcaps>"
+msgstr "Маленькая луна со стартом в лесистой местности.\n\n<smallcaps>На лесистых спутниках можно найти много органических материалов, но дубликантам быстро придется покинуть пределы своего начального биома, чтобы найти хоть какие-то металлы.</smallcaps>"
 
 #. STRINGS.WORLDS.FORESTMOONLET.NAME
 msgctxt "STRINGS.WORLDS.FORESTMOONLET.NAME"
@@ -62293,6 +63138,16 @@ msgctxt "STRINGS.WORLDS.MARSHYMOONLET.NAME"
 msgid "Marshy Asteroid"
 msgstr "Астероид с топью"
 
+#. STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
+msgctxt "STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION"
+msgid "A large-ish partially frozen world with a radioactive core.\n\n<smallcaps>While Radioactive Swamp Asteroid are largely swampy, they also contain a great deal of rust.</smallcaps>"
+msgstr "Довольно большой частично замерзший астероид с радиоактивным ядром.\n\n<smallcaps>Помимо огромного количества болот, на астероидах с радиоактивными болотами еще очень много ржавчины.</smallcaps>"
+
+#. STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.NAME
+msgctxt "STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.NAME"
+msgid "Radioactive Swamp Asteroid"
+msgstr "Астероид с радиоактивными болотами"
+
 #. STRINGS.WORLDS.METALHEAVYLANDINGSITE.DESCRIPTION
 msgctxt "STRINGS.WORLDS.METALHEAVYLANDINGSITE.DESCRIPTION"
 msgid "A marshy world with significant radiation.\n\n<smallcaps>Irradiated Marsh Asteroids have an abundance of metal for the taking if Duplicants can withstand the planetoid's radiation.</smallcaps>"
@@ -62305,13 +63160,13 @@ msgstr "Астероид с радиационной топью"
 
 #. STRINGS.WORLDS.MOOMOONLET.DESCRIPTION
 msgctxt "STRINGS.WORLDS.MOOMOONLET.DESCRIPTION"
-msgid "A small world with unique local lifeforms.\n\n<smallcaps>Moo Moonlets are the natural breeding ground of Gassy Moos due to their abundance of Gas Grass and Methane.</smallcaps>"
-msgstr "Маленький мир с уникальными формами жизни.\n\n<smallcaps>Благодаря обилию газовой травы и метана спутники Му-му стали естественным местом обитания газовых му-му.</smallcaps>"
+msgid "A small world with unique local lifeforms.\n\n<smallcaps>Moo Asteroids are the natural breeding ground of Gassy Moos due to their abundance of Gas Grass and Methane.</smallcaps>"
+msgstr "Маленький мир с уникальными формами жизни.\n\n<smallcaps>Благодаря обилию газовой травы и метана астероиды Му-му стали естественным местом обитания газовых му-му.</smallcaps>"
 
 #. STRINGS.WORLDS.MOOMOONLET.NAME
 msgctxt "STRINGS.WORLDS.MOOMOONLET.NAME"
-msgid "Moo Moonlet"
-msgstr "Спутник Му-му"
+msgid "Moo Asteroid"
+msgstr "Астероид му-му"
 
 #. STRINGS.WORLDS.MOON_BARREN.DESCRIPTION
 msgctxt "STRINGS.WORLDS.MOON_BARREN.DESCRIPTION"
@@ -62610,10 +63465,10 @@ msgstr "Астероид с нефтяными болотами"
 
 #. STRINGS.WORLDS.WATERMOONLET.DESCRIPTION
 msgctxt "STRINGS.WORLDS.WATERMOONLET.DESCRIPTION"
-msgid "A small, water-submerged world.\n\n<smallcaps>Water Moonlets possess a variety of liquid resources and are a natural source of Graphite. However, its thin surface and sparse construction material means Duplicants should come prepared for a swim.</smallcaps>"
-msgstr "Маленький, покрытый водой мир.\n\n<smallcaps>Водяные спутники богаты различными водными ресурсами и являются природным источником графита. Там мало суши и совсем немного строительных материалов, а значит, дубликанты должны быть готовы к плаванию.</smallcaps>"
+msgid "A small, water-submerged world.\n\n<smallcaps>Water Asteroids possess a variety of liquid resources and are a natural source of Graphite. However, its thin surface and sparse construction material means Duplicants should come prepared for a swim.</smallcaps>"
+msgstr "Маленький покрытый водой мир.\n\n<smallcaps>Водяные астероиды богаты различными водными ресурсами и являются природным источником графита. Там мало суши и совсем немного строительных материалов, а значит, дубликанты должны быть готовы к плаванию.</smallcaps>"
 
 #. STRINGS.WORLDS.WATERMOONLET.NAME
 msgctxt "STRINGS.WORLDS.WATERMOONLET.NAME"
-msgid "Water Moonlet"
-msgstr "Водяной спутник"
+msgid "Water Asteroid"
+msgstr "Водный астероид"

@@ -48,15 +48,18 @@ namespace Database
 				.VisualBGFX("mutate_glow_fx_kanim");
 			bonusLice = AddPlantMutation("bonusLice").AttributeModifier(Db.Get().PlantAttributes.MinRadiationThreshold, 25f).AttributeModifier(Db.Get().PlantAttributes.FertilizerUsageMod, 0.25f, multiplier: true).BonusCrop("BasicPlantFood", 1f)
 				.VisualSymbolOverride("snapTo_mutate1", "mutate_snaps_kanim", "meal_lice_mutate1")
-				.VisualSymbolOverride("snapTo_mutate2", "mutate_snaps_kanim", "meal_lice_mutate2");
+				.VisualSymbolOverride("snapTo_mutate2", "mutate_snaps_kanim", "meal_lice_mutate2")
+				.AddSoundEvent(GlobalAssets.GetSound("Plant_mutation_MealLice"));
 			sunnySpeed = AddPlantMutation("sunnySpeed").AttributeModifier(Db.Get().PlantAttributes.MinRadiationThreshold, 25f).AttributeModifier(Db.Get().PlantAttributes.MinLightLux, 1000f).AttributeModifier(Db.Get().Amounts.Maturity.maxAttribute, -0.5f, multiplier: true)
 				.AttributeModifier(Db.Get().PlantAttributes.FertilizerUsageMod, 0.25f, multiplier: true)
 				.VisualSymbolOverride("snapTo_mutate1", "mutate_snaps_kanim", "leaf_mutate1")
-				.VisualSymbolOverride("snapTo_mutate2", "mutate_snaps_kanim", "leaf_mutate2");
+				.VisualSymbolOverride("snapTo_mutate2", "mutate_snaps_kanim", "leaf_mutate2")
+				.AddSoundEvent(GlobalAssets.GetSound("Plant_mutation_Leaf"));
 			slowBurn = AddPlantMutation("slowBurn").AttributeModifier(Db.Get().PlantAttributes.MinRadiationThreshold, 25f).AttributeModifier(Db.Get().PlantAttributes.FertilizerUsageMod, -0.9f, multiplier: true).AttributeModifier(Db.Get().Amounts.Maturity.maxAttribute, 3.5f, multiplier: true)
 				.VisualTint(-0.3f, -0.3f, -0.5f);
 			blooms = AddPlantMutation("blooms").AttributeModifier(Db.Get().PlantAttributes.MinRadiationThreshold, 25f).AttributeModifier(Db.Get().BuildingAttributes.Decor, 20f).VisualSymbolOverride("snapTo_mutate1", "mutate_snaps_kanim", "blossom_mutate1")
-				.VisualSymbolOverride("snapTo_mutate2", "mutate_snaps_kanim", "blossom_mutate2");
+				.VisualSymbolOverride("snapTo_mutate2", "mutate_snaps_kanim", "blossom_mutate2")
+				.AddSoundEvent(GlobalAssets.GetSound("Plant_mutation_PrickleFlower"));
 			loadedWithFruit = AddPlantMutation("loadedWithFruit").AttributeModifier(Db.Get().PlantAttributes.MinRadiationThreshold, 25f).AttributeModifier(Db.Get().PlantAttributes.YieldAmount, 1f, multiplier: true).AttributeModifier(Db.Get().PlantAttributes.HarvestTime, 4f, multiplier: true)
 				.AttributeModifier(Db.Get().PlantAttributes.MinLightLux, 200f)
 				.AttributeModifier(Db.Get().PlantAttributes.FertilizerUsageMod, 0.2f, multiplier: true)

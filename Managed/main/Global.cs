@@ -385,7 +385,6 @@ public class Global : MonoBehaviour
 				component2.PopupConfirmDialog(string.Format(UI.FRONTEND.RAILFORCEQUIT.SAVE_EXIT, Path.GetFileNameWithoutExtension(filename)), delegate
 				{
 					SaveLoader.Instance.Save(filename);
-					ReportErrorDialog.MOST_RECENT_SAVEFILE = filename;
 					App.Quit();
 				}, delegate
 				{
@@ -490,7 +489,7 @@ public class Global : MonoBehaviour
 	private void SetONIStaticSessionVariables()
 	{
 		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Branch", "release");
-		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Build", 464434u);
+		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Build", 466411u);
 		if (KPlayerPrefs.HasKey(UnitConfigurationScreen.MassUnitKey))
 		{
 			ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable(UnitConfigurationScreen.MassUnitKey, ((GameUtil.MassUnit)KPlayerPrefs.GetInt(UnitConfigurationScreen.MassUnitKey)).ToString());

@@ -48,7 +48,24 @@ public class ProgressBar : KMonoBehaviour
 				base.gameObject.SetActive(value: false);
 			}
 		}
+		Game.Instance.Subscribe(1983128072, OnActiveWorldChanged);
+		SetWorldActive(ClusterManager.Instance.activeWorldId);
 		base.enabled = updatePercentFull != null;
+	}
+
+	private void OnActiveWorldChanged(object data)
+	{
+		Tuple<int, int> tuple = (Tuple<int, int>)data;
+		SetWorldActive(tuple.first);
+	}
+
+	private void SetWorldActive(int worldId)
+	{
+		base.gameObject.SetActive(this.GetMyWorldId() == worldId);
+		if (updatePercentFull == null || updatePercentFull.Target.Equals(null))
+		{
+			base.gameObject.SetActive(value: false);
+		}
 	}
 
 	public void SetUpdateFunc(Func<float> func)
@@ -59,7 +76,7 @@ public class ProgressBar : KMonoBehaviour
 
 	public virtual void Update()
 	{
-		if (updatePercentFull != null)
+		if (updatePercentFull != null && !updatePercentFull.Target.Equals(null))
 		{
 			PercentFull = updatePercentFull();
 		}
@@ -90,6 +107,7 @@ public class ProgressBar : KMonoBehaviour
 		{
 			Game.Instance.Unsubscribe(overlayUpdateHandle);
 		}
+		Game.Instance.Unsubscribe(1983128072, OnActiveWorldChanged);
 		base.OnCleanUp();
 	}
 
@@ -111,17 +129,17 @@ public class ProgressBar : KMonoBehaviour
 		progressBar.name = ((entity != null) ? (entity.name + "_") : "") + " ProgressBar";
 		progressBar.transform.Find("Bar").GetComponent<Image>().color = ProgressBarsConfig.Instance.GetBarColor("ProgressBar");
 		progressBar.Update();
-		Vector3 vector = entity.transform.GetPosition() + Vector3.down * 0.5f;
+		Vector3 position = entity.transform.GetPosition() + Vector3.down * 0.5f;
 		Building component = entity.GetComponent<Building>();
 		if (component != null)
 		{
-			vector = vector - Vector3.right * 0.5f * (component.Def.WidthInCells % 2) + component.Def.placementPivot;
+			position -= Vector3.right * 0.5f * (component.Def.WidthInCells % 2);
 		}
 		else
 		{
-			vector -= Vector3.right * 0.5f;
+			position -= Vector3.right * 0.5f;
 		}
-		progressBar.transform.SetPosition(vector);
+		progressBar.transform.SetPosition(position);
 		return progressBar;
 	}
 }

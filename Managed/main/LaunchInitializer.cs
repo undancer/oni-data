@@ -7,7 +7,7 @@ public class LaunchInitializer : MonoBehaviour
 {
 	private const string BASE_BUILD_PREFIX = "CS";
 
-	private const string EXPANSION1_BUILD_PREFIX = "EX1 S11";
+	private const string EXPANSION1_BUILD_PREFIX = "EX1 S12";
 
 	public GameObject[] SpawnPrefabs;
 
@@ -16,7 +16,7 @@ public class LaunchInitializer : MonoBehaviour
 
 	public static string BuildPrefix()
 	{
-		return DlcManager.IsExpansion1Installed() ? "EX1 S11" : "CS";
+		return DlcManager.IsExpansion1Installed() ? "EX1 S12" : "CS";
 	}
 
 	private void Update()
@@ -31,7 +31,8 @@ public class LaunchInitializer : MonoBehaviour
 		}
 		GraphicsOptionsScreen.SetSettingsFromPrefs();
 		Util.ApplyInvariantCultureToThread(Thread.CurrentThread);
-		Debug.Log("release Build: " + BuildPrefix() + "-" + 464434u);
+		Debug.Log("Current date: " + System.DateTime.Now);
+		Debug.Log("release Build: " + BuildPrefix() + "-" + 466411u);
 		UnityEngine.Object.DontDestroyOnLoad(base.gameObject);
 		KPlayerPrefs.instance.Load();
 		KFMOD.Initialize();

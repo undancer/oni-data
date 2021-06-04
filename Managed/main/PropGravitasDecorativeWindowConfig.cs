@@ -19,6 +19,7 @@ public class PropGravitasDecorativeWindowConfig : IEntityConfig
 		PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
 		component.SetElement(SimHashes.Glass);
 		component.Temperature = 294.15f;
+		gameObject.AddOrGet<Demolishable>();
 		return gameObject;
 	}
 

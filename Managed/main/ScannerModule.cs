@@ -24,8 +24,8 @@ public class ScannerModule : GameStateMachine<ScannerModule, ScannerModule.Insta
 			ClusterFogOfWarManager.Instance sMI = SaveGame.Instance.GetSMI<ClusterFogOfWarManager.Instance>();
 			AxialI location = component.Location;
 			sMI.RevealLocation(location, base.def.scanRadius);
-			List<ClusterGridEntity> notVisibleAsteroidsAtAdjacentCell = ClusterGrid.Instance.GetNotVisibleAsteroidsAtAdjacentCell(location);
-			foreach (ClusterGridEntity item in notVisibleAsteroidsAtAdjacentCell)
+			List<ClusterGridEntity> notVisibleEntitiesOfLayerAtAdjacentCell = ClusterGrid.Instance.GetNotVisibleEntitiesOfLayerAtAdjacentCell(location, EntityLayer.Asteroid);
+			foreach (ClusterGridEntity item in notVisibleEntitiesOfLayerAtAdjacentCell)
 			{
 				sMI.RevealLocation(item.Location);
 			}

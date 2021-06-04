@@ -102,7 +102,7 @@ public class ClustercraftExteriorDoor : KMonoBehaviour
 
 	private void OnLaunch(object data)
 	{
-		GetComponent<NavTeleporter>().TwoWayTarget(null);
+		GetComponent<NavTeleporter>().EnableTwoWayTarget(enable: false);
 		WorldContainer targetWorld = GetTargetWorld();
 		if (targetWorld != null)
 		{
@@ -112,7 +112,7 @@ public class ClustercraftExteriorDoor : KMonoBehaviour
 
 	private void OnLand(object data)
 	{
-		GetComponent<NavTeleporter>().TwoWayTarget(targetDoor.GetComponent<NavTeleporter>());
+		GetComponent<NavTeleporter>().EnableTwoWayTarget(enable: true);
 		WorldContainer targetWorld = GetTargetWorld();
 		if (targetWorld != null)
 		{

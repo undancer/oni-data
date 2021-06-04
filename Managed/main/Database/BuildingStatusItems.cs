@@ -61,6 +61,8 @@ namespace Database
 
 		public StatusItem PendingDeconstruction;
 
+		public StatusItem PendingDemolition;
+
 		public StatusItem PendingSwitchToggle;
 
 		public StatusItem GasVentObstructed;
@@ -196,6 +198,8 @@ namespace Database
 		public StatusItem FabricatorIdle;
 
 		public StatusItem FabricatorEmpty;
+
+		public StatusItem FabricatorLacksHEP;
 
 		public StatusItem FlushToilet;
 
@@ -419,6 +423,10 @@ namespace Database
 
 		public StatusItem RocketCargoFull;
 
+		public StatusItem FlightAllCargoFull;
+
+		public StatusItem FlightCargoRemaining;
+
 		public StatusItem LandedRocketLacksPassengerModule;
 
 		public StatusItem PilotNeeded;
@@ -444,6 +452,10 @@ namespace Database
 		public StatusItem LimitValveLimitReached;
 
 		public StatusItem LimitValveLimitNotReached;
+
+		public StatusItem SpacePOIHarvesting;
+
+		public StatusItem SpacePOIWasting;
 
 		public BuildingStatusItems(ResourceSet parent)
 			: base("BuildingStatusItems", parent)
@@ -761,6 +773,8 @@ namespace Database
 			};
 			PendingDeconstruction = CreateStatusItem("PendingDeconstruction", "BUILDING", "status_item_pending_deconstruction", StatusItem.IconType.Custom, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			PendingDeconstruction.conditionalOverlayCallback = ShowInUtilityOverlay;
+			PendingDemolition = CreateStatusItem("PendingDemolition", "BUILDING", "status_item_pending_deconstruction", StatusItem.IconType.Custom, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			PendingDemolition.conditionalOverlayCallback = ShowInUtilityOverlay;
 			PendingRepair = CreateStatusItem("PendingRepair", "BUILDING", "status_item_pending_repair", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			PendingRepair.resolveStringCallback = delegate(string str, object data)
 			{
@@ -871,10 +885,10 @@ namespace Database
 					if ((bool)pickupable)
 					{
 						PrimaryElement component4 = pickupable.GetComponent<PrimaryElement>();
-						float mass = component4.Mass;
-						if (mass > 0f)
+						float mass4 = component4.Mass;
+						if (mass4 > 0f)
 						{
-							text3 = string.Format(BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.CONTENTS, GameUtil.GetFormattedMass(mass), pickupable.GetProperName(), GameUtil.GetFormattedTemperature(component4.Temperature));
+							text3 = string.Format(BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.CONTENTS, GameUtil.GetFormattedMass(mass4), pickupable.GetProperName(), GameUtil.GetFormattedTemperature(component4.Temperature));
 							if (OverlayScreen.Instance != null && OverlayScreen.Instance.mode == OverlayModes.Disease.ID && component4.DiseaseIdx != byte.MaxValue)
 							{
 								text3 += string.Format(BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.CONTENTS_WITH_DISEASE, GameUtil.GetFormattedDisease(component4.DiseaseIdx, component4.DiseaseCount, color: true));
@@ -887,6 +901,7 @@ namespace Database
 			};
 			FabricatorIdle = CreateStatusItem("FabricatorIdle", "BUILDING", "status_item_fabricator_select", StatusItem.IconType.Custom, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			FabricatorEmpty = CreateStatusItem("FabricatorEmpty", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			FabricatorLacksHEP = CreateStatusItem("FabricatorLacksHEP", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			Toilet = CreateStatusItem("Toilet", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			Toilet.resolveStringCallback = delegate(string str, object data)
 			{
@@ -1294,6 +1309,13 @@ namespace Database
 			RocketCargoEmptying = CreateStatusItem("RocketCargoEmptying", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			RocketCargoFilling = CreateStatusItem("RocketCargoFilling", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			RocketCargoFull = CreateStatusItem("RocketCargoFull", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			FlightAllCargoFull = CreateStatusItem("FlightAllCargoFull", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			FlightCargoRemaining = CreateStatusItem("FlightCargoRemaining", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			FlightCargoRemaining.resolveStringCallback = delegate(string str, object data)
+			{
+				float mass3 = (float)data;
+				return str.Replace("{0}", GameUtil.GetFormattedMass(mass3));
+			};
 			PilotNeeded = CreateStatusItem("PilotNeeded", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			PilotNeeded.resolveStringCallback = delegate(string str, object data)
 			{
@@ -1346,6 +1368,18 @@ namespace Database
 				return string.Format(arg0: (!limitValve.displayUnitsInsteadOfMass) ? GameUtil.GetFormattedMass(limitValve.RemainingCapacity, GameUtil.TimeSlice.None, GameUtil.MetricMassFormat.Kilogram, includeSuffix: true, LimitValveSideScreen.FLOAT_FORMAT) : GameUtil.GetFormattedUnits(limitValve.RemainingCapacity, GameUtil.TimeSlice.None, displaySuffix: true, LimitValveSideScreen.FLOAT_FORMAT), format: BUILDING.STATUSITEMS.LIMITVALVELIMITNOTREACHED.NAME);
 			};
 			LimitValveLimitNotReached.resolveTooltipCallback = (string str, object data) => BUILDING.STATUSITEMS.LIMITVALVELIMITNOTREACHED.TOOLTIP;
+			SpacePOIHarvesting = CreateStatusItem("SpacePOIHarvesting", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			SpacePOIHarvesting.resolveStringCallback = delegate(string str, object data)
+			{
+				float mass2 = (float)data;
+				return string.Format(BUILDING.STATUSITEMS.SPACEPOIHARVESTING.NAME, GameUtil.GetFormattedMass(mass2, GameUtil.TimeSlice.PerSecond));
+			};
+			SpacePOIWasting = CreateStatusItem("SpacePOIWasting", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			SpacePOIWasting.resolveStringCallback = delegate(string str, object data)
+			{
+				float mass = (float)data;
+				return string.Format(BUILDING.STATUSITEMS.SPACEPOIWASTING.NAME, GameUtil.GetFormattedMass(mass, GameUtil.TimeSlice.PerSecond));
+			};
 		}
 
 		private static bool ShowInUtilityOverlay(HashedString mode, object data)

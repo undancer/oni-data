@@ -58,11 +58,11 @@ public static class DebugUtil
 		return text;
 	}
 
-	public static void DevAssert(bool test, string msg)
+	public static void DevAssert(bool test, string msg, UnityEngine.Object context = null)
 	{
 		if (!test)
 		{
-			Debug.LogWarning(msg);
+			Debug.LogWarning(msg, context);
 		}
 	}
 
