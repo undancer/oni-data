@@ -266,16 +266,21 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 			return true;
 		}
 		ColonyDiagnostic diagnostic = ColonyDiagnosticUtility.Instance.GetDiagnostic(id, ClusterManager.Instance.activeWorldId);
-		DiagnosticCriterion[] criteria = diagnostic.GetCriteria();
-		if (diagnostic != null && criteria != null)
+		if (diagnostic == null)
 		{
-			DiagnosticCriterion[] array = criteria;
-			foreach (DiagnosticCriterion diagnosticCriterion in array)
+			return false;
+		}
+		DiagnosticCriterion[] criteria = diagnostic.GetCriteria();
+		if (criteria == null)
+		{
+			return false;
+		}
+		DiagnosticCriterion[] array = criteria;
+		foreach (DiagnosticCriterion diagnosticCriterion in array)
+		{
+			if (diagnosticCriterion.name.ToUpper().Contains(filter))
 			{
-				if (diagnosticCriterion.name.ToUpper().Contains(filter))
-				{
-					return true;
-				}
+				return true;
 			}
 		}
 		return false;

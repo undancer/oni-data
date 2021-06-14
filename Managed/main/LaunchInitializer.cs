@@ -32,7 +32,7 @@ public class LaunchInitializer : MonoBehaviour
 		GraphicsOptionsScreen.SetSettingsFromPrefs();
 		Util.ApplyInvariantCultureToThread(Thread.CurrentThread);
 		Debug.Log("Current date: " + System.DateTime.Now);
-		Debug.Log("release Build: " + BuildPrefix() + "-" + 466411u);
+		Debug.Log("release Build: " + BuildPrefix() + "-" + 466654u);
 		UnityEngine.Object.DontDestroyOnLoad(base.gameObject);
 		KPlayerPrefs.instance.Load();
 		KFMOD.Initialize();

@@ -141,7 +141,7 @@ public class HarvestablePOIConfig : IMultiEntityConfig
 				7f
 			}
 		})));
-		list.Add(new HarvestablePOIParams("sattelite_field", new HarvestablePOIConfigurator.HarvestablePOIType("SatelliteField", new Dictionary<SimHashes, float>
+		list.Add(new HarvestablePOIParams("satellite_field", new HarvestablePOIConfigurator.HarvestablePOIType("SatelliteField", new Dictionary<SimHashes, float>
 		{
 			{
 				SimHashes.Sand,

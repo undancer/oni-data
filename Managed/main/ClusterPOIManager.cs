@@ -26,7 +26,7 @@ public class ClusterPOIManager : KMonoBehaviour
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		GameScheduler.Instance.ScheduleNextFrame("UpgradeOldSaves", delegate
+		UIScheduler.Instance.ScheduleNextFrame("UpgradeOldSaves", delegate
 		{
 			UpgradeOldSaves();
 		});

@@ -1,7 +1,6 @@
 msgid ""
 msgstr ""
 "Application: Oxygen Not IncludedPOT Version: 2.0\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
@@ -548,7 +547,7 @@ msgstr ""
 #. STRINGS.BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.EMPTY
 msgctxt "STRINGS.BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.EMPTY"
 msgid "Empty"
-msgstr "비우기"
+msgstr "비어있음"
 
 #. STRINGS.BUILDING.STATUSITEMS.COOLING.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.COOLING.NAME"
@@ -949,7 +948,7 @@ msgstr "<style=\"produced\">{FlowRate}</style>의 속도로 <link=\"OXYGEN\">산
 #. STRINGS.BUILDING.STATUSITEMS.EMPTYPUMPINGSTATION.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.EMPTYPUMPINGSTATION.NAME"
 msgid "Empty"
-msgstr "비우기"
+msgstr "비어있음"
 
 #. STRINGS.BUILDING.STATUSITEMS.EMPTYPUMPINGSTATION.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.EMPTYPUMPINGSTATION.TOOLTIP"
@@ -1076,6 +1075,36 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.FABRICATORIDLE.TOOLTIP"
 msgid "Select a recipe to begin fabrication"
 msgstr "제작을 시작하기 위해 레시피를 선택합니다."
 
+#. STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.NAME"
+msgid "Waiting For Radbolts"
+msgstr "래드볼트를 기다리는 중"
+
+#. STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.TOOLTIP"
+msgid "A queued recipe requires more Radbolts than are currently stored"
+msgstr "대기 중인 레시피에는 현재 저장된 것보다 더 많은 래드볼트가 필요합니다."
+
+#. STRINGS.BUILDING.STATUSITEMS.FLIGHTALLCARGOFULL.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FLIGHTALLCARGOFULL.NAME"
+msgid "All cargo bays full to capacity"
+msgstr "모든 화물칸의 용량이 가득 참"
+
+#. STRINGS.BUILDING.STATUSITEMS.FLIGHTALLCARGOFULL.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FLIGHTALLCARGOFULL.TOOLTIP"
+msgid "Rocket cannot store anymore materials"
+msgstr "로켓은 더 이상 재료를 저장할 수 없습니다."
+
+#. STRINGS.BUILDING.STATUSITEMS.FLIGHTCARGOREMAINING.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FLIGHTCARGOREMAINING.NAME"
+msgid "Cargo capacity remaining {0}"
+msgstr "남은 화물 용량 {0}"
+
+#. STRINGS.BUILDING.STATUSITEMS.FLIGHTCARGOREMAINING.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FLIGHTCARGOREMAINING.TOOLTIP"
+msgid "Rocket can store up to {0} more materials"
+msgstr "로켓은 최대 {0}개의 재료를 더 저장할 수 있습니다."
+
 #. STRINGS.BUILDING.STATUSITEMS.FLOODED.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.FLOODED.NAME"
 msgid "Building Flooded"
@@ -1149,7 +1178,7 @@ msgstr "퇴피"
 #. STRINGS.BUILDING.STATUSITEMS.GASPIPEEMPTY.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.GASPIPEEMPTY.NAME"
 msgid "Empty Pipe"
-msgstr "Empty Pipe"
+msgstr "파이프 비우기"
 
 #. STRINGS.BUILDING.STATUSITEMS.GASPIPEEMPTY.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.GASPIPEEMPTY.TOOLTIP"
@@ -1233,7 +1262,7 @@ msgstr "{Epitaph}"
 #. STRINGS.BUILDING.STATUSITEMS.GRAVEEMPTY.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.GRAVEEMPTY.NAME"
 msgid "Empty"
-msgstr "비우기"
+msgstr "비어있음"
 
 #. STRINGS.BUILDING.STATUSITEMS.GRAVEEMPTY.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.GRAVEEMPTY.TOOLTIP"
@@ -1572,7 +1601,7 @@ msgstr "더 이상 질량을 전송할 수 없습니다."
 #. STRINGS.BUILDING.STATUSITEMS.LIQUIDPIPEEMPTY.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.LIQUIDPIPEEMPTY.NAME"
 msgid "Empty Pipe"
-msgstr "Empty Pipe"
+msgstr "파이프 비우기"
 
 #. STRINGS.BUILDING.STATUSITEMS.LIQUIDPIPEEMPTY.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.LIQUIDPIPEEMPTY.TOOLTIP"
@@ -2487,7 +2516,7 @@ msgstr "초과 생산됨"
 #. STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.LINEITEM
 msgctxt "STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.LINEITEM"
 msgid "    • {0}: {1}\n"
-msgstr " • {0}: {1}\n"
+msgstr "    • {0}: {1}\n"
 
 #. STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.NAME"
@@ -2595,6 +2624,16 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.PENDINGDECONSTRUCTION.TOOLTIP"
 msgid "Building will be deconstructed once a Duplicant is available"
 msgstr "복제체를 사용할 수 있게 되면 건조물이 해체됩니다."
 
+#. STRINGS.BUILDING.STATUSITEMS.PENDINGDEMOLITION.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.PENDINGDEMOLITION.NAME"
+msgid "Demolition Errand"
+msgstr "파괴 용무"
+
+#. STRINGS.BUILDING.STATUSITEMS.PENDINGDEMOLITION.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.PENDINGDEMOLITION.TOOLTIP"
+msgid "Object will be permanently demolished once a Duplicant is available"
+msgstr "복제체가 사용 가능해지면 물체가 영구적으로 파괴됩니다."
+
 #. STRINGS.BUILDING.STATUSITEMS.PENDINGFISH.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.PENDINGFISH.NAME"
 msgid "Fishing Errand"
@@ -2696,7 +2735,7 @@ msgstr ""
 #. STRINGS.BUILDING.STATUSITEMS.PIPECONTENTS.EMPTY
 msgctxt "STRINGS.BUILDING.STATUSITEMS.PIPECONTENTS.EMPTY"
 msgid "Empty"
-msgstr "비우기"
+msgstr "비어있음"
 
 #. STRINGS.BUILDING.STATUSITEMS.PIPEMAYMELT.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.PIPEMAYMELT.NAME"
@@ -3129,6 +3168,26 @@ msgstr "우주선이 임무를 마쳤습니다."
 msgctxt "STRINGS.BUILDING.STATUSITEMS.SPACECRAFTREADYTOLAND.TOOLTIP"
 msgid "A spacecraft is ready to land"
 msgstr "우주선이 착륙할 준비가 되었습니다."
+
+#. STRINGS.BUILDING.STATUSITEMS.SPACEPOIHARVESTING.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.SPACEPOIHARVESTING.NAME"
+msgid "Extracting Resources: {0}"
+msgstr "자원 추출 중: {0}"
+
+#. STRINGS.BUILDING.STATUSITEMS.SPACEPOIHARVESTING.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.SPACEPOIHARVESTING.TOOLTIP"
+msgid "Resources are being mined from this space POI"
+msgstr "이 우주 관심지점에서 자원을 채굴하고 있습니다."
+
+#. STRINGS.BUILDING.STATUSITEMS.SPACEPOIWASTING.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.SPACEPOIWASTING.NAME"
+msgid "Cannot store resources: {0}"
+msgstr "자원을 저장할 수 없음: {0}"
+
+#. STRINGS.BUILDING.STATUSITEMS.SPACEPOIWASTING.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.SPACEPOIWASTING.TOOLTIP"
+msgid "Some portion of the resources being mined from this space POI cannot be stored in this rocket"
+msgstr "이 우주 관심지점에서 채굴 중인 자원의 일부는 이 로켓에 저장할 수 없습니다."
 
 #. STRINGS.BUILDING.STATUSITEMS.STORAGELOCKER.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.STORAGELOCKER.NAME"
@@ -4231,6 +4290,42 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.ARCADEMACHINE.NAME"
 msgid "<link=\"ARCADEMACHINE\">Arcade Cabinet</link>"
 msgstr "<link=\"ARCADEMACHINE\">아케이드 캐비닛</link>"
 
+#. STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.DESC"
+msgid "Discover the mysteries of the past."
+msgstr "과거의 신비를 발견하세요."
+
+#. STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.EFFECT"
+msgid "Analysis artifacts and extracts the <link=\"UNOBTANIUM\">Neutronium</link> from their shell."
+msgstr "가공물을 분석하고 껍질에서 <link=\"UNOBTANIUM\">뉴트로늄</link>을 추출합니다."
+
+#. STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.NAME"
+msgid "<link=\"ARTIFACTANALYSISSTATION\">Artifact Analysis Station</link>"
+msgstr "<link=\"ARTIFACTANALYSISSTATION\">가공물 분석 스테이션</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.ARTIFACTCARGOBAY.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTCARGOBAY.DESC"
+msgid "Holds artifacts found in space."
+msgstr "우주에서 발견된 가공물을 보관합니다."
+
+#. STRINGS.BUILDINGS.PREFABS.ARTIFACTCARGOBAY.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTCARGOBAY.EFFECT"
+msgid ""
+"Allows Duplicants to store any artifacts they uncover during space missions.\n"
+"\n"
+"Artifacts become available to the colony upon the rocket's return."
+msgstr ""
+"복제체가 우주 임무 중에 발견한 가공물을 저장할 수 있습니다.\n"
+"\n"
+"로켓이 돌아오면 콜로니에서 가공물을 사용할 수 있습니다."
+
+#. STRINGS.BUILDINGS.PREFABS.ARTIFACTCARGOBAY.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTCARGOBAY.NAME"
+msgid "<link=\"ARTIFACTCARGOBAY\">Artifact Transport Module</link>"
+msgstr "<link=\"ARTIFACTCARGOBAY\">가공물 수송 스테이션</link>"
+
 #. STRINGS.BUILDINGS.PREFABS.ASTRONAUTTRAININGCENTER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.ASTRONAUTTRAININGCENTER.DESC"
 msgid "Duplicants must complete astronaut training in order to pilot space rockets."
@@ -5273,6 +5368,41 @@ msgstr "심야를 위한 테스트 능력을 생성합니다."
 msgctxt "STRINGS.BUILDINGS.PREFABS.DEVGENERATOR.NAME"
 msgid "Dev Generator"
 msgstr "개발자 생성기"
+
+#. STRINGS.BUILDINGS.PREFABS.DEVRADIATIONGENERATOR.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.DEVRADIATIONGENERATOR.DESC"
+msgid "That's some <i>strong</i> coffee."
+msgstr "<i>진한</i> 커피네요."
+
+#. STRINGS.BUILDINGS.PREFABS.DEVRADIATIONGENERATOR.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.DEVRADIATIONGENERATOR.EFFECT"
+msgid "Generates on-demand radiation to keep you cosy."
+msgstr "편안함을 유지하기 위해 주문형 방사선을 생성합니다."
+
+#. STRINGS.BUILDINGS.PREFABS.DEVRADIATIONGENERATOR.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.DEVRADIATIONGENERATOR.NAME"
+msgid "Dev Radiation Emitter"
+msgstr "개발자 방사선 방출기"
+
+#. STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.DESC"
+msgid "Crushes carbon into diamonds"
+msgstr "탄소를 다이아몬드로 분쇄합니다."
+
+#. STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.EFFECT"
+msgid "Crushes carbon into diamonds"
+msgstr "탄소를 다이아몬드로 분쇄합니다."
+
+#. STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.NAME"
+msgid "<link=\"DIAMONDPRESS\">Diamond Press</link>"
+msgstr "<link=\"DIAMONDPRESS\">다이아몬드 프레스</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.REFINED_CARBON_RECIPE_DESCRIPTION
+msgctxt "STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.REFINED_CARBON_RECIPE_DESCRIPTION"
+msgid "Converts {1} to {0}"
+msgstr "{1}을(를) {0}(으)로 변환"
 
 #. STRINGS.BUILDINGS.PREFABS.DININGTABLE.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.DININGTABLE.DESC"
@@ -6645,6 +6775,32 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.GRAVE.NAME"
 msgid "<link=\"GRAVE\">Tasteful Memorial</link>"
 msgstr "<link=\"GRAVE\">세련된 기념비</link>"
 
+#. STRINGS.BUILDINGS.PREFABS.GRAVITASPEDESTAL.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.GRAVITASPEDESTAL.DESC"
+msgid "Perception can be drastically changed by a bit of thoughtful presentation."
+msgstr "약간의 사려 깊은 표현으로 인식은 크게 바뀔 수 있습니다."
+
+#. STRINGS.BUILDINGS.PREFABS.GRAVITASPEDESTAL.DISPLAYED_ITEM_FMT
+msgctxt "STRINGS.BUILDINGS.PREFABS.GRAVITASPEDESTAL.DISPLAYED_ITEM_FMT"
+msgid "Displayed {0}"
+msgstr "{0} 디스플레이"
+
+#. STRINGS.BUILDINGS.PREFABS.GRAVITASPEDESTAL.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.GRAVITASPEDESTAL.EFFECT"
+msgid ""
+"Displays a single object, doubling its <link=\"DECOR\">Decor</link> value.\n"
+"\n"
+"Objects with negative Decor will gain some positive Decor when displayed."
+msgstr ""
+"단일 물체를 디스플레이 하여 해당 <link=\"DECOR\">장식</link> 값을 두 배로 만듭니다.\n"
+"\n"
+"음수 장식을 가진 물체는 디스플레이하면 약간의 양수 장식을 획득합니다."
+
+#. STRINGS.BUILDINGS.PREFABS.GRAVITASPEDESTAL.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.GRAVITASPEDESTAL.NAME"
+msgid "<link=\"ITEMPEDESTAL\">Pedestal</link>"
+msgstr "<link=\"ITEMPEDESTAL\">받침대</link>"
+
 #. STRINGS.BUILDINGS.PREFABS.HABITATMODULEMEDIUM.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.HABITATMODULEMEDIUM.DESC"
 msgid "Duplicants can survive space travel inside this protective nosecone... Hopefully."
@@ -6829,8 +6985,8 @@ msgstr "<link=\"HIGHENERGYPARTICLEREDIRECTOR\">래드볼트 반사기</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.DESC"
-msgid "Radbolts are necessary for producing atomic research."
-msgstr "래드볼트는 원자 연구를 생산하는 데 필요합니다."
+msgid "Radbolts are necessary for producing Materials Science research."
+msgstr "래드볼트는 재료 과학 연구를 하는 데 필요합니다."
 
 #. STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.EFFECT"
@@ -9715,13 +9871,13 @@ msgstr "자원을 싣거나 내리려면 로켓을 착륙시켜야 합니다."
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGAS.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGAS.EFFECT"
 msgid ""
-"Allows <link=\"ELEMENTSGAS\">Gases</link> to be loaded from the storage of a linked rocket.\n"
+"Loads <link=\"ELEMENTSGAS\">Gases</link> to the storage of a linked rocket.\n"
 "\n"
 "Automatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n"
 "\n"
 "Uses the gas filters set on the rocket's cargo bays."
 msgstr ""
-"연결된 로켓의 저장소에서 <link=\"ELEMENTSGAS\">기체</link>를 실을 수 있습니다.\n"
+"연결된 로켓의 저장소에 <link=\"ELEMENTSGAS\">기체</link>를 싣습니다.\n"
 "\n"
 "<link=\"LAUNCHPLATFORM\">로켓 플랫폼</link> 또는 다른 <link=\"MODULARLAUNCHPADPORTSOLID\">로켓 포트</link>의 측면에 만들어지면 자동으로 연결됩니다.\n"
 "\n"
@@ -9740,13 +9896,13 @@ msgstr "자원을 싣거나 내리려면 로켓을 착륙시켜야 합니다."
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGASUNLOADER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGASUNLOADER.EFFECT"
 msgid ""
-"Allows <link=\"ELEMENTSGAS\">Gases</link> to be unloaded from the storage of a linked rocket.\n"
+"Unloads <link=\"ELEMENTSGAS\">Gases</link> from the storage of a linked rocket.\n"
 "\n"
 "Automatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n"
 "\n"
 "Uses the gas filters set on this unloader."
 msgstr ""
-"연결된 로켓의 저장소에서 <link=\"ELEMENTSGAS\">기체</link>를 싣거나 내릴 수 있습니다.\n"
+"연결된 로켓의 저장소에 <link=\"ELEMENTSGAS\">기체</link>를 내립니다.\n"
 "\n"
 "<link=\"LAUNCHPLATFORM\">로켓 플랫폼</link> 또는 다른 <link=\"MODULARLAUNCHPADPORTSOLID\">로켓 포트</link>의 측면에 만들어지면 자동으로 연결됩니다.\n"
 "\n"
@@ -9765,13 +9921,13 @@ msgstr "자원을 싣거나 내리려면 로켓을 착륙시켜야 합니다."
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.EFFECT"
 msgid ""
-"Allows <link=\"ELEMENTSLIQUID\">Liquids</link> to be loaded from the storage of a linked rocket.\n"
+"Loads <link=\"ELEMENTSLIQUID\">Liquids</link> to the storage of a linked rocket.\n"
 "\n"
 "Automatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n"
 "\n"
 "Uses the liquid filters set on the rocket's cargo bays."
 msgstr ""
-"연결된 로켓의 저장소에서 <link=\"ELEMENTSLIQUID\">액체</link>를 실을 수 있습니다.\n"
+"연결된 로켓의 저장소에 <link=\"ELEMENTSLIQUID\">액체</link>를 싣습니다.\n"
 "\n"
 "<link=\"LAUNCHPLATFORM\">로켓 플랫폼</link> 또는 다른 <link=\"MODULARLAUNCHPADPORTSOLID\">로켓 포트</link>의 측면에 만들어지면 자동으로 연결됩니다.\n"
 "\n"
@@ -9790,13 +9946,13 @@ msgstr "자원을 싣거나 내리려면 로켓을 착륙시켜야 합니다."
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUIDUNLOADER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUIDUNLOADER.EFFECT"
 msgid ""
-"Allows <link=\"ELEMENTSLIQUID\">Liquids</link> to be unloaded from the storage of a linked rocket.\n"
+"Unloads <link=\"ELEMENTSLIQUID\">Liquids</link> from the storage of a linked rocket.\n"
 "\n"
 "Automatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n"
 "\n"
 "Uses the liquid filters set on this unloader."
 msgstr ""
-"연결된 로켓의 저장소에서 <link=\"ELEMENTSLIQUID\">액체</link>를 싣거나 내릴 수 있습니다.\n"
+"연결된 로켓의 저장소에 <link=\"ELEMENTSLIQUID\">액체</link>를 내립니다.\n"
 "\n"
 "<link=\"LAUNCHPLATFORM\">로켓 플랫폼</link> 또는 다른 <link=\"MODULARLAUNCHPADPORTSOLID\">로켓 포트</link>의 측면에 만들어지면 자동으로 연결됩니다.\n"
 "\n"
@@ -9815,13 +9971,13 @@ msgstr "자원을 싣거나 내리려면 로켓을 착륙시켜야 합니다."
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLID.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLID.EFFECT"
 msgid ""
-"Allows <link=\"ELEMENTSSOLID\">Solids</link> to be loaded from the storage of a linked rocket.\n"
+"Loads <link=\"ELEMENTSSOLID\">Solids</link> to the storage of a linked rocket.\n"
 "\n"
 "Automatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n"
 "\n"
 "Uses the solid material filters set on the rocket's cargo bays."
 msgstr ""
-"연결된 로켓의 저장소에서 <link=\"ELEMENTSSOLID\">고체</link>를 실을 수 있습니다.\n"
+"연결된 로켓의 저장소에 <link=\"ELEMENTSSOLID\">고체</link>를 싣습니다.\n"
 "\n"
 "<link=\"LAUNCHPLATFORM\">로켓 플랫폼</link> 또는 다른 <link=\"MODULARLAUNCHPADPORTSOLID\">로켓 포트</link>의 측면에 만들어지면 자동으로 연결됩니다.\n"
 "\n"
@@ -9840,13 +9996,13 @@ msgstr "자원을 싣거나 내리려면 로켓을 착륙시켜야 합니다."
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLIDUNLOADER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLIDUNLOADER.EFFECT"
 msgid ""
-"Allows <link=\"ELEMENTSSOLID\">Solids</link> to be unloaded from the storage of a linked rocket.\n"
+"Unloads <link=\"ELEMENTSSOLID\">Solids</link> from the storage of a linked rocket.\n"
 "\n"
 "Automatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n"
 "\n"
 "Uses the solid material filters set on this unloader."
 msgstr ""
-"연결된 로켓의 저장소에서 <link=\"ELEMENTSSOLID\">고체</link>를 내릴 수 있습니다.\n"
+"연결된 로켓의 저장소에 <link=\"ELEMENTSSOLID\">고체</link>를 내립니다.\n"
 "\n"
 "<link=\"LAUNCHPLATFORM\">로켓 플랫폼</link> 또는 다른 <link=\"MODULARLAUNCHPADPORTSOLID\">로켓 포트</link>의 측면에 만들어지면 자동으로 연결됩니다.\n"
 "\n"
@@ -9994,6 +10150,27 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.NOSECONEBASIC.NAME"
 msgid "<link=\"NOSECONEBASIC\">Basic Nosecone</link>"
 msgstr "<link=\"NOSECONEBASIC\">기본 노즈콘</link>"
 
+#. STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.DESC"
+msgid "Harvests resources from the universe."
+msgstr "우주에서 자원을 수확합니다."
+
+#. STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.EFFECT"
+msgid ""
+"Enables a rocket to drill into interstellar debris and collect <link=\"ELEMENTSGAS\">gas</link>, <link=\"ELEMENTSLIQUID\">liquid</link> and <link=\"ELEMENTSSOLID\">solid</link> resources from space.\n"
+"\n"
+"Must be built at the top of a rocket."
+msgstr ""
+"로켓이 성간 잔해를 뚫고 우주에서 <link=\"ELEMENTSGAS\">기체</link>, <link=\"ELEMENTSLIQUID\">액체</link>, <link=\"ELEMENTSSOLID\">고체</link> 자원을 수집할 수 있습니다.\n"
+"\n"
+"로켓 꼭대기에 만들어야 합니다."
+
+#. STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.NAME"
+msgid "<link=\"NOSECONEHARVEST\">Drillcone</link>"
+msgstr "<link=\"NOSECONEHARVEST\">드릴콘</link>"
+
 #. STRINGS.BUILDINGS.PREFABS.NUCLEARREACTOR.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.NUCLEARREACTOR.DESC"
 msgid "Radbolt generators and reflectors make radiation useable by other buildings."
@@ -10038,22 +10215,22 @@ msgstr "이온이 몇 개 무료로 함께 제공됩니다."
 #. STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.EFFECT"
 msgid ""
-"Conducts <link=\"RESEARCH\">Atomic Research</link> to unlock new technologies.\n"
+"Conducts <link=\"RESEARCH\">Materials Science Research</link> to unlock new technologies.\n"
 "\n"
 "Consumes Radbolts.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"ATOMICRESEARCHER\">Atomic Research</link> skill."
+"Assigned Duplicants must possess the <link=\"ATOMICRESEARCHER\">Materials Science Research</link> skill."
 msgstr ""
-"<link=\"RESEARCH\">원자 연구</link>를 수행하여 새로운 기술을 잠금 해제합니다.\n"
+"<link=\"RESEARCH\">재료 과학 연구</link>를 수행하여 새로운 기술을 잠금 해제합니다.\n"
 "\n"
 "래드볼트를 소비합니다.\n"
 "\n"
-"할당된 복제체는 <link=\"ATOMICRESEARCHER\">원자 연구</link> 기술을 가지고 있어야 합니다."
+"할당된 복제체는 <link=\"ATOMICRESEARCHER\">재료 과학 연구</link> 기술을 가지고 있어야 합니다."
 
 #. STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME"
-msgid "<link=\"NUCLEARLABORATORY\">Atomic Collider</link>"
-msgstr "<link=\"NUCLEARLABORATORY\">원자 충돌기</link>"
+msgid "<link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>"
+msgstr "<link=\"NUCLEARLABORATORY\">재료 연구 터미널</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.OBJECTDISPENSER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.OBJECTDISPENSER.DESC"
@@ -13260,13 +13437,13 @@ msgstr "뒤쪽의 튜브는 빈 공간으로 사라집니다."
 #. STRINGS.BUILDINGS.PREFABS.WARPCONDUITRECEIVER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.WARPCONDUITRECEIVER.EFFECT"
 msgid ""
-"A machine capable of teleporting <link=\"ELEMENTSLIQUID\">Liquid</link>, <link=\"ELEMENTSSOLID\">Solid</link>, and <link=\"ELEMENTSGAS\">Gas</link> resources.\n"
+"A machine capable of teleporting <link=\"ELEMENTSLIQUID\">Liquid</link>, <link=\"ELEMENTSSOLID\">Solid</link>, and <link=\"ELEMENTSGAS\">Gas</link> resources to another asteroid.\n"
 "\n"
 "It can be activated by a Duplicant with the <link=\"RESEARCHER\">Field Research</link> skill.\n"
 "\n"
 "This is the receiving side."
 msgstr ""
-"<link=\"ELEMENTSLIQUID\">액체</link>, <link=\"ELEMENTSSOLID\">고체</link>, <link=\"ELEMENTSGAS\">기체</link>를 자원을 텔레포트할 수 있는 기계.\n"
+"<link=\"ELEMENTSLIQUID\">액체</link>, <link=\"ELEMENTSSOLID\">고체</link>, <link=\"ELEMENTSGAS\">기체</link> 자원을 다른 소행성으로 텔레포트할 수 있는 기계.\n"
 "\n"
 "<link=\"RESEARCHER\">현장 연구</link> 기술을 가진 복제체가 활성화할 수 있습니다.\n"
 "\n"
@@ -13285,17 +13462,17 @@ msgstr "뒤쪽의 튜브는 빈 공간으로 사라집니다."
 #. STRINGS.BUILDINGS.PREFABS.WARPCONDUITSENDER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.WARPCONDUITSENDER.EFFECT"
 msgid ""
-"A machine capable of teleporting <link=\"ELEMENTSLIQUID\">Liquid</link>, <link=\"ELEMENTSSOLID\">Solid</link>, and <link=\"ELEMENTSGAS\">Gas</link> resources.\n"
+"A machine capable of teleporting <link=\"ELEMENTSLIQUID\">Liquid</link>, <link=\"ELEMENTSSOLID\">Solid</link>, and <link=\"ELEMENTSGAS\">Gas</link> resources to another asteroid.\n"
 "\n"
 "It can be activated by a Duplicant with the <link=\"RESEARCHER\">Field Research</link> skill.\n"
 "\n"
 "This is the transmitting side."
 msgstr ""
-"<link=\"ELEMENTSLIQUID\">액체</link>, <link=\"ELEMENTSSOLID\">고체</link>, <link=\"ELEMENTSGAS\">기체</link>를 자원을 텔레포트할 수 있는 기계.\n"
+"<link=\"ELEMENTSLIQUID\">액체</link>, <link=\"ELEMENTSSOLID\">고체</link>, <link=\"ELEMENTSGAS\">기체</link> 자원을 다른 소행성으로 텔레포트할 수 있는 기계.\n"
 "\n"
 "<link=\"RESEARCHER\">현장 연구</link> 기술을 가진 복제체가 활성화할 수 있습니다.\n"
 "\n"
-"이쪽이 전송하는 쪽입니다."
+"이쪽이 보내는 쪽입니다."
 
 #. STRINGS.BUILDINGS.PREFABS.WARPCONDUITSENDER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.WARPCONDUITSENDER.NAME"
@@ -13786,7 +13963,7 @@ msgstr ""
 #. STRINGS.CODEX.A0_PROPFACILITYDISPLAY1.SUBTITLE
 msgctxt "STRINGS.CODEX.A0_PROPFACILITYDISPLAY1.SUBTITLE"
 msgid "PUBLIC RELEASE"
-msgstr "공개 릴리스"
+msgstr "공개 발표"
 
 #. STRINGS.CODEX.A0_PROPFACILITYDISPLAY1.TITLE
 msgctxt "STRINGS.CODEX.A0_PROPFACILITYDISPLAY1.TITLE"
@@ -13816,7 +13993,7 @@ msgstr "그라비타스설비 제공."
 #. STRINGS.CODEX.A0_PROPFACILITYDISPLAY2.SUBTITLE
 msgctxt "STRINGS.CODEX.A0_PROPFACILITYDISPLAY2.SUBTITLE"
 msgid "PUBLIC RELEASE"
-msgstr "공개 릴리스"
+msgstr "공개 발표"
 
 #. STRINGS.CODEX.A0_PROPFACILITYDISPLAY2.TITLE
 msgctxt "STRINGS.CODEX.A0_PROPFACILITYDISPLAY2.TITLE"
@@ -13840,7 +14017,7 @@ msgstr ""
 #. STRINGS.CODEX.A0_PROPFACILITYDISPLAY3.SUBTITLE
 msgctxt "STRINGS.CODEX.A0_PROPFACILITYDISPLAY3.SUBTITLE"
 msgid "PUBLIC RELEASE"
-msgstr "공개 릴리스"
+msgstr "공개 발표"
 
 #. STRINGS.CODEX.A0_PROPFACILITYDISPLAY3.TITLE
 msgctxt "STRINGS.CODEX.A0_PROPFACILITYDISPLAY3.TITLE"
@@ -13896,6 +14073,116 @@ msgstr "암호화 수준: 없음"
 msgctxt "STRINGS.CODEX.A1_A046.TITLE"
 msgid "Personal Journal: A046"
 msgstr "개인 일지: A046"
+
+#. STRINGS.CODEX.A1_CLONEDRABBITS.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.A1_CLONEDRABBITS.BODY.CONTAINER1"
+msgid ""
+"<smallcaps>[Voice Recognition Initialized]\n"
+"[Subject Identified: B111]</smallcaps>\n"
+"\n"
+"[LOG BEGINS]\n"
+"\n"
+"[A throat clears.]\n"
+"\n"
+"B111: We are now reliably printing healthy, living subjects, though all have exhibited unusual qualities as a result of the cloning process.\n"
+"\n"
+"[Chattering sounds can be heard.]\n"
+"\n"
+"B111: Odd communications, abnormal excrescenses, and vestigal limbs have been seen in all subjects thus far, to varying degrees of severity. It seems that bypassing or accelerating juvenility halts certain critical stages of development. Brain function, however, appears typical.\n"
+"\n"
+"[Chattering.]\n"
+"\n"
+"B111: T-They also seem quite happy.\n"
+"\n"
+"B111: Dr. Broussard, signing off.\n"
+"\n"
+"[LOG ENDS]"
+msgstr ""
+"<smallcaps>[음성 인식 초기화]\n"
+"[대상 식별됨: B111]</smallcaps>\n"
+"\n"
+"[로그 시작]\n"
+"\n"
+"[헛기침]\n"
+"\n"
+"B111: 지금 건강하고 살아있는 실험체를 프린트하고 있습니다만, 모두 복제 과정의 결과로 특이한 특성이 발생했습니다.\n"
+"\n"
+"[잡담 소리 들림]\n"
+"\n"
+"B111: 이상한 통신, 비정상 성장물,  흔적 사지가 지금까지 모든 실험체에서 심각도의 정도에 따라 다양하게 나타났습니다. 유년기를 우회하거나 촉진하면 발달의 특정 중요 단계가 중단되는 것으로 보입니다. 그러나 뇌 기능은 전형적인 것으로 보입니다.\n"
+"\n"
+"[잡담 소리]\n"
+"\n"
+"B111: 그리고 행복해 보입니다.\n"
+"\n"
+"B111: 브루사 박사 로그아웃.\n"
+"\n"
+"[로그 종료]"
+
+#. STRINGS.CODEX.A1_CLONEDRABBITS.SUBTITLE
+msgctxt "STRINGS.CODEX.A1_CLONEDRABBITS.SUBTITLE"
+msgid "ENCRYPTION LEVEL: TWO"
+msgstr "암호화 수준: 2"
+
+#. STRINGS.CODEX.A1_CLONEDRABBITS.TITLE
+msgctxt "STRINGS.CODEX.A1_CLONEDRABBITS.TITLE"
+msgid "Initial Success"
+msgstr "초기 성공"
+
+#. STRINGS.CODEX.A1_CLONEDRACCOONS.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.A1_CLONEDRACCOONS.BODY.CONTAINER1"
+msgid ""
+"<smallcaps>[Voice Recognition Initialized]\n"
+"[Subject Identified: B111]</smallcaps>\n"
+"\n"
+"[LOG BEGINS]\n"
+"\n"
+"[A throat clears.]\n"
+"\n"
+"B111: We are now reliably printing healthy, living subjects, though all have exhibited unusual qualities as a result of the cloning process.\n"
+"\n"
+"[Trilling sounds can be heard.]\n"
+"\n"
+"B111: Unusual mewings, benign neoplasms, and atavistic extremities have been seen in all subjects thus far, to varying degrees of severity. It seems that bypassing or accelerating juvenility halts certain critical stages of development. Brain function, however, appears typical.\n"
+"\n"
+"[Trilling.]\n"
+"\n"
+"B111: T-They also seem quite happy.\n"
+"\n"
+"B111: Dr. Broussard, signing off.\n"
+"\n"
+"[LOG ENDS]"
+msgstr ""
+"<smallcaps>[음성 인식 초기화]\n"
+"[대상 식별됨: B111]</smallcaps>\n"
+"\n"
+"[로그 시작]\n"
+"\n"
+"[헛기침]\n"
+"\n"
+"B111: 지금 건강하고 살아있는 실험체를 프린트하고 있습니다만, 모두 복제 과정의 결과로 특이한 특성이 발생했습니다.\n"
+"\n"
+"[찍찍거리는 소리 들림]\n"
+"\n"
+"B111: 비정상적인 음성, 양성 신생물, 격세유전 사지가 지금까지 모든 실험체에서 심각도의 정도에 따라 다양하게 나타났습니다. 유년기를 우회하거나 촉진하면 발달의 특정 중요 단계가 중단되는 것으로 보입니다. 그러나 뇌 기능은 전형적인 것으로 보입니다.\n"
+"\n"
+"[찍찍거리는 소리]\n"
+"\n"
+"B111: 그리고 행복해 보입니다.\n"
+"\n"
+"B111: 브루사 박사 로그아웃.\n"
+"\n"
+"[로그 종료]"
+
+#. STRINGS.CODEX.A1_CLONEDRACCOONS.SUBTITLE
+msgctxt "STRINGS.CODEX.A1_CLONEDRACCOONS.SUBTITLE"
+msgid "ENCRYPTION LEVEL: TWO"
+msgstr "암호화 수준: 2"
+
+#. STRINGS.CODEX.A1_CLONEDRACCOONS.TITLE
+msgctxt "STRINGS.CODEX.A1_CLONEDRACCOONS.TITLE"
+msgid "Initial Success"
+msgstr "초기 성공"
 
 #. STRINGS.CODEX.A1_CLONEDRATS.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.A1_CLONEDRATS.BODY.CONTAINER1"
@@ -15220,6 +15507,106 @@ msgctxt "STRINGS.CODEX.A5_GENETICOOZE.TITLE"
 msgid "Biofluid"
 msgstr "바이오액"
 
+#. STRINGS.CODEX.A5_SHRIMP.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.A5_SHRIMP.BODY.CONTAINER1"
+msgid ""
+"<smallcaps>[Voice Recognition Initialized]\n"
+"[Subject Identified: B111]</smallcaps>\n"
+"\n"
+"[LOG BEGINS]\n"
+"\n"
+"\"A-and how are you clever little guys today?\n"
+"\n"
+"(trilling)\n"
+"\n"
+"Look! I brought some pink shrimp for you to eat. Your favorite! Are you hungry?\n"
+"\n"
+"(excited trilling)\n"
+"\n"
+"Oh, one moment, my keen eager pals. I left the recorder on --\n"
+"\n"
+"(rustling)\"\n"
+"\n"
+"[LOG ENDS]"
+msgstr ""
+"<smallcaps>[음성 인식 초기화됨]\n"
+"[대상 식별: B111]</smallcaps>\n"
+"\n"
+"[로그 시작]\n"
+"\n"
+"\"아, 잘 있었니, 똑똑한 아이들아?\n"
+"\n"
+"(찍찍거리는 소리)\n"
+"봐! 네가 먹으라고 줄새우를 가져 왔어. 네가 좋아하는 거지! 배고프니?\n"
+"\n"
+"(찍찍거리는 소리)\n"
+"\n"
+"아 잠깐, 의욕이 넘치는 친구들아. 레코더를 켜놨네 --\n"
+"\n"
+"(부시럭)\"\n"
+"\n"
+"[로그 종료]"
+
+#. STRINGS.CODEX.A5_SHRIMP.SUBTITLE
+msgctxt "STRINGS.CODEX.A5_SHRIMP.SUBTITLE"
+msgid "ENCRYPTION LEVEL: ZERO"
+msgstr "암호화 수준: 0"
+
+#. STRINGS.CODEX.A5_SHRIMP.TITLE
+msgctxt "STRINGS.CODEX.A5_SHRIMP.TITLE"
+msgid "Shrimp"
+msgstr "새우"
+
+#. STRINGS.CODEX.A5_STRAWBERRIES.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.A5_STRAWBERRIES.BODY.CONTAINER1"
+msgid ""
+"<smallcaps>[Voice Recognition Initialized]\n"
+"[Subject Identified: B111]</smallcaps>\n"
+"\n"
+"[LOG BEGINS]\n"
+"\n"
+"\"A-and how are you bouncy little critters today?\n"
+"\n"
+"(chattering)\n"
+"\n"
+"Look! I brought strawberries. Your favorite! Are you hungry?\n"
+"\n"
+"(excited chattering)\n"
+"\n"
+"Oh, one moment, my precious, little pals. I left the recorder on --\n"
+"\n"
+"(rustling)\"\n"
+"\n"
+"[LOG ENDS]"
+msgstr ""
+"<smallcaps>[음성 인식 초기화됨]\n"
+"[대상 식별: B111]</smallcaps>\n"
+"\n"
+"[로그 시작]\n"
+"\n"
+"\"아, 잘 있었니, 기운찬 크리터들아?\n"
+"\n"
+"(찍찍 소리)\n"
+"봐! 딸기를 가져 왔어. 네가 좋아하는 거지! 배고프니?\n"
+"\n"
+"(흥분된 찍찍 소리)\n"
+"\n"
+"아 잠깐, 귀여운 친구들아. 레코더를 켜놨네 --\n"
+"\n"
+"(부시럭)\"\n"
+"\n"
+"[로그 종료]"
+
+#. STRINGS.CODEX.A5_STRAWBERRIES.SUBTITLE
+msgctxt "STRINGS.CODEX.A5_STRAWBERRIES.SUBTITLE"
+msgid "ENCRYPTION LEVEL: ZERO"
+msgstr "암호화 수준: 0"
+
+#. STRINGS.CODEX.A5_STRAWBERRIES.TITLE
+msgctxt "STRINGS.CODEX.A5_STRAWBERRIES.TITLE"
+msgid "Strawberries"
+msgstr "딸기"
+
 #. STRINGS.CODEX.A5_SUNFLOWERSEEDS.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.A5_SUNFLOWERSEEDS.BODY.CONTAINER1"
 msgid ""
@@ -15878,7 +16265,17 @@ msgstr "몽상"
 #. STRINGS.CODEX.ARBORTREE.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.ARBORTREE.BODY.CONTAINER1"
 msgid ""
+"Arbor Trees have been cultivated to spread horizontally when they grow so as to produce a high yield of lumber in vertically cramped spaces.\n"
+"\n"
+"Arbor Trees are related to the oak tree, specifically the Japanese Evergreen, though they have been genetically hybridized significantly.\n"
+"\n"
+"Despite having many hardy, evenly spaced branches, the short stature of the Arbor Tree makes climbing it rather irrelevant."
 msgstr ""
+"수목 나무는 수직으로 비좁은 공간에서 높은 수확량의 재목을 생산하기 위해 자랄 때 수평으로 퍼지도록 재배되었습니다.\n"
+"\n"
+"수목 나무는 떡갈 나무, 특히 일본 상록수와 관련이 있지만 유전적으로 상당히 혼종입니다.\n"
+"\n"
+"견고하고 균일한 간격의 가지가 많음에도 불구하고 수목 나무는 높지 않기 때문에 오르는 것은 무의미합니다."
 
 #. STRINGS.CODEX.ARBORTREE.SUBTITLE
 msgctxt "STRINGS.CODEX.ARBORTREE.SUBTITLE"
@@ -16070,6 +16467,48 @@ msgctxt "STRINGS.CODEX.B1_HOLLANDSDOG.TITLE2"
 msgid "dr. holland's dog"
 msgstr "홀란드 박사의 개"
 
+#. STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.BODY.CONTAINER1"
+msgid ""
+"Bring your office to the stars with Gravitas new corporate space stations.\n"
+"\n"
+"Enjoy a captivated workforce with over 600 square feet of office space in low earth orbit. Stunning views, a low gravity gym and a cafeteria serving the finest nutritional bars await your personnel.\n"
+"\n"
+"Daily to and from missions to your satellite office via our luxury space shuttles.\n"
+"\n"
+"Rest assured our space stations and shuttles utilize only the extremely efficient, environmentally friendly Gravitas proprietary power sources.\n"
+"\n"
+"The workplace revolution starts now!"
+msgstr ""
+"그라비타스의 새로운 기업 우주 정거장으로 사무실을 옮겨서 별이 보이는 풍경을 즐기세요.\n"
+"\n"
+"저궤도의 600 제곱피트가 넘는 사무실 공간에서 매력적인 직원들과 근무하세요. 멋진 전망, 저중력 체육관 및 최고의 영양 바를 제공하는 카페테리아가 귀하의 직원을 기다리고 있습니다.\n"
+"\n"
+"고급 우주 왕복선을 통해 매일 임무를 수행하고 위성 사무실로 출퇴근하세요.\n"
+"\n"
+"그라비타스 우주 정거장과 셔틀은 매우 효율적이고 환경 친화적인 그라비타스 독점 전력원만을 사용합니다.\n"
+"\n"
+"직장 혁명이 지금 시작됩니다!"
+
+#. STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.BODY.CONTAINER2
+msgctxt "STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.BODY.CONTAINER2"
+msgid ""
+"Taking reservations now for the first orbital office spaces.\n"
+"100% money back guarantee (minus 10% filing fee)"
+msgstr ""
+"최초의 궤도 사무실 공간을 지금 예약하세요.\n"
+"100% 환불 보장(제출 수수료 10% 제외)"
+
+#. STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.SUBTITLE
+msgctxt "STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.SUBTITLE"
+msgid "PUBLIC RELEASE"
+msgstr "공개 발표"
+
+#. STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.TITLE
+msgctxt "STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.TITLE"
+msgid "Office Space in Space!"
+msgstr "우주의 사무실 공간!"
+
 #. STRINGS.CODEX.B10_AI.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.B10_AI.BODY.CONTAINER1"
 msgid ""
@@ -16080,7 +16519,7 @@ msgid ""
 "\n"
 "I made a horrible discovery today while reviewing work on the artificial intelligence programming. It seems Dr. Ali mixed up a file when uploading a program onto a rudimentary robot and discovered that the device displayed the characteristics of what he called \"a puppy that was lost in a teleportation experiment weeks ago\".\n"
 "\n"
-".This unbelivable! Jackie has been hiding the nature of the teleportation experiments from me. What's worse is I know from previous conversations that she knows I would never approve of pursuing this line of experimentation. The societal benefits of teleportaion aside, you <i>cannot</i> kill a living being every time you want to send them to another room. The moral and ethical implications of this are horrendous.\n"
+"This unbelivable! Jackie has been hiding the nature of the teleportation experiments from me. What's worse is I know from previous conversations that she knows I would never approve of pursuing this line of experimentation. The societal benefits of teleportaion aside, you <i>cannot</i> kill a living being every time you want to send them to another room. The moral and ethical implications of this are horrendous.\n"
 "\n"
 "I know she has been keeping this information from me. When I searched through the Gravitas database I found nothing to do with these teleportation experiments. It was only because this reference showed up in Dr. Ali's AI paper that I was able to discover what has been happening.\n"
 "\n"
@@ -16200,6 +16639,52 @@ msgctxt "STRINGS.CODEX.B2_ELLIESBIRTHDAY.TITLE"
 msgid "Office Cake"
 msgstr "사무실 케이크"
 
+#. STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER1"
+msgid ""
+"Meet The Pilot:\n"
+"Captain Mae Johannsen\n"
+"\n"
+"From the time she was old enough to walk Captain Johannsen dreamed of reaching the sky. Growing up on an air force base she came to love the sound jet engines roaring overhead.\n"
+"\n"
+"At 16 she became the youngest pilot to fly a fighter jet and at 22 she had already entered the space flight program.\n"
+"\n"
+"Four years later Gravitas nabbed her for an exclusive contract piloting our space shuttles. In her time at Gravitas, Captain Johannsen has logged over 1,000 hours space flight time shuttling and deploying satellites to low Earth Orbits and has just been named the pilot of our inaugural civilian space tourist program, slated to begin in the next year.\n"
+"\n"
+"Gravitas is excited to have Captain Johannsen in the pilot seat as we reach for the stars...and beyond!"
+msgstr ""
+"조종사와의 만남:\n"
+"매 요한슨 캡틴\n"
+"\n"
+"그녀는 걸을 수 있을 나이가 들었을 때부터 요한슨 캡틴은 하늘에 이르는 꿈을 꾸었습니다. 공군 기지에서 자란 그녀는 머리 위로 울리는 제트 엔진 소리를 좋아하게 되었습니다.\n"
+"\n"
+"16세에 그녀는 전투기를 조종한 최연소 조종사가 되었고 22세에 이미 우주 비행 프로그램에 참여했습니다.\n"
+"\n"
+"4년 후 그라비타스는 우주 왕복선을 조종하는 독점 계약을 위해 그녀를 채용했습니다. 그라비타스에서 근무하는 동안 요한슨 캡틴은 1,000시간 이상의 우주 비행 시간을 기록하며 저궤도에 위성을 배치하고 내년에 시작할 예정인 최초 민간 우주 관광 프로그램의 조종사로 지명되었습니다.\n"
+"\n"
+"그라비타스는 별과 그 너머에 도달하기 위해 조종사 자리에 요한슨 캡틴을 앉히게 되어 기쁩니다!"
+
+#. STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER2
+msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER2"
+msgid ""
+"\n"
+"\n"
+"Brought to you by the Gravitas Facility."
+msgstr ""
+"\n"
+"\n"
+"그라비타스설비 제공."
+
+#. STRINGS.CODEX.B2_MEETTHEPILOT.SUBTITLE
+msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.SUBTITLE"
+msgid "PUBLIC RELEASE"
+msgstr "공개 발표"
+
+#. STRINGS.CODEX.B2_MEETTHEPILOT.TITLE
+msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.TITLE"
+msgid "The Future of Space Flight"
+msgstr "우주 비행의 미래"
+
 #. STRINGS.CODEX.B2_TEMPORALBOWUPDATE.BODY.CONTAINER2
 msgctxt "STRINGS.CODEX.B2_TEMPORALBOWUPDATE.BODY.CONTAINER2"
 msgid ""
@@ -16239,6 +16724,140 @@ msgstr "해독됨"
 msgctxt "STRINGS.CODEX.B2_TEMPORALBOWUPDATE.TITLE"
 msgid "Spec Changes"
 msgstr "규격 변경"
+
+#. STRINGS.CODEX.B3_MOVEDRABBITS.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.B3_MOVEDRABBITS.BODY.CONTAINER1"
+msgid ""
+"<smallcaps>[Voice Recognition Initialized]\n"
+"[Subjects Identified: A001, B111]</smallcaps>\n"
+"\n"
+"[LOG BEGINS]\n"
+"\n"
+"Broussard: Director, do you know where my rabbits have been moved to? I asked around the bioengineering division but I was referred back to you.\n"
+"\n"
+"Director: Hm? Oh, yes, they've been removed.\n"
+"\n"
+"Broussard: \"Removed\"?\n"
+"\n"
+"Director: Discarded. I'm sorry, did you still need them? The reports showed your experiments with them were completed.\n"
+"\n"
+"Broussard: No, I-I... I'd collected all the data I needed, I just --\n"
+"\n"
+"Director: -- Doctor. You weren't making pets out of test subjects, were you?\n"
+"\n"
+"Broussard: Don't be ridiculous, I --\n"
+"\n"
+"Director: -- Good.They were horrible to look at anyway. All those red eyes looking at me.\n"
+"\n"
+"Broussard: In the future, please do not mess with my things. It... disturbs me.\n"
+"\n"
+"Director: I will notify you beforehand next time, doctor.\n"
+"\n"
+"[LOG ENDS]"
+msgstr ""
+"<smallcaps>[음성 인식 초기화]\n"
+"[대상 식별됨: A001, B111]</smallcaps>\n"
+"\n"
+"[로그 시작]\n"
+"\n"
+"브루사: 관장님, 제 토끼가 어디로 옮겨졌죠? 바이오엔지니어링부에 물어봤는데, 관장님에게 물어보라고 했어요.\n"
+"\n"
+"관장: 흠? 아, 맞아요, 제거했어요.\n"
+"\n"
+"브루사: \"제거요\"?\n"
+"\n"
+"관장: 폐기했어요. 미안해요, 아직 더 필요한가요? 보고서에 따르면 실험이 끝났다고 하던데.\n"
+"\n"
+"브루사: 아니, 나... 내가 필요한 모든 데이터는 수집했는--\n"
+"\n"
+"관장: -- 박사님. 실험 대상을 애완 동물로 삼았나요, 그렇죠?\n"
+"\n"
+"브루사: 무슨 소리를, 나--\n"
+"\n"
+"관장: -- 좋아요. 어쨌든 보기 끔찍했어요. 그 수많은 빨간 눈들.\n"
+"\n"
+"브루사: 앞으로는 제 물건에 손대지 말아요. 그게... 기분 나쁘거든요.\n"
+"\n"
+"관장: 다음에는 알려주지 뭐, 박사.\n"
+"\n"
+"[로그 종료]"
+
+#. STRINGS.CODEX.B3_MOVEDRABBITS.SUBTITLE
+msgctxt "STRINGS.CODEX.B3_MOVEDRABBITS.SUBTITLE"
+msgid "ENCRYPTION LEVEL: ONE"
+msgstr "암호화 수준: 1"
+
+#. STRINGS.CODEX.B3_MOVEDRABBITS.TITLE
+msgctxt "STRINGS.CODEX.B3_MOVEDRABBITS.TITLE"
+msgid "Moved Rabbits"
+msgstr "옮긴 토끼"
+
+#. STRINGS.CODEX.B3_MOVEDRACCOONS.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.B3_MOVEDRACCOONS.BODY.CONTAINER1"
+msgid ""
+"<smallcaps>[Voice Recognition Initialized]\n"
+"[Subjects Identified: A001, B111]</smallcaps>\n"
+"\n"
+"[LOG BEGINS]\n"
+"\n"
+"Broussard: Director, do you know where my raccoons have been moved to? I asked around the bioengineering division but I was referred back to you.\n"
+"\n"
+"Director: Hm? Oh, yes, they've been removed.\n"
+"\n"
+"Broussard: \"Removed\"?\n"
+"\n"
+"Director: Discarded. I'm sorry, did you still need them? The reports showed your experiments with them were completed.\n"
+"\n"
+"Broussard: No, I-I... I'd collected all the data I needed, I just --\n"
+"\n"
+"Director: -- Doctor. You weren't making pets out of test subjects, were you?\n"
+"\n"
+"Broussard: Don't be ridiculous, I --\n"
+"\n"
+"Director: -- Good.They were horrible to look at anyway. All that mangy fur.\n"
+"\n"
+"Broussard: In the future, please do not mess with my things. It... disturbs me.\n"
+"\n"
+"Director: I will notify you beforehand next time, doctor.\n"
+"\n"
+"[LOG ENDS]"
+msgstr ""
+"<smallcaps>[음성 인식 초기화]\n"
+"[대상 식별됨: A001, B111]</smallcaps>\n"
+"\n"
+"[로그 시작]\n"
+"\n"
+"브루사: 관장님, 제 너구리가 어디로 옮겨졌죠? 바이오엔지니어링부에 물어봤는데, 관장님에게 물어보라고 했어요.\n"
+"\n"
+"관장: 흠? 아, 맞아요, 제거했어요.\n"
+"\n"
+"브루사: \"제거요\"?\n"
+"\n"
+"관장: 폐기했어요. 미안해요, 아직 더 필요한가요? 보고서에 따르면 실험이 끝났다고 하던데.\n"
+"\n"
+"브루사: 아니, 나... 내가 필요한 모든 데이터는 수집했는--\n"
+"\n"
+"관장: -- 박사님. 실험 대상을 애완 동물로 삼았나요, 그렇죠?\n"
+"\n"
+"브루사: 무슨 소리를, 나--\n"
+"\n"
+"관장: -- 좋아요. 어쨌든 보기 끔찍했어요. 그 수많은 옴 붙은 털.\n"
+"\n"
+"브루사: 앞으로는 제 물건에 손대지 말아요. 그게... 기분 나쁘거든요.\n"
+"\n"
+"관장: 다음에는 알려주지 뭐, 박사.\n"
+"\n"
+"[로그 종료]"
+
+#. STRINGS.CODEX.B3_MOVEDRACCOONS.SUBTITLE
+msgctxt "STRINGS.CODEX.B3_MOVEDRACCOONS.SUBTITLE"
+msgid "ENCRYPTION LEVEL: ONE"
+msgstr "암호화 수준: 1"
+
+#. STRINGS.CODEX.B3_MOVEDRACCOONS.TITLE
+msgctxt "STRINGS.CODEX.B3_MOVEDRACCOONS.TITLE"
+msgid "Moved Raccoons"
+msgstr "옮긴 너구리"
 
 #. STRINGS.CODEX.B3_MOVEDRATS.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.B3_MOVEDRATS.BODY.CONTAINER1"
@@ -17263,7 +17882,17 @@ msgstr "깎아지른찔레"
 #. STRINGS.CODEX.BOGBUCKET.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.BOGBUCKET.BODY.CONTAINER1"
 msgid ""
+"Bog Buckets get their name from their bucket-like flowers and their propensity to grow in swampy, bog-like environments.\n"
+"\n"
+"The flower secretes a thick, sweet liquid which collects at the bottom of the bucket and can be gathered for consumption.\n"
+"\n"
+"Though not inherently dangerous, the interior of the Bog Bucket flower is so warm and inviting that it has tempted individuals to climb inside for a nap, only to awake trapped in its sticky sap."
 msgstr ""
+"수렁박은 양동이와 같은 꽃과 늪지대와 같은 환경에서 자라는 경향에서 이름을 얻었습니다.\n"
+"\n"
+"꽃은 양동이 바닥에 모이고 섭취하기 위해 모을 수 있는 걸쭉하고 달콤한 액체를 분비합니다.\n"
+"\n"
+"본질적으로 위험하지는 않지만, 수렁박 꽃의 내부는 너무 따뜻하고 매력적이어서 낮잠을 자려고 들어갔다가 끈적한 수액에 갇히는 수가 있습니다."
 
 #. STRINGS.CODEX.BOGBUCKET.SUBTITLE
 msgctxt "STRINGS.CODEX.BOGBUCKET.SUBTITLE"
@@ -17845,7 +18474,17 @@ msgstr "번질한 기끌이"
 #. STRINGS.CODEX.GRUBFRUITPLANT.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.GRUBFRUITPLANT.BODY.CONTAINER1"
 msgid ""
+"The Grubfruit Plant exhibits a coevolutionary relationship with the Divergent species.\n"
+"\n"
+"Though capable of producing fruit without the help of the Divergent, the Spindly Grubfruit is a substandard version of the Grubfruit in both taste and caloric value.\n"
+"\n"
+"The mechanism for how the Divergent inspires Grubfruit Plant growth is not entirely known but is thought to be somehow tied to the infrasonic 'songs' these insects lovingly purr to their plants."
 msgstr ""
+"벵이과실 식물은 분기 종과 공진화 관계를 나타냅니다.\n"
+"\n"
+"분기의 도움 없이 과일을 생성할 수 있지만 호리호리한 벵이과실은 맛과 칼로리 값 모두에서 벵이과실의 표준 이하입니다.\n"
+"\n"
+"분기가 벵이과실 식물 성장을 고무시키는 방법에 대한 메커니즘은 완전히 알려지지 않았지만 이 식물을 사랑스럽게 추구하는 이 곤충들의 초저주파 '노래'와 연결되어 있는 것으로 추측됩니다."
 
 #. STRINGS.CODEX.GRUBFRUITPLANT.SUBTITLE
 msgctxt "STRINGS.CODEX.GRUBFRUITPLANT.SUBTITLE"
@@ -18186,7 +18825,17 @@ msgstr "수선인장"
 #. STRINGS.CODEX.JUMPINGJOYA.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.JUMPINGJOYA.BODY.CONTAINER1"
 msgid ""
+"The Jumping Joya is a decorative plant that brings a feeling of calmness and wellbeing to individuals in its vacinity.\n"
+"\n"
+"Their rounded appendages and eccentrically shaped polyps are a favorite of interior designers looking to offset the rigid straight walls of an institutional setting.\n"
+"\n"
+"The Jumping Joya's capacity to thrive in many environments and the ease in which they propagate make them the go-to house plant for the lazy gardener."
 msgstr ""
+"뛰는기쁨은 근처에 있는 자에게 평온함과 웰빙을 주는 장식용 식물입니다.\n"
+"\n"
+"둥근 부속물과 편심 형태의 폴립은 기관 공간의 딱딱한 직선 벽을 상쇄하려는 인테리어 디자이너가 가장 좋아하는 제장식입니다.\n"
+"\n"
+"뛰는기쁨의 많은 환경에서 번성할 수 있는 능력과 그들이 번식하는 용이성으로 인해 게으른 정원사가 집에서 키우는 인기 식물이 되었습니다."
 
 #. STRINGS.CODEX.JUMPINGJOYA.SUBTITLE
 msgctxt "STRINGS.CODEX.JUMPINGJOYA.SUBTITLE"
@@ -18247,12 +18896,17 @@ msgstr "신경 변동기"
 #. STRINGS.CODEX.MEALWOOD.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.MEALWOOD.BODY.CONTAINER1"
 msgid ""
+"Mealwood is an bramble-like plant that has a parasitic symbiotic relationship with the nutrient-rich Meal Lice that inhabit it.\n"
+"\n"
+"Mealwood experience a rapid growth rate in its first stages, but once the Meal Lice become active they consume all the new fruiting spurs on the plant before they can fully mature.\n"
+"\n"
+"Theoretically the flowers of this plant are a beautiful color of fuchsia, however no Mealwood has ever reached the point of flowering without being overrun by the parasitic Meal Lice."
 msgstr ""
-
-#. STRINGS.CODEX.MEALWOOD.BODY.CONTAINER2
-msgctxt "STRINGS.CODEX.MEALWOOD.BODY.CONTAINER2"
-msgid ""
-msgstr ""
+"끼니나무는 그 안에 서식하는 영양이 풍부한 끼니이와 기생 공생 관계를 가진 가시나무와 같은 식물입니다.\n"
+"\n"
+"끼니나무는 첫 단계에서 빠른 성장률을 경험하지만 끼니이가 활성화되면 완전히 성숙하기 전에 식물의 모든 새로운 열매를 먹습니다.\n"
+"\n"
+"이론적으로 이 식물의 꽃은 아름다운 자홍색이지만 기생하는 끼니이가 뒤덮지 않고 개화 지점에 도달한 끼니나무는 없습니다."
 
 #. STRINGS.CODEX.MEALWOOD.SUBTITLE
 msgctxt "STRINGS.CODEX.MEALWOOD.SUBTITLE"
@@ -18288,7 +18942,17 @@ msgstr "말랑당아욱"
 #. STRINGS.CODEX.MIRTHLEAF.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.MIRTHLEAF.BODY.CONTAINER1"
 msgid ""
+"The Mirth Leaf is a broad-leafed house plant used for decorating living spaces.\n"
+"\n"
+"The joyous bobbing of the wide green leaves provides hours of amusement for those desperate for entertainment.\n"
+"\n"
+"Although the Mirth Leaf can inspire laughter and joy, it is not cut out for a career in stand-up comedy."
 msgstr ""
+"환희잎은 생활 공간을 장식하는 데 사용되는 넓은 잎이 달린 주거지용 식물입니다.\n"
+"\n"
+"넓은 녹색 잎사귀의 즐거운 움직임은 오락이 절실한 사람들에게 몇 시간의 즐거움을 제공합니다.\n"
+"\n"
+"환희잎은 웃음과 기쁨을 불러 일으킬 수 있지만 스탠드업 코미디 경력을 쌓을 수는 없습니다."
 
 #. STRINGS.CODEX.MIRTHLEAF.SUBTITLE
 msgctxt "STRINGS.CODEX.MIRTHLEAF.SUBTITLE"
@@ -18811,6 +19475,26 @@ msgctxt "STRINGS.CODEX.MYLOG.BODY.ONEDUPELEFT.TITLE"
 msgid "Only One Remains"
 msgstr "하나만 남음"
 
+#. STRINGS.CODEX.MYLOG.BODY.OTHERDIMENSIONS.BODY
+msgctxt "STRINGS.CODEX.MYLOG.BODY.OTHERDIMENSIONS.BODY"
+msgid ""
+"A closer analysis of some documents my Duplicants encountered while searching artifacts has uncovered some curious similarities between multiple entries. These similarities are too strong to be coincidences, yet just divergent enough to raise questions.\n"
+"\n"
+"The most logical conclusion is that these artifacts are coming from different dimensions. That is, separate universes that exists concurrently with one another but exhibit tiny disparities in their histories.\n"
+"\n"
+"The most likely explaination is the material and matter from multiple dimensions is leaking into our current timeline through the Temporal Tear. Further analysis is required."
+msgstr ""
+"복제체가 가공물을 검색하는 동안 접한 일부 문서를 면밀히 분석한 결과 여러 항목 간의 흥미로운 유사점이 발견되었습니다. 이러한 유사성은 우연이라기에는 너무 강하지만 질문을 제기할 수 있을 정도로 다양합니다.\n"
+"\n"
+"가장 논리적인 결론은 이러한 가공물이 다른 차원에서 나온다는 것입니다. 즉, 서로 동시에 존재하지만 역사상 아주 작은 차이를 보이는 별개의 우주입니다.\n"
+"\n"
+"가장 가능성이 높은 설명은 물질과 여러 차원의 물질이 시간의 찢어짐을 통해 현재 시간대로 누출되고 있다는 것입니다.  추가 분석이 필요합니다."
+
+#. STRINGS.CODEX.MYLOG.BODY.OTHERDIMENSIONS.TITLE
+msgctxt "STRINGS.CODEX.MYLOG.BODY.OTHERDIMENSIONS.TITLE"
+msgid "Leaking Dimensions"
+msgstr "차원 누출"
+
 #. STRINGS.CODEX.MYLOG.BODY.OUTSIDESTARTINGBIOME.BODY
 msgctxt "STRINGS.CODEX.MYLOG.BODY.OUTSIDESTARTINGBIOME.BODY"
 msgid ""
@@ -19047,7 +19731,17 @@ msgstr "심연 벌레"
 #. STRINGS.CODEX.NOSHBEAN.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.NOSHBEAN.BODY.CONTAINER1"
 msgid ""
+"The Nosh Bean Plant produces a nutritious bean that can function as a delicious meat substitute provided it is properly processed.\n"
+"\n"
+"Though the bean is a food source, it also functions as the seed for the Nosh Bean plant.\n"
+"\n"
+"While using the Nosh Bean for nourishment would seem like the more practical application, doing so would deprive individuals of the immense gratification experienced by planting this bean and watching it flourish into maturity."
 msgstr ""
+"오물오물 콩 식물은 제대로 가공하면 맛있는 육류 대용품으로 기능할 수 있는 영양가 있는 콩을 생산합니다.\n"
+"\n"
+"콩은 식량원이지만 오물오물 콩 식물의 종자 역할도 합니다.\n"
+"\n"
+"영양을 위해 오물오물 콩을 사용하는 것이 더 실용적으로 보이지만, 그렇게 하면 이 콩을 심고 잘 자라는 것을 지켜 보면서 경험하는 엄청난 만족감이 박탈당할 것입니다."
 
 #. STRINGS.CODEX.NOSHBEAN.SUBTITLE
 msgctxt "STRINGS.CODEX.NOSHBEAN.SUBTITLE"
@@ -19646,7 +20340,7 @@ msgid ""
 "Novice Research is performed at the <link=\"RESEARCHCENTER\">Research Station</link>\n"
 "Advanced Research is performed at the <link=\"ADVANCEDRESEARCHCENTER\">Super Computer</link>\n"
 "Interstellar Research is performed at the <link=\"COSMICRESEARCHCENTER\">Virtual Planetarium</link>\n"
-"Atomic Research is performed at the <link=\"NUCLEARLABORATORY\">Atomic Collider</link>\n"
+"Materials Science Research is performed at the <link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>\n"
 "\n"
 msgstr ""
 "고급 연구 작업에는 적절한 종류의 연구 포인트를 생성하기 위해 특수 연구 스테이션이 필요합니다. 이러한 연구 스테이션은 종종 더 고급 자원을 소비합니다.\n"
@@ -19656,7 +20350,7 @@ msgstr ""
 "초급 연구는 <link=\"RESEARCHCENTER\">연구 스테이션</link>에서 수행됩니다.\n"
 "고급 연구는 <link=\"ADVANCEDRESEARCHCENTER\">슈퍼 컴퓨터</link>에서 수행됩니다.\n"
 "성간 연구는 <link=\"COSMICRESEARCHCENTER\">가상 플라네타륨</link>에서 수행됩니다.\n"
-"원자 연구는 <link=\"NUCLEARLABORATORY\">원자 충돌기</link>에서 수행됩니다.\n"
+"재료 과학 연구는 <link=\"NUCLEARLABORATORY\">재료 연구 터미널</link>에서 수행됩니다.\n"
 "\n"
 
 #. STRINGS.CODEX.RESEARCH.TITLE
@@ -19723,7 +20417,17 @@ msgstr "슬기로운 주둥가리"
 #. STRINGS.CODEX.SATURNCRITTERTRAP.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.SATURNCRITTERTRAP.BODY.CONTAINER1"
 msgid ""
+"The Saturn Critter Trap plant is a carnivorous plant that lays in wait for unsuspecting critters to happen by, then traps them in its mouth for consumption.\n"
+"\n"
+"The Saturn Trap Plant's predatory mechanism is reflective of the harsh radioactive habitat it resides in.\n"
+"\n"
+"Once trapped in the deadly maw of the plant, creatures are gently asphyxiated then digested through powerful acidic enzymes which coat the inner sides of the Saturn Trap Plant's leaves."
 msgstr ""
+"새턴 크리터 트랩 식물은 순진한 크리터가 일어날 때까지 기다렸다가 먹기 위해 입에 가두는 육식 식물입니다.\n"
+"\n"
+"새턴 크리터 트랩의 포식 메커니즘은 그것이 살고 있는 가혹한 방사능 서식지를 반영합니다.\n"
+"\n"
+"일단 식물의 치명적인 아귀에 갇히면 생물은 부드럽게 질식된 다음 새턴 크리터 트랩 식물의 잎 안쪽을 덮는 강력한 산성 효소를 통해 소화됩니다."
 
 #. STRINGS.CODEX.SATURNCRITTERTRAP.SUBTITLE
 msgctxt "STRINGS.CODEX.SATURNCRITTERTRAP.SUBTITLE"
@@ -23446,11 +24150,11 @@ msgstr "<link=\"SALTPLANT\">뿌림 소금덩굴</link>"
 #. STRINGS.CREATURES.SPECIES.SAPTREE.DESC
 msgctxt "STRINGS.CREATURES.SPECIES.SAPTREE.DESC"
 msgid ""
-"An <link=\"ISORESIN\">Isoresin</link>-producing, cybernetic tree that shows signs of sentience.\n"
+"An <link=\"RESIN\">Resin</link>-producing, cybernetic tree that shows signs of sentience.\n"
 "\n"
 "It is rooted firmly in place, and appears to have been here for some time."
 msgstr ""
-"지각을 보여주는 <link=\"ISORESIN\">아이소레진</link> 생성, 사이버네틱 나무.\n"
+"지각을 보여주는 <link=\"RESIN\">레진</link> 생성, 사이버네틱 나무.\n"
 "\n"
 "제자리에 단단히 뿌리를 내리고 있으며 한동안 여기에 있었던 것처럼 보입니다."
 
@@ -25016,7 +25720,7 @@ msgstr "현재 건강 상태: {healthState}"
 #. STRINGS.CREATURES.STATUSITEMS.HIGH_YIELD.LINE_ITEM
 msgctxt "STRINGS.CREATURES.STATUSITEMS.HIGH_YIELD.LINE_ITEM"
 msgid "    • {0}\n"
-msgstr "    • {0}\n"
+msgstr "• {0}\n"
 
 #. STRINGS.CREATURES.STATUSITEMS.HIGH_YIELD.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.HIGH_YIELD.NAME"
@@ -25214,7 +25918,7 @@ msgstr "<style=\"KKeyword\">액체</style> 요건이 충족되면 생장이 다�
 #. STRINGS.CREATURES.STATUSITEMS.NORMAL_YIELD.LINE_ITEM
 msgctxt "STRINGS.CREATURES.STATUSITEMS.NORMAL_YIELD.LINE_ITEM"
 msgid "    • {0}\n"
-msgstr "    • {0}\n"
+msgstr "• {0}\n"
 
 #. STRINGS.CREATURES.STATUSITEMS.NORMAL_YIELD.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.NORMAL_YIELD.NAME"
@@ -25645,9 +26349,7 @@ msgstr "다음 <style=\"KKeyword\">기체</style> 중 하나에 담겨 있으면
 #. STRINGS.CREATURES.STATUSITEMS.WRONGFERTILIZER.LINE_ITEM
 msgctxt "STRINGS.CREATURES.STATUSITEMS.WRONGFERTILIZER.LINE_ITEM"
 msgid "            • {0}: {1}\n"
-msgstr ""
-"            • {0}: {1}\n"
-"\n"
+msgstr "            • {0}: {1}\n"
 
 #. STRINGS.CREATURES.STATUSITEMS.WRONGFERTILIZER.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.WRONGFERTILIZER.NAME"
@@ -25668,7 +26370,7 @@ msgstr ""
 #. STRINGS.CREATURES.STATUSITEMS.WRONGFERTILIZERMAJOR.LINE_ITEM
 msgctxt "STRINGS.CREATURES.STATUSITEMS.WRONGFERTILIZERMAJOR.LINE_ITEM"
 msgid "                    • {0}: {1}\n"
-msgstr "                    • {0}: {1}\n"
+msgstr "                   • {0}: {1}\n"
 
 #. STRINGS.CREATURES.STATUSITEMS.WRONGFERTILIZERMAJOR.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.WRONGFERTILIZERMAJOR.NAME"
@@ -25689,9 +26391,7 @@ msgstr ""
 #. STRINGS.CREATURES.STATUSITEMS.WRONGIRRIGATION.LINE_ITEM
 msgctxt "STRINGS.CREATURES.STATUSITEMS.WRONGIRRIGATION.LINE_ITEM"
 msgid "            • {0}: {1}\n"
-msgstr ""
-"            • {0}: {1}\n"
-"\n"
+msgstr "            • {0}: {1}\n"
 
 #. STRINGS.CREATURES.STATUSITEMS.WRONGIRRIGATION.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.WRONGIRRIGATION.NAME"
@@ -25712,7 +26412,7 @@ msgstr ""
 #. STRINGS.CREATURES.STATUSITEMS.WRONGIRRIGATIONMAJOR.LINE_ITEM
 msgctxt "STRINGS.CREATURES.STATUSITEMS.WRONGIRRIGATIONMAJOR.LINE_ITEM"
 msgid "                    • {0}: {1}\n"
-msgstr "                    • {0}: {1}\n"
+msgstr "                   • {0}: {1}\n"
 
 #. STRINGS.CREATURES.STATUSITEMS.WRONGIRRIGATIONMAJOR.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.WRONGIRRIGATIONMAJOR.NAME"
@@ -26605,7 +27305,7 @@ msgstr "덩어리"
 #. STRINGS.DUPLICANTS.ATTRIBUTES.VALUE
 msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.VALUE"
 msgid "{0}: {1}"
-msgstr "{0} {1}"
+msgstr "{0}: {1}"
 
 #. STRINGS.DUPLICANTS.ATTRIBUTES.WILTTEMPRANGEMOD.DESC
 msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.WILTTEMPRANGEMOD.DESC"
@@ -27230,8 +27930,8 @@ msgstr "해체 예정"
 
 #. STRINGS.DUPLICANTS.CHORES.DECONSTRUCT.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.CHORES.DECONSTRUCT.TOOLTIP"
-msgid "This Duplicant is demolishing a building"
-msgstr "이 복제체는 건조물을 헐고 있습니다."
+msgid "This Duplicant is deconstructing a building"
+msgstr "이 복제체는 건조물을 해체하고 있습니다."
 
 #. STRINGS.DUPLICANTS.CHORES.DELIVERFOOD.NAME
 msgctxt "STRINGS.DUPLICANTS.CHORES.DELIVERFOOD.NAME"
@@ -27247,6 +27947,21 @@ msgstr "식품 배달 중"
 msgctxt "STRINGS.DUPLICANTS.CHORES.DELIVERFOOD.TOOLTIP"
 msgid "Under thirty minutes or it's free"
 msgstr "30분 미만이 아니면 무료입니다."
+
+#. STRINGS.DUPLICANTS.CHORES.DEMOLISH.NAME
+msgctxt "STRINGS.DUPLICANTS.CHORES.DEMOLISH.NAME"
+msgid "Demolish"
+msgstr "파괴"
+
+#. STRINGS.DUPLICANTS.CHORES.DEMOLISH.STATUS
+msgctxt "STRINGS.DUPLICANTS.CHORES.DEMOLISH.STATUS"
+msgid "Demolishing object"
+msgstr "물체 파괴 중"
+
+#. STRINGS.DUPLICANTS.CHORES.DEMOLISH.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.CHORES.DEMOLISH.TOOLTIP"
+msgid "Demolishing an object removes it permanently"
+msgstr "물체를 파괴하면 영구적으로 제거됩니다."
 
 #. STRINGS.DUPLICANTS.CHORES.DEPRESSURIZE.NAME
 msgctxt "STRINGS.DUPLICANTS.CHORES.DEPRESSURIZE.NAME"
@@ -29176,7 +29891,7 @@ msgstr "<link=\"ALLERGIES\">알레르기성 반응</link>"
 #. STRINGS.DUPLICANTS.DISEASES.ATTRIBUTE_MODIFIER_SYMPTOMS
 msgctxt "STRINGS.DUPLICANTS.DISEASES.ATTRIBUTE_MODIFIER_SYMPTOMS"
 msgid "{0}: {1}"
-msgstr "{0} {1}"
+msgstr "{0}: {1}"
 
 #. STRINGS.DUPLICANTS.DISEASES.ATTRIBUTE_MODIFIER_SYMPTOMS_TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.DISEASES.ATTRIBUTE_MODIFIER_SYMPTOMS_TOOLTIP"
@@ -29334,7 +30049,7 @@ msgstr "{0}마다 세균 수가 두 배로 늘어남"
 #. STRINGS.DUPLICANTS.DISEASES.DESCRIPTORS.INFO.GROWTH_FORMAT
 msgctxt "STRINGS.DUPLICANTS.DISEASES.DESCRIPTORS.INFO.GROWTH_FORMAT"
 msgid "    • {0}"
-msgstr "    • {0}"
+msgstr "• {0}"
 
 #. STRINGS.DUPLICANTS.DISEASES.DESCRIPTORS.INFO.NEUTRAL
 msgctxt "STRINGS.DUPLICANTS.DISEASES.DESCRIPTORS.INFO.NEUTRAL"
@@ -32496,12 +33211,12 @@ msgstr "비평가"
 #. STRINGS.DUPLICANTS.NEEDS.FOOD_QUALITY.ADJECTIVE_FORMAT_NEGATIVE
 msgctxt "STRINGS.DUPLICANTS.NEEDS.FOOD_QUALITY.ADJECTIVE_FORMAT_NEGATIVE"
 msgid "{0} [{1}]"
-msgstr "{0} [{1}]"
+msgstr "{0} ({1})"
 
 #. STRINGS.DUPLICANTS.NEEDS.FOOD_QUALITY.ADJECTIVE_FORMAT_POSITIVE
 msgctxt "STRINGS.DUPLICANTS.NEEDS.FOOD_QUALITY.ADJECTIVE_FORMAT_POSITIVE"
 msgid "{0} [{1}]"
-msgstr "{0} [{1}]"
+msgstr "{0} ({1})"
 
 #. STRINGS.DUPLICANTS.NEEDS.FOOD_QUALITY.ADJECTIVES.MINUS_1
 msgctxt "STRINGS.DUPLICANTS.NEEDS.FOOD_QUALITY.ADJECTIVES.MINUS_1"
@@ -33264,13 +33979,13 @@ msgstr "<link=\"NOROLE\">무직</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.DESCRIPTION"
-msgid "Enables Duplicants to study sub-atomic particles using the <link=\"NUCLEARLABORATORY\">Atomic Collider</link>"
-msgstr "복제체가 <link=\"NUCLEARLABORATORY\">원자 충돌기</link>를 사용하여 아원자 입자를 연구할 수 있게 합니다."
+msgid "Enables Duplicants to study matter using the <link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>"
+msgstr "복제체가 <link=\"NUCLEARLABORATORY\">재료 연구 터미널</link>을 사용하여 물질을 연구할 수 있습니다."
 
 #. STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.NAME"
-msgid "<link=\"NUCLEARRESEARCHER\">Atomic Research</link>"
-msgstr "<link=\"NUCLEARRESEARCHER\">원자 연구</link>"
+msgid "<link=\"NUCLEARRESEARCHER\">Materials Science Research</link>"
+msgstr "<link=\"NUCLEARRESEARCHER\">재료 과학 연구</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.OIL_TECHNICIAN.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.OIL_TECHNICIAN.DESCRIPTION"
@@ -33334,13 +34049,13 @@ msgstr "<link=\"PILOT\">로켓 조종</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.DESCRIPTION"
-msgid "Further increases a Duplicant's construction speeds"
-msgstr "복제체의 건조 속도를 더 증가합니다."
+msgid "Enables a Duplicant to deconstruct Gravitas buildings"
+msgstr "복제체가 그라비타스 건조물을 해체할 수 있습니다."
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.NAME"
-msgid "<link=\"SENIORBUILDER\">Improved Construction III</link>"
-msgstr "<link=\"SENIORBUILDER\">개선된 건조 III</link>"
+msgid "<link=\"SENIORBUILDER\">Demolition</link>"
+msgstr "<link=\"SENIORBUILDER\">파괴</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_FARMER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_FARMER.DESCRIPTION"
@@ -33720,6 +34435,16 @@ msgctxt "STRINGS.DUPLICANTS.STATS.TRUNKHEALTH.TOOLTIP"
 msgid "Tree branches will die if they do not have a healthy trunk to grow from"
 msgstr "자랄 건강한 줄기가 없는 나뭇가지는 죽을 것입니다."
 
+#. STRINGS.DUPLICANTS.STATUSITEMS.ANALYZINGARTIFACT.NAME
+msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.ANALYZINGARTIFACT.NAME"
+msgid "Analyzing Artifact"
+msgstr "가공물 분석 중"
+
+#. STRINGS.DUPLICANTS.STATUSITEMS.ANALYZINGARTIFACT.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.ANALYZINGARTIFACT.TOOLTIP"
+msgid "This duplicant is studying an artifact"
+msgstr "이 복제체는 가공물을 연구하고 있습니다."
+
 #. STRINGS.DUPLICANTS.STATUSITEMS.ANALYZINGGENES.NAME
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.ANALYZINGGENES.NAME"
 msgid "Analyzing Plant Genes"
@@ -34031,6 +34756,16 @@ msgstr "{Target} 해체 중"
 
 #. STRINGS.DUPLICANTS.STATUSITEMS.DECONSTRUCTING.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.DECONSTRUCTING.TOOLTIP"
+msgid "This Duplicant is deconstructing the <b>{Target}</b>"
+msgstr "이 복제체는 <b>{Target}</b>을(를) 해체하고 있습니다."
+
+#. STRINGS.DUPLICANTS.STATUSITEMS.DEMOLISHING.NAME
+msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.DEMOLISHING.NAME"
+msgid "Demolishing {Target}"
+msgstr "{Target} 파괴 중"
+
+#. STRINGS.DUPLICANTS.STATUSITEMS.DEMOLISHING.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.DEMOLISHING.TOOLTIP"
 msgid "This Duplicant is demolishing the <b>{Target}</b>"
 msgstr "이 복제체는 <b>{Target}</b>을(를) 헐고 있습니다."
 
@@ -35103,7 +35838,7 @@ msgstr "썩었음"
 #. STRINGS.DUPLICANTS.STATUSITEMS.ROTTEN.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.ROTTEN.TOOLTIP"
 msgid "Gross!"
-msgstr "우웩!"
+msgstr "징그럽잖아!"
 
 #. STRINGS.DUPLICANTS.STATUSITEMS.SEVEREWOUNDS.NAME
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.SEVEREWOUNDS.NAME"
@@ -35837,7 +36572,7 @@ msgstr "미숙한 아티스트"
 #. STRINGS.DUPLICANTS.TRAITS.ATTRIBUTE_MODIFIERS
 msgctxt "STRINGS.DUPLICANTS.TRAITS.ATTRIBUTE_MODIFIERS"
 msgid "{0}: {1}"
-msgstr "{0} {1}"
+msgstr "{0}: {1}"
 
 #. STRINGS.DUPLICANTS.TRAITS.BALLOONARTIST.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.BALLOONARTIST.DESC"
@@ -35897,7 +36632,7 @@ msgstr "<b>{0} 용무</b>를 할 수 없음"
 #. STRINGS.DUPLICANTS.TRAITS.CANNOT_DO_TASK_TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.TRAITS.CANNOT_DO_TASK_TOOLTIP"
 msgid "{0}: {1}"
-msgstr "{0} {1}"
+msgstr "{0}: {1}"
 
 #. STRINGS.DUPLICANTS.TRAITS.CANTBUILD.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.CANTBUILD.DESC"
@@ -36317,13 +37052,13 @@ msgstr "이 복제체는 <style=\"KKeyword\">사기 요건</style> 증가의 단
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.DESC"
-msgid "Further increases a Duplicant's construction speeds"
-msgstr "복제체의 건조 속도를 더 증가합니다."
+msgid "Enables a Duplicant to deconstruct Gravitas buildings"
+msgstr "복제체가 그라비타스 건조물을 해체할 수 있습니다."
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.NAME"
-msgid "Skilled: <link=\"SENIORBUILDER\">Improved Construction III</link>"
-msgstr "숙련: <link=\"SENIORBUILDER\">개선된 건조 III</link>"
+msgid "Skilled: <link=\"SENIORBUILDER\">Demolition</link>"
+msgstr "숙련: <link=\"SENIORBUILDER\">파괴</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.SHORT_DESC"
@@ -36737,13 +37472,13 @@ msgstr "이 복제체는 <style=\"KKeyword\">사기 요건</style> 증가의 단
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.DESC"
-msgid "Enables Duplicants to study sub-atomic particles using the <link=\"NUCLEARLABORATORY\">Atomic Collider</link>"
-msgstr "복제체가 <link=\"NUCLEARLABORATORY\">원자 충돌기</link>를 사용하여 아원자 입자를 연구할 수 있게 합니다."
+msgid "Enables Duplicants to study matter using the <link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>"
+msgstr "복제체가 <link=\"NUCLEARLABORATORY\">재료 연구 터미널</link>을 사용하여 물질을 연구할 수 있습니다."
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.NAME"
-msgid "Skilled: <link=\"NUCLEARRESEARCHER\">Atomic Research</link>"
-msgstr "숙련: <link=\"NUCLEARRESEARCHER\">원자 연구</link>"
+msgid "Skilled: <link=\"NUCLEARRESEARCHER\">Materials Science Research</link>"
+msgstr "숙련: <link=\"NUCLEARRESEARCHER\">재료 과학 연구</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.SHORT_DESC"
@@ -36853,7 +37588,7 @@ msgstr "<b>{0}</b>에 면역임"
 #. STRINGS.DUPLICANTS.TRAITS.IGNORED_EFFECTS_TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.TRAITS.IGNORED_EFFECTS_TOOLTIP"
 msgid "{0}: {1}"
-msgstr "{0} {1}"
+msgstr "{0}: {1}"
 
 #. STRINGS.DUPLICANTS.TRAITS.INTERIORDECORATOR.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.INTERIORDECORATOR.DESC"
@@ -40995,7 +41730,7 @@ msgstr "Building Utility 3"
 #. STRINGS.INPUT_BINDINGS.BUILDING.NAME
 msgctxt "STRINGS.INPUT_BINDINGS.BUILDING.NAME"
 msgid "Building"
-msgstr "만들기"
+msgstr "Building"
 
 #. STRINGS.INPUT_BINDINGS.BUILDING.TOGGLEENABLED
 msgctxt "STRINGS.INPUT_BINDINGS.BUILDING.TOGGLEENABLED"
@@ -41515,7 +42250,7 @@ msgstr "Dig"
 #. STRINGS.INPUT_BINDINGS.ROOT.DISINFECT
 msgctxt "STRINGS.INPUT_BINDINGS.ROOT.DISINFECT"
 msgid "Disinfect"
-msgstr "소독"
+msgstr "Disinfect"
 
 #. STRINGS.INPUT_BINDINGS.ROOT.EMPTYPIPE
 msgctxt "STRINGS.INPUT_BINDINGS.ROOT.EMPTYPIPE"
@@ -45513,6 +46248,11 @@ msgctxt "STRINGS.MISC.TAGS.BURNS"
 msgid "Flammable"
 msgstr "가연성"
 
+#. STRINGS.MISC.TAGS.CHARMEDARTIFACT
+msgctxt "STRINGS.MISC.TAGS.CHARMEDARTIFACT"
+msgid "Artifact of Interest"
+msgstr "관심 가공물"
+
 #. STRINGS.MISC.TAGS.CLINIC
 msgctxt "STRINGS.MISC.TAGS.CLINIC"
 msgid "Clinic"
@@ -45930,8 +46670,8 @@ msgstr "숨쉴 수 없는 기체"
 
 #. STRINGS.MISC.TAGS.UNIDENTIFIEDSEED
 msgctxt "STRINGS.MISC.TAGS.UNIDENTIFIEDSEED"
-msgid "Strange Seed"
-msgstr "이상한 씨"
+msgid "Seed (Unidentified Mutation)"
+msgstr "씨(미확인 돌연변이)"
 
 #. STRINGS.MISC.TAGS.UNSTABLE
 msgctxt "STRINGS.MISC.TAGS.UNSTABLE"
@@ -48908,13 +49648,13 @@ msgstr "<b>컨베이어 오버레이</b>"
 
 #. STRINGS.RESEARCH.OTHER_TECH_ITEMS.DELTA_RESEARCH_POINT.DESC
 msgctxt "STRINGS.RESEARCH.OTHER_TECH_ITEMS.DELTA_RESEARCH_POINT.DESC"
-msgid "Allows <style=\"KKeyword\">Atomic Research</style> points to be accumulated, unlocking higher technology tiers."
-msgstr "<style=\"KKeyword\">원자 연구</style> 포인트를 축적하여 더 높은 테크놀로지 등급을 잠금 해제합니다."
+msgid "Allows <style=\"KKeyword\">Materials Science Research</style> points to be accumulated, unlocking higher technology tiers."
+msgstr "<style=\"KKeyword\">재료 과학 연구</style> 포인트를 축적하여 더 높은 테크놀로지 등급을 잠금 해제합니다."
 
 #. STRINGS.RESEARCH.OTHER_TECH_ITEMS.DELTA_RESEARCH_POINT.NAME
 msgctxt "STRINGS.RESEARCH.OTHER_TECH_ITEMS.DELTA_RESEARCH_POINT.NAME"
-msgid "<style=\"KKeyword\">Atomic Research</style> Capability"
-msgstr "<style=\"KKeyword\">원자 연구</style> 능력"
+msgid "<style=\"KKeyword\">Materials Science Research</style> Capability"
+msgstr "<style=\"KKeyword\">재료 과학 연구</style> 능력"
 
 #. STRINGS.RESEARCH.OTHER_TECH_ITEMS.GAMMA_RESEARCH_POINT.DESC
 msgctxt "STRINGS.RESEARCH.OTHER_TECH_ITEMS.GAMMA_RESEARCH_POINT.DESC"
@@ -49016,6 +49756,16 @@ msgctxt "STRINGS.RESEARCH.TECHS.ADVANCEDRESEARCH.NAME"
 msgid "<link=\"ADVANCEDRESEARCH\">Advanced Research</link>"
 msgstr "<link=\"ADVANCEDRESEARCH\">고급 연구</link>"
 
+#. STRINGS.RESEARCH.TECHS.ADVANCEDRESOURCEEXTRACTION.DESC
+msgctxt "STRINGS.RESEARCH.TECHS.ADVANCEDRESOURCEEXTRACTION.DESC"
+msgid "Bring back souvieners from the stars."
+msgstr "별에서 기념품을 가져옵니다."
+
+#. STRINGS.RESEARCH.TECHS.ADVANCEDRESOURCEEXTRACTION.NAME
+msgctxt "STRINGS.RESEARCH.TECHS.ADVANCEDRESOURCEEXTRACTION.NAME"
+msgid "<link=\"ADVANCEDRESOURCEEXTRACTION\">Advanced Resource Extraction</link>"
+msgstr "<link=\"ADVANCEDRESOURCEEXTRACTION\">고급 자원 추출</link>"
+
 #. STRINGS.RESEARCH.TECHS.ADVANCEDSANITATION.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.ADVANCEDSANITATION.DESC"
 msgid "Clean up dirty Duplicants."
@@ -49105,6 +49855,26 @@ msgstr "콜로니 최초의 우주 프로그램을 시작하는 데 필요한 �
 msgctxt "STRINGS.RESEARCH.TECHS.BASICROCKETRY.NAME"
 msgid "<link=\"BASICROCKETRY\">Introductory Rocketry</link>"
 msgstr "<link=\"BASICROCKETRY\">시작 로켓 공학</link>"
+
+#. STRINGS.RESEARCH.TECHS.BETTERHYDROCARBONPROPULSION.DESC
+msgctxt "STRINGS.RESEARCH.TECHS.BETTERHYDROCARBONPROPULSION.DESC"
+msgid "Mid-range rocket engines with lots of smoke."
+msgstr "연기가 많은 중거리 로켓 엔진."
+
+#. STRINGS.RESEARCH.TECHS.BETTERHYDROCARBONPROPULSION.NAME
+msgctxt "STRINGS.RESEARCH.TECHS.BETTERHYDROCARBONPROPULSION.NAME"
+msgid "<link=\"BETTERHYDROCARBONPROPULSION\">Improved Hydrocarbon Propulsion</link>"
+msgstr "<link=\"BETTERHYDROCARBONPROPULSION\">개선된 탄화수소 추진</link>"
+
+#. STRINGS.RESEARCH.TECHS.BIOENGINEERING.DESC
+msgctxt "STRINGS.RESEARCH.TECHS.BIOENGINEERING.DESC"
+msgid "Description"
+msgstr "설명"
+
+#. STRINGS.RESEARCH.TECHS.BIOENGINEERING.NAME
+msgctxt "STRINGS.RESEARCH.TECHS.BIOENGINEERING.NAME"
+msgid "<link=\"BIOENGINEERING\">Bioengineering</link>"
+msgstr "<link=\"BIOENGINEERING\">바이오엔지니어링</link>"
 
 #. STRINGS.RESEARCH.TECHS.CARGOI.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.CARGOI.DESC"
@@ -49366,6 +50136,16 @@ msgctxt "STRINGS.RESEARCH.TECHS.GLASSFURNISHINGS.NAME"
 msgid "<link=\"GLASSFURNISHINGS\">Glass Blowing</link>"
 msgstr "<link=\"GLASSFURNISHINGS\">유리 불기</link>"
 
+#. STRINGS.RESEARCH.TECHS.HIGHPRESSUREFORGING.DESC
+msgctxt "STRINGS.RESEARCH.TECHS.HIGHPRESSUREFORGING.DESC"
+msgid "High pressure environment for diamond forging"
+msgstr "다이아몬드를 만들기 위한 고압 환경"
+
+#. STRINGS.RESEARCH.TECHS.HIGHPRESSUREFORGING.NAME
+msgctxt "STRINGS.RESEARCH.TECHS.HIGHPRESSUREFORGING.NAME"
+msgid "<link=\"HIGHPRESSUREFORGING\">Pressurized Forging</link>"
+msgstr "<link=\"HIGHPRESSUREFORGING\">고압 제조</link>"
+
 #. STRINGS.RESEARCH.TECHS.HIGHTEMPFORGING.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.HIGHTEMPFORGING.DESC"
 msgid "Craft entirely new materials by harnessing the most extreme temperatures."
@@ -49375,6 +50155,16 @@ msgstr "가장 극한의 온도를 이용하여 완전히 새로운 소재를 �
 msgctxt "STRINGS.RESEARCH.TECHS.HIGHTEMPFORGING.NAME"
 msgid "<link=\"HIGHTEMPFORGING\">Superheated Forging</link>"
 msgstr "<link=\"HIGHTEMPFORGING\">초과열 제조</link>"
+
+#. STRINGS.RESEARCH.TECHS.HIGHVELOCITYDESTRUCTION.DESC
+msgctxt "STRINGS.RESEARCH.TECHS.HIGHVELOCITYDESTRUCTION.DESC"
+msgid "Description"
+msgstr "설명"
+
+#. STRINGS.RESEARCH.TECHS.HIGHVELOCITYDESTRUCTION.NAME
+msgctxt "STRINGS.RESEARCH.TECHS.HIGHVELOCITYDESTRUCTION.NAME"
+msgid "<link=\"HIGHVELOCITYDESTRUCTION\">High Velocity Destruction</link>"
+msgstr "<link=\"HIGHVELOCITYDESTRUCTION\">고속 파괴</link>"
 
 #. STRINGS.RESEARCH.TECHS.HIGHVELOCITYTRANSPORT.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.HIGHVELOCITYTRANSPORT.DESC"
@@ -49648,13 +50438,13 @@ msgstr "<link=\"NUCLEAR\">방사선 정제</link>"
 
 #. STRINGS.RESEARCH.TECHS.NUCLEARRESEARCH.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.NUCLEARRESEARCH.DESC"
-msgid "Research and harness sub-atomic particles."
-msgstr "아원자 입자를 연구하고 활용합니다."
+msgid "Harness sub-atomic particles to study the properties of matter."
+msgstr "물질의 특성을 연구하기 위해 아원자 입자를 활용합니다."
 
 #. STRINGS.RESEARCH.TECHS.NUCLEARRESEARCH.NAME
 msgctxt "STRINGS.RESEARCH.TECHS.NUCLEARRESEARCH.NAME"
-msgid "<link=\"ATOMIC\">Atomic Research</link>"
-msgstr "<link=\"ATOMIC\">원자 연구</link>"
+msgid "<link=\"ATOMIC\">Materials Science Research</link>"
+msgstr "<link=\"ATOMIC\">재료 과학 연구</link>"
 
 #. STRINGS.RESEARCH.TECHS.PARALLELAUTOMATION.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.PARALLELAUTOMATION.DESC"
@@ -49886,6 +50676,26 @@ msgctxt "STRINGS.RESEARCH.TECHS.SOLIDTRANSPORT.NAME"
 msgid "<link=\"SOLIDTRANSPORT\">Solid Transport</link>"
 msgstr "<link=\"SOLIDTRANSPORT\">고체 수송</link>"
 
+#. STRINGS.RESEARCH.TECHS.SPACECOMBUSTION.DESC
+msgctxt "STRINGS.RESEARCH.TECHS.SPACECOMBUSTION.DESC"
+msgid "Description"
+msgstr "설명"
+
+#. STRINGS.RESEARCH.TECHS.SPACECOMBUSTION.NAME
+msgctxt "STRINGS.RESEARCH.TECHS.SPACECOMBUSTION.NAME"
+msgid "<link=\"SPACECOMBUSTION\">Advanced Combustion</link>"
+msgstr "<link=\"SPACECOMBUSTION\">고급 연소</link>"
+
+#. STRINGS.RESEARCH.TECHS.SPACEGAS.DESC
+msgctxt "STRINGS.RESEARCH.TECHS.SPACEGAS.DESC"
+msgid "Description"
+msgstr "설명"
+
+#. STRINGS.RESEARCH.TECHS.SPACEGAS.NAME
+msgctxt "STRINGS.RESEARCH.TECHS.SPACEGAS.NAME"
+msgid "<link=\"SPACEGAS\">Advanced Gas Flow</link>"
+msgstr "<link=\"SPACEGAS\">고급 기체 흐름</link>"
+
 #. STRINGS.RESEARCH.TECHS.SPACEPOWER.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.SPACEPOWER.DESC"
 msgid "It's like power... in space!"
@@ -50042,16 +50852,16 @@ msgstr "향상된 테크놀로지를 배울 수 있습니다."
 #. STRINGS.RESEARCH.TYPES.DELTA.DESC
 msgctxt "STRINGS.RESEARCH.TYPES.DELTA.DESC"
 msgid ""
-"<link=\"RESEARCH\">Atomic Research</link> is required to unlock atomic technologies.\n"
-"It can be conducted at a <link=\"NUCLEARLABORATORY\">Atomic Collider</link>."
+"<link=\"RESEARCH\">Materials Science Research</link> is required to unlock materials science technologies.\n"
+"It can be conducted at a <link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>."
 msgstr ""
-"원자 테크놀로지를 잠금 해제하려면 <link=\"RESEARCH\">원자 연구</link>가 필요합니다.\n"
-"<link=\"NUCLEARLABORATORY\">원자 충돌기</link>에서 실시할 수 있습니다."
+"재료 과학 테크놀로지를 잠금 해제하려면 <link=\"RESEARCH\">재료 과학 연구</link>가 필요합니다.\n"
+"<link=\"NUCLEARLABORATORY\">재료 연구 터미널</link>에서 실시할 수 있습니다."
 
 #. STRINGS.RESEARCH.TYPES.DELTA.NAME
 msgctxt "STRINGS.RESEARCH.TYPES.DELTA.NAME"
-msgid "Atomic Research"
-msgstr "원자 연구"
+msgid "Materials Science Research"
+msgstr "재료 과학 연구"
 
 #. STRINGS.RESEARCH.TYPES.DELTA.RECIPEDESC
 msgctxt "STRINGS.RESEARCH.TYPES.DELTA.RECIPEDESC"
@@ -51072,18 +51882,23 @@ msgstr "예정된 작업중지시간에 오락실을 방문하는 복제체는 �
 
 #. STRINGS.SUBWORLDS.AQUATIC.DESC
 msgctxt "STRINGS.SUBWORLDS.AQUATIC.DESC"
-msgid ""
-msgstr ""
+msgid "The Aquatic Biome is flush with a huge deposit of precious <link=\"WATER\">Water</link>."
+msgstr "수성 생물군계에는 귀중한 <link=\"WATER\">물</link>이 엄청나게 많이 있습니다."
 
 #. STRINGS.SUBWORLDS.AQUATIC.NAME
 msgctxt "STRINGS.SUBWORLDS.AQUATIC.NAME"
 msgid "Aquatic"
-msgstr "물의"
+msgstr "수성"
 
 #. STRINGS.SUBWORLDS.AQUATIC.UTILITY
 msgctxt "STRINGS.SUBWORLDS.AQUATIC.UTILITY"
 msgid ""
+"Initially there is very little solid ground in this biome to establish a temporary base, but once a transportation network can be established to send the <link=\"WATER\">Water</link> of the Aquatic Biome to the rest of the colony, the other elements will be easier to reach.\n"
+"\n"
+"<link=\"SANDSTONE\">Sandstone</link>, <link=\"MAFICROCK\">Mafic Rock</link>, <link=\"SAND\">Sand</link> and <link=\"SEDIMENTARYROCK\">Sedimentary Rock</link> provide readily available construction materials for setting up elementary infrastructure. The presence of <link=\"OXYROCK\">Oxylite</link> provides invaluable <link=\"OXYGEN\">Oxygen</link> which, through careful planning, should be able to sustain any Duplicants working in the area for a limited amount of time."
 msgstr ""
+"처음에는 이 생물군계에 임시 기지를 구축할 단단한 땅이 거의 없지만 수성 생물군계의 <link=\"WATER\">물</link>을 콜로니의 나머지 부분으로 보내기 위한 수송망이 구축되면 다른 요소에 더 쉽게 도달할 수 있습니다.\n"
+"<link=\"SANDSTONE\">사암</link>, <link=\"MAFICROCK\">고철질암</link>, <link=\"SAND\">모래</link>, <link=\"SEDIMENTARYROCK\">퇴적암</link>은 기초 인프라를 설정하기 위해 쉽게 사용할 수 있는 건축 재료를 제공합니다. <link=\"OXYROCK\">산소석</link>의 존재는 신중한 계획을 통해 제한된 시간 동안 해당 지역에서 일하는 복제체를 유지할 수 있는 귀중한 <link=\"OXYGEN\">산소</link>를 제공합니다."
 
 #. STRINGS.SUBWORLDS.BARREN.DESC
 msgctxt "STRINGS.SUBWORLDS.BARREN.DESC"
@@ -51270,23 +52085,33 @@ msgstr ""
 
 #. STRINGS.SUBWORLDS.MOO.DESC
 msgctxt "STRINGS.SUBWORLDS.MOO.DESC"
-msgid ""
-msgstr ""
+msgid "The Moo Biome is the natural habitat of the charismatic <link=\"MOO\">Gassy Moo</link>, a great source of <link=\"METHANE\">Natural Gas</link>."
+msgstr "음메 생물군계는 <link=\"METHANE\">천연가스</link>의 훌륭한 공급원인 카리스마 넘치는 <link=\"MOO\">가스질 음메</link>의 자연 서식지입니다."
 
 #. STRINGS.SUBWORLDS.MOO.NAME
 msgctxt "STRINGS.SUBWORLDS.MOO.NAME"
 msgid "Moo"
-msgstr "음매"
+msgstr "음메"
 
 #. STRINGS.SUBWORLDS.MOO.UTILITY
 msgctxt "STRINGS.SUBWORLDS.MOO.UTILITY"
 msgid ""
+"In addition to <link=\"METHANE\">Natural Gas</link>, the highly toxic <link=\"CHLORINEGAS\">Chlorine</link> is also present in gas form. In fact, Chlorine is present here in <link=\"ELEMENTSGAS\">gas</link>, <link=\"ELEMENTSLIQUID\">liquid</link>, and <link=\"ELEMENTSSOLID\">solid</link> states, largely due to the presence of <link=\"BLEACHSTONE\">Bleach Stone</link>.\n"
+"\n"
+"<link=\"IGNEOUSROCK\">Igneous Rock</link> and its denser form, <link=\"GRANITE\">Granite</link>, provide some useful construction materials, but the real star of this biome are the <link=\"MOO\">Gassy Moos</link> who consume <link=\"GASGRASS\">Gas Grass</link> and excrete <link=\"METHANE\">Natural Gas</link>. While Gassy Moos cannot be bred domestically, Gassy Mooteors regularly fall from space onto this biome, making it the best way to find a reliable source of these elusive creatures.\n"
+"\n"
+"With no breathable <link=\"OXYGEN\">Oxygen</link> in this biome my Duplicants will need to be properly prepared before they venture too far into its depths."
 msgstr ""
+"<link=\"METHANE\">천연가스</link> 외에도 독성이 높은 <link=\"CHLORINEGAS\">염소</link>도 기체 형태로 존재합니다. 사실 염소는 주로 <link=\"BLEACHSTONE\">표백석</link>의 존재로 인해 <link=\"ELEMENTSGAS\">기체</link>, <link=\"ELEMENTSLIQUID\">액체</link>, <link=\"ELEMENTSSOLID\">고체</link> 상태로 존재합니다.\n"
+"\n"
+"<link=\"IGNEOUSROCK\">화성암</link>과 더 조밀한 형태인 <link=\"GRANITE\">화강암</link>은 유용한 건축 재료를 제공하지만,이 생물군계의 진정한 스타는 <link=\"GASGRASS\">가스풀</link>을 소비하고 <link=\"METHANE\">천연가스</link>를 배출하는 <link=\"MOO\">가스질 음메</link>입니다. 가스질 음메는 가축으로 번식할 수 없지만 가스질 음메유성이 정기적으로 우주에서 이 생물군계로 떨어지므로 이 오묘한 생물을 잘 찾을 수 있습니다.\n"
+"\n"
+"이 생물군계에 호흡성 <link=\"OXYGEN\">산소</link>가 없기 때문에 복제체가 너무 깊이 들어가기 전에 적절하게 준비해야 합니다."
 
 #. STRINGS.SUBWORLDS.NIOBIUM.DESC
 msgctxt "STRINGS.SUBWORLDS.NIOBIUM.DESC"
-msgid ""
-msgstr ""
+msgid "The Niobium Biome features only two resources yet, because <link=\"NIOBIUM\">Niobium</link> is an extremely rare and valuable element, it is worth making a special visit."
+msgstr "나이오븀 생물군계는 아직 두 가지 자원만 제공합니다. <link=\"NIOBIUM\">나이오븀</link>은 매우 희귀하고 귀중한 요소이므로 특별 방문을 할 가치가 있습니다."
 
 #. STRINGS.SUBWORLDS.NIOBIUM.NAME
 msgctxt "STRINGS.SUBWORLDS.NIOBIUM.NAME"
@@ -51296,7 +52121,13 @@ msgstr "나이오븀"
 #. STRINGS.SUBWORLDS.NIOBIUM.UTILITY
 msgctxt "STRINGS.SUBWORLDS.NIOBIUM.UTILITY"
 msgid ""
+"By itself <link=\"NIOBIUM\">Niobium</link> is not a particularly useful resource, but if processed through a <link=\"METALREFINERY\">Metal Refinery</link> it produces the extremely thermal conductive <link=\"TEMPCONDUCTORSOLID\">Thermium</link> which goes a long way in solving many extreme temperature issues in a colony.\n"
+"\n"
+"The edges of this biome are filled with <link=\"OBSIDIAN\">Obsidian</link> so a Duplicant with the <link=\"SENIORMINER\">Super-Duperhard Digging</link> skill will be required before my colony can explore here."
 msgstr ""
+"그 자체로 <link=\"NIOBIUM\">나이오븀</link>은 특별히 유용한 자원은 아니지만 <link=\"METALREFINERY\">금속 제련소</link>를 통해 처리되는 경우 극도로 열 전도성이 있는 <link=\"TEMPCONDUCTORSOLID\">서미움</link>을 생성하여 콜로니의 많은 극한 온도 문제를 해결합니다.\n"
+"\n"
+"이 생물군계의 가장자리는 <link=\"OBSIDIAN\">흑요석</link>으로 채워져 있으므로 콜로니에서 여기를 탐험하려면 <link=\"SENIORMINER\">초특경도 굴착</link> 기술이 있는 복제체가 필요합니다."
 
 #. STRINGS.SUBWORLDS.OCEAN.DESC
 msgctxt "STRINGS.SUBWORLDS.OCEAN.DESC"
@@ -51489,8 +52320,8 @@ msgstr ""
 
 #. STRINGS.SUBWORLDS.WASTELAND.DESC
 msgctxt "STRINGS.SUBWORLDS.WASTELAND.DESC"
-msgid ""
-msgstr ""
+msgid "While the Wasteland Biome does not look particularly interesting, a pragmatic colony can take advantage of its selection of construction resources."
+msgstr "불모지 생물군계가 특별히 흥미로워 보이지는 않지만 실용적인 콜로니는 여기의 여러 가지 건조 자원을 활용할 수 있습니다."
 
 #. STRINGS.SUBWORLDS.WASTELAND.NAME
 msgctxt "STRINGS.SUBWORLDS.WASTELAND.NAME"
@@ -51500,7 +52331,17 @@ msgstr "불모지"
 #. STRINGS.SUBWORLDS.WASTELAND.UTILITY
 msgctxt "STRINGS.SUBWORLDS.WASTELAND.UTILITY"
 msgid ""
+"The prevalance of <link=\"COPPER\">Copper</link>, <link=\"SANDSTONE\">Sandstone</link>, <link=\"IGNEOUSROCK\">Igneous Rock</link> and its <link=\"IRON\">Iron</link> rich counterpart <link=\"MAFICROCK\">Mafic Rock</link>, make this a fruitful biome to explore for construction material. <link=\"SAND\">Sand</link> is also in abundance here which is useful as a filtering material.\n"
+"\n"
+"While the wildlife is not in abundance in the Wasteland Biome, the <link=\"DIVERGENTBEETLE\">Sweetle</link> and <link=\"DIVERGENTWORM\">Grubgrub</link> make interesting creatures to domesticate as they co-exist with the  <link=\"WORMPLANT\">Grubfruit Plants</link> to produce a much higher quality food than the <link=\"WORMPLANT\">Spindly Grubfruit Plant</link> found in the wild. Additionally, the <link=\"SULFUR\">Sulfur</link> found here works both as food for the GrubGrubs and fertilizer for the Grubfruit Plants.\n"
+"\n"
+"The abundance of <link=\"OXYGEN\">Oxygen</link> found in the Wasteland Biome makes for a low-risk area to send my Duplicants into to collect useful resources to continue with their construction projects."
 msgstr ""
+"<link=\"COPPER\">구리</link>, <link=\"SANDSTONE\">사암</link>, <link=\"IGNEOUSROCK\">화성암</link> 및 <link=\"IRON\">철</link>이 풍부한 <link=\"MAFICROCK\">고철질암</link>이 널리 퍼져 있어 건조 자재를 구하기에 좋은 생물군계입니다. 여과재로 유용한 <link=\"SAND\">모래</link>도 풍부합니다.\n"
+"\n"
+"불모지 생물군계에는 야생 크리터가 풍부하지 않지만 <link=\"DIVERGENTBEETLE\">단벌레</link>와 <link=\"DIVERGENTWORM\">벵이벵이</link>는 <link=\"WORMPLANT\">벵이과실</link>과 공존하여 야생에서 발견되는 <link=\"WORMPLANT\">호리호리한 벵이과실</link>보다 훨씬 높은 품질의 식품을 생산하기 때문에 길들이기 좋습니다. 그리고 여기에 있는 <link=\"SULFUR\">황</link>은 벵이벵이가 먹을 수 있고, 벵이과실의 비료로도 사용할 수 있습니다.\n"
+"\n"
+"불모지 생물군계에서 발견되는 풍부한 <link=\"OXYGEN\">산소</link>는 복제체를 보내 유용한 자원을 수집하여 건조 프로젝트를 계속할 수 있는 저위험 지역입니다."
 
 #. STRINGS.UI.ACTIONS
 msgctxt "STRINGS.UI.ACTIONS"
@@ -51585,7 +52426,7 @@ msgstr "이 콜로니는 {0} 주기가 지났습니다."
 #. STRINGS.UI.ASTEROIDCLOCK.SCHEDULE_BUTTON_TOOLTIP
 msgctxt "STRINGS.UI.ASTEROIDCLOCK.SCHEDULE_BUTTON_TOOLTIP"
 msgid "Manage Schedule"
-msgstr "수케줄 관리"
+msgstr "스케줄 관리"
 
 #. STRINGS.UI.ASTEROIDCLOCK.TIME_PLAYED
 msgctxt "STRINGS.UI.ASTEROIDCLOCK.TIME_PLAYED"
@@ -51900,7 +52741,7 @@ msgstr "달리기 속도: {0}"
 #. STRINGS.UI.BUILDINGEFFECTS.ELEMENTCONSUMED
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.ELEMENTCONSUMED"
 msgid "{0}: {1}"
-msgstr "{0} {1}"
+msgstr "{0}: {1}"
 
 #. STRINGS.UI.BUILDINGEFFECTS.ELEMENTCONSUMEDPERUSE
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.ELEMENTCONSUMEDPERUSE"
@@ -51910,27 +52751,27 @@ msgstr "{0}: 사용당 {1}"
 #. STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_ENTITYTEMP
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_ENTITYTEMP"
 msgid "{0}: {1}"
-msgstr "{0} {1}"
+msgstr "{0}: {1}"
 
 #. STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_FIXEDTEMP
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_FIXEDTEMP"
 msgid "{0}: {1}"
-msgstr "{0} {1}"
+msgstr "{0}: {1}"
 
 #. STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_INPUTTEMP
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_INPUTTEMP"
 msgid "{0}: {1}"
-msgstr "{0} {1}"
+msgstr "{0}: {1}"
 
 #. STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_MINORENTITYTEMP
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_MINORENTITYTEMP"
 msgid "{0}: {1}"
-msgstr "{0} {1}"
+msgstr "{0}: {1}"
 
 #. STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_MINTEMP
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_MINTEMP"
 msgid "{0}: {1}"
-msgstr "{0} {1}"
+msgstr "{0}: {1}"
 
 #. STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_TOILET
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.ELEMENTEMITTED_TOILET"
@@ -53007,7 +53848,7 @@ msgstr "넘치는 기쁨 반응: {0}"
 #. STRINGS.UI.CHARACTERCONTAINER_NEED
 msgctxt "STRINGS.UI.CHARACTERCONTAINER_NEED"
 msgid "{0}: {1}"
-msgstr "{0} {1}"
+msgstr "{0}: {1}"
 
 #. STRINGS.UI.CHARACTERCONTAINER_NOARCHETYPESELECTED
 msgctxt "STRINGS.UI.CHARACTERCONTAINER_NOARCHETYPESELECTED"
@@ -53093,6 +53934,21 @@ msgstr "미행성"
 msgctxt "STRINGS.UI.CLUSTERMAP.PLANETOID_KEYWORD"
 msgid "Planetoid"
 msgstr "미행성"
+
+#. STRINGS.UI.CLUSTERMAP.POI.MASS_REMAINING
+msgctxt "STRINGS.UI.CLUSTERMAP.POI.MASS_REMAINING"
+msgid "<b>Total Mass Remaining</b>"
+msgstr "<b>남은 총 질량</b>"
+
+#. STRINGS.UI.CLUSTERMAP.POI.ROCKETS_AT_THIS_LOCATION
+msgctxt "STRINGS.UI.CLUSTERMAP.POI.ROCKETS_AT_THIS_LOCATION"
+msgid "<b>Rockets at this location</b>"
+msgstr "<b>이 위치의 로켓</b>"
+
+#. STRINGS.UI.CLUSTERMAP.POI.TITLE
+msgctxt "STRINGS.UI.CLUSTERMAP.POI.TITLE"
+msgid "POINT OF INTEREST"
+msgstr "관심지점"
 
 #. STRINGS.UI.CLUSTERMAP.ROCKETS.BURDEN_MODULE.NAME
 msgctxt "STRINGS.UI.CLUSTERMAP.ROCKETS.BURDEN_MODULE.NAME"
@@ -53222,6 +54078,31 @@ msgstr ""
 msgctxt "STRINGS.UI.CLUSTERMAP.SELECT_DESTINATION"
 msgid "Select a new destination on the map"
 msgstr "지도에서 새로운 목적지점을 선택하세요"
+
+#. STRINGS.UI.CLUSTERMAP.STATUS.NORMAL
+msgctxt "STRINGS.UI.CLUSTERMAP.STATUS.NORMAL"
+msgid "Normal"
+msgstr "정상"
+
+#. STRINGS.UI.CLUSTERMAP.STATUS.ROCKET.GROUNDED
+msgctxt "STRINGS.UI.CLUSTERMAP.STATUS.ROCKET.GROUNDED"
+msgid "Normal"
+msgstr "정상"
+
+#. STRINGS.UI.CLUSTERMAP.STATUS.ROCKET.IDLE
+msgctxt "STRINGS.UI.CLUSTERMAP.STATUS.ROCKET.IDLE"
+msgid "Idle"
+msgstr "유휴"
+
+#. STRINGS.UI.CLUSTERMAP.STATUS.ROCKET.STRANDED
+msgctxt "STRINGS.UI.CLUSTERMAP.STATUS.ROCKET.STRANDED"
+msgid "Stranded"
+msgstr "좌초됨"
+
+#. STRINGS.UI.CLUSTERMAP.STATUS.ROCKET.TRAVELING
+msgctxt "STRINGS.UI.CLUSTERMAP.STATUS.ROCKET.TRAVELING"
+msgid "Traveling"
+msgstr "이동 중"
 
 #. STRINGS.UI.CLUSTERMAP.TILES
 msgctxt "STRINGS.UI.CLUSTERMAP.TILES"
@@ -54015,13 +54896,23 @@ msgstr "자리 표시자 기준 이름"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.ALL_NAME
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.ALL_NAME"
-msgid "Avg Power"
-msgstr "평균 전력"
+msgid "Power use"
+msgstr "전력 사용"
 
-#. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKPOWER
-msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKPOWER"
-msgid "Check power"
-msgstr "전력 확인"
+#. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CIRCUIT_OVER_CAPACITY
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CIRCUIT_OVER_CAPACITY"
+msgid "Circuit overloaded {0}/{1}"
+msgstr "회로 과부하 {0} /{1}"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKOVERWATTAGE
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKOVERWATTAGE"
+msgid "Check circuit overloaded"
+msgstr "회로 과부하 확인"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKPOWERUSECHANGE
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKPOWERUSECHANGE"
+msgid "Check power use change"
+msgstr "전력 사용 변경 확인"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.NORMAL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.NORMAL"
@@ -54033,15 +54924,25 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.OVERLOADED"
 msgid "    • One or more power grids are damaged"
 msgstr "    • 전력망 1개 이상이 손상되었습니다."
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.SIGNIFICANT_POWER_CHANGE_DETECTED
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.SIGNIFICANT_POWER_CHANGE_DETECTED"
+msgid "Significant power use change detected. (Average:{0}, Current:{1})"
+msgstr "상당한 전력 사용 변화가 감지되었습니다. (평균: {0}, 현재: {1})"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.TOOLTIP_NAME
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.TOOLTIP_NAME"
-msgid "<b>Avg Power</b>"
-msgstr "<b>평균 전력</b>"
+msgid "<b>Power use</b>"
+msgstr "<b>전력 사용</b>"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.ALL_NAME
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.ALL_NAME"
 msgid "Radiation"
 msgstr "방사선"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.AVERAGE_RADS
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.AVERAGE_RADS"
+msgid "Avg. {0}"
+msgstr "평균 {0}"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA.CHECKEXPOSED
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA.CHECKEXPOSED"
@@ -54854,12 +55755,12 @@ msgid ""
 " • {0}"
 msgstr ""
 "\n"
-"• {0}"
+" • {0}"
 
 #. STRINGS.UI.DETAILTABS.DETAILS.CONTENTS_MASS
 msgctxt "STRINGS.UI.DETAILTABS.DETAILS.CONTENTS_MASS"
 msgid "{0}: {1}"
-msgstr "{0} {1}"
+msgstr "{0}: {1}"
 
 #. STRINGS.UI.DETAILTABS.DETAILS.CONTENTS_ROTTABLE
 msgctxt "STRINGS.UI.DETAILTABS.DETAILS.CONTENTS_ROTTABLE"
@@ -54868,7 +55769,7 @@ msgid ""
 " • {0}"
 msgstr ""
 "\n"
-"• {0}"
+" • {0}"
 
 #. STRINGS.UI.DETAILTABS.DETAILS.CONTENTS_TEMPERATURE
 msgctxt "STRINGS.UI.DETAILTABS.DETAILS.CONTENTS_TEMPERATURE"
@@ -54943,7 +55844,7 @@ msgstr "{0}/주기로 세균 수 감소 중"
 #. STRINGS.UI.DETAILTABS.DISEASE.DETAILS.DISEASE_AMOUNT
 msgctxt "STRINGS.UI.DETAILTABS.DISEASE.DETAILS.DISEASE_AMOUNT"
 msgid "{0}: {1}"
-msgstr "{0} {1}"
+msgstr "{0}: {1}"
 
 #. STRINGS.UI.DETAILTABS.DISEASE.DETAILS.DISEASE_AMOUNT_TOOLTIP
 msgctxt "STRINGS.UI.DETAILTABS.DISEASE.DETAILS.DISEASE_AMOUNT_TOOLTIP"
@@ -55198,7 +56099,7 @@ msgstr "선택한 물체의 질병 위험 보기"
 #. STRINGS.UI.DETAILTABS.EGG_CHANCES.CHANCE_FORMAT
 msgctxt "STRINGS.UI.DETAILTABS.EGG_CHANCES.CHANCE_FORMAT"
 msgid "{0}: {1}"
-msgstr "{0} {1}"
+msgstr "{0}: {1}"
 
 #. STRINGS.UI.DETAILTABS.EGG_CHANCES.CHANCE_FORMAT_TOOLTIP
 msgctxt "STRINGS.UI.DETAILTABS.EGG_CHANCES.CHANCE_FORMAT_TOOLTIP"
@@ -55221,7 +56122,7 @@ msgstr "이 크리터는 {0}을(를) 낳을 확률이 {1}입니다."
 #. STRINGS.UI.DETAILTABS.EGG_CHANCES.CHANCE_MOD_FORMAT
 msgctxt "STRINGS.UI.DETAILTABS.EGG_CHANCES.CHANCE_MOD_FORMAT"
 msgid "    • {0}\n"
-msgstr "    • {0}\n"
+msgstr "• {0}\n"
 
 #. STRINGS.UI.DETAILTABS.ENERGYCONSUMER.NAME
 msgctxt "STRINGS.UI.DETAILTABS.ENERGYCONSUMER.NAME"
@@ -55580,6 +56481,16 @@ msgctxt "STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_BIOMES"
 msgid "BIOMES"
 msgstr "생물군계"
 
+#. STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_CARGOBAY
+msgctxt "STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_CARGOBAY"
+msgid "CARGO BAYS"
+msgstr "화물칸"
+
+#. STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_CLUSTER_POI
+msgctxt "STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_CLUSTER_POI"
+msgid "POINT OF INTEREST"
+msgstr "관심지점"
+
 #. STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_CONDITION
 msgctxt "STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_CONDITION"
 msgid "CONDITION"
@@ -55841,38 +56752,40 @@ msgstr "빌드: {0}"
 
 #. STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.ALERT_ONLY
 msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.ALERT_ONLY"
-msgid ""
-"\n"
-"------------------\n"
-"Click to subscribe to this diagnostic - <b>Visible On Alert Only</b>"
+msgid "Click to subscribe to this diagnostic - Current State:  <b>Never Visible      </b>"
 msgstr ""
-"\n"
-"------------------\n"
-"클릭하여 이 진단을 구독함 - <b>경보 시에만 보임</b>"
+"이 진단에 구독하려면 클릭 -  현재 상태: \n"
+"<b>절대로 표시하지 않음      </b>"
 
 #. STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.ALWAYS
 msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.ALWAYS"
-msgid ""
-"\n"
-"------------------\n"
-"Click to pin this diagnostic to the sidebar -  <b>Always Visible</b>"
-msgstr ""
-"\n"
-"------------------\n"
-"이 진단을 세로 막대에 고정하려면 클릭 -  \n"
-"<b>항상 표시</b>"
+msgid "Click to pin this diagnostic to the sidebar - Current State: <b>Visible On Alert Only</b>"
+msgstr "이 진단을 사이드바에 고정하려면 클릭 - 현재 상태: <b>경보 시에만 표시</b>"
 
 #. STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.NEVER
 msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.NEVER"
-msgid ""
-"\n"
-"------------------\n"
-"Click to mute this diagnostic on the sidebar -  <b>Never Visible      </b>"
-msgstr ""
-"\n"
-"------------------\n"
-"이 진단을 세로 막대에서 안 보이게 하려면 클릭 -  \n"
-"<b>절대로 표시하지 않음</b>"
+msgid "Click to mute this diagnostic on the sidebar -  Current State: <b>Always Visible</b>"
+msgstr "사이드바에서 이 진단을 보이지 않게 하려면 클릭 - 현재 상태: <b>항상 표시</b>"
+
+#. STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.TUTORIAL_DISABLED
+msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.TUTORIAL_DISABLED"
+msgid "Click to enable this diagnostic -  Current State: <b>Tutorial Disabled</b>"
+msgstr "이 진단을 활성화하려면 클릭 - 현재 상태: <b>지침 비활성화됨</b>"
+
+#. STRINGS.UI.DIAGNOSTICS_SCREEN.CRITERIA_ENABLED_COUNT
+msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.CRITERIA_ENABLED_COUNT"
+msgid "{0}/{1} criteria enabled"
+msgstr "{0}/{1} 기준 사용됨"
+
+#. STRINGS.UI.DIAGNOSTICS_SCREEN.CRITERIA_HEADER_TOOLTIP
+msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.CRITERIA_HEADER_TOOLTIP"
+msgid "Expand or collapse diagnostic criteria panel"
+msgstr "진단 기준 패널 확장 또는 축소"
+
+#. STRINGS.UI.DIAGNOSTICS_SCREEN.CRITERIA_TOOLTIP
+msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.CRITERIA_TOOLTIP"
+msgid "Toggle the <b>{0}</b> diagnostics evaluation of the <b>{1}</b> criteria."
+msgstr "<b>{1}</b> 기준의 <b>{0}</b> 진단 평가를 토글합니다."
 
 #. STRINGS.UI.DIAGNOSTICS_SCREEN.DIAGNOSTIC
 msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.DIAGNOSTIC"
@@ -56387,7 +57300,7 @@ msgstr "식품 싸움에서 {0} 섭취"
 #. STRINGS.UI.ENDOFDAYREPORT.NOTES.GERMS
 msgctxt "STRINGS.UI.ENDOFDAYREPORT.NOTES.GERMS"
 msgid "On {0}"
-msgstr "{0}에 있음"
+msgstr "{0} 관련"
 
 #. STRINGS.UI.ENDOFDAYREPORT.NOTES.HARVESTED
 msgctxt "STRINGS.UI.ENDOFDAYREPORT.NOTES.HARVESTED"
@@ -57821,7 +58734,7 @@ msgstr "크기: {0}"
 #. STRINGS.UI.FRONTEND.LOADSCREEN.COLONY_INFO_FMT
 msgctxt "STRINGS.UI.FRONTEND.LOADSCREEN.COLONY_INFO_FMT"
 msgid "{0}: {1}"
-msgstr "{0} {1}"
+msgstr "{0}: {1}"
 
 #. STRINGS.UI.FRONTEND.LOADSCREEN.COLONY_TITLE
 msgctxt "STRINGS.UI.FRONTEND.LOADSCREEN.COLONY_TITLE"
@@ -59861,7 +60774,7 @@ msgstr "생명 주기: {0}"
 #. STRINGS.UI.GAMEOBJECTEFFECTS.IDEAL_FERTILIZER
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.IDEAL_FERTILIZER"
 msgid "{0}: {1}"
-msgstr "{0} {1}"
+msgstr "{0}: {1}"
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.IDEAL_PRESSURE
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.IDEAL_PRESSURE"
@@ -59966,7 +60879,7 @@ msgstr "<link=\"HEAT\">온도</link>: {0} ~ {1}"
 #. STRINGS.UI.GAMEOBJECTEFFECTS.REQUIRESFERTILIZER
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.REQUIRESFERTILIZER"
 msgid "{0}: {1}"
-msgstr "{0} {1}"
+msgstr "{0}: {1}"
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.ROTTEN
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.ROTTEN"
@@ -60098,8 +61011,8 @@ msgstr ""
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.MUTANT_STERILE
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.MUTANT_STERILE"
-msgid "Due to changes to its DNA this plant will not produce seeds of its own"
-msgstr "DNA의 변화로 인해 이 식물은 자신의 씨를 생성하지 않습니다."
+msgid "This plant will not produce seeds of its own due to changes to its DNA"
+msgstr "이 식물은 DNA의 변화로 인해 자체 씨를 생산하지 않습니다."
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.REGROWTHTIME
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.REGROWTHTIME"
@@ -64187,6 +65100,11 @@ msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_COMPOUND.DESCRIPTION"
 msgid "<link=\"APOTHECARY\">Apothecary</link> Usage"
 msgstr "<link=\"APOTHECARY\">약제대</link> 사용"
 
+#. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_DEMOLISH.DESCRIPTION
+msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_DEMOLISH.DESCRIPTION"
+msgid "Demolish Gravitas Buildings"
+msgstr "그라비타스 건조물 파괴"
+
 #. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_DIG_NEARLY_IMPENETRABLE.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_DIG_NEARLY_IMPENETRABLE.DESCRIPTION"
 msgid "<link=\"KATAIRITE\">Abyssalite</link> Mining"
@@ -64247,6 +65165,11 @@ msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_POWER_TINKER.DESCRIPTION"
 msgid "<link=\"POWER\">Generator Tuning</link> usage and Microchip Crafting"
 msgstr "<link=\"POWER\">발전기 튜닝</link> 사용 및 마이크로칩 제작"
 
+#. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_STUDY_ARTIFACTS.DESCRIPTION
+msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_STUDY_ARTIFACTS.DESCRIPTION"
+msgid "Artifact Analysis"
+msgstr "가공물 분석"
+
 #. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_STUDY_WORLD_OBJECTS.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_STUDY_WORLD_OBJECTS.DESCRIPTION"
 msgid "Geographical Analysis"
@@ -64294,8 +65217,8 @@ msgstr "이 직무는 훈련이 필요 없습니다."
 
 #. STRINGS.UI.ROLES_SCREEN.PERKS.NUCLEAR_RESEARCH.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.NUCLEAR_RESEARCH.DESCRIPTION"
-msgid "<link=\"NUCLEARLABORATORY\">Atomic Collider</link> Usage"
-msgstr "<link=\"NUCLEARLABORATORY\">원자 충돌기</link> 사용"
+msgid "<link=\"NUCLEARLABORATORY\">Materials Study Terminal</link> Usage"
+msgstr "<link=\"NUCLEARLABORATORY\">재료 연구 터미널</link> 사용"
 
 #. STRINGS.UI.ROLES_SCREEN.PERKS.ORBITAL_RESEARCH.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.ORBITAL_RESEARCH.DESCRIPTION"
@@ -65616,6 +66539,16 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.VHS.NAME"
 msgid "Archaic Tech"
 msgstr "고대 기술"
 
+#. STRINGS.UI.SPACEDESTINATIONS.ARTIFACT_POI.GRAVITASSPACESTATION.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.ARTIFACT_POI.GRAVITASSPACESTATION.DESC"
+msgid "Default Description!"
+msgstr "기본 설명!"
+
+#. STRINGS.UI.SPACEDESTINATIONS.ARTIFACT_POI.GRAVITASSPACESTATION.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.ARTIFACT_POI.GRAVITASSPACESTATION.NAME"
+msgid "Gravitas Spacejunk"
+msgstr "그라비타스 우주쓰레기"
+
 #. STRINGS.UI.SPACEDESTINATIONS.ASTEROIDS.CARBONACEOUSASTEROID.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEDESTINATIONS.ASTEROIDS.CARBONACEOUSASTEROID.DESCRIPTION"
 msgid "A common asteroid containing several useful resources."
@@ -65716,6 +66649,11 @@ msgctxt "STRINGS.UI.SPACEDESTINATIONS.COMETS.SATELLITE.NAME"
 msgid "Defunct Satellite"
 msgstr "폐기된 위성"
 
+#. STRINGS.UI.SPACEDESTINATIONS.COMETS.URANIUMORECOMET.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.COMETS.URANIUMORECOMET.NAME"
+msgid "Unanium Comet"
+msgstr "우나늄 혜성"
+
 #. STRINGS.UI.SPACEDESTINATIONS.DEBRIS.SATELLITE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEDESTINATIONS.DEBRIS.SATELLITE.DESCRIPTION"
 msgid "An artificial construct that has escaped its orbit. It no longer appears to be monitored."
@@ -65815,6 +66753,389 @@ msgstr "대량의 냉동 재료이며 주로 <link=\"ICE\">얼음</link>으로 �
 msgctxt "STRINGS.UI.SPACEDESTINATIONS.GIANTS.ICEGIANT.NAME"
 msgid "Ice Giant"
 msgstr "얼음 거성"
+
+#. STRINGS.UI.SPACEDESTINATIONS.GRAVITAS_SPACE_POI.STATION
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.GRAVITAS_SPACE_POI.STATION"
+msgid "Destroyed Gravitas Space Station"
+msgstr "파괴된 그라비타스 우주 정거장"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.CARBONASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.CARBONASTEROIDFIELD.DESC"
+msgid ""
+"An asteroid containing <link=\"REFINEDCARBON\">Refined Carbon</link> and <link=\"CARBON\">Coal</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+"<link=\"REFINEDCARBON\">정제 탄소</link>와 <link=\"CARBON\">석탄</link>을 포함하는 소행성.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.CARBONASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.CARBONASTEROIDFIELD.NAME"
+msgid "Carbon Asteroid Field"
+msgstr "탄소 소행성 필드"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.CHLORINECLOUD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.CHLORINECLOUD.DESC"
+msgid ""
+"A cloud of harvestable debris containing <link=\"CHLORINEGAS\">Chlorine</link> and <link=\"BLEACHSTONE\">Bleach Stone</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+"<link=\"CHLORINEGAS\">염소</link>와 <link=\"BLEACHSTONE\">표백석</link>이 들어 있는 수확 가능한 잔해 구름.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.CHLORINECLOUD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.CHLORINECLOUD.NAME"
+msgid "Chlorine Cloud"
+msgstr "염소 구름"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.FORESTYOREFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.FORESTYOREFIELD.DESC"
+msgid ""
+"A field of harvestable resources containing <link=\"CARBONDIOXIDE\">Carbon Dioxide</link>, <link=\"IGNEOUSROCK\">Igneous Rock</link> and <link=\"ALUMINUMORE\">Aluminum Ore</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+"<link=\"CARBONDIOXIDE\">이산화탄소</link>, <link=\"IGNEOUSROCK\">화성암</link>, <link=\"ALUMINUMORE\">알루미늄 광물</link>을 포함하는 수확 가능한 자원이 있는 필드입니다.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.FORESTYOREFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.FORESTYOREFIELD.NAME"
+msgid "Forested Ore Field"
+msgstr "숲이 우거진 광물 필드"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.FROZENOREFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.FROZENOREFIELD.DESC"
+msgid ""
+"An asteroid field containing <link=\"CUPRITE\">Copper Ore</link>, <link=\"ICE\">Ice</link>, <link=\"COBALTITE\">Cobalt Ore</link> and <link=\"ALUMINUMORE\">Aluminum Ore</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+"<link=\"CUPRITE\">구리 광물</link>, <link=\"ICE\">얼음</link>, <link=\"COBALTITE\">코발트 광물</link>, <link=\"ALUMINUMORE\">알루미늄 광물</link>을 포함하는 수확 가능한 자원이 있는 소행성 필드입니다.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.FROZENOREFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.FROZENOREFIELD.NAME"
+msgid "Frozen Ore Asteroid Field"
+msgstr "얼어붙은 광물 소행성 필드"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GASGIANTCLOUD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GASGIANTCLOUD.DESC"
+msgid ""
+"The harvestable remains of a planet containing <link=\"HYDROGEN\">Hydrogen</link> in <link=\"ELEMENTSGAS\">gas</link> and <link=\"ELEMENTSSOLID\">solid</link> form, and <link=\"SOLIDMETHANE\">Methane</link> in <link=\"ELEMENTSGAS\">gas</link>, <link=\"ELEMENTSSOLID\">solid</link> and <link=\"ELEMENTSLIQUID\">liquid</link> form.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+"<link=\"ELEMENTSGAS\">기체</link> 및 <link=\"ELEMENTSSOLID\">고체</link> 형태의 <link=\"HYDROGEN\">수소</link>와 <link=\"ELEMENTSGAS\">기체</link>, <link=\"ELEMENTSSOLID\">고체</link>, <link=\"ELEMENTSLIQUID\">액체</link> 형태의 <link=\"SOLIDMETHANE\">메탄</link>을 포함하는 행성의 수확 가능한 잔존물.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GASGIANTCLOUD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GASGIANTCLOUD.NAME"
+msgid "Exploded Gas Giant"
+msgstr "폭발한 기체 거성"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GILDEDASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GILDEDASTEROIDFIELD.DESC"
+msgid ""
+"An asteroid field containing <link=\"GOLD\">Gold</link>, <link=\"FULLERENE\">Fullerene</link> and <link=\"FOOLSGOLD\">Pyrite</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+"<link=\"GOLD\">금</link>, <link=\"FULLERENE\">풀러렌</link>, <link=\"FOOLSGOLD\">황철광</link>을 포함하는 소행성.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GILDEDASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GILDEDASTEROIDFIELD.NAME"
+msgid "Gilded Asteroid Field"
+msgstr "도금된 소행성 필드"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GLIMMERINGASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GLIMMERINGASTEROIDFIELD.DESC"
+msgid ""
+"An asteroid field containing <link=\"TUNGSTEN\">Tungsten</link> and <link=\"WOLFRAMITE\">Wolframite</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+"<link=\"TUNGSTEN\">텅스텐</link>, <link=\"WOLFRAMITE\">철망간 중석</link>을 포함하는 소행성.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GLIMMERINGASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GLIMMERINGASTEROIDFIELD.NAME"
+msgid "Glimmering Asteroid Field"
+msgstr "희미하게 빛나는 소행성 필드"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.HELIUMCLOUD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.HELIUMCLOUD.DESC"
+msgid ""
+"A cloud of resources containing <link=\"WATER\">Water</link>, <link=\"HYDROGEN\">Hydrogen</link>, and <link=\"NIOBIUM\">Niobium</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+"<link=\"WATER\">물</link>, <link=\"HYDROGEN\">수소</link>를 포함하는 소행성.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.HELIUMCLOUD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.HELIUMCLOUD.NAME"
+msgid "Helium Cloud"
+msgstr "헬륨 구름"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ICEASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ICEASTEROIDFIELD.DESC"
+msgid ""
+"A cloud of planetary remains containing <link=\"ICE\">Ice</link>, <link=\"CARBONDIOXIDE\">Carbon Dioxide</link>, <link=\"OXYGEN\">Oxygen</link> and <link=\"METHANE\">Methane</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+"<link=\"ICE\">얼음</link>, <link=\"CARBONDIOXIDE\">이산화탄소</link>, <link=\"OXYGEN\">산소</link>, <link=\"METHANE\">메탄</link>을 포함하는 소행성.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ICEASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ICEASTEROIDFIELD.NAME"
+msgid "Exploded Ice Giant"
+msgstr "폭발된 얼음 거성"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.INTERSTELLARICEFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.INTERSTELLARICEFIELD.DESC"
+msgid ""
+"An asteroid field containing <link=\"ICE\">Ice</link>, <link=\"CARBONDIOXIDE\">Carbon Dioxide</link> and <link=\"OXYGEN\">Oxygen</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+"<link=\"ICE\">얼음</link>, <link=\"CARBONDIOXIDE\">이산화탄소</link>, <link=\"OXYGEN\">산소</link>를 포함하는 소행성.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.INTERSTELLARICEFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.INTERSTELLARICEFIELD.NAME"
+msgid "Ice Asteroid Field"
+msgstr "얼음 소행성 필드"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.INTERSTELLAROCEAN.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.INTERSTELLAROCEAN.DESC"
+msgid ""
+"An interplanetary body that consists of <link=\"SALTWATER\">Salt Water</link>,<link=\"BRINE\">Brine</link>, <link=\"SALT\">Salt</link> and <link=\"ICE\">Ice</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+"<link=\"SALTWATER\">소금물</link>,<link=\"BRINE\">염수</link>, <link=\"SALT\">소금</link>, <link=\"ICE\">얼음</link>을 포함하는 행성 간 물체.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.INTERSTELLAROCEAN.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.INTERSTELLAROCEAN.NAME"
+msgid "Interstellar Ocean"
+msgstr "성간 바다"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.METALLICASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.METALLICASTEROIDFIELD.DESC"
+msgid ""
+"An asteroid containing <link=\"IRON\">Iron</link>, <link=\"COPPER\">Copper</link> and <link=\"OBSIDIAN\">Obsidian</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+"<link=\"IRON\">철</link>, <link=\"COPPER\">구리</link>, <link=\"OBSIDIAN\">흑요석</link>을 포함하는 소행성.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.METALLICASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.METALLICASTEROIDFIELD.NAME"
+msgid "Metallic Asteroid Field"
+msgstr "금속성 소행성 필드"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OILYASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OILYASTEROIDFIELD.DESC"
+msgid ""
+"An asteroid field containing <link=\"METHANE\">Natural Gas</link>, <link=\"CARBONDIOXIDE\">Carbon Dioxide</link>, <link=\"CRUDEOIL\">Crude Oil</link> and <link=\"PETROLEUM\">Petroleum</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+"<link=\"METHANE\">천연가스</link>, <link=\"CARBONDIOXIDE\">이산화탄소</link>, <link=\"CRUDEOIL\">원유</link>를 포함하는 소행성.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OILYASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OILYASTEROIDFIELD.NAME"
+msgid "Oily Asteroid Field"
+msgstr "기름진 소행성 필드"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ORGANICMASSFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ORGANICMASSFIELD.DESC"
+msgid ""
+"A mass of harvestable resources containing <link=\"ALGAE\">Algae</link>, <link=\"SLIMEMOLD\">Slime</link>, <link=\"CONTAMINATEDOXYGEN\">Polluted Oxygen</link> and <link=\"DIRT\">Dirt</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+"<link=\"ALGAE\">조류</link>, <link=\"SLIMEMOLD\">는지렁이</link>, <link=\"CONTAMINATEDOXYGEN\">오염된 산소</link>, <link=\"DIRT\">흙</link>을 포함하는 소행성.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ORGANICMASSFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ORGANICMASSFIELD.NAME"
+msgid "Organic Mass Field"
+msgstr "유기물 필드"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OXIDIZEDASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OXIDIZEDASTEROIDFIELD.DESC"
+msgid ""
+"An asteroid field containing <link=\"CARBONDIOXIDE\">Carbon Dioxide</link> and <link=\"RUST\">Rust</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+" <link=\"CARBONDIOXIDE\">이산화탄소</link>, <link=\"RUST\">녹</link>을 포함하는 소행성.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OXIDIZEDASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OXIDIZEDASTEROIDFIELD.NAME"
+msgid "Oxidized Asteroid Field"
+msgstr "산화된 소행성 필드"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OXYGENRICHASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OXYGENRICHASTEROIDFIELD.DESC"
+msgid ""
+"An asteroid field containing <link=\"ICE\">Ice</link>, <link=\"CONTAMINATEDOXYGEN\">Polluted Oxygen</link> and <link=\"WATER\">Water</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+"<link=\"ICE\">얼음</link>, <link=\"CONTAMINATEDOXYGEN\">오염된 산소</link>, <link=\"WATER\">물</link>을 포함하는 소행성.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OXYGENRICHASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OXYGENRICHASTEROIDFIELD.NAME"
+msgid "Oxygen Rich Asteroid Field"
+msgstr "산소가 풍부한 소행성 필드"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.POI_PRODUCTION
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.POI_PRODUCTION"
+msgid "{0}"
+msgstr "{0}"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.POI_PRODUCTION_TOOLTIP
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.POI_PRODUCTION_TOOLTIP"
+msgid "{0}"
+msgstr "{0}"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.RADIOACTIVEASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.RADIOACTIVEASTEROIDFIELD.DESC"
+msgid ""
+"An asteroid field containing <link=\"BLEACHSTONE\">Bleach Stone</link>, <link=\"RUST\">Rust</link>,<link=\"URANIUMORE\">Uranium Ore</link> and <link=\"SULFUR\">Sulfur</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+"<link=\"BLEACHSTONE\">표백석</link>, <link=\"RUST\">녹</link>, <link=\"URANIUMORE\">우라늄 광물</link>, <link=\"SULFUR\">황</link>을 포함하는 소행성 필드입니다.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.RADIOACTIVEASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.RADIOACTIVEASTEROIDFIELD.NAME"
+msgid "Radioactive Asteroid Field"
+msgstr "방사성 소행성 필드"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.RADIOACTIVEGASCLOUD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.RADIOACTIVEGASCLOUD.DESC"
+msgid ""
+"A cloud of resources containing <link=\"CHLORINEGAS\">Chlorine</link>, <link=\"URANIUMORE\">Uranium Ore</link> and <link=\"CARBONDIOXIDE\">Carbon Dioxide</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+" <link=\"CHLORINEGAS\">염소</link>, <link=\"URANIUMORE\">우라늄 광물</link>, <link=\"CARBONDIOXIDE\">이산화탄소</link>를 포함하는 소행성.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.RADIOACTIVEGASCLOUD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.RADIOACTIVEGASCLOUD.NAME"
+msgid "Radioactive Gas Cloud"
+msgstr "방사성 기체 구름"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ROCKYASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ROCKYASTEROIDFIELD.DESC"
+msgid ""
+"An asteroid field containing <link=\"CUPRITE\">Copper Ore</link>, <link=\"SEDIMENTARYROCK\">Sedimentary Rock</link> and <link=\"IGNEOUSROCK\">Igneous Rock</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+" <link=\"CUPRITE\">구리 광물</link>, <link=\"SEDIMENTARYROCK\">퇴적암</link>, <link=\"IGNEOUSROCK\">화성암</link> 포함하는 소행성 필드입니다.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ROCKYASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ROCKYASTEROIDFIELD.NAME"
+msgid "Rocky Asteroid Field"
+msgstr "돌이 많은 소행성 필드"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SALTYASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SALTYASTEROIDFIELD.DESC"
+msgid ""
+"A field of harvestable resources containing <link=\"SALTWATER\">Salt Water</link>,<link=\"BRINE\">Brine</link> and <link=\"CARBONDIOXIDE\">Carbon Dioxide</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+"<link=\"SALTWATER\">소금물</link>, <link=\"BRINE\">염수</link>, <link=\"CARBONDIOXIDE\">이산화탄소</link>를 포함하는 소행성.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SALTYASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SALTYASTEROIDFIELD.NAME"
+msgid "Salty Asteroid Field"
+msgstr "짠 소행성 필드"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SANDYOREFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SANDYOREFIELD.DESC"
+msgid ""
+"An asteroid field containing <link=\"SANDSTONE\">Sandstone</link>, <link=\"ALGAE\">Algae</link>, <link=\"CUPRITE\">Copper Ore</link> and <link=\"SAND\">Sand</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+" <link=\"SANDSTONE\">사암</link>, <link=\"ALGAE\">조류</link>, <link=\"CUPRITE\">구리 광물</link>, <link=\"SAND\">모래</link>를 포함하는 소행성 필드.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SANDYOREFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SANDYOREFIELD.NAME"
+msgid "Sandy Ore Field"
+msgstr "모래 많은 광물 필드"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SATELLITEFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SATELLITEFIELD.DESC"
+msgid ""
+"\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+"\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SATELLITEFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SATELLITEFIELD.NAME"
+msgid "Satellite Asteroid Field"
+msgstr "위성 소행성 필드"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SWAMPYOREFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SWAMPYOREFIELD.DESC"
+msgid ""
+"An asteroid field containing <link=\"MUD\">Mud</link>, <link=\"TOXICSAND\">Polluted Dirt</link> and <link=\"COBALTITE\">Cobalt Ore</link>.\n"
+"\n"
+"Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr ""
+"<link=\"MUD\">진흙</link>, <link=\"TOXICSAND\">오염된 흙</link>, <link=\"COBALTITE\">코발트 광물</link>을 포함하는 소행성.\n"
+"\n"
+"자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SWAMPYOREFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SWAMPYOREFIELD.NAME"
+msgid "Swampy Ore Field"
+msgstr "늪지대 광물 필드"
 
 #. STRINGS.UI.SPACEDESTINATIONS.NONE.NAME
 msgctxt "STRINGS.UI.SPACEDESTINATIONS.NONE.NAME"
@@ -67477,7 +68798,7 @@ msgstr "굴착 도구"
 #. STRINGS.UI.TOOLS.DISINFECT.NAME
 msgctxt "STRINGS.UI.TOOLS.DISINFECT.NAME"
 msgid "Disinfect"
-msgstr "Disinfect"
+msgstr "소독"
 
 #. STRINGS.UI.TOOLS.DISINFECT.TOOLACTION
 msgctxt "STRINGS.UI.TOOLS.DISINFECT.TOOLACTION"
@@ -67492,7 +68813,7 @@ msgstr "소독 도구"
 #. STRINGS.UI.TOOLS.EMPTY_PIPE.NAME
 msgctxt "STRINGS.UI.TOOLS.EMPTY_PIPE.NAME"
 msgid "Empty Pipe"
-msgstr "Empty Pipe"
+msgstr "파이프 비우기"
 
 #. STRINGS.UI.TOOLS.EMPTY_PIPE.TOOLACTION
 msgctxt "STRINGS.UI.TOOLS.EMPTY_PIPE.TOOLACTION"
@@ -69266,7 +70587,7 @@ msgstr "스타맵 표시"
 
 #. STRINGS.UI.UISIDESCREENS.COMMAND_MODULE_SIDE_SCREEN.TITLE
 msgctxt "STRINGS.UI.UISIDESCREENS.COMMAND_MODULE_SIDE_SCREEN.TITLE"
-msgid "Launch Conditions"
+msgid "Launch Conditiothisns"
 msgstr "발사 조건"
 
 #. STRINGS.UI.UISIDESCREENS.CONDITIONLISTSIDESCREEN.TITLE
@@ -69287,7 +70608,7 @@ msgstr "{0} % "
 #. STRINGS.UI.UISIDESCREENS.COUNTER_SIDE_SCREEN.CURRENT_COUNT_SIMPLE
 msgctxt "STRINGS.UI.UISIDESCREENS.COUNTER_SIDE_SCREEN.CURRENT_COUNT_SIMPLE"
 msgid "{0} of "
-msgstr "다음 중 {0}:"
+msgstr "{0} / "
 
 #. STRINGS.UI.UISIDESCREENS.COUNTER_SIDE_SCREEN.DECREMENT_MODE
 msgctxt "STRINGS.UI.UISIDESCREENS.COUNTER_SIDE_SCREEN.DECREMENT_MODE"
@@ -69659,7 +70980,7 @@ msgstr "지시 생산 수량:"
 #. STRINGS.UI.UISIDESCREENS.FABRICATORSIDESCREEN.RECIPEPRODUCT
 msgctxt "STRINGS.UI.UISIDESCREENS.FABRICATORSIDESCREEN.RECIPEPRODUCT"
 msgid "{0}: {1}"
-msgstr "{0} {1}"
+msgstr "{0}: {1}"
 
 #. STRINGS.UI.UISIDESCREENS.FABRICATORSIDESCREEN.RECIPERQUIREMENT
 msgctxt "STRINGS.UI.UISIDESCREENS.FABRICATORSIDESCREEN.RECIPERQUIREMENT"
@@ -69713,7 +71034,7 @@ msgstr "이 레시피는 {2} {0} 중 {1}을(를) 사용합니다."
 #. STRINGS.UI.UISIDESCREENS.FABRICATORSIDESCREEN.UNITS_AND_CALS
 msgctxt "STRINGS.UI.UISIDESCREENS.FABRICATORSIDESCREEN.UNITS_AND_CALS"
 msgid "{0} [{1}]"
-msgstr "{0} [{1}]"
+msgstr "{0} ({1})"
 
 #. STRINGS.UI.UISIDESCREENS.FILTERSIDESCREEN.FILTEREDELEMENT.GAS
 msgctxt "STRINGS.UI.UISIDESCREENS.FILTERSIDESCREEN.FILTEREDELEMENT.GAS"
@@ -69888,6 +71209,31 @@ msgstr "내부 보기"
 msgctxt "STRINGS.UI.UISIDESCREENS.HABITATMODULESIDESCREEN.VIEW_BUTTON_TOOLTIP"
 msgid "What's goin' on in there?"
 msgstr "그 안에서 무슨 일이 일어나고 있나요?"
+
+#. STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.DISABLE
+msgctxt "STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.DISABLE"
+msgid "Disable Drill"
+msgstr "드릴 비활성화"
+
+#. STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.ENABLE
+msgctxt "STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.ENABLE"
+msgid "Enable Drill"
+msgstr "드릴 활성화"
+
+#. STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.MINING_IN_PROGRESS
+msgctxt "STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.MINING_IN_PROGRESS"
+msgid "Drilling..."
+msgstr "드릴 중..."
+
+#. STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.MINING_STOPPED
+msgctxt "STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.MINING_STOPPED"
+msgid "Not drilling"
+msgstr "드릴하고 있지 않음"
+
+#. STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.TITLE
+msgctxt "STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.TITLE"
+msgid "Resource Gathering"
+msgstr "자원 수집 중"
 
 #. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_E
 msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_E"
@@ -72416,25 +73762,45 @@ msgctxt "STRINGS.UI.USERMENUACTIONS.COPY_BUILDING_SETTINGS.TOOLTIP"
 msgid "Apply the settings and priorities of this building to other buildings of the same type {Hotkey}"
 msgstr "이 건조물의 설정과 우선 순위를 이와 같은 유형의 다른 건조물에 적용합니다. {Hotkey}"
 
-#. STRINGS.UI.USERMENUACTIONS.DEMOLISH.NAME
-msgctxt "STRINGS.UI.USERMENUACTIONS.DEMOLISH.NAME"
+#. STRINGS.UI.USERMENUACTIONS.DECONSTRUCT.NAME
+msgctxt "STRINGS.UI.USERMENUACTIONS.DECONSTRUCT.NAME"
 msgid "Deconstruct"
 msgstr "해체"
 
-#. STRINGS.UI.USERMENUACTIONS.DEMOLISH.NAME_OFF
-msgctxt "STRINGS.UI.USERMENUACTIONS.DEMOLISH.NAME_OFF"
+#. STRINGS.UI.USERMENUACTIONS.DECONSTRUCT.NAME_OFF
+msgctxt "STRINGS.UI.USERMENUACTIONS.DECONSTRUCT.NAME_OFF"
 msgid "Cancel Deconstruct"
 msgstr "해체 취소"
 
+#. STRINGS.UI.USERMENUACTIONS.DECONSTRUCT.TOOLTIP
+msgctxt "STRINGS.UI.USERMENUACTIONS.DECONSTRUCT.TOOLTIP"
+msgid "Deconstruct this building and refund all resources"
+msgstr "이 건조물을 해체하고 모든 자원을 돌려받습니다."
+
+#. STRINGS.UI.USERMENUACTIONS.DECONSTRUCT.TOOLTIP_OFF
+msgctxt "STRINGS.UI.USERMENUACTIONS.DECONSTRUCT.TOOLTIP_OFF"
+msgid "Cancel this deconstruct order"
+msgstr "이 해체 지시를 취소합니다."
+
+#. STRINGS.UI.USERMENUACTIONS.DEMOLISH.NAME
+msgctxt "STRINGS.UI.USERMENUACTIONS.DEMOLISH.NAME"
+msgid "Demolish"
+msgstr "파괴"
+
+#. STRINGS.UI.USERMENUACTIONS.DEMOLISH.NAME_OFF
+msgctxt "STRINGS.UI.USERMENUACTIONS.DEMOLISH.NAME_OFF"
+msgid "Cancel Demolition"
+msgstr "파괴 취소"
+
 #. STRINGS.UI.USERMENUACTIONS.DEMOLISH.TOOLTIP
 msgctxt "STRINGS.UI.USERMENUACTIONS.DEMOLISH.TOOLTIP"
-msgid "Demolish this building and refund all resources"
-msgstr "이 건조물을 해체하고 모든 자원을 반환합니다."
+msgid "Demolish this building"
+msgstr "이 건조물 파괴"
 
 #. STRINGS.UI.USERMENUACTIONS.DEMOLISH.TOOLTIP_OFF
 msgctxt "STRINGS.UI.USERMENUACTIONS.DEMOLISH.TOOLTIP_OFF"
-msgid "Cancel this deconstruct order"
-msgstr "이 해체 지시를 취소합니다."
+msgid "Cancel this demolition order"
+msgstr "이 파괴 명령 취소"
 
 #. STRINGS.UI.USERMENUACTIONS.DIG.NAME
 msgctxt "STRINGS.UI.USERMENUACTIONS.DIG.NAME"
@@ -72474,7 +73840,7 @@ msgstr "이 복제체의 도달 범위 안에 있는 영역을 숨깁니다."
 #. STRINGS.UI.USERMENUACTIONS.DUMP.NAME
 msgctxt "STRINGS.UI.USERMENUACTIONS.DUMP.NAME"
 msgid "Empty"
-msgstr "비우기"
+msgstr "비어있음"
 
 #. STRINGS.UI.USERMENUACTIONS.DUMP.NAME_OFF
 msgctxt "STRINGS.UI.USERMENUACTIONS.DUMP.NAME_OFF"
@@ -74523,6 +75889,22 @@ msgctxt "STRINGS.WORLDS.OILYMOONLET.NAME"
 msgid "Viscosia Asteroid"
 msgstr "점성 소행성"
 
+#. STRINGS.WORLDS.REGOLITHMOONLET.DESCRIPTION
+msgctxt "STRINGS.WORLDS.REGOLITHMOONLET.DESCRIPTION"
+msgid ""
+"A small, dusty world with plenty of craters.\n"
+"\n"
+"<smallcaps>Regolith Asteroids have frequent meteor showers</smallcaps>"
+msgstr ""
+"분화구가 많은 작고 먼지 많은 세계.\n"
+"\n"
+"<smallcaps>레골리스 소행성은 유성우가 자주 발생합니다.</smallcaps>"
+
+#. STRINGS.WORLDS.REGOLITHMOONLET.NAME
+msgctxt "STRINGS.WORLDS.REGOLITHMOONLET.NAME"
+msgid "Regolith Asteroid"
+msgstr "레골리스 소행성"
+
 #. STRINGS.WORLDS.SANDSTONE_DEFAULT.DESCRIPTION
 msgctxt "STRINGS.WORLDS.SANDSTONE_DEFAULT.DESCRIPTION"
 msgid ""
@@ -74845,11 +76227,11 @@ msgctxt "STRINGS.WORLDS.WATERMOONLET.DESCRIPTION"
 msgid ""
 "A small, water-submerged world.\n"
 "\n"
-"<smallcaps>Water Asteroids possess a variety of liquid resources and are a natural source of Graphite. However, its thin surface and sparse construction material means Duplicants should come prepared for a swim.</smallcaps>"
+"<smallcaps>Water Asteroids possess a variety of liquid resources and are a natural source of Graphite, but Duplicants should come prepared for a swim.</smallcaps>"
 msgstr ""
 "물에 잠긴 작은 세계.\n"
 "\n"
-"<smallcaps>물 소행성은 다양한 액체 자원을 보유하고 있으며 그래파이트의 천연 공급원입니다. 그러나 얇은 표면과 많지 않은 건조 재료로 인해 복제체는 수영할 준비를 해야 합니다.</smallcaps>"
+"<smallcaps>물 소행성은 다양한 액체 자원을 보유하고 있으며 그래파이트의 천연 공급원입니다. 그러나 복제체는 수영할 준비를 해야 합니다.</smallcaps>"
 
 #. STRINGS.WORLDS.WATERMOONLET.NAME
 msgctxt "STRINGS.WORLDS.WATERMOONLET.NAME"
