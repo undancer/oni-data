@@ -9,15 +9,14 @@ public class RocketInteriorSolidOutputConfig : IBuildingConfig
 
 	public const string ID = "RocketInteriorSolidOutput";
 
-	protected virtual string GetID()
+	public override string[] GetDlcIds()
 	{
-		return "RocketInteriorSolidOutput";
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(GetID(), 1, 1, "rocket_floor_plug_solid_out_kanim", 30, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnRocketEnvelope, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER2);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("RocketInteriorSolidOutput", 1, 1, "rocket_floor_plug_solid_out_kanim", 30, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnRocketEnvelope, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER2);
 		buildingDef.OutputConduitType = ConduitType.Solid;
 		buildingDef.UtilityOutputOffset = new CellOffset(0, 0);
 		buildingDef.RequiresPowerInput = true;

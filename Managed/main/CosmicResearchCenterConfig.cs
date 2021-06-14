@@ -15,6 +15,11 @@ public class CosmicResearchCenterConfig : IBuildingConfig
 
 	public static readonly Tag INPUT_MATERIAL = ResearchDatabankConfig.TAG;
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_VANILLA_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("CosmicResearchCenter", 4, 4, "research_space_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.NONE);
@@ -25,7 +30,7 @@ public class CosmicResearchCenterConfig : IBuildingConfig
 		buildingDef.ViewMode = OverlayModes.Power.ID;
 		buildingDef.AudioCategory = "Metal";
 		buildingDef.AudioSize = "large";
-		buildingDef.Deprecated = DlcManager.IsExpansion1Active();
+		buildingDef.Deprecated = DlcManager.FeatureClusterSpaceEnabled();
 		return buildingDef;
 	}
 

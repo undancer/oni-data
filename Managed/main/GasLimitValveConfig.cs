@@ -9,6 +9,11 @@ public class GasLimitValveConfig : IBuildingConfig
 
 	private const ConduitType CONDUIT_TYPE = ConduitType.Gas;
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("GasLimitValve", 1, 2, "limit_valve_gas_kanim", 30, 10f, new float[2]
@@ -20,7 +25,6 @@ public class GasLimitValveConfig : IBuildingConfig
 			"RefinedMetal",
 			"Plastic"
 		}, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER1, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER0);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		buildingDef.InputConduitType = ConduitType.Gas;
 		buildingDef.OutputConduitType = ConduitType.Gas;
 		buildingDef.Floodable = false;

@@ -91,12 +91,21 @@ public class Components
 			OnRemove -= on_remove;
 		}
 
-		public List<T> GetWorldItems(int worldId)
+		public List<T> GetWorldItems(int worldId, bool checkChildWorlds = false)
 		{
 			List<T> list = new List<T>();
 			foreach (T item in Items)
 			{
-				if ((item as KMonoBehaviour).GetMyWorldId() == worldId)
+				bool flag = (item as KMonoBehaviour).GetMyWorldId() == worldId;
+				if (!flag && checkChildWorlds)
+				{
+					WorldContainer myWorld = (item as KMonoBehaviour).GetMyWorld();
+					if (myWorld.ParentWorldId == worldId)
+					{
+						flag = true;
+					}
+				}
+				if (flag)
 				{
 					list.Add(item);
 				}

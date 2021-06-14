@@ -73,6 +73,6 @@ public struct BatchKey : IEquatable<BatchKey>
 
 	public override string ToString()
 	{
-		return "[" + idx.x + "," + idx.y + "] [" + groupID.HashValue + "] [" + layer + "] [" + z + "]" + materialType.ToString();
+		return "[" + idx.x + "," + idx.y + "] [" + groupID.HashValue + "] [" + layer + "] [" + z + "]" + materialType;
 	}
 }

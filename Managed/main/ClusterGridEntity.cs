@@ -110,7 +110,7 @@ public abstract class ClusterGridEntity : KMonoBehaviour
 
 	public virtual Sprite GetUISprite()
 	{
-		if (DlcManager.IsExpansion1Active())
+		if (DlcManager.FeatureClusterSpaceEnabled())
 		{
 			List<AnimConfig> animConfigs = AnimConfigs;
 			if (animConfigs.Count > 0)

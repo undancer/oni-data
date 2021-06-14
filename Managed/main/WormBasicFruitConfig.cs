@@ -6,9 +6,9 @@ public class WormBasicFruitConfig : IEntityConfig
 {
 	public const string ID = "WormBasicFruit";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "EXPANSION1_ID";
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 
 	public GameObject CreatePrefab()

@@ -161,7 +161,7 @@ namespace KMod
 
 		public bool IsEnabledForActiveDlc()
 		{
-			return IsEnabledForDlc(DlcManager.GetActiveDlcId());
+			return IsEnabledForDlc(DlcManager.GetHighestActiveDlcId());
 		}
 
 		public bool IsEnabledForDlc(string dlcId)
@@ -171,7 +171,7 @@ namespace KMod
 
 		public void SetEnabledForActiveDlc(bool enabled)
 		{
-			SetEnabledForDlc(DlcManager.GetActiveDlcId(), enabled);
+			SetEnabledForDlc(DlcManager.GetHighestActiveDlcId(), enabled);
 		}
 
 		public void SetEnabledForDlc(string dlcId, bool set_enabled)
@@ -281,10 +281,10 @@ namespace KMod
 			}
 			list2 = list2.Where((ArchivedVersion v) => DoesModSupportCurrentContent(v.info)).ToList();
 			IEnumerable<ArchivedVersion> source = (from v in list2
-				where (long)v.info.lastWorkingBuild >= 466654L
+				where (long)v.info.lastWorkingBuild >= 467601L
 				orderby v.info.lastWorkingBuild
 				select v).Concat(from v in list2
-				where (long)v.info.lastWorkingBuild < 466654L
+				where (long)v.info.lastWorkingBuild < 467601L
 				orderby v.info.lastWorkingBuild descending
 				select v);
 			return source.FirstOrDefault()?.relativePath;
@@ -336,7 +336,7 @@ namespace KMod
 
 		private bool DoesModSupportCurrentContent(PackagedModInfo mod_info)
 		{
-			string text = DlcManager.GetActiveDlcId();
+			string text = DlcManager.GetHighestActiveDlcId();
 			if (text == "")
 			{
 				text = "vanilla_id";

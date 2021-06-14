@@ -101,7 +101,8 @@ public class Rotatable : KMonoBehaviour, ISaveLoadable
 	public float GetVisualizerRotation()
 	{
 		PermittedRotations permittedRotations = this.permittedRotations;
-		if ((uint)(permittedRotations - 1) <= 1u)
+		PermittedRotations permittedRotations2 = permittedRotations;
+		if ((uint)(permittedRotations2 - 1) <= 1u)
 		{
 			return -90f * (float)orientation;
 		}

@@ -49,14 +49,14 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 
 		public void SetMissionState(Spacecraft.MissionState state)
 		{
-			Debug.Assert(!DlcManager.IsExpansion1Active());
+			Debug.Assert(!DlcManager.FeatureClusterSpaceEnabled());
 			Spacecraft spacecraftFromLaunchConditionManager = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(base.master.GetComponent<LaunchConditionManager>());
 			spacecraftFromLaunchConditionManager.SetState(state);
 		}
 
 		public Spacecraft.MissionState GetMissionState()
 		{
-			Debug.Assert(!DlcManager.IsExpansion1Active());
+			Debug.Assert(!DlcManager.FeatureClusterSpaceEnabled());
 			Spacecraft spacecraftFromLaunchConditionManager = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(base.master.GetComponent<LaunchConditionManager>());
 			return spacecraftFromLaunchConditionManager.state;
 		}
@@ -102,6 +102,12 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 			if (craftInterface != null)
 			{
 				craftInterface.Trigger(-1277991738, base.master.gameObject);
+				WorldContainer component = craftInterface.GetComponent<WorldContainer>();
+				List<MinionIdentity> worldItems = Components.MinionIdentities.GetWorldItems(component.id);
+				foreach (MinionIdentity item in worldItems)
+				{
+					Game.Instance.Trigger(586301400, item);
+				}
 			}
 			constantVelocityPhase_maxSpeed = 0f;
 		}
@@ -340,6 +346,12 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 				if (craftInterface != null)
 				{
 					craftInterface.Trigger(-887025858, smi.gameObject);
+					WorldContainer component = craftInterface.GetComponent<WorldContainer>();
+					List<MinionIdentity> worldItems = Components.MinionIdentities.GetWorldItems(component.id);
+					foreach (MinionIdentity item in worldItems)
+					{
+						Game.Instance.Trigger(586301400, item);
+					}
 				}
 				smi.GoTo(grounded);
 			});

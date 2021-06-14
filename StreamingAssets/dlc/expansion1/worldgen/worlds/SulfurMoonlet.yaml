@@ -20,7 +20,7 @@ defaultsOverrides:
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
 
-# List all the zone files to load
+# List all the subworld files to load
 subworldFiles:
   - name: subworlds/space/Space
   - name: expansion1::subworlds/marsh/HotMarshSurface
@@ -58,3 +58,20 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - subworlds/magma/Bottom
+
+worldTemplateRules:
+  # Marsh
+  - names:
+      - poi/hotmarsh/geyser_steam
+    listRule: GuaranteeOne
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [BoggyMarsh]
+  - names:
+      - poi/hotmarsh/geyser_methane
+    listRule: GuaranteeOne
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [BoggyMarsh]

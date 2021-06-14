@@ -77,9 +77,10 @@ namespace KSerialization
 			type.GetSerializationMethods(typeof(OnSerializingAttribute), typeof(OnSerializedAttribute), typeof(CustomSerialize), out onSerializing, out onSerialized, out customSerialize);
 			MemberSerialization serializationConfig = GetSerializationConfig(type);
 			MemberSerialization memberSerialization = serializationConfig;
-			if (memberSerialization != 0)
+			MemberSerialization memberSerialization2 = memberSerialization;
+			if (memberSerialization2 != 0)
 			{
-				if (memberSerialization == MemberSerialization.OptIn)
+				if (memberSerialization2 == MemberSerialization.OptIn)
 				{
 					while (type != typeof(object))
 					{

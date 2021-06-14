@@ -63,7 +63,7 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 	[OnDeserialized]
 	private void OnDeserialized()
 	{
-		if (!DlcManager.IsExpansion1Active())
+		if (!DlcManager.FeaturePlantMutationsEnabled())
 		{
 			requestedEntityAdditionalFilterTag = Tag.Invalid;
 		}

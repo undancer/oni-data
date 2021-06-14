@@ -15,9 +15,9 @@ public class FilterPlantConfig : IEntityConfig
 
 	public const float OXYGEN_CONSUMPTION_RATE = 0.008333334f;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "EXPANSION1_ID";
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 
 	public GameObject CreatePrefab()

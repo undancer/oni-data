@@ -11,9 +11,9 @@ public class BasicFabricMaterialPlantConfig : IEntityConfig
 
 	public const float WATER_RATE = 4f / 15f;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

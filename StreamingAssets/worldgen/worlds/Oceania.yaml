@@ -1,4 +1,4 @@
-name: STRINGS.WORLDS.OCEANIA.NAME
+name: STRINGS.WORLDS.OCEANIA.NAME # Oceania
 description: STRINGS.WORLDS.OCEANIA.DESCRIPTION
 asteroidIcon: Asteroid_oceania
 
@@ -8,21 +8,28 @@ worldsize:
 layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
 #                                in order to use this.
 
-# List all the zone files to load
+# List all the subworld files to load
 subworldFiles:
   - name: subworlds/sandstone/SandstoneStart
   - name: subworlds/sandstone/SandstoneMiniMetal
+    minCount: 2
   - name: subworlds/sandstone/SandstoneMiniWater
+    minCount: 2
   - name: subworlds/sandstone/SandstoneMiniAlgae
+    minCount: 2
   - name: subworlds/sandstone/Sandstone
+    minCount: 4
   - name: subworlds/marsh/HotMarsh
+    minCount: 5
   - name: subworlds/jungle/Jungle
+    minCount: 5
   - name: subworlds/frozen/Frozen
+    minCount: 5
   - name: subworlds/ocean/Ocean
     weight: 1.5
+    minCount: 10
   - name: subworlds/ocean/OceanDeep
     weight: 2.5
-  - name: subworlds/Impenetrable
   - name: subworlds/magma/Bottom
   - name: subworlds/oil/OilPockets
   - name: subworlds/space/Space
@@ -37,19 +44,13 @@ startingBasePositionVertical:
   min: 0.35
   max: 0.35
 
-worldTemplateRules:
-- names:
-  - geysers/generic
-  listRule: TryAll
-  someCount: 12
-
 seasons:
   - MeteorShowers
 
 # Rivers:
 #   - River
 
-# When we are converting unknown cells, this will give us the options, processed in this order, the effects are cumlative
+# Specify where subworlds can spawn. These rules are processed in order and their effects are cumulative.
 unknownCellsAllowedSubworlds: 
   - tagcommand: Default
     command: Replace
@@ -64,6 +65,7 @@ unknownCellsAllowedSubworlds:
       - subworlds/sandstone/SandstoneMiniMetal
       - subworlds/sandstone/SandstoneMiniWater
       - subworlds/sandstone/SandstoneMiniAlgae
+  # Ring-1
   - tagcommand: DistanceFromTag
     tag: AtStart
     minDistance: 2
@@ -73,6 +75,7 @@ unknownCellsAllowedSubworlds:
       - subworlds/marsh/HotMarsh
       - subworlds/jungle/Jungle
       - subworlds/ocean/Ocean
+  # Ring-2
   - tagcommand: DistanceFromTag
     tag: AtStart
     minDistance: 3
@@ -84,6 +87,7 @@ unknownCellsAllowedSubworlds:
       - subworlds/ocean/Ocean
       - subworlds/ocean/OceanDeep
       - subworlds/frozen/Frozen
+  # Ring-3
   - tagcommand: DistanceFromTag
     tag: AtStart
     minDistance: 4
@@ -91,6 +95,7 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - subworlds/ocean/OceanDeep
+  # Ring-4
   - tagcommand: DistanceFromTag
     tag: AtStart
     minDistance: 5
@@ -102,12 +107,14 @@ unknownCellsAllowedSubworlds:
       - subworlds/ocean/Ocean
       - subworlds/ocean/OceanDeep
       - subworlds/frozen/Frozen
-      - subworlds/sandstone/SandstoneStart
+      - subworlds/sandstone/Sandstone
+  # Core
   - tagcommand: AtTag
     tag: AtDepths
     command: Replace
     subworldNames:
       - subworlds/magma/Bottom
+  # Above Core
   - tagcommand: DistanceFromTag
     tag: AtDepths
     minDistance: 1
@@ -115,11 +122,13 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - subworlds/oil/OilPockets
+  # Space
   - tagcommand: AtTag
     tag: AtSurface
     command: Replace
     subworldNames:
       - subworlds/space/Space
+  # Surface
   - tagcommand: DistanceFromTag
     tag: AtSurface
     minDistance: 1
@@ -127,3 +136,80 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - subworlds/space/Surface
+
+worldTemplateRules:
+  # Jungle
+  - names:
+      - poi/jungle/geyser_steam
+    listRule: GuaranteeOne
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [ToxicJungle]
+  - names:
+      - poi/jungle/geyser_methane
+      - poi/jungle/geyser_chlorine
+    listRule: GuaranteeOne
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [ToxicJungle]
+  # Frozen
+  - names:
+      - poi/frozen/heatsink_a
+      - poi/frozen/heatsink_b
+      - poi/frozen/heatsink_c
+      - poi/frozen/heatsink_d
+    listRule: GuaranteeSomeTryMore
+    someCount: 1
+    moreCount: 2
+    priority: 100 
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [FrozenWastes]
+  # Marsh
+  - names:
+      - poi/hotmarsh/geyser_steam
+    listRule: GuaranteeOne
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [BoggyMarsh]
+  - names:
+      - poi/hotmarsh/geyser_methane
+    listRule: GuaranteeOne
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [BoggyMarsh]
+  # Ocean
+  - names:
+      - poi/poi_ocean_geyser_saltwater
+    listRule: GuaranteeOne
+    priority: 100 
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [Ocean]
+      - command: ExceptWith
+        subworldNames:
+          - subworlds/ocean/OceanDeep # OceanDeep did not have this geyser
+  # Gravitas
+  - names:
+    - poi/poi_gravitas
+    listRule: GuaranteeOne
+    priority: 500
+    allowExtremeTemperatureOverlap: true # ignore temperature differences on the surface
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - subworlds/space/Surface
+  # Generic Geysers
+  - names:
+    - geysers/generic
+    listRule: TryOne
+    times: 12
+    allowDuplicates: true
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning

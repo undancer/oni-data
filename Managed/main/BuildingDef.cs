@@ -10,9 +10,7 @@ using UnityEngine;
 [Serializable]
 public class BuildingDef : Def
 {
-	public string RequiredDlcId;
-
-	public string ForbiddenDlcId;
+	public string[] RequiredDlcIds;
 
 	public float EnergyConsumptionWhenActive;
 
@@ -1588,7 +1586,7 @@ public class BuildingDef : Def
 		}
 		if (!Deprecated)
 		{
-			Db.Get().TechItems.AddTechItem(PrefabID, Name, Effect, GetUISprite, (RequiredDlcId != null) ? RequiredDlcId : "");
+			Db.Get().TechItems.AddTechItem(PrefabID, Name, Effect, GetUISprite, RequiredDlcIds);
 		}
 	}
 

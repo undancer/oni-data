@@ -1299,7 +1299,7 @@ namespace Database
 			{
 				ClusterTraveler clusterTraveler = (ClusterTraveler)data;
 				str = str.Replace("{Range}", GameUtil.GetFormattedRocketRange(clusterTraveler.GetComponent<CraftModuleInterface>().Range, GameUtil.TimeSlice.None, displaySuffix: false));
-				return str.Replace("{Distance}", clusterTraveler.RemainingTravelNodes() + " " + (string)UI.CLUSTERMAP.TILES);
+				return str.Replace("{Distance}", clusterTraveler.RemainingTravelNodes() + " " + UI.CLUSTERMAP.TILES);
 			};
 			RocketStranded = CreateStatusItem("RocketStranded", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			RailgunpayloadNeedsEmptying = CreateStatusItem("RailgunpayloadNeedsEmptying", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);

@@ -369,6 +369,18 @@ namespace STRINGS
 			public static LocString SUBTITLE = "Critter Morph";
 		}
 
+		public class ROVER
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "The Rover is a planetary scout robot programmed to land on and mine Planetoids where sending a Duplicant would put them unneccessarily in danger.\n\nRovers are programmed to be very pleasant and social when interacting with other beings.\n\nHowever, an unintended consequence of this programming is that the socialized robots tended to experience the same work slow-downs due to loneliness and low morale.\n\nTo compensate for this, the Rover was programmed to have two distinct personalities it can switch between to have pleasant in-depth conversations with itself during long stints alone.";
+			}
+
+			public static LocString TITLE = "Rover";
+
+			public static LocString SUBTITLE = "Scouting Robot";
+		}
+
 		public class SHINEBUG
 		{
 			public class BODY
@@ -1753,6 +1765,18 @@ namespace STRINGS
 			public static LocString SUBTITLE = "Edible Plant";
 		}
 
+		public class EXPERIMENT52B
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "Experiment 52B is an aggressive, yet sessile creature that consumes calories and discharges resin.\n\nWhile this creature may look like a tree, its taxonomy more closely resembles a giant land-based coral with cybernetic implants.\n\nAlthough normally lab-grown creatures would be given a better name than Experiment 52B, in this particular case the experimenting scientists weren't sure that they were done.";
+			}
+
+			public static LocString TITLE = "Experiment 52B";
+
+			public static LocString SUBTITLE = "Plant?";
+		}
+
 		public class GASGRASS
 		{
 			public class BODY
@@ -1941,7 +1965,7 @@ namespace STRINGS
 		{
 			public class BODY
 			{
-				public static LocString CONTAINER1 = "";
+				public static LocString CONTAINER1 = "Sporechids take advantage of their flower's attractiveness to lure unsuspecting victims into clouds of parsitic Zombie Spores.\n\nThey are a rare form of holoparasitic plant which finds mammalian hosts to infect rather than the usual plant species.\n\nThe Zombie Spore was originally designed for medicinal purposes but its seditative properties were never refined to the point of usefulness.";
 			}
 
 			public static LocString TITLE = "Sporechid";
@@ -1977,7 +2001,7 @@ namespace STRINGS
 		{
 			public class BODY
 			{
-				public static LocString CONTAINER1 = "";
+				public static LocString CONTAINER1 = "Tranquil Toes are a decorative succulent that flourish in a radioactive environment.\n\nThough most of the flora and fauna that thrive a harsh radioactive biome tends to be aggressive, Tranquil Toes provide a rare exception to this rule.\n\nIt is a generally believed that the morale boosting abilities of this plant come from its resemblence to a funny hat one might wear at a party.";
 			}
 
 			public static LocString TITLE = "Tranquil Toes";
@@ -2192,7 +2216,7 @@ namespace STRINGS
 
 			public static LocString HEADER_2 = "Calculating Decor";
 
-			public static LocString PARAGRAPH_2 = "Many things have an effect on the Decor value of a tile. A building's effect is expressed as a strength value and a radius. Often that effect is positive, but many buildings also lower the decor value of an area too. " + UI.FormatAsLink("Plants", "PLANTS") + ", " + UI.FormatAsLink("Critters", "CREATURES") + ", and " + UI.FormatAsLink("Furniture", "BUILDCATEGORYFURNITURE") + " often increase decor while industrial buildings and rot often decrease it. Duplicants experience the combined decor of all objects affecting a tile.\n\nThe " + (string)CREATURES.SPECIES.PRICKLEGRASS.NAME + " has a decor value of " + $"{PrickleGrassConfig.POSITIVE_DECOR_EFFECT.amount} and a radius of {PrickleGrassConfig.POSITIVE_DECOR_EFFECT.radius} tiles. " + "\nThe " + (string)BUILDINGS.PREFABS.MICROBEMUSHER.NAME + " has a decor value of " + $"{MicrobeMusherConfig.DECOR.amount} and a radius of {MicrobeMusherConfig.DECOR.radius} tiles. " + "\nThe result of placing a " + (string)BUILDINGS.PREFABS.MICROBEMUSHER.NAME + " next to a " + (string)CREATURES.SPECIES.PRICKLEGRASS.NAME + " would be a combined decor value of " + (MicrobeMusherConfig.DECOR.amount + PrickleGrassConfig.POSITIVE_DECOR_EFFECT.amount);
+			public static LocString PARAGRAPH_2 = string.Concat("Many things have an effect on the Decor value of a tile. A building's effect is expressed as a strength value and a radius. Often that effect is positive, but many buildings also lower the decor value of an area too. ", UI.FormatAsLink("Plants", "PLANTS"), ", ", UI.FormatAsLink("Critters", "CREATURES"), ", and ", UI.FormatAsLink("Furniture", "BUILDCATEGORYFURNITURE"), " often increase decor while industrial buildings and rot often decrease it. Duplicants experience the combined decor of all objects affecting a tile.\n\nThe ", CREATURES.SPECIES.PRICKLEGRASS.NAME, " has a decor value of ", $"{PrickleGrassConfig.POSITIVE_DECOR_EFFECT.amount} and a radius of {PrickleGrassConfig.POSITIVE_DECOR_EFFECT.radius} tiles. ", "\nThe ", BUILDINGS.PREFABS.MICROBEMUSHER.NAME, " has a decor value of ", $"{MicrobeMusherConfig.DECOR.amount} and a radius of {MicrobeMusherConfig.DECOR.radius} tiles. ", "\nThe result of placing a ", BUILDINGS.PREFABS.MICROBEMUSHER.NAME, " next to a ", CREATURES.SPECIES.PRICKLEGRASS.NAME, " would be a combined decor value of ", (MicrobeMusherConfig.DECOR.amount + PrickleGrassConfig.POSITIVE_DECOR_EFFECT.amount).ToString());
 		}
 
 		public class EXOBASES
@@ -2281,7 +2305,7 @@ namespace STRINGS
 
 			public static LocString HEADER_3 = "Measuring Light";
 
-			public static LocString PARAGRAPH_3 = "The amount of light on a cell is measured in Lux. Lux has a dramatic range - A simple " + (string)BUILDINGS.PREFABS.CEILINGLIGHT.NAME + " produces " + 1800 + " Lux, while the sun will regularly produce values as high as " + 80000 + " Lux. The " + (string)BUILDINGS.PREFABS.SOLARPANEL.NAME + " generates power proportional to how many Lux it is exposed to.\n\n";
+			public static LocString PARAGRAPH_3 = string.Concat("The amount of light on a cell is measured in Lux. Lux has a dramatic range - A simple ", BUILDINGS.PREFABS.CEILINGLIGHT.NAME, " produces ", 1800.ToString(), " Lux, while the sun will regularly produce values as high as ", 80000.ToString(), " Lux. The ", BUILDINGS.PREFABS.SOLARPANEL.NAME, " generates power proportional to how many Lux it is exposed to.\n\n");
 		}
 
 		public class MORALE

@@ -67,13 +67,15 @@ namespace ProcGenGame
 					if (!isDebug)
 					{
 					}
-					continue;
 				}
-				tc.LogInfo("\t\tpossible", internalMob.type + " mps: " + mobPossibleSpawnPoints.Count + " ps:", availableSpawnCellsFeature.Count);
-				int num3 = Mathf.RoundToInt(internalMob.count.GetRandomValueWithinRange(rnd));
-				tc.LogInfo("\t\tcount", internalMob.type, num3);
-				Tag mobPrefab = ((mob.prefabName == null) ? new Tag(internalMob.type) : new Tag(mob.prefabName));
-				SpawnCountMobs(mob, mobPrefab, num3, mobPossibleSpawnPoints, tc, ref spawnedMobs, ref alreadyOccupiedCells);
+				else
+				{
+					tc.LogInfo("\t\tpossible", internalMob.type + " mps: " + mobPossibleSpawnPoints.Count + " ps:", availableSpawnCellsFeature.Count);
+					int num3 = Mathf.RoundToInt(internalMob.count.GetRandomValueWithinRange(rnd));
+					tc.LogInfo("\t\tcount", internalMob.type, num3);
+					Tag mobPrefab = ((mob.prefabName == null) ? new Tag(internalMob.type) : new Tag(mob.prefabName));
+					SpawnCountMobs(mob, mobPrefab, num3, mobPossibleSpawnPoints, tc, ref spawnedMobs, ref alreadyOccupiedCells);
+				}
 			}
 			return spawnedMobs;
 		}

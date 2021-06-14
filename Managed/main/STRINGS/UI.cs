@@ -599,65 +599,65 @@ namespace STRINGS
 			{
 				public class GRAVITASSPACESTATION1
 				{
-					public static LocString NAME = "Gravitas Spacejunk";
+					public static LocString NAME = "Destroyed Satellite";
 
-					public static LocString DESC = "Default Description!";
+					public static LocString DESC = "The remnants of a bygone era, lost in time.\n\nHarvesting space junk requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
 				}
 
 				public class GRAVITASSPACESTATION2
 				{
-					public static LocString NAME = "Gravitas Spacejunk";
+					public static LocString NAME = "Demolished Rocket";
 
-					public static LocString DESC = "Default Description!";
+					public static LocString DESC = "A defunct rocket from a corporation that vanished long ago.\n\nHarvesting space junk requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
 				}
 
 				public class GRAVITASSPACESTATION3
 				{
-					public static LocString NAME = "Gravitas Spacejunk";
+					public static LocString NAME = "Ruined Rocket";
 
-					public static LocString DESC = "Default Description!";
+					public static LocString DESC = "The ruins of a rocket that stopped functioning ages ago.\n\nHarvesting space junk requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
 				}
 
 				public class GRAVITASSPACESTATION4
 				{
-					public static LocString NAME = "Gravitas Spacejunk";
+					public static LocString NAME = "Retired Planetary Excursion Module";
 
-					public static LocString DESC = "Default Description!";
+					public static LocString DESC = "A rocket part from a society that has been wiped out.\n\nHarvesting space junk requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
 				}
 
 				public class GRAVITASSPACESTATION5
 				{
-					public static LocString NAME = "Gravitas Spacejunk";
+					public static LocString NAME = "Destroyed Satellite";
 
-					public static LocString DESC = "Default Description!";
+					public static LocString DESC = "A destroyed Gravitas satellite.\n\nHarvesting space junk requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
 				}
 
 				public class GRAVITASSPACESTATION6
 				{
-					public static LocString NAME = "Gravitas Spacejunk";
+					public static LocString NAME = "Annihilated Satellite";
 
-					public static LocString DESC = "Default Description!";
+					public static LocString DESC = "The remains of a satellite made some time in the past.\n\nHarvesting space junk requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
 				}
 
 				public class GRAVITASSPACESTATION7
 				{
-					public static LocString NAME = "Gravitas Spacejunk";
+					public static LocString NAME = "Wrecked Space Shuttle";
 
-					public static LocString DESC = "Default Description!";
+					public static LocString DESC = "A defunct space shuttle that floats through space unattended.\n\nHarvesting space junk requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
 				}
 
 				public class GRAVITASSPACESTATION8
 				{
-					public static LocString NAME = "Gravitas Spacejunk";
+					public static LocString NAME = "Obsolete Space Station Module";
 
-					public static LocString DESC = "Default Description!";
+					public static LocString DESC = "The module from a space station that ceased to exist ages ago.\n\nHarvesting space junk requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
 				}
 
 				public class RUSSELLSTEAPOT
 				{
 					public static LocString NAME = "Russell's Teapot";
 
-					public static LocString DESC = "Default Description!";
+					public static LocString DESC = "Has never been disproven to not exist.";
 				}
 			}
 
@@ -681,7 +681,7 @@ namespace STRINGS
 				{
 					public static LocString NAME = "Satellite Asteroid Field";
 
-					public static LocString DESC = "\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+					public static LocString DESC = "Antiquated space technology from a forgotten age.\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
 				}
 
 				public class ROCKYASTEROIDFIELD
@@ -2051,7 +2051,7 @@ namespace STRINGS
 
 						public static LocString NAME = "Teleporters";
 
-						public static LocString TOOLTIP = "Affects whether teleporters are spawned during Worldgen.";
+						public static LocString TOOLTIP = "Determines whether teleporters will be spawned during Worldgen";
 					}
 				}
 			}
@@ -2062,11 +2062,11 @@ namespace STRINGS
 				{
 					public static LocString ACTIVATE_EXPANSION1 = "ACTIVATE DLC";
 
-					public static LocString ACTIVATE_EXPANSION1_DESC = "The game will need to restart in order to download and install <i>Spaced Out!</i>";
+					public static LocString ACTIVATE_EXPANSION1_DESC = "The game will need to restart in order to activate <i>Spaced Out!</i>";
 
 					public static LocString DEACTIVATE_EXPANSION1 = "DEACTIVATE DLC";
 
-					public static LocString DEACTIVATE_EXPANSION1_DESC = "The game will need to restart in order to download and install the <i>Oxygen Not Included</i> base game.";
+					public static LocString DEACTIVATE_EXPANSION1_DESC = "The game will need to restart in order to activate the <i>Oxygen Not Included</i> base game.";
 				}
 
 				public static LocString STARTDEMO = "START DEMO";
@@ -7461,7 +7461,7 @@ namespace STRINGS
 
 				public static LocString DROPDOWN_TOOLTIP_PATH_OBSTRUCTED = "Landing path obstructed";
 
-				public static LocString DROPDOWN_TOOLTIP_SITE_OBSTRUCTED = "Landing site obstructed";
+				public static LocString DROPDOWN_TOOLTIP_SITE_OBSTRUCTED = "Landing position on the platform is obstructed";
 
 				public static LocString CHANGE_DESTINATION_BUTTON = "Change";
 
@@ -9826,7 +9826,7 @@ namespace STRINGS
 
 				public static LocString PREFERS_ROOM = "This building gains additional effects or functionality when built inside a " + PRE_KEYWORD + "{0}" + PST_KEYWORD;
 
-				public static LocString REQUIRESROOM = string.Concat("Must be built within a dedicated " + PRE_KEYWORD + "Room" + PST_KEYWORD + HORIZONTAL_BR_RULE, PRE_KEYWORD, "Room", PST_KEYWORD, " will become a ", PRE_KEYWORD, "{0}", PST_KEYWORD, " after construction");
+				public static LocString REQUIRESROOM = "Must be built within a dedicated " + PRE_KEYWORD + "Room" + PST_KEYWORD + HORIZONTAL_BR_RULE + PRE_KEYWORD + "Room" + PST_KEYWORD + " will become a " + PRE_KEYWORD + "{0}" + PST_KEYWORD + " after construction";
 
 				public static LocString ALLOWS_FERTILIZER = "Allows " + PRE_KEYWORD + "Fertilizer" + PST_KEYWORD + " to be delivered to plants";
 
@@ -9840,7 +9840,7 @@ namespace STRINGS
 
 				public static LocString BATTERYCAPACITY = "Can hold <b>{0}</b> of " + PRE_KEYWORD + "Power" + PST_KEYWORD + " when connected to a " + PRE_KEYWORD + "Generator" + PST_KEYWORD;
 
-				public static LocString BATTERYLEAK = (FormatAsNegativeRate("{0}") + " of this battery's charge will be lost as " + PRE_KEYWORD + "Heat" + PST_KEYWORD) ?? "";
+				public static LocString BATTERYLEAK = FormatAsNegativeRate("{0}") + " of this battery's charge will be lost as " + PRE_KEYWORD + "Heat" + PST_KEYWORD;
 
 				public static LocString STORAGECAPACITY = "Holds up to <b>{0}</b> of material";
 

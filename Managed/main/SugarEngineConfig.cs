@@ -12,10 +12,14 @@ public class SugarEngineConfig : IBuildingConfig
 
 	public static float FUEL_EFFICIENCY = 0.1875f;
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("SugarEngine", 3, 3, "rocket_sugar_engine_kanim", 1000, 30f, BUILDINGS.ROCKETRY_MASS_KG.DENSE_TIER1, MATERIALS.RAW_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.AttachmentSlotTag = GameTags.Rocket;
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;

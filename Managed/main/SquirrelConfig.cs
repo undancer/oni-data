@@ -39,9 +39,9 @@ public class SquirrelConfig : IEntityConfig
 		return BaseSquirrelConfig.SetupDiet(prefab, diet_infos, MIN_POOP_SIZE_KG);
 	}
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

@@ -514,6 +514,9 @@ namespace ProcGen
 				}
 				switch (unknownCellsAllowedSubworld.command)
 				{
+				case World.AllowedCellsFilter.Command.All:
+					Debug.LogError("Command.All is unsupported for unknownCellsAllowedSubworlds.");
+					break;
 				case World.AllowedCellsFilter.Command.Clear:
 					RunFilterClearCommand(vn, unknownCellsAllowedSubworld, hashSet);
 					break;
@@ -824,10 +827,10 @@ namespace ProcGen
 			}
 			if (points.Count < num)
 			{
-				string arg = "";
+				string str = "";
 				for (int l = 0; l < node.site.poly.Vertices.Count; l++)
 				{
-					arg = string.Concat(arg, node.site.poly.Vertices[l], ", ");
+					str = str + node.site.poly.Vertices[l].ToString() + ", ";
 				}
 				if (worldGen.isRunningDebugGen)
 				{

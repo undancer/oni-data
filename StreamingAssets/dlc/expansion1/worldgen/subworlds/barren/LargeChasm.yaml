@@ -20,7 +20,6 @@ biomes:
       - LeafyPlantSeed
       - Squirrel                 
 features: []
-pointsOfInterest:
 tags:
   - IgnoreCaveOverride
   - NoGlobalFeatureSpawning

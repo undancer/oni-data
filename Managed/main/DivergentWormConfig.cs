@@ -68,9 +68,9 @@ public class DivergentWormConfig : IEntityConfig
 		return prefab;
 	}
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "EXPANSION1_ID";
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 
 	public GameObject CreatePrefab()

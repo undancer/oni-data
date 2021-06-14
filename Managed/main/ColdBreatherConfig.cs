@@ -23,9 +23,9 @@ public class ColdBreatherConfig : IEntityConfig
 
 	public static readonly Tag SEED_TAG = TagManager.Create("ColdBreatherSeed");
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()
@@ -69,13 +69,16 @@ public class ColdBreatherConfig : IEntityConfig
 		SimTemperatureTransfer component = gameObject.GetComponent<SimTemperatureTransfer>();
 		component.SurfaceArea = 10f;
 		component.Thickness = 0.001f;
-		RadiationEmitter radiationEmitter = gameObject.AddComponent<RadiationEmitter>();
-		radiationEmitter.emitType = RadiationEmitter.RadiationEmitterType.Constant;
-		radiationEmitter.radiusProportionalToRads = false;
-		radiationEmitter.emitRadiusX = 6;
-		radiationEmitter.emitRadiusY = radiationEmitter.emitRadiusX;
-		radiationEmitter.emitRads = 48f;
-		radiationEmitter.emissionOffset = new Vector3(0f, 0f, 0f);
+		if (DlcManager.FeatureRadiationEnabled())
+		{
+			RadiationEmitter radiationEmitter = gameObject.AddComponent<RadiationEmitter>();
+			radiationEmitter.emitType = RadiationEmitter.RadiationEmitterType.Constant;
+			radiationEmitter.radiusProportionalToRads = false;
+			radiationEmitter.emitRadiusX = 6;
+			radiationEmitter.emitRadiusY = radiationEmitter.emitRadiusX;
+			radiationEmitter.emitRads = 48f;
+			radiationEmitter.emissionOffset = new Vector3(0f, 0f, 0f);
+		}
 		GameObject seed = EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Hidden, "ColdBreatherSeed", STRINGS.CREATURES.SPECIES.SEEDS.COLDBREATHER.NAME, STRINGS.CREATURES.SPECIES.SEEDS.COLDBREATHER.DESC, Assets.GetAnim("seed_coldbreather_kanim"), "object", 1, new List<Tag>
 		{
 			GameTags.CropSeed

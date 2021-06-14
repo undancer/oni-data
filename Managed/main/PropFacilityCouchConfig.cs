@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class PropFacilityCouchConfig : IEntityConfig
 {
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

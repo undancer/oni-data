@@ -221,6 +221,11 @@ public class SkillsScreen : KModalScreen
 		return 20f;
 	}
 
+	protected override void OnSpawn()
+	{
+		ClusterManager.Instance.Subscribe(-1078710002, WorldRemoved);
+	}
+
 	protected override void OnActivate()
 	{
 		base.ConsumeMouseScroll = true;
@@ -727,7 +732,7 @@ public class SkillsScreen : KModalScreen
 		}
 		foreach (KeyValuePair<int, GameObject> worldDivider in worldDividers)
 		{
-			worldDivider.Value.SetActive(ClusterManager.Instance.GetWorld(worldDivider.Key).IsDiscovered && DlcManager.IsExpansion1Active());
+			worldDivider.Value.SetActive(ClusterManager.Instance.GetWorld(worldDivider.Key).IsDiscovered && DlcManager.FeatureClusterSpaceEnabled());
 			Component reference = worldDivider.Value.GetComponent<HierarchyReferences>().GetReference("NobodyRow");
 			reference.gameObject.SetActive(value: true);
 			foreach (MinionAssignablesProxy item5 in Components.MinionAssignablesProxy)
@@ -756,6 +761,16 @@ public class SkillsScreen : KModalScreen
 			gameObject.GetComponentInChildren<LocText>().SetText(component.Name);
 			gameObject.GetComponent<HierarchyReferences>().GetReference<Image>("Icon").sprite = component.GetUISprite();
 			worldDividers.Add(worldId, gameObject);
+		}
+	}
+
+	private void WorldRemoved(object worldId)
+	{
+		int key = (int)worldId;
+		if (worldDividers.TryGetValue(key, out var value))
+		{
+			UnityEngine.Object.Destroy(value);
+			worldDividers.Remove(key);
 		}
 	}
 

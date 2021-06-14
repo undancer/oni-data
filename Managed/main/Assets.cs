@@ -410,7 +410,8 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 		prefab.UpdateSaveLoadTag();
 		if (PrefabsByTag.ContainsKey(prefab.PrefabTag))
 		{
-			Debug.LogWarning("Tried loading prefab with duplicate tag, ignoring: " + prefab.PrefabTag);
+			Tag prefabTag = prefab.PrefabTag;
+			Debug.LogWarning("Tried loading prefab with duplicate tag, ignoring: " + prefabTag.ToString());
 			return;
 		}
 		PrefabsByTag[prefab.PrefabTag] = prefab;
@@ -454,7 +455,8 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 		GameObject gameObject = TryGetPrefab(tag);
 		if (gameObject == null)
 		{
-			Debug.LogWarning("Missing prefab: " + tag);
+			Tag tag2 = tag;
+			Debug.LogWarning("Missing prefab: " + tag2.ToString());
 		}
 		return gameObject;
 	}

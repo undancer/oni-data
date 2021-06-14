@@ -5,10 +5,14 @@ public class HabitatModuleSmallConfig : IBuildingConfig
 {
 	public const string ID = "HabitatModuleSmall";
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("HabitatModuleSmall", 3, 3, "rocket_nosecone_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.DENSE_TIER0, MATERIALS.RAW_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.AttachmentSlotTag = GameTags.Rocket;
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;

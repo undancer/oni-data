@@ -252,7 +252,7 @@ public class ManagementMenu : KIconToggleMenu
 			toggleInfo = scheduleInfo,
 			cancelHandler = null
 		});
-		if (DlcManager.IsExpansion1Active())
+		if (DlcManager.FeatureClusterSpaceEnabled())
 		{
 			ScreenInfoMatch.Add(clusterMapInfo, new ScreenData
 			{
@@ -286,7 +286,7 @@ public class ManagementMenu : KIconToggleMenu
 		list.Add(jobsInfo);
 		list.Add(skillsInfo);
 		list.Add(researchInfo);
-		if (DlcManager.IsExpansion1Active())
+		if (DlcManager.FeatureClusterSpaceEnabled())
 		{
 			list.Add(clusterMapInfo);
 		}
@@ -307,14 +307,14 @@ public class ManagementMenu : KIconToggleMenu
 		Components.RoleStations.OnRemove += CheckSkills;
 		Game.Instance.Subscribe(-809948329, CheckResearch);
 		Game.Instance.Subscribe(-809948329, CheckSkills);
-		if (!DlcManager.IsExpansion1Active())
+		if (!DlcManager.FeatureClusterSpaceEnabled())
 		{
 			Components.Telescopes.OnAdd += CheckStarmap;
 			Components.Telescopes.OnRemove += CheckStarmap;
 		}
 		CheckResearch(null);
 		CheckSkills();
-		if (!DlcManager.IsExpansion1Active())
+		if (!DlcManager.FeatureClusterSpaceEnabled())
 		{
 			CheckStarmap();
 		}
@@ -521,6 +521,10 @@ public class ManagementMenu : KIconToggleMenu
 				screenData.toggleInfo.toggle.gameObject.GetComponentInChildren<ImageToggleState>().SetActive();
 				CloseActive();
 				activeScreen = screenData;
+				if (!activeScreen.screen.IsActive())
+				{
+					activeScreen.screen.Activate();
+				}
 				activeScreen.screen.Show();
 				List<ManagementMenuNotification> notificationsForAction = notificationDisplayer.GetNotificationsForAction(screenData.toggleInfo.hotKey);
 				foreach (ManagementMenuNotification item in notificationsForAction)

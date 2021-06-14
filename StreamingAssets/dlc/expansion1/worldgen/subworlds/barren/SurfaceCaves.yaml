@@ -14,7 +14,6 @@ biomes:
     weight: 1
     tags:
 features: []
-pointsOfInterest:
 tags:
   - IgnoreCaveOverride
   - ErodePointToBorderInv

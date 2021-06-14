@@ -108,11 +108,27 @@ public class AudioMixer
 			value.release();
 			activeSnapshots.Remove(snapshot);
 			result = true;
-			instance.Log(string.Concat("Stop Snapshot: [", snapshot, "] with fadeout mode: [", stop_mode, "]"));
+			AudioMixer instance = AudioMixer.instance;
+			string[] obj = new string[5]
+			{
+				"Stop Snapshot: [",
+				null,
+				null,
+				null,
+				null
+			};
+			HashedString hashedString = snapshot;
+			obj[1] = hashedString.ToString();
+			obj[2] = "] with fadeout mode: [";
+			obj[3] = stop_mode.ToString();
+			obj[4] = "]";
+			instance.Log(string.Concat(obj));
 		}
 		else
 		{
-			instance.Log(string.Concat("Tried to stop snapshot: [", snapshot, "] but it wasn't active."));
+			AudioMixer instance2 = AudioMixer.instance;
+			HashedString hashedString = snapshot;
+			instance2.Log("Tried to stop snapshot: [" + hashedString.ToString() + "] but it wasn't active.");
 		}
 		return result;
 	}

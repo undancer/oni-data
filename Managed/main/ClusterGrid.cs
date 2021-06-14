@@ -20,6 +20,11 @@ public class ClusterGrid
 
 	public Dictionary<AxialI, List<ClusterGridEntity>> cellContents = new Dictionary<AxialI, List<ClusterGridEntity>>();
 
+	public static void DestroyInstance()
+	{
+		Instance = null;
+	}
+
 	private ClusterFogOfWarManager.Instance GetFOWManager()
 	{
 		if (m_fowManager == null)

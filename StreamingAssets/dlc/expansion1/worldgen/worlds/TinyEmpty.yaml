@@ -20,7 +20,7 @@ defaultsOverrides:
     OverworldMinNodes: 1
   startingWorldElements: [] # remove the algae check
 
-# List all the zone files to load
+# List all the subworld files to load
 subworldFiles:
   - name: subworlds/Empty
 

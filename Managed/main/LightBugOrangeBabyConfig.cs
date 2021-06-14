@@ -5,9 +5,9 @@ public class LightBugOrangeBabyConfig : IEntityConfig
 {
 	public const string ID = "LightBugOrangeBaby";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

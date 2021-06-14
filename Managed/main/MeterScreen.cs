@@ -150,7 +150,14 @@ public class MeterScreen : KScreen, IRender1000ms
 		if (count2 != cachedMinionCount)
 		{
 			cachedMinionCount = count2;
-			currentMinions.text = $"{count2}/{count}";
+			if (DlcManager.FeatureClusterSpaceEnabled())
+			{
+				currentMinions.text = $"{count2}/{count}";
+			}
+			else
+			{
+				currentMinions.text = $"{count}";
+			}
 			MinionsTooltip.ClearMultiStringTooltip();
 			ClusterGridEntity component = ClusterManager.Instance.activeWorld.GetComponent<ClusterGridEntity>();
 			MinionsTooltip.AddMultiStringTooltip(string.Format(UI.TOOLTIPS.METERSCREEN_POPULATION_CLUSTER, component.Name, count2, count), ToolTipStyle_Header);

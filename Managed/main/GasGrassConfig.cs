@@ -12,9 +12,9 @@ public class GasGrassConfig : IEntityConfig
 
 	public const float FERTILIZATION_RATE = 0.00083333335f;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

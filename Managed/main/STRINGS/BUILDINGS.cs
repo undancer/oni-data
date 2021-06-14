@@ -1004,7 +1004,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Discover the mysteries of the past.";
 
-				public static LocString EFFECT = "Analysis artifacts and extracts the " + UI.FormatAsLink("Neutronium", "UNOBTANIUM") + " from their shell.";
+				public static LocString EFFECT = "Analyses and extracts " + UI.FormatAsLink("Neutronium", "UNOBTANIUM") + " from artifacts.";
 			}
 
 			public class CANVAS
@@ -3587,9 +3587,9 @@ namespace STRINGS
 
 				public static LocString OUTPUT_NAME = "RIBBON OUTPUT";
 
-				public static LocString OUTPUT_PORT_ACTIVE = (UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + ": Writes a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " to selected Bit of an " + LOGICRIBBON.NAME) ?? "";
+				public static LocString OUTPUT_PORT_ACTIVE = UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + ": Writes a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " to selected Bit of an " + LOGICRIBBON.NAME;
 
-				public static LocString OUTPUT_PORT_INACTIVE = (UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ": Writes a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + " to selected Bit of an " + LOGICRIBBON.NAME) ?? "";
+				public static LocString OUTPUT_PORT_INACTIVE = UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ": Writes a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + " to selected Bit of an " + LOGICRIBBON.NAME;
 			}
 
 			public class LOGICRIBBONREADER
@@ -4024,9 +4024,9 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Diamond Press", "DIAMONDPRESS");
 
-				public static LocString DESC = "Crushes carbon into diamonds";
+				public static LocString DESC = "Crushes refined carbon into diamond.";
 
-				public static LocString EFFECT = "Crushes carbon into diamonds";
+				public static LocString EFFECT = "Uses " + UI.FormatAsLink("Power", "POWER") + " and " + UI.FormatAsLink("Radbolts", "HEP") + " to crush " + UI.FormatAsLink("Refined Carbon", "REFINEDCARBON") + " into " + UI.FormatAsLink("Diamond", "DIAMOND") + ".\n\n\n\nDuplicants will not fabricate items unless recipes are queued and " + UI.FormatAsLink("Refined Carbon", "REFINEDCARBON") + " has been discovered.";
 
 				public static LocString REFINED_CARBON_RECIPE_DESCRIPTION = "Converts {1} to {0}";
 			}

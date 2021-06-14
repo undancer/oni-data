@@ -4,9 +4,9 @@ public class SleepLocator : IEntityConfig
 {
 	public static readonly string ID = "SleepLocator";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

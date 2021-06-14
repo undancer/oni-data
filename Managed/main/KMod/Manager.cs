@@ -91,6 +91,7 @@ namespace KMod
 				}
 			}
 			Testing.Install install = Testing.Install.NoTesting;
+			Testing.Install install2 = Testing.Install.NoTesting;
 			List<Mod> list = new List<Mod>();
 			bool flag2 = false;
 			foreach (Mod mod2 in mods)

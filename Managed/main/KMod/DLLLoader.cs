@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Harmony;
+using HarmonyLib;
 using UnityEngine;
 
 namespace KMod
@@ -94,7 +94,7 @@ namespace KMod
 				};
 				Type[] types3 = new Type[1]
 				{
-					typeof(HarmonyInstance)
+					typeof(Harmony)
 				};
 				MethodInfo methodInfo = null;
 				loadedModData.dlls = new HashSet<Assembly>();
@@ -129,7 +129,7 @@ namespace KMod
 					}
 					loadedModData.dlls.Add(item);
 				}
-				HarmonyInstance harmony = HarmonyInstance.Create(harmonyId);
+				Harmony harmony = new Harmony(harmonyId);
 				if (harmony != null)
 				{
 					object[] parameters = new object[1]
@@ -153,7 +153,7 @@ namespace KMod
 				pooledList2.Recycle();
 				loadedModData.patched_methods = harmony.GetPatchedMethods().Where(delegate(MethodBase method)
 				{
-					Patches patchInfo = harmony.GetPatchInfo(method);
+					Patches patchInfo = Harmony.GetPatchInfo(method);
 					return patchInfo.Owners.Contains(harmonyId);
 				}).ToList();
 				foreach (MethodInfo item5 in pooledList3)

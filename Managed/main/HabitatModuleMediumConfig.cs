@@ -5,10 +5,14 @@ public class HabitatModuleMediumConfig : IBuildingConfig
 {
 	public const string ID = "HabitatModuleMedium";
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("HabitatModuleMedium", 5, 4, "rocket_habitat_medium_module_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.DENSE_TIER1, MATERIALS.RAW_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.AttachmentSlotTag = GameTags.Rocket;
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;

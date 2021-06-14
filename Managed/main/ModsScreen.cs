@@ -175,7 +175,7 @@ public class ModsScreen : KModalScreen
 			string text = mod.title;
 			if (mod.available_content == (Content)0)
 			{
-				text += UI.FRONTEND.MODS.MOD_DISABLED_CONTENT.Replace("{Content}", GetDlcName(DlcManager.GetActiveDlcId()));
+				text += UI.FRONTEND.MODS.MOD_DISABLED_CONTENT.Replace("{Content}", GetDlcName(DlcManager.GetHighestActiveDlcId()));
 			}
 			reference.text = text;
 			ToolTip reference2 = hierarchyReferences.GetReference<ToolTip>("Description");
@@ -224,14 +224,17 @@ public class ModsScreen : KModalScreen
 
 	private static string GetDlcName(string dlcId)
 	{
-		if (!(dlcId == "EXPANSION1_ID"))
+		if (dlcId != null)
 		{
-			if ((dlcId != null && dlcId.Length == 0) || dlcId != null)
+			if (dlcId == "EXPANSION1_ID")
+			{
+				return UI.DLC1.NAME_ITAL;
+			}
+			if (dlcId != null && dlcId.Length == 0)
 			{
 			}
-			return UI.VANILLA.NAME_ITAL;
 		}
-		return UI.DLC1.NAME_ITAL;
+		return UI.VANILLA.NAME_ITAL;
 	}
 
 	private void OnToggleClicked(MultiToggle toggle, Label mod)

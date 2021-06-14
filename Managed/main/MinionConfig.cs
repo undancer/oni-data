@@ -37,9 +37,9 @@ public class MinionConfig : IEntityConfig
 
 	public const int MINION_SUIT_SYMBOL_LAYER = 6;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

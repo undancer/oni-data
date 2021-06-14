@@ -62,9 +62,9 @@ public class DreckoPlasticConfig : IEntityConfig
 		return prefab;
 	}
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public virtual GameObject CreatePrefab()

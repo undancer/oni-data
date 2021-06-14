@@ -6,13 +6,17 @@ public class SteamEngineConfig : IBuildingConfig
 {
 	public const string ID = "SteamEngine";
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_VANILLA_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("SteamEngine", 7, 5, "rocket_steam_engine_kanim", 1000, 480f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER7, new string[1]
 		{
 			SimHashes.Steel.ToString()
 		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.ForbiddenDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;
 		buildingDef.OverheatTemperature = 2273.15f;
@@ -66,7 +70,7 @@ public class SteamEngineConfig : IBuildingConfig
 			Storage.StoredItemModifier.Insulate
 		});
 		FuelTank fuelTank = go.AddOrGet<FuelTank>();
-		fuelTank.consumeFuelOnLand = !DlcManager.IsExpansion1Active();
+		fuelTank.consumeFuelOnLand = !DlcManager.FeatureClusterSpaceEnabled();
 		fuelTank.storage = storage;
 		fuelTank.FuelType = ElementLoader.FindElementByHash(SimHashes.Steam).tag;
 		fuelTank.physicalFuelCapacity = storage.capacityKg;

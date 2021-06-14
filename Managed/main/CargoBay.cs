@@ -84,7 +84,7 @@ public class CargoBay : KMonoBehaviour
 
 	public void SpawnResources(object data)
 	{
-		if (DlcManager.IsExpansion1Active())
+		if (DlcManager.FeatureClusterSpaceEnabled())
 		{
 			return;
 		}
@@ -153,7 +153,7 @@ public class CargoBay : KMonoBehaviour
 
 	private void ReserveResources()
 	{
-		if (!DlcManager.IsExpansion1Active())
+		if (!DlcManager.FeatureClusterSpaceEnabled())
 		{
 			ILaunchableRocket component = GetComponent<RocketModule>().conditionManager.GetComponent<ILaunchableRocket>();
 			if (component.registerType != LaunchableRocketRegisterType.Clustercraft)

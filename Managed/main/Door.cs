@@ -600,7 +600,8 @@ public class Door : Workable, ISaveLoadable, ISim200ms, INavDoor
 		{
 			int num = cells[i];
 			DoorType doorType = this.doorType;
-			if ((uint)doorType > 1u && doorType != DoorType.Sealed)
+			DoorType doorType2 = doorType;
+			if ((uint)doorType2 > 1u && doorType2 != DoorType.Sealed)
 			{
 				continue;
 			}

@@ -6,9 +6,9 @@ public class MethaneGeyserConfig : IEntityConfig
 {
 	public const string ID = "MethaneGeyser";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

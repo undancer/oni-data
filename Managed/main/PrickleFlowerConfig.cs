@@ -13,9 +13,9 @@ public class PrickleFlowerConfig : IEntityConfig
 
 	public const string SEED_ID = "PrickleFlowerSeed";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

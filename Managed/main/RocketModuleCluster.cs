@@ -10,6 +10,16 @@ public class RocketModuleCluster : RocketModule
 		component.OnNewConstruction(data);
 	});
 
+	private static readonly EventSystem.IntraObjectHandler<RocketModuleCluster> OnLaunchConditionChangedDelegate = new EventSystem.IntraObjectHandler<RocketModuleCluster>(delegate(RocketModuleCluster component, object data)
+	{
+		component.OnLaunchConditionChanged(data);
+	});
+
+	private static readonly EventSystem.IntraObjectHandler<RocketModuleCluster> OnLandDelegate = new EventSystem.IntraObjectHandler<RocketModuleCluster>(delegate(RocketModuleCluster component, object data)
+	{
+		component.OnLand(data);
+	});
+
 	private CraftModuleInterface _craftInterface;
 
 	public CraftModuleInterface CraftInterface
@@ -37,9 +47,14 @@ public class RocketModuleCluster : RocketModule
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		if (CraftInterface == null && DlcManager.IsExpansion1Active())
+		if (CraftInterface == null && DlcManager.FeatureClusterSpaceEnabled())
 		{
 			RegisterWithCraftModuleInterface();
+		}
+		if (GetComponent<RocketEngine>() == null && GetComponent<RocketEngineCluster>() == null && GetComponent<BuildingUnderConstruction>() == null)
+		{
+			Subscribe(1655598572, OnLaunchConditionChangedDelegate);
+			Subscribe(-887025858, OnLandDelegate);
 		}
 	}
 
@@ -91,5 +106,42 @@ public class RocketModuleCluster : RocketModule
 			return CraftInterface.GetComponent<Clustercraft>().Name;
 		}
 		return parentRocketName;
+	}
+
+	private void OnLaunchConditionChanged(object data)
+	{
+		UpdateAnimations();
+	}
+
+	private void OnLand(object data)
+	{
+		UpdateAnimations();
+	}
+
+	protected void UpdateAnimations()
+	{
+		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
+		Clustercraft clustercraft = ((CraftInterface == null) ? null : CraftInterface.GetComponent<Clustercraft>());
+		if (clustercraft != null && clustercraft.Status == Clustercraft.CraftStatus.Launching && component.HasAnimation("launch"))
+		{
+			component.ClearQueue();
+			if (component.HasAnimation("launch_pre"))
+			{
+				component.Play("launch_pre");
+			}
+			component.Queue("launch", KAnim.PlayMode.Loop);
+		}
+		else if (CraftInterface != null && CraftInterface.CheckPreppedForLaunch())
+		{
+			component.initialAnim = "ready_to_launch";
+			component.Play("pre_ready_to_launch");
+			component.Queue("ready_to_launch", KAnim.PlayMode.Loop);
+		}
+		else
+		{
+			component.initialAnim = "grounded";
+			component.Play("pst_ready_to_launch");
+			component.Queue("grounded", KAnim.PlayMode.Loop);
+		}
 	}
 }

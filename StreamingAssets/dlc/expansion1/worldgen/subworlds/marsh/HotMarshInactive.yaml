@@ -26,11 +26,13 @@ biomes:
       - BulbPlantSeed
 tags:
   - IgnoreCaveOverride
-pointsOfInterest:
-  ruins_a:
-    - poi/hotmarsh/frag_doorway
-    - poi/hotmarsh/frag_table
-  ruins_b:
-    - poi/hotmarsh/lab_burrow
-    - poi/hotmarsh/lab_splitroom
+subworldTemplateRules:
+  - names:
+      - poi/hotmarsh/frag_doorway
+      - poi/hotmarsh/frag_table
+    listRule: TryOne
+  - names:
+      - poi/hotmarsh/lab_burrow
+      - poi/hotmarsh/lab_splitroom
+    listRule: TryOne
 zoneType: BoggyMarsh

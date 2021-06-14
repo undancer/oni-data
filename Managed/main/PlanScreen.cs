@@ -1072,7 +1072,8 @@ public class PlanScreen : KIconToggleMenu
 		}
 		Image fgImage = toggle.gameObject.GetComponent<KToggle>().fgImage;
 		RequirementsState requirementsState2 = requirementsState;
-		if (requirementsState2 == RequirementsState.Tech)
+		RequirementsState requirementsState3 = requirementsState2;
+		if (requirementsState3 == RequirementsState.Tech)
 		{
 			fgImage.sprite = Overlay_NeedTech;
 			fgImage.gameObject.SetActive(value: true);

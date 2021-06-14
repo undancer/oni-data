@@ -16,16 +16,6 @@ biomes:
       - SaltPlantSeed
 tags:
   - IgnoreCaveOverride
-pointsOfInterest:
-  ruins_a:
-    - poi/poi_broken_farm
-    - poi/poi_old_pool
-  ruins_b:
-    - poi/poi_dupe_sensor_puzzle
-  spiral_a:
-    - poi/poi_salt_spiral
-    - poi/poi_salt_spiral_2
-    - poi/poi_salt_spiral_3
 features:
   - type: features/rust/EthanolLake
   - type: features/rust/MiniBleachBall
@@ -33,3 +23,16 @@ features:
   - type: features/rust/SulfurHole
   - type: features/rust/BigRock
 zoneType: Rust
+subworldTemplateRules:
+  - names:
+      - poi/poi_broken_farm
+      - poi/poi_old_pool
+    listRule: TryOne
+  - names:
+      - poi/poi_dupe_sensor_puzzle
+    listRule: TryOne
+  - names:
+      - poi/poi_salt_spiral
+      - poi/poi_salt_spiral_2
+      - poi/poi_salt_spiral_3
+    listRule: TryOne

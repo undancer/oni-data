@@ -6,9 +6,9 @@ public class BasicPlantFoodConfig : IEntityConfig
 {
 	public const string ID = "BasicPlantFood";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

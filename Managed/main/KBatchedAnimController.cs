@@ -181,7 +181,9 @@ public class KBatchedAnimController : KAnimControllerBase, KAnimConverter.IAnimC
 			HashedString batchGroupID = kafd.build.batchTag;
 			if (group.renderType == KAnimBatchGroup.RendererType.DontRender || group.renderType == KAnimBatchGroup.RendererType.AnimOnly)
 			{
-				Debug.Assert(group.swapTarget.IsValid, string.Concat("Invalid swap target fro group [", group.id, "]"));
+				bool isValid = group.swapTarget.IsValid;
+				HashedString id = group.id;
+				Debug.Assert(isValid, "Invalid swap target fro group [" + id.ToString() + "]");
 				batchGroupID = group.swapTarget;
 			}
 			this.batchGroupID = batchGroupID;

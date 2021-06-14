@@ -32,7 +32,7 @@ public class WorldSelector : KScreen, ISim4000ms
 
 	protected override void OnSpawn()
 	{
-		if (!DlcManager.IsExpansion1Active())
+		if (!DlcManager.FeatureClusterSpaceEnabled())
 		{
 			Deactivate();
 			return;

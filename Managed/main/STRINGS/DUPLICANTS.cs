@@ -1048,6 +1048,17 @@ namespace STRINGS
 				public static LocString REPORT_NAME = "Store {0}";
 			}
 
+			public class EQUIPMENTFETCH
+			{
+				public static LocString NAME = "Store Equipment";
+
+				public static LocString STATUS = "Storing equipment";
+
+				public static LocString TOOLTIP = "This Duplicant is transporting equipment for storage";
+
+				public static LocString REPORT_NAME = "Store {0}";
+			}
+
 			public class REPAIRFETCH
 			{
 				public static LocString NAME = "Repair Supply";
@@ -6378,7 +6389,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Underwater Movement";
 
-				public static LocString DESC = ("Determines a Duplicant's runspeed when submerged in " + UI.PRE_KEYWORD + "Liquid" + UI.PST_KEYWORD) ?? "";
+				public static LocString DESC = "Determines a Duplicant's runspeed when submerged in " + UI.PRE_KEYWORD + "Liquid" + UI.PST_KEYWORD;
 			}
 
 			public class OVERHEATTEMPERATURE

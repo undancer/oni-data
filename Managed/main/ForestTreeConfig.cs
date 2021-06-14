@@ -17,9 +17,9 @@ public class ForestTreeConfig : IEntityConfig
 
 	public const int NUM_BRANCHES = 7;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

@@ -11,7 +11,7 @@ namespace ProcGen
 
 		public World world => mutatedWorldData.world;
 
-		public static string ClusterDefaultName => DlcManager.IsExpansion1Active() ? "expansion1::clusters/SandstoneStartCluster" : "clusters/SandstoneDefault";
+		public static string ClusterDefaultName => DlcManager.FeatureClusterSpaceEnabled() ? "expansion1::clusters/SandstoneStartCluster" : "clusters/SandstoneDefault";
 
 		public WorldGenSettings(string worldName, List<string> traits, bool assertMissingTraits)
 		{

@@ -1186,7 +1186,7 @@ namespace STRINGS
 
 				public static LocString TOOLTIP = "These Duplicants had their genetic makeup modified:";
 
-				public static LocString SUFFIX = (" has developed " + UI.PRE_KEYWORD + "{0}" + UI.PST_KEYWORD) ?? "";
+				public static LocString SUFFIX = " has developed " + UI.PRE_KEYWORD + "{0}" + UI.PST_KEYWORD;
 			}
 
 			public class HEALINGTRAITGAIN

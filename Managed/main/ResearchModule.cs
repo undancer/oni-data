@@ -28,7 +28,7 @@ public class ResearchModule : KMonoBehaviour
 
 	public void OnLand(object data)
 	{
-		if (!DlcManager.IsExpansion1Active())
+		if (!DlcManager.FeatureClusterSpaceEnabled())
 		{
 			SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(SpacecraftManager.instance.GetSpacecraftID(GetComponent<RocketModule>().conditionManager.GetComponent<ILaunchableRocket>()));
 			SpaceDestination.ResearchOpportunity researchOpportunity = spacecraftDestination.TryCompleteResearchOpportunity();

@@ -220,19 +220,6 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 			minTimeToNotify = 6f,
 			lastNotifyTime = 0f
 		});
-		if (!DlcManager.IsExpansion1Active())
-		{
-			warningItems.Add(new Item
-			{
-				notification = new Notification(MISC.NOTIFICATIONS.FOODLOW.NAME, NotificationType.Bad, OnLowFoodTooltip, ClusterManager.Instance.activeWorld, expires: false, 0f, delegate
-				{
-					PlanScreen.Instance.OpenCategoryByName("Food");
-				}),
-				requirementSatisfied = EnoughFood,
-				minTimeToNotify = 10f,
-				lastNotifyTime = 0f
-			});
-		}
 		warningItems.Add(new Item
 		{
 			notification = new Notification(MISC.NOTIFICATIONS.NO_MEDICAL_COTS.NAME, NotificationType.Bad, (List<Notification> n, object o) => MISC.NOTIFICATIONS.NO_MEDICAL_COTS.TOOLTIP, null, expires: false, 0f, delegate

@@ -5,6 +5,11 @@ public class OxygenMaskMarkerConfig : IBuildingConfig
 {
 	public const string ID = "OxygenMaskMarker";
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		string[] rAW_METALS = MATERIALS.RAW_METALS;
@@ -16,7 +21,6 @@ public class OxygenMaskMarkerConfig : IBuildingConfig
 		buildingDef.PermittedRotations = PermittedRotations.FlipH;
 		buildingDef.PreventIdleTraversalPastBuilding = true;
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.SuitIDs, "OxygenMaskMarker");
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		return buildingDef;
 	}
 

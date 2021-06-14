@@ -87,7 +87,7 @@ public class FarmDiagnostic : ColonyDiagnostic
 
 	public override string GetAverageValueString()
 	{
-		return TrackerTool.Instance.GetWorldTracker<CropTracker>(base.worldID).GetCurrentValue() + "/" + Components.PlantablePlots.GetWorldItems(base.worldID).FindAll((PlantablePlot match) => match.HasDepositTag(GameTags.CropSeed)).Count.ToString();
+		return TrackerTool.Instance.GetWorldTracker<CropTracker>(base.worldID).GetCurrentValue() + "/" + Components.PlantablePlots.GetWorldItems(base.worldID).FindAll((PlantablePlot match) => match.HasDepositTag(GameTags.CropSeed)).Count;
 	}
 
 	public override DiagnosticResult Evaluate()

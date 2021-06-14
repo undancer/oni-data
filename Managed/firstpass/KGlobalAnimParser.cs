@@ -201,7 +201,8 @@ public class KGlobalAnimParser
 		int num = reader.ReadInt32();
 		if (num != 10 && num != 9)
 		{
-			Debug.LogError(string.Concat(fileNameHash, " has invalid build.bytes version [", num, "]"));
+			KAnimHashedString kAnimHashedString = fileNameHash;
+			Debug.LogError(kAnimHashedString.ToString() + " has invalid build.bytes version [" + num + "]");
 			return -1;
 		}
 		KAnimGroupFile.Group group = KAnimGroupFile.GetGroup(data.groupID);
@@ -286,7 +287,7 @@ public class KGlobalAnimParser
 			KAnim.Build.Symbol symbol = data.GetSymbol(i);
 			if (symbol == null)
 			{
-				Debug.LogWarning(string.Concat("Symbol null for [", data.groupID, "] idx: [", i, "]"));
+				Debug.LogWarning("Symbol null for [" + data.groupID.ToString() + "] idx: [" + i + "]");
 				continue;
 			}
 			if (symbol.numLookupFrames <= 0)
@@ -302,7 +303,22 @@ public class KGlobalAnimParser
 			symbol.frameLookup = new int[symbol.numLookupFrames];
 			if (symbol.numLookupFrames <= 0)
 			{
-				Debug.LogWarning(string.Concat("No lookup frames for  [", data.groupID, "] build: [", symbol.build.name, "] idx: [", i, "] id: [", symbol.hash, "]"));
+				string[] obj = new string[9]
+				{
+					"No lookup frames for  [",
+					data.groupID.ToString(),
+					"] build: [",
+					symbol.build.name,
+					"] idx: [",
+					i.ToString(),
+					"] id: [",
+					null,
+					null
+				};
+				KAnimHashedString hash = symbol.hash;
+				obj[7] = hash.ToString();
+				obj[8] = "]";
+				Debug.LogWarning(string.Concat(obj));
 				continue;
 			}
 			for (int k = 0; k < symbol.numLookupFrames; k++)
@@ -314,14 +330,44 @@ public class KGlobalAnimParser
 				KAnim.Build.SymbolFrameInstance symbolFrameInstance2 = data.GetSymbolFrameInstance(l);
 				if (symbolFrameInstance2.symbolFrame == null)
 				{
-					Debug.LogWarning(string.Concat("No symbol frame  [", data.groupID, "] symFrameIdx: [", l, "] id: [", symbol.hash, "]"));
+					string[] obj2 = new string[7]
+					{
+						"No symbol frame  [",
+						data.groupID.ToString(),
+						"] symFrameIdx: [",
+						l.ToString(),
+						"] id: [",
+						null,
+						null
+					};
+					KAnimHashedString hash = symbol.hash;
+					obj2[5] = hash.ToString();
+					obj2[6] = "]";
+					Debug.LogWarning(string.Concat(obj2));
 					continue;
 				}
 				for (int m = symbolFrameInstance2.symbolFrame.sourceFrameNum; m < symbolFrameInstance2.symbolFrame.sourceFrameNum + symbolFrameInstance2.symbolFrame.duration; m++)
 				{
 					if (m >= symbol.frameLookup.Length)
 					{
-						Debug.LogWarning(string.Concat("Too many lookup frames [", m, ">=", symbol.frameLookup.Length, "] for  [", data.groupID, "] idx: [", i, "] id: [", symbol.hash, "]"));
+						string[] obj3 = new string[11]
+						{
+							"Too many lookup frames [",
+							m.ToString(),
+							">=",
+							symbol.frameLookup.Length.ToString(),
+							"] for  [",
+							data.groupID.ToString(),
+							"] idx: [",
+							i.ToString(),
+							"] id: [",
+							null,
+							null
+						};
+						KAnimHashedString hash = symbol.hash;
+						obj3[9] = hash.ToString();
+						obj3[10] = "]";
+						Debug.LogWarning(string.Concat(obj3));
 					}
 					else
 					{

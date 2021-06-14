@@ -147,7 +147,8 @@ public class Diet
 				}
 				if (consumedTagToInfo.ContainsKey(tag))
 				{
-					Debug.LogError("Duplicate diet entry: " + tag);
+					Tag tag2 = tag;
+					Debug.LogError("Duplicate diet entry: " + tag2.ToString());
 				}
 				consumedTagToInfo[tag] = info;
 			}

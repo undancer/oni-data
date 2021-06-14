@@ -22,7 +22,6 @@ biomes:
 centralFeature:
   type: features/generic/StartLocation
 features: []
-pointsOfInterest:
 tags:
   - IgnoreCaveOverride
   - NoGlobalFeatureSpawning

@@ -4,6 +4,9 @@ nameTable: SWAMP
 asteroidIcon: asteroid_marshy_moonlet_kanim
 disableWorldTraits: true
 
+# Notes:
+# - Marsh/Jungle do not have their default geysers
+
 worldsize:
   X: 64
   Y: 96
@@ -26,10 +29,10 @@ startingBasePositionHorizontal:
   min: 0.35
   max: 0.65
 startingBasePositionVertical:
-  min: 0.45
-  max: 0.75
+  min: 0.50
+  max: 0.55
 
-# List all the zone files to load
+# List all the subworld files to load
 subworldFiles:
   - name: subworlds/space/Space
   - name: expansion1::subworlds/space/SpaceWithOrganicBorder
@@ -82,6 +85,7 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/magma/BottomSmall
 
 worldTemplateRules:
+  # Place one tungsten volcano anywhere so at least one spawns
   - names:
     - expansion1::geysers/molten_tungsten
     listRule: GuaranteeAll
@@ -95,25 +99,17 @@ worldTemplateRules:
         maxDistance: 2
       - command: ExceptWith
         zoneTypes: [ Space ]
-      - command: ExceptWith
-        tagcommand: AtTag
-        tag: NoGravitasFeatures
+  # Try to place tungsten volcanoes in the core
   - names:
     - expansion1::geysers/molten_tungsten_exposed
     listRule: TryAll
     times: 2
+    allowDuplicates: true
     priority: 100
     allowedCellsFilter:
       - command: Replace
-        tagcommand: DistanceFromTag
-        tag: AtDepths
-        minDistance: 0
-        maxDistance: 2
-      - command: IntersectWith
         zoneTypes: [ MagmaCore ]
-      - command: ExceptWith
-        tagcommand: AtTag
-        tag: NoGravitasFeatures
+  # Curated Geysers
   - names:
     - geysers/slimy_po2
     - geysers/methane
@@ -121,8 +117,9 @@ worldTemplateRules:
     - geysers/hot_co2
     - geysers/hot_hydrogen
     - geysers/hot_po2
-    listRule: TrySome
-    someCount: 1
+    listRule: TryOne
+    times: 1
+    allowDuplicates: true
     priority: 50
     allowedCellsFilter:
       - command: Replace

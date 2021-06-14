@@ -26,28 +26,72 @@ startingBasePositionVertical:
 subworldFiles:
   - name: subworlds/space/Space
   - name: subworlds/magma/Bottom
-  - name: expansion1::subworlds/sandstone/SandstoneMini
-    minCount: 2
+  - name: expansion1::subworlds/sandstone/SandstoneMiniWater
+    minCount: 3
     maxCount: 3
-  - name: expansion1::subworlds/marsh/HotMarshSteamy
-    minCount: 2
+  - name: expansion1::subworlds/sandstone/SandstoneMini
+    maxCount: 1
+  - name: subworlds/marsh/HotMarsh
+    minCount: 3
   - name: expansion1::subworlds/jungle/JungleSteamy 
     minCount: 2
+  - name: subworlds/jungle/Jungle
+    minCount: 3
   - name: expansion1::subworlds/sandstone/SandstoneStart
     overridePower: 4
-  - name: expansion1::subworlds/sandstone/Sandstone
   - name: expansion1::subworlds/space/IcySurface
     overridePower: 1.3
   - name: expansion1::subworlds/barren/CoalyGranite
+    overridePower: 1 # Reset their pdWeight
   - name: expansion1::subworlds/wasteland/WastelandBeetle
+    minCount: 2
   - name: expansion1::subworlds/wasteland/WastelandWorm
+    minCount: 1
+    maxCount: 2
+  - name: expansion1::subworlds/frozen/FrozenSlush
+    minCount: 2
+    maxCount: 3
 
 unknownCellsAllowedSubworlds: 
-#  - tagcommand: Default
-#    command: Replace
-#    subworldNames:
-##      - subworlds/space/Space
-#      - expansion1::subworlds/sandstone/Sandstone
+  # World Fill
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 3
+    maxDistance: 99
+    command: Replace
+    subworldNames:
+      - subworlds/jungle/Jungle # Cool Steam Geyser
+      - subworlds/marsh/HotMarsh
+      - expansion1::subworlds/wasteland/WastelandBeetle
+      - expansion1::subworlds/wasteland/WastelandWorm
+  # Ring-1/expanded start
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:    
+      - subworlds/marsh/HotMarsh
+      - expansion1::subworlds/jungle/JungleSteamy
+      - expansion1::subworlds/sandstone/SandstoneMini
+      - expansion1::subworlds/sandstone/SandstoneMiniWater
+  # Core
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 0
+    command: Replace
+    subworldNames:
+      - subworlds/magma/Bottom
+  # Above Core
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/barren/CoalyGranite
+  # Space
   - tagcommand: AtTag
     tag: AtSurface
     command: Replace
@@ -60,6 +104,7 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - subworlds/space/Space
+  # Surface
   - tagcommand: DistanceFromTag
     tag: AtSurface
     minDistance: 2
@@ -67,60 +112,43 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - expansion1::subworlds/space/IcySurface
+  # Below Surface
   - tagcommand: DistanceFromTag
     tag: AtSurface
     minDistance: 3
-    maxDistance: 99
+    maxDistance: 3
     command: Replace
     subworldNames:
-      - expansion1::subworlds/jungle/JungleSteamy
-      - expansion1::subworlds/wasteland/WastelandBeetle
-      - expansion1::subworlds/wasteland/WastelandWorm
-  - tagcommand: DistanceFromTag
-    tag: AtStart
-    minDistance: 1
-    maxDistance: 1
-    command: Replace
-    subworldNames:    
-      - expansion1::subworlds/marsh/HotMarshSteamy
-      - expansion1::subworlds/jungle/JungleSteamy
-#      - expansion1::subworlds/sandstone/SandstoneMiniMetal
-#      - expansion1::subworlds/sandstone/SandstoneMiniWater
-#      - expansion1::subworlds/sandstone/SandstoneMiniAlgae
-      - expansion1::subworlds/sandstone/SandstoneMini
-  - tagcommand: DistanceFromTag
-    tag: AtDepths
-    minDistance: 1
-    maxDistance: 1
-    command: Replace
-    subworldNames:
-      - expansion1::subworlds/barren/CoalyGranite
-  - tagcommand: DistanceFromTag
-    tag: AtDepths
-    minDistance: 0
-    maxDistance: 0
-    command: Replace
-    subworldNames:
-      - subworlds/magma/Bottom
+      - expansion1::subworlds/frozen/FrozenSlush
 
 worldTemplateRules:
+  # Jungle
   - names:
-    - expansion1::poi/warp/sender
-    - expansion1::poi/warp/receiver
-    - expansion1::poi/warp/teleporter
-    listRule: GuaranteeAll
-    priority: 500
+      - poi/jungle/geyser_steam
+    listRule: GuaranteeOne
+    priority: 100
     allowedCellsFilter:
       - command: Replace
-        tagcommand: DistanceFromTag
-        tag: AtStart
-        minDistance: 1
-        maxDistance: 2
-      - command: IntersectWith
-        zoneTypes: [ Wasteland, BoggyMarsh, ToxicJungle ]
-      - command: ExceptWith
-        tagcommand: AtTag
-        tag: NoGravitasFeatures
+        subworldNames:
+          - subworlds/jungle/Jungle
+  # FrozenSlush (no heatsink)
+  - names:
+    - expansion1::poi/poi_geyser_dirty_slush
+    - expansion1::poi/poi_frozen_salt_water_geyser
+    listRule: GuaranteeAll
+    priority: 100
+    allowedCellsFilter:
+	  - command: Replace
+        zoneTypes: [FrozenWastes]
+  # Marsh (no guaranteed steam)
+  - names:
+      - poi/hotmarsh/geyser_methane
+    listRule: GuaranteeOne
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [BoggyMarsh]
+  # Geysers
   - names:
     - expansion1::poi/poi_geyser_magma
     - expansion1::poi/poi_geyser_magma_2
@@ -135,6 +163,24 @@ worldTemplateRules:
         maxDistance: 1
       - command: IntersectWith
         zoneTypes: [ Barren ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+  # Gravitas
+  - names:
+    - expansion1::poi/warp/sender
+    - expansion1::poi/warp/receiver
+    - expansion1::poi/warp/teleporter
+    listRule: GuaranteeAll
+    priority: 500
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 2
+      - command: IntersectWith
+        zoneTypes: [ Wasteland, BoggyMarsh, ToxicJungle ]
       - command: ExceptWith
         tagcommand: AtTag
         tag: NoGravitasFeatures
@@ -161,14 +207,3 @@ worldTemplateRules:
         tag: AtSurface
         minDistance: 0
         maxDistance: 2
-  # DISABLED FOR TESTING
-  # - names:
-  #   - expansion1::poi/poi_temporal_tear_analyzer
-  #   listRule: GuaranteeAll
-  #   priority: 500
-  #   allowedCellsFilter:
-  #     - command: Replace
-  #       tagcommand: DistanceFromTag
-  #       tag: AtSurface
-  #       minDistance: 1
-  #       maxDistance: 1

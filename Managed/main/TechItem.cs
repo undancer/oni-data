@@ -9,17 +9,17 @@ public class TechItem : Resource
 
 	public string parentTechId;
 
-	public string dlcId;
+	public string[] dlcIds;
 
 	public Tech ParentTech => Db.Get().Techs.Get(parentTechId);
 
-	public TechItem(string id, ResourceSet parent, string name, string description, Func<string, bool, Sprite> getUISprite, string parentTechId, string dlcId)
+	public TechItem(string id, ResourceSet parent, string name, string description, Func<string, bool, Sprite> getUISprite, string parentTechId, string[] dlcIds)
 		: base(id, parent, name)
 	{
 		this.description = description;
 		this.getUISprite = getUISprite;
 		this.parentTechId = parentTechId;
-		this.dlcId = dlcId;
+		this.dlcIds = dlcIds;
 	}
 
 	public Sprite UISprite()

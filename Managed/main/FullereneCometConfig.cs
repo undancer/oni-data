@@ -5,9 +5,9 @@ public class FullereneCometConfig : IEntityConfig
 {
 	public static string ID = "FullereneComet";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "EXPANSION1_ID";
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 
 	public GameObject CreatePrefab()

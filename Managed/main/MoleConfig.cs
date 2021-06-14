@@ -46,9 +46,9 @@ public class MoleConfig : IEntityConfig
 		return gameObject;
 	}
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

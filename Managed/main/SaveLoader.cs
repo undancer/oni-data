@@ -756,7 +756,7 @@ public class SaveLoader : KMonoBehaviour
 			{
 				SaveGame.Header first = fileInfo.first;
 				SaveGame.GameInfo second = fileInfo.second;
-				if (second.saveMajorVersion >= 7 && DlcManager.GetActiveDlcId() == second.dlcId)
+				if (second.saveMajorVersion >= 7 && DlcManager.GetHighestActiveDlcId() == second.dlcId)
 				{
 					return allFiles[i];
 				}

@@ -13,9 +13,9 @@ public class SaltPlantConfig : IEntityConfig
 
 	public const float CHLORINE_CONSUMPTION_RATE = 0.006f;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

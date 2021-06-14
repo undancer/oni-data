@@ -448,9 +448,9 @@ public static class RetireColonyUtility
 				}
 				return Sprite.Create(texture2D, new Rect(Vector2.zero, new Vector2(texture2D.width, texture2D.height)), new Vector2(0.5f, 0.5f), 100f, 0u, SpriteMeshType.FullRect);
 			}
-			catch (Exception arg)
+			catch (Exception ex)
 			{
-				Debug.Log("failed to load preview image!? " + arg);
+				Debug.Log("failed to load preview image!? " + ex);
 			}
 		}
 		if (!fallbackToTimelapse)
@@ -461,9 +461,9 @@ public static class RetireColonyUtility
 		{
 			return LoadRetiredColonyPreview(colonyName);
 		}
-		catch (Exception arg2)
+		catch (Exception arg)
 		{
-			Debug.Log($"failed to load fallback timelapse image!? {arg2}");
+			Debug.Log($"failed to load fallback timelapse image!? {arg}");
 		}
 		return null;
 	}

@@ -8,5 +8,5 @@ public interface IEntityConfig
 
 	void OnSpawn(GameObject inst);
 
-	string GetDlcId();
+	string[] GetDlcIds();
 }

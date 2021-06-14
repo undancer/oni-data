@@ -8,9 +8,9 @@ public class SwampLilyFlowerConfig : IEntityConfig
 
 	public static string ID = "SwampLilyFlower";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

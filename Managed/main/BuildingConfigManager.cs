@@ -56,11 +56,12 @@ public class BuildingConfigManager : KMonoBehaviour
 
 	public void RegisterBuilding(IBuildingConfig config)
 	{
-		BuildingDef buildingDef = config.CreateBuildingDef();
-		if (!DlcManager.IsContentActive(buildingDef.RequiredDlcId) || (buildingDef.ForbiddenDlcId != null && DlcManager.IsContentActive(buildingDef.ForbiddenDlcId)))
+		if (!DlcManager.IsDlcListValidForCurrentContent(config.GetDlcIds()))
 		{
 			return;
 		}
+		BuildingDef buildingDef = config.CreateBuildingDef();
+		buildingDef.RequiredDlcIds = config.GetDlcIds();
 		configTable[config] = buildingDef;
 		GameObject gameObject = UnityEngine.Object.Instantiate(baseTemplate);
 		UnityEngine.Object.DontDestroyOnLoad(gameObject);

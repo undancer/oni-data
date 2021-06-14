@@ -24,7 +24,7 @@ startingBasePositionVertical:
   min: 0.46
   max: 0.46
 
-# List all the zone files to load
+# List all the subworld files to load
 subworldFiles:
   - name: expansion1::subworlds/swamp/SwampMini
     minCount: 2
@@ -38,6 +38,7 @@ subworldFiles:
     minCount: 2
   - name: expansion1::subworlds/wasteland/WastelandWorm
   - name: expansion1::subworlds/jungle/JungleGassy
+    minCount: 5
   - name: expansion1::subworlds/frozen/FrozenSlush
     minCount: 2
   - name: expansion1::subworlds/barren/CoalyGranite
@@ -45,6 +46,7 @@ subworldFiles:
   - name: expansion1::subworlds/magma/BottomSmall
     
 unknownCellsAllowedSubworlds: 
+  # Space
   - tagcommand: AtTag
     tag: AtSurface
     command: Replace
@@ -57,6 +59,7 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - subworlds/space/Space
+  # Surface
   - tagcommand: DistanceFromTag
     tag: AtSurface
     minDistance: 2
@@ -64,6 +67,7 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - expansion1::subworlds/space/HospitableSurface
+  # World Fill
   - tagcommand: DistanceFromTag
     tag: AtSurface
     minDistance: 3
@@ -72,7 +76,8 @@ unknownCellsAllowedSubworlds:
     subworldNames:
       - expansion1::subworlds/wasteland/WastelandWorm
       - expansion1::subworlds/jungle/JungleGassy
-  - tagcommand: DistanceFromTag # Ring-1 around start
+  # Ring-1 around start
+  - tagcommand: DistanceFromTag
     tag: AtStart
     minDistance: 1
     maxDistance: 1
@@ -81,6 +86,7 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/wasteland/WastelandBeetle
       - expansion1::subworlds/frozen/FrozenSlush
       - expansion1::subworlds/swamp/SwampMini
+  # Above Core
   - tagcommand: DistanceFromTag
     tag: AtDepths
     minDistance: 1
@@ -88,6 +94,7 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - expansion1::subworlds/barren/CoalyGranite
+  # Core
   - tagcommand: DistanceFromTag
     tag: AtDepths
     command: Replace
@@ -95,6 +102,62 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/magma/BottomSmall
 
 worldTemplateRules:
+  - names:
+      - poi/jungle/geyser_steam
+    listRule: GuaranteeOne
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [ToxicJungle]
+  - names:
+      - expansion1::poi/jungle/geyser_hydrogen
+      - poi/jungle/geyser_chlorine
+    listRule: GuaranteeOne
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [ToxicJungle]
+  # FrozenSlush
+  - names:
+    - expansion1::poi/poi_geyser_dirty_slush
+    - expansion1::poi/poi_frozen_salt_water_geyser
+    listRule: GuaranteeAll
+    priority: 100
+    allowedCellsFilter:
+	  - command: Replace
+        zoneTypes: [FrozenWastes]
+      - command: IntersectWith
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 3
+  - names:
+      - poi/frozen/heatsink_a
+      - poi/frozen/heatsink_b
+    listRule: GuaranteeOne
+    priority: 100 
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [FrozenWastes]
+  # Geysers
+  - names:
+    - expansion1::poi/poi_geyser_magma
+    - expansion1::poi/poi_geyser_magma_2
+    - expansion1::poi/poi_geyser_magma_3
+    listRule: TryAll
+    priority: 50
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 1
+        maxDistance: 1
+      - command: IntersectWith
+        zoneTypes: [ Barren ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+  # Gravitas
   - names:
     - expansion1::poi/warp/sender
     - expansion1::poi/warp/receiver
@@ -114,23 +177,6 @@ worldTemplateRules:
         maxDistance: 0
       - command: IntersectWith
         zoneTypes: [ BoggyMarsh, Rust, Wasteland, ToxicJungle, Ocean ]
-      - command: ExceptWith
-        tagcommand: AtTag
-        tag: NoGravitasFeatures
-  - names:
-    - expansion1::poi/poi_geyser_magma
-    - expansion1::poi/poi_geyser_magma_2
-    - expansion1::poi/poi_geyser_magma_3
-    listRule: TryAll
-    priority: 50
-    allowedCellsFilter:
-      - command: Replace
-        tagcommand: DistanceFromTag
-        tag: AtDepths
-        minDistance: 1
-        maxDistance: 1
-      - command: IntersectWith
-        zoneTypes: [ Barren ]
       - command: ExceptWith
         tagcommand: AtTag
         tag: NoGravitasFeatures
@@ -157,14 +203,3 @@ worldTemplateRules:
         tag: AtSurface
         minDistance: 0
         maxDistance: 2
-  # DISABLED FOR TESTING
-  # - names:
-  #   - expansion1::poi/poi_temporal_tear_analyzer
-  #   listRule: GuaranteeAll
-  #   priority: 500
-  #   allowedCellsFilter:
-  #     - command: Replace
-  #       tagcommand: DistanceFromTag
-  #       tag: AtSurface
-  #       minDistance: 1
-  #       maxDistance: 1

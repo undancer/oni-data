@@ -11,11 +11,15 @@ public class WarpConduitReceiverConfig : IBuildingConfig
 
 	private ConduitPortInfo solidOutputPort = new ConduitPortInfo(ConduitType.Solid, new CellOffset(1, 1));
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("WarpConduitReceiver", 4, 3, "warp_conduit_receiver_kanim", 250, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.NONE);
 		buildingDef.DefaultAnimState = "off";
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		buildingDef.Floodable = false;
 		buildingDef.Overheatable = false;
 		buildingDef.ShowInBuildMenu = false;

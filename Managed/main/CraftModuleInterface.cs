@@ -282,7 +282,7 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 		{
 			if (clusterModules[i].Get() == newModule)
 			{
-				Debug.LogError(string.Concat("Adding module ", newModule, " to the same rocket (", m_clustercraft.Name, ") twice"));
+				Debug.LogError("Adding module " + newModule?.ToString() + " to the same rocket (" + m_clustercraft.Name + ") twice");
 			}
 		}
 		clusterModules.Add(new Ref<RocketModuleCluster>(newModule));

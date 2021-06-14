@@ -38,8 +38,8 @@ public class ConversationMonitor : GameStateMachine<ConversationMonitor, Convers
 
 		public string GetATopic()
 		{
-			int max = recentTopics.Count + favouriteTopics.Count * 2 + personalTopics.Count;
-			int num = UnityEngine.Random.Range(0, max);
+			int maxExclusive = recentTopics.Count + favouriteTopics.Count * 2 + personalTopics.Count;
+			int num = UnityEngine.Random.Range(0, maxExclusive);
 			if (num < recentTopics.Count)
 			{
 				return recentTopics.Dequeue();

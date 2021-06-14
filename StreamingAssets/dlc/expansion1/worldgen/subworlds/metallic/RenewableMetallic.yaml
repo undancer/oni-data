@@ -14,27 +14,4 @@ biomes:
     weight: 1
 tags:
   - IgnoreCaveOverride
-subworldTemplateRules:
-  - names:
-    - expansion1::poi/poi_molten_gold_volcano
-    - expansion1::poi/poi_molten_aluminum_volcano
-    listRule: GuaranteeAll
-    priority: 100
-    allowedCellsFilter:
-      - command: IntersectWith
-        tagcommand: DistanceFromTag
-        tag: AtDepths
-        minDistance: 1
-        maxDistance: 3 
-  - names:
-    - expansion1::poi/poi_molten_gold_volcano
-    - expansion1::poi/poi_molten_aluminum_volcano
-    listRule: TryAll
-    priority: 100
-    allowedCellsFilter:
-      - command: IntersectWith
-        tagcommand: DistanceFromTag
-        tag: AtDepths
-        minDistance: 1
-        maxDistance: 3
 zoneType: Metallic

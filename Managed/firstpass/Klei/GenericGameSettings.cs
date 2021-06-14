@@ -145,12 +145,6 @@ namespace Klei
 			private set;
 		}
 
-		public bool disableExpansion1
-		{
-			get;
-			private set;
-		}
-
 		public PerformanceCapture performanceCapture
 		{
 			get;

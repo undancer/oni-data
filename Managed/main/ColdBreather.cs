@@ -63,16 +63,16 @@ public class ColdBreather : StateMachineComponent<ColdBreather.StatesInstance>, 
 				.Enter(delegate(StatesInstance smi)
 				{
 					smi.master.elementConsumer.EnableConsumption(enabled: true);
-					smi.master.radiationEmitter.SetEmitting(emitting: true);
+					smi.master.SetEmitting(emitting: true);
 				})
 				.Exit(delegate(StatesInstance smi)
 				{
 					smi.master.elementConsumer.EnableConsumption(enabled: false);
-					smi.master.radiationEmitter.SetEmitting(emitting: false);
+					smi.master.SetEmitting(emitting: false);
 				});
 			alive.wilting.PlayAnim("wilt1").EventTransition(GameHashes.WiltRecover, alive.mature, (StatesInstance smi) => !smi.master.wiltCondition.IsWilting()).Enter(delegate(StatesInstance smi)
 			{
-				smi.master.radiationEmitter.SetEmitting(emitting: false);
+				smi.master.SetEmitting(emitting: false);
 			});
 		}
 	}
@@ -89,7 +89,7 @@ public class ColdBreather : StateMachineComponent<ColdBreather.StatesInstance>, 
 	[MyCmpReq]
 	private ElementConsumer elementConsumer;
 
-	[MyCmpReq]
+	[MyCmpGet]
 	private RadiationEmitter radiationEmitter;
 
 	[MyCmpReq]
@@ -144,8 +144,11 @@ public class ColdBreather : StateMachineComponent<ColdBreather.StatesInstance>, 
 			{
 				component2.consumptionRate = consumptionRate * 0.25f;
 			}
-			radiationEmitter.emitRads = 48f;
-			radiationEmitter.Refresh();
+			if (radiationEmitter != null)
+			{
+				radiationEmitter.emitRads = 48f;
+				radiationEmitter.Refresh();
+			}
 		}
 	}
 
@@ -172,6 +175,14 @@ public class ColdBreather : StateMachineComponent<ColdBreather.StatesInstance>, 
 		{
 			new Descriptor(UI.GAMEOBJECTEFFECTS.COLDBREATHER, UI.GAMEOBJECTEFFECTS.TOOLTIPS.COLDBREATHER)
 		};
+	}
+
+	private void SetEmitting(bool emitting)
+	{
+		if (radiationEmitter != null)
+		{
+			radiationEmitter.SetEmitting(emitting);
+		}
 	}
 
 	private void Exhale()

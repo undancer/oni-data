@@ -1,3 +1,4 @@
+# Unused - Was used for VanillaSandstoneCluster
 name: STRINGS.WORLDS.IDEALLANDINGSITE.NAME
 description: STRINGS.WORLDS.IDEALLANDINGSITE.DESCRIPTION
 nameTable: FOREST
@@ -30,7 +31,7 @@ startingBasePositionVertical:
   min: 0.6
   max: 0.7
 
-# List all the zone files to load
+# List all the subworld files to load
 subworldFiles:
   - name: expansion1::subworlds/barren/LargeChasmStart
   - name: expansion1::subworlds/barren/LargeChasm
@@ -124,8 +125,9 @@ worldTemplateRules:
           - expansion1::subworlds/barren/LargeChasm
   - names:
     - geysers/generic
-    listRule: TryAll
-    someCount: 2
+    listRule: TryOne
+    times: 2
+    allowDuplicates: true
 #  - names: # Generic geysers
 #    - geysers/chlorine_gas
 #    - geysers/methane
@@ -134,8 +136,8 @@ worldTemplateRules:
 #    - geysers/hot_hydrogen
 #    - geysers/filthy_water
 #    - geysers/salt_water
-#    listRule: TrySome
-#    someCount: 4
+#    listRule: TryOne
+#    times: 4
 #    priority: 10
 #    allowedCellsFilter:
 #      - command: Replace

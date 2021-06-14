@@ -26,10 +26,13 @@ public class ClusterPOIManager : KMonoBehaviour
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		UIScheduler.Instance.ScheduleNextFrame("UpgradeOldSaves", delegate
+		if (DlcManager.FeatureClusterSpaceEnabled())
 		{
-			UpgradeOldSaves();
-		});
+			UIScheduler.Instance.ScheduleNextFrame("UpgradeOldSaves", delegate
+			{
+				UpgradeOldSaves();
+			});
+		}
 	}
 
 	private void UpgradeOldSaves()

@@ -644,7 +644,8 @@ public class LogicGate : LogicGateBase, ILogicEventSender, ILogicNetworkConnecti
 		{
 			outputValueOne = 0;
 			Op op = base.op;
-			if (op == Op.Multiplexer)
+			Op op2 = op;
+			if (op2 == Op.Multiplexer)
 			{
 				if (!LogicCircuitNetwork.IsBitActive(0, value3))
 				{
@@ -676,8 +677,9 @@ public class LogicGate : LogicGateBase, ILogicEventSender, ILogicNetworkConnecti
 			outputThreeSender.SetValue(0);
 			outputValueFour = 0;
 			outputFourSender.SetValue(0);
-			Op op2 = base.op;
-			if (op2 == Op.Demultiplexer)
+			Op op3 = base.op;
+			Op op4 = op3;
+			if (op4 == Op.Demultiplexer)
 			{
 				if (!LogicCircuitNetwork.IsBitActive(0, value2))
 				{
@@ -728,7 +730,8 @@ public class LogicGate : LogicGateBase, ILogicEventSender, ILogicNetworkConnecti
 				}
 			}
 			LogicWire.BitDepth bitDepth2 = bitDepth;
-			if (bitDepth2 != 0 && bitDepth2 == LogicWire.BitDepth.FourBit)
+			LogicWire.BitDepth bitDepth3 = bitDepth2;
+			if (bitDepth3 != 0 && bitDepth3 == LogicWire.BitDepth.FourBit)
 			{
 				uint num4 = (uint)value;
 				num4 = ~num4;

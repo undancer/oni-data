@@ -7,9 +7,9 @@ public class StickerBombConfig : IEntityConfig
 {
 	public const string ID = "StickerBomb";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

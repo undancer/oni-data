@@ -69,7 +69,7 @@ public class MinionTodoSideScreen : SideScreenContent
 				for (int num = 5; num >= 0; num--)
 				{
 					Tuple<PriorityScreen.PriorityClass, int, HierarchyReferences> tuple = new Tuple<PriorityScreen.PriorityClass, int, HierarchyReferences>(priority, num, Util.KInstantiateUI<HierarchyReferences>(priorityGroupPrefab, taskEntryContainer));
-					tuple.third.name = "PriorityGroup_" + (string)item.name + "_" + num;
+					tuple.third.name = string.Concat("PriorityGroup_", item.name, "_", num.ToString());
 					tuple.third.gameObject.SetActive(value: true);
 					JobsTableScreen.PriorityInfo priorityInfo = JobsTableScreen.priorityInfo[num];
 					tuple.third.GetReference<LocText>("Title").text = priorityInfo.name.text.ToUpper();

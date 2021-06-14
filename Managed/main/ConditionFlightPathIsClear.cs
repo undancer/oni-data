@@ -36,7 +36,7 @@ public class ConditionFlightPathIsClear : ProcessCondition
 
 	public override string GetStatusMessage(Status status)
 	{
-		if (DlcManager.IsExpansion1Active())
+		if (DlcManager.FeatureClusterSpaceEnabled())
 		{
 			return (status == Status.Ready) ? UI.STARMAP.LAUNCHCHECKLIST.FLIGHT_PATH_CLEAR.STATUS.READY : UI.STARMAP.LAUNCHCHECKLIST.FLIGHT_PATH_CLEAR.STATUS.FAILURE;
 		}
@@ -50,7 +50,7 @@ public class ConditionFlightPathIsClear : ProcessCondition
 
 	public override string GetStatusTooltip(Status status)
 	{
-		if (DlcManager.IsExpansion1Active())
+		if (DlcManager.FeatureClusterSpaceEnabled())
 		{
 			return (status == Status.Ready) ? UI.STARMAP.LAUNCHCHECKLIST.FLIGHT_PATH_CLEAR.TOOLTIP.READY : UI.STARMAP.LAUNCHCHECKLIST.FLIGHT_PATH_CLEAR.TOOLTIP.FAILURE;
 		}
@@ -64,7 +64,7 @@ public class ConditionFlightPathIsClear : ProcessCondition
 
 	public override bool ShowInUI()
 	{
-		return DlcManager.IsExpansion1Active();
+		return DlcManager.FeatureClusterSpaceEnabled();
 	}
 
 	public void Update()

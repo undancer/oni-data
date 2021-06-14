@@ -15,7 +15,7 @@ defaultsOverrides:
   overworldAddTags: 
 
 
-# List all the zone files to load
+# List all the subworld files to load
 subworldFiles:
   - name: expansion1::subworlds/moon_barren/BarrenStart
   - name: expansion1::subworlds/moon_barren/BarrenGranite
@@ -31,16 +31,10 @@ startingBasePositionVertical:
   min: 0.2
   max: 0.7
 
-# worldTemplateRules:
-# - names:
-#   - geysers/generic
-#   listRule: TryAll
-#   someCount: 12
-
 # Rivers:
 #   - River
 
-# When we are converting unknown cells, this will give us the options, processed in this order, the effects are cumlative
+# Specify where subworlds can spawn. These rules are processed in order and their effects are cumulative.
 unknownCellsAllowedSubworlds: 
   - tagcommand: Default
     command: Replace

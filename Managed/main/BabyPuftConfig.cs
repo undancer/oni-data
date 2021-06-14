@@ -5,9 +5,9 @@ public class BabyPuftConfig : IEntityConfig
 {
 	public const string ID = "PuftBaby";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

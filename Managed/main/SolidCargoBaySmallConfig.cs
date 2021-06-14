@@ -7,11 +7,15 @@ public class SolidCargoBaySmallConfig : IBuildingConfig
 
 	public float CAPACITY = 1200f * ROCKETRY.CARGO_CAPACITY_SCALE;
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("SolidCargoBaySmall", 3, 3, "rocket_storage_solid_small_kanim", 1000, 30f, BUILDINGS.ROCKETRY_MASS_KG.HOLLOW_TIER1, MATERIALS.REFINED_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;
 		buildingDef.Invincible = true;
 		buildingDef.OverheatTemperature = 2273.15f;

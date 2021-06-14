@@ -101,7 +101,9 @@ public class ResourceSet<T> : ResourceSet where T : Resource
 				return resource;
 			}
 		}
-		Debug.LogError("Could not find " + typeof(T).ToString() + ": " + id);
+		string str = typeof(T).ToString();
+		HashedString hashedString = id;
+		Debug.LogError("Could not find " + str + ": " + hashedString.ToString());
 		return null;
 	}
 

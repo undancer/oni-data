@@ -806,22 +806,22 @@ public static class GameUtil
 	public static string GetFormattedInfomation(float amount, TimeSlice timeSlice = TimeSlice.None)
 	{
 		amount = ApplyTimeSlice(amount, timeSlice);
-		string arg = "";
+		string str = "";
 		if (amount < 1024f)
 		{
-			arg = UI.UNITSUFFIXES.INFORMATION.KILOBYTE;
+			str = UI.UNITSUFFIXES.INFORMATION.KILOBYTE;
 		}
 		else if (amount < 1048576f)
 		{
 			amount /= 1000f;
-			arg = UI.UNITSUFFIXES.INFORMATION.MEGABYTE;
+			str = UI.UNITSUFFIXES.INFORMATION.MEGABYTE;
 		}
 		else if (amount < 1.0737418E+09f)
 		{
 			amount /= 1048576f;
-			arg = UI.UNITSUFFIXES.INFORMATION.GIGABYTE;
+			str = UI.UNITSUFFIXES.INFORMATION.GIGABYTE;
 		}
-		return AddTimeSliceText(amount + arg, timeSlice);
+		return AddTimeSliceText(amount + str, timeSlice);
 	}
 
 	public static LocString GetCurrentMassUnit(bool useSmallUnit = false)
@@ -935,7 +935,7 @@ public static class GameUtil
 
 	public static string GetFormattedEngineEfficiency(float amount)
 	{
-		return amount + " km /" + (string)UI.UNITSUFFIXES.MASS.KILOGRAM;
+		return amount + " km /" + UI.UNITSUFFIXES.MASS.KILOGRAM;
 	}
 
 	public static string GetFormattedDistance(float meters)

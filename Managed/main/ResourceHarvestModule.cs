@@ -17,12 +17,30 @@ public class ResourceHarvestModule : GameStateMachine<ResourceHarvestModule, Res
 
 	public class StatesInstance : GameInstance
 	{
+		private MeterController meter;
+
+		private Storage storage;
+
 		public StatesInstance(IStateMachineTarget master, Def def)
 			: base(master, def)
 		{
-			Storage component = GetComponent<Storage>();
-			RocketModule component2 = GetComponent<RocketModule>();
-			component2.AddModuleCondition(ProcessCondition.ProcessConditionType.RocketStorage, new ConditionHasResource(component, SimHashes.Diamond, 1000f));
+			storage = GetComponent<Storage>();
+			RocketModule component = GetComponent<RocketModule>();
+			component.AddModuleCondition(ProcessCondition.ProcessConditionType.RocketStorage, new ConditionHasResource(storage, SimHashes.Diamond, 1000f));
+			Subscribe(-1697596308, UpdateMeter);
+			meter = new MeterController(GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.Infront, Grid.SceneLayer.NoLayer, "meter_target", "meter_fill", "meter_frame", "meter_OL");
+			UpdateMeter();
+		}
+
+		protected override void OnCleanUp()
+		{
+			base.OnCleanUp();
+			Unsubscribe(-1697596308, UpdateMeter);
+		}
+
+		public void UpdateMeter(object data = null)
+		{
+			meter.SetPositionPercent(storage.MassStored() / storage.Capacity());
 		}
 
 		public void HarvestFromPOI(float dt)
@@ -44,42 +62,50 @@ public class ResourceHarvestModule : GameStateMachine<ResourceHarvestModule, Res
 			{
 				num += item.Value;
 			}
+			foreach (KeyValuePair<SimHashes, float> item2 in elementsWithWeights)
+			{
+				Element element = ElementLoader.FindElementByHash(item2.Key);
+				if (!DiscoveredResources.Instance.IsDiscovered(element.tag))
+				{
+					DiscoveredResources.Instance.Discover(element.tag, element.GetMaterialCategoryTag());
+				}
+			}
 			float num2 = Mathf.Min(GetMaxExtractKGFromDiamondAvailable(), base.def.harvestSpeed * dt);
 			float num3 = 0f;
 			float num4 = 0f;
 			float num5 = 0f;
-			foreach (KeyValuePair<SimHashes, float> item2 in elementsWithWeights)
+			foreach (KeyValuePair<SimHashes, float> item3 in elementsWithWeights)
 			{
 				if (num3 >= num2)
 				{
 					break;
 				}
-				SimHashes key = item2.Key;
-				float value = item2.Value;
+				SimHashes key = item3.Key;
+				float value = item3.Value;
 				float num6 = value / num;
 				float num7 = base.def.harvestSpeed * dt * num6;
 				num3 += num7;
-				Element element = ElementLoader.FindElementByHash(key);
-				CargoBay.CargoType cargoType = CargoBay.ElementStateToCargoTypes[element.state & Element.State.Solid];
+				Element element2 = ElementLoader.FindElementByHash(key);
+				CargoBay.CargoType cargoType = CargoBay.ElementStateToCargoTypes[element2.state & Element.State.Solid];
 				List<CargoBayCluster> cargoBaysOfType = component.GetCargoBaysOfType(cargoType);
 				float num8 = num7;
-				foreach (CargoBayCluster item3 in cargoBaysOfType)
+				foreach (CargoBayCluster item4 in cargoBaysOfType)
 				{
-					float num9 = Mathf.Min(item3.RemainingCapacity, num8);
+					float num9 = Mathf.Min(item4.RemainingCapacity, num8);
 					if (num9 != 0f)
 					{
 						num4 += num9;
 						num8 -= num9;
-						switch (element.state & Element.State.Solid)
+						switch (element2.state & Element.State.Solid)
 						{
 						case Element.State.Gas:
-							item3.storage.AddGasChunk(key, num9, element.defaultValues.temperature, byte.MaxValue, 0, keep_zero_mass: false);
+							item4.storage.AddGasChunk(key, num9, element2.defaultValues.temperature, byte.MaxValue, 0, keep_zero_mass: false);
 							break;
 						case Element.State.Liquid:
-							item3.storage.AddLiquid(key, num9, element.defaultValues.temperature, byte.MaxValue, 0);
+							item4.storage.AddLiquid(key, num9, element2.defaultValues.temperature, byte.MaxValue, 0);
 							break;
 						case Element.State.Solid:
-							item3.storage.AddOre(key, num9, element.defaultValues.temperature, byte.MaxValue, 0);
+							item4.storage.AddOre(key, num9, element2.defaultValues.temperature, byte.MaxValue, 0);
 							break;
 						}
 					}
@@ -186,7 +212,10 @@ public class ResourceHarvestModule : GameStateMachine<ResourceHarvestModule, Res
 		{
 			smi.CheckIfCanHarvest();
 		});
-		grounded.TagTransition(GameTags.RocketNotOnGround, not_grounded);
+		grounded.TagTransition(GameTags.RocketNotOnGround, not_grounded).Enter(delegate(StatesInstance smi)
+		{
+			smi.UpdateMeter();
+		});
 		not_grounded.DefaultState(not_grounded.not_harvesting).EventHandler(GameHashes.ClusterLocationChanged, (StatesInstance smi) => Game.Instance, delegate(StatesInstance smi)
 		{
 			smi.CheckIfCanHarvest();

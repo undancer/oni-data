@@ -5,9 +5,9 @@ public class BabyPuftBleachstoneConfig : IEntityConfig
 {
 	public const string ID = "PuftBleachstoneBaby";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

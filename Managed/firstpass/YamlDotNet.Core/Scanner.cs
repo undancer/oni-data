@@ -488,21 +488,12 @@ namespace YamlDotNet.Core
 		{
 			Mark start = cursor.Mark();
 			Skip();
-			string text = ScanDirectiveName(start);
-			string a = text;
-			Token result;
-			if (!(a == "YAML"))
+			Token result = ScanDirectiveName(start) switch
 			{
-				if (!(a == "TAG"))
-				{
-					throw new SyntaxErrorException(start, cursor.Mark(), "While scanning a directive, find uknown directive name.");
-				}
-				result = ScanTagDirectiveValue(start);
-			}
-			else
-			{
-				result = ScanVersionDirectiveValue(start);
-			}
+				"YAML" => ScanVersionDirectiveValue(start), 
+				"TAG" => ScanTagDirectiveValue(start), 
+				_ => throw new SyntaxErrorException(start, cursor.Mark(), "While scanning a directive, find uknown directive name."), 
+			};
 			while (analyzer.IsWhite())
 			{
 				Skip();

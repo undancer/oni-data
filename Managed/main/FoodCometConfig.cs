@@ -6,9 +6,9 @@ public class FoodCometConfig : IEntityConfig
 {
 	public static string ID = "FoodComet";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

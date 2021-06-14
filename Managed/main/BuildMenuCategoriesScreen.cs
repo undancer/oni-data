@@ -108,7 +108,8 @@ public class BuildMenuCategoriesScreen : KIconToggleMenu
 	{
 		UserData userData = (UserData)toggle_info.userData;
 		PlanScreen.RequirementsState requirementsState = userData.requirementsState;
-		if ((uint)(requirementsState - 2) <= 1u)
+		PlanScreen.RequirementsState requirementsState2 = requirementsState;
+		if ((uint)(requirementsState2 - 2) <= 1u)
 		{
 			if (selectedCategory != userData.category)
 			{

@@ -8,9 +8,9 @@ public class WormSuperFoodConfig : IEntityConfig
 
 	public static ComplexRecipe recipe;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "EXPANSION1_ID";
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 
 	public GameObject CreatePrefab()

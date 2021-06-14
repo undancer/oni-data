@@ -5,9 +5,9 @@ public class AlgaeConfig : IOreConfig
 {
 	public SimHashes ElementID => SimHashes.Algae;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

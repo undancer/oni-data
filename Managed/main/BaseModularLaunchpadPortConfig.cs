@@ -42,7 +42,6 @@ public class BaseModularLaunchpadPortConfig
 		buildingDef.RequiresPowerInput = true;
 		buildingDef.DefaultAnimState = "idle";
 		buildingDef.CanMove = false;
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		return buildingDef;
 	}
 

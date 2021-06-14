@@ -10,10 +10,14 @@ public class KeroseneEngineClusterSmallConfig : IBuildingConfig
 
 	public const float FUEL_CAPACITY = 450f;
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("KeroseneEngineClusterSmall", 3, 4, "rocket_petro_engine_small_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.ENGINE_MASS_SMALL, MATERIALS.REFINED_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;
 		buildingDef.OverheatTemperature = 2273.15f;

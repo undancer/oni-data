@@ -19,7 +19,8 @@ namespace YamlDotNet.Core
 			public void Enqueue(ParsingEvent @event)
 			{
 				EventType type = @event.Type;
-				if (type == EventType.StreamStart || type == EventType.DocumentStart)
+				EventType eventType = type;
+				if (eventType == EventType.StreamStart || eventType == EventType.DocumentStart)
 				{
 					highPriorityEvents.Enqueue(@event);
 				}

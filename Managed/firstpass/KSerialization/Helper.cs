@@ -632,7 +632,8 @@ namespace KSerialization
 		public static bool IsPOD(SerializationTypeInfo info)
 		{
 			SerializationTypeInfo serializationTypeInfo = info;
-			if (serializationTypeInfo - 1 <= SerializationTypeInfo.SByte || serializationTypeInfo - 4 <= SerializationTypeInfo.UInt32)
+			SerializationTypeInfo serializationTypeInfo2 = serializationTypeInfo;
+			if (serializationTypeInfo2 - 1 <= SerializationTypeInfo.SByte || serializationTypeInfo2 - 4 <= SerializationTypeInfo.UInt32)
 			{
 				return true;
 			}

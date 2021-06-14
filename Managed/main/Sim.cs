@@ -1012,9 +1012,9 @@ public static class Sim
 			}
 			else
 			{
-				string arg = Marshal.PtrToStringAnsi(ptr2->file);
+				string str = Marshal.PtrToStringAnsi(ptr2->file);
 				int line = ptr2->line;
-				stack_trace2 = arg + ":" + line;
+				stack_trace2 = str + ":" + line;
 			}
 			KCrashReporter.ReportSimDLLCrash(msg, stack_trace2, null);
 			return 0;

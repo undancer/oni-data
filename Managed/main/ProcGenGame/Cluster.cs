@@ -219,7 +219,7 @@ namespace ProcGenGame
 				worldForbiddenLocations.UnionWith(AxialUtil.GetRings(axialI2, 1, worldPlacement.buffer));
 				poiWorldAvoidance.UnionWith(AxialUtil.GetRings(axialI2, 1, maxRadius));
 			}
-			if (!DlcManager.IsExpansion1Active() || list == null)
+			if (!DlcManager.FeatureClusterSpaceEnabled() || list == null)
 			{
 				return;
 			}

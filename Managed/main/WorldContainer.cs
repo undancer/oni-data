@@ -97,7 +97,7 @@ public class WorldContainer : KMonoBehaviour
 	{
 		get
 		{
-			if (m_alertManager == null && DlcManager.IsVanillaId(""))
+			if (m_alertManager == null)
 			{
 				StateMachineController component = GetComponent<StateMachineController>();
 				m_alertManager = component.GetSMI<AlertStateManager.Instance>();

@@ -873,7 +873,7 @@ public class LoadScreen : KModalScreen
 		{
 			if (display != null)
 			{
-				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 466654u, 23);
+				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 467601u, 23);
 			}
 			return false;
 		}
@@ -1163,29 +1163,33 @@ public class LoadScreen : KModalScreen
 		{
 			return true;
 		}
-		return header.buildVersion > 466654;
+		return header.buildVersion > 467601;
 	}
 
 	private static bool IsSaveFromCurrentDLC(SaveGame.GameInfo gameInfo, out string saveDlcName)
 	{
 		string dlcId = gameInfo.dlcId;
-		if (!(dlcId == "EXPANSION1_ID"))
+		string text = dlcId;
+		if (text != null)
 		{
-			if ((dlcId != null && dlcId.Length == 0) || dlcId != null)
+			if (text == "EXPANSION1_ID")
+			{
+				saveDlcName = UI.DLC1.NAME_ITAL;
+				goto IL_0043;
+			}
+			if (text != null && text.Length == 0)
 			{
 			}
-			saveDlcName = UI.VANILLA.NAME_ITAL;
 		}
-		else
-		{
-			saveDlcName = UI.DLC1.NAME_ITAL;
-		}
-		return gameInfo.dlcId == DlcManager.GetActiveDlcId();
+		saveDlcName = UI.VANILLA.NAME_ITAL;
+		goto IL_0043;
+		IL_0043:
+		return gameInfo.dlcId == DlcManager.GetHighestActiveDlcId();
 	}
 
 	private static bool IsSaveFileFromUninstalledDLC(SaveGame.GameInfo gameInfo)
 	{
-		return DlcManager.IsAheadOfInstalledDlc(gameInfo.dlcId);
+		return DlcManager.IsContentActive(gameInfo.dlcId);
 	}
 
 	private void UpdateSelected(KButton button, string filename, string dlcId)
@@ -1209,13 +1213,13 @@ public class LoadScreen : KModalScreen
 
 	private void Load()
 	{
-		if (selectedSave.dlcId != DlcManager.GetActiveDlcId())
+		if (selectedSave.dlcId != DlcManager.GetHighestActiveDlcId())
 		{
 			string message = (DlcManager.IsVanillaId(selectedSave.dlcId) ? UI.FRONTEND.LOADSCREEN.VANILLA_RESTART : UI.FRONTEND.LOADSCREEN.EXPANSION1_RESTART);
 			ConfirmDoAction(message, delegate
 			{
 				bool flag = DlcManager.IsExpansion1Active();
-				DlcManager.SetExpansion1Active(!flag);
+				DlcManager.SetExpansion1Enabled(!flag);
 				KPlayerPrefs.SetString("AutoResumeSaveFile", selectedSave.filename);
 				App.instance.Restart();
 			});
@@ -1243,10 +1247,10 @@ public class LoadScreen : KModalScreen
 		SaveGame.GameInfo gameInfo = SaveLoader.LoadHeader(filename, out header);
 		string arg = null;
 		string arg2 = null;
-		if (header.buildVersion > 466654)
+		if (header.buildVersion > 467601)
 		{
 			arg = header.buildVersion.ToString();
-			arg2 = 466654u.ToString();
+			arg2 = 467601u.ToString();
 		}
 		else if (gameInfo.saveMajorVersion < 7)
 		{

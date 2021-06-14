@@ -38,34 +38,15 @@ biomes:
       - LeafyPlantSeed
 tags:
   - IgnoreCaveOverride
-pointsOfInterest:
-  geysers_a:
-    - poi/jungle/geyser_steam 
-  geysers_b:
-    - expansion1::poi/jungle/geyser_hydrogen
-    - poi/jungle/geyser_chlorine
-  ruins_a:    
-    - poi/jungle/lab_poolbottom
-    - poi/jungle/buttongate
-    - poi/jungle/lab_vinetank
-    - poi/jungle/lab_daytimer
-    - poi/jungle/frag_lightbugs
-    - poi/jungle/frag_lockers
-    - poi/jungle/oxylite_spiral
-  ruins_b:    
-    - poi/jungle/lab_poolbottom
-    - poi/jungle/buttongate
-    - poi/jungle/lab_vinetank
-    - poi/jungle/lab_daytimer
-    - poi/jungle/frag_lightbugs
-    - poi/jungle/frag_lockers
-    - poi/jungle/oxylite_spiral
-  ruins_c:    
-    - poi/jungle/lab_poolbottom
-    - poi/jungle/buttongate
-    - poi/jungle/lab_vinetank
-    - poi/jungle/lab_daytimer
-    - poi/jungle/frag_lightbugs
-    - poi/jungle/frag_lockers
-    - poi/jungle/oxylite_spiral
+subworldTemplateRules:
+  - names:
+      - poi/jungle/lab_poolbottom
+      - poi/jungle/buttongate
+      - poi/jungle/lab_vinetank
+      - poi/jungle/lab_daytimer
+      - poi/jungle/frag_lightbugs
+      - poi/jungle/frag_lockers
+      - poi/jungle/oxylite_spiral
+    listRule: TrySome
+    someCount : 3
 zoneType: ToxicJungle

@@ -38,12 +38,13 @@ biomes:
       - med_LeafyPlantSeed
 tags:
   - IgnoreCaveOverride
-pointsOfInterest:
-  ruins_a:    
-    - poi/jungle/lab_poolbottom
-    - poi/jungle/buttongate
-    - poi/jungle/lab_vinetank
-    - poi/jungle/lab_daytimer
-    - poi/jungle/frag_lightbugs
-    - poi/jungle/frag_lockers
+subworldTemplateRules:
+  - names:
+      - poi/jungle/lab_poolbottom
+      - poi/jungle/buttongate
+      - poi/jungle/lab_vinetank
+      - poi/jungle/lab_daytimer
+      - poi/jungle/frag_lightbugs
+      - poi/jungle/frag_lockers
+    listRule: TryOne
 zoneType: ToxicJungle

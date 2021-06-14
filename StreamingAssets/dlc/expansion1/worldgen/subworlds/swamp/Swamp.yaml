@@ -34,17 +34,20 @@ features:
   - type: expansion1::features/swamp/AirPocket
   - type: expansion1::features/swamp/AirPocket
   - type: expansion1::features/swamp/PacuPoolSmall
-pointsOfInterest:
-  water:
-    - expansion1::poi/swamp/water_a
-    - expansion1::poi/swamp/water_b
-    - expansion1::poi/swamp/water_c
-  staterpillar_a: # 2 of them
-    - expansion1::poi/swamp/staterpillar_a
-  staterpillar_b: # 3 of them
-    - expansion1::poi/swamp/staterpillar_b
-    - expansion1::poi/swamp/staterpillar_c
 tags:
   - IgnoreCaveOverride
   - NoGlobalFeatureSpawning
 zoneType: Swamp
+subworldTemplateRules:
+  - names:
+      - expansion1::poi/swamp/water_a
+      - expansion1::poi/swamp/water_b
+      - expansion1::poi/swamp/water_c
+    listRule: TryOne
+  - names:        # 2 of them
+      - expansion1::poi/swamp/staterpillar_a
+    listRule: TryOne
+  - names:        # 3 of them
+      - expansion1::poi/swamp/staterpillar_b
+      - expansion1::poi/swamp/staterpillar_c
+    listRule: TryOne

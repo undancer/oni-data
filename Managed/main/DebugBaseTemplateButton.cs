@@ -500,6 +500,8 @@ public class DebugBaseTemplateButton : KScreen
 			return;
 		}
 		selectionAsAsset.SaveToYaml(SaveName);
+		TemplateCache.Clear();
+		TemplateCache.Init();
 		PasteBaseTemplateScreen.Instance.RefreshStampButtons();
 	}
 

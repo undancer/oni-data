@@ -250,7 +250,7 @@ public class KAnimBatch
 		int width = dataTex.width;
 		if (width == 0)
 		{
-			Debug.LogWarning(string.Concat("Empty group [", group.batchID, "] ", batchset.idx, " (probably just anims)"));
+			Debug.LogWarning("Empty group [" + group.batchID.ToString() + "] " + batchset.idx.ToString() + " (probably just anims)");
 			return;
 		}
 		for (int i = 0; i < width * width; i++)

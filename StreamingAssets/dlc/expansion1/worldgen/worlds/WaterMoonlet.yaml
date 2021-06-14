@@ -37,59 +37,97 @@ subworldFiles:
   - name: expansion1::subworlds/aquatic/OpenWater  
   - name: expansion1::subworlds/aquatic/GraphiteCaves
   - name: expansion1::subworlds/barren/BarrenCore # placeholder until core is developed further
-  #- name: expansion1::subworlds/barren/BarrenFullereneCore
-
   
-unknownCellsAllowedSubworlds: 
+unknownCellsAllowedSubworlds:
   - tagcommand: Default
     command: Replace
     subworldNames:
       - expansion1::subworlds/aquatic/OpenWater
-  - tagcommand: DistanceFromTag # Surface
+  # Surface
+  - tagcommand: DistanceFromTag
     tag: AtSurface
     minDistance: 2
     maxDistance: 2 
     command: Replace
     subworldNames:
       - expansion1::subworlds/aquatic/SurfaceBeach
-  - tagcommand: AtTag # Space
-    tag: AtSurface
-    command: Replace
-    subworldNames:
-      - subworlds/space/Space
+  # Space
   - tagcommand: DistanceFromTag
     tag: AtSurface
-    minDistance: 1
+    minDistance: 0
     maxDistance: 1
     command: Replace
     subworldNames:
       - subworlds/space/Space
-  - tagcommand: DistanceFromTag # Caves
+  # Above Core     
+  - tagcommand: DistanceFromTag
     tag: AtDepths
     minDistance: 1
     maxDistance: 1 
     command: Replace
     subworldNames:
       - expansion1::subworlds/aquatic/GraphiteCaves
-  - tagcommand: AtTag # Core
+  # Core
+  - tagcommand: AtTag
     tag: AtDepths
     command: Replace
     subworldNames:
       - expansion1::subworlds/barren/BarrenCore
 
 worldTemplateRules:
+  # OpenWater
+  - names: # Geyser geodes
+    - expansion1::poi/aquatic/dirty_water_geode
+    - expansion1::poi/aquatic/cool_slush_geode
+    - expansion1::poi/aquatic/salt_geyser_geode
+    - expansion1::poi/aquatic/hot_water_geode
+    listRule: TrySome
+    someCount: 2
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - expansion1::subworlds/aquatic/OpenWater
+      - command: ExceptWith
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 2
+  - names: # Large geodes
+    - expansion1::poi/aquatic/large_geode
+    - expansion1::poi/aquatic/large_coal_geode
+    listRule: TryOne
+    someCount: 2
+    priority: 40 # place before others
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - expansion1::subworlds/aquatic/OpenWater
+      - command: ExceptWith
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 2
+  - names: # Smaller geods
+    - expansion1::poi/aquatic/small_oxylite_geode
+    listRule: TrySome
+    someCount: 1 # todo: expand with more
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - expansion1::subworlds/aquatic/OpenWater
+      - command: ExceptWith
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 2
   - names:
     - expansion1::poi/genericGravitas/poi_thermo_building
     listRule: GuaranteeAll
     priority: 450
     allowedCellsFilter:
       - command: Replace
-        tagcommand: DistanceFromTag
-        tag: AtDepths
-        minDistance: 1
-        maxDistance: 1
+        subworldNames:
+          - expansion1::subworlds/aquatic/GraphiteCaves
       - command: ExceptWith
         tagcommand: AtTag
         tag: NoGravitasFeatures
-      - command: IntersectWith
-        zoneTypes: [ Swamp ]

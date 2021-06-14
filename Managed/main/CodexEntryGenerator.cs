@@ -86,7 +86,7 @@ public static class CodexEntryGenerator
 				{
 					Sprite sprite = null;
 					Sprite sprite2 = null;
-					GameObject gameObject = Assets.TryGetPrefab(string.Concat(item2.PrefabID(), "Baby"));
+					GameObject gameObject = Assets.TryGetPrefab(item2.PrefabID().ToString() + "Baby");
 					if (gameObject != null)
 					{
 						sprite2 = Def.GetUISprite(gameObject).first;
@@ -1175,7 +1175,7 @@ public static class CodexEntryGenerator
 				new CodexText("    • " + string.Format(CODEX.ROBOT_DESCRIPTORS.STORAGE.CAPACITY, creature.GetComponents<Storage>()[1].Capacity()))
 			}, ContentContainer.ContentLayout.Vertical));
 		}
-		List<GameObject> prefabsWithTag = Assets.GetPrefabsWithTag(string.Concat(creature.PrefabID(), "Egg").ToTag());
+		List<GameObject> prefabsWithTag = Assets.GetPrefabsWithTag((creature.PrefabID().ToString() + "Egg").ToTag());
 		if (prefabsWithTag != null && prefabsWithTag.Count > 0)
 		{
 			containers.Add(new ContentContainer(new List<ICodexWidget>

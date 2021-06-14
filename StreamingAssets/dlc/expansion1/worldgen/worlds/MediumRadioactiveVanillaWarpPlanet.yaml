@@ -30,7 +30,7 @@ startingBasePositionVertical:
   min: 0.50
   max: 0.55
 
-# List all the zone files to load
+# List all the subworld files to load
 subworldFiles:
   - name: subworlds/space/Space
   - name: expansion1::subworlds/space/SpaceWithFrozenBorder    
@@ -39,13 +39,18 @@ subworldFiles:
   - name: expansion1::subworlds/rust/med_Rust
     minCount: 3
   - name: expansion1::subworlds/radioactive/med_Radioactive
+    minCount: 3
   - name: expansion1::subworlds/radioactive/med_UraniumFields
+    minCount: 1
   - name: expansion1::subworlds/radioactive/med_FrozenUraniumFields
+    minCount: 2
   - name: expansion1::subworlds/frozen/FrozenSlush
     minCount: 3
   - name: expansion1::subworlds/frozen/FrozenCore
   - name: expansion1::subworlds/jungle/JungleSteamy
+    minCount: 3
   - name: expansion1::subworlds/marsh/HotMarshSteamy
+    minCount: 3
     
 unknownCellsAllowedSubworlds: 
   - tagcommand: Default # Sides & surface
@@ -98,6 +103,55 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/frozen/FrozenCore
 
 worldTemplateRules:
+  # Marsh - no geyser included due to limited space
+  # Frozen Uranium
+  - names:
+      - expansion1::poi/radioactive/uranium_fields_liquid_co2_geyser
+      - expansion1::poi/radioactive/uranium_fields_liquid_co2_geyser_b
+      - expansion1::poi/radioactive/uranium_fields_liquid_co2_geyser_c
+    listRule: GuaranteeSomeTryMore
+    someCount: 1
+    moreCount: 1
+    priority: 100
+    allowExtremeTemperatureOverlap: true # This is acceptable
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [Radioactive]
+      - command: IntersectWith
+        subworldNames:
+          - expansion1::subworlds/radioactive/med_UraniumFields
+          - expansion1::subworlds/radioactive/med_FrozenUraniumFields
+  # FrozenSlush
+  - names:
+    - expansion1::poi/poi_geyser_dirty_slush
+    - expansion1::poi/poi_frozen_salt_water_geyser
+    listRule: GuaranteeAll
+    priority: 100
+    allowedCellsFilter:
+	  - command: Replace
+        zoneTypes: [FrozenWastes]
+      - command: IntersectWith
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 3
+  - names:
+      - poi/frozen/heatsink_a
+      - poi/frozen/heatsink_b
+    listRule: GuaranteeOne
+    priority: 100 
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [FrozenWastes]
+  # JungleSteamy
+  - names:
+      - poi/jungle/geyser_steam
+    listRule: GuaranteeOne
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [ToxicJungle]
+  # Gravitas
   - names:
     - expansion1::poi/warp/sender
     - expansion1::poi/warp/receiver
@@ -114,6 +168,7 @@ worldTemplateRules:
       - command: ExceptWith
         tagcommand: AtTag
         tag: NoGravitasFeatures
+  # Boons
   - names:
     - expansion1::poi/boon/bedroom
     - expansion1::poi/boon/washroom
@@ -148,6 +203,7 @@ worldTemplateRules:
         maxDistance: 3
       - command: IntersectWith
         zoneTypes: [ Swamp, Rust, ToxicJungle ]
+  # Curated geysers
   - names:
     - expansion1::geysers/molten_aluminum
     - expansion1::geysers/molten_cobalt

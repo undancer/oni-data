@@ -20,7 +20,7 @@ defaultsOverrides:
 startSubworldName: subworlds/magma/Bottom
 startingBaseTemplate: bases/sandstoneBase
 
-# List all the zone files to load
+# List all the subworld files to load
 subworldFiles:
   - name: subworlds/magma/Bottom
   - name: subworlds/space/Space

@@ -332,7 +332,8 @@ public class ResearchScreen : KModalScreen
 					continue;
 				}
 				ResourceTreeNode.Edge.EdgeType edgeType = edge.edgeType;
-				if ((uint)edgeType <= 1u || (uint)(edgeType - 4) <= 1u)
+				ResourceTreeNode.Edge.EdgeType edgeType2 = edgeType;
+				if ((uint)edgeType2 <= 1u || (uint)(edgeType2 - 4) <= 1u)
 				{
 					list.Add(edge.SrcTarget[0]);
 					list.Add(edge.path[0]);

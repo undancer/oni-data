@@ -4,9 +4,9 @@ public class SimpleFXConfig : IEntityConfig
 {
 	public static readonly string ID = "SimpleFX";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

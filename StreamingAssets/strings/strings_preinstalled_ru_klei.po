@@ -948,6 +948,36 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.FABRICATORIDLE.TOOLTIP"
 msgid "Select a recipe to begin fabrication"
 msgstr "Выберите рецепт, чтобы начать производство"
 
+#. STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.NAME"
+msgid "Waiting For Radbolts"
+msgstr "Ожидаются радболты"
+
+#. STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.TOOLTIP"
+msgid "A queued recipe requires more Radbolts than are currently stored"
+msgstr "Рецепт в очереди требует больше радболтов, чем имеется на складе."
+
+#. STRINGS.BUILDING.STATUSITEMS.FLIGHTALLCARGOFULL.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FLIGHTALLCARGOFULL.NAME"
+msgid "All cargo bays full to capacity"
+msgstr "Все грузовые отсеки заполнены до отказа"
+
+#. STRINGS.BUILDING.STATUSITEMS.FLIGHTALLCARGOFULL.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FLIGHTALLCARGOFULL.TOOLTIP"
+msgid "Rocket cannot store anymore materials"
+msgstr "В ракете больше нет места для материалов"
+
+#. STRINGS.BUILDING.STATUSITEMS.FLIGHTCARGOREMAINING.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FLIGHTCARGOREMAINING.NAME"
+msgid "Cargo capacity remaining {0}"
+msgstr "Осталось места для груза: {0}"
+
+#. STRINGS.BUILDING.STATUSITEMS.FLIGHTCARGOREMAINING.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FLIGHTCARGOREMAINING.TOOLTIP"
+msgid "Rocket can store up to {0} more materials"
+msgstr "В ракете осталось места для материалов: {0}"
+
 #. STRINGS.BUILDING.STATUSITEMS.FLOODED.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.FLOODED.NAME"
 msgid "Building Flooded"
@@ -2278,6 +2308,16 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.PENDINGDECONSTRUCTION.TOOLTIP"
 msgid "Building will be deconstructed once a Duplicant is available"
 msgstr "Постройка будет разобрана, когда освободится какой-либо дубликант"
 
+#. STRINGS.BUILDING.STATUSITEMS.PENDINGDEMOLITION.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.PENDINGDEMOLITION.NAME"
+msgid "Demolition Errand"
+msgstr "Поручение: снос"
+
+#. STRINGS.BUILDING.STATUSITEMS.PENDINGDEMOLITION.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.PENDINGDEMOLITION.TOOLTIP"
+msgid "Object will be permanently demolished once a Duplicant is available"
+msgstr "Объект будет разрушен, когда освободится какой-либо дубликант."
+
 #. STRINGS.BUILDING.STATUSITEMS.PENDINGFISH.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.PENDINGFISH.NAME"
 msgid "Fishing Errand"
@@ -2732,6 +2772,26 @@ msgstr "Космические судна завершили миссии"
 msgctxt "STRINGS.BUILDING.STATUSITEMS.SPACECRAFTREADYTOLAND.TOOLTIP"
 msgid "A spacecraft is ready to land"
 msgstr "Космический корабль готов к приземлению"
+
+#. STRINGS.BUILDING.STATUSITEMS.SPACEPOIHARVESTING.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.SPACEPOIHARVESTING.NAME"
+msgid "Extracting Resources: {0}"
+msgstr "Извлечение ресурсов: {0}"
+
+#. STRINGS.BUILDING.STATUSITEMS.SPACEPOIHARVESTING.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.SPACEPOIHARVESTING.TOOLTIP"
+msgid "Resources are being mined from this space POI"
+msgstr "Ресурсы добываются из этой космической точки"
+
+#. STRINGS.BUILDING.STATUSITEMS.SPACEPOIWASTING.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.SPACEPOIWASTING.NAME"
+msgid "Cannot store resources: {0}"
+msgstr "Невозможно хранить ресурсы: {0}"
+
+#. STRINGS.BUILDING.STATUSITEMS.SPACEPOIWASTING.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.SPACEPOIWASTING.TOOLTIP"
+msgid "Some portion of the resources being mined from this space POI cannot be stored in this rocket"
+msgstr "Некоторые ресурсы, добываемые из этой космической точки, невозможно загрузить в эту ракету."
 
 #. STRINGS.BUILDING.STATUSITEMS.STORAGELOCKER.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.STORAGELOCKER.NAME"
@@ -3688,6 +3748,36 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.ARCADEMACHINE.NAME"
 msgid "<link=\"ARCADEMACHINE\">Arcade Cabinet</link>"
 msgstr "<link=\"ARCADEMACHINE\">Аркадный автомат</link>"
 
+#. STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.DESC"
+msgid "Discover the mysteries of the past."
+msgstr "Раскройте тайны прошлого."
+
+#. STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.EFFECT"
+msgid "Analysis artifacts and extracts the <link=\"UNOBTANIUM\">Neutronium</link> from their shell."
+msgstr "Анализ артефактов и извлечение <link=\"UNOBTANIUM\">нейтрония</link> из их оболочки."
+
+#. STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.NAME"
+msgid "<link=\"ARTIFACTANALYSISSTATION\">Artifact Analysis Station</link>"
+msgstr "<link=\"ARTIFACTANALYSISSTATION\">Станция анализа артефактов</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.ARTIFACTCARGOBAY.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTCARGOBAY.DESC"
+msgid "Holds artifacts found in space."
+msgstr "Здесь хранятся артефакты, найденные в космосе."
+
+#. STRINGS.BUILDINGS.PREFABS.ARTIFACTCARGOBAY.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTCARGOBAY.EFFECT"
+msgid "Allows Duplicants to store any artifacts they uncover during space missions.\n\nArtifacts become available to the colony upon the rocket's return."
+msgstr "Позволяет дубликантам собирать артефакты, обнаруженные во время космических миссий.\n\nСобранные артефакты становятся доступными для колонии, когда ракета возвращается."
+
+#. STRINGS.BUILDINGS.PREFABS.ARTIFACTCARGOBAY.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTCARGOBAY.NAME"
+msgid "<link=\"ARTIFACTCARGOBAY\">Artifact Transport Module</link>"
+msgstr "<link=\"ARTIFACTCARGOBAY\">Модуль транспортировки артефактов</link>"
+
 #. STRINGS.BUILDINGS.PREFABS.ASTRONAUTTRAININGCENTER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.ASTRONAUTTRAININGCENTER.DESC"
 msgid "Duplicants must complete astronaut training in order to pilot space rockets."
@@ -4522,6 +4612,41 @@ msgstr "Генерирует энергию для тестирования по
 msgctxt "STRINGS.BUILDINGS.PREFABS.DEVGENERATOR.NAME"
 msgid "Dev Generator"
 msgstr "Генератор РЗРБ"
+
+#. STRINGS.BUILDINGS.PREFABS.DEVRADIATIONGENERATOR.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.DEVRADIATIONGENERATOR.DESC"
+msgid "That's some <i>strong</i> coffee."
+msgstr "Очень <i>крепкий</i> кофе"
+
+#. STRINGS.BUILDINGS.PREFABS.DEVRADIATIONGENERATOR.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.DEVRADIATIONGENERATOR.EFFECT"
+msgid "Generates on-demand radiation to keep you cosy."
+msgstr "По запросу генерирует радиацию для уюта."
+
+#. STRINGS.BUILDINGS.PREFABS.DEVRADIATIONGENERATOR.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.DEVRADIATIONGENERATOR.NAME"
+msgid "Dev Radiation Emitter"
+msgstr "Излучатель радиации разработчика"
+
+#. STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.DESC"
+msgid "Crushes carbon into diamonds"
+msgstr "Перерабатывает углерод в алмазы"
+
+#. STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.EFFECT"
+msgid "Crushes carbon into diamonds"
+msgstr "Перерабатывает углерод в алмазы"
+
+#. STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.NAME"
+msgid "<link=\"DIAMONDPRESS\">Diamond Press</link>"
+msgstr "<link=\"DIAMONDPRESS\">Алмазный пресс</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.REFINED_CARBON_RECIPE_DESCRIPTION
+msgctxt "STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.REFINED_CARBON_RECIPE_DESCRIPTION"
+msgid "Converts {1} to {0}"
+msgstr "Перерабатывает {1} в {0}"
 
 #. STRINGS.BUILDINGS.PREFABS.DININGTABLE.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.DININGTABLE.DESC"
@@ -5633,6 +5758,26 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.GRAVE.NAME"
 msgid "<link=\"GRAVE\">Tasteful Memorial</link>"
 msgstr "<link=\"GRAVE\">Стильная могила</link>"
 
+#. STRINGS.BUILDINGS.PREFABS.GRAVITASPEDESTAL.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.GRAVITASPEDESTAL.DESC"
+msgid "Perception can be drastically changed by a bit of thoughtful presentation."
+msgstr "Восприятие можно кардинально поменять с помощью продуманной презентации."
+
+#. STRINGS.BUILDINGS.PREFABS.GRAVITASPEDESTAL.DISPLAYED_ITEM_FMT
+msgctxt "STRINGS.BUILDINGS.PREFABS.GRAVITASPEDESTAL.DISPLAYED_ITEM_FMT"
+msgid "Displayed {0}"
+msgstr "Размещено: {0}"
+
+#. STRINGS.BUILDINGS.PREFABS.GRAVITASPEDESTAL.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.GRAVITASPEDESTAL.EFFECT"
+msgid "Displays a single object, doubling its <link=\"DECOR\">Decor</link> value.\n\nObjects with negative Decor will gain some positive Decor when displayed."
+msgstr "Место для размещения одного предмета. В два раза увеличивает показатель его <link=\"DECOR\">декора</link>.\n\nЕсли разместить здесь предметы с отрицательным декором, они улучшат свои показатели."
+
+#. STRINGS.BUILDINGS.PREFABS.GRAVITASPEDESTAL.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.GRAVITASPEDESTAL.NAME"
+msgid "<link=\"ITEMPEDESTAL\">Pedestal</link>"
+msgstr "<link=\"ITEMPEDESTAL\">Постамент</link>"
+
 #. STRINGS.BUILDINGS.PREFABS.HABITATMODULEMEDIUM.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.HABITATMODULEMEDIUM.DESC"
 msgid "Duplicants can survive space travel inside this protective nosecone... Hopefully."
@@ -5765,8 +5910,8 @@ msgstr "<link=\"HIGHENERGYPARTICLEREDIRECTOR\">Отражатель радбол
 
 #. STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.DESC"
-msgid "Radbolts are necessary for producing atomic research."
-msgstr "Радболты необходимы для атомных исследований."
+msgid "Radbolts are necessary for producing Materials Science research."
+msgstr "Радболты необходимы для исследований материалов."
 
 #. STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.EFFECT"
@@ -8155,8 +8300,8 @@ msgstr "Чтобы загружать или выгружать ресурсы, 
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGAS.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGAS.EFFECT"
-msgid "Allows <link=\"ELEMENTSGAS\">Gases</link> to be loaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the gas filters set on the rocket's cargo bays."
-msgstr "Позволяет подавать <link=\"ELEMENTSGAS\">газ</link> из отсеков подсоединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует газовые фильтры, установленные в грузовых отсеках ракеты."
+msgid "Loads <link=\"ELEMENTSGAS\">Gases</link> to the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the gas filters set on the rocket's cargo bays."
+msgstr "Подает <link=\"ELEMENTSGAS\">газ</link> в отсеки подсоединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует газовые фильтры, установленные в грузовых отсеках ракеты."
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGAS.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGAS.NAME"
@@ -8170,8 +8315,8 @@ msgstr "Чтобы загружать или выгружать ресурсы, 
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGASUNLOADER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGASUNLOADER.EFFECT"
-msgid "Allows <link=\"ELEMENTSGAS\">Gases</link> to be unloaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the gas filters set on this unloader."
-msgstr "Позволяет откачивать <link=\"ELEMENTSGAS\">газ</link> из отсеков подсоединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует газовые фильтры, установленные в погрузчике."
+msgid "Unloads <link=\"ELEMENTSGAS\">Gases</link> from the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the gas filters set on this unloader."
+msgstr "Откачивает <link=\"ELEMENTSGAS\">газ</link> из отсеков подсоединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует газовые фильтры, установленные в погрузчике."
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGASUNLOADER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTGASUNLOADER.NAME"
@@ -8185,8 +8330,8 @@ msgstr "Чтобы загружать или выгружать ресурсы, 
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.EFFECT"
-msgid "Allows <link=\"ELEMENTSLIQUID\">Liquids</link> to be loaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the liquid filters set on the rocket's cargo bays."
-msgstr "Позволяет подавать <link=\"ELEMENTSLIQUID\">жидкости</link> из отсеков подсоединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует фильтры жидкости, установленные в грузовых отсеках ракеты."
+msgid "Loads <link=\"ELEMENTSLIQUID\">Liquids</link> to the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the liquid filters set on the rocket's cargo bays."
+msgstr "Подает <link=\"ELEMENTSLIQUID\">жидкости</link> в отсеки подсоединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует жидкостные фильтры, установленные в грузовых отсеках ракеты."
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUID.NAME"
@@ -8200,8 +8345,8 @@ msgstr "Чтобы загружать или выгружать ресурсы, 
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUIDUNLOADER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUIDUNLOADER.EFFECT"
-msgid "Allows <link=\"ELEMENTSLIQUID\">Liquids</link> to be unloaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the liquid filters set on this unloader."
-msgstr "Позволяет откачивать <link=\"ELEMENTSLIQUID\">жидкости</link> из отсеков подсоединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует жидкостные фильтры, установленные в погрузчике."
+msgid "Unloads <link=\"ELEMENTSLIQUID\">Liquids</link> from the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the liquid filters set on this unloader."
+msgstr "Откачивает <link=\"ELEMENTSLIQUID\">жидкости</link> из отсеков подсоединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует жидкостные фильтры, установленные в погрузчике."
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUIDUNLOADER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTLIQUIDUNLOADER.NAME"
@@ -8215,8 +8360,8 @@ msgstr "Чтобы загружать или выгружать ресурсы, 
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLID.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLID.EFFECT"
-msgid "Allows <link=\"ELEMENTSSOLID\">Solids</link> to be loaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the solid material filters set on the rocket's cargo bays."
-msgstr "Позволяет подавать <link=\"ELEMENTSSOLID\">твердые вещества</link> из отсеков подсоединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует фильтры твердых веществ, установленные в грузовых отсеках ракеты."
+msgid "Loads <link=\"ELEMENTSSOLID\">Solids</link> to the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the solid material filters set on the rocket's cargo bays."
+msgstr "Подает <link=\"ELEMENTSSOLID\">твердые вещества</link> в отсеки подсоединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует фильтры твердых веществ, установленные в грузовых отсеках ракеты."
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLID.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLID.NAME"
@@ -8230,8 +8375,8 @@ msgstr "Чтобы загружать или выгружать ресурсы, 
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLIDUNLOADER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLIDUNLOADER.EFFECT"
-msgid "Allows <link=\"ELEMENTSSOLID\">Solids</link> to be unloaded from the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the solid material filters set on this unloader."
-msgstr "Позволяет выгружать <link=\"ELEMENTSSOLID\">твердые вещества</link> из отсеков подсоединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует фильтры твердых веществ, установленные в погрузчике."
+msgid "Unloads <link=\"ELEMENTSSOLID\">Solids</link> from the storage of a linked rocket.\n\nAutomatically links when built to the side of a <link=\"LAUNCHPLATFORM\">Rocket Platform</link> or another <link=\"MODULARLAUNCHPADPORTSOLID\">Rocket Port</link>.\n\nUses the solid material filters set on this unloader."
+msgstr "Выгружает <link=\"ELEMENTSSOLID\">твердые вещества</link> из отсеков подсоединенной ракеты.\n\nПодключается автоматически, если построить вплотную к <link=\"LAUNCHPLATFORM\">ракетной платформе</link> или к другому <link=\"MODULARLAUNCHPADPORTSOLID\">ракетному порту</link>.\n\nИспользует фильтры твердых веществ, установленные в погрузчике."
 
 #. STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLIDUNLOADER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.MODULARLAUNCHPADPORTSOLIDUNLOADER.NAME"
@@ -8333,6 +8478,21 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.NOSECONEBASIC.NAME"
 msgid "<link=\"NOSECONEBASIC\">Basic Nosecone</link>"
 msgstr "<link=\"NOSECONEBASIC\">Базовый головной обтекатель</link>"
 
+#. STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.DESC"
+msgid "Harvests resources from the universe."
+msgstr "Собирает ресурсы из вселенной."
+
+#. STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.EFFECT"
+msgid "Enables a rocket to drill into interstellar debris and collect <link=\"ELEMENTSGAS\">gas</link>, <link=\"ELEMENTSLIQUID\">liquid</link> and <link=\"ELEMENTSSOLID\">solid</link> resources from space.\n\nMust be built at the top of a rocket."
+msgstr "Позволяет ракете бурить космические обломки и собирать <link=\"ELEMENTSGAS\">газ</link>, <link=\"ELEMENTSLIQUID\">жидкость</link> и <link=\"ELEMENTSSOLID\">твердые ресурсы</link>.\n\nНужно строить в верхней части ракеты."
+
+#. STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.NAME"
+msgid "<link=\"NOSECONEHARVEST\">Drillcone</link>"
+msgstr "<link=\"NOSECONEHARVEST\">Носовой бур</link>"
+
 #. STRINGS.BUILDINGS.PREFABS.NUCLEARREACTOR.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.NUCLEARREACTOR.DESC"
 msgid "Radbolt generators and reflectors make radiation useable by other buildings."
@@ -8370,13 +8530,13 @@ msgstr "Поставляется с несколькими бесплатным�
 
 #. STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.EFFECT"
-msgid "Conducts <link=\"RESEARCH\">Atomic Research</link> to unlock new technologies.\n\nConsumes Radbolts.\n\nAssigned Duplicants must possess the <link=\"ATOMICRESEARCHER\">Atomic Research</link> skill."
-msgstr "Проводит <link=\"RESEARCH\">атомные исследования</link>, чтобы открыть новые технологии.\n\nРасходует радболты.\n\nНазначенные дубликанты должны обладать навыком <link=\"ATOMICRESEARCHER\">\"Атомное исследование\"</link>."
+msgid "Conducts <link=\"RESEARCH\">Materials Science Research</link> to unlock new technologies.\n\nConsumes Radbolts.\n\nAssigned Duplicants must possess the <link=\"ATOMICRESEARCHER\">Materials Science Research</link> skill."
+msgstr "Проводит <link=\"RESEARCH\">исследование материалов</link>, чтобы открыть новые технологии.\n\nПотребляет радболты.\n\n Назначенные дубликанты должны обладать навыком <link=\"ATOMICRESEARCHER\">исследования материалов</link>."
 
 #. STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME"
-msgid "<link=\"NUCLEARLABORATORY\">Atomic Collider</link>"
-msgstr "<link=\"NUCLEARLABORATORY\">Атомный коллайдер</link>"
+msgid "<link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>"
+msgstr "<link=\"NUCLEARLABORATORY\">Терминал для изучения материалов</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.OBJECTDISPENSER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.OBJECTDISPENSER.DESC"
@@ -10900,8 +11060,8 @@ msgstr "Трубы на задней стороне уходят в никуда
 
 #. STRINGS.BUILDINGS.PREFABS.WARPCONDUITRECEIVER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.WARPCONDUITRECEIVER.EFFECT"
-msgid "A machine capable of teleporting <link=\"ELEMENTSLIQUID\">Liquid</link>, <link=\"ELEMENTSSOLID\">Solid</link>, and <link=\"ELEMENTSGAS\">Gas</link> resources.\n\nIt can be activated by a Duplicant with the <link=\"RESEARCHER\">Field Research</link> skill.\n\nThis is the receiving side."
-msgstr "Машина, телепортирующая <link=\"ELEMENTSLIQUID\">жидкие</link>, <link=\"ELEMENTSSOLID\">твердые</link> и <link=\"ELEMENTSGAS\">газовые</link> ресурсы.\n\nЕе может активировать дубликант, обладающий навыком \"<link=\"RESEARCHER\">Полевое исследование</link>\".\n\nЭто принимающая сторона."
+msgid "A machine capable of teleporting <link=\"ELEMENTSLIQUID\">Liquid</link>, <link=\"ELEMENTSSOLID\">Solid</link>, and <link=\"ELEMENTSGAS\">Gas</link> resources to another asteroid.\n\nIt can be activated by a Duplicant with the <link=\"RESEARCHER\">Field Research</link> skill.\n\nThis is the receiving side."
+msgstr "Машина, телепортирующая <link=\"ELEMENTSLIQUID\">жидкие</link>, <link=\"ELEMENTSSOLID\">твердые</link> и <link=\"ELEMENTSGAS\">газовые</link> ресурсы на другой астероид.\n\nЕе может активировать дубликант, обладающий навыком <link=\"RESEARCHER\">Полевое исследование</link>.\n\nЭто принимающая сторона."
 
 #. STRINGS.BUILDINGS.PREFABS.WARPCONDUITRECEIVER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.WARPCONDUITRECEIVER.NAME"
@@ -10915,8 +11075,8 @@ msgstr "Трубы на задней стороне уходят в никуда
 
 #. STRINGS.BUILDINGS.PREFABS.WARPCONDUITSENDER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.WARPCONDUITSENDER.EFFECT"
-msgid "A machine capable of teleporting <link=\"ELEMENTSLIQUID\">Liquid</link>, <link=\"ELEMENTSSOLID\">Solid</link>, and <link=\"ELEMENTSGAS\">Gas</link> resources.\n\nIt can be activated by a Duplicant with the <link=\"RESEARCHER\">Field Research</link> skill.\n\nThis is the transmitting side."
-msgstr "Машина, телепортирующая <link=\"ELEMENTSLIQUID\">жидкие</link>, <link=\"ELEMENTSSOLID\">твердые</link> и <link=\"ELEMENTSGAS\">газовые</link> ресурсы.\n\nЕе может активировать дубликант, обладающий навыком \"<link=\"RESEARCHER\">Полевое исследование</link>\".\n\nЭто передающая сторона."
+msgid "A machine capable of teleporting <link=\"ELEMENTSLIQUID\">Liquid</link>, <link=\"ELEMENTSSOLID\">Solid</link>, and <link=\"ELEMENTSGAS\">Gas</link> resources to another asteroid.\n\nIt can be activated by a Duplicant with the <link=\"RESEARCHER\">Field Research</link> skill.\n\nThis is the transmitting side."
+msgstr "Машина, телепортирующая <link=\"ELEMENTSLIQUID\">жидкие</link>, <link=\"ELEMENTSSOLID\">твердые</link> и <link=\"ELEMENTSGAS\">газовые</link> ресурсына другой астероид.\n\nЕе может активировать дубликант, обладающий навыком <link=\"RESEARCHER\">Полевое исследование</link>.\n\nЭто передающая сторона."
 
 #. STRINGS.BUILDINGS.PREFABS.WARPCONDUITSENDER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.WARPCONDUITSENDER.NAME"
@@ -11337,6 +11497,36 @@ msgstr "УРОВЕНЬ ШИФРОВАНИЯ: НЕТ"
 msgctxt "STRINGS.CODEX.A1_A046.TITLE"
 msgid "Personal Journal: A046"
 msgstr "Личный журнал: A046"
+
+#. STRINGS.CODEX.A1_CLONEDRABBITS.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.A1_CLONEDRABBITS.BODY.CONTAINER1"
+msgid "<smallcaps>[Voice Recognition Initialized]\n[Subject Identified: B111]</smallcaps>\n\n[LOG BEGINS]\n\n[A throat clears.]\n\nB111: We are now reliably printing healthy, living subjects, though all have exhibited unusual qualities as a result of the cloning process.\n\n[Chattering sounds can be heard.]\n\nB111: Odd communications, abnormal excrescenses, and vestigal limbs have been seen in all subjects thus far, to varying degrees of severity. It seems that bypassing or accelerating juvenility halts certain critical stages of development. Brain function, however, appears typical.\n\n[Chattering.]\n\nB111: T-They also seem quite happy.\n\nB111: Dr. Broussard, signing off.\n\n[LOG ENDS]"
+msgstr "<smallcaps>[Активировано распознавание голоса]\n[Опознаны субъекты: B111]</smallcaps>\n\n[НАЧАЛО ЗАПИСИ]\n\n(откашливается)\n\nB111: Мы смогли добиться стабильной печати живых и вполне здоровых субъектов, хотя в результате клонирования у каждого из них проявились некоторые странные особенности.\n\n(болтовня)\n\nB111: Странная речь, непонятные опухоли, рудиментарные конечности — еще ни один субъект этого не избежал. Похоже, попытки пропустить или ускорить созревание стопорят некоторые важные этапы развития. Тем не менее, мозги у них работают в нормальном режиме.\n\n(болтовня)\n\nB111: И все они весьма счастливы.\n\nB111: Доктор Брусард, конец записи.\n\n[КОНЕЦ ЗАПИСИ]"
+
+#. STRINGS.CODEX.A1_CLONEDRABBITS.SUBTITLE
+msgctxt "STRINGS.CODEX.A1_CLONEDRABBITS.SUBTITLE"
+msgid "ENCRYPTION LEVEL: TWO"
+msgstr "УРОВЕНЬ ШИФРОВАНИЯ: ВТОРОЙ"
+
+#. STRINGS.CODEX.A1_CLONEDRABBITS.TITLE
+msgctxt "STRINGS.CODEX.A1_CLONEDRABBITS.TITLE"
+msgid "Initial Success"
+msgstr "Первоначальный успех"
+
+#. STRINGS.CODEX.A1_CLONEDRACCOONS.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.A1_CLONEDRACCOONS.BODY.CONTAINER1"
+msgid "<smallcaps>[Voice Recognition Initialized]\n[Subject Identified: B111]</smallcaps>\n\n[LOG BEGINS]\n\n[A throat clears.]\n\nB111: We are now reliably printing healthy, living subjects, though all have exhibited unusual qualities as a result of the cloning process.\n\n[Trilling sounds can be heard.]\n\nB111: Unusual mewings, benign neoplasms, and atavistic extremities have been seen in all subjects thus far, to varying degrees of severity. It seems that bypassing or accelerating juvenility halts certain critical stages of development. Brain function, however, appears typical.\n\n[Trilling.]\n\nB111: T-They also seem quite happy.\n\nB111: Dr. Broussard, signing off.\n\n[LOG ENDS]"
+msgstr "<smallcaps>[Активировано распознавание голоса]\n[Опознаны субъекты: B111]</smallcaps>\n\n[НАЧАЛО ЗАПИСИ]\n\n(откашливается)\n\nB111: Мы смогли добиться стабильной печати живых и вполне здоровых субъектов, хотя в результате клонирования у каждого из них проявились некоторые странные особенности.\n\n(слышны трели)\n\nB111: Странное мяуканье, доброкачественные опухоли, рудиментарные конечности — еще ни один субъект этого не избежал. Похоже, попытки пропустить или ускорить созревание стопорят некоторые важные этапы развития. Тем не менее, мозги у них работают в нормальном режиме.\n\n(трели)\n\nB111: И все они весьма счастливы.\n\nB111: Доктор Брусард, конец записи.\n\n[КОНЕЦ ЗАПИСИ]"
+
+#. STRINGS.CODEX.A1_CLONEDRACCOONS.SUBTITLE
+msgctxt "STRINGS.CODEX.A1_CLONEDRACCOONS.SUBTITLE"
+msgid "ENCRYPTION LEVEL: TWO"
+msgstr "УРОВЕНЬ ШИФРОВАНИЯ: ВТОРОЙ"
+
+#. STRINGS.CODEX.A1_CLONEDRACCOONS.TITLE
+msgctxt "STRINGS.CODEX.A1_CLONEDRACCOONS.TITLE"
+msgid "Initial Success"
+msgstr "Первоначальный успех"
 
 #. STRINGS.CODEX.A1_CLONEDRATS.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.A1_CLONEDRATS.BODY.CONTAINER1"
@@ -11838,6 +12028,36 @@ msgctxt "STRINGS.CODEX.A5_GENETICOOZE.TITLE"
 msgid "Biofluid"
 msgstr "Биожидкость"
 
+#. STRINGS.CODEX.A5_SHRIMP.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.A5_SHRIMP.BODY.CONTAINER1"
+msgid "<smallcaps>[Voice Recognition Initialized]\n[Subject Identified: B111]</smallcaps>\n\n[LOG BEGINS]\n\n\"A-and how are you clever little guys today?\n\n(trilling)\n\nLook! I brought some pink shrimp for you to eat. Your favorite! Are you hungry?\n\n(excited trilling)\n\nOh, one moment, my keen eager pals. I left the recorder on --\n\n(rustling)\"\n\n[LOG ENDS]"
+msgstr "<smallcaps>[Активировано распознавание голоса]\n[Опознаны субъекты: B111]</smallcaps>\n\n[НАЧАЛО ЗАПИСИ]\n\n\"И как вы сегодня, умняшки мои?\n\n(трель)\n\nСмотрите! У меня тут с собой креветки. Ваши любимые! Есть хотите?\n\n(восторженные трели)\n\nОй, ну-ка, погодите секунду, мои шустрики... Диктофон надо выключить...\n\n(шорох)\"\n\n[КОНЕЦ ЗАПИСИ]"
+
+#. STRINGS.CODEX.A5_SHRIMP.SUBTITLE
+msgctxt "STRINGS.CODEX.A5_SHRIMP.SUBTITLE"
+msgid "ENCRYPTION LEVEL: ZERO"
+msgstr "УРОВЕНЬ ШИФРОВАНИЯ: НУЛЕВОЙ"
+
+#. STRINGS.CODEX.A5_SHRIMP.TITLE
+msgctxt "STRINGS.CODEX.A5_SHRIMP.TITLE"
+msgid "Shrimp"
+msgstr "Креветка"
+
+#. STRINGS.CODEX.A5_STRAWBERRIES.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.A5_STRAWBERRIES.BODY.CONTAINER1"
+msgid "<smallcaps>[Voice Recognition Initialized]\n[Subject Identified: B111]</smallcaps>\n\n[LOG BEGINS]\n\n\"A-and how are you bouncy little critters today?\n\n(chattering)\n\nLook! I brought strawberries. Your favorite! Are you hungry?\n\n(excited chattering)\n\nOh, one moment, my precious, little pals. I left the recorder on --\n\n(rustling)\"\n\n[LOG ENDS]"
+msgstr "<smallcaps>[Активировано распознавание голоса]\n[Опознаны субъекты: B111]</smallcaps>\n\n[НАЧАЛО ЗАПИСИ]\n\n\"И как вы сегодня, пуопрыгунчики мои?\n\n(болтовня)\n\nСмотрите! У меня тут с собой клубничка. Ваша любимая! Есть хотите?\n\n(восторженная болтовня)\n\nОй, ну-ка, погодите секунду, мои маленькие... Диктофон надо выключить...\n\n(шорох)\"\n\n[КОНЕЦ ЗАПИСИ]"
+
+#. STRINGS.CODEX.A5_STRAWBERRIES.SUBTITLE
+msgctxt "STRINGS.CODEX.A5_STRAWBERRIES.SUBTITLE"
+msgid "ENCRYPTION LEVEL: ZERO"
+msgstr "УРОВЕНЬ ШИФРОВАНИЯ: НУЛЕВОЙ"
+
+#. STRINGS.CODEX.A5_STRAWBERRIES.TITLE
+msgctxt "STRINGS.CODEX.A5_STRAWBERRIES.TITLE"
+msgid "Strawberries"
+msgstr "Клубника"
+
 #. STRINGS.CODEX.A5_SUNFLOWERSEEDS.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.A5_SUNFLOWERSEEDS.BODY.CONTAINER1"
 msgid "<smallcaps>[Voice Recognition Initialized]\n[Subject Identified: B111]</smallcaps>\n\n[LOG BEGINS]\n\n\"A-and how are you furry little fellows today?\n\n(squeaking)\n\nLook! I brought sunflower seeds. Your favorite! Are you hungry?\n\n(excited squeaking)\n\nOh, one moment, my dear, little friends. I left the recorder on --\n\n(rustling)\"\n\n[LOG ENDS]"
@@ -12110,8 +12330,8 @@ msgstr "Несбыточная фантазия"
 
 #. STRINGS.CODEX.ARBORTREE.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.ARBORTREE.BODY.CONTAINER1"
-msgid ""
-msgstr ""
+msgid "Arbor Trees have been cultivated to spread horizontally when they grow so as to produce a high yield of lumber in vertically cramped spaces.\n\nArbor Trees are related to the oak tree, specifically the Japanese Evergreen, though they have been genetically hybridized significantly.\n\nDespite having many hardy, evenly spaced branches, the short stature of the Arbor Tree makes climbing it rather irrelevant."
+msgstr "Ветведеревья выращивают так, чтобы они ветвились в горизонтальной плоскости и обеспечивали высокий урожай пиломатериалов в вертикально стесненных пространствах.\n\nВетведеревья родственны дубу, особенно японскому вечнозеленому, хотя они и были значительно изменены генетически.\n\nНесмотря на наличие множества крепких и равномерно расположенных ветвей, лазать по ветведеревьям бессмысленно из-за их малой высоты."
 
 #. STRINGS.CODEX.ARBORTREE.SUBTITLE
 msgctxt "STRINGS.CODEX.ARBORTREE.SUBTITLE"
@@ -12218,9 +12438,29 @@ msgctxt "STRINGS.CODEX.B1_HOLLANDSDOG.TITLE2"
 msgid "dr. holland's dog"
 msgstr "собака доктора холланда"
 
+#. STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.BODY.CONTAINER1"
+msgid "Bring your office to the stars with Gravitas new corporate space stations.\n\nEnjoy a captivated workforce with over 600 square feet of office space in low earth orbit. Stunning views, a low gravity gym and a cafeteria serving the finest nutritional bars await your personnel.\n\nDaily to and from missions to your satellite office via our luxury space shuttles.\n\nRest assured our space stations and shuttles utilize only the extremely efficient, environmentally friendly Gravitas proprietary power sources.\n\nThe workplace revolution starts now!"
+msgstr "Вознесите свой офис к звездам с новыми корпоративными космическими станциями Gravitas.\n\nВаши сотрудники не смогут оторваться от работы в просторных офисных помещениях на низкой околоземной орбите. Потрясающие виды, тренажерный зал с низкой гравитацией и кафетерий, где подают лучшие диетические батончики, ждут ваших работников.\n\nЕжедневные рейсы в ваш орбитальный офис на наших роскошных космических шаттлах.\n\nНе переживайте: наши станции и шаттлы используют только чрезвычайно эффективны и экологически чистые источники энергии, запатентованные Gravitas.\n\nРеволюция на рабочем месте начинается сейчас!"
+
+#. STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.BODY.CONTAINER2
+msgctxt "STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.BODY.CONTAINER2"
+msgid "Taking reservations now for the first orbital office spaces.\n100% money back guarantee (minus 10% filing fee)"
+msgstr "Забронируйте первые орбитальные офисные помещения уже сейчас.\n100% гарантия возврата денег (минус регистрационный сбор 10%)"
+
+#. STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.SUBTITLE
+msgctxt "STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.SUBTITLE"
+msgid "PUBLIC RELEASE"
+msgstr "ОТКРЫТАЯ ПУБЛИКАЦИЯ"
+
+#. STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.TITLE
+msgctxt "STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.TITLE"
+msgid "Office Space in Space!"
+msgstr "Офис в космосе!"
+
 #. STRINGS.CODEX.B10_AI.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.B10_AI.BODY.CONTAINER1"
-msgid "<smallcaps>[Voice Recognition Initialized]\n[Subject Identified: B111-1]</smallcaps>\n\n[LOG BEGINS]\n\nI made a horrible discovery today while reviewing work on the artificial intelligence programming. It seems Dr. Ali mixed up a file when uploading a program onto a rudimentary robot and discovered that the device displayed the characteristics of what he called \"a puppy that was lost in a teleportation experiment weeks ago\".\n\n.This unbelivable! Jackie has been hiding the nature of the teleportation experiments from me. What's worse is I know from previous conversations that she knows I would never approve of pursuing this line of experimentation. The societal benefits of teleportaion aside, you <i>cannot</i> kill a living being every time you want to send them to another room. The moral and ethical implications of this are horrendous.\n\nI know she has been keeping this information from me. When I searched through the Gravitas database I found nothing to do with these teleportation experiments. It was only because this reference showed up in Dr. Ali's AI paper that I was able to discover what has been happening.\n\nJackie has to be stopped.\n\nBut I know she is beyond reasonable discussion. I hope this is the only thing she is hiding from me, but I fear it is not.\n\n[LOG ENDS]\n\n[LOG BEGINS]\n\nDespite myself, I can't help thinking of the intriguing possiblities this presents for the AI development. It haunts me.\n\nI fear I may be sliding down a slippery slope, at the bottom of which Jackie is waiting for me with open arms.\n\n[LOG ENDS]"
+msgid "<smallcaps>[Voice Recognition Initialized]\n[Subject Identified: B111-1]</smallcaps>\n\n[LOG BEGINS]\n\nI made a horrible discovery today while reviewing work on the artificial intelligence programming. It seems Dr. Ali mixed up a file when uploading a program onto a rudimentary robot and discovered that the device displayed the characteristics of what he called \"a puppy that was lost in a teleportation experiment weeks ago\".\n\nThis unbelivable! Jackie has been hiding the nature of the teleportation experiments from me. What's worse is I know from previous conversations that she knows I would never approve of pursuing this line of experimentation. The societal benefits of teleportaion aside, you <i>cannot</i> kill a living being every time you want to send them to another room. The moral and ethical implications of this are horrendous.\n\nI know she has been keeping this information from me. When I searched through the Gravitas database I found nothing to do with these teleportation experiments. It was only because this reference showed up in Dr. Ali's AI paper that I was able to discover what has been happening.\n\nJackie has to be stopped.\n\nBut I know she is beyond reasonable discussion. I hope this is the only thing she is hiding from me, but I fear it is not.\n\n[LOG ENDS]\n\n[LOG BEGINS]\n\nDespite myself, I can't help thinking of the intriguing possiblities this presents for the AI development. It haunts me.\n\nI fear I may be sliding down a slippery slope, at the bottom of which Jackie is waiting for me with open arms.\n\n[LOG ENDS]"
 msgstr "<smallcaps>[Активировано распознавание голоса]\n[Опознаны субъекты: B111-1]</smallcaps>\n\n[НАЧАЛО ЗАПИСИ]\n\nСегодня меня ждала ужасная находка. При просмотре работы над программированием искусственного интеллекта оказалось, что доктор Али перепутал файлы, которые нужно было загрузить в примитивного робота и обнаружил, что машина демонстрирует характеристики, по его словам, \"щенка, которого потеряли в эксперименте с телепортацией много недель назад\".\n\nНевероятно! Джеки скрывала от меня, какие на самом деле она проводила опыты с телепортацией. Хуже того, мы уже обсуждали это в прошлом, и она знала, что на такой курс экспериментов я никогда не соглашусь. Оставляя в стороне социальные возможности, которые открывает телепортация, <i>нельзя</i> просто убивать живое существо каждый раз, когда ты отправляешь его в другую комнату. Это ужасно и с точки зрения морали, и с точки зрения этики.\n\nЯ точно знаю, что она скрывала это от меня. Поиск информации об этих экспериментах в базе данных Gravitas не дал никаких результатов. Мне стало известно о них только благодаря этому случайному упоминанию в отчете доктора Али.\n\nДжеки нужно остановить.\n\nНо я знаю: время увещеваний прошло. Я надеюсь, это единственное, что она скрывала от меня, но боюсь, что это не так.\n\n[КОНЕЦ ЗАПИСИ]\n\n[НАЧАЛО ЗАПИСИ]\n\nНичего не могу поделать с мыслями о том, какие заманчивые перспективы это открывает для разработки ИИ. Постоянно об этом думаю.\n\nБоюсь, что начинаю катиться по наклонной прямо в распростертые объятья Джеки.\n\n[КОНЕЦ ЗАПИСИ]"
 
 #. STRINGS.CODEX.B10_AI.SUBTITLE
@@ -12253,6 +12493,26 @@ msgctxt "STRINGS.CODEX.B2_ELLIESBIRTHDAY.TITLE"
 msgid "Office Cake"
 msgstr "Торт для офиса"
 
+#. STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER1"
+msgid "Meet The Pilot:\nCaptain Mae Johannsen\n\nFrom the time she was old enough to walk Captain Johannsen dreamed of reaching the sky. Growing up on an air force base she came to love the sound jet engines roaring overhead.\n\nAt 16 she became the youngest pilot to fly a fighter jet and at 22 she had already entered the space flight program.\n\nFour years later Gravitas nabbed her for an exclusive contract piloting our space shuttles. In her time at Gravitas, Captain Johannsen has logged over 1,000 hours space flight time shuttling and deploying satellites to low Earth Orbits and has just been named the pilot of our inaugural civilian space tourist program, slated to begin in the next year.\n\nGravitas is excited to have Captain Johannsen in the pilot seat as we reach for the stars...and beyond!"
+msgstr "Познакомьтесь с пилотом:\nКапитан Мэй Йоханнсен\n\nС самых первых шагов капитан Йоханссен мечтала достичь неба. Она выросла на военно-воздушной базе и с детства полюбила рев реактивных двигателей над головой.\n\nВ 16 лет она стала самым молодым пилотом истребителя, а в 22 года уже участвовала в программе космических полетов. \n\nЧетыре года спустя компания Gravitas заключила с ней эксклюзивный контракт на пилотирование своих космических шаттлов. За время работы в Gravitas капитан Йоханнсен наработала более 1000 часов космического полета, совершая челночные рейсы и отправляя спутники на низкие околоземные орбиты. Теперь же она назначена пилотом нашей первой программы гражданского космического туризма, начало которой запланировано на следующий год.\n\nКомпания Gravitas рада видеть капитана Йоханнсен в кресле пилота, зная, что для нее и бесконечность не предел!"
+
+#. STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER2
+msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER2"
+msgid "\n\nBrought to you by the Gravitas Facility."
+msgstr "\n\nПродукт предприятия Gravitas."
+
+#. STRINGS.CODEX.B2_MEETTHEPILOT.SUBTITLE
+msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.SUBTITLE"
+msgid "PUBLIC RELEASE"
+msgstr "ОТКРЫТАЯ ПУБЛИКАЦИЯ"
+
+#. STRINGS.CODEX.B2_MEETTHEPILOT.TITLE
+msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.TITLE"
+msgid "The Future of Space Flight"
+msgstr "Будущее космических полетов"
+
 #. STRINGS.CODEX.B2_TEMPORALBOWUPDATE.BODY.CONTAINER2
 msgctxt "STRINGS.CODEX.B2_TEMPORALBOWUPDATE.BODY.CONTAINER2"
 msgid "Dr. Sklodowska, could I ask you to forward me the new spec changes to the Temporal Bow?\n\nThe Director completely ignored me when I asked for a project update this morning. She walked right past me in the hall - I didn't realize I was that far down on the food chain. :(\n\nMr. Kraus\nPhysics Department\nThe Gravitas Facility"
@@ -12272,6 +12532,36 @@ msgstr "НЕ ЗАШИФРОВАНО"
 msgctxt "STRINGS.CODEX.B2_TEMPORALBOWUPDATE.TITLE"
 msgid "Spec Changes"
 msgstr "Изменения технических характеристик"
+
+#. STRINGS.CODEX.B3_MOVEDRABBITS.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.B3_MOVEDRABBITS.BODY.CONTAINER1"
+msgid "<smallcaps>[Voice Recognition Initialized]\n[Subjects Identified: A001, B111]</smallcaps>\n\n[LOG BEGINS]\n\nBroussard: Director, do you know where my rabbits have been moved to? I asked around the bioengineering division but I was referred back to you.\n\nDirector: Hm? Oh, yes, they've been removed.\n\nBroussard: \"Removed\"?\n\nDirector: Discarded. I'm sorry, did you still need them? The reports showed your experiments with them were completed.\n\nBroussard: No, I-I... I'd collected all the data I needed, I just --\n\nDirector: -- Doctor. You weren't making pets out of test subjects, were you?\n\nBroussard: Don't be ridiculous, I --\n\nDirector: -- Good.They were horrible to look at anyway. All those red eyes looking at me.\n\nBroussard: In the future, please do not mess with my things. It... disturbs me.\n\nDirector: I will notify you beforehand next time, doctor.\n\n[LOG ENDS]"
+msgstr "<smallcaps>[Активировано распознавание голоса]\n[Опознаны субъекты: A001, B111]</smallcaps>\n\n[НАЧАЛО ЗАПИСИ]\n\nБрусард: Директор, вы не знаете, куда подевались мои кролики? Я поспрашивала в департаменте биоинженерии, но меня все отправили к вам.\n\nДиректор: Хм? А, да, их забрали.\n\nБрусард: \"Забрали\"?\n\nДиректор: Уничтожили. Прошу прощения, а они все еще были нужны? Судя по отчетам, эксперименты с ними были закончены.\n\nМакклинток: Нет, я... Я собрала всю необходимую информацию. Просто...\n\nДиректор: Доктор. Вы же не собирались оставить их в качестве питомцев?\n\nБрусард: Что за глупости, я...\n\nДоктор: Хорошо. На них все равно страшно смотреть было. Эти их красные глаза...\n\nБрусард: В будущем, пожалуйста, не трогайте мои вещи. Я... переживаю.\n\nДиректор: В следующий раз я предупрежу вас заранее, доктор.\n\n[КОНЕЦ ЗАПИСИ]"
+
+#. STRINGS.CODEX.B3_MOVEDRABBITS.SUBTITLE
+msgctxt "STRINGS.CODEX.B3_MOVEDRABBITS.SUBTITLE"
+msgid "ENCRYPTION LEVEL: ONE"
+msgstr "УРОВЕНЬ ШИФРОВАНИЯ: ПЕРВЫЙ"
+
+#. STRINGS.CODEX.B3_MOVEDRABBITS.TITLE
+msgctxt "STRINGS.CODEX.B3_MOVEDRABBITS.TITLE"
+msgid "Moved Rabbits"
+msgstr "Перемещенные кролики"
+
+#. STRINGS.CODEX.B3_MOVEDRACCOONS.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.B3_MOVEDRACCOONS.BODY.CONTAINER1"
+msgid "<smallcaps>[Voice Recognition Initialized]\n[Subjects Identified: A001, B111]</smallcaps>\n\n[LOG BEGINS]\n\nBroussard: Director, do you know where my raccoons have been moved to? I asked around the bioengineering division but I was referred back to you.\n\nDirector: Hm? Oh, yes, they've been removed.\n\nBroussard: \"Removed\"?\n\nDirector: Discarded. I'm sorry, did you still need them? The reports showed your experiments with them were completed.\n\nBroussard: No, I-I... I'd collected all the data I needed, I just --\n\nDirector: -- Doctor. You weren't making pets out of test subjects, were you?\n\nBroussard: Don't be ridiculous, I --\n\nDirector: -- Good.They were horrible to look at anyway. All that mangy fur.\n\nBroussard: In the future, please do not mess with my things. It... disturbs me.\n\nDirector: I will notify you beforehand next time, doctor.\n\n[LOG ENDS]"
+msgstr "<smallcaps>[Активировано распознавание голоса]\n[Опознаны субъекты: A001, B111]</smallcaps>\n\n[НАЧАЛО ЗАПИСИ]\n\nБрусард: Директор, вы не знаете, куда подевались мои еноты? Я поспрашивала в департаменте биоинженерии, но меня все отправили к вам.\n\nДиректор: Хм? А, да, их забрали.\n\nБрусард: \"Забрали\"?\n\nДиректор: Уничтожили. Прошу прощения, а они все еще были нужны? Судя по отчетам, эксперименты с ними были закончены.\n\nМакклинток: Нет, я... Я собрала всю необходимую информацию. Просто...\n\nДиректор: Доктор. Вы же не собирались оставить их в качестве питомцев?\n\nБрусард: Что за глупости, я...\n\nДоктор: Хорошо. На них все равно страшно смотреть было. Мех весь в колтунах.\n\nБрусард: В будущем, пожалуйста, не трогайте мои вещи. Я... переживаю.\n\nДиректор: В следующий раз я предупрежу вас заранее, доктор.\n\n[КОНЕЦ ЗАПИСИ]"
+
+#. STRINGS.CODEX.B3_MOVEDRACCOONS.SUBTITLE
+msgctxt "STRINGS.CODEX.B3_MOVEDRACCOONS.SUBTITLE"
+msgid "ENCRYPTION LEVEL: ONE"
+msgstr "УРОВЕНЬ ШИФРОВАНИЯ: ПЕРВЫЙ"
+
+#. STRINGS.CODEX.B3_MOVEDRACCOONS.TITLE
+msgctxt "STRINGS.CODEX.B3_MOVEDRACCOONS.TITLE"
+msgid "Moved Raccoons"
+msgstr "Перемещенные еноты"
 
 #. STRINGS.CODEX.B3_MOVEDRATS.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.B3_MOVEDRATS.BODY.CONTAINER1"
@@ -12710,8 +13000,8 @@ msgstr "Понтоцвет"
 
 #. STRINGS.CODEX.BOGBUCKET.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.BOGBUCKET.BODY.CONTAINER1"
-msgid ""
-msgstr ""
+msgid "Bog Buckets get their name from their bucket-like flowers and their propensity to grow in swampy, bog-like environments.\n\nThe flower secretes a thick, sweet liquid which collects at the bottom of the bucket and can be gathered for consumption.\n\nThough not inherently dangerous, the interior of the Bog Bucket flower is so warm and inviting that it has tempted individuals to climb inside for a nap, only to awake trapped in its sticky sap."
+msgstr "Болотники получили свое название по месту своего произрастания.\n\nВедрообразный цветок выделяет густую сладкую жидкость, которую можно собрать со дна \"ведра\".\n\nХотя по своей сути это растение не опасно, внутренняя часть цветка болотника настолько теплая и уютная, что люди залезают внутрь, чтобы вздремнуть, а потом просыпаются в ловушке из его липкого сока."
 
 #. STRINGS.CODEX.BOGBUCKET.SUBTITLE
 msgctxt "STRINGS.CODEX.BOGBUCKET.SUBTITLE"
@@ -13110,8 +13400,8 @@ msgstr "Блестящий дреккон"
 
 #. STRINGS.CODEX.GRUBFRUITPLANT.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.GRUBFRUITPLANT.BODY.CONTAINER1"
-msgid ""
-msgstr ""
+msgid "The Grubfruit Plant exhibits a coevolutionary relationship with the Divergent species.\n\nThough capable of producing fruit without the help of the Divergent, the Spindly Grubfruit is a substandard version of the Grubfruit in both taste and caloric value.\n\nThe mechanism for how the Divergent inspires Grubfruit Plant growth is not entirely known but is thought to be somehow tied to the infrasonic 'songs' these insects lovingly purr to their plants."
+msgstr "Личинкокос находится в коэволюционных отношениях с дивергентными видами.\n\nНесмотря на то, что хилый личинкокос способен производить фрукты без помощи дивергента, он считается некачественной версией личинкокоса из-за вкуса и калорийности плодов.\n\nНе совсем ясно, как дивергент стимулирует рост личинкокоса, но предполагается, что это каким-то образом связано с инфразвуковыми \"песнями\"» насекомых, которые с нежностью мурлыкают своим растениям."
 
 #. STRINGS.CODEX.GRUBFRUITPLANT.SUBTITLE
 msgctxt "STRINGS.CODEX.GRUBFRUITPLANT.SUBTITLE"
@@ -13400,8 +13690,8 @@ msgstr "Водокачкус"
 
 #. STRINGS.CODEX.JUMPINGJOYA.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.JUMPINGJOYA.BODY.CONTAINER1"
-msgid ""
-msgstr ""
+msgid "The Jumping Joya is a decorative plant that brings a feeling of calmness and wellbeing to individuals in its vacinity.\n\nTheir rounded appendages and eccentrically shaped polyps are a favorite of interior designers looking to offset the rigid straight walls of an institutional setting.\n\nThe Jumping Joya's capacity to thrive in many environments and the ease in which they propagate make them the go-to house plant for the lazy gardener."
+msgstr "Прыгучая рада – это декоративное растение, которое приносит чувство спокойствия и благополучия людям, находящимся рядом с ним.\n\nИх округлые придатки и полипы эксцентрической формы очень ценят дизайнеры интерьеров, которые стремятся разнообразить жесткие прямые формы учреждений.\n\nСпособность прыгучей рады процветать во многих средах и легкость, с которой она размножается, делают ее идеальным домашним растением для ленивого садовника."
 
 #. STRINGS.CODEX.JUMPINGJOYA.SUBTITLE
 msgctxt "STRINGS.CODEX.JUMPINGJOYA.SUBTITLE"
@@ -13455,13 +13745,8 @@ msgstr "Нейронный калибратор"
 
 #. STRINGS.CODEX.MEALWOOD.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.MEALWOOD.BODY.CONTAINER1"
-msgid ""
-msgstr ""
-
-#. STRINGS.CODEX.MEALWOOD.BODY.CONTAINER2
-msgctxt "STRINGS.CODEX.MEALWOOD.BODY.CONTAINER2"
-msgid ""
-msgstr ""
+msgid "Mealwood is an bramble-like plant that has a parasitic symbiotic relationship with the nutrient-rich Meal Lice that inhabit it.\n\nMealwood experience a rapid growth rate in its first stages, but once the Meal Lice become active they consume all the new fruiting spurs on the plant before they can fully mature.\n\nTheoretically the flowers of this plant are a beautiful color of fuchsia, however no Mealwood has ever reached the point of flowering without being overrun by the parasitic Meal Lice."
+msgstr "Пищевое дерево – это похожее на ежевику растение, которое выстраивает паразитическо-симбиотические отношения с питательными пищевиками, которые его населяют.\n\nПищевое дерево быстро растет на первых этапах, но как только пищевики становятся активными, они съедают все новые плоды растения до того, как те полностью созреют.\n\nТеоретически цветы этого растения имеют красивый цвет фуксии, однако ни одно пищевое дерево ни разу не достигло момента цветения до того, как его захватили пищевики."
 
 #. STRINGS.CODEX.MEALWOOD.SUBTITLE
 msgctxt "STRINGS.CODEX.MEALWOOD.SUBTITLE"
@@ -13490,8 +13775,8 @@ msgstr "Мягкая мальва"
 
 #. STRINGS.CODEX.MIRTHLEAF.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.MIRTHLEAF.BODY.CONTAINER1"
-msgid ""
-msgstr ""
+msgid "The Mirth Leaf is a broad-leafed house plant used for decorating living spaces.\n\nThe joyous bobbing of the wide green leaves provides hours of amusement for those desperate for entertainment.\n\nAlthough the Mirth Leaf can inspire laughter and joy, it is not cut out for a career in stand-up comedy."
+msgstr "Веселист – это широколистное домашнее растение, которое используют для украшения жилых помещений.\n\nЗабавное покачивание широких зеленых листьев часами развлекает тех, кто отчаянно хочет развеять скуку.\n\nХотя веселист может вызывать смех и радость, ему не светит карьера комедианта."
 
 #. STRINGS.CODEX.MIRTHLEAF.SUBTITLE
 msgctxt "STRINGS.CODEX.MIRTHLEAF.SUBTITLE"
@@ -13798,6 +14083,16 @@ msgctxt "STRINGS.CODEX.MYLOG.BODY.ONEDUPELEFT.TITLE"
 msgid "Only One Remains"
 msgstr "Остался всего один"
 
+#. STRINGS.CODEX.MYLOG.BODY.OTHERDIMENSIONS.BODY
+msgctxt "STRINGS.CODEX.MYLOG.BODY.OTHERDIMENSIONS.BODY"
+msgid "A closer analysis of some documents my Duplicants encountered while searching artifacts has uncovered some curious similarities between multiple entries. These similarities are too strong to be coincidences, yet just divergent enough to raise questions.\n\nThe most logical conclusion is that these artifacts are coming from different dimensions. That is, separate universes that exists concurrently with one another but exhibit tiny disparities in their histories.\n\nThe most likely explaination is the material and matter from multiple dimensions is leaking into our current timeline through the Temporal Tear. Further analysis is required."
+msgstr "Более тщательный анализ некоторых документов, которые мои дубликанты нашли при поиске артефактов, выявил некоторые любопытные сходства между несколькими записями. Эти сходства слишком сильны, чтобы быть совпадениями, но достаточно расходятся, чтобы вызывать вопросы.\n\nНаиболее логичным выводом является то, что эти артефакты происходят из разных измерений. То есть отдельных вселенных, которые существуют одновременно друг с другом, но демонстрируют крошечные различия в своей истории.\n\nНаиболее вероятное объяснение – это материал и материя из нескольких измерений, которые просачиваются в нашу текущую временную линию через временной разрыв. Требуется дальнейший анализ."
+
+#. STRINGS.CODEX.MYLOG.BODY.OTHERDIMENSIONS.TITLE
+msgctxt "STRINGS.CODEX.MYLOG.BODY.OTHERDIMENSIONS.TITLE"
+msgid "Leaking Dimensions"
+msgstr "Утечка измерений"
+
 #. STRINGS.CODEX.MYLOG.BODY.OUTSIDESTARTINGBIOME.BODY
 msgctxt "STRINGS.CODEX.MYLOG.BODY.OUTSIDESTARTINGBIOME.BODY"
 msgid "As the Duplicants scout further out I've begun to piece together a better view of our surroundings.\n\nThanks to their efforts, I've determined that this planet has enough resources to settle a longterm colony.\n\nBut... something is off. I've also detected deposits of Abyssalite and Neutronium in this planet's composition, manmade elements that shouldn't occur in nature.\n\nIs this really the target location?\n\n"
@@ -13915,8 +14210,8 @@ msgstr "Блестячок бездны"
 
 #. STRINGS.CODEX.NOSHBEAN.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.NOSHBEAN.BODY.CONTAINER1"
-msgid ""
-msgstr ""
+msgid "The Nosh Bean Plant produces a nutritious bean that can function as a delicious meat substitute provided it is properly processed.\n\nThough the bean is a food source, it also functions as the seed for the Nosh Bean plant.\n\nWhile using the Nosh Bean for nourishment would seem like the more practical application, doing so would deprive individuals of the immense gratification experienced by planting this bean and watching it flourish into maturity."
+msgstr "Закусочный боб дает питательные бобы, которые успешно заменяют мясо при условии правильной обработки.\n\nХотя бобы служат источником пищи, они также являются семенами закусочного боба.\n\nНесмотря на то, что использование растения как источника пищи могло бы показаться более практичным, это лишило бы людей безмерного удовлетворения от посадки боба и наблюдения за его ростом."
 
 #. STRINGS.CODEX.NOSHBEAN.SUBTITLE
 msgctxt "STRINGS.CODEX.NOSHBEAN.SUBTITLE"
@@ -14285,8 +14580,8 @@ msgstr "Выбранное задание по исследованию буде
 
 #. STRINGS.CODEX.RESEARCH.PARAGRAPH_3
 msgctxt "STRINGS.CODEX.RESEARCH.PARAGRAPH_3"
-msgid "Advanced research tasks require special research stations to generate the proper kind of research points. These research stations often consume more advanced resources.\n\nUsing higher level research stations also requires Duplicants to have learned higher level research <link=\"ROLES\">skills</link>.\n\nNovice Research is performed at the <link=\"RESEARCHCENTER\">Research Station</link>\nAdvanced Research is performed at the <link=\"ADVANCEDRESEARCHCENTER\">Super Computer</link>\nInterstellar Research is performed at the <link=\"COSMICRESEARCHCENTER\">Virtual Planetarium</link>\nAtomic Research is performed at the <link=\"NUCLEARLABORATORY\">Atomic Collider</link>\n\n"
-msgstr "Для заданий, связанных с углубленными исследованиями, требуются специальные исследовательские станции, которые производят очки исследования нужного вида. Эти исследовательские станции зачастую расходуют более ценные ресурсы.\n\nДля их использования дубликанты должны овладеть <link=\"ROLES\">навыками</link> исследования более высокого уровня.\n\nБазовые исследования проводятся на <link=\"RESEARCHCENTER\">исследовательских станциях</link>.\nУглубленные исследования — на <link=\"ADVANCEDRESEARCHCENTER\">суперкомпьютере</link>.\nКосмические — в <link=\"COSMICRESEARCHCENTER\">виртуальном планетарии</link>.\nАтомные — в <link=\"NUCLEARLABORATORY\">атомном коллайдере</link>.\n\n"
+msgid "Advanced research tasks require special research stations to generate the proper kind of research points. These research stations often consume more advanced resources.\n\nUsing higher level research stations also requires Duplicants to have learned higher level research <link=\"ROLES\">skills</link>.\n\nNovice Research is performed at the <link=\"RESEARCHCENTER\">Research Station</link>\nAdvanced Research is performed at the <link=\"ADVANCEDRESEARCHCENTER\">Super Computer</link>\nInterstellar Research is performed at the <link=\"COSMICRESEARCHCENTER\">Virtual Planetarium</link>\nMaterials Science Research is performed at the <link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>\n\n"
+msgstr "Для заданий, связанных с углубленными исследованиями, требуются специальные исследовательские станции, которые производят очки исследования нужного вида. Эти исследовательские станции зачастую расходуют более ценные ресурсы.\n\nДля их использования дубликанты должны овладеть <link=\"ROLES\">навыками</link> исследования более высокого уровня.\n\nБазовые исследования проводятся на <link=\"RESEARCHCENTER\">исследовательских станциях</link>.\nУглубленные исследования — на <link=\"ADVANCEDRESEARCHCENTER\">суперкомпьютере</link>.\nКосмические — в <link=\"COSMICRESEARCHCENTER\">виртуальном планетарии</link>.\nИзучение материалов — в <link=\"NUCLEARLABORATORY\">терминале для изучения материалов</link>.\n\n"
 
 #. STRINGS.CODEX.RESEARCH.TITLE
 msgctxt "STRINGS.CODEX.RESEARCH.TITLE"
@@ -14345,8 +14640,8 @@ msgstr "Шалфейный копатель"
 
 #. STRINGS.CODEX.SATURNCRITTERTRAP.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.SATURNCRITTERTRAP.BODY.CONTAINER1"
-msgid ""
-msgstr ""
+msgid "The Saturn Critter Trap plant is a carnivorous plant that lays in wait for unsuspecting critters to happen by, then traps them in its mouth for consumption.\n\nThe Saturn Trap Plant's predatory mechanism is reflective of the harsh radioactive habitat it resides in.\n\nOnce trapped in the deadly maw of the plant, creatures are gently asphyxiated then digested through powerful acidic enzymes which coat the inner sides of the Saturn Trap Plant's leaves."
+msgstr "Сатурновая существоловка – хищное растение, которое подстерегает ничего не подозревающих существ, а затем уловит их и съедает.\n\nХищный характер Сатурновой существоловки отражает суровость радиоактивной среды обитания, в которой оно растет.\n\nПопав в смертельную пасть растения, существа задыхаются, а затем их переваривают мощные кислотные ферменты, которые покрывают внутренние стороны листьев Сатурновой существоловки."
 
 #. STRINGS.CODEX.SATURNCRITTERTRAP.SUBTITLE
 msgctxt "STRINGS.CODEX.SATURNCRITTERTRAP.SUBTITLE"
@@ -17625,8 +17920,8 @@ msgstr "<link=\"SALTPLANT\">Лоза-солевик</link>"
 
 #. STRINGS.CREATURES.SPECIES.SAPTREE.DESC
 msgctxt "STRINGS.CREATURES.SPECIES.SAPTREE.DESC"
-msgid "An <link=\"ISORESIN\">Isoresin</link>-producing, cybernetic tree that shows signs of sentience.\n\nIt is rooted firmly in place, and appears to have been here for some time."
-msgstr "Кибернетическое дерево, которое выделяет <link=\"ISORESIN\">изосмолу</link>.\n\nЕго корни уходят глубоко в почву — похоже, дерево растет здесь уже не первый год."
+msgid "An <link=\"RESIN\">Resin</link>-producing, cybernetic tree that shows signs of sentience.\n\nIt is rooted firmly in place, and appears to have been here for some time."
+msgstr "Кибернетическое дерево, которое выделяет <link=\"RESIN\">смолу</link>.\n\nЕго корни уходят глубоко в почву — похоже, дерево растет здесь уже не первый год."
 
 #. STRINGS.CREATURES.SPECIES.SAPTREE.NAME
 msgctxt "STRINGS.CREATURES.SPECIES.SAPTREE.NAME"
@@ -20970,8 +21265,8 @@ msgstr "Собирается разрушить"
 
 #. STRINGS.DUPLICANTS.CHORES.DECONSTRUCT.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.CHORES.DECONSTRUCT.TOOLTIP"
-msgid "This Duplicant is demolishing a building"
-msgstr "Этот дубликант сносит строение"
+msgid "This Duplicant is deconstructing a building"
+msgstr "Этот дубликант разбирает строение"
 
 #. STRINGS.DUPLICANTS.CHORES.DELIVERFOOD.NAME
 msgctxt "STRINGS.DUPLICANTS.CHORES.DELIVERFOOD.NAME"
@@ -20987,6 +21282,21 @@ msgstr "Несет еду"
 msgctxt "STRINGS.DUPLICANTS.CHORES.DELIVERFOOD.TOOLTIP"
 msgid "Under thirty minutes or it's free"
 msgstr "Не уложились в полчаса — не платите"
+
+#. STRINGS.DUPLICANTS.CHORES.DEMOLISH.NAME
+msgctxt "STRINGS.DUPLICANTS.CHORES.DEMOLISH.NAME"
+msgid "Demolish"
+msgstr "Снести"
+
+#. STRINGS.DUPLICANTS.CHORES.DEMOLISH.STATUS
+msgctxt "STRINGS.DUPLICANTS.CHORES.DEMOLISH.STATUS"
+msgid "Demolishing object"
+msgstr "Снос объекта"
+
+#. STRINGS.DUPLICANTS.CHORES.DEMOLISH.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.CHORES.DEMOLISH.TOOLTIP"
+msgid "Demolishing an object removes it permanently"
+msgstr "При сносе объект удаляется навсегда"
 
 #. STRINGS.DUPLICANTS.CHORES.DEPRESSURIZE.NAME
 msgctxt "STRINGS.DUPLICANTS.CHORES.DEPRESSURIZE.NAME"
@@ -26650,13 +26960,13 @@ msgstr "<link=\"NOROLE\">Безработный</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.DESCRIPTION"
-msgid "Enables Duplicants to study sub-atomic particles using the <link=\"NUCLEARLABORATORY\">Atomic Collider</link>"
-msgstr "Позволяет дубликантам изучать субатомные частицы с помощью <link=\"NUCLEARLABORATORY\">атомного коллайдера</link>"
+msgid "Enables Duplicants to study matter using the <link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>"
+msgstr "Позволяет дубликантам исследовать материалы с помощью <link=\"NUCLEARLABORATORY\">терминала для изучения материалов</link>."
 
 #. STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.NAME"
-msgid "<link=\"NUCLEARRESEARCHER\">Atomic Research</link>"
-msgstr "<link=\"NUCLEARRESEARCHER\">Атомное исследование</link>"
+msgid "<link=\"NUCLEARRESEARCHER\">Materials Science Research</link>"
+msgstr "<link=\"NUCLEARRESEARCHER\">Исследование материалов</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.OIL_TECHNICIAN.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.OIL_TECHNICIAN.DESCRIPTION"
@@ -26720,13 +27030,13 @@ msgstr "<link=\"PILOT\">Пилотирование ракеты</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.DESCRIPTION"
-msgid "Further increases a Duplicant's construction speeds"
-msgstr "Значительно увеличивает скорость строительства дубликанта."
+msgid "Enables a Duplicant to deconstruct Gravitas buildings"
+msgstr "Позволяет дубликанту разрушать здания Gravitas"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.NAME"
-msgid "<link=\"SENIORBUILDER\">Improved Construction III</link>"
-msgstr "<link=\"SENIORBUILDER\">Улучшенное строительство III</link>"
+msgid "<link=\"SENIORBUILDER\">Demolition</link>"
+msgstr "<link=\"SENIORBUILDER\">Снос</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_FARMER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_FARMER.DESCRIPTION"
@@ -27068,6 +27378,16 @@ msgctxt "STRINGS.DUPLICANTS.STATS.TRUNKHEALTH.TOOLTIP"
 msgid "Tree branches will die if they do not have a healthy trunk to grow from"
 msgstr "Ветки дерева умрут, если будут расти не на здоровом стволе"
 
+#. STRINGS.DUPLICANTS.STATUSITEMS.ANALYZINGARTIFACT.NAME
+msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.ANALYZINGARTIFACT.NAME"
+msgid "Analyzing Artifact"
+msgstr "Анализ артефакта"
+
+#. STRINGS.DUPLICANTS.STATUSITEMS.ANALYZINGARTIFACT.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.ANALYZINGARTIFACT.TOOLTIP"
+msgid "This duplicant is studying an artifact"
+msgstr "Этот дубликант изучает артефакт"
+
 #. STRINGS.DUPLICANTS.STATUSITEMS.ANALYZINGGENES.NAME
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.ANALYZINGGENES.NAME"
 msgid "Analyzing Plant Genes"
@@ -27355,6 +27675,16 @@ msgstr "{Target} сносится"
 
 #. STRINGS.DUPLICANTS.STATUSITEMS.DECONSTRUCTING.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.DECONSTRUCTING.TOOLTIP"
+msgid "This Duplicant is deconstructing the <b>{Target}</b>"
+msgstr "Этот дубликант разбирает <b>{Target}</b>"
+
+#. STRINGS.DUPLICANTS.STATUSITEMS.DEMOLISHING.NAME
+msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.DEMOLISHING.NAME"
+msgid "Demolishing {Target}"
+msgstr "Снос: {Target}"
+
+#. STRINGS.DUPLICANTS.STATUSITEMS.DEMOLISHING.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.DEMOLISHING.TOOLTIP"
 msgid "This Duplicant is demolishing the <b>{Target}</b>"
 msgstr "<b>{Target}</b> сносится этим дубликантом"
 
@@ -29430,13 +29760,13 @@ msgstr "Этот дубликант получает <style=\"KKeyword\">нав�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.DESC"
-msgid "Further increases a Duplicant's construction speeds"
-msgstr "Значительно увеличивает скорость строительства дубликанта."
+msgid "Enables a Duplicant to deconstruct Gravitas buildings"
+msgstr "Позволяет дубликанту разрушать здания Gravitas"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.NAME"
-msgid "Skilled: <link=\"SENIORBUILDER\">Improved Construction III</link>"
-msgstr "Навык: <link=\"SENIORBUILDER\">улучшенное строительство III</link>"
+msgid "Skilled: <link=\"SENIORBUILDER\">Demolition</link>"
+msgstr "Навык: <link=\"SENIORBUILDER\">Снос</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.SHORT_DESC"
@@ -29850,13 +30180,13 @@ msgstr "Этот дубликант получает <style=\"KKeyword\">нав�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.DESC"
-msgid "Enables Duplicants to study sub-atomic particles using the <link=\"NUCLEARLABORATORY\">Atomic Collider</link>"
-msgstr "Позволяет дубликантам изучать субатомные частицы с помощью <link=\"NUCLEARLABORATORY\">атомного коллайдера</link>"
+msgid "Enables Duplicants to study matter using the <link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>"
+msgstr "Позволяет дубликантам исследовать материалы с помощью <link=\"NUCLEARLABORATORY\">терминала для изучения материалов</link>."
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.NAME"
-msgid "Skilled: <link=\"NUCLEARRESEARCHER\">Atomic Research</link>"
-msgstr "Навык: <link=\"NUCLEARRESEARCHER\">атомное исследование</link>"
+msgid "Skilled: <link=\"NUCLEARRESEARCHER\">Materials Science Research</link>"
+msgstr "Навык: <link=\"NUCLEARRESEARCHER\">Исследование материалов</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.SHORT_DESC"
@@ -37013,6 +37343,11 @@ msgctxt "STRINGS.MISC.TAGS.BURNS"
 msgid "Flammable"
 msgstr "Воспламеняющееся"
 
+#. STRINGS.MISC.TAGS.CHARMEDARTIFACT
+msgctxt "STRINGS.MISC.TAGS.CHARMEDARTIFACT"
+msgid "Artifact of Interest"
+msgstr "Интересный артефакт"
+
 #. STRINGS.MISC.TAGS.CLINIC
 msgctxt "STRINGS.MISC.TAGS.CLINIC"
 msgid "Clinic"
@@ -37430,8 +37765,8 @@ msgstr "Непригодный для дыхания газ"
 
 #. STRINGS.MISC.TAGS.UNIDENTIFIEDSEED
 msgctxt "STRINGS.MISC.TAGS.UNIDENTIFIEDSEED"
-msgid "Strange Seed"
-msgstr "Странное семя"
+msgid "Seed (Unidentified Mutation)"
+msgstr "Семя (неопознанная мутация)"
 
 #. STRINGS.MISC.TAGS.UNSTABLE
 msgctxt "STRINGS.MISC.TAGS.UNSTABLE"
@@ -40130,13 +40465,13 @@ msgstr "<b>Конвейерная схема</b>"
 
 #. STRINGS.RESEARCH.OTHER_TECH_ITEMS.DELTA_RESEARCH_POINT.DESC
 msgctxt "STRINGS.RESEARCH.OTHER_TECH_ITEMS.DELTA_RESEARCH_POINT.DESC"
-msgid "Allows <style=\"KKeyword\">Atomic Research</style> points to be accumulated, unlocking higher technology tiers."
-msgstr "Позволяет накапливать очки <style=\"KKeyword\">атомных исследований</style> и открывать изучение продвинутых технологий."
+msgid "Allows <style=\"KKeyword\">Materials Science Research</style> points to be accumulated, unlocking higher technology tiers."
+msgstr "Позволяет накапливать очки <style=\"KKeyword\">исследования материалов</style> и открывать изучение продвинутых технологий."
 
 #. STRINGS.RESEARCH.OTHER_TECH_ITEMS.DELTA_RESEARCH_POINT.NAME
 msgctxt "STRINGS.RESEARCH.OTHER_TECH_ITEMS.DELTA_RESEARCH_POINT.NAME"
-msgid "<style=\"KKeyword\">Atomic Research</style> Capability"
-msgstr "Предел <style=\"KKeyword\">атомного исследования</style>"
+msgid "<style=\"KKeyword\">Materials Science Research</style> Capability"
+msgstr "Способность к <style=\"KKeyword\">исследованию материалов</style>"
 
 #. STRINGS.RESEARCH.OTHER_TECH_ITEMS.GAMMA_RESEARCH_POINT.DESC
 msgctxt "STRINGS.RESEARCH.OTHER_TECH_ITEMS.GAMMA_RESEARCH_POINT.DESC"
@@ -40238,6 +40573,16 @@ msgctxt "STRINGS.RESEARCH.TECHS.ADVANCEDRESEARCH.NAME"
 msgid "<link=\"ADVANCEDRESEARCH\">Advanced Research</link>"
 msgstr "<link=\"ADVANCEDRESEARCH\">Углубленное исследование</link>"
 
+#. STRINGS.RESEARCH.TECHS.ADVANCEDRESOURCEEXTRACTION.DESC
+msgctxt "STRINGS.RESEARCH.TECHS.ADVANCEDRESOURCEEXTRACTION.DESC"
+msgid "Bring back souvieners from the stars."
+msgstr "Приносит сувениры из космоса."
+
+#. STRINGS.RESEARCH.TECHS.ADVANCEDRESOURCEEXTRACTION.NAME
+msgctxt "STRINGS.RESEARCH.TECHS.ADVANCEDRESOURCEEXTRACTION.NAME"
+msgid "<link=\"ADVANCEDRESOURCEEXTRACTION\">Advanced Resource Extraction</link>"
+msgstr "<link=\"ADVANCEDRESOURCEEXTRACTION\">Улучшенное извлечение ресурсов</link>"
+
 #. STRINGS.RESEARCH.TECHS.ADVANCEDSANITATION.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.ADVANCEDSANITATION.DESC"
 msgid "Clean up dirty Duplicants."
@@ -40327,6 +40672,26 @@ msgstr "Все необходимое для запуска первой кос�
 msgctxt "STRINGS.RESEARCH.TECHS.BASICROCKETRY.NAME"
 msgid "<link=\"BASICROCKETRY\">Introductory Rocketry</link>"
 msgstr "<link=\"BASICROCKETRY\">Ракетное дело: введение</link>"
+
+#. STRINGS.RESEARCH.TECHS.BETTERHYDROCARBONPROPULSION.DESC
+msgctxt "STRINGS.RESEARCH.TECHS.BETTERHYDROCARBONPROPULSION.DESC"
+msgid "Mid-range rocket engines with lots of smoke."
+msgstr "Ракетные двигатели средней дальности. Производят большое количество дыма."
+
+#. STRINGS.RESEARCH.TECHS.BETTERHYDROCARBONPROPULSION.NAME
+msgctxt "STRINGS.RESEARCH.TECHS.BETTERHYDROCARBONPROPULSION.NAME"
+msgid "<link=\"BETTERHYDROCARBONPROPULSION\">Improved Hydrocarbon Propulsion</link>"
+msgstr "<link=\"BETTERHYDROCARBONPROPULSION\">Улучшенная работа на углеводородах</link>"
+
+#. STRINGS.RESEARCH.TECHS.BIOENGINEERING.DESC
+msgctxt "STRINGS.RESEARCH.TECHS.BIOENGINEERING.DESC"
+msgid "Description"
+msgstr "Описание"
+
+#. STRINGS.RESEARCH.TECHS.BIOENGINEERING.NAME
+msgctxt "STRINGS.RESEARCH.TECHS.BIOENGINEERING.NAME"
+msgid "<link=\"BIOENGINEERING\">Bioengineering</link>"
+msgstr "<link=\"BIOENGINEERING\">Биоинженерия</link>"
 
 #. STRINGS.RESEARCH.TECHS.CARGOI.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.CARGOI.DESC"
@@ -40588,6 +40953,16 @@ msgctxt "STRINGS.RESEARCH.TECHS.GLASSFURNISHINGS.NAME"
 msgid "<link=\"GLASSFURNISHINGS\">Glass Blowing</link>"
 msgstr "<link=\"GLASSFURNISHINGS\">Выдув стекла</link>"
 
+#. STRINGS.RESEARCH.TECHS.HIGHPRESSUREFORGING.DESC
+msgctxt "STRINGS.RESEARCH.TECHS.HIGHPRESSUREFORGING.DESC"
+msgid "High pressure environment for diamond forging"
+msgstr "Среда высокого давления для производства алмазов"
+
+#. STRINGS.RESEARCH.TECHS.HIGHPRESSUREFORGING.NAME
+msgctxt "STRINGS.RESEARCH.TECHS.HIGHPRESSUREFORGING.NAME"
+msgid "<link=\"HIGHPRESSUREFORGING\">Pressurized Forging</link>"
+msgstr "<link=\"HIGHPRESSUREFORGING\">Ковка под давлением</link>"
+
 #. STRINGS.RESEARCH.TECHS.HIGHTEMPFORGING.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.HIGHTEMPFORGING.DESC"
 msgid "Craft entirely new materials by harnessing the most extreme temperatures."
@@ -40597,6 +40972,16 @@ msgstr "Создавайте совершенно новые материалы,
 msgctxt "STRINGS.RESEARCH.TECHS.HIGHTEMPFORGING.NAME"
 msgid "<link=\"HIGHTEMPFORGING\">Superheated Forging</link>"
 msgstr "<link=\"HIGHTEMPFORGING\">Ковка при перегреве</link>"
+
+#. STRINGS.RESEARCH.TECHS.HIGHVELOCITYDESTRUCTION.DESC
+msgctxt "STRINGS.RESEARCH.TECHS.HIGHVELOCITYDESTRUCTION.DESC"
+msgid "Description"
+msgstr "Описание"
+
+#. STRINGS.RESEARCH.TECHS.HIGHVELOCITYDESTRUCTION.NAME
+msgctxt "STRINGS.RESEARCH.TECHS.HIGHVELOCITYDESTRUCTION.NAME"
+msgid "<link=\"HIGHVELOCITYDESTRUCTION\">High Velocity Destruction</link>"
+msgstr "<link=\"HIGHVELOCITYDESTRUCTION\">Высокоскоростное разрушение</link>"
 
 #. STRINGS.RESEARCH.TECHS.HIGHVELOCITYTRANSPORT.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.HIGHVELOCITYTRANSPORT.DESC"
@@ -40870,13 +41255,13 @@ msgstr "<link=\"NUCLEAR\">Переработка радиации</link>"
 
 #. STRINGS.RESEARCH.TECHS.NUCLEARRESEARCH.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.NUCLEARRESEARCH.DESC"
-msgid "Research and harness sub-atomic particles."
-msgstr "Исследуйте и используйте субатомные частицы."
+msgid "Harness sub-atomic particles to study the properties of matter."
+msgstr "Используйте субатомные частицы для изучения свойств материи."
 
 #. STRINGS.RESEARCH.TECHS.NUCLEARRESEARCH.NAME
 msgctxt "STRINGS.RESEARCH.TECHS.NUCLEARRESEARCH.NAME"
-msgid "<link=\"ATOMIC\">Atomic Research</link>"
-msgstr "<link=\"ATOMIC\">Атомное исследование</link>"
+msgid "<link=\"ATOMIC\">Materials Science Research</link>"
+msgstr "<link=\"ATOMIC\">Исследование материалов</link>"
 
 #. STRINGS.RESEARCH.TECHS.PARALLELAUTOMATION.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.PARALLELAUTOMATION.DESC"
@@ -41108,6 +41493,26 @@ msgctxt "STRINGS.RESEARCH.TECHS.SOLIDTRANSPORT.NAME"
 msgid "<link=\"SOLIDTRANSPORT\">Solid Transport</link>"
 msgstr "<link=\"SOLIDTRANSPORT\">Транспортировка твердых предметов</link>"
 
+#. STRINGS.RESEARCH.TECHS.SPACECOMBUSTION.DESC
+msgctxt "STRINGS.RESEARCH.TECHS.SPACECOMBUSTION.DESC"
+msgid "Description"
+msgstr "Описание"
+
+#. STRINGS.RESEARCH.TECHS.SPACECOMBUSTION.NAME
+msgctxt "STRINGS.RESEARCH.TECHS.SPACECOMBUSTION.NAME"
+msgid "<link=\"SPACECOMBUSTION\">Advanced Combustion</link>"
+msgstr "<link=\"SPACECOMBUSTION\">Улучшенное сгорание</link>"
+
+#. STRINGS.RESEARCH.TECHS.SPACEGAS.DESC
+msgctxt "STRINGS.RESEARCH.TECHS.SPACEGAS.DESC"
+msgid "Description"
+msgstr "Описание"
+
+#. STRINGS.RESEARCH.TECHS.SPACEGAS.NAME
+msgctxt "STRINGS.RESEARCH.TECHS.SPACEGAS.NAME"
+msgid "<link=\"SPACEGAS\">Advanced Gas Flow</link>"
+msgstr "<link=\"SPACEGAS\">Улучшение потока газа</link>"
+
 #. STRINGS.RESEARCH.TECHS.SPACEPOWER.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.SPACEPOWER.DESC"
 msgid "It's like power... in space!"
@@ -41255,13 +41660,13 @@ msgstr "Открывает доступ к усовершенствованны�
 
 #. STRINGS.RESEARCH.TYPES.DELTA.DESC
 msgctxt "STRINGS.RESEARCH.TYPES.DELTA.DESC"
-msgid "<link=\"RESEARCH\">Atomic Research</link> is required to unlock atomic technologies.\nIt can be conducted at a <link=\"NUCLEARLABORATORY\">Atomic Collider</link>."
-msgstr "Для разблокирования атомных технологий требуется <link=\"RESEARCH\">атомное исследование</link>.\nЕго можно провести в <link=\"NUCLEARLABORATORY\">атомном коллайдере</link>."
+msgid "<link=\"RESEARCH\">Materials Science Research</link> is required to unlock materials science technologies.\nIt can be conducted at a <link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>."
+msgstr "Для разблокирования технологий исследования материалов требуется <link=\"RESEARCH\">Исследование материалов</link>.\nЕго можно провести в <link=\"NUCLEARLABORATORY\">Терминал для изучения материалов</link>."
 
 #. STRINGS.RESEARCH.TYPES.DELTA.NAME
 msgctxt "STRINGS.RESEARCH.TYPES.DELTA.NAME"
-msgid "Atomic Research"
-msgstr "Атомное исследование"
+msgid "Materials Science Research"
+msgstr "Исследование материалов"
 
 #. STRINGS.RESEARCH.TYPES.DELTA.RECIPEDESC
 msgctxt "STRINGS.RESEARCH.TYPES.DELTA.RECIPEDESC"
@@ -42240,8 +42645,8 @@ msgstr "Если дубликанты станут проводить запла
 
 #. STRINGS.SUBWORLDS.AQUATIC.DESC
 msgctxt "STRINGS.SUBWORLDS.AQUATIC.DESC"
-msgid ""
-msgstr ""
+msgid "The Aquatic Biome is flush with a huge deposit of precious <link=\"WATER\">Water</link>."
+msgstr "Водный биом содержит огромные запасы драгоценной <link=\"WATER\">воды</link>."
 
 #. STRINGS.SUBWORLDS.AQUATIC.NAME
 msgctxt "STRINGS.SUBWORLDS.AQUATIC.NAME"
@@ -42250,8 +42655,8 @@ msgstr "Водный"
 
 #. STRINGS.SUBWORLDS.AQUATIC.UTILITY
 msgctxt "STRINGS.SUBWORLDS.AQUATIC.UTILITY"
-msgid ""
-msgstr ""
+msgid "Initially there is very little solid ground in this biome to establish a temporary base, but once a transportation network can be established to send the <link=\"WATER\">Water</link> of the Aquatic Biome to the rest of the colony, the other elements will be easier to reach.\n\n<link=\"SANDSTONE\">Sandstone</link>, <link=\"MAFICROCK\">Mafic Rock</link>, <link=\"SAND\">Sand</link> and <link=\"SEDIMENTARYROCK\">Sedimentary Rock</link> provide readily available construction materials for setting up elementary infrastructure. The presence of <link=\"OXYROCK\">Oxylite</link> provides invaluable <link=\"OXYGEN\">Oxygen</link> which, through careful planning, should be able to sustain any Duplicants working in the area for a limited amount of time."
+msgstr "Изначально в этом биоме очень мало твердой почвы для создания временной базы, но как только будет создана транспортная сеть для отправки <link=\"WATER\">воды</link> водного биома в остальную часть колонии, до других элементов будет легче добраться. \n\n<link=\"SANDSTONE\">Песчаник</link>, <link=\"MAFICROCK\">мафическая порода</link>, <link=\"SAND\">песок</link> и <link=\"SEDIMENTARYROCK\">осадочные породы</link> обеспечивают легкодоступные строительные материалы для создания элементарной инфраструктуры. Присутствие <link=\"OXYROCK\">кислолита</link> обеспечивает колонию <link=\"OXYGEN\">кислородом</link>, которго, при тщательном планировании, хватит для всех дубликантов, ведущих временные работы в этом районе."
 
 #. STRINGS.SUBWORLDS.BARREN.DESC
 msgctxt "STRINGS.SUBWORLDS.BARREN.DESC"
@@ -42360,8 +42765,8 @@ msgstr "<link=\"GOLDAMALGAM\">Золотая амальгама</link>, <link=\"
 
 #. STRINGS.SUBWORLDS.MOO.DESC
 msgctxt "STRINGS.SUBWORLDS.MOO.DESC"
-msgid ""
-msgstr ""
+msgid "The Moo Biome is the natural habitat of the charismatic <link=\"MOO\">Gassy Moo</link>, a great source of <link=\"METHANE\">Natural Gas</link>."
+msgstr "Биом му-му – естественная среда обитания харизматичной <link=\"MOO\">газовой му-му</link>, отличного источника <link=\"METHANE\">природного газа</link>."
 
 #. STRINGS.SUBWORLDS.MOO.NAME
 msgctxt "STRINGS.SUBWORLDS.MOO.NAME"
@@ -42370,13 +42775,13 @@ msgstr "Му-му"
 
 #. STRINGS.SUBWORLDS.MOO.UTILITY
 msgctxt "STRINGS.SUBWORLDS.MOO.UTILITY"
-msgid ""
-msgstr ""
+msgid "In addition to <link=\"METHANE\">Natural Gas</link>, the highly toxic <link=\"CHLORINEGAS\">Chlorine</link> is also present in gas form. In fact, Chlorine is present here in <link=\"ELEMENTSGAS\">gas</link>, <link=\"ELEMENTSLIQUID\">liquid</link>, and <link=\"ELEMENTSSOLID\">solid</link> states, largely due to the presence of <link=\"BLEACHSTONE\">Bleach Stone</link>.\n\n<link=\"IGNEOUSROCK\">Igneous Rock</link> and its denser form, <link=\"GRANITE\">Granite</link>, provide some useful construction materials, but the real star of this biome are the <link=\"MOO\">Gassy Moos</link> who consume <link=\"GASGRASS\">Gas Grass</link> and excrete <link=\"METHANE\">Natural Gas</link>. While Gassy Moos cannot be bred domestically, Gassy Mooteors regularly fall from space onto this biome, making it the best way to find a reliable source of these elusive creatures.\n\nWith no breathable <link=\"OXYGEN\">Oxygen</link> in this biome my Duplicants will need to be properly prepared before they venture too far into its depths."
+msgstr "Помимо <link=\"METHANE\">природного газа</link>, также присутствует высокотоксичный <link=\"CHLORINEGAS\">хлор</link> в газовой форме. Фактически, хлор присутствует здесь в <link=\"ELEMENTSGAS\">газообразном, <link=\"ELEMENTSLIQUID\">жидком, и <link=\"ELEMENTSSOLID\">твердом состояниях, в основном из-за присутствия <link=\"BLEACHSTONE\">хлорного камня.</link>.\n\n<link=\"IGNEOUSROCK\">Магматические породы и их более плотная форма, <link=\"GRANITE\">гранит</link>, обеспечат колонию некоторыми полезными строительными материалами, но настоящая звезда этого биома <link=\"MOO\">газовые му-му</link>, которые потребляют <link=\"GASGRASS\">газовую траву</link> и выделяют <link=\"METHANE\">природный газ</link>. Хотя газовых му-му нельзя разводить в неволе, из космоса сюда регулярно падают газовые му-теоры, благодаря чему этот биом остается надежным источником этих неуловимых существ.\n\nЗдесь нет пригодного для дыхания <link=\"OXYGEN\">кислорода</link>, так что дубликантов нужно будет должным образом подготовить, прежде чем они отважатся зайти слишком далеко в глубины биома."
 
 #. STRINGS.SUBWORLDS.NIOBIUM.DESC
 msgctxt "STRINGS.SUBWORLDS.NIOBIUM.DESC"
-msgid ""
-msgstr ""
+msgid "The Niobium Biome features only two resources yet, because <link=\"NIOBIUM\">Niobium</link> is an extremely rare and valuable element, it is worth making a special visit."
+msgstr "Биом ниобия пока содержит только два ресурса, но поскольку <link=\"NIOBIUM\">ниобий</link> – это чрезвычайно редкий и ценный элемент, его стоит посетить специально."
 
 #. STRINGS.SUBWORLDS.NIOBIUM.NAME
 msgctxt "STRINGS.SUBWORLDS.NIOBIUM.NAME"
@@ -42385,8 +42790,8 @@ msgstr "Ниобий"
 
 #. STRINGS.SUBWORLDS.NIOBIUM.UTILITY
 msgctxt "STRINGS.SUBWORLDS.NIOBIUM.UTILITY"
-msgid ""
-msgstr ""
+msgid "By itself <link=\"NIOBIUM\">Niobium</link> is not a particularly useful resource, but if processed through a <link=\"METALREFINERY\">Metal Refinery</link> it produces the extremely thermal conductive <link=\"TEMPCONDUCTORSOLID\">Thermium</link> which goes a long way in solving many extreme temperature issues in a colony.\n\nThe edges of this biome are filled with <link=\"OBSIDIAN\">Obsidian</link> so a Duplicant with the <link=\"SENIORMINER\">Super-Duperhard Digging</link> skill will be required before my colony can explore here."
+msgstr "Сам по себе <link=\"NIOBIUM\">ниобий</link> не особенно полезный ресурс, но при переработке на <link=\"METALREFINERY\">металлургическом станке</link> он дает чрезвычайно теплопроводный <link=\"TEMPCONDUCTORSOLID\">термий</link>, который помогает решить многие проблемы с экстремальной температурой в колонии.\n\nКрая этого биома заполнены <link=\"OBSIDIAN\">обсидианом</link>, поэтому колонии потребуется дубликант с навыком <link=\"SENIORMINER\">супер-пупер-улучшенного рытья</link>, чтобы здесь работать."
 
 #. STRINGS.SUBWORLDS.OCEAN.DESC
 msgctxt "STRINGS.SUBWORLDS.OCEAN.DESC"
@@ -42495,8 +42900,8 @@ msgstr "<link=\"SWAMPFORAGEPLANTPLANTED\">Болотный мангольд</lin
 
 #. STRINGS.SUBWORLDS.WASTELAND.DESC
 msgctxt "STRINGS.SUBWORLDS.WASTELAND.DESC"
-msgid ""
-msgstr ""
+msgid "While the Wasteland Biome does not look particularly interesting, a pragmatic colony can take advantage of its selection of construction resources."
+msgstr "Хотя биом пустошей не выглядит особенно интересным, прагматичная колония может воспользоваться доступными в нем строительными ресурсами."
 
 #. STRINGS.SUBWORLDS.WASTELAND.NAME
 msgctxt "STRINGS.SUBWORLDS.WASTELAND.NAME"
@@ -42505,8 +42910,8 @@ msgstr "Пустошь"
 
 #. STRINGS.SUBWORLDS.WASTELAND.UTILITY
 msgctxt "STRINGS.SUBWORLDS.WASTELAND.UTILITY"
-msgid ""
-msgstr ""
+msgid "The prevalance of <link=\"COPPER\">Copper</link>, <link=\"SANDSTONE\">Sandstone</link>, <link=\"IGNEOUSROCK\">Igneous Rock</link> and its <link=\"IRON\">Iron</link> rich counterpart <link=\"MAFICROCK\">Mafic Rock</link>, make this a fruitful biome to explore for construction material. <link=\"SAND\">Sand</link> is also in abundance here which is useful as a filtering material.\n\nWhile the wildlife is not in abundance in the Wasteland Biome, the <link=\"DIVERGENTBEETLE\">Sweetle</link> and <link=\"DIVERGENTWORM\">Grubgrub</link> make interesting creatures to domesticate as they co-exist with the  <link=\"WORMPLANT\">Grubfruit Plants</link> to produce a much higher quality food than the <link=\"WORMPLANT\">Spindly Grubfruit Plant</link> found in the wild. Additionally, the <link=\"SULFUR\">Sulfur</link> found here works both as food for the GrubGrubs and fertilizer for the Grubfruit Plants.\n\nThe abundance of <link=\"OXYGEN\">Oxygen</link> found in the Wasteland Biome makes for a low-risk area to send my Duplicants into to collect useful resources to continue with their construction projects."
+msgstr "Преобладание <link=\"COPPER\">меди</link>, <link=\"SANDSTONE\">песчаника</link>, <link=\"IGNEOUSROCK\">магматической породы</link> и его богатого <link=\"IRON\">железом</link> аналога <link=\"MAFICROCK\">мафической породы</link> делает этот биом отличным источником строительных материалов. <link=\"SAND\">Песок</link> здесь также в изобилии, а он полезен в качестве фильтрующего материала.\n\nХотя диких животных в биоме пустоши не так много, можно приручить <link=\"DIVERGENTBEETLE\">сахажуков</link> и <link=\"DIVERGENTWORM\">личинкокосов</link>, сосуществующих с <link=\"WORMPLANT\">хилым личинкокосом</link>, встречающимся в дикой природе. Кроме того, <link=\"SULFUR\">сера</link>, добываемая здесь, подойдет как в качестве как пищи для личинок, так и удобрения для <link=\"WORMPLANT\">хилого личинкокоса</link>.\n\n Изобилие <link=\"OXYGEN\">кислорода</link> делает биом пустоши зоной с низким уровнем риска, в которую можно отправить дубликантов за полезными ресурсами для строительных проектов."
 
 #. STRINGS.UI.ACTIONS
 msgctxt "STRINGS.UI.ACTIONS"
@@ -43938,6 +44343,21 @@ msgctxt "STRINGS.UI.CLUSTERMAP.PLANETOID_KEYWORD"
 msgid "Planetoid"
 msgstr "Планетоид"
 
+#. STRINGS.UI.CLUSTERMAP.POI.MASS_REMAINING
+msgctxt "STRINGS.UI.CLUSTERMAP.POI.MASS_REMAINING"
+msgid "<b>Total Mass Remaining</b>"
+msgstr "Остаток <b>общей массы</b>"
+
+#. STRINGS.UI.CLUSTERMAP.POI.ROCKETS_AT_THIS_LOCATION
+msgctxt "STRINGS.UI.CLUSTERMAP.POI.ROCKETS_AT_THIS_LOCATION"
+msgid "<b>Rockets at this location</b>"
+msgstr "<b>Ракеты в этом месте</b>"
+
+#. STRINGS.UI.CLUSTERMAP.POI.TITLE
+msgctxt "STRINGS.UI.CLUSTERMAP.POI.TITLE"
+msgid "POINT OF INTEREST"
+msgstr "ЗНАЧИМЫЕ МЕСТА"
+
 #. STRINGS.UI.CLUSTERMAP.ROCKETS.BURDEN_MODULE.NAME
 msgctxt "STRINGS.UI.CLUSTERMAP.ROCKETS.BURDEN_MODULE.NAME"
 msgid "Module Burden: "
@@ -44062,6 +44482,31 @@ msgstr "<b>Скорость ракеты</b> вычисляется путем �
 msgctxt "STRINGS.UI.CLUSTERMAP.SELECT_DESTINATION"
 msgid "Select a new destination on the map"
 msgstr "Выбрать новое место назначения на карте"
+
+#. STRINGS.UI.CLUSTERMAP.STATUS.NORMAL
+msgctxt "STRINGS.UI.CLUSTERMAP.STATUS.NORMAL"
+msgid "Normal"
+msgstr "Обычн."
+
+#. STRINGS.UI.CLUSTERMAP.STATUS.ROCKET.GROUNDED
+msgctxt "STRINGS.UI.CLUSTERMAP.STATUS.ROCKET.GROUNDED"
+msgid "Normal"
+msgstr "Обычн."
+
+#. STRINGS.UI.CLUSTERMAP.STATUS.ROCKET.IDLE
+msgctxt "STRINGS.UI.CLUSTERMAP.STATUS.ROCKET.IDLE"
+msgid "Idle"
+msgstr "Бездействует"
+
+#. STRINGS.UI.CLUSTERMAP.STATUS.ROCKET.STRANDED
+msgctxt "STRINGS.UI.CLUSTERMAP.STATUS.ROCKET.STRANDED"
+msgid "Stranded"
+msgstr "Без топлива"
+
+#. STRINGS.UI.CLUSTERMAP.STATUS.ROCKET.TRAVELING
+msgctxt "STRINGS.UI.CLUSTERMAP.STATUS.ROCKET.TRAVELING"
+msgid "Traveling"
+msgstr "В пути"
 
 #. STRINGS.UI.CLUSTERMAP.TILES
 msgctxt "STRINGS.UI.CLUSTERMAP.TILES"
@@ -44795,13 +45240,23 @@ msgstr "Заполнитель названия критерия"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.ALL_NAME
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.ALL_NAME"
-msgid "Avg Power"
-msgstr "Средн. уровень энергии"
+msgid "Power use"
+msgstr "Использование энергии"
 
-#. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKPOWER
-msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKPOWER"
-msgid "Check power"
-msgstr "Проверить электроснабжение"
+#. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CIRCUIT_OVER_CAPACITY
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CIRCUIT_OVER_CAPACITY"
+msgid "Circuit overloaded {0}/{1}"
+msgstr "Перегрузка сети {0}/{1}"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKOVERWATTAGE
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKOVERWATTAGE"
+msgid "Check circuit overloaded"
+msgstr "Проверка перегрузки сети"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKPOWERUSECHANGE
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CRITERIA.CHECKPOWERUSECHANGE"
+msgid "Check power use change"
+msgstr "Проверка изменения использования энергии"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.NORMAL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.NORMAL"
@@ -44813,15 +45268,25 @@ msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.OVERLOADED"
 msgid "    • One or more power grids are damaged"
 msgstr "    • Одна или несколько электросетей повреждены"
 
+#. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.SIGNIFICANT_POWER_CHANGE_DETECTED
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.SIGNIFICANT_POWER_CHANGE_DETECTED"
+msgid "Significant power use change detected. (Average:{0}, Current:{1})"
+msgstr "Обнаружено значительное изменение энергопотребления. (Среднее: {0}, Текущее: {1})"
+
 #. STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.TOOLTIP_NAME
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.TOOLTIP_NAME"
-msgid "<b>Avg Power</b>"
-msgstr "<b>Средн. уровень энергии</b>"
+msgid "<b>Power use</b>"
+msgstr "<b>Использование энергии</b>"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.ALL_NAME
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.ALL_NAME"
 msgid "Radiation"
 msgstr "Радиация"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.AVERAGE_RADS
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.AVERAGE_RADS"
+msgid "Avg. {0}"
+msgstr "Средн. {0}"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA.CHECKEXPOSED
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA.CHECKEXPOSED"
@@ -46243,6 +46708,16 @@ msgctxt "STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_BIOMES"
 msgid "BIOMES"
 msgstr "БИОМЫ"
 
+#. STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_CARGOBAY
+msgctxt "STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_CARGOBAY"
+msgid "CARGO BAYS"
+msgstr "ГРУЗОВЫЕ ОТСЕКИ"
+
+#. STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_CLUSTER_POI
+msgctxt "STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_CLUSTER_POI"
+msgid "POINT OF INTEREST"
+msgstr "ЗНАЧИМЫЕ МЕСТА"
+
 #. STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_CONDITION
 msgctxt "STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_CONDITION"
 msgid "CONDITION"
@@ -46460,18 +46935,38 @@ msgstr "ПОСТРОИТЬ: {0}"
 
 #. STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.ALERT_ONLY
 msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.ALERT_ONLY"
-msgid "\n------------------\nClick to subscribe to this diagnostic - <b>Visible On Alert Only</b>"
-msgstr "\n------------------\nНажмите, чтобы следить за этим показателем - <b>Отображается только в случае тревоги</b>"
+msgid "Click to subscribe to this diagnostic - Current State:  <b>Never Visible      </b>"
+msgstr "Нажмите, чтобы следить за этим показателем - Сейчас: <b>не отображается</b>"
 
 #. STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.ALWAYS
 msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.ALWAYS"
-msgid "\n------------------\nClick to pin this diagnostic to the sidebar -  <b>Always Visible</b>"
-msgstr "\n------------------\nНажмите, чтобы закрепить этот показатель - <b>Отображается постоянно</b>"
+msgid "Click to pin this diagnostic to the sidebar - Current State: <b>Visible On Alert Only</b>"
+msgstr "Нажмите, чтобы закрепить этот показатель - Сейчас: <b>отображается только в случае тревоги</b>"
 
 #. STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.NEVER
 msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.NEVER"
-msgid "\n------------------\nClick to mute this diagnostic on the sidebar -  <b>Never Visible      </b>"
-msgstr "\n------------------\nНажмите, чтобы отключить этот показатель - <b>Не отображается</b>"
+msgid "Click to mute this diagnostic on the sidebar -  Current State: <b>Always Visible</b>"
+msgstr "Нажмите, чтобы отключить этот показатель - Сейчас: <b>не отображается</b>"
+
+#. STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.TUTORIAL_DISABLED
+msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.TUTORIAL_DISABLED"
+msgid "Click to enable this diagnostic -  Current State: <b>Tutorial Disabled</b>"
+msgstr "Нажмите, чтобы включить этот показатель - Сейчас: <b>обучение отключено</b>"
+
+#. STRINGS.UI.DIAGNOSTICS_SCREEN.CRITERIA_ENABLED_COUNT
+msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.CRITERIA_ENABLED_COUNT"
+msgid "{0}/{1} criteria enabled"
+msgstr "Критерии включены: {0}/{1}"
+
+#. STRINGS.UI.DIAGNOSTICS_SCREEN.CRITERIA_HEADER_TOOLTIP
+msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.CRITERIA_HEADER_TOOLTIP"
+msgid "Expand or collapse diagnostic criteria panel"
+msgstr "Развернуть или свернуть панель критериев диагностики"
+
+#. STRINGS.UI.DIAGNOSTICS_SCREEN.CRITERIA_TOOLTIP
+msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.CRITERIA_TOOLTIP"
+msgid "Toggle the <b>{0}</b> diagnostics evaluation of the <b>{1}</b> criteria."
+msgstr "Включить диагностическую оценку <b>{0}</b> критерия <b>{1}</b>."
 
 #. STRINGS.UI.DIAGNOSTICS_SCREEN.DIAGNOSTIC
 msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.DIAGNOSTIC"
@@ -50220,7 +50715,7 @@ msgstr "\n\nРост около сильного источника радиац
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.MUTANT_STERILE
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.MUTANT_STERILE"
-msgid "Due to changes to its DNA this plant will not produce seeds of its own"
+msgid "This plant will not produce seeds of its own due to changes to its DNA"
 msgstr "Из-за изменений в ДНК это растение не дает собственные семена."
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.REGROWTHTIME
@@ -53808,6 +54303,11 @@ msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_COMPOUND.DESCRIPTION"
 msgid "<link=\"APOTHECARY\">Apothecary</link> Usage"
 msgstr "Использование <link=\"APOTHECARY\">аптеки</link>"
 
+#. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_DEMOLISH.DESCRIPTION
+msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_DEMOLISH.DESCRIPTION"
+msgid "Demolish Gravitas Buildings"
+msgstr "Снести здания Gravitas"
+
 #. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_DIG_NEARLY_IMPENETRABLE.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_DIG_NEARLY_IMPENETRABLE.DESCRIPTION"
 msgid "<link=\"KATAIRITE\">Abyssalite</link> Mining"
@@ -53868,6 +54368,11 @@ msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_POWER_TINKER.DESCRIPTION"
 msgid "<link=\"POWER\">Generator Tuning</link> usage and Microchip Crafting"
 msgstr "<link=\"POWER\">Настройка генераторов</link> и создание микропроцессоров"
 
+#. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_STUDY_ARTIFACTS.DESCRIPTION
+msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_STUDY_ARTIFACTS.DESCRIPTION"
+msgid "Artifact Analysis"
+msgstr "Анализ артефактов"
+
 #. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_STUDY_WORLD_OBJECTS.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_STUDY_WORLD_OBJECTS.DESCRIPTION"
 msgid "Geographical Analysis"
@@ -53915,8 +54420,8 @@ msgstr "Для этой работы не нужна практика"
 
 #. STRINGS.UI.ROLES_SCREEN.PERKS.NUCLEAR_RESEARCH.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.NUCLEAR_RESEARCH.DESCRIPTION"
-msgid "<link=\"NUCLEARLABORATORY\">Atomic Collider</link> Usage"
-msgstr "Использование <link=\"NUCLEARLABORATORY\">атомного коллайдера</link>"
+msgid "<link=\"NUCLEARLABORATORY\">Materials Study Terminal</link> Usage"
+msgstr "Использование <link=\"NUCLEARLABORATORY\">терминала для изучения материалов</link>"
 
 #. STRINGS.UI.ROLES_SCREEN.PERKS.ORBITAL_RESEARCH.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.ORBITAL_RESEARCH.DESCRIPTION"
@@ -55123,6 +55628,16 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.VHS.NAME"
 msgid "Archaic Tech"
 msgstr "Древняя технология"
 
+#. STRINGS.UI.SPACEDESTINATIONS.ARTIFACT_POI.GRAVITASSPACESTATION.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.ARTIFACT_POI.GRAVITASSPACESTATION.DESC"
+msgid "Default Description!"
+msgstr "Описание по умолчанию!"
+
+#. STRINGS.UI.SPACEDESTINATIONS.ARTIFACT_POI.GRAVITASSPACESTATION.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.ARTIFACT_POI.GRAVITASSPACESTATION.NAME"
+msgid "Gravitas Spacejunk"
+msgstr "Космопомойка Gravitas"
+
 #. STRINGS.UI.SPACEDESTINATIONS.ASTEROIDS.CARBONACEOUSASTEROID.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEDESTINATIONS.ASTEROIDS.CARBONACEOUSASTEROID.DESCRIPTION"
 msgid "A common asteroid containing several useful resources."
@@ -55223,6 +55738,11 @@ msgctxt "STRINGS.UI.SPACEDESTINATIONS.COMETS.SATELLITE.NAME"
 msgid "Defunct Satellite"
 msgstr "Неработающий спутник"
 
+#. STRINGS.UI.SPACEDESTINATIONS.COMETS.URANIUMORECOMET.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.COMETS.URANIUMORECOMET.NAME"
+msgid "Unanium Comet"
+msgstr "Урановая комета"
+
 #. STRINGS.UI.SPACEDESTINATIONS.DEBRIS.SATELLITE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEDESTINATIONS.DEBRIS.SATELLITE.DESCRIPTION"
 msgid "An artificial construct that has escaped its orbit. It no longer appears to be monitored."
@@ -55322,6 +55842,251 @@ msgstr "Огромная замороженная масса, в основно�
 msgctxt "STRINGS.UI.SPACEDESTINATIONS.GIANTS.ICEGIANT.NAME"
 msgid "Ice Giant"
 msgstr "Ледяной гигант"
+
+#. STRINGS.UI.SPACEDESTINATIONS.GRAVITAS_SPACE_POI.STATION
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.GRAVITAS_SPACE_POI.STATION"
+msgid "Destroyed Gravitas Space Station"
+msgstr "Разрушенная космическая станция Gravitas"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.CARBONASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.CARBONASTEROIDFIELD.DESC"
+msgid "An asteroid containing <link=\"REFINEDCARBON\">Refined Carbon</link> and <link=\"CARBON\">Coal</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Астероид, содержащий <link=\"REFINEDCARBON\">очищенный углерод</link> и <link=\"CARBON\">уголь</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.CARBONASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.CARBONASTEROIDFIELD.NAME"
+msgid "Carbon Asteroid Field"
+msgstr "Поле углеродных астероидов"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.CHLORINECLOUD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.CHLORINECLOUD.DESC"
+msgid "A cloud of harvestable debris containing <link=\"CHLORINEGAS\">Chlorine</link> and <link=\"BLEACHSTONE\">Bleach Stone</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Облако космического мусора, содержащее <link=\"CHLORINEGAS\">хлор</link> и <link=\"BLEACHSTONE\">хлорный камень</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.CHLORINECLOUD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.CHLORINECLOUD.NAME"
+msgid "Chlorine Cloud"
+msgstr "Хлорное облако"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.FORESTYOREFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.FORESTYOREFIELD.DESC"
+msgid "A field of harvestable resources containing <link=\"CARBONDIOXIDE\">Carbon Dioxide</link>, <link=\"IGNEOUSROCK\">Igneous Rock</link> and <link=\"ALUMINUMORE\">Aluminum Ore</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Поле полезных ресурсов, содержащее <link=\"CARBONDIOXIDE\">углекислый газ</link>, <link=\"IGNEOUSROCK\">магматическую породу</link> и<link=\"ALUMINUMORE\">алюминиевую руду</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.FORESTYOREFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.FORESTYOREFIELD.NAME"
+msgid "Forested Ore Field"
+msgstr "Лесное рудное поле"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.FROZENOREFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.FROZENOREFIELD.DESC"
+msgid "An asteroid field containing <link=\"CUPRITE\">Copper Ore</link>, <link=\"ICE\">Ice</link>, <link=\"COBALTITE\">Cobalt Ore</link> and <link=\"ALUMINUMORE\">Aluminum Ore</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Поле астероидов, содержащее <link=\"CUPRITE\">медную руду</link>, <link=\"ICE\">лед</link>, <link=\"COBALTITE\">кобальтовую руду</link> и<link=\"ALUMINUMORE\">алюминиевую руду</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.FROZENOREFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.FROZENOREFIELD.NAME"
+msgid "Frozen Ore Asteroid Field"
+msgstr "Замерзшее астероидное поле"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GASGIANTCLOUD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GASGIANTCLOUD.DESC"
+msgid "The harvestable remains of a planet containing <link=\"HYDROGEN\">Hydrogen</link> in <link=\"ELEMENTSGAS\">gas</link> and <link=\"ELEMENTSSOLID\">solid</link> form, and <link=\"SOLIDMETHANE\">Methane</link> in <link=\"ELEMENTSGAS\">gas</link>, <link=\"ELEMENTSSOLID\">solid</link> and <link=\"ELEMENTSLIQUID\">liquid</link> form.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Останки планеты, с которых можно собрать <link=\"HYDROGEN\">водород</link> в <link=\"ELEMENTSGAS\">газообразной</link> и <link=\"ELEMENTSSOLID\">твердой</link> формах и <link=\"SOLIDMETHANE\">метан</link> в <link=\"ELEMENTSGAS\">газообразной</link>, <link=\"ELEMENTSSOLID\">твердой</link> и <link=\"ELEMENTSLIQUID\">жидкой</link> формах.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GASGIANTCLOUD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GASGIANTCLOUD.NAME"
+msgid "Exploded Gas Giant"
+msgstr "Взорвавшийся газовый гигант"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GILDEDASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GILDEDASTEROIDFIELD.DESC"
+msgid "An asteroid field containing <link=\"GOLD\">Gold</link>, <link=\"FULLERENE\">Fullerene</link> and <link=\"FOOLSGOLD\">Pyrite</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Поле астероидов, содержащее <link=\"GOLD\">золото</link>, <link=\"FULLERENE\">фуллерен</link> и<link=\"FOOLSGOLD\">пирит</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GILDEDASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GILDEDASTEROIDFIELD.NAME"
+msgid "Gilded Asteroid Field"
+msgstr "Золотое астероидное поле"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GLIMMERINGASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GLIMMERINGASTEROIDFIELD.DESC"
+msgid "An asteroid field containing <link=\"TUNGSTEN\">Tungsten</link> and <link=\"WOLFRAMITE\">Wolframite</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Поле астероидов, содержащее <link=\"TUNGSTEN\">вольфрам</link> и<link=\"WOLFRAMITE\">вольфрамит</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GLIMMERINGASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.GLIMMERINGASTEROIDFIELD.NAME"
+msgid "Glimmering Asteroid Field"
+msgstr "Мерцающее поле астероидов"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.HELIUMCLOUD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.HELIUMCLOUD.DESC"
+msgid "A cloud of resources containing <link=\"WATER\">Water</link>, <link=\"HYDROGEN\">Hydrogen</link>, and <link=\"NIOBIUM\">Niobium</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Облако ресурсов, содержащее <link=\"WATER\">воду</link> и <link=\"HYDROGEN\">водород</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.HELIUMCLOUD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.HELIUMCLOUD.NAME"
+msgid "Helium Cloud"
+msgstr "Гелиевое облако"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ICEASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ICEASTEROIDFIELD.DESC"
+msgid "A cloud of planetary remains containing <link=\"ICE\">Ice</link>, <link=\"CARBONDIOXIDE\">Carbon Dioxide</link>, <link=\"OXYGEN\">Oxygen</link> and <link=\"METHANE\">Methane</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Облако останков планеты, содержащее <link=\"ICE\">лед</link>, <link=\"CARBONDIOXIDE\">углекислый газ</link>, <link=\"OXYGEN\">кислород</link> и <link=\"METHANE\">метан</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ICEASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ICEASTEROIDFIELD.NAME"
+msgid "Exploded Ice Giant"
+msgstr "Взорвавшийся ледяной гигант"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.INTERSTELLARICEFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.INTERSTELLARICEFIELD.DESC"
+msgid "An asteroid field containing <link=\"ICE\">Ice</link>, <link=\"CARBONDIOXIDE\">Carbon Dioxide</link> and <link=\"OXYGEN\">Oxygen</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Поле астероидов, содержащее <link=\"ICE\">лед</link>, <link=\"CARBONDIOXIDE\">углекислый газ</link> и<link=\"OXYGEN\">кислород</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.INTERSTELLARICEFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.INTERSTELLARICEFIELD.NAME"
+msgid "Ice Asteroid Field"
+msgstr "Ледяное астероидное поле"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.INTERSTELLAROCEAN.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.INTERSTELLAROCEAN.DESC"
+msgid "An interplanetary body that consists of <link=\"SALTWATER\">Salt Water</link>,<link=\"BRINE\">Brine</link>, <link=\"SALT\">Salt</link> and <link=\"ICE\">Ice</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Космическое тело, содержащее <link=\"SALTWATER\">соленую воду</link><link=\"BRINE\">рапу</link>, <link=\"SALT\">соль</link> и<link=\"ICE\">лед</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.INTERSTELLAROCEAN.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.INTERSTELLAROCEAN.NAME"
+msgid "Interstellar Ocean"
+msgstr "Межзвездный океан"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.METALLICASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.METALLICASTEROIDFIELD.DESC"
+msgid "An asteroid containing <link=\"IRON\">Iron</link>, <link=\"COPPER\">Copper</link> and <link=\"OBSIDIAN\">Obsidian</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Астероид, содержащий <link=\"IRON\">железо</link>, <link=\"COPPER\">медь</link> и <link=\"OBSIDIAN\">обсидиан</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.METALLICASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.METALLICASTEROIDFIELD.NAME"
+msgid "Metallic Asteroid Field"
+msgstr "Металлическое астероидное поле"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OILYASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OILYASTEROIDFIELD.DESC"
+msgid "An asteroid field containing <link=\"METHANE\">Natural Gas</link>, <link=\"CARBONDIOXIDE\">Carbon Dioxide</link>, <link=\"CRUDEOIL\">Crude Oil</link> and <link=\"PETROLEUM\">Petroleum</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Поле астероидов, содержащее <link=\"METHANE\">природный газ</link>, <link=\"CARBONDIOXIDE\">углекислый газ</link> и <link=\"CRUDEOIL\">неочищенную нефть</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OILYASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OILYASTEROIDFIELD.NAME"
+msgid "Oily Asteroid Field"
+msgstr "Нефтяное астероидное поле"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ORGANICMASSFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ORGANICMASSFIELD.DESC"
+msgid "A mass of harvestable resources containing <link=\"ALGAE\">Algae</link>, <link=\"SLIMEMOLD\">Slime</link>, <link=\"CONTAMINATEDOXYGEN\">Polluted Oxygen</link> and <link=\"DIRT\">Dirt</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Масса ресурсов, содержащая <link=\"ALGAE\">водоросли</link>, <link=\"SLIMEMOLD\">слизь</link>, <link=\"CONTAMINATEDOXYGEN\">загрязненный кислород</link> и<link=\"DIRT\">землю</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ORGANICMASSFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ORGANICMASSFIELD.NAME"
+msgid "Organic Mass Field"
+msgstr "Поле органических ресурсов"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OXIDIZEDASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OXIDIZEDASTEROIDFIELD.DESC"
+msgid "An asteroid field containing <link=\"CARBONDIOXIDE\">Carbon Dioxide</link> and <link=\"RUST\">Rust</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Поле астероидов, содержащее <link=\"CARBONDIOXIDE\">углекислый газ</link> и<link=\"RUST\">ржавчину</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OXIDIZEDASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OXIDIZEDASTEROIDFIELD.NAME"
+msgid "Oxidized Asteroid Field"
+msgstr "Окисленное астероидное поле"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OXYGENRICHASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OXYGENRICHASTEROIDFIELD.DESC"
+msgid "An asteroid field containing <link=\"ICE\">Ice</link>, <link=\"CONTAMINATEDOXYGEN\">Polluted Oxygen</link> and <link=\"WATER\">Water</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Поле астероидов, содержащее <link=\"ICE\">лед</link>, <link=\"CONTAMINATEDOXYGEN\">загрязненный кислород</link> и<link=\"WATER\">воду</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OXYGENRICHASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.OXYGENRICHASTEROIDFIELD.NAME"
+msgid "Oxygen Rich Asteroid Field"
+msgstr "Богатое кислородом астероидное поле"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.POI_PRODUCTION
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.POI_PRODUCTION"
+msgid "{0}"
+msgstr "{0}"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.POI_PRODUCTION_TOOLTIP
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.POI_PRODUCTION_TOOLTIP"
+msgid "{0}"
+msgstr "{0}"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.RADIOACTIVEASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.RADIOACTIVEASTEROIDFIELD.DESC"
+msgid "An asteroid field containing <link=\"BLEACHSTONE\">Bleach Stone</link>, <link=\"RUST\">Rust</link>,<link=\"URANIUMORE\">Uranium Ore</link> and <link=\"SULFUR\">Sulfur</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Поле астероидов, содержащее <link=\"BLEACHSTONE\">хлорный камень</link>, <link=\"RUST\">ржавчину</link>, <link=\"URANIUMORE\">урановую руду</link> и<link=\"SULFUR\">серу</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.RADIOACTIVEASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.RADIOACTIVEASTEROIDFIELD.NAME"
+msgid "Radioactive Asteroid Field"
+msgstr "Радиоактивное астероидное поле"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.RADIOACTIVEGASCLOUD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.RADIOACTIVEGASCLOUD.DESC"
+msgid "A cloud of resources containing <link=\"CHLORINEGAS\">Chlorine</link>, <link=\"URANIUMORE\">Uranium Ore</link> and <link=\"CARBONDIOXIDE\">Carbon Dioxide</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Облако ресурсов, содержащее <link=\"CHLORINEGAS\">хлор</link>, <link=\"URANIUMORE\">урановую руду</link> и<link=\"CARBONDIOXIDE\">углекислый газ</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.RADIOACTIVEGASCLOUD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.RADIOACTIVEGASCLOUD.NAME"
+msgid "Radioactive Gas Cloud"
+msgstr "Радиоактивное облако газа"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ROCKYASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ROCKYASTEROIDFIELD.DESC"
+msgid "An asteroid field containing <link=\"CUPRITE\">Copper Ore</link>, <link=\"SEDIMENTARYROCK\">Sedimentary Rock</link> and <link=\"IGNEOUSROCK\">Igneous Rock</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Поле астероидов, содержащее <link=\"CUPRITE\">медную руду</link>, <link=\"SEDIMENTARYROCK\">осадочные породы</link> и <link=\"IGNEOUSROCK\">магматические породы</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ROCKYASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.ROCKYASTEROIDFIELD.NAME"
+msgid "Rocky Asteroid Field"
+msgstr "Поле каменных астероидов"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SALTYASTEROIDFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SALTYASTEROIDFIELD.DESC"
+msgid "A field of harvestable resources containing <link=\"SALTWATER\">Salt Water</link>,<link=\"BRINE\">Brine</link> and <link=\"CARBONDIOXIDE\">Carbon Dioxide</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Поле ресурсов, содержащее <link=\"SALTWATER\">соленую воду</link>, <link=\"BRINE\">рапу</link> и<link=\"CARBONDIOXIDE\">углекислый газ</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SALTYASTEROIDFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SALTYASTEROIDFIELD.NAME"
+msgid "Salty Asteroid Field"
+msgstr "Поле соленых астероидов"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SANDYOREFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SANDYOREFIELD.DESC"
+msgid "An asteroid field containing <link=\"SANDSTONE\">Sandstone</link>, <link=\"ALGAE\">Algae</link>, <link=\"CUPRITE\">Copper Ore</link> and <link=\"SAND\">Sand</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Поле астероидов, содержащее <link=\"SANDSTONE\">песчаник</link>, <link=\"ALGAE\">водоросли</link>, <link=\"CUPRITE\">медную руду</link> и<link=\"SAND\">песок</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SANDYOREFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SANDYOREFIELD.NAME"
+msgid "Sandy Ore Field"
+msgstr "Песчаное рудное поле"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SATELLITEFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SATELLITEFIELD.DESC"
+msgid "\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SATELLITEFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SATELLITEFIELD.NAME"
+msgid "Satellite Asteroid Field"
+msgstr "Спутниковое астероидное поле"
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SWAMPYOREFIELD.DESC
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SWAMPYOREFIELD.DESC"
+msgid "An asteroid field containing <link=\"MUD\">Mud</link>, <link=\"TOXICSAND\">Polluted Dirt</link> and <link=\"COBALTITE\">Cobalt Ore</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Поле астероидов, содержащее <link=\"MUD\">грязь</link>, <link=\"TOXICSAND\">загрязненную землю</link> и <link=\"COBALTITE\">кобальтовую руду</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+
+#. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SWAMPYOREFIELD.NAME
+msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SWAMPYOREFIELD.NAME"
+msgid "Swampy Ore Field"
+msgstr "Болотное рудное поле"
 
 #. STRINGS.UI.SPACEDESTINATIONS.NONE.NAME
 msgctxt "STRINGS.UI.SPACEDESTINATIONS.NONE.NAME"
@@ -58515,7 +59280,7 @@ msgstr "Показать звездную карту"
 
 #. STRINGS.UI.UISIDESCREENS.COMMAND_MODULE_SIDE_SCREEN.TITLE
 msgctxt "STRINGS.UI.UISIDESCREENS.COMMAND_MODULE_SIDE_SCREEN.TITLE"
-msgid "Launch Conditions"
+msgid "Launch Conditiothisns"
 msgstr "Условия для запуска"
 
 #. STRINGS.UI.UISIDESCREENS.CONDITIONLISTSIDESCREEN.TITLE
@@ -59097,6 +59862,31 @@ msgstr "Осмотреть внутренности"
 msgctxt "STRINGS.UI.UISIDESCREENS.HABITATMODULESIDESCREEN.VIEW_BUTTON_TOOLTIP"
 msgid "What's goin' on in there?"
 msgstr "Что там такое происходит?"
+
+#. STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.DISABLE
+msgctxt "STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.DISABLE"
+msgid "Disable Drill"
+msgstr "Прекратить бурение"
+
+#. STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.ENABLE
+msgctxt "STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.ENABLE"
+msgid "Enable Drill"
+msgstr "Начать бурение"
+
+#. STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.MINING_IN_PROGRESS
+msgctxt "STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.MINING_IN_PROGRESS"
+msgid "Drilling..."
+msgstr "Бурение..."
+
+#. STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.MINING_STOPPED
+msgctxt "STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.MINING_STOPPED"
+msgid "Not drilling"
+msgstr "Бурение не выполняется"
+
+#. STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.TITLE
+msgctxt "STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.TITLE"
+msgid "Resource Gathering"
+msgstr "Сбор ресурсов"
 
 #. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_E
 msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_E"
@@ -61443,25 +62233,45 @@ msgctxt "STRINGS.UI.USERMENUACTIONS.COPY_BUILDING_SETTINGS.TOOLTIP"
 msgid "Apply the settings and priorities of this building to other buildings of the same type {Hotkey}"
 msgstr "Применить настройки и использовать приоритеты этого строения для всех строений этого типа {Hotkey}"
 
-#. STRINGS.UI.USERMENUACTIONS.DEMOLISH.NAME
-msgctxt "STRINGS.UI.USERMENUACTIONS.DEMOLISH.NAME"
+#. STRINGS.UI.USERMENUACTIONS.DECONSTRUCT.NAME
+msgctxt "STRINGS.UI.USERMENUACTIONS.DECONSTRUCT.NAME"
 msgid "Deconstruct"
-msgstr "Разрушить"
+msgstr "Разобрать"
 
-#. STRINGS.UI.USERMENUACTIONS.DEMOLISH.NAME_OFF
-msgctxt "STRINGS.UI.USERMENUACTIONS.DEMOLISH.NAME_OFF"
+#. STRINGS.UI.USERMENUACTIONS.DECONSTRUCT.NAME_OFF
+msgctxt "STRINGS.UI.USERMENUACTIONS.DECONSTRUCT.NAME_OFF"
 msgid "Cancel Deconstruct"
 msgstr "Отменить разрушение"
 
+#. STRINGS.UI.USERMENUACTIONS.DECONSTRUCT.TOOLTIP
+msgctxt "STRINGS.UI.USERMENUACTIONS.DECONSTRUCT.TOOLTIP"
+msgid "Deconstruct this building and refund all resources"
+msgstr "Разобрать это строение и получить все ресурсы"
+
+#. STRINGS.UI.USERMENUACTIONS.DECONSTRUCT.TOOLTIP_OFF
+msgctxt "STRINGS.UI.USERMENUACTIONS.DECONSTRUCT.TOOLTIP_OFF"
+msgid "Cancel this deconstruct order"
+msgstr "Отменить поручение о разрушении"
+
+#. STRINGS.UI.USERMENUACTIONS.DEMOLISH.NAME
+msgctxt "STRINGS.UI.USERMENUACTIONS.DEMOLISH.NAME"
+msgid "Demolish"
+msgstr "Снести"
+
+#. STRINGS.UI.USERMENUACTIONS.DEMOLISH.NAME_OFF
+msgctxt "STRINGS.UI.USERMENUACTIONS.DEMOLISH.NAME_OFF"
+msgid "Cancel Demolition"
+msgstr "Отменить снос"
+
 #. STRINGS.UI.USERMENUACTIONS.DEMOLISH.TOOLTIP
 msgctxt "STRINGS.UI.USERMENUACTIONS.DEMOLISH.TOOLTIP"
-msgid "Demolish this building and refund all resources"
-msgstr "Снести это строение и получить все ресурсы"
+msgid "Demolish this building"
+msgstr "Снести это здание"
 
 #. STRINGS.UI.USERMENUACTIONS.DEMOLISH.TOOLTIP_OFF
 msgctxt "STRINGS.UI.USERMENUACTIONS.DEMOLISH.TOOLTIP_OFF"
-msgid "Cancel this deconstruct order"
-msgstr "Отменить поручение о разрушении"
+msgid "Cancel this demolition order"
+msgstr "Отменить этот приказ о сносе"
 
 #. STRINGS.UI.USERMENUACTIONS.DIG.NAME
 msgctxt "STRINGS.UI.USERMENUACTIONS.DIG.NAME"
@@ -63228,6 +64038,16 @@ msgctxt "STRINGS.WORLDS.OILYMOONLET.NAME"
 msgid "Viscosia Asteroid"
 msgstr "Вязкий астероид"
 
+#. STRINGS.WORLDS.REGOLITHMOONLET.DESCRIPTION
+msgctxt "STRINGS.WORLDS.REGOLITHMOONLET.DESCRIPTION"
+msgid "A small, dusty world with plenty of craters.\n\n<smallcaps>Regolith Asteroids have frequent meteor showers</smallcaps>"
+msgstr "Маленький пыльный мир с множеством кратеров. \n\n<smallcaps>На реголитовых астероидах часто бывают метеоритные дожди</smallcaps>"
+
+#. STRINGS.WORLDS.REGOLITHMOONLET.NAME
+msgctxt "STRINGS.WORLDS.REGOLITHMOONLET.NAME"
+msgid "Regolith Asteroid"
+msgstr "Реголитовый астероид"
+
 #. STRINGS.WORLDS.SANDSTONE_DEFAULT.DESCRIPTION
 msgctxt "STRINGS.WORLDS.SANDSTONE_DEFAULT.DESCRIPTION"
 msgid "A promising location with a balanced variety of resources.\n\n<smallcaps>Terra meets all the requirements for Duplicant life and holds no surprises. It's an ideal location for a first attempt at establishing a colony.</smallcaps>\n\n"
@@ -63465,8 +64285,8 @@ msgstr "Астероид с нефтяными болотами"
 
 #. STRINGS.WORLDS.WATERMOONLET.DESCRIPTION
 msgctxt "STRINGS.WORLDS.WATERMOONLET.DESCRIPTION"
-msgid "A small, water-submerged world.\n\n<smallcaps>Water Asteroids possess a variety of liquid resources and are a natural source of Graphite. However, its thin surface and sparse construction material means Duplicants should come prepared for a swim.</smallcaps>"
-msgstr "Маленький покрытый водой мир.\n\n<smallcaps>Водяные астероиды богаты различными водными ресурсами и являются природным источником графита. Там мало суши и совсем немного строительных материалов, а значит, дубликанты должны быть готовы к плаванию.</smallcaps>"
+msgid "A small, water-submerged world.\n\n<smallcaps>Water Asteroids possess a variety of liquid resources and are a natural source of Graphite, but Duplicants should come prepared for a swim.</smallcaps>"
+msgstr "Маленький, покрытый водой мир.\n\n<smallcaps> Водяные астероиды богаты различными водными ресурсами и являются природным источником графита, но дубликанты должны быть готовы к плаванию.</smallcaps>"
 
 #. STRINGS.WORLDS.WATERMOONLET.NAME
 msgctxt "STRINGS.WORLDS.WATERMOONLET.NAME"

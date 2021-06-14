@@ -31,7 +31,7 @@ public class BuildWatermark : KScreen
 	public void RefreshText()
 	{
 		string str = LaunchInitializer.BuildPrefix() + "-";
-		bool flag = true;
+		bool flag = false;
 		bool flag2 = DistributionPlatform.Initialized && DistributionPlatform.Inst.IsArchiveBranch;
 		button.ClearOnClick();
 		if (Application.isEditor)
@@ -40,7 +40,7 @@ public class BuildWatermark : KScreen
 		}
 		else
 		{
-			str += 466654u;
+			str += 467601u;
 			if (DebugHandler.enabled)
 			{
 				str += "-D";

@@ -9,6 +9,11 @@ public class LiquidLimitValveConfig : IBuildingConfig
 
 	private const ConduitType CONDUIT_TYPE = ConduitType.Liquid;
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("LiquidLimitValve", 1, 2, "limit_valve_liquid_kanim", 30, 10f, new float[2]
@@ -20,7 +25,6 @@ public class LiquidLimitValveConfig : IBuildingConfig
 			"RefinedMetal",
 			"Plastic"
 		}, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER1, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER0);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		buildingDef.InputConduitType = ConduitType.Liquid;
 		buildingDef.OutputConduitType = ConduitType.Liquid;
 		buildingDef.Floodable = false;

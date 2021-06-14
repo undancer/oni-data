@@ -126,12 +126,6 @@ namespace ProcGen
 			protected set;
 		}
 
-		public Dictionary<string, string[]> pointsOfInterest
-		{
-			get;
-			protected set;
-		}
-
 		public Dictionary<string, int> featureTemplates
 		{
 			get;
@@ -181,7 +175,6 @@ namespace ProcGen
 			tags = new List<string>();
 			biomes = new List<WeightedBiome>();
 			samplers = new List<SampleDescriber>();
-			pointsOfInterest = new Dictionary<string, string[]>();
 			featureTemplates = new Dictionary<string, int>();
 			pdWeight = 1f;
 			borderSizeOverride = new MinMax(1f, 2.5f);
@@ -195,11 +188,15 @@ namespace ProcGen
 			}
 			foreach (World.TemplateSpawnRules subworldTemplateRule in subworldTemplateRules)
 			{
+				bool flag = true;
 				foreach (World.AllowedCellsFilter item in subworldTemplateRule.allowedCellsFilter)
 				{
 					DebugUtil.DevAssert(item.command != World.AllowedCellsFilter.Command.Replace, "subworldTemplateRules in " + base.name + " contains an AllowedCellsFilter with Command.Replace, which replaces the implicit subworld filter.");
 					DebugUtil.Assert(item.zoneTypes == null || item.zoneTypes.Count == 0, "subworldTemplateRules in " + base.name + " contains zoneTypes, which is unsupported since there is an implicit subworld filter. Use worldTemplateRules instead.");
+					DebugUtil.Assert(item.command != World.AllowedCellsFilter.Command.All || flag, "subworldTemplateRules in " + base.name + " contains an All command that's not the first filter in the list.");
+					flag = false;
 				}
+				DebugUtil.Assert(!subworldTemplateRule.IsGuaranteeRule(), "subworldTemplateRules in " + base.name + " contains a guaranteed rule, which is not allowed. Include such rules in worldTemplateRules.");
 				World.AllowedCellsFilter allowedCellsFilter = new World.AllowedCellsFilter();
 				allowedCellsFilter.subworldNames.Add(base.name);
 				subworldTemplateRule.allowedCellsFilter.Insert(0, allowedCellsFilter);

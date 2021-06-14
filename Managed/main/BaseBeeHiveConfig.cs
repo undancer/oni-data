@@ -14,9 +14,9 @@ public class BaseBeeHiveConfig : IEntityConfig
 
 	private const int HEIGHT = 3;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "EXPANSION1_ID";
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 
 	public GameObject CreatePrefab()

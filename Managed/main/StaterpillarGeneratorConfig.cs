@@ -10,12 +10,16 @@ public class StaterpillarGeneratorConfig : IBuildingConfig
 
 	private const int HEIGHT = 2;
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		string iD = ID;
 		string[] aLL_METALS = MATERIALS.ALL_METALS;
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(construction_mass: BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, construction_materials: aLL_METALS, melting_point: 9999f, build_location_rule: BuildLocationRule.OnFoundationRotatable, noise: NOISE_POLLUTION.NOISY.TIER0, id: iD, width: 1, height: 2, anim: "egg_caterpillar_kanim", hitpoints: 100, construction_time: 10f, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		buildingDef.GeneratorWattageRating = 1600f;
 		buildingDef.GeneratorBaseCapacity = 5000f;
 		buildingDef.ExhaustKilowattsWhenActive = 2f;

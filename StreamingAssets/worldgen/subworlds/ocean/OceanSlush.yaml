@@ -17,7 +17,4 @@ biomes:
 tags:
   - IgnoreCaveOverride
   - River
-pointsOfInterest:
-  geysers_a:
-    - poi/poi_ocean_geyser_saltwater
 zoneType: Ocean

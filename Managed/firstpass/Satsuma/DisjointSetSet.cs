@@ -47,7 +47,7 @@ namespace Satsuma
 
 		public override string ToString()
 		{
-			return string.Concat("[DisjointSetSet:", Representative, "]");
+			return "[DisjointSetSet:" + Representative?.ToString() + "]";
 		}
 	}
 }

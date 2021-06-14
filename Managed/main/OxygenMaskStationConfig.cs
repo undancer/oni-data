@@ -16,6 +16,11 @@ public class OxygenMaskStationConfig : IBuildingConfig
 
 	public ChoreType fetchChoreType = Db.Get().ChoreTypes.Fetch;
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		string[] rAW_MINERALS = MATERIALS.RAW_MINERALS;
@@ -27,7 +32,6 @@ public class OxygenMaskStationConfig : IBuildingConfig
 		buildingDef.PermittedRotations = PermittedRotations.FlipH;
 		buildingDef.PreventIdleTraversalPastBuilding = true;
 		buildingDef.Deprecated = true;
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		return buildingDef;
 	}
 

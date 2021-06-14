@@ -8,13 +8,17 @@ public class OxidizerTankLiquidConfig : IBuildingConfig
 
 	public const float FuelCapacity = 2700f;
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_VANILLA_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("OxidizerTankLiquid", 5, 5, "rocket_oxidizer_tank_liquid_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.FUEL_TANK_DRY_MASS, new string[1]
 		{
 			SimHashes.Steel.ToString()
 		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.ForbiddenDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.DefaultAnimState = "grounded";
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;
@@ -54,7 +58,7 @@ public class OxidizerTankLiquidConfig : IBuildingConfig
 			Storage.StoredItemModifier.Insulate
 		});
 		OxidizerTank oxidizerTank = go.AddOrGet<OxidizerTank>();
-		oxidizerTank.consumeOnLand = !DlcManager.IsExpansion1Active();
+		oxidizerTank.consumeOnLand = !DlcManager.FeatureClusterSpaceEnabled();
 		oxidizerTank.storage = storage;
 		oxidizerTank.maxFillMass = 2700f;
 		oxidizerTank.supportsMultipleOxidizers = false;

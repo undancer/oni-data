@@ -4,9 +4,9 @@ public class MouthAnimation : IEntityConfig
 {
 	public static string ID = "MouthAnimation";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

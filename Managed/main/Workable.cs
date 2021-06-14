@@ -267,7 +267,7 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 			{
 				if (!MinionResume.AnyMinionHasPerk(requiredSkillPerk, this.GetMyWorldId()))
 				{
-					StatusItem status_item = (DlcManager.IsExpansion1Active() ? Db.Get().BuildingStatusItems.ClusterColonyLacksRequiredSkillPerk : Db.Get().BuildingStatusItems.ColonyLacksRequiredSkillPerk);
+					StatusItem status_item = (DlcManager.FeatureClusterSpaceEnabled() ? Db.Get().BuildingStatusItems.ClusterColonyLacksRequiredSkillPerk : Db.Get().BuildingStatusItems.ColonyLacksRequiredSkillPerk);
 					workStatusItemHandle = component.AddStatusItem(status_item, requiredSkillPerk);
 				}
 				else

@@ -5,9 +5,9 @@ public class BabyHatchConfig : IEntityConfig
 {
 	public const string ID = "HatchBaby";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

@@ -20,7 +20,7 @@ defaultsOverrides:
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
 
-# List all the zone files to load
+# List all the subworld files to load
 subworldFiles:
   - name: subworlds/space/Space
   - name: expansion1::subworlds/moo/MooCaverns
@@ -59,6 +59,8 @@ unknownCellsAllowedSubworlds:
     subworldNames:
       - expansion1::subworlds/moo/MooCore
 
+# note: The included subworlds have a heavy number of features, these templates will fail the first time
+#       and be placed using relaxed rules instead. This is expected behaviour.
 worldTemplateRules:
   - names:
     - geysers/chlorine_gas # supports 100+ plants
@@ -75,10 +77,11 @@ worldTemplateRules:
       - command: ExceptWith
         tagcommand: AtTag
         tag: NoGravitasFeatures
+  # Gravitas
   - names:
       - expansion1::poi/genericGravitas/poi_genetics_lab
     listRule: GuaranteeAll
-    priority: 100
+    priority: 500
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag

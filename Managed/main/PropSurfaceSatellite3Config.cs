@@ -7,9 +7,9 @@ public class PropSurfaceSatellite3Config : IEntityConfig
 {
 	public static string ID = "PropSurfaceSatellite3";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

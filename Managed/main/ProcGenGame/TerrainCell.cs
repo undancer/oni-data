@@ -351,7 +351,7 @@ namespace ProcGenGame
 			hashSet.UnionWith(featureCenterPoints);
 			if (featureCenterPoints.Count == 0)
 			{
-				Debug.LogWarning(string.Concat("Room has no centerpoints. Terrain Cell [ shape: ", shape.ToString(), " size: ", finalSize, "] [", node.NodeId, " ", node.type, " ", node.position, "]"));
+				Debug.LogWarning("Room has no centerpoints. Terrain Cell [ shape: " + shape.ToString() + " size: " + finalSize + "] [" + node.NodeId + " " + node.type + " " + node.position.ToString() + "]");
 			}
 			else if (bordersWidths != null && bordersWidths.Count > 0 && bordersWidths[0] > 0)
 			{
@@ -681,7 +681,7 @@ namespace ProcGenGame
 			{
 				if (debugMode)
 				{
-					Debug.LogWarning(string.Concat(node.type, " ", featureSettings.shape, "  blob size too large to fit in node. Size reduced. ", num, "->", (num2 - 6f).ToString()));
+					Debug.LogWarning(node.type + " " + featureSettings.shape.ToString() + "  blob size too large to fit in node. Size reduced. " + num + "->" + (num2 - 6f));
 				}
 				num = num2 - 6f;
 			}

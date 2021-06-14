@@ -152,8 +152,8 @@ public class MainMenu : KScreen
 		CheckDoubleBoundKeys();
 		topLeftAlphaMessage.gameObject.SetActive(value: false);
 		nextUpdateTimer.gameObject.SetActive(value: false);
-		expansion1Toggle.gameObject.SetActive(value: false);
-		bool ownsExpansion1 = DistributionPlatform.Inst.PurchasedDLC;
+		bool ownsExpansion1 = DistributionPlatform.Inst.IsDLCPurchased("EXPANSION1_ID");
+		expansion1Toggle.gameObject.SetActive(ownsExpansion1);
 		m_motdServerClient = new MotdServerClient();
 		m_motdServerClient.GetMotd(delegate(MotdServerClient.MotdResponse response, string error)
 		{
@@ -162,7 +162,6 @@ public class MainMenu : KScreen
 				topLeftAlphaMessage.gameObject.SetActive(value: true);
 				if (ownsExpansion1)
 				{
-					expansion1Toggle.gameObject.SetActive(value: true);
 					nextUpdateTimer.gameObject.SetActive(value: true);
 				}
 				motdImageHeader.text = response.image_header_text;
@@ -474,11 +473,11 @@ public class MainMenu : KScreen
 					gameInfo = value.headerData;
 				}
 				bool flag2 = true;
-				if (header.buildVersion > 466654 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 23)
+				if (header.buildVersion > 467601 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 23)
 				{
 					flag = false;
 				}
-				if (gameInfo.dlcId != DlcManager.GetActiveDlcId())
+				if (!DlcManager.IsContentActive(gameInfo.dlcId))
 				{
 					flag = false;
 				}
@@ -606,7 +605,7 @@ public class MainMenu : KScreen
 					string mGroup2 = GameInputMapping.KeyBindings[j].mGroup;
 					if ((mGroup == "Root" || mGroup2 == "Root" || mGroup == mGroup2) && (!(mGroup == "Root") || !bindingEntry.mIgnoreRootConflics) && (!(mGroup2 == "Root") || !bindingEntry2.mIgnoreRootConflics))
 					{
-						text = string.Concat(text, "\n\n", bindingEntry2.mAction, ": <b>", bindingEntry2.mKeyCode, "</b>\n", bindingEntry.mAction, ": <b>", bindingEntry.mKeyCode, "</b>");
+						text = text + "\n\n" + bindingEntry2.mAction.ToString() + ": <b>" + bindingEntry2.mKeyCode.ToString() + "</b>\n" + bindingEntry.mAction.ToString() + ": <b>" + bindingEntry.mKeyCode.ToString() + "</b>";
 						BindingEntry bindingEntry3 = bindingEntry2;
 						bindingEntry3.mKeyCode = KKeyCode.None;
 						bindingEntry3.mModifier = Modifier.None;

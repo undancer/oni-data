@@ -1,4 +1,4 @@
-name: STRINGS.WORLDS.HELICONA.NAME
+name: STRINGS.WORLDS.HELICONA.NAME # Helicona (Unused)
 description: STRINGS.WORLDS.HELICONA.DESCRIPTION
 asteroidIcon: Asteroid_icysandstone
 
@@ -16,12 +16,6 @@ subworldFiles:
 
 startSubworldName: subworlds/sandstone/SandstoneStart
 startingBaseTemplate: bases/sandstoneBase
-
-worldTemplateRules:
-- names:
-  - geysers/generic
-  listRule: TryAll
-  someCount: 12
 
 seasons:
   - MeteorShowers
@@ -96,3 +90,38 @@ unknownCellsAllowedSubworlds:
     temperatureRanges:
      - VeryCold
      - ExtremelyCold
+
+worldTemplateRules:
+  # Frozen
+  - names:
+      - poi/frozen/heatsink_a
+      - poi/frozen/heatsink_b
+      - poi/frozen/heatsink_c
+      - poi/frozen/heatsink_d
+    listRule: GuaranteeSomeTryMore
+    someCount: 1
+    moreCount: 2
+    priority: 100 
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [FrozenWastes]
+  # Gravitas
+  - names:
+    - poi/poi_gravitas
+    listRule: GuaranteeOne
+    priority: 500
+    allowExtremeTemperatureOverlap: true # ignore temperature differences on the surface
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - subworlds/space/Surface
+  # Generic Geysers
+  - names:
+    - geysers/generic
+    listRule: TryOne
+    times: 12
+    allowDuplicates: true
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning

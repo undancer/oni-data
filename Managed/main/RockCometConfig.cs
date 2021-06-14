@@ -9,9 +9,9 @@ public class RockCometConfig : IEntityConfig
 
 	private const int ADDED_CELLS = 6;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

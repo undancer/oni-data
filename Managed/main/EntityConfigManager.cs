@@ -62,7 +62,7 @@ public class EntityConfigManager : KMonoBehaviour
 			if (obj is IEntityConfig)
 			{
 				IEntityConfig entityConfig = obj as IEntityConfig;
-				if (DlcManager.IsContentActive(entityConfig.GetDlcId()))
+				if (DlcManager.IsDlcListValidForCurrentContent(entityConfig.GetDlcIds()))
 				{
 					RegisterEntity(obj as IEntityConfig);
 				}

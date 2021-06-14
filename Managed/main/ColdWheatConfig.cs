@@ -14,9 +14,9 @@ public class ColdWheatConfig : IEntityConfig
 
 	public const float WATER_RATE = 71f / (678f * (float)Math.PI);
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

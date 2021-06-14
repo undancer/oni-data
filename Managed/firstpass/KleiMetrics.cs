@@ -20,6 +20,13 @@ public class KleiMetrics : ThreadedHttps<KleiMetrics>
 		}
 	}
 
+	protected struct ExpansionsMetricsData
+	{
+		public string Name;
+
+		public bool Activated;
+	}
+
 	private const string SessionIDKey = "SESSION_ID";
 
 	private const string GameIDKey = "GAME_ID";
@@ -67,6 +74,8 @@ public class KleiMetrics : ThreadedHttps<KleiMetrics>
 	private const string LastUserActionFieldName = "LastUA";
 
 	public const string SaveFolderWriteTest = "SaveFolderWriteTest";
+
+	public const string ExpansionsFieldName = "Expansions";
 
 	private string PlatformUserIDFieldName;
 
@@ -214,6 +223,21 @@ public class KleiMetrics : ThreadedHttps<KleiMetrics>
 		return null;
 	}
 
+	protected static ExpansionsMetricsData[] Expansions()
+	{
+		List<string> ownedDLCIds = DlcManager.GetOwnedDLCIds();
+		ExpansionsMetricsData[] array = new ExpansionsMetricsData[ownedDLCIds.Count];
+		for (int i = 0; i < ownedDLCIds.Count; i++)
+		{
+			array[i] = new ExpansionsMetricsData
+			{
+				Name = ownedDLCIds[i],
+				Activated = DlcManager.IsContentActive(ownedDLCIds[i])
+			};
+		}
+		return array;
+	}
+
 	public void SetLastUserAction(long lastUserActionTicks)
 	{
 		if (enabled && sessionStarted)
@@ -341,6 +365,7 @@ public class KleiMetrics : ThreadedHttps<KleiMetrics>
 		{
 			SetStaticSessionVariable("KU", KleiAccount.KleiUserID);
 		}
+		SetStaticSessionVariable("Expansions", Expansions());
 	}
 
 	private Dictionary<string, object> GetUserSession()

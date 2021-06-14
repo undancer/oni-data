@@ -242,7 +242,7 @@ public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 			currentlyDisplayedRows.Add(item, value: true);
 			if (units.ContainsKey(item))
 			{
-				Debug.LogError(string.Concat("Trying to add ", item.ToString(), ":UnitType ", units[item], " but units dictionary already has key ", item.ToString(), " with unit type:", unit));
+				Debug.LogError("Trying to add " + item.ToString() + ":UnitType " + units[item].ToString() + " but units dictionary already has key " + item.ToString() + " with unit type:" + unit);
 			}
 			else
 			{
@@ -432,7 +432,7 @@ public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 			}
 			else
 			{
-				DebugUtil.DevLogError("DevError: No tracker found for resource category " + categoryRow.Key);
+				DebugUtil.DevLogError("DevError: No tracker found for resource category " + categoryRow.Key.ToString());
 			}
 		}
 		foreach (KeyValuePair<Tag, GameObject> resourceRow in resourceRows)
@@ -456,7 +456,7 @@ public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 			}
 			else
 			{
-				DebugUtil.DevLogError("DevError: No tracker found for resource " + resourceRow.Key);
+				DebugUtil.DevLogError("DevError: No tracker found for resource " + resourceRow.Key.ToString());
 			}
 		}
 	}

@@ -12,8 +12,13 @@ namespace ProcGen
 		[Serialize]
 		public TagSet tags = new TagSet();
 
+		[Serialize]
+		public Tag templateTag = Tag.Invalid;
+
+		[Serialize]
 		public TagSet featureSpecificTags = new TagSet();
 
+		[Serialize]
 		public TagSet biomeSpecificTags = new TagSet();
 
 		internal Satsuma.Node node
@@ -70,6 +75,18 @@ namespace ProcGen
 				}
 			}
 			return "MISSING";
+		}
+
+		public string GetFeature()
+		{
+			foreach (Tag tag in tags)
+			{
+				if (tag.Name.Contains("features/"))
+				{
+					return tag.Name;
+				}
+			}
+			return null;
 		}
 
 		public void SetPosition(Vector2 newPos)

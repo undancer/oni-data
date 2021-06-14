@@ -19,6 +19,11 @@ public class DecontaminationShowerConfig : IBuildingConfig
 
 	private const SimHashes PRODUCED_ELEMENT = SimHashes.DirtyWater;
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		string[] rADIATION_CONTAINMENT = MATERIALS.RADIATION_CONTAINMENT;
@@ -27,7 +32,6 @@ public class DecontaminationShowerConfig : IBuildingConfig
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER5[0],
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER2[0]
 		}, construction_materials: rADIATION_CONTAINMENT, melting_point: 1600f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER0, id: "DecontaminationShower", width: 2, height: 4, anim: "decontamination_shower_kanim", hitpoints: 250, construction_time: 120f, decor: BUILDINGS.DECOR.PENALTY.TIER3);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		buildingDef.InputConduitType = ConduitType.Liquid;
 		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
 		buildingDef.AudioCategory = "Metal";

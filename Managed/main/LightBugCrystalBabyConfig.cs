@@ -5,9 +5,9 @@ public class LightBugCrystalBabyConfig : IEntityConfig
 {
 	public const string ID = "LightBugCrystalBaby";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

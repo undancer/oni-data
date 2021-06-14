@@ -33,9 +33,9 @@ public class OilFloaterDecorConfig : IEntityConfig
 		return BaseOilFloaterConfig.SetupDiet(gameObject, SimHashes.Oxygen.CreateTag(), Tag.Invalid, CALORIES_PER_KG_OF_ORE, 0f, null, 0f, 0f);
 	}
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

@@ -23,9 +23,9 @@ public class HighEnergyParticleConfig : IEntityConfig
 
 	public const string ID = "HighEnergyParticle";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "EXPANSION1_ID";
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 
 	public GameObject CreatePrefab()

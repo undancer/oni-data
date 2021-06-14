@@ -43,14 +43,14 @@ public class ConditionDestinationReachable : ProcessCondition
 
 	public bool CanReachSpacecraftDestination(SpaceDestination destination)
 	{
-		Debug.Assert(!DlcManager.IsExpansion1Active());
+		Debug.Assert(!DlcManager.FeatureClusterSpaceEnabled());
 		float rocketMaxDistance = module.GetComponent<CommandModule>().rocketStats.GetRocketMaxDistance();
 		return (float)destination.OneBasedDistance * 10000f <= rocketMaxDistance;
 	}
 
 	public SpaceDestination GetSpacecraftDestination()
 	{
-		Debug.Assert(!DlcManager.IsExpansion1Active());
+		Debug.Assert(!DlcManager.FeatureClusterSpaceEnabled());
 		int id = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(module.GetComponent<LaunchConditionManager>()).id;
 		return SpacecraftManager.instance.GetSpacecraftDestination(id);
 	}
