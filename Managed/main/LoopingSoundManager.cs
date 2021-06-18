@@ -63,6 +63,8 @@ public class LoopingSoundManager : KMonoBehaviour, IRenderEveryTick
 
 	private static LoopingSoundManager instance;
 
+	private bool GameIsPaused;
+
 	private Dictionary<HashedString, LoopingSoundParameterUpdater> parameterUpdaters = new Dictionary<HashedString, LoopingSoundParameterUpdater>();
 
 	private KCompactedVector<Sound> sounds = new KCompactedVector<Sound>();
@@ -390,7 +392,7 @@ public class LoopingSoundManager : KMonoBehaviour, IRenderEveryTick
 		Sound data = Get().sounds.GetData(handle);
 		if (data.IsPlaying)
 		{
-			data.ev.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+			data.ev.stop(Get().GameIsPaused ? FMOD.Studio.STOP_MODE.IMMEDIATE : FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 			data.ev.release();
 			SoundDescription soundEventDescription = KFMOD.GetSoundEventDescription(data.path);
 			SoundDescription.Parameter[] parameters = soundEventDescription.parameters;
@@ -426,6 +428,7 @@ public class LoopingSoundManager : KMonoBehaviour, IRenderEveryTick
 	private void OnPauseChanged(object data)
 	{
 		bool flag = (bool)data;
+		GameIsPaused = flag;
 		foreach (Sound data2 in sounds.GetDataList())
 		{
 			if (data2.IsPlaying)

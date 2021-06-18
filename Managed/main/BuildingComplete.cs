@@ -135,14 +135,17 @@ public class BuildingComplete : Building
 			PrimaryElement obj = primaryElement;
 			obj.setTemperatureCallback = (PrimaryElement.SetTemperatureCallback)Delegate.Combine(obj.setTemperatureCallback, new PrimaryElement.SetTemperatureCallback(OnSetTemperature));
 		}
-		Def.MarkArea(cell, base.Orientation, Def.ObjectLayer, base.gameObject);
-		if (Def.IsTilePiece)
+		if (!base.gameObject.HasTag(GameTags.RocketInSpace))
 		{
-			Def.MarkArea(cell, base.Orientation, Def.TileLayer, base.gameObject);
-			Def.RunOnArea(cell, base.Orientation, delegate(int c)
+			Def.MarkArea(cell, base.Orientation, Def.ObjectLayer, base.gameObject);
+			if (Def.IsTilePiece)
 			{
-				TileVisualizer.RefreshCell(c, Def.TileLayer, Def.ReplacementLayer);
-			});
+				Def.MarkArea(cell, base.Orientation, Def.TileLayer, base.gameObject);
+				Def.RunOnArea(cell, base.Orientation, delegate(int c)
+				{
+					TileVisualizer.RefreshCell(c, Def.TileLayer, Def.ReplacementLayer);
+				});
+			}
 		}
 		RegisterBlockTileRenderer();
 		if (Def.PreventIdleTraversalPastBuilding)

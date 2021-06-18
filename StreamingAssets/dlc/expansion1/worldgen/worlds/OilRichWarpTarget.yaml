@@ -21,7 +21,7 @@ defaultsOverrides:
     OverworldSampleBehaviour: PoissonDisk
 
 startSubworldName: expansion1::subworlds/sandstone/SandstoneWarpStart
-startingBaseTemplate:  expansion1::bases/warpworldBase
+startingBaseTemplate:  expansion1::bases/warpworldSandstoneBase
 startingBasePositionHorizontal:
   min: 0.2
   max: 0.8

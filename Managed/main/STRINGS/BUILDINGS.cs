@@ -4017,7 +4017,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Microtarget where your " + UI.FormatAsLink("Interplanetary Payload", "RAILGUNPAYLOAD") + " lands on a Planetoid surface.";
 
-				public static LocString EFFECT = "Guides " + UI.FormatAsLink("Interplanetary Payloads", "RAILGUNPAYLOAD") + " and " + UI.FormatAsLink("Orbital Cargo Modules", "ORBITALCARGOMODULE") + "to land nearby.\n\n" + UI.FormatAsLink("Interplanetary Payloads", "RAILGUNPAYLOAD") + " must be launched from a " + UI.FormatAsLink("Interplanetary Launcher", "RAILGUN") + ".";
+				public static LocString EFFECT = "Guides " + UI.FormatAsLink("Interplanetary Payloads", "RAILGUNPAYLOAD") + " and " + UI.FormatAsLink("Orbital Cargo Modules", "ORBITALCARGOMODULE") + " to land nearby.\n\n" + UI.FormatAsLink("Interplanetary Payloads", "RAILGUNPAYLOAD") + " must be launched from a " + UI.FormatAsLink("Interplanetary Launcher", "RAILGUN") + ".";
 			}
 
 			public class DIAMONDPRESS
@@ -4284,6 +4284,114 @@ namespace STRINGS
 				public static LocString NAME = "Window";
 
 				public static LocString DESC = "A tall, thin window.";
+			}
+
+			public class PROPGRAVITASLABWINDOW
+			{
+				public static LocString NAME = "Lab Window";
+
+				public static LocString DESC = "";
+
+				public static LocString EFFECT = "";
+			}
+
+			public class PROPGRAVITASLABWINDOWHORIZONTAL
+			{
+				public static LocString NAME = "Lab Window";
+
+				public static LocString DESC = "";
+
+				public static LocString EFFECT = "";
+			}
+
+			public class PROPGRAVITASLABWALL
+			{
+				public static LocString NAME = "Lab Wall";
+
+				public static LocString DESC = "";
+
+				public static LocString EFFECT = "";
+			}
+
+			public class GRAVITASDOOR
+			{
+				public static LocString NAME = "Gravitas Door";
+
+				public static LocString DESC = "";
+
+				public static LocString EFFECT = "";
+			}
+
+			public class PROPGRAVITASWALL
+			{
+				public static LocString NAME = "Wall";
+
+				public static LocString DESC = "";
+
+				public static LocString EFFECT = "";
+			}
+
+			public class PROPGRAVITASDISPLAY4
+			{
+				public static LocString NAME = "Electronic Display";
+
+				public static LocString DESC = "";
+			}
+
+			public class PROPGRAVITASCEILINGROBOT
+			{
+				public static LocString NAME = "Ceiling Robot";
+
+				public static LocString DESC = "";
+			}
+
+			public class PROPGRAVITASFLOORROBOT
+			{
+				public static LocString NAME = "Floor Robot";
+
+				public static LocString DESC = "";
+			}
+
+			public class PROPGRAVITASJAR1
+			{
+				public static LocString NAME = "Jar 1";
+
+				public static LocString DESC = "";
+			}
+
+			public class PROPGRAVITASHANDSCANNER
+			{
+				public static LocString NAME = "Hand Scanner";
+
+				public static LocString DESC = "";
+			}
+
+			public class PROPGRAVITASLABTABLE
+			{
+				public static LocString NAME = "Table";
+
+				public static LocString DESC = "";
+			}
+
+			public class PROPGRAVITASROBTICTABLE
+			{
+				public static LocString NAME = "Table";
+
+				public static LocString DESC = "";
+			}
+
+			public class PROPGRAVITASSHELF
+			{
+				public static LocString NAME = "Shelf";
+
+				public static LocString DESC = "";
+			}
+
+			public class PROPGRAVITASJAR2
+			{
+				public static LocString NAME = "Jar 2";
+
+				public static LocString DESC = "";
 			}
 
 			public class WARPCONDUITRECEIVER

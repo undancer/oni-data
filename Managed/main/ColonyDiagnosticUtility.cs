@@ -248,6 +248,14 @@ public class ColonyDiagnosticUtility : KMonoBehaviour, ISim4000ms
 		return (WorkTimeDiagnostic)worldDiagnostics[worldID].Find((ColonyDiagnostic match) => match is WorkTimeDiagnostic && ((WorkTimeDiagnostic)match).choreGroup == choreGroup);
 	}
 
+	private void TryAddDiagnosticToWorldCollection(ref List<ColonyDiagnostic> newWorldDiagnostics, ColonyDiagnostic newDiagnostic)
+	{
+		if (DlcManager.IsDlcListValidForCurrentContent(newDiagnostic.GetDlcIds()))
+		{
+			newWorldDiagnostics.Add(newDiagnostic);
+		}
+	}
+
 	public void AddWorld(int worldID)
 	{
 		bool flag = false;
@@ -260,38 +268,38 @@ public class ColonyDiagnosticUtility : KMonoBehaviour, ISim4000ms
 		{
 			diagnosticCriteriaDisabled.Add(worldID, new Dictionary<string, List<string>>());
 		}
-		List<ColonyDiagnostic> list = new List<ColonyDiagnostic>();
-		list.Add(new BreathabilityDiagnostic(worldID));
-		list.Add(new FoodDiagnostic(worldID));
-		list.Add(new StressDiagnostic(worldID));
-		list.Add(new RadiationDiagnostic(worldID));
-		list.Add(new ReactorDiagnostic(worldID));
+		List<ColonyDiagnostic> newWorldDiagnostics = new List<ColonyDiagnostic>();
+		TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new BreathabilityDiagnostic(worldID));
+		TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new FoodDiagnostic(worldID));
+		TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new StressDiagnostic(worldID));
+		TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new RadiationDiagnostic(worldID));
+		TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new ReactorDiagnostic(worldID));
 		if (ClusterManager.Instance.GetWorld(worldID).IsModuleInterior)
 		{
-			list.Add(new FloatingRocketDiagnostic(worldID));
-			list.Add(new RocketFuelDiagnostic(worldID));
-			list.Add(new RocketOxidizerDiagnostic(worldID));
+			TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new FloatingRocketDiagnostic(worldID));
+			TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new RocketFuelDiagnostic(worldID));
+			TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new RocketOxidizerDiagnostic(worldID));
 		}
 		else
 		{
-			list.Add(new BedDiagnostic(worldID));
-			list.Add(new ToiletDiagnostic(worldID));
-			list.Add(new PowerUseDiagnostic(worldID));
-			list.Add(new BatteryDiagnostic(worldID));
-			list.Add(new IdleDiagnostic(worldID));
-			list.Add(new TrappedDuplicantDiagnostic(worldID));
-			list.Add(new FarmDiagnostic(worldID));
-			list.Add(new EntombedDiagnostic(worldID));
+			TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new BedDiagnostic(worldID));
+			TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new ToiletDiagnostic(worldID));
+			TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new PowerUseDiagnostic(worldID));
+			TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new BatteryDiagnostic(worldID));
+			TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new IdleDiagnostic(worldID));
+			TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new TrappedDuplicantDiagnostic(worldID));
+			TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new FarmDiagnostic(worldID));
+			TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new EntombedDiagnostic(worldID));
 			for (int i = 0; i < Db.Get().ChoreGroups.Count; i++)
 			{
-				list.Add(new ChoreGroupDiagnostic(worldID, Db.Get().ChoreGroups[i]));
-				list.Add(new WorkTimeDiagnostic(worldID, Db.Get().ChoreGroups[i]));
+				TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new ChoreGroupDiagnostic(worldID, Db.Get().ChoreGroups[i]));
+				TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new WorkTimeDiagnostic(worldID, Db.Get().ChoreGroups[i]));
 			}
-			list.Add(new AllChoresDiagnostic(worldID));
-			list.Add(new AllWorkTimeDiagnostic(worldID));
+			TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new AllChoresDiagnostic(worldID));
+			TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new AllWorkTimeDiagnostic(worldID));
 		}
-		worldDiagnostics.Add(worldID, list);
-		foreach (ColonyDiagnostic item in list)
+		worldDiagnostics.Add(worldID, newWorldDiagnostics);
+		foreach (ColonyDiagnostic item in newWorldDiagnostics)
 		{
 			if (!diagnosticDisplaySettings[worldID].ContainsKey(item.id))
 			{

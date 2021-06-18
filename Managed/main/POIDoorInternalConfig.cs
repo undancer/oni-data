@@ -39,6 +39,7 @@ public class POIDoorInternalConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
+		go.AddTag(GameTags.Gravitas);
 		AccessControl component = go.GetComponent<AccessControl>();
 		Door component2 = go.GetComponent<Door>();
 		component2.hasComplexUserControls = false;

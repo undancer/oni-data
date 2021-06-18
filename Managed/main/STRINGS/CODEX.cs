@@ -99,6 +99,30 @@ namespace STRINGS
 			public static LocString BODY = "";
 		}
 
+		public class BEETA
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "Beetas are insectiod creatures that enjoy a symbiotic relationship with the radioactive environment they thrive in.\n\nMuch like the honey bee gathers nectar and processes it to honey, the Beeta turns Uranium into Enriched Uranium through a complex process of isotope separation inside the Beeta Hive.\n\nWhen first observing the Beeta's enrichment process, many scientists note with surprise just how much more efficient the cooperative combination of insect and hive is when compared to even the most advanced industrial processes.";
+			}
+
+			public static LocString TITLE = "Beeta";
+
+			public static LocString SUBTITLE = "Aggressive Critter";
+		}
+
+		public class DIVERGENT
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "'Divergent' is the name given to the two different genders of one species, the Sweetle and the Grubgrub, both of which are able to reproduce asexually and tend to Grubfruit Plants.\n\nWhen tending to the Grubfruit Plant, both gender variants of the Divergent display the exact same behaviors, however the Grubgrub possesses slightly more tiny facial hair which helps in pollinating the plants and stimulates faster growth.";
+			}
+
+			public static LocString TITLE = "Divergent";
+
+			public static LocString SUBTITLE = "Domesticatable Critter";
+		}
+
 		public class DRECKO
 		{
 			public class BODY
@@ -293,6 +317,18 @@ namespace STRINGS
 			public static LocString SUBTITLE = "Domesticable Critter";
 		}
 
+		public class PLUGSLUG
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "Plug Slugs are fuzzy gastropoda that are able to cling to walls and ceilings thanks to an extreme triboelectric effect caused by friction between their fur and various surfaces. This same phenomomen allows the Plug Slug to generate a significant amount of static electricity that can be converted into power.\n\nThe increased amount of static electricity a Plug Slug can generate when domesticated is due to the internal vibration, or contented 'humming', they demonstrate when all their needs are met.";
+			}
+
+			public static LocString TITLE = "Plug Slug";
+
+			public static LocString SUBTITLE = "Domesticatable Critter";
+		}
+
 		public class POKESHELL
 		{
 			public class BODY
@@ -373,7 +409,7 @@ namespace STRINGS
 		{
 			public class BODY
 			{
-				public static LocString CONTAINER1 = "The Rover is a planetary scout robot programmed to land on and mine Planetoids where sending a Duplicant would put them unneccessarily in danger.\n\nRovers are programmed to be very pleasant and social when interacting with other beings.\n\nHowever, an unintended consequence of this programming is that the socialized robots tended to experience the same work slow-downs due to loneliness and low morale.\n\nTo compensate for this, the Rover was programmed to have two distinct personalities it can switch between to have pleasant in-depth conversations with itself during long stints alone.";
+				public static LocString CONTAINER1 = "The Rover is a planetary scout robot programmed to land on and mine Planetoids where sending a Duplicant would put them unneccessarily in danger.\n\nRovers are programmed to be very pleasant and social when interacting with other beings. However, an unintended consequence of this programming is that the socialized robots tended to experience the same work slow-downs due to loneliness and low morale.\n\nTo compensate for this, the Rover was programmed to have two distinct personalities it can switch between to have pleasant in-depth conversations with itself during long stints alone.";
 			}
 
 			public static LocString TITLE = "Rover";

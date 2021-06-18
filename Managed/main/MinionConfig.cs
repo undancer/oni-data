@@ -113,7 +113,7 @@ public class MinionConfig : IEntityConfig
 		kBoxCollider2D.offset = new Vector2(0f, 0.8f);
 		kBoxCollider2D.size = new Vector2(1f, 1.5f);
 		SnapOn snapOn = gameObject.AddOrGet<SnapOn>();
-		snapOn.snapPoints = new List<SnapOn.SnapPoint>(new SnapOn.SnapPoint[18]
+		snapOn.snapPoints = new List<SnapOn.SnapPoint>(new SnapOn.SnapPoint[19]
 		{
 			new SnapOn.SnapPoint
 			{
@@ -258,6 +258,14 @@ public class MinionConfig : IEntityConfig
 				context = "",
 				buildFile = Assets.GetAnim("mask_oxygen_kanim"),
 				overrideSymbol = "snapTo_goggles"
+			},
+			new SnapOn.SnapPoint
+			{
+				pointName = "dig",
+				automatic = false,
+				context = "demolish",
+				buildFile = Assets.GetAnim("poi_demolish_gun_kanim"),
+				overrideSymbol = "snapTo_rgtHand"
 			}
 		});
 		PrimaryElement primaryElement = gameObject.AddOrGet<PrimaryElement>();
@@ -318,7 +326,7 @@ public class MinionConfig : IEntityConfig
 		kBatchedAnimEventToggler.enableEvent = "LaserOn";
 		kBatchedAnimEventToggler.disableEvent = "LaserOff";
 		kBatchedAnimEventToggler.entries = new List<KBatchedAnimEventToggler.Entry>();
-		LaserEffect[] array = new LaserEffect[13];
+		LaserEffect[] array = new LaserEffect[14];
 		LaserEffect laserEffect = new LaserEffect
 		{
 			id = "DigEffect",
@@ -423,6 +431,14 @@ public class MinionConfig : IEntityConfig
 			context = "specialistdig"
 		};
 		array[12] = laserEffect;
+		laserEffect = new LaserEffect
+		{
+			id = "DemolishEffect",
+			animFile = "poi_demolish_fx_kanim",
+			anim = "idle",
+			context = "demolish"
+		};
+		array[13] = laserEffect;
 		LaserEffect[] array2 = array;
 		KBatchedAnimController component = prefab.GetComponent<KBatchedAnimController>();
 		LaserEffect[] array3 = array2;

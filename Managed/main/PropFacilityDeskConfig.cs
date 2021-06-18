@@ -20,6 +20,7 @@ public class PropFacilityDeskConfig : IEntityConfig
 		component.SetElement(SimHashes.Granite);
 		component.Temperature = 294.15f;
 		gameObject.AddOrGet<LoreBearer>();
+		gameObject.AddOrGet<Demolishable>();
 		return gameObject;
 	}
 

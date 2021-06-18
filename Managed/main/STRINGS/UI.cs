@@ -2371,6 +2371,15 @@ namespace STRINGS
 
 			public class MODS
 			{
+				public class CONTENT_FAILURE
+				{
+					public static LocString DISABLED_CONTENT = " - <b>Not compatible with <i>{Content}</i></b>";
+
+					public static LocString NO_CONTENT = " - <b>No compatible mod found</b>";
+
+					public static LocString OLD_API = " - <b>Mod out-of-date</b>";
+				}
+
 				public class TOOLTIPS
 				{
 					public static LocString ENABLED = "Enabled";
@@ -2401,8 +2410,6 @@ namespace STRINGS
 				public static LocString FAILED_TO_LOAD = "A mod failed to load and is being disabled:\n\n{0}: {1}\n\n{2}";
 
 				public static LocString DB_CORRUPT = "An error occurred trying to load the Mod Database.\n\n{0}";
-
-				public static LocString MOD_DISABLED_CONTENT = " - <b>Not compatible with <i>{Content}</i></b>";
 			}
 
 			public class MOD_EVENTS
@@ -8366,6 +8373,30 @@ namespace STRINGS
 				public class SEARCH_OBJECT_FAIL
 				{
 					public static LocString SEARCH1 = "I look around but find nothing of interest.";
+				}
+
+				public class SEARCH_SPACEPOI_SUCCESS
+				{
+					public static LocString SEARCH1 = "A quick analysis of the hardware of this debris has uncovered some searchable files within.\n\nNew Database Entry unlocked.";
+
+					public static LocString SEARCH2 = "There's an archaic interface I can interact with on this device.\n\nNew Database Entry unlocked.";
+
+					public static LocString SEARCH3 = "While investigating the software of this wreckage, a compelling file comes to my attention.\n\nNew Database Entry unlocked.";
+
+					public static LocString SEARCH4 = "Not much remains of the software that once ran this spacecraft except for one file that piques my interest.\n\nNew Database Entry unlocked.";
+
+					public static LocString SEARCH5 = "I find some noteworthy data hidden amongst the system files of this space junk.\n\nNew Database Entry unlocked.";
+
+					public static LocString SEARCH6 = "Despite being subjected to years of degradation, there are still recoverable files in this machinery.\n\nNew Database Entry unlocked.";
+				}
+
+				public class SEARCH_SPACEPOI_FAIL
+				{
+					public static LocString SEARCH1 = "There's nothing of interest left in this old space junk.";
+
+					public static LocString SEARCH2 = "I've salvaged everything I can from this vehicle.";
+
+					public static LocString SEARCH3 = "Years of neglect and radioactive decay have destroyed all the useful data from this derelict spacecraft.";
 				}
 
 				public static LocString NAME = "Inspect";

@@ -65,6 +65,9 @@ public class MainMenu : KScreen
 	private ColorStyleSetting normalButtonStyle;
 
 	[SerializeField]
+	private string menuMusicEventName;
+
+	[SerializeField]
 	private string ambientLoopEventName;
 
 	private EventInstance ambientLoop;
@@ -473,7 +476,7 @@ public class MainMenu : KScreen
 					gameInfo = value.headerData;
 				}
 				bool flag2 = true;
-				if (header.buildVersion > 467601 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 23)
+				if (header.buildVersion > 468097 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 23)
 				{
 					flag = false;
 				}
@@ -538,9 +541,9 @@ public class MainMenu : KScreen
 		{
 			AudioMixer.instance.StartUserVolumesSnapshot();
 		}
-		if (AudioDebug.Get().musicEnabled && !MusicManager.instance.SongIsPlaying("Music_TitleTheme_Expansion1"))
+		if (AudioDebug.Get().musicEnabled && !MusicManager.instance.SongIsPlaying(menuMusicEventName))
 		{
-			MusicManager.instance.PlaySong("Music_TitleTheme_Expansion1");
+			MusicManager.instance.PlaySong(menuMusicEventName);
 		}
 		CheckForAudioDriverIssue();
 	}

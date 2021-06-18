@@ -61,8 +61,8 @@ public class Demolishable : Workable
 		minimumAttributeMultiplier = 0.75f;
 		skillExperienceSkillGroup = Db.Get().SkillGroups.Building.Id;
 		skillExperienceMultiplier = SKILLS.MOST_DAY_EXPERIENCE;
-		multitoolContext = "build";
-		multitoolHitEffectTag = EffectConfigs.BuildSplashId;
+		multitoolContext = "demolish";
+		multitoolHitEffectTag = EffectConfigs.DemolishSplashId;
 		workingPstComplete = null;
 		workingPstFailed = null;
 		CellOffset[][] table = OffsetGroups.InvertedStandardTable;

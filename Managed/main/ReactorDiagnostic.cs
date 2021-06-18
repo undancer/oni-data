@@ -12,6 +12,11 @@ public class ReactorDiagnostic : ColonyDiagnostic
 		AddCriterion("CheckCoolant", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA.CHECKCOOLANT, CheckCoolant));
 	}
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	private DiagnosticResult CheckTemperature()
 	{
 		List<Reactor> worldItems = Components.NuclearReactors.GetWorldItems(base.worldID);

@@ -13,6 +13,8 @@ public class EffectConfigs : IMultiEntityConfig
 
 	public static string BuildSplashId = "BuildSplashFx";
 
+	public static string DemolishSplashId = "DemolishSplashFx";
+
 	public List<GameObject> CreatePrefabs()
 	{
 		List<GameObject> list = new List<GameObject>();
@@ -67,6 +69,17 @@ public class EffectConfigs : IMultiEntityConfig
 					"sparks_radial_build_kanim"
 				},
 				initialAnim = "loop",
+				initialMode = KAnim.PlayMode.Loop,
+				destroyOnAnimComplete = false
+			},
+			new
+			{
+				id = DemolishSplashId,
+				animFiles = new string[1]
+				{
+					"poi_demolish_impact_kanim"
+				},
+				initialAnim = "POI_demolish_impact",
 				initialMode = KAnim.PlayMode.Loop,
 				destroyOnAnimComplete = false
 			}

@@ -1,0 +1,21 @@
+id: "Divergent"
+title: STRINGS.CODEX.DIVERGENT.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.DIVERGENT.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.DIVERGENT.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.DIVERGENT.BODY.CONTAINER1
+          style: Body

@@ -1,0 +1,21 @@
+id: "PlugSlug"
+title: STRINGS.CODEX.PLUGSLUG.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.PLUGSLUG.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.PLUGSLUG.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.PLUGSLUG.BODY.CONTAINER1
+          style: Body

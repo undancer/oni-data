@@ -23,7 +23,7 @@ defaultsOverrides:
     POIPadding: 1
 
 startSubworldName: expansion1::subworlds/swamp/SwampWarpStart
-startingBaseTemplate:  expansion1::bases/warpworldBase
+startingBaseTemplate:  expansion1::bases/warpworldSwampBase
 startingBasePositionHorizontal:
   min: 0.3
   max: 0.7

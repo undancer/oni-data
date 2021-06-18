@@ -47,7 +47,7 @@ namespace KMod
 			return false;
 		}
 
-		public static LoadedModData LoadDLLs(string harmonyId, string path)
+		public static LoadedModData LoadDLLs(Mod ownerMod, string harmonyId, string path, bool isDev)
 		{
 			LoadedModData loadedModData = new LoadedModData();
 			try
@@ -83,99 +83,73 @@ namespace KMod
 				{
 					return null;
 				}
-				ListPool<MethodInfo, Manager>.PooledList pooledList = ListPool<MethodInfo, Manager>.Allocate();
-				ListPool<MethodInfo, Manager>.PooledList pooledList2 = ListPool<MethodInfo, Manager>.Allocate();
-				ListPool<MethodInfo, Manager>.PooledList pooledList3 = ListPool<MethodInfo, Manager>.Allocate();
-				ListPool<MethodInfo, Manager>.PooledList pooledList4 = ListPool<MethodInfo, Manager>.Allocate();
-				Type[] types = new Type[0];
-				Type[] types2 = new Type[1]
-				{
-					typeof(string)
-				};
-				Type[] types3 = new Type[1]
-				{
-					typeof(Harmony)
-				};
-				MethodInfo methodInfo = null;
 				loadedModData.dlls = new HashSet<Assembly>();
+				loadedModData.userMod2Instances = new Dictionary<Assembly, UserMod2>();
 				foreach (Assembly item in list)
 				{
-					Type[] types4 = item.GetTypes();
-					foreach (Type type in types4)
+					loadedModData.dlls.Add(item);
+					UserMod2 userMod = null;
+					Type[] types = item.GetTypes();
+					foreach (Type type in types)
 					{
-						if (!(type == null))
+						if (!(type == null) && typeof(UserMod2).IsAssignableFrom(type))
 						{
-							methodInfo = type.GetMethod("OnLoad", types);
-							if (methodInfo != null)
+							if (userMod != null)
 							{
-								pooledList3.Add(methodInfo);
+								Debug.LogError("Found more than one class inheriting `UserMod2` in " + item.FullName + ", only one per assembly is allowed. Aborting load.");
+								return null;
 							}
-							methodInfo = type.GetMethod("OnLoad", types2);
-							if (methodInfo != null)
-							{
-								pooledList4.Add(methodInfo);
-							}
-							methodInfo = type.GetMethod("PrePatch", types3);
-							if (methodInfo != null)
-							{
-								pooledList.Add(methodInfo);
-							}
-							methodInfo = type.GetMethod("PostPatch", types3);
-							if (methodInfo != null)
-							{
-								pooledList2.Add(methodInfo);
-							}
+							userMod = Activator.CreateInstance(type) as UserMod2;
 						}
 					}
-					loadedModData.dlls.Add(item);
+					if (userMod == null)
+					{
+						if (isDev)
+						{
+							Debug.LogWarning($"{item.GetName()} at {path} has no classes inheriting from UserMod, creating one...");
+						}
+						userMod = new UserMod2();
+					}
+					userMod.assembly = item;
+					userMod.path = path;
+					userMod.mod = ownerMod;
+					loadedModData.userMod2Instances[item] = userMod;
 				}
-				Harmony harmony = new Harmony(harmonyId);
-				if (harmony != null)
+				loadedModData.harmony = new Harmony(harmonyId);
+				if (loadedModData.harmony != null)
 				{
-					object[] parameters = new object[1]
+					foreach (KeyValuePair<Assembly, UserMod2> userMod2Instance in loadedModData.userMod2Instances)
 					{
-						harmony
-					};
-					foreach (MethodInfo item2 in pooledList)
-					{
-						item2.Invoke(null, parameters);
-					}
-					foreach (Assembly item3 in list)
-					{
-						harmony.PatchAll(item3);
-					}
-					foreach (MethodInfo item4 in pooledList2)
-					{
-						item4.Invoke(null, parameters);
+						UserMod2 value = userMod2Instance.Value;
+						value.OnLoad(loadedModData.harmony);
 					}
 				}
-				pooledList.Recycle();
-				pooledList2.Recycle();
-				loadedModData.patched_methods = harmony.GetPatchedMethods().Where(delegate(MethodBase method)
+				loadedModData.patched_methods = loadedModData.harmony.GetPatchedMethods().Where(delegate(MethodBase method)
 				{
 					Patches patchInfo = Harmony.GetPatchInfo(method);
 					return patchInfo.Owners.Contains(harmonyId);
 				}).ToList();
-				foreach (MethodInfo item5 in pooledList3)
-				{
-					item5.Invoke(null, null);
-				}
-				object[] parameters2 = new object[1]
-				{
-					path
-				};
-				foreach (MethodInfo item6 in pooledList4)
-				{
-					item6.Invoke(null, parameters2);
-				}
-				pooledList3.Recycle();
-				pooledList4.Recycle();
 				return loadedModData;
 			}
 			catch (Exception e)
 			{
 				DebugUtil.LogException(null, "Exception while loading mod " + harmonyId + " at " + path + ".", e);
 				return null;
+			}
+		}
+
+		public static void PostLoadDLLs(string harmonyId, LoadedModData modData, IReadOnlyList<Mod> mods)
+		{
+			try
+			{
+				foreach (KeyValuePair<Assembly, UserMod2> userMod2Instance in modData.userMod2Instances)
+				{
+					userMod2Instance.Value.OnAllModsLoaded(modData.harmony, mods);
+				}
+			}
+			catch (Exception e)
+			{
+				DebugUtil.LogException(null, "Exception while postLoading mod " + harmonyId + ".", e);
 			}
 		}
 	}

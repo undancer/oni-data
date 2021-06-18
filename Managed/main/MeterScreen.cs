@@ -150,17 +150,20 @@ public class MeterScreen : KScreen, IRender1000ms
 		if (count2 != cachedMinionCount)
 		{
 			cachedMinionCount = count2;
+			string text = "";
 			if (DlcManager.FeatureClusterSpaceEnabled())
 			{
+				ClusterGridEntity component = ClusterManager.Instance.activeWorld.GetComponent<ClusterGridEntity>();
+				text = string.Format(UI.TOOLTIPS.METERSCREEN_POPULATION_CLUSTER, component.Name, count2, count);
 				currentMinions.text = $"{count2}/{count}";
 			}
 			else
 			{
 				currentMinions.text = $"{count}";
+				text = string.Format(UI.TOOLTIPS.METERSCREEN_POPULATION, count.ToString("0"));
 			}
 			MinionsTooltip.ClearMultiStringTooltip();
-			ClusterGridEntity component = ClusterManager.Instance.activeWorld.GetComponent<ClusterGridEntity>();
-			MinionsTooltip.AddMultiStringTooltip(string.Format(UI.TOOLTIPS.METERSCREEN_POPULATION_CLUSTER, component.Name, count2, count), ToolTipStyle_Header);
+			MinionsTooltip.AddMultiStringTooltip(text, ToolTipStyle_Header);
 		}
 	}
 
