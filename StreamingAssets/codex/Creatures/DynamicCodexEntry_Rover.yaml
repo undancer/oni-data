@@ -1,6 +1,7 @@
 id: "Rover"
 title: STRINGS.CODEX.ROVER.TITLE
-
+dlcIds:
+  - "EXPANSION1_ID"
 contentContainers:
 #-----------------------------
   - contentLayout: Vertical

@@ -59,10 +59,13 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 		Instance = this;
 		for (int i = 0; i < tools.Length; i++)
 		{
-			GameObject gameObject = Util.KInstantiate(tools[i].gameObject, base.gameObject);
-			tools[i] = gameObject.GetComponent<InterfaceTool>();
-			tools[i].gameObject.SetActive(value: true);
-			tools[i].gameObject.SetActive(value: false);
+			if (DlcManager.IsDlcListValidForCurrentContent(tools[i].DlcIDs))
+			{
+				GameObject gameObject = Util.KInstantiate(tools[i].gameObject, base.gameObject);
+				tools[i] = gameObject.GetComponent<InterfaceTool>();
+				tools[i].gameObject.SetActive(value: true);
+				tools[i].gameObject.SetActive(value: false);
+			}
 		}
 	}
 

@@ -140,7 +140,7 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 		{
 			_rectTransform = _canvas.GetComponentInParent<RectTransform>();
 		}
-		if (activateOnSpawn && KScreenManager.Instance != null)
+		if (activateOnSpawn && KScreenManager.Instance != null && !isActive)
 		{
 			Activate();
 		}

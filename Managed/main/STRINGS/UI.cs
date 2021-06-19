@@ -679,9 +679,9 @@ namespace STRINGS
 
 				public class SATELLITEFIELD
 				{
-					public static LocString NAME = "Satellite Asteroid Field";
+					public static LocString NAME = "Space Debris";
 
-					public static LocString DESC = "Antiquated space technology from a forgotten age.\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
+					public static LocString DESC = "Space junk from a forgotten age.\n\nHarvesting resources requires a rocket equipped with a " + FormatAsLink("Drillcone", "NOSECONEHARVEST") + ".";
 				}
 
 				public class ROCKYASTEROIDFIELD
@@ -2038,14 +2038,14 @@ namespace STRINGS
 							{
 								public static LocString NAME = "Enabled";
 
-								public static LocString TOOLTIP = "Checked: Teleporters will be spawned during Worldgen (Default)";
+								public static LocString TOOLTIP = "Checked: Teleporters will spawn during Worldgen (Default)";
 							}
 
 							public static class DISABLED
 							{
 								public static LocString NAME = "Disabled";
 
-								public static LocString TOOLTIP = "Unchecked: No Teleporters will be spawned during Worldgen";
+								public static LocString TOOLTIP = "Unchecked: No Teleporters will spawn during Worldgen";
 							}
 						}
 
@@ -2174,13 +2174,13 @@ namespace STRINGS
 
 			public class MOTD
 			{
-				public static LocString IMAGE_HEADER = "MINE THE GAP UPDATE";
+				public static LocString IMAGE_HEADER = "THE BIG MERGE";
 
 				public static LocString NEWS_HEADER = "JOIN THE DISCUSSION";
 
 				public static LocString NEWS_BODY = "Stay up to date by joining our mailing list, or head on over to the forums and join the discussion.";
 
-				public static LocString PATCH_NOTES_SUMMARY = "Welcome to the <b>Mine The Gap Update!</b>\n\n   •<indent=20px>New Space Points-of-Interest can be mined using the Drillcone for renewable resources.</indent>\n\n   •<indent=20px>Gravitas Artifacts have been added back in to the game.</indent>\n\n   •<indent=20px>Tech Tree rebalance and updates.</indent>\n\n   •<indent=20px>New sound effects, Diagnostics panel improvements, bug fixes and new lore entries.</indent>\n\nCheck out the full patch notes for more details!";
+				public static LocString PATCH_NOTES_SUMMARY = "Welcome to the <b>UPDATE NAME</b>\n\n   •<indent=20px>Toggle between <i>Spaced Out!</i> and Base Game in the main menu without re-downloading the game.</indent>\n\n   •<indent=20px>Base Game now has all <i>Spaced Out!</i> bug fixes and quality-of-life improvements.</indent>\n\n   •<indent=20px>Several buildings and items have been added to the Base Game, including Oxygen Masks, and Meter Valves.</indent>\n\n   •<indent=20px>UI and Diagnostics improvements have been added to the Base Game.</indent>\n   \n   •<indent=20px>Significant updates to the Modding system, modders please see the forum for upgrade instructions.</indent>\n\nCheck out the full patch notes for more details!";
 
 				public static LocString UPDATE_TEXT = "LAUNCHED!";
 
@@ -5000,7 +5000,7 @@ namespace STRINGS
 
 			public static LocString ANALYSIS_DESCRIPTION = "Use a Telescope to analyze space destinations.\n\nCompleting analysis on an object will unlock rocket missions to that destination.";
 
-			public static LocString RESEARCH_DESCRIPTION = "Gather Interstellar Research Data using Research Modules.\n\nResearch Modules Installed: {0}";
+			public static LocString RESEARCH_DESCRIPTION = "Gather Interstellar Research Data using Research Modules.";
 
 			public static LocString ROCKET_RENAME_BUTTON_TOOLTIP = "Rename this rocket";
 

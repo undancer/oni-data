@@ -69,6 +69,8 @@ public class InterfaceTool : KMonoBehaviour
 
 	public HashedString ViewMode => viewMode;
 
+	public virtual string[] DlcIDs => DlcManager.AVAILABLE_ALL_VERSIONS;
+
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();

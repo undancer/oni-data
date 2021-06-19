@@ -265,7 +265,7 @@ namespace ProcGenGame
 					}
 					else
 					{
-						Debug.LogError($"There is no room for a Space POI in ring range [{item3.allowedRings.min}, {item3.allowedRings.max}]");
+						Debug.LogWarning($"There is no room for a Space POI in ring range [{item3.allowedRings.min}, {item3.allowedRings.max}]");
 					}
 				}
 			}

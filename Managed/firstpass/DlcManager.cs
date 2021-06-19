@@ -212,6 +212,11 @@ public class DlcManager
 		KPlayerPrefs.SetInt(dlcId + ".ENABLED", enabled ? 1 : 0);
 	}
 
+	public static bool IsPureVanilla()
+	{
+		return !IsExpansion1Active();
+	}
+
 	public static bool IsExpansion1Installed()
 	{
 		return CheckPlatformSubscription("EXPANSION1_ID");

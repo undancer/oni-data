@@ -38,6 +38,8 @@ namespace ProcGenGame
 			public bool overrideDiseaseAmount;
 		}
 
+		private const float MASS_VARIATION = 0.2f;
+
 		public List<KeyValuePair<int, Tag>> terrainPositions = null;
 
 		public List<KeyValuePair<int, Tag>> poi = null;
@@ -275,7 +277,7 @@ namespace ProcGenGame
 				return 0f;
 			}
 			Debug.Assert(world.density[cellIdx] >= 0f && world.density[cellIdx] <= 1f, "Density [" + world.density[cellIdx] + "] out of range [0-1]");
-			float num = world.density[cellIdx] - 0.5f;
+			float num = 0.2f * (world.density[cellIdx] - 0.5f);
 			float num2 = mass + mass * num;
 			if (num2 > 10000f)
 			{
@@ -858,6 +860,7 @@ namespace ProcGenGame
 					num3 = ((num15 < num11) ? 0f : ((!(num15 < num12)) ? 1f : Mathf.Clamp01((num15 - num11) / (num12 - num11))));
 				}
 				worldGen.GetElementForBiomePoint(world, elementBandConfiguration, pos, out var element, out var pd, out var dc, num3);
+				pd.mass += pd.mass * 0.2f * (world.density[pos.x + world.size.x * pos.y] - 0.5f);
 				if (!element.IsVacuum && element.id != SimHashes.Katairite && element.id != SimHashes.Unobtanium)
 				{
 					float num16 = temperatureMin;

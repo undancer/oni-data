@@ -1,6 +1,7 @@
 id: "MyLog29"
 title: STRINGS.CODEX.MYLOG.BODY.TELEPORT.TITLE
-
+dlcIds:
+  - "EXPANSION1_ID"
 contentContainers:
 #-----------------------------
   - contentLayout: Vertical

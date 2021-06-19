@@ -160,26 +160,29 @@ public class CookingStationConfig : IBuildingConfig
 			},
 			sortOrder = 20
 		};
-		ComplexRecipe.RecipeElement[] array13 = new ComplexRecipe.RecipeElement[1]
+		if (DlcManager.IsExpansion1Active())
 		{
-			new ComplexRecipe.RecipeElement(SwampFruitConfig.ID, 1f)
-		};
-		ComplexRecipe.RecipeElement[] array14 = new ComplexRecipe.RecipeElement[1]
-		{
-			new ComplexRecipe.RecipeElement("SwampDelights", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
-		};
-		string id7 = ComplexRecipeManager.MakeRecipeID("CookingStation", array13, array14);
-		CookedEggConfig.recipe = new ComplexRecipe(id7, array13, array14)
-		{
-			time = FOOD.RECIPES.STANDARD_COOK_TIME,
-			description = ITEMS.FOOD.SWAMPDELIGHTS.RECIPEDESC,
-			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
+			ComplexRecipe.RecipeElement[] array13 = new ComplexRecipe.RecipeElement[1]
 			{
-				"CookingStation"
-			},
-			sortOrder = 20
-		};
+				new ComplexRecipe.RecipeElement(SwampFruitConfig.ID, 1f)
+			};
+			ComplexRecipe.RecipeElement[] array14 = new ComplexRecipe.RecipeElement[1]
+			{
+				new ComplexRecipe.RecipeElement("SwampDelights", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
+			};
+			string id7 = ComplexRecipeManager.MakeRecipeID("CookingStation", array13, array14);
+			CookedEggConfig.recipe = new ComplexRecipe(id7, array13, array14)
+			{
+				time = FOOD.RECIPES.STANDARD_COOK_TIME,
+				description = ITEMS.FOOD.SWAMPDELIGHTS.RECIPEDESC,
+				nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
+				fabricators = new List<Tag>
+				{
+					"CookingStation"
+				},
+				sortOrder = 20
+			};
+		}
 		ComplexRecipe.RecipeElement[] array15 = new ComplexRecipe.RecipeElement[1]
 		{
 			new ComplexRecipe.RecipeElement("ColdWheatSeed", 3f)
@@ -220,47 +223,53 @@ public class CookingStationConfig : IBuildingConfig
 			},
 			sortOrder = 1
 		};
-		ComplexRecipe.RecipeElement[] array19 = new ComplexRecipe.RecipeElement[1]
+		if (DlcManager.IsExpansion1Active())
 		{
-			new ComplexRecipe.RecipeElement("WormBasicFruit", 1f)
-		};
-		ComplexRecipe.RecipeElement[] array20 = new ComplexRecipe.RecipeElement[1]
-		{
-			new ComplexRecipe.RecipeElement("WormBasicFood", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
-		};
-		string id10 = ComplexRecipeManager.MakeRecipeID("CookingStation", array19, array20);
-		WormBasicFoodConfig.recipe = new ComplexRecipe(id10, array19, array20)
-		{
-			time = FOOD.RECIPES.STANDARD_COOK_TIME,
-			description = ITEMS.FOOD.WORMBASICFOOD.RECIPEDESC,
-			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
+			ComplexRecipe.RecipeElement[] array19 = new ComplexRecipe.RecipeElement[1]
 			{
-				"CookingStation"
-			},
-			sortOrder = 20
-		};
-		ComplexRecipe.RecipeElement[] array21 = new ComplexRecipe.RecipeElement[2]
-		{
-			new ComplexRecipe.RecipeElement("WormSuperFruit", 8f),
-			new ComplexRecipe.RecipeElement("Sucrose".ToTag(), 4f)
-		};
-		ComplexRecipe.RecipeElement[] array22 = new ComplexRecipe.RecipeElement[1]
-		{
-			new ComplexRecipe.RecipeElement("WormSuperFood", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
-		};
-		string id11 = ComplexRecipeManager.MakeRecipeID("CookingStation", array21, array22);
-		WormSuperFoodConfig.recipe = new ComplexRecipe(id11, array21, array22)
-		{
-			time = FOOD.RECIPES.STANDARD_COOK_TIME,
-			description = ITEMS.FOOD.WORMSUPERFOOD.RECIPEDESC,
-			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
+				new ComplexRecipe.RecipeElement("WormBasicFruit", 1f)
+			};
+			ComplexRecipe.RecipeElement[] array20 = new ComplexRecipe.RecipeElement[1]
 			{
-				"CookingStation"
-			},
-			sortOrder = 20
-		};
+				new ComplexRecipe.RecipeElement("WormBasicFood", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
+			};
+			string id10 = ComplexRecipeManager.MakeRecipeID("CookingStation", array19, array20);
+			WormBasicFoodConfig.recipe = new ComplexRecipe(id10, array19, array20)
+			{
+				time = FOOD.RECIPES.STANDARD_COOK_TIME,
+				description = ITEMS.FOOD.WORMBASICFOOD.RECIPEDESC,
+				nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
+				fabricators = new List<Tag>
+				{
+					"CookingStation"
+				},
+				sortOrder = 20
+			};
+		}
+		if (DlcManager.IsExpansion1Active())
+		{
+			ComplexRecipe.RecipeElement[] array21 = new ComplexRecipe.RecipeElement[2]
+			{
+				new ComplexRecipe.RecipeElement("WormSuperFruit", 8f),
+				new ComplexRecipe.RecipeElement("Sucrose".ToTag(), 4f)
+			};
+			ComplexRecipe.RecipeElement[] array22 = new ComplexRecipe.RecipeElement[1]
+			{
+				new ComplexRecipe.RecipeElement("WormSuperFood", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
+			};
+			string id11 = ComplexRecipeManager.MakeRecipeID("CookingStation", array21, array22);
+			WormSuperFoodConfig.recipe = new ComplexRecipe(id11, array21, array22)
+			{
+				time = FOOD.RECIPES.STANDARD_COOK_TIME,
+				description = ITEMS.FOOD.WORMSUPERFOOD.RECIPEDESC,
+				nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
+				fabricators = new List<Tag>
+				{
+					"CookingStation"
+				},
+				sortOrder = 20
+			};
+		}
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

@@ -27,6 +27,11 @@ public class BuildingComplete : Building
 
 	public List<AttributeModifier> regionModifiers = new List<AttributeModifier>();
 
+	private static readonly EventSystem.IntraObjectHandler<BuildingComplete> OnEntombedChange = new EventSystem.IntraObjectHandler<BuildingComplete>(delegate(BuildingComplete component, object data)
+	{
+		component.OnEntombedChanged();
+	});
+
 	private static readonly EventSystem.IntraObjectHandler<BuildingComplete> OnObjectReplacedDelegate = new EventSystem.IntraObjectHandler<BuildingComplete>(delegate(BuildingComplete component, object data)
 	{
 		component.OnObjectReplaced(data);
@@ -84,6 +89,22 @@ public class BuildingComplete : Building
 			GameComps.StructureTemperatures.Add(base.gameObject);
 		}
 		Subscribe(1606648047, OnObjectReplacedDelegate);
+		if (Def.Entombable)
+		{
+			Subscribe(-1089732772, OnEntombedChange);
+		}
+	}
+
+	private void OnEntombedChanged()
+	{
+		if (base.gameObject.HasTag(GameTags.Entombed))
+		{
+			Components.EntombedBuildings.Add(this);
+		}
+		else
+		{
+			Components.EntombedBuildings.Remove(this);
+		}
 	}
 
 	public override void UpdatePosition(int cell)
@@ -272,6 +293,7 @@ public class BuildingComplete : Building
 			});
 		}
 		Components.BuildingCompletes.Remove(this);
+		Components.EntombedBuildings.Remove(this);
 		Components.TemplateBuildings.Remove(this);
 		UnregisterBlockTileRenderer();
 		BuildingInventory.Instance.UnregisterBuilding(this);

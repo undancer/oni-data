@@ -30,7 +30,6 @@ public class CosmicResearchCenterConfig : IBuildingConfig
 		buildingDef.ViewMode = OverlayModes.Power.ID;
 		buildingDef.AudioCategory = "Metal";
 		buildingDef.AudioSize = "large";
-		buildingDef.Deprecated = DlcManager.FeatureClusterSpaceEnabled();
 		return buildingDef;
 	}
 

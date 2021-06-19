@@ -1,5 +1,7 @@
 id: "ClonedRaccons"
 title: STRINGS.CODEX.A1_CLONEDRACCONS.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
 
 contentContainers:
 #-----------------------------

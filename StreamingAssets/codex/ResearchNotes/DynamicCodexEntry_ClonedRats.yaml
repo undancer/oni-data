@@ -1,6 +1,7 @@
 id: "ClonedRats"
 title: STRINGS.CODEX.A1_CLONEDRATS.TITLE
-
+dlcIds:
+  - "EXPANSION1_ID"
 contentContainers:
 #-----------------------------
   - contentLayout: Vertical

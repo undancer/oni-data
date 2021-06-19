@@ -1,5 +1,7 @@
 id: "SwampHarvestPlant"
 title: STRINGS.CODEX.BOGBUCKET.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
 
 contentContainers:
 #-----------------------------

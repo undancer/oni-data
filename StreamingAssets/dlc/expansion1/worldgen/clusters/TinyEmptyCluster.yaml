@@ -6,6 +6,7 @@ coordinatePrefix: TNY-E-C
 skip: EditorOnly
 clusterCategory: 2
 
+numRings: 12
 startWorldIndex: 0 
 worldPlacements:
 - world: expansion1::worlds/TinyEmpty

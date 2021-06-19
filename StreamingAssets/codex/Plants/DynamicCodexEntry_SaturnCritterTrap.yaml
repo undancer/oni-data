@@ -1,5 +1,7 @@
 id: "CritterTrapPlant"
 title: STRINGS.CODEX.SATURNCRITTERTRAP.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
 
 contentContainers:
 #-----------------------------

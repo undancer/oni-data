@@ -216,27 +216,30 @@ public class GourmetCookingStationConfig : IBuildingConfig
 			},
 			sortOrder = 900
 		};
-		ComplexRecipe.RecipeElement[] array13 = new ComplexRecipe.RecipeElement[3]
+		if (DlcManager.IsExpansion1Active())
 		{
-			new ComplexRecipe.RecipeElement("ColdWheatSeed", 3f),
-			new ComplexRecipe.RecipeElement("WormSuperFruit", 4f),
-			new ComplexRecipe.RecipeElement("GrilledPrickleFruit", 1f)
-		};
-		ComplexRecipe.RecipeElement[] array14 = new ComplexRecipe.RecipeElement[1]
-		{
-			new ComplexRecipe.RecipeElement("BerryPie", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
-		};
-		string id7 = ComplexRecipeManager.MakeRecipeID("GourmetCookingStation", array13, array14);
-		BerryPieConfig.recipe = new ComplexRecipe(id7, array13, array14)
-		{
-			time = FOOD.RECIPES.STANDARD_COOK_TIME,
-			description = ITEMS.FOOD.BERRYPIE.RECIPEDESC,
-			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
+			ComplexRecipe.RecipeElement[] array13 = new ComplexRecipe.RecipeElement[3]
 			{
-				"GourmetCookingStation"
-			},
-			sortOrder = 900
-		};
+				new ComplexRecipe.RecipeElement("ColdWheatSeed", 3f),
+				new ComplexRecipe.RecipeElement("WormSuperFruit", 4f),
+				new ComplexRecipe.RecipeElement("GrilledPrickleFruit", 1f)
+			};
+			ComplexRecipe.RecipeElement[] array14 = new ComplexRecipe.RecipeElement[1]
+			{
+				new ComplexRecipe.RecipeElement("BerryPie", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
+			};
+			string id7 = ComplexRecipeManager.MakeRecipeID("GourmetCookingStation", array13, array14);
+			BerryPieConfig.recipe = new ComplexRecipe(id7, array13, array14)
+			{
+				time = FOOD.RECIPES.STANDARD_COOK_TIME,
+				description = ITEMS.FOOD.BERRYPIE.RECIPEDESC,
+				nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
+				fabricators = new List<Tag>
+				{
+					"GourmetCookingStation"
+				},
+				sortOrder = 900
+			};
+		}
 	}
 }

@@ -6477,14 +6477,14 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Harvest Duration";
 
-				public static LocString DESC = "Time it takes an unskilled Duplicant to harvest this plant's fruit";
+				public static LocString DESC = "Time it takes an unskilled Duplicant to harvest this plant";
 			}
 
 			public class DECORBONUS
 			{
 				public static LocString NAME = "Decor Bonus";
 
-				public static LocString DESC = "Change in Decor relative to the base crop";
+				public static LocString DESC = "Change in Decor value relative to the base crop";
 			}
 
 			public class MINLIGHTLUX

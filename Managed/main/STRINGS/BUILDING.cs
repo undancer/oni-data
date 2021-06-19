@@ -2168,14 +2168,14 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Extracting Resources: {0}";
 
-				public static LocString TOOLTIP = "Resources are being mined from this space POI";
+				public static LocString TOOLTIP = "Resources are being mined from this space debris";
 			}
 
 			public class SPACEPOIWASTING
 			{
 				public static LocString NAME = "Cannot store resources: {0}";
 
-				public static LocString TOOLTIP = "Some resources being mined from this space POI cannot be stored in this rocket";
+				public static LocString TOOLTIP = "Some resources being mined from this space debris cannot be stored in this rocket";
 			}
 
 			public class RAILGUNPAYLOADNEEDSEMPTYING

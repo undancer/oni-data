@@ -118,7 +118,7 @@ namespace ProcGen
 
 		public ClusterLayout()
 		{
-			numRings = 9;
+			numRings = 12;
 		}
 
 		public static string GetName(string path, string addPrefix)

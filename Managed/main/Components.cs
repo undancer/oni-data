@@ -258,6 +258,8 @@ public class Components
 
 	public static Cmps<Reactor> NuclearReactors = new Cmps<Reactor>();
 
+	public static Cmps<BuildingComplete> EntombedBuildings = new Cmps<BuildingComplete>();
+
 	public static Cmps<IncubationMonitor.Instance> IncubationMonitors = new Cmps<IncubationMonitor.Instance>();
 
 	public static Cmps<FixedCapturableMonitor.Instance> FixedCapturableMonitors = new Cmps<FixedCapturableMonitor.Instance>();

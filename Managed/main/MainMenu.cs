@@ -46,8 +46,6 @@ public class MainMenu : KScreen
 
 	public GameObject topLeftAlphaMessage;
 
-	private float lastUpdateTime;
-
 	private MotdServerClient m_motdServerClient;
 
 	private GameObject GameSettingsScreen;
@@ -213,13 +211,12 @@ public class MainMenu : KScreen
 				Debug.LogWarning("Motd Request error: " + error);
 			}
 		});
-		lastUpdateTime = Time.unscaledTime;
 		activateOnSpawn = true;
 	}
 
-	public void RefreshMainMenu()
+	private void OnApplicationFocus(bool focus)
 	{
-		if (refreshResumeButton)
+		if (focus)
 		{
 			RefreshResumeButton();
 		}
@@ -437,14 +434,9 @@ public class MainMenu : KScreen
 
 	private void Update()
 	{
-		if (Time.unscaledTime - lastUpdateTime > 1f)
-		{
-			RefreshMainMenu();
-			lastUpdateTime = Time.unscaledTime;
-		}
 	}
 
-	public void RefreshResumeButton()
+	public void RefreshResumeButton(bool simpleCheck = false)
 	{
 		string latestSaveForCurrentDLC = SaveLoader.GetLatestSaveForCurrentDLC();
 		bool flag = !string.IsNullOrEmpty(latestSaveForCurrentDLC) && File.Exists(latestSaveForCurrentDLC);
@@ -476,7 +468,7 @@ public class MainMenu : KScreen
 					gameInfo = value.headerData;
 				}
 				bool flag2 = true;
-				if (header.buildVersion > 468097 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 23)
+				if (header.buildVersion > 468398 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 23)
 				{
 					flag = false;
 				}

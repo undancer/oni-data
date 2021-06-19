@@ -1,6 +1,7 @@
 id: "Beeta"
 title: STRINGS.CODEX.BEETA.TITLE
-
+dlcIds:
+  - "EXPANSION1_ID"
 contentContainers:
 #-----------------------------
   - contentLayout: Vertical

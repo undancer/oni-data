@@ -361,6 +361,7 @@ public static class CodexCache
 		id = FormatLinkID(entry.id);
 		entry.id = id;
 		CodexEntry codexEntry = entries[id];
+		codexEntry.dlcIds = entry.dlcIds;
 		for (int i = 0; i < entry.log.modificationRecords.Count; i++)
 		{
 		}

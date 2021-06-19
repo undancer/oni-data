@@ -24,11 +24,11 @@ defaultsOverrides:
 startSubworldName: expansion1::subworlds/swamp/SwampWarpStart
 startingBaseTemplate:  expansion1::bases/warpworldSwampBase
 startingBasePositionHorizontal:
-  min: 0.45
-  max: 0.55
+  min: 0.475
+  max: 0.525
 startingBasePositionVertical:
-  min: 0.50
-  max: 0.55
+  min: 0.4
+  max: 0.45
 
 # List all the subworld files to load
 subworldFiles:
@@ -37,7 +37,7 @@ subworldFiles:
   - name: expansion1::subworlds/swamp/Swamp
   - name: expansion1::subworlds/swamp/SwampWarpStart
   - name: expansion1::subworlds/rust/med_Rust
-    minCount: 3
+    minCount: 4
   - name: expansion1::subworlds/radioactive/med_Radioactive
     minCount: 3
   - name: expansion1::subworlds/radioactive/med_UraniumFields
@@ -47,23 +47,51 @@ subworldFiles:
   - name: expansion1::subworlds/frozen/FrozenSlush
     minCount: 3
   - name: expansion1::subworlds/frozen/FrozenCore
-  - name: expansion1::subworlds/jungle/JungleSteamy
+  - name: expansion1::subworlds/forest/med_ForestHot
     minCount: 3
+    maxCount: 5
+  - name: expansion1::subworlds/forest/med_Forest
+    minCount: 2
+    maxCount: 3
   - name: expansion1::subworlds/marsh/HotMarshSteamy
-    minCount: 3
+    minCount: 4
     
 unknownCellsAllowedSubworlds: 
-  - tagcommand: Default # Sides & surface
+#  - tagcommand: Default
+#    command: Replace
+#    subworldNames:
+#      - expansion1::subworlds/swamp/Swamp
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 1
+    maxDistance: 1
     command: Replace
     subworldNames:
       - expansion1::subworlds/swamp/Swamp
   - tagcommand: DistanceFromTag
-    tag: AtEdge
-    minDistance: 0
-    maxDistance: 1
+    tag: AtStart
+    minDistance: 2
+    maxDistance: 2
     command: Replace
     subworldNames:
-      - expansion1::subworlds/jungle/JungleSteamy
+      - expansion1::subworlds/forest/med_ForestHot
+      - expansion1::subworlds/swamp/Swamp
+      - expansion1::subworlds/rust/med_Rust
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 3
+    maxDistance: 3
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/forest/med_Forest
+      - expansion1::subworlds/rust/med_Rust
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 4
+    maxDistance: 4
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/marsh/HotMarshSteamy
       - expansion1::subworlds/rust/med_Rust
   - tagcommand: AtTag
     tag: AtSurface
@@ -103,7 +131,6 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/frozen/FrozenCore
 
 worldTemplateRules:
-  # Marsh - no geyser included due to limited space
   # Frozen Uranium
   - names:
       - expansion1::poi/radioactive/uranium_fields_liquid_co2_geyser
@@ -143,14 +170,14 @@ worldTemplateRules:
     allowedCellsFilter:
       - command: Replace
         zoneTypes: [FrozenWastes]
-  # JungleSteamy
+  # Marsh
   - names:
       - poi/jungle/geyser_steam
-    listRule: GuaranteeOne
+    listRule: TryOne
     priority: 100
     allowedCellsFilter:
       - command: Replace
-        zoneTypes: [ToxicJungle]
+        zoneTypes: [BoggyMarsh]
   # Gravitas
   - names:
     - expansion1::poi/warp/sender
@@ -164,7 +191,7 @@ worldTemplateRules:
         minDistance: 1
         maxDistance: 2
       - command: IntersectWith
-        zoneTypes: [ Swamp, Rust, ToxicJungle ]
+        zoneTypes: [ Swamp, Rust, Forest ]
       - command: ExceptWith
         tagcommand: AtTag
         tag: NoGravitasFeatures
@@ -184,7 +211,7 @@ worldTemplateRules:
         minDistance: 2
         maxDistance: 2
       - command: IntersectWith
-        zoneTypes: [ Swamp, Rust, ToxicJungle ]
+        zoneTypes: [ Swamp, Rust, Forest ]
   - names:
     - expansion1::poi/boon/bedroom
     - expansion1::poi/boon/washroom
@@ -202,7 +229,7 @@ worldTemplateRules:
         minDistance: 1
         maxDistance: 3
       - command: IntersectWith
-        zoneTypes: [ Swamp, Rust, ToxicJungle ]
+        zoneTypes: [ Swamp, Rust, Forest ]
   # Curated geysers
   - names:
     - expansion1::geysers/molten_aluminum

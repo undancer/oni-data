@@ -2780,7 +2780,7 @@ msgstr ""
 
 #. STRINGS.BUILDING.STATUSITEMS.SPACEPOIHARVESTING.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.SPACEPOIHARVESTING.TOOLTIP"
-msgid "Resources are being mined from this space POI"
+msgid "Resources are being mined from this space debris"
 msgstr ""
 
 #. STRINGS.BUILDING.STATUSITEMS.SPACEPOIWASTING.NAME
@@ -2790,7 +2790,7 @@ msgstr ""
 
 #. STRINGS.BUILDING.STATUSITEMS.SPACEPOIWASTING.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.SPACEPOIWASTING.TOOLTIP"
-msgid "Some resources being mined from this space POI cannot be stored in this rocket"
+msgid "Some resources being mined from this space debris cannot be stored in this rocket"
 msgstr ""
 
 #. STRINGS.BUILDING.STATUSITEMS.STORAGELOCKER.NAME
@@ -20260,7 +20260,7 @@ msgstr ""
 
 #. STRINGS.DUPLICANTS.ATTRIBUTES.DECORBONUS.DESC
 msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.DECORBONUS.DESC"
-msgid "Change in Decor relative to the base crop"
+msgid "Change in Decor value relative to the base crop"
 msgstr ""
 
 #. STRINGS.DUPLICANTS.ATTRIBUTES.DECORBONUS.NAME
@@ -20435,7 +20435,7 @@ msgstr ""
 
 #. STRINGS.DUPLICANTS.ATTRIBUTES.HARVESTTIME.DESC
 msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.HARVESTTIME.DESC"
-msgid "Time it takes an unskilled Duplicant to harvest this plant's fruit"
+msgid "Time it takes an unskilled Duplicant to harvest this plant"
 msgstr ""
 
 #. STRINGS.DUPLICANTS.ATTRIBUTES.HARVESTTIME.NAME
@@ -48775,7 +48775,7 @@ msgstr ""
 
 #. STRINGS.UI.FRONTEND.CUSTOMGAMESETTINGSSCREEN.SETTINGS.TELEPORTERS.LEVELS.DISABLED.TOOLTIP
 msgctxt "STRINGS.UI.FRONTEND.CUSTOMGAMESETTINGSSCREEN.SETTINGS.TELEPORTERS.LEVELS.DISABLED.TOOLTIP"
-msgid "Unchecked: No Teleporters will be spawned during Worldgen"
+msgid "Unchecked: No Teleporters will spawn during Worldgen"
 msgstr ""
 
 #. STRINGS.UI.FRONTEND.CUSTOMGAMESETTINGSSCREEN.SETTINGS.TELEPORTERS.LEVELS.ENABLED.NAME
@@ -48785,7 +48785,7 @@ msgstr ""
 
 #. STRINGS.UI.FRONTEND.CUSTOMGAMESETTINGSSCREEN.SETTINGS.TELEPORTERS.LEVELS.ENABLED.TOOLTIP
 msgctxt "STRINGS.UI.FRONTEND.CUSTOMGAMESETTINGSSCREEN.SETTINGS.TELEPORTERS.LEVELS.ENABLED.TOOLTIP"
-msgid "Checked: Teleporters will be spawned during Worldgen (Default)"
+msgid "Checked: Teleporters will spawn during Worldgen (Default)"
 msgstr ""
 
 #. STRINGS.UI.FRONTEND.CUSTOMGAMESETTINGSSCREEN.SETTINGS.TELEPORTERS.NAME
@@ -50035,7 +50035,7 @@ msgstr ""
 
 #. STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER
 msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
-msgid "MINE THE GAP UPDATE"
+msgid "THE BIG MERGE"
 msgstr ""
 
 #. STRINGS.UI.FRONTEND.MOTD.NEWS_BODY
@@ -50050,7 +50050,7 @@ msgstr ""
 
 #. STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY"
-msgid "Welcome to the <b>Mine The Gap Update!</b>\n\n   •<indent=20px>New Space Points-of-Interest can be mined using the Drillcone for renewable resources.</indent>\n\n   •<indent=20px>Gravitas Artifacts have been added back in to the game.</indent>\n\n   •<indent=20px>Tech Tree rebalance and updates.</indent>\n\n   •<indent=20px>New sound effects, Diagnostics panel improvements, bug fixes and new lore entries.</indent>\n\nCheck out the full patch notes for more details!"
+msgid "Welcome to the <b>UPDATE NAME</b>\n\n   •<indent=20px>Toggle between <i>Spaced Out!</i> and Base Game in the main menu without re-downloading the game.</indent>\n\n   •<indent=20px>Base Game now has all <i>Spaced Out!</i> bug fixes and quality-of-life improvements.</indent>\n\n   •<indent=20px>Several buildings and items have been added to the Base Game, including Oxygen Masks, and Meter Valves.</indent>\n\n   •<indent=20px>UI and Diagnostics improvements have been added to the Base Game.</indent>\n   \n   •<indent=20px>Significant updates to the Modding system, modders please see the forum for upgrade instructions.</indent>\n\nCheck out the full patch notes for more details!"
 msgstr ""
 
 #. STRINGS.UI.FRONTEND.MOTD.UPDATE_TEXT
@@ -56470,12 +56470,12 @@ msgstr ""
 
 #. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SATELLITEFIELD.DESC
 msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SATELLITEFIELD.DESC"
-msgid "Antiquated space technology from a forgotten age.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgid "Space junk from a forgotten age.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
 msgstr ""
 
 #. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SATELLITEFIELD.NAME
 msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SATELLITEFIELD.NAME"
-msgid "Satellite Asteroid Field"
+msgid "Space Debris"
 msgstr ""
 
 #. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.SWAMPYOREFIELD.DESC
@@ -57650,7 +57650,7 @@ msgstr ""
 
 #. STRINGS.UI.STARMAP.RESEARCH_DESCRIPTION
 msgctxt "STRINGS.UI.STARMAP.RESEARCH_DESCRIPTION"
-msgid "Gather Interstellar Research Data using Research Modules.\n\nResearch Modules Installed: {0}"
+msgid "Gather Interstellar Research Data using Research Modules."
 msgstr ""
 
 #. STRINGS.UI.STARMAP.ROCKET_COUNT

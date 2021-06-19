@@ -28,10 +28,10 @@ public class SaveScreen : KModalScreen
 
 	protected override void OnCmpEnable()
 	{
-		List<string> allColonyFiles = SaveLoader.GetAllColonyFiles();
-		foreach (string item in allColonyFiles)
+		List<SaveLoader.SaveFileEntry> allColonyFiles = SaveLoader.GetAllColonyFiles(sort: true);
+		foreach (SaveLoader.SaveFileEntry item in allColonyFiles)
 		{
-			AddExistingSaveFile(item);
+			AddExistingSaveFile(item.path);
 		}
 		SpeedControlScreen.Instance.Pause();
 	}

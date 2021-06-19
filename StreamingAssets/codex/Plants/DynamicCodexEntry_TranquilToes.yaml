@@ -1,5 +1,7 @@
 id: "ToePlant"
 title: STRINGS.CODEX.TRANQUILTOES.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
 
 contentContainers:
 #-----------------------------

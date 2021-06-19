@@ -1,6 +1,8 @@
 id: "PlugSlug"
 title: STRINGS.CODEX.PLUGSLUG.TITLE
-
+dlcIds:
+  - "EXPANSION1_ID"
+  
 contentContainers:
 #-----------------------------
   - contentLayout: Vertical

@@ -21,7 +21,10 @@ namespace Database
 			SlimeGerms = Add(new SlimeGerms(statsOnly));
 			PollenGerms = Add(new PollenGerms(statsOnly));
 			ZombieSpores = Add(new ZombieSpores(statsOnly));
-			RadiationPoisoning = Add(new RadiationPoisoning(statsOnly));
+			if (DlcManager.FeatureRadiationEnabled())
+			{
+				RadiationPoisoning = Add(new RadiationPoisoning(statsOnly));
+			}
 		}
 
 		public bool IsValidID(string id)

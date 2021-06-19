@@ -1,5 +1,7 @@
 id: "Cylindrica"
 title: STRINGS.CODEX.BLISSBURST.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
 
 contentContainers:
 #-----------------------------

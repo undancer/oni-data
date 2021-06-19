@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using KSerialization;
 using UnityEngine;
 
@@ -44,6 +45,15 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 	});
 
 	public List<Tag> AcceptedTags => acceptedTags;
+
+	[OnDeserialized]
+	private void OnDeserialized()
+	{
+		if (SaveLoader.Instance.GameInfo.IsVersionOlderThan(7, 20))
+		{
+			filterByStorageCategoriesOnSpawn = false;
+		}
+	}
 
 	private void OnDiscover(Tag category_tag, Tag tag)
 	{
