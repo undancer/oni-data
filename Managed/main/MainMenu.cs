@@ -468,7 +468,7 @@ public class MainMenu : KScreen
 					gameInfo = value.headerData;
 				}
 				bool flag2 = true;
-				if (header.buildVersion > 468398 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 23)
+				if (header.buildVersion > 468841 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 23)
 				{
 					flag = false;
 				}
@@ -547,6 +547,15 @@ public class MainMenu : KScreen
 			ambientLoop.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 			ambientLoop.release();
 			ambientLoop.clearHandle();
+		}
+	}
+
+	public void StopMainMenuMusic()
+	{
+		if (MusicManager.instance.SongIsPlaying(menuMusicEventName))
+		{
+			MusicManager.instance.StopSong(menuMusicEventName);
+			AudioMixer.instance.Stop(AudioMixerSnapshots.Get().FrontEndSnapshot);
 		}
 	}
 

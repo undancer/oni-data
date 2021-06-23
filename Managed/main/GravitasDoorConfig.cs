@@ -24,8 +24,8 @@ public class GravitasDoorConfig : IBuildingConfig
 		buildingDef.ForegroundLayer = Grid.SceneLayer.InteriorWall;
 		buildingDef.LogicInputPorts = DoorConfig.CreateSingleInputPortList(new CellOffset(0, 0));
 		buildingDef.LogicInputPorts = CreateSingleInputPortList(new CellOffset(0, 0));
-		SoundEventVolumeCache.instance.AddVolume("door_poi_internal_kanim", "Open_DoorInternal", NOISE_POLLUTION.NOISY.TIER2);
-		SoundEventVolumeCache.instance.AddVolume("door_poi_internal_kanim", "Close_DoorInternal", NOISE_POLLUTION.NOISY.TIER2);
+		SoundEventVolumeCache.instance.AddVolume("gravitas_door_internal_kanim", "GravitasDoorInternal_open", NOISE_POLLUTION.NOISY.TIER2);
+		SoundEventVolumeCache.instance.AddVolume("gravitas_door_internal_kanim", "GravitasDoorInternal_close", NOISE_POLLUTION.NOISY.TIER2);
 		return buildingDef;
 	}
 
@@ -43,6 +43,8 @@ public class GravitasDoorConfig : IBuildingConfig
 		Door door = go.AddOrGet<Door>();
 		door.unpoweredAnimSpeed = 1f;
 		door.doorType = Door.DoorType.Internal;
+		door.doorOpeningSoundEventName = "GravitasDoorInternal_open";
+		door.doorClosingSoundEventName = "GravitasDoorInternal_close";
 		go.AddOrGet<ZoneTile>();
 		AccessControl accessControl = go.AddOrGet<AccessControl>();
 		accessControl.controlEnabled = true;

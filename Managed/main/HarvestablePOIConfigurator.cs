@@ -126,7 +126,9 @@ public class HarvestablePOIConfigurator : KMonoBehaviour
 	private HarvestablePOIInstanceConfiguration CreateRandomInstance(HashedString typeId, float min, float max)
 	{
 		int globalWorldSeed = SaveLoader.Instance.clusterDetailSave.globalWorldSeed;
-		globalWorldSeed = globalWorldSeed + (int)base.transform.GetPosition().x + (int)base.transform.GetPosition().y;
+		ClusterGridEntity component = GetComponent<ClusterGridEntity>();
+		Vector3 position = ClusterGrid.Instance.GetPosition(component);
+		globalWorldSeed = globalWorldSeed + (int)position.x + (int)position.y;
 		System.Random randomSource = new System.Random(globalWorldSeed);
 		return new HarvestablePOIInstanceConfiguration
 		{

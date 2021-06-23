@@ -45,7 +45,7 @@ subworldFiles:
   - name: expansion1::subworlds/radioactive/med_FrozenUraniumFields
     minCount: 2
   - name: expansion1::subworlds/frozen/FrozenSlush
-    minCount: 3
+    minCount: 4
   - name: expansion1::subworlds/frozen/FrozenCore
   - name: expansion1::subworlds/forest/med_ForestHot
     minCount: 3
@@ -240,8 +240,9 @@ worldTemplateRules:
     - geysers/steam
     - geysers/hot_steam
     - geysers/hot_water
-    listRule: TrySome
-    someCount: 3
+    listRule: TryOne
+    times: 3
+    allowDuplicates: true
     priority: 50
     allowedCellsFilter:
     - command: Replace
@@ -259,8 +260,9 @@ worldTemplateRules:
     - geysers/salt_water
     - geysers/slush_water
     - expansion1::geysers/slush_salt_water
-    listRule: TrySome
-    someCount: 1
+    listRule: TryOne
+    times: 1
+    allowDuplicates: true
     priority: 50
     allowedCellsFilter:
     - command: Replace
@@ -283,8 +285,9 @@ worldTemplateRules:
     - expansion1::geysers/liquid_sulfur
     - geysers/liquid_co2
     - geysers/small_volcano
-    listRule: TrySome
-    someCount: 2
+    listRule: TryOne
+    times: 2
+    allowDuplicates: true
     priority: 50
     allowedCellsFilter:
     - command: Replace

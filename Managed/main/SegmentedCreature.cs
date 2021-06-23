@@ -328,9 +328,9 @@ public class SegmentedCreature : GameStateMachine<SegmentedCreature, SegmentedCr
 		{
 			PlayBodySegmentsAnim(smi, "idle_loop", KAnim.PlayMode.Loop);
 		}).Exit(SetRetractedPath);
-		retracted.pre.Update(UpdateRetractedPre, UpdateRate.RENDER_EVERY_TICK);
-		retracted.loop.ParamTransition(isRetracted, freeMovement, (Instance smi, bool p) => !isRetracted.Get(smi)).Update(UpdateRetractedLoop, UpdateRate.RENDER_EVERY_TICK);
-		freeMovement.DefaultState(freeMovement.idle).ParamTransition(isRetracted, retracted, (Instance smi, bool p) => isRetracted.Get(smi)).Update(UpdateFreeMovement, UpdateRate.RENDER_EVERY_TICK);
+		retracted.pre.Update(UpdateRetractedPre, UpdateRate.SIM_EVERY_TICK);
+		retracted.loop.ParamTransition(isRetracted, freeMovement, (Instance smi, bool p) => !isRetracted.Get(smi)).Update(UpdateRetractedLoop, UpdateRate.SIM_EVERY_TICK);
+		freeMovement.DefaultState(freeMovement.idle).ParamTransition(isRetracted, retracted, (Instance smi, bool p) => isRetracted.Get(smi)).Update(UpdateFreeMovement, UpdateRate.SIM_EVERY_TICK);
 		freeMovement.idle.Transition(freeMovement.moving, (Instance smi) => smi.GetComponent<Navigator>().IsMoving()).Enter(delegate(Instance smi)
 		{
 			PlayBodySegmentsAnim(smi, "idle_loop", KAnim.PlayMode.Loop, queue: true);

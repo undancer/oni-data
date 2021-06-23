@@ -70,7 +70,14 @@ namespace ProcGenGame
 				{
 					for (int i = 0; i < featureTemplate.Value; i++)
 					{
-						list.Add(featureTemplate.Key);
+						if (TemplateCache.TemplateExists(featureTemplate.Key))
+						{
+							list.Add(featureTemplate.Key);
+						}
+						else
+						{
+							DebugUtil.DevLogError($"TemplateSpawning: Template does not exist '{featureTemplate.Value}' in world '{settings.world.filePath}'");
+						}
 					}
 				}
 				list.ShuffleSeeded(myRandom.RandomSource());
@@ -147,7 +154,14 @@ namespace ProcGenGame
 						{
 							if (!hashSet.Contains(name))
 							{
-								pooledList.Add(name);
+								if (!TemplateCache.TemplateExists(name))
+								{
+									DebugUtil.DevLogError("TemplateSpawning: Missing template '" + name + "' in world '" + settings.world.filePath + "'");
+								}
+								else
+								{
+									pooledList.Add(name);
+								}
 							}
 						}
 					}
@@ -231,15 +245,19 @@ namespace ProcGenGame
 			{
 				return false;
 			}
-			List<TerrainCell> filteredTerrainCells = terrainCells.FindAll(delegate(TerrainCell tc)
+			List<TerrainCell> filteredTerrainCells = (rule.useRelaxedFiltering ? terrainCells.FindAll(delegate(TerrainCell tc)
+			{
+				tc.LogInfo("Filtering Relaxed (allowReplace)", template, 0f);
+				return tc.IsSafeToSpawnPOIRelaxed(terrainCells) && DoesCellMatchFilters(tc, rule.allowedCellsFilter);
+			}) : terrainCells.FindAll(delegate(TerrainCell tc)
 			{
 				tc.LogInfo("Filtering", template, 0f);
 				return tc.IsSafeToSpawnPOI(terrainCells) && DoesCellMatchFilters(tc, rule.allowedCellsFilter);
-			});
+			}));
 			RemoveOverlappingPOIs(ref filteredTerrainCells, ref terrainCells, ref placedPOIBounds, template2, settings, rule.allowExtremeTemperatureOverlap);
 			if (filteredTerrainCells.Count == 0)
 			{
-				if (guarantee)
+				if (guarantee && !rule.useRelaxedFiltering)
 				{
 					DebugUtil.LogWarningArgs("Could not place " + template + " using normal rules, trying relaxed");
 					filteredTerrainCells = terrainCells.FindAll(delegate(TerrainCell tc)

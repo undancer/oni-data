@@ -193,7 +193,8 @@ worldTemplateRules:
     - geysers/liquid_co2
     - expansion1::geysers/liquid_sulfur
     listRule: TryOne
-    times: 2
+    times: 3
+    useRelaxedFiltering: true # Frozen tends to use a lot of features, this means they can be replaced
     allowDuplicates: true
     priority: 10
     allowedCellsFilter:

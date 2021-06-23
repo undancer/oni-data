@@ -37,7 +37,14 @@ namespace KMod
 				set;
 			}
 
+			[Obsolete("Use minimumSupportedBuild instead!")]
 			public int lastWorkingBuild
+			{
+				get;
+				set;
+			}
+
+			public int minimumSupportedBuild
 			{
 				get;
 				set;
@@ -301,7 +308,7 @@ namespace KMod
 				packagedModInfo = new PackagedModInfo
 				{
 					supportedContent = "vanilla_id",
-					lastWorkingBuild = 0
+					minimumSupportedBuild = 0
 				};
 				if (ScanContentFromSourceForTranslationsOnly(""))
 				{
@@ -346,13 +353,10 @@ namespace KMod
 				}
 			}
 			list2 = list2.Where((ArchivedVersion v) => DoesModSupportCurrentContent(v.info)).ToList();
-			IEnumerable<ArchivedVersion> source = (from v in list2
-				where (long)v.info.lastWorkingBuild >= 468398L
-				orderby v.info.lastWorkingBuild
-				select v).Concat(from v in list2
-				where (long)v.info.lastWorkingBuild < 468398L
-				orderby v.info.lastWorkingBuild descending
-				select v);
+			IOrderedEnumerable<ArchivedVersion> source = from v in list2
+				where (long)v.info.minimumSupportedBuild <= 468841L
+				orderby v.info.minimumSupportedBuild descending
+				select v;
 			ArchivedVersion archivedVersion2 = source.FirstOrDefault();
 			return (archivedVersion2 != null) ? archivedVersion2 : null;
 		}
@@ -397,7 +401,15 @@ namespace KMod
 				ModDevLogError(string.Format("\t{0}: {1} in folder '{2}' does not specify supportedContent. Make sure you spelled it correctly in your mod_info!", label, "mod_info.yaml", text));
 				return null;
 			}
-			ModDevLog($"\t{label}: Found valid mod_info.yaml in folder '{text}': {packagedModInfo.supportedContent} at {packagedModInfo.lastWorkingBuild}");
+			if (packagedModInfo.lastWorkingBuild != 0)
+			{
+				ModDevLogError(string.Format("\t{0}: {1} in folder '{2}' is using `{3}`, please upgrade this to `{4}`", label, "mod_info.yaml", text, "lastWorkingBuild", "minimumSupportedBuild"));
+				if (packagedModInfo.minimumSupportedBuild == 0)
+				{
+					packagedModInfo.minimumSupportedBuild = packagedModInfo.lastWorkingBuild;
+				}
+			}
+			ModDevLog($"\t{label}: Found valid mod_info.yaml in folder '{text}': {packagedModInfo.supportedContent} at {packagedModInfo.minimumSupportedBuild}");
 			return packagedModInfo;
 		}
 
@@ -683,9 +695,9 @@ namespace KMod
 			}
 		}
 
-		public void PostLoad(Content content, IReadOnlyList<Mod> mods)
+		public void PostLoad(IReadOnlyList<Mod> mods)
 		{
-			if ((content & Content.DLL) != 0)
+			if ((loaded_content & Content.DLL) != 0 && loaded_mod_data != null)
 			{
 				DLLLoader.PostLoadDLLs(staticID, loaded_mod_data, mods);
 			}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using KSerialization;
 using STRINGS;
+using TUNING;
 using UnityEngine;
 
 public class Clustercraft : ClusterGridEntity
@@ -41,6 +42,22 @@ public class Clustercraft : ClusterGridEntity
 	private Guid mainStatusHandle;
 
 	private Guid cargoStatusHandle;
+
+	public static Dictionary<Tag, float> dlc1OxidizerEfficiencies = new Dictionary<Tag, float>
+	{
+		{
+			SimHashes.OxyRock.CreateTag(),
+			ROCKETRY.DLC1_OXIDIZER_EFFICIENCY.LOW
+		},
+		{
+			SimHashes.LiquidOxygen.CreateTag(),
+			ROCKETRY.DLC1_OXIDIZER_EFFICIENCY.HIGH
+		},
+		{
+			SimHashes.Fertilizer.CreateTag(),
+			ROCKETRY.DLC1_OXIDIZER_EFFICIENCY.VERY_LOW
+		}
+	};
 
 	[Serialize]
 	[Range(0f, 1f)]
@@ -387,7 +404,7 @@ public class Clustercraft : ClusterGridEntity
 			{
 				foreach (KeyValuePair<Tag, float> item in component.GetOxidizersAvailable())
 				{
-					float num = RocketStats.oxidizerEfficiencies[item.Key];
+					float num = dlc1OxidizerEfficiencies[item.Key];
 					float a = fuelEquivalentKGs / num;
 					float num2 = Mathf.Min(a, item.Value);
 					if (num2 > 0f)

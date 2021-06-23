@@ -62,7 +62,7 @@ worldTemplateRules:
     - expansion1::poi/poi_frozen_iron_geyser_4
     listRule: GuaranteeSomeTryMore
     someCount: 2
-    moreCount: 1
+    moreCount: 2
     priority: 100
     allowedCellsFilter:
       - command: Replace

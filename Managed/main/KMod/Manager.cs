@@ -484,7 +484,7 @@ namespace KMod
 				{
 					if (mod2.IsEnabledForActiveDlc())
 					{
-						mod2.PostLoad(content, readOnlyList);
+						mod2.PostLoad(readOnlyList);
 					}
 				}
 			}

@@ -7,9 +7,12 @@ namespace KMod
 	{
 		public static KModHeader GetHeader(IFileSource file_source, string defaultStaticID, string defaultTitle, string defaultDescription)
 		{
-			string filename = Path.Combine(file_source.GetRoot(), "mod.yaml");
-			FileHandle filehandle = file_source.GetFileSystem().FindFileHandle(filename);
-			KModHeader kModHeader = ((filehandle.full_path != null) ? YamlIO.LoadFile<KModHeader>(filehandle) : null);
+			string text = "mod.yaml";
+			string text2 = file_source.Read(text);
+			KModHeader kModHeader = ((!string.IsNullOrEmpty(text2)) ? YamlIO.Parse<KModHeader>(text2, new FileHandle
+			{
+				full_path = Path.Combine(file_source.GetRoot(), text)
+			}) : null);
 			if (kModHeader == null)
 			{
 				kModHeader = new KModHeader

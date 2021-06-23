@@ -1501,7 +1501,7 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 					smi.GoTo(failure_state);
 				}
 			});
-			Update("Work()", delegate(StateMachineInstanceType smi, float dt)
+			Update("Work(" + work_type + ")", delegate(StateMachineInstanceType smi, float dt)
 			{
 				if (validate_callback(smi))
 				{

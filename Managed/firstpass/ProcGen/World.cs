@@ -92,6 +92,12 @@ namespace ProcGen
 				private set;
 			}
 
+			public bool useRelaxedFiltering
+			{
+				get;
+				private set;
+			}
+
 			public List<AllowedCellsFilter> allowedCellsFilter
 			{
 				get;
@@ -103,6 +109,7 @@ namespace ProcGen
 				times = 1;
 				allowedCellsFilter = new List<AllowedCellsFilter>();
 				allowDuplicates = false;
+				useRelaxedFiltering = false;
 			}
 
 			public bool IsGuaranteeRule()

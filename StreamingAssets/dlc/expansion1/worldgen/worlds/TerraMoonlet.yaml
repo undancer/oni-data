@@ -166,6 +166,31 @@ worldTemplateRules:
       - command: ExceptWith
         tagcommand: AtTag
         tag: NoGravitasFeatures
+  # Curated Geysers
+  - names: 
+    - geysers/steam
+    - geysers/chlorine_gas
+    - geysers/hot_po2
+    - geysers/methane
+    - geysers/filthy_water
+    - geysers/liquid_co2
+    - geysers/hot_hydrogen
+    - geysers/big_volcano
+    listRule: TryOne
+    times: 3
+    allowDuplicates: true
+    priority: 10
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 2
+        maxDistance: 10
+      - command: ExceptWith
+        zoneTypes: [ Space ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGlobalFeatureSpawning
   # Gravitas
   - names:
     - expansion1::poi/warp/sender

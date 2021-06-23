@@ -111,7 +111,7 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 				Assets.GetAnim("anim_interacts_telescope_low_kanim")
 			};
 			requiredSkillPerk = Db.Get().SkillPerks.CanUseClusterTelescope.Id;
-			workLayer = Grid.SceneLayer.BuildingFront;
+			workLayer = Grid.SceneLayer.BuildingUse;
 		}
 
 		protected override void OnCleanUp()

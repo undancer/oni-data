@@ -60,8 +60,7 @@ public class OxidizerTankConfig : IBuildingConfig
 		FlatTagFilterable flatTagFilterable = go.AddOrGet<FlatTagFilterable>();
 		flatTagFilterable.tagOptions = new List<Tag>
 		{
-			SimHashes.OxyRock.CreateTag(),
-			SimHashes.Fertilizer.CreateTag()
+			SimHashes.OxyRock.CreateTag()
 		};
 		flatTagFilterable.headerText = STRINGS.BUILDINGS.PREFABS.OXIDIZERTANK.UI_FILTER_CATEGORY;
 		OxidizerTank oxidizerTank = go.AddOrGet<OxidizerTank>();

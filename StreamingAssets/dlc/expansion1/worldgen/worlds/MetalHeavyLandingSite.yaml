@@ -178,8 +178,9 @@ worldTemplateRules:
     - geysers/hot_hydrogen
     - geysers/filthy_water
     listRule: TryOne
-    times: 2
+    times: 3
     allowDuplicates: true
+    useRelaxedFiltering: true # Marsh contains a lot of features, this means they can be replaced
     priority: 10
     allowedCellsFilter:
       - command: Replace
@@ -189,3 +190,7 @@ worldTemplateRules:
         maxDistance: 10
       - command: ExceptWith
         zoneTypes: [ Space ]        
+      - command: ExceptWith
+        subworldNames:
+          - expansion1::subworlds/barren/LargeChasmStart
+          - expansion1::subworlds/barren/LargeChasm

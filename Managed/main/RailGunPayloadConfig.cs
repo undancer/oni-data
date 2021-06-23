@@ -23,6 +23,7 @@ public class RailGunPayloadConfig : IEntityConfig
 			GameTags.Experimental
 		});
 		gameObject.AddOrGetDef<RailGunPayload.Def>();
+		gameObject.AddComponent<LoopingSounds>();
 		Storage storage = BuildingTemplates.CreateDefaultStorage(gameObject);
 		storage.showInUI = true;
 		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);

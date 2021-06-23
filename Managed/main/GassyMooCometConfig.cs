@@ -23,8 +23,8 @@ public class GassyMooCometConfig : IEntityConfig
 		gassyMooComet.explosionOreCount = new Vector2I(0, 0);
 		gassyMooComet.totalTileDamage = 0f;
 		gassyMooComet.splashRadius = 1;
-		gassyMooComet.impactSound = "Meteor_Large_Impact";
-		gassyMooComet.flyingSoundID = 2;
+		gassyMooComet.impactSound = "Meteor_GassyMoo_Impact";
+		gassyMooComet.flyingSoundID = 4;
 		gassyMooComet.explosionEffectHash = SpawnFXHashes.MeteorImpactDust;
 		gassyMooComet.addTiles = 0;
 		gassyMooComet.destroyOnExplode = false;

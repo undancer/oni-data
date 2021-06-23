@@ -175,11 +175,12 @@ worldTemplateRules:
     - geysers/chlorine_gas
     - geysers/methane
     - geysers/hot_po2
+    - geysers/slimy_po2
     - geysers/small_volcano
     - geysers/hot_hydrogen
     - geysers/filthy_water
     listRule: TryOne
-    times: 2
+    times: 3
     allowDuplicates: true
     priority: 10
     allowedCellsFilter:
@@ -190,3 +191,7 @@ worldTemplateRules:
         maxDistance: 10
       - command: ExceptWith
         zoneTypes: [ Space ]        
+      - command: ExceptWith
+        subworldNames:
+          - expansion1::subworlds/swamp/SwampyChasmStart
+          - expansion1::subworlds/swamp/SwampyChasm

@@ -1426,7 +1426,7 @@ public class Game : KMonoBehaviour
 		{
 			return;
 		}
-		uint num = 468398u;
+		uint num = 468841u;
 		string text = System.DateTime.Now.ToShortDateString();
 		string text2 = System.DateTime.Now.ToShortTimeString();
 		string fileName = Path.GetFileName(GenericGameSettings.instance.performanceCapture.saveGame);
@@ -1785,10 +1785,7 @@ public class Game : KMonoBehaviour
 		{
 			MusicManager.instance.StopSong("Music_FrontEnd");
 		}
-		if (MusicManager.instance.SongIsPlaying("Music_TitleTheme_Expansion1"))
-		{
-			MusicManager.instance.StopSong("Music_TitleTheme_Expansion1");
-		}
+		MainMenu.Instance.StopMainMenuMusic();
 	}
 
 	public void StartBE()

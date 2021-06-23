@@ -136,12 +136,18 @@ worldTemplateRules:
         zoneTypes: [FrozenWastes]
   # Curated Geysers
   - names: 
+    - geysers/steam
     - geysers/chlorine_gas
+    - geysers/hot_po2
+    - geysers/methane
+    - geysers/filthy_water
+    - geysers/liquid_co2
     - geysers/hot_hydrogen
     - geysers/small_volcano
+    - geysers/big_volcano
     - expansion1::geysers/liquid_sulfur
     listRule: TryOne
-    times: 1
+    times: 3
     allowDuplicates: true
     priority: 10
     allowedCellsFilter:
@@ -152,6 +158,9 @@ worldTemplateRules:
         maxDistance: 10
       - command: ExceptWith
         zoneTypes: [ Space ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGlobalFeatureSpawning
   - names:
     - expansion1::poi/poi_geyser_magma
     - expansion1::poi/poi_geyser_magma_2

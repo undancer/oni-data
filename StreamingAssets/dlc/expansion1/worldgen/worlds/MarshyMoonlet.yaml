@@ -22,6 +22,7 @@ defaultsOverrides:
     OverworldDensityMax: 15
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
+    POIPadding: 1
 
 startSubworldName: expansion1::subworlds/marsh/med_HotMarshStart
 startingBaseTemplate: expansion1::poi/sap_tree_room
@@ -87,10 +88,11 @@ unknownCellsAllowedSubworlds:
 worldTemplateRules:
   # Place one tungsten volcano anywhere so at least one spawns
   - names:
-    - expansion1::geysers/molten_tungsten
+    - expansion1::geysers/molten_tungsten_compact
     listRule: GuaranteeAll
     times: 1
-    priority: 100
+    priority: 150
+    useRelaxedFiltering: true # Marsh contains a lot of features, this means they can be replaced
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag
@@ -101,11 +103,11 @@ worldTemplateRules:
         zoneTypes: [ Space ]
   # Try to place tungsten volcanoes in the core
   - names:
-    - expansion1::geysers/molten_tungsten_exposed
-    listRule: TryAll
+    - expansion1::geysers/molten_tungsten_exposed_compact
+    listRule: TryOne
     times: 2
     allowDuplicates: true
-    priority: 100
+    priority: 140
     allowedCellsFilter:
       - command: Replace
         zoneTypes: [ MagmaCore ]
@@ -118,9 +120,10 @@ worldTemplateRules:
     - geysers/hot_hydrogen
     - geysers/hot_po2
     listRule: TryOne
-    times: 1
+    times: 2
     allowDuplicates: true
     priority: 50
+    useRelaxedFiltering: true # Marsh contains a lot of features, this means they can be replaced
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag

@@ -3755,7 +3755,7 @@ msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.EFFECT"
-msgid "Analyses and extracts <link=\"UNOBTANIUM\">Neutronium</link> from artifacts."
+msgid "Analyses and extracts <link=\"UNOBTANIUM\">Neutronium</link> from artifacts of interest."
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.NAME
@@ -4635,7 +4635,7 @@ msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.EFFECT"
-msgid "Uses <link=\"POWER\">Power</link> and <link=\"HEP\">Radbolts</link> to crush <link=\"REFINEDCARBON\">Refined Carbon</link> into <link=\"DIAMOND\">Diamond</link>.\n\n\n\nDuplicants will not fabricate items unless recipes are queued and <link=\"REFINEDCARBON\">Refined Carbon</link> has been discovered."
+msgid "Uses <link=\"POWER\">Power</link> and <link=\"HEP\">Radbolts</link> to crush <link=\"REFINEDCARBON\">Refined Carbon</link> into <link=\"DIAMOND\">Diamond</link>.\n\nDuplicants will not fabricate items unless recipes are queued and <link=\"REFINEDCARBON\">Refined Carbon</link> has been discovered."
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.NAME
@@ -5760,7 +5760,7 @@ msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.GRAVITASDOOR.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.GRAVITASDOOR.DESC"
-msgid ""
+msgid "An office door to an office that no longer exists."
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.GRAVITASDOOR.EFFECT
@@ -9280,7 +9280,7 @@ msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASCEILINGROBOT.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASCEILINGROBOT.DESC"
-msgid ""
+msgid "Non-functioning robotic arms that once assisted lab technicians."
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASCEILINGROBOT.NAME
@@ -9290,7 +9290,7 @@ msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASDECORATIVEWINDOW.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASDECORATIVEWINDOW.DESC"
-msgid "A tall, thin window."
+msgid "A tall, thin window which once pointed to a courtyard."
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASDECORATIVEWINDOW.NAME
@@ -9300,7 +9300,7 @@ msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASDISPLAY4.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASDISPLAY4.DESC"
-msgid ""
+msgid "An electronic display projecting the blueprint of a robotic device.\n\nIt looks like a ceiling robot."
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASDISPLAY4.NAME
@@ -9310,17 +9310,17 @@ msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASFLOORROBOT.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASFLOORROBOT.DESC"
-msgid ""
+msgid "The grasping robotic claw designed to assist technicians in a lab."
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASFLOORROBOT.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASFLOORROBOT.NAME"
-msgid "Floor Robot"
+msgid "Robotic Arm"
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASHANDSCANNER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASHANDSCANNER.DESC"
-msgid ""
+msgid "A sophisticated security device.\n\nIt appears to use a method other than fingerprints to verify an individual's identity."
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASHANDSCANNER.NAME
@@ -9330,37 +9330,37 @@ msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASJAR1.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASJAR1.DESC"
-msgid ""
+msgid "An abnormally large brain floating in embalming liquid to prevent decomposition."
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASJAR1.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASJAR1.NAME"
-msgid "Jar 1"
+msgid "Big Brain Jar"
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASJAR2.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASJAR2.DESC"
-msgid ""
+msgid "The corpse of a proto-hatch creature meticulously preserved in a jar."
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASJAR2.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASJAR2.NAME"
-msgid "Jar 2"
+msgid "Sample Jar"
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABTABLE.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABTABLE.DESC"
-msgid ""
+msgid "The quaint research desk of a departed lab technician.\n\nPerhaps the computer stores something of interest."
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABTABLE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABTABLE.NAME"
-msgid "Table"
+msgid "Lab Desk"
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWALL.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWALL.DESC"
-msgid ""
+msgid "A regular wall that once existed in a working lab."
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWALL.EFFECT
@@ -9375,7 +9375,7 @@ msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWINDOW.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWINDOW.DESC"
-msgid ""
+msgid "A lab window. Formerly a portal to the outside world."
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWINDOW.EFFECT
@@ -9390,7 +9390,7 @@ msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWINDOWHORIZONTAL.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWINDOWHORIZONTAL.DESC"
-msgid ""
+msgid "A lab window.\n\nSomeone once stared out this contemplating the results of an experiment."
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWINDOWHORIZONTAL.EFFECT
@@ -9405,17 +9405,17 @@ msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASROBTICTABLE.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASROBTICTABLE.DESC"
-msgid ""
+msgid "The work space of an extinct robotics technician who left behind some unfinished prototypes."
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASROBTICTABLE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASROBTICTABLE.NAME"
-msgid "Table"
+msgid "Robitics Research Desk"
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASSHELF.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASSHELF.DESC"
-msgid ""
+msgid "A shelf holding jars just out of reach for a short person."
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASSHELF.NAME
@@ -9425,7 +9425,7 @@ msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASWALL.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASWALL.DESC"
-msgid ""
+msgid "The granite wall of a once great scientific facility."
 msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASWALL.EFFECT

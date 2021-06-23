@@ -197,7 +197,7 @@ worldTemplateRules:
     - geysers/salt_water
     listRule: TryOne
     allowDuplicates: true
-    times: 2
+    times: 3
     priority: 10
     allowedCellsFilter:
       - command: Replace
@@ -207,4 +207,7 @@ worldTemplateRules:
         maxDistance: 10
       - command: ExceptWith
         zoneTypes: [ Space ]
-        
+      - command: ExceptWith
+        subworldNames:
+          - expansion1::subworlds/barren/LargeChasmStart
+          - expansion1::subworlds/barren/LargeChasm

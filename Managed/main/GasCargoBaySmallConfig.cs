@@ -15,6 +15,7 @@ public class GasCargoBaySmallConfig : IBuildingConfig
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("GasCargoBaySmall", 3, 3, "rocket_storage_gas_small_kanim", 1000, 30f, BUILDINGS.ROCKETRY_MASS_KG.HOLLOW_TIER1, MATERIALS.REFINED_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;
 		buildingDef.OverheatTemperature = 2273.15f;
 		buildingDef.Floodable = false;
