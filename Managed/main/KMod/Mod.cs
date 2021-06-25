@@ -36,7 +36,26 @@ namespace KMod
 				set;
 			}
 
+			[Obsolete("Use minimumSupportedBuild instead!")]
 			public int lastWorkingBuild
+			{
+				get;
+				set;
+			}
+
+			public int minimumSupportedBuild
+			{
+				get;
+				set;
+			}
+
+			public int APIVersion
+			{
+				get;
+				set;
+			}
+
+			public string version
 			{
 				get;
 				set;
@@ -249,7 +268,7 @@ namespace KMod
 				packagedModInfo = new PackagedModInfo
 				{
 					supportedContent = "vanilla_id",
-					lastWorkingBuild = 0
+					minimumSupportedBuild = 0
 				};
 				if (ScanContentFromSourceForTranslationsOnly(""))
 				{
@@ -302,11 +321,8 @@ namespace KMod
 			}
 			list2 = list2.Where((ArchivedVersion v) => DoesModSupportCurrentContent(v.info)).ToList();
 			return (from v in list2
-				where (long)v.info.lastWorkingBuild >= 464364L
-				orderby v.info.lastWorkingBuild
-				select v).Concat(from v in list2
-				where (long)v.info.lastWorkingBuild < 464364L
-				orderby v.info.lastWorkingBuild descending
+				where (long)v.info.minimumSupportedBuild <= 469300L
+				orderby v.info.minimumSupportedBuild descending
 				select v).FirstOrDefault()?.relativePath;
 		}
 
@@ -346,7 +362,15 @@ namespace KMod
 				ModDevLogError(string.Format("\t{0}: {1} in folder '{2}' does not specify supportedContent. Make sure you spelled it correctly in your mod_info!", label, "mod_info.yaml", text));
 				return null;
 			}
-			ModDevLog($"\t{label}: Found valid mod_info.yaml in folder '{text}': {packagedModInfo.supportedContent} at {packagedModInfo.lastWorkingBuild}");
+			if (packagedModInfo.lastWorkingBuild != 0)
+			{
+				ModDevLogError(string.Format("\t{0}: {1} in folder '{2}' is using `{3}`, please upgrade this to `{4}`", label, "mod_info.yaml", text, "lastWorkingBuild", "minimumSupportedBuild"));
+				if (packagedModInfo.minimumSupportedBuild == 0)
+				{
+					packagedModInfo.minimumSupportedBuild = packagedModInfo.lastWorkingBuild;
+				}
+			}
+			ModDevLog($"\t{label}: Found valid mod_info.yaml in folder '{text}': {packagedModInfo.supportedContent} at {packagedModInfo.minimumSupportedBuild}");
 			return packagedModInfo;
 		}
 
