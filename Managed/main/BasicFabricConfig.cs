@@ -10,9 +10,9 @@ public class BasicFabricConfig : IEntityConfig
 
 	private AttributeModifier decorModifier = new AttributeModifier("Decor", 0.1f, ITEMS.INDUSTRIAL_PRODUCTS.BASIC_FABRIC.NAME, is_multiplier: true);
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

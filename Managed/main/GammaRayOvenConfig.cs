@@ -7,10 +7,14 @@ public class GammaRayOvenConfig : IBuildingConfig
 {
 	public const string ID = "GammaRayOven";
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("GammaRayOven", 2, 2, "kiln_kanim", 30, 30f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: TUNING.BUILDINGS.DECOR.NONE);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateElectricalBuildingDef(buildingDef);
 		buildingDef.AudioCategory = "Metal";
 		buildingDef.AudioSize = "large";

@@ -101,7 +101,8 @@ public class ColonyDiagnosticScreen : KScreen, ISim4000ms
 			indicator.color = diagnostic.colors[diagnostic.LatestResult.opinion];
 			tooltip.SetSimpleTooltip((diagnostic.LatestResult.Message.IsNullOrWhiteSpace() ? UI.COLONY_DIAGNOSTICS.GENERIC_STATUS_NORMAL.text : diagnostic.LatestResult.Message) + "\n\n" + UI.COLONY_DIAGNOSTICS.MUTE_TUTORIAL.text);
 			ColonyDiagnostic.PresentationSetting presentationSetting = diagnostic.presentationSetting;
-			if (presentationSetting == ColonyDiagnostic.PresentationSetting.AverageValue || presentationSetting != ColonyDiagnostic.PresentationSetting.CurrentValue)
+			ColonyDiagnostic.PresentationSetting presentationSetting2 = presentationSetting;
+			if (presentationSetting2 == ColonyDiagnostic.PresentationSetting.AverageValue || presentationSetting2 != ColonyDiagnostic.PresentationSetting.CurrentValue)
 			{
 				valueLabel.SetText(diagnostic.GetAverageValueString());
 			}

@@ -84,7 +84,7 @@ public static class Localization
 
 		public override string ToString()
 		{
-			return string.Concat(mCode, ":", mLanguage, ":", mDirection, ":", mFontName);
+			return mCode + ":" + mLanguage.ToString() + ":" + mDirection.ToString() + ":" + mFontName;
 		}
 	}
 

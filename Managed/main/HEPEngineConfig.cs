@@ -13,13 +13,17 @@ public class HEPEngineConfig : IBuildingConfig
 
 	public const string ID = "HEPEngine";
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("HEPEngine", 5, 5, "rocket_hep_engine_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.ENGINE_MASS_LARGE, new string[1]
 		{
 			SimHashes.Steel.ToString()
 		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;
 		buildingDef.OverheatTemperature = 2273.15f;

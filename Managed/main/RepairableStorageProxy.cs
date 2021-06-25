@@ -4,9 +4,9 @@ public class RepairableStorageProxy : IEntityConfig
 {
 	public static string ID = "RepairableStorageProxy";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

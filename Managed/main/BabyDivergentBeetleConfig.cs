@@ -5,9 +5,9 @@ public class BabyDivergentBeetleConfig : IEntityConfig
 {
 	public const string ID = "DivergentBeetleBaby";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "EXPANSION1_ID";
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 
 	public GameObject CreatePrefab()

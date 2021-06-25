@@ -14,6 +14,11 @@ public class OxygenMaskConfig : IEquipmentConfig
 
 	private AttributeModifier expertAthleticsModifier;
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public EquipmentDef CreateEquipmentDef()
 	{
 		List<AttributeModifier> list = new List<AttributeModifier>();
@@ -25,7 +30,6 @@ public class OxygenMaskConfig : IEquipmentConfig
 			GameTags.Clothes
 		});
 		equipmentDef.wornID = "Worn_Oxygen_Mask";
-		equipmentDef.RequiredDlcId = "EXPANSION1_ID";
 		equipmentDef.RecipeDescription = STRINGS.EQUIPMENT.PREFABS.OXYGEN_MASK.RECIPE_DESC;
 		equipmentDef.OnEquipCallBack = delegate(Equippable eq)
 		{

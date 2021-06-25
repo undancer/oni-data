@@ -46,8 +46,6 @@ public class MainMenu : KScreen
 
 	public GameObject topLeftAlphaMessage;
 
-	private float lastUpdateTime;
-
 	private MotdServerClient m_motdServerClient;
 
 	private GameObject GameSettingsScreen;
@@ -63,6 +61,9 @@ public class MainMenu : KScreen
 
 	[SerializeField]
 	private ColorStyleSetting normalButtonStyle;
+
+	[SerializeField]
+	private string menuMusicEventName;
 
 	[SerializeField]
 	private string ambientLoopEventName;
@@ -152,8 +153,8 @@ public class MainMenu : KScreen
 		CheckDoubleBoundKeys();
 		topLeftAlphaMessage.gameObject.SetActive(value: false);
 		nextUpdateTimer.gameObject.SetActive(value: false);
-		expansion1Toggle.gameObject.SetActive(value: false);
-		bool ownsExpansion1 = DistributionPlatform.Inst.PurchasedDLC;
+		bool ownsExpansion1 = DistributionPlatform.Inst.IsDLCPurchased("EXPANSION1_ID");
+		expansion1Toggle.gameObject.SetActive(ownsExpansion1);
 		m_motdServerClient = new MotdServerClient();
 		m_motdServerClient.GetMotd(delegate(MotdServerClient.MotdResponse response, string error)
 		{
@@ -162,7 +163,6 @@ public class MainMenu : KScreen
 				topLeftAlphaMessage.gameObject.SetActive(value: true);
 				if (ownsExpansion1)
 				{
-					expansion1Toggle.gameObject.SetActive(value: true);
 					nextUpdateTimer.gameObject.SetActive(value: true);
 				}
 				motdImageHeader.text = response.image_header_text;
@@ -211,13 +211,12 @@ public class MainMenu : KScreen
 				Debug.LogWarning("Motd Request error: " + error);
 			}
 		});
-		lastUpdateTime = Time.unscaledTime;
 		activateOnSpawn = true;
 	}
 
-	public void RefreshMainMenu()
+	private void OnApplicationFocus(bool focus)
 	{
-		if (refreshResumeButton)
+		if (focus)
 		{
 			RefreshResumeButton();
 		}
@@ -276,6 +275,8 @@ public class MainMenu : KScreen
 		m_cheatInputCounter = 0;
 		Canvas.ForceUpdateCanvases();
 		ShowLanguageConfirmation();
+		InitLoadScreen();
+		LoadScreen.Instance.ShowMigrationIfNecessary(fromMainMenu: true);
 		string savePrefix = SaveLoader.GetSavePrefix();
 		try
 		{
@@ -435,14 +436,9 @@ public class MainMenu : KScreen
 
 	private void Update()
 	{
-		if (Time.unscaledTime - lastUpdateTime > 1f)
-		{
-			RefreshMainMenu();
-			lastUpdateTime = Time.unscaledTime;
-		}
 	}
 
-	public void RefreshResumeButton()
+	public void RefreshResumeButton(bool simpleCheck = false)
 	{
 		string latestSaveForCurrentDLC = SaveLoader.GetLatestSaveForCurrentDLC();
 		bool flag = !string.IsNullOrEmpty(latestSaveForCurrentDLC) && File.Exists(latestSaveForCurrentDLC);
@@ -474,11 +470,11 @@ public class MainMenu : KScreen
 					gameInfo = value.headerData;
 				}
 				bool flag2 = true;
-				if (header.buildVersion > 466654 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 23)
+				if (header.buildVersion > 469287 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 23)
 				{
 					flag = false;
 				}
-				if (gameInfo.dlcId != DlcManager.GetActiveDlcId())
+				if (!DlcManager.IsContentActive(gameInfo.dlcId))
 				{
 					flag = false;
 				}
@@ -539,9 +535,9 @@ public class MainMenu : KScreen
 		{
 			AudioMixer.instance.StartUserVolumesSnapshot();
 		}
-		if (AudioDebug.Get().musicEnabled && !MusicManager.instance.SongIsPlaying("Music_TitleTheme_Expansion1"))
+		if (AudioDebug.Get().musicEnabled && !MusicManager.instance.SongIsPlaying(menuMusicEventName))
 		{
-			MusicManager.instance.PlaySong("Music_TitleTheme_Expansion1");
+			MusicManager.instance.PlaySong(menuMusicEventName);
 		}
 		CheckForAudioDriverIssue();
 	}
@@ -553,6 +549,15 @@ public class MainMenu : KScreen
 			ambientLoop.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 			ambientLoop.release();
 			ambientLoop.clearHandle();
+		}
+	}
+
+	public void StopMainMenuMusic()
+	{
+		if (MusicManager.instance.SongIsPlaying(menuMusicEventName))
+		{
+			MusicManager.instance.StopSong(menuMusicEventName);
+			AudioMixer.instance.Stop(AudioMixerSnapshots.Get().FrontEndSnapshot);
 		}
 	}
 
@@ -606,7 +611,7 @@ public class MainMenu : KScreen
 					string mGroup2 = GameInputMapping.KeyBindings[j].mGroup;
 					if ((mGroup == "Root" || mGroup2 == "Root" || mGroup == mGroup2) && (!(mGroup == "Root") || !bindingEntry.mIgnoreRootConflics) && (!(mGroup2 == "Root") || !bindingEntry2.mIgnoreRootConflics))
 					{
-						text = string.Concat(text, "\n\n", bindingEntry2.mAction, ": <b>", bindingEntry2.mKeyCode, "</b>\n", bindingEntry.mAction, ": <b>", bindingEntry.mKeyCode, "</b>");
+						text = text + "\n\n" + bindingEntry2.mAction.ToString() + ": <b>" + bindingEntry2.mKeyCode.ToString() + "</b>\n" + bindingEntry.mAction.ToString() + ": <b>" + bindingEntry.mKeyCode.ToString() + "</b>";
 						BindingEntry bindingEntry3 = bindingEntry2;
 						bindingEntry3.mKeyCode = KKeyCode.None;
 						bindingEntry3.mModifier = Modifier.None;

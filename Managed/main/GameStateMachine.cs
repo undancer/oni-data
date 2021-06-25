@@ -491,7 +491,8 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 					KAnimFile anim2 = Assets.GetAnim(hashedString2);
 					if (anim2 == null)
 					{
-						Debug.LogWarning("Missing anims: " + hashedString2);
+						HashedString hashedString3 = hashedString2;
+						Debug.LogWarning("Missing anims: " + hashedString3.ToString());
 					}
 					else
 					{
@@ -1460,18 +1461,18 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 			{
 				Pickupable pickupable2 = pickup_target.Get<Pickupable>(smi);
 				GameObject gameObject = reserver.Get(smi);
-				float num = requested_amount.Get(smi);
-				float num2 = Mathf.Max(1f, Db.Get().Attributes.CarryAmount.Lookup(gameObject).GetTotalValue());
-				float val = Math.Min(num, num2);
-				val = Math.Min(val, pickupable2.UnreservedAmount);
-				if (val <= 0f)
+				float val = requested_amount.Get(smi);
+				float val2 = Mathf.Max(1f, Db.Get().Attributes.CarryAmount.Lookup(gameObject).GetTotalValue());
+				float val3 = Math.Min(val, val2);
+				val3 = Math.Min(val3, pickupable2.UnreservedAmount);
+				if (val3 <= 0f)
 				{
 					pickupable2.PrintReservations();
-					Debug.LogError(num2 + ", " + num + ", " + pickupable2.UnreservedAmount + ", " + val);
+					Debug.LogError(val2 + ", " + val + ", " + pickupable2.UnreservedAmount + ", " + val3);
 				}
-				actual_amount.Set(val, smi);
-				int num3 = pickupable2.Reserve("ToggleReserve", gameObject, val);
-				smi.dataTable[data_idx] = num3;
+				actual_amount.Set(val3, smi);
+				int num = pickupable2.Reserve("ToggleReserve", gameObject, val3);
+				smi.dataTable[data_idx] = num;
 			});
 			Exit("Unreserve(" + pickup_target.name + ", " + requested_amount.name + ")", delegate(StateMachineInstanceType smi)
 			{
@@ -1500,7 +1501,7 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 					smi.GoTo(failure_state);
 				}
 			});
-			Update("Work()", delegate(StateMachineInstanceType smi, float dt)
+			Update("Work(" + work_type + ")", delegate(StateMachineInstanceType smi, float dt)
 			{
 				if (validate_callback(smi))
 				{

@@ -28,13 +28,16 @@ public static class BaseLightBugConfig
 		gameObject.AddOrGetDef<ThreatMonitor.Def>();
 		gameObject.AddOrGetDef<SubmergedMonitor.Def>();
 		EntityTemplates.CreateAndRegisterBaggedCreature(gameObject, must_stand_on_top_for_pickup: true, allow_mark_for_capture: false);
-		RadiationEmitter radiationEmitter = gameObject.AddOrGet<RadiationEmitter>();
-		radiationEmitter.emitType = RadiationEmitter.RadiationEmitterType.Constant;
-		radiationEmitter.radiusProportionalToRads = false;
-		radiationEmitter.emitRadiusX = 6;
-		radiationEmitter.emitRadiusY = radiationEmitter.emitRadiusX;
-		radiationEmitter.emitRads = 12f;
-		radiationEmitter.emissionOffset = new Vector3(0f, 0f, 0f);
+		if (DlcManager.FeatureRadiationEnabled())
+		{
+			RadiationEmitter radiationEmitter = gameObject.AddOrGet<RadiationEmitter>();
+			radiationEmitter.emitType = RadiationEmitter.RadiationEmitterType.Constant;
+			radiationEmitter.radiusProportionalToRads = false;
+			radiationEmitter.emitRadiusX = 6;
+			radiationEmitter.emitRadiusY = radiationEmitter.emitRadiusX;
+			radiationEmitter.emitRads = 12f;
+			radiationEmitter.emissionOffset = new Vector3(0f, 0f, 0f);
+		}
 		if (is_baby)
 		{
 			KBatchedAnimController component2 = gameObject.GetComponent<KBatchedAnimController>();

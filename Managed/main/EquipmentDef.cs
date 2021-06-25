@@ -8,8 +8,6 @@ public class EquipmentDef : Def
 
 	public string Slot;
 
-	public string RequiredDlcId;
-
 	public string FabricatorId;
 
 	public float FabricationTime;

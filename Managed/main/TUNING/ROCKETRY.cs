@@ -54,6 +54,15 @@ namespace TUNING
 
 		public class OXIDIZER_EFFICIENCY
 		{
+			public static float VERY_LOW = 0.334f;
+
+			public static float LOW = 1f;
+
+			public static float HIGH = 1.33f;
+		}
+
+		public class DLC1_OXIDIZER_EFFICIENCY
+		{
 			public static float VERY_LOW = 1f;
 
 			public static float LOW = 2f;

@@ -8,9 +8,9 @@ public class SpiceNutConfig : IEntityConfig
 
 	public static string ID = "SpiceNut";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

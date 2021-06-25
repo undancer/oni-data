@@ -1,8 +1,164 @@
 using System.Collections.Generic;
+using FMOD.Studio;
 using UnityEngine;
 
 public class ClusterMapVisualizer : KMonoBehaviour
 {
+	private class UpdateXPositionParameter : LoopingSoundParameterUpdater
+	{
+		private struct Entry
+		{
+			public Transform transform;
+
+			public EventInstance ev;
+
+			public PARAMETER_ID parameterId;
+		}
+
+		private List<Entry> entries = new List<Entry>();
+
+		public UpdateXPositionParameter()
+			: base("Starmap_Position_X")
+		{
+		}
+
+		public override void Add(Sound sound)
+		{
+			Entry entry = default(Entry);
+			entry.transform = sound.transform;
+			entry.ev = sound.ev;
+			entry.parameterId = sound.description.GetParameterId(base.parameter);
+			Entry item = entry;
+			entries.Add(item);
+		}
+
+		public override void Update(float dt)
+		{
+			foreach (Entry entry in entries)
+			{
+				if (!(entry.transform == null))
+				{
+					EventInstance ev = entry.ev;
+					ev.setParameterByID(entry.parameterId, entry.transform.GetPosition().x / (float)Screen.width);
+				}
+			}
+		}
+
+		public override void Remove(Sound sound)
+		{
+			for (int i = 0; i < entries.Count; i++)
+			{
+				if (entries[i].ev.handle == sound.ev.handle)
+				{
+					entries.RemoveAt(i);
+					break;
+				}
+			}
+		}
+	}
+
+	private class UpdateYPositionParameter : LoopingSoundParameterUpdater
+	{
+		private struct Entry
+		{
+			public Transform transform;
+
+			public EventInstance ev;
+
+			public PARAMETER_ID parameterId;
+		}
+
+		private List<Entry> entries = new List<Entry>();
+
+		public UpdateYPositionParameter()
+			: base("Starmap_Position_Y")
+		{
+		}
+
+		public override void Add(Sound sound)
+		{
+			Entry entry = default(Entry);
+			entry.transform = sound.transform;
+			entry.ev = sound.ev;
+			entry.parameterId = sound.description.GetParameterId(base.parameter);
+			Entry item = entry;
+			entries.Add(item);
+		}
+
+		public override void Update(float dt)
+		{
+			foreach (Entry entry in entries)
+			{
+				if (!(entry.transform == null))
+				{
+					EventInstance ev = entry.ev;
+					ev.setParameterByID(entry.parameterId, entry.transform.GetPosition().y / (float)Screen.height);
+				}
+			}
+		}
+
+		public override void Remove(Sound sound)
+		{
+			for (int i = 0; i < entries.Count; i++)
+			{
+				if (entries[i].ev.handle == sound.ev.handle)
+				{
+					entries.RemoveAt(i);
+					break;
+				}
+			}
+		}
+	}
+
+	private class UpdateZoomPercentageParameter : LoopingSoundParameterUpdater
+	{
+		private struct Entry
+		{
+			public Transform transform;
+
+			public EventInstance ev;
+
+			public PARAMETER_ID parameterId;
+		}
+
+		private List<Entry> entries = new List<Entry>();
+
+		public UpdateZoomPercentageParameter()
+			: base("Starmap_Zoom_Percentage")
+		{
+		}
+
+		public override void Add(Sound sound)
+		{
+			Entry entry = default(Entry);
+			entry.ev = sound.ev;
+			entry.parameterId = sound.description.GetParameterId(base.parameter);
+			Entry item = entry;
+			entries.Add(item);
+		}
+
+		public override void Update(float dt)
+		{
+			foreach (Entry entry in entries)
+			{
+				EventInstance ev = entry.ev;
+				ev.setParameterByID(entry.parameterId, ClusterMapScreen.Instance.CurrentZoomPercentage());
+			}
+		}
+
+		public override void Remove(Sound sound)
+		{
+			for (int i = 0; i < entries.Count; i++)
+			{
+				if (entries[i].ev.handle == sound.ev.handle)
+				{
+					entries.RemoveAt(i);
+					break;
+				}
+			}
+		}
+	}
+
 	public KBatchedAnimController animControllerPrefab;
 
 	public KBatchedAnimController peekControllerPrefab;
@@ -135,6 +291,7 @@ public class ClusterMapVisualizer : KMonoBehaviour
 					};
 					kBatchedAnimController.initialMode = KAnim.PlayMode.Loop;
 					kBatchedAnimController.initialAnim = animConfig.initialAnim;
+					kBatchedAnimController.gameObject.AddComponent<LoopingSounds>();
 					kBatchedAnimController.gameObject.SetActive(value: true);
 					animControllers.Add(kBatchedAnimController);
 				}

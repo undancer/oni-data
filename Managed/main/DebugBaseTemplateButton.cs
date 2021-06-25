@@ -209,7 +209,13 @@ public class DebugBaseTemplateButton : KScreen
 			Grid.CellToXY(SelectedCells[i], out var x2, out var y2);
 			Element element = ElementLoader.elements[Grid.ElementIdx[i2]];
 			string diseaseName = ((Grid.DiseaseIdx[i2] != byte.MaxValue) ? Db.Get().Diseases[Grid.DiseaseIdx[i2]].Id : null);
-			list.Add(new Cell(x2 - rootX, y2 - rootY, element.id, Grid.Temperature[i2], Grid.Mass[i2], diseaseName, Grid.DiseaseCount[i2], Grid.PreventFogOfWarReveal[SelectedCells[i]]));
+			int num3 = Grid.DiseaseCount[i2];
+			if (num3 <= 0)
+			{
+				num3 = 0;
+				diseaseName = null;
+			}
+			list.Add(new Cell(x2 - rootX, y2 - rootY, element.id, Grid.Temperature[i2], Grid.Mass[i2], diseaseName, num3, Grid.PreventFogOfWarReveal[SelectedCells[i]]));
 		}
 		for (int j = 0; j < Components.BuildingCompletes.Count; j++)
 		{
@@ -225,13 +231,13 @@ public class DebugBaseTemplateButton : KScreen
 			}
 			int[] placementCells = buildingComplete.PlacementCells;
 			string diseaseName2;
-			foreach (int num3 in placementCells)
+			foreach (int num4 in placementCells)
 			{
-				Grid.CellToXY(num3, out var xplace, out var yplace);
-				diseaseName2 = ((Grid.DiseaseIdx[num3] != byte.MaxValue) ? Db.Get().Diseases[Grid.DiseaseIdx[num3]].Id : null);
+				Grid.CellToXY(num4, out var xplace, out var yplace);
+				diseaseName2 = ((Grid.DiseaseIdx[num4] != byte.MaxValue) ? Db.Get().Diseases[Grid.DiseaseIdx[num4]].Id : null);
 				if (list.Find((Cell c) => c.location_x == xplace - rootX && c.location_y == yplace - rootY) == null)
 				{
-					list.Add(new Cell(xplace - rootX, yplace - rootY, Grid.Element[num3].id, Grid.Temperature[num3], Grid.Mass[num3], diseaseName2, Grid.DiseaseCount[num3]));
+					list.Add(new Cell(xplace - rootX, yplace - rootY, Grid.Element[num4].id, Grid.Temperature[num4], Grid.Mass[num4], diseaseName2, Grid.DiseaseCount[num4]));
 				}
 			}
 			Orientation rotation = Orientation.Neutral;
@@ -258,26 +264,26 @@ public class DebugBaseTemplateButton : KScreen
 			{
 				list4.Add(new Prefab.template_amount_value(amount.amount.Id, amount.value));
 			}
-			float num4 = 0f;
+			float num5 = 0f;
 			Battery component3 = buildingComplete.GetComponent<Battery>();
 			if (component3 != null)
 			{
-				num4 = component3.JoulesAvailable;
-				list5.Add(new Prefab.template_amount_value("joulesAvailable", num4));
+				num5 = component3.JoulesAvailable;
+				list5.Add(new Prefab.template_amount_value("joulesAvailable", num5));
 			}
-			float num5 = 0f;
+			float num6 = 0f;
 			Unsealable component4 = buildingComplete.GetComponent<Unsealable>();
 			if (component4 != null)
 			{
-				num5 = (component4.facingRight ? 1 : 0);
-				list5.Add(new Prefab.template_amount_value("sealedDoorDirection", num5));
+				num6 = (component4.facingRight ? 1 : 0);
+				list5.Add(new Prefab.template_amount_value("sealedDoorDirection", num6));
 			}
-			float num6 = 0f;
+			float num7 = 0f;
 			LogicSwitch component5 = buildingComplete.GetComponent<LogicSwitch>();
 			if (component5 != null)
 			{
-				num6 = (component5.IsSwitchedOn ? 1 : 0);
-				list5.Add(new Prefab.template_amount_value("switchSetting", num6));
+				num7 = (component5.IsSwitchedOn ? 1 : 0);
+				list5.Add(new Prefab.template_amount_value("switchSetting", num7));
 			}
 			x3 -= rootX;
 			y3 -= rootY;
@@ -370,10 +376,10 @@ public class DebugBaseTemplateButton : KScreen
 			{
 				continue;
 			}
-			int num7 = Grid.PosToCell(pickupable);
-			if ((SaveAllPickups || SelectedCells.Contains(num7)) && !Components.Pickupables[m].gameObject.GetComponent<MinionBrain>())
+			int num8 = Grid.PosToCell(pickupable);
+			if ((SaveAllPickups || SelectedCells.Contains(num8)) && !Components.Pickupables[m].gameObject.GetComponent<MinionBrain>())
 			{
-				Grid.CellToXY(num7, out var x5, out var y5);
+				Grid.CellToXY(num8, out var x5, out var y5);
 				x5 -= rootX;
 				y5 -= rootY;
 				SimHashes element4 = SimHashes.Void;
@@ -500,6 +506,8 @@ public class DebugBaseTemplateButton : KScreen
 			return;
 		}
 		selectionAsAsset.SaveToYaml(SaveName);
+		TemplateCache.Clear();
+		TemplateCache.Init();
 		PasteBaseTemplateScreen.Instance.RefreshStampButtons();
 	}
 

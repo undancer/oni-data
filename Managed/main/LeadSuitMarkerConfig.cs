@@ -5,6 +5,11 @@ public class LeadSuitMarkerConfig : IBuildingConfig
 {
 	public const string ID = "LeadSuitMarker";
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		string[] rEFINED_METALS = MATERIALS.REFINED_METALS;
@@ -13,7 +18,6 @@ public class LeadSuitMarkerConfig : IBuildingConfig
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER2[0],
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER1[0]
 		}, construction_materials: rEFINED_METALS, melting_point: 1600f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, id: "LeadSuitMarker", width: 2, height: 4, anim: "changingarea_radiation_arrow_kanim", hitpoints: 30, construction_time: 30f, decor: BUILDINGS.DECOR.BONUS.TIER1);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		buildingDef.PermittedRotations = PermittedRotations.FlipH;
 		buildingDef.PreventIdleTraversalPastBuilding = true;
 		buildingDef.Deprecated = !Sim.IsRadiationEnabled();

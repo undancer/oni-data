@@ -4,9 +4,9 @@ public class NuclearWasteConfig : IOreConfig
 {
 	public SimHashes ElementID => SimHashes.NuclearWaste;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

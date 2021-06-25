@@ -9,9 +9,9 @@ public class ForestTreeBranchConfig : IEntityConfig
 
 	public const float WOOD_AMOUNT = 300f;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

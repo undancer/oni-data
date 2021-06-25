@@ -8,6 +8,11 @@ public class AquaSuitConfig : IEquipmentConfig
 {
 	public const string ID = "Aqua_Suit";
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public EquipmentDef CreateEquipmentDef()
 	{
 		Dictionary<string, float> dictionary = new Dictionary<string, float>();

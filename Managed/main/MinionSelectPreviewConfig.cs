@@ -6,9 +6,9 @@ public class MinionSelectPreviewConfig : IEntityConfig
 {
 	public static string ID = "MinionSelectPreview";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

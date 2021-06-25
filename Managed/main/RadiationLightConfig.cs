@@ -5,10 +5,14 @@ public class RadiationLightConfig : IBuildingConfig
 {
 	public const string ID = "RadiationLight";
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("RadiationLight", 1, 1, "ceilinglight_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnCeiling, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		buildingDef.RequiresPowerInput = true;
 		buildingDef.EnergyConsumptionWhenActive = 10f;
 		buildingDef.SelfHeatKilowattsWhenActive = 0.5f;

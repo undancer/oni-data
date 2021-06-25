@@ -144,7 +144,7 @@ namespace ProcGen.Map
 						}
 						if (edge.arc == edge2.arc)
 						{
-							Debug.LogError(string.Concat("Duplicate EDGE [", edge.arc, "] & [", edge2.arc, "] - (ARC)"));
+							Debug.LogError("Duplicate EDGE [" + edge.arc.ToString() + "] & [" + edge2.arc.ToString() + "] - (ARC)");
 							return;
 						}
 						if (edge.corner0 == edge2.corner0 && edge.corner1 == edge2.corner1)

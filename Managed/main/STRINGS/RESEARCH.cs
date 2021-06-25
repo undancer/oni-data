@@ -745,7 +745,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Pressurized Forging", "HIGHPRESSUREFORGING");
 
-				public static LocString DESC = "High pressure environment for diamond forging";
+				public static LocString DESC = "High pressure diamond forging.";
 			}
 
 			public class RADIATIONPROTECTION
@@ -862,9 +862,9 @@ namespace STRINGS
 
 			public class SOLIDSPACE
 			{
-				public static LocString NAME = UI.FormatAsLink("Solid Space Transport", "SOLIDSPACE");
+				public static LocString NAME = UI.FormatAsLink("Solid Control", "SOLIDSPACE");
 
-				public static LocString DESC = "Transport and sort " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + " resources... in space!";
+				public static LocString DESC = "Transport and sort " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + " resources.";
 			}
 
 			public class HIGHVELOCITYTRANSPORT
@@ -885,28 +885,28 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Bioengineering", "BIOENGINEERING");
 
-				public static LocString DESC = "Description";
+				public static LocString DESC = "Mutation station.";
 			}
 
 			public class SPACECOMBUSTION
 			{
 				public static LocString NAME = UI.FormatAsLink("Advanced Combustion", "SPACECOMBUSTION");
 
-				public static LocString DESC = "Description";
+				public static LocString DESC = "Sweet advancements in rocket engines.";
 			}
 
 			public class HIGHVELOCITYDESTRUCTION
 			{
 				public static LocString NAME = UI.FormatAsLink("High Velocity Destruction", "HIGHVELOCITYDESTRUCTION");
 
-				public static LocString DESC = "Description";
+				public static LocString DESC = "Mine the skies.";
 			}
 
 			public class SPACEGAS
 			{
 				public static LocString NAME = UI.FormatAsLink("Advanced Gas Flow", "SPACEGAS");
 
-				public static LocString DESC = "Description";
+				public static LocString DESC = UI.FormatAsLink("Gas", "ELEMENTS_GASSES") + " engines and transportation for rockets.";
 			}
 		}
 	}

@@ -119,6 +119,11 @@ public abstract class ColonyDiagnostic
 		colors.Add(DiagnosticResult.Opinion.Good, Constants.POSITIVE_COLOR);
 	}
 
+	public virtual string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public DiagnosticCriterion[] GetCriteria()
 	{
 		DiagnosticCriterion[] array = new DiagnosticCriterion[criteria.Values.Count];

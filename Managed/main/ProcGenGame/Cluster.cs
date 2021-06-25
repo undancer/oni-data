@@ -219,7 +219,7 @@ namespace ProcGenGame
 				worldForbiddenLocations.UnionWith(AxialUtil.GetRings(axialI2, 1, worldPlacement.buffer));
 				poiWorldAvoidance.UnionWith(AxialUtil.GetRings(axialI2, 1, maxRadius));
 			}
-			if (!DlcManager.IsExpansion1Active() || list == null)
+			if (!DlcManager.FeatureClusterSpaceEnabled() || list == null)
 			{
 				return;
 			}
@@ -265,7 +265,7 @@ namespace ProcGenGame
 					}
 					else
 					{
-						Debug.LogError($"There is no room for a Space POI in ring range [{item3.allowedRings.min}, {item3.allowedRings.max}]");
+						Debug.LogWarning($"There is no room for a Space POI in ring range [{item3.allowedRings.min}, {item3.allowedRings.max}]");
 					}
 				}
 			}

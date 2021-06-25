@@ -41,9 +41,9 @@ public class PuftOxyliteConfig : IEntityConfig
 		return prefab;
 	}
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

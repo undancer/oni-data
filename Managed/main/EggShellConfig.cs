@@ -9,9 +9,9 @@ public class EggShellConfig : IEntityConfig
 
 	public const float EGG_TO_SHELL_RATIO = 0.5f;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

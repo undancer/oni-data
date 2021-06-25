@@ -9,9 +9,14 @@ public class DiamondPressConfig : IBuildingConfig
 
 	private const int HEP_PER_DIAMOND_KG = 10;
 
-	private const int RECIPE_MASS_KG = 10;
+	private const int RECIPE_MASS_KG = 100;
 
-	private const int HEP_STORAGE_CAPACITY = 500;
+	private const int HEP_STORAGE_CAPACITY = 2000;
+
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
 
 	public override BuildingDef CreateBuildingDef()
 	{
@@ -24,7 +29,6 @@ public class DiamondPressConfig : IBuildingConfig
 		buildingDef.ViewMode = OverlayModes.Power.ID;
 		buildingDef.AudioCategory = "HollowMetal";
 		buildingDef.AudioSize = "large";
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		return buildingDef;
 	}
 
@@ -38,7 +42,7 @@ public class DiamondPressConfig : IBuildingConfig
 		go.AddOrGet<FabricatorIngredientStatusManager>();
 		go.AddOrGet<CopyBuildingSettings>();
 		HighEnergyParticleStorage highEnergyParticleStorage = go.AddOrGet<HighEnergyParticleStorage>();
-		highEnergyParticleStorage.capacity = 500f;
+		highEnergyParticleStorage.capacity = 2000f;
 		highEnergyParticleStorage.autoStore = true;
 		ComplexFabricatorWorkable complexFabricatorWorkable = go.AddOrGet<ComplexFabricatorWorkable>();
 		BuildingTemplates.CreateComplexFabricatorStorage(go, complexFabricator);
@@ -52,16 +56,16 @@ public class DiamondPressConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement(SimHashes.RefinedCarbon.CreateTag(), 10f)
+			new ComplexRecipe.RecipeElement(SimHashes.RefinedCarbon.CreateTag(), 100f)
 		};
 		ComplexRecipe.RecipeElement[] array2 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement(SimHashes.Diamond.CreateTag(), 10f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
+			new ComplexRecipe.RecipeElement(SimHashes.Diamond.CreateTag(), 100f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
 		string id = ComplexRecipeManager.MakeRecipeID("DiamondPress", array, array2);
-		new ComplexRecipe(id, array, array2, 100)
+		new ComplexRecipe(id, array, array2, 1000)
 		{
-			time = 40f,
+			time = 80f,
 			description = string.Format(STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.REFINED_CARBON_RECIPE_DESCRIPTION, SimHashes.Diamond.CreateTag().ProperName(), SimHashes.RefinedCarbon.CreateTag().ProperName()),
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.IngredientToResult,
 			fabricators = new List<Tag>
@@ -83,6 +87,12 @@ public class DiamondPressConfig : IBuildingConfig
 			component.AttributeExperienceMultiplier = DUPLICANTSTATS.ATTRIBUTE_LEVELING.PART_DAY_EXPERIENCE;
 			component.SkillExperienceSkillGroup = Db.Get().SkillGroups.Technicals.Id;
 			component.SkillExperienceMultiplier = SKILLS.PART_DAY_EXPERIENCE;
+			MeterController meter = new MeterController(component.GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.Infront, Grid.SceneLayer.NoLayer, "meter_target", "meter_fill", "meter_frame", "meter_OL");
+			HighEnergyParticleStorage hepStorage = component.GetComponent<HighEnergyParticleStorage>();
+			component.Subscribe(-1837862626, delegate
+			{
+				meter.SetPositionPercent(hepStorage.Particles / hepStorage.Capacity());
+			});
 		};
 	}
 }

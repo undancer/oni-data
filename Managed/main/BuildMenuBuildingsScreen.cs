@@ -295,7 +295,8 @@ public class BuildMenuBuildingsScreen : KIconToggleMenu
 	{
 		PlanScreen.RequirementsState requirementsState = BuildMenu.Instance.BuildableState(def);
 		PlanScreen.RequirementsState requirementsState2 = requirementsState;
-		if ((uint)(requirementsState2 - 2) <= 1u)
+		PlanScreen.RequirementsState requirementsState3 = requirementsState2;
+		if ((uint)(requirementsState3 - 2) <= 1u)
 		{
 			if (def != selectedBuilding)
 			{

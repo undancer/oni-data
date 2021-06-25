@@ -15,10 +15,14 @@ public class RocketControlStationConfig : IBuildingConfig
 
 	public const float SLOW_SPEED = 0.5f;
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(ID, 2, 2, "rocket_control_station_kanim", 30, 60f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: BUILDINGS.DECOR.BONUS.TIER2);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		buildingDef.Overheatable = false;
 		buildingDef.Repairable = false;
 		buildingDef.Floodable = false;

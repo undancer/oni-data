@@ -13,9 +13,9 @@ public class CritterTrapPlantConfig : IEntityConfig
 
 	public const float GAS_VENT_THRESHOLD = 33.25f;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "EXPANSION1_ID";
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 
 	public GameObject CreatePrefab()

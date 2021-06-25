@@ -264,12 +264,15 @@ namespace Database
 			Arting2 = AddSkill(new Skill("Arting2", DUPLICANTS.ROLES.ARTIST.NAME, DUPLICANTS.ROLES.ARTIST.DESCRIPTION, "", 1, "hat_role_art2", "skillbadge_role_art2", Db.Get().SkillGroups.Art.Id, new List<SkillPerk>
 			{
 				Db.Get().SkillPerks.CanArtOkay,
-				Db.Get().SkillPerks.IncreaseArtMedium,
-				Db.Get().SkillPerks.CanStudyArtifact
+				Db.Get().SkillPerks.IncreaseArtMedium
 			}, new List<string>
 			{
 				Arting1.Id
 			}));
+			if (DlcManager.FeatureClusterSpaceEnabled())
+			{
+				Arting2.perks.Add(Db.Get().SkillPerks.CanStudyArtifact);
+			}
 			Arting3 = AddSkill(new Skill("Arting3", DUPLICANTS.ROLES.MASTER_ARTIST.NAME, DUPLICANTS.ROLES.MASTER_ARTIST.DESCRIPTION, "", 2, "hat_role_art3", "skillbadge_role_art3", Db.Get().SkillGroups.Art.Id, new List<SkillPerk>
 			{
 				Db.Get().SkillPerks.CanArtGreat,
@@ -301,7 +304,7 @@ namespace Database
 					Hauling1.Id,
 					RocketPiloting1.Id
 				}));
-				Suits1 = AddSkill(new Skill("Suits1", DUPLICANTS.ROLES.SUIT_EXPERT.NAME, DUPLICANTS.ROLES.SUIT_EXPERT.DESCRIPTION, "", 2, "hat_role_suits1", "skillbadge_role_suits3", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk>
+				Suits1 = AddSkill(new Skill("Suits1", DUPLICANTS.ROLES.SUIT_EXPERT.NAME, DUPLICANTS.ROLES.SUIT_EXPERT.DESCRIPTION, "EXPANSION1_ID", 2, "hat_role_suits1", "skillbadge_role_suits3", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk>
 				{
 					Db.Get().SkillPerks.ExosuitExpertise,
 					Db.Get().SkillPerks.IncreaseAthleticsMedium
@@ -318,7 +321,7 @@ namespace Database
 					Db.Get().SkillPerks.IncreaseAthleticsMedium
 				}, new List<string>
 				{
-					DlcManager.IsExpansion1Active() ? ThermalSuits.Id : Hauling2.Id
+					Hauling2.Id
 				}));
 			}
 			Technicals1 = AddSkill(new Skill("Technicals1", DUPLICANTS.ROLES.MACHINE_TECHNICIAN.NAME, DUPLICANTS.ROLES.MACHINE_TECHNICIAN.DESCRIPTION, "", 0, "hat_role_technicals1", "skillbadge_role_technicals1", Db.Get().SkillGroups.Technicals.Id, new List<SkillPerk>
@@ -357,7 +360,7 @@ namespace Database
 			}));
 			if (DlcManager.IsExpansion1Active())
 			{
-				Astronauting1 = AddSkill(new Skill("Astronauting1", DUPLICANTS.ROLES.USELESSSKILL.NAME, DUPLICANTS.ROLES.USELESSSKILL.DESCRIPTION, "", 3, "hat_role_astronaut1", "skillbadge_role_astronaut1", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk>
+				Astronauting1 = AddSkill(new Skill("Astronauting1", DUPLICANTS.ROLES.USELESSSKILL.NAME, DUPLICANTS.ROLES.USELESSSKILL.DESCRIPTION, "EXPANSION1_ID", 3, "hat_role_astronaut1", "skillbadge_role_astronaut1", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk>
 				{
 					Db.Get().SkillPerks.IncreaseAthleticsMedium
 				}, new List<string>
@@ -366,7 +369,7 @@ namespace Database
 					Suits1.Id
 				}));
 				Astronauting1.deprecated = true;
-				Astronauting2 = AddSkill(new Skill("Astronauting2", DUPLICANTS.ROLES.USELESSSKILL.NAME, DUPLICANTS.ROLES.USELESSSKILL.DESCRIPTION, "", 4, "hat_role_astronaut2", "skillbadge_role_astronaut2", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk>
+				Astronauting2 = AddSkill(new Skill("Astronauting2", DUPLICANTS.ROLES.USELESSSKILL.NAME, DUPLICANTS.ROLES.USELESSSKILL.DESCRIPTION, "EXPANSION1_ID", 4, "hat_role_astronaut2", "skillbadge_role_astronaut2", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk>
 				{
 					Db.Get().SkillPerks.IncreaseAthleticsMedium
 				}, new List<string>

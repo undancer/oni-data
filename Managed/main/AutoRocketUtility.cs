@@ -11,8 +11,13 @@ public static class AutoRocketUtility
 
 	private static IEnumerator AutoRocketRoutine(LaunchPad selectedPad)
 	{
-		GameObject baseModule = AddEngine(selectedPad);
-		GameObject commandModule = AddPassengerModule(baseModule);
+		GameObject engine = AddEngine(selectedPad);
+		GameObject oxidizerTank = AddOxidizerTank(engine);
+		yield return new WaitForEndOfFrame();
+		AddOxidizer(oxidizerTank);
+		GameObject commandModule = AddPassengerModule(oxidizerTank);
+		GameObject storageModule = AddSolidStorageModule(commandModule);
+		AddDrillCone(storageModule);
 		PassengerRocketModule passengerModule = commandModule.GetComponent<PassengerRocketModule>();
 		ClustercraftExteriorDoor exteriorDoor = passengerModule.GetComponent<ClustercraftExteriorDoor>();
 		int max = 100;
@@ -33,10 +38,10 @@ public static class AutoRocketUtility
 
 	private static GameObject AddEngine(LaunchPad selectedPad)
 	{
-		BuildingDef buildingDef = Assets.GetBuildingDef("CO2Engine");
+		BuildingDef buildingDef = Assets.GetBuildingDef("KeroseneEngineClusterSmall");
 		List<Tag> elements = new List<Tag>
 		{
-			SimHashes.Cuprite.CreateTag()
+			SimHashes.Steel.CreateTag()
 		};
 		GameObject gameObject = selectedPad.AddBaseModule(buildingDef, elements);
 		RocketEngineCluster component = gameObject.GetComponent<RocketEngineCluster>();
@@ -60,12 +65,56 @@ public static class AutoRocketUtility
 	private static GameObject AddPassengerModule(GameObject baseModule)
 	{
 		ReorderableBuilding component = baseModule.GetComponent<ReorderableBuilding>();
-		BuildingDef buildingDef = Assets.GetBuildingDef("HabitatModuleSmall");
+		BuildingDef buildingDef = Assets.GetBuildingDef("HabitatModuleMedium");
 		List<Tag> buildMaterials = new List<Tag>
 		{
 			SimHashes.Cuprite.CreateTag()
 		};
 		return component.AddModule(buildingDef, buildMaterials);
+	}
+
+	private static GameObject AddSolidStorageModule(GameObject baseModule)
+	{
+		ReorderableBuilding component = baseModule.GetComponent<ReorderableBuilding>();
+		BuildingDef buildingDef = Assets.GetBuildingDef("SolidCargoBaySmall");
+		List<Tag> buildMaterials = new List<Tag>
+		{
+			SimHashes.Steel.CreateTag()
+		};
+		return component.AddModule(buildingDef, buildMaterials);
+	}
+
+	private static GameObject AddDrillCone(GameObject baseModule)
+	{
+		ReorderableBuilding component = baseModule.GetComponent<ReorderableBuilding>();
+		BuildingDef buildingDef = Assets.GetBuildingDef("NoseconeHarvest");
+		List<Tag> buildMaterials = new List<Tag>
+		{
+			SimHashes.Steel.CreateTag(),
+			SimHashes.Polypropylene.CreateTag()
+		};
+		GameObject gameObject = component.AddModule(buildingDef, buildMaterials);
+		gameObject.GetComponent<Storage>().AddOre(SimHashes.Diamond, 1000f, 273f, byte.MaxValue, 0);
+		return gameObject;
+	}
+
+	private static GameObject AddOxidizerTank(GameObject baseModule)
+	{
+		ReorderableBuilding component = baseModule.GetComponent<ReorderableBuilding>();
+		BuildingDef buildingDef = Assets.GetBuildingDef("SmallOxidizerTank");
+		List<Tag> buildMaterials = new List<Tag>
+		{
+			SimHashes.Cuprite.CreateTag()
+		};
+		return component.AddModule(buildingDef, buildMaterials);
+	}
+
+	private static void AddOxidizer(GameObject oxidizerTank)
+	{
+		SimHashes simHashes = SimHashes.OxyRock;
+		Element element = ElementLoader.FindElementByHash(simHashes);
+		DiscoveredResources.Instance.Discover(element.tag, element.GetMaterialCategoryTag());
+		oxidizerTank.GetComponent<OxidizerTank>().DEBUG_FillTank(simHashes);
 	}
 
 	private static GameObject AddPilot(RocketControlStation station)

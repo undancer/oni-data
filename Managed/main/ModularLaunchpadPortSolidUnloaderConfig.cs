@@ -4,6 +4,11 @@ public class ModularLaunchpadPortSolidUnloaderConfig : IBuildingConfig
 {
 	public const string ID = "ModularLaunchpadPortSolidUnloader";
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		return BaseModularLaunchpadPortConfig.CreateBaseLaunchpadPort("ModularLaunchpadPortSolidUnloader", "conduit_port_solid_unloader_kanim", ConduitType.Solid, isLoader: false);

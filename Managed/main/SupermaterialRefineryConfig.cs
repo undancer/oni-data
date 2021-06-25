@@ -65,29 +65,32 @@ public class SupermaterialRefineryConfig : IBuildingConfig
 				TagManager.Create("SupermaterialRefinery")
 			}
 		};
-		float num3 = 0.9f;
-		float num4 = 1f - num3;
-		ComplexRecipe.RecipeElement[] array3 = new ComplexRecipe.RecipeElement[3]
+		if (DlcManager.IsExpansion1Active())
 		{
-			new ComplexRecipe.RecipeElement(SimHashes.Graphite.CreateTag(), 100f * num3),
-			new ComplexRecipe.RecipeElement(SimHashes.Sulfur.CreateTag(), 100f * num4 / 2f),
-			new ComplexRecipe.RecipeElement(SimHashes.Aluminum.CreateTag(), 100f * num4 / 2f)
-		};
-		ComplexRecipe.RecipeElement[] array4 = new ComplexRecipe.RecipeElement[1]
-		{
-			new ComplexRecipe.RecipeElement(SimHashes.Fullerene.CreateTag(), 100f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
-		};
-		string id2 = ComplexRecipeManager.MakeRecipeID("SupermaterialRefinery", array3, array4);
-		new ComplexRecipe(id2, array3, array4)
-		{
-			time = 80f,
-			description = STRINGS.BUILDINGS.PREFABS.SUPERMATERIALREFINERY.FULLERENE_RECIPE_DESCRIPTION,
-			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
+			float num3 = 0.9f;
+			float num4 = 1f - num3;
+			ComplexRecipe.RecipeElement[] array3 = new ComplexRecipe.RecipeElement[3]
 			{
-				TagManager.Create("SupermaterialRefinery")
-			}
-		};
+				new ComplexRecipe.RecipeElement(SimHashes.Graphite.CreateTag(), 100f * num3),
+				new ComplexRecipe.RecipeElement(SimHashes.Sulfur.CreateTag(), 100f * num4 / 2f),
+				new ComplexRecipe.RecipeElement(SimHashes.Aluminum.CreateTag(), 100f * num4 / 2f)
+			};
+			ComplexRecipe.RecipeElement[] array4 = new ComplexRecipe.RecipeElement[1]
+			{
+				new ComplexRecipe.RecipeElement(SimHashes.Fullerene.CreateTag(), 100f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
+			};
+			string id2 = ComplexRecipeManager.MakeRecipeID("SupermaterialRefinery", array3, array4);
+			new ComplexRecipe(id2, array3, array4)
+			{
+				time = 80f,
+				description = STRINGS.BUILDINGS.PREFABS.SUPERMATERIALREFINERY.FULLERENE_RECIPE_DESCRIPTION,
+				nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
+				fabricators = new List<Tag>
+				{
+					TagManager.Create("SupermaterialRefinery")
+				}
+			};
+		}
 		float num5 = 0.15f;
 		float num6 = 0.05f;
 		float num7 = 1f - num6 - num5;

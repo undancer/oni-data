@@ -131,7 +131,12 @@ public class SkillMinionWidget : KMonoBehaviour, IPointerEnterHandler, IEventSys
 			masteryPoints.text = UI.TABLESCREENS.NA;
 			morale.text = UI.TABLESCREENS.NA;
 		}
-		SetColor((skillsScreen.CurrentlySelectedMinion == assignableIdentity) ? selected_color : unselected_color);
+		bool flag = skillsScreen.CurrentlySelectedMinion == assignableIdentity;
+		if (skillsScreen.CurrentlySelectedMinion != null && assignableIdentity != null)
+		{
+			flag = flag || skillsScreen.CurrentlySelectedMinion.GetSoleOwner() == assignableIdentity.GetSoleOwner();
+		}
+		SetColor(flag ? selected_color : unselected_color);
 		HierarchyReferences component3 = GetComponent<HierarchyReferences>();
 		RefreshHat(text);
 		component3.GetReference("openButton").gameObject.SetActive(minionIdentity != null);

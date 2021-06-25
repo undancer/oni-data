@@ -62,7 +62,7 @@ public class ProgressBar : KMonoBehaviour
 	private void SetWorldActive(int worldId)
 	{
 		base.gameObject.SetActive(this.GetMyWorldId() == worldId);
-		if (updatePercentFull == null || updatePercentFull.Target.Equals(null))
+		if (updatePercentFull == null || updatePercentFull.Target.IsNullOrDestroyed())
 		{
 			base.gameObject.SetActive(value: false);
 		}
@@ -76,7 +76,7 @@ public class ProgressBar : KMonoBehaviour
 
 	public virtual void Update()
 	{
-		if (updatePercentFull != null && !updatePercentFull.Target.Equals(null))
+		if (updatePercentFull != null && !updatePercentFull.Target.IsNullOrDestroyed())
 		{
 			PercentFull = updatePercentFull();
 		}

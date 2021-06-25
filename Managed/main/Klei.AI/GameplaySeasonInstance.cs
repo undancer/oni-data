@@ -84,8 +84,8 @@ namespace Klei.AI
 					x.CalculatePriority();
 				});
 				list.Sort();
-				int max = Mathf.Min(list.Count, 5);
-				GameplayEvent eventType = list[Random.Range(0, max)];
+				int maxExclusive = Mathf.Min(list.Count, 5);
+				GameplayEvent eventType = list[Random.Range(0, maxExclusive)];
 				GameplayEventManager.Instance.StartNewEvent(eventType, worldId);
 				result = true;
 			}

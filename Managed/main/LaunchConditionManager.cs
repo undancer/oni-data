@@ -79,7 +79,7 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 		Spacecraft spacecraftFromLaunchConditionManager = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(this);
 		if (spacecraftFromLaunchConditionManager != null)
 		{
-			Debug.Assert(!DlcManager.IsExpansion1Active());
+			Debug.Assert(!DlcManager.FeatureClusterSpaceEnabled());
 			SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(spacecraftFromLaunchConditionManager.id);
 			LogicPorts component = base.gameObject.GetComponent<LogicPorts>();
 			if (component.GetInputValue(triggerPort) == 1 && spacecraftDestination != null && spacecraftDestination.id != -1)

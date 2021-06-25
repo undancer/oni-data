@@ -20,6 +20,11 @@ public class UraniumCentrifugeConfig : IBuildingConfig
 		Storage.StoredItemModifier.Insulate
 	};
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		string[] array = new string[2]
@@ -32,7 +37,6 @@ public class UraniumCentrifugeConfig : IBuildingConfig
 			TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5[0],
 			TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER2[0]
 		}, construction_materials: array, melting_point: 2400f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, id: "UraniumCentrifuge", width: 3, height: 4, anim: "enrichmentCentrifuge_kanim", hitpoints: 100, construction_time: 480f, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER1);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		buildingDef.Overheatable = false;
 		buildingDef.RequiresPowerInput = true;
 		buildingDef.PowerInputOffset = new CellOffset(0, 0);

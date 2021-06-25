@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class PropGravitasDecorativeWindowConfig : IEntityConfig
 {
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "EXPANSION1_ID";
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 
 	public GameObject CreatePrefab()

@@ -81,9 +81,9 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 			Grid.CellToXY(landingBeaconLocation, out var x, out var _);
 			if (landingBeaconLocation != Grid.InvalidCell)
 			{
-				int min = Mathf.Max(x - 3, (int)world.minimumBounds.x);
-				int max = Mathf.Min(x + 3, (int)world.maximumBounds.x);
-				num = Mathf.RoundToInt(Random.Range(min, max));
+				int minInclusive = Mathf.Max(x - 3, (int)world.minimumBounds.x);
+				int maxExclusive = Mathf.Min(x + 3, (int)world.maximumBounds.x);
+				num = Mathf.RoundToInt(Random.Range(minInclusive, maxExclusive));
 			}
 			else
 			{

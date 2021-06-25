@@ -6,6 +6,11 @@ public class GravitasPedestalConfig : IBuildingConfig
 {
 	public const string ID = "GravitasPedestal";
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("GravitasPedestal", 1, 2, "gravitas_pedestal_nice_kanim", 10, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.RAW_MINERALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER0);
@@ -15,7 +20,6 @@ public class GravitasPedestalConfig : IBuildingConfig
 		buildingDef.ViewMode = OverlayModes.Decor.ID;
 		buildingDef.AudioCategory = "Glass";
 		buildingDef.AudioSize = "small";
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		return buildingDef;
 	}
 

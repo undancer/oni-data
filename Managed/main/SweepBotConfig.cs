@@ -26,9 +26,9 @@ public class SweepBotConfig : IEntityConfig
 
 	public static float MASS = 25f;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

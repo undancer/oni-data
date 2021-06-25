@@ -214,8 +214,7 @@ namespace Database
 				"InsulatedGasConduit",
 				LogicPressureSensorGasConfig.ID,
 				"GasLogicValve",
-				"GasVentHighPressure",
-				"GasBottler"
+				"GasVentHighPressure"
 			}, this);
 			new Tech("SpaceGas", new List<string>
 			{
@@ -301,7 +300,6 @@ namespace Database
 			}, this);
 			new Tech("LiquidDistribution", new List<string>
 			{
-				"LiquidLimitValve",
 				"RocketInteriorLiquidInput",
 				"RocketInteriorLiquidOutput"
 			}, this);
@@ -319,8 +317,7 @@ namespace Database
 			{
 				"AlgaeDistillery",
 				"EthanolDistillery",
-				"WaterPurifier",
-				"BottleEmptierGas"
+				"WaterPurifier"
 			}, this);
 			new Tech("Catalytics", new List<string>
 			{
@@ -445,10 +442,7 @@ namespace Database
 			new Tech("RenaissanceArt", new List<string>
 			{
 				"CanvasTall",
-				"MarbleSculpture",
-				"MonumentBottom",
-				"MonumentMiddle",
-				"MonumentTop"
+				"MarbleSculpture"
 			}, this);
 			new Tech("Plastics", new List<string>
 			{
@@ -583,7 +577,8 @@ namespace Database
 				GasConduitTemperatureSensorConfig.ID,
 				GasConduitElementSensorConfig.ID,
 				"GasConduitRadiant",
-				"GasReservoir"
+				"GasReservoir",
+				"GasLimitValve"
 			}, this);
 			new Tech("LiquidTemperature", new List<string>
 			{
@@ -591,7 +586,8 @@ namespace Database
 				"LiquidConditioner",
 				LiquidConduitTemperatureSensorConfig.ID,
 				LiquidConduitElementSensorConfig.ID,
-				"LiquidHeater"
+				"LiquidHeater",
+				"LiquidLimitValve"
 			}, this);
 			new Tech("LogicControl", new List<string>
 			{
@@ -720,10 +716,37 @@ namespace Database
 				"SolidConduitInbox",
 				"SolidConduit",
 				"SolidConduitBridge",
-				"SolidVent",
-				"SolidConduitOutbox",
+				"SolidVent"
+			}, this);
+			new Tech("Monuments", new List<string>
+			{
+				"MonumentBottom",
+				"MonumentMiddle",
+				"MonumentTop"
+			}, this);
+			new Tech("SolidSpace", new List<string>
+			{
 				"SolidLogicValve",
-				"AutoMiner"
+				"SolidConduitOutbox",
+				"SolidLimitValve",
+				"SolidCargoBaySmall",
+				"RocketInteriorSolidInput",
+				"RocketInteriorSolidOutput",
+				"ModularLaunchpadPortSolid",
+				"ModularLaunchpadPortSolidUnloader"
+			}, this);
+			new Tech("RoboticTools", new List<string>
+			{
+				"AutoMiner",
+				"RailGunPayloadOpener"
+			}, this);
+			new Tech("PortableGasses", new List<string>
+			{
+				"GasBottler",
+				"BottleEmptierGas",
+				"OxygenMask",
+				"OxygenMaskLocker",
+				"OxygenMaskMarker"
 			}, this);
 			InitExpansion1();
 		}
@@ -732,18 +755,6 @@ namespace Database
 		{
 			if (DlcManager.IsExpansion1Active())
 			{
-				Get("SolidTransport").RemoveUnlockedItemIDs("SolidConduitOutbox", "SolidLogicValve", "AutoMiner");
-				Get("ImprovedGasPiping").RemoveUnlockedItemIDs("GasBottler");
-				Get("Distillation").RemoveUnlockedItemIDs("BottleEmptierGas");
-				Get("RenaissanceArt").RemoveUnlockedItemIDs("MonumentBottom", "MonumentMiddle", "MonumentTop");
-				new Tech("PortableGasses", new List<string>
-				{
-					"GasBottler",
-					"BottleEmptierGas",
-					"OxygenMask",
-					"OxygenMaskLocker",
-					"OxygenMaskMarker"
-				}, this);
 				new Tech("Bioengineering", new List<string>
 				{
 					"GeneticAnalysisStation"
@@ -753,38 +764,15 @@ namespace Database
 					"SugarEngine",
 					"SmallOxidizerTank"
 				}, this);
-				new Tech("SolidSpace", new List<string>
-				{
-					"SolidLogicValve",
-					"SolidConduitOutbox",
-					"SolidLimitValve",
-					"SolidCargoBaySmall",
-					"RocketInteriorSolidInput",
-					"RocketInteriorSolidOutput",
-					"ModularLaunchpadPortSolid",
-					"ModularLaunchpadPortSolidUnloader"
-				}, this);
-				new Tech("RoboticTools", new List<string>
-				{
-					"AutoMiner",
-					"RailGunPayloadOpener"
-				}, this);
 				new Tech("HighVelocityDestruction", new List<string>
 				{
 					"NoseconeHarvest"
 				}, this);
 				new Tech("GasDistribution", new List<string>
 				{
-					"GasLimitValve",
 					"RocketInteriorGasInput",
 					"RocketInteriorGasOutput",
 					"OxidizerTankCluster"
-				}, this);
-				new Tech("Monuments", new List<string>
-				{
-					"MonumentBottom",
-					"MonumentMiddle",
-					"MonumentTop"
 				}, this);
 				new Tech("AdvancedScanners", new List<string>
 				{

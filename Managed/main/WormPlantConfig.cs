@@ -24,9 +24,9 @@ public class WormPlantConfig : IEntityConfig
 		harvest = "basic_harvest"
 	};
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "EXPANSION1_ID";
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 
 	public static GameObject BaseWormPlant(string id, string name, string desc, string animFile, EffectorValues decor, string cropID)

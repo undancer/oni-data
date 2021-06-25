@@ -1175,7 +1175,7 @@ public class Game : KMonoBehaviour
 		int x = 0;
 		int y = 0;
 		Grid.CellToXY(mouseCell, out x, out y);
-		string text = mouseCell.ToString() + " (" + x + ", " + y + ")";
+		string text = mouseCell + " (" + x + ", " + y + ")";
 		DebugText.Instance.Draw(text, Grid.CellToPosCCC(mouseCell, Grid.SceneLayer.Move), Color.white);
 	}
 
@@ -1426,7 +1426,7 @@ public class Game : KMonoBehaviour
 		{
 			return;
 		}
-		uint num = 466654u;
+		uint num = 469287u;
 		string text = System.DateTime.Now.ToShortDateString();
 		string text2 = System.DateTime.Now.ToShortTimeString();
 		string fileName = Path.GetFileName(GenericGameSettings.instance.performanceCapture.saveGame);
@@ -1785,10 +1785,7 @@ public class Game : KMonoBehaviour
 		{
 			MusicManager.instance.StopSong("Music_FrontEnd");
 		}
-		if (MusicManager.instance.SongIsPlaying("Music_TitleTheme_Expansion1"))
-		{
-			MusicManager.instance.StopSong("Music_TitleTheme_Expansion1");
-		}
+		MainMenu.Instance.StopMainMenuMusic();
 	}
 
 	public void StartBE()
@@ -2026,6 +2023,8 @@ public class Game : KMonoBehaviour
 		MaterialSelectionPanel.ClearStatics();
 		StarmapScreen.DestroyInstance();
 		SpacecraftManager.DestroyInstance();
+		ClusterManager.DestroyInstance();
+		ClusterGrid.DestroyInstance();
 		Instance = null;
 		Grid.OnReveal = null;
 		VisualTunerElement = null;

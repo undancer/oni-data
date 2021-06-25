@@ -7,6 +7,11 @@ public class GasCargoBayClusterConfig : IBuildingConfig
 
 	public float CAPACITY = ROCKETRY.GAS_CARGO_BAY_CLUSTER_CAPACITY * ROCKETRY.CARGO_CAPACITY_SCALE;
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("GasCargoBayCluster", 5, 5, "rocket_cluster_storage_gas_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.CARGO_MASS, new string[1]
@@ -24,7 +29,6 @@ public class GasCargoBayClusterConfig : IBuildingConfig
 		buildingDef.CanMove = true;
 		buildingDef.Cancellable = false;
 		buildingDef.ShowInBuildMenu = false;
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		return buildingDef;
 	}
 

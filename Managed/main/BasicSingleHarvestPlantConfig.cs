@@ -11,9 +11,9 @@ public class BasicSingleHarvestPlantConfig : IEntityConfig
 
 	public const float DIRT_RATE = 0.016666668f;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

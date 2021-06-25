@@ -38,9 +38,9 @@ public class StaterpillarConfig : IEntityConfig
 		return BaseStaterpillarConfig.SetupDiet(prefab, hashSet, SimHashes.Hydrogen.CreateTag(), CALORIES_PER_KG_OF_ORE);
 	}
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "EXPANSION1_ID";
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 
 	public virtual GameObject CreatePrefab()

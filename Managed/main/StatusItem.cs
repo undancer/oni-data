@@ -212,7 +212,8 @@ public class StatusItem : Resource
 		if (sound_path == null)
 		{
 			NotificationType notificationType = this.notificationType;
-			if (notificationType == NotificationType.Bad)
+			NotificationType notificationType2 = notificationType;
+			if (notificationType2 == NotificationType.Bad)
 			{
 				soundPath = "Warning";
 			}
@@ -322,7 +323,8 @@ public class StatusItem : Resource
 	{
 		if (!overlayBitfieldMap.TryGetValue(mode, out var value))
 		{
-			Debug.LogWarning(string.Concat("ViewMode ", mode, " has no StatusItemOverlay value"));
+			HashedString hashedString = mode;
+			Debug.LogWarning("ViewMode " + hashedString.ToString() + " has no StatusItemOverlay value");
 			return StatusItemOverlays.None;
 		}
 		return value;

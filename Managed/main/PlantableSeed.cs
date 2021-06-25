@@ -19,26 +19,11 @@ public class PlantableSeed : KMonoBehaviour, IReceptacleDirection, IGameObjectEf
 
 	public SingleEntityReceptacle.ReceptacleDirection direction = SingleEntityReceptacle.ReceptacleDirection.Top;
 
-	private static readonly EventSystem.IntraObjectHandler<PlantableSeed> OnAbsorbDelegate = new EventSystem.IntraObjectHandler<PlantableSeed>(delegate(PlantableSeed component, object data)
-	{
-		component.OnAbsorb(data);
-	});
-
-	private static readonly EventSystem.IntraObjectHandler<PlantableSeed> OnSplitFromChunkDelegate = new EventSystem.IntraObjectHandler<PlantableSeed>(delegate(PlantableSeed component, object data)
-	{
-		component.OnSplitFromChunk(data);
-	});
-
 	public SingleEntityReceptacle.ReceptacleDirection Direction => direction;
 
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		if (GetComponent<MutantPlant>() != null)
-		{
-			Subscribe(-2064133523, OnAbsorbDelegate);
-			Subscribe(1335436905, OnSplitFromChunkDelegate);
-		}
 		timeUntilSelfPlant = Util.RandomVariance(2400f, 600f);
 	}
 
@@ -52,28 +37,6 @@ public class PlantableSeed : KMonoBehaviour, IReceptacleDirection, IGameObjectEf
 	{
 		Components.PlantableSeeds.Remove(this);
 		base.OnCleanUp();
-	}
-
-	private void OnAbsorb(object data)
-	{
-		Pickupable pickupable = data as Pickupable;
-		MutantPlant component = GetComponent<MutantPlant>();
-		if (component != null)
-		{
-			MutantPlant component2 = pickupable.GetComponent<MutantPlant>();
-			Debug.Assert(component2 != null && component.SubSpeciesID == component2.SubSpeciesID, "Two seeds of different subspecies just absorbed!");
-		}
-	}
-
-	private void OnSplitFromChunk(object data)
-	{
-		Pickupable pickupable = data as Pickupable;
-		MutantPlant component = GetComponent<MutantPlant>();
-		MutantPlant component2 = pickupable.GetComponent<MutantPlant>();
-		if (component != null && component2 != null)
-		{
-			component2.CopyMutationsTo(component);
-		}
 	}
 
 	public void TryPlant(bool allow_plant_from_storage = false)

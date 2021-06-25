@@ -38,9 +38,9 @@ public class DivergentBeetleConfig : IEntityConfig
 		return BaseDivergentConfig.SetupDiet(prefab, diet_infos, CALORIES_PER_KG_OF_ORE, MIN_POOP_SIZE_IN_KG);
 	}
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "EXPANSION1_ID";
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 
 	public GameObject CreatePrefab()

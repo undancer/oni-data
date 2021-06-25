@@ -33,7 +33,11 @@ namespace ProcGenGame
 		public void AddTemplate(TemplateContainer template, Vector2I position, ref Dictionary<int, int> claimedCells)
 		{
 			int cell = Grid.XYToCell(position.x, position.y);
-			bool flag = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.Teleporters).id == "Enabled";
+			bool flag = true;
+			if (DlcManager.IsExpansion1Active() && CustomGameSettings.Instance != null)
+			{
+				flag = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.Teleporters).id == "Enabled";
+			}
 			if (template.buildings != null)
 			{
 				foreach (Prefab building in template.buildings)

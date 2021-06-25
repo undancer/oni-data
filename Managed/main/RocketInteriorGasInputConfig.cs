@@ -9,15 +9,14 @@ public class RocketInteriorGasInputConfig : IBuildingConfig
 
 	public const string ID = "RocketInteriorGasInput";
 
-	protected virtual string GetID()
+	public override string[] GetDlcIds()
 	{
-		return "RocketInteriorGasInput";
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(GetID(), 1, 1, "rocket_floor_plug_gas_kanim", 30, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnRocketEnvelope, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER2);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("RocketInteriorGasInput", 1, 1, "rocket_floor_plug_gas_kanim", 30, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnRocketEnvelope, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER2);
 		buildingDef.InputConduitType = ConduitType.Gas;
 		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
 		buildingDef.Overheatable = false;

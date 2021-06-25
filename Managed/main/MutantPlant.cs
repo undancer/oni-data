@@ -17,9 +17,20 @@ public class MutantPlant : KMonoBehaviour, IGameObjectEffectDescriptor
 
 	private const int MAX_MUTATIONS = 1;
 
-	private Tag cachedSpeciesID;
+	[SerializeField]
+	private Tag speciesID;
 
 	private Tag cachedSubspeciesID;
+
+	private static readonly EventSystem.IntraObjectHandler<MutantPlant> OnAbsorbDelegate = new EventSystem.IntraObjectHandler<MutantPlant>(delegate(MutantPlant component, object data)
+	{
+		component.OnAbsorb(data);
+	});
+
+	private static readonly EventSystem.IntraObjectHandler<MutantPlant> OnSplitFromChunkDelegate = new EventSystem.IntraObjectHandler<MutantPlant>(delegate(MutantPlant component, object data)
+	{
+		component.OnSplitFromChunk(data);
+	});
 
 	public List<string> MutationIDs => mutationIDs;
 
@@ -31,19 +42,12 @@ public class MutantPlant : KMonoBehaviour, IGameObjectEffectDescriptor
 	{
 		get
 		{
-			if (cachedSpeciesID == null)
-			{
-				PlantableSeed component = GetComponent<PlantableSeed>();
-				if (component != null)
-				{
-					cachedSpeciesID = component.PlantID;
-				}
-				else
-				{
-					cachedSpeciesID = this.PrefabID();
-				}
-			}
-			return cachedSpeciesID;
+			Debug.Assert(speciesID != null, "Ack, forgot to configure the species ID for this mutantPlant!");
+			return speciesID;
+		}
+		set
+		{
+			speciesID = value;
 		}
 	}
 
@@ -57,6 +61,12 @@ public class MutantPlant : KMonoBehaviour, IGameObjectEffectDescriptor
 			}
 			return cachedSubspeciesID;
 		}
+	}
+
+	protected override void OnPrefabInit()
+	{
+		Subscribe(-2064133523, OnAbsorbDelegate);
+		Subscribe(1335436905, OnSplitFromChunkDelegate);
 	}
 
 	protected override void OnSpawn()
@@ -77,6 +87,23 @@ public class MutantPlant : KMonoBehaviour, IGameObjectEffectDescriptor
 	{
 		Components.MutantPlants.Remove(this);
 		base.OnCleanUp();
+	}
+
+	private void OnAbsorb(object data)
+	{
+		Pickupable pickupable = data as Pickupable;
+		MutantPlant component = pickupable.GetComponent<MutantPlant>();
+		Debug.Assert(component != null && SubSpeciesID == component.SubSpeciesID, "Two seeds of different subspecies just absorbed!");
+	}
+
+	private void OnSplitFromChunk(object data)
+	{
+		Pickupable pickupable = data as Pickupable;
+		MutantPlant component = pickupable.GetComponent<MutantPlant>();
+		if (component != null)
+		{
+			component.CopyMutationsTo(this);
+		}
 	}
 
 	public void Mutate()

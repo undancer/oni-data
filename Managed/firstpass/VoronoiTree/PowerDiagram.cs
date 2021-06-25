@@ -288,7 +288,9 @@ namespace VoronoiTree
 					site.position = site.poly.Centroid();
 					continue;
 				}
-				throw new Exception("site poly is null for [" + site.id + "]" + site.position);
+				string str = site.id.ToString();
+				Vector2 position = site.position;
+				throw new Exception("site poly is null for [" + str + "]" + position.ToString());
 			}
 			for (int i = 0; i <= maxIterations; i++)
 			{
@@ -602,7 +604,9 @@ namespace VoronoiTree
 					site.currentWeight = Mathf.Max(site.currentWeight, 1f);
 					continue;
 				}
-				throw new Exception("site poly is null for [" + site.id + "]" + site.position);
+				string str = site.id.ToString();
+				Vector2 position = site.position;
+				throw new Exception("site poly is null for [" + str + "]" + position.ToString());
 			}
 			float num = 0f;
 			foreach (PowerDiagramSite site2 in sites)

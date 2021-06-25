@@ -68,11 +68,14 @@ public class EmoteChore : Chore<EmoteChore.StatesInstance>
 
 	public override string ToString()
 	{
+		HashedString emoteKAnim;
 		if (base.smi.emoteKAnim.IsValid)
 		{
-			return string.Concat("EmoteChore<", base.smi.emoteKAnim, ">");
+			emoteKAnim = base.smi.emoteKAnim;
+			return "EmoteChore<" + emoteKAnim.ToString() + ">";
 		}
-		return string.Concat("EmoteChore<", base.smi.emoteAnims[0], ">");
+		emoteKAnim = base.smi.emoteAnims[0];
+		return "EmoteChore<" + emoteKAnim.ToString() + ">";
 	}
 
 	public void PairReactable(SelfEmoteReactable reactable)

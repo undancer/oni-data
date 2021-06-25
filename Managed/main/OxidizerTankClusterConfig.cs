@@ -9,13 +9,17 @@ public class OxidizerTankClusterConfig : IBuildingConfig
 
 	public const float FuelCapacity = 900f;
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("OxidizerTankCluster", 5, 5, "rocket_oxidizer_tank_kanim", 1000, 60f, TUNING.BUILDINGS.ROCKETRY_MASS_KG.FUEL_TANK_DRY_MASS, new string[1]
 		{
 			SimHashes.Steel.ToString()
 		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: TUNING.BUILDINGS.DECOR.NONE);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.DefaultAnimState = "grounded";
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;
@@ -63,7 +67,7 @@ public class OxidizerTankClusterConfig : IBuildingConfig
 		};
 		flatTagFilterable.headerText = STRINGS.BUILDINGS.PREFABS.OXIDIZERTANK.UI_FILTER_CATEGORY;
 		OxidizerTank oxidizerTank = go.AddOrGet<OxidizerTank>();
-		oxidizerTank.consumeOnLand = !DlcManager.IsExpansion1Active();
+		oxidizerTank.consumeOnLand = !DlcManager.FeatureClusterSpaceEnabled();
 		oxidizerTank.targetFillMass = 900f;
 		oxidizerTank.maxFillMass = 900f;
 		oxidizerTank.storage = storage;

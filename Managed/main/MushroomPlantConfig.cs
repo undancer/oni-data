@@ -11,9 +11,9 @@ public class MushroomPlantConfig : IEntityConfig
 
 	public const string SEED_ID = "MushroomSeed";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

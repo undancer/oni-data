@@ -94,7 +94,7 @@ public class ColonyDestinationAsteroidBeltData
 	{
 		if (filename.IsNullOrWhiteSpace())
 		{
-			filename = (DlcManager.IsExpansion1Active() ? "asteroid_sandstone_start_kanim" : "Asteroid_sandstone");
+			filename = (DlcManager.FeatureClusterSpaceEnabled() ? "asteroid_sandstone_start_kanim" : "Asteroid_sandstone");
 		}
 		Assets.TryGetAnim(filename, out var anim);
 		if (anim != null)
@@ -134,13 +134,13 @@ public class ColonyDestinationAsteroidBeltData
 	private List<AsteroidDescriptor> GenerateParamDescriptors()
 	{
 		List<AsteroidDescriptor> list = new List<AsteroidDescriptor>();
-		if (cluster != null && DlcManager.IsExpansion1Active())
+		if (cluster != null && DlcManager.FeatureClusterSpaceEnabled())
 		{
 			list.Add(new AsteroidDescriptor(string.Format(WORLDS.SURVIVAL_CHANCE.CLUSTERNAME, Strings.Get(cluster.name)), Strings.Get(cluster.description)));
 		}
 		list.Add(new AsteroidDescriptor(string.Format(WORLDS.SURVIVAL_CHANCE.PLANETNAME, startWorldName), null));
 		list.Add(new AsteroidDescriptor(Strings.Get(startWorld.description), null));
-		if (DlcManager.IsExpansion1Active())
+		if (DlcManager.FeatureClusterSpaceEnabled())
 		{
 			list.Add(new AsteroidDescriptor(string.Format(WORLDS.SURVIVAL_CHANCE.MOONNAMES), null));
 			foreach (ProcGen.World world in worlds)

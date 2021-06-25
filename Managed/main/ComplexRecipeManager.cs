@@ -26,7 +26,8 @@ public class ComplexRecipeManager
 
 	public static string MakeObsoleteRecipeID(string fabricator, Tag signatureElement)
 	{
-		return fabricator + "_" + signatureElement;
+		Tag tag = signatureElement;
+		return fabricator + "_" + tag.ToString();
 	}
 
 	public static string MakeRecipeID(string fabricator, IList<ComplexRecipe.RecipeElement> inputs, IList<ComplexRecipe.RecipeElement> outputs)

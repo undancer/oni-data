@@ -9,6 +9,11 @@ public class EquippableBalloonConfig : IEquipmentConfig
 
 	private BalloonFX.Instance fx;
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public EquipmentDef CreateEquipmentDef()
 	{
 		List<AttributeModifier> attributeModifiers = new List<AttributeModifier>();

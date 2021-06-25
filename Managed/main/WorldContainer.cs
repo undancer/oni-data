@@ -97,7 +97,7 @@ public class WorldContainer : KMonoBehaviour
 	{
 		get
 		{
-			if (m_alertManager == null && DlcManager.IsVanillaId(""))
+			if (m_alertManager == null)
 			{
 				StateMachineController component = GetComponent<StateMachineController>();
 				m_alertManager = component.GetSMI<AlertStateManager.Instance>();
@@ -365,13 +365,17 @@ public class WorldContainer : KMonoBehaviour
 	{
 		for (int i = 0; i < worldSize.x; i++)
 		{
-			for (int num = worldSize.y; num >= 0; num--)
+			int num = worldSize.y;
+			while (num >= 0)
 			{
-				int num2 = Grid.XYToCell(i + worldOffset.x, num + worldOffset.y);
-				if (Grid.IsValidCell(num2) && Grid.ExposedToSunlight[num2] >= 253)
+				int cell = Grid.XYToCell(i + worldOffset.x, num + worldOffset.y);
+				if (Grid.IsValidCell(cell) && !Grid.IsSolidCell(cell) && !Grid.IsLiquid(cell))
 				{
 					GridVisibility.Reveal(i + worldOffset.X, num + worldOffset.y, 7, 1f);
+					num--;
+					continue;
 				}
+				break;
 			}
 		}
 	}

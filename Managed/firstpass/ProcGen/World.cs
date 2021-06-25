@@ -80,6 +80,24 @@ namespace ProcGen
 				private set;
 			}
 
+			public bool allowDuplicates
+			{
+				get;
+				private set;
+			}
+
+			public bool allowExtremeTemperatureOverlap
+			{
+				get;
+				private set;
+			}
+
+			public bool useRelaxedFiltering
+			{
+				get;
+				private set;
+			}
+
 			public List<AllowedCellsFilter> allowedCellsFilter
 			{
 				get;
@@ -90,6 +108,20 @@ namespace ProcGen
 			{
 				times = 1;
 				allowedCellsFilter = new List<AllowedCellsFilter>();
+				allowDuplicates = false;
+				useRelaxedFiltering = false;
+			}
+
+			public bool IsGuaranteeRule()
+			{
+				return listRule switch
+				{
+					ListRule.GuaranteeOne => true, 
+					ListRule.GuaranteeSome => true, 
+					ListRule.GuaranteeSomeTryMore => true, 
+					ListRule.GuaranteeAll => true, 
+					_ => false, 
+				};
 			}
 		}
 
@@ -111,7 +143,8 @@ namespace ProcGen
 				UnionWith,
 				IntersectWith,
 				ExceptWith,
-				SymmetricExceptWith
+				SymmetricExceptWith,
+				All
 			}
 
 			public TagCommand tagcommand
@@ -339,9 +372,27 @@ namespace ProcGen
 			{
 				return;
 			}
+			List<string> usedSubworldFiles = new List<string>();
+			subworldFiles.ForEach(delegate(WeightedSubworldName x)
+			{
+				usedSubworldFiles.Add(x.name);
+			});
 			foreach (AllowedCellsFilter unknownCellsAllowedSubworld in unknownCellsAllowedSubworlds)
 			{
 				unknownCellsAllowedSubworld.Validate(name, subworldFiles);
+				if (unknownCellsAllowedSubworld.subworldNames == null)
+				{
+					continue;
+				}
+				foreach (string subworldName in unknownCellsAllowedSubworld.subworldNames)
+				{
+					usedSubworldFiles.Remove(subworldName);
+				}
+			}
+			usedSubworldFiles.Remove(startSubworldName);
+			if (usedSubworldFiles.Count > 0)
+			{
+				DebugUtil.LogWarningArgs("World " + name + ": defines subworldNames that are not used in unknownCellsAllowedSubworlds: \n" + string.Join(", ", usedSubworldFiles));
 			}
 		}
 	}

@@ -108,7 +108,7 @@ public class FuelTank : KMonoBehaviour, IUserControlledCapacity, IFuelTank
 			targetFillMass = physicalFuelCapacity;
 		}
 		GetComponent<KBatchedAnimController>().Play("grounded", KAnim.PlayMode.Loop);
-		if (DlcManager.IsExpansion1Active())
+		if (DlcManager.FeatureClusterSpaceEnabled())
 		{
 			GetComponent<RocketModule>().AddModuleCondition(ProcessCondition.ProcessConditionType.RocketStorage, new ConditionProperlyFueled(this));
 		}
@@ -145,7 +145,7 @@ public class FuelTank : KMonoBehaviour, IUserControlledCapacity, IFuelTank
 
 	public void DEBUG_FillTank()
 	{
-		if (DlcManager.IsExpansion1Active())
+		if (DlcManager.FeatureClusterSpaceEnabled())
 		{
 			RocketEngineCluster rocketEngineCluster = null;
 			foreach (GameObject item in AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>()))

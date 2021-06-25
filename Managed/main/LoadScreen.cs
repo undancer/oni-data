@@ -192,7 +192,7 @@ public class LoadScreen : KModalScreen
 		}
 	}
 
-	private Dictionary<string, List<SaveGameFileDetails>> GetColonies(List<string> files)
+	private Dictionary<string, List<SaveGameFileDetails>> GetColoniesDetails(List<SaveLoader.SaveFileEntry> files)
 	{
 		Dictionary<string, List<SaveGameFileDetails>> dictionary = new Dictionary<string, List<SaveGameFileDetails>>();
 		if (files.Count <= 0)
@@ -201,26 +201,26 @@ public class LoadScreen : KModalScreen
 		}
 		for (int i = 0; i < files.Count; i++)
 		{
-			if (IsFileValid(files[i]))
+			if (IsFileValid(files[i].path))
 			{
-				Tuple<SaveGame.Header, SaveGame.GameInfo> fileInfo = SaveGame.GetFileInfo(files[i]);
+				Tuple<SaveGame.Header, SaveGame.GameInfo> fileInfo = SaveGame.GetFileInfo(files[i].path);
 				SaveGame.Header first = fileInfo.first;
 				SaveGame.GameInfo second = fileInfo.second;
-				System.DateTime lastWriteTime = File.GetLastWriteTime(files[i]);
+				System.DateTime timeStamp = files[i].timeStamp;
 				long size = 0L;
 				try
 				{
-					FileInfo fileInfo2 = new FileInfo(files[i]);
+					FileInfo fileInfo2 = new FileInfo(files[i].path);
 					size = fileInfo2.Length;
 				}
 				catch (Exception ex)
 				{
-					Debug.LogWarning("Failed to get size for file: " + files[i] + "\n" + ex.ToString());
+					Debug.LogWarning("Failed to get size for file: " + files[i].ToString() + "\n" + ex.ToString());
 				}
 				SaveGameFileDetails item = default(SaveGameFileDetails);
 				item.BaseName = second.baseName;
-				item.FileName = files[i];
-				item.FileDate = lastWriteTime;
+				item.FileName = files[i].path;
+				item.FileDate = timeStamp;
 				item.FileHeader = first;
 				item.FileInfo = second;
 				item.Size = size;
@@ -235,22 +235,22 @@ public class LoadScreen : KModalScreen
 		return dictionary;
 	}
 
-	private Dictionary<string, List<SaveGameFileDetails>> GetColonies()
+	private Dictionary<string, List<SaveGameFileDetails>> GetColonies(bool sort)
 	{
-		List<string> allFiles = SaveLoader.GetAllFiles();
-		return GetColonies(allFiles);
+		List<SaveLoader.SaveFileEntry> allFiles = SaveLoader.GetAllFiles(sort);
+		return GetColoniesDetails(allFiles);
 	}
 
-	private Dictionary<string, List<SaveGameFileDetails>> GetLocalColonies()
+	private Dictionary<string, List<SaveGameFileDetails>> GetLocalColonies(bool sort)
 	{
-		List<string> allFiles = SaveLoader.GetAllFiles(SaveLoader.SaveType.local);
-		return GetColonies(allFiles);
+		List<SaveLoader.SaveFileEntry> allFiles = SaveLoader.GetAllFiles(sort, SaveLoader.SaveType.local);
+		return GetColoniesDetails(allFiles);
 	}
 
-	private Dictionary<string, List<SaveGameFileDetails>> GetCloudColonies()
+	private Dictionary<string, List<SaveGameFileDetails>> GetCloudColonies(bool sort)
 	{
-		List<string> allFiles = SaveLoader.GetAllFiles(SaveLoader.SaveType.cloud);
-		return GetColonies(allFiles);
+		List<SaveLoader.SaveFileEntry> allFiles = SaveLoader.GetAllFiles(sort, SaveLoader.SaveType.cloud);
+		return GetColoniesDetails(allFiles);
 	}
 
 	private bool IsFileValid(string filename)
@@ -278,7 +278,7 @@ public class LoadScreen : KModalScreen
 		{
 			return;
 		}
-		Dictionary<string, List<SaveGameFileDetails>> colonies = GetColonies();
+		Dictionary<string, List<SaveGameFileDetails>> colonies = GetColonies(sort: false);
 		foreach (KeyValuePair<string, List<SaveGameFileDetails>> item in colonies)
 		{
 			bool flag = false;
@@ -373,7 +373,7 @@ public class LoadScreen : KModalScreen
 			colonyListPool.ClearAll();
 		}
 		CheckCloudLocalOverlap();
-		Dictionary<string, List<SaveGameFileDetails>> colonies = GetColonies();
+		Dictionary<string, List<SaveGameFileDetails>> colonies = GetColonies(sort: true);
 		if (colonies.Count <= 0)
 		{
 			return;
@@ -550,10 +550,10 @@ public class LoadScreen : KModalScreen
 	private int CountValidSaves(string path, SearchOption searchType = SearchOption.AllDirectories)
 	{
 		int num = 0;
-		List<string> saveFiles = SaveLoader.GetSaveFiles(path, searchType);
+		List<SaveLoader.SaveFileEntry> saveFiles = SaveLoader.GetSaveFiles(path, sort: false, searchType);
 		for (int i = 0; i < saveFiles.Count; i++)
 		{
-			if (IsFileValid(saveFiles[i]))
+			if (IsFileValid(saveFiles[i].path))
 			{
 				num++;
 			}
@@ -574,38 +574,38 @@ public class LoadScreen : KModalScreen
 		errorMessage = null;
 		int num = 0;
 		string savePrefixAndCreateFolder = SaveLoader.GetSavePrefixAndCreateFolder();
-		List<string> saveFiles = SaveLoader.GetSaveFiles(savePrefixAndCreateFolder, SearchOption.TopDirectoryOnly);
+		List<SaveLoader.SaveFileEntry> saveFiles = SaveLoader.GetSaveFiles(savePrefixAndCreateFolder, sort: false, SearchOption.TopDirectoryOnly);
 		for (int i = 0; i < saveFiles.Count; i++)
 		{
-			string text = saveFiles[i];
-			if (IsFileValid(text))
+			SaveLoader.SaveFileEntry saveFileEntry = saveFiles[i];
+			if (IsFileValid(saveFileEntry.path))
 			{
-				if (MigrateSave(savePrefixAndCreateFolder, text, is_auto_save: false, out var saveError))
+				if (MigrateSave(savePrefixAndCreateFolder, saveFileEntry.path, is_auto_save: false, out var saveError))
 				{
 					num++;
 				}
 				else if (errorColony == null)
 				{
-					errorColony = text;
+					errorColony = saveFileEntry.path;
 					errorMessage = saveError;
 				}
 			}
 		}
 		int num2 = 0;
 		string autoSavePrefix = SaveLoader.GetAutoSavePrefix();
-		List<string> saveFiles2 = SaveLoader.GetSaveFiles(autoSavePrefix);
+		List<SaveLoader.SaveFileEntry> saveFiles2 = SaveLoader.GetSaveFiles(autoSavePrefix, sort: false);
 		for (int j = 0; j < saveFiles2.Count; j++)
 		{
-			string text2 = saveFiles2[j];
-			if (IsFileValid(text2))
+			SaveLoader.SaveFileEntry saveFileEntry2 = saveFiles2[j];
+			if (IsFileValid(saveFileEntry2.path))
 			{
-				if (MigrateSave(savePrefixAndCreateFolder, text2, is_auto_save: true, out var saveError2))
+				if (MigrateSave(savePrefixAndCreateFolder, saveFileEntry2.path, is_auto_save: true, out var saveError2))
 				{
 					num2++;
 				}
 				else if (errorColony == null)
 				{
-					errorColony = text2;
+					errorColony = saveFileEntry2.path;
 					errorMessage = saveError2;
 				}
 			}
@@ -744,7 +744,7 @@ public class LoadScreen : KModalScreen
 
 	private void DoConvertAllToLocal()
 	{
-		Dictionary<string, List<SaveGameFileDetails>> cloudColonies = GetCloudColonies();
+		Dictionary<string, List<SaveGameFileDetails>> cloudColonies = GetCloudColonies(sort: false);
 		if (cloudColonies.Count == 0)
 		{
 			return;
@@ -766,7 +766,7 @@ public class LoadScreen : KModalScreen
 
 	private void DoConvertAllToCloud()
 	{
-		Dictionary<string, List<SaveGameFileDetails>> localColonies = GetLocalColonies();
+		Dictionary<string, List<SaveGameFileDetails>> localColonies = GetLocalColonies(sort: false);
 		if (localColonies.Count == 0)
 		{
 			return;
@@ -873,7 +873,7 @@ public class LoadScreen : KModalScreen
 		{
 			if (display != null)
 			{
-				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 466654u, 23);
+				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 469287u, 23);
 			}
 			return false;
 		}
@@ -1163,29 +1163,33 @@ public class LoadScreen : KModalScreen
 		{
 			return true;
 		}
-		return header.buildVersion > 466654;
+		return header.buildVersion > 469287;
 	}
 
 	private static bool IsSaveFromCurrentDLC(SaveGame.GameInfo gameInfo, out string saveDlcName)
 	{
 		string dlcId = gameInfo.dlcId;
-		if (!(dlcId == "EXPANSION1_ID"))
+		string text = dlcId;
+		if (text != null)
 		{
-			if ((dlcId != null && dlcId.Length == 0) || dlcId != null)
+			if (text == "EXPANSION1_ID")
+			{
+				saveDlcName = UI.DLC1.NAME_ITAL;
+				goto IL_0043;
+			}
+			if (text != null && text.Length == 0)
 			{
 			}
-			saveDlcName = UI.VANILLA.NAME_ITAL;
 		}
-		else
-		{
-			saveDlcName = UI.DLC1.NAME_ITAL;
-		}
-		return gameInfo.dlcId == DlcManager.GetActiveDlcId();
+		saveDlcName = UI.VANILLA.NAME_ITAL;
+		goto IL_0043;
+		IL_0043:
+		return gameInfo.dlcId == DlcManager.GetHighestActiveDlcId();
 	}
 
 	private static bool IsSaveFileFromUninstalledDLC(SaveGame.GameInfo gameInfo)
 	{
-		return DlcManager.IsAheadOfInstalledDlc(gameInfo.dlcId);
+		return DlcManager.IsContentActive(gameInfo.dlcId);
 	}
 
 	private void UpdateSelected(KButton button, string filename, string dlcId)
@@ -1209,13 +1213,13 @@ public class LoadScreen : KModalScreen
 
 	private void Load()
 	{
-		if (selectedSave.dlcId != DlcManager.GetActiveDlcId())
+		if (selectedSave.dlcId != DlcManager.GetHighestActiveDlcId())
 		{
 			string message = (DlcManager.IsVanillaId(selectedSave.dlcId) ? UI.FRONTEND.LOADSCREEN.VANILLA_RESTART : UI.FRONTEND.LOADSCREEN.EXPANSION1_RESTART);
 			ConfirmDoAction(message, delegate
 			{
 				bool flag = DlcManager.IsExpansion1Active();
-				DlcManager.SetExpansion1Active(!flag);
+				DlcManager.SetExpansion1Enabled(!flag);
 				KPlayerPrefs.SetString("AutoResumeSaveFile", selectedSave.filename);
 				App.instance.Restart();
 			});
@@ -1243,10 +1247,10 @@ public class LoadScreen : KModalScreen
 		SaveGame.GameInfo gameInfo = SaveLoader.LoadHeader(filename, out header);
 		string arg = null;
 		string arg2 = null;
-		if (header.buildVersion > 466654)
+		if (header.buildVersion > 469287)
 		{
 			arg = header.buildVersion.ToString();
-			arg2 = 466654u.ToString();
+			arg2 = 469287u.ToString();
 		}
 		else if (gameInfo.saveMajorVersion < 7)
 		{
@@ -1292,6 +1296,7 @@ public class LoadScreen : KModalScreen
 				{
 					onDelete();
 				}
+				MainMenu.Instance.RefreshResumeButton();
 			}
 			catch (SystemException ex)
 			{

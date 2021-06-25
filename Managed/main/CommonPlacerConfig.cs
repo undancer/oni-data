@@ -10,9 +10,9 @@ public class CommonPlacerConfig
 		public Mesh mesh;
 	}
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab(string id, string name, Material default_material)

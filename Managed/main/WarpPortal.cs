@@ -266,8 +266,8 @@ public class WarpPortal : Workable
 		CameraController.Instance.ActiveWorldStarWipe(targetID, Grid.CellToPos(Grid.PosToCell(receiver)));
 		Worker targetWorker = base.worker;
 		targetWorker.StopWork();
-		ClusterManager.Instance.MigrateMinion(targetWorker.GetComponent<MinionIdentity>(), targetID);
 		receiver.ReceiveWarpedDuplicant(targetWorker);
+		ClusterManager.Instance.MigrateMinion(targetWorker.GetComponent<MinionIdentity>(), targetID);
 		delayWarpRoutine = null;
 	}
 

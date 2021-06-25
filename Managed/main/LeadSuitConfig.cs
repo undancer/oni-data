@@ -16,6 +16,11 @@ public class LeadSuitConfig : IEquipmentConfig
 
 	private AttributeModifier expertAthleticsModifier;
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public EquipmentDef CreateEquipmentDef()
 	{
 		List<AttributeModifier> list = new List<AttributeModifier>();
@@ -32,7 +37,6 @@ public class LeadSuitConfig : IEquipmentConfig
 			GameTags.Clothes
 		});
 		equipmentDef.wornID = "Worn_Lead_Suit";
-		equipmentDef.RequiredDlcId = "EXPANSION1_ID";
 		equipmentDef.RecipeDescription = STRINGS.EQUIPMENT.PREFABS.ATMO_SUIT.RECIPE_DESC;
 		equipmentDef.EffectImmunites.Add(Db.Get().effects.Get("SoakingWet"));
 		equipmentDef.EffectImmunites.Add(Db.Get().effects.Get("WetFeet"));

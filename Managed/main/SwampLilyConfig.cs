@@ -9,9 +9,9 @@ public class SwampLilyConfig : IEntityConfig
 
 	public const string SEED_ID = "SwampLilySeed";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

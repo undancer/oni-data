@@ -19,9 +19,9 @@ public class OxyfernConfig : IEntityConfig
 
 	public const float OXYGEN_RATE = 0.031250004f;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

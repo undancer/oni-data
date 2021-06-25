@@ -760,8 +760,8 @@ public class CameraController : KMonoBehaviour, IInputHandler
 
 	public void SetTargetPos(Vector3 pos, float orthographic_size, bool playSound)
 	{
-		int num = Grid.WorldIdx[Grid.PosToCell(pos)];
-		if (num == ClusterManager.INVALID_WORLD_IDX || ClusterManager.Instance.GetWorld(num) == null)
+		int num = Grid.PosToCell(pos);
+		if (!Grid.IsValidCell(num) || Grid.WorldIdx[num] == ClusterManager.INVALID_WORLD_IDX || ClusterManager.Instance.GetWorld(Grid.WorldIdx[num]) == null)
 		{
 			return;
 		}
@@ -771,10 +771,10 @@ public class CameraController : KMonoBehaviour, IInputHandler
 			KMonoBehaviour.PlaySound(GlobalAssets.GetSound("Click_Notification"));
 		}
 		pos.z = -100f;
-		if (num != ClusterManager.Instance.activeWorldId)
+		if (Grid.WorldIdx[num] != ClusterManager.Instance.activeWorldId)
 		{
 			targetOrthographicSize = 20f;
-			ActiveWorldStarWipe(num, pos, 10f, delegate
+			ActiveWorldStarWipe(Grid.WorldIdx[num], pos, 10f, delegate
 			{
 				targetPos = pos;
 				isTargetPosSet = true;
@@ -794,8 +794,8 @@ public class CameraController : KMonoBehaviour, IInputHandler
 
 	public void SetTargetPosForWorldChange(Vector3 pos, float orthographic_size, bool playSound)
 	{
-		int num = Grid.WorldIdx[Grid.PosToCell(pos)];
-		if (num != ClusterManager.INVALID_WORLD_IDX && !(ClusterManager.Instance.GetWorld(num) == null))
+		int num = Grid.PosToCell(pos);
+		if (Grid.IsValidCell(num) && Grid.WorldIdx[num] != ClusterManager.INVALID_WORLD_IDX && !(ClusterManager.Instance.GetWorld(Grid.WorldIdx[num]) == null))
 		{
 			ClearFollowTarget();
 			if (playSound && !isTargetPosSet)

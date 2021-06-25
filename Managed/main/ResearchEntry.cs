@@ -204,9 +204,9 @@ public class ResearchEntry : KMonoBehaviour
 				reference.sprite = unlockedItem.UISprite();
 				KImage reference2 = component2.GetReference<KImage>("Background");
 				KImage reference3 = component2.GetReference<KImage>("DLCOverlay");
-				reference3.gameObject.SetActive(!DlcManager.IsVanillaId(unlockedItem.dlcId));
+				reference3.gameObject.SetActive(!DlcManager.IsValidForVanilla(unlockedItem.dlcIds));
 				string text2 = $"{unlockedItem.Name}\n{unlockedItem.description}";
-				if (!DlcManager.IsVanillaId(unlockedItem.dlcId))
+				if (!DlcManager.IsValidForVanilla(unlockedItem.dlcIds))
 				{
 					text2 += RESEARCH.MESSAGING.DLC.EXPANSION1;
 				}

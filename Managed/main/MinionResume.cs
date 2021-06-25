@@ -712,7 +712,7 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 
 	public static bool AnyMinionHasPerk(string perk, int worldId = -1)
 	{
-		List<MinionResume> list = ((worldId >= 0) ? Components.MinionResumes.GetWorldItems(worldId) : Components.MinionResumes.Items);
+		List<MinionResume> list = ((worldId >= 0) ? Components.MinionResumes.GetWorldItems(worldId, checkChildWorlds: true) : Components.MinionResumes.Items);
 		foreach (MinionResume item in list)
 		{
 			if (item.HasPerk(perk))

@@ -277,7 +277,13 @@ public static class TemplateLoader
 	{
 		int cell = Grid.OffsetCell(root_cell, bc.location_x, bc.location_y);
 		UtilityConnections connection = (UtilityConnections)bc.connections;
-		switch (bc.id)
+		string id = bc.id;
+		string text = id;
+		if (text == null)
+		{
+			return;
+		}
+		switch (text)
 		{
 		case "Wire":
 		case "InsulatedWire":

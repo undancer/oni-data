@@ -41,16 +41,6 @@ public class RocketModule : KMonoBehaviour
 		component.OnRocketNotOnGroundTag(data);
 	});
 
-	private static readonly EventSystem.IntraObjectHandler<RocketModule> OnLaunchConditionChangedDelegate = new EventSystem.IntraObjectHandler<RocketModule>(delegate(RocketModule component, object data)
-	{
-		component.OnLaunchConditionChanged(data);
-	});
-
-	private static readonly EventSystem.IntraObjectHandler<RocketModule> OnLandDelegate = new EventSystem.IntraObjectHandler<RocketModule>(delegate(RocketModule component, object data)
-	{
-		component.OnLand(data);
-	});
-
 	public ProcessCondition AddModuleCondition(ProcessCondition.ProcessConditionType conditionType, ProcessCondition condition)
 	{
 		if (!moduleConditions.ContainsKey(conditionType))
@@ -96,7 +86,7 @@ public class RocketModule : KMonoBehaviour
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		if (!DlcManager.IsExpansion1Active())
+		if (!DlcManager.FeatureClusterSpaceEnabled())
 		{
 			conditionManager = FindLaunchConditionManager();
 			Spacecraft spacecraftFromLaunchConditionManager = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(conditionManager);
@@ -112,11 +102,6 @@ public class RocketModule : KMonoBehaviour
 			component.AddStatusItem(Db.Get().BuildingStatusItems.RocketName, this);
 		}
 		Subscribe(1502190696, DEBUG_OnDestroyDelegate);
-		if (GetComponent<RocketEngine>() == null && GetComponent<RocketEngineCluster>() == null && GetComponent<BuildingUnderConstruction>() == null)
-		{
-			Subscribe(1655598572, OnLaunchConditionChangedDelegate);
-			Subscribe(-887025858, OnLandDelegate);
-		}
 		FixSorting();
 		AttachableBuilding component2 = GetComponent<AttachableBuilding>();
 		component2.onAttachmentNetworkChanged = (Action<AttachableBuilding>)Delegate.Combine(component2.onAttachmentNetworkChanged, new Action<AttachableBuilding>(OnAttachmentNetworkChanged));
@@ -206,44 +191,6 @@ public class RocketModule : KMonoBehaviour
 		if (operationalLandedRequired && component != null)
 		{
 			component.SetFlag(landedFlag, value: false);
-		}
-	}
-
-	private void OnLaunchConditionChanged(object data)
-	{
-		UpdateAnimations();
-	}
-
-	private void OnLand(object data)
-	{
-		UpdateAnimations();
-	}
-
-	private void UpdateAnimations()
-	{
-		RocketModuleCluster component = GetComponent<RocketModuleCluster>();
-		KBatchedAnimController component2 = GetComponent<KBatchedAnimController>();
-		CraftModuleInterface craftInterface = component.CraftInterface;
-		Clustercraft clustercraft = ((craftInterface == null) ? null : craftInterface.GetComponent<Clustercraft>());
-		if (clustercraft != null && clustercraft.Status == Clustercraft.CraftStatus.Launching && component2.HasAnimation("launch"))
-		{
-			if (component2.HasAnimation("launch_pre"))
-			{
-				component2.Queue("launch_pre");
-			}
-			component2.Queue("launch", KAnim.PlayMode.Loop);
-		}
-		else if (craftInterface != null && craftInterface.CheckPreppedForLaunch())
-		{
-			component2.initialAnim = "ready_to_launch";
-			component2.Play("pre_ready_to_launch");
-			component2.Queue("ready_to_launch", KAnim.PlayMode.Loop);
-		}
-		else
-		{
-			component2.initialAnim = "grounded";
-			component2.Play("pst_ready_to_launch");
-			component2.Queue("grounded", KAnim.PlayMode.Loop);
 		}
 	}
 
@@ -397,7 +344,7 @@ public class RocketModule : KMonoBehaviour
 
 	public void RegisterWithConditionManager()
 	{
-		Debug.Assert(!DlcManager.IsExpansion1Active());
+		Debug.Assert(!DlcManager.FeatureClusterSpaceEnabled());
 		if (conditionManager != null)
 		{
 			conditionManager.RegisterRocketModule(this);
@@ -415,7 +362,7 @@ public class RocketModule : KMonoBehaviour
 
 	public virtual LaunchConditionManager FindLaunchConditionManager()
 	{
-		if (!DlcManager.IsExpansion1Active())
+		if (!DlcManager.FeatureClusterSpaceEnabled())
 		{
 			List<GameObject> attachedNetwork = AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>());
 			foreach (GameObject item in attachedNetwork)

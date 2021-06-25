@@ -138,7 +138,8 @@ public class MotdServerClient
 		if (locale != null)
 		{
 			Localization.Language lang = locale.Lang;
-			if (lang == Localization.Language.Chinese || (uint)(lang - 2) <= 1u)
+			Localization.Language language = lang;
+			if (language == Localization.Language.Chinese || (uint)(language - 2) <= 1u)
 			{
 				result = locale.Code + "/";
 			}

@@ -7,13 +7,17 @@ public class RocketWallTileConfig : IBuildingConfig
 
 	public static readonly int BlockTileConnectorID = Hash.SDBMLower("tiles_rocket_wall_int");
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("RocketWallTile", 1, 1, "floor_rocket_kanim", 1000, 60f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, new string[1]
 		{
 			SimHashes.Steel.ToString()
 		}, 800f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER0);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		buildingDef.DebugOnly = true;
 		BuildingTemplates.CreateFoundationTileDef(buildingDef);
 		buildingDef.Floodable = false;

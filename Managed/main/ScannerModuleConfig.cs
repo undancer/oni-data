@@ -5,6 +5,11 @@ public class ScannerModuleConfig : IBuildingConfig
 {
 	public const string ID = "ScannerModule";
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("ScannerModule", 5, 5, "rocket_scanner_module_kanim", 1000, 120f, new float[2]
@@ -26,7 +31,6 @@ public class ScannerModuleConfig : IBuildingConfig
 		buildingDef.attachablePosition = new CellOffset(0, 0);
 		buildingDef.CanMove = true;
 		buildingDef.Cancellable = false;
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		return buildingDef;
 	}
 

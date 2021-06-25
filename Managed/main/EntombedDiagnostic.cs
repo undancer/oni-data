@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EntombedDiagnostic : ColonyDiagnostic
 {
-	private int entombedCount = 0;
+	private int m_entombedCount = 0;
 
 	public EntombedDiagnostic(int worldID)
 		: base(worldID, UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.ALL_NAME)
@@ -15,7 +15,8 @@ public class EntombedDiagnostic : ColonyDiagnostic
 
 	private DiagnosticResult CheckEntombed()
 	{
-		List<BuildingComplete> worldItems = Components.BuildingCompletes.GetWorldItems(base.worldID);
+		List<BuildingComplete> worldItems = Components.EntombedBuildings.GetWorldItems(base.worldID);
+		m_entombedCount = 0;
 		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS);
 		result.opinion = DiagnosticResult.Opinion.Normal;
 		result.Message = UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.NORMAL;
@@ -26,7 +27,7 @@ public class EntombedDiagnostic : ColonyDiagnostic
 				result.opinion = DiagnosticResult.Opinion.Bad;
 				result.Message = UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.BUILDING_ENTOMBED;
 				result.clickThroughTarget = new Tuple<Vector3, GameObject>(item.gameObject.transform.position, item.gameObject);
-				entombedCount++;
+				m_entombedCount++;
 			}
 		}
 		return result;
@@ -34,6 +35,6 @@ public class EntombedDiagnostic : ColonyDiagnostic
 
 	public override string GetAverageValueString()
 	{
-		return entombedCount.ToString();
+		return m_entombedCount.ToString();
 	}
 }

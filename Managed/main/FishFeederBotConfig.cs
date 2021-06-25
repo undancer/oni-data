@@ -4,9 +4,9 @@ public class FishFeederBotConfig : IEntityConfig
 {
 	public const string ID = "FishFeederBot";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class PropFacilityDeskConfig : IEntityConfig
 {
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()
@@ -20,6 +20,7 @@ public class PropFacilityDeskConfig : IEntityConfig
 		component.SetElement(SimHashes.Granite);
 		component.Temperature = 294.15f;
 		gameObject.AddOrGet<LoreBearer>();
+		gameObject.AddOrGet<Demolishable>();
 		return gameObject;
 	}
 

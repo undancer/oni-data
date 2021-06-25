@@ -6,9 +6,9 @@ public class PacuFilletConfig : IEntityConfig
 {
 	public const string ID = "PacuFillet";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

@@ -6,9 +6,9 @@ public class HeatCubeConfig : IEntityConfig
 {
 	public const string ID = "HeatCube";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

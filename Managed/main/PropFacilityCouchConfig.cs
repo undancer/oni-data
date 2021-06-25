@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class PropFacilityCouchConfig : IEntityConfig
 {
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()
@@ -19,6 +19,7 @@ public class PropFacilityCouchConfig : IEntityConfig
 		PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
 		component.SetElement(SimHashes.Granite);
 		component.Temperature = 294.15f;
+		gameObject.AddOrGet<Demolishable>();
 		return gameObject;
 	}
 

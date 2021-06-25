@@ -35,7 +35,7 @@ namespace ProcGen
 
 		public string GetIconFilename(string iconName)
 		{
-			return DlcManager.IsExpansion1Active() ? "asteroid_sandstone_start_kanim" : "Asteroid_sandstone";
+			return DlcManager.FeatureClusterSpaceEnabled() ? "asteroid_sandstone_start_kanim" : "Asteroid_sandstone";
 		}
 
 		public void LoadReferencedWorlds(string path, string prefix, ISet<string> referencedWorlds, List<YamlIO.Error> errors)

@@ -5,15 +5,14 @@ public class RocketInteriorPowerPlugConfig : IBuildingConfig
 {
 	public const string ID = "RocketInteriorPowerPlug";
 
-	protected virtual string GetID()
+	public override string[] GetDlcIds()
 	{
-		return "RocketInteriorPowerPlug";
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(GetID(), 1, 1, "rocket_floor_plug_kanim", 30, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnRocketEnvelope, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER2);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("RocketInteriorPowerPlug", 1, 1, "rocket_floor_plug_kanim", 30, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnRocketEnvelope, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER2);
 		buildingDef.Overheatable = false;
 		buildingDef.Floodable = false;
 		buildingDef.Entombable = false;

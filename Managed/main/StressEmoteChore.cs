@@ -54,10 +54,13 @@ public class StressEmoteChore : Chore<StressEmoteChore.StatesInstance>
 
 	public override string ToString()
 	{
+		HashedString emoteKAnim;
 		if (base.smi.emoteKAnim.IsValid)
 		{
-			return string.Concat("StressEmoteChore<", base.smi.emoteKAnim, ">");
+			emoteKAnim = base.smi.emoteKAnim;
+			return "StressEmoteChore<" + emoteKAnim.ToString() + ">";
 		}
-		return string.Concat("StressEmoteChore<", base.smi.emoteAnims[0], ">");
+		emoteKAnim = base.smi.emoteAnims[0];
+		return "StressEmoteChore<" + emoteKAnim.ToString() + ">";
 	}
 }

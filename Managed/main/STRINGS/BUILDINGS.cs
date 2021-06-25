@@ -1004,7 +1004,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Discover the mysteries of the past.";
 
-				public static LocString EFFECT = "Analysis artifacts and extracts the " + UI.FormatAsLink("Neutronium", "UNOBTANIUM") + " from their shell.";
+				public static LocString EFFECT = "Analyses and extracts " + UI.FormatAsLink("Neutronium", "UNOBTANIUM") + " from artifacts of interest.";
 			}
 
 			public class CANVAS
@@ -3587,9 +3587,9 @@ namespace STRINGS
 
 				public static LocString OUTPUT_NAME = "RIBBON OUTPUT";
 
-				public static LocString OUTPUT_PORT_ACTIVE = (UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + ": Writes a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " to selected Bit of an " + LOGICRIBBON.NAME) ?? "";
+				public static LocString OUTPUT_PORT_ACTIVE = UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + ": Writes a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " to selected Bit of an " + LOGICRIBBON.NAME;
 
-				public static LocString OUTPUT_PORT_INACTIVE = (UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ": Writes a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + " to selected Bit of an " + LOGICRIBBON.NAME) ?? "";
+				public static LocString OUTPUT_PORT_INACTIVE = UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ": Writes a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + " to selected Bit of an " + LOGICRIBBON.NAME;
 			}
 
 			public class LOGICRIBBONREADER
@@ -4017,16 +4017,16 @@ namespace STRINGS
 
 				public static LocString DESC = "Microtarget where your " + UI.FormatAsLink("Interplanetary Payload", "RAILGUNPAYLOAD") + " lands on a Planetoid surface.";
 
-				public static LocString EFFECT = "Guides " + UI.FormatAsLink("Interplanetary Payloads", "RAILGUNPAYLOAD") + " and " + UI.FormatAsLink("Orbital Cargo Modules", "ORBITALCARGOMODULE") + "to land nearby.\n\n" + UI.FormatAsLink("Interplanetary Payloads", "RAILGUNPAYLOAD") + " must be launched from a " + UI.FormatAsLink("Interplanetary Launcher", "RAILGUN") + ".";
+				public static LocString EFFECT = "Guides " + UI.FormatAsLink("Interplanetary Payloads", "RAILGUNPAYLOAD") + " and " + UI.FormatAsLink("Orbital Cargo Modules", "ORBITALCARGOMODULE") + " to land nearby.\n\n" + UI.FormatAsLink("Interplanetary Payloads", "RAILGUNPAYLOAD") + " must be launched from a " + UI.FormatAsLink("Interplanetary Launcher", "RAILGUN") + ".";
 			}
 
 			public class DIAMONDPRESS
 			{
 				public static LocString NAME = UI.FormatAsLink("Diamond Press", "DIAMONDPRESS");
 
-				public static LocString DESC = "Crushes carbon into diamonds";
+				public static LocString DESC = "Crushes refined carbon into diamond.";
 
-				public static LocString EFFECT = "Crushes carbon into diamonds";
+				public static LocString EFFECT = "Uses " + UI.FormatAsLink("Power", "POWER") + " and " + UI.FormatAsLink("Radbolts", "HEP") + " to crush " + UI.FormatAsLink("Refined Carbon", "REFINEDCARBON") + " into " + UI.FormatAsLink("Diamond", "DIAMOND") + ".\n\nDuplicants will not fabricate items unless recipes are queued and " + UI.FormatAsLink("Refined Carbon", "REFINEDCARBON") + " has been discovered.";
 
 				public static LocString REFINED_CARBON_RECIPE_DESCRIPTION = "Converts {1} to {0}";
 			}
@@ -4283,7 +4283,115 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Window";
 
-				public static LocString DESC = "A tall, thin window.";
+				public static LocString DESC = "A tall, thin window which once pointed to a courtyard.";
+			}
+
+			public class PROPGRAVITASLABWINDOW
+			{
+				public static LocString NAME = "Lab Window";
+
+				public static LocString DESC = "A lab window. Formerly a portal to the outside world.";
+
+				public static LocString EFFECT = "";
+			}
+
+			public class PROPGRAVITASLABWINDOWHORIZONTAL
+			{
+				public static LocString NAME = "Lab Window";
+
+				public static LocString DESC = "A lab window.\n\nSomeone once stared out this contemplating the results of an experiment.";
+
+				public static LocString EFFECT = "";
+			}
+
+			public class PROPGRAVITASLABWALL
+			{
+				public static LocString NAME = "Lab Wall";
+
+				public static LocString DESC = "A regular wall that once existed in a working lab.";
+
+				public static LocString EFFECT = "";
+			}
+
+			public class GRAVITASDOOR
+			{
+				public static LocString NAME = "Gravitas Door";
+
+				public static LocString DESC = "An office door to an office that no longer exists.";
+
+				public static LocString EFFECT = "";
+			}
+
+			public class PROPGRAVITASWALL
+			{
+				public static LocString NAME = "Wall";
+
+				public static LocString DESC = "The granite wall of a once great scientific facility.";
+
+				public static LocString EFFECT = "";
+			}
+
+			public class PROPGRAVITASDISPLAY4
+			{
+				public static LocString NAME = "Electronic Display";
+
+				public static LocString DESC = "An electronic display projecting the blueprint of a robotic device.\n\nIt looks like a ceiling robot.";
+			}
+
+			public class PROPGRAVITASCEILINGROBOT
+			{
+				public static LocString NAME = "Ceiling Robot";
+
+				public static LocString DESC = "Non-functioning robotic arms that once assisted lab technicians.";
+			}
+
+			public class PROPGRAVITASFLOORROBOT
+			{
+				public static LocString NAME = "Robotic Arm";
+
+				public static LocString DESC = "The grasping robotic claw designed to assist technicians in a lab.";
+			}
+
+			public class PROPGRAVITASJAR1
+			{
+				public static LocString NAME = "Big Brain Jar";
+
+				public static LocString DESC = "An abnormally large brain floating in embalming liquid to prevent decomposition.";
+			}
+
+			public class PROPGRAVITASHANDSCANNER
+			{
+				public static LocString NAME = "Hand Scanner";
+
+				public static LocString DESC = "A sophisticated security device.\n\nIt appears to use a method other than fingerprints to verify an individual's identity.";
+			}
+
+			public class PROPGRAVITASLABTABLE
+			{
+				public static LocString NAME = "Lab Desk";
+
+				public static LocString DESC = "The quaint research desk of a departed lab technician.\n\nPerhaps the computer stores something of interest.";
+			}
+
+			public class PROPGRAVITASROBTICTABLE
+			{
+				public static LocString NAME = "Robotics Research Desk";
+
+				public static LocString DESC = "The work space of an extinct robotics technician who left behind some unfinished prototypes.";
+			}
+
+			public class PROPGRAVITASSHELF
+			{
+				public static LocString NAME = "Shelf";
+
+				public static LocString DESC = "A shelf holding jars just out of reach for a short person.";
+			}
+
+			public class PROPGRAVITASJAR2
+			{
+				public static LocString NAME = "Sample Jar";
+
+				public static LocString DESC = "The corpse of a proto-hatch creature meticulously preserved in a jar.";
 			}
 
 			public class WARPCONDUITRECEIVER

@@ -91,12 +91,21 @@ public class Components
 			OnRemove -= on_remove;
 		}
 
-		public List<T> GetWorldItems(int worldId)
+		public List<T> GetWorldItems(int worldId, bool checkChildWorlds = false)
 		{
 			List<T> list = new List<T>();
 			foreach (T item in Items)
 			{
-				if ((item as KMonoBehaviour).GetMyWorldId() == worldId)
+				bool flag = (item as KMonoBehaviour).GetMyWorldId() == worldId;
+				if (!flag && checkChildWorlds)
+				{
+					WorldContainer myWorld = (item as KMonoBehaviour).GetMyWorld();
+					if (myWorld.ParentWorldId == worldId)
+					{
+						flag = true;
+					}
+				}
+				if (flag)
 				{
 					list.Add(item);
 				}
@@ -248,6 +257,8 @@ public class Components
 	public static Cmps<RocketControlStation> RocketControlStations = new Cmps<RocketControlStation>();
 
 	public static Cmps<Reactor> NuclearReactors = new Cmps<Reactor>();
+
+	public static Cmps<BuildingComplete> EntombedBuildings = new Cmps<BuildingComplete>();
 
 	public static Cmps<IncubationMonitor.Instance> IncubationMonitors = new Cmps<IncubationMonitor.Instance>();
 

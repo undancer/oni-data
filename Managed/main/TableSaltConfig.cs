@@ -7,9 +7,9 @@ public class TableSaltConfig : IEntityConfig
 {
 	public static string ID = "TableSalt";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

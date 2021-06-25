@@ -58,4 +58,10 @@ public static class TemplateCache
 		}
 		return templates[templatePath];
 	}
+
+	public static bool TemplateExists(string templatePath)
+	{
+		string path = RewriteTemplateYaml(templatePath);
+		return FileSystem.FileExists(path);
+	}
 }

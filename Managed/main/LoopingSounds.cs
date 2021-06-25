@@ -224,7 +224,8 @@ public class LoopingSounds : KMonoBehaviour
 	{
 		if (AudioDebug.Get().debugGameEventSounds)
 		{
-			Debug.Log("GameSoundEvent: " + ev.Name);
+			HashedString name = ev.Name;
+			Debug.Log("GameSoundEvent: " + name.ToString());
 		}
 		List<AnimEvent> events = GameAudioSheets.Get().GetEvents(ev.Name);
 		if (events == null)

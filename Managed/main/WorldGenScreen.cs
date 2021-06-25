@@ -44,8 +44,7 @@ public class WorldGenScreen : NewGameFlowScreen
 	{
 		if (AudioDebug.Get().musicEnabled && !MusicManager.instance.SongIsPlaying("Music_FrontEnd"))
 		{
-			MusicManager.instance.StopSong("Music_TitleTheme_Expansion1");
-			AudioMixer.instance.Stop(AudioMixerSnapshots.Get().FrontEndSnapshot);
+			MainMenu.Instance.StopMainMenuMusic();
 			AudioMixer.instance.Start(AudioMixerSnapshots.Get().FrontEndWorldGenerationSnapshot);
 			MusicManager.instance.PlaySong("Music_FrontEnd");
 			MusicManager.instance.SetSongParameter("Music_FrontEnd", "songSection", 1f);

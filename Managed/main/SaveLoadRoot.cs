@@ -265,7 +265,7 @@ public class SaveLoadRoot : KMonoBehaviour
 					}
 				}
 			}
-			if (kMonoBehaviour == null)
+			if (kMonoBehaviour == null && gameObject != null)
 			{
 				SaveLoadRoot component = gameObject.GetComponent<SaveLoadRoot>();
 				int index;

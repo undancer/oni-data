@@ -84,8 +84,6 @@ public class ScreenPrefabs : KMonoBehaviour
 
 	public ModeSelectScreen ModeSelectScreen;
 
-	public NewGameSettingsScreen NewGameSettingsScreen;
-
 	public ColonyDestinationSelectScreen ColonyDestinationSelectScreen;
 
 	public RetiredColonyInfoScreen RetiredColonyInfoScreen;

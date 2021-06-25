@@ -29,7 +29,7 @@ public class GassyMooComet : Comet
 	protected override void SpawnCraterPrefabs()
 	{
 		KBatchedAnimController animController = GetComponent<KBatchedAnimController>();
-		animController.Queue("landing");
+		animController.Play("landing");
 		animController.onAnimComplete += delegate
 		{
 			if (craterPrefabs != null && craterPrefabs.Length != 0)

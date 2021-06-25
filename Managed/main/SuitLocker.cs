@@ -156,30 +156,18 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 					{
 						return false;
 					}
-					SuitTank component2 = slot2.assignable.GetComponent<SuitTank>();
-					if (component2 == null)
-					{
-						return false;
-					}
-					if (component2.NeedsRecharging())
+					SuitTank component4 = slot2.assignable.GetComponent<SuitTank>();
+					if (component4 != null && component4.NeedsRecharging())
 					{
 						return true;
 					}
-					JetSuitTank component3 = slot2.assignable.GetComponent<JetSuitTank>();
-					if (component3 == null)
-					{
-						return false;
-					}
-					if (component3.NeedsRecharging())
+					JetSuitTank component5 = slot2.assignable.GetComponent<JetSuitTank>();
+					if (component5 != null && component5.NeedsRecharging())
 					{
 						return true;
 					}
-					LeadSuitTank component4 = slot2.assignable.GetComponent<LeadSuitTank>();
-					if (component4 == null)
-					{
-						return false;
-					}
-					return component4.NeedsRecharging() ? true : false;
+					LeadSuitTank component6 = slot2.assignable.GetComponent<LeadSuitTank>();
+					return (component6 != null && component6.NeedsRecharging()) ? true : false;
 				}
 			};
 			DoesSuitNeedRechargingUrgent = precondition;
@@ -200,7 +188,17 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 						return false;
 					}
 					SuitTank component = slot.assignable.GetComponent<SuitTank>();
-					return (!(component == null)) ? true : false;
+					if (component != null)
+					{
+						return true;
+					}
+					JetSuitTank component2 = slot.assignable.GetComponent<JetSuitTank>();
+					if (component2 != null)
+					{
+						return true;
+					}
+					LeadSuitTank component3 = slot.assignable.GetComponent<LeadSuitTank>();
+					return (component3 != null) ? true : false;
 				}
 			};
 			DoesSuitNeedRechargingIdle = precondition;
@@ -484,7 +482,7 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 
 	private void CreateFetchChore()
 	{
-		fetchChore = new FetchChore(Db.Get().ChoreTypes.StorageFetch, GetComponent<Storage>(), 1f, OutfitTags, null, new Tag[1]
+		fetchChore = new FetchChore(Db.Get().ChoreTypes.EquipmentFetch, GetComponent<Storage>(), 1f, OutfitTags, null, new Tag[1]
 		{
 			GameTags.Assigned
 		}, null, run_until_complete: true, null, null, null, FetchOrder2.OperationalRequirement.None);

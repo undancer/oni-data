@@ -36,7 +36,8 @@ public class PlantSubSpeciesCatalog : KMonoBehaviour
 		{
 			if (mutationIDs == null || mutationIDs.Count == 0)
 			{
-				return string.Concat(speciesID, "_Original");
+				Tag tag = speciesID;
+				return tag.ToString() + "_Original";
 			}
 			StringBuilder stringBuilder = new StringBuilder();
 			stringBuilder.Append(speciesID);

@@ -22,12 +22,16 @@ public class OxidizerTank : KMonoBehaviour, IUserControlledCapacity
 	public float targetFillMass;
 
 	[SerializeField]
-	private Tag[] oxidizerTypes = new Tag[3]
+	private Tag[] oxidizerTypes = ((!DlcManager.IsExpansion1Active()) ? new Tag[2]
+	{
+		SimHashes.OxyRock.CreateTag(),
+		SimHashes.LiquidOxygen.CreateTag()
+	} : new Tag[3]
 	{
 		SimHashes.OxyRock.CreateTag(),
 		SimHashes.LiquidOxygen.CreateTag(),
 		SimHashes.Fertilizer.CreateTag()
-	};
+	});
 
 	private FilteredStorage filteredStorage;
 
@@ -86,7 +90,9 @@ public class OxidizerTank : KMonoBehaviour, IUserControlledCapacity
 			foreach (GameObject item in storage.items)
 			{
 				PrimaryElement component = item.GetComponent<PrimaryElement>();
-				num += component.Mass * RocketStats.oxidizerEfficiencies[component.ElementID.CreateTag()];
+				float num2 = 0f;
+				num2 = ((!DlcManager.FeatureClusterSpaceEnabled()) ? RocketStats.oxidizerEfficiencies[component.ElementID.CreateTag()] : Clustercraft.dlc1OxidizerEfficiencies[component.ElementID.CreateTag()]);
+				num += component.Mass * num2;
 			}
 			return num;
 		}
@@ -110,7 +116,12 @@ public class OxidizerTank : KMonoBehaviour, IUserControlledCapacity
 	{
 		base.OnSpawn();
 		GetComponent<KBatchedAnimController>().Play("grounded", KAnim.PlayMode.Loop);
-		GetComponent<RocketModule>().AddModuleCondition(ProcessCondition.ProcessConditionType.RocketStorage, new ConditionSufficientOxidizer(this));
+		RocketModuleCluster component = GetComponent<RocketModuleCluster>();
+		if (component != null)
+		{
+			Debug.Assert(DlcManager.IsExpansion1Active(), "EXP1 not active but trying to use EXP1 rockety system");
+			component.AddModuleCondition(ProcessCondition.ProcessConditionType.RocketStorage, new ConditionSufficientOxidizer(this));
+		}
 		UserMaxCapacity = Mathf.Min(UserMaxCapacity, maxFillMass);
 		Subscribe(-887025858, OnRocketLandedDelegate);
 		Subscribe(-1697596308, OnStorageChangeDelegate);

@@ -370,7 +370,18 @@ public class KBatchGroupData
 				KAnim.Build.Symbol buildSymbol = GetBuildSymbol(element.symbolIdx);
 				if (buildSymbol == null)
 				{
-					Debug.LogError(string.Concat("Missing symbol for Anim Frame Element: [", HashCache.Get().Get(element.symbol), ": ", element.symbol, "]"));
+					string[] obj = new string[5]
+					{
+						"Missing symbol for Anim Frame Element: [",
+						HashCache.Get().Get(element.symbol),
+						": ",
+						null,
+						null
+					};
+					KAnimHashedString symbol = element.symbol;
+					obj[3] = symbol.ToString();
+					obj[4] = "]";
+					Debug.LogError(string.Concat(obj));
 				}
 				int frameIdx = buildSymbol.GetFrameIdx(element.frame);
 				Write(data, start_index, frameIdx, l, element);

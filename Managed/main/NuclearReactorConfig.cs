@@ -49,10 +49,14 @@ public class NuclearReactorConfig : IBuildingConfig
 
 	public const string INPUT_PORT_ID = "CONTROL_FUEL_DELIVERY";
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("NuclearReactor", 5, 6, "generatornuclear_kanim", 100, 480f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.REFINED_METALS, 9999f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		buildingDef.GeneratorWattageRating = 0f;
 		buildingDef.GeneratorBaseCapacity = 10000f;
 		buildingDef.RequiresPowerInput = false;

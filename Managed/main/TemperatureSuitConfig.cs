@@ -8,6 +8,11 @@ public class TemperatureSuitConfig : IEquipmentConfig
 {
 	public const string ID = "Temperature_Suit";
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public EquipmentDef CreateEquipmentDef()
 	{
 		Dictionary<string, float> dictionary = new Dictionary<string, float>();

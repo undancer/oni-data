@@ -6,9 +6,9 @@ public class BleachStoneConfig : IOreConfig
 
 	public SimHashes SublimeElementID => SimHashes.ChlorineGas;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

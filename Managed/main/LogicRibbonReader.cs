@@ -104,7 +104,8 @@ public class LogicRibbonReader : KMonoBehaviour, ILogicRibbonBitSelector, IRende
 			}
 		}
 		LogicWire.BitDepth bitDepth2 = bitDepth;
-		if (bitDepth2 != 0 && bitDepth2 == LogicWire.BitDepth.FourBit)
+		LogicWire.BitDepth bitDepth3 = bitDepth2;
+		if (bitDepth3 != 0 && bitDepth3 == LogicWire.BitDepth.FourBit)
 		{
 			int new_value = currentValue >> selectedBit;
 			component.SendSignal(OUTPUT_PORT_ID, new_value);

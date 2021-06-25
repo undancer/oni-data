@@ -15,10 +15,6 @@ public class RocketStats
 		{
 			SimHashes.LiquidOxygen.CreateTag(),
 			ROCKETRY.OXIDIZER_EFFICIENCY.HIGH
-		},
-		{
-			SimHashes.Fertilizer.CreateTag(),
-			ROCKETRY.OXIDIZER_EFFICIENCY.VERY_LOW
 		}
 	};
 

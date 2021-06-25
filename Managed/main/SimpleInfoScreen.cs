@@ -852,7 +852,7 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 			Util.KDestroyGameObject(processConditionRow2);
 		}
 		processConditionRows.Clear();
-		if (!DlcManager.IsExpansion1Active())
+		if (!DlcManager.FeatureClusterSpaceEnabled())
 		{
 			if (selectedTarget.GetComponent<LaunchableRocket>() != null)
 			{

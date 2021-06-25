@@ -61,7 +61,7 @@ public class AssignmentGroupController : KMonoBehaviour
 	{
 		if (generateGroupOnStart && string.IsNullOrEmpty(AssignmentGroupID))
 		{
-			SetGroupID(string.Concat(GetComponent<KPrefabID>().PrefabID(), "_", GetComponent<KPrefabID>().InstanceID, "_assignmentGroup"));
+			SetGroupID(GetComponent<KPrefabID>().PrefabID().ToString() + "_" + GetComponent<KPrefabID>().InstanceID + "_assignmentGroup");
 			Game.Instance.assignmentManager.TryCreateAssignmentGroup(AssignmentGroupID, new IAssignableIdentity[0], base.gameObject.GetProperName());
 		}
 	}

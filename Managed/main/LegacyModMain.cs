@@ -73,7 +73,18 @@ public class LegacyModMain
 		string text = "";
 		foreach (Entry item2 in list)
 		{
-			text = text + item2.type.Name + ": " + item2.count + "\n";
+			string[] obj = new string[5]
+			{
+				text,
+				item2.type.Name,
+				": ",
+				null,
+				null
+			};
+			int count = item2.count;
+			obj[3] = count.ToString();
+			obj[4] = "\n";
+			text = string.Concat(obj);
 		}
 		Debug.Log(text);
 	}

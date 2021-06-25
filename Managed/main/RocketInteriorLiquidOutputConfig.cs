@@ -9,15 +9,14 @@ public class RocketInteriorLiquidOutputConfig : IBuildingConfig
 
 	public const string ID = "RocketInteriorLiquidOutput";
 
-	protected virtual string GetID()
+	public override string[] GetDlcIds()
 	{
-		return "RocketInteriorLiquidOutput";
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(GetID(), 1, 1, "rocket_floor_plug_liquid_out_kanim", 30, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnRocketEnvelope, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER2);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("RocketInteriorLiquidOutput", 1, 1, "rocket_floor_plug_liquid_out_kanim", 30, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnRocketEnvelope, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER2);
 		buildingDef.OutputConduitType = ConduitType.Liquid;
 		buildingDef.UtilityOutputOffset = new CellOffset(0, 0);
 		buildingDef.RequiresPowerInput = true;

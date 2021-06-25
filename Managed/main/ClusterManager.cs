@@ -70,6 +70,11 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 
 	public WorldContainer activeWorld => GetWorld(activeWorldId);
 
+	public static void DestroyInstance()
+	{
+		Instance = null;
+	}
+
 	public ClusterPOIManager GetClusterPOIManager()
 	{
 		return m_clusterPOIsManager;

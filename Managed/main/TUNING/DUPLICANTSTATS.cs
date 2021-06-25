@@ -865,7 +865,7 @@ namespace TUNING
 				id = "ConstructionDown",
 				statBonus = MEDIUM_STATPOINT_BONUS,
 				rarity = RARITY_UNCOMMON,
-				dlcId = "EXPANSION1_ID",
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"CantBuild"
@@ -877,7 +877,7 @@ namespace TUNING
 				id = "RanchingDown",
 				statBonus = SMALL_STATPOINT_BONUS,
 				rarity = RARITY_COMMON,
-				dlcId = "EXPANSION1_ID"
+				dlcId = ""
 			};
 			list2.Add(item);
 			item = new TraitVal
@@ -885,7 +885,7 @@ namespace TUNING
 				id = "CaringDown",
 				statBonus = SMALL_STATPOINT_BONUS,
 				rarity = RARITY_COMMON,
-				dlcId = "EXPANSION1_ID",
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"Hemophobia"
@@ -897,7 +897,7 @@ namespace TUNING
 				id = "BotanistDown",
 				statBonus = SMALL_STATPOINT_BONUS,
 				rarity = RARITY_COMMON,
-				dlcId = "EXPANSION1_ID"
+				dlcId = ""
 			};
 			list2.Add(item);
 			item = new TraitVal
@@ -905,7 +905,7 @@ namespace TUNING
 				id = "ArtDown",
 				statBonus = SMALL_STATPOINT_BONUS,
 				rarity = RARITY_COMMON,
-				dlcId = "EXPANSION1_ID"
+				dlcId = ""
 			};
 			list2.Add(item);
 			item = new TraitVal
@@ -913,7 +913,7 @@ namespace TUNING
 				id = "CookingDown",
 				statBonus = SMALL_STATPOINT_BONUS,
 				rarity = RARITY_COMMON,
-				dlcId = "EXPANSION1_ID",
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"CantCook"
@@ -925,7 +925,7 @@ namespace TUNING
 				id = "MachineryDown",
 				statBonus = SMALL_STATPOINT_BONUS,
 				rarity = RARITY_COMMON,
-				dlcId = "EXPANSION1_ID"
+				dlcId = ""
 			};
 			list2.Add(item);
 			item = new TraitVal
@@ -933,7 +933,7 @@ namespace TUNING
 				id = "DiggingDown",
 				statBonus = MEDIUM_STATPOINT_BONUS,
 				rarity = RARITY_RARE,
-				dlcId = "EXPANSION1_ID",
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"CantDig"
@@ -965,7 +965,7 @@ namespace TUNING
 				id = "DecorDown",
 				statBonus = TINY_STATPOINT_BONUS,
 				rarity = RARITY_COMMON,
-				dlcId = "EXPANSION1_ID"
+				dlcId = ""
 			};
 			list2.Add(item);
 			item = new TraitVal
@@ -1045,7 +1045,7 @@ namespace TUNING
 				id = "NightLight",
 				statBonus = SMALL_STATPOINT_BONUS,
 				rarity = RARITY_RARE,
-				dlcId = "EXPANSION1_ID"
+				dlcId = ""
 			};
 			list2.Add(item);
 			item = new TraitVal
@@ -1326,14 +1326,14 @@ namespace TUNING
 			{
 				id = "Thriver",
 				rarity = RARITY_EPIC,
-				dlcId = "EXPANSION1_ID"
+				dlcId = ""
 			};
 			list6.Add(item);
 			item = new TraitVal
 			{
 				id = "GreenThumb",
 				rarity = RARITY_COMMON,
-				dlcId = "EXPANSION1_ID",
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"BotanistDown"
@@ -1344,7 +1344,7 @@ namespace TUNING
 			{
 				id = "ConstructionUp",
 				rarity = RARITY_UNCOMMON,
-				dlcId = "EXPANSION1_ID",
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"ConstructionDown"
@@ -1355,7 +1355,7 @@ namespace TUNING
 			{
 				id = "RanchingUp",
 				rarity = RARITY_UNCOMMON,
-				dlcId = "EXPANSION1_ID",
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"RanchingDown"
@@ -1367,7 +1367,7 @@ namespace TUNING
 				id = "GrantSkill_Mining1",
 				statBonus = -LARGE_STATPOINT_BONUS,
 				rarity = RARITY_LEGENDARY,
-				dlcId = "EXPANSION1_ID",
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"CantDig"
@@ -1379,7 +1379,7 @@ namespace TUNING
 				id = "GrantSkill_Mining2",
 				statBonus = -LARGE_STATPOINT_BONUS,
 				rarity = RARITY_LEGENDARY,
-				dlcId = "EXPANSION1_ID",
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"CantDig"
@@ -1391,7 +1391,7 @@ namespace TUNING
 				id = "GrantSkill_Mining3",
 				statBonus = -LARGE_STATPOINT_BONUS,
 				rarity = RARITY_LEGENDARY,
-				dlcId = "EXPANSION1_ID",
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"CantDig"
@@ -1403,7 +1403,7 @@ namespace TUNING
 				id = "GrantSkill_Farming2",
 				statBonus = -LARGE_STATPOINT_BONUS,
 				rarity = RARITY_EPIC,
-				dlcId = "EXPANSION1_ID"
+				dlcId = ""
 			};
 			list6.Add(item);
 			item = new TraitVal
@@ -1411,7 +1411,7 @@ namespace TUNING
 				id = "GrantSkill_Ranching1",
 				statBonus = -LARGE_STATPOINT_BONUS,
 				rarity = RARITY_EPIC,
-				dlcId = "EXPANSION1_ID"
+				dlcId = ""
 			};
 			list6.Add(item);
 			item = new TraitVal
@@ -1419,7 +1419,7 @@ namespace TUNING
 				id = "GrantSkill_Cooking1",
 				statBonus = -LARGE_STATPOINT_BONUS,
 				rarity = RARITY_EPIC,
-				dlcId = "EXPANSION1_ID",
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"CantCook"
@@ -1431,7 +1431,7 @@ namespace TUNING
 				id = "GrantSkill_Arting1",
 				statBonus = -LARGE_STATPOINT_BONUS,
 				rarity = RARITY_EPIC,
-				dlcId = "EXPANSION1_ID",
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"Uncultured"
@@ -1443,7 +1443,7 @@ namespace TUNING
 				id = "GrantSkill_Arting2",
 				statBonus = -LARGE_STATPOINT_BONUS,
 				rarity = RARITY_EPIC,
-				dlcId = "EXPANSION1_ID",
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"Uncultured"
@@ -1455,7 +1455,7 @@ namespace TUNING
 				id = "GrantSkill_Arting3",
 				statBonus = -LARGE_STATPOINT_BONUS,
 				rarity = RARITY_EPIC,
-				dlcId = "EXPANSION1_ID",
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"Uncultured"
@@ -1467,7 +1467,7 @@ namespace TUNING
 				id = "GrantSkill_Suits1",
 				statBonus = -LARGE_STATPOINT_BONUS,
 				rarity = RARITY_EPIC,
-				dlcId = "EXPANSION1_ID"
+				dlcId = ""
 			};
 			list6.Add(item);
 			item = new TraitVal
@@ -1475,7 +1475,7 @@ namespace TUNING
 				id = "GrantSkill_Technicals2",
 				statBonus = -LARGE_STATPOINT_BONUS,
 				rarity = RARITY_EPIC,
-				dlcId = "EXPANSION1_ID"
+				dlcId = ""
 			};
 			list6.Add(item);
 			item = new TraitVal
@@ -1483,7 +1483,7 @@ namespace TUNING
 				id = "GrantSkill_Engineering1",
 				statBonus = -LARGE_STATPOINT_BONUS,
 				rarity = RARITY_EPIC,
-				dlcId = "EXPANSION1_ID"
+				dlcId = ""
 			};
 			list6.Add(item);
 			item = new TraitVal
@@ -1491,7 +1491,7 @@ namespace TUNING
 				id = "GrantSkill_Basekeeping2",
 				statBonus = -LARGE_STATPOINT_BONUS,
 				rarity = RARITY_EPIC,
-				dlcId = "EXPANSION1_ID",
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"Anemic"
@@ -1503,7 +1503,7 @@ namespace TUNING
 				id = "GrantSkill_Medicine2",
 				statBonus = -LARGE_STATPOINT_BONUS,
 				rarity = RARITY_EPIC,
-				dlcId = "EXPANSION1_ID",
+				dlcId = "",
 				mutuallyExclusiveTraits = new List<string>
 				{
 					"Hemophobia"

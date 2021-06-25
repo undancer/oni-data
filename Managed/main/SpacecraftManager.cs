@@ -318,7 +318,7 @@ public class SpacecraftManager : KMonoBehaviour, ISim1000ms
 	{
 		base.OnSpawn();
 		Game.Instance.spacecraftManager = this;
-		if (DlcManager.IsExpansion1Active())
+		if (DlcManager.FeatureClusterSpaceEnabled())
 		{
 			Debug.Assert(spacecraft == null || spacecraft.Count == 0);
 		}
@@ -398,7 +398,7 @@ public class SpacecraftManager : KMonoBehaviour, ISim1000ms
 
 	public void Sim1000ms(float dt)
 	{
-		if (DlcManager.IsExpansion1Active())
+		if (DlcManager.FeatureClusterSpaceEnabled())
 		{
 			return;
 		}

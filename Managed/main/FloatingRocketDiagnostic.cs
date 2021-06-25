@@ -8,6 +8,11 @@ public class FloatingRocketDiagnostic : ColonyDiagnostic
 		icon = "icon_action_dig";
 	}
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override DiagnosticResult Evaluate()
 	{
 		WorldContainer world = ClusterManager.Instance.GetWorld(base.worldID);

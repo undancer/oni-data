@@ -5,6 +5,11 @@ public class OxygenMaskLockerConfig : IBuildingConfig
 {
 	public const string ID = "OxygenMaskLocker";
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		string[] rAW_METALS = MATERIALS.RAW_METALS;
@@ -17,7 +22,6 @@ public class OxygenMaskLockerConfig : IBuildingConfig
 		buildingDef.InputConduitType = ConduitType.Gas;
 		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.SuitIDs, "OxygenMaskLocker");
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		return buildingDef;
 	}
 

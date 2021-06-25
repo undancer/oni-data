@@ -12,9 +12,9 @@ public class SwampHarvestPlantConfig : IEntityConfig
 
 	public const float WATER_RATE = 71f / (339f * (float)Math.PI);
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "EXPANSION1_ID";
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 
 	public GameObject CreatePrefab()

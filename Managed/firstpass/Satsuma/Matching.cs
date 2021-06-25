@@ -49,11 +49,13 @@ namespace Satsuma
 				}
 				if (matchedArc.ContainsKey(node))
 				{
-					throw new ArgumentException("Node is already matched: " + node);
+					Node node3 = node;
+					throw new ArgumentException("Node is already matched: " + node3.ToString());
 				}
 				if (matchedArc.ContainsKey(node2))
 				{
-					throw new ArgumentException("Node is already matched: " + node2);
+					Node node3 = node2;
+					throw new ArgumentException("Node is already matched: " + node3.ToString());
 				}
 				matchedArc[node] = arc;
 				matchedArc[node2] = arc;

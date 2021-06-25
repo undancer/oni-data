@@ -10,9 +10,9 @@ public class PowerStationToolsConfig : IEntityConfig
 
 	public const float MASS = 5f;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

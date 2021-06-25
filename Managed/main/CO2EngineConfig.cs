@@ -8,10 +8,14 @@ public class CO2EngineConfig : IBuildingConfig
 
 	public const SimHashes FUEL = SimHashes.CarbonDioxide;
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("CO2Engine", 3, 2, "rocket_co2_engine_kanim", 1000, 30f, BUILDINGS.ROCKETRY_MASS_KG.DENSE_TIER1, MATERIALS.RAW_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.AttachmentSlotTag = GameTags.Rocket;
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;

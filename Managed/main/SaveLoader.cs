@@ -595,9 +595,9 @@ public class SaveLoader : KMonoBehaviour
 		return null;
 	}
 
-	public static List<string> GetSaveFiles(string save_dir, SearchOption search = SearchOption.AllDirectories)
+	public static List<SaveFileEntry> GetSaveFiles(string save_dir, bool sort, SearchOption search = SearchOption.AllDirectories)
 	{
-		List<string> list = new List<string>();
+		List<SaveFileEntry> list = new List<SaveFileEntry>();
 		if (string.IsNullOrEmpty(save_dir))
 		{
 			return list;
@@ -609,7 +609,6 @@ public class SaveLoader : KMonoBehaviour
 				System.IO.Directory.CreateDirectory(save_dir);
 			}
 			string[] files = System.IO.Directory.GetFiles(save_dir, "*.sav", search);
-			List<SaveFileEntry> list2 = new List<SaveFileEntry>();
 			string[] array = files;
 			foreach (string text in array)
 			{
@@ -620,17 +619,16 @@ public class SaveLoader : KMonoBehaviour
 					saveFileEntry.path = text;
 					saveFileEntry.timeStamp = lastWriteTime;
 					SaveFileEntry item = saveFileEntry;
-					list2.Add(item);
+					list.Add(item);
 				}
 				catch (Exception ex)
 				{
 					Debug.LogWarning("Problem reading file: " + text + "\n" + ex.ToString());
 				}
 			}
-			list2.Sort((SaveFileEntry x, SaveFileEntry y) => y.timeStamp.CompareTo(x.timeStamp));
-			foreach (SaveFileEntry item2 in list2)
+			if (sort)
 			{
-				list.Add(item2.path);
+				list.Sort((SaveFileEntry x, SaveFileEntry y) => y.timeStamp.CompareTo(x.timeStamp));
 			}
 		}
 		catch (Exception ex2)
@@ -655,37 +653,33 @@ public class SaveLoader : KMonoBehaviour
 		return list;
 	}
 
-	public static List<string> GetAllFiles(SaveType type = SaveType.both)
+	public static List<SaveFileEntry> GetAllFiles(bool sort, SaveType type = SaveType.both)
 	{
 		switch (type)
 		{
 		case SaveType.local:
-			return GetSaveFiles(GetSavePrefixAndCreateFolder());
+			return GetSaveFiles(GetSavePrefixAndCreateFolder(), sort);
 		case SaveType.cloud:
-			return GetSaveFiles(GetCloudSavePrefix());
+			return GetSaveFiles(GetCloudSavePrefix(), sort);
 		case SaveType.both:
 		{
-			List<string> saveFiles = GetSaveFiles(GetSavePrefixAndCreateFolder());
-			List<string> saveFiles2 = GetSaveFiles(GetCloudSavePrefix());
-			for (int i = 0; i < saveFiles2.Count; i++)
+			List<SaveFileEntry> saveFiles = GetSaveFiles(GetSavePrefixAndCreateFolder(), sort: false);
+			List<SaveFileEntry> saveFiles2 = GetSaveFiles(GetCloudSavePrefix(), sort: false);
+			saveFiles.AddRange(saveFiles2);
+			if (sort)
 			{
-				saveFiles.Add(saveFiles2[i]);
+				saveFiles.Sort((SaveFileEntry x, SaveFileEntry y) => y.timeStamp.CompareTo(x.timeStamp));
 			}
-			saveFiles.Sort(delegate(string x, string y)
-			{
-				System.DateTime lastWriteTime = File.GetLastWriteTime(x);
-				return File.GetLastWriteTime(y).CompareTo(lastWriteTime);
-			});
 			return saveFiles;
 		}
 		default:
-			return new List<string>();
+			return new List<SaveFileEntry>();
 		}
 	}
 
-	public static List<string> GetAllColonyFiles(SearchOption search = SearchOption.TopDirectoryOnly)
+	public static List<SaveFileEntry> GetAllColonyFiles(bool sort, SearchOption search = SearchOption.TopDirectoryOnly)
 	{
-		return GetSaveFiles(GetActiveSaveColonyFolder(), search);
+		return GetSaveFiles(GetActiveSaveColonyFolder(), sort, search);
 	}
 
 	public static bool GetCloudSavesDefault()
@@ -738,27 +732,27 @@ public class SaveLoader : KMonoBehaviour
 
 	public static string GetLatestSaveFile()
 	{
-		List<string> allFiles = GetAllFiles();
+		List<SaveFileEntry> allFiles = GetAllFiles(sort: true);
 		if (allFiles.Count == 0)
 		{
 			return null;
 		}
-		return allFiles[0];
+		return allFiles[0].path;
 	}
 
 	public static string GetLatestSaveForCurrentDLC()
 	{
-		List<string> allFiles = GetAllFiles();
+		List<SaveFileEntry> allFiles = GetAllFiles(sort: true);
 		for (int i = 0; i < allFiles.Count; i++)
 		{
-			Tuple<SaveGame.Header, SaveGame.GameInfo> fileInfo = SaveGame.GetFileInfo(allFiles[i]);
+			Tuple<SaveGame.Header, SaveGame.GameInfo> fileInfo = SaveGame.GetFileInfo(allFiles[i].path);
 			if (fileInfo != null)
 			{
 				SaveGame.Header first = fileInfo.first;
 				SaveGame.GameInfo second = fileInfo.second;
-				if (second.saveMajorVersion >= 7 && DlcManager.GetActiveDlcId() == second.dlcId)
+				if (second.saveMajorVersion >= 7 && DlcManager.GetHighestActiveDlcId() == second.dlcId)
 				{
-					return allFiles[i];
+					return allFiles[i].path;
 				}
 			}
 		}
@@ -799,18 +793,18 @@ public class SaveLoader : KMonoBehaviour
 		if (isAutoSave && !GenericGameSettings.instance.keepAllAutosaves)
 		{
 			string activeAutoSavePath = GetActiveAutoSavePath();
-			List<string> saveFiles = GetSaveFiles(activeAutoSavePath);
+			List<SaveFileEntry> saveFiles = GetSaveFiles(activeAutoSavePath, sort: true);
 			List<string> list = new List<string>();
-			foreach (string item in saveFiles)
+			foreach (SaveFileEntry item in saveFiles)
 			{
-				Tuple<SaveGame.Header, SaveGame.GameInfo> fileInfo = SaveGame.GetFileInfo(item);
+				Tuple<SaveGame.Header, SaveGame.GameInfo> fileInfo = SaveGame.GetFileInfo(item.path);
 				if (fileInfo != null)
 				{
 					SaveGame.GameInfo second = fileInfo.second;
 					string saveUniqueID = SaveGame.GetSaveUniqueID(second);
 					if (saveUniqueID == Instance.GameInfo.colonyGuid.ToString())
 					{
-						list.Add(item);
+						list.Add(item.path);
 					}
 				}
 			}

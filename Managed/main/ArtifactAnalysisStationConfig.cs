@@ -7,6 +7,11 @@ public class ArtifactAnalysisStationConfig : IBuildingConfig
 
 	public const float WORK_TIME = 150f;
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("ArtifactAnalysisStation", 4, 4, "artifact_analysis_kanim", 30, 60f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.ALL_METALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER6, decor: BUILDINGS.DECOR.PENALTY.TIER2);
@@ -16,7 +21,6 @@ public class ArtifactAnalysisStationConfig : IBuildingConfig
 		buildingDef.ViewMode = OverlayModes.Power.ID;
 		buildingDef.AudioCategory = "HollowMetal";
 		buildingDef.AudioSize = "large";
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		buildingDef.Deprecated = true;
 		return buildingDef;
 	}

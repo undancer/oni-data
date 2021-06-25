@@ -217,7 +217,7 @@ public class TableScreen : KScreen
 					break;
 				}
 			}
-			worldDivider.Value.SetActive(ClusterManager.Instance.GetWorld(worldDivider.Key).IsDiscovered && DlcManager.IsExpansion1Active());
+			worldDivider.Value.SetActive(ClusterManager.Instance.GetWorld(worldDivider.Key).IsDiscovered && DlcManager.FeatureClusterSpaceEnabled());
 		}
 		SortRows();
 		rows_dirty = false;
@@ -621,7 +621,8 @@ public class TableScreen : KScreen
 		multiToggle = widget_go.GetComponent<MultiToggle>();
 		TableRow widgetRow = GetWidgetRow(widget_go);
 		TableRow.RowType rowType = widgetRow.rowType;
-		if ((uint)rowType <= 2u)
+		TableRow.RowType rowType2 = rowType;
+		if ((uint)rowType2 <= 2u)
 		{
 			multiToggle.ChangeState((int)get_value_checkbox_column_super(minion, widget_go));
 		}

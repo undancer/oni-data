@@ -19,7 +19,7 @@ public class Unlocks : KMonoBehaviour
 	{
 		{
 			"emails",
-			new string[21]
+			new string[22]
 			{
 				"email_thermodynamiclaws",
 				"email_security2",
@@ -41,7 +41,8 @@ public class Unlocks : KMonoBehaviour
 				"email_AIcontrol2",
 				"email_friendlyemail",
 				"email_AIcontrol3",
-				"email_AIcontrol4"
+				"email_AIcontrol4",
+				"email_engineeringcandidate"
 			}
 		},
 		{
@@ -83,7 +84,7 @@ public class Unlocks : KMonoBehaviour
 		},
 		{
 			"researchnotes",
-			new string[18]
+			new string[19]
 			{
 				"notes_clonedrats",
 				"notes_agriculture1",
@@ -102,7 +103,8 @@ public class Unlocks : KMonoBehaviour
 				"notes_neutroniumapplications",
 				"notes_teleportation",
 				"notes_AI",
-				"cryotank_warnings"
+				"cryotank_warnings",
+				"journal_inspace"
 			}
 		},
 		{

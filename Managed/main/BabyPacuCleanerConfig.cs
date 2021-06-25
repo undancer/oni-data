@@ -6,9 +6,9 @@ public class BabyPacuCleanerConfig : IEntityConfig
 {
 	public const string ID = "PacuCleanerBaby";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

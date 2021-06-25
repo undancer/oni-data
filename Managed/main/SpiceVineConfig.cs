@@ -13,9 +13,9 @@ public class SpiceVineConfig : IEntityConfig
 
 	public const float WATER_RATE = 7f / 120f;
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

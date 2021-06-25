@@ -8,13 +8,17 @@ public class LiquidFuelTankClusterConfig : IBuildingConfig
 
 	public const float FuelCapacity = 900f;
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("LiquidFuelTankCluster", 5, 5, "rocket_cluster_liquid_fuel_tank_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.FUEL_TANK_DRY_MASS, new string[1]
 		{
 			SimHashes.Steel.ToString()
 		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.RequiredDlcId = "EXPANSION1_ID";
 		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;
 		buildingDef.OverheatTemperature = 2273.15f;
@@ -54,7 +58,7 @@ public class LiquidFuelTankClusterConfig : IBuildingConfig
 			Storage.StoredItemModifier.Insulate
 		});
 		FuelTank fuelTank = go.AddOrGet<FuelTank>();
-		fuelTank.consumeFuelOnLand = !DlcManager.IsExpansion1Active();
+		fuelTank.consumeFuelOnLand = !DlcManager.FeatureClusterSpaceEnabled();
 		fuelTank.storage = storage;
 		fuelTank.physicalFuelCapacity = storage.capacityKg;
 		go.AddOrGet<CopyBuildingSettings>();

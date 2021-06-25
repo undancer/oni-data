@@ -114,6 +114,11 @@ public class ClusterMapScreen : KScreen
 		return 20f;
 	}
 
+	public float CurrentZoomPercentage()
+	{
+		return (m_currentZoomScale - 50f) / 100f;
+	}
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();

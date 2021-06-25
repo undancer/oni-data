@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -142,7 +143,7 @@ public class BuildingTemplates
 		component.isMovable = true;
 		component.initialMode = KAnim.PlayMode.Loop;
 		BuildingDef def = template.GetComponent<Building>().Def;
-		def.ShowInBuildMenu = def.ShowInBuildMenu && !DlcManager.IsExpansion1Active();
+		def.ShowInBuildMenu = def.ShowInBuildMenu && !DlcManager.FeatureClusterSpaceEnabled();
 		if (def.WidthInCells == 3)
 		{
 			template.AddOrGet<VerticalModuleTiler>();
@@ -187,7 +188,7 @@ public class BuildingTemplates
 		template = ExtendBuildingToRocketModule(template, vanillaBGAnim, clusterRocket: true);
 		BuildingDef def = template.GetComponent<Building>().Def;
 		GameObject buildingUnderConstruction = def.BuildingUnderConstruction;
-		DebugUtil.Assert(def.RequiredDlcId == "EXPANSION1_ID", "Only expansion1 rocket engines should be expanded to Cluster Modules.");
+		DebugUtil.Assert(Array.IndexOf(def.RequiredDlcIds, "EXPANSION1_ID") != -1, "Only expansion1 rocket engines should be expanded to Cluster Modules.");
 		template.AddOrGet<ReorderableBuilding>();
 		buildingUnderConstruction.AddOrGet<ReorderableBuilding>();
 		template.GetComponent<ReorderableBuilding>().buildConditions.Add(new ResearchCompleted());

@@ -332,6 +332,7 @@ public class Global : MonoBehaviour
 		Singleton<StateMachineManager>.CreateInstance();
 		Localization.RegisterForTranslation(typeof(UI));
 		modManager = new KMod.Manager();
+		modManager.LoadModDBAndInitialize();
 		modManager.Load(Content.DLL);
 		modManager.Load(Content.Strings);
 		KSerialization.Manager.Initialize();
@@ -341,7 +342,6 @@ public class Global : MonoBehaviour
 		Singleton<SoundEventVolumeCache>.CreateInstance();
 		mAnimEventManager = new AnimEventManager();
 		Singleton<KBatchedAnimUpdater>.CreateInstance();
-		DistributionPlatform.Initialize();
 		Localization.Initialize();
 		modManager.Load(Content.Translation);
 		modManager.distribution_platforms.Add(new Local("Local", Label.DistributionPlatform.Local));
@@ -356,7 +356,7 @@ public class Global : MonoBehaviour
 		{
 			if (!KPrivacyPrefs.instance.disableDataCollection)
 			{
-				Debug.Log(string.Concat("Logged into ", DistributionPlatform.Inst.Name, " with ID:", DistributionPlatform.Inst.LocalUser.Id, ", NAME:", DistributionPlatform.Inst.LocalUser.Name));
+				Debug.Log("Logged into " + DistributionPlatform.Inst.Name + " with ID:" + DistributionPlatform.Inst.LocalUser.Id?.ToString() + ", NAME:" + DistributionPlatform.Inst.LocalUser.Name);
 				ThreadedHttps<KleiAccount>.Instance.AuthenticateUser(OnGetUserIdKey);
 			}
 		}
@@ -489,7 +489,7 @@ public class Global : MonoBehaviour
 	private void SetONIStaticSessionVariables()
 	{
 		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Branch", "release");
-		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Build", 466654u);
+		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Build", 469287u);
 		if (KPlayerPrefs.HasKey(UnitConfigurationScreen.MassUnitKey))
 		{
 			ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable(UnitConfigurationScreen.MassUnitKey, ((GameUtil.MassUnit)KPlayerPrefs.GetInt(UnitConfigurationScreen.MassUnitKey)).ToString());

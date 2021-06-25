@@ -5,9 +5,9 @@ public class IronCometConfig : IEntityConfig
 {
 	public static string ID = "IronComet";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

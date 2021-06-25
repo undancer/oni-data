@@ -4,6 +4,11 @@ public class ModularLaunchpadPortGasUnloaderConfig : IBuildingConfig
 {
 	public const string ID = "ModularLaunchpadPortGasUnloader";
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		return BaseModularLaunchpadPortConfig.CreateBaseLaunchpadPort("ModularLaunchpadPortGasUnloader", "conduit_port_gas_unloader_kanim", ConduitType.Gas, isLoader: false);

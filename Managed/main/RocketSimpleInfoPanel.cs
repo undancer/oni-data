@@ -111,11 +111,11 @@ public class RocketSimpleInfoPanel : SimpleInfoPanel
 			float enginePower = rocketModuleCluster.performanceStats.EnginePower;
 			if (burden != 0f)
 			{
-				rocketStatusContainer.SetLabel("LocalBurden", "    • " + (string)UI.CLUSTERMAP.ROCKETS.BURDEN_MODULE.NAME + burden, string.Format(UI.CLUSTERMAP.ROCKETS.BURDEN_MODULE.TOOLTIP, burden));
+				rocketStatusContainer.SetLabel("LocalBurden", string.Concat("    • ", UI.CLUSTERMAP.ROCKETS.BURDEN_MODULE.NAME, burden.ToString()), string.Format(UI.CLUSTERMAP.ROCKETS.BURDEN_MODULE.TOOLTIP, burden));
 			}
 			if (enginePower != 0f)
 			{
-				rocketStatusContainer.SetLabel("LocalPower", "    • " + (string)UI.CLUSTERMAP.ROCKETS.POWER_MODULE.NAME + enginePower, string.Format(UI.CLUSTERMAP.ROCKETS.POWER_MODULE.TOOLTIP, enginePower));
+				rocketStatusContainer.SetLabel("LocalPower", string.Concat("    • ", UI.CLUSTERMAP.ROCKETS.POWER_MODULE.NAME, enginePower.ToString()), string.Format(UI.CLUSTERMAP.ROCKETS.POWER_MODULE.TOOLTIP, enginePower));
 			}
 		}
 		rocketStatusContainer.Commit();

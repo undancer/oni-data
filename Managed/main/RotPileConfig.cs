@@ -7,9 +7,9 @@ public class RotPileConfig : IEntityConfig
 {
 	public static string ID = "RotPile";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

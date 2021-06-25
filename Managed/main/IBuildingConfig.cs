@@ -21,4 +21,14 @@ public abstract class IBuildingConfig
 	public virtual void ConfigurePost(BuildingDef def)
 	{
 	}
+
+	public virtual string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
+	public virtual bool ForbidFromLoading()
+	{
+		return false;
+	}
 }

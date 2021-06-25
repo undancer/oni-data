@@ -19,8 +19,9 @@ public class FrontEndManager : KMonoBehaviour
 	{
 		base.OnPrefabInit();
 		Instance = this;
-		string activeDlcId = DlcManager.GetActiveDlcId();
-		if ((activeDlcId != null && activeDlcId.Length == 0) || !(activeDlcId == "EXPANSION1_ID"))
+		string highestActiveDlcId = DlcManager.GetHighestActiveDlcId();
+		string text = highestActiveDlcId;
+		if (text == null || (text != null && text.Length == 0) || !(text == "EXPANSION1_ID"))
 		{
 			Util.KInstantiateUI(mainMenuVanilla, base.gameObject, force_active: true);
 		}

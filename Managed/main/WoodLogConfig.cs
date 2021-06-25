@@ -8,9 +8,9 @@ public class WoodLogConfig : IEntityConfig
 
 	public static readonly Tag TAG = TagManager.Create("WoodLog");
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

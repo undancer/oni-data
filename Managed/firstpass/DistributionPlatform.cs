@@ -45,21 +45,15 @@ public class DistributionPlatform : MonoBehaviour
 			get;
 		}
 
-		bool PurchasedDLC
-		{
-			get;
-		}
-
-		bool IsExpansion1Active
-		{
-			get;
-		}
-
 		string ApplyWordFilter(string text);
 
 		void GetAuthTicket(AuthTicketHandler callback);
 
-		void ToggleDLC();
+		bool IsDLCPurchased(string dlcID);
+
+		bool IsDLCSubscribed(string dlcID);
+
+		void ToggleDLCSubscription(string dlcID);
 	}
 
 	public delegate void AuthTicketHandler(byte[] ticket);

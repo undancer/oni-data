@@ -9,6 +9,8 @@ public class SandboxRadsTool : BrushTool
 
 	protected Color recentlyAffectedCellColor = new Color(1f, 1f, 1f, 0.1f);
 
+	public override string[] DlcIDs => DlcManager.AVAILABLE_EXPANSION1_ONLY;
+
 	private SandboxSettings settings => SandboxToolParameterMenu.instance.settings;
 
 	public static void DestroyInstance()

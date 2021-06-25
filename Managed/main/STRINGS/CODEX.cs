@@ -99,6 +99,30 @@ namespace STRINGS
 			public static LocString BODY = "";
 		}
 
+		public class BEETA
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "Beetas are insectiod creatures that enjoy a symbiotic relationship with the radioactive environment they thrive in.\n\nMuch like the honey bee gathers nectar and processes it to honey, the Beeta turns Uranium into Enriched Uranium through a complex process of isotope separation inside the Beeta Hive.\n\nWhen first observing the Beeta's enrichment process, many scientists note with surprise just how much more efficient the cooperative combination of insect and hive is when compared to even the most advanced industrial processes.";
+			}
+
+			public static LocString TITLE = "Beeta";
+
+			public static LocString SUBTITLE = "Aggressive Critter";
+		}
+
+		public class DIVERGENT
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "'Divergent' is the name given to the two different genders of one species, the Sweetle and the Grubgrub, both of which are able to reproduce asexually and tend to Grubfruit Plants.\n\nWhen tending to the Grubfruit Plant, both gender variants of the Divergent display the exact same behaviors, however the Grubgrub possesses slightly more tiny facial hair which helps in pollinating the plants and stimulates faster growth.";
+			}
+
+			public static LocString TITLE = "Divergent";
+
+			public static LocString SUBTITLE = "Domesticable Critter";
+		}
+
 		public class DRECKO
 		{
 			public class BODY
@@ -293,6 +317,18 @@ namespace STRINGS
 			public static LocString SUBTITLE = "Domesticable Critter";
 		}
 
+		public class PLUGSLUG
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "Plug Slugs are fuzzy gastropoda that are able to cling to walls and ceilings thanks to an extreme triboelectric effect caused by friction between their fur and various surfaces. This same phenomomen allows the Plug Slug to generate a significant amount of static electricity that can be converted into power.\n\nThe increased amount of static electricity a Plug Slug can generate when domesticated is due to the internal vibration, or contented 'humming', they demonstrate when all their needs are met.";
+			}
+
+			public static LocString TITLE = "Plug Slug";
+
+			public static LocString SUBTITLE = "Domesticatable Critter";
+		}
+
 		public class POKESHELL
 		{
 			public class BODY
@@ -367,6 +403,18 @@ namespace STRINGS
 			public static LocString TITLE = "Puft Prince";
 
 			public static LocString SUBTITLE = "Critter Morph";
+		}
+
+		public class ROVER
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "The Rover is a planetary scout robot programmed to land on and mine Planetoids where sending a Duplicant would put them unneccessarily in danger.\n\nRovers are programmed to be very pleasant and social when interacting with other beings. However, an unintended consequence of this programming is that the socialized robots tended to experience the same work slow-downs due to loneliness and low morale.\n\nTo compensate for this, the Rover was programmed to have two distinct personalities it can switch between to have pleasant in-depth conversations with itself during long stints alone.";
+			}
+
+			public static LocString TITLE = "Rover";
+
+			public static LocString SUBTITLE = "Scouting Robot";
 		}
 
 		public class SHINEBUG
@@ -617,6 +665,24 @@ namespace STRINGS
 			public static LocString TITLE2 = "SUBJECT: devon's bloggg";
 
 			public static LocString SUBTITLE = "UNENCRYPTED";
+		}
+
+		public class C5_ENGINEERINGCANDIDATE
+		{
+			public class BODY
+			{
+				public static LocString EMAILHEADER1 = "<smallcaps>To: <b>[REDACTED]</b>\nFrom: <b>Director Stern</b><size=12><alpha=#AA> <jstern@gravitas.nova></size></color></smallcaps>\n------------------\n";
+
+				public static LocString CONTAINER3 = "<indent=5%>Director, I think I've found the perfect engineer candidate to design our small-scale colony machines.</indent>\n------------------\n";
+
+				public static LocString CONTAINER4 = "<b>Bringing Creative Workspace Ideas into the Industrial Setting</b>\n\nMichael E.E. Perlmutter is a rising star in the world industrial design, making a name for himself by cooking up playful workspaces for a work force typically left out of the creative conversation.\n\n\"Ergodynamic chairs have been done to death,\" says Perlmutter. \"What I'm interested in is redesigning the industrial space. There's no reason why a machine can't convey a sense of whimsy.\"\n\nIt's this philosophy that has launched Perlmutter to the top of a very short list of hot new industrial designers.";
+
+				public static LocString SIGNATURE1 = "\n[REDACTED]\n<size=11>Human Resources Coordinator\nThe Gravitas Facility</size>\n------------------\n";
+			}
+
+			public static LocString TITLE = "SUBJECT: Machine Engineer Candidate?";
+
+			public static LocString SUBTITLE = "ENCRYPTION LEVEL: ONE";
 		}
 
 		public class B7_FRIENDLYEMAIL
@@ -1115,6 +1181,18 @@ namespace STRINGS
 			public static LocString TITLE = "Evil";
 
 			public static LocString SUBTITLE = "ENCRYPTION LEVEL: NONE";
+		}
+
+		public class B7_INSPACE
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "<smallcaps>[Voice Recognition Initialized]\n[Subjects Identified: B835, B997]</smallcaps>\n\n[LOG BEGINS]\n\nDr.Ansari: Shhhh...\n\nDr. Bubare: What? What are we doing here?\n\nDr. Ansari: I'll show you, just keep your voice down.\n\nDr. Bubare: Are we even allowed to be here?\n\nDr. Ansari: No. Trust me it'll all be worth it once I can find it.\n\nDr. Bubare: Find what?\n\nDr. Ansari: That!\n\nDr. Bubare: ...Video feed from a rat cage? What's so great about -- Wait. Are they--?\n\nDr. Ansari: Floating!\n\nDr. Bubare: You mean they're in--?\n\nDr. Ansari: Space!\n\nDr. Bubare: Our thermal rats are in space?!?!\n\nDr. Ansari: Yep! There's Applecart and Cherrypie and little Bananabread. Look at them, they're so happy. We made ratstronauts!!\n\nDr. Bubare: HAPPY rat-stronauts.\n\nDr. Ansari: WE MADE HAPPY RATSTRONAUTS!!\n\nDr. Bubare: Shhhhhh...Someone's coming.\n\n[LOG ENDS]";
+			}
+
+			public static LocString TITLE = "In Space";
+
+			public static LocString SUBTITLE = "ENCRYPTION LEVEL: TWO";
 		}
 
 		public class B3_MOVEDRABBITS
@@ -1753,6 +1831,18 @@ namespace STRINGS
 			public static LocString SUBTITLE = "Edible Plant";
 		}
 
+		public class EXPERIMENT52B
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "Experiment 52B is an aggressive, yet sessile creature that consumes calories and discharges resin.\n\nWhile this creature may look like a tree, its taxonomy more closely resembles a giant land-based coral with cybernetic implants.\n\nAlthough normally lab-grown creatures would be given a better name than Experiment 52B, in this particular case the experimenting scientists weren't sure that they were done.";
+			}
+
+			public static LocString TITLE = "Experiment 52B";
+
+			public static LocString SUBTITLE = "Plant?";
+		}
+
 		public class GASGRASS
 		{
 			public class BODY
@@ -1941,7 +2031,7 @@ namespace STRINGS
 		{
 			public class BODY
 			{
-				public static LocString CONTAINER1 = "";
+				public static LocString CONTAINER1 = "Sporechids take advantage of their flower's attractiveness to lure unsuspecting victims into clouds of parasitic Zombie Spores.\n\nThey are a rare form of holoparasitic plant which finds mammalian hosts to infect rather than the usual plant species.\n\nThe Zombie Spore was originally designed for medicinal purposes but its sedative properties were never refined to the point of usefulness.";
 			}
 
 			public static LocString TITLE = "Sporechid";
@@ -1977,7 +2067,7 @@ namespace STRINGS
 		{
 			public class BODY
 			{
-				public static LocString CONTAINER1 = "";
+				public static LocString CONTAINER1 = "Tranquil Toes are a decorative succulent that flourish in a radioactive environment.\n\nThough most of the flora and fauna that thrive a harsh radioactive biome tends to be aggressive, Tranquil Toes provide a rare exception to this rule.\n\nIt is a generally believed that the morale boosting abilities of this plant come from its resemblence to a funny hat one might wear at a party.";
 			}
 
 			public static LocString TITLE = "Tranquil Toes";
@@ -2192,7 +2282,7 @@ namespace STRINGS
 
 			public static LocString HEADER_2 = "Calculating Decor";
 
-			public static LocString PARAGRAPH_2 = "Many things have an effect on the Decor value of a tile. A building's effect is expressed as a strength value and a radius. Often that effect is positive, but many buildings also lower the decor value of an area too. " + UI.FormatAsLink("Plants", "PLANTS") + ", " + UI.FormatAsLink("Critters", "CREATURES") + ", and " + UI.FormatAsLink("Furniture", "BUILDCATEGORYFURNITURE") + " often increase decor while industrial buildings and rot often decrease it. Duplicants experience the combined decor of all objects affecting a tile.\n\nThe " + (string)CREATURES.SPECIES.PRICKLEGRASS.NAME + " has a decor value of " + $"{PrickleGrassConfig.POSITIVE_DECOR_EFFECT.amount} and a radius of {PrickleGrassConfig.POSITIVE_DECOR_EFFECT.radius} tiles. " + "\nThe " + (string)BUILDINGS.PREFABS.MICROBEMUSHER.NAME + " has a decor value of " + $"{MicrobeMusherConfig.DECOR.amount} and a radius of {MicrobeMusherConfig.DECOR.radius} tiles. " + "\nThe result of placing a " + (string)BUILDINGS.PREFABS.MICROBEMUSHER.NAME + " next to a " + (string)CREATURES.SPECIES.PRICKLEGRASS.NAME + " would be a combined decor value of " + (MicrobeMusherConfig.DECOR.amount + PrickleGrassConfig.POSITIVE_DECOR_EFFECT.amount);
+			public static LocString PARAGRAPH_2 = string.Concat("Many things have an effect on the Decor value of a tile. A building's effect is expressed as a strength value and a radius. Often that effect is positive, but many buildings also lower the decor value of an area too. ", UI.FormatAsLink("Plants", "PLANTS"), ", ", UI.FormatAsLink("Critters", "CREATURES"), ", and ", UI.FormatAsLink("Furniture", "BUILDCATEGORYFURNITURE"), " often increase decor while industrial buildings and rot often decrease it. Duplicants experience the combined decor of all objects affecting a tile.\n\nThe ", CREATURES.SPECIES.PRICKLEGRASS.NAME, " has a decor value of ", $"{PrickleGrassConfig.POSITIVE_DECOR_EFFECT.amount} and a radius of {PrickleGrassConfig.POSITIVE_DECOR_EFFECT.radius} tiles. ", "\nThe ", BUILDINGS.PREFABS.MICROBEMUSHER.NAME, " has a decor value of ", $"{MicrobeMusherConfig.DECOR.amount} and a radius of {MicrobeMusherConfig.DECOR.radius} tiles. ", "\nThe result of placing a ", BUILDINGS.PREFABS.MICROBEMUSHER.NAME, " next to a ", CREATURES.SPECIES.PRICKLEGRASS.NAME, " would be a combined decor value of ", (MicrobeMusherConfig.DECOR.amount + PrickleGrassConfig.POSITIVE_DECOR_EFFECT.amount).ToString());
 		}
 
 		public class EXOBASES
@@ -2281,7 +2371,7 @@ namespace STRINGS
 
 			public static LocString HEADER_3 = "Measuring Light";
 
-			public static LocString PARAGRAPH_3 = "The amount of light on a cell is measured in Lux. Lux has a dramatic range - A simple " + (string)BUILDINGS.PREFABS.CEILINGLIGHT.NAME + " produces " + 1800 + " Lux, while the sun will regularly produce values as high as " + 80000 + " Lux. The " + (string)BUILDINGS.PREFABS.SOLARPANEL.NAME + " generates power proportional to how many Lux it is exposed to.\n\n";
+			public static LocString PARAGRAPH_3 = string.Concat("The amount of light on a cell is measured in Lux. Lux has a dramatic range - A simple ", BUILDINGS.PREFABS.CEILINGLIGHT.NAME, " produces ", 1800.ToString(), " Lux, while the sun will regularly produce values as high as ", 80000.ToString(), " Lux. The ", BUILDINGS.PREFABS.SOLARPANEL.NAME, " generates power proportional to how many Lux it is exposed to.\n\n");
 		}
 
 		public class MORALE

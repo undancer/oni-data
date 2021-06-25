@@ -134,6 +134,8 @@ namespace Database
 
 		public ChoreType DoctorFetch;
 
+		public ChoreType EquipmentFetch;
+
 		public ChoreType Disinfect;
 
 		public ChoreType Repair;
@@ -600,6 +602,10 @@ namespace Database
 			{
 				"Storage"
 			}, "", new string[0], DUPLICANTS.CHORES.STORAGEFETCH.NAME, DUPLICANTS.CHORES.STORAGEFETCH.STATUS, DUPLICANTS.CHORES.STORAGEFETCH.TOOLTIP, skip_implicit_priority_change: true, 5000, DUPLICANTS.CHORES.STORAGEFETCH.REPORT_NAME);
+			EquipmentFetch = Add("EquipmentFetch", new string[1]
+			{
+				"Hauling"
+			}, "", new string[0], DUPLICANTS.CHORES.EQUIPMENTFETCH.NAME, DUPLICANTS.CHORES.EQUIPMENTFETCH.STATUS, DUPLICANTS.CHORES.EQUIPMENTFETCH.TOOLTIP, skip_implicit_priority_change: false, 5000, DUPLICANTS.CHORES.EQUIPMENTFETCH.REPORT_NAME);
 			MoveToSafety = Add("MoveToSafety", new string[0], "MoveToSafety", new string[0], DUPLICANTS.CHORES.MOVETOSAFETY.NAME, DUPLICANTS.CHORES.MOVETOSAFETY.STATUS, DUPLICANTS.CHORES.MOVETOSAFETY.TOOLTIP, skip_implicit_priority_change: false);
 			ReturnSuitIdle = Add("ReturnSuitIdle", new string[0], "", new string[0], DUPLICANTS.CHORES.RETURNSUIT.NAME, DUPLICANTS.CHORES.RETURNSUIT.STATUS, DUPLICANTS.CHORES.RETURNSUIT.TOOLTIP, skip_implicit_priority_change: false);
 			Idle = Add("IdleChore", new string[0], "", new string[0], DUPLICANTS.CHORES.IDLE.NAME, DUPLICANTS.CHORES.IDLE.STATUS, DUPLICANTS.CHORES.IDLE.TOOLTIP, skip_implicit_priority_change: false);
@@ -740,7 +746,7 @@ namespace Database
 					Equip,
 					Unequip
 				},
-				new ChoreType[63]
+				new ChoreType[64]
 				{
 					DeliverFood,
 					Sigh,
@@ -804,7 +810,8 @@ namespace Database
 					FabricateFetch,
 					FoodFetch,
 					StorageFetch,
-					RepairFetch
+					RepairFetch,
+					EquipmentFetch
 				},
 				new ChoreType[2]
 				{

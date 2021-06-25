@@ -225,7 +225,8 @@ public class EntityTemplates
 			trait.Add(new AttributeModifier(Db.Get().Amounts.Maturity.maxAttribute.Id, cropval.cropDuration / 600f, baseTraitName));
 			if (DlcManager.FeaturePlantMutationsEnabled())
 			{
-				template.AddOrGet<MutantPlant>();
+				MutantPlant mutantPlant = template.AddOrGet<MutantPlant>();
+				mutantPlant.SpeciesID = component2.PrefabTag;
 				SymbolOverrideControllerUtil.AddToPrefab(template);
 			}
 			Crop crop = template.AddOrGet<Crop>();
@@ -691,7 +692,7 @@ public class EntityTemplates
 	{
 		GameObject gameObject = CreateLooseEntity(id, name, desc, 1f, unitMass: true, anim, initialAnim, Grid.SceneLayer.Front, collisionShape, width, height, isPickupable: true, SORTORDER.SEEDS + sortOrder);
 		gameObject.AddOrGet<EntitySplitter>();
-		CreateAndRegisterCompostableFromPrefab(gameObject);
+		GameObject go = CreateAndRegisterCompostableFromPrefab(gameObject);
 		PlantableSeed plantableSeed = gameObject.AddOrGet<PlantableSeed>();
 		plantableSeed.PlantID = new Tag(plant.name);
 		plantableSeed.replantGroundTag = replantGroundTag;
@@ -711,6 +712,9 @@ public class EntityTemplates
 		if (component2 != null)
 		{
 			MutantPlant mutantPlant = gameObject.AddOrGet<MutantPlant>();
+			mutantPlant.SpeciesID = component2.SpeciesID;
+			MutantPlant mutantPlant2 = go.AddOrGet<MutantPlant>();
+			mutantPlant2.SpeciesID = component2.SpeciesID;
 		}
 		KPrefabID component3 = gameObject.GetComponent<KPrefabID>();
 		Assets.AddPrefab(component3);

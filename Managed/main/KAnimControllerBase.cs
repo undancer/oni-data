@@ -706,7 +706,18 @@ public abstract class KAnimControllerBase : MonoBehaviour
 	{
 		if (curBuild == null)
 		{
-			Debug.LogWarning(string.Concat("[", base.gameObject.name, "] Missing build while trying to play anim [", anim_name, "]"), base.gameObject);
+			string[] obj = new string[5]
+			{
+				"[",
+				base.gameObject.name,
+				"] Missing build while trying to play anim [",
+				null,
+				null
+			};
+			HashedString hashedString = anim_name;
+			obj[3] = hashedString.ToString();
+			obj[4] = "]";
+			Debug.LogWarning(string.Concat(obj), base.gameObject);
 			return;
 		}
 		Queue<AnimData> queue = new Queue<AnimData>();

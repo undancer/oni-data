@@ -71,8 +71,17 @@ public class Structure : KMonoBehaviour
 		if (flag != isEntombed)
 		{
 			isEntombed = flag;
+			if (isEntombed)
+			{
+				GetComponent<KPrefabID>().AddTag(GameTags.Entombed);
+			}
+			else
+			{
+				GetComponent<KPrefabID>().RemoveTag(GameTags.Entombed);
+			}
 			operational.SetFlag(notEntombedFlag, !isEntombed);
 			GetComponent<KSelectable>().ToggleStatusItem(Db.Get().BuildingStatusItems.Entombed, isEntombed, this);
+			Trigger(-1089732772);
 		}
 	}
 

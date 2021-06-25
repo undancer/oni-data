@@ -188,7 +188,7 @@ public class DestinationSelectPanel : KMonoBehaviour
 		asteroidData.Clear();
 		foreach (KeyValuePair<string, ClusterLayout> item in SettingsCache.clusterLayouts.clusterCache)
 		{
-			if ((!DlcManager.IsExpansion1Active() || !(item.Key == "clusters/SandstoneDefault")) && item.Value.clusterCategory == ChosenClusterCategorySetting)
+			if ((!DlcManager.FeatureClusterSpaceEnabled() || !(item.Key == "clusters/SandstoneDefault")) && item.Value.clusterCategory == ChosenClusterCategorySetting)
 			{
 				clusterKeys.Add(item.Key);
 				ColonyDestinationAsteroidBeltData value = new ColonyDestinationAsteroidBeltData(item.Value.GetStartWorld(), 0, item.Key);

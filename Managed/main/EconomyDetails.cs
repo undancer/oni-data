@@ -392,7 +392,8 @@ public class EconomyDetails
 			CreateTransformation(prefab, prefab.PrefabTag);
 			if (prefab.GetComponent<GeyserConfigurator>() != null)
 			{
-				CreateTransformation(prefab, string.Concat(prefab.PrefabTag, "_ActiveOnly"));
+				Tag prefabTag = prefab.PrefabTag;
+				CreateTransformation(prefab, prefabTag.ToString() + "_ActiveOnly");
 			}
 		}
 		foreach (Effect resource in Db.Get().effects.resources)
@@ -1210,7 +1211,7 @@ public class EconomyDetails
 			streamWriter.Write("Resource,Amount");
 			foreach (BiomeTransformation item11 in list3)
 			{
-				streamWriter.Write("," + item11.tag);
+				streamWriter.Write("," + item11.tag.ToString());
 			}
 			streamWriter.Write("\n");
 			streamWriter.Write("Cells, " + details.startingBiomeCellCount + "\n");
@@ -1250,7 +1251,8 @@ public class EconomyDetails
 				continue;
 			}
 			streamWriter.Write(text);
-			streamWriter.Write("," + tag);
+			Tag tag2 = tag;
+			streamWriter.Write("," + tag2.ToString());
 			KAnimControllerBase component = prefab.GetComponent<KAnimControllerBase>();
 			if (component != null)
 			{

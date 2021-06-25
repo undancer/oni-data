@@ -4,9 +4,9 @@ public class MinionAssignablesProxyConfig : IEntityConfig
 {
 	public static string ID = "MinionAssignablesProxy";
 
-	public string GetDlcId()
+	public string[] GetDlcIds()
 	{
-		return "";
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()
