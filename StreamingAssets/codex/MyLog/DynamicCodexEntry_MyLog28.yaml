@@ -1,5 +1,7 @@
 id: "MyLog28"
 title: STRINGS.CODEX.MYLOG.BODY.CLUSTERWORLDS.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
 
 contentContainers:
 #-----------------------------

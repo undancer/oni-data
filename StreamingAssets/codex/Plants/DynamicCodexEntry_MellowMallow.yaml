@@ -1,5 +1,7 @@
 id: "Winecups"
 title: STRINGS.CODEX.MELLOWMALLOW.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
 
 contentContainers:
 #-----------------------------

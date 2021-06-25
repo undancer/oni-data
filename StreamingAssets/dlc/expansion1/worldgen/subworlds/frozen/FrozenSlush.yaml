@@ -15,13 +15,6 @@ biomes:
       - ColdBreather
 tags:
   - IgnoreCaveOverride
-pointsOfInterest:
-   heatsinks_a:
-    - poi/frozen/heatsink_a
-    - poi/frozen/heatsink_b
-   ruins_a:
-    - poi/frozen/lab_basement
-    - poi/frozen/lab_splitroom
 features:
   - type: expansion1::features/frozen/SlushPool
   - type: expansion1::features/frozen/SlushPool
@@ -31,14 +24,7 @@ features:
   - type: expansion1::features/frozen/RustShelf
 subworldTemplateRules:
   - names:
-    - expansion1::poi/poi_geyser_dirty_slush
-    - expansion1::poi/poi_frozen_salt_water_geyser
-    listRule: GuaranteeAll
-    priority: 100
-    allowedCellsFilter:
-      - command: IntersectWith
-        tagcommand: DistanceFromTag
-        tag: AtStart
-        minDistance: 1
-        maxDistance: 3
+    - poi/frozen/lab_basement
+    - poi/frozen/lab_splitroom
+    listRule: TryOne
 zoneType: FrozenWastes

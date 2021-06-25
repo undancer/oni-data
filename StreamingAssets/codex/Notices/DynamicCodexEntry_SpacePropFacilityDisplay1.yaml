@@ -1,5 +1,7 @@
 id: "SpacePropFacilityDisplay1"
 title: STRINGS.CODEX.B1_SPACEPROPFACILITYDISPLAY1.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
 
 contentContainers:
 #-----------------------------

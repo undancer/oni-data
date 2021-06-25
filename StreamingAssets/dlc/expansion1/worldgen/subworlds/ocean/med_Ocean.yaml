@@ -31,8 +31,9 @@ features:
 tags:
   - IgnoreCaveOverride
   - River
-pointsOfInterest:
-  ruins_a:
-    - poi/poi_ladder_tunnel
-    - poi/poi_dining_room
+subworldTemplateRules:
+  - names:
+      - poi/poi_ladder_tunnel
+      - poi/poi_dining_room
+    listRule: TryOne
 zoneType: Ocean

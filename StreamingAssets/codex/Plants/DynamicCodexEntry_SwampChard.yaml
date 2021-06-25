@@ -1,5 +1,7 @@
 id: "SwampForagePlantPlanted"
 title: STRINGS.CODEX.SWAMPCHARD.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
 
 contentContainers:
 #-----------------------------

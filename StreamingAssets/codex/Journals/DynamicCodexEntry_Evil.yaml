@@ -1,5 +1,7 @@
 id: "Evil"
 title: STRINGS.CODEX.C01_EVIL.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
 
 contentContainers:
 #-----------------------------

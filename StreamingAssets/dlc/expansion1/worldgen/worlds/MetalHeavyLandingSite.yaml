@@ -27,9 +27,9 @@ startingBasePositionHorizontal:
   max: 0.55
 startingBasePositionVertical:
   min: 0.75
-  max: 0.85
+  max: 0.75
 
-# List all the zone files to load
+# List all the subworld files to load
 subworldFiles:
   - name: expansion1::subworlds/barren/LargeChasmStart
   - name: expansion1::subworlds/barren/LargeChasm
@@ -101,6 +101,52 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/radioactive/med_FrozenUraniumFields
 
 worldTemplateRules:
+  # RenewableMetallic
+  - names:
+    - expansion1::poi/poi_molten_gold_volcano
+    - expansion1::poi/poi_molten_aluminum_volcano
+    listRule: GuaranteeAll
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [Metallic]
+      - command: IntersectWith
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 1
+        maxDistance: 3
+  - names: # Extra if there is space
+    - expansion1::poi/poi_molten_gold_volcano
+    - expansion1::poi/poi_molten_aluminum_volcano
+    listRule: TryAll
+    allowDuplicates: true
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [Metallic]
+      - command: IntersectWith
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 1
+        maxDistance: 3
+  # Frozen Uranium
+  - names:
+      - expansion1::poi/radioactive/uranium_fields_liquid_co2_geyser
+      - expansion1::poi/radioactive/uranium_fields_liquid_co2_geyser_b
+      - expansion1::poi/radioactive/uranium_fields_liquid_co2_geyser_c
+    listRule: GuaranteeSomeTryMore
+    someCount: 1
+    moreCount: 1
+    priority: 100
+    allowExtremeTemperatureOverlap: true # This is acceptable
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [Radioactive]
+      - command: IntersectWith
+        subworldNames:
+          - expansion1::subworlds/radioactive/med_UraniumFields
+          - expansion1::subworlds/radioactive/med_FrozenUraniumFields
+  # Boons
   - names:
     - expansion1::poi/boon/bedroom
     - expansion1::poi/boon/washroom
@@ -123,15 +169,18 @@ worldTemplateRules:
         subworldNames:
           - expansion1::subworlds/barren/LargeChasmStart
           - expansion1::subworlds/barren/LargeChasm
-  - names: # Generic geysers
+   # Curated geysers
+  - names:
     - geysers/chlorine_gas
     - geysers/methane
     - geysers/hot_po2
     - geysers/small_volcano
     - geysers/hot_hydrogen
     - geysers/filthy_water
-    listRule: TrySome
-    someCount: 2
+    listRule: TryOne
+    times: 3
+    allowDuplicates: true
+    useRelaxedFiltering: true # Marsh contains a lot of features, this means they can be replaced
     priority: 10
     allowedCellsFilter:
       - command: Replace
@@ -141,3 +190,7 @@ worldTemplateRules:
         maxDistance: 10
       - command: ExceptWith
         zoneTypes: [ Space ]        
+      - command: ExceptWith
+        subworldNames:
+          - expansion1::subworlds/barren/LargeChasmStart
+          - expansion1::subworlds/barren/LargeChasm

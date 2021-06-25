@@ -13,7 +13,6 @@ biomes:
     weight: 1
 # features:
 #   - type: expansion1::features/barren/GraniteCoalDeposit
-pointsOfInterest:
 tags:
   - IgnoreCaveOverride
 zoneType: Barren

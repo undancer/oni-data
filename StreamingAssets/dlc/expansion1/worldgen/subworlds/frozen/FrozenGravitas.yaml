@@ -23,10 +23,6 @@ features:
   - type: features/frozen/ColdBubble
   - type: features/frozen/ColdBubble
   - type: features/frozen/SandGeode
-# DISABLED FOR TESTING
-# pointsOfInterest:
-#   gravitas:
-#     - poi/poi_temporal_tear_opener
 tags:
   - IgnoreCaveOverride
 zoneType: FrozenWastes

@@ -40,7 +40,6 @@ biomes:
       - BasicForagePlant
       - BasicForagePlantPlanted
 features:
-  - type: expansion1::features/sedimentary/TinyEmptyLake
   - type: expansion1::features/sedimentary/SmallMetalVacuumBlob
   - type: expansion1::features/sedimentary/SmallAlgaeBall
 zoneType: Sandstone

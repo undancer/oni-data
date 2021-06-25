@@ -16,20 +16,23 @@ biomes:
       - Cylindrica #decor
       - WormPlantSeed
       - WormPlant
-pointsOfInterest:
-  oasis_a:
-    - expansion1::poi/wasteland/oasis_a
-  oasis_b:
-    - expansion1::poi/wasteland/oasis_b
-  worm_1:
-    - expansion1::poi/wasteland/worm_a
-    - expansion1::poi/wasteland/worm_cuprite
-    - expansion1::poi/wasteland/worm_wide
 features:
-  - type: expansion1::features/wasteland/WormPlantCave  
-  - type: expansion1::features/wasteland/BeetleCave  
+  - type: expansion1::features/wasteland/WormPlantCave
+  - type: expansion1::features/wasteland/BeetleCave
   - type: expansion1::features/wasteland/MetalBlob
   - type: expansion1::features/wasteland/SucroseBlob
 tags:
   - IgnoreCaveOverride
+subworldTemplateRules:
+  - names:
+      - expansion1::poi/wasteland/oasis_a
+    listRule: TryOne
+  - names:
+      - expansion1::poi/wasteland/oasis_b
+    listRule: TryOne
+  - names:
+      - expansion1::poi/wasteland/worm_a
+      - expansion1::poi/wasteland/worm_cuprite
+      - expansion1::poi/wasteland/worm_wide
+    listRule: TryOne
 zoneType: Wasteland

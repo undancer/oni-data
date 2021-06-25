@@ -24,34 +24,15 @@ biomes:
 tags:
   - IgnoreCaveOverride
   - River
-pointsOfInterest:
-  geysers_a:
-    - poi/jungle/geyser_steam 
-  geysers_b:
-    - poi/jungle/geyser_methane
-    - poi/jungle/geyser_chlorine
-  ruins_a:    
-    - poi/jungle/lab_poolbottom
-    - poi/jungle/buttongate
-    - poi/jungle/lab_vinetank
-    - poi/jungle/lab_daytimer
-    - poi/jungle/frag_lightbugs
-    - poi/jungle/frag_lockers
-    - poi/jungle/oxylite_spiral
-  ruins_b:    
-    - poi/jungle/lab_poolbottom
-    - poi/jungle/buttongate
-    - poi/jungle/lab_vinetank
-    - poi/jungle/lab_daytimer
-    - poi/jungle/frag_lightbugs
-    - poi/jungle/frag_lockers
-    - poi/jungle/oxylite_spiral
-  ruins_c:    
-    - poi/jungle/lab_poolbottom
-    - poi/jungle/buttongate
-    - poi/jungle/lab_vinetank
-    - poi/jungle/lab_daytimer
-    - poi/jungle/frag_lightbugs
-    - poi/jungle/frag_lockers
-    - poi/jungle/oxylite_spiral
+subworldTemplateRules:
+  - names:
+      - poi/jungle/lab_poolbottom
+      - poi/jungle/buttongate
+      - poi/jungle/lab_vinetank
+      - poi/jungle/lab_daytimer
+      - poi/jungle/frag_lightbugs
+      - poi/jungle/frag_lockers
+      - poi/jungle/oxylite_spiral
+    listRule: TrySome
+    someCount: 3
 zoneType: ToxicJungle

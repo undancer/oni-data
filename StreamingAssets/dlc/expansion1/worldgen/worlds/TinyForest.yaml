@@ -22,7 +22,7 @@ defaultsOverrides:
 startSubworldName: subworlds/forest/ForestStart
 startingBaseTemplate: bases/sandstoneBase
 
-# List all the zone files to load
+# List all the subworld files to load
 subworldFiles:
   - name: subworlds/forest/Forest
   - name: subworlds/forest/ForestStart

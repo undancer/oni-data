@@ -6,6 +6,7 @@ coordinatePrefix: TNY-SURF
 skip: EditorOnly
 clusterCategory: 2
 
+numRings: 12
 startWorldIndex: 0 
 worldPlacements:
 - world: worlds/TinySurface

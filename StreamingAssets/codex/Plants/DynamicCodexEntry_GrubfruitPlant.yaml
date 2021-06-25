@@ -1,5 +1,7 @@
 id: "SuperWormplant"
 title: STRINGS.CODEX.GRUBFRUITPLANT.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
 
 contentContainers:
 #-----------------------------

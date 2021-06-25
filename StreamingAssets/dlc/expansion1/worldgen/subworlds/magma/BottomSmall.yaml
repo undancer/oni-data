@@ -1,6 +1,6 @@
 biomeNoise: noise/Generic
 temperatureRange: ExtremelyHot
-minChildCount: 8
+minChildCount: 15 # Improve spawning of MarshyMoonlet's tungsten geysers
 density:
   min: 5
   max: 15

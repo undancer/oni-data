@@ -1,6 +1,7 @@
 id: "MeetThePilot"
 title: STRINGS.CODEX.B2_MEETTHEPILOT.TITLE
-
+dlcIds:
+  - "EXPANSION1_ID"
 contentContainers:
 #-----------------------------
   - contentLayout: Vertical

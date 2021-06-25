@@ -19,6 +19,7 @@ defaultsOverrides:
     OverworldDensityMax: 18
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
+    poiPadding: 1
 
 startSubworldName: expansion1::subworlds/swamp/SwampyChasmStart
 startingBaseTemplate:  poi/poi_satellite_3_a
@@ -29,7 +30,7 @@ startingBasePositionVertical:
   min: 0.65
   max: 0.65
 
-# List all the zone files to load
+# List all the subworld files to load
 subworldFiles:
   - name: expansion1::subworlds/swamp/SwampyChasmStart
   - name: expansion1::subworlds/swamp/SwampyChasm
@@ -49,8 +50,6 @@ subworldFiles:
   - name: expansion1::subworlds/radioactive/med_UraniumFields
   - name: expansion1::subworlds/radioactive/med_FrozenUraniumFields
     minCount: 3
-  - name: expansion1::subworlds/swamp/Swamp
-  - name: expansion1::subworlds/swamp/SwampWarpStart
     
 unknownCellsAllowedSubworlds: 
   - tagcommand: Default
@@ -103,6 +102,52 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/radioactive/med_FrozenUraniumFields
 
 worldTemplateRules:
+  # SwampyRenewableMetallic
+  - names:
+    - expansion1::poi/poi_molten_gold_volcano
+    - expansion1::poi/poi_molten_aluminum_volcano
+    listRule: GuaranteeAll
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [Metallic]
+      - command: IntersectWith
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 1
+        maxDistance: 3
+  - names: # Extra if there is space
+    - expansion1::poi/poi_molten_gold_volcano
+    - expansion1::poi/poi_molten_aluminum_volcano
+    listRule: TryAll
+    allowDuplicates: true
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [Metallic]
+      - command: IntersectWith
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 1
+        maxDistance: 3
+  # Frozen Uranium
+  - names:
+      - expansion1::poi/radioactive/uranium_fields_liquid_co2_geyser
+      - expansion1::poi/radioactive/uranium_fields_liquid_co2_geyser_b
+      - expansion1::poi/radioactive/uranium_fields_liquid_co2_geyser_c
+    listRule: GuaranteeSomeTryMore
+    someCount: 1
+    moreCount: 1
+    priority: 100
+    allowExtremeTemperatureOverlap: true # This is acceptable
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [Radioactive]
+      - command: IntersectWith
+        subworldNames:
+          - expansion1::subworlds/radioactive/med_UraniumFields
+          - expansion1::subworlds/radioactive/med_FrozenUraniumFields
+  # Boons
   - names:
     - expansion1::poi/boon/bedroom
     - expansion1::poi/boon/washroom
@@ -125,15 +170,18 @@ worldTemplateRules:
         subworldNames:
           - expansion1::subworlds/swamp/SwampyChasmStart
           - expansion1::subworlds/swamp/SwampyChasm
-  - names: # Generic geysers
+  # Curated Geysers
+  - names:
     - geysers/chlorine_gas
     - geysers/methane
     - geysers/hot_po2
+    - geysers/slimy_po2
     - geysers/small_volcano
     - geysers/hot_hydrogen
     - geysers/filthy_water
-    listRule: TrySome
-    someCount: 2
+    listRule: TryOne
+    times: 3
+    allowDuplicates: true
     priority: 10
     allowedCellsFilter:
       - command: Replace
@@ -143,3 +191,7 @@ worldTemplateRules:
         maxDistance: 10
       - command: ExceptWith
         zoneTypes: [ Space ]        
+      - command: ExceptWith
+        subworldNames:
+          - expansion1::subworlds/swamp/SwampyChasmStart
+          - expansion1::subworlds/swamp/SwampyChasm

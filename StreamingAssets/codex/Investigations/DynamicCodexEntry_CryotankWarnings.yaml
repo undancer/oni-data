@@ -1,6 +1,7 @@
 id: "CryotankWarnings"
 title: STRINGS.CODEX.CRYOTANKWARNINGS.TITLE
-
+dlcIds:
+  - "EXPANSION1_ID"
 contentContainers:
 #-----------------------------
   - contentLayout: Vertical

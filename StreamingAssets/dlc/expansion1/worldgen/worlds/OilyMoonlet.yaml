@@ -1,3 +1,4 @@
+# unused
 name: STRINGS.WORLDS.OILYMOONLET.NAME
 description: STRINGS.WORLDS.OILYMOONLET.DESCRIPTION
 nameTable: OILY
@@ -20,7 +21,7 @@ defaultsOverrides:
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
 
-# List all the zone files to load
+# List all the subworld files to load
 subworldFiles:
   - name: subworlds/space/Space
   - name: expansion1::subworlds/oil/OilSurface
@@ -61,3 +62,22 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - subworlds/magma/Bottom
+
+worldTemplateRules:
+  # Oil
+  - names:
+    - poi/oil/small_oilpockets_geyser_a
+    - poi/oil/small_oilpockets_geyser_b
+    - poi/oil/small_oilpockets_geyser_c
+    - poi/oil/small_oilpockets_geyser_d
+    - poi/oil/small_oilpockets_geyser_e
+    - poi/oil/small_oilpockets_geyser_f
+    - poi/oil/small_oilpockets_geyser_g
+    - poi/oil/small_oilpockets_geyser_h
+    listRule: GuaranteeOne
+    times: 3
+    allowDuplicates: true # be more flexible due to high temperature borders
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [OilField]

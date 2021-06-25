@@ -10,10 +10,6 @@ sampleBehaviour: PoissonDisk
 biomes:
   - name: expansion1::biomes/Niobium/NiobiumPatch
     weight: 1
-subworldTemplateRules:
-  - names:
-    - expansion1::geysers/molten_niobium
-    listRule: GuaranteeAll
 tags:
   - IgnoreCaveOverride
 zoneType: OilField

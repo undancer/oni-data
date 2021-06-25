@@ -27,24 +27,12 @@ biomes:
       - BulbPlantSeed
 tags:
   - IgnoreCaveOverride
-pointsOfInterest:
-  geysers_a:
-    - poi/hotmarsh/geyser_steam
-  geysers_b:
-    - poi/hotmarsh/geyser_methane
-  ruins_a:
-    - poi/hotmarsh/lab_burrow
-    - poi/hotmarsh/lab_splitroom
-    - poi/hotmarsh/frag_doorway
-    - poi/hotmarsh/frag_table
-  ruins_b:
-    - poi/hotmarsh/lab_burrow
-    - poi/hotmarsh/lab_splitroom
-    - poi/hotmarsh/frag_doorway
-    - poi/hotmarsh/frag_table
-  ruins_c:
-    - poi/hotmarsh/lab_burrow
-    - poi/hotmarsh/lab_splitroom
-    - poi/hotmarsh/frag_doorway
-    - poi/hotmarsh/frag_table
+subworldTemplateRules:
+  - names:
+      - poi/hotmarsh/lab_burrow
+      - poi/hotmarsh/lab_splitroom
+      - poi/hotmarsh/frag_doorway
+      - poi/hotmarsh/frag_table
+    listRule: TrySome
+    someCount: 3
 zoneType: BoggyMarsh

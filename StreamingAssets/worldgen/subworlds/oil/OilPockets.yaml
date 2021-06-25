@@ -1,10 +1,10 @@
 biomeNoise: noise/OilPockets
 temperatureRange: Hot
-minChildCount: 2
+minChildCount: 5
 density:
-  min: 35
-  max: 45
-avoidRadius: 50.0
+  min: 10
+  max: 15
+avoidRadius: 10.0
 sampleBehaviour: PoissonDisk
 biomes:
   - name: biomes/Oil/OilPockets
@@ -21,29 +21,12 @@ biomes:
 features:
   #- type: features/oilpockets/Cavity
   - type: features/oilpockets/CavityPond
-  - type: features/oilpockets/DiamondClump 
-pointsOfInterest:
- geysers_a:
-  - poi/oil/oilpockets_geyser_a
-  - poi/oil/oilpockets_geyser_b
-  - poi/oil/oilpockets_geyser_c    
- ruins_a:
-  - poi/poi_oil_switchdoor
-  - poi/poi_oil_six_switch_door
- geysers_b:
-  - poi/oil/oilpockets_geyser_d
-  - poi/oil/oilpockets_geyser_e
-  - poi/oil/oilpockets_geyser_f
- ruins_b:
-  - poi/poi_oil_switchdoor
-  - poi/poi_oil_six_switch_door
- geysers_c:
-  - poi/oil/oilpockets_geyser_a
-  - poi/oil/oilpockets_geyser_b
-  - poi/oil/oilpockets_geyser_c
-  - poi/oil/oilpockets_geyser_d
-  - poi/oil/oilpockets_geyser_e
-  - poi/oil/oilpockets_geyser_f
+  - type: features/oilpockets/DiamondClump
+subworldTemplateRules:
+  - names:
+      - poi/poi_oil_switchdoor
+      - poi/poi_oil_six_switch_door
+    listRule: TryAll
 tags:
   - IgnoreCaveOverride
 zoneType: OilField

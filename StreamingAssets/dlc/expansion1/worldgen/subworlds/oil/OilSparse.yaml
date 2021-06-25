@@ -20,14 +20,12 @@ biomes:
     #  massMultiplier: 50
 features:
   #- type: features/oilpockets/Cavity
-  - type: features/oilpockets/DiamondClump 
-pointsOfInterest:
- ruins_a:
-  - poi/poi_oil_switchdoor
-  - poi/poi_oil_six_switch_door
- ruins_b:
-  - poi/poi_oil_switchdoor
-  - poi/poi_oil_six_switch_door
+  - type: features/oilpockets/DiamondClump
 tags:
   - IgnoreCaveOverride
+subworldTemplateRules:
+  - names:
+      - poi/poi_oil_switchdoor
+      - poi/poi_oil_six_switch_door
+    listRule: TryAll
 zoneType: OilField

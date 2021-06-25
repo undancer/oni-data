@@ -13,33 +13,25 @@ biomes:
   - name: expansion1::biomes/Wasteland/Basic
     weight: 1
     tags:
-       - WormPlantSeed
-       - WormPlant
-       - Cylindrica
-       - DiverentBeelte
+      - WormPlantSeed
+      - WormPlant
+      - Cylindrica
+      - DiverentBeelte
 features:
   - type: expansion1::features/wasteland/BeetleCave
   - type: expansion1::features/wasteland/WormPlantCave
   - type: expansion1::features/wasteland/OxyliteBlob
-pointsOfInterest:
-  ruins_a:
-    - expansion1::poi/wasteland/chasm
-  ruins_b:
-    - expansion1::poi/wasteland/tower
-    - expansion1::poi/wasteland/hottub
-    - expansion1::poi/wasteland/chasm
-    - expansion1::poi/wasteland/stage 
-    - expansion1::poi/wasteland/locker
-  ruins_c:
-    - expansion1::poi/wasteland/tower
-    - expansion1::poi/wasteland/hottub
-    - expansion1::poi/wasteland/stage    
-    - expansion1::poi/wasteland/locker
-  ruins_d:
-    - expansion1::poi/wasteland/locker
-    - expansion1::poi/wasteland/tower
-    - expansion1::poi/wasteland/stage
-    
 tags:
   - IgnoreCaveOverride
+subworldTemplateRules:
+  - names:
+      - expansion1::poi/wasteland/chasm
+    listRule: TryOne
+  - names:
+      - expansion1::poi/wasteland/tower
+      - expansion1::poi/wasteland/hottub
+      - expansion1::poi/wasteland/stage
+      - expansion1::poi/wasteland/locker
+    listRule: TrySome
+    someCount: 3
 zoneType: Wasteland

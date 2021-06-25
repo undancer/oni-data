@@ -14,7 +14,7 @@ ElementChoiceGroups:
     selectionMethod: WeightedResample
     choices:
       - element: Oxygen
-        weight: 1
+        weight: 0.5
         overrides:
           massOverride: 1
       - element: Water
@@ -24,7 +24,7 @@ ElementChoiceGroups:
   RoomBorderChoices0:
     selectionMethod: WeightedResample
     choices:
-      - element: Oxygen
+      - element: Water
         weight: 2
   RoomBorderChoices1:
     selectionMethod: WeightedResample

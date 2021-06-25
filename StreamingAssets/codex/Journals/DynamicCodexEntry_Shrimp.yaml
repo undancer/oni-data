@@ -1,5 +1,7 @@
 id: "Shrimp"
 title: STRINGS.CODEX.A5_SHRIMP.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
 
 contentContainers:
 #-----------------------------

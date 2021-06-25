@@ -1,3 +1,4 @@
+# Unused - Was used for VanillaSandstoneCluster
 name: STRINGS.WORLDS.WARPOILYSWAMP.NAME
 description: STRINGS.WORLDS.WARPOILYSWAMP.DESCRIPTION
 nameTable: SWAMP
@@ -22,7 +23,7 @@ defaultsOverrides:
     POIPadding: 1
 
 startSubworldName: expansion1::subworlds/swamp/SwampWarpStart
-startingBaseTemplate:  expansion1::bases/warpworldBase
+startingBaseTemplate:  expansion1::bases/warpworldSwampBase
 startingBasePositionHorizontal:
   min: 0.3
   max: 0.7
@@ -30,7 +31,7 @@ startingBasePositionVertical:
   min: 0.50
   max: 0.55
 
-# List all the zone files to load
+# List all the subworld files to load
 subworldFiles:
   - name: subworlds/space/Space
   - name: expansion1::subworlds/space/SpaceWithFrozenBorder    
@@ -136,14 +137,14 @@ worldTemplateRules:
       - command: IntersectWith
         zoneTypes: [ Swamp ]
   - names:
-    - expansion1::poi/oil/small_oilpockets_geyser_a
-    - expansion1::poi/oil/small_oilpockets_geyser_b
-    - expansion1::poi/oil/small_oilpockets_geyser_c
-    - expansion1::poi/oil/small_oilpockets_geyser_d
-    - expansion1::poi/oil/small_oilpockets_geyser_e
-    - expansion1::poi/oil/small_oilpockets_geyser_f
-    - expansion1::poi/oil/small_oilpockets_geyser_g
-    - expansion1::poi/oil/small_oilpockets_geyser_h
+    - poi/oil/small_oilpockets_geyser_a
+    - poi/oil/small_oilpockets_geyser_b
+    - poi/oil/small_oilpockets_geyser_c
+    - poi/oil/small_oilpockets_geyser_d
+    - poi/oil/small_oilpockets_geyser_e
+    - poi/oil/small_oilpockets_geyser_f
+    - poi/oil/small_oilpockets_geyser_g
+    - poi/oil/small_oilpockets_geyser_h
     listRule: GuaranteeSomeTryMore
     someCount: 1
     moreCount: 2
@@ -158,5 +159,6 @@ worldTemplateRules:
         maxDistance: 2
   - names:
     - geysers/generic
-    listRule: TryAll
-    someCount: 3
+    listRule: TryOne
+    times: 3
+    allowDuplicates: true

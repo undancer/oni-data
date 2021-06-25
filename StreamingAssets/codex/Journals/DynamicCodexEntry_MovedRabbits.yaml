@@ -1,6 +1,7 @@
 id: "MovedRabbits"
 title: STRINGS.CODEX.B3_MOVEDRABBITS.TITLE
-
+dlcIds:
+  - "EXPANSION1_ID"
 contentContainers:
 #-----------------------------
   - contentLayout: Vertical

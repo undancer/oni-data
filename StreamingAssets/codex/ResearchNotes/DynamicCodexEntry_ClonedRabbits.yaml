@@ -1,5 +1,7 @@
 id: "ClonedRabbits"
 title: STRINGS.CODEX.A1_CLONEDRABBITS.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
 
 contentContainers:
 #-----------------------------

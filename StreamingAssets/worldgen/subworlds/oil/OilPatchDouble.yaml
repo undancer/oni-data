@@ -23,7 +23,6 @@ features:
   - type: features/oilpockets/OilWell
   - type: features/oilpockets/OilWell
   - type: features/oilpockets/DiamondClumpSmall
-pointsOfInterest:
 tags:
   - IgnoreCaveOverride
 zoneType: OilField
