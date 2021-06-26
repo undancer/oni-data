@@ -360,7 +360,7 @@ namespace KMod
 			}
 			list2 = list2.Where((ArchivedVersion v) => DoesModSupportCurrentContent(v.info)).ToList();
 			IOrderedEnumerable<ArchivedVersion> source = from v in list2
-				where (long)v.info.minimumSupportedBuild <= 469287L
+				where (long)v.info.minimumSupportedBuild <= 469369L
 				orderby v.info.minimumSupportedBuild descending
 				select v;
 			ArchivedVersion archivedVersion2 = source.FirstOrDefault();
