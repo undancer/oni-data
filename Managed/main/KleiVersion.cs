@@ -1,6 +1,6 @@
 public static class KleiVersion
 {
-	public const uint ChangeList = 469369u;
+	public const uint ChangeList = 469473u;
 
 	public const string BuildBranch = "release";
 

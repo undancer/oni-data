@@ -32,12 +32,12 @@ public class LaunchInitializer : MonoBehaviour
 		GraphicsOptionsScreen.SetSettingsFromPrefs();
 		Util.ApplyInvariantCultureToThread(Thread.CurrentThread);
 		Debug.Log("Current date: " + System.DateTime.Now.ToString());
-		Debug.Log("release Build: " + 469369u);
+		Debug.Log("release Build: " + 469473u);
 		UnityEngine.Object.DontDestroyOnLoad(base.gameObject);
 		KPlayerPrefs.instance.Load();
 		DistributionPlatform.Initialize();
 		Debug.Log("DistributionPlatform initialized.");
-		Debug.Log("release Build: " + BuildPrefix() + "-" + 469369u);
+		Debug.Log("release Build: " + BuildPrefix() + "-" + 469473u);
 		Debug.Log($"EXPANSION1 installed: {DlcManager.IsExpansion1Installed()}  active: {DlcManager.IsExpansion1Active()}");
 		KFMOD.Initialize();
 		for (int i = 0; i < SpawnPrefabs.Length; i++)
