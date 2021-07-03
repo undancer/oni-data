@@ -55,6 +55,8 @@ public static class BaseBeeConfig
 			gameObject.AddOrGetDef<BeeHiveMonitor.Def>();
 			EntityTemplates.CreateAndRegisterBaggedCreature(gameObject, must_stand_on_top_for_pickup: true, allow_mark_for_capture: true);
 		}
+		OvercrowdingMonitor.Def def = gameObject.AddOrGetDef<OvercrowdingMonitor.Def>();
+		def.spaceRequiredPerCreature = CREATURES.SPACE_REQUIREMENTS.TIER1;
 		radiationEmitter.emitRads = bee.radiationAmount;
 		ElementConsumer elementConsumer = gameObject.AddOrGet<ElementConsumer>();
 		elementConsumer.elementToConsume = SimHashes.CarbonDioxide;

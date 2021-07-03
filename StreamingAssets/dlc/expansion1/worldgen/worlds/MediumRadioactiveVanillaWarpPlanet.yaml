@@ -45,7 +45,7 @@ subworldFiles:
   - name: expansion1::subworlds/radioactive/med_FrozenUraniumFields
     minCount: 2
   - name: expansion1::subworlds/frozen/FrozenSlush
-    minCount: 4
+    minCount: 3
   - name: expansion1::subworlds/frozen/FrozenCore
   - name: expansion1::subworlds/forest/med_ForestHot
     minCount: 3
@@ -54,13 +54,13 @@ subworldFiles:
     minCount: 2
     maxCount: 3
   - name: expansion1::subworlds/marsh/HotMarshSteamy
-    minCount: 4
+    minCount: 3
     
 unknownCellsAllowedSubworlds: 
-#  - tagcommand: Default
-#    command: Replace
-#    subworldNames:
-#      - expansion1::subworlds/swamp/Swamp
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+     - expansion1::subworlds/swamp/Swamp
   - tagcommand: DistanceFromTag
     tag: AtStart
     minDistance: 1
@@ -88,7 +88,7 @@ unknownCellsAllowedSubworlds:
   - tagcommand: DistanceFromTag
     tag: AtStart
     minDistance: 4
-    maxDistance: 4
+    maxDistance: 99
     command: Replace
     subworldNames:
       - expansion1::subworlds/marsh/HotMarshSteamy
@@ -158,10 +158,8 @@ worldTemplateRules:
 	  - command: Replace
         zoneTypes: [FrozenWastes]
       - command: IntersectWith
-        tagcommand: DistanceFromTag
-        tag: AtStart
-        minDistance: 1
-        maxDistance: 3
+        subworldNames:
+          - expansion1::subworlds/frozen/FrozenSlush
   - names:
       - poi/frozen/heatsink_a
       - poi/frozen/heatsink_b
@@ -183,7 +181,7 @@ worldTemplateRules:
     - expansion1::poi/warp/sender
     - expansion1::poi/warp/receiver
     listRule: GuaranteeAll
-    priority: 500
+    priority: 90
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag

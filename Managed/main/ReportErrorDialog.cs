@@ -166,7 +166,7 @@ public class ReportErrorDialog : MonoBehaviour
 	public void OnSelect_COPYTOCLIPBOARD()
 	{
 		TextEditor textEditor = new TextEditor();
-		textEditor.text = m_stackTrace + $"\nBuild: {468841u}" + (DebugHandler.enabled ? "-D" : "");
+		textEditor.text = m_stackTrace + $"\nBuild: {469859u}" + (DebugHandler.enabled ? "-D" : "");
 		textEditor.SelectAll();
 		textEditor.Copy();
 	}

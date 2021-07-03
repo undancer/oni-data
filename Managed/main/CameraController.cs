@@ -327,6 +327,8 @@ public class CameraController : KMonoBehaviour, IInputHandler
 		GameScreenManager.Instance.SetCamera(GameScreenManager.UIRenderTarget.WorldSpace, uiCamera);
 		GameScreenManager.Instance.SetCamera(GameScreenManager.UIRenderTarget.ScreenshotModeCamera, uiCamera);
 		infoText = GameScreenManager.Instance.screenshotModeCanvas.GetComponentInChildren<LocText>();
+		overlayCamera.enabled = false;
+		overlayCamera.enabled = true;
 	}
 
 	public int GetCursorCell()
@@ -760,8 +762,8 @@ public class CameraController : KMonoBehaviour, IInputHandler
 
 	public void SetTargetPos(Vector3 pos, float orthographic_size, bool playSound)
 	{
-		int num = Grid.WorldIdx[Grid.PosToCell(pos)];
-		if (num == ClusterManager.INVALID_WORLD_IDX || ClusterManager.Instance.GetWorld(num) == null)
+		int num = Grid.PosToCell(pos);
+		if (!Grid.IsValidCell(num) || Grid.WorldIdx[num] == ClusterManager.INVALID_WORLD_IDX || ClusterManager.Instance.GetWorld(Grid.WorldIdx[num]) == null)
 		{
 			return;
 		}
@@ -771,10 +773,10 @@ public class CameraController : KMonoBehaviour, IInputHandler
 			KMonoBehaviour.PlaySound(GlobalAssets.GetSound("Click_Notification"));
 		}
 		pos.z = -100f;
-		if (num != ClusterManager.Instance.activeWorldId)
+		if (Grid.WorldIdx[num] != ClusterManager.Instance.activeWorldId)
 		{
 			targetOrthographicSize = 20f;
-			ActiveWorldStarWipe(num, pos, 10f, delegate
+			ActiveWorldStarWipe(Grid.WorldIdx[num], pos, 10f, delegate
 			{
 				targetPos = pos;
 				isTargetPosSet = true;
@@ -794,8 +796,8 @@ public class CameraController : KMonoBehaviour, IInputHandler
 
 	public void SetTargetPosForWorldChange(Vector3 pos, float orthographic_size, bool playSound)
 	{
-		int num = Grid.WorldIdx[Grid.PosToCell(pos)];
-		if (num != ClusterManager.INVALID_WORLD_IDX && !(ClusterManager.Instance.GetWorld(num) == null))
+		int num = Grid.PosToCell(pos);
+		if (Grid.IsValidCell(num) && Grid.WorldIdx[num] != ClusterManager.INVALID_WORLD_IDX && !(ClusterManager.Instance.GetWorld(Grid.WorldIdx[num]) == null))
 		{
 			ClearFollowTarget();
 			if (playSound && !isTargetPosSet)
@@ -1239,8 +1241,19 @@ public class CameraController : KMonoBehaviour, IInputHandler
 		{
 			Vector3 followPos = GetFollowPos();
 			Vector2 a = new Vector2(base.transform.GetLocalPosition().x, base.transform.GetLocalPosition().y);
-			Vector2 vector = Vector2.Lerp(a, followPos, Time.unscaledDeltaTime * 25f);
-			followTargetPos = new Vector3(vector.x, vector.y, base.transform.GetLocalPosition().z);
+			byte b = Grid.WorldIdx[Grid.PosToCell(followPos)];
+			if (ClusterManager.Instance.activeWorldId != b)
+			{
+				Transform transform = followTarget;
+				SetFollowTarget(null);
+				ClusterManager.Instance.SetActiveWorld(b);
+				SetFollowTarget(transform);
+			}
+			else
+			{
+				Vector2 vector = Vector2.Lerp(a, followPos, Time.unscaledDeltaTime * 25f);
+				followTargetPos = new Vector3(vector.x, vector.y, base.transform.GetLocalPosition().z);
+			}
 		}
 	}
 

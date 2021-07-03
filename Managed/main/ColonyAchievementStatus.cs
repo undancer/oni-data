@@ -21,7 +21,7 @@ public class ColonyAchievementStatus
 
 	public void UpdateAchievement()
 	{
-		if (Requirements.Count <= 0)
+		if (Requirements.Count <= 0 || m_achievement.Disabled)
 		{
 			return;
 		}

@@ -66,6 +66,7 @@ public class ModuleSolarPanel : Generator
 		BuildingDef def = GetComponent<BuildingComplete>().Def;
 		int num = Grid.PosToCell(this);
 		meter = new MeterController(GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.Infront, Grid.SceneLayer.NoLayer, "meter_target", "meter_fill", "meter_frame", "meter_OL");
+		meter.gameObject.GetComponent<KBatchedAnimTracker>().matchParentOffset = true;
 	}
 
 	protected override void OnCleanUp()

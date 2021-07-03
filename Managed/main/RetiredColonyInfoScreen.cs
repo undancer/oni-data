@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Database;
+using ProcGen;
+using ProcGenGame;
 using STRINGS;
 using TMPro;
 using UnityEngine;
@@ -33,6 +35,11 @@ public class RetiredColonyInfoScreen : KModalScreen
 	[Header("Timelapse References")]
 	[SerializeField]
 	private Slideshow slideshow;
+
+	[SerializeField]
+	private GameObject worldPrefab;
+
+	private string focusedWorld;
 
 	private string[] currentSlideshowFiles = new string[0];
 
@@ -407,6 +414,7 @@ public class RetiredColonyInfoScreen : KModalScreen
 	{
 		colonyName.text = data.colonyName.ToUpper();
 		cycleCount.text = string.Format(UI.RETIRED_COLONY_INFO_SCREEN.CYCLE_COUNT, data.cycleCount.ToString());
+		focusedWorld = data.startWorld;
 		ToggleExplorer(active: false);
 		RefreshUIScale();
 		if (Game.Instance == null)
@@ -457,7 +465,7 @@ public class RetiredColonyInfoScreen : KModalScreen
 	private bool LoadSlideshow(RetiredColonyData data)
 	{
 		clearCurrentSlideshow();
-		currentSlideshowFiles = RetireColonyUtility.LoadColonySlideshowFiles(data.colonyName);
+		currentSlideshowFiles = RetireColonyUtility.LoadColonySlideshowFiles(data.colonyName, focusedWorld);
 		slideshow.SetFiles(currentSlideshowFiles);
 		return currentSlideshowFiles != null && currentSlideshowFiles.Length != 0;
 	}
@@ -467,10 +475,10 @@ public class RetiredColonyInfoScreen : KModalScreen
 		currentSlideshowFiles = new string[0];
 	}
 
-	private bool LoadScreenshot(RetiredColonyData data)
+	private bool LoadScreenshot(RetiredColonyData data, string world)
 	{
 		clearCurrentSlideshow();
-		Sprite sprite = RetireColonyUtility.LoadRetiredColonyPreview(data.colonyName);
+		Sprite sprite = RetireColonyUtility.LoadRetiredColonyPreview(data.colonyName, world);
 		if (sprite != null)
 		{
 			slideshow.setSlide(sprite);
@@ -662,13 +670,25 @@ public class RetiredColonyInfoScreen : KModalScreen
 		Vector2 sizeDelta = slideshow.transform.parent.GetComponent<RectTransform>().sizeDelta;
 		Vector2 fittedSize = slideshow.GetFittedSize(sprite, sizeDelta.x, sizeDelta.y);
 		LayoutElement component = slideshow.GetComponent<LayoutElement>();
-		float num2 = (component.minWidth = (component.preferredWidth = fittedSize.x));
-		num2 = (component.minHeight = (component.preferredHeight = fittedSize.y));
+		if (fittedSize.y > component.preferredHeight)
+		{
+			component.minHeight = component.preferredHeight / (fittedSize.y / fittedSize.x);
+			component.minHeight = component.preferredHeight;
+		}
+		else
+		{
+			float num2 = (component.minWidth = (component.preferredWidth = fittedSize.x));
+			num2 = (component.minHeight = (component.preferredHeight = fittedSize.y));
+		}
 	}
 
 	private void DisplayTimelapse(RetiredColonyData data, GameObject container)
 	{
-		RectTransform reference = container.GetComponent<HierarchyReferences>().GetReference<RectTransform>("PlayIcon");
+		LocText reference = container.GetComponent<HierarchyReferences>().GetReference<LocText>("Title");
+		reference.SetText(UI.RETIRED_COLONY_INFO_SCREEN.TITLES.TIMELAPSE);
+		RectTransform reference2 = container.GetComponent<HierarchyReferences>().GetReference<RectTransform>("Worlds");
+		DisplayWorlds(data, reference2.gameObject);
+		RectTransform reference3 = container.GetComponent<HierarchyReferences>().GetReference<RectTransform>("PlayIcon");
 		slideshow = container.GetComponent<HierarchyReferences>().GetReference<Slideshow>("Slideshow");
 		slideshow.updateType = SlideshowUpdateType.loadOnDemand;
 		slideshow.SetPaused(state: true);
@@ -678,17 +698,17 @@ public class RetiredColonyInfoScreen : KModalScreen
 		};
 		slideshow.onEndingPlay = delegate
 		{
-			LoadScreenshot(data);
+			LoadScreenshot(data, focusedWorld);
 		};
-		if (!LoadScreenshot(data))
+		if (!LoadScreenshot(data, focusedWorld))
 		{
 			slideshow.gameObject.SetActive(value: false);
-			reference.gameObject.SetActive(value: false);
+			reference3.gameObject.SetActive(value: false);
 		}
 		else
 		{
 			slideshow.gameObject.SetActive(value: true);
-			reference.gameObject.SetActive(value: true);
+			reference3.gameObject.SetActive(value: true);
 		}
 	}
 
@@ -780,6 +800,36 @@ public class RetiredColonyInfoScreen : KModalScreen
 				Tuple<Sprite, Color> uISprite = Def.GetUISprite(prefab);
 				component.GetReference<Image>("Portrait").sprite = uISprite.first;
 			}
+		}
+	}
+
+	private void DisplayWorlds(RetiredColonyData data, GameObject container)
+	{
+		container.SetActive(data.worldIdentities.Count > 0);
+		for (int num = container.transform.childCount - 1; num >= 0; num--)
+		{
+			UnityEngine.Object.Destroy(container.transform.GetChild(num).gameObject);
+		}
+		if (data.worldIdentities.Count <= 0)
+		{
+			return;
+		}
+		foreach (KeyValuePair<string, string> worldPair in data.worldIdentities)
+		{
+			GameObject gameObject = Util.KInstantiateUI(worldPrefab, container, force_active: true);
+			HierarchyReferences component = gameObject.GetComponent<HierarchyReferences>();
+			ProcGen.World worldData = SettingsCache.worlds.GetWorldData(worldPair.Value);
+			Sprite sprite = ((worldData != null) ? ColonyDestinationAsteroidBeltData.GetUISprite(worldData.asteroidIcon) : null);
+			if (sprite != null)
+			{
+				component.GetReference<Image>("Portrait").sprite = sprite;
+			}
+			KButton component2 = gameObject.GetComponent<KButton>();
+			component2.onClick += delegate
+			{
+				focusedWorld = worldPair.Key;
+				LoadScreenshot(data, focusedWorld);
+			};
 		}
 	}
 
@@ -892,6 +942,10 @@ public class RetiredColonyInfoScreen : KModalScreen
 
 	private void ToggleExplorer(bool active)
 	{
+		if (active && Game.Instance == null)
+		{
+			WorldGen.LoadSettings();
+		}
 		ConfigButtons();
 		explorerRoot.SetActive(active);
 		colonyDataRoot.SetActive(!active);
@@ -925,7 +979,7 @@ public class RetiredColonyInfoScreen : KModalScreen
 			GameObject gameObject = Util.KInstantiateUI(colonyButtonPrefab, explorerGrid, force_active: true);
 			HierarchyReferences component = gameObject.GetComponent<HierarchyReferences>();
 			string text = RetireColonyUtility.StripInvalidCharacters(data.colonyName);
-			Sprite sprite = RetireColonyUtility.LoadRetiredColonyPreview(text);
+			Sprite sprite = RetireColonyUtility.LoadRetiredColonyPreview(text, data.startWorld);
 			Image reference = component.GetReference<Image>("ColonyImage");
 			RectTransform reference2 = component.GetReference<RectTransform>("PreviewUnavailableText");
 			if (sprite != null)

@@ -37,6 +37,13 @@ public class SplashMessageScreen : KMonoBehaviour
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		AudioMixer.instance.Start(AudioMixerSnapshots.Get().FrontEndWelcomeScreenSnapshot);
+		if (!DlcManager.IsExpansion1Active())
+		{
+			Object.Destroy(base.gameObject);
+		}
+		else
+		{
+			AudioMixer.instance.Start(AudioMixerSnapshots.Get().FrontEndWelcomeScreenSnapshot);
+		}
 	}
 }

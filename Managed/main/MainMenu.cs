@@ -275,6 +275,8 @@ public class MainMenu : KScreen
 		m_cheatInputCounter = 0;
 		Canvas.ForceUpdateCanvases();
 		ShowLanguageConfirmation();
+		InitLoadScreen();
+		LoadScreen.Instance.ShowMigrationIfNecessary(fromMainMenu: true);
 		string savePrefix = SaveLoader.GetSavePrefix();
 		try
 		{
@@ -468,7 +470,7 @@ public class MainMenu : KScreen
 					gameInfo = value.headerData;
 				}
 				bool flag2 = true;
-				if (header.buildVersion > 468841 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 23)
+				if (header.buildVersion > 469859 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 23)
 				{
 					flag = false;
 				}

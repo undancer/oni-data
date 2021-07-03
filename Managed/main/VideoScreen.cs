@@ -134,6 +134,7 @@ public class VideoScreen : KModalScreen
 
 	public void PlayVideo(VideoClip clip, bool unskippable = false, string overrideAudioSnapshot = "", bool showProceedButton = false)
 	{
+		Debug.Assert(clip != null);
 		for (int i = 0; i < overlayContainer.childCount; i++)
 		{
 			UnityEngine.Object.Destroy(overlayContainer.GetChild(i).gameObject);

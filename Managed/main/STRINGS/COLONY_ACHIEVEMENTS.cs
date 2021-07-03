@@ -97,6 +97,12 @@ namespace STRINGS
 				public static LocString NO_BUILDING = "Never built a {0}";
 
 				public static LocString MORALE = "{0} morale: {1}";
+
+				public static LocString COLLECT_ARTIFACTS = "Study Artifacts at the Artifact Analysis Station.\n\nArtifacts studied: {collectedCount} / {neededCount}";
+
+				public static LocString ESTABLISH_COLONIES = "Establish colonies on {goalBaseCount} asteroids by building and activating Mini-Pods.\n\nColonies established: {baseCount} / {neededCount}.";
+
+				public static LocString OPEN_TEMPORAL_TEAR = "Open the Temporal Tear by finding and activating the Temporal Tear Opener";
 			}
 
 			public static LocString WINCONDITION_LEAVE = "The Great Escape";
@@ -302,6 +308,8 @@ namespace STRINGS
 				public static LocString REACHED_SPACE_DESTINATION = "Breach the {0}";
 
 				public static LocString REACHED_SPACE_DESTINATION_DESCRIPTION = "Send a Duplicant on a one-way mission to the furthest Starmap destination";
+
+				public static LocString OPEN_TEMPORAL_TEAR = "Open the Temporal Tear";
 			}
 
 			public static LocString NAME = "The Great Escape";
@@ -313,6 +321,48 @@ namespace STRINGS
 			public static LocString MESSAGE_TITLE = "A COLONY'S HOPE";
 
 			public static LocString MESSAGE_BODY = "Our homeworld in this universe is gone, replaced by the skeleton of a planet and a wound in the sky... But I hold out hope that other worlds exist out there, tucked away in other dimensions. I sent my Duplicant through the Temporal Tear carrying that hope on their shoulders... Perhaps one day they'll find a place to call home, and begin a thriving colony all their own.";
+
+			public static LocString MESSAGE_TITLE_DLC1 = "DLC1";
+
+			public static LocString MESSAGE_BODY_DLC1 = "DLC1";
+		}
+
+		public class CONQUER_CLUSTER
+		{
+			public class VIDEO_TEXT
+			{
+				public static LocString FIRST = "Our homeworld in this universe is gone, replaced by the skeleton of a planet and a wound in the sky... But I hold out hope that other worlds exist out there, tucked away in other dimensions.";
+
+				public static LocString SECOND = "I sent my Duplicant through the Temporal Tear carrying that hope on their shoulders... Perhaps one day they'll find a place to call home, and begin a thriving colony all their own.";
+			}
+
+			public class VIDEO_TEXT_DLC1
+			{
+				public static LocString FIRST = "DLC1";
+
+				public static LocString SECOND = "DLC1";
+			}
+
+			public class REQUIREMENTS
+			{
+				public static LocString STUDY_ARTIFACTS = "Study {artifactCount} Artifacts";
+
+				public static LocString STUDY_ARTIFACTS_DESCRIPTION = "Study {artifactCount} Artifacts at the Artifact Analysis Station";
+
+				public static LocString SEVERAL_COLONIES = "Establish several colonies";
+
+				public static LocString SEVERAL_COLONIES_DESCRIPTION = "Establish colonies on {count} asteroids by building and activating Mini-Pods";
+			}
+
+			public static LocString NAME = "Conquer Starmap";
+
+			public static LocString MYLOGNAME = "Artifacts";
+
+			public static LocString DESCRIPTION = "";
+
+			public static LocString MESSAGE_TITLE = "CONQUERED STARMAP";
+
+			public static LocString MESSAGE_BODY = "Yay we studied all these artifacts and went to all these places.";
 
 			public static LocString MESSAGE_TITLE_DLC1 = "DLC1";
 

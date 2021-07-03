@@ -135,5 +135,6 @@ public class NuclearReactorConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
+		go.AddTag(GameTags.CorrosionProof);
 	}
 }

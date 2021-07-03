@@ -12,7 +12,7 @@ public static class Util
 {
 	private static HashSet<char> defaultInvalidUserInputChars = new HashSet<char>(Path.GetInvalidPathChars());
 
-	private static HashSet<char> additionalInvalidUserInputChars = new HashSet<char>(new char[9]
+	private static HashSet<char> additionalInvalidUserInputChars = new HashSet<char>(new char[10]
 	{
 		'<',
 		'>',
@@ -22,7 +22,8 @@ public static class Util
 		'?',
 		'*',
 		'\\',
-		'!'
+		'!',
+		'.'
 	});
 
 	private static System.Random random = new System.Random();

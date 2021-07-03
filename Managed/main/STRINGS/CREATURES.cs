@@ -57,7 +57,7 @@ namespace STRINGS
 
 			public static LocString SQUIRRELSPECIES = UI.FormatAsLink("Pips", "SQUIRRELSPECIES");
 
-			public static LocString STATERPILLARSPECIES = UI.FormatAsLink("Plug Slug", "STATERPILLARSPECIES");
+			public static LocString STATERPILLARSPECIES = UI.FormatAsLink("Plug Slugs", "STATERPILLARSPECIES");
 
 			public static LocString BEETASPECIES = UI.FormatAsLink("Beetas", "BEETASPECIES");
 

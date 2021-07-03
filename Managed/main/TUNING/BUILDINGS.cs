@@ -361,6 +361,8 @@ namespace TUNING
 			public const int HIGH_LIQUID_PRESSURE = 10;
 
 			public const int MICROMETEORITE = 1;
+
+			public const int CORROSIVE_ELEMENT = 1;
 		}
 
 		public class RELOCATION_TIME_SECONDS

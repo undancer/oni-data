@@ -27,15 +27,11 @@ public class TemporalTear : ClusterGridEntity
 
 	public override ClusterRevealLevel IsVisibleInFOW => ClusterRevealLevel.Peeked;
 
-	public void Init(AxialI location)
-	{
-		base.Location = location;
-	}
-
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
 		Game.Instance.Subscribe(-1298331547, OnClusterLocationChanged);
+		ClusterManager.Instance.GetComponent<ClusterPOIManager>().RegisterTemporalTear(this);
 	}
 
 	protected override void OnCleanUp()
@@ -46,13 +42,26 @@ public class TemporalTear : ClusterGridEntity
 
 	public void OnClusterLocationChanged(object data)
 	{
-		Clustercraft clustercraft = ((ClusterLocationChangedEvent)data).entity as Clustercraft;
-		Debug.Assert(clustercraft != null, $"ClusterLocationChanged sent for a non-Clustercraft object: {data}");
-		if (m_open && clustercraft.Location == base.Location && !clustercraft.IsFlightInProgress())
+		Clustercraft x = ((ClusterLocationChangedEvent)data).entity as Clustercraft;
+		Debug.Assert(x != null, $"ClusterLocationChanged sent for a non-Clustercraft object: {data}");
+	}
+
+	public void ConsumeCraft(Clustercraft craft)
+	{
+		if (!m_open || !(craft.Location == base.Location) || craft.IsFlightInProgress())
 		{
-			clustercraft.DestroyCraftAndModules();
-			m_hasConsumedCraft = true;
+			return;
 		}
+		for (int i = 0; i < Components.MinionIdentities.Count; i++)
+		{
+			MinionIdentity minionIdentity = Components.MinionIdentities[i];
+			if (minionIdentity.GetMyWorldId() == craft.ModuleInterface.GetInteriorWorld().id)
+			{
+				Util.KDestroyGameObject(minionIdentity.gameObject);
+			}
+		}
+		craft.DestroyCraftAndModules();
+		m_hasConsumedCraft = true;
 	}
 
 	public void Open()

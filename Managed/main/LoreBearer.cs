@@ -30,7 +30,7 @@ public class LoreBearer : KMonoBehaviour, ISidescreenButtonControl
 			string entryForLock = CodexCache.GetEntryForLock(key);
 			if (entryForLock == null)
 			{
-				KCrashReporter.Assert(condition: false, "Missing codex entry: " + key);
+				DebugUtil.DevLogError("Missing codex entry for lock: " + key);
 			}
 			else
 			{
@@ -143,19 +143,34 @@ public class LoreBearer : KMonoBehaviour, ISidescreenButtonControl
 			infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_CRYO_TANK"));
 			infoDialogScreen.AddOption(UI.USERMENUACTIONS.READLORE.GOTODATABASE, OpenCodexByLockKeyID("cryotank_warning"));
 		}
-		else
+		else if (base.gameObject.name.Contains("ArtifactSpacePOI"))
 		{
-			string text3 = Game.Instance.unlocks.UnlockNext("journals");
+			string text3 = Game.Instance.unlocks.UnlockNext("space");
 			if (text3 != null)
 			{
-				string str5 = "SEARCH" + UnityEngine.Random.Range(1, 6);
-				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_OBJECT_SUCCESS." + str5));
+				string str5 = "SEARCH" + UnityEngine.Random.Range(1, 7);
+				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_SPACEPOI_SUCCESS." + str5));
 				infoDialogScreen.AddOption(UI.USERMENUACTIONS.READLORE.GOTODATABASE, OpenCodexByLockKeyID(text3));
 			}
 			else
 			{
-				string str6 = "SEARCH1";
-				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_OBJECT_FAIL." + str6));
+				string str6 = "SEARCH" + UnityEngine.Random.Range(1, 4);
+				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_SPACEPOI_FAIL." + str6));
+			}
+		}
+		else
+		{
+			string text4 = Game.Instance.unlocks.UnlockNext("journals");
+			if (text4 != null)
+			{
+				string str7 = "SEARCH" + UnityEngine.Random.Range(1, 6);
+				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_OBJECT_SUCCESS." + str7));
+				infoDialogScreen.AddOption(UI.USERMENUACTIONS.READLORE.GOTODATABASE, OpenCodexByLockKeyID(text4));
+			}
+			else
+			{
+				string str8 = "SEARCH1";
+				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_OBJECT_FAIL." + str8));
 			}
 		}
 	}

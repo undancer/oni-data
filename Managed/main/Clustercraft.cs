@@ -97,9 +97,9 @@ public class Clustercraft : ClusterGridEntity
 		}
 	};
 
-	public override bool IsVisible => status == CraftStatus.InFlight;
+	public override bool IsVisible => true;
 
-	public override ClusterRevealLevel IsVisibleInFOW => ClusterRevealLevel.Hidden;
+	public override ClusterRevealLevel IsVisibleInFOW => ClusterRevealLevel.Visible;
 
 	public CraftModuleInterface ModuleInterface => m_moduleInterface;
 
@@ -452,23 +452,24 @@ public class Clustercraft : ClusterGridEntity
 	public void DestroyCraftAndModules()
 	{
 		List<RocketModuleCluster> list = m_moduleInterface.ClusterModules.Select((Ref<RocketModuleCluster> x) => x.Get()).ToList();
-		foreach (RocketModuleCluster item in list)
+		for (int num = list.Count - 1; num >= 0; num--)
 		{
-			Storage component = item.GetComponent<Storage>();
+			RocketModuleCluster rocketModuleCluster = list[num];
+			Storage component = rocketModuleCluster.GetComponent<Storage>();
 			if (component != null)
 			{
 				component.ConsumeAllIgnoringDisease();
 			}
-			MinionStorage component2 = item.GetComponent<MinionStorage>();
+			MinionStorage component2 = rocketModuleCluster.GetComponent<MinionStorage>();
 			if (component2 != null)
 			{
 				List<MinionStorage.Info> storedMinionInfo = component2.GetStoredMinionInfo();
-				for (int num = storedMinionInfo.Count - 1; num >= 0; num--)
+				for (int num2 = storedMinionInfo.Count - 1; num2 >= 0; num2--)
 				{
-					component2.DeleteStoredMinion(storedMinionInfo[num].id);
+					component2.DeleteStoredMinion(storedMinionInfo[num2].id);
 				}
 			}
-			Util.KDestroyGameObject(item.gameObject);
+			Util.KDestroyGameObject(rocketModuleCluster.gameObject);
 		}
 		Util.KDestroyGameObject(base.gameObject);
 	}
@@ -742,7 +743,12 @@ public class Clustercraft : ClusterGridEntity
 
 	public override bool ShowName()
 	{
-		return true;
+		return status != CraftStatus.Grounded;
+	}
+
+	public override bool ShowPath()
+	{
+		return status != CraftStatus.Grounded;
 	}
 
 	public override bool ShowProgressBar()

@@ -493,6 +493,19 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 		materialNeedCache.Clear();
 	}
 
+	public int HighestHEPQueued()
+	{
+		int num = 0;
+		foreach (KeyValuePair<string, int> recipeQueueCount in recipeQueueCounts)
+		{
+			if (recipeQueueCount.Value > 0)
+			{
+				num = Math.Max(recipe_list[FindRecipeIndex(recipeQueueCount.Key)].consumedHEP, num);
+			}
+		}
+		return num;
+	}
+
 	private void OnFetchComplete()
 	{
 		for (int num = fetchListList.Count - 1; num >= 0; num--)

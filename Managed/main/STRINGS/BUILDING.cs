@@ -1004,9 +1004,9 @@ namespace STRINGS
 
 			public class FABRICATORLACKSHEP
 			{
-				public static LocString NAME = "Waiting For Radbolts";
+				public static LocString NAME = "Waiting For Radbolts ({CurrentHEP}/{HEPRequired})";
 
-				public static LocString TOOLTIP = "A queued recipe requires more Radbolts than are currently stored";
+				public static LocString TOOLTIP = "A queued recipe requires more Radbolts than are currently stored.\n\nCurrently stored: {CurrentHEP}\nRequired for recipe: {HEPRequired}";
 			}
 
 			public class TOILET

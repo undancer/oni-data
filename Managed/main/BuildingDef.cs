@@ -798,6 +798,10 @@ public class BuildingDef : Def
 
 	public void UnmarkArea(int cell, Orientation orientation, ObjectLayer layer, GameObject go)
 	{
+		if (cell == Grid.InvalidCell)
+		{
+			return;
+		}
 		for (int i = 0; i < PlacementOffsets.Length; i++)
 		{
 			CellOffset offset = PlacementOffsets[i];

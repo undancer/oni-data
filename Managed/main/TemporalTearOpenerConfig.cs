@@ -7,7 +7,7 @@ public class TemporalTearOpenerConfig : IBuildingConfig
 
 	public const float PARTICLES_CAPACITY = 10000f;
 
-	public const float NUM_PARTICLES_TO_OPEN_TEAR = 6000f;
+	public const float NUM_PARTICLES_TO_OPEN_TEAR = 10000f;
 
 	public const float PARTICLE_CONSUME_RATE = 20f;
 
@@ -35,7 +35,7 @@ public class TemporalTearOpenerConfig : IBuildingConfig
 		highEnergyParticleStorage.autoStore = true;
 		highEnergyParticleStorage.capacity = 10000f;
 		TemporalTearOpener.Def def = go.AddOrGetDef<TemporalTearOpener.Def>();
-		def.numParticlesToOpen = 6000f;
+		def.numParticlesToOpen = 10000f;
 		def.consumeRate = 20f;
 	}
 

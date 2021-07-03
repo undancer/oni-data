@@ -332,6 +332,7 @@ public class Global : MonoBehaviour
 		Singleton<StateMachineManager>.CreateInstance();
 		Localization.RegisterForTranslation(typeof(UI));
 		modManager = new KMod.Manager();
+		modManager.LoadModDBAndInitialize();
 		modManager.Load(Content.DLL);
 		modManager.Load(Content.Strings);
 		KSerialization.Manager.Initialize();
@@ -488,7 +489,7 @@ public class Global : MonoBehaviour
 	private void SetONIStaticSessionVariables()
 	{
 		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Branch", "preview");
-		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Build", 468841u);
+		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Build", 469859u);
 		if (KPlayerPrefs.HasKey(UnitConfigurationScreen.MassUnitKey))
 		{
 			ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable(UnitConfigurationScreen.MassUnitKey, ((GameUtil.MassUnit)KPlayerPrefs.GetInt(UnitConfigurationScreen.MassUnitKey)).ToString());

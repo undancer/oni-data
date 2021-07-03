@@ -167,7 +167,7 @@ public class SelectedRecipeQueueScreen : KScreen
 		if (recipe.consumedHEP > 0)
 		{
 			HighEnergyParticleStorage component = target.GetComponent<HighEnergyParticleStorage>();
-			list.Add(new Descriptor($"<b>{ITEMS.RADIATION.HIGHENERGYPARITCLE.NAME}</b>: {recipe.consumedHEP} / {component.Particles}", $"<b>{ITEMS.RADIATION.HIGHENERGYPARITCLE.NAME}</b>: {recipe.consumedHEP} / {component.Particles}", Descriptor.DescriptorType.Requirement));
+			list.Add(new Descriptor($"<b>{ITEMS.RADIATION.HIGHENERGYPARITCLE.NAME}</b>: {component.Particles} / {recipe.consumedHEP}", $"<b>{ITEMS.RADIATION.HIGHENERGYPARITCLE.NAME}</b>: {component.Particles} / {recipe.consumedHEP}", Descriptor.DescriptorType.Requirement));
 		}
 		return list;
 	}

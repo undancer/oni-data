@@ -417,9 +417,9 @@ public class ClusterMapScreen : KScreen
 			AsteroidGridEntity component = worldContainer.GetComponent<AsteroidGridEntity>();
 			if (component != null && m_gridEntityVis.ContainsKey(component) && GetRevealLevel(component) == ClusterRevealLevel.Visible)
 			{
-				KBatchedAnimController firstAnim = m_gridEntityVis[component].GetFirstAnim();
+				KBatchedAnimController firstAnimController = m_gridEntityVis[component].GetFirstAnimController();
 				float y = floatCycleOffset + floatCycleScale * Mathf.Sin(floatCycleSpeed * (num + GameClock.Instance.GetTime()));
-				firstAnim.Offset = new Vector2(0f, y);
+				firstAnimController.Offset = new Vector2(0f, y);
 			}
 			num += 1f;
 		}
@@ -577,17 +577,25 @@ public class ClusterMapScreen : KScreen
 		if (m_mode == Mode.Default)
 		{
 			List<ClusterGridEntity> visibleEntitiesAtCell = ClusterGrid.Instance.GetVisibleEntitiesAtCell(newSelectionHex.location);
+			for (int num = visibleEntitiesAtCell.Count - 1; num >= 0; num--)
+			{
+				KSelectable component = visibleEntitiesAtCell[num].GetComponent<KSelectable>();
+				if (component == null || !component.IsSelectable)
+				{
+					visibleEntitiesAtCell.RemoveAt(num);
+				}
+			}
 			if (visibleEntitiesAtCell.Count == 0)
 			{
 				SetSelectedEntity(null);
 			}
 			else
 			{
-				int num = visibleEntitiesAtCell.IndexOf(m_selectedEntity);
+				int num2 = visibleEntitiesAtCell.IndexOf(m_selectedEntity);
 				int index = 0;
-				if (num >= 0)
+				if (num2 >= 0)
 				{
-					index = (num + 1) % visibleEntitiesAtCell.Count;
+					index = (num2 + 1) % visibleEntitiesAtCell.Count;
 				}
 				SetSelectedEntity(visibleEntitiesAtCell[index]);
 			}

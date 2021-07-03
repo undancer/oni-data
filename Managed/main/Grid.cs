@@ -1260,6 +1260,10 @@ public class Grid
 			return false;
 		}
 		WorldContainer world = ClusterManager.Instance.GetWorld(WorldIdx[cell]);
+		if (world == null)
+		{
+			return false;
+		}
 		Vector2I vector2I = CellToXY(cell);
 		return (float)vector2I.x >= world.minimumBounds.x && (float)vector2I.x <= world.maximumBounds.x && (float)vector2I.y >= world.minimumBounds.y && (float)vector2I.y <= world.maximumBounds.y - (float)TopBorderHeight;
 	}

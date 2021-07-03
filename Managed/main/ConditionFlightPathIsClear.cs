@@ -112,8 +112,7 @@ public class ConditionFlightPathIsClear : ProcessCondition
 					for (int j = 0; j < widthInCells; j++)
 					{
 						int num2 = Grid.XYToCell(j + (vector2I.x - widthInCells / 2), i + vector2I.y);
-						GameObject gameObject = Grid.Objects[num2, 1];
-						bool flag = Grid.Solid[num2] && (gameObject == null || !gameObject.HasTag(GameTags.DontBlockRockets));
+						bool flag = Grid.Solid[num2];
 						if (!Grid.IsValidCell(num2) || Grid.WorldIdx[num2] != Grid.WorldIdx[launchpad.GetComponent<LaunchPad>().RocketBottomPosition] || flag)
 						{
 							obstruction = num2;
@@ -140,12 +139,8 @@ public class ConditionFlightPathIsClear : ProcessCondition
 		{
 			if (!Grid.IsValidCell(num2) || Grid.Solid[num2])
 			{
-				GameObject gameObject = Grid.Objects[num2, 1];
-				if (gameObject == null || !gameObject.HasTag(GameTags.DontBlockRockets))
-				{
-					obstruction = num2;
-					return false;
-				}
+				obstruction = num2;
+				return false;
 			}
 			num2 = Grid.CellAbove(num2);
 		}

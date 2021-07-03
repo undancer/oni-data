@@ -143,11 +143,11 @@ public static class CodexEntryGenerator
 		action(GameTags.Creatures.Species.MoleSpecies, STRINGS.CREATURES.FAMILY_PLURAL.MOLESPECIES);
 		action(GameTags.Creatures.Species.SquirrelSpecies, STRINGS.CREATURES.FAMILY_PLURAL.SQUIRRELSPECIES);
 		action(GameTags.Creatures.Species.CrabSpecies, STRINGS.CREATURES.FAMILY_PLURAL.CRABSPECIES);
-		action(GameTags.Robots.Models.ScoutRover, STRINGS.ROBOTS.MODELS.SCOUT.NAME);
+		action(GameTags.Robots.Models.ScoutRover, STRINGS.CREATURES.FAMILY_PLURAL.SCOUTROVER);
 		action(GameTags.Creatures.Species.StaterpillarSpecies, STRINGS.CREATURES.FAMILY_PLURAL.STATERPILLARSPECIES);
 		action(GameTags.Creatures.Species.BeetaSpecies, STRINGS.CREATURES.FAMILY_PLURAL.BEETASPECIES);
 		action(GameTags.Creatures.Species.DivergentSpecies, STRINGS.CREATURES.FAMILY_PLURAL.DIVERGENTSPECIES);
-		action(GameTags.Robots.Models.SweepBot, STRINGS.ROBOTS.CATEGORY_NAME);
+		action(GameTags.Robots.Models.SweepBot, STRINGS.CREATURES.FAMILY_PLURAL.SWEEPBOT);
 		return results;
 	}
 

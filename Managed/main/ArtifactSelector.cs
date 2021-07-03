@@ -9,12 +9,22 @@ public class ArtifactSelector : KMonoBehaviour
 	[Serialize]
 	private List<string> placedArtifacts = new List<string>();
 
+	[Serialize]
+	private int analyzedArtifactCount;
+
 	private const string DEFAULT_ARTIFACT_ID = "artifact_officemug";
+
+	public int AnalyzedArtifactCount => analyzedArtifactCount;
 
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
 		Instance = this;
+	}
+
+	public void IncrementAnalyzedArtifacts()
+	{
+		analyzedArtifactCount++;
 	}
 
 	public string GetUniqueArtifactID()

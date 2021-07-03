@@ -50,5 +50,12 @@ namespace STRINGS
 
 			public static LocString DESCRIPTION = "A cluster of planets with a larger earthy planetoid to start on.";
 		}
+
+		public static class VANILLA_FOREST_CLUSTER
+		{
+			public static LocString NAME = "Large Forest Cluster";
+
+			public static LocString DESCRIPTION = "A cluster of planets with a larger foresty planetoid to start on.";
+		}
 	}
 }

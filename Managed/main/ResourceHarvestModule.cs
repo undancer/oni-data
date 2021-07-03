@@ -29,6 +29,7 @@ public class ResourceHarvestModule : GameStateMachine<ResourceHarvestModule, Res
 			component.AddModuleCondition(ProcessCondition.ProcessConditionType.RocketStorage, new ConditionHasResource(storage, SimHashes.Diamond, 1000f));
 			Subscribe(-1697596308, UpdateMeter);
 			meter = new MeterController(GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.Infront, Grid.SceneLayer.NoLayer, "meter_target", "meter_fill", "meter_frame", "meter_OL");
+			meter.gameObject.GetComponent<KBatchedAnimTracker>().matchParentOffset = true;
 			UpdateMeter();
 		}
 
@@ -234,9 +235,15 @@ public class ResourceHarvestModule : GameStateMachine<ResourceHarvestModule, Res
 			}, UpdateRate.SIM_4000ms);
 		not_grounded.harvesting.PlayAnim("deploying").Exit(delegate(StatesInstance smi)
 		{
+			RocketModuleCluster component3 = smi.master.gameObject.GetComponent<RocketModuleCluster>();
+			Clustercraft component4 = component3.CraftInterface.GetComponent<Clustercraft>();
+			component4.Trigger(939543986);
 			StatesInstance.RemoveHarvestStatusItems(smi.master.gameObject.GetComponent<RocketModuleCluster>().CraftInterface.gameObject);
 		}).Enter(delegate(StatesInstance smi)
 		{
+			RocketModuleCluster component = smi.master.gameObject.GetComponent<RocketModuleCluster>();
+			Clustercraft component2 = component.CraftInterface.GetComponent<Clustercraft>();
+			component2.Trigger(-1762453998);
 			StatesInstance.AddHarvestStatusItems(smi.master.gameObject.GetComponent<RocketModuleCluster>().CraftInterface.gameObject, smi.def.harvestSpeed);
 		})
 			.Update(delegate(StatesInstance smi, float dt)

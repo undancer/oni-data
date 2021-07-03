@@ -82,7 +82,7 @@ internal class SteamDistributionPlatform : MonoBehaviour, DistributionPlatform.I
 		{
 			SteamApps.GetCurrentBetaName(out var pchName, 100);
 			Debug.Log("Checking which steam branch we're on. Got: [" + pchName + "]");
-			return !(pchName == "default") && !(pchName == "release");
+			return !(pchName == "") && !(pchName == "default") && !(pchName == "release");
 		}
 	}
 

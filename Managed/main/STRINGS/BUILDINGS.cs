@@ -1005,6 +1005,10 @@ namespace STRINGS
 				public static LocString DESC = "Discover the mysteries of the past.";
 
 				public static LocString EFFECT = "Analyses and extracts " + UI.FormatAsLink("Neutronium", "UNOBTANIUM") + " from artifacts of interest.";
+
+				public static LocString PAYLOAD_DROP_RATE = string.Concat(ITEMS.INDUSTRIAL_PRODUCTS.GENE_SHUFFLER_RECHARGE.NAME, " drop chance: {chance}");
+
+				public static LocString PAYLOAD_DROP_RATE_TOOLTIP = string.Concat("This artifact has a {chance} to drop a ", ITEMS.INDUSTRIAL_PRODUCTS.GENE_SHUFFLER_RECHARGE.NAME, " when analyzed at the ", NAME);
 			}
 
 			public class CANVAS
@@ -4375,7 +4379,7 @@ namespace STRINGS
 
 			public class PROPGRAVITASROBTICTABLE
 			{
-				public static LocString NAME = "Robitics Research Desk";
+				public static LocString NAME = "Robotics Research Desk";
 
 				public static LocString DESC = "The work space of an extinct robotics technician who left behind some unfinished prototypes.";
 			}
@@ -4465,6 +4469,8 @@ namespace STRINGS
 			public static LocString CONDUIT_CONTENTS_BOILED = "pipe contents becoming too hot";
 
 			public static LocString BUILDING_OVERHEATED = "overheating";
+
+			public static LocString CORROSIVE_ELEMENT = "corrosive element";
 
 			public static LocString BAD_INPUT_ELEMENT = "receiving an incorrect substance";
 

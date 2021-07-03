@@ -229,10 +229,13 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 		{
 			if (component != null)
 			{
-				int[] placementCells2 = component.PlacementCells;
-				foreach (int cell4 in placementCells2)
+				if (component.GetMyWorldId() != ClusterManager.INVALID_WORLD_IDX)
 				{
-					Grid.UnregisterRestriction(cell4);
+					int[] placementCells2 = component.PlacementCells;
+					foreach (int cell4 in placementCells2)
+					{
+						Grid.UnregisterRestriction(cell4);
+					}
 				}
 			}
 			else
@@ -247,7 +250,10 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 			if (isTeleporter)
 			{
 				int cell6 = GetComponent<NavTeleporter>().GetCell();
-				Grid.UnregisterRestriction(cell6);
+				if (cell6 != Grid.InvalidCell)
+				{
+					Grid.UnregisterRestriction(cell6);
+				}
 			}
 		}
 		registered = register;

@@ -179,7 +179,7 @@ worldTemplateRules:
     listRule: TryOne
     times: 3
     allowDuplicates: true
-    priority: 10
+    priority: 50
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag
@@ -197,7 +197,7 @@ worldTemplateRules:
     - expansion1::poi/warp/receiver
     - expansion1::poi/warp/teleporter
     listRule: GuaranteeAll
-    priority: 500
+    priority: 90
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag
@@ -212,7 +212,7 @@ worldTemplateRules:
   - names:
     - expansion1::poi/genericGravitas/poi_office
     listRule: GuaranteeAll
-    priority: 100
+    priority: 90
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag

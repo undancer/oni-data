@@ -78,7 +78,7 @@ public class ClusterNameDisplayScreen : KScreen
 		int num2 = 0;
 		while (num2 < num)
 		{
-			if (m_entries[num2].grid_entity != null && ClusterMapScreen.GetRevealLevel(m_entries[num2].grid_entity) == ClusterRevealLevel.Visible && m_entries[num2].grid_entity.ShowName())
+			if (m_entries[num2].grid_entity != null && ClusterMapScreen.GetRevealLevel(m_entries[num2].grid_entity) == ClusterRevealLevel.Visible)
 			{
 				Transform gridEntityNameTarget = ClusterMapScreen.Instance.GetGridEntityNameTarget(m_entries[num2].grid_entity);
 				if (gridEntityNameTarget != null)
@@ -86,7 +86,7 @@ public class ClusterNameDisplayScreen : KScreen
 					Vector3 position = gridEntityNameTarget.GetPosition();
 					RectTransform component = m_entries[num2].display_go.GetComponent<RectTransform>();
 					component.SetPositionAndRotation(position, Quaternion.identity);
-					m_entries[num2].display_go.SetActive(m_entries[num2].grid_entity.IsVisible);
+					m_entries[num2].display_go.SetActive(m_entries[num2].grid_entity.IsVisible && m_entries[num2].grid_entity.ShowName());
 				}
 				else if (m_entries[num2].display_go.activeSelf)
 				{

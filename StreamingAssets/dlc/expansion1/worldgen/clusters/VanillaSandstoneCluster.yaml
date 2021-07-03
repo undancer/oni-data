@@ -2,7 +2,7 @@ name: STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_CLUSTER.NAME
 description: STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_CLUSTER.DESCRIPTION
 requiredDlcId: EXPANSION1_ID
 coordinatePrefix: V-SNDST-C
-menuOrder: -3
+menuOrder: 0
 clusterCategory: 1
 
 startWorldIndex: 0

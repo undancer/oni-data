@@ -37,6 +37,9 @@ public class WorldContainer : KMonoBehaviour
 	private bool isDiscovered;
 
 	[Serialize]
+	private bool isStartWorld;
+
+	[Serialize]
 	private bool isDupeVisited;
 
 	[Serialize]
@@ -84,6 +87,8 @@ public class WorldContainer : KMonoBehaviour
 	public bool IsModuleInterior => isModuleInterior;
 
 	public bool IsDiscovered => isDiscovered || DebugHandler.RevealFogOfWar;
+
+	public bool IsStartWorld => isStartWorld;
 
 	public bool IsDupeVisited => isDupeVisited;
 
@@ -328,6 +333,7 @@ public class WorldContainer : KMonoBehaviour
 			worldOffset = world.GetPosition();
 			worldSize = world.GetSize();
 			isDiscovered = world.isStartingWorld;
+			isStartWorld = world.isStartingWorld;
 			worldName = world.Settings.world.filePath;
 			nameTable = world.Settings.world.nameTable;
 			worldDescription = world.Settings.world.description;
@@ -365,13 +371,17 @@ public class WorldContainer : KMonoBehaviour
 	{
 		for (int i = 0; i < worldSize.x; i++)
 		{
-			for (int num = worldSize.y; num >= 0; num--)
+			int num = worldSize.y;
+			while (num >= 0)
 			{
-				int num2 = Grid.XYToCell(i + worldOffset.x, num + worldOffset.y);
-				if (Grid.IsValidCell(num2) && Grid.ExposedToSunlight[num2] >= 253)
+				int cell = Grid.XYToCell(i + worldOffset.x, num + worldOffset.y);
+				if (Grid.IsValidCell(cell) && !Grid.IsSolidCell(cell) && !Grid.IsLiquid(cell))
 				{
 					GridVisibility.Reveal(i + worldOffset.X, num + worldOffset.y, 7, 1f);
+					num--;
+					continue;
 				}
+				break;
 			}
 		}
 	}

@@ -1271,6 +1271,41 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "Be kind when you handle it. It's very fragile.";
 			}
+
+			public class REACTOR_MODEL
+			{
+				public static LocString NAME = "Model Nuclear Power Plant";
+
+				public static LocString DESCRIPTION = "It's pronounced nuclear";
+			}
+
+			public class MOOD_RING
+			{
+				public static LocString NAME = "Radiation Mood Ring";
+
+				public static LocString DESCRIPTION = "How radioactive are you feeling?";
+			}
+
+			public class ORACLE
+			{
+				public static LocString NAME = "Useless Machine";
+
+				public static LocString DESCRIPTION = "What does it do?";
+			}
+
+			public class GRUB_STATUE
+			{
+				public static LocString NAME = "Grub Statue";
+
+				public static LocString DESCRIPTION = "Grub Grub";
+			}
+
+			public class HONEY_JAR
+			{
+				public static LocString NAME = "Honey Jar";
+
+				public static LocString DESCRIPTION = "This doesn't taste like uranium";
+			}
 		}
 
 		public class SANDBOXTOOLS
@@ -1518,6 +1553,8 @@ namespace STRINGS
 				public static LocString CHEEVOS = "Colony Achievements";
 
 				public static LocString ACHIEVEMENT_HEADER = "ACHIEVEMENTS";
+
+				public static LocString TIMELAPSE = "Timelapse";
 			}
 
 			public class STATS
@@ -2180,7 +2217,7 @@ namespace STRINGS
 
 				public static LocString NEWS_BODY = "Stay up to date by joining our mailing list, or head on over to the forums and join the discussion.";
 
-				public static LocString PATCH_NOTES_SUMMARY = "Welcome to the <b>UPDATE NAME</b>\n\n   •<indent=20px>Toggle between <i>Spaced Out!</i> and Base Game in the main menu without re-downloading the game.</indent>\n\n   •<indent=20px>Base Game now has all <i>Spaced Out!</i> bug fixes and quality-of-life improvements.</indent>\n\n   •<indent=20px>Several buildings and items have been added to the Base Game, including Oxygen Masks, and Meter Valves.</indent>\n\n   •<indent=20px>UI and Diagnostics improvements have been added to the Base Game.</indent>\n   \n   •<indent=20px>Significant updates to the Modding system, modders please see the forum for upgrade instructions.</indent>\n\nCheck out the full patch notes for more details!";
+				public static LocString PATCH_NOTES_SUMMARY = "Welcome to the <b>THE BIG MERGE</b>\n\n   •<indent=20px>Toggle between <i>Spaced Out!</i> and Base Game in the main menu without re-downloading the game.</indent>\n\n   •<indent=20px>Base Game now has all <i>Spaced Out!</i> bug fixes and quality-of-life improvements.</indent>\n\n   •<indent=20px>Several buildings and items have been added to the Base Game, including Oxygen Masks, and Meter Valves.</indent>\n\n   •<indent=20px>UI and Diagnostics improvements have been added to the Base Game.</indent>\n   \n   •<indent=20px>Significant updates to the Modding system, modders please see the forum for upgrade instructions.</indent>\n\nCheck out the full patch notes for more details!";
 
 				public static LocString UPDATE_TEXT = "LAUNCHED!";
 
@@ -6620,6 +6657,15 @@ namespace STRINGS
 				public static LocString ANALYSIS_TARGET_HEADER = "Object Analysis";
 			}
 
+			public class TEMPORALTEARSIDESCREEN
+			{
+				public static LocString TITLE = "Temporal Tear";
+
+				public static LocString BUTTON_OPEN = "Enter Tear";
+
+				public static LocString BUTTON_CLOSED = "Tear Closed";
+			}
+
 			public class RAILGUNSIDESCREEN
 			{
 				public static LocString TITLE = "Launcher Configuration";
@@ -10407,6 +10453,8 @@ namespace STRINGS
 			public class DAMAGE_POPS
 			{
 				public static LocString OVERHEAT = "Overheat Damage";
+
+				public static LocString CORROSIVE_ELEMENT = "Corrosive Element Damage";
 
 				public static LocString WRONG_ELEMENT = "Wrong Element Damage";
 

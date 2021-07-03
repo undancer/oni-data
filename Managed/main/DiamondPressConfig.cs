@@ -50,10 +50,6 @@ public class DiamondPressConfig : IBuildingConfig
 		{
 			Assets.GetAnim("anim_interacts_diamond_press_kanim")
 		};
-		complexFabricatorWorkable.workingPstComplete = new HashedString[1]
-		{
-			"working_pst_complete"
-		};
 		ComplexRecipe.RecipeElement[] array = new ComplexRecipe.RecipeElement[1]
 		{
 			new ComplexRecipe.RecipeElement(SimHashes.RefinedCarbon.CreateTag(), 100f)
@@ -93,6 +89,7 @@ public class DiamondPressConfig : IBuildingConfig
 			{
 				meter.SetPositionPercent(hepStorage.Particles / hepStorage.Capacity());
 			});
+			meter.SetPositionPercent(hepStorage.Particles / hepStorage.Capacity());
 		};
 	}
 }

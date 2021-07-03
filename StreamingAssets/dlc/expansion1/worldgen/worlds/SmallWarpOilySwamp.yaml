@@ -90,7 +90,7 @@ worldTemplateRules:
     - expansion1::poi/warp/sender
     - expansion1::poi/warp/receiver
     listRule: GuaranteeAll
-    priority: 500
+    priority: 90
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag

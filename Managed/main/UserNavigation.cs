@@ -48,10 +48,14 @@ public class UserNavigation : KMonoBehaviour
 			Tuple<int, int> tuple = (Tuple<int, int>)worlds;
 			int first = tuple.first;
 			int second = tuple.second;
-			int num = Grid.WorldIdx[Grid.PosToCell(CameraController.Instance.transform.position)];
-			if (num != second)
+			int num = Grid.PosToCell(CameraController.Instance.transform.position);
+			if (!Grid.IsValidCell(num) || Grid.WorldIdx[num] != second)
 			{
-				Debug.LogWarning($"Position {CameraController.Instance.transform.position} is not inside of worldIdx {second}");
+				WorldContainer world = ClusterManager.Instance.GetWorld(second);
+				float x = Mathf.Clamp(CameraController.Instance.transform.position.x, world.minimumBounds.x, world.maximumBounds.x);
+				float y = Mathf.Clamp(CameraController.Instance.transform.position.y, world.minimumBounds.y, world.maximumBounds.y);
+				Vector3 position = new Vector3(x, y, CameraController.Instance.transform.position.z);
+				CameraController.Instance.SetPosition(position);
 			}
 			NavPoint value = (worldCameraPositions[second] = new NavPoint
 			{
@@ -60,8 +64,8 @@ public class UserNavigation : KMonoBehaviour
 			});
 			if (!worldCameraPositions.ContainsKey(first))
 			{
-				WorldContainer world = ClusterManager.Instance.GetWorld(first);
-				Vector2I vector2I = world.WorldOffset + new Vector2I(world.Width / 2, world.Height / 2);
+				WorldContainer world2 = ClusterManager.Instance.GetWorld(first);
+				Vector2I vector2I = world2.WorldOffset + new Vector2I(world2.Width / 2, world2.Height / 2);
 				Dictionary<int, NavPoint> dictionary = worldCameraPositions;
 				value = new NavPoint
 				{

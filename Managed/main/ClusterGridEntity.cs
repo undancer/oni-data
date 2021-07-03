@@ -139,5 +139,10 @@ public abstract class ClusterGridEntity : KMonoBehaviour
 		ClusterLocationChangedEvent clusterLocationChangedEvent2 = clusterLocationChangedEvent;
 		Trigger(-1298331547, clusterLocationChangedEvent2);
 		Game.Instance.Trigger(-1298331547, clusterLocationChangedEvent2);
+		KSelectable component = GetComponent<KSelectable>();
+		if (component.IsSelected)
+		{
+			DetailsScreen.Instance.Refresh(base.gameObject);
+		}
 	}
 }

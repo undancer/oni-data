@@ -98,7 +98,8 @@ public class RotPile : StateMachineComponent<RotPile.StatesInstance>
 
 	public void TryCreateNotification()
 	{
-		if (base.smi.master.GetMyWorld().worldInventory.IsReachable(base.smi.master.gameObject.GetComponent<Pickupable>()))
+		WorldContainer myWorld = base.smi.master.GetMyWorld();
+		if (myWorld != null && myWorld.worldInventory.IsReachable(base.smi.master.gameObject.GetComponent<Pickupable>()))
 		{
 			notification = new Notification(MISC.NOTIFICATIONS.FOODROT.NAME, NotificationType.BadMinor, OnRottenTooltip);
 			notification.tooltipData = base.smi.master.gameObject.GetProperName();

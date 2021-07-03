@@ -64,6 +64,7 @@ public class ArtifactPOIConfig : IMultiEntityConfig
 		artifactPOIClusterGridEntity.m_name = name;
 		artifactPOIClusterGridEntity.m_Anim = anim;
 		gameObject.AddOrGetDef<ArtifactPOIStates.Def>();
+		LoreBearer loreBearer = gameObject.AddOrGet<LoreBearer>();
 		return gameObject;
 	}
 

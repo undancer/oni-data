@@ -84,7 +84,7 @@ worldTemplateRules:
   - names:
       - expansion1::poi/genericGravitas/poi_gift_shop
     listRule: GuaranteeAll
-    priority: 500
+    priority: 90
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag

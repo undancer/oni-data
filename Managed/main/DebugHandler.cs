@@ -519,13 +519,13 @@ public class DebugHandler : IInputHandler
 		}
 	}
 
-	public static void SetTimelapseMode(bool enabled)
+	public static void SetTimelapseMode(bool enabled, int world_id = 0)
 	{
 		TimelapseMode = enabled;
 		if (enabled)
 		{
 			activeWorldBeforeOverride = ClusterManager.Instance.activeWorldId;
-			ClusterManager.Instance.TimelapseModeOverrideActiveWorld(0);
+			ClusterManager.Instance.TimelapseModeOverrideActiveWorld(world_id);
 		}
 		else
 		{

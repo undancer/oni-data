@@ -551,8 +551,8 @@ namespace Database
 			DeadReactorCoolingOff.resolveStringCallback = delegate(string str, object data)
 			{
 				Reactor.StatesInstance smi = (Reactor.StatesInstance)data;
-				float num3 = ((Reactor.StatesInstance)data).sm.timeSinceMeltdown.Get(smi);
-				str = str.Replace("{CyclesRemaining}", Util.FormatOneDecimalPlace(Mathf.Max(0f, 3000f - num3) / 600f));
+				float num4 = ((Reactor.StatesInstance)data).sm.timeSinceMeltdown.Get(smi);
+				str = str.Replace("{CyclesRemaining}", Util.FormatOneDecimalPlace(Mathf.Max(0f, 3000f - num4) / 600f));
 				return str;
 			};
 			ConstructableDigUnreachable = CreateStatusItem("ConstructableDigUnreachable", "BUILDING", "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
@@ -736,8 +736,8 @@ namespace Database
 				int idx = 0;
 				for (int i = 0; i < Components.Telepads.Items.Count; i++)
 				{
-					KSelectable component6 = Components.Telepads[i].GetComponent<KSelectable>();
-					if (component6.IsSelected)
+					KSelectable component7 = Components.Telepads[i].GetComponent<KSelectable>();
+					if (component7.IsSelected)
 					{
 						idx = (i + 1) % Components.Telepads.Items.Count;
 						break;
@@ -779,8 +779,8 @@ namespace Database
 			PendingRepair.resolveStringCallback = delegate(string str, object data)
 			{
 				Repairable.SMInstance sMInstance = (Repairable.SMInstance)data;
-				BuildingHP component5 = sMInstance.master.GetComponent<BuildingHP>();
-				return str.Replace("{DamageInfo}", component5.GetDamageSourceInfo().ToString());
+				BuildingHP component6 = sMInstance.master.GetComponent<BuildingHP>();
+				return str.Replace("{DamageInfo}", component6.GetDamageSourceInfo().ToString());
 			};
 			PendingRepair.conditionalOverlayCallback = (HashedString mode, object data) => true;
 			RequiresSkillPerk = CreateStatusItem("RequiresSkillPerk", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
@@ -884,14 +884,14 @@ namespace Database
 					Pickupable pickupable = solidConduitFlow.GetPickupable(contents.pickupableHandle);
 					if ((bool)pickupable)
 					{
-						PrimaryElement component4 = pickupable.GetComponent<PrimaryElement>();
-						float mass4 = component4.Mass;
+						PrimaryElement component5 = pickupable.GetComponent<PrimaryElement>();
+						float mass4 = component5.Mass;
 						if (mass4 > 0f)
 						{
-							text3 = string.Format(BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.CONTENTS, GameUtil.GetFormattedMass(mass4), pickupable.GetProperName(), GameUtil.GetFormattedTemperature(component4.Temperature));
-							if (OverlayScreen.Instance != null && OverlayScreen.Instance.mode == OverlayModes.Disease.ID && component4.DiseaseIdx != byte.MaxValue)
+							text3 = string.Format(BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.CONTENTS, GameUtil.GetFormattedMass(mass4), pickupable.GetProperName(), GameUtil.GetFormattedTemperature(component5.Temperature));
+							if (OverlayScreen.Instance != null && OverlayScreen.Instance.mode == OverlayModes.Disease.ID && component5.DiseaseIdx != byte.MaxValue)
 							{
-								text3 += string.Format(BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.CONTENTS_WITH_DISEASE, GameUtil.GetFormattedDisease(component4.DiseaseIdx, component4.DiseaseCount, color: true));
+								text3 += string.Format(BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.CONTENTS_WITH_DISEASE, GameUtil.GetFormattedDisease(component5.DiseaseIdx, component5.DiseaseCount, color: true));
 							}
 						}
 					}
@@ -901,7 +901,19 @@ namespace Database
 			};
 			FabricatorIdle = CreateStatusItem("FabricatorIdle", "BUILDING", "status_item_fabricator_select", StatusItem.IconType.Custom, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			FabricatorEmpty = CreateStatusItem("FabricatorEmpty", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
-			FabricatorLacksHEP = CreateStatusItem("FabricatorLacksHEP", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			FabricatorLacksHEP = CreateStatusItem("FabricatorLacksHEP", "BUILDING", "status_item_need_high_energy_particles", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			FabricatorLacksHEP.resolveStringCallback = delegate(string str, object data)
+			{
+				ComplexFabricator complexFabricator = (ComplexFabricator)data;
+				if (complexFabricator != null)
+				{
+					int num3 = complexFabricator.HighestHEPQueued();
+					HighEnergyParticleStorage component4 = complexFabricator.GetComponent<HighEnergyParticleStorage>();
+					str = str.Replace("{HEPRequired}", num3.ToString());
+					str = str.Replace("{CurrentHEP}", component4.Particles.ToString());
+				}
+				return str;
+			};
 			Toilet = CreateStatusItem("Toilet", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			Toilet.resolveStringCallback = delegate(string str, object data)
 			{

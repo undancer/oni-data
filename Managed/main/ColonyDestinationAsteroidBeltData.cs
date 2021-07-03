@@ -90,7 +90,7 @@ public class ColonyDestinationAsteroidBeltData
 		ReInitialize(seed);
 	}
 
-	private Sprite GetUISprite(string filename)
+	public static Sprite GetUISprite(string filename)
 	{
 		if (filename.IsNullOrWhiteSpace())
 		{

@@ -14,6 +14,8 @@ public class BabyBeeConfig : IEntityConfig
 	{
 		GameObject gameObject = BeeConfig.CreateBee("BeeBaby", CREATURES.SPECIES.BEE.BABY.NAME, CREATURES.SPECIES.BEE.BABY.DESC, "baby_blarva_kanim", is_baby: true);
 		EntityTemplates.ExtendEntityToBeingABaby(gameObject, "Bee", null, force_adult_nav_type: true, 2f);
+		KPrefabID component = gameObject.GetComponent<KPrefabID>();
+		component.AddTag(GameTags.Creatures.Walker);
 		return gameObject;
 	}
 

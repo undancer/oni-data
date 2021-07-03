@@ -260,6 +260,10 @@ public class Components
 
 	public static Cmps<BuildingComplete> EntombedBuildings = new Cmps<BuildingComplete>();
 
+	public static Cmps<SpaceArtifact> SpaceArtifacts = new Cmps<SpaceArtifact>();
+
+	public static Cmps<ArtifactAnalysisStationWorkable> ArtifactAnalysisStations = new Cmps<ArtifactAnalysisStationWorkable>();
+
 	public static Cmps<IncubationMonitor.Instance> IncubationMonitors = new Cmps<IncubationMonitor.Instance>();
 
 	public static Cmps<FixedCapturableMonitor.Instance> FixedCapturableMonitors = new Cmps<FixedCapturableMonitor.Instance>();

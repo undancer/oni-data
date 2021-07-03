@@ -120,7 +120,7 @@ namespace STRINGS
 
 			public static LocString TITLE = "Divergent";
 
-			public static LocString SUBTITLE = "Domesticatable Critter";
+			public static LocString SUBTITLE = "Domesticable Critter";
 		}
 
 		public class DRECKO
@@ -667,6 +667,24 @@ namespace STRINGS
 			public static LocString SUBTITLE = "UNENCRYPTED";
 		}
 
+		public class C5_ENGINEERINGCANDIDATE
+		{
+			public class BODY
+			{
+				public static LocString EMAILHEADER1 = "<smallcaps>To: <b>[REDACTED]</b>\nFrom: <b>Director Stern</b><size=12><alpha=#AA> <jstern@gravitas.nova></size></color></smallcaps>\n------------------\n";
+
+				public static LocString CONTAINER3 = "<indent=5%>Director, I think I've found the perfect engineer candidate to design our small-scale colony machines.</indent>\n------------------\n";
+
+				public static LocString CONTAINER4 = "<b>Bringing Creative Workspace Ideas into the Industrial Setting</b>\n\nMichael E.E. Perlmutter is a rising star in the world industrial design, making a name for himself by cooking up playful workspaces for a work force typically left out of the creative conversation.\n\n\"Ergodynamic chairs have been done to death,\" says Perlmutter. \"What I'm interested in is redesigning the industrial space. There's no reason why a machine can't convey a sense of whimsy.\"\n\nIt's this philosophy that has launched Perlmutter to the top of a very short list of hot new industrial designers.";
+
+				public static LocString SIGNATURE1 = "\n[REDACTED]\n<size=11>Human Resources Coordinator\nThe Gravitas Facility</size>\n------------------\n";
+			}
+
+			public static LocString TITLE = "SUBJECT: Machine Engineer Candidate?";
+
+			public static LocString SUBTITLE = "ENCRYPTION LEVEL: ONE";
+		}
+
 		public class B7_FRIENDLYEMAIL
 		{
 			public class BODY
@@ -993,6 +1011,18 @@ namespace STRINGS
 			public static LocString SUBTITLE = "ENCRYPTION LEVEL: NONE";
 		}
 
+		public class C3_FIRSTCOLONY
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "The first experiments with establishing a colony off planet were an unmitigated disaster. Without outside help, our current Artificial Intelligence was completely incapable of making the kind of spontaneous decisions needed to deal with unforeseen circumstances. Additionally, the colony subjects lacked the forethought to even build themselves toilet facilities even after soiling themselves repeatedly.\n\nWhile initial experiments in a lab setting were encouraging, our latest operation on non-Terra soil revealed some massive inadequacies to our system. If this idea is ever going to work, we will either need to massively improve the AI directing the subjects, or improve the brains of our Duplicants to the point where they possess higher cognitive functions.\n\nGiven the massive complications that could forsee arising if our Duplicants were made less supplicant, I'm leaning toward a push to improve our Artificial Intellegence.\n\nMeanwhile we will have to send a clean up crew to destroy all evidence of our little experiment beneath the Ceres' surface. We can't risk anyone discovering the remnants of our failed colony, even if the likelihood that that will happen won't be for another few decades at least.\n\n(Sometimes it boggles my mind how much farther behind the rest of the world is from Gravitas.)";
+			}
+
+			public static LocString TITLE = "Director's Notes";
+
+			public static LocString SUBTITLE = "ENCRYPTION LEVEL: THREE";
+		}
+
 		public class A8_FIRSTSUCCESS
 		{
 			public class BODY
@@ -1149,13 +1179,13 @@ namespace STRINGS
 			public static LocString SUBTITLE = "ENCRYPTION LEVEL: ONE";
 		}
 
-		public class C01_Evil
+		public class C01_EVIL
 		{
 			public class BODY
 			{
 				public static LocString CONTAINER1 = "Clearly Nikola is evil. He has some kind of scheme going on that he\ufffds keeping secret from the rest of Gravitas and I haven\ufffdt been able to crack what that is because it\ufffds offline and he\ufffds always at his computer. Whenever I ask him what he\ufffds up to he says I wouldn\ufffdt understand. Pfft! We both went through the same particle physics classes, buddy. Just because you mash a keyboard and I adjust knobs does not mean I don\ufffdt know what the Time Containment Field does.\n\nAnd then today I dropped a wrench and Nikola nearly jumped out of his skin! He spun around and screamed at me never to do that again. And then when I said, \"Geez, it\ufffds not the end of the world,\" he was like, \"Yeah, it\ufffds not like the world will blow up if I get this wrong\" really sarcastic like.\n\nWhich technically is true. If the Time Containment Field were to break down the Temporal Bow could theoretically blow up the world but that\ufffds why there are safety systems in place. And safety systems on safety systems. And then safety systems on top of that. But then he built all the safety systems so if he wanted to\ufffd\n------------------\n";
 
-				public static LocString CONTAINER2 = "I decided to get into work early today but when I got in Nikola was already there and it looked like he hadn\ufffdt been home all weekend. He was pacing back-and-forth in the lab, monologuing but not like an evil villain. Like someone who hadn\ufffdt slept in a week.\n\n\"Ruby,\" he said. \"You have to promise me that if anything goes wrong you\ufffdll turn on this machine. They\ufffdre pushing it too far. The printing pods are pushing the...It\ufffds too much - TOO MUCH! Something\ufffds going to blow. I tried\ufffd I\ufffdm trying to save it. Not the Earth. There\ufffds no hope for the Earth, it\ufffds all going to\ufffd\" then he made this exploding sound. \"But the Universe. Time itself. It could all go, don\ufffdt you see? This machine can contain it. Put a Temporal Containment Field around the Earth so time itself doesn\ufffdt break down and...and\ufffd\"\n\nThen all of a sudden these security guys came in. New guys. People I haven\ufffdt seen before. And they just took him away. Then they took me to a room and asked me all kinds of questions and I answered them, I guess. I don\ufffdt remember much because the whole time I was thinking - What if I was wrong? What if he\ufffds not evil, but Gravitas is?\n\nWhat if I was wrong and what if he\ufffds right?\\n------------------\n";
+				public static LocString CONTAINER2 = "I decided to get into work early today but when I got in Nikola was already there and it looked like he hadn\ufffdt been home all weekend. He was pacing back-and-forth in the lab, monologuing but not like an evil villain. Like someone who hadn\ufffdt slept in a week.\n\n\"Ruby,\" he said. \"You have to promise me that if anything goes wrong you\ufffdll turn on this machine. They\ufffdre pushing it too far. The printing pods are pushing the...It\ufffds too much - TOO MUCH! Something\ufffds going to blow. I tried\ufffd I\ufffdm trying to save it. Not the Earth. There\ufffds no hope for the Earth, it\ufffds all going to\ufffd\" then he made this exploding sound. \"But the Universe. Time itself. It could all go, don\ufffdt you see? This machine can contain it. Put a Temporal Containment Field around the Earth so time itself doesn\ufffdt break down and...and\ufffd\"\n\nThen all of a sudden these security guys came in. New guys. People I haven\ufffdt seen before. And they just took him away. Then they took me to a room and asked me all kinds of questions and I answered them, I guess. I don\ufffdt remember much because the whole time I was thinking - What if I was wrong? What if he\ufffds not evil, but Gravitas is?\n\nWhat if I was wrong and what if he\ufffds right?\n------------------\n";
 
 				public static LocString CONTAINER3 = "No seriously - what if he's right?\n------------------\n";
 			}
@@ -1163,6 +1193,18 @@ namespace STRINGS
 			public static LocString TITLE = "Evil";
 
 			public static LocString SUBTITLE = "ENCRYPTION LEVEL: NONE";
+		}
+
+		public class B7_INSPACE
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "<smallcaps>[Voice Recognition Initialized]\n[Subjects Identified: B835, B997]</smallcaps>\n\n[LOG BEGINS]\n\nDr.Ansari: Shhhh...\n\nDr. Bubare: What? What are we doing here?\n\nDr. Ansari: I'll show you, just keep your voice down.\n\nDr. Bubare: Are we even allowed to be here?\n\nDr. Ansari: No. Trust me it'll all be worth it once I can find it.\n\nDr. Bubare: Find what?\n\nDr. Ansari: That!\n\nDr. Bubare: ...Video feed from a rat cage? What's so great about -- Wait. Are they--?\n\nDr. Ansari: Floating!\n\nDr. Bubare: You mean they're in--?\n\nDr. Ansari: Space!\n\nDr. Bubare: Our thermal rats are in space?!?!\n\nDr. Ansari: Yep! There's Applecart and Cherrypie and little Bananabread. Look at them, they're so happy. We made ratstronauts!!\n\nDr. Bubare: HAPPY rat-stronauts.\n\nDr. Ansari: WE MADE HAPPY RATSTRONAUTS!!\n\nDr. Bubare: Shhhhhh...Someone's coming.\n\n[LOG ENDS]";
+			}
+
+			public static LocString TITLE = "In Space";
+
+			public static LocString SUBTITLE = "ENCRYPTION LEVEL: TWO";
 		}
 
 		public class B3_MOVEDRABBITS
@@ -2001,7 +2043,7 @@ namespace STRINGS
 		{
 			public class BODY
 			{
-				public static LocString CONTAINER1 = "Sporechids take advantage of their flower's attractiveness to lure unsuspecting victims into clouds of parsitic Zombie Spores.\n\nThey are a rare form of holoparasitic plant which finds mammalian hosts to infect rather than the usual plant species.\n\nThe Zombie Spore was originally designed for medicinal purposes but its seditative properties were never refined to the point of usefulness.";
+				public static LocString CONTAINER1 = "Sporechids take advantage of their flower's attractiveness to lure unsuspecting victims into clouds of parasitic Zombie Spores.\n\nThey are a rare form of holoparasitic plant which finds mammalian hosts to infect rather than the usual plant species.\n\nThe Zombie Spore was originally designed for medicinal purposes but its sedative properties were never refined to the point of usefulness.";
 			}
 
 			public static LocString TITLE = "Sporechid";

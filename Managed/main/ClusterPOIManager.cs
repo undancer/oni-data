@@ -35,6 +35,21 @@ public class ClusterPOIManager : KMonoBehaviour
 		}
 	}
 
+	public void RegisterTemporalTear(TemporalTear temporalTear)
+	{
+		m_temporalTear.Set(temporalTear);
+	}
+
+	public bool HasTemporalTear()
+	{
+		return m_temporalTear.Get() != null;
+	}
+
+	public TemporalTear GetTemporalTear()
+	{
+		return m_temporalTear.Get();
+	}
+
 	private void UpgradeOldSaves()
 	{
 		bool flag = false;
@@ -135,10 +150,15 @@ public class ClusterPOIManager : KMonoBehaviour
 		{
 			int[] key = item.Key;
 			string[] value = item.Value;
-			List<AxialI> rings = AxialUtil.GetRings(AxialI.ZERO, key[0], key[1]);
+			int minRadius = Mathf.Min(key[0], ClusterGrid.Instance.numRings - 1);
+			int maxRadius = Mathf.Min(key[1], ClusterGrid.Instance.numRings - 1);
+			List<AxialI> rings = AxialUtil.GetRings(AxialI.ZERO, minRadius, maxRadius);
 			List<AxialI> list2 = new List<AxialI>();
 			foreach (AxialI item2 in rings)
 			{
+				ClusterGrid instance = ClusterGrid.Instance;
+				Dictionary<AxialI, List<ClusterGridEntity>> cellContents = ClusterGrid.Instance.cellContents;
+				List<ClusterGridEntity> list3 = ClusterGrid.Instance.cellContents[item2];
 				if (ClusterGrid.Instance.cellContents[item2].Count == 0 && ClusterGrid.Instance.GetVisibleEntityOfLayerAtAdjacentCell(item2, EntityLayer.Asteroid) == null)
 				{
 					list2.Add(item2);
@@ -152,16 +172,8 @@ public class ClusterPOIManager : KMonoBehaviour
 				AxialI axialI = list2[Random.Range(0, list2.Count - 1)];
 				list2.Remove(axialI);
 				list.Add(axialI);
-				HarvestablePOIClusterGridEntity component = gameObject.GetComponent<HarvestablePOIClusterGridEntity>();
-				if (component != null)
-				{
-					component.Init(axialI);
-				}
-				ArtifactPOIClusterGridEntity component2 = gameObject.GetComponent<ArtifactPOIClusterGridEntity>();
-				if (component2 != null)
-				{
-					component2.Init(axialI);
-				}
+				ClusterGridEntity component = gameObject.GetComponent<ClusterGridEntity>();
+				component.Location = axialI;
 				gameObject.SetActive(value: true);
 			}
 		}
@@ -174,30 +186,32 @@ public class ClusterPOIManager : KMonoBehaviour
 			"ArtifactSpacePOI_GravitasSpaceStation8",
 			"ArtifactSpacePOI_RussellsTeapot"
 		};
-		List<AxialI> rings2 = AxialUtil.GetRings(AxialI.ZERO, 2, 11);
-		List<AxialI> list3 = new List<AxialI>();
+		int minRadius2 = Mathf.Min(2, ClusterGrid.Instance.numRings - 1);
+		int maxRadius2 = Mathf.Min(11, ClusterGrid.Instance.numRings - 1);
+		List<AxialI> rings2 = AxialUtil.GetRings(AxialI.ZERO, minRadius2, maxRadius2);
+		List<AxialI> list4 = new List<AxialI>();
 		foreach (AxialI item3 in rings2)
 		{
 			if (ClusterGrid.Instance.cellContents[item3].Count == 0 && ClusterGrid.Instance.GetVisibleEntityOfLayerAtAdjacentCell(item3, EntityLayer.Asteroid) == null && !list.Contains(item3))
 			{
-				list3.Add(item3);
+				list4.Add(item3);
 			}
 		}
 		string[] array3 = array2;
 		foreach (string s2 in array3)
 		{
 			GameObject gameObject2 = Util.KInstantiate(Assets.GetPrefab(s2));
-			AxialI axialI2 = list3[Random.Range(0, list3.Count - 1)];
-			list3.Remove(axialI2);
-			HarvestablePOIClusterGridEntity component3 = gameObject2.GetComponent<HarvestablePOIClusterGridEntity>();
+			AxialI axialI2 = list4[Random.Range(0, list4.Count - 1)];
+			list4.Remove(axialI2);
+			HarvestablePOIClusterGridEntity component2 = gameObject2.GetComponent<HarvestablePOIClusterGridEntity>();
+			if (component2 != null)
+			{
+				component2.Init(axialI2);
+			}
+			ArtifactPOIClusterGridEntity component3 = gameObject2.GetComponent<ArtifactPOIClusterGridEntity>();
 			if (component3 != null)
 			{
 				component3.Init(axialI2);
-			}
-			ArtifactPOIClusterGridEntity component4 = gameObject2.GetComponent<ArtifactPOIClusterGridEntity>();
-			if (component4 != null)
-			{
-				component4.Init(axialI2);
 			}
 			gameObject2.SetActive(value: true);
 		}
@@ -209,16 +223,8 @@ public class ClusterPOIManager : KMonoBehaviour
 		foreach (KeyValuePair<AxialI, string> poiPlacement in clusterLayout.poiPlacements)
 		{
 			GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(poiPlacement.Value));
-			HarvestablePOIClusterGridEntity component = gameObject.GetComponent<HarvestablePOIClusterGridEntity>();
-			if (component != null)
-			{
-				component.Init(poiPlacement.Key);
-			}
-			ArtifactPOIClusterGridEntity component2 = gameObject.GetComponent<ArtifactPOIClusterGridEntity>();
-			if (component2 != null)
-			{
-				component2.Init(poiPlacement.Key);
-			}
+			ClusterGridEntity component = gameObject.GetComponent<ClusterGridEntity>();
+			component.Location = poiPlacement.Key;
 			gameObject.SetActive(value: true);
 		}
 	}

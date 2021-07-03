@@ -25,7 +25,6 @@ namespace rendering
 			for (int i = 0; i < count; i++)
 			{
 				BackWallImage backWallImage2 = images[i];
-				Debug.Log($"copying image {backWallImage2.name} type {backWallImage2.image.format} size {backWallImage2.image.width}x{backWallImage2.image.height}");
 				for (int j = 0; j < mipmapCount; j++)
 				{
 					textureArray.SetPixels(backWallImage2.image.GetPixels(j), i, j);

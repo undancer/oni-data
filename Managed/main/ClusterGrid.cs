@@ -14,6 +14,8 @@ public class ClusterGrid
 
 	private const float MAX_OFFSET_WITHIN_HEX = 0.25f;
 
+	public int numRings;
+
 	private ClusterFogOfWarManager.Instance m_fowManager;
 
 	private Action<object> m_onClusterLocationChangedDelegate;
@@ -182,6 +184,7 @@ public class ClusterGrid
 	private void GenerateGrid(int rings)
 	{
 		CleanUpGrid();
+		numRings = rings;
 		for (int i = -rings + 1; i < rings; i++)
 		{
 			for (int j = -rings + 1; j < rings; j++)

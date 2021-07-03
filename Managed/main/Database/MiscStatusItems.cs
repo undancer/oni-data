@@ -94,6 +94,8 @@ namespace Database
 
 		public StatusItem StoredItemDurability;
 
+		public StatusItem ArtifactEntombed;
+
 		public MiscStatusItems(ResourceSet parent)
 			: base("MiscStatusItems", parent)
 		{
@@ -313,6 +315,7 @@ namespace Database
 				str = str.Replace("{durability}", GameUtil.GetFormattedPercent(percent));
 				return str;
 			};
+			ArtifactEntombed = CreateStatusItem("ArtifactEntombed", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 		}
 	}
 }

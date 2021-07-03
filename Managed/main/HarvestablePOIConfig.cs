@@ -97,7 +97,6 @@ public class HarvestablePOIConfig : IMultiEntityConfig
 			gameObject.AddOrGetDef<ArtifactPOIStates.Def>();
 			ArtifactPOIConfigurator artifactPOIConfigurator = gameObject.AddOrGet<ArtifactPOIConfigurator>();
 			artifactPOIConfigurator.presetType = ArtifactPOIConfigurator.defaultArtifactPoiType.idHash;
-			LoreBearer loreBearer = gameObject.AddOrGet<LoreBearer>();
 		}
 		InfoDescription infoDescription = gameObject.AddOrGet<InfoDescription>();
 		infoDescription.description = Strings.Get(descStringKey);

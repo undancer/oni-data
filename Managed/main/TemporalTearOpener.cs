@@ -94,6 +94,7 @@ public class TemporalTearOpener : GameStateMachine<TemporalTearOpener, TemporalT
 
 		public void OpenTemporalTear()
 		{
+			ClusterManager.Instance.GetClusterPOIManager().RevealTemporalTear();
 			ClusterManager.Instance.GetClusterPOIManager().OpenTemporalTear(this.GetMyWorldId());
 		}
 

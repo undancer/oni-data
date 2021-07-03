@@ -428,6 +428,22 @@ public class Worker : KMonoBehaviour
 		}
 	}
 
+	private void Update()
+	{
+		if (state == State.Working)
+		{
+			ForceSyncAnims();
+		}
+	}
+
+	private void ForceSyncAnims()
+	{
+		if (Time.deltaTime > 0f && kanimSynchronizer != null)
+		{
+			kanimSynchronizer.SyncTime();
+		}
+	}
+
 	public bool InstantlyFinish()
 	{
 		if (workable != null)

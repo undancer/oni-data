@@ -153,3 +153,11 @@ poiPlacements:
     allowedRings:
       min: 4
       max: 11
+
+  - pois:
+      - TemporalTear
+    numToSpawn: 1
+    avoidClumping: false
+    allowedRings:
+      min: 9
+      max: 11

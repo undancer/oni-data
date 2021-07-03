@@ -57,9 +57,17 @@ public class GlobalAssets : KMonoBehaviour
 						Debug.LogError($"ERROR [{eventList}] loading FMOD events for bank [{path}]");
 						continue;
 					}
-					foreach (EventDescription eventDescription in array3)
+					for (int j = 0; j < array3.Length; j++)
 					{
+						EventDescription eventDescription = array3[j];
 						eventDescription.getPath(out path);
+						if (path == null)
+						{
+							bank.getPath(out path);
+							eventDescription.getID(out var id);
+							Debug.LogError($"Got a FMOD event with a null path! {eventDescription.ToString()} {id} in bank {path}");
+							continue;
+						}
 						string simpleSoundEventName = Assets.GetSimpleSoundEventName(path);
 						simpleSoundEventName = simpleSoundEventName.ToLowerInvariant();
 						if (simpleSoundEventName.Length > 0 && !SoundTable.ContainsKey(simpleSoundEventName))

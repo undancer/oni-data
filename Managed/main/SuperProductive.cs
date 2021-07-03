@@ -24,7 +24,7 @@ public class SuperProductive : GameStateMachine<SuperProductive, SuperProductive
 
 		public bool ShouldSkipWork()
 		{
-			float num = Random.Range(0f, 100f);
+			float num = 0f;
 			return num <= TRAITS.JOY_REACTIONS.SUPER_PRODUCTIVE.INSTANT_SUCCESS_CHANCE;
 		}
 
@@ -71,18 +71,22 @@ public class SuperProductive : GameStateMachine<SuperProductive, SuperProductive
 		overjoyed.superProductive.Enter(delegate(Instance smi)
 		{
 			Worker component = smi.GetComponent<Worker>();
-			if (component.state == Worker.State.Working)
+			if (component != null && component.state == Worker.State.Working)
 			{
-				float num = component.workable.WorkTimeRemaining;
-				Diggable component2 = component.workable.GetComponent<Diggable>();
-				if (component2 != null)
+				Workable workable = component.workable;
+				if (workable != null)
 				{
-					num = Diggable.GetApproximateDigTime(Grid.PosToCell(component.workable));
-				}
-				if (num > 1f && smi.ShouldSkipWork() && component.InstantlyFinish())
-				{
-					smi.ReactSuperProductive();
-					smi.fx.sm.wasProductive.Trigger(smi.fx);
+					float num = workable.WorkTimeRemaining;
+					Diggable component2 = workable.GetComponent<Diggable>();
+					if (component2 != null)
+					{
+						num = Diggable.GetApproximateDigTime(Grid.PosToCell(workable));
+					}
+					if (num > 1f && smi.ShouldSkipWork() && component.InstantlyFinish())
+					{
+						smi.ReactSuperProductive();
+						smi.fx.sm.wasProductive.Trigger(smi.fx);
+					}
 				}
 			}
 			smi.GoTo(overjoyed.idle);

@@ -116,6 +116,18 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 		return list;
 	}
 
+	public WorldContainer GetStartWorld()
+	{
+		foreach (WorldContainer worldContainer in WorldContainers)
+		{
+			if (worldContainer.IsStartWorld)
+			{
+				return worldContainer;
+			}
+		}
+		return WorldContainers[0];
+	}
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();

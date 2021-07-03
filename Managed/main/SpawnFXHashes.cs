@@ -12,5 +12,6 @@ public enum SpawnFXHashes
 	MeteorImpactDirt = -130923271,
 	MeteorImpactMetal = 58009621,
 	MeteorImpactDust = -31719612,
-	ContaminatedOxygenBubbleWater = 328361878
+	ContaminatedOxygenBubbleWater = 328361878,
+	NuclearWasteDrip = -1160340439
 }

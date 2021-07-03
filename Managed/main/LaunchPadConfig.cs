@@ -58,17 +58,17 @@ public class LaunchPadConfig : IBuildingConfig
 		LaunchPad launchPad = go.AddOrGet<LaunchPad>();
 		launchPad.triggerPort = "TriggerLaunch";
 		launchPad.statusPort = "LaunchReady";
-		MakeBaseSolid.Def def = go.AddOrGetDef<MakeBaseSolid.Def>();
-		def.solidOffsets = new CellOffset[7];
+		FakeFloorAdder fakeFloorAdder = go.AddOrGet<FakeFloorAdder>();
+		fakeFloorAdder.floorOffsets = new CellOffset[7];
 		for (int i = 0; i < 7; i++)
 		{
-			def.solidOffsets[i] = new CellOffset(i - 3, 1);
+			fakeFloorAdder.floorOffsets[i] = new CellOffset(i - 3, 1);
 		}
 		go.AddOrGet<LaunchPadConditions>();
-		ChainedBuilding.Def def2 = go.AddOrGetDef<ChainedBuilding.Def>();
-		def2.headBuildingTag = "LaunchPad".ToTag();
-		def2.linkBuildingTag = BaseModularLaunchpadPortConfig.LinkTag;
-		def2.objectLayer = ObjectLayer.Building;
+		ChainedBuilding.Def def = go.AddOrGetDef<ChainedBuilding.Def>();
+		def.headBuildingTag = "LaunchPad".ToTag();
+		def.linkBuildingTag = BaseModularLaunchpadPortConfig.LinkTag;
+		def.objectLayer = ObjectLayer.Building;
 		go.AddOrGetDef<LaunchPadMaterialDistributor.Def>();
 		go.AddOrGet<UserNameable>();
 		CharacterOverlay characterOverlay = go.AddOrGet<CharacterOverlay>();
@@ -81,7 +81,5 @@ public class LaunchPadConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		KPrefabID component = go.GetComponent<KPrefabID>();
-		component.AddTag(GameTags.DontBlockRockets);
 	}
 }

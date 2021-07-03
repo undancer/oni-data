@@ -161,6 +161,12 @@ namespace KMod
 			private set;
 		}
 
+		public bool DevModCrashTriggered
+		{
+			get;
+			private set;
+		}
+
 		public string ContentPath => Path.Combine(label.install_path, relative_root);
 
 		public bool IsDev => label.distribution_platform == Label.DistributionPlatform.Dev;
@@ -354,7 +360,7 @@ namespace KMod
 			}
 			list2 = list2.Where((ArchivedVersion v) => DoesModSupportCurrentContent(v.info)).ToList();
 			IOrderedEnumerable<ArchivedVersion> source = from v in list2
-				where (long)v.info.minimumSupportedBuild <= 468841L
+				where (long)v.info.minimumSupportedBuild <= 469859L
 				orderby v.info.minimumSupportedBuild descending
 				select v;
 			ArchivedVersion archivedVersion2 = source.FirstOrDefault();
@@ -817,6 +823,7 @@ namespace KMod
 		{
 			if (IsDev)
 			{
+				DevModCrashTriggered = true;
 				Debug.LogError(msg);
 			}
 		}

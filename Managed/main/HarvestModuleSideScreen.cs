@@ -62,25 +62,32 @@ public class HarvestModuleSideScreen : SideScreenContent, ISimEveryTick
 
 	public void SimEveryTick(float dt)
 	{
+		if (targetCraft.IsNullOrDestroyed())
+		{
+			return;
+		}
 		HierarchyReferences component = GetComponent<HierarchyReferences>();
-		GenericUIProgressBar reference = component.GetReference<GenericUIProgressBar>("progressBar");
-		float num = 4f;
-		float num2 = GetResourceHarvestModule(targetCraft).timeinstate % num;
 		ResourceHarvestModule.StatesInstance resourceHarvestModule = GetResourceHarvestModule(targetCraft);
-		if (resourceHarvestModule.sm.canHarvest.Get(resourceHarvestModule))
+		if (resourceHarvestModule != null)
 		{
-			reference.SetFillPercentage(num2 / num);
-			reference.label.SetText(UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.MINING_IN_PROGRESS);
+			GenericUIProgressBar reference = component.GetReference<GenericUIProgressBar>("progressBar");
+			float num = 4f;
+			float num2 = resourceHarvestModule.timeinstate % num;
+			if (resourceHarvestModule.sm.canHarvest.Get(resourceHarvestModule))
+			{
+				reference.SetFillPercentage(num2 / num);
+				reference.label.SetText(UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.MINING_IN_PROGRESS);
+			}
+			else
+			{
+				reference.SetFillPercentage(0f);
+				reference.label.SetText(UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.MINING_STOPPED);
+			}
+			GenericUIProgressBar reference2 = component.GetReference<GenericUIProgressBar>("diamondProgressBar");
+			Storage component2 = resourceHarvestModule.GetComponent<Storage>();
+			float fillPercentage = component2.MassStored() / component2.Capacity();
+			reference2.SetFillPercentage(fillPercentage);
+			reference2.label.SetText(ElementLoader.GetElement(SimHashes.Diamond.CreateTag()).name + ": " + GameUtil.GetFormattedMass(component2.MassStored()));
 		}
-		else
-		{
-			reference.SetFillPercentage(0f);
-			reference.label.SetText(UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.MINING_STOPPED);
-		}
-		GenericUIProgressBar reference2 = component.GetReference<GenericUIProgressBar>("diamondProgressBar");
-		Storage component2 = GetResourceHarvestModule(targetCraft).GetComponent<Storage>();
-		float fillPercentage = component2.MassStored() / component2.Capacity();
-		reference2.SetFillPercentage(fillPercentage);
-		reference2.label.SetText(ElementLoader.GetElement(SimHashes.Diamond.CreateTag()).name + ": " + GameUtil.GetFormattedMass(component2.MassStored()));
 	}
 }

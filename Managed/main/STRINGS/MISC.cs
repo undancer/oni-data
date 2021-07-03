@@ -586,6 +586,13 @@ namespace STRINGS
 
 				public static LocString TOOLTIP = "Items lose durability each time they are equipped, and can no longer be put on by a Duplicant once they reach 0% durability\n\nItems can be repaired using the " + UI.FormatAsLink("Crafting Station", "CRAFTINGTABLE");
 			}
+
+			public class ARTIFACTENTOMBED
+			{
+				public static LocString NAME = "Entombed Artifact";
+
+				public static LocString TOOLTIP = "This artifact is trapped in an obscuring shell. A skilled artist can remove it at the " + BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.NAME;
+			}
 		}
 
 		public class POPFX

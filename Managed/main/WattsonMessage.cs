@@ -254,7 +254,7 @@ public class WattsonMessage : KScreen
 			Game.Instance.StartDelayedInitialSave();
 			UIScheduler.Instance.Schedule("InitialScreenshot", 1f, delegate
 			{
-				Game.Instance.timelapser.SaveScreenshot();
+				Game.Instance.timelapser.InitialScreenshot();
 			});
 			GameScheduler.Instance.Schedule("BasicTutorial", 1.5f, delegate
 			{

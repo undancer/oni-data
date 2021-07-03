@@ -214,6 +214,11 @@ public class ClusterMapVisualizer : KMonoBehaviour
 			ClusterMapTravelAnimator.StatesInstance statesInstance = new ClusterMapTravelAnimator.StatesInstance(this, entity);
 			statesInstance.StartSM();
 		}
+		if (entity is Clustercraft)
+		{
+			ClusterMapRocketAnimator.StatesInstance statesInstance2 = new ClusterMapRocketAnimator.StatesInstance(this, entity);
+			statesInstance2.StartSM();
+		}
 	}
 
 	protected override void OnCleanUp()
@@ -239,16 +244,16 @@ public class ClusterMapVisualizer : KMonoBehaviour
 				isSelected = selected;
 				RefreshPathDrawing();
 			}
-			GetFirstAnim().SetSymbolVisiblity("selected", selected);
+			GetFirstAnimController().SetSymbolVisiblity("selected", selected);
 		}
 	}
 
 	public void PlayAnim(string animName, KAnim.PlayMode playMode)
 	{
-		GetFirstAnim().Play(animName, playMode);
+		GetFirstAnimController().Play(animName, playMode);
 	}
 
-	public KBatchedAnimController GetFirstAnim()
+	public KBatchedAnimController GetFirstAnimController()
 	{
 		return animControllers[0];
 	}

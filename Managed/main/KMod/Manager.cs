@@ -65,7 +65,7 @@ namespace KMod
 			return Path.Combine(path, "mods/");
 		}
 
-		public Manager()
+		public void LoadModDBAndInitialize()
 		{
 			string filename = GetFilename();
 			try
@@ -201,7 +201,7 @@ namespace KMod
 			List<Mod> list = new List<Mod>();
 			foreach (Mod mod in mods)
 			{
-				if (mod.status != 0 && mod.IsActive() && !mod.HasOnlyTranslationContent())
+				if (mod.DevModCrashTriggered || (mod.status != 0 && mod.IsActive() && !mod.HasOnlyTranslationContent()))
 				{
 					list.Add(mod);
 				}

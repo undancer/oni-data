@@ -43,6 +43,13 @@ add:
       weight: 0.5
     - element: Sand
       weight: 1
+  sandyCrust:
+    - element: Sandstone
+      weight: 1
+    - element: Sand
+      weight: 1
+    - element: Cuprite
+      weight: 0.25
   organicCrust:
     - element: SlimeMold
       weight: 1

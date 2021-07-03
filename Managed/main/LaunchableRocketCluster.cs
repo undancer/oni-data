@@ -376,11 +376,7 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 				}
 				if (Grid.Solid[num])
 				{
-					GameObject gameObject = Grid.Objects[num, 1];
-					if (gameObject == null || !gameObject.HasTag(GameTags.DontBlockRockets))
-					{
-						WorldDamage.Instance.ApplyDamage(num, 10000f, num, BUILDINGS.DAMAGESOURCES.ROCKET, UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.ROCKET);
-					}
+					WorldDamage.Instance.ApplyDamage(num, 10000f, num, BUILDINGS.DAMAGESOURCES.ROCKET, UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.ROCKET);
 				}
 				else
 				{
@@ -388,13 +384,13 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 					{
 						continue;
 					}
-					GameObject gameObject2 = Grid.Objects[num, 39];
-					if (gameObject2 != null)
+					GameObject gameObject = Grid.Objects[num, 39];
+					if (gameObject != null)
 					{
-						BuildingHP component2 = gameObject2.GetComponent<BuildingHP>();
+						BuildingHP component2 = gameObject.GetComponent<BuildingHP>();
 						if (component2 != null)
 						{
-							gameObject2.Trigger(-794517298, new BuildingHP.DamageSourceInfo
+							gameObject.Trigger(-794517298, new BuildingHP.DamageSourceInfo
 							{
 								damage = component2.MaxHitPoints,
 								source = BUILDINGS.DAMAGESOURCES.ROCKET,

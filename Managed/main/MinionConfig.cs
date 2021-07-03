@@ -66,6 +66,7 @@ public class MinionConfig : IEntityConfig
 			Storage.StoredItemModifier.Preserve,
 			Storage.StoredItemModifier.Seal
 		});
+		gameObject.AddTag(GameTags.CorrosionProof);
 		gameObject.AddOrGet<Health>();
 		OxygenBreather oxygenBreather = gameObject.AddOrGet<OxygenBreather>();
 		oxygenBreather.O2toCO2conversion = 0.02f;

@@ -21,7 +21,6 @@ public class ArtifactAnalysisStationConfig : IBuildingConfig
 		buildingDef.ViewMode = OverlayModes.Power.ID;
 		buildingDef.AudioCategory = "HollowMetal";
 		buildingDef.AudioSize = "large";
-		buildingDef.Deprecated = true;
 		return buildingDef;
 	}
 
@@ -37,13 +36,12 @@ public class ArtifactAnalysisStationConfig : IBuildingConfig
 		manualDeliveryKG.SetStorage(storage);
 		manualDeliveryKG.choreTypeIDHash = Db.Get().ChoreTypes.MachineFetch.IdHash;
 		manualDeliveryKG.requestedItemTag = GameTags.CharmedArtifact;
-		manualDeliveryKG.refillMass = 1.1f;
+		manualDeliveryKG.refillMass = 1f;
 		manualDeliveryKG.minimumMass = 1f;
-		manualDeliveryKG.capacity = 5f;
+		manualDeliveryKG.capacity = 1f;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		SymbolOverrideControllerUtil.AddToPrefab(go);
 	}
 }

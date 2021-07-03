@@ -36,6 +36,11 @@ public class StaterpillarGeneratorConfig : IBuildingConfig
 		return buildingDef;
 	}
 
+	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
+	{
+		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
+	}
+
 	public override void DoPostConfigurePreview(BuildingDef def, GameObject go)
 	{
 	}

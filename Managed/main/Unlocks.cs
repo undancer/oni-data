@@ -19,7 +19,7 @@ public class Unlocks : KMonoBehaviour
 	{
 		{
 			"emails",
-			new string[21]
+			new string[22]
 			{
 				"email_thermodynamiclaws",
 				"email_security2",
@@ -41,7 +41,8 @@ public class Unlocks : KMonoBehaviour
 				"email_AIcontrol2",
 				"email_friendlyemail",
 				"email_AIcontrol3",
-				"email_AIcontrol4"
+				"email_AIcontrol4",
+				"email_engineeringcandidate"
 			}
 		},
 		{
@@ -102,7 +103,7 @@ public class Unlocks : KMonoBehaviour
 				"notes_neutroniumapplications",
 				"notes_teleportation",
 				"notes_AI",
-				"cryotank_warnings"
+				"cryotank_warning"
 			}
 		},
 		{
@@ -131,10 +132,12 @@ public class Unlocks : KMonoBehaviour
 		},
 		{
 			"space",
-			new string[2]
+			new string[4]
 			{
 				"display_spaceprop1",
-				"notice_pilot"
+				"notice_pilot",
+				"journal_inspace",
+				"notes_firstcolony"
 			}
 		}
 	};
@@ -231,6 +234,16 @@ public class Unlocks : KMonoBehaviour
 			return true;
 		}
 		return unlocked.Contains(unlockID);
+	}
+
+	public void Lock(string unlockID)
+	{
+		if (unlocked.Contains(unlockID))
+		{
+			unlocked.Remove(unlockID);
+			SaveUnlocks();
+			Game.Instance.Trigger(1594320620, unlockID);
+		}
 	}
 
 	public void Unlock(string unlockID)
