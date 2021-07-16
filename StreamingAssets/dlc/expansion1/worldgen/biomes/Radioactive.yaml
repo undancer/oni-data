@@ -73,6 +73,8 @@ TerrainBiomeLookupTable:
       bandSize: 0.05
     - content: SolidCarbonDioxide
       bandSize: 0.15
+      overrides:
+        massOverride: 8
     - content: UraniumOre
       bandSize: 0.04
     Frozen:
@@ -98,3 +100,5 @@ TerrainBiomeLookupTable:
       bandSize: 0.1
     - content: SolidCarbonDioxide
       bandSize: 0.15
+      overrides:
+        massOverride: 8

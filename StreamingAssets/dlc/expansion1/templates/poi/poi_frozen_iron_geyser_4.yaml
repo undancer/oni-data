@@ -55,7 +55,7 @@ cells:
   location_x: 1
   location_y: -4
 - element: SolidCarbonDioxide
-  mass: 100
+  mass: 1
   temperature: 176.455719
   location_x: -6
   location_y: -3
@@ -351,7 +351,7 @@ cells:
   location_x: -3
   location_y: 3
 - element: SolidCarbonDioxide
-  mass: 100
+  mass: 1
   temperature: 189.406998
   location_x: -2
   location_y: 3

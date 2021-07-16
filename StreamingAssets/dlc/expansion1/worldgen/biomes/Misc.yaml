@@ -62,3 +62,50 @@ TerrainBiomeLookupTable:
       bandSize: 0.21
     - content: Cuprite
       bandSize: 0.50
+    SoftDust:
+    - content: MaficRock
+      bandSize: 0.01
+    - content: Regolith
+      bandSize: 0.01
+    - content: Rust
+      bandSize: 0.01
+    - content: Regolith
+      bandSize: 0.01
+    - content: MaficRock
+      bandSize: 0.05
+    - content: Regolith
+      bandSize: 0.02
+    - content: Rust
+      bandSize: 0.03
+    - content: Regolith
+      bandSize: 0.01
+    - content: Rust
+      bandSize: 0.035
+    - content: IronOre
+      bandSize: 0.05
+    - content: MaficRock
+      bandSize: 0.50
+    - content: Regolith
+      bandSize: 0.33
+    DeadOasis:
+    - content: Oxygen
+      bandSize: 0.03
+      massOverride: 
+    - content: CrushedIce
+      bandSize: 0.01
+    - content: Ice
+      bandSize: 0.01
+    - content: Regolith
+      bandSize: 0.01
+    - content: MaficRock
+      bandSize: 0.05
+    - content: Regolith
+      bandSize: 0.02
+    - content: Regolith
+      bandSize: 0.01
+    - content: MaficRock
+      bandSize: 0.05
+    - content: Regolith
+      bandSize: 0.21
+    - content: CrushedIce
+      bandSize: 0.50

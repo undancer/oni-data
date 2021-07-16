@@ -27,29 +27,21 @@ cells:
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -5
   location_y: -6
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -4
   location_y: -6
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -3
   location_y: -6
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -2
   location_y: -6
 - element: Dirt
@@ -99,22 +91,16 @@ cells:
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 8
   location_y: -6
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 9
   location_y: -6
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 10
   location_y: -6
 - element: SedimentaryRock
@@ -135,15 +121,11 @@ cells:
 - element: Mud
   mass: 1000
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -10
   location_y: -5
 - element: Mud
   mass: 1000
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -9
   location_y: -5
 - element: SedimentaryRock
@@ -169,29 +151,21 @@ cells:
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -4
   location_y: -5
 - element: Mud
   mass: 1000
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -3
   location_y: -5
 - element: Mud
   mass: 1000
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -2
   location_y: -5
 - element: Mud
   mass: 1000
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -1
   location_y: -5
 - element: SedimentaryRock
@@ -216,22 +190,16 @@ cells:
 - element: Mud
   mass: 1000
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 4
   location_y: -5
 - element: Mud
   mass: 1000
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 5
   location_y: -5
 - element: Mud
   mass: 1000
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 6
   location_y: -5
 - element: Dirt
@@ -247,22 +215,16 @@ cells:
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 9
   location_y: -5
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 10
   location_y: -5
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 11
   location_y: -5
 - element: SedimentaryRock
@@ -293,8 +255,6 @@ cells:
 - element: Mud
   mass: 1000
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -11
   location_y: -4
 - element: SandStone
@@ -305,8 +265,6 @@ cells:
 - element: Mud
   mass: 1000
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -9
   location_y: -4
 - element: SandStone
@@ -451,15 +409,11 @@ cells:
 - element: Mud
   mass: 1000
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -10
   location_y: -3
 - element: Mud
   mass: 1000
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -9
   location_y: -3
 - element: Oxygen
@@ -609,8 +563,6 @@ cells:
 - element: Mud
   mass: 1000
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -9
   location_y: -2
 - element: Oxygen
@@ -760,8 +712,6 @@ cells:
 - element: Mud
   mass: 1000
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -9
   location_y: -1
 - element: Oxygen
@@ -1002,8 +952,6 @@ cells:
 - element: Mud
   mass: 1000
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 15
 - element: Oxygen
   mass: 0.264470845
@@ -1438,29 +1386,21 @@ cells:
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -11
   location_y: 4
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -10
   location_y: 4
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -9
   location_y: 4
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -8
   location_y: 4
 - element: Fertilizer
@@ -1520,8 +1460,6 @@ cells:
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 4
   location_y: 4
 - element: ToxicMud
@@ -1577,29 +1515,21 @@ cells:
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -10
   location_y: 5
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -9
   location_y: 5
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -8
   location_y: 5
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: -7
   location_y: 5
 - element: Fertilizer
@@ -1649,15 +1579,11 @@ cells:
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 3
   location_y: 5
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 4
   location_y: 5
 - element: CarbonDioxide
@@ -1760,43 +1686,31 @@ cells:
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 2
   location_y: 6
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 3
   location_y: 6
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 4
   location_y: 6
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 5
   location_y: 6
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 6
   location_y: 6
 - element: Cobaltite
   mass: 1250
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 7
   location_y: 6
 - element: SedimentaryRock
@@ -1945,8 +1859,6 @@ cells:
 - element: Mud
   mass: 1000
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 15
   location_y: 1
 - element: SedimentaryRock
@@ -2428,8 +2340,6 @@ buildings:
   location_y: -3
   element: Granite
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
 - id: GravitasDoor
   location_x: -8
   location_y: -3

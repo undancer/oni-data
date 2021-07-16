@@ -34,11 +34,6 @@ worldPlacements:
   allowedRings:
     min: 5
     max: 7
-- world: expansion1::worlds/NiobiumMoonlet # Niobium renewable
-  buffer: 3
-  allowedRings:
-    min: 7
-    max: 10
 - world: expansion1::worlds/MooMoonlet
   buffer: 3
   allowedRings:
@@ -49,9 +44,26 @@ worldPlacements:
   allowedRings:
     min: 6
     max: 8
+- world: expansion1::worlds/NiobiumMoonlet # Niobium renewable
+  buffer: 3
+  allowedRings:
+    min: 7
+    max: 10
+- world: expansion1::worlds/RegolithMoonlet # Meteors, voles, regolith
+  buffer: 4
+  allowedRings:
+    min: 5
+    max: 10
 
 poiPlacements:
   # harvestable POIs
+  - pois:
+      - TemporalTear
+    numToSpawn: 1
+    avoidClumping: false
+    allowedRings:
+      min: 8
+      max: 11
 
   - pois: # spawn all of these
       - HarvestableSpacePOI_SandyOreField # specific to a sandstone start asteroid!

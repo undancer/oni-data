@@ -1,18 +1,18 @@
-id: "ClonedRaccons"
-title: STRINGS.CODEX.A1_CLONEDRACCONS.TITLE
+id: "ClonedRaccoons"
+title: STRINGS.CODEX.A1_CLONEDRACCOONS.TITLE
 dlcIds:
   - "EXPANSION1_ID"
 
 contentContainers:
 #-----------------------------
   - contentLayout: Vertical
-    lockID: notes_clonedraccons
+    lockID: notes_clonedraccoons
     content:
       - !CodexText
-          stringKey: STRINGS.CODEX.A1_CLONEDRACCONS.TITLE
+          stringKey: STRINGS.CODEX.A1_CLONEDRACCOONS.TITLE
           style: Title
       - !CodexText
-          stringKey: STRINGS.CODEX.A1_CLONEDRACCONS.SUBTITLE
+          stringKey: STRINGS.CODEX.A1_CLONEDRACCOONS.SUBTITLE
           style: Subtitle
       - !CodexDividerLine
           preferredWidth: -1
@@ -21,7 +21,7 @@ contentContainers:
     lockID: notes_clonedrabbits
     content:
       - !CodexText
-          stringKey: STRINGS.CODEX.A1_CLONEDRABBITS.BODY.CONTAINER1
+          stringKey: STRINGS.CODEX.A1_CLONEDRACCOONS.BODY.CONTAINER1
           style: Body
 
 #      - Image:

@@ -1,5 +1,5 @@
 id: "SpacePropFacilityDisplay1"
-title: STRINGS.CODEX.B1_SPACEPROPFACILITYDISPLAY1.TITLE
+title: STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.TITLE
 dlcIds:
   - "EXPANSION1_ID"
 
@@ -9,10 +9,10 @@ contentContainers:
     lockID: display_spaceprop1
     content:
       - !CodexText
-          stringKey: STRINGS.CODEX.B1_SPACEPROPFACILITYDISPLAY1.TITLE
+          stringKey: STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.TITLE
           style: Title
       - !CodexText
-          stringKey: STRINGS.CODEX.B1_SPACEPROPFACILITYDISPLAY1.SUBTITLE
+          stringKey: STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.SUBTITLE
           style: Subtitle
       - !CodexDividerLine
           preferredWidth: -1
@@ -21,7 +21,7 @@ contentContainers:
     lockID: display_spaceprop1
     content:
       - !CodexText
-          stringKey: STRINGS.CODEX.B1_SPACEPROPFACILITYDISPLAY1.BODY.CONTAINER1
+          stringKey: STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.BODY.CONTAINER1
           style: Body
 
 #-----------------------------
@@ -29,5 +29,5 @@ contentContainers:
     lockID: display_spaceprop1
     content:
       - !CodexText
-          stringKey: STRINGS.CODEX.B1_SPACEPROPFACILITYDISPLAY1.BODY.CONTAINER2
+          stringKey: STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.BODY.CONTAINER2
           style: Body

@@ -6,7 +6,7 @@ dlcIds:
 contentContainers:
 #-----------------------------
   - contentLayout: Vertical
-    lockID: //--TODO
+    lockID: #//--TODO
     content:
       - !CodexText
           stringKey: STRINGS.CODEX.MYLOG.BODY.CLUSTERWORLDS.TITLE

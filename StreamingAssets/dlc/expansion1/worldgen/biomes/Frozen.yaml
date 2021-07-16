@@ -13,7 +13,7 @@ TerrainBiomeLookupTable:
     - content: SolidCarbonDioxide
       bandSize: 0.1
       overrides:
-        massOverride: 100.0
+        massOverride: 8
     - content: LiquidOxygen
       bandSize: 0.1
       overrides:
@@ -21,7 +21,7 @@ TerrainBiomeLookupTable:
     - content: SolidCarbonDioxide
       bandSize: 0.1
       overrides:
-        massOverride: 100.0
+        massOverride: 8
     - content: BrineIce
       bandSize: 0.5
     - content: LiquidOxygen
@@ -31,7 +31,7 @@ TerrainBiomeLookupTable:
     - content: SolidCarbonDioxide
       bandSize: 0.1
       overrides:
-        massOverride: 100
+        massOverride: 8
     - content: BrineIce
       bandSize: 0.5
     SaltySlush:

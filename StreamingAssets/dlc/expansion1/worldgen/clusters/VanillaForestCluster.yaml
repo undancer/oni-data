@@ -1,19 +1,19 @@
-name: STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_CLUSTER.NAME
-description: STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_CLUSTER.DESCRIPTION
+name: STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.NAME
+description: STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.DESCRIPTION
 requiredDlcId: EXPANSION1_ID
-coordinatePrefix: V-SNDST-C
-menuOrder: 0
+coordinatePrefix: V-FRST-C
+menuOrder: 1
 clusterCategory: 1
 
 startWorldIndex: 0
 numRings: 12
 worldPlacements:
-- world: expansion1::worlds/VanillaSandstoneDefault
+- world: expansion1::worlds/VanillaForestDefault
   buffer: 2
   allowedRings:
     min: 0
     max: 0
-- world: expansion1::worlds/MediumRadioactiveVanillaWarpPlanet # Rocket world
+- world: expansion1::worlds/MediumSandyRadioactiveVanillaWarpPlanet # Rocket world
   buffer: 2
   allowedRings:
     min: 3
@@ -60,7 +60,7 @@ poiPlacements:
       max: 11
       
   - pois: # spawn all of these
-      - HarvestableSpacePOI_SandyOreField # specific to a sandstone start asteroid!
+      - HarvestableSpacePOI_ForestyOreField # specific to a sandstone start asteroid!
     numToSpawn: 1
     allowedRings:
       min: 2
@@ -97,7 +97,7 @@ poiPlacements:
       - HarvestableSpacePOI_RockyAsteroidField
       - HarvestableSpacePOI_InterstellarIceField
       - HarvestableSpacePOI_InterstellarOcean
-      - HarvestableSpacePOI_ForestyOreField
+      - HarvestableSpacePOI_SandyOreField
       - HarvestableSpacePOI_SwampyOreField
       - HarvestableSpacePOI_OrganicMassField
     numToSpawn: 5

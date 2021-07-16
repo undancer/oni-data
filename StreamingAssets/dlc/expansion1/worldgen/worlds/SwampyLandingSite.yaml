@@ -105,7 +105,7 @@ worldTemplateRules:
   # SwampyRenewableMetallic
   - names:
     - expansion1::poi/poi_molten_gold_volcano
-    - expansion1::poi/poi_molten_aluminum_volcano
+    - expansion1::poi/poi_molten_cobalt_volcano
     listRule: GuaranteeAll
     priority: 100
     allowedCellsFilter:
@@ -118,7 +118,7 @@ worldTemplateRules:
         maxDistance: 3
   - names: # Extra if there is space
     - expansion1::poi/poi_molten_gold_volcano
-    - expansion1::poi/poi_molten_aluminum_volcano
+    - expansion1::poi/poi_molten_cobalt_volcano
     listRule: TryAll
     allowDuplicates: true
     priority: 100

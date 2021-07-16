@@ -1,68 +1,73 @@
-name: STRINGS.WORLDS.SANDSTONE_DEFAULT.NAME
-description: STRINGS.WORLDS.SANDSTONE_DEFAULT.DESCRIPTION
-nameTable: TERRA
-asteroidIcon: asteroid_vanilla_sandstone_start_kanim
+name: STRINGS.WORLDS.FOREST_LUSH.NAME # Verdante
+description: STRINGS.WORLDS.FOREST_LUSH.DESCRIPTION
+nameTable: FOREST
+asteroidIcon: asteroid_vanilla_forest_start_kanim
 disableWorldTraits: true
 
 worldsize:
-#  X: 256
-#  Y: 412
   X: 240
   Y: 380
 layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
 #                                in order to use this.
 
+defaultsOverrides:
+  startingWorldElements: [] # remove the algae check
+
 # List all the subworld files to load
 subworldFiles:
-  - name: subworlds/sandstone/SandstoneStart
-  - name: subworlds/sandstone/SandstoneMiniMetal
+  - name: subworlds/forest/ForestStart
+  - name: subworlds/forest/ForestMiniWater
+    weight: 0.5
     minCount: 1
-  - name: subworlds/sandstone/SandstoneMiniWater
-    minCount: 2
-  - name: subworlds/sandstone/SandstoneMiniAlgae
-    minCount: 2
+    maxCount: 4
+  - name: subworlds/forest/ForestMiniOxy
+    minCount: 1
+  - name: subworlds/forest/ForestMiniMetal
+    minCount: 1
+  - name: subworlds/forest/Forest
   - name: subworlds/marsh/HotMarsh
     minCount: 5
   - name: subworlds/jungle/Jungle
     minCount: 5
-  - name: subworlds/frozen/Frozen
+  - name: subworlds/magma/Bottom
+  - name: subworlds/oil/OilPockets
+    weight: 0.7
     minCount: 5
   - name: subworlds/ocean/Ocean
     minCount: 5
-  - name: subworlds/magma/Bottom
-  - name: expansion1::subworlds/oil/OilWells
-  - name: expansion1::subworlds/oil/OilSparse
+  - name: subworlds/rust/Rust
+    minCount: 5
   - name: expansion1::subworlds/space/SpaceWithNoBorder
-#  - name: subworlds/space/Surface
   - name: expansion1::subworlds/space/HospitableClassicSurface
-  - name: expansion1::subworlds/wasteland/WastelandBeetle
-  - name: expansion1::subworlds/wasteland/WastelandWorm
   - name: expansion1::subworlds/radioactive/UraniumSprinkles
+    maxCount: 4
+  - name: expansion1::subworlds/swamp/Swamp
+    minCount: 5
+  - name: subworlds/rust/RustFrozen
+    minCount: 2
+    maxCount: 4
 
-startSubworldName: subworlds/sandstone/SandstoneStart
-startingBaseTemplate: bases/sandstoneBase
-startingBasePositionHorizontal:
-  min: 0.5
-  max: 0.5
-startingBasePositionVertical:
-  min: 0.55
-  max: 0.55
+startSubworldName: subworlds/forest/ForestStart
+startingBaseTemplate: bases/forestBase
+
+#seasons:
+#  - MeteorShowers
 
 # Specify where subworlds can spawn. These rules are processed in order and their effects are cumulative.
 unknownCellsAllowedSubworlds: 
   - tagcommand: Default
     command: Replace
     subworldNames:
-      - subworlds/sandstone/SandstoneStart
+      - subworlds/forest/Forest
   - tagcommand: DistanceFromTag
     tag: AtStart
     minDistance: 1
     maxDistance: 1
     command: Replace
     subworldNames:
-      - subworlds/sandstone/SandstoneMiniMetal
-      - subworlds/sandstone/SandstoneMiniWater
-      - subworlds/sandstone/SandstoneMiniAlgae
+      - subworlds/forest/ForestMiniOxy
+      - subworlds/forest/ForestMiniWater
+      - subworlds/forest/ForestMiniMetal
   # Ring-1
   - tagcommand: DistanceFromTag
     tag: AtStart
@@ -71,8 +76,7 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - subworlds/marsh/HotMarsh
-      - subworlds/jungle/Jungle
-      - expansion1::subworlds/wasteland/WastelandBeetle
+      - subworlds/ocean/Ocean
   # Ring-2
   - tagcommand: DistanceFromTag
     tag: AtStart
@@ -80,11 +84,9 @@ unknownCellsAllowedSubworlds:
     maxDistance: 3
     command: Replace
     subworldNames:
-      - subworlds/marsh/HotMarsh
       - subworlds/jungle/Jungle
-      - subworlds/ocean/Ocean
-      - subworlds/frozen/Frozen
-      - expansion1::subworlds/wasteland/WastelandBeetle
+      - expansion1::subworlds/swamp/Swamp
+      - subworlds/rust/Rust
   # Ring-3
   - tagcommand: DistanceFromTag
     tag: AtStart
@@ -93,22 +95,17 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - subworlds/marsh/HotMarsh
-      - subworlds/jungle/Jungle
       - subworlds/ocean/Ocean
-      - subworlds/frozen/Frozen
       - expansion1::subworlds/radioactive/UraniumSprinkles
-      - expansion1::subworlds/wasteland/WastelandWorm
-  # Ring-4
+      - expansion1::subworlds/swamp/Swamp
   - tagcommand: DistanceFromTag
     tag: AtStart
     minDistance: 5
     maxDistance: 999
     command: Replace
     subworldNames:
-      - subworlds/marsh/HotMarsh
-      - subworlds/jungle/Jungle
+      - subworlds/rust/RustFrozen
       - subworlds/ocean/Ocean
-      - subworlds/frozen/Frozen
       - expansion1::subworlds/radioactive/UraniumSprinkles
   # Core
   - tagcommand: AtTag
@@ -123,8 +120,7 @@ unknownCellsAllowedSubworlds:
     maxDistance: 1
     command: Replace
     subworldNames:
-      - expansion1::subworlds/oil/OilWells
-      - expansion1::subworlds/oil/OilSparse
+      - subworlds/oil/OilPockets
   # Space
   - tagcommand: DistanceFromTag
     tag: AtSurface
@@ -142,7 +138,7 @@ unknownCellsAllowedSubworlds:
     subworldNames:
       - expansion1::subworlds/space/HospitableClassicSurface
 
-worldTemplateRules:  
+worldTemplateRules:
   # Jungle
   - names:
       - poi/jungle/geyser_steam
@@ -174,23 +170,12 @@ worldTemplateRules:
     allowedCellsFilter:
       - command: Replace
         zoneTypes: [BoggyMarsh]
-  # Frozen
-  - names:
-      - poi/frozen/heatsink_a
-      - poi/frozen/heatsink_b
-      - poi/frozen/heatsink_c
-      - poi/frozen/heatsink_d
-    listRule: GuaranteeSomeTryMore
-    someCount: 1
-    moreCount: 2
-    priority: 100 
-    allowedCellsFilter:
-      - command: Replace
-        zoneTypes: [FrozenWastes]
   # Ocean
   - names:
       - poi/poi_ocean_geyser_saltwater
-    listRule: GuaranteeOne
+    listRule: GuaranteeSome
+    someCount: 1
+    times: 2
     priority: 100 
     allowedCellsFilter:
       - command: Replace
@@ -218,7 +203,7 @@ worldTemplateRules:
     - expansion1::poi/warp/receiver
     - expansion1::poi/warp/teleporter
     listRule: GuaranteeAll
-    priority: 90
+    priority: 500
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag
@@ -226,14 +211,14 @@ worldTemplateRules:
         minDistance: 2
         maxDistance: 3
       - command: IntersectWith
-        zoneTypes: [ Ocean, BoggyMarsh, ToxicJungle, Wasteland ]
+        zoneTypes: [ Ocean, BoggyMarsh, ToxicJungle, Swamp, Rust ]
       - command: ExceptWith
         tagcommand: AtTag
         tag: NoGravitasFeatures
   - names:
       - expansion1::poi/genericGravitas/poi_office
     listRule: GuaranteeAll
-    priority: 90
+    priority: 100
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag
@@ -253,7 +238,8 @@ worldTemplateRules:
         tag: AtSurface
         minDistance: 0
         maxDistance: 2
-  # Curated Geysers
+
+# Curated Geysers
   - names: 
     - expansion1::geysers/liquid_sulfur
     - geysers/liquid_co2
@@ -361,3 +347,17 @@ worldTemplateRules:
       tag: AtSurface
       minDistance: 0
       maxDistance: 2
+# Frozen
+  - names:
+      - poi/frozen/heatsink_a
+      - poi/frozen/heatsink_b
+      - poi/frozen/heatsink_c
+      - poi/frozen/heatsink_d
+    listRule: GuaranteeSomeTryMore
+    someCount: 2
+    moreCount: 2
+    priority: 100 
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - subworlds/rust/RustFrozen

@@ -33,6 +33,8 @@ startingBasePositionVertical:
 subworldFiles:
   - name: expansion1::subworlds/sandstone/SandstoneWarpStart
   - name: expansion1::subworlds/sandstone/med_SandstoneWarp
+  - name: expansion1::subworlds/sandstone/SandstoneMini
+    minCount: 2
   - name: subworlds/space/Space
   - name: expansion1::subworlds/space/SpaceWithSaltyBorder
   - name: expansion1::subworlds/magma/BottomSmall
@@ -43,7 +45,7 @@ subworldFiles:
   - name: expansion1::subworlds/rust/med_Rust
     minCount: 2
   - name: expansion1::subworlds/ocean/med_OceanSurface
-    minCount: 2
+    minCount: 4
 
 unknownCellsAllowedSubworlds: 
   - tagcommand: Default
@@ -51,6 +53,24 @@ unknownCellsAllowedSubworlds:
     subworldNames:
       - expansion1::subworlds/sandstone/med_SandstoneWarp
       - expansion1::subworlds/rust/med_Rust
+  # Ring-1
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/sandstone/SandstoneMini
+  # Surface
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/sandstone/med_SandstoneWarp
+      - expansion1::subworlds/ocean/med_OceanSurface
+  # Space
   - tagcommand: AtTag
     tag: AtSurface
     command: Replace
@@ -63,22 +83,7 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - expansion1::subworlds/space/SpaceWithSaltyBorder
-  - tagcommand: DistanceFromTag
-    tag: AtSurface
-    minDistance: 2
-    maxDistance: 2
-    command: Replace
-    subworldNames:
-      - expansion1::subworlds/sandstone/med_SandstoneWarp
-      - expansion1::subworlds/ocean/med_OceanSurface
-  - tagcommand: DistanceFromTag
-    tag: AtDepths
-    minDistance: 2
-    maxDistance: 2
-    command: Replace
-    subworldNames:
-      - expansion1::subworlds/sandstone/med_SandstoneWarp
-      - expansion1::subworlds/rust/med_Rust
+  # Above Core
   - tagcommand: DistanceFromTag
     tag: AtDepths
     minDistance: 1
@@ -88,6 +93,7 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/oil/OilSparse
       - expansion1::subworlds/oil/OilWells
       - expansion1::subworlds/rust/med_Rust
+  # Core
   - tagcommand: DistanceFromTag
     tag: AtDepths
     minDistance: 0
@@ -125,7 +131,7 @@ worldTemplateRules:
     - expansion1::poi/warp/sender
     - expansion1::poi/warp/receiver
     listRule: GuaranteeAll
-    priority: 500
+    priority: 90
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag

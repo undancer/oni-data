@@ -24,6 +24,8 @@ TerrainBiomeLookupTable:
     Core:
     - content: SolidCarbonDioxide
       bandSize: 0.2
+      overrides:
+        massOverride: 8
     - content: Granite
       bandSize: 0.3
     - content: IgneousRock

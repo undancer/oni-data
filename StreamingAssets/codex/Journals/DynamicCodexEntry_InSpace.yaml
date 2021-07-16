@@ -22,9 +22,3 @@ contentContainers:
           stringKey: STRINGS.CODEX.B7_INSPACE.BODY.CONTAINER1
           style: Body
 #-----------------------------
-  - contentLayout: Vertical
-    lockID: journal_inspace
-    content:
-      - !CodexText
-          stringKey: STRINGS.CODEX.B7_INSPACE.BODY.CONTAINER2
-          style: Body

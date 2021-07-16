@@ -1,7 +1,18 @@
 msgid ""
 msgstr ""
-"Application: Oxygen Not Included"
-"POT Version: 2.0"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Application: Oxygen Not Included\n"
+"POT Version: 2.0\n"
+"X-Generator: Poedit 2.2.3\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. STRINGS.BUILDING.DETAILS.USE_COUNT
 msgctxt "STRINGS.BUILDING.DETAILS.USE_COUNT"
@@ -950,13 +961,13 @@ msgstr "Выберите рецепт, чтобы начать производ�
 
 #. STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.NAME"
-msgid "Waiting For Radbolts"
-msgstr "Ожидаются радболты"
+msgid "Waiting For Radbolts ({CurrentHEP}/{HEPRequired})"
+msgstr "Ожидаются радболты ({CurrentHEP}/{HEPRequired})"
 
 #. STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.TOOLTIP"
-msgid "A queued recipe requires more Radbolts than are currently stored"
-msgstr "Рецепт в очереди требует больше радболтов, чем имеется на складе."
+msgid "A queued recipe requires more Radbolts than are currently stored.\n\nCurrently stored: {CurrentHEP}\nRequired for recipe: {HEPRequired}"
+msgstr "Рецепт в очереди требует больше радболтов, чем имеется на складе.\n\nНа складе: {CurrentHEP}\nТребуется: {HEPRequired}"
 
 #. STRINGS.BUILDING.STATUSITEMS.FLIGHTALLCARGOFULL.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.FLIGHTALLCARGOFULL.NAME"
@@ -2993,6 +3004,16 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.TANNINGLIGHTSUFFICIENT.TOOLTIP"
 msgid "There is sufficient <link=\"LIGHT\">Light</link> here to create pleasing skin crisping"
 msgstr "<link=\"LIGHT\">Свет</link> здесь достаточно ярок и позволяет немного поджариться"
 
+#. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.NAME"
+msgid "Too few Printing Pods {progress}"
+msgstr "Недостаточно печатных станков {progress}"
+
+#. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.TOOLTIP"
+msgid "This device relies on a sufficiently large network of activated Printing Pods{progress}"
+msgstr "Это устройство работает благодаря достаточно обширной сети активированных печатных станков {progress}"
+
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_LOS.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_LOS.NAME"
 msgid "Line of Sight: Obstructed"
@@ -3005,23 +3026,23 @@ msgstr "Для работы этого устройства необходим �
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_TARGET.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_TARGET.NAME"
-msgid "Target: None"
-msgstr "Цель: не выбрана"
+msgid "Temporal Tear not revealed"
+msgstr "Временной разлом не обнаружен"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_TARGET.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_TARGET.TOOLTIP"
-msgid "\"Awaiting transmission of coordinates...\""
-msgstr "\"Ожидается передача координат...\""
+msgid "This machine is meant to target something in space, but the target is not yet revealed."
+msgstr "Это устройство воздействует на какую-то цель в космосе, но цель пока не обнаружена."
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.NAME"
-msgid "Progress: {progress}"
-msgstr "Прогресс: {progress}"
+msgid "Charging Progress: {progress}"
+msgstr "Прогресс зарядки: {progress}"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.TOOLTIP"
-msgid "Operation will commence once this device is fully charged"
-msgstr "Действие начнется, как только это устройство будет полностью заряжено"
+msgid "This device must be charged with a high number of Radbolts. Operation can commence once this device is fully charged."
+msgstr "Устройство должно быть заряжено большим количеством радболтов. Действие начнется, как только это устройство будет полностью заряжено."
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION"
@@ -3538,6 +3559,11 @@ msgctxt "STRINGS.BUILDINGS.DAMAGESOURCES.CONDUIT_CONTENTS_FROZE"
 msgid "pipe contents becoming too cold"
 msgstr "содержимое трубы слишком холодное"
 
+#. STRINGS.BUILDINGS.DAMAGESOURCES.CORROSIVE_ELEMENT
+msgctxt "STRINGS.BUILDINGS.DAMAGESOURCES.CORROSIVE_ELEMENT"
+msgid "corrosive element"
+msgstr "коррозионный элемент"
+
 #. STRINGS.BUILDINGS.DAMAGESOURCES.LIQUID_PRESSURE
 msgctxt "STRINGS.BUILDINGS.DAMAGESOURCES.LIQUID_PRESSURE"
 msgid "neighboring liquid pressure"
@@ -3762,6 +3788,16 @@ msgstr "Анализирует и извлекает <link=\"UNOBTANIUM\">ней
 msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.NAME"
 msgid "<link=\"ARTIFACTANALYSISSTATION\">Artifact Analysis Station</link>"
 msgstr "<link=\"ARTIFACTANALYSISSTATION\">Станция анализа артефактов</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.PAYLOAD_DROP_RATE
+msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.PAYLOAD_DROP_RATE"
+msgid "Vacillator Recharge drop chance: {chance}"
+msgstr "Шанс получения зарядки калибратора: {chance}"
+
+#. STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.PAYLOAD_DROP_RATE_TOOLTIP
+msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.PAYLOAD_DROP_RATE_TOOLTIP"
+msgid "This artifact has a {chance} to drop a Vacillator Recharge when analyzed at the <link=\"ARTIFACTANALYSISSTATION\">Artifact Analysis Station</link>"
+msgstr "При анализе на <link=\"ARTIFACTANALYSISSTATION\">Станции анализа артефактов</link> этот артефакт дает зарядку калибратора с вероятностью {chance}"
 
 #. STRINGS.BUILDINGS.PREFABS.ARTIFACTCARGOBAY.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTCARGOBAY.DESC"
@@ -8500,8 +8536,8 @@ msgstr "Собирает ресурсы из вселенной."
 
 #. STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.EFFECT"
-msgid "Enables a rocket to drill into interstellar debris and collect <link=\"ELEMENTSGAS\">gas</link>, <link=\"ELEMENTSLIQUID\">liquid</link> and <link=\"ELEMENTSSOLID\">solid</link> resources from space.\n\nMust be built at the top of a rocket."
-msgstr "Позволяет ракете бурить космические обломки и собирать <link=\"ELEMENTSGAS\">газ</link>, <link=\"ELEMENTSLIQUID\">жидкость</link> и <link=\"ELEMENTSSOLID\">твердые ресурсы</link>.\n\nНужно строить в верхней части ракеты."
+msgid "Enables a rocket to drill into interstellar debris and collect <link=\"ELEMENTSGAS\">gas</link>, <link=\"ELEMENTSLIQUID\">liquid</link> and <link=\"ELEMENTSSOLID\">solid</link> resources from space.\n\nMust be built at the top of a rocket with <link=\"ELEMENTSGAS\">gas</link>, <link=\"ELEMENTSLIQUID\">liquid</link> or <link=\"ELEMENTSSOLID\">solid</link> Cargo Module attached to store the appropriate resources."
+msgstr "Позволяет ракете бурить космические обломки и собирать <link=\"ELEMENTSGAS\">газ</link>, <link=\"ELEMENTSLIQUID\">жидкость</link> и <link=\"ELEMENTSSOLID\">твердые ресурсы</link>.\n\nНужно строить в верхней части ракеты с установленным грузовым модулем для <link=\"ELEMENTSGAS\">газа</link>, <link=\"ELEMENTSLIQUID\">жидкости</link> или <link=\"ELEMENTSSOLID\">твердых ресурсов</link> соответственно."
 
 #. STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.NAME"
@@ -9410,7 +9446,7 @@ msgstr "Рабочее место умершего робототехника, �
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASROBTICTABLE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASROBTICTABLE.NAME"
-msgid "Robitics Research Desk"
+msgid "Robotics Research Desk"
 msgstr "Рабочий стол робототехника"
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASSHELF.DESC
@@ -11538,6 +11574,16 @@ msgctxt "STRINGS.CLUSTER_NAMES.TWO_SMALL_WORLDS.NAME"
 msgid "Two Small Worlds"
 msgstr "Два маленьких мира"
 
+#. STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.DESCRIPTION
+msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.DESCRIPTION"
+msgid "A cluster of planets with a larger foresty planetoid to start on."
+msgstr "Скопление планет с большим лесистым планетоидом, с которого можно начать."
+
+#. STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.NAME
+msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.NAME"
+msgid "Large Forest Cluster"
+msgstr "Большое лесистое скопление"
+
 #. STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_CLUSTER.DESCRIPTION
 msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_CLUSTER.DESCRIPTION"
 msgid "A cluster of planets with a larger earthy planetoid to start on."
@@ -12660,23 +12706,28 @@ msgstr "Торт для офиса"
 
 #. STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER1"
-msgid "Meet The Pilot:\nCaptain Mae Johannsen\n\nFrom the time she was old enough to walk Captain Johannsen dreamed of reaching the sky. Growing up on an air force base she came to love the sound jet engines roaring overhead.\n\nAt 16 she became the youngest pilot to fly a fighter jet and at 22 she had already entered the space flight program.\n\nFour years later Gravitas nabbed her for an exclusive contract piloting our space shuttles. In her time at Gravitas, Captain Johannsen has logged over 1,000 hours space flight time shuttling and deploying satellites to low Earth Orbits and has just been named the pilot of our inaugural civilian space tourist program, slated to begin in the next year.\n\nGravitas is excited to have Captain Johannsen in the pilot seat as we reach for the stars...and beyond!"
-msgstr "Познакомьтесь с пилотом:\nкапитан Мэй Йоханнсен\n\nС самых первых шагов капитан Йоханссен мечтала достичь неба. Она выросла на военно-воздушной базе и с детства полюбила рев реактивных двигателей над головой.\n\nВ 16 лет она стала самым молодым пилотом истребителя, а в 22 года уже участвовала в программе космических полетов. \n\nЧетыре года спустя компания Gravitas заключила с ней эксклюзивный контракт на пилотирование своих космических шаттлов. За время работы в Gravitas капитан Йоханнсен наработала более 1000 часов космического полета, совершая челночные рейсы и отправляя спутники на низкие околоземные орбиты. Теперь же она назначена пилотом нашей первой программы гражданского космического туризма, начало которой запланировано на следующий год.\n\nКомпания Gravitas рада видеть капитана Йоханнсен в кресле пилота, зная, что для нее и бесконечность не предел!"
+msgid "<indent=%5>From the time she was old enough to walk Captain Johannsen dreamed of reaching the sky. Growing up on an air force base she came to love the sound jet engines roaring overhead. At 16 she became the youngest pilot ever to fly a fighter jet, and at 22 she had already entered the space flight program.\n\nFour years later Gravitas nabbed her for an exclusive contract piloting our space shuttles. In her time at Gravitas, Captain Johannsen has logged over 1,000 hours space flight time shuttling and deploying satellites to Low Earth Orbits and has just been named the pilot of our inaugural civilian space tourist program, slated to begin in the next year.\n\nGravitas is excited to have Captain Johannsen in the pilot seat as we reach for the stars...and beyond!</indent>"
+msgstr "<indent=%5>С самых первых шагов капитан Йоханнсен мечтала подняться в небо. Она выросла на военно-воздушной базе и уже в детстве полюбила рев реактивных двигателей над головой. В 16 лет она стала самым молодым пилотом истребителя, а в 22 уже участвовала в программе космических полетов.\n\nЧетыре года спустя компания Gravitas заключила с ней эксклюзивный контракт на пилотирование своих космических шаттлов. За время работы в Gravitas капитан Йоханнсен наработала более 1 000 часов космического полета, совершая челночные рейсы и отправляя спутники на низкие околоземные орбиты. Теперь же она назначена пилотом первой программы гражданского космического туризма, начало которой запланировано на следующий год.\n\nКомпания Gravitas рада видеть капитана Йоханнсен в кресле пилота, зная, что для нее и бесконечность не предел!</indent>"
 
 #. STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER2
 msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER2"
-msgid "\n\nBrought to you by the Gravitas Facility."
-msgstr "\n\nПродукт предприятия Gravitas."
+msgid "<indent=%10><smallcaps>\n\nBrought to you by the Gravitas Facility.</indent>"
+msgstr "<indent=%10><smallcaps>\n\nПродукт предприятия Gravitas.</indent>"
 
 #. STRINGS.CODEX.B2_MEETTHEPILOT.SUBTITLE
 msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.SUBTITLE"
-msgid "PUBLIC RELEASE"
-msgstr "ОТКРЫТАЯ ПУБЛИКАЦИЯ"
+msgid "ENCRYPTION LEVEL: ONE"
+msgstr "УРОВЕНЬ ШИФРОВАНИЯ: ПЕРВЫЙ"
 
 #. STRINGS.CODEX.B2_MEETTHEPILOT.TITLE
 msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.TITLE"
-msgid "The Future of Space Flight"
-msgstr "Будущее космических полетов"
+msgid "Meet the Pilot"
+msgstr "Знакомство с пилотом"
+
+#. STRINGS.CODEX.B2_MEETTHEPILOT.TITLE2
+msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.TITLE2"
+msgid "Captain Mae Johannsen"
+msgstr "Капитан Мэй Йоханнсен"
 
 #. STRINGS.CODEX.B2_TEMPORALBOWUPDATE.BODY.CONTAINER2
 msgctxt "STRINGS.CODEX.B2_TEMPORALBOWUPDATE.BODY.CONTAINER2"
@@ -13038,6 +13089,21 @@ msgctxt "STRINGS.CODEX.B7_FRIENDLYEMAIL.TITLE"
 msgid "Hiiiii!"
 msgstr "Приве-е-ет!"
 
+#. STRINGS.CODEX.B7_INSPACE.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.B7_INSPACE.BODY.CONTAINER1"
+msgid "<smallcaps>[Voice Recognition Initialized]\n[Subjects Identified: B835, B997]</smallcaps>\n\n[LOG BEGINS]\n\nDr.Ansari: Shhhh...\n\nDr. Bubare: What? What are we doing here?\n\nDr. Ansari: I'll show you, just keep your voice down.\n\nDr. Bubare: Are we even allowed to be here?\n\nDr. Ansari: No. Trust me it'll all be worth it once I can find it.\n\nDr. Bubare: Find what?\n\nDr. Ansari: That!\n\nDr. Bubare: ...Video feed from a rat cage? What's so great about -- Wait. Are they--?\n\nDr. Ansari: Floating!\n\nDr. Bubare: You mean they're in--?\n\nDr. Ansari: Space!\n\nDr. Bubare: Our thermal rats are in space?!?!\n\nDr. Ansari: Yep! There's Applecart and Cherrypie and little Bananabread. Look at them, they're so happy. We made ratstronauts!!\n\nDr. Bubare: HAPPY rat-stronauts.\n\nDr. Ansari: WE MADE HAPPY RATSTRONAUTS!!\n\nDr. Bubare: Shhhhhh...Someone's coming.\n\n[LOG ENDS]"
+msgstr "<smallcaps>[Активировано распознавание голоса]\n[Опознаны субъекты: B835, B997]</smallcaps>\n\n[НАЧАЛО ЗАПИСИ]\n\nДоктор Ансари: Тсс...\n\nДоктор Бубар: В чем?.. Что мы здесь делаем?\n\nДоктор Ансари: Я все покажу, только тише.\n\nДоктор Бубар: Нам вообще сюда можно?\n\nДоктор Ансари: Нет. Но уверяю: будущая находка того стоит.\n\nДоктор Бубар: Какая еще находка?\n\nДоктор Ансари: Эта!\n\nДоктор Бубар: ...Трансляция из крысиной клетки? Эка невидаль... Погоди. Они что?..\n\nДоктор Ансари: Летают!\n\nДоктор Бубар: То есть они в?..\n\nДоктор Ансари: В космосе!\n\nДоктор Бубар: Наши термокрысы в космосе?!\n\nДоктор Ансари: Ага! Шарлотка, Черешенка и малыш Бананчик. Посмотри на эти мордочки: какие счастливые. Мы создали крысонавтов!!!\n\nДоктор Бубар: СЧАСТЛИВЫХ крысонавтов.\n\nМЫ СОЗДАЛИ СЧАСТЛИВЫХ КРЫСОНАВТОВ!\n\nДоктор Бубар: Ш-ш-ш... Кто-то идет.\n\n[КОНЕЦ ЗАПИСИ]"
+
+#. STRINGS.CODEX.B7_INSPACE.SUBTITLE
+msgctxt "STRINGS.CODEX.B7_INSPACE.SUBTITLE"
+msgid "ENCRYPTION LEVEL: TWO"
+msgstr "УРОВЕНЬ ШИФРОВАНИЯ: ВТОРОЙ"
+
+#. STRINGS.CODEX.B7_INSPACE.TITLE
+msgctxt "STRINGS.CODEX.B7_INSPACE.TITLE"
+msgid "In Space"
+msgstr "В космосе"
+
 #. STRINGS.CODEX.B7_TIMESARROWTHOUGHTS.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.B7_TIMESARROWTHOUGHTS.BODY.CONTAINER1"
 msgid "I've been unable to shake the notion of the Bow.\n\nThe thought of its mechanics are too intriguing, and I can only dream of the mark such a device would make upon the world -- imagine, a source of inexhaustible energy!\n\nSo many of humanity's problems could be solved with this one invention - domestic energy, environmental pollution, <i>the fuel wars</i>.\n\nI have to pursue this dream, no matter what."
@@ -13223,30 +13289,75 @@ msgctxt "STRINGS.CODEX.BUDDYBUD.TITLE"
 msgid "Buddy Bud"
 msgstr "Дружок"
 
-#. STRINGS.CODEX.C01_Evil.BODY.CONTAINER1
-msgctxt "STRINGS.CODEX.C01_Evil.BODY.CONTAINER1"
+#. STRINGS.CODEX.C01_EVIL.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.C01_EVIL.BODY.CONTAINER1"
 msgid "Clearly Nikola is evil. He has some kind of scheme going on that he’s keeping secret from the rest of Gravitas and I haven’t been able to crack what that is because it’s offline and he’s always at his computer. Whenever I ask him what he’s up to he says I wouldn’t understand. Pfft! We both went through the same particle physics classes, buddy. Just because you mash a keyboard and I adjust knobs does not mean I don’t know what the Time Containment Field does.\n\nAnd then today I dropped a wrench and Nikola nearly jumped out of his skin! He spun around and screamed at me never to do that again. And then when I said, \"Geez, it’s not the end of the world,\" he was like, \"Yeah, it’s not like the world will blow up if I get this wrong\" really sarcastic like.\n\nWhich technically is true. If the Time Containment Field were to break down the Temporal Bow could theoretically blow up the world but that’s why there are safety systems in place. And safety systems on safety systems. And then safety systems on top of that. But then he built all the safety systems so if he wanted to…\n------------------\n"
 msgstr "Никола явно злой. Он разработал какую-то схему, которую он держит в секрете от остальной части Gravitas, и я не могу до нее добраться, потому что она хранится в его компьютере, а к нему он никого не подпускает. Когда я спрашиваю его, чем он занимается, он отвечает, что я не пойму. Пф-ф! Мы же оба учили физику элементарных частиц! Да, я весь день кручу рукоятки, а ты стучишь по клавиатуре, но это не значит, что я не разбираюсь в работе Поля сдерживания времени.\n\nА сегодня я уронил гаечный ключ, и Никола чуть из штанов не выпрыгнул! Он повернулся и закричал, мол, никогда больше так не делай. А когда я сказал: «Да боже мой, это не конец света», он саркастически сказал: «Да, мир же не взорвется от одной моей ошибки!».\n\nЧто технически верно. Если бы Поле сдерживания времени сломалось, Временная дуга теоретически могла бы взорвать весь мир, но именно на такой случай придуманы системы безопасности. И системы безопасности для систем безопасности. А потом еще один слой систем безопасности. Но все системы безопасности он придумал сам, так что если бы ему захотелось...\n------------------\n"
 
-#. STRINGS.CODEX.C01_Evil.BODY.CONTAINER2
-msgctxt "STRINGS.CODEX.C01_Evil.BODY.CONTAINER2"
+#. STRINGS.CODEX.C01_EVIL.BODY.CONTAINER2
+msgctxt "STRINGS.CODEX.C01_EVIL.BODY.CONTAINER2"
 msgid "I decided to get into work early today but when I got in Nikola was already there and it looked like he hadn’t been home all weekend. He was pacing back-and-forth in the lab, monologuing but not like an evil villain. Like someone who hadn’t slept in a week.\n\n\"Ruby,\" he said. \"You have to promise me that if anything goes wrong you’ll turn on this machine. They’re pushing it too far. The printing pods are pushing the...It’s too much - TOO MUCH! Something’s going to blow. I tried… I’m trying to save it. Not the Earth. There’s no hope for the Earth, it’s all going to…\" then he made this exploding sound. \"But the Universe. Time itself. It could all go, don’t you see? This machine can contain it. Put a Temporal Containment Field around the Earth so time itself doesn’t break down and...and…\"\n\nThen all of a sudden these security guys came in. New guys. People I haven’t seen before. And they just took him away. Then they took me to a room and asked me all kinds of questions and I answered them, I guess. I don’t remember much because the whole time I was thinking - What if I was wrong? What if he’s not evil, but Gravitas is?\n\nWhat if I was wrong and what if he’s right?\n------------------\n"
 msgstr "Сегодня я решил прийти на работу пораньше, но когда я приехал, я увидел, что Никола уже там, и, похоже, он не был дома все выходные. Он расхаживал взад и вперед по лаборатории и что-то бормотал, но не как злодей, а как тот, кто не спал неделю.\n\n«Руби», — сказал он. «Пообещай мне, что если что-то пойдет не так, ты включишь эту машину. Они зашли слишком далеко. Печатные станки слишком... Это слишком — СЛИШКОМ! Что-то взорвется. Я пытался... Я пытаюсь спасти его. Не Землю. Земле конец в любом случае, скоро все...» — а потом изобразил звук взрыва. «Вселенная. Само время. Все исчезнет, разве ты не видишь? Машина может сдержать катастрофу. Укройте Землю Полем сдерживания времени, чтобы само время не разрушилось, и...».\n\nИ тогда внезапно вошли охранники. Новые какие-то, я их прежде не видел. И они забрали его. Затем они отвели меня в комнату и задавали мне разные вопросы, и я, наверное, на них ответил. Я мало что помню, потому что все время думал: а что, если я был неправ? Что, если злой не он, а Gravitas?\n\nЧто, если я был неправ, а он прав?\n------------------\n"
 
-#. STRINGS.CODEX.C01_Evil.BODY.CONTAINER3
-msgctxt "STRINGS.CODEX.C01_Evil.BODY.CONTAINER3"
+#. STRINGS.CODEX.C01_EVIL.BODY.CONTAINER3
+msgctxt "STRINGS.CODEX.C01_EVIL.BODY.CONTAINER3"
 msgid "No seriously - what if he's right?\n------------------\n"
 msgstr "Нет, серьезно — а если он прав?\n------------------\n"
 
-#. STRINGS.CODEX.C01_Evil.SUBTITLE
-msgctxt "STRINGS.CODEX.C01_Evil.SUBTITLE"
+#. STRINGS.CODEX.C01_EVIL.SUBTITLE
+msgctxt "STRINGS.CODEX.C01_EVIL.SUBTITLE"
 msgid "ENCRYPTION LEVEL: NONE"
 msgstr "УРОВЕНЬ ШИФРОВАНИЯ: НЕТ"
 
-#. STRINGS.CODEX.C01_Evil.TITLE
-msgctxt "STRINGS.CODEX.C01_Evil.TITLE"
+#. STRINGS.CODEX.C01_EVIL.TITLE
+msgctxt "STRINGS.CODEX.C01_EVIL.TITLE"
 msgid "Evil"
 msgstr "Зло"
+
+#. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.CONTAINER3
+msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.CONTAINER3"
+msgid "<indent=5%>Director, I think I've found the perfect engineer candidate to design our small-scale colony machines.\n-----------------------------------------------------------------------------------------------------\n</indent>"
+msgstr "<indent=5%>Директор, у меня есть отличная кандидатура на пост инженера-проектировщика мини-машин в нашей колонии.\n-----------------------------------------------------------------------------------------------------\n</indent>"
+
+#. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.CONTAINER4
+msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.CONTAINER4"
+msgid "<indent=10%><smallcaps><b>Bringing Creative Workspace Ideas into the Industrial Setting</b>\n\nMichael E.E. Perlmutter is a rising star in the world industrial design, making a name for himself by cooking up playful workspaces for a work force typically left out of the creative conversation.\n\n\"Ergodynamic chairs have been done to death,\" says Perlmutter. \"What I'm interested in is redesigning the industrial space. There's no reason why a machine can't convey a sense of whimsy.\"\n\nIt's this philosophy that has launched Perlmutter to the top of a very short list of hot new industrial designers.</indent></smallcaps>"
+msgstr "<indent=10%><smallcaps><b>Креативные рабочие места в промышленных масштабах</b>\n\nМайкл Э. Э. Перлмуттер — восходящая звезда в промышленном проектировании. Мировую известность ему принес дизайн рабочих мест для тех, которых креативные решения обычно обходят стороной.\n\n\"Эргодинамические кресла — это прошлый век, — заявляет Перлмуттер. — Я нацелен на полный пересмотр производственной зоны. Кто сказал, что машины должны быть скучными?\"\n\nИменно такое мировоззрение и сделало Перлмуттера одним из самых востребованных промышленных проектировщиков.</indent></smallcaps>"
+
+#. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.EMAILHEADER1
+msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.EMAILHEADER1"
+msgid "<smallcaps>To: <b>[REDACTED]</b>\nFrom: <b>Director Stern</b><size=12><alpha=#AA> <jstern@gravitas.nova></size></color></smallcaps>\n------------------\n"
+msgstr "<smallcaps>Кому: <b>[СКРЫТО]</b>\nОт: <b>Директора Стерн</b><size=12><alpha=#AA> <jstern@gravitas.nova></size></color></smallcaps>\n------------------\n"
+
+#. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.SIGNATURE1
+msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.SIGNATURE1"
+msgid "\n[REDACTED]\n<size=11>Human Resources Coordinator\nThe Gravitas Facility</size>\n------------------\n"
+msgstr "\n[СКРЫТО]\n<size=11>Координатор отдела кадров\nПредприятие The Gravitas</size>\n------------------\n"
+
+#. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.SUBTITLE
+msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.SUBTITLE"
+msgid "ENCRYPTION LEVEL: ONE"
+msgstr "УРОВЕНЬ ШИФРОВАНИЯ: ПЕРВЫЙ"
+
+#. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.TITLE
+msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.TITLE"
+msgid "RE: Engineer Candidate?"
+msgstr "RE: Кандидат на пост инженера?"
+
+#. STRINGS.CODEX.C7_FIRSTCOLONY.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.C7_FIRSTCOLONY.BODY.CONTAINER1"
+msgid "The first experiments with establishing a colony off planet were an unmitigated disaster. Without outside help, our current Artificial Intelligence was completely incapable of making the kind of spontaneous decisions needed to deal with unforeseen circumstances. Additionally, the colony subjects lacked the forethought to even build themselves toilet facilities, even after soiling themselves repeatedly.\n\nWhile initial experiments in a lab setting were encouraging, our latest operation on non-Terra soil revealed some massive inadequacies to our system. If this idea is ever going to work, we will either need to massively improve the AI directing the subjects, or improve the brains of our Duplicants to the point where they possess higher cognitive functions.\n\nGiven the massive complications that I could forsee arising if our Duplicants were made less supplicant, I'm leaning toward a push to improve our Artificial Intellegence.\n\nMeanwhile, we will have to send a clean up crew to destroy all evidence of our little experiment beneath the Ceres' surface. We can't risk anyone discovering the remnants of our failed colony, even if the likelihood or that happening won't be for another few decades at least.\n\n(Sometimes it boggles my mind how much further behind the rest of the world is from Gravitas.)"
+msgstr "Первые попытки основать колонию за пределами планеты обернулись полным провалом. Без помощи извне наш действующий искусственный интеллект оказался абсолютно неспособен к принятию спонтанных решений, необходимых в непредвиденных ситуациях. Кроме того, субъекты колонии явно испытывали трудности с логикой: они даже туалет не построили, хотя постоянно пачкались в своих же экскрементах.\n\nРезультаты лабораторных экспериментов были вполне позитивными, но последняя операция на другой планете выявила в нашей системе несколько критичных проблем. Чтобы эта идея стала рабочей, нам придется значительно доработать либо ведущий ИИ, либо мозг дубликантов, чтобы улучшить их когнитивные функции.\n\nЯ предвижу весьма негативные последствия второго, поэтому склоняюсь к доработке ИИ.\n\nА пока придется отправить на Цереру команду зачистки и замести следы нашего маленького эксперимента. Нельзя допустить, чтобы кто-то обнаружил останки неудачной колонии, даже если такая возможность не представится еще десятки лет.\n\n(Порой у меня в голове не укладывается, как может остальной мир так отставать от Gravitas.)"
+
+#. STRINGS.CODEX.C7_FIRSTCOLONY.SUBTITLE
+msgctxt "STRINGS.CODEX.C7_FIRSTCOLONY.SUBTITLE"
+msgid "ENCRYPTION LEVEL: THREE"
+msgstr "УРОВЕНЬ ШИФРОВАНИЯ: ТРЕТИЙ"
+
+#. STRINGS.CODEX.C7_FIRSTCOLONY.TITLE
+msgctxt "STRINGS.CODEX.C7_FIRSTCOLONY.TITLE"
+msgid "Director's Notes"
+msgstr "Записи директора"
 
 #. STRINGS.CODEX.CLEANER.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.CLEANER.BODY.CONTAINER1"
@@ -13395,7 +13506,7 @@ msgstr "\"Дивергент\" — это название двух разных
 
 #. STRINGS.CODEX.DIVERGENT.SUBTITLE
 msgctxt "STRINGS.CODEX.DIVERGENT.SUBTITLE"
-msgid "Domesticatable Critter"
+msgid "Domesticable Critter"
 msgstr "Одомашненное существо"
 
 #. STRINGS.CODEX.DIVERGENT.TITLE
@@ -14373,6 +14484,16 @@ msgctxt "STRINGS.CODEX.MYLOG.BODY.TELEPORT.TITLE"
 msgid "Duplicant Teleportation"
 msgstr "Телепортация дубликантов"
 
+#. STRINGS.CODEX.MYLOG.BODY.TEMPORALOPENER.BODY
+msgctxt "STRINGS.CODEX.MYLOG.BODY.TEMPORALOPENER.BODY"
+msgid "\n\n"
+msgstr "\n\n"
+
+#. STRINGS.CODEX.MYLOG.BODY.TEMPORALOPENER.TITLE
+msgctxt "STRINGS.CODEX.MYLOG.BODY.TEMPORALOPENER.TITLE"
+msgid "Temporal Potential"
+msgstr "Временной потенциал"
+
 #. STRINGS.CODEX.MYLOG.BODY.TEMPORALTEAR.BODY
 msgctxt "STRINGS.CODEX.MYLOG.BODY.TEMPORALTEAR.BODY"
 msgid "My Duplicants' space research has made a startling discovery.\n\nFar, far off on the horizon their telescopes have spotted an anomaly that I could only possibly call a \"Temporal Tear\". Neutronium is detected in its readings, suggesting that it's related to the Neutronium that encases most of our asteroid.\n\nThough I believe it is through this Tear that we became jumbled within the section of our old planet, its discovery provides a glimmer of hope.\n\nTheoretically, we could send a rocket through the Tear to allow a Duplicant to explore the timelines and universes on the other side. They would never return, and we could not follow, but perhaps they could find a home among the stars, or even undo the terrible past that led us to our current fate.\n\n"
@@ -15020,7 +15141,7 @@ msgstr "Растение хилого личинкокоса"
 
 #. STRINGS.CODEX.SPORECHID.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.SPORECHID.BODY.CONTAINER1"
-msgid "Sporechids take advantage of their flower's attractiveness to lure unsuspecting victims into clouds of parsitic Zombie Spores.\n\nThey are a rare form of holoparasitic plant which finds mammalian hosts to infect rather than the usual plant species.\n\nThe Zombie Spore was originally designed for medicinal purposes but its seditative properties were never refined to the point of usefulness."
+msgid "Sporechids take advantage of their flower's attractiveness to lure unsuspecting victims into clouds of parasitic Zombie Spores.\n\nThey are a rare form of holoparasitic plant which finds mammalian hosts to infect rather than the usual plant species.\n\nThe Zombie Spore was originally designed for medicinal purposes but its sedative properties were never refined to the point of usefulness."
 msgstr "Споровики пользуются красотой своих цветков, чтобы заманивать ничего не подозревающих жертв в облака крайне вредных зомби-спор.\n\nЭто редкий вид голопаразитов, который ищет себе хозяев-млекопитающих вместо растений.\n\nИзначально зомби-споры разрабатывали для медицинских целей, но их седативным свойствам так и не нашли практического применения."
 
 #. STRINGS.CODEX.SPORECHID.SUBTITLE
@@ -15310,8 +15431,8 @@ msgstr "Пусть в этой Вселенной больше нет нашег
 
 #. STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_BODY_DLC1
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_BODY_DLC1"
-msgid "DLC1"
-msgstr "DLC1"
+msgid "We have always viewed the Temporal Tear as a phenomenon to fear but, like the civilizations before us, the call to adventure asks us to confront our anxiety and leap into the unknown. As a radical action of hope, I have sent enough Duplicants through the Temporal Tear to start another colony, explore dimensions beyond ours and plant the seeds of life throughout time and space."
+msgstr "Временной разлом всегда пугал нас, но, как и наши предки, мы не можем устоять перед зовом приключений и бросаемся навстречу неизвестному вопреки страху. Моим жестом безумной надежды стало отправление во временной разлом достаточного количества дубликантов, чтобы основать новую колонию, исследовать чужие измерения и принести жизнь во все уголки времени и пространства."
 
 #. STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_TITLE
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_TITLE"
@@ -15320,8 +15441,8 @@ msgstr "НАДЕЖДА КОЛОНИИ"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_TITLE_DLC1
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_TITLE_DLC1"
-msgid "DLC1"
-msgstr "DLC1"
+msgid "A DIMENSIONAL ADVENTURE"
+msgstr "СКВОЗЬ ИЗМЕРЕНИЯ"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MYLOGNAME
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MYLOGNAME"
@@ -15332,6 +15453,11 @@ msgstr "НАДЕЖДА КОЛОНИИ"
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.NAME"
 msgid "The Great Escape"
 msgstr "Великий побег"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.REQUIREMENTS.OPEN_TEMPORAL_TEAR
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.REQUIREMENTS.OPEN_TEMPORAL_TEAR"
+msgid "Open the Temporal Tear"
+msgstr "Откройте временной разлом"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.REQUIREMENTS.REACHED_SPACE_DESTINATION
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.REQUIREMENTS.REACHED_SPACE_DESTINATION"
@@ -15698,6 +15824,16 @@ msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.CLOTHE_DUPES"
 msgid "Duplicants in clothing: {0} / {1}"
 msgstr "Дубликантов в одежде: {0}/{1}"
 
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.COLLECT_ARTIFACTS
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.COLLECT_ARTIFACTS"
+msgid "Study Terrestrial Artifacts at the Artifact Analysis Station.\nTerrestrial Artifacts studied: {collectedCount} / {neededCount}"
+msgstr "Изучить земные артефакты на Станции анализа артефактов.\nИзучено земных артефактов: {collectedCount}/{neededCount}"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.COLLECT_SPACE_ARTIFACTS
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.COLLECT_SPACE_ARTIFACTS"
+msgid "Study Space Artifacts at the Artifact Analysis Station.\nSpace Artifacts studied: {collectedCount} / {neededCount}"
+msgstr "Изучить космические артефакты на Станции анализа артефактов.\nИзучено космических артефактов: {collectedCount}/{neededCount}"
+
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.CONSUME_CALORIES
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.CONSUME_CALORIES"
 msgid "Calories: {0} / {1}"
@@ -15727,6 +15863,11 @@ msgstr "Цикл: {0}/{1}"
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.ENTER_OIL_BIOME"
 msgid "Entered an oil biome"
 msgstr "Попадание в нефтяной биом"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.ESTABLISH_COLONIES
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.ESTABLISH_COLONIES"
+msgid "Establish colonies on {goalBaseCount} asteroids by building and activating Mini-Pods.\nColonies established: {baseCount} / {neededCount}."
+msgstr "Создать колонии не менее чем на {goalBaseCount} астероидах, построив и активировав мини-станки.\nСоздано колоний: {baseCount}/{neededCount}"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.EXOSUIT_CYCLES
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.EXOSUIT_CYCLES"
@@ -15792,6 +15933,11 @@ msgstr "Не было построено: {0}"
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.NO_FARM_TILES"
 msgid "No farmed plants"
 msgstr "Нет выращенных растений"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.OPEN_TEMPORAL_TEAR
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.OPEN_TEMPORAL_TEAR"
+msgid "Open the Temporal Tear by finding and activating the Temporal Tear Opener"
+msgstr "Открыть временной разлом, отыскав и активировав устройство для открытия"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.PLATFORM_UNLOCKING_DISABLED
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.PLATFORM_UNLOCKING_DISABLED"
@@ -15967,6 +16113,91 @@ msgstr "ДОСТИГНУТА ПЕРВОСТЕПЕННАЯ ЗАДАЧА: {0}"
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.PRE_VICTORY_MESSAGE_HEADER"
 msgid "- ALERT -"
 msgstr "- ВНИМАНИЕ -"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.DESCRIPTION
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.DESCRIPTION"
+msgid ""
+msgstr ""
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_BODY
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_BODY"
+msgid "In exploring this corner of the universe we have found and assembled a collection of artifacts from another civilization. Studying these artifacts can give us a greater understanding of who we are and where we come from. Only by learning about the past can we build a brighter future, one where we learn from the mistakes of our predecessors."
+msgstr "В процессе исследования этой части Вселенной мы обнаружили несколько артефактов, оставленных другой цивилизацией. Их изучение прольет свет на то, кто мы и откуда. Лишь узнав о своем прошлом, мы придем к светлому будущему — тому, где мы учимся на ошибках своих предков."
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_BODY_DLC1
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_BODY_DLC1"
+msgid "DLC1"
+msgstr "DLC1"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_TITLE
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_TITLE"
+msgid "LINK TO OUR PAST"
+msgstr "НИТОЧКА К ПРОШЛОМУ"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_TITLE_DLC1
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_TITLE_DLC1"
+msgid "DLC1"
+msgstr "DLC1"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MYLOGNAME
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MYLOGNAME"
+msgid "Artifacts"
+msgstr "Артефакты"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.NAME
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.NAME"
+msgid "Cosmic Archaeology"
+msgstr "Космическая археология"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.SEVERAL_COLONIES
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.SEVERAL_COLONIES"
+msgid "Establish several colonies"
+msgstr "Создайте несколько колоний"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.SEVERAL_COLONIES_DESCRIPTION
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.SEVERAL_COLONIES_DESCRIPTION"
+msgid "Establish colonies on {count} asteroids by building and activating Mini-Pods"
+msgstr "Создайте колонии на нескольких (не менее {count}) астероидах, построив и активировав мини-станки"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_ARTIFACTS
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_ARTIFACTS"
+msgid "Study {artifactCount} Terrestrial Artifacts"
+msgstr "Изучите земные артефакты: {artifactCount} шт."
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_ARTIFACTS_DESCRIPTION
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_ARTIFACTS_DESCRIPTION"
+msgid "Study {artifactCount} Terrestrial Artifacts at the Artifact Analysis Station"
+msgstr "Изучите земные артефакты на Станции анализа артефактов: {artifactCount} шт."
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_SPACE_ARTIFACTS
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_SPACE_ARTIFACTS"
+msgid "Study {artifactCount} Space Artifacts"
+msgstr "Изучите космические артефакты: {artifactCount} шт."
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_SPACE_ARTIFACTS_DESCRIPTION
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_SPACE_ARTIFACTS_DESCRIPTION"
+msgid "Study {artifactCount} Space Artifacts at the Artifact Analysis Station"
+msgstr "Изучить космические артефакты на Станции анализа артефактов: {artifactCount} шт."
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT.FIRST
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT.FIRST"
+msgid "Our homeworld in this universe is gone, replaced by the skeleton of a planet and a wound in the sky... But I hold out hope that other worlds exist out there, tucked away in other dimensions."
+msgstr "Пусть в этой Вселенной больше нет нашего дома, и вместо него в небе лишь разрыв и планетарные останки... но я буду верить, что в других все еще есть миры, сокрытые в различных измерениях."
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT.SECOND
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT.SECOND"
+msgid "I sent my Duplicant through the Temporal Tear carrying that hope on their shoulders... Perhaps one day they'll find a place to call home, and begin a thriving colony all their own."
+msgstr "Мой дубликант был отправлен сквозь временной разлом, держа в своих руках надежду... Возможно, когда-нибудь он найдет место, которое сможет назвать домом, и обоснует там свою собственную колонию."
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT_DLC1.FIRST
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT_DLC1.FIRST"
+msgid "DLC1"
+msgstr "DLC1"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT_DLC1.SECOND
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT_DLC1.SECOND"
+msgid "DLC1"
+msgstr "DLC1"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.THRIVING.DESCRIPTION
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.THRIVING.DESCRIPTION"
@@ -16280,8 +16511,8 @@ msgstr "<link=\"SQUIRRELSPECIES\">Цвирки</link>"
 
 #. STRINGS.CREATURES.FAMILY_PLURAL.STATERPILLARSPECIES
 msgctxt "STRINGS.CREATURES.FAMILY_PLURAL.STATERPILLARSPECIES"
-msgid "<link=\"STATERPILLARSPECIES\">Plug Slug</link>"
-msgstr "<link=\"STATERPILLARSPECIES\">Розеточный слизень</link>"
+msgid "<link=\"STATERPILLARSPECIES\">Plug Slugs</link>"
+msgstr "<link=\"STATERPILLARSPECIES\">Розеточные слизни</link>"
 
 #. STRINGS.CREATURES.FAMILY_PLURAL.SWEEPBOT
 msgctxt "STRINGS.CREATURES.FAMILY_PLURAL.SWEEPBOT"
@@ -19462,6 +19693,16 @@ msgstr "Отличный урожай"
 msgctxt "STRINGS.CREATURES.STATUSITEMS.HIGH_YIELD.TOOLTIP"
 msgid "Consistently ideal conditions allowed this plant to bear a large yield\n{Effects}"
 msgstr "Постоянные идеальные условия позволили этому растению принести большой урожай\n{Effects}"
+
+#. STRINGS.CREATURES.STATUSITEMS.HIVEHUNGRY.NAME
+msgctxt "STRINGS.CREATURES.STATUSITEMS.HIVEHUNGRY.NAME"
+msgid "Food Supply Low"
+msgstr "Недостаточные запасы еды"
+
+#. STRINGS.CREATURES.STATUSITEMS.HIVEHUNGRY.TOOLTIP
+msgctxt "STRINGS.CREATURES.STATUSITEMS.HIVEHUNGRY.TOOLTIP"
+msgid "The food reserves in this hive are running low."
+msgstr "Запасы еды в этом улье истощаются."
 
 #. STRINGS.CREATURES.STATUSITEMS.HOT.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.HOT.NAME"
@@ -36983,6 +37224,16 @@ msgctxt "STRINGS.MISC.POPFX.RESOURCE_EATEN"
 msgid "Resource Eaten"
 msgstr "Ресурс съеден"
 
+#. STRINGS.MISC.STATUSITEMS.ARTIFACTENTOMBED.NAME
+msgctxt "STRINGS.MISC.STATUSITEMS.ARTIFACTENTOMBED.NAME"
+msgid "Entombed Artifact"
+msgstr "Погребенный артефакт"
+
+#. STRINGS.MISC.STATUSITEMS.ARTIFACTENTOMBED.TOOLTIP
+msgctxt "STRINGS.MISC.STATUSITEMS.ARTIFACTENTOMBED.TOOLTIP"
+msgid "This artifact is trapped in an obscuring shell limiting its decor. A skilled artist can remove it at the <link=\"ARTIFACTANALYSISSTATION\">Artifact Analysis Station</link>"
+msgstr "Красоту этого артефакта скрывает мутная оболочка. Убрать ее сможет умелый художник на <link=\"ARTIFACTANALYSISSTATION\">Станции анализа артефактов</link>"
+
 #. STRINGS.MISC.STATUSITEMS.AWAITINGSTUDY.NAME
 msgctxt "STRINGS.MISC.STATUSITEMS.AWAITINGSTUDY.NAME"
 msgid "Analysis Pending"
@@ -43548,6 +43799,11 @@ msgctxt "STRINGS.UI.BUILDINGEFFECTS.DIET_PRODUCED_ITEM_FROM_PLANT"
 msgid "{Item}: {Amount} when properly fed"
 msgstr "{Item}: {Amount} при достаточной кормежке"
 
+#. STRINGS.UI.BUILDINGEFFECTS.DIET_STORED
+msgctxt "STRINGS.UI.BUILDINGEFFECTS.DIET_STORED"
+msgid "    • Stores: {Foodlist}"
+msgstr "    • Хранение: {Foodlist}"
+
 #. STRINGS.UI.BUILDINGEFFECTS.DISEASECONSUMEDPERUSE
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.DISEASECONSUMEDPERUSE"
 msgid "All Diseases: -{0} per use"
@@ -45367,6 +45623,11 @@ msgstr "    • Эта ракета направляется в место на�
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.NORMAL_LANDED"
 msgid "    • This rocket is currently landed on a <style=\"KKeyword\">Rocket Platform</style>"
 msgstr "    • Эта ракета сейчас находится на <style=\"KKeyword\">ракетной платформе</style>"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.NORMAL_UTILITY
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.NORMAL_UTILITY"
+msgid "    • This rocket is performing a utility at its destination"
+msgstr "    • Эта ракета занимается техническим обслуживанием в месте назначения"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.TOOLTIP_NAME
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.TOOLTIP_NAME"
@@ -50035,8 +50296,8 @@ msgstr "МАСТЕРСКАЯ STEAM"
 
 #. STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER
 msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
-msgid "THE BIG MERGE"
-msgstr "БОЛЬШОЕ ОБЪЕДИНЕНИЕ"
+msgid "A BREATH OF FRESH AIR"
+msgstr "ГЛОТОК ВОЗДУХА"
 
 #. STRINGS.UI.FRONTEND.MOTD.NEWS_BODY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.NEWS_BODY"
@@ -50050,8 +50311,8 @@ msgstr "ПРИСОЕДИНИТЬСЯ К ОБСУЖДЕНИЮ"
 
 #. STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY"
-msgid "Welcome to the <b>UPDATE NAME</b>\n\n   •<indent=20px>Toggle between <i>Spaced Out!</i> and Base Game in the main menu without re-downloading the game.</indent>\n\n   •<indent=20px>Base Game now has all <i>Spaced Out!</i> bug fixes and quality-of-life improvements.</indent>\n\n   •<indent=20px>Several buildings and items have been added to the Base Game, including Oxygen Masks, and Meter Valves.</indent>\n\n   •<indent=20px>UI and Diagnostics improvements have been added to the Base Game.</indent>\n   \n   •<indent=20px>Significant updates to the Modding system, modders please see the forum for upgrade instructions.</indent>\n\nCheck out the full patch notes for more details!"
-msgstr "Добро пожаловать в обновление <b>БОЛЬШОЕ ОБЪЕДИНЕНИЕ</b>!\n\n   •<indent=20px>Переключайтесь между <i>Spaced Out!</i> и основной игрой без перезагрузки.</indent>\n\n   •<indent=20px>В основной игре теперь исправлены все ошибки, от которых мы избавились в <i>Spaced Out!</i>, и внесены различные полезные изменения.</indent>\n\n   •<indent=20px>В основную игру добавлены несколько построек и предметов, в том числе кислородные маски и дозирующие клапаны.</indent>\n\n   •<indent=20px>Улучшения интерфейса и диагностики добавлены в основную игру.</indent>\n   \n   •<indent=20px>Значительно обновлена система модов: посмотрите изменения на форуме.</indent>\n\nПрочитайте полный список обновлений, чтобы узнать больше!"
+msgid "Welcome to the newest update <b>A BREATH OF FRESH AIR</b>:\n\n•<indent=20px>Several buildings and items have been added to the Base Game, including Oxygen Masks, and Meter Valves.</indent>\n•<indent=20px>Base Game now has all <i>Spaced Out!</i> bug fixes and quality-of-life improvements.</indent>\n•<indent=20px>Updates to <i>Spaced Out!</i> Colony Imperatives</indent>\n•<indent=20px>Significant updates to the Modding system, modders please see the forum for upgrade instructions.</indent>\n•<indent=20px>Toggle between <i>Spaced Out!</i> and Base Game in the main menu without re-downloading the game.</indent>\n\n   Check out the full patch notes for more details!"
+msgstr "Добро пожаловать в обновление <b>ГЛОТОК ВОЗДУХА</b>!\n\n•<indent=20px>В основную игру добавлены несколько построек и предметов, в том числе кислородные маски и дозирующие клапаны.</indent>\n•<indent=20px>В основной игре теперь исправлены все ошибки, от которых мы избавились в <i>Spaced Out!</i>, и внесены различные полезные изменения.</indent>\n•<indent=20px>Обновления первостепенных задач колонизации в <i>Spaced Out!</i></indent>\n•<indent=20px>Значительно обновлена система модов: посмотрите изменения на форуме.</indent>\n•<indent=20px>Переключаться между <i>Spaced Out!</i> и основной игрой теперь можно без перезагрузки.</indent>\n\n   Прочитайте полный список обновлений, чтобы узнать больше!"
 
 #. STRINGS.UI.FRONTEND.MOTD.UPDATE_TEXT
 msgctxt "STRINGS.UI.FRONTEND.MOTD.UPDATE_TEXT"
@@ -50327,6 +50588,36 @@ msgstr "НАЗВАНИЕ СОХРАНЕНИЯ"
 msgctxt "STRINGS.UI.FRONTEND.SAVESCREEN.TITLE"
 msgid "SAVE SLOTS"
 msgstr "ЯЧЕЙКИ СОХРАНЕНИЙ"
+
+#. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES
+msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES"
+msgid "Oxygen Not Included has had a <b>major update</b> since this save file was created! In addition to the <b>multitude of bug fixes and quality-of-life features</b>, please pay attention to these changes which may affect your existing colony:"
+msgstr "После создания этого файла сохранения для Oxygen Not Included вышло <b>важное обновление</b>! Мы внесли <b>множество исправлений и улучшений</b>, и среди них те, которые могут повлиять на вашу колонию:"
+
+#. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_AIRFILTER
+msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_AIRFILTER"
+msgid "•<indent=20px>MISSING. now requires <b>5w Power</b>.</indent>\n•<indent=20px>Duplicants will get <b>Stinging Eyes</b> from gasses such as chlorine and hydrogen.</indent>"
+msgstr "•<indent=20px>MISSING. теперь требуется <b>мощность в 5 ватт</b>.</indent>\n•<indent=20px>Дубликанты получают <b>раздражение глаз</b> от таких газов, как хлор и водород.</indent>"
+
+#. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_BUILDINGS
+msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_BUILDINGS"
+msgid "•<indent=20px>The <b>MISSING.</b> has been added to aid early-game exploration.</indent>\n•<indent=20px>Use the new <b>Meter Valves</b> for precise control of resources in pipes.</indent>"
+msgstr "•<indent=20px>Для облегчения исследований на ранних этапах добавлен <b>MISSING.</b></indent>\n•<indent=20px>Новые <b>дозирующие клапаны</b> помогут контролировать ресурсы в трубах с высокой точностью.</indent>"
+
+#. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_FOOD
+msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_FOOD"
+msgid "•<indent=20px>Fridges are more effective for early-game food storage</indent>\n•<indent=20px><b>Both</b> freezing temperatures and a sterile gas are needed for <b>total food preservation</b>.</indent>"
+msgstr "•<indent=20px>Холодильники стали более эффективны для хранения еды на ранних этапах.</indent>\n•<indent=20px>Для <b>полной сохранности продуктов</b> необходимы как температура замерзания, так и стерильный газ.</indent>"
+
+#. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_SIMULATION
+msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_SIMULATION"
+msgid "•<indent=20px>Many <b>simulation bugs</b> have been fixed.</indent>\n•<indent=20px>This may <b>change the effectiveness</b> of certain contraptions and MISSING. setups.</indent>"
+msgstr "•<indent=20px>Исправлено множество <b>ошибок симулятора</b>.</indent>\n•<indent=20px>Исправления могут <b>изменить эффективность</b> некоторых устройств и настроек MISSING.</indent>"
+
+#. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_TITLE
+msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_TITLE"
+msgid "BREATH OF FRESH AIR UPDATE CHANGES"
+msgstr "ИЗМЕНЕНИЯ В ОБНОВЛЕНИИ \"ГЛОТОК ВОЗДУХА\""
 
 #. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.NEWAUTOMATIONWARNING
 msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.NEWAUTOMATIONWARNING"
@@ -50727,6 +51018,11 @@ msgstr "Урон от жары"
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.CONDUIT_CONTENTS_FROZE"
 msgid "Cold Damage"
 msgstr "Урон от холода"
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.CORROSIVE_ELEMENT
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.CORROSIVE_ELEMENT"
+msgid "Corrosive Element Damage"
+msgstr "Урон от коррозионного элемента"
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.LIQUID_PRESSURE
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.LIQUID_PRESSURE"
@@ -54143,6 +54439,11 @@ msgctxt "STRINGS.UI.RETIRED_COLONY_INFO_SCREEN.TITLES.RETIRED_COLONIES"
 msgid "Colony Summaries"
 msgstr "Описания колонии"
 
+#. STRINGS.UI.RETIRED_COLONY_INFO_SCREEN.TITLES.TIMELAPSE
+msgctxt "STRINGS.UI.RETIRED_COLONY_INFO_SCREEN.TITLES.TIMELAPSE"
+msgid "Timelapse"
+msgstr "Ускоренное воспроизведение"
+
 #. STRINGS.UI.ROLES
 msgctxt "STRINGS.UI.ROLES"
 msgid "JOB ASSIGNMENTS"
@@ -55728,6 +56029,16 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.EGGROCK.NAME"
 msgid "Egg-Shaped Rock"
 msgstr "Камень в форме яйца"
 
+#. STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.DESCRIPTION
+msgctxt "STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.DESCRIPTION"
+msgid "Grub Grub"
+msgstr "Личинус"
+
+#. STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.NAME
+msgctxt "STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.NAME"
+msgid "Grub Statue"
+msgstr "Статуя личинки"
+
 #. STRINGS.UI.SPACEARTIFACTS.HATCHFOSSIL.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.HATCHFOSSIL.DESCRIPTION"
 msgid "The preserved bones of an early species of Hatch."
@@ -55737,6 +56048,16 @@ msgstr "Хорошо сохранившиеся кости древнего ви
 msgctxt "STRINGS.UI.SPACEARTIFACTS.HATCHFOSSIL.NAME"
 msgid "Pristine Fossil"
 msgstr "Древнее ископаемое"
+
+#. STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.DESCRIPTION
+msgctxt "STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.DESCRIPTION"
+msgid "This doesn't taste like uranium"
+msgstr "Ураном совершенно не отдает"
+
+#. STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.NAME
+msgctxt "STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.NAME"
+msgid "Honey Jar"
+msgstr "Банка меда"
 
 #. STRINGS.UI.SPACEARTIFACTS.MAGMALAMP.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MAGMALAMP.DESCRIPTION"
@@ -55767,6 +56088,16 @@ msgstr "Уникальный зеленый камень, образовавши
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MOLDAVITE.NAME"
 msgid "Moldavite"
 msgstr "Молдавит"
+
+#. STRINGS.UI.SPACEARTIFACTS.MOOD_RING.DESCRIPTION
+msgctxt "STRINGS.UI.SPACEARTIFACTS.MOOD_RING.DESCRIPTION"
+msgid "How radioactive are you feeling?"
+msgstr "Насколько вы радиоактивны?"
+
+#. STRINGS.UI.SPACEARTIFACTS.MOOD_RING.NAME
+msgctxt "STRINGS.UI.SPACEARTIFACTS.MOOD_RING.NAME"
+msgid "Radiation Mood Ring"
+msgstr "Кольцо радионастроения"
 
 #. STRINGS.UI.SPACEARTIFACTS.MOONMOONMOON.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MOONMOONMOON.DESCRIPTION"
@@ -55808,6 +56139,16 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.OKAYXRAY.NAME"
 msgid "Old X-Ray"
 msgstr "Старый рентгеновский снимок"
 
+#. STRINGS.UI.SPACEARTIFACTS.ORACLE.DESCRIPTION
+msgctxt "STRINGS.UI.SPACEARTIFACTS.ORACLE.DESCRIPTION"
+msgid "What does it do?"
+msgstr "Зачем оно вообще нужно?"
+
+#. STRINGS.UI.SPACEARTIFACTS.ORACLE.NAME
+msgctxt "STRINGS.UI.SPACEARTIFACTS.ORACLE.NAME"
+msgid "Useless Machine"
+msgstr "Бесполезное устройство"
+
 #. STRINGS.UI.SPACEARTIFACTS.PERCOLATOR.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.PERCOLATOR.DESCRIPTION"
 msgid "Don't drink from it! There was a pacu... IN the percolator!"
@@ -55837,6 +56178,16 @@ msgstr "Непонятно, придала ли ему такую форму п�
 msgctxt "STRINGS.UI.SPACEARTIFACTS.RAINBOWEGGROCK.NAME"
 msgid "Egg-Shaped Rock"
 msgstr "Камень в форме яйца"
+
+#. STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.DESCRIPTION
+msgctxt "STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.DESCRIPTION"
+msgid "It's pronounced nuclear"
+msgstr "Ядерный там реактор, а не ядреный"
+
+#. STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.NAME
+msgctxt "STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.NAME"
+msgid "Model Nuclear Power Plant"
+msgstr "Модель атомной электростанции"
 
 #. STRINGS.UI.SPACEARTIFACTS.ROBOTARM.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.ROBOTARM.DESCRIPTION"
@@ -56740,8 +57091,8 @@ msgstr "Выбрано место назначения"
 
 #. STRINGS.UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.NOTSELECTED
 msgctxt "STRINGS.UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.NOTSELECTED"
-msgid "Select the rocket's nosecone to set a destination"
-msgstr "Нажмите на головной обтекатель ракеты, чтобы выбрать место назначения."
+msgid "Select the rocket's Command Module to set a destination"
+msgstr "Нажмите на командный модуль ракеты, чтобы выбрать место назначения"
 
 #. STRINGS.UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.REACHABLE
 msgctxt "STRINGS.UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.REACHABLE"
@@ -59323,6 +59674,16 @@ msgctxt "STRINGS.UI.UISIDESCREENS.ACTIVATION_RANGE_SIDE_SCREEN.NAME"
 msgid "Breaktime Policy"
 msgstr "Перерыв: основные положения"
 
+#. STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN.NO_ARTIFACTS_DISCOVERED
+msgctxt "STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN.NO_ARTIFACTS_DISCOVERED"
+msgid "No artifacts analyzed"
+msgstr "Нет изученных артефактов"
+
+#. STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN.NO_ARTIFACTS_DISCOVERED_TOOLTIP
+msgctxt "STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN.NO_ARTIFACTS_DISCOVERED_TOOLTIP"
+msgid "A skilled artist can analyze artifacts."
+msgstr "Артефакты может проанализировать умелый художник."
+
 #. STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP
 msgctxt "STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP"
 msgid "Assign to {0}"
@@ -61807,6 +62168,21 @@ msgstr "Порог температуры"
 msgctxt "STRINGS.UI.UISIDESCREENS.TEMPERATURESWITCHSIDESCREEN.WARMER_BUTTON"
 msgid "Above"
 msgstr "Выше"
+
+#. STRINGS.UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.BUTTON_CLOSED
+msgctxt "STRINGS.UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.BUTTON_CLOSED"
+msgid "Tear Closed"
+msgstr "Разлом закрыт"
+
+#. STRINGS.UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.BUTTON_OPEN
+msgctxt "STRINGS.UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.BUTTON_OPEN"
+msgid "Enter Tear"
+msgstr "Войти в разлом"
+
+#. STRINGS.UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.TITLE
+msgctxt "STRINGS.UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.TITLE"
+msgid "Temporal Tear"
+msgstr "Временной разлом"
 
 #. STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.ABOVE_BUTTON
 msgctxt "STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.ABOVE_BUTTON"
@@ -64432,6 +64808,16 @@ msgstr "Довольно большой частично замерзший ас
 msgctxt "STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.NAME"
 msgid "Radioactive Swamp Asteroid"
 msgstr "Астероид с радиоактивными болотами"
+
+#. STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
+msgctxt "STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION"
+msgid "A large-ish world with a radioactive core.\n\n<smallcaps>The Radioactive Terra Asteroid is fairly dry and sandy, but does contain areas of jungle.</smallcaps>"
+msgstr "Сравнительно большое тело с радиоактивным ядром.\n\n<smallcaps>Радиоактивный астероид Терра</smallcaps> довольно засушлив и пустынен, но местами покрыт джунглями."
+
+#. STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.NAME
+msgctxt "STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.NAME"
+msgid "Radioactive Terra Asteroid"
+msgstr "Радиоактивный астероид Терра"
 
 #. STRINGS.WORLDS.METALHEAVYLANDINGSITE.DESCRIPTION
 msgctxt "STRINGS.WORLDS.METALHEAVYLANDINGSITE.DESCRIPTION"

@@ -952,8 +952,6 @@ cells:
 - element: Mud
   mass: 1000
   temperature: 294.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: 240750
   location_x: 14
 - element: Oxygen
   mass: 0.297109783

@@ -1,23 +1,24 @@
-id: "STATERPILLARSPECIES"
-title: STRINGS.CODEX.PLUGSLUG.TITLE
+id: "FirstColony"
+title: STRINGS.CODEX.C7_FIRSTCOLONY.TITLE
 dlcIds:
   - "EXPANSION1_ID"
-  
 contentContainers:
 #-----------------------------
   - contentLayout: Vertical
+    lockID: notes_firstcolony
     content:
       - !CodexText
-          stringKey: STRINGS.CODEX.PLUGSLUG.TITLE
+          stringKey: STRINGS.CODEX.C7_FIRSTCOLONY.TITLE
           style: Title
       - !CodexText
-          stringKey: STRINGS.CODEX.PLUGSLUG.SUBTITLE
+          stringKey: STRINGS.CODEX.C7_FIRSTCOLONY.SUBTITLE
           style: Subtitle
       - !CodexDividerLine
           preferredWidth: -1
 #-----------------------------
   - contentLayout: Vertical
+    lockID: notes_firstcolony
     content:
       - !CodexText
-          stringKey: STRINGS.CODEX.PLUGSLUG.BODY.CONTAINER1
+          stringKey: STRINGS.CODEX.C7_FIRSTCOLONY.BODY.CONTAINER1
           style: Body

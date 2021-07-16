@@ -1078,13 +1078,21 @@ msgstr "제작을 시작하기 위해 레시피를 선택합니다."
 
 #. STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.NAME"
-msgid "Waiting For Radbolts"
-msgstr "래드볼트를 기다리는 중"
+msgid "Waiting For Radbolts ({CurrentHEP}/{HEPRequired})"
+msgstr "래드볼트를 기다리는 중({CurrentHEP}/{HEPRequired})"
 
 #. STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.TOOLTIP"
-msgid "A queued recipe requires more Radbolts than are currently stored"
-msgstr "대기 중인 레시피에는 현재 저장된 것보다 더 많은 래드볼트가 필요합니다."
+msgid ""
+"A queued recipe requires more Radbolts than are currently stored.\n"
+"\n"
+"Currently stored: {CurrentHEP}\n"
+"Required for recipe: {HEPRequired}"
+msgstr ""
+"대기 중인 레시피에는 현재 저장된 것보다 더 많은 래드볼트가 필요합니다.\n"
+"\n"
+"현재 저장: {CurrentHEP} \n"
+"레시피에 필요: {HEPRequired}"
 
 #. STRINGS.BUILDING.STATUSITEMS.FLIGHTALLCARGOFULL.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.FLIGHTALLCARGOFULL.NAME"
@@ -2517,7 +2525,7 @@ msgstr "초과 생산됨"
 #. STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.LINEITEM
 msgctxt "STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.LINEITEM"
 msgid "    • {0}: {1}\n"
-msgstr "• {0}: {1}\n"
+msgstr "    • {0}: {1}\n"
 
 #. STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.NAME"
@@ -3408,6 +3416,16 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.TANNINGLIGHTSUFFICIENT.TOOLTIP"
 msgid "There is sufficient <link=\"LIGHT\">Light</link> here to create pleasing skin crisping"
 msgstr "기분 좋게 피부를 바싹 태우기에 충분한<link=\"LIGHT\">빛</link>이 있습니다."
 
+#. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.NAME"
+msgid "Too few Printing Pods {progress}"
+msgstr "프린팅 팟이 너무 적음 {progress}"
+
+#. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.TOOLTIP"
+msgid "This device relies on a sufficiently large network of activated Printing Pods{progress}"
+msgstr "이 장치는 활성화된 프린팅 팟 네트워크가 충분히 커야 합니다{progress}"
+
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_LOS.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_LOS.NAME"
 msgid "Line of Sight: Obstructed"
@@ -3420,23 +3438,23 @@ msgstr "이 장치를 작동하려면 우주에 대한 시야가 명확해야 �
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_TARGET.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_TARGET.NAME"
-msgid "Target: None"
-msgstr "대상: 없음"
+msgid "Temporal Tear not revealed"
+msgstr "시간의 찢어짐이 드러나지 않았음"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_TARGET.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_TARGET.TOOLTIP"
-msgid "\"Awaiting transmission of coordinates...\""
-msgstr "\"좌표 전송을 기다리는 중...\""
+msgid "This machine is meant to target something in space, but the target is not yet revealed."
+msgstr "이 기계는 우주에 있는 무언가를 표적으로 삼았지만 표적은 아직 밝혀지지 않았습니다."
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.NAME"
-msgid "Progress: {progress}"
-msgstr "진행: {progress}"
+msgid "Charging Progress: {progress}"
+msgstr "충전 진행률: {progress}"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.TOOLTIP"
-msgid "Operation will commence once this device is fully charged"
-msgstr "이 장치가 완전히 충전되면 작동이 시작됩니다."
+msgid "This device must be charged with a high number of Radbolts. Operation can commence once this device is fully charged."
+msgstr "이 장치는 다량의 래드볼트로 충전해야 합니다. 이 장치가 완전히 충전되면 작동을 시작할 수 있습니다."
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION"
@@ -4023,6 +4041,11 @@ msgctxt "STRINGS.BUILDINGS.DAMAGESOURCES.CONDUIT_CONTENTS_FROZE"
 msgid "pipe contents becoming too cold"
 msgstr "파이프 내용물이 너무 차가움"
 
+#. STRINGS.BUILDINGS.DAMAGESOURCES.CORROSIVE_ELEMENT
+msgctxt "STRINGS.BUILDINGS.DAMAGESOURCES.CORROSIVE_ELEMENT"
+msgid "corrosive element"
+msgstr "부식성 원소"
+
 #. STRINGS.BUILDINGS.DAMAGESOURCES.LIQUID_PRESSURE
 msgctxt "STRINGS.BUILDINGS.DAMAGESOURCES.LIQUID_PRESSURE"
 msgid "neighboring liquid pressure"
@@ -4305,6 +4328,16 @@ msgstr "관심 가공물에서 <link=\"UNOBTANIUM\">뉴트로늄</link>을 분�
 msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.NAME"
 msgid "<link=\"ARTIFACTANALYSISSTATION\">Artifact Analysis Station</link>"
 msgstr "<link=\"ARTIFACTANALYSISSTATION\">가공물 분석 스테이션</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.PAYLOAD_DROP_RATE
+msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.PAYLOAD_DROP_RATE"
+msgid "Vacillator Recharge drop chance: {chance}"
+msgstr "변동기 충전 발견 확률: {chance}"
+
+#. STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.PAYLOAD_DROP_RATE_TOOLTIP
+msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.PAYLOAD_DROP_RATE_TOOLTIP"
+msgid "This artifact has a {chance} to drop a Vacillator Recharge when analyzed at the <link=\"ARTIFACTANALYSISSTATION\">Artifact Analysis Station</link>"
+msgstr "이 가공물은 <link=\"ARTIFACTANALYSISSTATION\">가공물 분석 스테이션</link>에서 분석할 때 변동기 충전을 줄 {chance}이(가) 있습니다."
 
 #. STRINGS.BUILDINGS.PREFABS.ARTIFACTCARGOBAY.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTCARGOBAY.DESC"
@@ -10183,11 +10216,11 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.EFFECT"
 msgid ""
 "Enables a rocket to drill into interstellar debris and collect <link=\"ELEMENTSGAS\">gas</link>, <link=\"ELEMENTSLIQUID\">liquid</link> and <link=\"ELEMENTSSOLID\">solid</link> resources from space.\n"
 "\n"
-"Must be built at the top of a rocket."
+"Must be built at the top of a rocket with <link=\"ELEMENTSGAS\">gas</link>, <link=\"ELEMENTSLIQUID\">liquid</link> or <link=\"ELEMENTSSOLID\">solid</link> Cargo Module attached to store the appropriate resources."
 msgstr ""
-"로켓이 성간 잔해를 뚫고 우주에서 <link=\"ELEMENTSGAS\">기체</link>, <link=\"ELEMENTSLIQUID\">액체</link>, <link=\"ELEMENTSSOLID\">고체</link> 자원을 수집할 수 있습니다.\n"
+"로켓이 성간 파편을 드릴로 뚫고 우주에서 <link=\"ELEMENTSGAS\">기체</link>, <link=\"ELEMENTSLIQUID\">액체</link>, <link=\"ELEMENTSSOLID\">고체</link> 자원을 수집할 수 있도록 합니다.\n"
 "\n"
-"로켓 꼭대기에 만들어야 합니다."
+"적절한 자원을 저장하기 위해 <link=\"ELEMENTSGAS\">기체</link>, <link=\"ELEMENTSLIQUID\">액체</link> 또는 <link=\"ELEMENTSSOLID\">고체</link> 화물 모듈이 부착된 로켓의 상단에 만들어야 합니다."
 
 #. STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.NAME"
@@ -11364,8 +11397,8 @@ msgstr "미완성 프로토타입을 남긴 멸종된 로봇 기술자의 작업
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASROBTICTABLE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASROBTICTABLE.NAME"
-msgid "Robitics Research Desk"
-msgstr "로비틱스 연구 데스크"
+msgid "Robotics Research Desk"
+msgstr "로봇공학 연구 데스크"
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASSHELF.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASSHELF.DESC"
@@ -14054,10 +14087,20 @@ msgctxt "STRINGS.CLUSTER_NAMES.TWO_SMALL_WORLDS.NAME"
 msgid "Two Small Worlds"
 msgstr "작은 두 세계"
 
+#. STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.DESCRIPTION
+msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.DESCRIPTION"
+msgid "A cluster of planets with a larger foresty planetoid to start on."
+msgstr "숲이 많은 큰 시작 미행성을 가진 행성들의 무리."
+
+#. STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.NAME
+msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.NAME"
+msgid "Large Forest Cluster"
+msgstr "큰 숲 클러스터"
+
 #. STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_CLUSTER.DESCRIPTION
 msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_CLUSTER.DESCRIPTION"
 msgid "A cluster of planets with a larger earthy planetoid to start on."
-msgstr "흙이 많은 큰 시작 행성을 가진 행성들의 무리."
+msgstr "흙이 많은 큰 시작 행성을 가진 미행성들의 무리."
 
 #. STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_CLUSTER.NAME
 msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_CLUSTER.NAME"
@@ -16839,48 +16882,45 @@ msgstr "사무실 케이크"
 #. STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER1"
 msgid ""
-"Meet The Pilot:\n"
-"Captain Mae Johannsen\n"
+"<indent=%5>From the time she was old enough to walk Captain Johannsen dreamed of reaching the sky. Growing up on an air force base she came to love the sound jet engines roaring overhead. At 16 she became the youngest pilot ever to fly a fighter jet, and at 22 she had already entered the space flight program.\n"
 "\n"
-"From the time she was old enough to walk Captain Johannsen dreamed of reaching the sky. Growing up on an air force base she came to love the sound jet engines roaring overhead.\n"
+"Four years later Gravitas nabbed her for an exclusive contract piloting our space shuttles. In her time at Gravitas, Captain Johannsen has logged over 1,000 hours space flight time shuttling and deploying satellites to Low Earth Orbits and has just been named the pilot of our inaugural civilian space tourist program, slated to begin in the next year.\n"
 "\n"
-"At 16 she became the youngest pilot to fly a fighter jet and at 22 she had already entered the space flight program.\n"
-"\n"
-"Four years later Gravitas nabbed her for an exclusive contract piloting our space shuttles. In her time at Gravitas, Captain Johannsen has logged over 1,000 hours space flight time shuttling and deploying satellites to low Earth Orbits and has just been named the pilot of our inaugural civilian space tourist program, slated to begin in the next year.\n"
-"\n"
-"Gravitas is excited to have Captain Johannsen in the pilot seat as we reach for the stars...and beyond!"
+"Gravitas is excited to have Captain Johannsen in the pilot seat as we reach for the stars...and beyond!</indent>"
 msgstr ""
-"조종사와의 만남:\n"
-"매 요한슨 캡틴\n"
-"\n"
-"그녀는 걸을 수 있을 나이가 들었을 때부터 요한슨 캡틴은 하늘에 이르는 꿈을 꾸었습니다. 공군 기지에서 자란 그녀는 머리 위로 울리는 제트 엔진 소리를 좋아하게 되었습니다.\n"
+"<indent=%5>그녀는 걸을 수 있을 나이가 들었을 때부터 요한슨 캡틴은 하늘에 이르는 꿈을 꾸었습니다. 공군 기지에서 자란 그녀는 머리 위로 울리는 제트 엔진 소리를 좋아하게 되었습니다.\n"
 "\n"
 "16세에 그녀는 전투기를 조종한 최연소 조종사가 되었고 22세에 이미 우주 비행 프로그램에 참여했습니다.\n"
 "\n"
 "4년 후 그라비타스는 우주 왕복선을 조종하는 독점 계약을 위해 그녀를 채용했습니다. 그라비타스에서 근무하는 동안 요한슨 캡틴은 1,000시간 이상의 우주 비행 시간을 기록하며 저궤도에 위성을 배치하고 내년에 시작할 예정인 최초 민간 우주 관광 프로그램의 조종사로 지명되었습니다.\n"
 "\n"
-"그라비타스는 별과 그 너머에 도달하기 위해 조종사 자리에 요한슨 캡틴을 앉히게 되어 기쁩니다!"
+"그라비타스는 별과 그 너머에 도달하기 위해 조종사 자리에 요한슨 캡틴을 앉히게 되어 기쁩니다!</indent>"
 
 #. STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER2
 msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER2"
 msgid ""
+"<indent=%10><smallcaps>\n"
 "\n"
-"\n"
-"Brought to you by the Gravitas Facility."
+"Brought to you by the Gravitas Facility.</indent>"
 msgstr ""
+"<indent=%10><smallcaps>\n"
 "\n"
-"\n"
-"그라비타스설비 제공."
+"그라비타스설비 제공.</indent>"
 
 #. STRINGS.CODEX.B2_MEETTHEPILOT.SUBTITLE
 msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.SUBTITLE"
-msgid "PUBLIC RELEASE"
-msgstr "공개 발표"
+msgid "ENCRYPTION LEVEL: ONE"
+msgstr "암호화 수준: 1"
 
 #. STRINGS.CODEX.B2_MEETTHEPILOT.TITLE
 msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.TITLE"
-msgid "The Future of Space Flight"
-msgstr "우주 비행의 미래"
+msgid "Meet the Pilot"
+msgstr "파일럿 만나기"
+
+#. STRINGS.CODEX.B2_MEETTHEPILOT.TITLE2
+msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.TITLE2"
+msgid "Captain Mae Johannsen"
+msgstr "매 요한슨 선장"
 
 #. STRINGS.CODEX.B2_TEMPORALBOWUPDATE.BODY.CONTAINER2
 msgctxt "STRINGS.CODEX.B2_TEMPORALBOWUPDATE.BODY.CONTAINER2"
@@ -17847,6 +17887,97 @@ msgctxt "STRINGS.CODEX.B7_FRIENDLYEMAIL.TITLE"
 msgid "Hiiiii!"
 msgstr "안녕!"
 
+#. STRINGS.CODEX.B7_INSPACE.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.B7_INSPACE.BODY.CONTAINER1"
+msgid ""
+"<smallcaps>[Voice Recognition Initialized]\n"
+"[Subjects Identified: B835, B997]</smallcaps>\n"
+"\n"
+"[LOG BEGINS]\n"
+"\n"
+"Dr.Ansari: Shhhh...\n"
+"\n"
+"Dr. Bubare: What? What are we doing here?\n"
+"\n"
+"Dr. Ansari: I'll show you, just keep your voice down.\n"
+"\n"
+"Dr. Bubare: Are we even allowed to be here?\n"
+"\n"
+"Dr. Ansari: No. Trust me it'll all be worth it once I can find it.\n"
+"\n"
+"Dr. Bubare: Find what?\n"
+"\n"
+"Dr. Ansari: That!\n"
+"\n"
+"Dr. Bubare: ...Video feed from a rat cage? What's so great about -- Wait. Are they--?\n"
+"\n"
+"Dr. Ansari: Floating!\n"
+"\n"
+"Dr. Bubare: You mean they're in--?\n"
+"\n"
+"Dr. Ansari: Space!\n"
+"\n"
+"Dr. Bubare: Our thermal rats are in space?!?!\n"
+"\n"
+"Dr. Ansari: Yep! There's Applecart and Cherrypie and little Bananabread. Look at them, they're so happy. We made ratstronauts!!\n"
+"\n"
+"Dr. Bubare: HAPPY rat-stronauts.\n"
+"\n"
+"Dr. Ansari: WE MADE HAPPY RATSTRONAUTS!!\n"
+"\n"
+"Dr. Bubare: Shhhhhh...Someone's coming.\n"
+"\n"
+"[LOG ENDS]"
+msgstr ""
+"<smallcaps>[음성 인식 초기화]\n"
+"[대상 식별됨: B835, B997]</smallcaps>\n"
+"\n"
+"[로그 시작]\n"
+"\n"
+"안사리 박사: 쉬...\n"
+"\n"
+"부바레 박사: 뭐? 여기서 뭐 하는 거예요?\n"
+"\n"
+"안사리 박사: 보여 줄게, 목소리를 낮춰요. \n"
+"\n"
+"부바레 박사: 우리가 여기 있어도 되나요?\n"
+"\n"
+"안사리 박사: 아뇨. 일단 찾으면 그만한 가치가 있을 거에요.\n"
+"\n"
+"부바레 박사: 뭘 찾아요?\n"
+"\n"
+"안사리 박사: 저거! \n"
+"\n"
+"부바레 박사: ...쥐 우리의 영상? 뭐가 그렇게 대단한지, 잠깐. 저것은?\n"
+"\n"
+"안사리 박사: 떠있어! \n"
+"\n"
+"부바레 박사: 그것들이 있는 곳은?\n"
+"\n"
+"안사리 박사: 우주!\n"
+"\n"
+"부바레 박사: 우리 열 쥐가 우주에 있어?!?!\n"
+"\n"
+"안사리 박사: 네! 사과 카트, 체리파이, 작은 바나나브레드도. 너무 행복해 보이죠. 우리는 우주쥐를 만들었어요!!\n"
+"\n"
+"부바레 박사: 행복한 우주쥐.\n"
+"\n"
+"안사리 박사: 우리는 행복한 우주쥐를 만들었어요!!\n"
+"\n"
+"부바레 박사: 쉿... 누가 와요.\n"
+"\n"
+"[로그 종료]"
+
+#. STRINGS.CODEX.B7_INSPACE.SUBTITLE
+msgctxt "STRINGS.CODEX.B7_INSPACE.SUBTITLE"
+msgid "ENCRYPTION LEVEL: TWO"
+msgstr "암호화 수준: 2"
+
+#. STRINGS.CODEX.B7_INSPACE.TITLE
+msgctxt "STRINGS.CODEX.B7_INSPACE.TITLE"
+msgid "In Space"
+msgstr "우주에 있음"
+
 #. STRINGS.CODEX.B7_TIMESARROWTHOUGHTS.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.B7_TIMESARROWTHOUGHTS.BODY.CONTAINER1"
 msgid ""
@@ -18166,8 +18297,8 @@ msgctxt "STRINGS.CODEX.BUDDYBUD.TITLE"
 msgid "Buddy Bud"
 msgstr "친구눈"
 
-#. STRINGS.CODEX.C01_Evil.BODY.CONTAINER1
-msgctxt "STRINGS.CODEX.C01_Evil.BODY.CONTAINER1"
+#. STRINGS.CODEX.C01_EVIL.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.C01_EVIL.BODY.CONTAINER1"
 msgid ""
 "Clearly Nikola is evil. He has some kind of scheme going on that he’s keeping secret from the rest of Gravitas and I haven’t been able to crack what that is because it’s offline and he’s always at his computer. Whenever I ask him what he’s up to he says I wouldn’t understand. Pfft! We both went through the same particle physics classes, buddy. Just because you mash a keyboard and I adjust knobs does not mean I don’t know what the Time Containment Field does.\n"
 "\n"
@@ -18183,8 +18314,8 @@ msgstr ""
 "그것은 사실입니다. 시간봉쇄장이 붕괴된다면 시간 활은 이론적으로 세계를 파괴할 수 있지만, 그래서 안전 시스템이 있습니다. 그리고 안전 시스템의 안전 시스템이 있고, 그 위에 안전 시스템이 있습니다. 하지만 그가 모든 안전 시스템을 구축했으니까 그가 원한다면...\n"
 "------------------\n"
 
-#. STRINGS.CODEX.C01_Evil.BODY.CONTAINER2
-msgctxt "STRINGS.CODEX.C01_Evil.BODY.CONTAINER2"
+#. STRINGS.CODEX.C01_EVIL.BODY.CONTAINER2
+msgctxt "STRINGS.CODEX.C01_EVIL.BODY.CONTAINER2"
 msgid ""
 "I decided to get into work early today but when I got in Nikola was already there and it looked like he hadn’t been home all weekend. He was pacing back-and-forth in the lab, monologuing but not like an evil villain. Like someone who hadn’t slept in a week.\n"
 "\n"
@@ -18204,8 +18335,8 @@ msgstr ""
 "내가 틀렸고 그가 옳았다면?\n"
 "------------------\n"
 
-#. STRINGS.CODEX.C01_Evil.BODY.CONTAINER3
-msgctxt "STRINGS.CODEX.C01_Evil.BODY.CONTAINER3"
+#. STRINGS.CODEX.C01_EVIL.BODY.CONTAINER3
+msgctxt "STRINGS.CODEX.C01_EVIL.BODY.CONTAINER3"
 msgid ""
 "No seriously - what if he's right?\n"
 "------------------\n"
@@ -18213,15 +18344,114 @@ msgstr ""
 "정말로, 그가 옳다면?\n"
 "------------------\n"
 
-#. STRINGS.CODEX.C01_Evil.SUBTITLE
-msgctxt "STRINGS.CODEX.C01_Evil.SUBTITLE"
+#. STRINGS.CODEX.C01_EVIL.SUBTITLE
+msgctxt "STRINGS.CODEX.C01_EVIL.SUBTITLE"
 msgid "ENCRYPTION LEVEL: NONE"
 msgstr "암호화 수준: 없음"
 
-#. STRINGS.CODEX.C01_Evil.TITLE
-msgctxt "STRINGS.CODEX.C01_Evil.TITLE"
+#. STRINGS.CODEX.C01_EVIL.TITLE
+msgctxt "STRINGS.CODEX.C01_EVIL.TITLE"
 msgid "Evil"
 msgstr "사악한"
+
+#. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.CONTAINER3
+msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.CONTAINER3"
+msgid ""
+"<indent=5%>Director, I think I've found the perfect engineer candidate to design our small-scale colony machines.\n"
+"-----------------------------------------------------------------------------------------------------\n"
+"</indent>"
+msgstr ""
+"<indent=5%>감독님, 저는 소규모 콜로니 기계를 설계하기에 완벽한 엔지니어 후보를 찾은 것 같습니다.\n"
+"-----------------------------------------------------------------------------------------------------\n"
+"</indent>"
+
+#. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.CONTAINER4
+msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.CONTAINER4"
+msgid ""
+"<indent=10%><smallcaps><b>Bringing Creative Workspace Ideas into the Industrial Setting</b>\n"
+"\n"
+"Michael E.E. Perlmutter is a rising star in the world industrial design, making a name for himself by cooking up playful workspaces for a work force typically left out of the creative conversation.\n"
+"\n"
+"\"Ergodynamic chairs have been done to death,\" says Perlmutter. \"What I'm interested in is redesigning the industrial space. There's no reason why a machine can't convey a sense of whimsy.\"\n"
+"\n"
+"It's this philosophy that has launched Perlmutter to the top of a very short list of hot new industrial designers.</indent></smallcaps>"
+msgstr ""
+"<indent=10%><smallcaps><b>창의적인 작업 공간 아이디어를 산업 환경에 도입</b>\n"
+"\n"
+"마이클 EE 펄머터는 세계 산업 디자인의 떠오르는 스타로, 일반적으로 창의적인 담론에서 제외된 노동력을 위해 재미있는 작업 공간을 만들어 자신의 이름을 알렸다.\n"
+"\n"
+"펄머터는 \"인체공학적 의자는 한계에 이르렀다\"고 말했다. \"내가 관심 있는 것은 산업 공간을 재설계하는 것이다. 기계가 기발함을 표현하지 못할 이유는 없다.\"\n"
+"\n"
+"펄머터를 인기 있는 새로운 산업 디자이너의 매우 짧은 목록의 꼭대기로 올린 것은 바로 이 철학이다.</smallcaps></indent>"
+
+#. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.EMAILHEADER1
+msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.EMAILHEADER1"
+msgid ""
+"<smallcaps>To: <b>[REDACTED]</b>\n"
+"From: <b>Director Stern</b><size=12><alpha=#AA> <jstern@gravitas.nova></size></color></smallcaps>\n"
+"------------------\n"
+msgstr ""
+"<smallcaps>수신: <b>[가려짐]</b>\n"
+"발신: <b>스턴 관장</b><size=12><alpha=#AA> <jstern@gravitas.nova></size></color></smallcaps>\n"
+"------------------\n"
+
+#. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.SIGNATURE1
+msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.SIGNATURE1"
+msgid ""
+"\n"
+"[REDACTED]\n"
+"<size=11>Human Resources Coordinator\n"
+"The Gravitas Facility</size>\n"
+"------------------\n"
+msgstr ""
+"\n"
+"[REDACTED]\n"
+"<size=11>인적 자원 코디네이터\n"
+"그라비타스설비</size>\n"
+"------------------\n"
+
+#. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.SUBTITLE
+msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.SUBTITLE"
+msgid "ENCRYPTION LEVEL: ONE"
+msgstr "암호화 수준: 1"
+
+#. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.TITLE
+msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.TITLE"
+msgid "RE: Engineer Candidate?"
+msgstr "회신: 엔지니어 후보?"
+
+#. STRINGS.CODEX.C7_FIRSTCOLONY.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.C7_FIRSTCOLONY.BODY.CONTAINER1"
+msgid ""
+"The first experiments with establishing a colony off planet were an unmitigated disaster. Without outside help, our current Artificial Intelligence was completely incapable of making the kind of spontaneous decisions needed to deal with unforeseen circumstances. Additionally, the colony subjects lacked the forethought to even build themselves toilet facilities, even after soiling themselves repeatedly.\n"
+"\n"
+"While initial experiments in a lab setting were encouraging, our latest operation on non-Terra soil revealed some massive inadequacies to our system. If this idea is ever going to work, we will either need to massively improve the AI directing the subjects, or improve the brains of our Duplicants to the point where they possess higher cognitive functions.\n"
+"\n"
+"Given the massive complications that I could forsee arising if our Duplicants were made less supplicant, I'm leaning toward a push to improve our Artificial Intellegence.\n"
+"\n"
+"Meanwhile, we will have to send a clean up crew to destroy all evidence of our little experiment beneath the Ceres' surface. We can't risk anyone discovering the remnants of our failed colony, even if the likelihood or that happening won't be for another few decades at least.\n"
+"\n"
+"(Sometimes it boggles my mind how much further behind the rest of the world is from Gravitas.)"
+msgstr ""
+"행성 외곽에 콜로니를 구축하는 첫 번째 실험은 지독한 재앙이었습니다. 외부의 도움 없이는 우리의 현재 인공 지능은 예기치 않은 상황을 처리하는 데 필요한 자발적인 결정을 내릴 수 없었습니다. 또한 콜로니 주민들은 반복적으로 대소변으로 몸을 더럽힌 후에도 스스로 화장실 시설을 지을 계획이 부족했습니다.\n"
+"\n"
+"실험실 환경에서의 초기 실험은 고무적이었지만 테라가 아닌 토양에 대한 최근 작업은 우리 시스템에 엄청난 부적절함을 드러냈습니다. 이 아이디어의 효과를 발휘하려면, 우리는 대상을 지시하는 AI를 대폭 개선하거나 복제체의 뇌를 더 높은 인지 기능을 보유할 수 있도록 개선해야 합니다.\n"
+"\n"
+"복제체의 욕구가 적을 경우 발생할 수 있는 엄청난 합병증을 감안할 때, 우리의 인공 지능을 향상시키려는 노력에 기울이고 있습니다.\n"
+"\n"
+"한편, 세레스의 표면 아래에서 우리의 작은 실험의 모든 증거를 파괴하기 위해 정리 팀을 보내야 할 것입니다. 실패한 콜로니의 잔재를 발견하는 사람을 위험에 빠뜨릴 수 없습니다. 그럴 가능성이 적어도 앞으로 수십 년 동안은 없을지라도 말입니다.\n"
+"\n"
+"(때때로 그라비타스에 비하여 세상의 나머지 부분이 얼마나 더 뒤쳐져 있다는 것을 상기하면 내 스스로가 놀랍니다.)"
+
+#. STRINGS.CODEX.C7_FIRSTCOLONY.SUBTITLE
+msgctxt "STRINGS.CODEX.C7_FIRSTCOLONY.SUBTITLE"
+msgid "ENCRYPTION LEVEL: THREE"
+msgstr "암호화 수준: 3"
+
+#. STRINGS.CODEX.C7_FIRSTCOLONY.TITLE
+msgctxt "STRINGS.CODEX.C7_FIRSTCOLONY.TITLE"
+msgid "Director's Notes"
+msgstr "관장의 메모"
 
 #. STRINGS.CODEX.CLEANER.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.CLEANER.BODY.CONTAINER1"
@@ -18438,8 +18668,8 @@ msgstr ""
 
 #. STRINGS.CODEX.DIVERGENT.SUBTITLE
 msgctxt "STRINGS.CODEX.DIVERGENT.SUBTITLE"
-msgid "Domesticatable Critter"
-msgstr "길들일 수 있는 크리터"
+msgid "Domesticable Critter"
+msgstr "순화 가능 크리터"
 
 #. STRINGS.CODEX.DIVERGENT.TITLE
 msgctxt "STRINGS.CODEX.DIVERGENT.TITLE"
@@ -19935,6 +20165,20 @@ msgctxt "STRINGS.CODEX.MYLOG.BODY.TELEPORT.TITLE"
 msgid "Duplicant Teleportation"
 msgstr "복제체 텔레포테이션"
 
+#. STRINGS.CODEX.MYLOG.BODY.TEMPORALOPENER.BODY
+msgctxt "STRINGS.CODEX.MYLOG.BODY.TEMPORALOPENER.BODY"
+msgid ""
+"\n"
+"\n"
+msgstr ""
+"\n"
+"\n"
+
+#. STRINGS.CODEX.MYLOG.BODY.TEMPORALOPENER.TITLE
+msgctxt "STRINGS.CODEX.MYLOG.BODY.TEMPORALOPENER.TITLE"
+msgid "Temporal Potential"
+msgstr "시간 잠재력"
+
 #. STRINGS.CODEX.MYLOG.BODY.TEMPORALTEAR.BODY
 msgctxt "STRINGS.CODEX.MYLOG.BODY.TEMPORALTEAR.BODY"
 msgid ""
@@ -20909,11 +21153,11 @@ msgstr "호리호리한 벵이과실 식물"
 #. STRINGS.CODEX.SPORECHID.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.SPORECHID.BODY.CONTAINER1"
 msgid ""
-"Sporechids take advantage of their flower's attractiveness to lure unsuspecting victims into clouds of parsitic Zombie Spores.\n"
+"Sporechids take advantage of their flower's attractiveness to lure unsuspecting victims into clouds of parasitic Zombie Spores.\n"
 "\n"
 "They are a rare form of holoparasitic plant which finds mammalian hosts to infect rather than the usual plant species.\n"
 "\n"
-"The Zombie Spore was originally designed for medicinal purposes but its seditative properties were never refined to the point of usefulness."
+"The Zombie Spore was originally designed for medicinal purposes but its sedative properties were never refined to the point of usefulness."
 msgstr ""
 "포자난은 꽃의 매력을 이용하여 순진한 희생자를 기생 좀비 포자의 구름으로 유인합니다.\n"
 "\n"
@@ -21312,8 +21556,8 @@ msgstr "이 우주의 고향 행성은 사라지고, 행성의 뼈와 하늘의 
 
 #. STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_BODY_DLC1
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_BODY_DLC1"
-msgid "DLC1"
-msgstr "DLC1"
+msgid "We have always viewed the Temporal Tear as a phenomenon to fear but, like the civilizations before us, the call to adventure asks us to confront our anxiety and leap into the unknown. As a radical action of hope, I have sent enough Duplicants through the Temporal Tear to start another colony, explore dimensions beyond ours and plant the seeds of life throughout time and space."
+msgstr "우리는 우리보다 앞선 문명처럼 항상 시간의 찢어짐을 두려운 현상으로 보아 왔지만, 모험에 대한 열망으로 우리는 불안에 맞서서 미지의 세계로 도약해야 합니다. 급진적인 희망의 행동으로, 나는 다른 콜로니를 시작하고, 우리를 넘어선 차원을 탐구하고, 시간과 공간에 걸쳐 생명의 씨앗을 심기 위해 시간의 찢어짐을 통해 충분한 복제체를 보냈습니다."
 
 #. STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_TITLE
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_TITLE"
@@ -21322,8 +21566,8 @@ msgstr "콜로니의 희망"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_TITLE_DLC1
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_TITLE_DLC1"
-msgid "DLC1"
-msgstr "DLC1"
+msgid "A DIMENSIONAL ADVENTURE"
+msgstr "차원 모험"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MYLOGNAME
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MYLOGNAME"
@@ -21334,6 +21578,11 @@ msgstr "콜로니의 희망"
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.NAME"
 msgid "The Great Escape"
 msgstr "위대한 탈출"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.REQUIREMENTS.OPEN_TEMPORAL_TEAR
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.REQUIREMENTS.OPEN_TEMPORAL_TEAR"
+msgid "Open the Temporal Tear"
+msgstr "시간의 찢어짐을 열다"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.REQUIREMENTS.REACHED_SPACE_DESTINATION
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.REQUIREMENTS.REACHED_SPACE_DESTINATION"
@@ -21700,6 +21949,24 @@ msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.CLOTHE_DUPES"
 msgid "Duplicants in clothing: {0} / {1}"
 msgstr "옷 입은 복제체: {0} / {1}"
 
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.COLLECT_ARTIFACTS
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.COLLECT_ARTIFACTS"
+msgid ""
+"Study Terrestrial Artifacts at the Artifact Analysis Station.\n"
+"Terrestrial Artifacts studied: {collectedCount} / {neededCount}"
+msgstr ""
+"가공물 분석 스테이션에서 육상 가공물 연구\n"
+"연구된 육상 가공물: {collectedCount} / {neededCount}"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.COLLECT_SPACE_ARTIFACTS
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.COLLECT_SPACE_ARTIFACTS"
+msgid ""
+"Study Space Artifacts at the Artifact Analysis Station.\n"
+"Space Artifacts studied: {collectedCount} / {neededCount}"
+msgstr ""
+"가공물 분석 스테이션에서 우주 가공물 연구.\n"
+"연구된 우주 가공물: {collectedCount} / {neededCount}"
+
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.CONSUME_CALORIES
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.CONSUME_CALORIES"
 msgid "Calories: {0} / {1}"
@@ -21729,6 +21996,16 @@ msgstr "주기: {0} / {1}"
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.ENTER_OIL_BIOME"
 msgid "Entered an oil biome"
 msgstr "석유 생물군계에 들어갔음"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.ESTABLISH_COLONIES
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.ESTABLISH_COLONIES"
+msgid ""
+"Establish colonies on {goalBaseCount} asteroids by building and activating Mini-Pods.\n"
+"Colonies established: {baseCount} / {neededCount}."
+msgstr ""
+"미니팟을 만들고 활성화하여 {goalBaseCount} 소행성에 콜로니를 세웁니다.\n"
+"\n"
+"세운 콜로니: {baseCount} / {neededCount}."
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.EXOSUIT_CYCLES
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.EXOSUIT_CYCLES"
@@ -21794,6 +22071,11 @@ msgstr "{0}을(를) 만든 적이 없음"
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.NO_FARM_TILES"
 msgid "No farmed plants"
 msgstr "재배한 식물 없음"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.OPEN_TEMPORAL_TEAR
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.OPEN_TEMPORAL_TEAR"
+msgid "Open the Temporal Tear by finding and activating the Temporal Tear Opener"
+msgstr "시간의 찢어짐 오프너를 찾아 활성화하여 시간의 찢어짐을 엽니다."
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.PLATFORM_UNLOCKING_DISABLED
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.PLATFORM_UNLOCKING_DISABLED"
@@ -21969,6 +22251,91 @@ msgstr "명령 성취했음: {0}"
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.PRE_VICTORY_MESSAGE_HEADER"
 msgid "- ALERT -"
 msgstr "- 경보 -"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.DESCRIPTION
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.DESCRIPTION"
+msgid ""
+msgstr ""
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_BODY
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_BODY"
+msgid "In exploring this corner of the universe we have found and assembled a collection of artifacts from another civilization. Studying these artifacts can give us a greater understanding of who we are and where we come from. Only by learning about the past can we build a brighter future, one where we learn from the mistakes of our predecessors."
+msgstr "우주의 이 구석을 탐험하면서 우리는 다른 문명의 가공물 모음을 발견하고 모았습니다. 이러한 가공물을 연구하면 우리가 누구이며 어디에서 왔는지 더 잘 이해할 수 있습니다. 과거에 대해 배움으로써 우리는 더 밝은 미래를 만들 수 있습니다. 조상의 실수로부터 배우는 미래입니다."
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_BODY_DLC1
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_BODY_DLC1"
+msgid "DLC1"
+msgstr "DLC1"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_TITLE
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_TITLE"
+msgid "LINK TO OUR PAST"
+msgstr "과거로의 연결"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_TITLE_DLC1
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_TITLE_DLC1"
+msgid "DLC1"
+msgstr "DLC1"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MYLOGNAME
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MYLOGNAME"
+msgid "Artifacts"
+msgstr "가공물"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.NAME
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.NAME"
+msgid "Cosmic Archaeology"
+msgstr "우주 고고학"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.SEVERAL_COLONIES
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.SEVERAL_COLONIES"
+msgid "Establish several colonies"
+msgstr "여러 콜로니 수립"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.SEVERAL_COLONIES_DESCRIPTION
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.SEVERAL_COLONIES_DESCRIPTION"
+msgid "Establish colonies on {count} asteroids by building and activating Mini-Pods"
+msgstr "미니팟을 만들고 활성화하여 소행성 {count} 개에 콜로니를 세웁니다."
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_ARTIFACTS
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_ARTIFACTS"
+msgid "Study {artifactCount} Terrestrial Artifacts"
+msgstr "{artifactCount}개의 육상 가공물 연구"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_ARTIFACTS_DESCRIPTION
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_ARTIFACTS_DESCRIPTION"
+msgid "Study {artifactCount} Terrestrial Artifacts at the Artifact Analysis Station"
+msgstr "가공물 분석 스테이션에서 {artifactCount}개의 육상 가공물 연구"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_SPACE_ARTIFACTS
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_SPACE_ARTIFACTS"
+msgid "Study {artifactCount} Space Artifacts"
+msgstr "{artifactCount}개의 우주 가공물 연구"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_SPACE_ARTIFACTS_DESCRIPTION
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_SPACE_ARTIFACTS_DESCRIPTION"
+msgid "Study {artifactCount} Space Artifacts at the Artifact Analysis Station"
+msgstr "가공물 분석 스테이션에서 {artifactCount}개의 우주 가공물 연구"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT.FIRST
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT.FIRST"
+msgid "Our homeworld in this universe is gone, replaced by the skeleton of a planet and a wound in the sky... But I hold out hope that other worlds exist out there, tucked away in other dimensions."
+msgstr "이 우주의 고향 행성은 사라지고, 행성의 뼈와 하늘의 상처만 남았습니다... 하지만 다른 시간대와 차원에 다른 세계들이 있기를 희망합니다."
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT.SECOND
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT.SECOND"
+msgid "I sent my Duplicant through the Temporal Tear carrying that hope on their shoulders... Perhaps one day they'll find a place to call home, and begin a thriving colony all their own."
+msgstr "나는 그 희망을 짊어진 복제체들을 시간의 찢어짐을 통해 보냈습니다... 아마 언젠가는 고향이라고 부를 수 있는 곳을 찾고 자신들의 번성하는 콜로니를 시작하게 될 것입니다."
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT_DLC1.FIRST
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT_DLC1.FIRST"
+msgid "DLC1"
+msgstr "DLC1"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT_DLC1.SECOND
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT_DLC1.SECOND"
+msgid "DLC1"
+msgstr "DLC1"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.THRIVING.DESCRIPTION
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.THRIVING.DESCRIPTION"
@@ -22288,7 +22655,7 @@ msgstr "<link=\"SQUIRRELSPECIES\">잎람쥐</link>"
 
 #. STRINGS.CREATURES.FAMILY_PLURAL.STATERPILLARSPECIES
 msgctxt "STRINGS.CREATURES.FAMILY_PLURAL.STATERPILLARSPECIES"
-msgid "<link=\"STATERPILLARSPECIES\">Plug Slug</link>"
+msgid "<link=\"STATERPILLARSPECIES\">Plug Slugs</link>"
 msgstr "<link=\"STATERPILLARSPECIES\">플러그팽</link>"
 
 #. STRINGS.CREATURES.FAMILY_PLURAL.SWEEPBOT
@@ -26069,6 +26436,16 @@ msgid ""
 msgstr ""
 "지속적으로 이상적인 조건이 식물이 큰 산출량을 내놓을 수 있게 했습니다.\n"
 "{Effects}"
+
+#. STRINGS.CREATURES.STATUSITEMS.HIVEHUNGRY.NAME
+msgctxt "STRINGS.CREATURES.STATUSITEMS.HIVEHUNGRY.NAME"
+msgid "Food Supply Low"
+msgstr "식량 공급 부족"
+
+#. STRINGS.CREATURES.STATUSITEMS.HIVEHUNGRY.TOOLTIP
+msgctxt "STRINGS.CREATURES.STATUSITEMS.HIVEHUNGRY.TOOLTIP"
+msgid "The food reserves in this hive are running low."
+msgstr "이 통의 식량 보존량이 부족합니다."
 
 #. STRINGS.CREATURES.STATUSITEMS.HOT.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.HOT.NAME"
@@ -42084,7 +42461,7 @@ msgstr "Building Utility 3"
 #. STRINGS.INPUT_BINDINGS.BUILDING.NAME
 msgctxt "STRINGS.INPUT_BINDINGS.BUILDING.NAME"
 msgid "Building"
-msgstr "Building"
+msgstr "만들기"
 
 #. STRINGS.INPUT_BINDINGS.BUILDING.TOGGLEENABLED
 msgctxt "STRINGS.INPUT_BINDINGS.BUILDING.TOGGLEENABLED"
@@ -45945,6 +46322,16 @@ msgstr "걸레질"
 msgctxt "STRINGS.MISC.POPFX.RESOURCE_EATEN"
 msgid "Resource Eaten"
 msgstr "먹은 자원"
+
+#. STRINGS.MISC.STATUSITEMS.ARTIFACTENTOMBED.NAME
+msgctxt "STRINGS.MISC.STATUSITEMS.ARTIFACTENTOMBED.NAME"
+msgid "Entombed Artifact"
+msgstr "매몰된 가공물"
+
+#. STRINGS.MISC.STATUSITEMS.ARTIFACTENTOMBED.TOOLTIP
+msgctxt "STRINGS.MISC.STATUSITEMS.ARTIFACTENTOMBED.TOOLTIP"
+msgid "This artifact is trapped in an obscuring shell limiting its decor. A skilled artist can remove it at the <link=\"ARTIFACTANALYSISSTATION\">Artifact Analysis Station</link>"
+msgstr "이 가공물은 장식을 제한하는 가리는 껍질에 갇혀있습니다. 숙련된 예술가는 <link=\"ARTIFACTANALYSISSTATION\">가공물 분석 스테이션</link>에서 이를 제거할 수 있습니다."
 
 #. STRINGS.MISC.STATUSITEMS.AWAITINGSTUDY.NAME
 msgctxt "STRINGS.MISC.STATUSITEMS.AWAITINGSTUDY.NAME"
@@ -53072,6 +53459,11 @@ msgctxt "STRINGS.UI.BUILDINGEFFECTS.DIET_PRODUCED_ITEM_FROM_PLANT"
 msgid "{Item}: {Amount} when properly fed"
 msgstr "{Item}: 올바를 공급 시 {Amount}"
 
+#. STRINGS.UI.BUILDINGEFFECTS.DIET_STORED
+msgctxt "STRINGS.UI.BUILDINGEFFECTS.DIET_STORED"
+msgid "    • Stores: {Foodlist}"
+msgstr "    • 상점: {Foodlist}"
+
 #. STRINGS.UI.BUILDINGEFFECTS.DISEASECONSUMEDPERUSE
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.DISEASECONSUMEDPERUSE"
 msgid "All Diseases: -{0} per use"
@@ -55117,6 +55509,11 @@ msgstr "    • 이 로켓은 목적지점을 향해 비행 중입니다."
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.NORMAL_LANDED"
 msgid "    • This rocket is currently landed on a <style=\"KKeyword\">Rocket Platform</style>"
 msgstr "    • 이 로켓은 현재 <style=\"KKeyword\">로켓 플랫폼</style>에 착륙했습니다."
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.NORMAL_UTILITY
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.NORMAL_UTILITY"
+msgid "    • This rocket is performing a utility at its destination"
+msgstr "    • 이 로켓은 목적지점에서 실용적인 작업을 수행하고 있습니다."
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.TOOLTIP_NAME
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.TOOLTIP_NAME"
@@ -60240,8 +60637,8 @@ msgstr "Steam 창작마당"
 
 #. STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER
 msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
-msgid "THE BIG MERGE"
-msgstr "큰 병합"
+msgid "A BREATH OF FRESH AIR"
+msgstr "A BREATH OF FRESH AIR"
 
 #. STRINGS.UI.FRONTEND.MOTD.NEWS_BODY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.NEWS_BODY"
@@ -60256,33 +60653,25 @@ msgstr "토론에 참여하기"
 #. STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY"
 msgid ""
-"Welcome to the <b>UPDATE NAME</b>\n"
+"Welcome to the newest update <b>A BREATH OF FRESH AIR</b>:\n"
 "\n"
-"   •<indent=20px>Toggle between <i>Spaced Out!</i> and Base Game in the main menu without re-downloading the game.</indent>\n"
+"•<indent=20px>Several buildings and items have been added to the Base Game, including Oxygen Masks, and Meter Valves.</indent>\n"
+"•<indent=20px>Base Game now has all <i>Spaced Out!</i> bug fixes and quality-of-life improvements.</indent>\n"
+"•<indent=20px>Updates to <i>Spaced Out!</i> Colony Imperatives</indent>\n"
+"•<indent=20px>Significant updates to the Modding system, modders please see the forum for upgrade instructions.</indent>\n"
+"•<indent=20px>Toggle between <i>Spaced Out!</i> and Base Game in the main menu without re-downloading the game.</indent>\n"
 "\n"
-"   •<indent=20px>Base Game now has all <i>Spaced Out!</i> bug fixes and quality-of-life improvements.</indent>\n"
-"\n"
-"   •<indent=20px>Several buildings and items have been added to the Base Game, including Oxygen Masks, and Meter Valves.</indent>\n"
-"\n"
-"   •<indent=20px>UI and Diagnostics improvements have been added to the Base Game.</indent>\n"
-"   \n"
-"   •<indent=20px>Significant updates to the Modding system, modders please see the forum for upgrade instructions.</indent>\n"
-"\n"
-"Check out the full patch notes for more details!"
+"   Check out the full patch notes for more details!"
 msgstr ""
-"<b>큰 병합</b>을(를) 이용해 주셔서 감사합니다.\n"
+"최신 업데이트 <b>A BREATH OF FRESH AIR</b>를 이용해 주셔서 감사합니다.\n"
 "\n"
-"   •<indent=20px>게임을 다시 다운로드하지 않고 기본 메뉴에서 <i>Spaced Out!</i>과 기본 게임 사이를 전환합니다.</indent>\n"
+"•<indent=20px>산소 마스크, 미터 밸브를 비롯한 여러 건물과 아이템이 기본 게임에 추가되었습니다.</indent>\n"
+"•<indent=20px>기본 게임에 이제 모든 <i>Spaced Out!</i> 버그 수정 및 삶의 질 향상이 있습니다.</indent>\n"
+"•<indent=20px><i>Spaced Out!</i> 콜로니 명령</indent> 업데이트\n"
+"•<indent=20px>모드 시스템에 대한 중요한 업데이트, 모더는 포럼에서 업그레이드 지침을 참조하세요.</indent>\n"
+"•<indent=20px>게임을 다시 다운로드하지 않고도 기본 메뉴에서 <i>Spaced Out!</i>과 기본 게임 사이를 전환합니다.</indent>\n"
 "\n"
-"   •<indent=20px>기본 게임에는 이제 모든 <i>Spaced Out!</i> 버그 수정 및 삶의 편의성 향상이 있습니다.</indent>\n"
-"\n"
-"   •<indent=20px>산소 마스크, 미터 밸브를 포함하여 여러 건조물과 아이템이 기본 게임에 추가되었습니다.</indent>\n"
-"\n"
-"   •<indent=20px>UI 및 진단 개선 사항이 기본 게임에 추가되었습니다.</indent>\n"
-"   \n"
-"   •<indent=20px>모드 시스템에 대한 중요한 업데이트, 모더 업그레이드 지침은 포럼을 참조하세요.</indent>\n"
-"\n"
-"자세한 내용은 패치 노트 전문을 확인하세요!"
+"    자세한 내용은 패치 전문을 확인하세요!"
 
 #. STRINGS.UI.FRONTEND.MOTD.UPDATE_TEXT
 msgctxt "STRINGS.UI.FRONTEND.MOTD.UPDATE_TEXT"
@@ -60588,6 +60977,52 @@ msgstr "저장 이름"
 msgctxt "STRINGS.UI.FRONTEND.SAVESCREEN.TITLE"
 msgid "SAVE SLOTS"
 msgstr "저장 슬롯"
+
+#. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES
+msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES"
+msgid "Oxygen Not Included has had a <b>major update</b> since this save file was created! In addition to the <b>multitude of bug fixes and quality-of-life features</b>, please pay attention to these changes which may affect your existing colony:"
+msgstr "이 저장 파일이 생성된 이후로 Oxygen Not Included에 <b>주요 업데이트</b>가 있었습니다! <b>다양한 버그 수정 및 삶의 질 기능</b> 외에도 기존 콜로니에 영향을 줄 수 있는 다음 변경 사항에 주의하세요."
+
+#. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_AIRFILTER
+msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_AIRFILTER"
+msgid ""
+"•<indent=20px>MISSING. now requires <b>5w Power</b>.</indent>\n"
+"•<indent=20px>Duplicants will get <b>Stinging Eyes</b> from gasses such as chlorine and hydrogen.</indent>"
+msgstr ""
+"•<indent=20px>누락.은 이제 <b>5w 전력</b>이 필요합니다.</indent>\n"
+"•<indent=20px>복제체는 염소 및 수소와 같은 기체에서 <b>따가운 눈</b>을 얻습니다.</indent>"
+
+#. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_BUILDINGS
+msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_BUILDINGS"
+msgid ""
+"•<indent=20px>The <b>MISSING.</b> has been added to aid early-game exploration.</indent>\n"
+"•<indent=20px>Use the new <b>Meter Valves</b> for precise control of resources in pipes.</indent>"
+msgstr ""
+"•<indent=20px><b>누락.</b>이 게임 초반 탐색을 돕기 위해 추가 되었습니다.</indent>\n"
+"•<indent=20px> 파이프의 자원을 정밀하게 제어하려면 새로운 <b>미터 밸브</b>를 사용합니다.</indent>"
+
+#. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_FOOD
+msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_FOOD"
+msgid ""
+"•<indent=20px>Fridges are more effective for early-game food storage</indent>\n"
+"•<indent=20px><b>Both</b> freezing temperatures and a sterile gas are needed for <b>total food preservation</b>.</indent>"
+msgstr ""
+"•<indent=20px>냉장고는 게임 초반 식품 저장에 더 효과적입니다.</indent>\n"
+"•<indent=20px><b>완전한 식품 보존</b>을 위해서는 동결 온도와 멸균 기체가 <b>모두</b> 필요합니다.</indent>"
+
+#. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_SIMULATION
+msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_SIMULATION"
+msgid ""
+"•<indent=20px>Many <b>simulation bugs</b> have been fixed.</indent>\n"
+"•<indent=20px>This may <b>change the effectiveness</b> of certain contraptions and MISSING. setups.</indent>"
+msgstr ""
+"•<indent=20px>많은 <b>시뮬레이션 버그</b>가 수정되었습니다.</indent>\n"
+"•<indent=20px>이것은 특정 장치 및 누락.의 <b>효과를 변경</b>할 수 있습니다.</indent>"
+
+#. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_TITLE
+msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_TITLE"
+msgid "BREATH OF FRESH AIR UPDATE CHANGES"
+msgstr "BREATH OF FRESH AIR 업데이트 변경"
 
 #. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.NEWAUTOMATIONWARNING
 msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.NEWAUTOMATIONWARNING"
@@ -61103,6 +61538,11 @@ msgstr "열 피해"
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.CONDUIT_CONTENTS_FROZE"
 msgid "Cold Damage"
 msgstr "추위 피해"
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.CORROSIVE_ELEMENT
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.CORROSIVE_ELEMENT"
+msgid "Corrosive Element Damage"
+msgstr "부식성 원소 손상"
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.LIQUID_PRESSURE
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.LIQUID_PRESSURE"
@@ -61940,7 +62380,7 @@ msgstr "     {0}\n"
 #. STRINGS.UI.LISTENTRYSTRINGNOLINEBREAK
 msgctxt "STRINGS.UI.LISTENTRYSTRINGNOLINEBREAK"
 msgid "     {0}"
-msgstr "{0}"
+msgstr "     {0}"
 
 #. STRINGS.UI.LOGIC_PORTS.CONTROL_OPERATIONAL
 msgctxt "STRINGS.UI.LOGIC_PORTS.CONTROL_OPERATIONAL"
@@ -65020,6 +65460,11 @@ msgctxt "STRINGS.UI.RETIRED_COLONY_INFO_SCREEN.TITLES.RETIRED_COLONIES"
 msgid "Colony Summaries"
 msgstr "콜로니 요약"
 
+#. STRINGS.UI.RETIRED_COLONY_INFO_SCREEN.TITLES.TIMELAPSE
+msgctxt "STRINGS.UI.RETIRED_COLONY_INFO_SCREEN.TITLES.TIMELAPSE"
+msgid "Timelapse"
+msgstr "타임랩스"
+
 #. STRINGS.UI.ROLES
 msgctxt "STRINGS.UI.ROLES"
 msgid "JOB ASSIGNMENTS"
@@ -66725,6 +67170,16 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.EGGROCK.NAME"
 msgid "Egg-Shaped Rock"
 msgstr "알 모양 암석"
 
+#. STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.DESCRIPTION
+msgctxt "STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.DESCRIPTION"
+msgid "Grub Grub"
+msgstr "벵이벵이"
+
+#. STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.NAME
+msgctxt "STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.NAME"
+msgid "Grub Statue"
+msgstr "벵이 조각상"
+
 #. STRINGS.UI.SPACEARTIFACTS.HATCHFOSSIL.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.HATCHFOSSIL.DESCRIPTION"
 msgid "The preserved bones of an early species of Hatch."
@@ -66734,6 +67189,16 @@ msgstr "초기 주둥가리 종의 보존된 뼈."
 msgctxt "STRINGS.UI.SPACEARTIFACTS.HATCHFOSSIL.NAME"
 msgid "Pristine Fossil"
 msgstr "초기 화석"
+
+#. STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.DESCRIPTION
+msgctxt "STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.DESCRIPTION"
+msgid "This doesn't taste like uranium"
+msgstr "이것은 우라늄 맛이 아님"
+
+#. STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.NAME
+msgctxt "STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.NAME"
+msgid "Honey Jar"
+msgstr "꿀 단지"
 
 #. STRINGS.UI.SPACEARTIFACTS.MAGMALAMP.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MAGMALAMP.DESCRIPTION"
@@ -66764,6 +67229,16 @@ msgstr "운석의 충돌로 형성된 독특한 녹색 돌."
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MOLDAVITE.NAME"
 msgid "Moldavite"
 msgstr "몰다바이트"
+
+#. STRINGS.UI.SPACEARTIFACTS.MOOD_RING.DESCRIPTION
+msgctxt "STRINGS.UI.SPACEARTIFACTS.MOOD_RING.DESCRIPTION"
+msgid "How radioactive are you feeling?"
+msgstr "방사선을 얼마나 느끼나요?"
+
+#. STRINGS.UI.SPACEARTIFACTS.MOOD_RING.NAME
+msgctxt "STRINGS.UI.SPACEARTIFACTS.MOOD_RING.NAME"
+msgid "Radiation Mood Ring"
+msgstr "방사선 무드 링"
 
 #. STRINGS.UI.SPACEARTIFACTS.MOONMOONMOON.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MOONMOONMOON.DESCRIPTION"
@@ -66811,6 +67286,16 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.OKAYXRAY.NAME"
 msgid "Old X-Ray"
 msgstr "오래된 엑스레이"
 
+#. STRINGS.UI.SPACEARTIFACTS.ORACLE.DESCRIPTION
+msgctxt "STRINGS.UI.SPACEARTIFACTS.ORACLE.DESCRIPTION"
+msgid "What does it do?"
+msgstr "용도가 뭐죠?"
+
+#. STRINGS.UI.SPACEARTIFACTS.ORACLE.NAME
+msgctxt "STRINGS.UI.SPACEARTIFACTS.ORACLE.NAME"
+msgid "Useless Machine"
+msgstr "쓸모없는 기계"
+
 #. STRINGS.UI.SPACEARTIFACTS.PERCOLATOR.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.PERCOLATOR.DESCRIPTION"
 msgid "Don't drink from it! There was a pacu... IN the percolator!"
@@ -66846,6 +67331,16 @@ msgstr ""
 msgctxt "STRINGS.UI.SPACEARTIFACTS.RAINBOWEGGROCK.NAME"
 msgid "Egg-Shaped Rock"
 msgstr "알 모양 암석"
+
+#. STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.DESCRIPTION
+msgctxt "STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.DESCRIPTION"
+msgid "It's pronounced nuclear"
+msgstr "핵입니다"
+
+#. STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.NAME
+msgctxt "STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.NAME"
+msgid "Model Nuclear Power Plant"
+msgstr "모델 핵 발전소"
 
 #. STRINGS.UI.SPACEARTIFACTS.ROBOTARM.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.ROBOTARM.DESCRIPTION"
@@ -67962,8 +68457,8 @@ msgstr "목적지점 지정됨"
 
 #. STRINGS.UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.NOTSELECTED
 msgctxt "STRINGS.UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.NOTSELECTED"
-msgid "Select the rocket's nosecone to set a destination"
-msgstr "목적지점을 지정하려면 로켓의 노즈콘을 선택해야 합니다."
+msgid "Select the rocket's Command Module to set a destination"
+msgstr "로켓의 지령 모듈을 선택하여 목적지점 설정"
 
 #. STRINGS.UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.REACHABLE
 msgctxt "STRINGS.UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.REACHABLE"
@@ -70764,6 +71259,16 @@ msgctxt "STRINGS.UI.UISIDESCREENS.ACTIVATION_RANGE_SIDE_SCREEN.NAME"
 msgid "Breaktime Policy"
 msgstr "휴식 시간 정책"
 
+#. STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN.NO_ARTIFACTS_DISCOVERED
+msgctxt "STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN.NO_ARTIFACTS_DISCOVERED"
+msgid "No artifacts analyzed"
+msgstr "분석된 가공물 없음"
+
+#. STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN.NO_ARTIFACTS_DISCOVERED_TOOLTIP
+msgctxt "STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN.NO_ARTIFACTS_DISCOVERED_TOOLTIP"
+msgid "A skilled artist can analyze artifacts."
+msgstr "숙련된 예술가는 가공물을 분석할 수 있습니다."
+
 #. STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP
 msgctxt "STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP"
 msgid "Assign to {0}"
@@ -72809,12 +73314,12 @@ msgstr "{0} [{1} / 단위]"
 #. STRINGS.UI.UISIDESCREENS.PLANTERSIDESCREEN.YIELD
 msgctxt "STRINGS.UI.UISIDESCREENS.PLANTERSIDESCREEN.YIELD"
 msgid "{0}: {1} "
-msgstr "{0}: {1}"
+msgstr "{0}: {1} "
 
 #. STRINGS.UI.UISIDESCREENS.PLANTERSIDESCREEN.YIELD_NONFOOD
 msgctxt "STRINGS.UI.UISIDESCREENS.PLANTERSIDESCREEN.YIELD_NONFOOD"
 msgid "{0}: {1} "
-msgstr "{0}: {1}"
+msgstr "{0}: {1} "
 
 #. STRINGS.UI.UISIDESCREENS.PLANTERSIDESCREEN.YIELD_SEED
 msgctxt "STRINGS.UI.UISIDESCREENS.PLANTERSIDESCREEN.YIELD_SEED"
@@ -73440,6 +73945,21 @@ msgstr "온도 임계값"
 msgctxt "STRINGS.UI.UISIDESCREENS.TEMPERATURESWITCHSIDESCREEN.WARMER_BUTTON"
 msgid "Above"
 msgstr "초과"
+
+#. STRINGS.UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.BUTTON_CLOSED
+msgctxt "STRINGS.UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.BUTTON_CLOSED"
+msgid "Tear Closed"
+msgstr "찢어짐이 닫힘"
+
+#. STRINGS.UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.BUTTON_OPEN
+msgctxt "STRINGS.UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.BUTTON_OPEN"
+msgid "Enter Tear"
+msgstr "찢어짐에 들어감"
+
+#. STRINGS.UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.TITLE
+msgctxt "STRINGS.UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.TITLE"
+msgid "Temporal Tear"
+msgstr "시간의 찢어짐"
 
 #. STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.ABOVE_BUTTON
 msgctxt "STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.ABOVE_BUTTON"
@@ -76405,6 +76925,22 @@ msgstr ""
 msgctxt "STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.NAME"
 msgid "Radioactive Swamp Asteroid"
 msgstr "방사성 늪 소행성"
+
+#. STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
+msgctxt "STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION"
+msgid ""
+"A large-ish world with a radioactive core.\n"
+"\n"
+"<smallcaps>The Radioactive Terra Asteroid is fairly dry and sandy, but does contain areas of jungle.</smallcaps>"
+msgstr ""
+"방사성 핵을 가진 약간 큰 세계.\n"
+"\n"
+"<smallcaps>방사성 테라 소행성은 대체로 건조하고 모래가 많지만 정글 구역이 포함되어 있습니다.</smallcaps>"
+
+#. STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.NAME
+msgctxt "STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.NAME"
+msgid "Radioactive Terra Asteroid"
+msgstr "방사성 테라 소행성"
 
 #. STRINGS.WORLDS.METALHEAVYLANDINGSITE.DESCRIPTION
 msgctxt "STRINGS.WORLDS.METALHEAVYLANDINGSITE.DESCRIPTION"

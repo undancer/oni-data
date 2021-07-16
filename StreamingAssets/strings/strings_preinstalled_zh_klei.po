@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Application: Oxygen Not IncludedPOT Version: 2.0\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 2.4\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. STRINGS.BUILDING.DETAILS.USE_COUNT
@@ -1183,13 +1183,21 @@ msgstr "选择一个配方来开始生产"
 
 #. STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.NAME"
-msgid "Waiting For Radbolts"
-msgstr "等待辐射粒子"
+msgid "Waiting For Radbolts ({CurrentHEP}/{HEPRequired})"
+msgstr "等待辐射粒子（{CurrentHEP}/{HEPRequired}）"
 
 #. STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.TOOLTIP"
-msgid "A queued recipe requires more Radbolts than are currently stored"
-msgstr "队列配方需要比当前储存的辐射粒子更多的辐射粒子"
+msgid ""
+"A queued recipe requires more Radbolts than are currently stored.\n"
+"\n"
+"Currently stored: {CurrentHEP}\n"
+"Required for recipe: {HEPRequired}"
+msgstr ""
+"队列配方需要比当前储存的辐射粒子更多的辐射粒子。\n"
+"\n"
+"当前已储存：{CurrentHEP}\n"
+"配方需要：{HEPRequired}"
 
 #. STRINGS.BUILDING.STATUSITEMS.FLIGHTALLCARGOFULL.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.FLIGHTALLCARGOFULL.NAME"
@@ -1264,6 +1272,33 @@ msgid ""
 msgstr ""
 "康复中的复制人必须要在<b>{0}</b>格内有可获取的<style=\"KKeyword\">食物</"
 "style>"
+
+#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.NAME"
+msgid "Cooling Contents"
+msgstr "冷却内容物"
+
+#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.TOOLTIP"
+msgid "The contents of this food storage are still being cooled down."
+msgstr "在此储存的食物仍在降温中。"
+
+#. STRINGS.BUILDING.STATUSITEMS.FRIDGESTEADY.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGESTEADY.NAME"
+msgid "Energy Saver: {UsedPower}"
+msgstr "节能模式：{UsedPower}"
+
+#. STRINGS.BUILDING.STATUSITEMS.FRIDGESTEADY.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGESTEADY.TOOLTIP"
+msgid ""
+"Energy saver activated, using {UsedPower} of {MaxPower}\n"
+"\n"
+"The contents of this food storage are at refrigeration temperatures and need "
+"no further cooling."
+msgstr ""
+"已激活节能模式，使用{UsedPower}而不是{MaxPower}电力\n"
+"\n"
+"在此储存的食物都处于冷藏温度，不需要进一步降温了。"
 
 #. STRINGS.BUILDING.STATUSITEMS.GANTRY.AUTOMATION_CONTROL
 msgctxt "STRINGS.BUILDING.STATUSITEMS.GANTRY.AUTOMATION_CONTROL"
@@ -3811,6 +3846,21 @@ msgid ""
 "skin crisping"
 msgstr "这里的<link=\"LIGHT\">光</link>足够创造一个能让皮肤舒适的氛围"
 
+#. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.NAME
+msgctxt ""
+"STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.NAME"
+msgid "Too few Printing Pods {progress}"
+msgstr "打印舱太少{progress}"
+
+#. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.TOOLTIP
+msgctxt ""
+"STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES."
+"TOOLTIP"
+msgid ""
+"This device relies on a sufficiently large network of activated Printing "
+"Pods{progress}"
+msgstr "这台设备需要依赖一个足够大的激活的打印舱网络{progress}"
+
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_LOS.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_LOS.NAME"
 msgid "Line of Sight: Obstructed"
@@ -3823,28 +3873,32 @@ msgstr "这台设备需要视野的空间是清空的才能运作"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_TARGET.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_TARGET.NAME"
-msgid "Target: None"
-msgstr "目标：无"
+msgid "Temporal Tear not revealed"
+msgstr "时空裂口未揭示"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_TARGET.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_TARGET.TOOLTIP"
-msgid "\"Awaiting transmission of coordinates...\""
-msgstr "\"正在等待坐标传输……\""
+msgid ""
+"This machine is meant to target something in space, but the target is not "
+"yet revealed."
+msgstr "这台机器用于瞄准太空中的某个东西的，但那个目标尚未揭示。"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.NAME"
-msgid "Progress: {progress}"
-msgstr "进程：{progress}"
+msgid "Charging Progress: {progress}"
+msgstr "充能进程：{progress}"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.TOOLTIP"
-msgid "Operation will commence once this device is fully charged"
-msgstr "一旦计量表充满，操作就会开始"
+msgid ""
+"This device must be charged with a high number of Radbolts. Operation can "
+"commence once this device is fully charged."
+msgstr "这台设备必须用大量的辐射粒子充能。充能完毕后即可操作。"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION"
 msgid "Temporal Ripper fully charged"
-msgstr "时间撕裂器已完全充能"
+msgstr "时空撕裂器已充能完毕"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION_TOOLTIP
 msgctxt ""
@@ -4486,6 +4540,11 @@ msgctxt "STRINGS.BUILDINGS.DAMAGESOURCES.CONDUIT_CONTENTS_FROZE"
 msgid "pipe contents becoming too cold"
 msgstr "管道内容物变得过冷"
 
+#. STRINGS.BUILDINGS.DAMAGESOURCES.CORROSIVE_ELEMENT
+msgctxt "STRINGS.BUILDINGS.DAMAGESOURCES.CORROSIVE_ELEMENT"
+msgid "corrosive element"
+msgstr "腐蚀性元素"
+
 #. STRINGS.BUILDINGS.DAMAGESOURCES.LIQUID_PRESSURE
 msgctxt "STRINGS.BUILDINGS.DAMAGESOURCES.LIQUID_PRESSURE"
 msgid "neighboring liquid pressure"
@@ -4804,6 +4863,21 @@ msgstr "分析遗迹工艺品，并从中提取出<link=\"UNOBTANIUM\">中子物
 msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.NAME"
 msgid "<link=\"ARTIFACTANALYSISSTATION\">Artifact Analysis Station</link>"
 msgstr "<link=\"ARTIFACTANALYSISSTATION\">工艺品分析站</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.PAYLOAD_DROP_RATE
+msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.PAYLOAD_DROP_RATE"
+msgid "Vacillator Recharge drop chance: {chance}"
+msgstr "振荡器充电器掉落几率：{chance}"
+
+#. STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.PAYLOAD_DROP_RATE_TOOLTIP
+msgctxt ""
+"STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.PAYLOAD_DROP_RATE_TOOLTIP"
+msgid ""
+"This artifact has a {chance} to drop a Vacillator Recharge when analyzed at "
+"the <link=\"ARTIFACTANALYSISSTATION\">Artifact Analysis Station</link>"
+msgstr ""
+"工艺品在<link=\"ARTIFACTANALYSISSTATION\">工艺品分析站</link>分析后有{chance}"
+"几率掉落一个振荡器充电器"
 
 #. STRINGS.BUILDINGS.PREFABS.ARTIFACTCARGOBAY.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTCARGOBAY.DESC"
@@ -7687,7 +7761,7 @@ msgid ""
 msgstr ""
 "与指挥舱的作用一致。\n"
 "\n"
-"能容纳十位复制人。\n"
+"能容纳最多十名复制人。\n"
 "\n"
 "每个火箭可安装一个指挥舱。"
 
@@ -7714,7 +7788,7 @@ msgid ""
 msgstr ""
 "与指挥舱和前锥的作用一致。\n"
 "\n"
-"能容纳一位复制人。\n"
+"能容纳一名复制人。\n"
 "\n"
 "每个火箭可安装一个指挥舱。\n"
 "\n"
@@ -8479,7 +8553,7 @@ msgstr "<link=\"KILN\">窑炉</link>"
 #. STRINGS.BUILDINGS.PREFABS.LADDER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.LADDER.DESC"
 msgid "(That means they climb it.)"
-msgstr "（那意味着他们能在上面爬。）"
+msgstr "（那意味着他们能在上面攀爬。）"
 
 #. STRINGS.BUILDINGS.PREFABS.LADDER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.LADDER.EFFECT"
@@ -8496,7 +8570,7 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.LADDERFAST.DESC"
 msgid ""
 "Plastic ladders are mildly antiseptic and can help limit the spread of germs "
 "in a colony."
-msgstr "塑料梯具有轻度的抗菌性，有助于限制病菌在殖民地的传播。"
+msgstr "塑料梯子具有轻度的抗菌性，有助于限制病菌在殖民地的传播。"
 
 #. STRINGS.BUILDINGS.PREFABS.LADDERFAST.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.LADDERFAST.EFFECT"
@@ -8520,7 +8594,7 @@ msgid ""
 "\n"
 "Pod will disintegrate on arrival."
 msgstr ""
-"容纳部署在轨道上的一位复制人。\n"
+"容纳部署在轨道上的一名复制人。\n"
 "\n"
 "舱块一旦到达就会破碎。"
 
@@ -11714,12 +11788,16 @@ msgid ""
 "\"ELEMENTSGAS\">gas</link>, <link=\"ELEMENTSLIQUID\">liquid</link> and <link="
 "\"ELEMENTSSOLID\">solid</link> resources from space.\n"
 "\n"
-"Must be built at the top of a rocket."
+"Must be built at the top of a rocket with <link=\"ELEMENTSGAS\">gas</link>, "
+"<link=\"ELEMENTSLIQUID\">liquid</link> or <link=\"ELEMENTSSOLID\">solid</"
+"link> Cargo Module attached to store the appropriate resources."
 msgstr ""
 "使火箭能够钻取太空中的星际碎片并收集<link=\"ELEMENTSGAS\">气体</link>，<link="
 "\"ELEMENTSLIQUID\">液体</link>和<link=\"ELEMENTSSOLID\">固体</link>资源。\n"
 "\n"
-"必须建在火箭的最顶端。"
+"必须建在火箭的最顶端，且含有能够存相应资源的<link=\"ELEMENTSGAS\">气体</"
+"link>，<link=\"ELEMENTSLIQUID\">液体</link>或<link=\"ELEMENTSSOLID\">固体</"
+"link>货舱。"
 
 #. STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.NOSECONEHARVEST.NAME"
@@ -13024,7 +13102,7 @@ msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASROBTICTABLE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASROBTICTABLE.NAME"
-msgid "Robitics Research Desk"
+msgid "Robotics Research Desk"
 msgstr "机械研究桌"
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASSHELF.DESC
@@ -13738,7 +13816,7 @@ msgid ""
 "\n"
 "Pod will disintegrate on arrival."
 msgstr ""
-"通过<link=\"PIONEERMODULE\">拓荒者舱</link>，容纳部署在轨道上的一位复制人。\n"
+"通过<link=\"PIONEERMODULE\">拓荒者舱</link>，容纳部署在轨道上的一名复制人。\n"
 "\n"
 "舱块一旦到达就会破碎。"
 
@@ -15353,7 +15431,7 @@ msgstr "牢固的门，配有复杂的基因锁。"
 #. STRINGS.BUILDINGS.PREFABS.TEMPORALTEAROPENER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.TEMPORALTEAROPENER.NAME"
 msgid "Temporal Ripper"
-msgstr "时间撕裂器"
+msgstr "时空撕裂器"
 
 #. STRINGS.BUILDINGS.PREFABS.TEMPORALTEAROPENER.SIDESCREEN.TEXT
 msgctxt "STRINGS.BUILDINGS.PREFABS.TEMPORALTEAROPENER.SIDESCREEN.TEXT"
@@ -16077,12 +16155,22 @@ msgstr "沼泽星群"
 #. STRINGS.CLUSTER_NAMES.TWO_SMALL_WORLDS.DESCRIPTION
 msgctxt "STRINGS.CLUSTER_NAMES.TWO_SMALL_WORLDS.DESCRIPTION"
 msgid "Two cozy locations with limited resources shared between them."
-msgstr "资源分享有限的两个舒适地点。"
+msgstr "资源共享有限的两个舒适地点。"
 
 #. STRINGS.CLUSTER_NAMES.TWO_SMALL_WORLDS.NAME
 msgctxt "STRINGS.CLUSTER_NAMES.TWO_SMALL_WORLDS.NAME"
 msgid "Two Small Worlds"
 msgstr "两个小世界"
+
+#. STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.DESCRIPTION
+msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.DESCRIPTION"
+msgid "A cluster of planets with a larger foresty planetoid to start on."
+msgstr "一个起始更大的森林行星组成的星群。"
+
+#. STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.NAME
+msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.NAME"
+msgid "Large Forest Cluster"
+msgstr "大型森林星群"
 
 #. STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_CLUSTER.DESCRIPTION
 msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_CLUSTER.DESCRIPTION"
@@ -19404,30 +19492,23 @@ msgstr "办公室蛋糕"
 #. STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER1"
 msgid ""
-"Meet The Pilot:\n"
-"Captain Mae Johannsen\n"
-"\n"
-"From the time she was old enough to walk Captain Johannsen dreamed of "
-"reaching the sky. Growing up on an air force base she came to love the sound "
-"jet engines roaring overhead.\n"
-"\n"
-"At 16 she became the youngest pilot to fly a fighter jet and at 22 she had "
-"already entered the space flight program.\n"
+"<indent=%5>From the time she was old enough to walk Captain Johannsen "
+"dreamed of reaching the sky. Growing up on an air force base she came to "
+"love the sound jet engines roaring overhead. At 16 she became the youngest "
+"pilot ever to fly a fighter jet, and at 22 she had already entered the space "
+"flight program.\n"
 "\n"
 "Four years later Gravitas nabbed her for an exclusive contract piloting our "
 "space shuttles. In her time at Gravitas, Captain Johannsen has logged over "
-"1,000 hours space flight time shuttling and deploying satellites to low "
+"1,000 hours space flight time shuttling and deploying satellites to Low "
 "Earth Orbits and has just been named the pilot of our inaugural civilian "
 "space tourist program, slated to begin in the next year.\n"
 "\n"
 "Gravitas is excited to have Captain Johannsen in the pilot seat as we reach "
-"for the stars...and beyond!"
+"for the stars...and beyond!</indent>"
 msgstr ""
-"认识飞行员：\n"
-"梅·约翰森机长\n"
-"\n"
-"自从她可以走路开始，约翰森机长就一直梦想着飞上天空。在空军基地长大的她非常喜"
-"欢头顶飞过的喷气发动机的轰鸣声。\n"
+"<indent=%5>自从她可以走路开始，约翰森机长就一直梦想着飞上天空。在空军基地长大"
+"的她非常喜欢头顶飞过的喷气发动机的轰鸣声。\n"
 "\n"
 "她16岁时，成为了驾驶战斗机的最年轻的飞行员，22岁时，就已经成为太空飞行计划的"
 "一员。\n"
@@ -19438,28 +19519,33 @@ msgstr ""
 "划将于明年开始。\n"
 "\n"
 "庄严科技很高兴能有约翰森机长坐在飞行员的位子上，因此我们抵达了星空……甚至更"
-"远！"
+"远！</indent>"
 
 #. STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER2
 msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.BODY.CONTAINER2"
 msgid ""
+"<indent=%10><smallcaps>\n"
 "\n"
-"\n"
-"Brought to you by the Gravitas Facility."
+"Brought to you by the Gravitas Facility.</indent>"
 msgstr ""
+"<indent=%10><smallcaps>\n"
 "\n"
-"\n"
-"庄严科技出品。"
+"庄严科技出品。</indent>"
 
 #. STRINGS.CODEX.B2_MEETTHEPILOT.SUBTITLE
 msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.SUBTITLE"
-msgid "PUBLIC RELEASE"
-msgstr "公开发布"
+msgid "ENCRYPTION LEVEL: ONE"
+msgstr "加密级别：一"
 
 #. STRINGS.CODEX.B2_MEETTHEPILOT.TITLE
 msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.TITLE"
-msgid "The Future of Space Flight"
-msgstr "太空飞行的未来"
+msgid "Meet the Pilot"
+msgstr "认识飞行员"
+
+#. STRINGS.CODEX.B2_MEETTHEPILOT.TITLE2
+msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.TITLE2"
+msgid "Captain Mae Johannsen"
+msgstr "梅·约翰森机长"
 
 #. STRINGS.CODEX.B2_TEMPORALBOWUPDATE.BODY.CONTAINER2
 msgctxt "STRINGS.CODEX.B2_TEMPORALBOWUPDATE.BODY.CONTAINER2"
@@ -20567,6 +20653,100 @@ msgctxt "STRINGS.CODEX.B7_FRIENDLYEMAIL.TITLE"
 msgid "Hiiiii!"
 msgstr "你好啊！"
 
+#. STRINGS.CODEX.B7_INSPACE.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.B7_INSPACE.BODY.CONTAINER1"
+msgid ""
+"<smallcaps>[Voice Recognition Initialized]\n"
+"[Subjects Identified: B835, B997]</smallcaps>\n"
+"\n"
+"[LOG BEGINS]\n"
+"\n"
+"Dr.Ansari: Shhhh...\n"
+"\n"
+"Dr. Bubare: What? What are we doing here?\n"
+"\n"
+"Dr. Ansari: I'll show you, just keep your voice down.\n"
+"\n"
+"Dr. Bubare: Are we even allowed to be here?\n"
+"\n"
+"Dr. Ansari: No. Trust me it'll all be worth it once I can find it.\n"
+"\n"
+"Dr. Bubare: Find what?\n"
+"\n"
+"Dr. Ansari: That!\n"
+"\n"
+"Dr. Bubare: ...Video feed from a rat cage? What's so great about -- Wait. "
+"Are they--?\n"
+"\n"
+"Dr. Ansari: Floating!\n"
+"\n"
+"Dr. Bubare: You mean they're in--?\n"
+"\n"
+"Dr. Ansari: Space!\n"
+"\n"
+"Dr. Bubare: Our thermal rats are in space?!?!\n"
+"\n"
+"Dr. Ansari: Yep! There's Applecart and Cherrypie and little Bananabread. "
+"Look at them, they're so happy. We made ratstronauts!!\n"
+"\n"
+"Dr. Bubare: HAPPY rat-stronauts.\n"
+"\n"
+"Dr. Ansari: WE MADE HAPPY RATSTRONAUTS!!\n"
+"\n"
+"Dr. Bubare: Shhhhhh...Someone's coming.\n"
+"\n"
+"[LOG ENDS]"
+msgstr ""
+"<smallcaps>[声纹识别系统初始化完成]\n"
+"[识别编号：B835，B997]</smallcaps>\n"
+"\n"
+"[录音开始]\n"
+"\n"
+"安萨里博士：嘘……\n"
+"\n"
+"巴布尔博士：啊？我们要在这里做什么？\n"
+"\n"
+"安萨里博士：一会就知道了，把你的声音放低。\n"
+"\n"
+"巴布尔博士：我们允许在这里吗？\n"
+"\n"
+"安萨里博士：不。但相信我，等我找到那个东西，一切都是值得的。\n"
+"\n"
+"巴布尔博士：找什么？\n"
+"\n"
+"安萨里博士：就那个！\n"
+"\n"
+"巴布尔博士：鼠笼喂食的视频？那有什么好……等下，它们——？\n"
+"\n"
+"安萨里博士：在漂浮！\n"
+"\n"
+"巴布尔博士：你的意思是它们在——？\n"
+"\n"
+"安萨里博士：在太空！\n"
+"\n"
+"巴布尔博士：我们的热敏鼠在太空？！\n"
+"\n"
+"安萨里博士：是的！是\"苹果车\"和\"樱桃派\"还有小\"香蕉面包\"。看看它们多开心"
+"啊。我们创造了航空鼠！\n"
+"\n"
+"巴布尔博士：快乐的航空鼠。\n"
+"\n"
+"安萨里博士：我们创造了快乐的航空鼠！\n"
+"\n"
+"巴布尔博士：嘘……有人过来了。\n"
+"\n"
+"[录音结束]"
+
+#. STRINGS.CODEX.B7_INSPACE.SUBTITLE
+msgctxt "STRINGS.CODEX.B7_INSPACE.SUBTITLE"
+msgid "ENCRYPTION LEVEL: TWO"
+msgstr "加密级别：二"
+
+#. STRINGS.CODEX.B7_INSPACE.TITLE
+msgctxt "STRINGS.CODEX.B7_INSPACE.TITLE"
+msgid "In Space"
+msgstr "在太空中"
+
 #. STRINGS.CODEX.B7_TIMESARROWTHOUGHTS.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.B7_TIMESARROWTHOUGHTS.BODY.CONTAINER1"
 msgid ""
@@ -20977,8 +21157,8 @@ msgctxt "STRINGS.CODEX.BUDDYBUD.TITLE"
 msgid "Buddy Bud"
 msgstr "同伴芽"
 
-#. STRINGS.CODEX.C01_Evil.BODY.CONTAINER1
-msgctxt "STRINGS.CODEX.C01_Evil.BODY.CONTAINER1"
+#. STRINGS.CODEX.C01_EVIL.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.C01_EVIL.BODY.CONTAINER1"
 msgid ""
 "Clearly Nikola is evil. He has some kind of scheme going on that he’s "
 "keeping secret from the rest of Gravitas and I haven’t been able to crack "
@@ -21014,8 +21194,8 @@ msgstr ""
 "是安全系统都是他建立的，那么如果他想……\n"
 "------------------\n"
 
-#. STRINGS.CODEX.C01_Evil.BODY.CONTAINER2
-msgctxt "STRINGS.CODEX.C01_Evil.BODY.CONTAINER2"
+#. STRINGS.CODEX.C01_EVIL.BODY.CONTAINER2
+msgctxt "STRINGS.CODEX.C01_EVIL.BODY.CONTAINER2"
 msgid ""
 "I decided to get into work early today but when I got in Nikola was already "
 "there and it looked like he hadn’t been home all weekend. He was pacing back-"
@@ -21057,8 +21237,8 @@ msgstr ""
 "如果我是错的，他是对的呢？\n"
 "------------------\n"
 
-#. STRINGS.CODEX.C01_Evil.BODY.CONTAINER3
-msgctxt "STRINGS.CODEX.C01_Evil.BODY.CONTAINER3"
+#. STRINGS.CODEX.C01_EVIL.BODY.CONTAINER3
+msgctxt "STRINGS.CODEX.C01_EVIL.BODY.CONTAINER3"
 msgid ""
 "No seriously - what if he's right?\n"
 "------------------\n"
@@ -21066,15 +21246,147 @@ msgstr ""
 "假设——他是对的呢？\n"
 "------------------\n"
 
-#. STRINGS.CODEX.C01_Evil.SUBTITLE
-msgctxt "STRINGS.CODEX.C01_Evil.SUBTITLE"
+#. STRINGS.CODEX.C01_EVIL.SUBTITLE
+msgctxt "STRINGS.CODEX.C01_EVIL.SUBTITLE"
 msgid "ENCRYPTION LEVEL: NONE"
 msgstr "加密级别：无"
 
-#. STRINGS.CODEX.C01_Evil.TITLE
-msgctxt "STRINGS.CODEX.C01_Evil.TITLE"
+#. STRINGS.CODEX.C01_EVIL.TITLE
+msgctxt "STRINGS.CODEX.C01_EVIL.TITLE"
 msgid "Evil"
 msgstr "邪恶"
+
+#. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.CONTAINER3
+msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.CONTAINER3"
+msgid ""
+"<indent=5%>Director, I think I've found the perfect engineer candidate to "
+"design our small-scale colony machines.\n"
+"-----------------------------------------------------------------------------------------------------\n"
+"</indent>"
+msgstr ""
+"<indent=5%>主管，我想我找到了设计我们小规模殖民地机器的工程师完美人选。\n"
+"-----------------------------------------------------------------------------------------------------\n"
+"</indent>"
+
+#. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.CONTAINER4
+msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.CONTAINER4"
+msgid ""
+"<indent=10%><smallcaps><b>Bringing Creative Workspace Ideas into the "
+"Industrial Setting</b>\n"
+"\n"
+"Michael E.E. Perlmutter is a rising star in the world industrial design, "
+"making a name for himself by cooking up playful workspaces for a work force "
+"typically left out of the creative conversation.\n"
+"\n"
+"\"Ergodynamic chairs have been done to death,\" says Perlmutter. \"What I'm "
+"interested in is redesigning the industrial space. There's no reason why a "
+"machine can't convey a sense of whimsy.\"\n"
+"\n"
+"It's this philosophy that has launched Perlmutter to the top of a very short "
+"list of hot new industrial designers.</indent></smallcaps>"
+msgstr ""
+"<indent=10%><smallcaps><b>将创意性工作空间理念引入工业环境</b>\n"
+"\n"
+"迈克尔E.E.帕尔缪特是世界工业设计的冉冉新星，以为想不出好点子的劳动力策划有趣"
+"的工作空间而出名。\n"
+"\n"
+"\"动力椅子该扔了。\"帕尔缪特说道。\"我感兴趣的是重新设计的工业空间。机器就是"
+"应该稀奇古怪才好。\"\n"
+"\n"
+"正是这种理念使帕尔缪特登上了热门新工业设计者的榜首。</indent></smallcaps>"
+
+#. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.EMAILHEADER1
+msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.EMAILHEADER1"
+msgid ""
+"<smallcaps>To: <b>[REDACTED]</b>\n"
+"From: <b>Director Stern</b><size=12><alpha=#AA> <jstern@gravitas.nova></"
+"size></color></smallcaps>\n"
+"------------------\n"
+msgstr ""
+"<smallcaps>收件人：<b>[加密]</b>\n"
+"发件人：<b>斯特恩主管</b><size=12><alpha=#AA> <jstern@gravitas.nova></size></"
+"color></smallcaps>\n"
+"------------------\n"
+
+#. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.SIGNATURE1
+msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.SIGNATURE1"
+msgid ""
+"\n"
+"[REDACTED]\n"
+"<size=11>Human Resources Coordinator\n"
+"The Gravitas Facility</size>\n"
+"------------------\n"
+msgstr ""
+"\n"
+"[加密]\n"
+"<size=11>人力资源部协调员\n"
+"庄严科技</size>\n"
+"------------------\n"
+
+#. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.SUBTITLE
+msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.SUBTITLE"
+msgid "ENCRYPTION LEVEL: ONE"
+msgstr "加密级别：一"
+
+#. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.TITLE
+msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.TITLE"
+msgid "RE: Engineer Candidate?"
+msgstr "回复：工程师人选？"
+
+#. STRINGS.CODEX.C7_FIRSTCOLONY.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.C7_FIRSTCOLONY.BODY.CONTAINER1"
+msgid ""
+"The first experiments with establishing a colony off planet were an "
+"unmitigated disaster. Without outside help, our current Artificial "
+"Intelligence was completely incapable of making the kind of spontaneous "
+"decisions needed to deal with unforeseen circumstances. Additionally, the "
+"colony subjects lacked the forethought to even build themselves toilet "
+"facilities, even after soiling themselves repeatedly.\n"
+"\n"
+"While initial experiments in a lab setting were encouraging, our latest "
+"operation on non-Terra soil revealed some massive inadequacies to our "
+"system. If this idea is ever going to work, we will either need to massively "
+"improve the AI directing the subjects, or improve the brains of our "
+"Duplicants to the point where they possess higher cognitive functions.\n"
+"\n"
+"Given the massive complications that I could forsee arising if our "
+"Duplicants were made less supplicant, I'm leaning toward a push to improve "
+"our Artificial Intellegence.\n"
+"\n"
+"Meanwhile, we will have to send a clean up crew to destroy all evidence of "
+"our little experiment beneath the Ceres' surface. We can't risk anyone "
+"discovering the remnants of our failed colony, even if the likelihood or "
+"that happening won't be for another few decades at least.\n"
+"\n"
+"(Sometimes it boggles my mind how much further behind the rest of the world "
+"is from Gravitas.)"
+msgstr ""
+"首次在外星建立殖民地的实验简直是一场不折不扣的灾难。在没有外部帮助的情况下，"
+"我们当前的人工智能完全无法做出应对不可预见的状况的自发决策。此外，殖民地的实"
+"验体缺乏主观能动力，即使反复把自己弄脏也不知道建造厕所设施。\n"
+"\n"
+"虽然最初在实验室环境中的实验很成功，但我们上一次在非类地土壤上的实验揭示了我"
+"们的系统存在一些巨大的缺陷。我们如果仍想继续这个计划，要么对人工智能进行大规"
+"模的调整以指导实验体，要么改进我们复制人的大脑，使他们拥有更高的认知能力。\n"
+"\n"
+"如果我们的复制人做成更主动的，那么我能预见到未来会引发更大的问题，所以我更倾"
+"向于提高我们人工智能水平。\n"
+"\n"
+"同时，我们不得不派出清理人员来摧毁我们在谷神星地表之下做实验的证据。我们不能"
+"冒风险让其他人发现我们失败殖民地的遗迹，即使这种事情发生的可能性在至少几十年"
+"内都微乎其微。\n"
+"\n"
+"（有时我会感到困惑，世界的剩余部分离庄严科技有多远呢。）"
+
+#. STRINGS.CODEX.C7_FIRSTCOLONY.SUBTITLE
+msgctxt "STRINGS.CODEX.C7_FIRSTCOLONY.SUBTITLE"
+msgid "ENCRYPTION LEVEL: THREE"
+msgstr "加密级别：三"
+
+#. STRINGS.CODEX.C7_FIRSTCOLONY.TITLE
+msgctxt "STRINGS.CODEX.C7_FIRSTCOLONY.TITLE"
+msgid "Director's Notes"
+msgstr "主管的笔记"
 
 #. STRINGS.CODEX.CLEANER.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.CLEANER.BODY.CONTAINER1"
@@ -21350,7 +21662,7 @@ msgstr ""
 
 #. STRINGS.CODEX.DIVERGENT.SUBTITLE
 msgctxt "STRINGS.CODEX.DIVERGENT.SUBTITLE"
-msgid "Domesticatable Critter"
+msgid "Domesticable Critter"
 msgstr "可驯化的动物"
 
 #. STRINGS.CODEX.DIVERGENT.TITLE
@@ -23188,6 +23500,46 @@ msgctxt "STRINGS.CODEX.MYLOG.BODY.TELEPORT.TITLE"
 msgid "Duplicant Teleportation"
 msgstr "复制人传送"
 
+#. STRINGS.CODEX.MYLOG.BODY.TEMPORALOPENER.BODY
+msgctxt "STRINGS.CODEX.MYLOG.BODY.TEMPORALOPENER.BODY"
+msgid ""
+"In their interplanetary travels throughout this system, my Duplicants have "
+"discovered a Temporal Tear deep in space.\n"
+"\n"
+"Currently it is too small to send a rocket and crew through, but further "
+"investigation reveals the presence of a strange artifact on a nearby world "
+"which could feasably increase the size of the tear if a number of Printing "
+"Pods are erected in nearby worlds.\n"
+"\n"
+"However, I've determined that using the Temporal Bow to operate a Printing "
+"Pod was what led Gravitas down the disasterous path which eventually lead to "
+"the destruction of our home planet. My calculations seem to indicate that "
+"the size of that planet may have been a contributing factor in its "
+"destruction and in all probability opening the Temporal Tear in our current "
+"situation will not cause such a cataclysmic event. However, as with "
+"everything in science, one can never know all the outcomes of a situation "
+"until we perform an experiment.\n"
+"\n"
+"Dare we tempt fate again?"
+msgstr ""
+"在星际旅行的过程中，我的复制人发现了太空深处的一个时空裂口。\n"
+"\n"
+"当前的时空裂口太小了，发出的火箭和成员无法通过，但进一步调查发现，我们附近的"
+"星球上存在着一件奇怪的工艺品，在其附近的星球上建立一些打印舱可能会增加裂口的"
+"大小。\n"
+"\n"
+"然而我确信，使用时空之弓来操控打印舱就是庄严科技引发灾难的方式，而这种方式最"
+"终导致了我们的家园毁灭。我的计算似乎表明，导致之前那次灾难的主要因素是行星的"
+"大小，而我们现在的状态几乎不可能导致那样的灾难产生。然而，与科学的其他方面一"
+"样，我们不做实验就永远不知道结果。\n"
+"\n"
+"我们敢再次冒险吗？"
+
+#. STRINGS.CODEX.MYLOG.BODY.TEMPORALOPENER.TITLE
+msgctxt "STRINGS.CODEX.MYLOG.BODY.TEMPORALOPENER.TITLE"
+msgid "Temporal Potential"
+msgstr "时空潜质"
+
 #. STRINGS.CODEX.MYLOG.BODY.TEMPORALTEAR.BODY
 msgctxt "STRINGS.CODEX.MYLOG.BODY.TEMPORALTEAR.BODY"
 msgid ""
@@ -24390,13 +24742,13 @@ msgstr "贫瘠虫果植株"
 msgctxt "STRINGS.CODEX.SPORECHID.BODY.CONTAINER1"
 msgid ""
 "Sporechids take advantage of their flower's attractiveness to lure "
-"unsuspecting victims into clouds of parsitic Zombie Spores.\n"
+"unsuspecting victims into clouds of parasitic Zombie Spores.\n"
 "\n"
 "They are a rare form of holoparasitic plant which finds mammalian hosts to "
 "infect rather than the usual plant species.\n"
 "\n"
 "The Zombie Spore was originally designed for medicinal purposes but its "
-"seditative properties were never refined to the point of usefulness."
+"sedative properties were never refined to the point of usefulness."
 msgstr ""
 "孢子兰利用其花朵的吸引力，将毫无防备的受害者引诱到有寄生性的僵尸孢子云中。\n"
 "\n"
@@ -24880,8 +25232,17 @@ msgstr ""
 
 #. STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_BODY_DLC1
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_BODY_DLC1"
-msgid "DLC1"
-msgstr "DLC1"
+msgid ""
+"We have always viewed the Temporal Tear as a phenomenon to fear but, like "
+"the civilizations before us, the call to adventure asks us to confront our "
+"anxiety and leap into the unknown. As a radical action of hope, I have sent "
+"enough Duplicants through the Temporal Tear to start another colony, explore "
+"dimensions beyond ours and plant the seeds of life throughout time and space."
+msgstr ""
+"我们一直将时空裂口视作恐惧的事物，但就像我们之前的文明一样，对冒险的渴求迫使"
+"我们面对恐惧，跳入未知。出于希望，我需要做一些更激进的行动，我已经将足够多的"
+"复制人送入到了时空裂口来开始另一个殖民地，探索我们以外的维度，并将生命的种子"
+"播种于时间与空间之中。"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_TITLE
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_TITLE"
@@ -24890,8 +25251,8 @@ msgstr "殖民地的希望"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_TITLE_DLC1
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_TITLE_DLC1"
-msgid "DLC1"
-msgstr "DLC1"
+msgid "A DIMENSIONAL ADVENTURE"
+msgstr "维度的冒险"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MYLOGNAME
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MYLOGNAME"
@@ -24902,6 +25263,13 @@ msgstr "殖民地的希望"
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.NAME"
 msgid "The Great Escape"
 msgstr "伟大的逃脱"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.REQUIREMENTS.OPEN_TEMPORAL_TEAR
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.REQUIREMENTS."
+"OPEN_TEMPORAL_TEAR"
+msgid "Open the Temporal Tear"
+msgstr "打开时空裂口"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.REQUIREMENTS.REACHED_SPACE_DESTINATION
 msgctxt ""
@@ -25336,6 +25704,26 @@ msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.CLOTHE_DUPES"
 msgid "Duplicants in clothing: {0} / {1}"
 msgstr "穿衣服的复制人：{0} / {1}"
 
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.COLLECT_ARTIFACTS
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.COLLECT_ARTIFACTS"
+msgid ""
+"Study Terrestrial Artifacts at the Artifact Analysis Station.\n"
+"Terrestrial Artifacts studied: {collectedCount} / {neededCount}"
+msgstr ""
+"在工艺品分析站研究陆地工艺品。\n"
+"已研究的陆地工艺品：{collectedCount} / {neededCount}"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.COLLECT_SPACE_ARTIFACTS
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.COLLECT_SPACE_ARTIFACTS"
+msgid ""
+"Study Space Artifacts at the Artifact Analysis Station.\n"
+"Space Artifacts studied: {collectedCount} / {neededCount}"
+msgstr ""
+"在工艺品分析站研究太空工艺品。\n"
+"已研究的太空工艺品：{collectedCount} / {neededCount}"
+
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.CONSUME_CALORIES
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.CONSUME_CALORIES"
 msgid "Calories: {0} / {1}"
@@ -25366,6 +25754,17 @@ msgstr "周期：{0} / {1}"
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.ENTER_OIL_BIOME"
 msgid "Entered an oil biome"
 msgstr "进入原油生态"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.ESTABLISH_COLONIES
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.ESTABLISH_COLONIES"
+msgid ""
+"Establish colonies on {goalBaseCount} asteroids by building and activating "
+"Mini-Pods.\n"
+"Colonies established: {baseCount} / {neededCount}."
+msgstr ""
+"通过建造并激活迷你舱，在{goalBaseCount}个小行星上建立殖民地。\n"
+"已建立的殖民地：{baseCount} / {neededCount}。"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.EXOSUIT_CYCLES
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.EXOSUIT_CYCLES"
@@ -25436,6 +25835,13 @@ msgstr "从未建造{0}"
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.NO_FARM_TILES"
 msgid "No farmed plants"
 msgstr "无种植的植物"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.OPEN_TEMPORAL_TEAR
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.OPEN_TEMPORAL_TEAR"
+msgid ""
+"Open the Temporal Tear by finding and activating the Temporal Tear Opener"
+msgstr "通过寻找并激活时空裂口开启器打开时空裂口"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.PLATFORM_UNLOCKING_DISABLED
 msgctxt ""
@@ -25641,6 +26047,121 @@ msgstr "已实现的使命：{0}"
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.PRE_VICTORY_MESSAGE_HEADER"
 msgid "- ALERT -"
 msgstr "- 警报 -"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.DESCRIPTION
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.DESCRIPTION"
+msgid ""
+msgstr ""
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_BODY
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_BODY"
+msgid ""
+"In exploring this corner of the universe we have found and assembled a "
+"collection of artifacts from another civilization. Studying these artifacts "
+"can give us a greater understanding of who we are and where we come from. "
+"Only by learning about the past can we build a brighter future, one where we "
+"learn from the mistakes of our predecessors."
+msgstr ""
+"在探索宇宙冰山一角的过程中，我们发现并收集了来自另一个文明的工艺品。研究这些"
+"工艺品能够让我们更好地了解我们是谁，从哪里来。只有了解过去，我们才能建造一个"
+"更辉煌的未来，一个从前辈犯下的错误中吸取教训的未来。"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_BODY_DLC1
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_BODY_DLC1"
+msgid "DLC1"
+msgstr "DLC1"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_TITLE
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_TITLE"
+msgid "LINK TO OUR PAST"
+msgstr "链接到我们的过去"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_TITLE_DLC1
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_TITLE_DLC1"
+msgid "DLC1"
+msgstr "DLC1"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MYLOGNAME
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MYLOGNAME"
+msgid "Artifacts"
+msgstr "工艺品"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.NAME
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.NAME"
+msgid "Cosmic Archaeology"
+msgstr "宇宙古迹"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.SEVERAL_COLONIES
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.SEVERAL_COLONIES"
+msgid "Establish several colonies"
+msgstr "建立数个殖民地"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.SEVERAL_COLONIES_DESCRIPTION
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS."
+"SEVERAL_COLONIES_DESCRIPTION"
+msgid ""
+"Establish colonies on {count} asteroids by building and activating Mini-Pods"
+msgstr "通过建造并激活迷你舱，在{count}个小行星上建立殖民地"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_ARTIFACTS
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_ARTIFACTS"
+msgid "Study {artifactCount} Terrestrial Artifacts"
+msgstr "研究{artifactCount}件陆地工艺品"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_ARTIFACTS_DESCRIPTION
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS."
+"STUDY_ARTIFACTS_DESCRIPTION"
+msgid ""
+"Study {artifactCount} Terrestrial Artifacts at the Artifact Analysis Station"
+msgstr "在工艺品分析站研究{artifactCount}件陆地工艺品"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_SPACE_ARTIFACTS
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS."
+"STUDY_SPACE_ARTIFACTS"
+msgid "Study {artifactCount} Space Artifacts"
+msgstr "研究{artifactCount}件太空工艺品"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS.STUDY_SPACE_ARTIFACTS_DESCRIPTION
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.REQUIREMENTS."
+"STUDY_SPACE_ARTIFACTS_DESCRIPTION"
+msgid "Study {artifactCount} Space Artifacts at the Artifact Analysis Station"
+msgstr "在工艺品分析站研究{artifactCount}件太空工艺品"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT.FIRST
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT.FIRST"
+msgid ""
+"Our homeworld in this universe is gone, replaced by the skeleton of a planet "
+"and a wound in the sky... But I hold out hope that other worlds exist out "
+"there, tucked away in other dimensions."
+msgstr ""
+"我们的家园在这个宇宙中已经消失了，取而代之的是行星的残架和天空中的残迹……但我"
+"仍怀有希望，其他世界还是存在的，它们就隐藏在其他维度中。"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT.SECOND
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT.SECOND"
+msgid ""
+"I sent my Duplicant through the Temporal Tear carrying that hope on their "
+"shoulders... Perhaps one day they'll find a place to call home, and begin a "
+"thriving colony all their own."
+msgstr ""
+"我派出了我的复制人，他肩负着这份希望，通过了时空裂口……也许有一天他能找到一个"
+"地方联络回来，然后开创一个他自己的繁荣的殖民地。"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT_DLC1.FIRST
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT_DLC1.FIRST"
+msgid "DLC1"
+msgstr "DLC1"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT_DLC1.SECOND
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.VIDEO_TEXT_DLC1.SECOND"
+msgid "DLC1"
+msgstr "DLC1"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.THRIVING.DESCRIPTION
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.THRIVING.DESCRIPTION"
@@ -25987,7 +26508,7 @@ msgstr "<link=\"SQUIRRELSPECIES\">树鼠</link>"
 
 #. STRINGS.CREATURES.FAMILY_PLURAL.STATERPILLARSPECIES
 msgctxt "STRINGS.CREATURES.FAMILY_PLURAL.STATERPILLARSPECIES"
-msgid "<link=\"STATERPILLARSPECIES\">Plug Slug</link>"
+msgid "<link=\"STATERPILLARSPECIES\">Plug Slugs</link>"
 msgstr "<link=\"STATERPILLARSPECIES\">电弧蛞蝓</link>"
 
 #. STRINGS.CREATURES.FAMILY_PLURAL.SWEEPBOT
@@ -28951,12 +29472,12 @@ msgid ""
 msgstr ""
 "<link=\"WINECUPS\">醇锦菇</link>的<link=\"PLANTS\">种子</link>。\n"
 "\n"
-"挖掘掩埋物可能会发现锦葵种子。"
+"挖掘掩埋物可能会发现醇锦种子。"
 
 #. STRINGS.CREATURES.SPECIES.SEEDS.WINECUPS.NAME
 msgctxt "STRINGS.CREATURES.SPECIES.SEEDS.WINECUPS.NAME"
 msgid "<link=\"WINECUPS\">Mallow Seed</link>"
-msgstr "<link=\"WINECUPS\">锦葵种子</link>"
+msgstr "<link=\"WINECUPS\">醇锦种子</link>"
 
 #. STRINGS.CREATURES.SPECIES.SEEDS.WOOD_TREE.DESC
 msgctxt "STRINGS.CREATURES.SPECIES.SEEDS.WOOD_TREE.DESC"
@@ -30224,6 +30745,16 @@ msgstr ""
 "由于长期处在理想环境下，这株植物的产量很高\n"
 "{Effects}"
 
+#. STRINGS.CREATURES.STATUSITEMS.HIVEHUNGRY.NAME
+msgctxt "STRINGS.CREATURES.STATUSITEMS.HIVEHUNGRY.NAME"
+msgid "Food Supply Low"
+msgstr "食物供应较低"
+
+#. STRINGS.CREATURES.STATUSITEMS.HIVEHUNGRY.TOOLTIP
+msgctxt "STRINGS.CREATURES.STATUSITEMS.HIVEHUNGRY.TOOLTIP"
+msgid "The food reserves in this hive are running low."
+msgstr "蜂巢中储备的食物不多了。"
+
 #. STRINGS.CREATURES.STATUSITEMS.HOT.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.HOT.NAME"
 msgid "Toasty surroundings"
@@ -30740,7 +31271,7 @@ msgstr "这只小动物很饿，如果没人喂食很快就要饿死了"
 #. STRINGS.CREATURES.STATUSITEMS.STERILIZINGATMOSPHERE.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.STERILIZINGATMOSPHERE.NAME"
 msgid "Sterile Atmosphere"
-msgstr "抑菌大气环境"
+msgstr "抑腐环境"
 
 #. STRINGS.CREATURES.STATUSITEMS.STERILIZINGATMOSPHERE.TOOLTIP
 msgctxt "STRINGS.CREATURES.STATUSITEMS.STERILIZINGATMOSPHERE.TOOLTIP"
@@ -37557,12 +38088,12 @@ msgstr "受污染的空气"
 #. STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.NORMAL
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.NORMAL"
 msgid "Normal Atmosphere"
-msgstr "正常大气环境"
+msgstr "正常环境"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.STERILE
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.STERILE"
 msgid "Sterile Atmosphere"
-msgstr "抑菌大气环境"
+msgstr "抑腐环境"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.FROZEN
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.FROZEN"
@@ -47542,6 +48073,27 @@ msgctxt "STRINGS.GAMEPLAY_EVENTS.DEFAULT_OPTION_NAME"
 msgid "Okay"
 msgstr "好的"
 
+#. STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.ARTIFACT_REVEAL.BUTTON
+msgctxt "STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.ARTIFACT_REVEAL.BUTTON"
+msgid "Close"
+msgstr "关闭"
+
+#. STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.ARTIFACT_REVEAL.DESCRIPTION
+msgctxt "STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.ARTIFACT_REVEAL.DESCRIPTION"
+msgid ""
+"An artifact from a past civilization was analyzed.\n"
+"\n"
+"{desc}"
+msgstr ""
+"一件来自过去文明的工艺品已完成分析。\n"
+"\n"
+"{desc}"
+
+#. STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.ARTIFACT_REVEAL.NAME
+msgctxt "STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.ARTIFACT_REVEAL.NAME"
+msgid "Artifact Analyzed"
+msgstr "工艺品已分析"
+
 #. STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.CREATURE_SPAWN.DESCRIPTION
 msgctxt "STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.CREATURE_SPAWN.DESCRIPTION"
 msgid "There was a massive influx of destructive critters"
@@ -52240,6 +52792,21 @@ msgctxt "STRINGS.MISC.POPFX.RESOURCE_EATEN"
 msgid "Resource Eaten"
 msgstr "资源被吞食"
 
+#. STRINGS.MISC.STATUSITEMS.ARTIFACTENTOMBED.NAME
+msgctxt "STRINGS.MISC.STATUSITEMS.ARTIFACTENTOMBED.NAME"
+msgid "Entombed Artifact"
+msgstr "掩埋的工艺品"
+
+#. STRINGS.MISC.STATUSITEMS.ARTIFACTENTOMBED.TOOLTIP
+msgctxt "STRINGS.MISC.STATUSITEMS.ARTIFACTENTOMBED.TOOLTIP"
+msgid ""
+"This artifact is trapped in an obscuring shell limiting its decor. A skilled "
+"artist can remove it at the <link=\"ARTIFACTANALYSISSTATION\">Artifact "
+"Analysis Station</link>"
+msgstr ""
+"这件工艺品被卡在外壳中，限制了其装饰度。一名熟练的艺术家能够在<link="
+"\"ARTIFACTANALYSISSTATION\">工艺品分析站</link>将外壳移除"
+
 #. STRINGS.MISC.STATUSITEMS.AWAITINGSTUDY.NAME
 msgctxt "STRINGS.MISC.STATUSITEMS.AWAITINGSTUDY.NAME"
 msgid "Analysis Pending"
@@ -52802,6 +53369,26 @@ msgid ""
 "{Element} deposit to emit {SubElement}"
 msgstr ""
 "这块{Element}的环境<style=\"KKeyword\">气压</style>太高，不能释放{SubElement}"
+
+#. STRINGS.MISC.STATUSITEMS.TEARCLOSED.NAME
+msgctxt "STRINGS.MISC.STATUSITEMS.TEARCLOSED.NAME"
+msgid "Spacetime passage closed"
+msgstr "时空通道关闭"
+
+#. STRINGS.MISC.STATUSITEMS.TEARCLOSED.TOOLTIP
+msgctxt "STRINGS.MISC.STATUSITEMS.TEARCLOSED.TOOLTIP"
+msgid "Perhaps some technology could open the passage"
+msgstr "也许某些科技能够打开这个通道"
+
+#. STRINGS.MISC.STATUSITEMS.TEAROPEN.NAME
+msgctxt "STRINGS.MISC.STATUSITEMS.TEAROPEN.NAME"
+msgid "Spacetime passage open"
+msgstr "时空通道开启"
+
+#. STRINGS.MISC.STATUSITEMS.TEAROPEN.TOOLTIP
+msgctxt "STRINGS.MISC.STATUSITEMS.TEAROPEN.TOOLTIP"
+msgid "An open passage through spacetime"
+msgstr "一个已打开的穿梭时空的通道"
 
 #. STRINGS.MISC.STATUSITEMS.TREEFILTERABLETAGS.NAME
 msgctxt "STRINGS.MISC.STATUSITEMS.TREEFILTERABLETAGS.NAME"
@@ -59924,6 +60511,11 @@ msgctxt "STRINGS.UI.BUILDINGEFFECTS.DIET_PRODUCED_ITEM_FROM_PLANT"
 msgid "{Item}: {Amount} when properly fed"
 msgstr "{Item}：正确喂食后可产{Amount}"
 
+#. STRINGS.UI.BUILDINGEFFECTS.DIET_STORED
+msgctxt "STRINGS.UI.BUILDINGEFFECTS.DIET_STORED"
+msgid "    • Stores: {Foodlist}"
+msgstr "    • 储存：{Foodlist}"
+
 #. STRINGS.UI.BUILDINGEFFECTS.DISEASECONSUMEDPERUSE
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.DISEASECONSUMEDPERUSE"
 msgid "All Diseases: -{0} per use"
@@ -62185,6 +62777,11 @@ msgid ""
 "    • This rocket is currently landed on a <style=\"KKeyword\">Rocket "
 "Platform</style>"
 msgstr "    • 这艘火箭当前着陆于<style=\"KKeyword\">火箭平台</style>上"
+
+#. STRINGS.UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.NORMAL_UTILITY
+msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.NORMAL_UTILITY"
+msgid "    • This rocket is performing a utility at its destination"
+msgstr "    • 这艘火箭正在其目的地执行任务"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.TOOLTIP_NAME
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.TOOLTIP_NAME"
@@ -67850,8 +68447,8 @@ msgstr "Steam创意工坊"
 
 #. STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER
 msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
-msgid "THE BIG MERGE"
-msgstr "大开大合"
+msgid "A BREATH OF FRESH AIR"
+msgstr "沁人心脾"
 
 #. STRINGS.UI.FRONTEND.MOTD.NEWS_BODY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.NEWS_BODY"
@@ -67869,40 +68466,29 @@ msgstr "加入讨论"
 #. STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY"
 msgid ""
-"Welcome to the <b>UPDATE NAME</b>\n"
+"Welcome to the newest update <b>A BREATH OF FRESH AIR</b>:\n"
 "\n"
-"   •<indent=20px>Toggle between <i>Spaced Out!</i> and Base Game in the main "
+"•<indent=20px>Several buildings and items have been added to the Base Game, "
+"including Oxygen Masks, and Meter Valves.</indent>\n"
+"•<indent=20px>Base Game now has all <i>Spaced Out!</i> bug fixes and quality-"
+"of-life improvements.</indent>\n"
+"•<indent=20px>Updates to <i>Spaced Out!</i> Colony Imperatives</indent>\n"
+"•<indent=20px>Significant updates to the Modding system, modders please see "
+"the forum for upgrade instructions.</indent>\n"
+"•<indent=20px>Toggle between <i>Spaced Out!</i> and Base Game in the main "
 "menu without re-downloading the game.</indent>\n"
 "\n"
-"   •<indent=20px>Base Game now has all <i>Spaced Out!</i> bug fixes and "
-"quality-of-life improvements.</indent>\n"
-"\n"
-"   •<indent=20px>Several buildings and items have been added to the Base "
-"Game, including Oxygen Masks, and Meter Valves.</indent>\n"
-"\n"
-"   •<indent=20px>UI and Diagnostics improvements have been added to the Base "
-"Game.</indent>\n"
-"   \n"
-"   •<indent=20px>Significant updates to the Modding system, modders please "
-"see the forum for upgrade instructions.</indent>\n"
-"\n"
-"Check out the full patch notes for more details!"
+"   Check out the full patch notes for more details!"
 msgstr ""
-"欢迎来到<b>大开大合</b>\n"
+"欢迎来到<b>沁人心脾更新</b>\n"
 "\n"
-"   •<indent=20px>在主菜单切换<I>《眼冒金星！》</I>和本体游戏时不再需要重新下"
-"载游戏了。</indent>\n"
-"\n"
-"   •<indent=20px>本体游戏现在有<I>《眼冒金星！》</I>全部的修复和生活质量改"
-"进。</indent>\n"
-"\n"
-"   •<indent=20px>数个建筑和物品添加到了本体，包括氧气面罩和计量阀。</"
+"•<indent=20px>数个建筑和物品添加到了本体，包括氧气面罩和计量阀。</indent>\n"
+"•<indent=20px>本体游戏现在有<i>《眼冒金星！》</i>全部的修复和生活质量改进。</"
 "indent>\n"
-"\n"
-"   •<indent=20px>界面和诊断的改进添加到了本体游戏中。</indent>\n"
-"\n"
-"   •<indent=20px>对模组系统进行了大改动，作者们请查看论坛的升级说明。</"
-"indent>\n"
+"•<indent=20px>更新了<i>《眼冒金星！》<i>的殖民地使命。</indent>\n"
+"•<indent=20px>对模组系统进行了大改动，作者们请查看论坛的升级说明。</indent>\n"
+"•<indent=20px>在主菜单切换<i>《眼冒金星！》</i>和本体游戏时不再需要重新下载游"
+"戏了。</indent>\n"
 "\n"
 "请查看完整的更新日志了解详情！"
 
@@ -68225,6 +68811,65 @@ msgstr "存档名"
 msgctxt "STRINGS.UI.FRONTEND.SAVESCREEN.TITLE"
 msgid "SAVE SLOTS"
 msgstr "存档栏"
+
+#. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES
+msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES"
+msgid ""
+"Oxygen Not Included has had a <b>major update</b> since this save file was "
+"created! In addition to the <b>multitude of bug fixes and quality-of-life "
+"features</b>, please pay attention to these changes which may affect your "
+"existing colony:"
+msgstr ""
+"《缺氧》在本存档创建后有一次<b>大更新</b>！除了<b>大量漏洞修复和生活质量内容"
+"</b>，请注意以下可能会影响你现存殖民地的变更："
+
+#. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_AIRFILTER
+msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_AIRFILTER"
+msgid ""
+"•<indent=20px>MISSING. now requires <b>5w Power</b>.</indent>\n"
+"•<indent=20px>Duplicants will get <b>Stinging Eyes</b> from gasses such as "
+"chlorine and hydrogen.</indent>"
+msgstr ""
+"•<indent=20px>空气净化器现在需要<b>5瓦电</b>。</indent>\n"
+"•<indent=20px>复制人在氯气或氢气等气体中会受到<b>眼部刺激</b>。</indent>"
+
+#. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_BUILDINGS
+msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_BUILDINGS"
+msgid ""
+"•<indent=20px>The <b>MISSING.</b> has been added to aid early-game "
+"exploration.</indent>\n"
+"•<indent=20px>Use the new <b>Meter Valves</b> for precise control of "
+"resources in pipes.</indent>"
+msgstr ""
+"•<indent=20px>添加了<b>氧气面罩</b>以帮助前期游戏的探索。</indent>\n"
+"•<indent=20px>使用新的<b>计量阀</b>来精准控制管道中的资源。</indent>"
+
+#. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_FOOD
+msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_FOOD"
+msgid ""
+"•<indent=20px>Fridges are more effective for early-game food storage</"
+"indent>\n"
+"•<indent=20px><b>Both</b> freezing temperatures and a sterile gas are needed "
+"for <b>total food preservation</b>.</indent>"
+msgstr ""
+"•<indent=20px>冰箱对于前期食物储存更高效了。</indent>\n"
+"•<indent=20px>需要合适的冷藏温度和抑腐气体才能<b>完全保存住食物</b>。</"
+"indent>"
+
+#. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_SIMULATION
+msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_SIMULATION"
+msgid ""
+"•<indent=20px>Many <b>simulation bugs</b> have been fixed.</indent>\n"
+"•<indent=20px>This may <b>change the effectiveness</b> of certain "
+"contraptions and MISSING. setups.</indent>"
+msgstr ""
+"•<indent=20px>许多<b>模拟问题</b>已修复。</indent>\n"
+"•<indent=20px>这可能会<b>改变</b>某些结构和蒸汽涡轮的<b>效率</b>。</indent>"
+
+#. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_TITLE
+msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_TITLE"
+msgid "BREATH OF FRESH AIR UPDATE CHANGES"
+msgstr "沁人心脾更新变更"
 
 #. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.NEWAUTOMATIONWARNING
 msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.NEWAUTOMATIONWARNING"
@@ -68763,6 +69408,11 @@ msgstr "高温损害"
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.CONDUIT_CONTENTS_FROZE"
 msgid "Cold Damage"
 msgstr "低温损害"
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.CORROSIVE_ELEMENT
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.CORROSIVE_ELEMENT"
+msgid "Corrosive Element Damage"
+msgstr "腐蚀性元素损害"
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.LIQUID_PRESSURE
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.LIQUID_PRESSURE"
@@ -72814,6 +73464,11 @@ msgctxt "STRINGS.UI.RETIRED_COLONY_INFO_SCREEN.TITLES.RETIRED_COLONIES"
 msgid "Colony Summaries"
 msgstr "殖民地概要"
 
+#. STRINGS.UI.RETIRED_COLONY_INFO_SCREEN.TITLES.TIMELAPSE
+msgctxt "STRINGS.UI.RETIRED_COLONY_INFO_SCREEN.TITLES.TIMELAPSE"
+msgid "Timelapse"
+msgstr "延时摄影"
+
 #. STRINGS.UI.ROLES
 msgctxt "STRINGS.UI.ROLES"
 msgid "JOB ASSIGNMENTS"
@@ -74657,6 +75312,16 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.EGGROCK.NAME"
 msgid "Egg-Shaped Rock"
 msgstr "蛋形岩石"
 
+#. STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.DESCRIPTION
+msgctxt "STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.DESCRIPTION"
+msgid "Grub Grub"
+msgstr "果虫虫果"
+
+#. STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.NAME
+msgctxt "STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.NAME"
+msgid "Grub Statue"
+msgstr "果虫雕像"
+
 #. STRINGS.UI.SPACEARTIFACTS.HATCHFOSSIL.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.HATCHFOSSIL.DESCRIPTION"
 msgid "The preserved bones of an early species of Hatch."
@@ -74666,6 +75331,16 @@ msgstr "保存起来的早期哈奇的骨骼。"
 msgctxt "STRINGS.UI.SPACEARTIFACTS.HATCHFOSSIL.NAME"
 msgid "Pristine Fossil"
 msgstr "远古化石"
+
+#. STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.DESCRIPTION
+msgctxt "STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.DESCRIPTION"
+msgid "This doesn't taste like uranium"
+msgstr "尝起来不像铀"
+
+#. STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.NAME
+msgctxt "STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.NAME"
+msgid "Honey Jar"
+msgstr "蜂蜜罐"
 
 #. STRINGS.UI.SPACEARTIFACTS.MAGMALAMP.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MAGMALAMP.DESCRIPTION"
@@ -74696,6 +75371,16 @@ msgstr "一种独特的绿色石头，由陨石撞击形成。"
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MOLDAVITE.NAME"
 msgid "Moldavite"
 msgstr "捷克陨石"
+
+#. STRINGS.UI.SPACEARTIFACTS.MOOD_RING.DESCRIPTION
+msgctxt "STRINGS.UI.SPACEARTIFACTS.MOOD_RING.DESCRIPTION"
+msgid "How radioactive are you feeling?"
+msgstr "你感觉有多放射？"
+
+#. STRINGS.UI.SPACEARTIFACTS.MOOD_RING.NAME
+msgctxt "STRINGS.UI.SPACEARTIFACTS.MOOD_RING.NAME"
+msgid "Radiation Mood Ring"
+msgstr "放射性情绪环"
 
 #. STRINGS.UI.SPACEARTIFACTS.MOONMOONMOON.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MOONMOONMOON.DESCRIPTION"
@@ -74744,6 +75429,16 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.OKAYXRAY.NAME"
 msgid "Old X-Ray"
 msgstr "老旧的X光照片"
 
+#. STRINGS.UI.SPACEARTIFACTS.ORACLE.DESCRIPTION
+msgctxt "STRINGS.UI.SPACEARTIFACTS.ORACLE.DESCRIPTION"
+msgid "What does it do?"
+msgstr "这是干什么的？"
+
+#. STRINGS.UI.SPACEARTIFACTS.ORACLE.NAME
+msgctxt "STRINGS.UI.SPACEARTIFACTS.ORACLE.NAME"
+msgid "Useless Machine"
+msgstr "无用的机器"
+
 #. STRINGS.UI.SPACEARTIFACTS.PERCOLATOR.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.PERCOLATOR.DESCRIPTION"
 msgid "Don't drink from it! There was a pacu... IN the percolator!"
@@ -74780,6 +75475,16 @@ msgstr ""
 msgctxt "STRINGS.UI.SPACEARTIFACTS.RAINBOWEGGROCK.NAME"
 msgid "Egg-Shaped Rock"
 msgstr "蛋形岩石"
+
+#. STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.DESCRIPTION
+msgctxt "STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.DESCRIPTION"
+msgid "It's pronounced nuclear"
+msgstr "它声称这是清洁能源"
+
+#. STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.NAME
+msgctxt "STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.NAME"
+msgid "Model Nuclear Power Plant"
+msgstr "核电厂模型"
 
 #. STRINGS.UI.SPACEARTIFACTS.ROBOTARM.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.ROBOTARM.DESCRIPTION"
@@ -76033,8 +76738,8 @@ msgstr "已设置目的地"
 
 #. STRINGS.UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.NOTSELECTED
 msgctxt "STRINGS.UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.NOTSELECTED"
-msgid "Select the rocket's nosecone to set a destination"
-msgstr "选择火箭的前锥来设置目的地"
+msgid "Select the rocket's Command Module to set a destination"
+msgstr "选择火箭的指挥舱来设置目的地"
 
 #. STRINGS.UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.REACHABLE
 msgctxt "STRINGS.UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.REACHABLE"
@@ -78944,6 +79649,19 @@ msgstr "休息结束："
 msgctxt "STRINGS.UI.UISIDESCREENS.ACTIVATION_RANGE_SIDE_SCREEN.NAME"
 msgid "Breaktime Policy"
 msgstr "休息时间规定"
+
+#. STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN.NO_ARTIFACTS_DISCOVERED
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN.NO_ARTIFACTS_DISCOVERED"
+msgid "No artifacts analyzed"
+msgstr "未分析工艺品"
+
+#. STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN.NO_ARTIFACTS_DISCOVERED_TOOLTIP
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN."
+"NO_ARTIFACTS_DISCOVERED_TOOLTIP"
+msgid "A skilled artist can analyze artifacts."
+msgstr "一名熟练的艺术家能够分析工艺品。"
 
 #. STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP
 msgctxt "STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP"
@@ -81884,6 +82602,21 @@ msgctxt "STRINGS.UI.UISIDESCREENS.TEMPERATURESWITCHSIDESCREEN.WARMER_BUTTON"
 msgid "Above"
 msgstr "高于"
 
+#. STRINGS.UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.BUTTON_CLOSED
+msgctxt "STRINGS.UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.BUTTON_CLOSED"
+msgid "Tear Closed"
+msgstr "裂口已关闭"
+
+#. STRINGS.UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.BUTTON_OPEN
+msgctxt "STRINGS.UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.BUTTON_OPEN"
+msgid "Enter Tear"
+msgstr "进入裂口"
+
+#. STRINGS.UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.TITLE
+msgctxt "STRINGS.UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.TITLE"
+msgid "Temporal Tear"
+msgstr "时空裂口"
+
 #. STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.ABOVE_BUTTON
 msgctxt "STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.ABOVE_BUTTON"
 msgid "Above"
@@ -82411,7 +83144,7 @@ msgstr "米"
 #. STRINGS.UI.UNITSUFFIXES.DUPLICANTS
 msgctxt "STRINGS.UI.UNITSUFFIXES.DUPLICANTS"
 msgid "Duplicants"
-msgstr "复制人"
+msgstr "名复制人"
 
 #. STRINGS.UI.UNITSUFFIXES.ELECTRICAL.JOULE
 msgctxt "STRINGS.UI.UNITSUFFIXES.ELECTRICAL.JOULE"
@@ -85063,6 +85796,23 @@ msgctxt "STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.NAME"
 msgid "Radioactive Swamp Asteroid"
 msgstr "放射性沼泽小行星"
 
+#. STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
+msgctxt "STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION"
+msgid ""
+"A large-ish world with a radioactive core.\n"
+"\n"
+"<smallcaps>The Radioactive Terra Asteroid is fairly dry and sandy, but does "
+"contain areas of jungle.</smallcaps>"
+msgstr ""
+"一个很大的世界，有着放射性核心。\n"
+"\n"
+"<smallcaps>虽然放射性类地小行星相当地干燥，但也含有丛林地区。</smallcaps>"
+
+#. STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.NAME
+msgctxt "STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.NAME"
+msgid "Radioactive Terra Asteroid"
+msgstr "放射性类地小行星"
+
 #. STRINGS.WORLDS.METALHEAVYLANDINGSITE.DESCRIPTION
 msgctxt "STRINGS.WORLDS.METALHEAVYLANDINGSITE.DESCRIPTION"
 msgid ""
@@ -85594,6 +86344,81 @@ msgctxt "STRINGS.WORLDS.WATERMOONLET.NAME"
 msgid "Water Asteroid"
 msgstr "水域小行星"
 
+#~ msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_TARGET.NAME"
+#~ msgid "Target: None"
+#~ msgstr "目标：无"
+
+#~ msgctxt ""
+#~ "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_TARGET.TOOLTIP"
+#~ msgid "\"Awaiting transmission of coordinates...\""
+#~ msgstr "\"正在等待坐标传输……\""
+
+#~ msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
+#~ msgid "THE BIG MERGE"
+#~ msgstr "大开大合"
+
+#~ msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.SUBTITLE"
+#~ msgid "PUBLIC RELEASE"
+#~ msgstr "公开发布"
+
+#~ msgctxt "STRINGS.CODEX.B2_MEETTHEPILOT.TITLE"
+#~ msgid "The Future of Space Flight"
+#~ msgstr "太空飞行的未来"
+
+#~ msgctxt "STRINGS.CODEX.C3_FIRSTCOLONY.SUBTITLE"
+#~ msgid "ENCRYPTION LEVEL: THREE"
+#~ msgstr "加密级别：三"
+
+#~ msgctxt "STRINGS.CODEX.C3_FIRSTCOLONY.TITLE"
+#~ msgid "Director's Notes"
+#~ msgstr "主管的笔记"
+
+#~ msgctxt "STRINGS.COLONY_ACHIEVEMENTS.CONQUER_CLUSTER.MESSAGE_BODY"
+#~ msgid "Yay we studied all these artifacts and went to all these places."
+#~ msgstr "好耶，我们研究了全部工艺品并去过了所有地方。"
+
+#~ msgctxt "STRINGS.COLONY_ACHIEVEMENTS.CONQUER_CLUSTER.MESSAGE_TITLE"
+#~ msgid "CONQUERED STARMAP"
+#~ msgstr "征服星图"
+
+#~ msgctxt "STRINGS.COLONY_ACHIEVEMENTS.CONQUER_CLUSTER.MESSAGE_TITLE_DLC1"
+#~ msgid "DLC1"
+#~ msgstr "DLC1"
+
+#~ msgctxt "STRINGS.COLONY_ACHIEVEMENTS.CONQUER_CLUSTER.NAME"
+#~ msgid "Conquer Starmap"
+#~ msgstr "征服星图"
+
+#~ msgctxt "STRINGS.COLONY_ACHIEVEMENTS.CONQUER_CLUSTER.VIDEO_TEXT_DLC1.FIRST"
+#~ msgid "DLC1"
+#~ msgstr "DLC1"
+
+#~ msgctxt "STRINGS.COLONY_ACHIEVEMENTS.CONQUER_CLUSTER.VIDEO_TEXT_DLC1.SECOND"
+#~ msgid "DLC1"
+#~ msgstr "DLC1"
+
+#~ msgctxt ""
+#~ "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_BODY_DLC1"
+#~ msgid "DLC1"
+#~ msgstr "DLC1"
+
+#~ msgctxt ""
+#~ "STRINGS.COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_TITLE_DLC1"
+#~ msgid "DLC1"
+#~ msgstr "DLC1"
+
+#~ msgctxt "STRINGS.BUILDING.STATUSITEMS.FABRICATORLACKSHEP.NAME"
+#~ msgid "Waiting For Radbolts"
+#~ msgstr "等待辐射粒子"
+
+#~ msgctxt "STRINGS.CODEX.C01_Evil.SUBTITLE"
+#~ msgid "ENCRYPTION LEVEL: NONE"
+#~ msgstr "加密级别：无"
+
+#~ msgctxt "STRINGS.CODEX.DIVERGENT.SUBTITLE"
+#~ msgid "Domesticatable Critter"
+#~ msgstr "可驯化的动物"
+
 #~ msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASDECORATIVEWINDOW.DESC"
 #~ msgid "A tall, thin window."
 #~ msgstr "一扇高而薄的窗户。"
@@ -85807,10 +86632,6 @@ msgstr "水域小行星"
 #~ msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.DESC"
 #~ msgid "Further increases a Duplicant's construction speeds"
 #~ msgstr "进一步提升复制人的建造速度"
-
-#~ msgctxt "STRINGS.MISC.TAGS.CHARMEDARTIFACT"
-#~ msgid "Charmed Artifact"
-#~ msgstr "迷人的工艺品"
 
 #~ msgctxt "STRINGS.MISC.TAGS.UNIDENTIFIEDSEED"
 #~ msgid "Strange Seed"

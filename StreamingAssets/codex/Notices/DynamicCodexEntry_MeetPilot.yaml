@@ -11,6 +11,9 @@ contentContainers:
           stringKey: STRINGS.CODEX.B2_MEETTHEPILOT.TITLE
           style: Title
       - !CodexText
+          stringKey: STRINGS.CODEX.B2_MEETTHEPILOT.TITLE2
+          style: Title
+      - !CodexText
           stringKey: STRINGS.CODEX.B2_MEETTHEPILOT.SUBTITLE
           style: Subtitle
       - !CodexDividerLine
