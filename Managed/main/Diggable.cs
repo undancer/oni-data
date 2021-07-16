@@ -142,7 +142,7 @@ public class Diggable : Workable
 		int num = Grid.PosToCell(this);
 		int num2 = -1;
 		UpdateColor(isReachable);
-		if (Grid.Element[num].hardness >= 200)
+		if (Grid.Element[num].hardness >= 251)
 		{
 			bool flag = false;
 			foreach (Chore.PreconditionInstance precondition in chore.GetPreconditions())
@@ -155,12 +155,12 @@ public class Diggable : Workable
 			}
 			if (!flag)
 			{
-				chore.AddPrecondition(ChorePreconditions.instance.HasSkillPerk, Db.Get().SkillPerks.CanDigSupersuperhard);
+				chore.AddPrecondition(ChorePreconditions.instance.HasSkillPerk, Db.Get().SkillPerks.CanDigRadioactiveMaterials);
 			}
-			requiredSkillPerk = Db.Get().SkillPerks.CanDigSupersuperhard.Id;
+			requiredSkillPerk = Db.Get().SkillPerks.CanDigRadioactiveMaterials.Id;
 			materialDisplay.sharedMaterial = materials[3];
 		}
-		else if (Grid.Element[num].hardness >= 150)
+		else if (Grid.Element[num].hardness >= 200)
 		{
 			bool flag2 = false;
 			foreach (Chore.PreconditionInstance precondition2 in chore.GetPreconditions())
@@ -173,12 +173,12 @@ public class Diggable : Workable
 			}
 			if (!flag2)
 			{
-				chore.AddPrecondition(ChorePreconditions.instance.HasSkillPerk, Db.Get().SkillPerks.CanDigNearlyImpenetrable);
+				chore.AddPrecondition(ChorePreconditions.instance.HasSkillPerk, Db.Get().SkillPerks.CanDigSuperDuperHard);
 			}
-			requiredSkillPerk = Db.Get().SkillPerks.CanDigNearlyImpenetrable.Id;
-			materialDisplay.sharedMaterial = materials[2];
+			requiredSkillPerk = Db.Get().SkillPerks.CanDigSuperDuperHard.Id;
+			materialDisplay.sharedMaterial = materials[3];
 		}
-		else if (Grid.Element[num].hardness >= 50)
+		else if (Grid.Element[num].hardness >= 150)
 		{
 			bool flag3 = false;
 			foreach (Chore.PreconditionInstance precondition3 in chore.GetPreconditions())
@@ -191,6 +191,24 @@ public class Diggable : Workable
 			}
 			if (!flag3)
 			{
+				chore.AddPrecondition(ChorePreconditions.instance.HasSkillPerk, Db.Get().SkillPerks.CanDigNearlyImpenetrable);
+			}
+			requiredSkillPerk = Db.Get().SkillPerks.CanDigNearlyImpenetrable.Id;
+			materialDisplay.sharedMaterial = materials[2];
+		}
+		else if (Grid.Element[num].hardness >= 50)
+		{
+			bool flag4 = false;
+			foreach (Chore.PreconditionInstance precondition4 in chore.GetPreconditions())
+			{
+				if (precondition4.id == ChorePreconditions.instance.HasSkillPerk.id)
+				{
+					flag4 = true;
+					break;
+				}
+			}
+			if (!flag4)
+			{
 				chore.AddPrecondition(ChorePreconditions.instance.HasSkillPerk, Db.Get().SkillPerks.CanDigVeryFirm);
 			}
 			requiredSkillPerk = Db.Get().SkillPerks.CanDigVeryFirm.Id;
@@ -202,13 +220,13 @@ public class Diggable : Workable
 			chore.GetPreconditions().Remove(chore.GetPreconditions().Find((Chore.PreconditionInstance o) => o.id == ChorePreconditions.instance.HasSkillPerk.id));
 		}
 		UpdateStatusItem();
-		bool flag4 = false;
+		bool flag5 = false;
 		if (!Grid.Solid[num])
 		{
 			num2 = GetUnstableCellAbove(num);
 			if (num2 == -1)
 			{
-				flag4 = true;
+				flag5 = true;
 			}
 			else
 			{
@@ -217,9 +235,9 @@ public class Diggable : Workable
 		}
 		else if (Grid.Foundation[num])
 		{
-			flag4 = true;
+			flag5 = true;
 		}
-		if (flag4)
+		if (flag5)
 		{
 			isDigComplete = true;
 			if (chore == null || !chore.InProgress())

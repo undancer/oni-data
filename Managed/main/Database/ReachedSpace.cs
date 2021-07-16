@@ -1,10 +1,8 @@
-using System.IO;
-using KSerialization;
 using STRINGS;
 
 namespace Database
 {
-	public class ReachedSpace : VictoryColonyAchievementRequirement
+	public class ReachedSpace : VictoryColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		private SpaceDestinationType destinationType;
 
@@ -56,16 +54,7 @@ namespace Database
 			return false;
 		}
 
-		public override void Serialize(BinaryWriter writer)
-		{
-			writer.Write((byte)((destinationType == null) ? 1u : 0u));
-			if (destinationType != null)
-			{
-				writer.WriteKleiString(destinationType.Id);
-			}
-		}
-
-		public override void Deserialize(IReader reader)
+		public void Deserialize(IReader reader)
 		{
 			if (reader.ReadByte() == 0)
 			{

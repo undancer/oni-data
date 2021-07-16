@@ -192,6 +192,11 @@ public class StarmapScreen : KModalScreen
 
 	private BreakdownListRow rangeRowTotal;
 
+	public override float GetSortKey()
+	{
+		return 20f;
+	}
+
 	public static void DestroyInstance()
 	{
 		Instance = null;
@@ -535,18 +540,9 @@ public class StarmapScreen : KModalScreen
 		rectTransform.SetLocalPosition(new Vector3(rectTransform.localPosition.x, rectTransform.rect.height - Map.rect.height, rectTransform.localPosition.z));
 	}
 
-	public override float GetSortKey()
-	{
-		return 100f;
-	}
-
 	public override void OnKeyDown(KButtonEvent e)
 	{
-		if (!e.Consumed && (e.TryConsume(Action.MouseRight) || e.TryConsume(Action.Escape)))
-		{
-			ManagementMenu.Instance.CloseAll();
-		}
-		else if (CheckBlockedInput())
+		if (CheckBlockedInput())
 		{
 			if (!e.Consumed)
 			{
@@ -839,27 +835,27 @@ public class StarmapScreen : KModalScreen
 
 	private void FillChecklist(LaunchConditionManager launchConditionManager)
 	{
-		foreach (RocketLaunchCondition launchCondition in launchConditionManager.GetLaunchConditionList())
+		foreach (ProcessCondition launchCondition in launchConditionManager.GetLaunchConditionList())
 		{
 			BreakdownListRow breakdownListRow = rocketDetailsChecklist.AddRow();
-			string launchStatusMessage = launchCondition.GetLaunchStatusMessage(ready: true);
-			RocketLaunchCondition.LaunchStatus launchStatus = launchCondition.EvaluateLaunchCondition();
-			BreakdownListRow.Status status = BreakdownListRow.Status.Green;
-			switch (launchStatus)
+			string statusMessage = launchCondition.GetStatusMessage(ProcessCondition.Status.Ready);
+			ProcessCondition.Status status = launchCondition.EvaluateCondition();
+			BreakdownListRow.Status status2 = BreakdownListRow.Status.Green;
+			switch (status)
 			{
-			case RocketLaunchCondition.LaunchStatus.Failure:
-				status = BreakdownListRow.Status.Red;
+			case ProcessCondition.Status.Failure:
+				status2 = BreakdownListRow.Status.Red;
 				break;
-			case RocketLaunchCondition.LaunchStatus.Warning:
-				status = BreakdownListRow.Status.Yellow;
+			case ProcessCondition.Status.Warning:
+				status2 = BreakdownListRow.Status.Yellow;
 				break;
 			}
-			breakdownListRow.ShowCheckmarkData(launchStatusMessage, "", status);
-			if (launchStatus != 0)
+			breakdownListRow.ShowCheckmarkData(statusMessage, "", status2);
+			if (status != ProcessCondition.Status.Ready)
 			{
 				breakdownListRow.SetHighlighted(highlighted: true);
 			}
-			breakdownListRow.AddTooltip(launchCondition.GetLaunchStatusTooltip(launchStatus == RocketLaunchCondition.LaunchStatus.Failure));
+			breakdownListRow.AddTooltip(launchCondition.GetStatusTooltip(status));
 		}
 	}
 
@@ -883,7 +879,7 @@ public class StarmapScreen : KModalScreen
 		}
 		if (rangeRowTotal != null && selectedDestination != null && currentCommandModule != null)
 		{
-			rangeRowTotal.SetStatusColor((!currentCommandModule.reachable.CanReachDestination(selectedDestination)) ? BreakdownListRow.Status.Red : BreakdownListRow.Status.Green);
+			rangeRowTotal.SetStatusColor((!currentCommandModule.conditions.reachable.CanReachSpacecraftDestination(selectedDestination)) ? BreakdownListRow.Status.Red : BreakdownListRow.Status.Green);
 		}
 		UpdateDestinationStates();
 		Refresh();
@@ -899,7 +895,7 @@ public class StarmapScreen : KModalScreen
 			MultiToggle component2 = listRocketRow.Value.GetReference<RectTransform>("LaunchRocketButton").GetComponent<MultiToggle>();
 			bool flag = key.state == Spacecraft.MissionState.Grounded;
 			SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(launchConditions);
-			bool flag2 = spacecraftDestination != null && component.reachable.CanReachDestination(spacecraftDestination);
+			bool flag2 = spacecraftDestination != null && component.conditions.reachable.CanReachSpacecraftDestination(spacecraftDestination);
 			bool flag3 = launchConditions.CheckReadyToLaunch();
 			component2.ChangeState((!(flag && flag2 && flag3)) ? 1 : 0);
 		}
@@ -1052,15 +1048,15 @@ public class StarmapScreen : KModalScreen
 		Tag engineFuelTag = currentCommandModule.rocketStats.GetEngineFuelTag();
 		foreach (GameObject item in AttachableBuilding.GetAttachedNetwork(currentCommandModule.GetComponent<AttachableBuilding>()))
 		{
-			FuelTank component = item.GetComponent<FuelTank>();
-			if (component != null)
+			IFuelTank component = item.GetComponent<IFuelTank>();
+			if (!component.IsNullOrDestroyed())
 			{
 				BreakdownListRow breakdownListRow = rocketDetailsFuel.AddRow();
 				if (engineFuelTag.IsValid)
 				{
 					Element element = ElementLoader.GetElement(engineFuelTag);
 					Debug.Assert(element != null, "fuel_element");
-					breakdownListRow.ShowData(item.gameObject.GetProperName() + " (" + element.name + ")", GameUtil.GetFormattedMass(component.GetAmountAvailable(engineFuelTag), GameUtil.TimeSlice.None, GameUtil.MetricMassFormat.Tonne));
+					breakdownListRow.ShowData(item.gameObject.GetProperName() + " (" + element.name + ")", GameUtil.GetFormattedMass(component.Storage.GetAmountAvailable(engineFuelTag), GameUtil.TimeSlice.None, GameUtil.MetricMassFormat.Tonne));
 				}
 				else
 				{

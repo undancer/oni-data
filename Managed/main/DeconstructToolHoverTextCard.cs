@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using STRINGS;
+using UnityEngine;
 
 public class DeconstructToolHoverTextCard : HoverTextConfiguration
 {
@@ -10,6 +11,12 @@ public class DeconstructToolHoverTextCard : HoverTextConfiguration
 		string lastEnabledFilter = ToolMenu.Instance.toolParameterMenu.GetLastEnabledFilter();
 		HoverTextScreen instance = HoverTextScreen.Instance;
 		HoverTextDrawer hoverTextDrawer = instance.BeginDrawing();
+		int num = Grid.PosToCell(Camera.main.ScreenToWorldPoint(KInputManager.GetMousePos()));
+		if (!Grid.IsValidCell(num) || Grid.WorldIdx[num] != ClusterManager.Instance.activeWorldId)
+		{
+			hoverTextDrawer.EndDrawing();
+			return;
+		}
 		hoverTextDrawer.BeginShadowBar();
 		DrawTitle(instance, hoverTextDrawer);
 		DrawInstructions(HoverTextScreen.Instance, hoverTextDrawer);

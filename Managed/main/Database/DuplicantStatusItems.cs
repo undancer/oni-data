@@ -88,6 +88,8 @@ namespace Database
 
 		public StatusItem SleepingInterruptedByNoise;
 
+		public StatusItem SleepingInterruptedByFearOfDark;
+
 		public StatusItem SleepingPeacefully;
 
 		public StatusItem SleepingBadly;
@@ -191,6 +193,16 @@ namespace Database
 		public StatusItem BalloonArtistPlanning;
 
 		public StatusItem BalloonArtistHandingOut;
+
+		public StatusItem Partying;
+
+		public StatusItem GasLiquidIrritation;
+
+		public StatusItem ExpellingRads;
+
+		public StatusItem AnalyzingGenes;
+
+		public StatusItem AnalyzingArtifact;
 
 		private const int NONE_OVERLAY = 0;
 
@@ -310,15 +322,16 @@ namespace Database
 					string stateChangeNoiseSource = ((SleepChore.StatesInstance)data).stateChangeNoiseSource;
 					if (!string.IsNullOrEmpty(stateChangeNoiseSource))
 					{
-						string text3 = DUPLICANTS.STATUSITEMS.SLEEPING.TOOLTIP;
-						text3 = text3.Replace("{Disturber}", stateChangeNoiseSource);
-						str += text3;
+						string text7 = DUPLICANTS.STATUSITEMS.SLEEPING.TOOLTIP;
+						text7 = text7.Replace("{Disturber}", stateChangeNoiseSource);
+						str += text7;
 					}
 				}
 				return str;
 			};
 			SleepingInterruptedByNoise = CreateStatusItem("SleepingInterruptedByNoise", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			SleepingInterruptedByLight = CreateStatusItem("SleepingInterruptedByLight", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			SleepingInterruptedByFearOfDark = CreateStatusItem("SleepingInterruptedByFearOfDark", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			Eating = CreateStatusItem("Eating", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			Eating.resolveStringCallback = resolveStringCallback;
 			Digging = CreateStatusItem("Digging", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
@@ -403,14 +416,14 @@ namespace Database
 				float dtu_s2 = ((ExternalTemperatureMonitor.Instance)data).temperatureTransferer.average_kilowatts_exchanged.GetWeightedAverage * 1000f;
 				str = str.Replace("{currentTransferWattage}", GameUtil.GetFormattedHeatEnergyRate(dtu_s2));
 				AttributeInstance attributeInstance3 = ((ExternalTemperatureMonitor.Instance)data).attributes.Get("ThermalConductivityBarrier");
-				string text2 = "<b>" + attributeInstance3.GetFormattedValue() + "</b>";
+				string text6 = "<b>" + attributeInstance3.GetFormattedValue() + "</b>";
 				for (int j = 0; j != attributeInstance3.Modifiers.Count; j++)
 				{
 					AttributeModifier attributeModifier2 = attributeInstance3.Modifiers[j];
-					text2 += "\n";
-					text2 = text2 + "    • " + attributeModifier2.GetDescription() + " <b>" + attributeModifier2.GetFormattedString(attributeInstance3.gameObject) + "</b>";
+					text6 += "\n";
+					text6 = text6 + "    • " + attributeModifier2.GetDescription() + " <b>" + attributeModifier2.GetFormattedString() + "</b>";
 				}
-				str = str.Replace("{conductivityBarrier}", text2);
+				str = str.Replace("{conductivityBarrier}", text6);
 				return str;
 			};
 			Hot = CreateStatusItem("Hot", "DUPLICANTS", "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
@@ -420,14 +433,14 @@ namespace Database
 				float dtu_s = ((ExternalTemperatureMonitor.Instance)data).temperatureTransferer.average_kilowatts_exchanged.GetWeightedAverage * 1000f;
 				str = str.Replace("{currentTransferWattage}", GameUtil.GetFormattedHeatEnergyRate(dtu_s));
 				AttributeInstance attributeInstance2 = ((ExternalTemperatureMonitor.Instance)data).attributes.Get("ThermalConductivityBarrier");
-				string text = "<b>" + attributeInstance2.GetFormattedValue() + "</b>";
+				string text5 = "<b>" + attributeInstance2.GetFormattedValue() + "</b>";
 				for (int i = 0; i != attributeInstance2.Modifiers.Count; i++)
 				{
 					AttributeModifier attributeModifier = attributeInstance2.Modifiers[i];
-					text += "\n";
-					text = text + "    • " + attributeModifier.GetDescription() + " <b>" + attributeModifier.GetFormattedString(attributeInstance2.gameObject) + "</b>";
+					text5 += "\n";
+					text5 = text5 + "    • " + attributeModifier.GetDescription() + " <b>" + attributeModifier.GetFormattedString() + "</b>";
 				}
-				str = str.Replace("{conductivityBarrier}", text);
+				str = str.Replace("{conductivityBarrier}", text5);
 				return str;
 			};
 			BodyRegulatingHeating = CreateStatusItem("BodyRegulatingHeating", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
@@ -454,9 +467,9 @@ namespace Database
 			Incapacitated.AddNotification();
 			Incapacitated.resolveStringCallback = delegate(string str, object data)
 			{
-				IncapacitationMonitor.Instance instance = (IncapacitationMonitor.Instance)data;
-				float bleedLifeTime = instance.GetBleedLifeTime(instance);
-				str = str.Replace("{CauseOfIncapacitation}", instance.GetCauseOfIncapacitation().Name);
+				IncapacitationMonitor.Instance instance2 = (IncapacitationMonitor.Instance)data;
+				float bleedLifeTime = instance2.GetBleedLifeTime(instance2);
+				str = str.Replace("{CauseOfIncapacitation}", instance2.GetCauseOfIncapacitation().Name);
 				return str.Replace("{TimeUntilDeath}", GameUtil.GetFormattedTime(bleedLifeTime));
 			};
 			Relocating = CreateStatusItem("Relocating", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
@@ -535,6 +548,29 @@ namespace Database
 			BeingProductive = CreateStatusItem("BeingProductive", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			BalloonArtistPlanning = CreateStatusItem("BalloonArtistPlanning", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			BalloonArtistHandingOut = CreateStatusItem("BalloonArtistHandingOut", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			Partying = CreateStatusItem("Partying", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Good, allow_multiples: false, OverlayModes.None.ID);
+			GasLiquidIrritation = CreateStatusItem("GasLiquidIrritated", "DUPLICANTS", "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			GasLiquidIrritation.resolveStringCallback = (string str, object data) => ((GasLiquidExposureMonitor.Instance)data).IsMajorIrritation() ? DUPLICANTS.STATUSITEMS.GASLIQUIDEXPOSURE.NAME_MAJOR : DUPLICANTS.STATUSITEMS.GASLIQUIDEXPOSURE.NAME_MINOR;
+			GasLiquidIrritation.resolveTooltipCallback = delegate(string str, object data)
+			{
+				GasLiquidExposureMonitor.Instance instance = (GasLiquidExposureMonitor.Instance)data;
+				string text = DUPLICANTS.STATUSITEMS.GASLIQUIDEXPOSURE.TOOLTIP;
+				string text2 = "";
+				Effect appliedEffect = instance.sm.GetAppliedEffect(instance);
+				if (appliedEffect != null)
+				{
+					text2 = Effect.CreateTooltip(appliedEffect, showDuration: false);
+				}
+				string text3 = DUPLICANTS.STATUSITEMS.GASLIQUIDEXPOSURE.TOOLTIP_EXPOSED.Replace("{element}", instance.CurrentlyExposedToElement().name);
+				float currentExposure = instance.sm.GetCurrentExposure(instance);
+				text3 = ((currentExposure < 0f) ? text3.Replace("{rate}", DUPLICANTS.STATUSITEMS.GASLIQUIDEXPOSURE.TOOLTIP_RATE_DECREASE) : ((!(currentExposure > 0f)) ? text3.Replace("{rate}", DUPLICANTS.STATUSITEMS.GASLIQUIDEXPOSURE.TOOLTIP_RATE_STAYS) : text3.Replace("{rate}", DUPLICANTS.STATUSITEMS.GASLIQUIDEXPOSURE.TOOLTIP_RATE_INCREASE)));
+				float seconds = (instance.exposure - instance.minorIrritationThreshold) / Math.Abs(instance.exposureRate);
+				string text4 = DUPLICANTS.STATUSITEMS.GASLIQUIDEXPOSURE.TOOLTIP_EXPOSURE_LEVEL.Replace("{time}", GameUtil.GetFormattedTime(seconds));
+				return text + "\n\n" + text2 + "\n\n" + text3 + "\n\n" + text4;
+			};
+			ExpellingRads = CreateStatusItem("ExpellingRads", "DUPLICANTS", "", StatusItem.IconType.Exclamation, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			AnalyzingGenes = CreateStatusItem("AnalyzingGenes", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Good, allow_multiples: false, OverlayModes.None.ID);
+			AnalyzingArtifact = CreateStatusItem("AnalyzingArtifact", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Good, allow_multiples: false, OverlayModes.None.ID);
 		}
 	}
 }

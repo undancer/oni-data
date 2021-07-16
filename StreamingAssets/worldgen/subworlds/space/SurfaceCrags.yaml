@@ -14,9 +14,6 @@ biomes:
       - Mole
     #overrides:
     #  massMultiplier: 50
-pointsOfInterest:
-  gravitas:
-    - poi_gravitas 
 tags:
   - IgnoreCaveOverride
   - ErodePointToBorderInv

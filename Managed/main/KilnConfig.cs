@@ -39,7 +39,6 @@ public class KilnConfig : IBuildingConfig
 		go.AddOrGet<DropAllWorkable>();
 		go.AddOrGet<BuildingComplete>().isManuallyOperated = false;
 		ComplexFabricator complexFabricator = go.AddOrGet<ComplexFabricator>();
-		complexFabricator.resultState = ComplexFabricator.ResultState.Heated;
 		complexFabricator.heatedTemperature = 353.15f;
 		complexFabricator.duplicantOperated = false;
 		complexFabricator.sideScreenStyle = ComplexFabricatorSideScreen.StyleSetting.ListQueueHybrid;
@@ -64,7 +63,7 @@ public class KilnConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array2 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement(tag, num)
+			new ComplexRecipe.RecipeElement(tag, num, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
 		string obsolete_id = ComplexRecipeManager.MakeObsoleteRecipeID("Kiln", tag);
 		string text = ComplexRecipeManager.MakeRecipeID("Kiln", array, array2);
@@ -86,7 +85,7 @@ public class KilnConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array4 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement(tag2, num)
+			new ComplexRecipe.RecipeElement(tag2, num, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
 		string obsolete_id2 = ComplexRecipeManager.MakeObsoleteRecipeID("Kiln", tag2);
 		string text2 = ComplexRecipeManager.MakeRecipeID("Kiln", array3, array4);

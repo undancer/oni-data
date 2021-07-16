@@ -5,6 +5,7 @@ density:
   max: 15
 avoidRadius: 20.0
 minChildCount: 4
+extraBiomeChildren: 1
 sampleBehaviour: PoissonDisk
 biomes:
   - name: biomes/Ocean/Basic
@@ -30,12 +31,9 @@ features:
 tags:
   - IgnoreCaveOverride
   - River
-pointsOfInterest:
-  geysers_a:
-    - poi_ocean_geyser_saltwater
-  ruins_a:
-    - poi_ladder_tunnel
-    - poi_dining_room
-featureTemplates:
-  # feature_geyser_generic: 2
+subworldTemplateRules:
+  - names:
+      - poi/poi_ladder_tunnel
+      - poi/poi_dining_room
+    listRule: TryOne
 zoneType: Ocean

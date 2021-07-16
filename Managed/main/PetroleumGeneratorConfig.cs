@@ -40,6 +40,7 @@ public class PetroleumGeneratorConfig : IBuildingConfig
 		obj.ViewMode = OverlayModes.Power.ID;
 		obj.AudioCategory = "Metal";
 		obj.UtilityInputOffset = new CellOffset(-1, 0);
+		obj.RequiresPowerOutput = true;
 		obj.PowerOutputOffset = new CellOffset(1, 0);
 		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
 		obj.InputConduitType = ConduitType.Liquid;

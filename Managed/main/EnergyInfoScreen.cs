@@ -26,9 +26,9 @@ public class EnergyInfoScreen : TargetScreen
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		if (!(target.GetComponent<Generator>() != null) && !(target.GetComponent<Wire>() != null) && !(target.GetComponent<Battery>() != null))
+		if (target.GetComponent<ICircuitConnected>() == null)
 		{
-			return target.GetComponent<EnergyConsumer>() != null;
+			return target.GetComponent<Wire>() != null;
 		}
 		return true;
 	}
@@ -92,23 +92,10 @@ public class EnergyInfoScreen : TargetScreen
 		}
 		CircuitManager circuitManager = Game.Instance.circuitManager;
 		ushort num = ushort.MaxValue;
-		EnergyConsumer component = selectedTarget.GetComponent<EnergyConsumer>();
+		ICircuitConnected component = selectedTarget.GetComponent<ICircuitConnected>();
 		if (component != null)
 		{
-			num = component.CircuitID;
-		}
-		else
-		{
-			Generator component2 = selectedTarget.GetComponent<Generator>();
-			if (component2 != null)
-			{
-				num = component2.CircuitID;
-			}
-		}
-		if (num == ushort.MaxValue)
-		{
-			int cell = Grid.PosToCell(selectedTarget.transform.GetPosition());
-			num = circuitManager.GetCircuitID(cell);
+			num = circuitManager.GetCircuitID(component);
 		}
 		if (num != ushort.MaxValue)
 		{
@@ -152,7 +139,7 @@ public class EnergyInfoScreen : TargetScreen
 					if (item != null && item.GetComponent<Battery>() == null)
 					{
 						gameObject = AddOrGetLabel(generatorsLabels, generatorsPanel, item.gameObject.GetInstanceID().ToString());
-						if (item.GetComponent<Operational>().IsActive)
+						if (item.IsProducingPower())
 						{
 							gameObject.GetComponent<LocText>().text = $"{item.GetComponent<KSelectable>().entityName}: {GameUtil.GetFormattedWattage(item.WattageRating)}";
 						}

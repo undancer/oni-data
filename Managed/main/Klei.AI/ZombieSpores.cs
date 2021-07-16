@@ -6,8 +6,8 @@ namespace Klei.AI
 	{
 		public const string ID = "ZombieSpores";
 
-		public ZombieSpores()
-			: base("ZombieSpores", 50, new RangeInfo(168.15f, 258.15f, 513.15f, 563.15f), new RangeInfo(10f, 1200f, 1200f, 10f), new RangeInfo(0f, 0f, 1000f, 1000f), RangeInfo.Idempotent())
+		public ZombieSpores(bool statsOnly)
+			: base("ZombieSpores", 50, new RangeInfo(168.15f, 258.15f, 513.15f, 563.15f), new RangeInfo(10f, 1200f, 1200f, 10f), new RangeInfo(0f, 0f, 1000f, 1000f), RangeInfo.Idempotent(), statsOnly)
 		{
 		}
 

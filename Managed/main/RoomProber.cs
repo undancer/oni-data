@@ -116,6 +116,12 @@ public class RoomProber : ISim1000ms
 		GameScenePartitioner.Instance.AddGlobalLayerListener(GameScenePartitioner.Instance.objectLayers[1], OnBuildingsChanged);
 	}
 
+	public void Refresh()
+	{
+		ProcessSolidChanges();
+		RefreshRooms();
+	}
+
 	private void SolidChangedEvent(int cell)
 	{
 		SolidChangedEvent(cell, ignoreDoors: true);

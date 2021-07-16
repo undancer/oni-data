@@ -106,11 +106,9 @@ public class UniformPoissonDiskSampler
 		bool flag = false;
 		while (!flag)
 		{
-			float num = myRandom.RandomValue();
-			float num2 = settings.TopLeft.x + settings.Dimensions.x * num;
-			num = myRandom.RandomValue();
-			float num3 = settings.TopLeft.y + settings.Dimensions.y * num;
-			Vector2 vector = new Vector2(num2, num3);
+			float d = Mathf.Min(settings.Dimensions.x, settings.Dimensions.y) / 2f;
+			Vector2 a = new Vector2(myRandom.RandomValue(), myRandom.RandomValue());
+			Vector2 vector = settings.Center + a * d;
 			if (!settings.RejectionSqDistance.HasValue || !(Vector2.SqrMagnitude(settings.Center - vector) > settings.RejectionSqDistance))
 			{
 				flag = true;

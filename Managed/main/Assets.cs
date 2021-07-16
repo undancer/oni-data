@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using KMod;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -133,19 +134,17 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 
 	private static Dictionary<Tag, List<KPrefabID>> PrefabsByAdditionalTags = new Dictionary<Tag, List<KPrefabID>>();
 
-	private static Dictionary<HashedString, KAnimFile> AnimTable = new Dictionary<HashedString, KAnimFile>();
-
 	public List<KAnimFile> AnimAssets;
 
 	public static List<KAnimFile> Anims;
+
+	private static Dictionary<HashedString, KAnimFile> AnimTable = new Dictionary<HashedString, KAnimFile>();
 
 	public Font DebugFontAsset;
 
 	public static Font DebugFont;
 
 	public SubstanceTable substanceTable;
-
-	public static SubstanceTable SubstanceTable;
 
 	[SerializeField]
 	public TextAsset elementAudio;
@@ -199,8 +198,7 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 		Textures = TextureAssets.Where((Texture2D x) => x != null).ToList();
 		TextureAtlases = TextureAtlasAssets.Where((TextureAtlas x) => x != null).ToList();
 		BlockTileDecorInfos = BlockTileDecorInfoAssets.Where((BlockTileDecorInfo x) => x != null).ToList();
-		Anims = AnimAssets.Where((KAnimFile x) => x != null).ToList();
-		Anims.AddRange(ModLoadedKAnims);
+		LoadAnims();
 		UIPrefabs = UIPrefabAssets;
 		DebugFont = DebugFontAsset;
 		AsyncLoadManager<IGlobalAsyncLoader>.Run();
@@ -214,15 +212,6 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 				AddPrefab(prefabAsset);
 			}
 		}
-		AnimTable.Clear();
-		foreach (KAnimFile anim in Anims)
-		{
-			if (anim != null)
-			{
-				HashedString key2 = anim.name;
-				AnimTable[key2] = anim;
-			}
-		}
 		CreatePrefabs();
 	}
 
@@ -230,6 +219,7 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 	{
 		Db.Get();
 		LegacyModMain.Load();
+		Db.Get().Techs.PostProcess();
 	}
 
 	protected override void OnSpawn()
@@ -260,12 +250,61 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 		return CountableTags.Contains(tag);
 	}
 
+	private void LoadAnims()
+	{
+		KAnimBatchManager.DestroyInstance();
+		KAnimGroupFile.DestroyInstance();
+		KGlobalAnimParser.DestroyInstance();
+		KAnimBatchManager.CreateInstance();
+		KGlobalAnimParser.CreateInstance();
+		KAnimGroupFile.LoadGroupResourceFile();
+		if (BundledAssetsLoader.instance.Expansion1Assets != null)
+		{
+			AnimAssets.AddRange(BundledAssetsLoader.instance.Expansion1Assets.AnimAssets);
+		}
+		Anims = AnimAssets.Where((KAnimFile x) => x != null).ToList();
+		Anims.AddRange(ModLoadedKAnims);
+		AnimTable.Clear();
+		foreach (KAnimFile anim in Anims)
+		{
+			if (anim != null)
+			{
+				HashedString key = anim.name;
+				AnimTable[key] = anim;
+			}
+		}
+		KAnimGroupFile.MapNamesToAnimFiles(AnimTable);
+		Global.Instance.modManager.Load(Content.Animation);
+		Anims.AddRange(ModLoadedKAnims);
+		foreach (KAnimFile modLoadedKAnim in ModLoadedKAnims)
+		{
+			if (modLoadedKAnim != null)
+			{
+				HashedString key2 = modLoadedKAnim.name;
+				AnimTable[key2] = modLoadedKAnim;
+			}
+		}
+		Debug.Assert(AnimTable.Count > 0, "Anim Assets not yet loaded");
+		KAnimGroupFile.LoadAll();
+		KAnimBatchManager.Instance().CompleteInit();
+	}
+
 	private void SubstanceListHookup()
 	{
+		Dictionary<string, SubstanceTable> dictionary = new Dictionary<string, SubstanceTable>
+		{
+			{
+				"",
+				substanceTable
+			}
+		};
+		if (BundledAssetsLoader.instance.Expansion1Assets != null)
+		{
+			dictionary["EXPANSION1_ID"] = BundledAssetsLoader.instance.Expansion1Assets.SubstanceTable;
+		}
 		Hashtable substanceList = new Hashtable();
 		ElementsAudio.Instance.LoadData(AsyncLoadManager<IGlobalAsyncLoader>.AsyncLoader<ElementAudioFileLoader>.Get().entries);
-		ElementLoader.Load(ref substanceList, substanceTable);
-		SubstanceTable = substanceTable;
+		ElementLoader.Load(ref substanceList, dictionary);
 	}
 
 	public static string GetSimpleSoundEventName(string path)
@@ -369,7 +408,8 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 		prefab.UpdateSaveLoadTag();
 		if (PrefabsByTag.ContainsKey(prefab.PrefabTag))
 		{
-			Debug.LogWarning("Tried loading prefab with duplicate tag, ignoring: " + prefab.PrefabTag);
+			Tag prefabTag = prefab.PrefabTag;
+			Debug.LogWarning("Tried loading prefab with duplicate tag, ignoring: " + prefabTag.ToString());
 			return;
 		}
 		PrefabsByTag[prefab.PrefabTag] = prefab;
@@ -413,7 +453,8 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 		GameObject gameObject = TryGetPrefab(tag);
 		if (gameObject == null)
 		{
-			Debug.LogWarning("Missing prefab: " + tag);
+			Tag tag2 = tag;
+			Debug.LogWarning("Missing prefab: " + tag2.ToString());
 		}
 		return gameObject;
 	}
@@ -453,6 +494,13 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 			}
 		}
 		return list;
+	}
+
+	public static GameObject GetPrefabWithComponent<Type>()
+	{
+		List<GameObject> prefabsWithComponent = GetPrefabsWithComponent<Type>();
+		Debug.Assert(prefabsWithComponent.Count > 0, "There are no prefabs of type " + typeof(Type).Name);
+		return prefabsWithComponent[0];
 	}
 
 	public static List<Tag> GetPrefabTagsWithComponent<Type>()
@@ -526,6 +574,18 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 			Debug.LogWarning("Missing Anim: [" + name.ToString() + "]. You may have to run Collect Anim on the Assets prefab");
 		}
 		return value;
+	}
+
+	public static bool TryGetAnim(HashedString name, out KAnimFile anim)
+	{
+		if (!name.IsValid)
+		{
+			Debug.LogWarning("Invalid hash name");
+			anim = null;
+			return false;
+		}
+		AnimTable.TryGetValue(name, out anim);
+		return anim != null;
 	}
 
 	public void OnAfterDeserialize()

@@ -545,7 +545,7 @@ public static class DebugExtension
 		MethodInfo[] methods = obj.GetType().GetMethods();
 		for (int i = 0; i < methods.Length; i++)
 		{
-			text = ((!includeInfo) ? (text + methods[i].Name + "\n") : string.Concat(text, methods[i], "\n"));
+			text = ((!includeInfo) ? (text + methods[i].Name + "\n") : (text + methods[i]?.ToString() + "\n"));
 		}
 		return text;
 	}
@@ -556,7 +556,7 @@ public static class DebugExtension
 		MethodInfo[] methods = type.GetMethods();
 		for (int i = 0; i < methods.Length; i++)
 		{
-			text = ((!includeInfo) ? (text + methods[i].Name + "\n") : string.Concat(text, methods[i], "\n"));
+			text = ((!includeInfo) ? (text + methods[i].Name + "\n") : (text + methods[i]?.ToString() + "\n"));
 		}
 		return text;
 	}

@@ -40,7 +40,7 @@ public class PrickleGrass : StateMachineComponent<PrickleGrass.StatesInstance>
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = grow;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			dead.ToggleStatusItem(CREATURES.STATUSITEMS.DEAD.NAME, CREATURES.STATUSITEMS.DEAD.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, default(HashedString), 129022, null, null, Db.Get().StatusItemCategories.Main).ToggleTag(GameTags.PreventEmittingDisease).Enter(delegate(StatesInstance smi)
 			{
 				GameUtil.KInstantiate(Assets.GetPrefab(EffectConfigs.PlantDeathId), smi.master.transform.GetPosition(), Grid.SceneLayer.FXFront).SetActive(value: true);

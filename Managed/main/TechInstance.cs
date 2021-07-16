@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class TechInstance
 {
 	public struct SaveData
@@ -33,6 +35,15 @@ public class TechInstance
 		{
 			complete = true;
 		}
+	}
+
+	public float PercentageCompleteResearchType(string type)
+	{
+		if (!tech.RequiresResearchType(type))
+		{
+			return 1f;
+		}
+		return Mathf.Clamp01(progressInventory.PointsByTypeID[type] / tech.costsByResearchTypeID[type]);
 	}
 
 	public SaveData Save()

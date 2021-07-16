@@ -40,8 +40,8 @@ public class EspressoMachineWorkable : Workable, IWorkerPrioritizable
 	protected override void OnCompleteWork(Worker worker)
 	{
 		Storage component = GetComponent<Storage>();
-		component.ConsumeAndGetDisease(GameTags.Water, EspressoMachine.WATER_MASS_PER_USE, out var disease_info, out var aggregate_temperature);
-		component.ConsumeAndGetDisease(EspressoMachine.INGREDIENT_TAG, EspressoMachine.INGREDIENT_MASS_PER_USE, out var disease_info2, out aggregate_temperature);
+		component.ConsumeAndGetDisease(GameTags.Water, EspressoMachine.WATER_MASS_PER_USE, out var amount_consumed, out var disease_info, out var aggregate_temperature);
+		component.ConsumeAndGetDisease(EspressoMachine.INGREDIENT_TAG, EspressoMachine.INGREDIENT_MASS_PER_USE, out amount_consumed, out var disease_info2, out aggregate_temperature);
 		GermExposureMonitor.Instance sMI = worker.GetSMI<GermExposureMonitor.Instance>();
 		if (sMI != null)
 		{

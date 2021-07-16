@@ -32,6 +32,14 @@ public class IncapacitationMonitor : GameStateMachine<IncapacitationMonitor, Inc
 		public Death GetCauseOfIncapacitation()
 		{
 			KPrefabID component = GetComponent<KPrefabID>();
+			if (component.HasTag(GameTags.HitByHighEnergyParticle))
+			{
+				return Db.Get().Deaths.HitByHighEnergyParticle;
+			}
+			if (component.HasTag(GameTags.RadiationSicknessIncapacitation))
+			{
+				return Db.Get().Deaths.Radiation;
+			}
 			if (component.HasTag(GameTags.CaloriesDepleted))
 			{
 				return Db.Get().Deaths.Starvation;
@@ -63,11 +71,13 @@ public class IncapacitationMonitor : GameStateMachine<IncapacitationMonitor, Inc
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = healthy;
-		base.serializable = true;
-		healthy.TagTransition(GameTags.CaloriesDepleted, incapacitated).TagTransition(GameTags.HitPointsDepleted, incapacitated).Update(delegate(Instance smi, float dt)
-		{
-			smi.RecoverStamina(dt, smi);
-		});
+		base.serializable = SerializeType.Both_DEPRECATED;
+		healthy.TagTransition(GameTags.CaloriesDepleted, incapacitated).TagTransition(GameTags.HitPointsDepleted, incapacitated).TagTransition(GameTags.HitByHighEnergyParticle, incapacitated)
+			.TagTransition(GameTags.RadiationSicknessIncapacitation, incapacitated)
+			.Update(delegate(Instance smi, float dt)
+			{
+				smi.RecoverStamina(dt, smi);
+			});
 		start_recovery.TagTransition(new Tag[2]
 		{
 			GameTags.CaloriesDepleted,

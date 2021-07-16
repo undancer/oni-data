@@ -185,12 +185,7 @@ public class StatusItemGroup
 		Entry entry = new Entry(item, category, data);
 		if (item.shouldNotify)
 		{
-			string notificationText = item.notificationText;
-			NotificationType notificationType = item.notificationType;
-			HashedString invalid = HashedString.Invalid;
-			Func<List<Notification>, object, string> tooltip = OnToolTip;
-			Notification.ClickCallback notificationClickCallback = item.notificationClickCallback;
-			entry.notification = new Notification(notificationText, notificationType, invalid, tooltip, item, expires: false, item.notificationDelay, notificationClickCallback, data);
+			entry.notification = new Notification(item.notificationText, item.notificationType, OnToolTip, item, expires: false, 0f, item.notificationClickCallback, data);
 			gameObject.AddOrGet<Notifier>().Add(entry.notification);
 		}
 		if (item.ShouldShowIcon())

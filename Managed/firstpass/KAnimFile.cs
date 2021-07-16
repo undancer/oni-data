@@ -92,7 +92,7 @@ public class KAnimFile : ScriptableObject
 			{
 				return KAnimBatchManager.NO_BATCH;
 			}
-			_batchTag = KAnimGroupFile.GetGroupFile().GetGroupForHomeDirectory(new HashedString(homedirectory));
+			_batchTag = KAnimGroupFile.GetGroupForHomeDirectory(new HashedString(homedirectory));
 			return _batchTag;
 		}
 	}

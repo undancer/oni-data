@@ -38,6 +38,8 @@ namespace Database
 
 		public StatusItemCategory Heat;
 
+		public StatusItemCategory Stored;
+
 		public StatusItemCategories(ResourceSet parent)
 			: base("StatusItemCategories", parent)
 		{
@@ -59,6 +61,7 @@ namespace Database
 			RequiredRoom = new StatusItemCategory("RequiredRoom", this, "RequiredRoom");
 			Yield = new StatusItemCategory("Yield", this, "Yield");
 			Heat = new StatusItemCategory("Heat", this, "Heat");
+			Stored = new StatusItemCategory("Stored", this, "Stored");
 		}
 	}
 }

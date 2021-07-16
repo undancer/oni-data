@@ -103,6 +103,7 @@ public class SocialGatheringPoint : StateMachineComponent<SocialGatheringPoint.S
 		WorkChore<SocialGatheringPointWorkable> obj = new WorkChore<SocialGatheringPointWorkable>(Db.Get().ChoreTypes.Relax, workable, null, run_until_complete: true, null, null, schedule_block: Db.Get().ScheduleBlockTypes.Recreation, on_end: OnSocialChoreEnd, allow_in_red_alert: false, ignore_schedule_block: false, only_when_operational: true, override_anims: null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, priority_class: PriorityScreen.PriorityClass.high, priority_class_value: 5, ignore_building_assignment: false, add_to_daily_report: false);
 		obj.AddPrecondition(ChorePreconditions.instance.IsNotRedAlert);
 		obj.AddPrecondition(ChorePreconditions.instance.CanDoWorkerPrioritizable, workable);
+		obj.AddPrecondition(ChorePreconditions.instance.IsNotARobot, workable);
 		return obj;
 	}
 

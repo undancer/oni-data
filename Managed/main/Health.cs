@@ -25,6 +25,9 @@ public class Health : KMonoBehaviour, ISaveLoadable
 	[Serialize]
 	public HealthState State;
 
+	[Serialize]
+	private Death source_of_death;
+
 	public HealthBar healthBar;
 
 	private Effects effects;
@@ -69,7 +72,7 @@ public class Health : KMonoBehaviour, ISaveLoadable
 		{
 			if (CanBeIncapacitated)
 			{
-				Incapacitate(Db.Get().Deaths.Slain);
+				Incapacitate(GameTags.HitPointsDepleted);
 			}
 			else
 			{
@@ -113,7 +116,7 @@ public class Health : KMonoBehaviour, ISaveLoadable
 			{
 				if (CanBeIncapacitated)
 				{
-					Incapacitate(Db.Get().Deaths.Slain);
+					Incapacitate(GameTags.HitPointsDepleted);
 				}
 				else
 				{
@@ -264,10 +267,11 @@ public class Health : KMonoBehaviour, ISaveLoadable
 		return true;
 	}
 
-	public void Incapacitate(Death source_of_death)
+	public void Incapacitate(Tag cause)
 	{
 		State = HealthState.Incapacitated;
-		GetComponent<KPrefabID>().AddTag(GameTags.HitPointsDepleted);
+		GetComponent<KPrefabID>().AddTag(cause);
+		Damage(hitPoints);
 	}
 
 	private void Kill()

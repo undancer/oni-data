@@ -11,6 +11,11 @@ public class BasicSingleHarvestPlantConfig : IEntityConfig
 
 	public const float DIRT_RATE = 0.016666668f;
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("BasicSingleHarvestPlant", STRINGS.CREATURES.SPECIES.BASICSINGLEHARVESTPLANT.NAME, STRINGS.CREATURES.SPECIES.BASICSINGLEHARVESTPLANT.DESC, 1f, decor: DECOR.PENALTY.TIER1, anim: Assets.GetAnim("meallice_kanim"), initialAnim: "idle_empty", sceneLayer: Grid.SceneLayer.BuildingBack, width: 1, height: 2);
@@ -19,9 +24,8 @@ public class BasicSingleHarvestPlantConfig : IEntityConfig
 			SimHashes.Oxygen,
 			SimHashes.ContaminatedOxygen,
 			SimHashes.CarbonDioxide
-		}, pressure_sensitive: true, 0f, 0.15f, "BasicPlantFood", can_drown: true, can_tinker: false);
+		}, pressure_sensitive: true, 0f, 0.15f, "BasicPlantFood", can_drown: true, can_tinker: false, require_solid_tile: true, should_grow_old: true, 2400f, 0f, 460f, "BasicSingleHarvestPlantOriginal", STRINGS.CREATURES.SPECIES.BASICSINGLEHARVESTPLANT.NAME);
 		gameObject.AddOrGet<StandardCropPlant>();
-		gameObject.AddOrGet<KAnimControllerBase>().randomiseLoopedOffset = true;
 		gameObject.AddOrGet<LoopingSounds>();
 		GameObject seed = EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Harvest, "BasicSingleHarvestPlantSeed", STRINGS.CREATURES.SPECIES.SEEDS.BASICSINGLEHARVESTPLANT.NAME, STRINGS.CREATURES.SPECIES.SEEDS.BASICSINGLEHARVESTPLANT.DESC, Assets.GetAnim("seed_meallice_kanim"), "object", 0, new List<Tag>
 		{

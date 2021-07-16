@@ -40,7 +40,7 @@ public class WoundMonitor : GameStateMachine<WoundMonitor, WoundMonitor.Instance
 				text = kBatchedAnimController.CurrentAnim.name;
 			}
 			KAnim.PlayMode playMode = kBatchedAnimController.PlayMode;
-			if (text == null || (!text.Contains("hit") && !text.Contains("2_0") && !text.Contains("2_1") && !text.Contains("2_-1") && !text.Contains("2_-2") && !text.Contains("1_-1") && !text.Contains("1_-2") && !text.Contains("1_1") && !text.Contains("1_2") && !text.Contains("breathe_") && !text.Contains("death_")))
+			if (text == null || (!text.Contains("hit") && !text.Contains("2_0") && !text.Contains("2_1") && !text.Contains("2_-1") && !text.Contains("2_-2") && !text.Contains("1_-1") && !text.Contains("1_-2") && !text.Contains("1_1") && !text.Contains("1_2") && !text.Contains("breathe_") && !text.Contains("death_") && !text.Contains("impact")))
 			{
 				string s = "hit";
 				AttackChore.StatesInstance sMI = base.gameObject.GetSMI<AttackChore.StatesInstance>();
@@ -56,6 +56,26 @@ public class WoundMonitor : GameStateMachine<WoundMonitor, WoundMonitor.Instance
 				{
 					s = "hit_pole";
 				}
+				kBatchedAnimController.Play(s);
+				if (text != null)
+				{
+					kBatchedAnimController.Queue(text, playMode);
+				}
+			}
+		}
+
+		public void PlayKnockedOverImpactAnimation()
+		{
+			string text = null;
+			KBatchedAnimController kBatchedAnimController = base.smi.Get<KBatchedAnimController>();
+			if (kBatchedAnimController.CurrentAnim != null)
+			{
+				text = kBatchedAnimController.CurrentAnim.name;
+			}
+			KAnim.PlayMode playMode = kBatchedAnimController.PlayMode;
+			if (text == null || (!text.Contains("impact") && !text.Contains("2_0") && !text.Contains("2_1") && !text.Contains("2_-1") && !text.Contains("2_-2") && !text.Contains("1_-1") && !text.Contains("1_-2") && !text.Contains("1_1") && !text.Contains("1_2") && !text.Contains("breathe_") && !text.Contains("death_")))
+			{
+				string s = "impact";
 				kBatchedAnimController.Play(s);
 				if (text != null)
 				{
@@ -112,7 +132,7 @@ public class WoundMonitor : GameStateMachine<WoundMonitor, WoundMonitor.Instance
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = healthy;
-		root.ToggleAnims("anim_hits_kanim").EventHandler(GameHashes.HealthChanged, delegate(Instance smi, object data)
+		root.ToggleAnims("anim_hits_kanim").ToggleAnims("anim_impact_kanim", 0f, "EXPANSION1_ID").EventHandler(GameHashes.HealthChanged, delegate(Instance smi, object data)
 		{
 			smi.OnHealthChanged(data);
 		});

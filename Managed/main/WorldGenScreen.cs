@@ -19,12 +19,19 @@ public class WorldGenScreen : NewGameFlowScreen
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
+		if (MainMenu.Instance != null)
+		{
+			MainMenu.Instance.StopAmbience();
+		}
 		TriggerLoadingMusic();
 		UnityEngine.Object.FindObjectOfType<FrontEndBackground>().gameObject.SetActive(value: false);
 		SaveLoader.SetActiveSaveFilePath(null);
 		try
 		{
-			File.Delete(WorldGen.SIM_SAVE_FILENAME);
+			for (int i = 0; File.Exists(WorldGen.GetSIMSaveFilename(i)); i++)
+			{
+				File.Delete(WorldGen.GetSIMSaveFilename(i));
+			}
 		}
 		catch (Exception ex)
 		{
@@ -37,8 +44,7 @@ public class WorldGenScreen : NewGameFlowScreen
 	{
 		if (AudioDebug.Get().musicEnabled && !MusicManager.instance.SongIsPlaying("Music_FrontEnd"))
 		{
-			MusicManager.instance.StopSong("Music_TitleTheme");
-			AudioMixer.instance.Stop(AudioMixerSnapshots.Get().FrontEndSnapshot);
+			MainMenu.Instance.StopMainMenuMusic();
 			AudioMixer.instance.Start(AudioMixerSnapshots.Get().FrontEndWorldGenerationSnapshot);
 			MusicManager.instance.PlaySong("Music_FrontEnd");
 			MusicManager.instance.SetSongParameter("Music_FrontEnd", "songSection", 1f);

@@ -15,9 +15,11 @@ public class SweepBotStation : KMonoBehaviour
 
 	private MeterController meter;
 
-	private Storage sweepStorage;
-
+	[SerializeField]
 	private Storage botMaterialStorage;
+
+	[SerializeField]
+	private Storage sweepStorage;
 
 	private SchedulerHandle newSweepyHandle;
 
@@ -29,6 +31,12 @@ public class SweepBotStation : KMonoBehaviour
 	private int refreshSweepbotHandle = -1;
 
 	private int sweepBotNameChangeHandle = -1;
+
+	public void SetStorages(Storage botMaterialStorage, Storage sweepStorage)
+	{
+		this.botMaterialStorage = botMaterialStorage;
+		this.sweepStorage = sweepStorage;
+	}
 
 	protected override void OnPrefabInit()
 	{
@@ -46,8 +54,6 @@ public class SweepBotStation : KMonoBehaviour
 	{
 		Subscribe(-1697596308, OnStorageChanged);
 		meter = new MeterController(base.gameObject.GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.Infront, Grid.SceneLayer.NoLayer, "meter_frame", "meter_level");
-		botMaterialStorage = GetComponents<Storage>()[0];
-		sweepStorage = GetComponents<Storage>()[1];
 		if (sweepBot == null || sweepBot.Get() == null)
 		{
 			RequestNewSweepBot();

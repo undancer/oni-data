@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace UnityEngine.UI.Extensions
 {
+	[RequireComponent(typeof(CanvasRenderer))]
 	[AddComponentMenu("UI/Extensions/Primitives/UILineRenderer")]
 	public class UILineRenderer : UIPrimitiveBase
 	{

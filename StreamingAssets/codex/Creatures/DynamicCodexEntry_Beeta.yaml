@@ -1,0 +1,22 @@
+id: "BeetaSpecies"
+title: STRINGS.CODEX.BEETA.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.BEETA.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.BEETA.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.BEETA.BODY.CONTAINER1
+          style: Body

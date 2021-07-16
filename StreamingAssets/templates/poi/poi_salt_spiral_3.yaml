@@ -8,494 +8,350 @@ cells:
 - element: Salt
   mass: 255.589996
   temperature: 281.295868
-  diseaseName: FoodPoisoning
-  diseaseCount: -1727
   location_x: -4
   location_y: -5
 - element: Salt
   mass: 255.589996
   temperature: 280.501099
-  diseaseName: FoodPoisoning
-  diseaseCount: -1703
   location_x: -3
   location_y: -5
 - element: Salt
   mass: 255.589996
   temperature: 280.119598
-  diseaseName: FoodPoisoning
-  diseaseCount: -1693
   location_x: -2
   location_y: -5
 - element: Salt
   mass: 255.589996
   temperature: 280.012634
-  diseaseName: FoodPoisoning
-  diseaseCount: -1695
   location_x: -1
   location_y: -5
 - element: Salt
   mass: 255.589996
   temperature: 279.992371
-  diseaseName: FoodPoisoning
-  diseaseCount: -1694
   location_y: -5
 - element: Salt
   mass: 255.589996
   temperature: 279.855347
-  diseaseName: FoodPoisoning
-  diseaseCount: -1689
   location_x: 1
   location_y: -5
 - element: Salt
   mass: 255.589996
   temperature: 279.861603
-  diseaseName: FoodPoisoning
-  diseaseCount: -1689
   location_x: 2
   location_y: -5
 - element: Salt
   mass: 255.589996
   temperature: 279.850494
-  diseaseName: FoodPoisoning
-  diseaseCount: -1689
   location_x: 3
   location_y: -5
 - element: Salt
   mass: 255.589996
   temperature: 279.976898
-  diseaseName: FoodPoisoning
-  diseaseCount: -1693
   location_x: 4
   location_y: -5
 - element: Salt
   mass: 255.589996
   temperature: 280.925476
-  diseaseName: FoodPoisoning
-  diseaseCount: -1715
   location_x: 5
   location_y: -5
 - element: Salt
   mass: 255.589996
   temperature: 283.509033
-  diseaseName: FoodPoisoning
-  diseaseCount: -1768
   location_x: 6
   location_y: -5
 - element: Salt
   mass: 255.589996
   temperature: 276.605408
-  diseaseName: FoodPoisoning
-  diseaseCount: -1535
   location_x: 6
   location_y: -4
 - element: Salt
   mass: 255.589996
   temperature: 273.790222
-  diseaseName: FoodPoisoning
-  diseaseCount: -1509
   location_x: 6
   location_y: -3
 - element: Salt
   mass: 255.589996
   temperature: 272.540009
-  diseaseName: FoodPoisoning
-  diseaseCount: -1498
   location_x: 6
   location_y: -2
 - element: Salt
   mass: 255.589996
   temperature: 271.647552
-  diseaseName: FoodPoisoning
-  diseaseCount: -1488
   location_x: 6
 - element: Salt
   mass: 255.589996
   temperature: 270.693878
-  diseaseName: FoodPoisoning
-  diseaseCount: -1484
   location_x: 6
   location_y: 1
 - element: Salt
   mass: 255.589996
   temperature: 271.693939
-  diseaseName: FoodPoisoning
-  diseaseCount: -1492
   location_x: 6
   location_y: 2
 - element: Salt
   mass: 255.589996
   temperature: 273.210236
-  diseaseName: FoodPoisoning
-  diseaseCount: -1502
   location_x: 6
   location_y: 3
 - element: Salt
   mass: 255.589996
   temperature: 274.167267
-  diseaseName: FoodPoisoning
-  diseaseCount: -1510
   location_x: 5
   location_y: 5
 - element: Salt
   mass: 255.589996
   temperature: 283.688171
-  diseaseName: FoodPoisoning
-  diseaseCount: -1772
   location_x: 5
   location_y: 7
 - element: Salt
   mass: 255.589996
   temperature: 285.657532
-  diseaseName: FoodPoisoning
-  diseaseCount: -1805
   location_x: 6
   location_y: 7
 - element: Salt
   mass: 255.589996
   temperature: 282.265106
-  diseaseName: FoodPoisoning
-  diseaseCount: -1764
   location_x: -2
   location_y: 7
 - element: Salt
   mass: 255.589996
   temperature: 281.041748
-  diseaseName: FoodPoisoning
-  diseaseCount: -1718
   location_x: -1
   location_y: 7
 - element: Salt
   mass: 255.589996
   temperature: 280.055542
-  diseaseName: FoodPoisoning
-  diseaseCount: -1689
   location_y: 7
 - element: Salt
   mass: 255.589996
   temperature: 279.948303
-  diseaseName: FoodPoisoning
-  diseaseCount: -1690
   location_x: 1
   location_y: 7
 - element: Salt
   mass: 255.589996
   temperature: 280.22226
-  diseaseName: FoodPoisoning
-  diseaseCount: -1699
   location_x: 2
   location_y: 7
 - element: Salt
   mass: 255.589996
   temperature: 281.221191
-  diseaseName: FoodPoisoning
-  diseaseCount: -1740
   location_x: 3
   location_y: 7
 - element: Salt
   mass: 255.589996
   temperature: 276.718781
-  diseaseName: FoodPoisoning
-  diseaseCount: -1549
   location_x: -5
   location_y: -3
 - element: Salt
   mass: 255.589996
   temperature: 278.447479
-  diseaseName: FoodPoisoning
-  diseaseCount: -1596
   location_x: -5
   location_y: -2
 - element: Salt
   mass: 255.589996
   temperature: 279.447784
-  diseaseName: FoodPoisoning
-  diseaseCount: -1673
   location_x: -5
   location_y: -1
 - element: Salt
   mass: 255.589996
   temperature: 279.939941
-  diseaseName: FoodPoisoning
-  diseaseCount: -1692
   location_x: -5
 - element: Salt
   mass: 255.589996
   temperature: 279.699463
-  diseaseName: FoodPoisoning
-  diseaseCount: -1672
   location_x: -5
   location_y: 1
 - element: Salt
   mass: 255.589996
   temperature: 280.301849
-  diseaseName: FoodPoisoning
-  diseaseCount: -1701
   location_x: -5
   location_y: 2
 - element: Salt
   mass: 255.589996
   temperature: 280.686554
-  diseaseName: FoodPoisoning
-  diseaseCount: -1710
   location_x: -5
   location_y: 3
 - element: Salt
   mass: 255.589996
   temperature: 281.662537
-  diseaseName: FoodPoisoning
-  diseaseCount: -1725
   location_x: -5
   location_y: 4
 - element: Salt
   mass: 255.589996
   temperature: 282.825317
-  diseaseName: FoodPoisoning
-  diseaseCount: -1749
   location_x: -5
   location_y: 5
 - element: Salt
   mass: 255.589996
   temperature: 284.762482
-  diseaseName: FoodPoisoning
-  diseaseCount: -1777
   location_x: -5
   location_y: 6
 - element: Salt
   mass: 255.589996
   temperature: 288.917725
-  diseaseName: FoodPoisoning
-  diseaseCount: -1843
   location_x: -5
   location_y: 7
 - element: Salt
   mass: 255.589996
   temperature: 267.709045
-  diseaseName: FoodPoisoning
-  diseaseCount: -1462
   location_x: -3
 - element: Salt
   mass: 255.589996
   temperature: 267.725769
-  diseaseName: FoodPoisoning
-  diseaseCount: -1462
   location_x: -3
   location_y: 1
 - element: Salt
   mass: 255.589996
   temperature: 268.726349
-  diseaseName: FoodPoisoning
-  diseaseCount: -1468
   location_x: -3
   location_y: 2
 - element: Salt
   mass: 255.589996
   temperature: 267.679993
-  diseaseName: FoodPoisoning
-  diseaseCount: -1457
   location_x: -3
   location_y: -1
 - element: Salt
   mass: 255.589996
   temperature: 272.953461
-  diseaseName: FoodPoisoning
-  diseaseCount: -1508
   location_x: -3
   location_y: 5
 - element: Salt
   mass: 255.589996
   temperature: 270.460541
-  diseaseName: FoodPoisoning
-  diseaseCount: -1483
   location_x: -2
   location_y: 5
 - element: Salt
   mass: 255.589996
   temperature: 269.260284
-  diseaseName: FoodPoisoning
-  diseaseCount: -1471
   location_x: -1
   location_y: 5
 - element: Salt
   mass: 255.589996
   temperature: 268.25946
-  diseaseName: FoodPoisoning
-  diseaseCount: -1464
   location_y: 5
 - element: Salt
   mass: 255.589996
   temperature: 268.158081
-  diseaseName: FoodPoisoning
-  diseaseCount: -1460
   location_x: 1
   location_y: 5
 - element: Salt
   mass: 255.589996
   temperature: 267.110352
-  diseaseName: FoodPoisoning
-  diseaseCount: -1455
   location_x: -1
   location_y: 1
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -1460
   location_x: -1
   location_y: 2
 - element: Salt
   mass: 255.589996
   temperature: 267.47699
-  diseaseName: FoodPoisoning
-  diseaseCount: -1460
   location_x: -1
   location_y: 3
 - element: Salt
   mass: 255.589996
   temperature: 267.306427
-  diseaseName: FoodPoisoning
-  diseaseCount: -1460
   location_y: 3
 - element: Salt
   mass: 255.589996
   temperature: 267.194244
-  diseaseName: FoodPoisoning
-  diseaseCount: -1455
   location_x: 2
   location_y: 3
 - element: Salt
   mass: 255.589996
   temperature: 267.558624
-  diseaseName: FoodPoisoning
-  diseaseCount: -1461
   location_x: 3
   location_y: 3
 - element: Salt
   mass: 255.589996
   temperature: 268.558777
-  diseaseName: FoodPoisoning
-  diseaseCount: -1462
   location_x: 4
   location_y: 3
 - element: Salt
   mass: 255.589996
   temperature: 268.197174
-  diseaseName: FoodPoisoning
-  diseaseCount: -1464
   location_x: 4
   location_y: -3
 - element: Salt
   mass: 255.589996
   temperature: 267.476868
-  diseaseName: FoodPoisoning
-  diseaseCount: -1460
   location_x: 4
   location_y: -2
 - element: Salt
   mass: 255.589996
   temperature: 267.651245
-  diseaseName: FoodPoisoning
-  diseaseCount: -1458
   location_x: 4
   location_y: -1
 - element: Salt
   mass: 255.589996
   temperature: 267.420929
-  diseaseName: FoodPoisoning
-  diseaseCount: -1458
   location_x: 4
 - element: Salt
   mass: 255.589996
   temperature: 267.174805
-  diseaseName: FoodPoisoning
-  diseaseCount: -1457
   location_x: 4
   location_y: 1
 - element: Salt
   mass: 255.589996
   temperature: 267.506958
-  diseaseName: FoodPoisoning
-  diseaseCount: -1460
   location_x: 4
   location_y: 2
 - element: Salt
   mass: 255.589996
   temperature: 268.531555
-  diseaseName: FoodPoisoning
-  diseaseCount: -1462
   location_x: -2
   location_y: -3
 - element: Salt
   mass: 255.589996
   temperature: 267.714203
-  diseaseName: FoodPoisoning
-  diseaseCount: -1462
   location_x: -1
   location_y: -3
 - element: Salt
   mass: 255.589996
   temperature: 267.713074
-  diseaseName: FoodPoisoning
-  diseaseCount: -1462
   location_y: -3
 - element: Salt
   mass: 255.589996
   temperature: 267.707367
-  diseaseName: FoodPoisoning
-  diseaseCount: -1462
   location_x: 1
   location_y: -3
 - element: Salt
   mass: 255.589996
   temperature: 267.707733
-  diseaseName: FoodPoisoning
-  diseaseCount: -1462
   location_x: 2
   location_y: -3
 - element: Salt
   mass: 255.589996
   temperature: 267.707001
-  diseaseName: FoodPoisoning
-  diseaseCount: -1462
   location_x: 3
   location_y: -3
 - element: Salt
   mass: 255.589996
   temperature: 267.111023
-  diseaseName: FoodPoisoning
-  diseaseCount: -1455
   location_y: -1
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -1460
   location_x: 1
   location_y: -1
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -1460
   location_x: 2
   location_y: -1
 - element: Salt
   mass: 255.589996
   temperature: 267.299988
-  diseaseName: FoodPoisoning
-  diseaseCount: -1460
   location_x: 2
 - element: Salt
   mass: 255.589996
   temperature: 267.306427
-  diseaseName: FoodPoisoning
-  diseaseCount: -1460
   location_x: 2
   location_y: 1
 - element: Salt
   mass: 255.589996
   temperature: 267.305969
-  diseaseName: FoodPoisoning
-  diseaseCount: -1459
   location_x: 1
   location_y: 1
 buildings: []
@@ -508,9 +364,7 @@ otherEntities:
   element: Creature
   temperature: 279.492157
   units: 1
-  storage: []
   type: Other
-  rottable: {}
   amounts:
   - id: AirPressure
   - id: Temperature

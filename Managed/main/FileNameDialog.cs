@@ -22,7 +22,7 @@ public class FileNameDialog : KModalScreen
 
 	public override float GetSortKey()
 	{
-		return 1000f;
+		return 150f;
 	}
 
 	public void SetTextAndSelect(string text)

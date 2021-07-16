@@ -34,11 +34,13 @@ public class TableScreen : KScreen
 
 	private bool incubating;
 
+	private int removeWorldHandle = -1;
+
 	protected Dictionary<string, TableColumn> columns = new Dictionary<string, TableColumn>();
 
 	public List<TableRow> rows = new List<TableRow>();
 
-	public List<TableRow> sortable_rows = new List<TableRow>();
+	public List<TableRow> all_sortable_rows = new List<TableRow>();
 
 	public List<string> column_scrollers = new List<string>();
 
@@ -49,6 +51,8 @@ public class TableScreen : KScreen
 	public GameObject prefab_row_empty;
 
 	public GameObject prefab_row_header;
+
+	public GameObject prefab_world_divider;
 
 	public GameObject prefab_scroller_border;
 
@@ -71,6 +75,14 @@ public class TableScreen : KScreen
 
 	public Transform scroller_borders_transform;
 
+	public Dictionary<int, GameObject> worldDividers = new Dictionary<int, GameObject>();
+
+	protected override void OnPrefabInit()
+	{
+		base.OnPrefabInit();
+		removeWorldHandle = ClusterManager.Instance.Subscribe(-1078710002, RemoveWorldDivider);
+	}
+
 	protected override void OnActivate()
 	{
 		base.OnActivate();
@@ -92,6 +104,15 @@ public class TableScreen : KScreen
 		};
 	}
 
+	protected override void OnCleanUp()
+	{
+		base.OnCleanUp();
+		if (removeWorldHandle != -1)
+		{
+			ClusterManager.Instance.Unsubscribe(removeWorldHandle);
+		}
+	}
+
 	protected override void OnShow(bool show)
 	{
 		if (!show)
@@ -102,6 +123,7 @@ public class TableScreen : KScreen
 		}
 		ZeroScrollers();
 		base.OnShow(show);
+		rows_dirty = true;
 	}
 
 	private void ZeroScrollers()
@@ -178,6 +200,25 @@ public class TableScreen : KScreen
 				}
 			}
 		}
+		foreach (int item3 in ClusterManager.Instance.GetWorldIDsSorted())
+		{
+			AddWorldDivider(item3);
+		}
+		foreach (KeyValuePair<int, GameObject> worldDivider in worldDividers)
+		{
+			Component reference = worldDivider.Value.GetComponent<HierarchyReferences>().GetReference("NobodyRow");
+			reference.gameObject.SetActive(value: true);
+			foreach (MinionAssignablesProxy item4 in Components.MinionAssignablesProxy)
+			{
+				if (item4.GetTargetGameObject().GetComponent<KMonoBehaviour>().GetMyWorld()
+					.id == worldDivider.Key)
+				{
+					reference.gameObject.SetActive(value: false);
+					break;
+				}
+			}
+			worldDivider.Value.SetActive(ClusterManager.Instance.GetWorld(worldDivider.Key).IsDiscovered && DlcManager.FeatureClusterSpaceEnabled());
+		}
 		SortRows();
 		rows_dirty = false;
 	}
@@ -233,33 +274,59 @@ public class TableScreen : KScreen
 				value.column_sort_toggle.ChangeState(0);
 			}
 		}
-		if (active_sort_method == null)
-		{
-			return;
-		}
 		Dictionary<IAssignableIdentity, TableRow> dictionary = new Dictionary<IAssignableIdentity, TableRow>();
-		foreach (TableRow sortable_row in sortable_rows)
+		foreach (TableRow all_sortable_row in all_sortable_rows)
 		{
-			dictionary.Add(sortable_row.GetIdentity(), sortable_row);
+			dictionary.Add(all_sortable_row.GetIdentity(), all_sortable_row);
 		}
-		List<IAssignableIdentity> list = new List<IAssignableIdentity>();
+		Dictionary<int, List<IAssignableIdentity>> dictionary2 = new Dictionary<int, List<IAssignableIdentity>>();
 		foreach (KeyValuePair<IAssignableIdentity, TableRow> item in dictionary)
 		{
-			list.Add(item.Key);
+			int id = item.Key.GetSoleOwner().GetComponent<MinionAssignablesProxy>().GetTargetGameObject()
+				.GetComponent<KMonoBehaviour>()
+				.GetMyWorld()
+				.id;
+			if (!dictionary2.ContainsKey(id))
+			{
+				dictionary2.Add(id, new List<IAssignableIdentity>());
+			}
+			dictionary2[id].Add(item.Key);
 		}
-		list.Sort(active_sort_method);
-		if (sort_is_reversed)
+		all_sortable_rows.Clear();
+		Dictionary<int, int> dictionary3 = new Dictionary<int, int>();
+		int num = 0;
+		int num2 = 0;
+		foreach (KeyValuePair<int, List<IAssignableIdentity>> item2 in dictionary2)
 		{
-			list.Reverse();
+			dictionary3.Add(item2.Key, num);
+			num++;
+			List<IAssignableIdentity> list = new List<IAssignableIdentity>();
+			foreach (IAssignableIdentity item3 in item2.Value)
+			{
+				list.Add(item3);
+			}
+			if (active_sort_method != null)
+			{
+				list.Sort(active_sort_method);
+				if (sort_is_reversed)
+				{
+					list.Reverse();
+				}
+			}
+			num += list.Count;
+			num2 += list.Count;
+			for (int i = 0; i < list.Count; i++)
+			{
+				all_sortable_rows.Add(dictionary[list[i]]);
+			}
 		}
-		sortable_rows.Clear();
-		for (int i = 0; i < list.Count; i++)
+		for (int j = 0; j < all_sortable_rows.Count; j++)
 		{
-			sortable_rows.Add(dictionary[list[i]]);
+			all_sortable_rows[j].gameObject.transform.SetSiblingIndex(j);
 		}
-		for (int j = 0; j < sortable_rows.Count; j++)
+		foreach (KeyValuePair<int, int> item4 in dictionary3)
 		{
-			sortable_rows[j].gameObject.transform.SetSiblingIndex(j);
+			worldDividers[item4.Key].transform.SetSiblingIndex(item4.Value);
 		}
 		if (has_default_duplicant_row)
 		{
@@ -296,7 +363,7 @@ public class TableScreen : KScreen
 			rows[num].Clear();
 		}
 		rows.Clear();
-		sortable_rows.Clear();
+		all_sortable_rows.Clear();
 	}
 
 	protected void AddRow(IAssignableIdentity minion)
@@ -309,7 +376,7 @@ public class TableScreen : KScreen
 		component.ConfigureContent(minion, columns);
 		if (!flag)
 		{
-			sortable_rows.Add(component);
+			all_sortable_rows.Add(component);
 		}
 		else
 		{
@@ -324,6 +391,32 @@ public class TableScreen : KScreen
 		component.isDefault = true;
 		rows.Add(component);
 		component.ConfigureContent(null, columns);
+	}
+
+	protected void AddWorldDivider(int worldId)
+	{
+		if (!worldDividers.ContainsKey(worldId))
+		{
+			GameObject gameObject = Util.KInstantiateUI(prefab_world_divider, scroll_content_transform.gameObject, force_active: true);
+			gameObject.GetComponentInChildren<Image>().color = ClusterManager.worldColors[worldId % ClusterManager.worldColors.Length];
+			RectTransform component = gameObject.GetComponentInChildren<LocText>().GetComponent<RectTransform>();
+			component.sizeDelta = new Vector2(150f, component.sizeDelta.y);
+			ClusterGridEntity component2 = ClusterManager.Instance.GetWorld(worldId).GetComponent<ClusterGridEntity>();
+			string str = ((component2 is Clustercraft) ? NAMEGEN.WORLD.SPACECRAFT_PREFIX : NAMEGEN.WORLD.PLANETOID_PREFIX);
+			gameObject.GetComponentInChildren<LocText>().SetText(str + component2.Name);
+			gameObject.GetComponentInChildren<ToolTip>().SetSimpleTooltip(string.Format(NAMEGEN.WORLD.WORLDDIVIDER_TOOLTIP, component2.Name));
+			gameObject.GetComponent<HierarchyReferences>().GetReference<Image>("Icon").sprite = component2.GetUISprite();
+			worldDividers.Add(worldId, gameObject);
+		}
+	}
+
+	protected void RemoveWorldDivider(object worldId)
+	{
+		if (worldDividers.ContainsKey((int)worldId))
+		{
+			Util.KDestroyGameObject(worldDividers[(int)worldId]);
+			worldDividers.Remove((int)worldId);
+		}
 	}
 
 	protected TableRow GetWidgetRow(GameObject widget_go)
@@ -605,7 +698,7 @@ public class TableScreen : KScreen
 		{
 		case TableRow.RowType.Header:
 			StartCoroutine(CascadeSetRowCheckBoxes(superCheckboxTableColumn.columns_affected, default_row.GetComponent<TableRow>(), new_value, widget_go));
-			StartCoroutine(CascadeSetColumnCheckBoxes(sortable_rows, superCheckboxTableColumn, new_value, widget_go));
+			StartCoroutine(CascadeSetColumnCheckBoxes(all_sortable_rows, superCheckboxTableColumn, new_value, widget_go));
 			break;
 		case TableRow.RowType.Default:
 			StartCoroutine(CascadeSetRowCheckBoxes(superCheckboxTableColumn.columns_affected, widgetRow, new_value, widget_go));

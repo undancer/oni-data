@@ -38,6 +38,7 @@ public class StateMachineController : KMonoBehaviour, ISaveLoadableDetails, ISta
 		if (!stateMachines.Contains(state_machine))
 		{
 			stateMachines.Add(state_machine);
+			MyAttributes.OnAwake(state_machine, this);
 		}
 	}
 

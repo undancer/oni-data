@@ -17,31 +17,12 @@ biomes:
 features:
   #- type: features/oilpockets/Cavity
   - type: features/oilpockets/CavityPond
-  - type: features/oilpockets/DiamondClump 
-pointsOfInterest:
- geysers_a:
-  - poi_oilpockets_geyser_a
-  - poi_oilpockets_geyser_b
-  - poi_oilpockets_geyser_c    
- ruins_a:
-  - poi_oil_switchdoor
-  - poi_oil_six_switch_door
- geysers_b:
-  - poi_oilpockets_geyser_d
-  - poi_oilpockets_geyser_e
-  - poi_oilpockets_geyser_f
- ruins_b:
-  - poi_oil_switchdoor
-  - poi_oil_six_switch_door
- geysers_c:
-  - poi_oilpockets_geyser_a
-  - poi_oilpockets_geyser_b
-  - poi_oilpockets_geyser_c
-  - poi_oilpockets_geyser_d
-  - poi_oilpockets_geyser_e
-  - poi_oilpockets_geyser_f
+  - type: features/oilpockets/DiamondClump
+subworldTemplateRules:
+  - names:
+      - poi/poi_oil_switchdoor
+      - poi/poi_oil_six_switch_door
+    listRule: TryAll
 tags:
   - IgnoreCaveOverride
-featureTemplates:
-  # feature_geyser_generic: 2
 zoneType: OilField

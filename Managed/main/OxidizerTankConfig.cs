@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using STRINGS;
 using TUNING;
 using UnityEngine;
 
@@ -8,15 +9,20 @@ public class OxidizerTankConfig : IBuildingConfig
 
 	public const float FuelCapacity = 2700f;
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_VANILLA_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("OxidizerTank", 5, 5, "rocket_oxidizer_tank_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.FUEL_TANK_DRY_MASS, new string[1]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("OxidizerTank", 5, 5, "rocket_oxidizer_tank_kanim", 1000, 60f, TUNING.BUILDINGS.ROCKETRY_MASS_KG.FUEL_TANK_DRY_MASS, new string[1]
 		{
 			SimHashes.Steel.ToString()
-		}, 9999f, BuildLocationRule.BuildingAttachPoint, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: TUNING.BUILDINGS.DECOR.NONE);
 		BuildingTemplates.CreateRocketBuildingDef(obj);
 		obj.DefaultAnimState = "grounded";
-		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
+		obj.SceneLayer = Grid.SceneLayer.Building;
 		obj.OverheatTemperature = 2273.15f;
 		obj.Floodable = false;
 		obj.AttachmentSlotTag = GameTags.Rocket;
@@ -24,6 +30,8 @@ public class OxidizerTankConfig : IBuildingConfig
 		obj.RequiresPowerInput = false;
 		obj.attachablePosition = new CellOffset(0, 0);
 		obj.CanMove = true;
+		obj.Cancellable = false;
+		obj.ShowInBuildMenu = !DlcManager.FeatureClusterSpaceEnabled();
 		return obj;
 	}
 
@@ -42,24 +50,26 @@ public class OxidizerTankConfig : IBuildingConfig
 	{
 		Storage storage = go.AddOrGet<Storage>();
 		storage.capacityKg = 2700f;
-		storage.allowSublimation = false;
 		storage.SetDefaultStoredItemModifiers(new List<Storage.StoredItemModifier>
 		{
 			Storage.StoredItemModifier.Hide,
 			Storage.StoredItemModifier.Seal,
 			Storage.StoredItemModifier.Insulate
 		});
-		go.AddOrGet<OxidizerTank>().storage = storage;
+		FlatTagFilterable flatTagFilterable = go.AddOrGet<FlatTagFilterable>();
+		flatTagFilterable.tagOptions = new List<Tag>
+		{
+			SimHashes.OxyRock.CreateTag()
+		};
+		flatTagFilterable.headerText = STRINGS.BUILDINGS.PREFABS.OXIDIZERTANK.UI_FILTER_CATEGORY;
+		OxidizerTank oxidizerTank = go.AddOrGet<OxidizerTank>();
+		oxidizerTank.consumeOnLand = !DlcManager.FeatureClusterSpaceEnabled();
+		oxidizerTank.storage = storage;
+		oxidizerTank.supportsMultipleOxidizers = true;
+		oxidizerTank.maxFillMass = 2700f;
+		oxidizerTank.targetFillMass = 2700f;
 		go.AddOrGet<CopyBuildingSettings>();
 		go.AddOrGet<DropToUserCapacity>();
-		ManualDeliveryKG manualDeliveryKG = go.AddOrGet<ManualDeliveryKG>();
-		manualDeliveryKG.SetStorage(storage);
-		manualDeliveryKG.requestedItemTag = ElementLoader.FindElementByHash(SimHashes.OxyRock).tag;
-		manualDeliveryKG.refillMass = storage.capacityKg;
-		manualDeliveryKG.capacity = storage.capacityKg;
-		manualDeliveryKG.operationalRequirement = FetchOrder2.OperationalRequirement.None;
-		manualDeliveryKG.choreTypeIDHash = Db.Get().ChoreTypes.MachineFetch.IdHash;
-		go.AddOrGet<RocketModule>().SetBGKAnim(Assets.GetAnim("rocket_oxidizer_tank_bg_kanim"));
-		EntityTemplates.ExtendBuildingToRocketModule(go);
+		BuildingTemplates.ExtendBuildingToRocketModule(go, "rocket_oxidizer_tank_bg_kanim");
 	}
 }

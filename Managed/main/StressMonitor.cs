@@ -68,13 +68,13 @@ public class StressMonitor : GameStateMachine<StressMonitor, StressMonitor.Insta
 
 	public override void InitializeStates(out BaseState default_state)
 	{
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		default_state = satisfied;
 		root.Update("StressMonitor", delegate(Instance smi, float dt)
 		{
 			smi.ReportStress(dt);
 		});
-		satisfied.Transition(stressed.tier1, (Instance smi) => smi.stress.value >= 60f).ToggleExpression(Db.Get().Expressions.Neutral);
+		satisfied.TriggerOnEnter(GameHashes.NotStressed).Transition(stressed.tier1, (Instance smi) => smi.stress.value >= 60f).ToggleExpression(Db.Get().Expressions.Neutral);
 		stressed.ToggleStatusItem(Db.Get().DuplicantStatusItems.Stressed).Transition(satisfied, (Instance smi) => smi.stress.value < 60f).ToggleReactable((Instance smi) => smi.CreateConcernReactable())
 			.TriggerOnEnter(GameHashes.Stressed);
 		stressed.tier1.Transition(stressed.tier2, (Instance smi) => smi.HasHadEnough());

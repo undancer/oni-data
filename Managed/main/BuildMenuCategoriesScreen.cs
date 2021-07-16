@@ -106,7 +106,7 @@ public class BuildMenuCategoriesScreen : KIconToggleMenu
 	{
 		UserData userData = (UserData)toggle_info.userData;
 		PlanScreen.RequirementsState requirementsState = userData.requirementsState;
-		if ((uint)(requirementsState - 1) <= 1u)
+		if ((uint)(requirementsState - 2) <= 1u)
 		{
 			if (selectedCategory != userData.category)
 			{
@@ -194,7 +194,7 @@ public class BuildMenuCategoriesScreen : KIconToggleMenu
 			{
 				foreach (BuildingDef item in value)
 				{
-					if (item.ShowInBuildMenu && !item.Deprecated && (!item.DebugOnly || Game.Instance.DebugOnlyBuildingsAllowed))
+					if (item.ShowInBuildMenu && item.IsAvailable())
 					{
 						PlanScreen.RequirementsState requirementsState = BuildMenu.Instance.BuildableState(item);
 						flag = flag && requirementsState == PlanScreen.RequirementsState.Tech;
@@ -212,7 +212,7 @@ public class BuildMenuCategoriesScreen : KIconToggleMenu
 				flag2 = flag2 && (categoryRequirements == PlanScreen.RequirementsState.Materials || categoryRequirements == PlanScreen.RequirementsState.Tech);
 			}
 		}
-		PlanScreen.RequirementsState result = ((!flag) ? (flag2 ? PlanScreen.RequirementsState.Materials : PlanScreen.RequirementsState.Complete) : PlanScreen.RequirementsState.Tech);
+		PlanScreen.RequirementsState result = (flag ? PlanScreen.RequirementsState.Tech : ((!flag2) ? PlanScreen.RequirementsState.Complete : PlanScreen.RequirementsState.Materials));
 		if (DebugHandler.InstantBuildMode)
 		{
 			result = PlanScreen.RequirementsState.Complete;

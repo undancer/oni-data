@@ -6,6 +6,10 @@ public class SteamTurbineConfig : IBuildingConfig
 {
 	public const string ID = "SteamTurbine";
 
+	private const int HEIGHT = 4;
+
+	private const int WIDTH = 5;
+
 	private static readonly List<Storage.StoredItemModifier> StoredItemModifiers = new List<Storage.StoredItemModifier>
 	{
 		Storage.StoredItemModifier.Hide,
@@ -32,6 +36,7 @@ public class SteamTurbineConfig : IBuildingConfig
 		obj.PermittedRotations = PermittedRotations.FlipH;
 		obj.ViewMode = OverlayModes.Power.ID;
 		obj.AudioCategory = "Metal";
+		obj.RequiresPowerOutput = true;
 		obj.PowerOutputOffset = new CellOffset(1, 0);
 		obj.OverheatTemperature = 1273.15f;
 		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
@@ -50,6 +55,12 @@ public class SteamTurbineConfig : IBuildingConfig
 		go.AddOrGet<Storage>().SetDefaultStoredItemModifiers(StoredItemModifiers);
 		Turbine turbine = go.AddOrGet<Turbine>();
 		turbine.srcElem = SimHashes.Steam;
+		MakeBaseSolid.Def def = go.AddOrGetDef<MakeBaseSolid.Def>();
+		def.solidOffsets = new CellOffset[5];
+		for (int i = 0; i < 5; i++)
+		{
+			def.solidOffsets[i] = new CellOffset(i - 2, 0);
+		}
 		turbine.pumpKGRate = 10f;
 		turbine.requiredMassFlowDifferential = 3f;
 		turbine.minEmitMass = 10f;

@@ -77,6 +77,10 @@ namespace KMod
 				title = UI.FRONTEND.MOD_EVENTS.DEACTIVATED;
 				title_tooltip = UI.FRONTEND.MOD_EVENTS.TOOLTIPS.DEACTIVATED;
 				break;
+			case EventType.DisabledEarlyAccess:
+				title = UI.FRONTEND.MOD_EVENTS.ALL_MODS_DISABLED_EARLY_ACCESS;
+				title_tooltip = UI.FRONTEND.MOD_EVENTS.TOOLTIPS.ALL_MODS_DISABLED_EARLY_ACCESS;
+				break;
 			default:
 				throw new ArgumentOutOfRangeException();
 			}

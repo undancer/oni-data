@@ -15,7 +15,9 @@ namespace Database
 
 		public SkillPerk CanDigNearlyImpenetrable;
 
-		public SkillPerk CanDigSupersuperhard;
+		public SkillPerk CanDigSuperDuperHard;
+
+		public SkillPerk CanDigRadioactiveMaterials;
 
 		public SkillPerk IncreaseConstructionSmall;
 
@@ -25,11 +27,15 @@ namespace Database
 
 		public SkillPerk IncreaseConstructionMechatronics;
 
+		public SkillPerk CanDemolish;
+
 		public SkillPerk IncreaseLearningSmall;
 
 		public SkillPerk IncreaseLearningMedium;
 
 		public SkillPerk IncreaseLearningLarge;
+
+		public SkillPerk IncreaseLearningLargeSpace;
 
 		public SkillPerk IncreaseBotanySmall;
 
@@ -38,6 +44,8 @@ namespace Database
 		public SkillPerk IncreaseBotanyLarge;
 
 		public SkillPerk CanFarmTinker;
+
+		public SkillPerk CanIdentifyMutantSeeds;
 
 		public SkillPerk CanWrangleCreatures;
 
@@ -50,6 +58,8 @@ namespace Database
 		public SkillPerk IncreaseAthleticsSmall;
 
 		public SkillPerk IncreaseAthleticsMedium;
+
+		public SkillPerk IncreaseAthleticsLarge;
 
 		public SkillPerk IncreaseStrengthSmall;
 
@@ -80,6 +90,8 @@ namespace Database
 		public SkillPerk CanArtOkay;
 
 		public SkillPerk CanArtGreat;
+
+		public SkillPerk CanStudyArtifact;
 
 		public SkillPerk IncreaseMachinerySmall;
 
@@ -115,7 +127,15 @@ namespace Database
 
 		public SkillPerk AllowInterstellarResearch;
 
+		public SkillPerk AllowNuclearResearch;
+
+		public SkillPerk AllowOrbitalResearch;
+
 		public SkillPerk CanStudyWorldObjects;
+
+		public SkillPerk CanUseClusterTelescope;
+
+		public SkillPerk IncreaseRocketSpeedSmall;
 
 		public SkillPerk CanDoPlumbing;
 
@@ -125,6 +145,8 @@ namespace Database
 
 		public SkillPerk CanTrainToBeAstronaut;
 
+		public SkillPerk CanUseRocketControlStation;
+
 		public SkillPerks(ResourceSet parent)
 			: base("SkillPerks", parent)
 		{
@@ -133,24 +155,29 @@ namespace Database
 			IncreaseDigSpeedLarge = Add(new SkillAttributePerk("IncreaseDigSpeedLarge", Db.Get().Attributes.Digging.Id, ROLES.ATTRIBUTE_BONUS_THIRD, DUPLICANTS.ROLES.SENIOR_MINER.NAME));
 			CanDigVeryFirm = Add(new SimpleSkillPerk("CanDigVeryFirm", UI.ROLES_SCREEN.PERKS.CAN_DIG_VERY_FIRM.DESCRIPTION));
 			CanDigNearlyImpenetrable = Add(new SimpleSkillPerk("CanDigAbyssalite", UI.ROLES_SCREEN.PERKS.CAN_DIG_NEARLY_IMPENETRABLE.DESCRIPTION));
-			CanDigSupersuperhard = Add(new SimpleSkillPerk("CanDigDiamondAndObsidan", UI.ROLES_SCREEN.PERKS.CAN_DIG_SUPER_SUPER_HARD.DESCRIPTION));
+			CanDigSuperDuperHard = Add(new SimpleSkillPerk("CanDigDiamondAndObsidan", UI.ROLES_SCREEN.PERKS.CAN_DIG_SUPER_SUPER_HARD.DESCRIPTION));
+			CanDigRadioactiveMaterials = Add(new SimpleSkillPerk("CanDigCorium", UI.ROLES_SCREEN.PERKS.CAN_DIG_RADIOACTIVE_MATERIALS.DESCRIPTION));
 			IncreaseConstructionSmall = Add(new SkillAttributePerk("IncreaseConstructionSmall", Db.Get().Attributes.Construction.Id, ROLES.ATTRIBUTE_BONUS_FIRST, DUPLICANTS.ROLES.JUNIOR_BUILDER.NAME));
 			IncreaseConstructionMedium = Add(new SkillAttributePerk("IncreaseConstructionMedium", Db.Get().Attributes.Construction.Id, ROLES.ATTRIBUTE_BONUS_SECOND, DUPLICANTS.ROLES.BUILDER.NAME));
 			IncreaseConstructionLarge = Add(new SkillAttributePerk("IncreaseConstructionLarge", Db.Get().Attributes.Construction.Id, ROLES.ATTRIBUTE_BONUS_THIRD, DUPLICANTS.ROLES.SENIOR_BUILDER.NAME));
 			IncreaseConstructionMechatronics = Add(new SkillAttributePerk("IncreaseConstructionMechatronics", Db.Get().Attributes.Construction.Id, ROLES.ATTRIBUTE_BONUS_THIRD, DUPLICANTS.ROLES.MECHATRONIC_ENGINEER.NAME));
+			CanDemolish = Add(new SimpleSkillPerk("CanDemonlish", UI.ROLES_SCREEN.PERKS.CAN_DEMOLISH.DESCRIPTION));
 			IncreaseLearningSmall = Add(new SkillAttributePerk("IncreaseLearningSmall", Db.Get().Attributes.Learning.Id, ROLES.ATTRIBUTE_BONUS_FIRST, DUPLICANTS.ROLES.JUNIOR_RESEARCHER.NAME));
 			IncreaseLearningMedium = Add(new SkillAttributePerk("IncreaseLearningMedium", Db.Get().Attributes.Learning.Id, ROLES.ATTRIBUTE_BONUS_SECOND, DUPLICANTS.ROLES.RESEARCHER.NAME));
 			IncreaseLearningLarge = Add(new SkillAttributePerk("IncreaseLearningLarge", Db.Get().Attributes.Learning.Id, ROLES.ATTRIBUTE_BONUS_THIRD, DUPLICANTS.ROLES.SENIOR_RESEARCHER.NAME));
+			IncreaseLearningLargeSpace = Add(new SkillAttributePerk("IncreaseLearningLargeSpace", Db.Get().Attributes.Learning.Id, ROLES.ATTRIBUTE_BONUS_THIRD, DUPLICANTS.ROLES.SPACE_RESEARCHER.NAME));
 			IncreaseBotanySmall = Add(new SkillAttributePerk("IncreaseBotanySmall", Db.Get().Attributes.Botanist.Id, ROLES.ATTRIBUTE_BONUS_FIRST, DUPLICANTS.ROLES.JUNIOR_FARMER.NAME));
 			IncreaseBotanyMedium = Add(new SkillAttributePerk("IncreaseBotanyMedium", Db.Get().Attributes.Botanist.Id, ROLES.ATTRIBUTE_BONUS_SECOND, DUPLICANTS.ROLES.FARMER.NAME));
 			IncreaseBotanyLarge = Add(new SkillAttributePerk("IncreaseBotanyLarge", Db.Get().Attributes.Botanist.Id, ROLES.ATTRIBUTE_BONUS_THIRD, DUPLICANTS.ROLES.SENIOR_FARMER.NAME));
 			CanFarmTinker = Add(new SimpleSkillPerk("CanFarmTinker", UI.ROLES_SCREEN.PERKS.CAN_FARM_TINKER.DESCRIPTION));
+			CanIdentifyMutantSeeds = Add(new SimpleSkillPerk("CanIdentifyMutantSeeds", UI.ROLES_SCREEN.PERKS.CAN_IDENTIFY_MUTANT_SEEDS.DESCRIPTION));
 			IncreaseRanchingSmall = Add(new SkillAttributePerk("IncreaseRanchingSmall", Db.Get().Attributes.Ranching.Id, ROLES.ATTRIBUTE_BONUS_FIRST, DUPLICANTS.ROLES.RANCHER.NAME));
 			IncreaseRanchingMedium = Add(new SkillAttributePerk("IncreaseRanchingMedium", Db.Get().Attributes.Ranching.Id, ROLES.ATTRIBUTE_BONUS_SECOND, DUPLICANTS.ROLES.SENIOR_RANCHER.NAME));
 			CanWrangleCreatures = Add(new SimpleSkillPerk("CanWrangleCreatures", UI.ROLES_SCREEN.PERKS.CAN_WRANGLE_CREATURES.DESCRIPTION));
 			CanUseRanchStation = Add(new SimpleSkillPerk("CanUseRanchStation", UI.ROLES_SCREEN.PERKS.CAN_USE_RANCH_STATION.DESCRIPTION));
 			IncreaseAthleticsSmall = Add(new SkillAttributePerk("IncreaseAthleticsSmall", Db.Get().Attributes.Athletics.Id, ROLES.ATTRIBUTE_BONUS_FIRST, DUPLICANTS.ROLES.HAULER.NAME));
 			IncreaseAthleticsMedium = Add(new SkillAttributePerk("IncreaseAthletics", Db.Get().Attributes.Athletics.Id, ROLES.ATTRIBUTE_BONUS_SECOND, DUPLICANTS.ROLES.SUIT_EXPERT.NAME));
+			IncreaseAthleticsLarge = Add(new SkillAttributePerk("IncreaseAthleticsLarge", Db.Get().Attributes.Athletics.Id, ROLES.ATTRIBUTE_BONUS_SECOND, DUPLICANTS.ROLES.THERMAL_SUIT_WEARER.NAME));
 			IncreaseStrengthGofer = Add(new SkillAttributePerk("IncreaseStrengthGofer", Db.Get().Attributes.Strength.Id, ROLES.ATTRIBUTE_BONUS_FIRST, DUPLICANTS.ROLES.HAULER.NAME));
 			IncreaseStrengthCourier = Add(new SkillAttributePerk("IncreaseStrengthCourier", Db.Get().Attributes.Strength.Id, ROLES.ATTRIBUTE_BONUS_SECOND, DUPLICANTS.ROLES.MATERIALS_MANAGER.NAME));
 			IncreaseStrengthGroundskeeper = Add(new SkillAttributePerk("IncreaseStrengthGroundskeeper", Db.Get().Attributes.Strength.Id, ROLES.ATTRIBUTE_BONUS_FIRST, DUPLICANTS.ROLES.HANDYMAN.NAME));
@@ -164,6 +191,7 @@ namespace Database
 			CanArtUgly = Add(new SimpleSkillPerk("CanArtUgly", UI.ROLES_SCREEN.PERKS.CAN_ART_UGLY.DESCRIPTION));
 			CanArtOkay = Add(new SimpleSkillPerk("CanArtOkay", UI.ROLES_SCREEN.PERKS.CAN_ART_OKAY.DESCRIPTION));
 			CanArtGreat = Add(new SimpleSkillPerk("CanArtGreat", UI.ROLES_SCREEN.PERKS.CAN_ART_GREAT.DESCRIPTION));
+			CanStudyArtifact = Add(new SimpleSkillPerk("CanStudyArtifact", UI.ROLES_SCREEN.PERKS.CAN_STUDY_ARTIFACTS.DESCRIPTION));
 			IncreaseMachinerySmall = Add(new SkillAttributePerk("IncreaseMachinerySmall", Db.Get().Attributes.Machinery.Id, ROLES.ATTRIBUTE_BONUS_FIRST, DUPLICANTS.ROLES.MACHINE_TECHNICIAN.NAME));
 			IncreaseMachineryMedium = Add(new SkillAttributePerk("IncreaseMachineryMedium", Db.Get().Attributes.Machinery.Id, ROLES.ATTRIBUTE_BONUS_SECOND, DUPLICANTS.ROLES.POWER_TECHNICIAN.NAME));
 			IncreaseMachineryLarge = Add(new SkillAttributePerk("IncreaseMachineryLarge", Db.Get().Attributes.Machinery.Id, ROLES.ATTRIBUTE_BONUS_THIRD, DUPLICANTS.ROLES.MECHATRONIC_ENGINEER.NAME));
@@ -181,11 +209,16 @@ namespace Database
 			ExosuitExpertise = Add(new SimpleSkillPerk("ExosuitExpertise", UI.ROLES_SCREEN.PERKS.EXOSUIT_EXPERTISE.DESCRIPTION));
 			AllowAdvancedResearch = Add(new SimpleSkillPerk("AllowAdvancedResearch", UI.ROLES_SCREEN.PERKS.ADVANCED_RESEARCH.DESCRIPTION));
 			AllowInterstellarResearch = Add(new SimpleSkillPerk("AllowInterStellarResearch", UI.ROLES_SCREEN.PERKS.INTERSTELLAR_RESEARCH.DESCRIPTION));
+			AllowNuclearResearch = Add(new SimpleSkillPerk("AllowNuclearResearch", UI.ROLES_SCREEN.PERKS.NUCLEAR_RESEARCH.DESCRIPTION));
+			AllowOrbitalResearch = Add(new SimpleSkillPerk("AllowOrbitalResearch", UI.ROLES_SCREEN.PERKS.ORBITAL_RESEARCH.DESCRIPTION));
 			CanStudyWorldObjects = Add(new SimpleSkillPerk("CanStudyWorldObjects", UI.ROLES_SCREEN.PERKS.CAN_STUDY_WORLD_OBJECTS.DESCRIPTION));
+			CanUseClusterTelescope = Add(new SimpleSkillPerk("CanUseClusterTelescope", UI.ROLES_SCREEN.PERKS.CAN_USE_CLUSTER_TELESCOPE.DESCRIPTION));
 			CanDoPlumbing = Add(new SimpleSkillPerk("CanDoPlumbing", UI.ROLES_SCREEN.PERKS.CAN_DO_PLUMBING.DESCRIPTION));
 			CanUseRockets = Add(new SimpleSkillPerk("CanUseRockets", UI.ROLES_SCREEN.PERKS.CAN_USE_ROCKETS.DESCRIPTION));
 			FasterSpaceFlight = Add(new SkillAttributePerk("FasterSpaceFlight", Db.Get().Attributes.SpaceNavigation.Id, 0.1f, DUPLICANTS.ROLES.ASTRONAUT.NAME));
 			CanTrainToBeAstronaut = Add(new SimpleSkillPerk("CanTrainToBeAstronaut", UI.ROLES_SCREEN.PERKS.CAN_DO_ASTRONAUT_TRAINING.DESCRIPTION));
+			CanUseRocketControlStation = Add(new SimpleSkillPerk("CanUseRocketControlStation", UI.ROLES_SCREEN.PERKS.CAN_PILOT_ROCKET.DESCRIPTION));
+			IncreaseRocketSpeedSmall = Add(new SkillAttributePerk("IncreaseRocketSpeedSmall", Db.Get().Attributes.SpaceNavigation.Id, ROLES.ATTRIBUTE_BONUS_FIRST, DUPLICANTS.ROLES.ROCKETPILOT.NAME));
 		}
 	}
 }

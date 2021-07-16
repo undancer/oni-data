@@ -10,6 +10,11 @@ public class CoolVestConfig : IEquipmentConfig
 
 	public static ComplexRecipe recipe;
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public EquipmentDef CreateEquipmentDef()
 	{
 		new Dictionary<string, float>().Add("BasicFabric", TUNING.EQUIPMENT.VESTS.COOL_VEST_MASS);

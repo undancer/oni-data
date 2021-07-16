@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TUNING;
 using UnityEngine;
 
 public class GeneratedBuildings
@@ -26,6 +27,10 @@ public class GeneratedBuildings
 			{
 				DebugUtil.LogException(null, "Exception in RegisterBuilding for type " + item.FullName + " from " + item.Assembly.GetName().Name, e);
 			}
+		}
+		foreach (PlanScreen.PlanInfo item2 in BUILDINGS.PLANORDER)
+		{
+			item2.data.RemoveAll((string prefabId) => Assets.GetBuildingDef(prefabId) == null);
 		}
 	}
 
@@ -80,6 +85,18 @@ public class GeneratedBuildings
 			LogicPorts logicPorts = go.AddOrGet<LogicPorts>();
 			logicPorts.inputPortInfo = ((def.LogicInputPorts != null) ? def.LogicInputPorts.ToArray() : null);
 			logicPorts.outputPortInfo = ((def.LogicOutputPorts != null) ? def.LogicOutputPorts.ToArray() : null);
+		}
+	}
+
+	public static void InitializeHighEnergyParticlePorts(GameObject go, BuildingDef def)
+	{
+		if (def.UseHighEnergyParticleInputPort || def.UseHighEnergyParticleOutputPort)
+		{
+			HighEnergyParticlePort highEnergyParticlePort = go.AddOrGet<HighEnergyParticlePort>();
+			highEnergyParticlePort.particleInputOffset = def.HighEnergyParticleInputOffset;
+			highEnergyParticlePort.particleOutputOffset = def.HighEnergyParticleOutputOffset;
+			highEnergyParticlePort.particleInputEnabled = def.UseHighEnergyParticleInputPort;
+			highEnergyParticlePort.particleOutputEnabled = def.UseHighEnergyParticleOutputPort;
 		}
 	}
 }

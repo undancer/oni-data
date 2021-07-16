@@ -126,7 +126,11 @@ public class AccessControlSideScreen : SideScreenContent
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		return target.GetComponent<AccessControl>() != null;
+		if (target.GetComponent<AccessControl>() != null)
+		{
+			return target.GetComponent<AccessControl>().controlEnabled;
+		}
+		return false;
 	}
 
 	public override void SetTarget(GameObject target)

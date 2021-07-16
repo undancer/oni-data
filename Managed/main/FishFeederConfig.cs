@@ -33,6 +33,8 @@ public class FishFeederConfig : IBuildingConfig
 		storage.showDescriptor = true;
 		storage.allowItemRemoval = false;
 		storage.allowSettingOnlyFetchMarkedItems = false;
+		storage.showCapacityStatusItem = true;
+		storage.showCapacityAsMainStatus = true;
 		Storage storage2 = go.AddComponent<Storage>();
 		storage2.capacityKg = 200f;
 		storage2.showInUI = true;
@@ -52,7 +54,10 @@ public class FishFeederConfig : IBuildingConfig
 	{
 		go.AddOrGetDef<StorageController.Def>();
 		go.AddOrGetDef<FishFeeder.Def>();
-		go.AddOrGetDef<MakeBaseSolid.Def>();
+		go.AddOrGetDef<MakeBaseSolid.Def>().solidOffsets = new CellOffset[1]
+		{
+			new CellOffset(0, 0)
+		};
 		SymbolOverrideControllerUtil.AddToPrefab(go);
 	}
 

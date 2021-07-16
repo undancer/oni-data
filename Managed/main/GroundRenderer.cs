@@ -259,6 +259,10 @@ public class GroundRenderer : KMonoBehaviour
 					int num9 = -1;
 					int biomeIdx = GetBiomeIdx(i * Grid.WidthInCells + j);
 					GroundMasks.BiomeMaskData biomeMaskData = biomeMasks[biomeIdx];
+					if (biomeMaskData == null)
+					{
+						biomeMaskData = biomeMasks[3];
+					}
 					for (int k = 0; k < uniqueElements.Length; k++)
 					{
 						Element element = uniqueElements[k];

@@ -135,7 +135,8 @@ public class BuildMenu : KScreen
 				new BuildingInfo("MetalTile", Action.BuildMenuKeyX),
 				new BuildingInfo("GlassTile", Action.BuildMenuKeyW),
 				new BuildingInfo("BunkerTile", Action.BuildMenuKeyB),
-				new BuildingInfo("CarpetTile", Action.BuildMenuKeyL)
+				new BuildingInfo("CarpetTile", Action.BuildMenuKeyL),
+				new BuildingInfo("ExobaseHeadquarters", Action.BuildMenuKeyP)
 			}),
 			new DisplayInfo(CacheHashString("Ladders"), "icon_category_base", Action.BuildCategoryLadders, KKeyCode.A, new List<BuildingInfo>
 			{
@@ -165,6 +166,7 @@ public class BuildMenu : KScreen
 				new BuildingInfo("ResearchCenter", Action.BuildMenuKeyR),
 				new BuildingInfo("AdvancedResearchCenter", Action.BuildMenuKeyS),
 				new BuildingInfo("CosmicResearchCenter", Action.BuildMenuKeyC),
+				new BuildingInfo("NuclearResearchCenter", Action.BuildMenuKeyN),
 				new BuildingInfo("Telescope", Action.BuildMenuKeyT)
 			})
 		}),
@@ -218,7 +220,8 @@ public class BuildMenu : KScreen
 				new BuildingInfo(ShowerConfig.ID, Action.BuildMenuKeyS),
 				new BuildingInfo("WashBasin", Action.BuildMenuKeyB),
 				new BuildingInfo("WashSink", Action.BuildMenuKeyW),
-				new BuildingInfo("HandSanitizer", Action.BuildMenuKeyA)
+				new BuildingInfo("HandSanitizer", Action.BuildMenuKeyA),
+				new BuildingInfo("DecontaminationShower", Action.BuildMenuKeyD)
 			}),
 			new DisplayInfo(CacheHashString("Furniture"), "icon_category_furniture", Action.BuildCategoryFurniture, KKeyCode.F, new List<BuildingInfo>
 			{
@@ -275,6 +278,7 @@ public class BuildMenu : KScreen
 				new BuildingInfo("ManualGenerator", Action.BuildMenuKeyG),
 				new BuildingInfo("Generator", Action.BuildMenuKeyC),
 				new BuildingInfo("WoodGasGenerator", Action.BuildMenuKeyW),
+				new BuildingInfo("NuclearReactor", Action.BuildMenuKeyN),
 				new BuildingInfo("HydrogenGenerator", Action.BuildMenuKeyD),
 				new BuildingInfo("MethaneGenerator", Action.BuildMenuKeyA),
 				new BuildingInfo("PetroleumGenerator", Action.BuildMenuKeyR),
@@ -318,7 +322,10 @@ public class BuildMenu : KScreen
 				new BuildingInfo("LiquidVent", Action.BuildMenuKeyV),
 				new BuildingInfo("LiquidFilter", Action.BuildMenuKeyF),
 				new BuildingInfo("LiquidConduitPreferentialFlow", Action.BuildMenuKeyW),
-				new BuildingInfo("LiquidConduitOverflow", Action.BuildMenuKeyR)
+				new BuildingInfo("LiquidConduitOverflow", Action.BuildMenuKeyR),
+				new BuildingInfo("LiquidLimitValve", Action.BuildMenuKeyC),
+				new BuildingInfo("ModularLaunchpadPortLiquid", Action.BuildMenuKeyM),
+				new BuildingInfo("ModularLaunchpadPortLiquidUnloader", Action.BuildMenuKeyU)
 			}),
 			new DisplayInfo(CacheHashString("Ventilation Structures"), "icon_category_ventilation", Action.BuildCategoryVentilationStructures, KKeyCode.V, new List<BuildingInfo>
 			{
@@ -332,7 +339,10 @@ public class BuildMenu : KScreen
 				new BuildingInfo("GasBottler", Action.BuildMenuKeyB),
 				new BuildingInfo("BottleEmptierGas", Action.BuildMenuKeyB),
 				new BuildingInfo("GasConduitPreferentialFlow", Action.BuildMenuKeyW),
-				new BuildingInfo("GasConduitOverflow", Action.BuildMenuKeyR)
+				new BuildingInfo("GasConduitOverflow", Action.BuildMenuKeyR),
+				new BuildingInfo("GasLimitValve", Action.BuildMenuKeyL),
+				new BuildingInfo("ModularLaunchpadPortGas", Action.BuildMenuKeyG),
+				new BuildingInfo("ModularLaunchpadPortGasUnloader", Action.BuildMenuKeyU)
 			})
 		}),
 		new DisplayInfo(CacheHashString("Industrial"), "icon_category_refinery", Action.Plan5, KKeyCode.None, new List<DisplayInfo>
@@ -340,6 +350,7 @@ public class BuildMenu : KScreen
 			new DisplayInfo(CacheHashString("Oxygen"), "icon_category_oxygen", Action.BuildCategoryOxygen, KKeyCode.X, new List<BuildingInfo>
 			{
 				new BuildingInfo("MineralDeoxidizer", Action.BuildMenuKeyX),
+				new BuildingInfo("SublimationStation", Action.BuildMenuKeyS),
 				new BuildingInfo("AlgaeHabitat", Action.BuildMenuKeyA),
 				new BuildingInfo("AirFilter", Action.BuildMenuKeyD),
 				new BuildingInfo("CO2Scrubber", Action.BuildMenuKeyC),
@@ -356,7 +367,8 @@ public class BuildMenu : KScreen
 				new BuildingInfo("LiquidConditioner", Action.BuildMenuKeyA),
 				new BuildingInfo("OreScrubber", Action.BuildMenuKeyC),
 				new BuildingInfo("ThermalBlock", Action.BuildMenuKeyF),
-				new BuildingInfo("ExteriorWall", Action.BuildMenuKeyD)
+				new BuildingInfo("ExteriorWall", Action.BuildMenuKeyD),
+				new BuildingInfo("HighEnergyParticleRedirector", Action.BuildMenuKeyP)
 			}),
 			new DisplayInfo(CacheHashString("Refining"), "icon_category_refinery", Action.BuildCategoryRefining, KKeyCode.R, new List<BuildingInfo>
 			{
@@ -364,6 +376,7 @@ public class BuildMenu : KScreen
 				new BuildingInfo("AlgaeDistillery", Action.BuildMenuKeyA),
 				new BuildingInfo("EthanolDistillery", Action.BuildMenuKeyX),
 				new BuildingInfo("RockCrusher", Action.BuildMenuKeyG),
+				new BuildingInfo("SludgePress", Action.BuildMenuKeyP),
 				new BuildingInfo("Kiln", Action.BuildMenuKeyZ),
 				new BuildingInfo("OilWellCap", Action.BuildMenuKeyC),
 				new BuildingInfo("OilRefinery", Action.BuildMenuKeyR),
@@ -371,7 +384,8 @@ public class BuildMenu : KScreen
 				new BuildingInfo("MetalRefinery", Action.BuildMenuKeyT),
 				new BuildingInfo("GlassForge", Action.BuildMenuKeyF),
 				new BuildingInfo("OxyliteRefinery", Action.BuildMenuKeyO),
-				new BuildingInfo("SupermaterialRefinery", Action.BuildMenuKeyS)
+				new BuildingInfo("SupermaterialRefinery", Action.BuildMenuKeyS),
+				new BuildingInfo("UraniumCentrifuge", Action.BuildMenuKeyU)
 			}),
 			new DisplayInfo(CacheHashString("Equipment"), "icon_category_misc", Action.BuildCategoryEquipment, KKeyCode.S, new List<BuildingInfo>
 			{
@@ -380,12 +394,17 @@ public class BuildMenu : KScreen
 				new BuildingInfo("PowerControlStation", Action.BuildMenuKeyC),
 				new BuildingInfo("AstronautTrainingCenter", Action.BuildMenuKeyA),
 				new BuildingInfo("ResetSkillsStation", Action.BuildMenuKeyR),
+				new BuildingInfo("CraftingTable", Action.BuildMenuKeyZ),
+				new BuildingInfo("OxygenMaskMarker", Action.BuildMenuKeyQ),
+				new BuildingInfo("OxygenMaskLocker", Action.BuildMenuKeyY),
 				new BuildingInfo("ClothingFabricator", Action.BuildMenuKeyT),
 				new BuildingInfo("SuitFabricator", Action.BuildMenuKeyX),
 				new BuildingInfo("SuitMarker", Action.BuildMenuKeyE),
 				new BuildingInfo("SuitLocker", Action.BuildMenuKeyD),
 				new BuildingInfo("JetSuitMarker", Action.BuildMenuKeyJ),
-				new BuildingInfo("JetSuitLocker", Action.BuildMenuKeyO)
+				new BuildingInfo("JetSuitLocker", Action.BuildMenuKeyO),
+				new BuildingInfo("LeadSuitMarker", Action.BuildMenuKeyE),
+				new BuildingInfo("LeadSuitLocker", Action.BuildMenuKeyD)
 			}),
 			new DisplayInfo(CacheHashString("Rocketry"), "icon_category_rocketry", Action.BuildCategoryRocketry, KKeyCode.C, new List<BuildingInfo>
 			{
@@ -401,7 +420,9 @@ public class BuildMenu : KScreen
 				new BuildingInfo("CommandModule", Action.BuildMenuKeyC),
 				new BuildingInfo("TouristModule", Action.BuildMenuKeyY),
 				new BuildingInfo("ResearchModule", Action.BuildMenuKeyR),
-				new BuildingInfo("HydrogenEngine", Action.BuildMenuKeyH)
+				new BuildingInfo("HydrogenEngine", Action.BuildMenuKeyH),
+				new BuildingInfo("RailGun", Action.BuildMenuKeyP),
+				new BuildingInfo("LandingBeacon", Action.BuildMenuKeyL)
 			})
 		}),
 		new DisplayInfo(CacheHashString("Logistics"), "icon_category_ventilation", Action.Plan6, KKeyCode.None, new List<DisplayInfo>
@@ -420,8 +441,11 @@ public class BuildMenu : KScreen
 				new BuildingInfo("SolidConduitOutbox", Action.BuildMenuKeyO),
 				new BuildingInfo("SolidVent", Action.BuildMenuKeyV),
 				new BuildingInfo("SolidLogicValve", Action.BuildMenuKeyL),
+				new BuildingInfo("SolidLimitValve", Action.BuildMenuKeyD),
 				new BuildingInfo("SolidConduitBridge", Action.BuildMenuKeyB),
-				new BuildingInfo("AutoMiner", Action.BuildMenuKeyM)
+				new BuildingInfo("AutoMiner", Action.BuildMenuKeyM),
+				new BuildingInfo("ModularLaunchpadPortSolid", Action.BuildMenuKeyS),
+				new BuildingInfo("ModularLaunchpadPortSolidUnloader", Action.BuildMenuKeyU)
 			}),
 			new DisplayInfo(CacheHashString("LogicWiring"), "icon_category_automation", Action.BuildCategoryLogicWiring, KKeyCode.W, new List<BuildingInfo>
 			{

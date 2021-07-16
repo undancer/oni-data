@@ -26,7 +26,6 @@ public class HotTubConfig : IBuildingConfig
 			"Metal",
 			"BuildingWood"
 		}, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER3);
-		obj.DlcId = "PACK1";
 		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
 		obj.ViewMode = OverlayModes.LiquidConduits.ID;
 		obj.Floodable = true;

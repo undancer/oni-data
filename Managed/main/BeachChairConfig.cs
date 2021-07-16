@@ -22,7 +22,6 @@ public class BeachChairConfig : IBuildingConfig
 			"BuildableRaw",
 			"BuildingFiber"
 		}, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER4);
-		obj.DlcId = "PACK1";
 		obj.Floodable = true;
 		obj.AudioCategory = "Metal";
 		obj.Overheatable = true;

@@ -152,28 +152,28 @@ public class StatusItemRenderer
 				{
 					return;
 				}
-				int cell = Grid.PosToCell(vector);
-				if ((Grid.IsValidCell(cell) && !Grid.IsVisible(cell)) || !transform.GetComponent<KSelectable>().IsSelectable)
+				int num = Grid.PosToCell(vector);
+				if ((Grid.IsValidCell(num) && (!Grid.IsVisible(num) || Grid.WorldIdx[num] != ClusterManager.Instance.activeWorldId)) || !transform.GetComponent<KSelectable>().IsSelectable)
 				{
 					return;
 				}
 				renderer.visibleEntries.Add(this);
 				if (dirty)
 				{
-					int num = 0;
+					int num2 = 0;
 					foreach (StatusItem statusItem2 in statusItems)
 					{
 						if (statusItem2.UseConditionalCallback(overlay, transform) || !(overlay != OverlayModes.None.ID) || !(statusItem2.render_overlay != overlay))
 						{
-							num++;
+							num2++;
 						}
 					}
-					hasVisibleStatusItems = num != 0;
-					MeshBuilder meshBuilder = new MeshBuilder(num + 6, material);
-					float num2 = 0.25f;
+					hasVisibleStatusItems = num2 != 0;
+					MeshBuilder meshBuilder = new MeshBuilder(num2 + 6, material);
+					float num3 = 0.25f;
 					float z = -5f;
 					Vector2 b = new Vector2(0.05f, -0.05f);
-					float num3 = 0.02f;
+					float num4 = 0.02f;
 					Color32 c = new Color32(0, 0, 0, byte.MaxValue);
 					Color32 c2 = new Color32(0, 0, 0, 75);
 					Color32 c3 = renderer.neutralColor;
@@ -193,22 +193,28 @@ public class StatusItemRenderer
 						}
 					}
 					meshBuilder.AddQuad(new Vector2(0f, 0.29f) + b, new Vector2(0.05f, 0.05f), z, renderer.arrowSprite, c2);
-					meshBuilder.AddQuad(new Vector2(0f, 0f) + b, new Vector2(num2 * (float)num, num2), z, renderer.backgroundSprite, c2);
-					meshBuilder.AddQuad(new Vector2(0f, 0f), new Vector2(num2 * (float)num + num3, num2 + num3), z, renderer.backgroundSprite, c);
-					meshBuilder.AddQuad(new Vector2(0f, 0f), new Vector2(num2 * (float)num, num2), z, renderer.backgroundSprite, c3);
-					int num4 = 0;
+					meshBuilder.AddQuad(new Vector2(0f, 0f) + b, new Vector2(num3 * (float)num2, num3), z, renderer.backgroundSprite, c2);
+					meshBuilder.AddQuad(new Vector2(0f, 0f), new Vector2(num3 * (float)num2 + num4, num3 + num4), z, renderer.backgroundSprite, c);
+					meshBuilder.AddQuad(new Vector2(0f, 0f), new Vector2(num3 * (float)num2, num3), z, renderer.backgroundSprite, c3);
+					int num5 = 0;
 					for (int j = 0; j < statusItems.Count; j++)
 					{
 						StatusItem statusItem = statusItems[j];
 						if (statusItem.UseConditionalCallback(overlay, transform) || !(overlay != OverlayModes.None.ID) || !(statusItem.render_overlay != overlay))
 						{
-							float x = (float)num4 * num2 * 2f - num2 * (float)(num - 1);
+							float x = (float)num5 * num3 * 2f - num3 * (float)(num2 - 1);
+							if (statusItems[j].sprite == null)
+							{
+								DebugUtil.DevLogError("Status Item " + statusItems[j].Id + " has null sprite for icon '" + statusItems[j].iconName + "', you need to add the sprite to the TintedSprites list in the GameAssets prefab manually.");
+								statusItems[j].iconName = "status_item_exclamation";
+								statusItems[j].sprite = Assets.GetTintedSprite("status_item_exclamation");
+							}
 							Sprite sprite = statusItems[j].sprite.sprite;
-							meshBuilder.AddQuad(new Vector2(x, 0f), new Vector2(num2, num2), z, sprite, c);
-							num4++;
+							meshBuilder.AddQuad(new Vector2(x, 0f), new Vector2(num3, num3), z, sprite, c);
+							num5++;
 						}
 					}
-					meshBuilder.AddQuad(new Vector2(0f, 0.29f + num3), new Vector2(0.05f + num3, 0.05f + num3), z, renderer.arrowSprite, c);
+					meshBuilder.AddQuad(new Vector2(0f, 0.29f + num4), new Vector2(0.05f + num4, 0.05f + num4), z, renderer.arrowSprite, c);
 					meshBuilder.AddQuad(new Vector2(0f, 0.29f), new Vector2(0.05f, 0.05f), z, renderer.arrowSprite, c3);
 					meshBuilder.End(mesh);
 					dirty = false;

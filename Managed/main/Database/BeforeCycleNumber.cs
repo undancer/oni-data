@@ -1,10 +1,9 @@
-using System.IO;
 using STRINGS;
 using UnityEngine;
 
 namespace Database
 {
-	public class BeforeCycleNumber : ColonyAchievementRequirement
+	public class BeforeCycleNumber : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		private int cycleNumber;
 
@@ -23,12 +22,7 @@ namespace Database
 			return !Success();
 		}
 
-		public override void Serialize(BinaryWriter writer)
-		{
-			writer.Write(cycleNumber);
-		}
-
-		public override void Deserialize(IReader reader)
+		public void Deserialize(IReader reader)
 		{
 			cycleNumber = reader.ReadInt32();
 		}

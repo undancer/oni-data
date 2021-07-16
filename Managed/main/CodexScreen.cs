@@ -232,7 +232,7 @@ public class CodexScreen : KScreen
 
 	public override float GetSortKey()
 	{
-		return 10000f;
+		return 50f;
 	}
 
 	private void CodexScreenInit()
@@ -287,6 +287,10 @@ public class CodexScreen : KScreen
 		input = input.ToLower();
 		foreach (KeyValuePair<string, CodexEntry> entry in CodexCache.entries)
 		{
+			if (!DlcManager.IsDlcListValidForCurrentContent(entry.Value.GetDlcIds()))
+			{
+				continue;
+			}
 			if (input == "")
 			{
 				if (!entry.Value.searchOnly)

@@ -73,6 +73,18 @@ public class MonumentTopConfig : IBuildingConfig
 			monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_o", "lightbug"));
 			monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_p", "slickster"));
 			monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_q", "pacu"));
+			if (DlcManager.IsExpansion1Active())
+			{
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_r", "bee"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_s", "critter"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_t", "caterpillar"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_u", "worm"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_v", "scout_bot"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_w", "MiMa"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_x", "Stinky"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_y", "Harold"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_z", "Nails"));
+			}
 		};
 	}
 }

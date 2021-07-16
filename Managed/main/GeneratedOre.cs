@@ -10,37 +10,42 @@ public class GeneratedOre
 		HashSet<SimHashes> hashSet = new HashSet<SimHashes>();
 		foreach (Type type in types)
 		{
-			if (typeFromHandle.IsAssignableFrom(type) && !type.IsAbstract && !type.IsInterface)
+			if (!typeFromHandle.IsAssignableFrom(type) || type.IsAbstract || type.IsInterface)
 			{
-				IOreConfig obj = Activator.CreateInstance(type) as IOreConfig;
-				SimHashes elementID = obj.ElementID;
+				continue;
+			}
+			IOreConfig oreConfig = Activator.CreateInstance(type) as IOreConfig;
+			SimHashes elementID = oreConfig.ElementID;
+			Element element = ElementLoader.FindElementByHash(elementID);
+			if (element != null && DlcManager.IsContentActive(element.dlcId))
+			{
 				if (elementID != SimHashes.Void)
 				{
 					hashSet.Add(elementID);
 				}
-				Assets.AddPrefab(obj.CreatePrefab().GetComponent<KPrefabID>());
+				Assets.AddPrefab(oreConfig.CreatePrefab().GetComponent<KPrefabID>());
 			}
 		}
-		foreach (Element element in ElementLoader.elements)
+		foreach (Element element2 in ElementLoader.elements)
 		{
-			if (element == null || hashSet.Contains(element.id))
+			if (element2 == null || hashSet.Contains(element2.id) || !DlcManager.IsContentActive(element2.dlcId))
 			{
 				continue;
 			}
-			if (element.substance != null && element.substance.anim != null)
+			if (element2.substance != null && element2.substance.anim != null)
 			{
 				GameObject gameObject = null;
-				if (element.IsSolid)
+				if (element2.IsSolid)
 				{
-					gameObject = EntityTemplates.CreateSolidOreEntity(element.id);
+					gameObject = EntityTemplates.CreateSolidOreEntity(element2.id);
 				}
-				else if (element.IsLiquid)
+				else if (element2.IsLiquid)
 				{
-					gameObject = EntityTemplates.CreateLiquidOreEntity(element.id);
+					gameObject = EntityTemplates.CreateLiquidOreEntity(element2.id);
 				}
-				else if (element.IsGas)
+				else if (element2.IsGas)
 				{
-					gameObject = EntityTemplates.CreateGasOreEntity(element.id);
+					gameObject = EntityTemplates.CreateGasOreEntity(element2.id);
 				}
 				if (gameObject != null)
 				{
@@ -49,7 +54,7 @@ public class GeneratedOre
 			}
 			else
 			{
-				Debug.LogError("Missing substance or anim for element [" + element.name + "]");
+				Debug.LogError("Missing substance or anim for element [" + element2.name + "]");
 			}
 		}
 	}

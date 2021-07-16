@@ -17,6 +17,8 @@ namespace Klei.AI
 
 		public Action<GameObject> OnAddTrait;
 
+		public Func<string> TooltipCB;
+
 		public Func<string> ExtendedTooltip;
 
 		public ChoreGroup[] disabledChoreGroups;
@@ -45,7 +47,15 @@ namespace Klei.AI
 
 		public string GetTooltip()
 		{
-			return string.Concat(string.Concat(string.Concat(description + GetAttributeModifiersString(list_entry: true), GetDisabledChoresString(list_entry: true)), GetIgnoredEffectsString(list_entry: true)), GetExtendedTooltipStr());
+			if (TooltipCB != null)
+			{
+				return TooltipCB();
+			}
+			string description = base.description;
+			description += GetAttributeModifiersString(list_entry: true);
+			description += GetDisabledChoresString(list_entry: true);
+			description += GetIgnoredEffectsString(list_entry: true);
+			return description + GetExtendedTooltipStr();
 		}
 
 		public string GetAttributeModifiersString(bool list_entry)
@@ -58,7 +68,7 @@ namespace Klei.AI
 				{
 					text += DUPLICANTS.TRAITS.TRAIT_DESCRIPTION_LIST_ENTRY;
 				}
-				text += string.Format(DUPLICANTS.TRAITS.ATTRIBUTE_MODIFIERS, attribute.Name, selfModifier.GetFormattedString(null));
+				text += string.Format(DUPLICANTS.TRAITS.ATTRIBUTE_MODIFIERS, attribute.Name, selfModifier.GetFormattedString());
 			}
 			return text;
 		}

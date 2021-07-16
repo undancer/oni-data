@@ -1,10 +1,8 @@
-using System.IO;
-using KSerialization;
 using STRINGS;
 
 namespace Database
 {
-	public class BuildRoomType : ColonyAchievementRequirement
+	public class BuildRoomType : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		private RoomType roomType;
 
@@ -25,12 +23,7 @@ namespace Database
 			return false;
 		}
 
-		public override void Serialize(BinaryWriter writer)
-		{
-			writer.WriteKleiString(roomType.Id);
-		}
-
-		public override void Deserialize(IReader reader)
+		public void Deserialize(IReader reader)
 		{
 			string id = reader.ReadKleiString();
 			roomType = Db.Get().RoomTypes.Get(id);

@@ -65,7 +65,7 @@ public class LogicCircuitNetwork : UtilityNetwork
 
 	public ReadOnlyCollection<ILogicEventReceiver> Receivers => receivers.AsReadOnly();
 
-	public override void AddItem(int cell, object item)
+	public override void AddItem(object item)
 	{
 		if (item is LogicWire)
 		{
@@ -91,7 +91,7 @@ public class LogicCircuitNetwork : UtilityNetwork
 		}
 	}
 
-	public override void RemoveItem(int cell, object item)
+	public override void RemoveItem(object item)
 	{
 		if (item is LogicWire)
 		{
@@ -110,7 +110,7 @@ public class LogicCircuitNetwork : UtilityNetwork
 		}
 	}
 
-	public override void ConnectItem(int cell, object item)
+	public override void ConnectItem(object item)
 	{
 		if (item is ILogicEventReceiver)
 		{
@@ -122,7 +122,7 @@ public class LogicCircuitNetwork : UtilityNetwork
 		}
 	}
 
-	public override void DisconnectItem(int cell, object item)
+	public override void DisconnectItem(object item)
 	{
 		if (item is ILogicEventReceiver)
 		{
@@ -346,7 +346,7 @@ public class LogicCircuitNetwork : UtilityNetwork
 			if (overloadedNotification == null)
 			{
 				timeOverloadNotificationDisplayed = 0f;
-				overloadedNotification = new Notification(MISC.NOTIFICATIONS.LOGIC_CIRCUIT_OVERLOADED.NAME, NotificationType.BadMinor, HashedString.Invalid, null, null, expires: true, 0f, null, null, targetOverloadedWire.transform);
+				overloadedNotification = new Notification(MISC.NOTIFICATIONS.LOGIC_CIRCUIT_OVERLOADED.NAME, NotificationType.BadMinor, null, null, expires: true, 0f, null, null, targetOverloadedWire.transform);
 				Game.Instance.FindOrAdd<Notifier>().Add(overloadedNotification);
 			}
 		}

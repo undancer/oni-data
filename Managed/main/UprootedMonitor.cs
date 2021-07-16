@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using KSerialization;
 using UnityEngine;
 
@@ -6,17 +7,18 @@ public class UprootedMonitor : KMonoBehaviour
 {
 	private int position;
 
-	private int ground;
-
 	[Serialize]
 	public bool canBeUprooted = true;
 
 	[Serialize]
 	private bool uprooted;
 
-	public CellOffset monitorCell = new CellOffset(0, -1);
+	public CellOffset[] monitorCells = new CellOffset[1]
+	{
+		new CellOffset(0, -1)
+	};
 
-	private HandleVector<int>.Handle partitionerEntry;
+	private List<HandleVector<int>.Handle> partitionerEntries = new List<HandleVector<int>.Handle>();
 
 	private static readonly EventSystem.IntraObjectHandler<UprootedMonitor> OnUprootedDelegate = new EventSystem.IntraObjectHandler<UprootedMonitor>(delegate(UprootedMonitor component, object data)
 	{
@@ -45,17 +47,25 @@ public class UprootedMonitor : KMonoBehaviour
 		base.OnSpawn();
 		Subscribe(-216549700, OnUprootedDelegate);
 		position = Grid.PosToCell(base.gameObject);
-		ground = Grid.OffsetCell(position, monitorCell);
-		if (Grid.IsValidCell(position) && Grid.IsValidCell(ground))
+		CellOffset[] array = monitorCells;
+		foreach (CellOffset offset in array)
 		{
-			partitionerEntry = GameScenePartitioner.Instance.Add("UprootedMonitor.OnSpawn", base.gameObject, ground, GameScenePartitioner.Instance.solidChangedLayer, OnGroundChanged);
+			int cell = Grid.OffsetCell(position, offset);
+			if (Grid.IsValidCell(position) && Grid.IsValidCell(cell))
+			{
+				partitionerEntries.Add(GameScenePartitioner.Instance.Add("UprootedMonitor.OnSpawn", base.gameObject, cell, GameScenePartitioner.Instance.solidChangedLayer, OnGroundChanged));
+			}
+			OnGroundChanged(null);
 		}
-		OnGroundChanged(null);
 	}
 
 	protected override void OnCleanUp()
 	{
-		GameScenePartitioner.Instance.Free(ref partitionerEntry);
+		foreach (HandleVector<int>.Handle partitionerEntry in partitionerEntries)
+		{
+			HandleVector<int>.Handle handle = partitionerEntry;
+			GameScenePartitioner.Instance.Free(ref handle);
+		}
 		base.OnCleanUp();
 	}
 
@@ -69,40 +79,43 @@ public class UprootedMonitor : KMonoBehaviour
 		{
 			return false;
 		}
-		if (!IsCellSafe(position))
+		if (!IsSuitableFoundation(position))
 		{
 			return false;
 		}
 		return true;
 	}
 
-	public bool IsCellSafe(int cell)
+	public bool IsSuitableFoundation(int cell)
 	{
-		if (!Grid.IsCellOffsetValid(cell, monitorCell))
+		bool flag = true;
+		CellOffset[] array = monitorCells;
+		foreach (CellOffset offset in array)
 		{
-			return false;
+			if (!Grid.IsCellOffsetValid(cell, offset))
+			{
+				return false;
+			}
+			int i2 = Grid.OffsetCell(cell, offset);
+			flag = Grid.Solid[i2];
+			if (!flag)
+			{
+				break;
+			}
 		}
-		int i = Grid.OffsetCell(cell, monitorCell);
-		return Grid.Solid[i];
+		return flag;
 	}
 
 	public void OnGroundChanged(object callbackData)
 	{
 		if (!CheckTileGrowable())
 		{
-			GetComponent<KPrefabID>().AddTag(GameTags.Uprooted);
 			uprooted = true;
+		}
+		if (uprooted)
+		{
+			GetComponent<KPrefabID>().AddTag(GameTags.Uprooted);
 			Trigger(-216549700);
 		}
-	}
-
-	public static bool IsObjectUprooted(GameObject plant)
-	{
-		UprootedMonitor component = plant.GetComponent<UprootedMonitor>();
-		if (component == null)
-		{
-			return false;
-		}
-		return component.IsUprooted;
 	}
 }

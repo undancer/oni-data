@@ -32,6 +32,11 @@ public class GameScheduler : KMonoBehaviour, IScheduler
 		return scheduler.Schedule(name, time, callback, callback_data, group);
 	}
 
+	public SchedulerHandle ScheduleNextFrame(string name, Action<object> callback, object callback_data = null, SchedulerGroup group = null)
+	{
+		return scheduler.Schedule(name, 0f, callback, callback_data, group);
+	}
+
 	private void Update()
 	{
 		scheduler.Update();

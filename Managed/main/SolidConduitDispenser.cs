@@ -4,7 +4,7 @@ using UnityEngine;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 [AddComponentMenu("KMonoBehaviour/scripts/SolidConduitDispenser")]
-public class SolidConduitDispenser : KMonoBehaviour, ISaveLoadable
+public class SolidConduitDispenser : KMonoBehaviour, ISaveLoadable, IConduitDispenser
 {
 	[SerializeField]
 	public SimHashes[] elementFilter;
@@ -14,6 +14,12 @@ public class SolidConduitDispenser : KMonoBehaviour, ISaveLoadable
 
 	[SerializeField]
 	public bool alwaysDispense;
+
+	[SerializeField]
+	public bool useSecondaryOutput;
+
+	[SerializeField]
+	public bool solidOnly;
 
 	private static readonly Operational.Flag outputConduitFlag = new Operational.Flag("output_conduit", Operational.Flag.Type.Functional);
 
@@ -31,7 +37,9 @@ public class SolidConduitDispenser : KMonoBehaviour, ISaveLoadable
 
 	private int round_robin_index;
 
-	private const float MaxMass = 20f;
+	public Storage Storage => storage;
+
+	public ConduitType ConduitType => ConduitType.Solid;
 
 	public SolidConduitFlow.ConduitContents ConduitContents => GetConduitFlow().GetContents(utilityCell);
 
@@ -58,7 +66,7 @@ public class SolidConduitDispenser : KMonoBehaviour, ISaveLoadable
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		utilityCell = GetComponent<Building>().GetUtilityOutputCell();
+		utilityCell = GetOutputCell();
 		ScenePartitionerLayer layer = GameScenePartitioner.Instance.objectLayers[20];
 		partitionerEntry = GameScenePartitioner.Instance.Add("SolidConduitConsumer.OnSpawn", base.gameObject, utilityCell, layer, OnConduitConnectionChanged);
 		GetConduitFlow().AddConduitUpdater(ConduitUpdate, ConduitFlowPriority.Dispense);
@@ -103,15 +111,31 @@ public class SolidConduitDispenser : KMonoBehaviour, ISaveLoadable
 		dispensing = flag;
 	}
 
+	private bool isSolid(GameObject o)
+	{
+		PrimaryElement component = o.GetComponent<PrimaryElement>();
+		if (!(component == null) && !component.Element.IsLiquid)
+		{
+			return component.Element.IsGas;
+		}
+		return true;
+	}
+
 	private Pickupable FindSuitableItem()
 	{
-		List<GameObject> items = storage.items;
-		if (items.Count < 1)
+		List<GameObject> list = storage.items;
+		if (solidOnly)
+		{
+			List<GameObject> list2 = new List<GameObject>(list);
+			list2.RemoveAll(isSolid);
+			list = list2;
+		}
+		if (list.Count < 1)
 		{
 			return null;
 		}
-		round_robin_index %= items.Count;
-		GameObject gameObject = items[round_robin_index];
+		round_robin_index %= list.Count;
+		GameObject gameObject = list[round_robin_index];
 		round_robin_index++;
 		if (!gameObject)
 		{
@@ -125,5 +149,16 @@ public class SolidConduitDispenser : KMonoBehaviour, ISaveLoadable
 		GameObject gameObject = Grid.Objects[utilityCell, 20];
 		SolidConduit solidConduit = ((gameObject != null) ? gameObject.GetComponent<SolidConduit>() : null);
 		return ((solidConduit != null) ? solidConduit.GetNetwork() : null)?.id ?? (-1);
+	}
+
+	private int GetOutputCell()
+	{
+		Building component = GetComponent<Building>();
+		if (useSecondaryOutput)
+		{
+			ISecondaryOutput component2 = GetComponent<ISecondaryOutput>();
+			return Grid.OffsetCell(component.NaturalBuildingCell(), component2.GetSecondaryConduitOffset(ConduitType.Solid));
+		}
+		return component.GetUtilityOutputCell();
 	}
 }

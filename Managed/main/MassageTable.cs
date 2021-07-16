@@ -125,6 +125,7 @@ public class MassageTable : RelaxationPoint, IGameObjectEffectDescriptor, IActiv
 	protected override WorkChore<RelaxationPoint> CreateWorkChore()
 	{
 		WorkChore<RelaxationPoint> workChore = new WorkChore<RelaxationPoint>(Db.Get().ChoreTypes.StressHeal, this, null, run_until_complete: true, null, null, null, allow_in_red_alert: false, null, ignore_schedule_block: true, only_when_operational: true, null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, PriorityScreen.PriorityClass.high);
+		workChore.AddPrecondition(ChorePreconditions.instance.IsNotARobot, this);
 		workChore.AddPrecondition(IsStressAboveActivationRange, this);
 		return workChore;
 	}

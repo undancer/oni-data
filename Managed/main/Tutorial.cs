@@ -29,6 +29,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 		TM_Power,
 		TM_Insulation,
 		TM_Plumbing,
+		TM_Radiation,
 		TM_COUNT
 	}
 
@@ -76,6 +77,8 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 	public List<GameObject> oxygenGenerators = new List<GameObject>();
 
 	private int focusedOxygenGenerator;
+
+	private int focusedUnrefrigFood = -1;
 
 	public static Tutorial Instance
 	{
@@ -125,10 +128,10 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 	{
 		if (notifierPosition == Vector3.zero)
 		{
-			GameObject telepad = GameUtil.GetTelepad();
-			if (telepad != null)
+			GameObject activeTelepad = GameUtil.GetActiveTelepad();
+			if (activeTelepad != null)
 			{
-				notifierPosition = telepad.transform.GetPosition();
+				notifierPosition = activeTelepad.transform.GetPosition();
 			}
 		}
 		notifier.transform.SetPosition(notifierPosition);
@@ -144,7 +147,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 	{
 		if (tutorialMessagesRemaining.Count == 0)
 		{
-			for (int i = 0; i <= 19; i++)
+			for (int i = 0; i <= 20; i++)
 			{
 				tutorialMessagesRemaining.Add((TutorialMessages)i);
 			}
@@ -152,7 +155,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 		List<Item> list = new List<Item>();
 		list.Add(new Item
 		{
-			notification = new Notification(MISC.NOTIFICATIONS.NEEDTOILET.NAME, NotificationType.Tutorial, HashedString.Invalid, (List<Notification> n, object d) => MISC.NOTIFICATIONS.NEEDTOILET.TOOLTIP.text, null, expires: true, 5f, delegate
+			notification = new Notification(MISC.NOTIFICATIONS.NEEDTOILET.NAME, NotificationType.Tutorial, (List<Notification> n, object d) => MISC.NOTIFICATIONS.NEEDTOILET.TOOLTIP.text, null, expires: true, 5f, delegate
 			{
 				PlanScreen.Instance.OpenCategoryByName("Plumbing");
 			}),
@@ -162,7 +165,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 		List<Item> list2 = new List<Item>();
 		list2.Add(new Item
 		{
-			notification = new Notification(MISC.NOTIFICATIONS.NEEDFOOD.NAME, NotificationType.Tutorial, HashedString.Invalid, (List<Notification> n, object d) => MISC.NOTIFICATIONS.NEEDFOOD.TOOLTIP.text, null, expires: true, 20f, delegate
+			notification = new Notification(MISC.NOTIFICATIONS.NEEDFOOD.NAME, NotificationType.Tutorial, (List<Notification> n, object d) => MISC.NOTIFICATIONS.NEEDFOOD.TOOLTIP.text, null, expires: true, 20f, delegate
 			{
 				PlanScreen.Instance.OpenCategoryByName("Food");
 			}),
@@ -170,13 +173,13 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 		});
 		list2.Add(new Item
 		{
-			notification = new Notification(MISC.NOTIFICATIONS.THERMALCOMFORT.NAME, NotificationType.Tutorial, HashedString.Invalid, (List<Notification> n, object d) => MISC.NOTIFICATIONS.THERMALCOMFORT.TOOLTIP.text)
+			notification = new Notification(MISC.NOTIFICATIONS.THERMALCOMFORT.NAME, NotificationType.Tutorial, (List<Notification> n, object d) => MISC.NOTIFICATIONS.THERMALCOMFORT.TOOLTIP.text)
 		});
 		itemTree.Add(list2);
 		List<Item> list3 = new List<Item>();
 		list3.Add(new Item
 		{
-			notification = new Notification(MISC.NOTIFICATIONS.HYGENE_NEEDED.NAME, NotificationType.Tutorial, HashedString.Invalid, (List<Notification> n, object d) => MISC.NOTIFICATIONS.HYGENE_NEEDED.TOOLTIP, null, expires: true, 20f, delegate
+			notification = new Notification(MISC.NOTIFICATIONS.HYGENE_NEEDED.NAME, NotificationType.Tutorial, (List<Notification> n, object d) => MISC.NOTIFICATIONS.HYGENE_NEEDED.TOOLTIP, null, expires: true, 20f, delegate
 			{
 				PlanScreen.Instance.OpenCategoryByName("Medicine");
 			}),
@@ -185,7 +188,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 		itemTree.Add(list3);
 		warningItems.Add(new Item
 		{
-			notification = new Notification(MISC.NOTIFICATIONS.NO_OXYGEN_GENERATOR.NAME, NotificationType.Tutorial, HashedString.Invalid, (List<Notification> n, object d) => MISC.NOTIFICATIONS.NO_OXYGEN_GENERATOR.TOOLTIP, null, expires: false, 0f, delegate
+			notification = new Notification(MISC.NOTIFICATIONS.NO_OXYGEN_GENERATOR.NAME, NotificationType.Tutorial, (List<Notification> n, object d) => MISC.NOTIFICATIONS.NO_OXYGEN_GENERATOR.TOOLTIP, null, expires: false, 0f, delegate
 			{
 				PlanScreen.Instance.OpenCategoryByName("Oxygen");
 			}),
@@ -195,7 +198,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 		});
 		warningItems.Add(new Item
 		{
-			notification = new Notification(MISC.NOTIFICATIONS.INSUFFICIENTOXYGENLASTCYCLE.NAME, NotificationType.Tutorial, HashedString.Invalid, OnOxygenTooltip, null, expires: false, 0f, delegate
+			notification = new Notification(MISC.NOTIFICATIONS.INSUFFICIENTOXYGENLASTCYCLE.NAME, NotificationType.Tutorial, OnOxygenTooltip, null, expires: false, 0f, delegate
 			{
 				ZoomToNextOxygenGenerator();
 			}),
@@ -206,9 +209,9 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 		});
 		warningItems.Add(new Item
 		{
-			notification = new Notification(MISC.NOTIFICATIONS.UNREFRIGERATEDFOOD.NAME, NotificationType.Tutorial, HashedString.Invalid, UnrefrigeratedFoodTooltip, null, expires: false, 0f, delegate
+			notification = new Notification(MISC.NOTIFICATIONS.UNREFRIGERATEDFOOD.NAME, NotificationType.Tutorial, UnrefrigeratedFoodTooltip, null, expires: false, 0f, delegate
 			{
-				PlanScreen.Instance.OpenCategoryByName("Food");
+				ZoomToNextUnrefrigeratedFood();
 			}),
 			requirementSatisfied = FoodIsRefrigerated,
 			minTimeToNotify = 6f,
@@ -216,17 +219,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 		});
 		warningItems.Add(new Item
 		{
-			notification = new Notification(MISC.NOTIFICATIONS.FOODLOW.NAME, NotificationType.Bad, HashedString.Invalid, OnLowFoodTooltip, null, expires: false, 0f, delegate
-			{
-				PlanScreen.Instance.OpenCategoryByName("Food");
-			}),
-			requirementSatisfied = EnoughFood,
-			minTimeToNotify = 10f,
-			lastNotifyTime = 0f
-		});
-		warningItems.Add(new Item
-		{
-			notification = new Notification(MISC.NOTIFICATIONS.NO_MEDICAL_COTS.NAME, NotificationType.Bad, HashedString.Invalid, (List<Notification> n, object o) => MISC.NOTIFICATIONS.NO_MEDICAL_COTS.TOOLTIP, null, expires: false, 0f, delegate
+			notification = new Notification(MISC.NOTIFICATIONS.NO_MEDICAL_COTS.NAME, NotificationType.Bad, (List<Notification> n, object o) => MISC.NOTIFICATIONS.NO_MEDICAL_COTS.TOOLTIP, null, expires: false, 0f, delegate
 			{
 				PlanScreen.Instance.OpenCategoryByName("Medicine");
 			}),
@@ -236,7 +229,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 		});
 		warningItems.Add(new Item
 		{
-			notification = new Notification(string.Format(UI.ENDOFDAYREPORT.TRAVELTIMEWARNING.WARNING_TITLE), NotificationType.BadMinor, HashedString.Invalid, (List<Notification> n, object d) => string.Format(UI.ENDOFDAYREPORT.TRAVELTIMEWARNING.WARNING_MESSAGE, GameUtil.GetFormattedPercent(40f)), null, expires: true, 0f, delegate
+			notification = new Notification(string.Format(UI.ENDOFDAYREPORT.TRAVELTIMEWARNING.WARNING_TITLE), NotificationType.BadMinor, (List<Notification> n, object d) => string.Format(UI.ENDOFDAYREPORT.TRAVELTIMEWARNING.WARNING_MESSAGE, GameUtil.GetFormattedPercent(40f)), null, expires: true, 0f, delegate
 			{
 				ManagementMenu.Instance.OpenReports(GameClock.Instance.GetCycle());
 			}),
@@ -309,6 +302,9 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 		case TutorialMessages.TM_Plumbing:
 			message = new TutorialMessage(TutorialMessages.TM_Plumbing, MISC.NOTIFICATIONS.PLUMBING.NAME, MISC.NOTIFICATIONS.PLUMBING.MESSAGEBODY, MISC.NOTIFICATIONS.PLUMBING.TOOLTIP, "tutorials\\Piping", "Tute_Plumbing", VIDEOS.PLUMBING, "icon_category_plumbing");
 			break;
+		case TutorialMessages.TM_Radiation:
+			message = new TutorialMessage(TutorialMessages.TM_Radiation, MISC.NOTIFICATIONS.RADIATION.NAME, MISC.NOTIFICATIONS.RADIATION.MESSAGEBODY, MISC.NOTIFICATIONS.RADIATION.TOOLTIP, null, null, null, "icon_category_radiation");
+			break;
 		}
 		Debug.Assert(message != null || flag, $"No Tutorial message: {tm.ToString()}");
 		if (queueMessage)
@@ -337,19 +333,21 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 	private string UnrefrigeratedFoodTooltip(List<Notification> notifications, object data)
 	{
 		string text = MISC.NOTIFICATIONS.UNREFRIGERATEDFOOD.TOOLTIP;
-		List<string> list = new List<string>();
-		GetUnrefrigeratedFood(list);
-		for (int i = 0; i < list.Count; i++)
+		ListPool<Pickupable, Tutorial>.PooledList pooledList = ListPool<Pickupable, Tutorial>.Allocate();
+		GetUnrefrigeratedFood(pooledList);
+		for (int i = 0; i < pooledList.Count; i++)
 		{
-			text = text + "\n" + list[i];
+			text = text + "\n" + pooledList[i].GetProperName();
 		}
+		pooledList.Recycle();
 		return text;
 	}
 
 	private string OnLowFoodTooltip(List<Notification> notifications, object data)
 	{
-		float calories = RationTracker.Get().CountRations(null);
-		float f = (float)Components.LiveMinionIdentities.Count * -1000000f;
+		Debug.Assert(((WorldContainer)data).id == ClusterManager.Instance.activeWorldId);
+		float calories = RationTracker.Get().CountRations(null, ((WorldContainer)data).worldInventory);
+		float f = (float)Components.LiveMinionIdentities.GetWorldItems(((WorldContainer)data).id).Count * -1000000f;
 		return string.Format(MISC.NOTIFICATIONS.FOODLOW.TOOLTIP, GameUtil.GetFormattedCalories(calories), GameUtil.GetFormattedCalories(Mathf.Abs(f)));
 	}
 
@@ -372,7 +370,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 			type = NotificationType.Bad;
 			text = "Urgent important message. Uses Bad Color BG";
 		}
-		Notification notification = new Notification($"{text} ({debugMessageCount++.ToString()})", type, HashedString.Invalid, (List<Notification> n, object d) => MISC.NOTIFICATIONS.NEEDTOILET.TOOLTIP.text);
+		Notification notification = new Notification($"{text} ({debugMessageCount++.ToString()})", type, (List<Notification> n, object d) => MISC.NOTIFICATIONS.NEEDTOILET.TOOLTIP.text);
 		notifier.Add(notification);
 	}
 
@@ -483,12 +481,12 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 		return true;
 	}
 
-	private int GetUnrefrigeratedFood(List<string> foods)
+	private int GetUnrefrigeratedFood(List<Pickupable> foods)
 	{
 		int num = 0;
-		if (WorldInventory.Instance != null)
+		if (ClusterManager.Instance.activeWorld.worldInventory != null)
 		{
-			ICollection<Pickupable> pickupables = WorldInventory.Instance.GetPickupables(GameTags.Edible);
+			ICollection<Pickupable> pickupables = ClusterManager.Instance.activeWorld.worldInventory.GetPickupables(GameTags.Edible);
 			if (pickupables == null)
 			{
 				return 0;
@@ -496,13 +494,13 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 			{
 				foreach (Pickupable item in pickupables)
 				{
-					if (item.storage != null && (item.storage.GetComponent<RationBox>() != null || item.storage.GetComponent<Refrigerator>() != null) && !Rottable.IsRefrigerated(item.gameObject) && Rottable.AtmosphereQuality(item.gameObject) != Rottable.RotAtmosphereQuality.Sterilizing)
+					if (item.storage != null && (item.storage.GetComponent<RationBox>() != null || item.storage.GetComponent<Refrigerator>() != null))
 					{
 						Rottable.Instance sMI = item.GetSMI<Rottable.Instance>();
-						if (sMI != null && sMI.RotConstitutionPercentage < 0.8f)
+						if (sMI != null && Rottable.RefrigerationLevel(sMI) == Rottable.RotRefrigerationLevel.Normal && Rottable.AtmosphereQuality(sMI) != Rottable.RotAtmosphereQuality.Sterilizing && sMI != null && sMI.RotConstitutionPercentage < 0.8f)
 						{
 							num++;
-							foods?.Add(item.GetProperName());
+							foods?.Add(item);
 						}
 					}
 				}
@@ -524,9 +522,10 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 
 	private bool EnoughFood()
 	{
-		float num = RationTracker.Get().CountRations(null);
-		float num2 = (float)Components.LiveMinionIdentities.Count * 1000000f;
-		return num / num2 > 1f;
+		int count = Components.LiveMinionIdentities.GetWorldItems(ClusterManager.Instance.activeWorldId).Count;
+		float num = RationTracker.Get().CountRations(null, ClusterManager.Instance.activeWorld.worldInventory);
+		float num2 = (float)count * 1000000f;
+		return num / num2 >= 1f;
 	}
 
 	private bool CanTreatSickDuplicant()
@@ -602,7 +601,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 			GameObject gameObject = oxygenGenerators[focusedOxygenGenerator];
 			if (gameObject != null)
 			{
-				Vector3 position = gameObject.transform.position;
+				Vector3 position = gameObject.transform.GetPosition();
 				CameraController.Instance.SetTargetPos(position, 8f, playSound: true);
 			}
 			else
@@ -610,6 +609,26 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 				DebugUtil.DevLogErrorFormat("ZoomToNextOxygenGenerator generator was null: {0}", gameObject);
 			}
 			focusedOxygenGenerator++;
+		}
+	}
+
+	private void ZoomToNextUnrefrigeratedFood()
+	{
+		ListPool<Pickupable, Tutorial>.PooledList pooledList = ListPool<Pickupable, Tutorial>.Allocate();
+		int unrefrigeratedFood = GetUnrefrigeratedFood(pooledList);
+		if (pooledList.Count != 0)
+		{
+			focusedUnrefrigFood++;
+			if (focusedUnrefrigFood >= unrefrigeratedFood)
+			{
+				focusedUnrefrigFood = 0;
+			}
+			Pickupable pickupable = pooledList[focusedUnrefrigFood];
+			if (pickupable != null)
+			{
+				CameraController.Instance.SetTargetPos(pickupable.transform.GetPosition(), 8f, playSound: true);
+			}
+			pooledList.Recycle();
 		}
 	}
 }

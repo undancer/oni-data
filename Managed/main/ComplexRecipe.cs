@@ -9,12 +9,26 @@ public class ComplexRecipe
 		Ingredient,
 		Result,
 		IngredientToResult,
-		ResultWithIngredient
+		ResultWithIngredient,
+		Composite
 	}
 
 	public class RecipeElement
 	{
+		public enum TemperatureOperation
+		{
+			AverageTemperature,
+			Heated,
+			Melted
+		}
+
 		public Tag material;
+
+		public TemperatureOperation temperatureOperation;
+
+		public bool storeElement;
+
+		public bool inheritElement;
 
 		public float amount
 		{
@@ -22,10 +36,27 @@ public class ComplexRecipe
 			private set;
 		}
 
+		public RecipeElement(Tag material, float amount, bool inheritElement)
+		{
+			this.material = material;
+			this.amount = amount;
+			temperatureOperation = TemperatureOperation.AverageTemperature;
+			this.inheritElement = inheritElement;
+		}
+
 		public RecipeElement(Tag material, float amount)
 		{
 			this.material = material;
 			this.amount = amount;
+			temperatureOperation = TemperatureOperation.AverageTemperature;
+		}
+
+		public RecipeElement(Tag material, float amount, TemperatureOperation temperatureOperation, bool storeElement = false)
+		{
+			this.material = material;
+			this.amount = amount;
+			this.temperatureOperation = temperatureOperation;
+			this.storeElement = storeElement;
 		}
 	}
 
@@ -39,6 +70,8 @@ public class ComplexRecipe
 
 	public GameObject FabricationVisualizer;
 
+	public int consumedHEP;
+
 	public RecipeNameDisplay nameDisplay;
 
 	public string description;
@@ -51,11 +84,12 @@ public class ComplexRecipe
 
 	public Tag FirstResult => results[0].material;
 
-	public ComplexRecipe(string id, RecipeElement[] ingredients, RecipeElement[] results)
+	public ComplexRecipe(string id, RecipeElement[] ingredients, RecipeElement[] results, int consumedHEP = 0)
 	{
 		this.id = id;
 		this.ingredients = ingredients;
 		this.results = results;
+		this.consumedHEP = consumedHEP;
 		ComplexRecipeManager.Get().Add(this);
 	}
 
@@ -122,6 +156,12 @@ public class ComplexRecipe
 				return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_WITH_INCLUDE_AMOUNTS, ingredients[0].material.ProperName(), results[0].material.ProperName(), ingredients[0].amount, results[0].amount);
 			}
 			return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_WITH, ingredients[0].material.ProperName(), results[0].material.ProperName());
+		case RecipeNameDisplay.Composite:
+			if (includeAmounts)
+			{
+				return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_FROM_TO_COMPOSITE_INCLUDE_AMOUNTS, ingredients[0].material.ProperName(), results[0].material.ProperName(), results[1].material.ProperName(), ingredients[0].amount, results[0].amount, results[1].amount);
+			}
+			return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_FROM_TO_COMPOSITE, ingredients[0].material.ProperName(), results[0].material.ProperName(), results[1].material.ProperName());
 		default:
 			if (includeAmounts)
 			{

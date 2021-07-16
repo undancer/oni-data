@@ -209,7 +209,8 @@ public class WorldDamage : KMonoBehaviour
 		if (!(num <= 0f))
 		{
 			GameObject gameObject = element.substance.SpawnResource(vector, num, temperature, disease_idx, disease_count);
-			if (gameObject.GetComponent<Pickupable>() != null && WorldInventory.Instance.IsReachable(gameObject.GetComponent<Pickupable>()))
+			Pickupable component = gameObject.GetComponent<Pickupable>();
+			if (component != null && component.GetMyWorld() != null && component.GetMyWorld().worldInventory.IsReachable(gameObject.GetComponent<Pickupable>()))
 			{
 				PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, Mathf.RoundToInt(num) + " " + element.name, gameObject.transform);
 			}

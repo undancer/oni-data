@@ -71,6 +71,18 @@ public class Capturable : Workable, IGameObjectEffectDescriptor
 		base.OnCleanUp();
 	}
 
+	public override Vector3 GetTargetPoint()
+	{
+		Vector3 result = base.transform.GetPosition();
+		KBoxCollider2D component = GetComponent<KBoxCollider2D>();
+		if (component != null)
+		{
+			result = component.bounds.center;
+		}
+		result.z = 0f;
+		return result;
+	}
+
 	private void OnDeath(object data)
 	{
 		allowCapture = false;

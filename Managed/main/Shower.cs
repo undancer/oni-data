@@ -130,10 +130,12 @@ public class Shower : Workable, IGameObjectEffectDescriptor
 
 	public const float WATER_PER_USE = 5f;
 
-	private static readonly string[] EffectsRemoved = new string[2]
+	private static readonly string[] EffectsRemoved = new string[4]
 	{
 		"SoakingWet",
-		"WetFeet"
+		"WetFeet",
+		"MinorIrritation",
+		"MajorIrritation"
 	};
 
 	private Shower()
@@ -171,6 +173,10 @@ public class Shower : Workable, IGameObjectEffectDescriptor
 		{
 			string effect_id = EffectsRemoved[i];
 			component.Remove(effect_id);
+		}
+		if (!worker.HasTag(GameTags.HasSuitTank))
+		{
+			worker.GetSMI<GasLiquidExposureMonitor.Instance>()?.ResetExposure();
 		}
 		component.Add(SHOWER_EFFECT, should_save: true);
 		worker.GetSMI<HygieneMonitor.Instance>()?.SetDirtiness(0f);

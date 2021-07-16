@@ -88,7 +88,7 @@ public class CalorieMonitor : GameStateMachine<CalorieMonitor, CalorieMonitor.In
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = satisfied;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		satisfied.Transition(hungry, (Instance smi) => smi.IsHungry());
 		hungry.DefaultState(hungry.normal).Transition(satisfied, (Instance smi) => smi.IsSatisfied()).EventTransition(GameHashes.BeginChore, eating, (Instance smi) => smi.IsEating());
 		hungry.working.EventTransition(GameHashes.ScheduleBlocksChanged, hungry.normal, (Instance smi) => smi.IsEatTime()).Transition(hungry.starving, (Instance smi) => smi.IsStarving()).ToggleStatusItem(Db.Get().DuplicantStatusItems.Hungry);

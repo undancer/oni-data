@@ -1,0 +1,23 @@
+id: "STATERPILLARSPECIES"
+title: STRINGS.CODEX.PLUGSLUG.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
+  
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.PLUGSLUG.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.PLUGSLUG.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.PLUGSLUG.BODY.CONTAINER1
+          style: Body

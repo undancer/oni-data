@@ -25,6 +25,10 @@ namespace Database
 
 		public StatusItem MopUnreachable;
 
+		public StatusItem StorageUnreachable;
+
+		public StatusItem PassengerModuleUnreachable;
+
 		public StatusItem ConstructableDigUnreachable;
 
 		public StatusItem ConstructionUnreachable;
@@ -57,6 +61,8 @@ namespace Database
 
 		public StatusItem PendingDeconstruction;
 
+		public StatusItem PendingDemolition;
+
 		public StatusItem PendingSwitchToggle;
 
 		public StatusItem GasVentObstructed;
@@ -87,6 +93,10 @@ namespace Database
 
 		public StatusItem ColonyLacksRequiredSkillPerk;
 
+		public StatusItem ClusterColonyLacksRequiredSkillPerk;
+
+		public StatusItem WorkRequiresMinion;
+
 		public StatusItem PendingWork;
 
 		public StatusItem Flooded;
@@ -112,6 +122,8 @@ namespace Database
 		public StatusItem Entombed;
 
 		public MaterialsStatusItem WaitingForMaterials;
+
+		public StatusItem WaitingForHighEnergyParticles;
 
 		public StatusItem WaitingForRepairMaterials;
 
@@ -161,7 +173,11 @@ namespace Database
 
 		public StatusItem ConduitBlockedMultiples;
 
+		public StatusItem SolidConduitBlockedMultiples;
+
 		public StatusItem MeltingDown;
+
+		public StatusItem DeadReactorCoolingOff;
 
 		public StatusItem UnderConstruction;
 
@@ -182,6 +198,8 @@ namespace Database
 		public StatusItem FabricatorIdle;
 
 		public StatusItem FabricatorEmpty;
+
+		public StatusItem FabricatorLacksHEP;
 
 		public StatusItem FlushToilet;
 
@@ -215,6 +233,10 @@ namespace Database
 
 		public StatusItem EmittingGasAvg;
 
+		public StatusItem EmittingBlockedHighPressure;
+
+		public StatusItem EmittingBlockedLowTemperature;
+
 		public StatusItem PumpingLiquidOrGas;
 
 		public StatusItem NoLiquidElementToPump;
@@ -238,6 +260,8 @@ namespace Database
 		public StatusItem Wattage;
 
 		public StatusItem SolarPanelWattage;
+
+		public StatusItem ModuleSolarPanelWattage;
 
 		public StatusItem SteamTurbineWattage;
 
@@ -301,6 +325,8 @@ namespace Database
 
 		public StatusItem GeneShuffleCompleted;
 
+		public StatusItem GeneticAnalysisCompleted;
+
 		public StatusItem DirectionControl;
 
 		public StatusItem WellPressurizing;
@@ -308,6 +334,8 @@ namespace Database
 		public StatusItem WellOverpressure;
 
 		public StatusItem ReleasingPressure;
+
+		public StatusItem ReactorMeltdown;
 
 		public StatusItem NoSuitMarker;
 
@@ -351,6 +379,8 @@ namespace Database
 
 		public StatusItem Baited;
 
+		public StatusItem NoCoolant;
+
 		public StatusItem TanningLightSufficient;
 
 		public StatusItem TanningLightInsufficient;
@@ -362,6 +392,74 @@ namespace Database
 		public StatusItem HotTubFilling;
 
 		public StatusItem WindTunnelIntake;
+
+		public StatusItem CollectingHEP;
+
+		public StatusItem ReactorRefuelDisabled;
+
+		public StatusItem FridgeCooling;
+
+		public StatusItem FridgeSteady;
+
+		public StatusItem WarpPortalCharging;
+
+		public StatusItem WarpConduitPartnerDisabled;
+
+		public StatusItem InOrbit;
+
+		public StatusItem InFlight;
+
+		public StatusItem DestinationOutOfRange;
+
+		public StatusItem RocketStranded;
+
+		public StatusItem RailgunpayloadNeedsEmptying;
+
+		public StatusItem AwaitingEmptyBuilding;
+
+		public StatusItem DuplicantActivationRequired;
+
+		public StatusItem RocketChecklistIncomplete;
+
+		public StatusItem RocketCargoEmptying;
+
+		public StatusItem RocketCargoFilling;
+
+		public StatusItem RocketCargoFull;
+
+		public StatusItem FlightAllCargoFull;
+
+		public StatusItem FlightCargoRemaining;
+
+		public StatusItem LandedRocketLacksPassengerModule;
+
+		public StatusItem PilotNeeded;
+
+		public StatusItem AutoPilotActive;
+
+		public StatusItem InvalidMaskStationConsumptionState;
+
+		public StatusItem ClusterTelescopeAllWorkComplete;
+
+		public StatusItem RocketPlatformCloseToCeiling;
+
+		public StatusItem ModuleGeneratorPowered;
+
+		public StatusItem ModuleGeneratorNotPowered;
+
+		public StatusItem InOrbitRequired;
+
+		public StatusItem RailGunCooldown;
+
+		public StatusItem NoSurfaceSight;
+
+		public StatusItem LimitValveLimitReached;
+
+		public StatusItem LimitValveLimitNotReached;
+
+		public StatusItem SpacePOIHarvesting;
+
+		public StatusItem SpacePOIWasting;
 
 		public BuildingStatusItems(ResourceSet parent)
 			: base("BuildingStatusItems", parent)
@@ -417,31 +515,42 @@ namespace Database
 			CurrentDoorControlState.resolveStringCallback = delegate(string str, object data)
 			{
 				Door door = (Door)data;
-				string newValue12 = Strings.Get("STRINGS.BUILDING.STATUSITEMS.CURRENTDOORCONTROLSTATE." + door.CurrentState.ToString().ToUpper());
-				return str.Replace("{ControlState}", newValue12);
+				string newValue13 = Strings.Get("STRINGS.BUILDING.STATUSITEMS.CURRENTDOORCONTROLSTATE." + door.CurrentState.ToString().ToUpper());
+				return str.Replace("{ControlState}", newValue13);
 			};
 			ClinicOutsideHospital = CreateStatusItem("ClinicOutsideHospital", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false);
 			ConduitBlocked = CreateStatusItem("ConduitBlocked", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			OutputPipeFull = CreateStatusItem("OutputPipeFull", "BUILDING", "status_item_no_liquid_to_pump", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			ConstructionUnreachable = CreateStatusItem("ConstructionUnreachable", "BUILDING", "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
-			ConduitBlockedMultiples = CreateStatusItem("ConduitBlocked", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: true, OverlayModes.None.ID);
+			ConduitBlockedMultiples = CreateStatusItem("ConduitBlockedMultiples", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: true, OverlayModes.None.ID);
+			SolidConduitBlockedMultiples = CreateStatusItem("SolidConduitBlockedMultiples", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: true, OverlayModes.None.ID);
 			DigUnreachable = CreateStatusItem("DigUnreachable", "BUILDING", "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			MopUnreachable = CreateStatusItem("MopUnreachable", "BUILDING", "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			StorageUnreachable = CreateStatusItem("StorageUnreachable", "BUILDING", "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			PassengerModuleUnreachable = CreateStatusItem("PassengerModuleUnreachable", "BUILDING", "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			DirectionControl = CreateStatusItem("DirectionControl", BUILDING.STATUSITEMS.DIRECTION_CONTROL.NAME, BUILDING.STATUSITEMS.DIRECTION_CONTROL.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			DirectionControl.resolveStringCallback = delegate(string str, object data)
 			{
 				DirectionControl obj4 = (DirectionControl)data;
-				string newValue11 = BUILDING.STATUSITEMS.DIRECTION_CONTROL.DIRECTIONS.BOTH;
+				string newValue12 = BUILDING.STATUSITEMS.DIRECTION_CONTROL.DIRECTIONS.BOTH;
 				switch (obj4.allowedDirection)
 				{
 				case WorkableReactable.AllowedDirection.Left:
-					newValue11 = BUILDING.STATUSITEMS.DIRECTION_CONTROL.DIRECTIONS.LEFT;
+					newValue12 = BUILDING.STATUSITEMS.DIRECTION_CONTROL.DIRECTIONS.LEFT;
 					break;
 				case WorkableReactable.AllowedDirection.Right:
-					newValue11 = BUILDING.STATUSITEMS.DIRECTION_CONTROL.DIRECTIONS.RIGHT;
+					newValue12 = BUILDING.STATUSITEMS.DIRECTION_CONTROL.DIRECTIONS.RIGHT;
 					break;
 				}
-				str = str.Replace("{Direction}", newValue11);
+				str = str.Replace("{Direction}", newValue12);
+				return str;
+			};
+			DeadReactorCoolingOff = CreateStatusItem("DeadReactorCoolingOff", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			DeadReactorCoolingOff.resolveStringCallback = delegate(string str, object data)
+			{
+				Reactor.StatesInstance smi = (Reactor.StatesInstance)data;
+				float num4 = ((Reactor.StatesInstance)data).sm.timeSinceMeltdown.Get(smi);
+				str = str.Replace("{CyclesRemaining}", Util.FormatOneDecimalPlace(Mathf.Max(0f, 3000f - num4) / 600f));
 				return str;
 			};
 			ConstructableDigUnreachable = CreateStatusItem("ConstructableDigUnreachable", "BUILDING", "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
@@ -452,6 +561,7 @@ namespace Database
 			GasVentObstructed = CreateStatusItem("GasVentObstructed", "BUILDING", "status_item_vent_disabled", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.GasConduits.ID);
 			GasVentOverPressure = CreateStatusItem("GasVentOverPressure", "BUILDING", "status_item_vent_disabled", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.GasConduits.ID);
 			GeneShuffleCompleted = CreateStatusItem("GeneShuffleCompleted", "BUILDING", "status_item_pending_upgrade", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			GeneticAnalysisCompleted = CreateStatusItem("GeneticAnalysisCompleted", "BUILDING", "status_item_pending_upgrade", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			InvalidBuildingLocation = CreateStatusItem("InvalidBuildingLocation", "BUILDING", "status_item_missing_foundation", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			LiquidVentObstructed = CreateStatusItem("LiquidVentObstructed", "BUILDING", "status_item_vent_disabled", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.LiquidConduits.ID);
 			LiquidVentOverPressure = CreateStatusItem("LiquidVentOverPressure", "BUILDING", "status_item_vent_disabled", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.LiquidConduits.ID);
@@ -459,7 +569,7 @@ namespace Database
 			MaterialsUnavailable.AddNotification();
 			MaterialsUnavailable.resolveStringCallback = delegate(string str, object data)
 			{
-				string text7 = "";
+				string text8 = "";
 				Dictionary<Tag, float> dictionary = null;
 				if (data is IFetchList)
 				{
@@ -478,21 +588,21 @@ namespace Database
 						{
 							if (!flag4)
 							{
-								text7 += "\n";
+								text8 += "\n";
 							}
-							text7 = ((!Assets.IsTagCountable(item.Key)) ? (text7 + string.Format(BUILDING.STATUSITEMS.MATERIALSUNAVAILABLE.LINE_ITEM_MASS, item.Key.ProperName(), GameUtil.GetFormattedMass(item.Value))) : (text7 + string.Format(BUILDING.STATUSITEMS.MATERIALSUNAVAILABLE.LINE_ITEM_UNITS, GameUtil.GetUnitFormattedName(item.Key.ProperName(), item.Value))));
+							text8 = ((!Assets.IsTagCountable(item.Key)) ? (text8 + string.Format(BUILDING.STATUSITEMS.MATERIALSUNAVAILABLE.LINE_ITEM_MASS, item.Key.ProperName(), GameUtil.GetFormattedMass(item.Value))) : (text8 + string.Format(BUILDING.STATUSITEMS.MATERIALSUNAVAILABLE.LINE_ITEM_UNITS, GameUtil.GetUnitFormattedName(item.Key.ProperName(), item.Value))));
 							flag4 = false;
 						}
 					}
 				}
-				str = str.Replace("{ItemsRemaining}", text7);
+				str = str.Replace("{ItemsRemaining}", text8);
 				return str;
 			};
 			MaterialsUnavailableForRefill = new MaterialsStatusItem("MaterialsUnavailableForRefill", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: true, OverlayModes.None.ID);
 			MaterialsUnavailableForRefill.resolveStringCallback = delegate(string str, object data)
 			{
 				IFetchList obj3 = (IFetchList)data;
-				string text6 = "";
+				string text7 = "";
 				Dictionary<Tag, float> remaining2 = obj3.GetRemaining();
 				if (remaining2.Count > 0)
 				{
@@ -503,14 +613,14 @@ namespace Database
 						{
 							if (!flag3)
 							{
-								text6 += "\n";
+								text7 += "\n";
 							}
-							text6 += string.Format(BUILDING.STATUSITEMS.MATERIALSUNAVAILABLEFORREFILL.LINE_ITEM, item2.Key.ProperName());
+							text7 += string.Format(BUILDING.STATUSITEMS.MATERIALSUNAVAILABLEFORREFILL.LINE_ITEM, item2.Key.ProperName());
 							flag3 = false;
 						}
 					}
 				}
-				str = str.Replace("{ItemsRemaining}", text6);
+				str = str.Replace("{ItemsRemaining}", text7);
 				return str;
 			};
 			Func<string, object, string> resolveStringCallback = delegate(string str, object data)
@@ -518,6 +628,7 @@ namespace Database
 				RoomType roomType = Db.Get().RoomTypes.Get((string)data);
 				return (roomType != null) ? string.Format(str, roomType.Name) : str;
 			};
+			NoCoolant = CreateStatusItem("NoCoolant", "BUILDING", "status_item_need_supply_in", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			NotInAnyRoom = CreateStatusItem("NotInAnyRoom", "BUILDING", "status_item_room_required", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			NotInRequiredRoom = CreateStatusItem("NotInRequiredRoom", "BUILDING", "status_item_room_required", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			NotInRequiredRoom.resolveStringCallback = resolveStringCallback;
@@ -529,8 +640,8 @@ namespace Database
 				KeyValuePair<Tag, float> keyValuePair = (KeyValuePair<Tag, float>)data;
 				if (keyValuePair.Value != 0f)
 				{
-					string newValue10 = string.Format(BUILDING.STATUSITEMS.WAITINGFORMATERIALS.LINE_ITEM_MASS, keyValuePair.Key.ProperName(), GameUtil.GetFormattedMass(keyValuePair.Value));
-					str = str.Replace("{ItemsRemaining}", newValue10);
+					string newValue11 = string.Format(BUILDING.STATUSITEMS.WAITINGFORMATERIALS.LINE_ITEM_MASS, keyValuePair.Key.ProperName(), GameUtil.GetFormattedMass(keyValuePair.Value));
+					str = str.Replace("{ItemsRemaining}", newValue11);
 				}
 				return str;
 			};
@@ -538,7 +649,7 @@ namespace Database
 			WaitingForMaterials.resolveStringCallback = delegate(string str, object data)
 			{
 				IFetchList obj2 = (IFetchList)data;
-				string text5 = "";
+				string text6 = "";
 				Dictionary<Tag, float> remaining = obj2.GetRemaining();
 				if (remaining.Count > 0)
 				{
@@ -549,16 +660,17 @@ namespace Database
 						{
 							if (!flag2)
 							{
-								text5 += "\n";
+								text6 += "\n";
 							}
-							text5 = ((!Assets.IsTagCountable(item3.Key)) ? (text5 + string.Format(BUILDING.STATUSITEMS.WAITINGFORMATERIALS.LINE_ITEM_MASS, item3.Key.ProperName(), GameUtil.GetFormattedMass(item3.Value))) : (text5 + string.Format(BUILDING.STATUSITEMS.WAITINGFORMATERIALS.LINE_ITEM_UNITS, GameUtil.GetUnitFormattedName(item3.Key.ProperName(), item3.Value))));
+							text6 = ((!Assets.IsTagCountable(item3.Key)) ? (text6 + string.Format(BUILDING.STATUSITEMS.WAITINGFORMATERIALS.LINE_ITEM_MASS, item3.Key.ProperName(), GameUtil.GetFormattedMass(item3.Value))) : (text6 + string.Format(BUILDING.STATUSITEMS.WAITINGFORMATERIALS.LINE_ITEM_UNITS, GameUtil.GetUnitFormattedName(item3.Key.ProperName(), item3.Value))));
 							flag2 = false;
 						}
 					}
 				}
-				str = str.Replace("{ItemsRemaining}", text5);
+				str = str.Replace("{ItemsRemaining}", text6);
 				return str;
 			};
+			WaitingForHighEnergyParticles = new StatusItem("WaitingForRadiation", "BUILDING", "status_item_need_high_energy_particles", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			MeltingDown = CreateStatusItem("MeltingDown", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			MissingFoundation = CreateStatusItem("MissingFoundation", "BUILDING", "status_item_missing_foundation", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			NeutroniumUnminable = CreateStatusItem("NeutroniumUnminable", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
@@ -566,8 +678,8 @@ namespace Database
 			NeedGasIn.resolveStringCallback = delegate(string str, object data)
 			{
 				Tuple<ConduitType, Tag> tuple2 = (Tuple<ConduitType, Tag>)data;
-				string newValue9 = string.Format(BUILDING.STATUSITEMS.NEEDGASIN.LINE_ITEM, tuple2.second.ProperName());
-				str = str.Replace("{GasRequired}", newValue9);
+				string newValue10 = string.Format(BUILDING.STATUSITEMS.NEEDGASIN.LINE_ITEM, tuple2.second.ProperName());
+				str = str.Replace("{GasRequired}", newValue10);
 				return str;
 			};
 			NeedGasOut = CreateStatusItem("NeedGasOut", "BUILDING", "status_item_need_supply_out", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: true, OverlayModes.GasConduits.ID);
@@ -575,8 +687,8 @@ namespace Database
 			NeedLiquidIn.resolveStringCallback = delegate(string str, object data)
 			{
 				Tuple<ConduitType, Tag> tuple = (Tuple<ConduitType, Tag>)data;
-				string newValue8 = string.Format(BUILDING.STATUSITEMS.NEEDLIQUIDIN.LINE_ITEM, tuple.second.ProperName());
-				str = str.Replace("{LiquidRequired}", newValue8);
+				string newValue9 = string.Format(BUILDING.STATUSITEMS.NEEDLIQUIDIN.LINE_ITEM, tuple.second.ProperName());
+				str = str.Replace("{LiquidRequired}", newValue9);
 				return str;
 			};
 			NeedLiquidOut = CreateStatusItem("NeedLiquidOut", "BUILDING", "status_item_need_supply_out", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: true, OverlayModes.LiquidConduits.ID);
@@ -585,24 +697,24 @@ namespace Database
 			NeedResourceMass = CreateStatusItem("NeedResourceMass", "BUILDING", "status_item_need_resource", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			NeedResourceMass.resolveStringCallback = delegate(string str, object data)
 			{
-				string text4 = "";
+				string text5 = "";
 				EnergyGenerator.Formula formula = (EnergyGenerator.Formula)data;
 				if (formula.inputs.Length != 0)
 				{
 					bool flag = true;
 					EnergyGenerator.InputItem[] inputs = formula.inputs;
-					for (int i = 0; i < inputs.Length; i++)
+					for (int j = 0; j < inputs.Length; j++)
 					{
-						EnergyGenerator.InputItem inputItem = inputs[i];
+						EnergyGenerator.InputItem inputItem = inputs[j];
 						if (!flag)
 						{
-							text4 += "\n";
+							text5 += "\n";
 							flag = false;
 						}
-						text4 += string.Format(BUILDING.STATUSITEMS.NEEDRESOURCEMASS.LINE_ITEM, inputItem.tag.ProperName());
+						text5 += string.Format(BUILDING.STATUSITEMS.NEEDRESOURCEMASS.LINE_ITEM, inputItem.tag.ProperName());
 					}
 				}
-				str = str.Replace("{ResourcesRequired}", text4);
+				str = str.Replace("{ResourcesRequired}", text5);
 				return str;
 			};
 			LiquidPipeEmpty = CreateStatusItem("LiquidPipeEmpty", "BUILDING", "status_item_no_liquid_to_pump", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.LiquidConduits.ID);
@@ -616,10 +728,23 @@ namespace Database
 			PowerLoopDetected = CreateStatusItem("PowerLoopDetected", "BUILDING", "status_item_exclamation", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.Power.ID);
 			NewDuplicantsAvailable = CreateStatusItem("NewDuplicantsAvailable", "BUILDING", "status_item_new_duplicants_available", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			NewDuplicantsAvailable.AddNotification();
-			NewDuplicantsAvailable.notificationClickCallback = delegate(object data)
+			NewDuplicantsAvailable.notificationClickCallback = delegate
 			{
-				ImmigrantScreen.InitializeImmigrantScreen((Telepad)data);
-				Game.Instance.Trigger(288942073);
+				int idx = 0;
+				for (int i = 0; i < Components.Telepads.Items.Count; i++)
+				{
+					if (Components.Telepads[i].GetComponent<KSelectable>().IsSelected)
+					{
+						idx = (i + 1) % Components.Telepads.Items.Count;
+						break;
+					}
+				}
+				Telepad targetTelepad = Components.Telepads[idx];
+				int myWorldId = targetTelepad.GetMyWorldId();
+				CameraController.Instance.ActiveWorldStarWipe(myWorldId, targetTelepad.transform.GetPosition(), 10f, delegate
+				{
+					SelectTool.Instance.Select(targetTelepad.GetComponent<KSelectable>());
+				});
 			};
 			NoStorageFilterSet = CreateStatusItem("NoStorageFilterSet", "BUILDING", "status_item_no_filter_set", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			NoSuitMarker = CreateStatusItem("NoSuitMarker", "BUILDING", "status_item_no_filter_set", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
@@ -644,27 +769,58 @@ namespace Database
 			};
 			PendingDeconstruction = CreateStatusItem("PendingDeconstruction", "BUILDING", "status_item_pending_deconstruction", StatusItem.IconType.Custom, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			PendingDeconstruction.conditionalOverlayCallback = ShowInUtilityOverlay;
+			PendingDemolition = CreateStatusItem("PendingDemolition", "BUILDING", "status_item_pending_deconstruction", StatusItem.IconType.Custom, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			PendingDemolition.conditionalOverlayCallback = ShowInUtilityOverlay;
 			PendingRepair = CreateStatusItem("PendingRepair", "BUILDING", "status_item_pending_repair", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			PendingRepair.resolveStringCallback = (string str, object data) => str.Replace("{DamageInfo}", ((Repairable.SMInstance)data).master.GetComponent<BuildingHP>().GetDamageSourceInfo().ToString());
 			PendingRepair.conditionalOverlayCallback = (HashedString mode, object data) => true;
 			RequiresSkillPerk = CreateStatusItem("RequiresSkillPerk", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			RequiresSkillPerk.resolveStringCallback = delegate(string str, object data)
 			{
-				string id = (string)data;
-				SkillPerk perk = Db.Get().SkillPerks.Get(id);
-				List<Skill> skillsWithPerk = Db.Get().Skills.GetSkillsWithPerk(perk);
-				List<string> list = new List<string>();
-				foreach (Skill item4 in skillsWithPerk)
+				string id3 = (string)data;
+				SkillPerk perk3 = Db.Get().SkillPerks.Get(id3);
+				List<Skill> skillsWithPerk3 = Db.Get().Skills.GetSkillsWithPerk(perk3);
+				List<string> list3 = new List<string>();
+				foreach (Skill item4 in skillsWithPerk3)
 				{
-					list.Add(item4.Name);
+					list3.Add(item4.Name);
 				}
-				str = str.Replace("{Skills}", string.Join(", ", list.ToArray()));
+				str = str.Replace("{Skills}", string.Join(", ", list3.ToArray()));
 				return str;
 			};
 			DigRequiresSkillPerk = CreateStatusItem("DigRequiresSkillPerk", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			DigRequiresSkillPerk.resolveStringCallback = RequiresSkillPerk.resolveStringCallback;
 			ColonyLacksRequiredSkillPerk = CreateStatusItem("ColonyLacksRequiredSkillPerk", "BUILDING", "status_item_role_required", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
-			ColonyLacksRequiredSkillPerk.resolveStringCallback = RequiresSkillPerk.resolveStringCallback;
+			ColonyLacksRequiredSkillPerk.resolveStringCallback = delegate(string str, object data)
+			{
+				string id2 = (string)data;
+				SkillPerk perk2 = Db.Get().SkillPerks.Get(id2);
+				List<Skill> skillsWithPerk2 = Db.Get().Skills.GetSkillsWithPerk(perk2);
+				List<string> list2 = new List<string>();
+				foreach (Skill item5 in skillsWithPerk2)
+				{
+					list2.Add(item5.Name);
+				}
+				str = str.Replace("{Skills}", string.Join(", ", list2.ToArray()));
+				return str;
+			};
+			ColonyLacksRequiredSkillPerk.resolveTooltipCallback = delegate(string str, object data)
+			{
+				string id = (string)data;
+				SkillPerk perk = Db.Get().SkillPerks.Get(id);
+				List<Skill> skillsWithPerk = Db.Get().Skills.GetSkillsWithPerk(perk);
+				List<string> list = new List<string>();
+				foreach (Skill item6 in skillsWithPerk)
+				{
+					list.Add(item6.Name);
+				}
+				str = str.Replace("{Skills}", string.Join(", ", list.ToArray()));
+				return str;
+			};
+			ClusterColonyLacksRequiredSkillPerk = CreateStatusItem("ClusterColonyLacksRequiredSkillPerk", "BUILDING", "status_item_role_required", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			ClusterColonyLacksRequiredSkillPerk.resolveStringCallback = ColonyLacksRequiredSkillPerk.resolveStringCallback;
+			ClusterColonyLacksRequiredSkillPerk.resolveTooltipCallback = ColonyLacksRequiredSkillPerk.resolveTooltipCallback;
+			WorkRequiresMinion = CreateStatusItem("WorkRequiresMinion", "BUILDING", "status_item_role_required", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			SwitchStatusActive = CreateStatusItem("SwitchStatusActive", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			SwitchStatusInactive = CreateStatusItem("SwitchStatusInactive", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			LogicSwitchStatusActive = CreateStatusItem("LogicSwitchStatusActive", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
@@ -692,17 +848,17 @@ namespace Database
 				Conduit obj = (Conduit)data;
 				int cell2 = Grid.PosToCell(obj);
 				ConduitFlow.ConduitContents contents2 = obj.GetFlowManager().GetContents(cell2);
-				string text3 = BUILDING.STATUSITEMS.PIPECONTENTS.EMPTY;
+				string text4 = BUILDING.STATUSITEMS.PIPECONTENTS.EMPTY;
 				if (contents2.mass > 0f)
 				{
 					Element element3 = ElementLoader.FindElementByHash(contents2.element);
-					text3 = string.Format(BUILDING.STATUSITEMS.PIPECONTENTS.CONTENTS, GameUtil.GetFormattedMass(contents2.mass), element3.name, GameUtil.GetFormattedTemperature(contents2.temperature));
+					text4 = string.Format(BUILDING.STATUSITEMS.PIPECONTENTS.CONTENTS, GameUtil.GetFormattedMass(contents2.mass), element3.name, GameUtil.GetFormattedTemperature(contents2.temperature));
 					if (OverlayScreen.Instance != null && OverlayScreen.Instance.mode == OverlayModes.Disease.ID && contents2.diseaseIdx != byte.MaxValue)
 					{
-						text3 += string.Format(BUILDING.STATUSITEMS.PIPECONTENTS.CONTENTS_WITH_DISEASE, GameUtil.GetFormattedDisease(contents2.diseaseIdx, contents2.diseaseCount, color: true));
+						text4 += string.Format(BUILDING.STATUSITEMS.PIPECONTENTS.CONTENTS_WITH_DISEASE, GameUtil.GetFormattedDisease(contents2.diseaseIdx, contents2.diseaseCount, color: true));
 					}
 				}
-				str = str.Replace("{Contents}", text3);
+				str = str.Replace("{Contents}", text4);
 				return str;
 			};
 			Conveyor = CreateStatusItem("Conveyor", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.SolidConveyor.ID);
@@ -711,36 +867,49 @@ namespace Database
 				int cell = Grid.PosToCell((SolidConduit)data);
 				SolidConduitFlow solidConduitFlow = Game.Instance.solidConduitFlow;
 				SolidConduitFlow.ConduitContents contents = solidConduitFlow.GetContents(cell);
-				string text2 = BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.EMPTY;
+				string text3 = BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.EMPTY;
 				if (contents.pickupableHandle.IsValid())
 				{
 					Pickupable pickupable = solidConduitFlow.GetPickupable(contents.pickupableHandle);
 					if ((bool)pickupable)
 					{
-						PrimaryElement component3 = pickupable.GetComponent<PrimaryElement>();
-						float mass = component3.Mass;
-						if (mass > 0f)
+						PrimaryElement component5 = pickupable.GetComponent<PrimaryElement>();
+						float mass4 = component5.Mass;
+						if (mass4 > 0f)
 						{
-							text2 = string.Format(BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.CONTENTS, GameUtil.GetFormattedMass(mass), pickupable.GetProperName(), GameUtil.GetFormattedTemperature(component3.Temperature));
-							if (OverlayScreen.Instance != null && OverlayScreen.Instance.mode == OverlayModes.Disease.ID && component3.DiseaseIdx != byte.MaxValue)
+							text3 = string.Format(BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.CONTENTS, GameUtil.GetFormattedMass(mass4), pickupable.GetProperName(), GameUtil.GetFormattedTemperature(component5.Temperature));
+							if (OverlayScreen.Instance != null && OverlayScreen.Instance.mode == OverlayModes.Disease.ID && component5.DiseaseIdx != byte.MaxValue)
 							{
-								text2 += string.Format(BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.CONTENTS_WITH_DISEASE, GameUtil.GetFormattedDisease(component3.DiseaseIdx, component3.DiseaseCount, color: true));
+								text3 += string.Format(BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.CONTENTS_WITH_DISEASE, GameUtil.GetFormattedDisease(component5.DiseaseIdx, component5.DiseaseCount, color: true));
 							}
 						}
 					}
 				}
-				str = str.Replace("{Contents}", text2);
+				str = str.Replace("{Contents}", text3);
 				return str;
 			};
 			FabricatorIdle = CreateStatusItem("FabricatorIdle", "BUILDING", "status_item_fabricator_select", StatusItem.IconType.Custom, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			FabricatorEmpty = CreateStatusItem("FabricatorEmpty", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			FabricatorLacksHEP = CreateStatusItem("FabricatorLacksHEP", "BUILDING", "status_item_need_high_energy_particles", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			FabricatorLacksHEP.resolveStringCallback = delegate(string str, object data)
+			{
+				ComplexFabricator complexFabricator = (ComplexFabricator)data;
+				if (complexFabricator != null)
+				{
+					int num3 = complexFabricator.HighestHEPQueued();
+					HighEnergyParticleStorage component4 = complexFabricator.GetComponent<HighEnergyParticleStorage>();
+					str = str.Replace("{HEPRequired}", num3.ToString());
+					str = str.Replace("{CurrentHEP}", component4.Particles.ToString());
+				}
+				return str;
+			};
 			Toilet = CreateStatusItem("Toilet", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			Toilet.resolveStringCallback = delegate(string str, object data)
 			{
-				Toilet.StatesInstance statesInstance3 = (Toilet.StatesInstance)data;
-				if (statesInstance3 != null)
+				Toilet.StatesInstance statesInstance5 = (Toilet.StatesInstance)data;
+				if (statesInstance5 != null)
 				{
-					str = str.Replace("{FlushesRemaining}", statesInstance3.GetFlushesRemaining().ToString());
+					str = str.Replace("{FlushesRemaining}", statesInstance5.GetFlushesRemaining().ToString());
 				}
 				return str;
 			};
@@ -752,8 +921,8 @@ namespace Database
 			StatusItem noResearchSelected = NoResearchSelected;
 			noResearchSelected.resolveTooltipCallback = (Func<string, object, string>)Delegate.Combine(noResearchSelected.resolveTooltipCallback, (Func<string, object, string>)delegate(string str, object data)
 			{
-				string newValue7 = GameInputMapping.FindEntry(Action.ManageResearch).mKeyCode.ToString();
-				str = str.Replace("{RESEARCH_MENU_KEY}", newValue7);
+				string newValue8 = GameInputMapping.FindEntry(Action.ManageResearch).mKeyCode.ToString();
+				str = str.Replace("{RESEARCH_MENU_KEY}", newValue8);
 				return str;
 			});
 			NoResearchSelected.notificationClickCallback = delegate
@@ -767,8 +936,8 @@ namespace Database
 			StatusItem noApplicableAnalysisSelected = NoApplicableAnalysisSelected;
 			noApplicableAnalysisSelected.resolveTooltipCallback = (Func<string, object, string>)Delegate.Combine(noApplicableAnalysisSelected.resolveTooltipCallback, (Func<string, object, string>)delegate(string str, object data)
 			{
-				string newValue6 = GameInputMapping.FindEntry(Action.ManageStarmap).mKeyCode.ToString();
-				str = str.Replace("{STARMAP_MENU_KEY}", newValue6);
+				string newValue7 = GameInputMapping.FindEntry(Action.ManageStarmap).mKeyCode.ToString();
+				str = str.Replace("{STARMAP_MENU_KEY}", newValue7);
 				return str;
 			});
 			NoApplicableAnalysisSelected.notificationClickCallback = delegate
@@ -779,10 +948,10 @@ namespace Database
 			StatusItem noResearchOrDestinationSelected = NoResearchOrDestinationSelected;
 			noResearchOrDestinationSelected.resolveTooltipCallback = (Func<string, object, string>)Delegate.Combine(noResearchOrDestinationSelected.resolveTooltipCallback, (Func<string, object, string>)delegate(string str, object data)
 			{
-				string newValue4 = GameInputMapping.FindEntry(Action.ManageStarmap).mKeyCode.ToString();
-				str = str.Replace("{STARMAP_MENU_KEY}", newValue4);
-				string newValue5 = GameInputMapping.FindEntry(Action.ManageResearch).mKeyCode.ToString();
-				str = str.Replace("{RESEARCH_MENU_KEY}", newValue5);
+				string newValue5 = GameInputMapping.FindEntry(Action.ManageStarmap).mKeyCode.ToString();
+				str = str.Replace("{STARMAP_MENU_KEY}", newValue5);
+				string newValue6 = GameInputMapping.FindEntry(Action.ManageResearch).mKeyCode.ToString();
+				str = str.Replace("{RESEARCH_MENU_KEY}", newValue6);
 				return str;
 			});
 			NoResearchOrDestinationSelected.AddNotification();
@@ -796,8 +965,8 @@ namespace Database
 			EmittingLight = CreateStatusItem("EmittingLight", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			EmittingLight.resolveStringCallback = delegate(string str, object data)
 			{
-				string newValue3 = GameInputMapping.FindEntry(Action.Overlay5).mKeyCode.ToString();
-				str = str.Replace("{LightGridOverlay}", newValue3);
+				string newValue4 = GameInputMapping.FindEntry(Action.Overlay5).mKeyCode.ToString();
+				str = str.Replace("{LightGridOverlay}", newValue4);
 				return str;
 			};
 			RationBoxContents = CreateStatusItem("RationBoxContents", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
@@ -808,18 +977,18 @@ namespace Database
 				{
 					return str;
 				}
-				Storage component = rationBox.GetComponent<Storage>();
-				if (component == null)
+				Storage component2 = rationBox.GetComponent<Storage>();
+				if (component2 == null)
 				{
 					return str;
 				}
 				float num2 = 0f;
-				foreach (GameObject item5 in component.items)
+				foreach (GameObject item7 in component2.items)
 				{
-					Edible component2 = item5.GetComponent<Edible>();
-					if ((bool)component2)
+					Edible component3 = item7.GetComponent<Edible>();
+					if ((bool)component3)
 					{
-						num2 += component2.Calories;
+						num2 += component3.Calories;
 					}
 				}
 				str = str.Replace("{Stored}", GameUtil.GetFormattedCalories(num2));
@@ -829,24 +998,38 @@ namespace Database
 			EmittingElement.resolveStringCallback = delegate(string str, object data)
 			{
 				IElementEmitter elementEmitter2 = (IElementEmitter)data;
-				string newValue2 = ElementLoader.FindElementByHash(elementEmitter2.Element).tag.ProperName();
-				str = str.Replace("{ElementType}", newValue2);
+				string newValue3 = ElementLoader.FindElementByHash(elementEmitter2.Element).tag.ProperName();
+				str = str.Replace("{ElementType}", newValue3);
 				str = str.Replace("{FlowRate}", GameUtil.GetFormattedMass(elementEmitter2.AverageEmitRate, GameUtil.TimeSlice.PerSecond));
 				return str;
 			};
 			EmittingOxygenAvg = CreateStatusItem("EmittingOxygenAvg", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			EmittingOxygenAvg.resolveStringCallback = delegate(string str, object data)
 			{
-				Sublimates sublimates2 = (Sublimates)data;
-				str = str.Replace("{FlowRate}", GameUtil.GetFormattedMass(sublimates2.AvgFlowRate(), GameUtil.TimeSlice.PerSecond));
+				Sublimates sublimates4 = (Sublimates)data;
+				str = str.Replace("{FlowRate}", GameUtil.GetFormattedMass(sublimates4.AvgFlowRate(), GameUtil.TimeSlice.PerSecond));
 				return str;
 			};
 			EmittingGasAvg = CreateStatusItem("EmittingGasAvg", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			EmittingGasAvg.resolveStringCallback = delegate(string str, object data)
 			{
+				Sublimates sublimates3 = (Sublimates)data;
+				str = str.Replace("{Element}", ElementLoader.FindElementByHash(sublimates3.info.sublimatedElement).name);
+				str = str.Replace("{FlowRate}", GameUtil.GetFormattedMass(sublimates3.AvgFlowRate(), GameUtil.TimeSlice.PerSecond));
+				return str;
+			};
+			EmittingBlockedHighPressure = CreateStatusItem("EmittingBlockedHighPressure", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			EmittingBlockedHighPressure.resolveStringCallback = delegate(string str, object data)
+			{
+				Sublimates sublimates2 = (Sublimates)data;
+				str = str.Replace("{Element}", ElementLoader.FindElementByHash(sublimates2.info.sublimatedElement).name);
+				return str;
+			};
+			EmittingBlockedLowTemperature = CreateStatusItem("EmittingBlockedLowTemperature", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			EmittingBlockedLowTemperature.resolveStringCallback = delegate(string str, object data)
+			{
 				Sublimates sublimates = (Sublimates)data;
 				str = str.Replace("{Element}", ElementLoader.FindElementByHash(sublimates.info.sublimatedElement).name);
-				str = str.Replace("{FlowRate}", GameUtil.GetFormattedMass(sublimates.AvgFlowRate(), GameUtil.TimeSlice.PerSecond));
 				return str;
 			};
 			PumpingLiquidOrGas = CreateStatusItem("PumpingLiquidOrGas", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.LiquidConduits.ID);
@@ -866,8 +1049,8 @@ namespace Database
 			ElementConsumer.resolveStringCallback = delegate(string str, object data)
 			{
 				ElementConsumer elementConsumer = (ElementConsumer)data;
-				string newValue = ElementLoader.FindElementByHash(elementConsumer.elementToConsume).tag.ProperName();
-				str = str.Replace("{ElementTypes}", newValue);
+				string newValue2 = ElementLoader.FindElementByHash(elementConsumer.elementToConsume).tag.ProperName();
+				str = str.Replace("{ElementTypes}", newValue2);
 				str = str.Replace("{FlowRate}", GameUtil.GetFormattedMass(elementConsumer.AverageConsumeRate, GameUtil.TimeSlice.PerSecond));
 				return str;
 			};
@@ -895,8 +1078,8 @@ namespace Database
 			Wattage = CreateStatusItem("Wattage", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.Power.ID);
 			Wattage.resolveStringCallback = delegate(string str, object data)
 			{
-				Generator generator = (Generator)data;
-				str = str.Replace("{Wattage}", GameUtil.GetFormattedWattage(generator.WattageRating));
+				Generator generator3 = (Generator)data;
+				str = str.Replace("{Wattage}", GameUtil.GetFormattedWattage(generator3.WattageRating));
 				return str;
 			};
 			SolarPanelWattage = CreateStatusItem("SolarPanelWattage", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.Power.ID);
@@ -904,6 +1087,13 @@ namespace Database
 			{
 				SolarPanel solarPanel = (SolarPanel)data;
 				str = str.Replace("{Wattage}", GameUtil.GetFormattedWattage(solarPanel.CurrentWattage));
+				return str;
+			};
+			ModuleSolarPanelWattage = CreateStatusItem("ModuleSolarPanelWattage", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.Power.ID);
+			ModuleSolarPanelWattage.resolveStringCallback = delegate(string str, object data)
+			{
+				ModuleSolarPanel moduleSolarPanel = (ModuleSolarPanel)data;
+				str = str.Replace("{Wattage}", GameUtil.GetFormattedWattage(moduleSolarPanel.CurrentWattage));
 				return str;
 			};
 			SteamTurbineWattage = CreateStatusItem("SteamTurbineWattage", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.Power.ID);
@@ -961,11 +1151,11 @@ namespace Database
 			Grave = CreateStatusItem("Grave", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			Grave.resolveStringCallback = delegate(string str, object data)
 			{
-				Grave.StatesInstance statesInstance2 = (Grave.StatesInstance)data;
-				string text = str.Replace("{DeadDupe}", statesInstance2.master.graveName);
+				Grave.StatesInstance statesInstance4 = (Grave.StatesInstance)data;
+				string text2 = str.Replace("{DeadDupe}", statesInstance4.master.graveName);
 				string[] strings = LocString.GetStrings(typeof(NAMEGEN.GRAVE.EPITAPHS));
-				int num = statesInstance2.master.epitaphIdx % strings.Length;
-				return text.Replace("{Epitaph}", strings[num]);
+				int num = statesInstance4.master.epitaphIdx % strings.Length;
+				return text2.Replace("{Epitaph}", strings[num]);
 			};
 			GraveEmpty = CreateStatusItem("GraveEmpty", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			CannotCoolFurther = CreateStatusItem("CannotCoolFurther", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
@@ -981,11 +1171,12 @@ namespace Database
 			WellPressurizing = CreateStatusItem("WellPressurizing", BUILDING.STATUSITEMS.WELL_PRESSURIZING.NAME, BUILDING.STATUSITEMS.WELL_PRESSURIZING.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			WellPressurizing.resolveStringCallback = delegate(string str, object data)
 			{
-				OilWellCap.StatesInstance statesInstance = (OilWellCap.StatesInstance)data;
-				return (statesInstance != null) ? string.Format(str, GameUtil.GetFormattedPercent(100f * statesInstance.GetPressurePercent())) : str;
+				OilWellCap.StatesInstance statesInstance3 = (OilWellCap.StatesInstance)data;
+				return (statesInstance3 != null) ? string.Format(str, GameUtil.GetFormattedPercent(100f * statesInstance3.GetPressurePercent())) : str;
 			};
 			WellOverpressure = CreateStatusItem("WellOverpressure", BUILDING.STATUSITEMS.WELL_OVERPRESSURE.NAME, BUILDING.STATUSITEMS.WELL_OVERPRESSURE.TOOLTIP, "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			ReleasingPressure = CreateStatusItem("ReleasingPressure", BUILDING.STATUSITEMS.RELEASING_PRESSURE.NAME, BUILDING.STATUSITEMS.RELEASING_PRESSURE.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			ReactorMeltdown = CreateStatusItem("ReactorMeltdown", BUILDING.STATUSITEMS.REACTORMELTDOWN.NAME, BUILDING.STATUSITEMS.REACTORMELTDOWN.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Bad, allow_multiples: false, OverlayModes.None.ID);
 			TooCold = CreateStatusItem("TooCold", BUILDING.STATUSITEMS.TOO_COLD.NAME, BUILDING.STATUSITEMS.TOO_COLD.TOOLTIP, "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			IncubatorProgress = CreateStatusItem("IncubatorProgress", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			IncubatorProgress.resolveStringCallback = delegate(string str, object data)
@@ -1011,6 +1202,7 @@ namespace Database
 				RocketModule rocketModule = (RocketModule)data;
 				return (rocketModule != null) ? str.Replace("{0}", rocketModule.GetParentRocketName()) : str;
 			};
+			LandedRocketLacksPassengerModule = CreateStatusItem("LandedRocketLacksPassengerModule", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			PathNotClear = new StatusItem("PATH_NOT_CLEAR", "BUILDING", "status_item_no_sky", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			PathNotClear.resolveTooltipCallback = delegate(string str, object data)
 			{
@@ -1063,6 +1255,138 @@ namespace Database
 				return str;
 			};
 			WindTunnelIntake = CreateStatusItem("WindTunnelIntake", "BUILDING", "status_item_vent_disabled", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			WarpPortalCharging = CreateStatusItem("WarpPortalCharging", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false);
+			WarpPortalCharging.resolveStringCallback = delegate(string str, object data)
+			{
+				_ = (WarpPortal)data;
+				str = str.Replace("{charge}", GameUtil.GetFormattedPercent(100f * (((WarpPortal)data).rechargeProgress / 3000f)));
+				return str;
+			};
+			WarpPortalCharging.resolveTooltipCallback = delegate(string str, object data)
+			{
+				_ = (WarpPortal)data;
+				str = str.Replace("{cycles}", $"{(3000f - ((WarpPortal)data).rechargeProgress) / 600f:0.0}");
+				return str;
+			};
+			WarpConduitPartnerDisabled = CreateStatusItem("WarpConduitPartnerDisabled", "BUILDING", "status_item_exclamation", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			WarpConduitPartnerDisabled.resolveStringCallback = (string str, object data) => str.Replace("{x}", data.ToString());
+			CollectingHEP = CreateStatusItem("CollectingHEP", "BUILDING", "status_item_exclamation", StatusItem.IconType.Custom, NotificationType.Neutral, allow_multiples: false, OverlayModes.Radiation.ID, showWorldIcon: false);
+			CollectingHEP.resolveStringCallback = (string str, object data) => str.Replace("{x}", ((HighEnergyParticleSpawner)data).PredictedPerCycleConsumptionRate.ToString());
+			InOrbit = CreateStatusItem("InOrbit", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			InOrbit.resolveStringCallback = delegate(string str, object data)
+			{
+				ClusterGridEntity clusterGridEntity = (ClusterGridEntity)data;
+				return str.Replace("{Destination}", clusterGridEntity.Name);
+			};
+			InFlight = CreateStatusItem("InFlight", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			InFlight.resolveStringCallback = delegate(string str, object data)
+			{
+				ClusterTraveler clusterTraveler2 = (ClusterTraveler)data;
+				ClusterDestinationSelector component = clusterTraveler2.GetComponent<ClusterDestinationSelector>();
+				RocketClusterDestinationSelector rocketClusterDestinationSelector = component as RocketClusterDestinationSelector;
+				ClusterGrid.Instance.GetLocationDescription(component.GetDestination(), out var _, out var label, out var _);
+				if (rocketClusterDestinationSelector != null)
+				{
+					LaunchPad destinationPad = rocketClusterDestinationSelector.GetDestinationPad();
+					string newValue = ((destinationPad != null) ? destinationPad.GetProperName() : UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.FIRSTAVAILABLE.ToString());
+					return str.Replace("{Destination_Asteroid}", label).Replace("{Destination_Pad}", newValue).Replace("{ETA}", GameUtil.GetFormattedCycles(clusterTraveler2.TravelETA()));
+				}
+				return str.Replace("{Destination_Asteroid}", label).Replace("{ETA}", GameUtil.GetFormattedCycles(clusterTraveler2.TravelETA()));
+			};
+			DestinationOutOfRange = CreateStatusItem("DestinationOutOfRange", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			DestinationOutOfRange.resolveStringCallback = delegate(string str, object data)
+			{
+				ClusterTraveler clusterTraveler = (ClusterTraveler)data;
+				str = str.Replace("{Range}", GameUtil.GetFormattedRocketRange(clusterTraveler.GetComponent<CraftModuleInterface>().Range, GameUtil.TimeSlice.None, displaySuffix: false));
+				return str.Replace("{Distance}", clusterTraveler.RemainingTravelNodes() + " " + UI.CLUSTERMAP.TILES);
+			};
+			RocketStranded = CreateStatusItem("RocketStranded", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			RailgunpayloadNeedsEmptying = CreateStatusItem("RailgunpayloadNeedsEmptying", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			AwaitingEmptyBuilding = CreateStatusItem("AwaitingEmptyBuilding", "BUILDING", "action_empty_contents", StatusItem.IconType.Custom, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			DuplicantActivationRequired = CreateStatusItem("DuplicantActivationRequired", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			RocketChecklistIncomplete = CreateStatusItem("RocketChecklistIncomplete", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			RocketCargoEmptying = CreateStatusItem("RocketCargoEmptying", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			RocketCargoFilling = CreateStatusItem("RocketCargoFilling", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			RocketCargoFull = CreateStatusItem("RocketCargoFull", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			FlightAllCargoFull = CreateStatusItem("FlightAllCargoFull", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			FlightCargoRemaining = CreateStatusItem("FlightCargoRemaining", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			FlightCargoRemaining.resolveStringCallback = delegate(string str, object data)
+			{
+				float mass3 = (float)data;
+				return str.Replace("{0}", GameUtil.GetFormattedMass(mass3));
+			};
+			PilotNeeded = CreateStatusItem("PilotNeeded", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			PilotNeeded.resolveStringCallback = delegate(string str, object data)
+			{
+				RocketControlStation master = ((RocketControlStation.StatesInstance)data).master;
+				return str.Replace("{timeRemaining}", GameUtil.GetFormattedTime(master.TimeRemaining));
+			};
+			AutoPilotActive = CreateStatusItem("AutoPilotActive", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			InvalidMaskStationConsumptionState = CreateStatusItem("InvalidMaskStationConsumptionState", "BUILDING", "status_item_no_gas_to_pump", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			ClusterTelescopeAllWorkComplete = CreateStatusItem("ClusterTelescopeAllWorkComplete", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			RocketPlatformCloseToCeiling = CreateStatusItem("RocketPlatformCloseToCeiling", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			RocketPlatformCloseToCeiling.resolveStringCallback = (string str, object data) => str.Replace("{distance}", data.ToString());
+			ModuleGeneratorPowered = CreateStatusItem("ModuleGeneratorPowered", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.Power.ID);
+			ModuleGeneratorPowered.resolveStringCallback = delegate(string str, object data)
+			{
+				Generator generator2 = (Generator)data;
+				str = str.Replace("{ActiveWattage}", GameUtil.GetFormattedWattage(generator2.WattageRating));
+				str = str.Replace("{MaxWattage}", GameUtil.GetFormattedWattage(generator2.WattageRating));
+				return str;
+			};
+			ModuleGeneratorNotPowered = CreateStatusItem("ModuleGeneratorNotPowered", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.Power.ID);
+			ModuleGeneratorNotPowered.resolveStringCallback = delegate(string str, object data)
+			{
+				Generator generator = (Generator)data;
+				str = str.Replace("{ActiveWattage}", GameUtil.GetFormattedWattage(0f));
+				str = str.Replace("{MaxWattage}", GameUtil.GetFormattedWattage(generator.WattageRating));
+				return str;
+			};
+			InOrbitRequired = CreateStatusItem("InOrbitRequired", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			ReactorRefuelDisabled = CreateStatusItem("ReactorRefuelDisabled", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			FridgeCooling = CreateStatusItem("FridgeCooling", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			FridgeSteady = CreateStatusItem("FridgeSteady", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			FridgeSteady.resolveStringCallback = delegate(string str, object data)
+			{
+				RefrigeratorController.StatesInstance statesInstance2 = (RefrigeratorController.StatesInstance)data;
+				str = str.Replace("{UsedPower}", GameUtil.GetFormattedWattage(statesInstance2.GetSaverPower())).Replace("{MaxPower}", GameUtil.GetFormattedWattage(statesInstance2.GetNormalPower()));
+				return str;
+			};
+			RailGunCooldown = CreateStatusItem("RailGunCooldown", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			RailGunCooldown.resolveStringCallback = delegate(string str, object data)
+			{
+				RailGun.StatesInstance statesInstance = (RailGun.StatesInstance)data;
+				str = str.Replace("{timeleft}", GameUtil.GetFormattedTime(statesInstance.sm.cooldownTimer.Get(statesInstance)));
+				return str;
+			};
+			RailGunCooldown.resolveTooltipCallback = delegate(string str, object data)
+			{
+				_ = (RailGun.StatesInstance)data;
+				str = str.Replace("{x}", 6.ToString());
+				return str;
+			};
+			NoSurfaceSight = new StatusItem("NOSURFACESIGHT", "BUILDING", "status_item_no_sky", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			LimitValveLimitReached = CreateStatusItem("LimitValveLimitReached", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			LimitValveLimitNotReached = CreateStatusItem("LimitValveLimitNotReached", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			LimitValveLimitNotReached.resolveStringCallback = delegate(string str, object data)
+			{
+				LimitValve limitValve = (LimitValve)data;
+				string text = "";
+				return string.Format(arg0: (!limitValve.displayUnitsInsteadOfMass) ? GameUtil.GetFormattedMass(limitValve.RemainingCapacity, GameUtil.TimeSlice.None, GameUtil.MetricMassFormat.Kilogram, includeSuffix: true, LimitValveSideScreen.FLOAT_FORMAT) : GameUtil.GetFormattedUnits(limitValve.RemainingCapacity, GameUtil.TimeSlice.None, displaySuffix: true, LimitValveSideScreen.FLOAT_FORMAT), format: BUILDING.STATUSITEMS.LIMITVALVELIMITNOTREACHED.NAME);
+			};
+			LimitValveLimitNotReached.resolveTooltipCallback = (string str, object data) => BUILDING.STATUSITEMS.LIMITVALVELIMITNOTREACHED.TOOLTIP;
+			SpacePOIHarvesting = CreateStatusItem("SpacePOIHarvesting", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			SpacePOIHarvesting.resolveStringCallback = delegate(string str, object data)
+			{
+				float mass2 = (float)data;
+				return string.Format(BUILDING.STATUSITEMS.SPACEPOIHARVESTING.NAME, GameUtil.GetFormattedMass(mass2, GameUtil.TimeSlice.PerSecond));
+			};
+			SpacePOIWasting = CreateStatusItem("SpacePOIWasting", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			SpacePOIWasting.resolveStringCallback = delegate(string str, object data)
+			{
+				float mass = (float)data;
+				return string.Format(BUILDING.STATUSITEMS.SPACEPOIWASTING.NAME, GameUtil.GetFormattedMass(mass, GameUtil.TimeSlice.PerSecond));
+			};
 		}
 
 		private static bool ShowInUtilityOverlay(HashedString mode, object data)
@@ -1093,6 +1417,11 @@ namespace Database
 			{
 				Tag prefabTag5 = transform.GetComponent<KPrefabID>().PrefabTag;
 				result = OverlayScreen.SolidConveyorIDs.Contains(prefabTag5);
+			}
+			else if (mode == OverlayModes.Radiation.ID)
+			{
+				Tag prefabTag6 = transform.GetComponent<KPrefabID>().PrefabTag;
+				result = OverlayScreen.RadiationIDs.Contains(prefabTag6);
 			}
 			return result;
 		}

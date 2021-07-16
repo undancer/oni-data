@@ -12,7 +12,7 @@ biomes:
     #overrides:
     #  massMultiplier: 50
 featureTemplates:
-  feature_geyser_volcanohole: 5
+  geysers/volcanohole: 5
 tags:
   - IgnoreCaveOverride
   - NoGlobalFeatureSpawning

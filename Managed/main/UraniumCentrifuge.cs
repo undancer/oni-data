@@ -1,48 +1,55 @@
-using KSerialization;
+using System;
+using UnityEngine;
 
-[SerializationConfig(MemberSerialization.OptIn)]
-public class UraniumCentrifuge : StateMachineComponent<UraniumCentrifuge.StatesInstance>
+public class UraniumCentrifuge : ComplexFabricator
 {
-	public class StatesInstance : GameStateMachine<States, StatesInstance, UraniumCentrifuge, object>.GameInstance
+	private Guid statusHandle;
+
+	private static readonly EventSystem.IntraObjectHandler<UraniumCentrifuge> CheckPipesDelegate = new EventSystem.IntraObjectHandler<UraniumCentrifuge>(delegate(UraniumCentrifuge component, object data)
 	{
-		public StatesInstance(UraniumCentrifuge smi)
-			: base(smi)
+		component.CheckPipes(data);
+	});
+
+	private static readonly EventSystem.IntraObjectHandler<UraniumCentrifuge> DropEnrichedProductDelegate = new EventSystem.IntraObjectHandler<UraniumCentrifuge>(delegate(UraniumCentrifuge component, object data)
+	{
+		component.DropEnrichedProducts(data);
+	});
+
+	protected override void OnPrefabInit()
+	{
+		base.OnPrefabInit();
+		Subscribe(-1697596308, DropEnrichedProductDelegate);
+		Subscribe(-2094018600, CheckPipesDelegate);
+	}
+
+	private void DropEnrichedProducts(object data)
+	{
+		Storage[] components = GetComponents<Storage>();
+		for (int i = 0; i < components.Length; i++)
 		{
+			components[i].Drop(ElementLoader.FindElementByHash(SimHashes.EnrichedUranium).tag);
 		}
 	}
 
-	public class States : GameStateMachine<States, StatesInstance, UraniumCentrifuge>
+	private void CheckPipes(object data)
 	{
-		public State disabled;
-
-		public State waiting;
-
-		public State converting;
-
-		public override void InitializeStates(out BaseState default_state)
+		KSelectable component = GetComponent<KSelectable>();
+		int cell = Grid.OffsetCell(Grid.PosToCell(this), UraniumCentrifugeConfig.outPipeOffset);
+		GameObject gameObject = Grid.Objects[cell, 16];
+		if (gameObject != null)
 		{
-			default_state = disabled;
-			root.EventTransition(GameHashes.OperationalChanged, disabled, (StatesInstance smi) => !smi.master.operational.IsOperational);
-			disabled.EventTransition(GameHashes.OperationalChanged, waiting, (StatesInstance smi) => smi.master.operational.IsOperational);
-			waiting.EventTransition(GameHashes.OnStorageChange, converting, (StatesInstance smi) => smi.master.GetComponent<ElementConverter>().HasEnoughMassToStartConverting());
-			converting.Enter(delegate(StatesInstance smi)
+			if (gameObject.GetComponent<PrimaryElement>().Element.highTemp > ElementLoader.FindElementByHash(SimHashes.MoltenUranium).lowTemp)
 			{
-				smi.master.operational.SetActive(value: true);
-			}).Exit(delegate(StatesInstance smi)
+				component.RemoveStatusItem(statusHandle);
+			}
+			else
 			{
-				smi.master.operational.SetActive(value: false);
-			}).Transition(waiting, (StatesInstance smi) => !smi.master.GetComponent<ElementConverter>().CanConvertAtAll());
+				statusHandle = component.AddStatusItem(Db.Get().BuildingStatusItems.PipeMayMelt);
+			}
 		}
-	}
-
-	[MyCmpAdd]
-	private Storage storage;
-
-	[MyCmpReq]
-	private Operational operational;
-
-	protected override void OnSpawn()
-	{
-		base.smi.StartSM();
+		else
+		{
+			component.RemoveStatusItem(statusHandle);
+		}
 	}
 }

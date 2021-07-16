@@ -1,53 +1,102 @@
 using System;
+using System.Collections.Generic;
 using Klei.AI;
 using TemplateClasses;
 using UnityEngine;
 
 public static class TemplateLoader
 {
-	private static TemplateContainer template;
-
-	public static void Stamp(TemplateContainer template, Vector2 rootLocation, System.Action on_complete_callback)
+	private class ActiveStamp
 	{
-		TemplateLoader.template = template;
-		BuildPhase1((int)rootLocation.x, (int)rootLocation.y, delegate
-		{
-			BuildPhase2((int)rootLocation.x, (int)rootLocation.y, delegate
-			{
-				BuildPhase3((int)rootLocation.x, (int)rootLocation.y, delegate
-				{
-					BuildPhase4((int)rootLocation.x, (int)rootLocation.y, on_complete_callback);
-				});
-			});
-		});
-	}
+		private TemplateContainer m_template;
 
-	private static void BuildPhase1(int baseX, int baseY, System.Action callback)
-	{
-		if (Grid.WidthInCells >= 16)
+		private Vector2I m_rootLocation;
+
+		private System.Action m_onCompleteCallback;
+
+		private int currentPhase;
+
+		public ActiveStamp(TemplateContainer template, Vector2 rootLocation, System.Action onCompleteCallback)
 		{
-			CellOffset[] array = new CellOffset[template.cells.Count];
-			for (int i = 0; i < template.cells.Count; i++)
+			m_template = template;
+			m_rootLocation = new Vector2I((int)rootLocation.x, (int)rootLocation.y);
+			m_onCompleteCallback = onCompleteCallback;
+			NextPhase();
+		}
+
+		private void NextPhase()
+		{
+			currentPhase++;
+			switch (currentPhase)
 			{
-				array[i] = new CellOffset(template.cells[i].location_x, template.cells[i].location_y);
-			}
-			ClearPickups(baseX, baseY, array);
-			if (template.cells.Count > 0)
-			{
-				ApplyGridProperties(baseX, baseY, template);
-				PlaceCells(baseX, baseY, template, callback);
-				ClearEntities<Crop>(baseX, baseY, array);
-				ClearEntities<Health>(baseX, baseY, array);
-				ClearEntities<Geyser>(baseX, baseY, array);
-			}
-			else
-			{
-				callback();
+			case 1:
+				BuildPhase1(m_rootLocation.x, m_rootLocation.y, m_template, NextPhase);
+				break;
+			case 2:
+				BuildPhase2(m_rootLocation.x, m_rootLocation.y, m_template, NextPhase);
+				break;
+			case 3:
+				BuildPhase3(m_rootLocation.x, m_rootLocation.y, m_template, NextPhase);
+				break;
+			case 4:
+				BuildPhase4(m_rootLocation.x, m_rootLocation.y, m_template, NextPhase);
+				break;
+			case 5:
+				m_onCompleteCallback();
+				StampComplete(this);
+				break;
+			default:
+				Debug.Assert(condition: false, "How did we get here?? Something's wrong!");
+				break;
 			}
 		}
 	}
 
-	private static void BuildPhase2(int baseX, int baseY, System.Action callback)
+	private static List<ActiveStamp> activeStamps = new List<ActiveStamp>();
+
+	public static void Stamp(TemplateContainer template, Vector2 rootLocation, System.Action on_complete_callback)
+	{
+		ActiveStamp item = new ActiveStamp(template, rootLocation, on_complete_callback);
+		activeStamps.Add(item);
+	}
+
+	private static void StampComplete(ActiveStamp stamp)
+	{
+		activeStamps.Remove(stamp);
+	}
+
+	private static void BuildPhase1(int baseX, int baseY, TemplateContainer template, System.Action callback)
+	{
+		if (Grid.WidthInCells < 16)
+		{
+			return;
+		}
+		if (template.cells == null)
+		{
+			callback();
+			return;
+		}
+		CellOffset[] array = new CellOffset[template.cells.Count];
+		for (int i = 0; i < template.cells.Count; i++)
+		{
+			array[i] = new CellOffset(template.cells[i].location_x, template.cells[i].location_y);
+		}
+		ClearPickups(baseX, baseY, array);
+		if (template.cells.Count > 0)
+		{
+			ApplyGridProperties(baseX, baseY, template);
+			PlaceCells(baseX, baseY, template, callback);
+			ClearEntities<Crop>(baseX, baseY, array);
+			ClearEntities<Health>(baseX, baseY, array);
+			ClearEntities<Geyser>(baseX, baseY, array);
+		}
+		else
+		{
+			callback();
+		}
+	}
+
+	private static void BuildPhase2(int baseX, int baseY, TemplateContainer template, System.Action callback)
 	{
 		int num = Grid.OffsetCell(0, baseX, baseY);
 		if (template == null)
@@ -224,11 +273,17 @@ public static class TemplateLoader
 	{
 		int cell = Grid.OffsetCell(root_cell, bc.location_x, bc.location_y);
 		UtilityConnections connection = (UtilityConnections)bc.connections;
-		switch (bc.id)
+		string id = bc.id;
+		if (id == null)
+		{
+			return;
+		}
+		switch (id)
 		{
 		case "Wire":
 		case "InsulatedWire":
 		case "HighWattageWire":
+		case "WireRefined":
 			spawned.GetComponent<Wire>().SetFirstFrameCallback(delegate
 			{
 				Game.Instance.electricalConduitSystem.SetConnections(connection, cell, is_physical_building: true);
@@ -392,7 +447,7 @@ public static class TemplateLoader
 		return substance.SpawnResource(position, prefab.units, prefab.temperature, index, prefab.diseaseCount);
 	}
 
-	private static void BuildPhase3(int baseX, int baseY, System.Action callback)
+	private static void BuildPhase3(int baseX, int baseY, TemplateContainer template, System.Action callback)
 	{
 		if (template != null)
 		{
@@ -405,34 +460,43 @@ public static class TemplateLoader
 					component.Refresh();
 				}
 			}
-			for (int i = 0; i < template.pickupables.Count; i++)
+			if (template.pickupables != null)
 			{
-				if (template.pickupables[i] != null && !(template.pickupables[i].id == ""))
+				for (int i = 0; i < template.pickupables.Count; i++)
 				{
-					PlacePickupables(template.pickupables[i], root_cell);
+					if (template.pickupables[i] != null && !(template.pickupables[i].id == ""))
+					{
+						PlacePickupables(template.pickupables[i], root_cell);
+					}
 				}
 			}
-			for (int j = 0; j < template.elementalOres.Count; j++)
+			if (template.elementalOres != null)
 			{
-				if (template.elementalOres[j] != null && !(template.elementalOres[j].id == ""))
+				for (int j = 0; j < template.elementalOres.Count; j++)
 				{
-					PlaceElementalOres(template.elementalOres[j], root_cell);
+					if (template.elementalOres[j] != null && !(template.elementalOres[j].id == ""))
+					{
+						PlaceElementalOres(template.elementalOres[j], root_cell);
+					}
 				}
 			}
 		}
 		callback?.Invoke();
 	}
 
-	private static void BuildPhase4(int baseX, int baseY, System.Action callback)
+	private static void BuildPhase4(int baseX, int baseY, TemplateContainer template, System.Action callback)
 	{
 		if (template != null)
 		{
 			int root_cell = Grid.OffsetCell(0, baseX, baseY);
-			for (int i = 0; i < template.otherEntities.Count; i++)
+			if (template.otherEntities != null)
 			{
-				if (template.otherEntities[i] != null && !(template.otherEntities[i].id == ""))
+				for (int i = 0; i < template.otherEntities.Count; i++)
 				{
-					PlaceOtherEntities(template.otherEntities[i], root_cell);
+					if (template.otherEntities[i] != null && !(template.otherEntities[i].id == ""))
+					{
+						PlaceOtherEntities(template.otherEntities[i], root_cell);
+					}
 				}
 			}
 			template = null;
@@ -469,11 +533,16 @@ public static class TemplateLoader
 
 	private static void PlaceCells(int baseX, int baseY, TemplateContainer template, System.Action callback)
 	{
-		HandleVector<Game.CallbackInfo>.Handle handle = Game.Instance.callbackManager.Add(new Game.CallbackInfo(callback));
 		if (template == null)
 		{
 			Debug.LogError("Template Loader does not have template.");
 		}
+		if (template.cells == null)
+		{
+			callback();
+			return;
+		}
+		HandleVector<Game.CallbackInfo>.Handle handle = Game.Instance.callbackManager.Add(new Game.CallbackInfo(callback));
 		for (int i = 0; i < template.cells.Count; i++)
 		{
 			int num = Grid.XYToCell(template.cells[i].location_x + baseX, template.cells[i].location_y + baseY);
@@ -493,6 +562,10 @@ public static class TemplateLoader
 
 	public static void ApplyGridProperties(int baseX, int baseY, TemplateContainer template)
 	{
+		if (template.cells == null)
+		{
+			return;
+		}
 		for (int i = 0; i < template.cells.Count; i++)
 		{
 			int num = Grid.XYToCell(template.cells[i].location_x + baseX, template.cells[i].location_y + baseY);

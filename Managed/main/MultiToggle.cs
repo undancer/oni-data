@@ -20,6 +20,8 @@ public class MultiToggle : KMonoBehaviour, IPointerClickHandler, IEventSystemHan
 
 	public System.Action onClick;
 
+	public Func<bool> onDoubleClick;
+
 	public System.Action onEnter;
 
 	public System.Action onExit;
@@ -27,6 +29,8 @@ public class MultiToggle : KMonoBehaviour, IPointerClickHandler, IEventSystemHan
 	public System.Action onHold;
 
 	public System.Action onStopHold;
+
+	public bool allowRightClick = true;
 
 	protected bool clickHeldDown;
 
@@ -52,6 +56,15 @@ public class MultiToggle : KMonoBehaviour, IPointerClickHandler, IEventSystemHan
 			{
 				onHold();
 			}
+		}
+	}
+
+	private void OnDisable()
+	{
+		if (!base.gameObject.activeInHierarchy)
+		{
+			RefreshHoverColor();
+			pointerOver = false;
 		}
 	}
 
@@ -93,15 +106,23 @@ public class MultiToggle : KMonoBehaviour, IPointerClickHandler, IEventSystemHan
 
 	public virtual void OnPointerClick(PointerEventData eventData)
 	{
-		if (states.Length - 1 < state)
+		if (allowRightClick || eventData.button != PointerEventData.InputButton.Right)
 		{
-			Debug.LogWarning("Multi toggle has too few / no states");
+			if (states.Length - 1 < state)
+			{
+				Debug.LogWarning("Multi toggle has too few / no states");
+			}
+			bool flag = false;
+			if (onDoubleClick != null && eventData.clickCount == 2)
+			{
+				flag = onDoubleClick();
+			}
+			if (onClick != null && !flag)
+			{
+				onClick();
+			}
+			RefreshHoverColor();
 		}
-		if (onClick != null)
-		{
-			onClick();
-		}
-		RefreshHoverColor();
 	}
 
 	public void OnPointerEnter(PointerEventData eventData)
@@ -141,21 +162,44 @@ public class MultiToggle : KMonoBehaviour, IPointerClickHandler, IEventSystemHan
 
 	protected void RefreshHoverColor()
 	{
-		if (!pointerOver)
+		if (!base.gameObject.activeInHierarchy)
 		{
-			return;
-		}
-		if (states[state].use_color_on_hover && states[state].color_on_hover != states[state].color)
-		{
-			toggle_image.color = states[state].color_on_hover;
-		}
-		StatePresentationSetting[] additional_display_settings = states[state].additional_display_settings;
-		for (int i = 0; i < additional_display_settings.Length; i++)
-		{
-			StatePresentationSetting statePresentationSetting = additional_display_settings[i];
-			if (!(statePresentationSetting.image_target == null) && !(statePresentationSetting.image_target == null) && statePresentationSetting.use_color_on_hover)
+			if (states.Length == 0)
 			{
-				statePresentationSetting.image_target.color = statePresentationSetting.color_on_hover;
+				return;
+			}
+			if (states[state].use_color_on_hover && states[state].color_on_hover != states[state].color)
+			{
+				toggle_image.color = states[state].color;
+			}
+			StatePresentationSetting[] additional_display_settings = states[state].additional_display_settings;
+			for (int i = 0; i < additional_display_settings.Length; i++)
+			{
+				StatePresentationSetting statePresentationSetting = additional_display_settings[i];
+				if (!(statePresentationSetting.image_target == null) && statePresentationSetting.use_color_on_hover)
+				{
+					statePresentationSetting.image_target.color = statePresentationSetting.color;
+				}
+			}
+		}
+		else
+		{
+			if (!pointerOver)
+			{
+				return;
+			}
+			if (states[state].use_color_on_hover && states[state].color_on_hover != states[state].color)
+			{
+				toggle_image.color = states[state].color_on_hover;
+			}
+			StatePresentationSetting[] additional_display_settings = states[state].additional_display_settings;
+			for (int i = 0; i < additional_display_settings.Length; i++)
+			{
+				StatePresentationSetting statePresentationSetting2 = additional_display_settings[i];
+				if (!(statePresentationSetting2.image_target == null) && !(statePresentationSetting2.image_target == null) && statePresentationSetting2.use_color_on_hover)
+				{
+					statePresentationSetting2.image_target.color = statePresentationSetting2.color_on_hover;
+				}
 			}
 		}
 	}
@@ -197,6 +241,10 @@ public class MultiToggle : KMonoBehaviour, IPointerClickHandler, IEventSystemHan
 
 	public virtual void OnPointerDown(PointerEventData eventData)
 	{
+		if (!allowRightClick && eventData.button == PointerEventData.InputButton.Right)
+		{
+			return;
+		}
 		clickHeldDown = true;
 		if (play_sound_on_click)
 		{
@@ -213,6 +261,10 @@ public class MultiToggle : KMonoBehaviour, IPointerClickHandler, IEventSystemHan
 
 	public virtual void OnPointerUp(PointerEventData eventData)
 	{
+		if (!allowRightClick && eventData.button == PointerEventData.InputButton.Right)
+		{
+			return;
+		}
 		if (clickHeldDown)
 		{
 			if (play_sound_on_release && states[state].on_release_override_sound_path != "")

@@ -17,8 +17,6 @@ namespace Klei
 
 		public int chunkEdgeSize = 32;
 
-		public Vector2I subWorldSize = new Vector2I(512, 256);
-
 		public WorldLayout worldLayout;
 
 		public List<TerrainCell> terrainCells;
@@ -32,6 +30,8 @@ namespace Klei
 		public Chunk world;
 
 		public Tree voronoiTree;
+
+		public AxialI clusterLocation;
 
 		public Data()
 		{

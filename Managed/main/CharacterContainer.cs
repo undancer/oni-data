@@ -163,7 +163,7 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 
 	public override float GetSortKey()
 	{
-		return 100f;
+		return 50f;
 	}
 
 	private IEnumerator DelayedGeneration()
@@ -291,7 +291,7 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 			locText2.gameObject.SetActive(value: true);
 			locText2.text = stats.Traits[i].Name;
 			locText2.color = (trait.PositiveTrait ? Constants.POSITIVE_COLOR : Constants.NEGATIVE_COLOR);
-			locText2.GetComponent<ToolTip>().SetSimpleTooltip(trait.description);
+			locText2.GetComponent<ToolTip>().SetSimpleTooltip(trait.GetTooltip());
 			for (int j = 0; j < trait.SelfModifiers.Count; j++)
 			{
 				GameObject gameObject = Util.KInstantiateUI(attributeLabelTrait.gameObject, locText.transform.parent.gameObject);
@@ -302,7 +302,7 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 				_ = trait.SelfModifiers[j].AttributeId == "GermResistance";
 				Klei.AI.Attribute attribute = Db.Get().Attributes.Get(trait.SelfModifiers[j].AttributeId);
 				string text = attribute.Description;
-				text = string.Concat(text, "\n\n", Strings.Get("STRINGS.DUPLICANTS.ATTRIBUTES." + trait.SelfModifiers[j].AttributeId.ToUpper() + ".NAME"), ": ", trait.SelfModifiers[j].GetFormattedString(null));
+				text = string.Concat(text, "\n\n", Strings.Get("STRINGS.DUPLICANTS.ATTRIBUTES." + trait.SelfModifiers[j].AttributeId.ToUpper() + ".NAME"), ": ", trait.SelfModifiers[j].GetFormattedString());
 				List<AttributeConverter> convertersForAttribute = Db.Get().AttributeConverters.GetConvertersForAttribute(attribute);
 				for (int k = 0; k < convertersForAttribute.Count; k++)
 				{
@@ -397,12 +397,12 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 			string text7 = "";
 			text7 = ((!(skillGroup.choreGroupID != "")) ? string.Format(DUPLICANTS.ROLES.GROUPS.APTITUDE_DESCRIPTION, skillGroup.Name, DUPLICANTSTATS.APTITUDE_BONUS) : string.Format(arg2: Db.Get().ChoreGroups.Get(skillGroup.choreGroupID).description, format: DUPLICANTS.ROLES.GROUPS.APTITUDE_DESCRIPTION_CHOREGROUP, arg0: skillGroup.Name, arg1: DUPLICANTSTATS.APTITUDE_BONUS));
 			locText3.GetComponent<ToolTip>().SetSimpleTooltip(text7);
-			float num = DUPLICANTSTATS.APTITUDE_ATTRIBUTE_BONUSES[stats.skillAptitudes.Count - 1];
+			float num = stats.StartingLevels[skillAptitude.Key.relevantAttributes[0].Id];
 			LocText locText4 = Util.KInstantiateUI<LocText>(attributeLabelAptitude.gameObject, gameObject5);
 			locText4.gameObject.SetActive(value: true);
 			locText4.text = "+" + num + " " + skillAptitude.Key.relevantAttributes[0].Name;
 			string text8 = skillAptitude.Key.relevantAttributes[0].Description;
-			text8 = text8 + "\n\n" + skillAptitude.Key.relevantAttributes[0].Name + ": +" + DUPLICANTSTATS.APTITUDE_ATTRIBUTE_BONUSES[stats.skillAptitudes.Count - 1];
+			text8 = text8 + "\n\n" + skillAptitude.Key.relevantAttributes[0].Name + ": +" + num;
 			List<AttributeConverter> convertersForAttribute2 = Db.Get().AttributeConverters.GetConvertersForAttribute(skillAptitude.Key.relevantAttributes[0]);
 			for (int n = 0; n < convertersForAttribute2.Count; n++)
 			{
@@ -628,7 +628,7 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 
 	private bool IsCharacterRedundant()
 	{
-		if (!(containers.Find((CharacterContainer c) => c != null && c.stats != null && c != this && c.stats.Name == stats.Name) != null))
+		if (!(containers.Find((CharacterContainer c) => c != null && c.stats != null && c != this && c.stats.Name == stats.Name && c.stats.IsValid) != null))
 		{
 			return Components.LiveMinionIdentities.Items.Any((MinionIdentity id) => id.GetProperName() == stats.Name);
 		}

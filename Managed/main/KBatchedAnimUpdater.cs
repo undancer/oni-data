@@ -94,6 +94,11 @@ public class KBatchedAnimUpdater : Singleton<KBatchedAnimUpdater>
 
 	public Vector2I GetVisibleSize()
 	{
+		if (CameraController.Instance != null)
+		{
+			CameraController.Instance.GetWorldCamera(out var worldOffset, out var worldSize);
+			return new Vector2I((int)((float)(worldSize.x + worldOffset.x) * VISIBLE_RANGE_SCALE.x), (int)((float)(worldSize.y + worldOffset.y) * VISIBLE_RANGE_SCALE.y));
+		}
 		return new Vector2I((int)((float)Grid.WidthInCells * VISIBLE_RANGE_SCALE.x), (int)((float)Grid.HeightInCells * VISIBLE_RANGE_SCALE.y));
 	}
 
@@ -222,6 +227,10 @@ public class KBatchedAnimUpdater : Singleton<KBatchedAnimUpdater>
 			{
 				value.updateRegistrationState = RegistrationState.Unregistered;
 				list.Remove(linkedListNode);
+			}
+			else if (value.forceUseGameTime)
+			{
+				value.UpdateAnim(Time.deltaTime);
 			}
 			else
 			{
@@ -468,12 +477,25 @@ public class KBatchedAnimUpdater : Singleton<KBatchedAnimUpdater>
 		Grid.GetVisibleExtents(out min.x, out min.y, out max.x, out max.y);
 		min.x -= 4;
 		min.y -= 4;
-		min.x = Math.Min((int)((float)Grid.WidthInCells * VISIBLE_RANGE_SCALE.x) - 1, Math.Max(0, min.x));
-		min.y = Math.Min((int)((float)Grid.HeightInCells * VISIBLE_RANGE_SCALE.y) - 1, Math.Max(0, min.y));
-		max.x += 4;
-		max.y += 4;
-		max.x = Math.Min((int)((float)Grid.WidthInCells * VISIBLE_RANGE_SCALE.x) - 1, Math.Max(0, max.x));
-		max.y = Math.Min((int)((float)Grid.HeightInCells * VISIBLE_RANGE_SCALE.y) - 1, Math.Max(0, max.y));
+		if (CameraController.Instance != null)
+		{
+			CameraController.Instance.GetWorldCamera(out var worldOffset, out var worldSize);
+			min.x = Math.Min(worldOffset.x + worldSize.x - 1, Math.Max(worldOffset.x, min.x));
+			min.y = Math.Min(worldOffset.y + worldSize.y - 1, Math.Max(worldOffset.y, min.y));
+			max.x += 4;
+			max.y += 4;
+			max.x = Math.Min(worldOffset.x + worldSize.x - 1, Math.Max(worldOffset.x, max.x));
+			max.y = Math.Min(worldOffset.y + worldSize.y - 1, Math.Max(worldOffset.y, max.y));
+		}
+		else
+		{
+			min.x = Math.Min((int)((float)Grid.WidthInCells * VISIBLE_RANGE_SCALE.x) - 1, Math.Max(0, min.x));
+			min.y = Math.Min((int)((float)Grid.HeightInCells * VISIBLE_RANGE_SCALE.y) - 1, Math.Max(0, min.y));
+			max.x += 4;
+			max.y += 4;
+			max.x = Math.Min((int)((float)Grid.WidthInCells * VISIBLE_RANGE_SCALE.x) - 1, Math.Max(0, max.x));
+			max.y = Math.Min((int)((float)Grid.HeightInCells * VISIBLE_RANGE_SCALE.y) - 1, Math.Max(0, max.y));
+		}
 	}
 
 	private bool DoGridProcessing()

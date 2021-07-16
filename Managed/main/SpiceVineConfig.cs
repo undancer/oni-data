@@ -13,6 +13,11 @@ public class SpiceVineConfig : IEntityConfig
 
 	public const float WATER_RATE = 7f / 120f;
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("SpiceVine", STRINGS.CREATURES.SPECIES.SPICE_VINE.NAME, STRINGS.CREATURES.SPECIES.SPICE_VINE.DESC, 2f, decor: DECOR.BONUS.TIER1, anim: Assets.GetAnim("vinespicenut_kanim"), initialAnim: "idle_empty", sceneLayer: Grid.SceneLayer.BuildingFront, width: 1, height: 3, noise: default(EffectorValues), element: SimHashes.Creature, additionalTags: new List<Tag>
@@ -20,7 +25,7 @@ public class SpiceVineConfig : IEntityConfig
 			GameTags.Hanging
 		}, defaultTemperature: 320f);
 		EntityTemplates.MakeHangingOffsets(gameObject, 1, 3);
-		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 258.15f, 308.15f, 358.15f, 448.15f, null, pressure_sensitive: true, 0f, 0.15f, SpiceNutConfig.ID);
+		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 258.15f, 308.15f, 358.15f, 448.15f, null, pressure_sensitive: true, 0f, 0.15f, SpiceNutConfig.ID, can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, 2400f, 0f, 980f, "SpiceVineOriginal", STRINGS.CREATURES.SPECIES.SPICE_VINE.NAME);
 		Tag tag = ElementLoader.FindElementByHash(SimHashes.DirtyWater).tag;
 		PlantElementAbsorber.ConsumeInfo[] array = new PlantElementAbsorber.ConsumeInfo[1];
 		PlantElementAbsorber.ConsumeInfo consumeInfo = new PlantElementAbsorber.ConsumeInfo
@@ -38,7 +43,10 @@ public class SpiceVineConfig : IEntityConfig
 		};
 		array2[0] = consumeInfo;
 		EntityTemplates.ExtendPlantToFertilizable(gameObject, array2);
-		gameObject.GetComponent<UprootedMonitor>().monitorCell = new CellOffset(0, 1);
+		gameObject.GetComponent<UprootedMonitor>().monitorCells = new CellOffset[1]
+		{
+			new CellOffset(0, 1)
+		};
 		gameObject.AddOrGet<StandardCropPlant>();
 		EntityTemplates.MakeHangingOffsets(EntityTemplates.CreateAndRegisterPreviewForPlant(EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Harvest, "SpiceVineSeed", STRINGS.CREATURES.SPECIES.SEEDS.SPICE_VINE.NAME, STRINGS.CREATURES.SPECIES.SEEDS.SPICE_VINE.DESC, Assets.GetAnim("seed_spicenut_kanim"), "object", 1, new List<Tag>
 		{

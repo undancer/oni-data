@@ -7,28 +7,42 @@ public class OxidizerTank : KMonoBehaviour, IUserControlledCapacity
 {
 	public Storage storage;
 
+	public bool supportsMultipleOxidizers;
+
 	private MeterController meter;
 
 	private bool isSuspended;
 
+	public bool consumeOnLand = true;
+
 	[Serialize]
-	public float targetFillMass = 2700f;
+	public float maxFillMass;
+
+	[Serialize]
+	public float targetFillMass;
 
 	[SerializeField]
-	private Tag[] oxidizerTypes = new Tag[2]
+	private Tag[] oxidizerTypes = ((!DlcManager.IsExpansion1Active()) ? new Tag[2]
 	{
 		SimHashes.OxyRock.CreateTag(),
 		SimHashes.LiquidOxygen.CreateTag()
-	};
+	} : new Tag[3]
+	{
+		SimHashes.OxyRock.CreateTag(),
+		SimHashes.LiquidOxygen.CreateTag(),
+		SimHashes.Fertilizer.CreateTag()
+	});
+
+	private FilteredStorage filteredStorage;
 
 	private static readonly EventSystem.IntraObjectHandler<OxidizerTank> OnCopySettingsDelegate = new EventSystem.IntraObjectHandler<OxidizerTank>(delegate(OxidizerTank component, object data)
 	{
 		component.OnCopySettings(data);
 	});
 
-	private static readonly EventSystem.IntraObjectHandler<OxidizerTank> OnReturnRocketDelegate = new EventSystem.IntraObjectHandler<OxidizerTank>(delegate(OxidizerTank component, object data)
+	private static readonly EventSystem.IntraObjectHandler<OxidizerTank> OnRocketLandedDelegate = new EventSystem.IntraObjectHandler<OxidizerTank>(delegate(OxidizerTank component, object data)
 	{
-		component.OnReturn(data);
+		component.OnRocketLanded(data);
 	});
 
 	private static readonly EventSystem.IntraObjectHandler<OxidizerTank> OnStorageChangeDelegate = new EventSystem.IntraObjectHandler<OxidizerTank>(delegate(OxidizerTank component, object data)
@@ -64,9 +78,25 @@ public class OxidizerTank : KMonoBehaviour, IUserControlledCapacity
 
 	public float MinCapacity => 0f;
 
-	public float MaxCapacity => 2700f;
+	public float MaxCapacity => maxFillMass;
 
 	public float AmountStored => storage.MassStored();
+
+	public float TotalOxidizerPower
+	{
+		get
+		{
+			float num = 0f;
+			foreach (GameObject item in storage.items)
+			{
+				PrimaryElement component = item.GetComponent<PrimaryElement>();
+				float num2 = 0f;
+				num2 = ((!DlcManager.FeatureClusterSpaceEnabled()) ? RocketStats.oxidizerEfficiencies[component.ElementID.CreateTag()] : Clustercraft.dlc1OxidizerEfficiencies[component.ElementID.CreateTag()]);
+				num += component.Mass * num2;
+			}
+			return num;
+		}
+	}
 
 	public bool WholeValues => false;
 
@@ -76,22 +106,27 @@ public class OxidizerTank : KMonoBehaviour, IUserControlledCapacity
 	{
 		base.OnPrefabInit();
 		Subscribe(-905833192, OnCopySettingsDelegate);
+		if (supportsMultipleOxidizers)
+		{
+			filteredStorage = new FilteredStorage(this, null, null, this, use_logic_meter: true, Db.Get().ChoreTypes.Fetch);
+		}
 	}
 
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
 		GetComponent<KBatchedAnimController>().Play("grounded", KAnim.PlayMode.Loop);
-		UserMaxCapacity = UserMaxCapacity;
-		Subscribe(1366341636, OnReturnRocketDelegate);
+		RocketModuleCluster component = GetComponent<RocketModuleCluster>();
+		if (component != null)
+		{
+			Debug.Assert(DlcManager.IsExpansion1Active(), "EXP1 not active but trying to use EXP1 rockety system");
+			component.AddModuleCondition(ProcessCondition.ProcessConditionType.RocketStorage, new ConditionSufficientOxidizer(this));
+		}
+		UserMaxCapacity = Mathf.Min(UserMaxCapacity, maxFillMass);
+		Subscribe(-887025858, OnRocketLandedDelegate);
 		Subscribe(-1697596308, OnStorageChangeDelegate);
 		meter = new MeterController(GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.Infront, Grid.SceneLayer.NoLayer, "meter_target", "meter_fill", "meter_frame", "meter_OL");
 		meter.gameObject.GetComponent<KBatchedAnimTracker>().matchParentOffset = true;
-	}
-
-	public float MassStored()
-	{
-		return storage.MassStored();
 	}
 
 	public float GetTotalOxidizerAvailable()
@@ -116,8 +151,30 @@ public class OxidizerTank : KMonoBehaviour, IUserControlledCapacity
 		return dictionary;
 	}
 
+	private void OnStorageChange(object data)
+	{
+		meter.SetPositionPercent(storage.MassStored() / storage.capacityKg);
+	}
+
+	private void OnRocketLanded(object data)
+	{
+		if (consumeOnLand)
+		{
+			storage.ConsumeAllIgnoringDisease();
+		}
+	}
+
+	private void OnCopySettings(object data)
+	{
+		OxidizerTank component = ((GameObject)data).GetComponent<OxidizerTank>();
+		if (component != null)
+		{
+			UserMaxCapacity = component.UserMaxCapacity;
+		}
+	}
+
 	[ContextMenu("Fill Tank")]
-	public void FillTank(SimHashes element)
+	public void DEBUG_FillTank(SimHashes element)
 	{
 		if (ElementLoader.FindElementByHash(element).IsLiquid)
 		{
@@ -127,25 +184,6 @@ public class OxidizerTank : KMonoBehaviour, IUserControlledCapacity
 		{
 			GameObject go = ElementLoader.FindElementByHash(element).substance.SpawnResource(base.gameObject.transform.GetPosition(), targetFillMass, 300f, byte.MaxValue, 0);
 			storage.Store(go);
-		}
-	}
-
-	private void OnStorageChange(object data)
-	{
-		meter.SetPositionPercent(storage.MassStored() / storage.capacityKg);
-	}
-
-	private void OnReturn(object data)
-	{
-		storage.ConsumeAllIgnoringDisease();
-	}
-
-	private void OnCopySettings(object data)
-	{
-		OxidizerTank component = ((GameObject)data).GetComponent<OxidizerTank>();
-		if (component != null)
-		{
-			UserMaxCapacity = component.UserMaxCapacity;
 		}
 	}
 }

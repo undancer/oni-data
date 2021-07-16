@@ -25,7 +25,19 @@ public class PhonoboxSoundEvent : SoundEvent
 		AudioDebug audioDebug = AudioDebug.Get();
 		if (audioDebug != null && audioDebug.debugSoundEvents)
 		{
-			Debug.Log(behaviour.name + ", " + base.sound + ", " + base.frame + ", " + position);
+			string[] obj = new string[7]
+			{
+				behaviour.name,
+				", ",
+				base.sound,
+				", ",
+				base.frame.ToString(),
+				", ",
+				null
+			};
+			Vector3 vector = position;
+			obj[6] = vector.ToString();
+			Debug.Log(string.Concat(obj));
 		}
 		try
 		{

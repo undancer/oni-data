@@ -460,7 +460,7 @@ public class SteamTurbine : Generator
 					float display_dt = ((lastSampleTime > 0f) ? (Time.time - lastSampleTime) : 1f);
 					lastSampleTime = Time.time;
 					GameComps.StructureTemperatures.ProduceEnergy(structureTemperature, num2 * wasteHeatToTurbinePercent, BUILDINGS.PREFABS.STEAMTURBINE2.HEAT_SOURCE, display_dt);
-					liquidStorage.AddLiquid(destElem, num, outputElementTemperature, component.DiseaseIdx, num4);
+					liquidStorage.AddLiquid(destElem, num, outputElementTemperature, component.DiseaseIdx, num4, keep_zero_mass: true);
 				}
 			}
 		}

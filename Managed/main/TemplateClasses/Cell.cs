@@ -3,7 +3,7 @@ using System;
 namespace TemplateClasses
 {
 	[Serializable]
-	public class Cell : ICloneable
+	public class Cell
 	{
 		public SimHashes element
 		{
@@ -57,17 +57,6 @@ namespace TemplateClasses
 		{
 		}
 
-		public Cell(int loc_x, int loc_y)
-		{
-			location_x = loc_x;
-			location_y = loc_y;
-			element = SimHashes.Oxygen;
-			temperature = SaveGame.Instance.worldGen.Settings.GetFloatSetting("StartAreaTemperatureOffset");
-			mass = SaveGame.Instance.worldGen.Settings.GetFloatSetting("StartAreaPressureMultiplier");
-			diseaseName = null;
-			diseaseCount = 0;
-		}
-
 		public Cell(int loc_x, int loc_y, SimHashes _element, float _temperature, float _mass, string _diseaseName, int _diseaseCount, bool _preventFoWReveal = false)
 		{
 			location_x = loc_x;
@@ -78,19 +67,6 @@ namespace TemplateClasses
 			diseaseName = _diseaseName;
 			diseaseCount = _diseaseCount;
 			preventFoWReveal = _preventFoWReveal;
-		}
-
-		public object Clone()
-		{
-			return new Cell(location_x, location_y, element, temperature, mass, diseaseName, diseaseCount, preventFoWReveal);
-		}
-
-		public object Clone(int offset_x, int offset_y)
-		{
-			Cell obj = (Cell)Clone();
-			obj.location_x += offset_x;
-			obj.location_y += offset_y;
-			return obj;
 		}
 	}
 }

@@ -167,7 +167,7 @@ public class ToolTipScreen : KScreen
 			LayoutElement component = child.GetComponent<LayoutElement>();
 			TextMeshProUGUI component2 = child.GetComponent<TextMeshProUGUI>();
 			component2.text = tooltipSetting.GetMultiString(j);
-			child.GetComponent<SetTextStyleSetting>().SetStyle((TextStyleSetting)tooltipSetting.GetStyleSetting(j));
+			child.GetComponent<SetTextStyleSetting>().SetStyle(tooltipSetting.GetStyleSetting(j));
 			if (setting.SizingSetting == ToolTip.ToolTipSizeSetting.MaxWidthWrapContent)
 			{
 				float num2 = (component.minWidth = (component.preferredWidth = setting.WrapWidth));
@@ -176,7 +176,7 @@ public class ToolTipScreen : KScreen
 				num2 = (component.minHeight = (component.preferredHeight = component2.preferredHeight));
 				component.rectTransform().sizeDelta = new Vector2(setting.WrapWidth, component.minHeight);
 				GetComponentInChildren<ContentSizeFitter>(includeInactive: true).horizontalFit = ContentSizeFitter.FitMode.MinSize;
-				multiTooltipContainer.GetComponent<LayoutElement>().minWidth = setting.WrapWidth;
+				multiTooltipContainer.GetComponent<LayoutElement>().minWidth = setting.WrapWidth + 2f * ScreenEdgePadding.x;
 			}
 			else if (setting.SizingSetting == ToolTip.ToolTipSizeSetting.DynamicWidthNoWrap)
 			{

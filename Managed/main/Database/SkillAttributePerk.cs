@@ -14,7 +14,7 @@ namespace Database
 		{
 			Attribute attribute = Db.Get().Attributes.Get(attributeId);
 			modifier = new AttributeModifier(attributeId, modifierBonus, modifierDesc);
-			Name = string.Format(UI.ROLES_SCREEN.PERKS.ATTRIBUTE_EFFECT_FMT, modifier.GetFormattedString(null), attribute.Name);
+			Name = string.Format(UI.ROLES_SCREEN.PERKS.ATTRIBUTE_EFFECT_FMT, modifier.GetFormattedString(), attribute.Name);
 			base.OnApply = delegate(MinionResume identity)
 			{
 				if (identity.GetAttributes().Get(modifier.AttributeId).Modifiers.FindIndex((AttributeModifier mod) => mod == modifier) == -1)

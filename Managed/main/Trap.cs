@@ -6,55 +6,16 @@ public class Trap : StateMachineComponent<Trap.StatesInstance>
 {
 	public class StatesInstance : GameStateMachine<States, StatesInstance, Trap, object>.GameInstance
 	{
-		private HandleVector<int>.Handle partitionerEntry;
-
 		public StatesInstance(Trap master)
 			: base(master)
 		{
-			partitionerEntry = GameScenePartitioner.Instance.Add("Trap", base.gameObject, Grid.PosToCell(base.gameObject), GameScenePartitioner.Instance.trapsLayer, OnCreatureOnTrap);
 		}
 
-		public void OnCreatureOnTrap(object data)
+		public void OnTrapTriggered(object data)
 		{
-			Storage component = base.master.GetComponent<Storage>();
-			if (!component.IsEmpty())
-			{
-				return;
-			}
-			Trappable trappable = (Trappable)data;
-			if (trappable.HasTag(GameTags.Stored) || trappable.HasTag(GameTags.Trapped) || trappable.HasTag(GameTags.Creatures.Bagged))
-			{
-				return;
-			}
-			bool flag = false;
-			Tag[] trappableCreatures = base.master.trappableCreatures;
-			foreach (Tag tag in trappableCreatures)
-			{
-				if (trappable.HasTag(tag))
-				{
-					flag = true;
-					break;
-				}
-			}
-			if (flag)
-			{
-				KPrefabID component2 = trappable.GetComponent<KPrefabID>();
-				base.master.contents.Set(component2);
-				component.Store(trappable.gameObject, hide_popups: true);
-				base.master.SetStoredPosition(trappable.gameObject);
-				base.smi.sm.trapTriggered.Trigger(base.smi);
-			}
-		}
-
-		public override void StopSM(string reason)
-		{
-			DisableEvents();
-			base.StopSM(reason);
-		}
-
-		public void DisableEvents()
-		{
-			GameScenePartitioner.Instance.Free(ref partitionerEntry);
+			KPrefabID component = ((GameObject)data).GetComponent<KPrefabID>();
+			base.master.contents.Set(component);
+			base.smi.sm.trapTriggered.Trigger(base.smi);
 		}
 	}
 
@@ -80,12 +41,12 @@ public class Trap : StateMachineComponent<Trap.StatesInstance>
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = ready;
-			base.serializable = false;
+			base.serializable = SerializeType.Never;
 			CreateStatusItems();
-			ready.OnSignal(trapTriggered, trapping).ToggleStatusItem(statusReady).Exit(delegate(StatesInstance smi)
+			ready.EventHandler(GameHashes.TrapTriggered, delegate(StatesInstance smi, object data)
 			{
-				smi.DisableEvents();
-			});
+				smi.OnTrapTriggered(data);
+			}).OnSignal(trapTriggered, trapping).ToggleStatusItem(statusReady);
 			trapping.PlayAnim("working_pre").OnAnimQueueComplete(occupied);
 			occupied.ToggleTag(GameTags.Trapped).ToggleStatusItem(statusSprung, (StatesInstance smi) => smi).DefaultState(occupied.idle)
 				.EventTransition(GameHashes.OnStorageChange, finishedUsing, (StatesInstance smi) => smi.master.GetComponent<Storage>().IsEmpty());
@@ -98,10 +59,6 @@ public class Trap : StateMachineComponent<Trap.StatesInstance>
 		}
 	}
 
-	public Tag[] trappableCreatures;
-
-	public Vector2 trappedOffset = Vector2.zero;
-
 	[Serialize]
 	private Ref<KPrefabID> contents;
 
@@ -110,15 +67,6 @@ public class Trap : StateMachineComponent<Trap.StatesInstance>
 	private static StatusItem statusReady;
 
 	private static StatusItem statusSprung;
-
-	private void SetStoredPosition(GameObject go)
-	{
-		Vector3 position = Grid.CellToPosCBC(Grid.PosToCell(base.transform.GetPosition()), Grid.SceneLayer.BuildingBack);
-		position.x += trappedOffset.x;
-		position.y += trappedOffset.y;
-		go.transform.SetPosition(position);
-		go.GetComponent<KBatchedAnimController>().SetSceneLayer(Grid.SceneLayer.BuildingBack);
-	}
 
 	private static void CreateStatusItems()
 	{
@@ -145,22 +93,13 @@ public class Trap : StateMachineComponent<Trap.StatesInstance>
 	{
 		base.OnSpawn();
 		Storage component = GetComponent<Storage>();
-		foreach (GameObject item in component.items)
-		{
-			SetStoredPosition(item);
-			KBoxCollider2D component2 = item.GetComponent<KBoxCollider2D>();
-			if (component2 != null)
-			{
-				component2.enabled = true;
-			}
-		}
 		base.smi.StartSM();
 		if (!component.IsEmpty())
 		{
-			KPrefabID component3 = component.items[0].GetComponent<KPrefabID>();
-			if (component3 != null)
+			KPrefabID component2 = component.items[0].GetComponent<KPrefabID>();
+			if (component2 != null)
 			{
-				contents.Set(component3);
+				contents.Set(component2);
 				base.smi.GoTo(base.smi.sm.occupied);
 			}
 			else
@@ -168,10 +107,5 @@ public class Trap : StateMachineComponent<Trap.StatesInstance>
 				component.DropAll();
 			}
 		}
-	}
-
-	public KPrefabID GetContents()
-	{
-		return contents.Get();
 	}
 }

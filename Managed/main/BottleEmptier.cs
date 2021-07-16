@@ -29,20 +29,14 @@ public class BottleEmptier : StateMachineComponent<BottleEmptier.StatesInstance>
 
 		public void CreateChore()
 		{
-			KBatchedAnimController component = GetComponent<KBatchedAnimController>();
+			GetComponent<KBatchedAnimController>();
 			Tag[] tags = GetComponent<TreeFilterable>().GetTags();
-			if (tags == null || tags.Length == 0)
-			{
-				component.TintColour = base.master.noFilterTint;
-				return;
-			}
-			component.TintColour = base.master.filterTint;
 			Tag[] forbidden_tags = (base.master.allowManualPumpingStationFetching ? new Tag[0] : new Tag[1]
 			{
 				GameTags.LiquidSource
 			});
-			Storage component2 = GetComponent<Storage>();
-			chore = new FetchChore(Db.Get().ChoreTypes.StorageFetch, component2, component2.Capacity(), GetComponent<TreeFilterable>().GetTags(), null, forbidden_tags);
+			Storage component = GetComponent<Storage>();
+			chore = new FetchChore(Db.Get().ChoreTypes.StorageFetch, component, component.Capacity(), tags, null, forbidden_tags);
 		}
 
 		public void CancelChore()
@@ -116,7 +110,7 @@ public class BottleEmptier : StateMachineComponent<BottleEmptier.StatesInstance>
 			if (!(num <= 0f))
 			{
 				Tag prefabTag = firstPrimaryElement.GetComponent<KPrefabID>().PrefabTag;
-				component.ConsumeAndGetDisease(prefabTag, num, out var disease_info, out var aggregate_temperature);
+				component.ConsumeAndGetDisease(prefabTag, num, out var amount_consumed, out var disease_info, out var aggregate_temperature);
 				Vector3 position = base.transform.GetPosition();
 				position.y += 1.8f;
 				bool flag = GetComponent<Rotatable>().GetOrientation() == Orientation.FlipH;
@@ -130,11 +124,11 @@ public class BottleEmptier : StateMachineComponent<BottleEmptier.StatesInstance>
 				byte idx = element.idx;
 				if (element.IsLiquid)
 				{
-					FallingWater.instance.AddParticle(num2, idx, num, aggregate_temperature, disease_info.idx, disease_info.count, skip_sound: true);
+					FallingWater.instance.AddParticle(num2, idx, amount_consumed, aggregate_temperature, disease_info.idx, disease_info.count, skip_sound: true);
 				}
 				else
 				{
-					SimMessages.ModifyCell(num2, idx, aggregate_temperature, num, disease_info.idx, disease_info.count);
+					SimMessages.ModifyCell(num2, idx, aggregate_temperature, amount_consumed, disease_info.idx, disease_info.count);
 				}
 			}
 		}
@@ -210,12 +204,6 @@ public class BottleEmptier : StateMachineComponent<BottleEmptier.StatesInstance>
 
 	public bool isGasEmptier;
 
-	[SerializeField]
-	public Color noFilterTint = FilteredStorage.NO_FILTER_TINT;
-
-	[SerializeField]
-	public Color filterTint = FilteredStorage.FILTER_TINT;
-
 	private static readonly EventSystem.IntraObjectHandler<BottleEmptier> OnRefreshUserMenuDelegate = new EventSystem.IntraObjectHandler<BottleEmptier>(delegate(BottleEmptier component, object data)
 	{
 		component.OnRefreshUserMenu(data);
@@ -247,8 +235,16 @@ public class BottleEmptier : StateMachineComponent<BottleEmptier.StatesInstance>
 
 	private void OnRefreshUserMenu(object data)
 	{
-		KIconButtonMenu.ButtonInfo button = (allowManualPumpingStationFetching ? new KIconButtonMenu.ButtonInfo("action_bottler_delivery", UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.DENIED.NAME, OnChangeAllowManualPumpingStationFetching, Action.NumActions, null, null, null, UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.DENIED.TOOLTIP) : new KIconButtonMenu.ButtonInfo("action_bottler_delivery", UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.ALLOWED.NAME, OnChangeAllowManualPumpingStationFetching, Action.NumActions, null, null, null, UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.ALLOWED.TOOLTIP));
-		Game.Instance.userMenu.AddButton(base.gameObject, button, 0.4f);
+		if (isGasEmptier)
+		{
+			KIconButtonMenu.ButtonInfo button = (allowManualPumpingStationFetching ? new KIconButtonMenu.ButtonInfo("action_bottler_delivery", UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.DENIED_GAS.NAME, OnChangeAllowManualPumpingStationFetching, Action.NumActions, null, null, null, UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.DENIED_GAS.TOOLTIP) : new KIconButtonMenu.ButtonInfo("action_bottler_delivery", UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.ALLOWED_GAS.NAME, OnChangeAllowManualPumpingStationFetching, Action.NumActions, null, null, null, UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.ALLOWED_GAS.TOOLTIP));
+			Game.Instance.userMenu.AddButton(base.gameObject, button, 0.4f);
+		}
+		else
+		{
+			KIconButtonMenu.ButtonInfo button2 = (allowManualPumpingStationFetching ? new KIconButtonMenu.ButtonInfo("action_bottler_delivery", UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.DENIED.NAME, OnChangeAllowManualPumpingStationFetching, Action.NumActions, null, null, null, UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.DENIED.TOOLTIP) : new KIconButtonMenu.ButtonInfo("action_bottler_delivery", UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.ALLOWED.NAME, OnChangeAllowManualPumpingStationFetching, Action.NumActions, null, null, null, UI.USERMENUACTIONS.MANUAL_PUMP_DELIVERY.ALLOWED.TOOLTIP));
+			Game.Instance.userMenu.AddButton(base.gameObject, button2, 0.4f);
+		}
 	}
 
 	private void OnCopySettings(object data)

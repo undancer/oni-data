@@ -55,12 +55,17 @@ public class SaveUpgradeWarning : KMonoBehaviour
 
 	private void OnLoad(Game.GameSaveData data)
 	{
-		foreach (Upgrade item in new List<Upgrade>
+		List<Upgrade> list = new List<Upgrade>
 		{
 			new Upgrade(7, 5, SuddenMoraleHelper),
 			new Upgrade(7, 13, BedAndBathHelper),
 			new Upgrade(7, 16, NewAutomationWarning)
-		})
+		};
+		if (DlcManager.IsPureVanilla())
+		{
+			list.Add(new Upgrade(7, 25, MergedownWarning));
+		}
+		foreach (Upgrade item in list)
 		{
 			if (SaveLoader.Instance.GameInfo.IsVersionOlderThan(item.major, item.minor))
 			{
@@ -164,5 +169,24 @@ public class SaveUpgradeWarning : KMonoBehaviour
 				}
 			}
 		}
+	}
+
+	private void MergedownWarning()
+	{
+		SpriteListDialogScreen screen = Util.KInstantiateUI<SpriteListDialogScreen>(ScreenPrefabs.Instance.SpriteListDialogScreen.gameObject, GameScreenManager.Instance.ssOverlayCanvas.gameObject, force_active: true);
+		screen.AddOption(UI.DEVELOPMENTBUILDS.FULL_PATCH_NOTES, delegate
+		{
+			Application.OpenURL("https://forums.kleientertainment.com/game-updates/oni-alpha/");
+		});
+		screen.AddOption(UI.CONFIRMDIALOG.OK, delegate
+		{
+			screen.Deactivate();
+		});
+		screen.AddSprite(Assets.GetSprite("upgrade_mergedown_fridge"), UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_FOOD, 150f, 120f);
+		screen.AddSprite(Assets.GetSprite("upgrade_mergedown_deodorizer"), UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_AIRFILTER, 150f, 120f);
+		screen.AddSprite(Assets.GetSprite("upgrade_mergedown_steamturbine"), UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_SIMULATION, 150f, 120f);
+		screen.AddSprite(Assets.GetSprite("upgrade_mergedown_oxygen_meter"), UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_BUILDINGS, 150f, 120f);
+		screen.PopupConfirmDialog(UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES, UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_TITLE);
+		StartCoroutine(SendAutomationWarningNotifications());
 	}
 }

@@ -90,14 +90,16 @@ public class DetailsScreen : KTabMenu
 
 	private bool HasActivated;
 
-	private bool isEditing;
-
 	private SideScreenContent currentSideScreen;
+
+	private Dictionary<KScreen, KScreen> instantiatedSecondarySideScreens = new Dictionary<KScreen, KScreen>();
 
 	private static readonly EventSystem.IntraObjectHandler<DetailsScreen> OnRefreshDataDelegate = new EventSystem.IntraObjectHandler<DetailsScreen>(delegate(DetailsScreen component, object data)
 	{
 		component.OnRefreshData(data);
 	});
+
+	private List<KeyValuePair<GameObject, int>> sortedSideScreens = new List<KeyValuePair<GameObject, int>>();
 
 	public GameObject target
 	{
@@ -108,15 +110,6 @@ public class DetailsScreen : KTabMenu
 	public static void DestroyInstance()
 	{
 		Instance = null;
-	}
-
-	public override float GetSortKey()
-	{
-		if (isEditing)
-		{
-			return 10f;
-		}
-		return base.GetSortKey();
 	}
 
 	protected override void OnPrefabInit()
@@ -153,13 +146,13 @@ public class DetailsScreen : KTabMenu
 
 	private void OnStartedEditing()
 	{
-		isEditing = true;
+		base.isEditing = true;
 		KScreenManager.Instance.RefreshStack();
 	}
 
 	private void OnNameChanged(string newName)
 	{
-		isEditing = false;
+		base.isEditing = false;
 		if (!string.IsNullOrEmpty(newName))
 		{
 			MinionIdentity component = target.GetComponent<MinionIdentity>();
@@ -202,21 +195,9 @@ public class DetailsScreen : KTabMenu
 		base.OnCmpDisable();
 	}
 
-	public override void OnKeyDown(KButtonEvent e)
-	{
-		if (isEditing)
-		{
-			e.Consumed = true;
-		}
-		else
-		{
-			base.OnKeyDown(e);
-		}
-	}
-
 	public override void OnKeyUp(KButtonEvent e)
 	{
-		if (!isEditing && target != null && PlayerController.Instance.ConsumeIfNotDragging(e, Action.MouseRight))
+		if (!base.isEditing && target != null && PlayerController.Instance.ConsumeIfNotDragging(e, Action.MouseRight))
 		{
 			DeselectAndClose();
 		}
@@ -278,6 +259,7 @@ public class DetailsScreen : KTabMenu
 			return;
 		}
 		target = go;
+		sortedSideScreens.Clear();
 		CellSelectionObject component = target.GetComponent<CellSelectionObject>();
 		if ((bool)component)
 		{
@@ -336,29 +318,44 @@ public class DetailsScreen : KTabMenu
 			ActivateTab(0);
 		}
 		tabHeaderContainer.gameObject.SetActive((CountTabs() > 1) ? true : false);
-		if (sideScreens == null || sideScreens.Count <= 0)
+		if (sideScreens != null && sideScreens.Count > 0)
 		{
-			return;
-		}
-		sideScreens.ForEach(delegate(SideScreenRef scn)
-		{
-			if (scn.screenPrefab.IsValidForTarget(target))
+			sideScreens.ForEach(delegate(SideScreenRef scn)
 			{
-				if (scn.screenInstance == null)
+				if (!scn.screenPrefab.IsValidForTarget(target))
 				{
-					scn.screenInstance = Util.KInstantiateUI<SideScreenContent>(scn.screenPrefab.gameObject, sideScreenContentBody);
+					if (scn.screenInstance != null && scn.screenInstance.gameObject.activeSelf)
+					{
+						scn.screenInstance.gameObject.SetActive(value: false);
+					}
 				}
-				if (!sideScreen.activeInHierarchy)
+				else
 				{
-					sideScreen.SetActive(value: true);
+					if (scn.screenInstance == null)
+					{
+						scn.screenInstance = Util.KInstantiateUI<SideScreenContent>(scn.screenPrefab.gameObject, sideScreenContentBody);
+					}
+					if (!sideScreen.activeInHierarchy)
+					{
+						sideScreen.SetActive(value: true);
+					}
+					scn.screenInstance.SetTarget(target);
+					scn.screenInstance.Show();
+					int sideScreenSortOrder = scn.screenInstance.GetSideScreenSortOrder();
+					sortedSideScreens.Add(new KeyValuePair<GameObject, int>(scn.screenInstance.gameObject, sideScreenSortOrder));
+					if (currentSideScreen == null || !currentSideScreen.gameObject.activeSelf || sideScreenSortOrder > sortedSideScreens.Find((KeyValuePair<GameObject, int> match) => match.Key == currentSideScreen.gameObject).Value)
+					{
+						currentSideScreen = scn.screenInstance;
+					}
+					RefreshTitle();
 				}
-				scn.screenInstance.transform.SetAsFirstSibling();
-				scn.screenInstance.SetTarget(target);
-				scn.screenInstance.Show();
-				currentSideScreen = scn.screenInstance;
-				RefreshTitle();
-			}
-		});
+			});
+		}
+		sortedSideScreens.Sort((KeyValuePair<GameObject, int> x, KeyValuePair<GameObject, int> y) => (x.Value <= y.Value) ? 1 : (-1));
+		for (int k = 0; k < sortedSideScreens.Count; k++)
+		{
+			sortedSideScreens[k].Key.transform.SetSiblingIndex(k);
+		}
 	}
 
 	public void RefreshTitle()
@@ -385,8 +382,17 @@ public class DetailsScreen : KTabMenu
 	public KScreen SetSecondarySideScreen(KScreen secondaryPrefab, string title)
 	{
 		ClearSecondarySideScreen();
-		activeSideScreen2 = KScreenManager.Instance.InstantiateScreen(secondaryPrefab.gameObject, sideScreen2ContentBody);
-		activeSideScreen2.Activate();
+		if (instantiatedSecondarySideScreens.ContainsKey(secondaryPrefab))
+		{
+			activeSideScreen2 = instantiatedSecondarySideScreens[secondaryPrefab];
+			activeSideScreen2.gameObject.SetActive(value: true);
+		}
+		else
+		{
+			activeSideScreen2 = KScreenManager.Instance.InstantiateScreen(secondaryPrefab.gameObject, sideScreen2ContentBody);
+			activeSideScreen2.Activate();
+			instantiatedSecondarySideScreens.Add(secondaryPrefab, activeSideScreen2);
+		}
 		sideScreen2Title.text = title;
 		sideScreen2.SetActive(value: true);
 		return activeSideScreen2;
@@ -396,7 +402,7 @@ public class DetailsScreen : KTabMenu
 	{
 		if (activeSideScreen2 != null)
 		{
-			activeSideScreen2.Deactivate();
+			activeSideScreen2.gameObject.SetActive(value: false);
 			activeSideScreen2 = null;
 		}
 		sideScreen2.SetActive(value: false);
@@ -438,43 +444,46 @@ public class DetailsScreen : KTabMenu
 	private string GetSelectedObjectCodexID()
 	{
 		string text = "";
-		CellSelectionObject component = SelectTool.Instance.selected.GetComponent<CellSelectionObject>();
-		BuildingUnderConstruction component2 = SelectTool.Instance.selected.GetComponent<BuildingUnderConstruction>();
-		CreatureBrain component3 = SelectTool.Instance.selected.GetComponent<CreatureBrain>();
-		PlantableSeed component4 = SelectTool.Instance.selected.GetComponent<PlantableSeed>();
-		BudUprootedMonitor component5 = SelectTool.Instance.selected.GetComponent<BudUprootedMonitor>();
-		if (component != null)
+		Debug.Assert(target != null, "Details Screen has no target");
+		KSelectable component = target.GetComponent<KSelectable>();
+		Debug.Assert(component != null, $"Details Screen target is not a KSelectable {target}");
+		CellSelectionObject component2 = component.GetComponent<CellSelectionObject>();
+		BuildingUnderConstruction component3 = component.GetComponent<BuildingUnderConstruction>();
+		CreatureBrain component4 = component.GetComponent<CreatureBrain>();
+		PlantableSeed component5 = component.GetComponent<PlantableSeed>();
+		BudUprootedMonitor component6 = component.GetComponent<BudUprootedMonitor>();
+		if (component2 != null)
 		{
-			text = CodexCache.FormatLinkID(component.element.id.ToString());
-		}
-		else if (component2 != null)
-		{
-			text = CodexCache.FormatLinkID(component2.Def.PrefabID);
+			text = CodexCache.FormatLinkID(component2.element.id.ToString());
 		}
 		else if (component3 != null)
 		{
-			text = CodexCache.FormatLinkID(SelectTool.Instance.selected.PrefabID().ToString());
-			text = text.Replace("BABY", "");
+			text = CodexCache.FormatLinkID(component3.Def.PrefabID);
 		}
 		else if (component4 != null)
 		{
-			text = CodexCache.FormatLinkID(SelectTool.Instance.selected.PrefabID().ToString());
-			text = text.Replace("SEED", "");
+			text = CodexCache.FormatLinkID(component.PrefabID().ToString());
+			text = text.Replace("BABY", "");
 		}
 		else if (component5 != null)
 		{
-			if (component5.parentObject.Get() != null)
+			text = CodexCache.FormatLinkID(component.PrefabID().ToString());
+			text = text.Replace("SEED", "");
+		}
+		else if (component6 != null)
+		{
+			if (component6.parentObject.Get() != null)
 			{
-				text = CodexCache.FormatLinkID(component5.parentObject.Get().PrefabID().ToString());
+				text = CodexCache.FormatLinkID(component6.parentObject.Get().PrefabID().ToString());
 			}
-			else if (component5.GetComponent<TreeBud>() != null)
+			else if (component6.GetComponent<TreeBud>() != null)
 			{
-				text = CodexCache.FormatLinkID(component5.GetComponent<TreeBud>().buddingTrunk.Get().PrefabID().ToString());
+				text = CodexCache.FormatLinkID(component6.GetComponent<TreeBud>().buddingTrunk.Get().PrefabID().ToString());
 			}
 		}
 		else
 		{
-			text = CodexCache.FormatLinkID(SelectTool.Instance.selected.PrefabID().ToString());
+			text = CodexCache.FormatLinkID(component.PrefabID().ToString());
 		}
 		if (CodexCache.entries.ContainsKey(text) || CodexCache.FindSubEntry(text) != null)
 		{
@@ -496,6 +505,7 @@ public class DetailsScreen : KTabMenu
 	{
 		KMonoBehaviour.PlaySound(GlobalAssets.GetSound("Back"));
 		SelectTool.Instance.Select(null);
+		ClusterMapSelectTool.Instance.Select(null);
 		if (!(target == null))
 		{
 			target = null;

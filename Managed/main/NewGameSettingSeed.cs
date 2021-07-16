@@ -2,7 +2,6 @@ using System;
 using Klei.CustomSettings;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class NewGameSettingSeed : NewGameSettingWidget
 {
@@ -17,9 +16,6 @@ public class NewGameSettingSeed : NewGameSettingWidget
 
 	[SerializeField]
 	private KButton RandomizeButton;
-
-	[SerializeField]
-	private Image BG;
 
 	private const int MAX_VALID_SEED = int.MaxValue;
 

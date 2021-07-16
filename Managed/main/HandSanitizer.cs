@@ -18,10 +18,24 @@ public class HandSanitizer : StateMachineComponent<HandSanitizer.SMInstance>, IG
 		{
 			if (base.InternalCanBegin(new_reactor, transition))
 			{
-				PrimaryElement component = new_reactor.GetComponent<PrimaryElement>();
-				if (component != null)
+				HandSanitizer component = workable.GetComponent<HandSanitizer>();
+				if (!component.smi.IsReady())
 				{
-					return component.DiseaseIdx != byte.MaxValue;
+					return false;
+				}
+				bool flag = new_reactor.GetComponent<MinionIdentity>().GetEquipment().IsSlotOccupied(Db.Get().AssignableSlots.Suit);
+				if (!component.canSanitizeSuit && flag)
+				{
+					return false;
+				}
+				if (component.alwaysUse)
+				{
+					return true;
+				}
+				PrimaryElement component2 = new_reactor.GetComponent<PrimaryElement>();
+				if (component2 != null)
+				{
+					return component2.DiseaseIdx != byte.MaxValue;
 				}
 			}
 			return false;
@@ -41,7 +55,7 @@ public class HandSanitizer : StateMachineComponent<HandSanitizer.SMInstance>, IG
 			PrimaryElement primaryElement = GetComponent<Storage>().FindPrimaryElement(base.master.consumedElement);
 			if (primaryElement != null)
 			{
-				result = primaryElement.Mass > 0f;
+				result = primaryElement.Mass >= base.master.massConsumedPerUse;
 			}
 			return result;
 		}
@@ -67,10 +81,6 @@ public class HandSanitizer : StateMachineComponent<HandSanitizer.SMInstance>, IG
 				return false;
 			}
 			return true;
-		}
-
-		public void OnCompleteWork(Worker worker)
-		{
 		}
 
 		public void DumpOutput()
@@ -110,7 +120,23 @@ public class HandSanitizer : StateMachineComponent<HandSanitizer.SMInstance>, IG
 			notready.PlayAnim("off").EventTransition(GameHashes.OnStorageChange, ready, (SMInstance smi) => smi.IsReady()).TagTransition(GameTags.Operational, notoperational, on_remove: true);
 			ready.DefaultState(ready.free).ToggleReactable((SMInstance smi) => smi.master.reactable = new WashHandsReactable(smi.master.GetComponent<Work>(), Db.Get().ChoreTypes.WashHands, smi.master.GetComponent<DirectionControl>().allowedDirection)).TagTransition(GameTags.Operational, notoperational, on_remove: true);
 			ready.free.PlayAnim("on").WorkableStartTransition((SMInstance smi) => smi.GetComponent<Work>(), ready.occupied);
-			ready.occupied.PlayAnim("working_pre").QueueAnim("working_loop", loop: true).WorkableStopTransition((SMInstance smi) => smi.GetComponent<Work>(), notready);
+			ready.occupied.PlayAnim("working_pre").QueueAnim("working_loop", loop: true).Enter(delegate(SMInstance smi)
+			{
+				ConduitConsumer component2 = smi.GetComponent<ConduitConsumer>();
+				if (component2 != null)
+				{
+					component2.enabled = false;
+				}
+			})
+				.Exit(delegate(SMInstance smi)
+				{
+					ConduitConsumer component = smi.GetComponent<ConduitConsumer>();
+					if (component != null)
+					{
+						component.enabled = true;
+					}
+				})
+				.WorkableStopTransition((SMInstance smi) => smi.GetComponent<Work>(), notready);
 		}
 
 		private void UpdateStatusItems(SMInstance smi, float dt)
@@ -129,6 +155,8 @@ public class HandSanitizer : StateMachineComponent<HandSanitizer.SMInstance>, IG
 	[AddComponentMenu("KMonoBehaviour/Workable/Work")]
 	public class Work : Workable, IGameObjectEffectDescriptor
 	{
+		public bool removeIrritation;
+
 		private int diseaseRemoved;
 
 		protected override void OnPrefabInit()
@@ -159,27 +187,44 @@ public class HandSanitizer : StateMachineComponent<HandSanitizer.SMInstance>, IG
 				return true;
 			}
 			PrimaryElement component3 = worker.GetComponent<PrimaryElement>();
-			float num = Mathf.Min(component.massConsumedPerUse * dt / workTime, massAvailable);
-			int num2 = Math.Min((int)(dt / workTime * (float)component.diseaseRemovalCount), component3.DiseaseCount);
-			diseaseRemoved += num2;
+			float amount = Mathf.Min(component.massConsumedPerUse * dt / workTime, massAvailable);
+			int num = Math.Min((int)(dt / workTime * (float)component.diseaseRemovalCount), component3.DiseaseCount);
+			diseaseRemoved += num;
 			SimUtil.DiseaseInfo invalid = SimUtil.DiseaseInfo.Invalid;
 			invalid.idx = component3.DiseaseIdx;
-			invalid.count = num2;
-			component3.ModifyDiseaseCount(-num2, "HandSanitizer.OnWorkTick");
-			component.maxPossiblyRemoved += num2;
+			invalid.count = num;
+			component3.ModifyDiseaseCount(-num, "HandSanitizer.OnWorkTick");
+			component.maxPossiblyRemoved += num;
+			if (component.canSanitizeStorage && (bool)worker.GetComponent<Storage>())
+			{
+				foreach (GameObject item in worker.GetComponent<Storage>().GetItems())
+				{
+					PrimaryElement component4 = item.GetComponent<PrimaryElement>();
+					if ((bool)component4)
+					{
+						int num2 = Math.Min((int)(dt / workTime * (float)component.diseaseRemovalCount), component4.DiseaseCount);
+						component4.ModifyDiseaseCount(-num2, "HandSanitizer.OnWorkTick");
+						component.maxPossiblyRemoved += num2;
+					}
+				}
+			}
 			SimUtil.DiseaseInfo disease_info = SimUtil.DiseaseInfo.Invalid;
-			component2.ConsumeAndGetDisease(ElementLoader.FindElementByHash(component.consumedElement).tag, num, out disease_info, out var aggregate_temperature);
+			component2.ConsumeAndGetDisease(ElementLoader.FindElementByHash(component.consumedElement).tag, amount, out var amount_consumed, out disease_info, out var aggregate_temperature);
 			if (component.outputElement != SimHashes.Vacuum)
 			{
 				disease_info = SimUtil.CalculateFinalDiseaseInfo(invalid, disease_info);
-				component2.AddLiquid(component.outputElement, num, aggregate_temperature, disease_info.idx, disease_info.count);
+				component2.AddLiquid(component.outputElement, amount_consumed, aggregate_temperature, disease_info.idx, disease_info.count);
 			}
-			return diseaseRemoved > component.diseaseRemovalCount;
+			return false;
 		}
 
 		protected override void OnCompleteWork(Worker worker)
 		{
 			base.OnCompleteWork(worker);
+			if (removeIrritation && !worker.HasTag(GameTags.HasSuitTank))
+			{
+				worker.GetSMI<GasLiquidExposureMonitor.Instance>()?.ResetExposure();
+			}
 		}
 	}
 
@@ -194,6 +239,12 @@ public class HandSanitizer : StateMachineComponent<HandSanitizer.SMInstance>, IG
 	public SimHashes outputElement = SimHashes.Vacuum;
 
 	public bool dumpWhenFull;
+
+	public bool alwaysUse;
+
+	public bool canSanitizeSuit;
+
+	public bool canSanitizeStorage;
 
 	private WorkableReactable reactable;
 

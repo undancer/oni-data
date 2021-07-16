@@ -18,6 +18,12 @@ public class ChorePreconditions
 
 	public Chore.Precondition IsAssignedtoMe;
 
+	public Chore.Precondition IsInMyWorld;
+
+	public Chore.Precondition IsInMyParentWorld;
+
+	public Chore.Precondition IsCellNotInMyWorld;
+
 	public Chore.Precondition IsInMyRoom;
 
 	public Chore.Precondition IsPreferredAssignable;
@@ -27,6 +33,8 @@ public class ChorePreconditions
 	public Chore.Precondition IsNotTransferArm;
 
 	public Chore.Precondition HasSkillPerk;
+
+	public Chore.Precondition IsMinion;
 
 	public Chore.Precondition IsMoreSatisfyingEarly;
 
@@ -39,6 +47,8 @@ public class ChorePreconditions
 	public Chore.Precondition IsScheduledTime;
 
 	public Chore.Precondition CanMoveTo;
+
+	public Chore.Precondition CanMoveToCell;
 
 	public Chore.Precondition CanPickup;
 
@@ -83,6 +93,8 @@ public class ChorePreconditions
 	public Chore.Precondition IsBladderNotFull;
 
 	public Chore.Precondition NoDeadBodies;
+
+	public Chore.Precondition IsNotARobot;
 
 	public Chore.Precondition NotCurrentlyPeeing;
 
@@ -161,9 +173,48 @@ public class ChorePreconditions
 			sortOrder = 10,
 			fn = delegate(ref Chore.Precondition.Context context, object data)
 			{
-				Assignable obj = (Assignable)data;
+				Assignable assignable2 = (Assignable)data;
 				IAssignableIdentity component = context.consumerState.gameObject.GetComponent<IAssignableIdentity>();
-				return obj.IsAssignedTo(component);
+				return component != null && assignable2.IsAssignedTo(component);
+			}
+		});
+		isPreemptable = (IsInMyWorld = new Chore.Precondition
+		{
+			id = "IsInMyWorld",
+			description = DUPLICANTS.CHORES.PRECONDITIONS.IS_IN_MY_WORLD,
+			sortOrder = -1,
+			fn = delegate(ref Chore.Precondition.Context context, object data)
+			{
+				return !context.chore.isNull && context.chore.gameObject.IsMyWorld(context.consumerState.gameObject);
+			}
+		});
+		isPreemptable = (IsInMyParentWorld = new Chore.Precondition
+		{
+			id = "IsInMyParentWorld",
+			description = DUPLICANTS.CHORES.PRECONDITIONS.IS_IN_MY_WORLD,
+			sortOrder = -1,
+			fn = delegate(ref Chore.Precondition.Context context, object data)
+			{
+				return !context.chore.isNull && context.chore.gameObject.IsMyParentWorld(context.consumerState.gameObject);
+			}
+		});
+		isPreemptable = (IsCellNotInMyWorld = new Chore.Precondition
+		{
+			id = "IsCellNotInMyWorld",
+			description = DUPLICANTS.CHORES.PRECONDITIONS.IS_CELL_NOT_IN_MY_WORLD,
+			sortOrder = -1,
+			fn = delegate(ref Chore.Precondition.Context context, object data)
+			{
+				if (!context.chore.isNull)
+				{
+					int num = (int)data;
+					if (Grid.IsValidCell(num))
+					{
+						return Grid.WorldIdx[num] != context.consumerState.gameObject.GetMyWorldId();
+					}
+					return true;
+				}
+				return false;
 			}
 		});
 		isPreemptable = (IsInMyRoom = new Chore.Precondition
@@ -172,8 +223,8 @@ public class ChorePreconditions
 			description = DUPLICANTS.CHORES.PRECONDITIONS.IS_IN_MY_ROOM,
 			fn = delegate(ref Chore.Precondition.Context context, object data)
 			{
-				int cell = (int)data;
-				CavityInfo cavityForCell = Game.Instance.roomProber.GetCavityForCell(cell);
+				int cell2 = (int)data;
+				CavityInfo cavityForCell = Game.Instance.roomProber.GetCavityForCell(cell2);
 				Room room = null;
 				if (cavityForCell != null)
 				{
@@ -289,11 +340,20 @@ public class ChorePreconditions
 				return false;
 			}
 		});
+		isPreemptable = (IsMinion = new Chore.Precondition
+		{
+			id = "IsMinion",
+			description = DUPLICANTS.CHORES.PRECONDITIONS.IS_MINION,
+			fn = delegate(ref Chore.Precondition.Context context, object data)
+			{
+				return context.consumerState.resume != null;
+			}
+		});
 		isPreemptable = (IsMoreSatisfyingEarly = new Chore.Precondition
 		{
 			id = "IsMoreSatisfyingEarly",
 			description = DUPLICANTS.CHORES.PRECONDITIONS.IS_MORE_SATISFYING,
-			sortOrder = -1,
+			sortOrder = -2,
 			fn = delegate(ref Chore.Precondition.Context context, object data)
 			{
 				if (context.isAttemptingOverride)
@@ -387,7 +447,7 @@ public class ChorePreconditions
 			description = DUPLICANTS.CHORES.PRECONDITIONS.IS_NOT_RED_ALERT,
 			fn = delegate(ref Chore.Precondition.Context context, object data)
 			{
-				return context.chore.masterPriority.priority_class == PriorityScreen.PriorityClass.topPriority || !VignetteManager.Instance.Get().IsRedAlert();
+				return context.chore.masterPriority.priority_class == PriorityScreen.PriorityClass.topPriority || !context.chore.gameObject.GetMyWorld().IsRedAlert();
 			}
 		});
 		isPreemptable = (IsScheduledTime = new Chore.Precondition
@@ -396,7 +456,7 @@ public class ChorePreconditions
 			description = DUPLICANTS.CHORES.PRECONDITIONS.IS_SCHEDULED_TIME,
 			fn = delegate(ref Chore.Precondition.Context context, object data)
 			{
-				if (VignetteManager.Instance.Get().IsRedAlert())
+				if (context.chore.gameObject.GetMyWorld().IsRedAlert())
 				{
 					return true;
 				}
@@ -420,7 +480,30 @@ public class ChorePreconditions
 					return false;
 				}
 				IApproachable approachable = (IApproachable)kMonoBehaviour;
-				if (context.consumerState.consumer.GetNavigationCost(approachable, out var cost))
+				if (context.consumerState.consumer.GetNavigationCost(approachable, out var cost2))
+				{
+					context.cost += cost2;
+					return true;
+				}
+				return false;
+			}
+		});
+		isPreemptable = (CanMoveToCell = new Chore.Precondition
+		{
+			id = "CanMoveToCell",
+			description = DUPLICANTS.CHORES.PRECONDITIONS.CAN_MOVE_TO,
+			fn = delegate(ref Chore.Precondition.Context context, object data)
+			{
+				if (context.consumerState.consumer == null)
+				{
+					return false;
+				}
+				int cell = (int)data;
+				if (!Grid.IsValidCell(cell))
+				{
+					return false;
+				}
+				if (context.consumerState.consumer.GetNavigationCost(cell, out var cost))
 				{
 					context.cost += cost;
 					return true;
@@ -695,6 +778,15 @@ public class ChorePreconditions
 			fn = delegate
 			{
 				return Components.LiveMinionIdentities.Count == Components.MinionIdentities.Count;
+			}
+		});
+		isPreemptable = (IsNotARobot = new Chore.Precondition
+		{
+			id = "NoRobots",
+			description = DUPLICANTS.CHORES.PRECONDITIONS.NOT_A_ROBOT,
+			fn = delegate(ref Chore.Precondition.Context context, object data)
+			{
+				return context.consumerState.gameObject.GetComponent<MinionResume>() != null;
 			}
 		});
 		isPreemptable = (NotCurrentlyPeeing = new Chore.Precondition

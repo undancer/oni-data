@@ -17,11 +17,13 @@ public class FertilizationMonitor : GameStateMachine<FertilizationMonitor, Ferti
 			if (consumedElements.Length != 0)
 			{
 				List<Descriptor> list = new List<Descriptor>();
+				float preModifiedAttributeValue = obj.GetComponent<Modifiers>().GetPreModifiedAttributeValue(Db.Get().PlantAttributes.FertilizerUsageMod);
 				PlantElementAbsorber.ConsumeInfo[] array = consumedElements;
 				for (int i = 0; i < array.Length; i++)
 				{
 					PlantElementAbsorber.ConsumeInfo consumeInfo = array[i];
-					list.Add(new Descriptor(string.Format(UI.GAMEOBJECTEFFECTS.IDEAL_FERTILIZER, consumeInfo.tag.ProperName(), GameUtil.GetFormattedMass(0f - consumeInfo.massConsumptionRate, GameUtil.TimeSlice.PerCycle)), string.Format(UI.GAMEOBJECTEFFECTS.TOOLTIPS.IDEAL_FERTILIZER, consumeInfo.tag.ProperName(), GameUtil.GetFormattedMass(consumeInfo.massConsumptionRate, GameUtil.TimeSlice.PerCycle)), Descriptor.DescriptorType.Requirement));
+					float num = consumeInfo.massConsumptionRate * preModifiedAttributeValue;
+					list.Add(new Descriptor(string.Format(UI.GAMEOBJECTEFFECTS.IDEAL_FERTILIZER, consumeInfo.tag.ProperName(), GameUtil.GetFormattedMass(0f - num, GameUtil.TimeSlice.PerCycle)), string.Format(UI.GAMEOBJECTEFFECTS.TOOLTIPS.IDEAL_FERTILIZER, consumeInfo.tag.ProperName(), GameUtil.GetFormattedMass(num, GameUtil.TimeSlice.PerCycle)), Descriptor.DescriptorType.Requirement));
 				}
 				return list;
 			}
@@ -201,7 +203,8 @@ public class FertilizationMonitor : GameStateMachine<FertilizationMonitor, Ferti
 					}
 				}
 				total_available_mass = num;
-				if (num < consumeInfo.massConsumptionRate * dt)
+				float totalValue = base.gameObject.GetAttributes().Get(Db.Get().PlantAttributes.FertilizerUsageMod).GetTotalValue();
+				if (num < consumeInfo.massConsumptionRate * totalValue * dt)
 				{
 					value = false;
 					break;
@@ -216,7 +219,15 @@ public class FertilizationMonitor : GameStateMachine<FertilizationMonitor, Ferti
 			if (!absorberHandle.IsValid() && base.def.consumedElements != null && base.def.consumedElements.Length != 0)
 			{
 				_ = base.smi.gameObject;
-				absorberHandle = Game.Instance.plantElementAbsorbers.Add(storage, base.def.consumedElements);
+				float totalValue = base.gameObject.GetAttributes().Get(Db.Get().PlantAttributes.FertilizerUsageMod).GetTotalValue();
+				PlantElementAbsorber.ConsumeInfo[] array = new PlantElementAbsorber.ConsumeInfo[base.def.consumedElements.Length];
+				for (int i = 0; i < base.def.consumedElements.Length; i++)
+				{
+					PlantElementAbsorber.ConsumeInfo consumeInfo = base.def.consumedElements[i];
+					consumeInfo.massConsumptionRate *= totalValue;
+					array[i] = consumeInfo;
+				}
+				absorberHandle = Game.Instance.plantElementAbsorbers.Add(storage, array);
 			}
 		}
 
@@ -248,7 +259,7 @@ public class FertilizationMonitor : GameStateMachine<FertilizationMonitor, Ferti
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = wild;
-		base.serializable = false;
+		base.serializable = SerializeType.Never;
 		wild.ParamTransition(fertilizerStorage, unfertilizable, (Instance smi, GameObject p) => p != null);
 		unfertilizable.Enter(delegate(Instance smi)
 		{

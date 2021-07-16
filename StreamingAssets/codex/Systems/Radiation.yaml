@@ -1,0 +1,26 @@
+id: "Radiation"
+title: STRINGS.CODEX.RADIATION.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+    content:    
+      - !CodexText
+          stringKey: STRINGS.CODEX.RADIATION.HEADER_1
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.RADIATION.PARAGRAPH_1
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.RADIATION.HEADER_2
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.RADIATION.PARAGRAPH_2
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.RADIATION.HEADER_3
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.RADIATION.PARAGRAPH_3
+          style: Body 

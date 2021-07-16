@@ -30,30 +30,39 @@ public class ModsScreen : KModalScreen
 
 		public void OnBeginDrag(Vector2 pos)
 		{
-			startDragIdx = GetDragIdx(pos);
+			startDragIdx = GetDragIdx(pos, halfPosition: false);
 		}
 
 		public void OnEndDrag(Vector2 pos)
 		{
 			if (startDragIdx >= 0)
 			{
-				int dragIdx = GetDragIdx(pos);
-				int target_index = ((dragIdx >= 0 && dragIdx != startDragIdx) ? mods[dragIdx].mod_index : Global.Instance.modManager.mods.Count);
-				Global.Instance.modManager.Reinsert(mods[startDragIdx].mod_index, target_index, this);
-				screen.BuildDisplay();
+				int dragIdx = GetDragIdx(pos, halfPosition: true);
+				if (dragIdx != startDragIdx)
+				{
+					int mod_index = mods[startDragIdx].mod_index;
+					int target_index = ((0 <= dragIdx && dragIdx < mods.Count) ? mods[dragIdx].mod_index : (-1));
+					Global.Instance.modManager.Reinsert(mod_index, target_index, dragIdx >= mods.Count, this);
+					screen.BuildDisplay();
+				}
 			}
 		}
 
-		private int GetDragIdx(Vector2 pos)
+		private int GetDragIdx(Vector2 pos, bool halfPosition)
 		{
 			int result = -1;
 			for (int i = 0; i < mods.Count; i++)
 			{
-				if (RectTransformUtility.RectangleContainsScreenPoint(mods[i].rect_transform, pos))
+				RectTransformUtility.ScreenPointToLocalPointInRectangle(mods[i].rect_transform, pos, null, out var localPoint);
+				if (!halfPosition)
 				{
-					result = i;
+					localPoint += mods[i].rect_transform.rect.min;
+				}
+				if (!(localPoint.y < 0f))
+				{
 					break;
 				}
+				result = i;
 			}
 			return result;
 		}
@@ -176,31 +185,56 @@ public class ModsScreen : KModalScreen
 			hierarchyReferences.GetComponent<DragMe>().listener = listener;
 			LocText reference = hierarchyReferences.GetReference<LocText>("Title");
 			string text = mod.title;
+			hierarchyReferences.name = mod.title;
 			if (mod.available_content == (Content)0)
 			{
-				text += UI.FRONTEND.MODS.MOD_DISABLED_CONTENT.Replace("{Content}", GetDlcName(DlcManager.GetActiveDlcId()));
+				text = mod.contentCompatability switch
+				{
+					ModContentCompatability.OldAPI => text + UI.FRONTEND.MODS.CONTENT_FAILURE.OLD_API, 
+					ModContentCompatability.NoContent => text + UI.FRONTEND.MODS.CONTENT_FAILURE.NO_CONTENT, 
+					_ => text + UI.FRONTEND.MODS.CONTENT_FAILURE.DISABLED_CONTENT.Replace("{Content}", GetDlcName(DlcManager.GetHighestActiveDlcId())), 
+				};
 			}
 			reference.text = text;
+			LocText reference2 = hierarchyReferences.GetReference<LocText>("Version");
+			if (mod.packagedModInfo != null && mod.packagedModInfo.version != null && mod.packagedModInfo.version.Length > 0)
+			{
+				string text2 = mod.packagedModInfo.version;
+				if (text2.StartsWith("V"))
+				{
+					text2 = "v" + text2.Substring(1, text2.Length - 1);
+				}
+				else if (!text2.StartsWith("v"))
+				{
+					text2 = "v" + text2;
+				}
+				reference2.text = text2;
+				reference2.gameObject.SetActive(value: true);
+			}
+			else
+			{
+				reference2.gameObject.SetActive(value: false);
+			}
 			hierarchyReferences.GetReference<ToolTip>("Description").toolTip = mod.description;
 			if (mod.crash_count != 0)
 			{
 				reference.color = Color.Lerp(Color.white, Color.red, (float)mod.crash_count / 3f);
 			}
-			KButton reference2 = hierarchyReferences.GetReference<KButton>("ManageButton");
-			reference2.GetComponentInChildren<LocText>().text = (mod.IsLocal ? UI.FRONTEND.MODS.MANAGE_LOCAL : UI.FRONTEND.MODS.MANAGE);
-			reference2.isInteractable = mod.is_managed;
-			if (reference2.isInteractable)
+			KButton reference3 = hierarchyReferences.GetReference<KButton>("ManageButton");
+			reference3.GetComponentInChildren<LocText>().text = (mod.IsLocal ? UI.FRONTEND.MODS.MANAGE_LOCAL : UI.FRONTEND.MODS.MANAGE);
+			reference3.isInteractable = mod.is_managed;
+			if (reference3.isInteractable)
 			{
-				reference2.GetComponent<ToolTip>().toolTip = mod.manage_tooltip;
-				reference2.onClick += mod.on_managed;
+				reference3.GetComponent<ToolTip>().toolTip = mod.manage_tooltip;
+				reference3.onClick += mod.on_managed;
 			}
-			KImage reference3 = hierarchyReferences.GetReference<KImage>("BG");
+			KImage reference4 = hierarchyReferences.GetReference<KImage>("BG");
 			MultiToggle toggle = hierarchyReferences.GetReference<MultiToggle>("EnabledToggle");
 			toggle.ChangeState(mod.IsEnabledForActiveDlc() ? 1 : 0);
 			if (mod.available_content != 0)
 			{
-				reference3.defaultState = KImage.ColorSelector.Inactive;
-				reference3.ColorState = KImage.ColorSelector.Inactive;
+				reference4.defaultState = KImage.ColorSelector.Inactive;
+				reference4.ColorState = KImage.ColorSelector.Inactive;
 				MultiToggle multiToggle = toggle;
 				multiToggle.onClick = (System.Action)Delegate.Combine(multiToggle.onClick, (System.Action)delegate
 				{
@@ -210,8 +244,8 @@ public class ModsScreen : KModalScreen
 			}
 			else
 			{
-				reference3.defaultState = KImage.ColorSelector.Disabled;
-				reference3.ColorState = KImage.ColorSelector.Disabled;
+				reference4.defaultState = KImage.ColorSelector.Disabled;
+				reference4.ColorState = KImage.ColorSelector.Disabled;
 			}
 			hierarchyReferences.gameObject.SetActive(value: true);
 		}
@@ -224,14 +258,17 @@ public class ModsScreen : KModalScreen
 
 	private static string GetDlcName(string dlcId)
 	{
-		if (!(dlcId == "EXPANSION1_ID"))
+		if (dlcId != null)
 		{
-			if ((dlcId != null && dlcId.Length == 0) || dlcId != null)
+			if (dlcId == "EXPANSION1_ID")
+			{
+				return UI.DLC1.NAME_ITAL;
+			}
+			if (dlcId != null && dlcId.Length == 0)
 			{
 			}
-			return UI.VANILLA.NAME_ITAL;
 		}
-		return UI.DLC1.NAME_ITAL;
+		return UI.VANILLA.NAME_ITAL;
 	}
 
 	private void OnToggleClicked(MultiToggle toggle, Label mod)

@@ -12,7 +12,7 @@ public static class ModUtil
 		int num = BUILDINGS.PLANORDER.FindIndex((PlanScreen.PlanInfo x) => x.category == category);
 		if (num >= 0)
 		{
-			(BUILDINGS.PLANORDER[num].data as IList<string>).Add(building_id);
+			((ICollection<string>)BUILDINGS.PLANORDER[num].data).Add(building_id);
 		}
 	}
 

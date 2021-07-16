@@ -24,12 +24,12 @@ public class StandardAttributeFormatter : IAttributeFormatter
 		return GetFormattedValue(instance.GetTotalDisplayValue());
 	}
 
-	public virtual string GetFormattedModifier(AttributeModifier modifier, GameObject parent_instance)
+	public virtual string GetFormattedModifier(AttributeModifier modifier)
 	{
 		return GetFormattedValue(modifier.Value, DeltaTimeSlice);
 	}
 
-	public virtual string GetFormattedValue(float value, GameUtil.TimeSlice timeSlice = GameUtil.TimeSlice.None, GameObject parent_instance = null)
+	public virtual string GetFormattedValue(float value, GameUtil.TimeSlice timeSlice = GameUtil.TimeSlice.None)
 	{
 		return unitClass switch
 		{
@@ -40,43 +40,55 @@ public class StandardAttributeFormatter : IAttributeFormatter
 			GameUtil.UnitClass.Calories => GameUtil.GetFormattedCalories(value, timeSlice), 
 			GameUtil.UnitClass.Distance => GameUtil.GetFormattedDistance(value), 
 			GameUtil.UnitClass.Disease => GameUtil.GetFormattedDiseaseAmount(Mathf.RoundToInt(value)), 
+			GameUtil.UnitClass.Radiation => GameUtil.GetFormattedRads(value, timeSlice), 
+			GameUtil.UnitClass.Energy => GameUtil.GetFormattedJoules(value, "F1", timeSlice), 
+			GameUtil.UnitClass.Power => GameUtil.GetFormattedWattage(value), 
+			GameUtil.UnitClass.Lux => GameUtil.GetFormattedLux(Mathf.FloorToInt(value)), 
+			GameUtil.UnitClass.Time => GameUtil.GetFormattedCycles(value), 
+			GameUtil.UnitClass.Seconds => GameUtil.GetFormattedTime(value), 
+			GameUtil.UnitClass.Cycles => GameUtil.GetFormattedCycles(value * 600f), 
 			_ => GameUtil.GetFormattedSimple(value, timeSlice), 
 		};
 	}
 
-	public virtual string GetTooltipDescription(Attribute master, AttributeInstance instance)
+	public virtual string GetTooltipDescription(Attribute master)
 	{
 		return master.Description;
 	}
 
 	public virtual string GetTooltip(Attribute master, AttributeInstance instance)
 	{
-		string tooltipDescription = GetTooltipDescription(master, instance);
-		tooltipDescription += string.Format(DUPLICANTS.ATTRIBUTES.TOTAL_VALUE, GetFormattedValue(instance.GetTotalDisplayValue()), instance.Name);
-		if (instance.GetBaseValue() != 0f)
-		{
-			tooltipDescription += string.Format(DUPLICANTS.ATTRIBUTES.BASE_VALUE, instance.GetBaseValue());
-		}
 		List<AttributeModifier> list = new List<AttributeModifier>();
 		for (int i = 0; i < instance.Modifiers.Count; i++)
 		{
 			list.Add(instance.Modifiers[i]);
 		}
-		list.Sort((AttributeModifier p1, AttributeModifier p2) => p2.Value.CompareTo(p1.Value));
-		for (int j = 0; j != list.Count; j++)
+		return GetTooltip(master, list, instance.GetComponent<AttributeConverters>());
+	}
+
+	public string GetTooltip(Attribute master, List<AttributeModifier> modifiers, AttributeConverters converters)
+	{
+		string tooltipDescription = GetTooltipDescription(master);
+		tooltipDescription += string.Format(DUPLICANTS.ATTRIBUTES.TOTAL_VALUE, GetFormattedValue(AttributeInstance.GetTotalDisplayValue(master, modifiers)), master.Name);
+		if (master.BaseValue != 0f)
 		{
-			AttributeModifier attributeModifier = list[j];
-			string formattedString = attributeModifier.GetFormattedString(instance.gameObject);
+			tooltipDescription += string.Format(DUPLICANTS.ATTRIBUTES.BASE_VALUE, master.BaseValue);
+		}
+		List<AttributeModifier> list = new List<AttributeModifier>(modifiers);
+		list.Sort((AttributeModifier p1, AttributeModifier p2) => p2.Value.CompareTo(p1.Value));
+		for (int i = 0; i != list.Count; i++)
+		{
+			AttributeModifier attributeModifier = list[i];
+			string formattedString = attributeModifier.GetFormattedString();
 			if (formattedString != null)
 			{
 				tooltipDescription += string.Format(DUPLICANTS.ATTRIBUTES.MODIFIER_ENTRY, attributeModifier.GetDescription(), formattedString);
 			}
 		}
 		string text = "";
-		AttributeConverters component = instance.gameObject.GetComponent<AttributeConverters>();
-		if (component != null && master.converters.Count > 0)
+		if (converters != null && master.converters.Count > 0)
 		{
-			foreach (AttributeConverterInstance converter in component.converters)
+			foreach (AttributeConverterInstance converter in converters.converters)
 			{
 				if (converter.converter.attribute == master)
 				{

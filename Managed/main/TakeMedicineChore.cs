@@ -34,7 +34,7 @@ public class TakeMedicineChore : Chore<TakeMedicineChore.StatesInstance>
 			fetch.InitializeStates(eater, source, chunk, requestedpillcount, actualpillcount, takemedicine);
 			takemedicine.ToggleAnims("anim_eat_floor_kanim").ToggleTag(GameTags.TakingMedicine).ToggleWork("TakeMedicine", delegate(StatesInstance smi)
 			{
-				MedicinalPill workable = chunk.Get<MedicinalPill>(smi);
+				MedicinalPillWorkable workable = chunk.Get<MedicinalPillWorkable>(smi);
 				eater.Get<Worker>(smi).StartWork(new Worker.StartWorkInfo(workable));
 			}, (StatesInstance smi) => chunk.Get<MedicinalPill>(smi) != null, null, null);
 		}
@@ -42,13 +42,13 @@ public class TakeMedicineChore : Chore<TakeMedicineChore.StatesInstance>
 
 	private Pickupable pickupable;
 
-	private MedicinalPill medicine;
+	private MedicinalPillWorkable medicine;
 
 	public static readonly Precondition CanCure;
 
 	public static readonly Precondition IsConsumptionPermitted;
 
-	public TakeMedicineChore(MedicinalPill master)
+	public TakeMedicineChore(MedicinalPillWorkable master)
 		: base(Db.Get().ChoreTypes.TakeMedicine, (IStateMachineTarget)master, (ChoreProvider)null, run_until_complete: false, (Action<Chore>)null, (Action<Chore>)null, (Action<Chore>)null, PriorityScreen.PriorityClass.personalNeeds, 5, is_preemptable: false, allow_in_context_menu: true, 0, add_to_daily_report: false, ReportManager.ReportType.WorkTime)
 	{
 		medicine = master;

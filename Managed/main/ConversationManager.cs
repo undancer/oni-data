@@ -82,13 +82,14 @@ public class ConversationManager : KMonoBehaviour, ISim200ms
 			else
 			{
 				bool flag = true;
-				if (conversation.numUtterances == 0 && GameClock.Instance.GetTime() > conversation.lastTalkedTime + TuningData<Tuning>.Get().delayBeforeStart)
+				bool flag2 = conversation.minions.Find((MinionIdentity match) => !match.HasTag(GameTags.Partying)) == null;
+				if ((conversation.numUtterances == 0 && flag2 && GameClock.Instance.GetTime() > conversation.lastTalkedTime) || GameClock.Instance.GetTime() > conversation.lastTalkedTime + TuningData<Tuning>.Get().delayBeforeStart)
 				{
 					MinionIdentity minionIdentity = conversation.minions[UnityEngine.Random.Range(0, conversation.minions.Count)];
 					conversation.conversationType.NewTarget(minionIdentity);
 					flag = DoTalking(conversation, minionIdentity);
 				}
-				else if (conversation.numUtterances > 0 && conversation.numUtterances < TuningData<Tuning>.Get().maxUtterances && GameClock.Instance.GetTime() > conversation.lastTalkedTime + TuningData<Tuning>.Get().speakTime + TuningData<Tuning>.Get().delayBetweenUtterances)
+				else if (conversation.numUtterances > 0 && conversation.numUtterances < TuningData<Tuning>.Get().maxUtterances && ((flag2 && GameClock.Instance.GetTime() > conversation.lastTalkedTime + TuningData<Tuning>.Get().speakTime / 4f) || GameClock.Instance.GetTime() > conversation.lastTalkedTime + TuningData<Tuning>.Get().speakTime + TuningData<Tuning>.Get().delayBetweenUtterances))
 				{
 					int index = (conversation.minions.IndexOf(conversation.lastTalked) + UnityEngine.Random.Range(1, conversation.minions.Count)) % conversation.minions.Count;
 					MinionIdentity new_speaker = conversation.minions[index];

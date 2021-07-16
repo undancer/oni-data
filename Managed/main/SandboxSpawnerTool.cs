@@ -71,4 +71,33 @@ public class SandboxSpawnerTool : InterfaceTool
 		gameObject.SetActive(value: true);
 		new MinionStartingStats(is_starter_minion: false).Apply(gameObject);
 	}
+
+	public override void OnKeyDown(KButtonEvent e)
+	{
+		if (e.TryConsume(Action.SandboxCopyElement))
+		{
+			int cell = Grid.PosToCell(PlayerController.GetCursorPos(KInputManager.GetMousePos()));
+			List<ObjectLayer> list = new List<ObjectLayer>();
+			list.Add(ObjectLayer.Pickupables);
+			list.Add(ObjectLayer.Plants);
+			list.Add(ObjectLayer.Minion);
+			list.Add(ObjectLayer.Building);
+			if (Grid.IsValidCell(cell))
+			{
+				foreach (ObjectLayer item in list)
+				{
+					GameObject gameObject = Grid.Objects[cell, (int)item];
+					if ((bool)gameObject)
+					{
+						SandboxToolParameterMenu.instance.settings.SetStringSetting("SandboxTools.SelectedEntity", gameObject.PrefabID().ToString());
+						break;
+					}
+				}
+			}
+		}
+		if (!e.Consumed)
+		{
+			base.OnKeyDown(e);
+		}
+	}
 }

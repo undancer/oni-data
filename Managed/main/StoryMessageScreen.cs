@@ -102,6 +102,7 @@ public class StoryMessageScreen : KScreen
 
 	public static void HideInterface(bool hide)
 	{
+		SelectTool.Instance.Select(null, skipSound: true);
 		NotificationScreen.Instance.Show(!hide);
 		OverlayMenu.Instance.Show(!hide);
 		if (PlanScreen.Instance != null)
@@ -115,10 +116,18 @@ public class StoryMessageScreen : KScreen
 		ManagementMenu.Instance.Show(!hide);
 		ToolMenu.Instance.Show(!hide);
 		ToolMenu.Instance.PriorityScreen.Show(!hide);
-		ResourceCategoryScreen.Instance.Show(!hide);
+		ColonyDiagnosticScreen.Instance.Show(!hide);
+		PinnedResourcesPanel.Instance.Show(!hide);
 		TopLeftControlScreen.Instance.Show(!hide);
+		if (WorldSelector.Instance != null)
+		{
+			WorldSelector.Instance.Show(!hide);
+		}
 		DateTime.Instance.Show(!hide);
-		BuildWatermark.Instance.Show(!hide);
+		if (BuildWatermark.Instance != null)
+		{
+			BuildWatermark.Instance.Show(!hide);
+		}
 		PopFXManager.Instance.Show(!hide);
 	}
 

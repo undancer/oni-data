@@ -52,7 +52,7 @@ public class Filterable : KMonoBehaviour
 		Dictionary<Tag, HashSet<Tag>> dictionary = new Dictionary<Tag, HashSet<Tag>>();
 		if (filterElementState == ElementState.Solid)
 		{
-			dictionary = WorldInventory.Instance.GetDiscoveredResourcesFromTagSet(filterableCategories);
+			dictionary = DiscoveredResources.Instance.GetDiscoveredResourcesFromTagSet(filterableCategories);
 		}
 		else
 		{

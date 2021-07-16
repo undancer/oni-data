@@ -27,5 +27,15 @@ namespace ProcGen.Noise
 			get;
 			set;
 		}
+
+		public Link()
+		{
+		}
+
+		public Link(Type type, string name)
+		{
+			this.type = type;
+			this.name = name;
+		}
 	}
 }

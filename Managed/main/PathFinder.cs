@@ -29,7 +29,8 @@ public class PathFinder
 			None = 0x0,
 			HasAtmoSuit = 0x1,
 			HasJetPack = 0x2,
-			PerformSuitChecks = 0x4
+			HasOxygenMask = 0x4,
+			PerformSuitChecks = 0x8
 		}
 
 		public int cell;
@@ -371,7 +372,7 @@ public class PathFinder
 
 	public static void Initialize()
 	{
-		NavType[] array = new NavType[10];
+		NavType[] array = new NavType[11];
 		for (int i = 0; i < array.Length; i++)
 		{
 			array[i] = (NavType)i;

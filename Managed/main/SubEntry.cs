@@ -68,6 +68,12 @@ public class SubEntry
 		set;
 	}
 
+	public string[] dlcIds
+	{
+		get;
+		set;
+	}
+
 	public string sortString
 	{
 		get;
@@ -108,5 +114,10 @@ public class SubEntry
 				sortString = UI.StripLinkFormatting(name);
 			}
 		}
+	}
+
+	public string[] GetDlcIds()
+	{
+		return dlcIds;
 	}
 }

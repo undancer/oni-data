@@ -9,6 +9,11 @@ public class RockCometConfig : IEntityConfig
 
 	private const int ADDED_CELLS = 6;
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateEntity(ID, UI.SPACEDESTINATIONS.COMETS.ROCKCOMET.NAME);
@@ -39,6 +44,7 @@ public class RockCometConfig : IEntityConfig
 		kBatchedAnimController.initialAnim = "fall_loop";
 		kBatchedAnimController.initialMode = KAnim.PlayMode.Loop;
 		gameObject.AddOrGet<KCircleCollider2D>().radius = 0.5f;
+		gameObject.AddTag(GameTags.Comet);
 		return gameObject;
 	}
 

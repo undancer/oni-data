@@ -38,6 +38,8 @@ public class ObjectDispenserConfig : IBuildingConfig
 		storage.storageFilters = STORAGEFILTERS.NOT_EDIBLE_SOLIDS;
 		storage.storageFullMargin = STORAGE.STORAGE_LOCKER_FILLED_MARGIN;
 		storage.fetchCategory = Storage.FetchCategory.GeneralStorage;
+		storage.showCapacityStatusItem = true;
+		storage.showCapacityAsMainStatus = true;
 		go.AddOrGet<CopyBuildingSettings>().copyGroupTag = GameTags.StorageLocker;
 		Object.DestroyImmediate(go.GetComponent<LogicOperationalController>());
 	}

@@ -29,8 +29,8 @@ public class EggConfig
 		};
 		ComplexRecipe.RecipeElement[] array2 = new ComplexRecipe.RecipeElement[2]
 		{
-			new ComplexRecipe.RecipeElement("RawEgg", 0.5f * mass),
-			new ComplexRecipe.RecipeElement("EggShell", 0.5f * mass)
+			new ComplexRecipe.RecipeElement("RawEgg", 0.5f * mass, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature),
+			new ComplexRecipe.RecipeElement("EggShell", 0.5f * mass, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
 		string obsolete_id = ComplexRecipeManager.MakeObsoleteRecipeID(id, "RawEgg");
 		string text = ComplexRecipeManager.MakeRecipeID("EggCracker", array, array2);

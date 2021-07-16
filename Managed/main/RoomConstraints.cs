@@ -53,6 +53,8 @@ public static class RoomConstraints
 		public static Tag NatureReserve = "NatureReserve".ToTag();
 
 		public static Tag Decor20 = "Decor20".ToTag();
+
+		public static Tag RocketInterior = "RocketInterior".ToTag();
 	}
 
 	public class Constraint

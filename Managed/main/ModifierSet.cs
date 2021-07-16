@@ -32,6 +32,8 @@ public class ModifierSet : ScriptableObject
 
 		public bool IsBad;
 
+		public string CustomIcon;
+
 		public bool TriggerFloatingText;
 
 		public string EmoteAnim;
@@ -72,6 +74,8 @@ public class ModifierSet : ScriptableObject
 
 	public CritterAttributes CritterAttributes;
 
+	public PlantAttributes PlantAttributes;
+
 	public Database.Amounts Amounts;
 
 	public Database.AttributeConverters AttributeConverters;
@@ -89,6 +93,7 @@ public class ModifierSet : ScriptableObject
 		Attributes = new Database.Attributes(Root);
 		BuildingAttributes = new BuildingAttributes(Root);
 		CritterAttributes = new CritterAttributes(Root);
+		PlantAttributes = new PlantAttributes(Root);
 		effects = new ResourceSet<Effect>("Effects", Root);
 		traits = new TraitSet();
 		traitGroups = new TraitGroupSet();
@@ -119,7 +124,7 @@ public class ModifierSet : ScriptableObject
 			}
 			string text = Strings.Get($"STRINGS.DUPLICANTS.MODIFIERS.{modifierInfo.Id.ToUpper()}.NAME");
 			string description = Strings.Get($"STRINGS.DUPLICANTS.MODIFIERS.{modifierInfo.Id.ToUpper()}.TOOLTIP");
-			Effect effect = new Effect(modifierInfo.Id, text, description, modifierInfo.Duration * 600f, modifierInfo.ShowInUI && modifierInfo.Type != "Need", modifierInfo.TriggerFloatingText, modifierInfo.IsBad, modifierInfo.EmoteAnim, modifierInfo.EmoteCooldown, modifierInfo.StompGroup);
+			Effect effect = new Effect(modifierInfo.Id, text, description, modifierInfo.Duration * 600f, modifierInfo.ShowInUI && modifierInfo.Type != "Need", modifierInfo.TriggerFloatingText, modifierInfo.IsBad, modifierInfo.EmoteAnim, modifierInfo.EmoteCooldown, modifierInfo.StompGroup, modifierInfo.CustomIcon);
 			foreach (ModifierInfo modifierInfo2 in modifierInfos)
 			{
 				if (modifierInfo2.Id == modifierInfo.Id)
@@ -143,6 +148,12 @@ public class ModifierSet : ScriptableObject
 		};
 		effects.Get("WetFeet").AddEmotePrecondition(precon);
 		effects.Get("SoakingWet").AddEmotePrecondition(precon);
+		Effect effect4 = new Effect("DivergentCropTended", STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDED.NAME, STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDED.TOOLTIP, 600f, show_in_ui: true, trigger_floating_text: true, is_bad: false);
+		effect4.Add(new AttributeModifier(Db.Get().Amounts.Maturity.deltaAttribute.Id, 0.05f, STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDED.NAME, is_multiplier: true));
+		effects.Add(effect4);
+		Effect effect5 = new Effect("DivergentCropTendedWorm", STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDEDWORM.NAME, STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDEDWORM.TOOLTIP, 600f, show_in_ui: true, trigger_floating_text: true, is_bad: false);
+		effect5.Add(new AttributeModifier(Db.Get().Amounts.Maturity.deltaAttribute.Id, 0.5f, STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDEDWORM.NAME, is_multiplier: true));
+		effects.Add(effect5);
 	}
 
 	public Trait CreateTrait(string id, string name, string description, string group_name, bool should_save, ChoreGroup[] disabled_chore_groups, bool positive_trait, bool is_valid_starter_trait)

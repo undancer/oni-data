@@ -125,6 +125,20 @@ namespace STRINGS
 			public static LocString DESCRIPTION = "A marshy world with significant radiation.\n\n<smallcaps>Irradiated Marsh Asteroids have an abundance of metal for the taking if Duplicants can withstand the planetoid's radiation.</smallcaps>";
 		}
 
+		public class SWAMPYLANDINGSITE
+		{
+			public static LocString NAME = "Irradiated Swampy Asteroid";
+
+			public static LocString DESCRIPTION = "A small swampy world with a radioactive core.\n\n<smallcaps>Irradiated Swamps have a high concentration of rare swampy and radioactive resources but are also chocked full of dangers.</smallcaps>";
+		}
+
+		public class FORESTMOONLET
+		{
+			public static LocString NAME = "Forest Moonlet";
+
+			public static LocString DESCRIPTION = "A small moon with a forest start.\n\n<smallcaps>Forest Moonlets have plenty of organic material but Duplicants will have to venture outside their starting biome quickly to find any metal.</smallcaps>";
+		}
+
 		public class TERRAMOONLET
 		{
 			public static LocString NAME = "Sandstone Asteroid";
@@ -144,6 +158,20 @@ namespace STRINGS
 			public static LocString NAME = "Rusty Oil Asteroid";
 
 			public static LocString DESCRIPTION = "A rusty mid-sized world with an oily core.\n\n<smallcaps>Duplicants must sift through a great deal of rust and ocean to reach the prize of this planetoid's oil.</smallcaps>";
+		}
+
+		public class MEDIUMRADIOACTIVEVANILLAWARPPLANET
+		{
+			public static LocString NAME = "Radioactive Swamp Asteroid";
+
+			public static LocString DESCRIPTION = "A large-ish partially frozen world with a radioactive core.\n\n<smallcaps>While Radioactive Swamp Asteroid are largely swampy, they also contain a great deal of rust.</smallcaps>";
+		}
+
+		public class MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET
+		{
+			public static LocString NAME = "Radioactive Terra Asteroid";
+
+			public static LocString DESCRIPTION = "A large-ish world with a radioactive core.\n\n<smallcaps>The Radioactive Terra Asteroid is fairly dry and sandy, but does contain areas of jungle.</smallcaps>";
 		}
 
 		public class STRANGERICHSANDSTONE
@@ -193,6 +221,27 @@ namespace STRINGS
 			public static LocString NAME = "Swampy Asteroid";
 
 			public static LocString DESCRIPTION = "A large, polluted swamp world.\n\n<smallcaps>Swampy Asteroids are a great mass of frozen slush and wasteland. With a short distance to the surface, inter-world travel can be achieved quickly.</smallcaps>";
+		}
+
+		public class MOOMOONLET
+		{
+			public static LocString NAME = "Moo Asteroid";
+
+			public static LocString DESCRIPTION = "A small world with unique local lifeforms.\n\n<smallcaps>Moo Asteroids are the natural breeding ground of Gassy Moos due to their abundance of Gas Grass and Methane.</smallcaps>";
+		}
+
+		public class WATERMOONLET
+		{
+			public static LocString NAME = "Water Asteroid";
+
+			public static LocString DESCRIPTION = "A small, water-submerged world.\n\n<smallcaps>Water Asteroids possess a variety of liquid resources and are a natural source of Graphite, but Duplicants should come prepared for a swim.</smallcaps>";
+		}
+
+		public class REGOLITHMOONLET
+		{
+			public static LocString NAME = "Regolith Asteroid";
+
+			public static LocString DESCRIPTION = "A small, cold world with plenty of craters.\n\n<smallcaps>Regolith Asteroids have frequent meteor showers and are chalk full of Regolith, an incredibly useful filtration material. </smallcaps>";
 		}
 
 		public class TINYSTART

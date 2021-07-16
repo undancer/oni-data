@@ -11,8 +11,8 @@ public class NavTable
 	public NavTable(int cell_count)
 	{
 		ValidCells = new short[cell_count];
-		NavTypeMasks = new short[10];
-		for (short num = 0; num < 10; num = (short)(num + 1))
+		NavTypeMasks = new short[11];
+		for (short num = 0; num < 11; num = (short)(num + 1))
 		{
 			NavTypeMasks[num] = (short)(1 << (int)num);
 		}

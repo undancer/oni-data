@@ -11,6 +11,9 @@ public class GameOptionsScreen : KModalButtonMenu
 	private UnitConfigurationScreen unitConfiguration;
 
 	[SerializeField]
+	private GameObject expansion1ContentToggle;
+
+	[SerializeField]
 	private KButton resetTutorialButton;
 
 	[SerializeField]
@@ -18,6 +21,9 @@ public class GameOptionsScreen : KModalButtonMenu
 
 	[SerializeField]
 	private KButton sandboxButton;
+
+	[SerializeField]
+	private ConfirmDialogScreen confirmPrefab;
 
 	[SerializeField]
 	private KButton doneButton;
@@ -55,6 +61,14 @@ public class GameOptionsScreen : KModalButtonMenu
 		else
 		{
 			saveConfiguration.ToggleDisabledContent(enable: false);
+		}
+		if (expansion1ContentToggle != null)
+		{
+			expansion1ContentToggle.SetActive(DlcManager.IsExpansion1Installed());
+			expansion1ContentToggle.GetComponentInChildren<ToolTip>().toolTip = UI.FRONTEND.GAME_OPTIONS_SCREEN.EXPANSION1_CONTENT_ENABLED_TOOLTIP;
+			expansion1ContentToggle.GetComponentInChildren<KButton>().onClick += OnExpansion1ContentClicked;
+			expansion1ContentToggle.GetComponentInChildren<LocText>().text = UI.FRONTEND.GAME_OPTIONS_SCREEN.EXPANSION1_CONTENT_ENABLED;
+			UpdateExpansion1ContentToggle();
 		}
 		resetTutorialButton.onClick += OnTutorialReset;
 		controlsButton.onClick += OnKeyBindings;
@@ -121,6 +135,20 @@ public class GameOptionsScreen : KModalButtonMenu
 		{
 		});
 		component.Activate();
+	}
+
+	private void UpdateExpansion1ContentToggle()
+	{
+		bool active = DlcManager.IsExpansion1Active();
+		expansion1ContentToggle.GetComponent<HierarchyReferences>().GetReference("Checkmark").gameObject.SetActive(active);
+	}
+
+	private void OnExpansion1ContentClicked()
+	{
+		Canvas componentInParent = GetComponentInParent<Canvas>();
+		Util.KInstantiateUI<InfoDialogScreen>(ScreenPrefabs.Instance.InfoDialogScreen.gameObject, componentInParent.gameObject).SetHeader(UI.FRONTEND.GAME_OPTIONS_SCREEN.EXPANSION1_CONTENT_TESTING_TITLE).AddPlainText(UI.FRONTEND.GAME_OPTIONS_SCREEN.EXPANSION1_CONTENT_TESTING_BODY)
+			.AddDefaultOK()
+			.gameObject.SetActive(value: true);
 	}
 
 	private void OnUnlockSandboxMode()

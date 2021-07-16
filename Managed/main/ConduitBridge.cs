@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [AddComponentMenu("KMonoBehaviour/scripts/ConduitBridge")]
-public class ConduitBridge : KMonoBehaviour, IBridgedNetworkItem
+public class ConduitBridge : ConduitBridgeBase, IBridgedNetworkItem
 {
 	[SerializeField]
 	public ConduitType type;
@@ -38,19 +38,38 @@ public class ConduitBridge : KMonoBehaviour, IBridgedNetworkItem
 	private void ConduitUpdate(float dt)
 	{
 		ConduitFlow flowManager = Conduit.GetFlowManager(type);
-		if (!flowManager.HasConduit(inputCell))
+		if (!flowManager.HasConduit(inputCell) || !flowManager.HasConduit(outputCell))
 		{
+			SendEmptyOnMassTransfer();
 			return;
 		}
 		ConduitFlow.ConduitContents contents = flowManager.GetContents(inputCell);
-		if (contents.mass > 0f)
+		float num = contents.mass;
+		if (desiredMassTransfer != null)
 		{
-			float num = flowManager.AddElement(outputCell, contents.element, contents.mass, contents.temperature, contents.diseaseIdx, contents.diseaseCount);
-			if (num > 0f)
+			num = desiredMassTransfer(dt, contents.element, contents.mass, contents.temperature, contents.diseaseIdx, contents.diseaseCount, null);
+		}
+		if (num > 0f)
+		{
+			int disease_count = (int)(num / contents.mass * (float)contents.diseaseCount);
+			float num2 = flowManager.AddElement(outputCell, contents.element, num, contents.temperature, contents.diseaseIdx, disease_count);
+			if (num2 > 0f)
 			{
-				flowManager.RemoveElement(inputCell, num);
+				flowManager.RemoveElement(inputCell, num2);
 				Game.Instance.accumulators.Accumulate(accumulator, contents.mass);
+				if (OnMassTransfer != null)
+				{
+					OnMassTransfer(contents.element, num2, contents.temperature, contents.diseaseIdx, disease_count, null);
+				}
 			}
+			else
+			{
+				SendEmptyOnMassTransfer();
+			}
+		}
+		else
+		{
+			SendEmptyOnMassTransfer();
 		}
 	}
 

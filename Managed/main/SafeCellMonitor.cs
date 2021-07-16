@@ -23,7 +23,7 @@ public class SafeCellMonitor : GameStateMachine<SafeCellMonitor, SafeCellMonitor
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = satisfied;
-		base.serializable = false;
+		base.serializable = SerializeType.Never;
 		root.ToggleUrge(Db.Get().Urges.MoveToSafety);
 		satisfied.EventTransition(GameHashes.SafeCellDetected, danger, (Instance smi) => smi.IsAreaUnsafe());
 		danger.EventTransition(GameHashes.SafeCellLost, satisfied, (Instance smi) => !smi.IsAreaUnsafe()).ToggleChore((Instance smi) => new MoveToSafetyChore(smi.master), satisfied);

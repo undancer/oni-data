@@ -17,9 +17,16 @@ public class ColdBreatherConfig : IEntityConfig
 
 	public const float CONSUMPTION_RATE = 1f;
 
+	public const float RADIATION_STRENGTH = 48f;
+
 	public const string SEED_ID = "ColdBreatherSeed";
 
 	public static readonly Tag SEED_TAG = TagManager.Create("ColdBreatherSeed");
+
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
 
 	public GameObject CreatePrefab()
 	{
@@ -60,10 +67,20 @@ public class ColdBreatherConfig : IEntityConfig
 		SimTemperatureTransfer component = gameObject.GetComponent<SimTemperatureTransfer>();
 		component.SurfaceArea = 10f;
 		component.Thickness = 0.001f;
+		if (DlcManager.FeatureRadiationEnabled())
+		{
+			RadiationEmitter radiationEmitter = gameObject.AddComponent<RadiationEmitter>();
+			radiationEmitter.emitType = RadiationEmitter.RadiationEmitterType.Constant;
+			radiationEmitter.radiusProportionalToRads = false;
+			radiationEmitter.emitRadiusX = 6;
+			radiationEmitter.emitRadiusY = radiationEmitter.emitRadiusX;
+			radiationEmitter.emitRads = 48f;
+			radiationEmitter.emissionOffset = new Vector3(0f, 0f, 0f);
+		}
 		EntityTemplates.CreateAndRegisterPreviewForPlant(EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Hidden, "ColdBreatherSeed", STRINGS.CREATURES.SPECIES.SEEDS.COLDBREATHER.NAME, STRINGS.CREATURES.SPECIES.SEEDS.COLDBREATHER.DESC, Assets.GetAnim("seed_coldbreather_kanim"), "object", 1, new List<Tag>
 		{
 			GameTags.CropSeed
-		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 2, STRINGS.CREATURES.SPECIES.COLDBREATHER.DOMESTICATEDDESC, EntityTemplates.CollisionShape.CIRCLE, 0.3f, 0.3f), "ColdBreather_preview", Assets.GetAnim("coldbreather_kanim"), "place", 1, 2);
+		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 21, STRINGS.CREATURES.SPECIES.COLDBREATHER.DOMESTICATEDDESC, EntityTemplates.CollisionShape.CIRCLE, 0.3f, 0.3f), "ColdBreather_preview", Assets.GetAnim("coldbreather_kanim"), "place", 1, 2);
 		SoundEventVolumeCache.instance.AddVolume("coldbreather_kanim", "ColdBreather_grow", NOISE_POLLUTION.CREATURES.TIER3);
 		SoundEventVolumeCache.instance.AddVolume("coldbreather_kanim", "ColdBreather_intake", NOISE_POLLUTION.CREATURES.TIER3);
 		return gameObject;

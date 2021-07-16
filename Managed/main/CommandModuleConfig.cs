@@ -11,14 +11,19 @@ public class CommandModuleConfig : IBuildingConfig
 
 	private const string LAUNCH_READY_PORT_ID = "LaunchReady";
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_VANILLA_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef("CommandModule", 5, 5, "rocket_command_module_kanim", 1000, 60f, TUNING.BUILDINGS.ROCKETRY_MASS_KG.COMMAND_MODULE_MASS, new string[1]
 		{
 			SimHashes.Steel.ToString()
-		}, 9999f, BuildLocationRule.BuildingAttachPoint, noise: NOISE_POLLUTION.NOISY.TIER2, decor: TUNING.BUILDINGS.DECOR.NONE);
+		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: TUNING.BUILDINGS.DECOR.NONE);
 		BuildingTemplates.CreateRocketBuildingDef(obj);
-		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
+		obj.SceneLayer = Grid.SceneLayer.Building;
 		obj.OverheatTemperature = 2273.15f;
 		obj.Floodable = false;
 		obj.AttachmentSlotTag = GameTags.Rocket;
@@ -26,6 +31,7 @@ public class CommandModuleConfig : IBuildingConfig
 		obj.RequiresPowerInput = false;
 		obj.attachablePosition = new CellOffset(0, 0);
 		obj.CanMove = true;
+		obj.Cancellable = false;
 		obj.LogicInputPorts = new List<LogicPorts.Port>
 		{
 			LogicPorts.Port.InputPort("TriggerLaunch", new CellOffset(0, 1), STRINGS.BUILDINGS.PREFABS.COMMANDMODULE.LOGIC_PORT_LAUNCH, STRINGS.BUILDINGS.PREFABS.COMMANDMODULE.LOGIC_PORT_LAUNCH_ACTIVE, STRINGS.BUILDINGS.PREFABS.COMMANDMODULE.LOGIC_PORT_LAUNCH_INACTIVE)
@@ -42,7 +48,6 @@ public class CommandModuleConfig : IBuildingConfig
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		go.AddOrGet<LoopingSounds>();
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
-		go.AddOrGet<RocketModule>().SetBGKAnim(Assets.GetAnim("rocket_command_module_bg_kanim"));
 		LaunchConditionManager launchConditionManager = go.AddOrGet<LaunchConditionManager>();
 		launchConditionManager.triggerPort = "TriggerLaunch";
 		launchConditionManager.statusPort = "LaunchReady";
@@ -54,6 +59,7 @@ public class CommandModuleConfig : IBuildingConfig
 		});
 		go.AddOrGet<CommandModule>();
 		go.AddOrGet<CommandModuleWorkable>();
+		go.AddOrGet<RocketCommandConditions>();
 		go.AddOrGet<MinionStorage>();
 		go.AddOrGet<ArtifactFinder>();
 		go.AddOrGet<LaunchableRocket>();
@@ -61,9 +67,10 @@ public class CommandModuleConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
+		BuildingTemplates.ExtendBuildingToRocketModule(go, "rocket_command_module_bg_kanim");
 		Ownable ownable = go.AddOrGet<Ownable>();
 		ownable.slotID = Db.Get().AssignableSlots.RocketCommandModule.Id;
 		ownable.canBePublic = false;
-		EntityTemplates.ExtendBuildingToRocketModule(go);
+		go.AddOrGet<CharacterOverlay>().shouldShowName = true;
 	}
 }

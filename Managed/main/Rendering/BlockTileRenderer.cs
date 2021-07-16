@@ -105,8 +105,8 @@ namespace Rendering
 					material.SetTexture("_MainTex", def.BlockTilePlaceAtlas.texture);
 					material.name = def.BlockTilePlaceAtlas.name + "Mat";
 				}
-				int num = Grid.WidthInCells / 16;
-				int num2 = Grid.HeightInCells / 16;
+				int num = Grid.WidthInCells / 16 + 1;
+				int num2 = Grid.HeightInCells / 16 + 1;
 				meshChunks = new Mesh[num, num2];
 				dirtyChunks = new bool[num, num2];
 				for (int i = 0; i < num2; i++)

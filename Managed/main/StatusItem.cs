@@ -38,8 +38,6 @@ public class StatusItem : Resource
 
 	public string notificationTooltipText;
 
-	public float notificationDelay;
-
 	public string soundPath;
 
 	public string iconName;
@@ -139,6 +137,10 @@ public class StatusItem : Resource
 		{
 			OverlayModes.TileMode.ID,
 			StatusItemOverlays.None
+		},
+		{
+			OverlayModes.Radiation.ID,
+			StatusItemOverlays.Radiation
 		}
 	};
 
@@ -149,7 +151,7 @@ public class StatusItem : Resource
 		tooltipText = Strings.Get(composed_prefix + ".TOOLTIP");
 	}
 
-	public StatusItem(string id, string prefix, string icon, IconType icon_type, NotificationType notification_type, bool allow_multiples, HashedString render_overlay, bool showWorldIcon = true, int status_overlays = 129022)
+	public StatusItem(string id, string prefix, string icon, IconType icon_type, NotificationType notification_type, bool allow_multiples, HashedString render_overlay, bool showWorldIcon = true, int status_overlays = 129022, Func<string, object, string> resolve_string_callback = null)
 		: this(id, "STRINGS." + prefix + ".STATUSITEMS." + id.ToUpper())
 	{
 		switch (icon_type)
@@ -169,13 +171,14 @@ public class StatusItem : Resource
 		this.render_overlay = render_overlay;
 		showShowWorldIcon = showWorldIcon;
 		this.status_overlays = status_overlays;
+		resolveStringCallback = resolve_string_callback;
 		if (sprite == null)
 		{
 			Debug.LogWarning("Status item '" + id + "' references a missing icon: " + icon);
 		}
 	}
 
-	public StatusItem(string id, string name, string tooltip, string icon, IconType icon_type, NotificationType notification_type, bool allow_multiples, HashedString render_overlay, int status_overlays = 129022)
+	public StatusItem(string id, string name, string tooltip, string icon, IconType icon_type, NotificationType notification_type, bool allow_multiples, HashedString render_overlay, int status_overlays = 129022, bool showWorldIcon = true, Func<string, object, string> resolve_string_callback = null)
 		: base(id, name)
 	{
 		switch (icon_type)
@@ -195,19 +198,19 @@ public class StatusItem : Resource
 		allowMultiples = allow_multiples;
 		this.render_overlay = render_overlay;
 		this.status_overlays = status_overlays;
+		showShowWorldIcon = showWorldIcon;
+		resolveStringCallback = resolve_string_callback;
 		if (sprite == null)
 		{
 			Debug.LogWarning("Status item '" + id + "' references a missing icon: " + icon);
 		}
 	}
 
-	public void AddNotification(string sound_path = null, string notification_text = null, string notification_tooltip = null, float notification_delay = 0f)
+	public void AddNotification(string sound_path = null, string notification_text = null, string notification_tooltip = null)
 	{
 		shouldNotify = true;
-		notificationDelay = notification_delay;
 		if (sound_path == null)
 		{
-			NotificationType notificationType = this.notificationType;
 			if (notificationType == NotificationType.Bad)
 			{
 				soundPath = "Warning";
@@ -326,7 +329,8 @@ public class StatusItem : Resource
 	{
 		if (!overlayBitfieldMap.TryGetValue(mode, out var value))
 		{
-			Debug.LogWarning(string.Concat("ViewMode ", mode, " has no StatusItemOverlay value"));
+			HashedString hashedString = mode;
+			Debug.LogWarning("ViewMode " + hashedString.ToString() + " has no StatusItemOverlay value");
 			return StatusItemOverlays.None;
 		}
 		return value;

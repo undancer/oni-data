@@ -160,15 +160,11 @@ public class EntityTemplates
 		return template;
 	}
 
-	public static GameObject ExtendBuildingToRocketModule(GameObject template)
+	public static GameObject ExtendEntityToBasicPlant(GameObject template, float temperature_lethal_low = 218.15f, float temperature_warning_low = 283.15f, float temperature_warning_high = 303.15f, float temperature_lethal_high = 398.15f, SimHashes[] safe_elements = null, bool pressure_sensitive = true, float pressure_lethal_low = 0f, float pressure_warning_low = 0.15f, string crop_id = null, bool can_drown = true, bool can_tinker = true, bool require_solid_tile = true, bool should_grow_old = true, float max_age = 2400f, float min_radiation = 0f, float max_radiation = 220f, string baseTraitId = null, string baseTraitName = null)
 	{
-		template.GetComponent<KBatchedAnimController>().isMovable = true;
-		template.GetComponent<Building>().Def.ThermalConductivity = 0.1f;
-		return template;
-	}
-
-	public static GameObject ExtendEntityToBasicPlant(GameObject template, float temperature_lethal_low = 218.15f, float temperature_warning_low = 283.15f, float temperature_warning_high = 303.15f, float temperature_lethal_high = 398.15f, SimHashes[] safe_elements = null, bool pressure_sensitive = true, float pressure_lethal_low = 0f, float pressure_warning_low = 0.15f, string crop_id = null, bool can_drown = true, bool can_tinker = true, bool require_solid_tile = true, bool should_grow_old = true, float max_age = 2400f)
-	{
+		Modifiers component = template.GetComponent<Modifiers>();
+		Trait trait = Db.Get().CreateTrait(baseTraitId, baseTraitName, baseTraitName, null, should_save: false, null, positive_trait: true, is_valid_starter_trait: true);
+		template.AddTag(GameTags.Plant);
 		template.AddOrGet<EntombVulnerable>();
 		PressureVulnerable pressureVulnerable = template.AddOrGet<PressureVulnerable>();
 		if (pressure_sensitive)
@@ -182,6 +178,7 @@ public class EntityTemplates
 		template.AddOrGet<WiltCondition>();
 		template.AddOrGet<Prioritizable>();
 		template.AddOrGet<Uprootable>();
+		template.AddOrGet<Effects>();
 		if (require_solid_tile)
 		{
 			template.AddOrGet<UprootedMonitor>();
@@ -192,33 +189,60 @@ public class EntityTemplates
 		{
 			template.AddOrGet<DrowningMonitor>();
 		}
+		template.AddOrGet<KAnimControllerBase>().randomiseLoopedOffset = true;
+		component.initialAttributes.Add(Db.Get().PlantAttributes.WiltTempRangeMod.Id);
 		template.AddOrGet<TemperatureVulnerable>().Configure(temperature_warning_low, temperature_lethal_low, temperature_warning_high, temperature_lethal_high);
+		if (DlcManager.FeaturePlantMutationsEnabled())
+		{
+			component.initialAttributes.Add(Db.Get().PlantAttributes.MinRadiationThreshold.Id);
+			if (min_radiation != 0f)
+			{
+				trait.Add(new AttributeModifier(Db.Get().PlantAttributes.MinRadiationThreshold.Id, min_radiation, baseTraitName));
+			}
+			component.initialAttributes.Add(Db.Get().PlantAttributes.MaxRadiationThreshold.Id);
+			trait.Add(new AttributeModifier(Db.Get().PlantAttributes.MaxRadiationThreshold.Id, max_radiation, baseTraitName));
+			template.AddOrGetDef<RadiationVulnerable.Def>();
+		}
 		template.AddOrGet<OccupyArea>().objectLayers = new ObjectLayer[1]
 		{
 			ObjectLayer.Building
 		};
-		KPrefabID component = template.GetComponent<KPrefabID>();
+		KPrefabID component2 = template.GetComponent<KPrefabID>();
 		if (crop_id != null)
 		{
-			GeneratedBuildings.RegisterWithOverlay(OverlayScreen.HarvestableIDs, component.PrefabID().ToString());
+			GeneratedBuildings.RegisterWithOverlay(OverlayScreen.HarvestableIDs, component2.PrefabID().ToString());
 			Crop.CropVal cropval = CROPS.CROP_TYPES.Find((Crop.CropVal m) => m.cropId == crop_id);
+			Debug.Assert(baseTraitId != null && baseTraitName != null, "Extending " + template.name + " to a crop plant failed because the base trait wasn't specified.");
+			component.initialAttributes.Add(Db.Get().PlantAttributes.YieldAmount.Id);
+			component.initialAmounts.Add(Db.Get().Amounts.Maturity.Id);
+			trait.Add(new AttributeModifier(Db.Get().PlantAttributes.YieldAmount.Id, cropval.numProduced, baseTraitName));
+			trait.Add(new AttributeModifier(Db.Get().Amounts.Maturity.maxAttribute.Id, cropval.cropDuration / 600f, baseTraitName));
+			if (DlcManager.FeaturePlantMutationsEnabled())
+			{
+				template.AddOrGet<MutantPlant>().SpeciesID = component2.PrefabTag;
+				SymbolOverrideControllerUtil.AddToPrefab(template);
+			}
 			template.AddOrGet<Crop>().Configure(cropval);
 			Growing growing = template.AddOrGet<Growing>();
-			growing.growthTime = cropval.cropDuration;
 			growing.shouldGrowOld = should_grow_old;
 			growing.maxAge = max_age;
 			template.AddOrGet<Harvestable>();
 			template.AddOrGet<HarvestDesignatable>();
 		}
-		component.prefabInitFn += delegate(GameObject inst)
+		if (trait.SelfModifiers != null && trait.SelfModifiers.Count > 0)
 		{
-			PressureVulnerable component2 = inst.GetComponent<PressureVulnerable>();
-			if (safe_elements != null)
+			template.AddOrGet<Traits>();
+			component.initialTraits.Add(baseTraitId);
+		}
+		component2.prefabInitFn += delegate(GameObject inst)
+		{
+			PressureVulnerable component3 = inst.GetComponent<PressureVulnerable>();
+			if (component3 != null && safe_elements != null)
 			{
 				SimHashes[] array = safe_elements;
 				foreach (SimHashes hash in array)
 				{
-					component2.safe_atmospheres.Add(ElementLoader.FindElementByHash(hash));
+					component3.safe_atmospheres.Add(ElementLoader.FindElementByHash(hash));
 				}
 			}
 		};
@@ -229,7 +253,7 @@ public class EntityTemplates
 		return template;
 	}
 
-	public static GameObject ExtendEntityToWildCreature(GameObject prefab, int space_required_per_creature, float lifespan)
+	public static GameObject ExtendEntityToWildCreature(GameObject prefab, int space_required_per_creature)
 	{
 		prefab.AddOrGetDef<AgeMonitor.Def>();
 		prefab.AddOrGetDef<HappinessMonitor.Def>();
@@ -243,11 +267,10 @@ public class EntityTemplates
 		def.tameEffect.Add(new AttributeModifier(Db.Get().CritterAttributes.Happiness.Id, -1f, STRINGS.CREATURES.MODIFIERS.TAME.NAME));
 		def.tameEffect.Add(new AttributeModifier(Db.Get().CritterAttributes.Metabolism.Id, 100f, STRINGS.CREATURES.MODIFIERS.TAME.NAME));
 		prefab.AddOrGetDef<OvercrowdingMonitor.Def>().spaceRequiredPerCreature = space_required_per_creature;
-		prefab.AddTag(GameTags.Plant);
 		return prefab;
 	}
 
-	public static GameObject ExtendEntityToFertileCreature(GameObject prefab, string eggId, string eggName, string eggDesc, string egg_anim, float egg_mass, string baby_id, float fertility_cycles, float incubation_cycles, List<FertilityMonitor.BreedingChance> egg_chances, int eggSortOrder = -1, bool is_ranchable = true, bool add_fish_overcrowding_monitor = false, bool add_fixed_capturable_monitor = true, float egg_anim_scale = 1f)
+	public static GameObject ExtendEntityToFertileCreature(GameObject prefab, string eggId, string eggName, string eggDesc, string egg_anim, float egg_mass, string baby_id, float fertility_cycles, float incubation_cycles, List<FertilityMonitor.BreedingChance> egg_chances, int eggSortOrder = -1, bool is_ranchable = true, bool add_fish_overcrowding_monitor = false, bool add_fixed_capturable_monitor = true, float egg_anim_scale = 1f, bool deprecated = false)
 	{
 		FertilityMonitor.Def def = prefab.AddOrGetDef<FertilityMonitor.Def>();
 		def.baseFertileCycles = fertility_cycles;
@@ -271,8 +294,8 @@ public class EntityTemplates
 		KPrefabID creature_prefab_id = prefab.GetComponent<KPrefabID>();
 		creature_prefab_id.prefabSpawnFn += delegate
 		{
-			WorldInventory.Instance.Discover(eggId.ToTag(), WorldInventory.GetCategoryForTags(egg_prefab_id.Tags));
-			WorldInventory.Instance.Discover(baby_id.ToTag(), WorldInventory.GetCategoryForTags(creature_prefab_id.Tags));
+			DiscoveredResources.Instance.Discover(eggId.ToTag(), DiscoveredResources.GetCategoryForTags(egg_prefab_id.Tags));
+			DiscoveredResources.Instance.Discover(baby_id.ToTag(), DiscoveredResources.GetCategoryForTags(creature_prefab_id.Tags));
 		};
 		if (is_ranchable)
 		{
@@ -286,13 +309,20 @@ public class EntityTemplates
 		{
 			gameObject.AddOrGetDef<FishOvercrowdingMonitor.Def>();
 		}
+		if (deprecated)
+		{
+			gameObject.AddTag(GameTags.DeprecatedContent);
+			prefab.AddTag(GameTags.DeprecatedContent);
+		}
 		return prefab;
 	}
 
-	public static GameObject ExtendEntityToBeingABaby(GameObject prefab, Tag adult_prefab_id, string on_grow_item_drop_id = null)
+	public static GameObject ExtendEntityToBeingABaby(GameObject prefab, Tag adult_prefab_id, string on_grow_item_drop_id = null, bool force_adult_nav_type = false, float adult_threshold = 5f)
 	{
 		prefab.AddOrGetDef<BabyMonitor.Def>().adultPrefab = adult_prefab_id;
 		prefab.AddOrGetDef<BabyMonitor.Def>().onGrowDropID = on_grow_item_drop_id;
+		prefab.AddOrGetDef<BabyMonitor.Def>().forceAdultNavType = force_adult_nav_type;
+		prefab.AddOrGetDef<BabyMonitor.Def>().adultThreshold = adult_threshold;
 		prefab.AddOrGetDef<IncubatorMonitor.Def>();
 		prefab.AddOrGetDef<CreatureSleepMonitor.Def>();
 		prefab.AddOrGetDef<CallAdultMonitor.Def>();
@@ -307,10 +337,7 @@ public class EntityTemplates
 		Modifiers modifiers = template.AddOrGet<Modifiers>();
 		if (initialTraitID != null)
 		{
-			modifiers.initialTraits = new string[1]
-			{
-				initialTraitID
-			};
+			modifiers.initialTraits.Add(initialTraitID);
 		}
 		modifiers.initialAmounts.Add(Db.Get().Amounts.HitPoints.Id);
 		template.AddOrGet<KBatchedAnimController>().SetSymbolVisiblity("snapto_pivot", is_visible: false);
@@ -396,7 +423,7 @@ public class EntityTemplates
 		creature.AddOrGet<Capturable>().allowCapture = allow_mark_for_capture;
 		creature_prefab_id.prefabSpawnFn += delegate
 		{
-			WorldInventory.Instance.Discover(creature_prefab_id.PrefabTag, WorldInventory.GetCategoryForTags(creature_prefab_id.Tags));
+			DiscoveredResources.Instance.Discover(creature_prefab_id.PrefabTag, DiscoveredResources.GetCategoryForTags(creature_prefab_id.Tags));
 		};
 		return creature;
 	}
@@ -510,6 +537,7 @@ public class EntityTemplates
 		if (foodInfo.CanRot)
 		{
 			Rottable.Def def = template.AddOrGetDef<Rottable.Def>();
+			def.preserveTemperature = foodInfo.PreserveTemperature;
 			def.rotTemperature = foodInfo.RotTemperature;
 			def.spoilTime = foodInfo.SpoilTime;
 			def.staleTime = foodInfo.StaleTime;
@@ -537,13 +565,26 @@ public class EntityTemplates
 	public static GameObject ExtendEntityToMedicine(GameObject template, MedicineInfo medicineInfo)
 	{
 		template.AddOrGet<EntitySplitter>();
-		template.GetComponent<KPrefabID>().AddTag(GameTags.Medicine);
-		template.AddOrGet<MedicinalPill>().info = medicineInfo;
+		KPrefabID component = template.GetComponent<KPrefabID>();
+		Debug.Assert(component.PrefabID() == medicineInfo.id, "Tried assigning a medicine info to a non-matching prefab!");
+		MedicinalPill medicinalPill = template.AddOrGet<MedicinalPill>();
+		medicinalPill.info = medicineInfo;
+		if (medicineInfo.doctorStationId == null)
+		{
+			template.AddOrGet<MedicinalPillWorkable>().pill = medicinalPill;
+			component.AddTag(GameTags.Medicine);
+		}
+		else
+		{
+			component.AddTag(GameTags.MedicalSupplies);
+			component.AddTag(medicineInfo.GetSupplyTag());
+		}
 		return template;
 	}
 
 	public static GameObject ExtendPlantToFertilizable(GameObject template, PlantElementAbsorber.ConsumeInfo[] fertilizers)
 	{
+		template.GetComponent<Modifiers>().initialAttributes.Add(Db.Get().PlantAttributes.FertilizerUsageMod.Id);
 		HashedString idHash = Db.Get().ChoreTypes.FarmFetch.IdHash;
 		for (int i = 0; i < fertilizers.Length; i++)
 		{
@@ -581,6 +622,7 @@ public class EntityTemplates
 
 	public static GameObject ExtendPlantToIrrigated(GameObject template, PlantElementAbsorber.ConsumeInfo[] consume_info)
 	{
+		template.GetComponent<Modifiers>().initialAttributes.Add(Db.Get().PlantAttributes.FertilizerUsageMod.Id);
 		HashedString idHash = Db.Get().ChoreTypes.FarmFetch.IdHash;
 		for (int i = 0; i < consume_info.Length; i++)
 		{
@@ -628,7 +670,7 @@ public class EntityTemplates
 	{
 		GameObject gameObject = CreateLooseEntity(id, name, desc, 1f, unitMass: true, anim, initialAnim, Grid.SceneLayer.Front, collisionShape, width, height, isPickupable: true, SORTORDER.SEEDS + sortOrder);
 		gameObject.AddOrGet<EntitySplitter>();
-		CreateAndRegisterCompostableFromPrefab(gameObject);
+		GameObject go = CreateAndRegisterCompostableFromPrefab(gameObject);
 		PlantableSeed plantableSeed = gameObject.AddOrGet<PlantableSeed>();
 		plantableSeed.PlantID = new Tag(plant.name);
 		plantableSeed.replantGroundTag = replantGroundTag;
@@ -644,8 +686,14 @@ public class EntityTemplates
 			component.AddTag(GameTags.Seed);
 		}
 		component.AddTag(GameTags.PedestalDisplayable);
+		MutantPlant component2 = plant.GetComponent<MutantPlant>();
+		if (component2 != null)
+		{
+			gameObject.AddOrGet<MutantPlant>().SpeciesID = component2.SpeciesID;
+			go.AddOrGet<MutantPlant>().SpeciesID = component2.SpeciesID;
+		}
 		Assets.AddPrefab(gameObject.GetComponent<KPrefabID>());
-		plant.AddOrGet<SeedProducer>().Configure(gameObject.name, productionType, numberOfSeeds);
+		plant.AddOrGet<SeedProducer>().Configure(id, productionType, numberOfSeeds);
 		return gameObject;
 	}
 

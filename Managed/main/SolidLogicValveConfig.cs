@@ -42,7 +42,7 @@ public class SolidLogicValveConfig : IBuildingConfig
 	public override void DoPostConfigureComplete(GameObject go)
 	{
 		go.AddOrGet<LogicOperationalController>().unNetworkedValue = 0;
-		go.AddOrGet<RequireOutputs>().ignoreFullPipe = true;
+		go.GetComponent<RequireInputs>().SetRequirements(power: true, conduit: false);
 		go.AddOrGet<SolidConduitBridge>();
 		go.AddOrGet<SolidLogicValve>();
 	}

@@ -420,6 +420,7 @@ public abstract class Chore
 		AddPrecondition(ChorePreconditions.instance.IsMoreSatisfyingEarly);
 		AddPrecondition(ChorePreconditions.instance.IsMoreSatisfyingLate);
 		AddPrecondition(ChorePreconditions.instance.IsOverrideTargetNullOrMe);
+		AddPrecondition(ChorePreconditions.instance.IsInMyParentWorld);
 		chore_provider.AddChore(this);
 	}
 

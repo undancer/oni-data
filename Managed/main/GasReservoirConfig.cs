@@ -45,6 +45,8 @@ public class GasReservoirConfig : IBuildingConfig
 		storage.storageFilters = STORAGEFILTERS.GASES;
 		storage.capacityKg = 150f;
 		storage.SetDefaultStoredItemModifiers(ReservoirStoredItemModifiers);
+		storage.showCapacityStatusItem = true;
+		storage.showCapacityAsMainStatus = true;
 		go.AddOrGet<SmartReservoir>();
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
 		conduitConsumer.conduitType = ConduitType.Gas;

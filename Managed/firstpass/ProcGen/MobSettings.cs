@@ -45,10 +45,11 @@ namespace ProcGen
 			return mobkeys;
 		}
 
-		public void Merge(MobSettings other)
+		public MobSettings Merge(MobSettings other)
 		{
 			MobLookupTable.Merge(other.MobLookupTable);
 			mobkeys = null;
+			return this;
 		}
 	}
 }

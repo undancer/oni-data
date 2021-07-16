@@ -1,9 +1,8 @@
-using System.IO;
 using STRINGS;
 
 namespace Database
 {
-	public class FractionalCycleNumber : ColonyAchievementRequirement
+	public class FractionalCycleNumber : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		private float fractionalCycleNumber;
 
@@ -27,12 +26,7 @@ namespace Database
 			return true;
 		}
 
-		public override void Serialize(BinaryWriter writer)
-		{
-			writer.Write(fractionalCycleNumber);
-		}
-
-		public override void Deserialize(IReader reader)
+		public void Deserialize(IReader reader)
 		{
 			fractionalCycleNumber = reader.ReadSingle();
 		}

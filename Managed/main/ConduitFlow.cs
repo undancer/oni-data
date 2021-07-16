@@ -784,7 +784,7 @@ public class ConduitFlow : IConduitFlow
 		public float GetEffectiveCapacity(float maximum_capacity)
 		{
 			float mass = this.mass;
-			DebugUtil.DevAssert(mass <= maximum_capacity, "Effective mass cannot be greater than capacity!");
+			DebugUtil.DevAssert(mass <= maximum_capacity, $"Effective mass cannot be greater than capacity! mass={mass}, capcity={maximum_capacity}");
 			return Mathf.Max(0f, maximum_capacity - mass);
 		}
 
@@ -1733,6 +1733,10 @@ public class ConduitFlow : IConduitFlow
 		}
 	}
 
+	public const float MAX_LIQUID_MASS = 10f;
+
+	public const float MAX_GAS_MASS = 1f;
+
 	private ConduitType conduitType;
 
 	private float MaxMass = 10f;
@@ -2016,7 +2020,7 @@ public class ConduitFlow : IConduitFlow
 		}
 		if (contents.mass > 0f && contents.temperature <= 0f)
 		{
-			Debug.LogError("unexpected temperature");
+			Debug.LogError($"unexpected temperature {contents.temperature}");
 		}
 		return contents;
 	}

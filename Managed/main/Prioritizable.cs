@@ -115,6 +115,7 @@ public class Prioritizable : KMonoBehaviour
 			onPriorityChanged(masterPrioritySetting);
 		}
 		RefreshHighPriorityNotification();
+		RefreshTopPriorityOnWorld();
 		Vector3 position = base.transform.GetPosition();
 		Extents extents = new Extents((int)position.x, (int)position.y, 1, 1);
 		scenePartitionerEntry = GameScenePartitioner.Instance.Add(base.name, this, extents, GameScenePartitioner.Instance.prioritizableObjects, null);
@@ -135,19 +136,46 @@ public class Prioritizable : KMonoBehaviour
 			{
 				onPriorityChanged(masterPrioritySetting);
 			}
+			RefreshTopPriorityOnWorld();
 			RefreshHighPriorityNotification();
+		}
+	}
+
+	private void RefreshTopPriorityOnWorld()
+	{
+		SetTopPriorityOnWorld(IsTopPriority());
+	}
+
+	private void SetTopPriorityOnWorld(bool state)
+	{
+		WorldContainer myWorld = base.gameObject.GetMyWorld();
+		if (!(Game.Instance == null) && !(myWorld == null))
+		{
+			if (state)
+			{
+				myWorld.AddTopPriorityPrioritizable(this);
+			}
+			else
+			{
+				myWorld.RemoveTopPriorityPrioritizable(this);
+			}
 		}
 	}
 
 	public void AddRef()
 	{
 		refCount++;
+		RefreshTopPriorityOnWorld();
 		RefreshHighPriorityNotification();
 	}
 
 	public void RemoveRef()
 	{
 		refCount--;
+		if (IsTopPriority() || refCount == 0)
+		{
+			SetTopPriorityOnWorld(state: false);
+		}
 		RefreshHighPriorityNotification();
 	}
 
@@ -167,6 +195,19 @@ public class Prioritizable : KMonoBehaviour
 
 	protected override void OnCleanUp()
 	{
+		WorldContainer myWorld = base.gameObject.GetMyWorld();
+		if (myWorld != null)
+		{
+			myWorld.RemoveTopPriorityPrioritizable(this);
+		}
+		else
+		{
+			Debug.LogWarning("World has been destroyed before prioritizable " + base.name);
+			foreach (WorldContainer worldContainer in ClusterManager.Instance.WorldContainers)
+			{
+				worldContainer.RemoveTopPriorityPrioritizable(this);
+			}
+		}
 		base.OnCleanUp();
 		GameScenePartitioner.Instance.Free(ref scenePartitionerEntry);
 		Components.Prioritizables.Remove(this);

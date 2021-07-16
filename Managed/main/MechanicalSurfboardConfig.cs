@@ -12,7 +12,6 @@ public class MechanicalSurfboardConfig : IBuildingConfig
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef("MechanicalSurfboard", 2, 3, "mechanical_surfboard_kanim", 30, 60f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER1);
-		obj.DlcId = "PACK1";
 		obj.ViewMode = OverlayModes.LiquidConduits.ID;
 		obj.Floodable = false;
 		obj.AudioCategory = "Metal";

@@ -143,13 +143,13 @@ public static class BaseHatchConfig
 	public static List<Diet.Info> FoodDiet(Tag poopTag, float caloriesPerKg, float producedConversionRate, string diseaseId, float diseasePerKgProduced)
 	{
 		List<Diet.Info> list = new List<Diet.Info>();
-		foreach (EdiblesManager.FoodInfo item in FOOD.FOOD_TYPES_LIST)
+		foreach (EdiblesManager.FoodInfo allFoodType in EdiblesManager.GetAllFoodTypes())
 		{
-			if (item.CaloriesPerUnit > 0f)
+			if (allFoodType.CaloriesPerUnit > 0f)
 			{
 				HashSet<Tag> hashSet = new HashSet<Tag>();
-				hashSet.Add(new Tag(item.Id));
-				list.Add(new Diet.Info(hashSet, poopTag, item.CaloriesPerUnit, producedConversionRate, diseaseId, diseasePerKgProduced));
+				hashSet.Add(new Tag(allFoodType.Id));
+				list.Add(new Diet.Info(hashSet, poopTag, allFoodType.CaloriesPerUnit, producedConversionRate, diseaseId, diseasePerKgProduced));
 			}
 		}
 		return list;

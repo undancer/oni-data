@@ -32,7 +32,7 @@ public class PuftAlphaConfig : IEntityConfig
 	{
 		string symbol_override_prefix = "alp_";
 		GameObject prefab = BasePuftConfig.BasePuft(id, name, desc, "PuftAlphaBaseTrait", anim_file, is_baby, symbol_override_prefix, 258.15f, 338.15f);
-		EntityTemplates.ExtendEntityToWildCreature(prefab, PuftTuning.PEN_SIZE_PER_CREATURE, 75f);
+		EntityTemplates.ExtendEntityToWildCreature(prefab, PuftTuning.PEN_SIZE_PER_CREATURE);
 		Trait trait = Db.Get().CreateTrait("PuftAlphaBaseTrait", name, name, null, should_save: false, null, positive_trait: true, is_valid_starter_trait: true);
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.maxAttribute.Id, PuftTuning.STANDARD_STOMACH_SIZE, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.deltaAttribute.Id, (0f - PuftTuning.STANDARD_CALORIES_PER_CYCLE) / 600f, name));
@@ -54,6 +54,11 @@ public class PuftAlphaConfig : IEntityConfig
 		prefab = BasePuftConfig.SetupDiet(prefab, list.ToArray(), CALORIES_PER_KG_OF_ORE, MIN_POOP_SIZE_IN_KG);
 		prefab.AddOrGet<DiseaseSourceVisualizer>().alwaysShowDisease = "SlimeLung";
 		return prefab;
+	}
+
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

@@ -236,6 +236,10 @@ public class CrewPortrait : KMonoBehaviour
 					component.AddSymbolOverride(resource.targetSymbolId, accessory.symbol);
 					controller.SetSymbolVisiblity(resource.targetSymbolId, is_visible: true);
 				}
+				else
+				{
+					controller.SetSymbolVisiblity(resource.targetSymbolId, is_visible: false);
+				}
 			}
 			component.AddSymbolOverride(Db.Get().AccessorySlots.HatHair.targetSymbolId, Db.Get().AccessorySlots.HatHair.Lookup("hat_" + HashCache.Get().Get(component2.GetAccessory(Db.Get().AccessorySlots.Hair).symbol.hash)).symbol, 1);
 			RefreshHat(minionIdentity, controller);
@@ -264,12 +268,16 @@ public class CrewPortrait : KMonoBehaviour
 					component.AddSymbolOverride(resource2.targetSymbolId, accessory2.symbol);
 					controller.SetSymbolVisiblity(resource2.targetSymbolId, is_visible: true);
 				}
+				else
+				{
+					controller.SetSymbolVisiblity(resource2.targetSymbolId, is_visible: false);
+				}
 			}
 			component.AddSymbolOverride(Db.Get().AccessorySlots.HatHair.targetSymbolId, Db.Get().AccessorySlots.HatHair.Lookup("hat_" + HashCache.Get().Get(storedMinionIdentity.GetAccessory(Db.Get().AccessorySlots.Hair).symbol.hash)).symbol, 1);
 			RefreshHat(storedMinionIdentity, controller);
 		}
 		float num = (controller.animScale = 0.25f);
-		string s = "ui";
+		string s = "ui_idle";
 		controller.Play(s, KAnim.PlayMode.Loop);
 		controller.SetSymbolVisiblity("snapTo_neck", is_visible: false);
 		controller.SetSymbolVisiblity("snapTo_goggles", is_visible: false);

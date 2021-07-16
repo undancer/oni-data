@@ -55,6 +55,10 @@ public class LoadingOverlay : KModalScreen
 		{
 			instance.transform.SetParent(gameObject.transform);
 			instance.transform.SetSiblingIndex(gameObject.transform.childCount - 1);
+			if (MainMenu.Instance != null)
+			{
+				MainMenu.Instance.StopAmbience();
+			}
 		}
 		instance.loadCb = cb;
 		instance.showLoad = true;

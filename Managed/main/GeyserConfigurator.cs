@@ -40,7 +40,11 @@ public class GeyserConfigurator : KMonoBehaviour
 
 		public float maxYearPercent;
 
-		public GeyserType(string id, SimHashes element, float temperature, float minRatePerCycle, float maxRatePerCycle, float maxPressure, float minIterationLength = 60f, float maxIterationLength = 1140f, float minIterationPercent = 0.1f, float maxIterationPercent = 0.9f, float minYearLength = 15000f, float maxYearLength = 135000f, float minYearPercent = 0.4f, float maxYearPercent = 0.8f)
+		public float geyserTemperature;
+
+		public string DlcID;
+
+		public GeyserType(string id, SimHashes element, float temperature, float minRatePerCycle, float maxRatePerCycle, float maxPressure, float minIterationLength = 60f, float maxIterationLength = 1140f, float minIterationPercent = 0.1f, float maxIterationPercent = 0.9f, float minYearLength = 15000f, float maxYearLength = 135000f, float minYearPercent = 0.4f, float maxYearPercent = 0.8f, float geyserTemperature = 99f, string DlcID = "")
 		{
 			this.id = id;
 			idHash = id;
@@ -57,6 +61,8 @@ public class GeyserConfigurator : KMonoBehaviour
 			this.maxYearLength = maxYearLength;
 			this.minYearPercent = minYearPercent;
 			this.maxYearPercent = maxYearPercent;
+			this.DlcID = DlcID;
+			this.geyserTemperature = geyserTemperature;
 			if (geyserTypes == null)
 			{
 				geyserTypes = new List<GeyserType>();
@@ -232,7 +238,7 @@ public class GeyserConfigurator : KMonoBehaviour
 
 	private GeyserInstanceConfiguration CreateRandomInstance(HashedString typeId, float min, float max)
 	{
-		System.Random randomSource = new System.Random(SaveLoader.Instance.worldDetailSave.globalWorldSeed + (int)base.transform.GetPosition().x + (int)base.transform.GetPosition().y);
+		System.Random randomSource = new System.Random(SaveLoader.Instance.clusterDetailSave.globalWorldSeed + (int)base.transform.GetPosition().x + (int)base.transform.GetPosition().y);
 		return new GeyserInstanceConfiguration
 		{
 			typeId = typeId,

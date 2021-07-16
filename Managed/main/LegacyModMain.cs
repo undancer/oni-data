@@ -72,7 +72,18 @@ public class LegacyModMain
 		string text = "";
 		foreach (Entry item2 in list)
 		{
-			text = text + item2.type.Name + ": " + item2.count + "\n";
+			string[] obj = new string[5]
+			{
+				text,
+				item2.type.Name,
+				": ",
+				null,
+				null
+			};
+			int i = item2.count;
+			obj[3] = i.ToString();
+			obj[4] = "\n";
+			text = string.Concat(obj);
 		}
 		Debug.Log(text);
 	}
@@ -154,7 +165,7 @@ public class LegacyModMain
 
 	private static void ConfigElements()
 	{
-		ElementInfo[] array = new ElementInfo[19];
+		ElementInfo[] array = new ElementInfo[20];
 		ElementInfo elementInfo = new ElementInfo
 		{
 			id = SimHashes.Katairite,
@@ -233,49 +244,55 @@ public class LegacyModMain
 		array[11] = elementInfo;
 		elementInfo = new ElementInfo
 		{
-			id = SimHashes.Iron,
-			overheatMod = 50f
+			id = SimHashes.RefinedCarbon,
+			overheatMod = 900f
 		};
 		array[12] = elementInfo;
 		elementInfo = new ElementInfo
 		{
-			id = SimHashes.Tungsten,
+			id = SimHashes.Iron,
 			overheatMod = 50f
 		};
 		array[13] = elementInfo;
 		elementInfo = new ElementInfo
 		{
+			id = SimHashes.Tungsten,
+			overheatMod = 50f
+		};
+		array[14] = elementInfo;
+		elementInfo = new ElementInfo
+		{
 			id = SimHashes.Steel,
 			overheatMod = 200f
 		};
-		array[14] = elementInfo;
+		array[15] = elementInfo;
 		elementInfo = new ElementInfo
 		{
 			id = SimHashes.GoldAmalgam,
 			overheatMod = 50f,
 			decor = 0.1f
 		};
-		array[15] = elementInfo;
+		array[16] = elementInfo;
 		elementInfo = new ElementInfo
 		{
 			id = SimHashes.Diamond,
 			overheatMod = 200f,
 			decor = 1f
 		};
-		array[16] = elementInfo;
+		array[17] = elementInfo;
 		elementInfo = new ElementInfo
 		{
 			id = SimHashes.Niobium,
 			decor = 0.5f,
 			overheatMod = 500f
 		};
-		array[17] = elementInfo;
+		array[18] = elementInfo;
 		elementInfo = new ElementInfo
 		{
 			id = SimHashes.TempConductorSolid,
 			overheatMod = 900f
 		};
-		array[18] = elementInfo;
+		array[19] = elementInfo;
 		ElementInfo[] array2 = array;
 		for (int i = 0; i < array2.Length; i++)
 		{

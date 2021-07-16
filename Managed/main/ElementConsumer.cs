@@ -62,6 +62,8 @@ public class ElementConsumer : SimComponent, ISaveLoadable, IGameObjectEffectDes
 
 	private HandleVector<int>.Handle accumulator = HandleVector<int>.InvalidHandle;
 
+	public bool ignoreActiveChanged;
+
 	private Guid statusHandle;
 
 	public bool showDescriptor = true;
@@ -115,7 +117,10 @@ public class ElementConsumer : SimComponent, ISaveLoadable, IGameObjectEffectDes
 		{
 			throw new ArgumentException("No consumable elements specified");
 		}
-		Subscribe(824508782, OnActiveChangedDelegate);
+		if (!ignoreActiveChanged)
+		{
+			Subscribe(824508782, OnActiveChangedDelegate);
+		}
 		if (capacityKG != float.PositiveInfinity)
 		{
 			hasAvailableCapacity = !IsStorageFull();

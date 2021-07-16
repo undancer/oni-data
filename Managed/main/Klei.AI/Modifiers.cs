@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using KSerialization;
+using STRINGS;
 using UnityEngine;
 
 namespace Klei.AI
@@ -15,9 +16,11 @@ namespace Klei.AI
 
 		public Sicknesses sicknesses;
 
-		public string[] initialTraits;
+		public List<string> initialTraits = new List<string>();
 
 		public List<string> initialAmounts = new List<string>();
+
+		public List<string> initialAttributes = new List<string>();
 
 		protected override void OnPrefabInit()
 		{
@@ -29,16 +32,83 @@ namespace Klei.AI
 			{
 				amounts.Add(new AmountInstance(Db.Get().Amounts.Get(initialAmount), base.gameObject));
 			}
-			Traits component = GetComponent<Traits>();
-			if (initialTraits != null)
+			foreach (string initialAttribute in initialAttributes)
 			{
-				string[] array = initialTraits;
-				foreach (string id in array)
+				Attribute attribute = Db.Get().CritterAttributes.TryGet(initialAttribute);
+				if (attribute == null)
 				{
-					Trait trait = Db.Get().traits.Get(id);
-					component.Add(trait);
+					attribute = Db.Get().PlantAttributes.TryGet(initialAttribute);
+				}
+				if (attribute == null)
+				{
+					attribute = Db.Get().Attributes.TryGet(initialAttribute);
+				}
+				DebugUtil.Assert(attribute != null, "Couldn't find an attribute for id", initialAttribute);
+				attributes.Add(attribute);
+			}
+			Traits component = GetComponent<Traits>();
+			if (initialTraits == null)
+			{
+				return;
+			}
+			foreach (string initialTrait in initialTraits)
+			{
+				Trait trait = Db.Get().traits.Get(initialTrait);
+				component.Add(trait);
+			}
+		}
+
+		public float GetPreModifiedAttributeValue(Attribute attribute)
+		{
+			return AttributeInstance.GetTotalValue(attribute, GetPreModifiers(attribute));
+		}
+
+		public string GetPreModifiedAttributeFormattedValue(Attribute attribute)
+		{
+			float totalValue = AttributeInstance.GetTotalValue(attribute, GetPreModifiers(attribute));
+			return attribute.formatter.GetFormattedValue(totalValue, attribute.formatter.DeltaTimeSlice);
+		}
+
+		public string GetPreModifiedAttributeDescription(Attribute attribute)
+		{
+			float totalValue = AttributeInstance.GetTotalValue(attribute, GetPreModifiers(attribute));
+			return string.Format(DUPLICANTS.ATTRIBUTES.VALUE, attribute.Name, attribute.formatter.GetFormattedValue(totalValue, GameUtil.TimeSlice.None));
+		}
+
+		public string GetPreModifiedAttributeToolTip(Attribute attribute)
+		{
+			return attribute.formatter.GetTooltip(attribute, GetPreModifiers(attribute), null);
+		}
+
+		private List<AttributeModifier> GetPreModifiers(Attribute attribute)
+		{
+			List<AttributeModifier> list = new List<AttributeModifier>();
+			foreach (string initialTrait in initialTraits)
+			{
+				foreach (AttributeModifier selfModifier in Db.Get().traits.Get(initialTrait).SelfModifiers)
+				{
+					if (selfModifier.AttributeId == attribute.Id)
+					{
+						list.Add(selfModifier);
+					}
 				}
 			}
+			MutantPlant component = GetComponent<MutantPlant>();
+			if (component != null && component.MutationIDs != null)
+			{
+				foreach (string mutationID in component.MutationIDs)
+				{
+					foreach (AttributeModifier selfModifier2 in Db.Get().PlantMutations.Get(mutationID).SelfModifiers)
+					{
+						if (selfModifier2.AttributeId == attribute.Id)
+						{
+							list.Add(selfModifier2);
+						}
+					}
+				}
+				return list;
+			}
+			return list;
 		}
 
 		public void Serialize(BinaryWriter writer)

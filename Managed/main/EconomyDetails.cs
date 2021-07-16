@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using Klei.AI;
 using ProcGen;
-using TUNING;
 using UnityEngine;
 
 public class EconomyDetails
@@ -382,9 +381,9 @@ public class EconomyDetails
 		{
 			CreateResource(item, massResourceType);
 		}
-		foreach (EdiblesManager.FoodInfo item2 in FOOD.FOOD_TYPES_LIST)
+		foreach (EdiblesManager.FoodInfo allFoodType in EdiblesManager.GetAllFoodTypes())
 		{
-			CreateResource(item2.Id.ToTag(), amountResourceType);
+			CreateResource(allFoodType.Id.ToTag(), amountResourceType);
 		}
 		GatherStartingBiomeAmounts();
 		foreach (KPrefabID prefab in Assets.Prefabs)
@@ -392,7 +391,8 @@ public class EconomyDetails
 			CreateTransformation(prefab, prefab.PrefabTag);
 			if (prefab.GetComponent<GeyserConfigurator>() != null)
 			{
-				CreateTransformation(prefab, string.Concat(prefab.PrefabTag, "_ActiveOnly"));
+				Tag prefabTag = prefab.PrefabTag;
+				CreateTransformation(prefab, prefabTag.ToString() + "_ActiveOnly");
 			}
 		}
 		foreach (Effect resource in Db.Get().effects.resources)
@@ -1136,10 +1136,10 @@ public class EconomyDetails
 			}
 			list.Add(scenario11);
 		}
-		foreach (EdiblesManager.FoodInfo item10 in FOOD.FOOD_TYPES_LIST)
+		foreach (EdiblesManager.FoodInfo allFoodType in EdiblesManager.GetAllFoodTypes())
 		{
-			Scenario scenario12 = new Scenario("food/" + item10.Id, 0f, null);
-			Tag tag2 = TagManager.Create(item10.Id);
+			Scenario scenario12 = new Scenario("food/" + allFoodType.Id, 0f, null);
+			Tag tag2 = TagManager.Create(allFoodType.Id);
 			scenario12.AddEntry(new Scenario.Entry(tag2, 1f));
 			scenario12.AddEntry(new Scenario.Entry(TagManager.Create("Duplicant"), 1f));
 			List<Tag> list2 = new List<Tag>();
@@ -1174,15 +1174,15 @@ public class EconomyDetails
 		{
 			Directory.CreateDirectory("assets/Tuning/Economy");
 		}
-		foreach (Scenario item11 in list)
+		foreach (Scenario item10 in list)
 		{
-			string path = "assets/Tuning/Economy/" + item11.name + ".csv";
+			string path = "assets/Tuning/Economy/" + item10.name + ".csv";
 			if (!Directory.Exists(System.IO.Path.GetDirectoryName(path)))
 			{
 				Directory.CreateDirectory(System.IO.Path.GetDirectoryName(path));
 			}
 			using StreamWriter o = new StreamWriter(path);
-			details.DumpTransformations(item11, o);
+			details.DumpTransformations(item10, o);
 		}
 		float dupeBreathingPerSecond = details.GetDupeBreathingPerSecond(details);
 		List<BiomeTransformation> list3 = new List<BiomeTransformation>();
@@ -1200,19 +1200,19 @@ public class EconomyDetails
 		using (StreamWriter streamWriter = new StreamWriter(path2))
 		{
 			streamWriter.Write("Resource,Amount");
-			foreach (BiomeTransformation item12 in list3)
+			foreach (BiomeTransformation item11 in list3)
 			{
-				streamWriter.Write("," + item12.tag);
+				streamWriter.Write("," + item11.tag.ToString());
 			}
 			streamWriter.Write("\n");
 			streamWriter.Write("Cells, " + details.startingBiomeCellCount + "\n");
 			foreach (KeyValuePair<Element, float> startingBiomeAmount in details.startingBiomeAmounts)
 			{
 				streamWriter.Write(startingBiomeAmount.Key.id.ToString() + ", " + startingBiomeAmount.Value);
-				foreach (BiomeTransformation item13 in list3)
+				foreach (BiomeTransformation item12 in list3)
 				{
 					streamWriter.Write(",");
-					float num = item13.Transform(startingBiomeAmount.Key, startingBiomeAmount.Value);
+					float num = item12.Transform(startingBiomeAmount.Key, startingBiomeAmount.Value);
 					if (num > 0f)
 					{
 						streamWriter.Write(num);
@@ -1222,5 +1222,41 @@ public class EconomyDetails
 			}
 		}
 		Debug.Log("Completed economy details dump!!");
+	}
+
+	private static void DumpNameMapping()
+	{
+		if (!Directory.Exists("assets/Tuning/Economy"))
+		{
+			Directory.CreateDirectory("assets/Tuning/Economy");
+		}
+		using StreamWriter streamWriter = new StreamWriter("assets/Tuning/Economy/name_mapping.csv");
+		streamWriter.Write("Game Name, Prefab Name, Anim Files\n");
+		foreach (KPrefabID prefab in Assets.Prefabs)
+		{
+			string text = TagManager.StripLinkFormatting(prefab.GetProperName());
+			Tag tag = prefab.PrefabID();
+			if (text.IsNullOrWhiteSpace() || tag.Name.Contains("UnderConstruction") || tag.Name.Contains("Preview"))
+			{
+				continue;
+			}
+			streamWriter.Write(text);
+			Tag tag2 = tag;
+			streamWriter.Write("," + tag2.ToString());
+			KAnimControllerBase component = prefab.GetComponent<KAnimControllerBase>();
+			if (component != null)
+			{
+				KAnimFile[] animFiles = component.AnimFiles;
+				foreach (KAnimFile kAnimFile in animFiles)
+				{
+					streamWriter.Write("," + kAnimFile.name);
+				}
+			}
+			else
+			{
+				streamWriter.Write(",");
+			}
+			streamWriter.Write("\n");
+		}
 	}
 }

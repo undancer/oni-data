@@ -34,6 +34,8 @@ namespace Database
 
 		public Face SickCold;
 
+		public Face Pollen;
+
 		public Face Productive;
 
 		public Face Determined;
@@ -46,23 +48,32 @@ namespace Database
 
 		public Face Tickled;
 
+		public Face Radiation1;
+
+		public Face Radiation2;
+
+		public Face Radiation3;
+
+		public Face Radiation4;
+
 		public Faces()
 		{
 			Neutral = Add(new Face("Neutral"));
 			Happy = Add(new Face("Happy"));
 			Uncomfortable = Add(new Face("Uncomfortable"));
 			Cold = Add(new Face("Cold"));
-			Hot = Add(new Face("Hot"));
+			Hot = Add(new Face("Hot", "headfx_sweat"));
 			Tired = Add(new Face("Tired"));
 			Sleep = Add(new Face("Sleep"));
 			Hungry = Add(new Face("Hungry"));
 			Angry = Add(new Face("Angry"));
 			Suffocate = Add(new Face("Suffocate"));
-			Sick = Add(new Face("Sick"));
-			SickSpores = Add(new Face("Spores"));
+			Sick = Add(new Face("Sick", "headfx_sick"));
+			SickSpores = Add(new Face("Spores", "headfx_spores"));
 			Zombie = Add(new Face("Zombie"));
-			SickFierySkin = Add(new Face("Fiery"));
-			SickCold = Add(new Face("Cold"));
+			SickFierySkin = Add(new Face("Fiery", "headfx_fiery"));
+			SickCold = Add(new Face("SickCold", "headfx_sickcold"));
+			Pollen = Add(new Face("Pollen", "headfx_pollen"));
 			Dead = Add(new Face("Death"));
 			Productive = Add(new Face("Productive"));
 			Determined = Add(new Face("Determined"));
@@ -70,6 +81,10 @@ namespace Database
 			Sparkle = Add(new Face("Sparkle"));
 			Balloon = Add(new Face("Balloon"));
 			Tickled = Add(new Face("Tickled"));
+			Radiation1 = Add(new Face("Radiation1", "headfx_radiation1"));
+			Radiation2 = Add(new Face("Radiation2", "headfx_radiation2"));
+			Radiation3 = Add(new Face("Radiation3", "headfx_radiation3"));
+			Radiation4 = Add(new Face("Radiation4", "headfx_radiation4"));
 		}
 	}
 }

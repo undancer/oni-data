@@ -39,6 +39,8 @@ public class CellEventLogger : EventLogger<CellEventInstance, CellEvent>
 
 	public CellElementEvent DecompositionDirtyWater;
 
+	public CellElementEvent LaunchpadDesolidify;
+
 	public CellCallbackEvent SendCallback;
 
 	public CellCallbackEvent ReceiveCallback;

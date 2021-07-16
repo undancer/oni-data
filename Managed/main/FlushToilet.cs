@@ -136,11 +136,12 @@ public class FlushToilet : StateMachineComponent<FlushToilet.SMInstance>, IUsabl
 				smi.GetComponent<Operational>().SetActive(value: false);
 			}).EventTransition(GameHashes.OperationalChanged, filling, (SMInstance smi) => smi.GetComponent<Operational>().IsOperational)
 				.ParamTransition(outputBlocked, backedup, GameStateMachine<States, SMInstance, FlushToilet, object>.IsTrue);
-			ready.DefaultState(ready.idle).Enter(delegate(SMInstance smi)
+			ready.DefaultState(ready.idle).ToggleTag(GameTags.Usable).Enter(delegate(SMInstance smi)
 			{
 				smi.master.fillMeter.SetPositionPercent(1f);
 				smi.master.contaminationMeter.SetPositionPercent(0f);
-			}).PlayAnim("off")
+			})
+				.PlayAnim("off")
 				.EventTransition(GameHashes.ConduitConnectionChanged, disconnected, (SMInstance smi) => !smi.HasValidConnections())
 				.ParamTransition(outputBlocked, backedup, GameStateMachine<States, SMInstance, FlushToilet, object>.IsTrue)
 				.ToggleChore(CreateUrgentUseChore, flushing)

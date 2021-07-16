@@ -66,14 +66,14 @@ public class MechanicalSurfboardWorkable : Workable, IWorkerPrioritizable
 		Building component = GetComponent<Building>();
 		MechanicalSurfboard component2 = GetComponent<MechanicalSurfboard>();
 		int widthInCells = component.Def.WidthInCells;
-		int min = -(widthInCells - 1) / 2;
-		int max = widthInCells / 2;
-		int x = Random.Range(min, max);
-		float num = component2.waterSpillRateKG * dt;
-		GetComponent<Storage>().ConsumeAndGetDisease(SimHashes.Water.CreateTag(), num, out var disease_info, out var aggregate_temperature);
+		int minInclusive = -(widthInCells - 1) / 2;
+		int maxExclusive = widthInCells / 2;
+		int x = Random.Range(minInclusive, maxExclusive);
+		float amount = component2.waterSpillRateKG * dt;
+		GetComponent<Storage>().ConsumeAndGetDisease(SimHashes.Water.CreateTag(), amount, out var amount_consumed, out var disease_info, out var aggregate_temperature);
 		int cell = Grid.OffsetCell(Grid.PosToCell(base.gameObject), new CellOffset(x, 0));
 		int elementIndex = ElementLoader.GetElementIndex(SimHashes.Water);
-		FallingWater.instance.AddParticle(cell, (byte)elementIndex, num, aggregate_temperature, disease_info.idx, disease_info.count, skip_sound: true);
+		FallingWater.instance.AddParticle(cell, (byte)elementIndex, amount_consumed, aggregate_temperature, disease_info.idx, disease_info.count, skip_sound: true);
 		return false;
 	}
 

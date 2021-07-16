@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.IO;
 using Klei;
 using STRINGS;
@@ -33,11 +32,15 @@ public class DebugHandler : IInputHandler
 
 	public static bool DebugNextCall;
 
+	public static bool RevealFogOfWar;
+
 	private bool superTestMode;
 
 	private bool ultraTestMode;
 
 	private bool slowTestMode;
+
+	private static int activeWorldBeforeOverride = -1;
 
 	public static bool enabled
 	{
@@ -74,23 +77,41 @@ public class DebugHandler : IInputHandler
 		return Camera.main.ScreenToWorldPoint(mousePos);
 	}
 
-	private void SpawnMinion()
+	private void SpawnMinion(bool addAtmoSuit = false)
 	{
-		if (!(Immigration.Instance == null))
+		if (Immigration.Instance == null)
 		{
-			if (!Grid.IsValidBuildingCell(GetMouseCell()))
-			{
-				PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Negative, UI.DEBUG_TOOLS.INVALID_LOCATION, null, GetMousePos(), 1.5f, track_target: false, force_spawn: true);
-				return;
-			}
-			GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(MinionConfig.ID));
-			gameObject.name = Assets.GetPrefab(MinionConfig.ID).name;
-			Immigration.Instance.ApplyDefaultPersonalPriorities(gameObject);
-			Vector3 position = Grid.CellToPosCBC(GetMouseCell(), Grid.SceneLayer.Move);
-			gameObject.transform.SetLocalPosition(position);
-			gameObject.SetActive(value: true);
-			new MinionStartingStats(is_starter_minion: false).Apply(gameObject);
+			return;
 		}
+		if (!Grid.IsValidBuildingCell(GetMouseCell()))
+		{
+			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Negative, UI.DEBUG_TOOLS.INVALID_LOCATION, null, GetMousePos(), 1.5f, track_target: false, force_spawn: true);
+			return;
+		}
+		GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(MinionConfig.ID));
+		gameObject.name = Assets.GetPrefab(MinionConfig.ID).name;
+		Immigration.Instance.ApplyDefaultPersonalPriorities(gameObject);
+		Vector3 position = Grid.CellToPosCBC(GetMouseCell(), Grid.SceneLayer.Move);
+		gameObject.transform.SetLocalPosition(position);
+		gameObject.SetActive(value: true);
+		new MinionStartingStats(is_starter_minion: false).Apply(gameObject);
+		if (addAtmoSuit)
+		{
+			GameObject gameObject2 = GameUtil.KInstantiate(Assets.GetPrefab("Atmo_Suit"), position, Grid.SceneLayer.Creatures);
+			gameObject2.SetActive(value: true);
+			SuitTank component = gameObject2.GetComponent<SuitTank>();
+			GameObject gameObject3 = GameUtil.KInstantiate(Assets.GetPrefab(GameTags.Oxygen), position, Grid.SceneLayer.Ore);
+			gameObject3.GetComponent<PrimaryElement>().Units = component.capacity;
+			gameObject3.SetActive(value: true);
+			component.storage.Store(gameObject3, hide_popups: true);
+			Equippable component2 = gameObject2.GetComponent<Equippable>();
+			gameObject.GetComponent<MinionIdentity>().ValidateProxy();
+			Equipment component3 = gameObject.GetComponent<MinionIdentity>().assignableProxy.Get().GetComponent<Equipment>();
+			component2.Assign(component3.GetComponent<IAssignableIdentity>());
+			gameObject2.GetComponent<EquippableWorkable>().CancelChore();
+			component3.Equip(component2);
+		}
+		gameObject.GetMyWorld().SetDupeVisited();
 	}
 
 	public static void SetDebugEnabled(bool debugEnabled)
@@ -107,6 +128,10 @@ public class DebugHandler : IInputHandler
 		if (e.TryConsume(Action.DebugSpawnMinion))
 		{
 			SpawnMinion();
+		}
+		else if (e.TryConsume(Action.DebugSpawnMinionAtmoSuit))
+		{
+			SpawnMinion(addAtmoSuit: true);
 		}
 		else if (e.TryConsume(Action.DebugSpawnStressTest))
 		{
@@ -209,11 +234,11 @@ public class DebugHandler : IInputHandler
 		}
 		else if (e.TryConsume(Action.DebugDiscoverAllElements))
 		{
-			if (WorldInventory.Instance != null)
+			if (DiscoveredResources.Instance != null)
 			{
 				foreach (Element element in ElementLoader.elements)
 				{
-					WorldInventory.Instance.Discover(element.tag, element.GetMaterialCategoryTag());
+					DiscoveredResources.Instance.Discover(element.tag, element.GetMaterialCategoryTag());
 				}
 			}
 		}
@@ -245,7 +270,6 @@ public class DebugHandler : IInputHandler
 		{
 			if (Game.Instance != null)
 			{
-				Game.Instance.UpdateGameActiveRegion(0, 0, Grid.WidthInCells, Grid.HeightInCells);
 				SaveGame.Instance.worldGenSpawner.SpawnEverything();
 			}
 			if (DebugPaintElementScreen.Instance != null)
@@ -262,6 +286,8 @@ public class DebugHandler : IInputHandler
 				{
 					CameraController.Instance.EnableFreeCamera(!activeSelf);
 				}
+				RevealFogOfWar = !RevealFogOfWar;
+				Game.Instance.Trigger(-1991583975);
 			}
 		}
 		else if (e.TryConsume(Action.DebugCollectGarbage))
@@ -408,10 +434,7 @@ public class DebugHandler : IInputHandler
 				{
 					if (GenericGameSettings.instance.developerDebugEnable)
 					{
-						string str = Guid.NewGuid().ToString();
-						StackTrace stackTrace = new StackTrace(1, fNeedFileInfo: true);
-						str = str + "\n" + stackTrace.ToString();
-						KCrashReporter.ReportError("Debug crash with random stack", str, null, ScreenPrefabs.Instance.ConfirmDialogScreen, GameObject.Find("ScreenSpaceOverlayCanvas"));
+						throw new ArgumentException("My test exception");
 					}
 				}
 				else if (e.TryConsume(Action.DebugTriggerError))
@@ -457,6 +480,10 @@ public class DebugHandler : IInputHandler
 				{
 					Chore.ENABLE_PERSONAL_PRIORITIES = !Chore.ENABLE_PERSONAL_PRIORITIES;
 				}
+				else if (e.TryConsume(Action.DebugToggleClusterFX))
+				{
+					CameraController.Instance.ToggleClusterFX();
+				}
 			}
 		}
 		if (e.Consumed && Game.Instance != null)
@@ -484,9 +511,19 @@ public class DebugHandler : IInputHandler
 		}
 	}
 
-	public static void SetTimelapseMode(bool enabled)
+	public static void SetTimelapseMode(bool enabled, int world_id = 0)
 	{
 		TimelapseMode = enabled;
+		if (enabled)
+		{
+			activeWorldBeforeOverride = ClusterManager.Instance.activeWorldId;
+			ClusterManager.Instance.TimelapseModeOverrideActiveWorld(world_id);
+		}
+		else
+		{
+			ClusterManager.Instance.TimelapseModeOverrideActiveWorld(activeWorldBeforeOverride);
+		}
+		World.Instance.zoneRenderData.OnActiveWorldChanged();
 		UpdateUI();
 	}
 

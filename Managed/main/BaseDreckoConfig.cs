@@ -48,6 +48,7 @@ public static class BaseDreckoConfig
 			.Add(new PlayAnimsStates.Def(GameTags.Creatures.Poop, loop: false, "poop", STRINGS.CREATURES.STATUSITEMS.EXPELLING_SOLID.NAME, STRINGS.CREATURES.STATUSITEMS.EXPELLING_SOLID.TOOLTIP))
 			.Add(new CallAdultStates.Def())
 			.PopInterruptGroup()
+			.Add(new CreatureSleepStates.Def())
 			.Add(new IdleStates.Def
 			{
 				customIdleAnim = CustomIdleAnim

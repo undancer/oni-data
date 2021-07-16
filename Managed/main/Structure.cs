@@ -19,6 +19,11 @@ public class Structure : KMonoBehaviour
 
 	private HandleVector<int>.Handle partitionerEntry;
 
+	private static EventSystem.IntraObjectHandler<Structure> RocketLandedDelegate = new EventSystem.IntraObjectHandler<Structure>(delegate(Structure cmp, object data)
+	{
+		cmp.RocketChanged(data);
+	});
+
 	public bool IsEntombed()
 	{
 		return isEntombed;
@@ -26,6 +31,10 @@ public class Structure : KMonoBehaviour
 
 	public static bool IsBuildingEntombed(Building building)
 	{
+		if (!Grid.IsValidCell(Grid.PosToCell(building)))
+		{
+			return false;
+		}
 		for (int i = 0; i < building.PlacementCells.Length; i++)
 		{
 			int num = building.PlacementCells[i];
@@ -43,6 +52,17 @@ public class Structure : KMonoBehaviour
 		Extents extents = building.GetExtents();
 		partitionerEntry = GameScenePartitioner.Instance.Add("Structure.OnSpawn", base.gameObject, extents, GameScenePartitioner.Instance.solidChangedLayer, OnSolidChanged);
 		OnSolidChanged(null);
+		Subscribe(-887025858, RocketLandedDelegate);
+	}
+
+	public void UpdatePosition(int cell)
+	{
+		GameScenePartitioner.Instance.UpdatePosition(partitionerEntry, cell);
+	}
+
+	private void RocketChanged(object data)
+	{
+		OnSolidChanged(data);
 	}
 
 	private void OnSolidChanged(object data)
@@ -51,8 +71,17 @@ public class Structure : KMonoBehaviour
 		if (flag != isEntombed)
 		{
 			isEntombed = flag;
+			if (isEntombed)
+			{
+				GetComponent<KPrefabID>().AddTag(GameTags.Entombed);
+			}
+			else
+			{
+				GetComponent<KPrefabID>().RemoveTag(GameTags.Entombed);
+			}
 			operational.SetFlag(notEntombedFlag, !isEntombed);
 			GetComponent<KSelectable>().ToggleStatusItem(Db.Get().BuildingStatusItems.Entombed, isEntombed, this);
+			Trigger(-1089732772);
 		}
 	}
 

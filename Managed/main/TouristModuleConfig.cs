@@ -5,14 +5,19 @@ public class TouristModuleConfig : IBuildingConfig
 {
 	public const string ID = "TouristModule";
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_VANILLA_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef("TouristModule", 5, 5, "rocket_tourist_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.COMMAND_MODULE_MASS, new string[1]
 		{
 			SimHashes.Steel.ToString()
-		}, 9999f, BuildLocationRule.BuildingAttachPoint, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
 		BuildingTemplates.CreateRocketBuildingDef(obj);
-		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
+		obj.SceneLayer = Grid.SceneLayer.Building;
 		obj.OverheatTemperature = 2273.15f;
 		obj.Floodable = false;
 		obj.AttachmentSlotTag = GameTags.Rocket;
@@ -20,6 +25,7 @@ public class TouristModuleConfig : IBuildingConfig
 		obj.RequiresPowerInput = false;
 		obj.attachablePosition = new CellOffset(0, 0);
 		obj.CanMove = true;
+		obj.Cancellable = false;
 		return obj;
 	}
 
@@ -28,7 +34,6 @@ public class TouristModuleConfig : IBuildingConfig
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		go.AddOrGet<LoopingSounds>();
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
-		go.AddOrGet<RocketModule>().SetBGKAnim(Assets.GetAnim("rocket_tourist_bg_kanim"));
 		go.AddOrGet<TouristModule>();
 		go.AddOrGet<CommandModuleWorkable>();
 		go.AddOrGet<ArtifactFinder>();
@@ -42,9 +47,9 @@ public class TouristModuleConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
+		BuildingTemplates.ExtendBuildingToRocketModule(go, "rocket_tourist_bg_kanim");
 		Ownable ownable = go.AddOrGet<Ownable>();
 		ownable.slotID = Db.Get().AssignableSlots.RocketCommandModule.Id;
 		ownable.canBePublic = false;
-		EntityTemplates.ExtendBuildingToRocketModule(go);
 	}
 }

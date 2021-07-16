@@ -10,6 +10,8 @@ public class ManualGeneratorConfig : IBuildingConfig
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef("ManualGenerator", 2, 2, "generatormanual_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: BUILDINGS.DECOR.NONE);
 		obj.GeneratorWattageRating = 400f;
 		obj.GeneratorBaseCapacity = 10000f;
+		obj.RequiresPowerOutput = true;
+		obj.PowerOutputOffset = new CellOffset(0, 0);
 		obj.ViewMode = OverlayModes.Power.ID;
 		obj.AudioCategory = "Metal";
 		obj.Breakable = true;

@@ -87,14 +87,14 @@ namespace VoronoiTree
 		public Node()
 		{
 			type = NodeType.Unknown;
-			log = new LoggerSSF("VoronoiNode");
+			log = new LoggerSSF("VoronoiNode", 100);
 		}
 
 		public Node(NodeType type)
 		{
 			this.type = type;
 			tags = new TagSet();
-			log = new LoggerSSF("VoronoiNode");
+			log = new LoggerSSF("VoronoiNode", 100);
 		}
 
 		protected Node(Diagram.Site site, NodeType type, Tree parent)
@@ -103,7 +103,7 @@ namespace VoronoiTree
 			this.site = site;
 			this.type = type;
 			this.parent = parent;
-			log = new LoggerSSF("VoronoiNode");
+			log = new LoggerSSF("VoronoiNode", 100);
 		}
 
 		public Node GetNeighbour(uint id)
@@ -300,10 +300,10 @@ namespace VoronoiTree
 				return false;
 			}
 			visited = VisitedType.VisitedSuccess;
-			List<Site> list = new List<Site>();
+			List<PowerDiagramSite> list = new List<PowerDiagramSite>();
 			for (int i = 0; i < diagramSites.Count; i++)
 			{
-				Site item = new Site(diagramSites[i].id, diagramSites[i].position, diagramSites[i].weight);
+				PowerDiagramSite item = new PowerDiagramSite(diagramSites[i].id, diagramSites[i].position, diagramSites[i].weight);
 				list.Add(item);
 			}
 			PowerDiagram powerDiagram = new PowerDiagram(site.poly, list);
@@ -352,9 +352,15 @@ namespace VoronoiTree
 						Debug.LogError("FilterNeighbours neighbour.poly == null");
 					}
 					int edgeIdx = -1;
-					if (home.poly.SharesEdge(site.poly, ref edgeIdx) == Polygon.Commonality.Edge)
+					Polygon.DebugLog($"Testing for {home.id} common edge with {site.id}");
+					if (home.poly.SharesEdge(site.poly, ref edgeIdx, out var _) == Polygon.Commonality.Edge)
 					{
 						hashSet.Add(new KeyValuePair<uint, int>(niter.Current, edgeIdx));
+						Polygon.DebugLog($" -> {home.id} common edge with {site.id}: {edgeIdx}");
+					}
+					else
+					{
+						Polygon.DebugLog($" -> {home.id} NO COMMON with {site.id}: {edgeIdx}");
 					}
 				}
 			}
@@ -401,11 +407,6 @@ namespace VoronoiTree
 			{
 				GetNeighbour(enumerator.Current.Key).AddTag(tag);
 			}
-		}
-
-		public virtual Tree Split(SplitCommand cmd = null)
-		{
-			return null;
 		}
 	}
 }

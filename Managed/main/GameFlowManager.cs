@@ -8,7 +8,7 @@ public class GameFlowManager : StateMachineComponent<GameFlowManager.StatesInsta
 {
 	public class StatesInstance : GameStateMachine<States, StatesInstance, GameFlowManager, object>.GameInstance
 	{
-		public Notification colonyLostNotification = new Notification(MISC.NOTIFICATIONS.COLONYLOST.NAME, NotificationType.Bad, HashedString.Invalid, null, null, expires: false);
+		public Notification colonyLostNotification = new Notification(MISC.NOTIFICATIONS.COLONYLOST.NAME, NotificationType.Bad, null, null, expires: false);
 
 		public bool IsIncapacitated(GameObject go)
 		{

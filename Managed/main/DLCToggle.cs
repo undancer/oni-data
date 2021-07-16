@@ -17,10 +17,11 @@ public class DLCToggle : KMonoBehaviour
 
 	protected override void OnPrefabInit()
 	{
-		expansion1Active = DistributionPlatform.Inst.IsExpansion1Active;
+		expansion1Active = DlcManager.IsExpansion1Active();
 		button.onClick += ToggleExpansion1Cicked;
 		label.text = (expansion1Active ? UI.FRONTEND.MAINMENU.DLC.DEACTIVATE_EXPANSION1 : UI.FRONTEND.MAINMENU.DLC.ACTIVATE_EXPANSION1);
 		logo.sprite = (expansion1Active ? GlobalResources.Instance().baseGameLogoSmall : GlobalResources.Instance().expansion1LogoSmall);
+		logo.gameObject.SetActive(!expansion1Active);
 	}
 
 	private void ToggleExpansion1Cicked()
@@ -30,8 +31,7 @@ public class DLCToggle : KMonoBehaviour
 			.AddPlainText(expansion1Active ? UI.FRONTEND.MAINMENU.DLC.DEACTIVATE_EXPANSION1_DESC : UI.FRONTEND.MAINMENU.DLC.ACTIVATE_EXPANSION1_DESC)
 			.AddOption(UI.CONFIRMDIALOG.OK, delegate
 			{
-				KPlayerPrefs.SetInt("EXPANSION1_ID.ENABLED", 1);
-				DistributionPlatform.Inst.ToggleDLC();
+				DlcManager.ToggleDLC("EXPANSION1_ID");
 			}, rightSide: true);
 	}
 }

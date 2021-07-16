@@ -117,7 +117,12 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 				fn = delegate(ref Chore.Precondition.Context context, object data)
 				{
 					SuitLocker suitLocker = (SuitLocker)data;
-					AssignableSlotInstance slot = context.consumerState.equipment.GetSlot(Db.Get().AssignableSlots.Suit);
+					Equipment equipment = context.consumerState.equipment;
+					if (equipment == null)
+					{
+						return false;
+					}
+					AssignableSlotInstance slot = equipment.GetSlot(Db.Get().AssignableSlots.Suit);
 					if (slot.assignable == null)
 					{
 						return false;
@@ -138,26 +143,28 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 				description = DUPLICANTS.CHORES.PRECONDITIONS.DOES_SUIT_NEED_RECHARGING_URGENT,
 				fn = delegate(ref Chore.Precondition.Context context, object data)
 				{
-					AssignableSlotInstance slot2 = context.consumerState.equipment.GetSlot(Db.Get().AssignableSlots.Suit);
+					Equipment equipment2 = context.consumerState.equipment;
+					if (equipment2 == null)
+					{
+						return false;
+					}
+					AssignableSlotInstance slot2 = equipment2.GetSlot(Db.Get().AssignableSlots.Suit);
 					if (slot2.assignable == null)
 					{
 						return false;
 					}
 					SuitTank component = slot2.assignable.GetComponent<SuitTank>();
-					if (component == null)
-					{
-						return false;
-					}
-					if (component.NeedsRecharging())
+					if (component != null && component.NeedsRecharging())
 					{
 						return true;
 					}
 					JetSuitTank component2 = slot2.assignable.GetComponent<JetSuitTank>();
-					if (component2 == null)
+					if (component2 != null && component2.NeedsRecharging())
 					{
-						return false;
+						return true;
 					}
-					return component2.NeedsRecharging() ? true : false;
+					LeadSuitTank component3 = slot2.assignable.GetComponent<LeadSuitTank>();
+					return (component3 != null && component3.NeedsRecharging()) ? true : false;
 				}
 			};
 			DoesSuitNeedRechargingUrgent = precondition;
@@ -167,12 +174,25 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 				description = DUPLICANTS.CHORES.PRECONDITIONS.DOES_SUIT_NEED_RECHARGING_IDLE,
 				fn = delegate(ref Chore.Precondition.Context context, object data)
 				{
-					AssignableSlotInstance slot = context.consumerState.equipment.GetSlot(Db.Get().AssignableSlots.Suit);
+					Equipment equipment = context.consumerState.equipment;
+					if (equipment == null)
+					{
+						return false;
+					}
+					AssignableSlotInstance slot = equipment.GetSlot(Db.Get().AssignableSlots.Suit);
 					if (slot.assignable == null)
 					{
 						return false;
 					}
-					return (!(slot.assignable.GetComponent<SuitTank>() == null)) ? true : false;
+					if (slot.assignable.GetComponent<SuitTank>() != null)
+					{
+						return true;
+					}
+					if (slot.assignable.GetComponent<JetSuitTank>() != null)
+					{
+						return true;
+					}
+					return (slot.assignable.GetComponent<LeadSuitTank>() != null) ? true : false;
 				}
 			};
 			DoesSuitNeedRechargingIdle = precondition;
@@ -226,7 +246,7 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = empty;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			root.Update("RefreshMeter", delegate(StatesInstance smi, float dt)
 			{
 				smi.master.RefreshMeter();
@@ -261,7 +281,8 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 					smi.master.CancelFetchChore();
 				})
 				.ToggleStatusItem(BUILDING.STATUSITEMS.SUIT_LOCKER.SUIT_REQUESTED.NAME, BUILDING.STATUSITEMS.SUIT_LOCKER.SUIT_REQUESTED.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, default(HashedString), 129022, null, null, Db.Get().StatusItemCategories.Main);
-			charging.DefaultState(charging.pre).RefreshUserMenuOnEnter().EventTransition(GameHashes.OnStorageChange, empty, (StatesInstance smi) => smi.master.GetStoredOutfit() == null);
+			charging.DefaultState(charging.pre).RefreshUserMenuOnEnter().EventTransition(GameHashes.OnStorageChange, empty, (StatesInstance smi) => smi.master.GetStoredOutfit() == null)
+				.ToggleStatusItem(Db.Get().MiscStatusItems.StoredItemDurability, (StatesInstance smi) => smi.master.GetStoredOutfit().gameObject);
 			charging.pre.Enter(delegate(StatesInstance smi)
 			{
 				if (smi.master.IsSuitFullyCharged())
@@ -296,6 +317,7 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 				.ToggleStatusItem(BUILDING.STATUSITEMS.SUIT_LOCKER.NOT_OPERATIONAL.NAME, BUILDING.STATUSITEMS.SUIT_LOCKER.NOT_OPERATIONAL.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, default(HashedString), 129022, null, null, Db.Get().StatusItemCategories.Main);
 			charging.pst.PlayAnim("charging_pst").OnAnimQueueComplete(suitfullycharged);
 			suitfullycharged.EventTransition(GameHashes.OnStorageChange, empty, (StatesInstance smi) => smi.master.GetStoredOutfit() == null).PlayAnim("has_suit").RefreshUserMenuOnEnter()
+				.ToggleStatusItem(Db.Get().MiscStatusItems.StoredItemDurability, (StatesInstance smi) => smi.master.GetStoredOutfit().gameObject)
 				.ToggleStatusItem(BUILDING.STATUSITEMS.SUIT_LOCKER.FULLY_CHARGED.NAME, BUILDING.STATUSITEMS.SUIT_LOCKER.FULLY_CHARGED.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, default(HashedString), 129022, null, null, Db.Get().StatusItemCategories.Main);
 		}
 	}
@@ -350,14 +372,25 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 	{
 		get
 		{
-			GameObject oxygen = GetOxygen();
-			float result = 0f;
-			if (oxygen != null)
+			KPrefabID storedOutfit = GetStoredOutfit();
+			if (storedOutfit == null)
 			{
-				result = oxygen.GetComponent<PrimaryElement>().Mass / GetComponent<ConduitConsumer>().capacityKG;
-				result = Math.Min(result, 1f);
+				return 0f;
 			}
-			return result;
+			return storedOutfit.GetComponent<SuitTank>().PercentFull();
+		}
+	}
+
+	public float BatteryAvailable
+	{
+		get
+		{
+			KPrefabID storedOutfit = GetStoredOutfit();
+			if (storedOutfit == null)
+			{
+				return 0f;
+			}
+			return storedOutfit.GetComponent<LeadSuitTank>().batteryCharge;
 		}
 	}
 
@@ -442,7 +475,7 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 
 	private void CreateFetchChore()
 	{
-		fetchChore = new FetchChore(Db.Get().ChoreTypes.StorageFetch, GetComponent<Storage>(), 1f, OutfitTags, null, new Tag[1]
+		fetchChore = new FetchChore(Db.Get().ChoreTypes.EquipmentFetch, GetComponent<Storage>(), 1f, OutfitTags, null, new Tag[1]
 		{
 			GameTags.Assigned
 		}, null, run_until_complete: true, null, null, null, FetchOrder2.OperationalRequirement.None);
@@ -492,6 +525,11 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 			}
 			JetSuitTank component2 = storedOutfit.GetComponent<JetSuitTank>();
 			if (component2 != null && component2.PercentFull() < 1f)
+			{
+				return false;
+			}
+			LeadSuitTank leadSuitTank = ((storedOutfit != null) ? storedOutfit.GetComponent<LeadSuitTank>() : null);
+			if (leadSuitTank != null && leadSuitTank.PercentFull() < 1f)
 			{
 				return false;
 			}
@@ -552,6 +590,11 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 		Assignable assignable = equipment.GetAssignable(Db.Get().AssignableSlots.Suit);
 		assignable.Unassign();
 		GetComponent<Storage>().Store(assignable.gameObject);
+		Durability component = assignable.GetComponent<Durability>();
+		if (component != null && component.IsWornOut())
+		{
+			ConfigRequestSuit();
+		}
 	}
 
 	public void ConfigRequestSuit()
@@ -583,17 +626,20 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 	private void ChargeSuit(float dt)
 	{
 		KPrefabID storedOutfit = GetStoredOutfit();
-		if (!(storedOutfit == null))
+		if (storedOutfit == null)
 		{
-			GameObject oxygen = GetOxygen();
-			if (!(oxygen == null))
+			return;
+		}
+		GameObject oxygen = GetOxygen();
+		if (!(oxygen == null))
+		{
+			SuitTank component = storedOutfit.GetComponent<SuitTank>();
+			float a = component.capacity * 15f * dt / 600f;
+			a = Mathf.Min(a, component.capacity - component.GetTankAmount());
+			a = Mathf.Min(oxygen.GetComponent<PrimaryElement>().Mass, a);
+			if (a > 0f)
 			{
-				SuitTank component = storedOutfit.GetComponent<SuitTank>();
-				float a = component.capacity * 15f * dt / 600f;
-				a = Mathf.Min(a, component.capacity - component.amount);
-				a = Mathf.Min(oxygen.GetComponent<PrimaryElement>().Mass, a);
-				oxygen.GetComponent<PrimaryElement>().Mass -= a;
-				component.amount += a;
+				GetComponent<Storage>().Transfer(component.storage, component.elementTag, a, block_events: false, hide_popups: true);
 			}
 		}
 	}

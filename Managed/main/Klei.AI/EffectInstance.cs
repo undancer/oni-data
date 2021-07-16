@@ -115,7 +115,12 @@ namespace Klei.AI
 
 		private void ConfigureStatusItem()
 		{
-			statusItem = new StatusItem(effect.Id, effect.Name, effect.description, "", effect.isBad ? StatusItem.IconType.Exclamation : StatusItem.IconType.Info, effect.isBad ? NotificationType.Bad : NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID, 2);
+			StatusItem.IconType icon_type = (effect.isBad ? StatusItem.IconType.Exclamation : StatusItem.IconType.Info);
+			if (!effect.customIcon.IsNullOrWhiteSpace())
+			{
+				icon_type = StatusItem.IconType.Custom;
+			}
+			statusItem = new StatusItem(effect.Id, effect.Name, effect.description, effect.customIcon, icon_type, effect.isBad ? NotificationType.Bad : NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID, 2, showWorldIcon: false);
 			statusItem.resolveStringCallback = ResolveString;
 			statusItem.resolveTooltipCallback = ResolveTooltip;
 		}
@@ -132,11 +137,11 @@ namespace Klei.AI
 			string text2 = Effect.CreateTooltip(obj.effect, showDuration: false);
 			if (!string.IsNullOrEmpty(text2))
 			{
-				text = text + "\n" + text2;
+				text = text + "\n\n" + text2;
 			}
 			if (obj.effect.duration > 0f)
 			{
-				text = text + "\n" + string.Format(DUPLICANTS.MODIFIERS.TIME_REMAINING, GameUtil.GetFormattedCycles(GetTimeRemaining()));
+				text = text + "\n\n" + string.Format(DUPLICANTS.MODIFIERS.TIME_REMAINING, GameUtil.GetFormattedCycles(GetTimeRemaining()));
 			}
 			return text;
 		}

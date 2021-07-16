@@ -25,9 +25,13 @@ public class NameDisplayScreen : KScreen
 
 		public ProgressBar suitFuelBar;
 
+		public ProgressBar suitBatteryBar;
+
 		public HierarchyReferences thoughtBubble;
 
 		public HierarchyReferences thoughtBubbleConvo;
+
+		public HierarchyReferences gameplayEventDisplay;
 
 		public HierarchyReferences refs;
 	}
@@ -110,11 +114,12 @@ public class NameDisplayScreen : KScreen
 
 	private bool ShouldShowName(GameObject representedObject)
 	{
-		if (!(representedObject.GetComponent<MinionBrain>() != null) && !(representedObject.GetComponent<CommandModule>() != null) && !representedObject.GetComponent<SweepBotStation>())
+		CharacterOverlay component = representedObject.GetComponent<CharacterOverlay>();
+		if (component != null)
 		{
-			return representedObject.GetComponent<UserNameable>() != null;
+			return component.shouldShowName;
 		}
-		return true;
+		return false;
 	}
 
 	public Guid AddWorldText(string initialText, GameObject prefab)
@@ -272,21 +277,47 @@ public class NameDisplayScreen : KScreen
 			{
 				Debug.LogWarningFormat("FuelBar added twice {0}", component);
 			}
+			if (!entry.suitBatteryBar)
+			{
+				GameObject gameObject5 = Util.KInstantiateUI(ProgressBarsConfig.Instance.progressBarUIPrefab, reference.gameObject);
+				entry.suitBatteryBar = gameObject5.GetComponent<ProgressBar>();
+				entry.suitBatteryBar.autoHide = false;
+				gameObject5.name = "Suit Battery Bar";
+				gameObject5.transform.Find("Bar").GetComponent<Image>().color = ProgressBarsConfig.Instance.GetBarColor("BatteryBar");
+				gameObject5.GetComponent<KSelectable>().entityName = UI.METERS.BATTERY.TOOLTIP;
+			}
+			else
+			{
+				Debug.LogWarningFormat("CoolantBar added twice {0}", component);
+			}
 		}
 		else if (component is ThoughtGraph.Instance)
 		{
 			if (!entry.thoughtBubble)
 			{
-				GameObject gameObject5 = Util.KInstantiateUI(EffectPrefabs.Instance.ThoughtBubble, entry.display_go);
-				entry.thoughtBubble = gameObject5.GetComponent<HierarchyReferences>();
-				gameObject5.name = "Thought Bubble";
-				GameObject gameObject6 = Util.KInstantiateUI(EffectPrefabs.Instance.ThoughtBubbleConvo, entry.display_go);
-				entry.thoughtBubbleConvo = gameObject6.GetComponent<HierarchyReferences>();
-				gameObject6.name = "Thought Bubble Convo";
+				GameObject gameObject6 = Util.KInstantiateUI(EffectPrefabs.Instance.ThoughtBubble, entry.display_go);
+				entry.thoughtBubble = gameObject6.GetComponent<HierarchyReferences>();
+				gameObject6.name = "Thought Bubble";
+				GameObject gameObject7 = Util.KInstantiateUI(EffectPrefabs.Instance.ThoughtBubbleConvo, entry.display_go);
+				entry.thoughtBubbleConvo = gameObject7.GetComponent<HierarchyReferences>();
+				gameObject7.name = "Thought Bubble Convo";
 			}
 			else
 			{
 				Debug.LogWarningFormat("ThoughtGraph added twice {0}", component);
+			}
+		}
+		else if (component is GameplayEventMonitor.Instance)
+		{
+			if (!entry.gameplayEventDisplay)
+			{
+				GameObject gameObject8 = Util.KInstantiateUI(EffectPrefabs.Instance.GameplayEventDisplay, entry.display_go);
+				entry.gameplayEventDisplay = gameObject8.GetComponent<HierarchyReferences>();
+				gameObject8.name = "Gameplay Event Display";
+			}
+			else
+			{
+				Debug.LogWarningFormat("GameplayEventDisplay added twice {0}", component);
 			}
 		}
 	}
@@ -406,6 +437,17 @@ public class NameDisplayScreen : KScreen
 		active_bubble.GetReference<Image>(target).sprite = sprite;
 	}
 
+	public void SetGameplayEventDisplay(GameObject minion_go, bool bVisible, string hover_text, Sprite sprite)
+	{
+		Entry entry = GetEntry(minion_go);
+		if (entry != null && !(entry.gameplayEventDisplay == null))
+		{
+			entry.gameplayEventDisplay.GetReference<Image>("icon_sprite").sprite = sprite;
+			entry.gameplayEventDisplay.GetComponent<KSelectable>().entityName = hover_text;
+			entry.gameplayEventDisplay.gameObject.SetActive(bVisible);
+		}
+	}
+
 	public void SetBreathDisplay(GameObject minion_go, Func<float> updatePercentFull, bool bVisible)
 	{
 		Entry entry = GetEntry(minion_go);
@@ -447,6 +489,16 @@ public class NameDisplayScreen : KScreen
 		{
 			entry.suitFuelBar.SetUpdateFunc(updatePercentFull);
 			entry.suitFuelBar.gameObject.SetActive(bVisible);
+		}
+	}
+
+	public void SetSuitBatteryDisplay(GameObject minion_go, Func<float> updatePercentFull, bool bVisible)
+	{
+		Entry entry = GetEntry(minion_go);
+		if (entry != null && !(entry.suitBatteryBar == null))
+		{
+			entry.suitBatteryBar.SetUpdateFunc(updatePercentFull);
+			entry.suitBatteryBar.gameObject.SetActive(bVisible);
 		}
 	}
 

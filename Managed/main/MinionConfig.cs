@@ -21,6 +21,8 @@ public class MinionConfig : IEntityConfig
 
 	public static string MINION_BASE_TRAIT_ID = ID + "BaseTrait";
 
+	public static string MINION_NAV_GRID_NAME = "MinionNavGrid";
+
 	public const int MINION_BASE_SYMBOL_LAYER = 0;
 
 	public const int MINION_HAIR_ALWAYS_HACK_LAYER = 1;
@@ -35,12 +37,21 @@ public class MinionConfig : IEntityConfig
 
 	public const int MINION_SUIT_SYMBOL_LAYER = 6;
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		string name = DUPLICANTS.MODIFIERS.BASEDUPLICANT.NAME;
 		GameObject gameObject = EntityTemplates.CreateEntity(ID, name);
 		gameObject.AddOrGet<StateMachineController>();
 		MinionModifiers modifiers = gameObject.AddOrGet<MinionModifiers>();
+		gameObject.AddOrGet<Traits>();
+		gameObject.AddOrGet<Effects>();
+		gameObject.AddOrGet<AttributeLevels>();
+		gameObject.AddOrGet<AttributeConverters>();
 		AddMinionAmounts(modifiers);
 		AddMinionTraits(name, modifiers);
 		gameObject.AddOrGet<MinionBrain>();
@@ -55,6 +66,7 @@ public class MinionConfig : IEntityConfig
 			Storage.StoredItemModifier.Preserve,
 			Storage.StoredItemModifier.Seal
 		});
+		gameObject.AddTag(GameTags.CorrosionProof);
 		gameObject.AddOrGet<Health>();
 		OxygenBreather oxygenBreather = gameObject.AddOrGet<OxygenBreather>();
 		oxygenBreather.O2toCO2conversion = 0.02f;
@@ -70,9 +82,19 @@ public class MinionConfig : IEntityConfig
 		gridVisibility.innerRadius = 20f;
 		gameObject.AddOrGet<MiningSounds>();
 		gameObject.AddOrGet<SaveLoadRoot>();
-		gameObject.AddOrGet<AntiCluster>();
+		MoverLayerOccupier moverLayerOccupier = gameObject.AddOrGet<MoverLayerOccupier>();
+		moverLayerOccupier.objectLayers = new ObjectLayer[2]
+		{
+			ObjectLayer.Minion,
+			ObjectLayer.Mover
+		};
+		moverLayerOccupier.cellOffsets = new CellOffset[2]
+		{
+			CellOffset.none,
+			new CellOffset(0, 1)
+		};
 		Navigator navigator = gameObject.AddOrGet<Navigator>();
-		navigator.NavGridName = "MinionNavGrid";
+		navigator.NavGridName = MINION_NAV_GRID_NAME;
 		navigator.CurrentNavType = NavType.Floor;
 		KBatchedAnimController kBatchedAnimController = gameObject.AddOrGet<KBatchedAnimController>();
 		kBatchedAnimController.isMovable = true;
@@ -91,7 +113,7 @@ public class MinionConfig : IEntityConfig
 		KBoxCollider2D kBoxCollider2D = gameObject.AddOrGet<KBoxCollider2D>();
 		kBoxCollider2D.offset = new Vector2(0f, 0.8f);
 		kBoxCollider2D.size = new Vector2(1f, 1.5f);
-		gameObject.AddOrGet<SnapOn>().snapPoints = new List<SnapOn.SnapPoint>(new SnapOn.SnapPoint[17]
+		gameObject.AddOrGet<SnapOn>().snapPoints = new List<SnapOn.SnapPoint>(new SnapOn.SnapPoint[19]
 		{
 			new SnapOn.SnapPoint
 			{
@@ -228,12 +250,24 @@ public class MinionConfig : IEntityConfig
 				context = "specialistdig",
 				buildFile = Assets.GetAnim("excavator_kanim"),
 				overrideSymbol = "snapTo_rgtHand"
+			},
+			new SnapOn.SnapPoint
+			{
+				pointName = "mask_oxygen",
+				automatic = false,
+				context = "",
+				buildFile = Assets.GetAnim("mask_oxygen_kanim"),
+				overrideSymbol = "snapTo_goggles"
+			},
+			new SnapOn.SnapPoint
+			{
+				pointName = "dig",
+				automatic = false,
+				context = "demolish",
+				buildFile = Assets.GetAnim("poi_demolish_gun_kanim"),
+				overrideSymbol = "snapTo_rgtHand"
 			}
 		});
-		gameObject.AddOrGet<Effects>();
-		gameObject.AddOrGet<Traits>();
-		gameObject.AddOrGet<AttributeLevels>();
-		gameObject.AddOrGet<AttributeConverters>();
 		PrimaryElement primaryElement = gameObject.AddOrGet<PrimaryElement>();
 		primaryElement.InternalTemperature = 310.15f;
 		primaryElement.MassPerUnit = 30f;
@@ -250,7 +284,7 @@ public class MinionConfig : IEntityConfig
 		gameObject.AddOrGet<FactionAlignment>().Alignment = FactionManager.FactionID.Duplicant;
 		gameObject.AddOrGet<Weapon>();
 		gameObject.AddOrGet<RangedAttackable>();
-		gameObject.AddOrGet<CharacterOverlay>();
+		gameObject.AddOrGet<CharacterOverlay>().shouldShowName = true;
 		OccupyArea occupyArea = gameObject.AddOrGet<OccupyArea>();
 		occupyArea.objectLayers = new ObjectLayer[1];
 		occupyArea.ApplyToCells = false;
@@ -288,7 +322,7 @@ public class MinionConfig : IEntityConfig
 		kBatchedAnimEventToggler.enableEvent = "LaserOn";
 		kBatchedAnimEventToggler.disableEvent = "LaserOff";
 		kBatchedAnimEventToggler.entries = new List<KBatchedAnimEventToggler.Entry>();
-		LaserEffect[] array = new LaserEffect[13];
+		LaserEffect[] array = new LaserEffect[14];
 		LaserEffect laserEffect = new LaserEffect
 		{
 			id = "DigEffect",
@@ -393,6 +427,14 @@ public class MinionConfig : IEntityConfig
 			context = "specialistdig"
 		};
 		array[12] = laserEffect;
+		laserEffect = new LaserEffect
+		{
+			id = "DemolishEffect",
+			animFile = "poi_demolish_fx_kanim",
+			anim = "idle",
+			context = "demolish"
+		};
+		array[13] = laserEffect;
 		KBatchedAnimController component = prefab.GetComponent<KBatchedAnimController>();
 		LaserEffect[] array2 = array;
 		for (int i = 0; i < array2.Length; i++)
@@ -460,6 +502,7 @@ public class MinionConfig : IEntityConfig
 		component2.transitionDriver.overrideLayers.Add(new TubeTransitionLayer(component2));
 		component2.transitionDriver.overrideLayers.Add(new LadderDiseaseTransitionLayer(component2));
 		component2.transitionDriver.overrideLayers.Add(new ReactableTransitionLayer(component2));
+		component2.transitionDriver.overrideLayers.Add(new NavTeleportTransitionLayer(component2));
 		component2.transitionDriver.overrideLayers.Add(new SplashTransitionLayer(component2));
 		ThreatMonitor.Instance sMI = go.GetSMI<ThreatMonitor.Instance>();
 		if (sMI != null)
@@ -470,6 +513,18 @@ public class MinionConfig : IEntityConfig
 
 	public static void AddMinionAmounts(Modifiers modifiers)
 	{
+		modifiers.initialAttributes.Add(Db.Get().Attributes.AirConsumptionRate.Id);
+		modifiers.initialAttributes.Add(Db.Get().Attributes.MaxUnderwaterTravelCost.Id);
+		modifiers.initialAttributes.Add(Db.Get().Attributes.DecorExpectation.Id);
+		modifiers.initialAttributes.Add(Db.Get().Attributes.FoodExpectation.Id);
+		modifiers.initialAttributes.Add(Db.Get().Attributes.ToiletEfficiency.Id);
+		modifiers.initialAttributes.Add(Db.Get().Attributes.RoomTemperaturePreference.Id);
+		modifiers.initialAttributes.Add(Db.Get().Attributes.CarryAmount.Id);
+		modifiers.initialAttributes.Add(Db.Get().Attributes.QualityOfLife.Id);
+		modifiers.initialAttributes.Add(Db.Get().Attributes.SpaceNavigation.Id);
+		modifiers.initialAttributes.Add(Db.Get().Attributes.Sneezyness.Id);
+		modifiers.initialAttributes.Add(Db.Get().Attributes.RadiationResistance.Id);
+		modifiers.initialAttributes.Add(Db.Get().Attributes.RadiationRecovery.Id);
 		modifiers.initialAmounts.Add(Db.Get().Amounts.HitPoints.Id);
 		modifiers.initialAmounts.Add(Db.Get().Amounts.Stamina.Id);
 		modifiers.initialAmounts.Add(Db.Get().Amounts.Calories.Id);
@@ -481,18 +536,13 @@ public class MinionConfig : IEntityConfig
 		modifiers.initialAmounts.Add(Db.Get().Amounts.Temperature.Id);
 		modifiers.initialAmounts.Add(Db.Get().Amounts.ExternalTemperature.Id);
 		modifiers.initialAmounts.Add(Db.Get().Amounts.Decor.Id);
+		modifiers.initialAmounts.Add(Db.Get().Amounts.RadiationBalance.Id);
 	}
 
 	public static void AddMinionTraits(string name, Modifiers modifiers)
 	{
 		Trait trait = Db.Get().CreateTrait(MINION_BASE_TRAIT_ID, name, name, null, should_save: false, null, positive_trait: true, is_valid_starter_trait: true);
-		trait.Add(new AttributeModifier(Db.Get().Amounts.Stamina.deltaAttribute.Id, -7f / 60f, name));
-		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.deltaAttribute.Id, -1666.6666f, name));
-		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.maxAttribute.Id, 4000000f, name));
-		trait.Add(new AttributeModifier(Db.Get().Amounts.Toxicity.deltaAttribute.Id, 0f, name));
 		trait.Add(new AttributeModifier(Db.Get().Attributes.AirConsumptionRate.Id, 0.1f, name));
-		trait.Add(new AttributeModifier(Db.Get().Amounts.Bladder.deltaAttribute.Id, 355f / (678f * (float)Math.PI), name));
-		trait.Add(new AttributeModifier(Db.Get().Amounts.HitPoints.maxAttribute.Id, 100f, name));
 		trait.Add(new AttributeModifier(Db.Get().Attributes.MaxUnderwaterTravelCost.Id, 8f, name));
 		trait.Add(new AttributeModifier(Db.Get().Attributes.DecorExpectation.Id, 0f, name));
 		trait.Add(new AttributeModifier(Db.Get().Attributes.FoodExpectation.Id, 0f, name));
@@ -502,7 +552,15 @@ public class MinionConfig : IEntityConfig
 		trait.Add(new AttributeModifier(Db.Get().Attributes.QualityOfLife.Id, 1f, name));
 		trait.Add(new AttributeModifier(Db.Get().Attributes.SpaceNavigation.Id, 1f, name));
 		trait.Add(new AttributeModifier(Db.Get().Attributes.Sneezyness.Id, 0f, name));
+		trait.Add(new AttributeModifier(Db.Get().Attributes.RadiationResistance.Id, 0f, name));
+		trait.Add(new AttributeModifier(Db.Get().Amounts.Stamina.deltaAttribute.Id, -7f / 60f, name));
+		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.deltaAttribute.Id, -1666.6666f, name));
+		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.maxAttribute.Id, 4000000f, name));
+		trait.Add(new AttributeModifier(Db.Get().Amounts.Toxicity.deltaAttribute.Id, 0f, name));
+		trait.Add(new AttributeModifier(Db.Get().Amounts.Bladder.deltaAttribute.Id, 355f / (678f * (float)Math.PI), name));
+		trait.Add(new AttributeModifier(Db.Get().Amounts.HitPoints.maxAttribute.Id, 100f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.ImmuneLevel.deltaAttribute.Id, 0.025f, name));
+		modifiers.initialTraits.Add(MINION_BASE_TRAIT_ID);
 	}
 
 	public static void ConfigureSymbols(GameObject go)
@@ -510,6 +568,7 @@ public class MinionConfig : IEntityConfig
 		KBatchedAnimController component = go.GetComponent<KBatchedAnimController>();
 		component.SetSymbolVisiblity("snapto_hat", is_visible: false);
 		component.SetSymbolVisiblity("snapTo_hat_hair", is_visible: false);
+		component.SetSymbolVisiblity("snapTo_headfx", is_visible: false);
 		component.SetSymbolVisiblity("snapto_chest", is_visible: false);
 		component.SetSymbolVisiblity("snapto_neck", is_visible: false);
 		component.SetSymbolVisiblity("snapto_goggles", is_visible: false);

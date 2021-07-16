@@ -172,7 +172,7 @@ public class GeneShuffler : Workable
 	protected override void OnStartWork(Worker worker)
 	{
 		base.OnStartWork(worker);
-		notification = new Notification(MISC.NOTIFICATIONS.GENESHUFFLER.NAME, NotificationType.Good, HashedString.Invalid, (List<Notification> notificationList, object data) => string.Concat(MISC.NOTIFICATIONS.GENESHUFFLER.TOOLTIP, notificationList.ReduceMessages(countNames: false)), null, expires: false);
+		notification = new Notification(MISC.NOTIFICATIONS.GENESHUFFLER.NAME, NotificationType.Good, (List<Notification> notificationList, object data) => string.Concat(MISC.NOTIFICATIONS.GENESHUFFLER.TOOLTIP, notificationList.ReduceMessages(countNames: false)), null, expires: false);
 		notifier.Add(notification);
 		DeSelectBuilding();
 	}

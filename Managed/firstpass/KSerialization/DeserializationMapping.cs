@@ -138,11 +138,10 @@ namespace KSerialization
 				case SerializationTypeInfo.HashSet:
 				case SerializationTypeInfo.Queue:
 				{
-					int num2 = reader.ReadInt32();
-					reader.ReadInt32();
-					if (num2 > 0)
+					int length = reader.ReadInt32();
+					if (reader.ReadInt32() > -1)
 					{
-						reader.SkipBytes(num2);
+						reader.SkipBytes(length);
 					}
 					break;
 				}

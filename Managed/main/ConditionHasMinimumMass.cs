@@ -1,7 +1,7 @@
 using STRINGS;
 using UnityEngine;
 
-public class ConditionHasMinimumMass : RocketLaunchCondition
+public class ConditionHasMinimumMass : ProcessCondition
 {
 	private CommandModule commandModule;
 
@@ -10,23 +10,18 @@ public class ConditionHasMinimumMass : RocketLaunchCondition
 		commandModule = command;
 	}
 
-	public override RocketLaunchCondition GetParentCondition()
-	{
-		return null;
-	}
-
-	public override LaunchStatus EvaluateLaunchCondition()
+	public override Status EvaluateCondition()
 	{
 		int id = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(commandModule.GetComponent<LaunchConditionManager>()).id;
 		SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(id);
 		if (spacecraftDestination != null && SpacecraftManager.instance.GetDestinationAnalysisState(spacecraftDestination) == SpacecraftManager.DestinationAnalysisState.Complete && spacecraftDestination.AvailableMass >= CargoCapacity(spacecraftDestination, commandModule))
 		{
-			return LaunchStatus.Ready;
+			return Status.Ready;
 		}
-		return LaunchStatus.Warning;
+		return Status.Warning;
 	}
 
-	public override string GetLaunchStatusMessage(bool ready)
+	public override string GetStatusMessage(Status status)
 	{
 		int id = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(commandModule.GetComponent<LaunchConditionManager>()).id;
 		SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(id);
@@ -41,7 +36,7 @@ public class ConditionHasMinimumMass : RocketLaunchCondition
 		return UI.STARMAP.LAUNCHCHECKLIST.NO_DESTINATION;
 	}
 
-	public override string GetLaunchStatusTooltip(bool ready)
+	public override string GetStatusTooltip(Status status)
 	{
 		int id = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(commandModule.GetComponent<LaunchConditionManager>()).id;
 		SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(id);
@@ -94,5 +89,10 @@ public class ConditionHasMinimumMass : RocketLaunchCondition
 			}
 		}
 		return num;
+	}
+
+	public override bool ShowInUI()
+	{
+		return true;
 	}
 }

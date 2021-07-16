@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using ProcGen;
+using STRINGS;
 using UnityEngine;
 
 public class MinionBrain : Brain
@@ -146,9 +148,41 @@ public class MinionBrain : Brain
 		}
 	}
 
+	public Notification CreateCollapseNotification()
+	{
+		MinionIdentity component = GetComponent<MinionIdentity>();
+		return new Notification(MISC.NOTIFICATIONS.TILECOLLAPSE.NAME, NotificationType.Bad, (List<Notification> notificationList, object data) => string.Concat(MISC.NOTIFICATIONS.TILECOLLAPSE.TOOLTIP, notificationList.ReduceMessages(countNames: false)), "/t• " + component.GetProperName());
+	}
+
+	public void RemoveCollapseNotification(Notification notification)
+	{
+		Vector3 position = notification.clickFocus.GetPosition();
+		position.z = -40f;
+		WorldContainer myWorld = notification.clickFocus.gameObject.GetMyWorld();
+		if (myWorld != null && myWorld.IsDiscovered)
+		{
+			CameraController.Instance.ActiveWorldStarWipe(myWorld.id, position);
+		}
+		base.gameObject.AddOrGet<Notifier>().Remove(notification);
+	}
+
 	private void OnUnstableGroundImpact(object data)
 	{
-		RegisterReactEmotePair("UnstableGroundShock", "anim_react_shock_kanim", 1f);
+		GameObject telepad = GameUtil.GetTelepad(base.gameObject.GetMyWorld().id);
+		Navigator component = GetComponent<Navigator>();
+		Assignable assignable = GetComponent<MinionIdentity>().GetSoleOwner().GetAssignable(Db.Get().AssignableSlots.Bed);
+		bool num = assignable != null && component.CanReach(Grid.PosToCell(assignable.transform.GetPosition()));
+		bool flag = telepad != null && component.CanReach(Grid.PosToCell(telepad.transform.GetPosition()));
+		if (!num && !flag)
+		{
+			RegisterReactEmotePair("UnstableGroundShock", "anim_react_shock_kanim", 1f);
+			Notification notification = CreateCollapseNotification();
+			notification.customClickCallback = delegate
+			{
+				RemoveCollapseNotification(notification);
+			};
+			base.gameObject.AddOrGet<Notifier>().Add(notification);
+		}
 	}
 
 	protected override void OnCleanUp()

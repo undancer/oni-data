@@ -141,4 +141,20 @@ public class SandboxSprinkleTool : BrushTool
 		SimMessages.ReplaceElement(gameCell, id, sandBoxTool, floatSetting, floatSetting2, index2, settings.GetIntSetting("SandboxTools.DiseaseCount"), callbackIdx);
 		SetBrushSize(brushRadius);
 	}
+
+	public override void OnKeyDown(KButtonEvent e)
+	{
+		if (e.TryConsume(Action.SandboxCopyElement))
+		{
+			int cell = Grid.PosToCell(PlayerController.GetCursorPos(KInputManager.GetMousePos()));
+			if (Grid.IsValidCell(cell))
+			{
+				SandboxSampleTool.Sample(cell);
+			}
+		}
+		if (!e.Consumed)
+		{
+			base.OnKeyDown(e);
+		}
+	}
 }

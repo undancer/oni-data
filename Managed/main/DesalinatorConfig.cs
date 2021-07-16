@@ -59,8 +59,8 @@ public class DesalinatorConfig : IBuildingConfig
 		};
 		elementConverter2.outputElements = new ElementConverter.OutputElement[2]
 		{
-			new ElementConverter.OutputElement(3.5f, SimHashes.Water, 313.15f, useEntityTemperature: false, storeOutput: true, 0f, 0.5f, 0.75f),
-			new ElementConverter.OutputElement(1.5f, SimHashes.Salt, 313.15f, useEntityTemperature: false, storeOutput: true, 0f, 0.5f, 0.25f)
+			new ElementConverter.OutputElement(3.5f, SimHashes.Water, 0f, useEntityTemperature: false, storeOutput: true, 0f, 0.5f, 0.75f),
+			new ElementConverter.OutputElement(1.5f, SimHashes.Salt, 0f, useEntityTemperature: false, storeOutput: true, 0f, 0.5f, 0.25f)
 		};
 		DesalinatorWorkableEmpty desalinatorWorkableEmpty = go.AddOrGet<DesalinatorWorkableEmpty>();
 		desalinatorWorkableEmpty.workTime = 90f;

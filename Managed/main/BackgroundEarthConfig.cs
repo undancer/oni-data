@@ -4,6 +4,11 @@ public class BackgroundEarthConfig : IEntityConfig
 {
 	public static string ID = "BackgroundEarth";
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateEntity(ID, ID);

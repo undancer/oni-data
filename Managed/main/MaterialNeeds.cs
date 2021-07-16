@@ -1,49 +1,57 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [AddComponentMenu("KMonoBehaviour/scripts/MaterialNeeds")]
-public class MaterialNeeds : KMonoBehaviour
+public static class MaterialNeeds
 {
-	private Dictionary<Tag, float> Needs = new Dictionary<Tag, float>();
-
-	public System.Action OnDirty;
-
-	public static MaterialNeeds Instance
+	public static void UpdateNeed(Tag tag, float amount, int worldId)
 	{
-		get;
-		private set;
-	}
-
-	public static void DestroyInstance()
-	{
-		Instance = null;
-	}
-
-	protected override void OnPrefabInit()
-	{
-		Instance = this;
-	}
-
-	public void UpdateNeed(Tag tag, float amount)
-	{
-		float value = 0f;
-		if (!Needs.TryGetValue(tag, out value))
+		WorldContainer world = ClusterManager.Instance.GetWorld(worldId);
+		if (world != null)
 		{
-			Needs[tag] = 0f;
+			Dictionary<Tag, float> materialNeeds = world.materialNeeds;
+			float value = 0f;
+			if (!materialNeeds.TryGetValue(tag, out value))
+			{
+				materialNeeds[tag] = 0f;
+			}
+			materialNeeds[tag] = value + amount;
 		}
-		Needs[tag] = value + amount;
+		else
+		{
+			Debug.LogWarning($"MaterialNeeds.UpdateNeed called with invalid worldId {worldId}");
+		}
 	}
 
-	public float GetAmount(Tag tag)
+	public static float GetAmount(Tag tag, int worldId, bool includeRelatedWorlds)
 	{
-		float value = 0f;
-		Needs.TryGetValue(tag, out value);
-		return value;
-	}
-
-	public Dictionary<Tag, float> GetNeeds()
-	{
-		return Needs;
+		WorldContainer world = ClusterManager.Instance.GetWorld(worldId);
+		float num = 0f;
+		if (world != null)
+		{
+			if (!includeRelatedWorlds)
+			{
+				float value = 0f;
+				ClusterManager.Instance.GetWorld(worldId).materialNeeds.TryGetValue(tag, out value);
+				return num + value;
+			}
+			int parentWorldId = world.ParentWorldId;
+			{
+				foreach (WorldContainer worldContainer in ClusterManager.Instance.WorldContainers)
+				{
+					if (worldContainer.ParentWorldId == parentWorldId)
+					{
+						float value2 = 0f;
+						if (worldContainer.materialNeeds.TryGetValue(tag, out value2))
+						{
+							num += value2;
+						}
+					}
+				}
+				return num;
+			}
+		}
+		Debug.LogWarning($"MaterialNeeds.GetAmount called with invalid worldId {worldId}");
+		return 0f;
 	}
 }

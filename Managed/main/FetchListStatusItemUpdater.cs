@@ -38,9 +38,9 @@ public class FetchListStatusItemUpdater : KMonoBehaviour, IRender200ms
 	{
 		DictionaryPool<int, ListPool<FetchList2, FetchListStatusItemUpdater>.PooledList, FetchListStatusItemUpdater>.PooledDictionary pooledDictionary = DictionaryPool<int, ListPool<FetchList2, FetchListStatusItemUpdater>.PooledList, FetchListStatusItemUpdater>.Allocate();
 		int num = Math.Min(maxIteratingCount, fetchLists.Count - currentIteratingIndex);
-		for (int i = currentIteratingIndex; i < num; i++)
+		for (int i = 0; i < num; i++)
 		{
-			FetchList2 fetchList = fetchLists[i];
+			FetchList2 fetchList = fetchLists[i + currentIteratingIndex];
 			if (!(fetchList.Destination == null))
 			{
 				ListPool<FetchList2, FetchListStatusItemUpdater>.PooledList value = null;
@@ -61,6 +61,10 @@ public class FetchListStatusItemUpdater : KMonoBehaviour, IRender200ms
 		DictionaryPool<Tag, float, FetchListStatusItemUpdater>.PooledDictionary pooledDictionary3 = DictionaryPool<Tag, float, FetchListStatusItemUpdater>.Allocate();
 		foreach (KeyValuePair<int, ListPool<FetchList2, FetchListStatusItemUpdater>.PooledList> item in pooledDictionary)
 		{
+			if (item.Value[0].Destination.GetMyWorld() == null)
+			{
+				continue;
+			}
 			ListPool<Tag, FetchListStatusItemUpdater>.PooledList pooledList2 = ListPool<Tag, FetchListStatusItemUpdater>.Allocate();
 			Storage destination = item.Value[0].Destination;
 			foreach (FetchList2 item2 in item.Value)
@@ -103,11 +107,11 @@ public class FetchListStatusItemUpdater : KMonoBehaviour, IRender200ms
 			{
 				if (!pooledDictionary2.ContainsKey(item7))
 				{
-					pooledDictionary2[item7] = WorldInventory.Instance.GetTotalAmount(item7);
+					pooledDictionary2[item7] = destination.GetMyWorld().worldInventory.GetTotalAmount(item7, includeRelatedWorlds: true);
 				}
 				if (!pooledDictionary3.ContainsKey(item7))
 				{
-					pooledDictionary3[item7] = WorldInventory.Instance.GetAmount(item7);
+					pooledDictionary3[item7] = destination.GetMyWorld().worldInventory.GetAmount(item7, includeRelatedWorlds: true);
 				}
 			}
 			foreach (FetchList2 item8 in item.Value)

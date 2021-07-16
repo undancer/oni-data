@@ -21,6 +21,11 @@ public class OneshotReactableLocator : IEntityConfig
 		return (GameObject reactor, Navigator.ActiveTransition transition) => reactor != source;
 	}
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateEntity(ID, ID, is_selectable: false);

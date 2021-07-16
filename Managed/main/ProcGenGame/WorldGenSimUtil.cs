@@ -11,116 +11,99 @@ namespace ProcGenGame
 {
 	public static class WorldGenSimUtil
 	{
-		public unsafe static bool DoSettleSim(WorldGenSettings settings, Sim.Cell[] cells, float[] bgTemp, Sim.DiseaseCell[] dcs, WorldGen.OfflineCallbackFunction updateProgressFn, Data data, List<KeyValuePair<Vector2I, TemplateContainer>> templateSpawnTargets, Action<OfflineWorldGen.ErrorInfo> error_cb, Action<Sim.Cell[], float[], Sim.DiseaseCell[]> onSettleComplete)
+		private const int STEPS = 500;
+
+		public unsafe static bool DoSettleSim(WorldGenSettings settings, ref Sim.Cell[] cells, ref float[] bgTemp, ref Sim.DiseaseCell[] dcs, WorldGen.OfflineCallbackFunction updateProgressFn, Data data, List<KeyValuePair<Vector2I, TemplateContainer>> templateSpawnTargets, Action<OfflineWorldGen.ErrorInfo> error_cb, int baseId)
 		{
 			Sim.SIM_Initialize(Sim.DLL_MessageHandler);
 			SimMessages.CreateSimElementsTable(ElementLoader.elements);
-			SimMessages.CreateWorldGenHACKDiseaseTable(WorldGen.diseaseIds);
-			Sim.DiseaseCell[] dc = new Sim.DiseaseCell[dcs.Length];
-			SimMessages.SimDataInitializeFromCells(Grid.WidthInCells, Grid.HeightInCells, cells, bgTemp, dc);
-			int num = 500;
+			SimMessages.CreateDiseaseTable(WorldGen.diseaseStats);
+			SimMessages.SimDataInitializeFromCells(Grid.WidthInCells, Grid.HeightInCells, cells, bgTemp, dcs, headless: true);
 			updateProgressFn(UI.WORLDGEN.SETTLESIM.key, 0f, WorldGenProgressStages.Stages.SettleSim);
-			Vector2I min = new Vector2I(0, 0);
-			Vector2I max = new Vector2I(Grid.WidthInCells, Grid.HeightInCells);
-			byte[] bytes = null;
-			using (MemoryStream memoryStream = new MemoryStream())
-			{
-				using (BinaryWriter writer = new BinaryWriter(memoryStream))
-				{
-					try
-					{
-						Sim.Save(writer);
-					}
-					catch (Exception ex)
-					{
-						string message = ex.Message;
-						string stackTrace = ex.StackTrace;
-						WorldGenLogger.LogException(message, stackTrace);
-						return updateProgressFn(new StringKey("Exception in Sim Save"), -1f, WorldGenProgressStages.Stages.Failure);
-					}
-				}
-				bytes = memoryStream.ToArray();
-			}
-			if (Sim.Load(new FastReader(bytes)) != 0)
-			{
-				updateProgressFn(UI.WORLDGEN.FAILED.key, -1f, WorldGenProgressStages.Stages.Failure);
-				return true;
-			}
+			Sim.Start();
 			byte[] array = new byte[Grid.CellCount];
 			for (int i = 0; i < Grid.CellCount; i++)
 			{
 				array[i] = byte.MaxValue;
 			}
-			for (int j = 0; j < num; j++)
+			Vector2I a = new Vector2I(0, 0);
+			Vector2I size = data.world.size;
+			List<Pair<Vector2I, Vector2I>> list = new List<Pair<Vector2I, Vector2I>>();
+			list.Add(new Pair<Vector2I, Vector2I>(a, size));
+			for (int j = 0; j < 500; j++)
 			{
-				SimMessages.NewGameFrame(0.2f, min, max);
+				if (j == 498)
+				{
+					HashSet<int> hashSet = new HashSet<int>();
+					foreach (KeyValuePair<Vector2I, TemplateContainer> templateSpawnTarget in templateSpawnTargets)
+					{
+						if (templateSpawnTarget.Value.cells == null)
+						{
+							continue;
+						}
+						for (int k = 0; k < templateSpawnTarget.Value.cells.Count; k++)
+						{
+							Cell cell = templateSpawnTarget.Value.cells[k];
+							int num = Grid.OffsetCell(Grid.XYToCell(templateSpawnTarget.Key.x, templateSpawnTarget.Key.y), cell.location_x, cell.location_y);
+							if (Grid.IsValidCell(num) && !hashSet.Contains(num))
+							{
+								hashSet.Add(num);
+								byte elementIdx = (byte)ElementLoader.GetElementIndex(cell.element);
+								float temperature = cell.temperature;
+								float mass = cell.mass;
+								byte index = WorldGen.diseaseStats.GetIndex(cell.diseaseName);
+								int diseaseCount = cell.diseaseCount;
+								SimMessages.ModifyCell(num, elementIdx, temperature, mass, index, diseaseCount, SimMessages.ReplaceType.Replace);
+							}
+						}
+					}
+				}
+				SimMessages.NewGameFrame(0.2f, list);
 				IntPtr intPtr = Sim.HandleMessage(SimMessageHashes.PrepareGameData, array.Length, array);
-				updateProgressFn(UI.WORLDGEN.SETTLESIM.key, (float)j / (float)num * 100f, WorldGenProgressStages.Stages.SettleSim);
+				updateProgressFn(UI.WORLDGEN.SETTLESIM.key, (float)j / 500f, WorldGenProgressStages.Stages.SettleSim);
 				if (intPtr == IntPtr.Zero)
 				{
+					DebugUtil.LogWarningArgs("Unexpected");
 					continue;
 				}
 				Sim.GameDataUpdate* ptr = (Sim.GameDataUpdate*)(void*)intPtr;
-				for (int k = 0; k < ptr->numSubstanceChangeInfo; k++)
+				Grid.elementIdx = ptr->elementIdx;
+				Grid.temperature = ptr->temperature;
+				Grid.mass = ptr->mass;
+				Grid.radiation = ptr->radiation;
+				Grid.properties = ptr->properties;
+				Grid.strengthInfo = ptr->strengthInfo;
+				Grid.insulation = ptr->insulation;
+				Grid.diseaseIdx = ptr->diseaseIdx;
+				Grid.diseaseCount = ptr->diseaseCount;
+				Grid.AccumulatedFlowValues = ptr->accumulatedFlow;
+				Grid.exposedToSunlight = (byte*)(void*)ptr->propertyTextureExposedToSunlight;
+				for (int l = 0; l < ptr->numSubstanceChangeInfo; l++)
 				{
-					int cellIdx = ptr->substanceChangeInfo[k].cellIdx;
+					Sim.SubstanceChangeInfo substanceChangeInfo = ptr->substanceChangeInfo[l];
+					int cellIdx = substanceChangeInfo.cellIdx;
 					cells[cellIdx].elementIdx = ptr->elementIdx[cellIdx];
 					cells[cellIdx].insulation = ptr->insulation[cellIdx];
 					cells[cellIdx].properties = ptr->properties[cellIdx];
 					cells[cellIdx].temperature = ptr->temperature[cellIdx];
 					cells[cellIdx].mass = ptr->mass[cellIdx];
 					cells[cellIdx].strengthInfo = ptr->strengthInfo[cellIdx];
+					dcs[cellIdx].diseaseIdx = ptr->diseaseIdx[cellIdx];
+					dcs[cellIdx].elementCount = ptr->diseaseCount[cellIdx];
+					Grid.Element[cellIdx] = ElementLoader.elements[substanceChangeInfo.newElemIdx];
 				}
-				Cell templateCellData;
-				foreach (KeyValuePair<Vector2I, TemplateContainer> templateSpawnTarget in templateSpawnTargets)
+				for (int m = 0; m < ptr->numSolidInfo; m++)
 				{
-					for (int l = 0; l < templateSpawnTarget.Value.cells.Count; l++)
-					{
-						templateCellData = templateSpawnTarget.Value.cells[l];
-						int num2 = Grid.OffsetCell(Grid.XYToCell(templateSpawnTarget.Key.x, templateSpawnTarget.Key.y), templateCellData.location_x, templateCellData.location_y);
-						if (Grid.IsValidCell(num2))
-						{
-							cells[num2].elementIdx = (byte)ElementLoader.GetElementIndex(templateCellData.element);
-							cells[num2].temperature = templateCellData.temperature;
-							cells[num2].mass = templateCellData.mass;
-							dcs[num2].diseaseIdx = (byte)WorldGen.diseaseIds.FindIndex((string name) => name == templateCellData.diseaseName);
-							dcs[num2].elementCount = templateCellData.diseaseCount;
-						}
-					}
+					Sim.SolidInfo solidInfo = ptr->solidInfo[m];
+					Grid.SetSolid(solid: solidInfo.isSolid != 0, cell: solidInfo.cellIdx, ev: null);
 				}
 			}
-			for (int m = 0; m < Grid.CellCount; m++)
-			{
-				int callbackIdx = ((m == Grid.CellCount - 1) ? 2147481337 : (-1));
-				SimMessages.ModifyCell(m, cells[m].elementIdx, cells[m].temperature, cells[m].mass, dcs[m].diseaseIdx, dcs[m].elementCount, SimMessages.ReplaceType.Replace, do_vertical_solid_displacement: false, callbackIdx);
-			}
-			bool flag = false;
-			while (!flag)
-			{
-				SimMessages.NewGameFrame(0.2f, min, max);
-				IntPtr intPtr2 = Sim.HandleMessage(SimMessageHashes.PrepareGameData, array.Length, array);
-				if (intPtr2 == IntPtr.Zero)
-				{
-					continue;
-				}
-				Sim.GameDataUpdate* ptr2 = (Sim.GameDataUpdate*)(void*)intPtr2;
-				for (int n = 0; n < ptr2->numCallbackInfo; n++)
-				{
-					if (ptr2->callbackInfo[n].callbackIdx == 2147481337)
-					{
-						flag = true;
-						break;
-					}
-				}
-			}
-			Sim.HandleMessage(SimMessageHashes.SettleWorldGen, 0, null);
-			bool result = SaveSim(settings, data, error_cb);
-			onSettleComplete(cells, bgTemp, dcs);
+			bool result = SaveSim(settings, data, baseId, error_cb);
 			Sim.Shutdown();
 			return result;
 		}
 
-		private static bool SaveSim(WorldGenSettings settings, Data data, Action<OfflineWorldGen.ErrorInfo> error_cb)
+		private static bool SaveSim(WorldGenSettings settings, Data data, int baseId, Action<OfflineWorldGen.ErrorInfo> error_cb)
 		{
 			try
 			{
@@ -136,11 +119,13 @@ namespace ProcGenGame
 				simSaveFileStructure.worldDetail.globalNoiseSeed = data.globalNoiseSeed;
 				simSaveFileStructure.WidthInCells = Grid.WidthInCells;
 				simSaveFileStructure.HeightInCells = Grid.HeightInCells;
+				simSaveFileStructure.x = data.world.offset.x;
+				simSaveFileStructure.y = data.world.offset.y;
 				using (MemoryStream memoryStream = new MemoryStream())
 				{
 					using (BinaryWriter writer = new BinaryWriter(memoryStream))
 					{
-						Sim.Save(writer);
+						Sim.Save(writer, simSaveFileStructure.x, simSaveFileStructure.y);
 					}
 					simSaveFileStructure.Sim = memoryStream.ToArray();
 				}
@@ -157,7 +142,7 @@ namespace ProcGenGame
 							DebugUtil.LogErrorArgs("Couldn't serialize", ex.Message, ex.StackTrace);
 						}
 					}
-					using BinaryWriter binaryWriter = new BinaryWriter(File.Open(WorldGen.SIM_SAVE_FILENAME, FileMode.Create));
+					using BinaryWriter binaryWriter = new BinaryWriter(File.Open(WorldGen.GetSIMSaveFilename(baseId), FileMode.Create));
 					Manager.SerializeDirectory(binaryWriter);
 					binaryWriter.Write(memoryStream2.ToArray());
 				}
@@ -167,11 +152,38 @@ namespace ProcGenGame
 			{
 				error_cb(new OfflineWorldGen.ErrorInfo
 				{
-					errorDesc = string.Format(UI.FRONTEND.SUPPORTWARNINGS.SAVE_DIRECTORY_READ_ONLY, WorldGen.SIM_SAVE_FILENAME),
+					errorDesc = string.Format(UI.FRONTEND.SUPPORTWARNINGS.SAVE_DIRECTORY_READ_ONLY, WorldGen.GetSIMSaveFilename(baseId)),
 					exception = ex2
 				});
 				DebugUtil.LogErrorArgs("Couldn't write", ex2.Message, ex2.StackTrace);
 				return false;
+			}
+		}
+
+		public static void LoadSim(int baseCount, List<SimSaveFileStructure> loadedWorlds)
+		{
+			for (int i = 0; i != baseCount; i++)
+			{
+				SimSaveFileStructure simSaveFileStructure = new SimSaveFileStructure();
+				try
+				{
+					FastReader reader = new FastReader(File.ReadAllBytes(WorldGen.GetSIMSaveFilename(i)));
+					Manager.DeserializeDirectory(reader);
+					Deserializer.Deserialize(simSaveFileStructure, reader);
+				}
+				catch (Exception ex)
+				{
+					DebugUtil.LogErrorArgs("LoadSim Error!\n", ex.Message, ex.StackTrace);
+					return;
+				}
+				if (simSaveFileStructure.worldDetail == null)
+				{
+					Debug.LogError("Detail is null for world " + i);
+				}
+				else
+				{
+					loadedWorlds.Add(simSaveFileStructure);
+				}
 			}
 		}
 	}

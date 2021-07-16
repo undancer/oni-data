@@ -1,8 +1,22 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SubstanceTable : ScriptableObject, ISerializationCallbackReceiver
 {
+	private class SubstanceEqualityComparer : IEqualityComparer<Substance>
+	{
+		public bool Equals(Substance x, Substance y)
+		{
+			return x.elementID.Equals(y.elementID);
+		}
+
+		public int GetHashCode(Substance obj)
+		{
+			return obj.elementID.GetHashCode();
+		}
+	}
+
 	[SerializeField]
 	private List<Substance> list;
 
@@ -48,5 +62,10 @@ public class SubstanceTable : ScriptableObject, ISerializationCallbackReceiver
 				item.anims[0] = item.anim;
 			}
 		}
+	}
+
+	public void RemoveDuplicates()
+	{
+		list = list.Distinct(new SubstanceEqualityComparer()).ToList();
 	}
 }

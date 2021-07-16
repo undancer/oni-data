@@ -111,11 +111,6 @@ public class VideoScreen : KModalScreen
 		slideshow.SetPaused(state: false);
 	}
 
-	public override float GetSortKey()
-	{
-		return 100000f;
-	}
-
 	public override void OnKeyDown(KButtonEvent e)
 	{
 		if (e.IsAction(Action.Escape))
@@ -139,6 +134,7 @@ public class VideoScreen : KModalScreen
 
 	public void PlayVideo(VideoClip clip, bool unskippable = false, string overrideAudioSnapshot = "", bool showProceedButton = false)
 	{
+		Debug.Assert(clip != null);
 		for (int i = 0; i < overlayContainer.childCount; i++)
 		{
 			UnityEngine.Object.Destroy(overlayContainer.GetChild(i).gameObject);

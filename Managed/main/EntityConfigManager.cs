@@ -59,7 +59,7 @@ public class EntityConfigManager : KMonoBehaviour
 		foreach (ConfigEntry item2 in list)
 		{
 			object obj = Activator.CreateInstance(item2.type);
-			if (obj is IEntityConfig)
+			if (obj is IEntityConfig && DlcManager.IsDlcListValidForCurrentContent((obj as IEntityConfig).GetDlcIds()))
 			{
 				RegisterEntity(obj as IEntityConfig);
 			}

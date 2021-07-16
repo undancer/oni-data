@@ -10,7 +10,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Ensures my Duplicants can breathe easy... for a little while, anyways.";
 
-				public static LocString EFFECT = "Supplies Duplicants with <style=\"oxygen\">Oxygen</style> in toxic and low breathability environments.\n\nMust be refilled with oxygen at an Atmo Suit Dock when depleted.";
+				public static LocString EFFECT = "Supplies Duplicants with <style=\"oxygen\">Oxygen</style> in toxic and low breathability environments.\n\nMust be refilled with oxygen at an " + UI.FormatAsLink("Atmo Suit Dock", "SUITLOCKER") + " when depleted.";
 
 				public static LocString RECIPE_DESC = "Supplies Duplicants with <style=\"oxygen\">Oxygen</style> in toxic and low breathability environments.";
 
@@ -18,7 +18,7 @@ namespace STRINGS
 
 				public static LocString WORN_NAME = UI.FormatAsLink("Worn Oxygen Mask", "OXYGEN_MASK");
 
-				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Oxygen Mask", "OXYGEN_MASK") + ".\nNeeds to be repaired.";
+				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Oxygen Mask", "OXYGEN_MASK") + ".\n\nMasks can be repaired at a " + UI.FormatAsLink("Crafting Station", "CRAFTINGTABLE") + ".";
 			}
 
 			public class ATMO_SUIT
@@ -27,7 +27,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Ensures my Duplicants can breathe easy, anytime, anywhere.";
 
-				public static LocString EFFECT = "Supplies Duplicants with <style=\"oxygen\">Oxygen</style> in toxic and low breathability environments.\n\nMust be refilled with oxygen at an Atmo Suit Dock when depleted.";
+				public static LocString EFFECT = "Supplies Duplicants with <style=\"oxygen\">Oxygen</style> in toxic and low breathability environments.\n\nMust be refilled with oxygen at an " + UI.FormatAsLink("Atmo Suit Dock", "SUITLOCKER") + " when depleted.";
 
 				public static LocString RECIPE_DESC = "Supplies Duplicants with <style=\"oxygen\">Oxygen</style> in toxic and low breathability environments.";
 
@@ -35,7 +35,7 @@ namespace STRINGS
 
 				public static LocString WORN_NAME = UI.FormatAsLink("Worn Atmo Suit", "ATMO_SUIT");
 
-				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Atmo Suit", "ATMO_SUIT") + ".\nNeeds to be repaired.";
+				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Atmo Suit", "ATMO_SUIT") + ".\n\nSuits can be repaired at a " + UI.FormatAsLink("Crafting Station", "CRAFTINGTABLE") + ".";
 			}
 
 			public class AQUA_SUIT
@@ -44,9 +44,13 @@ namespace STRINGS
 
 				public static LocString DESC = "Because breathing underwater is better than... not.";
 
-				public static LocString EFFECT = "Supplies Duplicants with <style=\"oxygen\">Oxygen</style> in underwater environments.\n\nMust be refilled with " + UI.FormatAsLink("Oxygen", "OXYGEN") + " at an Atmo Suit Dock when depleted.";
+				public static LocString EFFECT = "Supplies Duplicants with <style=\"oxygen\">Oxygen</style> in underwater environments.\n\nMust be refilled with " + UI.FormatAsLink("Oxygen", "OXYGEN") + " at an " + UI.FormatAsLink("Atmo Suit Dock", "SUITLOCKER") + " when depleted.";
 
 				public static LocString RECIPE_DESC = "Supplies Duplicants with <style=\"oxygen\">Oxygen</style> in underwater environments.";
+
+				public static LocString WORN_NAME = UI.FormatAsLink("Worn Lead Suit", "AQUA_SUIT");
+
+				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Aqua Suit", "AQUA_SUIT") + ".\n\nSuits can be repaired at a " + UI.FormatAsLink("Crafting Station", "CRAFTINGTABLE") + ".";
 			}
 
 			public class TEMPERATURE_SUIT
@@ -58,6 +62,10 @@ namespace STRINGS
 				public static LocString EFFECT = "Provides insulation in regions with extreme <style=\"heat\">Temperatures</style>.\n\nMust be powered at a Thermo Suit Dock when depleted.";
 
 				public static LocString RECIPE_DESC = "Provides insulation in regions with extreme <style=\"heat\">Temperatures</style>.";
+
+				public static LocString WORN_NAME = UI.FormatAsLink("Worn Lead Suit", "TEMPERATURE_SUIT");
+
+				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Thermo Suit", "TEMPERATURE_SUIT") + ".\n\nSuits can be repaired at a " + UI.FormatAsLink("Crafting Station", "CRAFTINGTABLE") + ".";
 			}
 
 			public class JET_SUIT
@@ -66,7 +74,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Allows my Duplicants to take to the skies, for a time.";
 
-				public static LocString EFFECT = "Supplies Duplicants with " + UI.FormatAsLink("Oxygen", "OXYGEN") + " in toxic and low breathability environments.\n\nMust be refilled with " + UI.FormatAsLink("Oxygen", "OXYGEN") + " and " + UI.FormatAsLink("Petroleum", "PETROLEUM") + " at a Jet Suit Dock when depleted.";
+				public static LocString EFFECT = "Supplies Duplicants with " + UI.FormatAsLink("Oxygen", "OXYGEN") + " in toxic and low breathability environments.\n\nMust be refilled with " + UI.FormatAsLink("Oxygen", "OXYGEN") + " and " + UI.FormatAsLink("Petroleum", "PETROLEUM") + " at a " + UI.FormatAsLink("Jet Suit Dock", "JETSUITLOCKER") + " when depleted.";
 
 				public static LocString RECIPE_DESC = "Supplies Duplicants with " + UI.FormatAsLink("Oxygen", "OXYGEN") + " in toxic and low breathability environments.\n\nAllows Duplicant flight.";
 
@@ -76,7 +84,7 @@ namespace STRINGS
 
 				public static LocString WORN_NAME = UI.FormatAsLink("Worn Jet Suit", "JET_SUIT");
 
-				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Jet Suit", "JET_SUIT") + ".\nNeeds to be repaired.";
+				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Jet Suit", "JET_SUIT") + ".\n\nSuits can be repaired at a " + UI.FormatAsLink("Crafting Station", "CRAFTINGTABLE") + ".";
 			}
 
 			public class LEAD_SUIT
@@ -85,9 +93,9 @@ namespace STRINGS
 
 				public static LocString DESC = "Because exposure to radiation doesn't grant Duplicants superpowers.";
 
-				public static LocString EFFECT = "Supplies Duplicants with " + UI.FormatAsLink("Oxygen", "OXYGEN") + " and protection in areas with " + UI.FormatAsLink("Radiation", "RADIATION") + ".\n\nMust be refilled with " + UI.FormatAsLink("Oxygen", "OXYGEN") + " at a Lead Suit Dock when depleted.";
+				public static LocString EFFECT = "Supplies Duplicants with " + UI.FormatAsLink("Oxygen", "OXYGEN") + " and protection in areas with " + UI.FormatAsLink("Radiation", "RADIATION") + ".\n\nMust be refilled with " + UI.FormatAsLink("Oxygen", "OXYGEN") + " at a " + UI.FormatAsLink("Lead Suit Dock", "LEADSUITLOCKER") + " when depleted.";
 
-				public static LocString RECIPE_DESC = "Supplies Duplicants with " + UI.FormatAsLink("Oxygen", "OXYGEN") + " in toxic and low breathability environments.\n\nProtects duplicants from Radiation.";
+				public static LocString RECIPE_DESC = "Supplies Duplicants with " + UI.FormatAsLink("Oxygen", "OXYGEN") + " in toxic and low breathability environments.\n\nProtects Duplicants from " + UI.FormatAsLink("Radiation", "RADIATION") + ".";
 
 				public static LocString GENERICNAME = "Lead Suit";
 
@@ -97,7 +105,7 @@ namespace STRINGS
 
 				public static LocString WORN_NAME = UI.FormatAsLink("Worn Lead Suit", "LEAD_SUIT");
 
-				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Lead Suit", "LEAD_SUIT") + ".\nNeeds to be repaired.";
+				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Lead Suit", "LEAD_SUIT") + ".\n\nSuits can be repaired at a " + UI.FormatAsLink("Crafting Station", "CRAFTINGTABLE") + ".";
 			}
 
 			public class COOL_VEST
@@ -145,7 +153,7 @@ namespace STRINGS
 
 				public static LocString GENERICNAME = "Equipment";
 
-				public static LocString DESC = "";
+				public static LocString DESC = "It's like a to-go bag for your lungs.";
 
 				public static LocString EFFECT = "Allows Duplicants to breathe in hazardous environments.\n\nDoes not work when submerged in <style=\"liquid\">Liquid</style>.";
 

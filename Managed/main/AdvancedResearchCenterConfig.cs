@@ -5,9 +5,11 @@ public class AdvancedResearchCenterConfig : IBuildingConfig
 {
 	public const string ID = "AdvancedResearchCenter";
 
-	public const float BASE_RESEARCH_SPEED = 0.83f;
+	public const float BASE_SECONDS_PER_POINT = 60f;
 
 	public const float MASS_PER_POINT = 50f;
+
+	public const float BASE_MASS_PER_SECOND = 5f / 6f;
 
 	public const float CAPACITY = 750f;
 
@@ -44,14 +46,14 @@ public class AdvancedResearchCenterConfig : IBuildingConfig
 		{
 			Assets.GetAnim("anim_interacts_research2_kanim")
 		};
-		researchCenter.research_point_type_id = "beta";
+		researchCenter.research_point_type_id = "advanced";
 		researchCenter.inputMaterial = INPUT_MATERIAL;
 		researchCenter.mass_per_point = 50f;
 		researchCenter.requiredSkillPerk = Db.Get().SkillPerks.AllowAdvancedResearch.Id;
 		ElementConverter elementConverter = go.AddOrGet<ElementConverter>();
 		elementConverter.consumedElements = new ElementConverter.ConsumedElement[1]
 		{
-			new ElementConverter.ConsumedElement(INPUT_MATERIAL, 0.83f)
+			new ElementConverter.ConsumedElement(INPUT_MATERIAL, 5f / 6f)
 		};
 		elementConverter.showDescriptors = false;
 		go.AddOrGetDef<PoweredController.Def>();

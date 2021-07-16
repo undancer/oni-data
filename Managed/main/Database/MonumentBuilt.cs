@@ -1,9 +1,8 @@
-using System.IO;
 using STRINGS;
 
 namespace Database
 {
-	public class MonumentBuilt : VictoryColonyAchievementRequirement
+	public class MonumentBuilt : VictoryColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		public override string Name()
 		{
@@ -28,11 +27,7 @@ namespace Database
 			return false;
 		}
 
-		public override void Deserialize(IReader reader)
-		{
-		}
-
-		public override void Serialize(BinaryWriter writer)
+		public void Deserialize(IReader reader)
 		{
 		}
 

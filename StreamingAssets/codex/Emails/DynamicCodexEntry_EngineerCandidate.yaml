@@ -1,0 +1,40 @@
+id: "EngineerCandidate"
+title: STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_engineeringcandidate
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.SUBTITLE
+          style: Subtitle
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_engineeringcandidate
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.EMAILHEADER1
+          style: Body
+  - contentLayout: Vertical
+    lockID: email_engineeringcandidate
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.CONTAINER3
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_engineeringcandidate
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.CONTAINER4
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.SIGNATURE1
+          style: Body

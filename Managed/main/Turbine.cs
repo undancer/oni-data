@@ -31,7 +31,7 @@ public class Turbine : KMonoBehaviour
 		{
 			InitializeStatusItems();
 			default_state = operational;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			inoperational.EventTransition(GameHashes.OperationalChanged, operational.spinningUp, (Turbine.Instance smi) => smi.master.GetComponent<Operational>().IsOperational).QueueAnim("off").Enter(delegate(Turbine.Instance smi)
 			{
 				smi.master.currentRPM = 0f;
@@ -258,8 +258,6 @@ public class Turbine : KMonoBehaviour
 
 	private static StatusItem spinningUpStatusItem;
 
-	private const Sim.Cell.Properties floorCellProperties = (Sim.Cell.Properties)39;
-
 	private MeterController meter;
 
 	private HandleVector<Game.ComplexCallbackInfo<Sim.MassEmittedCallback>>.Handle simEmitCBHandle = HandleVector<Game.ComplexCallbackInfo<Sim.MassEmittedCallback>>.InvalidHandle;
@@ -277,13 +275,6 @@ public class Turbine : KMonoBehaviour
 			int x = i - (def.WidthInCells - 1) / 2;
 			srcCells[i] = Grid.OffsetCell(cell, new CellOffset(x, -1));
 			destCells[i] = Grid.OffsetCell(cell, new CellOffset(x, def.HeightInCells - 1));
-			int num = Grid.OffsetCell(cell, new CellOffset(x, 0));
-			SimMessages.SetCellProperties(num, 39);
-			Grid.Foundation[num] = true;
-			Grid.SetSolid(num, solid: true, CellEventLogger.Instance.SimCellOccupierForceSolid);
-			Grid.RenderedByWorld[num] = false;
-			World.Instance.OnSolidChanged(num);
-			GameScenePartitioner.Instance.TriggerEvent(num, GameScenePartitioner.Instance.solidChangedLayer, null);
 		}
 		smi = new Instance(this);
 		smi.StartSM();
@@ -301,19 +292,6 @@ public class Turbine : KMonoBehaviour
 		if (smi != null)
 		{
 			smi.StopSM("cleanup");
-		}
-		BuildingDef def = GetComponent<BuildingComplete>().Def;
-		int cell = Grid.PosToCell(this);
-		for (int i = 0; i < def.WidthInCells; i++)
-		{
-			int x = i - (def.WidthInCells - 1) / 2;
-			int num = Grid.OffsetCell(cell, new CellOffset(x, 0));
-			SimMessages.ClearCellProperties(num, 39);
-			Grid.Foundation[num] = false;
-			Grid.SetSolid(num, solid: false, CellEventLogger.Instance.SimCellOccupierForceSolid);
-			Grid.RenderedByWorld[num] = true;
-			World.Instance.OnSolidChanged(num);
-			GameScenePartitioner.Instance.TriggerEvent(num, GameScenePartitioner.Instance.solidChangedLayer, null);
 		}
 		Game.Instance.massEmitCallbackManager.Release(simEmitCBHandle, "Turbine");
 		simEmitCBHandle.Clear();

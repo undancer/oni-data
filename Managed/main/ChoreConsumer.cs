@@ -52,6 +52,18 @@ public class ChoreConsumer : KMonoBehaviour, IPersonalPriorityManager
 
 	public const int MAX_PERSONAL_PRIORITY = 5;
 
+	public const int PRIORITY_DISABLED = 0;
+
+	public const int PRIORITY_VERYLOW = 1;
+
+	public const int PRIORITY_LOW = 2;
+
+	public const int PRIORITY_FLAT = 3;
+
+	public const int PRIORITY_HIGH = 4;
+
+	public const int PRIORITY_VERYHIGH = 5;
+
 	[MyCmpAdd]
 	public ChoreProvider choreProvider;
 
@@ -409,6 +421,25 @@ public class ChoreConsumer : KMonoBehaviour, IPersonalPriorityManager
 		return false;
 	}
 
+	public bool GetNavigationCost(int cell, out int cost)
+	{
+		if ((bool)navigator)
+		{
+			cost = navigator.GetNavigationCost(cell);
+			if (cost != -1)
+			{
+				return true;
+			}
+		}
+		else if (consumerState.hasSolidTransferArm && consumerState.solidTransferArm.IsCellReachable(cell))
+		{
+			cost = Grid.GetCellRange(this.NaturalBuildingCell(), cell);
+			return true;
+		}
+		cost = 0;
+		return false;
+	}
+
 	public bool CanReach(IApproachable approachable)
 	{
 		if ((bool)navigator)
@@ -606,21 +637,10 @@ public class ChoreConsumer : KMonoBehaviour, IPersonalPriorityManager
 	public bool IsChoreGroupDisabled(ChoreGroup chore_group)
 	{
 		bool result = false;
-		foreach (Trait trait in base.gameObject.GetComponent<Traits>().TraitList)
+		Traits component = base.gameObject.GetComponent<Traits>();
+		if (component != null && component.IsChoreGroupDisabled(chore_group))
 		{
-			if (trait.disabledChoreGroups == null)
-			{
-				continue;
-			}
-			ChoreGroup[] disabledChoreGroups = trait.disabledChoreGroups;
-			for (int i = 0; i < disabledChoreGroups.Length; i++)
-			{
-				if (disabledChoreGroups[i].IdHash == chore_group.IdHash)
-				{
-					result = true;
-					break;
-				}
-			}
+			result = true;
 		}
 		return result;
 	}

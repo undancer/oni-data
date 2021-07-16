@@ -10,7 +10,13 @@ public class Schedulable : KMonoBehaviour
 
 	public bool IsAllowed(ScheduleBlockType schedule_block_type)
 	{
-		if (!VignetteManager.Instance.Get().IsRedAlert())
+		WorldContainer myWorld = base.gameObject.GetMyWorld();
+		if (myWorld == null)
+		{
+			DebugUtil.LogWarningArgs($"Trying to schedule {schedule_block_type.Id} but {base.gameObject.name} is not on a valid world. Grid cell: {Grid.PosToCell(base.gameObject.GetComponent<KPrefabID>())}");
+			return false;
+		}
+		if (!myWorld.AlertManager.IsRedAlert())
 		{
 			return ScheduleManager.Instance.IsAllowed(this, schedule_block_type);
 		}

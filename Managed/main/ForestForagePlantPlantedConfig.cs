@@ -6,6 +6,11 @@ public class ForestForagePlantPlantedConfig : IEntityConfig
 {
 	public const string ID = "ForestForagePlantPlanted";
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("ForestForagePlantPlanted", STRINGS.CREATURES.SPECIES.FORESTFORAGEPLANTPLANTED.NAME, STRINGS.CREATURES.SPECIES.FORESTFORAGEPLANTPLANTED.DESC, 100f, decor: DECOR.BONUS.TIER1, anim: Assets.GetAnim("podmelon_kanim"), initialAnim: "idle", sceneLayer: Grid.SceneLayer.BuildingBack, width: 1, height: 2);

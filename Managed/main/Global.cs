@@ -141,6 +141,7 @@ public class Global : MonoBehaviour
 			new BindingEntry("CinematicCamera", GamepadButton.NumButtons, KKeyCode.O, Modifier.None, Action.CinemaZoomOut, rebindable: true, ignore_root_conflicts: true),
 			new BindingEntry("CinematicCamera", GamepadButton.NumButtons, KKeyCode.Z, Modifier.None, Action.CinemaZoomSpeedPlus, rebindable: true, ignore_root_conflicts: true),
 			new BindingEntry("CinematicCamera", GamepadButton.NumButtons, KKeyCode.Z, Modifier.Shift, Action.CinemaZoomSpeedMinus, rebindable: true, ignore_root_conflicts: true),
+			new BindingEntry("CinematicCamera", GamepadButton.NumButtons, KKeyCode.P, Modifier.None, Action.CinemaUnpauseOnMove, rebindable: true, ignore_root_conflicts: true),
 			new BindingEntry("CinematicCamera", GamepadButton.NumButtons, KKeyCode.T, Modifier.None, Action.CinemaToggleLock, rebindable: true, ignore_root_conflicts: true),
 			new BindingEntry("CinematicCamera", GamepadButton.NumButtons, KKeyCode.E, Modifier.None, Action.CinemaToggleEasing, rebindable: true, ignore_root_conflicts: true),
 			new BindingEntry("Building", GamepadButton.NumButtons, KKeyCode.Slash, Modifier.None, Action.ToggleOpen),
@@ -164,9 +165,11 @@ public class Global : MonoBehaviour
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.Q, Modifier.Ctrl, Action.DebugGotoTarget),
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.S, Modifier.Ctrl, Action.DebugSelectMaterial),
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.M, Modifier.Ctrl, Action.DebugToggleMusic),
+			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.F, Modifier.Ctrl, Action.DebugToggleClusterFX),
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.Backspace, Modifier.None, Action.DebugToggle),
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.Backspace, Modifier.Ctrl, Action.DebugToggleFastWorkers),
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.Q, Modifier.Alt, Action.DebugTeleport),
+			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.F2, Modifier.Alt, Action.DebugSpawnMinionAtmoSuit),
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.F2, Modifier.Ctrl, Action.DebugSpawnMinion),
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.F3, Modifier.Ctrl, Action.DebugPlace),
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.F4, Modifier.Ctrl, Action.DebugInstantBuildMode),
@@ -229,11 +232,24 @@ public class Global : MonoBehaviour
 			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.F, Modifier.Shift, Action.SandboxFlood),
 			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.K, Modifier.Shift, Action.SandboxSample),
 			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.H, Modifier.Shift, Action.SandboxHeatGun),
+			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.J, Modifier.Shift, Action.SandboxRadsTool),
 			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.C, Modifier.Shift, Action.SandboxClearFloor),
 			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.X, Modifier.Shift, Action.SandboxDestroy),
 			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.E, Modifier.Shift, Action.SandboxSpawnEntity),
 			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.S, Modifier.Shift, Action.ToggleSandboxTools),
-			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.R, Modifier.Shift, Action.SandboxReveal)
+			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.R, Modifier.Shift, Action.SandboxReveal),
+			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.Z, Modifier.Shift, Action.SandboxCritterTool),
+			new BindingEntry("Sandbox", GamepadButton.NumButtons, KKeyCode.Mouse0, Modifier.Ctrl, Action.SandboxCopyElement),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha1, Modifier.Backtick, Action.SwitchActiveWorld1),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha2, Modifier.Backtick, Action.SwitchActiveWorld2),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha3, Modifier.Backtick, Action.SwitchActiveWorld3),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha4, Modifier.Backtick, Action.SwitchActiveWorld4),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha5, Modifier.Backtick, Action.SwitchActiveWorld5),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha6, Modifier.Backtick, Action.SwitchActiveWorld6),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha7, Modifier.Backtick, Action.SwitchActiveWorld7),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha8, Modifier.Backtick, Action.SwitchActiveWorld8),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha9, Modifier.Backtick, Action.SwitchActiveWorld9),
+			new BindingEntry("SwitchActiveWorld", GamepadButton.NumButtons, KKeyCode.Alpha0, Modifier.Backtick, Action.SwitchActiveWorld10)
 		};
 		IList<BuildMenu.DisplayInfo> list2 = (IList<BuildMenu.DisplayInfo>)BuildMenu.OrderedBuildings.data;
 		if (BuildMenu.UseHotkeyBuildMenu() && hotKeyBuildMenuPermitted)
@@ -286,6 +302,8 @@ public class Global : MonoBehaviour
 		Instance = this;
 		Debug.Log("Initializing at " + System.DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff"));
 		Debug.Log("Save path: " + Util.RootFolder());
+		MyCmp.Init();
+		MySmi.Init();
 		if (forcedAtlasInitializationList != null)
 		{
 			SpriteAtlas[] array = forcedAtlasInitializationList;
@@ -311,6 +329,7 @@ public class Global : MonoBehaviour
 		Singleton<StateMachineManager>.CreateInstance();
 		Localization.RegisterForTranslation(typeof(UI));
 		modManager = new KMod.Manager();
+		modManager.LoadModDBAndInitialize();
 		modManager.Load(Content.DLL);
 		modManager.Load(Content.Strings);
 		KSerialization.Manager.Initialize();
@@ -320,7 +339,6 @@ public class Global : MonoBehaviour
 		Singleton<SoundEventVolumeCache>.CreateInstance();
 		mAnimEventManager = new AnimEventManager();
 		Singleton<KBatchedAnimUpdater>.CreateInstance();
-		DistributionPlatform.Initialize();
 		Localization.Initialize();
 		modManager.Load(Content.Translation);
 		modManager.distribution_platforms.Add(new Local("Local", Label.DistributionPlatform.Local));
@@ -330,11 +348,12 @@ public class Global : MonoBehaviour
 		RestoreLegacyMetricsSetting();
 		TestDataLocations();
 		DistributionPlatform.onExitRequest += OnExitRequest;
+		DistributionPlatform.onDlcAuthenticationFailed += OnDlcAuthenticationFailed;
 		if (DistributionPlatform.Initialized)
 		{
 			if (!KPrivacyPrefs.instance.disableDataCollection)
 			{
-				Debug.Log(string.Concat("Logged into ", DistributionPlatform.Inst.Name, " with ID:", DistributionPlatform.Inst.LocalUser.Id, ", NAME:", DistributionPlatform.Inst.LocalUser.Name));
+				Debug.Log("Logged into " + DistributionPlatform.Inst.Name + " with ID:" + DistributionPlatform.Inst.LocalUser.Id?.ToString() + ", NAME:" + DistributionPlatform.Inst.LocalUser.Name);
 				ThreadedHttps<KleiAccount>.Instance.AuthenticateUser(OnGetUserIdKey);
 			}
 		}
@@ -361,7 +380,6 @@ public class Global : MonoBehaviour
 				component.GetComponent<ConfirmDialogScreen>().PopupConfirmDialog(string.Format(UI.FRONTEND.RAILFORCEQUIT.SAVE_EXIT, Path.GetFileNameWithoutExtension(filename)), delegate
 				{
 					SaveLoader.Instance.Save(filename);
-					ReportErrorDialog.MOST_RECENT_SAVEFILE = filename;
 					App.Quit();
 				}, delegate
 				{
@@ -378,6 +396,18 @@ public class Global : MonoBehaviour
 				App.Quit();
 			}, null);
 		}
+	}
+
+	private void OnDlcAuthenticationFailed()
+	{
+		KScreen component = KScreenManager.AddChild(globalCanvas, ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject).GetComponent<KScreen>();
+		component.Activate();
+		ConfirmDialogScreen component2 = component.GetComponent<ConfirmDialogScreen>();
+		component2.deactivateOnCancelAction = false;
+		component2.PopupConfirmDialog(UI.FRONTEND.RAILFORCEQUIT.DLC_NOT_PURCHASED, delegate
+		{
+			App.Quit();
+		}, null);
 	}
 
 	private void RestoreLegacyMetricsSetting()
@@ -451,7 +481,7 @@ public class Global : MonoBehaviour
 	private void SetONIStaticSessionVariables()
 	{
 		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Branch", "release");
-		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Build", 469300u);
+		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Build", 471618u);
 		if (KPlayerPrefs.HasKey(UnitConfigurationScreen.MassUnitKey))
 		{
 			ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable(UnitConfigurationScreen.MassUnitKey, ((GameUtil.MassUnit)KPlayerPrefs.GetInt(UnitConfigurationScreen.MassUnitKey)).ToString());

@@ -130,12 +130,6 @@ public class LiquidPumpingStation : Workable, ISim200ms
 		public SubstanceChunk source;
 	}
 
-	private static readonly CellOffset[] floorOffsets = new CellOffset[2]
-	{
-		new CellOffset(0, 0),
-		new CellOffset(1, 0)
-	};
-
 	private static readonly CellOffset[] liquidOffsets = new CellOffset[10]
 	{
 		new CellOffset(0, 0),
@@ -165,20 +159,12 @@ public class LiquidPumpingStation : Workable, ISim200ms
 		base.OnPrefabInit();
 		resetProgressOnStop = true;
 		showProgressBar = false;
-		int cell = Grid.PosToCell(this);
-		for (int i = 0; i < floorOffsets.Length; i++)
-		{
-			int num = Grid.OffsetCell(cell, floorOffsets[i]);
-			Grid.FakeFloor[num] = true;
-			Pathfinding.Instance.AddDirtyNavGridCell(num);
-		}
 	}
 
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
 		infos = new LiquidInfo[liquidOffsets.Length * 2];
-		GetComponent<KSelectable>().SetStatusIndicatorOffset(GetComponent<Building>().Def.placementPivot);
 		RefreshStatusItem();
 		Sim200ms(0f);
 		SetWorkTime(10f);
@@ -427,13 +413,6 @@ public class LiquidPumpingStation : Workable, ISim200ms
 			{
 				infos[i].source.DeleteObject();
 			}
-		}
-		int cell = Grid.PosToCell(this);
-		for (int j = 0; j < floorOffsets.Length; j++)
-		{
-			int num = Grid.OffsetCell(cell, floorOffsets[j]);
-			Grid.FakeFloor[num] = false;
-			Pathfinding.Instance.AddDirtyNavGridCell(num);
 		}
 	}
 }

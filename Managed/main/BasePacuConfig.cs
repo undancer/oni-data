@@ -55,9 +55,13 @@ public static class BasePacuConfig
 		gameObject.AddOrGet<Trappable>();
 		gameObject.AddOrGet<LoopingSounds>();
 		EntityTemplates.AddCreatureBrain(gameObject, chore_table, GameTags.Creatures.Species.PacuSpecies, symbol_prefix);
+		Tag tag = SimHashes.ToxicSand.CreateTag();
 		HashSet<Tag> hashSet = new HashSet<Tag>();
 		hashSet.Add(SimHashes.Algae.CreateTag());
-		Diet diet = new Diet(new Diet.Info(hashSet, SimHashes.ToxicSand.CreateTag(), CALORIES_PER_KG_OF_ORE, TUNING.CREATURES.CONVERSION_EFFICIENCY.NORMAL));
+		List<Diet.Info> list = new List<Diet.Info>();
+		list.Add(new Diet.Info(hashSet, tag, CALORIES_PER_KG_OF_ORE, TUNING.CREATURES.CONVERSION_EFFICIENCY.NORMAL));
+		list.AddRange(SeedDiet(tag, CALORIES_PER_KG_OF_ORE * KG_ORE_EATEN_PER_CYCLE * 4f, TUNING.CREATURES.CONVERSION_EFFICIENCY.NORMAL));
+		Diet diet = new Diet(list.ToArray());
 		CreatureCalorieMonitor.Def def = gameObject.AddOrGetDef<CreatureCalorieMonitor.Def>();
 		def.diet = diet;
 		def.minPoopSizeInCalories = CALORIES_PER_KG_OF_ORE * MIN_POOP_SIZE_IN_KG;
@@ -71,6 +75,18 @@ public static class BasePacuConfig
 			gameObject.AddOrGet<SymbolOverrideController>().ApplySymbolOverridesByAffix(Assets.GetAnim(anim_file), symbol_prefix);
 		}
 		return gameObject;
+	}
+
+	public static List<Diet.Info> SeedDiet(Tag poopTag, float caloriesPerSeed, float producedConversionRate)
+	{
+		List<Diet.Info> list = new List<Diet.Info>();
+		foreach (GameObject item in Assets.GetPrefabsWithTag(GameTags.Seed))
+		{
+			HashSet<Tag> hashSet = new HashSet<Tag>();
+			hashSet.Add(new Tag(item.GetComponent<KPrefabID>().PrefabID()));
+			list.Add(new Diet.Info(hashSet, poopTag, caloriesPerSeed, producedConversionRate));
+		}
+		return list;
 	}
 
 	private static string GetLandAnim(FallStates.Instance smi)

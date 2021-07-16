@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Room : IAssignableIdentity
 {
@@ -42,6 +43,19 @@ public class Room : IAssignableIdentity
 			}
 		}
 		return current_owners;
+	}
+
+	public List<GameObject> GetBuildingsOnFloor()
+	{
+		List<GameObject> list = new List<GameObject>();
+		for (int i = 0; i < buildings.Count; i++)
+		{
+			if (!Grid.Solid[Grid.PosToCell(buildings[i])] && Grid.Solid[Grid.CellBelow(Grid.PosToCell(buildings[i]))])
+			{
+				list.Add(buildings[i].gameObject);
+			}
+		}
+		return list;
 	}
 
 	public Ownables GetSoleOwner()

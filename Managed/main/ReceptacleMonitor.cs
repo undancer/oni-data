@@ -26,7 +26,7 @@ public class ReceptacleMonitor : StateMachineComponent<ReceptacleMonitor.StatesI
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = wild;
-			base.serializable = true;
+			base.serializable = SerializeType.Never;
 			wild.TriggerOnEnter(GameHashes.ReceptacleOperational);
 			inoperational.TriggerOnEnter(GameHashes.ReceptacleInoperational);
 			operational.TriggerOnEnter(GameHashes.ReceptacleOperational);

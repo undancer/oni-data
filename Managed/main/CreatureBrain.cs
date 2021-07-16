@@ -7,6 +7,10 @@ public class CreatureBrain : Brain
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		GetComponent<Navigator>().SetAbilities(new CreaturePathFinderAbilities(GetComponent<Navigator>()));
+		Navigator component = GetComponent<Navigator>();
+		if (component != null)
+		{
+			component.SetAbilities(new CreaturePathFinderAbilities(component));
+		}
 	}
 }

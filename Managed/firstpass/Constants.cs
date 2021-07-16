@@ -20,6 +20,8 @@ public static class Constants
 
 	public const float DaytimeDurationInSeconds = 525f;
 
+	public const float NightimeDurationInPercentage = 0.125f;
+
 	public const float DaytimeDurationInPercentage = 0.875f;
 
 	public const float StartTimeInSeconds = 50f;
@@ -29,8 +31,6 @@ public static class Constants
 	public const int AutoSaveDayInterval = 1;
 
 	public const float ICE_DIG_TIME = 4f;
-
-	public const float SORTKEY_MAX = 9999f;
 
 	public const string BULLETSTRING = "• ";
 
@@ -49,6 +49,12 @@ public static class Constants
 	public static readonly Color NEUTRAL_COLOR = Color.grey;
 
 	public static readonly string NEUTRAL_COLOR_STR = "#" + NEUTRAL_COLOR.ToHexString();
+
+	public static readonly Color WARNING_COLOR = new Color(1f, 14f / 15f, 22f / 51f);
+
+	public static readonly string WARNING_COLOR_STR = "#" + WARNING_COLOR.ToHexString();
+
+	public static readonly string WHITE_COLOR_STR = "#" + Color.white.ToHexString();
 
 	public const float W2KW = 0.001f;
 

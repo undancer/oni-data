@@ -64,7 +64,7 @@ public abstract class Assignable : KMonoBehaviour, ISaveLoadable
 		{
 			return assignee_identityRef.Get().GetComponent<IAssignableIdentity>();
 		}
-		if (assignee_groupID != "")
+		if (!string.IsNullOrEmpty(assignee_groupID))
 		{
 			return Game.Instance.assignmentManager.assignment_groups[assignee_groupID];
 		}
@@ -80,6 +80,7 @@ public abstract class Assignable : KMonoBehaviour, ISaveLoadable
 		{
 			Assign(Game.Instance.assignmentManager.assignment_groups["public"]);
 		}
+		assignmentPreconditions.Add((MinionAssignablesProxy proxy) => (!(proxy.GetTargetGameObject().GetComponent<KMonoBehaviour>().GetMyWorld() != this.GetMyWorld())) ? true : false);
 	}
 
 	protected override void OnCleanUp()
@@ -248,7 +249,13 @@ public abstract class Assignable : KMonoBehaviour, ISaveLoadable
 		int cell = Grid.PosToCell(this);
 		IApproachable component = GetComponent<IApproachable>();
 		CellOffset[] array = ((component != null) ? component.GetOffsets() : new CellOffset[1]);
-		foreach (CellOffset offset in array)
+		DebugUtil.DevAssert(navigator != null, "Navigator is mysteriously null");
+		if (navigator == null)
+		{
+			return -1;
+		}
+		CellOffset[] array2 = array;
+		foreach (CellOffset offset in array2)
 		{
 			int cell2 = Grid.OffsetCell(cell, offset);
 			int navigationCost = navigator.GetNavigationCost(cell2);

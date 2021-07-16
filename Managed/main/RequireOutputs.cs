@@ -121,8 +121,12 @@ public class RequireOutputs : KMonoBehaviour
 		{
 			operational.SetFlag(pipesHaveRoomFlag, flag);
 			previouslyHadRoom = flag;
-			StatusItem conduitBlockedMultiples = Db.Get().BuildingStatusItems.ConduitBlockedMultiples;
-			pipeBlockedGuid = selectable.ToggleStatusItem(conduitBlockedMultiples, pipeBlockedGuid, !flag);
+			StatusItem status_item = Db.Get().BuildingStatusItems.ConduitBlockedMultiples;
+			if (conduitType == ConduitType.Solid)
+			{
+				status_item = Db.Get().BuildingStatusItems.SolidConduitBlockedMultiples;
+			}
+			pipeBlockedGuid = selectable.ToggleStatusItem(status_item, pipeBlockedGuid, !flag);
 		}
 	}
 

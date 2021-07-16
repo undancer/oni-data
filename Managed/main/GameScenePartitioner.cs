@@ -110,8 +110,8 @@ public class GameScenePartitioner : KMonoBehaviour
 		industrialBuildings = partitioner.CreateMask("IndustrialBuildings");
 		completeBuildings = partitioner.CreateMask("CompleteBuildings");
 		prioritizableObjects = partitioner.CreateMask("PrioritizableObjects");
-		objectLayers = new ScenePartitionerLayer[40];
-		for (int i = 0; i < 40; i++)
+		objectLayers = new ScenePartitionerLayer[42];
+		for (int i = 0; i < 42; i++)
 		{
 			ObjectLayer objectLayer = (ObjectLayer)i;
 			objectLayers[i] = partitioner.CreateMask(new HashedString(objectLayer.ToString()));

@@ -19,9 +19,9 @@ public class SingleSliderSideScreen : SideScreenContent
 	public override bool IsValidForTarget(GameObject target)
 	{
 		KPrefabID component = target.GetComponent<KPrefabID>();
-		if (target.GetComponent<ISingleSliderControl>() != null && !component.HasTag("HydrogenGenerator".ToTag()) && !component.HasTag("MethaneGenerator".ToTag()) && !component.HasTag("PetroleumGenerator".ToTag()))
+		if (target.GetComponent<ISingleSliderControl>() != null && !component.HasTag("HydrogenGenerator".ToTag()) && !component.HasTag("MethaneGenerator".ToTag()) && !component.HasTag("PetroleumGenerator".ToTag()) && !component.HasTag("DevGenerator".ToTag()))
 		{
-			return !component.HasTag("DevGenerator".ToTag());
+			return !component.HasTag(GameTags.DeadReactor);
 		}
 		return false;
 	}
@@ -36,7 +36,7 @@ public class SingleSliderSideScreen : SideScreenContent
 		target = new_target.GetComponent<ISingleSliderControl>();
 		if (target == null)
 		{
-			Debug.LogError("The gameObject received does not contain a Manual Generator component");
+			Debug.LogError("The gameObject received does not contain a ISingleSliderControl implementation");
 			return;
 		}
 		titleKey = target.SliderTitleKey;

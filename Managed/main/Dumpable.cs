@@ -61,12 +61,7 @@ public class Dumpable : Workable
 
 	public void Dump()
 	{
-		PrimaryElement component = GetComponent<PrimaryElement>();
-		if (component.Mass > 0f)
-		{
-			SimMessages.AddRemoveSubstance(Grid.PosToCell(this), component.ElementID, CellEventLogger.Instance.Dumpable, component.Mass, component.Temperature, component.DiseaseIdx, component.DiseaseCount);
-		}
-		Util.KDestroyGameObject(base.gameObject);
+		Dump(base.transform.GetPosition());
 	}
 
 	public void Dump(Vector3 pos)
@@ -74,7 +69,14 @@ public class Dumpable : Workable
 		PrimaryElement component = GetComponent<PrimaryElement>();
 		if (component.Mass > 0f)
 		{
-			SimMessages.AddRemoveSubstance(Grid.PosToCell(pos), component.ElementID, CellEventLogger.Instance.Dumpable, component.Mass, component.Temperature, component.DiseaseIdx, component.DiseaseCount);
+			if (component.Element.IsLiquid)
+			{
+				FallingWater.instance.AddParticle(Grid.PosToCell(pos), component.Element.idx, component.Mass, component.Temperature, component.DiseaseIdx, component.DiseaseCount, skip_sound: true);
+			}
+			else
+			{
+				SimMessages.AddRemoveSubstance(Grid.PosToCell(pos), component.ElementID, CellEventLogger.Instance.Dumpable, component.Mass, component.Temperature, component.DiseaseIdx, component.DiseaseCount);
+			}
 		}
 		Util.KDestroyGameObject(base.gameObject);
 	}

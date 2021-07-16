@@ -430,7 +430,7 @@ public class BaseUtilityBuildTool : DragTool
 					gameObject = def.TryPlace(null, vector, Orientation.Neutral, selectedElements);
 					if (gameObject != null)
 					{
-						if (!def.MaterialsAvailable(selectedElements) && !DebugHandler.InstantBuildMode)
+						if (!def.MaterialsAvailable(selectedElements, ClusterManager.Instance.activeWorld) && !DebugHandler.InstantBuildMode)
 						{
 							PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, UI.TOOLTIPS.NOMATERIAL, null, vector);
 						}
@@ -470,7 +470,7 @@ public class BaseUtilityBuildTool : DragTool
 						component4.IsReplacementTile = true;
 						gameObject = def.Instantiate(vector, Orientation.Neutral, selectedElements);
 						component4.IsReplacementTile = false;
-						if (!def.MaterialsAvailable(selectedElements) && !DebugHandler.InstantBuildMode)
+						if (!def.MaterialsAvailable(selectedElements, ClusterManager.Instance.activeWorld) && !DebugHandler.InstantBuildMode)
 						{
 							PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, UI.TOOLTIPS.NOMATERIAL, null, vector);
 						}

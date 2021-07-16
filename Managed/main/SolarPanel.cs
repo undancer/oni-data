@@ -32,8 +32,6 @@ public class SolarPanel : Generator
 
 	private Guid statusHandle;
 
-	private const Sim.Cell.Properties floorCellProperties = (Sim.Cell.Properties)39;
-
 	private CellOffset[] solarCellOffsets = new CellOffset[14]
 	{
 		new CellOffset(-3, 2),
@@ -66,38 +64,12 @@ public class SolarPanel : Generator
 		smi = new StatesInstance(this);
 		smi.StartSM();
 		accumulator = Game.Instance.accumulators.Add("Element", this);
-		BuildingDef def = GetComponent<BuildingComplete>().Def;
-		int cell = Grid.PosToCell(this);
-		for (int i = 0; i < def.WidthInCells; i++)
-		{
-			int x = i - (def.WidthInCells - 1) / 2;
-			int num = Grid.OffsetCell(cell, new CellOffset(x, 0));
-			SimMessages.SetCellProperties(num, 39);
-			Grid.Foundation[num] = true;
-			Grid.SetSolid(num, solid: true, CellEventLogger.Instance.SimCellOccupierForceSolid);
-			World.Instance.OnSolidChanged(num);
-			GameScenePartitioner.Instance.TriggerEvent(num, GameScenePartitioner.Instance.solidChangedLayer, null);
-			Grid.RenderedByWorld[num] = false;
-		}
 		meter = new MeterController(GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.Infront, Grid.SceneLayer.NoLayer, "meter_target", "meter_fill", "meter_frame", "meter_OL");
 	}
 
 	protected override void OnCleanUp()
 	{
 		smi.StopSM("cleanup");
-		BuildingDef def = GetComponent<BuildingComplete>().Def;
-		int cell = Grid.PosToCell(this);
-		for (int i = 0; i < def.WidthInCells; i++)
-		{
-			int x = i - (def.WidthInCells - 1) / 2;
-			int num = Grid.OffsetCell(cell, new CellOffset(x, 0));
-			SimMessages.ClearCellProperties(num, 39);
-			Grid.Foundation[num] = false;
-			Grid.SetSolid(num, solid: false, CellEventLogger.Instance.SimCellOccupierForceSolid);
-			World.Instance.OnSolidChanged(num);
-			GameScenePartitioner.Instance.TriggerEvent(num, GameScenePartitioner.Instance.solidChangedLayer, null);
-			Grid.RenderedByWorld[num] = true;
-		}
 		Game.Instance.accumulators.Remove(accumulator);
 		base.OnCleanUp();
 	}

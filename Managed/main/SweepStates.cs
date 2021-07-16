@@ -28,8 +28,6 @@ public class SweepStates : GameStateMachine<SweepStates, SweepStates.Instance, I
 		}
 	}
 
-	public const float JOULES_SPENT_PER_KILOGRAM = 1f;
-
 	public const float TIME_UNTIL_BORED = 30f;
 
 	public const string MOVE_LOOP_SOUND = "SweepBot_mvmt_lp";
@@ -104,12 +102,13 @@ public class SweepStates : GameStateMachine<SweepStates, SweepStates.Instance, I
 			headingRight.Set(!headingRight.Get(smi), smi);
 		}).OnAnimQueueComplete(pause);
 		redirected.StopMoving().GoTo(emoteRedirected);
-		sweep.Enter(delegate(Instance smi)
+		sweep.PlayAnim("pickup").ToggleEffect("BotSweeping").Enter(delegate(Instance smi)
 		{
 			StopMoveSound(smi);
 			smi.sm.bored.Set(value: false, smi);
 			smi.sm.timeUntilBored.Set(30f, smi);
-		}).PlayAnim("pickup").OnAnimQueueComplete(moving);
+		})
+			.OnAnimQueueComplete(moving);
 		pause.Enter(delegate(Instance smi)
 		{
 			if (Grid.IsLiquid(Grid.PosToCell(smi)))
@@ -125,12 +124,13 @@ public class SweepStates : GameStateMachine<SweepStates, SweepStates.Instance, I
 				smi.GoTo(moving);
 			}
 		});
-		mopping.PlayAnim("mop_pre", KAnim.PlayMode.Once).QueueAnim("mop_loop", loop: true).Enter(delegate(Instance smi)
-		{
-			smi.sm.timeUntilBored.Set(30f, smi);
-			smi.sm.bored.Set(value: false, smi);
-			StopMoveSound(smi);
-		})
+		mopping.PlayAnim("mop_pre", KAnim.PlayMode.Once).QueueAnim("mop_loop", loop: true).ToggleEffect("BotMopping")
+			.Enter(delegate(Instance smi)
+			{
+				smi.sm.timeUntilBored.Set(30f, smi);
+				smi.sm.bored.Set(value: false, smi);
+				StopMoveSound(smi);
+			})
 			.Update(delegate(Instance smi, float dt)
 			{
 				if (smi.timeinstate > 16f || !Grid.IsLiquid(Grid.PosToCell(smi)))
@@ -218,15 +218,13 @@ public class SweepStates : GameStateMachine<SweepStates, SweepStates.Instance, I
 			{
 				component.GetComponent<EntitySplitter>();
 				component = EntitySplitter.Split(component, Mathf.Min(10f, storage.RemainingCapacity()));
-				float value = smi.gameObject.GetAmounts().GetValue(Db.Get().Amounts.InternalBattery.Id);
-				smi.gameObject.GetAmounts().SetValue(Db.Get().Amounts.InternalBattery.Id, Mathf.Max(0f, value - component.GetComponent<PrimaryElement>().Mass * 1f));
+				smi.gameObject.GetAmounts().GetValue(Db.Get().Amounts.InternalBattery.Id);
 				storage.Store(component.gameObject);
 				flag = true;
 			}
 			else
 			{
-				float value2 = smi.gameObject.GetAmounts().GetValue(Db.Get().Amounts.InternalBattery.Id);
-				smi.gameObject.GetAmounts().SetValue(Db.Get().Amounts.InternalBattery.Id, Mathf.Max(0f, value2 - component.GetComponent<PrimaryElement>().Mass * 1f));
+				smi.gameObject.GetAmounts().GetValue(Db.Get().Amounts.InternalBattery.Id);
 				storage.Store(component.gameObject);
 				flag = true;
 			}

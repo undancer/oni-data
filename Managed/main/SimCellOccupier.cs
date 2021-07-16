@@ -69,6 +69,10 @@ public class SimCellOccupier : KMonoBehaviour, IGameObjectEffectDescriptor
 			}
 			else
 			{
+				if (SaveGame.Instance.sandboxEnabled && Grid.Element[offset_cell].IsSolid)
+				{
+					SimMessages.Dig(offset_cell);
+				}
 				ForceSetGameCellData(offset_cell);
 				Game.Instance.AddSolidChangedFilter(offset_cell);
 			}

@@ -64,13 +64,25 @@ public class IlluminationVulnerable : StateMachineComponent<IlluminationVulnerab
 		}
 	}
 
-	public float lightIntensityThreshold;
-
 	private OccupyArea _occupyArea;
 
 	private SchedulerHandle handle;
 
 	public bool prefersDarkness;
+
+	private AttributeInstance minLuxAttributeInstance;
+
+	public int LightIntensityThreshold
+	{
+		get
+		{
+			if (minLuxAttributeInstance != null)
+			{
+				return Mathf.RoundToInt(minLuxAttributeInstance.GetTotalValue());
+			}
+			return Mathf.RoundToInt(GetComponent<Modifiers>().GetPreModifiedAttributeValue(Db.Get().PlantAttributes.MinLightLux));
+		}
+	}
 
 	private OccupyArea occupyArea
 	{
@@ -96,11 +108,11 @@ public class IlluminationVulnerable : StateMachineComponent<IlluminationVulnerab
 		{
 			if (base.smi.IsInsideState(base.smi.sm.too_bright))
 			{
-				return Db.Get().CreatureStatusItems.Crop_Too_Bright.resolveStringCallback(CREATURES.STATUSITEMS.CROP_TOO_BRIGHT.NAME, this);
+				return Db.Get().CreatureStatusItems.Crop_Too_Bright.GetName(this);
 			}
 			if (base.smi.IsInsideState(base.smi.sm.too_dark))
 			{
-				return Db.Get().CreatureStatusItems.Crop_Too_Dark.resolveStringCallback(CREATURES.STATUSITEMS.CROP_TOO_DARK.NAME, this);
+				return Db.Get().CreatureStatusItems.Crop_Too_Dark.GetName(this);
 			}
 			return "";
 		}
@@ -110,6 +122,7 @@ public class IlluminationVulnerable : StateMachineComponent<IlluminationVulnerab
 	{
 		base.OnPrefabInit();
 		base.gameObject.GetAmounts().Add(new AmountInstance(Db.Get().Amounts.Illumination, base.gameObject));
+		minLuxAttributeInstance = base.gameObject.GetAttributes().Add(Db.Get().PlantAttributes.MinLightLux);
 	}
 
 	protected override void OnSpawn()
@@ -133,9 +146,9 @@ public class IlluminationVulnerable : StateMachineComponent<IlluminationVulnerab
 	{
 		if (prefersDarkness)
 		{
-			return (float)Grid.LightIntensity[cell] <= lightIntensityThreshold;
+			return Grid.LightIntensity[cell] == 0;
 		}
-		return (float)Grid.LightIntensity[cell] > lightIntensityThreshold;
+		return Grid.LightIntensity[cell] > LightIntensityThreshold;
 	}
 
 	public bool IsComfortable()
@@ -154,7 +167,7 @@ public class IlluminationVulnerable : StateMachineComponent<IlluminationVulnerab
 		}
 		return new List<Descriptor>
 		{
-			new Descriptor(UI.GAMEOBJECTEFFECTS.REQUIRES_LIGHT, UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_LIGHT, Descriptor.DescriptorType.Requirement)
+			new Descriptor(UI.GAMEOBJECTEFFECTS.REQUIRES_LIGHT.Replace("{Lux}", GameUtil.GetFormattedLux(LightIntensityThreshold)), UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_LIGHT.Replace("{Lux}", GameUtil.GetFormattedLux(LightIntensityThreshold)), Descriptor.DescriptorType.Requirement)
 		};
 	}
 }

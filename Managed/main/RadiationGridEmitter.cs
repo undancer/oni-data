@@ -1,53 +1,65 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class RadiationGridEmitter
 {
-	public int cell = -1;
+	private static int MAX_EMIT_DISTANCE = 128;
 
-	public LightShape shape;
-
-	public float radius = 4f;
+	public int originCell = -1;
 
 	public int intensity = 1;
 
-	public float falloffRate = 0.5f;
+	public int projectionCount = 20;
 
-	private List<int> litCells;
+	public int direction;
 
-	public RadiationGridEmitter(int cell, List<int> lit_cells, int intensity, float radius, LightShape shape, float falloffRate = 0.5f)
+	public int angle = 360;
+
+	public bool enabled;
+
+	private HashSet<int> scanCells = new HashSet<int>();
+
+	public RadiationGridEmitter(int originCell, int intensity)
 	{
-		this.cell = cell;
-		this.radius = radius;
+		this.originCell = originCell;
 		this.intensity = intensity;
-		this.shape = shape;
-		litCells = lit_cells;
-		this.falloffRate = falloffRate;
 	}
 
-	public void Add()
+	public void Emit()
 	{
-		Remove();
-		DiscreteShadowCaster.GetVisibleCells(cell, litCells, (int)radius, shape);
-		for (int i = 0; i < litCells.Count; i++)
+		scanCells.Clear();
+		Vector2 a = Grid.CellToPosCCC(originCell, Grid.SceneLayer.Building);
+		for (float num = (float)direction - (float)angle / 2f; num < (float)direction + (float)angle / 2f; num += (float)(angle / projectionCount))
 		{
-			int num = litCells[i];
-			int num2 = Mathf.Max(1, Mathf.RoundToInt(falloffRate * (float)Mathf.Max(Grid.GetCellDistance(num, cell), 1)));
-			int num3 = Mathf.Max(0, Grid.RadiationCount[num] + intensity / num2);
-			Grid.RadiationCount[num] = num3;
-			RadiationGridManager.previewLux[num] = num3;
+			float num2 = UnityEngine.Random.Range((float)(-angle / projectionCount) / 2f, (float)(angle / projectionCount) / 2f);
+			Vector2 vector = new Vector2(Mathf.Cos((num + num2) * (float)Math.PI / 180f), Mathf.Sin((num + num2) * (float)Math.PI / 180f));
+			int num3 = 3;
+			float num4 = intensity / 4;
+			Vector2 a2 = vector;
+			float num5 = 0f;
+			while ((double)num4 > 0.01 && num5 < (float)MAX_EMIT_DISTANCE)
+			{
+				num5 += 1f / (float)num3;
+				int num6 = Grid.PosToCell(a + a2 * num5);
+				if (!Grid.IsValidCell(num6))
+				{
+					break;
+				}
+				if (!scanCells.Contains(num6))
+				{
+					SimMessages.ModifyRadiationOnCell(num6, Mathf.RoundToInt(num4));
+					scanCells.Add(num6);
+				}
+				num4 *= Mathf.Max(0f, 1f - Mathf.Pow(Grid.Mass[num6], 1.25f) * Grid.Element[num6].molarMass / 1000000f);
+				num4 *= UnityEngine.Random.Range(0.96f, 0.98f);
+			}
 		}
 	}
 
-	public void Remove()
+	private int CalculateFalloff(float falloffRate, int cell, int origin)
 	{
-		for (int i = 0; i < litCells.Count; i++)
-		{
-			int num = litCells[i];
-			int num2 = RadiationGridManager.CalculateFalloff(falloffRate, num, cell);
-			Grid.RadiationCount[num] = Mathf.Max(0, Grid.RadiationCount[num] - intensity / num2);
-			RadiationGridManager.previewLux[num] = 0;
-		}
-		litCells.Clear();
+		return Mathf.Max(1, Mathf.RoundToInt(falloffRate * (float)Mathf.Max(Grid.GetCellDistance(origin, cell), 1)));
 	}
 }

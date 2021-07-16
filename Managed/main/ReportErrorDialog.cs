@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using KMod;
 using STRINGS;
 using TMPro;
@@ -14,8 +12,6 @@ public class ReportErrorDialog : MonoBehaviour
 		SubmitError,
 		DisableMods
 	}
-
-	public static string MOST_RECENT_SAVEFILE;
 
 	private System.Action submitAction;
 
@@ -54,18 +50,6 @@ public class ReportErrorDialog : MonoBehaviour
 	private GameObject StackTrace;
 
 	[SerializeField]
-	private GameObject uploadSaveDialog;
-
-	[SerializeField]
-	private KButton uploadSaveButton;
-
-	[SerializeField]
-	private KButton skipUploadSaveButton;
-
-	[SerializeField]
-	private LocText saveFileInfoLabel;
-
-	[SerializeField]
 	private GameObject modEntryPrefab;
 
 	[SerializeField]
@@ -94,8 +78,6 @@ public class ReportErrorDialog : MonoBehaviour
 		continueGameButton.gameObject.SetActive(continueAction != null);
 		continueGameButton.onClick += OnSelect_CONTINUE;
 		quitButton.onClick += OnSelect_QUIT;
-		uploadSaveButton.onClick += OnSelect_UPLOADSAVE;
-		skipUploadSaveButton.onClick += OnSelect_SKIPUPLOADSAVE;
 		messageInputField.text = UI.CRASHSCREEN.BODY;
 	}
 
@@ -184,7 +166,7 @@ public class ReportErrorDialog : MonoBehaviour
 	public void OnSelect_COPYTOCLIPBOARD()
 	{
 		TextEditor textEditor = new TextEditor();
-		textEditor.text = m_stackTrace;
+		textEditor.text = m_stackTrace + $"\nBuild: {471618u}" + (DebugHandler.enabled ? "-D" : "");
 		textEditor.SelectAll();
 		textEditor.Copy();
 	}
@@ -193,25 +175,7 @@ public class ReportErrorDialog : MonoBehaviour
 	{
 		submitButton.GetComponentInChildren<LocText>().text = UI.CRASHSCREEN.REPORTING;
 		submitButton.GetComponent<KButton>().isInteractable = false;
-		StartCoroutine(WaitForUIUpdateBeforeReporting());
-	}
-
-	private IEnumerator WaitForUIUpdateBeforeReporting()
-	{
-		yield return new WaitForEndOfFrame();
-		yield return new WaitForEndOfFrame();
-		bool flag = false;
-		if (MOST_RECENT_SAVEFILE != null && File.Exists(MOST_RECENT_SAVEFILE))
-		{
-			flag = true;
-			long length = new FileInfo(MOST_RECENT_SAVEFILE).Length;
-			saveFileInfoLabel.text = Path.GetFileName(MOST_RECENT_SAVEFILE) + " " + length + " bytes";
-			uploadSaveDialog.SetActive(value: true);
-		}
-		if (!flag)
-		{
-			Submit();
-		}
+		Submit();
 	}
 
 	public void OnSelect_QUIT()
@@ -239,20 +203,6 @@ public class ReportErrorDialog : MonoBehaviour
 	public string UserMessage()
 	{
 		return messageInputField.text;
-	}
-
-	private void OnSelect_UPLOADSAVE()
-	{
-		uploadSaveDialog.SetActive(value: false);
-		KCrashReporter.MOST_RECENT_SAVEFILE = MOST_RECENT_SAVEFILE;
-		Submit();
-	}
-
-	private void OnSelect_SKIPUPLOADSAVE()
-	{
-		uploadSaveDialog.SetActive(value: false);
-		KCrashReporter.MOST_RECENT_SAVEFILE = null;
-		Submit();
 	}
 
 	private void Submit()

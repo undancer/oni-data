@@ -15,9 +15,20 @@ public struct SoundCuller
 
 	private float zoomScaler;
 
+	public static bool IsAudibleWorld(Vector2 pos)
+	{
+		bool result = false;
+		int num = Grid.PosToCell(pos);
+		if (Grid.IsValidCell(num) && Grid.WorldIdx[num] == ClusterManager.Instance.activeWorldId)
+		{
+			result = true;
+		}
+		return result;
+	}
+
 	public bool IsAudible(Vector2 pos)
 	{
-		if (min.LessEqual(pos))
+		if (IsAudibleWorld(pos) && min.LessEqual(pos))
 		{
 			return pos.LessEqual(max);
 		}
@@ -31,6 +42,10 @@ public struct SoundCuller
 
 	public bool IsAudible(Vector2 pos, float falloff_distance_sq)
 	{
+		if (!IsAudibleWorld(pos))
+		{
+			return false;
+		}
 		pos = GetVerticallyScaledPosition(pos);
 		return IsAudibleNoCameraScaling(pos, falloff_distance_sq);
 	}

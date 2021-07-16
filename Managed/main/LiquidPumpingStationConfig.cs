@@ -57,5 +57,10 @@ public class LiquidPumpingStationConfig : IBuildingConfig
 	{
 		AddGuide(go.GetComponent<Building>().Def.BuildingPreview, occupy_tiles: false);
 		AddGuide(go.GetComponent<Building>().Def.BuildingUnderConstruction, occupy_tiles: true);
+		go.AddOrGet<FakeFloorAdder>().floorOffsets = new CellOffset[2]
+		{
+			new CellOffset(0, 0),
+			new CellOffset(1, 0)
+		};
 	}
 }

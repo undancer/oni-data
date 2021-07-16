@@ -133,34 +133,21 @@ public class CommandModule : StateMachineComponent<CommandModule.StatesInstance>
 
 	public RocketStats rocketStats;
 
+	public RocketCommandConditions conditions;
+
 	private bool releasingAstronaut;
 
 	private const Sim.Cell.Properties floorCellProperties = (Sim.Cell.Properties)39;
 
-	public ConditionDestinationReachable reachable;
-
-	public ConditionHasAstronaut hasAstronaut;
-
-	public ConditionHasAtmoSuit hasSuit;
-
-	public CargoBayIsEmpty cargoEmpty;
-
-	public ConditionHasMinimumMass destHasResources;
-
-	public ConditionFlightPathIsClear flightPathIsClear;
-
 	public Assignable assignable;
-
-	private CharacterOverlay characterOverlay;
 
 	private HandleVector<int>.Handle partitionerEntry;
 
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		characterOverlay = base.gameObject.AddComponent<CharacterOverlay>();
-		characterOverlay.Register();
 		rocketStats = new RocketStats(this);
+		conditions = GetComponent<RocketCommandConditions>();
 	}
 
 	public void ReleaseAstronaut(bool fill_bladder)
@@ -204,13 +191,6 @@ public class CommandModule : StateMachineComponent<CommandModule.StatesInstance>
 		int cell = Grid.PosToCell(base.gameObject);
 		partitionerEntry = GameScenePartitioner.Instance.Add("CommandModule.gantryChanged", base.gameObject, cell, GameScenePartitioner.Instance.validNavCellChangedLayer, OnGantryChanged);
 		OnGantryChanged(null);
-		RocketModule component = GetComponent<RocketModule>();
-		reachable = (ConditionDestinationReachable)component.AddLaunchCondition(new ConditionDestinationReachable(this));
-		hasAstronaut = (ConditionHasAstronaut)component.AddLaunchCondition(new ConditionHasAstronaut(this));
-		hasSuit = (ConditionHasAtmoSuit)component.AddLaunchCondition(new ConditionHasAtmoSuit(this));
-		cargoEmpty = (CargoBayIsEmpty)component.AddLaunchCondition(new CargoBayIsEmpty(this));
-		destHasResources = (ConditionHasMinimumMass)component.AddLaunchCondition(new ConditionHasMinimumMass(this));
-		flightPathIsClear = (ConditionFlightPathIsClear)component.AddFlightCondition(new ConditionFlightPathIsClear(base.gameObject, 1));
 	}
 
 	private bool CanAssignTo(MinionAssignablesProxy worker)
@@ -228,8 +208,12 @@ public class CommandModule : StateMachineComponent<CommandModule.StatesInstance>
 
 	private static bool HasValidGantry(GameObject go)
 	{
-		int i = Grid.OffsetCell(Grid.PosToCell(go), 0, -1);
-		return Grid.FakeFloor[i];
+		int num = Grid.OffsetCell(Grid.PosToCell(go), 0, -1);
+		if (Grid.IsValidCell(num))
+		{
+			return Grid.FakeFloor[num];
+		}
+		return false;
 	}
 
 	private void OnGantryChanged(object data)

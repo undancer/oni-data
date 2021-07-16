@@ -149,7 +149,7 @@ public class SuitMarker : KMonoBehaviour
 			{
 				Assignable assignable = equipment.GetAssignable(Db.Get().AssignableSlots.Suit);
 				assignable.Unassign();
-				Notification notification = new Notification(MISC.NOTIFICATIONS.SUIT_DROPPED.NAME, NotificationType.BadMinor, HashedString.Invalid, (List<Notification> notificationList, object data) => MISC.NOTIFICATIONS.SUIT_DROPPED.TOOLTIP);
+				Notification notification = new Notification(MISC.NOTIFICATIONS.SUIT_DROPPED.NAME, NotificationType.BadMinor, (List<Notification> notificationList, object data) => MISC.NOTIFICATIONS.SUIT_DROPPED.TOOLTIP);
 				assignable.GetComponent<Notifier>().Add(notification);
 			}
 		}

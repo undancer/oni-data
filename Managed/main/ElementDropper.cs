@@ -28,24 +28,9 @@ public class ElementDropper : KMonoBehaviour
 
 	private void OnStorageChanged(object data)
 	{
-		GameObject gameObject = storage.FindFirst(emitTag);
-		if (!(gameObject == null) && gameObject.GetComponent<PrimaryElement>().Mass >= emitMass)
+		if (storage.GetMassAvailable(emitTag) >= emitMass)
 		{
-			Pickupable pickupable = gameObject.GetComponent<Pickupable>();
-			if (pickupable != null)
-			{
-				pickupable = pickupable.Take(emitMass);
-				pickupable.transform.SetPosition(pickupable.transform.GetPosition() + emitOffset);
-				pickupable.transform.parent = null;
-				Trigger(-1697596308, pickupable.gameObject);
-				pickupable.Trigger(856640610);
-			}
-			else
-			{
-				storage.Drop(gameObject);
-				gameObject.transform.SetPosition(gameObject.transform.GetPosition() + emitOffset);
-			}
-			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, pickupable.GetComponent<PrimaryElement>().Element.name + " " + GameUtil.GetFormattedMass(pickupable.TotalAmount), pickupable.transform);
+			storage.DropSome(emitTag, emitMass, ventGas: false, dumpLiquid: false, emitOffset, doDiseaseTransfer: true, showInWorldNotification: true);
 		}
 	}
 }

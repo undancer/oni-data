@@ -5,9 +5,14 @@ public class AnimEventHandler : KMonoBehaviour
 {
 	private delegate void SetPos(Vector3 pos);
 
+	[MyCmpGet]
 	private KBatchedAnimController controller;
 
+	[MyCmpGet]
 	private KBoxCollider2D animCollider;
+
+	[MyCmpGet]
+	private Navigator navigator;
 
 	private Vector3 targetPos;
 
@@ -28,8 +33,6 @@ public class AnimEventHandler : KMonoBehaviour
 				onWorkTargetSet += kBatchedAnimTracker.SetTarget;
 			}
 		}
-		controller = GetComponent<KBatchedAnimController>();
-		animCollider = GetComponent<KBoxCollider2D>();
 		baseOffset = animCollider.offset;
 	}
 
@@ -69,6 +72,7 @@ public class AnimEventHandler : KMonoBehaviour
 	public void LateUpdate()
 	{
 		Vector3 pivotSymbolPosition = controller.GetPivotSymbolPosition();
-		animCollider.offset = new Vector2(baseOffset.x + pivotSymbolPosition.x - base.transform.GetPosition().x, baseOffset.y + pivotSymbolPosition.y - base.transform.GetPosition().y);
+		Vector3 vector = navigator.NavGrid.GetNavTypeData(navigator.CurrentNavType).animControllerOffset;
+		animCollider.offset = new Vector2(baseOffset.x + pivotSymbolPosition.x - base.transform.GetPosition().x - vector.x, baseOffset.y + pivotSymbolPosition.y - base.transform.GetPosition().y + vector.y);
 	}
 }

@@ -4,7 +4,6 @@ using Klei.AI;
 using STRINGS;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class DebugPaintElementScreen : KScreen
@@ -124,6 +123,17 @@ public class DebugPaintElementScreen : KScreen
 		inputFields.Add(temperatureInput);
 		inputFields.Add(diseaseCountInput);
 		inputFields.Add(filterInput);
+		foreach (TMP_InputField inputField in inputFields)
+		{
+			inputField.onFocus = (System.Action)Delegate.Combine(inputField.onFocus, (System.Action)delegate
+			{
+				base.isEditing = true;
+			});
+			inputField.onEndEdit.AddListener(delegate
+			{
+				base.isEditing = false;
+			});
+		}
 		base.gameObject.SetActive(value: false);
 		activateOnSpawn = true;
 		base.ConsumeMouseScroll = true;
@@ -144,15 +154,11 @@ public class DebugPaintElementScreen : KScreen
 		diseaseButton.GetComponentsInChildren<LocText>()[0].text = UI.DEBUG_TOOLS.PAINT_ELEMENTS_SCREEN.DISEASE;
 		paintButton.GetComponentsInChildren<LocText>()[0].text = UI.DEBUG_TOOLS.PAINT_ELEMENTS_SCREEN.PAINT;
 		fillButton.GetComponentsInChildren<LocText>()[0].text = UI.DEBUG_TOOLS.PAINT_ELEMENTS_SCREEN.FILL;
+		spawnButton.GetComponentsInChildren<LocText>()[0].text = UI.DEBUG_TOOLS.PAINT_ELEMENTS_SCREEN.SPAWN_ALL;
 		sampleButton.GetComponentsInChildren<LocText>()[0].text = UI.DEBUG_TOOLS.PAINT_ELEMENTS_SCREEN.SAMPLE;
 		storeButton.GetComponentsInChildren<LocText>()[0].text = UI.DEBUG_TOOLS.PAINT_ELEMENTS_SCREEN.STORE;
 		affectBuildings.transform.parent.GetComponentsInChildren<LocText>()[0].text = UI.DEBUG_TOOLS.PAINT_ELEMENTS_SCREEN.BUILDINGS;
 		affectCells.transform.parent.GetComponentsInChildren<LocText>()[0].text = UI.DEBUG_TOOLS.PAINT_ELEMENTS_SCREEN.CELLS;
-	}
-
-	public override float GetSortKey()
-	{
-		return 100000f;
 	}
 
 	protected override void OnSpawn()
@@ -175,7 +181,10 @@ public class DebugPaintElementScreen : KScreen
 		fillButton.onClick += OnClickFill;
 		sampleButton.onClick += OnClickSample;
 		storeButton.onClick += OnClickStore;
-		spawnButton.enabled = false;
+		if (SaveGame.Instance.worldGenSpawner.SpawnsRemain())
+		{
+			spawnButton.onClick += OnClickSpawn;
+		}
 		KPopupMenu kPopupMenu2 = elementPopup;
 		kPopupMenu2.OnSelect = (Action<string, int>)Delegate.Combine(kPopupMenu2.OnSelect, new Action<string, int>(OnSelectElement));
 		elementButton.onClick += elementPopup.OnClick;
@@ -262,8 +271,12 @@ public class DebugPaintElementScreen : KScreen
 
 	private void OnClickSpawn()
 	{
+		foreach (WorldContainer worldContainer in ClusterManager.Instance.WorldContainers)
+		{
+			worldContainer.SetDiscovered(reveal_surface: true);
+		}
 		SaveGame.Instance.worldGenSpawner.SpawnEverything();
-		spawnButton.enabled = false;
+		spawnButton.GetComponent<KButton>().isInteractable = false;
 	}
 
 	private void OnClickPaint()
@@ -397,57 +410,6 @@ public class DebugPaintElementScreen : KScreen
 	{
 		filter = (string.IsNullOrEmpty(filterInput.text) ? null : filterInput.text);
 		FilterElements(filter);
-	}
-
-	public override void OnKeyDown(KButtonEvent e)
-	{
-		if (CheckBlockedInput())
-		{
-			if (!e.Consumed)
-			{
-				e.Consumed = true;
-			}
-		}
-		else
-		{
-			base.OnKeyDown(e);
-		}
-	}
-
-	public override void OnKeyUp(KButtonEvent e)
-	{
-		if (CheckBlockedInput())
-		{
-			if (!e.Consumed)
-			{
-				e.Consumed = true;
-			}
-		}
-		else
-		{
-			base.OnKeyDown(e);
-		}
-	}
-
-	private bool CheckBlockedInput()
-	{
-		bool result = false;
-		if (UnityEngine.EventSystems.EventSystem.current != null)
-		{
-			GameObject currentSelectedGameObject = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-			if (currentSelectedGameObject != null)
-			{
-				foreach (TMP_InputField inputField in inputFields)
-				{
-					if (currentSelectedGameObject == inputField.gameObject)
-					{
-						return true;
-					}
-				}
-				return result;
-			}
-		}
-		return result;
 	}
 
 	public void SampleCell(int cell)

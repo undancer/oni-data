@@ -1,0 +1,24 @@
+id: "Strawberries"
+title: STRINGS.CODEX.A5_STRAWBERRIES.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_strawberries
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_STRAWBERRIES.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_STRAWBERRIES.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_strawberries
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_STRAWBERRIES.BODY.CONTAINER1
+          style: Body

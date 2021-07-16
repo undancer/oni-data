@@ -233,7 +233,7 @@ namespace KSerialization
 				}
 				else
 				{
-					writer.Write(4);
+					writer.Write(0);
 					writer.Write(-1);
 				}
 				break;
@@ -291,7 +291,7 @@ namespace KSerialization
 				}
 				else
 				{
-					writer.Write(4);
+					writer.Write(0);
 					writer.Write(-1);
 				}
 				break;
@@ -331,7 +331,7 @@ namespace KSerialization
 				}
 				else
 				{
-					writer.Write(4);
+					writer.Write(0);
 					writer.Write(-1);
 				}
 				break;
@@ -363,7 +363,7 @@ namespace KSerialization
 				}
 				else
 				{
-					writer.Write(4);
+					writer.Write(0);
 					writer.Write(-1);
 				}
 				break;
@@ -429,7 +429,7 @@ namespace KSerialization
 				}
 				else
 				{
-					writer.Write(4);
+					writer.Write(0);
 					writer.Write(-1);
 				}
 				break;

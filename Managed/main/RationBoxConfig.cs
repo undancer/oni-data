@@ -27,6 +27,8 @@ public class RationBoxConfig : IBuildingConfig
 		storage.allowItemRemoval = true;
 		storage.storageFullMargin = STORAGE.STORAGE_LOCKER_FILLED_MARGIN;
 		storage.fetchCategory = Storage.FetchCategory.GeneralStorage;
+		storage.showCapacityStatusItem = true;
+		storage.showCapacityAsMainStatus = true;
 		go.AddOrGet<TreeFilterable>();
 		go.AddOrGet<RationBox>();
 		go.AddOrGet<UserNameable>();

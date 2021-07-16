@@ -42,6 +42,8 @@ namespace ProcGen
 
 		public static readonly Tag ErodePointToWorldTop = TagManager.Create("ErodePointToWorldTop");
 
+		public static readonly Tag ErodePointToWorldTopOrSide = TagManager.Create("ErodePointToWorldTopOrSide");
+
 		public static readonly Tag DistFunctionPointCentroid = TagManager.Create("DistFunctionPointCentroid");
 
 		public static readonly Tag DistFunctionPointEdge = TagManager.Create("DistFunctionPointEdge");
@@ -112,6 +114,8 @@ namespace ProcGen
 
 		public static readonly Tag CaveVoidSliver = TagManager.Create("CaveVoidSliver");
 
+		public static readonly Tag SwapLakesToBelow = TagManager.Create("SwapLakesToBelow");
+
 		public static readonly Tag Geode = TagManager.Create("Geode");
 
 		public static readonly Tag TheVoid = TagManager.Create("TheVoid");
@@ -120,25 +124,7 @@ namespace ProcGen
 
 		public static readonly Tag SprinkleOfOxyRock = TagManager.Create("SprinkleOfOxyRock");
 
-		public static readonly Tag Infected = TagManager.Create("Infected");
-
-		public static readonly Tag InfectedDweebcephaly = TagManager.Create("Infected:Dweebcephaly");
-
-		public static readonly Tag InfectedLazibonitis = TagManager.Create("Infected:Lazibonitis");
-
-		public static readonly Tag InfectedDiarrhea = TagManager.Create("Infected:Diarrhea");
-
-		public static readonly Tag InfectedFoodPoisoning = TagManager.Create("Infected:FoodPoisoning");
-
-		public static readonly Tag InfectedPutridOdour = TagManager.Create("Infected:PutridOdour");
-
-		public static readonly Tag InfectedSpores = TagManager.Create("Infected:Spores");
-
-		public static readonly Tag InfectedColdBrain = TagManager.Create("Infected:ColdBrain");
-
-		public static readonly Tag InfectedHeatRash = TagManager.Create("Infected:HeatRash");
-
-		public static readonly Tag InfectedSlimeLung = TagManager.Create("Infected:SlimeLung");
+		public static readonly Tag RocketInterior = TagManager.Create("RocketInterior");
 
 		public static readonly Tag DEBUG_Split = TagManager.Create("DEBUG_Split");
 

@@ -1,35 +1,34 @@
-name: STRINGS.WORLDS.BADLANDS.NAME
+name: STRINGS.WORLDS.BADLANDS.NAME # The Badlands
 description: STRINGS.WORLDS.BADLANDS.DESCRIPTION
-spriteName: Asteroid_badlands
-coordinatePrefix: BAD-A
-difficulty: 4
-tier: 2
+asteroidIcon: Asteroid_badlands
+
+# Notes:
+# minCounts are just enough space to generate guaranteed templates as this is a difficult world
 
 worldsize:
   X: 256
   Y: 384
-layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
-#                                in order to use this.
+layoutMethod: PowerTree
 
-# List all the zone files to load
+# List all the subworld files to load
 subworldFiles:
   - name: subworlds/sandstone/SandstoneStart
   - name: subworlds/sandstone/SandstoneMiniMetal
   - name: subworlds/sandstone/SandstoneMiniWater
-  - name: subworlds/sandstone/Sandstone
   - name: subworlds/jungle/Jungle
-  - name: subworlds/jungle/JungleSolid
+    minCount: 4
   - name: subworlds/frozen/Frozen
-  - name: subworlds/Impenetrable
+    minCount: 3
   - name: subworlds/magma/Bottom
   - name: subworlds/oil/OilPockets
+    minCount: 4
   - name: subworlds/space/Space
   - name: subworlds/space/Surface
   - name: subworlds/rust/Rust
   - name: subworlds/barren/BarrenGranite
 
 startSubworldName: subworlds/sandstone/SandstoneStart
-startingBaseTemplate: sandstoneBase
+startingBaseTemplate: bases/sandstoneBase
 startingBasePositionHorizontal:
   min: 0.4
   max: 0.5
@@ -37,21 +36,16 @@ startingBasePositionVertical:
   min: 0.45
   max: 0.55
 
-globalFeatureTemplates:
-  feature_geyser_generic: 12
+seasons:
+  - MeteorShowers
 
-# globalFeatures:
-#   sand_geode: 30
-
-# Rivers:
-#   - River
-
-# When we are converting unknown cells, this will give us the options, processed in this order, the effects are cumlative
+# Specify where subworlds can spawn. These rules are processed in order and their effects are cumulative.
 unknownCellsAllowedSubworlds: 
   - tagcommand: Default
     command: Replace
     subworldNames:
       - subworlds/sandstone/SandstoneStart
+  # Ring-1
   - tagcommand: DistanceFromTag
     tag: AtStart
     minDistance: 1
@@ -63,6 +57,7 @@ unknownCellsAllowedSubworlds:
       - subworlds/rust/Rust
       - subworlds/sandstone/SandstoneMiniMetal
       - subworlds/sandstone/SandstoneMiniWater
+  # Ring-2
   - tagcommand: DistanceFromTag
     tag: AtStart
     minDistance: 3
@@ -73,6 +68,7 @@ unknownCellsAllowedSubworlds:
       - subworlds/jungle/Jungle
       - subworlds/frozen/Frozen
       - subworlds/rust/Rust
+  # Ring-3
   - tagcommand: DistanceFromTag
     tag: AtStart
     minDistance: 4
@@ -83,11 +79,13 @@ unknownCellsAllowedSubworlds:
       - subworlds/jungle/Jungle
       - subworlds/frozen/Frozen
       - subworlds/rust/Rust
+  # Core
   - tagcommand: AtTag
     tag: AtDepths
     command: Replace
     subworldNames:
       - subworlds/magma/Bottom
+  # Above Core
   - tagcommand: DistanceFromTag
     tag: AtDepths
     minDistance: 1
@@ -96,11 +94,13 @@ unknownCellsAllowedSubworlds:
     subworldNames:
       - subworlds/barren/BarrenGranite
       - subworlds/oil/OilPockets
+  # Space
   - tagcommand: AtTag
     tag: AtSurface
     command: Replace
     subworldNames:
       - subworlds/space/Space
+  # Surface
   - tagcommand: DistanceFromTag
     tag: AtSurface
     minDistance: 1
@@ -108,3 +108,72 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - subworlds/space/Surface
+
+# Specify where important POIs and geysers spawn
+worldTemplateRules:
+  # Jungle
+  - names:
+      - poi/jungle/geyser_steam
+    listRule: GuaranteeOne
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [ToxicJungle]
+  - names:
+      - poi/jungle/geyser_methane
+      - poi/jungle/geyser_chlorine
+    listRule: GuaranteeOne
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [ToxicJungle]
+  # Frozen
+  - names:
+      - poi/frozen/heatsink_a
+      - poi/frozen/heatsink_b
+      - poi/frozen/heatsink_c
+      - poi/frozen/heatsink_d
+    listRule: GuaranteeSomeTryMore
+    someCount: 1
+    moreCount: 2
+    priority: 100 
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [FrozenWastes]
+  # Oil
+  - names:
+    - poi/oil/small_oilpockets_geyser_a
+    - poi/oil/small_oilpockets_geyser_b
+    - poi/oil/small_oilpockets_geyser_c
+    - poi/oil/small_oilpockets_geyser_d
+    - poi/oil/small_oilpockets_geyser_e
+    - poi/oil/small_oilpockets_geyser_f
+    - poi/oil/small_oilpockets_geyser_g
+    - poi/oil/small_oilpockets_geyser_h
+    listRule: GuaranteeOne
+    times: 3
+    allowDuplicates: true # be more flexible due to high temperature borders
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [OilField]
+  # Gravitas
+  - names:
+    - poi/poi_gravitas
+    listRule: GuaranteeOne
+    priority: 500
+    allowExtremeTemperatureOverlap: true # ignore temperature differences on the surface
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - subworlds/space/Surface
+  # Generic Geysers
+  - names:
+    - geysers/generic
+    listRule: TryOne
+    times: 12
+    allowDuplicates: true
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning

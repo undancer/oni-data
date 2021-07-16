@@ -208,7 +208,7 @@ public class IceCooledFan : StateMachineComponent<IceCooledFan.StatesInstance>
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		meter = new MeterController(GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.Behind, Grid.SceneLayer.NoLayer, "meter_target", "meter_waterbody", "meter_waterlevel");
+		meter = new MeterController(GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.Infront, Grid.SceneLayer.NoLayer, "meter_target", "meter_waterbody", "meter_waterlevel");
 		base.smi.StartSM();
 		GetComponent<ManualDeliveryKG>().SetStorage(iceStorage);
 	}

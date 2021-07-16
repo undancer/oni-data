@@ -35,8 +35,9 @@ public class LevelLayer : List<LayerGradient>, IMerge<LevelLayer>
 		}
 	}
 
-	public void Merge(LevelLayer other)
+	public LevelLayer Merge(LevelLayer other)
 	{
 		AddRange(other);
+		return this;
 	}
 }

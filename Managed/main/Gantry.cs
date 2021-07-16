@@ -17,7 +17,7 @@ public class Gantry : Switch
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = extended;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			retracted_pre.Enter(delegate(Gantry.Instance smi)
 			{
 				smi.SetActive(active: true);
@@ -128,19 +128,8 @@ public class Gantry : Switch
 	[MyCmpReq]
 	private Building building;
 
-	public static CellOffset[] TileOffsets = new CellOffset[2]
-	{
-		new CellOffset(-2, 1),
-		new CellOffset(-1, 1)
-	};
-
-	public static CellOffset[] RetractableOffsets = new CellOffset[4]
-	{
-		new CellOffset(0, 1),
-		new CellOffset(1, 1),
-		new CellOffset(2, 1),
-		new CellOffset(3, 1)
-	};
+	[MyCmpReq]
+	private FakeFloorAdder fakeFloorAdder;
 
 	private Instance smi;
 
@@ -155,21 +144,6 @@ public class Gantry : Switch
 			infoStatusItem.resolveStringCallback = ResolveInfoStatusItemString;
 		}
 		GetComponent<KAnimControllerBase>().PlaySpeedMultiplier = 0.5f;
-		int cell = Grid.PosToCell(this);
-		PrimaryElement component = GetComponent<PrimaryElement>();
-		for (int i = 0; i < TileOffsets.Length; i++)
-		{
-			CellOffset rotatedOffset = building.GetRotatedOffset(TileOffsets[i]);
-			int num = Grid.OffsetCell(cell, rotatedOffset);
-			SimMessages.ReplaceAndDisplaceElement(num, component.ElementID, CellEventLogger.Instance.SimCellOccupierOnSpawn, component.Mass, component.Temperature);
-			Grid.Objects[num, 1] = base.gameObject;
-			Grid.Foundation[num] = true;
-			Grid.Objects[num, 9] = base.gameObject;
-			Grid.SetSolid(num, solid: true, CellEventLogger.Instance.SimCellOccupierForceSolid);
-			Grid.RenderedByWorld[num] = false;
-			World.Instance.OnSolidChanged(num);
-			GameScenePartitioner.Instance.TriggerEvent(num, GameScenePartitioner.Instance.solidChangedLayer, null);
-		}
 		smi = new Instance(this, base.IsSwitchedOn);
 		smi.StartSM();
 		GetComponent<KSelectable>().ToggleStatusItem(infoStatusItem, on: true, smi);
@@ -181,43 +155,12 @@ public class Gantry : Switch
 		{
 			smi.StopSM("cleanup");
 		}
-		int cell = Grid.PosToCell(this);
-		CellOffset[] tileOffsets = TileOffsets;
-		foreach (CellOffset offset in tileOffsets)
-		{
-			CellOffset rotatedOffset = building.GetRotatedOffset(offset);
-			int num = Grid.OffsetCell(cell, rotatedOffset);
-			SimMessages.ReplaceAndDisplaceElement(num, SimHashes.Vacuum, CellEventLogger.Instance.SimCellOccupierOnSpawn, 0f);
-			Grid.Objects[num, 1] = null;
-			Grid.Objects[num, 9] = null;
-			Grid.Foundation[num] = false;
-			Grid.SetSolid(num, solid: false, CellEventLogger.Instance.SimCellOccupierDestroy);
-			Grid.RenderedByWorld[num] = true;
-			World.Instance.OnSolidChanged(num);
-			GameScenePartitioner.Instance.TriggerEvent(num, GameScenePartitioner.Instance.solidChangedLayer, null);
-		}
-		tileOffsets = RetractableOffsets;
-		foreach (CellOffset offset2 in tileOffsets)
-		{
-			CellOffset rotatedOffset2 = building.GetRotatedOffset(offset2);
-			int num2 = Grid.OffsetCell(cell, rotatedOffset2);
-			Grid.FakeFloor[num2] = false;
-			Pathfinding.Instance.AddDirtyNavGridCell(num2);
-		}
 		base.OnCleanUp();
 	}
 
 	public void SetWalkable(bool active)
 	{
-		int cell = Grid.PosToCell(this);
-		CellOffset[] retractableOffsets = RetractableOffsets;
-		foreach (CellOffset offset in retractableOffsets)
-		{
-			CellOffset rotatedOffset = building.GetRotatedOffset(offset);
-			int num = Grid.OffsetCell(cell, rotatedOffset);
-			Grid.FakeFloor[num] = active;
-			Pathfinding.Instance.AddDirtyNavGridCell(num);
-		}
+		fakeFloorAdder.SetFloor(active);
 	}
 
 	protected override void Toggle()

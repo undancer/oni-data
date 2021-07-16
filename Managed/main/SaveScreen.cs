@@ -27,9 +27,9 @@ public class SaveScreen : KModalScreen
 
 	protected override void OnCmpEnable()
 	{
-		foreach (string allColonyFile in SaveLoader.GetAllColonyFiles())
+		foreach (SaveLoader.SaveFileEntry allColonyFile in SaveLoader.GetAllColonyFiles(sort: true))
 		{
-			AddExistingSaveFile(allColonyFile);
+			AddExistingSaveFile(allColonyFile.path);
 		}
 		SpeedControlScreen.Instance.Pause();
 	}
@@ -83,7 +83,6 @@ public class SaveScreen : KModalScreen
 
 	private void DoSave(string filename)
 	{
-		ReportErrorDialog.MOST_RECENT_SAVEFILE = filename;
 		try
 		{
 			SaveLoader.Instance.Save(filename);

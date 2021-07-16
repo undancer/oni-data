@@ -12,7 +12,7 @@ public static class Util
 {
 	private static HashSet<char> defaultInvalidUserInputChars = new HashSet<char>(Path.GetInvalidPathChars());
 
-	private static HashSet<char> additionalInvalidUserInputChars = new HashSet<char>(new char[9]
+	private static HashSet<char> additionalInvalidUserInputChars = new HashSet<char>(new char[10]
 	{
 		'<',
 		'>',
@@ -22,12 +22,15 @@ public static class Util
 		'?',
 		'*',
 		'\\',
-		'!'
+		'!',
+		'.'
 	});
 
 	private static System.Random random = new System.Random();
 
 	private static string defaultRootFolder = Application.persistentDataPath;
+
+	private static string consoleLogPath = Application.consoleLogPath;
 
 	public static void Swap<T>(ref T a, ref T b)
 	{
@@ -575,12 +578,12 @@ public static class Util
 
 	public static string LogFilePath()
 	{
-		return Application.consoleLogPath;
+		return consoleLogPath;
 	}
 
 	public static string LogsFolder()
 	{
-		return Path.GetDirectoryName(Application.consoleLogPath);
+		return Path.GetDirectoryName(consoleLogPath);
 	}
 
 	public static string CacheFolder()
@@ -654,5 +657,18 @@ public static class Util
 		{
 			thread.CurrentCulture = CultureInfo.InvariantCulture;
 		}
+	}
+
+	public static bool IsNullOrDestroyed(this object obj)
+	{
+		if (obj == null)
+		{
+			return true;
+		}
+		if (obj is UnityEngine.Object)
+		{
+			return obj as UnityEngine.Object == null;
+		}
+		return false;
 	}
 }

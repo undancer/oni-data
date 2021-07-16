@@ -10,8 +10,6 @@ public class KModalScreen : KScreen
 
 	private RectTransform backgroundRectTransform;
 
-	public const float SCREEN_SORT_KEY = 100f;
-
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
@@ -115,39 +113,24 @@ public class KModalScreen : KScreen
 
 	public override void OnKeyDown(KButtonEvent e)
 	{
-		if (e.Consumed)
-		{
-			return;
-		}
-		if (Game.Instance != null && (e.TryConsume(Action.TogglePause) || e.TryConsume(Action.CycleSpeed)))
-		{
-			KMonoBehaviour.PlaySound(GlobalAssets.GetSound("Negative"));
-		}
-		if (!e.Consumed && e.TryConsume(Action.Escape))
-		{
-			Deactivate();
-		}
 		if (!e.Consumed)
 		{
-			KScrollRect componentInChildren = GetComponentInChildren<KScrollRect>();
-			if (componentInChildren != null)
+			if (Game.Instance != null && (e.TryConsume(Action.TogglePause) || e.TryConsume(Action.CycleSpeed)))
 			{
-				componentInChildren.OnKeyDown(e);
+				KMonoBehaviour.PlaySound(GlobalAssets.GetSound("Negative"));
 			}
+			if (!e.Consumed && e.TryConsume(Action.Escape))
+			{
+				Deactivate();
+			}
+			base.OnKeyDown(e);
+			e.Consumed = true;
 		}
-		e.Consumed = true;
 	}
 
 	public override void OnKeyUp(KButtonEvent e)
 	{
-		if (!e.Consumed)
-		{
-			KScrollRect componentInChildren = GetComponentInChildren<KScrollRect>();
-			if (componentInChildren != null)
-			{
-				componentInChildren.OnKeyUp(e);
-			}
-		}
+		base.OnKeyUp(e);
 		e.Consumed = true;
 	}
 }

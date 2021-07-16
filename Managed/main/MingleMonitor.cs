@@ -13,7 +13,7 @@ public class MingleMonitor : GameStateMachine<MingleMonitor, MingleMonitor.Insta
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = mingle;
-		base.serializable = false;
+		base.serializable = SerializeType.Never;
 		mingle.ToggleRecurringChore(CreateMingleChore);
 	}
 

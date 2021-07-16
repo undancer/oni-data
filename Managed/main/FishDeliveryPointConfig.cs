@@ -48,6 +48,9 @@ public class FishDeliveryPointConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		go.AddOrGetDef<MakeBaseSolid.Def>();
+		go.AddOrGetDef<MakeBaseSolid.Def>().solidOffsets = new CellOffset[1]
+		{
+			new CellOffset(0, 0)
+		};
 	}
 }

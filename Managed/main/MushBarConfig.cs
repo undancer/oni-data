@@ -8,6 +8,11 @@ public class MushBarConfig : IEntityConfig
 
 	public static ComplexRecipe recipe;
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject template = EntityTemplates.CreateLooseEntity("MushBar", ITEMS.FOOD.MUSHBAR.NAME, ITEMS.FOOD.MUSHBAR.DESC, 1f, unitMass: false, Assets.GetAnim("mushbar_kanim"), "object", Grid.SceneLayer.Front, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.4f, isPickupable: true);
@@ -38,7 +43,6 @@ public class MushBarConfig : IEntityConfig
 		KBatchedAnimTracker kBatchedAnimTracker = gameObject.AddComponent<KBatchedAnimTracker>();
 		kBatchedAnimTracker.symbol = new HashedString("meter_ration");
 		kBatchedAnimTracker.offset = Vector3.zero;
-		kBatchedAnimTracker.skipInitialDisable = true;
 		Object.DontDestroyOnLoad(gameObject);
 		return gameObject;
 	}

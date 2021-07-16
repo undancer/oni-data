@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using FMODUnity;
+using STRINGS;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,9 @@ public class WattsonMessage : KScreen
 
 	[SerializeField]
 	private RectTransform content;
+
+	[SerializeField]
+	private LocText message;
 
 	[SerializeField]
 	private Image bg;
@@ -59,6 +63,14 @@ public class WattsonMessage : KScreen
 	{
 		base.OnPrefabInit();
 		Game.Instance.Subscribe(-122303817, OnNewBaseCreated);
+		if (DlcManager.IsExpansion1Active())
+		{
+			message.SetText(UI.WELCOMEMESSAGEBODY_SPACEDOUT);
+		}
+		else
+		{
+			message.SetText(UI.WELCOMEMESSAGEBODY);
+		}
 	}
 
 	private IEnumerator ExpandPanel()
@@ -103,10 +115,16 @@ public class WattsonMessage : KScreen
 		hideScreensWhileActive.Add(ManagementMenu.Instance);
 		hideScreensWhileActive.Add(ToolMenu.Instance);
 		hideScreensWhileActive.Add(ToolMenu.Instance.PriorityScreen);
-		hideScreensWhileActive.Add(ResourceCategoryScreen.Instance);
+		hideScreensWhileActive.Add(PinnedResourcesPanel.Instance);
 		hideScreensWhileActive.Add(TopLeftControlScreen.Instance);
 		hideScreensWhileActive.Add(DateTime.Instance);
 		hideScreensWhileActive.Add(BuildWatermark.Instance);
+		hideScreensWhileActive.Add(BuildWatermark.Instance);
+		hideScreensWhileActive.Add(ColonyDiagnosticScreen.Instance);
+		if (WorldSelector.Instance != null)
+		{
+			hideScreensWhileActive.Add(WorldSelector.Instance);
+		}
 		foreach (KScreen item in hideScreensWhileActive)
 		{
 			item.Show(show: false);
@@ -140,7 +158,7 @@ public class WattsonMessage : KScreen
 		};
 		dialog.GetComponent<KScreen>().Show(show: false);
 		startFade = false;
-		GameObject telepad = GameUtil.GetTelepad();
+		GameObject telepad = GameUtil.GetTelepad(0);
 		if (telepad != null)
 		{
 			KAnimControllerBase kac = telepad.GetComponent<KAnimControllerBase>();
@@ -166,7 +184,7 @@ public class WattsonMessage : KScreen
 					emoteChore.onComplete = (Action<Chore>)Delegate.Combine(emoteChore.onComplete, (Action<Chore>)delegate
 					{
 						birthsComplete++;
-						if (birthsComplete == Components.LiveMinionIdentities.Count - 1)
+						if (birthsComplete == Components.LiveMinionIdentities.Count - 1 && IsActive())
 						{
 							PauseAndShowMessage();
 						}
@@ -186,6 +204,7 @@ public class WattsonMessage : KScreen
 		else
 		{
 			Debug.LogWarning("Failed to spawn telepad - does the starting base template lack a 'Headquarters' ?");
+			PauseAndShowMessage();
 		}
 		scheduleHandles.Add(UIScheduler.Instance.Schedule("GoHome", 0.1f, delegate
 		{
@@ -225,14 +244,17 @@ public class WattsonMessage : KScreen
 		{
 			foreach (KScreen item in hideScreensWhileActive)
 			{
-				item.SetShouldFadeIn(bShouldFade: true);
-				item.Show();
+				if (!(item == null))
+				{
+					item.SetShouldFadeIn(bShouldFade: true);
+					item.Show();
+				}
 			}
 			CameraController.Instance.SetMaxOrthographicSize(20f);
 			Game.Instance.StartDelayedInitialSave();
 			UIScheduler.Instance.Schedule("InitialScreenshot", 1f, delegate
 			{
-				Game.Instance.timelapser.SaveScreenshot();
+				Game.Instance.timelapser.InitialScreenshot();
 			});
 			GameScheduler.Instance.Schedule("BasicTutorial", 1.5f, delegate
 			{

@@ -1,0 +1,33 @@
+id: "SpacePropFacilityDisplay1"
+title: STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: display_spaceprop1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: display_spaceprop1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: display_spaceprop1
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B1_SPACEFACILITYDISPLAY1.BODY.CONTAINER2
+          style: Body

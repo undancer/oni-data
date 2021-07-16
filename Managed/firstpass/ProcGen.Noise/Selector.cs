@@ -80,10 +80,13 @@ namespace ProcGen.Noise
 				obj.RightModule = rightModule;
 				obj.LeftModule = leftModule;
 			}
-			Select obj2 = target as Select;
-			obj2.ControlModule = controlModule;
-			obj2.RightModule = rightModule;
-			obj2.LeftModule = leftModule;
+			else if (selectType == SelectType.Select)
+			{
+				Select obj2 = target as Select;
+				obj2.ControlModule = controlModule;
+				obj2.RightModule = rightModule;
+				obj2.LeftModule = leftModule;
+			}
 		}
 	}
 }

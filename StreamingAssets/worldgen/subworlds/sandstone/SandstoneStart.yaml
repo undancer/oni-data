@@ -50,4 +50,5 @@ tags:
   - IgnoreCaveOverride
   - NoGlobalFeatureSpawning
   - StartWorld
+  - SwapLakesToBelow
 zoneType: Sandstone

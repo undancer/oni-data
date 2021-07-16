@@ -132,7 +132,6 @@ public class World : KMonoBehaviour
 		{
 			if (GameUtil.IsCapturingTimeLapse())
 			{
-				Game.Instance.UpdateGameActiveRegion(0, 0, Grid.WidthInCells, Grid.HeightInCells);
 				groundRenderer.RenderAll();
 				KAnimBatchManager.Instance().UpdateActiveArea(new Vector2I(0, 0), new Vector2I(9999, 9999));
 				KAnimBatchManager.Instance().UpdateDirty(Time.frameCount);

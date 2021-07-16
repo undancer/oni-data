@@ -35,12 +35,12 @@ namespace Klei
 			{
 				if (_instance == null)
 				{
-					try
+					if (FileSystem.FileExists(Path))
 					{
 						_instance = YamlIO.LoadFile<GenericGameSettings>(Path);
 						Debug.Assert(_instance != null, "Loading " + Path + " returned null, the file may be corrupted");
 					}
-					catch
+					else
 					{
 						_instance = new GenericGameSettings();
 					}

@@ -21,6 +21,8 @@ public abstract class ResourceSet : Resource
 
 	public abstract Resource Add(Resource resource);
 
+	public abstract void Remove(Resource resource);
+
 	public abstract Resource GetResource(int idx);
 }
 [Serializable]
@@ -78,6 +80,18 @@ public class ResourceSet<T> : ResourceSet where T : Resource
 		return null;
 	}
 
+	public T TryGet(HashedString id)
+	{
+		foreach (T resource in resources)
+		{
+			if (resource.IdHash == id)
+			{
+				return resource;
+			}
+		}
+		return null;
+	}
+
 	public T Get(HashedString id)
 	{
 		foreach (T resource in resources)
@@ -87,7 +101,9 @@ public class ResourceSet<T> : ResourceSet where T : Resource
 				return resource;
 			}
 		}
-		Debug.LogError("Could not find " + typeof(T).ToString() + ": " + id);
+		string str = typeof(T).ToString();
+		HashedString hashedString = id;
+		Debug.LogError("Could not find " + str + ": " + hashedString.ToString());
 		return null;
 	}
 
@@ -102,6 +118,16 @@ public class ResourceSet<T> : ResourceSet where T : Resource
 		}
 		Debug.LogError("Could not find " + typeof(T).ToString() + ": " + id);
 		return null;
+	}
+
+	public override void Remove(Resource resource)
+	{
+		T val = resource as T;
+		if (val == null)
+		{
+			Debug.LogError("Resource type mismatch: " + resource.GetType().Name + " does not match " + typeof(T).Name);
+		}
+		resources.Remove(val);
 	}
 
 	public override Resource Add(Resource resource)

@@ -6,813 +6,866 @@ namespace Database
 {
 	public class Techs : ResourceSet<Tech>
 	{
-		public int tierCount;
-
-		public static Dictionary<string, string[]> TECH_GROUPING = new Dictionary<string, string[]>
-		{
-			{
-				"FarmingTech",
-				new string[4]
-				{
-					"AlgaeHabitat",
-					"PlanterBox",
-					"RationBox",
-					"Compost"
-				}
-			},
-			{
-				"FineDining",
-				new string[4]
-				{
-					"DiningTable",
-					"FarmTile",
-					"CookingStation",
-					"EggCracker"
-				}
-			},
-			{
-				"FoodRepurposing",
-				new string[1]
-				{
-					"Juicer"
-				}
-			},
-			{
-				"FinerDining",
-				new string[1]
-				{
-					"GourmetCookingStation"
-				}
-			},
-			{
-				"Agriculture",
-				new string[5]
-				{
-					"FertilizerMaker",
-					"HydroponicFarm",
-					"Refrigerator",
-					"FarmStation",
-					"ParkSign"
-				}
-			},
-			{
-				"Ranching",
-				new string[7]
-				{
-					"CreatureDeliveryPoint",
-					"FishDeliveryPoint",
-					"CreatureFeeder",
-					"FishFeeder",
-					"RanchStation",
-					"ShearingStation",
-					"FlyingCreatureBait"
-				}
-			},
-			{
-				"AnimalControl",
-				new string[5]
-				{
-					"CreatureTrap",
-					"FishTrap",
-					"AirborneCreatureLure",
-					"EggIncubator",
-					LogicCritterCountSensorConfig.ID
-				}
-			},
-			{
-				"ImprovedOxygen",
-				new string[2]
-				{
-					"Electrolyzer",
-					"RustDeoxidizer"
-				}
-			},
-			{
-				"GasPiping",
-				new string[4]
-				{
-					"GasConduit",
-					"GasPump",
-					"GasVent",
-					"GasConduitBridge"
-				}
-			},
-			{
-				"ImprovedGasPiping",
-				new string[7]
-				{
-					"InsulatedGasConduit",
-					LogicPressureSensorGasConfig.ID,
-					"GasVentHighPressure",
-					"GasLogicValve",
-					"GasBottler",
-					"GasConduitPreferentialFlow",
-					"GasConduitOverflow"
-				}
-			},
-			{
-				"PressureManagement",
-				new string[4]
-				{
-					"LiquidValve",
-					"GasValve",
-					"ManualPressureDoor",
-					"GasPermeableMembrane"
-				}
-			},
-			{
-				"DirectedAirStreams",
-				new string[3]
-				{
-					"PressureDoor",
-					"AirFilter",
-					"CO2Scrubber"
-				}
-			},
-			{
-				"LiquidFiltering",
-				new string[2]
-				{
-					"OreScrubber",
-					"Desalinator"
-				}
-			},
-			{
-				"MedicineI",
-				new string[1]
-				{
-					"Apothecary"
-				}
-			},
-			{
-				"MedicineII",
-				new string[2]
-				{
-					"DoctorStation",
-					"HandSanitizer"
-				}
-			},
-			{
-				"MedicineIII",
-				new string[3]
-				{
-					LogicDiseaseSensorConfig.ID,
-					GasConduitDiseaseSensorConfig.ID,
-					LiquidConduitDiseaseSensorConfig.ID
-				}
-			},
-			{
-				"MedicineIV",
-				new string[2]
-				{
-					"AdvancedDoctorStation",
-					"HotTub"
-				}
-			},
-			{
-				"LiquidPiping",
-				new string[4]
-				{
-					"LiquidConduit",
-					"LiquidPump",
-					"LiquidVent",
-					"LiquidConduitBridge"
-				}
-			},
-			{
-				"ImprovedLiquidPiping",
-				new string[6]
-				{
-					"InsulatedLiquidConduit",
-					LogicPressureSensorLiquidConfig.ID,
-					"LiquidLogicValve",
-					"LiquidConduitPreferentialFlow",
-					"LiquidConduitOverflow",
-					"LiquidReservoir"
-				}
-			},
-			{
-				"PrecisionPlumbing",
-				new string[1]
-				{
-					"EspressoMachine"
-				}
-			},
-			{
-				"SanitationSciences",
-				new string[4]
-				{
-					"WashSink",
-					"FlushToilet",
-					ShowerConfig.ID,
-					"MeshTile"
-				}
-			},
-			{
-				"FlowRedirection",
-				new string[1]
-				{
-					"MechanicalSurfboard"
-				}
-			},
-			{
-				"AdvancedFiltration",
-				new string[2]
-				{
-					"GasFilter",
-					"LiquidFilter"
-				}
-			},
-			{
-				"Distillation",
-				new string[4]
-				{
-					"WaterPurifier",
-					"AlgaeDistillery",
-					"EthanolDistillery",
-					"BottleEmptierGas"
-				}
-			},
-			{
-				"Catalytics",
-				new string[3]
-				{
-					"OxyliteRefinery",
-					"SupermaterialRefinery",
-					"SodaFountain"
-				}
-			},
-			{
-				"PowerRegulation",
-				new string[3]
-				{
-					SwitchConfig.ID,
-					"BatteryMedium",
-					"WireBridge"
-				}
-			},
-			{
-				"AdvancedPowerRegulation",
-				new string[6]
-				{
-					"HydrogenGenerator",
-					"HighWattageWire",
-					"WireBridgeHighWattage",
-					"PowerTransformerSmall",
-					LogicPowerRelayConfig.ID,
-					LogicWattageSensorConfig.ID
-				}
-			},
-			{
-				"PrettyGoodConductors",
-				new string[5]
-				{
-					"WireRefined",
-					"WireRefinedBridge",
-					"WireRefinedHighWattage",
-					"WireRefinedBridgeHighWattage",
-					"PowerTransformer"
-				}
-			},
-			{
-				"RenewableEnergy",
-				new string[4]
-				{
-					"SteamTurbine",
-					"SteamTurbine2",
-					"SolarPanel",
-					"Sauna"
-				}
-			},
-			{
-				"Combustion",
-				new string[2]
-				{
-					"Generator",
-					"WoodGasGenerator"
-				}
-			},
-			{
-				"ImprovedCombustion",
-				new string[3]
-				{
-					"MethaneGenerator",
-					"OilRefinery",
-					"PetroleumGenerator"
-				}
-			},
-			{
-				"InteriorDecor",
-				new string[3]
-				{
-					"FlowerVase",
-					"FloorLamp",
-					"CeilingLight"
-				}
-			},
-			{
-				"Artistry",
-				new string[7]
-				{
-					"CrownMoulding",
-					"CornerMoulding",
-					"SmallSculpture",
-					"IceSculpture",
-					"ItemPedestal",
-					"FlowerVaseWall",
-					"FlowerVaseHanging"
-				}
-			},
-			{
-				"Clothing",
-				new string[2]
-				{
-					"ClothingFabricator",
-					"CarpetTile"
-				}
-			},
-			{
-				"Acoustics",
-				new string[3]
-				{
-					"Phonobox",
-					"BatterySmart",
-					"PowerControlStation"
-				}
-			},
-			{
-				"FineArt",
-				new string[2]
-				{
-					"Canvas",
-					"Sculpture"
-				}
-			},
-			{
-				"EnvironmentalAppreciation",
-				new string[1]
-				{
-					"BeachChair"
-				}
-			},
-			{
-				"Luxury",
-				new string[3]
-				{
-					LuxuryBedConfig.ID,
-					"LadderFast",
-					"PlasticTile"
-				}
-			},
-			{
-				"RefractiveDecor",
-				new string[2]
-				{
-					"MetalSculpture",
-					"CanvasWide"
-				}
-			},
-			{
-				"GlassFurnishings",
-				new string[3]
-				{
-					"GlassTile",
-					"FlowerVaseHangingFancy",
-					"SunLamp"
-				}
-			},
-			{
-				"Screens",
-				new string[1]
-				{
-					PixelPackConfig.ID
-				}
-			},
-			{
-				"RenaissanceArt",
-				new string[5]
-				{
-					"MarbleSculpture",
-					"CanvasTall",
-					"MonumentBottom",
-					"MonumentMiddle",
-					"MonumentTop"
-				}
-			},
-			{
-				"Plastics",
-				new string[2]
-				{
-					"Polymerizer",
-					"OilWellCap"
-				}
-			},
-			{
-				"ValveMiniaturization",
-				new string[2]
-				{
-					"LiquidMiniPump",
-					"GasMiniPump"
-				}
-			},
-			{
-				"Suits",
-				new string[5]
-				{
-					"ExteriorWall",
-					"SuitMarker",
-					"SuitLocker",
-					"SuitFabricator",
-					"SuitsOverlay"
-				}
-			},
-			{
-				"Jobs",
-				new string[2]
-				{
-					"RoleStation",
-					"WaterCooler"
-				}
-			},
-			{
-				"AdvancedResearch",
-				new string[3]
-				{
-					"AdvancedResearchCenter",
-					"BetaResearchPoint",
-					"ResetSkillsStation"
-				}
-			},
-			{
-				"NotificationSystems",
-				new string[2]
-				{
-					LogicHammerConfig.ID,
-					LogicAlarmConfig.ID
-				}
-			},
-			{
-				"ArtificialFriends",
-				new string[1]
-				{
-					"SweepBotStation"
-				}
-			},
-			{
-				"BasicRefinement",
-				new string[2]
-				{
-					"RockCrusher",
-					"Kiln"
-				}
-			},
-			{
-				"RefinedObjects",
-				new string[2]
-				{
-					"ThermalBlock",
-					"FirePole"
-				}
-			},
-			{
-				"Smelting",
-				new string[2]
-				{
-					"MetalRefinery",
-					"MetalTile"
-				}
-			},
-			{
-				"HighTempForging",
-				new string[3]
-				{
-					"GlassForge",
-					"BunkerTile",
-					"BunkerDoor"
-				}
-			},
-			{
-				"TemperatureModulation",
-				new string[5]
-				{
-					"LiquidCooledFan",
-					"IceCooledFan",
-					"IceMachine",
-					"SpaceHeater",
-					"InsulationTile"
-				}
-			},
-			{
-				"HVAC",
-				new string[6]
-				{
-					"AirConditioner",
-					LogicTemperatureSensorConfig.ID,
-					"GasConduitRadiant",
-					GasConduitTemperatureSensorConfig.ID,
-					GasConduitElementSensorConfig.ID,
-					"GasReservoir"
-				}
-			},
-			{
-				"LiquidTemperature",
-				new string[5]
-				{
-					"LiquidHeater",
-					"LiquidConditioner",
-					"LiquidConduitRadiant",
-					LiquidConduitTemperatureSensorConfig.ID,
-					LiquidConduitElementSensorConfig.ID
-				}
-			},
-			{
-				"LogicControl",
-				new string[5]
-				{
-					"LogicWire",
-					"LogicDuplicantSensor",
-					LogicSwitchConfig.ID,
-					"LogicWireBridge",
-					"AutomationOverlay"
-				}
-			},
-			{
-				"GenericSensors",
-				new string[6]
-				{
-					LogicTimeOfDaySensorConfig.ID,
-					LogicTimerSensorConfig.ID,
-					"FloorSwitch",
-					LogicElementSensorGasConfig.ID,
-					LogicElementSensorLiquidConfig.ID,
-					"LogicGateNOT"
-				}
-			},
-			{
-				"LogicCircuits",
-				new string[4]
-				{
-					"LogicGateAND",
-					"LogicGateOR",
-					"LogicGateBUFFER",
-					"LogicGateFILTER"
-				}
-			},
-			{
-				"ParallelAutomation",
-				new string[4]
-				{
-					"LogicRibbon",
-					"LogicRibbonBridge",
-					LogicRibbonWriterConfig.ID,
-					LogicRibbonReaderConfig.ID
-				}
-			},
-			{
-				"DupeTrafficControl",
-				new string[6]
-				{
-					"Checkpoint",
-					LogicMemoryConfig.ID,
-					"ArcadeMachine",
-					"CosmicResearchCenter",
-					"LogicGateXOR",
-					LogicCounterConfig.ID
-				}
-			},
-			{
-				"Multiplexing",
-				new string[2]
-				{
-					"LogicGateMultiplexer",
-					"LogicGateDemultiplexer"
-				}
-			},
-			{
-				"SkyDetectors",
-				new string[3]
-				{
-					CometDetectorConfig.ID,
-					"Telescope",
-					"AstronautTrainingCenter"
-				}
-			},
-			{
-				"TravelTubes",
-				new string[4]
-				{
-					"TravelTubeEntrance",
-					"TravelTube",
-					"TravelTubeWallBridge",
-					"VerticalWindTunnel"
-				}
-			},
-			{
-				"SmartStorage",
-				new string[4]
-				{
-					"StorageLockerSmart",
-					"SolidTransferArm",
-					"ObjectDispenser",
-					"ConveyorOverlay"
-				}
-			},
-			{
-				"SolidTransport",
-				new string[7]
-				{
-					"SolidConduit",
-					"SolidConduitBridge",
-					"SolidConduitInbox",
-					"SolidConduitOutbox",
-					"SolidVent",
-					"SolidLogicValve",
-					"AutoMiner"
-				}
-			},
-			{
-				"SolidManagement",
-				new string[4]
-				{
-					"SolidFilter",
-					SolidConduitTemperatureSensorConfig.ID,
-					SolidConduitElementSensorConfig.ID,
-					SolidConduitDiseaseSensorConfig.ID
-				}
-			},
-			{
-				"BasicRocketry",
-				new string[4]
-				{
-					"CommandModule",
-					"SteamEngine",
-					"ResearchModule",
-					"Gantry"
-				}
-			},
-			{
-				"CargoI",
-				new string[1]
-				{
-					"CargoBay"
-				}
-			},
-			{
-				"CargoII",
-				new string[2]
-				{
-					"LiquidCargoBay",
-					"GasCargoBay"
-				}
-			},
-			{
-				"CargoIII",
-				new string[2]
-				{
-					"TouristModule",
-					"SpecialCargoBay"
-				}
-			},
-			{
-				"EnginesI",
-				new string[1]
-				{
-					"SolidBooster"
-				}
-			},
-			{
-				"EnginesII",
-				new string[3]
-				{
-					"KeroseneEngine",
-					"LiquidFuelTank",
-					"OxidizerTank"
-				}
-			},
-			{
-				"EnginesIII",
-				new string[2]
-				{
-					"OxidizerTankLiquid",
-					"HydrogenEngine"
-				}
-			},
-			{
-				"Jetpacks",
-				new string[3]
-				{
-					"JetSuit",
-					"JetSuitMarker",
-					"JetSuitLocker"
-				}
-			}
-		};
-
-		private readonly List<List<Tuple<string, float>>> TECH_TIERS = new List<List<Tuple<string, float>>>
-		{
-			new List<Tuple<string, float>>
-			{
-				new Tuple<string, float>("alpha", 15f)
-			},
-			new List<Tuple<string, float>>
-			{
-				new Tuple<string, float>("alpha", 20f)
-			},
-			new List<Tuple<string, float>>
-			{
-				new Tuple<string, float>("alpha", 30f),
-				new Tuple<string, float>("beta", 20f)
-			},
-			new List<Tuple<string, float>>
-			{
-				new Tuple<string, float>("alpha", 35f),
-				new Tuple<string, float>("beta", 30f)
-			},
-			new List<Tuple<string, float>>
-			{
-				new Tuple<string, float>("alpha", 40f),
-				new Tuple<string, float>("beta", 50f)
-			},
-			new List<Tuple<string, float>>
-			{
-				new Tuple<string, float>("alpha", 50f),
-				new Tuple<string, float>("beta", 70f)
-			},
-			new List<Tuple<string, float>>
-			{
-				new Tuple<string, float>("alpha", 70f),
-				new Tuple<string, float>("beta", 100f)
-			},
-			new List<Tuple<string, float>>
-			{
-				new Tuple<string, float>("alpha", 70f),
-				new Tuple<string, float>("beta", 100f),
-				new Tuple<string, float>("gamma", 200f)
-			},
-			new List<Tuple<string, float>>
-			{
-				new Tuple<string, float>("alpha", 70f),
-				new Tuple<string, float>("beta", 100f),
-				new Tuple<string, float>("gamma", 400f)
-			},
-			new List<Tuple<string, float>>
-			{
-				new Tuple<string, float>("alpha", 70f),
-				new Tuple<string, float>("beta", 100f),
-				new Tuple<string, float>("gamma", 800f)
-			},
-			new List<Tuple<string, float>>
-			{
-				new Tuple<string, float>("alpha", 70f),
-				new Tuple<string, float>("beta", 100f),
-				new Tuple<string, float>("gamma", 1600f)
-			}
-		};
+		private readonly List<List<Tuple<string, float>>> TECH_TIERS;
 
 		public Techs(ResourceSet parent)
 			: base("Techs", parent)
 		{
+			if (!DlcManager.IsExpansion1Active())
+			{
+				TECH_TIERS = new List<List<Tuple<string, float>>>
+				{
+					new List<Tuple<string, float>>(),
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 15f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 20f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 30f),
+						new Tuple<string, float>("advanced", 20f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 35f),
+						new Tuple<string, float>("advanced", 30f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 40f),
+						new Tuple<string, float>("advanced", 50f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 50f),
+						new Tuple<string, float>("advanced", 70f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 70f),
+						new Tuple<string, float>("advanced", 100f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 70f),
+						new Tuple<string, float>("advanced", 100f),
+						new Tuple<string, float>("space", 200f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 70f),
+						new Tuple<string, float>("advanced", 100f),
+						new Tuple<string, float>("space", 400f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 70f),
+						new Tuple<string, float>("advanced", 100f),
+						new Tuple<string, float>("space", 800f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 70f),
+						new Tuple<string, float>("advanced", 100f),
+						new Tuple<string, float>("space", 1600f)
+					}
+				};
+			}
+			else
+			{
+				TECH_TIERS = new List<List<Tuple<string, float>>>
+				{
+					new List<Tuple<string, float>>(),
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 15f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 20f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 30f),
+						new Tuple<string, float>("advanced", 20f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 35f),
+						new Tuple<string, float>("advanced", 30f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 40f),
+						new Tuple<string, float>("advanced", 50f),
+						new Tuple<string, float>("orbital", 0f),
+						new Tuple<string, float>("nuclear", 20f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 50f),
+						new Tuple<string, float>("advanced", 70f),
+						new Tuple<string, float>("orbital", 30f),
+						new Tuple<string, float>("nuclear", 40f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 70f),
+						new Tuple<string, float>("advanced", 100f),
+						new Tuple<string, float>("orbital", 250f),
+						new Tuple<string, float>("nuclear", 370f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 100f),
+						new Tuple<string, float>("advanced", 130f),
+						new Tuple<string, float>("orbital", 400f),
+						new Tuple<string, float>("nuclear", 435f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 100f),
+						new Tuple<string, float>("advanced", 130f),
+						new Tuple<string, float>("orbital", 600f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 100f),
+						new Tuple<string, float>("advanced", 130f),
+						new Tuple<string, float>("orbital", 800f)
+					},
+					new List<Tuple<string, float>>
+					{
+						new Tuple<string, float>("basic", 100f),
+						new Tuple<string, float>("advanced", 130f),
+						new Tuple<string, float>("orbital", 1600f)
+					}
+				};
+			}
+		}
+
+		public void Init()
+		{
+			new Tech("FarmingTech", new List<string>
+			{
+				"AlgaeHabitat",
+				"PlanterBox",
+				"RationBox",
+				"Compost"
+			}, this);
+			new Tech("FineDining", new List<string>
+			{
+				"CookingStation",
+				"EggCracker",
+				"DiningTable",
+				"FarmTile"
+			}, this);
+			new Tech("FoodRepurposing", new List<string>
+			{
+				"Juicer"
+			}, this);
+			new Tech("FinerDining", new List<string>
+			{
+				"GourmetCookingStation"
+			}, this);
+			new Tech("Agriculture", new List<string>
+			{
+				"FarmStation",
+				"FertilizerMaker",
+				"Refrigerator",
+				"HydroponicFarm",
+				"ParkSign"
+			}, this);
+			new Tech("Ranching", new List<string>
+			{
+				"RanchStation",
+				"CreatureDeliveryPoint",
+				"ShearingStation",
+				"CreatureFeeder",
+				"FlyingCreatureBait",
+				"FishDeliveryPoint",
+				"FishFeeder"
+			}, this);
+			new Tech("AnimalControl", new List<string>
+			{
+				"CreatureTrap",
+				"FishTrap",
+				"EggIncubator",
+				LogicCritterCountSensorConfig.ID
+			}, this);
+			new Tech("ImprovedOxygen", new List<string>
+			{
+				"Electrolyzer",
+				"RustDeoxidizer"
+			}, this);
+			new Tech("GasPiping", new List<string>
+			{
+				"GasConduit",
+				"GasConduitBridge",
+				"GasPump",
+				"GasVent"
+			}, this);
+			new Tech("ImprovedGasPiping", new List<string>
+			{
+				"InsulatedGasConduit",
+				LogicPressureSensorGasConfig.ID,
+				"GasLogicValve",
+				"GasVentHighPressure"
+			}, this);
+			new Tech("SpaceGas", new List<string>
+			{
+				"CO2Engine",
+				"ModularLaunchpadPortGas",
+				"ModularLaunchpadPortGasUnloader",
+				"GasCargoBaySmall"
+			}, this);
+			new Tech("PressureManagement", new List<string>
+			{
+				"LiquidValve",
+				"GasValve",
+				"GasPermeableMembrane",
+				"ManualPressureDoor"
+			}, this);
+			new Tech("DirectedAirStreams", new List<string>
+			{
+				"AirFilter",
+				"CO2Scrubber",
+				"PressureDoor"
+			}, this);
+			new Tech("LiquidFiltering", new List<string>
+			{
+				"OreScrubber",
+				"Desalinator"
+			}, this);
+			new Tech("MedicineI", new List<string>
+			{
+				"Apothecary"
+			}, this);
+			new Tech("MedicineII", new List<string>
+			{
+				"DoctorStation",
+				"HandSanitizer"
+			}, this);
+			new Tech("MedicineIII", new List<string>
+			{
+				GasConduitDiseaseSensorConfig.ID,
+				LiquidConduitDiseaseSensorConfig.ID,
+				LogicDiseaseSensorConfig.ID
+			}, this);
+			new Tech("MedicineIV", new List<string>
+			{
+				"AdvancedDoctorStation",
+				"AdvancedApothecary",
+				"HotTub",
+				LogicRadiationSensorConfig.ID
+			}, this);
+			new Tech("LiquidPiping", new List<string>
+			{
+				"LiquidConduit",
+				"LiquidConduitBridge",
+				"LiquidPump",
+				"LiquidVent"
+			}, this);
+			new Tech("ImprovedLiquidPiping", new List<string>
+			{
+				"InsulatedLiquidConduit",
+				LogicPressureSensorLiquidConfig.ID,
+				"LiquidLogicValve",
+				"LiquidConduitPreferentialFlow",
+				"LiquidConduitOverflow",
+				"LiquidReservoir"
+			}, this);
+			new Tech("PrecisionPlumbing", new List<string>
+			{
+				"EspressoMachine",
+				"LiquidFuelTankCluster"
+			}, this);
+			new Tech("SanitationSciences", new List<string>
+			{
+				"FlushToilet",
+				"WashSink",
+				ShowerConfig.ID,
+				"MeshTile"
+			}, this);
+			new Tech("FlowRedirection", new List<string>
+			{
+				"MechanicalSurfboard",
+				"ModularLaunchpadPortLiquid",
+				"ModularLaunchpadPortLiquidUnloader",
+				"LiquidCargoBaySmall"
+			}, this);
+			new Tech("LiquidDistribution", new List<string>
+			{
+				"RocketInteriorLiquidInput",
+				"RocketInteriorLiquidOutput"
+			}, this);
+			new Tech("AdvancedSanitation", new List<string>
+			{
+				"DecontaminationShower"
+			}, this);
+			new Tech("AdvancedFiltration", new List<string>
+			{
+				"GasFilter",
+				"LiquidFilter",
+				"SludgePress"
+			}, this);
+			new Tech("Distillation", new List<string>
+			{
+				"AlgaeDistillery",
+				"EthanolDistillery",
+				"WaterPurifier"
+			}, this);
+			new Tech("Catalytics", new List<string>
+			{
+				"OxyliteRefinery",
+				"SupermaterialRefinery",
+				"SodaFountain",
+				"GasCargoBayCluster"
+			}, this);
+			new Tech("AdvancedResourceExtraction", new List<string>
+			{
+				"NoseconeHarvest"
+			}, this);
+			new Tech("PowerRegulation", new List<string>
+			{
+				"BatteryMedium",
+				SwitchConfig.ID,
+				"WireBridge"
+			}, this);
+			new Tech("AdvancedPowerRegulation", new List<string>
+			{
+				"HighWattageWire",
+				"WireBridgeHighWattage",
+				"HydrogenGenerator",
+				LogicPowerRelayConfig.ID,
+				"PowerTransformerSmall",
+				LogicWattageSensorConfig.ID
+			}, this);
+			new Tech("PrettyGoodConductors", new List<string>
+			{
+				"WireRefined",
+				"WireRefinedBridge",
+				"WireRefinedHighWattage",
+				"WireRefinedBridgeHighWattage",
+				"PowerTransformer"
+			}, this);
+			new Tech("RenewableEnergy", new List<string>
+			{
+				"SteamTurbine2",
+				"SolarPanel",
+				"Sauna",
+				"SteamEngineCluster"
+			}, this);
+			new Tech("Combustion", new List<string>
+			{
+				"Generator",
+				"WoodGasGenerator"
+			}, this);
+			new Tech("ImprovedCombustion", new List<string>
+			{
+				"MethaneGenerator",
+				"OilRefinery",
+				"PetroleumGenerator"
+			}, this);
+			new Tech("InteriorDecor", new List<string>
+			{
+				"FlowerVase",
+				"FloorLamp",
+				"CeilingLight"
+			}, this);
+			new Tech("Artistry", new List<string>
+			{
+				"FlowerVaseWall",
+				"FlowerVaseHanging",
+				"CornerMoulding",
+				"CrownMoulding",
+				"ItemPedestal",
+				"SmallSculpture",
+				"IceSculpture"
+			}, this);
+			new Tech("Clothing", new List<string>
+			{
+				"ClothingFabricator",
+				"CarpetTile"
+			}, this);
+			new Tech("Acoustics", new List<string>
+			{
+				"BatterySmart",
+				"Phonobox",
+				"PowerControlStation"
+			}, this);
+			new Tech("SpacePower", new List<string>
+			{
+				"BatteryModule",
+				"SolarPanelModule",
+				"RocketInteriorPowerPlug"
+			}, this);
+			new Tech("NuclearRefinement", new List<string>
+			{
+				"NuclearReactor",
+				"UraniumCentrifuge"
+			}, this);
+			new Tech("FineArt", new List<string>
+			{
+				"Canvas",
+				"Sculpture"
+			}, this);
+			new Tech("EnvironmentalAppreciation", new List<string>
+			{
+				"BeachChair"
+			}, this);
+			new Tech("Luxury", new List<string>
+			{
+				LuxuryBedConfig.ID,
+				"LadderFast",
+				"PlasticTile"
+			}, this);
+			new Tech("RefractiveDecor", new List<string>
+			{
+				"CanvasWide",
+				"MetalSculpture"
+			}, this);
+			new Tech("GlassFurnishings", new List<string>
+			{
+				"GlassTile",
+				"FlowerVaseHangingFancy",
+				"SunLamp"
+			}, this);
+			new Tech("Screens", new List<string>
+			{
+				PixelPackConfig.ID
+			}, this);
+			new Tech("RenaissanceArt", new List<string>
+			{
+				"CanvasTall",
+				"MarbleSculpture"
+			}, this);
+			new Tech("Plastics", new List<string>
+			{
+				"Polymerizer",
+				"OilWellCap"
+			}, this);
+			new Tech("ValveMiniaturization", new List<string>
+			{
+				"LiquidMiniPump",
+				"GasMiniPump"
+			}, this);
+			new Tech("HydrocarbonPropulsion", new List<string>
+			{
+				"KeroseneEngineClusterSmall"
+			}, this);
+			new Tech("BetterHydroCarbonPropulsion", new List<string>
+			{
+				"KeroseneEngineCluster"
+			}, this);
+			new Tech("CryoFuelPropulsion", new List<string>
+			{
+				"HydrogenEngineCluster",
+				"OxidizerTankLiquidCluster"
+			}, this);
+			new Tech("Suits", new List<string>
+			{
+				"SuitsOverlay",
+				"AtmoSuit",
+				"SuitFabricator",
+				"ExteriorWall",
+				"SuitMarker",
+				"SuitLocker"
+			}, this);
+			new Tech("Jobs", new List<string>
+			{
+				"WaterCooler",
+				"CraftingTable"
+			}, this);
+			new Tech("AdvancedResearch", new List<string>
+			{
+				"BetaResearchPoint",
+				"AdvancedResearchCenter",
+				"ResetSkillsStation",
+				"ClusterTelescope",
+				"ExobaseHeadquarters"
+			}, this);
+			new Tech("SpaceProgram", new List<string>
+			{
+				"LaunchPad",
+				"HabitatModuleSmall",
+				"OrbitalCargoModule",
+				RocketControlStationConfig.ID
+			}, this);
+			new Tech("CrashPlan", new List<string>
+			{
+				"OrbitalResearchPoint",
+				"PioneerModule",
+				"OrbitalResearchCenter"
+			}, this);
+			new Tech("DurableLifeSupport", new List<string>
+			{
+				"NoseconeBasic",
+				"HabitatModuleMedium",
+				"ArtifactAnalysisStation",
+				"ArtifactCargoBay"
+			}, this);
+			new Tech("NuclearResearch", new List<string>
+			{
+				"DeltaResearchPoint",
+				"NuclearResearchCenter",
+				"HighEnergyParticleSpawner",
+				"HighEnergyParticleRedirector"
+			}, this);
+			new Tech("NuclearPropulsion", new List<string>
+			{
+				"HEPEngine"
+			}, this);
+			new Tech("NotificationSystems", new List<string>
+			{
+				LogicHammerConfig.ID,
+				LogicAlarmConfig.ID
+			}, this);
+			new Tech("ArtificialFriends", new List<string>
+			{
+				"SweepBotStation",
+				"ScoutModule"
+			}, this);
+			new Tech("BasicRefinement", new List<string>
+			{
+				"RockCrusher",
+				"Kiln"
+			}, this);
+			new Tech("RefinedObjects", new List<string>
+			{
+				"FirePole",
+				"ThermalBlock"
+			}, this);
+			new Tech("Smelting", new List<string>
+			{
+				"MetalRefinery",
+				"MetalTile"
+			}, this);
+			new Tech("HighTempForging", new List<string>
+			{
+				"GlassForge",
+				"BunkerTile",
+				"BunkerDoor",
+				"Gantry"
+			}, this);
+			new Tech("HighPressureForging", new List<string>
+			{
+				"DiamondPress"
+			}, this);
+			new Tech("RadiationProtection", new List<string>
+			{
+				"LeadSuit",
+				"LeadSuitMarker",
+				"LeadSuitLocker"
+			}, this);
+			new Tech("TemperatureModulation", new List<string>
+			{
+				"LiquidCooledFan",
+				"IceCooledFan",
+				"IceMachine",
+				"InsulationTile",
+				"SpaceHeater"
+			}, this);
+			new Tech("HVAC", new List<string>
+			{
+				"AirConditioner",
+				LogicTemperatureSensorConfig.ID,
+				GasConduitTemperatureSensorConfig.ID,
+				GasConduitElementSensorConfig.ID,
+				"GasConduitRadiant",
+				"GasReservoir",
+				"GasLimitValve"
+			}, this);
+			new Tech("LiquidTemperature", new List<string>
+			{
+				"LiquidConduitRadiant",
+				"LiquidConditioner",
+				LiquidConduitTemperatureSensorConfig.ID,
+				LiquidConduitElementSensorConfig.ID,
+				"LiquidHeater",
+				"LiquidLimitValve"
+			}, this);
+			new Tech("LogicControl", new List<string>
+			{
+				"AutomationOverlay",
+				LogicSwitchConfig.ID,
+				"LogicWire",
+				"LogicWireBridge",
+				"LogicDuplicantSensor"
+			}, this);
+			new Tech("GenericSensors", new List<string>
+			{
+				"FloorSwitch",
+				LogicElementSensorGasConfig.ID,
+				LogicElementSensorLiquidConfig.ID,
+				"LogicGateNOT",
+				LogicTimeOfDaySensorConfig.ID,
+				LogicTimerSensorConfig.ID
+			}, this);
+			new Tech("LogicCircuits", new List<string>
+			{
+				"LogicGateAND",
+				"LogicGateOR",
+				"LogicGateBUFFER",
+				"LogicGateFILTER"
+			}, this);
+			new Tech("ParallelAutomation", new List<string>
+			{
+				"LogicRibbon",
+				"LogicRibbonBridge",
+				LogicRibbonWriterConfig.ID,
+				LogicRibbonReaderConfig.ID
+			}, this);
+			new Tech("DupeTrafficControl", new List<string>
+			{
+				LogicCounterConfig.ID,
+				LogicMemoryConfig.ID,
+				"LogicGateXOR",
+				"ArcadeMachine",
+				"Checkpoint",
+				"CosmicResearchCenter"
+			}, this);
+			new Tech("Multiplexing", new List<string>
+			{
+				"LogicGateMultiplexer",
+				"LogicGateDemultiplexer"
+			}, this);
+			new Tech("SkyDetectors", new List<string>
+			{
+				CometDetectorConfig.ID,
+				"Telescope",
+				"AstronautTrainingCenter"
+			}, this);
+			new Tech("TravelTubes", new List<string>
+			{
+				"TravelTubeEntrance",
+				"TravelTube",
+				"TravelTubeWallBridge",
+				"VerticalWindTunnel"
+			}, this);
+			new Tech("SmartStorage", new List<string>
+			{
+				"ConveyorOverlay",
+				"SolidTransferArm",
+				"StorageLockerSmart",
+				"ObjectDispenser"
+			}, this);
+			new Tech("SolidManagement", new List<string>
+			{
+				"SolidFilter",
+				SolidConduitTemperatureSensorConfig.ID,
+				SolidConduitElementSensorConfig.ID,
+				SolidConduitDiseaseSensorConfig.ID,
+				"CargoBayCluster"
+			}, this);
+			new Tech("HighVelocityTransport", new List<string>
+			{
+				"RailGun",
+				"LandingBeacon"
+			}, this);
+			new Tech("BasicRocketry", new List<string>
+			{
+				"CommandModule",
+				"SteamEngine",
+				"ResearchModule",
+				"Gantry"
+			}, this);
+			new Tech("CargoI", new List<string>
+			{
+				"CargoBay"
+			}, this);
+			new Tech("CargoII", new List<string>
+			{
+				"LiquidCargoBay",
+				"GasCargoBay"
+			}, this);
+			new Tech("CargoIII", new List<string>
+			{
+				"TouristModule",
+				"SpecialCargoBay"
+			}, this);
+			new Tech("EnginesI", new List<string>
+			{
+				"SolidBooster"
+			}, this);
+			new Tech("EnginesII", new List<string>
+			{
+				"KeroseneEngine",
+				"LiquidFuelTank",
+				"OxidizerTank"
+			}, this);
+			new Tech("EnginesIII", new List<string>
+			{
+				"OxidizerTankLiquid",
+				"OxidizerTankCluster",
+				"HydrogenEngine"
+			}, this);
+			new Tech("Jetpacks", new List<string>
+			{
+				"JetSuit",
+				"JetSuitMarker",
+				"JetSuitLocker",
+				"LiquidCargoBayCluster"
+			}, this);
+			new Tech("SolidTransport", new List<string>
+			{
+				"SolidConduitInbox",
+				"SolidConduit",
+				"SolidConduitBridge",
+				"SolidVent"
+			}, this);
+			new Tech("Monuments", new List<string>
+			{
+				"MonumentBottom",
+				"MonumentMiddle",
+				"MonumentTop"
+			}, this);
+			new Tech("SolidSpace", new List<string>
+			{
+				"SolidLogicValve",
+				"SolidConduitOutbox",
+				"SolidLimitValve",
+				"SolidCargoBaySmall",
+				"RocketInteriorSolidInput",
+				"RocketInteriorSolidOutput",
+				"ModularLaunchpadPortSolid",
+				"ModularLaunchpadPortSolidUnloader"
+			}, this);
+			new Tech("RoboticTools", new List<string>
+			{
+				"AutoMiner",
+				"RailGunPayloadOpener"
+			}, this);
+			new Tech("PortableGasses", new List<string>
+			{
+				"GasBottler",
+				"BottleEmptierGas",
+				"OxygenMask",
+				"OxygenMaskLocker",
+				"OxygenMaskMarker"
+			}, this);
+			InitExpansion1();
+		}
+
+		private void InitExpansion1()
+		{
+			if (DlcManager.IsExpansion1Active())
+			{
+				new Tech("Bioengineering", new List<string>
+				{
+					"GeneticAnalysisStation"
+				}, this);
+				new Tech("SpaceCombustion", new List<string>
+				{
+					"SugarEngine",
+					"SmallOxidizerTank"
+				}, this);
+				new Tech("HighVelocityDestruction", new List<string>
+				{
+					"NoseconeHarvest"
+				}, this);
+				new Tech("GasDistribution", new List<string>
+				{
+					"RocketInteriorGasInput",
+					"RocketInteriorGasOutput",
+					"OxidizerTankCluster"
+				}, this);
+				new Tech("AdvancedScanners", new List<string>
+				{
+					"ScannerModule"
+				}, this);
+			}
+		}
+
+		public void PostProcess()
+		{
+			foreach (Tech resource in resources)
+			{
+				List<TechItem> list = new List<TechItem>();
+				foreach (string unlockedItemID in resource.unlockedItemIDs)
+				{
+					TechItem techItem = Db.Get().TechItems.TryGet(unlockedItemID);
+					if (techItem != null)
+					{
+						list.Add(techItem);
+					}
+				}
+				resource.unlockedItems = list;
+			}
 		}
 
 		public void Load(TextAsset tree_file)
 		{
-			foreach (ResourceTreeNode item in new ResourceTreeLoader<ResourceTreeNode>(tree_file))
+			ResourceTreeLoader<ResourceTreeNode> resourceTreeLoader = new ResourceTreeLoader<ResourceTreeNode>(tree_file);
+			List<TechTreeTitle> list = new List<TechTreeTitle>();
+			for (int i = 0; i < Db.Get().TechTreeTitles.Count; i++)
+			{
+				list.Add(Db.Get().TechTreeTitles[i]);
+			}
+			list.Sort((TechTreeTitle a, TechTreeTitle b) => a.center.y.CompareTo(b.center.y));
+			foreach (ResourceTreeNode item in resourceTreeLoader)
 			{
 				if (string.Equals(item.Id.Substring(0, 1), "_"))
 				{
 					continue;
 				}
 				Tech tech = TryGet(item.Id);
-				if (tech == null)
+				Debug.Assert(tech != null, "Tech node found in yEd that is not found in DbTechs constructor: " + item.Id);
+				string categoryID = "";
+				for (int j = 0; j < list.Count; j++)
 				{
-					tech = new Tech(item.Id, this, Strings.Get("STRINGS.RESEARCH.TECHS." + item.Id.ToUpper() + ".NAME"), Strings.Get("STRINGS.RESEARCH.TECHS." + item.Id.ToUpper() + ".DESC"), item);
+					if (list[j].center.y >= item.center.y)
+					{
+						categoryID = list[j].Id;
+						break;
+					}
 				}
+				tech.SetNode(item, categoryID);
 				foreach (ResourceTreeNode reference in item.references)
 				{
 					Tech tech2 = TryGet(reference.Id);
-					if (tech2 == null)
+					Debug.Assert(tech2 != null, "Tech node found in yEd that is not found in DbTechs constructor: " + reference.Id);
+					categoryID = "";
+					for (int k = 0; k < list.Count; k++)
 					{
-						tech2 = new Tech(reference.Id, this, Strings.Get("STRINGS.RESEARCH.TECHS." + reference.Id.ToUpper() + ".NAME"), Strings.Get("STRINGS.RESEARCH.TECHS." + reference.Id.ToUpper() + ".DESC"), reference);
+						if (list[k].center.y >= item.center.y)
+						{
+							categoryID = list[k].Id;
+							break;
+						}
 					}
+					tech2.SetNode(reference, categoryID);
 					tech2.requiredTech.Add(tech);
 					tech.unlockedTech.Add(tech2);
 				}
 			}
-			tierCount = 0;
 			foreach (Tech resource in resources)
 			{
 				resource.tier = GetTier(resource);
 				foreach (Tuple<string, float> item2 in TECH_TIERS[resource.tier])
 				{
-					resource.costsByResearchTypeID.Add(item2.first, item2.second);
+					if (!resource.costsByResearchTypeID.ContainsKey(item2.first))
+					{
+						resource.costsByResearchTypeID.Add(item2.first, item2.second);
+					}
 				}
-				tierCount = Math.Max(resource.tier + 1, tierCount);
+			}
+			for (int num = Count - 1; num >= 0; num--)
+			{
+				if (!((Tech)GetResource(num)).FoundNode)
+				{
+					Remove((Tech)GetResource(num));
+				}
 			}
 		}
 
-		private int GetTier(Tech tech)
+		public static int GetTier(Tech tech)
 		{
-			if (tech.requiredTech.Count == 0)
+			if (tech == null)
 			{
 				return 0;
 			}
@@ -832,6 +885,19 @@ namespace Database
 				tech.requiredTech.Add(tech2);
 				tech2.unlockedTech.Add(tech);
 			}
+		}
+
+		public Tech TryGetTechForTechItem(string itemId)
+		{
+			for (int i = 0; i < Count; i++)
+			{
+				Tech tech = (Tech)GetResource(i);
+				if (tech.unlockedItemIDs.Find((string match) => match == itemId) != null)
+				{
+					return tech;
+				}
+			}
+			return null;
 		}
 
 		public bool IsTechItemComplete(string id)

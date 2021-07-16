@@ -15,7 +15,7 @@ public struct StringKey
 
 	public override string ToString()
 	{
-		return "S: [" + String + "] H: [" + Hash + "] Value: [" + (string)Strings.Get(this) + "]";
+		return string.Concat("S: [", String, "] H: [", Hash.ToString(), "] Value: [", Strings.Get(this), "]");
 	}
 
 	public bool IsValid()

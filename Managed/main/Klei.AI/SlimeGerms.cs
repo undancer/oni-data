@@ -10,8 +10,8 @@ namespace Klei.AI
 
 		public const string ID = "SlimeLung";
 
-		public SlimeGerms()
-			: base("SlimeLung", 20, new RangeInfo(283.15f, 293.15f, 363.15f, 373.15f), new RangeInfo(10f, 1200f, 1200f, 10f), new RangeInfo(0f, 0f, 1000f, 1000f), RangeInfo.Idempotent())
+		public SlimeGerms(bool statsOnly)
+			: base("SlimeLung", 20, new RangeInfo(283.15f, 293.15f, 363.15f, 373.15f), new RangeInfo(10f, 1200f, 1200f, 10f), new RangeInfo(0f, 0f, 1000f, 1000f), RangeInfo.Idempotent(), statsOnly)
 		{
 		}
 

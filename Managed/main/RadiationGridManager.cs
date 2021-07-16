@@ -3,6 +3,12 @@ using UnityEngine;
 
 public static class RadiationGridManager
 {
+	public const float STANDARD_MASS_FALLOFF = 1000000f;
+
+	public const int RADIATION_LINGER_RATE = 4;
+
+	public static List<RadiationGridEmitter> emitters = new List<RadiationGridEmitter>();
+
 	public static List<Tuple<int, int>> previewLightCells = new List<Tuple<int, int>>();
 
 	public static int[] previewLux;
@@ -14,40 +20,22 @@ public static class RadiationGridManager
 
 	public static void Initialise()
 	{
-		previewLux = new int[Grid.CellCount];
+		emitters = new List<RadiationGridEmitter>();
 	}
 
 	public static void Shutdown()
 	{
-		previewLux = null;
-		previewLightCells.Clear();
+		emitters.Clear();
 	}
 
-	public static void DestroyPreview()
+	public static void Refresh()
 	{
-		foreach (Tuple<int, int> previewLightCell in previewLightCells)
+		for (int i = 0; i < emitters.Count; i++)
 		{
-			previewLux[previewLightCell.first] = 0;
-		}
-		previewLightCells.Clear();
-	}
-
-	public static void CreatePreview(int origin_cell, float radius, LightShape shape, int lux)
-	{
-		previewLightCells.Clear();
-		ListPool<int, RadiationGridEmitter>.PooledList pooledList = ListPool<int, RadiationGridEmitter>.Allocate();
-		pooledList.Add(origin_cell);
-		DiscreteShadowCaster.GetVisibleCells(origin_cell, pooledList, (int)radius, shape);
-		int num = 0;
-		foreach (int item in pooledList)
-		{
-			if (Grid.IsValidCell(item))
+			if (emitters[i].enabled)
 			{
-				num = lux / CalculateFalloff(0.5f, item, origin_cell);
-				previewLightCells.Add(new Tuple<int, int>(item, num));
-				previewLux[item] = num;
+				emitters[i].Emit();
 			}
 		}
-		pooledList.Recycle();
 	}
 }

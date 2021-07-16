@@ -19,23 +19,11 @@ public class PlantableSeed : KMonoBehaviour, IReceptacleDirection, IGameObjectEf
 
 	public SingleEntityReceptacle.ReceptacleDirection direction;
 
-	private static readonly EventSystem.IntraObjectHandler<PlantableSeed> OnAbsorbDelegate = new EventSystem.IntraObjectHandler<PlantableSeed>(delegate(PlantableSeed component, object data)
-	{
-		component.OnAbsorb(data);
-	});
-
-	private static readonly EventSystem.IntraObjectHandler<PlantableSeed> OnSplitDelegate = new EventSystem.IntraObjectHandler<PlantableSeed>(delegate(PlantableSeed component, object data)
-	{
-		component.OnSplit(data);
-	});
-
 	public SingleEntityReceptacle.ReceptacleDirection Direction => direction;
 
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		Subscribe(-2064133523, OnAbsorbDelegate);
-		Subscribe(1335436905, OnSplitDelegate);
 		timeUntilSelfPlant = Util.RandomVariance(2400f, 600f);
 	}
 
@@ -51,14 +39,6 @@ public class PlantableSeed : KMonoBehaviour, IReceptacleDirection, IGameObjectEf
 		base.OnCleanUp();
 	}
 
-	private void OnAbsorb(object data)
-	{
-	}
-
-	private void OnSplit(object data)
-	{
-	}
-
 	public void TryPlant(bool allow_plant_from_storage = false)
 	{
 		timeUntilSelfPlant = Util.RandomVariance(2400f, 600f);
@@ -71,6 +51,11 @@ public class PlantableSeed : KMonoBehaviour, IReceptacleDirection, IGameObjectEf
 		{
 			Vector3 position = Grid.CellToPosCBC(cell, Grid.SceneLayer.BuildingFront);
 			GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(PlantID), position, Grid.SceneLayer.BuildingFront);
+			MutantPlant component = gameObject.GetComponent<MutantPlant>();
+			if (component != null)
+			{
+				GetComponent<MutantPlant>().CopyMutationsTo(component);
+			}
 			gameObject.SetActive(value: true);
 			Pickupable pickupable = GetComponent<Pickupable>().Take(1f);
 			if (pickupable != null)
@@ -125,7 +110,7 @@ public class PlantableSeed : KMonoBehaviour, IReceptacleDirection, IGameObjectEf
 			return false;
 		}
 		UprootedMonitor component4 = prefab.GetComponent<UprootedMonitor>();
-		if (component4 != null && !component4.IsCellSafe(cell))
+		if (component4 != null && !component4.IsSuitableFoundation(cell))
 		{
 			return false;
 		}

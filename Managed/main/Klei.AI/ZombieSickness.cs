@@ -23,7 +23,7 @@ namespace Klei.AI
 			{
 				"anim_idle_spores_kanim",
 				"anim_loco_spore_kanim"
-			}, Db.Get().Expressions.Zombie));
+			}, Db.Get().Expressions.SickSpores));
 			AddSicknessComponent(new AttributeModifierSickness(new AttributeModifier[11]
 			{
 				new AttributeModifier(Db.Get().Attributes.Athletics.Id, -10f, DUPLICANTS.DISEASES.ZOMBIESICKNESS.NAME),

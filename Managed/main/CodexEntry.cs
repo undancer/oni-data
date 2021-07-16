@@ -8,6 +8,8 @@ public class CodexEntry
 
 	private List<ContentContainer> _contentContainers = new List<ContentContainer>();
 
+	private string[] _dlcIds;
+
 	private string _id;
 
 	private string _parentId;
@@ -47,6 +49,27 @@ public class CodexEntry
 		private set
 		{
 			_contentContainers = value;
+		}
+	}
+
+	public string[] dlcIds
+	{
+		get
+		{
+			return _dlcIds;
+		}
+		set
+		{
+			_dlcIds = value;
+			string str = "";
+			for (int i = 0; i < value.Length; i++)
+			{
+				str += value[i];
+				if (i != value.Length - 1)
+				{
+					str += "\n";
+				}
+			}
 		}
 	}
 
@@ -232,6 +255,7 @@ public class CodexEntry
 
 	public CodexEntry()
 	{
+		dlcIds = DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public CodexEntry(string category, List<ContentContainer> contentContainers, string name)
@@ -243,6 +267,7 @@ public class CodexEntry
 		{
 			sortString = UI.StripLinkFormatting(name);
 		}
+		dlcIds = DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public CodexEntry(string category, string titleKey, List<ContentContainer> contentContainers)
@@ -254,6 +279,7 @@ public class CodexEntry
 		{
 			sortString = UI.StripLinkFormatting(title);
 		}
+		dlcIds = DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public static List<string> ContentContainerDebug(List<ContentContainer> _contentContainers)
@@ -359,5 +385,15 @@ public class CodexEntry
 			}
 		}
 		return null;
+	}
+
+	public string[] GetDlcIds()
+	{
+		if (_dlcIds == null)
+		{
+			DebugUtil.DevAssert(_dlcIds != null, "Codex entry " + id + " has null dlcIds. Assigning to ALL");
+			_dlcIds = DlcManager.AVAILABLE_ALL_VERSIONS;
+		}
+		return _dlcIds;
 	}
 }

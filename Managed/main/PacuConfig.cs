@@ -1,6 +1,7 @@
 using STRINGS;
 using UnityEngine;
 
+[EntityConfigOrder(1)]
 public class PacuConfig : IEntityConfig
 {
 	public const string ID = "Pacu";
@@ -13,7 +14,12 @@ public class PacuConfig : IEntityConfig
 
 	public static GameObject CreatePacu(string id, string name, string desc, string anim_file, bool is_baby)
 	{
-		return EntityTemplates.ExtendEntityToWildCreature(BasePacuConfig.CreatePrefab(id, "PacuBaseTrait", name, desc, anim_file, is_baby, null, 273.15f, 333.15f), PacuTuning.PEN_SIZE_PER_CREATURE, 25f);
+		return EntityTemplates.ExtendEntityToWildCreature(BasePacuConfig.CreatePrefab(id, "PacuBaseTrait", name, desc, anim_file, is_baby, null, 273.15f, 333.15f), PacuTuning.PEN_SIZE_PER_CREATURE);
+	}
+
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public GameObject CreatePrefab()

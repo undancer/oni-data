@@ -1,9 +1,8 @@
-using System.Collections.Generic;
 using KSerialization;
 using UnityEngine;
 
 [AddComponentMenu("KMonoBehaviour/scripts/Refrigerator")]
-public class Refrigerator : KMonoBehaviour, IUserControlledCapacity, IGameObjectEffectDescriptor
+public class Refrigerator : KMonoBehaviour, IUserControlledCapacity
 {
 	[MyCmpGet]
 	private Storage storage;
@@ -14,26 +13,10 @@ public class Refrigerator : KMonoBehaviour, IUserControlledCapacity, IGameObject
 	[MyCmpGet]
 	private LogicPorts ports;
 
-	[SerializeField]
-	public float simulatedInternalTemperature = 277.15f;
-
-	[SerializeField]
-	public float simulatedInternalHeatCapacity = 400f;
-
-	[SerializeField]
-	public float simulatedThermalConductivity = 1000f;
-
 	[Serialize]
 	private float userMaxCapacity = float.PositiveInfinity;
 
 	private FilteredStorage filteredStorage;
-
-	private SimulatedTemperatureAdjuster temperatureAdjuster;
-
-	private static readonly EventSystem.IntraObjectHandler<Refrigerator> OnOperationalChangedDelegate = new EventSystem.IntraObjectHandler<Refrigerator>(delegate(Refrigerator component, object data)
-	{
-		component.OnOperationalChanged(data);
-	});
 
 	private static readonly EventSystem.IntraObjectHandler<Refrigerator> OnCopySettingsDelegate = new EventSystem.IntraObjectHandler<Refrigerator>(delegate(Refrigerator component, object data)
 	{
@@ -79,12 +62,9 @@ public class Refrigerator : KMonoBehaviour, IUserControlledCapacity, IGameObject
 
 	protected override void OnSpawn()
 	{
-		operational.SetActive(operational.IsOperational);
 		GetComponent<KAnimControllerBase>().Play("off");
 		filteredStorage.FilterChanged();
-		temperatureAdjuster = new SimulatedTemperatureAdjuster(simulatedInternalTemperature, simulatedInternalHeatCapacity, simulatedThermalConductivity, GetComponent<Storage>());
 		UpdateLogicCircuit();
-		Subscribe(-592767678, OnOperationalChangedDelegate);
 		Subscribe(-905833192, OnCopySettingsDelegate);
 		Subscribe(-1697596308, UpdateLogicCircuitCBDelegate);
 		Subscribe(-592767678, UpdateLogicCircuitCBDelegate);
@@ -93,13 +73,6 @@ public class Refrigerator : KMonoBehaviour, IUserControlledCapacity, IGameObject
 	protected override void OnCleanUp()
 	{
 		filteredStorage.CleanUp();
-		temperatureAdjuster.CleanUp();
-	}
-
-	private void OnOperationalChanged(object data)
-	{
-		bool isOperational = operational.IsOperational;
-		operational.SetActive(isOperational);
 	}
 
 	public bool IsActive()
@@ -118,11 +91,6 @@ public class Refrigerator : KMonoBehaviour, IUserControlledCapacity, IGameObject
 				UserMaxCapacity = component.UserMaxCapacity;
 			}
 		}
-	}
-
-	public List<Descriptor> GetDescriptors(GameObject go)
-	{
-		return SimulatedTemperatureAdjuster.GetDescriptors(simulatedInternalTemperature);
 	}
 
 	private void UpdateLogicCircuitCB(object data)

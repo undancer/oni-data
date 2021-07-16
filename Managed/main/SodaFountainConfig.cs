@@ -8,7 +8,6 @@ public class SodaFountainConfig : IBuildingConfig
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef("SodaFountain", 2, 2, "sodamaker_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER1);
-		obj.DlcId = "PACK1";
 		obj.ViewMode = OverlayModes.LiquidConduits.ID;
 		obj.Floodable = true;
 		obj.AudioCategory = "Metal";

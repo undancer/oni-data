@@ -64,7 +64,7 @@ namespace KMod
 			return Path.Combine(Util.RootFolder(), "mods/");
 		}
 
-		public Manager()
+		public void LoadModDBAndInitialize()
 		{
 			string filename = GetFilename();
 			try
@@ -196,7 +196,7 @@ namespace KMod
 			List<Mod> list = new List<Mod>();
 			foreach (Mod mod in mods)
 			{
-				if (mod.status != 0 && mod.IsActive() && !mod.HasOnlyTranslationContent())
+				if (mod.DevModCrashTriggered || (mod.status != 0 && mod.IsActive() && !mod.HasOnlyTranslationContent()))
 				{
 					list.Add(mod);
 				}
@@ -472,32 +472,43 @@ namespace KMod
 					mod.Load(content);
 				}
 			}
-			bool flag = false;
-			foreach (Mod mod2 in mods)
+			if ((content & Content.DLL) != 0)
 			{
-				Content content2 = mod2.loaded_content & content;
-				Content content3 = mod2.available_content & content;
-				if (mod2.IsEnabledForActiveDlc() && content2 != content3)
+				IReadOnlyList<Mod> readOnlyList = mods.AsReadOnly();
+				foreach (Mod mod2 in mods)
 				{
-					mod2.SetCrashed();
+					if (mod2.IsEnabledForActiveDlc())
+					{
+						mod2.PostLoad(readOnlyList);
+					}
+				}
+			}
+			bool flag = false;
+			foreach (Mod mod3 in mods)
+			{
+				Content content2 = mod3.loaded_content & content;
+				Content content3 = mod3.available_content & content;
+				if (mod3.IsEnabledForActiveDlc() && content2 != content3)
+				{
+					mod3.SetCrashed();
 					Event item;
-					if (!mod2.IsEnabledForActiveDlc())
+					if (!mod3.IsEnabledForActiveDlc())
 					{
 						flag = true;
 						List<Event> list = events;
 						item = new Event
 						{
 							event_type = EventType.Deactivated,
-							mod = mod2.label
+							mod = mod3.label
 						};
 						list.Add(item);
 					}
-					Debug.LogFormat("Failed to load mod {0}...disabling", mod2.title);
+					Debug.LogFormat("Failed to load mod {0}...disabling", mod3.title);
 					List<Event> list2 = events;
 					item = new Event
 					{
 						event_type = EventType.LoadError,
-						mod = mod2.label
+						mod = mod3.label
 					};
 					list2.Add(item);
 				}
@@ -1032,16 +1043,20 @@ namespace KMod
 			return true;
 		}
 
-		public void Reinsert(int source_index, int target_index, object caller)
+		public void Reinsert(int source_index, int target_index, bool move_to_end, object caller)
 		{
+			if (move_to_end)
+			{
+				target_index = mods.Count;
+			}
 			DebugUtil.Assert(source_index != target_index);
-			if (source_index >= -1 && mods.Count > source_index && target_index >= -1 && mods.Count >= target_index)
+			if (source_index >= -1 && mods.Count > source_index && target_index >= -1 && mods.Count > target_index)
 			{
 				Mod item = mods[source_index];
 				mods.RemoveAt(source_index);
-				if (source_index < target_index)
+				if (source_index > target_index)
 				{
-					target_index--;
+					target_index++;
 				}
 				if (target_index == mods.Count)
 				{

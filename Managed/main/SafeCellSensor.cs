@@ -1,3 +1,5 @@
+using Klei.AI;
+
 public class SafeCellSensor : Sensor
 {
 	private MinionBrain brain;
@@ -5,6 +7,8 @@ public class SafeCellSensor : Sensor
 	private Navigator navigator;
 
 	private KPrefabID prefabid;
+
+	private Traits traits;
 
 	private int cell = Grid.InvalidCell;
 
@@ -14,6 +18,7 @@ public class SafeCellSensor : Sensor
 		navigator = GetComponent<Navigator>();
 		brain = GetComponent<MinionBrain>();
 		prefabid = GetComponent<KPrefabID>();
+		traits = GetComponent<Traits>();
 	}
 
 	public override void Update()
@@ -71,7 +76,7 @@ public class SafeCellSensor : Sensor
 	{
 		if (cell == Grid.InvalidCell)
 		{
-			RunSafeCellQuery(avoid_light: true);
+			RunSafeCellQuery((!traits.HasTrait("NightLight")) ? true : false);
 		}
 		return cell;
 	}

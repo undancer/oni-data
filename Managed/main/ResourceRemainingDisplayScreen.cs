@@ -51,7 +51,7 @@ public class ResourceRemainingDisplayScreen : KScreen
 			selected_elements.Add(_selected_element);
 		}
 		currentRecipe = recipe;
-		Debug.Assert(selected_elements.Count == recipe.Ingredients.Count);
+		Debug.Assert(selected_elements.Count == recipe.Ingredients.Count, $"{recipe.Name} Mismatch number of selected elements {selected_elements.Count} and recipe requirements {recipe.Ingredients.Count}");
 	}
 
 	public void SetNumberOfPendingConstructions(int number)
@@ -92,13 +92,13 @@ public class ResourceRemainingDisplayScreen : KScreen
 			{
 				Tag tag = selected_elements[i];
 				float num = currentRecipe.Ingredients[i].amount * (float)numberOfPendingConstructions;
-				float num2 = WorldInventory.Instance.GetTotalAmount(tag) - WorldInventory.Instance.GetAmount(tag);
-				float num3 = WorldInventory.Instance.GetTotalAmount(tag) - (num2 + num);
-				if (num3 < 0f)
+				float amount = ClusterManager.Instance.activeWorld.worldInventory.GetAmount(tag, includeRelatedWorlds: true);
+				amount -= num;
+				if (amount < 0f)
 				{
-					num3 = 0f;
+					amount = 0f;
 				}
-				text = text + tag.ProperName() + ": " + GameUtil.GetFormattedMass(num3) + " / " + GameUtil.GetFormattedMass(currentRecipe.Ingredients[i].amount);
+				text = text + tag.ProperName() + ": " + GameUtil.GetFormattedMass(amount) + " / " + GameUtil.GetFormattedMass(currentRecipe.Ingredients[i].amount);
 				if (i < selected_elements.Count - 1)
 				{
 					text += "\n";

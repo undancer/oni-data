@@ -34,7 +34,7 @@ public class DreckoPlasticConfig : IEntityConfig
 	public static GameObject CreateDrecko(string id, string name, string desc, string anim_file, bool is_baby)
 	{
 		GameObject prefab = BaseDreckoConfig.BaseDrecko(id, name, desc, anim_file, "DreckoPlasticBaseTrait", is_baby, null, 298.15f, 333.15f);
-		prefab = EntityTemplates.ExtendEntityToWildCreature(prefab, DreckoTuning.PEN_SIZE_PER_CREATURE, 150f);
+		prefab = EntityTemplates.ExtendEntityToWildCreature(prefab, DreckoTuning.PEN_SIZE_PER_CREATURE);
 		Trait trait = Db.Get().CreateTrait("DreckoPlasticBaseTrait", name, name, null, should_save: false, null, positive_trait: true, is_valid_starter_trait: true);
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.maxAttribute.Id, DreckoTuning.STANDARD_STOMACH_SIZE, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.deltaAttribute.Id, (0f - DreckoTuning.STANDARD_CALORIES_PER_CYCLE) / 600f, name));
@@ -55,6 +55,11 @@ public class DreckoPlasticConfig : IEntityConfig
 		def2.targetAtmosphere = SimHashes.Hydrogen;
 		prefab.AddOrGetDef<SolidConsumerMonitor.Def>().diet = diet;
 		return prefab;
+	}
+
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
 	}
 
 	public virtual GameObject CreatePrefab()

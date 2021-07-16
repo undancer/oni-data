@@ -4,6 +4,11 @@ public class EyeAnimation : IEntityConfig
 {
 	public static string ID = "EyeAnimation";
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateEntity(ID, ID, is_selectable: false);

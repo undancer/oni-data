@@ -54,6 +54,15 @@ public class KFMOD
 	{
 		try
 		{
+			Settings instance = Settings.Instance;
+			if (!DlcManager.IsExpansion1Active())
+			{
+				instance.Banks.RemoveAll((string b) => b.StartsWith("expansion1_"));
+			}
+			if (UnityEngine.Object.FindObjectsOfType<RuntimeManager>().Length != 0)
+			{
+				Debug.LogError("FMOD got initialized before we tried to initialize it! This will cause bad things to happen!");
+			}
 			_ = RuntimeManager.StudioSystem;
 			didFmodInitializeSuccessfully = RuntimeManager.IsInitialized;
 		}

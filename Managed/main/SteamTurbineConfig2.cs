@@ -8,6 +8,10 @@ public class SteamTurbineConfig2 : IBuildingConfig
 
 	public static float MAX_WATTAGE = 850f;
 
+	private const int HEIGHT = 3;
+
+	private const int WIDTH = 5;
+
 	private static readonly List<Storage.StoredItemModifier> StoredItemModifiers = new List<Storage.StoredItemModifier>
 	{
 		Storage.StoredItemModifier.Hide,
@@ -36,6 +40,7 @@ public class SteamTurbineConfig2 : IBuildingConfig
 		obj.PermittedRotations = PermittedRotations.FlipH;
 		obj.ViewMode = OverlayModes.Power.ID;
 		obj.AudioCategory = "Metal";
+		obj.RequiresPowerOutput = true;
 		obj.PowerOutputOffset = new CellOffset(1, 0);
 		obj.OverheatTemperature = 1273.15f;
 		obj.SelfHeatKilowattsWhenActive = 4f;

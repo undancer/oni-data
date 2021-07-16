@@ -9,9 +9,9 @@ public class CellSelectionObject : KMonoBehaviour
 	[HideInInspector]
 	public CellSelectionObject alternateSelectionObject;
 
-	private float zDepth = -0.5f;
+	private float zDepth = Grid.GetLayerZ(Grid.SceneLayer.WorldSelection) - 0.5f;
 
-	private float zDepthSelected;
+	private float zDepthSelected = Grid.GetLayerZ(Grid.SceneLayer.WorldSelection);
 
 	private KBoxCollider2D mCollider;
 

@@ -10,6 +10,8 @@ namespace Database
 
 		public ColonyAchievement ReachedDistantPlanet;
 
+		public ColonyAchievement CollectedArtifacts;
+
 		public ColonyAchievement Survived100Cycles;
 
 		public ColonyAchievement ReachedSpace;
@@ -86,36 +88,38 @@ namespace Database
 				new NumberOfDupes(12),
 				new MonumentBuilt()
 			}, COLONY_ACHIEVEMENTS.THRIVING.MESSAGE_TITLE, COLONY_ACHIEVEMENTS.THRIVING.MESSAGE_BODY, "victoryShorts/Stay", "victoryLoops/Stay_loop", ThrivingSequence.Start, AudioMixerSnapshots.Get().VictoryNISGenericSnapshot, "home_sweet_home"));
-			ReachedDistantPlanet = Add(new ColonyAchievement("ReachedDistantPlanet", "WINCONDITION_LEAVE", COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.NAME, COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.DESCRIPTION, isVictoryCondition: true, new List<ColonyAchievementRequirement>
+			ReachedDistantPlanet = (DlcManager.IsExpansion1Active() ? Add(new ColonyAchievement("ReachedDistantPlanet", "WINCONDITION_LEAVE", COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.NAME, COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.DESCRIPTION, isVictoryCondition: true, new List<ColonyAchievementRequirement>
+			{
+				new EstablishColonies(),
+				new OpenTemporalTear(),
+				new SentCraftIntoTemporalTear()
+			}, COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_TITLE_DLC1, COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_BODY_DLC1, "victoryShorts/Leave", "victoryLoops/Leave_loop", EnterTemporalTearSequence.Start, AudioMixerSnapshots.Get().VictoryNISRocketSnapshot, "rocket")) : Add(new ColonyAchievement("ReachedDistantPlanet", "WINCONDITION_LEAVE", COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.NAME, COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.DESCRIPTION, isVictoryCondition: true, new List<ColonyAchievementRequirement>
 			{
 				new ReachedSpace(Db.Get().SpaceDestinationTypes.Wormhole)
-			}, COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_TITLE, COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_BODY, "victoryShorts/Leave", "victoryLoops/Leave_loop", ReachedDistantPlanetSequence.Start, AudioMixerSnapshots.Get().VictoryNISRocketSnapshot, "rocket"));
+			}, COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_TITLE, COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_BODY, "victoryShorts/Leave", "victoryLoops/Leave_loop", ReachedDistantPlanetSequence.Start, AudioMixerSnapshots.Get().VictoryNISRocketSnapshot, "rocket")));
+			if (DlcManager.IsExpansion1Active())
+			{
+				CollectedArtifacts = new ColonyAchievement("CollectedArtifacts", "WINCONDITION_ARTIFACTS", COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.NAME, COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.DESCRIPTION, isVictoryCondition: true, new List<ColonyAchievementRequirement>
+				{
+					new CollectedArtifacts(),
+					new CollectedSpaceArtifacts()
+				}, COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_TITLE, COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_BODY, "victoryShorts/Artifact", "victoryLoops/Artifact_loop", ArtifactSequence.Start, AudioMixerSnapshots.Get().VictoryNISGenericSnapshot, "home_sweet_home");
+				Add(CollectedArtifacts);
+			}
 			Survived100Cycles = Add(new ColonyAchievement("Survived100Cycles", "SURVIVE_HUNDRED_CYCLES", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SURVIVE_HUNDRED_CYCLES, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SURVIVE_HUNDRED_CYCLES_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
 			{
 				new CycleNumber()
 			}, "", "", "", "", null, "", "Turn_of_the_Century"));
-			ReachedSpace = Add(new ColonyAchievement("ReachedSpace", "REACH_SPACE_ANY_DESTINATION", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.REACH_SPACE_ANY_DESTINATION, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.REACH_SPACE_ANY_DESTINATION_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
+			ReachedSpace = (DlcManager.IsExpansion1Active() ? Add(new ColonyAchievement("ReachedSpace", "REACH_SPACE_ANY_DESTINATION", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.REACH_SPACE_ANY_DESTINATION, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.REACH_SPACE_ANY_DESTINATION_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
+			{
+				new LaunchedCraft()
+			}, "", "", "", "", null, "", "space_race")) : Add(new ColonyAchievement("ReachedSpace", "REACH_SPACE_ANY_DESTINATION", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.REACH_SPACE_ANY_DESTINATION, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.REACH_SPACE_ANY_DESTINATION_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
 			{
 				new ReachedSpace()
-			}, "", "", "", "", null, "", "space_race"));
+			}, "", "", "", "", null, "", "space_race")));
 			CompleteSkillBranch = Add(new ColonyAchievement("CompleteSkillBranch", "COMPLETED_SKILL_BRANCH", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.COMPLETED_SKILL_BRANCH, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.COMPLETED_SKILL_BRANCH_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
 			{
-				new SkillBranchComplete(new List<Skill>
-				{
-					Db.Get().Skills.Mining3,
-					Db.Get().Skills.Building3,
-					Db.Get().Skills.Farming3,
-					Db.Get().Skills.Ranching2,
-					Db.Get().Skills.Researching3,
-					Db.Get().Skills.Cooking2,
-					Db.Get().Skills.Arting3,
-					Db.Get().Skills.Hauling2,
-					Db.Get().Skills.Technicals2,
-					Db.Get().Skills.Engineering1,
-					Db.Get().Skills.Basekeeping2,
-					Db.Get().Skills.Astronauting2,
-					Db.Get().Skills.Medicine3
-				})
+				new SkillBranchComplete(Db.Get().Skills.GetTerminalSkills())
 			}, "", "", "", "", null, "", "CompleteSkillBranch"));
 			CompleteResearchTree = Add(new ColonyAchievement("CompleteResearchTree", "COMPLETED_RESEARCH", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.COMPLETED_RESEARCH, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.COMPLETED_RESEARCH_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
 			{
@@ -139,7 +143,7 @@ namespace Database
 					"Moo",
 					"Crab",
 					"Squirrel"
-				}, hasTrait: false)
+				})
 			}, "", "", "", "", null, "", "Animal_friends"));
 			Build4NatureReserves = Add(new ColonyAchievement("Build4NatureReserves", "BUILD_NATURE_RESERVES", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.BUILD_NATURE_RESERVES, string.Format(COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.BUILD_NATURE_RESERVES_DESCRIPTION, Db.Get().RoomTypes.NatureReserve.Name, 4), isVictoryCondition: false, new List<ColonyAchievementRequirement>
 			{
@@ -154,7 +158,7 @@ namespace Database
 				new CritterTypesWithTraits(new List<Tag>
 				{
 					"Moo"
-				}, hasTrait: false)
+				})
 			}, "", "", "", "", null, "", "moovin_on_up"));
 			CoolBuildingTo6K = Add(new ColonyAchievement("CoolBuildingTo6K", "SIXKELVIN_BUILDING", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SIXKELVIN_BUILDING, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SIXKELVIN_BUILDING_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
 			{

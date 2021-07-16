@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using STRINGS;
 using UnityEngine;
 
 public class MaterialSelectionPanel : KScreen
 {
+	public delegate bool GetBuildableStateDelegate(BuildingDef def);
+
+	public delegate string GetBuildableTooltipDelegate(BuildingDef def);
+
 	public delegate void SelectElement(Element element, float kgAvailable, float recipe_amount);
 
 	public struct SelectedElemInfo
@@ -36,6 +39,12 @@ public class MaterialSelectionPanel : KScreen
 	private Recipe activeRecipe;
 
 	private static Dictionary<Tag, List<Tag>> elementsWithTag = new Dictionary<Tag, List<Tag>>();
+
+	private GetBuildableStateDelegate GetBuildableState;
+
+	private GetBuildableTooltipDelegate GetBuildableTooltip;
+
+	private List<int> gameSubscriptionHandles = new List<int>();
 
 	public Tag CurrentSelectedElement => MaterialSelectors[0].CurrentSelectedElement;
 
@@ -79,16 +88,26 @@ public class MaterialSelectionPanel : KScreen
 		ResearchRequired.SetActive(value: false);
 		priorityScreen = Util.KInstantiateUI<PriorityScreen>(priorityScreenPrefab.gameObject, priorityScreenParent);
 		priorityScreen.InstantiateButtons(OnPriorityClicked);
-		Game.Instance.Subscribe(-107300940, delegate
+		gameSubscriptionHandles.Add(Game.Instance.Subscribe(-107300940, delegate
 		{
 			RefreshSelectors();
-		});
+		}));
 	}
 
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
 		activateOnSpawn = true;
+	}
+
+	protected override void OnCleanUp()
+	{
+		base.OnCleanUp();
+		foreach (int gameSubscriptionHandle in gameSubscriptionHandles)
+		{
+			Game.Instance.Unsubscribe(gameSubscriptionHandle);
+		}
+		gameSubscriptionHandles.Clear();
 	}
 
 	public void AddSelectAction(MaterialSelector.SelectMaterialActions action)
@@ -115,9 +134,11 @@ public class MaterialSelectionPanel : KScreen
 		});
 	}
 
-	public void ConfigureScreen(Recipe recipe)
+	public void ConfigureScreen(Recipe recipe, GetBuildableStateDelegate buildableStateCB, GetBuildableTooltipDelegate buildableTooltipCB)
 	{
 		activeRecipe = recipe;
+		GetBuildableState = buildableStateCB;
+		GetBuildableTooltip = buildableTooltipCB;
 		RefreshSelectors();
 	}
 
@@ -135,7 +156,7 @@ public class MaterialSelectionPanel : KScreen
 
 	public void RefreshSelectors()
 	{
-		if (activeRecipe == null)
+		if (activeRecipe == null || !base.gameObject.activeInHierarchy)
 		{
 			return;
 		}
@@ -143,13 +164,15 @@ public class MaterialSelectionPanel : KScreen
 		{
 			selector.gameObject.SetActive(value: false);
 		});
-		TechItem techItem = Db.Get().TechItems.TryGet(activeRecipe.GetBuildingDef().PrefabID);
-		if (!DebugHandler.InstantBuildMode && !Game.Instance.SandboxModeActive && techItem != null && !techItem.IsComplete())
+		BuildingDef buildingDef = activeRecipe.GetBuildingDef();
+		bool num = GetBuildableState(buildingDef);
+		string text = GetBuildableTooltip(buildingDef);
+		if (!num)
 		{
 			ResearchRequired.SetActive(value: true);
 			LocText[] componentsInChildren = ResearchRequired.GetComponentsInChildren<LocText>();
-			componentsInChildren[0].text = UI.PRODUCTINFO_RESEARCHREQUIRED;
-			componentsInChildren[1].text = string.Format(UI.PRODUCTINFO_REQUIRESRESEARCHDESC, techItem.parentTech.Name);
+			componentsInChildren[0].text = "";
+			componentsInChildren[1].text = text;
 			componentsInChildren[1].color = Constants.NEGATIVE_COLOR;
 			priorityScreen.gameObject.SetActive(value: false);
 			return;
@@ -214,24 +237,12 @@ public class MaterialSelectionPanel : KScreen
 		}
 	}
 
-	public bool CanBuild(Recipe recipe)
-	{
-		foreach (MaterialSelector materialSelector in MaterialSelectors)
-		{
-			if (materialSelector.gameObject.activeSelf && materialSelector.CurrentSelectedElement == null)
-			{
-				return false;
-			}
-		}
-		return true;
-	}
-
 	public static SelectedElemInfo Filter(Tag materialCategoryTag)
 	{
 		SelectedElemInfo result = default(SelectedElemInfo);
 		result.element = null;
 		result.kgAvailable = 0f;
-		if (WorldInventory.Instance == null || ElementLoader.elements == null || ElementLoader.elements.Count == 0)
+		if (DiscoveredResources.Instance == null || ElementLoader.elements == null || ElementLoader.elements.Count == 0)
 		{
 			return result;
 		}
@@ -265,7 +276,7 @@ public class MaterialSelectionPanel : KScreen
 		}
 		foreach (Tag item2 in value)
 		{
-			float amount = WorldInventory.Instance.GetAmount(item2);
+			float amount = ClusterManager.Instance.activeWorld.worldInventory.GetAmount(item2, includeRelatedWorlds: true);
 			if (amount > result.kgAvailable)
 			{
 				result.kgAvailable = amount;

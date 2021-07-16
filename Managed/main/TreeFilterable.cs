@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using KSerialization;
 using UnityEngine;
 
@@ -14,7 +15,23 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 	[MyCmpAdd]
 	private CopyBuildingSettings copyBuildingSettings;
 
+	public static readonly Color32 FILTER_TINT = Color.white;
+
+	public static readonly Color32 NO_FILTER_TINT = new Color(128f / 255f, 128f / 255f, 128f / 255f, 1f);
+
+	public Color32 filterTint = FILTER_TINT;
+
+	public Color32 noFilterTint = NO_FILTER_TINT;
+
+	[SerializeField]
+	public bool dropIncorrectOnFilterChange = true;
+
+	[SerializeField]
+	public bool autoSelectStoredOnLoad = true;
+
 	public bool showUserMenu = true;
+
+	public bool filterByStorageCategoriesOnSpawn = true;
 
 	[SerializeField]
 	[Serialize]
@@ -29,6 +46,15 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 
 	public List<Tag> AcceptedTags => acceptedTags;
 
+	[OnDeserialized]
+	private void OnDeserialized()
+	{
+		if (SaveLoader.Instance.GameInfo.IsVersionOlderThan(7, 20))
+		{
+			filterByStorageCategoriesOnSpawn = false;
+		}
+	}
+
 	private void OnDiscover(Tag category_tag, Tag tag)
 	{
 		if (!storage.storageFilters.Contains(category_tag))
@@ -36,16 +62,16 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 			return;
 		}
 		bool flag = false;
-		if (WorldInventory.Instance.GetDiscoveredResourcesFromTag(category_tag).Count <= 1)
+		if (DiscoveredResources.Instance.GetDiscoveredResourcesFromTag(category_tag).Count <= 1)
 		{
 			foreach (Tag storageFilter in storage.storageFilters)
 			{
-				if (storageFilter == category_tag || !WorldInventory.Instance.IsDiscovered(storageFilter))
+				if (storageFilter == category_tag || !DiscoveredResources.Instance.IsDiscovered(storageFilter))
 				{
 					continue;
 				}
 				flag = true;
-				foreach (Tag item in WorldInventory.Instance.GetDiscoveredResourcesFromTag(storageFilter))
+				foreach (Tag item in DiscoveredResources.Instance.GetDiscoveredResourcesFromTag(storageFilter))
 				{
 					if (!acceptedTags.Contains(item))
 					{
@@ -58,7 +84,7 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 				return;
 			}
 		}
-		foreach (Tag item2 in WorldInventory.Instance.GetDiscoveredResourcesFromTag(category_tag))
+		foreach (Tag item2 in DiscoveredResources.Instance.GetDiscoveredResourcesFromTag(category_tag))
 		{
 			if (!(item2 == tag) && !acceptedTags.Contains(item2))
 			{
@@ -76,8 +102,8 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 
 	protected override void OnSpawn()
 	{
-		WorldInventory.Instance.OnDiscover += OnDiscover;
-		if (storage != null)
+		DiscoveredResources.Instance.OnDiscover += OnDiscover;
+		if (autoSelectStoredOnLoad && storage != null)
 		{
 			List<Tag> list = new List<Tag>();
 			list.AddRange(acceptedTags);
@@ -88,7 +114,11 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 		{
 			OnFilterChanged(acceptedTags.ToArray());
 		}
-		RemoveIncorrectAcceptedTags();
+		RefreshTint();
+		if (filterByStorageCategoriesOnSpawn)
+		{
+			RemoveIncorrectAcceptedTags();
+		}
 	}
 
 	private void RemoveIncorrectAcceptedTags()
@@ -99,7 +129,7 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 			bool flag = false;
 			foreach (Tag storageFilter in storage.storageFilters)
 			{
-				if (WorldInventory.Instance.GetDiscoveredResourcesFromTag(storageFilter).Contains(acceptedTag))
+				if (DiscoveredResources.Instance.GetDiscoveredResourcesFromTag(storageFilter).Contains(acceptedTag))
 				{
 					flag = true;
 					break;
@@ -118,7 +148,7 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 
 	protected override void OnCleanUp()
 	{
-		WorldInventory.Instance.OnDiscover -= OnDiscover;
+		DiscoveredResources.Instance.OnDiscover -= OnDiscover;
 		base.OnCleanUp();
 	}
 
@@ -169,7 +199,8 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 		{
 			OnFilterChanged(acceptedTags.ToArray());
 		}
-		if (!(storage != null) || storage.items == null)
+		RefreshTint();
+		if (!dropIncorrectOnFilterChange || !(storage != null) || storage.items == null)
 		{
 			return;
 		}
@@ -224,5 +255,12 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 			text = "No tags selected";
 		}
 		return text;
+	}
+
+	private void RefreshTint()
+	{
+		bool flag = acceptedTags != null && acceptedTags.Count != 0;
+		GetComponent<KBatchedAnimController>().TintColour = (flag ? filterTint : noFilterTint);
+		GetComponent<KSelectable>().ToggleStatusItem(Db.Get().BuildingStatusItems.NoStorageFilterSet, !flag, this);
 	}
 }

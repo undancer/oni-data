@@ -6,6 +6,8 @@ public class OperationalValve : ValveBase
 	[MyCmpReq]
 	private Operational operational;
 
+	private bool isDispensing;
+
 	private static readonly EventSystem.IntraObjectHandler<OperationalValve> OnOperationalChangedDelegate = new EventSystem.IntraObjectHandler<OperationalValve>(delegate(OperationalValve component, object data)
 	{
 		component.OnOperationalChanged(data);
@@ -43,12 +45,16 @@ public class OperationalValve : ValveBase
 		operational.SetActive(flag);
 	}
 
+	protected override void OnMassTransfer(float amount)
+	{
+		isDispensing = amount > 0f;
+	}
+
 	public override void UpdateAnim()
 	{
-		float averageRate = Game.Instance.accumulators.GetAverageRate(flowAccumulator);
 		if (operational.IsOperational)
 		{
-			if (averageRate > 0f)
+			if (isDispensing)
 			{
 				controller.Queue("on_flow", KAnim.PlayMode.Loop);
 			}
@@ -56,10 +62,6 @@ public class OperationalValve : ValveBase
 			{
 				controller.Queue("on");
 			}
-		}
-		else if (averageRate > 0f)
-		{
-			controller.Queue("off_flow", KAnim.PlayMode.Loop);
 		}
 		else
 		{

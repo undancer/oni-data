@@ -121,6 +121,10 @@ public class SoundEvent : AnimEvent
 		Vector3 offset = controller.Offset;
 		position.x += offset.x;
 		position.y += offset.y;
+		if (!SoundCuller.IsAudibleWorld(position))
+		{
+			return false;
+		}
 		SpeedControlScreen instance2 = SpeedControlScreen.Instance;
 		if (is_dynamic)
 		{
@@ -180,7 +184,19 @@ public class SoundEvent : AnimEvent
 		AudioDebug audioDebug = AudioDebug.Get();
 		if (audioDebug != null && audioDebug.debugSoundEvents)
 		{
-			Debug.Log(behaviour.name + ", " + sound + ", " + base.frame + ", " + vector);
+			string[] obj = new string[7]
+			{
+				behaviour.name,
+				", ",
+				sound,
+				", ",
+				base.frame.ToString(),
+				", ",
+				null
+			};
+			Vector3 vector2 = vector;
+			obj[6] = vector2.ToString();
+			Debug.Log(string.Concat(obj));
 		}
 		try
 		{
@@ -293,7 +309,19 @@ public class SoundEvent : AnimEvent
 	{
 		if (sound != null)
 		{
-			Debug.Log(anim_name + ", " + sound_name + ", " + base.frame + ", " + sound_pos);
+			string[] obj = new string[7]
+			{
+				anim_name,
+				", ",
+				sound_name,
+				", ",
+				base.frame.ToString(),
+				", ",
+				null
+			};
+			Vector3 vector = sound_pos;
+			obj[6] = vector.ToString();
+			Debug.Log(string.Concat(obj));
 		}
 		else
 		{

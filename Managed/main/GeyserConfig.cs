@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class GeyserConfig : IEntityConfig
 {
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject obj = EntityTemplates.CreatePlacedEntity("Geyser", STRINGS.CREATURES.SPECIES.GEYSER.NAME, STRINGS.CREATURES.SPECIES.GEYSER.DESC, 2000f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER1, noise: NOISE_POLLUTION.NOISY.TIER6, anim: Assets.GetAnim("geyser_side_steam_kanim"), initialAnim: "inactive", sceneLayer: Grid.SceneLayer.BuildingBack, width: 4, height: 2);

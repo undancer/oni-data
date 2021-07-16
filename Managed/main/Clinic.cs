@@ -108,7 +108,7 @@ public class Clinic : Workable, IGameObjectEffectDescriptor, ISingleSliderContro
 
 		public override void InitializeStates(out BaseState default_state)
 		{
-			base.serializable = false;
+			base.serializable = SerializeType.Never;
 			default_state = unoperational;
 			unoperational.EventTransition(GameHashes.OperationalChanged, operational, (Instance smi) => smi.GetComponent<Operational>().IsOperational).Enter(delegate(Instance smi)
 			{

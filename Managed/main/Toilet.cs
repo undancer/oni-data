@@ -328,9 +328,9 @@ public class Toilet : StateMachineComponent<Toilet.StatesInstance>, ISaveLoadabl
 		meter.SetPositionPercent((float)FlushesUsed / (float)maxFlushes);
 		float aggregate_temperature = 0f;
 		Tag tag = ElementLoader.FindElementByHash(SimHashes.Dirt).tag;
-		storage.ConsumeAndGetDisease(tag, base.smi.DirtUsedPerFlush(), out var disease_info, out aggregate_temperature);
+		storage.ConsumeAndGetDisease(tag, base.smi.DirtUsedPerFlush(), out var amount_consumed, out var disease_info, out aggregate_temperature);
 		byte index = Db.Get().Diseases.GetIndex(diseaseId);
-		float mass = base.smi.MassPerFlush() + base.smi.DirtUsedPerFlush();
+		float mass = base.smi.MassPerFlush() + amount_consumed;
 		GameObject gameObject = ElementLoader.FindElementByHash(solidWastePerUse.elementID).substance.SpawnResource(base.transform.GetPosition(), mass, solidWasteTemperature, index, diseasePerFlush, prevent_merge: true);
 		gameObject.GetComponent<PrimaryElement>().AddDisease(disease_info.idx, disease_info.count, "Toilet.Flush");
 		storage.Store(gameObject);

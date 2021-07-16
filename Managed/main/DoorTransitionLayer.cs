@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class DoorTransitionLayer : TransitionDriver.OverrideLayer
 {
-	private List<Door> doors = new List<Door>();
+	private List<INavDoor> doors = new List<INavDoor>();
 
-	private Door targetDoor;
+	private INavDoor targetDoor;
 
 	public DoorTransitionLayer(Navigator navigator)
 		: base(navigator)
@@ -19,7 +19,7 @@ public class DoorTransitionLayer : TransitionDriver.OverrideLayer
 
 	private bool AreAllDoorsOpen()
 	{
-		foreach (Door door in doors)
+		foreach (INavDoor door in doors)
 		{
 			if (door != null && !door.IsOpen())
 			{
@@ -55,7 +55,7 @@ public class DoorTransitionLayer : TransitionDriver.OverrideLayer
 			transition.y = 0;
 			transition.isCompleteCB = () => AreAllDoorsOpen();
 		}
-		foreach (Door door in doors)
+		foreach (INavDoor door in doors)
 		{
 			door.Open();
 		}
@@ -69,9 +69,9 @@ public class DoorTransitionLayer : TransitionDriver.OverrideLayer
 	public override void EndTransition(Navigator navigator, Navigator.ActiveTransition transition)
 	{
 		base.EndTransition(navigator, transition);
-		foreach (Door door in doors)
+		foreach (INavDoor door in doors)
 		{
-			if (door != null)
+			if (!door.IsNullOrDestroyed())
 			{
 				door.Close();
 			}
@@ -81,14 +81,14 @@ public class DoorTransitionLayer : TransitionDriver.OverrideLayer
 
 	private void AddDoor(int cell)
 	{
-		Door door = GetDoor(cell);
-		if (door != null && !doors.Contains(door))
+		INavDoor door = GetDoor(cell);
+		if (!door.IsNullOrDestroyed() && !doors.Contains(door))
 		{
 			doors.Add(door);
 		}
 	}
 
-	private Door GetDoor(int cell)
+	private INavDoor GetDoor(int cell)
 	{
 		if (!Grid.HasDoor[cell])
 		{
@@ -97,10 +97,14 @@ public class DoorTransitionLayer : TransitionDriver.OverrideLayer
 		GameObject gameObject = Grid.Objects[cell, 1];
 		if (gameObject != null)
 		{
-			Door component = gameObject.GetComponent<Door>();
-			if (component != null && component.isSpawned)
+			INavDoor navDoor = gameObject.GetComponent<INavDoor>();
+			if (navDoor == null)
 			{
-				return component;
+				navDoor = gameObject.GetSMI<INavDoor>();
+			}
+			if (navDoor != null && navDoor.isSpawned)
+			{
+				return navDoor;
 			}
 		}
 		return null;

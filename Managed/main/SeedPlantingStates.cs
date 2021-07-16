@@ -168,7 +168,7 @@ public class SeedPlantingStates : GameStateMachine<SeedPlantingStates, SeedPlant
 			{
 				if (plot.Occupant == null)
 				{
-					plot.ForceDepositPickupable(smi.targetSeed);
+					plot.ForceDeposit(smi.targetSeed.gameObject);
 				}
 			}
 			else

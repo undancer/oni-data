@@ -6,6 +6,11 @@ public class SlimeMoldConfig : IOreConfig
 
 	public SimHashes SublimeElementID => SimHashes.ContaminatedOxygen;
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateSolidOreEntity(ElementID);

@@ -1,7 +1,6 @@
 using System;
 using Klei.CustomSettings;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class NewGameSettingToggle : NewGameSettingWidget
 {
@@ -17,9 +16,6 @@ public class NewGameSettingToggle : NewGameSettingWidget
 	[SerializeField]
 	private ToolTip ToggleToolTip;
 
-	[SerializeField]
-	private Image BG;
-
 	private ToggleSettingConfig config;
 
 	protected override void OnPrefabInit()
@@ -29,8 +25,9 @@ public class NewGameSettingToggle : NewGameSettingWidget
 		toggle.onClick = (System.Action)Delegate.Combine(toggle.onClick, new System.Action(ToggleSetting));
 	}
 
-	public void Initialize(ToggleSettingConfig config)
+	public void Initialize(ToggleSettingConfig config, NewGameSettingsPanel panel, string disabledDefault)
 	{
+		base.Initialize(config, panel, disabledDefault);
 		this.config = config;
 		Label.text = config.label;
 		ToolTip.toolTip = config.tooltip;
@@ -38,6 +35,7 @@ public class NewGameSettingToggle : NewGameSettingWidget
 
 	public override void Refresh()
 	{
+		base.Refresh();
 		SettingLevel currentQualitySetting = CustomGameSettings.Instance.GetCurrentQualitySetting(config);
 		Toggle.ChangeState(config.IsOnLevel(currentQualitySetting.id) ? 1 : 0);
 		ToggleToolTip.toolTip = currentQualitySetting.tooltip;
@@ -45,7 +43,10 @@ public class NewGameSettingToggle : NewGameSettingWidget
 
 	public void ToggleSetting()
 	{
-		CustomGameSettings.Instance.ToggleSettingLevel(config);
-		Refresh();
+		if (IsEnabled())
+		{
+			CustomGameSettings.Instance.ToggleSettingLevel(config);
+			RefreshAll();
+		}
 	}
 }

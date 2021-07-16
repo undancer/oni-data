@@ -9,30 +9,9 @@ public class RotPile : StateMachineComponent<RotPile.StatesInstance>
 	{
 		public AttributeModifier baseDecomposeRate;
 
-		private static string OnRottenTooltip(List<Notification> notifications, object data)
-		{
-			string text = "";
-			foreach (Notification notification in notifications)
-			{
-				if (notification.tooltipData != null)
-				{
-					text = text + "\n• " + (string)notification.tooltipData + " ";
-				}
-			}
-			return string.Format(MISC.NOTIFICATIONS.FOODROT.TOOLTIP, text);
-		}
-
 		public StatesInstance(RotPile master)
 			: base(master)
 		{
-			if (WorldInventory.Instance.IsReachable(base.smi.master.gameObject.GetComponent<Pickupable>()))
-			{
-				Notification notification = new Notification(MISC.NOTIFICATIONS.FOODROT.NAME, NotificationType.BadMinor, HashedString.Invalid, OnRottenTooltip)
-				{
-					tooltipData = master.gameObject.GetProperName()
-				};
-				base.gameObject.AddOrGet<Notifier>().Add(notification);
-			}
 		}
 	}
 
@@ -47,17 +26,26 @@ public class RotPile : StateMachineComponent<RotPile.StatesInstance>
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = decomposing;
-			base.serializable = true;
-			decomposing.ParamTransition(decompositionAmount, convertDestroy, (StatesInstance smi, float p) => p >= 600f).Update("Decomposing", delegate(StatesInstance smi, float dt)
+			base.serializable = SerializeType.Both_DEPRECATED;
+			decomposing.Enter(delegate(StatesInstance smi)
 			{
-				decompositionAmount.Delta(dt, smi);
-			});
+				smi.master.TryCreateNotification();
+			}).Exit(delegate(StatesInstance smi)
+			{
+				smi.master.TryClearNotification();
+			}).ParamTransition(decompositionAmount, convertDestroy, (StatesInstance smi, float p) => p >= 600f)
+				.Update("Decomposing", delegate(StatesInstance smi, float dt)
+				{
+					decompositionAmount.Delta(dt, smi);
+				});
 			convertDestroy.Enter(delegate(StatesInstance smi)
 			{
 				smi.master.ConvertToElement();
 			});
 		}
 	}
+
+	private Notification notification;
 
 	protected override void OnPrefabInit()
 	{
@@ -84,5 +72,37 @@ public class RotPile : StateMachineComponent<RotPile.StatesInstance>
 		GameObject gameObject = ElementLoader.FindElementByHash(hash).substance.SpawnResource(base.smi.master.transform.GetPosition(), mass, temperature, byte.MaxValue, 0);
 		PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, ElementLoader.FindElementByHash(hash).name, gameObject.transform);
 		Util.KDestroyGameObject(base.smi.gameObject);
+	}
+
+	private static string OnRottenTooltip(List<Notification> notifications, object data)
+	{
+		string text = "";
+		foreach (Notification notification2 in notifications)
+		{
+			if (notification2.tooltipData != null)
+			{
+				text = text + "\n• " + (string)notification2.tooltipData + " ";
+			}
+		}
+		return string.Format(MISC.NOTIFICATIONS.FOODROT.TOOLTIP, text);
+	}
+
+	public void TryClearNotification()
+	{
+		if (notification != null)
+		{
+			base.gameObject.AddOrGet<Notifier>().Remove(notification);
+		}
+	}
+
+	public void TryCreateNotification()
+	{
+		WorldContainer myWorld = base.smi.master.GetMyWorld();
+		if (myWorld != null && myWorld.worldInventory.IsReachable(base.smi.master.gameObject.GetComponent<Pickupable>()))
+		{
+			notification = new Notification(MISC.NOTIFICATIONS.FOODROT.NAME, NotificationType.BadMinor, OnRottenTooltip);
+			notification.tooltipData = base.smi.master.gameObject.GetProperName();
+			base.gameObject.AddOrGet<Notifier>().Add(notification);
+		}
 	}
 }

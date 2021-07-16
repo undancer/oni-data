@@ -22,12 +22,13 @@ public class FishTrapConfig : IBuildingConfig
 		storage.allowItemRemoval = true;
 		storage.SetDefaultStoredItemModifiers(StoredItemModifiers);
 		storage.sendOnStoreOnSpawn = true;
-		Trap trap = go.AddOrGet<Trap>();
-		trap.trappableCreatures = new Tag[1]
+		TrapTrigger trapTrigger = go.AddOrGet<TrapTrigger>();
+		trapTrigger.trappableCreatures = new Tag[1]
 		{
 			GameTags.Creatures.Swimmer
 		};
-		trap.trappedOffset = new Vector2(0f, 1f);
+		trapTrigger.trappedOffset = new Vector2(0f, 1f);
+		go.AddOrGet<Trap>();
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

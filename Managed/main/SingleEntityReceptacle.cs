@@ -30,6 +30,9 @@ public class SingleEntityReceptacle : Workable, IRender1000ms
 	public Tag requestedEntityTag;
 
 	[Serialize]
+	public Tag requestedEntityAdditionalFilterTag;
+
+	[Serialize]
 	protected Ref<KSelectable> occupyObjectRef = new Ref<KSelectable>();
 
 	[SerializeField]
@@ -85,6 +88,11 @@ public class SingleEntityReceptacle : Workable, IRender1000ms
 
 	public ReceptacleDirection Direction => direction;
 
+	public bool HasDepositTag(Tag tag)
+	{
+		return possibleDepositTagsList.Contains(tag);
+	}
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
@@ -99,9 +107,13 @@ public class SingleEntityReceptacle : Workable, IRender1000ms
 			SubscribeToOccupant();
 		}
 		UpdateStatusItem();
+		if (occupyingObject == null && !requestedEntityTag.IsValid)
+		{
+			requestedEntityAdditionalFilterTag = null;
+		}
 		if (occupyingObject == null && requestedEntityTag.IsValid)
 		{
-			CreateOrder(requestedEntityTag);
+			CreateOrder(requestedEntityTag, requestedEntityAdditionalFilterTag);
 		}
 		Subscribe(-592767678, OnOperationalChangedDelegate);
 	}
@@ -120,10 +132,11 @@ public class SingleEntityReceptacle : Workable, IRender1000ms
 	{
 	}
 
-	public virtual void CreateOrder(Tag entityTag)
+	public virtual void CreateOrder(Tag entityTag, Tag additionalFilterTag)
 	{
 		requestedEntityTag = entityTag;
-		CreateFetchChore(requestedEntityTag);
+		requestedEntityAdditionalFilterTag = additionalFilterTag;
+		CreateFetchChore(requestedEntityTag, requestedEntityAdditionalFilterTag);
 		SetPreview(entityTag, solid: true);
 		UpdateStatusItem();
 	}
@@ -148,9 +161,12 @@ public class SingleEntityReceptacle : Workable, IRender1000ms
 				Tag[] tags = fetchChore.tags;
 				foreach (Tag tag in tags)
 				{
-					if (WorldInventory.Instance.GetTotalAmount(tag) > 0f)
+					if (this.GetMyWorld().worldInventory.GetTotalAmount(tag, includeRelatedWorlds: true) > 0f)
 					{
-						flag = true;
+						if (this.GetMyWorld().worldInventory.GetTotalAmount(requestedEntityAdditionalFilterTag, includeRelatedWorlds: true) > 0f || requestedEntityAdditionalFilterTag == Tag.Invalid)
+						{
+							flag = true;
+						}
 						break;
 					}
 				}
@@ -170,21 +186,25 @@ public class SingleEntityReceptacle : Workable, IRender1000ms
 		}
 	}
 
-	protected void CreateFetchChore(Tag entityTag)
+	protected void CreateFetchChore(Tag entityTag, Tag additionalRequiredTag)
 	{
 		if (fetchChore == null && entityTag.IsValid && entityTag != GameTags.Empty)
 		{
 			fetchChore = new FetchChore(Db.Get().ChoreTypes.FarmFetch, storage, 1f, new Tag[1]
 			{
 				entityTag
-			}, null, null, null, run_until_complete: true, OnFetchComplete, delegate
+			}, (!additionalRequiredTag.IsValid || !(additionalRequiredTag != GameTags.Empty)) ? null : new Tag[2]
+			{
+				entityTag,
+				additionalRequiredTag
+			}, null, null, run_until_complete: true, OnFetchComplete, delegate
 			{
 				UpdateStatusItem();
 			}, delegate
 			{
 				UpdateStatusItem();
 			}, FetchOrder2.OperationalRequirement.Functional);
-			MaterialNeeds.Instance.UpdateNeed(requestedEntityTag, 1f);
+			MaterialNeeds.UpdateNeed(requestedEntityTag, 1f, base.gameObject.GetMyWorldId());
 			UpdateStatusItem();
 		}
 	}
@@ -198,6 +218,7 @@ public class SingleEntityReceptacle : Workable, IRender1000ms
 	{
 		if ((bool)occupyingObject)
 		{
+			UnsubscribeFromOccupant();
 			storage.DropAll();
 		}
 		occupyingObject = null;
@@ -210,7 +231,7 @@ public class SingleEntityReceptacle : Workable, IRender1000ms
 	{
 		if (fetchChore != null)
 		{
-			MaterialNeeds.Instance.UpdateNeed(requestedEntityTag, -1f);
+			MaterialNeeds.UpdateNeed(requestedEntityTag, -1f, base.gameObject.GetMyWorldId());
 			fetchChore.Cancel("User canceled");
 			fetchChore = null;
 		}
@@ -225,7 +246,7 @@ public class SingleEntityReceptacle : Workable, IRender1000ms
 		ClearOccupant();
 		if (autoReplaceEntity && requestedEntityTag.IsValid && requestedEntityTag != GameTags.Empty)
 		{
-			CreateOrder(requestedEntityTag);
+			CreateOrder(requestedEntityTag, requestedEntityAdditionalFilterTag);
 		}
 	}
 
@@ -257,27 +278,32 @@ public class SingleEntityReceptacle : Workable, IRender1000ms
 		}
 		else
 		{
-			OnDepositObject(fetchChore.fetchTarget.GetComponent<Pickupable>());
+			OnDepositObject(fetchChore.fetchTarget.gameObject);
 		}
 	}
 
-	public void ForceDepositPickupable(Pickupable pickupable)
+	public void ForceDeposit(GameObject depositedObject)
 	{
-		OnDepositObject(pickupable);
+		if (occupyingObject != null)
+		{
+			ClearOccupant();
+		}
+		OnDepositObject(depositedObject);
 	}
 
-	private void OnDepositObject(Pickupable pickupable)
+	private void OnDepositObject(GameObject depositedObject)
 	{
 		SetPreview(Tag.Invalid);
-		MaterialNeeds.Instance.UpdateNeed(requestedEntityTag, -1f);
-		KBatchedAnimController component = pickupable.GetComponent<KBatchedAnimController>();
+		MaterialNeeds.UpdateNeed(requestedEntityTag, -1f, base.gameObject.GetMyWorldId());
+		KBatchedAnimController component = depositedObject.GetComponent<KBatchedAnimController>();
 		if (component != null)
 		{
 			component.GetBatchInstanceData().ClearOverrideTransformMatrix();
 		}
-		occupyingObject = SpawnOccupyingObject(pickupable.gameObject);
+		occupyingObject = SpawnOccupyingObject(depositedObject);
 		if (occupyingObject != null)
 		{
+			ConfigureOccupyingObject(occupyingObject);
 			occupyingObject.SetActive(value: true);
 			PositionOccupyingObject();
 			SubscribeToOccupant();
@@ -299,14 +325,18 @@ public class SingleEntityReceptacle : Workable, IRender1000ms
 		UpdateStatusItem();
 		if (destroyEntityOnDeposit)
 		{
-			Util.KDestroyGameObject(pickupable.gameObject);
+			Util.KDestroyGameObject(depositedObject);
 		}
 		Trigger(-731304873, occupyingObject);
 	}
 
-	public virtual GameObject SpawnOccupyingObject(GameObject depositedEntity)
+	protected virtual GameObject SpawnOccupyingObject(GameObject depositedEntity)
 	{
 		return depositedEntity;
+	}
+
+	protected virtual void ConfigureOccupyingObject(GameObject source)
+	{
 	}
 
 	protected virtual void PositionOccupyingObject()

@@ -41,7 +41,7 @@ namespace Klei.AI
 
 		public string DescriptionFromAttribute(float value, GameObject go)
 		{
-			string text = ((formatter != null) ? formatter.GetFormattedValue(value, formatter.DeltaTimeSlice, go) : ((attribute.formatter == null) ? GameUtil.GetFormattedSimple(value) : attribute.formatter.GetFormattedValue(value, attribute.formatter.DeltaTimeSlice, go)));
+			string text = ((formatter != null) ? formatter.GetFormattedValue(value, formatter.DeltaTimeSlice) : ((attribute.formatter == null) ? GameUtil.GetFormattedSimple(value) : attribute.formatter.GetFormattedValue(value, attribute.formatter.DeltaTimeSlice)));
 			if (text != null)
 			{
 				text = GameUtil.AddPositiveSign(text, value > 0f);

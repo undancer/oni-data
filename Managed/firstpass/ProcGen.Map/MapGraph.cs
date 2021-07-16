@@ -1,93 +1,48 @@
-using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using KSerialization;
-using Satsuma;
 using UnityEngine;
 
 namespace ProcGen.Map
 {
 	[SerializationConfig(MemberSerialization.OptIn)]
-	public class MapGraph : Graph
+	public class MapGraph : Graph<Cell, Edge>
 	{
-		[Serialize]
-		public List<Cell> cellList;
-
 		[Serialize]
 		public List<Corner> cornerList;
 
-		[Serialize]
-		public List<Edge> edgeList;
-
-		public List<Cell> cells => cellList;
-
 		public List<Corner> corners => cornerList;
-
-		public List<Edge> edges => edgeList;
 
 		public MapGraph(int seed)
 			: base(seed)
 		{
-			cellList = new List<Cell>();
 			cornerList = new List<Corner>();
-			edgeList = new List<Edge>();
 		}
 
-		public Edge GetEdge(Corner corner0, Corner corner1, bool createOK = true)
+		public Edge GetEdge(Cell site0, Cell site1)
 		{
-			bool didCreate;
-			return GetEdge(corner0, corner1, createOK, out didCreate);
+			return GetArc(site0, site1);
 		}
 
-		public Edge GetEdge(Corner corner0, Corner corner1, bool createOK, out bool didCreate)
+		public Edge AddEdge(Cell site0, Cell site1, Corner corner0, Corner corner1)
 		{
-			Edge edge = null;
-			didCreate = false;
-			edge = edgeList.Find((Edge e) => (e.corner0 == corner0 && e.corner1 == corner1) || (e.corner1 == corner0 && e.corner0 == corner1));
-			if (edge != null)
-			{
-				return edge;
-			}
-			if (!createOK)
-			{
-				Debug.LogWarning("Cant create Edge but no edge found");
-				return null;
-			}
-			edge = new Edge(base.baseGraph.AddArc(corner0.node, corner1.node, Directedness.Undirected), corner0, corner1);
-			arcList.Add(edge);
-			edgeList.Add(edge);
-			didCreate = true;
+			Edge edge = AddArc(site0, site1, "Edge");
+			edge.SetCorners(corner0, corner1);
 			return edge;
 		}
 
-		public Edge GetEdge(Corner corner0, Corner corner1, Cell site0, Cell site1, bool createOK = true)
+		public Edge AddOrGetEdge(Cell site0, Cell site1, Corner corner0, Corner corner1)
 		{
-			bool didCreate;
-			return GetEdge(corner0, corner1, site0, site1, createOK, out didCreate);
+			Edge arc = GetArc(site0, site1);
+			if (arc != null)
+			{
+				return arc;
+			}
+			arc = AddArc(site0, site1, "Edge");
+			arc.SetCorners(corner0, corner1);
+			return arc;
 		}
 
-		public Edge GetEdge(Corner corner0, Corner corner1, Cell site0, Cell site1, bool createOK, out bool didCreate)
-		{
-			Edge edge = null;
-			didCreate = false;
-			edge = edgeList.Find((Edge e) => (e.corner0 == corner0 && e.corner1 == corner1) || (e.corner1 == corner0 && e.corner0 == corner1));
-			if (edge != null)
-			{
-				return edge;
-			}
-			if (!createOK)
-			{
-				Debug.LogWarning("Cant create Edge but no edge found");
-				return null;
-			}
-			edge = new Edge(base.baseGraph.AddArc(corner0.node, corner1.node, Directedness.Undirected), corner0, corner1, site0, site1);
-			arcList.Add(edge);
-			edgeList.Add(edge);
-			didCreate = true;
-			return edge;
-		}
-
-		public Corner GetCorner(Vector2 position, bool createOK = true)
+		public Corner AddOrGetCorner(Vector2 position)
 		{
 			Corner corner = cornerList.Find(delegate(Corner c)
 			{
@@ -96,109 +51,58 @@ namespace ProcGen.Map
 			});
 			if (corner == null)
 			{
-				if (!createOK)
-				{
-					Debug.LogWarning("Cant create Corner but no corner found");
-					return null;
-				}
-				corner = new Corner(base.baseGraph.AddNode());
-				nodeList.Add(corner);
-				corner.SetPosition(position);
+				corner = new Corner(position);
 				cornerList.Add(corner);
 			}
 			return corner;
 		}
 
-		public Cell GetCell(Satsuma.Node node)
-		{
-			return cellList.Find((Cell c) => c.node == node);
-		}
-
-		public Cell GetCell(Vector2 position)
-		{
-			return cellList.Find(delegate(Cell c)
-			{
-				Vector2 vector = c.position - position;
-				return vector.x < 1f && vector.x > -1f && vector.y < 1f && vector.y > -1f;
-			});
-		}
-
-		public Cell GetCell(Vector2 position, Satsuma.Node node, bool createOK = true)
-		{
-			bool didCreate;
-			return GetCell(position, node, createOK, out didCreate);
-		}
-
-		public Cell GetCell(Vector2 position, Satsuma.Node node, bool createOK, out bool didCreate)
-		{
-			Cell cell = cellList.Find(delegate(Cell c)
-			{
-				Vector2 vector = c.position - position;
-				return vector.x < 1f && vector.x > -1f && vector.y < 1f && vector.y > -1f;
-			});
-			didCreate = false;
-			if (cell == null)
-			{
-				if (!createOK)
-				{
-					Debug.LogWarning("Cant create Cell but no cell found");
-					return null;
-				}
-				cell = cellList.Find((Cell c) => c.node == node);
-				if (cell == null)
-				{
-					cell = new Cell(node);
-					didCreate = true;
-					cell.SetPosition(position);
-					cellList.Add(cell);
-				}
-				else
-				{
-					Debug.LogWarning("GetCell Same node [" + node.Id + "] differnt position!");
-				}
-			}
-			return cell;
-		}
-
 		public List<Edge> GetEdgesWithTag(Tag tag)
 		{
-			List<Edge> list = new List<Edge>();
-			for (int i = 0; i < edgeList.Count; i++)
-			{
-				if (edgeList[i].tags.Contains(tag))
-				{
-					list.Add(edgeList[i]);
-				}
-			}
-			return list;
+			return GetArcsWithTag(tag);
 		}
 
-		public void Remove(Edge n)
+		public void ClearEdgesAndCorners()
 		{
-			n.site0.Remove(n);
-			n.site1.Remove(n);
-			edges.Remove(n);
+			foreach (Edge arc in arcList)
+			{
+				base.baseGraph.DeleteArc(arc.arc);
+			}
+			arcList.Clear();
+			cornerList.Clear();
+		}
+
+		public void ClearTags()
+		{
+			foreach (Cell node in nodeList)
+			{
+				node.tags.Clear();
+			}
+			foreach (Edge arc in arcList)
+			{
+				arc.tags.Clear();
+			}
 		}
 
 		public void Validate()
 		{
-			for (int i = 0; i < cellList.Count; i++)
+			for (int i = 0; i < nodeList.Count; i++)
 			{
-				for (int j = 0; j < cellList.Count; j++)
+				for (int j = 0; j < nodeList.Count; j++)
 				{
 					if (j != i)
 					{
-						if (cellList[i] == cellList[j])
+						if (nodeList[i] == nodeList[j])
 						{
-							Debug.LogError("Duplicate cell (class)");
+							Debug.LogError("Duplicate cell (instance)");
 							return;
 						}
-						if (cellList[i].position == cellList[j].position)
+						if (nodeList[i].position == nodeList[j].position)
 						{
 							Debug.LogError("Duplicate cell (position)");
 							return;
 						}
-						if (cellList[i].node == cellList[j].node)
+						if (nodeList[i].node == nodeList[j].node)
 						{
 							Debug.LogError("Duplicate cell (node)");
 							return;
@@ -214,7 +118,7 @@ namespace ProcGen.Map
 					{
 						if (cornerList[k] == cornerList[l])
 						{
-							Debug.LogError("Duplicate corner (class)");
+							Debug.LogError("Duplicate corner (instance)");
 							return;
 						}
 						if (cornerList[k].position == cornerList[l].position)
@@ -222,94 +126,61 @@ namespace ProcGen.Map
 							Debug.LogError("Duplicate corner (position)");
 							return;
 						}
-						if (cornerList[k].node == cornerList[l].node)
-						{
-							Debug.LogError("Duplicate corner (node)");
-							return;
-						}
 					}
 				}
 			}
-			for (int m = 0; m < edgeList.Count; m++)
+			for (int m = 0; m < arcList.Count; m++)
 			{
-				for (int n = 0; n < edgeList.Count; n++)
+				for (int n = 0; n < arcList.Count; n++)
 				{
-					if (n == m)
+					if (n != m)
 					{
-						continue;
-					}
-					Edge edge = edgeList[m];
-					Edge edge2 = edgeList[n];
-					if (edge == edge2)
-					{
-						Debug.LogError("Duplicate edge (class)");
-						return;
-					}
-					if (edge.arc == edge2.arc)
-					{
-						Debug.LogError(string.Concat("Duplicate EDGE [", edge.arc, "] & [", edge2.arc, "] - (ARC) [", edge.site0.node.Id, "] &  [", edge.site1.node.Id, "]"));
-						return;
-					}
-					if (edge.corner0 == edge2.corner0 && edge.corner1 == edge2.corner1)
-					{
-						Debug.LogError("Duplicate edge (corner same order)");
-						return;
-					}
-					if (edge.corner0 == edge2.corner1 && edge.corner1 == edge2.corner0)
-					{
-						Debug.LogError("Duplicate edge (corner different order)");
-						return;
-					}
-					if (edge.site0 == edge.site1 || edge2.site0 == edge2.site1)
-					{
-						continue;
-					}
-					if (edge.site0 == edge2.site0 && edge.site1 == edge2.site1)
-					{
-						Debug.LogError("Duplicate edge (site same order)");
-						return;
-					}
-					if (edge.site0 == edge2.site1 && edge.site1 == edge2.site0)
-					{
-						Debug.LogError("Duplicate Edge [" + edge.arc.Id + "] -> [" + edge.corner0.node.Id + "<-->" + edge.corner1.node.Id + "] sites: [" + edge.site0.node.Id + " -- " + edge.site1.node.Id + "] and [" + edge2.arc.Id + "] -> [" + edge2.corner0.node.Id + "<-->" + edge2.corner1.node.Id + "] sites: [" + edge2.site0.node.Id + " -- " + edge2.site1.node.Id + "] - (site differnt order)");
-						Debug.Log(string.Concat("CE 0: ", edge.corner0.position, " 1: ", edge.corner1.position));
-						Debug.Log(string.Concat("OE 0: ", edge2.corner0.position, " 1: ", edge2.corner1.position));
-						Debug.Log(string.Concat("Sites C 0: ", edge.site0.position, " 1: ", edge.site1.position));
-						DebugExtension.DebugCircle2d(edge.site0.position, Color.red, 1f, 15f);
-						DebugExtension.DebugCircle2d(edge.site1.position, Color.magenta, 2f, 15f);
-						Debug.Log(string.Concat("Sites O 0: ", edge2.site0.position, " 1: ", edge2.site1.position));
-						DebugExtension.DebugCircle2d(edge2.site0.position, Color.green, 3f, 15f);
-						DebugExtension.DebugCircle2d(edge2.site1.position, Color.cyan, 4f, 15f);
-					}
-					else
-					{
-						if (edge.site0.node == edge2.site0.node && edge.site1.node == edge2.site1.node)
+						Edge edge = arcList[m];
+						Edge edge2 = arcList[n];
+						if (edge == edge2)
+						{
+							Debug.LogError("Duplicate edge (instance)");
+							return;
+						}
+						if (edge.arc == edge2.arc)
+						{
+							Debug.LogError("Duplicate EDGE [" + edge.arc.ToString() + "] & [" + edge2.arc.ToString() + "] - (ARC)");
+							return;
+						}
+						if (edge.corner0 == edge2.corner0 && edge.corner1 == edge2.corner1)
+						{
+							Debug.LogError("Duplicate edge (corner same order)");
+							return;
+						}
+						if (edge.corner0 == edge2.corner1 && edge.corner1 == edge2.corner0)
+						{
+							Debug.LogError("Duplicate edge (corner different order)");
+							return;
+						}
+						List<Cell> nodes = GetNodes(edge);
+						List<Cell> nodes2 = GetNodes(edge2);
+						if (nodes[0] == nodes2[0] && nodes[1] == nodes2[1])
+						{
+							Debug.LogError("Duplicate edge (site same order)");
+							return;
+						}
+						if (nodes[0] == nodes2[1] && nodes[1] == nodes2[0])
+						{
+							Debug.LogError("Duplicate Edge (site differnt order)");
+							return;
+						}
+						if (nodes[0].node == nodes2[0].node && nodes[1].node == nodes2[1].node)
 						{
 							Debug.LogError("Duplicate edge (site node same order)");
 							return;
 						}
-						if (edge.site1.node == edge2.site0.node && edge.site0.node == edge2.site1.node)
+						if (nodes[0].node == nodes2[1].node && nodes[1].node == nodes2[0].node)
 						{
 							Debug.LogError("Duplicate edge (site node differnt order)");
 							return;
 						}
 					}
 				}
-			}
-		}
-
-		[OnDeserialized]
-		internal new void OnDeserializedMethod()
-		{
-			try
-			{
-				base.OnDeserializedMethod();
-			}
-			catch (Exception ex)
-			{
-				string message = ex.Message;
-				string stackTrace = ex.StackTrace;
-				Debug.Log("Error deserialising " + message + "\n" + stackTrace);
 			}
 		}
 	}

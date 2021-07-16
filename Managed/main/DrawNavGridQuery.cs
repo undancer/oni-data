@@ -9,7 +9,7 @@ public class DrawNavGridQuery : PathFinderQuery
 
 	public override bool IsMatch(int cell, int parent_cell, int cost)
 	{
-		if (parent_cell == Grid.InvalidCell)
+		if (parent_cell == Grid.InvalidCell || Grid.WorldIdx[parent_cell] != ClusterManager.Instance.activeWorldId || Grid.WorldIdx[cell] != ClusterManager.Instance.activeWorldId)
 		{
 			return false;
 		}

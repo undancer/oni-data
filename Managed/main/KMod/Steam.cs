@@ -18,9 +18,9 @@ namespace KMod
 			{
 				return null;
 			}
-			string id = subscribed.fileId.m_PublishedFileId.ToString();
+			string steamModID = subscribed.fileId.m_PublishedFileId.ToString();
 			Label label = default(Label);
-			label.id = id;
+			label.id = steamModID;
 			label.distribution_platform = Label.DistributionPlatform.Steam;
 			label.version = (long)subscribed.lastUpdateTime;
 			label.title = subscribed.title;
@@ -34,9 +34,12 @@ namespace KMod
 				});
 				return null;
 			}
-			return new Mod(label2, subscribed.description, new ZipFile(pchFolder), UI.FRONTEND.MODS.TOOLTIPS.MANAGE_STEAM_SUBSCRIPTION, delegate
+			ZipFile zipFile = new ZipFile(pchFolder);
+			KModHeader header = KModUtil.GetHeader(zipFile, label2.defaultStaticID, subscribed.title, subscribed.description);
+			label2.title = header.title;
+			return new Mod(label2, header.staticID, header.description, zipFile, UI.FRONTEND.MODS.TOOLTIPS.MANAGE_STEAM_SUBSCRIPTION, delegate
 			{
-				Application.OpenURL("https://steamcommunity.com/sharedfiles/filedetails/?id=" + id);
+				Application.OpenURL("https://steamcommunity.com/sharedfiles/filedetails/?id=" + steamModID);
 			});
 		}
 

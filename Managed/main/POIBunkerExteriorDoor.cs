@@ -16,7 +16,7 @@ public class POIBunkerExteriorDoor : IBuildingConfig
 		buildingDef.IsFoundation = true;
 		buildingDef.TileLayer = ObjectLayer.FoundationTile;
 		buildingDef.AudioCategory = "Metal";
-		buildingDef.PermittedRotations = PermittedRotations.R90;
+		buildingDef.PermittedRotations = PermittedRotations.FlipH;
 		buildingDef.SceneLayer = Grid.SceneLayer.Building;
 		buildingDef.ForegroundLayer = Grid.SceneLayer.InteriorWall;
 		buildingDef.ShowInBuildMenu = false;

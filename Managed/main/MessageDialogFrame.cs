@@ -25,7 +25,7 @@ public class MessageDialogFrame : KScreen
 
 	public override float GetSortKey()
 	{
-		return 9999f;
+		return 15f;
 	}
 
 	protected override void OnActivate()

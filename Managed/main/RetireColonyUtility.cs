@@ -79,7 +79,20 @@ public static class RetireColonyUtility
 		{
 			array2[j] = Components.BuildingCompletes[j];
 		}
-		return new RetiredColonyData(SaveGame.Instance.BaseName, GameClock.Instance.GetCycle(), System.DateTime.Now.ToShortDateString(), list.ToArray(), array, array2);
+		string startWorld = null;
+		Dictionary<string, string> dictionary = new Dictionary<string, string>();
+		foreach (WorldContainer worldContainer in ClusterManager.Instance.WorldContainers)
+		{
+			if (worldContainer.IsDiscovered && !worldContainer.IsModuleInterior)
+			{
+				dictionary.Add(worldContainer.GetComponent<ClusterGridEntity>().Name, worldContainer.worldName);
+				if (worldContainer.IsStartWorld)
+				{
+					startWorld = worldContainer.GetComponent<ClusterGridEntity>().Name;
+				}
+			}
+		}
+		return new RetiredColonyData(SaveGame.Instance.BaseName, GameClock.Instance.GetCycle(), System.DateTime.Now.ToShortDateString(), list.ToArray(), array, array2, startWorld, dictionary);
 	}
 
 	private static RetiredColonyData LoadRetiredColony(string file, bool skipStats, Encoding enc)
@@ -93,6 +106,7 @@ public static class RetireColonyUtility
 		List<Tuple<string, int>> list2 = new List<Tuple<string, int>>();
 		List<RetiredColonyData.RetiredDuplicantData> list3 = new List<RetiredColonyData.RetiredDuplicantData>();
 		List<RetiredColonyData.RetiredColonyStatistic> list4 = new List<RetiredColonyData.RetiredColonyStatistic>();
+		Dictionary<string, string> dictionary = new Dictionary<string, string>();
 		while (jsonReader.Read())
 		{
 			JsonToken tokenType = jsonReader.TokenType;
@@ -197,51 +211,15 @@ public static class RetireColonyUtility
 				Tuple<string, int> item = new Tuple<string, int>(a4, b);
 				list2.Add(item);
 			}
-			if (tokenType != JsonToken.StartObject || !(a == "Stats"))
+			if (tokenType == JsonToken.StartObject && a == "Stats")
 			{
-				continue;
-			}
-			if (skipStats)
-			{
-				break;
-			}
-			string a5 = null;
-			RetiredColonyData.RetiredColonyStatistic retiredColonyStatistic = new RetiredColonyData.RetiredColonyStatistic();
-			List<Tuple<float, float>> list5 = new List<Tuple<float, float>>();
-			while (jsonReader.Read())
-			{
-				tokenType = jsonReader.TokenType;
-				if (tokenType == JsonToken.EndObject)
+				if (skipStats)
 				{
 					break;
 				}
-				if (tokenType == JsonToken.PropertyName)
-				{
-					a5 = jsonReader.Value.ToString();
-				}
-				if (a5 == "id" && tokenType == JsonToken.String)
-				{
-					retiredColonyStatistic.id = jsonReader.Value.ToString();
-				}
-				if (a5 == "name" && tokenType == JsonToken.String)
-				{
-					retiredColonyStatistic.name = jsonReader.Value.ToString();
-				}
-				if (a5 == "nameX" && tokenType == JsonToken.String)
-				{
-					retiredColonyStatistic.nameX = jsonReader.Value.ToString();
-				}
-				if (a5 == "nameY" && tokenType == JsonToken.String)
-				{
-					retiredColonyStatistic.nameY = jsonReader.Value.ToString();
-				}
-				if (!(a5 == "value") || tokenType != JsonToken.StartObject)
-				{
-					continue;
-				}
-				string a6 = null;
-				float a7 = 0f;
-				float b2 = 0f;
+				string a5 = null;
+				RetiredColonyData.RetiredColonyStatistic retiredColonyStatistic = new RetiredColonyData.RetiredColonyStatistic();
+				List<Tuple<float, float>> list5 = new List<Tuple<float, float>>();
 				while (jsonReader.Read())
 				{
 					tokenType = jsonReader.TokenType;
@@ -251,27 +229,88 @@ public static class RetireColonyUtility
 					}
 					if (tokenType == JsonToken.PropertyName)
 					{
-						a6 = jsonReader.Value.ToString();
+						a5 = jsonReader.Value.ToString();
 					}
-					if (a6 == "first" && (tokenType == JsonToken.Float || tokenType == JsonToken.Integer))
+					if (a5 == "id" && tokenType == JsonToken.String)
 					{
-						a7 = float.Parse(jsonReader.Value.ToString());
+						retiredColonyStatistic.id = jsonReader.Value.ToString();
 					}
-					if (a6 == "second" && (tokenType == JsonToken.Float || tokenType == JsonToken.Integer))
+					if (a5 == "name" && tokenType == JsonToken.String)
 					{
-						b2 = float.Parse(jsonReader.Value.ToString());
+						retiredColonyStatistic.name = jsonReader.Value.ToString();
+					}
+					if (a5 == "nameX" && tokenType == JsonToken.String)
+					{
+						retiredColonyStatistic.nameX = jsonReader.Value.ToString();
+					}
+					if (a5 == "nameY" && tokenType == JsonToken.String)
+					{
+						retiredColonyStatistic.nameY = jsonReader.Value.ToString();
+					}
+					if (!(a5 == "value") || tokenType != JsonToken.StartObject)
+					{
+						continue;
+					}
+					string a6 = null;
+					float a7 = 0f;
+					float b2 = 0f;
+					while (jsonReader.Read())
+					{
+						tokenType = jsonReader.TokenType;
+						if (tokenType == JsonToken.EndObject)
+						{
+							break;
+						}
+						if (tokenType == JsonToken.PropertyName)
+						{
+							a6 = jsonReader.Value.ToString();
+						}
+						if (a6 == "first" && (tokenType == JsonToken.Float || tokenType == JsonToken.Integer))
+						{
+							a7 = float.Parse(jsonReader.Value.ToString());
+						}
+						if (a6 == "second" && (tokenType == JsonToken.Float || tokenType == JsonToken.Integer))
+						{
+							b2 = float.Parse(jsonReader.Value.ToString());
+						}
+					}
+					Tuple<float, float> item2 = new Tuple<float, float>(a7, b2);
+					list5.Add(item2);
+				}
+				retiredColonyStatistic.value = list5.ToArray();
+				list4.Add(retiredColonyStatistic);
+			}
+			if (tokenType == JsonToken.StartObject && a == "worldIdentities")
+			{
+				string text2 = null;
+				while (jsonReader.Read())
+				{
+					tokenType = jsonReader.TokenType;
+					if (tokenType == JsonToken.EndObject)
+					{
+						break;
+					}
+					if (tokenType == JsonToken.PropertyName)
+					{
+						text2 = jsonReader.Value.ToString();
+					}
+					if (text2 != null && jsonReader.Value != null && tokenType == JsonToken.String)
+					{
+						string value2 = jsonReader.Value.ToString();
+						dictionary.Add(text2, value2);
 					}
 				}
-				Tuple<float, float> item2 = new Tuple<float, float>(a7, b2);
-				list5.Add(item2);
 			}
-			retiredColonyStatistic.value = list5.ToArray();
-			list4.Add(retiredColonyStatistic);
+			if (tokenType == JsonToken.String && a == "startWorld")
+			{
+				retiredColonyData.startWorld = jsonReader.Value.ToString();
+			}
 		}
 		retiredColonyData.Duplicants = list3.ToArray();
 		retiredColonyData.Stats = list4.ToArray();
 		retiredColonyData.achievements = list.ToArray();
 		retiredColonyData.buildings = list2;
+		retiredColonyData.worldIdentities = dictionary;
 		return retiredColonyData;
 	}
 
@@ -325,10 +364,14 @@ public static class RetireColonyUtility
 		return list.ToArray();
 	}
 
-	public static string[] LoadColonySlideshowFiles(string colonyName)
+	public static string[] LoadColonySlideshowFiles(string colonyName, string world_name)
 	{
 		string path = StripInvalidCharacters(colonyName);
 		string text = Path.Combine(Path.Combine(Util.RootFolder(), Util.GetRetiredColoniesFolderName()), path);
+		if (!world_name.IsNullOrWhiteSpace())
+		{
+			text = Path.Combine(text, world_name);
+		}
 		List<string> list = new List<string>();
 		if (Directory.Exists(text))
 		{
@@ -374,12 +417,16 @@ public static class RetireColonyUtility
 		return list.ToArray();
 	}
 
-	public static Sprite LoadRetiredColonyPreview(string colonyName)
+	public static Sprite LoadRetiredColonyPreview(string colonyName, string startName = null)
 	{
 		try
 		{
 			string path = StripInvalidCharacters(colonyName);
 			string text = Path.Combine(Path.Combine(Util.RootFolder(), Util.GetRetiredColoniesFolderName()), path);
+			if (!startName.IsNullOrWhiteSpace())
+			{
+				text = Path.Combine(text, startName);
+			}
 			List<string> list = new List<string>();
 			if (Directory.Exists(text))
 			{
@@ -444,9 +491,9 @@ public static class RetireColonyUtility
 				}
 				return Sprite.Create(texture2D, new Rect(Vector2.zero, new Vector2(texture2D.width, texture2D.height)), new Vector2(0.5f, 0.5f), 100f, 0u, SpriteMeshType.FullRect);
 			}
-			catch (Exception arg)
+			catch (Exception ex)
 			{
-				Debug.Log("failed to load preview image!? " + arg);
+				Debug.Log("failed to load preview image!? " + ex);
 			}
 		}
 		if (!fallbackToTimelapse)
@@ -457,9 +504,9 @@ public static class RetireColonyUtility
 		{
 			return LoadRetiredColonyPreview(colonyName);
 		}
-		catch (Exception arg2)
+		catch (Exception arg)
 		{
-			Debug.Log($"failed to load fallback timelapse image!? {arg2}");
+			Debug.Log($"failed to load fallback timelapse image!? {arg}");
 		}
 		return null;
 	}

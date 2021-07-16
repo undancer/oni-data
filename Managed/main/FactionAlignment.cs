@@ -5,18 +5,21 @@ using UnityEngine;
 [AddComponentMenu("KMonoBehaviour/scripts/FactionAlignment")]
 public class FactionAlignment : KMonoBehaviour
 {
+	[SerializeField]
+	public bool canBePlayerTargeted = true;
+
 	[Serialize]
 	private bool alignmentActive = true;
 
 	public FactionManager.FactionID Alignment;
 
 	[Serialize]
-	public bool targeted;
+	private bool targeted;
 
 	[Serialize]
-	public bool targetable = true;
+	private bool targetable = true;
 
-	private static readonly EventSystem.IntraObjectHandler<FactionAlignment> OnDeadTagChangedDelegate = GameUtil.CreateHasTagHandler(GameTags.Dead, delegate(FactionAlignment component, object data)
+	private static readonly EventSystem.IntraObjectHandler<FactionAlignment> OnDeadTagAddedDelegate = GameUtil.CreateHasTagHandler(GameTags.Dead, delegate(FactionAlignment component, object data)
 	{
 		component.OnDeath(data);
 	});
@@ -56,7 +59,7 @@ public class FactionAlignment : KMonoBehaviour
 		{
 			FactionManager.Instance.GetFaction(Alignment).Members.Add(this);
 		}
-		GameUtil.SubscribeToTags(this, OnDeadTagChangedDelegate);
+		GameUtil.SubscribeToTags(this, OnDeadTagAddedDelegate, triggerImmediately: true);
 		UpdateStatusItem();
 	}
 
@@ -88,9 +91,14 @@ public class FactionAlignment : KMonoBehaviour
 		return FactionManager.Instance.GetFaction(Alignment).Members.Contains(this);
 	}
 
+	public bool IsPlayerTargeted()
+	{
+		return targeted;
+	}
+
 	public void SetPlayerTargetable(bool state)
 	{
-		targetable = state;
+		targetable = state && canBePlayerTargeted;
 		if (!state)
 		{
 			SetPlayerTargeted(state: false);
@@ -131,7 +139,7 @@ public class FactionAlignment : KMonoBehaviour
 
 	private void OnRefreshUserMenu(object data)
 	{
-		if (Alignment != 0 && IsAlignmentActive())
+		if (Alignment != 0 && canBePlayerTargeted && IsAlignmentActive())
 		{
 			KIconButtonMenu.ButtonInfo button = ((!targeted) ? new KIconButtonMenu.ButtonInfo("action_attack", UI.USERMENUACTIONS.ATTACK.NAME, delegate
 			{

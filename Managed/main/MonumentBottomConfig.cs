@@ -69,6 +69,18 @@ public class MonumentBottomConfig : IBuildingConfig
 			monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_i", "sit_on_tools"));
 			monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_j", "water_pacu"));
 			monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_k", "sit_on_eggs"));
+			if (DlcManager.IsExpansion1Active())
+			{
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_l", "rocketnosecone"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_m", "rocketsugarengine"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_n", "rocketnCO2"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_o", "rocketpetro"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_p", "rocketnoseconesmall"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_q", "rocketradengine"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_r", "sweepyoff"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_s", "sweepypeek"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_t", "sweepy"));
+			}
 		};
 	}
 }

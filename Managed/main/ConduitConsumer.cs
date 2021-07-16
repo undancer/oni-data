@@ -4,7 +4,7 @@ using UnityEngine;
 
 [SkipSaveFileSerialization]
 [AddComponentMenu("KMonoBehaviour/scripts/ConduitConsumer")]
-public class ConduitConsumer : KMonoBehaviour
+public class ConduitConsumer : KMonoBehaviour, IConduitConsumer
 {
 	public enum WrongElementResult
 	{
@@ -43,11 +43,16 @@ public class ConduitConsumer : KMonoBehaviour
 	[NonSerialized]
 	public bool isConsuming = true;
 
+	[NonSerialized]
+	public bool consumedLastTick = true;
+
 	[MyCmpReq]
 	public Operational operational;
 
 	[MyCmpReq]
 	private Building building;
+
+	public ISecondaryInput targetSecondaryInput;
 
 	[MyCmpGet]
 	public Storage storage;
@@ -63,6 +68,10 @@ public class ConduitConsumer : KMonoBehaviour
 	private bool satisfied;
 
 	public WrongElementResult wrongElementResult;
+
+	public Storage Storage => storage;
+
+	public ConduitType ConduitType => conduitType;
 
 	public bool IsConnected
 	{
@@ -196,7 +205,7 @@ public class ConduitConsumer : KMonoBehaviour
 		if (useSecondaryInput)
 		{
 			ISecondaryInput component = GetComponent<ISecondaryInput>();
-			return Grid.OffsetCell(building.NaturalBuildingCell(), component.GetSecondaryConduitOffset());
+			return Grid.OffsetCell(building.NaturalBuildingCell(), component.GetSecondaryConduitOffset(conduitType));
 		}
 		return building.GetUtilityInputCell();
 	}
@@ -244,6 +253,7 @@ public class ConduitConsumer : KMonoBehaviour
 	private void Consume(float dt, ConduitFlow conduit_mgr)
 	{
 		IsSatisfied = false;
+		consumedLastTick = true;
 		if (building.Def.CanMove)
 		{
 			utilityCell = GetInputCell();
@@ -264,6 +274,11 @@ public class ConduitConsumer : KMonoBehaviour
 		}
 		float a = ConsumptionRate * dt;
 		a = Mathf.Min(a, space_remaining_kg);
+		Element element = ElementLoader.FindElementByHash(contents.element);
+		if (contents.element != lastConsumedElement)
+		{
+			DiscoveredResources.Instance.Discover(element.tag, element.materialCategory);
+		}
 		float num = 0f;
 		if (a > 0f)
 		{
@@ -271,7 +286,7 @@ public class ConduitConsumer : KMonoBehaviour
 			num = conduitContents.mass;
 			lastConsumedElement = conduitContents.element;
 		}
-		bool flag = ElementLoader.FindElementByHash(contents.element).HasTag(capacityTag);
+		bool flag = element.HasTag(capacityTag);
 		if (num > 0f && capacityTag != GameTags.Any && !flag)
 		{
 			Trigger(-794517298, new BuildingHP.DamageSourceInfo
@@ -287,36 +302,41 @@ public class ConduitConsumer : KMonoBehaviour
 			{
 				return;
 			}
+			consumedLastTick = false;
 			int disease_count = (int)((float)contents.diseaseCount * (num / contents.mass));
-			Element element = ElementLoader.FindElementByHash(contents.element);
+			Element element2 = ElementLoader.FindElementByHash(contents.element);
 			switch (conduitType)
 			{
 			case ConduitType.Liquid:
-				if (element.IsLiquid)
+				if (element2.IsLiquid)
 				{
 					storage.AddLiquid(contents.element, num, contents.temperature, contents.diseaseIdx, disease_count, keepZeroMassObject, do_disease_transfer: false);
 				}
 				else
 				{
-					Debug.LogWarning("Liquid conduit consumer consuming non liquid: " + element.id);
+					Debug.LogWarning("Liquid conduit consumer consuming non liquid: " + element2.id);
 				}
 				break;
 			case ConduitType.Gas:
-				if (element.IsGas)
+				if (element2.IsGas)
 				{
 					storage.AddGasChunk(contents.element, num, contents.temperature, contents.diseaseIdx, disease_count, keepZeroMassObject, do_disease_transfer: false);
 				}
 				else
 				{
-					Debug.LogWarning("Gas conduit consumer consuming non gas: " + element.id);
+					Debug.LogWarning("Gas conduit consumer consuming non gas: " + element2.id);
 				}
 				break;
 			}
 		}
-		else if (num > 0f && wrongElementResult == WrongElementResult.Dump)
+		else if (num > 0f)
 		{
-			int disease_count2 = (int)((float)contents.diseaseCount * (num / contents.mass));
-			SimMessages.AddRemoveSubstance(Grid.PosToCell(base.transform.GetPosition()), contents.element, CellEventLogger.Instance.ConduitConsumerWrongElement, num, contents.temperature, contents.diseaseIdx, disease_count2);
+			consumedLastTick = false;
+			if (wrongElementResult == WrongElementResult.Dump)
+			{
+				int disease_count2 = (int)((float)contents.diseaseCount * (num / contents.mass));
+				SimMessages.AddRemoveSubstance(Grid.PosToCell(base.transform.GetPosition()), contents.element, CellEventLogger.Instance.ConduitConsumerWrongElement, num, contents.temperature, contents.diseaseIdx, disease_count2);
+			}
 		}
 	}
 }

@@ -108,7 +108,7 @@ public class ReactionMonitor : GameStateMachine<ReactionMonitor, ReactionMonitor
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = idle;
-		base.serializable = false;
+		base.serializable = SerializeType.Never;
 		idle.Enter("ClearReactable", delegate(Instance smi)
 		{
 			reactable.Set(null, smi);

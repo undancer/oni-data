@@ -26,9 +26,10 @@ namespace ProcGen
 			return array;
 		}
 
-		public void Merge(BiomeSettings other)
+		public BiomeSettings Merge(BiomeSettings other)
 		{
 			TerrainBiomeLookupTable.Merge(other.TerrainBiomeLookupTable);
+			return this;
 		}
 	}
 }

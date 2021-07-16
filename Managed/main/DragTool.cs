@@ -113,7 +113,7 @@ public class DragTool : InterfaceTool
 
 	public override void OnLeftClickDown(Vector3 cursor_pos)
 	{
-		cursor_pos -= placementPivot;
+		cursor_pos = ClampPositionToWorld(cursor_pos, ClusterManager.Instance.activeWorld);
 		dragging = true;
 		downPos = cursor_pos;
 		previousCursorPos = cursor_pos;
@@ -168,7 +168,7 @@ public class DragTool : InterfaceTool
 
 	public override void OnLeftClickUp(Vector3 cursor_pos)
 	{
-		cursor_pos -= placementPivot;
+		cursor_pos = ClampPositionToWorld(cursor_pos, ClusterManager.Instance.activeWorld);
 		KScreenManager.Instance.SetEventSystemEnabled(state: true);
 		dragAxis = DragAxis.Invalid;
 		if (!dragging)
@@ -232,8 +232,16 @@ public class DragTool : InterfaceTool
 		return "Tile_Cancel";
 	}
 
+	protected Vector3 ClampPositionToWorld(Vector3 position, WorldContainer world)
+	{
+		position.x = Mathf.Clamp(position.x, world.minimumBounds.x, world.maximumBounds.x);
+		position.y = Mathf.Clamp(position.y, world.minimumBounds.y, world.maximumBounds.y);
+		return position;
+	}
+
 	public override void OnMouseMove(Vector3 cursorPos)
 	{
+		cursorPos = ClampPositionToWorld(cursorPos, ClusterManager.Instance.activeWorld);
 		if (dragging)
 		{
 			if (Input.GetKey((KeyCode)Global.Instance.GetInputManager().GetDefaultController().GetInputForAction(Action.DragStraight)))
@@ -288,6 +296,8 @@ public class DragTool : InterfaceTool
 		{
 			Vector2 input = Vector3.Max(downPos, cursorPos);
 			Vector2 input2 = Vector3.Min(downPos, cursorPos);
+			input = GetWorldRestrictedPosition(input);
+			input2 = GetWorldRestrictedPosition(input2);
 			input = GetRegularizedPos(input, minimize: false);
 			input2 = GetRegularizedPos(input2, minimize: true);
 			Vector2 vector2 = input - input2;
@@ -311,7 +321,7 @@ public class DragTool : InterfaceTool
 			{
 				Vector2I vector2I = new Vector2I(Mathf.RoundToInt(vector2.x), Mathf.RoundToInt(vector2.y));
 				LocText component = NameDisplayScreen.Instance.GetWorldText(areaVisualizerText).GetComponent<LocText>();
-				component.text = string.Format(UI.TOOLS.TOOL_AREA_FMT, vector2I.x, vector2I.y);
+				component.text = string.Format(UI.TOOLS.TOOL_AREA_FMT, vector2I.x, vector2I.y, vector2I.x * vector2I.y);
 				TransformExtensions.SetPosition(position: v, transform: component.transform);
 			}
 			break;
@@ -335,6 +345,7 @@ public class DragTool : InterfaceTool
 
 	private void AddDragPoint(Vector3 cursorPos)
 	{
+		cursorPos = ClampPositionToWorld(cursorPos, ClusterManager.Instance.activeWorld);
 		int cell = Grid.PosToCell(cursorPos);
 		if (Grid.IsValidCell(cell) && Grid.IsVisible(cell))
 		{
@@ -344,6 +355,7 @@ public class DragTool : InterfaceTool
 
 	private void AddDragPoints(Vector3 cursorPos, Vector3 previousCursorPos)
 	{
+		cursorPos = ClampPositionToWorld(cursorPos, ClusterManager.Instance.activeWorld);
 		Vector3 a = cursorPos - previousCursorPos;
 		float magnitude = a.magnitude;
 		float num = Grid.CellSizeInMeters * 0.25f;

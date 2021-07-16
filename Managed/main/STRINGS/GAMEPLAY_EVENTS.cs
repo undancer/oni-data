@@ -126,6 +126,15 @@ namespace STRINGS
 
 				public static LocString BUTTON = "See Destination";
 			}
+
+			public class ARTIFACT_REVEAL
+			{
+				public static LocString NAME = "Artifact Analyzed";
+
+				public static LocString DESCRIPTION = "An artifact from a past civilization was analyzed.\n\n{desc}";
+
+				public static LocString BUTTON = "Close";
+			}
 		}
 
 		public class BONUS

@@ -8,6 +8,8 @@ public class ThreatMonitor : GameStateMachine<ThreatMonitor, ThreatMonitor.Insta
 	public class Def : BaseDef
 	{
 		public Health.HealthState fleethresholdState = Health.HealthState.Injured;
+
+		public Tag[] friendlyCreatureTags;
 	}
 
 	public class ThreatenedStates : State
@@ -59,6 +61,19 @@ public class ThreatMonitor : GameStateMachine<ThreatMonitor, ThreatMonitor.Insta
 		{
 			grudgeTime = 0f;
 			target = null;
+		}
+
+		public bool IsValidRevengeTarget(bool isDuplicant)
+		{
+			if (target != null && target.IsAlignmentActive() && (target.health == null || !target.health.IsDefeated()))
+			{
+				if (isDuplicant)
+				{
+					return !target.IsPlayerTargeted();
+				}
+				return true;
+			}
+			return false;
 		}
 	}
 
@@ -175,13 +190,12 @@ public class ThreatMonitor : GameStateMachine<ThreatMonitor, ThreatMonitor.Insta
 
 		private void GotoThreatResponse()
 		{
-			bool flag = base.smi.master.GetComponent<Navigator>().IsMoving();
 			Chore currentChore = base.smi.master.GetComponent<ChoreDriver>().GetCurrentChore();
-			if (WillFight() && mainThreat.GetComponent<FactionAlignment>().targeted)
+			if (WillFight() && mainThreat.GetComponent<FactionAlignment>().IsPlayerTargeted())
 			{
 				base.smi.GoTo(base.smi.sm.threatened.duplicant.ShouldFight);
 			}
-			else if (!flag && (currentChore == null || currentChore.target == null || !(currentChore.target.GetComponent<Pickupable>() != null)))
+			else if (currentChore == null || currentChore.target == null || currentChore.target == base.master || !(currentChore.target.GetComponent<Pickupable>() != null))
 			{
 				base.smi.GoTo(base.smi.sm.threatened.duplicant.ShoudFlee);
 			}
@@ -226,7 +240,7 @@ public class ThreatMonitor : GameStateMachine<ThreatMonitor, ThreatMonitor.Insta
 
 		public bool CheckForThreats()
 		{
-			GameObject x = ((!(revengeThreat.target != null) || !revengeThreat.target.IsAlignmentActive() || revengeThreat.target.health.IsDefeated() || (IAmADuplicant && revengeThreat.target.targeted)) ? FindThreat() : revengeThreat.target.gameObject);
+			GameObject x = ((!revengeThreat.IsValidRevengeTarget(IAmADuplicant)) ? FindThreat() : revengeThreat.target.gameObject);
 			SetMainThreat(x);
 			return x != null;
 		}
@@ -239,17 +253,50 @@ public class ThreatMonitor : GameStateMachine<ThreatMonitor, ThreatMonitor.Insta
 				return null;
 			}
 			bool flag = WillFight();
-			if (IAmADuplicant && flag)
+			ListPool<ScenePartitionerEntry, ThreatMonitor>.PooledList pooledList = ListPool<ScenePartitionerEntry, ThreatMonitor>.Allocate();
+			int radius = 20;
+			Extents extents = new Extents(Grid.PosToCell(base.gameObject), radius);
+			GameScenePartitioner.Instance.GatherEntries(extents, GameScenePartitioner.Instance.attackableEntitiesLayer, pooledList);
+			for (int i = 0; i < pooledList.Count; i++)
 			{
-				for (int i = 0; i < 6; i++)
+				FactionAlignment factionAlignment = pooledList[i].obj as FactionAlignment;
+				if (factionAlignment.transform == null || factionAlignment == alignment || !factionAlignment.IsAlignmentActive() || FactionManager.Instance.GetDisposition(alignment.Alignment, factionAlignment.Alignment) != FactionManager.Disposition.Attack)
 				{
-					if (i == 0)
+					continue;
+				}
+				if (base.def.friendlyCreatureTags != null)
+				{
+					bool flag2 = false;
+					Tag[] friendlyCreatureTags = base.def.friendlyCreatureTags;
+					foreach (Tag tag in friendlyCreatureTags)
+					{
+						if (factionAlignment.HasTag(tag))
+						{
+							flag2 = true;
+						}
+					}
+					if (flag2)
 					{
 						continue;
 					}
-					foreach (FactionAlignment member in FactionManager.Instance.GetFaction((FactionManager.FactionID)i).Members)
+				}
+				if (navigator.CanReach(factionAlignment.attackable))
+				{
+					threats.Add(factionAlignment);
+				}
+			}
+			pooledList.Recycle();
+			if (IAmADuplicant && flag)
+			{
+				for (int k = 0; k < 6; k++)
+				{
+					if (k == 0)
 					{
-						if (member.targeted && !member.health.IsDefeated() && !threats.Contains(member) && navigator.CanReach(member.attackable))
+						continue;
+					}
+					foreach (FactionAlignment member in FactionManager.Instance.GetFaction((FactionManager.FactionID)k).Members)
+					{
+						if (member.IsPlayerTargeted() && !member.health.IsDefeated() && !threats.Contains(member) && navigator.CanReach(member.attackable))
 						{
 							threats.Add(member);
 						}
@@ -326,7 +373,7 @@ public class ThreatMonitor : GameStateMachine<ThreatMonitor, ThreatMonitor.Insta
 
 	private static void DupeUpdateTarget(Instance smi, float dt)
 	{
-		if (smi.MainThreat == null || !smi.MainThreat.GetComponent<FactionAlignment>().targeted)
+		if (smi.MainThreat == null || !smi.MainThreat.GetComponent<FactionAlignment>().IsPlayerTargeted())
 		{
 			smi.Trigger(2144432245);
 		}

@@ -87,4 +87,14 @@ public static class DrawUtil
 	public static void Sphere(Vector3 pos, float radius, Color color, float time = 0f)
 	{
 	}
+
+	public static void Cell(int gridWidth, int cell, Color color, float inset = 0f, float time = 0f)
+	{
+		CellXY(cell % gridWidth, cell / gridWidth, color, inset, time);
+	}
+
+	public static void CellXY(int x, int y, Color color, float inset = 0f, float time = 0f)
+	{
+		new Vector2(x, y);
+	}
 }

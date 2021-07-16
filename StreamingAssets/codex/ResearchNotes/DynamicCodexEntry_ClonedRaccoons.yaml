@@ -1,0 +1,32 @@
+id: "ClonedRaccoons"
+title: STRINGS.CODEX.A1_CLONEDRACCOONS.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_clonedraccoons
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1_CLONEDRACCOONS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1_CLONEDRACCOONS.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_clonedrabbits
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A1_CLONEDRACCOONS.BODY.CONTAINER1
+          style: Body
+
+#      - Image:
+#        type: Image
+#        properties:
+#          spriteName: ONI_logo
+#
+#          preferredHeight: 128

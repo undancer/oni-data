@@ -76,9 +76,9 @@ public class NavGrid
 
 		public NavAxis startAxis;
 
-		public sbyte x;
+		public int x;
 
-		public sbyte y;
+		public int y;
 
 		public byte id;
 
@@ -104,16 +104,19 @@ public class NavGrid
 
 		public bool isCritter;
 
+		public override string ToString()
+		{
+			return $"{id}: {start}->{end} ({startAxis}); offset {x},{y}";
+		}
+
 		public Transition(NavType start, NavType end, int x, int y, NavAxis start_axis, bool is_looping, bool loop_has_pre, bool is_escape, int cost, string anim, CellOffset[] void_offsets, CellOffset[] solid_offsets, NavOffset[] valid_nav_offsets, NavOffset[] invalid_nav_offsets, bool critter = false, float animSpeed = 1f)
 		{
-			DebugUtil.Assert(x <= 127 && x >= -128);
-			DebugUtil.Assert(y <= 127 && y >= -128);
 			DebugUtil.Assert(cost <= 255 && cost >= 0);
 			id = byte.MaxValue;
 			this.start = start;
 			this.end = end;
-			this.x = (sbyte)x;
-			this.y = (sbyte)y;
+			this.x = x;
+			this.y = y;
 			startAxis = start_axis;
 			isLooping = is_looping;
 			isEscape = is_escape;
@@ -359,6 +362,8 @@ public class NavGrid
 
 	public static int InvalidCell = -1;
 
+	public Dictionary<int, int> teleportTransitions = new Dictionary<int, int>();
+
 	public Link[] Links;
 
 	private HashSet<int> DirtyCells = new HashSet<int>();
@@ -470,8 +475,8 @@ public class NavGrid
 		Links = new Link[maxLinksPerCell * Grid.CellCount];
 		NavTable = new NavTable(Grid.CellCount);
 		this.transitions = transitions;
-		transitionsByNavType = new Transition[10][];
-		for (int k = 0; k < 10; k++)
+		transitionsByNavType = new Transition[11][];
+		for (int k = 0; k < 11; k++)
 		{
 			List<Transition> list2 = new List<Transition>();
 			NavType navType = (NavType)k;
@@ -554,7 +559,7 @@ public class NavGrid
 
 	public void UpdateGraph(HashSet<int> dirty_nav_cells)
 	{
-		NavGridUpdater.UpdateNavGrid(NavTable, ValidNavTypes, Validators, boundingOffsets, maxLinksPerCell, Links, transitionsByNavType, dirty_nav_cells);
+		NavGridUpdater.UpdateNavGrid(NavTable, ValidNavTypes, Validators, boundingOffsets, maxLinksPerCell, Links, transitionsByNavType, teleportTransitions, dirty_nav_cells);
 		if (OnNavGridUpdateComplete != null)
 		{
 			OnNavGridUpdateComplete(dirty_nav_cells);
@@ -584,7 +589,7 @@ public class NavGrid
 		int cellCount = Grid.CellCount;
 		for (int i = 0; i < cellCount; i++)
 		{
-			for (int j = 0; j < 10; j++)
+			for (int j = 0; j < 11; j++)
 			{
 				NavType nav_type = (NavType)j;
 				if (NavTable.IsValid(i, nav_type) && DrawNavTypeCell(nav_type, ref color))
@@ -677,10 +682,10 @@ public class NavGrid
 	{
 		if (debugColorLookup == null)
 		{
-			debugColorLookup = new Color[10];
-			for (int i = 0; i < 10; i++)
+			debugColorLookup = new Color[11];
+			for (int i = 0; i < 11; i++)
 			{
-				double num = (double)i / 10.0;
+				double num = (double)i / 11.0;
 				IList<double> list = ColorConverter.HUSLToRGB(new double[3]
 				{
 					num * 360.0,

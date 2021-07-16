@@ -43,7 +43,6 @@ public class GourmetCookingStationConfig : IBuildingConfig
 		go.AddOrGet<DropAllWorkable>();
 		go.AddOrGet<BuildingComplete>().isManuallyOperated = true;
 		GourmetCookingStation gourmetCookingStation = go.AddOrGet<GourmetCookingStation>();
-		gourmetCookingStation.resultState = ComplexFabricator.ResultState.Heated;
 		gourmetCookingStation.heatedTemperature = 368.15f;
 		gourmetCookingStation.duplicantOperated = true;
 		gourmetCookingStation.sideScreenStyle = ComplexFabricatorSideScreen.StyleSetting.ListQueueHybrid;
@@ -97,7 +96,7 @@ public class GourmetCookingStationConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array2 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement("Salsa", 1f)
+			new ComplexRecipe.RecipeElement("Salsa", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
 		SalsaConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("GourmetCookingStation", array, array2), array, array2)
 		{
@@ -117,7 +116,7 @@ public class GourmetCookingStationConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array4 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement("MushroomWrap", 1f)
+			new ComplexRecipe.RecipeElement("MushroomWrap", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
 		MushroomWrapConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("GourmetCookingStation", array3, array4), array3, array4)
 		{
@@ -137,7 +136,7 @@ public class GourmetCookingStationConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array6 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement("SurfAndTurf", 1f)
+			new ComplexRecipe.RecipeElement("SurfAndTurf", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
 		SurfAndTurfConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("GourmetCookingStation", array5, array6), array5, array6)
 		{
@@ -157,7 +156,7 @@ public class GourmetCookingStationConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array8 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement("SpiceBread", 1f)
+			new ComplexRecipe.RecipeElement("SpiceBread", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
 		SpiceBreadConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("GourmetCookingStation", array7, array8), array7, array8)
 		{
@@ -177,7 +176,7 @@ public class GourmetCookingStationConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array10 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement("SpicyTofu", 1f)
+			new ComplexRecipe.RecipeElement("SpicyTofu", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
 		SpicyTofuConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("GourmetCookingStation", array9, array10), array9, array10)
 		{
@@ -198,7 +197,7 @@ public class GourmetCookingStationConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array12 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement("Burger", 1f)
+			new ComplexRecipe.RecipeElement("Burger", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
 		BurgerConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("GourmetCookingStation", array11, array12), array11, array12)
 		{
@@ -211,5 +210,29 @@ public class GourmetCookingStationConfig : IBuildingConfig
 			},
 			sortOrder = 900
 		};
+		if (DlcManager.IsExpansion1Active())
+		{
+			ComplexRecipe.RecipeElement[] array13 = new ComplexRecipe.RecipeElement[3]
+			{
+				new ComplexRecipe.RecipeElement("ColdWheatSeed", 3f),
+				new ComplexRecipe.RecipeElement("WormSuperFruit", 4f),
+				new ComplexRecipe.RecipeElement("GrilledPrickleFruit", 1f)
+			};
+			ComplexRecipe.RecipeElement[] array14 = new ComplexRecipe.RecipeElement[1]
+			{
+				new ComplexRecipe.RecipeElement("BerryPie", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
+			};
+			BerryPieConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("GourmetCookingStation", array13, array14), array13, array14)
+			{
+				time = FOOD.RECIPES.STANDARD_COOK_TIME,
+				description = ITEMS.FOOD.BERRYPIE.RECIPEDESC,
+				nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
+				fabricators = new List<Tag>
+				{
+					"GourmetCookingStation"
+				},
+				sortOrder = 900
+			};
+		}
 	}
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Steamworks;
 using UnityEngine;
 
@@ -43,6 +44,14 @@ internal class SteamDistributionPlatform : MonoBehaviour, DistributionPlatform.I
 
 	private SteamUser mLocalUser;
 
+	private Dictionary<string, uint> DLCtoSteamIDMap = new Dictionary<string, uint>
+	{
+		{
+			"EXPANSION1_ID",
+			1452490u
+		}
+	};
+
 	public bool Initialized => SteamManager.Initialized;
 
 	public string Name => "Steam";
@@ -73,35 +82,13 @@ internal class SteamDistributionPlatform : MonoBehaviour, DistributionPlatform.I
 		{
 			SteamApps.GetCurrentBetaName(out var pchName, 100);
 			Debug.Log("Checking which steam branch we're on. Got: [" + pchName + "]");
-			if (!(pchName == "default"))
+			if (!(pchName == "") && !(pchName == "default"))
 			{
 				return !(pchName == "release");
 			}
 			return false;
 		}
 	}
-
-	public bool PurchasedDLC
-	{
-		get
-		{
-			bool purchasedDLC = false;
-			if (SteamManager.Initialized)
-			{
-				GetAuthTicket(delegate(byte[] ticket)
-				{
-					CSteamID steamID = Steamworks.SteamUser.GetSteamID();
-					Steamworks.SteamUser.BeginAuthSession(ticket, ticket.Length, steamID);
-					EUserHasLicenseForAppResult eUserHasLicenseForAppResult = Steamworks.SteamUser.UserHasLicenseForApp(steamID, new AppId_t(1452490u));
-					purchasedDLC = eUserHasLicenseForAppResult == EUserHasLicenseForAppResult.k_EUserHasLicenseResultHasLicense;
-					Steamworks.SteamUser.EndAuthSession(steamID);
-				});
-			}
-			return purchasedDLC;
-		}
-	}
-
-	public bool IsExpansion1Active => false;
 
 	public string ApplyWordFilter(string text)
 	{
@@ -121,12 +108,48 @@ internal class SteamDistributionPlatform : MonoBehaviour, DistributionPlatform.I
 		handler(array2);
 	}
 
-	public void ToggleDLC()
+	public bool IsDLCPurchased(string dlcID)
 	{
-		Debug.Log("Steam: Toggling DLC");
-		if (PurchasedDLC)
+		bool purchasedDLC = false;
+		if (SteamManager.Initialized)
 		{
-			if (IsExpansion1Active)
+			uint steamDlcID = DLCtoSteamIDMap[dlcID];
+			GetAuthTicket(delegate(byte[] ticket)
+			{
+				CSteamID steamID = Steamworks.SteamUser.GetSteamID();
+				Steamworks.SteamUser.BeginAuthSession(ticket, ticket.Length, steamID);
+				EUserHasLicenseForAppResult eUserHasLicenseForAppResult = Steamworks.SteamUser.UserHasLicenseForApp(steamID, new AppId_t(steamDlcID));
+				purchasedDLC = eUserHasLicenseForAppResult == EUserHasLicenseForAppResult.k_EUserHasLicenseResultHasLicense;
+				Steamworks.SteamUser.EndAuthSession(steamID);
+			});
+		}
+		else if (Application.isEditor)
+		{
+			purchasedDLC = true;
+		}
+		return purchasedDLC;
+	}
+
+	public bool IsDLCSubscribed(string dlcID)
+	{
+		uint value = DLCtoSteamIDMap[dlcID];
+		if (SteamManager.Initialized)
+		{
+			return SteamApps.BIsSubscribedApp(new AppId_t(value));
+		}
+		if (Application.isEditor)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	public void ToggleDLCSubscription(string dlcID)
+	{
+		Debug.Log("Steam: Toggling DLC " + dlcID);
+		if (IsDLCPurchased(dlcID))
+		{
+			if (IsDLCSubscribed(dlcID))
 			{
 				SteamApps.UninstallDLC(new AppId_t(1452490u));
 				Debug.Log("Switching to base game");
@@ -134,7 +157,7 @@ internal class SteamDistributionPlatform : MonoBehaviour, DistributionPlatform.I
 			else
 			{
 				SteamApps.InstallDLC(new AppId_t(1452490u));
-				Debug.Log("Switching to Spaced Out");
+				Debug.Log("Switching to " + dlcID);
 			}
 			SteamApps.MarkContentCorrupt(bMissingFilesOnly: false);
 			Application.OpenURL("steam://rungameid/" + 457140u);

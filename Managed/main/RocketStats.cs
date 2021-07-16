@@ -6,25 +6,21 @@ public class RocketStats
 {
 	private CommandModule commandModule;
 
-	private static Dictionary<Tag, float> oxidizerEfficiencies;
+	public static Dictionary<Tag, float> oxidizerEfficiencies = new Dictionary<Tag, float>
+	{
+		{
+			SimHashes.OxyRock.CreateTag(),
+			ROCKETRY.OXIDIZER_EFFICIENCY.LOW
+		},
+		{
+			SimHashes.LiquidOxygen.CreateTag(),
+			ROCKETRY.OXIDIZER_EFFICIENCY.HIGH
+		}
+	};
 
 	public RocketStats(CommandModule commandModule)
 	{
 		this.commandModule = commandModule;
-		if (oxidizerEfficiencies == null)
-		{
-			oxidizerEfficiencies = new Dictionary<Tag, float>
-			{
-				{
-					SimHashes.OxyRock.CreateTag(),
-					ROCKETRY.OXIDIZER_EFFICIENCY.LOW
-				},
-				{
-					SimHashes.LiquidOxygen.CreateTag(),
-					ROCKETRY.OXIDIZER_EFFICIENCY.HIGH
-				}
-			};
-		}
 	}
 
 	public float GetRocketMaxDistance()
@@ -67,11 +63,11 @@ public class RocketStats
 				SolidBooster component4 = component.GetComponent<SolidBooster>();
 				if (component2 != null)
 				{
-					num += component2.MassStored();
+					num += component2.storage.MassStored();
 				}
 				if (component3 != null)
 				{
-					num += component3.MassStored();
+					num += component3.storage.MassStored();
 				}
 				if (component4 != null)
 				{
@@ -101,7 +97,7 @@ public class RocketStats
 			Tag engineFuelTag = GetEngineFuelTag();
 			if (component != null)
 			{
-				num += component.GetAmountAvailable(engineFuelTag);
+				num += component.storage.GetAmountAvailable(engineFuelTag);
 			}
 			if (includeBoosters)
 			{

@@ -268,6 +268,8 @@ namespace STRINGS
 
 			public static LocString DEBUGSPAWNMINION = "Debug Spawn Minion";
 
+			public static LocString DEBUGSPAWNMINIONATMOSUIT = "Debug Spawn Minion with Atmo Suit";
+
 			public static LocString DEBUGPLACE = "Debug Place";
 
 			public static LocString DEBUGINSTANTBUILDMODE = "Debug Instant Build Mode";
@@ -354,6 +356,8 @@ namespace STRINGS
 			public static LocString TOGGLESANDBOXTOOLS = "Toggle Sandbox Tools";
 
 			public static LocString SANDBOXREVEAL = "Sandbox Reveal";
+
+			public static LocString SANDBOXCRITTER = "Sandbox Remove Critters";
 		}
 	}
 }

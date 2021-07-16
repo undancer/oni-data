@@ -36,6 +36,11 @@ public class ResearchType
 		CreatePrefab(fabricationIngredients, fabricationTime, kAnim_ID, fabricators, recipeDescription, color);
 	}
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab(Recipe.Ingredient[] fabricationIngredients, float fabricationTime, HashedString kAnim_ID, string[] fabricators, string recipeDescription, Color color)
 	{
 		GameObject gameObject = EntityTemplates.CreateBasicEntity(id, name, description, 1f, unitMass: true, Assets.GetAnim(kAnim_ID), "ui", Grid.SceneLayer.BuildingFront);

@@ -17,7 +17,7 @@ public class ResourceCategoryScreen : KScreen
 
 	private float HideSpeedFactor = 12f;
 
-	private float maxHeightPadding = 280f;
+	private float maxHeightPadding = 480f;
 
 	private float targetContentHideHeight;
 
@@ -75,7 +75,7 @@ public class ResourceCategoryScreen : KScreen
 
 	private void Update()
 	{
-		if (WorldInventory.Instance == null)
+		if (ClusterManager.Instance.activeWorld.worldInventory == null)
 		{
 			return;
 		}
@@ -91,7 +91,7 @@ public class ResourceCategoryScreen : KScreen
 		{
 			Tag tag = DisplayedCategoryKeys[categoryUpdatePacer];
 			ResourceCategoryHeader resourceCategoryHeader = DisplayedCategories[tag];
-			if (WorldInventory.Instance.IsDiscovered(tag) && !resourceCategoryHeader.gameObject.activeInHierarchy)
+			if (DiscoveredResources.Instance.IsDiscovered(tag) && !resourceCategoryHeader.gameObject.activeInHierarchy)
 			{
 				resourceCategoryHeader.gameObject.SetActive(value: true);
 			}

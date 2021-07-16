@@ -109,7 +109,6 @@ public class GravityComponents : KGameObjectComponentManager<GravityComponent>
 					float num7 = value.extents.y - value.yOffset;
 					vector3.y = vector4.y + num7;
 					value.velocity.x = 0f;
-					value.elapsedTime = -1f;
 					value.transform.SetPosition(new Vector3(vector3.x, vector3.y, position.z));
 					data[i] = value;
 					value.transform.gameObject.Trigger(1188683690, vector2);

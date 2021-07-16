@@ -1,41 +1,43 @@
 using System.Collections.Generic;
-using System.IO;
 using Klei;
-using UnityEngine;
+using ProcGen;
 
 public static class TemplateCache
 {
-	private static string baseTemplatePath;
+	private const string defaultAssetFolder = "bases";
 
 	private static Dictionary<string, TemplateContainer> templates;
 
-	private const string defaultAssetFolder = "bases";
+	public static bool Initted
+	{
+		get;
+		private set;
+	}
 
 	public static void Init()
 	{
-		templates = new Dictionary<string, TemplateContainer>();
-		baseTemplatePath = FileSystem.Normalize(Path.Combine(Application.streamingAssetsPath, "templates"));
+		if (!Initted)
+		{
+			templates = new Dictionary<string, TemplateContainer>();
+			Initted = true;
+		}
 	}
 
 	public static void Clear()
 	{
 		templates = null;
-		baseTemplatePath = null;
+		Initted = false;
 	}
 
-	public static string GetTemplatePath()
+	public static string RewriteTemplatePath(string scopePath)
 	{
-		return baseTemplatePath;
+		SettingsCache.GetDlcIdAndPath(scopePath, out var dlcId, out var path);
+		return SettingsCache.GetAbsoluteContentPath(dlcId, "templates/" + path);
 	}
 
-	public static TemplateContainer GetStartingBaseTemplate(string startingTemplateName)
+	public static string RewriteTemplateYaml(string scopePath)
 	{
-		DebugUtil.Assert(startingTemplateName != null, "Tried loading a starting template named ", startingTemplateName);
-		if (baseTemplatePath == null)
-		{
-			Init();
-		}
-		return GetTemplate(Path.Combine("bases", startingTemplateName));
+		return RewriteTemplatePath(scopePath) + ".yaml";
 	}
 
 	public static TemplateContainer GetTemplate(string templatePath)
@@ -46,52 +48,19 @@ public static class TemplateCache
 		}
 		if (templates[templatePath] == null)
 		{
-			string text = FileSystem.Normalize(Path.Combine(baseTemplatePath, templatePath));
-			TemplateContainer templateContainer = YamlIO.LoadFile<TemplateContainer>(text + ".yaml");
+			string text = RewriteTemplateYaml(templatePath);
+			TemplateContainer templateContainer = YamlIO.LoadFile<TemplateContainer>(text);
 			if (templateContainer == null)
 			{
-				Debug.LogWarning("Missing template [" + text + ".yaml]");
+				Debug.LogWarning("Missing template [" + text + "]");
 			}
 			templates[templatePath] = templateContainer;
 		}
 		return templates[templatePath];
 	}
 
-	private static void GetAssetPaths(string folder, List<string> paths)
+	public static bool TemplateExists(string templatePath)
 	{
-		FileSystem.GetFiles(FileSystem.Normalize(Path.Combine(baseTemplatePath, folder)), "*.yaml", paths);
-	}
-
-	public static List<string> CollectBaseTemplateNames(string folder = "bases")
-	{
-		List<string> list = new List<string>();
-		ListPool<string, TemplateContainer>.PooledList pooledList = ListPool<string, TemplateContainer>.Allocate();
-		GetAssetPaths(folder, pooledList);
-		foreach (string item in pooledList)
-		{
-			string text = FileSystem.Normalize(Path.Combine(folder, Path.GetFileNameWithoutExtension(item)));
-			list.Add(text);
-			if (!templates.ContainsKey(text))
-			{
-				templates.Add(text, null);
-			}
-		}
-		pooledList.Recycle();
-		list.Sort((string x, string y) => x.CompareTo(y));
-		return list;
-	}
-
-	public static List<TemplateContainer> CollectBaseTemplateAssets(string folder = "bases")
-	{
-		List<TemplateContainer> list = new List<TemplateContainer>();
-		ListPool<string, TemplateContainer>.PooledList pooledList = ListPool<string, TemplateContainer>.Allocate();
-		GetAssetPaths(folder, pooledList);
-		foreach (string item in pooledList)
-		{
-			list.Add(YamlIO.LoadFile<TemplateContainer>(item));
-		}
-		pooledList.Recycle();
-		list.Sort((TemplateContainer x, TemplateContainer y) => (y.priority - x.priority == 0) ? x.name.CompareTo(y.name) : (y.priority - x.priority));
-		return list;
+		return FileSystem.FileExists(RewriteTemplateYaml(templatePath));
 	}
 }

@@ -34,6 +34,10 @@ public class MeterController
 
 	private void Initialize(KAnimControllerBase building_controller, string meter_target, string meter_animation, Meter.Offset front_back, Grid.SceneLayer user_specified_render_layer, Vector3 tracker_offset, params string[] symbols_to_hide)
 	{
+		if (building_controller.HasAnimation(meter_animation + "_cb") && !GlobalAssets.Instance.colorSet.IsDefaultColorSet())
+		{
+			meter_animation += "_cb";
+		}
 		string name = building_controller.name + "." + meter_animation;
 		GameObject gameObject = UnityEngine.Object.Instantiate(Assets.GetPrefab(MeterConfig.ID));
 		gameObject.name = name;

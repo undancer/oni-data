@@ -7,6 +7,8 @@ public class RefrigeratorConfig : IBuildingConfig
 {
 	public const string ID = "Refrigerator";
 
+	private const int ENERGY_SAVER_POWER = 20;
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef("Refrigerator", 1, 2, "fridge_kanim", 30, 10f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_MINERALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER0, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER1);
@@ -35,9 +37,11 @@ public class RefrigeratorConfig : IBuildingConfig
 		storage.capacityKg = 100f;
 		storage.storageFullMargin = STORAGE.STORAGE_LOCKER_FILLED_MARGIN;
 		storage.fetchCategory = Storage.FetchCategory.GeneralStorage;
+		storage.showCapacityStatusItem = true;
 		Prioritizable.AddRef(go);
 		go.AddOrGet<TreeFilterable>();
 		go.AddOrGet<Refrigerator>();
+		go.AddOrGetDef<RefrigeratorController.Def>().powerSaverEnergyUsage = 20f;
 		go.AddOrGet<UserNameable>();
 		go.AddOrGet<DropAllWorkable>();
 		go.AddOrGetDef<StorageController.Def>();

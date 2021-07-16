@@ -47,6 +47,8 @@ public class SolidConduitInboxConfig : IBuildingConfig
 		storage.storageFilters = list;
 		storage.allowItemRemoval = false;
 		storage.onlyTransferFromLowerPriority = true;
+		storage.showCapacityStatusItem = true;
+		storage.showCapacityAsMainStatus = true;
 		go.AddOrGet<TreeFilterable>();
 		go.AddOrGet<SolidConduitInbox>();
 		go.AddOrGet<SolidConduitDispenser>();

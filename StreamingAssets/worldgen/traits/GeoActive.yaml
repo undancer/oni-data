@@ -5,4 +5,4 @@ exclusiveWith:
   - traits/GeoDormant
 
 globalFeatureTemplateMods:
-  feature_geyser_generic: 4
+  geysers/generic: 4

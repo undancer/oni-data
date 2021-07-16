@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics;
-using UnityEngine;
 
 namespace Klei.AI
 {
@@ -80,7 +79,7 @@ namespace Klei.AI
 			return DescriptionCB();
 		}
 
-		public string GetFormattedString(GameObject parent_instance)
+		public string GetFormattedString()
 		{
 			IAttributeFormatter attributeFormatter = null;
 			Attribute attribute = Db.Get().Attributes.TryGet(AttributeId);
@@ -97,10 +96,18 @@ namespace Klei.AI
 					{
 						attributeFormatter = attribute.formatter;
 					}
+					else
+					{
+						attribute = Db.Get().PlantAttributes.TryGet(AttributeId);
+						if (attribute != null)
+						{
+							attributeFormatter = attribute.formatter;
+						}
+					}
 				}
 			}
 			string str = "";
-			str = ((attributeFormatter != null) ? attributeFormatter.GetFormattedModifier(this, parent_instance) : ((!IsMultiplier) ? (str + GameUtil.GetFormattedSimple(Value)) : (str + GameUtil.GetFormattedPercent(Value * 100f))));
+			str = ((attributeFormatter != null) ? attributeFormatter.GetFormattedModifier(this) : ((!IsMultiplier) ? (str + GameUtil.GetFormattedSimple(Value)) : (str + GameUtil.GetFormattedPercent(Value * 100f))));
 			if (str != null && str.Length > 0 && str[0] != '-')
 			{
 				str = GameUtil.AddPositiveSign(str, Value > 0f);

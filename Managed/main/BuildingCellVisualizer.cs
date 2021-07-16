@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class BuildingCellVisualizer : KMonoBehaviour
 {
 	[Flags]
-	private enum Ports : byte
+	private enum Ports
 	{
 		PowerIn = 0x1,
 		PowerOut = 0x2,
@@ -19,7 +19,8 @@ public class BuildingCellVisualizer : KMonoBehaviour
 		LiquidIn = 0x10,
 		LiquidOut = 0x20,
 		SolidIn = 0x40,
-		SolidOut = 0x80
+		SolidOut = 0x80,
+		HighEnergyParticle = 0x100
 	}
 
 	private BuildingCellVisualizerResources resources;
@@ -41,7 +42,7 @@ public class BuildingCellVisualizer : KMonoBehaviour
 
 	private const Ports SOLID_PORTS = Ports.SolidIn | Ports.SolidOut;
 
-	private const Ports MATTER_PORTS = ~(Ports.PowerIn | Ports.PowerOut);
+	private const Ports MATTER_PORTS = Ports.GasIn | Ports.GasOut | Ports.LiquidIn | Ports.LiquidOut | Ports.SolidIn | Ports.SolidOut;
 
 	private Ports ports;
 
@@ -75,7 +76,9 @@ public class BuildingCellVisualizer : KMonoBehaviour
 
 	public bool RequiresSolid => (ports & (Ports.SolidIn | Ports.SolidOut)) != 0;
 
-	public bool RequiresUtilityConnection => (ports & ~(Ports.PowerIn | Ports.PowerOut)) != 0;
+	public bool RequiresUtilityConnection => (ports & (Ports.GasIn | Ports.GasOut | Ports.LiquidIn | Ports.LiquidOut | Ports.SolidIn | Ports.SolidOut)) != 0;
+
+	public bool RequiresHighEnergyParticles => (ports & Ports.HighEnergyParticle) != 0;
 
 	public void ConnectedEventWithDelay(float delay, int connectionCount, int cell, string soundName)
 	{
@@ -171,6 +174,14 @@ public class BuildingCellVisualizer : KMonoBehaviour
 		{
 			ports |= Ports.SolidOut;
 		}
+		if (def.CheckRequiresHighEnergyParticleInput())
+		{
+			ports |= Ports.HighEnergyParticle;
+		}
+		if (def.CheckRequiresHighEnergyParticleOutput())
+		{
+			ports |= Ports.HighEnergyParticle;
+		}
 		DiseaseVisualization.Info info = Assets.instance.DiseaseVisualization.GetInfo(def.DiseaseCellVisName);
 		if (info.name != null)
 		{
@@ -180,33 +191,33 @@ public class BuildingCellVisualizer : KMonoBehaviour
 		ISecondaryInput component = def.BuildingComplete.GetComponent<ISecondaryInput>();
 		if (component != null)
 		{
-			switch (component.GetSecondaryConduitType())
+			if (component.HasSecondaryConduitType(ConduitType.Gas))
 			{
-			case ConduitType.Gas:
 				secondary_ports |= Ports.GasIn;
-				break;
-			case ConduitType.Liquid:
+			}
+			if (component.HasSecondaryConduitType(ConduitType.Liquid))
+			{
 				secondary_ports |= Ports.LiquidIn;
-				break;
-			case ConduitType.Solid:
+			}
+			if (component.HasSecondaryConduitType(ConduitType.Solid))
+			{
 				secondary_ports |= Ports.SolidIn;
-				break;
 			}
 		}
 		ISecondaryOutput component2 = def.BuildingComplete.GetComponent<ISecondaryOutput>();
 		if (component2 != null)
 		{
-			switch (component2.GetSecondaryConduitType())
+			if (component2.HasSecondaryConduitType(ConduitType.Gas))
 			{
-			case ConduitType.Gas:
 				secondary_ports |= Ports.GasOut;
-				break;
-			case ConduitType.Liquid:
+			}
+			if (component2.HasSecondaryConduitType(ConduitType.Liquid))
+			{
 				secondary_ports |= Ports.LiquidOut;
-				break;
-			case ConduitType.Solid:
+			}
+			if (component2.HasSecondaryConduitType(ConduitType.Solid))
+			{
 				secondary_ports |= Ports.SolidOut;
-				break;
 			}
 		}
 	}
@@ -271,7 +282,11 @@ public class BuildingCellVisualizer : KMonoBehaviour
 
 	public void DrawIcons(HashedString mode)
 	{
-		if (mode == OverlayModes.Power.ID)
+		if (base.gameObject.GetMyWorldId() != ClusterManager.Instance.activeWorldId)
+		{
+			DisableIcons();
+		}
+		else if (mode == OverlayModes.Power.ID)
 		{
 			if (RequiresPower)
 			{
@@ -341,13 +356,13 @@ public class BuildingCellVisualizer : KMonoBehaviour
 				}
 				if ((secondary_ports & Ports.GasIn) != 0)
 				{
-					CellOffset secondaryConduitOffset = building.GetComponent<ISecondaryInput>().GetSecondaryConduitOffset();
+					CellOffset secondaryConduitOffset = building.GetComponent<ISecondaryInput>().GetSecondaryConduitOffset(ConduitType.Gas);
 					int visualizerCell = GetVisualizerCell(building, secondaryConduitOffset);
 					DrawUtilityIcon(visualizerCell, resources.gasInputIcon, ref secondaryInputVisualizer, secondInputColour, Color.white);
 				}
 				if ((secondary_ports & Ports.GasOut) != 0)
 				{
-					CellOffset secondaryConduitOffset2 = building.GetComponent<ISecondaryOutput>().GetSecondaryConduitOffset();
+					CellOffset secondaryConduitOffset2 = building.GetComponent<ISecondaryOutput>().GetSecondaryConduitOffset(ConduitType.Gas);
 					int visualizerCell2 = GetVisualizerCell(building, secondaryConduitOffset2);
 					DrawUtilityIcon(visualizerCell2, resources.gasOutputIcon, ref secondaryOutputVisualizer, secondOutputColour, Color.white);
 				}
@@ -377,13 +392,13 @@ public class BuildingCellVisualizer : KMonoBehaviour
 				}
 				if ((secondary_ports & Ports.LiquidIn) != 0)
 				{
-					CellOffset secondaryConduitOffset3 = building.GetComponent<ISecondaryInput>().GetSecondaryConduitOffset();
+					CellOffset secondaryConduitOffset3 = building.GetComponent<ISecondaryInput>().GetSecondaryConduitOffset(ConduitType.Liquid);
 					int visualizerCell3 = GetVisualizerCell(building, secondaryConduitOffset3);
 					DrawUtilityIcon(visualizerCell3, resources.liquidInputIcon, ref secondaryInputVisualizer, secondInputColour, Color.white);
 				}
 				if ((secondary_ports & Ports.LiquidOut) != 0)
 				{
-					CellOffset secondaryConduitOffset4 = building.GetComponent<ISecondaryOutput>().GetSecondaryConduitOffset();
+					CellOffset secondaryConduitOffset4 = building.GetComponent<ISecondaryOutput>().GetSecondaryConduitOffset(ConduitType.Liquid);
 					int visualizerCell4 = GetVisualizerCell(building, secondaryConduitOffset4);
 					DrawUtilityIcon(visualizerCell4, resources.liquidOutputIcon, ref secondaryOutputVisualizer, secondOutputColour, Color.white);
 				}
@@ -395,7 +410,7 @@ public class BuildingCellVisualizer : KMonoBehaviour
 		}
 		else if (mode == OverlayModes.SolidConveyor.ID)
 		{
-			if (RequiresSolid)
+			if (RequiresSolid || (secondary_ports & (Ports.SolidIn | Ports.SolidOut)) != 0)
 			{
 				if ((ports & Ports.SolidIn) != 0)
 				{
@@ -413,13 +428,13 @@ public class BuildingCellVisualizer : KMonoBehaviour
 				}
 				if ((secondary_ports & Ports.SolidIn) != 0)
 				{
-					CellOffset secondaryConduitOffset5 = building.GetComponent<ISecondaryInput>().GetSecondaryConduitOffset();
+					CellOffset secondaryConduitOffset5 = building.GetComponent<ISecondaryInput>().GetSecondaryConduitOffset(ConduitType.Solid);
 					int visualizerCell5 = GetVisualizerCell(building, secondaryConduitOffset5);
 					DrawUtilityIcon(visualizerCell5, resources.liquidInputIcon, ref secondaryInputVisualizer, secondInputColour, Color.white);
 				}
 				if ((secondary_ports & Ports.SolidOut) != 0)
 				{
-					CellOffset secondaryConduitOffset6 = building.GetComponent<ISecondaryOutput>().GetSecondaryConduitOffset();
+					CellOffset secondaryConduitOffset6 = building.GetComponent<ISecondaryOutput>().GetSecondaryConduitOffset(ConduitType.Solid);
 					int visualizerCell6 = GetVisualizerCell(building, secondaryConduitOffset6);
 					DrawUtilityIcon(visualizerCell6, resources.liquidOutputIcon, ref secondaryOutputVisualizer, secondOutputColour, Color.white);
 				}
@@ -429,10 +444,38 @@ public class BuildingCellVisualizer : KMonoBehaviour
 				DisableIcons();
 			}
 		}
-		else if (mode == OverlayModes.Disease.ID && diseaseSourceSprite != null)
+		else if (mode == OverlayModes.Disease.ID)
 		{
-			int utilityOutputCell = building.GetUtilityOutputCell();
-			DrawUtilityIcon(utilityOutputCell, diseaseSourceSprite, ref inputVisualizer, diseaseSourceColour);
+			if (diseaseSourceSprite != null)
+			{
+				int utilityOutputCell = building.GetUtilityOutputCell();
+				DrawUtilityIcon(utilityOutputCell, diseaseSourceSprite, ref inputVisualizer, diseaseSourceColour);
+			}
+		}
+		else
+		{
+			if (!(mode == OverlayModes.Radiation.ID) || !RequiresHighEnergyParticles)
+			{
+				return;
+			}
+			int num7 = 3;
+			if (building.Def.UseHighEnergyParticleInputPort)
+			{
+				int highEnergyParticleInputCell = building.GetHighEnergyParticleInputCell();
+				DrawUtilityIcon(highEnergyParticleInputCell, resources.highEnergyParticleInputIcon, ref inputVisualizer, resources.highEnergyParticleInputColour, Color.white, num7, hideBG: true);
+			}
+			if (building.Def.UseHighEnergyParticleOutputPort)
+			{
+				int highEnergyParticleOutputCell = building.GetHighEnergyParticleOutputCell();
+				IHighEnergyParticleDirection component4 = building.GetComponent<IHighEnergyParticleDirection>();
+				Sprite icon_img3 = resources.highEnergyParticleOutputIcons[0];
+				if (component4 != null)
+				{
+					int directionIndex = EightDirectionUtil.GetDirectionIndex(component4.Direction);
+					icon_img3 = resources.highEnergyParticleOutputIcons[directionIndex];
+				}
+				DrawUtilityIcon(highEnergyParticleOutputCell, icon_img3, ref outputVisualizer, resources.highEnergyParticleOutputColour, Color.white, num7, hideBG: true);
+			}
 		}
 	}
 

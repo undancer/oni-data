@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using KSerialization;
 using ProcGen;
+using ProcGenGame;
 using TemplateClasses;
 using UnityEngine;
 
@@ -97,31 +98,37 @@ public class WorldGenSpawner : KMonoBehaviour
 			{
 				return;
 			}
-			GameScenePartitioner.Instance.Free(ref fogOfWarPartitionerEntry);
+			WorldContainer world = ClusterManager.Instance.GetWorld(Grid.WorldIdx[cell]);
+			bool flag = world != null && world.IsDiscovered;
 			GameObject prefab = Assets.GetPrefab(GetPrefabTag());
 			if (prefab != null)
 			{
-				bool flag = false;
-				if (prefab.GetComponent<Pickupable>() != null && !prefab.HasTag(GameTags.Creatures.Digger))
+				if (flag | prefab.HasTag(GameTags.WarpTech))
 				{
-					flag = true;
-				}
-				else if (prefab.GetDef<BurrowMonitor.Def>() != null)
-				{
-					flag = true;
-				}
-				if (flag && Grid.Solid[cell])
-				{
-					solidChangedPartitionerEntry = GameScenePartitioner.Instance.Add("WorldGenSpawner.OnSolidChanged", this, cell, GameScenePartitioner.Instance.solidChangedLayer, OnSolidChanged);
-					Game.Instance.GetComponent<EntombedItemVisualizer>().AddItem(cell);
-				}
-				else
-				{
-					Spawn();
+					GameScenePartitioner.Instance.Free(ref fogOfWarPartitionerEntry);
+					bool flag2 = false;
+					if (prefab.GetComponent<Pickupable>() != null && !prefab.HasTag(GameTags.Creatures.Digger))
+					{
+						flag2 = true;
+					}
+					else if (prefab.GetDef<BurrowMonitor.Def>() != null)
+					{
+						flag2 = true;
+					}
+					if (flag2 && Grid.Solid[cell])
+					{
+						solidChangedPartitionerEntry = GameScenePartitioner.Instance.Add("WorldGenSpawner.OnSolidChanged", this, cell, GameScenePartitioner.Instance.solidChangedLayer, OnSolidChanged);
+						Game.Instance.GetComponent<EntombedItemVisualizer>().AddItem(cell);
+					}
+					else
+					{
+						Spawn();
+					}
 				}
 			}
-			else
+			else if (flag)
 			{
+				GameScenePartitioner.Instance.Free(ref fogOfWarPartitionerEntry);
 				Spawn();
 			}
 		}
@@ -182,6 +189,17 @@ public class WorldGenSpawner : KMonoBehaviour
 		}
 	}
 
+	public void SpawnTag(string id)
+	{
+		for (int i = 0; i < spawnables.Count; i++)
+		{
+			if (spawnables[i].spawnInfo.id == id)
+			{
+				spawnables[i].TrySpawn();
+			}
+		}
+	}
+
 	public void ClearSpawnersInArea(Vector2 root_position, CellOffset[] area)
 	{
 		for (int i = 0; i < spawnables.Count; i++)
@@ -193,20 +211,13 @@ public class WorldGenSpawner : KMonoBehaviour
 		}
 	}
 
-	protected override void OnPrefabInit()
-	{
-		base.OnPrefabInit();
-		if (!hasPlacedTemplates)
-		{
-			DoReveal();
-		}
-	}
-
 	protected override void OnSpawn()
 	{
 		if (!hasPlacedTemplates)
 		{
-			PlaceTemplates();
+			Debug.Assert(SaveLoader.Instance.ClusterLayout != null, "Trying to place templates for an already-loaded save, no worldgen data available");
+			DoReveal(SaveLoader.Instance.ClusterLayout);
+			PlaceTemplates(SaveLoader.Instance.ClusterLayout);
 			hasPlacedTemplates = true;
 		}
 		if (spawnInfos != null)
@@ -244,38 +255,72 @@ public class WorldGenSpawner : KMonoBehaviour
 		AddSpawnable(new Prefab(tag.Name, Prefab.Type.Other, vector2I.x, vector2I.y, SimHashes.Carbon));
 	}
 
-	private void PlaceTemplates()
+	public List<Tag> GetUnspawnedWithType<T>(int worldID) where T : KMonoBehaviour
 	{
-		spawnables = new List<Spawnable>();
-		foreach (Prefab building in SaveGame.Instance.worldGen.SpawnData.buildings)
+		List<Tag> list = new List<Tag>();
+		foreach (Spawnable item in spawnables.FindAll((Spawnable match) => !match.isSpawned && Grid.WorldIdx[match.cell] == worldID && Assets.GetPrefab(match.spawnInfo.id) != null && (Object)Assets.GetPrefab(match.spawnInfo.id).GetComponent<T>() != (Object)null))
 		{
-			building.type = Prefab.Type.Building;
-			AddSpawnable(building);
+			list.Add(item.spawnInfo.id);
 		}
-		foreach (Prefab elementalOre in SaveGame.Instance.worldGen.SpawnData.elementalOres)
-		{
-			elementalOre.type = Prefab.Type.Ore;
-			AddSpawnable(elementalOre);
-		}
-		foreach (Prefab otherEntity in SaveGame.Instance.worldGen.SpawnData.otherEntities)
-		{
-			otherEntity.type = Prefab.Type.Other;
-			AddSpawnable(otherEntity);
-		}
-		foreach (Prefab pickupable in SaveGame.Instance.worldGen.SpawnData.pickupables)
-		{
-			pickupable.type = Prefab.Type.Pickupable;
-			AddSpawnable(pickupable);
-		}
-		SaveGame.Instance.worldGen.SpawnData.buildings.Clear();
-		SaveGame.Instance.worldGen.SpawnData.elementalOres.Clear();
-		SaveGame.Instance.worldGen.SpawnData.otherEntities.Clear();
-		SaveGame.Instance.worldGen.SpawnData.pickupables.Clear();
+		return list;
 	}
 
-	private void DoReveal()
+	public List<Tag> GetSpawnersWithTag(Tag tag, int worldID, bool includeSpawned = false)
 	{
-		Game.Instance.Reset(SaveGame.Instance.worldGen.SpawnData);
+		List<Tag> list = new List<Tag>();
+		foreach (Spawnable item in spawnables.FindAll((Spawnable match) => (includeSpawned || !match.isSpawned) && Grid.WorldIdx[match.cell] == worldID && match.spawnInfo.id == tag))
+		{
+			list.Add(item.spawnInfo.id);
+		}
+		return list;
+	}
+
+	private void PlaceTemplates(Cluster clusterLayout)
+	{
+		spawnables = new List<Spawnable>();
+		foreach (WorldGen world in clusterLayout.worlds)
+		{
+			foreach (Prefab building in world.SpawnData.buildings)
+			{
+				building.location_x += world.data.world.offset.x;
+				building.location_y += world.data.world.offset.y;
+				building.type = Prefab.Type.Building;
+				AddSpawnable(building);
+			}
+			foreach (Prefab elementalOre in world.SpawnData.elementalOres)
+			{
+				elementalOre.location_x += world.data.world.offset.x;
+				elementalOre.location_y += world.data.world.offset.y;
+				elementalOre.type = Prefab.Type.Ore;
+				AddSpawnable(elementalOre);
+			}
+			foreach (Prefab otherEntity in world.SpawnData.otherEntities)
+			{
+				otherEntity.location_x += world.data.world.offset.x;
+				otherEntity.location_y += world.data.world.offset.y;
+				otherEntity.type = Prefab.Type.Other;
+				AddSpawnable(otherEntity);
+			}
+			foreach (Prefab pickupable in world.SpawnData.pickupables)
+			{
+				pickupable.location_x += world.data.world.offset.x;
+				pickupable.location_y += world.data.world.offset.y;
+				pickupable.type = Prefab.Type.Pickupable;
+				AddSpawnable(pickupable);
+			}
+			world.SpawnData.buildings.Clear();
+			world.SpawnData.elementalOres.Clear();
+			world.SpawnData.otherEntities.Clear();
+			world.SpawnData.pickupables.Clear();
+		}
+	}
+
+	private void DoReveal(Cluster clusterLayout)
+	{
+		foreach (WorldGen world in clusterLayout.worlds)
+		{
+			Game.Instance.Reset(world.SpawnData, world.WorldOffset);
+		}
 		for (int i = 0; i < Grid.CellCount; i++)
 		{
 			Grid.Revealed[i] = false;
@@ -283,7 +328,8 @@ public class WorldGenSpawner : KMonoBehaviour
 		}
 		float innerRadius = 16.5f;
 		int radius = 18;
-		Vector2I baseStartPos = SaveGame.Instance.worldGen.SpawnData.baseStartPos;
+		Vector2I baseStartPos = clusterLayout.currentWorld.SpawnData.baseStartPos;
+		baseStartPos += clusterLayout.currentWorld.WorldOffset;
 		GridVisibility.Reveal(baseStartPos.x, baseStartPos.y, radius, innerRadius);
 	}
 }

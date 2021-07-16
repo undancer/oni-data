@@ -19,6 +19,11 @@ public class BalloonStandConfig : IEntityConfig
 		}
 	};
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateEntity(ID, ID, is_selectable: false);

@@ -1,6 +1,6 @@
 biomeNoise: noise/Generic
 temperatureRange: VeryCold
-minChildCount: 4
+minChildCount: 1
 density:
   min: 35
   max: 45
@@ -11,7 +11,6 @@ biomes:
     weight: 1
     #overrides:
     #  massMultiplier: 50
-pointsOfInterest:
 tags:
   - IgnoreCaveOverride
   - NoGlobalFeatureSpawning

@@ -1,0 +1,14 @@
+name: STRINGS.CLUSTER_NAMES.DEFAULT.NAME
+description: STRINGS.CLUSTER_NAMES.DEFAULT.DESCRIPTION
+coordinatePrefix: BAD-A
+forbiddenDlcId: EXPANSION1_ID
+
+difficulty: 4
+menuOrder: 7
+
+startWorldIndex: 0
+worldPlacements:
+- world: worlds/Badlands
+  allowedRings:
+    min: 0
+    max: 0

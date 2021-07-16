@@ -41,28 +41,28 @@ public class TemperatureVulnerable : StateMachineComponent<TemperatureVulnerable
 			lethalCold.Enter(delegate(StatesInstance smi)
 			{
 				smi.master.internalTemperatureState = TemperatureState.LethalCold;
-			}).TriggerOnEnter(GameHashes.TooColdFatal).ParamTransition(internalTemp, warningCold, (StatesInstance smi, float p) => p > smi.master.internalTemperatureLethal_Low)
+			}).TriggerOnEnter(GameHashes.TooColdFatal).ParamTransition(internalTemp, warningCold, (StatesInstance smi, float p) => p > smi.master.TemperatureLethalLow)
 				.Enter(Kill);
 			lethalHot.Enter(delegate(StatesInstance smi)
 			{
 				smi.master.internalTemperatureState = TemperatureState.LethalHot;
-			}).TriggerOnEnter(GameHashes.TooHotFatal).ParamTransition(internalTemp, warningHot, (StatesInstance smi, float p) => p < smi.master.internalTemperatureLethal_High)
+			}).TriggerOnEnter(GameHashes.TooHotFatal).ParamTransition(internalTemp, warningHot, (StatesInstance smi, float p) => p < smi.master.TemperatureLethalHigh)
 				.Enter(Kill);
 			warningCold.Enter(delegate(StatesInstance smi)
 			{
 				smi.master.internalTemperatureState = TemperatureState.WarningCold;
-			}).TriggerOnEnter(GameHashes.TooColdWarning).ParamTransition(internalTemp, lethalCold, (StatesInstance smi, float p) => p < smi.master.internalTemperatureLethal_Low)
-				.ParamTransition(internalTemp, normal, (StatesInstance smi, float p) => p > smi.master.internalTemperatureWarning_Low);
+			}).TriggerOnEnter(GameHashes.TooColdWarning).ParamTransition(internalTemp, lethalCold, (StatesInstance smi, float p) => p < smi.master.TemperatureLethalLow)
+				.ParamTransition(internalTemp, normal, (StatesInstance smi, float p) => p > smi.master.TemperatureWarningLow);
 			warningHot.Enter(delegate(StatesInstance smi)
 			{
 				smi.master.internalTemperatureState = TemperatureState.WarningHot;
-			}).TriggerOnEnter(GameHashes.TooHotWarning).ParamTransition(internalTemp, lethalHot, (StatesInstance smi, float p) => p > smi.master.internalTemperatureLethal_High)
-				.ParamTransition(internalTemp, normal, (StatesInstance smi, float p) => p < smi.master.internalTemperatureWarning_High);
+			}).TriggerOnEnter(GameHashes.TooHotWarning).ParamTransition(internalTemp, lethalHot, (StatesInstance smi, float p) => p > smi.master.TemperatureLethalHigh)
+				.ParamTransition(internalTemp, normal, (StatesInstance smi, float p) => p < smi.master.TemperatureWarningHigh);
 			normal.Enter(delegate(StatesInstance smi)
 			{
 				smi.master.internalTemperatureState = TemperatureState.Normal;
-			}).TriggerOnEnter(GameHashes.OptimalTemperatureAchieved).ParamTransition(internalTemp, warningHot, (StatesInstance smi, float p) => p > smi.master.internalTemperatureWarning_High)
-				.ParamTransition(internalTemp, warningCold, (StatesInstance smi, float p) => p < smi.master.internalTemperatureWarning_Low);
+			}).TriggerOnEnter(GameHashes.OptimalTemperatureAchieved).ParamTransition(internalTemp, warningHot, (StatesInstance smi, float p) => p > smi.master.TemperatureWarningHigh)
+				.ParamTransition(internalTemp, warningCold, (StatesInstance smi, float p) => p < smi.master.TemperatureWarningLow);
 		}
 
 		private static void Kill(Instance smi)
@@ -82,17 +82,21 @@ public class TemperatureVulnerable : StateMachineComponent<TemperatureVulnerable
 
 	private OccupyArea _occupyArea;
 
-	public float internalTemperatureLethal_Low;
+	[SerializeField]
+	private float internalTemperatureLethal_Low;
 
-	public float internalTemperatureWarning_Low;
+	[SerializeField]
+	private float internalTemperatureWarning_Low;
 
-	public float internalTemperaturePerfect_Low;
+	[SerializeField]
+	private float internalTemperatureWarning_High;
 
-	public float internalTemperaturePerfect_High;
+	[SerializeField]
+	private float internalTemperatureLethal_High;
 
-	public float internalTemperatureWarning_High;
+	private AttributeInstance wiltTempRangeModAttribute;
 
-	public float internalTemperatureLethal_High;
+	private float temperatureRangeModScalar;
 
 	private const float minimumMassForReading = 0.1f;
 
@@ -121,6 +125,34 @@ public class TemperatureVulnerable : StateMachineComponent<TemperatureVulnerable
 				_occupyArea = GetComponent<OccupyArea>();
 			}
 			return _occupyArea;
+		}
+	}
+
+	public float TemperatureLethalLow => internalTemperatureLethal_Low;
+
+	public float TemperatureLethalHigh => internalTemperatureLethal_High;
+
+	public float TemperatureWarningLow
+	{
+		get
+		{
+			if (wiltTempRangeModAttribute != null)
+			{
+				return internalTemperatureWarning_Low + (1f - wiltTempRangeModAttribute.GetTotalValue()) * temperatureRangeModScalar;
+			}
+			return internalTemperatureWarning_Low;
+		}
+	}
+
+	public float TemperatureWarningHigh
+	{
+		get
+		{
+			if (wiltTempRangeModAttribute != null)
+			{
+				return internalTemperatureWarning_High - (1f - wiltTempRangeModAttribute.GetTotalValue()) * temperatureRangeModScalar;
+			}
+			return internalTemperatureWarning_High;
 		}
 	}
 
@@ -172,6 +204,8 @@ public class TemperatureVulnerable : StateMachineComponent<TemperatureVulnerable
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
+		wiltTempRangeModAttribute = this.GetAttributes().Get(Db.Get().PlantAttributes.WiltTempRangeMod);
+		temperatureRangeModScalar = (internalTemperatureWarning_High - internalTemperatureWarning_Low) / 2f;
 		SlicedUpdaterSim1000ms<TemperatureVulnerable>.instance.RegisterUpdate1000ms(this);
 		base.smi.sm.internalTemp.Set(primaryElement.Temperature, base.smi);
 		base.smi.StartSM();
@@ -194,7 +228,7 @@ public class TemperatureVulnerable : StateMachineComponent<TemperatureVulnerable
 	public bool IsCellSafe(int cell)
 	{
 		float averageTemperature = GetAverageTemperature(cell);
-		if (averageTemperature > -1f && averageTemperature > internalTemperatureLethal_Low)
+		if (averageTemperature > -1f && averageTemperature > TemperatureLethalLow)
 		{
 			return averageTemperature < internalTemperatureLethal_High;
 		}
@@ -239,9 +273,12 @@ public class TemperatureVulnerable : StateMachineComponent<TemperatureVulnerable
 
 	public List<Descriptor> GetDescriptors(GameObject go)
 	{
+		float num = (internalTemperatureWarning_High - internalTemperatureWarning_Low) / 2f;
+		float temp = ((wiltTempRangeModAttribute != null) ? TemperatureWarningLow : (internalTemperatureWarning_Low + (1f - GetComponent<Modifiers>().GetPreModifiedAttributeValue(Db.Get().PlantAttributes.WiltTempRangeMod)) * num));
+		float temp2 = ((wiltTempRangeModAttribute != null) ? TemperatureWarningHigh : (internalTemperatureWarning_High - (1f - GetComponent<Modifiers>().GetPreModifiedAttributeValue(Db.Get().PlantAttributes.WiltTempRangeMod)) * num));
 		return new List<Descriptor>
 		{
-			new Descriptor(string.Format(UI.GAMEOBJECTEFFECTS.REQUIRES_TEMPERATURE, GameUtil.GetFormattedTemperature(internalTemperatureWarning_Low, GameUtil.TimeSlice.None, GameUtil.TemperatureInterpretation.Absolute, displayUnits: false), GameUtil.GetFormattedTemperature(internalTemperatureWarning_High)), string.Format(UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_TEMPERATURE, GameUtil.GetFormattedTemperature(internalTemperatureWarning_Low, GameUtil.TimeSlice.None, GameUtil.TemperatureInterpretation.Absolute, displayUnits: false), GameUtil.GetFormattedTemperature(internalTemperatureWarning_High)), Descriptor.DescriptorType.Requirement)
+			new Descriptor(string.Format(UI.GAMEOBJECTEFFECTS.REQUIRES_TEMPERATURE, GameUtil.GetFormattedTemperature(temp, GameUtil.TimeSlice.None, GameUtil.TemperatureInterpretation.Absolute, displayUnits: false), GameUtil.GetFormattedTemperature(temp2)), string.Format(UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_TEMPERATURE, GameUtil.GetFormattedTemperature(temp, GameUtil.TimeSlice.None, GameUtil.TemperatureInterpretation.Absolute, displayUnits: false), GameUtil.GetFormattedTemperature(temp2)), Descriptor.DescriptorType.Requirement)
 		};
 	}
 }

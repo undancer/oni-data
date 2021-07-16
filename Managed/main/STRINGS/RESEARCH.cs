@@ -17,7 +17,7 @@ namespace STRINGS
 
 			public static LocString NO_RESEARCHER_SKILL = "No Researchers assigned";
 
-			public static LocString NO_RESEARCHER_SKILL_TOOLTIP = string.Concat("The selected research focus requires ", UI.PRE_KEYWORD, "Advanced Research", UI.PST_KEYWORD, " to complete\n\nOpen the ", UI.FormatAsManagementMenu("Skills Panel", "[L]"), " and teach a Duplicant the ", TECHS.ADVANCEDRESEARCH.NAME, " Skill to use this building");
+			public static LocString NO_RESEARCHER_SKILL_TOOLTIP = "The selected research focus requires {ResearchType} to complete\n\nOpen the " + UI.FormatAsManagementMenu("Skills Panel", "[L]") + " and teach a Duplicant the {ResearchType} Skill to use this building";
 
 			public static LocString MISSING_RESEARCH_STATION = "Missing Research Station";
 
@@ -55,12 +55,23 @@ namespace STRINGS
 
 			public class DELTA
 			{
-				public static LocString NAME = "Atomic Research";
+				public static LocString NAME = "Materials Science Research";
 
-				public static LocString DESC = string.Concat(UI.FormatAsLink("Atomic Research", "RESEARCH"), " is required to unlock atomic technologies.\nIt can be conducted at a ", BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME, ".");
+				public static LocString DESC = string.Concat(UI.FormatAsLink("Materials Science Research", "RESEARCH"), " is required to unlock materials science technologies.\nIt can be conducted at a ", BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME, ".");
 
 				public static LocString RECIPEDESC = "Unlocks next wave technologies.";
 			}
+
+			public class ORBITAL
+			{
+				public static LocString NAME = "Orbital Research";
+
+				public static LocString DESC = string.Concat(UI.FormatAsLink("Orbital Research", "RESEARCH"), " is required to unlock orbital technologies.\nIt can be conducted at a ", BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.NAME, ".");
+
+				public static LocString RECIPEDESC = "Unlocks out-of-this-world technologies.";
+			}
+
+			public static LocString MISSINGRECIPEDESC = "Missing Recipe Description";
 		}
 
 		public class OTHER_TECH_ITEMS
@@ -123,9 +134,16 @@ namespace STRINGS
 
 			public class DELTA_RESEARCH_POINT
 			{
-				public static LocString NAME = UI.PRE_KEYWORD + "Atomic  Research" + UI.PST_KEYWORD + " Capability";
+				public static LocString NAME = UI.PRE_KEYWORD + "Materials Science Research" + UI.PST_KEYWORD + " Capability";
 
-				public static LocString DESC = "Allows " + UI.PRE_KEYWORD + "Atomic Research" + UI.PST_KEYWORD + " points to be accumulated, unlocking higher technology tiers.";
+				public static LocString DESC = "Allows " + UI.PRE_KEYWORD + "Materials Science Research" + UI.PST_KEYWORD + " points to be accumulated, unlocking higher technology tiers.";
+			}
+
+			public class ORBITAL_RESEARCH_POINT
+			{
+				public static LocString NAME = UI.PRE_KEYWORD + "Orbital Research" + UI.PST_KEYWORD + " Capability";
+
+				public static LocString DESC = "Allows " + UI.PRE_KEYWORD + "Orbital Research" + UI.PST_KEYWORD + " points to be accumulated, unlocking higher technology tiers.";
 			}
 
 			public class CONVEYOR_OVERLAY
@@ -247,6 +265,13 @@ namespace STRINGS
 				public static LocString DESC = "Balance on irrigated concave platforms for a " + UI.FormatAsLink("Morale", "MORALE") + " boost.";
 			}
 
+			public class LIQUIDDISTRIBUTION
+			{
+				public static LocString NAME = UI.FormatAsLink("Liquid Distribution", "LIQUIDDISTRIBUTION");
+
+				public static LocString DESC = "Internal rocket hookups for liquid resources.";
+			}
+
 			public class TEMPERATUREMODULATION
 			{
 				public static LocString NAME = UI.FormatAsLink("Temperature Modulation", "TEMPERATUREMODULATION");
@@ -259,6 +284,13 @@ namespace STRINGS
 				public static LocString NAME = UI.FormatAsLink("HVAC", "HVAC");
 
 				public static LocString DESC = "Regulate " + UI.FormatAsLink("Temperature", "HEAT") + " in the colony for " + UI.FormatAsLink("Plant", "PLANTS") + " cultivation and Duplicant comfort.";
+			}
+
+			public class GASDISTRIBUTION
+			{
+				public static LocString NAME = UI.FormatAsLink("Gas Distribution", "GASDISTRIBUTION");
+
+				public static LocString DESC = "Internal rocket hookups for gas resources.";
 			}
 
 			public class LIQUIDTEMPERATURE
@@ -329,6 +361,13 @@ namespace STRINGS
 				public static LocString NAME = UI.FormatAsLink("Sanitation", "SANITATIONSCIENCES");
 
 				public static LocString DESC = "Make daily ablutions less of a hassle.";
+			}
+
+			public class ADVANCEDSANITATION
+			{
+				public static LocString NAME = UI.FormatAsLink("Advanced Sanitation", "ADVANCEDSANITATION");
+
+				public static LocString DESC = "Clean up dirty Duplicants.";
 			}
 
 			public class MEDICINEI
@@ -413,6 +452,13 @@ namespace STRINGS
 				public static LocString NAME = UI.FormatAsLink("Sound Amplifiers", "ACOUSTICS");
 
 				public static LocString DESC = "Precise control of the audio spectrum allows Duplicants to get funky.";
+			}
+
+			public class SPACEPOWER
+			{
+				public static LocString NAME = UI.FormatAsLink("Space Power", "SPACEPOWER");
+
+				public static LocString DESC = "It's like power... in space!";
 			}
 
 			public class AMPLIFIERS
@@ -517,21 +563,21 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Space Program", "SPACEPROGRAM");
 
-				public static LocString DESC = "Basic facilities for allowing the first Duplicant to reach space with minimal harm.";
+				public static LocString DESC = "The first steps in getting a Duplicant to space.";
 			}
 
 			public class CRASHPLAN
 			{
 				public static LocString NAME = UI.FormatAsLink("Crash Plan", "CRASHPLAN");
 
-				public static LocString DESC = "What goes up, must come down";
+				public static LocString DESC = "What goes up, must come down.";
 			}
 
 			public class DURABLELIFESUPPORT
 			{
 				public static LocString NAME = UI.FormatAsLink("Durable Life Support", "DURABLELIFESUPPORT");
 
-				public static LocString DESC = "Improved construction will allow extended missions into space.";
+				public static LocString DESC = "Improved devices for extended missions into space.";
 			}
 
 			public class ARTIFICIALFRIENDS
@@ -587,7 +633,14 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Hydrocarbon Propulsion", "HYDROCARBONPROPULSION");
 
-				public static LocString DESC = "Big rocket engines with smoke";
+				public static LocString DESC = "Mid-range rocket engines with lots of smoke.";
+			}
+
+			public class BETTERHYDROCARBONPROPULSION
+			{
+				public static LocString NAME = UI.FormatAsLink("Improved Hydrocarbon Propulsion", "BETTERHYDROCARBONPROPULSION");
+
+				public static LocString DESC = "Mid-range rocket engines with lots of smoke.";
 			}
 
 			public class PRETTYGOODCONDUCTORS
@@ -632,6 +685,13 @@ namespace STRINGS
 				public static LocString DESC = "Virtually extend the boundaries of Duplicant imagination.";
 			}
 
+			public class ADVANCEDSCANNERS
+			{
+				public static LocString NAME = UI.FormatAsLink("Sensitive Microimaging", "ADVANCEDSCANNERS");
+
+				public static LocString DESC = "Computerized systems do the looking, so Duplicants don't have to.";
+			}
+
 			public class SMELTING
 			{
 				public static LocString NAME = UI.FormatAsLink("Smelting", "SMELTING");
@@ -667,11 +727,25 @@ namespace STRINGS
 				public static LocString DESC = "Make solid decisions in " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + " sorting.";
 			}
 
+			public class SOLIDDISTRIBUTION
+			{
+				public static LocString NAME = UI.FormatAsLink("Solid Distribution", "SOLIDDISTRIBUTION");
+
+				public static LocString DESC = "Internal rocket hookups for " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + " resources.";
+			}
+
 			public class HIGHTEMPFORGING
 			{
 				public static LocString NAME = UI.FormatAsLink("Superheated Forging", "HIGHTEMPFORGING");
 
 				public static LocString DESC = "Craft entirely new materials by harnessing the most extreme temperatures.";
+			}
+
+			public class HIGHPRESSUREFORGING
+			{
+				public static LocString NAME = UI.FormatAsLink("Pressurized Forging", "HIGHPRESSUREFORGING");
+
+				public static LocString DESC = "High pressure diamond forging.";
 			}
 
 			public class RADIATIONPROTECTION
@@ -727,7 +801,21 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Cryofuel Propulsion", "CRYOFUELPROPULSION");
 
-				public static LocString DESC = "With this technology, the sky is your oyster. Go exploring!";
+				public static LocString DESC = "A semi-powerful engine to propel you further into the galaxy.";
+			}
+
+			public class NUCLEARPROPULSION
+			{
+				public static LocString NAME = UI.FormatAsLink("Radbolt Propulsion", "NUCLEARPROPULSION");
+
+				public static LocString DESC = "Radical technology to get you to the stars.";
+			}
+
+			public class ADVANCEDRESOURCEEXTRACTION
+			{
+				public static LocString NAME = UI.FormatAsLink("Advanced Resource Extraction", "ADVANCEDRESOURCEEXTRACTION");
+
+				public static LocString DESC = "Bring back souvieners from the stars.";
 			}
 
 			public class CARGOI
@@ -767,9 +855,58 @@ namespace STRINGS
 
 			public class NUCLEARRESEARCH
 			{
-				public static LocString NAME = "W.I.P. Skill";
+				public static LocString NAME = UI.FormatAsLink("Materials Science Research", "ATOMIC");
 
-				public static LocString DESC = "W.I.P. skill";
+				public static LocString DESC = "Harness sub-atomic particles to study the properties of matter.";
+			}
+
+			public class SOLIDSPACE
+			{
+				public static LocString NAME = UI.FormatAsLink("Solid Control", "SOLIDSPACE");
+
+				public static LocString DESC = "Transport and sort " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + " resources.";
+			}
+
+			public class HIGHVELOCITYTRANSPORT
+			{
+				public static LocString NAME = UI.FormatAsLink("High Velocity Transport", "HIGHVELOCITY");
+
+				public static LocString DESC = "Hurl things through space.";
+			}
+
+			public class MONUMENTS
+			{
+				public static LocString NAME = UI.FormatAsLink("Monuments", "MONUMENTS");
+
+				public static LocString DESC = "Monumental art projects.";
+			}
+
+			public class BIOENGINEERING
+			{
+				public static LocString NAME = UI.FormatAsLink("Bioengineering", "BIOENGINEERING");
+
+				public static LocString DESC = "Mutation station.";
+			}
+
+			public class SPACECOMBUSTION
+			{
+				public static LocString NAME = UI.FormatAsLink("Advanced Combustion", "SPACECOMBUSTION");
+
+				public static LocString DESC = "Sweet advancements in rocket engines.";
+			}
+
+			public class HIGHVELOCITYDESTRUCTION
+			{
+				public static LocString NAME = UI.FormatAsLink("High Velocity Destruction", "HIGHVELOCITYDESTRUCTION");
+
+				public static LocString DESC = "Mine the skies.";
+			}
+
+			public class SPACEGAS
+			{
+				public static LocString NAME = UI.FormatAsLink("Advanced Gas Flow", "SPACEGAS");
+
+				public static LocString DESC = UI.FormatAsLink("Gas", "ELEMENTS_GASSES") + " engines and transportation for rockets.";
 			}
 		}
 	}

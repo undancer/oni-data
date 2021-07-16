@@ -76,6 +76,8 @@ namespace Database
 
 		public ChoreType Relax;
 
+		public ChoreType RadiationPain;
+
 		public ChoreType StressHeal;
 
 		public ChoreType MoveToSafety;
@@ -97,6 +99,8 @@ namespace Database
 		public ChoreType Toggle;
 
 		public ChoreType Mourn;
+
+		public ChoreType Migrate;
 
 		public ChoreType Fetch;
 
@@ -130,6 +134,8 @@ namespace Database
 
 		public ChoreType DoctorFetch;
 
+		public ChoreType EquipmentFetch;
+
 		public ChoreType Disinfect;
 
 		public ChoreType Repair;
@@ -137,6 +143,8 @@ namespace Database
 		public ChoreType EmptyStorage;
 
 		public ChoreType Deconstruct;
+
+		public ChoreType Demolish;
 
 		public ChoreType Art;
 
@@ -194,6 +202,8 @@ namespace Database
 
 		public ChoreType MoveTo;
 
+		public ChoreType RocketEnterExit;
+
 		public ChoreType UglyCry;
 
 		public ChoreType BingeEat;
@@ -226,6 +236,10 @@ namespace Database
 
 		public ChoreType JoyReaction;
 
+		public ChoreType RocketControl;
+
+		public ChoreType Party;
+
 		private int nextImplicitPriority = 10000;
 
 		private const int INVALID_PRIORITY = -1;
@@ -255,7 +269,7 @@ namespace Database
 			pooledList.Recycle();
 			if (!skip_implicit_priority_change)
 			{
-				nextImplicitPriority -= 100;
+				nextImplicitPriority -= 50;
 			}
 			if (report_name != null)
 			{
@@ -281,8 +295,10 @@ namespace Database
 			}, DUPLICANTS.CHORES.HEAL.NAME, DUPLICANTS.CHORES.HEAL.STATUS, DUPLICANTS.CHORES.HEAL.TOOLTIP, skip_implicit_priority_change: false);
 			BeIncapacitated = Add("BeIncapacitated", new string[0], "BeIncapacitated", new string[0], DUPLICANTS.CHORES.BEINCAPACITATED.NAME, DUPLICANTS.CHORES.BEINCAPACITATED.STATUS, DUPLICANTS.CHORES.BEINCAPACITATED.TOOLTIP, skip_implicit_priority_change: false);
 			GeneShuffle = Add("GeneShuffle", new string[0], "", new string[0], DUPLICANTS.CHORES.GENESHUFFLE.NAME, DUPLICANTS.CHORES.GENESHUFFLE.STATUS, DUPLICANTS.CHORES.GENESHUFFLE.TOOLTIP, skip_implicit_priority_change: false);
+			Migrate = Add("Migrate", new string[0], "", new string[0], DUPLICANTS.CHORES.MIGRATE.NAME, DUPLICANTS.CHORES.MIGRATE.STATUS, DUPLICANTS.CHORES.MIGRATE.TOOLTIP, skip_implicit_priority_change: false);
 			DebugGoTo = Add("DebugGoTo", new string[0], "", new string[0], DUPLICANTS.CHORES.DEBUGGOTO.NAME, DUPLICANTS.CHORES.DEBUGGOTO.STATUS, DUPLICANTS.CHORES.MOVETO.TOOLTIP, skip_implicit_priority_change: false);
 			MoveTo = Add("MoveTo", new string[0], "", new string[0], DUPLICANTS.CHORES.MOVETO.NAME, DUPLICANTS.CHORES.MOVETO.STATUS, DUPLICANTS.CHORES.MOVETO.TOOLTIP, skip_implicit_priority_change: false);
+			RocketEnterExit = Add("RocketEnterExit", new string[0], "", new string[0], DUPLICANTS.CHORES.ROCKETENTEREXIT.NAME, DUPLICANTS.CHORES.ROCKETENTEREXIT.STATUS, DUPLICANTS.CHORES.ROCKETENTEREXIT.TOOLTIP, skip_implicit_priority_change: false);
 			DropUnusedInventory = Add("DropUnusedInventory", new string[0], "", new string[0], DUPLICANTS.CHORES.DROPUNUSEDINVENTORY.NAME, DUPLICANTS.CHORES.DROPUNUSEDINVENTORY.STATUS, DUPLICANTS.CHORES.DROPUNUSEDINVENTORY.TOOLTIP, skip_implicit_priority_change: false);
 			Pee = Add("Pee", new string[0], "Pee", new string[0], DUPLICANTS.CHORES.PEE.NAME, DUPLICANTS.CHORES.PEE.STATUS, DUPLICANTS.CHORES.PEE.TOOLTIP, skip_implicit_priority_change: false);
 			RecoverBreath = Add("RecoverBreath", new string[0], "RecoverBreath", new string[0], DUPLICANTS.CHORES.RECOVERBREATH.NAME, DUPLICANTS.CHORES.RECOVERBREATH.STATUS, DUPLICANTS.CHORES.RECOVERBREATH.TOOLTIP, skip_implicit_priority_change: false);
@@ -307,6 +323,7 @@ namespace Database
 			}, DUPLICANTS.CHORES.STRESSACTINGOUT.NAME, DUPLICANTS.CHORES.STRESSACTINGOUT.STATUS, DUPLICANTS.CHORES.STRESSACTINGOUT.TOOLTIP, skip_implicit_priority_change: false);
 			Vomit = Add("Vomit", new string[0], "EmoteHighPriority", new string[0], DUPLICANTS.CHORES.VOMIT.NAME, DUPLICANTS.CHORES.VOMIT.STATUS, DUPLICANTS.CHORES.VOMIT.TOOLTIP, skip_implicit_priority_change: false);
 			Cough = Add("Cough", new string[0], "EmoteHighPriority", new string[0], DUPLICANTS.CHORES.COUGH.NAME, DUPLICANTS.CHORES.COUGH.STATUS, DUPLICANTS.CHORES.COUGH.TOOLTIP, skip_implicit_priority_change: false);
+			RadiationPain = Add("RadiationPain", new string[0], "EmoteHighPriority", new string[0], DUPLICANTS.CHORES.RADIATIONPAIN.NAME, DUPLICANTS.CHORES.RADIATIONPAIN.STATUS, DUPLICANTS.CHORES.RADIATIONPAIN.TOOLTIP, skip_implicit_priority_change: false);
 			SwitchHat = Add("SwitchHat", new string[0], "", new string[0], DUPLICANTS.CHORES.LEARNSKILL.NAME, DUPLICANTS.CHORES.LEARNSKILL.STATUS, DUPLICANTS.CHORES.LEARNSKILL.TOOLTIP, skip_implicit_priority_change: false);
 			StressIdle = Add("StressIdle", new string[0], "", new string[0], DUPLICANTS.CHORES.STRESSIDLE.NAME, DUPLICANTS.CHORES.STRESSIDLE.STATUS, DUPLICANTS.CHORES.STRESSIDLE.TOOLTIP, skip_implicit_priority_change: false);
 			RescueIncapacitated = Add("RescueIncapacitated", new string[0], "", new string[0], DUPLICANTS.CHORES.RESCUEINCAPACITATED.NAME, DUPLICANTS.CHORES.RESCUEINCAPACITATED.STATUS, DUPLICANTS.CHORES.RESCUEINCAPACITATED.TOOLTIP, skip_implicit_priority_change: false);
@@ -343,11 +360,16 @@ namespace Database
 			UnlearnSkill = Add("UnlearnSkill", new string[0], "", new string[0], DUPLICANTS.CHORES.UNLEARNSKILL.NAME, DUPLICANTS.CHORES.UNLEARNSKILL.STATUS, DUPLICANTS.CHORES.UNLEARNSKILL.TOOLTIP, skip_implicit_priority_change: false);
 			Equip = Add("Equip", new string[0], "", new string[0], DUPLICANTS.CHORES.EQUIP.NAME, DUPLICANTS.CHORES.EQUIP.STATUS, DUPLICANTS.CHORES.EQUIP.TOOLTIP, skip_implicit_priority_change: false);
 			JoyReaction = Add("JoyReaction", new string[0], "", new string[0], DUPLICANTS.CHORES.JOYREACTION.NAME, DUPLICANTS.CHORES.JOYREACTION.STATUS, DUPLICANTS.CHORES.JOYREACTION.TOOLTIP, skip_implicit_priority_change: false, 5000);
+			RocketControl = Add("RocketControl", new string[0], "", new string[0], DUPLICANTS.CHORES.ROCKETCONTROL.NAME, DUPLICANTS.CHORES.ROCKETCONTROL.STATUS, DUPLICANTS.CHORES.ROCKETCONTROL.TOOLTIP, skip_implicit_priority_change: false);
 			StressHeal = Add("StressHeal", new string[0], "", new string[1]
 			{
 				""
 			}, DUPLICANTS.CHORES.STRESSHEAL.NAME, DUPLICANTS.CHORES.STRESSHEAL.STATUS, DUPLICANTS.CHORES.STRESSHEAL.TOOLTIP, skip_implicit_priority_change: false);
-			Relax = Add("Relax", new string[0], "", new string[1]
+			Party = Add("Party", new string[0], "", new string[0], DUPLICANTS.CHORES.PARTY.NAME, DUPLICANTS.CHORES.PARTY.STATUS, DUPLICANTS.CHORES.PARTY.TOOLTIP, skip_implicit_priority_change: false);
+			Relax = Add("Relax", new string[1]
+			{
+				"Recreation"
+			}, "", new string[1]
 			{
 				"Sleep"
 			}, DUPLICANTS.CHORES.RELAX.NAME, DUPLICANTS.CHORES.RELAX.STATUS, DUPLICANTS.CHORES.RELAX.TOOLTIP, skip_implicit_priority_change: false);
@@ -423,6 +445,10 @@ namespace Database
 			{
 				"Build"
 			}, "", new string[0], DUPLICANTS.CHORES.DECONSTRUCT.NAME, DUPLICANTS.CHORES.DECONSTRUCT.STATUS, DUPLICANTS.CHORES.DECONSTRUCT.TOOLTIP, skip_implicit_priority_change: false, 5000);
+			Demolish = Add("Demolish", new string[1]
+			{
+				"Build"
+			}, "", new string[0], DUPLICANTS.CHORES.DEMOLISH.NAME, DUPLICANTS.CHORES.DEMOLISH.STATUS, DUPLICANTS.CHORES.DEMOLISH.TOOLTIP, skip_implicit_priority_change: false, 5000);
 			Research = Add("Research", new string[1]
 			{
 				"Research"
@@ -576,10 +602,14 @@ namespace Database
 			{
 				"Storage"
 			}, "", new string[0], DUPLICANTS.CHORES.STORAGEFETCH.NAME, DUPLICANTS.CHORES.STORAGEFETCH.STATUS, DUPLICANTS.CHORES.STORAGEFETCH.TOOLTIP, skip_implicit_priority_change: true, 5000, DUPLICANTS.CHORES.STORAGEFETCH.REPORT_NAME);
+			EquipmentFetch = Add("EquipmentFetch", new string[1]
+			{
+				"Hauling"
+			}, "", new string[0], DUPLICANTS.CHORES.EQUIPMENTFETCH.NAME, DUPLICANTS.CHORES.EQUIPMENTFETCH.STATUS, DUPLICANTS.CHORES.EQUIPMENTFETCH.TOOLTIP, skip_implicit_priority_change: false, 5000, DUPLICANTS.CHORES.EQUIPMENTFETCH.REPORT_NAME);
 			MoveToSafety = Add("MoveToSafety", new string[0], "MoveToSafety", new string[0], DUPLICANTS.CHORES.MOVETOSAFETY.NAME, DUPLICANTS.CHORES.MOVETOSAFETY.STATUS, DUPLICANTS.CHORES.MOVETOSAFETY.TOOLTIP, skip_implicit_priority_change: false);
 			ReturnSuitIdle = Add("ReturnSuitIdle", new string[0], "", new string[0], DUPLICANTS.CHORES.RETURNSUIT.NAME, DUPLICANTS.CHORES.RETURNSUIT.STATUS, DUPLICANTS.CHORES.RETURNSUIT.TOOLTIP, skip_implicit_priority_change: false);
 			Idle = Add("IdleChore", new string[0], "", new string[0], DUPLICANTS.CHORES.IDLE.NAME, DUPLICANTS.CHORES.IDLE.STATUS, DUPLICANTS.CHORES.IDLE.TOOLTIP, skip_implicit_priority_change: false);
-			ChoreType[][] obj = new ChoreType[30][]
+			ChoreType[][] obj = new ChoreType[32][]
 			{
 				new ChoreType[1]
 				{
@@ -593,10 +623,11 @@ namespace Database
 				{
 					HealCritical
 				},
-				new ChoreType[2]
+				new ChoreType[3]
 				{
 					BeIncapacitated,
-					GeneShuffle
+					GeneShuffle,
+					Migrate
 				},
 				new ChoreType[1]
 				{
@@ -606,9 +637,10 @@ namespace Database
 				{
 					StressVomit
 				},
-				new ChoreType[1]
+				new ChoreType[2]
 				{
-					MoveTo
+					MoveTo,
+					RocketEnterExit
 				},
 				new ChoreType[1]
 				{
@@ -626,7 +658,7 @@ namespace Database
 				{
 					BingeEat
 				},
-				new ChoreType[8]
+				new ChoreType[9]
 				{
 					EmoteHighPriority,
 					StressActingOut,
@@ -635,7 +667,8 @@ namespace Database
 					Pee,
 					StressIdle,
 					RescueIncapacitated,
-					SwitchHat
+					SwitchHat,
+					RadiationPain
 				},
 				new ChoreType[1]
 				{
@@ -644,6 +677,10 @@ namespace Database
 				new ChoreType[1]
 				{
 					TopPriority
+				},
+				new ChoreType[1]
+				{
+					RocketControl
 				},
 				new ChoreType[1]
 				{
@@ -698,6 +735,10 @@ namespace Database
 				},
 				new ChoreType[1]
 				{
+					Party
+				},
+				new ChoreType[1]
+				{
 					Relax
 				},
 				new ChoreType[2]
@@ -705,7 +746,7 @@ namespace Database
 					Equip,
 					Unequip
 				},
-				new ChoreType[62]
+				new ChoreType[64]
 				{
 					DeliverFood,
 					Sigh,
@@ -729,6 +770,7 @@ namespace Database
 					Mop,
 					Toggle,
 					Deconstruct,
+					Demolish,
 					Capture,
 					EggSing,
 					Art,
@@ -768,7 +810,8 @@ namespace Database
 					FabricateFetch,
 					FoodFetch,
 					StorageFetch,
-					RepairFetch
+					RepairFetch,
+					EquipmentFetch
 				},
 				new ChoreType[2]
 				{

@@ -78,5 +78,33 @@ namespace ProcGen
 			Debug.LogError("Couldnt get SimHash [" + item + "]");
 			return null;
 		}
+
+		public WeightedSimHash GetWeightedSimHashAtChoice(string item, float percentage)
+		{
+			if (ElementChoiceGroups.ContainsKey(item))
+			{
+				List<WeightedSimHash> choices = ElementChoiceGroups[item].choices;
+				if (choices.Count > 0)
+				{
+					float num = 0f;
+					for (int i = 0; i < choices.Count; i++)
+					{
+						num += choices[i].weight;
+					}
+					float num2 = 0f;
+					for (int j = 0; j < choices.Count; j++)
+					{
+						num2 += choices[j].weight;
+						if (num2 > percentage)
+						{
+							return choices[j];
+						}
+					}
+					return choices[choices.Count - 1];
+				}
+			}
+			Debug.LogError("Couldnt get SimHash [" + item + "]");
+			return null;
+		}
 	}
 }

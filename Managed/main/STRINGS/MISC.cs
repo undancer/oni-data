@@ -184,7 +184,9 @@ namespace STRINGS
 
 			public static LocString COMBUSTIBLESOLID = "Combustible Solid";
 
-			public static LocString UNIDENTIFIEDSEED = "Strange Seed";
+			public static LocString UNIDENTIFIEDSEED = "Seed (Unidentified Mutation)";
+
+			public static LocString CHARMEDARTIFACT = "Artifact of Interest";
 
 			public static LocString GENE_SHUFFLER = "Neural Vacillator";
 
@@ -575,14 +577,35 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Durability: {durability}";
 
-				public static LocString TOOLTIP = "This item will stop functioning when it reaches 0% durability.";
+				public static LocString TOOLTIP = "Items lose durability each time they are equipped, and can no longer be put on by a Duplicant once they reach 0% durability\n\nItems can be repaired using the " + UI.FormatAsLink("Crafting Station", "CRAFTINGTABLE");
 			}
 
 			public class STOREDITEMDURABILITY
 			{
-				public static LocString NAME = "Suit Durability: {durability}";
+				public static LocString NAME = "Durability: {durability}";
 
-				public static LocString TOOLTIP = "The suit will stop functioning when it reaches 0% durability.";
+				public static LocString TOOLTIP = "Items lose durability each time they are equipped, and can no longer be put on by a Duplicant once they reach 0% durability\n\nItems can be repaired using the " + UI.FormatAsLink("Crafting Station", "CRAFTINGTABLE");
+			}
+
+			public class ARTIFACTENTOMBED
+			{
+				public static LocString NAME = "Entombed Artifact";
+
+				public static LocString TOOLTIP = "This artifact is trapped in an obscuring shell limiting its decor. A skilled artist can remove it at the " + BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.NAME;
+			}
+
+			public class TEAROPEN
+			{
+				public static LocString NAME = "Temporal Tear open";
+
+				public static LocString TOOLTIP = "An open passage through spacetime";
+			}
+
+			public class TEARCLOSED
+			{
+				public static LocString NAME = "Temporal Tear closed";
+
+				public static LocString TOOLTIP = "Perhaps some technology could open the passage";
 			}
 		}
 
@@ -743,7 +766,16 @@ namespace STRINGS
 
 				public static LocString TOOLTIP = "Notes on managing radiation";
 
-				public static LocString MESSAGEBODY = "Objects such as " + UI.FormatAsLink("Uranium Ore", "URANIUMORE") + " and " + UI.FormatAsLink("Beetafineries", "BEE") + " emit a " + UI.FormatAsLink("Radioactive", "RADIOACTIVE") + " energy that can be toxic to my Duplicants.\n\nI can use the Radiation Overlay " + UI.FormatAsHotkey("[L-SHIFT + F4]") + " to check the scope of the Radiation field. Building thick walls around radiation emitters will dampen the field and protect my Duplicants from getting " + UI.FormatAsLink("Radiation Sickness", "RADIATIONSICKNESS") + " .";
+				public static LocString MESSAGEBODY = "Objects such as " + UI.FormatAsLink("Uranium Ore", "URANIUMORE") + " and " + UI.FormatAsLink("Beeta Hives", "BEE") + " emit a " + UI.FormatAsLink("Radioactive", "RADIOACTIVE") + " energy that can be toxic to my Duplicants.\n\nI can use the " + UI.FormatAsOverlay("Radiation Overlay") + " " + UI.FormatAsHotkey("[L-SHIFT + F4]") + " to check the scope of the Radiation field. Building thick walls around radiation emitters will dampen the field and protect my Duplicants from getting " + UI.FormatAsLink("Radiation Sickness", "RADIATIONSICKNESS") + " .";
+			}
+
+			public class SPACETRAVEL
+			{
+				public static LocString NAME = "Tutorial: Space Travel";
+
+				public static LocString TOOLTIP = "Notes on traveling in space";
+
+				public static LocString MESSAGEBODY = "Building a rocket first requires constructing a " + UI.FormatAsLink("Rocket Platform", "LAUNCHPLATFORM") + " and adding modules from the menu. All components of the Rocket Checklist will need to be complete before being capable of launching.\n\nA " + UI.FormatAsLink("Telescope", "TELESCOPE") + " needs to built on the surface of a Planetoid in order to use the " + UI.PRE_KEYWORD + "Starmap Screen" + UI.PST_KEYWORD + " " + UI.FormatAsHotkey("[Z]") + " to see and set course for new destinations.";
 			}
 
 			public class MORALE
@@ -788,7 +820,7 @@ namespace STRINGS
 
 				public static LocString TOOLTIP = "Notes on connecting buildings with pipes";
 
-				public static LocString MESSAGEBODY = "When connecting pipes it is useful to have the Plumbing Overlay " + UI.FormatAsHotkey("[F6]") + " selected. Each building which requires plumbing must have their Building Intake connected to the Output Pipe from a source such as a Liquid Pump. Liquid Pumps must be submerged in water and attached to a power source to function.\n\nBuildings often output contaminated water which must flow out of the building through piping from the Output Pipe. The water can then be expelled through Liquid Vent or filtered through a Liquid Filter and reused.";
+				public static LocString MESSAGEBODY = "When connecting pipes it is useful to have the Plumbing Overlay " + UI.FormatAsHotkey("[F6]") + " selected. Each building which requires plumbing must have their Building Intake connected to the Output Pipe from a source such as a Liquid Pump. Liquid Pumps must be submerged in liquid and attached to a power source to function.\n\nBuildings often output contaminated water which must flow out of the building through piping from the Output Pipe. The water can then be expelled through a Liquid Vent, or filtered through a Liquid Filter for reuse.";
 			}
 
 			public class NEW_AUTOMATION_WARNING
@@ -841,7 +873,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = string.Concat("New ", UI.CLUSTERMAP.PLANETOID, " detected");
 
-				public static LocString MESSAGEBODY = string.Concat("The Duplicants' astrological efforts have uncovered new ", UI.CLUSTERMAP.PLANETOID, "s:\n{0}");
+				public static LocString MESSAGEBODY = string.Concat("My Duplicants' astronomical efforts have uncovered a new ", UI.CLUSTERMAP.PLANETOID, ":\n{0}");
 
 				public static LocString TOOLTIP = "{0} discovered";
 			}
@@ -899,6 +931,13 @@ namespace STRINGS
 				public static LocString NAME = "Red Alert";
 
 				public static LocString TOOLTIP = "The colony is prioritizing work over their individual well-being";
+			}
+
+			public class REACTORMELTDOWN
+			{
+				public static LocString NAME = "Reactor Meltdown";
+
+				public static LocString TOOLTIP = "A Research Reactor has overheated and is melting down! Extreme radiation is flooding the area";
 			}
 
 			public class HEALING
@@ -1148,11 +1187,18 @@ namespace STRINGS
 				public static LocString TOOLTIP = "These Duplicants have had their " + UI.PRE_KEYWORD + "Skill Points" + UI.PST_KEYWORD + " refunded:";
 			}
 
+			public class BADROCKETPATH
+			{
+				public static LocString NAME = "Flight Path Obstructed";
+
+				public static LocString TOOLTIP = "A rocket's flight path has been interrupted by a new astronomical discovery.\nOpen the " + UI.PRE_KEYWORD + "Starmap Screen" + UI.PST_KEYWORD + " " + UI.FormatAsHotkey("[Z]") + " to reassign rocket paths";
+			}
+
 			public class SCHEDULE_CHANGED
 			{
 				public static LocString NAME = "{0}: {1}!";
 
-				public static LocString TOOLTIP = "Duplicants assigned to " + UI.PRE_KEYWORD + "{0}" + UI.PST_KEYWORD + " have started their <b>{1}</b> block.\n\n{2}\n\nOpen the " + UI.PRE_KEYWORD + "Schedule Screen" + UI.PST_KEYWORD + " " + UI.FormatAsHotkey("[PERIOD KEY]") + " to change blocks or assignments.";
+				public static LocString TOOLTIP = "Duplicants assigned to " + UI.PRE_KEYWORD + "{0}" + UI.PST_KEYWORD + " have started their <b>{1}</b> block.\n\n{2}\n\nOpen the " + UI.PRE_KEYWORD + "Schedule Screen" + UI.PST_KEYWORD + " " + UI.FormatAsHotkey("[PERIOD KEY]") + " to change blocks or assignments";
 			}
 
 			public class GENESHUFFLER
@@ -1161,16 +1207,16 @@ namespace STRINGS
 
 				public static LocString TOOLTIP = "These Duplicants had their genetic makeup modified:";
 
-				public static LocString SUFFIX = (" has developed " + UI.PRE_KEYWORD + "{0}" + UI.PST_KEYWORD) ?? "";
+				public static LocString SUFFIX = " has developed " + UI.PRE_KEYWORD + "{0}" + UI.PST_KEYWORD;
 			}
 
 			public class HEALINGTRAITGAIN
 			{
 				public static LocString NAME = "New trait";
 
-				public static LocString TOOLTIP = "These Duplicants' injuries weren't set and healed improperly. They developed " + UI.PRE_KEYWORD + "Traits" + UI.PST_KEYWORD + " as a result:";
+				public static LocString TOOLTIP = "These Duplicants' injuries weren't set and healed improperly.\nThey developed " + UI.PRE_KEYWORD + "Traits" + UI.PST_KEYWORD + " as a result:";
 
-				public static LocString SUFFIX = (" has developed " + UI.PRE_KEYWORD + "{0}" + UI.PST_KEYWORD) ?? "";
+				public static LocString SUFFIX = " has developed " + UI.PRE_KEYWORD + "{0}" + UI.PST_KEYWORD;
 			}
 
 			public class COLONYLOST
@@ -1332,6 +1378,22 @@ namespace STRINGS
 				public static LocString NAME = "Duplicant warp ready";
 
 				public static LocString TOOLTIP = "{dupe} is ready to warp from the " + BUILDINGS.PREFABS.WARPPORTAL.NAME;
+			}
+
+			public class GENETICANALYSISCOMPLETE
+			{
+				public static LocString NAME = "Seed Analysis Complete";
+
+				public static LocString MESSAGEBODY = "Deeply probing the genes of the {Plant} plant have led to the discovery of a promising new cultivatable mutation:\n\n<b>{Subspecies}</b>\n\n{Info}";
+
+				public static LocString TOOLTIP = "{Plant} Analysis complete!";
+			}
+
+			public class NEWMUTANTSEED
+			{
+				public static LocString NAME = "New Mutant Seed Discovered";
+
+				public static LocString TOOLTIP = string.Concat("A new mutant variety of the {Plant} has been found. Analyze it at the ", BUILDINGS.PREFABS.GENETICANALYSISSTATION.NAME, " to learn more!");
 			}
 		}
 

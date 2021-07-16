@@ -1,6 +1,6 @@
 using STRINGS;
 
-public class ConditionSufficientFood : RocketLaunchCondition
+public class ConditionSufficientFood : ProcessCondition
 {
 	private CommandModule module;
 
@@ -9,35 +9,35 @@ public class ConditionSufficientFood : RocketLaunchCondition
 		this.module = module;
 	}
 
-	public override RocketLaunchCondition GetParentCondition()
-	{
-		return null;
-	}
-
-	public override LaunchStatus EvaluateLaunchCondition()
+	public override Status EvaluateCondition()
 	{
 		if (!(module.storage.GetAmountAvailable(GameTags.Edible) > 1f))
 		{
-			return LaunchStatus.Failure;
+			return Status.Failure;
 		}
-		return LaunchStatus.Ready;
+		return Status.Ready;
 	}
 
-	public override string GetLaunchStatusMessage(bool ready)
+	public override string GetStatusMessage(Status status)
 	{
-		if (ready)
+		if (status == Status.Ready)
 		{
 			return UI.STARMAP.HASFOOD.NAME;
 		}
 		return UI.STARMAP.NOFOOD.NAME;
 	}
 
-	public override string GetLaunchStatusTooltip(bool ready)
+	public override string GetStatusTooltip(Status status)
 	{
-		if (ready)
+		if (status == Status.Ready)
 		{
 			return UI.STARMAP.HASFOOD.TOOLTIP;
 		}
 		return UI.STARMAP.NOFOOD.TOOLTIP;
+	}
+
+	public override bool ShowInUI()
+	{
+		return true;
 	}
 }

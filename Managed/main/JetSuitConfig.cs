@@ -8,11 +8,18 @@ public class JetSuitConfig : IEquipmentConfig
 {
 	public const string ID = "Jet_Suit";
 
+	public const string WORN_ID = "Worn_Jet_Suit";
+
 	public static ComplexRecipe recipe;
 
 	private const PathFinder.PotentialPath.Flags suit_flags = PathFinder.PotentialPath.Flags.HasJetPack;
 
 	private AttributeModifier expertAthleticsModifier;
+
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
 
 	public EquipmentDef CreateEquipmentDef()
 	{
@@ -34,10 +41,12 @@ public class JetSuitConfig : IEquipmentConfig
 		list.Add(new AttributeModifier(Db.Get().Attributes.Digging.Id, TUNING.EQUIPMENT.SUITS.ATMOSUIT_DIGGING, STRINGS.EQUIPMENT.PREFABS.ATMO_SUIT.NAME));
 		list.Add(new AttributeModifier(Db.Get().Attributes.ScaldingThreshold.Id, TUNING.EQUIPMENT.SUITS.ATMOSUIT_SCALDING, STRINGS.EQUIPMENT.PREFABS.ATMO_SUIT.NAME));
 		expertAthleticsModifier = new AttributeModifier(TUNING.EQUIPMENT.ATTRIBUTE_MOD_IDS.ATHLETICS, -TUNING.EQUIPMENT.SUITS.ATMOSUIT_ATHLETICS, Db.Get().Skills.Suits1.Name);
-		EquipmentDef equipmentDef = EquipmentTemplates.CreateEquipmentDef("Jet_Suit", TUNING.EQUIPMENT.SUITS.SLOT, SimHashes.Steel, TUNING.EQUIPMENT.SUITS.ATMOSUIT_MASS, "suit_jetpack_kanim", "", "body_jetpack_kanim", 6, list, null, IsBody: true, EntityTemplates.CollisionShape.CIRCLE, 0.325f, 0.325f, new Tag[1]
+		EquipmentDef equipmentDef = EquipmentTemplates.CreateEquipmentDef("Jet_Suit", TUNING.EQUIPMENT.SUITS.SLOT, SimHashes.Steel, TUNING.EQUIPMENT.SUITS.ATMOSUIT_MASS, "suit_jetpack_kanim", "", "body_jetpack_kanim", 6, list, null, IsBody: true, EntityTemplates.CollisionShape.CIRCLE, 0.325f, 0.325f, new Tag[2]
 		{
-			GameTags.Suit
+			GameTags.Suit,
+			GameTags.Clothes
 		}, "JetSuit");
+		equipmentDef.wornID = "Worn_Jet_Suit";
 		equipmentDef.RecipeDescription = STRINGS.EQUIPMENT.PREFABS.JET_SUIT.RECIPE_DESC;
 		equipmentDef.EffectImmunites.Add(Db.Get().effects.Get("SoakingWet"));
 		equipmentDef.EffectImmunites.Add(Db.Get().effects.Get("WetFeet"));
@@ -92,7 +101,9 @@ public class JetSuitConfig : IEquipmentConfig
 							component3.Remove("SoiledSuit");
 						}
 					}
-					eq.GetComponent<Storage>().DropAll(eq.transform.GetPosition(), vent_gas: true, dump_liquid: true, default(Vector3), do_disease_transfer: false);
+					TagBits any_tags = new TagBits(eq.GetComponent<SuitTank>().elementTag);
+					TagBits tagBits = default(TagBits);
+					eq.GetComponent<Storage>().DropUnlessHasTags(any_tags, tagBits, tagBits, do_disease_transfer: true, dumpElements: true);
 				}
 			}
 		};
@@ -106,12 +117,16 @@ public class JetSuitConfig : IEquipmentConfig
 		SuitTank suitTank = go.AddComponent<SuitTank>();
 		suitTank.element = "Oxygen";
 		suitTank.capacity = 75f;
+		suitTank.elementTag = GameTags.Breathable;
 		go.AddComponent<JetSuitTank>();
 		go.AddComponent<HelmetController>().has_jets = true;
 		KPrefabID component = go.GetComponent<KPrefabID>();
 		component.AddTag(GameTags.Clothes);
 		component.AddTag(GameTags.PedestalDisplayable);
 		component.AddTag(GameTags.AirtightSuit);
+		Durability durability = go.AddComponent<Durability>();
+		durability.wornEquipmentPrefabID = "Worn_Jet_Suit";
+		durability.durabilityLossPerCycle = TUNING.EQUIPMENT.SUITS.ATMOSUIT_DECAY;
 		Storage storage = go.AddOrGet<Storage>();
 		storage.SetDefaultStoredItemModifiers(Storage.StandardInsulatedStorage);
 		storage.showInUI = true;

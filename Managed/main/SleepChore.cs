@@ -28,6 +28,11 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 		{
 			base.sm.sleeper.Set(sleeper, base.smi);
 			base.sm.isInterruptable.Set(isInterruptable, base.smi);
+			Traits component = sleeper.GetComponent<Traits>();
+			if (component != null)
+			{
+				base.sm.needsNightLight.Set(component.HasTrait("NightLight"), base.smi);
+			}
 			if (bedIsLocator)
 			{
 				AddLocator(bed);
@@ -42,7 +47,19 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 		{
 			GameObject go = base.sm.sleeper.Get(base.smi);
 			int cell = Grid.PosToCell(go);
-			if (Grid.IsValidCell(cell) && !IsLightLevelOk(cell) && !IsLoudSleeper())
+			if (!Grid.IsValidCell(cell))
+			{
+				return;
+			}
+			bool flag = IsDarkAtCell(cell);
+			if (base.sm.needsNightLight.Get(base.smi))
+			{
+				if (flag)
+				{
+					go.Trigger(-1307593733);
+				}
+			}
+			else if (!flag && !IsLoudSleeper())
 			{
 				go.Trigger(-1063113160);
 			}
@@ -118,6 +135,10 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 			public State interrupt_light;
 
 			public State interrupt_light_transition;
+
+			public State interrupt_scared;
+
+			public State interrupt_scared_transition;
 		}
 
 		public TargetParameter sleeper;
@@ -129,6 +150,10 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 		public BoolParameter isDisturbedByNoise;
 
 		public BoolParameter isDisturbedByLight;
+
+		public BoolParameter isScaredOfDark;
+
+		public BoolParameter needsNightLight;
 
 		public ApproachSubState<IApproachable> approach;
 
@@ -158,15 +183,31 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 				.EventHandler(GameHashes.SleepDisturbedByNoise, delegate(StatesInstance smi)
 				{
 					isDisturbedByNoise.Set(value: true, smi);
+				})
+				.EventHandler(GameHashes.SleepDisturbedByFearOfDark, delegate(StatesInstance smi)
+				{
+					isScaredOfDark.Set(value: true, smi);
 				});
 			sleep.uninterruptable.DoNothing();
 			sleep.normal.ParamTransition(isInterruptable, sleep.uninterruptable, GameStateMachine<States, StatesInstance, SleepChore, object>.IsFalse).ToggleCategoryStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().DuplicantStatusItems.Sleeping).QueueAnim("working_loop", loop: true)
 				.ParamTransition(isDisturbedByNoise, sleep.interrupt_noise, GameStateMachine<States, StatesInstance, SleepChore, object>.IsTrue)
 				.ParamTransition(isDisturbedByLight, sleep.interrupt_light, GameStateMachine<States, StatesInstance, SleepChore, object>.IsTrue)
+				.ParamTransition(isScaredOfDark, sleep.interrupt_scared, GameStateMachine<States, StatesInstance, SleepChore, object>.IsTrue)
 				.Update(delegate(StatesInstance smi, float dt)
 				{
 					smi.CheckLightLevel();
 				});
+			sleep.interrupt_scared.ToggleCategoryStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().DuplicantStatusItems.SleepingInterruptedByFearOfDark).QueueAnim("interrupt_afraid").OnAnimQueueComplete(sleep.interrupt_scared_transition);
+			sleep.interrupt_scared_transition.Enter(delegate(StatesInstance smi)
+			{
+				if (!smi.master.GetComponent<Effects>().HasEffect(Db.Get().effects.Get("TerribleSleep")))
+				{
+					smi.master.GetComponent<Effects>().Add(Db.Get().effects.Get("BadSleepAfraidOfDark"), should_save: true);
+				}
+				State state3 = (smi.master.GetComponent<Schedulable>().IsAllowed(Db.Get().ScheduleBlockTypes.Sleep) ? sleep.normal : success);
+				isScaredOfDark.Set(value: false, smi);
+				smi.GoTo(state3);
+			});
 			sleep.interrupt_noise.ToggleCategoryStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().DuplicantStatusItems.SleepingInterruptedByNoise).QueueAnim("interrupt_light").OnAnimQueueComplete(sleep.interrupt_noise_transition);
 			sleep.interrupt_noise_transition.Enter(delegate(StatesInstance smi)
 			{
@@ -238,7 +279,7 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 		return ChoreHelpers.CreateSleepLocator(Grid.CellToPosCBC(num, Grid.SceneLayer.Move)).GetComponent<Sleepable>();
 	}
 
-	public static bool IsLightLevelOk(int cell)
+	public static bool IsDarkAtCell(int cell)
 	{
 		return Grid.LightIntensity[cell] <= 0;
 	}

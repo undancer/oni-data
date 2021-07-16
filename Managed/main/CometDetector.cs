@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Klei.AI;
 using KSerialization;
 using UnityEngine;
 
@@ -51,6 +53,8 @@ public class CometDetector : GameStateMachine<CometDetector, CometDetector.Insta
 
 		private DetectorNetwork.Instance detectorNetwork;
 
+		private List<GameplayEventInstance> meteorShowers = new List<GameplayEventInstance>();
+
 		public Instance(IStateMachineTarget master, Def def)
 			: base(master, def)
 		{
@@ -85,7 +89,15 @@ public class CometDetector : GameStateMachine<CometDetector, CometDetector.Insta
 			KPrefabID component = GetComponent<KPrefabID>();
 			if (targetCraft.Get() == null)
 			{
-				if (SaveGame.Instance.GetComponent<SeasonManager>().TimeUntilNextBombardment() <= detectTime)
+				SaveGame.Instance.GetComponent<GameplayEventManager>().GetActiveEventsOfType<MeteorShowerEvent>(this.GetMyWorldId(), ref meteorShowers);
+				float num = float.MaxValue;
+				foreach (GameplayEventInstance meteorShower in meteorShowers)
+				{
+					MeteorShowerEvent.StatesInstance statesInstance = meteorShower.smi as MeteorShowerEvent.StatesInstance;
+					num = Mathf.Min(num, statesInstance.TimeUntilNextShower());
+				}
+				meteorShowers.Clear();
+				if (num < detectTime)
 				{
 					component.AddTag(GameTags.Detecting);
 				}
@@ -93,21 +105,23 @@ public class CometDetector : GameStateMachine<CometDetector, CometDetector.Insta
 				{
 					component.RemoveTag(GameTags.Detecting);
 				}
-				return;
-			}
-			Spacecraft spacecraftFromLaunchConditionManager = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(targetCraft.Get());
-			if (spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.Destroyed)
-			{
-				targetCraft.Set(null);
-				component.RemoveTag(GameTags.Detecting);
-			}
-			else if (spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.Launching || spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.WaitingToLand || spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.Landing || (spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.Underway && spacecraftFromLaunchConditionManager.GetTimeLeft() <= detectTime))
-			{
-				component.AddTag(GameTags.Detecting);
 			}
 			else
 			{
-				component.RemoveTag(GameTags.Detecting);
+				Spacecraft spacecraftFromLaunchConditionManager = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(targetCraft.Get());
+				if (spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.Destroyed)
+				{
+					targetCraft.Set(null);
+					component.RemoveTag(GameTags.Detecting);
+				}
+				else if (spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.Launching || spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.WaitingToLand || spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.Landing || (spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.Underway && spacecraftFromLaunchConditionManager.GetTimeLeft() <= detectTime))
+				{
+					component.AddTag(GameTags.Detecting);
+				}
+				else
+				{
+					component.RemoveTag(GameTags.Detecting);
+				}
 			}
 		}
 

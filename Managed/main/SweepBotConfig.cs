@@ -12,19 +12,24 @@ public class SweepBotConfig : IEntityConfig
 
 	public const float STORAGE_CAPACITY = 500f;
 
-	public const float BATTERY_DEPLETION_RATE = 40f;
+	public const float BATTERY_CAPACITY = 9000f;
 
-	public const float BATTERY_CAPACITY = 21000f;
+	public const float BATTERY_DEPLETION_RATE = 17.142857f;
 
 	public const float MAX_SWEEP_AMOUNT = 10f;
 
 	public const float MOP_SPEED = 10f;
 
-	private string name = ROBOTS.MODELS.SWEEPBOT.NAME;
+	private string name = STRINGS.ROBOTS.MODELS.SWEEPBOT.NAME;
 
-	private string desc = ROBOTS.MODELS.SWEEPBOT.DESC;
+	private string desc = STRINGS.ROBOTS.MODELS.SWEEPBOT.DESC;
 
 	public static float MASS = 25f;
+
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
 
 	public GameObject CreatePrefab()
 	{
@@ -36,22 +41,21 @@ public class SweepBotConfig : IEntityConfig
 		gameObject.AddComponent<Pickupable>();
 		gameObject.AddOrGet<Clearable>().isClearable = false;
 		Trait trait = Db.Get().CreateTrait("SweepBotBaseTrait", name, name, null, should_save: false, null, positive_trait: true, is_valid_starter_trait: true);
-		trait.Add(new AttributeModifier(Db.Get().Amounts.InternalBattery.maxAttribute.Id, 21000f, name));
-		trait.Add(new AttributeModifier(Db.Get().Amounts.InternalBattery.deltaAttribute.Id, -40f, name));
+		trait.Add(new AttributeModifier(Db.Get().Amounts.InternalBattery.maxAttribute.Id, 9000f, name));
+		trait.Add(new AttributeModifier(Db.Get().Amounts.InternalBattery.deltaAttribute.Id, -17.142857f, name));
 		Modifiers modifiers = gameObject.AddOrGet<Modifiers>();
-		modifiers.initialTraits = new string[1]
-		{
-			"SweepBotBaseTrait"
-		};
+		modifiers.initialTraits.Add("SweepBotBaseTrait");
 		modifiers.initialAmounts.Add(Db.Get().Amounts.HitPoints.Id);
 		modifiers.initialAmounts.Add(Db.Get().Amounts.InternalBattery.Id);
 		gameObject.AddOrGet<KBatchedAnimController>().SetSymbolVisiblity("snapto_pivot", is_visible: false);
 		gameObject.AddOrGet<Traits>();
-		gameObject.AddOrGet<CharacterOverlay>();
 		gameObject.AddOrGet<Effects>();
 		gameObject.AddOrGetDef<AnimInterruptMonitor.Def>();
 		gameObject.AddOrGetDef<StorageUnloadMonitor.Def>();
-		gameObject.AddOrGetDef<RobotBatteryMonitor.Def>();
+		RobotBatteryMonitor.Def def = gameObject.AddOrGetDef<RobotBatteryMonitor.Def>();
+		def.batteryAmountId = Db.Get().Amounts.InternalBattery.Id;
+		def.canCharge = true;
+		def.lowBatteryWarningPercent = 0.5f;
 		gameObject.AddOrGetDef<SweetBotReactMonitor.Def>();
 		gameObject.AddOrGetDef<CreatureFallMonitor.Def>();
 		gameObject.AddOrGetDef<SweepBotTrappedMonitor.Def>();

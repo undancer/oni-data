@@ -10,7 +10,6 @@ public class VerticalWindTunnelConfig : IBuildingConfig
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef("VerticalWindTunnel", 5, 6, "wind_tunnel_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER6, MATERIALS.PLASTICS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER1);
-		obj.DlcId = "PACK1";
 		obj.ViewMode = OverlayModes.Power.ID;
 		obj.Floodable = true;
 		obj.AudioCategory = "Metal";

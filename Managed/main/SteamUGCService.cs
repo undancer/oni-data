@@ -357,11 +357,49 @@ public class SteamUGCService : MonoBehaviour
 			break;
 		}
 		case EResult.k_EResultBusy:
-			Debug.Log(string.Concat("Steam: [OnSteamUGCQueryDetailsCompleted] - handle: ", pCallback.m_handle, " -- Result: ", pCallback.m_eResult, " Resending"));
+		{
+			string[] obj2 = new string[5]
+			{
+				"Steam: [OnSteamUGCQueryDetailsCompleted] - handle: ",
+				null,
+				null,
+				null,
+				null
+			};
+			UGCQueryHandle_t handle = pCallback.m_handle;
+			obj2[1] = handle.ToString();
+			obj2[2] = " -- Result: ";
+			obj2[3] = pCallback.m_eResult.ToString();
+			obj2[4] = " Resending";
+			Debug.Log(string.Concat(obj2));
 			break;
+		}
 		default:
 		{
-			Debug.Log(string.Concat("Steam: [OnSteamUGCQueryDetailsCompleted] - handle: ", pCallback.m_handle, " -- Result: ", pCallback.m_eResult, " -- NUm results: ", pCallback.m_unNumResultsReturned, " --Total Matching: ", pCallback.m_unTotalMatchingResults, " -- cached: ", pCallback.m_bCachedData.ToString()));
+			string[] obj = new string[10]
+			{
+				"Steam: [OnSteamUGCQueryDetailsCompleted] - handle: ",
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null
+			};
+			UGCQueryHandle_t handle = pCallback.m_handle;
+			obj[1] = handle.ToString();
+			obj[2] = " -- Result: ";
+			obj[3] = pCallback.m_eResult.ToString();
+			obj[4] = " -- NUm results: ";
+			obj[5] = pCallback.m_unNumResultsReturned.ToString();
+			obj[6] = " --Total Matching: ";
+			obj[7] = pCallback.m_unTotalMatchingResults.ToString();
+			obj[8] = " -- cached: ";
+			obj[9] = pCallback.m_bCachedData.ToString();
+			Debug.Log(string.Concat(obj));
 			HashSet<PublishedFileId_t> hashSet = proxies;
 			proxies = queries;
 			queries = hashSet;

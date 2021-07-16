@@ -97,6 +97,14 @@ namespace STRINGS
 				public static LocString NO_BUILDING = "Never built a {0}";
 
 				public static LocString MORALE = "{0} morale: {1}";
+
+				public static LocString COLLECT_ARTIFACTS = "Study Terrestrial Artifacts at the Artifact Analysis Station.\nTerrestrial Artifacts studied: {collectedCount} / {neededCount}";
+
+				public static LocString COLLECT_SPACE_ARTIFACTS = "Study Space Artifacts at the Artifact Analysis Station.\nSpace Artifacts studied: {collectedCount} / {neededCount}";
+
+				public static LocString ESTABLISH_COLONIES = "Establish colonies on {goalBaseCount} asteroids by building and activating Mini-Pods.\nColonies established: {baseCount} / {neededCount}.";
+
+				public static LocString OPEN_TEMPORAL_TEAR = "Open the Temporal Tear by finding and activating the Temporal Tear Opener";
 			}
 
 			public static LocString WINCONDITION_LEAVE = "The Great Escape";
@@ -302,6 +310,8 @@ namespace STRINGS
 				public static LocString REACHED_SPACE_DESTINATION = "Breach the {0}";
 
 				public static LocString REACHED_SPACE_DESTINATION_DESCRIPTION = "Send a Duplicant on a one-way mission to the furthest Starmap destination";
+
+				public static LocString OPEN_TEMPORAL_TEAR = "Open the Temporal Tear";
 			}
 
 			public static LocString NAME = "The Great Escape";
@@ -313,6 +323,52 @@ namespace STRINGS
 			public static LocString MESSAGE_TITLE = "A COLONY'S HOPE";
 
 			public static LocString MESSAGE_BODY = "Our homeworld in this universe is gone, replaced by the skeleton of a planet and a wound in the sky... But I hold out hope that other worlds exist out there, tucked away in other dimensions. I sent my Duplicant through the Temporal Tear carrying that hope on their shoulders... Perhaps one day they'll find a place to call home, and begin a thriving colony all their own.";
+
+			public static LocString MESSAGE_TITLE_DLC1 = "A DIMENSIONAL ADVENTURE";
+
+			public static LocString MESSAGE_BODY_DLC1 = "We have always viewed the Temporal Tear as a phenomenon to fear but, like the civilizations before us, the call to adventure asks us to confront our anxiety and leap into the unknown. As a radical action of hope, I have sent enough Duplicants through the Temporal Tear to start another colony, explore dimensions beyond ours and plant the seeds of life throughout time and space.";
+		}
+
+		public class STUDY_ARTIFACTS
+		{
+			public class VIDEO_TEXT
+			{
+				public static LocString FIRST = "Our homeworld in this universe is gone, replaced by the skeleton of a planet and a wound in the sky... But I hold out hope that other worlds exist out there, tucked away in other dimensions.";
+
+				public static LocString SECOND = "I sent my Duplicant through the Temporal Tear carrying that hope on their shoulders... Perhaps one day they'll find a place to call home, and begin a thriving colony all their own.";
+			}
+
+			public class VIDEO_TEXT_DLC1
+			{
+				public static LocString FIRST = "DLC1";
+
+				public static LocString SECOND = "DLC1";
+			}
+
+			public class REQUIREMENTS
+			{
+				public static LocString STUDY_ARTIFACTS = "Study {artifactCount} Terrestrial Artifacts";
+
+				public static LocString STUDY_ARTIFACTS_DESCRIPTION = "Study {artifactCount} Terrestrial Artifacts at the Artifact Analysis Station";
+
+				public static LocString STUDY_SPACE_ARTIFACTS = "Study {artifactCount} Space Artifacts";
+
+				public static LocString STUDY_SPACE_ARTIFACTS_DESCRIPTION = "Study {artifactCount} Space Artifacts at the Artifact Analysis Station";
+
+				public static LocString SEVERAL_COLONIES = "Establish several colonies";
+
+				public static LocString SEVERAL_COLONIES_DESCRIPTION = "Establish colonies on {count} asteroids by building and activating Mini-Pods";
+			}
+
+			public static LocString NAME = "Cosmic Archaeology";
+
+			public static LocString MYLOGNAME = "Artifacts";
+
+			public static LocString DESCRIPTION = "";
+
+			public static LocString MESSAGE_TITLE = "LINK TO OUR PAST";
+
+			public static LocString MESSAGE_BODY = "In exploring this corner of the universe we have found and assembled a collection of artifacts from another civilization. Studying these artifacts can give us a greater understanding of who we are and where we come from. Only by learning about the past can we build a brighter future, one where we learn from the mistakes of our predecessors.";
 
 			public static LocString MESSAGE_TITLE_DLC1 = "DLC1";
 

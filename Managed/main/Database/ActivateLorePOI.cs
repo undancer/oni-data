@@ -1,15 +1,10 @@
-using System.IO;
 using STRINGS;
 
 namespace Database
 {
-	public class ActivateLorePOI : ColonyAchievementRequirement
+	public class ActivateLorePOI : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
-		public override void Deserialize(IReader reader)
-		{
-		}
-
-		public override void Serialize(BinaryWriter writer)
+		public void Deserialize(IReader reader)
 		{
 		}
 

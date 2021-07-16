@@ -32,7 +32,6 @@ public class OuthouseConfig : IBuildingConfig
 		toilet.dirtUsedPerFlush = 13f;
 		toilet.solidWastePerUse = new Toilet.SpawnInfo(SimHashes.ToxicSand, 6.7f, 0f);
 		toilet.solidWasteTemperature = 310.15f;
-		toilet.gasWasteWhenFull = new Toilet.SpawnInfo(SimHashes.ContaminatedOxygen, 0.1f, 15f);
 		toilet.diseaseId = "FoodPoisoning";
 		toilet.diseasePerFlush = 100000;
 		toilet.diseaseOnDupePerFlush = 100000;

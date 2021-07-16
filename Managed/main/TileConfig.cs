@@ -26,7 +26,6 @@ public class TileConfig : IBuildingConfig
 		obj.BlockTileMaterial = Assets.GetMaterial("tiles_solid");
 		obj.DecorBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_solid_tops_info");
 		obj.DecorPlaceBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_solid_tops_place_info");
-		obj.ConstructionOffsetFilter = BuildingDef.ConstructionOffsetFilter_OneDown;
 		obj.DragBuild = true;
 		return obj;
 	}

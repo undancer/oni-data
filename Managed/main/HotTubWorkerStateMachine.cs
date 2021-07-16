@@ -46,7 +46,7 @@ public class HotTubWorkerStateMachine : GameStateMachine<HotTubWorkerStateMachin
 			position2.z = Grid.GetLayerZ(Grid.SceneLayer.BuildingUse);
 			smi.transform.SetPosition(position2);
 		}).OnAnimQueueComplete(loop);
-		loop.PlayAnim((StatesInstance smi) => workAnimLoopVariants[Random.Range(0, workAnimLoopVariants.Length)], KAnim.PlayMode.Once).OnAnimQueueComplete(loop_reenter).EventTransition(GameHashes.WorkerPlayPostAnim, pst_back, (StatesInstance smi) => smi.GetComponent<Worker>().state == Worker.State.PendingCompletion);
+		loop.PlayAnim((StatesInstance smi) => workAnimLoopVariants[Random.Range(0, workAnimLoopVariants.Length)]).OnAnimQueueComplete(loop_reenter).EventTransition(GameHashes.WorkerPlayPostAnim, pst_back, (StatesInstance smi) => smi.GetComponent<Worker>().state == Worker.State.PendingCompletion);
 		loop_reenter.GoTo(loop).EventTransition(GameHashes.WorkerPlayPostAnim, pst_back, (StatesInstance smi) => smi.GetComponent<Worker>().state == Worker.State.PendingCompletion);
 		pst_back.PlayAnim("working_pst_back").OnAnimQueueComplete(pst_front);
 		pst_front.PlayAnim("working_pst_front").Enter(delegate(StatesInstance smi)

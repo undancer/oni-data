@@ -12,9 +12,6 @@ biomes:
     weight: 1
     tags:
 features: []
-pointsOfInterest:
 tags:
   - IgnoreCaveOverride
-# featureTemplates:
-  # feature_geyser_generic: 2
 zoneType: Sandstone

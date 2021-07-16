@@ -302,6 +302,7 @@ public class InputBindingsScreen : KModalScreen
 		modifier |= ((IsKeyDown(KeyCode.LeftControl) || IsKeyDown(KeyCode.RightControl)) ? Modifier.Ctrl : Modifier.None);
 		modifier |= ((IsKeyDown(KeyCode.LeftShift) || IsKeyDown(KeyCode.RightShift)) ? Modifier.Shift : Modifier.None);
 		modifier |= (IsKeyDown(KeyCode.CapsLock) ? Modifier.CapsLock : Modifier.None);
+		modifier |= (IsKeyDown(KeyCode.BackQuote) ? Modifier.Backtick : Modifier.None);
 		bool flag = false;
 		for (int i = 0; i < validKeys.Length; i++)
 		{

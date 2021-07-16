@@ -84,4 +84,14 @@ public class Facing : KMonoBehaviour
 		}
 		return Grid.CellRight(cell);
 	}
+
+	public int GetBackCell()
+	{
+		int cell = Grid.PosToCell(this);
+		if (!GetFacing())
+		{
+			return Grid.CellLeft(cell);
+		}
+		return Grid.CellRight(cell);
+	}
 }

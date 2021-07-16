@@ -200,7 +200,7 @@ public class ThresholdSwitchSideScreen : SideScreenContent, IRender200ms
 
 	private void UpdateTargetThresholdLabel()
 	{
-		numberInput.SetDisplayValue(thresholdSwitch.Format(thresholdSwitch.Threshold, units: false));
+		numberInput.SetDisplayValue(thresholdSwitch.Format(thresholdSwitch.Threshold, units: false) + thresholdSwitch.ThresholdValueUnits());
 		if (thresholdSwitch.ActivateAboveThreshold)
 		{
 			thresholdSlider.GetComponentInChildren<ToolTip>().SetSimpleTooltip(string.Format(thresholdSwitch.AboveToolTip, thresholdSwitch.Format(thresholdSwitch.Threshold, units: true)));

@@ -25,9 +25,6 @@ public class Spacecraft
 	public string rocketName = UI.STARMAP.DEFAULT_NAME;
 
 	[Serialize]
-	public int moduleCount;
-
-	[Serialize]
 	public Ref<LaunchConditionManager> refLaunchConditions = new Ref<LaunchConditionManager>();
 
 	[Serialize]
@@ -54,6 +51,10 @@ public class Spacecraft
 	public Spacecraft(LaunchConditionManager launchConditions)
 	{
 		this.launchConditions = launchConditions;
+	}
+
+	public Spacecraft()
+	{
 	}
 
 	public void SetRocketName(string newName)
@@ -161,12 +162,12 @@ public class Spacecraft
 
 	private void Land()
 	{
-		launchConditions.Trigger(1366341636, SpacecraftManager.instance.GetSpacecraftDestination(id));
+		launchConditions.Trigger(-1165815793, SpacecraftManager.instance.GetSpacecraftDestination(id));
 		foreach (GameObject item in AttachableBuilding.GetAttachedNetwork(launchConditions.GetComponent<AttachableBuilding>()))
 		{
 			if (item != launchConditions.gameObject)
 			{
-				item.Trigger(1366341636, SpacecraftManager.instance.GetSpacecraftDestination(id));
+				item.Trigger(-1165815793, SpacecraftManager.instance.GetSpacecraftDestination(id));
 			}
 		}
 	}

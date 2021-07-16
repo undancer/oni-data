@@ -26,6 +26,7 @@ public class MethaneGeneratorConfig : IBuildingConfig
 		obj.AudioCategory = "Metal";
 		obj.UtilityInputOffset = new CellOffset(0, 0);
 		obj.UtilityOutputOffset = new CellOffset(2, 2);
+		obj.RequiresPowerOutput = true;
 		obj.PowerOutputOffset = new CellOffset(0, 0);
 		obj.InputConduitType = ConduitType.Gas;
 		obj.OutputConduitType = ConduitType.Gas;

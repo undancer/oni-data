@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ public class Timelapser : KMonoBehaviour
 	private string previewSaveGamePath = "";
 
 	private bool screenshotToday;
+
+	private List<int> worldsToScreenshot = new List<int>();
 
 	private HashedString activeOverlay;
 
@@ -185,38 +188,56 @@ public class Timelapser : KMonoBehaviour
 
 	private void OnNewDay(object data = null)
 	{
+		DebugUtil.LogWarningArgs(worldsToScreenshot.Count == 0, "Timelapse.OnNewDay but worldsToScreenshot is not empty");
 		int cycle = GameClock.Instance.GetCycle();
-		if (cycle > timelapseScreenshotCycles[timelapseScreenshotCycles.Length - 1])
+		foreach (WorldContainer worldContainer in ClusterManager.Instance.WorldContainers)
 		{
-			if (cycle % 10 == 0)
+			if (!worldContainer.IsDiscovered || worldContainer.IsModuleInterior)
 			{
-				screenshotToday = true;
+				continue;
 			}
-			return;
-		}
-		for (int i = 0; i < timelapseScreenshotCycles.Length; i++)
-		{
-			if (cycle == timelapseScreenshotCycles[i])
+			if (worldContainer.DiscoveryTimestamp + (float)cycle > (float)timelapseScreenshotCycles[timelapseScreenshotCycles.Length - 1])
 			{
-				screenshotToday = true;
+				if (worldContainer.DiscoveryTimestamp + (float)(cycle % 10) == 0f)
+				{
+					screenshotToday = true;
+					worldsToScreenshot.Add(worldContainer.id);
+				}
+				continue;
+			}
+			for (int i = 0; i < timelapseScreenshotCycles.Length; i++)
+			{
+				if ((int)worldContainer.DiscoveryTimestamp + cycle == timelapseScreenshotCycles[i])
+				{
+					screenshotToday = true;
+					worldsToScreenshot.Add(worldContainer.id);
+				}
 			}
 		}
 	}
 
 	private void Update()
 	{
-		if (screenshotToday && CycleTimeToScreenshot() <= 0f)
+		if (screenshotToday)
 		{
-			if (!timelapseUserEnabled)
+			if (CycleTimeToScreenshot() <= 0f || GameClock.Instance.GetCycle() == 0)
 			{
-				screenshotToday = false;
+				if (!timelapseUserEnabled)
+				{
+					screenshotToday = false;
+					worldsToScreenshot.Clear();
+				}
+				else if (!PlayerController.Instance.IsDragging())
+				{
+					CameraController.Instance.ForcePanningState(state: false);
+					screenshotToday = false;
+					SaveScreenshot();
+				}
 			}
-			else if (!PlayerController.Instance.IsDragging())
-			{
-				CameraController.Instance.ForcePanningState(state: false);
-				screenshotToday = false;
-				SaveScreenshot();
-			}
+		}
+		else
+		{
+			screenshotToday = !screenshotPending && worldsToScreenshot.Count > 0;
 		}
 	}
 
@@ -231,38 +252,48 @@ public class Timelapser : KMonoBehaviour
 		while (true)
 		{
 			yield return wait;
-			if (screenshotPending)
+			if (!screenshotPending)
 			{
-				if (!freezeCamera.enabled)
-				{
-					freezeTexture.ReadPixels(new Rect(0f, 0f, Camera.main.pixelWidth, Camera.main.pixelHeight), 0, 0);
-					freezeTexture.Apply();
-					freezeCamera.gameObject.GetComponent<FillRenderTargetEffect>().SetFillTexture(freezeTexture);
-					freezeCamera.enabled = true;
-					screenshotActive = true;
-					RefreshRenderTextureSize();
-					SetPostionAndOrtho();
-					DebugHandler.SetTimelapseMode(enabled: true);
-					activeOverlay = OverlayScreen.Instance.mode;
-					OverlayScreen.Instance.ToggleOverlay(OverlayModes.None.ID, allowSound: false);
-				}
-				else
-				{
-					RenderAndPrint();
-					freezeCamera.enabled = false;
-					DebugHandler.SetTimelapseMode(enabled: false);
-					screenshotPending = false;
-					previewScreenshot = false;
-					screenshotActive = false;
-					debugScreenShot = false;
-					previewSaveGamePath = "";
-					OverlayScreen.Instance.ToggleOverlay(activeOverlay, allowSound: false);
-				}
+				continue;
 			}
+			int num = (previewScreenshot ? ClusterManager.Instance.GetStartWorld().id : worldsToScreenshot[0]);
+			if (!freezeCamera.enabled)
+			{
+				freezeTexture.ReadPixels(new Rect(0f, 0f, Camera.main.pixelWidth, Camera.main.pixelHeight), 0, 0);
+				freezeTexture.Apply();
+				freezeCamera.gameObject.GetComponent<FillRenderTargetEffect>().SetFillTexture(freezeTexture);
+				freezeCamera.enabled = true;
+				screenshotActive = true;
+				RefreshRenderTextureSize();
+				DebugHandler.SetTimelapseMode(enabled: true, num);
+				SetPostionAndOrtho(num);
+				activeOverlay = OverlayScreen.Instance.mode;
+				OverlayScreen.Instance.ToggleOverlay(OverlayModes.None.ID, allowSound: false);
+				continue;
+			}
+			RenderAndPrint(num);
+			if (!previewScreenshot)
+			{
+				worldsToScreenshot.Remove(num);
+			}
+			freezeCamera.enabled = false;
+			DebugHandler.SetTimelapseMode(enabled: false);
+			screenshotPending = false;
+			previewScreenshot = false;
+			screenshotActive = false;
+			debugScreenShot = false;
+			previewSaveGamePath = "";
+			OverlayScreen.Instance.ToggleOverlay(activeOverlay, allowSound: false);
 		}
 	}
 
-	public void SaveScreenshot()
+	public void InitialScreenshot()
+	{
+		worldsToScreenshot.Add(ClusterManager.Instance.GetStartWorld().id);
+		SaveScreenshot();
+	}
+
+	private void SaveScreenshot()
 	{
 		screenshotPending = true;
 	}
@@ -274,52 +305,77 @@ public class Timelapser : KMonoBehaviour
 		SaveScreenshot();
 	}
 
-	private void SetPostionAndOrtho()
+	private void SetPostionAndOrtho(int world_id)
 	{
-		float num = 0f;
-		GameObject telepad = GameUtil.GetTelepad();
-		if (telepad == null)
+		WorldContainer world = ClusterManager.Instance.GetWorld(world_id);
+		if (world == null)
 		{
 			return;
 		}
-		Vector3 position = telepad.transform.GetPosition();
-		foreach (BuildingComplete item in Components.BuildingCompletes.Items)
-		{
-			Vector3 position2 = item.transform.GetPosition();
-			float num2 = (float)bufferRenderTexture.width / (float)bufferRenderTexture.height;
-			Vector3 vector = position - position2;
-			num = Mathf.Max(num, vector.x / num2, vector.y);
-		}
-		num += 10f;
-		num = Mathf.Max(num, 18f);
+		float num = 0f;
 		Camera overlayCamera = CameraController.Instance.overlayCamera;
 		camSize = overlayCamera.orthographicSize;
-		CameraController.Instance.SetOrthographicsSize(num);
 		camPosition = CameraController.Instance.transform.position;
-		CameraController.Instance.SetPosition(new Vector3(telepad.transform.position.x, telepad.transform.position.y, CameraController.Instance.transform.position.z));
-		CameraController.Instance.SetTargetPos(new Vector3(telepad.transform.position.x, telepad.transform.position.y, CameraController.Instance.transform.position.z), camSize, playSound: false);
+		if (world.IsStartWorld)
+		{
+			GameObject telepad = GameUtil.GetTelepad(world_id);
+			if (telepad == null)
+			{
+				return;
+			}
+			Vector3 position = telepad.transform.GetPosition();
+			foreach (BuildingComplete item in Components.BuildingCompletes.Items)
+			{
+				Vector3 position2 = item.transform.GetPosition();
+				float num2 = (float)bufferRenderTexture.width / (float)bufferRenderTexture.height;
+				Vector3 vector = position - position2;
+				num = Mathf.Max(num, vector.x / num2, vector.y);
+			}
+			num += 10f;
+			num = Mathf.Max(num, 18f);
+			CameraController.Instance.SetOrthographicsSize(num);
+			CameraController.Instance.SetPosition(new Vector3(telepad.transform.position.x, telepad.transform.position.y, CameraController.Instance.transform.position.z));
+		}
+		else
+		{
+			CameraController.Instance.SetOrthographicsSize(world.WorldSize.y / 2);
+			CameraController.Instance.SetPosition(new Vector3(world.WorldOffset.x + world.WorldSize.x / 2, world.WorldOffset.y + world.WorldSize.y / 2, CameraController.Instance.transform.position.z));
+		}
 	}
 
-	private void RenderAndPrint()
+	private void RenderAndPrint(int world_id)
 	{
-		GameObject telepad = GameUtil.GetTelepad();
-		if (telepad == null)
+		WorldContainer world = ClusterManager.Instance.GetWorld(world_id);
+		if (world == null)
 		{
-			Debug.Log("No telepad present, aborting screenshot.");
 			return;
+		}
+		if (world.IsStartWorld)
+		{
+			GameObject telepad = GameUtil.GetTelepad(0);
+			if (telepad == null)
+			{
+				Debug.Log("No telepad present, aborting screenshot.");
+				return;
+			}
+			Vector3 position = telepad.transform.position;
+			position.z = CameraController.Instance.transform.position.z;
+			CameraController.Instance.SetPosition(position);
+		}
+		else
+		{
+			CameraController.Instance.SetPosition(new Vector3(world.WorldOffset.x + world.WorldSize.x / 2, world.WorldOffset.y + world.WorldSize.y / 2, CameraController.Instance.transform.position.z));
 		}
 		RenderTexture active = RenderTexture.active;
 		RenderTexture.active = bufferRenderTexture;
-		CameraController.Instance.SetPosition(new Vector3(telepad.transform.position.x, telepad.transform.position.y, CameraController.Instance.transform.position.z));
 		CameraController.Instance.RenderForTimelapser(ref bufferRenderTexture);
-		WriteToPng(bufferRenderTexture);
+		WriteToPng(bufferRenderTexture, world.GetComponent<ClusterGridEntity>().Name);
 		CameraController.Instance.SetOrthographicsSize(camSize);
 		CameraController.Instance.SetPosition(camPosition);
-		CameraController.Instance.SetTargetPos(camPosition, camSize, playSound: false);
 		RenderTexture.active = active;
 	}
 
-	public void WriteToPng(RenderTexture renderTex)
+	public void WriteToPng(RenderTexture renderTex, string world_name = "")
 	{
 		Texture2D texture2D = new Texture2D(renderTex.width, renderTex.height, TextureFormat.ARGB32, mipChain: false);
 		texture2D.ReadPixels(new Rect(0f, 0f, renderTex.width, renderTex.height), 0, 0);
@@ -343,22 +399,35 @@ public class Timelapser : KMonoBehaviour
 			{
 				Directory.CreateDirectory(text2);
 			}
-			string text3 = Path.Combine(text2, path);
-			DebugUtil.LogArgs("Saving screenshot to", text3);
+			string path2 = text2;
+			if (!world_name.IsNullOrWhiteSpace())
+			{
+				path2 = Path.Combine(path2, world_name);
+				if (!Directory.Exists(path2))
+				{
+					Directory.CreateDirectory(path2);
+				}
+				path2 = Path.Combine(path2, world_name);
+			}
+			else
+			{
+				path2 = Path.Combine(path2, path);
+			}
+			DebugUtil.LogArgs("Saving screenshot to", path2);
 			string format = "0000.##";
-			text3 = text3 + "_cycle_" + GameClock.Instance.GetCycle().ToString(format);
+			path2 = path2 + "_cycle_" + GameClock.Instance.GetCycle().ToString(format);
 			if (debugScreenShot)
 			{
-				text3 = text3 + "_" + System.DateTime.Now.Day + "-" + System.DateTime.Now.Month + "_" + System.DateTime.Now.Hour + "-" + System.DateTime.Now.Minute + "-" + System.DateTime.Now.Second;
+				path2 = path2 + "_" + System.DateTime.Now.Day + "-" + System.DateTime.Now.Month + "_" + System.DateTime.Now.Hour + "-" + System.DateTime.Now.Minute + "-" + System.DateTime.Now.Second;
 			}
-			File.WriteAllBytes(text3 + ".png", bytes);
+			File.WriteAllBytes(path2 + ".png", bytes);
 		}
 		else
 		{
-			string path2 = previewSaveGamePath;
-			path2 = Path.ChangeExtension(path2, ".png");
-			DebugUtil.LogArgs("Saving screenshot to", path2);
-			File.WriteAllBytes(path2, bytes);
+			string path3 = previewSaveGamePath;
+			path3 = Path.ChangeExtension(path3, ".png");
+			DebugUtil.LogArgs("Saving screenshot to", path3);
+			File.WriteAllBytes(path3, bytes);
 		}
 	}
 }

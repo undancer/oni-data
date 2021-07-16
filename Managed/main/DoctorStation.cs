@@ -41,7 +41,7 @@ public class DoctorStation : Workable
 
 		public override void InitializeStates(out BaseState default_state)
 		{
-			base.serializable = false;
+			base.serializable = SerializeType.Never;
 			default_state = unoperational;
 			unoperational.EventTransition(GameHashes.OperationalChanged, operational, (StatesInstance smi) => smi.master.operational.IsOperational);
 			operational.EventTransition(GameHashes.OperationalChanged, operational, (StatesInstance smi) => !smi.master.operational.IsOperational).DefaultState(operational.not_ready);
@@ -95,9 +95,6 @@ public class DoctorStation : Workable
 
 	private DoctorStationDoctorWorkable doctor_workable;
 
-	[SerializeField]
-	public Tag supplyTag;
-
 	private Dictionary<HashedString, Tag> treatments_available = new Dictionary<HashedString, Tag>();
 
 	private StatesInstance smi;
@@ -139,17 +136,15 @@ public class DoctorStation : Workable
 		treatments_available.Clear();
 		foreach (GameObject item in storage.items)
 		{
-			if (item.HasTag(GameTags.MedicalSupplies))
+			MedicinalPill component = item.GetComponent<MedicinalPill>();
+			if (!(component != null))
 			{
-				Tag tag = item.PrefabID();
-				if (tag == "IntermediateCure")
-				{
-					AddTreatment("SlimeSickness", tag);
-				}
-				if (tag == "AdvancedCure")
-				{
-					AddTreatment("ZombieSickness", tag);
-				}
+				continue;
+			}
+			Tag tag = item.PrefabID();
+			foreach (string curedSickness in component.info.curedSicknesses)
+			{
+				AddTreatment(curedSickness, tag);
 			}
 		}
 		bool value = treatments_available.Count > 0;

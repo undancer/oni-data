@@ -40,7 +40,7 @@ public class CapacityControlSideScreen : SideScreenContent
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		return target.GetComponent<IUserControlledCapacity>() != null;
+		return !target.GetComponent<IUserControlledCapacity>().IsNullOrDestroyed();
 	}
 
 	public override void SetTarget(GameObject new_target)

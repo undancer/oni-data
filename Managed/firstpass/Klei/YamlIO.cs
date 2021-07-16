@@ -61,7 +61,12 @@ namespace Klei
 
 		public static T LoadFile<T>(string filename, ErrorHandler handle_error = null, List<Tuple<string, Type>> tagMappings = null)
 		{
-			return LoadFile<T>(FileSystem.FindFileHandle(filename), handle_error, tagMappings);
+			FileHandle filehandle = FileSystem.FindFileHandle(filename);
+			if (filehandle.source == null)
+			{
+				throw new FileNotFoundException("YamlIO tried loading a file that doesn't exist: " + filename);
+			}
+			return LoadFile<T>(filehandle, handle_error, tagMappings);
 		}
 
 		public static void LogError(Error error, bool force_log_as_warning)

@@ -7,6 +7,11 @@ public class StickerBombConfig : IEntityConfig
 {
 	public const string ID = "StickerBomb";
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateBasicEntity("StickerBomb", STRINGS.BUILDINGS.PREFABS.STICKERBOMB.NAME, STRINGS.BUILDINGS.PREFABS.STICKERBOMB.DESC, 1f, unitMass: true, Assets.GetAnim("sticker_kanim"), "off", Grid.SceneLayer.Backwall);

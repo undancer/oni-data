@@ -89,6 +89,13 @@ contentContainers:
           icon:
             spriteName: icon_category_medical			
       - !CodexLabelWithLargeIcon
+          linkID: "EXOBASES"
+          label:
+            stringKey: STRINGS.CODEX.EXOBASES.TITLE
+            style: BodyWhite
+          icon:
+            spriteName: icon_category_rocketry			
+      - !CodexLabelWithLargeIcon
           linkID: "MISCELLANEOUSTIPS"
           label:
             stringKey: STRINGS.UI.CODEX.CATEGORYNAMES.MISCELLANEOUSTIPS

@@ -12,6 +12,12 @@ public class BuildToolHoverTextCard : HoverTextConfiguration
 	{
 		HoverTextScreen instance = HoverTextScreen.Instance;
 		HoverTextDrawer hoverTextDrawer = instance.BeginDrawing();
+		int num = Grid.PosToCell(Camera.main.ScreenToWorldPoint(KInputManager.GetMousePos()));
+		if (!Grid.IsValidCell(num) || Grid.WorldIdx[num] != ClusterManager.Instance.activeWorldId)
+		{
+			hoverTextDrawer.EndDrawing();
+			return;
+		}
 		hoverTextDrawer.BeginShadowBar();
 		ActionName = ((currentDef != null && currentDef.DragBuild) ? UI.TOOLS.BUILD.TOOLACTION_DRAG : UI.TOOLS.BUILD.TOOLACTION);
 		if (currentDef != null && currentDef.Name != null)
@@ -20,7 +26,6 @@ public class BuildToolHoverTextCard : HoverTextConfiguration
 		}
 		DrawTitle(instance, hoverTextDrawer);
 		DrawInstructions(instance, hoverTextDrawer);
-		int cell = Grid.PosToCell(Camera.main.ScreenToWorldPoint(KInputManager.GetMousePos()));
 		int min_height = 26;
 		int width = 8;
 		if (currentDef != null)
@@ -41,7 +46,7 @@ public class BuildToolHoverTextCard : HoverTextConfiguration
 					}
 					orientation = BuildTool.Instance.GetBuildingOrientation;
 					string fail_reason = "Unknown reason";
-					Vector3 pos = Grid.CellToPosCCC(cell, Grid.SceneLayer.Building);
+					Vector3 pos = Grid.CellToPosCCC(num, Grid.SceneLayer.Building);
 					if (!currentDef.IsValidPlaceLocation(BuildTool.Instance.visualizer, pos, orientation, out fail_reason))
 					{
 						hoverTextDrawer.NewLine(min_height);
@@ -49,7 +54,7 @@ public class BuildToolHoverTextCard : HoverTextConfiguration
 						hoverTextDrawer.DrawText(fail_reason, HoverTextStyleSettings[1]);
 					}
 					RoomTracker component = currentDef.BuildingComplete.GetComponent<RoomTracker>();
-					if (component != null && !component.SufficientBuildLocation(cell))
+					if (component != null && !component.SufficientBuildLocation(num))
 					{
 						hoverTextDrawer.NewLine(min_height);
 						hoverTextDrawer.AddIndent(width);
@@ -68,35 +73,35 @@ public class BuildToolHoverTextCard : HoverTextConfiguration
 				foreach (KSelectable hoverObject in hoverObjects)
 				{
 					LogicPorts component3 = hoverObject.GetComponent<LogicPorts>();
-					if (component3 != null && component3.TryGetPortAtCell(cell, out var port, out var isInput))
+					if (component3 != null && component3.TryGetPortAtCell(num, out var port, out var isInput))
 					{
 						bool flag = component3.IsPortConnected(port.id);
 						hoverTextDrawer.BeginShadowBar();
-						int num;
+						int num2;
 						if (isInput)
 						{
 							string replacement = (port.displayCustomName ? port.description : UI.LOGIC_PORTS.PORT_INPUT_DEFAULT_NAME.text);
-							num = component3.GetInputValue(port.id);
+							num2 = component3.GetInputValue(port.id);
 							hoverTextDrawer.DrawText(UI.TOOLS.GENERIC.LOGIC_INPUT_HOVER_FMT.Replace("{Port}", replacement).Replace("{Name}", hoverObject.GetProperName().ToUpper()), component2.Styles_Title.Standard);
 						}
 						else
 						{
 							string replacement2 = (port.displayCustomName ? port.description : UI.LOGIC_PORTS.PORT_OUTPUT_DEFAULT_NAME.text);
-							num = component3.GetOutputValue(port.id);
+							num2 = component3.GetOutputValue(port.id);
 							hoverTextDrawer.DrawText(UI.TOOLS.GENERIC.LOGIC_OUTPUT_HOVER_FMT.Replace("{Port}", replacement2).Replace("{Name}", hoverObject.GetProperName().ToUpper()), component2.Styles_Title.Standard);
 						}
 						hoverTextDrawer.NewLine();
-						TextStyleSetting style = ((!flag) ? component2.Styles_LogicActive.Standard : ((num == 1) ? component2.Styles_LogicActive.Selected : component2.Styles_LogicSignalInactive));
-						component2.DrawLogicIcon(hoverTextDrawer, (num == 1 && flag) ? component2.iconActiveAutomationPort : component2.iconDash, style);
+						TextStyleSetting style = ((!flag) ? component2.Styles_LogicActive.Standard : ((num2 == 1) ? component2.Styles_LogicActive.Selected : component2.Styles_LogicSignalInactive));
+						component2.DrawLogicIcon(hoverTextDrawer, (num2 == 1 && flag) ? component2.iconActiveAutomationPort : component2.iconDash, style);
 						component2.DrawLogicText(hoverTextDrawer, port.activeDescription, style);
 						hoverTextDrawer.NewLine();
-						TextStyleSetting style2 = ((!flag) ? component2.Styles_LogicStandby.Standard : ((num == 0) ? component2.Styles_LogicStandby.Selected : component2.Styles_LogicSignalInactive));
-						component2.DrawLogicIcon(hoverTextDrawer, (num == 0 && flag) ? component2.iconActiveAutomationPort : component2.iconDash, style2);
+						TextStyleSetting style2 = ((!flag) ? component2.Styles_LogicStandby.Standard : ((num2 == 0) ? component2.Styles_LogicStandby.Selected : component2.Styles_LogicSignalInactive));
+						component2.DrawLogicIcon(hoverTextDrawer, (num2 == 0 && flag) ? component2.iconActiveAutomationPort : component2.iconDash, style2);
 						component2.DrawLogicText(hoverTextDrawer, port.inactiveDescription, style2);
 						hoverTextDrawer.EndShadowBar();
 					}
 					LogicGate component4 = hoverObject.GetComponent<LogicGate>();
-					if (component4 != null && component4.TryGetPortAtCell(cell, out var port2))
+					if (component4 != null && component4.TryGetPortAtCell(num, out var port2))
 					{
 						int portValue = component4.GetPortValue(port2);
 						bool portConnected = component4.GetPortConnected(port2);
@@ -125,7 +130,7 @@ public class BuildToolHoverTextCard : HoverTextConfiguration
 			else if (mode == OverlayModes.Power.ID)
 			{
 				CircuitManager circuitManager = Game.Instance.circuitManager;
-				ushort circuitID = circuitManager.GetCircuitID(cell);
+				ushort circuitID = circuitManager.GetCircuitID(num);
 				if (circuitID != ushort.MaxValue)
 				{
 					hoverTextDrawer.BeginShadowBar();

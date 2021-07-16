@@ -12,19 +12,25 @@ namespace Database
 
 		public Disease ZombieSpores;
 
-		public Diseases(ResourceSet parent)
+		public Disease RadiationPoisoning;
+
+		public Diseases(ResourceSet parent, bool statsOnly = false)
 			: base("Diseases", parent)
 		{
-			FoodGerms = Add(new FoodGerms());
-			SlimeGerms = Add(new SlimeGerms());
-			PollenGerms = Add(new PollenGerms());
-			ZombieSpores = Add(new ZombieSpores());
+			FoodGerms = Add(new FoodGerms(statsOnly));
+			SlimeGerms = Add(new SlimeGerms(statsOnly));
+			PollenGerms = Add(new PollenGerms(statsOnly));
+			ZombieSpores = Add(new ZombieSpores(statsOnly));
+			if (DlcManager.FeatureRadiationEnabled())
+			{
+				RadiationPoisoning = Add(new RadiationPoisoning(statsOnly));
+			}
 		}
 
-		public static bool IsValidID(string id)
+		public bool IsValidID(string id)
 		{
 			bool result = false;
-			foreach (Disease resource in Db.Get().Diseases.resources)
+			foreach (Disease resource in resources)
 			{
 				if (resource.Id == id)
 				{
@@ -36,10 +42,9 @@ namespace Database
 
 		public byte GetIndex(int hash)
 		{
-			Diseases diseases = Db.Get().Diseases;
-			for (byte b = 0; b < diseases.Count; b = (byte)(b + 1))
+			for (byte b = 0; b < resources.Count; b = (byte)(b + 1))
 			{
-				Disease disease = diseases[b];
+				Disease disease = resources[b];
 				if (hash == disease.id.GetHashCode())
 				{
 					return b;

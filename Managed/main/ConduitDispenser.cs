@@ -4,7 +4,7 @@ using UnityEngine;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 [AddComponentMenu("KMonoBehaviour/scripts/ConduitDispenser")]
-public class ConduitDispenser : KMonoBehaviour, ISaveLoadable
+public class ConduitDispenser : KMonoBehaviour, ISaveLoadable, IConduitDispenser
 {
 	[SerializeField]
 	public ConduitType conduitType;
@@ -24,6 +24,12 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable
 	[SerializeField]
 	public bool blocked;
 
+	[SerializeField]
+	public bool empty = true;
+
+	[SerializeField]
+	public bool useSecondaryOutput;
+
 	private static readonly Operational.Flag outputConduitFlag = new Operational.Flag("output_conduit", Operational.Flag.Type.Functional);
 
 	[MyCmpReq]
@@ -37,6 +43,10 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable
 	private int utilityCell = -1;
 
 	private int elementOutputOffset;
+
+	public Storage Storage => storage;
+
+	public ConduitType ConduitType => conduitType;
 
 	public ConduitType TypeOfConduit => conduitType;
 
@@ -82,7 +92,7 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable
 		{
 			Tutorial.Instance.TutorialMessage(Tutorial.TutorialMessages.TM_Plumbing);
 		});
-		utilityCell = GetComponent<Building>().GetUtilityOutputCell();
+		utilityCell = GetOutputCell();
 		ScenePartitionerLayer layer = GameScenePartitioner.Instance.objectLayers[(conduitType == ConduitType.Gas) ? 12 : 16];
 		partitionerEntry = GameScenePartitioner.Instance.Add("ConduitConsumer.OnSpawn", base.gameObject, utilityCell, layer, OnConduitConnectionChanged);
 		GetConduitManager().AddConduitUpdater(ConduitUpdate, ConduitFlowPriority.Dispense);
@@ -120,7 +130,7 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable
 		PrimaryElement primaryElement = FindSuitableElement();
 		if (primaryElement != null)
 		{
-			primaryElement.KeepZeroMassObject = true;
+			empty = false;
 			float num = GetConduitManager().AddElement(utilityCell, primaryElement.ElementID, primaryElement.Mass, primaryElement.Temperature, primaryElement.DiseaseIdx, primaryElement.DiseaseCount);
 			if (num > 0f)
 			{
@@ -133,6 +143,10 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable
 			{
 				blocked = true;
 			}
+		}
+		else
+		{
+			empty = true;
 		}
 	}
 
@@ -163,5 +177,16 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable
 			}
 		}
 		return false;
+	}
+
+	private int GetOutputCell()
+	{
+		Building component = GetComponent<Building>();
+		if (useSecondaryOutput)
+		{
+			ISecondaryOutput component2 = GetComponent<ISecondaryOutput>();
+			return Grid.OffsetCell(component.NaturalBuildingCell(), component2.GetSecondaryConduitOffset(conduitType));
+		}
+		return component.GetUtilityOutputCell();
 	}
 }

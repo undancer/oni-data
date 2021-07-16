@@ -115,6 +115,11 @@ public class SelectToolHoverTextCard : HoverTextConfiguration
 			int num3 = Grid.PosToCell(CameraController.Instance.baseCamera.ScreenToWorldPoint(KInputManager.GetMousePos()));
 			return Grid.Element[num3].IsGas;
 		});
+		overlayFilterMap.Add(OverlayModes.Radiation.ID, delegate
+		{
+			int i = Grid.PosToCell(CameraController.Instance.baseCamera.ScreenToWorldPoint(KInputManager.GetMousePos()));
+			return Grid.Radiation[i] > 0f;
+		});
 		overlayFilterMap.Add(OverlayModes.LiquidConduits.ID, delegate
 		{
 			int num2 = Grid.PosToCell(CameraController.Instance.baseCamera.ScreenToWorldPoint(KInputManager.GetMousePos()));
@@ -186,11 +191,15 @@ public class SelectToolHoverTextCard : HoverTextConfiguration
 		HashedString mode = SimDebugView.Instance.GetMode();
 		bool flag = mode == OverlayModes.Disease.ID;
 		bool flag2 = true;
-		if (Grid.DupePassable[num])
+		if (Grid.DupePassable[num] && Grid.Solid[num])
 		{
 			flag2 = false;
 		}
 		bool flag3 = Grid.IsVisible(num);
+		if (Grid.WorldIdx[num] != ClusterManager.Instance.activeWorldId)
+		{
+			flag3 = false;
+		}
 		if (!flag3)
 		{
 			flag2 = false;
@@ -418,6 +427,18 @@ public class SelectToolHoverTextCard : HoverTextConfiguration
 				hoverTextDrawer.EndShadowBar();
 			}
 		}
+		else if (mode == OverlayModes.Radiation.ID)
+		{
+			if (flag3)
+			{
+				text += UI.OVERLAYS.RADIATION.DESC.Replace("{rads}", GameUtil.GetFormattedRads(Grid.Radiation[num])).Replace("{description}", GameUtil.GetRadiationDescription(Grid.Radiation[num]));
+				hoverTextDrawer.BeginShadowBar();
+				hoverTextDrawer.DrawText(UI.OVERLAYS.RADIATION.HOVERTITLE, Styles_Title.Standard);
+				hoverTextDrawer.NewLine();
+				hoverTextDrawer.DrawText(text, Styles_BodyText.Standard);
+				hoverTextDrawer.EndShadowBar();
+			}
+		}
 		else if (mode == OverlayModes.Logic.ID)
 		{
 			foreach (KSelectable hoverObject2 in hoverObjects)
@@ -616,7 +637,7 @@ public class SelectToolHoverTextCard : HoverTextConfiguration
 				hoverTextDrawer.DrawText(GameUtil.GetFormattedTemperature(temp), Styles_BodyText.Standard);
 			}
 			BuildingComplete component7 = kSelectable.GetComponent<BuildingComplete>();
-			if (component7 != null && component7.Def.IsFoundation)
+			if (component7 != null && component7.Def.IsFoundation && Grid.Element[num].IsSolid)
 			{
 				flag2 = false;
 			}
@@ -665,7 +686,7 @@ public class SelectToolHoverTextCard : HoverTextConfiguration
 				hoverTextDrawer.DrawIcon(iconDash);
 				hoverTextDrawer.DrawText(ElementLoader.elements[Grid.ElementIdx[num]].GetMaterialCategoryTag().ProperName(), Styles_BodyText.Standard);
 			}
-			string[] array = WorldInspector.MassStringsReadOnly(num);
+			string[] array = HoverTextHelper.MassStringsReadOnly(num);
 			hoverTextDrawer.NewLine();
 			hoverTextDrawer.DrawIcon(iconDash);
 			for (int m = 0; m < array.Length; m++)
@@ -736,7 +757,7 @@ public class SelectToolHoverTextCard : HoverTextConfiguration
 			}
 			hoverTextDrawer.EndShadowBar();
 		}
-		else if (!flag3)
+		else if (!flag3 && Grid.WorldIdx[num] == ClusterManager.Instance.activeWorldId)
 		{
 			hoverTextDrawer.BeginShadowBar();
 			hoverTextDrawer.DrawIcon(iconWarning);
@@ -819,7 +840,11 @@ public class SelectToolHoverTextCard : HoverTextConfiguration
 
 	private static bool ShouldShowRadiationOverlay(KSelectable selectable)
 	{
-		return selectable.GetComponent<Light2D>() != null;
+		if (!(selectable.GetComponent<HighEnergyParticle>() != null))
+		{
+			return selectable.GetComponent<HighEnergyParticlePort>();
+		}
+		return true;
 	}
 
 	private static bool ShouldShowGasConduitOverlay(KSelectable selectable)

@@ -8,7 +8,7 @@ namespace Satsuma
 			{
 				return "Arc.Invalid";
 			}
-			return string.Concat(graph.U(arc), graph.IsEdge(arc) ? "<-->" : "--->", graph.V(arc));
+			return graph.U(arc).ToString() + (graph.IsEdge(arc) ? "<-->" : "--->") + graph.V(arc).ToString();
 		}
 
 		public static Node Other(this IArcLookup graph, Arc arc, Node node)

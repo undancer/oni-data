@@ -6,6 +6,11 @@ public class ShockwormConfig : IEntityConfig
 {
 	public const string ID = "ShockWorm";
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject obj = EntityTemplates.CreatePlacedEntity("ShockWorm", STRINGS.CREATURES.SPECIES.SHOCKWORM.NAME, STRINGS.CREATURES.SPECIES.SHOCKWORM.DESC, 50f, decor: DECOR.BONUS.TIER0, anim: Assets.GetAnim("shockworm_kanim"), initialAnim: "idle", sceneLayer: Grid.SceneLayer.Creatures, width: 1, height: 2);

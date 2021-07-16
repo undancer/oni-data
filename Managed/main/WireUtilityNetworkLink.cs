@@ -1,23 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WireUtilityNetworkLink : UtilityNetworkLink, IWattageRating, IHaveUtilityNetworkMgr, IUtilityNetworkItem, IBridgedNetworkItem
+public class WireUtilityNetworkLink : UtilityNetworkLink, IWattageRating, IHaveUtilityNetworkMgr, IBridgedNetworkItem, ICircuitConnected
 {
 	[SerializeField]
 	public Wire.WattageRating maxWattageRating;
 
-	public ushort NetworkID
+	public bool IsVirtual
 	{
-		get
-		{
-			GetCells(out var linked_cell, out var _);
-			ElectricalUtilityNetwork electricalUtilityNetwork = Game.Instance.electricalConduitSystem.GetNetworkForCell(linked_cell) as ElectricalUtilityNetwork;
-			if (electricalUtilityNetwork == null)
-			{
-				return ushort.MaxValue;
-			}
-			return (ushort)electricalUtilityNetwork.id;
-		}
+		get;
+		private set;
+	}
+
+	public int PowerCell => GetNetworkCell();
+
+	public object VirtualCircuitKey
+	{
+		get;
+		private set;
 	}
 
 	public Wire.WattageRating GetMaxWattageRating()
@@ -49,8 +49,8 @@ public class WireUtilityNetworkLink : UtilityNetworkLink, IWattageRating, IHaveU
 
 	public void AddNetworks(ICollection<UtilityNetwork> networks)
 	{
-		GetCells(out var linked_cell, out var _);
-		UtilityNetwork networkForCell = GetNetworkManager().GetNetworkForCell(linked_cell);
+		int networkCell = GetNetworkCell();
+		UtilityNetwork networkForCell = GetNetworkManager().GetNetworkForCell(networkCell);
 		if (networkForCell != null)
 		{
 			networks.Add(networkForCell);
@@ -59,8 +59,8 @@ public class WireUtilityNetworkLink : UtilityNetworkLink, IWattageRating, IHaveU
 
 	public bool IsConnectedToNetworks(ICollection<UtilityNetwork> networks)
 	{
-		GetCells(out var linked_cell, out var _);
-		UtilityNetwork networkForCell = GetNetworkManager().GetNetworkForCell(linked_cell);
+		int networkCell = GetNetworkCell();
+		UtilityNetwork networkForCell = GetNetworkManager().GetNetworkForCell(networkCell);
 		return networks.Contains(networkForCell);
 	}
 }

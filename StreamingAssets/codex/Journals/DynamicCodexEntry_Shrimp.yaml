@@ -1,0 +1,25 @@
+id: "Shrimp"
+title: STRINGS.CODEX.A5_SHRIMP.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_shrimp
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_SHRIMP.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_SHRIMP.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_shrimp
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.A5_SHRIMP.BODY.CONTAINER1
+          style: Body

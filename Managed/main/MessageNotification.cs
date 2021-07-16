@@ -10,7 +10,7 @@ public class MessageNotification : Notification
 	}
 
 	public MessageNotification(Message m)
-		: base(m.GetTitle(), NotificationType.Messages, HashedString.Invalid, null, null, expires: false)
+		: base(m.GetTitle(), NotificationType.Messages, null, null, expires: false)
 	{
 		MessageNotification messageNotification = this;
 		message = m;

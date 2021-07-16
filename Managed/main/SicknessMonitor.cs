@@ -97,7 +97,7 @@ public class SicknessMonitor : GameStateMachine<SicknessMonitor, SicknessMonitor
 
 	public override void InitializeStates(out BaseState default_state)
 	{
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		default_state = healthy;
 		healthy.EventTransition(GameHashes.SicknessAdded, sick, (Instance smi) => smi.IsSick());
 		sick.DefaultState(sick.minor).EventTransition(GameHashes.SicknessCured, post_nocheer, (Instance smi) => !smi.IsSick()).ToggleThought(Db.Get().Thoughts.GotInfected);

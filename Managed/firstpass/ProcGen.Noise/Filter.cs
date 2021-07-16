@@ -6,6 +6,20 @@ namespace ProcGen.Noise
 {
 	public class Filter : NoiseBase
 	{
+		public enum NoiseFilter
+		{
+			_UNSET_,
+			Pipe,
+			SumFractal,
+			SinFractal,
+			Billow,
+			MultiFractal,
+			HeterogeneousMultiFractal,
+			HybridMultiFractal,
+			RidgedMultiFractal,
+			Voronoi
+		}
+
 		public NoiseFilter filter
 		{
 			get;
@@ -48,6 +62,18 @@ namespace ProcGen.Noise
 			set;
 		}
 
+		public float scale
+		{
+			get;
+			set;
+		}
+
+		public float bias
+		{
+			get;
+			set;
+		}
+
 		public override Type GetObjectType()
 		{
 			return typeof(Filter);
@@ -56,12 +82,14 @@ namespace ProcGen.Noise
 		public Filter()
 		{
 			filter = NoiseFilter.RidgedMultiFractal;
-			frequency = 10f;
+			frequency = 0.1f;
 			lacunarity = 3f;
-			octaves = 10;
+			octaves = 0;
 			offset = 1f;
-			gain = 0f;
-			exponent = 0f;
+			gain = 1f;
+			exponent = 0.9f;
+			scale = 1f;
+			bias = 0f;
 		}
 
 		public Filter(Filter src)
@@ -115,6 +143,13 @@ namespace ProcGen.Noise
 				filterModule.OctaveCount = octaves;
 				filterModule.Offset = offset;
 				filterModule.Gain = gain;
+				filterModule.SpectralExponent = exponent;
+				if (filter == NoiseFilter.Billow)
+				{
+					Billow obj = (Billow)filterModule;
+					obj.Scale = scale;
+					obj.Bias = bias;
+				}
 			}
 			return (IModule3D)filterModule;
 		}

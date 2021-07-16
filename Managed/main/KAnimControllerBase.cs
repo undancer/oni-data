@@ -72,6 +72,9 @@ public abstract class KAnimControllerBase : MonoBehaviour
 	[SerializeField]
 	protected bool flipY;
 
+	[SerializeField]
+	public bool forceUseGameTime;
+
 	public string defaultAnim;
 
 	protected KAnim.Anim curAnim;
@@ -398,7 +401,7 @@ public abstract class KAnimControllerBase : MonoBehaviour
 			DebugUtil.Assert(value[0].buildBytes != null, "First anim file for " + base.gameObject.name + " needs to be the build file.");
 			for (int i = 0; i < value.Length; i++)
 			{
-				DebugUtil.Assert(value[i] != null, "Anim file is null");
+				DebugUtil.Assert(value[i] != null, "Anim file is null", base.name);
 			}
 			animFiles = new KAnimFile[value.Length];
 			for (int j = 0; j < value.Length; j++)
@@ -703,7 +706,18 @@ public abstract class KAnimControllerBase : MonoBehaviour
 	{
 		if (curBuild == null)
 		{
-			Debug.LogWarning(string.Concat("[", base.gameObject.name, "] Missing build while trying to play anim [", anim_name, "]"), base.gameObject);
+			string[] obj = new string[5]
+			{
+				"[",
+				base.gameObject.name,
+				"] Missing build while trying to play anim [",
+				null,
+				null
+			};
+			HashedString hashedString = anim_name;
+			obj[3] = hashedString.ToString();
+			obj[4] = "]";
+			Debug.LogWarning(string.Concat(obj), base.gameObject);
 			return;
 		}
 		Queue<AnimData> queue = new Queue<AnimData>();

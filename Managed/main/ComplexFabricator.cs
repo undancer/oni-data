@@ -10,13 +10,6 @@ using UnityEngine;
 [AddComponentMenu("KMonoBehaviour/scripts/ComplexFabricator")]
 public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 {
-	public enum ResultState
-	{
-		PassTemperature,
-		Heated,
-		Melted
-	}
-
 	private const int MaxPrefetchCount = 2;
 
 	public bool duplicantOperated = true;
@@ -25,9 +18,6 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 
 	[SerializeField]
 	public HashedString fetchChoreTypeIdHash = Db.Get().ChoreTypes.FabricateFetch.IdHash;
-
-	[SerializeField]
-	public ResultState resultState;
 
 	[SerializeField]
 	public float heatedTemperature;
@@ -103,6 +93,11 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 	private ProgressBar progressBar;
 
 	private static readonly EventSystem.IntraObjectHandler<ComplexFabricator> OnStorageChangeDelegate = new EventSystem.IntraObjectHandler<ComplexFabricator>(delegate(ComplexFabricator component, object data)
+	{
+		component.OnStorageChange(data);
+	});
+
+	private static readonly EventSystem.IntraObjectHandler<ComplexFabricator> OnParticleStorageChangedDelegate = new EventSystem.IntraObjectHandler<ComplexFabricator>(delegate(ComplexFabricator component, object data)
 	{
 		component.OnStorageChange(data);
 	});
@@ -230,6 +225,7 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 		Subscribe(-592767678, OnOperationalChangedDelegate);
 		Subscribe(-905833192, OnCopySettingsDelegate);
 		Subscribe(-1697596308, OnStorageChangeDelegate);
+		Subscribe(-1837862626, OnParticleStorageChangedDelegate);
 		workable = GetComponent<ComplexFabricatorWorkable>();
 		Components.ComplexFabricators.Add(this);
 	}
@@ -527,7 +523,7 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 		ClearMaterialNeeds();
 		foreach (KeyValuePair<Tag, float> missingAmount in missingAmounts)
 		{
-			MaterialNeeds.Instance.UpdateNeed(missingAmount.Key, missingAmount.Value);
+			MaterialNeeds.UpdateNeed(missingAmount.Key, missingAmount.Value, base.gameObject.GetMyWorldId());
 			materialNeedCache.Add(missingAmount.Key, missingAmount.Value);
 		}
 	}
@@ -536,9 +532,22 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 	{
 		foreach (KeyValuePair<Tag, float> item in materialNeedCache)
 		{
-			MaterialNeeds.Instance.UpdateNeed(item.Key, 0f - item.Value);
+			MaterialNeeds.UpdateNeed(item.Key, 0f - item.Value, base.gameObject.GetMyWorldId());
 		}
 		materialNeedCache.Clear();
+	}
+
+	public int HighestHEPQueued()
+	{
+		int num = 0;
+		foreach (KeyValuePair<string, int> recipeQueueCount in recipeQueueCounts)
+		{
+			if (recipeQueueCount.Value > 0)
+			{
+				num = Math.Max(recipe_list[FindRecipeIndex(recipeQueueCount.Key)].consumedHEP, num);
+			}
+		}
+		return num;
 	}
 
 	private void OnFetchComplete()
@@ -875,7 +884,16 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 	protected virtual bool HasIngredients(ComplexRecipe recipe, Storage storage)
 	{
 		ComplexRecipe.RecipeElement[] ingredients = recipe.ingredients;
-		foreach (ComplexRecipe.RecipeElement recipeElement in ingredients)
+		if (recipe.consumedHEP > 0)
+		{
+			HighEnergyParticleStorage component = GetComponent<HighEnergyParticleStorage>();
+			if (component == null || component.Particles < (float)recipe.consumedHEP)
+			{
+				return false;
+			}
+		}
+		ComplexRecipe.RecipeElement[] array = ingredients;
+		foreach (ComplexRecipe.RecipeElement recipeElement in array)
 		{
 			float amountAvailable = storage.GetAmountAvailable(recipeElement.material);
 			if (recipeElement.amount - amountAvailable >= PICKUPABLETUNING.MINIMUM_PICKABLE_AMOUNT)
@@ -899,16 +917,25 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 		{
 			num2 += recipeElement.amount;
 		}
+		Element element = null;
 		ingredients = recipe.ingredients;
 		foreach (ComplexRecipe.RecipeElement recipeElement2 in ingredients)
 		{
 			float num3 = recipeElement2.amount / num2;
-			buildStorage.ConsumeAndGetDisease(recipeElement2.material, recipeElement2.amount, out var disease_info, out var aggregate_temperature);
+			if (recipeElement2.inheritElement)
+			{
+				element = buildStorage.FindFirst(recipeElement2.material).GetComponent<PrimaryElement>().Element;
+			}
+			buildStorage.ConsumeAndGetDisease(recipeElement2.material, recipeElement2.amount, out var _, out var disease_info, out var aggregate_temperature);
 			if (disease_info.count > diseaseInfo.count)
 			{
 				diseaseInfo = disease_info;
 			}
 			num += aggregate_temperature * num3;
+		}
+		if (recipe.consumedHEP > 0)
+		{
+			GetComponent<HighEnergyParticleStorage>().ConsumeAndGet(recipe.consumedHEP);
 		}
 		ingredients = recipe.results;
 		foreach (ComplexRecipe.RecipeElement recipeElement3 in ingredients)
@@ -922,32 +949,36 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 					ReportManager.Instance.ReportValue(ReportManager.ReportType.CaloriesCreated, 0f - component.Calories, StringFormatter.Replace(UI.ENDOFDAYREPORT.NOTES.CRAFTED_USED, "{0}", component.GetProperName()), UI.ENDOFDAYREPORT.NOTES.CRAFTED_CONTEXT);
 				}
 			}
-			switch (resultState)
+			switch (recipeElement3.temperatureOperation)
 			{
-			case ResultState.PassTemperature:
-			case ResultState.Heated:
+			case ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature:
+			case ComplexRecipe.RecipeElement.TemperatureOperation.Heated:
 			{
 				GameObject gameObject2 = GameUtil.KInstantiate(Assets.GetPrefab(recipeElement3.material), Grid.SceneLayer.Ore);
 				int cell = Grid.PosToCell(this);
 				gameObject2.transform.SetPosition(Grid.CellToPosCCC(cell, Grid.SceneLayer.Ore) + outputOffset);
 				PrimaryElement component2 = gameObject2.GetComponent<PrimaryElement>();
 				component2.Units = recipeElement3.amount;
-				component2.Temperature = ((resultState == ResultState.PassTemperature) ? num : heatedTemperature);
+				component2.Temperature = ((recipeElement3.temperatureOperation == ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature) ? num : heatedTemperature);
+				if (element != null)
+				{
+					component2.SetElement(element.id, addTags: false);
+				}
 				gameObject2.SetActive(value: true);
 				float num4 = recipeElement3.amount / recipe.TotalResultUnits();
 				component2.AddDisease(diseaseInfo.idx, Mathf.RoundToInt((float)diseaseInfo.count * num4), "ComplexFabricator.CompleteOrder");
 				gameObject2.GetComponent<KMonoBehaviour>().Trigger(748399584);
 				list.Add(gameObject2);
-				if (storeProduced)
+				if (storeProduced || recipeElement3.storeElement)
 				{
 					outStorage.Store(gameObject2);
 				}
 				break;
 			}
-			case ResultState.Melted:
-				if (storeProduced)
+			case ComplexRecipe.RecipeElement.TemperatureOperation.Melted:
+				if (storeProduced || recipeElement3.storeElement)
 				{
-					float temperature = ElementLoader.GetElement(recipeElement3.material).lowTemp + (ElementLoader.GetElement(recipeElement3.material).highTemp - ElementLoader.GetElement(recipeElement3.material).lowTemp) / 2f;
+					float temperature = ElementLoader.GetElement(recipeElement3.material).defaultValues.temperature;
 					outStorage.AddLiquid(ElementLoader.GetElementID(recipeElement3.material), recipeElement3.amount, temperature, 0, 0);
 				}
 				break;
@@ -1018,5 +1049,29 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 			}
 		}
 		return null;
+	}
+
+	public bool NeedsMoreHEPForQueuedRecipe()
+	{
+		if (hasOpenOrders)
+		{
+			HighEnergyParticleStorage component = GetComponent<HighEnergyParticleStorage>();
+			foreach (KeyValuePair<string, int> recipeQueueCount in recipeQueueCounts)
+			{
+				if (recipeQueueCount.Value <= 0)
+				{
+					continue;
+				}
+				ComplexRecipe[] recipes = GetRecipes();
+				foreach (ComplexRecipe complexRecipe in recipes)
+				{
+					if (complexRecipe.id == recipeQueueCount.Key && (float)complexRecipe.consumedHEP > component.Particles)
+					{
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

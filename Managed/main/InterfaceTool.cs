@@ -69,6 +69,8 @@ public class InterfaceTool : KMonoBehaviour
 
 	public HashedString ViewMode => viewMode;
 
+	public virtual string[] DlcIDs => DlcManager.AVAILABLE_ALL_VERSIONS;
+
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
@@ -84,6 +86,11 @@ public class InterfaceTool : KMonoBehaviour
 
 	public virtual bool ShowHoverUI()
 	{
+		Vector3 pos = Camera.main.ScreenToWorldPoint(KInputManager.GetMousePos());
+		if (OverlayScreen.Instance == null || !ClusterManager.Instance.IsPositionInActiveWorld(pos) || pos.x < 0f || pos.x > Grid.WidthInMeters || pos.y < 0f || pos.y > Grid.HeightInMeters)
+		{
+			return false;
+		}
 		bool result = false;
 		UnityEngine.EventSystems.EventSystem current = UnityEngine.EventSystems.EventSystem.current;
 		if (current != null)
@@ -183,6 +190,13 @@ public class InterfaceTool : KMonoBehaviour
 	{
 		Vector3 vector = new Vector3(Grid.HalfCellSizeInMeters, Grid.HalfCellSizeInMeters, 0f);
 		return Grid.CellToPosCCC(Grid.PosToCell(input), Grid.SceneLayer.Background) + (minimize ? (-vector) : vector);
+	}
+
+	protected Vector2 GetWorldRestrictedPosition(Vector2 input)
+	{
+		input.x = Mathf.Clamp(input.x, ClusterManager.Instance.activeWorld.minimumBounds.x, ClusterManager.Instance.activeWorld.maximumBounds.x);
+		input.y = Mathf.Clamp(input.y, ClusterManager.Instance.activeWorld.minimumBounds.y, ClusterManager.Instance.activeWorld.maximumBounds.y);
+		return input;
 	}
 
 	protected void SetCursor(Texture2D new_cursor, Vector2 offset, CursorMode mode)

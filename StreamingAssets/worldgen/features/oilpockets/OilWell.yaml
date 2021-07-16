@@ -17,6 +17,8 @@ ElementChoiceGroups:
     choices:
       - element: CrudeOil
         weight: 1        
+        overrides:
+          massOverride: 200 # Use old CrudeOil defaultMass to preserve existing seeds.
       - element: CarbonDioxide
         weight: 3        
   RoomBorderChoices0:

@@ -311,7 +311,7 @@ public class LiquidCooledFan : StateMachineComponent<LiquidCooledFan.StatesInsta
 		Game.Instance.accumulators.Accumulate(base.smi.master.waterConsumptionAccumulator, num5);
 		if (num5 != 0f)
 		{
-			liquidStorage.ConsumeAndGetDisease(GameTags.Water, num5, out var disease_info, out var _);
+			liquidStorage.ConsumeAndGetDisease(GameTags.Water, num5, out var _, out var disease_info, out var _);
 			SimMessages.ModifyDiseaseOnCell(Grid.PosToCell(base.gameObject), disease_info.idx, disease_info.count);
 			UpdateMeter();
 		}

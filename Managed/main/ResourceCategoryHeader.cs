@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [AddComponentMenu("KMonoBehaviour/scripts/ResourceCategoryHeader")]
-public class ResourceCategoryHeader : KMonoBehaviour, IPointerEnterHandler, IEventSystemHandler, IPointerExitHandler
+public class ResourceCategoryHeader : KMonoBehaviour, IPointerEnterHandler, IEventSystemHandler, IPointerExitHandler, ISim4000ms
 {
 	[Serializable]
 	public struct ElementReferences
@@ -44,6 +44,8 @@ public class ResourceCategoryHeader : KMonoBehaviour, IPointerEnterHandler, IEve
 
 	private bool anyDiscovered;
 
+	public const float chartHistoryLength = 3000f;
+
 	[MyCmpGet]
 	private ToolTip tooltip;
 
@@ -61,6 +63,8 @@ public class ResourceCategoryHeader : KMonoBehaviour, IPointerEnterHandler, IEve
 
 	[SerializeField]
 	private Image Background;
+
+	public GameObject sparkChart;
 
 	private float cachedAvailable = float.MinValue;
 
@@ -88,6 +92,7 @@ public class ResourceCategoryHeader : KMonoBehaviour, IPointerEnterHandler, IEve
 		base.OnSpawn();
 		tooltip.OnToolTip = OnTooltip;
 		UpdateContents();
+		RefreshChart();
 	}
 
 	private void SetInteractable(bool state)
@@ -177,9 +182,9 @@ public class ResourceCategoryHeader : KMonoBehaviour, IPointerEnterHandler, IEve
 	{
 		Background.color = (is_hovering ? BackgroundHoverColor : new Color(0f, 0f, 0f, 0f));
 		ICollection<Pickupable> collection = null;
-		if (WorldInventory.Instance != null)
+		if (ClusterManager.Instance.activeWorld.worldInventory != null)
 		{
-			collection = WorldInventory.Instance.GetPickupables(ResourceCategoryTag);
+			collection = ClusterManager.Instance.activeWorld.worldInventory.GetPickupables(ResourceCategoryTag);
 		}
 		if (collection == null)
 		{
@@ -233,7 +238,7 @@ public class ResourceCategoryHeader : KMonoBehaviour, IPointerEnterHandler, IEve
 		total = 0f;
 		reserved = 0f;
 		HashSet<Tag> resources = null;
-		if (!WorldInventory.Instance.TryGetDiscoveredResourcesFromTag(ResourceCategoryTag, out resources))
+		if (!DiscoveredResources.Instance.TryGetDiscoveredResourcesFromTag(ResourceCategoryTag, out resources))
 		{
 			return;
 		}
@@ -306,7 +311,14 @@ public class ResourceCategoryHeader : KMonoBehaviour, IPointerEnterHandler, IEve
 	private string OnTooltip()
 	{
 		GetAmounts(doExtras: true, out var available, out var total, out var reserved);
-		return string.Concat(elements.LabelText.text + "\n", string.Format(UI.RESOURCESCREEN.AVAILABLE_TOOLTIP, ResourceCategoryScreen.QuantityTextForMeasure(available, Measure), ResourceCategoryScreen.QuantityTextForMeasure(reserved, Measure), ResourceCategoryScreen.QuantityTextForMeasure(total, Measure)));
+		string str = elements.LabelText.text + "\n";
+		str += string.Format(UI.RESOURCESCREEN.AVAILABLE_TOOLTIP, ResourceCategoryScreen.QuantityTextForMeasure(available, Measure), ResourceCategoryScreen.QuantityTextForMeasure(reserved, Measure), ResourceCategoryScreen.QuantityTextForMeasure(total, Measure));
+		float delta = TrackerTool.Instance.GetResourceStatistic(ClusterManager.Instance.activeWorldId, ResourceCategoryTag).GetDelta(150f);
+		if (delta != 0f)
+		{
+			return str + "\n\n" + string.Format(UI.RESOURCESCREEN.TREND_TOOLTIP, (delta > 0f) ? UI.RESOURCESCREEN.INCREASING_STR : UI.RESOURCESCREEN.DECREASING_STR, GameUtil.GetFormattedMass(Mathf.Abs(delta)));
+		}
+		return str + "\n\n" + UI.RESOURCESCREEN.TREND_TOOLTIP_NO_CHANGE;
 	}
 
 	private ResourceEntry NewResourceEntry(Tag resourceTag, GameUtil.MeasureUnit measure)
@@ -314,5 +326,20 @@ public class ResourceCategoryHeader : KMonoBehaviour, IPointerEnterHandler, IEve
 		ResourceEntry component = Util.KInstantiateUI(Prefab_ResourceEntry, EntryContainer.gameObject, force_active: true).GetComponent<ResourceEntry>();
 		component.SetTag(resourceTag, measure);
 		return component;
+	}
+
+	public void Sim4000ms(float dt)
+	{
+		RefreshChart();
+	}
+
+	private void RefreshChart()
+	{
+		if (sparkChart != null)
+		{
+			ResourceTracker resourceStatistic = TrackerTool.Instance.GetResourceStatistic(ClusterManager.Instance.activeWorldId, ResourceCategoryTag);
+			sparkChart.GetComponentInChildren<LineLayer>().RefreshLine(resourceStatistic.ChartableData(3000f), "resourceAmount");
+			sparkChart.GetComponentInChildren<SparkLayer>().SetColor(Constants.NEUTRAL_COLOR);
+		}
 	}
 }

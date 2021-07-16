@@ -20,7 +20,7 @@ public class QuarantineFeedableMonitor : GameStateMachine<QuarantineFeedableMoni
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = satisfied;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		satisfied.EventTransition(GameHashes.AddUrge, hungry, (Instance smi) => smi.IsHungry());
 		hungry.EventTransition(GameHashes.RemoveUrge, satisfied, (Instance smi) => !smi.IsHungry());
 	}

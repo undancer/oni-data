@@ -140,7 +140,7 @@ public class TinkerStation : Workable, IGameObjectEffectDescriptor, ISim1000ms
 	protected override void OnCompleteWork(Worker worker)
 	{
 		base.OnCompleteWork(worker);
-		storage.ConsumeAndGetDisease(inputMaterial, massPerTinker, out var _, out var _);
+		storage.ConsumeAndGetDisease(inputMaterial, massPerTinker, out var _, out var _, out var _);
 		GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(outputPrefab), base.transform.GetPosition(), Grid.SceneLayer.Ore);
 		gameObject.GetComponent<PrimaryElement>().Temperature = outputTemperature;
 		gameObject.SetActive(value: true);
@@ -177,9 +177,9 @@ public class TinkerStation : Workable, IGameObjectEffectDescriptor, ISim1000ms
 
 	private bool ToolsRequested()
 	{
-		if (MaterialNeeds.Instance.GetAmount(outputPrefab) > 0f)
+		if (MaterialNeeds.GetAmount(outputPrefab, base.gameObject.GetMyWorldId(), includeRelatedWorlds: false) > 0f)
 		{
-			return WorldInventory.Instance.GetAmount(outputPrefab) <= 0f;
+			return this.GetMyWorld().worldInventory.GetAmount(outputPrefab, includeRelatedWorlds: true) <= 0f;
 		}
 		return false;
 	}

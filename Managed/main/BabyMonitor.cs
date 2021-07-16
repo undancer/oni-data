@@ -10,6 +10,10 @@ public class BabyMonitor : GameStateMachine<BabyMonitor, BabyMonitor.Instance, I
 		public Tag adultPrefab;
 
 		public string onGrowDropID;
+
+		public bool forceAdultNavType;
+
+		public float adultThreshold = 5f;
 	}
 
 	public new class Instance : GameInstance
@@ -39,8 +43,11 @@ public class BabyMonitor : GameStateMachine<BabyMonitor, BabyMonitor.Instance, I
 					amountInstance.value = num * amountInstance.GetMax();
 				}
 			}
-			Navigator component = base.smi.GetComponent<Navigator>();
-			gameObject.GetComponent<Navigator>().SetCurrentNavType(component.CurrentNavType);
+			if (!base.smi.def.forceAdultNavType)
+			{
+				Navigator component = base.smi.GetComponent<Navigator>();
+				gameObject.GetComponent<Navigator>().SetCurrentNavType(component.CurrentNavType);
+			}
 			gameObject.Trigger(-2027483228, base.gameObject);
 			KSelectable component2 = base.gameObject.GetComponent<KSelectable>();
 			if (SelectTool.Instance != null && SelectTool.Instance.selected != null && SelectTool.Instance.selected == component2)
@@ -76,7 +83,7 @@ public class BabyMonitor : GameStateMachine<BabyMonitor, BabyMonitor.Instance, I
 	private static bool IsReadyToSpawnAdult(Instance smi)
 	{
 		AmountInstance amountInstance = Db.Get().Amounts.Age.Lookup(smi.gameObject);
-		float num = 5f;
+		float num = smi.def.adultThreshold;
 		if (GenericGameSettings.instance.acceleratedLifecycle)
 		{
 			num = 0.005f;

@@ -231,7 +231,7 @@ public class FetchAreaChore : Chore<FetchAreaChore.StatesInstance>
 					continue;
 				}
 				component.UpdateTagBits();
-				if (component.HasAllTags_AssumeLaundered(ref rootChore.requiredTagBits) && !component.HasAnyTags_AssumeLaundered(ref rootChore.forbiddenTagBits) && !list.Contains(pickupable2) && rootContext.consumerState.consumer.CanReach(pickupable2))
+				if (component.HasAnyTags_AssumeLaundered(ref rootChore.tagBits) && component.HasAllTags_AssumeLaundered(ref rootChore.requiredTagBits) && !component.HasAnyTags_AssumeLaundered(ref rootChore.forbiddenTagBits) && !list.Contains(pickupable2) && rootContext.consumerState.consumer.CanReach(pickupable2))
 				{
 					float unreservedAmount = pickupable2.UnreservedAmount;
 					list.Add(pickupable2);
@@ -264,7 +264,7 @@ public class FetchAreaChore : Chore<FetchAreaChore.StatesInstance>
 				}
 				Precondition.Context context2 = pooledList[j];
 				FetchChore fetchChore2 = context2.chore as FetchChore;
-				if (fetchChore2 != rootChore && context2.IsSuccess() && fetchChore2.overrideTarget == null && fetchChore2.driver == null && fetchChore2.tagBits.AreEqual(ref rootChore.tagBits))
+				if (fetchChore2 != rootChore && context2.IsSuccess() && fetchChore2.overrideTarget == null && fetchChore2.driver == null && fetchChore2.tagBits.AreEqual(ref rootChore.tagBits) && fetchChore2.requiredTagBits.AreEqual(ref rootChore.requiredTagBits) && fetchChore2.forbiddenTagBits.AreEqual(ref rootChore.forbiddenTagBits))
 				{
 					num4 = Mathf.Min(fetchChore2.originalAmount, num2 - num5);
 					if (minTakeAmount > 0f)

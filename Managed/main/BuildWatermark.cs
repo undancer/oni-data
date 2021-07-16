@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BuildWatermark : KScreen
 {
+	public bool interactable = true;
+
 	public LocText textDisplay;
 
 	public ToolTip toolTip;
@@ -26,34 +28,43 @@ public class BuildWatermark : KScreen
 		RefreshText();
 	}
 
-	public void RefreshText()
+	public static string GetBuildText()
 	{
-		string str = "CS-";
-		bool flag = true;
-		bool flag2 = DistributionPlatform.Initialized && DistributionPlatform.Inst.IsArchiveBranch;
-		button.ClearOnClick();
+		string str = LaunchInitializer.BuildPrefix() + "-";
 		if (Application.isEditor)
 		{
 			str += "<EDITOR>";
 		}
 		else
 		{
-			str += 469300u;
+			str += 471618u;
 			if (DebugHandler.enabled)
 			{
 				str += "-D";
 			}
 		}
+		return str;
+	}
+
+	public void RefreshText()
+	{
+		bool flag = true;
+		bool flag2 = DistributionPlatform.Initialized && DistributionPlatform.Inst.IsArchiveBranch;
+		string buildText = GetBuildText();
+		button.ClearOnClick();
 		if (flag)
 		{
-			textDisplay.SetText(string.Format(UI.DEVELOPMENTBUILDS.WATERMARK, str));
+			textDisplay.SetText(string.Format(UI.DEVELOPMENTBUILDS.WATERMARK, buildText));
 			toolTip.ClearMultiStringTooltip();
 		}
 		else
 		{
-			textDisplay.SetText(string.Format(UI.DEVELOPMENTBUILDS.TESTING_WATERMARK, str));
+			textDisplay.SetText(string.Format(UI.DEVELOPMENTBUILDS.TESTING_WATERMARK, buildText));
 			toolTip.SetSimpleTooltip(UI.DEVELOPMENTBUILDS.TESTING_TOOLTIP);
-			button.onClick += ShowTestingMessage;
+			if (interactable)
+			{
+				button.onClick += ShowTestingMessage;
+			}
 		}
 		foreach (GameObject archiveIcon in archiveIcons)
 		{

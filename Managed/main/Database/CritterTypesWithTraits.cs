@@ -1,10 +1,8 @@
 using System.Collections.Generic;
-using System.IO;
-using KSerialization;
 
 namespace Database
 {
-	public class CritterTypesWithTraits : ColonyAchievementRequirement
+	public class CritterTypesWithTraits : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		public Dictionary<Tag, bool> critterTypesToCheck = new Dictionary<Tag, bool>();
 
@@ -12,7 +10,7 @@ namespace Database
 
 		private bool hasTrait;
 
-		public CritterTypesWithTraits(List<Tag> critterTypes, bool hasTrait = true)
+		public CritterTypesWithTraits(List<Tag> critterTypes)
 		{
 			foreach (Tag critterType in critterTypes)
 			{
@@ -21,26 +19,16 @@ namespace Database
 					critterTypesToCheck.Add(critterType, value: false);
 				}
 			}
-			this.hasTrait = hasTrait;
+			hasTrait = false;
 			trait = GameTags.Creatures.Wild;
-		}
-
-		public override void Update()
-		{
-			foreach (Capturable item in Components.Capturables.Items)
-			{
-				if (item.HasTag(trait) == hasTrait && critterTypesToCheck.ContainsKey(item.PrefabID()))
-				{
-					critterTypesToCheck[item.PrefabID()] = true;
-				}
-			}
 		}
 
 		public override bool Success()
 		{
+			HashSet<Tag> tamedCritterTypes = SaveGame.Instance.GetComponent<ColonyAchievementTracker>().tamedCritterTypes;
 			foreach (KeyValuePair<Tag, bool> item in critterTypesToCheck)
 			{
-				if (!item.Value)
+				if (!tamedCritterTypes.Contains(item.Key))
 				{
 					return false;
 				}
@@ -48,18 +36,7 @@ namespace Database
 			return true;
 		}
 
-		public override void Serialize(BinaryWriter writer)
-		{
-			writer.Write(critterTypesToCheck.Count);
-			foreach (KeyValuePair<Tag, bool> item in critterTypesToCheck)
-			{
-				writer.WriteKleiString(item.Key.ToString());
-				writer.Write((byte)(item.Value ? 1u : 0u));
-			}
-			writer.Write((byte)(hasTrait ? 1u : 0u));
-		}
-
-		public override void Deserialize(IReader reader)
+		public void Deserialize(IReader reader)
 		{
 			critterTypesToCheck = new Dictionary<Tag, bool>();
 			int num = reader.ReadInt32();

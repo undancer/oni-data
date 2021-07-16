@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Klei.AI;
 using KSerialization;
 using STRINGS;
 using TUNING;
@@ -157,7 +158,7 @@ public class Constructable : Workable, ISaveLoadable
 					{
 						if (this != null && base.gameObject != null)
 						{
-							FinishConstruction(connections);
+							FinishConstruction(connections, worker);
 						}
 					});
 				}
@@ -173,13 +174,13 @@ public class Constructable : Workable, ISaveLoadable
 					{
 						component5.Subscribe(-21016276, delegate
 						{
-							FinishConstruction(connections);
+							FinishConstruction(connections, worker);
 						});
 					}
 					else
 					{
 						Debug.LogWarning("Why am I trying to replace a: " + replacementCandidate.name);
-						FinishConstruction(connections);
+						FinishConstruction(connections, worker);
 					}
 				}
 				KAnimGraphTileVisualizer component6 = replacementCandidate.GetComponent<KAnimGraphTileVisualizer>();
@@ -198,18 +199,24 @@ public class Constructable : Workable, ISaveLoadable
 		}
 		if (flag2)
 		{
-			FinishConstruction(connections);
+			FinishConstruction(connections, worker);
 		}
 		PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Building, GetComponent<KSelectable>().GetName(), base.transform);
 	}
 
-	private void FinishConstruction(UtilityConnections connections)
+	private void FinishConstruction(UtilityConnections connections, Worker workerForGameplayEvent)
 	{
 		Rotatable component = GetComponent<Rotatable>();
 		Orientation orientation = ((component != null) ? component.GetOrientation() : Orientation.Neutral);
 		int cell = Grid.PosToCell(base.transform.GetLocalPosition());
 		UnmarkArea();
 		GameObject gameObject = building.Def.Build(cell, orientation, storage, selectedElementsTags, initialTemperature, playsound: true, GameClock.Instance.GetTime());
+		BonusEvent.GameplayEventData gameplayEventData = new BonusEvent.GameplayEventData();
+		gameplayEventData.building = gameObject.GetComponent<BuildingComplete>();
+		gameplayEventData.workable = this;
+		gameplayEventData.worker = workerForGameplayEvent;
+		gameplayEventData.eventTrigger = GameHashes.NewBuilding;
+		GameplayEventManager.Instance.Trigger(-1661515756, gameplayEventData);
 		gameObject.transform.rotation = base.transform.rotation;
 		Rotatable component2 = gameObject.GetComponent<Rotatable>();
 		if (component2 != null)
@@ -231,6 +238,7 @@ public class Constructable : Workable, ISaveLoadable
 				((SelectTool)PlayerController.Instance.ActiveTool).SelectNextFrame(gameObject.GetComponent<KSelectable>());
 			}
 		}
+		gameObject.Trigger(2121280625, this);
 		storage.ConsumeAllIgnoringDisease();
 		finished = true;
 		this.DeleteObject();
@@ -239,7 +247,7 @@ public class Constructable : Workable, ISaveLoadable
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		invalidLocation = new Notification(MISC.NOTIFICATIONS.INVALIDCONSTRUCTIONLOCATION.NAME, NotificationType.BadMinor, HashedString.Invalid, (List<Notification> notificationList, object data) => string.Concat(MISC.NOTIFICATIONS.INVALIDCONSTRUCTIONLOCATION.TOOLTIP, notificationList.ReduceMessages(countNames: false)));
+		invalidLocation = new Notification(MISC.NOTIFICATIONS.INVALIDCONSTRUCTIONLOCATION.NAME, NotificationType.BadMinor, (List<Notification> notificationList, object data) => string.Concat(MISC.NOTIFICATIONS.INVALIDCONSTRUCTIONLOCATION.TOOLTIP, notificationList.ReduceMessages(countNames: false)));
 		CellOffset[][] table = OffsetGroups.InvertedStandardTable;
 		if (building.Def.IsTilePiece)
 		{
@@ -253,6 +261,10 @@ public class Constructable : Workable, ISaveLoadable
 		if (rotatable == null)
 		{
 			MarkArea();
+		}
+		if (Db.Get().TechItems.GetTechTierForItem(building.Def.PrefabID) > 1)
+		{
+			requireMinionToWork = true;
 		}
 		workerStatusItem = Db.Get().DuplicantStatusItems.Building;
 		workingStatusItem = null;
@@ -287,7 +299,7 @@ public class Constructable : Workable, ISaveLoadable
 		foreach (Recipe.Ingredient ingredient in allIngredients)
 		{
 			fetchList.Add(ingredient.tag, null, null, ingredient.amount);
-			MaterialNeeds.Instance.UpdateNeed(ingredient.tag, ingredient.amount);
+			MaterialNeeds.UpdateNeed(ingredient.tag, ingredient.amount, base.gameObject.GetMyWorldId());
 		}
 		if (!building.Def.IsTilePiece)
 		{
@@ -617,7 +629,7 @@ public class Constructable : Workable, ISaveLoadable
 			Recipe.Ingredient[] allIngredients = Recipe.GetAllIngredients(SelectedElementsTags);
 			foreach (Recipe.Ingredient ingredient in allIngredients)
 			{
-				MaterialNeeds.Instance.UpdateNeed(ingredient.tag, 0f - ingredient.amount);
+				MaterialNeeds.UpdateNeed(ingredient.tag, 0f - ingredient.amount, base.gameObject.GetMyWorldId());
 			}
 			materialNeedsCleared = true;
 		}

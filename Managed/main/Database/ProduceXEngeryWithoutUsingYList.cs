@@ -1,10 +1,8 @@
 using System.Collections.Generic;
-using System.IO;
-using KSerialization;
 
 namespace Database
 {
-	public class ProduceXEngeryWithoutUsingYList : ColonyAchievementRequirement
+	public class ProduceXEngeryWithoutUsingYList : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		public List<Tag> disallowedBuildings = new List<Tag>();
 
@@ -46,19 +44,7 @@ namespace Database
 			return false;
 		}
 
-		public override void Serialize(BinaryWriter writer)
-		{
-			writer.Write(disallowedBuildings.Count);
-			foreach (Tag disallowedBuilding in disallowedBuildings)
-			{
-				writer.WriteKleiString(disallowedBuilding.ToString());
-			}
-			writer.Write((double)amountProduced);
-			writer.Write((double)amountToProduce);
-			writer.Write((byte)(usedDisallowedBuilding ? 1u : 0u));
-		}
-
-		public override void Deserialize(IReader reader)
+		public void Deserialize(IReader reader)
 		{
 			int num = reader.ReadInt32();
 			disallowedBuildings = new List<Tag>(num);

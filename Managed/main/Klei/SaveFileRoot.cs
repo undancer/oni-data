@@ -11,7 +11,7 @@ namespace Klei
 
 		public Dictionary<string, byte[]> streamed;
 
-		public string worldID;
+		public string clusterID;
 
 		public List<ModInfo> requiredMods;
 

@@ -21,19 +21,22 @@ public class ElectricalUtilityNetwork : UtilityNetwork
 
 	private float timeOverloadNotificationDisplayed;
 
-	public override void AddItem(int cell, object item)
+	public override void AddItem(object item)
 	{
-		Wire wire = (Wire)item;
-		Wire.WattageRating maxWattageRating = wire.MaxWattageRating;
-		List<Wire> list = wireGroups[(int)maxWattageRating];
-		if (list == null)
+		if (item.GetType() == typeof(Wire))
 		{
-			list = new List<Wire>();
-			wireGroups[(int)maxWattageRating] = list;
+			Wire wire = (Wire)item;
+			Wire.WattageRating maxWattageRating = wire.MaxWattageRating;
+			List<Wire> list = wireGroups[(int)maxWattageRating];
+			if (list == null)
+			{
+				list = new List<Wire>();
+				wireGroups[(int)maxWattageRating] = list;
+			}
+			list.Add(wire);
+			allWires.Add(wire);
+			timeOverloaded = Mathf.Max(timeOverloaded, wire.circuitOverloadTime);
 		}
-		list.Add(wire);
-		allWires.Add(wire);
-		timeOverloaded = Mathf.Max(timeOverloaded, wire.circuitOverloadTime);
 	}
 
 	public override void Reset(UtilityNetworkGridNode[] grid)
@@ -120,7 +123,7 @@ public class ElectricalUtilityNetwork : UtilityNetwork
 			if (overloadedNotification == null)
 			{
 				timeOverloadNotificationDisplayed = 0f;
-				overloadedNotification = new Notification(MISC.NOTIFICATIONS.CIRCUIT_OVERLOADED.NAME, NotificationType.BadMinor, HashedString.Invalid, null, null, expires: true, 0f, null, null, targetOverloadedWire.transform);
+				overloadedNotification = new Notification(MISC.NOTIFICATIONS.CIRCUIT_OVERLOADED.NAME, NotificationType.BadMinor, null, null, expires: true, 0f, null, null, targetOverloadedWire.transform);
 				GameScheduler.Instance.Schedule("Power Tutorial", 2f, delegate
 				{
 					Tutorial.Instance.TutorialMessage(Tutorial.TutorialMessages.TM_Power);
@@ -161,7 +164,7 @@ public class ElectricalUtilityNetwork : UtilityNetwork
 		return 0f;
 	}
 
-	public override void RemoveItem(int cell, object item)
+	public override void RemoveItem(object item)
 	{
 		if (item.GetType() == typeof(Wire))
 		{

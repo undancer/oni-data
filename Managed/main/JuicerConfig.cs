@@ -16,7 +16,6 @@ public class JuicerConfig : IBuildingConfig
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef("Juicer", 3, 4, "juicer_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER1);
-		obj.DlcId = "PACK1";
 		obj.ViewMode = OverlayModes.LiquidConduits.ID;
 		obj.Floodable = true;
 		obj.AudioCategory = "Metal";

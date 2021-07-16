@@ -26,6 +26,8 @@ public class OverlayScreen : KMonoBehaviour
 
 	public static HashSet<Tag> SolidConveyorIDs = new HashSet<Tag>();
 
+	public static HashSet<Tag> RadiationIDs = new HashSet<Tag>();
+
 	[EventRef]
 	[SerializeField]
 	public string techViewSoundPath;
@@ -162,6 +164,7 @@ public class OverlayScreen : KMonoBehaviour
 		RegisterMode(new OverlayModes.Logic(logicModeUIPrefab));
 		RegisterMode(new OverlayModes.SolidConveyor());
 		RegisterMode(new OverlayModes.TileMode());
+		RegisterMode(new OverlayModes.Radiation());
 	}
 
 	private void RegisterMode(OverlayModes.Mode mode)
@@ -189,7 +192,6 @@ public class OverlayScreen : KMonoBehaviour
 		{
 			ManagementMenu.Instance.CloseAll();
 		}
-		ResourceCategoryScreen.Instance.Show(newMode == OverlayModes.None.ID && Game.Instance.GameStarted());
 		SimDebugView.Instance.SetMode(newMode);
 		if (!modeInfos.TryGetValue(newMode, out currentModeInfo))
 		{

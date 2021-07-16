@@ -8,6 +8,9 @@ public class ReportScreen : KScreen
 	private LocText title;
 
 	[SerializeField]
+	private KButton closeButton;
+
+	[SerializeField]
 	private KButton prevButton;
 
 	[SerializeField]
@@ -47,6 +50,10 @@ public class ReportScreen : KScreen
 	{
 		base.OnPrefabInit();
 		Instance = this;
+		closeButton.onClick += delegate
+		{
+			ManagementMenu.Instance.CloseAll();
+		};
 		prevButton.onClick += delegate
 		{
 			ShowReport(currentReport.day - 1);

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Klei.CustomSettings;
 using ProcGen;
-using ProcGenGame;
 using UnityEngine;
 
 [AddComponentMenu("KMonoBehaviour/scripts/DestinationSelectPanel")]
@@ -35,6 +35,14 @@ public class DestinationSelectPanel : KMonoBehaviour
 	[SerializeField]
 	private float centeringSpeed = 0.5f;
 
+	[SerializeField]
+	private GameObject moonContainer;
+
+	[SerializeField]
+	private GameObject moonPrefab;
+
+	private static int chosenClusterCategorySetting;
+
 	private float offset;
 
 	private int selectedIndex = -1;
@@ -43,9 +51,11 @@ public class DestinationSelectPanel : KMonoBehaviour
 
 	private int numAsteroids;
 
-	private List<string> worldNames;
+	private List<string> clusterKeys;
 
-	private Dictionary<string, ColonyDestinationAsteroidData> asteroidData = new Dictionary<string, ColonyDestinationAsteroidData>();
+	private Dictionary<string, string> clusterStartWorlds;
+
+	private Dictionary<string, ColonyDestinationAsteroidBeltData> asteroidData = new Dictionary<string, ColonyDestinationAsteroidBeltData>();
 
 	private Vector2 dragStartPos;
 
@@ -55,11 +65,23 @@ public class DestinationSelectPanel : KMonoBehaviour
 
 	private const string debugFmt = "{world}: {seed} [{traits}] {{settings}}";
 
+	public static int ChosenClusterCategorySetting
+	{
+		get
+		{
+			return chosenClusterCategorySetting;
+		}
+		set
+		{
+			chosenClusterCategorySetting = value;
+		}
+	}
+
 	private float min => asteroidContainer.rect.x + offset;
 
 	private float max => min + asteroidContainer.rect.width;
 
-	public event Action<ColonyDestinationAsteroidData> OnAsteroidClicked;
+	public event Action<ColonyDestinationAsteroidBeltData> OnAsteroidClicked;
 
 	protected override void OnPrefabInit()
 	{
@@ -89,10 +111,10 @@ public class DestinationSelectPanel : KMonoBehaviour
 		offset += num;
 		int num2 = selectedIndex;
 		selectedIndex = Mathf.RoundToInt((0f - offset) / asteroidXSeparation);
-		selectedIndex = Mathf.Clamp(selectedIndex, 0, worldNames.Count - 1);
+		selectedIndex = Mathf.Clamp(selectedIndex, 0, clusterStartWorlds.Count - 1);
 		if (num2 != selectedIndex)
 		{
-			this.OnAsteroidClicked(asteroidData[worldNames[selectedIndex]]);
+			this.OnAsteroidClicked(asteroidData[clusterKeys[selectedIndex]]);
 			KFMOD.PlayUISound(GlobalAssets.GetSound("DestinationSelect_Scroll"));
 		}
 	}
@@ -106,31 +128,21 @@ public class DestinationSelectPanel : KMonoBehaviour
 
 	private void ClickLeft()
 	{
-		selectedIndex = Mathf.Clamp(selectedIndex - 1, 0, worldNames.Count - 1);
-		this.OnAsteroidClicked(asteroidData[worldNames[selectedIndex]]);
+		selectedIndex = Mathf.Clamp(selectedIndex - 1, 0, clusterKeys.Count - 1);
+		this.OnAsteroidClicked(asteroidData[clusterKeys[selectedIndex]]);
 	}
 
 	private void ClickRight()
 	{
-		selectedIndex = Mathf.Clamp(selectedIndex + 1, 0, worldNames.Count - 1);
-		this.OnAsteroidClicked(asteroidData[worldNames[selectedIndex]]);
+		selectedIndex = Mathf.Clamp(selectedIndex + 1, 0, clusterKeys.Count - 1);
+		this.OnAsteroidClicked(asteroidData[clusterKeys[selectedIndex]]);
 	}
 
-	protected override void OnSpawn()
+	public void Init()
 	{
-		WorldGen.LoadSettings();
-		worldNames = SettingsCache.worlds.GetNames();
-		foreach (string worldName in worldNames)
-		{
-			ColonyDestinationAsteroidData value = new ColonyDestinationAsteroidData(worldName, 0);
-			asteroidData[worldName] = value;
-		}
-		worldNames.Sort(delegate(string a, string b)
-		{
-			ColonyDestinationAsteroidData colonyDestinationAsteroidData = asteroidData[a];
-			ColonyDestinationAsteroidData colonyDestinationAsteroidData2 = asteroidData[b];
-			return colonyDestinationAsteroidData.difficulty.CompareTo(colonyDestinationAsteroidData2.difficulty);
-		});
+		clusterKeys = new List<string>();
+		clusterStartWorlds = new Dictionary<string, string>();
+		UpdateDisplayedClusters();
 	}
 
 	private void Update()
@@ -161,38 +173,99 @@ public class DestinationSelectPanel : KMonoBehaviour
 		}
 		float x = asteroidContainer.rect.min.x;
 		float x2 = asteroidContainer.rect.max.x;
-		offset = Mathf.Clamp(offset, (float)(-(worldNames.Count - 1)) * asteroidXSeparation + x, x2);
+		offset = Mathf.Clamp(offset, (float)(-(clusterStartWorlds.Count - 1)) * asteroidXSeparation + x, x2);
 		RePlaceAsteroids();
+		for (int i = 0; i < moonContainer.transform.childCount; i++)
+		{
+			moonContainer.transform.GetChild(i).GetChild(0).SetLocalPosition(new Vector3(0f, 1.5f + 3f * Mathf.Sin(((float)i + Time.realtimeSinceStartup) * 1.25f), 0f));
+		}
+	}
+
+	public void UpdateDisplayedClusters()
+	{
+		clusterKeys.Clear();
+		clusterStartWorlds.Clear();
+		asteroidData.Clear();
+		foreach (KeyValuePair<string, ClusterLayout> item in SettingsCache.clusterLayouts.clusterCache)
+		{
+			if ((!DlcManager.FeatureClusterSpaceEnabled() || !(item.Key == "clusters/SandstoneDefault")) && item.Value.clusterCategory == ChosenClusterCategorySetting)
+			{
+				clusterKeys.Add(item.Key);
+				ColonyDestinationAsteroidBeltData value = new ColonyDestinationAsteroidBeltData(item.Value.GetStartWorld(), 0, item.Key);
+				asteroidData[item.Key] = value;
+				clusterStartWorlds.Add(item.Key, item.Value.GetStartWorld());
+			}
+		}
+		clusterKeys.Sort((string a, string b) => SettingsCache.clusterLayouts.clusterCache[a].menuOrder.CompareTo(SettingsCache.clusterLayouts.clusterCache[b].menuOrder));
 	}
 
 	[ContextMenu("RePlaceAsteroids")]
 	public void RePlaceAsteroids()
 	{
 		BeginAsteroidDrawing();
-		for (int i = 0; i < worldNames.Count; i++)
+		for (int i = 0; i < clusterKeys.Count; i++)
 		{
-			if (i == selectedIndex)
-			{
-				continue;
-			}
-			float num = offset + (float)i * asteroidXSeparation;
-			if (!(num + offset + asteroidXSeparation < min) && !(num + offset - asteroidXSeparation > max))
-			{
-				GetAsteroid(worldNames[i], 1f).transform.SetLocalPosition(new Vector3(num, 0f, 0f));
-				if (numAsteroids > 100)
-				{
-					break;
-				}
-			}
+			float x = offset + (float)i * asteroidXSeparation;
+			GetAsteroid(clusterKeys[i], (i == selectedIndex) ? asteroidFocusScale : 1f).transform.SetLocalPosition(new Vector3(x, (i == selectedIndex) ? (5f + 10f * Mathf.Sin(Time.realtimeSinceStartup * 1f)) : 0f, 0f));
 		}
-		float x = offset + (float)selectedIndex * asteroidXSeparation;
-		GetAsteroid(worldNames[selectedIndex], asteroidFocusScale).transform.SetLocalPosition(new Vector3(x, 0f, 0f));
 		EndAsteroidDrawing();
 	}
 
 	private void BeginAsteroidDrawing()
 	{
 		numAsteroids = 0;
+	}
+
+	private void ShowMoons(ColonyDestinationAsteroidBeltData asteroid)
+	{
+		if (asteroid.worlds.Count > 0)
+		{
+			while (moonContainer.transform.childCount < asteroid.worlds.Count)
+			{
+				UnityEngine.Object.Instantiate(moonPrefab, moonContainer.transform);
+			}
+			for (int i = 0; i < asteroid.worlds.Count; i++)
+			{
+				KBatchedAnimController componentInChildren = moonContainer.transform.GetChild(i).GetComponentInChildren<KBatchedAnimController>();
+				int index = (-1 + i + asteroid.worlds.Count / 2) % asteroid.worlds.Count;
+				ProcGen.World world = null;
+				world = asteroid.worlds[index];
+				KAnimFile anim = Assets.GetAnim(world.asteroidIcon.IsNullOrWhiteSpace() ? AsteroidGridEntity.DEFAULT_ASTEROID_ICON_ANIM : world.asteroidIcon);
+				if (anim != null)
+				{
+					componentInChildren.SetVisiblity(is_visible: true);
+					componentInChildren.SwapAnims(new KAnimFile[1]
+					{
+						anim
+					});
+					componentInChildren.initialMode = KAnim.PlayMode.Loop;
+					componentInChildren.initialAnim = "idle_loop";
+					componentInChildren.gameObject.SetActive(value: true);
+					if (componentInChildren.HasAnimation(componentInChildren.initialAnim))
+					{
+						componentInChildren.Play(componentInChildren.initialAnim, KAnim.PlayMode.Loop);
+					}
+					componentInChildren.transform.parent.gameObject.SetActive(value: true);
+				}
+			}
+			for (int j = asteroid.worlds.Count; j < moonContainer.transform.childCount; j++)
+			{
+				KBatchedAnimController componentInChildren2 = moonContainer.transform.GetChild(j).GetComponentInChildren<KBatchedAnimController>();
+				if (componentInChildren2 != null)
+				{
+					componentInChildren2.SetVisiblity(is_visible: false);
+				}
+				moonContainer.transform.GetChild(j).gameObject.SetActive(value: false);
+			}
+		}
+		else
+		{
+			KBatchedAnimController[] componentsInChildren = moonContainer.GetComponentsInChildren<KBatchedAnimController>();
+			for (int k = 0; k < componentsInChildren.Length; k++)
+			{
+				componentsInChildren[k].SetVisiblity(is_visible: false);
+			}
+		}
 	}
 
 	private DestinationAsteroid2 GetAsteroid(string name, float scale)
@@ -208,10 +281,10 @@ public class DestinationSelectPanel : KMonoBehaviour
 			destinationAsteroid.OnClicked += this.OnAsteroidClicked;
 			asteroids.Add(destinationAsteroid);
 		}
+		destinationAsteroid.SetAsteroid(asteroidData[name]);
 		asteroidData[name].TargetScale = scale;
 		asteroidData[name].Scale += (asteroidData[name].TargetScale - asteroidData[name].Scale) * focusScaleSpeed * Time.unscaledDeltaTime;
 		destinationAsteroid.transform.localScale = Vector3.one * asteroidData[name].Scale;
-		destinationAsteroid.SetAsteroid(asteroidData[name]);
 		numAsteroids++;
 		return destinationAsteroid;
 	}
@@ -224,34 +297,49 @@ public class DestinationSelectPanel : KMonoBehaviour
 		}
 	}
 
-	public ColonyDestinationAsteroidData SelectAsteroid(string name, int seed)
+	public ColonyDestinationAsteroidBeltData SelectAsteroid(string name, int seed)
 	{
-		selectedIndex = worldNames.IndexOf(name);
+		selectedIndex = clusterKeys.IndexOf(name);
 		asteroidData[name].ReInitialize(seed);
+		ShowMoons(asteroidData[name]);
 		return asteroidData[name];
+	}
+
+	public string GetDefaultAsteroid()
+	{
+		return clusterKeys.First();
+	}
+
+	public ColonyDestinationAsteroidBeltData SelectDefaultAsteroid(int seed)
+	{
+		selectedIndex = 0;
+		string key = asteroidData.Keys.First();
+		asteroidData[key].ReInitialize(seed);
+		ShowMoons(asteroidData[key]);
+		return asteroidData[key];
 	}
 
 	public void ScrollLeft()
 	{
 		int index = Mathf.Max(selectedIndex - 1, 0);
-		this.OnAsteroidClicked(asteroidData[worldNames[index]]);
+		this.OnAsteroidClicked(asteroidData[clusterKeys[index]]);
 	}
 
 	public void ScrollRight()
 	{
-		int index = Mathf.Min(selectedIndex + 1, worldNames.Count - 1);
-		this.OnAsteroidClicked(asteroidData[worldNames[index]]);
+		int index = Mathf.Min(selectedIndex + 1, clusterStartWorlds.Count - 1);
+		this.OnAsteroidClicked(asteroidData[clusterKeys[index]]);
 	}
 
 	private void DebugCurrentSetting()
 	{
-		ColonyDestinationAsteroidData colonyDestinationAsteroidData = asteroidData[worldNames[selectedIndex]];
+		ColonyDestinationAsteroidBeltData colonyDestinationAsteroidBeltData = asteroidData[clusterKeys[selectedIndex]];
 		string text = "{world}: {seed} [{traits}] {{settings}}";
-		string properName = colonyDestinationAsteroidData.properName;
-		string newValue = colonyDestinationAsteroidData.seed.ToString();
-		text = text.Replace("{world}", properName);
+		string startWorldName = colonyDestinationAsteroidBeltData.startWorldName;
+		string newValue = colonyDestinationAsteroidBeltData.seed.ToString();
+		text = text.Replace("{world}", startWorldName);
 		text = text.Replace("{seed}", newValue);
-		List<AsteroidDescriptor> traitDescriptors = colonyDestinationAsteroidData.GetTraitDescriptors();
+		List<AsteroidDescriptor> traitDescriptors = colonyDestinationAsteroidBeltData.GetTraitDescriptors();
 		string[] array = new string[traitDescriptors.Count];
 		for (int i = 0; i < traitDescriptors.Count; i++)
 		{
@@ -275,7 +363,7 @@ public class DestinationSelectPanel : KMonoBehaviour
 				if (qualitySetting.Value.coordinate_dimension >= 0 && qualitySetting.Value.coordinate_dimension_width >= 0)
 				{
 					SettingLevel currentQualitySetting = CustomGameSettings.Instance.GetCurrentQualitySetting(qualitySetting.Key);
-					if (currentQualitySetting.id != qualitySetting.Value.default_level_id)
+					if (currentQualitySetting.id != qualitySetting.Value.GetDefaultLevelId())
 					{
 						list.Add($"{qualitySetting.Value.label}={currentQualitySetting.label}");
 					}

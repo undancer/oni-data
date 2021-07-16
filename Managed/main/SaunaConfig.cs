@@ -20,15 +20,14 @@ public class SaunaConfig : IBuildingConfig
 			"Metal",
 			"BuildingWood"
 		}, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER2);
-		obj.DlcId = "PACK1";
 		obj.ViewMode = OverlayModes.GasConduits.ID;
 		obj.Floodable = true;
 		obj.AudioCategory = "Metal";
 		obj.Overheatable = true;
 		obj.InputConduitType = ConduitType.Gas;
-		obj.UtilityInputOffset = new CellOffset(1, 1);
-		obj.OutputConduitType = ConduitType.Liquid;
 		obj.UtilityInputOffset = new CellOffset(-1, 0);
+		obj.OutputConduitType = ConduitType.Liquid;
+		obj.UtilityOutputOffset = new CellOffset(1, 0);
 		obj.RequiresPowerInput = true;
 		obj.PowerInputOffset = new CellOffset(0, 2);
 		obj.EnergyConsumptionWhenActive = 60f;

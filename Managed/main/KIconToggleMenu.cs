@@ -23,6 +23,8 @@ public class KIconToggleMenu : KScreen
 
 		public Action hotKey;
 
+		public ToolTip.ComplexTooltipDelegate getTooltipText;
+
 		public Func<Sprite> getSpriteCB;
 
 		public KToggle prefabOverride;
@@ -37,6 +39,7 @@ public class KIconToggleMenu : KScreen
 			hotKey = hotkey;
 			this.tooltip = tooltip;
 			tooltipHeader = tooltip_header;
+			getTooltipText = DefaultGetTooltipText;
 		}
 
 		public ToggleInfo(string text, object user_data, Action hotkey, Func<Sprite> get_sprite_cb)
@@ -45,6 +48,23 @@ public class KIconToggleMenu : KScreen
 			userData = user_data;
 			hotKey = hotkey;
 			getSpriteCB = get_sprite_cb;
+		}
+
+		public virtual void SetToggle(KToggle toggle)
+		{
+			this.toggle = toggle;
+			toggle.GetComponent<ToolTip>().OnComplexToolTip = getTooltipText;
+		}
+
+		protected virtual List<Tuple<string, TextStyleSetting>> DefaultGetTooltipText()
+		{
+			List<Tuple<string, TextStyleSetting>> list = new List<Tuple<string, TextStyleSetting>>();
+			if (tooltipHeader != null)
+			{
+				list.Add(new Tuple<string, TextStyleSetting>(tooltipHeader, ToolTipScreen.Instance.defaultTooltipHeaderStyle));
+			}
+			list.Add(new Tuple<string, TextStyleSetting>(tooltip, ToolTipScreen.Instance.defaultTooltipBodyStyle));
+			return list;
 		}
 	}
 
@@ -145,19 +165,6 @@ public class KIconToggleMenu : KScreen
 					component.text = toggleInfo.text;
 				}
 			}
-			ToolTip component2 = kToggle.GetComponent<ToolTip>();
-			if ((bool)component2)
-			{
-				if (toggleInfo.tooltipHeader != "")
-				{
-					component2.AddMultiStringTooltip(toggleInfo.tooltipHeader, (ToggleToolTipHeaderTextStyleSetting != null) ? ToggleToolTipHeaderTextStyleSetting : ToggleToolTipTextStyleSetting);
-					if (ToggleToolTipHeaderTextStyleSetting == null)
-					{
-						Debug.Log("!");
-					}
-				}
-				component2.AddMultiStringTooltip(GameUtil.ReplaceHotkeyString(toggleInfo.tooltip, toggleInfo.hotKey), ToggleToolTipTextStyleSetting);
-			}
 			if (toggleInfo.getSpriteCB != null)
 			{
 				kToggle.fgImage.sprite = toggleInfo.getSpriteCB();
@@ -166,7 +173,7 @@ public class KIconToggleMenu : KScreen
 			{
 				kToggle.fgImage.sprite = Assets.GetSprite(toggleInfo.icon);
 			}
-			toggleInfo.toggle = kToggle;
+			toggleInfo.SetToggle(kToggle);
 			toggles.Add(kToggle);
 		}
 	}

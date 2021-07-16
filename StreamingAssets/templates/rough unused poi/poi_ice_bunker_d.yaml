@@ -83,122 +83,12 @@ cells:
   temperature: 233.358917
   location_x: 2
   location_y: -6
-- element: Obsidian
-  mass: 100
-  temperature: 235.483292
-  diseaseName: SlimeLung
-  diseaseCount: 104
-  location_x: -5
-  location_y: -5
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 237.241745
-  diseaseName: SlimeLung
-  diseaseCount: 150
-  location_x: -4
-  location_y: -5
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 239.278442
-  diseaseName: SlimeLung
-  diseaseCount: 223
-  location_x: -3
-  location_y: -5
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 242.591675
-  diseaseName: SlimeLung
-  diseaseCount: 376
-  location_x: -2
-  location_y: -5
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 246.907349
-  diseaseName: SlimeLung
-  diseaseCount: 1082
-  location_x: -1
-  location_y: -5
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 242.877411
-  diseaseName: SlimeLung
-  diseaseCount: 6468
-  location_y: -5
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 240.366119
-  diseaseName: SlimeLung
-  diseaseCount: 3088
-  location_x: 1
-  location_y: -5
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 239.328751
-  diseaseName: SlimeLung
-  diseaseCount: 2472
-  location_x: 2
-  location_y: -5
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 236.598373
-  diseaseName: SlimeLung
-  diseaseCount: 8
-  location_x: -5
-  location_y: -4
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.105312593
-  temperature: 246.985046
-  diseaseName: SlimeLung
-  diseaseCount: 358
-  location_x: -4
-  location_y: -4
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.100727491
-  temperature: 249.944138
-  diseaseName: SlimeLung
-  diseaseCount: 993
-  location_x: -3
-  location_y: -4
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.089711681
   temperature: 250.98201
   diseaseName: SlimeLung
   diseaseCount: 1997
   location_x: -2
-  location_y: -4
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.0777260065
-  temperature: 258.573425
-  diseaseName: SlimeLung
-  diseaseCount: 2073
-  location_x: -1
-  location_y: -4
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.0687958822
-  temperature: 267.963867
-  diseaseName: SlimeLung
-  diseaseCount: 6418
-  location_y: -4
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.0680342764
-  temperature: 251.990021
-  diseaseName: SlimeLung
-  diseaseCount: 493
-  location_x: 1
   location_y: -4
   preventFoWReveal: true
 - element: Oxygen
@@ -209,57 +99,12 @@ cells:
   location_x: 2
   location_y: -4
   preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 237.871307
-  location_x: -5
-  location_y: -3
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.107617892
-  temperature: 249.152084
-  diseaseName: SlimeLung
-  diseaseCount: 134
-  location_x: -4
-  location_y: -3
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.104062125
-  temperature: 263.278412
-  diseaseName: SlimeLung
-  diseaseCount: 287
-  location_x: -3
-  location_y: -3
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.0958066508
   temperature: 269.925934
   diseaseName: SlimeLung
   diseaseCount: 789
   location_x: -2
-  location_y: -3
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.0833884031
-  temperature: 279.834045
-  diseaseName: SlimeLung
-  diseaseCount: 629
-  location_x: -1
-  location_y: -3
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.0744137391
-  temperature: 283.544006
-  diseaseName: SlimeLung
-  diseaseCount: 2931
-  location_y: -3
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.0697780848
-  temperature: 272.768036
-  diseaseName: SlimeLung
-  diseaseCount: 169
-  location_x: 1
   location_y: -3
   preventFoWReveal: true
 - element: Oxygen
@@ -270,57 +115,12 @@ cells:
   location_x: 2
   location_y: -3
   preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 240.235397
-  location_x: -5
-  location_y: -2
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.109772146
-  temperature: 255.945419
-  diseaseName: SlimeLung
-  diseaseCount: 124
-  location_x: -4
-  location_y: -2
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.107229128
-  temperature: 272.013672
-  diseaseName: SlimeLung
-  diseaseCount: 176
-  location_x: -3
-  location_y: -2
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.103339277
   temperature: 284.570862
   diseaseName: SlimeLung
   diseaseCount: 849
   location_x: -2
-  location_y: -2
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 289.37735
-  diseaseName: SlimeLung
-  diseaseCount: 2180
-  location_x: -1
-  location_y: -2
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.0804206356
-  temperature: 287.01059
-  diseaseName: SlimeLung
-  diseaseCount: 1811
-  location_y: -2
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 279.905426
-  diseaseName: SlimeLung
-  diseaseCount: 521
-  location_x: 1
   location_y: -2
   preventFoWReveal: true
 - element: Oxygen
@@ -331,59 +131,6 @@ cells:
   location_x: 2
   location_y: -2
   preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 245.588303
-  location_x: -5
-  location_y: -1
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 263.835083
-  diseaseName: SlimeLung
-  diseaseCount: 21
-  location_x: -4
-  location_y: -1
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 277.174011
-  diseaseName: SlimeLung
-  diseaseCount: 95
-  location_x: -3
-  location_y: -1
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 285.448181
-  diseaseName: SlimeLung
-  diseaseCount: 577
-  location_x: -2
-  location_y: -1
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 289.443024
-  diseaseName: SlimeLung
-  diseaseCount: 760
-  location_x: -1
-  location_y: -1
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.0849026889
-  temperature: 285.889771
-  diseaseName: SlimeLung
-  diseaseCount: 1506
-  location_y: -1
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 273.218018
-  diseaseName: SlimeLung
-  diseaseCount: 486
-  location_x: 1
-  location_y: -1
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.0806987509
   temperature: 259.551636
@@ -391,25 +138,6 @@ cells:
   diseaseCount: 330
   location_x: 2
   location_y: -1
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 241.228348
-  location_x: -5
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.102506958
-  temperature: 259.713226
-  diseaseName: SlimeLung
-  diseaseCount: 79
-  location_x: -4
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.100576892
-  temperature: 274.178619
-  diseaseName: SlimeLung
-  diseaseCount: 126
-  location_x: -3
   preventFoWReveal: true
 - element: Oxygen
   mass: 0.0967992246
@@ -419,85 +147,11 @@ cells:
   location_x: -2
   preventFoWReveal: true
 - element: Oxygen
-  mass: 0.0933306664
-  temperature: 287.527069
-  diseaseName: SlimeLung
-  diseaseCount: 190
-  location_x: -1
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.0898956731
-  temperature: 279.760895
-  diseaseName: SlimeLung
-  diseaseCount: 411
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 258.723358
-  diseaseName: SlimeLung
-  diseaseCount: 562
-  location_x: 1
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 247.03508
-  diseaseName: SlimeLung
-  diseaseCount: 149
-  location_x: 2
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 240.235397
-  diseaseName: SlimeLung
-  diseaseCount: 19
-  location_x: -5
-  location_y: 1
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.103692591
-  temperature: 256.743652
-  diseaseName: SlimeLung
-  diseaseCount: 54
-  location_x: -4
-  location_y: 1
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.102063619
-  temperature: 272.496918
-  diseaseName: SlimeLung
-  diseaseCount: 95
-  location_x: -3
-  location_y: 1
-  preventFoWReveal: true
-- element: Oxygen
   mass: 0.0989377871
   temperature: 284.110901
   diseaseName: SlimeLung
   diseaseCount: 553
   location_x: -2
-  location_y: 1
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.0952465162
-  temperature: 286.844238
-  diseaseName: SlimeLung
-  diseaseCount: 69
-  location_x: -1
-  location_y: 1
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.0930467173
-  temperature: 270.286743
-  diseaseName: SlimeLung
-  diseaseCount: 146
-  location_y: 1
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 247.870239
-  diseaseName: SlimeLung
-  diseaseCount: 457
-  location_x: 1
   location_y: 1
   preventFoWReveal: true
 - element: Granite
@@ -507,57 +161,12 @@ cells:
   diseaseCount: 761
   location_x: 2
   location_y: 1
-- element: Obsidian
-  mass: 100
-  temperature: 243.215027
-  diseaseName: SlimeLung
-  diseaseCount: 34
-  location_x: -5
-  location_y: 2
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.104836524
-  temperature: 266.26535
-  location_x: -4
-  location_y: 2
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.103535607
-  temperature: 269.610962
-  diseaseName: SlimeLung
-  diseaseCount: 52
-  location_x: -3
-  location_y: 2
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.101750568
   temperature: 286.779144
   diseaseName: SlimeLung
   diseaseCount: 137
   location_x: -2
-  location_y: 2
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 290.654694
-  diseaseName: SlimeLung
-  diseaseCount: 373
-  location_x: -1
-  location_y: 2
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.0954007357
-  temperature: 272.559784
-  diseaseName: SlimeLung
-  diseaseCount: 116
-  location_y: 2
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 243.983521
-  diseaseName: SlimeLung
-  diseaseCount: 243
-  location_x: 1
   location_y: 2
   preventFoWReveal: true
 - element: Granite
@@ -567,57 +176,6 @@ cells:
   diseaseCount: 986
   location_x: 2
   location_y: 2
-- element: Obsidian
-  mass: 100
-  temperature: 250.539307
-  location_x: -5
-  location_y: 3
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 267.565887
-  location_x: -4
-  location_y: 3
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 279.118683
-  diseaseName: SlimeLung
-  diseaseCount: 61
-  location_x: -3
-  location_y: 3
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 286.006073
-  diseaseName: SlimeLung
-  diseaseCount: 171
-  location_x: -2
-  location_y: 3
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 289.35553
-  diseaseName: SlimeLung
-  diseaseCount: 405
-  location_x: -1
-  location_y: 3
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.0992390737
-  temperature: 273.90329
-  diseaseName: SlimeLung
-  diseaseCount: 87
-  location_y: 3
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 244.972427
-  diseaseName: SlimeLung
-  diseaseCount: 254
-  location_x: 1
-  location_y: 3
-  preventFoWReveal: true
 - element: Granite
   mass: 1840
   temperature: 235.048752
@@ -625,55 +183,12 @@ cells:
   diseaseCount: 1228
   location_x: 2
   location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 247.072128
-  location_x: -5
-  location_y: 4
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.117192395
-  temperature: 259.615723
-  location_x: -4
-  location_y: 4
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.115094617
-  temperature: 269.494232
-  diseaseName: SlimeLung
-  diseaseCount: 16
-  location_x: -3
-  location_y: 4
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.111234553
   temperature: 279.837372
   diseaseName: SlimeLung
   diseaseCount: 174
   location_x: -2
-  location_y: 4
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.10779734
-  temperature: 284.834625
-  diseaseName: SlimeLung
-  diseaseCount: 9
-  location_x: -1
-  location_y: 4
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.104279526
-  temperature: 269.291962
-  diseaseName: SlimeLung
-  diseaseCount: 31
-  location_y: 4
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 248.757538
-  diseaseName: SlimeLung
-  diseaseCount: 177
-  location_x: 1
   location_y: 4
   preventFoWReveal: true
 - element: CrushedIce
@@ -683,51 +198,12 @@ cells:
   diseaseCount: 346
   location_x: 2
   location_y: 4
-- element: Obsidian
-  mass: 100
-  temperature: 244.612701
-  location_x: -5
-  location_y: 5
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.118539184
-  temperature: 254.901413
-  location_x: -4
-  location_y: 5
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.116737865
-  temperature: 262.767303
-  location_x: -3
-  location_y: 5
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.11347542
   temperature: 272.154266
   diseaseName: SlimeLung
   diseaseCount: 28
   location_x: -2
-  location_y: 5
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.110089839
-  temperature: 278.903259
-  location_x: -1
-  location_y: 5
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.107943811
-  temperature: 269.906952
-  diseaseName: SlimeLung
-  diseaseCount: 45
-  location_y: 5
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 251.52272
-  diseaseName: SlimeLung
-  diseaseCount: 113
-  location_x: 1
   location_y: 5
   preventFoWReveal: true
 - element: CrushedIce
@@ -737,51 +213,10 @@ cells:
   diseaseCount: 145
   location_x: 2
   location_y: 5
-- element: Obsidian
-  mass: 100
-  temperature: 246.337463
-  location_x: -5
-  location_y: 6
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.119847752
-  temperature: 252.11824
-  location_x: -4
-  location_y: 6
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.118366972
-  temperature: 259.150787
-  location_x: -3
-  location_y: 6
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.116385482
   temperature: 265.349396
   location_x: -2
-  location_y: 6
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 274.883484
-  diseaseName: SlimeLung
-  diseaseCount: 7
-  location_x: -1
-  location_y: 6
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.111932807
-  temperature: 270.323212
-  diseaseName: SlimeLung
-  diseaseCount: 5
-  location_y: 6
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 252.815567
-  diseaseName: SlimeLung
-  diseaseCount: 18
-  location_x: 1
   location_y: 6
   preventFoWReveal: true
 - element: CrushedIce
@@ -791,49 +226,6 @@ cells:
   diseaseCount: 10348
   location_x: 2
   location_y: 6
-- element: Obsidian
-  mass: 100
-  temperature: 244.984665
-  location_x: -5
-  location_y: 7
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 242.519608
-  location_x: -4
-  location_y: 7
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 243.502121
-  location_x: -3
-  location_y: 7
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 248.147736
-  location_x: -2
-  location_y: 7
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 259.816956
-  location_x: -1
-  location_y: 7
-  preventFoWReveal: true
-- element: Oxygen
-  mass: 0.119230464
-  temperature: 267.71344
-  location_y: 7
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 255.269409
-  diseaseName: SlimeLung
-  diseaseCount: 81
-  location_x: 1
-  location_y: 7
-  preventFoWReveal: true
 - element: Ice
   mass: 1000
   temperature: 233.669022
@@ -859,22 +251,11 @@ cells:
   temperature: 235.066315
   location_x: -2
   location_y: 8
-- element: Obsidian
-  mass: 100
-  temperature: 248.034622
-  location_x: -1
-  location_y: 8
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.125649631
   temperature: 259.297577
   location_y: 8
   preventFoWReveal: true
-- element: Iron
-  mass: 400
-  temperature: 269.503174
-  location_x: 1
-  location_y: 8
 - element: Ice
   mass: 1000
   temperature: 233.813934
@@ -900,22 +281,11 @@ cells:
   temperature: 233.993393
   location_x: -2
   location_y: 9
-- element: Obsidian
-  mass: 100
-  temperature: 243.438965
-  location_x: -1
-  location_y: 9
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.12929146
   temperature: 253.23642
   location_y: 9
   preventFoWReveal: true
-- element: Iron
-  mass: 400
-  temperature: 269.339355
-  location_x: 1
-  location_y: 9
 - element: Ice
   mass: 1000
   temperature: 233.794235
@@ -1187,62 +557,6 @@ cells:
   diseaseCount: 294
   location_x: 9
   location_y: -6
-- element: Obsidian
-  mass: 100
-  temperature: 238.357086
-  diseaseName: SlimeLung
-  diseaseCount: 2659
-  location_x: 3
-  location_y: -5
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 238.10231
-  diseaseName: SlimeLung
-  diseaseCount: 3241
-  location_x: 4
-  location_y: -5
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 237.622589
-  diseaseName: SlimeLung
-  diseaseCount: 3846
-  location_x: 5
-  location_y: -5
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 238.19838
-  diseaseName: SlimeLung
-  diseaseCount: 3013
-  location_x: 6
-  location_y: -5
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 239.27356
-  diseaseName: SlimeLung
-  diseaseCount: 8019
-  location_x: 7
-  location_y: -5
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 241.65062
-  diseaseName: SlimeLung
-  diseaseCount: 6568
-  location_x: 8
-  location_y: -5
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 247.504776
-  diseaseName: SlimeLung
-  diseaseCount: 2446
-  location_x: 9
-  location_y: -5
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.0846363083
   temperature: 240.733719
@@ -1289,14 +603,6 @@ cells:
   diseaseName: SlimeLung
   diseaseCount: 5256
   location_x: 8
-  location_y: -4
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 262.335754
-  diseaseName: SlimeLung
-  diseaseCount: 3214
-  location_x: 9
   location_y: -4
   preventFoWReveal: true
 - element: Oxygen
@@ -1347,14 +653,6 @@ cells:
   location_x: 8
   location_y: -3
   preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 270.424133
-  diseaseName: SlimeLung
-  diseaseCount: 1911
-  location_x: 9
-  location_y: -3
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.0812962279
   temperature: 248.505951
@@ -1403,14 +701,6 @@ cells:
   location_x: 8
   location_y: -2
   preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 271.448151
-  diseaseName: SlimeLung
-  diseaseCount: 1047
-  location_x: 9
-  location_y: -2
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.0817804411
   temperature: 247.034576
@@ -1436,14 +726,6 @@ cells:
   location_y: -1
   preventFoWReveal: true
 - element: Oxygen
-  mass: 0.0941939875
-  temperature: 261.238159
-  diseaseName: SlimeLung
-  diseaseCount: 1252
-  location_x: 6
-  location_y: -1
-  preventFoWReveal: true
-- element: Oxygen
   mass: 0.0964388177
   temperature: 249.583984
   diseaseName: SlimeLung
@@ -1458,63 +740,6 @@ cells:
   diseaseCount: 1477
   location_x: 8
   location_y: -1
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 265.763916
-  diseaseName: SlimeLung
-  diseaseCount: 406
-  location_x: 9
-  location_y: -1
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 241.748245
-  diseaseName: SlimeLung
-  diseaseCount: 46
-  location_x: 3
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 239.832855
-  diseaseName: SlimeLung
-  diseaseCount: 223
-  location_x: 4
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 239.266586
-  diseaseName: SlimeLung
-  diseaseCount: 312
-  location_x: 5
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 239.531754
-  diseaseName: SlimeLung
-  diseaseCount: 1057
-  location_x: 6
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 240.65654
-  diseaseName: SlimeLung
-  diseaseCount: 2556
-  location_x: 7
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 244.567444
-  diseaseName: SlimeLung
-  diseaseCount: 2794
-  location_x: 8
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 253.414764
-  diseaseName: SlimeLung
-  diseaseCount: 1371
-  location_x: 9
   preventFoWReveal: true
 - element: Granite
   mass: 1840
@@ -1693,22 +918,6 @@ cells:
   temperature: 235.130936
   location_x: -2
   location_y: 10
-- element: Obsidian
-  mass: 100
-  temperature: 242.128174
-  location_x: -1
-  location_y: 10
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 245.461456
-  location_y: 10
-  preventFoWReveal: true
-- element: Obsidian
-  mass: 100
-  temperature: 246.89415
-  location_x: 1
-  location_y: 10
 - element: Ice
   mass: 1000
   temperature: 232.966217
@@ -1788,25 +997,6 @@ cells:
   location_y: 1
 - element: Obsidian
   mass: 100
-  temperature: 267.565887
-  location_x: -4
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 279.118683
-  diseaseName: SlimeLung
-  diseaseCount: 61
-  location_x: -3
-  location_y: 3
-- element: Obsidian
-  mass: 100
-  temperature: 286.006073
-  diseaseName: SlimeLung
-  diseaseCount: 171
-  location_x: -2
-  location_y: 3
-- element: Obsidian
-  mass: 100
   temperature: 241.228348
   location_x: -5
 - element: Obsidian
@@ -1816,49 +1006,8 @@ cells:
   location_y: -1
 - element: Obsidian
   mass: 100
-  temperature: 263.835083
-  diseaseName: SlimeLung
-  diseaseCount: 21
-  location_x: -4
-  location_y: -1
-- element: Obsidian
-  mass: 100
-  temperature: 277.174011
-  diseaseName: SlimeLung
-  diseaseCount: 95
-  location_x: -3
-  location_y: -1
-- element: Obsidian
-  mass: 100
-  temperature: 285.448181
-  diseaseName: SlimeLung
-  diseaseCount: 577
-  location_x: -2
-  location_y: -1
-- element: Obsidian
-  mass: 100
   temperature: 244.984665
   location_x: -5
-  location_y: 7
-- element: Obsidian
-  mass: 100
-  temperature: 242.519608
-  location_x: -4
-  location_y: 7
-- element: Obsidian
-  mass: 100
-  temperature: 243.502121
-  location_x: -3
-  location_y: 7
-- element: Obsidian
-  mass: 100
-  temperature: 248.147736
-  location_x: -2
-  location_y: 7
-- element: Obsidian
-  mass: 100
-  temperature: 259.816956
-  location_x: -1
   location_y: 7
 - element: Obsidian
   mass: 100
@@ -1869,25 +1018,11 @@ cells:
   location_y: 6
 - element: Obsidian
   mass: 100
-  temperature: 289.35553
-  diseaseName: SlimeLung
-  diseaseCount: 405
-  location_x: -1
-  location_y: 3
-- element: Obsidian
-  mass: 100
   temperature: 290.654694
   diseaseName: SlimeLung
   diseaseCount: 373
   location_x: -1
   location_y: 2
-- element: Obsidian
-  mass: 100
-  temperature: 289.443024
-  diseaseName: SlimeLung
-  diseaseCount: 760
-  location_x: -1
-  location_y: -1
 - element: Obsidian
   mass: 100
   temperature: 240.235397
@@ -1914,45 +1049,11 @@ cells:
   location_y: -5
 - element: Obsidian
   mass: 100
-  temperature: 237.241745
-  diseaseName: SlimeLung
-  diseaseCount: 150
-  location_x: -4
-  location_y: -5
-- element: Obsidian
-  mass: 100
-  temperature: 239.278442
-  diseaseName: SlimeLung
-  diseaseCount: 223
-  location_x: -3
-  location_y: -5
-- element: Obsidian
-  mass: 100
-  temperature: 242.591675
-  diseaseName: SlimeLung
-  diseaseCount: 376
-  location_x: -2
-  location_y: -5
-- element: Obsidian
-  mass: 100
-  temperature: 246.907349
-  diseaseName: SlimeLung
-  diseaseCount: 1082
-  location_x: -1
-  location_y: -5
-- element: Obsidian
-  mass: 100
   temperature: 289.37735
   diseaseName: SlimeLung
   diseaseCount: 2180
   location_x: -1
   location_y: -2
-- element: Obsidian
-  mass: 100
-  temperature: 242.877411
-  diseaseName: SlimeLung
-  diseaseCount: 6468
-  location_y: -5
 - element: Obsidian
   mass: 100
   temperature: 240.366119
@@ -2009,12 +1110,6 @@ cells:
   diseaseCount: 3013
   location_x: 6
   location_y: -5
-- element: Obsidian
-  mass: 100
-  temperature: 258.723358
-  diseaseName: SlimeLung
-  diseaseCount: 562
-  location_x: 1
 - element: Obsidian
   mass: 100
   temperature: 247.870239
@@ -2133,36 +1228,6 @@ cells:
   location_x: 7
 - element: Obsidian
   mass: 100
-  temperature: 239.531754
-  diseaseName: SlimeLung
-  diseaseCount: 1057
-  location_x: 6
-- element: Obsidian
-  mass: 100
-  temperature: 239.266586
-  diseaseName: SlimeLung
-  diseaseCount: 312
-  location_x: 5
-- element: Obsidian
-  mass: 100
-  temperature: 239.832855
-  diseaseName: SlimeLung
-  diseaseCount: 223
-  location_x: 4
-- element: Obsidian
-  mass: 100
-  temperature: 241.748245
-  diseaseName: SlimeLung
-  diseaseCount: 46
-  location_x: 3
-- element: Obsidian
-  mass: 100
-  temperature: 247.03508
-  diseaseName: SlimeLung
-  diseaseCount: 149
-  location_x: 2
-- element: Obsidian
-  mass: 100
   temperature: 248.034622
   location_x: -1
   location_y: 8
@@ -2186,10 +1251,6 @@ cells:
   location_x: 1
   location_y: 10
 - element: Oxygen
-  mass: 0.119230464
-  temperature: 267.71344
-  location_y: 7
-- element: Oxygen
   mass: 0.111932807
   temperature: 270.323212
   diseaseName: SlimeLung
@@ -2208,12 +1269,6 @@ cells:
   diseaseCount: 31
   location_y: 4
 - element: Oxygen
-  mass: 0.0992390737
-  temperature: 273.90329
-  diseaseName: SlimeLung
-  diseaseCount: 87
-  location_y: 3
-- element: Oxygen
   mass: 0.0954007357
   temperature: 272.559784
   diseaseName: SlimeLung
@@ -2225,17 +1280,6 @@ cells:
   diseaseName: SlimeLung
   diseaseCount: 146
   location_y: 1
-- element: Oxygen
-  mass: 0.0898956731
-  temperature: 279.760895
-  diseaseName: SlimeLung
-  diseaseCount: 411
-- element: Oxygen
-  mass: 0.0849026889
-  temperature: 285.889771
-  diseaseName: SlimeLung
-  diseaseCount: 1506
-  location_y: -1
 - element: Oxygen
   mass: 0.0804206356
   temperature: 287.01059
@@ -2254,13 +1298,6 @@ cells:
   diseaseName: SlimeLung
   diseaseCount: 6418
   location_y: -4
-- element: Oxygen
-  mass: 0.0941939875
-  temperature: 261.238159
-  diseaseName: SlimeLung
-  diseaseCount: 1252
-  location_x: 6
-  location_y: -1
 - element: Iron
   mass: 400
   temperature: 269.503174
@@ -2285,12 +1322,6 @@ cells:
   diseaseCount: 169
   location_x: 1
   location_y: -3
-- element: Oxygen
-  mass: 0.102506958
-  temperature: 259.713226
-  diseaseName: SlimeLung
-  diseaseCount: 79
-  location_x: -4
 - element: Oxygen
   mass: 0.100576892
   temperature: 274.178619
@@ -2324,11 +1355,6 @@ cells:
   location_x: -3
   location_y: 2
 - element: Oxygen
-  mass: 0.117192395
-  temperature: 259.615723
-  location_x: -4
-  location_y: 4
-- element: Oxygen
   mass: 0.115094617
   temperature: 269.494232
   diseaseName: SlimeLung
@@ -2355,13 +1381,6 @@ cells:
   temperature: 259.150787
   location_x: -3
   location_y: 6
-- element: Oxygen
-  mass: 0.105312593
-  temperature: 246.985046
-  diseaseName: SlimeLung
-  diseaseCount: 358
-  location_x: -4
-  location_y: -4
 - element: Oxygen
   mass: 0.100727491
   temperature: 249.944138
@@ -2632,37 +1651,21 @@ buildings:
   location_y: 6
   element: Obsidian
   temperature: 247.501968
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -5
   location_y: 5
   element: Obsidian
   temperature: 245.580673
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -5
   location_y: 4
   element: Obsidian
   temperature: 248.142822
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -5
   location_y: 3
   element: Obsidian
   temperature: 251.435822
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -5
   location_y: 2
@@ -2670,10 +1673,6 @@ buildings:
   temperature: 243.776291
   diseaseName: SlimeLung
   diseaseCount: 34
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -5
   location_y: 1
@@ -2681,19 +1680,11 @@ buildings:
   temperature: 240.702316
   diseaseName: SlimeLung
   diseaseCount: 19
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -4
   location_y: 3
   element: Obsidian
   temperature: 268.678009
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -3
   location_y: 3
@@ -2701,10 +1692,6 @@ buildings:
   temperature: 280.044647
   diseaseName: SlimeLung
   diseaseCount: 61
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -2
   location_y: 3
@@ -2712,27 +1699,15 @@ buildings:
   temperature: 286.632721
   diseaseName: SlimeLung
   diseaseCount: 171
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -5
   element: Obsidian
   temperature: 241.687286
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -5
   location_y: -1
   element: Obsidian
   temperature: 246.129822
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -4
   location_y: -1
@@ -2740,10 +1715,6 @@ buildings:
   temperature: 264.819702
   diseaseName: SlimeLung
   diseaseCount: 21
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -3
   location_y: -1
@@ -2751,10 +1722,6 @@ buildings:
   temperature: 278.150452
   diseaseName: SlimeLung
   diseaseCount: 95
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -2
   location_y: -1
@@ -2762,55 +1729,31 @@ buildings:
   temperature: 286.163452
   diseaseName: SlimeLung
   diseaseCount: 577
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -5
   location_y: 7
   element: Obsidian
   temperature: 246.071014
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -4
   location_y: 7
   element: Obsidian
   temperature: 243.503479
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -3
   location_y: 7
   element: Obsidian
   temperature: 244.339996
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -2
   location_y: 7
   element: Obsidian
   temperature: 249.071106
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -1
   location_y: 7
   element: Obsidian
   temperature: 261.114288
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -1
   location_y: 6
@@ -2818,10 +1761,6 @@ buildings:
   temperature: 277.551758
   diseaseName: SlimeLung
   diseaseCount: 7
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -1
   location_y: 3
@@ -2829,10 +1768,6 @@ buildings:
   temperature: 289.873138
   diseaseName: SlimeLung
   diseaseCount: 405
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -1
   location_y: 2
@@ -2840,10 +1775,6 @@ buildings:
   temperature: 291.05777
   diseaseName: SlimeLung
   diseaseCount: 373
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -1
   location_y: -1
@@ -2851,28 +1782,16 @@ buildings:
   temperature: 290.157776
   diseaseName: SlimeLung
   diseaseCount: 760
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -5
   location_y: -2
   element: Obsidian
   temperature: 240.724731
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -5
   location_y: -3
   element: Obsidian
   temperature: 238.376099
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -5
   location_y: -4
@@ -2880,10 +1799,6 @@ buildings:
   temperature: 237.065598
   diseaseName: SlimeLung
   diseaseCount: 8
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -5
   location_y: -5
@@ -2891,10 +1806,6 @@ buildings:
   temperature: 235.84613
   diseaseName: SlimeLung
   diseaseCount: 104
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -4
   location_y: -5
@@ -2902,10 +1813,6 @@ buildings:
   temperature: 237.870941
   diseaseName: SlimeLung
   diseaseCount: 150
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -3
   location_y: -5
@@ -2913,10 +1820,6 @@ buildings:
   temperature: 240.033951
   diseaseName: SlimeLung
   diseaseCount: 223
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -2
   location_y: -5
@@ -2924,10 +1827,6 @@ buildings:
   temperature: 243.777008
   diseaseName: SlimeLung
   diseaseCount: 376
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -1
   location_y: -5
@@ -2935,10 +1834,6 @@ buildings:
   temperature: 251.359283
   diseaseName: SlimeLung
   diseaseCount: 1082
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -1
   location_y: -2
@@ -2946,20 +1841,12 @@ buildings:
   temperature: 289.503265
   diseaseName: SlimeLung
   diseaseCount: 2180
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_y: -5
   element: Obsidian
   temperature: 244.124542
   diseaseName: SlimeLung
   diseaseCount: 6468
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: -5
@@ -2967,10 +1854,6 @@ buildings:
   temperature: 241.241333
   diseaseName: SlimeLung
   diseaseCount: 3088
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 2
   location_y: -5
@@ -2978,10 +1861,6 @@ buildings:
   temperature: 240.191177
   diseaseName: SlimeLung
   diseaseCount: 2472
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 3
   location_y: -5
@@ -2989,10 +1868,6 @@ buildings:
   temperature: 239.204987
   diseaseName: SlimeLung
   diseaseCount: 2659
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 4
   location_y: -5
@@ -3000,10 +1875,6 @@ buildings:
   temperature: 238.94368
   diseaseName: SlimeLung
   diseaseCount: 3241
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 5
   location_y: -5
@@ -3011,10 +1882,6 @@ buildings:
   temperature: 238.535538
   diseaseName: SlimeLung
   diseaseCount: 3846
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: -2
@@ -3022,10 +1889,6 @@ buildings:
   temperature: 281.041931
   diseaseName: SlimeLung
   diseaseCount: 521
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: -1
@@ -3033,10 +1896,6 @@ buildings:
   temperature: 274.499542
   diseaseName: SlimeLung
   diseaseCount: 486
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 6
   location_y: -5
@@ -3044,20 +1903,12 @@ buildings:
   temperature: 239.028152
   diseaseName: SlimeLung
   diseaseCount: 3013
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 1
   element: Obsidian
   temperature: 260.005341
   diseaseName: SlimeLung
   diseaseCount: 562
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: 1
@@ -3065,10 +1916,6 @@ buildings:
   temperature: 248.682129
   diseaseName: SlimeLung
   diseaseCount: 457
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: 2
@@ -3076,10 +1923,6 @@ buildings:
   temperature: 244.760178
   diseaseName: SlimeLung
   diseaseCount: 243
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: 3
@@ -3087,10 +1930,6 @@ buildings:
   temperature: 245.824249
   diseaseName: SlimeLung
   diseaseCount: 254
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: 4
@@ -3098,10 +1937,6 @@ buildings:
   temperature: 250.329285
   diseaseName: SlimeLung
   diseaseCount: 177
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: 5
@@ -3109,10 +1944,6 @@ buildings:
   temperature: 253.479813
   diseaseName: SlimeLung
   diseaseCount: 113
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: 6
@@ -3120,10 +1951,6 @@ buildings:
   temperature: 254.718536
   diseaseName: SlimeLung
   diseaseCount: 18
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: 7
@@ -3131,10 +1958,6 @@ buildings:
   temperature: 256.920563
   diseaseName: SlimeLung
   diseaseCount: 81
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 9
   location_y: -2
@@ -3142,10 +1965,6 @@ buildings:
   temperature: 272.697662
   diseaseName: SlimeLung
   diseaseCount: 1047
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 9
   location_y: -3
@@ -3153,10 +1972,6 @@ buildings:
   temperature: 271.676361
   diseaseName: SlimeLung
   diseaseCount: 1911
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 9
   location_y: -4
@@ -3164,10 +1979,6 @@ buildings:
   temperature: 263.558441
   diseaseName: SlimeLung
   diseaseCount: 3214
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 9
   location_y: -5
@@ -3175,10 +1986,6 @@ buildings:
   temperature: 248.300964
   diseaseName: SlimeLung
   diseaseCount: 2446
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 8
   location_y: -5
@@ -3186,10 +1993,6 @@ buildings:
   temperature: 242.38678
   diseaseName: SlimeLung
   diseaseCount: 6568
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 7
   location_y: -5
@@ -3197,10 +2000,6 @@ buildings:
   temperature: 240.06868
   diseaseName: SlimeLung
   diseaseCount: 8019
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 9
   location_y: -1
@@ -3208,246 +2007,135 @@ buildings:
   temperature: 266.922333
   diseaseName: SlimeLung
   diseaseCount: 406
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 9
   element: Obsidian
   temperature: 254.348373
   diseaseName: SlimeLung
   diseaseCount: 1371
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 8
   element: Obsidian
   temperature: 245.218048
   diseaseName: SlimeLung
   diseaseCount: 2794
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 7
   element: Obsidian
   temperature: 241.303116
   diseaseName: SlimeLung
   diseaseCount: 2556
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 6
   element: Obsidian
   temperature: 240.248199
   diseaseName: SlimeLung
   diseaseCount: 1057
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 5
   element: Obsidian
   temperature: 239.8815
   diseaseName: SlimeLung
   diseaseCount: 312
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 4
   element: Obsidian
   temperature: 240.569717
   diseaseName: SlimeLung
   diseaseCount: 223
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 3
   element: Obsidian
   temperature: 242.544586
   diseaseName: SlimeLung
   diseaseCount: 46
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 2
   element: Obsidian
   temperature: 247.933807
   diseaseName: SlimeLung
   diseaseCount: 149
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -1
   location_y: 8
   element: Obsidian
   temperature: 248.88147
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -1
   location_y: 9
   element: Obsidian
   temperature: 244.428391
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -1
   location_y: 10
   element: Obsidian
   temperature: 243.237228
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_y: 10
   element: Obsidian
   temperature: 247.336716
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: 10
   element: Obsidian
   temperature: 248.111938
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Ladder
   location_y: 7
   element: Obsidian
   temperature: 279.371704
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Ladder
   location_y: 6
   element: Obsidian
   temperature: 282.052307
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Ladder
   location_y: 5
   element: Obsidian
   temperature: 283.158234
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Ladder
   location_y: 4
   element: Obsidian
   temperature: 281.968842
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Ladder
   location_y: 3
   element: Obsidian
   temperature: 280.657196
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Ladder
   location_y: 2
   element: Obsidian
   temperature: 280.355072
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Ladder
   location_y: 1
   element: Obsidian
   temperature: 281.952148
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Ladder
   element: Obsidian
   temperature: 286.004059
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Ladder
   location_y: -1
   element: Obsidian
   temperature: 289.355286
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Ladder
   location_y: -2
   element: Obsidian
   temperature: 290.604767
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Ladder
   location_y: -3
   element: Obsidian
   temperature: 289.161041
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Ladder
   location_y: -4
   element: Obsidian
   temperature: 280.161316
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: CeilingLight
   location_x: 6
   location_y: -1
   element: Cuprite
   temperature: 264.870575
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: POIBunkerExteriorDoor
   location_x: 1
   location_y: 8
   element: Cuprite
   temperature: 269.503174
-  storage: []
-  rottable: {}
-  amounts: []
   other_values:
   - id: sealedDoorDirection
     value: 1
@@ -3456,328 +2144,176 @@ buildings:
   location_y: -4
   element: Cuprite
   temperature: 251.990021
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: MedicalBed
   location_x: -4
   element: Obsidian
   temperature: 279.032684
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: MedicalBed
   location_x: -4
   location_y: 4
   element: Obsidian
   temperature: 275.431366
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: MedicalBed
   location_x: -4
   location_y: -4
   element: Obsidian
   temperature: 272.859924
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -4
   location_y: 4
   element: Cuprite
   temperature: 267.978821
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -4
   location_y: 3
   element: Cuprite
   temperature: 267.565887
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -3
   location_y: 3
   element: Cuprite
   temperature: 279.118683
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -2
   location_y: 3
   element: Cuprite
   temperature: 286.006073
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -1
   location_y: 3
   element: Cuprite
   temperature: 289.35553
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -4
   element: Cuprite
   temperature: 265.483307
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -4
   location_y: -1
   element: Cuprite
   temperature: 263.835083
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -3
   location_y: -1
   element: Cuprite
   temperature: 277.174011
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -2
   location_y: -1
   element: Cuprite
   temperature: 285.448181
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -1
   location_y: -1
   element: Cuprite
   temperature: 289.443024
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -4
   location_y: 7
   element: Cuprite
   temperature: 242.519608
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -3
   location_y: 7
   element: Cuprite
   temperature: 243.502121
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -2
   location_y: 7
   element: Cuprite
   temperature: 248.147736
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -1
   location_y: 7
   element: Cuprite
   temperature: 259.816956
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_y: -1
   element: Cuprite
   temperature: 287.990906
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_y: 3
   element: Cuprite
   temperature: 277.158051
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_y: 7
   element: Cuprite
   temperature: 274.295593
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -4
   location_y: -4
   element: Cuprite
   temperature: 254.18364
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -4
   location_y: -5
   element: Cuprite
   temperature: 237.241745
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -3
   location_y: -5
   element: Cuprite
   temperature: 239.278442
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -2
   location_y: -5
   element: Cuprite
   temperature: 242.591675
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -1
   location_y: -5
   element: Cuprite
   temperature: 246.907349
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_y: -5
   element: Cuprite
   temperature: 242.877411
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 6
   location_y: -1
   element: Cuprite
   temperature: 265.040466
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 6
   element: Cuprite
   temperature: 239.531754
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 5
   element: Cuprite
   temperature: 239.266586
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 4
   element: Cuprite
   temperature: 239.832855
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 3
   element: Cuprite
   temperature: 241.748245
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 2
   element: Cuprite
   temperature: 247.03508
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 1
   element: Cuprite
   temperature: 258.723358
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   element: Cuprite
   temperature: 283.692047
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: POIDoorInternal
   location_x: -1
   location_y: 4
   element: Cuprite
   temperature: 284.834625
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: POIDoorInternal
   location_x: -1
   element: Cuprite
   temperature: 287.527069
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: POIDoorInternal
   location_x: -1
   location_y: -4
   element: Cuprite
   temperature: 258.573425
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 pickupables:
 - id: BasicFabricMaterialPlantSeed
   location_x: 3
@@ -3785,27 +2321,21 @@ pickupables:
   element: Creature
   temperature: 272.184509
   units: 1
-  storage: []
   type: Pickupable
-  rottable: {}
 - id: BasicFabricMaterialPlantSeed
   location_x: 5
   location_y: 4
   element: Creature
   temperature: 271.882111
   units: 1
-  storage: []
   type: Pickupable
-  rottable: {}
 - id: MushroomSeed
   location_x: 1
   location_y: 12
   element: Creature
   temperature: 272.168915
   units: 1
-  storage: []
   type: Pickupable
-  rottable: {}
 elementalOres:
 - id: Ice
   location_x: 4
@@ -3813,86 +2343,63 @@ elementalOres:
   element: Ice
   temperature: 232.721054
   units: 5.27348042
-  storage: []
   type: Ore
-  rottable: {}
 - id: Ice
   location_x: 5
   location_y: 3
   element: Ice
   temperature: 234.011719
   units: 8.55897045
-  storage: []
   type: Ore
-  rottable: {}
 - id: Ice
   location_x: 1
   location_y: 11
   element: Ice
   temperature: 232.664063
   units: 0.0317121148
-  storage: []
   type: Ore
-  rottable: {}
 - id: Ice
   location_x: 3
   location_y: 5
   element: Ice
   temperature: 232.853241
   units: 0.390308559
-  storage: []
   type: Ore
-  rottable: {}
 otherEntities:
 - id: SetLocker
   location_x: -2
   element: Unobtanium
   temperature: 300
   units: 1
-  storage: []
   type: Other
-  rottable: {}
-  amounts: []
 - id: SetLocker
   location_x: -2
   location_y: 4
   element: Unobtanium
   temperature: 300
   units: 1
-  storage: []
   type: Other
-  rottable: {}
-  amounts: []
 - id: SetLocker
   location_x: -2
   location_y: -4
   element: Unobtanium
   temperature: 300
   units: 1
-  storage: []
   type: Other
-  rottable: {}
-  amounts: []
 - id: VendingMachine
   location_x: 3
   location_y: -4
   element: Unobtanium
   temperature: 300
   units: 1
-  storage: []
   type: Other
-  rottable: {}
-  amounts: []
 - id: PropTable
   location_x: 6
   location_y: -4
   element: Unobtanium
   temperature: 300
   units: 1
-  storage: []
   type: Other
-  rottable: {}
-  amounts: []
 utilityConnections:
 - name: TilePOI
   location_x: -5

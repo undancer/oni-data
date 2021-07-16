@@ -72,6 +72,12 @@ public class MonumentMiddleConfig : IBuildingConfig
 			monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_j", "model_pose2"));
 			monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_k", "balancing"));
 			monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_l", "holding_babies"));
+			if (DlcManager.IsExpansion1Active())
+			{
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_m", "rocket"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_n", "holding_baby_worm"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_o", "holding_baby_blarva_critter"));
+			}
 		};
 	}
 }

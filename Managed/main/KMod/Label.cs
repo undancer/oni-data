@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using System.IO;
 using Klei;
@@ -23,18 +22,18 @@ namespace KMod
 
 		public string id;
 
-		public long version;
-
 		public string title;
+
+		public long version;
 
 		[JsonIgnore]
 		private string distribution_platform_name => distribution_platform.ToString();
 
 		[JsonIgnore]
-		public string install_path => FileSystem.Normalize(Path.Combine(Path.Combine(Manager.GetDirectory(), distribution_platform_name), id));
+		public string install_path => FileSystem.Normalize(Path.Combine(Manager.GetDirectory(), distribution_platform_name, id));
 
 		[JsonIgnore]
-		public System.DateTime time_stamp => System.DateTime.FromFileTimeUtc(version);
+		public string defaultStaticID => id + "." + distribution_platform;
 
 		public override string ToString()
 		{

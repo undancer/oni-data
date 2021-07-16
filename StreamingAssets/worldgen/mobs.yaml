@@ -3,14 +3,6 @@ MobLookupTable:
   remove: [] 
   # elements to add from in-memory structure when this file is loaded
   add:
-    Hexaped:
-      location: Floor
-      selectMethod: Centroid
-      density:
-        min: 0.008
-        max: 0.015
-      width: 1
-      height: 1
     Puft:
       location: Air
       selectMethod: Centroid
@@ -35,14 +27,6 @@ MobLookupTable:
         max: 0.03
       width: 1
       height: 1
-    SteamSpout:
-      location: Air
-      selectMethod: Centroid
-      density:
-        min: 0.02
-        max: 0.02
-      width: 1
-      height: 1
     Geyser:
       location: Air
       selectMethod: Centroid
@@ -59,30 +43,6 @@ MobLookupTable:
         max: 0.01
       width: 1
       height: 1
-    PropaneSpout:
-      location: Air
-      selectMethod: Centroid
-      density:
-        min: 0.02
-        max: 0.02
-      width: 1
-      height: 1
-    OilSpout:
-      location: Air
-      selectMethod: Centroid
-      density:
-        min: 0.02
-        max: 0.02
-      width: 1
-      height: 1
-    OilEater:
-      location: Floor
-      selectMethod: Centroid
-      density:
-        min: 0.15
-        max: 0.2
-      width: 1
-      height: 1
     OilFloater:
       location: Floor
       selectMethod: Centroid
@@ -91,9 +51,6 @@ MobLookupTable:
         max: 0.2
       width: 1
       height: 1
-    MysteryEgg:
-     location: Air
-     selectMethod: Centroid
     Hatch:
       location: Air
       selectMethod: Centroid
@@ -136,17 +93,6 @@ MobLookupTable:
         max: 0.008
       width: 1
       height: 1
-    GreedyGreen:
-      location: Floor
-      selectMethod: Centroid
-    JungleGasPlant:
-      location: Floor
-      selectMethod: Centroid
-      density:
-        min: 0.04
-        max: 0.06
-      width: 1
-      height: 1
     BasicSingleHarvestPlant:
       location: Floor
       selectMethod: Centroid
@@ -161,9 +107,6 @@ MobLookupTable:
       density:
         min: 0.04
         max: 0.05
-      units:
-        min: 1
-        max: 2
       width: 1
       height: 1
     BasicForagePlant:
@@ -212,9 +155,6 @@ MobLookupTable:
       density:
         min: 0.04
         max: 0.05
-      units:
-        min: 1
-        max: 2
       width: 1
       height: 1
     ColdBreather:
@@ -304,9 +244,6 @@ MobLookupTable:
       density:
         min: 0.04
         max: 0.05
-      units:
-        min: 1
-        max: 2
       width: 1
       height: 1
     PrickleFlower:

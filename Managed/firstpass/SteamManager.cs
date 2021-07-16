@@ -61,9 +61,9 @@ public class SteamManager : MonoBehaviour
 				return;
 			}
 		}
-		catch (DllNotFoundException arg)
+		catch (DllNotFoundException ex)
 		{
-			Debug.LogError("[Steamworks.NET] Could not load [lib]steam_api.dll/so/dylib. It's likely not in the correct location. Refer to the README for more details.\n" + arg, this);
+			Debug.LogError("[Steamworks.NET] Could not load [lib]steam_api.dll/so/dylib. It's likely not in the correct location. Refer to the README for more details.\n" + ex, this);
 			App.Quit();
 			return;
 		}

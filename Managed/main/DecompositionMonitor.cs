@@ -130,7 +130,7 @@ public class DecompositionMonitor : GameStateMachine<DecompositionMonitor, Decom
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = satisfied;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		satisfied.Update("UpdateDecomposition", delegate(Instance smi, float dt)
 		{
 			smi.UpdateDecomposition(dt);

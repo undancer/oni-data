@@ -168,19 +168,21 @@ public class GroundMasks : ScriptableObject
 		}
 	}
 
-	[ContextMenu("Regenerate")]
+	[ContextMenu("Print Variations")]
 	private void Regenerate()
 	{
 		Initialize();
+		string text = "Listing all variations:\n";
 		foreach (KeyValuePair<string, BiomeMaskData> biomeMask in biomeMasks)
 		{
 			BiomeMaskData value = biomeMask.Value;
-			DebugUtil.LogArgs(value.name);
+			text = text + "Biome: " + value.name + "\n";
 			for (int i = 1; i < value.tiles.Length; i++)
 			{
 				Tile tile = value.tiles[i];
-				DebugUtil.LogArgs("Tile", i, "has", tile.variationUVs.Length, "variations");
+				text += $"  tile {Convert.ToString(i, 2).PadLeft(4, '0')}: {tile.variationUVs.Length} variations\n";
 			}
 		}
+		Debug.Log(text);
 	}
 }

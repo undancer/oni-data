@@ -89,7 +89,7 @@ public class Repairable : Workable
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = repaired;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			forbidden.OnSignal(allow, repaired);
 			allowed.Enter(delegate(SMInstance smi)
 			{

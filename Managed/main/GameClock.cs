@@ -126,6 +126,11 @@ public class GameClock : KMonoBehaviour, ISaveLoadable, ISim33ms, IRender1000ms
 		return timeSinceStartOfCycle + (float)cycle * 600f;
 	}
 
+	public float GetTimeInCycles()
+	{
+		return (float)cycle + GetCurrentCycleAsPercentage();
+	}
+
 	public int GetFrame()
 	{
 		return frame;
@@ -138,7 +143,12 @@ public class GameClock : KMonoBehaviour, ISaveLoadable, ISim33ms, IRender1000ms
 
 	public bool IsNighttime()
 	{
-		return !(Instance.GetCurrentCycleAsPercentage() < 0.875f);
+		return Instance.GetCurrentCycleAsPercentage() >= 0.875f;
+	}
+
+	public float GetDaytimeDurationInPercentage()
+	{
+		return 0.875f;
 	}
 
 	public void SetTime(float new_time)

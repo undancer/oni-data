@@ -29,6 +29,18 @@ public class Studyable : Workable, ISidescreenButtonControl
 
 	public bool Studied => studied;
 
+	public bool Studying
+	{
+		get
+		{
+			if (chore != null)
+			{
+				return chore.InProgress();
+			}
+			return false;
+		}
+	}
+
 	public string SidescreenTitleKey => "STRINGS.UI.UISIDESCREENS.STUDYABLE_SIDE_SCREEN.TITLE";
 
 	public string SidescreenStatusMessage
@@ -63,6 +75,32 @@ public class Studyable : Workable, ISidescreenButtonControl
 		}
 	}
 
+	public string SidescreenButtonTooltip
+	{
+		get
+		{
+			if (studied)
+			{
+				return UI.UISIDESCREENS.STUDYABLE_SIDE_SCREEN.STUDIED_STATUS;
+			}
+			if (markedForStudy)
+			{
+				return UI.UISIDESCREENS.STUDYABLE_SIDE_SCREEN.PENDING_STATUS;
+			}
+			return UI.UISIDESCREENS.STUDYABLE_SIDE_SCREEN.SEND_STATUS;
+		}
+	}
+
+	public bool SidescreenEnabled()
+	{
+		return true;
+	}
+
+	public bool SidescreenButtonInteractable()
+	{
+		return !studied;
+	}
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
@@ -95,6 +133,7 @@ public class Studyable : Workable, ISidescreenButtonControl
 		{
 			chore.Cancel("Studyable.CancelChore");
 			chore = null;
+			Trigger(1488501379);
 		}
 	}
 
@@ -140,6 +179,7 @@ public class Studyable : Workable, ISidescreenButtonControl
 				chore.Cancel("debug");
 				chore = null;
 			}
+			Trigger(-1436775550);
 		}
 		else
 		{
@@ -154,10 +194,16 @@ public class Studyable : Workable, ISidescreenButtonControl
 		studied = true;
 		chore = null;
 		Refresh();
+		Trigger(-1436775550);
 	}
 
 	public void OnSidescreenButtonPressed()
 	{
 		ToggleStudyChore();
+	}
+
+	public int ButtonSideScreenSortOrder()
+	{
+		return 20;
 	}
 }

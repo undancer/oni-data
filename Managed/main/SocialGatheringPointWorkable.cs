@@ -11,6 +11,8 @@ public class SocialGatheringPointWorkable : Workable, IWorkerPrioritizable
 
 	public string specificEffect;
 
+	public int timesConversed;
+
 	private SocialGatheringPointWorkable()
 	{
 		SetReportType(ReportManager.ReportType.PersonalTime);
@@ -63,6 +65,7 @@ public class SocialGatheringPointWorkable : Workable, IWorkerPrioritizable
 		worker.GetComponent<KPrefabID>().AddTag(GameTags.AlwaysConverse);
 		worker.Subscribe(-594200555, OnStartedTalking);
 		worker.Subscribe(25860745, OnStoppedTalking);
+		timesConversed = 0;
 	}
 
 	protected override void OnStopWork(Worker worker)
@@ -75,10 +78,13 @@ public class SocialGatheringPointWorkable : Workable, IWorkerPrioritizable
 
 	protected override void OnCompleteWork(Worker worker)
 	{
-		Effects component = worker.GetComponent<Effects>();
-		if (!string.IsNullOrEmpty(specificEffect))
+		if (timesConversed > 0)
 		{
-			component.Add(specificEffect, should_save: true);
+			Effects component = worker.GetComponent<Effects>();
+			if (!string.IsNullOrEmpty(specificEffect))
+			{
+				component.Add(specificEffect, should_save: true);
+			}
 		}
 	}
 
@@ -99,6 +105,7 @@ public class SocialGatheringPointWorkable : Workable, IWorkerPrioritizable
 			base.worker.GetComponent<Facing>().Face(talker.transform.GetPosition());
 			lastTalker = talker;
 		}
+		timesConversed++;
 	}
 
 	private void OnStoppedTalking(object data)

@@ -79,7 +79,7 @@ public class ResourceTreeNode : Resource
 
 		public void Render(Rect rect, float width, Color colour)
 		{
-			EdgeType edgeType = this.edgeType;
+			_ = edgeType;
 			_ = 5;
 			RTEditorGUI.DrawLine(rect, SourcePos(), TargetPos(), colour, null, width);
 		}

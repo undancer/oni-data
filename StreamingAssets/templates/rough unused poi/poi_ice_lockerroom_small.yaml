@@ -5,17 +5,6 @@ info:
     Y: 2
   area: 8
 cells:
-- element: Obsidian
-  mass: 100
-  temperature: 318
-  location_x: -1
-- element: Obsidian
-  mass: 100
-  temperature: 318
-- element: Obsidian
-  mass: 100
-  temperature: 318
-  location_x: 1
 - element: Vacuum
   location_y: 1
 - element: Vacuum
@@ -37,25 +26,13 @@ buildings:
   location_x: -1
   element: Obsidian
   temperature: 318
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   element: Obsidian
   temperature: 318
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 1
   element: Obsidian
   temperature: 318
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 pickupables: []
 elementalOres: []
 otherEntities:
@@ -65,19 +42,13 @@ otherEntities:
   element: Unobtanium
   temperature: 300
   units: 1
-  storage: []
   type: Other
-  rottable: {}
-  amounts: []
 - id: SetLocker
   location_y: 1
   element: Unobtanium
   temperature: 300
   units: 1
-  storage: []
   type: Other
-  rottable: {}
-  amounts: []
 utilityConnections:
 - name: TilePOI
   location_x: -1

@@ -162,6 +162,7 @@ public class KCrashReporter : MonoBehaviour
 
 	private void OnDisable()
 	{
+		Application.logMessageReceived -= HandleLog;
 	}
 
 	private void HandleLog(string msg, string stack_trace, LogType type)
@@ -403,7 +404,7 @@ public class KCrashReporter : MonoBehaviour
 			}
 			if (string.IsNullOrEmpty(stack_trace))
 			{
-				string arg = "CS-" + 469300u;
+				string arg = LaunchInitializer.BuildPrefix() + "-" + 471618u;
 				stack_trace = $"No stack trace {arg}\n\n{msg}";
 			}
 			List<string> list = new List<string>();
@@ -457,6 +458,14 @@ public class KCrashReporter : MonoBehaviour
 			{
 				userMessage = "";
 			}
+			else
+			{
+				userMessage = "[" + BuildWatermark.GetBuildText() + "] " + userMessage;
+				if (!string.IsNullOrEmpty(save_file_hash))
+				{
+					userMessage = userMessage + "\nsave_hash: " + save_file_hash;
+				}
+			}
 			Error error = new Error();
 			error.user = GetUserID();
 			error.callstack = stack_trace;
@@ -465,7 +474,7 @@ public class KCrashReporter : MonoBehaviour
 				error.callstack = error.callstack + "\n" + Guid.NewGuid().ToString();
 			}
 			error.fullstack = $"{msg}\n\n{stack_trace}";
-			error.build = 469300;
+			error.build = 471618;
 			error.log = GetLogContents();
 			error.summaryline = string.Join("\n", list.ToArray());
 			error.user_message = userMessage;

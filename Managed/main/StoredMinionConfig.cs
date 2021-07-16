@@ -5,6 +5,11 @@ public class StoredMinionConfig : IEntityConfig
 {
 	public static string ID = "StoredMinion";
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateEntity(ID, ID);

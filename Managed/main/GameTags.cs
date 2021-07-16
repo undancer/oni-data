@@ -54,17 +54,29 @@ public class GameTags
 			public static readonly Tag SquirrelSpecies = TagManager.Create("SquirrelSpecies");
 
 			public static readonly Tag CrabSpecies = TagManager.Create("CrabSpecies");
+
+			public static readonly Tag StaterpillarSpecies = TagManager.Create("StaterpillarSpecies");
+
+			public static readonly Tag BeetaSpecies = TagManager.Create("BeetaSpecies");
+
+			public static readonly Tag DivergentSpecies = TagManager.Create("DivergentSpecies");
 		}
 
 		public static class Behaviours
 		{
+			public static readonly Tag HarvestHiveBehaviour = TagManager.Create("HarvestHiveBehaviour");
+
 			public static readonly Tag GrowUpBehaviour = TagManager.Create("GrowUpBehaviour");
 
 			public static readonly Tag SleepBehaviour = TagManager.Create("SleepBehaviour");
 
 			public static readonly Tag CallAdultBehaviour = TagManager.Create("CallAdultBehaviour");
 
+			public static readonly Tag SearchForEggBehaviour = TagManager.Create("SearchForEggBehaviour");
+
 			public static readonly Tag PlayInterruptAnim = TagManager.Create("PlayInterruptAnim");
+
+			public static readonly Tag DisableCreature = TagManager.Create("DisableCreature");
 		}
 
 		public static readonly Tag ReservedByCreature = TagManager.Create("ReservedByCreature");
@@ -96,6 +108,22 @@ public class GameTags
 		public static readonly Tag WantsToClimbTree = TagManager.Create("WantsToClimbTree");
 
 		public static readonly Tag WantsToPlantSeed = TagManager.Create("WantsToPlantSeed");
+
+		public static readonly Tag WantsToForage = TagManager.Create("WantsToForage");
+
+		public static readonly Tag WantsToLayEgg = TagManager.Create("WantsToLayEgg");
+
+		public static readonly Tag WantsToTendEgg = TagManager.Create("WantsToTendEgg");
+
+		public static readonly Tag WantsToProducePower = TagManager.Create("WantsToProducePower");
+
+		public static readonly Tag WantsToGoHome = TagManager.Create("WantsToGoHome");
+
+		public static readonly Tag WantsToMakeHome = TagManager.Create("WantsToMakeHome");
+
+		public static readonly Tag BeeWantsToSleep = TagManager.Create("BeeWantsToSleep");
+
+		public static readonly Tag WantsToTendCrops = TagManager.Create("WantsToTendPlants");
 
 		public static readonly Tag Flee = TagManager.Create("Flee");
 
@@ -149,9 +177,15 @@ public class GameTags
 
 		public static readonly Tag Tunnel = TagManager.Create("Tunnel");
 
+		public static readonly Tag Builder = TagManager.Create("Builder");
+
 		public static readonly Tag ScalesGrown = TagManager.Create("ScalesGrown");
 
 		public static readonly Tag CanMolt = TagManager.Create("CanMolt");
+
+		public static readonly Tag CantReachEgg = TagManager.Create("CantReachEgg");
+
+		public static readonly Tag HasNoFoundation = TagManager.Create("HasNoFoundation");
 	}
 
 	public static class Robots
@@ -159,6 +193,8 @@ public class GameTags
 		public static class Models
 		{
 			public static readonly Tag SweepBot = TagManager.Create("SweepBot");
+
+			public static readonly Tag ScoutRover = TagManager.Create("ScoutRover");
 		}
 
 		public static class Behaviours
@@ -180,6 +216,8 @@ public class GameTags
 	public static readonly Tag SpawnsInWorld = TagManager.Create("SpawnsInWorld");
 
 	public static readonly Tag Experimental = TagManager.Create("Experimental");
+
+	public static readonly Tag Gravitas = TagManager.Create("Gravitas");
 
 	public static readonly Tag Miscellaneous = TagManager.Create("Miscellaneous");
 
@@ -251,6 +289,10 @@ public class GameTags
 
 	public static readonly Tag Artifact = TagManager.Create("Artifact");
 
+	public static readonly Tag CharmedArtifact = TagManager.Create("CharmedArtifact");
+
+	public static readonly Tag TerrestrialArtifact = TagManager.Create("TerrestrialArtifact");
+
 	public static readonly Tag MiscPickupable = TagManager.Create("MiscPickupable");
 
 	public static readonly Tag CombustibleGas = TagManager.Create("CombustibleGas");
@@ -261,13 +303,23 @@ public class GameTags
 
 	public static readonly Tag FlyingCritterEdible = TagManager.Create("FlyingCritterEdible");
 
+	public static readonly Tag Comet = TagManager.Create("Comet");
+
+	public static readonly Tag DeadReactor = TagManager.Create("DeadReactor");
+
 	public static readonly Tag Incapacitated = TagManager.Create("Incapacitated");
 
 	public static readonly Tag CaloriesDepleted = TagManager.Create("CaloriesDepleted");
 
 	public static readonly Tag HitPointsDepleted = TagManager.Create("HitPointsDepleted");
 
+	public static readonly Tag HitByHighEnergyParticle = TagManager.Create("HitByHighEnergyParticle");
+
+	public static readonly Tag RadiationSicknessIncapacitation = TagManager.Create("RadiationSickness");
+
 	public static readonly Tag Wilting = TagManager.Create("Wilting");
+
+	public static readonly Tag Blighted = TagManager.Create("Blighted");
 
 	public static readonly Tag PreventEmittingDisease = TagManager.Create("EmittingDisease");
 
@@ -371,7 +423,15 @@ public class GameTags
 
 	public static readonly Tag Crushable = TagManager.Create("Crushable");
 
+	public static readonly Tag Noncrushable = TagManager.Create("Noncrushable");
+
 	public static readonly Tag IronOre = TagManager.Create("IronOre");
+
+	public static readonly Tag HighEnergyParticle = TagManager.Create("HighEnergyParticle");
+
+	public static readonly Tag IgnoreMaterialCategory = TagManager.Create("IgnoreMaterialCategory");
+
+	public static readonly Tag Oxidizer = TagManager.Create("Oxidizer");
 
 	public static readonly Tag Minion = TagManager.Create("Minion");
 
@@ -401,6 +461,8 @@ public class GameTags
 
 	public static readonly Tag Ladders = TagManager.Create("Ladders");
 
+	public static readonly Tag NavTeleporters = TagManager.Create("NavTeleporters");
+
 	public static readonly Tag Wires = TagManager.Create("Wires");
 
 	public static readonly Tag Vents = TagManager.Create("Vents");
@@ -427,11 +489,19 @@ public class GameTags
 
 	public static readonly Tag AtmoSuit = TagManager.Create("Atmo_Suit");
 
+	public static readonly Tag OxygenMask = TagManager.Create("Oxygen_Mask");
+
+	public static readonly Tag LeadSuit = TagManager.Create("Lead_Suit");
+
 	public static readonly Tag AquaSuit = TagManager.Create("Aqua_Suit");
 
 	public static readonly Tag JetSuit = TagManager.Create("Jet_Suit");
 
 	public static readonly Tag JetSuitOutOfFuel = TagManager.Create("JetSuitOutOfFuel");
+
+	public static readonly Tag SuitBatteryLow = TagManager.Create("SuitBatteryLow");
+
+	public static readonly Tag SuitBatteryOut = TagManager.Create("SuitBatteryOut");
 
 	public static readonly Tag TemperatureSuit = TagManager.Create("Temperature_Suit");
 
@@ -441,14 +511,16 @@ public class GameTags
 		AquaSuit,
 		AtmoSuit,
 		JetSuit,
-		TemperatureSuit
+		TemperatureSuit,
+		LeadSuit
 	};
 
 	public static readonly List<Tag> OxygenSuitTags = new List<Tag>
 	{
 		AtmoSuit,
 		AquaSuit,
-		JetSuit
+		JetSuit,
+		LeadSuit
 	};
 
 	public static readonly Tag EquippableBalloon = TagManager.Create("EquippableBalloon");
@@ -509,6 +581,10 @@ public class GameTags
 
 	public static readonly Tag TakingMedicine = TagManager.Create("TakingMedicine");
 
+	public static readonly Tag Partying = TagManager.Create("Partying");
+
+	public static readonly Tag MakingMess = TagManager.Create("MakingMess");
+
 	public static readonly Tag DupeBrain = TagManager.Create("DupeBrain");
 
 	public static readonly Tag CreatureBrain = TagManager.Create("CreatureBrain");
@@ -518,6 +594,10 @@ public class GameTags
 	public static readonly Tag HoldingBreath = TagManager.Create("HoldingBreath");
 
 	public static readonly Tag Overjoyed = TagManager.Create("Overjoyed");
+
+	public static readonly Tag HasSuitTank = TagManager.Create("HasSuitTank");
+
+	public static readonly Tag UnderConstruction = TagManager.Create("UnderConstruction");
 
 	public static readonly Tag Operational = TagManager.Create("Operational");
 
@@ -533,9 +613,39 @@ public class GameTags
 
 	public static readonly Tag TemplateBuilding = TagManager.Create("TemplateBuilding");
 
+	public static readonly Tag ModularConduitPort = TagManager.Create("ModularConduitPort");
+
+	public static readonly Tag WarpTech = TagManager.Create("WarpTech");
+
 	public static readonly Tag Rocket = TagManager.Create("Rocket");
 
+	public static readonly Tag RocketOnGround = TagManager.Create("RocketOnGround");
+
 	public static readonly Tag RocketNotOnGround = TagManager.Create("RocketNotOnGround");
+
+	public static readonly Tag RocketInSpace = TagManager.Create("RocketInSpace");
+
+	public static readonly Tag RailGunPayloadEmptyable = TagManager.Create("RailGunPayloadEmptyable");
+
+	public static readonly Tag TransferringCargoComplete = TagManager.Create("TransferringCargoComplete");
+
+	public static readonly Tag NoseRocketModule = TagManager.Create("NoseRocketModule");
+
+	public static readonly Tag LaunchButtonRocketModule = TagManager.Create("LaunchButtonRocketModule");
+
+	public static readonly Tag RocketInteriorBuilding = TagManager.Create("RocketInteriorBuilding");
+
+	public static readonly Tag NotRocketInteriorBuilding = TagManager.Create("NotRocketInteriorBuilding");
+
+	public static readonly Tag UniquePerWorld = TagManager.Create("UniquePerWorld");
+
+	public static readonly Tag RocketEnvelopeTile = TagManager.Create("RocketEnvelopeTile");
+
+	public static readonly Tag NoRocketRefund = TagManager.Create("NoRocketRefund");
+
+	public static readonly Tag RocketModule = TagManager.Create("RocketModule");
+
+	public static readonly Tag EntityInSpace = TagManager.Create("EntityInSpace");
 
 	public static readonly Tag Monument = TagManager.Create("Monument");
 
@@ -544,6 +654,10 @@ public class GameTags
 	public static readonly Tag StoredPrivate = TagManager.Create("StoredPrivate");
 
 	public static readonly Tag Sealed = TagManager.Create("Sealed");
+
+	public static readonly Tag CorrosionProof = TagManager.Create("CorrosionProof");
+
+	public static readonly Tag UnidentifiedSeed = TagManager.Create("UnidentifiedSeed");
 
 	public static readonly Tag CropSeed = TagManager.Create("CropSeed");
 
@@ -571,6 +685,8 @@ public class GameTags
 
 	public static readonly Tag Empty = TagManager.Create("Empty");
 
+	public static readonly Tag SpaceDanger = TagManager.Create("SpaceDanger");
+
 	public static TagSet SolidElements = new TagSet();
 
 	public static TagSet LiquidElements = new TagSet();
@@ -590,12 +706,14 @@ public class GameTags
 		Egg,
 		Clothes,
 		IndustrialIngredient,
-		Compostable
+		Compostable,
+		HighEnergyParticle
 	};
 
 	public static TagSet IgnoredMaterialCategories = new TagSet
 	{
-		Special
+		Special,
+		IgnoreMaterialCategory
 	};
 
 	public static TagSet MaterialCategories = new TagSet

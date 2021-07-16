@@ -44,6 +44,15 @@ public class IdleStates : GameStateMachine<IdleStates, IdleStates.Instance, ISta
 			{
 				return false;
 			}
+			Grid.ObjectLayers[1].TryGetValue(cell, out var value);
+			if (value != null)
+			{
+				BuildingUnderConstruction component = value.GetComponent<BuildingUnderConstruction>();
+				if (component != null && component.Def.isSolidTile)
+				{
+					return false;
+				}
+			}
 			bool flag = navType != NavType.Swim;
 			bool flag2 = navType == NavType.Swim || allowLiquid;
 			bool flag3 = Grid.IsSubstantialLiquid(cell);

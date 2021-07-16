@@ -23,13 +23,15 @@ public class ToolTip : KMonoBehaviour, IPointerEnterHandler, IEventSystemHandler
 		DynamicWidthNoWrap
 	}
 
+	public delegate List<Tuple<string, TextStyleSetting>> ComplexTooltipDelegate();
+
 	public bool UseFixedStringKey;
 
 	public string FixedStringKey = "";
 
 	private List<string> multiStringToolTips = new List<string>();
 
-	private List<ScriptableObject> styleSettings = new List<ScriptableObject>();
+	private List<TextStyleSetting> styleSettings = new List<TextStyleSetting>();
 
 	public bool worldSpace;
 
@@ -57,7 +59,7 @@ public class ToolTip : KMonoBehaviour, IPointerEnterHandler, IEventSystemHandler
 
 	private Func<string> _OnToolTip;
 
-	public Func<List<Tuple<string, ScriptableObject>>> OnComplexToolTip;
+	public ComplexTooltipDelegate OnComplexToolTip;
 
 	private static readonly EventSystem.IntraObjectHandler<ToolTip> OnClickDelegate = new EventSystem.IntraObjectHandler<ToolTip>(delegate(ToolTip component, object data)
 	{
@@ -147,7 +149,7 @@ public class ToolTip : KMonoBehaviour, IPointerEnterHandler, IEventSystemHandler
 		AddMultiStringTooltip(message, PluginAssets.Instance.defaultTextStyleSetting);
 	}
 
-	public void AddMultiStringTooltip(string newString, ScriptableObject styleSetting)
+	public void AddMultiStringTooltip(string newString, TextStyleSetting styleSetting)
 	{
 		multiStringToolTips.Add(newString);
 		styleSettings.Add(styleSetting);
@@ -164,7 +166,7 @@ public class ToolTip : KMonoBehaviour, IPointerEnterHandler, IEventSystemHandler
 		return multiStringToolTips[idx];
 	}
 
-	public ScriptableObject GetStyleSetting(int idx)
+	public TextStyleSetting GetStyleSetting(int idx)
 	{
 		return styleSettings[idx];
 	}
@@ -193,7 +195,7 @@ public class ToolTip : KMonoBehaviour, IPointerEnterHandler, IEventSystemHandler
 				return;
 			}
 			ClearMultiStringTooltip();
-			foreach (Tuple<string, ScriptableObject> item in OnComplexToolTip())
+			foreach (Tuple<string, TextStyleSetting> item in OnComplexToolTip())
 			{
 				AddMultiStringTooltip(item.first, item.second);
 			}

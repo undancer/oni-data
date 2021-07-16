@@ -427,7 +427,7 @@ public class ElementConverter : StateMachineComponent<ElementConverter.StatesIns
 						SimMessages.AddRemoveSubstance(num17, outputElement.elementHash, CellEventLogger.Instance.OxygenModifierSimUpdate, num15, num16, a.idx, a.count);
 					}
 				}
-				if (outputElement.elementHash == SimHashes.Oxygen)
+				if (outputElement.elementHash == SimHashes.Oxygen || outputElement.elementHash == SimHashes.ContaminatedOxygen)
 				{
 					ReportManager.Instance.ReportValue(ReportManager.ReportType.OxygenCreated, num15, base.gameObject.GetProperName());
 				}

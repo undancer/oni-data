@@ -6,6 +6,8 @@ using UnityEngine;
 [SerializationConfig(MemberSerialization.OptIn)]
 public class Ownable : Assignable, ISaveLoadable, IGameObjectEffectDescriptor
 {
+	public bool tintWhenUnassigned = true;
+
 	private Color unownedTint = Color.gray;
 
 	private Color ownedTint = Color.white;
@@ -75,6 +77,10 @@ public class Ownable : Assignable, ISaveLoadable, IGameObjectEffectDescriptor
 
 	private void UpdateTint()
 	{
+		if (!tintWhenUnassigned)
+		{
+			return;
+		}
 		KAnimControllerBase component = GetComponent<KAnimControllerBase>();
 		if (component != null && component.HasBatchInstanceData)
 		{

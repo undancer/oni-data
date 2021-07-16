@@ -12,6 +12,8 @@ public class AudioSheet
 
 		public string Type;
 
+		public string RequiredDlcId;
+
 		public float MinInterval;
 
 		public string Name0;

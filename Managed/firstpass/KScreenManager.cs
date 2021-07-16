@@ -131,7 +131,18 @@ public class KScreenManager : KMonoBehaviour, IInputHandler
 		string text = "";
 		foreach (KScreen item in screenStack)
 		{
-			text = text + item.name + "\n";
+			if (item != null)
+			{
+				if (!item.isActiveAndEnabled)
+				{
+					text += "Not isActiveAndEnabled: ";
+				}
+				text = text + item.name + "\n";
+			}
+			else
+			{
+				text += "Null screen in screenStack\n";
+			}
 		}
 		return text;
 	}
@@ -165,7 +176,7 @@ public class KScreenManager : KMonoBehaviour, IInputHandler
 			if (kScreen != null && kScreen.isActiveAndEnabled)
 			{
 				kScreen.OnKeyDown(e);
-				if (e.Consumed || kScreen.IsModal())
+				if (e.Consumed)
 				{
 					lastConsumedEvent = e;
 					lastConsumedEventScreen = kScreen;
@@ -187,7 +198,7 @@ public class KScreenManager : KMonoBehaviour, IInputHandler
 			if (kScreen != null && kScreen.isActiveAndEnabled)
 			{
 				kScreen.OnKeyUp(e);
-				if (e.Consumed || kScreen.IsModal())
+				if (e.Consumed)
 				{
 					lastConsumedEvent = e;
 					lastConsumedEventScreen = kScreen;

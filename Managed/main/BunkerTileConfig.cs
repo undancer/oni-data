@@ -48,8 +48,9 @@ public class BunkerTileConfig : IBuildingConfig
 	public override void DoPostConfigureComplete(GameObject go)
 	{
 		GeneratedBuildings.RemoveLoopingSounds(go);
-		go.GetComponent<KPrefabID>().AddTag(GameTags.FloorTiles);
-		go.GetComponent<KPrefabID>().AddTag(GameTags.Bunker);
+		KPrefabID component = go.GetComponent<KPrefabID>();
+		component.AddTag(GameTags.Bunker);
+		component.AddTag(GameTags.FloorTiles);
 	}
 
 	public override void DoPostConfigureUnderConstruction(GameObject go)

@@ -1,11 +1,7 @@
 name: STRINGS.WORLDS.THE_ROCK.NAME
 description: STRINGS.WORLDS.THE_ROCK.DESCRIPTION
-spriteName: Asteroid_sandstone
-coordinatePrefix: T-ROCK
-difficulty: 6
-tier: 2
-
 skip: true
+asteroidIcon: Asteroid_sandstone
 
 defaultsOverrides:
   data:
@@ -17,6 +13,7 @@ worldsize:
 subworldFiles:
   - name: subworlds/sandstone/SandstoneStart
   - name: subworlds/frozen/Frozen
+    minCount: 3
   - name: subworlds/space/TheVoid
   - name: subworlds/space/Surface
   - name: subworlds/magma/Bottom
@@ -24,10 +21,10 @@ subworldFiles:
     overrideName: Default
 
 startSubworldName: subworlds/sandstone/SandstoneStart
-startingBaseTemplate: sandstoneBase
+startingBaseTemplate: bases/sandstoneBase
 
-globalFeatureTemplates:
-  feature_geyser_generic: 12
+seasons:
+  - MeteorShowers
 
 unknownCellsAllowedSubworlds: 
   - tagcommand: Default # By default add in all the Human warm and hot areas
@@ -59,3 +56,38 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - subworlds/space/TheVoid
+
+worldTemplateRules:
+  # Frozen
+  - names:
+      - poi/frozen/heatsink_a
+      - poi/frozen/heatsink_b
+      - poi/frozen/heatsink_c
+      - poi/frozen/heatsink_d
+    listRule: GuaranteeSomeTryMore
+    someCount: 1
+    moreCount: 2
+    priority: 100 
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [FrozenWastes]
+  # Gravitas
+  - names:
+    - poi/poi_gravitas
+    listRule: GuaranteeOne
+    priority: 500
+    allowExtremeTemperatureOverlap: true # ignore temperature differences on the surface
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - subworlds/space/Surface
+  # Generic Geysers
+  - names:
+    - geysers/generic
+    listRule: TryOne
+    times: 12
+    allowDuplicates: true
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning

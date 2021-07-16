@@ -19,7 +19,7 @@ public class ObjectDispenser : Switch, IUserControlledCapacity
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = idle;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			idle.PlayAnim("on").EventHandler(GameHashes.OnStorageChange, delegate(ObjectDispenser.Instance smi)
 			{
 				smi.UpdateState();

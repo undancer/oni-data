@@ -198,7 +198,7 @@ public class FixedCapturePoint : GameStateMachine<FixedCapturePoint, FixedCaptur
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = operational;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		unoperational.TagTransition(GameTags.Operational, operational);
 		operational.DefaultState(operational.manual).TagTransition(GameTags.Operational, unoperational, on_remove: true);
 		operational.manual.ParamTransition(automated, operational.automated, GameStateMachine<FixedCapturePoint, Instance, IStateMachineTarget, Def>.IsTrue);

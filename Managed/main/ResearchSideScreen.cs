@@ -70,7 +70,11 @@ public class ResearchSideScreen : SideScreenContent
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		return target.GetComponent<ResearchCenter>() != null;
+		if (!(target.GetComponent<ResearchCenter>() != null))
+		{
+			return target.GetComponent<NuclearResearchCenter>() != null;
+		}
+		return true;
 	}
 
 	private void RefreshDisplayState(object data = null)
@@ -79,12 +83,22 @@ public class ResearchSideScreen : SideScreenContent
 		{
 			return;
 		}
+		string text = "";
 		ResearchCenter component = SelectTool.Instance.selected.GetComponent<ResearchCenter>();
-		if (component == null)
+		NuclearResearchCenter component2 = SelectTool.Instance.selected.GetComponent<NuclearResearchCenter>();
+		if (component != null)
+		{
+			text = component.research_point_type_id;
+		}
+		if (component2 != null)
+		{
+			text = component2.researchTypeID;
+		}
+		if (component == null && component2 == null)
 		{
 			return;
 		}
-		researchButtonIcon.sprite = Research.Instance.researchTypes.GetResearchType(component.research_point_type_id).sprite;
+		researchButtonIcon.sprite = Research.Instance.researchTypes.GetResearchType(text).sprite;
 		TechInstance activeResearch = Research.Instance.GetActiveResearch();
 		if (activeResearch == null)
 		{
@@ -92,12 +106,12 @@ public class ResearchSideScreen : SideScreenContent
 			return;
 		}
 		string str = "";
-		if (!activeResearch.tech.costsByResearchTypeID.ContainsKey(component.research_point_type_id) || activeResearch.tech.costsByResearchTypeID[component.research_point_type_id] <= 0f)
+		if (!activeResearch.tech.costsByResearchTypeID.ContainsKey(text) || activeResearch.tech.costsByResearchTypeID[text] <= 0f)
 		{
 			str += "<color=#7f7f7f>";
 		}
 		str = str + "<b>" + activeResearch.tech.Name + "</b>";
-		if (!activeResearch.tech.costsByResearchTypeID.ContainsKey(component.research_point_type_id) || activeResearch.tech.costsByResearchTypeID[component.research_point_type_id] <= 0f)
+		if (!activeResearch.tech.costsByResearchTypeID.ContainsKey(text) || activeResearch.tech.costsByResearchTypeID[text] <= 0f)
 		{
 			str += "</color>";
 		}
@@ -105,7 +119,7 @@ public class ResearchSideScreen : SideScreenContent
 		{
 			if (item.Value != 0f)
 			{
-				bool flag = item.Key == component.research_point_type_id;
+				bool flag = item.Key == text;
 				str += "\n   ";
 				str += "<b>";
 				if (!flag)

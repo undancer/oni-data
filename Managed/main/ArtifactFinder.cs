@@ -20,7 +20,7 @@ public class ArtifactFinder : KMonoBehaviour
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		Subscribe(238242047, OnLandDelegate);
+		Subscribe(-887025858, OnLandDelegate);
 	}
 
 	public ArtifactTier GetArtifactDropTier(StoredMinionIdentity minionID, SpaceDestination destination)
@@ -76,7 +76,7 @@ public class ArtifactFinder : KMonoBehaviour
 
 	public void OnLand(object data)
 	{
-		SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(SpacecraftManager.instance.GetSpacecraftID(GetComponent<RocketModule>().conditionManager.GetComponent<LaunchableRocket>()));
+		SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(SpacecraftManager.instance.GetSpacecraftID(GetComponent<RocketModule>().conditionManager.GetComponent<ILaunchableRocket>()));
 		foreach (MinionStorage.Info item in minionStorage.GetStoredMinionInfo())
 		{
 			StoredMinionIdentity minionID = item.serializedMinion.Get<StoredMinionIdentity>();

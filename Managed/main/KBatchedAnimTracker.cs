@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class KBatchedAnimTracker : MonoBehaviour
@@ -18,8 +17,6 @@ public class KBatchedAnimTracker : MonoBehaviour
 	public bool useTargetPoint;
 
 	public bool fadeOut = true;
-
-	public bool skipInitialDisable;
 
 	public bool forceAlwaysVisible;
 
@@ -61,21 +58,6 @@ public class KBatchedAnimTracker : MonoBehaviour
 		controller.onLayerChanged += OnLayerChanged;
 		forceUpdate = true;
 		myAnim = GetComponent<KBatchedAnimController>();
-		List<KAnimControllerBase> list = new List<KAnimControllerBase>(GetComponentsInChildren<KAnimControllerBase>(includeInactive: true));
-		if (!skipInitialDisable)
-		{
-			for (int i = 0; i < base.transform.childCount; i++)
-			{
-				base.transform.GetChild(i).gameObject.SetActive(value: false);
-			}
-		}
-		for (int num = list.Count - 1; num >= 0; num--)
-		{
-			if (list[num].gameObject == base.gameObject)
-			{
-				list.RemoveAt(num);
-			}
-		}
 	}
 
 	private void OnDestroy()

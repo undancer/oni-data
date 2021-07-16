@@ -105,10 +105,15 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 
 	private int skillsUpdateHandle = -1;
 
+	private int minionUpdateHandle = -1;
+
 	public string requiredSkillPerk;
 
 	[SerializeField]
 	protected bool shouldShowSkillPerkStatusItem = true;
+
+	[SerializeField]
+	public bool requireMinionToWork;
 
 	protected StatusItem readyForSkillWorkStatusItem;
 
@@ -236,6 +241,11 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 			}
 			skillsUpdateHandle = Game.Instance.Subscribe(-1523247426, UpdateStatusItem);
 		}
+		if (requireMinionToWork && minionUpdateHandle != -1)
+		{
+			Game.Instance.Unsubscribe(minionUpdateHandle);
+		}
+		minionUpdateHandle = Game.Instance.Subscribe(586301400, UpdateStatusItem);
 		GetComponent<KPrefabID>().AddTag(GameTags.HasChores);
 		lightEfficiencyBonusStatusItem = Db.Get().DuplicantStatusItems.LightWorkEfficiencyBonus;
 		ShowProgressBar(alwaysShowProgressBar && workTimeRemaining < GetWorkTime());
@@ -252,11 +262,16 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 		component.RemoveStatusItem(workStatusItemHandle);
 		if (worker == null)
 		{
-			if (shouldShowSkillPerkStatusItem && !string.IsNullOrEmpty(requiredSkillPerk))
+			if (requireMinionToWork && Components.LiveMinionIdentities.GetWorldItems(this.GetMyWorldId()).Count == 0)
 			{
-				if (!MinionResume.AnyMinionHasPerk(requiredSkillPerk))
+				workStatusItemHandle = component.AddStatusItem(Db.Get().BuildingStatusItems.WorkRequiresMinion);
+			}
+			else if (shouldShowSkillPerkStatusItem && !string.IsNullOrEmpty(requiredSkillPerk))
+			{
+				if (!MinionResume.AnyMinionHasPerk(requiredSkillPerk, this.GetMyWorldId()))
 				{
-					workStatusItemHandle = component.AddStatusItem(Db.Get().BuildingStatusItems.ColonyLacksRequiredSkillPerk, requiredSkillPerk);
+					StatusItem status_item = (DlcManager.FeatureClusterSpaceEnabled() ? Db.Get().BuildingStatusItems.ClusterColonyLacksRequiredSkillPerk : Db.Get().BuildingStatusItems.ColonyLacksRequiredSkillPerk);
+					workStatusItemHandle = component.AddStatusItem(status_item, requiredSkillPerk);
 				}
 				else
 				{
@@ -551,7 +566,7 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 		{
 			if (progressBar == null)
 			{
-				progressBar = ProgressBar.CreateProgressBar(this, GetPercentComplete);
+				progressBar = ProgressBar.CreateProgressBar(base.gameObject, GetPercentComplete);
 			}
 			progressBar.gameObject.SetActive(value: true);
 		}
@@ -572,6 +587,10 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 		if (skillsUpdateHandle != -1)
 		{
 			Game.Instance.Unsubscribe(skillsUpdateHandle);
+		}
+		if (minionUpdateHandle != -1)
+		{
+			Game.Instance.Unsubscribe(minionUpdateHandle);
 		}
 		base.OnCleanUp();
 		OnWorkableEventCB = null;

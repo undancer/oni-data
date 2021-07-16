@@ -17,10 +17,15 @@ public class ForestTreeConfig : IEntityConfig
 
 	public const int NUM_BRANCHES = 7;
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("ForestTree", STRINGS.CREATURES.SPECIES.WOOD_TREE.NAME, STRINGS.CREATURES.SPECIES.WOOD_TREE.DESC, 2f, decor: DECOR.BONUS.TIER1, anim: Assets.GetAnim("tree_kanim"), initialAnim: "idle_empty", sceneLayer: Grid.SceneLayer.Building, width: 1, height: 2, noise: default(EffectorValues), element: SimHashes.Creature, additionalTags: new List<Tag>(), defaultTemperature: 298.15f);
-		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 258.15f, 288.15f, 313.15f, 448.15f, null, pressure_sensitive: true, 0f, 0.15f, "WoodLog", can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: false);
+		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 258.15f, 288.15f, 313.15f, 448.15f, null, pressure_sensitive: true, 0f, 0.15f, "WoodLog", can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: false, 2400f, 0f, 980f, "ForestTreeOriginal", STRINGS.CREATURES.SPECIES.WOOD_TREE.NAME);
 		gameObject.AddOrGet<BuddingTrunk>();
 		gameObject.UpdateComponentRequirement<Harvestable>(required: false);
 		Tag tag = ElementLoader.FindElementByHash(SimHashes.DirtyWater).tag;
@@ -41,7 +46,6 @@ public class ForestTreeConfig : IEntityConfig
 		array2[0] = consumeInfo;
 		EntityTemplates.ExtendPlantToFertilizable(gameObject, array2);
 		gameObject.AddComponent<StandardCropPlant>();
-		gameObject.GetComponent<UprootedMonitor>().monitorCell = new CellOffset(0, -1);
 		gameObject.AddOrGet<BuddingTrunk>().budPrefabID = "ForestTreeBranch";
 		EntityTemplates.CreateAndRegisterPreviewForPlant(EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Hidden, "ForestTreeSeed", STRINGS.CREATURES.SPECIES.SEEDS.WOOD_TREE.NAME, STRINGS.CREATURES.SPECIES.SEEDS.WOOD_TREE.DESC, Assets.GetAnim("seed_tree_kanim"), "object", 1, new List<Tag>
 		{

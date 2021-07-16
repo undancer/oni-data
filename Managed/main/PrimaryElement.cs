@@ -93,6 +93,10 @@ public class PrimaryElement : KMonoBehaviour, ISaveLoadable
 			{
 				_units = value;
 			}
+			if (onDataChanged != null)
+			{
+				onDataChanged(this);
+			}
 		}
 	}
 
@@ -291,12 +295,12 @@ public class PrimaryElement : KMonoBehaviour, ISaveLoadable
 	{
 		if (_Temperature <= 0f)
 		{
-			DebugUtil.DevLogErrorFormat(base.gameObject, "{0} is attempting to serialize a temperature of <= 0K. Resetting to default.", base.gameObject.name);
+			DebugUtil.DevLogError(base.gameObject.name + " is attempting to serialize a temperature of <= 0K. Resetting to default. world=" + base.gameObject.DebugGetMyWorldName());
 			_Temperature = Element.defaultValues.temperature;
 		}
 		if (Mass > MAX_MASS)
 		{
-			DebugUtil.DevLogErrorFormat(base.gameObject, "{0} is attempting to serialize very large mass {1}. Resetting to default.", base.gameObject.name, Mass);
+			DebugUtil.DevLogError($"{base.gameObject.name} is attempting to serialize very large mass {Mass}. Resetting to default. world={base.gameObject.DebugGetMyWorldName()}");
 			Mass = Element.defaultValues.mass;
 		}
 	}
@@ -384,10 +388,13 @@ public class PrimaryElement : KMonoBehaviour, ISaveLoadable
 		base.OnCleanUp();
 	}
 
-	public void SetElement(SimHashes element_id)
+	public void SetElement(SimHashes element_id, bool addTags = true)
 	{
 		ElementID = element_id;
-		UpdateTags();
+		if (addTags)
+		{
+			UpdateTags();
+		}
 	}
 
 	public void UpdateTags()

@@ -7,8 +7,7 @@ public class TilePOIConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef(ID, 1, 1, "floor_mesh_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER1);
-		obj.ShowInBuildMenu = false;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef(ID, 1, 1, "floor_mesh_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.ALL_MINERALS, 1600f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER1);
 		obj.Floodable = false;
 		obj.Entombable = false;
 		obj.Overheatable = false;
@@ -25,6 +24,7 @@ public class TilePOIConfig : IBuildingConfig
 		obj.ConstructionOffsetFilter = BuildingDef.ConstructionOffsetFilter_OneDown;
 		obj.isKAnimTile = true;
 		obj.isSolidTile = true;
+		obj.DebugOnly = true;
 		obj.BlockTileAtlas = Assets.GetTextureAtlas("tiles_POI");
 		obj.BlockTilePlaceAtlas = Assets.GetTextureAtlas("tiles_POI");
 		obj.BlockTileMaterial = Assets.GetMaterial("tiles_solid");

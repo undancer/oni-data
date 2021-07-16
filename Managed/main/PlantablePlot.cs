@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using KSerialization;
 using STRINGS;
 using UnityEngine;
@@ -69,6 +70,19 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 
 	public bool AcceptsIrrigation => accepts_irrigation;
 
+	[OnDeserialized]
+	private void OnDeserialized()
+	{
+		if (!DlcManager.FeaturePlantMutationsEnabled())
+		{
+			requestedEntityAdditionalFilterTag = Tag.Invalid;
+		}
+		else if (requestedEntityTag.IsValid && requestedEntityAdditionalFilterTag.IsValid && !PlantSubSpeciesCatalog.Instance.IsValidPlantableSeed(requestedEntityTag, requestedEntityAdditionalFilterTag))
+		{
+			requestedEntityAdditionalFilterTag = Tag.Invalid;
+		}
+	}
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
@@ -76,9 +90,22 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 		statusItemNoneAvailable = Db.Get().BuildingStatusItems.NoAvailableSeed;
 		statusItemAwaitingDelivery = Db.Get().BuildingStatusItems.AwaitingSeedDelivery;
 		plantRef = new Ref<KPrefabID>();
-		destroyEntityOnDeposit = true;
 		Subscribe(-905833192, OnCopySettingsDelegate);
 		Subscribe(144050788, OnUpdateRoomDelegate);
+		if (this.HasTag(GameTags.FarmTiles))
+		{
+			storage.SetOffsetTable(OffsetGroups.InvertedStandardTableWithCorners);
+			DropAllWorkable component = GetComponent<DropAllWorkable>();
+			if (component != null)
+			{
+				component.SetOffsetTable(OffsetGroups.InvertedStandardTableWithCorners);
+			}
+			Toggleable component2 = GetComponent<Toggleable>();
+			if (component2 != null)
+			{
+				component2.SetOffsetTable(OffsetGroups.InvertedStandardTableWithCorners);
+			}
+		}
 	}
 
 	private void OnCopySettings(object data)
@@ -91,6 +118,7 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 		if (base.occupyingObject == null && (requestedEntityTag != component.requestedEntityTag || component.occupyingObject != null))
 		{
 			Tag entityTag = component.requestedEntityTag;
+			Tag requestedEntityAdditionalFilterTag = component.requestedEntityAdditionalFilterTag;
 			if (component.occupyingObject != null)
 			{
 				SeedProducer component2 = component.occupyingObject.GetComponent<SeedProducer>();
@@ -100,7 +128,7 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 				}
 			}
 			CancelActiveRequest();
-			CreateOrder(entityTag);
+			CreateOrder(entityTag, requestedEntityAdditionalFilterTag);
 		}
 		if (!(base.occupyingObject != null))
 		{
@@ -117,12 +145,12 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 		}
 	}
 
-	public override void CreateOrder(Tag entityTag)
+	public override void CreateOrder(Tag entityTag, Tag additionalFilterTag)
 	{
 		SetPreview(entityTag);
 		if (ValidPlant)
 		{
-			base.CreateOrder(entityTag);
+			base.CreateOrder(entityTag, additionalFilterTag);
 		}
 		else
 		{
@@ -180,37 +208,57 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 		Components.PlantablePlots.Remove(this);
 	}
 
-	public override GameObject SpawnOccupyingObject(GameObject depositedEntity)
+	protected override GameObject SpawnOccupyingObject(GameObject depositedEntity)
 	{
 		PlantableSeed component = depositedEntity.GetComponent<PlantableSeed>();
-		if (component == null)
+		if (component != null)
 		{
-			Debug.LogError("Planted seed " + depositedEntity.gameObject.name + " is missing PlantableSeed component");
-			return null;
+			Vector3 position = Grid.CellToPosCBC(Grid.PosToCell(this), plantLayer);
+			GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(component.PlantID), position, plantLayer);
+			MutantPlant component2 = gameObject.GetComponent<MutantPlant>();
+			if (component2 != null)
+			{
+				component.GetComponent<MutantPlant>().CopyMutationsTo(component2);
+			}
+			gameObject.SetActive(value: true);
+			destroyEntityOnDeposit = true;
+			return gameObject;
 		}
-		Vector3 position = Grid.CellToPosCBC(Grid.PosToCell(this), plantLayer);
-		GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(component.PlantID), position, plantLayer);
-		gameObject.SetActive(value: true);
-		KPrefabID component2 = gameObject.GetComponent<KPrefabID>();
-		plantRef.Set(component2);
-		RegisterWithPlant(gameObject);
-		UprootedMonitor component3 = gameObject.GetComponent<UprootedMonitor>();
-		if ((bool)component3)
+		destroyEntityOnDeposit = false;
+		return depositedEntity;
+	}
+
+	protected override void ConfigureOccupyingObject(GameObject newPlant)
+	{
+		KPrefabID component = newPlant.GetComponent<KPrefabID>();
+		plantRef.Set(component);
+		RegisterWithPlant(newPlant);
+		UprootedMonitor component2 = newPlant.GetComponent<UprootedMonitor>();
+		if ((bool)component2)
 		{
-			component3.canBeUprooted = false;
+			component2.canBeUprooted = false;
 		}
 		autoReplaceEntity = false;
-		Prioritizable component4 = GetComponent<Prioritizable>();
-		if (component4 != null)
+		Prioritizable component3 = GetComponent<Prioritizable>();
+		if (component3 != null)
 		{
-			Prioritizable component5 = gameObject.GetComponent<Prioritizable>();
-			if (component5 != null)
+			Prioritizable component4 = newPlant.GetComponent<Prioritizable>();
+			if (component4 != null)
 			{
-				component5.SetMasterPriority(component4.GetMasterPriority());
-				component5.onPriorityChanged = (Action<PrioritySetting>)Delegate.Combine(component5.onPriorityChanged, new Action<PrioritySetting>(SyncPriority));
+				component4.SetMasterPriority(component3.GetMasterPriority());
+				component4.onPriorityChanged = (Action<PrioritySetting>)Delegate.Combine(component4.onPriorityChanged, new Action<PrioritySetting>(SyncPriority));
 			}
 		}
-		return gameObject;
+	}
+
+	public void ReplacePlant(GameObject plant, bool keepStorage)
+	{
+		if (keepStorage)
+		{
+			UnsubscribeFromOccupant();
+			base.occupyingObject = null;
+		}
+		ForceDeposit(plant);
 	}
 
 	protected override void PositionOccupyingObject()

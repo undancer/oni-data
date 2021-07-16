@@ -7,14 +7,19 @@ public class SolidBoosterConfig : IBuildingConfig
 
 	public const float capacity = 400f;
 
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_VANILLA_ONLY;
+	}
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef("SolidBooster", 7, 5, "rocket_solid_booster_kanim", 1000, 480f, BUILDINGS.ROCKETRY_MASS_KG.ENGINE_MASS_SMALL, new string[1]
 		{
 			SimHashes.Steel.ToString()
-		}, 9999f, BuildLocationRule.BuildingAttachPoint, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
 		BuildingTemplates.CreateRocketBuildingDef(obj);
-		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
+		obj.SceneLayer = Grid.SceneLayer.Building;
 		obj.Invincible = true;
 		obj.OverheatTemperature = 2273.15f;
 		obj.Floodable = false;
@@ -23,6 +28,7 @@ public class SolidBoosterConfig : IBuildingConfig
 		obj.RequiresPowerInput = false;
 		obj.attachablePosition = new CellOffset(0, 0);
 		obj.CanMove = true;
+		obj.Cancellable = false;
 		return obj;
 	}
 
@@ -67,7 +73,6 @@ public class SolidBoosterConfig : IBuildingConfig
 		manualDeliveryKG2.refillMass = storage.capacityKg / 2f;
 		manualDeliveryKG2.capacity = storage.capacityKg / 2f;
 		manualDeliveryKG2.choreTypeIDHash = Db.Get().ChoreTypes.MachineFetch.IdHash;
-		go.AddOrGet<RocketModule>().SetBGKAnim(Assets.GetAnim("rocket_solid_booster_bg_kanim"));
-		EntityTemplates.ExtendBuildingToRocketModule(go);
+		BuildingTemplates.ExtendBuildingToRocketModule(go, "rocket_solid_booster_bg_kanim");
 	}
 }

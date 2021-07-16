@@ -93,7 +93,7 @@ public class StaminaMonitor : GameStateMachine<StaminaMonitor, StaminaMonitor.In
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = satisfied;
-		base.serializable = true;
+		base.serializable = SerializeType.Both_DEPRECATED;
 		root.ToggleStateMachine((Instance smi) => new UrgeMonitor.Instance(smi.master, Db.Get().Urges.Sleep, Db.Get().Amounts.Stamina, Db.Get().ScheduleBlockTypes.Sleep, 100f, 0f, is_threshold_minimum: false)).ToggleStateMachine((Instance smi) => new SleepChoreMonitor.Instance(smi.master));
 		satisfied.Transition(sleepy, (Instance smi) => smi.NeedsToSleep() || smi.WantsToSleep());
 		sleepy.Update("Check Sleep State", delegate(Instance smi, float dt)

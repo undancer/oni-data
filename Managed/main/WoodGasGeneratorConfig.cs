@@ -32,6 +32,7 @@ public class WoodGasGeneratorConfig : IBuildingConfig
 		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(1, 1));
 		obj.ViewMode = OverlayModes.Power.ID;
 		obj.AudioCategory = "Metal";
+		obj.RequiresPowerOutput = true;
 		obj.PowerOutputOffset = new CellOffset(0, 0);
 		return obj;
 	}

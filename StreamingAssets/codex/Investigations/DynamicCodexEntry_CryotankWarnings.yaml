@@ -1,0 +1,24 @@
+id: "CryotankWarnings"
+title: STRINGS.CODEX.CRYOTANKWARNINGS.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: cryotank_warning
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.CRYOTANKWARNINGS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.CRYOTANKWARNINGS.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: cryotank_warning
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.CRYOTANKWARNINGS.BODY.CONTAINER1
+          style: Body

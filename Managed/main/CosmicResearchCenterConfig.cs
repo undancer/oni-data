@@ -5,13 +5,20 @@ public class CosmicResearchCenterConfig : IBuildingConfig
 {
 	public const string ID = "CosmicResearchCenter";
 
-	public const float BASE_RESEARCH_SPEED = 0.02f;
+	public const float BASE_SECONDS_PER_POINT = 50f;
 
 	public const float MASS_PER_POINT = 1f;
+
+	public const float BASE_MASS_PER_SECOND = 0.02f;
 
 	public const float CAPACITY = 300f;
 
 	public static readonly Tag INPUT_MATERIAL = ResearchDatabankConfig.TAG;
+
+	public override string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_VANILLA_ONLY;
+	}
 
 	public override BuildingDef CreateBuildingDef()
 	{
@@ -44,7 +51,7 @@ public class CosmicResearchCenterConfig : IBuildingConfig
 		{
 			Assets.GetAnim("anim_interacts_research_space_kanim")
 		};
-		researchCenter.research_point_type_id = "gamma";
+		researchCenter.research_point_type_id = "space";
 		researchCenter.inputMaterial = INPUT_MATERIAL;
 		researchCenter.mass_per_point = 1f;
 		researchCenter.requiredSkillPerk = Db.Get().SkillPerks.AllowInterstellarResearch.Id;

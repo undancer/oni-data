@@ -65,7 +65,7 @@ public class IceMachine : StateMachineComponent<IceMachine.StatesInstance>
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = off;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			off.PlayAnim("off").EventTransition(GameHashes.OperationalChanged, on, (StatesInstance smi) => smi.master.operational.IsOperational);
 			on.PlayAnim("on").EventTransition(GameHashes.OperationalChanged, off, (StatesInstance smi) => !smi.master.operational.IsOperational).DefaultState(on.waiting);
 			on.waiting.EventTransition(GameHashes.OnStorageChange, on.working_pre, (StatesInstance smi) => smi.master.CanMakeIce());

@@ -29,7 +29,7 @@ public class OpenURLButtons : KMonoBehaviour
 	public List<URLButtonData> buttonData;
 
 	[SerializeField]
-	private GameObject patchNotesScreen;
+	private GameObject patchNotesScreenPrefab;
 
 	[SerializeField]
 	private FeedbackScreen feedbackScreenPrefab;
@@ -75,7 +75,7 @@ public class OpenURLButtons : KMonoBehaviour
 
 	public void OpenPatchNotes()
 	{
-		patchNotesScreen.SetActive(value: true);
+		Util.KInstantiateUI(patchNotesScreenPrefab, FrontEndManager.Instance.gameObject, force_active: true);
 	}
 
 	public void OpenFeedbackScreen()

@@ -11,15 +11,36 @@ using UnityEngine;
 [AddComponentMenu("KMonoBehaviour/scripts/Unlocks")]
 public class Unlocks : KMonoBehaviour
 {
+	private class MetaUnlockCategory
+	{
+		public string metaCollectionID;
+
+		public string mesaCollectionID;
+
+		public int mesaUnlockCount;
+
+		public MetaUnlockCategory(string metaCollectionID, string mesaCollectionID, int mesaUnlockCount)
+		{
+			this.metaCollectionID = metaCollectionID;
+			this.mesaCollectionID = mesaCollectionID;
+			this.mesaUnlockCount = mesaUnlockCount;
+		}
+	}
+
 	private const int FILE_IO_RETRY_ATTEMPTS = 5;
 
 	private List<string> unlocked = new List<string>();
+
+	private List<MetaUnlockCategory> MetaUnlockCategories = new List<MetaUnlockCategory>
+	{
+		new MetaUnlockCategory("dimensionalloreMeta", "dimensionallore", 4)
+	};
 
 	public Dictionary<string, string[]> lockCollections = new Dictionary<string, string[]>
 	{
 		{
 			"emails",
-			new string[21]
+			new string[22]
 			{
 				"email_thermodynamiclaws",
 				"email_security2",
@@ -41,12 +62,13 @@ public class Unlocks : KMonoBehaviour
 				"email_AIcontrol2",
 				"email_friendlyemail",
 				"email_AIcontrol3",
-				"email_AIcontrol4"
+				"email_AIcontrol4",
+				"email_engineeringcandidate"
 			}
 		},
 		{
 			"journals",
-			new string[30]
+			new string[31]
 			{
 				"journal_timesarrowthoughts",
 				"journal_A046_1",
@@ -77,12 +99,13 @@ public class Unlocks : KMonoBehaviour
 				"journal_elliesbirthday2",
 				"journal_B111_1",
 				"journal_revisitednumbers2",
-				"journal_timemusings"
+				"journal_timemusings",
+				"journal_evil"
 			}
 		},
 		{
 			"researchnotes",
-			new string[15]
+			new string[18]
 			{
 				"notes_clonedrats",
 				"notes_agriculture1",
@@ -98,7 +121,10 @@ public class Unlocks : KMonoBehaviour
 				"notes_agriculture4",
 				"notes_neutronium",
 				"notes_firstsuccess",
-				"notes_neutroniumapplications"
+				"notes_neutroniumapplications",
+				"notes_teleportation",
+				"notes_AI",
+				"cryotank_warning"
 			}
 		},
 		{
@@ -111,6 +137,35 @@ public class Unlocks : KMonoBehaviour
 				"misc_politerequest",
 				"misc_casualfriday",
 				"misc_dishbot"
+			}
+		},
+		{
+			"dimensionallore",
+			new string[6]
+			{
+				"notes_clonedrabbits",
+				"notes_clonedraccoons",
+				"journal_movedrabbits",
+				"journal_movedraccoons",
+				"journal_strawberries",
+				"journal_shrimp"
+			}
+		},
+		{
+			"dimensionalloreMeta",
+			new string[1]
+			{
+				"log9"
+			}
+		},
+		{
+			"space",
+			new string[4]
+			{
+				"display_spaceprop1",
+				"notice_pilot",
+				"journal_inspace",
+				"notes_firstcolony"
 			}
 		}
 	};
@@ -190,7 +245,7 @@ public class Unlocks : KMonoBehaviour
 		base.OnSpawn();
 		UnlockCycleCodexes();
 		GameClock.Instance.Subscribe(631075836, OnNewDay);
-		Subscribe(-1056989049, OnLaunchRocketDelegate);
+		Subscribe(-1277991738, OnLaunchRocketDelegate);
 		Subscribe(282337316, OnDuplicantDiedDelegate);
 		Subscribe(-818188514, OnDiscoveredSpaceDelegate);
 		Components.LiveMinionIdentities.OnAdd += OnNewDupe;
@@ -209,13 +264,24 @@ public class Unlocks : KMonoBehaviour
 		return unlocked.Contains(unlockID);
 	}
 
+	public void Lock(string unlockID)
+	{
+		if (unlocked.Contains(unlockID))
+		{
+			unlocked.Remove(unlockID);
+			SaveUnlocks();
+			Game.Instance.Trigger(1594320620, unlockID);
+		}
+	}
+
 	public void Unlock(string unlockID)
 	{
 		if (string.IsNullOrEmpty(unlockID))
 		{
 			DebugUtil.DevAssert(test: false, "Unlock called with null or empty string");
+			return;
 		}
-		else if (!unlocked.Contains(unlockID))
+		if (!unlocked.Contains(unlockID))
 		{
 			unlocked.Add(unlockID);
 			SaveUnlocks();
@@ -224,6 +290,30 @@ public class Unlocks : KMonoBehaviour
 			if (messageNotification != null)
 			{
 				GetComponent<Notifier>().Add(messageNotification);
+			}
+		}
+		EvalMetaCategories();
+	}
+
+	private void EvalMetaCategories()
+	{
+		foreach (MetaUnlockCategory metaUnlockCategory in MetaUnlockCategories)
+		{
+			string metaCollectionID = metaUnlockCategory.metaCollectionID;
+			string mesaCollectionID = metaUnlockCategory.mesaCollectionID;
+			int mesaUnlockCount = metaUnlockCategory.mesaUnlockCount;
+			int num = 0;
+			string[] array = lockCollections[mesaCollectionID];
+			foreach (string unlockID in array)
+			{
+				if (IsUnlocked(unlockID))
+				{
+					num++;
+				}
+			}
+			if (num >= mesaUnlockCount)
+			{
+				UnlockNext(metaCollectionID);
 			}
 		}
 	}

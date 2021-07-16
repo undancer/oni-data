@@ -15,6 +15,22 @@ public class CringeMonitor : GameStateMachine<CringeMonitor, CringeMonitor.Insta
 			statusItem = new StatusItem("CringeSource", name, null, "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 		}
 
+		public Reactable GetReactable()
+		{
+			EmoteReactable emoteReactable = new SelfEmoteReactable(base.master.gameObject, "Cringe", Db.Get().ChoreTypes.EmoteHighPriority, "anim_cringe_kanim", 0f, 0f).AddStep(new EmoteReactable.EmoteStep
+			{
+				anim = "cringe_pre"
+			}).AddStep(new EmoteReactable.EmoteStep
+			{
+				anim = "cringe_loop"
+			}).AddStep(new EmoteReactable.EmoteStep
+			{
+				anim = "cringe_pst"
+			});
+			emoteReactable.preventChoreInterruption = true;
+			return emoteReactable;
+		}
+
 		public StatusItem GetStatusItem()
 		{
 			return statusItem;
@@ -36,7 +52,7 @@ public class CringeMonitor : GameStateMachine<CringeMonitor, CringeMonitor.Insta
 	{
 		default_state = idle;
 		idle.EventHandler(GameHashes.Cringe, TriggerCringe);
-		cringe.ToggleChore((Instance smi) => new EmoteChore(smi.master, Db.Get().ChoreTypes.EmoteHighPriority, "anim_cringe_kanim", CringeAnims, smi.GetStatusItem), idle).ScheduleGoTo(3f, idle);
+		cringe.ToggleReactable((Instance smi) => smi.GetReactable()).ToggleStatusItem((Instance smi) => smi.GetStatusItem()).ScheduleGoTo(3f, idle);
 	}
 
 	private void TriggerCringe(Instance smi, object data)

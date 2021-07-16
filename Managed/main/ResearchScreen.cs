@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using STRINGS;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -16,6 +15,8 @@ public class ResearchScreen : KModalScreen
 		MissingPrerequisites,
 		StateCount
 	}
+
+	private const float SCROLL_BUFFER = 250f;
 
 	[SerializeField]
 	private Image BG;
@@ -39,16 +40,13 @@ public class ResearchScreen : KModalScreen
 	private Dictionary<Tech, ResearchEntry> entryMap;
 
 	[SerializeField]
-	private TMP_InputField filterField;
-
-	[SerializeField]
-	private KButton filterClearButton;
-
-	[SerializeField]
 	private KButton zoomOutButton;
 
 	[SerializeField]
 	private KButton zoomInButton;
+
+	[SerializeField]
+	private ResearchScreenSideBar sideBar;
 
 	private Tech currentResearch;
 
@@ -77,6 +75,12 @@ public class ResearchScreen : KModalScreen
 	private Vector3 dragStartPosition;
 
 	private Vector3 dragLastPosition;
+
+	private Vector2 dragInteria;
+
+	private Vector2 forceTargetPosition;
+
+	private bool zoomingToTarget;
 
 	private float targetZoom = 1f;
 
@@ -115,6 +119,15 @@ public class ResearchScreen : KModalScreen
 		return Research.Instance.IsBeingResearched(tech);
 	}
 
+	public override float GetSortKey()
+	{
+		if (base.isEditing)
+		{
+			return 50f;
+		}
+		return 20f;
+	}
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
@@ -142,12 +155,30 @@ public class ResearchScreen : KModalScreen
 		zoomCenterLock = true;
 	}
 
+	public void ZoomToTech(string techID)
+	{
+		Vector2 a = (Vector2)entryMap[Db.Get().Techs.Get(techID)].rectTransform().GetLocalPosition() + new Vector2((0f - foreground.rectTransform().rect.size.x) / 2f, foreground.rectTransform().rect.size.y / 2f);
+		forceTargetPosition = -a;
+		zoomingToTarget = true;
+		targetZoom = maxZoom;
+	}
+
 	private void Update()
 	{
+		if (!base.canvas.enabled)
+		{
+			return;
+		}
 		RectTransform component = scrollContent.GetComponent<RectTransform>();
 		if (!isDragging && (rightMouseDown || leftMouseDown) && Vector2.Distance(dragStartPosition, KInputManager.GetMousePos()) > 1f)
 		{
 			isDragging = true;
+		}
+		if (isDragging && !Input.GetMouseButton(0) && !Input.GetMouseButton(1))
+		{
+			leftMouseDown = false;
+			rightMouseDown = false;
+			isDragging = false;
 		}
 		Vector2 anchoredPosition = component.anchoredPosition;
 		currentZoom = Mathf.Lerp(t: Mathf.Min(effectiveZoomSpeed * Time.unscaledDeltaTime, 0.9f), a: currentZoom, b: targetZoom);
@@ -181,13 +212,18 @@ public class ResearchScreen : KModalScreen
 			Vector2 vector2 = KInputManager.GetMousePos() - dragLastPosition;
 			zero2 += vector2;
 			dragLastPosition = KInputManager.GetMousePos();
+			dragInteria = Vector2.ClampMagnitude(dragInteria + vector2, 400f);
 		}
+		dragInteria *= Mathf.Max(0f, 1f - Time.unscaledDeltaTime * 4f);
 		Vector2 vector3 = anchoredPosition + zero + keyPanDelta + zero2;
 		if (!isDragging)
 		{
-			Vector2 vector4 = component.rect.size * -0.5f * currentZoom;
-			Vector2 vector5 = component.rect.size * 0.5f * currentZoom;
-			Vector2 vector6 = new Vector2(Mathf.Clamp(vector3.x, vector4.x, vector5.x), Mathf.Clamp(vector3.y, vector4.y, vector5.y)) - vector3;
+			Vector2 size = GetComponent<RectTransform>().rect.size;
+			Vector2 vector4 = new Vector2(((0f - component.rect.size.x) / 2f - 250f) * currentZoom, -250f * currentZoom);
+			Vector2 vector5 = new Vector2(250f * currentZoom, (component.rect.size.y + 250f) * currentZoom - size.y);
+			Vector2 a = new Vector2(Mathf.Clamp(vector3.x, vector4.x, vector5.x), Mathf.Clamp(vector3.y, vector4.y, vector5.y));
+			forceTargetPosition = new Vector2(Mathf.Clamp(forceTargetPosition.x, vector4.x, vector5.x), Mathf.Clamp(forceTargetPosition.y, vector4.y, vector5.y));
+			Vector2 vector6 = a + dragInteria - vector3;
 			if (!panLeft && !panRight && !panUp && !panDown)
 			{
 				vector3 += vector6 * edgeClampFactor * Time.unscaledDeltaTime;
@@ -213,6 +249,14 @@ public class ResearchScreen : KModalScreen
 				}
 			}
 		}
+		if (zoomingToTarget)
+		{
+			vector3 = Vector2.Lerp(vector3, forceTargetPosition, Time.unscaledDeltaTime * 4f);
+			if (Vector3.Distance(vector3, forceTargetPosition) < 1f || isDragging || panLeft || panRight || panUp || panDown)
+			{
+				zoomingToTarget = false;
+			}
+		}
 		component.anchoredPosition = vector3;
 	}
 
@@ -224,13 +268,6 @@ public class ResearchScreen : KModalScreen
 		{
 			Show(show: false);
 		});
-		filterField.placeholder.GetComponent<TextMeshProUGUI>().text = UI.FILTER;
-		filterField.onValueChanged.AddListener(OnFilterChanged);
-		filterClearButton.onClick += delegate
-		{
-			filterField.text = "";
-			OnFilterChanged("");
-		};
 		pointDisplayMap = new Dictionary<string, LocText>();
 		foreach (ResearchType type in Research.Instance.researchTypes.Types)
 		{
@@ -328,9 +365,8 @@ public class ResearchScreen : KModalScreen
 			ManagementMenu.Instance.CloseAll();
 		};
 		StartCoroutine(WaitAndSetActiveResearch());
-		ManagementMenu.Instance.AddResearchScreen(this);
 		base.OnSpawn();
-		Show(show: false);
+		scrollContent.GetComponent<RectTransform>().anchoredPosition = new Vector2(250f, -250f);
 		zoomOutButton.onClick += delegate
 		{
 			ZoomOut();
@@ -339,6 +375,8 @@ public class ResearchScreen : KModalScreen
 		{
 			ZoomIn();
 		};
+		base.gameObject.SetActive(value: true);
+		Show(show: false);
 	}
 
 	protected override void OnCleanUp()
@@ -496,38 +534,58 @@ public class ResearchScreen : KModalScreen
 		}
 	}
 
+	public override void Show(bool show = true)
+	{
+		mouseOver = false;
+		base.canvas.enabled = show;
+		CanvasGroup component = GetComponent<CanvasGroup>();
+		if (component != null)
+		{
+			component.interactable = show;
+			component.blocksRaycasts = show;
+			component.ignoreParentGroups = true;
+		}
+		OnShow(show);
+	}
+
 	protected override void OnShow(bool show)
 	{
 		base.OnShow(show);
 		if (show)
 		{
-			DetailsScreen.Instance.gameObject.SetActive(value: false);
+			if (DetailsScreen.Instance != null)
+			{
+				DetailsScreen.Instance.gameObject.SetActive(value: false);
+			}
 		}
 		else if (SelectTool.Instance.selected != null && !DetailsScreen.Instance.gameObject.activeSelf)
 		{
 			DetailsScreen.Instance.gameObject.SetActive(value: true);
 			DetailsScreen.Instance.Refresh(SelectTool.Instance.selected.gameObject);
 		}
-		filterField.text = "";
-		OnFilterChanged("");
 		UpdateProgressBars();
 		UpdatePointDisplay();
 	}
 
 	public override void OnKeyUp(KButtonEvent e)
 	{
+		if (!base.canvas.enabled)
+		{
+			return;
+		}
 		if (!e.Consumed)
 		{
+			if (e.IsAction(Action.MouseRight))
+			{
+				if (!isDragging)
+				{
+					ManagementMenu.Instance.CloseAll();
+				}
+				isDragging = false;
+				rightMouseDown = false;
+			}
 			if (e.IsAction(Action.MouseRight) || e.IsAction(Action.MouseLeft))
 			{
-				if (!isDragging && e.TryConsume(Action.MouseRight))
-				{
-					isDragging = false;
-					rightMouseDown = false;
-					leftMouseDown = false;
-					ManagementMenu.Instance.CloseAll();
-					return;
-				}
 				isDragging = false;
 				rightMouseDown = false;
 				leftMouseDown = false;
@@ -558,6 +616,10 @@ public class ResearchScreen : KModalScreen
 
 	public override void OnKeyDown(KButtonEvent e)
 	{
+		if (!base.canvas.enabled)
+		{
+			return;
+		}
 		if (!e.Consumed)
 		{
 			if (e.TryConsume(Action.MouseRight))
@@ -574,17 +636,20 @@ public class ResearchScreen : KModalScreen
 				leftMouseDown = true;
 				return;
 			}
-			if (e.TryConsume(Action.ZoomIn))
+			if (KInputManager.GetMousePos().x > sideBar.rectTransform().sizeDelta.x)
 			{
-				targetZoom = Mathf.Clamp(targetZoom + zoomAmountPerScroll, minZoom, maxZoom);
-				zoomCenterLock = false;
-				return;
-			}
-			if (e.TryConsume(Action.ZoomOut))
-			{
-				targetZoom = Mathf.Clamp(targetZoom - zoomAmountPerScroll, minZoom, maxZoom);
-				zoomCenterLock = false;
-				return;
+				if (e.TryConsume(Action.ZoomIn))
+				{
+					targetZoom = Mathf.Clamp(targetZoom + zoomAmountPerScroll, minZoom, maxZoom);
+					zoomCenterLock = false;
+					return;
+				}
+				if (e.TryConsume(Action.ZoomOut))
+				{
+					targetZoom = Mathf.Clamp(targetZoom - zoomAmountPerScroll, minZoom, maxZoom);
+					zoomCenterLock = false;
+					return;
+				}
 			}
 			if (e.TryConsume(Action.Escape))
 			{
@@ -615,12 +680,55 @@ public class ResearchScreen : KModalScreen
 		base.OnKeyDown(e);
 	}
 
-	private void OnFilterChanged(string filter_text)
+	public static bool TechPassesSearchFilter(string techID, string filterString)
 	{
-		filter_text = filter_text.ToLower();
-		foreach (KeyValuePair<Tech, ResearchEntry> item in entryMap)
+		if (!string.IsNullOrEmpty(filterString))
 		{
-			item.Value.UpdateFilterState(filter_text);
+			filterString = filterString.ToUpper();
+			bool flag = false;
+			Tech tech = Db.Get().Techs.Get(techID);
+			flag = UI.StripLinkFormatting(tech.Name).ToLower().ToUpper()
+				.Contains(filterString);
+			if (!flag)
+			{
+				flag = tech.category.ToUpper().Contains(filterString);
+				{
+					foreach (TechItem unlockedItem in tech.unlockedItems)
+					{
+						if (UI.StripLinkFormatting(unlockedItem.Name).ToLower().ToUpper()
+							.Contains(filterString))
+						{
+							return true;
+						}
+						if (UI.StripLinkFormatting(unlockedItem.description).ToLower().ToUpper()
+							.Contains(filterString))
+						{
+							return true;
+						}
+					}
+					return flag;
+				}
+			}
+			return flag;
 		}
+		return true;
+	}
+
+	public static bool TechItemPassesSearchFilter(string techItemID, string filterString)
+	{
+		if (!string.IsNullOrEmpty(filterString))
+		{
+			bool flag = false;
+			filterString = filterString.ToUpper();
+			TechItem techItem = Db.Get().TechItems.Get(techItemID);
+			flag = UI.StripLinkFormatting(techItem.Name).ToLower().ToUpper()
+				.Contains(filterString);
+			if (!flag)
+			{
+				flag = techItem.Name.ToUpper().Contains(filterString) && techItem.description.ToUpper().Contains(filterString);
+			}
+			return flag;
+		}
+		return true;
 	}
 }

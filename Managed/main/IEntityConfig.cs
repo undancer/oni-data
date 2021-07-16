@@ -7,4 +7,6 @@ public interface IEntityConfig
 	void OnPrefabInit(GameObject inst);
 
 	void OnSpawn(GameObject inst);
+
+	string[] GetDlcIds();
 }

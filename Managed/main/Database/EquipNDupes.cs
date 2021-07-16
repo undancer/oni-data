@@ -1,10 +1,8 @@
-using System.IO;
-using KSerialization;
 using STRINGS;
 
 namespace Database
 {
-	public class EquipNDupes : ColonyAchievementRequirement
+	public class EquipNDupes : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
 		private AssignableSlot equipmentSlot;
 
@@ -30,13 +28,7 @@ namespace Database
 			return num >= numToEquip;
 		}
 
-		public override void Serialize(BinaryWriter writer)
-		{
-			writer.WriteKleiString(equipmentSlot.Id);
-			writer.Write(numToEquip);
-		}
-
-		public override void Deserialize(IReader reader)
+		public void Deserialize(IReader reader)
 		{
 			string id = reader.ReadKleiString();
 			equipmentSlot = Db.Get().AssignableSlots.Get(id);

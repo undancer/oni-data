@@ -6,6 +6,11 @@ public class BasicForagePlantPlantedConfig : IEntityConfig
 {
 	public const string ID = "BasicForagePlantPlanted";
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("BasicForagePlantPlanted", STRINGS.CREATURES.SPECIES.BASICFORAGEPLANTPLANTED.NAME, STRINGS.CREATURES.SPECIES.BASICFORAGEPLANTPLANTED.DESC, 100f, decor: DECOR.BONUS.TIER1, anim: Assets.GetAnim("muckroot_kanim"), initialAnim: "idle", sceneLayer: Grid.SceneLayer.BuildingBack, width: 1, height: 1);

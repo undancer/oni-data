@@ -18,6 +18,8 @@ public class GeneratorConfig : IBuildingConfig
 		obj.GeneratorBaseCapacity = 20000f;
 		obj.ExhaustKilowattsWhenActive = 8f;
 		obj.SelfHeatKilowattsWhenActive = 1f;
+		obj.RequiresPowerOutput = true;
+		obj.PowerOutputOffset = new CellOffset(0, 0);
 		obj.ViewMode = OverlayModes.Power.ID;
 		obj.AudioCategory = "HollowMetal";
 		obj.AudioSize = "large";

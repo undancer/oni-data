@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using STRINGS;
 using UnityEngine;
@@ -8,65 +9,137 @@ public class ManagementMenu : KIconToggleMenu
 	{
 		public KScreen screen;
 
-		public ToggleInfo toggleInfo;
+		public ManagementMenuToggleInfo toggleInfo;
+
+		public Func<bool> cancelHandler;
 
 		public int tabIdx;
 	}
 
-	[SerializeField]
-	private KToggle smallPrefab;
+	public class ManagementMenuToggleInfo : ToggleInfo
+	{
+		public ImageToggleState alertImage;
 
-	private ScreenData activeScreen;
+		public ImageToggleState glowImage;
 
-	private KButton activeButton;
+		private ColorStyleSetting originalButtonSetting;
+
+		public ManagementMenuToggleInfo(string text, string icon, object user_data = null, Action hotkey = Action.NumActions, string tooltip = "", string tooltip_header = "")
+			: base(text, icon, user_data, hotkey, tooltip, tooltip_header)
+		{
+			base.tooltip = GameUtil.ReplaceHotkeyString(base.tooltip, hotKey);
+		}
+
+		public void SetNotificationDisplay(bool showAlertImage, bool showGlow, ColorStyleSetting buttonColorStyle, ColorStyleSetting alertColorStyle)
+		{
+			ImageToggleState component = toggle.GetComponent<ImageToggleState>();
+			if (component != null)
+			{
+				if (buttonColorStyle != null)
+				{
+					component.SetColorStyle(buttonColorStyle);
+				}
+				else
+				{
+					component.SetColorStyle(originalButtonSetting);
+				}
+			}
+			if (alertImage != null)
+			{
+				alertImage.gameObject.SetActive(showAlertImage);
+				alertImage.SetColorStyle(alertColorStyle);
+			}
+			if (glowImage != null)
+			{
+				glowImage.gameObject.SetActive(showGlow);
+				if (buttonColorStyle != null)
+				{
+					glowImage.SetColorStyle(buttonColorStyle);
+				}
+			}
+		}
+
+		public override void SetToggle(KToggle toggle)
+		{
+			base.SetToggle(toggle);
+			ImageToggleState component = toggle.GetComponent<ImageToggleState>();
+			if (component != null)
+			{
+				originalButtonSetting = component.colorStyleSetting;
+			}
+			HierarchyReferences component2 = toggle.GetComponent<HierarchyReferences>();
+			if (component2 != null)
+			{
+				alertImage = component2.GetReference<ImageToggleState>("AlertImage");
+				glowImage = component2.GetReference<ImageToggleState>("GlowImage");
+			}
+		}
+	}
+
+	[MyCmpReq]
+	public ManagementMenuNotificationDisplayer notificationDisplayer;
 
 	public static ManagementMenu Instance;
 
-	public KScreen researchScreen;
+	[Header("Management Menu Specific")]
+	[SerializeField]
+	private KToggle smallPrefab;
 
-	private JobsTableScreen jobsScreen;
+	public KToggle PauseMenuButton;
+
+	[Header("Top Right Screen References")]
+	public JobsTableScreen jobsScreen;
 
 	public VitalsTableScreen vitalsScreen;
 
 	public ScheduleScreen scheduleScreen;
 
-	public KScreen reportsScreen;
-
-	private ConsumablesTableScreen consumablesScreen;
+	public ReportScreen reportsScreen;
 
 	public CodexScreen codexScreen;
 
+	public ConsumablesTableScreen consumablesScreen;
+
 	private StarmapScreen starmapScreen;
+
+	private ClusterMapScreen clusterMapScreen;
 
 	private SkillsScreen skillsScreen;
 
-	public string colourSchemeDisabled;
+	private ResearchScreen researchScreen;
 
-	public InstantiateUIPrefabChild instantiator;
+	[Header("Notification Styles")]
+	public ColorStyleSetting noAlertColorStyle;
 
-	private ToggleInfo jobsInfo;
+	public List<ColorStyleSetting> alertColorStyle;
 
-	private ToggleInfo consumablesInfo;
+	public List<TextStyleSetting> alertTextStyle;
 
-	private ToggleInfo scheduleInfo;
+	private ManagementMenuToggleInfo jobsInfo;
 
-	private ToggleInfo vitalsInfo;
+	private ManagementMenuToggleInfo consumablesInfo;
 
-	private ToggleInfo reportsInfo;
+	private ManagementMenuToggleInfo scheduleInfo;
 
-	private ToggleInfo researchInfo;
+	private ManagementMenuToggleInfo vitalsInfo;
 
-	private ToggleInfo codexInfo;
+	private ManagementMenuToggleInfo reportsInfo;
 
-	private ToggleInfo starmapInfo;
+	private ManagementMenuToggleInfo researchInfo;
 
-	private ToggleInfo skillsInfo;
+	private ManagementMenuToggleInfo codexInfo;
 
-	private Dictionary<ToggleInfo, ScreenData> ScreenInfoMatch = new Dictionary<ToggleInfo, ScreenData>();
+	private ManagementMenuToggleInfo starmapInfo;
 
-	public KButton[] CloseButtons;
+	private ManagementMenuToggleInfo clusterMapInfo;
 
-	public KToggle PauseMenuButton;
+	private ManagementMenuToggleInfo skillsInfo;
+
+	private Dictionary<ManagementMenuToggleInfo, ScreenData> ScreenInfoMatch = new Dictionary<ManagementMenuToggleInfo, ScreenData>();
+
+	private ScreenData activeScreen;
+
+	private KButton activeButton;
 
 	private string skillsTooltip;
 
@@ -80,84 +153,131 @@ public class ManagementMenu : KIconToggleMenu
 
 	private string starmapTooltipDisabled;
 
+	private string clusterMapTooltip;
+
+	private string clusterMapTooltipDisabled;
+
+	private List<KScreen> mutuallyExclusiveScreens = new List<KScreen>();
+
 	public static void DestroyInstance()
 	{
 		Instance = null;
+	}
+
+	public override float GetSortKey()
+	{
+		return 21f;
 	}
 
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
 		Instance = this;
+		notificationDisplayer.onNotificationsChanged += OnNotificationsChanged;
 		CodexCache.CodexCacheInit();
 		ScheduledUIInstantiation component = GameScreenManager.Instance.ssOverlayCanvas.GetComponent<ScheduledUIInstantiation>();
-		instantiator.Instantiate();
-		jobsScreen = instantiator.GetComponentInChildren<JobsTableScreen>(includeInactive: true);
-		consumablesScreen = instantiator.GetComponentInChildren<ConsumablesTableScreen>(includeInactive: true);
-		vitalsScreen = instantiator.GetComponentInChildren<VitalsTableScreen>(includeInactive: true);
 		starmapScreen = component.GetInstantiatedObject<StarmapScreen>();
-		codexScreen = instantiator.GetComponentInChildren<CodexScreen>(includeInactive: true);
-		scheduleScreen = instantiator.GetComponentInChildren<ScheduleScreen>(includeInactive: true);
+		clusterMapScreen = component.GetInstantiatedObject<ClusterMapScreen>();
 		skillsScreen = component.GetInstantiatedObject<SkillsScreen>();
+		researchScreen = component.GetInstantiatedObject<ResearchScreen>();
 		Subscribe(Game.Instance.gameObject, 288942073, OnUIClear);
-		consumablesInfo = new ToggleInfo(UI.CONSUMABLES, "OverviewUI_consumables_icon", null, Action.ManageConsumables, UI.TOOLTIPS.MANAGEMENTMENU_CONSUMABLES);
-		vitalsInfo = new ToggleInfo(UI.VITALS, "OverviewUI_vitals_icon", null, Action.ManageVitals, UI.TOOLTIPS.MANAGEMENTMENU_VITALS);
-		reportsInfo = new ToggleInfo(UI.REPORT, "OverviewUI_reports_icon", null, Action.ManageReport, UI.TOOLTIPS.MANAGEMENTMENU_DAILYREPORT);
+		consumablesInfo = new ManagementMenuToggleInfo(UI.CONSUMABLES, "OverviewUI_consumables_icon", null, Action.ManageConsumables, UI.TOOLTIPS.MANAGEMENTMENU_CONSUMABLES);
+		AddToggleTooltip(consumablesInfo);
+		vitalsInfo = new ManagementMenuToggleInfo(UI.VITALS, "OverviewUI_vitals_icon", null, Action.ManageVitals, UI.TOOLTIPS.MANAGEMENTMENU_VITALS);
+		AddToggleTooltip(vitalsInfo);
+		researchInfo = new ManagementMenuToggleInfo(UI.RESEARCH, "OverviewUI_research_nav_icon", null, Action.ManageResearch, UI.TOOLTIPS.MANAGEMENTMENU_RESEARCH);
+		AddToggleTooltip(researchInfo, UI.TOOLTIPS.MANAGEMENTMENU_REQUIRES_RESEARCH);
+		jobsInfo = new ManagementMenuToggleInfo(UI.JOBS, "OverviewUI_priority_icon", null, Action.ManagePriorities, UI.TOOLTIPS.MANAGEMENTMENU_JOBS);
+		AddToggleTooltip(jobsInfo);
+		skillsInfo = new ManagementMenuToggleInfo(UI.SKILLS, "OverviewUI_jobs_icon", null, Action.ManageSkills, UI.TOOLTIPS.MANAGEMENTMENU_SKILLS);
+		AddToggleTooltip(skillsInfo, UI.TOOLTIPS.MANAGEMENTMENU_REQUIRES_SKILL_STATION);
+		starmapInfo = new ManagementMenuToggleInfo(UI.STARMAP.MANAGEMENT_BUTTON, "OverviewUI_starmap_icon", null, Action.ManageStarmap, UI.TOOLTIPS.MANAGEMENTMENU_STARMAP);
+		AddToggleTooltip(starmapInfo, UI.TOOLTIPS.MANAGEMENTMENU_REQUIRES_TELESCOPE);
+		clusterMapInfo = new ManagementMenuToggleInfo(UI.STARMAP.MANAGEMENT_BUTTON, "OverviewUI_starmap_icon", null, Action.ManageStarmap, UI.TOOLTIPS.MANAGEMENTMENU_STARMAP);
+		AddToggleTooltip(clusterMapInfo);
+		scheduleInfo = new ManagementMenuToggleInfo(UI.SCHEDULE, "OverviewUI_schedule2_icon", null, Action.ManageSchedule, UI.TOOLTIPS.MANAGEMENTMENU_SCHEDULE);
+		AddToggleTooltip(scheduleInfo);
+		reportsInfo = new ManagementMenuToggleInfo(UI.REPORT, "OverviewUI_reports_icon", null, Action.ManageReport, UI.TOOLTIPS.MANAGEMENTMENU_DAILYREPORT);
+		AddToggleTooltip(reportsInfo);
 		reportsInfo.prefabOverride = smallPrefab;
-		researchInfo = new ToggleInfo(UI.RESEARCH, "OverviewUI_research_nav_icon", null, Action.ManageResearch, UI.TOOLTIPS.MANAGEMENTMENU_RESEARCH);
-		jobsInfo = new ToggleInfo(UI.JOBS, "OverviewUI_priority_icon", null, Action.ManagePriorities, UI.TOOLTIPS.MANAGEMENTMENU_JOBS);
-		skillsInfo = new ToggleInfo(UI.SKILLS, "OverviewUI_jobs_icon", null, Action.ManageSkills, UI.TOOLTIPS.MANAGEMENTMENU_SKILLS);
-		starmapInfo = new ToggleInfo(UI.STARMAP.MANAGEMENT_BUTTON, "OverviewUI_starmap_icon", null, Action.ManageStarmap, UI.TOOLTIPS.MANAGEMENTMENU_STARMAP);
-		codexInfo = new ToggleInfo(UI.CODEX.MANAGEMENT_BUTTON, "OverviewUI_database_icon", null, Action.ManageDatabase, UI.TOOLTIPS.MANAGEMENTMENU_CODEX);
+		codexInfo = new ManagementMenuToggleInfo(UI.CODEX.MANAGEMENT_BUTTON, "OverviewUI_database_icon", null, Action.ManageDatabase, UI.TOOLTIPS.MANAGEMENTMENU_CODEX);
+		AddToggleTooltip(codexInfo);
 		codexInfo.prefabOverride = smallPrefab;
-		scheduleInfo = new ToggleInfo(UI.SCHEDULE, "OverviewUI_schedule2_icon", null, Action.ManageSchedule, UI.TOOLTIPS.MANAGEMENTMENU_SCHEDULE);
 		ScreenInfoMatch.Add(consumablesInfo, new ScreenData
 		{
 			screen = consumablesScreen,
 			tabIdx = 3,
-			toggleInfo = consumablesInfo
+			toggleInfo = consumablesInfo,
+			cancelHandler = null
 		});
 		ScreenInfoMatch.Add(vitalsInfo, new ScreenData
 		{
 			screen = vitalsScreen,
 			tabIdx = 2,
-			toggleInfo = vitalsInfo
+			toggleInfo = vitalsInfo,
+			cancelHandler = null
 		});
 		ScreenInfoMatch.Add(reportsInfo, new ScreenData
 		{
 			screen = reportsScreen,
 			tabIdx = 4,
-			toggleInfo = reportsInfo
+			toggleInfo = reportsInfo,
+			cancelHandler = null
 		});
 		ScreenInfoMatch.Add(jobsInfo, new ScreenData
 		{
 			screen = jobsScreen,
 			tabIdx = 1,
-			toggleInfo = jobsInfo
+			toggleInfo = jobsInfo,
+			cancelHandler = null
 		});
 		ScreenInfoMatch.Add(skillsInfo, new ScreenData
 		{
 			screen = skillsScreen,
 			tabIdx = 0,
-			toggleInfo = skillsInfo
+			toggleInfo = skillsInfo,
+			cancelHandler = null
 		});
 		ScreenInfoMatch.Add(codexInfo, new ScreenData
 		{
 			screen = codexScreen,
 			tabIdx = 6,
-			toggleInfo = codexInfo
+			toggleInfo = codexInfo,
+			cancelHandler = null
 		});
 		ScreenInfoMatch.Add(scheduleInfo, new ScreenData
 		{
 			screen = scheduleScreen,
 			tabIdx = 7,
-			toggleInfo = scheduleInfo
+			toggleInfo = scheduleInfo,
+			cancelHandler = null
 		});
-		ScreenInfoMatch.Add(starmapInfo, new ScreenData
+		if (DlcManager.FeatureClusterSpaceEnabled())
 		{
-			screen = starmapScreen,
-			tabIdx = 7,
-			toggleInfo = starmapInfo
+			ScreenInfoMatch.Add(clusterMapInfo, new ScreenData
+			{
+				screen = clusterMapScreen,
+				tabIdx = 7,
+				toggleInfo = clusterMapInfo,
+				cancelHandler = clusterMapScreen.TryHandleCancel
+			});
+		}
+		else
+		{
+			ScreenInfoMatch.Add(starmapInfo, new ScreenData
+			{
+				screen = starmapScreen,
+				tabIdx = 7,
+				toggleInfo = starmapInfo,
+				cancelHandler = null
+			});
+		}
+		ScreenInfoMatch.Add(researchInfo, new ScreenData
+		{
+			screen = researchScreen,
+			tabIdx = 5,
+			toggleInfo = researchInfo,
+			cancelHandler = null
 		});
 		List<ToggleInfo> list = new List<ToggleInfo>();
 		list.Add(vitalsInfo);
@@ -166,7 +286,14 @@ public class ManagementMenu : KIconToggleMenu
 		list.Add(jobsInfo);
 		list.Add(skillsInfo);
 		list.Add(researchInfo);
-		list.Add(starmapInfo);
+		if (DlcManager.FeatureClusterSpaceEnabled())
+		{
+			list.Add(clusterMapInfo);
+		}
+		else
+		{
+			list.Add(starmapInfo);
+		}
 		list.Add(reportsInfo);
 		list.Add(codexInfo);
 		Setup(list);
@@ -180,29 +307,58 @@ public class ManagementMenu : KIconToggleMenu
 		Components.RoleStations.OnRemove += CheckSkills;
 		Game.Instance.Subscribe(-809948329, CheckResearch);
 		Game.Instance.Subscribe(-809948329, CheckSkills);
-		Components.Telescopes.OnAdd += CheckStarmap;
-		Components.Telescopes.OnRemove += CheckStarmap;
-		skillsTooltipDisabled = UI.TOOLTIPS.MANAGEMENTMENU_REQUIRES_SKILL_STATION;
-		skillsTooltip = GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.MANAGEMENTMENU_SKILLS, Action.ManageSkills);
-		researchTooltipDisabled = UI.TOOLTIPS.MANAGEMENTMENU_REQUIRES_RESEARCH;
-		researchTooltip = GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.MANAGEMENTMENU_RESEARCH, Action.ManageResearch);
-		starmapTooltipDisabled = UI.TOOLTIPS.MANAGEMENTMENU_REQUIRES_TELESCOPE;
-		starmapTooltip = GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.MANAGEMENTMENU_STARMAP, Action.ManageStarmap);
+		if (!DlcManager.FeatureClusterSpaceEnabled())
+		{
+			Components.Telescopes.OnAdd += CheckStarmap;
+			Components.Telescopes.OnRemove += CheckStarmap;
+		}
 		CheckResearch(null);
 		CheckSkills();
-		CheckStarmap();
-		researchInfo.toggle.soundPlayer.AcceptClickCondition = () => ResearchAvailable() || activeScreen == ScreenInfoMatch[Instance.researchInfo];
-		KButton[] closeButtons = CloseButtons;
-		foreach (KButton obj in closeButtons)
+		if (!DlcManager.FeatureClusterSpaceEnabled())
 		{
-			obj.onClick += CloseAll;
-			obj.soundPlayer.Enabled = false;
+			CheckStarmap();
 		}
+		researchInfo.toggle.soundPlayer.AcceptClickCondition = () => ResearchAvailable() || activeScreen == ScreenInfoMatch[Instance.researchInfo];
 		foreach (KToggle toggle in toggles)
 		{
 			toggle.soundPlayer.toggle_widget_sound_events[0].PlaySound = false;
 			toggle.soundPlayer.toggle_widget_sound_events[1].PlaySound = false;
 		}
+	}
+
+	protected override void OnSpawn()
+	{
+		base.OnSpawn();
+		mutuallyExclusiveScreens.Add(AllResourcesScreen.Instance);
+		mutuallyExclusiveScreens.Add(AllDiagnosticsScreen.Instance);
+		OnNotificationsChanged();
+	}
+
+	private void OnNotificationsChanged()
+	{
+		foreach (KeyValuePair<ManagementMenuToggleInfo, ScreenData> item in ScreenInfoMatch)
+		{
+			item.Key.SetNotificationDisplay(showAlertImage: false, showGlow: false, null, noAlertColorStyle);
+		}
+	}
+
+	private void AddToggleTooltip(ManagementMenuToggleInfo toggleInfo, string disabledTooltip = null)
+	{
+		toggleInfo.getTooltipText = delegate
+		{
+			List<Tuple<string, TextStyleSetting>> list = new List<Tuple<string, TextStyleSetting>>();
+			if (disabledTooltip != null && !toggleInfo.toggle.interactable)
+			{
+				list.Add(new Tuple<string, TextStyleSetting>(disabledTooltip, ToolTipScreen.Instance.defaultTooltipBodyStyle));
+				return list;
+			}
+			if (toggleInfo.tooltipHeader != null)
+			{
+				list.Add(new Tuple<string, TextStyleSetting>(toggleInfo.tooltipHeader, ToolTipScreen.Instance.defaultTooltipHeaderStyle));
+			}
+			list.Add(new Tuple<string, TextStyleSetting>(toggleInfo.tooltip, ToolTipScreen.Instance.defaultTooltipBodyStyle));
+			return list;
+		};
 	}
 
 	private void OnPauseMenuClicked()
@@ -211,41 +367,23 @@ public class ManagementMenu : KIconToggleMenu
 		PauseMenuButton.isOn = false;
 	}
 
-	public void AddResearchScreen(ResearchScreen researchScreen)
-	{
-		if (!(this.researchScreen != null))
-		{
-			this.researchScreen = researchScreen;
-			this.researchScreen.gameObject.SetActive(value: false);
-			ScreenInfoMatch.Add(researchInfo, new ScreenData
-			{
-				screen = this.researchScreen,
-				tabIdx = 5,
-				toggleInfo = researchInfo
-			});
-			this.researchScreen.Show(show: false);
-		}
-	}
-
 	public void CheckResearch(object o)
 	{
 		if (!(researchInfo.toggle == null))
 		{
 			bool flag = Components.ResearchCenters.Count <= 0 && !DebugHandler.InstantBuildMode;
 			bool active = !flag && activeScreen != null && activeScreen.toggleInfo == researchInfo;
-			string tooltip = (flag ? researchTooltipDisabled : researchTooltip);
-			ConfigureToggle(researchInfo.toggle, flag, active, tooltip, ToggleToolTipTextStyleSetting);
+			ConfigureToggle(researchInfo.toggle, flag, active);
 		}
 	}
 
 	public void CheckSkills(object o = null)
 	{
-		if (skillsInfo != null && !(skillsInfo.toggle == null))
+		if (!(skillsInfo.toggle == null))
 		{
-			bool flag = Components.RoleStations.Count <= 0 && !DebugHandler.InstantBuildMode;
+			bool disabled = Components.RoleStations.Count <= 0 && !DebugHandler.InstantBuildMode;
 			bool active = activeScreen != null && activeScreen.toggleInfo == skillsInfo;
-			string tooltip = (flag ? skillsTooltipDisabled : skillsTooltip);
-			ConfigureToggle(skillsInfo.toggle, flag, active, tooltip, ToggleToolTipTextStyleSetting);
+			ConfigureToggle(skillsInfo.toggle, disabled, active);
 		}
 	}
 
@@ -253,17 +391,15 @@ public class ManagementMenu : KIconToggleMenu
 	{
 		if (!(starmapInfo.toggle == null))
 		{
-			bool flag = Components.Telescopes.Count <= 0 && !DebugHandler.InstantBuildMode;
+			bool disabled = Components.Telescopes.Count <= 0 && !DebugHandler.InstantBuildMode;
 			bool active = activeScreen != null && activeScreen.toggleInfo == starmapInfo;
-			string tooltip = (flag ? starmapTooltipDisabled : starmapTooltip);
-			ConfigureToggle(starmapInfo.toggle, flag, active, tooltip, ToggleToolTipTextStyleSetting);
+			ConfigureToggle(starmapInfo.toggle, disabled, active);
 		}
 	}
 
-	private void ConfigureToggle(KToggle toggle, bool disabled, bool active, string tooltip, TextStyleSetting tooltip_style)
+	private void ConfigureToggle(KToggle toggle, bool disabled, bool active)
 	{
-		toggle.interactable = active;
-		toggle.GetComponent<KToggle>().interactable = !disabled;
+		toggle.interactable = !disabled;
 		if (disabled)
 		{
 			toggle.GetComponentInChildren<ImageToggleState>().SetDisabled();
@@ -272,16 +408,13 @@ public class ManagementMenu : KIconToggleMenu
 		{
 			toggle.GetComponentInChildren<ImageToggleState>().SetActiveState(active);
 		}
-		ToolTip component = toggle.GetComponent<ToolTip>();
-		component.ClearMultiStringTooltip();
-		component.AddMultiStringTooltip(tooltip, tooltip_style);
 	}
 
 	public override void OnKeyDown(KButtonEvent e)
 	{
 		if (activeScreen != null && e.TryConsume(Action.Escape))
 		{
-			ToggleScreen(activeScreen);
+			ToggleIfCancelUnhandled(activeScreen);
 		}
 		if (!e.Consumed)
 		{
@@ -293,11 +426,19 @@ public class ManagementMenu : KIconToggleMenu
 	{
 		if (activeScreen != null && PlayerController.Instance.ConsumeIfNotDragging(e, Action.MouseRight))
 		{
-			ToggleScreen(activeScreen);
+			ToggleIfCancelUnhandled(activeScreen);
 		}
 		if (!e.Consumed)
 		{
 			base.OnKeyUp(e);
+		}
+	}
+
+	private void ToggleIfCancelUnhandled(ScreenData screenData)
+	{
+		if (screenData.cancelHandler == null || !screenData.cancelHandler())
+		{
+			ToggleScreen(screenData);
 		}
 	}
 
@@ -319,7 +460,7 @@ public class ManagementMenu : KIconToggleMenu
 		return true;
 	}
 
-	private bool StarmapAvailable()
+	public static bool StarmapAvailable()
 	{
 		if (Components.Telescopes.Count <= 0)
 		{
@@ -391,7 +532,23 @@ public class ManagementMenu : KIconToggleMenu
 				screenData.toggleInfo.toggle.gameObject.GetComponentInChildren<ImageToggleState>().SetActive();
 				CloseActive();
 				activeScreen = screenData;
+				if (!activeScreen.screen.IsActive())
+				{
+					activeScreen.screen.Activate();
+				}
 				activeScreen.screen.Show();
+				foreach (ManagementMenuNotification item in notificationDisplayer.GetNotificationsForAction(screenData.toggleInfo.hotKey))
+				{
+					if (item.customClickCallback != null)
+					{
+						item.customClickCallback(item.customClickData);
+						break;
+					}
+				}
+				foreach (KScreen mutuallyExclusiveScreen in mutuallyExclusiveScreens)
+				{
+					mutuallyExclusiveScreen.Show(show: false);
+				}
 			}
 			else
 			{
@@ -407,7 +564,7 @@ public class ManagementMenu : KIconToggleMenu
 
 	public void OnButtonClick(ToggleInfo toggle_info)
 	{
-		ToggleScreen(ScreenInfoMatch[toggle_info]);
+		ToggleScreen(ScreenInfoMatch[(ManagementMenuToggleInfo)toggle_info]);
 	}
 
 	private void CloseActive()
@@ -422,10 +579,6 @@ public class ManagementMenu : KIconToggleMenu
 
 	public void ToggleResearch()
 	{
-		if (researchScreen == null)
-		{
-			AddResearchScreen(Object.FindObjectOfType<ResearchScreen>());
-		}
 		if ((ResearchAvailable() || activeScreen == ScreenInfoMatch[Instance.researchInfo]) && researchInfo != null)
 		{
 			ToggleScreen(ScreenInfoMatch[Instance.researchInfo]);
@@ -462,6 +615,11 @@ public class ManagementMenu : KIconToggleMenu
 		}
 	}
 
+	public void ToggleClusterMap()
+	{
+		ToggleScreen(ScreenInfoMatch[Instance.clusterMapInfo]);
+	}
+
 	public void TogglePriorities()
 	{
 		ToggleScreen(ScreenInfoMatch[Instance.jobsInfo]);
@@ -492,11 +650,19 @@ public class ManagementMenu : KIconToggleMenu
 		}
 	}
 
+	public void OpenClusterMap()
+	{
+		if (activeScreen != ScreenInfoMatch[Instance.clusterMapInfo])
+		{
+			ToggleScreen(ScreenInfoMatch[Instance.clusterMapInfo]);
+		}
+	}
+
 	public void OpenSkills(MinionIdentity minionIdentity)
 	{
+		skillsScreen.CurrentlySelectedMinion = minionIdentity;
 		if (activeScreen != ScreenInfoMatch[Instance.skillsInfo])
 		{
-			skillsScreen.CurrentlySelectedMinion = minionIdentity;
 			ToggleScreen(ScreenInfoMatch[Instance.skillsInfo]);
 		}
 	}

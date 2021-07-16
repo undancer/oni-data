@@ -19,7 +19,7 @@ public class VignetteManager : GameStateMachine<VignetteManager, VignetteManager
 
 		private bool hasTopPriorityChore;
 
-		public Notification redAlertNotification = new Notification(MISC.NOTIFICATIONS.REDALERT.NAME, NotificationType.Bad, HashedString.Invalid, (List<Notification> notificationList, object data) => MISC.NOTIFICATIONS.REDALERT.TOOLTIP, null, expires: false);
+		public Notification redAlertNotification = new Notification(MISC.NOTIFICATIONS.REDALERT.NAME, NotificationType.Bad, (List<Notification> notificationList, object data) => MISC.NOTIFICATIONS.REDALERT.TOOLTIP, null, expires: false);
 
 		public static void DestroyInstance()
 		{

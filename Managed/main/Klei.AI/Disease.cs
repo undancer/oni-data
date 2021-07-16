@@ -106,31 +106,34 @@ namespace Klei.AI
 
 		public new string Name => Strings.Get(name);
 
-		public Disease(string id, byte strength, RangeInfo temperature_range, RangeInfo temperature_half_lives, RangeInfo pressure_range, RangeInfo pressure_half_lives)
+		public Disease(string id, byte strength, RangeInfo temperature_range, RangeInfo temperature_half_lives, RangeInfo pressure_range, RangeInfo pressure_half_lives, bool statsOnly)
 			: base(id)
 		{
 			name = new StringKey("STRINGS.DUPLICANTS.DISEASES." + id.ToUpper() + ".NAME");
 			this.id = id;
-			overlayColourName = Assets.instance.DiseaseVisualization.GetInfo(id).overlayColourName;
 			temperatureRange = temperature_range;
 			temperatureHalfLives = temperature_half_lives;
 			pressureRange = pressure_range;
 			pressureHalfLives = pressure_half_lives;
 			PopulateElemGrowthInfo();
 			ApplyRules();
-			string str = Strings.Get("STRINGS.DUPLICANTS.DISEASES." + id.ToUpper() + ".LEGEND_HOVERTEXT").ToString();
-			overlayLegendHovertext = str + DUPLICANTS.DISEASES.LEGEND_POSTAMBLE;
-			Attribute attribute = new Attribute(id + "Min", "Minimum" + id.ToString(), "", "", 0f, Attribute.Display.Normal, is_trainable: false);
-			Attribute attribute2 = new Attribute(id + "Max", "Maximum" + id.ToString(), "", "", 10000000f, Attribute.Display.Normal, is_trainable: false);
-			amountDeltaAttribute = new Attribute(id + "Delta", id.ToString(), "", "", 0f, Attribute.Display.Normal, is_trainable: false);
-			amount = new Amount(id, id + " " + DUPLICANTS.DISEASES.GERMS, id + " " + DUPLICANTS.DISEASES.GERMS, attribute, attribute2, amountDeltaAttribute, show_max: false, Units.Flat, 0.01f, show_in_ui: true);
-			Db.Get().Attributes.Add(attribute);
-			Db.Get().Attributes.Add(attribute2);
-			Db.Get().Attributes.Add(amountDeltaAttribute);
-			cureSpeedBase = new Attribute(id + "CureSpeed", is_trainable: false, Attribute.Display.Normal, is_profession: false);
-			cureSpeedBase.BaseValue = 1f;
-			cureSpeedBase.SetFormatter(new ToPercentAttributeFormatter(1f));
-			Db.Get().Attributes.Add(cureSpeedBase);
+			if (!statsOnly)
+			{
+				overlayColourName = Assets.instance.DiseaseVisualization.GetInfo(id).overlayColourName;
+				string str = Strings.Get("STRINGS.DUPLICANTS.DISEASES." + id.ToUpper() + ".LEGEND_HOVERTEXT").ToString();
+				overlayLegendHovertext = str + DUPLICANTS.DISEASES.LEGEND_POSTAMBLE;
+				Attribute attribute = new Attribute(id + "Min", "Minimum" + id.ToString(), "", "", 0f, Attribute.Display.Normal, is_trainable: false);
+				Attribute attribute2 = new Attribute(id + "Max", "Maximum" + id.ToString(), "", "", 10000000f, Attribute.Display.Normal, is_trainable: false);
+				amountDeltaAttribute = new Attribute(id + "Delta", id.ToString(), "", "", 0f, Attribute.Display.Normal, is_trainable: false);
+				amount = new Amount(id, id + " " + DUPLICANTS.DISEASES.GERMS, id + " " + DUPLICANTS.DISEASES.GERMS, attribute, attribute2, amountDeltaAttribute, show_max: false, Units.Flat, 0.01f, show_in_ui: true);
+				Db.Get().Attributes.Add(attribute);
+				Db.Get().Attributes.Add(attribute2);
+				Db.Get().Attributes.Add(amountDeltaAttribute);
+				cureSpeedBase = new Attribute(id + "CureSpeed", is_trainable: false, Attribute.Display.Normal, is_profession: false);
+				cureSpeedBase.BaseValue = 1f;
+				cureSpeedBase.SetFormatter(new ToPercentAttributeFormatter(1f));
+				Db.Get().Attributes.Add(cureSpeedBase);
+			}
 		}
 
 		protected virtual void PopulateElemGrowthInfo()

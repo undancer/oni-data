@@ -156,6 +156,7 @@ public class TransitionDriver
 		{
 			float speed = transition.speed;
 			Vector3 position = navigator.transform.GetPosition();
+			int num = Grid.PosToCell(position);
 			if (transition.x > 0)
 			{
 				position.x += dt * speed;
@@ -197,6 +198,11 @@ public class TransitionDriver
 				position.y = targetPos.y;
 			}
 			navigator.transform.SetPosition(position);
+			int num2 = Grid.PosToCell(position);
+			if (num2 != num)
+			{
+				navigator.Trigger(915392638, num2);
+			}
 		}
 		if (isComplete)
 		{

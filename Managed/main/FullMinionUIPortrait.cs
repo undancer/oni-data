@@ -5,6 +5,11 @@ public class FullMinionUIPortrait : IEntityConfig
 {
 	public static string ID = "FullMinionUIPortrait";
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateEntity(ID, ID);
@@ -28,8 +33,8 @@ public class FullMinionUIPortrait : IEntityConfig
 		kBatchedAnimController.AnimFiles = new KAnimFile[4]
 		{
 			Assets.GetAnim("body_comp_default_kanim"),
-			Assets.GetAnim("anim_construction_default_kanim"),
 			Assets.GetAnim("anim_idles_default_kanim"),
+			Assets.GetAnim("anim_idle_healthy_kanim"),
 			Assets.GetAnim("anim_cheer_kanim")
 		};
 		SymbolOverrideControllerUtil.AddToPrefab(gameObject);

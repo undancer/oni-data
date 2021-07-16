@@ -6,7 +6,7 @@ public class Assignables : KMonoBehaviour
 {
 	protected List<AssignableSlotInstance> slots = new List<AssignableSlotInstance>();
 
-	private static readonly EventSystem.IntraObjectHandler<Assignables> OnDeadTagChangedDelegate = GameUtil.CreateHasTagHandler(GameTags.Dead, delegate(Assignables component, object data)
+	private static readonly EventSystem.IntraObjectHandler<Assignables> OnDeadTagAddedDelegate = GameUtil.CreateHasTagHandler(GameTags.Dead, delegate(Assignables component, object data)
 	{
 		component.OnDeath(data);
 	});
@@ -26,7 +26,7 @@ public class Assignables : KMonoBehaviour
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		GameUtil.SubscribeToTags(this, OnDeadTagChangedDelegate);
+		GameUtil.SubscribeToTags(this, OnDeadTagAddedDelegate, triggerImmediately: true);
 	}
 
 	private void OnDeath(object data)

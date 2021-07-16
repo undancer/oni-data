@@ -56,6 +56,15 @@ public class BuildingCellVisualizerResources : ScriptableObject
 
 	public IOColours liquidIOColours;
 
+	[Header("High Energy Particle")]
+	public Sprite highEnergyParticleInputIcon;
+
+	public Sprite[] highEnergyParticleOutputIcons;
+
+	public Color highEnergyParticleInputColour;
+
+	public Color highEnergyParticleOutputColour;
+
 	private static BuildingCellVisualizerResources _Instance;
 
 	public Material backgroundMaterial
@@ -101,6 +110,18 @@ public class BuildingCellVisualizerResources : ScriptableObject
 	}
 
 	public Material gasOutputMaterial
+	{
+		get;
+		set;
+	}
+
+	public Material highEnergyParticleInputMaterial
+	{
+		get;
+		set;
+	}
+
+	public Material highEnergyParticleOutputMaterial
 	{
 		get;
 		set;
@@ -158,6 +179,8 @@ public class BuildingCellVisualizerResources : ScriptableObject
 		liquidOutputMaterial = new Material(shader);
 		gasInputMaterial = new Material(shader);
 		gasOutputMaterial = new Material(shader);
+		highEnergyParticleInputMaterial = new Material(shader);
+		highEnergyParticleOutputMaterial = new Material(shader);
 		backgroundMesh = CreateMesh("BuildingCellVisualizer", Vector2.zero, 0.5f);
 		float num = 0.5f;
 		iconMesh = CreateMesh("BuildingCellVisualizerIcon", Vector2.zero, num * 0.5f);

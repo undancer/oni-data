@@ -6,6 +6,11 @@ public class MinionSelectPreviewConfig : IEntityConfig
 {
 	public static string ID = "MinionSelectPreview";
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateEntity(ID, ID);
@@ -21,10 +26,7 @@ public class MinionSelectPreviewConfig : IEntityConfig
 		gameObject.AddOrGet<Effects>();
 		gameObject.AddOrGet<Traits>();
 		MinionModifiers minionModifiers = gameObject.AddOrGet<MinionModifiers>();
-		minionModifiers.initialTraits = new string[1]
-		{
-			MinionConfig.MINION_BASE_TRAIT_ID
-		};
+		minionModifiers.initialTraits.Add(MinionConfig.MINION_BASE_TRAIT_ID);
 		MinionConfig.AddMinionAmounts(minionModifiers);
 		gameObject.AddOrGet<AttributeLevels>();
 		gameObject.AddOrGet<AttributeConverters>();

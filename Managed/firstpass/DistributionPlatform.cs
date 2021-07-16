@@ -45,21 +45,15 @@ public class DistributionPlatform : MonoBehaviour
 			get;
 		}
 
-		bool PurchasedDLC
-		{
-			get;
-		}
-
-		bool IsExpansion1Active
-		{
-			get;
-		}
-
 		string ApplyWordFilter(string text);
 
 		void GetAuthTicket(AuthTicketHandler callback);
 
-		void ToggleDLC();
+		bool IsDLCPurchased(string dlcID);
+
+		bool IsDLCSubscribed(string dlcID);
+
+		void ToggleDLCSubscription(string dlcID);
 	}
 
 	public delegate void AuthTicketHandler(byte[] ticket);
@@ -92,6 +86,8 @@ public class DistributionPlatform : MonoBehaviour
 
 	public static event System.Action onExitRequest;
 
+	public static event System.Action onDlcAuthenticationFailed;
+
 	public static void Initialize()
 	{
 		if (sImpl == null)
@@ -109,6 +105,14 @@ public class DistributionPlatform : MonoBehaviour
 		if (DistributionPlatform.onExitRequest != null)
 		{
 			DistributionPlatform.onExitRequest();
+		}
+	}
+
+	public static void TriggerDlcAuthenticationFailed()
+	{
+		if (DistributionPlatform.onDlcAuthenticationFailed != null)
+		{
+			DistributionPlatform.onDlcAuthenticationFailed();
 		}
 	}
 }

@@ -81,7 +81,7 @@ public class TubeTraveller : GameStateMachine<TubeTraveller, TubeTraveller.Insta
 			Attributes attributes = base.gameObject.GetAttributes();
 			if (nowInTube)
 			{
-				hadSuitTank = HasSuitTank();
+				hadSuitTank = HasTag(GameTags.HasSuitTank);
 				if (!hadSuitTank)
 				{
 					GetComponent<OxygenBreather>().SetGasProvider(base.sm);
@@ -115,16 +115,6 @@ public class TubeTraveller : GameStateMachine<TubeTraveller, TubeTraveller.Insta
 			{
 				component2.RefreshRegistration();
 			}
-		}
-
-		private bool HasSuitTank()
-		{
-			AssignableSlotInstance slot = GetComponent<MinionIdentity>().GetEquipment().GetSlot(Db.Get().AssignableSlots.Suit);
-			if (slot != null && slot.assignable != null)
-			{
-				return slot.assignable.GetComponent<SuitTank>() != null;
-			}
-			return false;
 		}
 	}
 

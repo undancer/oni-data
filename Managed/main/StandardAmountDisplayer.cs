@@ -1,6 +1,5 @@
 using Klei.AI;
 using STRINGS;
-using UnityEngine;
 
 public class StandardAmountDisplayer : IAmountDisplayer
 {
@@ -36,7 +35,7 @@ public class StandardAmountDisplayer : IAmountDisplayer
 	{
 		if (!master.showMax)
 		{
-			return formatter.GetFormattedValue(instance.value, GameUtil.TimeSlice.None, instance.gameObject);
+			return formatter.GetFormattedValue(instance.value);
 		}
 		return $"{formatter.GetFormattedValue(instance.value)} / {formatter.GetFormattedValue(instance.GetMax())}";
 	}
@@ -62,7 +61,7 @@ public class StandardAmountDisplayer : IAmountDisplayer
 		for (int i = 0; i != instance.deltaAttribute.Modifiers.Count; i++)
 		{
 			AttributeModifier attributeModifier = instance.deltaAttribute.Modifiers[i];
-			str = str + "\n" + string.Format(UI.MODIFIER_ITEM_TEMPLATE, attributeModifier.GetDescription(), formatter.GetFormattedModifier(attributeModifier, instance.gameObject));
+			str = str + "\n" + string.Format(UI.MODIFIER_ITEM_TEMPLATE, attributeModifier.GetDescription(), formatter.GetFormattedModifier(attributeModifier));
 		}
 		return str;
 	}
@@ -72,13 +71,13 @@ public class StandardAmountDisplayer : IAmountDisplayer
 		return formatter.GetFormattedAttribute(instance);
 	}
 
-	public string GetFormattedModifier(AttributeModifier modifier, GameObject parent_instance)
+	public string GetFormattedModifier(AttributeModifier modifier)
 	{
-		return formatter.GetFormattedModifier(modifier, parent_instance);
+		return formatter.GetFormattedModifier(modifier);
 	}
 
-	public string GetFormattedValue(float value, GameUtil.TimeSlice time_slice, GameObject parent_instance)
+	public string GetFormattedValue(float value, GameUtil.TimeSlice time_slice)
 	{
-		return formatter.GetFormattedValue(value, time_slice, parent_instance);
+		return formatter.GetFormattedValue(value, time_slice);
 	}
 }

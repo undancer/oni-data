@@ -126,10 +126,6 @@ public class CO2Manager : KMonoBehaviour, ISim33ms
 						co2Items[i] = co2Items[num];
 						co2Items.RemoveAt(num);
 					}
-					else
-					{
-						DebugUtil.LogWarningArgs("Couldn't emit CO2");
-					}
 					break;
 				}
 				num2 = num4;

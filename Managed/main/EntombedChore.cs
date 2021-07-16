@@ -5,10 +5,13 @@ public class EntombedChore : Chore<EntombedChore.StatesInstance>
 {
 	public class StatesInstance : GameStateMachine<States, StatesInstance, EntombedChore, object>.GameInstance
 	{
-		public StatesInstance(EntombedChore master, GameObject entombable)
+		public string entombedAnimOverride;
+
+		public StatesInstance(EntombedChore master, GameObject entombable, string entombedAnimOverride)
 			: base(master)
 		{
 			base.sm.entombable.Set(entombable, base.smi);
+			this.entombedAnimOverride = entombedAnimOverride;
 		}
 
 		public void UpdateFaceEntombed()
@@ -32,7 +35,7 @@ public class EntombedChore : Chore<EntombedChore.StatesInstance>
 		{
 			default_state = entombedbody;
 			Target(entombable);
-			root.ToggleAnims("anim_emotes_default_kanim").Update("IsFaceEntombed", delegate(StatesInstance smi, float dt)
+			root.ToggleAnims((StatesInstance smi) => smi.entombedAnimOverride).Update("IsFaceEntombed", delegate(StatesInstance smi, float dt)
 			{
 				smi.UpdateFaceEntombed();
 			}).ToggleStatusItem(Db.Get().DuplicantStatusItems.EntombedChore);
@@ -41,9 +44,9 @@ public class EntombedChore : Chore<EntombedChore.StatesInstance>
 		}
 	}
 
-	public EntombedChore(IStateMachineTarget target)
+	public EntombedChore(IStateMachineTarget target, string entombedAnimOverride)
 		: base(Db.Get().ChoreTypes.Entombed, target, target.GetComponent<ChoreProvider>(), run_until_complete: false, (Action<Chore>)null, (Action<Chore>)null, (Action<Chore>)null, PriorityScreen.PriorityClass.compulsory, 5, is_preemptable: false, allow_in_context_menu: true, 0, add_to_daily_report: false, ReportManager.ReportType.WorkTime)
 	{
-		base.smi = new StatesInstance(this, target.gameObject);
+		base.smi = new StatesInstance(this, target.gameObject, entombedAnimOverride);
 	}
 }

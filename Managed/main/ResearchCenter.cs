@@ -5,7 +5,7 @@ using TUNING;
 using UnityEngine;
 
 [AddComponentMenu("KMonoBehaviour/Workable/ResearchCenter")]
-public class ResearchCenter : Workable, IGameObjectEffectDescriptor, ISim200ms
+public class ResearchCenter : Workable, IGameObjectEffectDescriptor, ISim200ms, IResearchCenter
 {
 	private Chore chore;
 
@@ -60,8 +60,8 @@ public class ResearchCenter : Workable, IGameObjectEffectDescriptor, ISim200ms
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		Research.Instance.Subscribe(-1914338957, UpdateWorkingState);
-		Research.Instance.Subscribe(-125623018, UpdateWorkingState);
+		Subscribe(-1914338957, UpdateWorkingStateDelegate);
+		Subscribe(-125623018, UpdateWorkingStateDelegate);
 		Subscribe(187661686, UpdateWorkingStateDelegate);
 		Subscribe(-1697596308, CheckHasMaterialDelegate);
 		Components.ResearchCenters.Add(this);
@@ -230,6 +230,11 @@ public class ResearchCenter : Workable, IGameObjectEffectDescriptor, ISim200ms
 		Game.Instance.Trigger(-1974454597);
 	}
 
+	public string GetResearchType()
+	{
+		return research_point_type_id;
+	}
+
 	private void CheckHasMaterial(object o = null)
 	{
 		if (!HasMaterial() && chore != null)
@@ -296,5 +301,10 @@ public class ResearchCenter : Workable, IGameObjectEffectDescriptor, ISim200ms
 		descriptors.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.RESEARCH_MATERIALS, inputMaterial.ProperName(), GameUtil.GetFormattedByTag(inputMaterial, mass_per_point)), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.RESEARCH_MATERIALS, inputMaterial.ProperName(), GameUtil.GetFormattedByTag(inputMaterial, mass_per_point)), Descriptor.DescriptorType.Requirement));
 		descriptors.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.PRODUCES_RESEARCH_POINTS, Research.Instance.researchTypes.GetResearchType(research_point_type_id).name), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.PRODUCES_RESEARCH_POINTS, Research.Instance.researchTypes.GetResearchType(research_point_type_id).name)));
 		return descriptors;
+	}
+
+	public override bool InstantlyFinish(Worker worker)
+	{
+		return false;
 	}
 }

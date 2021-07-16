@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Klei.AI;
 using STRINGS;
 
@@ -27,7 +26,14 @@ public class OvercrowdingMonitor : GameStateMachine<OvercrowdingMonitor, Overcro
 			KPrefabID component = base.master.GetComponent<KPrefabID>();
 			if (cavity != null)
 			{
-				GetCreatureCollection(this, cavity).Remove(component);
+				if (HasTag(GameTags.Egg))
+				{
+					cavity.eggs.Remove(component);
+				}
+				else
+				{
+					cavity.creatures.Remove(component);
+				}
 			}
 		}
 	}
@@ -142,32 +148,38 @@ public class OvercrowdingMonitor : GameStateMachine<OvercrowdingMonitor, Overcro
 		}
 	}
 
-	private static List<KPrefabID> GetCreatureCollection(Instance smi, CavityInfo cavity_info)
-	{
-		if (smi.HasTag(GameTags.Egg))
-		{
-			return cavity_info.eggs;
-		}
-		return cavity_info.creatures;
-	}
-
 	private static void UpdateCavity(Instance smi, float dt)
 	{
 		CavityInfo cavityForCell = Game.Instance.roomProber.GetCavityForCell(Grid.PosToCell(smi));
-		if (cavityForCell != smi.cavity)
+		if (cavityForCell == smi.cavity)
 		{
-			KPrefabID component = smi.GetComponent<KPrefabID>();
-			if (smi.cavity != null)
+			return;
+		}
+		KPrefabID component = smi.GetComponent<KPrefabID>();
+		if (smi.cavity != null)
+		{
+			if (smi.HasTag(GameTags.Egg))
 			{
-				GetCreatureCollection(smi, smi.cavity).Remove(component);
-				Game.Instance.roomProber.UpdateRoom(cavityForCell);
+				smi.cavity.eggs.Remove(component);
 			}
-			smi.cavity = cavityForCell;
-			if (smi.cavity != null)
+			else
 			{
-				GetCreatureCollection(smi, smi.cavity).Add(component);
-				Game.Instance.roomProber.UpdateRoom(smi.cavity);
+				smi.cavity.creatures.Remove(component);
 			}
+			Game.Instance.roomProber.UpdateRoom(cavityForCell);
+		}
+		smi.cavity = cavityForCell;
+		if (smi.cavity != null)
+		{
+			if (smi.HasTag(GameTags.Egg))
+			{
+				smi.cavity.eggs.Add(component);
+			}
+			else
+			{
+				smi.cavity.creatures.Add(component);
+			}
+			Game.Instance.roomProber.UpdateRoom(smi.cavity);
 		}
 	}
 }

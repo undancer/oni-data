@@ -44,7 +44,7 @@ public class ScheduleScreen : KScreen
 
 	public override float GetSortKey()
 	{
-		return 100f;
+		return 50f;
 	}
 
 	protected override void OnPrefabInit()

@@ -4,19 +4,19 @@ public class UtilityNetwork
 
 	public ConduitType conduitType;
 
-	public virtual void AddItem(int cell, object item)
+	public virtual void AddItem(object item)
 	{
 	}
 
-	public virtual void RemoveItem(int cell, object item)
+	public virtual void RemoveItem(object item)
 	{
 	}
 
-	public virtual void ConnectItem(int cell, object item)
+	public virtual void ConnectItem(object item)
 	{
 	}
 
-	public virtual void DisconnectItem(int cell, object item)
+	public virtual void DisconnectItem(object item)
 	{
 	}
 

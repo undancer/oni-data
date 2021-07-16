@@ -5,50 +5,6 @@ info:
     Y: 6
   area: 62
 cells:
-- element: SandStone
-  mass: 100
-  temperature: 293.98941
-  location_x: -3
-  location_y: -2
-- element: Oxygen
-  mass: 0.848506331
-  temperature: 281.318024
-  location_x: -2
-  location_y: -2
-- element: SandStone
-  mass: 100
-  temperature: 293.656464
-  location_x: -1
-  location_y: -2
-- element: Cuprite
-  mass: 100
-  temperature: 294.315796
-  location_y: -2
-- element: SandStone
-  mass: 100
-  temperature: 293.832153
-  location_x: 1
-  location_y: -2
-- element: Cuprite
-  mass: 100
-  temperature: 294.619446
-  location_x: 2
-  location_y: -2
-- element: Cuprite
-  mass: 100
-  temperature: 294.606201
-  location_x: 3
-  location_y: -2
-- element: SandStone
-  mass: 100
-  temperature: 294.193817
-  location_x: 4
-  location_y: -2
-- element: SandStone
-  mass: 100
-  temperature: 293.453552
-  location_x: -3
-  location_y: -1
 - element: Oxygen
   mass: 0.833530605
   temperature: 291.295258
@@ -63,14 +19,6 @@ cells:
   mass: 0.81911695
   temperature: 292.98407
   location_y: -1
-- element: SandStone
-  mass: 100
-  temperature: 293.457611
-  location_x: -3
-- element: Oxygen
-  mass: 0.825170577
-  temperature: 291.416229
-  location_x: -2
 - element: Oxygen
   mass: 0.819546819
   temperature: 293.758423
@@ -86,11 +34,6 @@ cells:
   mass: 0.777448714
   temperature: 294.806671
   location_x: 2
-- element: SandStone
-  mass: 100
-  temperature: 293.851593
-  location_x: -3
-  location_y: 1
 - element: Oxygen
   mass: 0.820296347
   temperature: 290.277588
@@ -140,11 +83,6 @@ cells:
   location_x: 1
   location_y: 2
 - element: Oxygen
-  mass: 1.90859735
-  temperature: 270.036987
-  location_x: 2
-  location_y: 2
-- element: Oxygen
   mass: 0.734334528
   temperature: 266.366882
   location_x: 3
@@ -154,32 +92,6 @@ cells:
   temperature: 270.435425
   location_x: 4
   location_y: 2
-- element: Vacuum
-  location_x: -1
-  location_y: 3
-- element: Vacuum
-  location_x: 1
-  location_y: 3
-- element: Vacuum
-  location_x: 2
-  location_y: 3
-- element: Vacuum
-  location_x: 4
-  location_y: 3
-- element: Cuprite
-  mass: 100
-  temperature: 294.315796
-  location_y: -2
-- element: Cuprite
-  mass: 100
-  temperature: 294.619446
-  location_x: 2
-  location_y: -2
-- element: Cuprite
-  mass: 100
-  temperature: 294.606201
-  location_x: 3
-  location_y: -2
 - element: Cuprite
   mass: 100
   temperature: 294.606201
@@ -190,29 +102,14 @@ cells:
   temperature: 294.619446
   location_x: 2
   location_y: -2
-- element: SandStone
-  mass: 100
-  temperature: 293.832153
-  location_x: 1
-  location_y: -2
 - element: Cuprite
   mass: 100
   temperature: 294.315796
-  location_y: -2
-- element: SandStone
-  mass: 100
-  temperature: 293.656464
-  location_x: -1
   location_y: -2
 - element: Oxygen
   mass: 0.848506331
   temperature: 281.318024
   location_x: -2
-  location_y: -2
-- element: SandStone
-  mass: 100
-  temperature: 293.98941
-  location_x: -3
   location_y: -2
 - element: SandStone
   mass: 100
@@ -248,15 +145,6 @@ cells:
   temperature: 293.453552
   location_x: -3
   location_y: -1
-- element: Vacuum
-  location_x: -1
-  location_y: 3
-- element: Vacuum
-  location_x: 1
-  location_y: 3
-- element: Vacuum
-  location_x: 2
-  location_y: 3
 - element: Vacuum
   location_x: 4
   location_y: 3
@@ -283,242 +171,138 @@ buildings:
   location_y: -2
   element: Cuprite
   temperature: 294.315796
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: HydroponicFarm
   location_x: 2
   location_y: -2
   element: Cuprite
   temperature: 294.619446
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: HydroponicFarm
   location_x: 3
   location_y: -2
   element: Cuprite
   temperature: 294.606201
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LiquidConduit
   location_x: 3
   location_y: -2
   element: SandStone
   temperature: 294.606201
-  storage: []
   connections: 1
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LiquidConduit
   location_x: 2
   location_y: -2
   element: SandStone
   temperature: 294.619446
-  storage: []
   connections: 3
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LiquidConduit
   location_x: 1
   location_y: -2
   element: SandStone
   temperature: 293.832153
-  storage: []
   connections: 2
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LiquidConduit
   location_y: -2
   element: SandStone
   temperature: 294.315796
-  storage: []
   connections: 1
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LiquidConduit
   location_x: -1
   location_y: -2
   element: SandStone
   temperature: 293.656464
-  storage: []
   connections: 2
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LiquidConduit
   location_x: -2
   location_y: -2
   element: SandStone
   temperature: 293.216309
-  storage: []
   connections: 1
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: LiquidConduit
   location_x: -3
   location_y: -2
   element: SandStone
   temperature: 293.98941
-  storage: []
   connections: 2
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 1
   location_y: -2
   element: SandStone
   temperature: 293.832153
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: 4
   location_y: -2
   element: SandStone
   temperature: 294.193817
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -1
   location_y: -2
   element: SandStone
   temperature: 293.656464
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -3
   location_y: -2
   element: SandStone
   temperature: 293.98941
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -3
   location_y: 1
   element: SandStone
   temperature: 293.851593
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -3
   element: SandStone
   temperature: 293.457611
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: TilePOI
   location_x: -3
   location_y: -1
   element: SandStone
   temperature: 293.453552
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: GasPermeableMembrane
   location_x: -1
   location_y: 3
   element: Cuprite
   temperature: 293.161194
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: GasPermeableMembrane
   location_x: 1
   location_y: 3
   element: Cuprite
   temperature: 293.161316
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: GasPermeableMembrane
   location_x: 2
   location_y: 3
   element: Cuprite
   temperature: 293.161469
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: GasPermeableMembrane
   location_x: 4
   location_y: 3
   element: Cuprite
   temperature: 293.16098
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 2
   location_y: 2
   element: Cuprite
   temperature: 293.151062
-  storage: []
   connections: 4
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 2
   location_y: 3
   element: Cuprite
   temperature: 293.151093
-  storage: []
   connections: 9
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: 1
   location_y: 3
   element: Cuprite
   temperature: 293.151062
-  storage: []
   connections: 2
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: Wire
   location_x: -1
   location_y: 3
   element: Cuprite
   temperature: 293.151215
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 - id: FlowerVaseWall
   location_x: -2
   element: Cuprite
   temperature: 293.157501
-  storage: []
-  rottable: {}
-  amounts: []
-  other_values: []
 pickupables: []
 elementalOres: []
 otherEntities:
@@ -528,7 +312,4 @@ otherEntities:
   element: Steel
   temperature: 294.149994
   units: 1
-  storage: []
   type: Other
-  rottable: {}
-  amounts: []

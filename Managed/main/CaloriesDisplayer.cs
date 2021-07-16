@@ -1,5 +1,4 @@
 using Klei.AI;
-using UnityEngine;
 
 public class CaloriesDisplayer : StandardAmountDisplayer
 {
@@ -10,23 +9,13 @@ public class CaloriesDisplayer : StandardAmountDisplayer
 		{
 		}
 
-		public override string GetFormattedModifier(AttributeModifier modifier, GameObject parent_instance)
+		public override string GetFormattedModifier(AttributeModifier modifier)
 		{
 			if (modifier.IsMultiplier)
 			{
 				return GameUtil.GetFormattedPercent((0f - modifier.Value) * 100f);
 			}
-			return base.GetFormattedModifier(modifier, parent_instance);
-		}
-
-		public override string GetTooltip(Attribute master, AttributeInstance instance)
-		{
-			return "TEST";
-		}
-
-		public override string GetTooltipDescription(Attribute master, AttributeInstance instance)
-		{
-			return "TEST";
+			return base.GetFormattedModifier(modifier);
 		}
 	}
 

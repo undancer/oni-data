@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using KSerialization;
 using STRINGS;
 using UnityEngine;
@@ -6,103 +8,95 @@ using UnityEngine;
 [AddComponentMenu("KMonoBehaviour/scripts/Placeable")]
 public class Placeable : KMonoBehaviour
 {
+	public enum PlacementRules
+	{
+		OnFoundation,
+		VisibleToSpace,
+		RestrictToWorld
+	}
+
 	[MyCmpReq]
-	private KPrefabID prefabId;
+	private OccupyArea occupyArea;
 
-	[Serialize]
-	private int targetCell = -1;
+	public string kAnimName;
 
-	public Tag previewTag;
+	public string animName;
 
-	public Tag spawnOnPlaceTag;
+	public List<PlacementRules> placementRules = new List<PlacementRules>();
 
-	private GameObject preview;
+	[NonSerialized]
+	public int restrictWorldId;
 
-	private FetchChore chore;
-
-	private static readonly EventSystem.IntraObjectHandler<Placeable> OnRefreshUserMenuDelegate = new EventSystem.IntraObjectHandler<Placeable>(delegate(Placeable component, object data)
+	public bool IsValidPlaceLocation(int cell, out string reason)
 	{
-		component.OnRefreshUserMenu(data);
-	});
-
-	protected override void OnPrefabInit()
-	{
-		base.OnPrefabInit();
-		Subscribe(493375141, OnRefreshUserMenuDelegate);
-	}
-
-	protected override void OnSpawn()
-	{
-		base.OnSpawn();
-		prefabId.AddTag(new Tag(prefabId.InstanceID.ToString()));
-		if (targetCell != -1)
+		if (placementRules.Contains(PlacementRules.RestrictToWorld) && Grid.WorldIdx[cell] != restrictWorldId)
 		{
-			QueuePlacement(targetCell);
+			reason = UI.TOOLS.PLACE.REASONS.RESTRICT_TO_WORLD;
+			return false;
 		}
-	}
-
-	protected override void OnCleanUp()
-	{
-		if (preview != null)
+		if (!occupyArea.CanOccupyArea(cell, occupyArea.objectLayers[0]))
 		{
-			preview.DeleteObject();
+			reason = UI.TOOLS.PLACE.REASONS.CAN_OCCUPY_AREA;
+			return false;
 		}
-		base.OnCleanUp();
-	}
-
-	public void QueuePlacement(int target)
-	{
-		targetCell = target;
-		Vector3 position = Grid.CellToPosCBC(targetCell, Grid.SceneLayer.Front);
-		if (preview == null)
+		if (placementRules.Contains(PlacementRules.OnFoundation) && !occupyArea.TestAreaBelow(cell, null, FoundationTest))
 		{
-			preview = GameUtil.KInstantiate(Assets.GetPrefab(previewTag), position, Grid.SceneLayer.Front);
-			preview.SetActive(value: true);
+			reason = UI.TOOLS.PLACE.REASONS.ON_FOUNDATION;
+			return false;
 		}
-		else
+		if (placementRules.Contains(PlacementRules.VisibleToSpace) && !occupyArea.TestArea(cell, null, SunnySpaceTest))
 		{
-			preview.transform.SetPosition(position);
+			reason = UI.TOOLS.PLACE.REASONS.VISIBLE_TO_SPACE;
+			return false;
 		}
-		if (chore != null)
+		reason = "ok!";
+		return true;
+	}
+
+	private bool SunnySpaceTest(int cell, object data)
+	{
+		if (!Grid.IsValidCell(cell))
 		{
-			chore.Cancel("new target");
+			return false;
 		}
-		chore = new FetchChore(Db.Get().ChoreTypes.Fetch, preview.GetComponent<Storage>(), 1f, new Tag[1]
+		Grid.CellToXY(cell, out var x, out var y);
+		int id = Grid.WorldIdx[cell];
+		WorldContainer world = ClusterManager.Instance.GetWorld(id);
+		int top = world.WorldOffset.y + world.WorldSize.y;
+		if (!Grid.Solid[cell] && !Grid.Foundation[cell])
 		{
-			new Tag(prefabId.InstanceID.ToString())
-		}, null, null, null, run_until_complete: true, OnChoreComplete, null, null, FetchOrder2.OperationalRequirement.None);
-	}
-
-	private void OnChoreComplete(Chore completed_chore)
-	{
-		Place(targetCell);
-	}
-
-	public void Place(int target)
-	{
-		Vector3 position = Grid.CellToPosCBC(target, Grid.SceneLayer.Front);
-		GameUtil.KInstantiate(Assets.GetPrefab(spawnOnPlaceTag), position, Grid.SceneLayer.Front).SetActive(value: true);
-		this.DeleteObject();
-	}
-
-	private void OpenPlaceTool()
-	{
-		PlaceTool.Instance.Activate(this, previewTag);
-	}
-
-	private void OnRefreshUserMenu(object data)
-	{
-		KIconButtonMenu.ButtonInfo button = ((targetCell == -1) ? new KIconButtonMenu.ButtonInfo("action_deconstruct", UI.USERMENUACTIONS.RELOCATE.NAME, OpenPlaceTool, Action.NumActions, null, null, null, UI.USERMENUACTIONS.RELOCATE.TOOLTIP) : new KIconButtonMenu.ButtonInfo("action_deconstruct", UI.USERMENUACTIONS.RELOCATE.NAME_OFF, CancelRelocation, Action.NumActions, null, null, null, UI.USERMENUACTIONS.RELOCATE.TOOLTIP_OFF));
-		Game.Instance.userMenu.AddButton(base.gameObject, button);
-	}
-
-	private void CancelRelocation()
-	{
-		if (preview != null)
-		{
-			preview.DeleteObject();
-			preview = null;
+			if (Grid.ExposedToSunlight[cell] < 253)
+			{
+				return ClearPathToSky(x, y, top);
+			}
+			return true;
 		}
-		targetCell = -1;
+		return false;
+	}
+
+	private bool ClearPathToSky(int x, int startY, int top)
+	{
+		for (int i = startY; i < top; i++)
+		{
+			int i2 = Grid.XYToCell(x, i);
+			if (Grid.Solid[i2] || Grid.Foundation[i2])
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private bool FoundationTest(int cell, object data)
+	{
+		if (Grid.IsValidBuildingCell(cell))
+		{
+			if (!Grid.Solid[cell])
+			{
+				return Grid.Foundation[cell];
+			}
+			return true;
+		}
+		return false;
 	}
 }

@@ -89,22 +89,29 @@ public class ValveBase : KMonoBehaviour, ISaveLoadable
 		ConduitFlow.Conduit conduit = flowManager.GetConduit(inputCell);
 		if (!flowManager.HasConduit(inputCell) || !flowManager.HasConduit(outputCell))
 		{
+			OnMassTransfer(0f);
 			UpdateAnim();
 			return;
 		}
 		ConduitFlow.ConduitContents contents = conduit.GetContents(flowManager);
 		float num = Mathf.Min(contents.mass, currentFlow * dt);
+		float num2 = 0f;
 		if (num > 0f)
 		{
 			int disease_count = (int)(num / contents.mass * (float)contents.diseaseCount);
-			float num2 = flowManager.AddElement(outputCell, contents.element, num, contents.temperature, contents.diseaseIdx, disease_count);
+			num2 = flowManager.AddElement(outputCell, contents.element, num, contents.temperature, contents.diseaseIdx, disease_count);
 			Game.Instance.accumulators.Accumulate(flowAccumulator, num2);
 			if (num2 > 0f)
 			{
 				flowManager.RemoveElement(inputCell, num2);
 			}
 		}
+		OnMassTransfer(num2);
 		UpdateAnim();
+	}
+
+	protected virtual void OnMassTransfer(float amount)
+	{
 	}
 
 	public virtual void UpdateAnim()

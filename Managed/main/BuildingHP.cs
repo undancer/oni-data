@@ -40,7 +40,7 @@ public class BuildingHP : Workable
 
 		public Notification CreateBrokenMachineNotification()
 		{
-			return new Notification(MISC.NOTIFICATIONS.BROKENMACHINE.NAME, NotificationType.BadMinor, HashedString.Invalid, (List<Notification> notificationList, object data) => string.Concat(MISC.NOTIFICATIONS.BROKENMACHINE.TOOLTIP, notificationList.ReduceMessages(countNames: false)), "/t• " + base.master.damageSourceInfo.source, expires: false);
+			return new Notification(MISC.NOTIFICATIONS.BROKENMACHINE.NAME, NotificationType.BadMinor, (List<Notification> notificationList, object data) => string.Concat(MISC.NOTIFICATIONS.BROKENMACHINE.TOOLTIP, notificationList.ReduceMessages(countNames: false)), "/t• " + base.master.damageSourceInfo.source, expires: false);
 		}
 
 		public void ShowProgressBar(bool show)
@@ -180,7 +180,7 @@ public class BuildingHP : Workable
 
 		public override void InitializeStates(out BaseState default_state)
 		{
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			default_state = healthy;
 			healthy.DefaultState(healthy.imperfect).EventTransition(GameHashes.BuildingReceivedDamage, damaged, (SMInstance smi) => smi.master.HitPoints <= 0);
 			healthy.imperfect.Enter(delegate(SMInstance smi)

@@ -32,10 +32,10 @@ public class StickerBomb : StateMachineComponent<StickerBomb.StatesInstance>
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = idle;
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			root.Transition(destroy, (StatesInstance smi) => GameClock.Instance.GetTime() >= smi.destroyTime).DefaultState(idle);
-			idle.PlayAnim((StatesInstance smi) => smi.GetStickerAnim("idle"), KAnim.PlayMode.Once).ScheduleGoTo((StatesInstance smi) => Random.Range(20, 30), sparkle);
-			sparkle.PlayAnim((StatesInstance smi) => smi.GetStickerAnim("sparkle"), KAnim.PlayMode.Once).OnAnimQueueComplete(idle);
+			idle.PlayAnim((StatesInstance smi) => smi.GetStickerAnim("idle")).ScheduleGoTo((StatesInstance smi) => Random.Range(20, 30), sparkle);
+			sparkle.PlayAnim((StatesInstance smi) => smi.GetStickerAnim("sparkle")).OnAnimQueueComplete(idle);
 			destroy.Enter(delegate(StatesInstance smi)
 			{
 				Util.KDestroyGameObject(smi.master);

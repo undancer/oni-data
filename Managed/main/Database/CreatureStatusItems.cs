@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Klei.AI;
 using STRINGS;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ namespace Database
 {
 	public class CreatureStatusItems : StatusItems
 	{
+		public StatusItem Dead;
+
 		public StatusItem HealthStatus;
 
 		public StatusItem Hot;
@@ -23,6 +26,8 @@ namespace Database
 		public StatusItem Crop_Too_Dark;
 
 		public StatusItem Crop_Too_Bright;
+
+		public StatusItem Crop_Blighted;
 
 		public StatusItem Hypothermia;
 
@@ -96,6 +101,8 @@ namespace Database
 
 		public StatusItem Refrigerated;
 
+		public StatusItem RefrigeratedFrozen;
+
 		public StatusItem Unrefrigerated;
 
 		public StatusItem SterilizingAtmosphere;
@@ -110,6 +117,20 @@ namespace Database
 
 		public StatusItem Hungry;
 
+		public StatusItem HiveHungry;
+
+		public StatusItem NoSleepSpot;
+
+		public StatusItem OriginalPlantMutation;
+
+		public StatusItem UnknownMutation;
+
+		public StatusItem SpecificPlantMutation;
+
+		public StatusItem Crop_Too_NonRadiated;
+
+		public StatusItem Crop_Too_Radiated;
+
 		public CreatureStatusItems(ResourceSet parent)
 			: base("CreatureStatusItems", parent)
 		{
@@ -118,18 +139,19 @@ namespace Database
 
 		private void CreateStatusItems()
 		{
+			Dead = new StatusItem("Dead", "CREATURES", "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false);
 			Hot = new StatusItem("Hot", "CREATURES", "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false);
 			Hot.resolveStringCallback = delegate(string str, object data)
 			{
 				TemperatureVulnerable temperatureVulnerable4 = (TemperatureVulnerable)data;
-				return string.Format(str, GameUtil.GetFormattedTemperature(temperatureVulnerable4.internalTemperatureWarning_Low), GameUtil.GetFormattedTemperature(temperatureVulnerable4.internalTemperatureWarning_High));
+				return string.Format(str, GameUtil.GetFormattedTemperature(temperatureVulnerable4.TemperatureWarningLow), GameUtil.GetFormattedTemperature(temperatureVulnerable4.TemperatureWarningHigh));
 			};
 			Hot_Crop = new StatusItem("Hot_Crop", "CREATURES", "status_item_plant_temperature", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false);
 			Hot_Crop.resolveStringCallback = delegate(string str, object data)
 			{
 				TemperatureVulnerable temperatureVulnerable3 = (TemperatureVulnerable)data;
-				str = str.Replace("{low_temperature}", GameUtil.GetFormattedTemperature(temperatureVulnerable3.internalTemperatureWarning_Low));
-				str = str.Replace("{high_temperature}", GameUtil.GetFormattedTemperature(temperatureVulnerable3.internalTemperatureWarning_High));
+				str = str.Replace("{low_temperature}", GameUtil.GetFormattedTemperature(temperatureVulnerable3.TemperatureWarningLow));
+				str = str.Replace("{high_temperature}", GameUtil.GetFormattedTemperature(temperatureVulnerable3.TemperatureWarningHigh));
 				return str;
 			};
 			Scalding = new StatusItem("Scalding", "CREATURES", "", StatusItem.IconType.Exclamation, NotificationType.DuplicantThreatening, allow_multiples: true, OverlayModes.None.ID);
@@ -146,20 +168,19 @@ namespace Database
 			Cold.resolveStringCallback = delegate(string str, object data)
 			{
 				TemperatureVulnerable temperatureVulnerable2 = (TemperatureVulnerable)data;
-				return string.Format(str, GameUtil.GetFormattedTemperature(temperatureVulnerable2.internalTemperatureWarning_Low), GameUtil.GetFormattedTemperature(temperatureVulnerable2.internalTemperatureWarning_High));
+				return string.Format(str, GameUtil.GetFormattedTemperature(temperatureVulnerable2.TemperatureWarningLow), GameUtil.GetFormattedTemperature(temperatureVulnerable2.TemperatureWarningHigh));
 			};
 			Cold_Crop = new StatusItem("Cold_Crop", "CREATURES", "status_item_plant_temperature", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false);
 			Cold_Crop.resolveStringCallback = delegate(string str, object data)
 			{
 				TemperatureVulnerable temperatureVulnerable = (TemperatureVulnerable)data;
-				str = str.Replace("low_temperature", GameUtil.GetFormattedTemperature(temperatureVulnerable.internalTemperatureWarning_Low));
-				str = str.Replace("high_temperature", GameUtil.GetFormattedTemperature(temperatureVulnerable.internalTemperatureWarning_High));
+				str = str.Replace("low_temperature", GameUtil.GetFormattedTemperature(temperatureVulnerable.TemperatureWarningLow));
+				str = str.Replace("high_temperature", GameUtil.GetFormattedTemperature(temperatureVulnerable.TemperatureWarningHigh));
 				return str;
 			};
 			Crop_Too_Dark = new StatusItem("Crop_Too_Dark", "CREATURES", "status_item_plant_light", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false);
-			Crop_Too_Dark.resolveStringCallback = (string str, object data) => str;
 			Crop_Too_Bright = new StatusItem("Crop_Too_Bright", "CREATURES", "status_item_plant_light", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false);
-			Crop_Too_Bright.resolveStringCallback = (string str, object data) => str;
+			Crop_Blighted = new StatusItem("Crop_Blighted", "CREATURES", "status_item_plant_blighted", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false);
 			Hyperthermia = new StatusItem("Hyperthermia", "CREATURES", "", StatusItem.IconType.Exclamation, NotificationType.Bad, allow_multiples: false, OverlayModes.None.ID);
 			Hyperthermia.resolveTooltipCallback = delegate(string str, object data)
 			{
@@ -209,14 +230,15 @@ namespace Database
 			CropSleeping.resolveTooltipCallback = delegate(string str, object data)
 			{
 				CropSleepingMonitor.Instance instance6 = (CropSleepingMonitor.Instance)data;
-				string newValue4 = string.Format(CREATURES.STATUSITEMS.CROP_SLEEPING.REQUIREMENT_LUMINANCE, instance6.def.lightIntensityThreshold);
-				return str.Replace("{REQUIREMENTS}", newValue4);
+				AttributeInstance attributeInstance = Db.Get().PlantAttributes.MinLightLux.Lookup(instance6.gameObject);
+				string newValue5 = string.Format(CREATURES.STATUSITEMS.CROP_SLEEPING.REQUIREMENT_LUMINANCE, attributeInstance.GetTotalValue());
+				return str.Replace("{REQUIREMENTS}", newValue5);
 			};
 			EnvironmentTooWarm = new StatusItem("EnvironmentTooWarm", "CREATURES", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			EnvironmentTooWarm.resolveStringCallback = delegate(string str, object data)
 			{
 				float temp3 = Grid.Temperature[Grid.PosToCell(((TemperatureVulnerable)data).gameObject)];
-				float temp4 = ((TemperatureVulnerable)data).internalTemperatureLethal_High - 1f;
+				float temp4 = ((TemperatureVulnerable)data).TemperatureLethalHigh - 1f;
 				str = str.Replace("{ExternalTemperature}", GameUtil.GetFormattedTemperature(temp3));
 				str = str.Replace("{TargetTemperature}", GameUtil.GetFormattedTemperature(temp4));
 				return str;
@@ -225,7 +247,7 @@ namespace Database
 			EnvironmentTooCold.resolveStringCallback = delegate(string str, object data)
 			{
 				float temp = Grid.Temperature[Grid.PosToCell(((TemperatureVulnerable)data).gameObject)];
-				float temp2 = ((TemperatureVulnerable)data).internalTemperatureLethal_Low + 1f;
+				float temp2 = ((TemperatureVulnerable)data).TemperatureLethalLow + 1f;
 				str = str.Replace("{ExternalTemperature}", GameUtil.GetFormattedTemperature(temp));
 				str = str.Replace("{TargetTemperature}", GameUtil.GetFormattedTemperature(temp2));
 				return str;
@@ -240,9 +262,11 @@ namespace Database
 			Wilting = new StatusItem("Wilting", "CREATURES", "status_item_need_plant", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false, 1026);
 			Wilting.resolveStringCallback = delegate(string str, object data)
 			{
-				if (data is Growing && data != null)
+				Growing growing2 = data as Growing;
+				if (growing2 != null && data != null)
 				{
-					str = str.Replace("{TimeUntilNextHarvest}", GameUtil.GetFormattedCycles(Mathf.Min(((Growing)data).growthTime, ((Growing)data).TimeUntilNextHarvest())));
+					AmountInstance amountInstance2 = growing2.gameObject.GetAmounts().Get(Db.Get().Amounts.Maturity);
+					str = str.Replace("{TimeUntilNextHarvest}", GameUtil.GetFormattedCycles(Mathf.Min(amountInstance2.GetMax(), growing2.TimeUntilNextHarvest())));
 				}
 				str = str.Replace("{Reasons}", (data as KMonoBehaviour).GetComponent<WiltCondition>().WiltCausesString());
 				return str;
@@ -250,9 +274,11 @@ namespace Database
 			WiltingDomestic = new StatusItem("WiltingDomestic", "CREATURES", "status_item_need_plant", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: true, 1026);
 			WiltingDomestic.resolveStringCallback = delegate(string str, object data)
 			{
-				if (data is Growing && data != null)
+				Growing growing = data as Growing;
+				if (growing != null && data != null)
 				{
-					str = str.Replace("{TimeUntilNextHarvest}", GameUtil.GetFormattedCycles(Mathf.Min(((Growing)data).growthTime, ((Growing)data).TimeUntilNextHarvest())));
+					AmountInstance amountInstance = growing.gameObject.GetAmounts().Get(Db.Get().Amounts.Maturity);
+					str = str.Replace("{TimeUntilNextHarvest}", GameUtil.GetFormattedCycles(Mathf.Min(amountInstance.GetMax(), growing.TimeUntilNextHarvest())));
 				}
 				str = str.Replace("{Reasons}", (data as KMonoBehaviour).GetComponent<WiltCondition>().WiltCausesString());
 				return str;
@@ -301,56 +327,56 @@ namespace Database
 			HealthStatus = new StatusItem("HealthStatus", "CREATURES", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			HealthStatus.resolveStringCallback = delegate(string str, object data)
 			{
-				string newValue3 = "";
+				string newValue4 = "";
 				switch ((Health.HealthState)data)
 				{
 				case Health.HealthState.Perfect:
-					newValue3 = MISC.STATUSITEMS.HEALTHSTATUS.PERFECT.NAME;
+					newValue4 = MISC.STATUSITEMS.HEALTHSTATUS.PERFECT.NAME;
 					break;
 				case Health.HealthState.Scuffed:
-					newValue3 = MISC.STATUSITEMS.HEALTHSTATUS.SCUFFED.NAME;
+					newValue4 = MISC.STATUSITEMS.HEALTHSTATUS.SCUFFED.NAME;
 					break;
 				case Health.HealthState.Injured:
-					newValue3 = MISC.STATUSITEMS.HEALTHSTATUS.INJURED.NAME;
+					newValue4 = MISC.STATUSITEMS.HEALTHSTATUS.INJURED.NAME;
 					break;
 				case Health.HealthState.Critical:
-					newValue3 = MISC.STATUSITEMS.HEALTHSTATUS.CRITICAL.NAME;
+					newValue4 = MISC.STATUSITEMS.HEALTHSTATUS.CRITICAL.NAME;
 					break;
 				case Health.HealthState.Incapacitated:
-					newValue3 = MISC.STATUSITEMS.HEALTHSTATUS.INCAPACITATED.NAME;
+					newValue4 = MISC.STATUSITEMS.HEALTHSTATUS.INCAPACITATED.NAME;
 					break;
 				case Health.HealthState.Dead:
-					newValue3 = MISC.STATUSITEMS.HEALTHSTATUS.DEAD.NAME;
+					newValue4 = MISC.STATUSITEMS.HEALTHSTATUS.DEAD.NAME;
 					break;
 				}
-				str = str.Replace("{healthState}", newValue3);
+				str = str.Replace("{healthState}", newValue4);
 				return str;
 			};
 			HealthStatus.resolveTooltipCallback = delegate(string str, object data)
 			{
-				string newValue2 = "";
+				string newValue3 = "";
 				switch ((Health.HealthState)data)
 				{
 				case Health.HealthState.Perfect:
-					newValue2 = MISC.STATUSITEMS.HEALTHSTATUS.PERFECT.TOOLTIP;
+					newValue3 = MISC.STATUSITEMS.HEALTHSTATUS.PERFECT.TOOLTIP;
 					break;
 				case Health.HealthState.Scuffed:
-					newValue2 = MISC.STATUSITEMS.HEALTHSTATUS.SCUFFED.TOOLTIP;
+					newValue3 = MISC.STATUSITEMS.HEALTHSTATUS.SCUFFED.TOOLTIP;
 					break;
 				case Health.HealthState.Injured:
-					newValue2 = MISC.STATUSITEMS.HEALTHSTATUS.INJURED.TOOLTIP;
+					newValue3 = MISC.STATUSITEMS.HEALTHSTATUS.INJURED.TOOLTIP;
 					break;
 				case Health.HealthState.Critical:
-					newValue2 = MISC.STATUSITEMS.HEALTHSTATUS.CRITICAL.TOOLTIP;
+					newValue3 = MISC.STATUSITEMS.HEALTHSTATUS.CRITICAL.TOOLTIP;
 					break;
 				case Health.HealthState.Incapacitated:
-					newValue2 = MISC.STATUSITEMS.HEALTHSTATUS.INCAPACITATED.TOOLTIP;
+					newValue3 = MISC.STATUSITEMS.HEALTHSTATUS.INCAPACITATED.TOOLTIP;
 					break;
 				case Health.HealthState.Dead:
-					newValue2 = MISC.STATUSITEMS.HEALTHSTATUS.DEAD.TOOLTIP;
+					newValue3 = MISC.STATUSITEMS.HEALTHSTATUS.DEAD.TOOLTIP;
 					break;
 				}
-				str = str.Replace("{healthState}", newValue2);
+				str = str.Replace("{healthState}", newValue3);
 				return str;
 			};
 			Barren = new StatusItem("Barren", "CREATURES", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
@@ -396,9 +422,17 @@ namespace Database
 				return str.Replace("{RotTooltip}", instance2.GetToolTip());
 			};
 			Spoiled = new StatusItem("Spoiled", "CREATURES", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			Func<string, object, string> resolveStringCallback5 = delegate(string str, object data)
+			{
+				IRottable rottable = (IRottable)data;
+				return str.Replace("{RotTemperature}", GameUtil.GetFormattedTemperature(rottable.RotTemperature)).Replace("{PreserveTemperature}", GameUtil.GetFormattedTemperature(rottable.PreserveTemperature));
+			};
 			Refrigerated = new StatusItem("Refrigerated", "CREATURES", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			Refrigerated.resolveStringCallback = resolveStringCallback5;
+			RefrigeratedFrozen = new StatusItem("RefrigeratedFrozen", "CREATURES", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			RefrigeratedFrozen.resolveStringCallback = resolveStringCallback5;
 			Unrefrigerated = new StatusItem("Unrefrigerated", "CREATURES", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
-			Unrefrigerated.resolveStringCallback = (string str, object data) => str.Replace("{RotTemperature}", GameUtil.GetFormattedTemperature(277.15f));
+			Unrefrigerated.resolveStringCallback = resolveStringCallback5;
 			SterilizingAtmosphere = new StatusItem("SterilizingAtmosphere", "CREATURES", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			ContaminatedAtmosphere = new StatusItem("ContaminatedAtmosphere", "CREATURES", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			Old = new StatusItem("Old", "CREATURES", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
@@ -440,7 +474,29 @@ namespace Database
 			Hungry = new StatusItem("Hungry", "CREATURES", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			Hungry.resolveTooltipCallback = delegate(string str, object data)
 			{
-				Diet diet = ((CreatureCalorieMonitor.Instance)data).master.gameObject.GetDef<CreatureCalorieMonitor.Def>().diet;
+				Diet diet2 = ((CreatureCalorieMonitor.Instance)data).master.gameObject.GetDef<CreatureCalorieMonitor.Def>().diet;
+				if (diet2.consumedTags.Count > 0)
+				{
+					string[] array2 = diet2.consumedTags.Select((KeyValuePair<Tag, float> t) => t.Key.ProperName()).ToArray();
+					if (array2.Length > 3)
+					{
+						array2 = new string[4]
+						{
+							array2[0],
+							array2[1],
+							array2[2],
+							"..."
+						};
+					}
+					string newValue2 = string.Join(", ", array2);
+					return str + "\n" + UI.BUILDINGEFFECTS.DIET_CONSUMED.text.Replace("{Foodlist}", newValue2);
+				}
+				return str;
+			};
+			HiveHungry = new StatusItem("HiveHungry", "CREATURES", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			HiveHungry.resolveTooltipCallback = delegate(string str, object data)
+			{
+				Diet diet = ((BeehiveCalorieMonitor.Instance)data).master.gameObject.GetDef<BeehiveCalorieMonitor.Def>().diet;
 				if (diet.consumedTags.Count > 0)
 				{
 					string[] array = diet.consumedTags.Select((KeyValuePair<Tag, float> t) => t.Key.ProperName()).ToArray();
@@ -455,10 +511,27 @@ namespace Database
 						};
 					}
 					string newValue = string.Join(", ", array);
-					return str + "\n" + UI.BUILDINGEFFECTS.DIET_CONSUMED.text.Replace("{Foodlist}", newValue);
+					return str + "\n" + UI.BUILDINGEFFECTS.DIET_STORED.text.Replace("{Foodlist}", newValue);
 				}
 				return str;
 			};
+			NoSleepSpot = new StatusItem("NoSleepSpot", "CREATURES", "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			OriginalPlantMutation = new StatusItem("OriginalPlantMutation", "CREATURES", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			UnknownMutation = new StatusItem("UnknownMutation", "CREATURES", "status_item_unknown_mutation", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			SpecificPlantMutation = new StatusItem("SpecificPlantMutation", "CREATURES", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			SpecificPlantMutation.resolveStringCallback = delegate(string str, object data)
+			{
+				PlantMutation plantMutation2 = (PlantMutation)data;
+				return str.Replace("{MutationName}", plantMutation2.Name);
+			};
+			SpecificPlantMutation.resolveTooltipCallback = delegate(string str, object data)
+			{
+				PlantMutation plantMutation = (PlantMutation)data;
+				str = str.Replace("{MutationName}", plantMutation.Name);
+				return str + "\n" + plantMutation.GetTooltip();
+			};
+			Crop_Too_NonRadiated = new StatusItem("Crop_Too_NonRadiated", "CREATURES", "status_item_plant_light", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false);
+			Crop_Too_Radiated = new StatusItem("Crop_Too_Radiated", "CREATURES", "status_item_plant_light", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false);
 		}
 	}
 }

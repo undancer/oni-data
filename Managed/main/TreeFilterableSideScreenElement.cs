@@ -8,7 +8,7 @@ public class TreeFilterableSideScreenElement : KMonoBehaviour
 	private LocText elementName;
 
 	[SerializeField]
-	private KToggle checkBox;
+	private MultiToggle checkBox;
 
 	[SerializeField]
 	private KImage elementImg;
@@ -21,7 +21,7 @@ public class TreeFilterableSideScreenElement : KMonoBehaviour
 
 	private bool initialized;
 
-	public bool IsSelected => checkBox.isOn;
+	public bool IsSelected => checkBox.CurrentState == 1;
 
 	public TreeFilterableSideScreen Parent
 	{
@@ -42,7 +42,7 @@ public class TreeFilterableSideScreenElement : KMonoBehaviour
 		return elementTag;
 	}
 
-	public KToggle GetCheckboxToggle()
+	public MultiToggle GetCheckboxToggle()
 	{
 		return checkBox;
 	}
@@ -52,7 +52,7 @@ public class TreeFilterableSideScreenElement : KMonoBehaviour
 		if (!initialized)
 		{
 			checkBoxImg = checkBox.gameObject.GetComponentInChildrenOnly<KImage>();
-			checkBox.onClick += CheckBoxClicked;
+			checkBox.onClick = CheckBoxClicked;
 			initialized = true;
 		}
 	}
@@ -80,16 +80,17 @@ public class TreeFilterableSideScreenElement : KMonoBehaviour
 
 	public void SetSprite(Tag t)
 	{
-		Element element = ElementLoader.GetElement(t);
-		Sprite sprite = ((element != null) ? Def.GetUISpriteFromMultiObjectAnim(element.substance.anim) : GetStorageObjectSprite(t));
-		elementImg.sprite = sprite;
-		elementImg.enabled = sprite != null;
+		Tuple<Sprite, Color> uISprite = Def.GetUISprite(t);
+		elementImg.sprite = uISprite.first;
+		elementImg.color = uISprite.second;
+		elementImg.gameObject.SetActive(value: true);
 	}
 
 	public void SetTag(Tag newTag)
 	{
 		Initialize();
 		elementTag = newTag;
+		SetSprite(elementTag);
 		string text = elementTag.ProperName();
 		if (parent.IsStorage)
 		{
@@ -106,7 +107,7 @@ public class TreeFilterableSideScreenElement : KMonoBehaviour
 
 	public void SetCheckBox(bool checkBoxState)
 	{
-		checkBox.isOn = checkBoxState;
+		checkBox.ChangeState(checkBoxState ? 1 : 0);
 		checkBoxImg.enabled = checkBoxState;
 		if (this.OnSelectionChanged != null)
 		{

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using Delaunay.Geo;
 using KSerialization;
 using Satsuma;
@@ -10,19 +9,19 @@ using UnityEngine;
 namespace ProcGen
 {
 	[SerializationConfig(MemberSerialization.OptIn)]
-	public class Graph
+	public class Graph<N, A> where N : Node, new()where A : Arc, new()
 	{
 		[Serialize]
-		public List<Node> nodeList;
+		public List<N> nodeList;
 
 		[Serialize]
-		public List<Arc> arcList;
+		public List<A> arcList;
 
 		private SeededRandom myRandom;
 
-		public List<Node> nodes => nodeList;
+		public List<N> nodes => nodeList;
 
-		public List<Arc> arcs => arcList;
+		public List<A> arcs => arcList;
 
 		public CustomGraph baseGraph
 		{
@@ -38,54 +37,92 @@ namespace ProcGen
 		public Graph(int seed)
 		{
 			SetSeed(seed);
-			nodeList = new List<Node>();
-			arcList = new List<Arc>();
+			nodeList = new List<N>();
+			arcList = new List<A>();
 			baseGraph = new CustomGraph();
 		}
 
-		public Node AddNode(string type)
+		public N AddNode(string type, Vector2 position = default(Vector2))
 		{
-			Node node = new Node(baseGraph.AddNode(), type);
-			nodeList.Add(node);
-			return node;
+			N val = new N();
+			val.SetNode(baseGraph.AddNode());
+			val.SetType(type);
+			val.SetPosition(position);
+			nodeList.Add(val);
+			return val;
 		}
 
-		public void Remove(Node n)
+		public void Remove(N n)
 		{
 			baseGraph.DeleteNode(n.node);
 			nodes.Remove(n);
 		}
 
-		public Arc AddArc(Node nodeA, Node nodeB, string type)
+		public A AddArc(N nodeA, N nodeB, string type)
 		{
-			Arc arc = new Arc(baseGraph.AddArc(nodeA.node, nodeB.node, Directedness.Undirected), type);
-			arcList.Add(arc);
-			return arc;
+			Satsuma.Arc arc = baseGraph.AddArc(nodeA.node, nodeB.node, Directedness.Undirected);
+			A val = new A();
+			val.SetArc(arc);
+			val.SetType(type);
+			arcList.Add(val);
+			return val;
 		}
 
-		public Node FindNodeByID(uint id)
+		public N FindNodeByID(uint id)
 		{
-			return nodeList.Find((Node node) => node.node.Id == id);
+			return nodeList.Find((N node) => node.node.Id == id);
 		}
 
-		public Arc FindArcByID(uint id)
+		public A FindArcByID(uint id)
 		{
-			return arcList.Find((Arc arc) => arc.arc.Id == id);
+			return arcList.Find((A arc) => arc.arc.Id == id);
 		}
 
-		public Node FindNode(Predicate<Node> pred)
+		public N FindNode(Predicate<N> pred)
 		{
 			return nodeList.Find(pred);
 		}
 
-		public Arc FindArc(Predicate<Arc> pred)
+		public A FindArc(Predicate<A> pred)
 		{
 			return arcList.Find(pred);
 		}
 
-		public int GetDistanceToTagSetFromNode(Node node, TagSet tagset)
+		public List<A> GetArcs(N node0)
 		{
-			List<Node> nodesWithAtLeastOneTag = GetNodesWithAtLeastOneTag(tagset);
+			List<A> list = new List<A>();
+			foreach (Satsuma.Arc sarc in baseGraph.Arcs(node0.node))
+			{
+				list.Add(arcList.Find((A a) => a.arc == sarc));
+			}
+			return list;
+		}
+
+		public A GetArc(N node0, N node1)
+		{
+			IEnumerator<Satsuma.Arc> enumerator = baseGraph.Arcs(node0.node, node1.node).GetEnumerator();
+			if (enumerator.MoveNext())
+			{
+				Satsuma.Arc sarc = enumerator.Current;
+				return arcList.Find((A a) => a.arc == sarc);
+			}
+			return null;
+		}
+
+		public List<N> GetNodes(A arc)
+		{
+			Satsuma.Node u = baseGraph.U(arc.arc);
+			Satsuma.Node v = baseGraph.V(arc.arc);
+			return new List<N>
+			{
+				nodeList.Find((N n) => n.node == u),
+				nodeList.Find((N n) => n.node == v)
+			};
+		}
+
+		public int GetDistanceToTagSetFromNode(N node, TagSet tagset)
+		{
+			List<N> nodesWithAtLeastOneTag = GetNodesWithAtLeastOneTag(tagset);
 			if (nodesWithAtLeastOneTag.Count > 0)
 			{
 				Dijkstra dijkstra = new Dijkstra(baseGraph, (Satsuma.Arc arc) => 1.0, DijkstraMode.Sum);
@@ -99,9 +136,9 @@ namespace ProcGen
 			return -1;
 		}
 
-		public int GetDistanceToTagFromNode(Node node, Tag tag)
+		public int GetDistanceToTagFromNode(N node, Tag tag)
 		{
-			List<Node> nodesWithTag = GetNodesWithTag(tag);
+			List<N> nodesWithTag = GetNodesWithTag(tag);
 			if (nodesWithTag.Count > 0)
 			{
 				Dijkstra dijkstra = new Dijkstra(baseGraph, (Satsuma.Arc arc) => 1.0, DijkstraMode.Sum);
@@ -117,7 +154,7 @@ namespace ProcGen
 
 		public Dictionary<uint, int> GetDistanceToTag(Tag tag)
 		{
-			List<Node> nodesWithTag = GetNodesWithTag(tag);
+			List<N> nodesWithTag = GetNodesWithTag(tag);
 			if (nodesWithTag.Count > 0)
 			{
 				Dijkstra dijkstra = new Dijkstra(baseGraph, (Satsuma.Arc arc) => 1.0, DijkstraMode.Sum);
@@ -136,39 +173,19 @@ namespace ProcGen
 			return null;
 		}
 
-		public List<Node> GetNodesWithAtLeastOneTag(TagSet tagset)
+		public List<N> GetNodesWithAtLeastOneTag(TagSet tagset)
 		{
-			return nodeList.FindAll((Node node) => node.tags.ContainsOne(tagset));
+			return nodeList.FindAll((N node) => node.tags.ContainsOne(tagset));
 		}
 
-		public List<Node> GetNodesWithTag(Tag tag)
+		public List<N> GetNodesWithTag(Tag tag)
 		{
-			return nodeList.FindAll((Node node) => node.tags.Contains(tag));
+			return nodeList.FindAll((N node) => node.tags.Contains(tag));
 		}
 
-		public List<Arc> GetArcsWithTag(Tag tag)
+		public List<A> GetArcsWithTag(Tag tag)
 		{
-			return arcList.FindAll((Arc arc) => arc.tags.Contains(tag));
-		}
-
-		[OnDeserialized]
-		internal void OnDeserializedMethod()
-		{
-			try
-			{
-				for (int i = 0; i < nodeList.Count; i++)
-				{
-					Node node = new Node(baseGraph.AddNode(), nodeList[i].type);
-					node.SetPosition(nodeList[i].position);
-					nodeList[i] = node;
-				}
-			}
-			catch (Exception ex)
-			{
-				string message = ex.Message;
-				string stackTrace = ex.StackTrace;
-				Debug.Log("Error deserialising " + message + "\n" + stackTrace);
-			}
+			return arcList.FindAll((A arc) => arc.tags.Contains(tag));
 		}
 
 		public static PointD GetForceForBoundry(PointD particle, Polygon bounds)
@@ -198,7 +215,7 @@ namespace ProcGen
 
 		public PointD GetPositionForNode(Satsuma.Node node)
 		{
-			Node node2 = nodeList.Find((Node n) => n.node == node);
+			Node node2 = nodeList.Find((N n) => n.node == node);
 			return new PointD(node2.position.x, node2.position.y);
 		}
 
@@ -236,7 +253,7 @@ namespace ProcGen
 				while (enumerator.MoveNext())
 				{
 					Satsuma.Node node = enumerator.Current;
-					Node node2 = nodeList.Find((Node n) => n.node == node);
+					Node node2 = nodeList.Find((N n) => n.node == node);
 					if (node2 != null)
 					{
 						vector.x = (float)forceDirectedLayout.NodePositions[node].X;

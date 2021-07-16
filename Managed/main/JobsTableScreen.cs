@@ -105,7 +105,7 @@ public class JobsTableScreen : TableScreen
 
 	public override float GetSortKey()
 	{
-		return 101f;
+		return 22f;
 	}
 
 	protected override void OnActivate()
@@ -133,8 +133,11 @@ public class JobsTableScreen : TableScreen
 			select @group;
 		foreach (ChoreGroup item2 in list)
 		{
-			PrioritizationGroupTableColumn new_column = new PrioritizationGroupTableColumn(item2, LoadValue, ChangePersonalPriority, HoverPersonalPriority, ChangeColumnPriority, HoverChangeColumnPriorityButton, OnSortClicked, OnSortHovered);
-			RegisterColumn(item2.Id, new_column);
+			if (item2.userPrioritizable)
+			{
+				PrioritizationGroupTableColumn new_column = new PrioritizationGroupTableColumn(item2, LoadValue, ChangePersonalPriority, HoverPersonalPriority, ChangeColumnPriority, HoverChangeColumnPriorityButton, OnSortClicked, OnSortHovered);
+				RegisterColumn(item2.Id, new_column);
+			}
 		}
 		PrioritizeRowTableColumn new_column2 = new PrioritizeRowTableColumn(null, ChangeRowPriority, HoverChangeRowPriorityButton);
 		RegisterColumn("prioritize_row", new_column2);
@@ -198,31 +201,11 @@ public class JobsTableScreen : TableScreen
 			string priorityValue = GetPriorityValue(personalPriority);
 			if (priorityManager.IsChoreGroupDisabled(choreGroup))
 			{
-				Trait trait = null;
-				foreach (Trait trait2 in minionIdentity.GetComponent<Traits>().TraitList)
-				{
-					if (trait2.disabledChoreGroups == null)
-					{
-						continue;
-					}
-					ChoreGroup[] disabledChoreGroups = trait2.disabledChoreGroups;
-					for (int i = 0; i < disabledChoreGroups.Length; i++)
-					{
-						if (disabledChoreGroups[i].IdHash == choreGroup.IdHash)
-						{
-							trait = trait2;
-							break;
-						}
-					}
-					if (trait != null)
-					{
-						break;
-					}
-				}
+				minionIdentity.GetComponent<Traits>().IsChoreGroupDisabled(choreGroup, out var disablingTrait);
 				text = UI.JOBSSCREEN.TRAIT_DISABLED.ToString();
 				text = text.Replace("{Name}", minionIdentity.GetProperName());
 				text = text.Replace("{Job}", choreGroup.Name);
-				text = text.Replace("{Trait}", trait.Name);
+				text = text.Replace("{Trait}", disablingTrait.Name);
 				componentInChildren.ClearMultiStringTooltip();
 				componentInChildren.AddMultiStringTooltip(text, null);
 			}
@@ -996,7 +979,10 @@ public class JobsTableScreen : TableScreen
 				ChoreConsumer component = item2.GetComponent<ChoreConsumer>();
 				foreach (ChoreGroup resource in Db.Get().ChoreGroups.resources)
 				{
-					component.SetPersonalPriority(resource, 3);
+					if (resource.userPrioritizable)
+					{
+						component.SetPersonalPriority(resource, 3);
+					}
 				}
 			}
 		}

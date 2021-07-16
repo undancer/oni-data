@@ -23,6 +23,11 @@ public class GlomConfig : IEntityConfig
 
 	public const int emitDiseasePerKg = 1000;
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		string text = STRINGS.CREATURES.SPECIES.GLOM.NAME;

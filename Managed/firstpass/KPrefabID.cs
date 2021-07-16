@@ -208,7 +208,7 @@ public class KPrefabID : KMonoBehaviour, ISaveLoadable
 		if (Tags.Add(tag))
 		{
 			dirtyTagBits = true;
-			Trigger(-1582839653);
+			Trigger(-1582839653, new TagChangedEventData(tag, added: true));
 		}
 		if (serialize)
 		{
@@ -221,7 +221,7 @@ public class KPrefabID : KMonoBehaviour, ISaveLoadable
 		if (Tags.Remove(tag))
 		{
 			dirtyTagBits = true;
-			Trigger(-1582839653);
+			Trigger(-1582839653, new TagChangedEventData(tag, added: false));
 		}
 		serializedTags.Remove(tag);
 	}
@@ -273,6 +273,32 @@ public class KPrefabID : KMonoBehaviour, ISaveLoadable
 	{
 		UpdateTagBits();
 		return tagBits.HasAny(ref search_tags);
+	}
+
+	public bool HasAllTags(List<Tag> search_tags)
+	{
+		InitializeTags();
+		foreach (Tag search_tag in search_tags)
+		{
+			if (!tags.Contains(search_tag))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public bool HasAllTags(Tag[] search_tags)
+	{
+		InitializeTags();
+		foreach (Tag item in search_tags)
+		{
+			if (!tags.Contains(item))
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public bool HasAllTags(ref TagBits search_tags)

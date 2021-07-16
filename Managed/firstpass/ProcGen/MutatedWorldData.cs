@@ -47,21 +47,13 @@ namespace ProcGen
 		private void ApplyTrait(WorldTrait trait)
 		{
 			world.ModStartLocation(trait.startingBasePositionHorizontalMod, trait.startingBasePositionVerticalMod);
-			foreach (WeightedName additionalSubworldFile in trait.additionalSubworldFiles)
+			foreach (WeightedSubworldName additionalSubworldFile in trait.additionalSubworldFiles)
 			{
 				world.subworldFiles.Add(additionalSubworldFile);
 			}
 			foreach (World.AllowedCellsFilter additionalUnknownCellFilter in trait.additionalUnknownCellFilters)
 			{
 				world.unknownCellsAllowedSubworlds.Add(additionalUnknownCellFilter);
-			}
-			foreach (KeyValuePair<string, int> globalFeatureTemplateMod in trait.globalFeatureTemplateMods)
-			{
-				if (!world.globalFeatureTemplates.ContainsKey(globalFeatureTemplateMod.Key))
-				{
-					world.globalFeatureTemplates[globalFeatureTemplateMod.Key] = 0;
-				}
-				world.globalFeatureTemplates[globalFeatureTemplateMod.Key] += globalFeatureTemplateMod.Value;
 			}
 			foreach (KeyValuePair<string, int> globalFeatureMod in trait.globalFeatureMods)
 			{

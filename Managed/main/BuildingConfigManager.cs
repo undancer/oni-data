@@ -12,10 +12,9 @@ public class BuildingConfigManager : KMonoBehaviour
 
 	private Dictionary<IBuildingConfig, BuildingDef> configTable = new Dictionary<IBuildingConfig, BuildingDef>();
 
-	private string[] NonBuildableBuildings = new string[2]
+	private string[] NonBuildableBuildings = new string[1]
 	{
-		"Headquarters",
-		"POIBunkerExteriorDoor"
+		"Headquarters"
 	};
 
 	private HashSet<Type> defaultKComponents = new HashSet<Type>();
@@ -57,7 +56,12 @@ public class BuildingConfigManager : KMonoBehaviour
 
 	public void RegisterBuilding(IBuildingConfig config)
 	{
+		if (!DlcManager.IsDlcListValidForCurrentContent(config.GetDlcIds()))
+		{
+			return;
+		}
 		BuildingDef buildingDef = config.CreateBuildingDef();
+		buildingDef.RequiredDlcIds = config.GetDlcIds();
 		configTable[config] = buildingDef;
 		GameObject gameObject = UnityEngine.Object.Instantiate(baseTemplate);
 		UnityEngine.Object.DontDestroyOnLoad(gameObject);

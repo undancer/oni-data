@@ -147,6 +147,12 @@ public class GameAudioSheets : AudioSheets
 		case "MainMenuSoundEvent":
 			soundEvent = new MainMenuSoundEvent(file_name, sound_name, frame);
 			break;
+		case "ClusterMapSoundEvent":
+			soundEvent = new ClusterMapSoundEvent(file_name, sound_name, frame, looping: false);
+			break;
+		case "ClusterMapLoopingSoundEvent":
+			soundEvent = new ClusterMapSoundEvent(file_name, sound_name, frame, looping: true);
+			break;
 		case "CreatureVariationSoundEvent":
 			soundEvent = new CreatureVariationSoundEvent(file_name, sound_name, frame, do_load: true, type == "LoopingSoundEvent", min_interval, is_dynamic: false);
 			break;
@@ -158,6 +164,9 @@ public class GameAudioSheets : AudioSheets
 			break;
 		case "PhonoboxSoundEvent":
 			soundEvent = new PhonoboxSoundEvent(file_name, sound_name, frame, min_interval);
+			break;
+		case "PlantMutationSoundEvent":
+			soundEvent = new PlantMutationSoundEvent(file_name, sound_name, frame, min_interval);
 			break;
 		}
 		if (soundEvent != null)

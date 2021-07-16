@@ -9,20 +9,18 @@ public class AttachableBuilding : KMonoBehaviour
 
 	public Action<AttachableBuilding> onAttachmentNetworkChanged;
 
-	private static readonly EventSystem.IntraObjectHandler<AttachableBuilding> AttachmentNetworkChangedDelegate = new EventSystem.IntraObjectHandler<AttachableBuilding>(delegate(AttachableBuilding component, object data)
-	{
-		component.AttachmentNetworkChanged(data);
-	});
-
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
 		RegisterWithAttachPoint(register: true);
 		Components.AttachableBuildings.Add(this);
-		Subscribe(486707561, AttachmentNetworkChangedDelegate);
 		foreach (GameObject item in GetAttachedNetwork(this))
 		{
-			item.Trigger(486707561, this);
+			AttachableBuilding component = item.GetComponent<AttachableBuilding>();
+			if (component != null && component.onAttachmentNetworkChanged != null)
+			{
+				component.onAttachmentNetworkChanged(this);
+			}
 		}
 	}
 
@@ -31,17 +29,20 @@ public class AttachableBuilding : KMonoBehaviour
 		base.OnSpawn();
 	}
 
-	private void AttachmentNetworkChanged(object attachableBuilding)
-	{
-		if (onAttachmentNetworkChanged != null)
-		{
-			onAttachmentNetworkChanged((AttachableBuilding)attachableBuilding);
-		}
-	}
-
 	public void RegisterWithAttachPoint(bool register)
 	{
-		int num = Grid.OffsetCell(Grid.PosToCell(base.gameObject), Assets.GetBuildingDef(GetComponent<KPrefabID>().PrefabID().Name).attachablePosition);
+		BuildingDef buildingDef = null;
+		BuildingComplete component = GetComponent<BuildingComplete>();
+		BuildingUnderConstruction component2 = GetComponent<BuildingUnderConstruction>();
+		if (component != null)
+		{
+			buildingDef = component.Def;
+		}
+		else if (component2 != null)
+		{
+			buildingDef = component2.Def;
+		}
+		int num = Grid.OffsetCell(Grid.PosToCell(base.gameObject), buildingDef.attachablePosition);
 		bool flag = false;
 		int num2 = 0;
 		while (!flag && num2 < Components.BuildingAttachPoints.Count)
@@ -50,7 +51,14 @@ public class AttachableBuilding : KMonoBehaviour
 			{
 				if (num == Grid.OffsetCell(Grid.PosToCell(Components.BuildingAttachPoints[num2]), Components.BuildingAttachPoints[num2].points[i].position))
 				{
-					Components.BuildingAttachPoints[num2].points[i].attachedBuilding = (register ? this : null);
+					if (register)
+					{
+						Components.BuildingAttachPoints[num2].points[i].attachedBuilding = this;
+					}
+					else if (Components.BuildingAttachPoints[num2].points[i].attachedBuilding == this)
+					{
+						Components.BuildingAttachPoints[num2].points[i].attachedBuilding = null;
+					}
 					flag = true;
 					break;
 				}
@@ -59,22 +67,24 @@ public class AttachableBuilding : KMonoBehaviour
 		}
 	}
 
-	public static List<GameObject> GetAttachedNetwork(AttachableBuilding tip)
+	public static void GetAttachedBelow(AttachableBuilding searchStart, ref List<GameObject> buildings)
 	{
-		List<GameObject> list = new List<GameObject>();
-		list.Add(tip.gameObject);
-		AttachableBuilding attachableBuilding = tip;
+		AttachableBuilding attachableBuilding = searchStart;
 		while (attachableBuilding != null)
 		{
 			BuildingAttachPoint attachedTo = attachableBuilding.GetAttachedTo();
 			attachableBuilding = null;
 			if (attachedTo != null)
 			{
-				list.Add(attachedTo.gameObject);
+				buildings.Add(attachedTo.gameObject);
 				attachableBuilding = attachedTo.GetComponent<AttachableBuilding>();
 			}
 		}
-		BuildingAttachPoint buildingAttachPoint = tip.GetComponent<BuildingAttachPoint>();
+	}
+
+	public static void GetAttachedAbove(AttachableBuilding searchStart, ref List<GameObject> buildings)
+	{
+		BuildingAttachPoint buildingAttachPoint = searchStart.GetComponent<BuildingAttachPoint>();
 		while (buildingAttachPoint != null)
 		{
 			bool flag = false;
@@ -90,12 +100,12 @@ public class AttachableBuilding : KMonoBehaviour
 				{
 					continue;
 				}
-				foreach (AttachableBuilding attachableBuilding2 in Components.AttachableBuildings)
+				foreach (AttachableBuilding attachableBuilding in Components.AttachableBuildings)
 				{
-					if (attachableBuilding2 == hardPoint.attachedBuilding)
+					if (attachableBuilding == hardPoint.attachedBuilding)
 					{
-						list.Add(attachableBuilding2.gameObject);
-						buildingAttachPoint = attachableBuilding2.GetComponent<BuildingAttachPoint>();
+						buildings.Add(attachableBuilding.gameObject);
+						buildingAttachPoint = attachableBuilding.GetComponent<BuildingAttachPoint>();
 						flag = true;
 					}
 				}
@@ -105,7 +115,15 @@ public class AttachableBuilding : KMonoBehaviour
 				buildingAttachPoint = null;
 			}
 		}
-		return list;
+	}
+
+	public static List<GameObject> GetAttachedNetwork(AttachableBuilding searchStart)
+	{
+		List<GameObject> buildings = new List<GameObject>();
+		buildings.Add(searchStart.gameObject);
+		GetAttachedAbove(searchStart, ref buildings);
+		GetAttachedBelow(searchStart, ref buildings);
+		return buildings;
 	}
 
 	public BuildingAttachPoint GetAttachedTo()
@@ -114,7 +132,7 @@ public class AttachableBuilding : KMonoBehaviour
 		{
 			for (int j = 0; j < Components.BuildingAttachPoints[i].points.Length; j++)
 			{
-				if (Components.BuildingAttachPoints[i].points[j].attachedBuilding == this)
+				if (Components.BuildingAttachPoints[i].points[j].attachedBuilding == this && (Components.BuildingAttachPoints[i].points[j].attachedBuilding.GetComponent<Deconstructable>() == null || !Components.BuildingAttachPoints[i].points[j].attachedBuilding.GetComponent<Deconstructable>().HasBeenDestroyed))
 				{
 					return Components.BuildingAttachPoints[i];
 				}
@@ -126,6 +144,14 @@ public class AttachableBuilding : KMonoBehaviour
 	protected override void OnCleanUp()
 	{
 		base.OnCleanUp();
+		foreach (GameObject item in GetAttachedNetwork(this))
+		{
+			AttachableBuilding component = item.GetComponent<AttachableBuilding>();
+			if (component != null && component.onAttachmentNetworkChanged != null)
+			{
+				component.onAttachmentNetworkChanged(this);
+			}
+		}
 		RegisterWithAttachPoint(register: false);
 		Components.AttachableBuildings.Remove(this);
 	}

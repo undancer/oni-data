@@ -7,7 +7,7 @@ public class FacilityBackWallWindowConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("FacilityBackWallWindow", 1, 6, "gravitas_window_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.GLASSES, 1600f, BuildLocationRule.NotInTiles, noise: NOISE_POLLUTION.NONE, decor: DECOR.BONUS.TIER3);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("FacilityBackWallWindow", 1, 6, "gravitas_window_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.GLASSES, 1600f, BuildLocationRule.NotInTiles, noise: NOISE_POLLUTION.NONE, decor: DECOR.BONUS.TIER3);
 		obj.Floodable = false;
 		obj.Overheatable = false;
 		obj.AudioCategory = "Metal";
@@ -22,8 +22,9 @@ public class FacilityBackWallWindowConfig : IBuildingConfig
 	{
 		go.AddOrGet<AnimTileable>().objectLayer = ObjectLayer.Backwall;
 		go.AddComponent<ZoneTile>();
-		go.GetComponent<PrimaryElement>().SetElement(SimHashes.Steel);
+		go.GetComponent<PrimaryElement>().SetElement(SimHashes.Glass);
 		go.GetComponent<PrimaryElement>().Temperature = 273f;
+		go.GetComponent<KPrefabID>().AddTag(GameTags.Gravitas);
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 	}
 

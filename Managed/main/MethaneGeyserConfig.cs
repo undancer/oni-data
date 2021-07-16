@@ -6,6 +6,11 @@ public class MethaneGeyserConfig : IEntityConfig
 {
 	public const string ID = "MethaneGeyser";
 
+	public string[] GetDlcIds()
+	{
+		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
 	public GameObject CreatePrefab()
 	{
 		GameObject obj = EntityTemplates.CreatePlacedEntity("MethaneGeyser", STRINGS.CREATURES.SPECIES.METHANEGEYSER.NAME, STRINGS.CREATURES.SPECIES.METHANEGEYSER.DESC, 2000f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER1, noise: NOISE_POLLUTION.NOISY.TIER5, anim: Assets.GetAnim("geyser_side_methane_kanim"), initialAnim: "inactive", sceneLayer: Grid.SceneLayer.BuildingBack, width: 4, height: 2);

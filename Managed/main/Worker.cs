@@ -125,6 +125,15 @@ public class Worker : KMonoBehaviour
 			}
 			DetachAnimOverrides();
 			workable.CompleteWork(this);
+			if (workable.worker != null && !(workable is Constructable) && !(workable is Deconstructable) && !(workable is Repairable) && !(workable is Disinfectable))
+			{
+				BonusEvent.GameplayEventData gameplayEventData = new BonusEvent.GameplayEventData();
+				gameplayEventData.workable = workable;
+				gameplayEventData.worker = workable.worker;
+				gameplayEventData.building = workable.GetComponent<BuildingComplete>();
+				gameplayEventData.eventTrigger = GameHashes.UseBuilding;
+				GameplayEventManager.Instance.Trigger(1175726587, gameplayEventData);
+			}
 		}
 		InternalStopWork(workable, is_aborted: false);
 	}
@@ -374,7 +383,7 @@ public class Worker : KMonoBehaviour
 				KAnim.PlayMode workAnimPlayMode = workable.GetWorkAnimPlayMode();
 				Vector3 vector = (workAnimOffset = workable.GetWorkOffset());
 				component.Offset += vector;
-				if (usesMultiTool && animInfo.smi == null && workAnims != null)
+				if (usesMultiTool && animInfo.smi == null && workAnims != null && resume != null)
 				{
 					if (workable.synchronizeAnims)
 					{
@@ -415,6 +424,22 @@ public class Worker : KMonoBehaviour
 			string str = "Exception in: Worker.StartWork(" + name + ")";
 			DebugUtil.LogErrorArgs(this, str + "\n" + ex.ToString());
 			throw;
+		}
+	}
+
+	private void Update()
+	{
+		if (state == State.Working)
+		{
+			ForceSyncAnims();
+		}
+	}
+
+	private void ForceSyncAnims()
+	{
+		if (Time.deltaTime > 0f && kanimSynchronizer != null)
+		{
+			kanimSynchronizer.SyncTime();
 		}
 	}
 
@@ -496,7 +521,8 @@ public class Worker : KMonoBehaviour
 				anim = "react",
 				startcb = GetReactionEffect
 			}).AddThought(Db.Get().Thoughts.Encourage).AddPrecondition(ReactorIsOnFloor)
-				.AddPrecondition(ReactorIsFacingMe);
+				.AddPrecondition(ReactorIsFacingMe)
+				.AddPrecondition(ReactorIsntPartying);
 		}
 	}
 
@@ -514,6 +540,16 @@ public class Worker : KMonoBehaviour
 	{
 		Facing component = reactor.GetComponent<Facing>();
 		return base.transform.GetPosition().x < reactor.transform.GetPosition().x == component.GetFacing();
+	}
+
+	private bool ReactorIsntPartying(GameObject reactor, Navigator.ActiveTransition transition)
+	{
+		ChoreConsumer component = reactor.GetComponent<ChoreConsumer>();
+		if (component.choreDriver.HasChore())
+		{
+			return component.choreDriver.GetCurrentChore().choreType != Db.Get().ChoreTypes.Party;
+		}
+		return false;
 	}
 
 	public void ClearPasserbyReactable()

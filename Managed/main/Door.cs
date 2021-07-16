@@ -4,7 +4,7 @@ using UnityEngine;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 [AddComponentMenu("KMonoBehaviour/Workable/Door")]
-public class Door : Workable, ISaveLoadable, ISim200ms
+public class Door : Workable, ISaveLoadable, ISim200ms, INavDoor
 {
 	public enum DoorType
 	{
@@ -53,7 +53,7 @@ public class Door : Workable, ISaveLoadable, ISim200ms
 				int[] placementCells = base.master.GetComponent<Building>().PlacementCells;
 				foreach (int cell in placementCells)
 				{
-					if (Grid.Objects[cell, 0] != null)
+					if (Grid.Objects[cell, 40] != null)
 					{
 						value = true;
 						break;
@@ -95,7 +95,7 @@ public class Door : Workable, ISaveLoadable, ISim200ms
 
 		public override void InitializeStates(out BaseState default_state)
 		{
-			base.serializable = true;
+			base.serializable = SerializeType.Both_DEPRECATED;
 			default_state = closed;
 			root.Update("RefreshIsBlocked", delegate(Instance smi, float dt)
 			{
@@ -403,7 +403,6 @@ public class Door : Workable, ISaveLoadable, ISim200ms
 		foreach (int num4 in placementCells)
 		{
 			Grid.HasDoor[num4] = true;
-			Grid.HasAccessDoor[num4] = GetComponent<AccessControl>() != null;
 			if (rotatable.IsRotated)
 			{
 				list.Add(Grid.CellAbove(num4));
@@ -452,7 +451,6 @@ public class Door : Workable, ISaveLoadable, ISim200ms
 		foreach (int num2 in placementCells)
 		{
 			Grid.HasDoor[num2] = false;
-			Grid.HasAccessDoor[num2] = false;
 			Game.Instance.SetDupePassableSolid(num2, passable: false, Grid.Solid[num2]);
 			Grid.CritterImpassable[num2] = false;
 			Grid.DupeImpassable[num2] = false;
@@ -708,7 +706,7 @@ public class Door : Workable, ISaveLoadable, ISim200ms
 		ApplyRequestedControlState();
 	}
 
-	public float Open()
+	public void Open()
 	{
 		if (openCount == 0 && DisplacesGas(doorType))
 		{
@@ -737,19 +735,15 @@ public class Door : Workable, ISaveLoadable, ISim200ms
 			}
 		}
 		openCount++;
-		float result = 1f;
-		if (consumer != null)
+		ControlState controlState = this.controlState;
+		if ((uint)controlState > 1u)
 		{
-			result = (consumer.IsPowered ? 1f : 0.5f);
+			_ = 2;
 		}
-		switch (controlState)
+		else
 		{
-		case ControlState.Auto:
-		case ControlState.Opened:
 			controller.sm.isOpen.Set(value: true, controller);
-			break;
 		}
-		return result;
 	}
 
 	public void Close()
@@ -869,5 +863,10 @@ public class Door : Workable, ISaveLoadable, ISim200ms
 				break;
 			}
 		}
+	}
+
+	bool INavDoor.get_isSpawned()
+	{
+		return base.isSpawned;
 	}
 }

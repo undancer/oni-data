@@ -21,7 +21,12 @@ public static class BaseCrabConfig
 		gameObject.AddOrGet<Trappable>();
 		gameObject.AddOrGet<LoopingSounds>();
 		gameObject.AddOrGetDef<CreatureFallMonitor.Def>();
-		gameObject.AddOrGetDef<ThreatMonitor.Def>().fleethresholdState = Health.HealthState.Dead;
+		ThreatMonitor.Def def = gameObject.AddOrGetDef<ThreatMonitor.Def>();
+		def.fleethresholdState = Health.HealthState.Dead;
+		def.friendlyCreatureTags = new Tag[1]
+		{
+			GameTags.Creatures.CrabFriend
+		};
 		gameObject.AddWeapon(2f, 3f);
 		SoundEventVolumeCache.instance.AddVolume("hatch_kanim", "Hatch_voice_idle", NOISE_POLLUTION.CREATURES.TIER2);
 		SoundEventVolumeCache.instance.AddVolume("FloorSoundEvent", "Hatch_footstep", NOISE_POLLUTION.CREATURES.TIER1);

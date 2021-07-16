@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [AddComponentMenu("KMonoBehaviour/scripts/ResourceEntry")]
-public class ResourceEntry : KMonoBehaviour, IPointerEnterHandler, IEventSystemHandler, IPointerExitHandler
+public class ResourceEntry : KMonoBehaviour, IPointerEnterHandler, IEventSystemHandler, IPointerExitHandler, ISim4000ms
 {
 	public Tag Resource;
 
@@ -43,6 +43,8 @@ public class ResourceEntry : KMonoBehaviour, IPointerEnterHandler, IEventSystemH
 	[MyCmpReq]
 	private Button button;
 
+	public GameObject sparkChart;
+
 	private const float CLICK_RESET_TIME_THRESHOLD = 10f;
 
 	private int selectionIdx;
@@ -65,6 +67,7 @@ public class ResourceEntry : KMonoBehaviour, IPointerEnterHandler, IEventSystemH
 	{
 		base.OnSpawn();
 		tooltip.OnToolTip = OnToolTip;
+		RefreshChart();
 	}
 
 	private void OnClick()
@@ -72,7 +75,7 @@ public class ResourceEntry : KMonoBehaviour, IPointerEnterHandler, IEventSystemH
 		lastClickTime = Time.unscaledTime;
 		if (cachedPickupables == null)
 		{
-			cachedPickupables = WorldInventory.Instance.CreatePickupablesList(Resource);
+			cachedPickupables = ClusterManager.Instance.activeWorld.worldInventory.CreatePickupablesList(Resource);
 			StartCoroutine(ClearCachedPickupablesAfterThreshold());
 		}
 		if (cachedPickupables == null)
@@ -125,9 +128,9 @@ public class ResourceEntry : KMonoBehaviour, IPointerEnterHandler, IEventSystemH
 
 	public void GetAmounts(EdiblesManager.FoodInfo food_info, bool doExtras, out float available, out float total, out float reserved)
 	{
-		available = WorldInventory.Instance.GetAmount(Resource);
-		total = (doExtras ? WorldInventory.Instance.GetTotalAmount(Resource) : 0f);
-		reserved = (doExtras ? MaterialNeeds.Instance.GetAmount(Resource) : 0f);
+		available = ClusterManager.Instance.activeWorld.worldInventory.GetAmount(Resource, includeRelatedWorlds: false);
+		total = (doExtras ? ClusterManager.Instance.activeWorld.worldInventory.GetTotalAmount(Resource, includeRelatedWorlds: false) : 0f);
+		reserved = (doExtras ? MaterialNeeds.GetAmount(Resource, ClusterManager.Instance.activeWorldId, includeRelatedWorlds: false) : 0f);
 		if (food_info != null)
 		{
 			available *= food_info.CaloriesPerUnit;
@@ -174,7 +177,14 @@ public class ResourceEntry : KMonoBehaviour, IPointerEnterHandler, IEventSystemH
 	private string OnToolTip()
 	{
 		GetAmounts(doExtras: true, out var available, out var total, out var reserved);
-		return string.Concat(NameLabel.text + "\n", string.Format(UI.RESOURCESCREEN.AVAILABLE_TOOLTIP, ResourceCategoryScreen.QuantityTextForMeasure(available, Measure), ResourceCategoryScreen.QuantityTextForMeasure(reserved, Measure), ResourceCategoryScreen.QuantityTextForMeasure(total, Measure)));
+		string str = NameLabel.text + "\n";
+		str += string.Format(UI.RESOURCESCREEN.AVAILABLE_TOOLTIP, ResourceCategoryScreen.QuantityTextForMeasure(available, Measure), ResourceCategoryScreen.QuantityTextForMeasure(reserved, Measure), ResourceCategoryScreen.QuantityTextForMeasure(total, Measure));
+		float delta = TrackerTool.Instance.GetResourceStatistic(ClusterManager.Instance.activeWorldId, Resource).GetDelta(150f);
+		if (delta != 0f)
+		{
+			return str + "\n\n" + string.Format(UI.RESOURCESCREEN.TREND_TOOLTIP, (delta > 0f) ? UI.RESOURCESCREEN.INCREASING_STR : UI.RESOURCESCREEN.DECREASING_STR, GameUtil.GetFormattedMass(Mathf.Abs(delta)));
+		}
+		return str + "\n\n" + UI.RESOURCESCREEN.TREND_TOOLTIP_NO_CHANGE;
 	}
 
 	public void SetName(string name)
@@ -191,7 +201,7 @@ public class ResourceEntry : KMonoBehaviour, IPointerEnterHandler, IEventSystemH
 
 	private void Hover(bool is_hovering)
 	{
-		if (WorldInventory.Instance == null)
+		if (ClusterManager.Instance.activeWorld.worldInventory == null)
 		{
 			return;
 		}
@@ -203,7 +213,7 @@ public class ResourceEntry : KMonoBehaviour, IPointerEnterHandler, IEventSystemH
 		{
 			Background.color = new Color(0f, 0f, 0f, 0f);
 		}
-		ICollection<Pickupable> pickupables = WorldInventory.Instance.GetPickupables(Resource);
+		ICollection<Pickupable> pickupables = ClusterManager.Instance.activeWorld.worldInventory.GetPickupables(Resource);
 		if (pickupables == null)
 		{
 			return;
@@ -255,5 +265,20 @@ public class ResourceEntry : KMonoBehaviour, IPointerEnterHandler, IEventSystemH
 	public void SetSprite(Sprite sprite)
 	{
 		image.sprite = sprite;
+	}
+
+	public void Sim4000ms(float dt)
+	{
+		RefreshChart();
+	}
+
+	private void RefreshChart()
+	{
+		if (sparkChart != null)
+		{
+			ResourceTracker resourceStatistic = TrackerTool.Instance.GetResourceStatistic(ClusterManager.Instance.activeWorldId, Resource);
+			sparkChart.GetComponentInChildren<LineLayer>().RefreshLine(resourceStatistic.ChartableData(3000f), "resourceAmount");
+			sparkChart.GetComponentInChildren<SparkLayer>().SetColor(Constants.NEUTRAL_COLOR);
+		}
 	}
 }

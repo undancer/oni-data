@@ -10,9 +10,6 @@ public class BuildingComplete : Building
 	private Modifiers modifiers;
 
 	[MyCmpGet]
-	public Assignable assignable;
-
-	[MyCmpGet]
 	public KPrefabID prefabid;
 
 	public bool isManuallyOperated;
@@ -29,6 +26,11 @@ public class BuildingComplete : Building
 	private ObjectLayer replacingTileLayer = ObjectLayer.NumLayers;
 
 	public List<AttributeModifier> regionModifiers = new List<AttributeModifier>();
+
+	private static readonly EventSystem.IntraObjectHandler<BuildingComplete> OnEntombedChange = new EventSystem.IntraObjectHandler<BuildingComplete>(delegate(BuildingComplete component, object data)
+	{
+		component.OnEntombedChanged();
+	});
 
 	private static readonly EventSystem.IntraObjectHandler<BuildingComplete> OnObjectReplacedDelegate = new EventSystem.IntraObjectHandler<BuildingComplete>(delegate(BuildingComplete component, object data)
 	{
@@ -51,6 +53,18 @@ public class BuildingComplete : Building
 		position.z = Grid.GetLayerZ(Def.SceneLayer);
 		base.transform.SetPosition(position);
 		base.gameObject.SetLayerRecursively(LayerMask.NameToLayer("Default"));
+		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
+		Rotatable component2 = GetComponent<Rotatable>();
+		if (component != null && component2 == null)
+		{
+			component.Offset = Def.GetVisualizerOffset();
+		}
+		KBoxCollider2D component3 = GetComponent<KBoxCollider2D>();
+		if (component3 != null)
+		{
+			Vector3 visualizerOffset = Def.GetVisualizerOffset();
+			component3.offset += new Vector2(visualizerOffset.x, visualizerOffset.y);
+		}
 		Attributes attributes = this.GetAttributes();
 		foreach (Klei.AI.Attribute attribute2 in Def.attributes)
 		{
@@ -75,6 +89,28 @@ public class BuildingComplete : Building
 			GameComps.StructureTemperatures.Add(base.gameObject);
 		}
 		Subscribe(1606648047, OnObjectReplacedDelegate);
+		if (Def.Entombable)
+		{
+			Subscribe(-1089732772, OnEntombedChange);
+		}
+	}
+
+	private void OnEntombedChanged()
+	{
+		if (base.gameObject.HasTag(GameTags.Entombed))
+		{
+			Components.EntombedBuildings.Add(this);
+		}
+		else
+		{
+			Components.EntombedBuildings.Remove(this);
+		}
+	}
+
+	public override void UpdatePosition(int cell)
+	{
+		GameScenePartitioner.Instance.UpdatePosition(scenePartitionerEntry, cell);
+		base.UpdatePosition(cell);
 	}
 
 	private void OnObjectReplaced(object data)
@@ -86,30 +122,26 @@ public class BuildingComplete : Building
 	{
 		base.OnSpawn();
 		primaryElement = GetComponent<PrimaryElement>();
-		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
-		Rotatable component2 = GetComponent<Rotatable>();
-		if (component != null && component2 == null)
-		{
-			component.Offset = Def.GetVisualizerOffset() + Def.placementPivot;
-		}
-		KBoxCollider2D component3 = GetComponent<KBoxCollider2D>();
-		if (component3 != null)
-		{
-			Vector3 visualizerOffset = Def.GetVisualizerOffset();
-			component3.offset += new Vector2(visualizerOffset.x, visualizerOffset.y);
-		}
 		int cell = Grid.PosToCell(base.transform.GetPosition());
+		int[] placementCells = base.PlacementCells;
+		for (int i = 0; i < placementCells.Length; i++)
+		{
+			SimMessages.SetCellProperties(placementCells[i], 128);
+		}
 		if (Def.IsFoundation)
 		{
-			int[] placementCells = base.PlacementCells;
+			placementCells = base.PlacementCells;
 			foreach (int num in placementCells)
 			{
 				Grid.Foundation[num] = true;
 				Game.Instance.roomProber.SolidChangedEvent(num, ignoreDoors: false);
 			}
 		}
-		Vector3 position = Grid.CellToPosCBC(cell, Def.SceneLayer);
-		base.transform.SetPosition(position);
+		if (Grid.IsValidCell(cell))
+		{
+			Vector3 position = Grid.CellToPosCBC(cell, Def.SceneLayer);
+			base.transform.SetPosition(position);
+		}
 		if (primaryElement != null)
 		{
 			if (primaryElement.Mass == 0f)
@@ -124,14 +156,17 @@ public class BuildingComplete : Building
 			PrimaryElement obj = primaryElement;
 			obj.setTemperatureCallback = (PrimaryElement.SetTemperatureCallback)Delegate.Combine(obj.setTemperatureCallback, new PrimaryElement.SetTemperatureCallback(OnSetTemperature));
 		}
-		Def.MarkArea(cell, base.Orientation, Def.ObjectLayer, base.gameObject);
-		if (Def.IsTilePiece)
+		if (!base.gameObject.HasTag(GameTags.RocketInSpace))
 		{
-			Def.MarkArea(cell, base.Orientation, Def.TileLayer, base.gameObject);
-			Def.RunOnArea(cell, base.Orientation, delegate(int c)
+			Def.MarkArea(cell, base.Orientation, Def.ObjectLayer, base.gameObject);
+			if (Def.IsTilePiece)
 			{
-				TileVisualizer.RefreshCell(c, Def.TileLayer, Def.ReplacementLayer);
-			});
+				Def.MarkArea(cell, base.Orientation, Def.TileLayer, base.gameObject);
+				Def.RunOnArea(cell, base.Orientation, delegate(int c)
+				{
+					TileVisualizer.RefreshCell(c, Def.TileLayer, Def.ReplacementLayer);
+				});
+			}
 		}
 		RegisterBlockTileRenderer();
 		if (Def.PreventIdleTraversalPastBuilding)
@@ -140,11 +175,6 @@ public class BuildingComplete : Building
 			{
 				Grid.PreventIdleTraversal[base.PlacementCells[j]] = true;
 			}
-		}
-		KSelectable component4 = GetComponent<KSelectable>();
-		if (component4 != null)
-		{
-			component4.SetStatusIndicatorOffset(Def.placementPivot);
 		}
 		Components.BuildingCompletes.Add(this);
 		BuildingConfigManager.Instance.AddBuildingCompleteKComponents(base.gameObject, Def.Tag);
@@ -155,42 +185,41 @@ public class BuildingComplete : Building
 			Components.TemplateBuildings.Add(this);
 		}
 		Attributes attributes = this.GetAttributes();
-		if (attributes == null)
+		if (attributes != null)
 		{
-			return;
-		}
-		Deconstructable component5 = GetComponent<Deconstructable>();
-		if (!(component5 != null))
-		{
-			return;
-		}
-		for (int k = 1; k < component5.constructionElements.Length; k++)
-		{
-			Tag tag = component5.constructionElements[k];
-			Element element = ElementLoader.GetElement(tag);
-			if (element != null)
+			Deconstructable component = GetComponent<Deconstructable>();
+			if (component != null)
 			{
-				foreach (AttributeModifier attributeModifier in element.attributeModifiers)
+				for (int k = 1; k < component.constructionElements.Length; k++)
 				{
-					attributes.Add(attributeModifier);
+					Tag tag = component.constructionElements[k];
+					Element element = ElementLoader.GetElement(tag);
+					if (element != null)
+					{
+						foreach (AttributeModifier attributeModifier in element.attributeModifiers)
+						{
+							attributes.Add(attributeModifier);
+						}
+						continue;
+					}
+					GameObject gameObject = Assets.TryGetPrefab(tag);
+					if (!(gameObject != null))
+					{
+						continue;
+					}
+					PrefabAttributeModifiers component2 = gameObject.GetComponent<PrefabAttributeModifiers>();
+					if (!(component2 != null))
+					{
+						continue;
+					}
+					foreach (AttributeModifier descriptor in component2.descriptors)
+					{
+						attributes.Add(descriptor);
+					}
 				}
-				continue;
-			}
-			GameObject gameObject = Assets.TryGetPrefab(tag);
-			if (!(gameObject != null))
-			{
-				continue;
-			}
-			PrefabAttributeModifiers component6 = gameObject.GetComponent<PrefabAttributeModifiers>();
-			if (!(component6 != null))
-			{
-				continue;
-			}
-			foreach (AttributeModifier descriptor in component6.descriptors)
-			{
-				attributes.Add(descriptor);
 			}
 		}
+		BuildingInventory.Instance.RegisterBuilding(this);
 	}
 
 	private void OnSetTemperature(PrimaryElement primary_element, float temperature)
@@ -224,7 +253,7 @@ public class BuildingComplete : Building
 			GameComps.StructureTemperatures.Remove(base.gameObject);
 		}
 		base.OnCleanUp();
-		if (!WasReplaced())
+		if (!WasReplaced() && base.gameObject.GetMyWorldId() != ClusterManager.INVALID_WORLD_IDX)
 		{
 			int cell = Grid.PosToCell(this);
 			Def.UnmarkArea(cell, base.Orientation, Def.ObjectLayer, base.gameObject);
@@ -263,8 +292,10 @@ public class BuildingComplete : Building
 			});
 		}
 		Components.BuildingCompletes.Remove(this);
+		Components.EntombedBuildings.Remove(this);
 		Components.TemplateBuildings.Remove(this);
 		UnregisterBlockTileRenderer();
+		BuildingInventory.Instance.UnregisterBuilding(this);
 		Trigger(-21016276, this);
 	}
 }

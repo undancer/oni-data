@@ -6,16 +6,22 @@ using UnityEngine;
 [AddComponentMenu("KMonoBehaviour/scripts/LaunchConditionManager")]
 public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 {
+	public enum ConditionType
+	{
+		Launch,
+		Flight
+	}
+
 	public HashedString triggerPort;
 
 	public HashedString statusPort;
 
-	private LaunchableRocket launchable;
+	private ILaunchableRocket launchable;
 
 	[Serialize]
 	private List<Tuple<string, string, string>> DEBUG_ModuleDestructions;
 
-	private Dictionary<RocketFlightCondition, Guid> conditionStatuses = new Dictionary<RocketFlightCondition, Guid>();
+	private Dictionary<ProcessCondition, Guid> conditionStatuses = new Dictionary<ProcessCondition, Guid>();
 
 	public List<RocketModule> rocketModules
 	{
@@ -55,21 +61,12 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		launchable = GetComponent<LaunchableRocket>();
+		launchable = GetComponent<ILaunchableRocket>();
 		FindModules();
 		GetComponent<AttachableBuilding>().onAttachmentNetworkChanged = delegate
 		{
 			FindModules();
 		};
-		Subscribe(-1582839653, OnTagsChanged);
-	}
-
-	private void OnTagsChanged(object data)
-	{
-		foreach (RocketModule rocketModule in rocketModules)
-		{
-			rocketModule.OnConditionManagerTagsChanged(data);
-		}
 	}
 
 	protected override void OnCleanUp()
@@ -82,6 +79,7 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 		Spacecraft spacecraftFromLaunchConditionManager = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(this);
 		if (spacecraftFromLaunchConditionManager != null)
 		{
+			Debug.Assert(!DlcManager.FeatureClusterSpaceEnabled());
 			SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(spacecraftFromLaunchConditionManager.id);
 			if (base.gameObject.GetComponent<LogicPorts>().GetInputValue(triggerPort) == 1 && spacecraftDestination != null && spacecraftDestination.id != -1)
 			{
@@ -92,8 +90,7 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 
 	public void FindModules()
 	{
-		List<GameObject> attachedNetwork = AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>());
-		foreach (GameObject item in attachedNetwork)
+		foreach (GameObject item in AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>()))
 		{
 			RocketModule component = item.GetComponent<RocketModule>();
 			if (component != null && component.conditionManager == null)
@@ -101,11 +98,6 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 				component.conditionManager = this;
 				component.RegisterWithConditionManager();
 			}
-		}
-		Spacecraft spacecraftFromLaunchConditionManager = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(this);
-		if (spacecraftFromLaunchConditionManager != null)
-		{
-			spacecraftFromLaunchConditionManager.moduleCount = attachedNetwork.Count;
 		}
 	}
 
@@ -122,14 +114,18 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 		rocketModules.Remove(module);
 	}
 
-	public List<RocketLaunchCondition> GetLaunchConditionList()
+	public List<ProcessCondition> GetLaunchConditionList()
 	{
-		List<RocketLaunchCondition> list = new List<RocketLaunchCondition>();
+		List<ProcessCondition> list = new List<ProcessCondition>();
 		foreach (RocketModule rocketModule in rocketModules)
 		{
-			foreach (RocketLaunchCondition launchCondition in rocketModule.launchConditions)
+			foreach (ProcessCondition item in rocketModule.GetConditionSet(ProcessCondition.ProcessConditionType.RocketPrep))
 			{
-				list.Add(launchCondition);
+				list.Add(item);
+			}
+			foreach (ProcessCondition item2 in rocketModule.GetConditionSet(ProcessCondition.ProcessConditionType.RocketStorage))
+			{
+				list.Add(item2);
 			}
 		}
 		return list;
@@ -143,7 +139,7 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 		}
 		if (SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(this).state == Spacecraft.MissionState.Grounded && (DebugHandler.InstantBuildMode || (CheckReadyToLaunch() && CheckAbleToFly())))
 		{
-			launchable.Trigger(-1056989049);
+			launchable.LaunchableGameObject.Trigger(705820818);
 			SpacecraftManager.instance.SetSpacecraftDestination(this, destination);
 			SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(this).BeginMission(destination);
 		}
@@ -153,12 +149,23 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 	{
 		foreach (RocketModule rocketModule in rocketModules)
 		{
-			foreach (RocketLaunchCondition launchCondition in rocketModule.launchConditions)
+			foreach (ProcessCondition item in rocketModule.GetConditionSet(ProcessCondition.ProcessConditionType.RocketPrep))
 			{
-				if (launchCondition.EvaluateLaunchCondition() == RocketLaunchCondition.LaunchStatus.Failure)
+				if (item.EvaluateCondition() == ProcessCondition.Status.Failure)
 				{
 					return false;
 				}
+			}
+			foreach (ProcessCondition item2 in rocketModule.GetConditionSet(ProcessCondition.ProcessConditionType.RocketStorage))
+			{
+				if (item2.EvaluateCondition() == ProcessCondition.Status.Failure)
+				{
+					return false;
+				}
+			}
+			if (launchable.registerType == LaunchableRocketRegisterType.Spacecraft)
+			{
+				return CheckAbleToFly();
 			}
 		}
 		return true;
@@ -168,9 +175,9 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 	{
 		foreach (RocketModule rocketModule in rocketModules)
 		{
-			foreach (RocketFlightCondition flightCondition in rocketModule.flightConditions)
+			foreach (ProcessCondition item in rocketModule.GetConditionSet(ProcessCondition.ProcessConditionType.RocketFlight))
 			{
-				if (!flightCondition.EvaluateFlightCondition())
+				if (item.EvaluateCondition() == ProcessCondition.Status.Failure)
 				{
 					return false;
 				}
@@ -182,7 +189,7 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 	private void ClearFlightStatuses()
 	{
 		KSelectable component = GetComponent<KSelectable>();
-		foreach (KeyValuePair<RocketFlightCondition, Guid> conditionStatus in conditionStatuses)
+		foreach (KeyValuePair<ProcessCondition, Guid> conditionStatus in conditionStatuses)
 		{
 			component.RemoveStatusItem(conditionStatus.Value);
 		}
@@ -207,20 +214,20 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 			KSelectable component2 = GetComponent<KSelectable>();
 			foreach (RocketModule rocketModule in rocketModules)
 			{
-				foreach (RocketFlightCondition flightCondition in rocketModule.flightConditions)
+				foreach (ProcessCondition item in rocketModule.GetConditionSet(ProcessCondition.ProcessConditionType.RocketFlight))
 				{
-					if (!flightCondition.EvaluateFlightCondition())
+					if (item.EvaluateCondition() == ProcessCondition.Status.Failure)
 					{
-						if (!conditionStatuses.ContainsKey(flightCondition))
+						if (!conditionStatuses.ContainsKey(item))
 						{
-							StatusItem failureStatusItem = flightCondition.GetFailureStatusItem();
-							conditionStatuses[flightCondition] = component2.AddStatusItem(failureStatusItem, flightCondition);
+							StatusItem statusItem = item.GetStatusItem(ProcessCondition.Status.Failure);
+							conditionStatuses[item] = component2.AddStatusItem(statusItem, item);
 						}
 					}
-					else if (conditionStatuses.ContainsKey(flightCondition))
+					else if (conditionStatuses.ContainsKey(item))
 					{
-						component2.RemoveStatusItem(conditionStatuses[flightCondition]);
-						conditionStatuses.Remove(flightCondition);
+						component2.RemoveStatusItem(conditionStatuses[item]);
+						conditionStatuses.Remove(item);
 					}
 				}
 			}

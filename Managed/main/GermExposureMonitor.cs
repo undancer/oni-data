@@ -420,7 +420,7 @@ public class GermExposureMonitor : GameStateMachine<GermExposureMonitor, GermExp
 				contactStatusItemHandles.TryGetValue(exposureType.germ_id, out var value);
 				statusItemHandles.TryGetValue(exposureType.germ_id, out var value2);
 				ExposureState exposureState = GetExposureState(exposureType.germ_id);
-				if (value2 == Guid.Empty && (exposureState == ExposureState.Exposed || exposureState == ExposureState.Contracted))
+				if (value2 == Guid.Empty && (exposureState == ExposureState.Exposed || exposureState == ExposureState.Contracted) && !string.IsNullOrEmpty(exposureType.sickness_id))
 				{
 					value2 = GetComponent<KSelectable>().AddStatusItem(Db.Get().DuplicantStatusItems.ExposedToGerms, new ExposureStatusData
 					{
@@ -435,11 +435,14 @@ public class GermExposureMonitor : GameStateMachine<GermExposureMonitor, GermExp
 				statusItemHandles[exposureType.germ_id] = value2;
 				if (value == Guid.Empty && exposureState == ExposureState.Contact)
 				{
-					value = GetComponent<KSelectable>().AddStatusItem(Db.Get().DuplicantStatusItems.ContactWithGerms, new ExposureStatusData
+					if (!string.IsNullOrEmpty(exposureType.sickness_id))
 					{
-						exposure_type = exposureType,
-						owner = this
-					});
+						value = GetComponent<KSelectable>().AddStatusItem(Db.Get().DuplicantStatusItems.ContactWithGerms, new ExposureStatusData
+						{
+							exposure_type = exposureType,
+							owner = this
+						});
+					}
 				}
 				else if (value != Guid.Empty && exposureState != ExposureState.Contact)
 				{
@@ -478,7 +481,7 @@ public class GermExposureMonitor : GameStateMachine<GermExposureMonitor, GermExp
 			ExposureType[] tYPES = GERM_EXPOSURE.TYPES;
 			foreach (ExposureType exposureType in tYPES)
 			{
-				if (!exposureType.infect_immediately)
+				if (!exposureType.infect_immediately && exposureType.sickness_id != null)
 				{
 					ExposureState exposureState = GetExposureState(exposureType.germ_id);
 					if (exposureState == ExposureState.Exposed)
@@ -535,7 +538,7 @@ public class GermExposureMonitor : GameStateMachine<GermExposureMonitor, GermExp
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = root;
-		base.serializable = false;
+		base.serializable = SerializeType.Never;
 		root.Update(delegate(Instance smi, float dt)
 		{
 			smi.OnInhaleExposureTick(dt);

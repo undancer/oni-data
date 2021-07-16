@@ -68,7 +68,7 @@ public class OxygenBreather : KMonoBehaviour, ISim200ms
 
 	private IGasProvider gasProvider;
 
-	private static readonly EventSystem.IntraObjectHandler<OxygenBreather> OnDeadTagChangedDelegate = GameUtil.CreateHasTagHandler(GameTags.Dead, delegate(OxygenBreather component, object data)
+	private static readonly EventSystem.IntraObjectHandler<OxygenBreather> OnDeadTagAddedDelegate = GameUtil.CreateHasTagHandler(GameTags.Dead, delegate(OxygenBreather component, object data)
 	{
 		component.OnDeath(data);
 	});
@@ -96,7 +96,7 @@ public class OxygenBreather : KMonoBehaviour, ISim200ms
 
 	protected override void OnPrefabInit()
 	{
-		GameUtil.SubscribeToTags(this, OnDeadTagChangedDelegate);
+		GameUtil.SubscribeToTags(this, OnDeadTagAddedDelegate, triggerImmediately: true);
 	}
 
 	public bool IsLowOxygen()

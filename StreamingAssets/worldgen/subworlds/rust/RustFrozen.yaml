@@ -14,7 +14,4 @@ biomes:
       - ColdBreatherSparse
 tags:
   - IgnoreCaveOverride
-pointsOfInterest:
-featureTemplates:
-  # feature_geyser_generic: 2
 zoneType: Rust

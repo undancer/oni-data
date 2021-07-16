@@ -1,5 +1,6 @@
 using FMODUnity;
 using Klei.AI;
+using ProcGenGame;
 using UnityEngine;
 
 public class NewBaseScreen : KScreen
@@ -15,7 +16,9 @@ public class NewBaseScreen : KScreen
 	[EventRef]
 	public string BuildBaseSoundMigrated;
 
-	private ITelepadDeliverable[] minionStartingStats;
+	private ITelepadDeliverable[] m_minionStartingStats;
+
+	private Cluster m_clusterLayout;
 
 	public override float GetSortKey()
 	{
@@ -62,9 +65,10 @@ public class NewBaseScreen : KScreen
 		Final();
 	}
 
-	public void SetStartingMinionStats(ITelepadDeliverable[] stats)
+	public void Init(Cluster clusterLayout, ITelepadDeliverable[] startingMinionStats)
 	{
-		minionStartingStats = stats;
+		m_clusterLayout = clusterLayout;
+		m_minionStartingStats = startingMinionStats;
 	}
 
 	protected override void OnDeactivate()
@@ -125,10 +129,10 @@ public class NewBaseScreen : KScreen
 		{
 			return;
 		}
-		int baseLeft = SaveGame.Instance.worldGen.BaseLeft;
-		int baseRight = SaveGame.Instance.worldGen.BaseRight;
+		int baseLeft = m_clusterLayout.currentWorld.BaseLeft;
+		int baseRight = m_clusterLayout.currentWorld.BaseRight;
 		Effect a_new_hope = Db.Get().effects.Get("AnewHope");
-		for (int i = 0; i < minionStartingStats.Length; i++)
+		for (int i = 0; i < m_minionStartingStats.Length; i++)
 		{
 			int x2 = x + i % (baseRight - baseLeft) + 1;
 			int y2 = y;
@@ -137,7 +141,7 @@ public class NewBaseScreen : KScreen
 			Immigration.Instance.ApplyDefaultPersonalPriorities(gameObject);
 			gameObject.transform.SetLocalPosition(Grid.CellToPosCBC(cell, Grid.SceneLayer.Move));
 			gameObject.SetActive(value: true);
-			((MinionStartingStats)minionStartingStats[i]).Apply(gameObject);
+			((MinionStartingStats)m_minionStartingStats[i]).Apply(gameObject);
 			GameScheduler.Instance.Schedule("ANewHope", 3f + 0.5f * (float)i, delegate(object m)
 			{
 				GameObject gameObject2 = m as GameObject;
@@ -147,5 +151,6 @@ public class NewBaseScreen : KScreen
 				}
 			}, gameObject);
 		}
+		ClusterManager.Instance.activeWorld.SetDupeVisited();
 	}
 }

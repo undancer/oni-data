@@ -1,0 +1,24 @@
+id: "InSpace"
+title: STRINGS.CODEX.B7_INSPACE.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_inspace
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B7_INSPACE.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B7_INSPACE.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_inspace
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B7_INSPACE.BODY.CONTAINER1
+          style: Body
+#-----------------------------

@@ -5,8 +5,6 @@ public class AdvancedDoctorStationConfig : IBuildingConfig
 {
 	public const string ID = "AdvancedDoctorStation";
 
-	private static Tag SUPPLY_TAG = "AdvancedCure";
-
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef("AdvancedDoctorStation", 2, 3, "bed_medical_kanim", 100, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
@@ -28,9 +26,10 @@ public class AdvancedDoctorStationConfig : IBuildingConfig
 	{
 		Storage storage = go.AddOrGet<Storage>();
 		storage.showInUI = true;
+		Tag supplyTagForStation = MedicineInfo.GetSupplyTagForStation("AdvancedDoctorStation");
 		ManualDeliveryKG manualDeliveryKG = go.AddOrGet<ManualDeliveryKG>();
 		manualDeliveryKG.SetStorage(storage);
-		manualDeliveryKG.requestedItemTag = SUPPLY_TAG;
+		manualDeliveryKG.requestedItemTag = supplyTagForStation;
 		manualDeliveryKG.capacity = 10f;
 		manualDeliveryKG.refillMass = 5f;
 		manualDeliveryKG.minimumMass = 1f;
@@ -42,7 +41,6 @@ public class AdvancedDoctorStationConfig : IBuildingConfig
 			Assets.GetAnim("anim_interacts_medical_bed_kanim")
 		};
 		doctorStation.workLayer = Grid.SceneLayer.BuildingFront;
-		doctorStation.supplyTag = SUPPLY_TAG;
 		RoomTracker roomTracker = go.AddOrGet<RoomTracker>();
 		roomTracker.requiredRoomType = Db.Get().RoomTypes.Hospital.Id;
 		roomTracker.requirement = RoomTracker.Requirement.CustomRecommended;

@@ -1,0 +1,14 @@
+name: STRINGS.CLUSTER_NAMES.DEFAULT.NAME
+description: STRINGS.CLUSTER_NAMES.DEFAULT.DESCRIPTION
+coordinatePrefix: LUSH-A
+forbiddenDlcId: EXPANSION1_ID
+
+difficulty: 2
+menuOrder: 4
+
+startWorldIndex: 0
+worldPlacements:
+- world: worlds/ForestLush
+  allowedRings:
+    min: 0
+    max: 0

@@ -113,7 +113,7 @@ public class BeachChair : StateMachineComponent<BeachChair.StatesInstance>, IGam
 				.PlayAnim("working_lit_pre");
 			ready.working_lit.working.ParamTransition(lit, ready.working_lit.post, GameStateMachine<States, StatesInstance, BeachChair, object>.IsFalse).Target(worker).QueueAnim("working_lit_loop", loop: true)
 				.ScheduleGoTo((StatesInstance smi) => Random.Range(5f, 15f), ready.working_lit.silly);
-			ready.working_lit.silly.ParamTransition(lit, ready.working_lit.post, GameStateMachine<States, StatesInstance, BeachChair, object>.IsFalse).Target(worker).PlayAnim((StatesInstance smi) => SILLY_ANIMS[Random.Range(0, SILLY_ANIMS.Length)], KAnim.PlayMode.Once)
+			ready.working_lit.silly.ParamTransition(lit, ready.working_lit.post, GameStateMachine<States, StatesInstance, BeachChair, object>.IsFalse).Target(worker).PlayAnim((StatesInstance smi) => SILLY_ANIMS[Random.Range(0, SILLY_ANIMS.Length)])
 				.OnAnimQueueComplete(ready.working_lit.working);
 			ready.working_lit.post.Target(worker).PlayAnim("working_lit_pst").EventHandler(GameHashes.AnimQueueComplete, delegate(StatesInstance smi)
 			{
@@ -175,7 +175,7 @@ public class BeachChair : StateMachineComponent<BeachChair.StatesInstance>, IGam
 		LocString locString2 = (high_lux ? BUILDINGS.PREFABS.BEACHCHAIR.LIGHTEFFECT_HIGH_TOOLTIP : BUILDINGS.PREFABS.BEACHCHAIR.LIGHTEFFECT_LOW_TOOLTIP);
 		foreach (AttributeModifier selfModifier in effect.SelfModifiers)
 		{
-			Descriptor item = new Descriptor(locString.Replace("{attrib}", Strings.Get("STRINGS.DUPLICANTS.ATTRIBUTES." + selfModifier.AttributeId.ToUpper() + ".NAME")).Replace("{amount}", selfModifier.GetFormattedString(null)).Replace("{lux}", GameUtil.GetFormattedLux(10000)), locString2.Replace("{attrib}", Strings.Get("STRINGS.DUPLICANTS.ATTRIBUTES." + selfModifier.AttributeId.ToUpper() + ".NAME")).Replace("{amount}", selfModifier.GetFormattedString(null)).Replace("{lux}", GameUtil.GetFormattedLux(10000)));
+			Descriptor item = new Descriptor(locString.Replace("{attrib}", Strings.Get("STRINGS.DUPLICANTS.ATTRIBUTES." + selfModifier.AttributeId.ToUpper() + ".NAME")).Replace("{amount}", selfModifier.GetFormattedString()).Replace("{lux}", GameUtil.GetFormattedLux(10000)), locString2.Replace("{attrib}", Strings.Get("STRINGS.DUPLICANTS.ATTRIBUTES." + selfModifier.AttributeId.ToUpper() + ".NAME")).Replace("{amount}", selfModifier.GetFormattedString()).Replace("{lux}", GameUtil.GetFormattedLux(10000)));
 			item.IncreaseIndent();
 			descs.Add(item);
 		}
