@@ -18,8 +18,7 @@ public class BundledAssetsLoader : KMonoBehaviour
 		if (DlcManager.IsExpansion1Active())
 		{
 			Debug.Log("Loading Expansion1 assets from bundle");
-			string path = Path.Combine(Application.streamingAssetsPath, DlcManager.GetContentBundleName("EXPANSION1_ID"));
-			AssetBundle assetBundle = AssetBundle.LoadFromFile(path);
+			AssetBundle assetBundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, DlcManager.GetContentBundleName("EXPANSION1_ID")));
 			Debug.Assert(assetBundle != null, "Expansion1 is Active but its asset bundle failed to load");
 			GameObject gameObject = assetBundle.LoadAsset<GameObject>("Expansion1Assets");
 			Debug.Assert(gameObject != null, "Could not load the Expansion1Assets prefab");

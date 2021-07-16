@@ -26,8 +26,7 @@ public class IntermediateRadPillConfig : IEntityConfig
 		{
 			new ComplexRecipe.RecipeElement("IntermediateRadPill".ToTag(), 1f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
-		string id = ComplexRecipeManager.MakeRecipeID("AdvancedApothecary", array, array2);
-		recipe = new ComplexRecipe(id, array, array2)
+		recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("AdvancedApothecary", array, array2), array, array2)
 		{
 			time = 50f,
 			description = ITEMS.PILLS.INTERMEDIATERADPILL.RECIPEDESC,

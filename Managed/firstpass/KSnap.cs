@@ -86,8 +86,7 @@ public class KSnap : MonoBehaviour
 		{
 			return;
 		}
-		RectTransform rectTransform = base.transform.rectTransform();
-		rectTransform.GetWorldCorners(corners);
+		base.transform.rectTransform().GetWorldCorners(corners);
 		Vector3 zero = Vector3.zero;
 		Vector3[] array = corners;
 		for (int i = 0; i < array.Length; i++)

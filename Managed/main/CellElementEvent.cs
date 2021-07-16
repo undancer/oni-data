@@ -19,8 +19,7 @@ public class CellElementEvent : CellEvent
 
 	public override string GetDescription(EventInstanceBase ev)
 	{
-		CellEventInstance cellEventInstance = ev as CellEventInstance;
-		SimHashes data = (SimHashes)cellEventInstance.data;
+		SimHashes data = (SimHashes)(ev as CellEventInstance).data;
 		return GetMessagePrefix() + "Element=" + data.ToString() + " (" + reason + ")";
 	}
 }

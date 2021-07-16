@@ -212,8 +212,7 @@ public class SpaceDestination
 		if (Random.value < 0.33f)
 		{
 			int index = Random.Range(0, researchOpportunities.Count);
-			ResearchOpportunity researchOpportunity = researchOpportunities[index];
-			researchOpportunity.discoveredRareItem = RARE_ITEMS[Random.Range(0, RARE_ITEMS.Count)].first;
+			researchOpportunities[index].discoveredRareItem = RARE_ITEMS[Random.Range(0, RARE_ITEMS.Count)].first;
 		}
 	}
 
@@ -263,6 +262,7 @@ public class SpaceDestination
 			{
 				dictionary.Add(item.Key, item.Value);
 			}
+			return dictionary;
 		}
 		return dictionary;
 	}
@@ -280,6 +280,7 @@ public class SpaceDestination
 		}
 		foreach (KeyValuePair<SimHashes, float> recoverableElement in recoverableElements)
 		{
+			_ = recoverableElement;
 			if (HasElementType(bay.storageType))
 			{
 				Storage component = bay.GetComponent<Storage>();

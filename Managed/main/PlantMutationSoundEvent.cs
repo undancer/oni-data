@@ -9,8 +9,7 @@ public class PlantMutationSoundEvent : SoundEvent
 
 	public override void OnPlay(AnimEventManager.EventPlayerData behaviour)
 	{
-		GameObject gameObject = behaviour.controller.gameObject;
-		MutantPlant component = gameObject.GetComponent<MutantPlant>();
+		MutantPlant component = behaviour.controller.gameObject.GetComponent<MutantPlant>();
 		Vector3 position = behaviour.GetComponent<Transform>().GetPosition();
 		if (component != null)
 		{

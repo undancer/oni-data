@@ -15,8 +15,7 @@ public class MushroomWrapConfig : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject template = EntityTemplates.CreateLooseEntity("MushroomWrap", ITEMS.FOOD.MUSHROOMWRAP.NAME, ITEMS.FOOD.MUSHROOMWRAP.DESC, 1f, unitMass: false, Assets.GetAnim("mushroom_wrap_kanim"), "object", Grid.SceneLayer.Front, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.5f, isPickupable: true);
-		return EntityTemplates.ExtendEntityToFood(template, FOOD.FOOD_TYPES.MUSHROOM_WRAP);
+		return EntityTemplates.ExtendEntityToFood(EntityTemplates.CreateLooseEntity("MushroomWrap", ITEMS.FOOD.MUSHROOMWRAP.NAME, ITEMS.FOOD.MUSHROOMWRAP.DESC, 1f, unitMass: false, Assets.GetAnim("mushroom_wrap_kanim"), "object", Grid.SceneLayer.Front, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.5f, isPickupable: true), FOOD.FOOD_TYPES.MUSHROOM_WRAP);
 	}
 
 	public void OnPrefabInit(GameObject inst)

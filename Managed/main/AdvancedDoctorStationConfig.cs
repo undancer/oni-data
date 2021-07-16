@@ -7,13 +7,13 @@ public class AdvancedDoctorStationConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("AdvancedDoctorStation", 2, 3, "bed_medical_kanim", 100, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 480f;
-		buildingDef.ExhaustKilowattsWhenActive = 0.25f;
-		buildingDef.SelfHeatKilowattsWhenActive = 0.5f;
-		buildingDef.AudioCategory = "Metal";
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("AdvancedDoctorStation", 2, 3, "bed_medical_kanim", 100, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 480f;
+		obj.ExhaustKilowattsWhenActive = 0.25f;
+		obj.SelfHeatKilowattsWhenActive = 0.5f;
+		obj.AudioCategory = "Metal";
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

@@ -19,22 +19,20 @@ namespace Database
 		public override bool Success()
 		{
 			List<string> list = new List<string>();
-			List<ComplexRecipe> recipes = ComplexRecipeManager.Get().recipes;
-			foreach (ComplexRecipe item in recipes)
+			foreach (ComplexRecipe recipe in ComplexRecipeManager.Get().recipes)
 			{
 				foreach (Tag foodProducer in foodProducers)
 				{
-					foreach (Tag fabricator in item.fabricators)
+					foreach (Tag fabricator in recipe.fabricators)
 					{
 						if (fabricator == foodProducer)
 						{
-							list.Add(item.FirstResult.ToString());
+							list.Add(recipe.FirstResult.ToString());
 						}
 					}
 				}
 			}
-			float caloiresConsumedByFood = RationTracker.Get().GetCaloiresConsumedByFood(list.Distinct().ToList());
-			return caloiresConsumedByFood / 1000f > (float)numCalories;
+			return RationTracker.Get().GetCaloiresConsumedByFood(list.Distinct().ToList()) / 1000f > (float)numCalories;
 		}
 
 		public void Deserialize(IReader reader)

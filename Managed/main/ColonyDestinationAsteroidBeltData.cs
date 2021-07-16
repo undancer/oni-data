@@ -58,9 +58,29 @@ public class ColonyDestinationAsteroidBeltData
 
 	public string startWorldName => Strings.Get(startWorld.name);
 
-	public string properName => (cluster != null) ? cluster.name : "";
+	public string properName
+	{
+		get
+		{
+			if (cluster == null)
+			{
+				return "";
+			}
+			return cluster.name;
+		}
+	}
 
-	public string beltPath => (cluster != null) ? cluster.filePath : WorldGenSettings.ClusterDefaultName;
+	public string beltPath
+	{
+		get
+		{
+			if (cluster == null)
+			{
+				return WorldGenSettings.ClusterDefaultName;
+			}
+			return cluster.filePath;
+		}
+	}
 
 	public List<ProcGen.World> worlds
 	{
@@ -90,7 +110,7 @@ public class ColonyDestinationAsteroidBeltData
 		ReInitialize(seed);
 	}
 
-	private Sprite GetUISprite(string filename)
+	public static Sprite GetUISprite(string filename)
 	{
 		if (filename.IsNullOrWhiteSpace())
 		{
@@ -160,15 +180,12 @@ public class ColonyDestinationAsteroidBeltData
 		if (startWorld.disableWorldTraits)
 		{
 			list.Add(new AsteroidDescriptor(WORLD_TRAITS.NO_TRAITS.NAME, WORLD_TRAITS.NO_TRAITS.DESCRIPTION));
+			return list;
 		}
-		else
+		foreach (string randomTrait in SettingsCache.GetRandomTraits(seed))
 		{
-			List<string> randomTraits = SettingsCache.GetRandomTraits(seed);
-			foreach (string item in randomTraits)
-			{
-				WorldTrait cachedTrait = SettingsCache.GetCachedTrait(item, assertMissingTrait: true);
-				list.Add(new AsteroidDescriptor(string.Format("<color=#{1}>{0}</color>", Strings.Get(cachedTrait.name), cachedTrait.colorHex), Strings.Get(cachedTrait.description)));
-			}
+			WorldTrait cachedTrait = SettingsCache.GetCachedTrait(randomTrait, assertMissingTrait: true);
+			list.Add(new AsteroidDescriptor(string.Format("<color=#{1}>{0}</color>", Strings.Get(cachedTrait.name), cachedTrait.colorHex), Strings.Get(cachedTrait.description)));
 		}
 		return list;
 	}

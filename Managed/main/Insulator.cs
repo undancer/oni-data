@@ -12,15 +12,11 @@ public class Insulator : KMonoBehaviour
 
 	protected override void OnSpawn()
 	{
-		int cell = Grid.PosToCell(base.transform.GetPosition());
-		cell = Grid.OffsetCell(cell, offset);
-		SimMessages.SetInsulation(cell, building.Def.ThermalConductivity);
+		SimMessages.SetInsulation(Grid.OffsetCell(Grid.PosToCell(base.transform.GetPosition()), offset), building.Def.ThermalConductivity);
 	}
 
 	protected override void OnCleanUp()
 	{
-		int cell = Grid.PosToCell(base.transform.GetPosition());
-		cell = Grid.OffsetCell(cell, offset);
-		SimMessages.SetInsulation(cell, 1f);
+		SimMessages.SetInsulation(Grid.OffsetCell(Grid.PosToCell(base.transform.GetPosition()), offset), 1f);
 	}
 }

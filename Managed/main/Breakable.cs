@@ -11,7 +11,7 @@ public class Breakable : Workable
 
 	private float secondsPerTenPercentDamage = float.PositiveInfinity;
 
-	private float elapsedDamageTime = 0f;
+	private float elapsedDamageTime;
 
 	private int tenPercentDamage = int.MaxValue;
 

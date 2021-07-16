@@ -12,20 +12,20 @@ public class HabitatModuleMediumConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("HabitatModuleMedium", 5, 4, "rocket_habitat_medium_module_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.DENSE_TIER1, MATERIALS.RAW_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
-		buildingDef.AttachmentSlotTag = GameTags.Rocket;
-		buildingDef.SceneLayer = Grid.SceneLayer.Building;
-		buildingDef.OverheatTemperature = 2273.15f;
-		buildingDef.Floodable = false;
-		buildingDef.ObjectLayer = ObjectLayer.Building;
-		buildingDef.ForegroundLayer = Grid.SceneLayer.Front;
-		buildingDef.RequiresPowerInput = false;
-		buildingDef.attachablePosition = new CellOffset(0, 0);
-		buildingDef.CanMove = true;
-		buildingDef.Cancellable = false;
-		buildingDef.ShowInBuildMenu = false;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("HabitatModuleMedium", 5, 4, "rocket_habitat_medium_module_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.DENSE_TIER1, MATERIALS.RAW_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		BuildingTemplates.CreateRocketBuildingDef(obj);
+		obj.AttachmentSlotTag = GameTags.Rocket;
+		obj.SceneLayer = Grid.SceneLayer.Building;
+		obj.OverheatTemperature = 2273.15f;
+		obj.Floodable = false;
+		obj.ObjectLayer = ObjectLayer.Building;
+		obj.ForegroundLayer = Grid.SceneLayer.Front;
+		obj.RequiresPowerInput = false;
+		obj.attachablePosition = new CellOffset(0, 0);
+		obj.CanMove = true;
+		obj.Cancellable = false;
+		obj.ShowInBuildMenu = false;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -34,21 +34,17 @@ public class HabitatModuleMediumConfig : IBuildingConfig
 		go.AddOrGet<LoopingSounds>();
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
 		go.GetComponent<KPrefabID>().AddTag(GameTags.LaunchButtonRocketModule);
-		AssignmentGroupController assignmentGroupController = go.AddOrGet<AssignmentGroupController>();
-		assignmentGroupController.generateGroupOnStart = true;
+		go.AddOrGet<AssignmentGroupController>().generateGroupOnStart = true;
 		go.AddOrGet<PassengerRocketModule>();
-		ClustercraftExteriorDoor clustercraftExteriorDoor = go.AddOrGet<ClustercraftExteriorDoor>();
-		clustercraftExteriorDoor.interiorTemplateName = "expansion1::interiors/habitat_medium";
+		go.AddOrGet<ClustercraftExteriorDoor>().interiorTemplateName = "expansion1::interiors/habitat_medium";
 		go.AddOrGetDef<SimpleDoorController.Def>();
 		go.AddOrGet<NavTeleporter>();
 		go.AddOrGet<AccessControl>();
 		go.AddOrGet<LaunchableRocketCluster>();
 		go.AddOrGet<RocketCommandConditions>();
 		go.AddOrGet<RocketProcessConditionDisplayTarget>();
-		CharacterOverlay characterOverlay = go.AddOrGet<CharacterOverlay>();
-		characterOverlay.shouldShowName = true;
-		BuildingAttachPoint buildingAttachPoint = go.AddOrGet<BuildingAttachPoint>();
-		buildingAttachPoint.points = new BuildingAttachPoint.HardPoint[1]
+		go.AddOrGet<CharacterOverlay>().shouldShowName = true;
+		go.AddOrGet<BuildingAttachPoint>().points = new BuildingAttachPoint.HardPoint[1]
 		{
 			new BuildingAttachPoint.HardPoint(new CellOffset(0, 4), GameTags.Rocket, null)
 		};

@@ -19,8 +19,7 @@ public class BreathabilityTracker : WorldTracker
 		foreach (MinionIdentity worldItem in Components.LiveMinionIdentities.GetWorldItems(base.WorldID))
 		{
 			OxygenBreather component = worldItem.GetComponent<OxygenBreather>();
-			OxygenBreather.IGasProvider gasProvider = component.GetGasProvider();
-			if (gasProvider is GasBreatherFromWorldProvider)
+			if (component.GetGasProvider() is GasBreatherFromWorldProvider)
 			{
 				if (component.IsBreathableElement)
 				{

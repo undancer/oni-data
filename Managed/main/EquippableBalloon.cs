@@ -6,7 +6,7 @@ public class EquippableBalloon : StateMachineComponent<EquippableBalloon.StatesI
 	public class StatesInstance : GameStateMachine<States, StatesInstance, EquippableBalloon, object>.GameInstance
 	{
 		[Serialize]
-		public float transitionTime = 0f;
+		public float transitionTime;
 
 		public StatesInstance(EquippableBalloon master)
 			: base(master)

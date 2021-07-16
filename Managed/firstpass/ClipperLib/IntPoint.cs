@@ -26,12 +26,20 @@ namespace ClipperLib
 
 		public static bool operator ==(IntPoint a, IntPoint b)
 		{
-			return a.X == b.X && a.Y == b.Y;
+			if (a.X == b.X)
+			{
+				return a.Y == b.Y;
+			}
+			return false;
 		}
 
 		public static bool operator !=(IntPoint a, IntPoint b)
 		{
-			return a.X != b.X || a.Y != b.Y;
+			if (a.X == b.X)
+			{
+				return a.Y != b.Y;
+			}
+			return true;
 		}
 
 		public override bool Equals(object obj)
@@ -43,7 +51,11 @@ namespace ClipperLib
 			if (obj is IntPoint)
 			{
 				IntPoint intPoint = (IntPoint)obj;
-				return X == intPoint.X && Y == intPoint.Y;
+				if (X == intPoint.X)
+				{
+					return Y == intPoint.Y;
+				}
+				return false;
 			}
 			return false;
 		}

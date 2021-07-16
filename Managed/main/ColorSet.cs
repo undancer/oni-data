@@ -169,7 +169,6 @@ public class ColorSet : ScriptableObject
 
 	public bool IsDefaultColorSet()
 	{
-		int num = Array.IndexOf(GlobalAssets.Instance.colorSetOptions, this);
-		return num == 0;
+		return Array.IndexOf(GlobalAssets.Instance.colorSetOptions, this) == 0;
 	}
 }

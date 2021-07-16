@@ -99,14 +99,18 @@ public class FleeChore : Chore<FleeChore.StatesInstance>
 
 	private bool isInFavoredDirection(int cell, int fleeFromCell)
 	{
-		bool flag = ((Grid.CellToPos(fleeFromCell).x < gameObject.transform.GetPosition().x) ? true : false);
-		bool flag2 = ((Grid.CellToPos(fleeFromCell).x < Grid.CellToPos(cell).x) ? true : false);
-		return flag == flag2;
+		int num = ((Grid.CellToPos(fleeFromCell).x < gameObject.transform.GetPosition().x) ? 1 : 0);
+		bool flag = ((Grid.CellToPos(fleeFromCell).x < Grid.CellToPos(cell).x) ? true : false);
+		return num == (flag ? 1 : 0);
 	}
 
 	private bool CanFleeTo(int cell)
 	{
-		return nav.CanReach(cell) || nav.CanReach(Grid.OffsetCell(cell, -1, -1)) || nav.CanReach(Grid.OffsetCell(cell, 1, -1)) || nav.CanReach(Grid.OffsetCell(cell, -1, 1)) || nav.CanReach(Grid.OffsetCell(cell, 1, 1));
+		if (!nav.CanReach(cell) && !nav.CanReach(Grid.OffsetCell(cell, -1, -1)) && !nav.CanReach(Grid.OffsetCell(cell, 1, -1)) && !nav.CanReach(Grid.OffsetCell(cell, -1, 1)))
+		{
+			return nav.CanReach(Grid.OffsetCell(cell, 1, 1));
+		}
+		return true;
 	}
 
 	public GameObject CreateLocator(Vector3 pos)

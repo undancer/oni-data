@@ -7,10 +7,10 @@ public class BedConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(ID, 2, 2, "bedlg_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.Overheatable = false;
-		buildingDef.AudioCategory = "Metal";
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef(ID, 2, 2, "bedlg_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
+		obj.Overheatable = false;
+		obj.AudioCategory = "Metal";
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -35,7 +35,6 @@ public class BedConfig : IBuildingConfig
 			Assets.GetAnim("anim_sleep_bed_kanim")
 		};
 		sleepable.workLayer = Grid.SceneLayer.BuildingFront;
-		Ownable ownable = go.AddOrGet<Ownable>();
-		ownable.slotID = Db.Get().AssignableSlots.Bed.Id;
+		go.AddOrGet<Ownable>().slotID = Db.Get().AssignableSlots.Bed.Id;
 	}
 }

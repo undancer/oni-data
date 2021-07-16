@@ -25,9 +25,7 @@ public class Schedule : ISaveLoadable, IListableOption
 
 	public static int GetBlockIdx()
 	{
-		float currentCycleAsPercentage = GameClock.Instance.GetCurrentCycleAsPercentage();
-		int val = (int)(currentCycleAsPercentage * 24f);
-		return Math.Min(val, 23);
+		return Math.Min((int)(GameClock.Instance.GetCurrentCycleAsPercentage() * 24f), 23);
 	}
 
 	public static int GetLastBlockIdx()

@@ -8,7 +8,7 @@ public class MonumentBottomConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("MonumentBottom", 5, 5, "victory_monument_base_kanim", 1000, 60f, new float[2]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("MonumentBottom", 5, 5, "victory_monument_base_kanim", 1000, 60f, new float[2]
 		{
 			7500f,
 			2500f
@@ -17,30 +17,28 @@ public class MonumentBottomConfig : IBuildingConfig
 			SimHashes.Steel.ToString(),
 			SimHashes.Obsidian.ToString()
 		}, 9999f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.BONUS.MONUMENT.INCOMPLETE);
-		BuildingTemplates.CreateMonumentBuildingDef(buildingDef);
-		buildingDef.SceneLayer = Grid.SceneLayer.BuildingFront;
-		buildingDef.OverheatTemperature = 2273.15f;
-		buildingDef.Floodable = false;
-		buildingDef.AttachmentSlotTag = "MonumentBottom";
-		buildingDef.ObjectLayer = ObjectLayer.Building;
-		buildingDef.PermittedRotations = PermittedRotations.FlipH;
-		buildingDef.attachablePosition = new CellOffset(0, 0);
-		buildingDef.RequiresPowerInput = false;
-		buildingDef.CanMove = false;
-		return buildingDef;
+		BuildingTemplates.CreateMonumentBuildingDef(obj);
+		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
+		obj.OverheatTemperature = 2273.15f;
+		obj.Floodable = false;
+		obj.AttachmentSlotTag = "MonumentBottom";
+		obj.ObjectLayer = ObjectLayer.Building;
+		obj.PermittedRotations = PermittedRotations.FlipH;
+		obj.attachablePosition = new CellOffset(0, 0);
+		obj.RequiresPowerInput = false;
+		obj.CanMove = false;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		go.AddOrGet<LoopingSounds>();
-		BuildingAttachPoint buildingAttachPoint = go.AddOrGet<BuildingAttachPoint>();
-		buildingAttachPoint.points = new BuildingAttachPoint.HardPoint[1]
+		go.AddOrGet<BuildingAttachPoint>().points = new BuildingAttachPoint.HardPoint[1]
 		{
 			new BuildingAttachPoint.HardPoint(new CellOffset(0, 5), "MonumentMiddle", null)
 		};
-		MonumentPart monumentPart = go.AddOrGet<MonumentPart>();
-		monumentPart.part = MonumentPart.Part.Bottom;
+		go.AddOrGet<MonumentPart>().part = MonumentPart.Part.Bottom;
 	}
 
 	public override void DoPostConfigurePreview(BuildingDef def, GameObject go)
@@ -71,6 +69,18 @@ public class MonumentBottomConfig : IBuildingConfig
 			monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_i", "sit_on_tools"));
 			monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_j", "water_pacu"));
 			monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_k", "sit_on_eggs"));
+			if (DlcManager.IsExpansion1Active())
+			{
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_l", "rocketnosecone"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_m", "rocketsugarengine"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_n", "rocketnCO2"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_o", "rocketpetro"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_p", "rocketnoseconesmall"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_q", "rocketradengine"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_r", "sweepyoff"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_s", "sweepypeek"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_t", "sweepy"));
+			}
 		};
 	}
 }

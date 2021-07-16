@@ -15,7 +15,15 @@ namespace Database
 		{
 			int num = (int)fractionalCycleNumber;
 			float num2 = fractionalCycleNumber - (float)num;
-			return (float)(GameClock.Instance.GetCycle() + 1) > fractionalCycleNumber || (GameClock.Instance.GetCycle() + 1 == num && GameClock.Instance.GetCurrentCycleAsPercentage() >= num2);
+			if (!((float)(GameClock.Instance.GetCycle() + 1) > fractionalCycleNumber))
+			{
+				if (GameClock.Instance.GetCycle() + 1 == num)
+				{
+					return GameClock.Instance.GetCurrentCycleAsPercentage() >= num2;
+				}
+				return false;
+			}
+			return true;
 		}
 
 		public void Deserialize(IReader reader)

@@ -50,8 +50,7 @@ public class CargoBayConduit : KMonoBehaviour
 			connectedWrongPortStatus = new StatusItem("CONNECTED_ROCKET_WRONG_PORT", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: true, OverlayModes.None.ID);
 			connectedNoPortStatus = new StatusItem("CONNECTED_ROCKET_NO_PORT", "BUILDING", "status_item_no_liquid_to_pump", StatusItem.IconType.Custom, NotificationType.Bad, allow_multiples: true, OverlayModes.None.ID);
 		}
-		LaunchPad currentPad = GetComponent<RocketModuleCluster>().CraftInterface.CurrentPad;
-		if (currentPad != null)
+		if (GetComponent<RocketModuleCluster>().CraftInterface.CurrentPad != null)
 		{
 			OnLaunchpadChainChanged(null);
 			GetComponent<RocketModuleCluster>().CraftInterface.CurrentPad.Subscribe(-1009905786, OnLaunchpadChainChanged);

@@ -34,9 +34,9 @@ public class LogicHammer : Switch
 
 	private Rotatable rotatable;
 
-	private int logic_value = 0;
+	private int logic_value;
 
-	private bool wasOn = false;
+	private bool wasOn;
 
 	protected static readonly HashedString[] ON_HIT_ANIMS = new HashedString[1]
 	{
@@ -118,9 +118,7 @@ public class LogicHammer : Switch
 						Wire component = gameObject.GetComponent<Wire>();
 						if (component != null)
 						{
-							UtilityNetworkManager<ElectricalUtilityNetwork, Wire> electricalConduitSystem = Game.Instance.electricalConduitSystem;
-							UtilityNetwork networkForCell = electricalConduitSystem.GetNetworkForCell(component.GetNetworkCell());
-							ElectricalUtilityNetwork electricalUtilityNetwork = (ElectricalUtilityNetwork)networkForCell;
+							ElectricalUtilityNetwork electricalUtilityNetwork = (ElectricalUtilityNetwork)Game.Instance.electricalConduitSystem.GetNetworkForCell(component.GetNetworkCell());
 							if (electricalUtilityNetwork != null)
 							{
 								num = electricalUtilityNetwork.allWires.Count;
@@ -132,14 +130,12 @@ public class LogicHammer : Switch
 						gameObject = Grid.Objects[resonator_cell, 31];
 						if (gameObject != null)
 						{
-							LogicWire component2 = gameObject.GetComponent<LogicWire>();
-							if (component2 != null)
+							if (gameObject.GetComponent<LogicWire>() != null)
 							{
-								LogicCircuitManager logicCircuitManager = Game.Instance.logicCircuitManager;
-								LogicCircuitNetwork networkForCell2 = logicCircuitManager.GetNetworkForCell(resonator_cell);
-								if (networkForCell2 != null)
+								LogicCircuitNetwork networkForCell = Game.Instance.logicCircuitManager.GetNetworkForCell(resonator_cell);
+								if (networkForCell != null)
 								{
-									num = networkForCell2.WireCount;
+									num = networkForCell.WireCount;
 								}
 							}
 						}
@@ -148,10 +144,8 @@ public class LogicHammer : Switch
 							gameObject = Grid.Objects[resonator_cell, 12];
 							if (gameObject != null)
 							{
-								Conduit component3 = gameObject.GetComponent<Conduit>();
-								IUtilityNetworkMgr networkManager = Conduit.GetNetworkManager(ConduitType.Gas);
-								UtilityNetwork networkForCell3 = networkManager.GetNetworkForCell(component3.GetNetworkCell());
-								FlowUtilityNetwork flowUtilityNetwork = (FlowUtilityNetwork)networkForCell3;
+								Conduit component2 = gameObject.GetComponent<Conduit>();
+								FlowUtilityNetwork flowUtilityNetwork = (FlowUtilityNetwork)Conduit.GetNetworkManager(ConduitType.Gas).GetNetworkForCell(component2.GetNetworkCell());
 								if (flowUtilityNetwork != null)
 								{
 									num = flowUtilityNetwork.conduitCount;
@@ -162,10 +156,8 @@ public class LogicHammer : Switch
 								gameObject = Grid.Objects[resonator_cell, 16];
 								if (gameObject != null)
 								{
-									Conduit component4 = gameObject.GetComponent<Conduit>();
-									IUtilityNetworkMgr networkManager2 = Conduit.GetNetworkManager(ConduitType.Liquid);
-									UtilityNetwork networkForCell4 = networkManager2.GetNetworkForCell(component4.GetNetworkCell());
-									FlowUtilityNetwork flowUtilityNetwork2 = (FlowUtilityNetwork)networkForCell4;
+									Conduit component3 = gameObject.GetComponent<Conduit>();
+									FlowUtilityNetwork flowUtilityNetwork2 = (FlowUtilityNetwork)Conduit.GetNetworkManager(ConduitType.Liquid).GetNetworkForCell(component3.GetNetworkCell());
 									if (flowUtilityNetwork2 != null)
 									{
 										num = flowUtilityNetwork2.conduitCount;
@@ -174,9 +166,7 @@ public class LogicHammer : Switch
 								else
 								{
 									gameObject = Grid.Objects[resonator_cell, 20];
-									if (!(gameObject != null))
-									{
-									}
+									_ = gameObject != null;
 								}
 							}
 						}
@@ -185,10 +175,10 @@ public class LogicHammer : Switch
 			}
 			if (gameObject != null)
 			{
-				Building component5 = gameObject.GetComponent<BuildingComplete>();
-				if (component5 != null)
+				Building component4 = gameObject.GetComponent<BuildingComplete>();
+				if (component4 != null)
 				{
-					text = component5.Def.PrefabID;
+					text = component4.Def.PrefabID;
 				}
 			}
 			if (text != null)

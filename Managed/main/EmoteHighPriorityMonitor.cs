@@ -9,8 +9,7 @@ public class EmoteHighPriorityMonitor : GameStateMachine<EmoteHighPriorityMonito
 
 		public void OnStartChore(object o)
 		{
-			Chore chore = (Chore)o;
-			if (chore.SatisfiesUrge(Db.Get().Urges.EmoteHighPriority))
+			if (((Chore)o).SatisfiesUrge(Db.Get().Urges.EmoteHighPriority))
 			{
 				GoTo(base.sm.resetting);
 			}

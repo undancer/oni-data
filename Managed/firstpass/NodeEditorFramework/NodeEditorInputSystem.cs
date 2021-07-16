@@ -25,23 +25,22 @@ namespace NodeEditorFramework
 			hotkeyHandlers = new List<KeyValuePair<HotkeyAttribute, Delegate>>();
 			contextEntries = new List<KeyValuePair<ContextEntryAttribute, PopupMenu.MenuFunctionData>>();
 			contextFillers = new List<KeyValuePair<ContextFillerAttribute, Delegate>>();
-			IEnumerable<Assembly> enumerable = from assembly in AppDomain.CurrentDomain.GetAssemblies()
+			foreach (Assembly item in from assembly in AppDomain.CurrentDomain.GetAssemblies()
 				where assembly.FullName.Contains("Assembly")
-				select assembly;
-			foreach (Assembly item in enumerable)
+				select assembly)
 			{
 				Type[] types = item.GetTypes();
-				foreach (Type type in types)
+				for (int i = 0; i < types.Length; i++)
 				{
-					MethodInfo[] methods = type.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
+					MethodInfo[] methods = types[i].GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
 					foreach (MethodInfo methodInfo in methods)
 					{
 						Delegate actionDelegate = null;
 						object[] customAttributes = methodInfo.GetCustomAttributes(inherit: true);
 						foreach (object obj in customAttributes)
 						{
-							Type type2 = obj.GetType();
-							if (type2 == typeof(EventHandlerAttribute))
+							Type type = obj.GetType();
+							if (type == typeof(EventHandlerAttribute))
 							{
 								if (EventHandlerAttribute.AssureValidity(methodInfo, obj as EventHandlerAttribute))
 								{
@@ -52,7 +51,7 @@ namespace NodeEditorFramework
 									eventHandlers.Add(new KeyValuePair<EventHandlerAttribute, Delegate>(obj as EventHandlerAttribute, actionDelegate));
 								}
 							}
-							else if (type2 == typeof(HotkeyAttribute))
+							else if (type == typeof(HotkeyAttribute))
 							{
 								if (HotkeyAttribute.AssureValidity(methodInfo, obj as HotkeyAttribute))
 								{
@@ -63,7 +62,7 @@ namespace NodeEditorFramework
 									hotkeyHandlers.Add(new KeyValuePair<HotkeyAttribute, Delegate>(obj as HotkeyAttribute, actionDelegate));
 								}
 							}
-							else if (type2 == typeof(ContextEntryAttribute))
+							else if (type == typeof(ContextEntryAttribute))
 							{
 								if (!ContextEntryAttribute.AssureValidity(methodInfo, obj as ContextEntryAttribute))
 								{
@@ -83,7 +82,7 @@ namespace NodeEditorFramework
 								};
 								contextEntries.Add(new KeyValuePair<ContextEntryAttribute, PopupMenu.MenuFunctionData>(obj as ContextEntryAttribute, value));
 							}
-							else if (type2 == typeof(ContextFillerAttribute) && ContextFillerAttribute.AssureValidity(methodInfo, obj as ContextFillerAttribute))
+							else if (type == typeof(ContextFillerAttribute) && ContextFillerAttribute.AssureValidity(methodInfo, obj as ContextFillerAttribute))
 							{
 								Delegate value2 = Delegate.CreateDelegate(typeof(Action<NodeEditorInputInfo, GenericMenu>), methodInfo);
 								contextFillers.Add(new KeyValuePair<ContextFillerAttribute, Delegate>(obj as ContextFillerAttribute, value2));
@@ -171,8 +170,7 @@ namespace NodeEditorFramework
 		{
 			if (!shouldIgnoreInput(state))
 			{
-				NodeEditorInputInfo inputInfo = new NodeEditorInputInfo(state);
-				CallEventHandlers(inputInfo, late: true);
+				CallEventHandlers(new NodeEditorInputInfo(state), late: true);
 			}
 		}
 

@@ -33,7 +33,11 @@ public class EatChore : Chore<EatChore.StatesInstance>
 			if (base.smi.sm.messstation != null && base.smi.sm.messstation.Get(base.smi) != null)
 			{
 				MessStation component = base.smi.sm.messstation.Get(base.smi).GetComponent<MessStation>();
-				return component != null && component.HasSalt;
+				if (!(component != null))
+				{
+					return false;
+				}
+				return component.HasSalt;
 			}
 			return false;
 		}
@@ -68,12 +72,7 @@ public class EatChore : Chore<EatChore.StatesInstance>
 
 		public void ApplyRoomEffects()
 		{
-			Room roomOfGameObject = Game.Instance.roomProber.GetRoomOfGameObject(base.sm.messstation.Get(base.smi).gameObject);
-			if (roomOfGameObject != null)
-			{
-				RoomType roomType = roomOfGameObject.roomType;
-				roomType.TriggerRoomEffects(base.sm.messstation.Get(base.smi).gameObject.GetComponent<KPrefabID>(), base.sm.eater.Get(base.smi).gameObject.GetComponent<Effects>());
-			}
+			Game.Instance.roomProber.GetRoomOfGameObject(base.sm.messstation.Get(base.smi).gameObject)?.roomType.TriggerRoomEffects(base.sm.messstation.Get(base.smi).gameObject.GetComponent<KPrefabID>(), base.sm.eater.Get(base.smi).gameObject.GetComponent<Effects>());
 		}
 
 		public void ApplySaltEffect()
@@ -82,9 +81,7 @@ public class EatChore : Chore<EatChore.StatesInstance>
 			if (component != null && component.Has(TableSaltConfig.ID.ToTag()))
 			{
 				component.ConsumeIgnoringDisease(TableSaltConfig.ID.ToTag(), TableSaltTuning.CONSUMABLE_RATE);
-				Worker component2 = base.sm.eater.Get(base.smi).gameObject.GetComponent<Worker>();
-				Effects component3 = component2.GetComponent<Effects>();
-				component3.Add("MessTableSalt", should_save: true);
+				base.sm.eater.Get(base.smi).gameObject.GetComponent<Worker>().GetComponent<Effects>().Add("MessTableSalt", should_save: true);
 				base.sm.messstation.Get(base.smi).gameObject.Trigger(1356255274);
 			}
 		}

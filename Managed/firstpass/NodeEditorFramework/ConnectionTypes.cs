@@ -59,13 +59,16 @@ namespace NodeEditorFramework
 
 		internal static void FetchTypes()
 		{
-			Dictionary<string, TypeData> dictionary = new Dictionary<string, TypeData>();
-			dictionary.Add("None", new TypeData(typeof(object)));
-			types = dictionary;
-			IEnumerable<Assembly> enumerable = from assembly in AppDomain.CurrentDomain.GetAssemblies()
+			types = new Dictionary<string, TypeData>
+			{
+				{
+					"None",
+					new TypeData(typeof(object))
+				}
+			};
+			foreach (Assembly item in from assembly in AppDomain.CurrentDomain.GetAssemblies()
 				where assembly.FullName.Contains("Assembly")
-				select assembly;
-			foreach (Assembly item in enumerable)
+				select assembly)
 			{
 				foreach (Type item2 in from T in item.GetTypes()
 					where T.IsClass && !T.IsAbstract && T.GetInterfaces().Contains(typeof(IConnectionTypeDeclaration))

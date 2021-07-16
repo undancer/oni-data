@@ -35,7 +35,6 @@ public class WireRefinedBridgeHighWattageConfig : WireBridgeHighWattageConfig
 	public override void DoPostConfigureUnderConstruction(GameObject go)
 	{
 		base.DoPostConfigureUnderConstruction(go);
-		Constructable component = go.GetComponent<Constructable>();
-		component.requiredSkillPerk = Db.Get().SkillPerks.CanPowerTinker.Id;
+		go.GetComponent<Constructable>().requiredSkillPerk = Db.Get().SkillPerks.CanPowerTinker.Id;
 	}
 }

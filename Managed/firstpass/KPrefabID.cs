@@ -20,7 +20,7 @@ public class KPrefabID : KMonoBehaviour, ISaveLoadable
 
 	private TagBits tagBits;
 
-	private bool initialized = false;
+	private bool initialized;
 
 	private bool dirtyTagBits = true;
 
@@ -320,7 +320,11 @@ public class KPrefabID : KMonoBehaviour, ISaveLoadable
 	public override bool Equals(object o)
 	{
 		KPrefabID kPrefabID = o as KPrefabID;
-		return kPrefabID != null && PrefabTag == kPrefabID.PrefabTag;
+		if (kPrefabID != null)
+		{
+			return PrefabTag == kPrefabID.PrefabTag;
+		}
+		return false;
 	}
 
 	public override int GetHashCode()
@@ -353,8 +357,7 @@ public class KPrefabID : KMonoBehaviour, ISaveLoadable
 	{
 		InitializeTags(force_initialize: true);
 		KPrefabIDTracker kPrefabIDTracker = KPrefabIDTracker.Get();
-		KPrefabID instance = kPrefabIDTracker.GetInstance(InstanceID);
-		if ((bool)instance)
+		if ((bool)kPrefabIDTracker.GetInstance(InstanceID))
 		{
 			conflicted = true;
 		}

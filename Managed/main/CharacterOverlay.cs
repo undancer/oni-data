@@ -6,7 +6,7 @@ public class CharacterOverlay : KMonoBehaviour
 {
 	public bool shouldShowName;
 
-	private bool registered = false;
+	private bool registered;
 
 	protected override void OnSpawn()
 	{

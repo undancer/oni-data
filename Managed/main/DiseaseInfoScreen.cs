@@ -23,7 +23,11 @@ public class DiseaseInfoScreen : TargetScreen
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		return target.GetComponent<CellSelectionObject>() != null || target.GetComponent<PrimaryElement>() != null;
+		if (!(target.GetComponent<CellSelectionObject>() != null))
+		{
+			return target.GetComponent<PrimaryElement>() != null;
+		}
+		return true;
 	}
 
 	protected override void OnPrefabInit()
@@ -75,9 +79,7 @@ public class DiseaseInfoScreen : TargetScreen
 				diseaseSourcePanel.SetLabel("source_" + j, allDescriptors[j].text, allDescriptors[j].tooltipText);
 			}
 		}
-		if (CreateImmuneInfo())
-		{
-		}
+		CreateImmuneInfo();
 		if (!CreateDiseaseInfo())
 		{
 			currentGermsPanel.SetTitle(UI.DETAILTABS.DISEASE.NO_CURRENT_GERMS);
@@ -220,15 +222,14 @@ public class DiseaseInfoScreen : TargetScreen
 
 	private bool CreateDiseaseInfo()
 	{
-		PrimaryElement component = selectedTarget.GetComponent<PrimaryElement>();
-		if (component != null)
+		if (selectedTarget.GetComponent<PrimaryElement>() != null)
 		{
 			return CreateDiseaseInfo_PrimaryElement();
 		}
-		CellSelectionObject component2 = selectedTarget.GetComponent<CellSelectionObject>();
-		if (component2 != null)
+		CellSelectionObject component = selectedTarget.GetComponent<CellSelectionObject>();
+		if (component != null)
 		{
-			return CreateDiseaseInfo_CellSelectionObject(component2);
+			return CreateDiseaseInfo_CellSelectionObject(component);
 		}
 		return false;
 	}

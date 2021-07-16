@@ -24,26 +24,26 @@ public class HighEnergyParticleSpawnerConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("HighEnergyParticleSpawner", 1, 2, "radiation_collector_kanim", 30, 10f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.NotInTiles, noise: NOISE_POLLUTION.NONE, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER1);
-		buildingDef.Floodable = false;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.Overheatable = false;
-		buildingDef.ViewMode = OverlayModes.Radiation.ID;
-		buildingDef.PermittedRotations = PermittedRotations.R360;
-		buildingDef.UseHighEnergyParticleOutputPort = true;
-		buildingDef.HighEnergyParticleOutputOffset = new CellOffset(0, 1);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.PowerInputOffset = new CellOffset(0, 0);
-		buildingDef.EnergyConsumptionWhenActive = 480f;
-		buildingDef.ExhaustKilowattsWhenActive = 1f;
-		buildingDef.SelfHeatKilowattsWhenActive = 4f;
-		buildingDef.LogicInputPorts = new List<LogicPorts.Port>
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("HighEnergyParticleSpawner", 1, 2, "radiation_collector_kanim", 30, 10f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.NotInTiles, noise: NOISE_POLLUTION.NONE, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER1);
+		obj.Floodable = false;
+		obj.AudioCategory = "Metal";
+		obj.Overheatable = false;
+		obj.ViewMode = OverlayModes.Radiation.ID;
+		obj.PermittedRotations = PermittedRotations.R360;
+		obj.UseHighEnergyParticleOutputPort = true;
+		obj.HighEnergyParticleOutputOffset = new CellOffset(0, 1);
+		obj.RequiresPowerInput = true;
+		obj.PowerInputOffset = new CellOffset(0, 0);
+		obj.EnergyConsumptionWhenActive = 480f;
+		obj.ExhaustKilowattsWhenActive = 1f;
+		obj.SelfHeatKilowattsWhenActive = 4f;
+		obj.LogicInputPorts = new List<LogicPorts.Port>
 		{
 			LogicPorts.Port.InputPort(HighEnergyParticleSpawner.PORT_ID, new CellOffset(0, 0), STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.LOGIC_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.LOGIC_PORT_INACTIVE)
 		};
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.RadiationIDs, "HighEnergyParticleSpawner");
-		buildingDef.Deprecated = !Sim.IsRadiationEnabled();
-		return buildingDef;
+		obj.Deprecated = !Sim.IsRadiationEnabled();
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

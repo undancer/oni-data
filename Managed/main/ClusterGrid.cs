@@ -14,6 +14,8 @@ public class ClusterGrid
 
 	private const float MAX_OFFSET_WITHIN_HEX = 0.25f;
 
+	public int numRings;
+
 	private ClusterFogOfWarManager.Instance m_fowManager;
 
 	private Action<object> m_onClusterLocationChangedDelegate;
@@ -63,7 +65,11 @@ public class ClusterGrid
 
 	public bool IsVisible(ClusterGridEntity entity)
 	{
-		return entity.IsVisible && IsCellVisible(entity.Location);
+		if (entity.IsVisible)
+		{
+			return IsCellVisible(entity.Location);
+		}
+		return false;
 	}
 
 	public List<ClusterGridEntity> GetVisibleEntitiesAtCell(AxialI cell)
@@ -77,8 +83,7 @@ public class ClusterGrid
 
 	public ClusterGridEntity GetVisibleEntityOfLayerAtCell(AxialI cell, EntityLayer entityLayer)
 	{
-		List<ClusterGridEntity> visibleEntitiesAtCell = GetVisibleEntitiesAtCell(cell);
-		return visibleEntitiesAtCell.Find((ClusterGridEntity x) => x.Layer == entityLayer);
+		return GetVisibleEntitiesAtCell(cell).Find((ClusterGridEntity x) => x.Layer == entityLayer);
 	}
 
 	public ClusterGridEntity GetVisibleEntityOfLayerAtAdjacentCell(AxialI cell, EntityLayer entityLayer)
@@ -140,8 +145,7 @@ public class ClusterGrid
 		Vector3I vector3I = cell.ToCube();
 		Vector3I vector3I2 = new Vector3I(vector3I.x, vector3I.y, vector3I.z);
 		Vector3I vector3I3 = new Vector3I(0, 0, 0);
-		float num = (Mathf.Abs(vector3I2.x - vector3I3.x) + Mathf.Abs(vector3I2.y - vector3I3.y) + Mathf.Abs(vector3I2.z - vector3I3.z)) / 2;
-		return (int)num;
+		return (int)(float)((Mathf.Abs(vector3I2.x - vector3I3.x) + Mathf.Abs(vector3I2.y - vector3I3.y) + Mathf.Abs(vector3I2.z - vector3I3.z)) / 2);
 	}
 
 	private void CleanUpGrid()
@@ -182,6 +186,7 @@ public class ClusterGrid
 	private void GenerateGrid(int rings)
 	{
 		CleanUpGrid();
+		numRings = rings;
 		for (int i = -rings + 1; i < rings; i++)
 		{
 			for (int j = -rings + 1; j < rings; j++)
@@ -227,9 +232,8 @@ public class ClusterGrid
 			float num5 = 0.1f;
 			if (num4 >= AxialI.DIRECTIONS.Count)
 			{
-				float num6 = 0.15f;
-				float num7 = num6 / (float)(num4 / AxialI.DIRECTIONS.Count);
-				num5 += num7 * (float)num3 / (float)AxialI.DIRECTIONS.Count;
+				float num6 = 0.15f / (float)(num4 / AxialI.DIRECTIONS.Count);
+				num5 += num6 * (float)num3 / (float)AxialI.DIRECTIONS.Count;
 			}
 			num += (float)axialI.R * num5;
 			num2 += (float)axialI.Q * num5;
@@ -324,8 +328,7 @@ public class ClusterGrid
 
 	public void GetLocationDescription(AxialI location, out Sprite sprite, out string label, out string sublabel)
 	{
-		List<ClusterGridEntity> visibleEntitiesAtCell = GetVisibleEntitiesAtCell(location);
-		ClusterGridEntity clusterGridEntity = visibleEntitiesAtCell.Find((ClusterGridEntity x) => x.Layer == EntityLayer.Asteroid);
+		ClusterGridEntity clusterGridEntity = GetVisibleEntitiesAtCell(location).Find((ClusterGridEntity x) => x.Layer == EntityLayer.Asteroid);
 		ClusterGridEntity visibleEntityOfLayerAtAdjacentCell = GetVisibleEntityOfLayerAtAdjacentCell(location, EntityLayer.Asteroid);
 		if (clusterGridEntity != null)
 		{

@@ -45,9 +45,9 @@ public class UserNavigation : KMonoBehaviour
 		base.OnSpawn();
 		Game.Instance.Subscribe(1983128072, delegate(object worlds)
 		{
-			Tuple<int, int> tuple = (Tuple<int, int>)worlds;
-			int first = tuple.first;
-			int second = tuple.second;
+			Tuple<int, int> obj = (Tuple<int, int>)worlds;
+			int first = obj.first;
+			int second = obj.second;
 			int num = Grid.PosToCell(CameraController.Instance.transform.position);
 			if (!Grid.IsValidCell(num) || Grid.WorldIdx[num] != second)
 			{
@@ -80,13 +80,26 @@ public class UserNavigation : KMonoBehaviour
 
 	public void SetWorldCameraStartPosition(int world_id, Vector3 start_pos)
 	{
+		NavPoint value;
 		if (!worldCameraPositions.ContainsKey(world_id))
 		{
-			worldCameraPositions.Add(world_id, new NavPoint
+			Dictionary<int, NavPoint> dictionary = worldCameraPositions;
+			value = new NavPoint
 			{
 				pos = new Vector3(start_pos.x, start_pos.y),
 				orthoSize = CameraController.Instance.targetOrthographicSize
-			});
+			};
+			dictionary.Add(world_id, value);
+		}
+		else
+		{
+			Dictionary<int, NavPoint> dictionary2 = worldCameraPositions;
+			value = new NavPoint
+			{
+				pos = new Vector3(start_pos.x, start_pos.y),
+				orthoSize = CameraController.Instance.targetOrthographicSize
+			};
+			dictionary2[world_id] = value;
 		}
 	}
 
@@ -128,11 +141,10 @@ public class UserNavigation : KMonoBehaviour
 			NavPoint navPoint = hotkeyNavPoints[index];
 			if (navPoint.IsValid())
 			{
-				CameraController instance = CameraController.Instance;
-				instance.SetTargetPos(navPoint.pos, navPoint.orthoSize, playSound: true);
-				EventInstance instance2 = KFMOD.BeginOneShot(GlobalAssets.GetSound("UserNavPoint_recall"), Vector3.zero);
-				instance2.setParameterByName("userNavPoint_ID", index);
-				KFMOD.EndOneShot(instance2);
+				CameraController.Instance.SetTargetPos(navPoint.pos, navPoint.orthoSize, playSound: true);
+				EventInstance instance = KFMOD.BeginOneShot(GlobalAssets.GetSound("UserNavPoint_recall"), Vector3.zero);
+				instance.setParameterByName("userNavPoint_ID", index);
+				KFMOD.EndOneShot(instance);
 			}
 		}
 	}

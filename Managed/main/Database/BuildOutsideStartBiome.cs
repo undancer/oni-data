@@ -1,4 +1,3 @@
-using Delaunay.Geo;
 using Klei;
 using ProcGen;
 using STRINGS;
@@ -12,22 +11,17 @@ namespace Database
 			WorldDetailSave clusterDetailSave = SaveLoader.Instance.clusterDetailSave;
 			foreach (BuildingComplete item in Components.BuildingCompletes.Items)
 			{
-				KPrefabID component = item.GetComponent<KPrefabID>();
-				if (component.HasTag(GameTags.TemplateBuilding))
+				if (item.GetComponent<KPrefabID>().HasTag(GameTags.TemplateBuilding))
 				{
 					continue;
 				}
 				for (int i = 0; i < clusterDetailSave.overworldCells.Count; i++)
 				{
 					WorldDetailSave.OverworldCell overworldCell = clusterDetailSave.overworldCells[i];
-					if (overworldCell.tags != null && !overworldCell.tags.Contains(WorldGenTags.StartWorld))
+					if (overworldCell.tags != null && !overworldCell.tags.Contains(WorldGenTags.StartWorld) && overworldCell.poly.PointInPolygon(item.transform.GetPosition()))
 					{
-						Polygon poly = overworldCell.poly;
-						if (poly.PointInPolygon(item.transform.GetPosition()))
-						{
-							Game.Instance.unlocks.Unlock("buildoutsidestartingbiome");
-							return true;
-						}
+						Game.Instance.unlocks.Unlock("buildoutsidestartingbiome");
+						return true;
 					}
 				}
 			}

@@ -65,13 +65,13 @@ namespace Satsuma
 					num++;
 					if (num >= maxImprovements)
 					{
-						goto IL_00cd;
+						goto IL_00ae;
 					}
 					break;
 				}
 			}
-			goto IL_00cd;
-			IL_00cd:
+			goto IL_00ae;
+			IL_00ae:
 			foreach (Node item2 in list)
 			{
 				unmatchedRedNodes.Remove(item2);

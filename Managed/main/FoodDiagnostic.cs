@@ -18,8 +18,7 @@ public class FoodDiagnostic : ColonyDiagnostic
 	private DiagnosticResult CheckAnyFood()
 	{
 		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.FOODDIAGNOSTIC.CRITERIA_HAS_FOOD.PASS);
-		List<MinionIdentity> worldItems = Components.LiveMinionIdentities.GetWorldItems(base.worldID);
-		if (worldItems.Count != 0)
+		if (Components.LiveMinionIdentities.GetWorldItems(base.worldID).Count != 0)
 		{
 			if (tracker.GetDataTimeLength() < 10f)
 			{
@@ -61,12 +60,11 @@ public class FoodDiagnostic : ColonyDiagnostic
 	private DiagnosticResult CheckStarvation()
 	{
 		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS);
-		List<MinionIdentity> worldItems = Components.LiveMinionIdentities.GetWorldItems(base.worldID);
-		foreach (MinionIdentity item in worldItems)
+		foreach (MinionIdentity worldItem in Components.LiveMinionIdentities.GetWorldItems(base.worldID))
 		{
-			if (!item.IsNull())
+			if (!worldItem.IsNull())
 			{
-				CalorieMonitor.Instance sMI = item.GetSMI<CalorieMonitor.Instance>();
+				CalorieMonitor.Instance sMI = worldItem.GetSMI<CalorieMonitor.Instance>();
 				if (!sMI.IsNullOrStopped() && sMI.IsInsideState(sMI.sm.hungry.starving))
 				{
 					result.opinion = DiagnosticResult.Opinion.Bad;

@@ -58,14 +58,14 @@ public class LightColorMenu : KMonoBehaviour
 		if (lightColors.Length != 0 && color_index < lightColors.Length)
 		{
 			Light2D[] componentsInChildren = GetComponentsInChildren<Light2D>(includeInactive: true);
-			foreach (Light2D light2D in componentsInChildren)
+			for (int i = 0; i < componentsInChildren.Length; i++)
 			{
-				light2D.Color = lightColors[color_index].color;
+				componentsInChildren[i].Color = lightColors[color_index].color;
 			}
 			MeshRenderer[] componentsInChildren2 = GetComponentsInChildren<MeshRenderer>(includeInactive: true);
-			foreach (MeshRenderer meshRenderer in componentsInChildren2)
+			for (int i = 0; i < componentsInChildren2.Length; i++)
 			{
-				Material[] materials = meshRenderer.materials;
+				Material[] materials = componentsInChildren2[i].materials;
 				foreach (Material material in materials)
 				{
 					if (material.name.StartsWith("matScriptedGlow01"))

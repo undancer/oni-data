@@ -16,12 +16,20 @@ public class ReturnToChargeStationStates : GameStateMachine<ReturnToChargeStatio
 
 		public bool ChargeAborted()
 		{
-			return base.smi.sm.GetSweepLocker(base.smi) == null || !base.smi.sm.GetSweepLocker(base.smi).GetComponent<Operational>().IsActive;
+			if (!(base.smi.sm.GetSweepLocker(base.smi) == null))
+			{
+				return !base.smi.sm.GetSweepLocker(base.smi).GetComponent<Operational>().IsActive;
+			}
+			return true;
 		}
 
 		public bool StationReadyToCharge()
 		{
-			return base.smi.sm.GetSweepLocker(base.smi) != null && base.smi.sm.GetSweepLocker(base.smi).GetComponent<Operational>().IsActive;
+			if (base.smi.sm.GetSweepLocker(base.smi) != null)
+			{
+				return base.smi.sm.GetSweepLocker(base.smi).GetComponent<Operational>().IsActive;
+			}
+			return false;
 		}
 	}
 
@@ -54,7 +62,7 @@ public class ReturnToChargeStationStates : GameStateMachine<ReturnToChargeStatio
 		movingToChargingStation.ToggleStatusItem(Db.Get().RobotStatusItems.MovingToChargeStation, (Instance smi) => smi.gameObject, Db.Get().StatusItemCategories.Main).MoveTo(delegate(Instance smi)
 		{
 			Storage sweepLocker = GetSweepLocker(smi);
-			return (sweepLocker == null) ? Grid.InvalidCell : Grid.PosToCell(sweepLocker);
+			return (!(sweepLocker == null)) ? Grid.PosToCell(sweepLocker) : Grid.InvalidCell;
 		}, chargingstates.waitingForCharging, idle);
 		chargingstates.Enter(delegate(Instance smi)
 		{

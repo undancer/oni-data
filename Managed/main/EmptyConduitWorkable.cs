@@ -63,8 +63,7 @@ public class EmptyConduitWorkable : Workable
 		if (chore == null)
 		{
 			StatusItem statusItem = GetStatusItem();
-			KSelectable component = GetComponent<KSelectable>();
-			component.ToggleStatusItem(statusItem, on: true);
+			GetComponent<KSelectable>().ToggleStatusItem(statusItem, on: true);
 			CreateWorkChore();
 		}
 	}
@@ -104,7 +103,11 @@ public class EmptyConduitWorkable : Workable
 
 	private ConduitFlow GetFlowManager()
 	{
-		return (conduit.type == ConduitType.Gas) ? Game.Instance.gasConduitFlow : Game.Instance.liquidConduitFlow;
+		if (conduit.type != ConduitType.Gas)
+		{
+			return Game.Instance.liquidConduitFlow;
+		}
+		return Game.Instance.gasConduitFlow;
 	}
 
 	private void OnEmptyConduitCancelled(object data)

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using STRINGS;
 using UnityEngine;
 
-public abstract class ColonyDiagnostic
+public abstract class ColonyDiagnostic : ISim4000ms
 {
 	public enum PresentationSetting
 	{
@@ -75,7 +75,7 @@ public abstract class ColonyDiagnostic
 
 	private Dictionary<string, DiagnosticCriterion> criteria = new Dictionary<string, DiagnosticCriterion>();
 
-	public PresentationSetting presentationSetting = PresentationSetting.AverageValue;
+	public PresentationSetting presentationSetting;
 
 	private DiagnosticResult latestResult = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.NO_DATA);
 
@@ -117,11 +117,22 @@ public abstract class ColonyDiagnostic
 		colors.Add(DiagnosticResult.Opinion.Suggestion, Constants.NEUTRAL_COLOR);
 		colors.Add(DiagnosticResult.Opinion.Tutorial, Constants.NEUTRAL_COLOR);
 		colors.Add(DiagnosticResult.Opinion.Good, Constants.POSITIVE_COLOR);
+		SimAndRenderScheduler.instance.Add(this, load_balance: true);
 	}
 
 	public virtual string[] GetDlcIds()
 	{
 		return DlcManager.AVAILABLE_ALL_VERSIONS;
+	}
+
+	public void OnCleanUp()
+	{
+		SimAndRenderScheduler.instance.Remove(this);
+	}
+
+	public void Sim4000ms(float dt)
+	{
+		SetResult(ColonyDiagnosticUtility.IgnoreFirstUpdate ? ColonyDiagnosticUtility.NoDataResult : Evaluate());
 	}
 
 	public DiagnosticCriterion[] GetCriteria()

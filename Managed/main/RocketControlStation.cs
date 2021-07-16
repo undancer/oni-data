@@ -123,13 +123,16 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 		private bool RocketReadyForLaunch(StatesInstance smi)
 		{
 			Clustercraft component = clusterCraft.Get(smi).GetComponent<Clustercraft>();
-			return component.LaunchRequested && component.CheckReadyToLaunch();
+			if (component.LaunchRequested)
+			{
+				return component.CheckReadyToLaunch();
+			}
+			return false;
 		}
 
 		private GameObject GetRocket(StatesInstance smi)
 		{
-			WorldContainer world = ClusterManager.Instance.GetWorld(smi.GetMyWorldId());
-			return world.gameObject.GetComponent<Clustercraft>().gameObject;
+			return ClusterManager.Instance.GetWorld(smi.GetMyWorldId()).gameObject.GetComponent<Clustercraft>().gameObject;
 		}
 
 		private void SetRocketSpeed(StatesInstance smi, float speed_multiplier)
@@ -140,17 +143,17 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 		private Chore CreateChore(StatesInstance smi)
 		{
 			Workable component = smi.master.GetComponent<RocketControlStationIdleWorkable>();
-			Chore chore = new WorkChore<RocketControlStationIdleWorkable>(Db.Get().ChoreTypes.RocketControl, component, null, run_until_complete: true, null, null, null, allow_in_red_alert: false, Db.Get().ScheduleBlockTypes.Work, ignore_schedule_block: false, only_when_operational: true, null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, PriorityScreen.PriorityClass.high);
-			chore.AddPrecondition(ChorePreconditions.instance.HasSkillPerk, Db.Get().SkillPerks.CanUseRocketControlStation);
-			return chore;
+			WorkChore<RocketControlStationIdleWorkable> workChore = new WorkChore<RocketControlStationIdleWorkable>(Db.Get().ChoreTypes.RocketControl, component, null, run_until_complete: true, null, null, null, allow_in_red_alert: false, Db.Get().ScheduleBlockTypes.Work, ignore_schedule_block: false, only_when_operational: true, null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, PriorityScreen.PriorityClass.high);
+			workChore.AddPrecondition(ChorePreconditions.instance.HasSkillPerk, Db.Get().SkillPerks.CanUseRocketControlStation);
+			return workChore;
 		}
 
 		private Chore CreateLaunchChore(StatesInstance smi)
 		{
 			Workable component = smi.master.GetComponent<RocketControlStationLaunchWorkable>();
-			Chore chore = new WorkChore<RocketControlStationLaunchWorkable>(Db.Get().ChoreTypes.RocketControl, component, null, run_until_complete: true, null, null, null, allow_in_red_alert: true, null, ignore_schedule_block: true, only_when_operational: true, null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, PriorityScreen.PriorityClass.topPriority);
-			chore.AddPrecondition(ChorePreconditions.instance.HasSkillPerk, Db.Get().SkillPerks.CanUseRocketControlStation);
-			return chore;
+			WorkChore<RocketControlStationLaunchWorkable> workChore = new WorkChore<RocketControlStationLaunchWorkable>(Db.Get().ChoreTypes.RocketControl, component, null, run_until_complete: true, null, null, null, allow_in_red_alert: true, null, ignore_schedule_block: true, only_when_operational: true, null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, PriorityScreen.PriorityClass.topPriority);
+			workChore.AddPrecondition(ChorePreconditions.instance.HasSkillPerk, Db.Get().SkillPerks.CanUseRocketControlStation);
+			return workChore;
 		}
 
 		public void LaunchRocket(StatesInstance smi)

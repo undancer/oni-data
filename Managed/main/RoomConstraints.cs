@@ -243,11 +243,7 @@ public static class RoomConstraints
 
 	public static Constraint ORIGINALTILES = new Constraint(null, (Room room) => 1 + room.cavity.maxY - room.cavity.minY >= 4);
 
-	public static Constraint WILDANIMAL = new Constraint(null, delegate(Room room)
-	{
-		int num4 = room.cavity.creatures.Count + room.cavity.eggs.Count;
-		return num4 > 0;
-	}, 1, ROOMS.CRITERIA.WILDANIMAL.NAME, ROOMS.CRITERIA.WILDANIMAL.DESCRIPTION);
+	public static Constraint WILDANIMAL = new Constraint(null, (Room room) => room.cavity.creatures.Count + room.cavity.eggs.Count > 0, 1, ROOMS.CRITERIA.WILDANIMAL.NAME, ROOMS.CRITERIA.WILDANIMAL.DESCRIPTION);
 
 	public static Constraint WILDANIMALS = new Constraint(null, delegate(Room room)
 	{
@@ -342,8 +338,8 @@ public static class RoomConstraints
 				bool flag = false;
 				if (roomType2.additional_constraints != null)
 				{
-					Constraint[] additional_constraints2 = roomType2.additional_constraints;
-					foreach (Constraint constraint2 in additional_constraints2)
+					Constraint[] additional_constraints = roomType2.additional_constraints;
+					foreach (Constraint constraint2 in additional_constraints)
 					{
 						if (!constraint2.isSatisfied(room))
 						{
@@ -359,12 +355,11 @@ public static class RoomConstraints
 				bool flag2 = false;
 				foreach (RoomType resource in Db.Get().RoomTypes.resources)
 				{
-					if (resource == roomType2 || resource == Db.Get().RoomTypes.Neutral || !Db.Get().RoomTypes.HasAmbiguousRoomType(room, roomType2, resource))
+					if (resource != roomType2 && resource != Db.Get().RoomTypes.Neutral && Db.Get().RoomTypes.HasAmbiguousRoomType(room, roomType2, resource))
 					{
-						continue;
+						flag2 = true;
+						break;
 					}
-					flag2 = true;
-					break;
 				}
 				if (flag2)
 				{

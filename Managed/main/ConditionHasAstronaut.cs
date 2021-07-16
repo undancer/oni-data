@@ -12,8 +12,7 @@ public class ConditionHasAstronaut : ProcessCondition
 
 	public override Status EvaluateCondition()
 	{
-		MinionStorage component = module.GetComponent<MinionStorage>();
-		List<MinionStorage.Info> storedMinionInfo = component.GetStoredMinionInfo();
+		List<MinionStorage.Info> storedMinionInfo = module.GetComponent<MinionStorage>().GetStoredMinionInfo();
 		if (storedMinionInfo.Count > 0 && storedMinionInfo[0].serializedMinion != null)
 		{
 			return Status.Ready;

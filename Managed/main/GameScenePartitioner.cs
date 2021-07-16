@@ -269,8 +269,7 @@ public class GameScenePartitioner : KMonoBehaviour
 	{
 		if (handle.IsValid())
 		{
-			ScenePartitionerEntry data = scenePartitionerEntries.GetData(handle);
-			data.UpdatePosition(x, y);
+			scenePartitionerEntries.GetData(handle).UpdatePosition(x, y);
 		}
 	}
 
@@ -278,8 +277,7 @@ public class GameScenePartitioner : KMonoBehaviour
 	{
 		if (handle.IsValid())
 		{
-			ScenePartitionerEntry data = scenePartitionerEntries.GetData(handle);
-			data.Release();
+			scenePartitionerEntries.GetData(handle).Release();
 			scenePartitionerEntries.Free(handle);
 			handle.Clear();
 		}

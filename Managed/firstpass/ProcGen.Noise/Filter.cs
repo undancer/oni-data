@@ -146,9 +146,9 @@ namespace ProcGen.Noise
 				filterModule.SpectralExponent = exponent;
 				if (filter == NoiseFilter.Billow)
 				{
-					Billow billow = (Billow)filterModule;
-					billow.Scale = scale;
-					billow.Bias = bias;
+					Billow obj = (Billow)filterModule;
+					obj.Scale = scale;
+					obj.Bias = bias;
 				}
 			}
 			return (IModule3D)filterModule;

@@ -366,9 +366,7 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 
 	public static VideoClip GetVideo(string name)
 	{
-		VideoClip videoClip = null;
-		string path = "video_webm/" + name;
-		return Resources.Load<VideoClip>(path);
+		return Resources.Load<VideoClip>("video_webm/" + name);
 	}
 
 	public static Texture2D GetTexture(string name)
@@ -465,7 +463,11 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 	{
 		KPrefabID value = null;
 		PrefabsByTag.TryGetValue(tag, out value);
-		return (value != null) ? value.gameObject : null;
+		if (!(value != null))
+		{
+			return null;
+		}
+		return value.gameObject;
 	}
 
 	public static List<GameObject> GetPrefabsWithTag(Tag tag)
@@ -517,10 +519,7 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 	public static Assets GetInstanceEditorOnly()
 	{
 		Assets[] array = (Assets[])Resources.FindObjectsOfTypeAll(typeof(Assets));
-		if (array == null || array.Length == 0)
-		{
-			return array[0];
-		}
+		_ = array?.LongLength;
 		return array[0];
 	}
 

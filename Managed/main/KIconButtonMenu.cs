@@ -295,9 +295,9 @@ public class KIconButtonMenu : KScreen
 			currentlySelectedToggle = selectedToggle;
 		}
 		GameObject[] array = buttonObjects;
-		foreach (GameObject gameObject in array)
+		for (int i = 0; i < array.Length; i++)
 		{
-			KToggle component = gameObject.GetComponent<KToggle>();
+			KToggle component = array[i].GetComponent<KToggle>();
 			if (component != null)
 			{
 				if (component == currentlySelectedToggle)

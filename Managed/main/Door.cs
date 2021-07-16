@@ -174,8 +174,7 @@ public class Door : Workable, ISaveLoadable, ISim200ms, INavDoor
 				smi.master.RefreshControlState();
 				if (smi.master.GetComponent<Unsealable>().facingRight)
 				{
-					KBatchedAnimController component2 = smi.master.GetComponent<KBatchedAnimController>();
-					component2.FlipX = true;
+					smi.master.GetComponent<KBatchedAnimController>().FlipX = true;
 				}
 			}).Enter("SetWorldStateClosed", delegate(Instance smi)
 			{
@@ -232,10 +231,10 @@ public class Door : Workable, ISaveLoadable, ISim200ms, INavDoor
 	[MyCmpAdd]
 	private LoopingSounds loopingSounds;
 
-	public Orientation verticalOrientation = Orientation.Neutral;
+	public Orientation verticalOrientation;
 
 	[SerializeField]
-	public bool hasComplexUserControls = false;
+	public bool hasComplexUserControls;
 
 	[SerializeField]
 	public float unpoweredAnimSpeed = 0.25f;
@@ -264,16 +263,16 @@ public class Door : Workable, ISaveLoadable, ISim200ms, INavDoor
 	private static readonly HashedString SOUND_PROGRESS_PARAMETER = "doorProgress";
 
 	[Serialize]
-	private bool hasBeenUnsealed = false;
+	private bool hasBeenUnsealed;
 
 	[Serialize]
-	private ControlState controlState = ControlState.Auto;
+	private ControlState controlState;
 
-	private bool on = false;
+	private bool on;
 
-	private bool do_melt_check = false;
+	private bool do_melt_check;
 
-	private int openCount = 0;
+	private int openCount;
 
 	private ControlState requestedState;
 
@@ -311,7 +310,7 @@ public class Door : Workable, ISaveLoadable, ISim200ms, INavDoor
 		component.OnLogicValueChanged(data);
 	});
 
-	private bool applyLogicChange = false;
+	private bool applyLogicChange;
 
 	public ControlState CurrentState => controlState;
 
@@ -323,8 +322,7 @@ public class Door : Workable, ISaveLoadable, ISim200ms, INavDoor
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		Door component = gameObject.GetComponent<Door>();
+		Door component = ((GameObject)data).GetComponent<Door>();
 		if (component != null)
 		{
 			QueueStateChange(component.requestedState);
@@ -366,8 +364,7 @@ public class Door : Workable, ISaveLoadable, ISim200ms, INavDoor
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		KPrefabID component = GetComponent<KPrefabID>();
-		if (component != null)
+		if (GetComponent<KPrefabID>() != null)
 		{
 			log = new LoggerFSS("Door");
 		}
@@ -450,8 +447,8 @@ public class Door : Workable, ISaveLoadable, ISim200ms, INavDoor
 				list.Add(Grid.CellRight(num));
 			}
 		}
-		int[] placementCells2 = building.PlacementCells;
-		foreach (int num2 in placementCells2)
+		placementCells = building.PlacementCells;
+		foreach (int num2 in placementCells)
 		{
 			Grid.HasDoor[num2] = false;
 			Game.Instance.SetDupePassableSolid(num2, passable: false, Grid.Solid[num2]);
@@ -600,8 +597,7 @@ public class Door : Workable, ISaveLoadable, ISim200ms, INavDoor
 		{
 			int num = cells[i];
 			DoorType doorType = this.doorType;
-			DoorType doorType2 = doorType;
-			if ((uint)doorType2 > 1u && doorType2 != DoorType.Sealed)
+			if ((uint)doorType > 1u && doorType != DoorType.Sealed)
 			{
 				continue;
 			}
@@ -739,12 +735,14 @@ public class Door : Workable, ISaveLoadable, ISim200ms, INavDoor
 			}
 		}
 		openCount++;
-		switch (controlState)
+		ControlState controlState = this.controlState;
+		if ((uint)controlState > 1u)
 		{
-		case ControlState.Auto:
-		case ControlState.Opened:
+			_ = 2;
+		}
+		else
+		{
 			controller.sm.isOpen.Set(value: true, controller);
-			break;
 		}
 	}
 
@@ -763,8 +761,6 @@ public class Door : Workable, ISaveLoadable, ISim200ms, INavDoor
 		}
 		switch (controlState)
 		{
-		case ControlState.Opened:
-			break;
 		case ControlState.Locked:
 			controller.sm.isOpen.Set(value: false, controller);
 			break;
@@ -775,12 +771,18 @@ public class Door : Workable, ISaveLoadable, ISim200ms, INavDoor
 				Game.Instance.userMenu.Refresh(base.gameObject);
 			}
 			break;
+		case ControlState.Opened:
+			break;
 		}
 	}
 
 	public bool IsOpen()
 	{
-		return controller.IsInsideState(controller.sm.open) || controller.IsInsideState(controller.sm.closedelay) || controller.IsInsideState(controller.sm.closeblocked);
+		if (!controller.IsInsideState(controller.sm.open) && !controller.IsInsideState(controller.sm.closedelay))
+		{
+			return controller.IsInsideState(controller.sm.closeblocked);
+		}
+		return true;
 	}
 
 	private void ApplyRequestedControlState(bool force = false)
@@ -823,13 +825,14 @@ public class Door : Workable, ISaveLoadable, ISim200ms, INavDoor
 		{
 			return;
 		}
+		int[] placementCells;
 		if (doorOpenLiquidRefreshHack)
 		{
 			doorOpenLiquidRefreshTime -= dt;
 			if (doorOpenLiquidRefreshTime <= 0f)
 			{
 				doorOpenLiquidRefreshHack = false;
-				int[] placementCells = building.PlacementCells;
+				placementCells = building.PlacementCells;
 				foreach (int cell in placementCells)
 				{
 					Pathfinding.Instance.AddDirtyNavGridCell(cell);
@@ -851,8 +854,8 @@ public class Door : Workable, ISaveLoadable, ISim200ms, INavDoor
 		{
 			return;
 		}
-		int[] placementCells2 = building.PlacementCells;
-		foreach (int i2 in placementCells2)
+		placementCells = building.PlacementCells;
+		foreach (int i2 in placementCells)
 		{
 			if (!Grid.Solid[i2])
 			{

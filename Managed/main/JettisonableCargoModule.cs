@@ -50,8 +50,7 @@ public class JettisonableCargoModule : GameStateMachine<JettisonableCargoModule,
 				{
 					return false;
 				}
-				MinionStorage component = gameObject.GetComponent<MinionStorage>();
-				return component != null;
+				return gameObject.GetComponent<MinionStorage>() != null;
 			}
 		}
 
@@ -75,24 +74,22 @@ public class JettisonableCargoModule : GameStateMachine<JettisonableCargoModule,
 
 		private void ChooseLanderLocation()
 		{
-			RocketModuleCluster component = base.master.GetComponent<RocketModuleCluster>();
-			Clustercraft component2 = component.CraftInterface.GetComponent<Clustercraft>();
-			ClusterGridEntity stableOrbitAsteroid = component2.GetStableOrbitAsteroid();
+			ClusterGridEntity stableOrbitAsteroid = base.master.GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>().GetStableOrbitAsteroid();
 			if (stableOrbitAsteroid != null)
 			{
-				int id = stableOrbitAsteroid.GetComponent<WorldContainer>().id;
-				GameObject gameObject = landerContainer.FindFirst(base.def.landerPrefabID);
-				Placeable component3 = gameObject.GetComponent<Placeable>();
-				component3.restrictWorldId = id;
-				ClusterManager.Instance.SetActiveWorld(id);
+				WorldContainer component = stableOrbitAsteroid.GetComponent<WorldContainer>();
+				Placeable component2 = landerContainer.FindFirst(base.def.landerPrefabID).GetComponent<Placeable>();
+				component2.restrictWorldId = component.id;
+				component.LookAtSurface();
+				ClusterManager.Instance.SetActiveWorld(component.id);
 				ManagementMenu.Instance.CloseAll();
-				PlaceTool.Instance.Activate(component3, OnLanderPlaced);
+				PlaceTool.Instance.Activate(component2, OnLanderPlaced);
 			}
 		}
 
 		private void OnLanderPlaced(Placeable lander, int cell)
 		{
-			GameObject gameObject = landerContainer.FindFirst(base.def.landerPrefabID);
+			landerContainer.FindFirst(base.def.landerPrefabID);
 			landerContainer.Drop(lander.gameObject);
 			TreeFilterable component = GetComponent<TreeFilterable>();
 			TreeFilterable component2 = lander.GetComponent<TreeFilterable>();
@@ -104,9 +101,9 @@ public class JettisonableCargoModule : GameStateMachine<JettisonableCargoModule,
 			if (component3 != null)
 			{
 				Storage[] components = base.gameObject.GetComponents<Storage>();
-				foreach (Storage storage in components)
+				for (int i = 0; i < components.Length; i++)
 				{
-					storage.Transfer(component3, block_events: false, hide_popups: true);
+					components[i].Transfer(component3, block_events: false, hide_popups: true);
 				}
 			}
 			MinionStorage component4 = lander.GetComponent<MinionStorage>();
@@ -157,8 +154,7 @@ public class JettisonableCargoModule : GameStateMachine<JettisonableCargoModule,
 
 		public bool IsValidDropLocation()
 		{
-			Clustercraft component = GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>();
-			return component.GetStableOrbitAsteroid() != null;
+			return GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>().GetStableOrbitAsteroid() != null;
 		}
 
 		public void EmptyCargo()
@@ -168,7 +164,15 @@ public class JettisonableCargoModule : GameStateMachine<JettisonableCargoModule,
 
 		public bool CanEmptyCargo()
 		{
-			return base.sm.hasCargo.Get(base.smi) && IsValidDropLocation() && (!ChooseDuplicant || ChosenDuplicant != null);
+			if (base.sm.hasCargo.Get(base.smi) && IsValidDropLocation())
+			{
+				if (ChooseDuplicant)
+				{
+					return ChosenDuplicant != null;
+				}
+				return true;
+			}
+			return false;
 		}
 	}
 

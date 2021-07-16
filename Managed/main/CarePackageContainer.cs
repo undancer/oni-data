@@ -345,8 +345,7 @@ public class CarePackageContainer : KScreen, ITelepadDeliverableContainer
 		{
 			controller.RemoveDeliverable(info);
 		}
-		ImageToggleState component = selectButton.GetComponent<ImageToggleState>();
-		component.SetInactive();
+		selectButton.GetComponent<ImageToggleState>().SetInactive();
 		selectButton.Deselect();
 		selectButton.ClearOnClick();
 		selectButton.onClick += delegate
@@ -463,7 +462,11 @@ public class CarePackageContainer : KScreen, ITelepadDeliverableContainer
 
 	public string GetValueColor(bool isPositive)
 	{
-		return isPositive ? "<color=green>" : "<color=#ff2222ff>";
+		if (!isPositive)
+		{
+			return "<color=#ff2222ff>";
+		}
+		return "<color=green>";
 	}
 
 	public override void OnKeyDown(KButtonEvent e)

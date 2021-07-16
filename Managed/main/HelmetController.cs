@@ -3,9 +3,9 @@ using UnityEngine;
 [AddComponentMenu("KMonoBehaviour/scripts/HelmetController")]
 public class HelmetController : KMonoBehaviour
 {
-	public string anim_file = null;
+	public string anim_file;
 
-	public bool has_jets = false;
+	public bool has_jets;
 
 	private bool is_shown;
 
@@ -185,8 +185,7 @@ public class HelmetController : KMonoBehaviour
 		GameObject gameObject = new GameObject(name2);
 		gameObject.SetActive(value: false);
 		gameObject.transform.parent = assigneeController.transform;
-		KPrefabID kPrefabID = gameObject.AddComponent<KPrefabID>();
-		kPrefabID.PrefabTag = new Tag(name2);
+		gameObject.AddComponent<KPrefabID>().PrefabTag = new Tag(name2);
 		KBatchedAnimController kBatchedAnimController = gameObject.AddComponent<KBatchedAnimController>();
 		kBatchedAnimController.AnimFiles = new KAnimFile[1]
 		{
@@ -195,11 +194,9 @@ public class HelmetController : KMonoBehaviour
 		kBatchedAnimController.initialAnim = anim_clip;
 		kBatchedAnimController.isMovable = true;
 		kBatchedAnimController.sceneLayer = layer;
-		KBatchedAnimTracker kBatchedAnimTracker = gameObject.AddComponent<KBatchedAnimTracker>();
-		kBatchedAnimTracker.symbol = symbol_name;
+		gameObject.AddComponent<KBatchedAnimTracker>().symbol = symbol_name;
 		bool symbolVisible;
-		Vector4 column = assigneeController.GetSymbolTransform(symbol_name, out symbolVisible).GetColumn(3);
-		Vector3 position = column;
+		Vector3 position = assigneeController.GetSymbolTransform(symbol_name, out symbolVisible).GetColumn(3);
 		position.z = Grid.GetLayerZ(layer);
 		gameObject.transform.SetPosition(position);
 		gameObject.SetActive(value: true);

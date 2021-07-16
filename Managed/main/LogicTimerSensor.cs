@@ -11,13 +11,13 @@ public class LogicTimerSensor : Switch, ISaveLoadable, ISim33ms
 	public float offDuration = 10f;
 
 	[Serialize]
-	public bool displayCyclesMode = false;
+	public bool displayCyclesMode;
 
-	private bool wasOn = false;
+	private bool wasOn;
 
 	[SerializeField]
 	[Serialize]
-	public float timeElapsedInCurrentState = 0f;
+	public float timeElapsedInCurrentState;
 
 	[MyCmpAdd]
 	private CopyBuildingSettings copyBuildingSettings;
@@ -35,8 +35,7 @@ public class LogicTimerSensor : Switch, ISaveLoadable, ISim33ms
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		LogicTimerSensor component = gameObject.GetComponent<LogicTimerSensor>();
+		LogicTimerSensor component = ((GameObject)data).GetComponent<LogicTimerSensor>();
 		if (component != null)
 		{
 			onDuration = component.onDuration;
@@ -87,8 +86,7 @@ public class LogicTimerSensor : Switch, ISaveLoadable, ISim33ms
 
 	private void UpdateLogicCircuit()
 	{
-		LogicPorts component = GetComponent<LogicPorts>();
-		component.SendSignal(LogicSwitch.PORT_ID, switchedOn ? 1 : 0);
+		GetComponent<LogicPorts>().SendSignal(LogicSwitch.PORT_ID, switchedOn ? 1 : 0);
 	}
 
 	private void UpdateVisualState(bool force = false)

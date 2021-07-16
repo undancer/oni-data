@@ -36,11 +36,12 @@ public class GameInputMapping
 
 	public static HashSet<string> GetAxis()
 	{
-		HashSet<string> hashSet = new HashSet<string>();
-		hashSet.Add("Mouse X");
-		hashSet.Add("Mouse Y");
-		hashSet.Add("Mouse ScrollWheel");
-		return hashSet;
+		return new HashSet<string>
+		{
+			"Mouse X",
+			"Mouse Y",
+			"Mouse ScrollWheel"
+		};
 	}
 
 	public static void SetDefaultKeyBindings(BindingEntry[] default_keybindings)
@@ -73,7 +74,11 @@ public class GameInputMapping
 	{
 		BindingEntry bindingEntry = FindEntry(a);
 		BindingEntry bindingEntry2 = FindEntry(b);
-		return bindingEntry.mKeyCode == bindingEntry2.mKeyCode && bindingEntry.mModifier == bindingEntry2.mModifier;
+		if (bindingEntry.mKeyCode == bindingEntry2.mKeyCode)
+		{
+			return bindingEntry.mModifier == bindingEntry2.mModifier;
+		}
+		return false;
 	}
 
 	public static BindingEntry[] FindEntriesByKeyCode(KKeyCode keycode)

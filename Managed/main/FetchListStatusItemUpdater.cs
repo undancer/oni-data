@@ -9,7 +9,7 @@ public class FetchListStatusItemUpdater : KMonoBehaviour, IRender200ms
 
 	private List<FetchList2> fetchLists = new List<FetchList2>();
 
-	private int currentIteratingIndex = 0;
+	private int currentIteratingIndex;
 
 	private int maxIteratingCount = 100;
 
@@ -38,9 +38,9 @@ public class FetchListStatusItemUpdater : KMonoBehaviour, IRender200ms
 	{
 		DictionaryPool<int, ListPool<FetchList2, FetchListStatusItemUpdater>.PooledList, FetchListStatusItemUpdater>.PooledDictionary pooledDictionary = DictionaryPool<int, ListPool<FetchList2, FetchListStatusItemUpdater>.PooledList, FetchListStatusItemUpdater>.Allocate();
 		int num = Math.Min(maxIteratingCount, fetchLists.Count - currentIteratingIndex);
-		for (int i = currentIteratingIndex; i < num; i++)
+		for (int i = 0; i < num; i++)
 		{
-			FetchList2 fetchList = fetchLists[i];
+			FetchList2 fetchList = fetchLists[i + currentIteratingIndex];
 			if (!(fetchList.Destination == null))
 			{
 				ListPool<FetchList2, FetchListStatusItemUpdater>.PooledList value = null;
@@ -61,13 +61,16 @@ public class FetchListStatusItemUpdater : KMonoBehaviour, IRender200ms
 		DictionaryPool<Tag, float, FetchListStatusItemUpdater>.PooledDictionary pooledDictionary3 = DictionaryPool<Tag, float, FetchListStatusItemUpdater>.Allocate();
 		foreach (KeyValuePair<int, ListPool<FetchList2, FetchListStatusItemUpdater>.PooledList> item in pooledDictionary)
 		{
+			if (item.Value[0].Destination.GetMyWorld() == null)
+			{
+				continue;
+			}
 			ListPool<Tag, FetchListStatusItemUpdater>.PooledList pooledList2 = ListPool<Tag, FetchListStatusItemUpdater>.Allocate();
 			Storage destination = item.Value[0].Destination;
 			foreach (FetchList2 item2 in item.Value)
 			{
 				item2.UpdateRemaining();
-				Dictionary<Tag, float> remaining = item2.GetRemaining();
-				foreach (KeyValuePair<Tag, float> item3 in remaining)
+				foreach (KeyValuePair<Tag, float> item3 in item2.GetRemaining())
 				{
 					if (!pooledList2.Contains(item3.Key))
 					{
@@ -116,8 +119,7 @@ public class FetchListStatusItemUpdater : KMonoBehaviour, IRender200ms
 				bool should_add = false;
 				bool should_add2 = true;
 				bool should_add3 = false;
-				Dictionary<Tag, float> remaining2 = item8.GetRemaining();
-				foreach (KeyValuePair<Tag, float> item9 in remaining2)
+				foreach (KeyValuePair<Tag, float> item9 in item8.GetRemaining())
 				{
 					Tag key = item9.Key;
 					float value2 = item9.Value;

@@ -397,8 +397,7 @@ public class Scenario : KMonoBehaviour
 		{
 			for (int j = 0; j < height; j++)
 			{
-				int gameCell = Grid.OffsetCell(RootCell, x + i, y + j);
-				SimMessages.ReplaceElement(gameCell, SimHashes.Oxygen, CellEventLogger.Instance.Scenario, 200f);
+				SimMessages.ReplaceElement(Grid.OffsetCell(RootCell, x + i, y + j), SimHashes.Oxygen, CellEventLogger.Instance.Scenario, 200f);
 				SimMessages.ReplaceElement(Grid.OffsetCell(RootCell, x, y + j), SimHashes.Ice, CellEventLogger.Instance.Scenario, 1000f);
 				SimMessages.ReplaceElement(Grid.OffsetCell(RootCell, x + width, y + j), SimHashes.Ice, CellEventLogger.Instance.Scenario, 1000f);
 			}
@@ -923,8 +922,7 @@ public class Scenario : KMonoBehaviour
 	{
 		RunAfterNextUpdate(delegate
 		{
-			int cell = Grid.OffsetCell(RootCell, x, y);
-			Vector3 position = Grid.CellToPosCCC(cell, Grid.SceneLayer.Ore);
+			Vector3 position = Grid.CellToPosCCC(Grid.OffsetCell(RootCell, x, y), Grid.SceneLayer.Ore);
 			position.x += UnityEngine.Random.Range(-0.1f, 0.1f);
 			ElementLoader.FindElementByHash(element).substance.SpawnResource(position, 4000f, 293f, byte.MaxValue, 0);
 		});
@@ -946,8 +944,7 @@ public class Scenario : KMonoBehaviour
 	public static GameObject SpawnPrefab(int RootCell, int x, int y, string name, Grid.SceneLayer scene_layer = Grid.SceneLayer.Ore)
 	{
 		int cell = Grid.OffsetCell(RootCell, x, y);
-		Tag tag = TagManager.Create(name);
-		GameObject prefab = Assets.GetPrefab(tag);
+		GameObject prefab = Assets.GetPrefab(TagManager.Create(name));
 		if (prefab == null)
 		{
 			return null;
@@ -962,15 +959,13 @@ public class Scenario : KMonoBehaviour
 		Vector3 pos = Grid.CellToPosCCC(RootCell, Grid.SceneLayer.Background);
 		CameraController.Instance.SnapTo(pos);
 		Clear();
-		RowLayout rowLayout = new RowLayout(0, 0);
-		Builder builder = rowLayout.NextRow();
+		Builder builder = new RowLayout(0, 0).NextRow();
 		HashSet<Element> elements = new HashSet<Element>();
 		int bot = builder.Bot;
-		List<Element> list = (from element in ElementLoader.elements
+		foreach (Element item in (from element in ElementLoader.elements
 			where element.IsSolid
 			orderby element.highTempTransitionTarget
-			select element).ToList();
-		foreach (Element item in list)
+			select element).ToList())
 		{
 			if (!item.IsSolid)
 			{
@@ -995,11 +990,10 @@ public class Scenario : KMonoBehaviour
 			while (flag);
 			builder = new Builder(left + 3, bot);
 		}
-		List<Element> list2 = (from element in ElementLoader.elements
+		foreach (Element item2 in (from element in ElementLoader.elements
 			where element.IsLiquid && !elements.Contains(element)
 			orderby element.highTempTransitionTarget
-			select element).ToList();
-		foreach (Element item2 in list2)
+			select element).ToList())
 		{
 			Element element3 = item2;
 			int left2 = builder.Left;
@@ -1020,13 +1014,11 @@ public class Scenario : KMonoBehaviour
 			while (flag2);
 			builder = new Builder(left2 + 3, bot);
 		}
-		List<Element> list3 = ElementLoader.elements.Where((Element element) => element.state == Element.State.Gas && !elements.Contains(element)).ToList();
-		foreach (Element item3 in list3)
+		foreach (Element item3 in ElementLoader.elements.Where((Element element) => element.state == Element.State.Gas && !elements.Contains(element)).ToList())
 		{
-			Element element4 = item3;
 			int left3 = builder.Left;
 			builder.Hole(2, 3);
-			builder.Fill(2, 2, element4.id);
+			builder.Fill(2, 2, item3.id);
 			builder.FinalizeRoom(SimHashes.Vacuum, SimHashes.Unobtanium);
 			builder = new Builder(left3, builder.Bot + 4);
 			builder = new Builder(left3 + 3, bot);
@@ -1052,8 +1044,7 @@ public class Scenario : KMonoBehaviour
 				SimMessages.ReplaceElement(Grid.XYToCell(j, i), SimHashes.Oxygen, CellEventLogger.Instance.Scenario, 100f);
 			}
 		}
-		RowLayout rowLayout = new RowLayout(0, 0);
-		Builder builder = rowLayout.NextRow();
+		Builder builder = new RowLayout(0, 0).NextRow();
 		for (int k = 0; k < 16; k++)
 		{
 			builder.Jump();

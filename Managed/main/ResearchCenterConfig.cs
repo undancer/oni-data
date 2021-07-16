@@ -17,15 +17,15 @@ public class ResearchCenterConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("ResearchCenter", 2, 2, "research_center_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER0, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 60f;
-		buildingDef.ViewMode = OverlayModes.Power.ID;
-		buildingDef.ExhaustKilowattsWhenActive = 0.125f;
-		buildingDef.SelfHeatKilowattsWhenActive = 1f;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.AudioSize = "large";
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("ResearchCenter", 2, 2, "research_center_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER0, decor: BUILDINGS.DECOR.NONE);
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 60f;
+		obj.ViewMode = OverlayModes.Power.ID;
+		obj.ExhaustKilowattsWhenActive = 0.125f;
+		obj.SelfHeatKilowattsWhenActive = 1f;
+		obj.AudioCategory = "Metal";
+		obj.AudioSize = "large";
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

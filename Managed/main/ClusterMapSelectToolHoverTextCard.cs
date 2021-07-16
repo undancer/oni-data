@@ -24,8 +24,7 @@ public class ClusterMapSelectToolHoverTextCard : HoverTextConfiguration
 		{
 			ConfigureHoverScreen();
 		}
-		HoverTextScreen instance = HoverTextScreen.Instance;
-		HoverTextDrawer hoverTextDrawer = instance.BeginDrawing();
+		HoverTextDrawer hoverTextDrawer = HoverTextScreen.Instance.BeginDrawing();
 		foreach (KSelectable hoverObject in hoverObjects)
 		{
 			hoverTextDrawer.BeginShadowBar(ClusterMapSelectTool.Instance.GetSelected() == hoverObject);

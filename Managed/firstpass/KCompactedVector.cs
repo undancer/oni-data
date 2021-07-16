@@ -40,8 +40,8 @@ public class KCompactedVector<T> : KCompactedVectorBase, ICollection, IEnumerabl
 	{
 		int num = data.Count - 1;
 		int free_component_idx;
-		bool flag = Free(handle, num, out free_component_idx);
-		if (flag)
+		bool num2 = Free(handle, num, out free_component_idx);
+		if (num2)
 		{
 			if (free_component_idx < num)
 			{
@@ -49,7 +49,11 @@ public class KCompactedVector<T> : KCompactedVectorBase, ICollection, IEnumerabl
 			}
 			data.RemoveAt(num);
 		}
-		return flag ? HandleVector<int>.InvalidHandle : handle;
+		if (!num2)
+		{
+			return handle;
+		}
+		return HandleVector<int>.InvalidHandle;
 	}
 
 	public T GetData(HandleVector<int>.Handle handle)

@@ -36,7 +36,11 @@ public struct EffectorValues
 		{
 			return false;
 		}
-		return amount == p.amount && radius == p.radius;
+		if (amount == p.amount)
+		{
+			return radius == p.radius;
+		}
+		return false;
 	}
 
 	public override int GetHashCode()

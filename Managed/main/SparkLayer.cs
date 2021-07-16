@@ -18,7 +18,7 @@ public class SparkLayer : LineLayer
 
 	public ColorRules colorRules;
 
-	public bool debugMark = false;
+	public bool debugMark;
 
 	public bool scaleHeightToData = true;
 

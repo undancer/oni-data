@@ -30,7 +30,7 @@ public class MoveToLureStates : GameStateMachine<MoveToLureStates, MoveToLureSta
 		arrive_at_lure.Enter(delegate(Instance smi)
 		{
 			Lure.Instance targetLure = GetTargetLure(smi);
-			if (targetLure?.HasTag(GameTags.OneTimeUseLure) ?? false)
+			if (targetLure != null && targetLure.HasTag(GameTags.OneTimeUseLure))
 			{
 				targetLure.GetComponent<KPrefabID>().AddTag(GameTags.LureUsed);
 			}
@@ -40,8 +40,7 @@ public class MoveToLureStates : GameStateMachine<MoveToLureStates, MoveToLureSta
 
 	private static Lure.Instance GetTargetLure(Instance smi)
 	{
-		LureableMonitor.Instance sMI = smi.GetSMI<LureableMonitor.Instance>();
-		GameObject targetLure = sMI.GetTargetLure();
+		GameObject targetLure = smi.GetSMI<LureableMonitor.Instance>().GetTargetLure();
 		if (targetLure == null)
 		{
 			return null;

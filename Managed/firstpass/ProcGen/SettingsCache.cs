@@ -261,15 +261,13 @@ namespace ProcGen
 			{
 				return longName;
 			}
-			string filename = RewriteWorldgenPathYaml(longName);
-			FeatureSettings featureSettings = YamlIO.LoadFile<FeatureSettings>(filename);
+			FeatureSettings featureSettings = YamlIO.LoadFile<FeatureSettings>(RewriteWorldgenPathYaml(longName));
 			if (featureSettings != null)
 			{
 				SettingsCache.featureSettings.Add(longName, featureSettings);
 				if (featureSettings.forceBiome != null)
 				{
-					bool test = LoadBiome(featureSettings.forceBiome, errors);
-					DebugUtil.Assert(test, longName, "(feature) referenced a missing biome named", featureSettings.forceBiome);
+					DebugUtil.Assert(LoadBiome(featureSettings.forceBiome, errors), longName, "(feature) referenced a missing biome named", featureSettings.forceBiome);
 				}
 			}
 			else
@@ -297,8 +295,7 @@ namespace ProcGen
 				{
 					text = subworld.overrideName;
 				}
-				string filename = RewriteWorldgenPathYaml(text);
-				SubWorld subWorld2 = YamlIO.LoadFile<SubWorld>(filename);
+				SubWorld subWorld2 = YamlIO.LoadFile<SubWorld>(RewriteWorldgenPathYaml(text));
 				if (subWorld2 != null)
 				{
 					subWorld = subWorld2;

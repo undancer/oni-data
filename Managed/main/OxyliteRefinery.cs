@@ -15,16 +15,12 @@ public class OxyliteRefinery : StateMachineComponent<OxyliteRefinery.StatesInsta
 		{
 			Storage storage = base.smi.master.storage;
 			GameObject gameObject = storage.FindFirst(base.smi.master.emitTag);
-			if (gameObject != null)
+			if (gameObject != null && gameObject.GetComponent<PrimaryElement>().Mass >= base.master.emitMass)
 			{
-				PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
-				if (component.Mass >= base.master.emitMass)
-				{
-					Vector3 position = base.transform.GetPosition() + base.master.dropOffset;
-					position.z = Grid.GetLayerZ(Grid.SceneLayer.Ore);
-					gameObject.transform.SetPosition(position);
-					storage.Drop(gameObject);
-				}
+				Vector3 position = base.transform.GetPosition() + base.master.dropOffset;
+				position.z = Grid.GetLayerZ(Grid.SceneLayer.Ore);
+				gameObject.transform.SetPosition(position);
+				storage.Drop(gameObject);
 			}
 		}
 	}

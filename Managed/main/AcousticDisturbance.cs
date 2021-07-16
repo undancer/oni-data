@@ -36,8 +36,7 @@ public class AcousticDisturbance
 				continue;
 			}
 			Vector2 vector2 = minionIdentity.transform.GetPosition();
-			float num3 = Vector2.SqrMagnitude(vector - vector2);
-			if (num3 <= (float)num2)
+			if (Vector2.SqrMagnitude(vector - vector2) <= (float)num2)
 			{
 				int item = Grid.PosToCell(vector2);
 				if (cellsInRange.Contains(item) && minionIdentity.GetSMI<StaminaMonitor.Instance>().IsSleeping())
@@ -72,9 +71,9 @@ public class AcousticDisturbance
 
 	private static void DestroyEffect(object data)
 	{
-		KBatchedAnimController kBatchedAnimController = (KBatchedAnimController)data;
-		kBatchedAnimController.destroyOnAnimComplete = true;
-		kBatchedAnimController.Play(PostAnim);
+		KBatchedAnimController obj = (KBatchedAnimController)data;
+		obj.destroyOnAnimComplete = true;
+		obj.Play(PostAnim);
 	}
 
 	private static int GetGridDistance(int cell, int center_cell)
@@ -99,27 +98,27 @@ public class AcousticDisturbance
 			int num2 = Grid.CellAbove(cell);
 			int num3 = cell - 1;
 			int num4 = cell + 1;
-			bool flag = Grid.IsValidCell(num) && !Grid.Solid[num];
-			bool flag2 = Grid.IsValidCell(num2) && !Grid.Solid[num2];
-			bool flag3 = Grid.IsValidCell(num3) && !Grid.Solid[num3];
-			bool flag4 = Grid.IsValidCell(num4) && !Grid.Solid[num4];
-			if (flag || flag3)
+			bool num5 = Grid.IsValidCell(num) && !Grid.Solid[num];
+			bool flag = Grid.IsValidCell(num2) && !Grid.Solid[num2];
+			bool flag2 = Grid.IsValidCell(num3) && !Grid.Solid[num3];
+			bool flag3 = Grid.IsValidCell(num4) && !Grid.Solid[num4];
+			if (num5 || flag2)
 			{
 				DetermineCellsInRadius(num - 1, depth2, max_depth, cells_in_range);
 			}
 			DetermineCellsInRadius(num, depth2, max_depth, cells_in_range);
-			if (flag || flag4)
+			if (num5 || flag3)
 			{
 				DetermineCellsInRadius(num + 1, depth2, max_depth, cells_in_range);
 			}
 			DetermineCellsInRadius(num3, depth2, max_depth, cells_in_range);
 			DetermineCellsInRadius(num4, depth2, max_depth, cells_in_range);
-			if (flag2 || flag3)
+			if (flag || flag2)
 			{
 				DetermineCellsInRadius(num2 - 1, depth2, max_depth, cells_in_range);
 			}
 			DetermineCellsInRadius(num2, depth2, max_depth, cellsInRange);
-			if (flag2 || flag4)
+			if (flag || flag3)
 			{
 				DetermineCellsInRadius(num2 + 1, depth2, max_depth, cells_in_range);
 			}

@@ -55,19 +55,19 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 	private Dictionary<string, bool> ownedHats = new Dictionary<string, bool>();
 
 	[Serialize]
-	private float totalExperienceGained = 0f;
+	private float totalExperienceGained;
 
-	private Notification lastSkillNotification = null;
+	private Notification lastSkillNotification;
 
 	private AttributeModifier skillsMoraleExpectationModifier;
 
 	private AttributeModifier skillsMoraleModifier;
 
-	public float DEBUG_PassiveExperienceGained = 0f;
+	public float DEBUG_PassiveExperienceGained;
 
-	public float DEBUG_ActiveExperienceGained = 0f;
+	public float DEBUG_ActiveExperienceGained;
 
-	public float DEBUG_SecondsAlive = 0f;
+	public float DEBUG_SecondsAlive;
 
 	public MinionIdentity GetIdentity => identity;
 
@@ -103,9 +103,7 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 
 	public static int CalculateTotalSkillPointsGained(float experience)
 	{
-		float f = experience / (float)SKILLS.TARGET_SKILLS_CYCLE / 600f;
-		float num = Mathf.Pow(f, 1f / SKILLS.EXPERIENCE_LEVEL_POWER);
-		return Mathf.FloorToInt(num * (float)SKILLS.TARGET_SKILLS_EARNED);
+		return Mathf.FloorToInt(Mathf.Pow(experience / (float)SKILLS.TARGET_SKILLS_CYCLE / 600f, 1f / SKILLS.EXPERIENCE_LEVEL_POWER) * (float)SKILLS.TARGET_SKILLS_EARNED);
 	}
 
 	[OnDeserialized]
@@ -199,7 +197,11 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 
 	public bool HasMasteredSkill(string skillId)
 	{
-		return MasteryBySkillID.ContainsKey(skillId) && MasteryBySkillID[skillId];
+		if (MasteryBySkillID.ContainsKey(skillId))
+		{
+			return MasteryBySkillID[skillId];
+		}
+		return false;
 	}
 
 	public void UpdateUrge()
@@ -230,8 +232,7 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 
 	private void ApplySkillPerks(string skillId)
 	{
-		Skill skill = Db.Get().Skills.Get(skillId);
-		foreach (SkillPerk perk in skill.perks)
+		foreach (SkillPerk perk in Db.Get().Skills.Get(skillId).perks)
 		{
 			if (perk.OnApply != null)
 			{
@@ -242,8 +243,7 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 
 	private void RemoveSkillPerks(string skillId)
 	{
-		Skill skill = Db.Get().Skills.Get(skillId);
-		foreach (SkillPerk perk in skill.perks)
+		foreach (SkillPerk perk in Db.Get().Skills.Get(skillId).perks)
 		{
 			if (perk.OnRemove != null)
 			{
@@ -387,7 +387,11 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 
 	public bool OwnsHat(string hatId)
 	{
-		return ownedHats.ContainsKey(hatId) && ownedHats[hatId];
+		if (ownedHats.ContainsKey(hatId))
+		{
+			return ownedHats[hatId];
+		}
+		return false;
 	}
 
 	public void SkillLearned()
@@ -478,16 +482,12 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 
 	public static float CalculateNextExperienceBar(int current_skill_points)
 	{
-		float f = (float)(current_skill_points + 1) / (float)SKILLS.TARGET_SKILLS_EARNED;
-		float num = Mathf.Pow(f, SKILLS.EXPERIENCE_LEVEL_POWER);
-		return num * (float)SKILLS.TARGET_SKILLS_CYCLE * 600f;
+		return Mathf.Pow((float)(current_skill_points + 1) / (float)SKILLS.TARGET_SKILLS_EARNED, SKILLS.EXPERIENCE_LEVEL_POWER) * (float)SKILLS.TARGET_SKILLS_CYCLE * 600f;
 	}
 
 	public static float CalculatePreviousExperienceBar(int current_skill_points)
 	{
-		float f = (float)current_skill_points / (float)SKILLS.TARGET_SKILLS_EARNED;
-		float num = Mathf.Pow(f, SKILLS.EXPERIENCE_LEVEL_POWER);
-		return num * (float)SKILLS.TARGET_SKILLS_CYCLE * 600f;
+		return Mathf.Pow((float)current_skill_points / (float)SKILLS.TARGET_SKILLS_EARNED, SKILLS.EXPERIENCE_LEVEL_POWER) * (float)SKILLS.TARGET_SKILLS_CYCLE * 600f;
 	}
 
 	private void UpdateExpectations()
@@ -551,8 +551,7 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 			string text = MISC.NOTIFICATIONS.SKILL_POINT_EARNED.NAME.Replace("{Duplicant}", identity.GetProperName());
 			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Plus, text, base.transform, new Vector3(0f, 0.5f, 0f));
 		}
-		StateMachine.Instance instance = new UpgradeFX.Instance(base.gameObject.GetComponent<KMonoBehaviour>(), new Vector3(0f, 0f, -0.1f));
-		instance.StartSM();
+		new UpgradeFX.Instance(base.gameObject.GetComponent<KMonoBehaviour>(), new Vector3(0f, 0f, -0.1f)).StartSM();
 	}
 
 	private void ShowNewSkillPointNotification()
@@ -628,8 +627,7 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 
 	public void RemoveHat()
 	{
-		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
-		RemoveHat(component);
+		RemoveHat(GetComponent<KBatchedAnimController>());
 	}
 
 	public static void RemoveHat(KBatchedAnimController controller)
@@ -712,8 +710,7 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 
 	public static bool AnyMinionHasPerk(string perk, int worldId = -1)
 	{
-		List<MinionResume> list = ((worldId >= 0) ? Components.MinionResumes.GetWorldItems(worldId, checkChildWorlds: true) : Components.MinionResumes.Items);
-		foreach (MinionResume item in list)
+		foreach (MinionResume item in (worldId >= 0) ? Components.MinionResumes.GetWorldItems(worldId, checkChildWorlds: true) : Components.MinionResumes.Items)
 		{
 			if (item.HasPerk(perk))
 			{
@@ -727,11 +724,10 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 	{
 		foreach (MinionResume item in Components.MinionResumes.Items)
 		{
-			if (item == me || !item.HasPerk(perk))
+			if (!(item == me) && item.HasPerk(perk))
 			{
-				continue;
+				return true;
 			}
-			return true;
 		}
 		return false;
 	}

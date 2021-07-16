@@ -291,6 +291,8 @@ public class GameTags
 
 	public static readonly Tag CharmedArtifact = TagManager.Create("CharmedArtifact");
 
+	public static readonly Tag TerrestrialArtifact = TagManager.Create("TerrestrialArtifact");
+
 	public static readonly Tag MiscPickupable = TagManager.Create("MiscPickupable");
 
 	public static readonly Tag CombustibleGas = TagManager.Create("CombustibleGas");
@@ -641,8 +643,6 @@ public class GameTags
 
 	public static readonly Tag NoRocketRefund = TagManager.Create("NoRocketRefund");
 
-	public static readonly Tag DontBlockRockets = TagManager.Create("DontBlockRockets ");
-
 	public static readonly Tag RocketModule = TagManager.Create("RocketModule");
 
 	public static readonly Tag EntityInSpace = TagManager.Create("EntityInSpace");
@@ -654,6 +654,8 @@ public class GameTags
 	public static readonly Tag StoredPrivate = TagManager.Create("StoredPrivate");
 
 	public static readonly Tag Sealed = TagManager.Create("Sealed");
+
+	public static readonly Tag CorrosionProof = TagManager.Create("CorrosionProof");
 
 	public static readonly Tag UnidentifiedSeed = TagManager.Create("UnidentifiedSeed");
 

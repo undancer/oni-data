@@ -13,7 +13,7 @@ public class ClusterTraveler : KMonoBehaviour, ISim200ms
 	private ClusterGridEntity m_clusterGridEntity;
 
 	[Serialize]
-	private float m_movePotential = 0f;
+	private float m_movePotential;
 
 	public Func<float> getSpeedCB;
 
@@ -70,8 +70,7 @@ public class ClusterTraveler : KMonoBehaviour, ISim200ms
 
 	public float RemainingTravelDistance()
 	{
-		int num = RemainingTravelNodes();
-		return (float)num * 600f - m_movePotential;
+		return (float)RemainingTravelNodes() * 600f - m_movePotential;
 	}
 
 	public int RemainingTravelNodes()
@@ -111,10 +110,15 @@ public class ClusterTraveler : KMonoBehaviour, ISim200ms
 		{
 			return;
 		}
-		AxialI location = m_clusterGridEntity.Location;
+		_ = m_clusterGridEntity.Location;
 		if (flag)
 		{
-			bool flag3 = flag2 && m_destinationSelector.requireLaunchPadOnAsteroidDestination;
+			if (flag2)
+			{
+				_ = m_destinationSelector.requireLaunchPadOnAsteroidDestination;
+			}
+			else
+				_ = 0;
 			if (!flag2 || CurrentPath.Count > 1)
 			{
 				float num = dt * getSpeedCB();

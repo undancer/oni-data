@@ -72,11 +72,11 @@ public class SteamTurbine : Generator
 
 	public class Instance : GameStateMachine<States, Instance, SteamTurbine, object>.GameInstance
 	{
-		public bool insufficientMass = false;
+		public bool insufficientMass;
 
-		public bool insufficientTemperature = false;
+		public bool insufficientTemperature;
 
-		public bool buildingTooHot = false;
+		public bool buildingTooHot;
 
 		private Guid inputBlockedHandle = Guid.Empty;
 
@@ -115,10 +115,10 @@ public class SteamTurbine : Generator
 		public void UpdateState(float dt)
 		{
 			bool flag = CanSteamFlow(ref insufficientMass, ref insufficientTemperature);
-			bool flag2 = IsTooHot(ref buildingTooHot);
+			bool num = IsTooHot(ref buildingTooHot);
 			UpdateStatusItems();
 			StateMachine.BaseState currentState = base.smi.GetCurrentState();
-			if (flag2)
+			if (num)
 			{
 				if (currentState != base.sm.operational.tooHot)
 				{
@@ -161,7 +161,11 @@ public class SteamTurbine : Generator
 			}
 			insufficient_mass = num < base.master.requiredMass;
 			insufficient_temperature = num2 < base.master.minActiveTemperature;
-			return !insufficient_mass && !insufficient_temperature;
+			if (!insufficient_mass)
+			{
+				return !insufficient_temperature;
+			}
+			return false;
 		}
 
 		public void UpdateStatusItems()
@@ -221,16 +225,16 @@ public class SteamTurbine : Generator
 	private static readonly HashedString TINT_SYMBOL = new HashedString("meter_fill");
 
 	[Serialize]
-	private float storedMass = 0f;
+	private float storedMass;
 
 	[Serialize]
-	private float storedTemperature = 0f;
+	private float storedTemperature;
 
 	[Serialize]
 	private byte diseaseIdx = byte.MaxValue;
 
 	[Serialize]
-	private int diseaseCount = 0;
+	private int diseaseCount;
 
 	private static StatusItem inputBlockedStatusItem;
 
@@ -317,9 +321,9 @@ public class SteamTurbine : Generator
 	{
 		float mass = pumpKGRate * dt / (float)srcCells.Length;
 		int[] array = srcCells;
-		foreach (int gameCell in array)
+		for (int i = 0; i < array.Length; i++)
 		{
-			SimMessages.ConsumeMass(callbackIdx: Game.Instance.massConsumedCallbackManager.Add(OnSimConsumeCallback, this, "SteamTurbineConsume").index, gameCell: gameCell, element: srcElem, mass: mass, radius: 1);
+			SimMessages.ConsumeMass(array[i], callbackIdx: Game.Instance.massConsumedCallbackManager.Add(OnSimConsumeCallback, this, "SteamTurbineConsume").index, element: srcElem, mass: mass, radius: 1);
 		}
 	}
 
@@ -366,9 +370,11 @@ public class SteamTurbine : Generator
 				diseaseInfo.idx = diseaseIdx;
 				diseaseInfo.count = diseaseCount;
 				SimUtil.DiseaseInfo a = diseaseInfo;
-				diseaseInfo = default(SimUtil.DiseaseInfo);
-				diseaseInfo.idx = info.diseaseIdx;
-				diseaseInfo.count = info.diseaseCount;
+				diseaseInfo = new SimUtil.DiseaseInfo
+				{
+					idx = info.diseaseIdx,
+					count = info.diseaseCount
+				};
 				SimUtil.DiseaseInfo b = diseaseInfo;
 				SimUtil.DiseaseInfo diseaseInfo2 = SimUtil.CalculateFinalDiseaseInfo(a, b);
 				diseaseIdx = diseaseInfo2.idx;
@@ -445,18 +451,16 @@ public class SteamTurbine : Generator
 				if (component.Mass > num)
 				{
 					num = Mathf.Min(component.Mass, pumpKGRate * dt);
-					float num2 = JoulesToGenerate(component);
-					value = Mathf.Min(num2 * (num / pumpKGRate), base.WattageRating * dt);
-					float num3 = HeatFromCoolingSteam(component);
-					float num4 = num3 * (num / component.Mass);
-					float num5 = num / component.Mass;
-					int num6 = Mathf.RoundToInt((float)component.DiseaseCount * num5);
+					value = Mathf.Min(JoulesToGenerate(component) * (num / pumpKGRate), base.WattageRating * dt);
+					float num2 = HeatFromCoolingSteam(component) * (num / component.Mass);
+					float num3 = num / component.Mass;
+					int num4 = Mathf.RoundToInt((float)component.DiseaseCount * num3);
 					component.Mass -= num;
-					component.ModifyDiseaseCount(-num6, "SteamTurbine.EnergySim200ms");
+					component.ModifyDiseaseCount(-num4, "SteamTurbine.EnergySim200ms");
 					float display_dt = ((lastSampleTime > 0f) ? (Time.time - lastSampleTime) : 1f);
 					lastSampleTime = Time.time;
-					GameComps.StructureTemperatures.ProduceEnergy(structureTemperature, num4 * wasteHeatToTurbinePercent, BUILDINGS.PREFABS.STEAMTURBINE2.HEAT_SOURCE, display_dt);
-					liquidStorage.AddLiquid(destElem, num, outputElementTemperature, component.DiseaseIdx, num6, keep_zero_mass: true);
+					GameComps.StructureTemperatures.ProduceEnergy(structureTemperature, num2 * wasteHeatToTurbinePercent, BUILDINGS.PREFABS.STEAMTURBINE2.HEAT_SOURCE, display_dt);
+					liquidStorage.AddLiquid(destElem, num, outputElementTemperature, component.DiseaseIdx, num4, keep_zero_mass: true);
 				}
 			}
 		}
@@ -478,8 +482,7 @@ public class SteamTurbine : Generator
 
 	public float JoulesToGenerate(PrimaryElement steam)
 	{
-		float temperature = steam.Temperature;
-		float num = (temperature - outputElementTemperature) / (idealSourceElementTemperature - outputElementTemperature);
+		float num = (steam.Temperature - outputElementTemperature) / (idealSourceElementTemperature - outputElementTemperature);
 		return base.WattageRating * (float)Math.Pow(num, 1.0);
 	}
 }

@@ -8,7 +8,7 @@ public class TransformingPlant : KMonoBehaviour
 
 	public Func<object, bool> eventDataCondition;
 
-	public bool useGrowthTimeRatio = false;
+	public bool useGrowthTimeRatio;
 
 	public bool keepPlantablePlotStorage = true;
 
@@ -37,8 +37,7 @@ public class TransformingPlant : KMonoBehaviour
 		{
 			return;
 		}
-		GameObject prefab = Assets.GetPrefab(transformPlantId.ToTag());
-		GameObject gameObject = GameUtil.KInstantiate(prefab, Grid.SceneLayer.BuildingBack);
+		GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(transformPlantId.ToTag()), Grid.SceneLayer.BuildingBack);
 		gameObject.transform.SetPosition(base.transform.GetPosition());
 		MutantPlant component = GetComponent<MutantPlant>();
 		MutantPlant component2 = gameObject.GetComponent<MutantPlant>();

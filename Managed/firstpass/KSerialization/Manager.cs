@@ -33,9 +33,9 @@ namespace KSerialization
 			if (type == null)
 			{
 				Assembly[] array = assemblies;
-				foreach (Assembly assembly in array)
+				for (int i = 0; i < array.Length; i++)
 				{
-					type = assembly.GetType(type_name);
+					type = array[i].GetType(type_name);
 					if (type != null)
 					{
 						break;
@@ -168,37 +168,33 @@ namespace KSerialization
 
 		public static bool HasDeserializationMapping(Type type)
 		{
-			return GetDeserializationTemplate(type) != null && GetSerializationTemplate(type) != null;
+			if (GetDeserializationTemplate(type) != null)
+			{
+				return GetSerializationTemplate(type) != null;
+			}
+			return false;
 		}
 
 		public static DeserializationMapping GetDeserializationMapping(Type type)
 		{
-			DeserializationTemplate deserializationTemplate = GetDeserializationTemplate(type);
-			if (deserializationTemplate == null)
-			{
-				throw new ArgumentException("Tried to deserialize a class named: " + type.GetKTypeString() + " but no such class exists");
-			}
+			DeserializationTemplate dtemplate = GetDeserializationTemplate(type) ?? throw new ArgumentException("Tried to deserialize a class named: " + type.GetKTypeString() + " but no such class exists");
 			SerializationTemplate serializationTemplate = GetSerializationTemplate(type);
 			if (serializationTemplate == null)
 			{
 				throw new ArgumentException("Tried to deserialize into a class named: " + type.GetKTypeString() + " but no such class exists");
 			}
-			return GetMapping(deserializationTemplate, serializationTemplate);
+			return GetMapping(dtemplate, serializationTemplate);
 		}
 
 		public static DeserializationMapping GetDeserializationMapping(string type_name)
 		{
-			DeserializationTemplate deserializationTemplate = GetDeserializationTemplate(type_name);
-			if (deserializationTemplate == null)
-			{
-				throw new ArgumentException("Tried to deserialize a class named: " + type_name + " but no such class exists");
-			}
+			DeserializationTemplate dtemplate = GetDeserializationTemplate(type_name) ?? throw new ArgumentException("Tried to deserialize a class named: " + type_name + " but no such class exists");
 			SerializationTemplate serializationTemplate = GetSerializationTemplate(type_name);
 			if (serializationTemplate == null)
 			{
 				throw new ArgumentException("Tried to deserialize into a class named: " + type_name + " but no such class exists");
 			}
-			return GetMapping(deserializationTemplate, serializationTemplate);
+			return GetMapping(dtemplate, serializationTemplate);
 		}
 
 		private static DeserializationMapping GetMapping(DeserializationTemplate dtemplate, SerializationTemplate stemplate)

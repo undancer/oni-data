@@ -36,8 +36,7 @@ public class ProgressBarSideScreen : SideScreenContent, IRender1000ms
 		progressBar.SetFillPercentage(targetObject.GetProgressBarFillPercentage());
 		progressBar.label.SetText(targetObject.GetProgressBarLabel());
 		label.SetText(targetObject.GetProgressBarTitleLabel());
-		ToolTip componentInChildren = progressBar.GetComponentInChildren<ToolTip>();
-		componentInChildren.SetSimpleTooltip(targetObject.GetProgressBarTooltip());
+		progressBar.GetComponentInChildren<ToolTip>().SetSimpleTooltip(targetObject.GetProgressBarTooltip());
 	}
 
 	public void Render1000ms(float dt)

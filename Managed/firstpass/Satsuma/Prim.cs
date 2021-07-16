@@ -38,8 +38,7 @@ namespace Satsuma
 			PriorityQueue<Node, TCost> priorityQueue = new PriorityQueue<Node, TCost>();
 			HashSet<Node> hashSet = new HashSet<Node>();
 			Dictionary<Node, Arc> dictionary = new Dictionary<Node, Arc>();
-			ConnectedComponents connectedComponents = new ConnectedComponents(Graph, ConnectedComponents.Flags.CreateComponents);
-			foreach (HashSet<Node> component in connectedComponents.Components)
+			foreach (HashSet<Node> component in new ConnectedComponents(Graph, ConnectedComponents.Flags.CreateComponents).Components)
 			{
 				Node node = component.First();
 				hashSet.Add(node);
@@ -50,7 +49,6 @@ namespace Satsuma
 					priorityQueue[node2] = Cost(item);
 				}
 			}
-			connectedComponents = null;
 			while (priorityQueue.Count != 0)
 			{
 				Node node3 = priorityQueue.Peek();

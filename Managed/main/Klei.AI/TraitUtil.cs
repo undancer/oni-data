@@ -29,8 +29,7 @@ namespace Klei.AI
 				{
 					list.Add(Db.Get().ChoreGroups.Get(id2));
 				}
-				Trait trait = Db.Get().CreateTrait(id, name, desc, null, should_save: true, list.ToArray(), positiveTrait, is_valid_starter_trait: true);
-				trait.Add(new AttributeModifier(attributeId, delta, name));
+				Db.Get().CreateTrait(id, name, desc, null, should_save: true, list.ToArray(), positiveTrait, is_valid_starter_trait: true).Add(new AttributeModifier(attributeId, delta, name));
 			};
 		}
 
@@ -58,8 +57,7 @@ namespace Klei.AI
 		{
 			return delegate
 			{
-				Trait trait = Db.Get().CreateTrait(id, name, desc, null, should_save: true, null, positiveTrait, is_valid_starter_trait: true);
-				trait.AddIgnoredEffects(ignoredEffects);
+				Db.Get().CreateTrait(id, name, desc, null, should_save: true, null, positiveTrait, is_valid_starter_trait: true).AddIgnoredEffects(ignoredEffects);
 			};
 		}
 

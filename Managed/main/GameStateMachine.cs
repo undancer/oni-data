@@ -152,8 +152,7 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 		public override void Unregister(StateMachineInstanceType smi, Context context)
 		{
 			base.Unregister(smi, context);
-			GameObject x = target.Get(smi);
-			if (x != null)
+			if (target.Get(smi) != null)
 			{
 				target.Get(smi).Unsubscribe(context.handlerId);
 			}
@@ -287,8 +286,7 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 			{
 				if (parent != null)
 				{
-					State state = (State)parent;
-					return state.GetStateTarget();
+					return ((State)parent).GetStateTarget();
 				}
 				TargetParameter targetParameter = sm.stateTarget;
 				if (targetParameter == null)
@@ -527,8 +525,7 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 					{
 						Debug.LogError("Trying to add missing override anims:" + anim_file);
 					}
-					KAnimControllerBase kAnimControllerBase = state_target.Get<KAnimControllerBase>(smi);
-					kAnimControllerBase.AddAnimOverrides(anim2, priority);
+					state_target.Get<KAnimControllerBase>(smi).AddAnimOverrides(anim2, priority);
 				}
 			}, delegate(StateMachineInstanceType smi)
 			{
@@ -578,14 +575,12 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 			{
 				if (condition == null || condition(smi))
 				{
-					LoopingSounds component2 = state_target.Get(smi).GetComponent<LoopingSounds>();
-					component2.StartSound(event_name, pause_on_game_pause, enable_culling, enable_camera_scaled_position);
+					state_target.Get(smi).GetComponent<LoopingSounds>().StartSound(event_name, pause_on_game_pause, enable_culling, enable_camera_scaled_position);
 				}
 			});
 			Exit("StopLoopingSound( " + event_name + " )", delegate(StateMachineInstanceType smi)
 			{
-				LoopingSounds component = state_target.Get(smi).GetComponent<LoopingSounds>();
-				component.StopSound(event_name);
+				state_target.Get(smi).GetComponent<LoopingSounds>().StopSound(event_name);
 			});
 			return this;
 		}
@@ -600,16 +595,14 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 				{
 					string text = event_name_callback(smi);
 					smi.dataTable[data_idx] = text;
-					LoopingSounds component2 = state_target.Get(smi).GetComponent<LoopingSounds>();
-					component2.StartSound(text);
+					state_target.Get(smi).GetComponent<LoopingSounds>().StartSound(text);
 				}
 			});
 			Exit("StopLoopingSound( " + state_label + " )", delegate(StateMachineInstanceType smi)
 			{
 				if (smi.dataTable[data_idx] != null)
 				{
-					LoopingSounds component = state_target.Get(smi).GetComponent<LoopingSounds>();
-					component.StopSound((string)smi.dataTable[data_idx]);
+					state_target.Get(smi).GetComponent<LoopingSounds>().StopSound((string)smi.dataTable[data_idx]);
 					smi.dataTable[data_idx] = null;
 				}
 			});
@@ -1031,8 +1024,7 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 			});
 			Exit("DisableFX()", delegate(StateMachineInstanceType smi)
 			{
-				object obj = smi.dataTable[data_idx];
-				Instance instance = (Instance)obj;
+				Instance instance = (Instance)smi.dataTable[data_idx];
 				smi.dataTable[data_idx] = null;
 				instance?.StopSM("ToggleFX.Exit");
 			});
@@ -1378,9 +1370,7 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 			TargetParameter state_target = GetStateTarget();
 			Enter("Trigger(" + evt.ToString() + ")", delegate(StateMachineInstanceType smi)
 			{
-				GameObject go = state_target.Get(smi);
-				object data = ((callback != null) ? callback(smi) : null);
-				go.Trigger((int)evt, data);
+				state_target.Get(smi).Trigger(data: (callback != null) ? callback(smi) : null, hash: (int)evt);
 			});
 			return this;
 		}
@@ -1505,8 +1495,7 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 			{
 				if (validate_callback(smi))
 				{
-					Worker worker = state_target.Get<Worker>(smi);
-					switch (worker.Work(dt))
+					switch (state_target.Get<Worker>(smi).Work(dt))
 					{
 					case Worker.WorkResult.Success:
 						smi.GoTo(success_state);
@@ -1534,8 +1523,7 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 			ToggleWork(typeof(WorkableType).Name, delegate(StateMachineInstanceType smi)
 			{
 				Workable workable = source_target.Get<WorkableType>(smi);
-				Worker worker = state_target.Get<Worker>(smi);
-				worker.StartWork(new Worker.StartWorkInfo(workable));
+				state_target.Get<Worker>(smi).StartWork(new Worker.StartWorkInfo(workable));
 			}, (StateMachineInstanceType smi) => (UnityEngine.Object)source_target.Get<WorkableType>(smi) != (UnityEngine.Object)null && (is_valid_cb == null || is_valid_cb(smi)), success_state, failure_state);
 			return this;
 		}
@@ -1600,8 +1588,7 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 			{
 				Notification notification2 = callback(smi);
 				smi.dataTable[data_idx] = notification2;
-				Notifier notifier2 = state_target.AddOrGet<Notifier>(smi);
-				notifier2.Add(notification2);
+				state_target.AddOrGet<Notifier>(smi).Add(notification2);
 			});
 			Exit("DisableNotification()", delegate(StateMachineInstanceType smi)
 			{
@@ -1864,21 +1851,20 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 			Enter("MoveTo()", delegate(StateMachineInstanceType smi)
 			{
 				int cell2 = cell_callback(smi);
-				Navigator navigator2 = state_target.Get<Navigator>(smi);
+				Navigator navigator = state_target.Get<Navigator>(smi);
 				CellOffset[] offsets = default_offset;
 				if (cell_offsets_callback != null)
 				{
 					offsets = cell_offsets_callback(smi);
 				}
-				navigator2.GoTo(cell2, offsets);
+				navigator.GoTo(cell2, offsets);
 			});
 			if (update_cell)
 			{
 				Update("MoveTo()", delegate(StateMachineInstanceType smi, float dt)
 				{
 					int cell = cell_callback(smi);
-					Navigator navigator = state_target.Get<Navigator>(smi);
-					navigator.UpdateTarget(cell);
+					state_target.Get<Navigator>(smi).UpdateTarget(cell);
 				});
 			}
 			Exit("StopMoving()", delegate(StateMachineInstanceType smi)
@@ -1905,8 +1891,7 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 				}
 				else
 				{
-					GameObject gameObject = state_target.Get(smi);
-					Navigator component = gameObject.GetComponent<Navigator>();
+					Navigator component = state_target.Get(smi).GetComponent<Navigator>();
 					if (offsets == null)
 					{
 						offsets = approachable.GetOffsets();
@@ -1932,8 +1917,7 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 					if (approachable != null)
 					{
 						float target_x = approachable.transform.GetPosition().x + x_offset;
-						Facing facing = state_target.Get<Facing>(smi);
-						facing.Face(target_x);
+						state_target.Get<Facing>(smi).Face(target_x);
 					}
 				}
 			});
@@ -2271,10 +2255,8 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 				Storage storage = carrier.Get<Storage>(smi);
 				GameObject gameObject = item.Get(smi);
 				storage.Drop(gameObject);
-				Transform transform = drop_target.Get<Transform>(smi);
-				int cell = Grid.PosToCell(transform.GetPosition());
-				int cell2 = Grid.CellAbove(cell);
-				gameObject.transform.SetPosition(Grid.CellToPosCCC(cell2, Grid.SceneLayer.Move));
+				int cell = Grid.CellAbove(Grid.PosToCell(drop_target.Get<Transform>(smi).GetPosition()));
+				gameObject.transform.SetPosition(Grid.CellToPosCCC(cell, Grid.SceneLayer.Move));
 				smi.GoTo(success_state);
 			});
 			return this;
@@ -2335,7 +2317,15 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 			TemperatureVulnerable component = plant.GetComponent<TemperatureVulnerable>();
 			EntombVulnerable component2 = plant.GetComponent<EntombVulnerable>();
 			PressureVulnerable component3 = plant.GetComponent<PressureVulnerable>();
-			return (component == null || !component.IsLethal) && (component2 == null || !component2.GetEntombed) && (component3 == null || !component3.IsLethal);
+			if ((component == null || !component.IsLethal) && (component2 == null || !component2.GetEntombed))
+			{
+				if (!(component3 == null))
+				{
+					return !component3.IsLethal;
+				}
+				return true;
+			}
+			return false;
 		}
 
 		private static bool isLethalTemperature(GameObject plant)

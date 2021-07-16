@@ -38,20 +38,18 @@ public class RadiationDiagnostic : ColonyDiagnostic
 		{
 			result.opinion = DiagnosticResult.Opinion.Normal;
 			result.Message = UI.COLONY_DIAGNOSTICS.NO_MINIONS;
+			return result;
 		}
-		else
+		result.opinion = DiagnosticResult.Opinion.Normal;
+		result.Message = UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.NORMAL;
+		foreach (MinionIdentity item in worldItems)
 		{
-			result.opinion = DiagnosticResult.Opinion.Normal;
-			result.Message = UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.NORMAL;
-			foreach (MinionIdentity item in worldItems)
+			RadiationMonitor.Instance sMI = item.GetSMI<RadiationMonitor.Instance>();
+			if (sMI.sm.isSick.Get(sMI))
 			{
-				RadiationMonitor.Instance sMI = item.GetSMI<RadiationMonitor.Instance>();
-				if (sMI.sm.isSick.Get(sMI))
-				{
-					result.opinion = DiagnosticResult.Opinion.Concern;
-					result.Message = UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA_RADIATION_SICKNESS.FAIL;
-					result.clickThroughTarget = new Tuple<Vector3, GameObject>(item.gameObject.transform.position, item.gameObject);
-				}
+				result.opinion = DiagnosticResult.Opinion.Concern;
+				result.Message = UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA_RADIATION_SICKNESS.FAIL;
+				result.clickThroughTarget = new Tuple<Vector3, GameObject>(item.gameObject.transform.position, item.gameObject);
 			}
 		}
 		return result;

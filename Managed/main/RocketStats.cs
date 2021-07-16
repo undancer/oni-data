@@ -145,8 +145,7 @@ public class RocketStats
 			{
 				continue;
 			}
-			Dictionary<Tag, float> oxidizersAvailable = component.GetOxidizersAvailable();
-			foreach (KeyValuePair<Tag, float> item2 in oxidizersAvailable)
+			foreach (KeyValuePair<Tag, float> item2 in component.GetOxidizersAvailable())
 			{
 				if (dictionary.ContainsKey(item2.Key))
 				{
@@ -165,13 +164,11 @@ public class RocketStats
 		{
 			return 0f;
 		}
-		float num3 = num / num2;
-		return num3 * 100f;
+		return num / num2 * 100f;
 	}
 
 	public float GetTotalThrust()
 	{
-		float num = 0f;
 		float totalFuel = GetTotalFuel();
 		float totalOxidizer = GetTotalOxidizer();
 		float averageOxidizerEfficiency = GetAverageOxidizerEfficiency();
@@ -180,8 +177,7 @@ public class RocketStats
 		{
 			return 0f;
 		}
-		num = (mainEngine.requireOxidizer ? (Mathf.Min(totalFuel, totalOxidizer) * (mainEngine.efficiency * (averageOxidizerEfficiency / 100f))) : (totalFuel * mainEngine.efficiency));
-		return num + GetBoosterThrust();
+		return (mainEngine.requireOxidizer ? (Mathf.Min(totalFuel, totalOxidizer) * (mainEngine.efficiency * (averageOxidizerEfficiency / 100f))) : (totalFuel * mainEngine.efficiency)) + GetBoosterThrust();
 	}
 
 	public float GetBoosterThrust()
@@ -218,7 +214,7 @@ public class RocketStats
 			rocketEngine = item.GetComponent<RocketEngine>();
 			if (rocketEngine != null && rocketEngine.mainEngine)
 			{
-				break;
+				return rocketEngine;
 			}
 		}
 		return rocketEngine;

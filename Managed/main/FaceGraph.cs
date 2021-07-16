@@ -86,14 +86,12 @@ public class FaceGraph : KMonoBehaviour
 		}
 		if (m_blinkMonitor.IsNullOrStopped() || !m_blinkMonitor.IsBlinking())
 		{
-			Accessory accessory = m_accessorizer.GetAccessory(Db.Get().AccessorySlots.Eyes);
-			KAnim.Build.Symbol symbol = accessory.symbol;
+			KAnim.Build.Symbol symbol = m_accessorizer.GetAccessory(Db.Get().AccessorySlots.Eyes).symbol;
 			ApplyShape(symbol, m_controller, anim, ANIM_HASH_SNAPTO_EYES, should_use_sideways_symbol);
 		}
 		if (m_speechMonitor.IsNullOrStopped() || !m_speechMonitor.IsPlayingSpeech())
 		{
-			Accessory accessory2 = m_accessorizer.GetAccessory(Db.Get().AccessorySlots.Mouth);
-			KAnim.Build.Symbol symbol2 = accessory2.symbol;
+			KAnim.Build.Symbol symbol2 = m_accessorizer.GetAccessory(Db.Get().AccessorySlots.Mouth).symbol;
 			ApplyShape(symbol2, m_controller, anim, ANIM_HASH_SNAPTO_MOUTH, should_use_sideways_symbol);
 		}
 		else
@@ -153,8 +151,7 @@ public class FaceGraph : KMonoBehaviour
 			KAnim.Anim.Frame frame = anim.GetFrame(shapes_file.GetData().build.batchTag, 0);
 			for (int j = 0; j < frame.numElements; j++)
 			{
-				KBatchGroupData batchGroupData = KAnimBatchManager.Instance().GetBatchGroupData(shapes_file.GetData().animBatchTag);
-				frameElement = batchGroupData.GetFrameElement(frame.firstElementIdx + j);
+				frameElement = KAnimBatchManager.Instance().GetBatchGroupData(shapes_file.GetData().animBatchTag).GetFrameElement(frame.firstElementIdx + j);
 				if (!(frameElement.symbol != symbol_name_in_shape_file))
 				{
 					if (flag2 || !should_use_sideways_symbol)
@@ -175,8 +172,7 @@ public class FaceGraph : KMonoBehaviour
 			DebugUtil.Assert(test: false, "Could not find shape element for shape:" + HashCache.Get().Get(variation_symbol.hash));
 		}
 		KAnim.Build.Symbol symbol = KAnimBatchManager.Instance().GetBatchGroupData(controller.batchGroupID).GetSymbol(symbol_name_in_shape_file);
-		KBatchGroupData batchGroupData2 = KAnimBatchManager.Instance().GetBatchGroupData(variation_symbol.build.batchTag);
-		KAnim.Build.SymbolFrameInstance symbol_frame_instance = batchGroupData2.symbolFrameInstances[variation_symbol.firstFrameIdx + frameElement.frame];
+		KAnim.Build.SymbolFrameInstance symbol_frame_instance = KAnimBatchManager.Instance().GetBatchGroupData(variation_symbol.build.batchTag).symbolFrameInstances[variation_symbol.firstFrameIdx + frameElement.frame];
 		symbol_frame_instance.buildImageIdx = m_symbolOverrideController.GetAtlasIdx(variation_symbol.build.GetTexture(0));
 		controller.SetSymbolOverride(symbol.firstFrameIdx, ref symbol_frame_instance);
 	}

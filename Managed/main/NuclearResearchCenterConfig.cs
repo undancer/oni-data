@@ -20,19 +20,19 @@ public class NuclearResearchCenterConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("NuclearResearchCenter", 5, 3, "material_research_centre_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 120f;
-		buildingDef.ExhaustKilowattsWhenActive = 0.5f;
-		buildingDef.SelfHeatKilowattsWhenActive = 4f;
-		buildingDef.UseHighEnergyParticleInputPort = true;
-		buildingDef.HighEnergyParticleInputOffset = new CellOffset(-2, 1);
-		buildingDef.ViewMode = OverlayModes.Radiation.ID;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.AudioSize = "large";
-		buildingDef.Deprecated = !Sim.IsRadiationEnabled();
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("NuclearResearchCenter", 5, 3, "material_research_centre_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.NONE);
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 120f;
+		obj.ExhaustKilowattsWhenActive = 0.5f;
+		obj.SelfHeatKilowattsWhenActive = 4f;
+		obj.UseHighEnergyParticleInputPort = true;
+		obj.HighEnergyParticleInputOffset = new CellOffset(-2, 1);
+		obj.ViewMode = OverlayModes.Radiation.ID;
+		obj.AudioCategory = "Metal";
+		obj.AudioSize = "large";
+		obj.Deprecated = !Sim.IsRadiationEnabled();
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.RadiationIDs, "NuclearResearchCenter");
-		return buildingDef;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

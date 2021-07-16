@@ -12,23 +12,22 @@ public class PropGravitasWallConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("PropGravitasWall", 1, 1, "gravitas_walls_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.NotInTiles, noise: NOISE_POLLUTION.NONE, decor: DECOR.BONUS.TIER0);
-		buildingDef.PermittedRotations = PermittedRotations.R360;
-		buildingDef.Entombable = false;
-		buildingDef.Floodable = false;
-		buildingDef.Overheatable = false;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.BaseTimeUntilRepair = -1f;
-		buildingDef.DefaultAnimState = "off";
-		buildingDef.ObjectLayer = ObjectLayer.Backwall;
-		buildingDef.SceneLayer = Grid.SceneLayer.Backwall;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("PropGravitasWall", 1, 1, "gravitas_walls_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.NotInTiles, noise: NOISE_POLLUTION.NONE, decor: DECOR.BONUS.TIER0);
+		obj.PermittedRotations = PermittedRotations.R360;
+		obj.Entombable = false;
+		obj.Floodable = false;
+		obj.Overheatable = false;
+		obj.AudioCategory = "Metal";
+		obj.BaseTimeUntilRepair = -1f;
+		obj.DefaultAnimState = "off";
+		obj.ObjectLayer = ObjectLayer.Backwall;
+		obj.SceneLayer = Grid.SceneLayer.Backwall;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
-		AnimTileable animTileable = go.AddOrGet<AnimTileable>();
-		animTileable.objectLayer = ObjectLayer.Backwall;
+		go.AddOrGet<AnimTileable>().objectLayer = ObjectLayer.Backwall;
 		go.AddComponent<ZoneTile>();
 		go.GetComponent<PrimaryElement>().SetElement(SimHashes.Glass);
 		go.GetComponent<PrimaryElement>().Temperature = 273f;

@@ -12,7 +12,7 @@ public class AutoStorageDropper : GameStateMachine<AutoStorageDropper, AutoStora
 
 		public float maxRate = float.MaxValue;
 
-		public bool onlyWhenOperational = false;
+		public bool onlyWhenOperational;
 	}
 
 	public new class Instance : GameInstance

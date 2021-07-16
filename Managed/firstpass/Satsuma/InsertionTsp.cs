@@ -54,9 +54,7 @@ namespace Satsuma
 
 		private double PriorityFromCost(double c)
 		{
-			TspSelectionRule selectionRule = SelectionRule;
-			TspSelectionRule tspSelectionRule = selectionRule;
-			if (tspSelectionRule == TspSelectionRule.Farthest)
+			if (SelectionRule == TspSelectionRule.Farthest)
 			{
 				return 0.0 - c;
 			}

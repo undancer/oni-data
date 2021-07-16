@@ -106,33 +106,32 @@ public class PrioritizableRenderer
 				vertices[1 + num] = new Vector3(vector.x - vector2.x, vector.y + vector2.y, z);
 				vertices[2 + num] = new Vector3(vector.x + vector2.x, vector.y - vector2.y, z);
 				vertices[3 + num] = new Vector3(vector.x + vector2.x, vector.y + vector2.y, z);
-				float num2 = 0.1f;
 				PrioritySetting masterPriority = prioritizable2.GetMasterPriority();
-				float num3 = -1f;
+				float num2 = -1f;
 				if (masterPriority.priority_class >= PriorityScreen.PriorityClass.high)
 				{
-					num3 += 9f;
+					num2 += 9f;
 				}
 				if (masterPriority.priority_class >= PriorityScreen.PriorityClass.topPriority)
 				{
-					num3 += 0f;
+					num2 += 0f;
 				}
-				num3 += (float)masterPriority.priority_value;
-				float num4 = num2 * num3;
-				float num5 = 0f;
-				float num6 = num2;
-				float num7 = 1f;
-				uvs[num] = new Vector2(num4, num5);
-				uvs[1 + num] = new Vector2(num4, num5 + num7);
-				uvs[2 + num] = new Vector2(num4 + num6, num5);
-				uvs[3 + num] = new Vector2(num4 + num6, num5 + num7);
-				int num8 = 6 * i;
-				triangles[num8] = num;
-				triangles[1 + num8] = num + 1;
-				triangles[2 + num8] = num + 2;
-				triangles[3 + num8] = num + 2;
-				triangles[4 + num8] = num + 1;
-				triangles[5 + num8] = num + 3;
+				num2 += (float)masterPriority.priority_value;
+				float num3 = 0.1f * num2;
+				float num4 = 0f;
+				float num5 = 0.1f;
+				float num6 = 1f;
+				uvs[num] = new Vector2(num3, num4);
+				uvs[1 + num] = new Vector2(num3, num4 + num6);
+				uvs[2 + num] = new Vector2(num3 + num5, num4);
+				uvs[3 + num] = new Vector2(num3 + num5, num4 + num6);
+				int num7 = 6 * i;
+				triangles[num7] = num;
+				triangles[1 + num7] = num + 1;
+				triangles[2 + num7] = num + 2;
+				triangles[3 + num7] = num + 2;
+				triangles[4 + num7] = num + 1;
+				triangles[5 + num7] = num + 3;
 			}
 			mesh.Clear();
 			mesh.vertices = vertices;

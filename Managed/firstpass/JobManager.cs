@@ -68,8 +68,7 @@ public class JobManager
 
 		public static void ThreadMain(object data)
 		{
-			WorkerThread workerThread = (WorkerThread)data;
-			workerThread.Run();
+			((WorkerThread)data).Run();
 		}
 	}
 
@@ -87,7 +86,7 @@ public class JobManager
 
 	private ManualResetEvent manualResetEvent = new ManualResetEvent(initialState: false);
 
-	private static bool runSingleThreaded = false;
+	private static bool runSingleThreaded;
 
 	public bool isShuttingDown
 	{

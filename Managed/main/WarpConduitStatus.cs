@@ -6,25 +6,25 @@ public static class WarpConduitStatus
 
 	public static void UpdateWarpConduitsOperational(GameObject sender, GameObject receiver)
 	{
-		bool flag = sender != null && sender.GetComponent<Activatable>().IsActivated;
-		bool flag2 = receiver != null && receiver.GetComponent<Activatable>().IsActivated;
-		bool value = flag && flag2;
-		int num = 0;
+		bool num = sender != null && sender.GetComponent<Activatable>().IsActivated;
+		bool flag = receiver != null && receiver.GetComponent<Activatable>().IsActivated;
+		bool value = num && flag;
+		int num2 = 0;
+		if (num)
+		{
+			num2++;
+		}
 		if (flag)
 		{
-			num++;
-		}
-		if (flag2)
-		{
-			num++;
+			num2++;
 		}
 		if (sender != null)
 		{
 			sender.GetComponent<Operational>().SetFlag(warpConnectedFlag, value);
-			if (num != 2)
+			if (num2 != 2)
 			{
 				sender.GetComponent<KSelectable>().RemoveStatusItem(Db.Get().BuildingStatusItems.WarpConduitPartnerDisabled);
-				sender.GetComponent<KSelectable>().AddStatusItem(Db.Get().BuildingStatusItems.WarpConduitPartnerDisabled, num);
+				sender.GetComponent<KSelectable>().AddStatusItem(Db.Get().BuildingStatusItems.WarpConduitPartnerDisabled, num2);
 			}
 			else
 			{
@@ -34,10 +34,10 @@ public static class WarpConduitStatus
 		if (receiver != null)
 		{
 			receiver.GetComponent<Operational>().SetFlag(warpConnectedFlag, value);
-			if (num != 2)
+			if (num2 != 2)
 			{
 				receiver.GetComponent<KSelectable>().RemoveStatusItem(Db.Get().BuildingStatusItems.WarpConduitPartnerDisabled);
-				receiver.GetComponent<KSelectable>().AddStatusItem(Db.Get().BuildingStatusItems.WarpConduitPartnerDisabled, num);
+				receiver.GetComponent<KSelectable>().AddStatusItem(Db.Get().BuildingStatusItems.WarpConduitPartnerDisabled, num2);
 			}
 			else
 			{

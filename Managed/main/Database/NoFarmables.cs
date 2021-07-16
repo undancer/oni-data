@@ -13,9 +13,9 @@ namespace Database
 					continue;
 				}
 				Tag[] possibleDepositObjectTags = item.possibleDepositObjectTags;
-				foreach (Tag a in possibleDepositObjectTags)
+				for (int i = 0; i < possibleDepositObjectTags.Length; i++)
 				{
-					if (a != GameTags.DecorSeed)
+					if (possibleDepositObjectTags[i] != GameTags.DecorSeed)
 					{
 						return false;
 					}

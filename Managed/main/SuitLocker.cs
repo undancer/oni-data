@@ -74,15 +74,13 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 			Equipment equipment = worker.GetComponent<MinionIdentity>().GetEquipment();
 			if (equipment.IsSlotOccupied(Db.Get().AssignableSlots.Suit))
 			{
-				SuitLocker component = GetComponent<SuitLocker>();
-				if (component.CanDropOffSuit())
+				if (GetComponent<SuitLocker>().CanDropOffSuit())
 				{
 					GetComponent<SuitLocker>().UnequipFrom(equipment);
 				}
 				else
 				{
-					Assignable assignable = equipment.GetAssignable(Db.Get().AssignableSlots.Suit);
-					assignable.Unassign();
+					equipment.GetAssignable(Db.Get().AssignableSlots.Suit).Unassign();
 				}
 			}
 			if (urgentChore != null)
@@ -108,8 +106,7 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 				description = DUPLICANTS.CHORES.PRECONDITIONS.HAS_SUIT_MARKER,
 				fn = delegate(ref Chore.Precondition.Context context, object data)
 				{
-					SuitLocker suitLocker2 = (SuitLocker)data;
-					return suitLocker2.suitMarkerState == SuitMarkerState.HasMarker;
+					return ((SuitLocker)data).suitMarkerState == SuitMarkerState.HasMarker;
 				}
 			};
 			HasSuitMarker = hasSuitMarker;
@@ -130,9 +127,9 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 					{
 						return false;
 					}
-					bool flag = slot.assignable.GetComponent<JetSuitTank>() != null;
-					bool flag2 = suitLocker.GetComponent<JetSuitLocker>() != null;
-					return flag == flag2;
+					bool num = slot.assignable.GetComponent<JetSuitTank>() != null;
+					bool flag = suitLocker.GetComponent<JetSuitLocker>() != null;
+					return num == flag;
 				}
 			});
 			base._002Ector();
@@ -156,18 +153,18 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 					{
 						return false;
 					}
-					SuitTank component4 = slot2.assignable.GetComponent<SuitTank>();
-					if (component4 != null && component4.NeedsRecharging())
+					SuitTank component = slot2.assignable.GetComponent<SuitTank>();
+					if (component != null && component.NeedsRecharging())
 					{
 						return true;
 					}
-					JetSuitTank component5 = slot2.assignable.GetComponent<JetSuitTank>();
-					if (component5 != null && component5.NeedsRecharging())
+					JetSuitTank component2 = slot2.assignable.GetComponent<JetSuitTank>();
+					if (component2 != null && component2.NeedsRecharging())
 					{
 						return true;
 					}
-					LeadSuitTank component6 = slot2.assignable.GetComponent<LeadSuitTank>();
-					return (component6 != null && component6.NeedsRecharging()) ? true : false;
+					LeadSuitTank component3 = slot2.assignable.GetComponent<LeadSuitTank>();
+					return (component3 != null && component3.NeedsRecharging()) ? true : false;
 				}
 			};
 			DoesSuitNeedRechargingUrgent = precondition;
@@ -187,18 +184,15 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 					{
 						return false;
 					}
-					SuitTank component = slot.assignable.GetComponent<SuitTank>();
-					if (component != null)
+					if (slot.assignable.GetComponent<SuitTank>() != null)
 					{
 						return true;
 					}
-					JetSuitTank component2 = slot.assignable.GetComponent<JetSuitTank>();
-					if (component2 != null)
+					if (slot.assignable.GetComponent<JetSuitTank>() != null)
 					{
 						return true;
 					}
-					LeadSuitTank component3 = slot.assignable.GetComponent<LeadSuitTank>();
-					return (component3 != null) ? true : false;
+					return (slot.assignable.GetComponent<LeadSuitTank>() != null) ? true : false;
 				}
 			};
 			DoesSuitNeedRechargingIdle = precondition;
@@ -372,7 +366,7 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 
 	private MeterController meter;
 
-	private SuitMarkerState suitMarkerState = SuitMarkerState.HasMarker;
+	private SuitMarkerState suitMarkerState;
 
 	public float OxygenAvailable
 	{
@@ -396,8 +390,7 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 			{
 				return 0f;
 			}
-			LeadSuitTank component = storedOutfit.GetComponent<LeadSuitTank>();
-			return component.batteryCharge;
+			return storedOutfit.GetComponent<LeadSuitTank>().batteryCharge;
 		}
 	}
 
@@ -596,10 +589,9 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 	{
 		Assignable assignable = equipment.GetAssignable(Db.Get().AssignableSlots.Suit);
 		assignable.Unassign();
-		Storage component = GetComponent<Storage>();
-		component.Store(assignable.gameObject);
-		Durability component2 = assignable.GetComponent<Durability>();
-		if (component2 != null && component2.IsWornOut())
+		GetComponent<Storage>().Store(assignable.gameObject);
+		Durability component = assignable.GetComponent<Durability>();
+		if (component != null && component.IsWornOut())
 		{
 			ConfigRequestSuit();
 		}
@@ -619,7 +611,11 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 
 	public bool CanDropOffSuit()
 	{
-		return base.smi.sm.isConfigured.Get(base.smi) && !base.smi.sm.isWaitingForSuit.Get(base.smi) && GetStoredOutfit() == null;
+		if (base.smi.sm.isConfigured.Get(base.smi) && !base.smi.sm.isWaitingForSuit.Get(base.smi))
+		{
+			return GetStoredOutfit() == null;
+		}
+		return false;
 	}
 
 	private GameObject GetOxygen()
@@ -696,11 +692,12 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 		while (true)
 		{
 			int cell2 = Grid.OffsetCell(cell, num, 0);
-			if (Grid.IsValidCell(cell2) && !GatherSuitBuildingsOnCell(cell2, suit_lockers, suit_markers))
+			if (!Grid.IsValidCell(cell2) || GatherSuitBuildingsOnCell(cell2, suit_lockers, suit_markers))
 			{
-				break;
+				num += dir;
+				continue;
 			}
-			num += dir;
+			break;
 		}
 	}
 
@@ -787,14 +784,13 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 			for (int j = i + 1; j < pooledList.Count; j++)
 			{
 				SuitLockerEntry suitLockerEntry3 = pooledList[j];
-				if (Grid.CellRight(suitLockerEntry2.cell) == suitLockerEntry3.cell)
+				if (Grid.CellRight(suitLockerEntry2.cell) != suitLockerEntry3.cell)
 				{
-					i++;
-					suitLockerEntry2 = suitLockerEntry3;
-					pooledList3.Add(suitLockerEntry3);
-					continue;
+					break;
 				}
-				break;
+				i++;
+				suitLockerEntry2 = suitLockerEntry3;
+				pooledList3.Add(suitLockerEntry3);
 			}
 			int cell2 = Grid.CellLeft(suitLockerEntry.cell);
 			int cell3 = Grid.CellRight(suitLockerEntry2.cell);

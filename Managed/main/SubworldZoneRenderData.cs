@@ -7,10 +7,10 @@ using UnityEngine;
 public class SubworldZoneRenderData : KMonoBehaviour
 {
 	[SerializeField]
-	private Texture2D colourTex = null;
+	private Texture2D colourTex;
 
 	[SerializeField]
-	private Texture2D indexTex = null;
+	private Texture2D indexTex;
 
 	[HideInInspector]
 	public SubWorld.ZoneType[] worldZoneTypes;

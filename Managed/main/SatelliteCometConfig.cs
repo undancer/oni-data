@@ -45,8 +45,7 @@ public class SatelliteCometConfig : IEntityConfig
 		kBatchedAnimController.initialAnim = "fall_loop";
 		kBatchedAnimController.initialMode = KAnim.PlayMode.Loop;
 		kBatchedAnimController.visibilityType = KAnimControllerBase.VisibilityType.OffscreenUpdate;
-		KCircleCollider2D kCircleCollider2D = gameObject.AddOrGet<KCircleCollider2D>();
-		kCircleCollider2D.radius = 0.5f;
+		gameObject.AddOrGet<KCircleCollider2D>().radius = 0.5f;
 		gameObject.transform.localScale = new Vector3(1.5f, 1.5f, 1f);
 		gameObject.AddTag(GameTags.Comet);
 		return gameObject;

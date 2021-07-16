@@ -56,8 +56,7 @@ public class ProducePowerMonitor : GameStateMachine<ProducePowerMonitor, Produce
 		Staterpillar component = smi.GetComponent<Staterpillar>();
 		if (targetSleepCell.Get(smi) == Grid.InvalidCell && component.GetGenerator() != null)
 		{
-			KPrefabID generator = component.GetGenerator();
-			int value = Grid.PosToCell(generator);
+			int value = Grid.PosToCell(component.GetGenerator());
 			targetSleepCell.Set(value, smi);
 		}
 	}
@@ -65,8 +64,7 @@ public class ProducePowerMonitor : GameStateMachine<ProducePowerMonitor, Produce
 	private void FindSleepLocation(Instance smi)
 	{
 		StaterpillarCellQuery staterpillarCellQuery = PathFinderQueries.staterpillarCellQuery.Reset(10, smi.gameObject);
-		Navigator component = smi.GetComponent<Navigator>();
-		component.RunQuery(staterpillarCellQuery);
+		smi.GetComponent<Navigator>().RunQuery(staterpillarCellQuery);
 		if (staterpillarCellQuery.result_cells.Count <= 0)
 		{
 			return;

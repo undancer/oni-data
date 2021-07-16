@@ -9,13 +9,13 @@ public class ClothingFabricatorConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("ClothingFabricator", 4, 3, "clothingfactory_kanim", 100, 240f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: TUNING.BUILDINGS.DECOR.NONE);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 240f;
-		buildingDef.ViewMode = OverlayModes.Power.ID;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.PowerInputOffset = new CellOffset(2, 0);
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("ClothingFabricator", 4, 3, "clothingfactory_kanim", 100, 240f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: TUNING.BUILDINGS.DECOR.NONE);
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 240f;
+		obj.ViewMode = OverlayModes.Power.ID;
+		obj.AudioCategory = "Metal";
+		obj.PowerInputOffset = new CellOffset(2, 0);
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -47,8 +47,7 @@ public class ClothingFabricatorConfig : IBuildingConfig
 		{
 			new ComplexRecipe.RecipeElement("Warm_Vest".ToTag(), 1f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
-		string id = ComplexRecipeManager.MakeRecipeID("ClothingFabricator", array, array2);
-		WarmVestConfig.recipe = new ComplexRecipe(id, array, array2)
+		WarmVestConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("ClothingFabricator", array, array2), array, array2)
 		{
 			time = TUNING.EQUIPMENT.VESTS.WARM_VEST_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.WARM_VEST.RECIPE_DESC,
@@ -67,8 +66,7 @@ public class ClothingFabricatorConfig : IBuildingConfig
 		{
 			new ComplexRecipe.RecipeElement("Cool_Vest".ToTag(), 1f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
-		string id2 = ComplexRecipeManager.MakeRecipeID("ClothingFabricator", array3, array4);
-		CoolVestConfig.recipe = new ComplexRecipe(id2, array3, array4)
+		CoolVestConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("ClothingFabricator", array3, array4), array3, array4)
 		{
 			time = TUNING.EQUIPMENT.VESTS.COOL_VEST_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.COOL_VEST.RECIPE_DESC,
@@ -87,8 +85,7 @@ public class ClothingFabricatorConfig : IBuildingConfig
 		{
 			new ComplexRecipe.RecipeElement("Funky_Vest".ToTag(), 1f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
-		string id3 = ComplexRecipeManager.MakeRecipeID("ClothingFabricator", array5, array6);
-		FunkyVestConfig.recipe = new ComplexRecipe(id3, array5, array6)
+		FunkyVestConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("ClothingFabricator", array5, array6), array5, array6)
 		{
 			time = TUNING.EQUIPMENT.VESTS.FUNKY_VEST_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.FUNKY_VEST.RECIPE_DESC,

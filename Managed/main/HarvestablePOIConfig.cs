@@ -74,8 +74,7 @@ public class HarvestablePOIConfig : IMultiEntityConfig
 	public List<GameObject> CreatePrefabs()
 	{
 		List<GameObject> list = new List<GameObject>();
-		List<HarvestablePOIParams> list2 = GenerateConfigs();
-		foreach (HarvestablePOIParams item in list2)
+		foreach (HarvestablePOIParams item in GenerateConfigs())
 		{
 			list.Add(CreateHarvestablePOI(item.id, item.anim, Strings.Get(item.nameStringKey), item.descStringKey, item.poiType.idHash, item.poiType.canProvideArtifacts));
 		}
@@ -86,8 +85,7 @@ public class HarvestablePOIConfig : IMultiEntityConfig
 	{
 		GameObject gameObject = EntityTemplates.CreateEntity(id, id);
 		gameObject.AddOrGet<SaveLoadRoot>();
-		HarvestablePOIConfigurator harvestablePOIConfigurator = gameObject.AddOrGet<HarvestablePOIConfigurator>();
-		harvestablePOIConfigurator.presetType = poiType;
+		gameObject.AddOrGet<HarvestablePOIConfigurator>().presetType = poiType;
 		HarvestablePOIClusterGridEntity harvestablePOIClusterGridEntity = gameObject.AddOrGet<HarvestablePOIClusterGridEntity>();
 		harvestablePOIClusterGridEntity.m_name = name;
 		harvestablePOIClusterGridEntity.m_Anim = anim;
@@ -95,12 +93,9 @@ public class HarvestablePOIConfig : IMultiEntityConfig
 		if (canProvideArtifacts)
 		{
 			gameObject.AddOrGetDef<ArtifactPOIStates.Def>();
-			ArtifactPOIConfigurator artifactPOIConfigurator = gameObject.AddOrGet<ArtifactPOIConfigurator>();
-			artifactPOIConfigurator.presetType = ArtifactPOIConfigurator.defaultArtifactPoiType.idHash;
-			LoreBearer loreBearer = gameObject.AddOrGet<LoreBearer>();
+			gameObject.AddOrGet<ArtifactPOIConfigurator>().presetType = ArtifactPOIConfigurator.defaultArtifactPoiType.idHash;
 		}
-		InfoDescription infoDescription = gameObject.AddOrGet<InfoDescription>();
-		infoDescription.description = Strings.Get(descStringKey);
+		gameObject.AddOrGet<InfoDescription>().description = Strings.Get(descStringKey);
 		return gameObject;
 	}
 

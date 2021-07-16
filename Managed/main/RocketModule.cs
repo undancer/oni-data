@@ -22,7 +22,7 @@ public class RocketModule : KMonoBehaviour
 	private string rocket_module_bg_anim = "on";
 
 	[SerializeField]
-	private KAnimFile bgAnimFile = null;
+	private KAnimFile bgAnimFile;
 
 	protected string parentRocketName = UI.STARMAP.DEFAULT_NAME;
 
@@ -63,8 +63,9 @@ public class RocketModule : KMonoBehaviour
 			{
 				list.AddRange(moduleCondition.Value);
 			}
+			return list;
 		}
-		else if (moduleConditions.ContainsKey(conditionType))
+		if (moduleConditions.ContainsKey(conditionType))
 		{
 			list = moduleConditions[conditionType];
 		}
@@ -118,13 +119,12 @@ public class RocketModule : KMonoBehaviour
 		while (component != null)
 		{
 			BuildingAttachPoint attachedTo = component.GetAttachedTo();
-			if (attachedTo != null)
+			if (!(attachedTo != null))
 			{
-				component = attachedTo.GetComponent<AttachableBuilding>();
-				num++;
-				continue;
+				break;
 			}
-			break;
+			component = attachedTo.GetComponent<AttachableBuilding>();
+			num++;
 		}
 		Vector3 localPosition = base.transform.GetLocalPosition();
 		localPosition.z = Grid.GetLayerZ(Grid.SceneLayer.Building) - (float)num * 0.01f;
@@ -224,17 +224,15 @@ public class RocketModule : KMonoBehaviour
 			component4.SetRegistered(newRegistered: false);
 		}
 		ManualDeliveryKG[] components = GetComponents<ManualDeliveryKG>();
-		ManualDeliveryKG[] array = components;
-		foreach (ManualDeliveryKG manualDeliveryKG in array)
+		foreach (ManualDeliveryKG obj in components)
 		{
-			DebugUtil.DevAssert(!manualDeliveryKG.IsPaused, "RocketModule ManualDeliver chore was already paused, when this rocket lands it will re-enable it.");
-			manualDeliveryKG.Pause(pause: true, "Rocket heading to space");
+			DebugUtil.DevAssert(!obj.IsPaused, "RocketModule ManualDeliver chore was already paused, when this rocket lands it will re-enable it.");
+			obj.Pause(pause: true, "Rocket heading to space");
 		}
 		BuildingConduitEndpoints[] components2 = GetComponents<BuildingConduitEndpoints>();
-		BuildingConduitEndpoints[] array2 = components2;
-		foreach (BuildingConduitEndpoints buildingConduitEndpoints in array2)
+		for (int i = 0; i < components2.Length; i++)
 		{
-			buildingConduitEndpoints.RemoveEndPoint();
+			components2[i].RemoveEndPoint();
 		}
 		ReorderableBuilding component5 = GetComponent<ReorderableBuilding>();
 		if (component5 != null)
@@ -266,12 +264,11 @@ public class RocketModule : KMonoBehaviour
 	public void RegisterComponents()
 	{
 		int cell = Grid.PosToCell(this);
-		KSelectable component = GetComponent<KSelectable>();
-		component.IsSelectable = true;
-		Deconstructable component2 = GetComponent<Deconstructable>();
-		if (component2 != null)
+		GetComponent<KSelectable>().IsSelectable = true;
+		Deconstructable component = GetComponent<Deconstructable>();
+		if (component != null)
 		{
-			component2.SetAllowDeconstruction(allow: true);
+			component.SetAllowDeconstruction(allow: true);
 		}
 		HandleVector<int>.Handle handle = GameComps.StructureTemperatures.GetHandle(base.gameObject);
 		if (handle.IsValid())
@@ -279,57 +276,54 @@ public class RocketModule : KMonoBehaviour
 			GameComps.StructureTemperatures.Enable(handle);
 		}
 		Storage[] components = GetComponents<Storage>();
-		Storage[] array = components;
-		foreach (Storage storage in array)
+		for (int i = 0; i < components.Length; i++)
 		{
-			storage.UpdateStoredItemCachedCells();
+			components[i].UpdateStoredItemCachedCells();
 		}
-		FakeFloorAdder component3 = GetComponent<FakeFloorAdder>();
+		FakeFloorAdder component2 = GetComponent<FakeFloorAdder>();
+		if (component2 != null)
+		{
+			component2.SetFloor(active: true);
+		}
+		AccessControl component3 = GetComponent<AccessControl>();
 		if (component3 != null)
 		{
-			component3.SetFloor(active: true);
-		}
-		AccessControl component4 = GetComponent<AccessControl>();
-		if (component4 != null)
-		{
-			component4.SetRegistered(newRegistered: true);
+			component3.SetRegistered(newRegistered: true);
 		}
 		ManualDeliveryKG[] components2 = GetComponents<ManualDeliveryKG>();
-		ManualDeliveryKG[] array2 = components2;
-		foreach (ManualDeliveryKG manualDeliveryKG in array2)
+		for (int i = 0; i < components2.Length; i++)
 		{
-			manualDeliveryKG.Pause(pause: false, "Landing on world");
+			components2[i].Pause(pause: false, "Landing on world");
 		}
 		BuildingConduitEndpoints[] components3 = GetComponents<BuildingConduitEndpoints>();
-		BuildingConduitEndpoints[] array3 = components3;
-		foreach (BuildingConduitEndpoints buildingConduitEndpoints in array3)
+		for (int i = 0; i < components3.Length; i++)
 		{
-			buildingConduitEndpoints.AddEndpoint();
+			components3[i].AddEndpoint();
 		}
-		ReorderableBuilding component5 = GetComponent<ReorderableBuilding>();
+		ReorderableBuilding component4 = GetComponent<ReorderableBuilding>();
+		if (component4 != null)
+		{
+			component4.ShowReorderArm(show: true);
+		}
+		BuildingComplete component5 = GetComponent<BuildingComplete>();
 		if (component5 != null)
 		{
-			component5.ShowReorderArm(show: true);
+			component5.UpdatePosition(cell);
 		}
-		BuildingComplete component6 = GetComponent<BuildingComplete>();
+		Workable component6 = GetComponent<Workable>();
 		if (component6 != null)
 		{
-			component6.UpdatePosition(cell);
+			component6.RefreshReachability();
 		}
-		Workable component7 = GetComponent<Workable>();
+		Structure component7 = GetComponent<Structure>();
 		if (component7 != null)
 		{
-			component7.RefreshReachability();
+			component7.UpdatePosition(cell);
 		}
-		Structure component8 = GetComponent<Structure>();
+		WireUtilitySemiVirtualNetworkLink component8 = GetComponent<WireUtilitySemiVirtualNetworkLink>();
 		if (component8 != null)
 		{
-			component8.UpdatePosition(cell);
-		}
-		WireUtilitySemiVirtualNetworkLink component9 = GetComponent<WireUtilitySemiVirtualNetworkLink>();
-		if (component9 != null)
-		{
-			component9.SetLinkConnected(connect: true);
+			component8.SetLinkConnected(connect: true);
 		}
 	}
 
@@ -364,8 +358,7 @@ public class RocketModule : KMonoBehaviour
 	{
 		if (!DlcManager.FeatureClusterSpaceEnabled())
 		{
-			List<GameObject> attachedNetwork = AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>());
-			foreach (GameObject item in attachedNetwork)
+			foreach (GameObject item in AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>()))
 			{
 				LaunchConditionManager component = item.GetComponent<LaunchConditionManager>();
 				if (component != null)
@@ -397,16 +390,14 @@ public class RocketModule : KMonoBehaviour
 		}
 		int cell = Grid.PosToCell(base.transform.GetPosition());
 		Building component2 = GetComponent<Building>();
-		BuildingDef def = component2.Def;
-		def.UnmarkArea(cell, component2.Orientation, component2.Def.ObjectLayer, base.gameObject);
+		component2.Def.UnmarkArea(cell, component2.Orientation, component2.Def.ObjectLayer, base.gameObject);
 		TransformExtensions.SetPosition(position: new Vector3(-1f, -1f, 0f), transform: base.gameObject.transform);
 		LogicPorts component3 = GetComponent<LogicPorts>();
 		if (component3 != null)
 		{
 			component3.OnMove();
 		}
-		KSelectable component4 = GetComponent<KSelectable>();
-		component4.ToggleStatusItem(Db.Get().BuildingStatusItems.Entombed, on: false, this);
+		GetComponent<KSelectable>().ToggleStatusItem(Db.Get().BuildingStatusItems.Entombed, on: false, this);
 	}
 
 	public void MoveToPad(int newCell)
@@ -415,8 +406,7 @@ public class RocketModule : KMonoBehaviour
 		int cell = Grid.PosToCell(base.transform.GetPosition());
 		Building component = GetComponent<Building>();
 		component.RefreshCells();
-		BuildingDef def = component.Def;
-		def.MarkArea(cell, component.Orientation, component.Def.ObjectLayer, base.gameObject);
+		component.Def.MarkArea(cell, component.Orientation, component.Def.ObjectLayer, base.gameObject);
 		LogicPorts component2 = GetComponent<LogicPorts>();
 		if (component2 != null)
 		{

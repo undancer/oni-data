@@ -76,11 +76,9 @@ public class GroupSelectorWidget : MonoBehaviour
 	{
 		if (!IsSubPanelOpen())
 		{
-			int num = RebuildSubPanelOptions();
-			if (num > 0)
+			if (RebuildSubPanelOptions() > 0)
 			{
-				GridLayoutGroup component = unselectedItemsPanel.GetComponent<GridLayoutGroup>();
-				component.constraintCount = Mathf.Min(numExpectedPanelColumns, unselectedItemsPanel.childCount);
+				unselectedItemsPanel.GetComponent<GridLayoutGroup>().constraintCount = Mathf.Min(numExpectedPanelColumns, unselectedItemsPanel.childCount);
 				unselectedItemsPanel.gameObject.SetActive(value: true);
 				unselectedItemsPanel.GetComponent<Selectable>().Select();
 			}
@@ -143,8 +141,7 @@ public class GroupSelectorWidget : MonoBehaviour
 				}
 			}
 		}
-		ToolTip component3 = gameObject.GetComponent<ToolTip>();
-		component3.OnToolTip = () => itemCallbacks.getItemHoverText(widgetID, options[idx].userData, is_selected_item);
+		gameObject.GetComponent<ToolTip>().OnToolTip = () => itemCallbacks.getItemHoverText(widgetID, options[idx].userData, is_selected_item);
 		return gameObject;
 	}
 

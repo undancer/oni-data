@@ -7,7 +7,7 @@ public class SleepChoreMonitor : GameStateMachine<SleepChoreMonitor, SleepChoreM
 	{
 		private int locatorCell;
 
-		public GameObject locator = null;
+		public GameObject locator;
 
 		public Instance(IStateMachineTarget master)
 			: base(master)
@@ -31,8 +31,7 @@ public class SleepChoreMonitor : GameStateMachine<SleepChoreMonitor, SleepChoreM
 					assignable = soleOwner.AutoAssignSlot(Db.Get().AssignableSlots.Bed);
 					if (assignable != null)
 					{
-						AssignableReachabilitySensor sensor = GetComponent<Sensors>().GetSensor<AssignableReachabilitySensor>();
-						sensor.Update();
+						GetComponent<Sensors>().GetSensor<AssignableReachabilitySensor>().Update();
 					}
 				}
 			}
@@ -47,7 +46,11 @@ public class SleepChoreMonitor : GameStateMachine<SleepChoreMonitor, SleepChoreM
 		public bool IsBedReachable()
 		{
 			AssignableReachabilitySensor sensor = GetComponent<Sensors>().GetSensor<AssignableReachabilitySensor>();
-			return sensor.IsReachable(Db.Get().AssignableSlots.Bed) || sensor.IsReachable(Db.Get().AssignableSlots.MedicalBed);
+			if (!sensor.IsReachable(Db.Get().AssignableSlots.Bed))
+			{
+				return sensor.IsReachable(Db.Get().AssignableSlots.MedicalBed);
+			}
+			return true;
 		}
 
 		public GameObject CreatePassedOutLocator()
@@ -99,8 +102,7 @@ public class SleepChoreMonitor : GameStateMachine<SleepChoreMonitor, SleepChoreM
 		checkforbed.Enter("SetBed", delegate(Instance smi)
 		{
 			smi.UpdateBed();
-			StaminaMonitor.Instance sMI = smi.GetSMI<StaminaMonitor.Instance>();
-			if (sMI.NeedsToSleep())
+			if (smi.GetSMI<StaminaMonitor.Instance>().NeedsToSleep())
 			{
 				smi.GoTo(passingout);
 			}

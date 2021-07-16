@@ -26,16 +26,16 @@ public class AlgaeHabitatConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("AlgaeHabitat", 1, 2, "algaefarm_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.FARMABLE, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER0, decor: BUILDINGS.DECOR.PENALTY.TIER1);
-		buildingDef.Floodable = false;
-		buildingDef.ViewMode = OverlayModes.Oxygen.ID;
-		buildingDef.AudioCategory = "HollowMetal";
-		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
-		buildingDef.UtilityOutputOffset = new CellOffset(0, 0);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("AlgaeHabitat", 1, 2, "algaefarm_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.FARMABLE, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER0, decor: BUILDINGS.DECOR.PENALTY.TIER1);
+		obj.Floodable = false;
+		obj.ViewMode = OverlayModes.Oxygen.ID;
+		obj.AudioCategory = "HollowMetal";
+		obj.UtilityInputOffset = new CellOffset(0, 0);
+		obj.UtilityOutputOffset = new CellOffset(0, 0);
 		SoundEventVolumeCache.instance.AddVolume("algaefarm_kanim", "AlgaeHabitat_bubbles", NOISE_POLLUTION.NOISY.TIER0);
 		SoundEventVolumeCache.instance.AddVolume("algaefarm_kanim", "AlgaeHabitat_algae_in", NOISE_POLLUTION.NOISY.TIER0);
 		SoundEventVolumeCache.instance.AddVolume("algaefarm_kanim", "AlgaeHabitat_algae_out", NOISE_POLLUTION.NOISY.TIER0);
-		return buildingDef;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -87,8 +87,7 @@ public class AlgaeHabitatConfig : IBuildingConfig
 		{
 			new ElementConverter.OutputElement(0.040000003f, SimHashes.Oxygen, 303.15f, useEntityTemperature: false, storeOutput: false, 0f, 1f)
 		};
-		ElementConverter elementConverter2 = go.AddComponent<ElementConverter>();
-		elementConverter2.outputElements = new ElementConverter.OutputElement[1]
+		go.AddComponent<ElementConverter>().outputElements = new ElementConverter.OutputElement[1]
 		{
 			new ElementConverter.OutputElement(0.29033336f, SimHashes.DirtyWater, 303.15f, useEntityTemperature: false, storeOutput: true, 0f, 1f)
 		};

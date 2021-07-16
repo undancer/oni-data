@@ -81,8 +81,7 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 		{
 			Debug.Assert(!DlcManager.FeatureClusterSpaceEnabled());
 			SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(spacecraftFromLaunchConditionManager.id);
-			LogicPorts component = base.gameObject.GetComponent<LogicPorts>();
-			if (component.GetInputValue(triggerPort) == 1 && spacecraftDestination != null && spacecraftDestination.id != -1)
+			if (base.gameObject.GetComponent<LogicPorts>().GetInputValue(triggerPort) == 1 && spacecraftDestination != null && spacecraftDestination.id != -1)
 			{
 				Launch(spacecraftDestination);
 			}
@@ -91,8 +90,7 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 
 	public void FindModules()
 	{
-		List<GameObject> attachedNetwork = AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>());
-		foreach (GameObject item in attachedNetwork)
+		foreach (GameObject item in AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>()))
 		{
 			RocketModule component = item.GetComponent<RocketModule>();
 			if (component != null && component.conditionManager == null)
@@ -139,13 +137,11 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 		{
 			Debug.LogError("Null destination passed to launch");
 		}
-		Spacecraft spacecraftFromLaunchConditionManager = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(this);
-		if (spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.Grounded && (DebugHandler.InstantBuildMode || (CheckReadyToLaunch() && CheckAbleToFly())))
+		if (SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(this).state == Spacecraft.MissionState.Grounded && (DebugHandler.InstantBuildMode || (CheckReadyToLaunch() && CheckAbleToFly())))
 		{
 			launchable.LaunchableGameObject.Trigger(705820818);
 			SpacecraftManager.instance.SetSpacecraftDestination(this, destination);
-			Spacecraft spacecraftFromLaunchConditionManager2 = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(this);
-			spacecraftFromLaunchConditionManager2.BeginMission(destination);
+			SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(this).BeginMission(destination);
 		}
 	}
 
@@ -202,9 +198,9 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 
 	public void Sim4000ms(float dt)
 	{
-		bool flag = CheckReadyToLaunch();
+		bool num = CheckReadyToLaunch();
 		LogicPorts component = base.gameObject.GetComponent<LogicPorts>();
-		if (flag)
+		if (num)
 		{
 			Spacecraft spacecraftFromLaunchConditionManager = SpacecraftManager.instance.GetSpacecraftFromLaunchConditionManager(this);
 			if (spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.Grounded || spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.Launching)

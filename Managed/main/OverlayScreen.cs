@@ -182,7 +182,7 @@ public class OverlayScreen : KMonoBehaviour
 
 	public void ToggleOverlay(HashedString newMode, bool allowSound = true)
 	{
-		bool flag = allowSound && ((!(currentModeInfo.mode.ViewMode() == newMode)) ? true : false);
+		int num = (allowSound ? ((!(currentModeInfo.mode.ViewMode() == newMode)) ? 1 : 0) : 0);
 		if (newMode != OverlayModes.None.ID)
 		{
 			ManagementMenu.Instance.CloseAll();
@@ -198,7 +198,7 @@ public class OverlayScreen : KMonoBehaviour
 			currentModeInfo = modeInfos[OverlayModes.None.ID];
 		}
 		currentModeInfo.mode.Enable();
-		if (flag)
+		if (num != 0)
 		{
 			UpdateOverlaySounds();
 		}
@@ -238,7 +238,11 @@ public class OverlayScreen : KMonoBehaviour
 
 	public HashedString GetMode()
 	{
-		return (currentModeInfo.mode != null) ? currentModeInfo.mode.ViewMode() : OverlayModes.None.ID;
+		if (currentModeInfo.mode == null)
+		{
+			return OverlayModes.None.ID;
+		}
+		return currentModeInfo.mode.ViewMode();
 	}
 
 	private void UpdateOverlaySounds()

@@ -270,8 +270,7 @@ public class IrrigationMonitor : GameStateMachine<IrrigationMonitor, IrrigationM
 						}
 					}
 					total_available_mass = num;
-					AttributeInstance attributeInstance = base.gameObject.GetAttributes().Get(Db.Get().PlantAttributes.FertilizerUsageMod);
-					float totalValue = attributeInstance.GetTotalValue();
+					float totalValue = base.gameObject.GetAttributes().Get(Db.Get().PlantAttributes.FertilizerUsageMod).GetTotalValue();
 					if (num < consumeInfo.massConsumptionRate * totalValue * dt)
 					{
 						flag = false;
@@ -306,8 +305,7 @@ public class IrrigationMonitor : GameStateMachine<IrrigationMonitor, IrrigationM
 			{
 				if (base.def.consumedElements != null && base.def.consumedElements.Length != 0)
 				{
-					AttributeInstance attributeInstance = base.gameObject.GetAttributes().Get(Db.Get().PlantAttributes.FertilizerUsageMod);
-					float totalValue = attributeInstance.GetTotalValue();
+					float totalValue = base.gameObject.GetAttributes().Get(Db.Get().PlantAttributes.FertilizerUsageMod).GetTotalValue();
 					PlantElementAbsorber.ConsumeInfo[] array = new PlantElementAbsorber.ConsumeInfo[base.def.consumedElements.Length];
 					for (int i = 0; i < base.def.consumedElements.Length; i++)
 					{
@@ -358,9 +356,9 @@ public class IrrigationMonitor : GameStateMachine<IrrigationMonitor, IrrigationM
 		replanted.Enter(delegate(Instance smi)
 		{
 			ManualDeliveryKG[] components = smi.gameObject.GetComponents<ManualDeliveryKG>();
-			foreach (ManualDeliveryKG manualDeliveryKG in components)
+			for (int i = 0; i < components.Length; i++)
 			{
-				manualDeliveryKG.Pause(pause: false, "replanted");
+				components[i].Pause(pause: false, "replanted");
 			}
 			smi.UpdateIrrigation(71f / (678f * (float)Math.PI));
 		}).Target(resourceStorage).EventHandler(GameHashes.OnStorageChange, delegate(Instance smi)

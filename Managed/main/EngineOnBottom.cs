@@ -9,12 +9,23 @@ public class EngineOnBottom : SelectModuleCondition
 		{
 			return true;
 		}
-		return selectionContext switch
+		switch (selectionContext)
 		{
-			SelectionContext.ReplaceModule => (existingModule.GetComponent<AttachableBuilding>().GetAttachedTo() == null) ? true : false, 
-			SelectionContext.AddModuleBelow => (existingModule.GetComponent<AttachableBuilding>().GetAttachedTo() == null) ? true : false, 
-			_ => false, 
-		};
+		case SelectionContext.ReplaceModule:
+			if (!(existingModule.GetComponent<AttachableBuilding>().GetAttachedTo() == null))
+			{
+				return false;
+			}
+			return true;
+		case SelectionContext.AddModuleBelow:
+			if (!(existingModule.GetComponent<AttachableBuilding>().GetAttachedTo() == null))
+			{
+				return false;
+			}
+			return true;
+		default:
+			return false;
+		}
 	}
 
 	public override string GetStatusTooltip(bool ready, BuildingDef selectedPart)

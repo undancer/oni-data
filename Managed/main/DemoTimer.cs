@@ -17,17 +17,17 @@ public class DemoTimer : MonoBehaviour
 
 	private float duration;
 
-	private float elapsed = 0f;
+	private float elapsed;
 
-	private bool demoOver = false;
+	private bool demoOver;
 
 	private float beginTime = -1f;
 
-	public bool CountdownActive = false;
+	public bool CountdownActive;
 
 	private GameObject fadeOutScreen;
 
-	private Color fadeOutColor = default(Color);
+	private Color fadeOutColor;
 
 	public static void DestroyInstance()
 	{
@@ -108,8 +108,7 @@ public class DemoTimer : MonoBehaviour
 		if (!demoOver)
 		{
 			demoOver = true;
-			GameObject gameObject = Util.KInstantiateUI(Prefab_DemoOverScreen, GameScreenManager.Instance.ssOverlayCanvas.gameObject);
-			gameObject.GetComponent<DemoOverScreen>().Show();
+			Util.KInstantiateUI(Prefab_DemoOverScreen, GameScreenManager.Instance.ssOverlayCanvas.gameObject).GetComponent<DemoOverScreen>().Show();
 		}
 	}
 }

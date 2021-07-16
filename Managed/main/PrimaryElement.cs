@@ -22,7 +22,7 @@ public class PrimaryElement : KMonoBehaviour, ISaveLoadable
 
 	private PrimaryElement diseaseRedirectTarget;
 
-	private bool useSimDiseaseInfo = false;
+	private bool useSimDiseaseInfo;
 
 	public const float DefaultChunkMass = 400f;
 
@@ -34,7 +34,7 @@ public class PrimaryElement : KMonoBehaviour, ISaveLoadable
 
 	[Serialize]
 	[HashedEnum]
-	public SimHashes ElementID = (SimHashes)0;
+	public SimHashes ElementID;
 
 	private float _units = 1f;
 
@@ -44,7 +44,7 @@ public class PrimaryElement : KMonoBehaviour, ISaveLoadable
 
 	[NonSerialized]
 	[Serialize]
-	public bool KeepZeroMassObject = false;
+	public bool KeepZeroMassObject;
 
 	[Serialize]
 	private HashedString diseaseID;
@@ -57,13 +57,13 @@ public class PrimaryElement : KMonoBehaviour, ISaveLoadable
 	public float MassPerUnit = 1f;
 
 	[NonSerialized]
-	private Element _Element = null;
+	private Element _Element;
 
 	[NonSerialized]
 	public Action<PrimaryElement> onDataChanged;
 
 	[NonSerialized]
-	private bool forcePermanentDiseaseContainer = false;
+	private bool forcePermanentDiseaseContainer;
 
 	private static readonly EventSystem.IntraObjectHandler<PrimaryElement> OnSplitFromChunkDelegate = new EventSystem.IntraObjectHandler<PrimaryElement>(delegate(PrimaryElement component, object data)
 	{
@@ -354,8 +354,7 @@ public class PrimaryElement : KMonoBehaviour, ISaveLoadable
 		{
 			return;
 		}
-		Element element = Element;
-		foreach (AttributeModifier attributeModifier in element.attributeModifiers)
+		foreach (AttributeModifier attributeModifier in Element.attributeModifiers)
 		{
 			attributes.Add(attributeModifier);
 		}
@@ -436,18 +435,13 @@ public class PrimaryElement : KMonoBehaviour, ISaveLoadable
 		}
 		else if (useSimDiseaseInfo)
 		{
-			int gameCell = Grid.PosToCell(this);
-			SimMessages.ModifyDiseaseOnCell(gameCell, byte.MaxValue, delta);
+			SimMessages.ModifyDiseaseOnCell(Grid.PosToCell(this), byte.MaxValue, delta);
 		}
-		else if (delta != 0 && diseaseHandle.IsValid())
+		else if (delta != 0 && diseaseHandle.IsValid() && GameComps.DiseaseContainers.ModifyDiseaseCount(diseaseHandle, delta) <= 0 && !forcePermanentDiseaseContainer)
 		{
-			int num = GameComps.DiseaseContainers.ModifyDiseaseCount(diseaseHandle, delta);
-			if (num <= 0 && !forcePermanentDiseaseContainer)
-			{
-				Trigger(-1689370368, false);
-				GameComps.DiseaseContainers.Remove(base.gameObject);
-				diseaseHandle.Clear();
-			}
+			Trigger(-1689370368, false);
+			GameComps.DiseaseContainers.Remove(base.gameObject);
+			diseaseHandle.Clear();
 		}
 	}
 
@@ -463,13 +457,11 @@ public class PrimaryElement : KMonoBehaviour, ISaveLoadable
 		}
 		else if (useSimDiseaseInfo)
 		{
-			int gameCell = Grid.PosToCell(this);
-			SimMessages.ModifyDiseaseOnCell(gameCell, disease_idx, delta);
+			SimMessages.ModifyDiseaseOnCell(Grid.PosToCell(this), disease_idx, delta);
 		}
 		else if (diseaseHandle.IsValid())
 		{
-			int num = GameComps.DiseaseContainers.AddDisease(diseaseHandle, disease_idx, delta);
-			if (num <= 0)
+			if (GameComps.DiseaseContainers.AddDisease(diseaseHandle, disease_idx, delta) <= 0)
 			{
 				GameComps.DiseaseContainers.Remove(base.gameObject);
 				diseaseHandle.Clear();

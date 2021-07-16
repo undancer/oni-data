@@ -83,7 +83,7 @@ public class EvilFlower : StateMachineComponent<EvilFlower.StatesInstance>
 	[MyCmpReq]
 	private EntombVulnerable entombVulnerable;
 
-	public bool replanted = false;
+	public bool replanted;
 
 	public EffectorValues positive_decor_effect;
 

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using STRINGS;
 using UnityEngine;
@@ -28,10 +27,9 @@ public class SaveScreen : KModalScreen
 
 	protected override void OnCmpEnable()
 	{
-		List<SaveLoader.SaveFileEntry> allColonyFiles = SaveLoader.GetAllColonyFiles(sort: true);
-		foreach (SaveLoader.SaveFileEntry item in allColonyFiles)
+		foreach (SaveLoader.SaveFileEntry allColonyFile in SaveLoader.GetAllColonyFiles(sort: true))
 		{
-			AddExistingSaveFile(item.path);
+			AddExistingSaveFile(allColonyFile.path);
 		}
 		SpeedControlScreen.Instance.Pause();
 	}
@@ -60,8 +58,7 @@ public class SaveScreen : KModalScreen
 	public static string GetValidSaveFilename(string filename)
 	{
 		string text = ".sav";
-		string a = Path.GetExtension(filename).ToLower();
-		if (a != text)
+		if (Path.GetExtension(filename).ToLower() != text)
 		{
 			filename += text;
 		}
@@ -94,8 +91,7 @@ public class SaveScreen : KModalScreen
 		catch (IOException ex)
 		{
 			IOException e = ex;
-			ConfirmDialogScreen component = Util.KInstantiateUI(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, base.transform.parent.gameObject, force_active: true).GetComponent<ConfirmDialogScreen>();
-			component.PopupConfirmDialog(string.Format(UI.FRONTEND.SAVESCREEN.IO_ERROR, e.ToString()), delegate
+			Util.KInstantiateUI(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, base.transform.parent.gameObject, force_active: true).GetComponent<ConfirmDialogScreen>().PopupConfirmDialog(string.Format(UI.FRONTEND.SAVESCREEN.IO_ERROR, e.ToString()), delegate
 			{
 				Deactivate();
 			}, null, UI.FRONTEND.SAVESCREEN.REPORT_BUG, delegate
@@ -117,8 +113,7 @@ public class SaveScreen : KModalScreen
 		}
 		fileNameDialog.onConfirm = delegate(string filename)
 		{
-			string activeSaveColonyFolder = SaveLoader.GetActiveSaveColonyFolder();
-			filename = Path.Combine(activeSaveColonyFolder, filename);
+			filename = Path.Combine(SaveLoader.GetActiveSaveColonyFolder(), filename);
 			Save(filename);
 		};
 	}

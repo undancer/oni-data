@@ -79,8 +79,7 @@ public static class DebugUtil
 		if (!test)
 		{
 			StackTrace arg = new StackTrace(1, fNeedFileInfo: true);
-			string obj = $"{BuildString(objs)}\n{arg}";
-			Debug.LogWarning(obj);
+			Debug.LogWarning($"{BuildString(objs)}\n{arg}");
 		}
 	}
 
@@ -106,38 +105,32 @@ public static class DebugUtil
 
 	public static void LogArgs(params object[] objs)
 	{
-		string obj = BuildString(objs);
-		Debug.Log(obj);
+		Debug.Log(BuildString(objs));
 	}
 
 	public static void LogArgs(UnityEngine.Object context, params object[] objs)
 	{
-		string obj = BuildString(objs);
-		Debug.Log(obj, context);
+		Debug.Log(BuildString(objs), context);
 	}
 
 	public static void LogWarningArgs(params object[] objs)
 	{
-		string obj = BuildString(objs);
-		Debug.LogWarning(obj);
+		Debug.LogWarning(BuildString(objs));
 	}
 
 	public static void LogWarningArgs(UnityEngine.Object context, params object[] objs)
 	{
-		string obj = BuildString(objs);
-		Debug.LogWarning(obj, context);
+		Debug.LogWarning(BuildString(objs), context);
 	}
 
 	public static void LogErrorArgs(params object[] objs)
 	{
-		string obj = BuildString(objs);
-		Debug.LogError(obj);
+		Debug.LogError(BuildString(objs));
 	}
 
 	public static void LogErrorArgs(UnityEngine.Object context, params object[] objs)
 	{
-		string obj = BuildString(objs);
-		Debug.LogError(obj, context);
+		Debug.LogError(BuildString(objs), context);
 	}
 
 	public static void LogException(UnityEngine.Object context, string errorMessage, Exception e)

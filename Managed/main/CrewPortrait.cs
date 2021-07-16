@@ -9,7 +9,7 @@ public class CrewPortrait : KMonoBehaviour
 {
 	public Image targetImage;
 
-	public bool startTransparent = false;
+	public bool startTransparent;
 
 	public bool useLabels = true;
 
@@ -26,7 +26,7 @@ public class CrewPortrait : KMonoBehaviour
 
 	public bool useDefaultExpression = true;
 
-	private bool requiresRefresh = false;
+	private bool requiresRefresh;
 
 	private bool areEventsRegistered;
 
@@ -196,8 +196,7 @@ public class CrewPortrait : KMonoBehaviour
 		MinionIdentity minionIdentity = identityObject as MinionIdentity;
 		if (minionIdentity != null)
 		{
-			MinionResume component = minionIdentity.GetComponent<MinionResume>();
-			hat_id = component.CurrentHat;
+			hat_id = minionIdentity.GetComponent<MinionResume>().CurrentHat;
 		}
 		else if (identityObject as StoredMinionIdentity != null)
 		{

@@ -65,9 +65,10 @@ public class BuildingInventory : KMonoBehaviour
 		if (!Buildings.TryGetValue(prefabTag, out var value))
 		{
 			DebugUtil.DevLogError($"Unregistering building {prefabTag} before it was registered.");
-			return;
 		}
-		bool test = value.Remove(building);
-		DebugUtil.DevAssert(test, $"Building {prefabTag} was not found to be removed");
+		else
+		{
+			DebugUtil.DevAssert(value.Remove(building), $"Building {prefabTag} was not found to be removed");
+		}
 	}
 }

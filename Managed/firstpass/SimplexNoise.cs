@@ -52,7 +52,11 @@ public class SimplexNoise
 
 	private static int fastfloor(float n)
 	{
-		return (n > 0f) ? ((int)n) : ((int)n - 1);
+		if (!(n > 0f))
+		{
+			return (int)n - 1;
+		}
+		return (int)n;
 	}
 
 	private static float K(int a)

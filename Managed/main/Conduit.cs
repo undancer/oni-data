@@ -16,7 +16,7 @@ public class Conduit : KMonoBehaviour, IFirstFrameCallback, IHaveUtilityNetworkM
 
 	public ConduitType type;
 
-	private System.Action firstFrameCallback = null;
+	private System.Action firstFrameCallback;
 
 	private static readonly EventSystem.IntraObjectHandler<Conduit> OnHighlightedDelegate = new EventSystem.IntraObjectHandler<Conduit>(delegate(Conduit component, object data)
 	{
@@ -105,8 +105,7 @@ public class Conduit : KMonoBehaviour, IFirstFrameCallback, IHaveUtilityNetworkM
 		BuildingDef def = GetComponent<Building>().Def;
 		if (def != null && def.ThermalConductivity != 1f)
 		{
-			ConduitFlowVisualizer flowVisualizer = GetFlowVisualizer();
-			flowVisualizer.AddThermalConductivity(Grid.PosToCell(base.transform.GetPosition()), def.ThermalConductivity);
+			GetFlowVisualizer().AddThermalConductivity(Grid.PosToCell(base.transform.GetPosition()), def.ThermalConductivity);
 		}
 	}
 
@@ -117,8 +116,7 @@ public class Conduit : KMonoBehaviour, IFirstFrameCallback, IHaveUtilityNetworkM
 		BuildingDef def = GetComponent<Building>().Def;
 		if (def != null && def.ThermalConductivity != 1f)
 		{
-			ConduitFlowVisualizer flowVisualizer = GetFlowVisualizer();
-			flowVisualizer.RemoveThermalConductivity(Grid.PosToCell(base.transform.GetPosition()), def.ThermalConductivity);
+			GetFlowVisualizer().RemoveThermalConductivity(Grid.PosToCell(base.transform.GetPosition()), def.ThermalConductivity);
 		}
 		int cell = Grid.PosToCell(base.transform.GetPosition());
 		GetNetworkManager().RemoveFromNetworks(cell, this, is_endpoint: false);
@@ -133,27 +131,47 @@ public class Conduit : KMonoBehaviour, IFirstFrameCallback, IHaveUtilityNetworkM
 
 	private ConduitFlowVisualizer GetFlowVisualizer()
 	{
-		return (type == ConduitType.Gas) ? Game.Instance.gasFlowVisualizer : Game.Instance.liquidFlowVisualizer;
+		if (type != ConduitType.Gas)
+		{
+			return Game.Instance.liquidFlowVisualizer;
+		}
+		return Game.Instance.gasFlowVisualizer;
 	}
 
 	public IUtilityNetworkMgr GetNetworkManager()
 	{
-		return (type == ConduitType.Gas) ? Game.Instance.gasConduitSystem : Game.Instance.liquidConduitSystem;
+		if (type != ConduitType.Gas)
+		{
+			return Game.Instance.liquidConduitSystem;
+		}
+		return Game.Instance.gasConduitSystem;
 	}
 
 	public ConduitFlow GetFlowManager()
 	{
-		return (type == ConduitType.Gas) ? Game.Instance.gasConduitFlow : Game.Instance.liquidConduitFlow;
+		if (type != ConduitType.Gas)
+		{
+			return Game.Instance.liquidConduitFlow;
+		}
+		return Game.Instance.gasConduitFlow;
 	}
 
 	public static ConduitFlow GetFlowManager(ConduitType type)
 	{
-		return (type == ConduitType.Gas) ? Game.Instance.gasConduitFlow : Game.Instance.liquidConduitFlow;
+		if (type != ConduitType.Gas)
+		{
+			return Game.Instance.liquidConduitFlow;
+		}
+		return Game.Instance.gasConduitFlow;
 	}
 
 	public static IUtilityNetworkMgr GetNetworkManager(ConduitType type)
 	{
-		return (type == ConduitType.Gas) ? Game.Instance.gasConduitSystem : Game.Instance.liquidConduitSystem;
+		if (type != ConduitType.Gas)
+		{
+			return Game.Instance.liquidConduitSystem;
+		}
+		return Game.Instance.gasConduitSystem;
 	}
 
 	public void AddNetworks(ICollection<UtilityNetwork> networks)
@@ -179,8 +197,7 @@ public class Conduit : KMonoBehaviour, IFirstFrameCallback, IHaveUtilityNetworkM
 	private void OnHighlighted(object data)
 	{
 		int highlightedCell = (((bool)data) ? Grid.PosToCell(base.transform.GetPosition()) : (-1));
-		ConduitFlowVisualizer flowVisualizer = GetFlowVisualizer();
-		flowVisualizer.SetHighlightedCell(highlightedCell);
+		GetFlowVisualizer().SetHighlightedCell(highlightedCell);
 	}
 
 	private void OnConduitFrozen(object data)

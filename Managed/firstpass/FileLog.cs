@@ -3,7 +3,7 @@ using System.IO;
 
 public class FileLog
 {
-	private static FileLog instance = null;
+	private static FileLog instance;
 
 	private StreamWriter writer;
 

@@ -9,13 +9,21 @@ public class TopOnly : SelectModuleCondition
 		if (selectionContext == SelectionContext.ReplaceModule)
 		{
 			Debug.Assert(existingModule.GetComponent<LaunchPad>() == null, "Trying to replace launch pad with rocket module");
-			return existingModule.GetComponent<BuildingAttachPoint>() == null || existingModule.GetComponent<BuildingAttachPoint>().points[0].attachedBuilding == null;
+			if (!(existingModule.GetComponent<BuildingAttachPoint>() == null))
+			{
+				return existingModule.GetComponent<BuildingAttachPoint>().points[0].attachedBuilding == null;
+			}
+			return true;
 		}
 		if (existingModule.GetComponent<LaunchPad>() != null)
 		{
 			return true;
 		}
-		return existingModule.GetComponent<BuildingAttachPoint>() != null && existingModule.GetComponent<BuildingAttachPoint>().points[0].attachedBuilding == null;
+		if (existingModule.GetComponent<BuildingAttachPoint>() != null)
+		{
+			return existingModule.GetComponent<BuildingAttachPoint>().points[0].attachedBuilding == null;
+		}
+		return false;
 	}
 
 	public override string GetStatusTooltip(bool ready, BuildingDef selectedPart)

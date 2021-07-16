@@ -57,15 +57,11 @@ namespace YamlDotNet.Samples.Helpers
 				MethodInfo[] methods = type.GetMethods();
 				foreach (MethodInfo methodInfo in methods)
 				{
-					if (methodInfo.Name == "Main")
+					if (methodInfo.Name == "Main" && (SampleAttribute)Attribute.GetCustomAttribute(methodInfo, typeof(SampleAttribute)) != null)
 					{
-						SampleAttribute sampleAttribute = (SampleAttribute)Attribute.GetCustomAttribute(methodInfo, typeof(SampleAttribute));
-						if (sampleAttribute != null)
-						{
-							list.Add(type.Name);
-							flag = true;
-							break;
-						}
+						list.Add(type.Name);
+						flag = true;
+						break;
 					}
 					if (flag)
 					{

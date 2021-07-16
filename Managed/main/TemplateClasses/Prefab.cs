@@ -169,9 +169,12 @@ namespace TemplateClasses
 			if (storage != null && storage.Count > 0)
 			{
 				prefab.storage = new List<StorageItem>();
-				foreach (StorageItem item in storage)
 				{
-					prefab.storage.Add(item.Clone());
+					foreach (StorageItem item in storage)
+					{
+						prefab.storage.Add(item.Clone());
+					}
+					return prefab;
 				}
 			}
 			return prefab;

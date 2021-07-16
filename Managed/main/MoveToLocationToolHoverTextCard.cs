@@ -6,8 +6,7 @@ public class MoveToLocationToolHoverTextCard : HoverTextConfiguration
 {
 	public override void UpdateHoverElements(List<KSelectable> selected)
 	{
-		HoverTextScreen instance = HoverTextScreen.Instance;
-		HoverTextDrawer hoverTextDrawer = instance.BeginDrawing();
+		HoverTextDrawer hoverTextDrawer = HoverTextScreen.Instance.BeginDrawing();
 		int num = Grid.PosToCell(Camera.main.ScreenToWorldPoint(KInputManager.GetMousePos()));
 		if (!Grid.IsValidCell(num) || Grid.WorldIdx[num] != ClusterManager.Instance.activeWorldId)
 		{

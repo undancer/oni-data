@@ -10,16 +10,16 @@ public class PedestalArtifactSpawner : KMonoBehaviour
 	private SingleEntityReceptacle receptacle;
 
 	[Serialize]
-	private bool artifactSpawned = false;
+	private bool artifactSpawned;
 
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
 		if (!artifactSpawned)
 		{
-			string uniqueArtifactID = ArtifactSelector.Instance.GetUniqueArtifactID();
-			GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(uniqueArtifactID), base.transform.position);
+			GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(ArtifactSelector.Instance.GetUniqueArtifactID()), base.transform.position);
 			gameObject.SetActive(value: true);
+			gameObject.AddTag(GameTags.TerrestrialArtifact);
 			storage.Store(gameObject);
 			receptacle.ForceDeposit(gameObject);
 			artifactSpawned = true;

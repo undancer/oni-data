@@ -43,8 +43,7 @@ namespace Klei
 					serializerBuilder = serializerBuilder.WithTagMapping(tagMapping.first, tagMapping.second);
 				}
 			}
-			Serializer serializer = serializerBuilder.Build();
-			serializer.Serialize(writer, some_object);
+			serializerBuilder.Build().Serialize(writer, some_object);
 		}
 
 		public static void SaveOrWarnUser<T>(T some_object, string filename, List<Tuple<string, Type>> tagMappings = null)
@@ -75,12 +74,10 @@ namespace Klei
 			ErrorLogger errorLogger = ((force_log_as_warning || error.severity == Error.Severity.Recoverable) ? new ErrorLogger(Debug.LogWarningFormat) : new ErrorLogger(Debug.LogErrorFormat));
 			if (error.inner_exception == null)
 			{
-				bool flag = false;
 				errorLogger("{0} parse error in {1}\n{2}", error.severity, error.file.full_path, error.message);
 			}
 			else
 			{
-				bool flag2 = false;
 				errorLogger("{0} parse error in {1}\n{2}\n{3}", error.severity, error.file.full_path, error.message, error.inner_exception.Message);
 			}
 		}

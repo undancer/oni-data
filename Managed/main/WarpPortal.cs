@@ -133,7 +133,7 @@ public class WarpPortal : Workable
 
 	private int selectEventHandle = -1;
 
-	private Coroutine delayWarpRoutine = null;
+	private Coroutine delayWarpRoutine;
 
 	private static readonly HashedString[] printing_anim = new HashedString[3]
 	{
@@ -211,8 +211,7 @@ public class WarpPortal : Workable
 	{
 		SaveGame.Instance.GetComponent<WorldGenSpawner>().SpawnTag(WarpReceiverConfig.ID);
 		WarpReceiver[] array = Object.FindObjectsOfType<WarpReceiver>();
-		WarpReceiver[] array2 = array;
-		foreach (WarpReceiver component in array2)
+		foreach (WarpReceiver component in array)
 		{
 			if (component.GetMyWorldId() != this.GetMyWorldId())
 			{
@@ -231,8 +230,7 @@ public class WarpPortal : Workable
 		}
 		WarpReceiver warpReceiver = null;
 		WarpReceiver[] array = Object.FindObjectsOfType<WarpReceiver>();
-		WarpReceiver[] array2 = array;
-		foreach (WarpReceiver warpReceiver2 in array2)
+		foreach (WarpReceiver warpReceiver2 in array)
 		{
 			if (warpReceiver2.GetMyWorldId() != this.GetMyWorldId())
 			{
@@ -262,12 +260,12 @@ public class WarpPortal : Workable
 	public IEnumerator DelayedWarp(WarpReceiver receiver)
 	{
 		yield return new WaitForEndOfFrame();
-		int targetID = receiver.GetMyWorldId();
-		CameraController.Instance.ActiveWorldStarWipe(targetID, Grid.CellToPos(Grid.PosToCell(receiver)));
-		Worker targetWorker = base.worker;
-		targetWorker.StopWork();
-		receiver.ReceiveWarpedDuplicant(targetWorker);
-		ClusterManager.Instance.MigrateMinion(targetWorker.GetComponent<MinionIdentity>(), targetID);
+		int myWorldId = receiver.GetMyWorldId();
+		CameraController.Instance.ActiveWorldStarWipe(myWorldId, Grid.CellToPos(Grid.PosToCell(receiver)));
+		Worker worker = base.worker;
+		worker.StopWork();
+		receiver.ReceiveWarpedDuplicant(worker);
+		ClusterManager.Instance.MigrateMinion(worker.GetComponent<MinionIdentity>(), myWorldId);
 		delayWarpRoutine = null;
 	}
 
@@ -334,8 +332,7 @@ public class WarpPortal : Workable
 
 	public void RefreshSideScreen()
 	{
-		KSelectable component = GetComponent<KSelectable>();
-		if (component.IsSelected)
+		if (GetComponent<KSelectable>().IsSelected)
 		{
 			DetailsScreen.Instance.Refresh(base.gameObject);
 		}

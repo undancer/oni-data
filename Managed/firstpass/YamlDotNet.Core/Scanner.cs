@@ -220,7 +220,11 @@ namespace YamlDotNet.Core
 
 		private static bool StartsWith(StringBuilder what, char start)
 		{
-			return what.Length > 0 && what[0] == start;
+			if (what.Length > 0)
+			{
+				return what[0] == start;
+			}
+			return false;
 		}
 
 		private void StaleSimpleKeys()
@@ -358,16 +362,24 @@ namespace YamlDotNet.Core
 
 		private bool CheckWhiteSpace()
 		{
-			return analyzer.Check(' ') || ((flowLevel > 0 || !simpleKeyAllowed) && analyzer.Check('\t'));
+			if (!analyzer.Check(' '))
+			{
+				if (flowLevel > 0 || !simpleKeyAllowed)
+				{
+					return analyzer.Check('\t');
+				}
+				return false;
+			}
+			return true;
 		}
 
 		private bool IsDocumentIndicator()
 		{
 			if (cursor.LineOffset == 0 && analyzer.IsWhiteBreakOrZero(3))
 			{
-				bool flag = analyzer.Check('-') && analyzer.Check('-', 1) && analyzer.Check('-', 2);
-				bool flag2 = analyzer.Check('.') && analyzer.Check('.', 1) && analyzer.Check('.', 2);
-				return flag || flag2;
+				bool num = analyzer.Check('-') && analyzer.Check('-', 1) && analyzer.Check('-', 2);
+				bool flag = analyzer.Check('.') && analyzer.Check('.', 1) && analyzer.Check('.', 2);
+				return num || flag;
 			}
 			return false;
 		}

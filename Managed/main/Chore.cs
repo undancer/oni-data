@@ -205,7 +205,11 @@ public abstract class Chore
 					}
 					return chore.id - obj.chore.id;
 				}
-				return (!flag) ? 1 : (-1);
+				if (!flag)
+				{
+					return 1;
+				}
+				return -1;
 			}
 
 			public override bool Equals(object obj)
@@ -466,10 +470,9 @@ public abstract class Chore
 
 	public void SetOverrideTarget(ChoreConsumer chore_consumer)
 	{
-		string text = "null";
 		if (chore_consumer != null)
 		{
-			text = chore_consumer.name;
+			_ = chore_consumer.name;
 		}
 		overrideTarget = chore_consumer;
 		Fail("New override target");

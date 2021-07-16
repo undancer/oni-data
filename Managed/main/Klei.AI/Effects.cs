@@ -247,13 +247,11 @@ namespace Klei.AI
 		{
 			foreach (EffectInstance effect in source.effects)
 			{
-				EffectInstance effectInstance = Add(effect.effect, effect.shouldSave);
-				effectInstance.timeRemaining = effect.timeRemaining;
+				Add(effect.effect, effect.shouldSave).timeRemaining = effect.timeRemaining;
 			}
 			foreach (EffectInstance item in source.effectsThatExpire)
 			{
-				EffectInstance effectInstance2 = Add(item.effect, item.shouldSave);
-				effectInstance2.timeRemaining = item.timeRemaining;
+				Add(item.effect, item.shouldSave).timeRemaining = item.timeRemaining;
 			}
 		}
 	}

@@ -1,4 +1,3 @@
-#define UNITY_ASSERTIONS
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -7,7 +6,6 @@ using Database;
 using Klei.AI;
 using Klei.AI.DiseaseGrowthRules;
 using STRINGS;
-using UnityEngine;
 
 public static class SimMessages
 {
@@ -759,23 +757,19 @@ public static class SimMessages
 	public unsafe static void AddElementChunk(int gameCell, SimHashes element, float mass, float temperature, float surface_area, float thickness, float ground_transfer_scale, int cb_handle)
 	{
 		Debug.Assert(Grid.IsValidCell(gameCell));
-		if (Grid.IsValidCell(gameCell))
+		if (Grid.IsValidCell(gameCell) && mass * temperature > 0f)
 		{
-			UnityEngine.Debug.Assert(mass * temperature > 0f, "Tried to add an SimTemperatureTransfer component with 0 mass or temperature. Unsupported! Your game is now in a bad state.");
-			if (mass * temperature > 0f)
-			{
-				int elementIndex = ElementLoader.GetElementIndex(element);
-				AddElementChunkMessage* ptr = stackalloc AddElementChunkMessage[1];
-				ptr->gameCell = gameCell;
-				ptr->callbackIdx = cb_handle;
-				ptr->mass = mass;
-				ptr->temperature = temperature;
-				ptr->surfaceArea = surface_area;
-				ptr->thickness = thickness;
-				ptr->groundTransferScale = ground_transfer_scale;
-				ptr->elementIdx = (byte)elementIndex;
-				Sim.SIM_HandleMessage(1445724082, sizeof(AddElementChunkMessage), (byte*)ptr);
-			}
+			int elementIndex = ElementLoader.GetElementIndex(element);
+			AddElementChunkMessage* ptr = stackalloc AddElementChunkMessage[1];
+			ptr->gameCell = gameCell;
+			ptr->callbackIdx = cb_handle;
+			ptr->mass = mass;
+			ptr->temperature = temperature;
+			ptr->surfaceArea = surface_area;
+			ptr->thickness = thickness;
+			ptr->groundTransferScale = ground_transfer_scale;
+			ptr->elementIdx = (byte)elementIndex;
+			Sim.SIM_HandleMessage(1445724082, sizeof(AddElementChunkMessage), (byte*)ptr);
 		}
 	}
 
@@ -847,8 +841,7 @@ public static class SimMessages
 
 	public unsafe static void AddBuildingHeatExchange(Extents extents, float mass, float temperature, float thermal_conductivity, float operating_kw, byte elem_idx, int callbackIdx = -1)
 	{
-		int cell = Grid.XYToCell(extents.x, extents.y);
-		if (Grid.IsValidCell(cell))
+		if (Grid.IsValidCell(Grid.XYToCell(extents.x, extents.y)))
 		{
 			int num = Grid.XYToCell(extents.x + extents.width, extents.y + extents.height);
 			if (!Grid.IsValidCell(num))
@@ -1100,108 +1093,96 @@ public static class SimMessages
 
 	public unsafe static void Dig(int gameCell, int callbackIdx = -1, bool skipEvent = false)
 	{
-		if (!Grid.IsValidCell(gameCell))
+		if (Grid.IsValidCell(gameCell))
 		{
-			UnityEngine.Debug.AssertFormat(false, "Invalid cell: {0}", gameCell);
-			return;
+			DigMessage* ptr = stackalloc DigMessage[1];
+			ptr->cellIdx = gameCell;
+			ptr->callbackIdx = callbackIdx;
+			ptr->skipEvent = skipEvent;
+			Sim.SIM_HandleMessage(833038498, sizeof(DigMessage), (byte*)ptr);
 		}
-		DigMessage* ptr = stackalloc DigMessage[1];
-		ptr->cellIdx = gameCell;
-		ptr->callbackIdx = callbackIdx;
-		ptr->skipEvent = skipEvent;
-		Sim.SIM_HandleMessage(833038498, sizeof(DigMessage), (byte*)ptr);
 	}
 
 	public unsafe static void SetInsulation(int gameCell, float value)
 	{
-		if (!Grid.IsValidCell(gameCell))
+		if (Grid.IsValidCell(gameCell))
 		{
-			UnityEngine.Debug.AssertFormat(false, "Invalid cell: {0}", gameCell);
-			return;
+			SetCellFloatValueMessage* ptr = stackalloc SetCellFloatValueMessage[1];
+			ptr->cellIdx = gameCell;
+			ptr->value = value;
+			Sim.SIM_HandleMessage(-898773121, sizeof(SetCellFloatValueMessage), (byte*)ptr);
 		}
-		SetCellFloatValueMessage* ptr = stackalloc SetCellFloatValueMessage[1];
-		ptr->cellIdx = gameCell;
-		ptr->value = value;
-		Sim.SIM_HandleMessage(-898773121, sizeof(SetCellFloatValueMessage), (byte*)ptr);
 	}
 
 	public unsafe static void SetStrength(int gameCell, int weight, float strengthMultiplier)
 	{
-		if (!Grid.IsValidCell(gameCell))
+		if (Grid.IsValidCell(gameCell))
 		{
-			UnityEngine.Debug.AssertFormat(false, "Invalid cell: {0}", gameCell);
-			return;
+			SetCellFloatValueMessage* ptr = stackalloc SetCellFloatValueMessage[1];
+			ptr->cellIdx = gameCell;
+			int num = (int)(strengthMultiplier * 4f) & 0x7F;
+			int num2 = ((weight & 1) << 7) | num;
+			ptr->value = (int)(byte)num2;
+			Sim.SIM_HandleMessage(1593243982, sizeof(SetCellFloatValueMessage), (byte*)ptr);
 		}
-		SetCellFloatValueMessage* ptr = stackalloc SetCellFloatValueMessage[1];
-		ptr->cellIdx = gameCell;
-		int num = (int)(strengthMultiplier * 4f) & 0x7F;
-		int num2 = ((weight & 1) << 7) | num;
-		ptr->value = (int)(byte)num2;
-		Sim.SIM_HandleMessage(1593243982, sizeof(SetCellFloatValueMessage), (byte*)ptr);
 	}
 
 	public unsafe static void SetCellProperties(int gameCell, byte properties)
 	{
-		if (!Grid.IsValidCell(gameCell))
+		if (Grid.IsValidCell(gameCell))
 		{
-			UnityEngine.Debug.AssertFormat(false, "Invalid cell: {0}", gameCell);
-			return;
+			CellPropertiesMessage* ptr = stackalloc CellPropertiesMessage[1];
+			ptr->cellIdx = gameCell;
+			ptr->properties = properties;
+			ptr->set = 1;
+			Sim.SIM_HandleMessage(-469311643, sizeof(CellPropertiesMessage), (byte*)ptr);
 		}
-		CellPropertiesMessage* ptr = stackalloc CellPropertiesMessage[1];
-		ptr->cellIdx = gameCell;
-		ptr->properties = properties;
-		ptr->set = 1;
-		Sim.SIM_HandleMessage(-469311643, sizeof(CellPropertiesMessage), (byte*)ptr);
 	}
 
 	public unsafe static void ClearCellProperties(int gameCell, byte properties)
 	{
-		if (!Grid.IsValidCell(gameCell))
+		if (Grid.IsValidCell(gameCell))
 		{
-			UnityEngine.Debug.AssertFormat(false, "Invalid cell: {0}", gameCell);
-			return;
+			CellPropertiesMessage* ptr = stackalloc CellPropertiesMessage[1];
+			ptr->cellIdx = gameCell;
+			ptr->properties = properties;
+			ptr->set = 0;
+			Sim.SIM_HandleMessage(-469311643, sizeof(CellPropertiesMessage), (byte*)ptr);
 		}
-		CellPropertiesMessage* ptr = stackalloc CellPropertiesMessage[1];
-		ptr->cellIdx = gameCell;
-		ptr->properties = properties;
-		ptr->set = 0;
-		Sim.SIM_HandleMessage(-469311643, sizeof(CellPropertiesMessage), (byte*)ptr);
 	}
 
 	public unsafe static void ModifyCell(int gameCell, int elementIdx, float temperature, float mass, byte disease_idx, int disease_count, ReplaceType replace_type = ReplaceType.None, bool do_vertical_solid_displacement = false, int callbackIdx = -1)
 	{
-		if (!Grid.IsValidCell(gameCell))
+		if (Grid.IsValidCell(gameCell))
 		{
-			UnityEngine.Debug.AssertFormat(false, "Invalid cell: {0}", gameCell);
-			return;
+			Element element = ElementLoader.elements[elementIdx];
+			if (element.maxMass == 0f && mass > element.maxMass)
+			{
+				Debug.LogWarningFormat("Invalid cell modification (mass greater than element maximum): Cell={0}, EIdx={1}, T={2}, M={3}, {4} max mass = {5}", gameCell, elementIdx, temperature, mass, element.id, element.maxMass);
+				mass = element.maxMass;
+			}
+			if (temperature < 0f || temperature > 10000f)
+			{
+				Debug.LogWarningFormat("Invalid cell modification (temp out of bounds): Cell={0}, EIdx={1}, T={2}, M={3}, {4} default temp = {5}", gameCell, elementIdx, temperature, mass, element.id, element.defaultValues.temperature);
+				temperature = element.defaultValues.temperature;
+			}
+			if (temperature == 0f && mass > 0f)
+			{
+				Debug.LogWarningFormat("Invalid cell modification (zero temp with non-zero mass): Cell={0}, EIdx={1}, T={2}, M={3}, {4} default temp = {5}", gameCell, elementIdx, temperature, mass, element.id, element.defaultValues.temperature);
+				temperature = element.defaultValues.temperature;
+			}
+			ModifyCellMessage* ptr = stackalloc ModifyCellMessage[1];
+			ptr->cellIdx = gameCell;
+			ptr->callbackIdx = callbackIdx;
+			ptr->temperature = temperature;
+			ptr->mass = mass;
+			ptr->elementIdx = (byte)elementIdx;
+			ptr->replaceType = (byte)replace_type;
+			ptr->diseaseIdx = disease_idx;
+			ptr->diseaseCount = disease_count;
+			ptr->addSubType = (byte)((!do_vertical_solid_displacement) ? 1u : 0u);
+			Sim.SIM_HandleMessage(-1252920804, sizeof(ModifyCellMessage), (byte*)ptr);
 		}
-		Element element = ElementLoader.elements[elementIdx];
-		if (element.maxMass == 0f && mass > element.maxMass)
-		{
-			Debug.LogWarningFormat("Invalid cell modification (mass greater than element maximum): Cell={0}, EIdx={1}, T={2}, M={3}, {4} max mass = {5}", gameCell, elementIdx, temperature, mass, element.id, element.maxMass);
-			mass = element.maxMass;
-		}
-		if (temperature < 0f || temperature > 10000f)
-		{
-			Debug.LogWarningFormat("Invalid cell modification (temp out of bounds): Cell={0}, EIdx={1}, T={2}, M={3}, {4} default temp = {5}", gameCell, elementIdx, temperature, mass, element.id, element.defaultValues.temperature);
-			temperature = element.defaultValues.temperature;
-		}
-		if (temperature == 0f && mass > 0f)
-		{
-			Debug.LogWarningFormat("Invalid cell modification (zero temp with non-zero mass): Cell={0}, EIdx={1}, T={2}, M={3}, {4} default temp = {5}", gameCell, elementIdx, temperature, mass, element.id, element.defaultValues.temperature);
-			temperature = element.defaultValues.temperature;
-		}
-		ModifyCellMessage* ptr = stackalloc ModifyCellMessage[1];
-		ptr->cellIdx = gameCell;
-		ptr->callbackIdx = callbackIdx;
-		ptr->temperature = temperature;
-		ptr->mass = mass;
-		ptr->elementIdx = (byte)elementIdx;
-		ptr->replaceType = (byte)replace_type;
-		ptr->diseaseIdx = disease_idx;
-		ptr->diseaseCount = disease_count;
-		ptr->addSubType = (byte)((!do_vertical_solid_displacement) ? 1u : 0u);
-		Sim.SIM_HandleMessage(-1252920804, sizeof(ModifyCellMessage), (byte*)ptr);
 	}
 
 	public unsafe static void ModifyDiseaseOnCell(int gameCell, byte disease_idx, int disease_delta)
@@ -1247,37 +1228,33 @@ public static class SimMessages
 
 	public unsafe static void ConsumeMass(int gameCell, SimHashes element, float mass, byte radius, int callbackIdx = -1)
 	{
-		if (!Grid.IsValidCell(gameCell))
+		if (Grid.IsValidCell(gameCell))
 		{
-			UnityEngine.Debug.AssertFormat(false, "Invalid cell: {0}", gameCell);
-			return;
+			int elementIndex = ElementLoader.GetElementIndex(element);
+			MassConsumptionMessage* ptr = stackalloc MassConsumptionMessage[1];
+			ptr->cellIdx = gameCell;
+			ptr->callbackIdx = callbackIdx;
+			ptr->mass = mass;
+			ptr->elementIdx = (byte)elementIndex;
+			ptr->radius = radius;
+			Sim.SIM_HandleMessage(1727657959, sizeof(MassConsumptionMessage), (byte*)ptr);
 		}
-		int elementIndex = ElementLoader.GetElementIndex(element);
-		MassConsumptionMessage* ptr = stackalloc MassConsumptionMessage[1];
-		ptr->cellIdx = gameCell;
-		ptr->callbackIdx = callbackIdx;
-		ptr->mass = mass;
-		ptr->elementIdx = (byte)elementIndex;
-		ptr->radius = radius;
-		Sim.SIM_HandleMessage(1727657959, sizeof(MassConsumptionMessage), (byte*)ptr);
 	}
 
 	public unsafe static void EmitMass(int gameCell, byte element_idx, float mass, float temperature, byte disease_idx, int disease_count, int callbackIdx = -1)
 	{
-		if (!Grid.IsValidCell(gameCell))
+		if (Grid.IsValidCell(gameCell))
 		{
-			UnityEngine.Debug.AssertFormat(false, "Invalid cell: {0}", gameCell);
-			return;
+			MassEmissionMessage* ptr = stackalloc MassEmissionMessage[1];
+			ptr->cellIdx = gameCell;
+			ptr->callbackIdx = callbackIdx;
+			ptr->mass = mass;
+			ptr->temperature = temperature;
+			ptr->elementIdx = element_idx;
+			ptr->diseaseIdx = disease_idx;
+			ptr->diseaseCount = disease_count;
+			Sim.SIM_HandleMessage(797274363, sizeof(MassEmissionMessage), (byte*)ptr);
 		}
-		MassEmissionMessage* ptr = stackalloc MassEmissionMessage[1];
-		ptr->cellIdx = gameCell;
-		ptr->callbackIdx = callbackIdx;
-		ptr->mass = mass;
-		ptr->temperature = temperature;
-		ptr->elementIdx = element_idx;
-		ptr->diseaseIdx = disease_idx;
-		ptr->diseaseCount = disease_count;
-		Sim.SIM_HandleMessage(797274363, sizeof(MassEmissionMessage), (byte*)ptr);
 	}
 
 	public unsafe static void ConsumeDisease(int game_cell, float percent_to_consume, int max_to_consume, int callback_idx)
@@ -1306,9 +1283,6 @@ public static class SimMessages
 			Element element = ElementLoader.elements[elementIdx];
 			float temperature2 = ((temperature != -1f) ? temperature : element.defaultValues.temperature);
 			ModifyCell(gameCell, elementIdx, temperature2, mass, disease_idx, disease_count, ReplaceType.None, do_vertical_solid_displacement, callbackIdx);
-			if (ev == null)
-			{
-			}
 		}
 	}
 
@@ -1336,22 +1310,20 @@ public static class SimMessages
 
 	public unsafe static void ModifyEnergy(int gameCell, float kilojoules, float max_temperature, EnergySourceID id)
 	{
-		if (!Grid.IsValidCell(gameCell))
+		if (Grid.IsValidCell(gameCell))
 		{
-			UnityEngine.Debug.AssertFormat(false, "Invalid cell: {0}", gameCell);
-			return;
+			if (max_temperature <= 0f)
+			{
+				Debug.LogError("invalid max temperature for cell energy modification");
+				return;
+			}
+			ModifyCellEnergyMessage* ptr = stackalloc ModifyCellEnergyMessage[1];
+			ptr->cellIdx = gameCell;
+			ptr->kilojoules = kilojoules;
+			ptr->maxTemperature = max_temperature;
+			ptr->id = (int)id;
+			Sim.SIM_HandleMessage(818320644, sizeof(ModifyCellEnergyMessage), (byte*)ptr);
 		}
-		if (max_temperature <= 0f)
-		{
-			Debug.LogError("invalid max temperature for cell energy modification");
-			return;
-		}
-		ModifyCellEnergyMessage* ptr = stackalloc ModifyCellEnergyMessage[1];
-		ptr->cellIdx = gameCell;
-		ptr->kilojoules = kilojoules;
-		ptr->maxTemperature = max_temperature;
-		ptr->id = (int)id;
-		Sim.SIM_HandleMessage(818320644, sizeof(ModifyCellEnergyMessage), (byte*)ptr);
 	}
 
 	public static void ModifyMass(int gameCell, float mass, byte disease_idx, int disease_count, CellModifyMassEvent ev, float temperature = -1f, SimHashes element = SimHashes.Vacuum)
@@ -1370,7 +1342,6 @@ public static class SimMessages
 		}
 		else
 		{
-			UnityEngine.Debug.Assert(mass < 0f, "Mass less than zero");
 			ModifyCell(gameCell, 0, temperature, mass, disease_idx, disease_count);
 		}
 	}

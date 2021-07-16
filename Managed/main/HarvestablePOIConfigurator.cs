@@ -49,7 +49,7 @@ public class HarvestablePOIConfigurator : KMonoBehaviour
 	{
 		public HashedString typeId;
 
-		private bool didInit = false;
+		private bool didInit;
 
 		public float capacityRoll;
 
@@ -100,7 +100,7 @@ public class HarvestablePOIConfigurator : KMonoBehaviour
 
 	public HashedString presetType;
 
-	public float presetMin = 0f;
+	public float presetMin;
 
 	public float presetMax = 1f;
 
@@ -128,8 +128,7 @@ public class HarvestablePOIConfigurator : KMonoBehaviour
 		int globalWorldSeed = SaveLoader.Instance.clusterDetailSave.globalWorldSeed;
 		ClusterGridEntity component = GetComponent<ClusterGridEntity>();
 		Vector3 position = ClusterGrid.Instance.GetPosition(component);
-		globalWorldSeed = globalWorldSeed + (int)position.x + (int)position.y;
-		System.Random randomSource = new System.Random(globalWorldSeed);
+		System.Random randomSource = new System.Random(globalWorldSeed + (int)position.x + (int)position.y);
 		return new HarvestablePOIInstanceConfiguration
 		{
 			typeId = typeId,

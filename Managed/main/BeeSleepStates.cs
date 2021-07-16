@@ -11,7 +11,7 @@ public class BeeSleepStates : GameStateMachine<BeeSleepStates, BeeSleepStates.In
 	{
 		public int targetSleepCell;
 
-		public float co2Exposure = 0f;
+		public float co2Exposure;
 
 		public Instance(Chore<Instance> chore, Def def)
 			: base((IStateMachineTarget)chore, def)
@@ -68,12 +68,10 @@ public class BeeSleepStates : GameStateMachine<BeeSleepStates, BeeSleepStates.In
 		sleep.pre.QueueAnim("sleep_pre").OnAnimQueueComplete(sleep.loop);
 		sleep.loop.Enter(delegate(Instance smi)
 		{
-			LoopingSounds component2 = smi.GetComponent<LoopingSounds>();
-			component2.PauseSound(GlobalAssets.GetSound("Bee_wings_LP"), paused: true);
+			smi.GetComponent<LoopingSounds>().PauseSound(GlobalAssets.GetSound("Bee_wings_LP"), paused: true);
 		}).QueueAnim("sleep_loop", loop: true).Exit(delegate(Instance smi)
 		{
-			LoopingSounds component = smi.GetComponent<LoopingSounds>();
-			component.PauseSound(GlobalAssets.GetSound("Bee_wings_LP"), paused: false);
+			smi.GetComponent<LoopingSounds>().PauseSound(GlobalAssets.GetSound("Bee_wings_LP"), paused: false);
 		});
 		sleep.pst.QueueAnim("sleep_pst").OnAnimQueueComplete(behaviourcomplete);
 		behaviourcomplete.BehaviourComplete(GameTags.Creatures.BeeWantsToSleep);
@@ -83,8 +81,7 @@ public class BeeSleepStates : GameStateMachine<BeeSleepStates, BeeSleepStates.In
 	{
 		smi.targetSleepCell = Grid.InvalidCell;
 		FloorCellQuery floorCellQuery = PathFinderQueries.floorCellQuery.Reset(1);
-		Navigator component = smi.GetComponent<Navigator>();
-		component.RunQuery(floorCellQuery);
+		smi.GetComponent<Navigator>().RunQuery(floorCellQuery);
 		if (floorCellQuery.result_cells.Count > 0)
 		{
 			smi.targetSleepCell = floorCellQuery.result_cells[Random.Range(0, floorCellQuery.result_cells.Count)];
@@ -93,7 +90,6 @@ public class BeeSleepStates : GameStateMachine<BeeSleepStates, BeeSleepStates.In
 
 	public static bool ShouldWakeUp(Instance smi)
 	{
-		BeeSleepMonitor.Instance sMI = smi.GetSMI<BeeSleepMonitor.Instance>();
-		return sMI.CO2Exposure <= 0f;
+		return smi.GetSMI<BeeSleepMonitor.Instance>().CO2Exposure <= 0f;
 	}
 }

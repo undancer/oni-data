@@ -191,9 +191,7 @@ public class Clearable : Workable, ISaveLoadable, IRender1000ms
 			bool show2 = false;
 			if (isMarkedForClear)
 			{
-				bool flag = GlobalChoreProvider.Instance.ClearableHasDestination(pickupable);
-				show = flag;
-				show2 = !flag;
+				show2 = !(show = GlobalChoreProvider.Instance.ClearableHasDestination(pickupable));
 			}
 			pendingClearGuid = selectable.ToggleStatusItem(Db.Get().MiscStatusItems.PendingClear, pendingClearGuid, show, this);
 			pendingClearNoStorageGuid = selectable.ToggleStatusItem(Db.Get().MiscStatusItems.PendingClearNoStorage, pendingClearNoStorageGuid, show2, this);

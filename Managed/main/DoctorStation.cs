@@ -251,8 +251,7 @@ public class DoctorStation : Workable
 			description = DUPLICANTS.CHORES.PRECONDITIONS.TREATMENT_AVAILABLE,
 			fn = delegate(ref Chore.Precondition.Context context, object data)
 			{
-				DoctorStation doctorStation2 = (DoctorStation)data;
-				return doctorStation2.IsTreatmentAvailable(context.consumerState.gameObject);
+				return ((DoctorStation)data).IsTreatmentAvailable(context.consumerState.gameObject);
 			}
 		};
 		TreatmentAvailable = precondition;
@@ -262,8 +261,7 @@ public class DoctorStation : Workable
 			description = DUPLICANTS.CHORES.PRECONDITIONS.DOCTOR_AVAILABLE,
 			fn = delegate(ref Chore.Precondition.Context context, object data)
 			{
-				DoctorStation doctorStation = (DoctorStation)data;
-				return doctorStation.IsDoctorAvailable(context.consumerState.gameObject);
+				return ((DoctorStation)data).IsDoctorAvailable(context.consumerState.gameObject);
 			}
 		};
 		DoctorAvailable = precondition;

@@ -14,7 +14,7 @@ public static class TemplateLoader
 
 		private System.Action m_onCompleteCallback;
 
-		private int currentPhase = 0;
+		private int currentPhase;
 
 		public ActiveStamp(TemplateContainer template, Vector2 rootLocation, System.Action onCompleteCallback)
 		{
@@ -121,8 +121,7 @@ public static class TemplateLoader
 		{
 			return null;
 		}
-		BuildingDef buildingDef = Assets.GetBuildingDef(prefab.id);
-		if (buildingDef == null)
+		if (Assets.GetBuildingDef(prefab.id) == null)
 		{
 			return null;
 		}
@@ -132,8 +131,7 @@ public static class TemplateLoader
 		{
 			return null;
 		}
-		int widthInCells = Assets.GetBuildingDef(prefab.id).WidthInCells;
-		if (widthInCells >= 3)
+		if (Assets.GetBuildingDef(prefab.id).WidthInCells >= 3)
 		{
 			num--;
 		}
@@ -144,20 +142,19 @@ public static class TemplateLoader
 			return gameObject;
 		}
 		BuildingComplete component = gameObject.GetComponent<BuildingComplete>();
-		KPrefabID component2 = gameObject.GetComponent<KPrefabID>();
-		component2.AddTag(GameTags.TemplateBuilding, serialize: true);
+		gameObject.GetComponent<KPrefabID>().AddTag(GameTags.TemplateBuilding, serialize: true);
 		Components.TemplateBuildings.Add(component);
-		Rotatable component3 = gameObject.GetComponent<Rotatable>();
-		if (component3 != null)
+		Rotatable component2 = gameObject.GetComponent<Rotatable>();
+		if (component2 != null)
 		{
-			component3.SetOrientation(prefab.rotationOrientation);
+			component2.SetOrientation(prefab.rotationOrientation);
 		}
-		PrimaryElement component4 = component.GetComponent<PrimaryElement>();
+		PrimaryElement component3 = component.GetComponent<PrimaryElement>();
 		if (prefab.temperature > 0f)
 		{
-			component4.Temperature = prefab.temperature;
+			component3.Temperature = prefab.temperature;
 		}
-		component4.AddDisease(Db.Get().Diseases.GetIndex(prefab.diseaseName), prefab.diseaseCount, "TemplateLoader.PlaceBuilding");
+		component3.AddDisease(Db.Get().Diseases.GetIndex(prefab.diseaseName), prefab.diseaseCount, "TemplateLoader.PlaceBuilding");
 		if (prefab.id == "Door")
 		{
 			for (int i = 0; i < component.PlacementCells.Length; i++)
@@ -185,26 +182,26 @@ public static class TemplateLoader
 		}
 		if (prefab.other_values != null)
 		{
-			Prefab.template_amount_value[] other_values = prefab.other_values;
-			foreach (Prefab.template_amount_value template_amount_value2 in other_values)
+			Prefab.template_amount_value[] amounts = prefab.other_values;
+			foreach (Prefab.template_amount_value template_amount_value2 in amounts)
 			{
 				switch (template_amount_value2.id)
 				{
 				case "joulesAvailable":
 				{
-					Battery component5 = gameObject.GetComponent<Battery>();
-					if ((bool)component5)
+					Battery component4 = gameObject.GetComponent<Battery>();
+					if ((bool)component4)
 					{
-						component5.AddEnergy(template_amount_value2.value);
+						component4.AddEnergy(template_amount_value2.value);
 					}
 					break;
 				}
 				case "sealedDoorDirection":
 				{
-					Unsealable component6 = gameObject.GetComponent<Unsealable>();
-					if ((bool)component6)
+					Unsealable component5 = gameObject.GetComponent<Unsealable>();
+					if ((bool)component5)
 					{
-						component6.facingRight = ((template_amount_value2.value != 0f) ? true : false);
+						component5.facingRight = ((template_amount_value2.value != 0f) ? true : false);
 					}
 					break;
 				}
@@ -225,20 +222,19 @@ public static class TemplateLoader
 		}
 		if (prefab.storage != null && prefab.storage.Count > 0)
 		{
-			Storage component7 = component.gameObject.GetComponent<Storage>();
-			if (component7 == null)
+			Storage component6 = component.gameObject.GetComponent<Storage>();
+			if (component6 == null)
 			{
 				Debug.LogWarning("No storage component on stampTemplate building " + prefab.id + ". Saved storage contents will be ignored.");
 			}
-			for (int l = 0; l < prefab.storage.Count; l++)
+			for (int k = 0; k < prefab.storage.Count; k++)
 			{
-				StorageItem storageItem = prefab.storage[l];
+				StorageItem storageItem = prefab.storage[k];
 				string id = storageItem.id;
 				GameObject gameObject2;
 				if (storageItem.isOre)
 				{
-					Substance substance = ElementLoader.FindElementByHash(storageItem.element).substance;
-					gameObject2 = substance.SpawnResource(Vector3.zero, storageItem.units, storageItem.temperature, Db.Get().Diseases.GetIndex(storageItem.diseaseName), storageItem.diseaseCount);
+					gameObject2 = ElementLoader.FindElementByHash(storageItem.element).substance.SpawnResource(Vector3.zero, storageItem.units, storageItem.temperature, Db.Get().Diseases.GetIndex(storageItem.diseaseName), storageItem.diseaseCount);
 				}
 				else
 				{
@@ -249,20 +245,20 @@ public static class TemplateLoader
 						continue;
 					}
 					gameObject2.SetActive(value: true);
-					PrimaryElement component8 = gameObject2.GetComponent<PrimaryElement>();
-					component8.Units = storageItem.units;
-					component8.Temperature = storageItem.temperature;
-					component8.AddDisease(Db.Get().Diseases.GetIndex(storageItem.diseaseName), storageItem.diseaseCount, "TemplateLoader.PlaceBuilding");
+					PrimaryElement component7 = gameObject2.GetComponent<PrimaryElement>();
+					component7.Units = storageItem.units;
+					component7.Temperature = storageItem.temperature;
+					component7.AddDisease(Db.Get().Diseases.GetIndex(storageItem.diseaseName), storageItem.diseaseCount, "TemplateLoader.PlaceBuilding");
 					Rottable.Instance sMI = gameObject2.GetSMI<Rottable.Instance>();
 					if (sMI != null)
 					{
 						sMI.RotValue = storageItem.rottable.rotAmount;
 					}
 				}
-				GameObject gameObject3 = component7.Store(gameObject2, hide_popups: true, block_events: true);
+				GameObject gameObject3 = component6.Store(gameObject2, hide_popups: true, block_events: true);
 				if (gameObject3 != null)
 				{
-					gameObject3.GetComponent<Pickupable>().OnStore(component7);
+					gameObject3.GetComponent<Pickupable>().OnStore(component6);
 				}
 			}
 		}
@@ -278,12 +274,11 @@ public static class TemplateLoader
 		int cell = Grid.OffsetCell(root_cell, bc.location_x, bc.location_y);
 		UtilityConnections connection = (UtilityConnections)bc.connections;
 		string id = bc.id;
-		string text = id;
-		if (text == null)
+		if (id == null)
 		{
 			return;
 		}
-		switch (text)
+		switch (id)
 		{
 		case "Wire":
 		case "InsulatedWire":
@@ -442,8 +437,7 @@ public static class TemplateLoader
 			return null;
 		}
 		Substance substance = ElementLoader.FindElementByHash(prefab.element).substance;
-		int cell = Grid.OffsetCell(root_cell, location_x, location_y);
-		Vector3 position = Grid.CellToPosCCC(cell, Grid.SceneLayer.Ore);
+		Vector3 position = Grid.CellToPosCCC(Grid.OffsetCell(root_cell, location_x, location_y), Grid.SceneLayer.Ore);
 		byte index = Db.Get().Diseases.GetIndex(prefab.diseaseName);
 		if (prefab.temperature <= 0f)
 		{
@@ -528,8 +522,7 @@ public static class TemplateLoader
 	private static void ClearEntities<T>(int rootX, int rootY, CellOffset[] TemplateOffsets) where T : KMonoBehaviour
 	{
 		T[] array = (T[])UnityEngine.Object.FindObjectsOfType(typeof(T));
-		T[] array2 = array;
-		foreach (T val in array2)
+		foreach (T val in array)
 		{
 			if (Grid.IsCellOffsetOf(Grid.PosToCell(val.gameObject), Grid.XYToCell(rootX, rootY), TemplateOffsets))
 			{

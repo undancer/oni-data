@@ -154,10 +154,8 @@ public class ResourceSet<T> : ResourceSet where T : Resource
 
 	public void ResolveReferences()
 	{
-		Type type = GetType();
-		FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
-		FieldInfo[] array = fields;
-		foreach (FieldInfo fieldInfo in array)
+		FieldInfo[] fields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
+		foreach (FieldInfo fieldInfo in fields)
 		{
 			if (fieldInfo.FieldType.IsSubclassOf(typeof(Resource)) && fieldInfo.GetValue(this) == null)
 			{

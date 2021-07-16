@@ -44,8 +44,7 @@ public class ResearchType
 	public GameObject CreatePrefab(Recipe.Ingredient[] fabricationIngredients, float fabricationTime, HashedString kAnim_ID, string[] fabricators, string recipeDescription, Color color)
 	{
 		GameObject gameObject = EntityTemplates.CreateBasicEntity(id, name, description, 1f, unitMass: true, Assets.GetAnim(kAnim_ID), "ui", Grid.SceneLayer.BuildingFront);
-		ResearchPointObject researchPointObject = gameObject.AddOrGet<ResearchPointObject>();
-		researchPointObject.TypeID = id;
+		gameObject.AddOrGet<ResearchPointObject>().TypeID = id;
 		_recipe = new Recipe(id, 1f, (SimHashes)0, name, recipeDescription);
 		_recipe.SetFabricators(fabricators, fabricationTime);
 		_recipe.SetIcon(Assets.GetSprite("research_type_icon"), color);

@@ -16,7 +16,7 @@ public abstract class GameplayEvent : Resource, IComparable<GameplayEvent>
 
 	public int numTimesAllowed = -1;
 
-	public bool allowMultipleEventInstances = false;
+	public bool allowMultipleEventInstances;
 
 	public int durration;
 
@@ -74,7 +74,11 @@ public abstract class GameplayEvent : Resource, IComparable<GameplayEvent>
 
 	public virtual bool WillNeverRunAgain()
 	{
-		return numTimesAllowed != -1 && GameplayEventManager.Instance.NumberOfPastEvents(Id) >= numTimesAllowed;
+		if (numTimesAllowed != -1)
+		{
+			return GameplayEventManager.Instance.NumberOfPastEvents(Id) >= numTimesAllowed;
+		}
+		return false;
 	}
 
 	public int GetCashedPriority()
@@ -166,13 +170,21 @@ public abstract class GameplayEvent : Resource, IComparable<GameplayEvent>
 		{
 			list.RemoveAll((MinionIdentity x) => !filter.filter(x));
 		}
-		return (list.Count == 0) ? null : list[UnityEngine.Random.Range(0, list.Count)];
+		if (list.Count != 0)
+		{
+			return list[UnityEngine.Random.Range(0, list.Count)];
+		}
+		return null;
 	}
 
 	public MinionIdentity GetRandomMinionPrioritizeFiltered()
 	{
 		MinionIdentity randomFilteredMinion = GetRandomFilteredMinion();
-		return (randomFilteredMinion == null) ? Components.LiveMinionIdentities.Items[UnityEngine.Random.Range(0, Components.LiveMinionIdentities.Items.Count)] : randomFilteredMinion;
+		if (!(randomFilteredMinion == null))
+		{
+			return randomFilteredMinion;
+		}
+		return Components.LiveMinionIdentities.Items[UnityEngine.Random.Range(0, Components.LiveMinionIdentities.Items.Count)];
 	}
 
 	public int CompareTo(GameplayEvent other)

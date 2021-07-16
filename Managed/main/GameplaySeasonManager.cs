@@ -14,9 +14,6 @@ public class GameplaySeasonManager : GameStateMachine<GameplaySeasonManager, Gam
 		[Serialize]
 		public List<GameplaySeasonInstance> activeSeasons;
 
-		[Serialize]
-		private bool m_initialized = false;
-
 		[MyCmpGet]
 		private WorldContainer m_worldContainer;
 
@@ -29,10 +26,6 @@ public class GameplaySeasonManager : GameStateMachine<GameplaySeasonManager, Gam
 		public void Initialize()
 		{
 			activeSeasons.RemoveAll((GameplaySeasonInstance item) => item.Season == null);
-			if (m_initialized)
-			{
-				return;
-			}
 			List<GameplaySeason> list = new List<GameplaySeason>();
 			if (m_worldContainer != null)
 			{
@@ -64,7 +57,13 @@ public class GameplaySeasonManager : GameStateMachine<GameplaySeasonManager, Gam
 					activeSeasons.Add(item.Instantiate(GetWorldId()));
 				}
 			}
-			m_initialized = true;
+			foreach (GameplaySeasonInstance item2 in new List<GameplaySeasonInstance>(activeSeasons))
+			{
+				if (!list.Contains(item2.Season) || !DlcManager.IsContentActive(item2.Season.dlcId))
+				{
+					activeSeasons.Remove(item2);
+				}
+			}
 		}
 
 		private int GetWorldId()
@@ -80,7 +79,7 @@ public class GameplaySeasonManager : GameStateMachine<GameplaySeasonManager, Gam
 		{
 			foreach (GameplaySeasonInstance activeSeason in activeSeasons)
 			{
-				if (activeSeason.IsEnded() || !(GameUtil.GetCurrentTimeInCycles() > activeSeason.NextEventTime))
+				if (activeSeason.ShouldGenerateEvents() || !(GameUtil.GetCurrentTimeInCycles() > activeSeason.NextEventTime))
 				{
 					continue;
 				}
@@ -92,7 +91,6 @@ public class GameplaySeasonManager : GameStateMachine<GameplaySeasonManager, Gam
 					}
 				}
 			}
-			activeSeasons.RemoveAll((GameplaySeasonInstance x) => x.IsEnded());
 		}
 
 		public void StartNewSeason(GameplaySeason seasonType)

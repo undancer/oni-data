@@ -75,11 +75,8 @@ public class SandboxRadsTool : BrushTool
 		if (!recentlyAffectedCells.Contains(cell))
 		{
 			recentlyAffectedCells.Add(cell);
-			float num = Grid.Radiation[cell];
-			float num2 = num;
-			num += SandboxToolParameterMenu.instance.settings.GetFloatSetting("SandbosTools.RadiationAdditive");
-			num = Mathf.Clamp(num, 0f, 8999999f);
-			float radiationDelta = num - num2;
+			float num;
+			float radiationDelta = Mathf.Clamp((num = Grid.Radiation[cell]) + SandboxToolParameterMenu.instance.settings.GetFloatSetting("SandbosTools.RadiationAdditive"), 0f, 8999999f) - num;
 			SimMessages.ModifyRadiationOnCell(cell, radiationDelta, Game.Instance.radiationConsumedCallbackManager.Add(OnSimConsumeRadiationCallback, this, "SandboxRadTools").index);
 		}
 	}

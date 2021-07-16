@@ -4,7 +4,7 @@ public class Accumulators
 {
 	private const float TIME_WINDOW = 3f;
 
-	private float elapsedTime = 0f;
+	private float elapsedTime;
 
 	private KCompactedVector<float> accumulated;
 
@@ -55,7 +55,11 @@ public class Accumulators
 
 	public float GetAverageRate(HandleVector<int>.Handle handle)
 	{
-		return handle.IsValid() ? average.GetData(handle) : 0f;
+		if (!handle.IsValid())
+		{
+			return 0f;
+		}
+		return average.GetData(handle);
 	}
 
 	public void Accumulate(HandleVector<int>.Handle handle, float amount)

@@ -15,16 +15,16 @@ public class MineralDeoxidizerConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("MineralDeoxidizer", 1, 2, "mineraldeoxidizer_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: BUILDINGS.DECOR.PENALTY.TIER1);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 120f;
-		buildingDef.ExhaustKilowattsWhenActive = 0.5f;
-		buildingDef.SelfHeatKilowattsWhenActive = 1f;
-		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 1));
-		buildingDef.ViewMode = OverlayModes.Oxygen.ID;
-		buildingDef.AudioCategory = "HollowMetal";
-		buildingDef.Breakable = true;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("MineralDeoxidizer", 1, 2, "mineraldeoxidizer_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: BUILDINGS.DECOR.PENALTY.TIER1);
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 120f;
+		obj.ExhaustKilowattsWhenActive = 0.5f;
+		obj.SelfHeatKilowattsWhenActive = 1f;
+		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 1));
+		obj.ViewMode = OverlayModes.Oxygen.ID;
+		obj.AudioCategory = "HollowMetal";
+		obj.Breakable = true;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

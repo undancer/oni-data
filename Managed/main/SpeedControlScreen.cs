@@ -42,7 +42,7 @@ public class SpeedControlScreen : KScreen
 
 	private int speed;
 
-	private int pauseCount = 0;
+	private int pauseCount;
 
 	private float stepTime;
 
@@ -73,10 +73,9 @@ public class SpeedControlScreen : KScreen
 			mediumButton,
 			fastButton
 		};
-		KToggle[] array2 = array;
-		foreach (KToggle kToggle in array2)
+		for (int i = 0; i < array.Length; i++)
 		{
-			kToggle.soundPlayer.Enabled = false;
+			array[i].soundPlayer.Enabled = false;
 		}
 		slowButton.onClick += delegate
 		{

@@ -673,14 +673,14 @@ namespace STRINGS
 			{
 				public static LocString EMAILHEADER1 = "<smallcaps>To: <b>[REDACTED]</b>\nFrom: <b>Director Stern</b><size=12><alpha=#AA> <jstern@gravitas.nova></size></color></smallcaps>\n------------------\n";
 
-				public static LocString CONTAINER3 = "<indent=5%>Director, I think I've found the perfect engineer candidate to design our small-scale colony machines.</indent>\n------------------\n";
+				public static LocString CONTAINER3 = "<indent=5%>Director, I think I've found the perfect engineer candidate to design our small-scale colony machines.\n-----------------------------------------------------------------------------------------------------\n</indent>";
 
-				public static LocString CONTAINER4 = "<b>Bringing Creative Workspace Ideas into the Industrial Setting</b>\n\nMichael E.E. Perlmutter is a rising star in the world industrial design, making a name for himself by cooking up playful workspaces for a work force typically left out of the creative conversation.\n\n\"Ergodynamic chairs have been done to death,\" says Perlmutter. \"What I'm interested in is redesigning the industrial space. There's no reason why a machine can't convey a sense of whimsy.\"\n\nIt's this philosophy that has launched Perlmutter to the top of a very short list of hot new industrial designers.";
+				public static LocString CONTAINER4 = "<indent=10%><smallcaps><b>Bringing Creative Workspace Ideas into the Industrial Setting</b>\n\nMichael E.E. Perlmutter is a rising star in the world industrial design, making a name for himself by cooking up playful workspaces for a work force typically left out of the creative conversation.\n\n\"Ergodynamic chairs have been done to death,\" says Perlmutter. \"What I'm interested in is redesigning the industrial space. There's no reason why a machine can't convey a sense of whimsy.\"\n\nIt's this philosophy that has launched Perlmutter to the top of a very short list of hot new industrial designers.</indent></smallcaps>";
 
 				public static LocString SIGNATURE1 = "\n[REDACTED]\n<size=11>Human Resources Coordinator\nThe Gravitas Facility</size>\n------------------\n";
 			}
 
-			public static LocString TITLE = "SUBJECT: Machine Engineer Candidate?";
+			public static LocString TITLE = "RE: Engineer Candidate?";
 
 			public static LocString SUBTITLE = "ENCRYPTION LEVEL: ONE";
 		}
@@ -1011,6 +1011,18 @@ namespace STRINGS
 			public static LocString SUBTITLE = "ENCRYPTION LEVEL: NONE";
 		}
 
+		public class C7_FIRSTCOLONY
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "The first experiments with establishing a colony off planet were an unmitigated disaster. Without outside help, our current Artificial Intelligence was completely incapable of making the kind of spontaneous decisions needed to deal with unforeseen circumstances. Additionally, the colony subjects lacked the forethought to even build themselves toilet facilities, even after soiling themselves repeatedly.\n\nWhile initial experiments in a lab setting were encouraging, our latest operation on non-Terra soil revealed some massive inadequacies to our system. If this idea is ever going to work, we will either need to massively improve the AI directing the subjects, or improve the brains of our Duplicants to the point where they possess higher cognitive functions.\n\nGiven the massive complications that I could forsee arising if our Duplicants were made less supplicant, I'm leaning toward a push to improve our Artificial Intellegence.\n\nMeanwhile, we will have to send a clean up crew to destroy all evidence of our little experiment beneath the Ceres' surface. We can't risk anyone discovering the remnants of our failed colony, even if the likelihood or that happening won't be for another few decades at least.\n\n(Sometimes it boggles my mind how much further behind the rest of the world is from Gravitas.)";
+			}
+
+			public static LocString TITLE = "Director's Notes";
+
+			public static LocString SUBTITLE = "ENCRYPTION LEVEL: THREE";
+		}
+
 		public class A8_FIRSTSUCCESS
 		{
 			public class BODY
@@ -1167,13 +1179,13 @@ namespace STRINGS
 			public static LocString SUBTITLE = "ENCRYPTION LEVEL: ONE";
 		}
 
-		public class C01_Evil
+		public class C01_EVIL
 		{
 			public class BODY
 			{
 				public static LocString CONTAINER1 = "Clearly Nikola is evil. He has some kind of scheme going on that he\ufffds keeping secret from the rest of Gravitas and I haven\ufffdt been able to crack what that is because it\ufffds offline and he\ufffds always at his computer. Whenever I ask him what he\ufffds up to he says I wouldn\ufffdt understand. Pfft! We both went through the same particle physics classes, buddy. Just because you mash a keyboard and I adjust knobs does not mean I don\ufffdt know what the Time Containment Field does.\n\nAnd then today I dropped a wrench and Nikola nearly jumped out of his skin! He spun around and screamed at me never to do that again. And then when I said, \"Geez, it\ufffds not the end of the world,\" he was like, \"Yeah, it\ufffds not like the world will blow up if I get this wrong\" really sarcastic like.\n\nWhich technically is true. If the Time Containment Field were to break down the Temporal Bow could theoretically blow up the world but that\ufffds why there are safety systems in place. And safety systems on safety systems. And then safety systems on top of that. But then he built all the safety systems so if he wanted to\ufffd\n------------------\n";
 
-				public static LocString CONTAINER2 = "I decided to get into work early today but when I got in Nikola was already there and it looked like he hadn\ufffdt been home all weekend. He was pacing back-and-forth in the lab, monologuing but not like an evil villain. Like someone who hadn\ufffdt slept in a week.\n\n\"Ruby,\" he said. \"You have to promise me that if anything goes wrong you\ufffdll turn on this machine. They\ufffdre pushing it too far. The printing pods are pushing the...It\ufffds too much - TOO MUCH! Something\ufffds going to blow. I tried\ufffd I\ufffdm trying to save it. Not the Earth. There\ufffds no hope for the Earth, it\ufffds all going to\ufffd\" then he made this exploding sound. \"But the Universe. Time itself. It could all go, don\ufffdt you see? This machine can contain it. Put a Temporal Containment Field around the Earth so time itself doesn\ufffdt break down and...and\ufffd\"\n\nThen all of a sudden these security guys came in. New guys. People I haven\ufffdt seen before. And they just took him away. Then they took me to a room and asked me all kinds of questions and I answered them, I guess. I don\ufffdt remember much because the whole time I was thinking - What if I was wrong? What if he\ufffds not evil, but Gravitas is?\n\nWhat if I was wrong and what if he\ufffds right?\\n------------------\n";
+				public static LocString CONTAINER2 = "I decided to get into work early today but when I got in Nikola was already there and it looked like he hadn\ufffdt been home all weekend. He was pacing back-and-forth in the lab, monologuing but not like an evil villain. Like someone who hadn\ufffdt slept in a week.\n\n\"Ruby,\" he said. \"You have to promise me that if anything goes wrong you\ufffdll turn on this machine. They\ufffdre pushing it too far. The printing pods are pushing the...It\ufffds too much - TOO MUCH! Something\ufffds going to blow. I tried\ufffd I\ufffdm trying to save it. Not the Earth. There\ufffds no hope for the Earth, it\ufffds all going to\ufffd\" then he made this exploding sound. \"But the Universe. Time itself. It could all go, don\ufffdt you see? This machine can contain it. Put a Temporal Containment Field around the Earth so time itself doesn\ufffdt break down and...and\ufffd\"\n\nThen all of a sudden these security guys came in. New guys. People I haven\ufffdt seen before. And they just took him away. Then they took me to a room and asked me all kinds of questions and I answered them, I guess. I don\ufffdt remember much because the whole time I was thinking - What if I was wrong? What if he\ufffds not evil, but Gravitas is?\n\nWhat if I was wrong and what if he\ufffds right?\n------------------\n";
 
 				public static LocString CONTAINER3 = "No seriously - what if he's right?\n------------------\n";
 			}
@@ -1527,6 +1539,13 @@ namespace STRINGS
 					public static LocString BODY = "My Duplicants' space research has made a startling discovery.\n\nFar, far off on the horizon their telescopes have spotted an anomaly that I could only possibly call a \"Temporal Tear\". Neutronium is detected in its readings, suggesting that it's related to the Neutronium that encases most of our asteroid.\n\nThough I believe it is through this Tear that we became jumbled within the section of our old planet, its discovery provides a glimmer of hope.\n\nTheoretically, we could send a rocket through the Tear to allow a Duplicant to explore the timelines and universes on the other side. They would never return, and we could not follow, but perhaps they could find a home among the stars, or even undo the terrible past that led us to our current fate.\n\n";
 				}
 
+				public class TEMPORALOPENER
+				{
+					public static LocString TITLE = "Temporal Potential";
+
+					public static LocString BODY = "In their interplanetary travels throughout this system, my Duplicants have discovered a Temporal Tear deep in space.\n\nCurrently it is too small to send a rocket and crew through, but further investigation reveals the presence of a strange artifact on a nearby world which could feasably increase the size of the tear if a number of Printing Pods are erected in nearby worlds.\n\nHowever, I've determined that using the Temporal Bow to operate a Printing Pod was what led Gravitas down the disasterous path which eventually lead to the destruction of our home planet. My calculations seem to indicate that the size of that planet may have been a contributing factor in its destruction and in all probability opening the Temporal Tear in our current situation will not cause such a cataclysmic event. However, as with everything in science, one can never know all the outcomes of a situation until we perform an experiment.\n\nDare we tempt fate again?";
+				}
+
 				public class LOG4
 				{
 					public static LocString TITLE = "Cycle 1000";
@@ -1643,14 +1662,16 @@ namespace STRINGS
 		{
 			public class BODY
 			{
-				public static LocString CONTAINER1 = "Meet The Pilot:\nCaptain Mae Johannsen\n\nFrom the time she was old enough to walk Captain Johannsen dreamed of reaching the sky. Growing up on an air force base she came to love the sound jet engines roaring overhead.\n\nAt 16 she became the youngest pilot to fly a fighter jet and at 22 she had already entered the space flight program.\n\nFour years later Gravitas nabbed her for an exclusive contract piloting our space shuttles. In her time at Gravitas, Captain Johannsen has logged over 1,000 hours space flight time shuttling and deploying satellites to low Earth Orbits and has just been named the pilot of our inaugural civilian space tourist program, slated to begin in the next year.\n\nGravitas is excited to have Captain Johannsen in the pilot seat as we reach for the stars...and beyond!";
+				public static LocString CONTAINER1 = "<indent=%5>From the time she was old enough to walk Captain Johannsen dreamed of reaching the sky. Growing up on an air force base she came to love the sound jet engines roaring overhead. At 16 she became the youngest pilot ever to fly a fighter jet, and at 22 she had already entered the space flight program.\n\nFour years later Gravitas nabbed her for an exclusive contract piloting our space shuttles. In her time at Gravitas, Captain Johannsen has logged over 1,000 hours space flight time shuttling and deploying satellites to Low Earth Orbits and has just been named the pilot of our inaugural civilian space tourist program, slated to begin in the next year.\n\nGravitas is excited to have Captain Johannsen in the pilot seat as we reach for the stars...and beyond!</indent>";
 
-				public static LocString CONTAINER2 = "\n\nBrought to you by the Gravitas Facility.";
+				public static LocString CONTAINER2 = "<indent=%10><smallcaps>\n\nBrought to you by the Gravitas Facility.</indent>";
 			}
 
-			public static LocString TITLE = "The Future of Space Flight";
+			public static LocString TITLE = "Meet the Pilot";
 
-			public static LocString SUBTITLE = "PUBLIC RELEASE";
+			public static LocString TITLE2 = "Captain Mae Johannsen";
+
+			public static LocString SUBTITLE = "ENCRYPTION LEVEL: ONE";
 		}
 
 		public class A3_NEWSECURITY

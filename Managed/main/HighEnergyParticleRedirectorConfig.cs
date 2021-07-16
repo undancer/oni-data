@@ -18,23 +18,23 @@ public class HighEnergyParticleRedirectorConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("HighEnergyParticleRedirector", 1, 2, "orb_transporter_kanim", 30, 10f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.NotInTiles, noise: NOISE_POLLUTION.NONE, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER1);
-		buildingDef.Floodable = false;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.Overheatable = false;
-		buildingDef.PermittedRotations = PermittedRotations.R360;
-		buildingDef.ViewMode = OverlayModes.Radiation.ID;
-		buildingDef.UseHighEnergyParticleInputPort = true;
-		buildingDef.HighEnergyParticleInputOffset = new CellOffset(0, 0);
-		buildingDef.UseHighEnergyParticleOutputPort = true;
-		buildingDef.HighEnergyParticleOutputOffset = new CellOffset(0, 1);
-		buildingDef.LogicInputPorts = new List<LogicPorts.Port>
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("HighEnergyParticleRedirector", 1, 2, "orb_transporter_kanim", 30, 10f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.NotInTiles, noise: NOISE_POLLUTION.NONE, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER1);
+		obj.Floodable = false;
+		obj.AudioCategory = "Metal";
+		obj.Overheatable = false;
+		obj.PermittedRotations = PermittedRotations.R360;
+		obj.ViewMode = OverlayModes.Radiation.ID;
+		obj.UseHighEnergyParticleInputPort = true;
+		obj.HighEnergyParticleInputOffset = new CellOffset(0, 0);
+		obj.UseHighEnergyParticleOutputPort = true;
+		obj.HighEnergyParticleOutputOffset = new CellOffset(0, 1);
+		obj.LogicInputPorts = new List<LogicPorts.Port>
 		{
 			LogicPorts.Port.InputPort(HighEnergyParticleRedirector.PORT_ID, new CellOffset(0, 1), STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLEREDIRECTOR.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLEREDIRECTOR.LOGIC_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLEREDIRECTOR.LOGIC_PORT_INACTIVE)
 		};
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.RadiationIDs, "HighEnergyParticleRedirector");
-		buildingDef.Deprecated = !Sim.IsRadiationEnabled();
-		return buildingDef;
+		obj.Deprecated = !Sim.IsRadiationEnabled();
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -45,8 +45,7 @@ public class HighEnergyParticleRedirectorConfig : IBuildingConfig
 		highEnergyParticleStorage.autoStore = true;
 		highEnergyParticleStorage.showInUI = false;
 		highEnergyParticleStorage.capacity = 501f;
-		HighEnergyParticleRedirector highEnergyParticleRedirector = go.AddOrGet<HighEnergyParticleRedirector>();
-		highEnergyParticleRedirector.directorDelay = 0.5f;
+		go.AddOrGet<HighEnergyParticleRedirector>().directorDelay = 0.5f;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

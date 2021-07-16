@@ -66,8 +66,7 @@ public class LogicMemory : KMonoBehaviour
 
 	private static string ResolveInfoStatusItemString(string format_str, object data)
 	{
-		LogicMemory logicMemory = (LogicMemory)data;
-		int outputValue = logicMemory.ports.GetOutputValue(READ_PORT_ID);
+		int outputValue = ((LogicMemory)data).ports.GetOutputValue(READ_PORT_ID);
 		return string.Format(BUILDINGS.PREFABS.LOGICMEMORY.STATUS_ITEM_VALUE, outputValue);
 	}
 }

@@ -37,7 +37,11 @@ public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms,
 			{
 				UpdatePath();
 			}
-			return base.smi.master.destinationSelector.GetDestinationWorld() != base.smi.master.GetMyWorldId() && PathLength() != -1;
+			if (base.smi.master.destinationSelector.GetDestinationWorld() != base.smi.master.GetMyWorldId())
+			{
+				return PathLength() != -1;
+			}
+			return false;
 		}
 
 		public int PathLength()
@@ -74,7 +78,11 @@ public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms,
 
 		public bool MayTurnOn()
 		{
-			return HasEnergy() && IsDestinationReachable() && base.master.operational.IsOperational && base.sm.allowedFromLogic.Get(this);
+			if (HasEnergy() && IsDestinationReachable() && base.master.operational.IsOperational)
+			{
+				return base.sm.allowedFromLogic.Get(this);
+			}
+			return false;
 		}
 	}
 
@@ -244,9 +252,9 @@ public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms,
 
 	public static readonly HashedString PORT_ID = "LogicLaunching";
 
-	private bool hasLogicWire = false;
+	private bool hasLogicWire;
 
-	private bool isLogicActive = false;
+	private bool isLogicActive;
 
 	private static StatusItem infoStatusItemLogic;
 
@@ -265,7 +273,21 @@ public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms,
 
 	public float CurrentEnergy => hepStorage.Particles;
 
-	public bool AllowLaunchingFromLogic => !hasLogicWire || (hasLogicWire && isLogicActive);
+	public bool AllowLaunchingFromLogic
+	{
+		get
+		{
+			if (hasLogicWire)
+			{
+				if (hasLogicWire)
+				{
+					return isLogicActive;
+				}
+				return false;
+			}
+			return true;
+		}
+	}
 
 	public bool HasLogicWire => hasLogicWire;
 
@@ -304,10 +326,8 @@ public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms,
 
 	protected override void OnCleanUp()
 	{
-		IUtilityNetworkMgr networkManager = Conduit.GetNetworkManager(liquidPortInfo.conduitType);
-		networkManager.RemoveFromNetworks(liquidInputCell, liquidNetworkItem, is_endpoint: true);
-		networkManager = Conduit.GetNetworkManager(gasPortInfo.conduitType);
-		networkManager.RemoveFromNetworks(gasInputCell, gasNetworkItem, is_endpoint: true);
+		Conduit.GetNetworkManager(liquidPortInfo.conduitType).RemoveFromNetworks(liquidInputCell, liquidNetworkItem, is_endpoint: true);
+		Conduit.GetNetworkManager(gasPortInfo.conduitType).RemoveFromNetworks(gasInputCell, gasNetworkItem, is_endpoint: true);
 		Game.Instance.solidConduitSystem.RemoveFromNetworks(solidInputCell, solidConsumer, is_endpoint: true);
 		base.OnCleanUp();
 	}
@@ -320,7 +340,11 @@ public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms,
 
 	bool ISecondaryInput.HasSecondaryConduitType(ConduitType type)
 	{
-		return liquidPortInfo.conduitType == type || gasPortInfo.conduitType == type || solidPortInfo.conduitType == type;
+		if (liquidPortInfo.conduitType != type && gasPortInfo.conduitType != type)
+		{
+			return solidPortInfo.conduitType == type;
+		}
+		return true;
 	}
 
 	public CellOffset GetSecondaryConduitOffset(ConduitType type)
@@ -342,10 +366,8 @@ public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms,
 
 	private LogicCircuitNetwork GetNetwork()
 	{
-		LogicPorts component = GetComponent<LogicPorts>();
-		int portCell = component.GetPortCell(PORT_ID);
-		LogicCircuitManager logicCircuitManager = Game.Instance.logicCircuitManager;
-		return logicCircuitManager.GetNetworkForCell(portCell);
+		int portCell = GetComponent<LogicPorts>().GetPortCell(PORT_ID);
+		return Game.Instance.logicCircuitManager.GetNetworkForCell(portCell);
 	}
 
 	private void CheckLogicWireState()
@@ -368,16 +390,15 @@ public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms,
 
 	private static string ResolveInfoStatusItemString(string format_str, object data)
 	{
-		RailGun railGun = (RailGun)data;
-		Operational operational = railGun.operational;
-		return railGun.AllowLaunchingFromLogic ? BUILDING.STATUSITEMS.LOGIC.LOGIC_CONTROLLED_ENABLED : BUILDING.STATUSITEMS.LOGIC.LOGIC_CONTROLLED_DISABLED;
+		RailGun obj = (RailGun)data;
+		_ = obj.operational;
+		return obj.AllowLaunchingFromLogic ? BUILDING.STATUSITEMS.LOGIC.LOGIC_CONTROLLED_ENABLED : BUILDING.STATUSITEMS.LOGIC.LOGIC_CONTROLLED_DISABLED;
 	}
 
 	public void Sim200ms(float dt)
 	{
 		WorldContainer myWorld = this.GetMyWorld();
-		Building component = GetComponent<Building>();
-		Extents extents = component.GetExtents();
+		Extents extents = GetComponent<Building>().GetExtents();
 		int x = extents.x;
 		int x2 = extents.x + extents.width - 2;
 		int y = extents.y + extents.height;
@@ -398,9 +419,9 @@ public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms,
 		}
 		operational.SetFlag(noSurfaceSight, flag);
 		operational.SetFlag(noDestination, destinationSelector.GetDestinationWorld() >= 0);
-		KSelectable component2 = GetComponent<KSelectable>();
-		component2.ToggleStatusItem(noSurfaceSightStatusItem, !flag);
-		component2.ToggleStatusItem(noDestinationStatusItem, destinationSelector.GetDestinationWorld() < 0);
+		KSelectable component = GetComponent<KSelectable>();
+		component.ToggleStatusItem(noSurfaceSightStatusItem, !flag);
+		component.ToggleStatusItem(noDestinationStatusItem, destinationSelector.GetDestinationWorld() < 0);
 		UpdateMeters();
 	}
 

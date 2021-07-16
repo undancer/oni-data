@@ -24,7 +24,17 @@ public class Shower : Workable, IGameObjectEffectDescriptor
 
 			private ConduitDispenser dispenser;
 
-			public bool IsOperational => operational.IsOperational && consumer.IsConnected && dispenser.IsConnected;
+			public bool IsOperational
+			{
+				get
+				{
+					if (operational.IsOperational && consumer.IsConnected)
+					{
+						return dispenser.IsConnected;
+					}
+					return false;
+				}
+			}
 
 			public Instance(Shower master)
 				: base(master)
@@ -183,12 +193,10 @@ public class Shower : Workable, IGameObjectEffectDescriptor
 			SimUtil.DiseaseInfo b = diseaseInfo;
 			component.ModifyDiseaseCount(-b.count, "Shower.RemoveDisease");
 			accumulatedDisease = SimUtil.CalculateFinalDiseaseInfo(accumulatedDisease, b);
-			Storage component2 = GetComponent<Storage>();
-			PrimaryElement primaryElement = component2.FindPrimaryElement(outputTargetElement);
+			PrimaryElement primaryElement = GetComponent<Storage>().FindPrimaryElement(outputTargetElement);
 			if (primaryElement != null)
 			{
-				PrimaryElement component3 = primaryElement.GetComponent<PrimaryElement>();
-				component3.AddDisease(accumulatedDisease.idx, accumulatedDisease.count, "Shower.RemoveDisease");
+				primaryElement.GetComponent<PrimaryElement>().AddDisease(accumulatedDisease.idx, accumulatedDisease.count, "Shower.RemoveDisease");
 				accumulatedDisease = SimUtil.DiseaseInfo.Invalid;
 			}
 		}

@@ -21,18 +21,18 @@ public class FertilizerMakerConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("FertilizerMaker", 4, 3, "fertilizer_maker_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.PENALTY.TIER2);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 120f;
-		buildingDef.ExhaustKilowattsWhenActive = 1f;
-		buildingDef.SelfHeatKilowattsWhenActive = 2f;
-		buildingDef.InputConduitType = ConduitType.Liquid;
-		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
-		buildingDef.AudioCategory = "HollowMetal";
-		buildingDef.PowerInputOffset = new CellOffset(1, 0);
-		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
-		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(-1, 0));
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("FertilizerMaker", 4, 3, "fertilizer_maker_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.PENALTY.TIER2);
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 120f;
+		obj.ExhaustKilowattsWhenActive = 1f;
+		obj.SelfHeatKilowattsWhenActive = 2f;
+		obj.InputConduitType = ConduitType.Liquid;
+		obj.ViewMode = OverlayModes.LiquidConduits.ID;
+		obj.AudioCategory = "HollowMetal";
+		obj.PowerInputOffset = new CellOffset(1, 0);
+		obj.UtilityInputOffset = new CellOffset(0, 0);
+		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(-1, 0));
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

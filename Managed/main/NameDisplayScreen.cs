@@ -115,7 +115,11 @@ public class NameDisplayScreen : KScreen
 	private bool ShouldShowName(GameObject representedObject)
 	{
 		CharacterOverlay component = representedObject.GetComponent<CharacterOverlay>();
-		return component != null && component.shouldShowName;
+		if (component != null)
+		{
+			return component.shouldShowName;
+		}
+		return false;
 	}
 
 	public Guid AddWorldText(string initialText, GameObject prefab)
@@ -135,8 +139,7 @@ public class NameDisplayScreen : KScreen
 		{
 			if (textEntry.guid == guid)
 			{
-				result = textEntry.display_go;
-				break;
+				return textEntry.display_go;
 			}
 		}
 		return result;
@@ -164,8 +167,7 @@ public class NameDisplayScreen : KScreen
 	{
 		Entry entry = new Entry();
 		entry.world_go = representedObject;
-		GameObject original = (ShouldShowName(representedObject) ? nameAndBarsPrefab : barsPrefab);
-		GameObject gameObject = (entry.display_go = Util.KInstantiateUI(original, base.gameObject, force_active: true));
+		GameObject gameObject = (entry.display_go = Util.KInstantiateUI(ShouldShowName(representedObject) ? nameAndBarsPrefab : barsPrefab, base.gameObject, force_active: true));
 		if (worldSpace)
 		{
 			entry.display_go.transform.localScale = Vector3.one * 0.01f;
@@ -367,8 +369,7 @@ public class NameDisplayScreen : KScreen
 				}
 				if (entries[num2].bars_go != null)
 				{
-					GameObject bars_go = entries[num2].bars_go;
-					bars_go.GetComponentsInChildren(includeInactive: false, workingList);
+					entries[num2].bars_go.GetComponentsInChildren(includeInactive: false, workingList);
 					foreach (KCollider2D working in workingList)
 					{
 						working.MarkDirty();
@@ -433,8 +434,7 @@ public class NameDisplayScreen : KScreen
 
 	private void ApplyThoughtSprite(HierarchyReferences active_bubble, Sprite sprite, string target)
 	{
-		Image reference = active_bubble.GetReference<Image>(target);
-		reference.sprite = sprite;
+		active_bubble.GetReference<Image>(target).sprite = sprite;
 	}
 
 	public void SetGameplayEventDisplay(GameObject minion_go, bool bVisible, string hover_text, Sprite sprite)

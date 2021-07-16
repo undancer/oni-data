@@ -9,7 +9,7 @@ public class MiningSounds : KMonoBehaviour
 	[MyCmpGet]
 	private LoopingSounds loopingSounds;
 
-	private FMODAsset miningSound = null;
+	private FMODAsset miningSound;
 
 	[EventRef]
 	private string miningSoundEvent;

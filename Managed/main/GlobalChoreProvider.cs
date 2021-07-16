@@ -120,7 +120,7 @@ public class GlobalChoreProvider : ChoreProvider, IRender200ms
 
 	private ClearableManager clearableManager;
 
-	private TagBits storageFetchableBits = default(TagBits);
+	private TagBits storageFetchableBits;
 
 	protected override void OnPrefabInit()
 	{

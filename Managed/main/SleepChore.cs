@@ -7,13 +7,13 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 {
 	public class StatesInstance : GameStateMachine<States, StatesInstance, SleepChore, object>.GameInstance
 	{
-		public bool hadPeacefulSleep = false;
+		public bool hadPeacefulSleep;
 
-		public bool hadNormalSleep = false;
+		public bool hadNormalSleep;
 
-		public bool hadBadSleep = false;
+		public bool hadBadSleep;
 
-		public bool hadTerribleSleep = false;
+		public bool hadTerribleSleep;
 
 		public int lastEvaluatedDay = -1;
 
@@ -21,7 +21,7 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 
 		public string stateChangeNoiseSource;
 
-		private GameObject locator = null;
+		private GameObject locator;
 
 		public StatesInstance(SleepChore master, GameObject sleeper, GameObject bed, bool bedIsLocator, bool isInterruptable)
 			: base(master)
@@ -67,8 +67,7 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 
 		public bool IsLoudSleeper()
 		{
-			GameObject gameObject = base.sm.sleeper.Get(base.smi);
-			if (gameObject.GetComponent<Snorer>() != null)
+			if (base.sm.sleeper.Get(base.smi).GetComponent<Snorer>() != null)
 			{
 				return true;
 			}
@@ -201,8 +200,7 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 			sleep.interrupt_scared.ToggleCategoryStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().DuplicantStatusItems.SleepingInterruptedByFearOfDark).QueueAnim("interrupt_afraid").OnAnimQueueComplete(sleep.interrupt_scared_transition);
 			sleep.interrupt_scared_transition.Enter(delegate(StatesInstance smi)
 			{
-				Effects component3 = smi.master.GetComponent<Effects>();
-				if (!component3.HasEffect(Db.Get().effects.Get("TerribleSleep")))
+				if (!smi.master.GetComponent<Effects>().HasEffect(Db.Get().effects.Get("TerribleSleep")))
 				{
 					smi.master.GetComponent<Effects>().Add(Db.Get().effects.Get("BadSleepAfraidOfDark"), should_save: true);
 				}
@@ -213,11 +211,11 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 			sleep.interrupt_noise.ToggleCategoryStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().DuplicantStatusItems.SleepingInterruptedByNoise).QueueAnim("interrupt_light").OnAnimQueueComplete(sleep.interrupt_noise_transition);
 			sleep.interrupt_noise_transition.Enter(delegate(StatesInstance smi)
 			{
-				Effects component2 = smi.master.GetComponent<Effects>();
-				component2.Add(Db.Get().effects.Get("TerribleSleep"), should_save: true);
-				if (component2.HasEffect(Db.Get().effects.Get("BadSleep")))
+				Effects component = smi.master.GetComponent<Effects>();
+				component.Add(Db.Get().effects.Get("TerribleSleep"), should_save: true);
+				if (component.HasEffect(Db.Get().effects.Get("BadSleep")))
 				{
-					component2.Remove(Db.Get().effects.Get("BadSleep"));
+					component.Remove(Db.Get().effects.Get("BadSleep"));
 				}
 				isDisturbedByNoise.Set(value: false, smi);
 				State state2 = (smi.master.GetComponent<Schedulable>().IsAllowed(Db.Get().ScheduleBlockTypes.Sleep) ? sleep.normal : success);
@@ -226,8 +224,7 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 			sleep.interrupt_light.ToggleCategoryStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().DuplicantStatusItems.SleepingInterruptedByLight).QueueAnim("interrupt").OnAnimQueueComplete(sleep.interrupt_light_transition);
 			sleep.interrupt_light_transition.Enter(delegate(StatesInstance smi)
 			{
-				Effects component = smi.master.GetComponent<Effects>();
-				if (!component.HasEffect(Db.Get().effects.Get("TerribleSleep")))
+				if (!smi.master.GetComponent<Effects>().HasEffect(Db.Get().effects.Get("TerribleSleep")))
 				{
 					smi.master.GetComponent<Effects>().Add(Db.Get().effects.Get("BadSleep"), should_save: true);
 				}
@@ -249,10 +246,10 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 		fn = delegate(ref Precondition.Context context, object data)
 		{
 			Narcolepsy component = context.consumerState.consumer.GetComponent<Narcolepsy>();
-			bool flag = component != null && component.IsNarcolepsing();
-			bool flag2 = context.consumerState.consumer.GetSMI<StaminaMonitor.Instance>()?.NeedsToSleep() ?? false;
-			bool flag3 = ChorePreconditions.instance.IsScheduledTime.fn(ref context, Db.Get().ScheduleBlockTypes.Sleep);
-			return flag || flag3 || flag2;
+			bool num = component != null && component.IsNarcolepsing();
+			bool flag = context.consumerState.consumer.GetSMI<StaminaMonitor.Instance>()?.NeedsToSleep() ?? false;
+			bool flag2 = ChorePreconditions.instance.IsScheduledTime.fn(ref context, Db.Get().ScheduleBlockTypes.Sleep);
+			return num || flag2 || flag;
 		}
 	};
 
@@ -279,14 +276,11 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 		{
 			num = Grid.PosToCell(sleeper.transform.GetPosition());
 		}
-		Vector3 pos = Grid.CellToPosCBC(num, Grid.SceneLayer.Move);
-		GameObject gameObject = ChoreHelpers.CreateSleepLocator(pos);
-		return gameObject.GetComponent<Sleepable>();
+		return ChoreHelpers.CreateSleepLocator(Grid.CellToPosCBC(num, Grid.SceneLayer.Move)).GetComponent<Sleepable>();
 	}
 
 	public static bool IsDarkAtCell(int cell)
 	{
-		int num = Grid.LightIntensity[cell];
-		return num <= 0;
+		return Grid.LightIntensity[cell] <= 0;
 	}
 }

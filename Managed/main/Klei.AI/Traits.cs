@@ -40,8 +40,7 @@ namespace Klei.AI
 				return;
 			}
 			List<DUPLICANTSTATS.TraitVal> jOYTRAITS = DUPLICANTSTATS.JOYTRAITS;
-			MinionIdentity component = GetComponent<MinionIdentity>();
-			if (!component)
+			if (!GetComponent<MinionIdentity>())
 			{
 				return;
 			}
@@ -91,8 +90,7 @@ namespace Klei.AI
 			{
 				if (trait.Id == trait_id)
 				{
-					result = true;
-					break;
+					return true;
 				}
 			}
 			return result;
@@ -170,9 +168,9 @@ namespace Klei.AI
 					continue;
 				}
 				ChoreGroup[] disabledChoreGroups = trait.disabledChoreGroups;
-				foreach (ChoreGroup choreGroup in disabledChoreGroups)
+				for (int i = 0; i < disabledChoreGroups.Length; i++)
 				{
-					if (choreGroup.IdHash == choreGroupId)
+					if (disabledChoreGroups[i].IdHash == choreGroupId)
 					{
 						disablingTrait = trait;
 						return true;

@@ -211,9 +211,7 @@ public class StatusItem : Resource
 		shouldNotify = true;
 		if (sound_path == null)
 		{
-			NotificationType notificationType = this.notificationType;
-			NotificationType notificationType2 = notificationType;
-			if (notificationType2 == NotificationType.Bad)
+			if (notificationType == NotificationType.Bad)
 			{
 				soundPath = "Warning";
 			}
@@ -281,7 +279,11 @@ public class StatusItem : Resource
 
 	public bool ShouldShowIcon()
 	{
-		return iconType == IconType.Custom && showShowWorldIcon;
+		if (iconType == IconType.Custom)
+		{
+			return showShowWorldIcon;
+		}
+		return false;
 	}
 
 	public virtual void ShowToolTip(ToolTip tooltip_widget, object data, TextStyleSetting property_style)
@@ -302,7 +304,11 @@ public class StatusItem : Resource
 
 	public bool UseConditionalCallback(HashedString overlay, Transform transform)
 	{
-		return overlay != OverlayModes.None.ID && conditionalOverlayCallback != null && conditionalOverlayCallback(overlay, transform);
+		if (overlay != OverlayModes.None.ID && conditionalOverlayCallback != null)
+		{
+			return conditionalOverlayCallback(overlay, transform);
+		}
+		return false;
 	}
 
 	public StatusItem SetResolveStringCallback(Func<string, object, string> cb)

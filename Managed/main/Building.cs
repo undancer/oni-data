@@ -17,7 +17,7 @@ public class Building : KMonoBehaviour, IGameObjectEffectDescriptor, IUniformGri
 	[MyCmpAdd]
 	private StateMachineController stateMachineController;
 
-	private int[] placementCells = null;
+	private int[] placementCells;
 
 	private Extents extents;
 
@@ -25,7 +25,17 @@ public class Building : KMonoBehaviour, IGameObjectEffectDescriptor, IUniformGri
 
 	private HandleVector<int>.Handle scenePartitionerEntry;
 
-	public Orientation Orientation => (rotatable != null) ? rotatable.GetOrientation() : Orientation.Neutral;
+	public Orientation Orientation
+	{
+		get
+		{
+			if (!(rotatable != null))
+			{
+				return Orientation.Neutral;
+			}
+			return rotatable.GetOrientation();
+		}
+	}
 
 	public int[] PlacementCells
 	{
@@ -73,8 +83,7 @@ public class Building : KMonoBehaviour, IGameObjectEffectDescriptor, IUniformGri
 		Orientation orientation = Orientation;
 		for (int i = 0; i < Def.PlacementOffsets.Length; i++)
 		{
-			CellOffset offset = Def.PlacementOffsets[i];
-			CellOffset rotatedCellOffset = Rotatable.GetRotatedCellOffset(offset, orientation);
+			CellOffset rotatedCellOffset = Rotatable.GetRotatedCellOffset(Def.PlacementOffsets[i], orientation);
 			int num2 = Grid.OffsetCell(num, rotatedCellOffset);
 			placementCells[i] = num2;
 		}
@@ -135,16 +144,15 @@ public class Building : KMonoBehaviour, IGameObjectEffectDescriptor, IUniformGri
 		{
 			component2.iconOffset.y = 0.3f;
 		}
-		KPrefabID component3 = GetComponent<KPrefabID>();
-		if (component3.HasTag(RoomConstraints.ConstraintTags.IndustrialMachinery))
+		if (GetComponent<KPrefabID>().HasTag(RoomConstraints.ConstraintTags.IndustrialMachinery))
 		{
 			scenePartitionerEntry = GameScenePartitioner.Instance.Add(base.name, base.gameObject, GetExtents(), GameScenePartitioner.Instance.industrialBuildings, null);
 		}
 		if (Def.Deprecated && GetComponent<KSelectable>() != null)
 		{
-			KSelectable component4 = GetComponent<KSelectable>();
+			KSelectable component3 = GetComponent<KSelectable>();
 			deprecatedBuildingStatusItem = new StatusItem("BUILDING_DEPRECATED", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
-			component4.AddStatusItem(deprecatedBuildingStatusItem);
+			component3.AddStatusItem(deprecatedBuildingStatusItem);
 		}
 	}
 
@@ -177,13 +185,16 @@ public class Building : KMonoBehaviour, IGameObjectEffectDescriptor, IUniformGri
 
 	public CellOffset GetRotatedOffset(CellOffset offset)
 	{
-		return (rotatable != null) ? rotatable.GetRotatedCellOffset(offset) : offset;
+		if (!(rotatable != null))
+		{
+			return offset;
+		}
+		return rotatable.GetRotatedCellOffset(offset);
 	}
 
 	private int GetBottomLeftCell()
 	{
-		Vector3 position = base.transform.GetPosition();
-		return Grid.PosToCell(position);
+		return Grid.PosToCell(base.transform.GetPosition());
 	}
 
 	public int GetPowerInputCell()
@@ -260,7 +271,11 @@ public class Building : KMonoBehaviour, IGameObjectEffectDescriptor, IUniformGri
 
 	private SimHashes GetVisualizationElementID(PrimaryElement pe)
 	{
-		return (this is BuildingComplete) ? pe.ElementID : SimHashes.Void;
+		if (!(this is BuildingComplete))
+		{
+			return SimHashes.Void;
+		}
+		return pe.ElementID;
 	}
 
 	public void RunOnArea(Action<int> callback)

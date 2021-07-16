@@ -21,8 +21,7 @@ public static class BaseMooConfig
 			inst.GetAttributes().Add(Db.Get().Attributes.MaxUnderwaterTravelCost);
 		};
 		gameObject.AddOrGet<LoopingSounds>();
-		LureableMonitor.Def def = gameObject.AddOrGetDef<LureableMonitor.Def>();
-		def.lures = new Tag[1]
+		gameObject.AddOrGetDef<LureableMonitor.Def>().lures = new Tag[1]
 		{
 			SimHashes.BleachStone.CreateTag()
 		};
@@ -55,16 +54,11 @@ public static class BaseMooConfig
 	{
 		HashSet<Tag> hashSet = new HashSet<Tag>();
 		hashSet.Add(consumed_tag);
-		Diet.Info[] infos = new Diet.Info[1]
-		{
-			new Diet.Info(hashSet, producedTag, caloriesPerKg, producedConversionRate, diseaseId, diseasePerKgProduced)
-		};
-		Diet diet = new Diet(infos);
+		Diet diet = new Diet(new Diet.Info(hashSet, producedTag, caloriesPerKg, producedConversionRate, diseaseId, diseasePerKgProduced));
 		CreatureCalorieMonitor.Def def = prefab.AddOrGetDef<CreatureCalorieMonitor.Def>();
 		def.diet = diet;
 		def.minPoopSizeInCalories = minPoopSizeInKg * caloriesPerKg;
-		SolidConsumerMonitor.Def def2 = prefab.AddOrGetDef<SolidConsumerMonitor.Def>();
-		def2.diet = diet;
+		prefab.AddOrGetDef<SolidConsumerMonitor.Def>().diet = diet;
 		return prefab;
 	}
 

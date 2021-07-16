@@ -94,8 +94,11 @@ public class DupeGreetingManager : KMonoBehaviour, ISim200ms
 
 	private int GetOffsetCell(MinionIdentity minion, int offset)
 	{
-		Facing component = minion.GetComponent<Facing>();
-		return component.GetFacing() ? Grid.OffsetCell(Grid.PosToCell(minion), -offset, 0) : Grid.OffsetCell(Grid.PosToCell(minion), offset, 0);
+		if (!minion.GetComponent<Facing>().GetFacing())
+		{
+			return Grid.OffsetCell(Grid.PosToCell(minion), offset, 0);
+		}
+		return Grid.OffsetCell(Grid.PosToCell(minion), -offset, 0);
 	}
 
 	private bool ValidNavigatingMinion(MinionIdentity minion)
@@ -105,7 +108,11 @@ public class DupeGreetingManager : KMonoBehaviour, ISim200ms
 			return false;
 		}
 		Navigator component = minion.GetComponent<Navigator>();
-		return component != null && component.IsMoving() && component.CurrentNavType == NavType.Floor;
+		if (component != null && component.IsMoving())
+		{
+			return component.CurrentNavType == NavType.Floor;
+		}
+		return false;
 	}
 
 	private bool ValidOppositionalMinion(MinionIdentity reference_minion, MinionIdentity minion)
@@ -120,7 +127,11 @@ public class DupeGreetingManager : KMonoBehaviour, ISim200ms
 		}
 		Facing component = minion.GetComponent<Facing>();
 		Facing component2 = reference_minion.GetComponent<Facing>();
-		return ValidNavigatingMinion(minion) && component != null && component2 != null && component.GetFacing() != component2.GetFacing();
+		if (ValidNavigatingMinion(minion) && component != null && component2 != null)
+		{
+			return component.GetFacing() != component2.GetFacing();
+		}
+		return false;
 	}
 
 	private void BeginNewGreeting(MinionIdentity minion_a, MinionIdentity minion_b, int cell)
@@ -168,10 +179,8 @@ public class DupeGreetingManager : KMonoBehaviour, ISim200ms
 				break;
 			}
 		}
-		Facing component2 = minionGO.GetComponent<Facing>();
-		component2.SetFacing(vector.x < minionGO.transform.GetPosition().x);
-		Effects component3 = minionGO.GetComponent<Effects>();
-		component3.Add("Greeting", should_save: true);
+		minionGO.GetComponent<Facing>().SetFacing(vector.x < minionGO.transform.GetPosition().x);
+		minionGO.GetComponent<Effects>().Add("Greeting", should_save: true);
 		cooldowns[component] = GameClock.Instance.GetTime();
 	}
 }

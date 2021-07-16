@@ -17,12 +17,10 @@ public class GassyMooComet : Comet
 			{
 				flag = true;
 			}
-			int num2 = (flag ? (-75) : 255);
-			float f = (float)num2 * (float)Math.PI / 180f;
-			float num3 = UnityEngine.Random.Range(spawnVelocity.x, spawnVelocity.y);
-			velocity = new Vector2((0f - Mathf.Cos(f)) * num3, Mathf.Sin(f) * num3);
-			KBatchedAnimController component = GetComponent<KBatchedAnimController>();
-			component.FlipX = flag;
+			float f = (float)(flag ? (-75) : 255) * (float)Math.PI / 180f;
+			float num2 = UnityEngine.Random.Range(spawnVelocity.x, spawnVelocity.y);
+			velocity = new Vector2((0f - Mathf.Cos(f)) * num2, Mathf.Sin(f) * num2);
+			GetComponent<KBatchedAnimController>().FlipX = flag;
 		}
 	}
 

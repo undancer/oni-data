@@ -125,9 +125,13 @@ public class IceMachine : StateMachineComponent<IceMachine.StatesInstance>
 
 	private bool CanMakeIce()
 	{
-		bool flag = waterStorage != null && waterStorage.GetMassAvailable(SimHashes.Water) >= 0.1f;
-		bool flag2 = iceStorage != null && iceStorage.IsFull();
-		return flag && !flag2;
+		bool num = waterStorage != null && waterStorage.GetMassAvailable(SimHashes.Water) >= 0.1f;
+		bool flag = iceStorage != null && iceStorage.IsFull();
+		if (num)
+		{
+			return !flag;
+		}
+		return false;
 	}
 
 	private void MakeIce(StatesInstance smi, float dt)
@@ -135,16 +139,15 @@ public class IceMachine : StateMachineComponent<IceMachine.StatesInstance>
 		float num = heatRemovalRate * dt / (float)waterStorage.items.Count;
 		foreach (GameObject item in waterStorage.items)
 		{
-			PrimaryElement component = item.GetComponent<PrimaryElement>();
-			GameUtil.DeltaThermalEnergy(component, 0f - num, smi.master.targetTemperature);
+			GameUtil.DeltaThermalEnergy(item.GetComponent<PrimaryElement>(), 0f - num, smi.master.targetTemperature);
 		}
 		for (int num2 = waterStorage.items.Count; num2 > 0; num2--)
 		{
 			GameObject gameObject = waterStorage.items[num2 - 1];
 			if ((bool)gameObject && gameObject.GetComponent<PrimaryElement>().Temperature < gameObject.GetComponent<PrimaryElement>().Element.lowTemp)
 			{
-				PrimaryElement component2 = gameObject.GetComponent<PrimaryElement>();
-				waterStorage.AddOre(component2.Element.lowTempTransitionTarget, component2.Mass, component2.Temperature, component2.DiseaseIdx, component2.DiseaseCount);
+				PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
+				waterStorage.AddOre(component.Element.lowTempTransitionTarget, component.Mass, component.Temperature, component.DiseaseIdx, component.DiseaseCount);
 				waterStorage.ConsumeIgnoringDisease(gameObject);
 			}
 		}

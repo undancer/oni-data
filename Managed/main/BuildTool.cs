@@ -19,13 +19,13 @@ public class BuildTool : DragTool
 
 	private BuildingDef def;
 
-	private Orientation buildingOrientation = Orientation.Neutral;
+	private Orientation buildingOrientation;
 
 	private ToolTip tooltip;
 
 	public static BuildTool Instance;
 
-	private bool active = false;
+	private bool active;
 
 	private int buildingCount;
 
@@ -74,8 +74,7 @@ public class BuildTool : DragTool
 		}
 		visualizer.SetActive(value: true);
 		UpdateVis(vector);
-		BuildToolHoverTextCard component3 = GetComponent<BuildToolHoverTextCard>();
-		component3.currentDef = def;
+		GetComponent<BuildToolHoverTextCard>().currentDef = def;
 		ResourceRemainingDisplayScreen.instance.ActivateDisplay(visualizer);
 		if (component == null)
 		{
@@ -262,12 +261,7 @@ public class BuildTool : DragTool
 
 	private void TryBuild(int cell)
 	{
-		if (visualizer == null || (cell == lastDragCell && buildingOrientation == lastDragOrientation))
-		{
-			return;
-		}
-		int num = Grid.PosToCell(visualizer);
-		if (num != cell && ((bool)def.BuildingComplete.GetComponent<LogicPorts>() || (bool)def.BuildingComplete.GetComponent<LogicGateBase>()))
+		if (visualizer == null || (cell == lastDragCell && buildingOrientation == lastDragOrientation) || (Grid.PosToCell(visualizer) != cell && ((bool)def.BuildingComplete.GetComponent<LogicPorts>() || (bool)def.BuildingComplete.GetComponent<LogicGateBase>())))
 		{
 			return;
 		}

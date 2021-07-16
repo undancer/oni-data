@@ -83,8 +83,7 @@ public class Diggable : Workable
 		base.OnSpawn();
 		int num = Grid.PosToCell(this);
 		originalDigElement = Grid.Element[num];
-		KSelectable component = GetComponent<KSelectable>();
-		component.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().MiscStatusItems.WaitingForDig);
+		GetComponent<KSelectable>().SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().MiscStatusItems.WaitingForDig);
 		UpdateColor(isReachable);
 		Grid.Objects[num, 7] = base.gameObject;
 		ChoreType chore_type = Db.Get().ChoreTypes.Dig;
@@ -96,8 +95,7 @@ public class Diggable : Workable
 		SetWorkTime(float.PositiveInfinity);
 		partitionerEntry = GameScenePartitioner.Instance.Add("Diggable.OnSpawn", base.gameObject, Grid.PosToCell(this), GameScenePartitioner.Instance.solidChangedLayer, OnSolidChanged);
 		OnSolidChanged(null);
-		ReachabilityMonitor.Instance instance = new ReachabilityMonitor.Instance(this);
-		instance.StartSM();
+		new ReachabilityMonitor.Instance(this).StartSM();
 		Subscribe(493375141, OnRefreshUserMenuDelegate);
 		handle = Game.Instance.Subscribe(-1523247426, UpdateStatusItem);
 		Components.Diggables.Add(this);
@@ -121,13 +119,9 @@ public class Diggable : Workable
 	{
 		bool result = false;
 		GameObject gameObject = Grid.Objects[cell, 1];
-		if (gameObject != null)
+		if (gameObject != null && gameObject.GetComponent<Constructable>() != null)
 		{
-			Constructable component = gameObject.GetComponent<Constructable>();
-			if (component != null)
-			{
-				result = true;
-			}
+			result = true;
 		}
 		return result;
 	}
@@ -278,8 +272,7 @@ public class Diggable : Workable
 
 	protected override bool OnWorkTick(Worker worker, float dt)
 	{
-		int cell = Grid.PosToCell(this);
-		DoDigTick(cell, dt);
+		DoDigTick(Grid.PosToCell(this), dt);
 		return isDigComplete;
 	}
 
@@ -341,8 +334,7 @@ public class Diggable : Workable
 	private static int GetUnstableCellAbove(int cell)
 	{
 		Vector2I cellXY = Grid.CellToXY(cell);
-		UnstableGroundManager component = World.Instance.GetComponent<UnstableGroundManager>();
-		List<int> cellsContainingFallingAbove = component.GetCellsContainingFallingAbove(cellXY);
+		List<int> cellsContainingFallingAbove = World.Instance.GetComponent<UnstableGroundManager>().GetCellsContainingFallingAbove(cellXY);
 		if (cellsContainingFallingAbove.Contains(cell))
 		{
 			return cell;

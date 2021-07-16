@@ -20,8 +20,7 @@ public class CreditsScreen : KModalScreen
 		string[] strings = LocString.GetStrings(typeof(UI.CREDITSSCREEN.THIRD_PARTY));
 		foreach (string text in strings)
 		{
-			GameObject gameObject = Util.KInstantiateUI(entryPrefab, entryContainer.gameObject, force_active: true);
-			gameObject.GetComponent<LocText>().text = text;
+			Util.KInstantiateUI(entryPrefab, entryContainer.gameObject, force_active: true).GetComponent<LocText>().text = text;
 		}
 		CloseButton.onClick += Close;
 	}
@@ -46,8 +45,7 @@ public class CreditsScreen : KModalScreen
 		list.Shuffle();
 		foreach (string item in list)
 		{
-			GameObject gameObject = Util.KInstantiateUI(entryPrefab, entryContainer.gameObject, force_active: true);
-			gameObject.GetComponent<LocText>().text = item;
+			Util.KInstantiateUI(entryPrefab, entryContainer.gameObject, force_active: true).GetComponent<LocText>().text = item;
 		}
 	}
 }

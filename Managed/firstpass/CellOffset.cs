@@ -65,12 +65,20 @@ public struct CellOffset : IEquatable<CellOffset>
 	public override bool Equals(object obj)
 	{
 		CellOffset cellOffset = (CellOffset)obj;
-		return x == cellOffset.x && y == cellOffset.y;
+		if (x == cellOffset.x)
+		{
+			return y == cellOffset.y;
+		}
+		return false;
 	}
 
 	public bool Equals(CellOffset offset)
 	{
-		return x == offset.x && y == offset.y;
+		if (x == offset.x)
+		{
+			return y == offset.y;
+		}
+		return false;
 	}
 
 	public override int GetHashCode()
@@ -80,12 +88,20 @@ public struct CellOffset : IEquatable<CellOffset>
 
 	public static bool operator ==(CellOffset a, CellOffset b)
 	{
-		return a.x == b.x && a.y == b.y;
+		if (a.x == b.x)
+		{
+			return a.y == b.y;
+		}
+		return false;
 	}
 
 	public static bool operator !=(CellOffset a, CellOffset b)
 	{
-		return a.x != b.x || a.y != b.y;
+		if (a.x == b.x)
+		{
+			return a.y != b.y;
+		}
+		return true;
 	}
 
 	public override string ToString()

@@ -62,10 +62,8 @@ public class SocialGatheringPoint : StateMachineComponent<SocialGatheringPoint.S
 		workables = new SocialGatheringPointWorkable[choreOffsets.Length];
 		for (int i = 0; i < workables.Length; i++)
 		{
-			int cell = Grid.OffsetCell(Grid.PosToCell(this), choreOffsets[i]);
-			Vector3 pos = Grid.CellToPosCBC(cell, Grid.SceneLayer.Move);
-			GameObject go = ChoreHelpers.CreateLocator("SocialGatheringPointWorkable", pos);
-			SocialGatheringPointWorkable socialGatheringPointWorkable = go.AddOrGet<SocialGatheringPointWorkable>();
+			Vector3 pos = Grid.CellToPosCBC(Grid.OffsetCell(Grid.PosToCell(this), choreOffsets[i]), Grid.SceneLayer.Move);
+			SocialGatheringPointWorkable socialGatheringPointWorkable = ChoreHelpers.CreateLocator("SocialGatheringPointWorkable", pos).AddOrGet<SocialGatheringPointWorkable>();
 			socialGatheringPointWorkable.basePriority = basePriority;
 			socialGatheringPointWorkable.specificEffect = socialEffect;
 			socialGatheringPointWorkable.OnWorkableEventCB = OnWorkableEvent;
@@ -102,11 +100,11 @@ public class SocialGatheringPoint : StateMachineComponent<SocialGatheringPoint.S
 	private Chore CreateChore(int i)
 	{
 		Workable workable = workables[i];
-		Chore chore = new WorkChore<SocialGatheringPointWorkable>(Db.Get().ChoreTypes.Relax, workable, null, run_until_complete: true, null, null, schedule_block: Db.Get().ScheduleBlockTypes.Recreation, on_end: OnSocialChoreEnd, allow_in_red_alert: false, ignore_schedule_block: false, only_when_operational: true, override_anims: null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, priority_class: PriorityScreen.PriorityClass.high, priority_class_value: 5, ignore_building_assignment: false, add_to_daily_report: false);
-		chore.AddPrecondition(ChorePreconditions.instance.IsNotRedAlert);
-		chore.AddPrecondition(ChorePreconditions.instance.CanDoWorkerPrioritizable, workable);
-		chore.AddPrecondition(ChorePreconditions.instance.IsNotARobot, workable);
-		return chore;
+		WorkChore<SocialGatheringPointWorkable> obj = new WorkChore<SocialGatheringPointWorkable>(Db.Get().ChoreTypes.Relax, workable, null, run_until_complete: true, null, null, schedule_block: Db.Get().ScheduleBlockTypes.Recreation, on_end: OnSocialChoreEnd, allow_in_red_alert: false, ignore_schedule_block: false, only_when_operational: true, override_anims: null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, priority_class: PriorityScreen.PriorityClass.high, priority_class_value: 5, ignore_building_assignment: false, add_to_daily_report: false);
+		obj.AddPrecondition(ChorePreconditions.instance.IsNotRedAlert);
+		obj.AddPrecondition(ChorePreconditions.instance.CanDoWorkerPrioritizable, workable);
+		obj.AddPrecondition(ChorePreconditions.instance.IsNotARobot, workable);
+		return obj;
 	}
 
 	private void OnSocialChoreEnd(Chore chore)

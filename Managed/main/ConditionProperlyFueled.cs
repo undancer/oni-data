@@ -23,7 +23,11 @@ public class ConditionProperlyFueled : ProcessCondition
 			int num = component3.RemainingTravelNodes();
 			if (num == 0)
 			{
-				return component2.HasResourcesToMove(1, Clustercraft.CombustionResource.Fuel) ? Status.Ready : Status.Failure;
+				if (!component2.HasResourcesToMove(1, Clustercraft.CombustionResource.Fuel))
+				{
+					return Status.Failure;
+				}
+				return Status.Ready;
 			}
 			bool flag = component2.HasResourcesToMove(num * 2, Clustercraft.CombustionResource.Fuel);
 			bool flag2 = component2.HasResourcesToMove(num, Clustercraft.CombustionResource.Fuel);

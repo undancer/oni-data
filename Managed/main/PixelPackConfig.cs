@@ -9,7 +9,7 @@ public class PixelPackConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(ID, 4, 1, "pixel_pack_kanim", 30, 10f, new float[2]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef(ID, 4, 1, "pixel_pack_kanim", 30, 10f, new float[2]
 		{
 			TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER2[0],
 			TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER0[0]
@@ -18,31 +18,30 @@ public class PixelPackConfig : IBuildingConfig
 			"Glass",
 			"RefinedMetal"
 		}, 1600f, BuildLocationRule.NotInTiles, noise: NOISE_POLLUTION.NONE, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER3);
-		buildingDef.Overheatable = false;
-		buildingDef.Floodable = false;
-		buildingDef.Entombable = false;
-		buildingDef.PermittedRotations = PermittedRotations.R360;
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.PowerInputOffset = new CellOffset(1, 0);
-		buildingDef.EnergyConsumptionWhenActive = 10f;
-		buildingDef.SelfHeatKilowattsWhenActive = 0f;
-		buildingDef.ExhaustKilowattsWhenActive = 0f;
-		buildingDef.LogicInputPorts = new List<LogicPorts.Port>
+		obj.Overheatable = false;
+		obj.Floodable = false;
+		obj.Entombable = false;
+		obj.PermittedRotations = PermittedRotations.R360;
+		obj.RequiresPowerInput = true;
+		obj.PowerInputOffset = new CellOffset(1, 0);
+		obj.EnergyConsumptionWhenActive = 10f;
+		obj.SelfHeatKilowattsWhenActive = 0f;
+		obj.ExhaustKilowattsWhenActive = 0f;
+		obj.LogicInputPorts = new List<LogicPorts.Port>
 		{
 			LogicPorts.Port.RibbonInputPort(PixelPack.PORT_ID, new CellOffset(0, 0), STRINGS.BUILDINGS.PREFABS.PIXELPACK.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.PIXELPACK.INPUT_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.PIXELPACK.INPUT_PORT_INACTIVE)
 		};
-		buildingDef.ViewMode = OverlayModes.Logic.ID;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.ObjectLayer = ObjectLayer.Backwall;
-		buildingDef.SceneLayer = Grid.SceneLayer.InteriorWall;
+		obj.ViewMode = OverlayModes.Logic.ID;
+		obj.AudioCategory = "Metal";
+		obj.ObjectLayer = ObjectLayer.Backwall;
+		obj.SceneLayer = Grid.SceneLayer.InteriorWall;
 		GeneratedBuildings.RegisterWithOverlay(OverlayModes.Logic.HighlightItemIDs, ID);
-		return buildingDef;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
-		AnimTileable animTileable = go.AddOrGet<AnimTileable>();
-		animTileable.objectLayer = ObjectLayer.Backwall;
+		go.AddOrGet<AnimTileable>().objectLayer = ObjectLayer.Backwall;
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		go.AddComponent<ZoneTile>();
 	}

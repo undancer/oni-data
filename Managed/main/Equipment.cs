@@ -21,8 +21,7 @@ public class Equipment : Assignables
 
 	public GameObject GetTargetGameObject()
 	{
-		IAssignableIdentity assignableIdentity = GetAssignableIdentity();
-		MinionAssignablesProxy minionAssignablesProxy = (MinionAssignablesProxy)assignableIdentity;
+		MinionAssignablesProxy minionAssignablesProxy = (MinionAssignablesProxy)GetAssignableIdentity();
 		if ((bool)minionAssignablesProxy)
 		{
 			return minionAssignablesProxy.GetTargetGameObject();
@@ -239,13 +238,21 @@ public class Equipment : Assignables
 
 	public bool IsEquipped(Equippable equippable)
 	{
-		return equippable.assignee is Equipment && (Equipment)equippable.assignee == this && equippable.isEquipped;
+		if (equippable.assignee is Equipment && (Equipment)equippable.assignee == this)
+		{
+			return equippable.isEquipped;
+		}
+		return false;
 	}
 
 	public bool IsSlotOccupied(AssignableSlot slot)
 	{
 		EquipmentSlotInstance equipmentSlotInstance = GetSlot(slot) as EquipmentSlotInstance;
-		return equipmentSlotInstance.IsAssigned() && (equipmentSlotInstance.assignable as Equippable).isEquipped;
+		if (equipmentSlotInstance.IsAssigned())
+		{
+			return (equipmentSlotInstance.assignable as Equippable).isEquipped;
+		}
+		return false;
 	}
 
 	public void UnequipAll()

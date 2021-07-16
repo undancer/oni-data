@@ -27,8 +27,7 @@ namespace Delaunay
 			{
 				for (int i = 0; i < _sites.Count; i++)
 				{
-					Site site = _sites[i];
-					site.Dispose();
+					_sites[i].Dispose();
 				}
 				_sites.Clear();
 				_sites = null;

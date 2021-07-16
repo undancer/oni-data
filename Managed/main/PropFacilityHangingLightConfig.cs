@@ -12,15 +12,15 @@ public class PropFacilityHangingLightConfig : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject gameObject = EntityTemplates.CreatePlacedEntity("PropFacilityHangingLight", STRINGS.BUILDINGS.PREFABS.PROPFACILITYLAMP.NAME, STRINGS.BUILDINGS.PREFABS.PROPFACILITYLAMP.DESC, 50f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("gravitas_light_kanim"), initialAnim: "off", sceneLayer: Grid.SceneLayer.Building, width: 1, height: 4, element: SimHashes.Creature, additionalTags: new List<Tag>
+		GameObject obj = EntityTemplates.CreatePlacedEntity("PropFacilityHangingLight", STRINGS.BUILDINGS.PREFABS.PROPFACILITYLAMP.NAME, STRINGS.BUILDINGS.PREFABS.PROPFACILITYLAMP.DESC, 50f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("gravitas_light_kanim"), initialAnim: "off", sceneLayer: Grid.SceneLayer.Building, width: 1, height: 4, element: SimHashes.Creature, additionalTags: new List<Tag>
 		{
 			GameTags.Gravitas
 		});
-		PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
+		PrimaryElement component = obj.GetComponent<PrimaryElement>();
 		component.SetElement(SimHashes.Steel);
 		component.Temperature = 294.15f;
-		gameObject.AddOrGet<Demolishable>();
-		return gameObject;
+		obj.AddOrGet<Demolishable>();
+		return obj;
 	}
 
 	public void OnPrefabInit(GameObject inst)

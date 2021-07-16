@@ -194,8 +194,7 @@ public class WarpConduitReceiver : StateMachineComponent<WarpConduitReceiver.Sta
 		WarpConduitSender warpConduitSender = null;
 		SaveGame.Instance.GetComponent<WorldGenSpawner>().SpawnTag("WarpConduitSender");
 		WarpConduitSender[] array = Object.FindObjectsOfType<WarpConduitSender>();
-		WarpConduitSender[] array2 = array;
-		foreach (WarpConduitSender warpConduitSender2 in array2)
+		foreach (WarpConduitSender warpConduitSender2 in array)
 		{
 			if (warpConduitSender2.GetMyWorldId() != this.GetMyWorldId())
 			{
@@ -214,13 +213,10 @@ public class WarpConduitReceiver : StateMachineComponent<WarpConduitReceiver.Sta
 
 	protected override void OnCleanUp()
 	{
-		IUtilityNetworkMgr networkManager = Conduit.GetNetworkManager(liquidPortInfo.conduitType);
-		networkManager.RemoveFromNetworks(liquidPort.outputCell, liquidPort.networkItem, is_endpoint: true);
+		Conduit.GetNetworkManager(liquidPortInfo.conduitType).RemoveFromNetworks(liquidPort.outputCell, liquidPort.networkItem, is_endpoint: true);
 		if (gasPort.portInfo != null)
 		{
-			ConduitType conduitType = gasPort.portInfo.conduitType;
-			networkManager = Conduit.GetNetworkManager(conduitType);
-			networkManager.RemoveFromNetworks(gasPort.outputCell, gasPort.networkItem, is_endpoint: true);
+			Conduit.GetNetworkManager(gasPort.portInfo.conduitType).RemoveFromNetworks(gasPort.outputCell, gasPort.networkItem, is_endpoint: true);
 		}
 		else
 		{
@@ -255,7 +251,11 @@ public class WarpConduitReceiver : StateMachineComponent<WarpConduitReceiver.Sta
 
 	public bool HasSecondaryConduitType(ConduitType type)
 	{
-		return type == gasPortInfo.conduitType || type == liquidPortInfo.conduitType || type == solidPortInfo.conduitType;
+		if (type != gasPortInfo.conduitType && type != liquidPortInfo.conduitType)
+		{
+			return type == solidPortInfo.conduitType;
+		}
+		return true;
 	}
 
 	public CellOffset GetSecondaryConduitOffset(ConduitType type)

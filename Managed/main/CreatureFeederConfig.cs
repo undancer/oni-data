@@ -8,9 +8,9 @@ public class CreatureFeederConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("CreatureFeeder", 1, 2, "feeder_kanim", 100, 120f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER2);
-		buildingDef.AudioCategory = "Metal";
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("CreatureFeeder", 1, 2, "feeder_kanim", 100, 120f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER2);
+		obj.AudioCategory = "Metal";
+		return obj;
 	}
 
 	public override void DoPostConfigureUnderConstruction(GameObject go)
@@ -29,8 +29,7 @@ public class CreatureFeederConfig : IBuildingConfig
 		storage.allowSettingOnlyFetchMarkedItems = false;
 		storage.showCapacityStatusItem = true;
 		storage.showCapacityAsMainStatus = true;
-		StorageLocker storageLocker = go.AddOrGet<StorageLocker>();
-		storageLocker.choreTypeID = Db.Get().ChoreTypes.RanchingFetch.Id;
+		go.AddOrGet<StorageLocker>().choreTypeID = Db.Get().ChoreTypes.RanchingFetch.Id;
 		go.AddOrGet<UserNameable>();
 		go.AddOrGet<TreeFilterable>();
 		go.AddOrGet<CreatureFeeder>();
@@ -44,7 +43,7 @@ public class CreatureFeederConfig : IBuildingConfig
 	public override void ConfigurePost(BuildingDef def)
 	{
 		List<Tag> list = new List<Tag>();
-		Tag[] target_species = new Tag[6]
+		foreach (KeyValuePair<Tag, Diet> item in DietManager.CollectDiets(new Tag[6]
 		{
 			GameTags.Creatures.Species.LightBugSpecies,
 			GameTags.Creatures.Species.HatchSpecies,
@@ -52,8 +51,7 @@ public class CreatureFeederConfig : IBuildingConfig
 			GameTags.Creatures.Species.CrabSpecies,
 			GameTags.Creatures.Species.StaterpillarSpecies,
 			GameTags.Creatures.Species.DivergentSpecies
-		};
-		foreach (KeyValuePair<Tag, Diet> item in DietManager.CollectDiets(target_species))
+		}))
 		{
 			list.Add(item.Key);
 		}

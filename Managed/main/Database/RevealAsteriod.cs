@@ -6,7 +6,7 @@ namespace Database
 	{
 		private float percentToReveal;
 
-		private float amountRevealed = 0f;
+		private float amountRevealed;
 
 		public RevealAsteriod(float percentToReveal)
 		{

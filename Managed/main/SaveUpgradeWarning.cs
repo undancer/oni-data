@@ -61,6 +61,10 @@ public class SaveUpgradeWarning : KMonoBehaviour
 			new Upgrade(7, 13, BedAndBathHelper),
 			new Upgrade(7, 16, NewAutomationWarning)
 		};
+		if (DlcManager.IsPureVanilla())
+		{
+			list.Add(new Upgrade(7, 25, MergedownWarning));
+		}
 		foreach (Upgrade item in list)
 		{
 			if (SaveLoader.Instance.GameInfo.IsVersionOlderThan(item.major, item.minor))
@@ -78,8 +82,7 @@ public class SaveUpgradeWarning : KMonoBehaviour
 		{
 			foreach (MinionIdentity item in Components.LiveMinionIdentities.Items)
 			{
-				Effects component = item.GetComponent<Effects>();
-				component.Add(morale_effect, should_save: true);
+				item.GetComponent<Effects>().Add(morale_effect, should_save: true);
 			}
 			screen.Deactivate();
 		});
@@ -119,9 +122,9 @@ public class SaveUpgradeWarning : KMonoBehaviour
 			screen.Deactivate();
 		});
 		string[] array = buildingIDsWithNewPorts;
-		foreach (string prefab_id in array)
+		for (int i = 0; i < array.Length; i++)
 		{
-			BuildingDef buildingDef = Assets.GetBuildingDef(prefab_id);
+			BuildingDef buildingDef = Assets.GetBuildingDef(array[i]);
 			screen.AddSprite(buildingDef.GetUISprite(), buildingDef.Name);
 		}
 		screen.PopupConfirmDialog(UI.FRONTEND.SAVEUPGRADEWARNINGS.NEWAUTOMATIONWARNING, UI.FRONTEND.SAVEUPGRADEWARNINGS.NEWAUTOMATIONWARNING_TITLE);
@@ -138,33 +141,52 @@ public class SaveUpgradeWarning : KMonoBehaviour
 		foreach (BuildingComplete buildingComplete in Components.BuildingCompletes)
 		{
 			string[] array = buildingIDsWithNewPorts;
-			foreach (string id in array)
+			foreach (string text in array)
 			{
-				BuildingDef buildingDef = Assets.GetBuildingDef(id);
+				BuildingDef buildingDef = Assets.GetBuildingDef(text);
 				if (!(buildingComplete.Def == buildingDef))
 				{
 					continue;
 				}
-				List<ILogicUIElement> newPorts = new List<ILogicUIElement>();
-				LogicPorts ports = buildingComplete.GetComponent<LogicPorts>();
-				if (ports.outputPorts != null)
+				List<ILogicUIElement> list = new List<ILogicUIElement>();
+				LogicPorts component = buildingComplete.GetComponent<LogicPorts>();
+				if (component.outputPorts != null)
 				{
-					newPorts.AddRange(ports.outputPorts);
+					list.AddRange(component.outputPorts);
 				}
-				if (ports.inputPorts != null)
+				if (component.inputPorts != null)
 				{
-					newPorts.AddRange(ports.inputPorts);
+					list.AddRange(component.inputPorts);
 				}
-				foreach (ILogicUIElement port in newPorts)
+				foreach (ILogicUIElement item in list)
 				{
-					if (Grid.Objects[port.GetLogicUICell(), 31] != null)
+					if (Grid.Objects[item.GetLogicUICell(), 31] != null)
 					{
-						Debug.Log("Triggering automation warning for building of type " + id);
+						Debug.Log("Triggering automation warning for building of type " + text);
 						GenericMessage message = new GenericMessage(MISC.NOTIFICATIONS.NEW_AUTOMATION_WARNING.NAME, MISC.NOTIFICATIONS.NEW_AUTOMATION_WARNING.TOOLTIP, MISC.NOTIFICATIONS.NEW_AUTOMATION_WARNING.TOOLTIP, buildingComplete);
 						Messenger.Instance.QueueMessage(message);
 					}
 				}
 			}
 		}
+	}
+
+	private void MergedownWarning()
+	{
+		SpriteListDialogScreen screen = Util.KInstantiateUI<SpriteListDialogScreen>(ScreenPrefabs.Instance.SpriteListDialogScreen.gameObject, GameScreenManager.Instance.ssOverlayCanvas.gameObject, force_active: true);
+		screen.AddOption(UI.DEVELOPMENTBUILDS.FULL_PATCH_NOTES, delegate
+		{
+			Application.OpenURL("https://forums.kleientertainment.com/game-updates/oni-alpha/");
+		});
+		screen.AddOption(UI.CONFIRMDIALOG.OK, delegate
+		{
+			screen.Deactivate();
+		});
+		screen.AddSprite(Assets.GetSprite("upgrade_mergedown_fridge"), UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_FOOD, 150f, 120f);
+		screen.AddSprite(Assets.GetSprite("upgrade_mergedown_deodorizer"), UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_AIRFILTER, 150f, 120f);
+		screen.AddSprite(Assets.GetSprite("upgrade_mergedown_steamturbine"), UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_SIMULATION, 150f, 120f);
+		screen.AddSprite(Assets.GetSprite("upgrade_mergedown_oxygen_meter"), UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_BUILDINGS, 150f, 120f);
+		screen.PopupConfirmDialog(UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES, UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_TITLE);
+		StartCoroutine(SendAutomationWarningNotifications());
 	}
 }

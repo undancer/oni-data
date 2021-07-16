@@ -81,6 +81,8 @@ public class GameplayEventPopupData
 
 	public GameObject[] minions;
 
+	public GameObject artifact;
+
 	public HashedString animFileName;
 
 	public HashedString backgroundFileName;

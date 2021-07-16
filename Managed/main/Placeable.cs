@@ -63,7 +63,15 @@ public class Placeable : KMonoBehaviour
 		int id = Grid.WorldIdx[cell];
 		WorldContainer world = ClusterManager.Instance.GetWorld(id);
 		int top = world.WorldOffset.y + world.WorldSize.y;
-		return !Grid.Solid[cell] && !Grid.Foundation[cell] && (Grid.ExposedToSunlight[cell] >= 253 || ClearPathToSky(x, y, top));
+		if (!Grid.Solid[cell] && !Grid.Foundation[cell])
+		{
+			if (Grid.ExposedToSunlight[cell] < 253)
+			{
+				return ClearPathToSky(x, y, top);
+			}
+			return true;
+		}
+		return false;
 	}
 
 	private bool ClearPathToSky(int x, int startY, int top)
@@ -81,6 +89,14 @@ public class Placeable : KMonoBehaviour
 
 	private bool FoundationTest(int cell, object data)
 	{
-		return Grid.IsValidBuildingCell(cell) && (Grid.Solid[cell] || Grid.Foundation[cell]);
+		if (Grid.IsValidBuildingCell(cell))
+		{
+			if (!Grid.Solid[cell])
+			{
+				return Grid.Foundation[cell];
+			}
+			return true;
+		}
+		return false;
 	}
 }

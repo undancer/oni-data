@@ -17,7 +17,7 @@ public class CargoBay : KMonoBehaviour
 
 	private MeterController meter;
 
-	public CargoType storageType = CargoType.Solids;
+	public CargoType storageType;
 
 	public static Dictionary<Element.State, CargoType> ElementStateToCargoTypes = new Dictionary<Element.State, CargoType>
 	{
@@ -159,8 +159,7 @@ public class CargoBay : KMonoBehaviour
 			if (component.registerType != LaunchableRocketRegisterType.Clustercraft)
 			{
 				int spacecraftID = SpacecraftManager.instance.GetSpacecraftID(component);
-				SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(spacecraftID);
-				spacecraftDestination.UpdateRemainingResources(this);
+				SpacecraftManager.instance.GetSpacecraftDestination(spacecraftID).UpdateRemainingResources(this);
 			}
 		}
 	}

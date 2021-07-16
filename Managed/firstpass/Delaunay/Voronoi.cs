@@ -226,9 +226,7 @@ namespace Delaunay
 
 		public List<LineSegment> SpanningTree(KruskalType type = KruskalType.MINIMUM)
 		{
-			List<Edge> edges = DelaunayHelpers.SelectNonIntersectingEdges(_edges);
-			List<LineSegment> lineSegments = DelaunayHelpers.DelaunayLinesForEdges(edges);
-			return DelaunayHelpers.Kruskal(lineSegments, type);
+			return DelaunayHelpers.Kruskal(DelaunayHelpers.DelaunayLinesForEdges(DelaunayHelpers.SelectNonIntersectingEdges(_edges)), type);
 		}
 
 		public List<List<Vector2>> Regions()
@@ -263,17 +261,22 @@ namespace Delaunay
 				{
 					s = halfedgePriorityQueue.Min();
 				}
+				Halfedge halfedge;
+				Halfedge edgeListRightNeighbor;
+				Site site2;
+				Edge edge;
+				Halfedge halfedge2;
+				Vertex vertex;
 				if (site != null && (halfedgePriorityQueue.Empty() || CompareByYThenX(site, s) < 0))
 				{
-					Halfedge halfedge = edgeList.EdgeListLeftNeighbor(site.Coord);
-					Halfedge edgeListRightNeighbor = halfedge.edgeListRightNeighbor;
-					Site site2 = FortunesAlgorithm_rightRegion(halfedge);
-					Edge edge = Edge.CreateBisectingEdge(site2, site);
+					halfedge = edgeList.EdgeListLeftNeighbor(site.Coord);
+					edgeListRightNeighbor = halfedge.edgeListRightNeighbor;
+					site2 = FortunesAlgorithm_rightRegion(halfedge);
+					edge = Edge.CreateBisectingEdge(site2, site);
 					_edges.Add(edge);
-					Halfedge halfedge2 = Halfedge.Create(edge, Side.LEFT);
+					halfedge2 = Halfedge.Create(edge, Side.LEFT);
 					list.Add(halfedge2);
 					edgeList.Insert(halfedge, halfedge2);
-					Vertex vertex;
 					if ((vertex = Vertex.Intersect(halfedge, halfedge2)) != null)
 					{
 						list2.Add(vertex);
@@ -296,61 +299,58 @@ namespace Delaunay
 					site = _sites.Next();
 					continue;
 				}
-				if (!halfedgePriorityQueue.Empty())
+				if (halfedgePriorityQueue.Empty())
 				{
-					Halfedge halfedge = halfedgePriorityQueue.ExtractMin();
-					Halfedge edgeListLeftNeighbor = halfedge.edgeListLeftNeighbor;
-					Halfedge edgeListRightNeighbor = halfedge.edgeListRightNeighbor;
-					Halfedge edgeListRightNeighbor2 = edgeListRightNeighbor.edgeListRightNeighbor;
-					Site site2 = FortunesAlgorithm_leftRegion(halfedge);
-					Site site3 = FortunesAlgorithm_rightRegion(edgeListRightNeighbor);
-					Vertex vertex2 = halfedge.vertex;
-					vertex2.SetIndex();
-					halfedge.edge.SetVertex(halfedge.leftRight.Value, vertex2);
-					edgeListRightNeighbor.edge.SetVertex(edgeListRightNeighbor.leftRight.Value, vertex2);
-					edgeList.Remove(halfedge);
-					halfedgePriorityQueue.Remove(edgeListRightNeighbor);
-					edgeList.Remove(edgeListRightNeighbor);
-					Side side = Side.LEFT;
-					if (site2.y > site3.y)
-					{
-						Site site4 = site2;
-						site2 = site3;
-						site3 = site4;
-						side = Side.RIGHT;
-					}
-					Edge edge = Edge.CreateBisectingEdge(site2, site3);
-					_edges.Add(edge);
-					Halfedge halfedge2 = Halfedge.Create(edge, side);
-					list.Add(halfedge2);
-					edgeList.Insert(edgeListLeftNeighbor, halfedge2);
-					edge.SetVertex(SideHelper.Other(side), vertex2);
-					Vertex vertex;
-					if ((vertex = Vertex.Intersect(edgeListLeftNeighbor, halfedge2)) != null)
-					{
-						list2.Add(vertex);
-						halfedgePriorityQueue.Remove(edgeListLeftNeighbor);
-						edgeListLeftNeighbor.vertex = vertex;
-						edgeListLeftNeighbor.ystar = vertex.y + site2.Dist(vertex);
-						halfedgePriorityQueue.Insert(edgeListLeftNeighbor);
-					}
-					if ((vertex = Vertex.Intersect(halfedge2, edgeListRightNeighbor2)) != null)
-					{
-						list2.Add(vertex);
-						halfedge2.vertex = vertex;
-						halfedge2.ystar = vertex.y + site2.Dist(vertex);
-						halfedgePriorityQueue.Insert(halfedge2);
-					}
-					continue;
+					break;
 				}
-				break;
+				halfedge = halfedgePriorityQueue.ExtractMin();
+				Halfedge edgeListLeftNeighbor = halfedge.edgeListLeftNeighbor;
+				edgeListRightNeighbor = halfedge.edgeListRightNeighbor;
+				Halfedge edgeListRightNeighbor2 = edgeListRightNeighbor.edgeListRightNeighbor;
+				site2 = FortunesAlgorithm_leftRegion(halfedge);
+				Site site3 = FortunesAlgorithm_rightRegion(edgeListRightNeighbor);
+				Vertex vertex2 = halfedge.vertex;
+				vertex2.SetIndex();
+				halfedge.edge.SetVertex(halfedge.leftRight.Value, vertex2);
+				edgeListRightNeighbor.edge.SetVertex(edgeListRightNeighbor.leftRight.Value, vertex2);
+				edgeList.Remove(halfedge);
+				halfedgePriorityQueue.Remove(edgeListRightNeighbor);
+				edgeList.Remove(edgeListRightNeighbor);
+				Side side = Side.LEFT;
+				if (site2.y > site3.y)
+				{
+					Site site4 = site2;
+					site2 = site3;
+					site3 = site4;
+					side = Side.RIGHT;
+				}
+				edge = Edge.CreateBisectingEdge(site2, site3);
+				_edges.Add(edge);
+				halfedge2 = Halfedge.Create(edge, side);
+				list.Add(halfedge2);
+				edgeList.Insert(edgeListLeftNeighbor, halfedge2);
+				edge.SetVertex(SideHelper.Other(side), vertex2);
+				if ((vertex = Vertex.Intersect(edgeListLeftNeighbor, halfedge2)) != null)
+				{
+					list2.Add(vertex);
+					halfedgePriorityQueue.Remove(edgeListLeftNeighbor);
+					edgeListLeftNeighbor.vertex = vertex;
+					edgeListLeftNeighbor.ystar = vertex.y + site2.Dist(vertex);
+					halfedgePriorityQueue.Insert(edgeListLeftNeighbor);
+				}
+				if ((vertex = Vertex.Intersect(halfedge2, edgeListRightNeighbor2)) != null)
+				{
+					list2.Add(vertex);
+					halfedge2.vertex = vertex;
+					halfedge2.ystar = vertex.y + site2.Dist(vertex);
+					halfedgePriorityQueue.Insert(halfedge2);
+				}
 			}
 			halfedgePriorityQueue.Dispose();
 			edgeList.Dispose();
 			for (int i = 0; i < list.Count; i++)
 			{
-				Halfedge halfedge3 = list[i];
-				halfedge3.ReallyDispose();
+				list[i].ReallyDispose();
 			}
 			list.Clear();
 			for (int j = 0; j < _edges.Count; j++)

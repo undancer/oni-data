@@ -41,8 +41,7 @@ public class EggIncubator : SingleEntityReceptacle, ISaveLoadable, ISim1000ms
 		requiredSkillPerk = Db.Get().SkillPerks.CanWrangleCreatures.Id;
 		occupyingObjectRelativePosition = new Vector3(0.5f, 1f, -1f);
 		synchronizeAnims = false;
-		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
-		component.SetSymbolVisiblity("egg_target", is_visible: false);
+		GetComponent<KBatchedAnimController>().SetSymbolVisiblity("egg_target", is_visible: false);
 		meter = new MeterController(this, Meter.Offset.Infront, Grid.SceneLayer.NoLayer);
 	}
 
@@ -133,12 +132,11 @@ public class EggIncubator : SingleEntityReceptacle, ISaveLoadable, ISim1000ms
 	protected override void PositionOccupyingObject()
 	{
 		base.PositionOccupyingObject();
-		KBatchedAnimController component = base.occupyingObject.GetComponent<KBatchedAnimController>();
-		component.SetSceneLayer(Grid.SceneLayer.BuildingUse);
-		KSelectable component2 = base.occupyingObject.GetComponent<KSelectable>();
-		if (component2 != null)
+		base.occupyingObject.GetComponent<KBatchedAnimController>().SetSceneLayer(Grid.SceneLayer.BuildingUse);
+		KSelectable component = base.occupyingObject.GetComponent<KSelectable>();
+		if (component != null)
 		{
-			component2.IsSelectable = true;
+			component.IsSelectable = true;
 		}
 	}
 
@@ -156,8 +154,7 @@ public class EggIncubator : SingleEntityReceptacle, ISaveLoadable, ISim1000ms
 		float result = 0f;
 		if ((bool)base.occupyingObject)
 		{
-			Amounts amounts = base.occupyingObject.GetAmounts();
-			AmountInstance amountInstance = amounts.Get(Db.Get().Amounts.Incubation);
+			AmountInstance amountInstance = base.occupyingObject.GetAmounts().Get(Db.Get().Amounts.Incubation);
 			result = ((amountInstance == null) ? 1f : (amountInstance.value / amountInstance.GetMax()));
 		}
 		return result;

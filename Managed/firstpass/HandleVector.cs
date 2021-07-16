@@ -185,8 +185,8 @@ public class HandleVector<T>
 
 	public bool IsVersionValid(Handle handle)
 	{
-		byte b = (byte)(handle.index >> 24);
+		byte num = (byte)(handle.index >> 24);
 		int index = handle.index & 0xFFFFFF;
-		return b == versions[index];
+		return num == versions[index];
 	}
 }

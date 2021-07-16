@@ -38,10 +38,8 @@ public class Staterpillar : KMonoBehaviour
 			gameObject = generatorDef.Build(targetCell, Orientation.R180, null, generatorElement, base.gameObject.GetComponent<PrimaryElement>().Temperature);
 			gameObject.SetActive(value: true);
 			generatorRef = new Ref<KPrefabID>(gameObject.GetComponent<KPrefabID>());
-			BuildingCellVisualizer component = gameObject.GetComponent<BuildingCellVisualizer>();
-			component.enabled = false;
-			StaterpillarGenerator component2 = gameObject.GetComponent<StaterpillarGenerator>();
-			component2.enabled = false;
+			gameObject.GetComponent<BuildingCellVisualizer>().enabled = false;
+			gameObject.GetComponent<StaterpillarGenerator>().enabled = false;
 		}
 		Attributes attributes = gameObject.gameObject.GetAttributes();
 		bool flag = base.gameObject.GetSMI<WildnessMonitor.Instance>().wildness.value > 0f;
@@ -85,9 +83,7 @@ public class Staterpillar : KMonoBehaviour
 
 	public bool IsConnected()
 	{
-		KPrefabID generator = GetGenerator();
-		Generator component = generator.GetComponent<Generator>();
-		if (component.CircuitID == ushort.MaxValue)
+		if (GetGenerator().GetComponent<Generator>().CircuitID == ushort.MaxValue)
 		{
 			return false;
 		}
@@ -102,10 +98,8 @@ public class Staterpillar : KMonoBehaviour
 	public void EnableGenerator()
 	{
 		KPrefabID generator = GetGenerator();
-		StaterpillarGenerator component = generator.GetComponent<StaterpillarGenerator>();
-		component.enabled = true;
-		BuildingCellVisualizer component2 = generator.GetComponent<BuildingCellVisualizer>();
-		component2.enabled = true;
+		generator.GetComponent<StaterpillarGenerator>().enabled = true;
+		generator.GetComponent<BuildingCellVisualizer>().enabled = true;
 	}
 
 	public void DestroyGenerator()
@@ -123,6 +117,10 @@ public class Staterpillar : KMonoBehaviour
 
 	public KPrefabID GetGenerator()
 	{
-		return (generatorRef.Get() != null) ? generatorRef.Get() : null;
+		if (!(generatorRef.Get() != null))
+		{
+			return null;
+		}
+		return generatorRef.Get();
 	}
 }

@@ -23,8 +23,7 @@ public class GlassForge : ComplexFabricator
 		GameObject gameObject = Grid.Objects[cell, 16];
 		if (gameObject != null)
 		{
-			PrimaryElement component2 = gameObject.GetComponent<PrimaryElement>();
-			if (component2.Element.highTemp > ElementLoader.FindElementByHash(SimHashes.MoltenGlass).lowTemp)
+			if (gameObject.GetComponent<PrimaryElement>().Element.highTemp > ElementLoader.FindElementByHash(SimHashes.MoltenGlass).lowTemp)
 			{
 				component.RemoveStatusItem(statusHandle);
 			}

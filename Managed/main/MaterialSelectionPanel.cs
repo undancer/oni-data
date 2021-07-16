@@ -165,9 +165,9 @@ public class MaterialSelectionPanel : KScreen
 			selector.gameObject.SetActive(value: false);
 		});
 		BuildingDef buildingDef = activeRecipe.GetBuildingDef();
-		bool flag = GetBuildableState(buildingDef);
+		bool num = GetBuildableState(buildingDef);
 		string text = GetBuildableTooltip(buildingDef);
-		if (!flag)
+		if (!num)
 		{
 			ResearchRequired.SetActive(value: true);
 			LocText[] componentsInChildren = ResearchRequired.GetComponentsInChildren<LocText>();
@@ -203,8 +203,7 @@ public class MaterialSelectionPanel : KScreen
 		bool result = true;
 		for (int i = 0; i < MaterialSelectors.Count; i++)
 		{
-			MaterialSelector materialSelector = MaterialSelectors[i];
-			if (!materialSelector.AutoSelectAvailableMaterial())
+			if (!MaterialSelectors[i].AutoSelectAvailableMaterial())
 			{
 				result = false;
 			}

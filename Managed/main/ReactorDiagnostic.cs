@@ -20,13 +20,14 @@ public class ReactorDiagnostic : ColonyDiagnostic
 	private DiagnosticResult CheckTemperature()
 	{
 		List<Reactor> worldItems = Components.NuclearReactors.GetWorldItems(base.worldID);
-		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS);
-		result.opinion = DiagnosticResult.Opinion.Normal;
-		result.Message = UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.NORMAL;
+		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS)
+		{
+			opinion = DiagnosticResult.Opinion.Normal,
+			Message = UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.NORMAL
+		};
 		foreach (Reactor item in worldItems)
 		{
-			float fuelTemperature = item.FuelTemperature;
-			if (fuelTemperature > 1254.8625f)
+			if (item.FuelTemperature > 1254.8625f)
 			{
 				result.opinion = DiagnosticResult.Opinion.Warning;
 				result.Message = UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA_TEMPERATURE_WARNING;
@@ -39,20 +40,18 @@ public class ReactorDiagnostic : ColonyDiagnostic
 	private DiagnosticResult CheckCoolant()
 	{
 		List<Reactor> worldItems = Components.NuclearReactors.GetWorldItems(base.worldID);
-		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS);
-		result.opinion = DiagnosticResult.Opinion.Normal;
-		result.Message = UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.NORMAL;
+		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS)
+		{
+			opinion = DiagnosticResult.Opinion.Normal,
+			Message = UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.NORMAL
+		};
 		foreach (Reactor item in worldItems)
 		{
-			if (item.On)
+			if (item.On && item.ReserveCoolantMass <= 45f)
 			{
-				float reserveCoolantMass = item.ReserveCoolantMass;
-				if (reserveCoolantMass <= 45f)
-				{
-					result.opinion = DiagnosticResult.Opinion.Concern;
-					result.Message = UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA_COOLANT_WARNING;
-					result.clickThroughTarget = new Tuple<Vector3, GameObject>(item.gameObject.transform.position, item.gameObject);
-				}
+				result.opinion = DiagnosticResult.Opinion.Concern;
+				result.Message = UI.COLONY_DIAGNOSTICS.REACTORDIAGNOSTIC.CRITERIA_COOLANT_WARNING;
+				result.clickThroughTarget = new Tuple<Vector3, GameObject>(item.gameObject.transform.position, item.gameObject);
 			}
 		}
 		return result;

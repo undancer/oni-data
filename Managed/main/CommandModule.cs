@@ -39,8 +39,7 @@ public class CommandModule : StateMachineComponent<CommandModule.StatesInstance>
 				if (!(kPrefabID == null))
 				{
 					StoredMinionIdentity component = kPrefabID.GetComponent<StoredMinionIdentity>();
-					Assignable component2 = GetComponent<Assignable>();
-					if (component2.assignee == component.assignableProxy.Get())
+					if (GetComponent<Assignable>().assignee == component.assignableProxy.Get())
 					{
 						return true;
 					}
@@ -136,7 +135,7 @@ public class CommandModule : StateMachineComponent<CommandModule.StatesInstance>
 
 	public RocketCommandConditions conditions;
 
-	private bool releasingAstronaut = false;
+	private bool releasingAstronaut;
 
 	private const Sim.Cell.Properties floorCellProperties = (Sim.Cell.Properties)39;
 
@@ -210,7 +209,11 @@ public class CommandModule : StateMachineComponent<CommandModule.StatesInstance>
 	private static bool HasValidGantry(GameObject go)
 	{
 		int num = Grid.OffsetCell(Grid.PosToCell(go), 0, -1);
-		return Grid.IsValidCell(num) && Grid.FakeFloor[num];
+		if (Grid.IsValidCell(num))
+		{
+			return Grid.FakeFloor[num];
+		}
+		return false;
 	}
 
 	private void OnGantryChanged(object data)

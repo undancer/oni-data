@@ -16,9 +16,17 @@ public class LoadingCompleteCondition : ProcessCondition
 	{
 		if (userControlledTarget != null)
 		{
-			return (!(userControlledTarget.AmountStored >= userControlledTarget.UserMaxCapacity)) ? Status.Warning : Status.Ready;
+			if (!(userControlledTarget.AmountStored >= userControlledTarget.UserMaxCapacity))
+			{
+				return Status.Warning;
+			}
+			return Status.Ready;
 		}
-		return (!target.IsFull()) ? Status.Warning : Status.Ready;
+		if (!target.IsFull())
+		{
+			return Status.Warning;
+		}
+		return Status.Ready;
 	}
 
 	public override string GetStatusMessage(Status status)

@@ -56,17 +56,29 @@ public struct AABB3
 
 	public bool Contains(Vector3 pt)
 	{
-		return min.LessEqual(pt) && pt.Less(max);
+		if (min.LessEqual(pt))
+		{
+			return pt.Less(max);
+		}
+		return false;
 	}
 
 	public bool Contains(AABB3 aabb)
 	{
-		return Contains(aabb.min) && Contains(aabb.max);
+		if (Contains(aabb.min))
+		{
+			return Contains(aabb.max);
+		}
+		return false;
 	}
 
 	public bool Intersects(AABB3 aabb)
 	{
-		return min.LessEqual(aabb.max) && aabb.min.Less(max);
+		if (min.LessEqual(aabb.max))
+		{
+			return aabb.min.Less(max);
+		}
+		return false;
 	}
 
 	public override bool Equals(object obj)
@@ -76,7 +88,11 @@ public struct AABB3
 			return false;
 		}
 		AABB3 aABB = (AABB3)obj;
-		return min == aABB.min && max == aABB.max;
+		if (min == aABB.min)
+		{
+			return max == aABB.max;
+		}
+		return false;
 	}
 
 	public override int GetHashCode()

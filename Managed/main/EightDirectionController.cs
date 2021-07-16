@@ -32,8 +32,7 @@ public class EightDirectionController
 		gameObject = new GameObject(name);
 		gameObject.SetActive(value: false);
 		gameObject.transform.parent = buildingController.transform;
-		KPrefabID kPrefabID = gameObject.AddComponent<KPrefabID>();
-		kPrefabID.PrefabTag = new Tag(name);
+		gameObject.AddComponent<KPrefabID>().PrefabTag = new Tag(name);
 		this.defaultAnim = defaultAnim;
 		controller = gameObject.AddOrGet<KBatchedAnimController>();
 		controller.AnimFiles = new KAnimFile[1]
@@ -49,8 +48,7 @@ public class EightDirectionController
 		}
 		buildingController.SetSymbolVisiblity(targetSymbol, is_visible: false);
 		bool symbolVisible;
-		Vector4 column = buildingController.GetSymbolTransform(new HashedString(targetSymbol), out symbolVisible).GetColumn(3);
-		Vector3 position = column;
+		Vector3 position = buildingController.GetSymbolTransform(new HashedString(targetSymbol), out symbolVisible).GetColumn(3);
 		switch (frontBack)
 		{
 		case Offset.Behind:

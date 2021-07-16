@@ -15,7 +15,11 @@ public class RanchableMonitor : GameStateMachine<RanchableMonitor, RanchableMoni
 
 		public bool ShouldGoGetRanched()
 		{
-			return targetRanchStation != null && targetRanchStation.IsRunning() && targetRanchStation.shouldCreatureGoGetRanched;
+			if (targetRanchStation != null && targetRanchStation.IsRunning())
+			{
+				return targetRanchStation.shouldCreatureGoGetRanched;
+			}
+			return false;
 		}
 	}
 

@@ -11,14 +11,13 @@ public static class AutoRocketUtility
 
 	private static IEnumerator AutoRocketRoutine(LaunchPad selectedPad)
 	{
-		GameObject engine = AddEngine(selectedPad);
-		GameObject oxidizerTank = AddOxidizerTank(engine);
+		GameObject baseModule = AddEngine(selectedPad);
+		GameObject oxidizerTank = AddOxidizerTank(baseModule);
 		yield return new WaitForEndOfFrame();
 		AddOxidizer(oxidizerTank);
-		GameObject commandModule = AddPassengerModule(oxidizerTank);
-		GameObject storageModule = AddSolidStorageModule(commandModule);
-		AddDrillCone(storageModule);
-		PassengerRocketModule passengerModule = commandModule.GetComponent<PassengerRocketModule>();
+		GameObject gameObject = AddPassengerModule(oxidizerTank);
+		AddDrillCone(AddSolidStorageModule(gameObject));
+		PassengerRocketModule passengerModule = gameObject.GetComponent<PassengerRocketModule>();
 		ClustercraftExteriorDoor exteriorDoor = passengerModule.GetComponent<ClustercraftExteriorDoor>();
 		int max = 100;
 		while (exteriorDoor.GetInteriorDoor() == null && max > 0)
@@ -26,9 +25,7 @@ public static class AutoRocketUtility
 			max--;
 			yield return new WaitForEndOfFrame();
 		}
-		RocketModuleCluster rocketModuleCluster = passengerModule.GetComponent<RocketModuleCluster>();
-		CraftModuleInterface craftModuleInterface = rocketModuleCluster.CraftInterface;
-		WorldContainer interiorWorld = craftModuleInterface.GetInteriorWorld();
+		WorldContainer interiorWorld = passengerModule.GetComponent<RocketModuleCluster>().CraftInterface.GetInteriorWorld();
 		RocketControlStation station = Components.RocketControlStations.GetWorldItems(interiorWorld.id)[0];
 		GameObject minion = AddPilot(station);
 		AddOxygen(station);
@@ -44,20 +41,21 @@ public static class AutoRocketUtility
 			SimHashes.Steel.CreateTag()
 		};
 		GameObject gameObject = selectedPad.AddBaseModule(buildingDef, elements);
-		RocketEngineCluster component = gameObject.GetComponent<RocketEngineCluster>();
-		Element element = ElementLoader.GetElement(component.fuelTag);
-		Storage component2 = gameObject.GetComponent<Storage>();
+		Element element = ElementLoader.GetElement(gameObject.GetComponent<RocketEngineCluster>().fuelTag);
+		Storage component = gameObject.GetComponent<Storage>();
 		if (element.IsGas)
 		{
-			component2.AddGasChunk(element.id, component2.Capacity(), element.defaultValues.temperature, byte.MaxValue, 0, keep_zero_mass: false);
+			component.AddGasChunk(element.id, component.Capacity(), element.defaultValues.temperature, byte.MaxValue, 0, keep_zero_mass: false);
+			return gameObject;
 		}
-		else if (element.IsLiquid)
+		if (element.IsLiquid)
 		{
-			component2.AddLiquid(element.id, component2.Capacity(), element.defaultValues.temperature, byte.MaxValue, 0);
+			component.AddLiquid(element.id, component.Capacity(), element.defaultValues.temperature, byte.MaxValue, 0);
+			return gameObject;
 		}
-		else if (element.IsSolid)
+		if (element.IsSolid)
 		{
-			component2.AddOre(element.id, component2.Capacity(), element.defaultValues.temperature, byte.MaxValue, 0);
+			component.AddOre(element.id, component.Capacity(), element.defaultValues.temperature, byte.MaxValue, 0);
 		}
 		return gameObject;
 	}
@@ -126,8 +124,7 @@ public static class AutoRocketUtility
 		Vector3 position2 = Grid.CellToPosCBC(Grid.PosToCell(position), Grid.SceneLayer.Move);
 		gameObject.transform.SetLocalPosition(position2);
 		gameObject.SetActive(value: true);
-		MinionStartingStats minionStartingStats = new MinionStartingStats(is_starter_minion: false);
-		minionStartingStats.Apply(gameObject);
+		new MinionStartingStats(is_starter_minion: false).Apply(gameObject);
 		MinionResume component = gameObject.GetComponent<MinionResume>();
 		if (DebugHandler.InstantBuildMode && component.AvailableSkillpoints < 1)
 		{
@@ -163,7 +160,6 @@ public static class AutoRocketUtility
 
 	private static void SetDestination(CraftModuleInterface craftModuleInterface, PassengerRocketModule passengerModule)
 	{
-		ClusterDestinationSelector component = craftModuleInterface.GetComponent<ClusterDestinationSelector>();
-		component.SetDestination(passengerModule.GetMyWorldLocation() + AxialI.NORTHEAST);
+		craftModuleInterface.GetComponent<ClusterDestinationSelector>().SetDestination(passengerModule.GetMyWorldLocation() + AxialI.NORTHEAST);
 	}
 }

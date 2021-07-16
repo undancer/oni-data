@@ -24,37 +24,35 @@ public class SteamTurbineConfig : IBuildingConfig
 			"RefinedMetal",
 			"Plastic"
 		};
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(construction_mass: new float[2]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: new float[2]
 		{
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER5[0],
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER3[0]
 		}, construction_materials: array, melting_point: 1600f, build_location_rule: BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, id: "SteamTurbine", width: 5, height: 4, anim: "steamturbine_kanim", hitpoints: 30, construction_time: 60f, decor: BUILDINGS.DECOR.NONE, temperature_modification_mass_scale: 1f);
-		buildingDef.GeneratorWattageRating = 2000f;
-		buildingDef.GeneratorBaseCapacity = 2000f;
-		buildingDef.Entombable = true;
-		buildingDef.IsFoundation = false;
-		buildingDef.PermittedRotations = PermittedRotations.FlipH;
-		buildingDef.ViewMode = OverlayModes.Power.ID;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.RequiresPowerOutput = true;
-		buildingDef.PowerOutputOffset = new CellOffset(1, 0);
-		buildingDef.OverheatTemperature = 1273.15f;
-		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
-		buildingDef.Deprecated = true;
-		return buildingDef;
+		obj.GeneratorWattageRating = 2000f;
+		obj.GeneratorBaseCapacity = 2000f;
+		obj.Entombable = true;
+		obj.IsFoundation = false;
+		obj.PermittedRotations = PermittedRotations.FlipH;
+		obj.ViewMode = OverlayModes.Power.ID;
+		obj.AudioCategory = "Metal";
+		obj.RequiresPowerOutput = true;
+		obj.PowerOutputOffset = new CellOffset(1, 0);
+		obj.OverheatTemperature = 1273.15f;
+		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
+		obj.Deprecated = true;
+		return obj;
 	}
 
 	public override void DoPostConfigureUnderConstruction(GameObject go)
 	{
 		base.DoPostConfigureUnderConstruction(go);
-		Constructable component = go.GetComponent<Constructable>();
-		component.requiredSkillPerk = Db.Get().SkillPerks.CanPowerTinker.Id;
+		go.GetComponent<Constructable>().requiredSkillPerk = Db.Get().SkillPerks.CanPowerTinker.Id;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		Storage storage = go.AddOrGet<Storage>();
-		storage.SetDefaultStoredItemModifiers(StoredItemModifiers);
+		go.AddOrGet<Storage>().SetDefaultStoredItemModifiers(StoredItemModifiers);
 		Turbine turbine = go.AddOrGet<Turbine>();
 		turbine.srcElem = SimHashes.Steam;
 		MakeBaseSolid.Def def = go.AddOrGetDef<MakeBaseSolid.Def>();

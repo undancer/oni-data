@@ -9,7 +9,7 @@ public class Activatable : Workable, ISidescreenButtonControl
 	private Operational.Flag activatedFlag = new Operational.Flag("activated", Operational.Flag.Type.Requirement);
 
 	[Serialize]
-	private bool activated = false;
+	private bool activated;
 
 	private Guid statusItem;
 

@@ -37,8 +37,7 @@ public class DivergentWormConfig : IEntityConfig
 
 	public static GameObject CreateWorm(string id, string name, string desc, string anim_file, bool is_baby)
 	{
-		GameObject prefab = BaseDivergentConfig.BaseDivergent(id, name, desc, 200f, anim_file, "DivergentWormBaseTrait", is_baby, 8f, null, "DivergentCropTendedWorm", 3, is_pacifist: false);
-		prefab = EntityTemplates.ExtendEntityToWildCreature(prefab, DivergentTuning.PEN_SIZE_PER_CREATURE_WORM);
+		GameObject prefab = EntityTemplates.ExtendEntityToWildCreature(BaseDivergentConfig.BaseDivergent(id, name, desc, 200f, anim_file, "DivergentWormBaseTrait", is_baby, 8f, null, "DivergentCropTendedWorm", 3, is_pacifist: false), DivergentTuning.PEN_SIZE_PER_CREATURE_WORM);
 		Trait trait = Db.Get().CreateTrait("DivergentWormBaseTrait", name, name, null, should_save: false, null, positive_trait: true, is_valid_starter_trait: true);
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.maxAttribute.Id, DivergentTuning.STANDARD_STOMACH_SIZE, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.deltaAttribute.Id, (0f - DivergentTuning.STANDARD_CALORIES_PER_CYCLE) / 600f, name));
@@ -50,8 +49,8 @@ public class DivergentWormConfig : IEntityConfig
 		{
 			SimHashes.Sucrose.CreateTag()
 		}, SimHashes.Mud.CreateTag(), CALORIES_PER_KG_OF_SUCROSE));
-		prefab = BaseDivergentConfig.SetupDiet(prefab, list, CALORIES_PER_KG_OF_ORE, MINI_POOP_SIZE_IN_KG);
-		SegmentedCreature.Def def = prefab.AddOrGetDef<SegmentedCreature.Def>();
+		GameObject gameObject = BaseDivergentConfig.SetupDiet(prefab, list, CALORIES_PER_KG_OF_ORE, MINI_POOP_SIZE_IN_KG);
+		SegmentedCreature.Def def = gameObject.AddOrGetDef<SegmentedCreature.Def>();
 		def.segmentTrackerSymbol = new HashedString("segmenttracker");
 		def.numBodySegments = 5;
 		def.midAnim = Assets.GetAnim("worm_torso_kanim");
@@ -65,7 +64,7 @@ public class DivergentWormConfig : IEntityConfig
 		def.retractionPathSpeed = 2f;
 		def.compressedMaxScale = 0.25f;
 		def.headOffset = new Vector3(0.12f, 0.4f, 0f);
-		return prefab;
+		return gameObject;
 	}
 
 	public string[] GetDlcIds()
@@ -75,8 +74,7 @@ public class DivergentWormConfig : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject prefab = CreateWorm("DivergentWorm", STRINGS.CREATURES.SPECIES.DIVERGENT.VARIANT_WORM.NAME, STRINGS.CREATURES.SPECIES.DIVERGENT.VARIANT_WORM.DESC, "worm_head_kanim", is_baby: false);
-		return EntityTemplates.ExtendEntityToFertileCreature(prefab, "DivergentWormEgg", STRINGS.CREATURES.SPECIES.DIVERGENT.VARIANT_WORM.EGG_NAME, STRINGS.CREATURES.SPECIES.DIVERGENT.VARIANT_WORM.DESC, "egg_worm_kanim", DivergentTuning.EGG_MASS, "DivergentWormBaby", 90f, 30f, DivergentTuning.EGG_CHANCES_WORM, EGG_SORT_ORDER);
+		return EntityTemplates.ExtendEntityToFertileCreature(CreateWorm("DivergentWorm", STRINGS.CREATURES.SPECIES.DIVERGENT.VARIANT_WORM.NAME, STRINGS.CREATURES.SPECIES.DIVERGENT.VARIANT_WORM.DESC, "worm_head_kanim", is_baby: false), "DivergentWormEgg", STRINGS.CREATURES.SPECIES.DIVERGENT.VARIANT_WORM.EGG_NAME, STRINGS.CREATURES.SPECIES.DIVERGENT.VARIANT_WORM.DESC, "egg_worm_kanim", DivergentTuning.EGG_MASS, "DivergentWormBaby", 90f, 30f, DivergentTuning.EGG_CHANCES_WORM, EGG_SORT_ORDER);
 	}
 
 	public void OnPrefabInit(GameObject prefab)

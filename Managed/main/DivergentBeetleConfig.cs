@@ -27,8 +27,7 @@ public class DivergentBeetleConfig : IEntityConfig
 
 	public static GameObject CreateDivergentBeetle(string id, string name, string desc, string anim_file, bool is_baby)
 	{
-		GameObject prefab = BaseDivergentConfig.BaseDivergent(id, name, desc, 50f, anim_file, "DivergentBeetleBaseTrait", is_baby);
-		prefab = EntityTemplates.ExtendEntityToWildCreature(prefab, DivergentTuning.PEN_SIZE_PER_CREATURE);
+		GameObject prefab = EntityTemplates.ExtendEntityToWildCreature(BaseDivergentConfig.BaseDivergent(id, name, desc, 50f, anim_file, "DivergentBeetleBaseTrait", is_baby), DivergentTuning.PEN_SIZE_PER_CREATURE);
 		Trait trait = Db.Get().CreateTrait("DivergentBeetleBaseTrait", name, name, null, should_save: false, null, positive_trait: true, is_valid_starter_trait: true);
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.maxAttribute.Id, DivergentTuning.STANDARD_STOMACH_SIZE, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.deltaAttribute.Id, (0f - DivergentTuning.STANDARD_CALORIES_PER_CYCLE) / 600f, name));
@@ -45,8 +44,7 @@ public class DivergentBeetleConfig : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject prefab = CreateDivergentBeetle("DivergentBeetle", STRINGS.CREATURES.SPECIES.DIVERGENT.VARIANT_BEETLE.NAME, STRINGS.CREATURES.SPECIES.DIVERGENT.VARIANT_BEETLE.DESC, "critter_kanim", is_baby: false);
-		return EntityTemplates.ExtendEntityToFertileCreature(prefab, "DivergentBeetleEgg", STRINGS.CREATURES.SPECIES.DIVERGENT.VARIANT_BEETLE.EGG_NAME, STRINGS.CREATURES.SPECIES.DIVERGENT.VARIANT_BEETLE.DESC, "egg_critter_kanim", DivergentTuning.EGG_MASS, "DivergentBeetleBaby", 45f, 15f, DivergentTuning.EGG_CHANCES_BEETLE, EGG_SORT_ORDER);
+		return EntityTemplates.ExtendEntityToFertileCreature(CreateDivergentBeetle("DivergentBeetle", STRINGS.CREATURES.SPECIES.DIVERGENT.VARIANT_BEETLE.NAME, STRINGS.CREATURES.SPECIES.DIVERGENT.VARIANT_BEETLE.DESC, "critter_kanim", is_baby: false), "DivergentBeetleEgg", STRINGS.CREATURES.SPECIES.DIVERGENT.VARIANT_BEETLE.EGG_NAME, STRINGS.CREATURES.SPECIES.DIVERGENT.VARIANT_BEETLE.DESC, "egg_critter_kanim", DivergentTuning.EGG_MASS, "DivergentBeetleBaby", 45f, 15f, DivergentTuning.EGG_CHANCES_BEETLE, EGG_SORT_ORDER);
 	}
 
 	public void OnPrefabInit(GameObject prefab)

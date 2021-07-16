@@ -10,13 +10,13 @@ public class BatterySmart : Battery, IActivationRangeTarget
 	public static readonly HashedString PORT_ID = "BatterySmartLogicPort";
 
 	[Serialize]
-	private int activateValue = 0;
+	private int activateValue;
 
 	[Serialize]
 	private int deactivateValue = 100;
 
 	[Serialize]
-	private bool activated = false;
+	private bool activated;
 
 	[MyCmpGet]
 	private LogicPorts logicPorts;
@@ -91,8 +91,7 @@ public class BatterySmart : Battery, IActivationRangeTarget
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		BatterySmart component = gameObject.GetComponent<BatterySmart>();
+		BatterySmart component = ((GameObject)data).GetComponent<BatterySmart>();
 		if (component != null)
 		{
 			ActivateValue = component.ActivateValue;

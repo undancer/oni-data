@@ -15,10 +15,10 @@ public class TreeBud : KMonoBehaviour, IWiltCause
 	public Ref<BuddingTrunk> buddingTrunk;
 
 	[Serialize]
-	private int trunkPosition = 0;
+	private int trunkPosition;
 
 	[Serialize]
-	public int growingPos = 0;
+	public int growingPos;
 
 	private int trunkWiltHandle = -1;
 
@@ -183,8 +183,7 @@ public class TreeBud : KMonoBehaviour, IWiltCause
 			trunkWiltRecoverHandle = buddingTrunk.Subscribe(712767498, OnTrunkRecover);
 			Trigger(912965142, !buddingTrunk.GetComponent<WiltCondition>().IsWilting());
 			ReceptacleMonitor component = GetComponent<ReceptacleMonitor>();
-			ReceptacleMonitor component2 = buddingTrunk.GetComponent<ReceptacleMonitor>();
-			PlantablePlot receptacle = component2.GetReceptacle();
+			PlantablePlot receptacle = buddingTrunk.GetComponent<ReceptacleMonitor>().GetReceptacle();
 			component.SetReceptacle(receptacle);
 			Vector3 position = base.gameObject.transform.position;
 			position.z = Grid.GetLayerZ(Grid.SceneLayer.BuildingFront) - 0.1f * (float)trunkPosition;

@@ -9,7 +9,7 @@ public class TextLinkHandler : MonoBehaviour, IPointerClickHandler, IEventSystem
 	[MyCmpGet]
 	private LocText text;
 
-	private bool hoverLink = false;
+	private bool hoverLink;
 
 	public void OnPointerClick(PointerEventData eventData)
 	{
@@ -25,7 +25,8 @@ public class TextLinkHandler : MonoBehaviour, IPointerClickHandler, IEventSystem
 		string text = CodexCache.FormatLinkID(this.text.textInfo.linkInfo[num].GetLinkID());
 		if (!CodexCache.entries.ContainsKey(text))
 		{
-			if (CodexCache.FindSubEntry(text)?.disabled ?? true)
+			SubEntry subEntry = CodexCache.FindSubEntry(text);
+			if (subEntry == null || subEntry.disabled)
 			{
 				text = "PAGENOTFOUND";
 			}

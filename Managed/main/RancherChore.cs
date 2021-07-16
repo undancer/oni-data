@@ -114,7 +114,11 @@ public class RancherChore : Chore<RancherChore.RancherChoreStates.Instance>
 
 		private static bool HasCreatureLeft(Instance smi)
 		{
-			return smi.ranchStation.targetRanchable.IsNullOrStopped() || !smi.ranchStation.targetRanchable.GetComponent<ChoreConsumer>().IsChoreEqualOrAboveCurrentChorePriority<RanchedStates>();
+			if (!smi.ranchStation.targetRanchable.IsNullOrStopped())
+			{
+				return !smi.ranchStation.targetRanchable.GetComponent<ChoreConsumer>().IsChoreEqualOrAboveCurrentChorePriority<RanchedStates>();
+			}
+			return true;
 		}
 
 		private static void SetCreatureLayer(Instance smi)
@@ -202,8 +206,7 @@ public class RancherChore : Chore<RancherChore.RancherChoreStates.Instance>
 		description = DUPLICANTS.CHORES.PRECONDITIONS.IS_CREATURE_AVAILABLE_FOR_RANCHING,
 		fn = delegate(ref Precondition.Context context, object data)
 		{
-			RanchStation.Instance instance = data as RanchStation.Instance;
-			return instance.IsCreatureAvailableForRanching();
+			return (data as RanchStation.Instance).IsCreatureAvailableForRanching();
 		}
 	};
 

@@ -13,7 +13,7 @@ public class RadiationEmitter : SimComponent
 		Attractor
 	}
 
-	public bool radiusProportionalToRads = false;
+	public bool radiusProportionalToRads;
 
 	[SerializeField]
 	public short emitRadiusX = 4;
@@ -31,13 +31,13 @@ public class RadiationEmitter : SimComponent
 	public float emitSpeed = 1f;
 
 	[SerializeField]
-	public float emitDirection = 0f;
+	public float emitDirection;
 
 	[SerializeField]
 	public float emitAngle = 360f;
 
 	[SerializeField]
-	public RadiationEmitterType emitType = RadiationEmitterType.Constant;
+	public RadiationEmitterType emitType;
 
 	[SerializeField]
 	public Vector3 emissionOffset = Vector3.zero;

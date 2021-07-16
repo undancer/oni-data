@@ -69,8 +69,7 @@ public class RotPile : StateMachineComponent<RotPile.StatesInstance>
 			return;
 		}
 		SimHashes hash = SimHashes.ToxicSand;
-		Substance substance = ElementLoader.FindElementByHash(hash).substance;
-		GameObject gameObject = substance.SpawnResource(base.smi.master.transform.GetPosition(), mass, temperature, byte.MaxValue, 0);
+		GameObject gameObject = ElementLoader.FindElementByHash(hash).substance.SpawnResource(base.smi.master.transform.GetPosition(), mass, temperature, byte.MaxValue, 0);
 		PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, ElementLoader.FindElementByHash(hash).name, gameObject.transform);
 		Util.KDestroyGameObject(base.smi.gameObject);
 	}
@@ -98,7 +97,8 @@ public class RotPile : StateMachineComponent<RotPile.StatesInstance>
 
 	public void TryCreateNotification()
 	{
-		if (base.smi.master.GetMyWorld().worldInventory.IsReachable(base.smi.master.gameObject.GetComponent<Pickupable>()))
+		WorldContainer myWorld = base.smi.master.GetMyWorld();
+		if (myWorld != null && myWorld.worldInventory.IsReachable(base.smi.master.gameObject.GetComponent<Pickupable>()))
 		{
 			notification = new Notification(MISC.NOTIFICATIONS.FOODROT.NAME, NotificationType.BadMinor, OnRottenTooltip);
 			notification.tooltipData = base.smi.master.gameObject.GetProperName();

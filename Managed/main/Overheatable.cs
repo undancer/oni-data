@@ -80,14 +80,17 @@ public class Overheatable : StateMachineComponent<Overheatable.StatesInstance>, 
 		get
 		{
 			InitializeModifiers();
-			return (overheatTemp != null) ? overheatTemp.GetTotalValue() : 10000f;
+			if (overheatTemp == null)
+			{
+				return 10000f;
+			}
+			return overheatTemp.GetTotalValue();
 		}
 	}
 
 	public void ResetTemperature()
 	{
-		PrimaryElement component = GetComponent<PrimaryElement>();
-		component.Temperature = 293.15f;
+		GetComponent<PrimaryElement>().Temperature = 293.15f;
 	}
 
 	protected override void OnPrefabInit()

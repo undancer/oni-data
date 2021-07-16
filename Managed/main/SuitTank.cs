@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using KSerialization;
 using STRINGS;
 using UnityEngine;
@@ -23,7 +22,7 @@ public class SuitTank : KMonoBehaviour, IGameObjectEffectDescriptor, OxygenBreat
 
 	public const float REFILL_PERCENT = 0.25f;
 
-	public bool underwaterSupport = false;
+	public bool underwaterSupport;
 
 	private SuitSuffocationMonitor.Instance suitSuffocationMonitor;
 
@@ -44,9 +43,9 @@ public class SuitTank : KMonoBehaviour, IGameObjectEffectDescriptor, OxygenBreat
 		Subscribe(-170173755, OnUnequippedDelegate);
 	}
 
-	[OnDeserialized]
-	internal void OnDeserialized()
+	protected override void OnSpawn()
 	{
+		base.OnSpawn();
 		if (amount != 0f)
 		{
 			storage.AddGasChunk(SimHashes.Oxygen, amount, GetComponent<PrimaryElement>().Temperature, byte.MaxValue, 0, keep_zero_mass: false);

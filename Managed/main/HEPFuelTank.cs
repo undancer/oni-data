@@ -81,8 +81,7 @@ public class HEPFuelTank : KMonoBehaviour, IFuelTank, IUserControlledCapacity
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		HEPFuelTank component = gameObject.GetComponent<HEPFuelTank>();
+		HEPFuelTank component = ((GameObject)data).GetComponent<HEPFuelTank>();
 		if (component != null)
 		{
 			UserMaxCapacity = component.UserMaxCapacity;

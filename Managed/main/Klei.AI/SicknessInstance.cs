@@ -278,20 +278,21 @@ namespace Klei.AI
 
 		public float GetInfectedTimeRemaining()
 		{
-			float sicknessDuration = modifier.SicknessDuration;
-			float num = sicknessDuration * (1f - smi.sm.percentRecovered.Get(smi));
-			return num / TotalCureSpeedMultiplier;
+			return modifier.SicknessDuration * (1f - smi.sm.percentRecovered.Get(smi)) / TotalCureSpeedMultiplier;
 		}
 
 		public float GetFatalityTimeRemaining()
 		{
-			float fatalityDuration = modifier.fatalityDuration;
-			return fatalityDuration * (1f - smi.sm.percentDied.Get(smi));
+			return modifier.fatalityDuration * (1f - smi.sm.percentDied.Get(smi));
 		}
 
 		public float GetPercentCured()
 		{
-			return (smi != null) ? smi.sm.percentRecovered.Get(smi) : 0f;
+			if (smi == null)
+			{
+				return 0f;
+			}
+			return smi.sm.percentRecovered.Get(smi);
 		}
 
 		public void SetPercentCured(float pct)

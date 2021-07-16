@@ -1,9 +1,7 @@
-#define ENABLE_PROFILER
 using System;
 using System.Collections.Generic;
 using STRINGS;
 using UnityEngine;
-using UnityEngine.Profiling;
 
 public class DetailsScreen : KTabMenu
 {
@@ -88,7 +86,7 @@ public class DetailsScreen : KTabMenu
 	[SerializeField]
 	private LocText sideScreen2Title;
 
-	private KScreen activeSideScreen2 = null;
+	private KScreen activeSideScreen2;
 
 	private bool HasActivated;
 
@@ -286,11 +284,11 @@ public class DetailsScreen : KTabMenu
 		int num2 = 0;
 		for (int j = 0; j < screens.Length; j++)
 		{
-			bool flag = screens[j].screen.IsValidForTarget(go);
-			bool flag2 = screens[j].hideWhenDead && base.gameObject.HasTag(GameTags.Dead);
-			bool flag3 = flag && !flag2;
-			SetTabEnabled(screens[j].tabIdx, flag3);
-			if (!flag3)
+			bool num3 = screens[j].screen.IsValidForTarget(go);
+			bool flag = screens[j].hideWhenDead && base.gameObject.HasTag(GameTags.Dead);
+			bool flag2 = num3 && !flag;
+			SetTabEnabled(screens[j].tabIdx, flag2);
+			if (!flag2)
 			{
 				continue;
 			}
@@ -306,7 +304,7 @@ public class DetailsScreen : KTabMenu
 					num = j;
 				}
 			}
-			else if (flag3 && previouslyActiveTab >= 0 && previouslyActiveTab < screens.Length && screens[j].name == screens[previouslyActiveTab].name)
+			else if (flag2 && previouslyActiveTab >= 0 && previouslyActiveTab < screens.Length && screens[j].name == screens[previouslyActiveTab].name)
 			{
 				num = screens[j].tabIdx;
 			}
@@ -384,7 +382,6 @@ public class DetailsScreen : KTabMenu
 	public KScreen SetSecondarySideScreen(KScreen secondaryPrefab, string title)
 	{
 		ClearSecondarySideScreen();
-		Profiler.BeginSample("SetSecondarySideScreen");
 		if (instantiatedSecondarySideScreens.ContainsKey(secondaryPrefab))
 		{
 			activeSideScreen2 = instantiatedSecondarySideScreens[secondaryPrefab];
@@ -398,20 +395,17 @@ public class DetailsScreen : KTabMenu
 		}
 		sideScreen2Title.text = title;
 		sideScreen2.SetActive(value: true);
-		Profiler.BeginSample("EndSample");
 		return activeSideScreen2;
 	}
 
 	public void ClearSecondarySideScreen()
 	{
-		Profiler.BeginSample("ClearSecondarySideScreen");
 		if (activeSideScreen2 != null)
 		{
 			activeSideScreen2.gameObject.SetActive(value: false);
 			activeSideScreen2 = null;
 		}
 		sideScreen2.SetActive(value: false);
-		Profiler.BeginSample("EndSample");
 	}
 
 	public void DeactivateSideContent()
@@ -544,31 +538,29 @@ public class DetailsScreen : KTabMenu
 				return;
 			}
 		}
-		MinionIdentity component3 = target.GetComponent<MinionIdentity>();
-		if ((bool)component3)
+		if ((bool)target.GetComponent<MinionIdentity>())
 		{
 			TabTitle.SetPortrait(component.gameObject);
 			return;
 		}
-		Edible component4 = target.GetComponent<Edible>();
-		if (component4 != null)
+		Edible component3 = target.GetComponent<Edible>();
+		if (component3 != null)
 		{
-			KBatchedAnimController component5 = component4.GetComponent<KBatchedAnimController>();
-			Sprite uISpriteFromMultiObjectAnim = Def.GetUISpriteFromMultiObjectAnim(component5.AnimFiles[0]);
+			Sprite uISpriteFromMultiObjectAnim = Def.GetUISpriteFromMultiObjectAnim(component3.GetComponent<KBatchedAnimController>().AnimFiles[0]);
 			TabTitle.portrait.SetPortrait(uISpriteFromMultiObjectAnim);
 			return;
 		}
-		PrimaryElement component6 = target.GetComponent<PrimaryElement>();
-		if (component6 != null)
+		PrimaryElement component4 = target.GetComponent<PrimaryElement>();
+		if (component4 != null)
 		{
-			TabTitle.portrait.SetPortrait(Def.GetUISpriteFromMultiObjectAnim(ElementLoader.FindElementByHash(component6.ElementID).substance.anim));
+			TabTitle.portrait.SetPortrait(Def.GetUISpriteFromMultiObjectAnim(ElementLoader.FindElementByHash(component4.ElementID).substance.anim));
 			return;
 		}
-		CellSelectionObject component7 = target.GetComponent<CellSelectionObject>();
-		if (component7 != null)
+		CellSelectionObject component5 = target.GetComponent<CellSelectionObject>();
+		if (component5 != null)
 		{
-			string animName = (component7.element.IsSolid ? "ui" : component7.element.substance.name);
-			Sprite uISpriteFromMultiObjectAnim2 = Def.GetUISpriteFromMultiObjectAnim(component7.element.substance.anim, animName);
+			string animName = (component5.element.IsSolid ? "ui" : component5.element.substance.name);
+			Sprite uISpriteFromMultiObjectAnim2 = Def.GetUISpriteFromMultiObjectAnim(component5.element.substance.anim, animName);
 			TabTitle.portrait.SetPortrait(uISpriteFromMultiObjectAnim2);
 		}
 	}

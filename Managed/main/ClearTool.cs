@@ -33,18 +33,13 @@ public class ClearTool : DragTool
 		{
 			GameObject gameObject2 = objectLayerListItem.gameObject;
 			objectLayerListItem = objectLayerListItem.nextItem;
-			if (gameObject2 == null || gameObject2.GetComponent<MinionIdentity>() != null)
-			{
-				continue;
-			}
-			Clearable component = gameObject2.GetComponent<Clearable>();
-			if (component.isClearable)
+			if (!(gameObject2 == null) && !(gameObject2.GetComponent<MinionIdentity>() != null) && gameObject2.GetComponent<Clearable>().isClearable)
 			{
 				gameObject2.GetComponent<Clearable>().MarkForClear();
-				Prioritizable component2 = gameObject2.GetComponent<Prioritizable>();
-				if (component2 != null)
+				Prioritizable component = gameObject2.GetComponent<Prioritizable>();
+				if (component != null)
 				{
-					component2.SetMasterPriority(ToolMenu.Instance.PriorityScreen.GetLastSelectedPriority());
+					component.SetMasterPriority(ToolMenu.Instance.PriorityScreen.GetLastSelectedPriority());
 				}
 			}
 		}

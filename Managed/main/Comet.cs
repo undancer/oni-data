@@ -25,7 +25,7 @@ public class Comet : KMonoBehaviour, ISim33ms
 
 	public int splashRadius = 1;
 
-	public int addTiles = 0;
+	public int addTiles;
 
 	public int addTilesMinHeight;
 
@@ -53,7 +53,7 @@ public class Comet : KMonoBehaviour, ISim33ms
 
 	public float windowDamageMultiplier = 5f;
 
-	public float bunkerDamageMultiplier = 0f;
+	public float bunkerDamageMultiplier;
 
 	public string impactSound;
 
@@ -71,15 +71,15 @@ public class Comet : KMonoBehaviour, ISim33ms
 
 	private Vector3 previousPosition;
 
-	private bool hasExploded = false;
+	private bool hasExploded;
 
-	public bool canHitDuplicants = false;
+	public bool canHitDuplicants;
 
-	public string[] craterPrefabs = null;
+	public string[] craterPrefabs;
 
 	public bool destroyOnExplode = true;
 
-	private float age = 0f;
+	private float age;
 
 	public System.Action OnImpact;
 
@@ -137,8 +137,7 @@ public class Comet : KMonoBehaviour, ISim33ms
 		float f = num * (float)Math.PI / 180f;
 		float num2 = UnityEngine.Random.Range(spawnVelocity.x, spawnVelocity.y);
 		velocity = new Vector2((0f - Mathf.Cos(f)) * num2, Mathf.Sin(f) * num2);
-		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
-		component.Rotation = 0f - num - 90f;
+		GetComponent<KBatchedAnimController>().Rotation = 0f - num - 90f;
 	}
 
 	public void RandomizeMassAndTemperature()
@@ -326,7 +325,11 @@ public class Comet : KMonoBehaviour, ISim33ms
 
 	private bool SpawnTilesCellTest(int cell)
 	{
-		return Grid.IsValidCell(cell) && !Grid.Solid[cell];
+		if (Grid.IsValidCell(cell))
+		{
+			return !Grid.Solid[cell];
+		}
+		return false;
 	}
 
 	[ContextMenu("DamageTiles")]
@@ -402,8 +405,7 @@ public class Comet : KMonoBehaviour, ISim33ms
 			Building component2 = gameObject.GetComponent<Building>();
 			if (component != null && !damagedEntities.Contains(gameObject))
 			{
-				KPrefabID component3 = gameObject.GetComponent<KPrefabID>();
-				float f = (component3.HasTag(GameTags.Bunker) ? ((float)damage * bunkerDamageMultiplier) : ((float)damage));
+				float f = (gameObject.GetComponent<KPrefabID>().HasTag(GameTags.Bunker) ? ((float)damage * bunkerDamageMultiplier) : ((float)damage));
 				if (component2 != null && component2.Def != null)
 				{
 					PlayBuildingDamageSound(component2.Def, Grid.CellToPos(cell), gameObject);
@@ -422,12 +424,11 @@ public class Comet : KMonoBehaviour, ISim33ms
 		foreach (ScenePartitionerEntry item in pooledList)
 		{
 			Pickupable pickupable = item.obj as Pickupable;
-			Health component4 = pickupable.GetComponent<Health>();
-			if (component4 != null && !damagedEntities.Contains(pickupable.gameObject))
+			Health component3 = pickupable.GetComponent<Health>();
+			if (component3 != null && !damagedEntities.Contains(pickupable.gameObject))
 			{
-				KPrefabID component5 = pickupable.GetComponent<KPrefabID>();
-				float amount = (component5.HasTag(GameTags.Bunker) ? ((float)damage * bunkerDamageMultiplier) : ((float)damage));
-				component4.Damage(amount);
+				float amount = (pickupable.GetComponent<KPrefabID>().HasTag(GameTags.Bunker) ? ((float)damage * bunkerDamageMultiplier) : ((float)damage));
+				component3.Damage(amount);
 				damagedEntities.Add(pickupable.gameObject);
 			}
 		}
@@ -442,12 +443,11 @@ public class Comet : KMonoBehaviour, ISim33ms
 		while (num2 > -6f)
 		{
 			num2 -= 1f;
-			float num3 = Mathf.Ceil(position.y + num2) - 0.2f;
-			num2 = num3 - position.y;
+			num2 = Mathf.Ceil(position.y + num2) - 0.2f - position.y;
 			float x = num2 * num;
 			Vector3 b = new Vector3(x, num2, 0f);
-			int num4 = Grid.PosToCell(position + b);
-			if (Grid.IsValidCell(num4) && Grid.Solid[num4])
+			int num3 = Grid.PosToCell(position + b);
+			if (Grid.IsValidCell(num3) && Grid.Solid[num3])
 			{
 				return b.magnitude;
 			}
@@ -480,12 +480,10 @@ public class Comet : KMonoBehaviour, ISim33ms
 	{
 		if (def != null)
 		{
-			string name = StringFormatter.Combine("MeteorDamage_Building_", def.AudioCategory);
-			string sound = GlobalAssets.GetSound(name);
+			string sound = GlobalAssets.GetSound(StringFormatter.Combine("MeteorDamage_Building_", def.AudioCategory));
 			if (sound == null)
 			{
-				name = "MeteorDamage_Building_Metal";
-				sound = GlobalAssets.GetSound(name);
+				sound = GlobalAssets.GetSound("MeteorDamage_Building_Metal");
 			}
 			if (sound != null && (bool)CameraController.Instance && CameraController.Instance.IsAudibleSound(pos, sound))
 			{

@@ -459,8 +459,7 @@ public class SandboxToolParameterMenu : KScreen
 			{
 				Tuple<Sprite, Color> icon = new Tuple<Sprite, Color>(CodexCache.entries[brain.species.ToString().ToUpper()].icon, CodexCache.entries[brain.species.ToString().ToUpper()].iconColor);
 				list2.Add(brain.species);
-				string key = "STRINGS.CREATURES.FAMILY_PLURAL." + brain.species.ToString().ToUpper();
-				SelectorValue.SearchFilter item4 = new SelectorValue.SearchFilter(Strings.Get(key), delegate(object entity)
+				SelectorValue.SearchFilter item4 = new SelectorValue.SearchFilter(Strings.Get("STRINGS.CREATURES.FAMILY_PLURAL." + brain.species.ToString().ToUpper()), delegate(object entity)
 				{
 					CreatureBrain component2 = Assets.GetPrefab((entity as KPrefabID).PrefabID()).GetComponent<CreatureBrain>();
 					return (entity as KPrefabID).HasTag("CreatureBrain".ToString()) && component2.species == brain.species;
@@ -536,13 +535,9 @@ public class SandboxToolParameterMenu : KScreen
 					return new Tuple<Sprite, Color>(Assets.GetSprite("ui_duplicant_portrait_placeholder"), Color.white);
 				}
 				KBatchedAnimController component = prefab.GetComponent<KBatchedAnimController>();
-				if (component != null && component.AnimFiles.Length != 0)
+				if (component != null && component.AnimFiles.Length != 0 && component.AnimFiles[0] != null)
 				{
-					KAnimFile x = component.AnimFiles[0];
-					if (x != null)
-					{
-						return Def.GetUISprite(prefab);
-					}
+					return Def.GetUISprite(prefab);
 				}
 			}
 			return null;
@@ -606,11 +601,9 @@ public class SandboxToolParameterMenu : KScreen
 	private void RefreshTemperatureUnitDisplays()
 	{
 		temperatureSlider.unitString = GameUtil.GetTemperatureUnitSuffix();
-		HierarchyReferences component = temperatureSlider.row.GetComponent<HierarchyReferences>();
-		component.GetReference<LocText>("UnitLabel").text = temperatureSlider.unitString;
+		temperatureSlider.row.GetComponent<HierarchyReferences>().GetReference<LocText>("UnitLabel").text = temperatureSlider.unitString;
 		temperatureAdditiveSlider.unitString = GameUtil.GetTemperatureUnitSuffix();
-		component = temperatureAdditiveSlider.row.GetComponent<HierarchyReferences>();
-		component.GetReference<LocText>("UnitLabel").text = temperatureSlider.unitString;
+		temperatureAdditiveSlider.row.GetComponent<HierarchyReferences>().GetReference<LocText>("UnitLabel").text = temperatureSlider.unitString;
 	}
 
 	private GameObject SpawnSelector(SelectorValue selector)
@@ -731,7 +724,7 @@ public class SandboxToolParameterMenu : KScreen
 			{
 				clearFilterButton.SetActive(value: true);
 			}
-			List<KeyValuePair<object, GameObject>> list = new List<KeyValuePair<object, GameObject>>();
+			new List<KeyValuePair<object, GameObject>>();
 			bool flag = selector.optionButtons.Find((KeyValuePair<object, GameObject> match) => match.Key is SelectorValue.SearchFilter).Key != null;
 			if (string.IsNullOrEmpty(filterString))
 			{
@@ -775,11 +768,10 @@ public class SandboxToolParameterMenu : KScreen
 			{
 				object[] options2 = selector.options;
 				object option2 = default(object);
-				for (int k = 0; k < options2.Length; k++)
+				for (int j = 0; j < options2.Length; j++)
 				{
-					option2 = options2[k];
-					list = selector.optionButtons.FindAll((KeyValuePair<object, GameObject> match) => match.Key == option2);
-					foreach (KeyValuePair<object, GameObject> item in list)
+					option2 = options2[j];
+					foreach (KeyValuePair<object, GameObject> item in selector.optionButtons.FindAll((KeyValuePair<object, GameObject> match) => match.Key == option2))
 					{
 						if (string.IsNullOrEmpty(filterString))
 						{
@@ -893,10 +885,10 @@ public class SandboxToolParameterMenu : KScreen
 				{
 					if (currentSelectedGameObject == inputField.gameObject)
 					{
-						result = true;
-						break;
+						return true;
 					}
 				}
+				return result;
 			}
 		}
 		return result;

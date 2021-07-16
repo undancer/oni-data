@@ -160,8 +160,7 @@ public class BuildMenuBuildingsScreen : KIconToggleMenu
 		{
 			return;
 		}
-		UserData userData = info.userData as UserData;
-		BuildingDef def = userData.def;
+		BuildingDef def = (info.userData as UserData).def;
 		TechItem techItem = Db.Get().TechItems.TryGet(def.PrefabID);
 		bool flag = DebugHandler.InstantBuildMode || techItem == null || techItem.IsComplete();
 		bool flag2 = flag || techItem == null || techItem.ParentTech.ArePrerequisitesComplete();
@@ -294,9 +293,7 @@ public class BuildMenuBuildingsScreen : KIconToggleMenu
 	private void OnSelectBuilding(BuildingDef def)
 	{
 		PlanScreen.RequirementsState requirementsState = BuildMenu.Instance.BuildableState(def);
-		PlanScreen.RequirementsState requirementsState2 = requirementsState;
-		PlanScreen.RequirementsState requirementsState3 = requirementsState2;
-		if ((uint)(requirementsState3 - 2) <= 1u)
+		if ((uint)(requirementsState - 2) <= 1u)
 		{
 			if (def != selectedBuilding)
 			{
@@ -374,8 +371,9 @@ public class BuildMenuBuildingsScreen : KIconToggleMenu
 
 	public override void OnKeyDown(KButtonEvent e)
 	{
-		if (!mouseOver || !base.ConsumeMouseScroll || e.TryConsume(Action.ZoomIn) || e.TryConsume(Action.ZoomOut))
+		if (mouseOver && base.ConsumeMouseScroll && !e.TryConsume(Action.ZoomIn))
 		{
+			e.TryConsume(Action.ZoomOut);
 		}
 		if (!HasFocus)
 		{

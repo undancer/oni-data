@@ -61,21 +61,21 @@ namespace Satsuma
 
 		public Arc GetArc(Node u, Node v)
 		{
-			bool flag = IsRed(u);
-			bool flag2 = IsRed(v);
-			if (flag == flag2)
+			bool num = IsRed(u);
+			bool flag = IsRed(v);
+			if (num == flag)
 			{
 				return Arc.Invalid;
 			}
-			if (flag2)
+			if (flag)
 			{
 				Node node = u;
 				u = v;
 				v = node;
 			}
-			int num = (int)(u.Id - 1);
-			int num2 = (int)(v.Id - RedNodeCount - 1);
-			return new Arc(1 + (long)num2 * (long)RedNodeCount + num);
+			int num2 = (int)(u.Id - 1);
+			int num3 = (int)(v.Id - RedNodeCount - 1);
+			return new Arc(1 + (long)num3 * (long)RedNodeCount + num2);
 		}
 
 		public Node U(Arc arc)
@@ -99,9 +99,9 @@ namespace Satsuma
 			{
 			case Color.Red:
 			{
-				for (int i = 0; i < RedNodeCount; i++)
+				for (int j = 0; j < RedNodeCount; j++)
 				{
-					yield return GetRedNode(i);
+					yield return GetRedNode(j);
 				}
 				break;
 			}
@@ -122,9 +122,9 @@ namespace Satsuma
 			{
 				yield return GetRedNode(j);
 			}
-			for (int i = 0; i < BlueNodeCount; i++)
+			for (int j = 0; j < BlueNodeCount; j++)
 			{
-				yield return GetBlueNode(i);
+				yield return GetBlueNode(j);
 			}
 		}
 
@@ -145,12 +145,26 @@ namespace Satsuma
 
 		public IEnumerable<Arc> Arcs(Node u, ArcFilter filter = ArcFilter.All)
 		{
-			bool isRed = IsRed(u);
-			if (Directed && (filter == ArcFilter.Edge || (filter == ArcFilter.Forward && !isRed) || (filter == ArcFilter.Backward && isRed)))
+			bool flag = IsRed(u);
+			if (Directed)
 			{
-				yield break;
+				switch (filter)
+				{
+				case ArcFilter.Forward:
+					if (!flag)
+					{
+						yield break;
+					}
+					break;
+				case ArcFilter.Edge:
+					yield break;
+				}
+				if (filter == ArcFilter.Backward && flag)
+				{
+					yield break;
+				}
 			}
-			if (isRed)
+			if (flag)
 			{
 				for (int j = 0; j < BlueNodeCount; j++)
 				{
@@ -159,9 +173,9 @@ namespace Satsuma
 			}
 			else
 			{
-				for (int i = 0; i < RedNodeCount; i++)
+				for (int j = 0; j < RedNodeCount; j++)
 				{
-					yield return GetArc(GetRedNode(i), u);
+					yield return GetArc(GetRedNode(j), u);
 				}
 			}
 		}
@@ -196,7 +210,11 @@ namespace Satsuma
 			{
 				return 0;
 			}
-			return flag ? BlueNodeCount : RedNodeCount;
+			if (!flag)
+			{
+				return RedNodeCount;
+			}
+			return BlueNodeCount;
 		}
 
 		public int ArcCount(Node u, Node v, ArcFilter filter = ArcFilter.All)
@@ -205,17 +223,29 @@ namespace Satsuma
 			{
 				return 0;
 			}
-			return (ArcCount(u, filter) > 0) ? 1 : 0;
+			if (ArcCount(u, filter) <= 0)
+			{
+				return 0;
+			}
+			return 1;
 		}
 
 		public bool HasNode(Node node)
 		{
-			return node.Id >= 1 && node.Id <= RedNodeCount + BlueNodeCount;
+			if (node.Id >= 1)
+			{
+				return node.Id <= RedNodeCount + BlueNodeCount;
+			}
+			return false;
 		}
 
 		public bool HasArc(Arc arc)
 		{
-			return arc.Id >= 1 && arc.Id <= RedNodeCount * BlueNodeCount;
+			if (arc.Id >= 1)
+			{
+				return arc.Id <= RedNodeCount * BlueNodeCount;
+			}
+			return false;
 		}
 	}
 }

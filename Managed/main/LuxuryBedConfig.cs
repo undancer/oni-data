@@ -7,10 +7,10 @@ public class LuxuryBedConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(ID, 4, 2, "elegantbed_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.PLASTICS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER2);
-		buildingDef.Overheatable = false;
-		buildingDef.AudioCategory = "Metal";
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef(ID, 4, 2, "elegantbed_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.PLASTICS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER2);
+		obj.Overheatable = false;
+		obj.AudioCategory = "Metal";
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -36,7 +36,6 @@ public class LuxuryBedConfig : IBuildingConfig
 			Assets.GetAnim("anim_sleep_bed_kanim")
 		};
 		sleepable.workLayer = Grid.SceneLayer.BuildingFront;
-		Ownable ownable = go.AddOrGet<Ownable>();
-		ownable.slotID = Db.Get().AssignableSlots.Bed.Id;
+		go.AddOrGet<Ownable>().slotID = Db.Get().AssignableSlots.Bed.Id;
 	}
 }

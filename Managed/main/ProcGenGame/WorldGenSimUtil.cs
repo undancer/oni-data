@@ -95,8 +95,7 @@ namespace ProcGenGame
 				for (int m = 0; m < ptr->numSolidInfo; m++)
 				{
 					Sim.SolidInfo solidInfo = ptr->solidInfo[m];
-					bool solid = solidInfo.isSolid != 0;
-					Grid.SetSolid(solidInfo.cellIdx, solid, null);
+					Grid.SetSolid(solid: solidInfo.isSolid != 0, cell: solidInfo.cellIdx, ev: null);
 				}
 			}
 			bool result = SaveSim(settings, data, baseId, error_cb);

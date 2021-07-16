@@ -21,7 +21,11 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			return other is SiteId_t && this == (SiteId_t)other;
+			if (other is SiteId_t)
+			{
+				return this == (SiteId_t)other;
+			}
+			return false;
 		}
 
 		public override int GetHashCode()

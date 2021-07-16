@@ -49,8 +49,7 @@ public class CargoLander : GameStateMachine<CargoLander, CargoLander.StatesInsta
 
 		public void ResetAnimPosition()
 		{
-			KBatchedAnimController component = GetComponent<KBatchedAnimController>();
-			component.Offset = Vector3.up * flightAnimOffset;
+			GetComponent<KBatchedAnimController>().Offset = Vector3.up * flightAnimOffset;
 		}
 
 		public void OnJettisoned()
@@ -76,8 +75,7 @@ public class CargoLander : GameStateMachine<CargoLander, CargoLander.StatesInsta
 		{
 			flightAnimOffset = Mathf.Max(flightAnimOffset - dt * topSpeed, 0f);
 			ResetAnimPosition();
-			Vector3 pos = base.gameObject.transform.GetPosition() + new Vector3(0f, flightAnimOffset, 0f);
-			int num = Grid.PosToCell(pos);
+			int num = Grid.PosToCell(base.gameObject.transform.GetPosition() + new Vector3(0f, flightAnimOffset, 0f));
 			if (Grid.IsValidCell(num))
 			{
 				SimMessages.EmitMass(num, (byte)ElementLoader.GetElementIndex(exhaustElement), dt * exhaustEmitRate, exhaustTemperature, 0, 0);
@@ -86,12 +84,11 @@ public class CargoLander : GameStateMachine<CargoLander, CargoLander.StatesInsta
 
 		public void DoLand()
 		{
-			KBatchedAnimController component = base.smi.master.GetComponent<KBatchedAnimController>();
-			component.Offset = Vector3.zero;
-			OccupyArea component2 = base.smi.GetComponent<OccupyArea>();
-			if (component2 != null)
+			base.smi.master.GetComponent<KBatchedAnimController>().Offset = Vector3.zero;
+			OccupyArea component = base.smi.GetComponent<OccupyArea>();
+			if (component != null)
 			{
-				component2.ApplyToCells = true;
+				component.ApplyToCells = true;
 			}
 			if (base.def.deployOnLanding && CheckIfLoaded())
 			{

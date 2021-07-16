@@ -9,13 +9,12 @@ public class TemperatureVulnerable : StateMachineComponent<TemperatureVulnerable
 {
 	public class StatesInstance : GameStateMachine<States, StatesInstance, TemperatureVulnerable, object>.GameInstance
 	{
-		public bool hasMaturity = false;
+		public bool hasMaturity;
 
 		public StatesInstance(TemperatureVulnerable master)
 			: base(master)
 		{
-			AmountInstance amountInstance = Db.Get().Amounts.Maturity.Lookup(base.gameObject);
-			if (amountInstance != null)
+			if (Db.Get().Amounts.Maturity.Lookup(base.gameObject) != null)
 			{
 				hasMaturity = true;
 			}
@@ -161,7 +160,17 @@ public class TemperatureVulnerable : StateMachineComponent<TemperatureVulnerable
 
 	public TemperatureState GetInternalTemperatureState => internalTemperatureState;
 
-	public bool IsLethal => GetInternalTemperatureState == TemperatureState.LethalHot || GetInternalTemperatureState == TemperatureState.LethalCold;
+	public bool IsLethal
+	{
+		get
+		{
+			if (GetInternalTemperatureState != TemperatureState.LethalHot)
+			{
+				return GetInternalTemperatureState == TemperatureState.LethalCold;
+			}
+			return true;
+		}
+	}
 
 	public bool IsNormal => GetInternalTemperatureState == TemperatureState.Normal;
 
@@ -219,13 +228,16 @@ public class TemperatureVulnerable : StateMachineComponent<TemperatureVulnerable
 	public bool IsCellSafe(int cell)
 	{
 		float averageTemperature = GetAverageTemperature(cell);
-		return averageTemperature > -1f && averageTemperature > TemperatureLethalLow && averageTemperature < internalTemperatureLethal_High;
+		if (averageTemperature > -1f && averageTemperature > TemperatureLethalLow)
+		{
+			return averageTemperature < internalTemperatureLethal_High;
+		}
+		return false;
 	}
 
 	public void SlicedSim1000ms(float dt)
 	{
-		int cell = Grid.PosToCell(base.gameObject);
-		if (Grid.IsValidCell(cell))
+		if (Grid.IsValidCell(Grid.PosToCell(base.gameObject)))
 		{
 			base.smi.sm.internalTemp.Set(InternalTemperature, base.smi);
 			displayTemperatureAmount.value = InternalTemperature;

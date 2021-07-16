@@ -21,7 +21,7 @@ public class Generator : KMonoBehaviour, ISaveLoadable, IEnergyProducer, ICircui
 	protected KSelectable selectable;
 
 	[Serialize]
-	private float joulesAvailable = 0f;
+	private float joulesAvailable;
 
 	[SerializeField]
 	public int powerDistributionOrder;

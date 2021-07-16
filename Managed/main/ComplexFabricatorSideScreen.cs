@@ -205,8 +205,7 @@ public class ComplexFabricatorSideScreen : SideScreenContent
 		}
 		int num = 0;
 		ComplexRecipe[] recipes = targetFab.GetRecipes();
-		ComplexRecipe[] array = recipes;
-		foreach (ComplexRecipe recipe in array)
+		foreach (ComplexRecipe recipe in recipes)
 		{
 			bool flag = false;
 			if (DebugHandler.InstantBuildMode)
@@ -257,8 +256,8 @@ public class ComplexFabricatorSideScreen : SideScreenContent
 					gameObject.GetComponent<Image>().color = Def.GetUISprite(recipeElement.material).second;
 					gameObject.gameObject.name = recipeElement.material.Name;
 				}
-				ComplexRecipe.RecipeElement[] results = recipe.results;
-				foreach (ComplexRecipe.RecipeElement recipeElement2 in results)
+				ingredients = recipe.results;
+				foreach (ComplexRecipe.RecipeElement recipeElement2 in ingredients)
 				{
 					GameObject gameObject2 = Util.KInstantiateUI(component2.GetReference("ToIconPrefab").gameObject, component2.GetReference("ToIcons").gameObject, force_active: true);
 					gameObject2.GetComponent<Image>().sprite = Def.GetUISprite(recipeElement2.material).first;
@@ -489,8 +488,7 @@ public class ComplexFabricatorSideScreen : SideScreenContent
 			Tag tag = recipe.Ingredients[i].tag;
 			foreach (Element element in ElementLoader.elements)
 			{
-				Tag a = GameTagExtensions.Create(element.id);
-				if (a == tag)
+				if (GameTagExtensions.Create(element.id) == tag)
 				{
 					array[i] = element;
 					break;

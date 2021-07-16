@@ -21,8 +21,7 @@ namespace KSerialization
 		{
 			string b = reader.ReadKleiString();
 			Type type = obj.GetType();
-			string kTypeString = type.GetKTypeString();
-			if (kTypeString == b)
+			if (type.GetKTypeString() == b)
 			{
 				return DeserializeTypeless(type, obj, reader);
 			}
@@ -47,8 +46,7 @@ namespace KSerialization
 
 		public static bool DeserializeTypeless(object obj, IReader reader)
 		{
-			Type type = obj.GetType();
-			DeserializationMapping deserializationMapping = Manager.GetDeserializationMapping(type);
+			DeserializationMapping deserializationMapping = Manager.GetDeserializationMapping(obj.GetType());
 			try
 			{
 				return deserializationMapping.Deserialize(obj, reader);
@@ -64,12 +62,12 @@ namespace KSerialization
 		public static bool Deserialize(Type type, IReader reader, out object result)
 		{
 			DeserializationMapping deserializationMapping = Manager.GetDeserializationMapping(type);
-			bool result2;
 			try
 			{
 				object obj = Activator.CreateInstance(type);
-				result2 = deserializationMapping.Deserialize(obj, reader);
+				bool result2 = deserializationMapping.Deserialize(obj, reader);
 				result = obj;
+				return result2;
 			}
 			catch (Exception ex)
 			{
@@ -77,7 +75,6 @@ namespace KSerialization
 				DebugLog.Output(DebugLog.Level.Error, text);
 				throw new Exception(text, ex);
 			}
-			return result2;
 		}
 	}
 }

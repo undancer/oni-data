@@ -23,8 +23,7 @@ public class BasicFabricConfig : IEntityConfig
 			GameTags.BuildingFiber
 		});
 		gameObject.AddOrGet<EntitySplitter>();
-		PrefabAttributeModifiers prefabAttributeModifiers = gameObject.AddOrGet<PrefabAttributeModifiers>();
-		prefabAttributeModifiers.AddAttributeDescriptor(decorModifier);
+		gameObject.AddOrGet<PrefabAttributeModifiers>().AddAttributeDescriptor(decorModifier);
 		return gameObject;
 	}
 

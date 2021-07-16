@@ -68,17 +68,17 @@ namespace Delaunay.Geo
 			{
 				return new float[0];
 			}
-			if (num == num2)
+			if (num != num2)
 			{
-				return new float[1]
+				return new float[2]
 				{
-					num
+					num,
+					num2
 				};
 			}
-			return new float[2]
+			return new float[1]
 			{
-				num,
-				num2
+				num
 			};
 		}
 
@@ -100,8 +100,7 @@ namespace Delaunay.Geo
 			}
 			List<Vector2> list = new List<Vector2>();
 			float[] array = OverlapIntervals(ub, ub2);
-			float[] array2 = array;
-			foreach (float num3 in array2)
+			foreach (float num3 in array)
 			{
 				float x = a2.x * num3 + a1.x * (1f - num3);
 				float y = a2.y * num3 + a1.y * (1f - num3);
@@ -114,8 +113,7 @@ namespace Delaunay.Geo
 		private static bool PointOnLine(Vector2 p, Vector2 a1, Vector2 a2)
 		{
 			float u = 0f;
-			double num = DistFromSeg(p, a1, a2, Mathf.Epsilon, ref u);
-			return num < (double)Mathf.Epsilon;
+			return DistFromSeg(p, a1, a2, Mathf.Epsilon, ref u) < (double)Mathf.Epsilon;
 		}
 
 		private static double DistFromSeg(Vector2 p, Vector2 q0, Vector2 q1, double radius, ref float u)
@@ -129,8 +127,7 @@ namespace Delaunay.Geo
 			{
 				throw new Exception("Expected line segment, not point.");
 			}
-			double num6 = Math.Abs(num * num4 - num3 * num2);
-			return num6 / num5;
+			return Math.Abs(num * num4 - num3 * num2) / num5;
 		}
 
 		public bool DoesIntersect(LineSegment other)
@@ -140,8 +137,7 @@ namespace Delaunay.Geo
 
 		public static bool DoesIntersect(LineSegment a, LineSegment b)
 		{
-			Vector2[] array = Intersection(a.p0.Value, a.p1.Value, b.p0.Value, b.p1.Value);
-			if (array.Length != 0)
+			if (Intersection(a.p0.Value, a.p1.Value, b.p0.Value, b.p1.Value).Length != 0)
 			{
 				return true;
 			}

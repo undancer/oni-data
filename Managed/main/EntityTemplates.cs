@@ -55,12 +55,10 @@ public class EntityTemplates
 	private static void ConfigEntity(GameObject template, string id, string name, bool is_selectable = true)
 	{
 		template.name = id;
-		KPrefabID kPrefabID = template.AddOrGet<KPrefabID>();
-		kPrefabID.PrefabTag = TagManager.Create(id, name);
+		template.AddOrGet<KPrefabID>().PrefabTag = TagManager.Create(id, name);
 		if (is_selectable)
 		{
-			KSelectable kSelectable = template.AddOrGet<KSelectable>();
-			kSelectable.SetName(name);
+			template.AddOrGet<KSelectable>().SetName(name);
 		}
 	}
 
@@ -105,8 +103,7 @@ public class EntityTemplates
 		{
 			primaryElement.Mass = mass;
 		}
-		InfoDescription infoDescription = template.AddOrGet<InfoDescription>();
-		infoDescription.description = desc;
+		template.AddOrGet<InfoDescription>().description = desc;
 		template.AddOrGet<Notifier>();
 		return template;
 	}
@@ -130,10 +127,8 @@ public class EntityTemplates
 		kBoxCollider2D.size = new Vector2f(width, height);
 		float num = 0.5f * (float)((width + 1) % 2);
 		kBoxCollider2D.offset = new Vector2f(num, (float)height / 2f);
-		KBatchedAnimController component = template.GetComponent<KBatchedAnimController>();
-		component.Offset = new Vector3(num, 0f, 0f);
-		OccupyArea occupyArea = template.AddOrGet<OccupyArea>();
-		occupyArea.OccupiedCellsOffsets = GenerateOffsets(width, height);
+		template.GetComponent<KBatchedAnimController>().Offset = new Vector3(num, 0f, 0f);
+		template.AddOrGet<OccupyArea>().OccupiedCellsOffsets = GenerateOffsets(width, height);
 		DecorProvider decorProvider = template.AddOrGet<DecorProvider>();
 		decorProvider.SetValues(decor);
 		decorProvider.overrideName = name;
@@ -196,8 +191,7 @@ public class EntityTemplates
 		}
 		template.AddOrGet<KAnimControllerBase>().randomiseLoopedOffset = true;
 		component.initialAttributes.Add(Db.Get().PlantAttributes.WiltTempRangeMod.Id);
-		TemperatureVulnerable temperatureVulnerable = template.AddOrGet<TemperatureVulnerable>();
-		temperatureVulnerable.Configure(temperature_warning_low, temperature_lethal_low, temperature_warning_high, temperature_lethal_high);
+		template.AddOrGet<TemperatureVulnerable>().Configure(temperature_warning_low, temperature_lethal_low, temperature_warning_high, temperature_lethal_high);
 		if (DlcManager.FeaturePlantMutationsEnabled())
 		{
 			component.initialAttributes.Add(Db.Get().PlantAttributes.MinRadiationThreshold.Id);
@@ -225,12 +219,10 @@ public class EntityTemplates
 			trait.Add(new AttributeModifier(Db.Get().Amounts.Maturity.maxAttribute.Id, cropval.cropDuration / 600f, baseTraitName));
 			if (DlcManager.FeaturePlantMutationsEnabled())
 			{
-				MutantPlant mutantPlant = template.AddOrGet<MutantPlant>();
-				mutantPlant.SpeciesID = component2.PrefabTag;
+				template.AddOrGet<MutantPlant>().SpeciesID = component2.PrefabTag;
 				SymbolOverrideControllerUtil.AddToPrefab(template);
 			}
-			Crop crop = template.AddOrGet<Crop>();
-			crop.Configure(cropval);
+			template.AddOrGet<Crop>().Configure(cropval);
 			Growing growing = template.AddOrGet<Growing>();
 			growing.shouldGrowOld = should_grow_old;
 			growing.maxAge = max_age;
@@ -274,8 +266,7 @@ public class EntityTemplates
 		def.tameEffect = new Effect("Tame" + prefabTag.Name, STRINGS.CREATURES.MODIFIERS.TAME.NAME, STRINGS.CREATURES.MODIFIERS.TAME.TOOLTIP, 0f, show_in_ui: true, trigger_floating_text: true, is_bad: false);
 		def.tameEffect.Add(new AttributeModifier(Db.Get().CritterAttributes.Happiness.Id, -1f, STRINGS.CREATURES.MODIFIERS.TAME.NAME));
 		def.tameEffect.Add(new AttributeModifier(Db.Get().CritterAttributes.Metabolism.Id, 100f, STRINGS.CREATURES.MODIFIERS.TAME.NAME));
-		OvercrowdingMonitor.Def def2 = prefab.AddOrGetDef<OvercrowdingMonitor.Def>();
-		def2.spaceRequiredPerCreature = space_required_per_creature;
+		prefab.AddOrGetDef<OvercrowdingMonitor.Def>().spaceRequiredPerCreature = space_required_per_creature;
 		return prefab;
 	}
 
@@ -284,8 +275,7 @@ public class EntityTemplates
 		FertilityMonitor.Def def = prefab.AddOrGetDef<FertilityMonitor.Def>();
 		def.baseFertileCycles = fertility_cycles;
 		DebugUtil.DevAssert(eggSortOrder > -1, "Added a fertile creature without an egg sort order!");
-		float base_incubation_rate = 100f / (600f * incubation_cycles);
-		GameObject gameObject = EggConfig.CreateEgg(eggId, eggName, eggDesc, baby_id, egg_anim, egg_mass, eggSortOrder, base_incubation_rate);
+		GameObject gameObject = EggConfig.CreateEgg(base_incubation_rate: 100f / (600f * incubation_cycles), id: eggId, name: eggName, desc: eggDesc, creature_id: baby_id, anim: egg_anim, mass: egg_mass, egg_sort_order: eggSortOrder);
 		def.eggPrefab = new Tag(eggId);
 		def.initialBreedingWeights = egg_chances;
 		if (egg_anim_scale != 1f)
@@ -343,8 +333,7 @@ public class EntityTemplates
 	public static GameObject ExtendEntityToBasicCreature(GameObject template, FactionManager.FactionID faction = FactionManager.FactionID.Prey, string initialTraitID = null, string NavGridName = "WalkerNavGrid1x1", NavType navType = NavType.Floor, int max_probing_radius = 32, float moveSpeed = 2f, string onDeathDropID = "Meat", int onDeathDropCount = 1, bool drownVulnerable = true, bool entombVulnerable = true, float warningLowTemperature = 283.15f, float warningHighTemperature = 293.15f, float lethalLowTemperature = 243.15f, float lethalHighTemperature = 343.15f)
 	{
 		template.GetComponent<KBatchedAnimController>().isMovable = true;
-		KPrefabID kPrefabID = template.AddOrGet<KPrefabID>();
-		kPrefabID.AddTag(GameTags.Creature);
+		template.AddOrGet<KPrefabID>().AddTag(GameTags.Creature);
 		Modifiers modifiers = template.AddOrGet<Modifiers>();
 		if (initialTraitID != null)
 		{
@@ -431,8 +420,7 @@ public class EntityTemplates
 		Baggable baggable = creature.AddOrGet<Baggable>();
 		baggable.mustStandOntopOfTrapForPickup = must_stand_on_top_for_pickup;
 		baggable.useGunForPickup = use_gun_for_pickup;
-		Capturable capturable = creature.AddOrGet<Capturable>();
-		capturable.allowCapture = allow_mark_for_capture;
+		creature.AddOrGet<Capturable>().allowCapture = allow_mark_for_capture;
 		creature_prefab_id.prefabSpawnFn += delegate
 		{
 			DiscoveredResources.Instance.Discover(creature_prefab_id.PrefabTag, DiscoveredResources.GetCategoryForTags(creature_prefab_id.Tags));
@@ -444,8 +432,7 @@ public class EntityTemplates
 	{
 		GameObject template = CreateBasicEntity(id, name, desc, mass, unitMass, anim, initialAnim, sceneLayer, element, additionalTags);
 		template = AddCollision(template, collisionShape, width, height);
-		KBatchedAnimController component = template.GetComponent<KBatchedAnimController>();
-		component.isMovable = true;
+		template.GetComponent<KBatchedAnimController>().isMovable = true;
 		template.AddOrGet<Modifiers>();
 		if (isPickupable)
 		{
@@ -472,8 +459,7 @@ public class EntityTemplates
 		baseOreTemplate.AddComponent<KBatchedAnimController>();
 		baseOreTemplate.AddComponent<SimTemperatureTransfer>();
 		baseOreTemplate.AddComponent<Modifiers>();
-		OccupyArea occupyArea = baseOreTemplate.AddOrGet<OccupyArea>();
-		occupyArea.OccupiedCellsOffsets = new CellOffset[1];
+		baseOreTemplate.AddOrGet<OccupyArea>().OccupiedCellsOffsets = new CellOffset[1];
 		DecorProvider decorProvider = baseOreTemplate.AddOrGet<DecorProvider>();
 		decorProvider.baseDecor = -10f;
 		decorProvider.baseRadius = 1f;
@@ -512,8 +498,7 @@ public class EntityTemplates
 		Pickupable pickupable = gameObject.AddOrGet<Pickupable>();
 		pickupable.SetWorkTime(5f);
 		pickupable.sortOrder = element.buildMenuSort;
-		KSelectable kSelectable = gameObject.AddOrGet<KSelectable>();
-		kSelectable.SetName(element.name);
+		gameObject.AddOrGet<KSelectable>().SetName(element.name);
 		KBatchedAnimController kBatchedAnimController = gameObject.AddOrGet<KBatchedAnimController>();
 		kBatchedAnimController.AnimFiles = new KAnimFile[1]
 		{
@@ -533,8 +518,7 @@ public class EntityTemplates
 	public static GameObject CreateLiquidOreEntity(SimHashes elementId, List<Tag> additionalTags = null)
 	{
 		GameObject gameObject = CreateOreEntity(elementId, CollisionShape.RECTANGLE, 0.5f, 0.6f, additionalTags);
-		Dumpable dumpable = gameObject.AddOrGet<Dumpable>();
-		dumpable.SetWorkTime(5f);
+		gameObject.AddOrGet<Dumpable>().SetWorkTime(5f);
 		gameObject.AddOrGet<SubstanceChunk>();
 		return gameObject;
 	}
@@ -542,8 +526,7 @@ public class EntityTemplates
 	public static GameObject CreateGasOreEntity(SimHashes elementId, List<Tag> additionalTags = null)
 	{
 		GameObject gameObject = CreateOreEntity(elementId, CollisionShape.RECTANGLE, 0.5f, 0.6f, additionalTags);
-		Dumpable dumpable = gameObject.AddOrGet<Dumpable>();
-		dumpable.SetWorkTime(5f);
+		gameObject.AddOrGet<Dumpable>().SetWorkTime(5f);
 		gameObject.AddOrGet<SubstanceChunk>();
 		return gameObject;
 	}
@@ -564,8 +547,7 @@ public class EntityTemplates
 		component.AddTag(GameTags.PedestalDisplayable);
 		if (foodInfo.CaloriesPerUnit > 0f)
 		{
-			Edible edible = template.AddOrGet<Edible>();
-			edible.FoodInfo = foodInfo;
+			template.AddOrGet<Edible>().FoodInfo = foodInfo;
 			component.instantiateFn += delegate(GameObject go)
 			{
 				go.GetComponent<Edible>().FoodInfo = foodInfo;
@@ -589,8 +571,7 @@ public class EntityTemplates
 		medicinalPill.info = medicineInfo;
 		if (medicineInfo.doctorStationId == null)
 		{
-			MedicinalPillWorkable medicinalPillWorkable = template.AddOrGet<MedicinalPillWorkable>();
-			medicinalPillWorkable.pill = medicinalPill;
+			template.AddOrGet<MedicinalPillWorkable>().pill = medicinalPill;
 			component.AddTag(GameTags.Medicine);
 		}
 		else
@@ -603,8 +584,7 @@ public class EntityTemplates
 
 	public static GameObject ExtendPlantToFertilizable(GameObject template, PlantElementAbsorber.ConsumeInfo[] fertilizers)
 	{
-		Modifiers component = template.GetComponent<Modifiers>();
-		component.initialAttributes.Add(Db.Get().PlantAttributes.FertilizerUsageMod.Id);
+		template.GetComponent<Modifiers>().initialAttributes.Add(Db.Get().PlantAttributes.FertilizerUsageMod.Id);
 		HashedString idHash = Db.Get().ChoreTypes.FarmFetch.IdHash;
 		for (int i = 0; i < fertilizers.Length; i++)
 		{
@@ -617,16 +597,16 @@ public class EntityTemplates
 			manualDeliveryKG.operationalRequirement = FetchOrder2.OperationalRequirement.Functional;
 			manualDeliveryKG.choreTypeIDHash = idHash;
 		}
-		KPrefabID component2 = template.GetComponent<KPrefabID>();
+		KPrefabID component = template.GetComponent<KPrefabID>();
 		FertilizationMonitor.Def def = template.AddOrGetDef<FertilizationMonitor.Def>();
 		def.wrongFertilizerTestTag = GameTags.Solid;
 		def.consumedElements = fertilizers;
-		component2.prefabInitFn += delegate(GameObject inst)
+		component.prefabInitFn += delegate(GameObject inst)
 		{
 			ManualDeliveryKG[] components = inst.GetComponents<ManualDeliveryKG>();
-			foreach (ManualDeliveryKG manualDeliveryKG2 in components)
+			for (int j = 0; j < components.Length; j++)
 			{
-				manualDeliveryKG2.Pause(pause: true, "init");
+				components[j].Pause(pause: true, "init");
 			}
 		};
 		return template;
@@ -642,8 +622,7 @@ public class EntityTemplates
 
 	public static GameObject ExtendPlantToIrrigated(GameObject template, PlantElementAbsorber.ConsumeInfo[] consume_info)
 	{
-		Modifiers component = template.GetComponent<Modifiers>();
-		component.initialAttributes.Add(Db.Get().PlantAttributes.FertilizerUsageMod.Id);
+		template.GetComponent<Modifiers>().initialAttributes.Add(Db.Get().PlantAttributes.FertilizerUsageMod.Id);
 		HashedString idHash = Db.Get().ChoreTypes.FarmFetch.IdHash;
 		for (int i = 0; i < consume_info.Length; i++)
 		{
@@ -668,8 +647,7 @@ public class EntityTemplates
 		{
 			return null;
 		}
-		Compostable compostable = original.AddComponent<Compostable>();
-		compostable.isMarkedForCompost = false;
+		original.AddComponent<Compostable>().isMarkedForCompost = false;
 		KPrefabID component = original.GetComponent<KPrefabID>();
 		GameObject gameObject = Object.Instantiate(original);
 		Object.DontDestroyOnLoad(gameObject);
@@ -711,15 +689,11 @@ public class EntityTemplates
 		MutantPlant component2 = plant.GetComponent<MutantPlant>();
 		if (component2 != null)
 		{
-			MutantPlant mutantPlant = gameObject.AddOrGet<MutantPlant>();
-			mutantPlant.SpeciesID = component2.SpeciesID;
-			MutantPlant mutantPlant2 = go.AddOrGet<MutantPlant>();
-			mutantPlant2.SpeciesID = component2.SpeciesID;
+			gameObject.AddOrGet<MutantPlant>().SpeciesID = component2.SpeciesID;
+			go.AddOrGet<MutantPlant>().SpeciesID = component2.SpeciesID;
 		}
-		KPrefabID component3 = gameObject.GetComponent<KPrefabID>();
-		Assets.AddPrefab(component3);
-		SeedProducer seedProducer = plant.AddOrGet<SeedProducer>();
-		seedProducer.Configure(id, productionType, numberOfSeeds);
+		Assets.AddPrefab(gameObject.GetComponent<KPrefabID>());
+		plant.AddOrGet<SeedProducer>().Configure(id, productionType, numberOfSeeds);
 		return gameObject;
 	}
 
@@ -728,8 +702,7 @@ public class EntityTemplates
 		GameObject gameObject = CreatePlacedEntity(id, id, id, 1f, anim, initial_anim, Grid.SceneLayer.Front, width, height, TUNING.BUILDINGS.DECOR.NONE);
 		gameObject.UpdateComponentRequirement<KSelectable>(required: false);
 		gameObject.UpdateComponentRequirement<SaveLoadRoot>(required: false);
-		EntityPreview entityPreview = gameObject.AddOrGet<EntityPreview>();
-		entityPreview.objectLayer = object_layer;
+		gameObject.AddOrGet<EntityPreview>().objectLayer = object_layer;
 		OccupyArea occupyArea = gameObject.AddOrGet<OccupyArea>();
 		occupyArea.objectLayers = new ObjectLayer[1]
 		{
@@ -737,27 +710,24 @@ public class EntityTemplates
 		};
 		occupyArea.ApplyToCells = false;
 		gameObject.AddOrGet<Storage>();
-		KPrefabID component = gameObject.GetComponent<KPrefabID>();
-		Assets.AddPrefab(component);
+		Assets.AddPrefab(gameObject.GetComponent<KPrefabID>());
 		return gameObject;
 	}
 
 	public static GameObject CreateAndRegisterPreviewForPlant(GameObject seed, string id, KAnimFile anim, string initialAnim, int width, int height)
 	{
 		GameObject result = CreateAndRegisterPreview(id, anim, initialAnim, ObjectLayer.Building, width, height);
-		PlantableSeed component = seed.GetComponent<PlantableSeed>();
-		component.PreviewID = TagManager.Create(id);
+		seed.GetComponent<PlantableSeed>().PreviewID = TagManager.Create(id);
 		return result;
 	}
 
 	public static CellOffset[] GenerateOffsets(int width, int height)
 	{
 		int num = width / 2;
-		int num2 = num;
-		int startX = num2 - width + 1;
+		int startX = num - width + 1;
 		int startY = 0;
 		int endY = height - 1;
-		return GenerateOffsets(startX, startY, num2, endY);
+		return GenerateOffsets(startX, startY, num, endY);
 	}
 
 	private static CellOffset[] GenerateOffsets(int startX, int startY, int endX, int endY)
@@ -780,11 +750,10 @@ public class EntityTemplates
 	public static CellOffset[] GenerateHangingOffsets(int width, int height)
 	{
 		int num = width / 2;
-		int num2 = num;
-		int startX = num2 - width + 1;
+		int startX = num - width + 1;
 		int startY = -height + 1;
 		int endY = 0;
-		return GenerateOffsets(startX, startY, num2, endY);
+		return GenerateOffsets(startX, startY, num, endY);
 	}
 
 	public static GameObject AddCollision(GameObject template, CollisionShape shape, float width, float height)
@@ -792,20 +761,14 @@ public class EntityTemplates
 		switch (shape)
 		{
 		case CollisionShape.RECTANGLE:
-		{
-			KBoxCollider2D kBoxCollider2D = template.AddOrGet<KBoxCollider2D>();
-			kBoxCollider2D.size = new Vector2f(width, height);
+			template.AddOrGet<KBoxCollider2D>().size = new Vector2f(width, height);
 			break;
-		}
 		case CollisionShape.POLYGONAL:
 			template.AddOrGet<PolygonCollider2D>();
 			break;
 		default:
-		{
-			KCircleCollider2D kCircleCollider2D = template.AddOrGet<KCircleCollider2D>();
-			kCircleCollider2D.radius = Mathf.Max(width, height);
+			template.AddOrGet<KCircleCollider2D>().radius = Mathf.Max(width, height);
 			break;
-		}
 		}
 		return template;
 	}

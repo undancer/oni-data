@@ -42,7 +42,7 @@ public class CropTendingStates : GameStateMachine<CropTendingStates, CropTending
 
 		public AnimSet animSet;
 
-		public bool tendedSucceeded = false;
+		public bool tendedSucceeded;
 
 		public bool[] symbolStates;
 

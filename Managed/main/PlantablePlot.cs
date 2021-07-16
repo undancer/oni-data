@@ -21,13 +21,13 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 	private EntityPreview plantPreview;
 
 	[SerializeField]
-	private bool accepts_fertilizer = false;
+	private bool accepts_fertilizer;
 
 	[SerializeField]
 	private bool accepts_irrigation = true;
 
 	[SerializeField]
-	public bool has_liquid_pipe_input = false;
+	public bool has_liquid_pipe_input;
 
 	private static readonly EventSystem.IntraObjectHandler<PlantablePlot> OnCopySettingsDelegate = new EventSystem.IntraObjectHandler<PlantablePlot>(delegate(PlantablePlot component, object data)
 	{
@@ -54,7 +54,17 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 		}
 	}
 
-	public bool ValidPlant => plantPreview == null || plantPreview.Valid;
+	public bool ValidPlant
+	{
+		get
+		{
+			if (!(plantPreview == null))
+			{
+				return plantPreview.Valid;
+			}
+			return true;
+		}
+	}
 
 	public bool AcceptsFertilizer => accepts_fertilizer;
 
@@ -100,8 +110,7 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		PlantablePlot component = gameObject.GetComponent<PlantablePlot>();
+		PlantablePlot component = ((GameObject)data).GetComponent<PlantablePlot>();
 		if (!(component != null))
 		{
 			return;

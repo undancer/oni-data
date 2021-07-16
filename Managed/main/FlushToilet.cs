@@ -20,7 +20,11 @@ public class FlushToilet : StateMachineComponent<FlushToilet.SMInstance>, IUsabl
 
 		public bool HasValidConnections()
 		{
-			return Game.Instance.liquidConduitFlow.HasConduit(base.master.inputCell) && Game.Instance.liquidConduitFlow.HasConduit(base.master.outputCell);
+			if (Game.Instance.liquidConduitFlow.HasConduit(base.master.inputCell))
+			{
+				return Game.Instance.liquidConduitFlow.HasConduit(base.master.outputCell);
+			}
+			return false;
 		}
 
 		public bool UpdateFullnessState()
@@ -43,8 +47,7 @@ public class FlushToilet : StateMachineComponent<FlushToilet.SMInstance>, IUsabl
 
 		public void UpdateDirtyState()
 		{
-			ToiletWorkableUse component = GetComponent<ToiletWorkableUse>();
-			float percentComplete = component.GetPercentComplete();
+			float percentComplete = GetComponent<ToiletWorkableUse>().GetPercentComplete();
 			base.master.contaminationMeter.SetPositionPercent(percentComplete);
 		}
 
@@ -68,11 +71,10 @@ public class FlushToilet : StateMachineComponent<FlushToilet.SMInstance>, IUsabl
 			foreach (GameObject item in GetComponent<Storage>().items)
 			{
 				PrimaryElement component = item.GetComponent<PrimaryElement>();
-				if (component == null || component.ElementID != SimHashes.DirtyWater || !(component.Mass > 0f))
+				if (!(component == null) && component.ElementID == SimHashes.DirtyWater && component.Mass > 0f)
 				{
-					continue;
+					return true;
 				}
-				return true;
 			}
 			return false;
 		}
@@ -247,8 +249,7 @@ public class FlushToilet : StateMachineComponent<FlushToilet.SMInstance>, IUsabl
 
 	protected override void OnCleanUp()
 	{
-		ConduitFlow liquidConduitFlow = Game.Instance.liquidConduitFlow;
-		liquidConduitFlow.onConduitsRebuilt -= OnConduitsRebuilt;
+		Game.Instance.liquidConduitFlow.onConduitsRebuilt -= OnConduitsRebuilt;
 		Components.BasicBuildings.Remove(this);
 		Components.Toilets.Remove(this);
 		base.OnCleanUp();
@@ -286,8 +287,7 @@ public class FlushToilet : StateMachineComponent<FlushToilet.SMInstance>, IUsabl
 		storage.AddLiquid(SimHashes.DirtyWater, massEmittedPerUse, temperature, index, diseasePerFlush);
 		if (worker != null)
 		{
-			PrimaryElement component2 = worker.GetComponent<PrimaryElement>();
-			component2.AddDisease(index, diseaseOnDupePerFlush, "FlushToilet.Flush");
+			worker.GetComponent<PrimaryElement>().AddDisease(index, diseaseOnDupePerFlush, "FlushToilet.Flush");
 			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, string.Format(DUPLICANTS.DISEASES.ADDED_POPFX, Db.Get().Diseases[index].Name, diseasePerFlush + diseaseOnDupePerFlush), base.transform, Vector3.up);
 			Tutorial.Instance.TutorialMessage(Tutorial.TutorialMessages.TM_LotsOfGerms);
 		}
@@ -300,8 +300,7 @@ public class FlushToilet : StateMachineComponent<FlushToilet.SMInstance>, IUsabl
 	public List<Descriptor> RequirementDescriptors()
 	{
 		List<Descriptor> list = new List<Descriptor>();
-		Element element = ElementLoader.FindElementByHash(SimHashes.Water);
-		string arg = element.tag.ProperName();
+		string arg = ElementLoader.FindElementByHash(SimHashes.Water).tag.ProperName();
 		list.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.ELEMENTCONSUMEDPERUSE, arg, GameUtil.GetFormattedMass(massConsumedPerUse, GameUtil.TimeSlice.None, GameUtil.MetricMassFormat.UseThreshold, includeSuffix: true, "{0:0.##}")), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.ELEMENTCONSUMEDPERUSE, arg, GameUtil.GetFormattedMass(massConsumedPerUse, GameUtil.TimeSlice.None, GameUtil.MetricMassFormat.UseThreshold, includeSuffix: true, "{0:0.##}")), Descriptor.DescriptorType.Requirement));
 		return list;
 	}
@@ -309,8 +308,7 @@ public class FlushToilet : StateMachineComponent<FlushToilet.SMInstance>, IUsabl
 	public List<Descriptor> EffectDescriptors()
 	{
 		List<Descriptor> list = new List<Descriptor>();
-		Element element = ElementLoader.FindElementByHash(SimHashes.DirtyWater);
-		string arg = element.tag.ProperName();
+		string arg = ElementLoader.FindElementByHash(SimHashes.DirtyWater).tag.ProperName();
 		list.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.ELEMENTEMITTED_TOILET, arg, GameUtil.GetFormattedMass(massEmittedPerUse, GameUtil.TimeSlice.None, GameUtil.MetricMassFormat.UseThreshold, includeSuffix: true, "{0:0.##}"), GameUtil.GetFormattedTemperature(newPeeTemperature)), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.ELEMENTEMITTED_TOILET, arg, GameUtil.GetFormattedMass(massEmittedPerUse, GameUtil.TimeSlice.None, GameUtil.MetricMassFormat.UseThreshold, includeSuffix: true, "{0:0.##}"), GameUtil.GetFormattedTemperature(newPeeTemperature))));
 		Disease disease = Db.Get().Diseases.Get(diseaseId);
 		int units = diseasePerFlush + diseaseOnDupePerFlush;
@@ -330,8 +328,7 @@ public class FlushToilet : StateMachineComponent<FlushToilet.SMInstance>, IUsabl
 	{
 		if (GetSMI() != null)
 		{
-			ConduitFlow liquidConduitFlow = Game.Instance.liquidConduitFlow;
-			bool value = liquidConduitFlow.GetContents(outputCell).mass > 0f && base.smi.HasContaminatedMass();
+			bool value = Game.Instance.liquidConduitFlow.GetContents(outputCell).mass > 0f && base.smi.HasContaminatedMass();
 			base.smi.sm.outputBlocked.Set(value, base.smi);
 		}
 	}

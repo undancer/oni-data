@@ -13,8 +13,7 @@ public class SwampForagePlantConfig : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject template = EntityTemplates.CreateLooseEntity("SwampForagePlant", ITEMS.FOOD.SWAMPFORAGEPLANT.NAME, ITEMS.FOOD.SWAMPFORAGEPLANT.DESC, 1f, unitMass: false, Assets.GetAnim("swamptuber_vegetable_kanim"), "object", Grid.SceneLayer.BuildingBack, EntityTemplates.CollisionShape.CIRCLE, 0.3f, 0.3f, isPickupable: true);
-		return EntityTemplates.ExtendEntityToFood(template, FOOD.FOOD_TYPES.SWAMPFORAGEPLANT);
+		return EntityTemplates.ExtendEntityToFood(EntityTemplates.CreateLooseEntity("SwampForagePlant", ITEMS.FOOD.SWAMPFORAGEPLANT.NAME, ITEMS.FOOD.SWAMPFORAGEPLANT.DESC, 1f, unitMass: false, Assets.GetAnim("swamptuber_vegetable_kanim"), "object", Grid.SceneLayer.BuildingBack, EntityTemplates.CollisionShape.CIRCLE, 0.3f, 0.3f, isPickupable: true), FOOD.FOOD_TYPES.SWAMPFORAGEPLANT);
 	}
 
 	public void OnPrefabInit(GameObject inst)

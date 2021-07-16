@@ -116,6 +116,18 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 		return list;
 	}
 
+	public WorldContainer GetStartWorld()
+	{
+		foreach (WorldContainer worldContainer in WorldContainers)
+		{
+			if (worldContainer.IsStartWorld)
+			{
+				return worldContainer;
+			}
+		}
+		return WorldContainers[0];
+	}
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
@@ -144,8 +156,7 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 		m_grid = new ClusterGrid(m_numRings);
 		foreach (WorldGen world in clusterLayout.worlds)
 		{
-			WorldContainer worldContainer = CreateAsteroidWorldContainer(world);
-			int id = worldContainer.id;
+			int id = CreateAsteroidWorldContainer(world).id;
 			Vector2I position = world.GetPosition();
 			Vector2I vector2I = position + world.GetSize();
 			for (int i = position.y; i < vector2I.y; i++)
@@ -235,9 +246,8 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 			CreateDefaultAsteroidWorldContainer();
 		}
 		bool flag = false;
-		foreach (WorldContainer worldContainer2 in m_worldContainers)
+		foreach (WorldContainer worldContainer in m_worldContainers)
 		{
-			WorldContainer worldContainer = worldContainer2;
 			Vector2I worldOffset = worldContainer.WorldOffset;
 			Vector2I vector2I = worldOffset + worldContainer.WorldSize;
 			for (int i = worldOffset.y; i < vector2I.y; i++)
@@ -382,7 +392,11 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 	private bool NotObstructedCell(int x, int y)
 	{
 		int cell = Grid.XYToCell(x, y);
-		return Grid.IsValidCell(cell) && Grid.Objects[cell, 1] == null;
+		if (Grid.IsValidCell(cell))
+		{
+			return Grid.Objects[cell, 1] == null;
+		}
+		return false;
 	}
 
 	private int LowestYThatSeesSky(int topCellYPos, int x)
@@ -398,7 +412,11 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 	private bool ValidSurfaceCell(int x, int y)
 	{
 		int i = Grid.XYToCell(x, y - 1);
-		return Grid.Solid[i] || Grid.Foundation[i];
+		if (!Grid.Solid[i])
+		{
+			return Grid.Foundation[i];
+		}
+		return true;
 	}
 
 	public int GetRandomSurfaceCell(int worldID, int width = 1, bool excludeTopBorderHeight = true)
@@ -494,15 +512,13 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 		GameObject craft_go = door.GetComponent<RocketModuleCluster>().CraftInterface.gameObject;
 		if (activeWorldId == world_id)
 		{
-			int parentWorldId = craft_go.GetComponent<WorldContainer>().ParentWorldId;
-			if (parentWorldId != INVALID_WORLD_IDX)
+			if (craft_go.GetComponent<WorldContainer>().ParentWorldId == world_id)
 			{
-				Debug.LogWarning($"Destroying rocket interior while it is the active world id {world_id}. Setting parent world {parentWorldId}");
-				SetActiveWorld(craft_go.GetComponent<WorldContainer>().ParentWorldId);
+				SetActiveWorld(Instance.GetStartWorld().id);
 			}
 			else
 			{
-				Debug.LogError($"Destroying a rocket world {world_id} with no parent world.");
+				SetActiveWorld(craft_go.GetComponent<WorldContainer>().ParentWorldId);
 			}
 		}
 		Vector3 spawn_pos = door.transform.position;

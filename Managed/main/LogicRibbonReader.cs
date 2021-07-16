@@ -44,7 +44,7 @@ public class LogicRibbonReader : KMonoBehaviour, ILogicRibbonBitSelector, IRende
 	public int bitDepth = 4;
 
 	[Serialize]
-	public int selectedBit = 0;
+	public int selectedBit;
 
 	[Serialize]
 	private int currentValue;
@@ -81,8 +81,7 @@ public class LogicRibbonReader : KMonoBehaviour, ILogicRibbonBitSelector, IRende
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		LogicRibbonReader component = gameObject.GetComponent<LogicRibbonReader>();
+		LogicRibbonReader component = ((GameObject)data).GetComponent<LogicRibbonReader>();
 		if (component != null)
 		{
 			SetBitSelection(component.selectedBit);
@@ -103,9 +102,7 @@ public class LogicRibbonReader : KMonoBehaviour, ILogicRibbonBitSelector, IRende
 				bitDepth = component2.MaxBitDepth;
 			}
 		}
-		LogicWire.BitDepth bitDepth2 = bitDepth;
-		LogicWire.BitDepth bitDepth3 = bitDepth2;
-		if (bitDepth3 != 0 && bitDepth3 == LogicWire.BitDepth.FourBit)
+		if (bitDepth != 0 && bitDepth == LogicWire.BitDepth.FourBit)
 		{
 			int new_value = currentValue >> selectedBit;
 			component.SendSignal(OUTPUT_PORT_ID, new_value);
@@ -155,8 +152,7 @@ public class LogicRibbonReader : KMonoBehaviour, ILogicRibbonBitSelector, IRende
 		if (ports != null)
 		{
 			int portCell = ports.GetPortCell(INPUT_PORT_ID);
-			LogicCircuitManager logicCircuitManager = Game.Instance.logicCircuitManager;
-			logicCircuitNetwork = logicCircuitManager.GetNetworkForCell(portCell);
+			logicCircuitNetwork = Game.Instance.logicCircuitManager.GetNetworkForCell(portCell);
 		}
 		return logicCircuitNetwork?.IsBitActive(bit) ?? false;
 	}
@@ -164,13 +160,21 @@ public class LogicRibbonReader : KMonoBehaviour, ILogicRibbonBitSelector, IRende
 	public int GetInputValue()
 	{
 		LogicPorts component = GetComponent<LogicPorts>();
-		return (component != null) ? component.GetInputValue(INPUT_PORT_ID) : 0;
+		if (!(component != null))
+		{
+			return 0;
+		}
+		return component.GetInputValue(INPUT_PORT_ID);
 	}
 
 	public int GetOutputValue()
 	{
 		LogicPorts component = GetComponent<LogicPorts>();
-		return (component != null) ? component.GetOutputValue(OUTPUT_PORT_ID) : 0;
+		if (!(component != null))
+		{
+			return 0;
+		}
+		return component.GetOutputValue(OUTPUT_PORT_ID);
 	}
 
 	private LogicCircuitNetwork GetInputNetwork()
@@ -179,8 +183,7 @@ public class LogicRibbonReader : KMonoBehaviour, ILogicRibbonBitSelector, IRende
 		if (ports != null)
 		{
 			int portCell = ports.GetPortCell(INPUT_PORT_ID);
-			LogicCircuitManager logicCircuitManager = Game.Instance.logicCircuitManager;
-			result = logicCircuitManager.GetNetworkForCell(portCell);
+			result = Game.Instance.logicCircuitManager.GetNetworkForCell(portCell);
 		}
 		return result;
 	}
@@ -191,8 +194,7 @@ public class LogicRibbonReader : KMonoBehaviour, ILogicRibbonBitSelector, IRende
 		if (ports != null)
 		{
 			int portCell = ports.GetPortCell(OUTPUT_PORT_ID);
-			LogicCircuitManager logicCircuitManager = Game.Instance.logicCircuitManager;
-			result = logicCircuitManager.GetNetworkForCell(portCell);
+			result = Game.Instance.logicCircuitManager.GetNetworkForCell(portCell);
 		}
 		return result;
 	}
@@ -201,7 +203,7 @@ public class LogicRibbonReader : KMonoBehaviour, ILogicRibbonBitSelector, IRende
 	{
 		LogicCircuitNetwork inputNetwork = GetInputNetwork();
 		LogicCircuitNetwork outputNetwork = GetOutputNetwork();
-		int inputValue = GetInputValue();
+		GetInputValue();
 		int num = 0;
 		if (inputNetwork != null)
 		{

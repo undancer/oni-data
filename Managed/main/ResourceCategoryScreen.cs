@@ -19,13 +19,13 @@ public class ResourceCategoryScreen : KScreen
 
 	private float maxHeightPadding = 480f;
 
-	private float targetContentHideHeight = 0f;
+	private float targetContentHideHeight;
 
 	public Dictionary<Tag, ResourceCategoryHeader> DisplayedCategories = new Dictionary<Tag, ResourceCategoryHeader>();
 
 	private Tag[] DisplayedCategoryKeys;
 
-	private int categoryUpdatePacer = 0;
+	private int categoryUpdatePacer;
 
 	public static void DestroyInstance()
 	{

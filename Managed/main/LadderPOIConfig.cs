@@ -25,11 +25,10 @@ public class LadderPOIConfig : IEntityConfig
 		ladder.upwardsMovementSpeedMultiplier = 1.5f;
 		ladder.downwardsMovementSpeedMultiplier = 1.5f;
 		gameObject.AddOrGet<AnimTileable>();
-		OccupyArea obj = gameObject.AddOrGet<OccupyArea>();
-		Object.DestroyImmediate(obj);
-		obj = gameObject.AddOrGet<OccupyArea>();
-		obj.OccupiedCellsOffsets = EntityTemplates.GenerateOffsets(num, num2);
-		obj.objectLayers = new ObjectLayer[1]
+		Object.DestroyImmediate(gameObject.AddOrGet<OccupyArea>());
+		OccupyArea occupyArea = gameObject.AddOrGet<OccupyArea>();
+		occupyArea.OccupiedCellsOffsets = EntityTemplates.GenerateOffsets(num, num2);
+		occupyArea.objectLayers = new ObjectLayer[1]
 		{
 			ObjectLayer.Building
 		};

@@ -122,8 +122,7 @@ public class JetSuitLocker : StateMachineComponent<JetSuitLocker.StatesInstance>
 
 	protected override void OnCleanUp()
 	{
-		IUtilityNetworkMgr networkManager = Conduit.GetNetworkManager(portInfo.conduitType);
-		networkManager.RemoveFromNetworks(secondaryInputCell, flowNetworkItem, is_endpoint: true);
+		Conduit.GetNetworkManager(portInfo.conduitType).RemoveFromNetworks(secondaryInputCell, flowNetworkItem, is_endpoint: true);
 		base.OnCleanUp();
 	}
 

@@ -16,8 +16,7 @@ public class MournChore : Chore<MournChore.StatesInstance>
 
 		public void CreateLocator()
 		{
-			Grave grave = FindGraveToMournAt();
-			int cell = Grid.PosToCell(grave.transform.GetPosition());
+			int cell = Grid.PosToCell(FindGraveToMournAt().transform.GetPosition());
 			Navigator component = base.master.GetComponent<Navigator>();
 			int standableCell = GetStandableCell(cell, component);
 			if (standableCell < 0)
@@ -99,18 +98,12 @@ public class MournChore : Chore<MournChore.StatesInstance>
 		description = DUPLICANTS.CHORES.PRECONDITIONS.HAS_PLACE_TO_STAND,
 		fn = delegate(ref Precondition.Context context, object data)
 		{
-			IStateMachineTarget stateMachineTarget = (IStateMachineTarget)data;
-			Navigator component = stateMachineTarget.GetComponent<Navigator>();
+			Navigator component = ((IStateMachineTarget)data).GetComponent<Navigator>();
 			bool result = false;
 			Grave grave = FindGraveToMournAt();
-			if (grave != null)
+			if (grave != null && Grid.IsValidCell(GetStandableCell(Grid.PosToCell(grave), component)))
 			{
-				int cell = Grid.PosToCell(grave);
-				int standableCell = GetStandableCell(cell, component);
-				if (Grid.IsValidCell(standableCell))
-				{
-					result = true;
-				}
+				result = true;
 			}
 			return result;
 		}
@@ -174,8 +167,7 @@ public class MournChore : Chore<MournChore.StatesInstance>
 			Debug.LogError("MournChore null smi.sm");
 			return;
 		}
-		Grave x = FindGraveToMournAt();
-		if (x == null)
+		if (FindGraveToMournAt() == null)
 		{
 			Debug.LogError("MournChore no grave");
 			return;

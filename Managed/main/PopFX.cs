@@ -24,15 +24,15 @@ public class PopFX : KMonoBehaviour
 
 	private float lifetime;
 
-	private float lifeElapsed = 0f;
+	private float lifeElapsed;
 
-	private bool trackTarget = false;
+	private bool trackTarget;
 
 	private Vector3 startPos;
 
-	private bool isLive = false;
+	private bool isLive;
 
-	private bool isActiveWorld = false;
+	private bool isActiveWorld;
 
 	public void Recycle()
 	{
@@ -89,8 +89,7 @@ public class PopFX : KMonoBehaviour
 
 	private void SetWorldActive(int worldId)
 	{
-		Vector3 pos = ((trackTarget && targetTransform != null) ? targetTransform.position : startPos);
-		int num = Grid.PosToCell(pos);
+		int num = Grid.PosToCell((trackTarget && targetTransform != null) ? targetTransform.position : startPos);
 		isActiveWorld = !Grid.IsValidCell(num) || Grid.WorldIdx[num] == worldId;
 	}
 

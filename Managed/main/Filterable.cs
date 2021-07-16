@@ -18,7 +18,7 @@ public class Filterable : KMonoBehaviour
 	private CopyBuildingSettings copyBuildingSettings;
 
 	[Serialize]
-	public ElementState filterElementState = ElementState.None;
+	public ElementState filterElementState;
 
 	[Serialize]
 	private Tag selectedTag = GameTags.Void;
@@ -85,8 +85,7 @@ public class Filterable : KMonoBehaviour
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		Filterable component = gameObject.GetComponent<Filterable>();
+		Filterable component = ((GameObject)data).GetComponent<Filterable>();
 		if (component != null)
 		{
 			SelectedTag = component.SelectedTag;

@@ -29,21 +29,21 @@ public class PolymerizerConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("Polymerizer", 3, 3, "plasticrefinery_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: BUILDINGS.DECOR.NONE);
-		BuildingTemplates.CreateElectricalBuildingDef(buildingDef);
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.AudioSize = "large";
-		buildingDef.EnergyConsumptionWhenActive = 240f;
-		buildingDef.ExhaustKilowattsWhenActive = 0.5f;
-		buildingDef.SelfHeatKilowattsWhenActive = 32f;
-		buildingDef.PowerInputOffset = new CellOffset(0, 0);
-		buildingDef.InputConduitType = ConduitType.Liquid;
-		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
-		buildingDef.OutputConduitType = ConduitType.Gas;
-		buildingDef.UtilityOutputOffset = new CellOffset(0, 1);
-		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 1));
-		buildingDef.PermittedRotations = PermittedRotations.FlipH;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("Polymerizer", 3, 3, "plasticrefinery_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: BUILDINGS.DECOR.NONE);
+		BuildingTemplates.CreateElectricalBuildingDef(obj);
+		obj.AudioCategory = "Metal";
+		obj.AudioSize = "large";
+		obj.EnergyConsumptionWhenActive = 240f;
+		obj.ExhaustKilowattsWhenActive = 0.5f;
+		obj.SelfHeatKilowattsWhenActive = 32f;
+		obj.PowerInputOffset = new CellOffset(0, 0);
+		obj.InputConduitType = ConduitType.Liquid;
+		obj.UtilityInputOffset = new CellOffset(0, 0);
+		obj.OutputConduitType = ConduitType.Gas;
+		obj.UtilityOutputOffset = new CellOffset(0, 1);
+		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 1));
+		obj.PermittedRotations = PermittedRotations.FlipH;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

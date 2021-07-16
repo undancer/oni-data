@@ -116,26 +116,25 @@ public class AnimTileable : KMonoBehaviour
 			is_visible4 = !HasTileableNeighbour(num4);
 		}
 		KBatchedAnimController[] componentsInChildren = GetComponentsInChildren<KBatchedAnimController>();
-		KBatchedAnimController[] array = componentsInChildren;
-		foreach (KBatchedAnimController kBatchedAnimController in array)
+		foreach (KBatchedAnimController kBatchedAnimController in componentsInChildren)
 		{
-			KAnimHashedString[] array2 = leftSymbols;
-			foreach (KAnimHashedString symbol in array2)
+			KAnimHashedString[] array = leftSymbols;
+			foreach (KAnimHashedString symbol in array)
 			{
 				kBatchedAnimController.SetSymbolVisiblity(symbol, is_visible);
 			}
-			KAnimHashedString[] array3 = rightSymbols;
-			foreach (KAnimHashedString symbol2 in array3)
+			array = rightSymbols;
+			foreach (KAnimHashedString symbol2 in array)
 			{
 				kBatchedAnimController.SetSymbolVisiblity(symbol2, is_visible2);
 			}
-			KAnimHashedString[] array4 = topSymbols;
-			foreach (KAnimHashedString symbol3 in array4)
+			array = topSymbols;
+			foreach (KAnimHashedString symbol3 in array)
 			{
 				kBatchedAnimController.SetSymbolVisiblity(symbol3, is_visible3);
 			}
-			KAnimHashedString[] array5 = bottomSymbols;
-			foreach (KAnimHashedString symbol4 in array5)
+			array = bottomSymbols;
+			foreach (KAnimHashedString symbol4 in array)
 			{
 				kBatchedAnimController.SetSymbolVisiblity(symbol4, is_visible4);
 			}

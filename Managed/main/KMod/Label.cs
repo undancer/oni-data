@@ -42,7 +42,11 @@ namespace KMod
 
 		public bool Match(Label rhs)
 		{
-			return id == rhs.id && distribution_platform == rhs.distribution_platform;
+			if (id == rhs.id)
+			{
+				return distribution_platform == rhs.distribution_platform;
+			}
+			return false;
 		}
 	}
 }

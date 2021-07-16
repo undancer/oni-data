@@ -62,9 +62,9 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 
 	private Dictionary<TutorialMessages, bool> hiddenTutorialMessages = new Dictionary<TutorialMessages, bool>();
 
-	private int debugMessageCount = 0;
+	private int debugMessageCount;
 
-	private bool queuedPrioritiesMessage = false;
+	private bool queuedPrioritiesMessage;
 
 	private const float LOW_RATION_AMOUNT = 1f;
 
@@ -76,7 +76,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 
 	public List<GameObject> oxygenGenerators = new List<GameObject>();
 
-	private int focusedOxygenGenerator = 0;
+	private int focusedOxygenGenerator;
 
 	private int focusedUnrefrigFood = -1;
 
@@ -94,8 +94,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 		}
 		foreach (TutorialMessages value in Enum.GetValues(typeof(TutorialMessages)))
 		{
-			string key = "HideTutorial_" + value;
-			KPlayerPrefs.SetInt(key, 0);
+			KPlayerPrefs.SetInt("HideTutorial_" + value, 0);
 			if (Instance != null)
 			{
 				Instance.tutorialMessagesRemaining.Add(value);
@@ -109,8 +108,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 	{
 		foreach (TutorialMessages value2 in Enum.GetValues(typeof(TutorialMessages)))
 		{
-			string key2 = "HideTutorial_" + value2;
-			bool value = KPlayerPrefs.GetInt(key2, 0) != 0;
+			bool value = KPlayerPrefs.GetInt("HideTutorial_" + value2, 0) != 0;
 			hiddenTutorialMessages[value2] = value;
 		}
 	}
@@ -118,8 +116,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 	public void HideTutorialMessage(TutorialMessages message)
 	{
 		hiddenTutorialMessages[message] = true;
-		string key = "HideTutorial_" + message;
-		KPlayerPrefs.SetInt(key, 1);
+		KPlayerPrefs.SetInt("HideTutorial_" + message, 1);
 	}
 
 	public static void DestroyInstance()
@@ -330,9 +327,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 	private string OnOxygenTooltip(List<Notification> notifications, object data)
 	{
 		ReportManager.ReportEntry entry = ReportManager.Instance.YesterdaysReport.GetEntry(ReportManager.ReportType.OxygenCreated);
-		string text = MISC.NOTIFICATIONS.INSUFFICIENTOXYGENLASTCYCLE.TOOLTIP;
-		text = text.Replace("{EmittingRate}", GameUtil.GetFormattedMass(entry.Positive));
-		return text.Replace("{ConsumptionRate}", GameUtil.GetFormattedMass(Mathf.Abs(entry.Negative)));
+		return ((string)MISC.NOTIFICATIONS.INSUFFICIENTOXYGENLASTCYCLE.TOOLTIP).Replace("{EmittingRate}", GameUtil.GetFormattedMass(entry.Positive)).Replace("{ConsumptionRate}", GameUtil.GetFormattedMass(Mathf.Abs(entry.Negative)));
 	}
 
 	private string UnrefrigeratedFoodTooltip(List<Notification> notifications, object data)
@@ -466,8 +461,15 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 			return true;
 		}
 		ReportManager.ReportEntry entry = ReportManager.Instance.YesterdaysReport.GetEntry(ReportManager.ReportType.OxygenCreated);
-		ReportManager.ReportEntry entry2 = ReportManager.Instance.TodaysReport.GetEntry(ReportManager.ReportType.OxygenCreated);
-		return entry2.Net > 0.0001f || entry.Net > 0.0001f || (GameClock.Instance.GetCycle() < 1 && !GameClock.Instance.IsNighttime());
+		if (!(ReportManager.Instance.TodaysReport.GetEntry(ReportManager.ReportType.OxygenCreated).Net > 0.0001f) && !(entry.Net > 0.0001f))
+		{
+			if (GameClock.Instance.GetCycle() < 1)
+			{
+				return !GameClock.Instance.IsNighttime();
+			}
+			return false;
+		}
+		return true;
 	}
 
 	private bool FoodIsRefrigerated()
@@ -489,17 +491,20 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 			{
 				return 0;
 			}
-			foreach (Pickupable item in pickupables)
 			{
-				if (item.storage != null && (item.storage.GetComponent<RationBox>() != null || item.storage.GetComponent<Refrigerator>() != null))
+				foreach (Pickupable item in pickupables)
 				{
-					Rottable.Instance sMI = item.GetSMI<Rottable.Instance>();
-					if (sMI != null && Rottable.RefrigerationLevel(sMI) == Rottable.RotRefrigerationLevel.Normal && Rottable.AtmosphereQuality(sMI) != Rottable.RotAtmosphereQuality.Sterilizing && sMI != null && sMI.RotConstitutionPercentage < 0.8f)
+					if (item.storage != null && (item.storage.GetComponent<RationBox>() != null || item.storage.GetComponent<Refrigerator>() != null))
 					{
-						num++;
-						foods?.Add(item);
+						Rottable.Instance sMI = item.GetSMI<Rottable.Instance>();
+						if (sMI != null && Rottable.RefrigerationLevel(sMI) == Rottable.RotRefrigerationLevel.Normal && Rottable.AtmosphereQuality(sMI) != Rottable.RotAtmosphereQuality.Sterilizing && sMI != null && sMI.RotConstitutionPercentage < 0.8f)
+						{
+							num++;
+							foods?.Add(item);
+						}
 					}
 				}
+				return num;
 			}
 		}
 		return num;
@@ -529,10 +534,9 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 		bool flag = false;
 		for (int i = 0; i < Components.LiveMinionIdentities.Count; i++)
 		{
-			Sicknesses sicknesses = Components.LiveMinionIdentities[i].GetSicknesses();
-			foreach (SicknessInstance item in sicknesses)
+			foreach (SicknessInstance sickness in Components.LiveMinionIdentities[i].GetSicknesses())
 			{
-				if (item.Sickness.severity >= Sickness.Severity.Major)
+				if (sickness.Sickness.severity >= Sickness.Severity.Major)
 				{
 					flag = true;
 					break;
@@ -564,8 +568,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 			num += entry.Net;
 			num2 += 600f * (float)entry.contextEntries.Count;
 		}
-		float num4 = num / num2;
-		return num4 <= 0.4f;
+		return num / num2 <= 0.4f;
 	}
 
 	private bool FoodSourceExists()

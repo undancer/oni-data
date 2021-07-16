@@ -21,8 +21,7 @@ namespace Database
 			int num = 0;
 			foreach (IBasicBuilding item in Components.BasicBuildings.Items)
 			{
-				KPrefabID component = item.transform.GetComponent<KPrefabID>();
-				Tag prefabTag = component.PrefabTag;
+				Tag prefabTag = item.transform.GetComponent<KPrefabID>().PrefabTag;
 				if (validBuildingTypes.Contains(prefabTag))
 				{
 					num++;

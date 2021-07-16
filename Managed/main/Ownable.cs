@@ -28,9 +28,7 @@ public class Ownable : Assignable, ISaveLoadable, IGameObjectEffectDescriptor
 		}
 		if (new_assignee is MinionAssignablesProxy)
 		{
-			Ownables soleOwner = new_assignee.GetSoleOwner();
-			Ownables component = soleOwner.GetComponent<Ownables>();
-			AssignableSlotInstance slot = component.GetSlot(base.slot);
+			AssignableSlotInstance slot = new_assignee.GetSoleOwner().GetComponent<Ownables>().GetSlot(base.slot);
 			if (slot != null)
 			{
 				Assignable assignable = slot.assignable;
@@ -64,8 +62,7 @@ public class Ownable : Assignable, ISaveLoadable, IGameObjectEffectDescriptor
 			Ref<KPrefabID> serializedMinion = storedMinionInfo[0].serializedMinion;
 			if (serializedMinion != null && serializedMinion.GetId() != -1)
 			{
-				KPrefabID kPrefabID = serializedMinion.Get();
-				StoredMinionIdentity component2 = kPrefabID.GetComponent<StoredMinionIdentity>();
+				StoredMinionIdentity component2 = serializedMinion.Get().GetComponent<StoredMinionIdentity>();
 				component2.ValidateProxy();
 				Assign(component2);
 			}

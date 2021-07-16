@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using UnityEngine;
 using UnityEngine.Networking;
 
 public static class SimpleNetworkCache
@@ -12,15 +11,12 @@ public static class SimpleNetworkCache
 		string version_filepath = cache_prefix + "_version";
 		string data_filepath = cache_prefix + "_data";
 		UnityWebRequest version_wr = new UnityWebRequest(new Uri(version_filepath, UriKind.Absolute), "GET", new DownloadHandlerBuffer(), null);
-		AsyncOperation asyncOperation = version_wr.SendWebRequest();
-		asyncOperation.completed += delegate
+		version_wr.SendWebRequest().completed += delegate
 		{
-			int versionFromWebRequest = GetVersionFromWebRequest(version_wr);
-			if (versionFromWebRequest == version)
+			if (GetVersionFromWebRequest(version_wr) == version)
 			{
 				data_wr.uri = new Uri(data_filepath, UriKind.Absolute);
-				AsyncOperation asyncOperation2 = data_wr.SendWebRequest();
-				asyncOperation2.completed += delegate
+				data_wr.SendWebRequest().completed += delegate
 				{
 					if (!string.IsNullOrEmpty(data_wr.error))
 					{
@@ -41,8 +37,7 @@ public static class SimpleNetworkCache
 			else
 			{
 				data_wr.url = url;
-				AsyncOperation asyncOperation3 = data_wr.SendWebRequest();
-				asyncOperation3.completed += delegate
+				data_wr.SendWebRequest().completed += delegate
 				{
 					if (string.IsNullOrEmpty(data_wr.error))
 					{

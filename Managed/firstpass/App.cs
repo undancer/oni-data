@@ -55,12 +55,12 @@ public class App : MonoBehaviour
 		string directoryName = Path.GetDirectoryName(fullPath);
 		fullPath = Path.Combine(directoryName, "OxygenNotIncluded.app/Contents/MacOS/OxygenNotIncluded");
 		Debug.LogFormat("Restarting\n\texe ({0})\n\tfull ({1})\n\tdir ({2})", fileName, fullPath, directoryName);
-		string fileName2 = Path.Combine(directoryName, "OxygenNotIncluded.app/Contents/MacOS/Restarter");
-		ProcessStartInfo processStartInfo = new ProcessStartInfo(fileName2);
-		processStartInfo.UseShellExecute = true;
-		processStartInfo.CreateNoWindow = true;
-		processStartInfo.Arguments = $"\"{fullPath}\"";
-		Process.Start(processStartInfo);
+		Process.Start(new ProcessStartInfo(Path.Combine(directoryName, "OxygenNotIncluded.app/Contents/MacOS/Restarter"))
+		{
+			UseShellExecute = true,
+			CreateNoWindow = true,
+			Arguments = $"\"{fullPath}\""
+		});
 		Quit();
 	}
 

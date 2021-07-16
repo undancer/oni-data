@@ -36,8 +36,7 @@ namespace MIConvexHull
 
 		public void DepositFace(int faceIndex)
 		{
-			ConvexFaceInternal convexFaceInternal = FacePool[faceIndex];
-			int[] adjacentFaces = convexFaceInternal.AdjacentFaces;
+			int[] adjacentFaces = FacePool[faceIndex].AdjacentFaces;
 			for (int i = 0; i < adjacentFaces.Length; i++)
 			{
 				adjacentFaces[i] = -1;
@@ -113,7 +112,11 @@ namespace MIConvexHull
 
 		public IndexBuffer GetVertexBuffer()
 		{
-			return (EmptyBufferStack.Count != 0) ? EmptyBufferStack.Pop() : new IndexBuffer();
+			if (EmptyBufferStack.Count == 0)
+			{
+				return new IndexBuffer();
+			}
+			return EmptyBufferStack.Pop();
 		}
 
 		public void DepositDeferredFace(DeferredFace face)
@@ -123,7 +126,11 @@ namespace MIConvexHull
 
 		public DeferredFace GetDeferredFace()
 		{
-			return (DeferredFaceStack.Count != 0) ? DeferredFaceStack.Pop() : new DeferredFace();
+			if (DeferredFaceStack.Count == 0)
+			{
+				return new DeferredFace();
+			}
+			return DeferredFaceStack.Pop();
 		}
 	}
 }

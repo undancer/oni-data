@@ -19,7 +19,7 @@ public class Notification
 
 	public object customClickData;
 
-	private int notificationIncrement = 0;
+	private int notificationIncrement;
 
 	private string notifierName;
 
@@ -132,16 +132,15 @@ public class Notification
 				string value = text.Substring(num3, num - num3);
 				stringBuilder.Append(value);
 				num2 = text.IndexOf('}', num);
-				if (num < num2)
+				if (num >= num2)
 				{
-					string tag = text.Substring(num + 1, num2 - num - 1);
-					string tagDescription = GetTagDescription(tag);
-					stringBuilder.Append(tagDescription);
-					num3 = num2 + 1;
-					num = text.IndexOf('{', num2);
-					continue;
+					break;
 				}
-				break;
+				string tag = text.Substring(num + 1, num2 - num - 1);
+				string tagDescription = GetTagDescription(tag);
+				stringBuilder.Append(tagDescription);
+				num3 = num2 + 1;
+				num = text.IndexOf('{', num2);
 			}
 			stringBuilder.Append(text.Substring(num3, text.Length - num3));
 			return stringBuilder.ToString();

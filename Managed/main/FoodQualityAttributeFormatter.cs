@@ -19,7 +19,6 @@ public class FoodQualityAttributeFormatter : StandardAttributeFormatter
 
 	public override string GetFormattedValue(float value, GameUtil.TimeSlice timeSlice)
 	{
-		int quality = (int)value;
-		return Util.StripTextFormatting(GameUtil.GetFormattedFoodQuality(quality));
+		return Util.StripTextFormatting(GameUtil.GetFormattedFoodQuality((int)value));
 	}
 }

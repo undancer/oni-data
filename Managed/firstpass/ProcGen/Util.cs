@@ -141,13 +141,13 @@ namespace ProcGen
 			points.AddRange(line);
 			if (x != y)
 			{
-				p = new Vector2(c.x - y, c.y + x);
+				Vector2 p5 = new Vector2(c.x - y, c.y + x);
 				p2 = new Vector2(c.x + y, c.y + x);
-				line = GetLine(p, p2);
+				line = GetLine(p5, p2);
 				points.AddRange(line);
-				p3 = new Vector2(c.x - y, c.y - x);
+				Vector2 p6 = new Vector2(c.x - y, c.y - x);
 				p4 = new Vector2(c.x + y, c.y - x);
-				line = GetLine(p3, p4);
+				line = GetLine(p6, p4);
 				points.AddRange(line);
 			}
 		}
@@ -207,16 +207,14 @@ namespace ProcGen
 		public static List<Vector2I> GetSplat(Vector2 center, float radius, System.Random rng)
 		{
 			HashSet<Vector2I> hashSet = new HashSet<Vector2I>();
-			float num = (float)Math.PI * 2f * radius;
-			int num2 = Mathf.RoundToInt(num * 1f);
-			for (int i = 0; i < num2; i++)
+			int num = Mathf.RoundToInt((float)Math.PI * 2f * radius * 1f);
+			for (int i = 0; i < num; i++)
 			{
-				float num3 = (float)rng.NextDouble();
-				num3 *= num3;
-				float num4 = num3 * radius;
-				float f = (float)Math.PI * 2f * ((float)i / (float)num2);
-				float x = Mathf.Sin(f) * num4;
-				float y = Mathf.Cos(f) * num4;
+				float num2 = (float)rng.NextDouble();
+				float num3 = num2 * num2 * radius;
+				float f = (float)Math.PI * 2f * ((float)i / (float)num);
+				float x = Mathf.Sin(f) * num3;
+				float y = Mathf.Cos(f) * num3;
 				foreach (Vector2I item in GetLine(center, new Vector2(x, y) + center))
 				{
 					hashSet.Add(item);

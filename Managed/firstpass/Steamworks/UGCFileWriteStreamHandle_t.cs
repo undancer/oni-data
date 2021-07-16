@@ -21,7 +21,11 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			return other is UGCFileWriteStreamHandle_t && this == (UGCFileWriteStreamHandle_t)other;
+			if (other is UGCFileWriteStreamHandle_t)
+			{
+				return this == (UGCFileWriteStreamHandle_t)other;
+			}
+			return false;
 		}
 
 		public override int GetHashCode()

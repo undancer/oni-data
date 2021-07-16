@@ -79,11 +79,8 @@ public class ResourceTreeNode : Resource
 
 		public void Render(Rect rect, float width, Color colour)
 		{
-			EdgeType edgeType = this.edgeType;
-			EdgeType edgeType2 = edgeType;
-			if (edgeType2 != EdgeType.GenericEdge)
-			{
-			}
+			_ = edgeType;
+			_ = 5;
 			RTEditorGUI.DrawLine(rect, SourcePos(), TargetPos(), colour, null, width);
 		}
 	}

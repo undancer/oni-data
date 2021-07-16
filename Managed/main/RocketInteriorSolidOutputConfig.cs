@@ -16,25 +16,25 @@ public class RocketInteriorSolidOutputConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("RocketInteriorSolidOutput", 1, 1, "rocket_floor_plug_solid_out_kanim", 30, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnRocketEnvelope, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER2);
-		buildingDef.OutputConduitType = ConduitType.Solid;
-		buildingDef.UtilityOutputOffset = new CellOffset(0, 0);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 60f;
-		buildingDef.ExhaustKilowattsWhenActive = 0f;
-		buildingDef.SelfHeatKilowattsWhenActive = 0.5f;
-		buildingDef.Overheatable = false;
-		buildingDef.Floodable = false;
-		buildingDef.Entombable = false;
-		buildingDef.ViewMode = OverlayModes.SolidConveyor.ID;
-		buildingDef.ObjectLayer = ObjectLayer.Building;
-		buildingDef.SceneLayer = Grid.SceneLayer.Building;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.AudioSize = "small";
-		buildingDef.BaseTimeUntilRepair = -1f;
-		buildingDef.PermittedRotations = PermittedRotations.R360;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("RocketInteriorSolidOutput", 1, 1, "rocket_floor_plug_solid_out_kanim", 30, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnRocketEnvelope, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER2);
+		obj.OutputConduitType = ConduitType.Solid;
+		obj.UtilityOutputOffset = new CellOffset(0, 0);
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 60f;
+		obj.ExhaustKilowattsWhenActive = 0f;
+		obj.SelfHeatKilowattsWhenActive = 0.5f;
+		obj.Overheatable = false;
+		obj.Floodable = false;
+		obj.Entombable = false;
+		obj.ViewMode = OverlayModes.SolidConveyor.ID;
+		obj.ObjectLayer = ObjectLayer.Building;
+		obj.SceneLayer = Grid.SceneLayer.Building;
+		obj.AudioCategory = "Metal";
+		obj.AudioSize = "small";
+		obj.BaseTimeUntilRepair = -1f;
+		obj.PermittedRotations = PermittedRotations.R360;
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.SolidConveyorIDs, "RocketInteriorSolidOutput");
-		return buildingDef;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -49,8 +49,7 @@ public class RocketInteriorSolidOutputConfig : IBuildingConfig
 		go.AddOrGetDef<PoweredActiveController.Def>();
 		Storage storage = go.AddOrGet<Storage>();
 		storage.capacityKg = 20f;
-		Filterable filterable = go.AddOrGet<Filterable>();
-		filterable.filterElementState = Filterable.ElementState.Solid;
+		go.AddOrGet<Filterable>().filterElementState = Filterable.ElementState.Solid;
 		RocketConduitStorageAccess rocketConduitStorageAccess = go.AddOrGet<RocketConduitStorageAccess>();
 		rocketConduitStorageAccess.storage = storage;
 		rocketConduitStorageAccess.cargoType = CargoBay.CargoType.Solids;

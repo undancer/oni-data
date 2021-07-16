@@ -54,32 +54,26 @@ public class PasteBaseTemplateScreen : KScreen
 				if (DlcManager.IsContentActive(dlcId))
 				{
 					GameObject gameObject = Util.KInstantiateUI(prefab_directory_button, button_list_container, force_active: true);
-					KButton component = gameObject.GetComponent<KButton>();
-					component.onClick += delegate
+					gameObject.GetComponent<KButton>().onClick += delegate
 					{
 						UpdateDirectory(SettingsCache.GetScope(dlcId));
 					};
-					LocText componentInChildren = gameObject.GetComponentInChildren<LocText>();
-					componentInChildren.text = ((dlcId == "") ? UI.DEBUG_TOOLS.SAVE_BASE_TEMPLATE.BASE_GAME_FOLDER_NAME.text : SettingsCache.GetScope(dlcId));
+					gameObject.GetComponentInChildren<LocText>().text = ((dlcId == "") ? UI.DEBUG_TOOLS.SAVE_BASE_TEMPLATE.BASE_GAME_FOLDER_NAME.text : SettingsCache.GetScope(dlcId));
 					m_template_buttons.Add(gameObject);
 				}
 			}
 			return;
 		}
-		string path = TemplateCache.RewriteTemplatePath(m_CurrentDirectory);
-		string[] directories = Directory.GetDirectories(path);
-		string[] array = directories;
-		foreach (string path2 in array)
+		string[] directories = Directory.GetDirectories(TemplateCache.RewriteTemplatePath(m_CurrentDirectory));
+		foreach (string path in directories)
 		{
-			string directory_name = System.IO.Path.GetFileNameWithoutExtension(path2);
+			string directory_name = System.IO.Path.GetFileNameWithoutExtension(path);
 			GameObject gameObject2 = Util.KInstantiateUI(prefab_directory_button, button_list_container, force_active: true);
-			KButton component2 = gameObject2.GetComponent<KButton>();
-			component2.onClick += delegate
+			gameObject2.GetComponent<KButton>().onClick += delegate
 			{
 				UpdateDirectory(directory_name);
 			};
-			LocText componentInChildren2 = gameObject2.GetComponentInChildren<LocText>();
-			componentInChildren2.text = directory_name;
+			gameObject2.GetComponentInChildren<LocText>().text = directory_name;
 			m_template_buttons.Add(gameObject2);
 		}
 		ListPool<FileHandle, PasteBaseTemplateScreen>.PooledList pooledList = ListPool<FileHandle, PasteBaseTemplateScreen>.Allocate();
@@ -88,13 +82,11 @@ public class PasteBaseTemplateScreen : KScreen
 		{
 			string file_path_no_extension = System.IO.Path.GetFileNameWithoutExtension(item.full_path);
 			GameObject gameObject3 = Util.KInstantiateUI(prefab_paste_button, button_list_container, force_active: true);
-			KButton component3 = gameObject3.GetComponent<KButton>();
-			component3.onClick += delegate
+			gameObject3.GetComponent<KButton>().onClick += delegate
 			{
 				OnClickPasteButton(file_path_no_extension);
 			};
-			LocText componentInChildren3 = gameObject3.GetComponentInChildren<LocText>();
-			componentInChildren3.text = file_path_no_extension;
+			gameObject3.GetComponentInChildren<LocText>().text = file_path_no_extension;
 			m_template_buttons.Add(gameObject3);
 		}
 	}

@@ -13,7 +13,7 @@ public class DecorDiagnostic : ColonyDiagnostic
 	private DiagnosticResult CheckDecor()
 	{
 		List<MinionIdentity> worldItems = Components.LiveMinionIdentities.GetWorldItems(base.worldID);
-		List<PlantablePlot> worldItems2 = Components.PlantablePlots.GetWorldItems(base.worldID);
+		Components.PlantablePlots.GetWorldItems(base.worldID);
 		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS);
 		if (worldItems.Count == 0)
 		{

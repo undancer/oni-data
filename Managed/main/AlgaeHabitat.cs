@@ -166,10 +166,9 @@ public class AlgaeHabitat : StateMachineComponent<AlgaeHabitat.SMInstance>
 		foreach (ElementConverter elementConverter in components2)
 		{
 			ElementConverter.OutputElement[] outputElements = elementConverter.outputElements;
-			for (int k = 0; k < outputElements.Length; k++)
+			for (int j = 0; j < outputElements.Length; j++)
 			{
-				ElementConverter.OutputElement outputElement = outputElements[k];
-				if (outputElement.elementHash == SimHashes.DirtyWater)
+				if (outputElements[j].elementHash == SimHashes.DirtyWater)
 				{
 					elementConverter.SetStorage(storage);
 					break;

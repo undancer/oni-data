@@ -32,13 +32,11 @@ public static class MaterialNeeds
 			if (!includeRelatedWorlds)
 			{
 				float value = 0f;
-				Dictionary<Tag, float> materialNeeds = ClusterManager.Instance.GetWorld(worldId).materialNeeds;
-				materialNeeds.TryGetValue(tag, out value);
-				num += value;
+				ClusterManager.Instance.GetWorld(worldId).materialNeeds.TryGetValue(tag, out value);
+				return num + value;
 			}
-			else
+			int parentWorldId = world.ParentWorldId;
 			{
-				int parentWorldId = world.ParentWorldId;
 				foreach (WorldContainer worldContainer in ClusterManager.Instance.WorldContainers)
 				{
 					if (worldContainer.ParentWorldId == parentWorldId)
@@ -50,8 +48,8 @@ public static class MaterialNeeds
 						}
 					}
 				}
+				return num;
 			}
-			return num;
 		}
 		Debug.LogWarning($"MaterialNeeds.GetAmount called with invalid worldId {worldId}");
 		return 0f;

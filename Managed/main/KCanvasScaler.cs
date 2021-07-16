@@ -72,15 +72,13 @@ public class KCanvasScaler : KMonoBehaviour
 
 	private float ScreenRelativeScale()
 	{
-		float dpi = Screen.dpi;
+		_ = Screen.dpi;
 		Camera x = Camera.main;
 		if (x == null)
 		{
 			x = UnityEngine.Object.FindObjectOfType<Camera>();
 		}
-		if (x != null)
-		{
-		}
+		_ = x != null;
 		if ((float)Screen.height <= scaleSteps[0].maxRes_y || (float)Screen.width / (float)Screen.height < 1.6777778f)
 		{
 			return scaleSteps[0].scale;

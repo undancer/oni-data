@@ -13,8 +13,7 @@ public class PopIn : MonoBehaviour
 
 	private void Update()
 	{
-		float x = base.transform.localScale.x;
-		float num = Mathf.Lerp(x, targetScale, Time.unscaledDeltaTime * speed);
+		float num = Mathf.Lerp(base.transform.localScale.x, targetScale, Time.unscaledDeltaTime * speed);
 		base.transform.localScale = new Vector3(num, num, 1f);
 	}
 

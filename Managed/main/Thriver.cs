@@ -28,7 +28,8 @@ public class Thriver : StateMachineComponent<Thriver.StatesInstance>
 			root.EventTransition(GameHashes.NotStressed, idle).EventTransition(GameHashes.Stressed, stressed).EventTransition(GameHashes.StressedHadEnough, stressed)
 				.Enter(delegate(StatesInstance smi)
 				{
-					if (smi.master.GetSMI<StressMonitor.Instance>()?.IsStressed() ?? false)
+					StressMonitor.Instance sMI = smi.master.GetSMI<StressMonitor.Instance>();
+					if (sMI != null && sMI.IsStressed())
 					{
 						smi.GoTo(stressed);
 					}

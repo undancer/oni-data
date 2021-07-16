@@ -86,8 +86,7 @@ public class BatchSet
 		{
 			Debug.LogError("Registering with wrong batch set (layer) " + controller.GetName());
 		}
-		HashedString batchGroupID = controller.GetBatchGroupID();
-		if (!(batchGroupID == key.groupID))
+		if (!(controller.GetBatchGroupID() == key.groupID))
 		{
 			Debug.LogError("Registering with wrong batch set (groupID) " + controller.GetName());
 		}

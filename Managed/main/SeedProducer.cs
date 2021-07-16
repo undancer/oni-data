@@ -28,7 +28,7 @@ public class SeedProducer : KMonoBehaviour, IGameObjectEffectDescriptor
 
 	public SeedInfo seedInfo;
 
-	private bool droppedSeedAlready = false;
+	private bool droppedSeedAlready;
 
 	private static readonly EventSystem.IntraObjectHandler<SeedProducer> DropSeedDelegate = new EventSystem.IntraObjectHandler<SeedProducer>(delegate(SeedProducer component, object data)
 	{
@@ -125,20 +125,14 @@ public class SeedProducer : KMonoBehaviour, IGameObjectEffectDescriptor
 	{
 		AttributeInstance attributeInstance = Db.Get().PlantAttributes.MaxRadiationThreshold.Lookup(this);
 		int num = Grid.PosToCell(base.gameObject);
-		float value = (Grid.IsValidCell(num) ? Grid.Radiation[num] : 0f);
-		value = Mathf.Clamp(value, 0f, attributeInstance.GetTotalValue());
-		float num2 = value / attributeInstance.GetTotalValue() * 0.8f;
-		float value2 = UnityEngine.Random.value;
-		return value2 < num2;
+		float num2 = Mathf.Clamp(Grid.IsValidCell(num) ? Grid.Radiation[num] : 0f, 0f, attributeInstance.GetTotalValue()) / attributeInstance.GetTotalValue() * 0.8f;
+		return UnityEngine.Random.value < num2;
 	}
 
 	public List<Descriptor> GetDescriptors(GameObject go)
 	{
 		List<Descriptor> list = new List<Descriptor>();
-		GameObject prefab = Assets.GetPrefab(new Tag(seedInfo.seedId));
-		if (prefab != null)
-		{
-		}
+		_ = Assets.GetPrefab(new Tag(seedInfo.seedId)) != null;
 		switch (seedInfo.productionType)
 		{
 		default:

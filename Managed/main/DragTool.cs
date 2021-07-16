@@ -37,9 +37,9 @@ public class DragTool : InterfaceTool
 
 	protected Vector3 placementPivot;
 
-	protected bool interceptNumberKeysForPriority = false;
+	protected bool interceptNumberKeysForPriority;
 
-	private bool dragging = false;
+	private bool dragging;
 
 	private Vector3 previousCursorPos;
 
@@ -90,8 +90,7 @@ public class DragTool : InterfaceTool
 			areaVisualizer.SetActive(value: false);
 			areaVisualizerSpriteRenderer = areaVisualizer.GetComponent<SpriteRenderer>();
 			areaVisualizer.transform.SetParent(base.transform);
-			Renderer component = areaVisualizer.GetComponent<Renderer>();
-			component.material.color = areaColour;
+			areaVisualizer.GetComponent<Renderer>().material.color = areaColour;
 		}
 	}
 
@@ -123,9 +122,7 @@ public class DragTool : InterfaceTool
 		if (areaVisualizerTextPrefab != null)
 		{
 			areaVisualizerText = NameDisplayScreen.Instance.AddWorldText("", areaVisualizerTextPrefab);
-			GameObject worldText = NameDisplayScreen.Instance.GetWorldText(areaVisualizerText);
-			LocText component = worldText.GetComponent<LocText>();
-			component.color = areaColour;
+			NameDisplayScreen.Instance.GetWorldText(areaVisualizerText).GetComponent<LocText>().color = areaColour;
 		}
 		switch (GetMode())
 		{
@@ -162,8 +159,7 @@ public class DragTool : InterfaceTool
 				NameDisplayScreen.Instance.RemoveWorldText(areaVisualizerText);
 				areaVisualizerText = Guid.Empty;
 			}
-			Mode mode = GetMode();
-			if (mode == Mode.Box && areaVisualizer != null)
+			if (GetMode() == Mode.Box && areaVisualizer != null)
 			{
 				areaVisualizer.SetActive(value: false);
 			}
@@ -185,8 +181,7 @@ public class DragTool : InterfaceTool
 			NameDisplayScreen.Instance.RemoveWorldText(areaVisualizerText);
 			areaVisualizerText = Guid.Empty;
 		}
-		Mode mode = GetMode();
-		if (mode != Mode.Box || !(areaVisualizer != null))
+		if (GetMode() != Mode.Box || !(areaVisualizer != null))
 		{
 			return;
 		}
@@ -218,8 +213,7 @@ public class DragTool : InterfaceTool
 				}
 			}
 		}
-		string sound = GlobalAssets.GetSound(GetConfirmSound());
-		KMonoBehaviour.PlaySound(sound);
+		KMonoBehaviour.PlaySound(GlobalAssets.GetSound(GetConfirmSound()));
 		OnDragComplete(downPos, cursor_pos);
 	}
 
@@ -291,12 +285,11 @@ public class DragTool : InterfaceTool
 			if (areaVisualizerText != Guid.Empty)
 			{
 				int dragLength = GetDragLength();
-				GameObject worldText2 = NameDisplayScreen.Instance.GetWorldText(areaVisualizerText);
-				LocText component2 = worldText2.GetComponent<LocText>();
+				LocText component2 = NameDisplayScreen.Instance.GetWorldText(areaVisualizerText).GetComponent<LocText>();
 				component2.text = string.Format(UI.TOOLS.TOOL_LENGTH_FMT, dragLength);
-				Vector3 position2 = Grid.CellToPos(Grid.PosToCell(cursorPos));
-				position2 += new Vector3(0f, 1f, 0f);
-				component2.transform.SetPosition(position2);
+				Vector3 position3 = Grid.CellToPos(Grid.PosToCell(cursorPos));
+				position3 += new Vector3(0f, 1f, 0f);
+				component2.transform.SetPosition(position3);
 			}
 			break;
 		case Mode.Box:
@@ -308,8 +301,8 @@ public class DragTool : InterfaceTool
 			input = GetRegularizedPos(input, minimize: false);
 			input2 = GetRegularizedPos(input2, minimize: true);
 			Vector2 vector2 = input - input2;
-			Vector2 vector3 = (input + input2) * 0.5f;
-			areaVisualizer.transform.SetPosition(new Vector2(vector3.x, vector3.y));
+			Vector2 v = (input + input2) * 0.5f;
+			areaVisualizer.transform.SetPosition(new Vector2(v.x, v.y));
 			int num = (int)(input.x - input2.x + (input.y - input2.y) - 1f);
 			if (areaVisualizerSpriteRenderer.size != vector2)
 			{
@@ -327,11 +320,9 @@ public class DragTool : InterfaceTool
 			if (areaVisualizerText != Guid.Empty)
 			{
 				Vector2I vector2I = new Vector2I(Mathf.RoundToInt(vector2.x), Mathf.RoundToInt(vector2.y));
-				GameObject worldText = NameDisplayScreen.Instance.GetWorldText(areaVisualizerText);
-				LocText component = worldText.GetComponent<LocText>();
+				LocText component = NameDisplayScreen.Instance.GetWorldText(areaVisualizerText).GetComponent<LocText>();
 				component.text = string.Format(UI.TOOLS.TOOL_AREA_FMT, vector2I.x, vector2I.y, vector2I.x * vector2I.y);
-				Vector2 v = vector3;
-				component.transform.SetPosition(v);
+				TransformExtensions.SetPosition(position: v, transform: component.transform);
 			}
 			break;
 		}
@@ -483,7 +474,11 @@ public class DragTool : InterfaceTool
 
 	public override bool ShowHoverUI()
 	{
-		return dragging || base.ShowHoverUI();
+		if (!dragging)
+		{
+			return base.ShowHoverUI();
+		}
+		return true;
 	}
 
 	public override void LateUpdate()

@@ -42,16 +42,14 @@ public class GasConduitPreferentialFlowConfig : IBuildingConfig
 
 	private void AttachPort(GameObject go)
 	{
-		ConduitSecondaryInput conduitSecondaryInput = go.AddComponent<ConduitSecondaryInput>();
-		conduitSecondaryInput.portInfo = secondaryPort;
+		go.AddComponent<ConduitSecondaryInput>().portInfo = secondaryPort;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		GeneratedBuildings.MakeBuildingAlwaysOperational(go);
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
-		ConduitPreferentialFlow conduitPreferentialFlow = go.AddOrGet<ConduitPreferentialFlow>();
-		conduitPreferentialFlow.portInfo = secondaryPort;
+		go.AddOrGet<ConduitPreferentialFlow>().portInfo = secondaryPort;
 		go.GetComponent<KPrefabID>().AddTag(GameTags.OverlayInFrontOfConduits);
 	}
 

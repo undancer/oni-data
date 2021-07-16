@@ -6,7 +6,7 @@ public static class TemplateCache
 {
 	private const string defaultAssetFolder = "bases";
 
-	private static Dictionary<string, TemplateContainer> templates = null;
+	private static Dictionary<string, TemplateContainer> templates;
 
 	public static bool Initted
 	{
@@ -61,7 +61,6 @@ public static class TemplateCache
 
 	public static bool TemplateExists(string templatePath)
 	{
-		string path = RewriteTemplateYaml(templatePath);
-		return FileSystem.FileExists(path);
+		return FileSystem.FileExists(RewriteTemplateYaml(templatePath));
 	}
 }

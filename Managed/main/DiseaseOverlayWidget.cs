@@ -61,13 +61,11 @@ public class DiseaseOverlayWidget : KMonoBehaviour
 				}
 				else
 				{
-					GameObject gameObject2 = Util.KInstantiateUI(germsImage.gameObject, germsImage.transform.parent.gameObject, force_active: true);
-					image = gameObject2.GetComponent<Image>();
+					image = Util.KInstantiateUI(germsImage.gameObject, germsImage.transform.parent.gameObject, force_active: true).GetComponent<Image>();
 					displayedDiseases.Add(image);
 				}
 				image.color = GlobalAssets.Instance.colorSet.GetColorByName(resource.overlayColourName);
-				ToolTip component2 = image.GetComponent<ToolTip>();
-				component2.toolTip = resource.Name + " " + GameUtil.GetFormattedDiseaseAmount((int)value);
+				image.GetComponent<ToolTip>().toolTip = resource.Name + " " + GameUtil.GetFormattedDiseaseAmount((int)value);
 				num2++;
 			}
 		}

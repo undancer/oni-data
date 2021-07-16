@@ -53,8 +53,7 @@ public class TileScreen : KScreen
 	{
 		Vector3 mousePos = KInputManager.GetMousePos();
 		mousePos.z = 0f - Camera.main.transform.GetPosition().z - Grid.CellSizeInMeters;
-		Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
-		int num = Grid.PosToCell(pos);
+		int num = Grid.PosToCell(Camera.main.ScreenToWorldPoint(mousePos));
 		if (Grid.IsValidCell(num) && Grid.IsVisible(num))
 		{
 			Element element = Grid.Element[num];
@@ -147,16 +146,14 @@ public class TileScreen : KScreen
 		ConduitFlow conduitFlow = ((mode == OverlayModes.LiquidConduits.ID) ? Game.Instance.gasConduitFlow : Game.Instance.liquidConduitFlow);
 		Vector3 mousePos = KInputManager.GetMousePos();
 		mousePos.z = 0f - Camera.main.transform.GetPosition().z - Grid.CellSizeInMeters;
-		Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
-		int cell = Grid.PosToCell(pos);
+		int cell = Grid.PosToCell(Camera.main.ScreenToWorldPoint(mousePos));
 		if (Grid.IsValidCell(cell) && utilityNetworkManager.GetConnections(cell, is_physical_building: true) != 0)
 		{
 			ConduitFlow.ConduitContents contents = conduitFlow.GetContents(cell);
-			SimHashes element = contents.element;
-			Element element2 = ElementLoader.FindElementByHash(element);
+			Element element = ElementLoader.FindElementByHash(contents.element);
 			float num = contents.mass;
 			float temperature = contents.temperature;
-			nameLabel.text = element2.name;
+			nameLabel.text = element.name;
 			string arg = "kg";
 			if (num < 5f)
 			{
@@ -165,32 +162,32 @@ public class TileScreen : KScreen
 			}
 			massAmtLabel.text = $"{num:0.0} {arg}";
 			massTitleLabel.text = "mass";
-			if (element2.IsLiquid)
+			if (element.IsLiquid)
 			{
 				solidIcon.gameObject.transform.parent.gameObject.SetActive(value: true);
 				gasIcon.gameObject.transform.parent.gameObject.SetActive(value: true);
 				massIcon.sprite = liquidIcon.sprite;
-				solidText.text = ((int)element2.lowTemp).ToString();
-				gasText.text = ((int)element2.highTemp).ToString();
+				solidText.text = ((int)element.lowTemp).ToString();
+				gasText.text = ((int)element.highTemp).ToString();
 				liquidIcon.rectTransform.SetParent(temperatureSlider.transform.parent, worldPositionStays: true);
 				liquidIcon.rectTransform.SetLocalPosition(new Vector3(-80f, 0f));
-				if (!SetSliderColour(temperature, element2.lowTemp))
+				if (!SetSliderColour(temperature, element.lowTemp))
 				{
-					SetSliderColour(temperature, element2.highTemp);
+					SetSliderColour(temperature, element.highTemp);
 				}
-				temperatureSlider.SetMinMaxValue(element2.lowTemp, element2.highTemp, Mathf.Max(element2.lowTemp - 100f, 0f), Mathf.Min(element2.highTemp + 100f, 5200f));
+				temperatureSlider.SetMinMaxValue(element.lowTemp, element.highTemp, Mathf.Max(element.lowTemp - 100f, 0f), Mathf.Min(element.highTemp + 100f, 5200f));
 			}
-			else if (element2.IsGas)
+			else if (element.IsGas)
 			{
 				solidText.text = "";
-				gasText.text = ((int)element2.lowTemp).ToString();
+				gasText.text = ((int)element.lowTemp).ToString();
 				solidIcon.gameObject.transform.parent.gameObject.SetActive(value: false);
 				gasIcon.gameObject.transform.parent.gameObject.SetActive(value: true);
 				massIcon.sprite = gasIcon.sprite;
-				SetSliderColour(temperature, element2.lowTemp);
+				SetSliderColour(temperature, element.lowTemp);
 				liquidIcon.rectTransform.SetParent(gasIcon.transform.parent, worldPositionStays: true);
 				liquidIcon.rectTransform.SetLocalPosition(new Vector3(0f, -64f));
-				temperatureSlider.SetMinMaxValue(0f, Mathf.Max(element2.lowTemp - 100f, 0f), 0f, element2.lowTemp + 100f);
+				temperatureSlider.SetMinMaxValue(0f, Mathf.Max(element.lowTemp - 100f, 0f), 0f, element.lowTemp + 100f);
 			}
 			temperatureSlider.SetExtraValue(temperature);
 			temperatureSliderText.text = GameUtil.GetFormattedTemperature((int)temperature);

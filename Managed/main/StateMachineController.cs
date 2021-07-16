@@ -112,7 +112,7 @@ public class StateMachineController : KMonoBehaviour, ISaveLoadableDetails, ISta
 		}
 		foreach (StateMachine.BaseDef def in cmpdef.defs)
 		{
-			StateMachine.Instance instance = def.CreateSMI(this);
+			def.CreateSMI(this);
 		}
 	}
 

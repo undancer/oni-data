@@ -20,15 +20,15 @@ public class Health : KMonoBehaviour, ISaveLoadable
 	}
 
 	[Serialize]
-	public bool CanBeIncapacitated = false;
+	public bool CanBeIncapacitated;
 
 	[Serialize]
-	public HealthState State = HealthState.Perfect;
+	public HealthState State;
 
 	[Serialize]
 	private Death source_of_death;
 
-	public HealthBar healthBar = null;
+	public HealthBar healthBar;
 
 	private Effects effects;
 
@@ -260,7 +260,11 @@ public class Health : KMonoBehaviour, ISaveLoadable
 
 	public bool IsDefeated()
 	{
-		return State == HealthState.Incapacitated || State == HealthState.Dead;
+		if (State != HealthState.Incapacitated)
+		{
+			return State == HealthState.Dead;
+		}
+		return true;
 	}
 
 	public void Incapacitate(Tag cause)
@@ -272,8 +276,7 @@ public class Health : KMonoBehaviour, ISaveLoadable
 
 	private void Kill()
 	{
-		DeathMonitor.Instance sMI = base.gameObject.GetSMI<DeathMonitor.Instance>();
-		if (sMI != null)
+		if (base.gameObject.GetSMI<DeathMonitor.Instance>() != null)
 		{
 			base.gameObject.GetSMI<DeathMonitor.Instance>().Kill(Db.Get().Deaths.Slain);
 		}

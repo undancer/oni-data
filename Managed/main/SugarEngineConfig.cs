@@ -19,22 +19,22 @@ public class SugarEngineConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("SugarEngine", 3, 3, "rocket_sugar_engine_kanim", 1000, 30f, BUILDINGS.ROCKETRY_MASS_KG.DENSE_TIER1, MATERIALS.RAW_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
-		buildingDef.AttachmentSlotTag = GameTags.Rocket;
-		buildingDef.SceneLayer = Grid.SceneLayer.Building;
-		buildingDef.OverheatTemperature = 2273.15f;
-		buildingDef.Floodable = false;
-		buildingDef.attachablePosition = new CellOffset(0, 0);
-		buildingDef.ObjectLayer = ObjectLayer.Building;
-		buildingDef.InputConduitType = ConduitType.None;
-		buildingDef.GeneratorWattageRating = 60f;
-		buildingDef.GeneratorBaseCapacity = 2000f;
-		buildingDef.RequiresPowerInput = false;
-		buildingDef.RequiresPowerOutput = false;
-		buildingDef.CanMove = true;
-		buildingDef.Cancellable = false;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("SugarEngine", 3, 3, "rocket_sugar_engine_kanim", 1000, 30f, BUILDINGS.ROCKETRY_MASS_KG.DENSE_TIER1, MATERIALS.RAW_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		BuildingTemplates.CreateRocketBuildingDef(obj);
+		obj.AttachmentSlotTag = GameTags.Rocket;
+		obj.SceneLayer = Grid.SceneLayer.Building;
+		obj.OverheatTemperature = 2273.15f;
+		obj.Floodable = false;
+		obj.attachablePosition = new CellOffset(0, 0);
+		obj.ObjectLayer = ObjectLayer.Building;
+		obj.InputConduitType = ConduitType.None;
+		obj.GeneratorWattageRating = 60f;
+		obj.GeneratorBaseCapacity = 2000f;
+		obj.RequiresPowerInput = false;
+		obj.RequiresPowerOutput = false;
+		obj.CanMove = true;
+		obj.Cancellable = false;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -42,8 +42,7 @@ public class SugarEngineConfig : IBuildingConfig
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		go.AddOrGet<LoopingSounds>();
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
-		BuildingAttachPoint buildingAttachPoint = go.AddOrGet<BuildingAttachPoint>();
-		buildingAttachPoint.points = new BuildingAttachPoint.HardPoint[1]
+		go.AddOrGet<BuildingAttachPoint>().points = new BuildingAttachPoint.HardPoint[1]
 		{
 			new BuildingAttachPoint.HardPoint(new CellOffset(0, 3), GameTags.Rocket, null)
 		};
@@ -67,7 +66,7 @@ public class SugarEngineConfig : IBuildingConfig
 		rocketEngineCluster.explosionEffectHash = SpawnFXHashes.MeteorImpactDust;
 		rocketEngineCluster.requireOxidizer = true;
 		rocketEngineCluster.exhaustElement = SimHashes.CarbonDioxide;
-		ModuleGenerator moduleGenerator = go.AddOrGet<ModuleGenerator>();
+		go.AddOrGet<ModuleGenerator>();
 		Storage storage = go.AddOrGet<Storage>();
 		storage.capacityKg = 450f;
 		storage.SetDefaultStoredItemModifiers(new List<Storage.StoredItemModifier>

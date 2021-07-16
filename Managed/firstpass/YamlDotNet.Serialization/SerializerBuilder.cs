@@ -68,35 +68,9 @@ namespace YamlDotNet.Serialization
 		public SerializerBuilder()
 		{
 			typeInspectorFactories.Add(typeof(CachedTypeInspector), (ITypeInspector inner) => new CachedTypeInspector(inner));
-			typeInspectorFactories.Add(typeof(NamingConventionTypeInspector), delegate(ITypeInspector inner)
-			{
-				ITypeInspector result2;
-				if (namingConvention == null)
-				{
-					result2 = inner;
-				}
-				else
-				{
-					ITypeInspector typeInspector3 = new NamingConventionTypeInspector(inner, namingConvention);
-					result2 = typeInspector3;
-				}
-				return result2;
-			});
+			typeInspectorFactories.Add(typeof(NamingConventionTypeInspector), (ITypeInspector inner) => (namingConvention == null) ? inner : new NamingConventionTypeInspector(inner, namingConvention));
 			typeInspectorFactories.Add(typeof(YamlAttributesTypeInspector), (ITypeInspector inner) => new YamlAttributesTypeInspector(inner));
-			typeInspectorFactories.Add(typeof(YamlAttributeOverridesInspector), delegate(ITypeInspector inner)
-			{
-				ITypeInspector result;
-				if (overrides == null)
-				{
-					result = inner;
-				}
-				else
-				{
-					ITypeInspector typeInspector2 = new YamlAttributeOverridesInspector(inner, overrides.Clone());
-					result = typeInspector2;
-				}
-				return result;
-			});
+			typeInspectorFactories.Add(typeof(YamlAttributeOverridesInspector), (ITypeInspector inner) => (overrides == null) ? inner : new YamlAttributeOverridesInspector(inner, overrides.Clone()));
 			preProcessingPhaseObjectGraphVisitorFactories = new LazyComponentRegistrationList<IEnumerable<IYamlTypeConverter>, IObjectGraphVisitor<Nothing>>();
 			preProcessingPhaseObjectGraphVisitorFactories.Add(typeof(AnchorAssigner), (IEnumerable<IYamlTypeConverter> typeConverters) => new AnchorAssigner(typeConverters));
 			emissionPhaseObjectGraphVisitorFactories = new LazyComponentRegistrationList<EmissionPhaseObjectGraphVisitorArgs, IObjectGraphVisitor<IEmitter>>();

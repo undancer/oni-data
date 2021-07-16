@@ -36,7 +36,7 @@ public class StoryMessageScreen : KScreen
 
 	public System.Action OnClose;
 
-	private bool startFade = false;
+	private bool startFade;
 
 	public string title
 	{
@@ -102,6 +102,7 @@ public class StoryMessageScreen : KScreen
 
 	public static void HideInterface(bool hide)
 	{
+		SelectTool.Instance.Select(null, skipSound: true);
 		NotificationScreen.Instance.Show(!hide);
 		OverlayMenu.Instance.Show(!hide);
 		if (PlanScreen.Instance != null)
@@ -118,9 +119,15 @@ public class StoryMessageScreen : KScreen
 		ColonyDiagnosticScreen.Instance.Show(!hide);
 		PinnedResourcesPanel.Instance.Show(!hide);
 		TopLeftControlScreen.Instance.Show(!hide);
-		WorldSelector.Instance.Show(!hide);
+		if (WorldSelector.Instance != null)
+		{
+			WorldSelector.Instance.Show(!hide);
+		}
 		DateTime.Instance.Show(!hide);
-		BuildWatermark.Instance.Show(!hide);
+		if (BuildWatermark.Instance != null)
+		{
+			BuildWatermark.Instance.Show(!hide);
+		}
 		PopFXManager.Instance.Show(!hide);
 	}
 
@@ -159,9 +166,7 @@ public class StoryMessageScreen : KScreen
 
 	protected override void OnDeactivate()
 	{
-		if (IsActive())
-		{
-		}
+		IsActive();
 		base.OnDeactivate();
 		MusicManager.instance.StopSong("Music_Victory_01_Message");
 		if (restoreInterfaceOnClose)

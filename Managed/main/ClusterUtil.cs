@@ -100,8 +100,7 @@ public static class ClusterUtil
 
 	public static int GetAsteroidWorldIdAtLocation(AxialI location)
 	{
-		List<ClusterGridEntity> list = ClusterGrid.Instance.cellContents[location];
-		foreach (ClusterGridEntity item in list)
+		foreach (ClusterGridEntity item in ClusterGrid.Instance.cellContents[location])
 		{
 			if (item.Layer == EntityLayer.Asteroid)
 			{
@@ -122,7 +121,11 @@ public static class ClusterUtil
 
 	public static bool ActiveWorldHasPrinter()
 	{
-		return ClusterManager.Instance.activeWorld.IsModuleInterior || Components.Telepads.GetWorldItems(ClusterManager.Instance.activeWorldId).Count > 0;
+		if (!ClusterManager.Instance.activeWorld.IsModuleInterior)
+		{
+			return Components.Telepads.GetWorldItems(ClusterManager.Instance.activeWorldId).Count > 0;
+		}
+		return true;
 	}
 
 	public static float GetAmountFromRelatedWorlds(WorldInventory worldInventory, Tag element)
@@ -143,8 +146,7 @@ public static class ClusterUtil
 	public static List<Pickupable> GetPickupablesFromRelatedWorlds(WorldInventory worldInventory, Tag tag)
 	{
 		List<Pickupable> list = new List<Pickupable>();
-		WorldContainer component = worldInventory.GetComponent<WorldContainer>();
-		int parentWorldId = component.ParentWorldId;
+		int parentWorldId = worldInventory.GetComponent<WorldContainer>().ParentWorldId;
 		ICollection<Pickupable> collection = null;
 		foreach (WorldContainer worldContainer in ClusterManager.Instance.WorldContainers)
 		{

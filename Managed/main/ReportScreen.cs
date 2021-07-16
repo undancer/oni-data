@@ -189,8 +189,7 @@ public class ReportScreen : KScreen
 			lineItems[reportGroup.stringKey] = value;
 		}
 		value.SetActive(value: true);
-		ReportScreenHeader component = value.GetComponent<ReportScreenHeader>();
-		component.SetMainEntry(reportGroup);
+		value.GetComponent<ReportScreenHeader>().SetMainEntry(reportGroup);
 		return value;
 	}
 
@@ -214,8 +213,7 @@ public class ReportScreen : KScreen
 				lineItems[reportGroup.stringKey] = value;
 			}
 			value.SetActive(value: true);
-			ReportScreenEntry component = value.GetComponent<ReportScreenEntry>();
-			component.SetMainEntry(entry, reportGroup);
+			value.GetComponent<ReportScreenEntry>().SetMainEntry(entry, reportGroup);
 		}
 		return value;
 	}

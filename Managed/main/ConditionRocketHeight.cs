@@ -11,7 +11,11 @@ public class ConditionRocketHeight : ProcessCondition
 
 	public override Status EvaluateCondition()
 	{
-		return (engine.maxHeight >= engine.GetComponent<RocketModuleCluster>().CraftInterface.RocketHeight) ? Status.Ready : Status.Failure;
+		if (engine.maxHeight < engine.GetComponent<RocketModuleCluster>().CraftInterface.RocketHeight)
+		{
+			return Status.Failure;
+		}
+		return Status.Ready;
 	}
 
 	public override string GetStatusMessage(Status status)
@@ -19,9 +23,9 @@ public class ConditionRocketHeight : ProcessCondition
 		string text = "";
 		return status switch
 		{
-			Status.Ready => UI.STARMAP.LAUNCHCHECKLIST.MAX_MODULES.STATUS.READY, 
-			Status.Failure => UI.STARMAP.LAUNCHCHECKLIST.MAX_MODULES.STATUS.FAILURE, 
-			_ => UI.STARMAP.LAUNCHCHECKLIST.MAX_MODULES.STATUS.WARNING, 
+			Status.Ready => UI.STARMAP.LAUNCHCHECKLIST.MAX_HEIGHT.STATUS.READY, 
+			Status.Failure => UI.STARMAP.LAUNCHCHECKLIST.MAX_HEIGHT.STATUS.FAILURE, 
+			_ => UI.STARMAP.LAUNCHCHECKLIST.MAX_HEIGHT.STATUS.WARNING, 
 		};
 	}
 
@@ -30,9 +34,9 @@ public class ConditionRocketHeight : ProcessCondition
 		string text = "";
 		return status switch
 		{
-			Status.Ready => UI.STARMAP.LAUNCHCHECKLIST.MAX_MODULES.TOOLTIP.READY, 
-			Status.Failure => UI.STARMAP.LAUNCHCHECKLIST.MAX_MODULES.TOOLTIP.FAILURE, 
-			_ => UI.STARMAP.LAUNCHCHECKLIST.MAX_MODULES.TOOLTIP.WARNING, 
+			Status.Ready => UI.STARMAP.LAUNCHCHECKLIST.MAX_HEIGHT.TOOLTIP.READY, 
+			Status.Failure => UI.STARMAP.LAUNCHCHECKLIST.MAX_HEIGHT.TOOLTIP.FAILURE, 
+			_ => UI.STARMAP.LAUNCHCHECKLIST.MAX_HEIGHT.TOOLTIP.WARNING, 
 		};
 	}
 

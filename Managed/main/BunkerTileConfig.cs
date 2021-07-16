@@ -9,28 +9,28 @@ public class BunkerTileConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("BunkerTile", 1, 1, "floor_bunker_kanim", 1000, 60f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, new string[1]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("BunkerTile", 1, 1, "floor_bunker_kanim", 1000, 60f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, new string[1]
 		{
 			SimHashes.Steel.ToString()
 		}, 800f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER0);
-		BuildingTemplates.CreateFoundationTileDef(buildingDef);
-		buildingDef.Floodable = false;
-		buildingDef.Entombable = false;
-		buildingDef.Overheatable = false;
-		buildingDef.UseStructureTemperature = false;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.AudioSize = "small";
-		buildingDef.BaseTimeUntilRepair = -1f;
-		buildingDef.SceneLayer = Grid.SceneLayer.TileMain;
-		buildingDef.isKAnimTile = true;
-		buildingDef.isSolidTile = true;
-		buildingDef.BlockTileAtlas = Assets.GetTextureAtlas("tiles_bunker");
-		buildingDef.BlockTilePlaceAtlas = Assets.GetTextureAtlas("tiles_bunker_place");
-		buildingDef.BlockTileMaterial = Assets.GetMaterial("tiles_solid");
-		buildingDef.DecorBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_bunker_tops_decor_info");
-		buildingDef.DecorPlaceBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_bunker_tops_decor_place_info");
-		buildingDef.ConstructionOffsetFilter = BuildingDef.ConstructionOffsetFilter_OneDown;
-		return buildingDef;
+		BuildingTemplates.CreateFoundationTileDef(obj);
+		obj.Floodable = false;
+		obj.Entombable = false;
+		obj.Overheatable = false;
+		obj.UseStructureTemperature = false;
+		obj.AudioCategory = "Metal";
+		obj.AudioSize = "small";
+		obj.BaseTimeUntilRepair = -1f;
+		obj.SceneLayer = Grid.SceneLayer.TileMain;
+		obj.isKAnimTile = true;
+		obj.isSolidTile = true;
+		obj.BlockTileAtlas = Assets.GetTextureAtlas("tiles_bunker");
+		obj.BlockTilePlaceAtlas = Assets.GetTextureAtlas("tiles_bunker_place");
+		obj.BlockTileMaterial = Assets.GetMaterial("tiles_solid");
+		obj.DecorBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_bunker_tops_decor_info");
+		obj.DecorPlaceBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_bunker_tops_decor_place_info");
+		obj.ConstructionOffsetFilter = BuildingDef.ConstructionOffsetFilter_OneDown;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -41,10 +41,8 @@ public class BunkerTileConfig : IBuildingConfig
 		simCellOccupier.strengthMultiplier = 10f;
 		simCellOccupier.notifyOnMelt = true;
 		go.AddOrGet<TileTemperature>();
-		KAnimGridTileVisualizer kAnimGridTileVisualizer = go.AddOrGet<KAnimGridTileVisualizer>();
-		kAnimGridTileVisualizer.blockTileConnectorID = BlockTileConnectorID;
-		BuildingHP buildingHP = go.AddOrGet<BuildingHP>();
-		buildingHP.destroyOnDamaged = true;
+		go.AddOrGet<KAnimGridTileVisualizer>().blockTileConnectorID = BlockTileConnectorID;
+		go.AddOrGet<BuildingHP>().destroyOnDamaged = true;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

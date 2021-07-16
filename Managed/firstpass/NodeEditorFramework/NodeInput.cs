@@ -24,7 +24,17 @@ namespace NodeEditorFramework
 			}
 		}
 
-		public bool IsValueNull => !(connection != null) || connection.IsValueNull;
+		public bool IsValueNull
+		{
+			get
+			{
+				if (!(connection != null))
+				{
+					return true;
+				}
+				return connection.IsValueNull;
+			}
+		}
 
 		public static NodeInput Create(Node nodeBody, string inputName, string inputType)
 		{
@@ -82,12 +92,20 @@ namespace NodeEditorFramework
 
 		public object GetValue()
 		{
-			return (connection != null) ? connection.GetValue() : null;
+			if (!(connection != null))
+			{
+				return null;
+			}
+			return connection.GetValue();
 		}
 
 		public object GetValue(Type type)
 		{
-			return (connection != null) ? connection.GetValue(type) : null;
+			if (!(connection != null))
+			{
+				return null;
+			}
+			return connection.GetValue(type);
 		}
 
 		public void SetValue(object value)
@@ -100,7 +118,11 @@ namespace NodeEditorFramework
 
 		public T GetValue<T>()
 		{
-			return (connection != null) ? connection.GetValue<T>() : NodeOutput.GetDefault<T>();
+			if (!(connection != null))
+			{
+				return NodeOutput.GetDefault<T>();
+			}
+			return connection.GetValue<T>();
 		}
 
 		public void SetValue<T>(T value)
@@ -173,7 +195,11 @@ namespace NodeEditorFramework
 
 		public override Node GetNodeAcrossConnection()
 		{
-			return (connection != null) ? connection.body : null;
+			if (!(connection != null))
+			{
+				return null;
+			}
+			return connection.body;
 		}
 	}
 }

@@ -30,7 +30,11 @@ public class TelescopeTarget : ClusterGridEntity
 	public override bool ShowProgressBar()
 	{
 		float progress = GetProgress();
-		return progress > 0f && progress < 1f;
+		if (progress > 0f)
+		{
+			return progress < 1f;
+		}
+		return false;
 	}
 
 	public override float GetProgress()

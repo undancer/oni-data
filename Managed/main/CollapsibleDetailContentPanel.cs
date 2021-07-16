@@ -194,10 +194,9 @@ public class CollapsibleDetailContentPanel : KMonoBehaviour
 	public void ForceLocTextsMeshRebuild()
 	{
 		LocText[] componentsInChildren = GetComponentsInChildren<LocText>();
-		LocText[] array = componentsInChildren;
-		foreach (LocText locText in array)
+		for (int i = 0; i < componentsInChildren.Length; i++)
 		{
-			locText.ForceMeshUpdate();
+			componentsInChildren[i].ForceMeshUpdate();
 		}
 	}
 }

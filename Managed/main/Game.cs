@@ -193,7 +193,7 @@ public class Game : KMonoBehaviour
 
 		private Vector2I max;
 
-		public bool isActive = false;
+		public bool isActive;
 
 		public Vector2I regionMin => min;
 
@@ -341,13 +341,13 @@ public class Game : KMonoBehaviour
 	public Action<GameSaveData> OnLoad;
 
 	[NonSerialized]
-	public bool baseAlreadyCreated = false;
+	public bool baseAlreadyCreated;
 
 	[NonSerialized]
-	public bool autoPrioritizeRoles = false;
+	public bool autoPrioritizeRoles;
 
 	[NonSerialized]
-	public bool advancedPersonalPriorities = false;
+	public bool advancedPersonalPriorities;
 
 	public SavedInfo savedInfo;
 
@@ -369,7 +369,7 @@ public class Game : KMonoBehaviour
 
 	public Element VisualTunerElement;
 
-	public float currentSunlightIntensity = 0f;
+	public float currentSunlightIntensity;
 
 	public RoomProber roomProber;
 
@@ -385,7 +385,7 @@ public class Game : KMonoBehaviour
 
 	public Timelapser timelapser;
 
-	private bool sandboxModeActive = false;
+	private bool sandboxModeActive;
 
 	public HandleVector<CallbackInfo> callbackManager = new HandleVector<CallbackInfo>(256);
 
@@ -446,7 +446,7 @@ public class Game : KMonoBehaviour
 
 	public PlantElementAbsorbers plantElementAbsorbers;
 
-	public TemperatureOverlayModes temperatureOverlayMode = TemperatureOverlayModes.AbsoluteTemperature;
+	public TemperatureOverlayModes temperatureOverlayMode;
 
 	public bool showExpandedTemperatures;
 
@@ -506,7 +506,7 @@ public class Game : KMonoBehaviour
 
 	private List<SolidInfo> gameSolidInfo = new List<SolidInfo>();
 
-	private bool IsPaused = false;
+	private bool IsPaused;
 
 	private HashSet<int> solidChangedFilter = new HashSet<int>();
 
@@ -521,7 +521,7 @@ public class Game : KMonoBehaviour
 	[MyCmpGet]
 	private GameScenePartitioner gameScenePartitioner;
 
-	private bool gameStarted = false;
+	private bool gameStarted;
 
 	private static readonly EventSystem.IntraObjectHandler<Game> MarkStatusItemRendererDirtyDelegate = new EventSystem.IntraObjectHandler<Game>(delegate(Game component, object data)
 	{
@@ -535,9 +535,9 @@ public class Game : KMonoBehaviour
 
 	private ushort[] activeFX;
 
-	public bool debugWasUsed = false;
+	public bool debugWasUsed;
 
-	private bool isLoading = false;
+	private bool isLoading;
 
 	private List<Pair<Vector2I, Vector2I>> simActiveRegions = new List<Pair<Vector2I, Vector2I>>();
 
@@ -556,11 +556,11 @@ public class Game : KMonoBehaviour
 
 	private Dictionary<int, ObjectPool> fxPools = new Dictionary<int, ObjectPool>();
 
-	private SavingPreCB activatePreCB = null;
+	private SavingPreCB activatePreCB;
 
-	private SavingActiveCB activateActiveCB = null;
+	private SavingActiveCB activateActiveCB;
 
-	private SavingPostCB activatePostCB = null;
+	private SavingPostCB activatePostCB;
 
 	[SerializeField]
 	public UIColours uiColours = new UIColours();
@@ -626,7 +626,21 @@ public class Game : KMonoBehaviour
 		}
 	}
 
-	public bool DebugOnlyBuildingsAllowed => DebugHandler.enabled && (SandboxModeActive || DebugHandler.InstantBuildMode);
+	public bool DebugOnlyBuildingsAllowed
+	{
+		get
+		{
+			if (DebugHandler.enabled)
+			{
+				if (!SandboxModeActive)
+				{
+					return DebugHandler.InstantBuildMode;
+				}
+				return true;
+			}
+			return false;
+		}
+	}
 
 	public StatusItemRenderer statusItemRenderer
 	{
@@ -799,8 +813,7 @@ public class Game : KMonoBehaviour
 		UnityEngine.Object[] array = Resources.FindObjectsOfTypeAll(typeof(MeshRenderer));
 		for (int i = 0; i < array.Length; i++)
 		{
-			MeshRenderer meshRenderer = (MeshRenderer)array[i];
-			meshRenderer.reflectionProbeUsage = ReflectionProbeUsage.Off;
+			((MeshRenderer)array[i]).reflectionProbeUsage = ReflectionProbeUsage.Off;
 		}
 		Subscribe(1798162660, MarkStatusItemRendererDirtyDelegate);
 		Subscribe(1983128072, ActiveWorldChangedDelegate);
@@ -866,8 +879,7 @@ public class Game : KMonoBehaviour
 
 	private Player SpawnPlayer()
 	{
-		GameObject gameObject = Util.KInstantiate(playerPrefab, base.gameObject);
-		Player component = gameObject.GetComponent<Player>();
+		Player component = Util.KInstantiate(playerPrefab, base.gameObject).GetComponent<Player>();
 		component.ScreenManager = screenMgr;
 		component.ScreenManager.StartScreen(ScreenPrefabs.Instance.HudScreen.gameObject);
 		component.ScreenManager.StartScreen(ScreenPrefabs.Instance.HoverTextScreen.gameObject, null, GameScreenManager.UIRenderTarget.HoverTextScreen);
@@ -1005,8 +1017,7 @@ public class Game : KMonoBehaviour
 			}
 			for (int num4 = 0; num4 < ptr->numRemovedMassEntries; num4++)
 			{
-				Sim.ConsumedMassInfo consumed_info = ptr->removedMassEntries[num4];
-				ElementConsumer.AddMass(consumed_info);
+				ElementConsumer.AddMass(ptr->removedMassEntries[num4]);
 			}
 			int numMassConsumedCallbacks = ptr->numMassConsumedCallbacks;
 			HandleVector<ComplexCallbackInfo<Sim.MassConsumedCallback>>.Handle handle3 = default(HandleVector<ComplexCallbackInfo<Sim.MassConsumedCallback>>.Handle);
@@ -1080,32 +1091,27 @@ public class Game : KMonoBehaviour
 			int numElementChunkMeltedInfos = ptr->numElementChunkMeltedInfos;
 			for (int num10 = 0; num10 < numElementChunkMeltedInfos; num10++)
 			{
-				Sim.MeltedInfo meltedInfo = ptr->elementChunkMeltedInfos[num10];
-				SimTemperatureTransfer.DoOreMeltTransition(meltedInfo.handle);
+				SimTemperatureTransfer.DoOreMeltTransition(ptr->elementChunkMeltedInfos[num10].handle);
 			}
 			int numBuildingOverheatInfos = ptr->numBuildingOverheatInfos;
 			for (int num11 = 0; num11 < numBuildingOverheatInfos; num11++)
 			{
-				Sim.MeltedInfo meltedInfo2 = ptr->buildingOverheatInfos[num11];
-				StructureTemperatureComponents.DoOverheat(meltedInfo2.handle);
+				StructureTemperatureComponents.DoOverheat(ptr->buildingOverheatInfos[num11].handle);
 			}
 			int numBuildingNoLongerOverheatedInfos = ptr->numBuildingNoLongerOverheatedInfos;
 			for (int num12 = 0; num12 < numBuildingNoLongerOverheatedInfos; num12++)
 			{
-				Sim.MeltedInfo meltedInfo3 = ptr->buildingNoLongerOverheatedInfos[num12];
-				StructureTemperatureComponents.DoNoLongerOverheated(meltedInfo3.handle);
+				StructureTemperatureComponents.DoNoLongerOverheated(ptr->buildingNoLongerOverheatedInfos[num12].handle);
 			}
 			int numBuildingMeltedInfos = ptr->numBuildingMeltedInfos;
 			for (int num13 = 0; num13 < numBuildingMeltedInfos; num13++)
 			{
-				Sim.MeltedInfo meltedInfo4 = ptr->buildingMeltedInfos[num13];
-				StructureTemperatureComponents.DoStateTransition(meltedInfo4.handle);
+				StructureTemperatureComponents.DoStateTransition(ptr->buildingMeltedInfos[num13].handle);
 			}
 			int numCellMeltedInfos = ptr->numCellMeltedInfos;
 			for (int num14 = 0; num14 < numCellMeltedInfos; num14++)
 			{
-				Sim.CellMeltedInfo cellMeltedInfo = ptr->cellMeltedInfos[num14];
-				int gameCell = cellMeltedInfo.gameCell;
+				int gameCell = ptr->cellMeltedInfos[num14].gameCell;
 				GameObject gameObject = Grid.Objects[gameCell, 9];
 				if (gameObject != null)
 				{
@@ -1426,7 +1432,7 @@ public class Game : KMonoBehaviour
 		{
 			return;
 		}
-		uint num = 469473u;
+		uint num = 471618u;
 		string text = System.DateTime.Now.ToShortDateString();
 		string text2 = System.DateTime.Now.ToShortTimeString();
 		string fileName = Path.GetFileName(GenericGameSettings.instance.performanceCapture.saveGame);
@@ -1602,8 +1608,7 @@ public class Game : KMonoBehaviour
 
 	public static void SaveSettings(BinaryWriter writer)
 	{
-		Settings obj = new Settings(Instance);
-		Serializer.Serialize(obj, writer);
+		Serializer.Serialize(new Settings(Instance), writer);
 	}
 
 	public static void LoadSettings(Deserializer deserializer)
@@ -1718,12 +1723,12 @@ public class Game : KMonoBehaviour
 		if (activateActiveCB != null)
 		{
 			activateActiveCB();
-			int j = 0;
-			while (j < 1)
+			k = 0;
+			while (k < 1)
 			{
 				yield return null;
-				int num = j + 1;
-				j = num;
+				int num = k + 1;
+				k = num;
 			}
 		}
 		SaveLoader.Instance.Save(filename, isAutoSave, updateSavePointer);
@@ -1731,12 +1736,12 @@ public class Game : KMonoBehaviour
 		{
 			activatePostCB();
 		}
-		int i = 0;
-		while (i < 5)
+		k = 0;
+		while (k < 5)
 		{
 			yield return null;
-			int num = i + 1;
-			i = num;
+			int num = k + 1;
+			k = num;
 		}
 		PlayerController.Instance.AllowDragging(allow: true);
 	}
@@ -1817,8 +1822,7 @@ public class Game : KMonoBehaviour
 		}
 		MusicManager.instance.KillAllSongs(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 		AudioMixer.instance.StopPersistentSnapshots();
-		Dictionary<Tag, List<SaveLoadRoot>> lists = SaveLoader.Instance.saveManager.GetLists();
-		foreach (List<SaveLoadRoot> value in lists.Values)
+		foreach (List<SaveLoadRoot> value in SaveLoader.Instance.saveManager.GetLists().Values)
 		{
 			foreach (SaveLoadRoot item in value)
 			{
@@ -2031,7 +2035,6 @@ public class Game : KMonoBehaviour
 		Assets.ClearOnAddPrefab();
 		KMonoBehaviour.lastGameObject = null;
 		KMonoBehaviour.lastObj = null;
-		GameComps gameComps = KComponentSpawn.instance.comps as GameComps;
-		gameComps.Clear();
+		(KComponentSpawn.instance.comps as GameComps).Clear();
 	}
 }

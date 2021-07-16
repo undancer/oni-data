@@ -37,7 +37,7 @@ public class SegmentedCreature : GameStateMachine<SegmentedCreature, SegmentedCr
 
 		public float compressedMaxScale = 1.2f;
 
-		public int animFrameOffset = 0;
+		public int animFrameOffset;
 
 		public HashSet<HashedString> retractWhenStartingAnimNames = new HashSet<HashedString>
 		{
@@ -102,8 +102,7 @@ public class SegmentedCreature : GameStateMachine<SegmentedCreature, SegmentedCr
 
 		private void CreateSegments()
 		{
-			float layerZ = Grid.GetLayerZ(Grid.SceneLayer.Creatures);
-			float num = layerZ + (float)creatureBatchSlot * 0.01f;
+			float num = Grid.GetLayerZ(Grid.SceneLayer.Creatures) + (float)creatureBatchSlot * 0.01f;
 			creatureBatchSlot = (creatureBatchSlot + 1) % 10;
 			CreatureSegment value = segments.AddFirst(new CreatureSegment(base.gameObject, num, base.smi.def.headOffset, Vector3.zero)).Value;
 			base.gameObject.SetActive(value: false);
@@ -257,8 +256,7 @@ public class SegmentedCreature : GameStateMachine<SegmentedCreature, SegmentedCr
 				if (symbol.IsValid)
 				{
 					bool symbolVisible;
-					Vector4 column = animController.GetSymbolTransform(symbol, out symbolVisible).GetColumn(3);
-					Vector3 a = column;
+					Vector3 a = animController.GetSymbolTransform(symbol, out symbolVisible).GetColumn(3);
 					a.z = zRelativeOffset;
 					return a + vector;
 				}

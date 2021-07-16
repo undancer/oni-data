@@ -27,8 +27,7 @@ namespace Klei.AI
 
 			private void PickSpawnLocations()
 			{
-				Telepad random = Components.Telepads.Items.GetRandom();
-				Vector3 position = random.transform.GetPosition();
+				Vector3 position = Components.Telepads.Items.GetRandom().transform.GetPosition();
 				int num = 100;
 				ListPool<ScenePartitionerEntry, GameScenePartitioner>.PooledList pooledList = ListPool<ScenePartitionerEntry, GameScenePartitioner>.Allocate();
 				GameScenePartitioner.Instance.GatherEntries((int)position.x - num / 2, (int)position.y - num / 2, num, num, GameScenePartitioner.Instance.plants, pooledList);
@@ -60,8 +59,7 @@ namespace Klei.AI
 				if (spawnPositions.Count > 0)
 				{
 					Vector3 random = spawnPositions.GetRandom();
-					GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(creatureID), random);
-					gameObject.SetActive(value: true);
+					Util.KInstantiate(Assets.GetPrefab(creatureID), random).SetActive(value: true);
 				}
 			}
 		}
@@ -95,10 +93,11 @@ namespace Klei.AI
 
 			public override GameplayEventPopupData GenerateEventPopupData(StatesInstance smi)
 			{
-				GameplayEventPopupData gameplayEventPopupData = new GameplayEventPopupData(smi.gameplayEvent);
-				gameplayEventPopupData.location = GAMEPLAY_EVENTS.LOCATIONS.PRINTING_POD;
-				gameplayEventPopupData.whenDescription = GAMEPLAY_EVENTS.TIMES.NOW;
-				return gameplayEventPopupData;
+				return new GameplayEventPopupData(smi.gameplayEvent)
+				{
+					location = GAMEPLAY_EVENTS.LOCATIONS.PRINTING_POD,
+					whenDescription = GAMEPLAY_EVENTS.TIMES.NOW
+				};
 			}
 		}
 

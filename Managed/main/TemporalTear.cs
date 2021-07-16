@@ -19,7 +19,7 @@ public class TemporalTear : ClusterGridEntity
 		new AnimConfig
 		{
 			animFile = Assets.GetAnim("temporal_tear_kanim"),
-			initialAnim = "idle_loop"
+			initialAnim = "closed_loop"
 		}
 	};
 
@@ -27,37 +27,68 @@ public class TemporalTear : ClusterGridEntity
 
 	public override ClusterRevealLevel IsVisibleInFOW => ClusterRevealLevel.Peeked;
 
-	public void Init(AxialI location)
-	{
-		base.Location = location;
-	}
-
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		Game.Instance.Subscribe(-1298331547, OnClusterLocationChanged);
+		ClusterManager.Instance.GetComponent<ClusterPOIManager>().RegisterTemporalTear(this);
+		UpdateStatus();
+	}
+
+	public void UpdateStatus()
+	{
+		KSelectable component = GetComponent<KSelectable>();
+		ClusterMapVisualizer clusterMapVisualizer = null;
+		if (ClusterMapScreen.Instance != null)
+		{
+			clusterMapVisualizer = ClusterMapScreen.Instance.GetEntityVisAnim(this);
+		}
+		if (IsOpen())
+		{
+			if (clusterMapVisualizer != null)
+			{
+				clusterMapVisualizer.PlayAnim("open_loop", KAnim.PlayMode.Loop);
+			}
+			component.RemoveStatusItem(Db.Get().MiscStatusItems.TearClosed);
+			component.AddStatusItem(Db.Get().MiscStatusItems.TearOpen);
+		}
+		else
+		{
+			if (clusterMapVisualizer != null)
+			{
+				clusterMapVisualizer.PlayAnim("closed_loop", KAnim.PlayMode.Loop);
+			}
+			component.RemoveStatusItem(Db.Get().MiscStatusItems.TearOpen);
+			GetComponent<KSelectable>().AddStatusItem(Db.Get().MiscStatusItems.TearClosed);
+		}
 	}
 
 	protected override void OnCleanUp()
 	{
-		Game.Instance.Unsubscribe(-1298331547, OnClusterLocationChanged);
 		base.OnCleanUp();
 	}
 
-	public void OnClusterLocationChanged(object data)
+	public void ConsumeCraft(Clustercraft craft)
 	{
-		Clustercraft clustercraft = ((ClusterLocationChangedEvent)data).entity as Clustercraft;
-		Debug.Assert(clustercraft != null, $"ClusterLocationChanged sent for a non-Clustercraft object: {data}");
-		if (m_open && clustercraft.Location == base.Location && !clustercraft.IsFlightInProgress())
+		if (!m_open || !(craft.Location == base.Location) || craft.IsFlightInProgress())
 		{
-			clustercraft.DestroyCraftAndModules();
-			m_hasConsumedCraft = true;
+			return;
 		}
+		for (int i = 0; i < Components.MinionIdentities.Count; i++)
+		{
+			MinionIdentity minionIdentity = Components.MinionIdentities[i];
+			if (minionIdentity.GetMyWorldId() == craft.ModuleInterface.GetInteriorWorld().id)
+			{
+				Util.KDestroyGameObject(minionIdentity.gameObject);
+			}
+		}
+		craft.DestroyCraftAndModules();
+		m_hasConsumedCraft = true;
 	}
 
 	public void Open()
 	{
 		m_open = true;
+		UpdateStatus();
 	}
 
 	public bool IsOpen()

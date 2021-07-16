@@ -35,8 +35,7 @@ public class TakeMedicineChore : Chore<TakeMedicineChore.StatesInstance>
 			takemedicine.ToggleAnims("anim_eat_floor_kanim").ToggleTag(GameTags.TakingMedicine).ToggleWork("TakeMedicine", delegate(StatesInstance smi)
 			{
 				MedicinalPillWorkable workable = chunk.Get<MedicinalPillWorkable>(smi);
-				Worker worker = eater.Get<Worker>(smi);
-				worker.StartWork(new Worker.StartWorkInfo(workable));
+				eater.Get<Worker>(smi).StartWork(new Worker.StartWorkInfo(workable));
 			}, (StatesInstance smi) => chunk.Get<MedicinalPill>(smi) != null, null, null);
 		}
 	}
@@ -77,8 +76,7 @@ public class TakeMedicineChore : Chore<TakeMedicineChore.StatesInstance>
 			description = DUPLICANTS.CHORES.PRECONDITIONS.CAN_CURE,
 			fn = delegate(ref Precondition.Context context, object data)
 			{
-				TakeMedicineChore takeMedicineChore2 = (TakeMedicineChore)data;
-				return takeMedicineChore2.medicine.CanBeTakenBy(context.consumerState.gameObject);
+				return ((TakeMedicineChore)data).medicine.CanBeTakenBy(context.consumerState.gameObject);
 			}
 		};
 		CanCure = precondition;

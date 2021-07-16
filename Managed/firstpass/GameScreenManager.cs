@@ -113,8 +113,7 @@ public class GameScreenManager : KMonoBehaviour
 			parent = GetParent(target);
 		}
 		KScreenManager.AddExistingChild(parent, screen);
-		KScreen component = screen.GetComponent<KScreen>();
-		component.Activate();
+		screen.GetComponent<KScreen>().Activate();
 		return screen;
 	}
 
@@ -124,8 +123,7 @@ public class GameScreenManager : KMonoBehaviour
 		{
 			parent = GetParent(target);
 		}
-		GameObject gameObject = KScreenManager.AddChild(parent, screenPrefab);
-		return gameObject.GetComponent<KScreen>();
+		return KScreenManager.AddChild(parent, screenPrefab).GetComponent<KScreen>();
 	}
 
 	public KScreen StartScreen(GameObject screenPrefab, GameObject parent = null, UIRenderTarget target = UIRenderTarget.ScreenSpaceOverlay)
@@ -134,8 +132,7 @@ public class GameScreenManager : KMonoBehaviour
 		{
 			parent = GetParent(target);
 		}
-		GameObject gameObject = KScreenManager.AddChild(parent, screenPrefab);
-		KScreen component = gameObject.GetComponent<KScreen>();
+		KScreen component = KScreenManager.AddChild(parent, screenPrefab).GetComponent<KScreen>();
 		component.Activate();
 		return component;
 	}

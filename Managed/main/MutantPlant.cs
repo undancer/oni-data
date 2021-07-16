@@ -8,7 +8,7 @@ using UnityEngine;
 public class MutantPlant : KMonoBehaviour, IGameObjectEffectDescriptor
 {
 	[Serialize]
-	private bool analyzed = false;
+	private bool analyzed;
 
 	[Serialize]
 	private List<string> mutationIDs;
@@ -34,9 +34,29 @@ public class MutantPlant : KMonoBehaviour, IGameObjectEffectDescriptor
 
 	public List<string> MutationIDs => mutationIDs;
 
-	public bool IsOriginal => mutationIDs == null || mutationIDs.Count == 0;
+	public bool IsOriginal
+	{
+		get
+		{
+			if (mutationIDs != null)
+			{
+				return mutationIDs.Count == 0;
+			}
+			return true;
+		}
+	}
 
-	public bool IsIdentified => analyzed && PlantSubSpeciesCatalog.Instance.IsSubSpeciesIdentified(SubSpeciesID);
+	public bool IsIdentified
+	{
+		get
+		{
+			if (analyzed)
+			{
+				return PlantSubSpeciesCatalog.Instance.IsSubSpeciesIdentified(SubSpeciesID);
+			}
+			return false;
+		}
+	}
 
 	public Tag SpeciesID
 	{
@@ -91,15 +111,13 @@ public class MutantPlant : KMonoBehaviour, IGameObjectEffectDescriptor
 
 	private void OnAbsorb(object data)
 	{
-		Pickupable pickupable = data as Pickupable;
-		MutantPlant component = pickupable.GetComponent<MutantPlant>();
+		MutantPlant component = (data as Pickupable).GetComponent<MutantPlant>();
 		Debug.Assert(component != null && SubSpeciesID == component.SubSpeciesID, "Two seeds of different subspecies just absorbed!");
 	}
 
 	private void OnSplitFromChunk(object data)
 	{
-		Pickupable pickupable = data as Pickupable;
-		MutantPlant component = pickupable.GetComponent<MutantPlant>();
+		MutantPlant component = (data as Pickupable).GetComponent<MutantPlant>();
 		if (component != null)
 		{
 			component.CopyMutationsTo(this);
@@ -131,8 +149,7 @@ public class MutantPlant : KMonoBehaviour, IGameObjectEffectDescriptor
 		}
 		foreach (string mutationID in mutationIDs)
 		{
-			PlantMutation plantMutation = Db.Get().PlantMutations.Get(mutationID);
-			plantMutation.ApplyTo(this);
+			Db.Get().PlantMutations.Get(mutationID).ApplyTo(this);
 		}
 	}
 
@@ -207,8 +224,7 @@ public class MutantPlant : KMonoBehaviour, IGameObjectEffectDescriptor
 		List<Descriptor> descriptors = new List<Descriptor>();
 		foreach (string mutationID in mutationIDs)
 		{
-			PlantMutation plantMutation = Db.Get().PlantMutations.Get(mutationID);
-			plantMutation.GetDescriptors(ref descriptors, go);
+			Db.Get().PlantMutations.Get(mutationID).GetDescriptors(ref descriptors, go);
 		}
 		return descriptors;
 	}
@@ -223,6 +239,7 @@ public class MutantPlant : KMonoBehaviour, IGameObjectEffectDescriptor
 				PlantMutation plantMutation = Db.Get().PlantMutations.Get(mutationID);
 				list.AddRange(plantMutation.AdditionalSoundEvents);
 			}
+			return list;
 		}
 		return list;
 	}

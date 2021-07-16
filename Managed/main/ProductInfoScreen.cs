@@ -1,4 +1,3 @@
-#define UNITY_ASSERTIONS
 using System;
 using System.Collections.Generic;
 using Klei.AI;
@@ -40,7 +39,7 @@ public class ProductInfoScreen : KScreen
 
 	private bool expandedInfo = true;
 
-	private bool configuring = false;
+	private bool configuring;
 
 	private void RefreshScreen()
 	{
@@ -189,7 +188,6 @@ public class ProductInfoScreen : KScreen
 
 	private void SetDescription(BuildingDef def)
 	{
-		UnityEngine.Debug.Assert(def != null, "def is null");
 		if (def == null || productFlavourText == null)
 		{
 			return;
@@ -226,8 +224,7 @@ public class ProductInfoScreen : KScreen
 			}
 			else
 			{
-				GameObject gameObject = Assets.TryGetPrefab(materialSelectionPanel.CurrentSelectedElement);
-				PrefabAttributeModifiers component = gameObject.GetComponent<PrefabAttributeModifiers>();
+				PrefabAttributeModifiers component = Assets.TryGetPrefab(materialSelectionPanel.CurrentSelectedElement).GetComponent<PrefabAttributeModifiers>();
 				if (component != null)
 				{
 					foreach (AttributeModifier descriptor in component.descriptors)

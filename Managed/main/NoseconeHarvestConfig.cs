@@ -20,24 +20,24 @@ public class NoseconeHarvestConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("NoseconeHarvest", 5, 4, "rocket_nosecone_gathering_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.HOLLOW_TIER2, new string[2]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("NoseconeHarvest", 5, 4, "rocket_nosecone_gathering_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.HOLLOW_TIER2, new string[2]
 		{
 			"RefinedMetal",
 			"Plastic"
 		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
-		buildingDef.AttachmentSlotTag = GameTags.Rocket;
-		buildingDef.SceneLayer = Grid.SceneLayer.Building;
-		buildingDef.OverheatTemperature = 2273.15f;
-		buildingDef.Floodable = false;
-		buildingDef.ObjectLayer = ObjectLayer.Building;
-		buildingDef.ForegroundLayer = Grid.SceneLayer.Front;
-		buildingDef.RequiresPowerInput = false;
-		buildingDef.attachablePosition = new CellOffset(0, 0);
-		buildingDef.CanMove = true;
-		buildingDef.Cancellable = false;
-		buildingDef.ShowInBuildMenu = false;
-		return buildingDef;
+		BuildingTemplates.CreateRocketBuildingDef(obj);
+		obj.AttachmentSlotTag = GameTags.Rocket;
+		obj.SceneLayer = Grid.SceneLayer.Building;
+		obj.OverheatTemperature = 2273.15f;
+		obj.Floodable = false;
+		obj.ObjectLayer = ObjectLayer.Building;
+		obj.ForegroundLayer = Grid.SceneLayer.Front;
+		obj.RequiresPowerInput = false;
+		obj.attachablePosition = new CellOffset(0, 0);
+		obj.CanMove = true;
+		obj.Cancellable = false;
+		obj.ShowInBuildMenu = false;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -46,8 +46,7 @@ public class NoseconeHarvestConfig : IBuildingConfig
 		go.AddOrGet<LoopingSounds>();
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
 		go.GetComponent<KPrefabID>().AddTag(GameTags.NoseRocketModule);
-		ResourceHarvestModule.Def def = go.AddOrGetDef<ResourceHarvestModule.Def>();
-		def.harvestSpeed = solidCapacity / timeToFill;
+		go.AddOrGetDef<ResourceHarvestModule.Def>().harvestSpeed = solidCapacity / timeToFill;
 		Storage storage = go.AddOrGet<Storage>();
 		storage.capacityKg = 1000f;
 		storage.useWideOffsets = true;

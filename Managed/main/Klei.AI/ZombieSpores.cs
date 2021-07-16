@@ -65,13 +65,13 @@ namespace Klei.AI
 				minDiffusionCount = 5100,
 				diffusionScale = 0.005f
 			});
-			SimHashes[] array2 = new SimHashes[3]
+			array = new SimHashes[3]
 			{
 				SimHashes.CarbonDioxide,
 				SimHashes.Methane,
 				SimHashes.SourGas
 			};
-			foreach (SimHashes element2 in array2)
+			foreach (SimHashes element2 in array)
 			{
 				AddGrowthRule(new ElementGrowthRule(element2)
 				{
@@ -95,14 +95,14 @@ namespace Klei.AI
 				maxCountPerKG = 100f,
 				diffusionScale = 0.01f
 			});
-			SimHashes[] array3 = new SimHashes[4]
+			array = new SimHashes[4]
 			{
 				SimHashes.CrudeOil,
 				SimHashes.Petroleum,
 				SimHashes.Naphtha,
 				SimHashes.LiquidMethane
 			};
-			foreach (SimHashes element3 in array3)
+			foreach (SimHashes element3 in array)
 			{
 				AddGrowthRule(new ElementGrowthRule(element3)
 				{

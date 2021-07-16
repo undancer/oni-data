@@ -9,18 +9,18 @@ public class SweepBotStationConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("SweepBotStation", 2, 2, "sweep_bot_base_station_kanim", 30, 30f, new float[1]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("SweepBotStation", 2, 2, "sweep_bot_base_station_kanim", 30, 30f, new float[1]
 		{
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER2[0] - SweepBotConfig.MASS
 		}, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER1);
-		buildingDef.ViewMode = OverlayModes.Power.ID;
-		buildingDef.Floodable = false;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 240f;
-		buildingDef.ExhaustKilowattsWhenActive = 0f;
-		buildingDef.SelfHeatKilowattsWhenActive = 1f;
-		return buildingDef;
+		obj.ViewMode = OverlayModes.Power.ID;
+		obj.Floodable = false;
+		obj.AudioCategory = "Metal";
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 240f;
+		obj.ExhaustKilowattsWhenActive = 0f;
+		obj.SelfHeatKilowattsWhenActive = 1f;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -47,10 +47,8 @@ public class SweepBotStationConfig : IBuildingConfig
 		storage2.capacityKg = 1000f;
 		storage2.allowClearable = true;
 		storage2.showCapacityStatusItem = true;
-		CharacterOverlay characterOverlay = go.AddOrGet<CharacterOverlay>();
-		characterOverlay.shouldShowName = true;
-		SweepBotStation sweepBotStation = go.AddOrGet<SweepBotStation>();
-		sweepBotStation.SetStorages(storage, storage2);
+		go.AddOrGet<CharacterOverlay>().shouldShowName = true;
+		go.AddOrGet<SweepBotStation>().SetStorages(storage, storage2);
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

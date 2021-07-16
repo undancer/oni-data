@@ -82,7 +82,11 @@ public class GameNavGrids
 			}
 			if (is_dupe)
 			{
-				return (Grid.NavValidatorMasks[cell] & (Grid.NavValidatorFlags.Ladder | Grid.NavValidatorFlags.Pole)) == 0 && (Grid.NavValidatorMasks[anchor_cell] & (Grid.NavValidatorFlags.Ladder | Grid.NavValidatorFlags.Pole)) != 0;
+				if ((Grid.NavValidatorMasks[cell] & (Grid.NavValidatorFlags.Ladder | Grid.NavValidatorFlags.Pole)) == 0)
+				{
+					return (Grid.NavValidatorMasks[anchor_cell] & (Grid.NavValidatorFlags.Ladder | Grid.NavValidatorFlags.Pole)) != 0;
+				}
+				return false;
 			}
 			return false;
 		}
@@ -371,16 +375,15 @@ public class GameNavGrids
 		public override void UpdateCell(int cell, NavTable nav_table, CellOffset[] bounding_offsets)
 		{
 			bool flag = false;
-			int cell2 = Grid.CellAbove(cell);
-			if (Grid.IsWorldValidCell(cell2))
+			if (Grid.IsWorldValidCell(Grid.CellAbove(cell)))
 			{
 				flag = !Grid.IsSubstantialLiquid(cell) && IsClear(cell, bounding_offsets, allow_door_traversal);
 				if (flag && exclude_floor)
 				{
-					int cell3 = Grid.CellBelow(cell);
-					if (Grid.IsWorldValidCell(cell3))
+					int cell2 = Grid.CellBelow(cell);
+					if (Grid.IsWorldValidCell(cell2))
 					{
-						flag = IsClear(cell3, bounding_offsets, allow_door_traversal);
+						flag = IsClear(cell2, bounding_offsets, allow_door_traversal);
 					}
 				}
 				if (flag && exclude_jet_suit_blockers)
@@ -474,13 +477,21 @@ public class GameNavGrids
 				{
 					byte index = Grid.ElementIdx[cell];
 					Element element = ElementLoader.elements[index];
-					return Grid.Element[cell].hardness < 150 && !element.HasTag(GameTags.RefinedMetal);
+					if (Grid.Element[cell].hardness < 150)
+					{
+						return !element.HasTag(GameTags.RefinedMetal);
+					}
+					return false;
 				}
 				GameObject gameObject = Grid.Objects[cell, 1];
 				if (gameObject != null)
 				{
 					PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
-					return Grid.Element[cell].hardness < 150 && !component.Element.HasTag(GameTags.RefinedMetal);
+					if (Grid.Element[cell].hardness < 150)
+					{
+						return !component.Element.HasTag(GameTags.RefinedMetal);
+					}
+					return false;
 				}
 			}
 			return false;
@@ -1755,9 +1766,9 @@ public class GameNavGrids
 	private CellOffset[] MirrorOffsets(CellOffset[] offsets)
 	{
 		List<CellOffset> list = new List<CellOffset>();
-		foreach (CellOffset cellOffset in offsets)
+		for (int i = 0; i < offsets.Length; i++)
 		{
-			CellOffset item = cellOffset;
+			CellOffset item = offsets[i];
 			item.x = -item.x;
 			list.Add(item);
 		}
@@ -1767,9 +1778,9 @@ public class GameNavGrids
 	private NavOffset[] MirrorNavOffsets(NavOffset[] offsets)
 	{
 		List<NavOffset> list = new List<NavOffset>();
-		foreach (NavOffset navOffset in offsets)
+		for (int i = 0; i < offsets.Length; i++)
 		{
-			NavOffset item = navOffset;
+			NavOffset item = offsets[i];
 			item.navType = NavGrid.MirrorNavType(item.navType);
 			item.offset.x = -item.offset.x;
 			list.Add(item);

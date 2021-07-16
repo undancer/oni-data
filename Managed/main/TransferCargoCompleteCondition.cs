@@ -16,8 +16,7 @@ public class TransferCargoCompleteCondition : ProcessCondition
 		LaunchPad component = target.GetComponent<LaunchPad>();
 		if (component == null)
 		{
-			Clustercraft component2 = target.GetComponent<Clustercraft>();
-			craftModuleInterface = component2.ModuleInterface;
+			craftModuleInterface = target.GetComponent<Clustercraft>().ModuleInterface;
 		}
 		else
 		{
@@ -32,7 +31,11 @@ public class TransferCargoCompleteCondition : ProcessCondition
 		{
 			return Status.Ready;
 		}
-		return (!target.HasTag(GameTags.TransferringCargoComplete)) ? Status.Warning : Status.Ready;
+		if (!target.HasTag(GameTags.TransferringCargoComplete))
+		{
+			return Status.Warning;
+		}
+		return Status.Ready;
 	}
 
 	public override string GetStatusMessage(Status status)

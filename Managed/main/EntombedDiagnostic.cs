@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EntombedDiagnostic : ColonyDiagnostic
 {
-	private int m_entombedCount = 0;
+	private int m_entombedCount;
 
 	public EntombedDiagnostic(int worldID)
 		: base(worldID, UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.ALL_NAME)
@@ -17,9 +17,11 @@ public class EntombedDiagnostic : ColonyDiagnostic
 	{
 		List<BuildingComplete> worldItems = Components.EntombedBuildings.GetWorldItems(base.worldID);
 		m_entombedCount = 0;
-		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS);
-		result.opinion = DiagnosticResult.Opinion.Normal;
-		result.Message = UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.NORMAL;
+		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS)
+		{
+			opinion = DiagnosticResult.Opinion.Normal,
+			Message = UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.NORMAL
+		};
 		foreach (BuildingComplete item in worldItems)
 		{
 			if (item.HasTag(GameTags.Entombed))

@@ -110,9 +110,9 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 		component.OnLogicValueChanged(data);
 	});
 
-	private bool hasLogicWire = false;
+	private bool hasLogicWire;
 
-	private bool isLogicActive = false;
+	private bool isLogicActive;
 
 	private static StatusItem infoStatusItem_Logic;
 
@@ -136,7 +136,21 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 		}
 	}
 
-	public bool AllowSpawnParticles => !hasLogicWire || (hasLogicWire && isLogicActive);
+	public bool AllowSpawnParticles
+	{
+		get
+		{
+			if (hasLogicWire)
+			{
+				if (hasLogicWire)
+				{
+					return isLogicActive;
+				}
+				return false;
+			}
+			return true;
+		}
+	}
 
 	public bool HasLogicWire => hasLogicWire;
 
@@ -148,8 +162,7 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		HighEnergyParticleSpawner component = gameObject.GetComponent<HighEnergyParticleSpawner>();
+		HighEnergyParticleSpawner component = ((GameObject)data).GetComponent<HighEnergyParticleSpawner>();
 		if (component != null)
 		{
 			Direction = component.Direction;
@@ -272,10 +285,8 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 
 	private LogicCircuitNetwork GetNetwork()
 	{
-		LogicPorts component = GetComponent<LogicPorts>();
-		int portCell = component.GetPortCell(PORT_ID);
-		LogicCircuitManager logicCircuitManager = Game.Instance.logicCircuitManager;
-		return logicCircuitManager.GetNetworkForCell(portCell);
+		int portCell = GetComponent<LogicPorts>().GetPortCell(PORT_ID);
+		return Game.Instance.logicCircuitManager.GetNetworkForCell(portCell);
 	}
 
 	private void OnLogicValueChanged(object data)

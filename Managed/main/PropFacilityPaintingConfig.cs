@@ -12,15 +12,15 @@ public class PropFacilityPaintingConfig : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject gameObject = EntityTemplates.CreatePlacedEntity("PropFacilityPainting", STRINGS.BUILDINGS.PREFABS.PROPFACILITYPAINTING.NAME, STRINGS.BUILDINGS.PREFABS.PROPFACILITYPAINTING.DESC, 50f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("gravitas_painting_kanim"), initialAnim: "off", sceneLayer: Grid.SceneLayer.Building, width: 3, height: 2, element: SimHashes.Creature, additionalTags: new List<Tag>
+		GameObject obj = EntityTemplates.CreatePlacedEntity("PropFacilityPainting", STRINGS.BUILDINGS.PREFABS.PROPFACILITYPAINTING.NAME, STRINGS.BUILDINGS.PREFABS.PROPFACILITYPAINTING.DESC, 50f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("gravitas_painting_kanim"), initialAnim: "off", sceneLayer: Grid.SceneLayer.Building, width: 3, height: 2, element: SimHashes.Creature, additionalTags: new List<Tag>
 		{
 			GameTags.Gravitas
 		});
-		PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
+		PrimaryElement component = obj.GetComponent<PrimaryElement>();
 		component.SetElement(SimHashes.Granite);
 		component.Temperature = 294.15f;
-		gameObject.AddOrGet<Demolishable>();
-		return gameObject;
+		obj.AddOrGet<Demolishable>();
+		return obj;
 	}
 
 	public void OnPrefabInit(GameObject inst)

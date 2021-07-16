@@ -50,8 +50,7 @@ public class MinionStorage : KMonoBehaviour
 
 	private KPrefabID CreateSerializedMinion(GameObject src_minion)
 	{
-		GameObject prefab = SaveLoader.Instance.saveManager.GetPrefab(StoredMinionConfig.ID);
-		GameObject gameObject = Util.KInstantiate(prefab, Vector3.zero);
+		GameObject gameObject = Util.KInstantiate(SaveLoader.Instance.saveManager.GetPrefab(StoredMinionConfig.ID), Vector3.zero);
 		gameObject.SetActive(value: true);
 		MinionIdentity component = src_minion.GetComponent<MinionIdentity>();
 		StoredMinionIdentity component2 = gameObject.GetComponent<StoredMinionIdentity>();
@@ -107,8 +106,7 @@ public class MinionStorage : KMonoBehaviour
 
 	private static void StoreModifiers(MinionIdentity src_id, StoredMinionIdentity dest_id)
 	{
-		MinionModifiers component = src_id.GetComponent<MinionModifiers>();
-		foreach (AttributeInstance attribute in component.attributes)
+		foreach (AttributeInstance attribute in src_id.GetComponent<MinionModifiers>().attributes)
 		{
 			if (dest_id.minionModifiers.attributes.Get(attribute.Attribute.Id) == null)
 			{
@@ -132,35 +130,32 @@ public class MinionStorage : KMonoBehaviour
 		dest_id.bodyData = src_id.bodyData;
 		if (src_id.traitIDs != null)
 		{
-			Traits component = dest_id.GetComponent<Traits>();
-			component.SetTraitIds(src_id.traitIDs);
+			dest_id.GetComponent<Traits>().SetTraitIds(src_id.traitIDs);
 		}
 		if (src_id.accessories != null)
 		{
-			Accessorizer component2 = dest_id.GetComponent<Accessorizer>();
-			component2.SetAccessories(src_id.accessories);
+			dest_id.GetComponent<Accessorizer>().SetAccessories(src_id.accessories);
 		}
-		ConsumableConsumer component3 = dest_id.GetComponent<ConsumableConsumer>();
+		ConsumableConsumer component = dest_id.GetComponent<ConsumableConsumer>();
 		if (src_id.forbiddenTags != null)
 		{
-			component3.forbiddenTags = src_id.forbiddenTags.ToArray();
+			component.forbiddenTags = src_id.forbiddenTags.ToArray();
 		}
 		if (src_id.MasteryBySkillID != null)
 		{
-			MinionResume component4 = dest_id.GetComponent<MinionResume>();
-			component4.RestoreResume(src_id.MasteryBySkillID, src_id.AptitudeBySkillGroup, src_id.grantedSkillIDs, src_id.TotalExperienceGained);
-			component4.SetHats(src_id.currentHat, src_id.targetHat);
+			MinionResume component2 = dest_id.GetComponent<MinionResume>();
+			component2.RestoreResume(src_id.MasteryBySkillID, src_id.AptitudeBySkillGroup, src_id.grantedSkillIDs, src_id.TotalExperienceGained);
+			component2.SetHats(src_id.currentHat, src_id.targetHat);
 		}
 		if (src_id.choreGroupPriorities != null)
 		{
-			ChoreConsumer component5 = dest_id.GetComponent<ChoreConsumer>();
-			component5.SetChoreGroupPriorities(src_id.choreGroupPriorities);
+			dest_id.GetComponent<ChoreConsumer>().SetChoreGroupPriorities(src_id.choreGroupPriorities);
 		}
-		AttributeLevels component6 = dest_id.GetComponent<AttributeLevels>();
+		AttributeLevels component3 = dest_id.GetComponent<AttributeLevels>();
 		if (src_id.attributeLevels != null)
 		{
-			component6.SaveLoadLevels = src_id.attributeLevels.ToArray();
-			component6.OnDeserialized();
+			component3.SaveLoadLevels = src_id.attributeLevels.ToArray();
+			component3.OnDeserialized();
 		}
 		dest_id.GetComponent<Accessorizer>().ApplyAccessories();
 		dest_id.assignableProxy = new Ref<MinionAssignablesProxy>();
@@ -175,21 +170,20 @@ public class MinionStorage : KMonoBehaviour
 				equipment.Equip(equippable);
 			}
 		}
-		Schedulable component7 = src_id.GetComponent<Schedulable>();
-		Schedule schedule = component7.GetSchedule();
+		Schedulable component4 = src_id.GetComponent<Schedulable>();
+		Schedule schedule = component4.GetSchedule();
 		if (schedule != null)
 		{
-			schedule.Unassign(component7);
-			Schedulable component8 = dest_id.GetComponent<Schedulable>();
-			schedule.Assign(component8);
+			schedule.Unassign(component4);
+			Schedulable component5 = dest_id.GetComponent<Schedulable>();
+			schedule.Assign(component5);
 		}
 	}
 
 	public static void RedirectInstanceTracker(GameObject src_minion, GameObject dest_minion)
 	{
 		KPrefabID component = src_minion.GetComponent<KPrefabID>();
-		KPrefabID component2 = dest_minion.GetComponent<KPrefabID>();
-		component2.InstanceID = component.InstanceID;
+		dest_minion.GetComponent<KPrefabID>().InstanceID = component.InstanceID;
 		component.InstanceID = -1;
 	}
 
@@ -239,14 +233,12 @@ public class MinionStorage : KMonoBehaviour
 		{
 			return null;
 		}
-		GameObject gameObject = kPrefabID.gameObject;
-		return DeserializeMinion(gameObject, pos);
+		return DeserializeMinion(kPrefabID.gameObject, pos);
 	}
 
 	public static GameObject DeserializeMinion(GameObject sourceMinion, Vector3 pos)
 	{
-		GameObject prefab = SaveLoader.Instance.saveManager.GetPrefab(MinionConfig.ID);
-		GameObject gameObject = Util.KInstantiate(prefab, pos);
+		GameObject gameObject = Util.KInstantiate(SaveLoader.Instance.saveManager.GetPrefab(MinionConfig.ID), pos);
 		StoredMinionIdentity component = sourceMinion.GetComponent<StoredMinionIdentity>();
 		MinionIdentity component2 = gameObject.GetComponent<MinionIdentity>();
 		RedirectInstanceTracker(sourceMinion, gameObject);

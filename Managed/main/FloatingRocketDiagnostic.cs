@@ -28,8 +28,26 @@ public class FloatingRocketDiagnostic : ColonyDiagnostic
 			result.Message = UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.NORMAL_FLIGHT;
 			if (component.Destination == component.Location)
 			{
-				result.opinion = DiagnosticResult.Opinion.Suggestion;
-				result.Message = UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.WARNING_NO_DESTINATION;
+				bool flag = false;
+				foreach (Ref<RocketModuleCluster> clusterModule in component.ModuleInterface.ClusterModules)
+				{
+					ResourceHarvestModule.StatesInstance sMI = clusterModule.Get().GetSMI<ResourceHarvestModule.StatesInstance>();
+					if (sMI != null && sMI.IsInsideState(sMI.sm.not_grounded.harvesting))
+					{
+						flag = true;
+						break;
+					}
+				}
+				if (flag)
+				{
+					result.opinion = DiagnosticResult.Opinion.Normal;
+					result.Message = UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.NORMAL_UTILITY;
+				}
+				else
+				{
+					result.opinion = DiagnosticResult.Opinion.Suggestion;
+					result.Message = UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.WARNING_NO_DESTINATION;
+				}
 			}
 			else if (component.Speed == 0f)
 			{

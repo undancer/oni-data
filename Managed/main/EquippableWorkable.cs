@@ -10,7 +10,7 @@ public class EquippableWorkable : Workable, ISaveLoadable
 
 	private Chore chore;
 
-	private QualityLevel quality = QualityLevel.Poor;
+	private QualityLevel quality;
 
 	protected override void OnPrefabInit()
 	{
@@ -61,14 +61,9 @@ public class EquippableWorkable : Workable, ISaveLoadable
 			chore.Cancel("Equipment Reassigned");
 			chore = null;
 		}
-		if (target != null)
+		if (target != null && !target.GetSoleOwner().GetComponent<Equipment>().IsEquipped(equippable))
 		{
-			Ownables soleOwner = target.GetSoleOwner();
-			Equipment component = soleOwner.GetComponent<Equipment>();
-			if (!component.IsEquipped(equippable))
-			{
-				CreateChore();
-			}
+			CreateChore();
 		}
 	}
 

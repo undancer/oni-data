@@ -23,7 +23,6 @@ public class NotificationHighlightTarget : KMonoBehaviour
 
 	public void View()
 	{
-		NotificationHighlightController componentInParent = GetComponentInParent<NotificationHighlightController>();
-		componentInParent.TargetViewed(this);
+		GetComponentInParent<NotificationHighlightController>().TargetViewed(this);
 	}
 }

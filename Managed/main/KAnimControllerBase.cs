@@ -40,7 +40,7 @@ public abstract class KAnimControllerBase : MonoBehaviour
 	public GameObject showWhenMissing;
 
 	[SerializeField]
-	public KAnimBatchGroup.MaterialType materialType = KAnimBatchGroup.MaterialType.Default;
+	public KAnimBatchGroup.MaterialType materialType;
 
 	[SerializeField]
 	public string initialAnim;
@@ -64,16 +64,16 @@ public abstract class KAnimControllerBase : MonoBehaviour
 	public bool destroyOnAnimComplete;
 
 	[SerializeField]
-	public bool inactiveDisable = false;
+	public bool inactiveDisable;
 
 	[SerializeField]
-	protected bool flipX = false;
+	protected bool flipX;
 
 	[SerializeField]
-	protected bool flipY = false;
+	protected bool flipY;
 
 	[SerializeField]
-	public bool forceUseGameTime = false;
+	public bool forceUseGameTime;
 
 	public string defaultAnim;
 
@@ -91,9 +91,9 @@ public abstract class KAnimControllerBase : MonoBehaviour
 
 	protected DeepProfiler DeepProfiler = new DeepProfiler(enable_profiling: false);
 
-	public bool randomiseLoopedOffset = false;
+	public bool randomiseLoopedOffset;
 
-	protected float elapsedTime = 0f;
+	protected float elapsedTime;
 
 	protected float playSpeed = 1f;
 
@@ -122,13 +122,13 @@ public abstract class KAnimControllerBase : MonoBehaviour
 	[SerializeField]
 	protected bool _enabled = true;
 
-	protected bool hasEnableRun = false;
+	protected bool hasEnableRun;
 
-	protected bool hasAwakeRun = false;
+	protected bool hasAwakeRun;
 
-	protected KBatchedAnimInstanceData batchInstanceData = null;
+	protected KBatchedAnimInstanceData batchInstanceData;
 
-	public VisibilityType visibilityType = VisibilityType.Default;
+	public VisibilityType visibilityType;
 
 	public Action<GameObject> onDestroySelf;
 
@@ -141,11 +141,11 @@ public abstract class KAnimControllerBase : MonoBehaviour
 
 	protected Queue<AnimData> animQueue = new Queue<AnimData>();
 
-	protected int maxSymbols = 0;
+	protected int maxSymbols;
 
 	public Grid.SceneLayer fgLayer = Grid.SceneLayer.NoLayer;
 
-	protected AnimEventManager aem = null;
+	protected AnimEventManager aem;
 
 	private static HashedString snaptoPivot = new HashedString("snapTo_pivot");
 
@@ -756,12 +756,11 @@ public abstract class KAnimControllerBase : MonoBehaviour
 		{
 			if (!anims.TryGetValue(animData.anim, out value))
 			{
-				bool flag = true;
 				if (showWhenMissing != null)
 				{
 					showWhenMissing.SetActive(value: true);
 				}
-				if (flag)
+				if (true)
 				{
 					TriggerStop();
 					return;
@@ -918,8 +917,7 @@ public abstract class KAnimControllerBase : MonoBehaviour
 		}
 		if (usingNewSymbolOverrideSystem && data.buildIndex != -1 && data.build.symbols != null && data.build.symbols.Length != 0)
 		{
-			SymbolOverrideController component = GetComponent<SymbolOverrideController>();
-			component.AddBuildOverride(anim_file.GetData(), -1);
+			GetComponent<SymbolOverrideController>().AddBuildOverride(anim_file.GetData(), -1);
 		}
 	}
 

@@ -277,14 +277,17 @@ public class TravelTubeEntrance : StateMachineComponent<TravelTubeEntrance.SMIns
 
 	private void TubeConnectionsChanged(object data)
 	{
-		UtilityConnections utilityConnections = (UtilityConnections)data;
-		bool value = utilityConnections == UtilityConnections.Up;
+		bool value = (UtilityConnections)data == UtilityConnections.Up;
 		operational.SetFlag(tubeConnected, value);
 	}
 
 	private bool CanAcceptMorePower()
 	{
-		return operational.IsOperational && (button == null || button.IsEnabled) && energyConsumer.IsExternallyPowered && availableJoules < jouleCapacity;
+		if (operational.IsOperational && (button == null || button.IsEnabled) && energyConsumer.IsExternallyPowered)
+		{
+			return availableJoules < jouleCapacity;
+		}
+		return false;
 	}
 
 	public void Sim200ms(float dt)
@@ -407,10 +410,10 @@ public class TravelTubeEntrance : StateMachineComponent<TravelTubeEntrance.SMIns
 
 	private void UpdateConnectionStatus()
 	{
-		bool flag = button != null && !button.IsEnabled;
+		bool num = button != null && !button.IsEnabled;
 		bool isConnected = energyConsumer.IsConnected;
 		bool hasLaunchPower = HasLaunchPower;
-		if (flag || !isConnected || hasLaunchPower)
+		if (num || !isConnected || hasLaunchPower)
 		{
 			connectedStatus = selectable.RemoveStatusItem(connectedStatus);
 		}

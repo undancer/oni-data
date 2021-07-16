@@ -58,8 +58,7 @@ namespace Klei.AI
 		{
 			for (int i = 0; i < ModifierList.Count; i++)
 			{
-				InstanceType val = ModifierList[i];
-				if (val == instance)
+				if (ModifierList[i] == instance)
 				{
 					ModifierList.RemoveAt(i);
 					instance.OnCleanUp();

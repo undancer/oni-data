@@ -84,8 +84,7 @@ public class EffectConfigs : IMultiEntityConfig
 				destroyOnAnimComplete = false
 			}
 		};
-		var array2 = array;
-		foreach (var anon in array2)
+		foreach (var anon in array)
 		{
 			GameObject gameObject = EntityTemplates.CreateEntity(anon.id, anon.id, is_selectable: false);
 			KBatchedAnimController kBatchedAnimController = gameObject.AddOrGet<KBatchedAnimController>();
@@ -96,12 +95,12 @@ public class EffectConfigs : IMultiEntityConfig
 			kBatchedAnimController.destroyOnAnimComplete = anon.destroyOnAnimComplete;
 			if (anon.animFiles.Length != 0)
 			{
-				KAnimFile[] array3 = new KAnimFile[anon.animFiles.Length];
-				for (int j = 0; j < array3.Length; j++)
+				KAnimFile[] array2 = new KAnimFile[anon.animFiles.Length];
+				for (int j = 0; j < array2.Length; j++)
 				{
-					array3[j] = Assets.GetAnim(anon.animFiles[j]);
+					array2[j] = Assets.GetAnim(anon.animFiles[j]);
 				}
-				kBatchedAnimController.AnimFiles = array3;
+				kBatchedAnimController.AnimFiles = array2;
 			}
 			gameObject.AddOrGet<LoopingSounds>();
 			list.Add(gameObject);

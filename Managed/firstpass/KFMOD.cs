@@ -54,7 +54,16 @@ public class KFMOD
 	{
 		try
 		{
-			FMOD.Studio.System studioSystem = RuntimeManager.StudioSystem;
+			Settings instance = Settings.Instance;
+			if (!DlcManager.IsExpansion1Active())
+			{
+				instance.Banks.RemoveAll((string b) => b.StartsWith("expansion1_"));
+			}
+			if (UnityEngine.Object.FindObjectsOfType<RuntimeManager>().Length != 0)
+			{
+				Debug.LogError("FMOD got initialized before we tried to initialize it! This will cause bad things to happen!");
+			}
+			_ = RuntimeManager.StudioSystem;
 			didFmodInitializeSuccessfully = RuntimeManager.IsInitialized;
 		}
 		catch (Exception ex)
@@ -72,8 +81,7 @@ public class KFMOD
 
 	public static void PlayOneShot(string sound, Vector3 position, float volume = 1f)
 	{
-		EventInstance instance = BeginOneShot(sound, position, volume);
-		EndOneShot(instance);
+		EndOneShot(BeginOneShot(sound, position, volume));
 	}
 
 	public static void PlayUISound(string sound)
@@ -90,15 +98,11 @@ public class KFMOD
 		EventInstance result = CreateInstance(sound);
 		if (!result.isValid())
 		{
-			if (KFMODDebugger.instance != null)
-			{
-			}
+			_ = KFMODDebugger.instance != null;
 			return result;
 		}
 		Vector3 pos = new Vector3(position.x, position.y, position.z);
-		if (KFMODDebugger.instance != null)
-		{
-		}
+		_ = KFMODDebugger.instance != null;
 		ATTRIBUTES_3D attributes = pos.To3DAttributes();
 		result.set3DAttributes(attributes);
 		result.setVolume(volume);
@@ -140,9 +144,9 @@ public class KFMOD
 		sound.description = soundEventDescription;
 		OneShotSoundParameterUpdater.Sound sound2 = sound;
 		OneShotSoundParameterUpdater[] oneShotParameterUpdaters = soundEventDescription.oneShotParameterUpdaters;
-		foreach (OneShotSoundParameterUpdater oneShotSoundParameterUpdater in oneShotParameterUpdaters)
+		for (int i = 0; i < oneShotParameterUpdaters.Length; i++)
 		{
-			oneShotSoundParameterUpdater.Play(sound2);
+			oneShotParameterUpdaters[i].Play(sound2);
 		}
 		return eventInstance;
 	}

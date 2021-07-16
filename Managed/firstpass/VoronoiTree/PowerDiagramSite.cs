@@ -24,10 +24,10 @@ namespace VoronoiTree
 		public Vector2 position;
 
 		[Serialize]
-		public Polygon poly = null;
+		public Polygon poly;
 
 		[Serialize]
-		public List<PowerDiagramSite> neighbours = null;
+		public List<PowerDiagramSite> neighbours;
 
 		private Vector2? circumCenter;
 

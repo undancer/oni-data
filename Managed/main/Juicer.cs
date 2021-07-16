@@ -38,9 +38,9 @@ public class Juicer : StateMachineComponent<Juicer.StatesInstance>, IGameObjectE
 		private Chore CreateChore(StatesInstance smi)
 		{
 			Workable component = smi.master.GetComponent<JuicerWorkable>();
-			Chore chore = new WorkChore<JuicerWorkable>(Db.Get().ChoreTypes.Relax, component, null, run_until_complete: true, null, null, null, allow_in_red_alert: false, Db.Get().ScheduleBlockTypes.Recreation, ignore_schedule_block: false, only_when_operational: true, null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, PriorityScreen.PriorityClass.high);
-			chore.AddPrecondition(ChorePreconditions.instance.CanDoWorkerPrioritizable, component);
-			return chore;
+			WorkChore<JuicerWorkable> workChore = new WorkChore<JuicerWorkable>(Db.Get().ChoreTypes.Relax, component, null, run_until_complete: true, null, null, null, allow_in_red_alert: false, Db.Get().ScheduleBlockTypes.Recreation, ignore_schedule_block: false, only_when_operational: true, null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, PriorityScreen.PriorityClass.high);
+			workChore.AddPrecondition(ChorePreconditions.instance.CanDoWorkerPrioritizable, component);
+			return workChore;
 		}
 
 		private bool IsReady(StatesInstance smi)
@@ -56,8 +56,7 @@ public class Juicer : StateMachineComponent<Juicer.StatesInstance>, IGameObjectE
 			}
 			for (int i = 0; i < smi.master.ingredientTags.Length; i++)
 			{
-				float amountAvailable = smi.GetComponent<Storage>().GetAmountAvailable(smi.master.ingredientTags[i]);
-				if (amountAvailable < smi.master.ingredientMassesPerUse[i])
+				if (smi.GetComponent<Storage>().GetAmountAvailable(smi.master.ingredientTags[i]) < smi.master.ingredientMassesPerUse[i])
 				{
 					return false;
 				}
@@ -103,8 +102,7 @@ public class Juicer : StateMachineComponent<Juicer.StatesInstance>, IGameObjectE
 	{
 		string arg = tag.ProperName();
 		Descriptor item = default(Descriptor);
-		EdiblesManager.FoodInfo foodInfo = EdiblesManager.GetFoodInfo(tag.Name);
-		string arg2 = ((foodInfo != null) ? GameUtil.GetFormattedCaloriesForItem(tag, mass) : GameUtil.GetFormattedMass(mass, GameUtil.TimeSlice.None, GameUtil.MetricMassFormat.Kilogram));
+		string arg2 = ((EdiblesManager.GetFoodInfo(tag.Name) != null) ? GameUtil.GetFormattedCaloriesForItem(tag, mass) : GameUtil.GetFormattedMass(mass, GameUtil.TimeSlice.None, GameUtil.MetricMassFormat.Kilogram));
 		item.SetupDescriptor(string.Format(UI.BUILDINGEFFECTS.ELEMENTCONSUMEDPERUSE, arg, arg2), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.ELEMENTCONSUMEDPERUSE, arg, arg2), Descriptor.DescriptorType.Requirement);
 		descs.Add(item);
 	}

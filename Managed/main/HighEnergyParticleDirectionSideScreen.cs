@@ -8,7 +8,7 @@ public class HighEnergyParticleDirectionSideScreen : SideScreenContent
 
 	public List<KButton> Buttons;
 
-	private KButton activeButton = null;
+	private KButton activeButton;
 
 	public LocText directionLabel;
 
@@ -61,9 +61,13 @@ public class HighEnergyParticleDirectionSideScreen : SideScreenContent
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		bool flag = target.GetComponent<HighEnergyParticleRedirector>() != null;
-		bool flag2 = target.GetComponent<HighEnergyParticleSpawner>() != null;
-		return (flag || flag2) && target.GetComponent<IHighEnergyParticleDirection>() != null;
+		bool num = target.GetComponent<HighEnergyParticleRedirector>() != null;
+		bool flag = target.GetComponent<HighEnergyParticleSpawner>() != null;
+		if (num || flag)
+		{
+			return target.GetComponent<IHighEnergyParticleDirection>() != null;
+		}
+		return false;
 	}
 
 	public override void SetTarget(GameObject new_target)
@@ -89,8 +93,7 @@ public class HighEnergyParticleDirectionSideScreen : SideScreenContent
 		int directionIndex = EightDirectionUtil.GetDirectionIndex(target.Direction);
 		if (directionIndex >= 0 && directionIndex < Buttons.Count)
 		{
-			KButton kButton = Buttons[directionIndex];
-			kButton.SignalClick(KKeyCode.Mouse0);
+			Buttons[directionIndex].SignalClick(KKeyCode.Mouse0);
 		}
 		else
 		{

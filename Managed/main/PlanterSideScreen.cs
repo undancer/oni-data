@@ -33,7 +33,7 @@ public class PlanterSideScreen : ReceptacleSideScreen
 
 	private Dictionary<PlantablePlot, Tag> entityPreviousSubSelectionMap = new Dictionary<PlantablePlot, Tag>();
 
-	private Coroutine activeAnimationRoutine = null;
+	private Coroutine activeAnimationRoutine;
 
 	private const float EXPAND_DURATION = 0.33f;
 
@@ -125,13 +125,13 @@ public class PlanterSideScreen : ReceptacleSideScreen
 	private IEnumerator ExpandMutations()
 	{
 		LayoutElement le = mutationViewport.GetComponent<LayoutElement>();
-		float totalTravel = 94f;
-		float travelPerSecond = totalTravel / 0.33f;
+		float num = 94f;
+		float travelPerSecond = num / 0.33f;
 		while (le.minHeight < 118f)
 		{
-			float pos2 = le.minHeight;
-			float delta = Time.unscaledDeltaTime * travelPerSecond;
-			pos2 = (le.preferredHeight = (le.minHeight = Mathf.Min(pos2 + delta, 118f)));
+			float minHeight = le.minHeight;
+			float num2 = Time.unscaledDeltaTime * travelPerSecond;
+			minHeight = (le.preferredHeight = (le.minHeight = Mathf.Min(minHeight + num2, 118f)));
 			yield return new WaitForEndOfFrame();
 		}
 		mutationPanelCollapsed = false;
@@ -142,13 +142,13 @@ public class PlanterSideScreen : ReceptacleSideScreen
 	private IEnumerator CollapseMutations()
 	{
 		LayoutElement le = mutationViewport.GetComponent<LayoutElement>();
-		float totalTravel = -94f;
-		float travelPerSecond = totalTravel / 0.33f;
+		float num = -94f;
+		float travelPerSecond = num / 0.33f;
 		while (le.minHeight > 24f)
 		{
-			float pos2 = le.minHeight;
-			float delta = Time.unscaledDeltaTime * travelPerSecond;
-			pos2 = (le.preferredHeight = (le.minHeight = Mathf.Max(pos2 + delta, 24f)));
+			float minHeight = le.minHeight;
+			float num2 = Time.unscaledDeltaTime * travelPerSecond;
+			minHeight = (le.preferredHeight = (le.minHeight = Mathf.Max(minHeight + num2, 24f)));
 			yield return new WaitForEndOfFrame();
 		}
 		mutationPanelCollapsed = true;
@@ -273,8 +273,7 @@ public class PlanterSideScreen : ReceptacleSideScreen
 
 	protected override Sprite GetEntityIcon(Tag prefabTag)
 	{
-		GameObject prefab = Assets.GetPrefab(prefabTag);
-		PlantableSeed component = prefab.GetComponent<PlantableSeed>();
+		PlantableSeed component = Assets.GetPrefab(prefabTag).GetComponent<PlantableSeed>();
 		if (component != null)
 		{
 			return base.GetEntityIcon(new Tag(component.PlantID));
@@ -382,7 +381,11 @@ public class PlanterSideScreen : ReceptacleSideScreen
 		}
 		PlantablePlot plantablePlot = targetReceptacle as PlantablePlot;
 		WorldContainer myWorld = targetReceptacle.GetMyWorld();
-		return flag && plantablePlot.ValidPlant && myWorld.worldInventory.GetCountWithAdditionalTag(selectedDepositObjectTag, selectedDepositObjectAdditionalTag, myWorld.IsModuleInterior) > 0;
+		if (flag && plantablePlot.ValidPlant)
+		{
+			return myWorld.worldInventory.GetCountWithAdditionalTag(selectedDepositObjectTag, selectedDepositObjectAdditionalTag, myWorld.IsModuleInterior) > 0;
+		}
+		return false;
 	}
 
 	public override void SetTarget(GameObject target)

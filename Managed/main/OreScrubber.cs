@@ -107,7 +107,7 @@ public class OreScrubber : StateMachineComponent<OreScrubber.SMInstance>, IGameO
 	[AddComponentMenu("KMonoBehaviour/Workable/Work")]
 	public class Work : Workable, IGameObjectEffectDescriptor
 	{
-		private int diseaseRemoved = 0;
+		private int diseaseRemoved;
 
 		protected override void OnPrefabInit()
 		{
@@ -169,7 +169,7 @@ public class OreScrubber : StateMachineComponent<OreScrubber.SMInstance>, IGameO
 	private MeterController cleanMeter;
 
 	[Serialize]
-	public int maxPossiblyRemoved = 0;
+	public int maxPossiblyRemoved;
 
 	private static readonly EventSystem.IntraObjectHandler<OreScrubber> OnStorageChangeDelegate = new EventSystem.IntraObjectHandler<OreScrubber>(delegate(OreScrubber component, object data)
 	{

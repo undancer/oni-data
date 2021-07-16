@@ -20,22 +20,22 @@ public class StaterpillarConfig : IEntityConfig
 
 	public static GameObject CreateStaterpillar(string id, string name, string desc, string anim_file, bool is_baby)
 	{
-		GameObject prefab = BaseStaterpillarConfig.BaseStaterpillar(id, name, desc, anim_file, "StaterpillarBaseTrait", is_baby);
-		prefab = EntityTemplates.ExtendEntityToWildCreature(prefab, TUNING.CREATURES.SPACE_REQUIREMENTS.TIER3);
+		GameObject prefab = EntityTemplates.ExtendEntityToWildCreature(BaseStaterpillarConfig.BaseStaterpillar(id, name, desc, anim_file, "StaterpillarBaseTrait", is_baby), TUNING.CREATURES.SPACE_REQUIREMENTS.TIER3);
 		Trait trait = Db.Get().CreateTrait("StaterpillarBaseTrait", name, name, null, should_save: false, null, positive_trait: true, is_valid_starter_trait: true);
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.maxAttribute.Id, StaterpillarTuning.STANDARD_STOMACH_SIZE, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.deltaAttribute.Id, (0f - StaterpillarTuning.STANDARD_CALORIES_PER_CYCLE) / 600f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.HitPoints.maxAttribute.Id, 25f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Age.maxAttribute.Id, 100f, name));
-		HashSet<Tag> hashSet = new HashSet<Tag>();
-		hashSet.Add(SimHashes.Cuprite.CreateTag());
-		hashSet.Add(SimHashes.IronOre.CreateTag());
-		hashSet.Add(SimHashes.GoldAmalgam.CreateTag());
-		hashSet.Add(SimHashes.Wolframite.CreateTag());
-		hashSet.Add(SimHashes.AluminumOre.CreateTag());
-		hashSet.Add(SimHashes.Electrum.CreateTag());
-		hashSet.Add(SimHashes.Cobaltite.CreateTag());
-		return BaseStaterpillarConfig.SetupDiet(prefab, hashSet, SimHashes.Hydrogen.CreateTag(), CALORIES_PER_KG_OF_ORE);
+		return BaseStaterpillarConfig.SetupDiet(prefab, new HashSet<Tag>
+		{
+			SimHashes.Cuprite.CreateTag(),
+			SimHashes.IronOre.CreateTag(),
+			SimHashes.GoldAmalgam.CreateTag(),
+			SimHashes.Wolframite.CreateTag(),
+			SimHashes.AluminumOre.CreateTag(),
+			SimHashes.Electrum.CreateTag(),
+			SimHashes.Cobaltite.CreateTag()
+		}, SimHashes.Hydrogen.CreateTag(), CALORIES_PER_KG_OF_ORE);
 	}
 
 	public string[] GetDlcIds()
@@ -45,8 +45,7 @@ public class StaterpillarConfig : IEntityConfig
 
 	public virtual GameObject CreatePrefab()
 	{
-		GameObject prefab = CreateStaterpillar("Staterpillar", STRINGS.CREATURES.SPECIES.STATERPILLAR.NAME, STRINGS.CREATURES.SPECIES.STATERPILLAR.DESC, "caterpillar_kanim", is_baby: false);
-		return EntityTemplates.ExtendEntityToFertileCreature(prefab, "StaterpillarEgg", STRINGS.CREATURES.SPECIES.STATERPILLAR.EGG_NAME, STRINGS.CREATURES.SPECIES.STATERPILLAR.DESC, "egg_caterpillar_kanim", StaterpillarTuning.EGG_MASS, "StaterpillarBaby", 60.000004f, 20f, StaterpillarTuning.EGG_CHANCES_BASE, EGG_SORT_ORDER);
+		return EntityTemplates.ExtendEntityToFertileCreature(CreateStaterpillar("Staterpillar", STRINGS.CREATURES.SPECIES.STATERPILLAR.NAME, STRINGS.CREATURES.SPECIES.STATERPILLAR.DESC, "caterpillar_kanim", is_baby: false), "StaterpillarEgg", STRINGS.CREATURES.SPECIES.STATERPILLAR.EGG_NAME, STRINGS.CREATURES.SPECIES.STATERPILLAR.DESC, "egg_caterpillar_kanim", StaterpillarTuning.EGG_MASS, "StaterpillarBaby", 60.000004f, 20f, StaterpillarTuning.EGG_CHANCES_BASE, EGG_SORT_ORDER);
 	}
 
 	public void OnPrefabInit(GameObject prefab)

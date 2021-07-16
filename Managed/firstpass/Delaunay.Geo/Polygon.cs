@@ -20,9 +20,9 @@ namespace Delaunay.Geo
 		[Serialize]
 		private List<Vector2> vertices;
 
-		private Vector2? centroid = null;
+		private Vector2? centroid;
 
-		public static bool DoDebugSpew = false;
+		public static bool DoDebugSpew;
 
 		private const int CLIPPER_INTEGER_SCALE = 10000;
 
@@ -256,12 +256,7 @@ namespace Delaunay.Geo
 				{
 					Vector2 vector3 = other.vertices[index];
 					Vector2 vector4 = other.vertices[num3];
-					int num4 = 0;
-					num4 += ((Vector2.Distance(vector4, vector2) < 0.001f) ? 1 : 0);
-					num4 += ((Vector2.Distance(vector4, vector) < 0.001f) ? 1 : 0);
-					num4 += ((Vector2.Distance(vector3, vector2) < 0.001f) ? 1 : 0);
-					num4 += ((Vector2.Distance(vector3, vector) < 0.001f) ? 1 : 0);
-					if (num4 == 1)
+					if (0 + ((Vector2.Distance(vector4, vector2) < 0.001f) ? 1 : 0) + ((Vector2.Distance(vector4, vector) < 0.001f) ? 1 : 0) + ((Vector2.Distance(vector3, vector2) < 0.001f) ? 1 : 0) + ((Vector2.Distance(vector3, vector) < 0.001f) ? 1 : 0) == 1)
 					{
 						result = Commonality.Point;
 					}
@@ -273,12 +268,12 @@ namespace Delaunay.Geo
 						float f2 = (vector4.x - vector3.x) * (vector.y - vector3.y) - (vector.x - vector3.x) * (vector4.y - vector3.y);
 						if (Mathf.Abs(f) < 0.001f && Mathf.Abs(f2) < 0.001f)
 						{
-							bool flag = vector.x < vector2.x || (vector.x == vector2.x && vector.y < vector2.y);
-							Vector2 vector5 = (flag ? vector : vector2);
-							Vector2 vector6 = (flag ? vector2 : vector);
-							bool flag2 = vector3.x < vector4.x || (vector3.x == vector4.x && vector3.y < vector4.y);
-							Vector2 vector7 = (flag2 ? vector3 : vector4);
-							Vector2 vector8 = (flag2 ? vector4 : vector3);
+							bool num4 = vector.x < vector2.x || (vector.x == vector2.x && vector.y < vector2.y);
+							Vector2 vector5 = (num4 ? vector : vector2);
+							Vector2 vector6 = (num4 ? vector2 : vector);
+							bool num5 = vector3.x < vector4.x || (vector3.x == vector4.x && vector3.y < vector4.y);
+							Vector2 vector7 = (num5 ? vector3 : vector4);
+							Vector2 vector8 = (num5 ? vector4 : vector3);
 							if (!(vector5.x < vector7.x) && (vector5.x != vector7.x || !(vector5.y < vector7.y)))
 							{
 								Vector2 vector9 = vector5;
@@ -329,8 +324,7 @@ namespace Delaunay.Geo
 			float timeOnEdge = 0f;
 			MathUtil.Pair<Vector2, Vector2> closestEdge = GetClosestEdge(point.Value, ref timeOnEdge);
 			Vector2 a = closestEdge.Second - closestEdge.First;
-			Vector2 a2 = closestEdge.First + a * timeOnEdge;
-			return Vector2.Distance(a2, point.Value);
+			return Vector2.Distance(closestEdge.First + a * timeOnEdge, point.Value);
 		}
 
 		public MathUtil.Pair<Vector2, Vector2> GetClosestEdge(Vector2 point, ref float timeOnEdge)
@@ -539,8 +533,7 @@ namespace Delaunay.Geo
 			for (int i = 0; i < vertices.Count; i++)
 			{
 				Vector2 vector2 = vertices[i];
-				Vector2 a = vertices[(i < vertices.Count - 1) ? (i + 1) : 0];
-				Vector2 vector3 = a - vector2;
+				Vector2 vector3 = vertices[(i < vertices.Count - 1) ? (i + 1) : 0] - vector2;
 				Vector2 vector4 = new Vector2(vector3.y, 0f - vector3.x);
 				Vector2 u = vector2 - segment.p0.Value;
 				float num3 = perp(u, vector4);
@@ -595,12 +588,9 @@ namespace Delaunay.Geo
 				Vector2 a2 = vertices[(i < vertices.Count - 1) ? (i + 1) : 0];
 				if (inset != 0f)
 				{
-					Vector2 vector = (a - b).normalized * (0f - inset);
-					Vector2 vector2 = (a2 - b).normalized * (0f - inset);
+					_ = (a - b).normalized * (0f - inset);
+					_ = (a2 - b).normalized * (0f - inset);
 				}
-			}
-			if (!drawCentroid)
-			{
 			}
 		}
 	}

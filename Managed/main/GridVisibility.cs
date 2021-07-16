@@ -45,8 +45,7 @@ public class GridVisibility : KMonoBehaviour
 				if (num2 >= 0 && Grid.HeightInCells - 1 >= num2 && num3 >= 0 && Grid.WidthInCells - 1 >= num3)
 				{
 					int num4 = num2 * Grid.WidthInCells + num3;
-					byte b = Grid.Visible[num4];
-					if (b < byte.MaxValue && num == Grid.WorldIdx[num4])
+					if (Grid.Visible[num4] < byte.MaxValue && num == Grid.WorldIdx[num4])
 					{
 						float num5 = Mathf.Lerp(1f, 0f, (new Vector2(j, i).magnitude - innerRadius) / ((float)radius - innerRadius));
 						Grid.Reveal(num4, (byte)(255f * num5));

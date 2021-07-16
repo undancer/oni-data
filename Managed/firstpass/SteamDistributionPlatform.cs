@@ -42,7 +42,7 @@ internal class SteamDistributionPlatform : MonoBehaviour, DistributionPlatform.I
 		}
 	}
 
-	private SteamUser mLocalUser = null;
+	private SteamUser mLocalUser;
 
 	private Dictionary<string, uint> DLCtoSteamIDMap = new Dictionary<string, uint>
 	{
@@ -82,7 +82,11 @@ internal class SteamDistributionPlatform : MonoBehaviour, DistributionPlatform.I
 		{
 			SteamApps.GetCurrentBetaName(out var pchName, 100);
 			Debug.Log("Checking which steam branch we're on. Got: [" + pchName + "]");
-			return !(pchName == "default") && !(pchName == "release");
+			if (!(pchName == "") && !(pchName == "default"))
+			{
+				return !(pchName == "release");
+			}
+			return false;
 		}
 	}
 

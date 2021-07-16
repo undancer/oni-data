@@ -72,8 +72,7 @@ namespace YamlDotNet.Serialization
 
 			public T GetCustomAttribute<T>() where T : Attribute
 			{
-				T attribute = overrides.GetAttribute<T>(classType, Name);
-				return attribute ?? baseDescriptor.GetCustomAttribute<T>();
+				return overrides.GetAttribute<T>(classType, Name) ?? baseDescriptor.GetCustomAttribute<T>();
 			}
 
 			public IObjectDescriptor Read(object target)

@@ -11,7 +11,7 @@ public class SplashMessageScreen : KMonoBehaviour
 
 	public LocText bodyText;
 
-	public bool previewInEditor = false;
+	public bool previewInEditor;
 
 	protected override void OnPrefabInit()
 	{
@@ -30,13 +30,20 @@ public class SplashMessageScreen : KMonoBehaviour
 
 	private void OnEnable()
 	{
-		LayoutElement component = confirmButton.GetComponent<LayoutElement>();
-		LocText componentInChildren = confirmButton.GetComponentInChildren<LocText>();
+		confirmButton.GetComponent<LayoutElement>();
+		confirmButton.GetComponentInChildren<LocText>();
 	}
 
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		AudioMixer.instance.Start(AudioMixerSnapshots.Get().FrontEndWelcomeScreenSnapshot);
+		if (!DlcManager.IsExpansion1Active())
+		{
+			Object.Destroy(base.gameObject);
+		}
+		else
+		{
+			AudioMixer.instance.Start(AudioMixerSnapshots.Get().FrontEndWelcomeScreenSnapshot);
+		}
 	}
 }

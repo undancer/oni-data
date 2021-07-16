@@ -37,7 +37,7 @@ public class GeneticAnalysisStationSideScreen : SideScreenContent
 	public override void SetTarget(GameObject target)
 	{
 		this.target = target.GetSMI<GeneticAnalysisStation.StatesInstance>();
-		GeneticAnalysisStationWorkable component = target.GetComponent<GeneticAnalysisStationWorkable>();
+		target.GetComponent<GeneticAnalysisStationWorkable>();
 		Refresh();
 	}
 
@@ -59,8 +59,7 @@ public class GeneticAnalysisStationSideScreen : SideScreenContent
 		int num = 0;
 		foreach (KeyValuePair<Tag, List<PlantSubSpeciesCatalog.SubSpeciesInfo>> item in dictionary)
 		{
-			List<PlantSubSpeciesCatalog.SubSpeciesInfo> allSubSpeciesForSpecies = PlantSubSpeciesCatalog.Instance.GetAllSubSpeciesForSpecies(item.Key);
-			if (allSubSpeciesForSpecies.Count <= 1)
+			if (PlantSubSpeciesCatalog.Instance.GetAllSubSpeciesForSpecies(item.Key).Count <= 1)
 			{
 				continue;
 			}
@@ -74,8 +73,7 @@ public class GeneticAnalysisStationSideScreen : SideScreenContent
 			{
 				continue;
 			}
-			SeedProducer.SeedInfo seedInfo = component.seedInfo;
-			Tag tag = seedInfo.seedId.ToTag();
+			Tag tag = component.seedInfo.seedId.ToTag();
 			if (DiscoveredResources.Instance.IsDiscovered(tag))
 			{
 				HierarchyReferences hierarchyReferences;
@@ -114,13 +112,12 @@ public class GeneticAnalysisStationSideScreen : SideScreenContent
 		LocText reference = button.GetReference<LocText>("Label");
 		Image reference2 = button.GetReference<Image>("Icon");
 		LocText reference3 = button.GetReference<LocText>("ProgressLabel");
-		ToolTip reference4 = button.GetReference<ToolTip>("ToolTip");
+		button.GetReference<ToolTip>("ToolTip");
 		Tag seedID = GetSeedIDFromPlantID(speciesID);
 		bool isForbidden = target.GetSeedForbidden(seedID);
 		reference.text = seedID.ProperName();
 		reference2.sprite = Def.GetUISprite(seedID).first;
-		List<PlantSubSpeciesCatalog.SubSpeciesInfo> allSubSpeciesForSpecies = PlantSubSpeciesCatalog.Instance.GetAllSubSpeciesForSpecies(speciesID);
-		if (allSubSpeciesForSpecies.Count > 0)
+		if (PlantSubSpeciesCatalog.Instance.GetAllSubSpeciesForSpecies(speciesID).Count > 0)
 		{
 			reference3.text = (isForbidden ? UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_FORBIDDEN : UI.UISIDESCREENS.GENETICANALYSISSIDESCREEN.SEED_ALLOWED);
 		}
@@ -140,9 +137,6 @@ public class GeneticAnalysisStationSideScreen : SideScreenContent
 
 	private Tag GetSeedIDFromPlantID(Tag speciesID)
 	{
-		GameObject prefab = Assets.GetPrefab(speciesID);
-		SeedProducer component = prefab.GetComponent<SeedProducer>();
-		string seedId = component.seedInfo.seedId;
-		return seedId;
+		return Assets.GetPrefab(speciesID).GetComponent<SeedProducer>().seedInfo.seedId;
 	}
 }

@@ -21,7 +21,11 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			return other is HTTPRequestHandle && this == (HTTPRequestHandle)other;
+			if (other is HTTPRequestHandle)
+			{
+				return this == (HTTPRequestHandle)other;
+			}
+			return false;
 		}
 
 		public override int GetHashCode()

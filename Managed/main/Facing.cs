@@ -60,9 +60,7 @@ public class Facing : KMonoBehaviour
 		if (kanimController != null && kanimController.FlipX != facingLeft)
 		{
 			kanimController.FlipX = facingLeft;
-			if (!facingLeft)
-			{
-			}
+			_ = facingLeft;
 		}
 	}
 

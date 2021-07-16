@@ -28,8 +28,7 @@ public class VendingMachineConfig : IEntityConfig
 		setLocker.dropOffset = new Vector2I(1, 1);
 		gameObject.AddOrGet<LoreBearer>();
 		gameObject.AddOrGet<LoopingSounds>();
-		OccupyArea occupyArea = gameObject.AddOrGet<OccupyArea>();
-		occupyArea.objectLayers = new ObjectLayer[1]
+		gameObject.AddOrGet<OccupyArea>().objectLayers = new ObjectLayer[1]
 		{
 			ObjectLayer.Building
 		};

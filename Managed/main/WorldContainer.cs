@@ -37,6 +37,9 @@ public class WorldContainer : KMonoBehaviour
 	private bool isDiscovered;
 
 	[Serialize]
+	private bool isStartWorld;
+
+	[Serialize]
 	private bool isDupeVisited;
 
 	[Serialize]
@@ -83,7 +86,19 @@ public class WorldContainer : KMonoBehaviour
 
 	public bool IsModuleInterior => isModuleInterior;
 
-	public bool IsDiscovered => isDiscovered || DebugHandler.RevealFogOfWar;
+	public bool IsDiscovered
+	{
+		get
+		{
+			if (!isDiscovered)
+			{
+				return DebugHandler.RevealFogOfWar;
+			}
+			return true;
+		}
+	}
+
+	public bool IsStartWorld => isStartWorld;
 
 	public bool IsDupeVisited => isDupeVisited;
 
@@ -165,8 +180,7 @@ public class WorldContainer : KMonoBehaviour
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		InfoDescription infoDescription = base.gameObject.AddOrGet<InfoDescription>();
-		infoDescription.DescriptionLocString = worldDescription;
+		base.gameObject.AddOrGet<InfoDescription>().DescriptionLocString = worldDescription;
 		RefreshHasTopPriorityChore();
 	}
 
@@ -225,8 +239,7 @@ public class WorldContainer : KMonoBehaviour
 		isDiscovered = true;
 		if (reveal_surface)
 		{
-			RevealSurface();
-			SetSurfaceCameraPos();
+			LookAtSurface();
 		}
 		Game.Instance.Trigger(-521212405, this);
 	}
@@ -270,7 +283,11 @@ public class WorldContainer : KMonoBehaviour
 		{
 			return -1;
 		}
-		return (vector.sqrMagnitude < vector2.sqrMagnitude) ? 1 : (-1);
+		if (!(vector.sqrMagnitude < vector2.sqrMagnitude))
+		{
+			return -1;
+		}
+		return 1;
 	}
 
 	public void PlaceInteriorTemplate(string template_name, System.Action callback)
@@ -314,8 +331,7 @@ public class WorldContainer : KMonoBehaviour
 		{
 			for (int j = (int)rect.xMin; (float)j < rect.xMax; j++)
 			{
-				int cell = Grid.XYToCell(j, i);
-				SimMessages.ModifyCellWorldZone(cell, 0);
+				SimMessages.ModifyCellWorldZone(Grid.XYToCell(j, i), 0);
 			}
 		}
 	}
@@ -328,6 +344,7 @@ public class WorldContainer : KMonoBehaviour
 			worldOffset = world.GetPosition();
 			worldSize = world.GetSize();
 			isDiscovered = world.isStartingWorld;
+			isStartWorld = world.isStartingWorld;
 			worldName = world.Settings.world.filePath;
 			nameTable = world.Settings.world.nameTable;
 			worldDescription = world.Settings.world.description;
@@ -358,69 +375,82 @@ public class WorldContainer : KMonoBehaviour
 
 	public bool ContainsPoint(Vector2 point)
 	{
-		return point.x >= (float)worldOffset.x && point.y >= (float)worldOffset.y && point.x < (float)(worldOffset.x + worldSize.x) && point.y < (float)(worldOffset.y + worldSize.y);
+		if (point.x >= (float)worldOffset.x && point.y >= (float)worldOffset.y && point.x < (float)(worldOffset.x + worldSize.x))
+		{
+			return point.y < (float)(worldOffset.y + worldSize.y);
+		}
+		return false;
+	}
+
+	public void LookAtSurface()
+	{
+		if (!IsDupeVisited)
+		{
+			RevealSurface();
+		}
+		Vector3? vector = SetSurfaceCameraPos();
+		if (ClusterManager.Instance.activeWorldId == id && vector.HasValue)
+		{
+			CameraController.Instance.SnapTo(vector.Value);
+		}
 	}
 
 	private void RevealSurface()
 	{
 		for (int i = 0; i < worldSize.x; i++)
 		{
-			int num = worldSize.y;
-			while (num >= 0)
+			for (int num = worldSize.y - 1; num >= 0; num--)
 			{
 				int cell = Grid.XYToCell(i + worldOffset.x, num + worldOffset.y);
-				if (Grid.IsValidCell(cell) && !Grid.IsSolidCell(cell) && !Grid.IsLiquid(cell))
+				if (!Grid.IsValidCell(cell) || Grid.IsSolidCell(cell) || Grid.IsLiquid(cell))
 				{
-					GridVisibility.Reveal(i + worldOffset.X, num + worldOffset.y, 7, 1f);
-					num--;
-					continue;
+					break;
 				}
-				break;
+				GridVisibility.Reveal(i + worldOffset.X, num + worldOffset.y, 7, 1f);
 			}
 		}
 	}
 
-	private void SetSurfaceCameraPos()
+	private Vector3? SetSurfaceCameraPos()
 	{
-		if (!(SaveGame.Instance != null))
+		if (SaveGame.Instance != null)
 		{
-			return;
-		}
-		int num = (int)maximumBounds.y;
-		for (int i = 0; i < worldSize.X; i++)
-		{
-			for (int num2 = worldSize.Y; num2 >= 0; num2--)
+			int num = (int)maximumBounds.y;
+			for (int i = 0; i < worldSize.X; i++)
 			{
-				int num3 = num2 + worldOffset.y;
-				int num4 = Grid.XYToCell(i + worldOffset.x, num3);
-				if (Grid.IsValidCell(num4) && (Grid.Solid[num4] || Grid.IsLiquid(num4)))
+				for (int num2 = worldSize.y - 1; num2 >= 0; num2--)
 				{
-					num = Math.Min(num, num3);
-					break;
+					int num3 = num2 + worldOffset.y;
+					int num4 = Grid.XYToCell(i + worldOffset.x, num3);
+					if (Grid.IsValidCell(num4) && (Grid.Solid[num4] || Grid.IsLiquid(num4)))
+					{
+						num = Math.Min(num, num3);
+						break;
+					}
 				}
 			}
+			int num5 = (num + worldOffset.y + worldSize.y) / 2;
+			Vector3 vector = new Vector3(WorldOffset.x + Width / 2, num5, 0f);
+			SaveGame.Instance.GetComponent<UserNavigation>().SetWorldCameraStartPosition(id, vector);
+			return vector;
 		}
-		int num5 = (num + worldOffset.y + worldSize.y) / 2;
-		Vector3 start_pos = new Vector3(WorldOffset.x + Width / 2, num5, 0f);
-		SaveGame.Instance.GetComponent<UserNavigation>().SetWorldCameraStartPosition(id, start_pos);
+		return null;
 	}
 
 	public void EjectAllDupes(Vector3 spawn_pos)
 	{
-		List<MinionIdentity> worldItems = Components.MinionIdentities.GetWorldItems(id);
-		foreach (MinionIdentity item in worldItems)
+		foreach (MinionIdentity worldItem in Components.MinionIdentities.GetWorldItems(id))
 		{
-			item.transform.SetLocalPosition(spawn_pos);
+			worldItem.transform.SetLocalPosition(spawn_pos);
 		}
 	}
 
 	public void DestroyWorldBuildings(Vector3 spawn_pos, out HashSet<int> noRefundTiles)
 	{
 		TransferBuildingMaterials(spawn_pos, out noRefundTiles);
-		List<ClustercraftInteriorDoor> worldItems = Components.ClusterCraftInteriorDoors.GetWorldItems(id);
-		foreach (ClustercraftInteriorDoor item in worldItems)
+		foreach (ClustercraftInteriorDoor worldItem in Components.ClusterCraftInteriorDoors.GetWorldItems(id))
 		{
-			item.DeleteObject();
+			worldItem.DeleteObject();
 		}
 		ClearWorldZones();
 	}
@@ -461,8 +491,7 @@ public class WorldContainer : KMonoBehaviour
 					GameObject prefab = Assets.GetPrefab(component.constructionElements[i]);
 					for (int j = 0; (float)j < buildingComplete.Def.Mass[i]; j++)
 					{
-						GameObject gameObject = GameUtil.KInstantiate(prefab, pos + Vector3.up * 0.5f, Grid.SceneLayer.Ore);
-						gameObject.SetActive(value: true);
+						GameUtil.KInstantiate(prefab, pos + Vector3.up * 0.5f, Grid.SceneLayer.Ore).SetActive(value: true);
 					}
 				}
 			}
@@ -587,8 +616,7 @@ public class WorldContainer : KMonoBehaviour
 		{
 			for (int k = (int)minimumBounds.x; (float)k <= maximumBounds.x; k++)
 			{
-				int cell = Grid.XYToCell(k, j);
-				SimMessages.ModifyCellWorldZone(cell, byte.MaxValue);
+				SimMessages.ModifyCellWorldZone(Grid.XYToCell(k, j), byte.MaxValue);
 			}
 		}
 	}

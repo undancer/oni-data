@@ -11,7 +11,15 @@ public class ElementSpout : StateMachineComponent<ElementSpout.StatesInstance>
 
 		private bool CanEmitOnCell(int cell, float max_pressure, Element.State expected_state)
 		{
-			return Grid.Mass[cell] < max_pressure && (Grid.Element[cell].IsState(expected_state) || Grid.Element[cell].IsVacuum);
+			if (Grid.Mass[cell] < max_pressure)
+			{
+				if (!Grid.Element[cell].IsState(expected_state))
+				{
+					return Grid.Element[cell].IsVacuum;
+				}
+				return true;
+			}
+			return false;
 		}
 
 		public bool CanEmitAnywhere()
@@ -20,9 +28,12 @@ public class ElementSpout : StateMachineComponent<ElementSpout.StatesInstance>
 			int cell2 = Grid.CellLeft(cell);
 			int cell3 = Grid.CellRight(cell);
 			int cell4 = Grid.CellAbove(cell);
-			Element element = ElementLoader.FindElementByHash(base.smi.master.emitter.outputElement.elementHash);
-			Element.State state = element.state;
-			return false || CanEmitOnCell(cell, base.smi.master.maxPressure, state) || CanEmitOnCell(cell2, base.smi.master.maxPressure, state) || CanEmitOnCell(cell3, base.smi.master.maxPressure, state) || CanEmitOnCell(cell4, base.smi.master.maxPressure, state);
+			Element.State state = ElementLoader.FindElementByHash(base.smi.master.emitter.outputElement.elementHash).state;
+			if (0 == 0 && !CanEmitOnCell(cell, base.smi.master.maxPressure, state) && !CanEmitOnCell(cell2, base.smi.master.maxPressure, state) && !CanEmitOnCell(cell3, base.smi.master.maxPressure, state))
+			{
+				return CanEmitOnCell(cell4, base.smi.master.maxPressure, state);
+			}
+			return true;
 		}
 	}
 

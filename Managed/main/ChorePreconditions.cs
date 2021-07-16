@@ -208,7 +208,11 @@ public class ChorePreconditions
 				if (!context.chore.isNull)
 				{
 					int num = (int)data;
-					return !Grid.IsValidCell(num) || Grid.WorldIdx[num] != context.consumerState.gameObject.GetMyWorldId();
+					if (Grid.IsValidCell(num))
+					{
+						return Grid.WorldIdx[num] != context.consumerState.gameObject.GetMyWorldId();
+					}
+					return true;
 				}
 				return false;
 			}
@@ -294,8 +298,8 @@ public class ChorePreconditions
 				{
 					return true;
 				}
-				PeeChoreMonitor.Instance sMI2 = context.consumerState.gameObject.GetSMI<PeeChoreMonitor.Instance>();
-				return sMI2?.IsInsideState(sMI2.sm.critical) ?? false;
+				PeeChoreMonitor.Instance sMI4 = context.consumerState.gameObject.GetSMI<PeeChoreMonitor.Instance>();
+				return sMI4?.IsInsideState(sMI4.sm.critical) ?? false;
 			}
 		});
 		isPreemptable = (IsNotTransferArm = new Chore.Precondition
@@ -313,25 +317,25 @@ public class ChorePreconditions
 			description = DUPLICANTS.CHORES.PRECONDITIONS.HAS_SKILL_PERK,
 			fn = delegate(ref Chore.Precondition.Context context, object data)
 			{
-				MinionResume resume2 = context.consumerState.resume;
-				if (!resume2)
+				MinionResume resume = context.consumerState.resume;
+				if (!resume)
 				{
 					return false;
 				}
 				if (data is SkillPerk)
 				{
 					SkillPerk perk = data as SkillPerk;
-					return resume2.HasPerk(perk);
+					return resume.HasPerk(perk);
 				}
 				if (data is HashedString)
 				{
 					HashedString perkId = (HashedString)data;
-					return resume2.HasPerk(perkId);
+					return resume.HasPerk(perkId);
 				}
 				if (data is string)
 				{
 					HashedString perkId2 = (string)data;
-					return resume2.HasPerk(perkId2);
+					return resume.HasPerk(perkId2);
 				}
 				return false;
 			}
@@ -342,8 +346,7 @@ public class ChorePreconditions
 			description = DUPLICANTS.CHORES.PRECONDITIONS.IS_MINION,
 			fn = delegate(ref Chore.Precondition.Context context, object data)
 			{
-				MinionResume resume = context.consumerState.resume;
-				return resume != null;
+				return context.consumerState.resume != null;
 			}
 		});
 		isPreemptable = (IsMoreSatisfyingEarly = new Chore.Precondition
@@ -540,8 +543,8 @@ public class ChorePreconditions
 				{
 					return false;
 				}
-				StaminaMonitor.Instance sMI = context.consumerState.consumer.GetSMI<StaminaMonitor.Instance>();
-				return !sMI.IsInsideState(sMI.sm.sleepy.sleeping);
+				StaminaMonitor.Instance sMI3 = context.consumerState.consumer.GetSMI<StaminaMonitor.Instance>();
+				return !sMI3.IsInsideState(sMI3.sm.sleepy.sleeping);
 			}
 		});
 		isPreemptable = (IsStanding = new Chore.Precondition
@@ -580,7 +583,11 @@ public class ChorePreconditions
 				{
 					return false;
 				}
-				return !(context.consumerState.navigator == null) && context.consumerState.navigator.CurrentNavType != NavType.Ladder && context.consumerState.navigator.CurrentNavType != NavType.Pole;
+				if (context.consumerState.navigator == null)
+				{
+					return false;
+				}
+				return context.consumerState.navigator.CurrentNavType != NavType.Ladder && context.consumerState.navigator.CurrentNavType != NavType.Pole;
 			}
 		});
 		isPreemptable = (NotInTube = new Chore.Precondition
@@ -613,8 +620,7 @@ public class ChorePreconditions
 			description = DUPLICANTS.CHORES.PRECONDITIONS.IS_OPERATIONAL,
 			fn = delegate(ref Chore.Precondition.Context context, object data)
 			{
-				Operational operational2 = data as Operational;
-				return operational2.IsOperational;
+				return (data as Operational).IsOperational;
 			}
 		});
 		isPreemptable = (IsNotMarkedForDeconstruction = new Chore.Precondition
@@ -643,8 +649,7 @@ public class ChorePreconditions
 			description = DUPLICANTS.CHORES.PRECONDITIONS.IS_FUNCTIONAL,
 			fn = delegate(ref Chore.Precondition.Context context, object data)
 			{
-				Operational operational = data as Operational;
-				return operational.IsFunctional;
+				return (data as Operational).IsFunctional;
 			}
 		});
 		isPreemptable = (IsOverrideTargetNullOrMe = new Chore.Precondition
@@ -676,8 +681,7 @@ public class ChorePreconditions
 			description = DUPLICANTS.CHORES.PRECONDITIONS.IS_GETTING_MORE_STRESSED,
 			fn = delegate(ref Chore.Precondition.Context context, object data)
 			{
-				AmountInstance amountInstance = Db.Get().Amounts.Stress.Lookup(context.consumerState.gameObject);
-				return amountInstance.GetDelta() > 0f;
+				return Db.Get().Amounts.Stress.Lookup(context.consumerState.gameObject).GetDelta() > 0f;
 			}
 		});
 		isPreemptable = (IsAllowedByAutomation = new Chore.Precondition
@@ -686,8 +690,7 @@ public class ChorePreconditions
 			description = DUPLICANTS.CHORES.PRECONDITIONS.IS_ALLOWED_BY_AUTOMATION,
 			fn = delegate(ref Chore.Precondition.Context context, object data)
 			{
-				Automatable automatable = (Automatable)data;
-				return automatable.AllowedByAutomation(context.consumerState.hasSolidTransferArm);
+				return ((Automatable)data).AllowedByAutomation(context.consumerState.hasSolidTransferArm);
 			}
 		});
 		isPreemptable = (HasTag = new Chore.Precondition
@@ -738,8 +741,7 @@ public class ChorePreconditions
 			description = DUPLICANTS.CHORES.PRECONDITIONS.EXCLUSIVELY_AVAILABLE,
 			fn = delegate(ref Chore.Precondition.Context context, object data)
 			{
-				List<Chore> list = (List<Chore>)data;
-				foreach (Chore item in list)
+				foreach (Chore item in (List<Chore>)data)
 				{
 					if (item != context.chore && item.driver != null)
 					{
@@ -755,7 +757,8 @@ public class ChorePreconditions
 			description = DUPLICANTS.CHORES.PRECONDITIONS.BLADDER_FULL,
 			fn = delegate(ref Chore.Precondition.Context context, object data)
 			{
-				return (context.consumerState.gameObject.GetSMI<BladderMonitor.Instance>()?.NeedsToPee() ?? false) ? true : false;
+				BladderMonitor.Instance sMI2 = context.consumerState.gameObject.GetSMI<BladderMonitor.Instance>();
+				return (sMI2 != null && sMI2.NeedsToPee()) ? true : false;
 			}
 		});
 		isPreemptable = (IsBladderNotFull = new Chore.Precondition
@@ -764,7 +767,8 @@ public class ChorePreconditions
 			description = DUPLICANTS.CHORES.PRECONDITIONS.BLADDER_NOT_FULL,
 			fn = delegate(ref Chore.Precondition.Context context, object data)
 			{
-				return (!(context.consumerState.gameObject.GetSMI<BladderMonitor.Instance>()?.NeedsToPee() ?? false)) ? true : false;
+				BladderMonitor.Instance sMI = context.consumerState.gameObject.GetSMI<BladderMonitor.Instance>();
+				return (sMI == null || !sMI.NeedsToPee()) ? true : false;
 			}
 		});
 		isPreemptable = (NoDeadBodies = new Chore.Precondition

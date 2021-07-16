@@ -100,8 +100,7 @@ public class ChoreTable
 
 		public Entry(StateMachine.BaseDef state_machine_def, int priority, int interrupt_priority)
 		{
-			StateMachine stateMachine = Singleton<StateMachineManager>.Instance.CreateStateMachine(state_machine_def.GetStateMachineType());
-			Type stateMachineInstanceType = stateMachine.GetStateMachineInstanceType();
+			Type stateMachineInstanceType = Singleton<StateMachineManager>.Instance.CreateStateMachine(state_machine_def.GetStateMachineType()).GetStateMachineInstanceType();
 			Type[] typeArguments = new Type[2]
 			{
 				state_machine_def.GetStateMachineType(),

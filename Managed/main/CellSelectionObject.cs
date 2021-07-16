@@ -45,7 +45,7 @@ public class CellSelectionObject : KMonoBehaviour
 
 	public int diseaseCount;
 
-	private float updateTimer = 0f;
+	private float updateTimer;
 
 	private Dictionary<HashedString, Func<bool>> overlayFilterMap = new Dictionary<HashedString, Func<bool>>();
 
@@ -201,7 +201,11 @@ public class CellSelectionObject : KMonoBehaviour
 
 	public static bool IsExposedToSpace(int cell)
 	{
-		return Game.Instance.world.zoneRenderData.GetSubWorldZoneType(cell) == SubWorld.ZoneType.Space && Grid.Objects[cell, 2] == null;
+		if (Game.Instance.world.zoneRenderData.GetSubWorldZoneType(cell) == SubWorld.ZoneType.Space)
+		{
+			return Grid.Objects[cell, 2] == null;
+		}
+		return false;
 	}
 
 	private void UpdateStatusItem()

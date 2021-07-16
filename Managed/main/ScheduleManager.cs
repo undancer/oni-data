@@ -25,10 +25,10 @@ public class ScheduleManager : KMonoBehaviour, ISim33ms
 	private List<Schedule> schedules;
 
 	[Serialize]
-	private int lastIdx = 0;
+	private int lastIdx;
 
 	[Serialize]
-	private int scheduleNameIncrementor = 0;
+	private int scheduleNameIncrementor;
 
 	public static ScheduleManager Instance;
 
@@ -198,8 +198,8 @@ public class ScheduleManager : KMonoBehaviour, ISim33ms
 		int[] tones = schedule.GetTones();
 		for (int i = 0; i < tones.Length; i++)
 		{
-			int t = (forwards ? i : (tones.Length - 1 - i));
-			PlayTone(tones[t], forwards);
+			int num = (forwards ? i : (tones.Length - 1 - i));
+			PlayTone(tones[num], forwards);
 			yield return new WaitForSeconds(TuningData<Tuning>.Get().toneSpacingSeconds);
 		}
 	}

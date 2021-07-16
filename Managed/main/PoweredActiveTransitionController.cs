@@ -2,7 +2,7 @@ public class PoweredActiveTransitionController : GameStateMachine<PoweredActiveT
 {
 	public class Def : BaseDef
 	{
-		public bool showWorkingStatus = false;
+		public bool showWorkingStatus;
 	}
 
 	public new class Instance : GameInstance

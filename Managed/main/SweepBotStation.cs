@@ -147,8 +147,7 @@ public class SweepBotStation : KMonoBehaviour
 
 	public void DockRobot(bool docked)
 	{
-		Operational component = GetComponent<Operational>();
-		component.SetFlag(dockedRobot, docked);
+		GetComponent<Operational>().SetFlag(dockedRobot, docked);
 	}
 
 	public void StartCharging()

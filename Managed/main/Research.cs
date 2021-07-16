@@ -37,13 +37,13 @@ public class Research : KMonoBehaviour, ISaveLoadable
 
 	public ResearchTypes researchTypes;
 
-	public bool UseGlobalPointInventory = false;
+	public bool UseGlobalPointInventory;
 
 	[Serialize]
 	public ResearchPointInventory globalPointInventory;
 
 	[Serialize]
-	private SaveData saveData = default(SaveData);
+	private SaveData saveData;
 
 	private static readonly EventSystem.IntraObjectHandler<Research> OnRolesUpdatedDelegate = new EventSystem.IntraObjectHandler<Research>(delegate(Research component, object data)
 	{
@@ -195,10 +195,9 @@ public class Research : KMonoBehaviour, ISaveLoadable
 
 	private void NotifyResearchCenters(GameHashes hash, object data)
 	{
-		foreach (object researchCenter in Components.ResearchCenters)
+		foreach (KMonoBehaviour researchCenter in Components.ResearchCenters)
 		{
-			KMonoBehaviour kMonoBehaviour = (KMonoBehaviour)researchCenter;
-			kMonoBehaviour.Trigger(-1914338957, data);
+			researchCenter.Trigger(-1914338957, data);
 		}
 		Trigger((int)hash, data);
 	}
@@ -274,8 +273,7 @@ public class Research : KMonoBehaviour, ISaveLoadable
 			Debug.LogWarning("No active research to add research points to. Global research inventory is disabled.");
 			return;
 		}
-		ResearchPointInventory researchPointInventory = (UseGlobalPointInventory ? globalPointInventory : activeResearch.progressInventory);
-		researchPointInventory.AddResearchPoints(researchTypeID, points);
+		(UseGlobalPointInventory ? globalPointInventory : activeResearch.progressInventory).AddResearchPoints(researchTypeID, points);
 		CheckBuyResearch();
 		NotifyResearchCenters(GameHashes.ResearchPointsChanged, null);
 	}
@@ -362,8 +360,7 @@ public class Research : KMonoBehaviour, ISaveLoadable
 				Tech tech = Db.Get().Techs.TryGet(save_data.techId);
 				if (tech != null)
 				{
-					TechInstance orAdd = GetOrAdd(tech);
-					orAdd.Load(save_data);
+					GetOrAdd(tech).Load(save_data);
 				}
 			}
 		}
@@ -434,10 +431,8 @@ public class Research : KMonoBehaviour, ISaveLoadable
 		if (activeResearch == null)
 		{
 			notifier.Remove(MissingResearchStation);
-			return;
 		}
-		string missingResearchBuildingName = GetMissingResearchBuildingName();
-		if (string.IsNullOrEmpty(missingResearchBuildingName))
+		else if (string.IsNullOrEmpty(GetMissingResearchBuildingName()))
 		{
 			notifier.Remove(MissingResearchStation);
 		}

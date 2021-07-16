@@ -1,4 +1,3 @@
-#define DEBUG
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -87,7 +86,7 @@ namespace KMod
 		[JsonProperty]
 		public string reinstall_path;
 
-		public bool foundInStackTrace = false;
+		public bool foundInStackTrace;
 
 		public string relative_root = "";
 
@@ -99,7 +98,7 @@ namespace KMod
 
 		public IFileSource content_source;
 
-		public bool is_subscribed = false;
+		public bool is_subscribed;
 
 		private const string VANILLA_ID = "vanilla_id";
 
@@ -171,7 +170,17 @@ namespace KMod
 
 		public bool IsDev => label.distribution_platform == Label.DistributionPlatform.Dev;
 
-		public bool IsLocal => label.distribution_platform == Label.DistributionPlatform.Dev || label.distribution_platform == Label.DistributionPlatform.Local;
+		public bool IsLocal
+		{
+			get
+			{
+				if (label.distribution_platform != Label.DistributionPlatform.Dev)
+				{
+					return label.distribution_platform == Label.DistributionPlatform.Local;
+				}
+				return true;
+			}
+		}
 
 		[JsonConstructor]
 		public Mod()
@@ -209,7 +218,11 @@ namespace KMod
 
 		public bool IsEnabledForDlc(string dlcId)
 		{
-			return enabledForDlc != null && enabledForDlc.Contains(dlcId);
+			if (enabledForDlc != null)
+			{
+				return enabledForDlc.Contains(dlcId);
+			}
+			return false;
 		}
 
 		public void SetEnabledForActiveDlc(bool enabled)
@@ -334,14 +347,22 @@ namespace KMod
 			if (!file_source.Exists("archived_versions"))
 			{
 				ModDevLog($"\t{label}: No archived_versions for this mod, using root version directly.");
-				return DoesModSupportCurrentContent(packagedModInfo) ? archivedVersion : null;
+				if (!DoesModSupportCurrentContent(packagedModInfo))
+				{
+					return null;
+				}
+				return archivedVersion;
 			}
 			List<FileSystemItem> list = new List<FileSystemItem>();
 			file_source.GetTopLevelItems(list, "archived_versions");
 			if (list.Count == 0)
 			{
 				ModDevLog($"\t{label}: No archived_versions for this mod, using root version directly.");
-				return DoesModSupportCurrentContent(packagedModInfo) ? archivedVersion : null;
+				if (!DoesModSupportCurrentContent(packagedModInfo))
+				{
+					return null;
+				}
+				return archivedVersion;
 			}
 			List<ArchivedVersion> list2 = new List<ArchivedVersion>();
 			list2.Add(archivedVersion);
@@ -359,12 +380,15 @@ namespace KMod
 				}
 			}
 			list2 = list2.Where((ArchivedVersion v) => DoesModSupportCurrentContent(v.info)).ToList();
-			IOrderedEnumerable<ArchivedVersion> source = from v in list2
-				where (long)v.info.minimumSupportedBuild <= 469473L
+			ArchivedVersion archivedVersion2 = (from v in list2
+				where (long)v.info.minimumSupportedBuild <= 471618L
 				orderby v.info.minimumSupportedBuild descending
-				select v;
-			ArchivedVersion archivedVersion2 = source.FirstOrDefault();
-			return (archivedVersion2 != null) ? archivedVersion2 : null;
+				select v).FirstOrDefault();
+			if (archivedVersion2 == null)
+			{
+				return null;
+			}
+			return archivedVersion2;
 		}
 
 		private PackagedModInfo GetModInfoForFolder(string relative_root)
@@ -374,14 +398,10 @@ namespace KMod
 			bool flag = false;
 			foreach (FileSystemItem item in list)
 			{
-				if (item.type == FileSystemItem.ItemType.File)
+				if (item.type == FileSystemItem.ItemType.File && item.name.ToLower() == "mod_info.yaml")
 				{
-					string a = item.name.ToLower();
-					if (a == "mod_info.yaml")
-					{
-						flag = true;
-						break;
-					}
+					flag = true;
+					break;
 				}
 			}
 			string text = (string.IsNullOrEmpty(relative_root) ? "root" : relative_root);
@@ -428,7 +448,11 @@ namespace KMod
 			}
 			text = text.ToLower();
 			string text2 = mod_info.supportedContent.ToLower();
-			return text2.Contains(text) || text2.Contains("all");
+			if (!text2.Contains(text))
+			{
+				return text2.Contains("all");
+			}
+			return true;
 		}
 
 		private bool ScanContentFromSourceForTranslationsOnly(string relativeRoot)
@@ -438,13 +462,9 @@ namespace KMod
 			file_source.GetTopLevelItems(list, relativeRoot);
 			foreach (FileSystemItem item in list)
 			{
-				if (item.type == FileSystemItem.ItemType.File)
+				if (item.type == FileSystemItem.ItemType.File && item.name.ToLower().EndsWith(".po"))
 				{
-					string text = item.name.ToLower();
-					if (text.EndsWith(".po"))
-					{
-						available_content |= Content.Translation;
-					}
+					available_content |= Content.Translation;
 				}
 			}
 			return available_content != (Content)0;
@@ -544,8 +564,6 @@ namespace KMod
 
 		public void Install()
 		{
-			Assert(status == Status.NotInstalled, $"not in a state such that it can be installed: {status.ToString()}");
-			Assert(loaded_content == (Content)0, $"still has loaded content: {loaded_content.ToString()}");
 			if (IsLocal)
 			{
 				status = Status.Installed;
@@ -562,7 +580,6 @@ namespace KMod
 
 		public bool Uninstall()
 		{
-			Assert(status != Status.NotInstalled, $"not in a state such that it can be uninstalled: {status.ToString()}");
 			SetEnabledForActiveDlc(enabled: false);
 			if (loaded_content != 0)
 			{
@@ -582,22 +599,19 @@ namespace KMod
 
 		private bool LoadStrings()
 		{
-			Assert((available_content & Content.Strings) != 0, $"attempting to load content that this mod does not provide: {Content.Strings.ToString()}");
 			string path = FileSystem.Normalize(Path.Combine(ContentPath, "strings"));
 			if (!System.IO.Directory.Exists(path))
 			{
 				return false;
 			}
 			int num = 0;
-			DirectoryInfo directoryInfo = new DirectoryInfo(path);
-			FileInfo[] files = directoryInfo.GetFiles();
+			FileInfo[] files = new DirectoryInfo(path).GetFiles();
 			foreach (FileInfo fileInfo in files)
 			{
 				if (!(fileInfo.Extension.ToLower() != ".po"))
 				{
 					num++;
-					Dictionary<string, string> translated_strings = Localization.LoadStringsFile(fileInfo.FullName, isTemplate: false);
-					Localization.OverloadStrings(translated_strings);
+					Localization.OverloadStrings(Localization.LoadStringsFile(fileInfo.FullName, isTemplate: false));
 				}
 			}
 			return true;
@@ -610,22 +624,20 @@ namespace KMod
 
 		private bool LoadAnimation()
 		{
-			Assert((available_content & Content.Animation) != 0, $"attempting to load content that this mod does not provide: {Content.Animation.ToString()}");
 			string path = FileSystem.Normalize(Path.Combine(ContentPath, "anim"));
 			if (!System.IO.Directory.Exists(path))
 			{
 				return false;
 			}
 			int num = 0;
-			DirectoryInfo directoryInfo = new DirectoryInfo(path);
-			DirectoryInfo[] directories = directoryInfo.GetDirectories();
-			foreach (DirectoryInfo directoryInfo2 in directories)
+			DirectoryInfo[] directories = new DirectoryInfo(path).GetDirectories();
+			for (int i = 0; i < directories.Length; i++)
 			{
-				DirectoryInfo[] directories2 = directoryInfo2.GetDirectories();
-				foreach (DirectoryInfo directoryInfo3 in directories2)
+				DirectoryInfo[] directories2 = directories[i].GetDirectories();
+				foreach (DirectoryInfo directoryInfo in directories2)
 				{
 					KAnimFile.Mod mod = new KAnimFile.Mod();
-					FileInfo[] files = directoryInfo3.GetFiles();
+					FileInfo[] files = directoryInfo.GetFiles();
 					foreach (FileInfo fileInfo in files)
 					{
 						if (fileInfo.Extension == ".png")
@@ -656,7 +668,7 @@ namespace KMod
 							DebugUtil.LogWarningArgs($"Unhandled asset ({fileInfo.FullName})...ignoring");
 						}
 					}
-					string name = directoryInfo3.Name + "_kanim";
+					string name = directoryInfo.Name + "_kanim";
 					if (mod.IsValid() && (bool)ModUtil.AddKAnimMod(name, mod))
 					{
 						num++;
@@ -712,7 +724,6 @@ namespace KMod
 		public void Unload(Content content)
 		{
 			content &= loaded_content;
-			Assert((content & (Content.Strings | Content.DLL | Content.Translation | Content.Animation)) == 0, $"attempting to unload boot content: {(content & (Content.Strings | Content.DLL | Content.Translation | Content.Animation)).ToString()}");
 			if ((content & Content.LayerableFiles) != 0)
 			{
 				FileSystem.file_sources.Remove(content_source.GetFileSystem());

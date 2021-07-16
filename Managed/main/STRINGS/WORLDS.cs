@@ -167,6 +167,13 @@ namespace STRINGS
 			public static LocString DESCRIPTION = "A large-ish partially frozen world with a radioactive core.\n\n<smallcaps>While Radioactive Swamp Asteroid are largely swampy, they also contain a great deal of rust.</smallcaps>";
 		}
 
+		public class MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET
+		{
+			public static LocString NAME = "Radioactive Terra Asteroid";
+
+			public static LocString DESCRIPTION = "A large-ish world with a radioactive core.\n\n<smallcaps>The Radioactive Terra Asteroid is fairly dry and sandy, but does contain areas of jungle.</smallcaps>";
+		}
+
 		public class STRANGERICHSANDSTONE
 		{
 			public static LocString NAME = "Rocky Asteroid";
@@ -234,7 +241,7 @@ namespace STRINGS
 		{
 			public static LocString NAME = "Regolith Asteroid";
 
-			public static LocString DESCRIPTION = "A small, dusty world with plenty of craters.\n\n<smallcaps>Regolith Asteroids have frequent meteor showers</smallcaps>";
+			public static LocString DESCRIPTION = "A small, cold world with plenty of craters.\n\n<smallcaps>Regolith Asteroids have frequent meteor showers and are chalk full of Regolith, an incredibly useful filtration material. </smallcaps>";
 		}
 
 		public class TINYSTART

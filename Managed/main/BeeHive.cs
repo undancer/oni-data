@@ -85,20 +85,22 @@ public class BeeHive : GameStateMachine<BeeHive, BeeHive.StatesInstance, IStateM
 
 		public void SpawnNewLarvaFromHive()
 		{
-			GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(base.def.larvaPrefabID), base.transform.GetPosition());
-			gameObject.SetActive(value: true);
+			Util.KInstantiate(Assets.GetPrefab(base.def.larvaPrefabID), base.transform.GetPosition()).SetActive(value: true);
 		}
 
 		public void SpawnNewBeeFromHive()
 		{
-			GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(base.def.beePrefabID), base.transform.GetPosition());
-			gameObject.SetActive(value: true);
+			Util.KInstantiate(Assets.GetPrefab(base.def.beePrefabID), base.transform.GetPosition()).SetActive(value: true);
 		}
 
 		public bool IsDisabled()
 		{
 			KPrefabID component = GetComponent<KPrefabID>();
-			return component.HasTag(GameTags.Creatures.HasNoFoundation) || component.HasTag(GameTags.Entombed) || component.HasTag(GameTags.Creatures.Drowning);
+			if (!component.HasTag(GameTags.Creatures.HasNoFoundation) && !component.HasTag(GameTags.Entombed))
+			{
+				return component.HasTag(GameTags.Creatures.Drowning);
+			}
+			return true;
 		}
 	}
 
@@ -123,8 +125,7 @@ public class BeeHive : GameStateMachine<BeeHive, BeeHive.StatesInstance, IStateM
 		{
 			PrimaryElement component = smi.GetComponent<PrimaryElement>();
 			Storage component2 = smi.GetComponent<Storage>();
-			byte index = Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.id);
-			component2.AddOre(SimHashes.NuclearWaste, BeeHiveTuning.WASTE_DROPPED_ON_DEATH, component.Temperature, index, BeeHiveTuning.GERMS_DROPPED_ON_DEATH);
+			component2.AddOre(disease_idx: Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.id), element: SimHashes.NuclearWaste, mass: BeeHiveTuning.WASTE_DROPPED_ON_DEATH, temperature: component.Temperature, disease_count: BeeHiveTuning.GERMS_DROPPED_ON_DEATH);
 			component2.DropAll(smi.master.transform.position, vent_gas: true, dump_liquid: true);
 		});
 		disabled.ToggleTag(GameTags.Creatures.Behaviours.DisableCreature).EventTransition(GameHashes.FoundationChanged, enabled, (StatesInstance smi) => !smi.IsDisabled()).EventTransition(GameHashes.EntombedChanged, enabled, (StatesInstance smi) => !smi.IsDisabled())

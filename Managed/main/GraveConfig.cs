@@ -23,12 +23,12 @@ public class GraveConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("Grave", 1, 2, "gravestone_kanim", 30, 120f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER2);
-		buildingDef.Overheatable = false;
-		buildingDef.Floodable = false;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.BaseTimeUntilRepair = -1f;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("Grave", 1, 2, "gravestone_kanim", 30, 120f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER2);
+		obj.Overheatable = false;
+		obj.Floodable = false;
+		obj.AudioCategory = "Metal";
+		obj.BaseTimeUntilRepair = -1f;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

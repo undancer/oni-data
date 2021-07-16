@@ -52,8 +52,7 @@ public class PuftAlphaConfig : IEntityConfig
 			SimHashes.Oxygen.CreateTag()
 		}), SimHashes.OxyRock.CreateTag(), CALORIES_PER_KG_OF_ORE, TUNING.CREATURES.CONVERSION_EFFICIENCY.BAD_2, "SlimeLung", 1000f));
 		prefab = BasePuftConfig.SetupDiet(prefab, list.ToArray(), CALORIES_PER_KG_OF_ORE, MIN_POOP_SIZE_IN_KG);
-		DiseaseSourceVisualizer diseaseSourceVisualizer = prefab.AddOrGet<DiseaseSourceVisualizer>();
-		diseaseSourceVisualizer.alwaysShowDisease = "SlimeLung";
+		prefab.AddOrGet<DiseaseSourceVisualizer>().alwaysShowDisease = "SlimeLung";
 		return prefab;
 	}
 
@@ -64,14 +63,12 @@ public class PuftAlphaConfig : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject prefab = CreatePuftAlpha("PuftAlpha", STRINGS.CREATURES.SPECIES.PUFT.VARIANT_ALPHA.NAME, STRINGS.CREATURES.SPECIES.PUFT.VARIANT_ALPHA.DESC, "puft_kanim", is_baby: false);
-		return EntityTemplates.ExtendEntityToFertileCreature(prefab, "PuftAlphaEgg", STRINGS.CREATURES.SPECIES.PUFT.VARIANT_ALPHA.EGG_NAME, STRINGS.CREATURES.SPECIES.PUFT.VARIANT_ALPHA.DESC, "egg_puft_kanim", PuftTuning.EGG_MASS, "PuftAlphaBaby", 45f, 15f, PuftTuning.EGG_CHANCES_ALPHA, EGG_SORT_ORDER);
+		return EntityTemplates.ExtendEntityToFertileCreature(CreatePuftAlpha("PuftAlpha", STRINGS.CREATURES.SPECIES.PUFT.VARIANT_ALPHA.NAME, STRINGS.CREATURES.SPECIES.PUFT.VARIANT_ALPHA.DESC, "puft_kanim", is_baby: false), "PuftAlphaEgg", STRINGS.CREATURES.SPECIES.PUFT.VARIANT_ALPHA.EGG_NAME, STRINGS.CREATURES.SPECIES.PUFT.VARIANT_ALPHA.DESC, "egg_puft_kanim", PuftTuning.EGG_MASS, "PuftAlphaBaby", 45f, 15f, PuftTuning.EGG_CHANCES_ALPHA, EGG_SORT_ORDER);
 	}
 
 	public void OnPrefabInit(GameObject inst)
 	{
-		KBatchedAnimController component = inst.GetComponent<KBatchedAnimController>();
-		component.animScale *= 1.1f;
+		inst.GetComponent<KBatchedAnimController>().animScale *= 1.1f;
 	}
 
 	public void OnSpawn(GameObject inst)

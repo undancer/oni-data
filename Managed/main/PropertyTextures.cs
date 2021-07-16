@@ -79,7 +79,7 @@ public class PropertyTextures : KMonoBehaviour, ISim200ms
 	}
 
 	[NonSerialized]
-	public bool ForceLightEverywhere = false;
+	public bool ForceLightEverywhere;
 
 	[SerializeField]
 	private Vector2 PressureRange = new Vector2(15f, 200f);
@@ -107,7 +107,7 @@ public class PropertyTextures : KMonoBehaviour, ISim200ms
 	[SerializeField]
 	private Vector2 hotRange;
 
-	public static float FogOfWarScale = 0f;
+	public static float FogOfWarScale;
 
 	private int WorldSizeID;
 
@@ -485,8 +485,7 @@ public class PropertyTextures : KMonoBehaviour, ISim200ms
 					region.SetBytes(j, i, 0);
 					continue;
 				}
-				Element element = Grid.Element[num];
-				byte b = (byte)((element.id != SimHashes.Oxygen) ? 255u : 0u);
+				byte b = (byte)((Grid.Element[num].id != SimHashes.Oxygen) ? 255u : 0u);
 				region.SetBytes(j, i, b);
 			}
 		}
@@ -511,11 +510,9 @@ public class PropertyTextures : KMonoBehaviour, ISim200ms
 				{
 					float num3 = Grid.Temperature[num];
 					float num4 = element.lowTemp * temperatureStateChangeRange;
-					float num5 = Mathf.Abs(num3 - element.lowTemp);
-					float a = num5 / num4;
-					float num6 = element.highTemp * temperatureStateChangeRange;
-					float num7 = Mathf.Abs(num3 - element.highTemp);
-					float b = num7 / num6;
+					float a = Mathf.Abs(num3 - element.lowTemp) / num4;
+					float num5 = element.highTemp * temperatureStateChangeRange;
+					float b = Mathf.Abs(num3 - element.highTemp) / num5;
 					num2 = Mathf.Max(num2, 1f - Mathf.Min(a, b));
 				}
 				region.SetBytes(j, i, (byte)(num2 * 255f));
@@ -565,8 +562,7 @@ public class PropertyTextures : KMonoBehaviour, ISim200ms
 				}
 				else if (element.IsLiquid)
 				{
-					int cell = Grid.CellAbove(num);
-					if (Grid.IsValidCell(cell))
+					if (Grid.IsValidCell(Grid.CellAbove(num)))
 					{
 						region.SetBytes(j, i, element.substance.colour.r, element.substance.colour.g, element.substance.colour.b, byte.MaxValue);
 					}

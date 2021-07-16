@@ -17,7 +17,7 @@ public class Durability : KMonoBehaviour
 	});
 
 	[Serialize]
-	private bool isEquipped = false;
+	private bool isEquipped;
 
 	[Serialize]
 	private float timeEquipped;
@@ -40,8 +40,7 @@ public class Durability : KMonoBehaviour
 
 	protected override void OnSpawn()
 	{
-		KSelectable component = GetComponent<KSelectable>();
-		component.AddStatusItem(Db.Get().MiscStatusItems.Durability, base.gameObject);
+		GetComponent<KSelectable>().AddStatusItem(Db.Get().MiscStatusItems.Durability, base.gameObject);
 		SettingLevel currentQualitySetting = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.Durability);
 		if (currentQualitySetting != null)
 		{
@@ -90,8 +89,7 @@ public class Durability : KMonoBehaviour
 
 	public void ConvertToWornObject()
 	{
-		GameObject prefab = Assets.GetPrefab(wornEquipmentPrefabID);
-		GameObject gameObject = GameUtil.KInstantiate(prefab, Grid.SceneLayer.Ore);
+		GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(wornEquipmentPrefabID), Grid.SceneLayer.Ore);
 		gameObject.transform.SetPosition(base.transform.GetPosition());
 		gameObject.GetComponent<PrimaryElement>().SetElement(GetComponent<PrimaryElement>().ElementID, addTags: false);
 		gameObject.SetActive(value: true);

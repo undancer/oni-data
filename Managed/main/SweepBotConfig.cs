@@ -38,13 +38,12 @@ public class SweepBotConfig : IEntityConfig
 		gameObject.GetComponent<KBatchedAnimController>().isMovable = true;
 		KPrefabID kPrefabID = gameObject.AddOrGet<KPrefabID>();
 		kPrefabID.AddTag(GameTags.Creature);
-		Pickupable pickupable = gameObject.AddComponent<Pickupable>();
+		gameObject.AddComponent<Pickupable>();
 		gameObject.AddOrGet<Clearable>().isClearable = false;
 		Trait trait = Db.Get().CreateTrait("SweepBotBaseTrait", name, name, null, should_save: false, null, positive_trait: true, is_valid_starter_trait: true);
 		trait.Add(new AttributeModifier(Db.Get().Amounts.InternalBattery.maxAttribute.Id, 9000f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.InternalBattery.deltaAttribute.Id, -17.142857f, name));
 		Modifiers modifiers = gameObject.AddOrGet<Modifiers>();
-		bool flag = true;
 		modifiers.initialTraits.Add("SweepBotBaseTrait");
 		modifiers.initialAmounts.Add(Db.Get().Amounts.HitPoints.Id);
 		modifiers.initialAmounts.Add(Db.Get().Amounts.InternalBattery.Id);
@@ -61,8 +60,7 @@ public class SweepBotConfig : IEntityConfig
 		gameObject.AddOrGetDef<CreatureFallMonitor.Def>();
 		gameObject.AddOrGetDef<SweepBotTrappedMonitor.Def>();
 		gameObject.AddOrGet<AnimEventHandler>();
-		SnapOn snapOn = gameObject.AddOrGet<SnapOn>();
-		snapOn.snapPoints = new List<SnapOn.SnapPoint>(new SnapOn.SnapPoint[1]
+		gameObject.AddOrGet<SnapOn>().snapPoints = new List<SnapOn.SnapPoint>(new SnapOn.SnapPoint[1]
 		{
 			new SnapOn.SnapPoint
 			{
@@ -74,11 +72,9 @@ public class SweepBotConfig : IEntityConfig
 			}
 		});
 		SymbolOverrideControllerUtil.AddToPrefab(gameObject);
-		Storage storage = gameObject.AddComponent<Storage>();
-		Storage storage2 = gameObject.AddComponent<Storage>();
-		storage2.capacityKg = 500f;
-		OrnamentReceptacle ornamentReceptacle = gameObject.AddOrGet<OrnamentReceptacle>();
-		ornamentReceptacle.AddDepositTag(GameTags.PedestalDisplayable);
+		gameObject.AddComponent<Storage>();
+		gameObject.AddComponent<Storage>().capacityKg = 500f;
+		gameObject.AddOrGet<OrnamentReceptacle>().AddDepositTag(GameTags.PedestalDisplayable);
 		gameObject.AddOrGet<DecorProvider>();
 		gameObject.AddOrGet<UserNameable>();
 		gameObject.AddOrGet<CharacterOverlay>();
@@ -109,7 +105,7 @@ public class SweepBotConfig : IEntityConfig
 	{
 		StorageUnloadMonitor.Instance sMI = inst.GetSMI<StorageUnloadMonitor.Instance>();
 		sMI.sm.internalStorage.Set(inst.GetComponents<Storage>()[1], sMI);
-		OrnamentReceptacle component = inst.GetComponent<OrnamentReceptacle>();
+		inst.GetComponent<OrnamentReceptacle>();
 		inst.GetSMI<CreatureFallMonitor.Instance>().anim = "idle_loop";
 	}
 }

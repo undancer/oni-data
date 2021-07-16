@@ -17,8 +17,7 @@ namespace ProcGenGame
 			this.neighbors = neighbors;
 			Vector2 a = e1 - e0;
 			Vector2 normalized = new Vector2(0f - a.y, a.x).normalized;
-			Vector2 a2 = e0 + a / 2f;
-			Vector2 point = a2 + normalized;
+			Vector2 point = e0 + a / 2f + normalized;
 			if (neighbors.n0.poly.Contains(point))
 			{
 				AddSegment(e0, e1);

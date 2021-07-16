@@ -13,14 +13,14 @@ public class RockCrusherConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("RockCrusher", 4, 4, "rockrefinery_kanim", 30, 60f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.ALL_METALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER6, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 240f;
-		buildingDef.SelfHeatKilowattsWhenActive = 16f;
-		buildingDef.ViewMode = OverlayModes.Power.ID;
-		buildingDef.AudioCategory = "HollowMetal";
-		buildingDef.AudioSize = "large";
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("RockCrusher", 4, 4, "rockrefinery_kanim", 30, 60f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.ALL_METALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER6, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 240f;
+		obj.SelfHeatKilowattsWhenActive = 16f;
+		obj.ViewMode = OverlayModes.Power.ID;
+		obj.AudioCategory = "HollowMetal";
+		obj.AudioSize = "large";
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -43,8 +43,7 @@ public class RockCrusherConfig : IBuildingConfig
 			"working_pst_complete"
 		};
 		Tag tag = SimHashes.Sand.CreateTag();
-		List<Element> list = ElementLoader.elements.FindAll((Element e) => e.HasTag(GameTags.Crushable));
-		foreach (Element item in list)
+		foreach (Element item in ElementLoader.elements.FindAll((Element e) => e.HasTag(GameTags.Crushable)))
 		{
 			ComplexRecipe.RecipeElement[] array = new ComplexRecipe.RecipeElement[1]
 			{
@@ -68,13 +67,11 @@ public class RockCrusherConfig : IBuildingConfig
 			};
 			ComplexRecipeManager.Get().AddObsoleteIDMapping(obsolete_id, text);
 		}
-		List<Element> list2 = ElementLoader.elements.FindAll((Element e) => e.IsSolid && e.HasTag(GameTags.Metal));
-		foreach (Element item2 in list2)
+		foreach (Element item2 in ElementLoader.elements.FindAll((Element e) => e.IsSolid && e.HasTag(GameTags.Metal)))
 		{
 			if (!item2.HasTag(GameTags.Noncrushable))
 			{
-				Element highTempTransition = item2.highTempTransition;
-				Element lowTempTransition = highTempTransition.lowTempTransition;
+				Element lowTempTransition = item2.highTempTransition.lowTempTransition;
 				if (lowTempTransition != item2)
 				{
 					ComplexRecipe.RecipeElement[] array3 = new ComplexRecipe.RecipeElement[1]
@@ -133,8 +130,7 @@ public class RockCrusherConfig : IBuildingConfig
 		{
 			new ComplexRecipe.RecipeElement(element2.tag, 5f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
-		string id = ComplexRecipeManager.MakeRecipeID("RockCrusher", array7, array8);
-		new ComplexRecipe(id, array7, array8)
+		new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("RockCrusher", array7, array8), array7, array8)
 		{
 			time = 40f,
 			description = string.Format(STRINGS.BUILDINGS.PREFABS.ROCKCRUSHER.LIME_RECIPE_DESCRIPTION, SimHashes.Lime.CreateTag().ProperName(), ITEMS.INDUSTRIAL_PRODUCTS.CRAB_SHELL.NAME),
@@ -153,8 +149,7 @@ public class RockCrusherConfig : IBuildingConfig
 		{
 			new ComplexRecipe.RecipeElement(element3.tag, 10f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
-		string id2 = ComplexRecipeManager.MakeRecipeID("RockCrusher", array9, array10);
-		new ComplexRecipe(id2, array9, array10)
+		new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("RockCrusher", array9, array10), array9, array10)
 		{
 			time = 40f,
 			description = string.Format(STRINGS.BUILDINGS.PREFABS.ROCKCRUSHER.LIME_RECIPE_DESCRIPTION, SimHashes.Lime.CreateTag().ProperName(), ITEMS.INDUSTRIAL_PRODUCTS.CRAB_SHELL.NAME),
@@ -173,8 +168,7 @@ public class RockCrusherConfig : IBuildingConfig
 			new ComplexRecipe.RecipeElement(ElementLoader.FindElementByHash(SimHashes.Lime).tag, 5f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature),
 			new ComplexRecipe.RecipeElement(ElementLoader.FindElementByHash(SimHashes.SedimentaryRock).tag, 95f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
-		string id3 = ComplexRecipeManager.MakeRecipeID("RockCrusher", array11, array12);
-		new ComplexRecipe(id3, array11, array12)
+		new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("RockCrusher", array11, array12), array11, array12)
 		{
 			time = 40f,
 			description = string.Format(STRINGS.BUILDINGS.PREFABS.ROCKCRUSHER.LIME_FROM_LIMESTONE_RECIPE_DESCRIPTION, SimHashes.Fossil.CreateTag().ProperName(), SimHashes.SedimentaryRock.CreateTag().ProperName(), SimHashes.Lime.CreateTag().ProperName()),
@@ -194,8 +188,7 @@ public class RockCrusherConfig : IBuildingConfig
 			new ComplexRecipe.RecipeElement(TableSaltConfig.ID.ToTag(), 100f * num, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature),
 			new ComplexRecipe.RecipeElement(SimHashes.Sand.CreateTag(), 100f * (1f - num), ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
-		string id4 = ComplexRecipeManager.MakeRecipeID("RockCrusher", array13, array14);
-		new ComplexRecipe(id4, array13, array14)
+		new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("RockCrusher", array13, array14), array13, array14)
 		{
 			time = 40f,
 			description = string.Format(STRINGS.BUILDINGS.PREFABS.ROCKCRUSHER.RECIPE_DESCRIPTION, SimHashes.Salt.CreateTag().ProperName(), ITEMS.INDUSTRIAL_PRODUCTS.TABLE_SALT.NAME),
@@ -215,8 +208,7 @@ public class RockCrusherConfig : IBuildingConfig
 			new ComplexRecipe.RecipeElement(SimHashes.Graphite.CreateTag(), 100f * num2, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature),
 			new ComplexRecipe.RecipeElement(SimHashes.Sand.CreateTag(), 100f * (1f - num2), ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
-		string id5 = ComplexRecipeManager.MakeRecipeID("RockCrusher", array15, array16);
-		new ComplexRecipe(id5, array15, array16)
+		new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("RockCrusher", array15, array16), array15, array16)
 		{
 			time = 40f,
 			description = string.Format(STRINGS.BUILDINGS.PREFABS.ROCKCRUSHER.RECIPE_DESCRIPTION, SimHashes.Fullerene.CreateTag().ProperName(), SimHashes.Graphite.CreateTag().ProperName()),

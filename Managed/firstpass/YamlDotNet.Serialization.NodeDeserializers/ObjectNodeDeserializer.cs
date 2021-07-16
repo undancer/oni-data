@@ -25,8 +25,7 @@ namespace YamlDotNet.Serialization.NodeDeserializers
 
 		bool INodeDeserializer.Deserialize(IParser parser, Type expectedType, Func<IParser, Type, object> nestedObjectDeserializer, out object value)
 		{
-			MappingStart mappingStart = parser.Allow<MappingStart>();
-			if (mappingStart == null)
+			if (parser.Allow<MappingStart>() == null)
 			{
 				value = null;
 				return false;

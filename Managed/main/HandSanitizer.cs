@@ -23,8 +23,7 @@ public class HandSanitizer : StateMachineComponent<HandSanitizer.SMInstance>, IG
 				{
 					return false;
 				}
-				MinionIdentity component2 = new_reactor.GetComponent<MinionIdentity>();
-				bool flag = component2.GetEquipment().IsSlotOccupied(Db.Get().AssignableSlots.Suit);
+				bool flag = new_reactor.GetComponent<MinionIdentity>().GetEquipment().IsSlotOccupied(Db.Get().AssignableSlots.Suit);
 				if (!component.canSanitizeSuit && flag)
 				{
 					return false;
@@ -33,10 +32,10 @@ public class HandSanitizer : StateMachineComponent<HandSanitizer.SMInstance>, IG
 				{
 					return true;
 				}
-				PrimaryElement component3 = new_reactor.GetComponent<PrimaryElement>();
-				if (component3 != null)
+				PrimaryElement component2 = new_reactor.GetComponent<PrimaryElement>();
+				if (component2 != null)
 				{
-					return component3.DiseaseIdx != byte.MaxValue;
+					return component2.DiseaseIdx != byte.MaxValue;
 				}
 			}
 			return false;
@@ -156,9 +155,9 @@ public class HandSanitizer : StateMachineComponent<HandSanitizer.SMInstance>, IG
 	[AddComponentMenu("KMonoBehaviour/Workable/Work")]
 	public class Work : Workable, IGameObjectEffectDescriptor
 	{
-		public bool removeIrritation = false;
+		public bool removeIrritation;
 
-		private int diseaseRemoved = 0;
+		private int diseaseRemoved;
 
 		protected override void OnPrefabInit()
 		{
@@ -188,8 +187,7 @@ public class HandSanitizer : StateMachineComponent<HandSanitizer.SMInstance>, IG
 				return true;
 			}
 			PrimaryElement component3 = worker.GetComponent<PrimaryElement>();
-			float a = component.massConsumedPerUse * dt / workTime;
-			float amount = Mathf.Min(a, massAvailable);
+			float amount = Mathf.Min(component.massConsumedPerUse * dt / workTime, massAvailable);
 			int num = Math.Min((int)(dt / workTime * (float)component.diseaseRemovalCount), component3.DiseaseCount);
 			diseaseRemoved += num;
 			SimUtil.DiseaseInfo invalid = SimUtil.DiseaseInfo.Invalid;
@@ -199,14 +197,13 @@ public class HandSanitizer : StateMachineComponent<HandSanitizer.SMInstance>, IG
 			component.maxPossiblyRemoved += num;
 			if (component.canSanitizeStorage && (bool)worker.GetComponent<Storage>())
 			{
-				Storage component4 = worker.GetComponent<Storage>();
-				foreach (GameObject item in component4.GetItems())
+				foreach (GameObject item in worker.GetComponent<Storage>().GetItems())
 				{
-					PrimaryElement component5 = item.GetComponent<PrimaryElement>();
-					if ((bool)component5)
+					PrimaryElement component4 = item.GetComponent<PrimaryElement>();
+					if ((bool)component4)
 					{
-						int num2 = Math.Min((int)(dt / workTime * (float)component.diseaseRemovalCount), component5.DiseaseCount);
-						component5.ModifyDiseaseCount(-num2, "HandSanitizer.OnWorkTick");
+						int num2 = Math.Min((int)(dt / workTime * (float)component.diseaseRemovalCount), component4.DiseaseCount);
+						component4.ModifyDiseaseCount(-num2, "HandSanitizer.OnWorkTick");
 						component.maxPossiblyRemoved += num2;
 					}
 				}
@@ -241,13 +238,13 @@ public class HandSanitizer : StateMachineComponent<HandSanitizer.SMInstance>, IG
 
 	public SimHashes outputElement = SimHashes.Vacuum;
 
-	public bool dumpWhenFull = false;
+	public bool dumpWhenFull;
 
-	public bool alwaysUse = false;
+	public bool alwaysUse;
 
-	public bool canSanitizeSuit = false;
+	public bool canSanitizeSuit;
 
-	public bool canSanitizeStorage = false;
+	public bool canSanitizeStorage;
 
 	private WorkableReactable reactable;
 
@@ -255,12 +252,12 @@ public class HandSanitizer : StateMachineComponent<HandSanitizer.SMInstance>, IG
 
 	private MeterController dirtyMeter;
 
-	public Meter.Offset cleanMeterOffset = Meter.Offset.Infront;
+	public Meter.Offset cleanMeterOffset;
 
-	public Meter.Offset dirtyMeterOffset = Meter.Offset.Infront;
+	public Meter.Offset dirtyMeterOffset;
 
 	[Serialize]
-	public int maxPossiblyRemoved = 0;
+	public int maxPossiblyRemoved;
 
 	private static readonly EventSystem.IntraObjectHandler<HandSanitizer> OnStorageChangeDelegate = new EventSystem.IntraObjectHandler<HandSanitizer>(delegate(HandSanitizer component, object data)
 	{
@@ -329,9 +326,10 @@ public class HandSanitizer : StateMachineComponent<HandSanitizer.SMInstance>, IG
 
 	public List<Descriptor> RequirementDescriptors()
 	{
-		List<Descriptor> list = new List<Descriptor>();
-		list.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.ELEMENTCONSUMEDPERUSE, ElementLoader.FindElementByHash(consumedElement).name, GameUtil.GetFormattedMass(massConsumedPerUse)), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.ELEMENTCONSUMEDPERUSE, ElementLoader.FindElementByHash(consumedElement).name, GameUtil.GetFormattedMass(massConsumedPerUse)), Descriptor.DescriptorType.Requirement));
-		return list;
+		return new List<Descriptor>
+		{
+			new Descriptor(string.Format(UI.BUILDINGEFFECTS.ELEMENTCONSUMEDPERUSE, ElementLoader.FindElementByHash(consumedElement).name, GameUtil.GetFormattedMass(massConsumedPerUse)), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.ELEMENTCONSUMEDPERUSE, ElementLoader.FindElementByHash(consumedElement).name, GameUtil.GetFormattedMass(massConsumedPerUse)), Descriptor.DescriptorType.Requirement)
+		};
 	}
 
 	public List<Descriptor> EffectDescriptors()

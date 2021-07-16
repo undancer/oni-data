@@ -27,9 +27,8 @@ public class AdvancedCureConfig : IEntityConfig
 		{
 			new ComplexRecipe.RecipeElement("AdvancedCure", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
-		string text = (Sim.IsRadiationEnabled() ? "AdvancedApothecary" : "Apothecary");
-		string id = ComplexRecipeManager.MakeRecipeID(text, array, array2);
-		recipe = new ComplexRecipe(id, array, array2)
+		string text = "Apothecary";
+		recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID(text, array, array2), array, array2)
 		{
 			time = 200f,
 			description = ITEMS.PILLS.ADVANCEDCURE.RECIPEDESC,

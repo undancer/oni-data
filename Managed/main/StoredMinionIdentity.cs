@@ -129,7 +129,11 @@ public class StoredMinionIdentity : KMonoBehaviour, ISaveLoadable, IAssignableId
 
 	public bool HasMasteredSkill(string skillId)
 	{
-		return MasteryBySkillID.ContainsKey(skillId) && MasteryBySkillID[skillId];
+		if (MasteryBySkillID.ContainsKey(skillId))
+		{
+			return MasteryBySkillID[skillId];
+		}
+		return false;
 	}
 
 	protected override void OnPrefabInit()
@@ -236,8 +240,7 @@ public class StoredMinionIdentity : KMonoBehaviour, ISaveLoadable, IAssignableId
 				{
 					DebugUtil.LogWarningArgs("Found a minion storage with an invalid ref, rebinding.", component.InstanceID, storedName, item.gameObject.name);
 					info = (storedMinionInfo[i] = new MinionStorage.Info(storedName, new Ref<KPrefabID>(component)));
-					Assignable component2 = item.GetComponent<Assignable>();
-					component2.Assign(this);
+					item.GetComponent<Assignable>().Assign(this);
 					flag2 = true;
 					break;
 				}
@@ -347,9 +350,9 @@ public class StoredMinionIdentity : KMonoBehaviour, ISaveLoadable, IAssignableId
 				continue;
 			}
 			ChoreGroup[] disabledChoreGroups = trait.disabledChoreGroups;
-			foreach (ChoreGroup choreGroup in disabledChoreGroups)
+			for (int i = 0; i < disabledChoreGroups.Length; i++)
 			{
-				if (choreGroup.IdHash == chore_group.IdHash)
+				if (disabledChoreGroups[i].IdHash == chore_group.IdHash)
 				{
 					return true;
 				}

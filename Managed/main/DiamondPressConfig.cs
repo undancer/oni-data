@@ -20,16 +20,16 @@ public class DiamondPressConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("DiamondPress", 3, 5, "diamond_press_kanim", 30, 60f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.ALL_METALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER6, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 240f;
-		buildingDef.SelfHeatKilowattsWhenActive = 16f;
-		buildingDef.UseHighEnergyParticleInputPort = true;
-		buildingDef.HighEnergyParticleInputOffset = new CellOffset(0, 2);
-		buildingDef.ViewMode = OverlayModes.Power.ID;
-		buildingDef.AudioCategory = "HollowMetal";
-		buildingDef.AudioSize = "large";
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("DiamondPress", 3, 5, "diamond_press_kanim", 30, 60f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.ALL_METALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER6, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 240f;
+		obj.SelfHeatKilowattsWhenActive = 16f;
+		obj.UseHighEnergyParticleInputPort = true;
+		obj.HighEnergyParticleInputOffset = new CellOffset(0, 2);
+		obj.ViewMode = OverlayModes.Power.ID;
+		obj.AudioCategory = "HollowMetal";
+		obj.AudioSize = "large";
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -50,10 +50,6 @@ public class DiamondPressConfig : IBuildingConfig
 		{
 			Assets.GetAnim("anim_interacts_diamond_press_kanim")
 		};
-		complexFabricatorWorkable.workingPstComplete = new HashedString[1]
-		{
-			"working_pst_complete"
-		};
 		ComplexRecipe.RecipeElement[] array = new ComplexRecipe.RecipeElement[1]
 		{
 			new ComplexRecipe.RecipeElement(SimHashes.RefinedCarbon.CreateTag(), 100f)
@@ -62,8 +58,7 @@ public class DiamondPressConfig : IBuildingConfig
 		{
 			new ComplexRecipe.RecipeElement(SimHashes.Diamond.CreateTag(), 100f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
-		string id = ComplexRecipeManager.MakeRecipeID("DiamondPress", array, array2);
-		new ComplexRecipe(id, array, array2, 1000)
+		new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("DiamondPress", array, array2), array, array2, 1000)
 		{
 			time = 80f,
 			description = string.Format(STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.REFINED_CARBON_RECIPE_DESCRIPTION, SimHashes.Diamond.CreateTag().ProperName(), SimHashes.RefinedCarbon.CreateTag().ProperName()),
@@ -93,6 +88,7 @@ public class DiamondPressConfig : IBuildingConfig
 			{
 				meter.SetPositionPercent(hepStorage.Particles / hepStorage.Capacity());
 			});
+			meter.SetPositionPercent(hepStorage.Particles / hepStorage.Capacity());
 		};
 	}
 }

@@ -49,8 +49,7 @@ public static class BasePacuConfig
 			.Add(new MoveToLureStates.Def())
 			.PopInterruptGroup()
 			.Add(new IdleStates.Def());
-		CreatureFallMonitor.Def def = gameObject.AddOrGetDef<CreatureFallMonitor.Def>();
-		def.canSwim = true;
+		gameObject.AddOrGetDef<CreatureFallMonitor.Def>().canSwim = true;
 		gameObject.AddOrGetDef<FlopMonitor.Def>();
 		gameObject.AddOrGetDef<FishOvercrowdingMonitor.Def>();
 		gameObject.AddOrGet<Trappable>();
@@ -59,19 +58,15 @@ public static class BasePacuConfig
 		Tag tag = SimHashes.ToxicSand.CreateTag();
 		HashSet<Tag> hashSet = new HashSet<Tag>();
 		hashSet.Add(SimHashes.Algae.CreateTag());
-		List<Diet.Info> list = new List<Diet.Info>
-		{
-			new Diet.Info(hashSet, tag, CALORIES_PER_KG_OF_ORE, TUNING.CREATURES.CONVERSION_EFFICIENCY.NORMAL)
-		};
+		List<Diet.Info> list = new List<Diet.Info>();
+		list.Add(new Diet.Info(hashSet, tag, CALORIES_PER_KG_OF_ORE, TUNING.CREATURES.CONVERSION_EFFICIENCY.NORMAL));
 		list.AddRange(SeedDiet(tag, CALORIES_PER_KG_OF_ORE * KG_ORE_EATEN_PER_CYCLE * 4f, TUNING.CREATURES.CONVERSION_EFFICIENCY.NORMAL));
 		Diet diet = new Diet(list.ToArray());
-		CreatureCalorieMonitor.Def def2 = gameObject.AddOrGetDef<CreatureCalorieMonitor.Def>();
-		def2.diet = diet;
-		def2.minPoopSizeInCalories = CALORIES_PER_KG_OF_ORE * MIN_POOP_SIZE_IN_KG;
-		SolidConsumerMonitor.Def def3 = gameObject.AddOrGetDef<SolidConsumerMonitor.Def>();
-		def3.diet = diet;
-		LureableMonitor.Def def4 = gameObject.AddOrGetDef<LureableMonitor.Def>();
-		def4.lures = new Tag[1]
+		CreatureCalorieMonitor.Def def = gameObject.AddOrGetDef<CreatureCalorieMonitor.Def>();
+		def.diet = diet;
+		def.minPoopSizeInCalories = CALORIES_PER_KG_OF_ORE * MIN_POOP_SIZE_IN_KG;
+		gameObject.AddOrGetDef<SolidConsumerMonitor.Def>().diet = diet;
+		gameObject.AddOrGetDef<LureableMonitor.Def>().lures = new Tag[1]
 		{
 			GameTags.Creatures.FishTrapLure
 		};
@@ -85,8 +80,7 @@ public static class BasePacuConfig
 	public static List<Diet.Info> SeedDiet(Tag poopTag, float caloriesPerSeed, float producedConversionRate)
 	{
 		List<Diet.Info> list = new List<Diet.Info>();
-		List<GameObject> prefabsWithTag = Assets.GetPrefabsWithTag(GameTags.Seed);
-		foreach (GameObject item in prefabsWithTag)
+		foreach (GameObject item in Assets.GetPrefabsWithTag(GameTags.Seed))
 		{
 			HashSet<Tag> hashSet = new HashSet<Tag>();
 			hashSet.Add(new Tag(item.GetComponent<KPrefabID>().PrefabID()));

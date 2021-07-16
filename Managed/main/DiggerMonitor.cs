@@ -71,8 +71,7 @@ public class DiggerMonitor : GameStateMachine<DiggerMonitor, DiggerMonitor.Insta
 		public bool CanTunnel()
 		{
 			int num = Grid.PosToCell(this);
-			SubWorld.ZoneType subWorldZoneType = World.Instance.zoneRenderData.GetSubWorldZoneType(num);
-			if (subWorldZoneType == SubWorld.ZoneType.Space)
+			if (World.Instance.zoneRenderData.GetSubWorldZoneType(num) == SubWorld.ZoneType.Space)
 			{
 				int num2 = num;
 				while (Grid.IsValidCell(num2) && !Grid.Solid[num2])
@@ -113,13 +112,21 @@ public class DiggerMonitor : GameStateMachine<DiggerMonitor, DiggerMonitor.Insta
 				{
 					byte index = Grid.ElementIdx[cell];
 					Element element = ElementLoader.elements[index];
-					return Grid.Element[cell].hardness < 150 && !element.HasTag(GameTags.RefinedMetal);
+					if (Grid.Element[cell].hardness < 150)
+					{
+						return !element.HasTag(GameTags.RefinedMetal);
+					}
+					return false;
 				}
 				GameObject gameObject = Grid.Objects[cell, 1];
 				if (gameObject != null)
 				{
 					PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
-					return Grid.Element[cell].hardness < 150 && !component.Element.HasTag(GameTags.RefinedMetal);
+					if (Grid.Element[cell].hardness < 150)
+					{
+						return !component.Element.HasTag(GameTags.RefinedMetal);
+					}
+					return false;
 				}
 			}
 			return false;

@@ -23,7 +23,7 @@ public class InterfaceTool : KMonoBehaviour
 
 	public string placeSound;
 
-	protected bool populateHitsList = false;
+	protected bool populateHitsList;
 
 	[NonSerialized]
 	public bool hasFocus;
@@ -57,7 +57,7 @@ public class InterfaceTool : KMonoBehaviour
 
 	private List<KSelectable> hits = new List<KSelectable>();
 
-	protected bool playedSoundThisFrame = false;
+	protected bool playedSoundThisFrame;
 
 	private List<Intersection> intersections = new List<Intersection>();
 
@@ -65,7 +65,7 @@ public class InterfaceTool : KMonoBehaviour
 
 	private HashSet<Component> curIntersectionGroup = new HashSet<Component>();
 
-	private int hitCycleCount = 0;
+	private int hitCycleCount;
 
 	public HashedString ViewMode => viewMode;
 
@@ -147,8 +147,7 @@ public class InterfaceTool : KMonoBehaviour
 	{
 		if (!(visualizer == null) && isAppFocused)
 		{
-			int cell = Grid.PosToCell(cursor_pos);
-			cursor_pos = Grid.CellToPosCBC(cell, visualizerLayer);
+			cursor_pos = Grid.CellToPosCBC(Grid.PosToCell(cursor_pos), visualizerLayer);
 			cursor_pos.z += -0.15f;
 			visualizer.transform.SetLocalPosition(cursor_pos);
 		}
@@ -190,8 +189,7 @@ public class InterfaceTool : KMonoBehaviour
 	protected Vector2 GetRegularizedPos(Vector2 input, bool minimize)
 	{
 		Vector3 vector = new Vector3(Grid.HalfCellSizeInMeters, Grid.HalfCellSizeInMeters, 0f);
-		int cell = Grid.PosToCell(input);
-		return Grid.CellToPosCCC(cell, Grid.SceneLayer.Background) + (minimize ? (-vector) : vector);
+		return Grid.CellToPosCCC(Grid.PosToCell(input), Grid.SceneLayer.Background) + (minimize ? (-vector) : vector);
 	}
 
 	protected Vector2 GetWorldRestrictedPosition(Vector2 input)
@@ -222,12 +220,7 @@ public class InterfaceTool : KMonoBehaviour
 	{
 		if (populateHitsList)
 		{
-			if (!isAppFocused)
-			{
-				return;
-			}
-			int cell = Grid.PosToCell(Camera.main.ScreenToWorldPoint(KInputManager.GetMousePos()));
-			if (!Grid.IsValidCell(cell))
+			if (!isAppFocused || !Grid.IsValidCell(Grid.PosToCell(Camera.main.ScreenToWorldPoint(KInputManager.GetMousePos()))))
 			{
 				return;
 			}
@@ -423,7 +416,11 @@ public class InterfaceTool : KMonoBehaviour
 			return 1;
 		}
 		int num = x.transform.GetPosition().z.CompareTo(y.transform.GetPosition().z);
-		return (num == 0) ? x.GetInstanceID().CompareTo(y.GetInstanceID()) : num;
+		if (num != 0)
+		{
+			return num;
+		}
+		return x.GetInstanceID().CompareTo(y.GetInstanceID());
 	}
 
 	public void SetHoverOverride(KSelectable hover_override)

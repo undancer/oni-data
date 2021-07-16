@@ -18,26 +18,26 @@ public class SolarPanelModuleConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("SolarPanelModule", 3, 1, "rocket_solar_panel_module_kanim", 1000, 30f, BUILDINGS.ROCKETRY_MASS_KG.HOLLOW_TIER1, MATERIALS.GLASSES, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
-		buildingDef.DefaultAnimState = "grounded";
-		buildingDef.AttachmentSlotTag = GameTags.Rocket;
-		buildingDef.GeneratorWattageRating = 60f;
-		buildingDef.GeneratorBaseCapacity = buildingDef.GeneratorWattageRating;
-		buildingDef.ExhaustKilowattsWhenActive = 0f;
-		buildingDef.SelfHeatKilowattsWhenActive = 0f;
-		buildingDef.SceneLayer = Grid.SceneLayer.Building;
-		buildingDef.ForegroundLayer = Grid.SceneLayer.Front;
-		buildingDef.OverheatTemperature = 2273.15f;
-		buildingDef.Floodable = false;
-		buildingDef.PowerInputOffset = PLUG_OFFSET;
-		buildingDef.PowerOutputOffset = PLUG_OFFSET;
-		buildingDef.ObjectLayer = ObjectLayer.Building;
-		buildingDef.RequiresPowerOutput = true;
-		buildingDef.UseWhitePowerOutputConnectorColour = true;
-		buildingDef.CanMove = true;
-		buildingDef.Cancellable = false;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("SolarPanelModule", 3, 1, "rocket_solar_panel_module_kanim", 1000, 30f, BUILDINGS.ROCKETRY_MASS_KG.HOLLOW_TIER1, MATERIALS.GLASSES, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		BuildingTemplates.CreateRocketBuildingDef(obj);
+		obj.DefaultAnimState = "grounded";
+		obj.AttachmentSlotTag = GameTags.Rocket;
+		obj.GeneratorWattageRating = 60f;
+		obj.GeneratorBaseCapacity = obj.GeneratorWattageRating;
+		obj.ExhaustKilowattsWhenActive = 0f;
+		obj.SelfHeatKilowattsWhenActive = 0f;
+		obj.SceneLayer = Grid.SceneLayer.Building;
+		obj.ForegroundLayer = Grid.SceneLayer.Front;
+		obj.OverheatTemperature = 2273.15f;
+		obj.Floodable = false;
+		obj.PowerInputOffset = PLUG_OFFSET;
+		obj.PowerOutputOffset = PLUG_OFFSET;
+		obj.ObjectLayer = ObjectLayer.Building;
+		obj.RequiresPowerOutput = true;
+		obj.UseWhitePowerOutputConnectorColour = true;
+		obj.CanMove = true;
+		obj.Cancellable = false;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -46,8 +46,7 @@ public class SolarPanelModuleConfig : IBuildingConfig
 		go.AddOrGet<LoopingSounds>();
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
 		go.AddComponent<RequireInputs>();
-		BuildingAttachPoint buildingAttachPoint = go.AddOrGet<BuildingAttachPoint>();
-		buildingAttachPoint.points = new BuildingAttachPoint.HardPoint[1]
+		go.AddOrGet<BuildingAttachPoint>().points = new BuildingAttachPoint.HardPoint[1]
 		{
 			new BuildingAttachPoint.HardPoint(new CellOffset(0, 1), GameTags.Rocket, null)
 		};
@@ -56,8 +55,7 @@ public class SolarPanelModuleConfig : IBuildingConfig
 	public override void DoPostConfigureComplete(GameObject go)
 	{
 		Prioritizable.AddRef(go);
-		ModuleSolarPanel moduleSolarPanel = go.AddOrGet<ModuleSolarPanel>();
-		moduleSolarPanel.showConnectedConsumerStatusItems = false;
+		go.AddOrGet<ModuleSolarPanel>().showConnectedConsumerStatusItems = false;
 		BuildingTemplates.ExtendBuildingToRocketModuleCluster(go, null, ROCKETRY.BURDEN.INSIGNIFICANT);
 		go.GetComponent<RocketModule>().operationalLandedRequired = false;
 	}

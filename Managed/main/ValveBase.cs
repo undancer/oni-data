@@ -98,8 +98,7 @@ public class ValveBase : KMonoBehaviour, ISaveLoadable
 		float num2 = 0f;
 		if (num > 0f)
 		{
-			float num3 = num / contents.mass;
-			int disease_count = (int)(num3 * (float)contents.diseaseCount);
+			int disease_count = (int)(num / contents.mass * (float)contents.diseaseCount);
 			num2 = flowManager.AddElement(outputCell, contents.element, num, contents.temperature, contents.diseaseIdx, disease_count);
 			Game.Instance.accumulators.Accumulate(flowAccumulator, num2);
 			if (num2 > 0f)

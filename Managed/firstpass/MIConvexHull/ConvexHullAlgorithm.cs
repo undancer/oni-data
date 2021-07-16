@@ -176,9 +176,10 @@ namespace MIConvexHull
 		private void SerializeVerticesToPositions()
 		{
 			int num = 0;
+			IVertex[] vertices;
 			if (IsLifted)
 			{
-				IVertex[] vertices = Vertices;
+				vertices = Vertices;
 				foreach (IVertex vertex in vertices)
 				{
 					double num2 = 0.0;
@@ -193,12 +194,12 @@ namespace MIConvexHull
 				}
 				return;
 			}
-			IVertex[] vertices2 = Vertices;
-			foreach (IVertex vertex2 in vertices2)
+			vertices = Vertices;
+			foreach (IVertex vertex2 in vertices)
 			{
-				for (int l = 0; l < NumOfDimensions; l++)
+				for (int k = 0; k < NumOfDimensions; k++)
 				{
-					Positions[num++] = vertex2.Position[l];
+					Positions[num++] = vertex2.Position[k];
 				}
 			}
 		}
@@ -310,11 +311,10 @@ namespace MIConvexHull
 					{
 						if (j == list.Count)
 						{
-							int num2 = 0;
-							num2++;
+							_ = 0;
 						}
-						int num3 = list[j];
-						array2[num++] = num3;
+						int num2 = list[j];
+						array2[num++] = num2;
 					}
 				}
 				ConvexFaceInternal convexFaceInternal = FacePool[ObjectManager.GetFace()];
@@ -331,9 +331,9 @@ namespace MIConvexHull
 				}
 			}
 			int[] array3 = array;
-			foreach (int num4 in array3)
+			foreach (int num3 in array3)
 			{
-				ConvexFaceInternal convexFaceInternal2 = FacePool[num4];
+				ConvexFaceInternal convexFaceInternal2 = FacePool[num3];
 				FindBeyondVertices(convexFaceInternal2);
 				if (convexFaceInternal2.VerticesBeyond.Count == 0)
 				{

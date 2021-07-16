@@ -7,10 +7,10 @@ public class BatteryConfig : BaseBatteryConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = CreateBuildingDef("Battery", 1, 2, 30, "batterysm_kanim", 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, 0.25f, 1f, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER1);
-		buildingDef.Breakable = true;
+		BuildingDef obj = CreateBuildingDef("Battery", 1, 2, 30, "batterysm_kanim", 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, 0.25f, 1f, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER1);
+		obj.Breakable = true;
 		SoundEventVolumeCache.instance.AddVolume("batterysm_kanim", "Battery_rattle", NOISE_POLLUTION.NOISY.TIER1);
-		return buildingDef;
+		return obj;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

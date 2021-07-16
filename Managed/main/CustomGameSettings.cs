@@ -28,10 +28,10 @@ public class CustomGameSettings : KMonoBehaviour
 	private static CustomGameSettings instance;
 
 	[Serialize]
-	public bool is_custom_game = false;
+	public bool is_custom_game;
 
 	[Serialize]
-	public CustomGameMode customGameMode = CustomGameMode.Survival;
+	public CustomGameMode customGameMode;
 
 	[Serialize]
 	private Dictionary<string, string> CurrentQualityLevelsBySetting = new Dictionary<string, string>();
@@ -315,8 +315,7 @@ public class CustomGameSettings : KMonoBehaviour
 				}
 				if (data.ContainsKey(qualitySetting.Key) && data[qualitySetting.Key] != b)
 				{
-					result = false;
-					break;
+					return false;
 				}
 			}
 		}
@@ -347,12 +346,11 @@ public class CustomGameSettings : KMonoBehaviour
 		MetricSettingsData item = metricSettingsData;
 		foreach (CustomGameMode value in Enum.GetValues(typeof(CustomGameMode)))
 		{
-			if (value == CustomGameMode.Custom || !AllValuesMatch(CurrentQualityLevelsBySetting, value))
+			if (value != CustomGameMode.Custom && AllValuesMatch(CurrentQualityLevelsBySetting, value))
 			{
-				continue;
+				item.Value = value.ToString();
+				break;
 			}
-			item.Value = value.ToString();
-			break;
 		}
 		list.Add(item);
 		return list;
@@ -424,8 +422,7 @@ public class CustomGameSettings : KMonoBehaviour
 
 	public static string[] ParseSettingCoordinate(string coord)
 	{
-		Regex regex = new Regex("(.*)-(.*)-(.*)");
-		Match match = regex.Match(coord);
+		Match match = new Regex("(.*)-(.*)-(.*)").Match(coord);
 		string[] array = new string[match.Groups.Count];
 		for (int i = 0; i < match.Groups.Count; i++)
 		{

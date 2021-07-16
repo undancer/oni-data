@@ -37,13 +37,13 @@ public class Constructable : Workable, ISaveLoadable
 
 	private Chore buildChore;
 
-	private bool materialNeedsCleared = false;
+	private bool materialNeedsCleared;
 
 	private bool hasUnreachableDigs;
 
-	private bool finished = false;
+	private bool finished;
 
-	private bool unmarked = false;
+	private bool unmarked;
 
 	public bool isDiggingRequired = true;
 
@@ -54,7 +54,7 @@ public class Constructable : Workable, ISaveLoadable
 	private Extents ladderDetectionExtents;
 
 	[Serialize]
-	public bool IsReplacementTile = false;
+	public bool IsReplacementTile;
 
 	private HandleVector<int>.Handle solidPartitionerEntry;
 
@@ -167,8 +167,7 @@ public class Constructable : Workable, ISaveLoadable
 					Conduit component4 = replacementCandidate.GetComponent<Conduit>();
 					if (component4 != null)
 					{
-						ConduitFlow flowManager = component4.GetFlowManager();
-						flowManager.MarkForReplacement(cell);
+						component4.GetFlowManager().MarkForReplacement(cell);
 					}
 					BuildingComplete component5 = replacementCandidate.GetComponent<BuildingComplete>();
 					if (component5 != null)
@@ -227,14 +226,13 @@ public class Constructable : Workable, ISaveLoadable
 		KAnimGraphTileVisualizer component3 = GetComponent<KAnimGraphTileVisualizer>();
 		if (component3 != null)
 		{
-			KAnimGraphTileVisualizer component4 = gameObject.GetComponent<KAnimGraphTileVisualizer>();
-			component4.Connections = connections;
+			gameObject.GetComponent<KAnimGraphTileVisualizer>().Connections = connections;
 			component3.skipCleanup = true;
 		}
-		KSelectable component5 = GetComponent<KSelectable>();
-		if (component5 != null && component5.IsSelected && gameObject.GetComponent<KSelectable>() != null)
+		KSelectable component4 = GetComponent<KSelectable>();
+		if (component4 != null && component4.IsSelected && gameObject.GetComponent<KSelectable>() != null)
 		{
-			component5.Unselect();
+			component4.Unselect();
 			if (PlayerController.Instance.ActiveTool.name == "SelectTool")
 			{
 				((SelectTool)PlayerController.Instance.ActiveTool).SelectNextFrame(gameObject.GetComponent<KSelectable>());
@@ -264,8 +262,7 @@ public class Constructable : Workable, ISaveLoadable
 		{
 			MarkArea();
 		}
-		int techTierForItem = Db.Get().TechItems.GetTechTierForItem(building.Def.PrefabID);
-		if (techTierForItem > 1)
+		if (Db.Get().TechItems.GetTechTierForItem(building.Def.PrefabID) > 1)
 		{
 			requireMinionToWork = true;
 		}
@@ -358,8 +355,7 @@ public class Constructable : Workable, ISaveLoadable
 		{
 			int x = 0;
 			int y = 0;
-			int cell2 = Grid.PosToCell(this);
-			Grid.CellToXY(cell2, out x, out y);
+			Grid.CellToXY(Grid.PosToCell(this), out x, out y);
 			int y2 = y - 3;
 			ladderDetectionExtents = new Extents(x, y2, 1, 5);
 			ladderParititonerEntry = GameScenePartitioner.Instance.Add("Constructable.OnNearbyBuildingLayerChanged", base.gameObject, ladderDetectionExtents, GameScenePartitioner.Instance.objectLayers[1], OnNearbyBuildingLayerChanged);
@@ -367,8 +363,7 @@ public class Constructable : Workable, ISaveLoadable
 		}
 		fetchList.Submit(OnFetchListComplete, check_storage_contents: true);
 		PlaceDiggables();
-		ReachabilityMonitor.Instance instance = new ReachabilityMonitor.Instance(this);
-		instance.StartSM();
+		new ReachabilityMonitor.Instance(this).StartSM();
 		Subscribe(493375141, OnRefreshUserMenuDelegate);
 		Prioritizable component3 = GetComponent<Prioritizable>();
 		component3.onPriorityChanged = (Action<PrioritySetting>)Delegate.Combine(component3.onPriorityChanged, new Action<PrioritySetting>(OnPriorityChanged));
@@ -398,8 +393,7 @@ public class Constructable : Workable, ISaveLoadable
 		{
 			return;
 		}
-		GameObject x = Grid.Objects[num, (int)def.TileLayer];
-		if (x == null)
+		if (Grid.Objects[num, (int)def.TileLayer] == null)
 		{
 			def.MarkArea(num, orientation, def.TileLayer, base.gameObject);
 			def.RunOnArea(num, orientation, delegate(int c)
@@ -417,8 +411,7 @@ public class Constructable : Workable, ISaveLoadable
 			unmarked = true;
 			int num = Grid.PosToCell(base.transform.GetPosition());
 			BuildingDef def = building.Def;
-			ObjectLayer layer = (IsReplacementTile ? building.Def.ReplacementLayer : building.Def.ObjectLayer);
-			def.UnmarkArea(num, building.Orientation, layer, base.gameObject);
+			def.UnmarkArea(layer: IsReplacementTile ? building.Def.ReplacementLayer : building.Def.ObjectLayer, cell: num, orientation: building.Orientation, go: base.gameObject);
 			if (def.IsTilePiece)
 			{
 				Grid.IsTileUnderConstruction[num] = false;
@@ -505,9 +498,9 @@ public class Constructable : Workable, ISaveLoadable
 		}
 		UnmarkArea();
 		int[] placementCells = building.PlacementCells;
-		foreach (int cell2 in placementCells)
+		for (int i = 0; i < placementCells.Length; i++)
 		{
-			Diggable diggable = Diggable.GetDiggable(cell2);
+			Diggable diggable = Diggable.GetDiggable(placementCells[i]);
 			if (diggable != null)
 			{
 				diggable.gameObject.DeleteObject();

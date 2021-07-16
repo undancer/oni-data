@@ -34,7 +34,7 @@ public class ModeSelectScreen : NewGameFlowScreen
 	[SerializeField]
 	private KBatchedAnimController survivalAnim;
 
-	private static bool dataLoaded = false;
+	private static bool dataLoaded;
 
 	protected override void OnPrefabInit()
 	{

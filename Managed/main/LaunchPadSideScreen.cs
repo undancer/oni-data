@@ -116,8 +116,7 @@ public class LaunchPadSideScreen : SideScreenContent
 
 	private void ClickStartNewRocket()
 	{
-		SelectModuleSideScreen selectModuleSideScreen = (SelectModuleSideScreen)DetailsScreen.Instance.SetSecondarySideScreen(changeModuleSideScreen, UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.CHANGEMODULEPANEL);
-		selectModuleSideScreen.SetLaunchPad(selectedPad);
+		((SelectModuleSideScreen)DetailsScreen.Instance.SetSecondarySideScreen(changeModuleSideScreen, UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.CHANGEMODULEPANEL)).SetLaunchPad(selectedPad);
 	}
 
 	private void RefreshRocketButton()

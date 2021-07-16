@@ -47,8 +47,7 @@ public class SpriteSheetAnimManager : KMonoBehaviour, IRenderEveryTick
 
 	public void Play(int name_hash, Vector3 pos, Quaternion rotation, Vector2 size, Color32 colour)
 	{
-		SpriteSheetAnimator spriteSheetAnimator = nameIndexMap[name_hash];
-		spriteSheetAnimator.Play(pos, rotation, size, colour);
+		nameIndexMap[name_hash].Play(pos, rotation, size, colour);
 	}
 
 	public void RenderEveryTick(float dt)
@@ -67,7 +66,7 @@ public class SpriteSheetAnimManager : KMonoBehaviour, IRenderEveryTick
 
 	public void Render()
 	{
-		Vector3 zero = Vector3.zero;
+		_ = Vector3.zero;
 		foreach (KeyValuePair<int, SpriteSheetAnimator> item in nameIndexMap)
 		{
 			item.Value.Render();

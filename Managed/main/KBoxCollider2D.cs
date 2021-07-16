@@ -18,14 +18,7 @@ public class KBoxCollider2D : KCollider2D
 		}
 	}
 
-	public override Bounds bounds
-	{
-		get
-		{
-			Vector3 center = base.transform.GetPosition() + new Vector3(base.offset.x, base.offset.y, 0f);
-			return new Bounds(center, new Vector3(_size.x, _size.y, 0f));
-		}
-	}
+	public override Bounds bounds => new Bounds(base.transform.GetPosition() + new Vector3(base.offset.x, base.offset.y, 0f), new Vector3(_size.x, _size.y, 0f));
 
 	public override Extents GetExtents()
 	{
@@ -45,7 +38,11 @@ public class KBoxCollider2D : KCollider2D
 		Vector3 vector = base.transform.GetPosition() + new Vector3(base.offset.x, base.offset.y, 0f);
 		Vector2 vector2 = new Vector2(vector.x - size.x * 0.5f, vector.y - size.y * 0.5f);
 		Vector2 vector3 = new Vector2(vector.x + size.x * 0.5f, vector.y + size.y * 0.5f);
-		return intersect_pos.x >= vector2.x && intersect_pos.x <= vector3.x && intersect_pos.y >= vector2.y && intersect_pos.y <= vector3.y;
+		if (intersect_pos.x >= vector2.x && intersect_pos.x <= vector3.x && intersect_pos.y >= vector2.y)
+		{
+			return intersect_pos.y <= vector3.y;
+		}
+		return false;
 	}
 
 	private void OnDrawGizmosSelected()

@@ -14,8 +14,7 @@ public class DestroyAfter : KMonoBehaviour
 	{
 		for (int i = 0; i < particleSystems.Length; i++)
 		{
-			ParticleSystem particleSystem = particleSystems[i];
-			if (particleSystem.IsAlive(withChildren: false))
+			if (particleSystems[i].IsAlive(withChildren: false))
 			{
 				return true;
 			}

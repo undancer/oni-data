@@ -10,7 +10,7 @@ public static class EventExtensions
 	public static void Trigger(this GameObject go, int hash, object data = null)
 	{
 		KObject kObject = KObjectManager.Instance.Get(go);
-		if (kObject?.hasEventSystem ?? false)
+		if (kObject != null && kObject.hasEventSystem)
 		{
 			kObject.GetEventSystem().Trigger(go, hash, data);
 		}

@@ -29,14 +29,14 @@ public class BottleEmptier : StateMachineComponent<BottleEmptier.StatesInstance>
 
 		public void CreateChore()
 		{
-			KBatchedAnimController component = GetComponent<KBatchedAnimController>();
+			GetComponent<KBatchedAnimController>();
 			Tag[] tags = GetComponent<TreeFilterable>().GetTags();
 			Tag[] forbidden_tags = (base.master.allowManualPumpingStationFetching ? new Tag[0] : new Tag[1]
 			{
 				GameTags.LiquidSource
 			});
-			Storage component2 = GetComponent<Storage>();
-			chore = new FetchChore(Db.Get().ChoreTypes.StorageFetch, component2, component2.Capacity(), tags, null, forbidden_tags);
+			Storage component = GetComponent<Storage>();
+			chore = new FetchChore(Db.Get().ChoreTypes.StorageFetch, component, component.Capacity(), tags, null, forbidden_tags);
 		}
 
 		public void CancelChore()
@@ -106,8 +106,7 @@ public class BottleEmptier : StateMachineComponent<BottleEmptier.StatesInstance>
 				return;
 			}
 			Storage component = GetComponent<Storage>();
-			float mass = firstPrimaryElement.Mass;
-			float num = Mathf.Min(mass, base.master.emptyRate * dt);
+			float num = Mathf.Min(firstPrimaryElement.Mass, base.master.emptyRate * dt);
 			if (!(num <= 0f))
 			{
 				Tag prefabTag = firstPrimaryElement.GetComponent<KPrefabID>().PrefabTag;
@@ -250,8 +249,7 @@ public class BottleEmptier : StateMachineComponent<BottleEmptier.StatesInstance>
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		BottleEmptier component = gameObject.GetComponent<BottleEmptier>();
+		BottleEmptier component = ((GameObject)data).GetComponent<BottleEmptier>();
 		allowManualPumpingStationFetching = component.allowManualPumpingStationFetching;
 		base.smi.RefreshChore();
 	}

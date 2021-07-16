@@ -19,7 +19,11 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			return other is SteamLeaderboardEntries_t && this == (SteamLeaderboardEntries_t)other;
+			if (other is SteamLeaderboardEntries_t)
+			{
+				return this == (SteamLeaderboardEntries_t)other;
+			}
+			return false;
 		}
 
 		public override int GetHashCode()

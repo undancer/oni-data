@@ -132,7 +132,8 @@ public class AssignmentManager : KMonoBehaviour
 		{
 			if (assignable.slot == slot && assignable.assignee != null && assignable.assignee.HasOwner(owner))
 			{
-				if ((assignable.assignee as Room)?.roomType.priority_building_use ?? false)
+				Room room = assignable.assignee as Room;
+				if (room != null && room.roomType.priority_building_use)
 				{
 					PreferredAssignableResults.Clear();
 					PreferredAssignableResults.Add(assignable);
@@ -162,7 +163,8 @@ public class AssignmentManager : KMonoBehaviour
 			return false;
 		}
 		int num = assignee.NumOwners();
-		if ((assignee as Room)?.roomType.priority_building_use ?? false)
+		Room room = assignee as Room;
+		if (room != null && room.roomType.priority_building_use)
 		{
 			return true;
 		}
@@ -170,8 +172,8 @@ public class AssignmentManager : KMonoBehaviour
 		{
 			if (assignable.slot == candidate.slot && assignable.assignee != assignee)
 			{
-				Room room = assignable.assignee as Room;
-				if (room != null && room.roomType.priority_building_use && assignable.assignee.HasOwner(owner))
+				Room room2 = assignable.assignee as Room;
+				if (room2 != null && room2.roomType.priority_building_use && assignable.assignee.HasOwner(owner))
 				{
 					return false;
 				}

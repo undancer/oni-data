@@ -33,10 +33,8 @@ public static class BaseDivergentConfig
 		gameObject.AddOrGet<LoopingSounds>();
 		gameObject.AddOrGetDef<CreatureFallMonitor.Def>();
 		gameObject.AddOrGetDef<BurrowMonitor.Def>();
-		CropTendingMonitor.Def def = gameObject.AddOrGetDef<CropTendingMonitor.Def>();
-		def.numCropsTendedPerCycle = num_tended_per_cycle;
-		ThreatMonitor.Def def2 = gameObject.AddOrGetDef<ThreatMonitor.Def>();
-		def2.fleethresholdState = Health.HealthState.Dead;
+		gameObject.AddOrGetDef<CropTendingMonitor.Def>().numCropsTendedPerCycle = num_tended_per_cycle;
+		gameObject.AddOrGetDef<ThreatMonitor.Def>().fleethresholdState = Health.HealthState.Dead;
 		EntityTemplates.CreateAndRegisterBaggedCreature(gameObject, must_stand_on_top_for_pickup: true, allow_mark_for_capture: true);
 		KPrefabID component = gameObject.GetComponent<KPrefabID>();
 		component.AddTag(GameTags.Creatures.Walker);
@@ -44,10 +42,10 @@ public static class BaseDivergentConfig
 		{
 			inst.GetAttributes().Add(Db.Get().Attributes.MaxUnderwaterTravelCost);
 		};
-		CropTendingStates.Def def3 = new CropTendingStates.Def();
-		def3.effectId = cropTendingEffect;
-		def3.interests.Add("WormPlant", 10);
-		def3.animSetOverrides.Add("WormPlant", new CropTendingStates.AnimSet
+		CropTendingStates.Def def = new CropTendingStates.Def();
+		def.effectId = cropTendingEffect;
+		def.interests.Add("WormPlant", 10);
+		def.animSetOverrides.Add("WormPlant", new CropTendingStates.AnimSet
 		{
 			crop_tending_pre = "wormwood_tending_pre",
 			crop_tending = "wormwood_tending",
@@ -58,7 +56,7 @@ public static class BaseDivergentConfig
 				"flower_wilted"
 			}
 		});
-		def3.ignoreEffectGroup = ignoreEffectGroup;
+		def.ignoreEffectGroup = ignoreEffectGroup;
 		ChoreTable.Builder chore_table = new ChoreTable.Builder().Add(new DeathStates.Def()).Add(new AnimInterruptStates.Def()).Add(new GrowUpStates.Def())
 			.Add(new TrappedStates.Def())
 			.Add(new IncubatingStates.Def())
@@ -77,7 +75,7 @@ public static class BaseDivergentConfig
 			.Add(new EatStates.Def())
 			.Add(new PlayAnimsStates.Def(GameTags.Creatures.Poop, loop: false, "poop", STRINGS.CREATURES.STATUSITEMS.EXPELLING_SOLID.NAME, STRINGS.CREATURES.STATUSITEMS.EXPELLING_SOLID.TOOLTIP))
 			.Add(new CallAdultStates.Def())
-			.Add(def3, !is_baby)
+			.Add(def, !is_baby)
 			.PopInterruptGroup()
 			.Add(new IdleStates.Def());
 		EntityTemplates.AddCreatureBrain(gameObject, chore_table, GameTags.Creatures.Species.DivergentSpecies, symbolOverridePrefix);
@@ -100,8 +98,7 @@ public static class BaseDivergentConfig
 		CreatureCalorieMonitor.Def def = prefab.AddOrGetDef<CreatureCalorieMonitor.Def>();
 		def.diet = diet;
 		def.minPoopSizeInCalories = referenceCaloriesPerKg * minPoopSizeInKg;
-		SolidConsumerMonitor.Def def2 = prefab.AddOrGetDef<SolidConsumerMonitor.Def>();
-		def2.diet = diet;
+		prefab.AddOrGetDef<SolidConsumerMonitor.Def>().diet = diet;
 		return prefab;
 	}
 }

@@ -14,23 +14,23 @@ public class KBatchedAnimTracker : MonoBehaviour
 
 	public Vector3 previousTargetPoint;
 
-	public bool useTargetPoint = false;
+	public bool useTargetPoint;
 
 	public bool fadeOut = true;
 
-	public bool forceAlwaysVisible = false;
+	public bool forceAlwaysVisible;
 
-	public bool matchParentOffset = false;
+	public bool matchParentOffset;
 
 	private bool alive = true;
 
-	private bool forceUpdate = false;
+	private bool forceUpdate;
 
 	private Matrix2x3 previousMatrix;
 
 	private Vector3 previousPosition;
 
-	private KBatchedAnimController myAnim = null;
+	private KBatchedAnimController myAnim;
 
 	private void Start()
 	{
@@ -88,8 +88,7 @@ public class KBatchedAnimTracker : MonoBehaviour
 	{
 		forceUpdate = false;
 		bool symbolVisible = false;
-		KAnim.Anim currentAnim = controller.CurrentAnim;
-		if (currentAnim != null)
+		if (controller.CurrentAnim != null)
 		{
 			Matrix2x3 symbolLocalTransform = controller.GetSymbolLocalTransform(symbol, out symbolVisible);
 			Vector3 position = controller.transform.GetPosition();

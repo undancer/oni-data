@@ -7,14 +7,12 @@ public static class KMonoBehaviourExtensions
 {
 	public static int Subscribe(this GameObject go, int hash, Action<object> handler)
 	{
-		KMonoBehaviour component = go.GetComponent<KMonoBehaviour>();
-		return component.Subscribe(hash, handler);
+		return go.GetComponent<KMonoBehaviour>().Subscribe(hash, handler);
 	}
 
 	public static void Subscribe(this GameObject go, GameObject target, int hash, Action<object> handler)
 	{
-		KMonoBehaviour component = go.GetComponent<KMonoBehaviour>();
-		component.Subscribe(target, hash, handler);
+		go.GetComponent<KMonoBehaviour>().Subscribe(target, hash, handler);
 	}
 
 	public static void Unsubscribe(this GameObject go, int hash, Action<object> handler)
@@ -47,8 +45,7 @@ public static class KMonoBehaviourExtensions
 	public static T GetComponentInChildrenOnly<T>(this GameObject go) where T : Component
 	{
 		T[] componentsInChildren = go.GetComponentsInChildren<T>();
-		T[] array = componentsInChildren;
-		foreach (T val in array)
+		foreach (T val in componentsInChildren)
 		{
 			if (val.gameObject != go)
 			{

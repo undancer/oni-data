@@ -7,13 +7,13 @@ using UnityEngine.UI;
 public class KBatchedAnimController : KAnimControllerBase, KAnimConverter.IAnimConverter
 {
 	[NonSerialized]
-	protected bool _forceRebuild = false;
+	protected bool _forceRebuild;
 
 	private Vector3 lastPos = Vector3.zero;
 
 	private Vector2I lastChunkXY = KBatchedAnimUpdater.INVALID_CHUNK_ID;
 
-	private KAnimBatch batch = null;
+	private KAnimBatch batch;
 
 	public float animScale = 0.005f;
 
@@ -32,21 +32,21 @@ public class KBatchedAnimController : KAnimControllerBase, KAnimConverter.IAnimC
 
 	public Grid.SceneLayer sceneLayer;
 
-	private RectTransform rt = null;
+	private RectTransform rt;
 
 	private Vector3 screenOffset = new Vector3(0f, 0f, 0f);
 
 	public Matrix2x3 navMatrix = Matrix2x3.identity;
 
-	private CanvasScaler scaler = null;
+	private CanvasScaler scaler;
 
 	public bool setScaleFromAnim = true;
 
 	public Vector2 animOverrideSize = Vector2.one;
 
-	private Canvas rootCanvas = null;
+	private Canvas rootCanvas;
 
-	public bool isMovable = false;
+	public bool isMovable;
 
 	protected bool forceRebuild
 	{
@@ -83,7 +83,11 @@ public class KBatchedAnimController : KAnimControllerBase, KAnimConverter.IAnimC
 
 	public bool IsActive()
 	{
-		return base.isActiveAndEnabled && _enabled;
+		if (base.isActiveAndEnabled)
+		{
+			return _enabled;
+		}
+		return false;
 	}
 
 	public bool IsVisible()
@@ -165,8 +169,7 @@ public class KBatchedAnimController : KAnimControllerBase, KAnimConverter.IAnimC
 
 	private static void OnMovementStateChanged(Transform transform, bool is_moving)
 	{
-		KBatchedAnimController component = transform.GetComponent<KBatchedAnimController>();
-		component.OnMovementStateChanged(is_moving);
+		transform.GetComponent<KBatchedAnimController>().OnMovementStateChanged(is_moving);
 	}
 
 	private void SetBatchGroup(KAnimFileData kafd)
@@ -250,14 +253,10 @@ public class KBatchedAnimController : KAnimControllerBase, KAnimConverter.IAnimC
 				batch.OverrideZ(base.transform.GetPosition().z);
 			}
 			Vector3 vector = (lastPos = base.PositionIncludingOffset);
-			if (visibilityType != VisibilityType.Always)
+			if (visibilityType != VisibilityType.Always && KAnimBatchManager.ControllerToChunkXY(this) != lastChunkXY && lastChunkXY != KBatchedAnimUpdater.INVALID_CHUNK_ID)
 			{
-				Vector2I u = KAnimBatchManager.ControllerToChunkXY(this);
-				if (u != lastChunkXY && lastChunkXY != KBatchedAnimUpdater.INVALID_CHUNK_ID)
-				{
-					DeRegister();
-					Register();
-				}
+				DeRegister();
+				Register();
 			}
 			SetDirty();
 		}
@@ -391,12 +390,20 @@ public class KBatchedAnimController : KAnimControllerBase, KAnimConverter.IAnimC
 
 	public int GetCurrentNumFrames()
 	{
-		return (curAnim != null) ? curAnim.numFrames : 0;
+		if (curAnim == null)
+		{
+			return 0;
+		}
+		return curAnim.numFrames;
 	}
 
 	public int GetFirstFrameIndex()
 	{
-		return (curAnim != null) ? curAnim.firstFrameIdx : (-1);
+		if (curAnim == null)
+		{
+			return -1;
+		}
+		return curAnim.firstFrameIdx;
 	}
 
 	private Canvas GetRootCanvas()
@@ -472,13 +479,10 @@ public class KBatchedAnimController : KAnimControllerBase, KAnimConverter.IAnimC
 		{
 			Matrix2x3 n3 = Matrix2x3.Translate(-pivot);
 			Matrix2x3 n4 = Matrix2x3.Rotate(rotation * ((float)Math.PI / 180f));
-			Matrix2x3 m = Matrix2x3.Translate(pivot);
-			Matrix2x3 n5 = m * n4 * n3;
-			Matrix2x3 m2 = Matrix2x3.TRS(v, base.transform.rotation, base.transform.localScale);
-			return m2 * n5 * n * navMatrix * n2;
+			Matrix2x3 n5 = Matrix2x3.Translate(pivot) * n4 * n3;
+			return Matrix2x3.TRS(v, base.transform.rotation, base.transform.localScale) * n5 * n * navMatrix * n2;
 		}
-		Matrix2x3 m3 = Matrix2x3.TRS(v, base.transform.rotation, base.transform.localScale);
-		return m3 * n * navMatrix * n2;
+		return Matrix2x3.TRS(v, base.transform.rotation, base.transform.localScale) * n * navMatrix * n2;
 	}
 
 	public override Matrix4x4 GetSymbolTransform(HashedString symbol, out bool symbolVisible)
@@ -488,8 +492,7 @@ public class KBatchedAnimController : KAnimControllerBase, KAnimConverter.IAnimC
 			Matrix2x3 symbolLocalTransform = GetSymbolLocalTransform(symbol, out symbolVisible);
 			if (symbolVisible)
 			{
-				Matrix4x4 lhs = GetTransformMatrix();
-				return lhs * symbolLocalTransform;
+				return (Matrix4x4)GetTransformMatrix() * (Matrix4x4)symbolLocalTransform;
 			}
 		}
 		symbolVisible = false;

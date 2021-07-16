@@ -7,7 +7,7 @@ namespace ProcGen
 	[SerializationConfig(MemberSerialization.OptIn)]
 	public class Node
 	{
-		private bool nodeSet = false;
+		private bool nodeSet;
 
 		[Serialize]
 		public TagSet tags = new TagSet();

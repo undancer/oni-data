@@ -61,7 +61,11 @@ public class FixedCaptureChore : Chore<FixedCaptureChore.FixedCaptureChoreStates
 
 		private static bool HasCreatureLeft(Instance smi)
 		{
-			return smi.fixedCapturePoint.targetCapturable.IsNullOrStopped() || !smi.fixedCapturePoint.targetCapturable.GetComponent<ChoreConsumer>().IsChoreEqualOrAboveCurrentChorePriority<FixedCaptureStates>();
+			if (!smi.fixedCapturePoint.targetCapturable.IsNullOrStopped())
+			{
+				return !smi.fixedCapturePoint.targetCapturable.GetComponent<ChoreConsumer>().IsChoreEqualOrAboveCurrentChorePriority<FixedCaptureStates>();
+			}
+			return true;
 		}
 	}
 
@@ -71,8 +75,7 @@ public class FixedCaptureChore : Chore<FixedCaptureChore.FixedCaptureChoreStates
 		description = DUPLICANTS.CHORES.PRECONDITIONS.IS_CREATURE_AVAILABLE_FOR_FIXED_CAPTURE,
 		fn = delegate(ref Precondition.Context context, object data)
 		{
-			FixedCapturePoint.Instance instance = data as FixedCapturePoint.Instance;
-			return instance.IsCreatureAvailableForFixedCapture();
+			return (data as FixedCapturePoint.Instance).IsCreatureAvailableForFixedCapture();
 		}
 	};
 

@@ -191,8 +191,7 @@ public class WorkChore<WorkableType> : Chore<WorkChore<WorkableType>.StatesInsta
 			{
 				return false;
 			}
-			int navigationCost2 = context.consumerState.navigator.GetNavigationCost(workable);
-			if (navigationCost2 * 2 > navigationCost)
+			if (context.consumerState.navigator.GetNavigationCost(workable) * 2 > navigationCost)
 			{
 				return false;
 			}

@@ -27,7 +27,7 @@ public class GameClock : KMonoBehaviour, ISaveLoadable, ISim33ms, IRender1000ms
 	private float timePlayed;
 
 	[Serialize]
-	private bool isNight = false;
+	private bool isNight;
 
 	public static readonly string NewCycleKey = "NewCycle";
 
@@ -188,8 +188,7 @@ public class GameClock : KMonoBehaviour, ISaveLoadable, ISim33ms, IRender1000ms
 		text = Path.ChangeExtension(text, null);
 		text = text + " Cycle " + day;
 		text = SaveScreen.GetValidSaveFilename(text);
-		string activeAutoSavePath = SaveLoader.GetActiveAutoSavePath();
-		text = Path.Combine(activeAutoSavePath, Path.GetFileName(text));
+		text = Path.Combine(SaveLoader.GetActiveAutoSavePath(), Path.GetFileName(text));
 		string text2 = text;
 		int num3 = 1;
 		while (File.Exists(text))

@@ -50,9 +50,9 @@ public class PrioritizationGroupTableColumn : TableColumn
 		if (componentsInChildren != null)
 		{
 			ToolTip[] array = componentsInChildren;
-			foreach (ToolTip toolTip in array)
+			for (int i = 0; i < array.Length; i++)
 			{
-				toolTip.OnToolTip = () => onHoverWidget(widget_go);
+				array[i].OnToolTip = () => onHoverWidget(widget_go);
 			}
 		}
 		return widget_go;
@@ -65,28 +65,26 @@ public class PrioritizationGroupTableColumn : TableColumn
 		LayoutElement component2 = widget_go.GetComponentInChildren<LocText>().GetComponent<LayoutElement>();
 		float num3 = (component2.preferredWidth = (component2.minWidth = 63f));
 		Component reference = component.GetReference("Label");
-		LocText component3 = reference.GetComponent<LocText>();
-		component3.raycastTarget = true;
-		ToolTip component4 = reference.GetComponent<ToolTip>();
-		if (component4 != null)
+		reference.GetComponent<LocText>().raycastTarget = true;
+		ToolTip component3 = reference.GetComponent<ToolTip>();
+		if (component3 != null)
 		{
-			component4.OnToolTip = () => onHoverWidget(widget_go);
+			component3.OnToolTip = () => onHoverWidget(widget_go);
 		}
 		MultiToggle multiToggle = (column_sort_toggle = widget_go.GetComponentInChildren<MultiToggle>(includeInactive: true));
 		multiToggle.onClick = (System.Action)Delegate.Combine(multiToggle.onClick, (System.Action)delegate
 		{
 			onSortClicked(widget_go);
 		});
-		ToolTip component5 = multiToggle.GetComponent<ToolTip>();
+		ToolTip component4 = multiToggle.GetComponent<ToolTip>();
+		if (component4 != null)
+		{
+			component4.OnToolTip = () => onSortHovered(widget_go);
+		}
+		ToolTip component5 = (component.GetReference("PrioritizeButton") as KButton).GetComponent<ToolTip>();
 		if (component5 != null)
 		{
-			component5.OnToolTip = () => onSortHovered(widget_go);
-		}
-		KButton kButton = component.GetReference("PrioritizeButton") as KButton;
-		ToolTip component6 = kButton.GetComponent<ToolTip>();
-		if (component6 != null)
-		{
-			component6.OnToolTip = () => onHoverHeaderOptionSelector(widget_go);
+			component5.OnToolTip = () => onHoverHeaderOptionSelector(widget_go);
 		}
 		return widget_go;
 	}

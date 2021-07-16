@@ -14,7 +14,7 @@ public class HighEnergyParticlePort : KMonoBehaviour, IGameObjectEffectDescripto
 
 	public OnParticleCapture onParticleUncapture;
 
-	public HighEnergyParticle currentParticle = null;
+	public HighEnergyParticle currentParticle;
 
 	public bool requireOperational = true;
 
@@ -56,7 +56,15 @@ public class HighEnergyParticlePort : KMonoBehaviour, IGameObjectEffectDescripto
 	public bool InputActive()
 	{
 		Operational component = GetComponent<Operational>();
-		return particleInputEnabled && component != null && component.IsFunctional && (!requireOperational || component.IsOperational);
+		if (particleInputEnabled && component != null && component.IsFunctional)
+		{
+			if (requireOperational)
+			{
+				return component.IsOperational;
+			}
+			return true;
+		}
+		return false;
 	}
 
 	public bool AllowCapture(HighEnergyParticle particle)

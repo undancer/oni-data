@@ -44,7 +44,7 @@ public class SkillsScreen : KModalScreen
 
 	private MultiToggle activeSortToggle;
 
-	private bool sortReversed = false;
+	private bool sortReversed;
 
 	private Comparison<IAssignableIdentity> active_sort_method;
 
@@ -131,9 +131,9 @@ public class SkillsScreen : KModalScreen
 
 	private List<GameObject> skillColumns = new List<GameObject>();
 
-	private bool dirty = false;
+	private bool dirty;
 
-	private bool linesPending = false;
+	private bool linesPending;
 
 	private int layoutRowHeight = 80;
 
@@ -183,11 +183,11 @@ public class SkillsScreen : KModalScreen
 		MinionResume component = targetGameObject.GetComponent<MinionResume>();
 		MinionResume component2 = targetGameObject2.GetComponent<MinionResume>();
 		AttributeInstance attributeInstance = Db.Get().Attributes.QualityOfLife.Lookup(component);
-		AttributeInstance attributeInstance2 = Db.Get().Attributes.QualityOfLifeExpectation.Lookup(component);
-		AttributeInstance attributeInstance3 = Db.Get().Attributes.QualityOfLife.Lookup(component2);
-		AttributeInstance attributeInstance4 = Db.Get().Attributes.QualityOfLifeExpectation.Lookup(component2);
+		Db.Get().Attributes.QualityOfLifeExpectation.Lookup(component);
+		AttributeInstance attributeInstance2 = Db.Get().Attributes.QualityOfLife.Lookup(component2);
+		Db.Get().Attributes.QualityOfLifeExpectation.Lookup(component2);
 		float totalValue = attributeInstance.GetTotalValue();
-		float totalValue2 = attributeInstance3.GetTotalValue();
+		float totalValue2 = attributeInstance2.GetTotalValue();
 		return totalValue.CompareTo(totalValue2);
 	};
 
@@ -871,7 +871,7 @@ public class SkillsScreen : KModalScreen
 
 	private void SetPortraitAnimator(IAssignableIdentity assignableIdentity)
 	{
-		if (assignableIdentity?.IsNull() ?? true)
+		if (assignableIdentity == null || assignableIdentity.IsNull())
 		{
 			return;
 		}

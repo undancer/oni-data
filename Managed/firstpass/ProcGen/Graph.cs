@@ -17,7 +17,7 @@ namespace ProcGen
 		[Serialize]
 		public List<A> arcList;
 
-		private SeededRandom myRandom = null;
+		private SeededRandom myRandom;
 
 		public List<N> nodes => nodeList;
 

@@ -10,9 +10,9 @@ public class TrackerTool : KMonoBehaviour
 
 	private Dictionary<MinionIdentity, List<MinionTracker>> minionTrackers = new Dictionary<MinionIdentity, List<MinionTracker>>();
 
-	private int updatingWorldTracker = 0;
+	private int updatingWorldTracker;
 
-	private int updatingMinionTracker = 0;
+	private int updatingMinionTracker;
 
 	public bool trackerActive = true;
 

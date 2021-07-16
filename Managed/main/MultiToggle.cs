@@ -12,7 +12,7 @@ public class MultiToggle : KMonoBehaviour, IPointerClickHandler, IEventSystemHan
 
 	public bool play_sound_on_click = true;
 
-	public bool play_sound_on_release = false;
+	public bool play_sound_on_release;
 
 	public Image toggle_image;
 
@@ -32,13 +32,13 @@ public class MultiToggle : KMonoBehaviour, IPointerClickHandler, IEventSystemHan
 
 	public bool allowRightClick = true;
 
-	protected bool clickHeldDown = false;
+	protected bool clickHeldDown;
 
-	protected float totalHeldTime = 0f;
+	protected float totalHeldTime;
 
 	protected float heldTimeThreshold = 0.4f;
 
-	private bool pointerOver = false;
+	private bool pointerOver;
 
 	public int CurrentState => state;
 
@@ -192,10 +192,10 @@ public class MultiToggle : KMonoBehaviour, IPointerClickHandler, IEventSystemHan
 			{
 				toggle_image.color = states[state].color_on_hover;
 			}
-			StatePresentationSetting[] additional_display_settings2 = states[state].additional_display_settings;
-			for (int j = 0; j < additional_display_settings2.Length; j++)
+			StatePresentationSetting[] additional_display_settings = states[state].additional_display_settings;
+			for (int i = 0; i < additional_display_settings.Length; i++)
 			{
-				StatePresentationSetting statePresentationSetting2 = additional_display_settings2[j];
+				StatePresentationSetting statePresentationSetting2 = additional_display_settings[i];
 				if (!(statePresentationSetting2.image_target == null) && !(statePresentationSetting2.image_target == null) && statePresentationSetting2.use_color_on_hover)
 				{
 					statePresentationSetting2.image_target.color = statePresentationSetting2.color_on_hover;

@@ -26,8 +26,8 @@ public class DLCToggle : KMonoBehaviour
 
 	private void ToggleExpansion1Cicked()
 	{
-		InfoDialogScreen infoDialogScreen = Util.KInstantiateUI<InfoDialogScreen>(ScreenPrefabs.Instance.InfoDialogScreen.gameObject, GetComponentInParent<Canvas>().gameObject, force_active: true);
-		infoDialogScreen.AddDefaultCancel().SetHeader(expansion1Active ? UI.FRONTEND.MAINMENU.DLC.DEACTIVATE_EXPANSION1 : UI.FRONTEND.MAINMENU.DLC.ACTIVATE_EXPANSION1).AddSprite(expansion1Active ? GlobalResources.Instance().baseGameLogoSmall : GlobalResources.Instance().expansion1LogoSmall)
+		Util.KInstantiateUI<InfoDialogScreen>(ScreenPrefabs.Instance.InfoDialogScreen.gameObject, GetComponentInParent<Canvas>().gameObject, force_active: true).AddDefaultCancel().SetHeader(expansion1Active ? UI.FRONTEND.MAINMENU.DLC.DEACTIVATE_EXPANSION1 : UI.FRONTEND.MAINMENU.DLC.ACTIVATE_EXPANSION1)
+			.AddSprite(expansion1Active ? GlobalResources.Instance().baseGameLogoSmall : GlobalResources.Instance().expansion1LogoSmall)
 			.AddPlainText(expansion1Active ? UI.FRONTEND.MAINMENU.DLC.DEACTIVATE_EXPANSION1_DESC : UI.FRONTEND.MAINMENU.DLC.ACTIVATE_EXPANSION1_DESC)
 			.AddOption(UI.CONFIRMDIALOG.OK, delegate
 			{

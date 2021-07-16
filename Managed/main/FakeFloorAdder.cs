@@ -4,7 +4,7 @@ public class FakeFloorAdder : KMonoBehaviour
 
 	public bool initiallyActive = true;
 
-	private bool isActive = false;
+	private bool isActive;
 
 	protected override void OnSpawn()
 	{

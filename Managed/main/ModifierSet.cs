@@ -146,16 +146,14 @@ public class ModifierSet : ScriptableObject
 			int cell = Grid.PosToCell(go);
 			return Grid.IsValidCell(cell) && Grid.IsGas(cell);
 		};
-		Effect effect4 = effects.Get("WetFeet");
-		effect4.AddEmotePrecondition(precon);
-		Effect effect5 = effects.Get("SoakingWet");
-		effect5.AddEmotePrecondition(precon);
-		Effect effect6 = new Effect("DivergentCropTended", STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDED.NAME, STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDED.TOOLTIP, 600f, show_in_ui: true, trigger_floating_text: true, is_bad: false);
-		effect6.Add(new AttributeModifier(Db.Get().Amounts.Maturity.deltaAttribute.Id, 0.05f, STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDED.NAME, is_multiplier: true));
-		effects.Add(effect6);
-		Effect effect7 = new Effect("DivergentCropTendedWorm", STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDEDWORM.NAME, STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDEDWORM.TOOLTIP, 600f, show_in_ui: true, trigger_floating_text: true, is_bad: false);
-		effect7.Add(new AttributeModifier(Db.Get().Amounts.Maturity.deltaAttribute.Id, 0.5f, STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDEDWORM.NAME, is_multiplier: true));
-		effects.Add(effect7);
+		effects.Get("WetFeet").AddEmotePrecondition(precon);
+		effects.Get("SoakingWet").AddEmotePrecondition(precon);
+		Effect effect4 = new Effect("DivergentCropTended", STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDED.NAME, STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDED.TOOLTIP, 600f, show_in_ui: true, trigger_floating_text: true, is_bad: false);
+		effect4.Add(new AttributeModifier(Db.Get().Amounts.Maturity.deltaAttribute.Id, 0.05f, STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDED.NAME, is_multiplier: true));
+		effects.Add(effect4);
+		Effect effect5 = new Effect("DivergentCropTendedWorm", STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDEDWORM.NAME, STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDEDWORM.TOOLTIP, 600f, show_in_ui: true, trigger_floating_text: true, is_bad: false);
+		effect5.Add(new AttributeModifier(Db.Get().Amounts.Maturity.deltaAttribute.Id, 0.5f, STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDEDWORM.NAME, is_multiplier: true));
+		effects.Add(effect5);
 	}
 
 	public Trait CreateTrait(string id, string name, string description, string group_name, bool should_save, ChoreGroup[] disabled_chore_groups, bool positive_trait, bool is_valid_starter_trait)

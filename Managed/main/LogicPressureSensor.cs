@@ -7,15 +7,15 @@ public class LogicPressureSensor : Switch, ISaveLoadable, IThresholdSwitch, ISim
 {
 	[SerializeField]
 	[Serialize]
-	private float threshold = 0f;
+	private float threshold;
 
 	[SerializeField]
 	[Serialize]
 	private bool activateAboveThreshold = true;
 
-	private bool wasOn = false;
+	private bool wasOn;
 
-	public float rangeMin = 0f;
+	public float rangeMin;
 
 	public float rangeMax = 1f;
 
@@ -25,7 +25,7 @@ public class LogicPressureSensor : Switch, ISaveLoadable, IThresholdSwitch, ISim
 
 	private float[] samples = new float[8];
 
-	private int sampleIdx = 0;
+	private int sampleIdx;
 
 	[MyCmpAdd]
 	private CopyBuildingSettings copyBuildingSettings;
@@ -98,8 +98,7 @@ public class LogicPressureSensor : Switch, ISaveLoadable, IThresholdSwitch, ISim
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		LogicPressureSensor component = gameObject.GetComponent<LogicPressureSensor>();
+		LogicPressureSensor component = ((GameObject)data).GetComponent<LogicPressureSensor>();
 		if (component != null)
 		{
 			Threshold = component.Threshold;
@@ -149,12 +148,20 @@ public class LogicPressureSensor : Switch, ISaveLoadable, IThresholdSwitch, ISim
 
 	public float GetRangeMinInputField()
 	{
-		return (desiredState == Element.State.Gas) ? (rangeMin * 1000f) : rangeMin;
+		if (desiredState != Element.State.Gas)
+		{
+			return rangeMin;
+		}
+		return rangeMin * 1000f;
 	}
 
 	public float GetRangeMaxInputField()
 	{
-		return (desiredState == Element.State.Gas) ? (rangeMax * 1000f) : rangeMax;
+		if (desiredState != Element.State.Gas)
+		{
+			return rangeMax;
+		}
+		return rangeMax * 1000f;
 	}
 
 	public string Format(float value, bool units)

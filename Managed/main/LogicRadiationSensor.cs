@@ -5,7 +5,7 @@ using UnityEngine;
 [SerializationConfig(MemberSerialization.OptIn)]
 public class LogicRadiationSensor : Switch, ISaveLoadable, IThresholdSwitch, ISim200ms
 {
-	private int simUpdateCounter = 0;
+	private int simUpdateCounter;
 
 	[Serialize]
 	public float thresholdRads = 280f;
@@ -16,7 +16,7 @@ public class LogicRadiationSensor : Switch, ISaveLoadable, IThresholdSwitch, ISi
 	[Serialize]
 	private bool dirty = true;
 
-	public float minRads = 0f;
+	public float minRads;
 
 	public float maxRads = 5000f;
 
@@ -26,7 +26,7 @@ public class LogicRadiationSensor : Switch, ISaveLoadable, IThresholdSwitch, ISi
 
 	private float averageRads;
 
-	private bool wasOn = false;
+	private bool wasOn;
 
 	[MyCmpAdd]
 	private CopyBuildingSettings copyBuildingSettings;
@@ -95,8 +95,7 @@ public class LogicRadiationSensor : Switch, ISaveLoadable, IThresholdSwitch, ISi
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		LogicRadiationSensor component = gameObject.GetComponent<LogicRadiationSensor>();
+		LogicRadiationSensor component = ((GameObject)data).GetComponent<LogicRadiationSensor>();
 		if (component != null)
 		{
 			Threshold = component.Threshold;

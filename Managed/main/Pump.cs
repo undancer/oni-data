@@ -23,9 +23,9 @@ public class Pump : KMonoBehaviour, ISim1000ms
 
 	private const float OperationalUpdateInterval = 1f;
 
-	private float elapsedTime = 0f;
+	private float elapsedTime;
 
-	private bool pumpable = false;
+	private bool pumpable;
 
 	private Guid conduitBlockedStatusGuid;
 

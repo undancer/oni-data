@@ -19,7 +19,11 @@ public class RocketHeightLimit : SelectModuleCondition
 		{
 			return true;
 		}
-		return component.CraftInterface.MaxHeight == -1 || component.CraftInterface.RocketHeight + num <= component.CraftInterface.MaxHeight;
+		if (component.CraftInterface.MaxHeight != -1)
+		{
+			return component.CraftInterface.RocketHeight + num <= component.CraftInterface.MaxHeight;
+		}
+		return true;
 	}
 
 	public override string GetStatusTooltip(bool ready, BuildingDef selectedPart)

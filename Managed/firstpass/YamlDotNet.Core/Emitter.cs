@@ -174,24 +174,27 @@ namespace YamlDotNet.Core
 				return false;
 			}
 			int num2 = 0;
-			foreach (ParsingEvent @event in events)
+			using (Queue<ParsingEvent>.Enumerator enumerator = events.GetEnumerator())
 			{
-				switch (@event.Type)
+				while (enumerator.MoveNext())
 				{
-				case EventType.DocumentStart:
-				case EventType.SequenceStart:
-				case EventType.MappingStart:
-					num2++;
-					break;
-				case EventType.DocumentEnd:
-				case EventType.SequenceEnd:
-				case EventType.MappingEnd:
-					num2--;
-					break;
-				}
-				if (num2 == 0)
-				{
-					return false;
+					switch (enumerator.Current.Type)
+					{
+					case EventType.DocumentStart:
+					case EventType.SequenceStart:
+					case EventType.MappingStart:
+						num2++;
+						break;
+					case EventType.DocumentEnd:
+					case EventType.SequenceEnd:
+					case EventType.MappingEnd:
+						num2--;
+						break;
+					}
+					if (num2 == 0)
+					{
+						return false;
+					}
 				}
 			}
 			return true;
@@ -430,8 +433,7 @@ namespace YamlDotNet.Core
 			try
 			{
 				byte[] bytes = output.Encoding.GetBytes(value);
-				string @string = output.Encoding.GetString(bytes, 0, bytes.Length);
-				return @string.Equals(value);
+				return output.Encoding.GetString(bytes, 0, bytes.Length).Equals(value);
 			}
 			catch (EncoderFallbackException)
 			{
@@ -445,7 +447,11 @@ namespace YamlDotNet.Core
 
 		private bool IsUnicode(Encoding encoding)
 		{
-			return encoding is UTF8Encoding || encoding is UnicodeEncoding || encoding is UTF7Encoding || encoding is UTF8Encoding;
+			if (!(encoding is UTF8Encoding) && !(encoding is UnicodeEncoding) && !(encoding is UTF7Encoding))
+			{
+				return encoding is UTF8Encoding;
+			}
+			return true;
 		}
 
 		private void AnalyzeTag(string tag)
@@ -585,17 +591,17 @@ namespace YamlDotNet.Core
 					AppendTagDirectiveTo(item, allowDuplicates: false, tagDirectives);
 				}
 				TagDirective[] defaultTagDirectives = Constants.DefaultTagDirectives;
-				foreach (TagDirective value in defaultTagDirectives)
+				for (int i = 0; i < defaultTagDirectives.Length; i++)
 				{
-					AppendTagDirectiveTo(value, allowDuplicates: true, tagDirectives);
+					AppendTagDirectiveTo(defaultTagDirectives[i], allowDuplicates: true, tagDirectives);
 				}
 				if (tagDirectiveCollection.Count > 0)
 				{
 					flag = false;
-					TagDirective[] defaultTagDirectives2 = Constants.DefaultTagDirectives;
-					foreach (TagDirective value2 in defaultTagDirectives2)
+					defaultTagDirectives = Constants.DefaultTagDirectives;
+					for (int i = 0; i < defaultTagDirectives.Length; i++)
 					{
-						AppendTagDirectiveTo(value2, allowDuplicates: true, tagDirectiveCollection);
+						AppendTagDirectiveTo(defaultTagDirectives[i], allowDuplicates: true, tagDirectiveCollection);
 					}
 					foreach (TagDirective item2 in tagDirectiveCollection)
 					{
@@ -904,105 +910,109 @@ namespace YamlDotNet.Core
 			for (int i = 0; i < value.Length; i++)
 			{
 				char c = value[i];
-				if (!IsPrintable(c) || IsBreak(c, out var _) || c == '"' || c == '\\')
+				if (IsPrintable(c) && !IsBreak(c, out var _))
 				{
-					Write('\\');
 					switch (c)
 					{
-					case '\0':
-						Write('0');
-						break;
-					case '\a':
-						Write('a');
-						break;
-					case '\b':
-						Write('b');
-						break;
-					case '\t':
-						Write('t');
-						break;
-					case '\n':
-						Write('n');
-						break;
-					case '\v':
-						Write('v');
-						break;
-					case '\f':
-						Write('f');
-						break;
-					case '\r':
-						Write('r');
-						break;
-					case '\u001b':
-						Write('e');
-						break;
 					case '"':
-						Write('"');
-						break;
 					case '\\':
-						Write('\\');
 						break;
-					case '\u0085':
-						Write('N');
-						break;
-					case '\u00a0':
-						Write('_');
-						break;
-					case '\u2028':
-						Write('L');
-						break;
-					case '\u2029':
-						Write('P');
-						break;
-					default:
-					{
-						ushort num = c;
-						if (num <= 255)
+					case ' ':
+						if (allowBreaks && !flag && column > bestWidth && i > 0 && i + 1 < value.Length)
 						{
-							Write('x');
-							Write(num.ToString("X02", CultureInfo.InvariantCulture));
-						}
-						else if (IsHighSurrogate(c))
-						{
-							if (i + 1 >= value.Length || !IsLowSurrogate(value[i + 1]))
+							WriteIndent();
+							if (value[i + 1] == ' ')
 							{
-								throw new SyntaxErrorException("While writing a quoted scalar, found an orphaned high surrogate.");
+								Write('\\');
 							}
-							Write('U');
-							Write(char.ConvertToUtf32(c, value[i + 1]).ToString("X08", CultureInfo.InvariantCulture));
-							i++;
 						}
 						else
 						{
-							Write('u');
-							Write(num.ToString("X04", CultureInfo.InvariantCulture));
+							Write(c);
 						}
-						break;
+						flag = true;
+						continue;
+					default:
+						Write(c);
+						flag = false;
+						continue;
 					}
-					}
-					flag = false;
 				}
-				else if (c == ' ')
+				Write('\\');
+				switch (c)
 				{
-					if (allowBreaks && !flag && column > bestWidth && i > 0 && i + 1 < value.Length)
+				case '\0':
+					Write('0');
+					break;
+				case '\a':
+					Write('a');
+					break;
+				case '\b':
+					Write('b');
+					break;
+				case '\t':
+					Write('t');
+					break;
+				case '\n':
+					Write('n');
+					break;
+				case '\v':
+					Write('v');
+					break;
+				case '\f':
+					Write('f');
+					break;
+				case '\r':
+					Write('r');
+					break;
+				case '\u001b':
+					Write('e');
+					break;
+				case '"':
+					Write('"');
+					break;
+				case '\\':
+					Write('\\');
+					break;
+				case '\u0085':
+					Write('N');
+					break;
+				case '\u00a0':
+					Write('_');
+					break;
+				case '\u2028':
+					Write('L');
+					break;
+				case '\u2029':
+					Write('P');
+					break;
+				default:
+				{
+					ushort num = c;
+					if (num <= 255)
 					{
-						WriteIndent();
-						if (value[i + 1] == ' ')
+						Write('x');
+						Write(num.ToString("X02", CultureInfo.InvariantCulture));
+					}
+					else if (IsHighSurrogate(c))
+					{
+						if (i + 1 >= value.Length || !IsLowSurrogate(value[i + 1]))
 						{
-							Write('\\');
+							throw new SyntaxErrorException("While writing a quoted scalar, found an orphaned high surrogate.");
 						}
+						Write('U');
+						Write(char.ConvertToUtf32(c, value[i + 1]).ToString("X08", CultureInfo.InvariantCulture));
+						i++;
 					}
 					else
 					{
-						Write(c);
+						Write('u');
+						Write(num.ToString("X04", CultureInfo.InvariantCulture));
 					}
-					flag = true;
+					break;
 				}
-				else
-				{
-					Write(c);
-					flag = false;
 				}
+				flag = false;
 			}
 			WriteIndicator("\"", needWhitespace: false, whitespace: false, indentation: false);
 			isWhitespace = false;
@@ -1118,22 +1128,146 @@ namespace YamlDotNet.Core
 
 		private static bool IsBlank(char character)
 		{
-			return character == ' ' || character == '\t';
+			if (character != ' ')
+			{
+				return character == '\t';
+			}
+			return true;
 		}
 
 		private static bool IsPrintable(char character)
 		{
-			return character == '\t' || character == '\n' || character == '\r' || (character >= ' ' && character <= '~') || character == '\u0085' || (character >= '\u00a0' && character <= '\ud7ff') || (character >= '\ue000' && character <= '\ufffd');
+			switch (character)
+			{
+			default:
+				if (character != '\u0085' && (character < '\u00a0' || character > '\ud7ff'))
+				{
+					if (character >= '\ue000')
+					{
+						return character <= '\ufffd';
+					}
+					return false;
+				}
+				break;
+			case '\t':
+			case '\n':
+			case '\r':
+			case ' ':
+			case '!':
+			case '"':
+			case '#':
+			case '$':
+			case '%':
+			case '&':
+			case '\'':
+			case '(':
+			case ')':
+			case '*':
+			case '+':
+			case ',':
+			case '-':
+			case '.':
+			case '/':
+			case '0':
+			case '1':
+			case '2':
+			case '3':
+			case '4':
+			case '5':
+			case '6':
+			case '7':
+			case '8':
+			case '9':
+			case ':':
+			case ';':
+			case '<':
+			case '=':
+			case '>':
+			case '?':
+			case '@':
+			case 'A':
+			case 'B':
+			case 'C':
+			case 'D':
+			case 'E':
+			case 'F':
+			case 'G':
+			case 'H':
+			case 'I':
+			case 'J':
+			case 'K':
+			case 'L':
+			case 'M':
+			case 'N':
+			case 'O':
+			case 'P':
+			case 'Q':
+			case 'R':
+			case 'S':
+			case 'T':
+			case 'U':
+			case 'V':
+			case 'W':
+			case 'X':
+			case 'Y':
+			case 'Z':
+			case '[':
+			case '\\':
+			case ']':
+			case '^':
+			case '_':
+			case '`':
+			case 'a':
+			case 'b':
+			case 'c':
+			case 'd':
+			case 'e':
+			case 'f':
+			case 'g':
+			case 'h':
+			case 'i':
+			case 'j':
+			case 'k':
+			case 'l':
+			case 'm':
+			case 'n':
+			case 'o':
+			case 'p':
+			case 'q':
+			case 'r':
+			case 's':
+			case 't':
+			case 'u':
+			case 'v':
+			case 'w':
+			case 'x':
+			case 'y':
+			case 'z':
+			case '{':
+			case '|':
+			case '}':
+			case '~':
+				break;
+			}
+			return true;
 		}
 
 		private static bool IsHighSurrogate(char c)
 		{
-			return '\ud800' <= c && c <= '\udbff';
+			if ('\ud800' <= c)
+			{
+				return c <= '\udbff';
+			}
+			return false;
 		}
 
 		private static bool IsLowSurrogate(char c)
 		{
-			return '\udc00' <= c && c <= '\udfff';
+			if ('\udc00' <= c)
+			{
+				return c <= '\udfff';
+			}
+			return false;
 		}
 
 		private void EmitSequenceStart(ParsingEvent evt)
@@ -1453,7 +1587,11 @@ namespace YamlDotNet.Core
 				return false;
 			}
 			FakeList<ParsingEvent> fakeList = new FakeList<ParsingEvent>(events);
-			return fakeList[0] is SequenceStart && fakeList[1] is SequenceEnd;
+			if (fakeList[0] is SequenceStart)
+			{
+				return fakeList[1] is SequenceEnd;
+			}
+			return false;
 		}
 
 		private bool CheckEmptyMapping()
@@ -1463,7 +1601,11 @@ namespace YamlDotNet.Core
 				return false;
 			}
 			FakeList<ParsingEvent> fakeList = new FakeList<ParsingEvent>(events);
-			return fakeList[0] is MappingStart && fakeList[1] is MappingEnd;
+			if (fakeList[0] is MappingStart)
+			{
+				return fakeList[1] is MappingEnd;
+			}
+			return false;
 		}
 
 		private void WriteBlockScalarHints(string value)

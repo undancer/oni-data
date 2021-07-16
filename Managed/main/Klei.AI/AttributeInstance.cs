@@ -15,7 +15,7 @@ namespace Klei.AI
 
 		public ArrayRef<AttributeModifier> Modifiers;
 
-		public bool hide = false;
+		public bool hide;
 
 		public string Id => Attribute.Id;
 

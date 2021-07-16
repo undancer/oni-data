@@ -30,7 +30,7 @@ namespace Satsuma
 			int num2 = 0;
 			while (true)
 			{
-				if (num == 0)
+				if (num == 0L)
 				{
 					num = 1L;
 				}

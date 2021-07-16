@@ -17,7 +17,11 @@ public class ConditionHasResource : ProcessCondition
 
 	public override Status EvaluateCondition()
 	{
-		return (!(storage.GetAmountAvailable(resource.CreateTag()) >= thresholdMass)) ? Status.Warning : Status.Ready;
+		if (!(storage.GetAmountAvailable(resource.CreateTag()) >= thresholdMass))
+		{
+			return Status.Warning;
+		}
+		return Status.Ready;
 	}
 
 	public override string GetStatusMessage(Status status)

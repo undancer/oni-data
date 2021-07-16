@@ -58,8 +58,7 @@ public class EggCracker : KMonoBehaviour
 		case Workable.WorkableEvent.WorkCompleted:
 			if ((bool)display_egg)
 			{
-				KBatchedAnimController component = display_egg.GetComponent<KBatchedAnimController>();
-				component.Play("hatching_pst");
+				display_egg.GetComponent<KBatchedAnimController>().Play("hatching_pst");
 			}
 			break;
 		case Workable.WorkableEvent.WorkStopped:

@@ -15,7 +15,11 @@ public class FixedCapturableMonitor : GameStateMachine<FixedCapturableMonitor, F
 
 		public bool ShouldGoGetCaptured()
 		{
-			return targetCapturePoint != null && targetCapturePoint.IsRunning() && targetCapturePoint.shouldCreatureGoGetCaptured;
+			if (targetCapturePoint != null && targetCapturePoint.IsRunning())
+			{
+				return targetCapturePoint.shouldCreatureGoGetCaptured;
+			}
+			return false;
 		}
 	}
 

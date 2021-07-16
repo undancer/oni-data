@@ -5,8 +5,7 @@ public static class FXHelpers
 	public static KBatchedAnimController CreateEffect(string anim_file_name, Vector3 position, Transform parent = null, bool update_looping_sounds_position = false, Grid.SceneLayer layer = Grid.SceneLayer.Front, bool set_inactive = false)
 	{
 		KBatchedAnimController component = GameUtil.KInstantiate(Assets.GetPrefab(EffectConfigs.EffectTemplateId), position, layer).GetComponent<KBatchedAnimController>();
-		KPrefabID component2 = component.GetComponent<KPrefabID>();
-		component2.PrefabTag = TagManager.Create(anim_file_name);
+		component.GetComponent<KPrefabID>().PrefabTag = TagManager.Create(anim_file_name);
 		component.name = anim_file_name;
 		if (parent != null)
 		{
@@ -15,8 +14,7 @@ public static class FXHelpers
 		component.transform.SetPosition(position);
 		if (update_looping_sounds_position)
 		{
-			LoopingSounds loopingSounds = component.FindOrAddComponent<LoopingSounds>();
-			loopingSounds.updatePosition = true;
+			component.FindOrAddComponent<LoopingSounds>().updatePosition = true;
 		}
 		KAnimFile anim = Assets.GetAnim(anim_file_name);
 		if (anim == null)

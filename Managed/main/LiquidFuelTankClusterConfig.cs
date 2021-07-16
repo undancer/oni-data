@@ -15,31 +15,30 @@ public class LiquidFuelTankClusterConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("LiquidFuelTankCluster", 5, 5, "rocket_cluster_liquid_fuel_tank_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.FUEL_TANK_DRY_MASS, new string[1]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("LiquidFuelTankCluster", 5, 5, "rocket_cluster_liquid_fuel_tank_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.FUEL_TANK_DRY_MASS, new string[1]
 		{
 			SimHashes.Steel.ToString()
 		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
-		buildingDef.SceneLayer = Grid.SceneLayer.Building;
-		buildingDef.OverheatTemperature = 2273.15f;
-		buildingDef.Floodable = false;
-		buildingDef.AttachmentSlotTag = GameTags.Rocket;
-		buildingDef.ObjectLayer = ObjectLayer.Building;
-		buildingDef.UtilityInputOffset = new CellOffset(2, 3);
-		buildingDef.InputConduitType = ConduitType.Liquid;
-		buildingDef.RequiresPowerInput = false;
-		buildingDef.attachablePosition = new CellOffset(0, 0);
-		buildingDef.CanMove = true;
-		buildingDef.Cancellable = false;
-		buildingDef.ShowInBuildMenu = false;
-		return buildingDef;
+		BuildingTemplates.CreateRocketBuildingDef(obj);
+		obj.SceneLayer = Grid.SceneLayer.Building;
+		obj.OverheatTemperature = 2273.15f;
+		obj.Floodable = false;
+		obj.AttachmentSlotTag = GameTags.Rocket;
+		obj.ObjectLayer = ObjectLayer.Building;
+		obj.UtilityInputOffset = new CellOffset(2, 3);
+		obj.InputConduitType = ConduitType.Liquid;
+		obj.RequiresPowerInput = false;
+		obj.attachablePosition = new CellOffset(0, 0);
+		obj.CanMove = true;
+		obj.Cancellable = false;
+		obj.ShowInBuildMenu = false;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
-		BuildingAttachPoint buildingAttachPoint = go.AddOrGet<BuildingAttachPoint>();
-		buildingAttachPoint.points = new BuildingAttachPoint.HardPoint[1]
+		go.AddOrGet<BuildingAttachPoint>().points = new BuildingAttachPoint.HardPoint[1]
 		{
 			new BuildingAttachPoint.HardPoint(new CellOffset(0, 5), GameTags.Rocket, null)
 		};

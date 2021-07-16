@@ -189,7 +189,7 @@ public class Navigator : StateMachineComponent<Navigator.StatesInstance>, ISaveL
 		component.OnStore(data);
 	});
 
-	public bool executePathProbeTaskAsync = false;
+	public bool executePathProbeTaskAsync;
 
 	public KMonoBehaviour target
 	{
@@ -224,15 +224,13 @@ public class Navigator : StateMachineComponent<Navigator.StatesInstance>, ISaveL
 
 	public void Deserialize(IReader reader)
 	{
-		byte b = reader.ReadByte();
-		NavType navType = (NavType)b;
+		NavType navType = (NavType)reader.ReadByte();
 		if (!SaveLoader.Instance.GameInfo.IsVersionOlderThan(7, 11))
 		{
 			int num = reader.ReadInt32();
 			for (int i = 0; i < num; i++)
 			{
-				byte b2 = reader.ReadByte();
-				NavType key = (NavType)b2;
+				NavType key = (NavType)reader.ReadByte();
 				int value = reader.ReadInt32();
 				if (distanceTravelledByNavType.ContainsKey(key))
 				{
@@ -242,9 +240,9 @@ public class Navigator : StateMachineComponent<Navigator.StatesInstance>, ISaveL
 		}
 		bool flag = false;
 		NavType[] validNavTypes = NavGrid.ValidNavTypes;
-		foreach (NavType navType2 in validNavTypes)
+		for (int j = 0; j < validNavTypes.Length; j++)
 		{
-			if (navType2 == navType)
+			if (validNavTypes[j] == navType)
 			{
 				flag = true;
 				break;
@@ -265,8 +263,7 @@ public class Navigator : StateMachineComponent<Navigator.StatesInstance>, ISaveL
 		simRenderLoadBalance = true;
 		autoRegisterSimRender = false;
 		NavGrid = Pathfinding.Instance.GetNavGrid(NavGridName);
-		PathProber component = GetComponent<PathProber>();
-		component.SetValidNavTypes(NavGrid.ValidNavTypes, maxProbingRadius);
+		GetComponent<PathProber>().SetValidNavTypes(NavGrid.ValidNavTypes, maxProbingRadius);
 		distanceTravelledByNavType = new Dictionary<NavType, int>();
 		for (int i = 0; i < 11; i++)
 		{
@@ -447,8 +444,7 @@ public class Navigator : StateMachineComponent<Navigator.StatesInstance>, ISaveL
 		if (play_idle)
 		{
 			HashedString idleAnim = NavGrid.GetIdleAnim(CurrentNavType);
-			KAnimControllerBase component = GetComponent<KAnimControllerBase>();
-			component.Play(idleAnim, KAnim.PlayMode.Loop);
+			GetComponent<KAnimControllerBase>().Play(idleAnim, KAnim.PlayMode.Loop);
 		}
 		if (arrived_at_destination)
 		{

@@ -144,13 +144,11 @@ public abstract class Tracker
 		}
 		float num = -1f;
 		float second = array[array.Length - 1].second;
-		float num2 = 0f;
-		for (int num3 = array.Length - 1; num3 >= 0; num3--)
+		for (int num2 = array.Length - 1; num2 >= 0; num2--)
 		{
-			num2 = time - array[num3].first;
-			if (num2 >= secondsAgo)
+			if (time - array[num2].first >= secondsAgo)
 			{
-				num = array[num3].second;
+				num = array[num2].second;
 			}
 		}
 		return second - num;
@@ -171,19 +169,18 @@ public abstract class Tracker
 	{
 		int num = 10;
 		List<DataPoint> list = new List<DataPoint>();
-		float num2 = dataPoints[dataPoints.Count - 1].periodEnd - dataPoints[0].periodStart;
-		float num3 = num2 / (float)num;
+		float num2 = (dataPoints[dataPoints.Count - 1].periodEnd - dataPoints[0].periodStart) / (float)num;
 		for (int i = 0; i < num; i++)
 		{
-			float num4 = num3 * (float)i;
-			float num5 = num4 + num3;
-			float num6 = 0f;
+			float num3 = num2 * (float)i;
+			float num4 = num3 + num2;
+			float num5 = 0f;
 			for (int j = 0; j < dataPoints.Count; j++)
 			{
 				DataPoint dataPoint = dataPoints[j];
-				num6 += dataPoint.periodValue * Mathf.Max(0f, Mathf.Min(num5, dataPoint.periodEnd) - Mathf.Max(dataPoint.periodStart, num4));
+				num5 += dataPoint.periodValue * Mathf.Max(0f, Mathf.Min(num4, dataPoint.periodEnd) - Mathf.Max(dataPoint.periodStart, num3));
 			}
-			list.Add(new DataPoint(num4, num5, num6 / (num5 - num4)));
+			list.Add(new DataPoint(num3, num4, num5 / (num4 - num3)));
 		}
 		return list;
 	}

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -67,8 +68,12 @@ public class EventSystem
 
 		public static bool IsStatic(Delegate del)
 		{
-			return del.Target == null || del.Target.GetType().GetCustomAttributes(inherit: false).OfType<CompilerGeneratedAttribute>()
-				.Any();
+			if (del.Target != null)
+			{
+				return del.Target.GetType().GetCustomAttributes(inherit: false).OfType<CompilerGeneratedAttribute>()
+					.Any();
+			}
+			return true;
 		}
 
 		public IntraObjectHandler(Action<ComponentType, object> handler)
@@ -99,8 +104,6 @@ public class EventSystem
 		}
 	}
 
-	private static bool ENABLE_DETAILED_EVENT_PROFILE_INFO = false;
-
 	private int nextId;
 
 	private int currentlyTriggering;
@@ -109,7 +112,9 @@ public class EventSystem
 
 	private ArrayRef<SubscribedEntry> subscribedEvents;
 
-	private ArrayRef<Entry> entries;
+	private Dictionary<int, List<Entry>> entryMap = new Dictionary<int, List<Entry>>();
+
+	private Dictionary<int, int> idMap = new Dictionary<int, int>();
 
 	private ArrayRef<IntraObjectRoute> intraObjectRoutes;
 
@@ -136,34 +141,28 @@ public class EventSystem
 				intraObjectDispatcher[hash][intraObjectRoutes[i].handlerIndex].Trigger(go, data);
 			}
 		}
-		int size = entries.size;
-		if (ENABLE_DETAILED_EVENT_PROFILE_INFO)
+		if (entryMap.TryGetValue(hash, out var value))
 		{
-			for (int j = 0; j < size; j++)
+			int count = value.Count;
+			for (int j = 0; j < count; j++)
 			{
-				if (entries[j].hash == hash && entries[j].handler != null)
+				if (value[j].hash == hash && value[j].handler != null)
 				{
-					entries[j].handler(data);
-				}
-			}
-		}
-		else
-		{
-			for (int k = 0; k < size; k++)
-			{
-				if (entries[k].hash == hash && entries[k].handler != null)
-				{
-					entries[k].handler(data);
+					value[j].handler(data);
 				}
 			}
 		}
 		currentlyTriggering--;
-		if (dirty && currentlyTriggering == 0)
+		if (!dirty || currentlyTriggering != 0)
 		{
-			dirty = false;
-			entries.RemoveAllSwap((Entry x) => x.handler == null);
-			intraObjectRoutes.RemoveAllSwap((IntraObjectRoute route) => !route.IsValid());
+			return;
 		}
+		dirty = false;
+		if (entryMap.TryGetValue(hash, out var value2))
+		{
+			value2.RemoveAll((Entry x) => x.handler == null);
+		}
+		intraObjectRoutes.RemoveAllSwap((IntraObjectRoute route) => !route.IsValid());
 	}
 
 	public void OnCleanUp()
@@ -176,13 +175,18 @@ public class EventSystem
 				Unsubscribe(subscribedEntry.go, subscribedEntry.hash, subscribedEntry.handler);
 			}
 		}
-		for (int i = 0; i < entries.size; i++)
+		foreach (KeyValuePair<int, List<Entry>> item in entryMap)
 		{
-			Entry value = entries[i];
-			value.handler = null;
-			entries[i] = value;
+			List<Entry> value = item.Value;
+			for (int i = 0; i < value.Count; i++)
+			{
+				Entry value2 = value[i];
+				value2.handler = null;
+				value[i] = value2;
+			}
+			value.Clear();
 		}
-		entries.Clear();
+		entryMap.Clear();
 		subscribedEvents.Clear();
 		intraObjectRoutes.Clear();
 	}
@@ -206,25 +210,36 @@ public class EventSystem
 
 	public int Subscribe(int hash, Action<object> handler)
 	{
-		entries.Add(new Entry(hash, handler, ++nextId));
+		Entry item = new Entry(hash, handler, ++nextId);
+		if (!entryMap.TryGetValue(hash, out var value))
+		{
+			value = new List<Entry>();
+			entryMap.Add(hash, value);
+		}
+		value.Add(item);
+		idMap.Add(item.id, item.hash);
 		return nextId;
 	}
 
 	public void Unsubscribe(int hash, Action<object> handler)
 	{
-		for (int i = 0; i < entries.size; i++)
+		if (!entryMap.TryGetValue(hash, out var value))
 		{
-			if (entries[i].hash == hash && entries[i].handler == handler)
+			return;
+		}
+		for (int i = 0; i < value.Count; i++)
+		{
+			if (value[i].hash == hash && value[i].handler == handler)
 			{
 				if (currentlyTriggering == 0)
 				{
-					entries.RemoveAt(i);
+					value.RemoveAt(i);
 					break;
 				}
 				dirty = true;
-				Entry value = entries[i];
-				value.handler = null;
-				entries[i] = value;
+				Entry value2 = value[i];
+				value2.handler = null;
+				value[i] = value2;
 				break;
 			}
 		}
@@ -232,29 +247,33 @@ public class EventSystem
 
 	public void Unsubscribe(int id)
 	{
-		for (int i = 0; i < entries.size; i++)
+		int value = -1;
+		if (idMap.TryGetValue(id, out value) && entryMap.TryGetValue(value, out var value2))
 		{
-			if (entries[i].id == id)
+			for (int i = 0; i < value2.Count; i++)
 			{
-				if (currentlyTriggering == 0)
+				if (value2[i].id == id)
 				{
-					entries.RemoveAt(i);
+					if (currentlyTriggering == 0)
+					{
+						value2.RemoveAt(i);
+						break;
+					}
+					dirty = true;
+					Entry value3 = value2[i];
+					value3.handler = null;
+					value2[i] = value3;
 					break;
 				}
-				dirty = true;
-				Entry value = entries[i];
-				value.handler = null;
-				entries[i] = value;
-				break;
 			}
 		}
+		idMap.Remove(id);
 	}
 
 	public int Subscribe(GameObject target, int eventName, Action<object> handler)
 	{
 		RegisterEvent(target, eventName, handler);
-		KObject orCreateObject = KObjectManager.Instance.GetOrCreateObject(target);
-		return orCreateObject.GetEventSystem().Subscribe(eventName, handler);
+		return KObjectManager.Instance.GetOrCreateObject(target).GetEventSystem().Subscribe(eventName, handler);
 	}
 
 	public int Subscribe<ComponentType>(int eventName, IntraObjectHandler<ComponentType> handler) where ComponentType : Component
@@ -279,8 +298,7 @@ public class EventSystem
 		UnregisterEvent(target, eventName, handler);
 		if (!(target == null))
 		{
-			KObject orCreateObject = KObjectManager.Instance.GetOrCreateObject(target);
-			orCreateObject.GetEventSystem().Unsubscribe(eventName, handler);
+			KObjectManager.Instance.GetOrCreateObject(target).GetEventSystem().Unsubscribe(eventName, handler);
 		}
 	}
 
@@ -331,10 +349,20 @@ public class EventSystem
 
 	public void Unsubscribe(string[] eventNames, Action<object> handler)
 	{
-		foreach (string s in eventNames)
+		for (int i = 0; i < eventNames.Length; i++)
 		{
-			int hash = Hash.SDBMLower(s);
+			int hash = Hash.SDBMLower(eventNames[i]);
 			Unsubscribe(hash, handler);
 		}
+	}
+
+	[Conditional("ENABLE_DETAILED_EVENT_PROFILE_INFO")]
+	private static void BeginDetailedSample(string region_name)
+	{
+	}
+
+	[Conditional("ENABLE_DETAILED_EVENT_PROFILE_INFO")]
+	private static void EndDetailedSample(string region_name)
+	{
 	}
 }

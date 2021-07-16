@@ -64,17 +64,29 @@ public class SaveGame : KMonoBehaviour, ISaveLoadable
 			this.sandboxEnabled = sandboxEnabled;
 			this.dlcId = dlcId;
 			saveMajorVersion = 7;
-			saveMinorVersion = 23;
+			saveMinorVersion = 25;
 		}
 
 		public bool IsVersionOlderThan(int major, int minor)
 		{
-			return saveMajorVersion < major || (saveMajorVersion == major && saveMinorVersion < minor);
+			if (saveMajorVersion >= major)
+			{
+				if (saveMajorVersion == major)
+				{
+					return saveMinorVersion < minor;
+				}
+				return false;
+			}
+			return true;
 		}
 
 		public bool IsVersionExactly(int major, int minor)
 		{
-			return saveMajorVersion == major && saveMinorVersion == minor;
+			if (saveMajorVersion == major)
+			{
+				return saveMinorVersion == minor;
+			}
+			return false;
 		}
 	}
 
@@ -91,7 +103,7 @@ public class SaveGame : KMonoBehaviour, ISaveLoadable
 	public bool enableAutoDisinfect = true;
 
 	[Serialize]
-	public bool sandboxEnabled = false;
+	public bool sandboxEnabled;
 
 	[Serialize]
 	private int autoSaveCycleInterval = 1;
@@ -146,8 +158,7 @@ public class SaveGame : KMonoBehaviour, ISaveLoadable
 	protected override void OnPrefabInit()
 	{
 		Instance = this;
-		ColonyRationMonitor.Instance instance = new ColonyRationMonitor.Instance(this);
-		instance.StartSM();
+		new ColonyRationMonitor.Instance(this).StartSM();
 		entombedItemManager = base.gameObject.AddComponent<EntombedItemManager>();
 		worldGenSpawner = base.gameObject.AddComponent<WorldGenSpawner>();
 		base.gameObject.AddOrGetDef<GameplaySeasonManager.Def>();
@@ -174,12 +185,11 @@ public class SaveGame : KMonoBehaviour, ISaveLoadable
 	public byte[] GetSaveHeader(bool isAutoSave, bool isCompressed, out Header header)
 	{
 		string text = null;
-		string activeSaveFilePath = SaveLoader.GetActiveSaveFilePath();
-		string originalSaveFileName = SaveLoader.GetOriginalSaveFileName(activeSaveFilePath);
+		string originalSaveFileName = SaveLoader.GetOriginalSaveFileName(SaveLoader.GetActiveSaveFilePath());
 		text = JsonConvert.SerializeObject(new GameInfo(GameClock.Instance.GetCycle(), Components.LiveMinionIdentities.Count, baseName, isAutoSave, originalSaveFileName, SaveLoader.Instance.GameInfo.clusterId, SaveLoader.Instance.GameInfo.worldTraits, SaveLoader.Instance.GameInfo.colonyGuid, DlcManager.GetHighestActiveDlcId(), sandboxEnabled));
 		byte[] bytes = Encoding.UTF8.GetBytes(text);
 		header = default(Header);
-		header.buildVersion = 469473u;
+		header.buildVersion = 471618u;
 		header.headerSize = bytes.Length;
 		header.headerVersion = 1u;
 		header.compression = (isCompressed ? 1 : 0);
@@ -188,7 +198,11 @@ public class SaveGame : KMonoBehaviour, ISaveLoadable
 
 	public static string GetSaveUniqueID(GameInfo info)
 	{
-		return (info.colonyGuid != Guid.Empty) ? info.colonyGuid.ToString() : (info.baseName + "/" + info.clusterId);
+		if (!(info.colonyGuid != Guid.Empty))
+		{
+			return info.baseName + "/" + info.clusterId;
+		}
+		return info.colonyGuid.ToString();
 	}
 
 	public static Tuple<Header, GameInfo> GetFileInfo(string filename)
@@ -283,9 +297,9 @@ public class SaveGame : KMonoBehaviour, ISaveLoadable
 		if (SaveLoader.Instance.GameInfo.worldTraits != null)
 		{
 			string[] worldTraits = SaveLoader.Instance.GameInfo.worldTraits;
-			foreach (string name in worldTraits)
+			for (int i = 0; i < worldTraits.Length; i++)
 			{
-				WorldTrait cachedTrait = SettingsCache.GetCachedTrait(name, assertMissingTrait: false);
+				WorldTrait cachedTrait = SettingsCache.GetCachedTrait(worldTraits[i], assertMissingTrait: false);
 				if (cachedTrait != null)
 				{
 					list.Add(new Tuple<string, TextStyleSetting>(Strings.Get(cachedTrait.name), ToolTipScreen.Instance.defaultTooltipBodyStyle));

@@ -28,8 +28,7 @@ public class IntermediateCureConfig : IEntityConfig
 			new ComplexRecipe.RecipeElement("IntermediateCure", 1f)
 		};
 		string text = "Apothecary";
-		string id = ComplexRecipeManager.MakeRecipeID(text, array, array2);
-		recipe = new ComplexRecipe(id, array, array2)
+		recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID(text, array, array2), array, array2)
 		{
 			time = 100f,
 			description = ITEMS.PILLS.INTERMEDIATECURE.RECIPEDESC,

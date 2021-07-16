@@ -49,11 +49,11 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 
 	public bool allowItemRemoval;
 
-	public bool onlyTransferFromLowerPriority = false;
+	public bool onlyTransferFromLowerPriority;
 
 	public float capacityKg = 20000f;
 
-	public bool showDescriptor = false;
+	public bool showDescriptor;
 
 	public bool doDiseaseTransfer = true;
 
@@ -61,21 +61,21 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 
 	public bool useGunForDelivery = true;
 
-	public bool sendOnStoreOnSpawn = false;
+	public bool sendOnStoreOnSpawn;
 
 	public bool showInUI = true;
 
-	public bool allowClearable = false;
+	public bool allowClearable;
 
-	public bool showCapacityStatusItem = false;
+	public bool showCapacityStatusItem;
 
-	public bool showCapacityAsMainStatus = false;
+	public bool showCapacityAsMainStatus;
 
-	public bool showUnreachableStatus = false;
+	public bool showUnreachableStatus;
 
-	public bool useWideOffsets = false;
+	public bool useWideOffsets;
 
-	public FetchCategory fetchCategory = FetchCategory.Building;
+	public FetchCategory fetchCategory;
 
 	public int storageNetworkID = -1;
 
@@ -88,7 +88,7 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		component.OnReachableChanged(data);
 	});
 
-	public FXPrefix fxPrefix = FXPrefix.Delivered;
+	public FXPrefix fxPrefix;
 
 	public List<GameObject> items = new List<GameObject>();
 
@@ -101,11 +101,11 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 	[MyCmpGet]
 	protected PrimaryElement primaryElement;
 
-	public bool dropOnLoad = false;
+	public bool dropOnLoad;
 
 	protected float maxKGPerItem = float.MaxValue;
 
-	private bool endOfLife = false;
+	private bool endOfLife;
 
 	public bool allowSettingOnlyFetchMarkedItems = true;
 
@@ -164,9 +164,19 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		component.OnCopySettings(data);
 	});
 
-	private List<GameObject> deleted_objects = null;
+	private List<GameObject> deleted_objects;
 
-	public bool ShouldOnlyTransferFromLowerPriority => onlyTransferFromLowerPriority || allowItemRemoval;
+	public bool ShouldOnlyTransferFromLowerPriority
+	{
+		get
+		{
+			if (!onlyTransferFromLowerPriority)
+			{
+				return allowItemRemoval;
+			}
+			return true;
+		}
+	}
 
 	public bool allowUIItemRemoval
 	{
@@ -314,8 +324,7 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		if (showUnreachableStatus)
 		{
 			Subscribe(-1432940121, OnReachableChangedDelegate);
-			ReachabilityMonitor.Instance instance = new ReachabilityMonitor.Instance(this);
-			instance.StartSM();
+			new ReachabilityMonitor.Instance(this).StartSM();
 		}
 	}
 
@@ -429,8 +438,7 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		{
 			Element element2 = ElementLoader.FindElementByHash(element);
 			GameObject gameObject = element2.substance.SpawnResource(base.transform.GetPosition(), mass, temperature, disease_idx, disease_count, prevent_merge: true, forceTemperature: false, manual_activation: true);
-			Pickupable component = gameObject.GetComponent<Pickupable>();
-			component.prevent_absorb_until_stored = true;
+			gameObject.GetComponent<Pickupable>().prevent_absorb_until_stored = true;
 			element2.substance.ActivateSubstanceGameObject(gameObject, disease_idx, disease_count);
 			Store(gameObject, hide_popups: true, block_events: false, do_disease_transfer);
 		}
@@ -1106,8 +1114,7 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 				PrimaryElement component = item.GetComponent<PrimaryElement>();
 				if (component.HasTag(tag) && component.Mass > 0f)
 				{
-					result = true;
-					break;
+					return true;
 				}
 			}
 		}
@@ -1136,8 +1143,7 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 				PrimaryElement component = item.GetComponent<PrimaryElement>();
 				if (component.ElementID == element)
 				{
-					result = component;
-					break;
+					return component;
 				}
 			}
 		}
@@ -1279,15 +1285,10 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 	{
 		foreach (GameObject item in items)
 		{
-			if (!(item != null))
+			if (item != null)
 			{
-				continue;
-			}
-			Pickupable component = item.GetComponent<Pickupable>();
-			if (component != null)
-			{
-				KPrefabID component2 = component.GetComponent<KPrefabID>();
-				if (component2.HasTag(tag))
+				Pickupable component = item.GetComponent<Pickupable>();
+				if (component != null && component.GetComponent<KPrefabID>().HasTag(tag))
 				{
 					amount = component.TotalAmount;
 					return true;
@@ -1384,8 +1385,7 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		Storage component = gameObject.GetComponent<Storage>();
+		Storage component = ((GameObject)data).GetComponent<Storage>();
 		if (component != null)
 		{
 			SetOnlyFetchMarkedItems(component.onlyFetchMarkedItems);
@@ -1402,9 +1402,9 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 
 	private void OnReachableChanged(object data)
 	{
-		bool flag = (bool)data;
+		bool num = (bool)data;
 		KSelectable component = GetComponent<KSelectable>();
-		if (flag)
+		if (num)
 		{
 			component.RemoveStatusItem(Db.Get().BuildingStatusItems.StorageUnreachable);
 		}
@@ -1417,13 +1417,9 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 	private bool ShouldSaveItem(GameObject go)
 	{
 		bool result = false;
-		if (go != null && go.GetComponent<SaveLoadRoot>() != null)
+		if (go != null && go.GetComponent<SaveLoadRoot>() != null && go.GetComponent<PrimaryElement>().Mass > 0f)
 		{
-			PrimaryElement component = go.GetComponent<PrimaryElement>();
-			if (component.Mass > 0f)
-			{
-				result = true;
-			}
+			result = true;
 		}
 		return result;
 	}
@@ -1466,7 +1462,7 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 
 	public void Deserialize(IReader reader)
 	{
-		float realtimeSinceStartup = Time.realtimeSinceStartup;
+		_ = Time.realtimeSinceStartup;
 		float num = 0f;
 		float num2 = 0f;
 		float num3 = 0f;
@@ -1475,11 +1471,10 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		items = new List<GameObject>(num4);
 		for (int i = 0; i < num4; i++)
 		{
-			float realtimeSinceStartup2 = Time.realtimeSinceStartup;
-			string tag_string = reader.ReadKleiString();
-			Tag tag = TagManager.Create(tag_string);
+			float realtimeSinceStartup = Time.realtimeSinceStartup;
+			Tag tag = TagManager.Create(reader.ReadKleiString());
 			SaveLoadRoot saveLoadRoot = SaveLoadRoot.Load(tag, reader);
-			num += Time.realtimeSinceStartup - realtimeSinceStartup2;
+			num += Time.realtimeSinceStartup - realtimeSinceStartup;
 			if (saveLoadRoot != null)
 			{
 				KBatchedAnimController component = saveLoadRoot.GetComponent<KBatchedAnimController>();
@@ -1488,24 +1483,24 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 					component.enabled = false;
 				}
 				saveLoadRoot.SetRegistered(registered: false);
-				float realtimeSinceStartup3 = Time.realtimeSinceStartup;
+				float realtimeSinceStartup2 = Time.realtimeSinceStartup;
 				GameObject gameObject = Store(saveLoadRoot.gameObject, hide_popups: true, block_events: true, do_disease_transfer: false, is_deserializing: true);
-				num2 += Time.realtimeSinceStartup - realtimeSinceStartup3;
+				num2 += Time.realtimeSinceStartup - realtimeSinceStartup2;
 				if (gameObject != null)
 				{
 					Pickupable component2 = gameObject.GetComponent<Pickupable>();
 					if (component2 != null)
 					{
-						float realtimeSinceStartup4 = Time.realtimeSinceStartup;
+						float realtimeSinceStartup3 = Time.realtimeSinceStartup;
 						component2.OnStore(this);
-						num3 += Time.realtimeSinceStartup - realtimeSinceStartup4;
+						num3 += Time.realtimeSinceStartup - realtimeSinceStartup3;
 					}
 					Storable component3 = gameObject.GetComponent<Storable>();
 					if (component3 != null)
 					{
-						float realtimeSinceStartup5 = Time.realtimeSinceStartup;
+						float realtimeSinceStartup4 = Time.realtimeSinceStartup;
 						component3.OnStore(this);
-						num3 += Time.realtimeSinceStartup - realtimeSinceStartup5;
+						num3 += Time.realtimeSinceStartup - realtimeSinceStartup4;
 					}
 					if (dropOnLoad)
 					{

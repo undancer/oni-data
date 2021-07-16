@@ -225,12 +225,24 @@ public static class GameUtil
 		{
 		case TemperatureUnit.Celsius:
 			num = temperature - 273.15f;
-			return roundOutput ? Mathf.Round(num) : num;
+			if (!roundOutput)
+			{
+				return num;
+			}
+			return Mathf.Round(num);
 		case TemperatureUnit.Fahrenheit:
 			num = temperature * 1.8f - 459.67f;
-			return roundOutput ? Mathf.Round(num) : num;
+			if (!roundOutput)
+			{
+				return num;
+			}
+			return Mathf.Round(num);
 		default:
-			return roundOutput ? Mathf.Round(temperature) : temperature;
+			if (!roundOutput)
+			{
+				return temperature;
+			}
+			return Mathf.Round(temperature);
 		}
 	}
 
@@ -369,11 +381,9 @@ public static class GameUtil
 	public static float EnergyToTemperatureDelta(float kilojoules, PrimaryElement element)
 	{
 		Debug.Assert(element.Mass > 0f);
-		float energyInPrimaryElement = GetEnergyInPrimaryElement(element);
-		float num = Mathf.Max(energyInPrimaryElement - kilojoules, 1f);
+		float num = Mathf.Max(GetEnergyInPrimaryElement(element) - kilojoules, 1f);
 		float temperature = element.Temperature;
-		float num2 = num / (0.001f * (element.Mass * (element.Element.specificHeatCapacity * 1000f)));
-		return num2 - temperature;
+		return num / (0.001f * (element.Mass * (element.Element.specificHeatCapacity * 1000f))) - temperature;
 	}
 
 	public static float CalculateEnergyDeltaForElement(PrimaryElement element, float startTemp, float endTemp)
@@ -383,21 +393,19 @@ public static class GameUtil
 
 	public static float CalculateEnergyDeltaForElementChange(float mass, float shc, float startTemp, float endTemp)
 	{
-		float num = endTemp - startTemp;
-		return num * mass * shc;
+		return (endTemp - startTemp) * mass * shc;
 	}
 
 	public static float GetFinalTemperature(float t1, float m1, float t2, float m2)
 	{
 		float num = m1 + m2;
-		float num2 = t1 * m1 + t2 * m2;
-		float value = num2 / num;
-		float num3 = Mathf.Min(t1, t2);
-		float num4 = Mathf.Max(t1, t2);
-		value = Mathf.Clamp(value, num3, num4);
+		float value = (t1 * m1 + t2 * m2) / num;
+		float num2 = Mathf.Min(t1, t2);
+		float num3 = Mathf.Max(t1, t2);
+		value = Mathf.Clamp(value, num2, num3);
 		if (float.IsNaN(value) || float.IsInfinity(value))
 		{
-			Debug.LogError($"Calculated an invalid temperature: t1={t1}, m1={m1}, t2={t2}, m2={m2}, min_temp={num3}, max_temp={num4}");
+			Debug.LogError($"Calculated an invalid temperature: t1={t1}, m1={m1}, t2={t2}, m2={m2}, min_temp={num2}, max_temp={num3}");
 		}
 		return value;
 	}
@@ -432,7 +440,14 @@ public static class GameUtil
 		return f.ToString(format);
 	}
 
-	public static string GetStandardFloat(float f, bool allowHundredths = false)
+	public static string GetStandardFloat(float f)
+	{
+		string text = "";
+		text = ((f == 0f) ? "0" : ((Mathf.Abs(f) < 1f) ? "#,##0.#" : ((!(Mathf.Abs(f) < 10f)) ? "#,###" : "#,###.#")));
+		return FloatToString(f, text);
+	}
+
+	public static string GetStandardPercentageFloat(float f, bool allowHundredths = false)
 	{
 		string text = "";
 		text = ((Mathf.Abs(f) == 0f) ? "0" : ((Mathf.Abs(f) < 0.1f && allowHundredths) ? "##0.##" : ((!(Mathf.Abs(f) < 1f)) ? "##0" : "##0.#")));
@@ -447,7 +462,11 @@ public static class GameUtil
 			PrimaryElement component2 = go.GetComponent<PrimaryElement>();
 			return GetUnitFormattedName(go.GetProperName(), component2.Units, upperName);
 		}
-		return upperName ? StringFormatter.ToUpper(go.GetProperName()) : go.GetProperName();
+		if (!upperName)
+		{
+			return go.GetProperName();
+		}
+		return StringFormatter.ToUpper(go.GetProperName());
 	}
 
 	public static string GetUnitFormattedName(string name, float count, bool upperName = false)
@@ -498,11 +517,8 @@ public static class GameUtil
 			result = GetTemperatureConvertedToKelvin(Mathf.Round(GetConvertedTemperature(Mathf.Round(kelvin), roundOutput: true)));
 			break;
 		case TemperatureUnit.Fahrenheit:
-		{
-			float temperature = Mathf.RoundToInt(GetTemperatureConvertedFromKelvin(kelvin, TemperatureUnit.Fahrenheit));
-			result = GetTemperatureConvertedToKelvin(temperature, TemperatureUnit.Fahrenheit);
+			result = GetTemperatureConvertedToKelvin(Mathf.RoundToInt(GetTemperatureConvertedFromKelvin(kelvin, TemperatureUnit.Fahrenheit)), TemperatureUnit.Fahrenheit);
 			break;
-		}
 		case TemperatureUnit.Kelvin:
 			result = Mathf.RoundToInt(kelvin);
 			break;
@@ -542,22 +558,19 @@ public static class GameUtil
 			str = UI.UNITSUFFIXES.CALORIES.KILOCALORIE;
 		}
 		calories = ApplyTimeSlice(calories, timeSlice);
-		string text = GetStandardFloat(calories) + str;
-		return AddTimeSliceText(text, timeSlice);
+		return AddTimeSliceText(GetStandardFloat(calories) + str, timeSlice);
 	}
 
 	public static string GetFormattedPlantGrowth(float percent, TimeSlice timeSlice = TimeSlice.None)
 	{
 		percent = ApplyTimeSlice(percent, timeSlice);
-		string text = string.Concat(GetStandardFloat(percent, allowHundredths: true), UI.UNITSUFFIXES.PERCENT, " ", UI.UNITSUFFIXES.GROWTH);
-		return AddTimeSliceText(text, timeSlice);
+		return AddTimeSliceText(string.Concat(GetStandardPercentageFloat(percent, allowHundredths: true), UI.UNITSUFFIXES.PERCENT, " ", UI.UNITSUFFIXES.GROWTH), timeSlice);
 	}
 
 	public static string GetFormattedPercent(float percent, TimeSlice timeSlice = TimeSlice.None)
 	{
 		percent = ApplyTimeSlice(percent, timeSlice);
-		string text = GetStandardFloat(percent, allowHundredths: true) + UI.UNITSUFFIXES.PERCENT;
-		return AddTimeSliceText(text, timeSlice);
+		return AddTimeSliceText(GetStandardPercentageFloat(percent, allowHundredths: true) + UI.UNITSUFFIXES.PERCENT, timeSlice);
 	}
 
 	public static string GetFormattedRoundedJoules(float joules)
@@ -583,16 +596,14 @@ public static class GameUtil
 	public static string GetFormattedRads(float rads, TimeSlice timeSlice = TimeSlice.None)
 	{
 		rads = ApplyTimeSlice(rads, timeSlice);
-		string text = GetStandardFloat(rads) + UI.UNITSUFFIXES.RADIATION.RADS;
-		return AddTimeSliceText(text, timeSlice);
+		return AddTimeSliceText(GetStandardFloat(rads) + UI.UNITSUFFIXES.RADIATION.RADS, timeSlice);
 	}
 
 	public static string GetFormattedHighEnergyParticles(float units, TimeSlice timeSlice = TimeSlice.None)
 	{
 		string str = ((units == 1f) ? UI.UNITSUFFIXES.HIGHENERGYPARTICLES.PARTRICLE : UI.UNITSUFFIXES.HIGHENERGYPARTICLES.PARTRICLES);
 		units = ApplyTimeSlice(units, timeSlice);
-		string text = GetStandardFloat(units) + str;
-		return AddTimeSliceText(text, timeSlice);
+		return AddTimeSliceText(GetStandardFloat(units) + str, timeSlice);
 	}
 
 	public static string GetFormattedWattage(float watts, WattageFormatterUnit unit = WattageFormatterUnit.Automatic, bool displayUnits = true)
@@ -1014,7 +1025,11 @@ public static class GameUtil
 	public static bool HasTrait(GameObject go, string traitName)
 	{
 		Traits component = go.GetComponent<Traits>();
-		return !(component == null) && component.HasTrait(traitName);
+		if (!(component == null))
+		{
+			return component.HasTrait(traitName);
+		}
+		return false;
 	}
 
 	public static HashSet<int> GetFloodFillCavity(int startCell, bool allowLiquid)
@@ -1082,8 +1097,7 @@ public static class GameUtil
 
 	public static bool FloodFillCheck<ArgType>(Func<int, ArgType, bool> fn, ArgType arg, int start_cell, int max_depth, bool stop_at_solid, bool stop_at_liquid)
 	{
-		int num = FloodFillFind(fn, arg, start_cell, max_depth, stop_at_solid, stop_at_liquid);
-		return num != -1;
+		return FloodFillFind(fn, arg, start_cell, max_depth, stop_at_solid, stop_at_liquid) != -1;
 	}
 
 	public static int FloodFillFind<ArgType>(Func<int, ArgType, bool> fn, ArgType arg, int start_cell, int max_depth, bool stop_at_solid, bool stop_at_liquid)
@@ -1632,14 +1646,12 @@ public static class GameUtil
 	public static void CreateExplosion(Vector3 explosion_pos)
 	{
 		Vector2 b = new Vector2(explosion_pos.x, explosion_pos.y);
-		float num = 5f;
-		float num2 = num * num;
+		float num = 5f * 5f;
 		foreach (Health item in Components.Health.Items)
 		{
 			Vector3 position = item.transform.GetPosition();
-			Vector2 a = new Vector2(position.x, position.y);
-			float sqrMagnitude = (a - b).sqrMagnitude;
-			if (num2 >= sqrMagnitude && item != null)
+			float sqrMagnitude = (new Vector2(position.x, position.y) - b).sqrMagnitude;
+			if (num >= sqrMagnitude && item != null)
 			{
 				item.Damage(item.maxHitPoints);
 			}
@@ -1709,7 +1721,11 @@ public static class GameUtil
 		{
 			return null;
 		}
-		return (asset.path != null) ? asset.path : asset.name;
+		if (asset.path == null)
+		{
+			return asset.name;
+		}
+		return asset.path;
 	}
 
 	private static void SortGameObjectDescriptors(List<IGameObjectEffectDescriptor> descriptorList)
@@ -1780,6 +1796,7 @@ public static class GameUtil
 					list.Add(additionalEffect);
 				}
 			}
+			return list;
 		}
 		return list;
 	}
@@ -1924,6 +1941,7 @@ public static class GameUtil
 					list.Add(additionalEffect);
 				}
 			}
+			return list;
 		}
 		return list;
 	}
@@ -1931,8 +1949,7 @@ public static class GameUtil
 	public static List<Descriptor> GetPlantRequirementDescriptors(GameObject go)
 	{
 		List<Descriptor> list = new List<Descriptor>();
-		List<Descriptor> allDescriptors = GetAllDescriptors(go);
-		List<Descriptor> requirementDescriptors = GetRequirementDescriptors(allDescriptors);
+		List<Descriptor> requirementDescriptors = GetRequirementDescriptors(GetAllDescriptors(go));
 		if (requirementDescriptors.Count > 0)
 		{
 			Descriptor item = default(Descriptor);
@@ -1960,8 +1977,7 @@ public static class GameUtil
 	public static List<Descriptor> GetPlantEffectDescriptors(GameObject go)
 	{
 		List<Descriptor> list = new List<Descriptor>();
-		Growing component = go.GetComponent<Growing>();
-		if (component == null)
+		if (go.GetComponent<Growing>() == null)
 		{
 			return list;
 		}
@@ -2002,13 +2018,13 @@ public static class GameUtil
 		{
 			foreach (AttributeModifier item in attributeModifiers)
 			{
-				Klei.AI.Attribute attribute = Db.Get().Attributes.Get(item.AttributeId);
-				string name = attribute.Name;
+				string name = Db.Get().Attributes.Get(item.AttributeId).Name;
 				string formattedString = item.GetFormattedString();
 				string newValue = ((item.Value >= 0f) ? "produced" : "consumed");
 				string text = UI.GAMEOBJECTEFFECTS.EQUIPMENT_MODS.text.Replace("{Attribute}", name).Replace("{Style}", newValue).Replace("{Value}", formattedString);
 				list.Add(new Descriptor(text, text));
 			}
+			return list;
 		}
 		return list;
 	}
@@ -2201,8 +2217,7 @@ public static class GameUtil
 		Sprite sprite = Assets.GetSprite(text);
 		if (sprite != null)
 		{
-			Tuple<Sprite, Color> tuple = new Tuple<Sprite, Color>(sprite, Color.white);
-			return tuple.first;
+			return new Tuple<Sprite, Color>(sprite, Color.white).first;
 		}
 		Debug.LogWarning("Missing codex biome icon: " + text);
 		return null;
@@ -2254,25 +2269,21 @@ public static class GameUtil
 		int num = 1;
 		int num2 = 2;
 		int num3 = 4;
-		List<string> tList = new List<string>(LocString.GetStrings(typeof(NAMEGEN.ROCKET.NOUN)));
-		text = tList.GetRandom();
+		text = new List<string>(LocString.GetStrings(typeof(NAMEGEN.ROCKET.NOUN))).GetRandom();
 		int num4 = 0;
 		if (UnityEngine.Random.value > 0.7f)
 		{
-			List<string> tList2 = new List<string>(LocString.GetStrings(typeof(NAMEGEN.ROCKET.PREFIX)));
-			newValue = tList2.GetRandom();
+			newValue = new List<string>(LocString.GetStrings(typeof(NAMEGEN.ROCKET.PREFIX))).GetRandom();
 			num4 |= num;
 		}
 		if (UnityEngine.Random.value > 0.5f)
 		{
-			List<string> tList3 = new List<string>(LocString.GetStrings(typeof(NAMEGEN.ROCKET.ADJECTIVE)));
-			newValue2 = tList3.GetRandom();
+			newValue2 = new List<string>(LocString.GetStrings(typeof(NAMEGEN.ROCKET.ADJECTIVE))).GetRandom();
 			num4 |= num2;
 		}
 		if (UnityEngine.Random.value > 0.1f)
 		{
-			List<string> tList4 = new List<string>(LocString.GetStrings(typeof(NAMEGEN.ROCKET.SUFFIX)));
-			newValue3 = tList4.GetRandom();
+			newValue3 = new List<string>(LocString.GetStrings(typeof(NAMEGEN.ROCKET.SUFFIX))).GetRandom();
 			num4 |= num3;
 		}
 		string text2 = ((num4 == (num | num2 | num3)) ? ((string)NAMEGEN.ROCKET.FMT_PREFIX_ADJECTIVE_NOUN_SUFFIX) : ((num4 == (num2 | num3)) ? ((string)NAMEGEN.ROCKET.FMT_ADJECTIVE_NOUN_SUFFIX) : ((num4 == (num | num3)) ? ((string)NAMEGEN.ROCKET.FMT_PREFIX_NOUN_SUFFIX) : ((num4 == num3) ? ((string)NAMEGEN.ROCKET.FMT_NOUN_SUFFIX) : ((num4 == (num | num2)) ? ((string)NAMEGEN.ROCKET.FMT_PREFIX_ADJECTIVE_NOUN) : ((num4 == num) ? ((string)NAMEGEN.ROCKET.FMT_PREFIX_NOUN) : ((num4 != num2) ? ((string)NAMEGEN.ROCKET.FMT_NOUN) : ((string)NAMEGEN.ROCKET.FMT_ADJECTIVE_NOUN))))))));
@@ -2301,8 +2312,7 @@ public static class GameUtil
 	{
 		float num = 0f;
 		Element element = ElementLoader.FindElementByHash(SimHashes.Creature);
-		Element element2 = Grid.Element[cell];
-		if (element2.thermalConductivity != 0f)
+		if (Grid.Element[cell].thermalConductivity != 0f)
 		{
 			num = SimUtil.CalculateEnergyFlowCreatures(cell, 310.15f, element.specificHeatCapacity, element.thermalConductivity, 1f, 0.0045f);
 		}
@@ -2317,13 +2327,12 @@ public static class GameUtil
 		while (true)
 		{
 			startIndex = source.IndexOf(separator, startIndex);
-			if (startIndex != -1)
+			if (startIndex == -1)
 			{
-				startIndex += separator.Length;
-				num++;
-				continue;
+				break;
 			}
-			break;
+			startIndex += separator.Length;
+			num++;
 		}
 		if (num == 0)
 		{
@@ -2365,7 +2374,7 @@ public static class GameUtil
 
 	public static string GetFormattedDiseaseAmount(int units, TimeSlice timeSlice = TimeSlice.None)
 	{
-		float num = ApplyTimeSlice(units, timeSlice);
+		ApplyTimeSlice(units, timeSlice);
 		return AddTimeSliceText(units.ToString("#,##0") + UI.UNITSUFFIXES.DISEASE.UNITS, timeSlice);
 	}
 
@@ -2531,6 +2540,7 @@ public static class GameUtil
 						item2.IncreaseIndent();
 						list.Add(item2);
 					}
+					return list;
 				}
 			}
 		}
@@ -2565,6 +2575,7 @@ public static class GameUtil
 						string formattedString2 = descriptor.GetFormattedString();
 						text = text + "\n    • " + string.Format(DUPLICANTS.MODIFIERS.MODIFIER_FORMAT, name2, formattedString2);
 					}
+					return text;
 				}
 			}
 		}
@@ -2653,7 +2664,11 @@ public static class GameUtil
 
 	public static bool IsCapturingTimeLapse()
 	{
-		return Game.Instance != null && Game.Instance.timelapser != null && Game.Instance.timelapser.CapturingTimelapseScreenshot;
+		if (Game.Instance != null && Game.Instance.timelapser != null)
+		{
+			return Game.Instance.timelapser.CapturingTimelapseScreenshot;
+		}
+		return false;
 	}
 
 	public static ExposureType GetExposureTypeForDisease(Disease disease)

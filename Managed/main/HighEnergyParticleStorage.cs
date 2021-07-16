@@ -15,6 +15,9 @@ public class HighEnergyParticleStorage : KMonoBehaviour, IStorage
 
 	public bool autoStore;
 
+	[Serialize]
+	public bool receiverOpen = true;
+
 	public float Particles => particles;
 
 	public bool allowUIItemRemoval
@@ -62,7 +65,11 @@ public class HighEnergyParticleStorage : KMonoBehaviour, IStorage
 
 	private bool OnParticleCaptureAllowed(HighEnergyParticle particle)
 	{
-		return particles < capacity;
+		if (particles < capacity)
+		{
+			return receiverOpen;
+		}
+		return false;
 	}
 
 	public void Store(float amount)

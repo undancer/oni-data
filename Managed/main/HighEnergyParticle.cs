@@ -104,7 +104,7 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 
 		private void EmitRemainingPayload(StatesInstance smi)
 		{
-			KAnim.Anim currentAnim = smi.master.GetComponent<KBatchedAnimController>().GetCurrentAnim();
+			smi.master.GetComponent<KBatchedAnimController>().GetCurrentAnim();
 			smi.master.emitter.emitRadiusX = 6;
 			smi.master.emitter.emitRadiusY = 6;
 			smi.master.emitter.emitRads = smi.master.payload * 0.5f * 600f / 9f;
@@ -161,8 +161,7 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 	{
 		base.OnSpawn();
 		Components.HighEnergyParticles.Add(this);
-		KSelectable component = GetComponent<KSelectable>();
-		component.AddStatusItem(Db.Get().MiscStatusItems.HighEnergyParticleCount, base.gameObject);
+		GetComponent<KSelectable>().AddStatusItem(Db.Get().MiscStatusItems.HighEnergyParticleCount, base.gameObject);
 		emitter.SetEmitting(emitting: false);
 		emitter.Refresh();
 		SetDirection(direction);
@@ -276,23 +275,23 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 		GameObject gameObject = Grid.Objects[cell, 1];
 		if (gameObject != null)
 		{
-			Operational component = gameObject.GetComponent<Operational>();
-			HighEnergyParticlePort component2 = gameObject.GetComponent<HighEnergyParticlePort>();
-			if (component2 != null)
+			gameObject.GetComponent<Operational>();
+			HighEnergyParticlePort component = gameObject.GetComponent<HighEnergyParticlePort>();
+			if (component != null)
 			{
-				Vector2 pos = Grid.CellToPosCCC(component2.GetHighEnergyParticleInputPortPosition(), Grid.SceneLayer.NoLayer);
+				Vector2 pos = Grid.CellToPosCCC(component.GetHighEnergyParticleInputPortPosition(), Grid.SceneLayer.NoLayer);
 				if (GetComponent<KCircleCollider2D>().Intersects(pos))
 				{
-					if (component2.InputActive() && component2.AllowCapture(this))
+					if (component.InputActive() && component.AllowCapture(this))
 					{
-						Capture(component2);
+						Capture(component);
 						return;
 					}
 					Collide(CollisionType.PassThrough);
 				}
 			}
 		}
-		KCircleCollider2D component3 = GetComponent<KCircleCollider2D>();
+		KCircleCollider2D component2 = GetComponent<KCircleCollider2D>();
 		int x = 0;
 		int y = 0;
 		Grid.CellToXY(cell, out x, out y);
@@ -301,15 +300,14 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 		foreach (ScenePartitionerEntry item in pooledList)
 		{
 			KCollider2D kCollider2D = item.obj as KCollider2D;
-			HighEnergyParticle component4 = kCollider2D.gameObject.GetComponent<HighEnergyParticle>();
-			if (!(component4 != null) || !component3.Intersects(component4.transform.position) || !kCollider2D.Intersects(base.transform.position) || component4 == this || !component4.isCollideable)
+			HighEnergyParticle component3 = kCollider2D.gameObject.GetComponent<HighEnergyParticle>();
+			if (component3 != null && component2.Intersects(component3.transform.position) && kCollider2D.Intersects(base.transform.position) && !(component3 == this) && component3.isCollideable)
 			{
-				continue;
+				payload += component3.payload;
+				component3.DestroyNow();
+				Collide(CollisionType.HighEnergyParticle);
+				return;
 			}
-			payload += component4.payload;
-			component4.DestroyNow();
-			Collide(CollisionType.HighEnergyParticle);
-			return;
 		}
 		pooledList.Recycle();
 		GameObject gameObject2 = Grid.Objects[cell, 3];
@@ -322,11 +320,11 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 				objectLayerListItem = objectLayerListItem.nextItem;
 				if (!(gameObject3 == null))
 				{
-					KPrefabID component5 = gameObject3.GetComponent<KPrefabID>();
-					Health component6 = gameObject2.GetComponent<Health>();
-					if (component6 != null && component5 != null && component5.HasTag(GameTags.Creature) && !component6.IsDefeated())
+					KPrefabID component4 = gameObject3.GetComponent<KPrefabID>();
+					Health component5 = gameObject2.GetComponent<Health>();
+					if (component5 != null && component4 != null && component4.HasTag(GameTags.Creature) && !component5.IsDefeated())
 					{
-						component6.Damage(20f);
+						component5.Damage(20f);
 						Collide(CollisionType.Creature);
 						return;
 					}
@@ -336,12 +334,12 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 		GameObject gameObject4 = Grid.Objects[cell, 0];
 		if (gameObject4 != null)
 		{
-			Health component7 = gameObject4.GetComponent<Health>();
-			if (component7 != null && !component7.IsDefeated() && !gameObject4.HasTag(GameTags.Dead) && !gameObject4.HasTag(GameTags.Dying))
+			Health component6 = gameObject4.GetComponent<Health>();
+			if (component6 != null && !component6.IsDefeated() && !gameObject4.HasTag(GameTags.Dead) && !gameObject4.HasTag(GameTags.Dying))
 			{
-				component7.Damage(20f);
+				component6.Damage(20f);
 				WoundMonitor.Instance sMI = gameObject4.GetSMI<WoundMonitor.Instance>();
-				if (sMI != null && !component7.IsDefeated())
+				if (sMI != null && !component6.IsDefeated())
 				{
 					sMI.PlayKnockedOverImpactAnimation();
 				}

@@ -123,8 +123,7 @@ namespace ProcGen
 
 		public static string GetName(string path, string addPrefix)
 		{
-			string filename = System.IO.Path.Combine(addPrefix + "clusters", System.IO.Path.GetFileNameWithoutExtension(path));
-			return FileSystem.Normalize(filename);
+			return FileSystem.Normalize(System.IO.Path.Combine(addPrefix + "clusters", System.IO.Path.GetFileNameWithoutExtension(path)));
 		}
 
 		public string GetStartWorld()

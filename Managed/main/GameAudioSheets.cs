@@ -91,11 +91,13 @@ public class GameAudioSheets : AudioSheets
 			sound_name = sound_name.Replace(":disable_camera_position_scaling", "");
 			shouldCameraScalePosition = false;
 		}
-		if (type == "FloorSoundEvent")
+		switch (type)
 		{
+		case "FloorSoundEvent":
 			soundEvent = new FloorSoundEvent(file_name, sound_name, frame);
-		}
-		else if (type == "SoundEvent" || type == "LoopingSoundEvent")
+			break;
+		case "SoundEvent":
+		case "LoopingSoundEvent":
 		{
 			bool is_looping = type == "LoopingSoundEvent";
 			string[] array = sound_name.Split(':');
@@ -112,79 +114,60 @@ public class GameAudioSheets : AudioSheets
 					Debug.LogWarning(sound_name + " has unknown parameter " + array[i]);
 				}
 			}
+			break;
 		}
-		else
-		{
-			int num;
-			switch (type)
-			{
-			case "LadderSoundEvent":
-				soundEvent = new LadderSoundEvent(file_name, sound_name, frame);
-				break;
-			case "LaserSoundEvent":
-				soundEvent = new LaserSoundEvent(file_name, sound_name, frame, min_interval);
-				break;
-			case "HatchDrillSoundEvent":
-				soundEvent = new HatchDrillSoundEvent(file_name, sound_name, frame, min_interval);
-				break;
-			case "CreatureChewSoundEvent":
-				soundEvent = new CreatureChewSoundEvent(file_name, sound_name, frame, min_interval);
-				break;
-			case "BuildingDamageSoundEvent":
-				soundEvent = new BuildingDamageSoundEvent(file_name, sound_name, frame);
-				break;
-			case "WallDamageSoundEvent":
-				soundEvent = new WallDamageSoundEvent(file_name, sound_name, frame, min_interval);
-				break;
-			case "RemoteSoundEvent":
-				soundEvent = new RemoteSoundEvent(file_name, sound_name, frame, min_interval);
-				break;
-			default:
-				num = ((type == "LoopingVoiceSoundEvent") ? 1 : 0);
-				goto IL_0212;
-			case "VoiceSoundEvent":
-				{
-					num = 1;
-					goto IL_0212;
-				}
-				IL_0212:
-				if (num != 0)
-				{
-					soundEvent = new VoiceSoundEvent(file_name, sound_name, frame, type == "LoopingVoiceSoundEvent");
-					break;
-				}
-				switch (type)
-				{
-				case "MouthFlapSoundEvent":
-					soundEvent = new MouthFlapSoundEvent(file_name, sound_name, frame, is_looping: false);
-					break;
-				case "MainMenuSoundEvent":
-					soundEvent = new MainMenuSoundEvent(file_name, sound_name, frame);
-					break;
-				case "ClusterMapSoundEvent":
-					soundEvent = new ClusterMapSoundEvent(file_name, sound_name, frame, looping: false);
-					break;
-				case "ClusterMapLoopingSoundEvent":
-					soundEvent = new ClusterMapSoundEvent(file_name, sound_name, frame, looping: true);
-					break;
-				case "CreatureVariationSoundEvent":
-					soundEvent = new CreatureVariationSoundEvent(file_name, sound_name, frame, do_load: true, type == "LoopingSoundEvent", min_interval, is_dynamic: false);
-					break;
-				case "CountedSoundEvent":
-					soundEvent = new CountedSoundEvent(file_name, sound_name, frame, do_load: true, is_looping: false, min_interval, is_dynamic: false);
-					break;
-				case "SculptingSoundEvent":
-					soundEvent = new SculptingSoundEvent(file_name, sound_name, frame, do_load: true, is_looping: false, min_interval, is_dynamic: false);
-					break;
-				case "PhonoboxSoundEvent":
-					soundEvent = new PhonoboxSoundEvent(file_name, sound_name, frame, min_interval);
-					break;
-				case "PlantMutationSoundEvent":
-					soundEvent = new PlantMutationSoundEvent(file_name, sound_name, frame, min_interval);
-					break;
-				}
-				break;
-			}
+		case "LadderSoundEvent":
+			soundEvent = new LadderSoundEvent(file_name, sound_name, frame);
+			break;
+		case "LaserSoundEvent":
+			soundEvent = new LaserSoundEvent(file_name, sound_name, frame, min_interval);
+			break;
+		case "HatchDrillSoundEvent":
+			soundEvent = new HatchDrillSoundEvent(file_name, sound_name, frame, min_interval);
+			break;
+		case "CreatureChewSoundEvent":
+			soundEvent = new CreatureChewSoundEvent(file_name, sound_name, frame, min_interval);
+			break;
+		case "BuildingDamageSoundEvent":
+			soundEvent = new BuildingDamageSoundEvent(file_name, sound_name, frame);
+			break;
+		case "WallDamageSoundEvent":
+			soundEvent = new WallDamageSoundEvent(file_name, sound_name, frame, min_interval);
+			break;
+		case "RemoteSoundEvent":
+			soundEvent = new RemoteSoundEvent(file_name, sound_name, frame, min_interval);
+			break;
+		case "VoiceSoundEvent":
+		case "LoopingVoiceSoundEvent":
+			soundEvent = new VoiceSoundEvent(file_name, sound_name, frame, type == "LoopingVoiceSoundEvent");
+			break;
+		case "MouthFlapSoundEvent":
+			soundEvent = new MouthFlapSoundEvent(file_name, sound_name, frame, is_looping: false);
+			break;
+		case "MainMenuSoundEvent":
+			soundEvent = new MainMenuSoundEvent(file_name, sound_name, frame);
+			break;
+		case "ClusterMapSoundEvent":
+			soundEvent = new ClusterMapSoundEvent(file_name, sound_name, frame, looping: false);
+			break;
+		case "ClusterMapLoopingSoundEvent":
+			soundEvent = new ClusterMapSoundEvent(file_name, sound_name, frame, looping: true);
+			break;
+		case "CreatureVariationSoundEvent":
+			soundEvent = new CreatureVariationSoundEvent(file_name, sound_name, frame, do_load: true, type == "LoopingSoundEvent", min_interval, is_dynamic: false);
+			break;
+		case "CountedSoundEvent":
+			soundEvent = new CountedSoundEvent(file_name, sound_name, frame, do_load: true, is_looping: false, min_interval, is_dynamic: false);
+			break;
+		case "SculptingSoundEvent":
+			soundEvent = new SculptingSoundEvent(file_name, sound_name, frame, do_load: true, is_looping: false, min_interval, is_dynamic: false);
+			break;
+		case "PhonoboxSoundEvent":
+			soundEvent = new PhonoboxSoundEvent(file_name, sound_name, frame, min_interval);
+			break;
+		case "PlantMutationSoundEvent":
+			soundEvent = new PlantMutationSoundEvent(file_name, sound_name, frame, min_interval);
+			break;
 		}
 		if (soundEvent != null)
 		{

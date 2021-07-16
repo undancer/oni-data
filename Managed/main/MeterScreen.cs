@@ -39,7 +39,7 @@ public class MeterScreen : KScreen, IRender1000ms
 
 	public TextStyleSetting ToolTipStyle_Property;
 
-	private bool startValuesSet = false;
+	private bool startValuesSet;
 
 	public MultiToggle RedAlertButton;
 
@@ -242,8 +242,7 @@ public class MeterScreen : KScreen, IRender1000ms
 		int num = 0;
 		foreach (MinionIdentity worldLiveMinionIdentity in worldLiveMinionIdentities)
 		{
-			Sicknesses sicknesses = worldLiveMinionIdentity.GetComponent<MinionModifiers>().sicknesses;
-			if (sicknesses.IsInfected())
+			if (worldLiveMinionIdentity.GetComponent<MinionModifiers>().sicknesses.IsInfected())
 			{
 				num++;
 			}
@@ -265,8 +264,7 @@ public class MeterScreen : KScreen, IRender1000ms
 
 	private void AddToolTipAmountPercentLine(ToolTip tooltip, AmountInstance amount, MinionIdentity id, bool selected)
 	{
-		string name = id.GetComponent<KSelectable>().GetName();
-		string str = name + ":  " + Mathf.Round(amount.value) + "%";
+		string str = id.GetComponent<KSelectable>().GetName() + ":  " + Mathf.Round(amount.value) + "%";
 		AddToolTipLine(tooltip, str, selected);
 	}
 
@@ -278,13 +276,11 @@ public class MeterScreen : KScreen, IRender1000ms
 		RationsTooltip.ClearMultiStringTooltip();
 		RationsTooltip.AddMultiStringTooltip(string.Format(UI.TOOLTIPS.METERSCREEN_MEALHISTORY, GameUtil.GetFormattedCalories(calories)), ToolTipStyle_Header);
 		RationsTooltip.AddMultiStringTooltip("", ToolTipStyle_Property);
-		IOrderedEnumerable<KeyValuePair<string, float>> source = rationsDict.OrderByDescending(delegate(KeyValuePair<string, float> x)
+		foreach (KeyValuePair<string, float> item in rationsDict.OrderByDescending(delegate(KeyValuePair<string, float> x)
 		{
 			EdiblesManager.FoodInfo foodInfo2 = EdiblesManager.GetFoodInfo(x.Key);
 			return x.Value * (foodInfo2?.CaloriesPerUnit ?? (-1f));
-		});
-		Dictionary<string, float> dictionary = source.ToDictionary((KeyValuePair<string, float> t) => t.Key, (KeyValuePair<string, float> t) => t.Value);
-		foreach (KeyValuePair<string, float> item in dictionary)
+		}).ToDictionary((KeyValuePair<string, float> t) => t.Key, (KeyValuePair<string, float> t) => t.Value))
 		{
 			EdiblesManager.FoodInfo foodInfo = EdiblesManager.GetFoodInfo(item.Key);
 			RationsTooltip.AddMultiStringTooltip((foodInfo != null) ? $"{foodInfo.Name}: {GameUtil.GetFormattedCalories(item.Value * foodInfo.CaloriesPerUnit)}" : string.Format(UI.TOOLTIPS.METERSCREEN_INVALID_FOOD_TYPE, item.Key), ToolTipStyle_Property);

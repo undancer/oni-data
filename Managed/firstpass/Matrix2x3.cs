@@ -49,7 +49,11 @@ public struct Matrix2x3
 
 	public static bool operator ==(Matrix2x3 m, Matrix2x3 n)
 	{
-		return m.m00 == n.m00 && m.m01 == n.m01 && m.m02 == n.m02 && m.m10 == n.m10 && m.m11 == n.m11 && m.m12 == n.m12;
+		if (m.m00 == n.m00 && m.m01 == n.m01 && m.m02 == n.m02 && m.m10 == n.m10 && m.m11 == n.m11)
+		{
+			return m.m12 == n.m12;
+		}
+		return false;
 	}
 
 	public static bool operator !=(Matrix2x3 m, Matrix2x3 n)

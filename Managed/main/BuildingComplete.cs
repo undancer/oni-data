@@ -124,14 +124,14 @@ public class BuildingComplete : Building
 		primaryElement = GetComponent<PrimaryElement>();
 		int cell = Grid.PosToCell(base.transform.GetPosition());
 		int[] placementCells = base.PlacementCells;
-		foreach (int gameCell in placementCells)
+		for (int i = 0; i < placementCells.Length; i++)
 		{
-			SimMessages.SetCellProperties(gameCell, 128);
+			SimMessages.SetCellProperties(placementCells[i], 128);
 		}
 		if (Def.IsFoundation)
 		{
-			int[] placementCells2 = base.PlacementCells;
-			foreach (int num in placementCells2)
+			placementCells = base.PlacementCells;
+			foreach (int num in placementCells)
 			{
 				Grid.Foundation[num] = true;
 				Game.Instance.roomProber.SolidChangedEvent(num, ignoreDoors: false);
@@ -171,9 +171,9 @@ public class BuildingComplete : Building
 		RegisterBlockTileRenderer();
 		if (Def.PreventIdleTraversalPastBuilding)
 		{
-			for (int k = 0; k < base.PlacementCells.Length; k++)
+			for (int j = 0; j < base.PlacementCells.Length; j++)
 			{
-				Grid.PreventIdleTraversal[base.PlacementCells[k]] = true;
+				Grid.PreventIdleTraversal[base.PlacementCells[j]] = true;
 			}
 		}
 		Components.BuildingCompletes.Add(this);
@@ -190,9 +190,9 @@ public class BuildingComplete : Building
 			Deconstructable component = GetComponent<Deconstructable>();
 			if (component != null)
 			{
-				for (int l = 1; l < component.constructionElements.Length; l++)
+				for (int k = 1; k < component.constructionElements.Length; k++)
 				{
-					Tag tag = component.constructionElements[l];
+					Tag tag = component.constructionElements[k];
 					Element element = ElementLoader.GetElement(tag);
 					if (element != null)
 					{
@@ -234,8 +234,7 @@ public class BuildingComplete : Building
 
 	private string GetInspectSound()
 	{
-		string name = "AI_Inspect_" + GetComponent<KPrefabID>().PrefabTag.Name;
-		return GlobalAssets.GetSound(name);
+		return GlobalAssets.GetSound("AI_Inspect_" + GetComponent<KPrefabID>().PrefabTag.Name);
 	}
 
 	protected override void OnCleanUp()
@@ -254,7 +253,7 @@ public class BuildingComplete : Building
 			GameComps.StructureTemperatures.Remove(base.gameObject);
 		}
 		base.OnCleanUp();
-		if (!WasReplaced())
+		if (!WasReplaced() && base.gameObject.GetMyWorldId() != ClusterManager.INVALID_WORLD_IDX)
 		{
 			int cell = Grid.PosToCell(this);
 			Def.UnmarkArea(cell, base.Orientation, Def.ObjectLayer, base.gameObject);

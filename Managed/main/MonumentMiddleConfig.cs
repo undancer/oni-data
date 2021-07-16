@@ -8,7 +8,7 @@ public class MonumentMiddleConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("MonumentMiddle", 5, 5, "victory_monument_mid_kanim", 1000, 60f, new float[3]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("MonumentMiddle", 5, 5, "victory_monument_mid_kanim", 1000, 60f, new float[3]
 		{
 			2500f,
 			2500f,
@@ -19,30 +19,28 @@ public class MonumentMiddleConfig : IBuildingConfig
 			SimHashes.Polypropylene.ToString(),
 			SimHashes.Steel.ToString()
 		}, 9999f, BuildLocationRule.BuildingAttachPoint, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.BONUS.MONUMENT.INCOMPLETE);
-		BuildingTemplates.CreateMonumentBuildingDef(buildingDef);
-		buildingDef.SceneLayer = Grid.SceneLayer.Building;
-		buildingDef.OverheatTemperature = 2273.15f;
-		buildingDef.Floodable = false;
-		buildingDef.AttachmentSlotTag = "MonumentMiddle";
-		buildingDef.ObjectLayer = ObjectLayer.Building;
-		buildingDef.PermittedRotations = PermittedRotations.FlipH;
-		buildingDef.attachablePosition = new CellOffset(0, 0);
-		buildingDef.RequiresPowerInput = false;
-		buildingDef.CanMove = false;
-		return buildingDef;
+		BuildingTemplates.CreateMonumentBuildingDef(obj);
+		obj.SceneLayer = Grid.SceneLayer.Building;
+		obj.OverheatTemperature = 2273.15f;
+		obj.Floodable = false;
+		obj.AttachmentSlotTag = "MonumentMiddle";
+		obj.ObjectLayer = ObjectLayer.Building;
+		obj.PermittedRotations = PermittedRotations.FlipH;
+		obj.attachablePosition = new CellOffset(0, 0);
+		obj.RequiresPowerInput = false;
+		obj.CanMove = false;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		go.AddOrGet<LoopingSounds>();
-		BuildingAttachPoint buildingAttachPoint = go.AddOrGet<BuildingAttachPoint>();
-		buildingAttachPoint.points = new BuildingAttachPoint.HardPoint[1]
+		go.AddOrGet<BuildingAttachPoint>().points = new BuildingAttachPoint.HardPoint[1]
 		{
 			new BuildingAttachPoint.HardPoint(new CellOffset(0, 5), "MonumentTop", null)
 		};
-		MonumentPart monumentPart = go.AddOrGet<MonumentPart>();
-		monumentPart.part = MonumentPart.Part.Middle;
+		go.AddOrGet<MonumentPart>().part = MonumentPart.Part.Middle;
 	}
 
 	public override void DoPostConfigurePreview(BuildingDef def, GameObject go)
@@ -74,6 +72,12 @@ public class MonumentMiddleConfig : IBuildingConfig
 			monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_j", "model_pose2"));
 			monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_k", "balancing"));
 			monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_l", "holding_babies"));
+			if (DlcManager.IsExpansion1Active())
+			{
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_m", "rocket"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_n", "holding_baby_worm"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_o", "holding_baby_blarva_critter"));
+			}
 		};
 	}
 }

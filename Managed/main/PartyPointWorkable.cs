@@ -40,8 +40,7 @@ public class PartyPointWorkable : Workable, IWorkerPrioritizable
 		showProgressBar = false;
 		resetProgressOnStop = true;
 		lightEfficiencyBonus = false;
-		float num = Random.Range(0f, 100f);
-		if (num > 80f)
+		if (Random.Range(0f, 100f) > 80f)
 		{
 			activity = ActivityType.Dance;
 		}
@@ -112,8 +111,7 @@ public class PartyPointWorkable : Workable, IWorkerPrioritizable
 	protected override void OnStartWork(Worker worker)
 	{
 		base.OnStartWork(worker);
-		KPrefabID component = worker.GetComponent<KPrefabID>();
-		component.AddTag(GameTags.AlwaysConverse);
+		worker.GetComponent<KPrefabID>().AddTag(GameTags.AlwaysConverse);
 		worker.Subscribe(-594200555, OnStartedTalking);
 		worker.Subscribe(25860745, OnStoppedTalking);
 	}
@@ -121,8 +119,7 @@ public class PartyPointWorkable : Workable, IWorkerPrioritizable
 	protected override void OnStopWork(Worker worker)
 	{
 		base.OnStopWork(worker);
-		KPrefabID component = worker.GetComponent<KPrefabID>();
-		component.RemoveTag(GameTags.AlwaysConverse);
+		worker.GetComponent<KPrefabID>().RemoveTag(GameTags.AlwaysConverse);
 		worker.Unsubscribe(-594200555, OnStartedTalking);
 		worker.Unsubscribe(25860745, OnStoppedTalking);
 	}
@@ -155,8 +152,7 @@ public class PartyPointWorkable : Workable, IWorkerPrioritizable
 		{
 			if (activity == ActivityType.Talk)
 			{
-				Facing component2 = base.worker.GetComponent<Facing>();
-				component2.Face(talker.transform.GetPosition());
+				base.worker.GetComponent<Facing>().Face(talker.transform.GetPosition());
 			}
 			lastTalker = talker;
 		}
@@ -169,13 +165,9 @@ public class PartyPointWorkable : Workable, IWorkerPrioritizable
 	public bool GetWorkerPriority(Worker worker, out int priority)
 	{
 		priority = basePriority;
-		if (!string.IsNullOrEmpty(specificEffect))
+		if (!string.IsNullOrEmpty(specificEffect) && worker.GetComponent<Effects>().HasEffect(specificEffect))
 		{
-			Effects component = worker.GetComponent<Effects>();
-			if (component.HasEffect(specificEffect))
-			{
-				priority = RELAXATION.PRIORITY.RECENTLY_USED;
-			}
+			priority = RELAXATION.PRIORITY.RECENTLY_USED;
 		}
 		return true;
 	}

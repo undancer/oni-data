@@ -67,8 +67,7 @@ public class Moppable : Workable, ISim1000ms, ISim200ms
 		Grid.Objects[Grid.PosToCell(base.gameObject), 8] = base.gameObject;
 		new WorkChore<Moppable>(Db.Get().ChoreTypes.Mop, this);
 		SetWorkTime(float.PositiveInfinity);
-		KSelectable component = GetComponent<KSelectable>();
-		component.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().MiscStatusItems.WaitingForMop);
+		GetComponent<KSelectable>().SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().MiscStatusItems.WaitingForMop);
 		Subscribe(493375141, OnRefreshUserMenuDelegate);
 		overrideAnims = new KAnimFile[1]
 		{
@@ -80,8 +79,7 @@ public class Moppable : Workable, ISim1000ms, ISim200ms
 		}), GameScenePartitioner.Instance.liquidChangedLayer, OnLiquidChanged);
 		Refresh();
 		Subscribe(-1432940121, OnReachableChangedDelegate);
-		ReachabilityMonitor.Instance instance = new ReachabilityMonitor.Instance(this);
-		instance.StartSM();
+		new ReachabilityMonitor.Instance(this).StartSM();
 		SimAndRenderScheduler.instance.Remove(this);
 	}
 

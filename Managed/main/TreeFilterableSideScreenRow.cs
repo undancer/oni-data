@@ -13,7 +13,7 @@ public class TreeFilterableSideScreenRow : KMonoBehaviour
 		On
 	}
 
-	public bool visualDirty = false;
+	public bool visualDirty;
 
 	[SerializeField]
 	private LocText elementName;
@@ -75,7 +75,11 @@ public class TreeFilterableSideScreenRow : KMonoBehaviour
 		{
 			return State.Mixed;
 		}
-		return (rowElements.Count > 0) ? State.On : State.Off;
+		if (rowElements.Count <= 0)
+		{
+			return State.Off;
+		}
+		return State.On;
 	}
 
 	protected override void OnPrefabInit()

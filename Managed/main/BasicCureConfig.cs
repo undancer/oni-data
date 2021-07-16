@@ -27,8 +27,7 @@ public class BasicCureConfig : IEntityConfig
 		{
 			new ComplexRecipe.RecipeElement("BasicCure", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
-		string id = ComplexRecipeManager.MakeRecipeID("Apothecary", array, array2);
-		recipe = new ComplexRecipe(id, array, array2)
+		recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("Apothecary", array, array2), array, array2)
 		{
 			time = 50f,
 			description = ITEMS.PILLS.BASICCURE.RECIPEDESC,

@@ -23,8 +23,7 @@ public class AsteroidDescriptorPanel : KMonoBehaviour
 			GameObject gameObject = null;
 			if (i >= labels.Count)
 			{
-				GameObject original = ((customLabelPrefab != null) ? customLabelPrefab : ScreenPrefabs.Instance.DescriptionLabel);
-				gameObject = Util.KInstantiate(original, base.gameObject);
+				gameObject = Util.KInstantiate((customLabelPrefab != null) ? customLabelPrefab : ScreenPrefabs.Instance.DescriptionLabel, base.gameObject);
 				gameObject.transform.localScale = new Vector3(1f, 1f, 1f);
 				labels.Add(gameObject);
 			}

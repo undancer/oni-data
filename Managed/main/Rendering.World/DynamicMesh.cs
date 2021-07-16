@@ -88,9 +88,9 @@ namespace Rendering.World
 		public void Commit()
 		{
 			DynamicSubMesh[] meshes = Meshes;
-			foreach (DynamicSubMesh dynamicSubMesh in meshes)
+			for (int i = 0; i < meshes.Length; i++)
 			{
-				dynamicSubMesh.Commit();
+				meshes[i].Commit();
 			}
 			TriangleMeshIdx = 0;
 			UVMeshIdx = 0;
@@ -99,10 +99,9 @@ namespace Rendering.World
 
 		public void AddTriangle(int triangle)
 		{
-			DynamicSubMesh dynamicSubMesh = Meshes[TriangleMeshIdx];
-			if (dynamicSubMesh.AreTrianglesFull())
+			if (Meshes[TriangleMeshIdx].AreTrianglesFull())
 			{
-				dynamicSubMesh = Meshes[++TriangleMeshIdx];
+				_ = Meshes[++TriangleMeshIdx];
 			}
 			Meshes[TriangleMeshIdx].AddTriangle(triangle);
 		}
@@ -130,9 +129,9 @@ namespace Rendering.World
 		public void Render(Vector3 position, Quaternion rotation, Material material, int layer, MaterialPropertyBlock property_block)
 		{
 			DynamicSubMesh[] meshes = Meshes;
-			foreach (DynamicSubMesh dynamicSubMesh in meshes)
+			for (int i = 0; i < meshes.Length; i++)
 			{
-				dynamicSubMesh.Render(position, rotation, material, layer, property_block);
+				meshes[i].Render(position, rotation, material, layer, property_block);
 			}
 		}
 	}

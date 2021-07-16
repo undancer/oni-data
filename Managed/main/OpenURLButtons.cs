@@ -95,15 +95,13 @@ public class OpenURLButtons : KMonoBehaviour
 			DistributionPlatform.Inst.GetAuthTicket(delegate(byte[] ticket)
 			{
 				string newValue = string.Concat(Array.ConvertAll(ticket, (byte x) => x.ToString("X2")));
-				string url2 = URL.Replace("{SteamID}", DistributionPlatform.Inst.LocalUser.Id.ToInt64().ToString()).Replace("{SteamTicket}", newValue);
-				Application.OpenURL(url2);
+				Application.OpenURL(URL.Replace("{SteamID}", DistributionPlatform.Inst.LocalUser.Id.ToInt64().ToString()).Replace("{SteamTicket}", newValue));
 			});
 		}
 		else
 		{
 			string value = URL.Replace("{SteamID}", "").Replace("{SteamTicket}", "");
-			string url = "https://accounts.klei.com/login?goto={gotoUrl}".Replace("{gotoUrl}", WebUtility.HtmlEncode(value));
-			Application.OpenURL(url);
+			Application.OpenURL("https://accounts.klei.com/login?goto={gotoUrl}".Replace("{gotoUrl}", WebUtility.HtmlEncode(value)));
 		}
 	}
 }

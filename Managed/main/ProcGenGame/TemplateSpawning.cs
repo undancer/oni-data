@@ -309,11 +309,10 @@ namespace ProcGenGame
 				if (subWorld.temperatureRange != subworld.temperatureRange)
 				{
 					float num = Mathf.Min(temperature.min, temperature2.min);
-					float num2 = Mathf.Max(temperature.max, temperature2.max);
-					float num3 = num2 - num;
-					bool flag = rect.Overlaps(terrainCell.poly.bounds);
-					bool flag2 = num3 > EXTREME_POI_OVERLAP_TEMPERATURE_RANGE;
-					if (flag && flag2)
+					float num2 = Mathf.Max(temperature.max, temperature2.max) - num;
+					bool num3 = rect.Overlaps(terrainCell.poly.bounds);
+					bool flag = num2 > EXTREME_POI_OVERLAP_TEMPERATURE_RANGE;
+					if (num3 && flag)
 					{
 						return true;
 					}
@@ -404,7 +403,11 @@ namespace ProcGenGame
 				case ProcGen.World.AllowedCellsFilter.TagCommand.DistanceFromTag:
 				{
 					int num = cell.DistanceToTag(filter.tag);
-					return num >= filter.minDistance && num <= filter.maxDistance;
+					if (num >= filter.minDistance)
+					{
+						return num <= filter.maxDistance;
+					}
+					return false;
 				}
 				}
 			}

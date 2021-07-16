@@ -6,7 +6,7 @@ public class PowerTransformer : Generator
 {
 	private Battery battery;
 
-	private bool mLoopDetected = false;
+	private bool mLoopDetected;
 
 	private static readonly EventSystem.IntraObjectHandler<PowerTransformer> OnOperationalChangedDelegate = new EventSystem.IntraObjectHandler<PowerTransformer>(delegate(PowerTransformer component, object data)
 	{

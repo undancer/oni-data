@@ -83,12 +83,11 @@ public class SandboxSprinkleTool : BrushTool
 		{
 			for (int j = 0; j < brushRadius * 2; j++)
 			{
-				float num = Vector2.Distance(new Vector2(i, j), new Vector2(brushRadius, brushRadius));
-				if (num < (float)brushRadius - 0.8f)
+				if (Vector2.Distance(new Vector2(i, j), new Vector2(brushRadius, brushRadius)) < (float)brushRadius - 0.8f)
 				{
 					Vector2 vector = Grid.CellToXY(Grid.OffsetCell(currentCell, i, j));
-					float num2 = PerlinSimplexNoise.noise(vector.x / settings.GetFloatSetting("SandboxTools.NoiseDensity"), vector.y / settings.GetFloatSetting("SandboxTools.NoiseDensity"), Time.realtimeSinceStartup);
-					if (settings.GetFloatSetting("SandboxTools.NoiseScale") <= num2)
+					float num = PerlinSimplexNoise.noise(vector.x / settings.GetFloatSetting("SandboxTools.NoiseDensity"), vector.y / settings.GetFloatSetting("SandboxTools.NoiseDensity"), Time.realtimeSinceStartup);
+					if (settings.GetFloatSetting("SandboxTools.NoiseScale") <= num)
 					{
 						brushOffsets.Add(new Vector2(i - brushRadius, j - brushRadius));
 					}

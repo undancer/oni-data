@@ -116,8 +116,7 @@ public class EntityThreatMonitor : GameStateMachine<EntityThreatMonitor, EntityT
 			GameScenePartitioner.Instance.GatherEntries(extents, GameScenePartitioner.Instance.attackableEntitiesLayer, pooledList);
 			for (int i = 0; i < pooledList.Count; i++)
 			{
-				ScenePartitionerEntry scenePartitionerEntry = pooledList[i];
-				FactionAlignment factionAlignment = scenePartitionerEntry.obj as FactionAlignment;
+				FactionAlignment factionAlignment = pooledList[i].obj as FactionAlignment;
 				if (!(factionAlignment.transform == null) && !(factionAlignment == alignment) && factionAlignment.IsAlignmentActive() && navigator.CanReach(factionAlignment.attackable) && (!(allyTag != null) || !factionAlignment.HasTag(allyTag)))
 				{
 					threats.Add(factionAlignment);

@@ -7,15 +7,15 @@ public class ResetSkillsStationConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("ResetSkillsStation", 3, 3, "reSpeccer_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 480f;
-		buildingDef.ExhaustKilowattsWhenActive = 0.5f;
-		buildingDef.SelfHeatKilowattsWhenActive = 4f;
-		buildingDef.ViewMode = OverlayModes.Power.ID;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.AudioSize = "large";
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("ResetSkillsStation", 3, 3, "reSpeccer_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.NONE);
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 480f;
+		obj.ExhaustKilowattsWhenActive = 0.5f;
+		obj.SelfHeatKilowattsWhenActive = 4f;
+		obj.ViewMode = OverlayModes.Power.ID;
+		obj.AudioCategory = "Metal";
+		obj.AudioSize = "large";
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -23,8 +23,7 @@ public class ResetSkillsStationConfig : IBuildingConfig
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
 		go.AddTag(GameTags.NotRoomAssignable);
 		go.AddOrGet<BuildingComplete>().isManuallyOperated = true;
-		Ownable ownable = go.AddOrGet<Ownable>();
-		ownable.slotID = Db.Get().AssignableSlots.ResetSkillsStation.Id;
+		go.AddOrGet<Ownable>().slotID = Db.Get().AssignableSlots.ResetSkillsStation.Id;
 		ResetSkillsStation resetSkillsStation = go.AddOrGet<ResetSkillsStation>();
 		resetSkillsStation.workTime = 180f;
 		resetSkillsStation.overrideAnims = new KAnimFile[1]

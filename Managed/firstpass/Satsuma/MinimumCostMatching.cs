@@ -54,8 +54,7 @@ namespace Satsuma
 
 		private void Run()
 		{
-			RedirectedGraph graph = new RedirectedGraph(Graph, (Arc x) => (!IsRed(Graph.U(x))) ? RedirectedGraph.Direction.Backward : RedirectedGraph.Direction.Forward);
-			Supergraph supergraph = new Supergraph(graph);
+			Supergraph supergraph = new Supergraph(new RedirectedGraph(Graph, (Arc x) => (!IsRed(Graph.U(x))) ? RedirectedGraph.Direction.Backward : RedirectedGraph.Direction.Forward));
 			Node node = supergraph.AddNode();
 			Node node2 = supergraph.AddNode();
 			foreach (Node item in Graph.Nodes())
@@ -70,7 +69,7 @@ namespace Satsuma
 				}
 			}
 			Arc reflow = supergraph.AddArc(node2, node, Directedness.Directed);
-			NetworkSimplex networkSimplex = new NetworkSimplex(supergraph, (Arc x) => (x == reflow) ? MinimumMatchingSize : 0, (Arc x) => (!(x == reflow)) ? 1 : MaximumMatchingSize, null, (Arc x) => Graph.HasArc(x) ? Cost(x) : 0.0);
+			NetworkSimplex networkSimplex = new NetworkSimplex(supergraph, (Arc x) => (x == reflow) ? MinimumMatchingSize : 0, (Arc x) => (!(x == reflow)) ? 1 : MaximumMatchingSize, null, (Arc x) => (!Graph.HasArc(x)) ? 0.0 : Cost(x));
 			networkSimplex.Run();
 			if (networkSimplex.State != SimplexState.Optimal)
 			{

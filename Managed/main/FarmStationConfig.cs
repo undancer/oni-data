@@ -15,13 +15,13 @@ public class FarmStationConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("FarmStation", 2, 3, "planttender_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.ViewMode = OverlayModes.Rooms.ID;
-		buildingDef.Overheatable = false;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.AudioSize = "large";
-		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("FarmStation", 2, 3, "planttender_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.NONE);
+		obj.ViewMode = OverlayModes.Rooms.ID;
+		obj.Overheatable = false;
+		obj.AudioCategory = "Metal";
+		obj.AudioSize = "large";
+		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

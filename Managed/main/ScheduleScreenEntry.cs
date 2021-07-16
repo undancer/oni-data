@@ -64,8 +64,7 @@ public class ScheduleScreenEntry : KMonoBehaviour
 		});
 		int num = 0;
 		blockButtons = new List<ScheduleBlockButton>();
-		List<ScheduleBlock> blocks = schedule.GetBlocks();
-		int count = blocks.Count;
+		int count = schedule.GetBlocks().Count;
 		foreach (ScheduleBlock block in schedule.GetBlocks())
 		{
 			ScheduleBlockButton scheduleBlockButton = Util.KInstantiateUI<ScheduleBlockButton>(blockButtonPrefab.gameObject, blockButtonContainer.gameObject, force_active: true);
@@ -233,8 +232,7 @@ public class ScheduleScreenEntry : KMonoBehaviour
 		{
 			noteEntryRight.text = "";
 		}
-		int numBlocks = blockTypeCounts[Db.Get().ScheduleBlockTypes.Recreation.Id];
-		string breakBonus = QualityOfLifeNeed.GetBreakBonus(numBlocks);
+		string breakBonus = QualityOfLifeNeed.GetBreakBonus(blockTypeCounts[Db.Get().ScheduleBlockTypes.Recreation.Id]);
 		if (breakBonus == null)
 		{
 			return;

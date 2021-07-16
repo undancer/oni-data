@@ -20,10 +20,10 @@ public class KAnimFile : ScriptableObject
 	public const string ANIM_ROOT_PATH = "Assets/anim";
 
 	[SerializeField]
-	private TextAsset animFile = null;
+	private TextAsset animFile;
 
 	[SerializeField]
-	private TextAsset buildFile = null;
+	private TextAsset buildFile;
 
 	[SerializeField]
 	private List<Texture2D> textures = new List<Texture2D>();
@@ -36,11 +36,49 @@ public class KAnimFile : ScriptableObject
 
 	public string homedirectory = "";
 
-	public byte[] animBytes => (mod != null) ? mod.anim : ((animFile != null) ? animFile.bytes : null);
+	public byte[] animBytes
+	{
+		get
+		{
+			if (mod != null)
+			{
+				return mod.anim;
+			}
+			if (!(animFile != null))
+			{
+				return null;
+			}
+			return animFile.bytes;
+		}
+	}
 
-	public byte[] buildBytes => (mod != null) ? mod.build : ((buildFile != null) ? buildFile.bytes : null);
+	public byte[] buildBytes
+	{
+		get
+		{
+			if (mod != null)
+			{
+				return mod.build;
+			}
+			if (!(buildFile != null))
+			{
+				return null;
+			}
+			return buildFile.bytes;
+		}
+	}
 
-	public List<Texture2D> textureList => (mod == null) ? textures : mod.textures;
+	public List<Texture2D> textureList
+	{
+		get
+		{
+			if (mod != null)
+			{
+				return mod.textures;
+			}
+			return textures;
+		}
+	}
 
 	public HashedString batchTag
 	{

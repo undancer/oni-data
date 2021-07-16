@@ -26,8 +26,7 @@ public class AnimEventHandler : KMonoBehaviour
 	{
 		base.OnSpawn();
 		KBatchedAnimTracker[] componentsInChildren = GetComponentsInChildren<KBatchedAnimTracker>(includeInactive: true);
-		KBatchedAnimTracker[] array = componentsInChildren;
-		foreach (KBatchedAnimTracker kBatchedAnimTracker in array)
+		foreach (KBatchedAnimTracker kBatchedAnimTracker in componentsInChildren)
 		{
 			if (kBatchedAnimTracker.useTargetPoint)
 			{

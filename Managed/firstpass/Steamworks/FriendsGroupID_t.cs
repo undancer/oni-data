@@ -21,7 +21,11 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			return other is FriendsGroupID_t && this == (FriendsGroupID_t)other;
+			if (other is FriendsGroupID_t)
+			{
+				return this == (FriendsGroupID_t)other;
+			}
+			return false;
 		}
 
 		public override int GetHashCode()

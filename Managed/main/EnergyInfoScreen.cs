@@ -26,7 +26,11 @@ public class EnergyInfoScreen : TargetScreen
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		return target.GetComponent<ICircuitConnected>() != null || target.GetComponent<Wire>() != null;
+		if (target.GetComponent<ICircuitConnected>() == null)
+		{
+			return target.GetComponent<Wire>() != null;
+		}
+		return true;
 	}
 
 	protected override void OnPrefabInit()

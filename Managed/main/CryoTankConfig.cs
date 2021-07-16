@@ -24,8 +24,7 @@ public class CryoTankConfig : IEntityConfig
 		cryoTank.overrideAnim = "anim_interacts_clothingfactory_kanim";
 		cryoTank.dropOffset = new Vector2I(0, 1);
 		gameObject.AddOrGet<LoreBearer>();
-		OccupyArea occupyArea = gameObject.AddOrGet<OccupyArea>();
-		occupyArea.objectLayers = new ObjectLayer[1]
+		gameObject.AddOrGet<OccupyArea>().objectLayers = new ObjectLayer[1]
 		{
 			ObjectLayer.Building
 		};

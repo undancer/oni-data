@@ -12,8 +12,7 @@ public class EyeAnimation : IEntityConfig
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateEntity(ID, ID, is_selectable: false);
-		KBatchedAnimController kBatchedAnimController = gameObject.AddOrGet<KBatchedAnimController>();
-		kBatchedAnimController.AnimFiles = new KAnimFile[1]
+		gameObject.AddOrGet<KBatchedAnimController>().AnimFiles = new KAnimFile[1]
 		{
 			Assets.GetAnim("anim_blinks_kanim")
 		};

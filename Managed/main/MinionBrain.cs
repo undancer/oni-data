@@ -48,8 +48,7 @@ public class MinionBrain : Brain
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		Storage component = GetComponent<Storage>();
-		foreach (GameObject item in component.items)
+		foreach (GameObject item in GetComponent<Storage>().items)
 		{
 			AddAnimTracker(item);
 		}
@@ -99,12 +98,10 @@ public class MinionBrain : Brain
 		if (!Game.Instance.savedInfo.discoveredSurface)
 		{
 			int cell = Grid.PosToCell(base.gameObject);
-			SubWorld.ZoneType subWorldZoneType = World.Instance.zoneRenderData.GetSubWorldZoneType(cell);
-			if (subWorldZoneType == SubWorld.ZoneType.Space)
+			if (World.Instance.zoneRenderData.GetSubWorldZoneType(cell) == SubWorld.ZoneType.Space)
 			{
 				Game.Instance.savedInfo.discoveredSurface = true;
-				Vector3 position = base.gameObject.transform.GetPosition();
-				DiscoveredSpaceMessage message = new DiscoveredSpaceMessage(position);
+				DiscoveredSpaceMessage message = new DiscoveredSpaceMessage(base.gameObject.transform.GetPosition());
 				Messenger.Instance.QueueMessage(message);
 				Game.Instance.Trigger(-818188514, base.gameObject);
 			}
@@ -112,8 +109,7 @@ public class MinionBrain : Brain
 		if (!Game.Instance.savedInfo.discoveredOilField)
 		{
 			int cell2 = Grid.PosToCell(base.gameObject);
-			SubWorld.ZoneType subWorldZoneType2 = World.Instance.zoneRenderData.GetSubWorldZoneType(cell2);
-			if (subWorldZoneType2 == SubWorld.ZoneType.OilField)
+			if (World.Instance.zoneRenderData.GetSubWorldZoneType(cell2) == SubWorld.ZoneType.OilField)
 			{
 				Game.Instance.savedInfo.discoveredOilField = true;
 			}
@@ -167,20 +163,17 @@ public class MinionBrain : Brain
 		{
 			CameraController.Instance.ActiveWorldStarWipe(myWorld.id, position);
 		}
-		Notifier notifier = base.gameObject.AddOrGet<Notifier>();
-		notifier.Remove(notification);
+		base.gameObject.AddOrGet<Notifier>().Remove(notification);
 	}
 
 	private void OnUnstableGroundImpact(object data)
 	{
-		int id = base.gameObject.GetMyWorld().id;
-		GameObject telepad = GameUtil.GetTelepad(id);
+		GameObject telepad = GameUtil.GetTelepad(base.gameObject.GetMyWorld().id);
 		Navigator component = GetComponent<Navigator>();
-		Ownables soleOwner = GetComponent<MinionIdentity>().GetSoleOwner();
-		Assignable assignable = soleOwner.GetAssignable(Db.Get().AssignableSlots.Bed);
-		bool flag = assignable != null && component.CanReach(Grid.PosToCell(assignable.transform.GetPosition()));
-		bool flag2 = telepad != null && component.CanReach(Grid.PosToCell(telepad.transform.GetPosition()));
-		if (!flag && !flag2)
+		Assignable assignable = GetComponent<MinionIdentity>().GetSoleOwner().GetAssignable(Db.Get().AssignableSlots.Bed);
+		bool num = assignable != null && component.CanReach(Grid.PosToCell(assignable.transform.GetPosition()));
+		bool flag = telepad != null && component.CanReach(Grid.PosToCell(telepad.transform.GetPosition()));
+		if (!num && !flag)
 		{
 			RegisterReactEmotePair("UnstableGroundShock", "anim_react_shock_kanim", 1f);
 			Notification notification = CreateCollapseNotification();
@@ -188,8 +181,7 @@ public class MinionBrain : Brain
 			{
 				RemoveCollapseNotification(notification);
 			};
-			Notifier notifier = base.gameObject.AddOrGet<Notifier>();
-			notifier.Add(notification);
+			base.gameObject.AddOrGet<Notifier>().Add(notification);
 		}
 	}
 

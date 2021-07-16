@@ -113,8 +113,7 @@ public static class MathUtil
 	public static Vector3 ApproachConstant(Vector3 target, Vector3 current, float speed)
 	{
 		Vector3 vector = target - current;
-		float magnitude = vector.magnitude;
-		if (magnitude > speed)
+		if (vector.magnitude > speed)
 		{
 			return current + vector.normalized * speed;
 		}
@@ -179,7 +178,6 @@ public static class MathUtil
 		}
 		float num2 = (point.x - segment.First.x) * (segment.Second.x - segment.First.x) + (point.y - segment.First.y) * (segment.Second.y - segment.First.y);
 		closest_point = Mathf.Max(0f, Mathf.Min(1f, num2 / num));
-		Vector2 a = segment.First + (segment.Second - segment.First) * closest_point;
-		return Vector2.Distance(a, point);
+		return Vector2.Distance(segment.First + (segment.Second - segment.First) * closest_point, point);
 	}
 }

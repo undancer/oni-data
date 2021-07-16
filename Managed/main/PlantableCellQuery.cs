@@ -97,8 +97,7 @@ public class PlantableCellQuery : PathFinderQuery
 		int num2 = 0;
 		foreach (ScenePartitionerEntry item in pooledList)
 		{
-			KPrefabID kPrefabID = (KPrefabID)item.obj;
-			if (!kPrefabID.GetComponent<TreeBud>())
+			if (!((KPrefabID)item.obj).GetComponent<TreeBud>())
 			{
 				num2++;
 			}

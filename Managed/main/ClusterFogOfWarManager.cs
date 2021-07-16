@@ -142,8 +142,7 @@ public class ClusterFogOfWarManager : GameStateMachine<ClusterFogOfWarManager, C
 		{
 			for (int i = 0; i <= radius; i++)
 			{
-				List<AxialI> ring = AxialUtil.GetRing(center, i);
-				foreach (AxialI item in ring)
+				foreach (AxialI item in AxialUtil.GetRing(center, i))
 				{
 					if (ClusterGrid.Instance.IsValidCell(item) && !IsLocationRevealed(item))
 					{

@@ -152,10 +152,10 @@ namespace NodeEditorFramework
 				node.CheckNodeKnobMigration();
 				Node node2 = AddClonedSO(allSOs, clonedSOs, node);
 				AddClonedSOs(allSOs, clonedSOs, node2.GetScriptableObjects());
-				foreach (NodeKnob nodeKnob4 in node2.nodeKnobs)
+				foreach (NodeKnob nodeKnob3 in node2.nodeKnobs)
 				{
-					AddClonedSO(allSOs, clonedSOs, nodeKnob4);
-					AddClonedSOs(allSOs, clonedSOs, nodeKnob4.GetScriptableObjects());
+					AddClonedSO(allSOs, clonedSOs, nodeKnob3);
+					AddClonedSOs(allSOs, clonedSOs, nodeKnob3.GetScriptableObjects());
 				}
 			}
 			for (int j = 0; j < nodeCanvas.nodes.Count; j++)
@@ -167,21 +167,18 @@ namespace NodeEditorFramework
 				for (int k = 0; k < node5.nodeKnobs.Count; k++)
 				{
 					NodeKnob nodeKnob2 = (node5.nodeKnobs[k] = ReplaceSO(allSOs, clonedSOs, node5.nodeKnobs[k]));
-					NodeKnob nodeKnob3 = nodeKnob2;
-					nodeKnob3.body = node5;
-					nodeKnob3.CopyScriptableObjects((ScriptableObject so) => ReplaceSO(allSOs, clonedSOs, so));
+					nodeKnob2.body = node5;
+					nodeKnob2.CopyScriptableObjects((ScriptableObject so) => ReplaceSO(allSOs, clonedSOs, so));
 				}
 				for (int l = 0; l < node5.Inputs.Count; l++)
 				{
 					NodeInput nodeInput2 = (node5.Inputs[l] = ReplaceSO(allSOs, clonedSOs, node5.Inputs[l]));
-					NodeInput nodeInput3 = nodeInput2;
-					nodeInput3.body = node5;
+					nodeInput2.body = node5;
 				}
 				for (int m = 0; m < node5.Outputs.Count; m++)
 				{
 					NodeOutput nodeOutput2 = (node5.Outputs[m] = ReplaceSO(allSOs, clonedSOs, node5.Outputs[m]));
-					NodeOutput nodeOutput3 = nodeOutput2;
-					nodeOutput3.body = node5;
+					nodeOutput2.body = node5;
 				}
 			}
 			if (editorStates)
@@ -195,10 +192,10 @@ namespace NodeEditorFramework
 			}
 			else
 			{
-				NodeEditorState[] editorStates3 = nodeCanvas.editorStates;
-				foreach (NodeEditorState nodeEditorState2 in editorStates3)
+				NodeEditorState[] editorStates2 = nodeCanvas.editorStates;
+				for (int n = 0; n < editorStates2.Length; n++)
 				{
-					nodeEditorState2.selectedNode = null;
+					editorStates2[n].selectedNode = null;
 				}
 			}
 			return nodeCanvas;
@@ -267,7 +264,11 @@ namespace NodeEditorFramework
 			{
 				Debug.LogError("GetWorkingCopy: ScriptableObject " + initialSO.name + " was not copied before! It will be null!");
 			}
-			return (num == -1) ? null : ((T)clonedScriptableObjects[num]);
+			if (num != -1)
+			{
+				return (T)clonedScriptableObjects[num];
+			}
+			return null;
 		}
 
 		public static NodeEditorState ExtractEditorState(NodeCanvas canvas, string stateName)

@@ -25,13 +25,13 @@ public class DebugPaintElementScreen : KScreen
 	public float temperature = -1f;
 
 	[NonSerialized]
-	public bool set_prevent_fow_reveal = false;
+	public bool set_prevent_fow_reveal;
 
 	[NonSerialized]
-	public bool set_allow_fow_reveal = false;
+	public bool set_allow_fow_reveal;
 
 	[NonSerialized]
-	public int diseaseCount = 0;
+	public int diseaseCount;
 
 	public byte diseaseIdx;
 
@@ -101,7 +101,7 @@ public class DebugPaintElementScreen : KScreen
 
 	private List<string> options_list = new List<string>();
 
-	private string filter = null;
+	private string filter;
 
 	public static DebugPaintElementScreen Instance
 	{
@@ -240,10 +240,9 @@ public class DebugPaintElementScreen : KScreen
 				SimHashes.Water,
 				SimHashes.Oxygen
 			};
-			SimHashes[] array2 = array;
-			foreach (SimHashes hash in array2)
+			for (int i = 0; i < array.Length; i++)
 			{
-				Element element = ElementLoader.FindElementByHash(hash);
+				Element element = ElementLoader.FindElementByHash(array[i]);
 				item = new ElemDisplayInfo
 				{
 					id = element.id,

@@ -126,7 +126,17 @@ public class AutoMiner : StateMachineComponent<AutoMiner.Instance>, ISim1000ms
 
 	private bool HasDigCell => dig_cell != Grid.InvalidCell;
 
-	private bool RotationComplete => HasDigCell && rotation_complete;
+	private bool RotationComplete
+	{
+		get
+		{
+			if (HasDigCell)
+			{
+				return rotation_complete;
+			}
+			return false;
+		}
+	}
 
 	protected override void OnPrefabInit()
 	{
@@ -145,8 +155,7 @@ public class AutoMiner : StateMachineComponent<AutoMiner.Instance>, ISim1000ms
 		arm_go.transform.parent = component.transform;
 		looping_sounds = arm_go.AddComponent<LoopingSounds>();
 		rotateSound = GlobalAssets.GetSound(rotateSound);
-		KPrefabID kPrefabID = arm_go.AddComponent<KPrefabID>();
-		kPrefabID.PrefabTag = new Tag(name);
+		arm_go.AddComponent<KPrefabID>().PrefabTag = new Tag(name);
 		arm_anim_ctrl = arm_go.AddComponent<KBatchedAnimController>();
 		arm_anim_ctrl.AnimFiles = new KAnimFile[1]
 		{
@@ -157,8 +166,7 @@ public class AutoMiner : StateMachineComponent<AutoMiner.Instance>, ISim1000ms
 		arm_anim_ctrl.sceneLayer = Grid.SceneLayer.TransferArm;
 		component.SetSymbolVisiblity("gun_target", is_visible: false);
 		bool symbolVisible;
-		Vector4 column = component.GetSymbolTransform(new HashedString("gun_target"), out symbolVisible).GetColumn(3);
-		Vector3 position = column;
+		Vector3 position = component.GetSymbolTransform(new HashedString("gun_target"), out symbolVisible).GetColumn(3);
 		position.z = Grid.GetLayerZ(Grid.SceneLayer.TransferArm);
 		arm_go.transform.SetPosition(position);
 		arm_go.SetActive(value: true);
@@ -364,20 +372,19 @@ public class AutoMiner : StateMachineComponent<AutoMiner.Instance>, ISim1000ms
 	{
 		if (!rotation_complete)
 		{
-			float num = MathUtil.AngleSigned(Vector3.up, target_dir, Vector3.forward);
-			float val = num - arm_rot;
+			float val = MathUtil.AngleSigned(Vector3.up, target_dir, Vector3.forward) - arm_rot;
 			val = MathUtil.Wrap(-180f, 180f, val);
 			rotation_complete = Mathf.Approximately(val, 0f);
-			float num2 = val;
+			float num = val;
 			if (warp)
 			{
 				rotation_complete = true;
 			}
 			else
 			{
-				num2 = Mathf.Clamp(num2, (0f - turn_rate) * dt, turn_rate * dt);
+				num = Mathf.Clamp(num, (0f - turn_rate) * dt, turn_rate * dt);
 			}
-			arm_rot += num2;
+			arm_rot += num;
 			arm_rot = MathUtil.Wrap(-180f, 180f, arm_rot);
 			arm_go.transform.rotation = Quaternion.Euler(0f, 0f, arm_rot);
 			if (!rotation_complete)

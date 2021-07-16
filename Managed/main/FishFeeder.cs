@@ -27,7 +27,7 @@ public class FishFeeder : GameStateMachine<FishFeeder, FishFeeder.Instance, ISta
 	{
 		private Instance smi;
 
-		private float mass = 0f;
+		private float mass;
 
 		private float targetMass;
 
@@ -146,9 +146,8 @@ public class FishFeeder : GameStateMachine<FishFeeder, FishFeeder.Instance, ISta
 				if (!(item == null))
 				{
 					num += item.GetComponent<PrimaryElement>().Mass;
-					int cell = Grid.PosToCell(smi.transform.GetPosition());
-					int cell2 = Grid.CellBelow(Grid.CellBelow(cell));
-					item.transform.SetPosition(Grid.CellToPosCBC(cell2, Grid.SceneLayer.BuildingBack));
+					int cell = Grid.CellBelow(Grid.CellBelow(Grid.PosToCell(smi.transform.GetPosition())));
+					item.transform.SetPosition(Grid.CellToPosCBC(cell, Grid.SceneLayer.BuildingBack));
 				}
 			}
 			if (num == 0f)
@@ -172,9 +171,8 @@ public class FishFeeder : GameStateMachine<FishFeeder, FishFeeder.Instance, ISta
 						anim.GetComponent<SymbolOverrideController>().AddSymbolOverride(HASH_FEEDBALL, symbol);
 					}
 					botStorage.Store(pickupable.gameObject);
-					int cell3 = Grid.PosToCell(smi.transform.GetPosition());
-					int cell4 = Grid.CellBelow(Grid.CellBelow(cell3));
-					pickupable.transform.SetPosition(Grid.CellToPosCBC(cell4, Grid.SceneLayer.BuildingUse));
+					int cell2 = Grid.CellBelow(Grid.CellBelow(Grid.PosToCell(smi.transform.GetPosition())));
+					pickupable.transform.SetPosition(Grid.CellToPosCBC(cell2, Grid.SceneLayer.BuildingUse));
 				}
 				else
 				{
@@ -238,8 +236,7 @@ public class FishFeeder : GameStateMachine<FishFeeder, FishFeeder.Instance, ISta
 
 	private static void OnStorageChange(Instance smi, object data)
 	{
-		GameObject x = (GameObject)data;
-		if (!(x == null))
+		if (!((GameObject)data == null))
 		{
 			smi.fishFeederTop.RefreshStorage();
 			smi.fishFeederBot.RefreshStorage();

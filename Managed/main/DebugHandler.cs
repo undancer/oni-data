@@ -34,11 +34,11 @@ public class DebugHandler : IInputHandler
 
 	public static bool RevealFogOfWar;
 
-	private bool superTestMode = false;
+	private bool superTestMode;
 
-	private bool ultraTestMode = false;
+	private bool ultraTestMode;
 
-	private bool slowTestMode = false;
+	private bool slowTestMode;
 
 	private static int activeWorldBeforeOverride = -1;
 
@@ -67,8 +67,7 @@ public class DebugHandler : IInputHandler
 	{
 		Vector3 mousePos = KInputManager.GetMousePos();
 		mousePos.z = 0f - Camera.main.transform.GetPosition().z - Grid.CellSizeInMeters;
-		Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
-		return Grid.PosToCell(pos);
+		return Grid.PosToCell(Camera.main.ScreenToWorldPoint(mousePos));
 	}
 
 	public static Vector3 GetMousePos()
@@ -95,25 +94,24 @@ public class DebugHandler : IInputHandler
 		Vector3 position = Grid.CellToPosCBC(GetMouseCell(), Grid.SceneLayer.Move);
 		gameObject.transform.SetLocalPosition(position);
 		gameObject.SetActive(value: true);
-		MinionStartingStats minionStartingStats = new MinionStartingStats(is_starter_minion: false);
-		minionStartingStats.Apply(gameObject);
+		new MinionStartingStats(is_starter_minion: false).Apply(gameObject);
 		if (addAtmoSuit)
 		{
 			GameObject gameObject2 = GameUtil.KInstantiate(Assets.GetPrefab("Atmo_Suit"), position, Grid.SceneLayer.Creatures);
 			gameObject2.SetActive(value: true);
 			SuitTank component = gameObject2.GetComponent<SuitTank>();
 			GameObject gameObject3 = GameUtil.KInstantiate(Assets.GetPrefab(GameTags.Oxygen), position, Grid.SceneLayer.Ore);
-			PrimaryElement component2 = gameObject3.GetComponent<PrimaryElement>();
-			component2.Units = component.capacity;
+			gameObject3.GetComponent<PrimaryElement>().Units = component.capacity;
 			gameObject3.SetActive(value: true);
 			component.storage.Store(gameObject3, hide_popups: true);
-			Equippable component3 = gameObject2.GetComponent<Equippable>();
+			Equippable component2 = gameObject2.GetComponent<Equippable>();
 			gameObject.GetComponent<MinionIdentity>().ValidateProxy();
-			Equipment component4 = gameObject.GetComponent<MinionIdentity>().assignableProxy.Get().GetComponent<Equipment>();
-			component3.Assign(component4.GetComponent<IAssignableIdentity>());
+			Equipment component3 = gameObject.GetComponent<MinionIdentity>().assignableProxy.Get().GetComponent<Equipment>();
+			component2.Assign(component3.GetComponent<IAssignableIdentity>());
 			gameObject2.GetComponent<EquippableWorkable>().CancelChore();
-			component4.Equip(component3);
+			component3.Equip(component2);
 		}
+		gameObject.GetMyWorld().SetDupeVisited();
 	}
 
 	public static void SetDebugEnabled(bool debugEnabled)
@@ -183,8 +181,7 @@ public class DebugHandler : IInputHandler
 		}
 		else if (e.TryConsume(Action.DebugDig))
 		{
-			int mouseCell = GetMouseCell();
-			SimMessages.Dig(mouseCell);
+			SimMessages.Dig(GetMouseCell());
 		}
 		else if (e.TryConsume(Action.DebugToggleFastWorkers))
 		{
@@ -225,8 +222,7 @@ public class DebugHandler : IInputHandler
 		{
 			Vector3 mousePos = KInputManager.GetMousePos();
 			mousePos.z = 0f - Camera.main.transform.GetPosition().z - Grid.CellSizeInMeters;
-			Vector3 explosion_pos = Camera.main.ScreenToWorldPoint(mousePos);
-			GameUtil.CreateExplosion(explosion_pos);
+			GameUtil.CreateExplosion(Camera.main.ScreenToWorldPoint(mousePos));
 		}
 		else if (e.TryConsume(Action.DebugLockCursor))
 		{
@@ -252,23 +248,19 @@ public class DebugHandler : IInputHandler
 		}
 		else if (e.TryConsume(Action.SreenShot1x))
 		{
-			string filename = Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png");
-			ScreenCapture.CaptureScreenshot(filename, 1);
+			ScreenCapture.CaptureScreenshot(Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png"), 1);
 		}
 		else if (e.TryConsume(Action.SreenShot2x))
 		{
-			string filename2 = Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png");
-			ScreenCapture.CaptureScreenshot(filename2, 2);
+			ScreenCapture.CaptureScreenshot(Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png"), 2);
 		}
 		else if (e.TryConsume(Action.SreenShot8x))
 		{
-			string filename3 = Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png");
-			ScreenCapture.CaptureScreenshot(filename3, 8);
+			ScreenCapture.CaptureScreenshot(Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png"), 8);
 		}
 		else if (e.TryConsume(Action.SreenShot32x))
 		{
-			string filename4 = Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png");
-			ScreenCapture.CaptureScreenshot(filename4, 32);
+			ScreenCapture.CaptureScreenshot(Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png"), 32);
 		}
 		else if (e.TryConsume(Action.DebugCellInfo))
 		{
@@ -349,13 +341,13 @@ public class DebugHandler : IInputHandler
 			KSelectable selected = SelectTool.Instance.selected;
 			if (selected != null)
 			{
-				int mouseCell2 = GetMouseCell();
-				if (!Grid.IsValidBuildingCell(mouseCell2))
+				int mouseCell = GetMouseCell();
+				if (!Grid.IsValidBuildingCell(mouseCell))
 				{
 					PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Negative, UI.DEBUG_TOOLS.INVALID_LOCATION, null, GetMousePos(), 1.5f, track_target: false, force_spawn: true);
 					return;
 				}
-				selected.transform.SetPosition(Grid.CellToPosCBC(mouseCell2, Grid.SceneLayer.Move));
+				selected.transform.SetPosition(Grid.CellToPosCBC(mouseCell, Grid.SceneLayer.Move));
 			}
 		}
 		else if (!e.TryConsume(Action.DebugPlace) && !e.TryConsume(Action.DebugSelectMaterial))
@@ -519,13 +511,13 @@ public class DebugHandler : IInputHandler
 		}
 	}
 
-	public static void SetTimelapseMode(bool enabled)
+	public static void SetTimelapseMode(bool enabled, int world_id = 0)
 	{
 		TimelapseMode = enabled;
 		if (enabled)
 		{
 			activeWorldBeforeOverride = ClusterManager.Instance.activeWorldId;
-			ClusterManager.Instance.TimelapseModeOverrideActiveWorld(0);
+			ClusterManager.Instance.TimelapseModeOverrideActiveWorld(world_id);
 		}
 		else
 		{

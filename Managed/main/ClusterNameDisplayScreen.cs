@@ -52,15 +52,13 @@ public class ClusterNameDisplayScreen : KScreen
 		{
 			Entry entry = new Entry();
 			entry.grid_entity = representedObject;
-			GameObject original = nameAndBarsPrefab;
-			GameObject gameObject = (entry.display_go = Util.KInstantiateUI(original, base.gameObject, force_active: true));
+			GameObject gameObject = (entry.display_go = Util.KInstantiateUI(nameAndBarsPrefab, base.gameObject, force_active: true));
 			gameObject.name = representedObject.name + " cluster overlay";
 			entry.Name = representedObject.name;
 			entry.refs = gameObject.GetComponent<HierarchyReferences>();
 			entry.bars_go = entry.refs.GetReference<RectTransform>("Bars").gameObject;
 			m_entries.Add(entry);
-			KSelectable component = representedObject.GetComponent<KSelectable>();
-			if (component != null)
+			if (representedObject.GetComponent<KSelectable>() != null)
 			{
 				UpdateName(representedObject);
 				UpdateBars(representedObject);
@@ -78,15 +76,14 @@ public class ClusterNameDisplayScreen : KScreen
 		int num2 = 0;
 		while (num2 < num)
 		{
-			if (m_entries[num2].grid_entity != null && ClusterMapScreen.GetRevealLevel(m_entries[num2].grid_entity) == ClusterRevealLevel.Visible && m_entries[num2].grid_entity.ShowName())
+			if (m_entries[num2].grid_entity != null && ClusterMapScreen.GetRevealLevel(m_entries[num2].grid_entity) == ClusterRevealLevel.Visible)
 			{
 				Transform gridEntityNameTarget = ClusterMapScreen.Instance.GetGridEntityNameTarget(m_entries[num2].grid_entity);
 				if (gridEntityNameTarget != null)
 				{
 					Vector3 position = gridEntityNameTarget.GetPosition();
-					RectTransform component = m_entries[num2].display_go.GetComponent<RectTransform>();
-					component.SetPositionAndRotation(position, Quaternion.identity);
-					m_entries[num2].display_go.SetActive(m_entries[num2].grid_entity.IsVisible);
+					m_entries[num2].display_go.GetComponent<RectTransform>().SetPositionAndRotation(position, Quaternion.identity);
+					m_entries[num2].display_go.SetActive(m_entries[num2].grid_entity.IsVisible && m_entries[num2].grid_entity.ShowName());
 				}
 				else if (m_entries[num2].display_go.activeSelf)
 				{
@@ -95,8 +92,7 @@ public class ClusterNameDisplayScreen : KScreen
 				UpdateBars(m_entries[num2].grid_entity);
 				if (m_entries[num2].bars_go != null)
 				{
-					GameObject bars_go = m_entries[num2].bars_go;
-					bars_go.GetComponentsInChildren(includeInactive: false, workingList);
+					m_entries[num2].bars_go.GetComponentsInChildren(includeInactive: false, workingList);
 					foreach (KCollider2D working in workingList)
 					{
 						working.MarkDirty();

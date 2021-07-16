@@ -67,6 +67,17 @@ public class GameplayEventManager : KMonoBehaviour
 		return false;
 	}
 
+	public void GetActiveEventsOfType<T>(int worldID, ref List<GameplayEventInstance> results) where T : GameplayEvent
+	{
+		foreach (GameplayEventInstance activeEvent in activeEvents)
+		{
+			if (activeEvent.worldId == worldID && activeEvent.gameplayEvent as T != null)
+			{
+				results.Add(activeEvent);
+			}
+		}
+	}
+
 	private GameplayEventInstance CreateGameplayEvent(GameplayEvent gameplayEvent, int worldId)
 	{
 		return gameplayEvent.CreateInstance(worldId);

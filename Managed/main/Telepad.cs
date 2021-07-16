@@ -14,7 +14,11 @@ public class Telepad : StateMachineComponent<Telepad.StatesInstance>
 
 		public bool IsColonyLost()
 		{
-			return GameFlowManager.Instance != null && GameFlowManager.Instance.IsGameOver();
+			if (GameFlowManager.Instance != null)
+			{
+				return GameFlowManager.Instance.IsGameOver();
+			}
+			return false;
 		}
 
 		public void UpdateMeter()

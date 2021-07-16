@@ -9,11 +9,11 @@ public class Telescope : Workable, OxygenBreather.IGasProvider, IGameObjectEffec
 {
 	public int clearScanCellRadius = 15;
 
-	private OxygenBreather.IGasProvider workerGasProvider = null;
+	private OxygenBreather.IGasProvider workerGasProvider;
 
 	private Operational operational;
 
-	private float percentClear = 0f;
+	private float percentClear;
 
 	private static readonly Operational.Flag visibleSkyFlag = new Operational.Flag("VisibleSky", Operational.Flag.Type.Requirement);
 
@@ -30,9 +30,7 @@ public class Telescope : Workable, OxygenBreather.IGasProvider, IGameObjectEffec
 		description = DUPLICANTS.CHORES.PRECONDITIONS.CONTAINS_OXYGEN,
 		fn = delegate(ref Chore.Precondition.Context context, object data)
 		{
-			Storage component = context.chore.target.GetComponent<Storage>();
-			PrimaryElement x = component.FindFirstWithMass(GameTags.Oxygen);
-			return x != null;
+			return context.chore.target.GetComponent<Storage>().FindFirstWithMass(GameTags.Oxygen) != null;
 		}
 	};
 
@@ -76,8 +74,7 @@ public class Telescope : Workable, OxygenBreather.IGasProvider, IGameObjectEffec
 
 	public void Sim200ms(float dt)
 	{
-		Building component = GetComponent<Building>();
-		Extents extents = component.GetExtents();
+		Extents extents = GetComponent<Building>().GetExtents();
 		int num = Mathf.Max(0, extents.x - clearScanCellRadius);
 		int num2 = Mathf.Min(extents.x + clearScanCellRadius);
 		int y = extents.y + extents.height - 3;
@@ -92,22 +89,22 @@ public class Telescope : Workable, OxygenBreather.IGasProvider, IGameObjectEffec
 				num6++;
 			}
 		}
-		Operational component2 = GetComponent<Operational>();
-		component2.SetFlag(visibleSkyFlag, num6 > 0);
+		Operational component = GetComponent<Operational>();
+		component.SetFlag(visibleSkyFlag, num6 > 0);
 		bool on = num6 < num3;
-		KSelectable component3 = GetComponent<KSelectable>();
+		KSelectable component2 = GetComponent<KSelectable>();
 		if (num6 > 0)
 		{
-			component3.ToggleStatusItem(noVisibilityStatusItem, on: false);
-			component3.ToggleStatusItem(reducedVisibilityStatusItem, on, this);
+			component2.ToggleStatusItem(noVisibilityStatusItem, on: false);
+			component2.ToggleStatusItem(reducedVisibilityStatusItem, on, this);
 		}
 		else
 		{
-			component3.ToggleStatusItem(noVisibilityStatusItem, on: true, this);
-			component3.ToggleStatusItem(reducedVisibilityStatusItem, on: false);
+			component2.ToggleStatusItem(noVisibilityStatusItem, on: true, this);
+			component2.ToggleStatusItem(reducedVisibilityStatusItem, on: false);
 		}
 		percentClear = (float)num6 / (float)num3;
-		if (!component2.IsActive && component2.IsOperational && chore == null)
+		if (!component.IsActive && component.IsOperational && chore == null)
 		{
 			chore = CreateChore();
 			SetWorkTime(float.PositiveInfinity);
@@ -117,9 +114,7 @@ public class Telescope : Workable, OxygenBreather.IGasProvider, IGameObjectEffec
 	private static string GetStatusItemString(string src_str, object data)
 	{
 		Telescope telescope = (Telescope)data;
-		string text = src_str;
-		text = text.Replace("{VISIBILITY}", GameUtil.GetFormattedPercent(telescope.percentClear * 100f));
-		return text.Replace("{RADIUS}", telescope.clearScanCellRadius.ToString());
+		return src_str.Replace("{VISIBILITY}", GameUtil.GetFormattedPercent(telescope.percentClear * 100f)).Replace("{RADIUS}", telescope.clearScanCellRadius.ToString());
 	}
 
 	private void OnWorkableEvent(WorkableEvent ev)
@@ -159,9 +154,8 @@ public class Telescope : Workable, OxygenBreather.IGasProvider, IGameObjectEffec
 			float num = 1f / (float)destination.OneBasedDistance;
 			float num2 = ROCKETRY.DESTINATION_ANALYSIS.DISCOVERED;
 			float dEFAULT_CYCLES_PER_DISCOVERY = ROCKETRY.DESTINATION_ANALYSIS.DEFAULT_CYCLES_PER_DISCOVERY;
-			float num3 = num2 / dEFAULT_CYCLES_PER_DISCOVERY;
-			float num4 = num3 / 600f;
-			float points = dt * num * num4;
+			float num3 = num2 / dEFAULT_CYCLES_PER_DISCOVERY / 600f;
+			float points = dt * num * num3;
 			SpacecraftManager.instance.EarnDestinationAnalysisPoints(starmapAnalysisDestinationID, points);
 		}
 		return base.OnWorkTick(worker, dt);
@@ -191,9 +185,7 @@ public class Telescope : Workable, OxygenBreather.IGasProvider, IGameObjectEffec
 		{
 			flag = true;
 		}
-		KSelectable component = GetComponent<KSelectable>();
-		bool on = !flag && !SpacecraftManager.instance.AreAllDestinationsAnalyzed();
-		component.ToggleStatusItem(Db.Get().BuildingStatusItems.NoApplicableAnalysisSelected, on);
+		GetComponent<KSelectable>().ToggleStatusItem(on: !flag && !SpacecraftManager.instance.AreAllDestinationsAnalyzed(), status_item: Db.Get().BuildingStatusItems.NoApplicableAnalysisSelected);
 		operational.SetFlag(this.flag, flag);
 		if (!flag && (bool)base.worker)
 		{

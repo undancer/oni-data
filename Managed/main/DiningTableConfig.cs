@@ -7,11 +7,11 @@ public class DiningTableConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("DiningTable", 1, 1, "diningtable_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER1);
-		buildingDef.WorkTime = 20f;
-		buildingDef.Overheatable = false;
-		buildingDef.AudioCategory = "Metal";
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("DiningTable", 1, 1, "diningtable_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER1);
+		obj.WorkTime = 20f;
+		obj.Overheatable = false;
+		obj.AudioCategory = "Metal";
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -25,8 +25,7 @@ public class DiningTableConfig : IBuildingConfig
 	public override void DoPostConfigureComplete(GameObject go)
 	{
 		go.GetComponent<KAnimControllerBase>().initialAnim = "off";
-		Ownable ownable = go.AddOrGet<Ownable>();
-		ownable.slotID = Db.Get().AssignableSlots.MessStation.Id;
+		go.AddOrGet<Ownable>().slotID = Db.Get().AssignableSlots.MessStation.Id;
 		Storage storage = BuildingTemplates.CreateDefaultStorage(go);
 		storage.showInUI = true;
 		storage.capacityKg = TableSaltTuning.SALTSHAKERSTORAGEMASS;

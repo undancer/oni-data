@@ -19,9 +19,9 @@ public class ElementsAudio
 		public string creatureChewSound = "";
 	}
 
-	private static ElementsAudio _instance = null;
+	private static ElementsAudio _instance;
 
-	private ElementAudioConfig[] elementAudioConfigs = null;
+	private ElementAudioConfig[] elementAudioConfigs;
 
 	public static ElementsAudio Instance
 	{

@@ -28,15 +28,11 @@ public class ConditionDestinationReachable : ProcessCondition
 			break;
 		}
 		case LaunchableRocketRegisterType.Clustercraft:
-		{
-			CraftModuleInterface craftInterface = module.GetComponent<RocketModuleCluster>().CraftInterface;
-			RocketClusterDestinationSelector component = craftInterface.GetComponent<RocketClusterDestinationSelector>();
-			if (!component.IsAtDestination())
+			if (!module.GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<RocketClusterDestinationSelector>().IsAtDestination())
 			{
 				result = Status.Ready;
 			}
 			break;
-		}
 		}
 		return result;
 	}
@@ -61,7 +57,7 @@ public class ConditionDestinationReachable : ProcessCondition
 		switch (craftRegisterType)
 		{
 		case LaunchableRocketRegisterType.Spacecraft:
-			result = ((status != Status.Ready || GetSpacecraftDestination() == null) ? ((GetSpacecraftDestination() == null) ? ((string)UI.STARMAP.DESTINATIONSELECTION.NOTSELECTED) : ((string)UI.STARMAP.DESTINATIONSELECTION.UNREACHABLE)) : ((string)UI.STARMAP.DESTINATIONSELECTION.REACHABLE));
+			result = ((status == Status.Ready && GetSpacecraftDestination() != null) ? ((string)UI.STARMAP.DESTINATIONSELECTION.REACHABLE) : ((GetSpacecraftDestination() == null) ? ((string)UI.STARMAP.DESTINATIONSELECTION.NOTSELECTED) : ((string)UI.STARMAP.DESTINATIONSELECTION.UNREACHABLE)));
 			break;
 		case LaunchableRocketRegisterType.Clustercraft:
 			result = UI.STARMAP.DESTINATIONSELECTION.REACHABLE;
@@ -76,7 +72,7 @@ public class ConditionDestinationReachable : ProcessCondition
 		switch (craftRegisterType)
 		{
 		case LaunchableRocketRegisterType.Spacecraft:
-			result = ((status != Status.Ready || GetSpacecraftDestination() == null) ? ((GetSpacecraftDestination() == null) ? ((string)UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.NOTSELECTED) : ((string)UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.UNREACHABLE)) : ((string)UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.REACHABLE));
+			result = ((status == Status.Ready && GetSpacecraftDestination() != null) ? ((string)UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.REACHABLE) : ((GetSpacecraftDestination() == null) ? ((string)UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.NOTSELECTED) : ((string)UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.UNREACHABLE)));
 			break;
 		case LaunchableRocketRegisterType.Clustercraft:
 			result = ((status != Status.Ready) ? ((string)UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.NOTSELECTED) : ((string)UI.STARMAP.DESTINATIONSELECTION_TOOLTIP.REACHABLE));

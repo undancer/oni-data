@@ -28,13 +28,16 @@ public struct SoundCuller
 
 	public bool IsAudible(Vector2 pos)
 	{
-		return IsAudibleWorld(pos) && min.LessEqual(pos) && pos.LessEqual(max);
+		if (IsAudibleWorld(pos) && min.LessEqual(pos))
+		{
+			return pos.LessEqual(max);
+		}
+		return false;
 	}
 
 	public bool IsAudibleNoCameraScaling(Vector2 pos, float falloff_distance_sq)
 	{
-		float num = (pos.x - cameraPos.x) * (pos.x - cameraPos.x) + (pos.y - cameraPos.y) * (pos.y - cameraPos.y);
-		return num < falloff_distance_sq;
+		return (pos.x - cameraPos.x) * (pos.x - cameraPos.x) + (pos.y - cameraPos.y) * (pos.y - cameraPos.y) < falloff_distance_sq;
 	}
 
 	public bool IsAudible(Vector2 pos, float falloff_distance_sq)
@@ -95,8 +98,7 @@ public struct SoundCuller
 		result.max = new Vector3(vector.x, vector.y, 0f);
 		result.cameraPos = main.transform.GetPosition();
 		Audio audio = Audio.Get();
-		float orthographicSize = CameraController.Instance.cameras[0].orthographicSize;
-		float num = orthographicSize / (audio.listenerReferenceZ - audio.listenerMinZ);
+		float num = CameraController.Instance.cameras[0].orthographicSize / (audio.listenerReferenceZ - audio.listenerMinZ);
 		num = (result.zoomScaler = ((!(num <= 0f)) ? 1f : 2f));
 		return result;
 	}

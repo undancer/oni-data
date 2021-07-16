@@ -27,10 +27,10 @@ public class WiltCondition : KMonoBehaviour
 	private ReceptacleMonitor rm;
 
 	[Serialize]
-	private bool goingToWilt = false;
+	private bool goingToWilt;
 
 	[Serialize]
-	private bool wilting = false;
+	private bool wilting;
 
 	private Dictionary<int, bool> WiltConditions = new Dictionary<int, bool>();
 

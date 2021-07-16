@@ -14,13 +14,13 @@ public class CraftingTableConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("CraftingTable", 2, 2, "craftingStation_kanim", 100, 30f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.RAW_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: TUNING.BUILDINGS.DECOR.NONE);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 60f;
-		buildingDef.ViewMode = OverlayModes.Power.ID;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.PowerInputOffset = new CellOffset(1, 0);
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("CraftingTable", 2, 2, "craftingStation_kanim", 100, 30f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.RAW_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: TUNING.BUILDINGS.DECOR.NONE);
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 60f;
+		obj.ViewMode = OverlayModes.Power.ID;
+		obj.AudioCategory = "Metal";
+		obj.PowerInputOffset = new CellOffset(1, 0);
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -52,8 +52,7 @@ public class CraftingTableConfig : IBuildingConfig
 		{
 			new ComplexRecipe.RecipeElement("Oxygen_Mask".ToTag(), 1f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
-		string id = ComplexRecipeManager.MakeRecipeID("CraftingTable", array, array2);
-		AtmoSuitConfig.recipe = new ComplexRecipe(id, array, array2)
+		AtmoSuitConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("CraftingTable", array, array2), array, array2)
 		{
 			time = TUNING.EQUIPMENT.SUITS.OXYMASK_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.OXYGEN_MASK.RECIPE_DESC,
@@ -72,8 +71,7 @@ public class CraftingTableConfig : IBuildingConfig
 		{
 			new ComplexRecipe.RecipeElement("Oxygen_Mask".ToTag(), 1f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
-		string id2 = ComplexRecipeManager.MakeRecipeID("CraftingTable", array3, array4);
-		AtmoSuitConfig.recipe = new ComplexRecipe(id2, array3, array4)
+		AtmoSuitConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("CraftingTable", array3, array4), array3, array4)
 		{
 			time = TUNING.EQUIPMENT.SUITS.OXYMASK_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.OXYGEN_MASK.RECIPE_DESC,
@@ -86,14 +84,13 @@ public class CraftingTableConfig : IBuildingConfig
 		};
 		ComplexRecipe.RecipeElement[] array5 = new ComplexRecipe.RecipeElement[1]
 		{
-			new ComplexRecipe.RecipeElement(SimHashes.Cobaltite.CreateTag(), 50f, inheritElement: true)
+			new ComplexRecipe.RecipeElement(SimHashes.IronOre.CreateTag(), 50f, inheritElement: true)
 		};
 		ComplexRecipe.RecipeElement[] array6 = new ComplexRecipe.RecipeElement[1]
 		{
 			new ComplexRecipe.RecipeElement("Oxygen_Mask".ToTag(), 1f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
-		string id3 = ComplexRecipeManager.MakeRecipeID("CraftingTable", array5, array6);
-		AtmoSuitConfig.recipe = new ComplexRecipe(id3, array5, array6)
+		AtmoSuitConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("CraftingTable", array5, array6), array5, array6)
 		{
 			time = TUNING.EQUIPMENT.SUITS.OXYMASK_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.OXYGEN_MASK.RECIPE_DESC,
@@ -104,16 +101,37 @@ public class CraftingTableConfig : IBuildingConfig
 			},
 			requiredTech = Db.Get().TechItems.oxygenMask.parentTechId
 		};
-		ComplexRecipe.RecipeElement[] array7 = new ComplexRecipe.RecipeElement[1]
+		if (ElementLoader.FindElementByHash(SimHashes.Cobaltite) != null)
+		{
+			ComplexRecipe.RecipeElement[] array7 = new ComplexRecipe.RecipeElement[1]
+			{
+				new ComplexRecipe.RecipeElement(SimHashes.Cobaltite.CreateTag(), 50f, inheritElement: true)
+			};
+			ComplexRecipe.RecipeElement[] array8 = new ComplexRecipe.RecipeElement[1]
+			{
+				new ComplexRecipe.RecipeElement("Oxygen_Mask".ToTag(), 1f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
+			};
+			AtmoSuitConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("CraftingTable", array7, array8), array7, array8)
+			{
+				time = TUNING.EQUIPMENT.SUITS.OXYMASK_FABTIME,
+				description = STRINGS.EQUIPMENT.PREFABS.OXYGEN_MASK.RECIPE_DESC,
+				nameDisplay = ComplexRecipe.RecipeNameDisplay.ResultWithIngredient,
+				fabricators = new List<Tag>
+				{
+					"CraftingTable"
+				},
+				requiredTech = Db.Get().TechItems.oxygenMask.parentTechId
+			};
+		}
+		ComplexRecipe.RecipeElement[] array9 = new ComplexRecipe.RecipeElement[1]
 		{
 			new ComplexRecipe.RecipeElement("Worn_Oxygen_Mask".ToTag(), 1f, inheritElement: true)
 		};
-		ComplexRecipe.RecipeElement[] array8 = new ComplexRecipe.RecipeElement[1]
+		ComplexRecipe.RecipeElement[] array10 = new ComplexRecipe.RecipeElement[1]
 		{
 			new ComplexRecipe.RecipeElement("Oxygen_Mask".ToTag(), 1f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
-		string id4 = ComplexRecipeManager.MakeRecipeID("CraftingTable", array7, array8);
-		AtmoSuitConfig.recipe = new ComplexRecipe(id4, array7, array8)
+		AtmoSuitConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("CraftingTable", array9, array10), array9, array10)
 		{
 			time = TUNING.EQUIPMENT.SUITS.OXYMASK_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.OXYGEN_MASK.RECIPE_DESC,

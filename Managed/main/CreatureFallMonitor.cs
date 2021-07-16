@@ -95,8 +95,7 @@ public class CreatureFallMonitor : GameStateMachine<CreatureFallMonitor, Creatur
 					num = 0.5f;
 				}
 				position.y += base.transform.GetComponent<KBoxCollider2D>().size.y * num;
-				int cell = Grid.PosToCell(position);
-				if (Grid.IsSubstantialLiquid(cell))
+				if (Grid.IsSubstantialLiquid(Grid.PosToCell(position)))
 				{
 					if (!GameComps.Gravities.Has(base.gameObject))
 					{

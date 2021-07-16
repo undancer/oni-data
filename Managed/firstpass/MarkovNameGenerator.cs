@@ -28,13 +28,11 @@ public class MarkovNameGenerator
 				while (text.Length < length)
 				{
 					string token = text.Substring(text.Length - _order, _order);
-					char letter = GetLetter(token);
-					if (letter != '?')
+					if (GetLetter(token) == '?')
 					{
-						text += GetLetter(token);
-						continue;
+						break;
 					}
-					break;
+					text += GetLetter(token);
 				}
 				if (text.Contains(" "))
 				{
@@ -86,13 +84,12 @@ public class MarkovNameGenerator
 		foreach (string sampleName in sampleNames)
 		{
 			string[] array = sampleName.Split(',');
-			string[] array2 = array;
-			foreach (string text in array2)
+			for (int i = 0; i < array.Length; i++)
 			{
-				string text2 = text.Trim().ToUpper();
-				if (text2.Length >= order + 1)
+				string text = array[i].Trim().ToUpper();
+				if (text.Length >= order + 1)
 				{
-					_samples.Add(text2);
+					_samples.Add(text);
 				}
 			}
 		}

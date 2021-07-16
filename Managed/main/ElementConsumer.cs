@@ -26,7 +26,7 @@ public class ElementConsumer : SimComponent, ISaveLoadable, IGameObjectEffectDes
 	public byte consumptionRadius = 1;
 
 	[SerializeField]
-	public float minimumMass = 0f;
+	public float minimumMass;
 
 	[SerializeField]
 	public bool showInStatusPanel = true;
@@ -38,18 +38,18 @@ public class ElementConsumer : SimComponent, ISaveLoadable, IGameObjectEffectDes
 	public float capacityKG = float.PositiveInfinity;
 
 	[SerializeField]
-	public Configuration configuration = Configuration.Element;
+	public Configuration configuration;
 
 	[NonSerialized]
 	[Serialize]
-	public float consumedMass = 0f;
+	public float consumedMass;
 
 	[NonSerialized]
 	[Serialize]
-	public float consumedTemperature = 0f;
+	public float consumedTemperature;
 
 	[SerializeField]
-	public bool storeOnConsume = false;
+	public bool storeOnConsume;
 
 	[MyCmpGet]
 	public Storage storage;
@@ -62,7 +62,7 @@ public class ElementConsumer : SimComponent, ISaveLoadable, IGameObjectEffectDes
 
 	private HandleVector<int>.Handle accumulator = HandleVector<int>.InvalidHandle;
 
-	public bool ignoreActiveChanged = false;
+	public bool ignoreActiveChanged;
 
 	private Guid statusHandle;
 
@@ -70,7 +70,7 @@ public class ElementConsumer : SimComponent, ISaveLoadable, IGameObjectEffectDes
 
 	public bool isRequired = true;
 
-	private bool consumptionEnabled = false;
+	private bool consumptionEnabled;
 
 	private bool hasAvailableCapacity = true;
 
@@ -94,7 +94,11 @@ public class ElementConsumer : SimComponent, ISaveLoadable, IGameObjectEffectDes
 		{
 			int sampleCell = GetSampleCell();
 			SimHashes id = Grid.Element[sampleCell].id;
-			return elementToConsume == id && Grid.Mass[sampleCell] >= minimumMass;
+			if (elementToConsume == id)
+			{
+				return Grid.Mass[sampleCell] >= minimumMass;
+			}
+			return false;
 		}
 	}
 
@@ -132,7 +136,11 @@ public class ElementConsumer : SimComponent, ISaveLoadable, IGameObjectEffectDes
 
 	protected virtual bool IsActive()
 	{
-		return operational == null || operational.IsActive;
+		if (!(operational == null))
+		{
+			return operational.IsActive;
+		}
+		return true;
 	}
 
 	public void EnableConsumption(bool enabled)
@@ -320,8 +328,7 @@ public class ElementConsumer : SimComponent, ISaveLoadable, IGameObjectEffectDes
 
 	protected override void OnSimRegister(HandleVector<Game.ComplexCallbackInfo<int>>.Handle cb_handle)
 	{
-		int sampleCell = GetSampleCell();
-		SimMessages.AddElementConsumer(sampleCell, configuration, elementToConsume, consumptionRadius, cb_handle.index);
+		SimMessages.AddElementConsumer(GetSampleCell(), configuration, elementToConsume, consumptionRadius, cb_handle.index);
 	}
 
 	protected override Action<int> GetStaticUnregister()

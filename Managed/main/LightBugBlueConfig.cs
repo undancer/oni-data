@@ -33,8 +33,7 @@ public class LightBugBlueConfig : IEntityConfig
 		hashSet.Add(SimHashes.Phosphorite.CreateTag());
 		hashSet.Add(SimHashes.Phosphorus.CreateTag());
 		prefab = BaseLightBugConfig.SetupDiet(prefab, hashSet, Tag.Invalid, CALORIES_PER_KG_OF_ORE);
-		LureableMonitor.Def def = prefab.AddOrGetDef<LureableMonitor.Def>();
-		def.lures = new Tag[2]
+		prefab.AddOrGetDef<LureableMonitor.Def>().lures = new Tag[2]
 		{
 			SimHashes.Phosphorite.CreateTag(),
 			SimHashes.Phosphorus.CreateTag()

@@ -33,8 +33,7 @@ public class PuftOxyliteConfig : IEntityConfig
 		trait.Add(new AttributeModifier(Db.Get().Amounts.HitPoints.maxAttribute.Id, 25f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Age.maxAttribute.Id, 75f, name));
 		prefab = BasePuftConfig.SetupDiet(prefab, SimHashes.Oxygen.CreateTag(), SimHashes.OxyRock.CreateTag(), CALORIES_PER_KG_OF_ORE, TUNING.CREATURES.CONVERSION_EFFICIENCY.GOOD_2, null, 0f, MIN_POOP_SIZE_IN_KG);
-		LureableMonitor.Def def = prefab.AddOrGetDef<LureableMonitor.Def>();
-		def.lures = new Tag[1]
+		prefab.AddOrGetDef<LureableMonitor.Def>().lures = new Tag[1]
 		{
 			SimHashes.OxyRock.CreateTag()
 		};
@@ -48,8 +47,7 @@ public class PuftOxyliteConfig : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject prefab = CreatePuftOxylite("PuftOxylite", STRINGS.CREATURES.SPECIES.PUFT.VARIANT_OXYLITE.NAME, STRINGS.CREATURES.SPECIES.PUFT.VARIANT_OXYLITE.DESC, "puft_kanim", is_baby: false);
-		return EntityTemplates.ExtendEntityToFertileCreature(prefab, "PuftOxyliteEgg", STRINGS.CREATURES.SPECIES.PUFT.VARIANT_OXYLITE.EGG_NAME, STRINGS.CREATURES.SPECIES.PUFT.VARIANT_OXYLITE.DESC, "egg_puft_kanim", PuftTuning.EGG_MASS, "PuftOxyliteBaby", 45f, 15f, PuftTuning.EGG_CHANCES_OXYLITE, EGG_SORT_ORDER);
+		return EntityTemplates.ExtendEntityToFertileCreature(CreatePuftOxylite("PuftOxylite", STRINGS.CREATURES.SPECIES.PUFT.VARIANT_OXYLITE.NAME, STRINGS.CREATURES.SPECIES.PUFT.VARIANT_OXYLITE.DESC, "puft_kanim", is_baby: false), "PuftOxyliteEgg", STRINGS.CREATURES.SPECIES.PUFT.VARIANT_OXYLITE.EGG_NAME, STRINGS.CREATURES.SPECIES.PUFT.VARIANT_OXYLITE.DESC, "egg_puft_kanim", PuftTuning.EGG_MASS, "PuftOxyliteBaby", 45f, 15f, PuftTuning.EGG_CHANCES_OXYLITE, EGG_SORT_ORDER);
 	}
 
 	public void OnPrefabInit(GameObject prefab)

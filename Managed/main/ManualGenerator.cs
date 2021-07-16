@@ -60,7 +60,7 @@ public class ManualGenerator : Workable, ISingleSliderControl, ISliderControl
 	[MyCmpGet]
 	private BuildingEnabledButton buildingEnabledButton;
 
-	private Chore chore = null;
+	private Chore chore;
 
 	private int powerCell;
 
@@ -178,8 +178,7 @@ public class ManualGenerator : Workable, ISingleSliderControl, ISliderControl
 	{
 		if (operational.IsActive)
 		{
-			KSelectable component = GetComponent<KSelectable>();
-			component.SetStatusItem(Db.Get().StatusItemCategories.Power, Db.Get().BuildingStatusItems.ManualGeneratorChargingUp);
+			GetComponent<KSelectable>().SetStatusItem(Db.Get().StatusItemCategories.Power, Db.Get().BuildingStatusItems.ManualGeneratorChargingUp);
 		}
 	}
 

@@ -16,7 +16,7 @@ public class FrontEndBackground : UIDupeRandomizer
 
 	private KBatchedAnimController dreckoController;
 
-	private float nextDreckoTime = 0f;
+	private float nextDreckoTime;
 
 	private Tuning tuning;
 
@@ -71,10 +71,10 @@ public class FrontEndBackground : UIDupeRandomizer
 		anims[minion_idx].lastWaitTime = Random.Range(anims[minion_idx].minSecondsBetweenAction, anims[minion_idx].maxSecondsBetweenAction);
 		yield return new WaitForSecondsRealtime(anims[minion_idx].lastWaitTime);
 		GetNewBody(minion_idx);
-		foreach (KBatchedAnimController kbac in anims[minion_idx].minions)
+		foreach (KBatchedAnimController minion in anims[minion_idx].minions)
 		{
-			kbac.ClearQueue();
-			kbac.Play(anims[minion_idx].anim_name);
+			minion.ClearQueue();
+			minion.Play(anims[minion_idx].anim_name);
 		}
 	}
 }

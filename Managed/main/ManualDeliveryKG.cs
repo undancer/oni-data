@@ -27,13 +27,13 @@ public class ManualDeliveryKG : KMonoBehaviour, ISim1000ms
 	public float minimumMass = 10f;
 
 	[SerializeField]
-	public FetchOrder2.OperationalRequirement operationalRequirement = FetchOrder2.OperationalRequirement.Operational;
+	public FetchOrder2.OperationalRequirement operationalRequirement;
 
 	[SerializeField]
-	public bool allowPause = false;
+	public bool allowPause;
 
 	[SerializeField]
-	private bool paused = false;
+	private bool paused;
 
 	[SerializeField]
 	public HashedString choreTypeIDHash;
@@ -209,13 +209,9 @@ public class ManualDeliveryKG : KMonoBehaviour, ISim1000ms
 				fetchList = null;
 			}
 		}
-		else if (fetchList == null)
+		else if (fetchList == null && storage.GetMassAvailable(requestedItemTag) < refillMass)
 		{
-			float massAvailable = storage.GetMassAvailable(requestedItemTag);
-			if (massAvailable < refillMass)
-			{
-				RequestDelivery();
-			}
+			RequestDelivery();
 		}
 	}
 

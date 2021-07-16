@@ -84,8 +84,7 @@ public class FetchOrder2
 			{
 				if (chore.InProgress())
 				{
-					result = true;
-					break;
+					return true;
 				}
 			}
 			return result;

@@ -11,8 +11,7 @@ public class CreaturePathFinderAbilities : PathFinderAbilities
 
 	protected override void Refresh(Navigator navigator)
 	{
-		int cell = Grid.PosToCell(navigator);
-		if (PathFinder.IsSubmerged(cell))
+		if (PathFinder.IsSubmerged(Grid.PosToCell(navigator)))
 		{
 			maxUnderwaterCost = int.MaxValue;
 			return;

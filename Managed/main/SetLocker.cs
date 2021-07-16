@@ -65,7 +65,7 @@ public class SetLocker : StateMachineComponent<SetLocker.StatesInstance>, ISides
 	private string[] contents;
 
 	[Serialize]
-	private bool used = false;
+	private bool used;
 
 	private Chore chore;
 

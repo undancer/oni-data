@@ -1,6 +1,4 @@
-#define UNITY_ASSERTIONS
 using System.Collections.Generic;
-using UnityEngine.Assertions;
 
 public class TagManager
 {
@@ -36,7 +34,6 @@ public class TagManager
 
 	public static Tag[] Create(IList<string> strings)
 	{
-		Assert.IsTrue(strings != null && strings.Count > 0);
 		Tag[] array = new Tag[strings.Count];
 		for (int i = 0; i < strings.Count; i++)
 		{
@@ -106,12 +103,12 @@ public class TagManager
 					Debug.LogWarningFormat("String has no open link tag: {0}");
 				}
 			}
+			return text2;
 		}
 		catch
 		{
 			Debug.Log("STRIP LINK FORMATTING FAILED ON: " + text);
-			text2 = text;
+			return text;
 		}
-		return text2;
 	}
 }

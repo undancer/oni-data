@@ -26,8 +26,7 @@ public class BasicBoosterConfig : IEntityConfig
 		{
 			new ComplexRecipe.RecipeElement("BasicBooster".ToTag(), 1f, ComplexRecipe.RecipeElement.TemperatureOperation.AverageTemperature)
 		};
-		string id = ComplexRecipeManager.MakeRecipeID("Apothecary", array, array2);
-		recipe = new ComplexRecipe(id, array, array2)
+		recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("Apothecary", array, array2), array, array2)
 		{
 			time = 50f,
 			description = ITEMS.PILLS.BASICBOOSTER.RECIPEDESC,

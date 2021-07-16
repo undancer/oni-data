@@ -25,11 +25,11 @@ public class IdleCellSensor : Sensor
 			cell = Grid.InvalidCell;
 			return;
 		}
-		MinionPathFinderAbilities minionPathFinderAbilities = (MinionPathFinderAbilities)navigator.GetCurrentAbilities();
-		minionPathFinderAbilities.SetIdleNavMaskEnabled(enabled: true);
+		MinionPathFinderAbilities obj = (MinionPathFinderAbilities)navigator.GetCurrentAbilities();
+		obj.SetIdleNavMaskEnabled(enabled: true);
 		IdleCellQuery idleCellQuery = PathFinderQueries.idleCellQuery.Reset(brain, Random.Range(30, 60));
 		navigator.RunQuery(idleCellQuery);
-		minionPathFinderAbilities.SetIdleNavMaskEnabled(enabled: false);
+		obj.SetIdleNavMaskEnabled(enabled: false);
 		cell = idleCellQuery.GetResultCell();
 	}
 

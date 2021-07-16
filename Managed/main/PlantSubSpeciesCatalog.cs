@@ -23,7 +23,17 @@ public class PlantSubSpeciesCatalog : KMonoBehaviour
 
 		public bool IsValid => ID.IsValid;
 
-		public bool IsOriginal => mutationIDs == null || mutationIDs.Count == 0;
+		public bool IsOriginal
+		{
+			get
+			{
+				if (mutationIDs != null)
+				{
+					return mutationIDs.Count == 0;
+				}
+				return true;
+			}
+		}
 
 		public SubSpeciesInfo(Tag speciesID, List<string> mutationIDs)
 		{
@@ -225,7 +235,7 @@ public class PlantSubSpeciesCatalog : KMonoBehaviour
 		{
 			return;
 		}
-		SubSpeciesInfo subSpeciesInfo = FindSubSpecies(subSpeciesID);
+		FindSubSpecies(subSpeciesID);
 		foreach (MutantPlant mutantPlant in Components.MutantPlants)
 		{
 			if (mutantPlant.HasTag(subSpeciesID))
@@ -253,14 +263,17 @@ public class PlantSubSpeciesCatalog : KMonoBehaviour
 		{
 			return false;
 		}
-		GameObject prefab = Assets.GetPrefab(seedID);
-		MutantPlant component = prefab.GetComponent<MutantPlant>();
+		MutantPlant component = Assets.GetPrefab(seedID).GetComponent<MutantPlant>();
 		if (component == null)
 		{
 			return !subspeciesID.IsValid;
 		}
 		List<SubSpeciesInfo> allSubSpeciesForSpecies = Instance.GetAllSubSpeciesForSpecies(component.SpeciesID);
-		return allSubSpeciesForSpecies != null && allSubSpeciesForSpecies.FindIndex((SubSpeciesInfo s) => s.ID == subspeciesID) != -1 && Instance.IsSubSpeciesIdentified(subspeciesID);
+		if (allSubSpeciesForSpecies != null && allSubSpeciesForSpecies.FindIndex((SubSpeciesInfo s) => s.ID == subspeciesID) != -1)
+		{
+			return Instance.IsSubSpeciesIdentified(subspeciesID);
+		}
+		return false;
 	}
 
 	private void EnsureOriginalSubSpecies()

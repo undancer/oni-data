@@ -43,7 +43,11 @@ public class RequestCrewSideScreen : SideScreenContent
 		if (component2 != null)
 		{
 			RocketControlStation.StatesInstance sMI = component2.GetSMI<RocketControlStation.StatesInstance>();
-			return !sMI.sm.IsInFlight(sMI) && !sMI.sm.IsLaunching(sMI);
+			if (!sMI.sm.IsInFlight(sMI))
+			{
+				return !sMI.sm.IsLaunching(sMI);
+			}
+			return false;
 		}
 		return false;
 	}
@@ -92,19 +96,19 @@ public class RequestCrewSideScreen : SideScreenContent
 		{
 			button.isOn = true;
 			ImageToggleState[] componentsInChildren = button.GetComponentsInChildren<ImageToggleState>();
-			foreach (ImageToggleState imageToggleState in componentsInChildren)
+			for (int i = 0; i < componentsInChildren.Length; i++)
 			{
-				imageToggleState.SetActive();
+				componentsInChildren[i].SetActive();
 			}
 			button.GetComponent<ImageToggleStateThrobber>().enabled = false;
 		}
 		else
 		{
 			button.isOn = false;
-			ImageToggleState[] componentsInChildren2 = button.GetComponentsInChildren<ImageToggleState>();
-			foreach (ImageToggleState imageToggleState2 in componentsInChildren2)
+			ImageToggleState[] componentsInChildren = button.GetComponentsInChildren<ImageToggleState>();
+			for (int i = 0; i < componentsInChildren.Length; i++)
 			{
-				imageToggleState2.SetInactive();
+				componentsInChildren[i].SetInactive();
 			}
 			button.GetComponent<ImageToggleStateThrobber>().enabled = false;
 		}

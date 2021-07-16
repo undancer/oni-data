@@ -13,18 +13,18 @@ public class GeneratorConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("Generator", 3, 3, "generatorphos_kanim", 100, 120f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.ALL_METALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.PENALTY.TIER2);
-		buildingDef.GeneratorWattageRating = 600f;
-		buildingDef.GeneratorBaseCapacity = 20000f;
-		buildingDef.ExhaustKilowattsWhenActive = 8f;
-		buildingDef.SelfHeatKilowattsWhenActive = 1f;
-		buildingDef.RequiresPowerOutput = true;
-		buildingDef.PowerOutputOffset = new CellOffset(0, 0);
-		buildingDef.ViewMode = OverlayModes.Power.ID;
-		buildingDef.AudioCategory = "HollowMetal";
-		buildingDef.AudioSize = "large";
-		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("Generator", 3, 3, "generatorphos_kanim", 100, 120f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.ALL_METALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.PENALTY.TIER2);
+		obj.GeneratorWattageRating = 600f;
+		obj.GeneratorBaseCapacity = 20000f;
+		obj.ExhaustKilowattsWhenActive = 8f;
+		obj.SelfHeatKilowattsWhenActive = 1f;
+		obj.RequiresPowerOutput = true;
+		obj.PowerOutputOffset = new CellOffset(0, 0);
+		obj.ViewMode = OverlayModes.Power.ID;
+		obj.AudioCategory = "HollowMetal";
+		obj.AudioSize = "large";
+		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

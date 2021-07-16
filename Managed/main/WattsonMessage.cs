@@ -42,7 +42,7 @@ public class WattsonMessage : KScreen
 
 	private List<KScreen> hideScreensWhileActive = new List<KScreen>();
 
-	private bool startFade = false;
+	private bool startFade;
 
 	private List<SchedulerHandle> scheduleHandles = new List<SchedulerHandle>();
 
@@ -52,7 +52,7 @@ public class WattsonMessage : KScreen
 		"working_loop"
 	};
 
-	private int birthsComplete = 0;
+	private int birthsComplete;
 
 	public override float GetSortKey()
 	{
@@ -254,7 +254,7 @@ public class WattsonMessage : KScreen
 			Game.Instance.StartDelayedInitialSave();
 			UIScheduler.Instance.Schedule("InitialScreenshot", 1f, delegate
 			{
-				Game.Instance.timelapser.SaveScreenshot();
+				Game.Instance.timelapser.InitialScreenshot();
 			});
 			GameScheduler.Instance.Schedule("BasicTutorial", 1.5f, delegate
 			{

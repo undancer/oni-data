@@ -13,23 +13,22 @@ public class EggIncubatorConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("EggIncubator", 2, 3, "incubator_kanim", 30, 120f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER0);
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 240f;
-		buildingDef.ExhaustKilowattsWhenActive = 0.5f;
-		buildingDef.SelfHeatKilowattsWhenActive = 4f;
-		buildingDef.OverheatTemperature = 363.15f;
-		buildingDef.SceneLayer = Grid.SceneLayer.Building;
-		buildingDef.ForegroundLayer = Grid.SceneLayer.BuildingFront;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("EggIncubator", 2, 3, "incubator_kanim", 30, 120f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER0);
+		obj.AudioCategory = "Metal";
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 240f;
+		obj.ExhaustKilowattsWhenActive = 0.5f;
+		obj.SelfHeatKilowattsWhenActive = 4f;
+		obj.OverheatTemperature = 363.15f;
+		obj.SceneLayer = Grid.SceneLayer.Building;
+		obj.ForegroundLayer = Grid.SceneLayer.BuildingFront;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		Prioritizable.AddRef(go);
-		Storage storage = BuildingTemplates.CreateDefaultStorage(go);
-		storage.SetDefaultStoredItemModifiers(IncubatorStorage);
+		BuildingTemplates.CreateDefaultStorage(go).SetDefaultStoredItemModifiers(IncubatorStorage);
 		EggIncubator eggIncubator = go.AddOrGet<EggIncubator>();
 		eggIncubator.AddDepositTag(GameTags.Egg);
 		eggIncubator.SetWorkTime(5f);

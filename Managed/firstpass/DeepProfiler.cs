@@ -12,16 +12,12 @@ public class DeepProfiler
 	[Conditional("DEEP_PROFILE")]
 	public void BeginSample(string message)
 	{
-		if (!enableProfiling)
-		{
-		}
+		_ = enableProfiling;
 	}
 
 	[Conditional("DEEP_PROFILE")]
 	public void EndSample()
 	{
-		if (!enableProfiling)
-		{
-		}
+		_ = enableProfiling;
 	}
 }

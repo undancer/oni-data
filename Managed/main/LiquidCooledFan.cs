@@ -259,15 +259,14 @@ public class LiquidCooledFan : StateMachineComponent<LiquidCooledFan.StatesInsta
 			return;
 		}
 		float num = 0.1f;
-		float num2 = num;
 		PrimaryElement primaryElement = null;
 		for (int i = 0; i < gasStorage.items.Count; i++)
 		{
 			PrimaryElement component = gasStorage.items[i].GetComponent<PrimaryElement>();
-			if (component.Mass > num2 && component.Element.IsGas)
+			if (component.Mass > num && component.Element.IsGas)
 			{
 				primaryElement = component;
-				num2 = primaryElement.Mass;
+				num = primaryElement.Mass;
 			}
 		}
 		if (primaryElement != null)

@@ -9,12 +9,50 @@ public class ArtifactSelector : KMonoBehaviour
 	[Serialize]
 	private List<string> placedArtifacts = new List<string>();
 
+	[Serialize]
+	private int analyzedArtifactCount;
+
+	[Serialize]
+	private int analyzedSpaceArtifactCount;
+
+	[Serialize]
+	private List<string> analyzedArtifatIDs = new List<string>();
+
 	private const string DEFAULT_ARTIFACT_ID = "artifact_officemug";
+
+	public int AnalyzedArtifactCount => analyzedArtifactCount;
+
+	public int AnalyzedSpaceArtifactCount => analyzedSpaceArtifactCount;
+
+	public List<string> GetAnalyzedArtifactIDs()
+	{
+		return analyzedArtifatIDs;
+	}
 
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
 		Instance = this;
+	}
+
+	public bool RecordArtifactAnalyzed(string id)
+	{
+		if (analyzedArtifatIDs.Contains(id))
+		{
+			return false;
+		}
+		analyzedArtifatIDs.Add(id);
+		return true;
+	}
+
+	public void IncrementAnalyzedTerrestrialArtifacts()
+	{
+		analyzedArtifactCount++;
+	}
+
+	public void IncrementAnalyzedSpaceArtifacts()
+	{
+		analyzedSpaceArtifactCount++;
 	}
 
 	public string GetUniqueArtifactID()

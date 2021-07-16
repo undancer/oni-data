@@ -18,8 +18,7 @@ public class EarlyBird : StateMachineComponent<EarlyBird.StatesInstance>
 			{
 				return false;
 			}
-			int blockIdx = global::Schedule.GetBlockIdx();
-			return blockIdx < TRAITS.EARLYBIRD_SCHEDULEBLOCK;
+			return global::Schedule.GetBlockIdx() < TRAITS.EARLYBIRD_SCHEDULEBLOCK;
 		}
 	}
 

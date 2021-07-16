@@ -67,7 +67,11 @@ public class RailgunPayloadClusterGridEntity : ClusterGridEntity
 
 	public override bool ShowProgressBar()
 	{
-		return m_selectable.IsSelected && m_clusterTraveler.IsTraveling();
+		if (m_selectable.IsSelected)
+		{
+			return m_clusterTraveler.IsTraveling();
+		}
+		return false;
 	}
 
 	public override float GetProgress()

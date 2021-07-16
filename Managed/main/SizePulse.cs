@@ -20,11 +20,11 @@ public class SizePulse : MonoBehaviour
 
 	public float speed = 1f;
 
-	public bool updateWhenPaused = false;
+	public bool updateWhenPaused;
 
 	private Vector2 cur;
 
-	private State state = State.Up;
+	private State state;
 
 	private void Start()
 	{
@@ -65,7 +65,6 @@ public class SizePulse : MonoBehaviour
 			}
 			break;
 		}
-		RectTransform rectTransform = (RectTransform)base.transform;
-		rectTransform.localScale = new Vector3(cur.x, cur.y, 1f);
+		((RectTransform)base.transform).localScale = new Vector3(cur.x, cur.y, 1f);
 	}
 }

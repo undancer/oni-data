@@ -66,8 +66,7 @@ public class HiveEatingStates : GameStateMachine<HiveEatingStates, HiveEatingSta
 			{
 				return;
 			}
-			CreatureCalorieMonitor.Def def = smi.gameObject.AddOrGetDef<CreatureCalorieMonitor.Def>();
-			Diet.Info dietInfo = def.diet.GetDietInfo(component.PrefabTag);
+			Diet.Info dietInfo = smi.gameObject.AddOrGetDef<BeehiveCalorieMonitor.Def>().diet.GetDietInfo(component.PrefabTag);
 			if (dietInfo != null)
 			{
 				AmountInstance amountInstance = Db.Get().Amounts.Calories.Lookup(smi.gameObject);

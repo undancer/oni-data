@@ -37,19 +37,31 @@ public struct GridArea
 		if (cell >= MinCell && cell < MaxCell)
 		{
 			int num = cell % Grid.WidthInCells;
-			return num >= Min.x && num < Max.x;
+			if (num >= Min.x)
+			{
+				return num < Max.x;
+			}
+			return false;
 		}
 		return false;
 	}
 
 	public bool Contains(int x, int y)
 	{
-		return x >= min.x && x < max.x && y >= min.y && y < max.y;
+		if (x >= min.x && x < max.x && y >= min.y)
+		{
+			return y < max.y;
+		}
+		return false;
 	}
 
 	public bool Contains(Vector3 pos)
 	{
-		return (float)min.x <= pos.x && pos.x < (float)max.x && (float)min.y <= pos.y && pos.y <= (float)max.y;
+		if ((float)min.x <= pos.x && pos.x < (float)max.x && (float)min.y <= pos.y)
+		{
+			return pos.y <= (float)max.y;
+		}
+		return false;
 	}
 
 	public void RunIfInside(int cell, Action<int> action)

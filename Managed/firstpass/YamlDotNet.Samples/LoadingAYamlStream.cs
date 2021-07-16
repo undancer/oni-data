@@ -27,8 +27,7 @@ namespace YamlDotNet.Samples
 			{
 				output.WriteLine(((YamlScalarNode)child.Key).Value);
 			}
-			YamlSequenceNode yamlSequenceNode = (YamlSequenceNode)yamlMappingNode.Children[new YamlScalarNode("items")];
-			foreach (YamlMappingNode item in yamlSequenceNode)
+			foreach (YamlMappingNode item in (YamlSequenceNode)yamlMappingNode.Children[new YamlScalarNode("items")])
 			{
 				output.WriteLine("{0}\t{1}", item.Children[new YamlScalarNode("part_no")], item.Children[new YamlScalarNode("descrip")]);
 			}

@@ -50,7 +50,11 @@ public class RationMonitor : GameStateMachine<RationMonitor, RationMonitor.Insta
 
 		public bool IsEating()
 		{
-			return choreDriver.HasChore() && choreDriver.GetCurrentChore().choreType.urge == Db.Get().Urges.Eat;
+			if (choreDriver.HasChore())
+			{
+				return choreDriver.GetCurrentChore().choreType.urge == Db.Get().Urges.Eat;
+			}
+			return false;
 		}
 
 		public void OnNewDay()

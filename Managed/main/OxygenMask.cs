@@ -40,8 +40,7 @@ public class OxygenMask : KMonoBehaviour, ISim200ms
 
 	public void Sim200ms(float dt)
 	{
-		Equippable component = GetComponent<Equippable>();
-		if (component.assignee == null)
+		if (GetComponent<Equippable>().assignee == null)
 		{
 			float a = leakRate * dt;
 			float massAvailable = storage.GetMassAvailable(suitTank.elementTag);

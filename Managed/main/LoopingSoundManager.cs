@@ -198,9 +198,9 @@ public class LoopingSoundManager : KMonoBehaviour, IRenderEveryTick
 				sound.pos.x += offset.x;
 				sound.pos.y += offset.y;
 			}
-			bool flag2 = !sound.IsCullingEnabled || (sound.ShouldCameraScalePosition && soundCuller.IsAudible(sound.pos, sound.falloffDistanceSq)) || soundCuller.IsAudibleNoCameraScaling(sound.pos, sound.falloffDistanceSq);
+			bool num = !sound.IsCullingEnabled || (sound.ShouldCameraScalePosition && soundCuller.IsAudible(sound.pos, sound.falloffDistanceSq)) || soundCuller.IsAudibleNoCameraScaling(sound.pos, sound.falloffDistanceSq);
 			bool isPlaying = sound.IsPlaying;
-			if (flag2)
+			if (num)
 			{
 				pooledList.Add(sound);
 				if (!isPlaying)
@@ -275,10 +275,10 @@ public class LoopingSoundManager : KMonoBehaviour, IRenderEveryTick
 			sound2.transform = value3.transform;
 			sound2.objectIsSelectedAndVisible = false;
 			LoopingSoundParameterUpdater.Sound sound4 = sound2;
-			SoundDescription.Parameter[] parameters2 = soundDescription2.parameters;
-			for (int k = 0; k < parameters2.Length; k++)
+			SoundDescription.Parameter[] parameters = soundDescription2.parameters;
+			for (int j = 0; j < parameters.Length; j++)
 			{
-				SoundDescription.Parameter parameter2 = parameters2[k];
+				SoundDescription.Parameter parameter2 = parameters[j];
 				LoopingSoundParameterUpdater value4 = null;
 				if (parameterUpdaters.TryGetValue(parameter2.name, out value4))
 				{

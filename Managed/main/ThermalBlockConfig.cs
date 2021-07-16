@@ -15,22 +15,21 @@ public class ThermalBlockConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("ThermalBlock", 1, 1, "thermalblock_kanim", 30, 120f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.ANY_BUILDABLE, 1600f, BuildLocationRule.NotInTiles, noise: NOISE_POLLUTION.NONE, decor: DECOR.NONE);
-		buildingDef.Floodable = false;
-		buildingDef.Overheatable = false;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.BaseTimeUntilRepair = -1f;
-		buildingDef.ViewMode = OverlayModes.Temperature.ID;
-		buildingDef.DefaultAnimState = "off";
-		buildingDef.ObjectLayer = ObjectLayer.Backwall;
-		buildingDef.SceneLayer = Grid.SceneLayer.Backwall;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("ThermalBlock", 1, 1, "thermalblock_kanim", 30, 120f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.ANY_BUILDABLE, 1600f, BuildLocationRule.NotInTiles, noise: NOISE_POLLUTION.NONE, decor: DECOR.NONE);
+		obj.Floodable = false;
+		obj.Overheatable = false;
+		obj.AudioCategory = "Metal";
+		obj.BaseTimeUntilRepair = -1f;
+		obj.ViewMode = OverlayModes.Temperature.ID;
+		obj.DefaultAnimState = "off";
+		obj.ObjectLayer = ObjectLayer.Backwall;
+		obj.SceneLayer = Grid.SceneLayer.Backwall;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
-		AnimTileable animTileable = go.AddOrGet<AnimTileable>();
-		animTileable.objectLayer = ObjectLayer.Backwall;
+		go.AddOrGet<AnimTileable>().objectLayer = ObjectLayer.Backwall;
 		go.AddComponent<ZoneTile>();
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 	}

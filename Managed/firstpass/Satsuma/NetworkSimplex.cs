@@ -137,7 +137,11 @@ namespace Satsuma
 				return value;
 			}
 			value = LowerBound(arc);
-			return (value == long.MinValue) ? 0 : value;
+			if (value != long.MinValue)
+			{
+				return value;
+			}
+			return 0L;
 		}
 
 		public void Clear()
@@ -151,14 +155,13 @@ namespace Satsuma
 			foreach (Arc item2 in Graph.Arcs())
 			{
 				LowerBound(item2);
-				long num = UpperBound(item2);
-				if (num < long.MaxValue)
+				if (UpperBound(item2) < long.MaxValue)
 				{
 					Saturated.Add(item2);
 				}
-				long num2 = Flow(item2);
-				dictionary[Graph.U(item2)] -= num2;
-				dictionary[Graph.V(item2)] += num2;
+				long num = Flow(item2);
+				dictionary[Graph.U(item2)] -= num;
+				dictionary[Graph.V(item2)] += num;
 			}
 			Potential = new Dictionary<Node, double>();
 			MyGraph = new Supergraph(Graph);
@@ -168,9 +171,9 @@ namespace Satsuma
 			Dictionary<Node, Arc> dictionary2 = new Dictionary<Node, Arc>();
 			foreach (Node item3 in Graph.Nodes())
 			{
-				long num3 = dictionary[item3];
-				Arc arc = ((num3 > 0) ? MyGraph.AddArc(item3, ArtificialNode, Directedness.Directed) : MyGraph.AddArc(ArtificialNode, item3, Directedness.Directed));
-				Potential[item3] = ((num3 <= 0) ? 1 : (-1));
+				long num2 = dictionary[item3];
+				Arc arc = ((num2 > 0) ? MyGraph.AddArc(item3, ArtificialNode, Directedness.Directed) : MyGraph.AddArc(ArtificialNode, item3, Directedness.Directed));
+				Potential[item3] = ((num2 <= 0) ? 1 : (-1));
 				ArtificialArcs.Add(arc);
 				dictionary2[item3] = arc;
 			}
@@ -189,17 +192,37 @@ namespace Satsuma
 
 		private long ActualLowerBound(Arc arc)
 		{
-			return ArtificialArcs.Contains(arc) ? 0 : LowerBound(arc);
+			if (!ArtificialArcs.Contains(arc))
+			{
+				return LowerBound(arc);
+			}
+			return 0L;
 		}
 
 		private long ActualUpperBound(Arc arc)
 		{
-			return (!ArtificialArcs.Contains(arc)) ? UpperBound(arc) : ((State == SimplexState.FirstPhase) ? long.MaxValue : 0);
+			if (!ArtificialArcs.Contains(arc))
+			{
+				return UpperBound(arc);
+			}
+			if (State != 0)
+			{
+				return 0L;
+			}
+			return long.MaxValue;
 		}
 
 		private double ActualCost(Arc arc)
 		{
-			return ArtificialArcs.Contains(arc) ? 1.0 : ((State == SimplexState.FirstPhase) ? 0.0 : Cost(arc));
+			if (!ArtificialArcs.Contains(arc))
+			{
+				if (State != 0)
+				{
+					return Cost(arc);
+				}
+				return 0.0;
+			}
+			return 1.0;
 		}
 
 		private static ulong MySubtract(long a, long b)

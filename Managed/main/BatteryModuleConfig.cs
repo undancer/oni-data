@@ -16,22 +16,22 @@ public class BatteryModuleConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("BatteryModule", 3, 2, "rocket_battery_pack_kanim", 1000, 30f, BUILDINGS.ROCKETRY_MASS_KG.HOLLOW_TIER2, MATERIALS.RAW_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
-		buildingDef.DefaultAnimState = "grounded";
-		buildingDef.AttachmentSlotTag = GameTags.Rocket;
-		buildingDef.SceneLayer = Grid.SceneLayer.Building;
-		buildingDef.ForegroundLayer = Grid.SceneLayer.Front;
-		buildingDef.OverheatTemperature = 2273.15f;
-		buildingDef.Floodable = false;
-		buildingDef.PowerInputOffset = PLUG_OFFSET;
-		buildingDef.PowerOutputOffset = PLUG_OFFSET;
-		buildingDef.ObjectLayer = ObjectLayer.Building;
-		buildingDef.RequiresPowerOutput = true;
-		buildingDef.UseWhitePowerOutputConnectorColour = true;
-		buildingDef.CanMove = true;
-		buildingDef.Cancellable = false;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("BatteryModule", 3, 2, "rocket_battery_pack_kanim", 1000, 30f, BUILDINGS.ROCKETRY_MASS_KG.HOLLOW_TIER2, MATERIALS.RAW_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		BuildingTemplates.CreateRocketBuildingDef(obj);
+		obj.DefaultAnimState = "grounded";
+		obj.AttachmentSlotTag = GameTags.Rocket;
+		obj.SceneLayer = Grid.SceneLayer.Building;
+		obj.ForegroundLayer = Grid.SceneLayer.Front;
+		obj.OverheatTemperature = 2273.15f;
+		obj.Floodable = false;
+		obj.PowerInputOffset = PLUG_OFFSET;
+		obj.PowerOutputOffset = PLUG_OFFSET;
+		obj.ObjectLayer = ObjectLayer.Building;
+		obj.RequiresPowerOutput = true;
+		obj.UseWhitePowerOutputConnectorColour = true;
+		obj.CanMove = true;
+		obj.Cancellable = false;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -40,8 +40,7 @@ public class BatteryModuleConfig : IBuildingConfig
 		go.AddOrGet<LoopingSounds>();
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
 		go.AddComponent<RequireInputs>();
-		BuildingAttachPoint buildingAttachPoint = go.AddOrGet<BuildingAttachPoint>();
-		buildingAttachPoint.points = new BuildingAttachPoint.HardPoint[1]
+		go.AddOrGet<BuildingAttachPoint>().points = new BuildingAttachPoint.HardPoint[1]
 		{
 			new BuildingAttachPoint.HardPoint(new CellOffset(0, 2), GameTags.Rocket, null)
 		};

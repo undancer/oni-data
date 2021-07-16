@@ -32,8 +32,7 @@ public class GraphedBar : KMonoBehaviour
 			LayoutElement component = gameObject.GetComponent<LayoutElement>();
 			component.preferredHeight = values[i];
 			component.minWidth = format.width;
-			Image component2 = gameObject.GetComponent<Image>();
-			component2.color = format.colors[i % format.colors.Length];
+			gameObject.GetComponent<Image>().color = format.colors[i % format.colors.Length];
 			segments.Add(gameObject);
 		}
 	}

@@ -52,8 +52,7 @@ public class LaunchPadMaterialDistributor : GameStateMachine<LaunchPadMaterialDi
 			pooledDictionary[CargoBay.CargoType.Gasses] = ListPool<CargoBayCluster, LaunchPadMaterialDistributor>.Allocate();
 			foreach (Ref<RocketModuleCluster> clusterModule in craftInterface.ClusterModules)
 			{
-				RocketModuleCluster rocketModuleCluster = clusterModule.Get();
-				CargoBayCluster component = rocketModuleCluster.GetComponent<CargoBayCluster>();
+				CargoBayCluster component = clusterModule.Get().GetComponent<CargoBayCluster>();
 				if (component != null && component.storageType != CargoBay.CargoType.Entities && component.storage.MassStored() > 0f)
 				{
 					pooledDictionary[component.storageType].Add(component);
@@ -119,8 +118,7 @@ public class LaunchPadMaterialDistributor : GameStateMachine<LaunchPadMaterialDi
 			pooledDictionary[CargoBay.CargoType.Gasses] = ListPool<CargoBayCluster, LaunchPadMaterialDistributor>.Allocate();
 			foreach (Ref<RocketModuleCluster> clusterModule in craftInterface.ClusterModules)
 			{
-				RocketModuleCluster rocketModuleCluster = clusterModule.Get();
-				CargoBayCluster component = rocketModuleCluster.GetComponent<CargoBayCluster>();
+				CargoBayCluster component = clusterModule.Get().GetComponent<CargoBayCluster>();
 				if (component != null && component.storageType != CargoBay.CargoType.Entities && component.RemainingCapacity > 0f)
 				{
 					pooledDictionary[component.storageType].Add(component);
@@ -144,12 +142,7 @@ public class LaunchPadMaterialDistributor : GameStateMachine<LaunchPadMaterialDi
 						{
 							float remainingCapacity = item2.RemainingCapacity;
 							float num2 = component2.Storage.MassStored();
-							if (remainingCapacity <= 0f || num2 <= 0f)
-							{
-								continue;
-							}
-							TreeFilterable component3 = item2.GetComponent<TreeFilterable>();
-							if (component3.AcceptedTags.Contains(gameObject.PrefabID()))
+							if (!(remainingCapacity <= 0f) && !(num2 <= 0f) && item2.GetComponent<TreeFilterable>().AcceptedTags.Contains(gameObject.PrefabID()))
 							{
 								loading = true;
 								flag = true;

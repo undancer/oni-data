@@ -68,8 +68,7 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 				RocketEngineCluster component = clusterModule.Get().GetComponent<RocketEngineCluster>();
 				if (component != null)
 				{
-					float burnableMassRemaining = BurnableMassRemaining;
-					return burnableMassRemaining / component.GetComponent<RocketModuleCluster>().performanceStats.FuelKilogramPerDistance;
+					return BurnableMassRemaining / component.GetComponent<RocketModuleCluster>().performanceStats.FuelKilogramPerDistance;
 				}
 			}
 			return 0f;
@@ -109,7 +108,11 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 			{
 				return 0f;
 			}
-			return rocketEngineCluster.requireOxidizer ? Mathf.Min(FuelRemaining, OxidizerPowerRemaining) : FuelRemaining;
+			if (!rocketEngineCluster.requireOxidizer)
+			{
+				return FuelRemaining;
+			}
+			return Mathf.Min(FuelRemaining, OxidizerPowerRemaining);
 		}
 	}
 
@@ -188,11 +191,10 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 		{
 			foreach (Ref<RocketModuleCluster> clusterModule in ClusterModules)
 			{
-				if ((object)clusterModule.Get().GetComponent<CargoBayCluster>() == null)
+				if ((object)clusterModule.Get().GetComponent<CargoBayCluster>() != null)
 				{
-					continue;
+					return true;
 				}
-				return true;
 			}
 			return false;
 		}
@@ -312,8 +314,7 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 		Trigger(1512695988);
 		foreach (Ref<RocketModule> module2 in modules)
 		{
-			RocketModule rocketModule = module2.Get();
-			rocketModule.Trigger(1512695988);
+			module2.Get().Trigger(1512695988);
 		}
 		SetBottomModule();
 		if (clusterModules.Count == 0)
@@ -388,27 +389,47 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 
 	public bool CheckPreppedForLaunch()
 	{
-		return EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketPrep) != 0 && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketStorage) != 0 && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketFlight) != ProcessCondition.Status.Failure;
+		if (EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketPrep) != 0 && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketStorage) != 0)
+		{
+			return EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketFlight) != ProcessCondition.Status.Failure;
+		}
+		return false;
 	}
 
 	public bool CheckReadyToLaunch()
 	{
-		return EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketPrep) != 0 && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketStorage) != 0 && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketFlight) != 0 && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketBoard) != ProcessCondition.Status.Failure;
+		if (EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketPrep) != 0 && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketStorage) != 0 && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketFlight) != 0)
+		{
+			return EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketBoard) != ProcessCondition.Status.Failure;
+		}
+		return false;
 	}
 
 	public bool HasLaunchWarnings()
 	{
-		return EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketPrep) == ProcessCondition.Status.Warning || EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketStorage) == ProcessCondition.Status.Warning || EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketBoard) == ProcessCondition.Status.Warning;
+		if (EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketPrep) != ProcessCondition.Status.Warning && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketStorage) != ProcessCondition.Status.Warning)
+		{
+			return EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketBoard) == ProcessCondition.Status.Warning;
+		}
+		return true;
 	}
 
 	public bool CheckReadyForAutomatedLaunchCommand()
 	{
-		return EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketPrep) == ProcessCondition.Status.Ready && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketStorage) == ProcessCondition.Status.Ready;
+		if (EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketPrep) == ProcessCondition.Status.Ready)
+		{
+			return EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketStorage) == ProcessCondition.Status.Ready;
+		}
+		return false;
 	}
 
 	public bool CheckReadyForAutomatedLaunch()
 	{
-		return EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketPrep) == ProcessCondition.Status.Ready && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketStorage) == ProcessCondition.Status.Ready && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketBoard) == ProcessCondition.Status.Ready;
+		if (EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketPrep) == ProcessCondition.Status.Ready && EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketStorage) == ProcessCondition.Status.Ready)
+		{
+			return EvaluateConditionSet(ProcessCondition.ProcessConditionType.RocketBoard) == ProcessCondition.Status.Ready;
+		}
+		return false;
 	}
 
 	public void TriggerEventOnCraftAndRocket(GameHashes evt, object data)
@@ -578,7 +599,7 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 			}
 			if (status == ProcessCondition.Status.Failure)
 			{
-				break;
+				return status;
 			}
 		}
 		return status;

@@ -6,7 +6,7 @@ using UnityEngine;
 public class LogicWattageSensor : Switch, ISaveLoadable, IThresholdSwitch, ISim200ms
 {
 	[Serialize]
-	public float thresholdWattage = 0f;
+	public float thresholdWattage;
 
 	[Serialize]
 	public bool activateOnHigherThan;
@@ -14,13 +14,13 @@ public class LogicWattageSensor : Switch, ISaveLoadable, IThresholdSwitch, ISim2
 	[Serialize]
 	public bool dirty = true;
 
-	private readonly float minWattage = 0f;
+	private readonly float minWattage;
 
 	private readonly float maxWattage = 1.5f * Wire.GetMaxWattageAsFloat(Wire.WattageRating.Max50000);
 
-	private float currentWattage = 0f;
+	private float currentWattage;
 
-	private bool wasOn = false;
+	private bool wasOn;
 
 	[MyCmpAdd]
 	private CopyBuildingSettings copyBuildingSettings;
@@ -90,8 +90,7 @@ public class LogicWattageSensor : Switch, ISaveLoadable, IThresholdSwitch, ISim2
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		LogicWattageSensor component = gameObject.GetComponent<LogicWattageSensor>();
+		LogicWattageSensor component = ((GameObject)data).GetComponent<LogicWattageSensor>();
 		if (component != null)
 		{
 			Threshold = component.Threshold;

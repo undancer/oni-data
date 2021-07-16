@@ -11,12 +11,16 @@ namespace ProcGen
 
 		public bool HasWorld(string name)
 		{
-			return name != null && worldCache.ContainsKey(name);
+			if (name == null)
+			{
+				return false;
+			}
+			return worldCache.ContainsKey(name);
 		}
 
 		public World GetWorldData(string name)
 		{
-			if (worldCache.TryGetValue(name, out var value))
+			if (!name.IsNullOrWhiteSpace() && worldCache.TryGetValue(name, out var value))
 			{
 				return value;
 			}
@@ -35,7 +39,11 @@ namespace ProcGen
 
 		public string GetIconFilename(string iconName)
 		{
-			return DlcManager.FeatureClusterSpaceEnabled() ? "asteroid_sandstone_start_kanim" : "Asteroid_sandstone";
+			if (!DlcManager.FeatureClusterSpaceEnabled())
+			{
+				return "Asteroid_sandstone";
+			}
+			return "asteroid_sandstone_start_kanim";
 		}
 
 		public void LoadReferencedWorlds(string path, string prefix, ISet<string> referencedWorlds, List<YamlIO.Error> errors)
@@ -46,8 +54,7 @@ namespace ProcGen
 		private void UpdateWorldCache(string path, string prefix, ISet<string> referencedWorlds, List<YamlIO.Error> errors)
 		{
 			ListPool<FileHandle, Worlds>.PooledList pooledList = ListPool<FileHandle, Worlds>.Allocate();
-			string path2 = FileSystem.Normalize(System.IO.Path.Combine(path, "worlds/"));
-			FileSystem.GetFiles(path2, "*.yaml", pooledList);
+			FileSystem.GetFiles(FileSystem.Normalize(System.IO.Path.Combine(path, "worlds/")), "*.yaml", pooledList);
 			foreach (FileHandle item2 in pooledList)
 			{
 				string text = item2.full_path.Substring(path.Length);

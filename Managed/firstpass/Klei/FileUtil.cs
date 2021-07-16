@@ -25,13 +25,13 @@ namespace Klei
 
 		private const int RETRY_MILLISECONDS = 100;
 
-		public static ErrorType errorType = ErrorType.None;
+		public static ErrorType errorType;
 
-		public static string errorSubject = null;
+		public static string errorSubject;
 
-		public static string exceptionMessage = null;
+		public static string exceptionMessage;
 
-		public static string exceptionStackTrace = null;
+		public static string exceptionStackTrace;
 
 		public static event System.Action onErrorMessage;
 
@@ -57,7 +57,6 @@ namespace Klei
 			{
 				try
 				{
-					bool flag = false;
 					return io_op();
 				}
 				catch (UnauthorizedAccessException ex4)
@@ -98,7 +97,6 @@ namespace Klei
 			{
 				try
 				{
-					bool flag = false;
 					io_op();
 					return;
 				}
@@ -163,17 +161,18 @@ namespace Klei
 			{
 				DebugUtil.LogArgs("UnauthorizedAccessException during IO on ", io_subject, ", squelching. Stack trace was:\n", ex.Message, "\n", ex.StackTrace);
 				ErrorDialog(ErrorType.IOError, io_subject, ex.Message, ex.StackTrace);
+				return fail_result;
 			}
 			catch (IOException ex2)
 			{
 				DebugUtil.LogArgs("IOException during IO on ", io_subject, ", squelching. Stack trace was:\n", ex2.Message, "\n", ex2.StackTrace);
 				ErrorDialog(ErrorType.IOError, io_subject, ex2.Message, ex2.StackTrace);
+				return fail_result;
 			}
 			catch
 			{
 				throw;
 			}
-			return fail_result;
 		}
 
 		public static FileStream Create(string filename, int retry_count = 0)

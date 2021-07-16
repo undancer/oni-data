@@ -25,8 +25,7 @@ public class HatchConfig : IEntityConfig
 
 	public static GameObject CreateHatch(string id, string name, string desc, string anim_file, bool is_baby)
 	{
-		GameObject prefab = BaseHatchConfig.BaseHatch(id, name, desc, anim_file, "HatchBaseTrait", is_baby);
-		prefab = EntityTemplates.ExtendEntityToWildCreature(prefab, HatchTuning.PEN_SIZE_PER_CREATURE);
+		GameObject prefab = EntityTemplates.ExtendEntityToWildCreature(BaseHatchConfig.BaseHatch(id, name, desc, anim_file, "HatchBaseTrait", is_baby), HatchTuning.PEN_SIZE_PER_CREATURE);
 		Trait trait = Db.Get().CreateTrait("HatchBaseTrait", name, name, null, should_save: false, null, positive_trait: true, is_valid_starter_trait: true);
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.maxAttribute.Id, HatchTuning.STANDARD_STOMACH_SIZE, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.deltaAttribute.Id, (0f - HatchTuning.STANDARD_CALORIES_PER_CYCLE) / 600f, name));
@@ -44,8 +43,7 @@ public class HatchConfig : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject prefab = CreateHatch("Hatch", STRINGS.CREATURES.SPECIES.HATCH.NAME, STRINGS.CREATURES.SPECIES.HATCH.DESC, "hatch_kanim", is_baby: false);
-		return EntityTemplates.ExtendEntityToFertileCreature(prefab, "HatchEgg", STRINGS.CREATURES.SPECIES.HATCH.EGG_NAME, STRINGS.CREATURES.SPECIES.HATCH.DESC, "egg_hatch_kanim", HatchTuning.EGG_MASS, "HatchBaby", 60.000004f, 20f, HatchTuning.EGG_CHANCES_BASE, EGG_SORT_ORDER);
+		return EntityTemplates.ExtendEntityToFertileCreature(CreateHatch("Hatch", STRINGS.CREATURES.SPECIES.HATCH.NAME, STRINGS.CREATURES.SPECIES.HATCH.DESC, "hatch_kanim", is_baby: false), "HatchEgg", STRINGS.CREATURES.SPECIES.HATCH.EGG_NAME, STRINGS.CREATURES.SPECIES.HATCH.DESC, "egg_hatch_kanim", HatchTuning.EGG_MASS, "HatchBaby", 60.000004f, 20f, HatchTuning.EGG_CHANCES_BASE, EGG_SORT_ORDER);
 	}
 
 	public void OnPrefabInit(GameObject prefab)

@@ -39,7 +39,7 @@ public class SingleEntityReceptacle : Workable, IRender1000ms
 	private List<Tag> possibleDepositTagsList = new List<Tag>();
 
 	[SerializeField]
-	protected bool destroyEntityOnDeposit = false;
+	protected bool destroyEntityOnDeposit;
 
 	[SerializeField]
 	protected ReceptacleDirection direction;

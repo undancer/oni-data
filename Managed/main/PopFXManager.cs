@@ -20,7 +20,7 @@ public class PopFXManager : KScreen
 
 	public Sprite sprite_Research;
 
-	private bool ready = false;
+	private bool ready;
 
 	public static void DestroyInstance()
 	{

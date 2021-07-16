@@ -105,7 +105,7 @@ public class SkillMinionWidget : KMonoBehaviour, IPointerEnterHandler, IEventSys
 		{
 			MinionResume component = minionIdentity.GetComponent<MinionResume>();
 			int availableSkillpoints = component.AvailableSkillpoints;
-			int totalSkillPointsGained = component.TotalSkillPointsGained;
+			_ = component.TotalSkillPointsGained;
 			masteryPoints.text = ((availableSkillpoints > 0) ? GameUtil.ApplyBoldString(GameUtil.ColourizeString(new Color(0.5f, 1f, 0.5f, 1f), availableSkillpoints.ToString())) : "0");
 			AttributeInstance attributeInstance = Db.Get().Attributes.QualityOfLife.Lookup(component);
 			AttributeInstance attributeInstance2 = Db.Get().Attributes.QualityOfLifeExpectation.Lookup(component);
@@ -175,8 +175,7 @@ public class SkillMinionWidget : KMonoBehaviour, IPointerEnterHandler, IEventSys
 
 	public void RefreshHat(string hat)
 	{
-		HierarchyReferences component = GetComponent<HierarchyReferences>();
-		component.GetReference("selectedHat").GetComponent<Image>().sprite = Assets.GetSprite(string.IsNullOrEmpty(hat) ? "hat_role_none" : hat);
+		GetComponent<HierarchyReferences>().GetReference("selectedHat").GetComponent<Image>().sprite = Assets.GetSprite(string.IsNullOrEmpty(hat) ? "hat_role_none" : hat);
 	}
 
 	private void OnHatDropEntryClick(IListableOption skill, object data)
@@ -189,8 +188,7 @@ public class SkillMinionWidget : KMonoBehaviour, IPointerEnterHandler, IEventSys
 		MinionResume component = minionIdentity.GetComponent<MinionResume>();
 		if (skill != null)
 		{
-			HierarchyReferences component2 = GetComponent<HierarchyReferences>();
-			component2.GetReference("selectedHat").GetComponent<Image>().sprite = Assets.GetSprite((skill as SkillListable).skillHat);
+			GetComponent<HierarchyReferences>().GetReference("selectedHat").GetComponent<Image>().sprite = Assets.GetSprite((skill as SkillListable).skillHat);
 			if (component != null)
 			{
 				string skillHat = (skill as SkillListable).skillHat;
@@ -203,8 +201,7 @@ public class SkillMinionWidget : KMonoBehaviour, IPointerEnterHandler, IEventSys
 		}
 		else
 		{
-			HierarchyReferences component3 = GetComponent<HierarchyReferences>();
-			component3.GetReference("selectedHat").GetComponent<Image>().sprite = Assets.GetSprite("hat_role_none");
+			GetComponent<HierarchyReferences>().GetReference("selectedHat").GetComponent<Image>().sprite = Assets.GetSprite("hat_role_none");
 			if (component != null)
 			{
 				component.SetHats(component.CurrentHat, null);

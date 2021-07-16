@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RocketModuleCluster : RocketModule
@@ -73,8 +72,7 @@ public class RocketModuleCluster : RocketModule
 
 	private void RegisterWithCraftModuleInterface()
 	{
-		List<GameObject> attachedNetwork = AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>());
-		foreach (GameObject item in attachedNetwork)
+		foreach (GameObject item in AttachableBuilding.GetAttachedNetwork(GetComponent<AttachableBuilding>()))
 		{
 			if (!(item == base.gameObject))
 			{

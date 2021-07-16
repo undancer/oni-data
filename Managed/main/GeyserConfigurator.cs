@@ -102,7 +102,7 @@ public class GeyserConfigurator : KMonoBehaviour
 
 		private float scaledYearPercent;
 
-		private bool didInit = false;
+		private bool didInit;
 
 		public GeyserType geyserType => FindType(typeId);
 
@@ -155,8 +155,7 @@ public class GeyserConfigurator : KMonoBehaviour
 		public float GetEmitRate()
 		{
 			float num = 600f / GetIterationLength();
-			float num2 = GetMassPerCycle() / num;
-			return num2 / GetOnDuration();
+			return GetMassPerCycle() / num / GetOnDuration();
 		}
 
 		public float GetYearLength()
@@ -206,9 +205,7 @@ public class GeyserConfigurator : KMonoBehaviour
 			float num = 6f;
 			float num2 = 0.002472623f;
 			float num3 = t * (1f - num2 * 2f) + num2;
-			float num4 = 0f - Mathf.Log(1f / num3 - 1f);
-			num4 = (num4 + num) / (num * 2f);
-			return num4 * (max - min) + min;
+			return (0f - Mathf.Log(1f / num3 - 1f) + num) / (num * 2f) * (max - min) + min;
 		}
 	}
 
@@ -216,7 +213,7 @@ public class GeyserConfigurator : KMonoBehaviour
 
 	public HashedString presetType;
 
-	public float presetMin = 0f;
+	public float presetMin;
 
 	public float presetMax = 1f;
 
@@ -241,9 +238,7 @@ public class GeyserConfigurator : KMonoBehaviour
 
 	private GeyserInstanceConfiguration CreateRandomInstance(HashedString typeId, float min, float max)
 	{
-		int globalWorldSeed = SaveLoader.Instance.clusterDetailSave.globalWorldSeed;
-		globalWorldSeed = globalWorldSeed + (int)base.transform.GetPosition().x + (int)base.transform.GetPosition().y;
-		System.Random randomSource = new System.Random(globalWorldSeed);
+		System.Random randomSource = new System.Random(SaveLoader.Instance.clusterDetailSave.globalWorldSeed + (int)base.transform.GetPosition().x + (int)base.transform.GetPosition().y);
 		return new GeyserInstanceConfiguration
 		{
 			typeId = typeId,

@@ -184,7 +184,11 @@ public class ChoreConsumer : KMonoBehaviour, IPersonalPriorityManager
 
 	public bool IsPermittedByUser(ChoreGroup chore_group)
 	{
-		return chore_group == null || !userDisabledChoreGroups.Contains(chore_group.IdHash);
+		if (chore_group != null)
+		{
+			return !userDisabledChoreGroups.Contains(chore_group.IdHash);
+		}
+		return true;
 	}
 
 	public void SetPermittedByUser(ChoreGroup chore_group, bool is_allowed)
@@ -205,7 +209,11 @@ public class ChoreConsumer : KMonoBehaviour, IPersonalPriorityManager
 
 	public bool IsPermittedByTraits(ChoreGroup chore_group)
 	{
-		return chore_group == null || !traitDisabledChoreGroups.Contains(chore_group.IdHash);
+		if (chore_group != null)
+		{
+			return !traitDisabledChoreGroups.Contains(chore_group.IdHash);
+		}
+		return true;
 	}
 
 	public void SetPermittedByTraits(ChoreGroup chore_group, bool is_enabled)
@@ -250,14 +258,10 @@ public class ChoreConsumer : KMonoBehaviour, IPersonalPriorityManager
 			for (int num3 = succeeded_contexts.Count - 1; num3 >= 0; num3--)
 			{
 				Chore.Precondition.Context context2 = succeeded_contexts[num3];
-				if (context2.IsSuccess())
+				if (context2.IsSuccess() && ((context2.masterPriority.priority_class == PriorityScreen.PriorityClass.topPriority) ? interruptPriority : context2.interruptPriority) > num2 && !currentChore.choreType.interruptExclusion.Overlaps(context2.chore.choreType.tags))
 				{
-					int num4 = ((context2.masterPriority.priority_class == PriorityScreen.PriorityClass.topPriority) ? interruptPriority : context2.interruptPriority);
-					if (num4 > num2 && !currentChore.choreType.interruptExclusion.Overlaps(context2.chore.choreType.tags))
-					{
-						out_context = context2;
-						return true;
-					}
+					out_context = context2;
+					return true;
 				}
 			}
 		}
@@ -268,8 +272,7 @@ public class ChoreConsumer : KMonoBehaviour, IPersonalPriorityManager
 	{
 		if (debug)
 		{
-			int num = 0;
-			num++;
+			_ = 0 + 1;
 		}
 		preconditionSnapshot.Clear();
 		consumerState.Refresh();
@@ -315,18 +318,17 @@ public class ChoreConsumer : KMonoBehaviour, IPersonalPriorityManager
 		{
 			for (int i = 0; i < providers.Count; i++)
 			{
-				ChoreProvider choreProvider = providers[i];
-				choreProvider.CollectChores(consumerState, preconditionSnapshot.succeededContexts, preconditionSnapshot.failedContexts);
+				providers[i].CollectChores(consumerState, preconditionSnapshot.succeededContexts, preconditionSnapshot.failedContexts);
 			}
 		}
 		preconditionSnapshot.succeededContexts.Sort();
 		List<Chore.Precondition.Context> succeededContexts = preconditionSnapshot.succeededContexts;
-		bool flag = ChooseChore(ref out_context, succeededContexts);
-		if (flag)
+		bool num = ChooseChore(ref out_context, succeededContexts);
+		if (num)
 		{
 			preconditionSnapshot.CopyTo(lastSuccessfulPreconditionSnapshot);
 		}
-		return flag;
+		return num;
 	}
 
 	public void AddProvider(ChoreProvider provider)
@@ -565,9 +567,7 @@ public class ChoreConsumer : KMonoBehaviour, IPersonalPriorityManager
 
 	public int GetAssociatedSkillLevel(ChoreGroup group)
 	{
-		Klei.AI.Attributes attributes = this.GetAttributes();
-		float value = attributes.GetValue(group.attribute.Id);
-		return (int)value;
+		return (int)this.GetAttributes().GetValue(group.attribute.Id);
 	}
 
 	private void UpdateChoreTypePriorities(ChoreGroup group, int value)

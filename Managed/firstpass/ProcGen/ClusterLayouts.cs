@@ -64,8 +64,7 @@ namespace ProcGen
 
 		public World GetWorldData(string clusterID, int worldID)
 		{
-			ClusterLayout clusterData = GetClusterData(clusterID);
-			WorldPlacement worldPlacement = clusterData.worldPlacements[worldID];
+			WorldPlacement worldPlacement = GetClusterData(clusterID).worldPlacements[worldID];
 			return SettingsCache.worlds.GetWorldData(worldPlacement.world);
 		}
 	}

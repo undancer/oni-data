@@ -38,8 +38,7 @@ public class ChoreProvider : KMonoBehaviour
 	{
 		for (int i = 0; i < chores.Count; i++)
 		{
-			Chore chore = chores[i];
-			chore.CollectChores(consumer_state, succeeded, failed_contexts, is_attempting_override: false);
+			chores[i].CollectChores(consumer_state, succeeded, failed_contexts, is_attempting_override: false);
 		}
 	}
 }

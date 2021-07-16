@@ -11,7 +11,7 @@ public class Uncoverable : KMonoBehaviour
 	private OccupyArea occupyArea;
 
 	[Serialize]
-	private bool hasBeenUncovered = false;
+	private bool hasBeenUncovered;
 
 	private HandleVector<int>.Handle partitionerEntry;
 
@@ -20,13 +20,16 @@ public class Uncoverable : KMonoBehaviour
 	private bool IsAnyCellShowing()
 	{
 		int rootCell = Grid.PosToCell(this);
-		bool flag = occupyArea.TestArea(rootCell, null, IsCellBlockedDelegate);
-		return !flag;
+		return !occupyArea.TestArea(rootCell, null, IsCellBlockedDelegate);
 	}
 
 	private static bool IsCellBlocked(int cell, object data)
 	{
-		return Grid.Element[cell].IsSolid && !Grid.Foundation[cell];
+		if (Grid.Element[cell].IsSolid)
+		{
+			return !Grid.Foundation[cell];
+		}
+		return false;
 	}
 
 	protected override void OnPrefabInit()

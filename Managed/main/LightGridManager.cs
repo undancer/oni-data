@@ -33,7 +33,11 @@ public static class LightGridManager
 
 			public bool Equals(State rhs)
 			{
-				return origin == rhs.origin && shape == rhs.shape && radius == rhs.radius && intensity == rhs.intensity && falloffRate == rhs.falloffRate && colour == rhs.colour;
+				if (origin == rhs.origin && shape == rhs.shape && radius == rhs.radius && intensity == rhs.intensity && falloffRate == rhs.falloffRate)
+				{
+					return colour == rhs.colour;
+				}
+				return false;
 			}
 		}
 

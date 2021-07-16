@@ -32,6 +32,10 @@ public class RobotIdleMonitor : GameStateMachine<RobotIdleMonitor, RobotIdleMoni
 		{
 			return true;
 		}
-		return !smi.master.gameObject.GetComponent<ChoreConsumer>().choreDriver.HasChore() && sMI.GetCurrentState() == sMI.sm.standing;
+		if (!smi.master.gameObject.GetComponent<ChoreConsumer>().choreDriver.HasChore())
+		{
+			return sMI.GetCurrentState() == sMI.sm.standing;
+		}
+		return false;
 	}
 }

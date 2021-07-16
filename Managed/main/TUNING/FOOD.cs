@@ -34,7 +34,7 @@ namespace TUNING
 			public static readonly EdiblesManager.FoodInfo LETTUCE = new EdiblesManager.FoodInfo("Lettuce", "", 400000f, 0, 255.15f, 277.15f, 2400f, can_rot: true).AddEffects(new List<string>
 			{
 				"SeafoodRadiationResistance"
-			});
+			}, DlcManager.AVAILABLE_EXPANSION1_ONLY);
 
 			public static readonly EdiblesManager.FoodInfo MEAT = new EdiblesManager.FoodInfo("Meat", "", 1600000f, -1, 255.15f, 277.15f, 4800f, can_rot: true);
 
@@ -47,7 +47,7 @@ namespace TUNING
 			public static readonly EdiblesManager.FoodInfo FISH_MEAT = new EdiblesManager.FoodInfo("FishMeat", "", 1000000f, 2, 255.15f, 277.15f, 2400f, can_rot: true).AddEffects(new List<string>
 			{
 				"SeafoodRadiationResistance"
-			});
+			}, DlcManager.AVAILABLE_EXPANSION1_ONLY);
 
 			public static readonly EdiblesManager.FoodInfo WORMBASICFRUIT = new EdiblesManager.FoodInfo("WormBasicFruit", "EXPANSION1_ID", 800000f, 0, 255.15f, 277.15f, 4800f, can_rot: true);
 
@@ -74,7 +74,7 @@ namespace TUNING
 			public static readonly EdiblesManager.FoodInfo COOKED_FISH = new EdiblesManager.FoodInfo("CookedFish", "", 1600000f, 3, 255.15f, 277.15f, 2400f, can_rot: true).AddEffects(new List<string>
 			{
 				"SeafoodRadiationResistance"
-			});
+			}, DlcManager.AVAILABLE_EXPANSION1_ONLY);
 
 			public static readonly EdiblesManager.FoodInfo POPCORN = new EdiblesManager.FoodInfo("Popcorn", "EXPANSION1_ID", 1000000f, 1, 255.15f, 277.15f, 4800f, can_rot: true);
 
@@ -83,7 +83,7 @@ namespace TUNING
 			public static readonly EdiblesManager.FoodInfo MICROWAVED_LETTUCE = new EdiblesManager.FoodInfo("MicrowavedLettuce", "EXPANSION1_ID", 800000f, 1, 255.15f, 277.15f, 2400f, can_rot: true).AddEffects(new List<string>
 			{
 				"SeafoodRadiationResistance"
-			});
+			}, DlcManager.AVAILABLE_EXPANSION1_ONLY);
 
 			public static readonly EdiblesManager.FoodInfo WORMBASICFOOD = new EdiblesManager.FoodInfo("WormBasicFood", "EXPANSION1_ID", 1200000f, 1, 255.15f, 277.15f, 4800f, can_rot: true);
 
@@ -96,12 +96,12 @@ namespace TUNING
 			public static readonly EdiblesManager.FoodInfo SURF_AND_TURF = new EdiblesManager.FoodInfo("SurfAndTurf", "", 6000000f, 4, 255.15f, 277.15f, 2400f, can_rot: true).AddEffects(new List<string>
 			{
 				"SeafoodRadiationResistance"
-			});
+			}, DlcManager.AVAILABLE_EXPANSION1_ONLY);
 
 			public static readonly EdiblesManager.FoodInfo MUSHROOM_WRAP = new EdiblesManager.FoodInfo("MushroomWrap", "", 4800000f, 4, 255.15f, 277.15f, 2400f, can_rot: true).AddEffects(new List<string>
 			{
 				"SeafoodRadiationResistance"
-			});
+			}, DlcManager.AVAILABLE_EXPANSION1_ONLY);
 
 			public static readonly EdiblesManager.FoodInfo TOFU = new EdiblesManager.FoodInfo("Tofu", "", 3600000f, 2, 255.15f, 277.15f, 2400f, can_rot: true);
 
@@ -113,9 +113,11 @@ namespace TUNING
 
 			public static readonly EdiblesManager.FoodInfo BURGER = new EdiblesManager.FoodInfo("Burger", "", 6000000f, 6, 255.15f, 277.15f, 2400f, can_rot: true).AddEffects(new List<string>
 			{
-				"GoodEats",
+				"GoodEats"
+			}, DlcManager.AVAILABLE_ALL_VERSIONS).AddEffects(new List<string>
+			{
 				"SeafoodRadiationResistance"
-			});
+			}, DlcManager.AVAILABLE_EXPANSION1_ONLY);
 
 			public static readonly EdiblesManager.FoodInfo BEAN = new EdiblesManager.FoodInfo("BeanPlantSeed", "", 0f, 3, 255.15f, 277.15f, 4800f, can_rot: true);
 

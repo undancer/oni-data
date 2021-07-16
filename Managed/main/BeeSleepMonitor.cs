@@ -8,7 +8,7 @@ public class BeeSleepMonitor : GameStateMachine<BeeSleepMonitor, BeeSleepMonitor
 
 	public new class Instance : GameInstance
 	{
-		public float CO2Exposure = 0f;
+		public float CO2Exposure;
 
 		public Instance(IStateMachineTarget master, Def def)
 			: base(master, def)
@@ -43,13 +43,9 @@ public class BeeSleepMonitor : GameStateMachine<BeeSleepMonitor, BeeSleepMonitor
 	public bool IsInCO2(Instance smi)
 	{
 		int num = Grid.PosToCell(smi.gameObject);
-		if (Grid.IsValidCell(num))
+		if (Grid.IsValidCell(num) && Grid.Element[num].id == SimHashes.CarbonDioxide)
 		{
-			Element element = Grid.Element[num];
-			if (element.id == SimHashes.CarbonDioxide)
-			{
-				return true;
-			}
+			return true;
 		}
 		return false;
 	}

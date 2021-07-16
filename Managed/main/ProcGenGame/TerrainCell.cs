@@ -40,23 +40,23 @@ namespace ProcGenGame
 
 		private const float MASS_VARIATION = 0.2f;
 
-		public List<KeyValuePair<int, Tag>> terrainPositions = null;
+		public List<KeyValuePair<int, Tag>> terrainPositions;
 
-		public List<KeyValuePair<int, Tag>> poi = null;
+		public List<KeyValuePair<int, Tag>> poi;
 
 		public List<int> neighbourTerrainCells = new List<int>();
 
-		private float finalSize = 0f;
+		private float finalSize;
 
-		private bool debugMode = false;
+		private bool debugMode;
 
-		private List<int> allCells = null;
+		private List<int> allCells;
 
-		private HashSet<int> availableTerrainPoints = null;
+		private HashSet<int> availableTerrainPoints;
 
-		private HashSet<int> featureSpawnPoints = null;
+		private HashSet<int> featureSpawnPoints;
 
-		private HashSet<int> availableSpawnPoints = null;
+		private HashSet<int> availableSpawnPoints;
 
 		public const int DONT_SET_TEMPERATURE_DEFAULTS = -1;
 
@@ -112,7 +112,17 @@ namespace ProcGenGame
 			private set;
 		}
 
-		public bool HasMobs => mobs != null && mobs.Count > 0;
+		public bool HasMobs
+		{
+			get
+			{
+				if (mobs != null)
+				{
+					return mobs.Count > 0;
+				}
+				return false;
+			}
+		}
 
 		public List<KeyValuePair<int, Tag>> mobs
 		{
@@ -288,13 +298,11 @@ namespace ProcGenGame
 
 		private void HandleSprinkleOfElement(WorldGenSettings settings, Tag targetTag, Chunk world, SetValuesFunction SetValues, float temperatureMin, float temperatureRange, SeededRandom rnd)
 		{
-			FeatureSettings feature = settings.GetFeature(targetTag.Name);
-			string element = feature.GetOneWeightedSimHash("SprinkleOfElementChoices", rnd).element;
-			Element element2 = ElementLoader.FindElementByName(element);
+			Element element = ElementLoader.FindElementByName(settings.GetFeature(targetTag.Name).GetOneWeightedSimHash("SprinkleOfElementChoices", rnd).element);
 			ProcGen.Room value = null;
 			SettingsCache.rooms.TryGetValue(targetTag.Name, out value);
 			SampleDescriber sampleDescriber = value;
-			Sim.PhysicsData defaultValues = element2.defaultValues;
+			Sim.PhysicsData defaultValues = element.defaultValues;
 			Sim.DiseaseCell invalid = Sim.DiseaseCell.Invalid;
 			for (int i = 0; i < terrainPositions.Count; i++)
 			{
@@ -303,16 +311,15 @@ namespace ProcGenGame
 					continue;
 				}
 				float radius = rnd.RandomRange(sampleDescriber.blobSize.min, sampleDescriber.blobSize.max);
-				Vector2 center = Grid.CellToPos2D(terrainPositions[i].Key);
-				List<Vector2I> filledCircle = ProcGen.Util.GetFilledCircle(center, radius);
+				List<Vector2I> filledCircle = ProcGen.Util.GetFilledCircle(Grid.CellToPos2D(terrainPositions[i].Key), radius);
 				for (int j = 0; j < filledCircle.Count; j++)
 				{
 					int num = Grid.XYToCell(filledCircle[j].x, filledCircle[j].y);
 					if (Grid.IsValidCell(num))
 					{
-						defaultValues.mass = GetDensityMassForCell(world, num, element2.defaultValues.mass);
+						defaultValues.mass = GetDensityMassForCell(world, num, element.defaultValues.mass);
 						defaultValues.temperature = temperatureMin + world.heatOffset[num] * temperatureRange;
-						SetValues(num, element2, defaultValues, invalid);
+						SetValues(num, element, defaultValues, invalid);
 					}
 				}
 			}
@@ -552,8 +559,7 @@ namespace ProcGenGame
 			}
 			for (int i = 0; i < points.Count; i++)
 			{
-				int cell = Grid.XYToCell(points[i].x, points[i].y);
-				if (!Grid.IsValidCell(cell))
+				if (!Grid.IsValidCell(Grid.XYToCell(points[i].x, points[i].y)))
 				{
 					continue;
 				}
@@ -789,8 +795,7 @@ namespace ProcGenGame
 					{
 						float timeOnEdge = 0f;
 						MathUtil.Pair<Vector2, Vector2> closestEdge = poly.GetClosestEdge(vector, ref timeOnEdge);
-						Vector2 a = closestEdge.First + (closestEdge.Second - closestEdge.First) * timeOnEdge;
-						num4 = Vector2.Distance(a, vector);
+						num4 = Vector2.Distance(closestEdge.First + (closestEdge.Second - closestEdge.First) * timeOnEdge, vector);
 					}
 					num3 = Vector2.Distance(poly.Centroid(), vector) / num4;
 					num3 = Mathf.Max(0f, Mathf.Min(1f, num3));
@@ -803,13 +808,13 @@ namespace ProcGenGame
 				{
 					float timeOnEdge2 = 0f;
 					MathUtil.Pair<Vector2, Vector2> closestEdge2 = poly.GetClosestEdge(vector, ref timeOnEdge2);
-					Vector2 a2 = closestEdge2.First + (closestEdge2.Second - closestEdge2.First) * timeOnEdge2;
+					Vector2 a = closestEdge2.First + (closestEdge2.Second - closestEdge2.First) * timeOnEdge2;
 					float num5 = 15f;
 					if (flag11)
 					{
 						num5 = Vector2.Distance(poly.Centroid(), vector);
 					}
-					num3 = Vector2.Distance(a2, vector) / num5;
+					num3 = Vector2.Distance(a, vector) / num5;
 					num3 = Mathf.Max(0f, Mathf.Min(1f, num3));
 					if (flag6)
 					{
@@ -824,8 +829,7 @@ namespace ProcGenGame
 					{
 						MathUtil.Pair<Vector2, Vector2> segment = new MathUtil.Pair<Vector2, Vector2>(item.corner0.position, item.corner1.position);
 						float closest_point = 0f;
-						float a3 = Mathf.Abs(MathUtil.GetClosestPointBetweenPointAndLineSegment(segment, vector, ref closest_point));
-						num6 = Mathf.Min(a3, num6);
+						num6 = Mathf.Min(Mathf.Abs(MathUtil.GetClosestPointBetweenPointAndLineSegment(segment, vector, ref closest_point)), num6);
 					}
 					float num7 = 20f;
 					if (flag11)
@@ -989,7 +993,11 @@ namespace ProcGenGame
 
 		public bool IsSafeToSpawnFeatureTemplate(Tag additionalTag)
 		{
-			return !node.tags.Contains(additionalTag) && !node.tags.ContainsOne(noFeatureSpawnTagSet);
+			if (!node.tags.Contains(additionalTag))
+			{
+				return !node.tags.ContainsOne(noFeatureSpawnTagSet);
+			}
+			return false;
 		}
 
 		public bool IsSafeToSpawnFeatureTemplate(bool log = true)

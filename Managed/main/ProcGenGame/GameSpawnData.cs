@@ -99,7 +99,11 @@ namespace ProcGenGame
 
 		private bool IsWarpTeleporter(Prefab prefab)
 		{
-			return prefab.id == "WarpPortal" || prefab.id == WarpReceiverConfig.ID || prefab.id == "WarpConduitSender" || prefab.id == "WarpConduitReceiver";
+			if (!(prefab.id == "WarpPortal") && !(prefab.id == WarpReceiverConfig.ID) && !(prefab.id == "WarpConduitSender"))
+			{
+				return prefab.id == "WarpConduitReceiver";
+			}
+			return true;
 		}
 	}
 }

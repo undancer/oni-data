@@ -43,10 +43,9 @@ namespace KSerialization
 			while (type != typeof(object))
 			{
 				object[] customAttributes = type.GetCustomAttributes(typeof(SerializationConfig), inherit: false);
-				object[] array = customAttributes;
-				for (int i = 0; i < array.Length; i++)
+				for (int i = 0; i < customAttributes.Length; i++)
 				{
-					Attribute attribute = (Attribute)array[i];
+					Attribute attribute = (Attribute)customAttributes[i];
 					if (attribute is SerializationConfig)
 					{
 						SerializationConfig serializationConfig = attribute as SerializationConfig;
@@ -76,11 +75,9 @@ namespace KSerialization
 			typeInfo = Manager.GetTypeInfo(type);
 			type.GetSerializationMethods(typeof(OnSerializingAttribute), typeof(OnSerializedAttribute), typeof(CustomSerialize), out onSerializing, out onSerialized, out customSerialize);
 			MemberSerialization serializationConfig = GetSerializationConfig(type);
-			MemberSerialization memberSerialization = serializationConfig;
-			MemberSerialization memberSerialization2 = memberSerialization;
-			if (memberSerialization2 != 0)
+			if (serializationConfig != 0)
 			{
-				if (memberSerialization2 == MemberSerialization.OptIn)
+				if (serializationConfig == MemberSerialization.OptIn)
 				{
 					while (type != typeof(object))
 					{
@@ -114,8 +111,7 @@ namespace KSerialization
 		private void AddPublicFields(Type type)
 		{
 			FieldInfo[] fields = type.GetFields(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public);
-			FieldInfo[] array = fields;
-			foreach (FieldInfo field in array)
+			foreach (FieldInfo field in fields)
 			{
 				AddValidField(field);
 			}
@@ -124,12 +120,10 @@ namespace KSerialization
 		private void AddOptInFields(Type type)
 		{
 			FieldInfo[] fields = type.GetFields(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-			FieldInfo[] array = fields;
-			foreach (FieldInfo fieldInfo in array)
+			foreach (FieldInfo fieldInfo in fields)
 			{
 				object[] customAttributes = fieldInfo.GetCustomAttributes(inherit: false);
-				object[] array2 = customAttributes;
-				foreach (object obj in array2)
+				foreach (object obj in customAttributes)
 				{
 					if (obj != null && obj is Serialize)
 					{
@@ -155,8 +149,7 @@ namespace KSerialization
 		private void AddPublicProperties(Type type)
 		{
 			PropertyInfo[] properties = type.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public);
-			PropertyInfo[] array = properties;
-			foreach (PropertyInfo property in array)
+			foreach (PropertyInfo property in properties)
 			{
 				AddValidProperty(property);
 			}
@@ -165,12 +158,10 @@ namespace KSerialization
 		private void AddOptInProperties(Type type)
 		{
 			PropertyInfo[] properties = type.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-			PropertyInfo[] array = properties;
-			foreach (PropertyInfo propertyInfo in array)
+			foreach (PropertyInfo propertyInfo in properties)
 			{
 				object[] customAttributes = propertyInfo.GetCustomAttributes(inherit: false);
-				object[] array2 = customAttributes;
-				foreach (object obj in array2)
+				foreach (object obj in customAttributes)
 				{
 					if (obj != null && obj is Serialize)
 					{
@@ -182,15 +173,10 @@ namespace KSerialization
 
 		private void AddValidProperty(PropertyInfo property)
 		{
-			if (property.GetIndexParameters().Length != 0)
+			if (property.GetIndexParameters().Length == 0)
 			{
-				return;
-			}
-			object[] customAttributes = property.GetCustomAttributes(typeof(NonSerializedAttribute), inherit: false);
-			if (customAttributes == null || customAttributes.Length == 0)
-			{
-				MethodInfo setMethod = property.GetSetMethod();
-				if (setMethod != null)
+				object[] customAttributes = property.GetCustomAttributes(typeof(NonSerializedAttribute), inherit: false);
+				if ((customAttributes == null || customAttributes.Length == 0) && property.GetSetMethod() != null)
 				{
 					serializableProperties.Add(new SerializationProperty
 					{

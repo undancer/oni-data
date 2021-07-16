@@ -10,6 +10,8 @@ namespace Database
 
 		public ColonyAchievement ReachedDistantPlanet;
 
+		public ColonyAchievement CollectedArtifacts;
+
 		public ColonyAchievement Survived100Cycles;
 
 		public ColonyAchievement ReachedSpace;
@@ -88,11 +90,22 @@ namespace Database
 			}, COLONY_ACHIEVEMENTS.THRIVING.MESSAGE_TITLE, COLONY_ACHIEVEMENTS.THRIVING.MESSAGE_BODY, "victoryShorts/Stay", "victoryLoops/Stay_loop", ThrivingSequence.Start, AudioMixerSnapshots.Get().VictoryNISGenericSnapshot, "home_sweet_home"));
 			ReachedDistantPlanet = (DlcManager.IsExpansion1Active() ? Add(new ColonyAchievement("ReachedDistantPlanet", "WINCONDITION_LEAVE", COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.NAME, COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.DESCRIPTION, isVictoryCondition: true, new List<ColonyAchievementRequirement>
 			{
+				new EstablishColonies(),
+				new OpenTemporalTear(),
 				new SentCraftIntoTemporalTear()
 			}, COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_TITLE_DLC1, COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_BODY_DLC1, "victoryShorts/Leave", "victoryLoops/Leave_loop", EnterTemporalTearSequence.Start, AudioMixerSnapshots.Get().VictoryNISRocketSnapshot, "rocket")) : Add(new ColonyAchievement("ReachedDistantPlanet", "WINCONDITION_LEAVE", COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.NAME, COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.DESCRIPTION, isVictoryCondition: true, new List<ColonyAchievementRequirement>
 			{
 				new ReachedSpace(Db.Get().SpaceDestinationTypes.Wormhole)
 			}, COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_TITLE, COLONY_ACHIEVEMENTS.DISTANT_PLANET_REACHED.MESSAGE_BODY, "victoryShorts/Leave", "victoryLoops/Leave_loop", ReachedDistantPlanetSequence.Start, AudioMixerSnapshots.Get().VictoryNISRocketSnapshot, "rocket")));
+			if (DlcManager.IsExpansion1Active())
+			{
+				CollectedArtifacts = new ColonyAchievement("CollectedArtifacts", "WINCONDITION_ARTIFACTS", COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.NAME, COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.DESCRIPTION, isVictoryCondition: true, new List<ColonyAchievementRequirement>
+				{
+					new CollectedArtifacts(),
+					new CollectedSpaceArtifacts()
+				}, COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_TITLE, COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_BODY, "victoryShorts/Artifact", "victoryLoops/Artifact_loop", ArtifactSequence.Start, AudioMixerSnapshots.Get().VictoryNISGenericSnapshot, "home_sweet_home");
+				Add(CollectedArtifacts);
+			}
 			Survived100Cycles = Add(new ColonyAchievement("Survived100Cycles", "SURVIVE_HUNDRED_CYCLES", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SURVIVE_HUNDRED_CYCLES, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SURVIVE_HUNDRED_CYCLES_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
 			{
 				new CycleNumber()
@@ -211,8 +224,7 @@ namespace Database
 				new EatXKCalProducedByY(1, new List<Tag>
 				{
 					"GourmetCookingStation",
-					"CookingStation",
-					"GammaRayOven"
+					"CookingStation"
 				})
 			}, "", "", "", "", null, "", "its_not_raw"));
 			BasicPumping = Add(new ColonyAchievement("BasicPumping", "BASIC_PUMPING", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.BASIC_PUMPING, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.BASIC_PUMPING_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>

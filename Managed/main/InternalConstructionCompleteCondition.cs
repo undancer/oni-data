@@ -11,7 +11,11 @@ public class InternalConstructionCompleteCondition : ProcessCondition
 
 	public override Status EvaluateCondition()
 	{
-		return (target.IsRequestingConstruction() && !target.HasOutputInStorage()) ? Status.Warning : Status.Ready;
+		if (target.IsRequestingConstruction() && !target.HasOutputInStorage())
+		{
+			return Status.Warning;
+		}
+		return Status.Ready;
 	}
 
 	public override string GetStatusMessage(Status status)

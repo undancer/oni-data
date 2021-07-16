@@ -39,17 +39,33 @@ public class DlcManager
 
 	public static bool IsVanillaId(string dlcId)
 	{
-		return dlcId == null || dlcId == "";
+		if (dlcId != null)
+		{
+			return dlcId == "";
+		}
+		return true;
 	}
 
 	public static bool IsVanillaId(string[] dlcIds)
 	{
-		return dlcIds == null || (dlcIds.Length == 1 && dlcIds[0] == "");
+		if (dlcIds != null)
+		{
+			if (dlcIds.Length == 1)
+			{
+				return dlcIds[0] == "";
+			}
+			return false;
+		}
+		return true;
 	}
 
 	public static bool IsValidForVanilla(string[] dlcIds)
 	{
-		return dlcIds == null || Array.IndexOf(dlcIds, "") != -1;
+		if (dlcIds != null)
+		{
+			return Array.IndexOf(dlcIds, "") != -1;
+		}
+		return true;
 	}
 
 	public static bool IsExpansion1Id(string dlcId)
@@ -106,13 +122,20 @@ public class DlcManager
 		if (Application.isEditor || DistributionPlatform.Inst.IsDLCPurchased(id))
 		{
 			SetContentSettingEnabled(id, !IsContentSettingEnabled(id));
-			App.instance.Restart();
+			if ((bool)App.instance)
+			{
+				App.instance.Restart();
+			}
 		}
 	}
 
 	public static bool IsContentActive(string dlcId)
 	{
-		return CheckPlatformSubscription(dlcId) && IsContentSettingEnabled(dlcId);
+		if (CheckPlatformSubscription(dlcId))
+		{
+			return IsContentSettingEnabled(dlcId);
+		}
+		return false;
 	}
 
 	public static bool IsDlcListValidForCurrentContent(string[] dlcIds)

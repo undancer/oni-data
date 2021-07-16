@@ -192,7 +192,7 @@ public class SpacePOISimpleInfoPanel : SimpleInfoPanel
 		artifactsSpacer.rectTransform().SetAsLastSibling();
 		artifactRow.rectTransform().SetAsLastSibling();
 		ArtifactPOIStates.Instance sMI = artifactConfigurator.GetSMI<ArtifactPOIStates.Instance>();
-		string artifactID = sMI.configuration.GetArtifactID();
+		sMI.configuration.GetArtifactID();
 		HierarchyReferences component = artifactRow.GetComponent<HierarchyReferences>();
 		component.GetReference<LocText>("NameLabel").text = UI.CLUSTERMAP.POI.ARTIFACTS;
 		component.GetReference<LocText>("ValueLabel").alignment = TextAlignmentOptions.MidlineRight;

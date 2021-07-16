@@ -11,27 +11,26 @@ public class SolidFilterConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("SolidFilter", 3, 1, "filter_material_conveyor_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.PENALTY.TIER0);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 120f;
-		buildingDef.SelfHeatKilowattsWhenActive = 0f;
-		buildingDef.ExhaustKilowattsWhenActive = 0f;
-		buildingDef.InputConduitType = ConduitType.Solid;
-		buildingDef.OutputConduitType = ConduitType.Solid;
-		buildingDef.Floodable = false;
-		buildingDef.ViewMode = OverlayModes.SolidConveyor.ID;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.UtilityInputOffset = new CellOffset(-1, 0);
-		buildingDef.UtilityOutputOffset = new CellOffset(1, 0);
-		buildingDef.PermittedRotations = PermittedRotations.R360;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("SolidFilter", 3, 1, "filter_material_conveyor_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER1, decor: BUILDINGS.DECOR.PENALTY.TIER0);
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 120f;
+		obj.SelfHeatKilowattsWhenActive = 0f;
+		obj.ExhaustKilowattsWhenActive = 0f;
+		obj.InputConduitType = ConduitType.Solid;
+		obj.OutputConduitType = ConduitType.Solid;
+		obj.Floodable = false;
+		obj.ViewMode = OverlayModes.SolidConveyor.ID;
+		obj.AudioCategory = "Metal";
+		obj.UtilityInputOffset = new CellOffset(-1, 0);
+		obj.UtilityOutputOffset = new CellOffset(1, 0);
+		obj.PermittedRotations = PermittedRotations.R360;
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.SolidConveyorIDs, "SolidFilter");
-		return buildingDef;
+		return obj;
 	}
 
 	private void AttachPort(GameObject go)
 	{
-		ConduitSecondaryOutput conduitSecondaryOutput = go.AddComponent<ConduitSecondaryOutput>();
-		conduitSecondaryOutput.portInfo = secondaryPort;
+		go.AddComponent<ConduitSecondaryOutput>().portInfo = secondaryPort;
 	}
 
 	public override void DoPostConfigurePreview(BuildingDef def, GameObject go)
@@ -50,10 +49,8 @@ public class SolidFilterConfig : IBuildingConfig
 	{
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
 		go.AddOrGet<Structure>();
-		ElementFilter elementFilter = go.AddOrGet<ElementFilter>();
-		elementFilter.portInfo = secondaryPort;
-		Filterable filterable = go.AddOrGet<Filterable>();
-		filterable.filterElementState = Filterable.ElementState.Solid;
+		go.AddOrGet<ElementFilter>().portInfo = secondaryPort;
+		go.AddOrGet<Filterable>().filterElementState = Filterable.ElementState.Solid;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

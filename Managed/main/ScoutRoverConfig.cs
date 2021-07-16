@@ -51,7 +51,7 @@ public class ScoutRoverConfig : IEntityConfig
 			Db.Get().ChoreGroups.Recreation,
 			Db.Get().ChoreGroups.Toggle
 		};
-		Traits traits = gameObject.AddOrGet<Traits>();
+		gameObject.AddOrGet<Traits>();
 		Trait trait = Db.Get().CreateTrait(ROVER_BASE_TRAIT_ID, STRINGS.ROBOTS.MODELS.SCOUT.NAME, STRINGS.ROBOTS.MODELS.SCOUT.NAME, null, should_save: false, disabled_chore_groups, positive_trait: true, is_valid_starter_trait: true);
 		trait.Add(new AttributeModifier(Db.Get().Attributes.CarryAmount.Id, 200f, STRINGS.ROBOTS.MODELS.SCOUT.NAME));
 		trait.Add(new AttributeModifier(Db.Get().Attributes.Digging.Id, TUNING.ROBOTS.SCOUTBOT.DIGGING, STRINGS.ROBOTS.MODELS.SCOUT.NAME));
@@ -106,10 +106,8 @@ public class ScoutRoverConfig : IEntityConfig
 		navigator.updateProber = true;
 		navigator.sceneLayer = Grid.SceneLayer.Creatures;
 		gameObject.AddOrGet<Sensors>();
-		Pickupable pickupable = gameObject.AddOrGet<Pickupable>();
-		pickupable.SetWorkTime(5f);
-		SnapOn snapOn = gameObject.AddOrGet<SnapOn>();
-		snapOn.snapPoints = new List<SnapOn.SnapPoint>(new SnapOn.SnapPoint[0]);
+		gameObject.AddOrGet<Pickupable>().SetWorkTime(5f);
+		gameObject.AddOrGet<SnapOn>().snapPoints = new List<SnapOn.SnapPoint>(new SnapOn.SnapPoint[0]);
 		component.SetSymbolVisiblity("snapto_pivot", is_visible: false);
 		return gameObject;
 	}

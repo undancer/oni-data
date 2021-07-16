@@ -17,7 +17,7 @@ namespace Database
 
 		public int tier;
 
-		public bool deprecated = false;
+		public bool deprecated;
 
 		public List<SkillPerk> perks;
 

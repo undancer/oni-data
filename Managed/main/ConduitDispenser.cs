@@ -10,25 +10,25 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable, IConduitDispenser
 	public ConduitType conduitType;
 
 	[SerializeField]
-	public SimHashes[] elementFilter = null;
+	public SimHashes[] elementFilter;
 
 	[SerializeField]
-	public bool invertElementFilter = false;
+	public bool invertElementFilter;
 
 	[SerializeField]
-	public bool alwaysDispense = false;
+	public bool alwaysDispense;
 
 	[SerializeField]
 	public bool isOn = true;
 
 	[SerializeField]
-	public bool blocked = false;
+	public bool blocked;
 
 	[SerializeField]
 	public bool empty = true;
 
 	[SerializeField]
-	public bool useSecondaryOutput = false;
+	public bool useSecondaryOutput;
 
 	private static readonly Operational.Flag outputConduitFlag = new Operational.Flag("output_conduit", Operational.Flag.Type.Functional);
 
@@ -42,7 +42,7 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable, IConduitDispenser
 
 	private int utilityCell = -1;
 
-	private int elementOutputOffset = 0;
+	private int elementOutputOffset;
 
 	public Storage Storage => storage;
 
@@ -57,7 +57,11 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable, IConduitDispenser
 		get
 		{
 			GameObject gameObject = Grid.Objects[utilityCell, (conduitType == ConduitType.Gas) ? 12 : 16];
-			return gameObject != null && gameObject.GetComponent<BuildingComplete>() != null;
+			if (gameObject != null)
+			{
+				return gameObject.GetComponent<BuildingComplete>() != null;
+			}
+			return false;
 		}
 	}
 
@@ -127,13 +131,11 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable, IConduitDispenser
 		if (primaryElement != null)
 		{
 			empty = false;
-			ConduitFlow conduitManager = GetConduitManager();
-			float num = conduitManager.AddElement(utilityCell, primaryElement.ElementID, primaryElement.Mass, primaryElement.Temperature, primaryElement.DiseaseIdx, primaryElement.DiseaseCount);
+			float num = GetConduitManager().AddElement(utilityCell, primaryElement.ElementID, primaryElement.Mass, primaryElement.Temperature, primaryElement.DiseaseIdx, primaryElement.DiseaseCount);
 			if (num > 0f)
 			{
-				float num2 = num / primaryElement.Mass;
-				int num3 = (int)(num2 * (float)primaryElement.DiseaseCount);
-				primaryElement.ModifyDiseaseCount(-num3, "ConduitDispenser.ConduitUpdate");
+				int num2 = (int)(num / primaryElement.Mass * (float)primaryElement.DiseaseCount);
+				primaryElement.ModifyDiseaseCount(-num2, "ConduitDispenser.ConduitUpdate");
 				primaryElement.Mass -= num;
 				Trigger(-1697596308, primaryElement.gameObject);
 			}

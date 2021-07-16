@@ -17,8 +17,7 @@ public static class BaseOilFloaterConfig
 		gameObject.AddOrGet<LoopingSounds>();
 		gameObject.AddOrGetDef<ThreatMonitor.Def>();
 		gameObject.AddOrGetDef<SubmergedMonitor.Def>();
-		CreatureFallMonitor.Def def = gameObject.AddOrGetDef<CreatureFallMonitor.Def>();
-		def.canSwim = true;
+		gameObject.AddOrGetDef<CreatureFallMonitor.Def>().canSwim = true;
 		gameObject.AddWeapon(1f, 1f);
 		EntityTemplates.CreateAndRegisterBaggedCreature(gameObject, must_stand_on_top_for_pickup: true, allow_mark_for_capture: false);
 		string inhaleSound = "OilFloater_intake_air";
@@ -61,16 +60,11 @@ public static class BaseOilFloaterConfig
 	{
 		HashSet<Tag> hashSet = new HashSet<Tag>();
 		hashSet.Add(consumed_tag);
-		Diet.Info[] infos = new Diet.Info[1]
-		{
-			new Diet.Info(hashSet, producedTag, caloriesPerKg, producedConversionRate, diseaseId, diseasePerKgProduced)
-		};
-		Diet diet = new Diet(infos);
+		Diet diet = new Diet(new Diet.Info(hashSet, producedTag, caloriesPerKg, producedConversionRate, diseaseId, diseasePerKgProduced));
 		CreatureCalorieMonitor.Def def = prefab.AddOrGetDef<CreatureCalorieMonitor.Def>();
 		def.diet = diet;
 		def.minPoopSizeInCalories = minPoopSizeInKg * caloriesPerKg;
-		GasAndLiquidConsumerMonitor.Def def2 = prefab.AddOrGetDef<GasAndLiquidConsumerMonitor.Def>();
-		def2.diet = diet;
+		prefab.AddOrGetDef<GasAndLiquidConsumerMonitor.Def>().diet = diet;
 		return prefab;
 	}
 }

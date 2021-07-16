@@ -57,7 +57,11 @@ public class SuffocationMonitor : GameStateMachine<SuffocationMonitor, Suffocati
 
 		public bool IsInBreathableArea()
 		{
-			return base.master.GetComponent<KPrefabID>().HasTag(GameTags.RecoveringBreath) || base.master.GetComponent<Sensors>().GetSensor<BreathableAreaSensor>().IsBreathable();
+			if (!base.master.GetComponent<KPrefabID>().HasTag(GameTags.RecoveringBreath))
+			{
+				return base.master.GetComponent<Sensors>().GetSensor<BreathableAreaSensor>().IsBreathable();
+			}
+			return true;
 		}
 
 		public bool HasSuffocated()
@@ -67,7 +71,11 @@ public class SuffocationMonitor : GameStateMachine<SuffocationMonitor, Suffocati
 
 		public bool IsSuffocating()
 		{
-			return breath.deltaAttribute.GetTotalValue() <= 0f && breath.value <= 45.454548f;
+			if (breath.deltaAttribute.GetTotalValue() <= 0f)
+			{
+				return breath.value <= 45.454548f;
+			}
+			return false;
 		}
 
 		public void Kill()

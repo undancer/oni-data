@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Klei.AI;
 using UnityEngine;
 
 [Serializable]
@@ -98,13 +97,11 @@ public class Def : ScriptableObject
 		{
 			if (Db.Get().Amounts.Exists(item as string))
 			{
-				Amount amount = Db.Get().Amounts.Get(item as string);
-				return new Tuple<Sprite, Color>(Assets.GetSprite(amount.uiSprite), Color.white);
+				return new Tuple<Sprite, Color>(Assets.GetSprite(Db.Get().Amounts.Get(item as string).uiSprite), Color.white);
 			}
 			if (Db.Get().Attributes.Exists(item as string))
 			{
-				Klei.AI.Attribute attribute = Db.Get().Attributes.Get(item as string);
-				return new Tuple<Sprite, Color>(Assets.GetSprite(attribute.uiSprite), Color.white);
+				return new Tuple<Sprite, Color>(Assets.GetSprite(Db.Get().Attributes.Get(item as string).uiSprite), Color.white);
 			}
 			return GetUISprite((item as string).ToTag(), animName, centered);
 		}

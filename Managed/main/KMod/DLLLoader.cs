@@ -120,15 +120,12 @@ namespace KMod
 				{
 					foreach (KeyValuePair<Assembly, UserMod2> userMod2Instance in loadedModData.userMod2Instances)
 					{
-						UserMod2 value = userMod2Instance.Value;
-						value.OnLoad(loadedModData.harmony);
+						userMod2Instance.Value.OnLoad(loadedModData.harmony);
 					}
 				}
-				loadedModData.patched_methods = loadedModData.harmony.GetPatchedMethods().Where(delegate(MethodBase method)
-				{
-					Patches patchInfo = Harmony.GetPatchInfo(method);
-					return patchInfo.Owners.Contains(harmonyId);
-				}).ToList();
+				loadedModData.patched_methods = (from method in loadedModData.harmony.GetPatchedMethods()
+					where Harmony.GetPatchInfo(method).Owners.Contains(harmonyId)
+					select method).ToList();
 				return loadedModData;
 			}
 			catch (Exception e)

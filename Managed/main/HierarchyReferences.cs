@@ -10,8 +10,7 @@ public class HierarchyReferences : KMonoBehaviour
 		ElementReference[] array = references;
 		for (int i = 0; i < array.Length; i++)
 		{
-			ElementReference elementReference = array[i];
-			if (elementReference.Name == name)
+			if (array[i].Name == name)
 			{
 				return true;
 			}

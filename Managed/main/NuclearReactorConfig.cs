@@ -56,31 +56,31 @@ public class NuclearReactorConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("NuclearReactor", 5, 6, "generatornuclear_kanim", 100, 480f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.REFINED_METALS, 9999f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
-		buildingDef.GeneratorWattageRating = 0f;
-		buildingDef.GeneratorBaseCapacity = 10000f;
-		buildingDef.RequiresPowerInput = false;
-		buildingDef.RequiresPowerOutput = false;
-		buildingDef.ThermalConductivity = 0.1f;
-		buildingDef.ExhaustKilowattsWhenActive = 0f;
-		buildingDef.SelfHeatKilowattsWhenActive = 0f;
-		buildingDef.Overheatable = false;
-		buildingDef.InputConduitType = ConduitType.Liquid;
-		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
-		buildingDef.UtilityInputOffset = new CellOffset(-2, 2);
-		buildingDef.LogicInputPorts = new List<LogicPorts.Port>
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("NuclearReactor", 5, 6, "generatornuclear_kanim", 100, 480f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.REFINED_METALS, 9999f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
+		obj.GeneratorWattageRating = 0f;
+		obj.GeneratorBaseCapacity = 10000f;
+		obj.RequiresPowerInput = false;
+		obj.RequiresPowerOutput = false;
+		obj.ThermalConductivity = 0.1f;
+		obj.ExhaustKilowattsWhenActive = 0f;
+		obj.SelfHeatKilowattsWhenActive = 0f;
+		obj.Overheatable = false;
+		obj.InputConduitType = ConduitType.Liquid;
+		obj.ViewMode = OverlayModes.LiquidConduits.ID;
+		obj.UtilityInputOffset = new CellOffset(-2, 2);
+		obj.LogicInputPorts = new List<LogicPorts.Port>
 		{
 			LogicPorts.Port.InputPort("CONTROL_FUEL_DELIVERY", new CellOffset(0, 0), STRINGS.BUILDINGS.PREFABS.NUCLEARREACTOR.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.NUCLEARREACTOR.INPUT_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.NUCLEARREACTOR.INPUT_PORT_INACTIVE, show_wire_missing_icon: false, display_custom_name: true)
 		};
-		buildingDef.ViewMode = OverlayModes.Temperature.ID;
-		buildingDef.AudioCategory = "HollowMetal";
-		buildingDef.AudioSize = "large";
-		buildingDef.Floodable = false;
-		buildingDef.Entombable = false;
-		buildingDef.Breakable = false;
-		buildingDef.Invincible = true;
-		buildingDef.Deprecated = !Sim.IsRadiationEnabled();
-		return buildingDef;
+		obj.ViewMode = OverlayModes.Temperature.ID;
+		obj.AudioCategory = "HollowMetal";
+		obj.AudioSize = "large";
+		obj.Floodable = false;
+		obj.Entombable = false;
+		obj.Breakable = false;
+		obj.Invincible = true;
+		obj.Deprecated = !Sim.IsRadiationEnabled();
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -100,15 +100,13 @@ public class NuclearReactorConfig : IBuildingConfig
 			Storage.StoredItemModifier.Insulate,
 			Storage.StoredItemModifier.Hide
 		});
-		Storage storage2 = go.AddComponent<Storage>();
-		storage2.SetDefaultStoredItemModifiers(new List<Storage.StoredItemModifier>
+		go.AddComponent<Storage>().SetDefaultStoredItemModifiers(new List<Storage.StoredItemModifier>
 		{
 			Storage.StoredItemModifier.Seal,
 			Storage.StoredItemModifier.Insulate,
 			Storage.StoredItemModifier.Hide
 		});
-		Storage storage3 = go.AddComponent<Storage>();
-		storage3.SetDefaultStoredItemModifiers(new List<Storage.StoredItemModifier>
+		go.AddComponent<Storage>().SetDefaultStoredItemModifiers(new List<Storage.StoredItemModifier>
 		{
 			Storage.StoredItemModifier.Seal,
 			Storage.StoredItemModifier.Insulate,
@@ -135,5 +133,6 @@ public class NuclearReactorConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
+		go.AddTag(GameTags.CorrosionProof);
 	}
 }

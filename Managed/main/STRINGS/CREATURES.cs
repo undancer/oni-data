@@ -57,7 +57,7 @@ namespace STRINGS
 
 			public static LocString SQUIRRELSPECIES = UI.FormatAsLink("Pips", "SQUIRRELSPECIES");
 
-			public static LocString STATERPILLARSPECIES = UI.FormatAsLink("Plug Slug", "STATERPILLARSPECIES");
+			public static LocString STATERPILLARSPECIES = UI.FormatAsLink("Plug Slugs", "STATERPILLARSPECIES");
 
 			public static LocString BEETASPECIES = UI.FormatAsLink("Beetas", "BEETASPECIES");
 
@@ -2192,6 +2192,13 @@ namespace STRINGS
 				public static LocString NAME = "Hungry";
 
 				public static LocString TOOLTIP = "This critter's tummy is rumbling";
+			}
+
+			public class HIVEHUNGRY
+			{
+				public static LocString NAME = "Food Supply Low";
+
+				public static LocString TOOLTIP = "The food reserves in this hive are running low";
 			}
 
 			public class STARVING

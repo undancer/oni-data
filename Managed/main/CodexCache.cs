@@ -7,11 +7,11 @@ using UnityEngine;
 
 public static class CodexCache
 {
-	private static string baseEntryPath = null;
+	private static string baseEntryPath;
 
-	public static Dictionary<string, CodexEntry> entries = null;
+	public static Dictionary<string, CodexEntry> entries;
 
-	public static Dictionary<string, SubEntry> subEntries = null;
+	public static Dictionary<string, SubEntry> subEntries;
 
 	private static Dictionary<string, List<string>> unlockedEntryLookup;
 
@@ -32,17 +32,18 @@ public static class CodexCache
 		Dictionary<string, CodexEntry> dictionary = new Dictionary<string, CodexEntry>();
 		if (widgetTagMappings == null)
 		{
-			List<Tuple<string, Type>> list = new List<Tuple<string, Type>>();
-			list.Add(new Tuple<string, Type>("!CodexText", typeof(CodexText)));
-			list.Add(new Tuple<string, Type>("!CodexImage", typeof(CodexImage)));
-			list.Add(new Tuple<string, Type>("!CodexDividerLine", typeof(CodexDividerLine)));
-			list.Add(new Tuple<string, Type>("!CodexSpacer", typeof(CodexSpacer)));
-			list.Add(new Tuple<string, Type>("!CodexLabelWithIcon", typeof(CodexLabelWithIcon)));
-			list.Add(new Tuple<string, Type>("!CodexLabelWithLargeIcon", typeof(CodexLabelWithLargeIcon)));
-			list.Add(new Tuple<string, Type>("!CodexContentLockedIndicator", typeof(CodexContentLockedIndicator)));
-			list.Add(new Tuple<string, Type>("!CodexLargeSpacer", typeof(CodexLargeSpacer)));
-			list.Add(new Tuple<string, Type>("!CodexVideo", typeof(CodexVideo)));
-			widgetTagMappings = list;
+			widgetTagMappings = new List<Tuple<string, Type>>
+			{
+				new Tuple<string, Type>("!CodexText", typeof(CodexText)),
+				new Tuple<string, Type>("!CodexImage", typeof(CodexImage)),
+				new Tuple<string, Type>("!CodexDividerLine", typeof(CodexDividerLine)),
+				new Tuple<string, Type>("!CodexSpacer", typeof(CodexSpacer)),
+				new Tuple<string, Type>("!CodexLabelWithIcon", typeof(CodexLabelWithIcon)),
+				new Tuple<string, Type>("!CodexLabelWithLargeIcon", typeof(CodexLabelWithLargeIcon)),
+				new Tuple<string, Type>("!CodexContentLockedIndicator", typeof(CodexContentLockedIndicator)),
+				new Tuple<string, Type>("!CodexLargeSpacer", typeof(CodexLargeSpacer)),
+				new Tuple<string, Type>("!CodexVideo", typeof(CodexVideo))
+			};
 		}
 		string text = FormatLinkID("LESSONS");
 		dictionary.Add(text, CodexEntryGenerator.GenerateCategoryEntry(text, UI.CODEX.CATEGORYNAMES.TIPS, CodexEntryGenerator.GenerateTutorialNotificationEntries(), Assets.GetSprite("codexIconLessons"), largeFormat: true, sort: false, UI.CODEX.CATEGORYNAMES.VIDEOS));
@@ -70,15 +71,15 @@ public static class CodexCache
 		dictionary.Add(text, CodexEntryGenerator.GenerateCategoryEntry(text, UI.CODEX.CATEGORYNAMES.BIOMES, CodexEntryGenerator.GenerateBiomeEntries(), Assets.GetSprite("codexIconGeysers")));
 		CategoryEntry item = CodexEntryGenerator.GenerateCategoryEntry(FormatLinkID("HOME"), UI.CODEX.CATEGORYNAMES.ROOT, dictionary);
 		CodexEntryGenerator.GeneratePageNotFound();
-		List<CategoryEntry> list2 = new List<CategoryEntry>();
+		List<CategoryEntry> list = new List<CategoryEntry>();
 		foreach (KeyValuePair<string, CodexEntry> item2 in dictionary)
 		{
-			list2.Add(item2.Value as CategoryEntry);
+			list.Add(item2.Value as CategoryEntry);
 		}
-		CollectYAMLEntries(list2);
-		CollectYAMLSubEntries(list2);
+		CollectYAMLEntries(list);
+		CollectYAMLSubEntries(list);
 		CheckUnlockableContent();
-		list2.Add(item);
+		list.Add(item);
 		foreach (KeyValuePair<string, CodexEntry> entry in entries)
 		{
 			if (entry.Value.subEntries.Count > 0)
@@ -99,22 +100,22 @@ public static class CodexCache
 				}
 				if (entry.Value.subEntries.Count > 1)
 				{
-					List<ICodexWidget> list3 = new List<ICodexWidget>();
-					list3.Add(new CodexSpacer());
-					list3.Add(new CodexText(string.Format(CODEX.HEADERS.SUBENTRIES, entry.Value.subEntries.Count - num, entry.Value.subEntries.Count), CodexTextStyle.Subtitle));
+					List<ICodexWidget> list2 = new List<ICodexWidget>();
+					list2.Add(new CodexSpacer());
+					list2.Add(new CodexText(string.Format(CODEX.HEADERS.SUBENTRIES, entry.Value.subEntries.Count - num, entry.Value.subEntries.Count), CodexTextStyle.Subtitle));
 					foreach (SubEntry subEntry2 in entry.Value.subEntries)
 					{
 						if (subEntry2.lockID != null && !Game.Instance.unlocks.IsUnlocked(subEntry2.lockID))
 						{
-							list3.Add(new CodexText(UI.FormatAsLink(CODEX.HEADERS.CONTENTLOCKED, UI.ExtractLinkID(subEntry2.name))));
+							list2.Add(new CodexText(UI.FormatAsLink(CODEX.HEADERS.CONTENTLOCKED, UI.ExtractLinkID(subEntry2.name))));
 							continue;
 						}
 						string text2 = UI.StripLinkFormatting(subEntry2.name);
 						text2 = UI.FormatAsLink(text2, subEntry2.id);
-						list3.Add(new CodexText(text2));
+						list2.Add(new CodexText(text2));
 					}
-					list3.Add(new CodexSpacer());
-					entry.Value.contentContainers.Insert(entry.Value.customContentLength, new ContentContainer(list3, ContentContainer.ContentLayout.Vertical));
+					list2.Add(new CodexSpacer());
+					entry.Value.contentContainers.Insert(entry.Value.customContentLength, new ContentContainer(list2, ContentContainer.ContentLayout.Vertical));
 				}
 			}
 			for (int i = 0; i < entry.Value.subEntries.Count; i++)
@@ -122,7 +123,7 @@ public static class CodexCache
 				entry.Value.AddContentContainerRange(entry.Value.subEntries[i].contentContainers);
 			}
 		}
-		CodexEntryGenerator.PopulateCategoryEntries(list2, delegate(CodexEntry a, CodexEntry b)
+		CodexEntryGenerator.PopulateCategoryEntries(list, delegate(CodexEntry a, CodexEntry b)
 		{
 			if (a.name == (string)UI.CODEX.CATEGORYNAMES.TIPS)
 			{
@@ -180,8 +181,7 @@ public static class CodexCache
 	private static void CollectYAMLEntries(List<CategoryEntry> categories)
 	{
 		baseEntryPath = Application.streamingAssetsPath + "/codex";
-		List<CodexEntry> list = CollectEntries("");
-		foreach (CodexEntry item in list)
+		foreach (CodexEntry item in CollectEntries(""))
 		{
 			if (item != null && item.id != null && item.contentContainers != null)
 			{
@@ -196,10 +196,9 @@ public static class CodexCache
 			}
 		}
 		string[] directories = Directory.GetDirectories(baseEntryPath);
-		foreach (string path in directories)
+		for (int i = 0; i < directories.Length; i++)
 		{
-			List<CodexEntry> list2 = CollectEntries(Path.GetFileNameWithoutExtension(path));
-			foreach (CodexEntry item2 in list2)
+			foreach (CodexEntry item2 in CollectEntries(Path.GetFileNameWithoutExtension(directories[i])))
 			{
 				if (item2 != null && item2.id != null && item2.contentContainers != null)
 				{
@@ -219,8 +218,7 @@ public static class CodexCache
 	private static void CollectYAMLSubEntries(List<CategoryEntry> categories)
 	{
 		baseEntryPath = Application.streamingAssetsPath + "/codex";
-		List<SubEntry> list = CollectSubEntries("");
-		foreach (SubEntry v in list)
+		foreach (SubEntry v in CollectSubEntries(""))
 		{
 			if (v.parentEntryID == null || v.id == null)
 			{
@@ -416,8 +414,7 @@ public static class CodexCache
 
 	private static void YamlParseErrorCB(YamlIO.Error error, bool force_log_as_warning)
 	{
-		string message = $"{error.severity} parse error in {error.file.full_path}\n{error.message}";
-		throw new Exception(message, error.inner_exception);
+		throw new Exception($"{error.severity} parse error in {error.file.full_path}\n{error.message}", error.inner_exception);
 	}
 
 	public static List<CodexEntry> CollectEntries(string folder)

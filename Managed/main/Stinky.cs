@@ -46,10 +46,7 @@ public class Stinky : StateMachineComponent<Stinky.StatesInstance>
 
 		private float GetNewInterval()
 		{
-			float mu = TRAITS.STINKY_EMIT_INTERVAL_MAX - TRAITS.STINKY_EMIT_INTERVAL_MIN;
-			float a = Util.GaussianRandom(mu);
-			a = Mathf.Max(a, TRAITS.STINKY_EMIT_INTERVAL_MIN);
-			return Mathf.Min(a, TRAITS.STINKY_EMIT_INTERVAL_MAX);
+			return Mathf.Min(Mathf.Max(Util.GaussianRandom(TRAITS.STINKY_EMIT_INTERVAL_MAX - TRAITS.STINKY_EMIT_INTERVAL_MIN), TRAITS.STINKY_EMIT_INTERVAL_MIN), TRAITS.STINKY_EMIT_INTERVAL_MAX);
 		}
 	}
 
@@ -86,8 +83,7 @@ public class Stinky : StateMachineComponent<Stinky.StatesInstance>
 			if (minionIdentity.gameObject != gameObject.gameObject)
 			{
 				Vector2 b = minionIdentity.transform.GetPosition();
-				float num = Vector2.SqrMagnitude(a - b);
-				if (num <= 2.25f)
+				if (Vector2.SqrMagnitude(a - b) <= 2.25f)
 				{
 					minionIdentity.Trigger(508119890, Strings.Get("STRINGS.DUPLICANTS.DISEASES.PUTRIDODOUR.CRINGE_EFFECT").String);
 					minionIdentity.GetComponent<Effects>().Add("SmelledStinky", should_save: true);
@@ -95,12 +91,9 @@ public class Stinky : StateMachineComponent<Stinky.StatesInstance>
 				}
 			}
 		}
-		int gameCell = Grid.PosToCell(gameObject.transform.GetPosition());
-		float value = Db.Get().Amounts.Temperature.Lookup(this).value;
-		SimMessages.AddRemoveSubstance(gameCell, SimHashes.ContaminatedOxygen, CellEventLogger.Instance.ElementConsumerSimUpdate, 0.0025000002f, value, byte.MaxValue, 0);
-		GameObject gameObject2 = gameObject;
-		bool flag = SoundEvent.ObjectIsSelectedAndVisible(gameObject2);
-		Vector3 vector = gameObject2.GetComponent<Transform>().GetPosition();
+		SimMessages.AddRemoveSubstance(Grid.PosToCell(gameObject.transform.GetPosition()), temperature: Db.Get().Amounts.Temperature.Lookup(this).value, new_element: SimHashes.ContaminatedOxygen, ev: CellEventLogger.Instance.ElementConsumerSimUpdate, mass: 0.0025000002f, disease_idx: byte.MaxValue, disease_count: 0);
+		bool flag = SoundEvent.ObjectIsSelectedAndVisible(gameObject);
+		Vector3 vector = gameObject.GetComponent<Transform>().GetPosition();
 		float volume = 1f;
 		if (flag)
 		{

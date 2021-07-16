@@ -85,8 +85,7 @@ namespace Klei.AI
 			List<AttributeModifier> list = new List<AttributeModifier>();
 			foreach (string initialTrait in initialTraits)
 			{
-				Trait trait = Db.Get().traits.Get(initialTrait);
-				foreach (AttributeModifier selfModifier in trait.SelfModifiers)
+				foreach (AttributeModifier selfModifier in Db.Get().traits.Get(initialTrait).SelfModifiers)
 				{
 					if (selfModifier.AttributeId == attribute.Id)
 					{
@@ -99,8 +98,7 @@ namespace Klei.AI
 			{
 				foreach (string mutationID in component.MutationIDs)
 				{
-					PlantMutation plantMutation = Db.Get().PlantMutations.Get(mutationID);
-					foreach (AttributeModifier selfModifier2 in plantMutation.SelfModifiers)
+					foreach (AttributeModifier selfModifier2 in Db.Get().PlantMutations.Get(mutationID).SelfModifiers)
 					{
 						if (selfModifier2.AttributeId == attribute.Id)
 						{
@@ -108,6 +106,7 @@ namespace Klei.AI
 						}
 					}
 				}
+				return list;
 			}
 			return list;
 		}

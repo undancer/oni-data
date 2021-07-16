@@ -70,9 +70,9 @@ public class ConsumablesTableScreen : TableScreen
 						return true;
 					}
 					ConsumableInfoTableColumn[] array = quality_group_columns;
-					foreach (ConsumableInfoTableColumn consumableInfoTableColumn in array)
+					for (int l = 0; l < array.Length; l++)
 					{
-						if (consumableInfoTableColumn.isRevealed)
+						if (array[l].isRevealed)
 						{
 							return true;
 						}
@@ -172,13 +172,8 @@ public class ConsumablesTableScreen : TableScreen
 	protected void on_tooltip_qualityoflife_expectations(IAssignableIdentity minion, GameObject widget_go, ToolTip tooltip)
 	{
 		tooltip.ClearMultiStringTooltip();
-		TableRow widgetRow = GetWidgetRow(widget_go);
-		switch (widgetRow.rowType)
+		switch (GetWidgetRow(widget_go).rowType)
 		{
-		case TableRow.RowType.Default:
-			break;
-		case TableRow.RowType.Header:
-			break;
 		case TableRow.RowType.Minion:
 		{
 			MinionIdentity minionIdentity = minion as MinionIdentity;
@@ -191,20 +186,21 @@ public class ConsumablesTableScreen : TableScreen
 		case TableRow.RowType.StoredMinon:
 			StoredMinionTooltip(minion, tooltip);
 			break;
+		case TableRow.RowType.Header:
+		case TableRow.RowType.Default:
+			break;
 		}
 	}
 
 	protected void on_tooltip_sort_qualityoflife_expectations(IAssignableIdentity minion, GameObject widget_go, ToolTip tooltip)
 	{
 		tooltip.ClearMultiStringTooltip();
-		TableRow widgetRow = GetWidgetRow(widget_go);
-		switch (widgetRow.rowType)
+		switch (GetWidgetRow(widget_go).rowType)
 		{
-		case TableRow.RowType.Default:
-			break;
 		case TableRow.RowType.Header:
 			tooltip.AddMultiStringTooltip(UI.TABLESCREENS.COLUMN_SORT_BY_EXPECTATIONS, null);
 			break;
+		case TableRow.RowType.Default:
 		case TableRow.RowType.Minion:
 		case TableRow.RowType.StoredMinon:
 			break;
@@ -213,13 +209,13 @@ public class ConsumablesTableScreen : TableScreen
 
 	private ResultValues get_value_food_info_super(MinionIdentity minion, GameObject widget_go)
 	{
-		SuperCheckboxTableColumn superCheckboxTableColumn = GetWidgetColumn(widget_go) as SuperCheckboxTableColumn;
+		SuperCheckboxTableColumn obj = GetWidgetColumn(widget_go) as SuperCheckboxTableColumn;
 		TableRow widgetRow = GetWidgetRow(widget_go);
 		bool flag = true;
 		bool flag2 = true;
 		bool flag3 = false;
 		bool flag4 = false;
-		CheckboxTableColumn[] columns_affected = superCheckboxTableColumn.columns_affected;
+		CheckboxTableColumn[] columns_affected = obj.columns_affected;
 		foreach (CheckboxTableColumn checkboxTableColumn in columns_affected)
 		{
 			switch (checkboxTableColumn.get_value_action(widgetRow.GetIdentity(), widgetRow.GetWidget(checkboxTableColumn)))
@@ -419,8 +415,7 @@ public class ConsumablesTableScreen : TableScreen
 				num2 += Mathf.RoundToInt(attributeInstance.GetTotalValue());
 			}
 			string effectForFoodQuality = Edible.GetEffectForFoodQuality(num2);
-			Effect effect = Db.Get().effects.Get(effectForFoodQuality);
-			foreach (AttributeModifier selfModifier in effect.SelfModifiers)
+			foreach (AttributeModifier selfModifier in Db.Get().effects.Get(effectForFoodQuality).SelfModifiers)
 			{
 				if (selfModifier.AttributeId == Db.Get().Attributes.QualityOfLife.Id)
 				{
@@ -485,8 +480,7 @@ public class ConsumablesTableScreen : TableScreen
 	private void on_tooltip_consumable_info_super(IAssignableIdentity minion, GameObject widget_go, ToolTip tooltip)
 	{
 		tooltip.ClearMultiStringTooltip();
-		TableRow widgetRow = GetWidgetRow(widget_go);
-		switch (widgetRow.rowType)
+		switch (GetWidgetRow(widget_go).rowType)
 		{
 		case TableRow.RowType.Header:
 			tooltip.AddMultiStringTooltip(UI.CONSUMABLESSCREEN.TOOLTIP_TOGGLE_ALL.text, null);
@@ -531,13 +525,13 @@ public class ConsumablesTableScreen : TableScreen
 				return;
 			}
 			KBatchedAnimController component2 = prefab.GetComponent<KBatchedAnimController>();
-			Image image2 = widget_go.GetComponent<HierarchyReferences>().GetReference("PortraitImage") as Image;
+			Image image = widget_go.GetComponent<HierarchyReferences>().GetReference("PortraitImage") as Image;
 			if (component2.AnimFiles.Length != 0)
 			{
-				Sprite sprite = (image2.sprite = Def.GetUISpriteFromMultiObjectAnim(component2.AnimFiles[0]));
+				Sprite sprite = (image.sprite = Def.GetUISpriteFromMultiObjectAnim(component2.AnimFiles[0]));
 			}
-			image2.color = Color.white;
-			image2.material = ((ClusterManager.Instance.activeWorld.worldInventory.GetAmount(consumable_info.ConsumableId.ToTag(), includeRelatedWorlds: false) > 0f) ? Assets.UIPrefabs.TableScreenWidgets.DefaultUIMaterial : Assets.UIPrefabs.TableScreenWidgets.DesaturatedUIMaterial);
+			image.color = Color.white;
+			image.material = ((ClusterManager.Instance.activeWorld.worldInventory.GetAmount(consumable_info.ConsumableId.ToTag(), includeRelatedWorlds: false) > 0f) ? Assets.UIPrefabs.TableScreenWidgets.DefaultUIMaterial : Assets.UIPrefabs.TableScreenWidgets.DesaturatedUIMaterial);
 			break;
 		}
 		case TableRow.RowType.Default:
@@ -570,8 +564,7 @@ public class ConsumablesTableScreen : TableScreen
 			}
 			if (foodInfo != null && minion as MinionIdentity != null)
 			{
-				Image image = widget_go.GetComponent<HierarchyReferences>().GetReference("BGImage") as Image;
-				Color color2 = (image.color = new Color(184f / 255f, 113f / 255f, 148f / 255f, Mathf.Max((float)foodInfo.Quality - Db.Get().Attributes.FoodExpectation.Lookup(minion as MinionIdentity).GetTotalValue() + 1f, 0f) * 0.25f));
+				Color color2 = ((widget_go.GetComponent<HierarchyReferences>().GetReference("BGImage") as Image).color = new Color(184f / 255f, 113f / 255f, 148f / 255f, Mathf.Max((float)foodInfo.Quality - Db.Get().Attributes.FoodExpectation.Lookup(minion as MinionIdentity).GetTotalValue() + 1f, 0f) * 0.25f));
 			}
 			break;
 		}
@@ -625,11 +618,10 @@ public class ConsumablesTableScreen : TableScreen
 					}
 					break;
 				}
-				if (!flag4)
+				if (flag4)
 				{
-					continue;
+					break;
 				}
-				break;
 			}
 			result = (flag3 ? ResultValues.Partial : ((!flag2) ? ((!flag) ? ResultValues.Partial : ResultValues.False) : ResultValues.True));
 			break;
@@ -638,15 +630,7 @@ public class ConsumablesTableScreen : TableScreen
 			result = ((!ConsumerManager.instance.DefaultForbiddenTagsList.Contains(consumable_info.ConsumableId.ToTag())) ? ResultValues.True : ResultValues.False);
 			break;
 		case TableRow.RowType.Minion:
-			if (minion as MinionIdentity != null)
-			{
-				ConsumableConsumer component = ((MinionIdentity)minion).GetComponent<ConsumableConsumer>();
-				result = (component.IsPermitted(consumable_info.ConsumableId) ? ResultValues.True : ResultValues.False);
-			}
-			else
-			{
-				result = ResultValues.True;
-			}
+			result = ((!(minion as MinionIdentity != null)) ? ResultValues.True : (((MinionIdentity)minion).GetComponent<ConsumableConsumer>().IsPermitted(consumable_info.ConsumableId) ? ResultValues.True : ResultValues.False));
 			break;
 		case TableRow.RowType.StoredMinon:
 			result = ((!(minion as StoredMinionIdentity != null)) ? ResultValues.True : (((StoredMinionIdentity)minion).IsPermittedToConsume(consumable_info.ConsumableId) ? ResultValues.True : ResultValues.False));
@@ -658,19 +642,16 @@ public class ConsumablesTableScreen : TableScreen
 	protected void on_tooltip_name(IAssignableIdentity minion, GameObject widget_go, ToolTip tooltip)
 	{
 		tooltip.ClearMultiStringTooltip();
-		TableRow widgetRow = GetWidgetRow(widget_go);
-		switch (widgetRow.rowType)
+		switch (GetWidgetRow(widget_go).rowType)
 		{
-		case TableRow.RowType.Default:
-			break;
-		case TableRow.RowType.Header:
-			break;
 		case TableRow.RowType.Minion:
 			if (minion != null)
 			{
 				tooltip.AddMultiStringTooltip(string.Format(UI.TABLESCREENS.GOTO_DUPLICANT_BUTTON, minion.GetProperName()), null);
 			}
 			break;
+		case TableRow.RowType.Header:
+		case TableRow.RowType.Default:
 		case TableRow.RowType.StoredMinon:
 			break;
 		}

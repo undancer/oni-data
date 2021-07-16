@@ -8,7 +8,7 @@ public struct SoundDescription
 
 		public PARAMETER_ID id;
 
-		public static readonly PARAMETER_ID INVALID_ID = default(PARAMETER_ID);
+		public static readonly PARAMETER_ID INVALID_ID;
 	}
 
 	public string path;

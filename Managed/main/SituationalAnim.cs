@@ -50,15 +50,13 @@ public class SituationalAnim : KMonoBehaviour
 
 	private void SetAnim(string animName)
 	{
-		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
-		component.Play(animName);
+		GetComponent<KBatchedAnimController>().Play(animName);
 	}
 
 	private Situation GetSituation()
 	{
 		Situation situation = (Situation)0;
-		Building component = GetComponent<Building>();
-		Extents extents = component.GetExtents();
+		Extents extents = GetComponent<Building>().GetExtents();
 		int x = extents.x;
 		int num = extents.x + extents.width - 1;
 		int y = extents.y;

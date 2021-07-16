@@ -10,12 +10,12 @@ namespace YamlDotNet.Serialization.NodeDeserializers
 		{
 			value = null;
 			NodeEvent nodeEvent = parser.Peek<NodeEvent>();
-			bool flag = nodeEvent != null && NodeIsNull(nodeEvent);
-			if (flag)
+			bool num = nodeEvent != null && NodeIsNull(nodeEvent);
+			if (num)
 			{
 				parser.SkipThisAndNestedEvents();
 			}
-			return flag;
+			return num;
 		}
 
 		private bool NodeIsNull(NodeEvent nodeEvent)
@@ -30,20 +30,16 @@ namespace YamlDotNet.Serialization.NodeDeserializers
 				return false;
 			}
 			string value = scalar.Value;
-			int result;
 			switch (value)
 			{
 			default:
-				result = ((value == "NULL") ? 1 : 0);
-				break;
+				return value == "NULL";
 			case "":
 			case "~":
 			case "null":
 			case "Null":
-				result = 1;
-				break;
+				return true;
 			}
-			return (byte)result != 0;
 		}
 	}
 }

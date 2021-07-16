@@ -29,8 +29,7 @@ public class SuperWormPlantConfig : IEntityConfig
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = WormPlantConfig.BaseWormPlant("SuperWormPlant", STRINGS.CREATURES.SPECIES.SUPERWORMPLANT.NAME, STRINGS.CREATURES.SPECIES.SUPERWORMPLANT.DESC, "wormwood_kanim", SUPER_DECOR, "WormSuperFruit");
-		SeedProducer seedProducer = gameObject.AddOrGet<SeedProducer>();
-		seedProducer.Configure("WormPlantSeed", SeedProducer.ProductionType.Harvest);
+		gameObject.AddOrGet<SeedProducer>().Configure("WormPlantSeed", SeedProducer.ProductionType.Harvest);
 		return gameObject;
 	}
 
@@ -40,8 +39,7 @@ public class SuperWormPlantConfig : IEntityConfig
 		transformingPlant.SubscribeToTransformEvent(GameHashes.HarvestComplete);
 		transformingPlant.transformPlantId = "WormPlant";
 		prefab.GetComponent<KAnimControllerBase>().SetSymbolVisiblity("flower", is_visible: false);
-		StandardCropPlant standardCropPlant = prefab.AddOrGet<StandardCropPlant>();
-		standardCropPlant.anims = animSet;
+		prefab.AddOrGet<StandardCropPlant>().anims = animSet;
 	}
 
 	public void OnSpawn(GameObject inst)

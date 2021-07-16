@@ -7,9 +7,9 @@ using UnityEngine;
 
 public class DebugBaseTemplateButton : KScreen
 {
-	private bool SaveAllBuildings = false;
+	private bool SaveAllBuildings;
 
-	private bool SaveAllPickups = false;
+	private bool SaveAllPickups;
 
 	public KButton saveBaseButton;
 
@@ -201,8 +201,7 @@ public class DebugBaseTemplateButton : KScreen
 		}
 		float x = num / (float)SelectedCells.Count;
 		float y = (num2 /= (float)SelectedCells.Count);
-		int cell = Grid.PosToCell(new Vector3(x, y, 0f));
-		Grid.CellToXY(cell, out var rootX, out var rootY);
+		Grid.CellToXY(Grid.PosToCell(new Vector3(x, y, 0f)), out var rootX, out var rootY);
 		for (int i = 0; i < SelectedCells.Count; i++)
 		{
 			int i2 = SelectedCells[i];
@@ -315,8 +314,7 @@ public class DebugBaseTemplateButton : KScreen
 					{
 						rotAmount = sMI.RotValue;
 					}
-					ElementChunk component8 = item2.GetComponent<ElementChunk>();
-					if (component8 != null)
+					if (item2.GetComponent<ElementChunk>() != null)
 					{
 						isOre = true;
 					}
@@ -337,7 +335,7 @@ public class DebugBaseTemplateButton : KScreen
 			Prefab prefab2 = list2[l];
 			int x4 = prefab2.location_x + rootX;
 			int y4 = prefab2.location_y + rootY;
-			int cell2 = Grid.XYToCell(x4, y4);
+			int cell = Grid.XYToCell(x4, y4);
 			switch (prefab2.id)
 			{
 			default:
@@ -347,21 +345,21 @@ public class DebugBaseTemplateButton : KScreen
 			case "InsulatedWire":
 			case "HighWattageWire":
 			case "WireRefined":
-				prefab2.connections = (int)Game.Instance.electricalConduitSystem.GetConnections(cell2, is_physical_building: true);
+				prefab2.connections = (int)Game.Instance.electricalConduitSystem.GetConnections(cell, is_physical_building: true);
 				break;
 			case "GasConduit":
 			case "InsulatedGasConduit":
-				prefab2.connections = (int)Game.Instance.gasConduitSystem.GetConnections(cell2, is_physical_building: true);
+				prefab2.connections = (int)Game.Instance.gasConduitSystem.GetConnections(cell, is_physical_building: true);
 				break;
 			case "LiquidConduit":
 			case "InsulatedLiquidConduit":
-				prefab2.connections = (int)Game.Instance.liquidConduitSystem.GetConnections(cell2, is_physical_building: true);
+				prefab2.connections = (int)Game.Instance.liquidConduitSystem.GetConnections(cell, is_physical_building: true);
 				break;
 			case "LogicWire":
-				prefab2.connections = (int)Game.Instance.logicCircuitSystem.GetConnections(cell2, is_physical_building: true);
+				prefab2.connections = (int)Game.Instance.logicCircuitSystem.GetConnections(cell, is_physical_building: true);
 				break;
 			case "SolidConduit":
-				prefab2.connections = (int)Game.Instance.solidConduitSystem.GetConnections(cell2, is_physical_building: true);
+				prefab2.connections = (int)Game.Instance.solidConduitSystem.GetConnections(cell, is_physical_building: true);
 				break;
 			}
 		}
@@ -393,17 +391,16 @@ public class DebugBaseTemplateButton : KScreen
 				{
 					rotAmount2 = sMI2.RotValue;
 				}
-				PrimaryElement component9 = pickupable.gameObject.GetComponent<PrimaryElement>();
-				if (component9 != null)
+				PrimaryElement component8 = pickupable.gameObject.GetComponent<PrimaryElement>();
+				if (component8 != null)
 				{
-					element4 = component9.ElementID;
-					units2 = component9.Units;
-					temperature = component9.Temperature;
-					disease2 = ((component9.DiseaseIdx != byte.MaxValue) ? Db.Get().Diseases[component9.DiseaseIdx].Id : null);
-					disease_count3 = component9.DiseaseCount;
+					element4 = component8.ElementID;
+					units2 = component8.Units;
+					temperature = component8.Temperature;
+					disease2 = ((component8.DiseaseIdx != byte.MaxValue) ? Db.Get().Diseases[component8.DiseaseIdx].Id : null);
+					disease_count3 = component8.DiseaseCount;
 				}
-				ElementChunk component10 = pickupable.gameObject.GetComponent<ElementChunk>();
-				if (component10 != null)
+				if (pickupable.gameObject.GetComponent<ElementChunk>() != null)
 				{
 					Prefab item = new Prefab(pickupable.PrefabID().Name, Prefab.Type.Ore, x5, y5, element4, temperature, units2, disease2, disease_count3);
 					_primaryElementOres.Add(item);
@@ -475,8 +472,7 @@ public class DebugBaseTemplateButton : KScreen
 					list.Add(new Prefab.template_amount_value(amount.amount.Id, amount.value));
 				}
 			}
-			ElementChunk component2 = (item2 as KMonoBehaviour).gameObject.GetComponent<ElementChunk>();
-			if (component2 != null)
+			if ((item2 as KMonoBehaviour).gameObject.GetComponent<ElementChunk>() != null)
 			{
 				Prefab item = new Prefab((item2 as KMonoBehaviour).PrefabID().Name, Prefab.Type.Ore, x, y, element, temperature, units, disease, disease_count, Orientation.Neutral, list.ToArray());
 				_primaryElementOres.Add(item);

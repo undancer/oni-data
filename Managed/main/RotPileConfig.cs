@@ -22,8 +22,7 @@ public class RotPileConfig : IEntityConfig
 		gameObject.AddOrGet<OccupyArea>();
 		gameObject.AddOrGet<Modifiers>();
 		gameObject.AddOrGet<RotPile>();
-		DecorProvider decorProvider = gameObject.AddComponent<DecorProvider>();
-		decorProvider.SetValues(DECOR.PENALTY.TIER2);
+		gameObject.AddComponent<DecorProvider>().SetValues(DECOR.PENALTY.TIER2);
 		return gameObject;
 	}
 

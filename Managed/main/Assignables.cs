@@ -71,21 +71,20 @@ public class Assignables : KMonoBehaviour
 		{
 			return assignable;
 		}
-		MinionAssignablesProxy component = GetComponent<MinionAssignablesProxy>();
-		GameObject targetGameObject = component.GetTargetGameObject();
+		GameObject targetGameObject = GetComponent<MinionAssignablesProxy>().GetTargetGameObject();
 		if (targetGameObject == null)
 		{
 			Debug.LogWarning("AutoAssignSlot failed, proxy game object was null.");
 			return null;
 		}
-		Navigator component2 = targetGameObject.GetComponent<Navigator>();
+		Navigator component = targetGameObject.GetComponent<Navigator>();
 		IAssignableIdentity assignableIdentity = GetAssignableIdentity();
 		int num = int.MaxValue;
 		foreach (Assignable item in Game.Instance.assignmentManager)
 		{
 			if (!(item == null) && !item.IsAssigned() && item.slot == slot && item.CanAutoAssignTo(assignableIdentity))
 			{
-				int navigationCost = item.GetNavigationCost(component2);
+				int navigationCost = item.GetNavigationCost(component);
 				if (navigationCost != -1 && navigationCost < num)
 				{
 					num = navigationCost;

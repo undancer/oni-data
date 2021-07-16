@@ -254,8 +254,7 @@ namespace VoronoiTree
 				Vector2 vector = bounds.Vertices[i];
 				Vector2 vector2 = bounds.Vertices[(i < bounds.Vertices.Count - 1) ? (i + 1) : 0];
 				Vector2 b2 = (vector - b).normalized * 1000f;
-				Vector2 pos = vector + b2;
-				PowerDiagramSite powerDiagramSite = new PowerDiagramSite(pos)
+				PowerDiagramSite powerDiagramSite = new PowerDiagramSite(vector + b2)
 				{
 					dummy = true
 				};
@@ -263,10 +262,8 @@ namespace VoronoiTree
 				powerDiagramSite.weight = Mathf.Epsilon;
 				powerDiagramSite.currentWeight = Mathf.Epsilon;
 				dualSites.Add(new DualSite2d(powerDiagramSite));
-				Vector2 a = (vector2 - vector) * 0.5f + vector2;
-				Vector2 b3 = (a - b).normalized * 1000f;
-				Vector2 pos2 = vector2 + b3;
-				PowerDiagramSite powerDiagramSite2 = new PowerDiagramSite(pos2)
+				Vector2 b3 = ((vector2 - vector) * 0.5f + vector2 - b).normalized * 1000f;
+				PowerDiagramSite powerDiagramSite2 = new PowerDiagramSite(vector2 + b3)
 				{
 					dummy = true,
 					weight = Mathf.Epsilon,
@@ -325,7 +322,7 @@ namespace VoronoiTree
 			voronoiMesh = VoronoiMesh.Create<DualSite2d, PowerDiagramSite>(dualSites);
 			foreach (PowerDiagramSite vertex in voronoiMesh.Vertices)
 			{
-				Vector2 circumcenter = vertex.Circumcenter;
+				_ = vertex.Circumcenter;
 				DualSite2d[] vertices = vertex.Vertices;
 				foreach (DualSite2d dualSite2d in vertices)
 				{
@@ -342,11 +339,10 @@ namespace VoronoiTree
 					dualSite2d.site.neighbours = TouchingFaces(dualSite2d, vertex);
 					foreach (PowerDiagramSite neighbour in dualSite2d.site.neighbours)
 					{
-						Vector2 circumcenter2 = neighbour.Circumcenter;
+						Vector2 circumcenter = neighbour.Circumcenter;
 						Color red = Color.red;
 						red.a = 0.3f;
-						list.Add(circumcenter2);
-						Vector2 vector = circumcenter2;
+						list.Add(circumcenter);
 					}
 					if (list.Count > 0)
 					{
@@ -368,8 +364,7 @@ namespace VoronoiTree
 			{
 				list.Add(externalEdgePoints[i].ToDualSite());
 			}
-			VoronoiMesh<DualSite3d, TriangulationCellExt<DualSite3d>, VoronoiEdge<DualSite3d, TriangulationCellExt<DualSite3d>>> voronoiMesh = VoronoiMesh.Create<DualSite3d, TriangulationCellExt<DualSite3d>>(list);
-			foreach (TriangulationCellExt<DualSite3d> vertex in voronoiMesh.Vertices)
+			foreach (TriangulationCellExt<DualSite3d> vertex in VoronoiMesh.Create<DualSite3d, TriangulationCellExt<DualSite3d>>(list).Vertices)
 			{
 				Vector3 zero = Vector3.zero;
 				DualSite3d[] vertices = vertex.Vertices;
@@ -579,15 +574,14 @@ namespace VoronoiTree
 						Vector2 dualPoint = item.GetDualPoint();
 						list2.Add(dualPoint);
 					}
-					Polygon polygon = PolyForRandomPoints(list2);
-					Polygon polygon2 = polygon.Clip(bounds);
-					if (polygon2 == null)
+					Polygon polygon = PolyForRandomPoints(list2).Clip(bounds);
+					if (polygon == null)
 					{
 						DebugExtension.DebugCircle2d(dualSite3d.site.position, Color.magenta, 5f, 0f, depthTest: true, 20f);
 					}
 					else
 					{
-						dualSite3d.site.poly = polygon2;
+						dualSite3d.site.poly = polygon;
 					}
 				}
 			}
@@ -719,8 +713,7 @@ namespace VoronoiTree
 					verts[i].y
 				};
 			}
-			ConvexHull<DefaultVertex, DefaultConvexFace<DefaultVertex>> convexHull = ConvexHull.Create(array);
-			double[][] array2 = convexHull.Points.Select((DefaultVertex p) => p.Position).ToArray();
+			double[][] array2 = ConvexHull.Create(array).Points.Select((DefaultVertex p) => p.Position).ToArray();
 			Polygon polygon = new Polygon();
 			for (int j = 0; j < array2.Length; j++)
 			{

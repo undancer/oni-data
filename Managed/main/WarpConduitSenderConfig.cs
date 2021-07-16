@@ -18,23 +18,20 @@ public class WarpConduitSenderConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("WarpConduitSender", 4, 3, "warp_conduit_sender_kanim", 250, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.Floodable = false;
-		buildingDef.Overheatable = false;
-		buildingDef.ShowInBuildMenu = false;
-		buildingDef.DefaultAnimState = "idle";
-		buildingDef.CanMove = true;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("WarpConduitSender", 4, 3, "warp_conduit_sender_kanim", 250, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.NONE);
+		obj.Floodable = false;
+		obj.Overheatable = false;
+		obj.ShowInBuildMenu = false;
+		obj.DefaultAnimState = "idle";
+		obj.CanMove = true;
+		return obj;
 	}
 
 	private void AttachPorts(GameObject go)
 	{
-		ConduitSecondaryInput conduitSecondaryInput = go.AddComponent<ConduitSecondaryInput>();
-		conduitSecondaryInput.portInfo = liquidInputPort;
-		ConduitSecondaryInput conduitSecondaryInput2 = go.AddComponent<ConduitSecondaryInput>();
-		conduitSecondaryInput2.portInfo = gasInputPort;
-		ConduitSecondaryInput conduitSecondaryInput3 = go.AddComponent<ConduitSecondaryInput>();
-		conduitSecondaryInput3.portInfo = solidInputPort;
+		go.AddComponent<ConduitSecondaryInput>().portInfo = liquidInputPort;
+		go.AddComponent<ConduitSecondaryInput>().portInfo = gasInputPort;
+		go.AddComponent<ConduitSecondaryInput>().portInfo = solidInputPort;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -81,10 +78,8 @@ public class WarpConduitSenderConfig : IBuildingConfig
 	public override void DoPostConfigureComplete(GameObject go)
 	{
 		go.AddOrGet<BuildingCellVisualizer>();
-		Deconstructable component = go.GetComponent<Deconstructable>();
-		component.SetAllowDeconstruction(allow: false);
-		Activatable component2 = go.GetComponent<Activatable>();
-		component2.requiredSkillPerk = Db.Get().SkillPerks.CanStudyWorldObjects.Id;
+		go.GetComponent<Deconstructable>().SetAllowDeconstruction(allow: false);
+		go.GetComponent<Activatable>().requiredSkillPerk = Db.Get().SkillPerks.CanStudyWorldObjects.Id;
 	}
 
 	public override void DoPostConfigurePreview(BuildingDef def, GameObject go)

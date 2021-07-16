@@ -1004,9 +1004,9 @@ namespace STRINGS
 
 			public class FABRICATORLACKSHEP
 			{
-				public static LocString NAME = "Waiting For Radbolts";
+				public static LocString NAME = "Waiting For Radbolts ({CurrentHEP}/{HEPRequired})";
 
-				public static LocString TOOLTIP = "A queued recipe requires more Radbolts than are currently stored";
+				public static LocString TOOLTIP = "A queued recipe requires more Radbolts than are currently stored.\n\nCurrently stored: {CurrentHEP}\nRequired for recipe: {HEPRequired}";
 			}
 
 			public class TOILET
@@ -2087,9 +2087,9 @@ namespace STRINGS
 
 			public class TEMPORAL_TEAR_OPENER_NO_TARGET
 			{
-				public static LocString NAME = "Target: None";
+				public static LocString NAME = "Temporal Tear not revealed";
 
-				public static LocString TOOLTIP = "\"Awaiting transmission of coordinates...\"";
+				public static LocString TOOLTIP = "This machine is meant to target something in space, but the target is not yet revealed.";
 			}
 
 			public class TEMPORAL_TEAR_OPENER_NO_LOS
@@ -2099,16 +2099,23 @@ namespace STRINGS
 				public static LocString TOOLTIP = "This device needs a clear view of space to operate";
 			}
 
+			public class TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES
+			{
+				public static LocString NAME = "Too few Printing Pods {progress}";
+
+				public static LocString TOOLTIP = "This device relies on a network of activated Printing Pods {progress}";
+			}
+
 			public class TEMPORAL_TEAR_OPENER_PROGRESS
 			{
-				public static LocString NAME = "Progress: {progress}";
+				public static LocString NAME = "Charging Progress: {progress}";
 
-				public static LocString TOOLTIP = "Operation will commence once this device is fully charged";
+				public static LocString TOOLTIP = "This device must be charged with a high number of Radbolts. Operation can commence once this device is fully charged";
 			}
 
 			public class TEMPORAL_TEAR_OPENER_READY
 			{
-				public static LocString NOTIFICATION = "Temporal Ripper fully charged";
+				public static LocString NOTIFICATION = "Temporal Tear Opener fully charged";
 
 				public static LocString NOTIFICATION_TOOLTIP = "Push the red button to activate";
 			}
@@ -2351,6 +2358,20 @@ namespace STRINGS
 				public static LocString NAME = "Cleaning Rails: {timeleft}";
 
 				public static LocString TOOLTIP = "This building automatically performs routine maintenance every {x} launches";
+			}
+
+			public class FRIDGECOOLING
+			{
+				public static LocString NAME = "Cooling Contents";
+
+				public static LocString TOOLTIP = "The contents of this food storage are still being cooled down.";
+			}
+
+			public class FRIDGESTEADY
+			{
+				public static LocString NAME = "Energy Saver: {UsedPower}";
+
+				public static LocString TOOLTIP = "Energy saver activated, using {UsedPower} of {MaxPower}\n\nThe contents of this food storage are at refrigeration temperatures and need no further cooling.";
 			}
 		}
 

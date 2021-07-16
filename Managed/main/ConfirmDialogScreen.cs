@@ -94,8 +94,7 @@ public class ConfirmDialogScreen : KModalScreen
 			configurableButton.SetActive(configurableAction != null);
 			if (configurable_text != null)
 			{
-				LocText componentInChildren = configurableButton.GetComponentInChildren<LocText>();
-				componentInChildren.text = configurable_text;
+				configurableButton.GetComponentInChildren<LocText>().text = configurable_text;
 			}
 		}
 		if (image_sprite != null)

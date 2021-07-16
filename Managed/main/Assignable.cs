@@ -19,7 +19,7 @@ public abstract class Assignable : KMonoBehaviour, ISaveLoadable
 
 	public AssignableSlot[] subSlots;
 
-	public bool canBePublic = false;
+	public bool canBePublic;
 
 	[Serialize]
 	private bool canBeAssigned = true;

@@ -609,7 +609,7 @@ namespace Database
 			MoveToSafety = Add("MoveToSafety", new string[0], "MoveToSafety", new string[0], DUPLICANTS.CHORES.MOVETOSAFETY.NAME, DUPLICANTS.CHORES.MOVETOSAFETY.STATUS, DUPLICANTS.CHORES.MOVETOSAFETY.TOOLTIP, skip_implicit_priority_change: false);
 			ReturnSuitIdle = Add("ReturnSuitIdle", new string[0], "", new string[0], DUPLICANTS.CHORES.RETURNSUIT.NAME, DUPLICANTS.CHORES.RETURNSUIT.STATUS, DUPLICANTS.CHORES.RETURNSUIT.TOOLTIP, skip_implicit_priority_change: false);
 			Idle = Add("IdleChore", new string[0], "", new string[0], DUPLICANTS.CHORES.IDLE.NAME, DUPLICANTS.CHORES.IDLE.STATUS, DUPLICANTS.CHORES.IDLE.TOOLTIP, skip_implicit_priority_change: false);
-			ChoreType[][] array = new ChoreType[32][]
+			ChoreType[][] obj = new ChoreType[32][]
 			{
 				new ChoreType[1]
 				{
@@ -825,11 +825,10 @@ namespace Database
 			};
 			string text = "";
 			int num = 100000;
-			ChoreType[][] array2 = array;
-			foreach (ChoreType[] array3 in array2)
+			ChoreType[][] array = obj;
+			foreach (ChoreType[] array2 in array)
 			{
-				ChoreType[] array4 = array3;
-				foreach (ChoreType choreType in array4)
+				foreach (ChoreType choreType in array2)
 				{
 					if (choreType.interruptPriority != 0)
 					{

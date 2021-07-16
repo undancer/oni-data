@@ -20,7 +20,7 @@ namespace NodeEditorFramework
 		[NonSerialized]
 		public NodeKnob focusedNodeKnob;
 
-		public Vector2 panOffset = default(Vector2);
+		public Vector2 panOffset;
 
 		public float zoom = 1f;
 

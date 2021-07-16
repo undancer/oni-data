@@ -38,9 +38,9 @@ public class BaseNaming : KMonoBehaviour
 			bool flag = false;
 			try
 			{
-				bool flag2 = Directory.Exists(Path.Combine(savePrefixAndCreateFolder, newName));
-				bool flag3 = cloudSavePrefix != null && Directory.Exists(Path.Combine(cloudSavePrefix, newName));
-				flag = flag2 || flag3;
+				bool num = Directory.Exists(Path.Combine(savePrefixAndCreateFolder, newName));
+				bool flag2 = cloudSavePrefix != null && Directory.Exists(Path.Combine(cloudSavePrefix, newName));
+				flag = num || flag2;
 			}
 			catch (Exception arg)
 			{
@@ -82,8 +82,7 @@ public class BaseNaming : KMonoBehaviour
 			{
 				path2 = cloudSavePrefix;
 			}
-			string activeSaveFilePath = Path.Combine(path2, newName, path);
-			SaveLoader.SetActiveSaveFilePath(activeSaveFilePath);
+			SaveLoader.SetActiveSaveFilePath(Path.Combine(path2, newName, path));
 		}
 	}
 

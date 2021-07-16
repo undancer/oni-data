@@ -23,7 +23,11 @@ public class ConditionSufficientOxidizer : ProcessCondition
 			int num = component3.RemainingTravelNodes();
 			if (num == 0)
 			{
-				return component2.HasResourcesToMove(1, Clustercraft.CombustionResource.Oxidizer) ? Status.Ready : Status.Failure;
+				if (!component2.HasResourcesToMove(1, Clustercraft.CombustionResource.Oxidizer))
+				{
+					return Status.Failure;
+				}
+				return Status.Ready;
 			}
 			bool flag = component2.HasResourcesToMove(num * 2, Clustercraft.CombustionResource.Oxidizer);
 			bool flag2 = component2.HasResourcesToMove(num, Clustercraft.CombustionResource.Oxidizer);

@@ -35,7 +35,7 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 
 		private int MAX_CELLS_TRACKED = 5;
 
-		private bool flipRecoverEmote = false;
+		private bool flipRecoverEmote;
 
 		public Instance(IStateMachineTarget master, bool shouldPlayEmotes, string entombedAnimOverride = null)
 			: base(master)
@@ -64,8 +64,7 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 
 		private void OnMovementStateChanged(object data)
 		{
-			GameHashes gameHashes = (GameHashes)data;
-			if (gameHashes != GameHashes.ObjectMovementWakeUp)
+			if ((GameHashes)data != GameHashes.ObjectMovementWakeUp)
 			{
 				return;
 			}
@@ -116,17 +115,12 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 
 		public void RecoverEmote()
 		{
-			if (shouldPlayEmotes)
+			if (shouldPlayEmotes && Random.Range(0, 9) == 8)
 			{
-				int num = Random.Range(0, 9);
-				if (num == 8)
+				new EmoteChore(base.master.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_react_floor_missing_kanim", new HashedString[1]
 				{
-					ChoreProvider component = base.master.GetComponent<ChoreProvider>();
-					new EmoteChore(component, Db.Get().ChoreTypes.EmoteHighPriority, "anim_react_floor_missing_kanim", new HashedString[1]
-					{
-						"react"
-					}, KAnim.PlayMode.Once, flipRecoverEmote);
-				}
+					"react"
+				}, KAnim.PlayMode.Once, flipRecoverEmote);
 			}
 		}
 
@@ -162,7 +156,11 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 		public bool CanRecoverToLadder()
 		{
 			int cell = Grid.PosToCell(base.master.transform.GetPosition());
-			return navigator.NavGrid.NavTable.IsValid(cell, NavType.Ladder) && !base.gameObject.HasTag(GameTags.Incapacitated);
+			if (navigator.NavGrid.NavTable.IsValid(cell, NavType.Ladder))
+			{
+				return !base.gameObject.HasTag(GameTags.Incapacitated);
+			}
+			return false;
 		}
 
 		public void MountLadder()
@@ -174,7 +172,11 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 		public bool CanRecoverToPole()
 		{
 			int cell = Grid.PosToCell(base.master.transform.GetPosition());
-			return navigator.NavGrid.NavTable.IsValid(cell, NavType.Pole) && !base.gameObject.HasTag(GameTags.Incapacitated);
+			if (navigator.NavGrid.NavTable.IsValid(cell, NavType.Pole))
+			{
+				return !base.gameObject.HasTag(GameTags.Incapacitated);
+			}
+			return false;
 		}
 
 		public void MountPole()
@@ -193,9 +195,9 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 				int num2 = Grid.CellAbove(num);
 				bool flag2 = Grid.IsValidCell(num);
 				bool flag3 = Grid.IsValidCell(num2);
-				bool flag4 = IsValidNavCell(num) && (!base.gameObject.HasTag(GameTags.Incapacitated) || (navigator.CurrentNavType != NavType.Ladder && navigator.CurrentNavType != NavType.Pole));
-				flag = (!flag4 && flag2 && Grid.Solid[num]) || (flag3 && Grid.Solid[num2]) || (flag2 && Grid.DupeImpassable[num]) || (flag3 && Grid.DupeImpassable[num2]);
-				value = !flag4 && !flag;
+				bool num3 = IsValidNavCell(num) && (!base.gameObject.HasTag(GameTags.Incapacitated) || (navigator.CurrentNavType != NavType.Ladder && navigator.CurrentNavType != NavType.Pole));
+				flag = (!num3 && flag2 && Grid.Solid[num]) || (flag3 && Grid.Solid[num2]) || (flag2 && Grid.DupeImpassable[num]) || (flag3 && Grid.DupeImpassable[num2]);
+				value = !num3 && !flag;
 				if ((!flag2 && flag3) || Grid.WorldIdx[num] != Grid.WorldIdx[num2])
 				{
 					TeleportInWorld(num);
@@ -221,7 +223,11 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 
 		private bool IsValidNavCell(int cell)
 		{
-			return navigator.NavGrid.NavTable.IsValid(cell, navigator.CurrentNavType) && !Grid.DupeImpassable[cell];
+			if (navigator.NavGrid.NavTable.IsValid(cell, navigator.CurrentNavType))
+			{
+				return !Grid.DupeImpassable[cell];
+			}
+			return false;
 		}
 
 		public void TryEntombedEscape()
@@ -267,8 +273,8 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 					}
 				}
 			}
-			CellOffset[] array3 = entombedEscapeOffsets;
-			foreach (CellOffset offset2 in array3)
+			array2 = entombedEscapeOffsets;
+			foreach (CellOffset offset2 in array2)
 			{
 				if (Grid.IsCellOffsetValid(cell2, offset2))
 				{

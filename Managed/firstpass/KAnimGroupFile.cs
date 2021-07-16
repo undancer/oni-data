@@ -68,7 +68,7 @@ public class KAnimGroupFile : ScriptableObject
 
 	public const int MAX_ANIMS_PER_GROUP = 10;
 
-	private static KAnimGroupFile groupfile = null;
+	private static KAnimGroupFile groupfile;
 
 	private Dictionary<int, KAnimFileData> fileData = new Dictionary<int, KAnimFileData>();
 
@@ -150,8 +150,7 @@ public class KAnimGroupFile : ScriptableObject
 			group.commandDirectory = akf.directory;
 			group.maxGroupSize = akf.MaxGroupSize;
 			group.renderType = akf.RendererType;
-			int num2 = groups.FindIndex((Group t) => t.commandDirectory == group.commandDirectory);
-			if (num2 == -1)
+			if (groups.FindIndex((Group t) => t.commandDirectory == group.commandDirectory) == -1)
 			{
 				if (flag)
 				{

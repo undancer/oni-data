@@ -9,29 +9,29 @@ public class LogicRibbonReaderConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(ID, 2, 1, "logic_ribbon_reader_kanim", 30, 30f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER0);
-		buildingDef.Overheatable = false;
-		buildingDef.Floodable = false;
-		buildingDef.Entombable = false;
-		buildingDef.PermittedRotations = PermittedRotations.R360;
-		buildingDef.InitialOrientation = Orientation.R180;
-		buildingDef.ViewMode = OverlayModes.Logic.ID;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.ObjectLayer = ObjectLayer.LogicGate;
-		buildingDef.SceneLayer = Grid.SceneLayer.LogicGates;
-		buildingDef.AlwaysOperational = true;
-		buildingDef.LogicInputPorts = new List<LogicPorts.Port>
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef(ID, 2, 1, "logic_ribbon_reader_kanim", 30, 30f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER0);
+		obj.Overheatable = false;
+		obj.Floodable = false;
+		obj.Entombable = false;
+		obj.PermittedRotations = PermittedRotations.R360;
+		obj.InitialOrientation = Orientation.R180;
+		obj.ViewMode = OverlayModes.Logic.ID;
+		obj.AudioCategory = "Metal";
+		obj.ObjectLayer = ObjectLayer.LogicGate;
+		obj.SceneLayer = Grid.SceneLayer.LogicGates;
+		obj.AlwaysOperational = true;
+		obj.LogicInputPorts = new List<LogicPorts.Port>
 		{
 			LogicPorts.Port.RibbonInputPort(LogicRibbonReader.INPUT_PORT_ID, new CellOffset(0, 0), STRINGS.BUILDINGS.PREFABS.LOGICRIBBONREADER.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.LOGICRIBBONREADER.INPUT_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.LOGICRIBBONREADER.INPUT_PORT_INACTIVE, show_wire_missing_icon: true)
 		};
-		buildingDef.LogicOutputPorts = new List<LogicPorts.Port>
+		obj.LogicOutputPorts = new List<LogicPorts.Port>
 		{
 			LogicPorts.Port.OutputPort(LogicRibbonReader.OUTPUT_PORT_ID, new CellOffset(1, 0), STRINGS.BUILDINGS.PREFABS.LOGICRIBBONREADER.LOGIC_PORT_OUTPUT, STRINGS.BUILDINGS.PREFABS.LOGICRIBBONREADER.OUTPUT_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.LOGICRIBBONREADER.OUTPUT_PORT_INACTIVE, show_wire_missing_icon: true)
 		};
 		SoundEventVolumeCache.instance.AddVolume("door_internal_kanim", "Open_DoorInternal", NOISE_POLLUTION.NOISY.TIER3);
 		SoundEventVolumeCache.instance.AddVolume("door_internal_kanim", "Close_DoorInternal", NOISE_POLLUTION.NOISY.TIER3);
 		GeneratedBuildings.RegisterWithOverlay(OverlayModes.Logic.HighlightItemIDs, ID);
-		return buildingDef;
+		return obj;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

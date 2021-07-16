@@ -372,13 +372,12 @@ public class EconomyDetails
 		{
 			CreateResource(element);
 		}
-		List<Tag> list = new List<Tag>
+		foreach (Tag item in new List<Tag>
 		{
 			GameTags.CombustibleLiquid,
 			GameTags.CombustibleGas,
 			GameTags.CombustibleSolid
-		};
-		foreach (Tag item in list)
+		})
 		{
 			CreateResource(item, massResourceType);
 		}
@@ -502,8 +501,7 @@ public class EconomyDetails
 			}
 			if (transformation2.tag == new Tag(debugTag))
 			{
-				int num4 = 0;
-				num4++;
+				_ = 0 + 1;
 			}
 			num3++;
 			o.Write("\"" + transformation2.tag.Name + "\"");
@@ -518,7 +516,7 @@ public class EconomyDetails
 				o.Write(",\"invariant\"");
 			}
 			string a = str + num3;
-			float num5 = 0f;
+			float num4 = 0f;
 			bool flag = false;
 			foreach (Resource item3 in used_resources)
 			{
@@ -537,7 +535,7 @@ public class EconomyDetails
 					if (delta.resource.type == massResourceType)
 					{
 						flag = true;
-						num5 += delta.amount;
+						num4 += delta.amount;
 					}
 					if (!transformation2.timeInvariant)
 					{
@@ -552,7 +550,7 @@ public class EconomyDetails
 			o.Write(",");
 			if (flag)
 			{
-				WriteProduct(o, a, (num5 / transformation2.timeInSeconds).ToString("0.00000"), text);
+				WriteProduct(o, a, (num4 / transformation2.timeInSeconds).ToString("0.00000"), text);
 			}
 			foreach (Ratio item4 in list)
 			{
@@ -566,16 +564,16 @@ public class EconomyDetails
 			}
 			o.Write("\n");
 		}
-		int num6 = 4;
+		int num5 = 4;
 		for (int k = 0; k < num; k++)
 		{
-			if (k >= num6 && k < num6 + used_resources.Count)
+			if (k >= num5 && k < num5 + used_resources.Count)
 			{
 				string text2 = ((char)(65 + k % 26)).ToString();
-				int num7 = Mathf.FloorToInt((float)k / 26f);
-				if (num7 > 0)
+				int num6 = Mathf.FloorToInt((float)k / 26f);
+				if (num6 > 0)
 				{
-					text2 = (char)(65 + num7 - 1) + text2;
+					text2 = (char)(65 + num6 - 1) + text2;
 				}
 				o.Write("\"=SUM(" + text2 + "2: " + text2 + num2 + ")\"");
 			}
@@ -636,8 +634,7 @@ public class EconomyDetails
 	{
 		if (tag == new Tag(debugTag))
 		{
-			int num = 0;
-			num++;
+			_ = 0 + 1;
 		}
 		Building component = prefab_id.GetComponent<Building>();
 		ElementConverter component2 = prefab_id.GetComponent<ElementConverter>();
@@ -730,9 +727,9 @@ public class EconomyDetails
 				if (component2.outputElements != null)
 				{
 					ElementConverter.OutputElement[] outputElements = component2.outputElements;
-					for (int j = 0; j < outputElements.Length; j++)
+					for (int i = 0; i < outputElements.Length; i++)
 					{
-						ElementConverter.OutputElement outputElement = outputElements[j];
+						ElementConverter.OutputElement outputElement = outputElements[i];
 						Element element = ElementLoader.FindElementByHash(outputElement.elementHash);
 						Resource resource2 = CreateResource(element.tag, massResourceType);
 						transformation.AddDelta(new Transformation.Delta(resource2, outputElement.massGenerationRate));
@@ -761,18 +758,18 @@ public class EconomyDetails
 				if (component7.formula.inputs != null)
 				{
 					EnergyGenerator.InputItem[] inputs = component7.formula.inputs;
-					for (int k = 0; k < inputs.Length; k++)
+					for (int i = 0; i < inputs.Length; i++)
 					{
-						EnergyGenerator.InputItem inputItem = inputs[k];
+						EnergyGenerator.InputItem inputItem = inputs[i];
 						transformation.AddDelta(new Transformation.Delta(GetResource(inputItem.tag), 0f - inputItem.consumptionRate));
 					}
 				}
 				if (component7.formula.outputs != null)
 				{
 					EnergyGenerator.OutputItem[] outputs = component7.formula.outputs;
-					for (int l = 0; l < outputs.Length; l++)
+					for (int i = 0; i < outputs.Length; i++)
 					{
-						EnergyGenerator.OutputItem outputItem = outputs[l];
+						EnergyGenerator.OutputItem outputItem = outputs[i];
 						transformation.AddDelta(new Transformation.Delta(GetResource(outputItem.element), outputItem.creationRate));
 					}
 				}
@@ -790,23 +787,20 @@ public class EconomyDetails
 			{
 				EdiblesManager.FoodInfo foodInfo = component10.FoodInfo;
 				transformation.AddDelta(new Transformation.Delta(fixedCaloriesResource, foodInfo.CaloriesPerUnit * 0.001f));
-				ComplexRecipe complexRecipe2 = ComplexRecipeManager.Get().recipes.Find((ComplexRecipe a) => a.FirstResult == tag);
-				if (complexRecipe2 == null)
-				{
-				}
+				ComplexRecipeManager.Get().recipes.Find((ComplexRecipe a) => a.FirstResult == tag);
 			}
 			if (component11 != null)
 			{
 				Resource resource4 = CreateResource(TagManager.Create(component11.cropVal.cropId), amountResourceType);
-				float num2 = component11.cropVal.numProduced;
-				transformation.AddDelta(new Transformation.Delta(resource4, num2));
+				float num = component11.cropVal.numProduced;
+				transformation.AddDelta(new Transformation.Delta(resource4, num));
 				GameObject prefab = Assets.GetPrefab(new Tag(component11.cropVal.cropId));
 				if (prefab != null)
 				{
 					Edible component17 = prefab.GetComponent<Edible>();
 					if (component17 != null)
 					{
-						transformation.AddDelta(new Transformation.Delta(caloriesResource, component17.FoodInfo.CaloriesPerUnit * num2 * 0.001f));
+						transformation.AddDelta(new Transformation.Delta(caloriesResource, component17.FoodInfo.CaloriesPerUnit * num * 0.001f));
 					}
 				}
 			}
@@ -818,8 +812,8 @@ public class EconomyDetails
 					CreateResource(recipeElement.material, amountResourceType);
 					transformation.AddDelta(new Transformation.Delta(GetResource(recipeElement.material), 0f - recipeElement.amount));
 				}
-				ComplexRecipe.RecipeElement[] results = complexRecipe.results;
-				foreach (ComplexRecipe.RecipeElement recipeElement2 in results)
+				ingredients = complexRecipe.results;
+				foreach (ComplexRecipe.RecipeElement recipeElement2 in ingredients)
 				{
 					CreateResource(recipeElement2.material, amountResourceType);
 					transformation.AddDelta(new Transformation.Delta(GetResource(recipeElement2.material), recipeElement2.amount));
@@ -827,7 +821,7 @@ public class EconomyDetails
 			}
 			if (components != null)
 			{
-				for (int num3 = 0; num3 < components.Length; num3++)
+				for (int j = 0; j < components.Length; j++)
 				{
 					transformation.AddDelta(new Transformation.Delta(duplicantTimeResource, -0.1f * transformation.timeInSeconds));
 				}
@@ -837,9 +831,9 @@ public class EconomyDetails
 				foreach (FertilizationMonitor.Def item in list)
 				{
 					PlantElementAbsorber.ConsumeInfo[] consumedElements2 = item.consumedElements;
-					for (int num4 = 0; num4 < consumedElements2.Length; num4++)
+					for (int i = 0; i < consumedElements2.Length; i++)
 					{
-						PlantElementAbsorber.ConsumeInfo consumeInfo = consumedElements2[num4];
+						PlantElementAbsorber.ConsumeInfo consumeInfo = consumedElements2[i];
 						Resource resource5 = CreateResource(consumeInfo.tag, massResourceType);
 						transformation.AddDelta(new Transformation.Delta(resource5, (0f - consumeInfo.massConsumptionRate) * transformation.timeInSeconds));
 					}
@@ -849,10 +843,10 @@ public class EconomyDetails
 			{
 				foreach (IrrigationMonitor.Def item2 in list2)
 				{
-					PlantElementAbsorber.ConsumeInfo[] consumedElements3 = item2.consumedElements;
-					for (int num5 = 0; num5 < consumedElements3.Length; num5++)
+					PlantElementAbsorber.ConsumeInfo[] consumedElements2 = item2.consumedElements;
+					for (int i = 0; i < consumedElements2.Length; i++)
 					{
-						PlantElementAbsorber.ConsumeInfo consumeInfo2 = consumedElements3[num5];
+						PlantElementAbsorber.ConsumeInfo consumeInfo2 = consumedElements2[i];
 						Resource resource6 = CreateResource(consumeInfo2.tag, massResourceType);
 						transformation.AddDelta(new Transformation.Delta(resource6, (0f - consumeInfo2.massConsumptionRate) * transformation.timeInSeconds));
 					}
@@ -894,8 +888,7 @@ public class EconomyDetails
 			}
 			if (component16 != null)
 			{
-				Effect effect = component16.CreateEffect();
-				foreach (AttributeModifier selfModifier in effect.SelfModifiers)
+				foreach (AttributeModifier selfModifier in component16.CreateEffect().SelfModifiers)
 				{
 					Resource resource7 = CreateResource(new Tag(selfModifier.AttributeId), attributeResourceType);
 					transformation.AddDelta(new Transformation.Delta(resource7, selfModifier.Value));
@@ -960,9 +953,9 @@ public class EconomyDetails
 			}
 			Scenario scenario2 = new Scenario("diets/" + prefab.name, 0f, null);
 			Diet.Info[] infos = def.diet.infos;
-			foreach (Diet.Info info in infos)
+			for (int i = 0; i < infos.Length; i++)
 			{
-				using HashSet<Tag>.Enumerator enumerator2 = info.consumedTags.GetEnumerator();
+				using HashSet<Tag>.Enumerator enumerator2 = infos[i].consumedTags.GetEnumerator();
 				while (enumerator2.MoveNext())
 				{
 					Tag tag = string.Concat(str2: enumerator2.Current.Name, str0: prefab.PrefabTag.Name, str1: "Diet");
@@ -1010,8 +1003,7 @@ public class EconomyDetails
 
 	private float GetDupeBreathingPerSecond(EconomyDetails details)
 	{
-		Transformation transformation = details.GetTransformation(TagManager.Create("Duplicant"));
-		return transformation.GetDelta(details.GetResource(GameTags.Oxygen)).amount;
+		return details.GetTransformation(TagManager.Create("Duplicant")).GetDelta(details.GetResource(GameTags.Oxygen)).amount;
 	}
 
 	private BiomeTransformation CreateBiomeTransformationFromTransformation(EconomyDetails details, Tag transformation_tag, Tag input_resource_tag, Tag output_resource_tag)
@@ -1136,11 +1128,10 @@ public class EconomyDetails
 							break;
 						}
 					}
-					if (!flag)
+					if (flag)
 					{
-						continue;
+						break;
 					}
-					break;
 				}
 			}
 			list.Add(scenario11);
@@ -1235,12 +1226,11 @@ public class EconomyDetails
 
 	private static void DumpNameMapping()
 	{
-		string path = "assets/Tuning/Economy/name_mapping.csv";
 		if (!Directory.Exists("assets/Tuning/Economy"))
 		{
 			Directory.CreateDirectory("assets/Tuning/Economy");
 		}
-		using StreamWriter streamWriter = new StreamWriter(path);
+		using StreamWriter streamWriter = new StreamWriter("assets/Tuning/Economy/name_mapping.csv");
 		streamWriter.Write("Game Name, Prefab Name, Anim Files\n");
 		foreach (KPrefabID prefab in Assets.Prefabs)
 		{

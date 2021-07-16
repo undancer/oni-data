@@ -11,7 +11,7 @@ public class LimitValve : KMonoBehaviour, ISaveLoadable
 
 	public static readonly Operational.Flag limitNotReached = new Operational.Flag("limitNotReached", Operational.Flag.Type.Requirement);
 
-	public ConduitType conduitType = ConduitType.None;
+	public ConduitType conduitType;
 
 	public float maxLimitKg = 100f;
 
@@ -45,7 +45,7 @@ public class LimitValve : KMonoBehaviour, ISaveLoadable
 
 	private MeterController limitMeter;
 
-	public bool displayUnitsInsteadOfMass = false;
+	public bool displayUnitsInsteadOfMass;
 
 	public NonLinearSlider.Range[] sliderRanges;
 

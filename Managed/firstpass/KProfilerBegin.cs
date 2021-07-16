@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class KProfilerBegin : MonoBehaviour
 {
-	public static int begin_counter = 0;
+	public static int begin_counter;
 
 	private void Start()
 	{

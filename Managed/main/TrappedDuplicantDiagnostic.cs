@@ -29,12 +29,11 @@ public class TrappedDuplicantDiagnostic : ColonyDiagnostic
 			bool flag2 = true;
 			foreach (MinionIdentity worldItem2 in Components.LiveMinionIdentities.GetWorldItems(base.worldID))
 			{
-				if (worldItem == worldItem2 || CheckMinionBasicallyIdle(worldItem2) || !component.CanReach(worldItem2.GetComponent<IApproachable>()))
+				if (!(worldItem == worldItem2) && !CheckMinionBasicallyIdle(worldItem2) && component.CanReach(worldItem2.GetComponent<IApproachable>()))
 				{
-					continue;
+					flag2 = false;
+					break;
 				}
-				flag2 = false;
-				break;
 			}
 			List<Telepad> worldItems = Components.Telepads.GetWorldItems(component.GetMyWorld().id);
 			if (worldItems != null && worldItems.Count > 0)
@@ -46,6 +45,7 @@ public class TrappedDuplicantDiagnostic : ColonyDiagnostic
 			{
 				foreach (WarpReceiver item in worldItems2)
 				{
+					_ = item;
 					flag2 = flag2 && !component.CanReach(worldItems2[0].GetComponent<IApproachable>());
 				}
 			}

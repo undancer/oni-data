@@ -7,21 +7,21 @@ public class FarmTileConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("FarmTile", 1, 1, "farmtilerotating_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.FARMABLE, 1600f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
-		BuildingTemplates.CreateFoundationTileDef(buildingDef);
-		buildingDef.Floodable = false;
-		buildingDef.Entombable = false;
-		buildingDef.Overheatable = false;
-		buildingDef.ForegroundLayer = Grid.SceneLayer.BuildingBack;
-		buildingDef.AudioCategory = "HollowMetal";
-		buildingDef.AudioSize = "small";
-		buildingDef.BaseTimeUntilRepair = -1f;
-		buildingDef.SceneLayer = Grid.SceneLayer.TileMain;
-		buildingDef.ConstructionOffsetFilter = BuildingDef.ConstructionOffsetFilter_OneDown;
-		buildingDef.PermittedRotations = PermittedRotations.FlipV;
-		buildingDef.isSolidTile = false;
-		buildingDef.DragBuild = true;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("FarmTile", 1, 1, "farmtilerotating_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.FARMABLE, 1600f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
+		BuildingTemplates.CreateFoundationTileDef(obj);
+		obj.Floodable = false;
+		obj.Entombable = false;
+		obj.Overheatable = false;
+		obj.ForegroundLayer = Grid.SceneLayer.BuildingBack;
+		obj.AudioCategory = "HollowMetal";
+		obj.AudioSize = "small";
+		obj.BaseTimeUntilRepair = -1f;
+		obj.SceneLayer = Grid.SceneLayer.TileMain;
+		obj.ConstructionOffsetFilter = BuildingDef.ConstructionOffsetFilter_OneDown;
+		obj.PermittedRotations = PermittedRotations.FlipV;
+		obj.isSolidTile = false;
+		obj.DragBuild = true;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -32,15 +32,13 @@ public class FarmTileConfig : IBuildingConfig
 		simCellOccupier.doReplaceElement = true;
 		simCellOccupier.notifyOnMelt = true;
 		go.AddOrGet<TileTemperature>();
-		Storage storage = BuildingTemplates.CreateDefaultStorage(go);
-		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
+		BuildingTemplates.CreateDefaultStorage(go).SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
 		PlantablePlot plantablePlot = go.AddOrGet<PlantablePlot>();
 		plantablePlot.occupyingObjectRelativePosition = new Vector3(0f, 1f, 0f);
 		plantablePlot.AddDepositTag(GameTags.CropSeed);
 		plantablePlot.AddDepositTag(GameTags.WaterSeed);
 		plantablePlot.SetFertilizationFlags(fertilizer: true, liquid_piping: false);
-		CopyBuildingSettings copyBuildingSettings = go.AddOrGet<CopyBuildingSettings>();
-		copyBuildingSettings.copyGroupTag = GameTags.Farm;
+		go.AddOrGet<CopyBuildingSettings>().copyGroupTag = GameTags.Farm;
 		go.AddOrGet<AnimTileable>();
 		Prioritizable.AddRef(go);
 	}
@@ -54,24 +52,23 @@ public class FarmTileConfig : IBuildingConfig
 
 	public static void SetUpFarmPlotTags(GameObject go)
 	{
-		KPrefabID component = go.GetComponent<KPrefabID>();
-		component.prefabSpawnFn += delegate(GameObject inst)
+		go.GetComponent<KPrefabID>().prefabSpawnFn += delegate(GameObject inst)
 		{
-			Rotatable component2 = inst.GetComponent<Rotatable>();
-			PlantablePlot component3 = inst.GetComponent<PlantablePlot>();
-			switch (component2.GetOrientation())
+			Rotatable component = inst.GetComponent<Rotatable>();
+			PlantablePlot component2 = inst.GetComponent<PlantablePlot>();
+			switch (component.GetOrientation())
 			{
 			case Orientation.Neutral:
 			case Orientation.FlipH:
-				component3.SetReceptacleDirection(SingleEntityReceptacle.ReceptacleDirection.Top);
+				component2.SetReceptacleDirection(SingleEntityReceptacle.ReceptacleDirection.Top);
 				break;
 			case Orientation.R180:
 			case Orientation.FlipV:
-				component3.SetReceptacleDirection(SingleEntityReceptacle.ReceptacleDirection.Bottom);
+				component2.SetReceptacleDirection(SingleEntityReceptacle.ReceptacleDirection.Bottom);
 				break;
 			case Orientation.R90:
 			case Orientation.R270:
-				component3.SetReceptacleDirection(SingleEntityReceptacle.ReceptacleDirection.Side);
+				component2.SetReceptacleDirection(SingleEntityReceptacle.ReceptacleDirection.Side);
 				break;
 			case Orientation.NumRotations:
 				break;

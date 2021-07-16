@@ -11,9 +11,30 @@ using UnityEngine;
 [AddComponentMenu("KMonoBehaviour/scripts/Unlocks")]
 public class Unlocks : KMonoBehaviour
 {
+	private class MetaUnlockCategory
+	{
+		public string metaCollectionID;
+
+		public string mesaCollectionID;
+
+		public int mesaUnlockCount;
+
+		public MetaUnlockCategory(string metaCollectionID, string mesaCollectionID, int mesaUnlockCount)
+		{
+			this.metaCollectionID = metaCollectionID;
+			this.mesaCollectionID = mesaCollectionID;
+			this.mesaUnlockCount = mesaUnlockCount;
+		}
+	}
+
 	private const int FILE_IO_RETRY_ATTEMPTS = 5;
 
 	private List<string> unlocked = new List<string>();
+
+	private List<MetaUnlockCategory> MetaUnlockCategories = new List<MetaUnlockCategory>
+	{
+		new MetaUnlockCategory("dimensionalloreMeta", "dimensionallore", 4)
+	};
 
 	public Dictionary<string, string[]> lockCollections = new Dictionary<string, string[]>
 	{
@@ -84,7 +105,7 @@ public class Unlocks : KMonoBehaviour
 		},
 		{
 			"researchnotes",
-			new string[19]
+			new string[18]
 			{
 				"notes_clonedrats",
 				"notes_agriculture1",
@@ -103,8 +124,7 @@ public class Unlocks : KMonoBehaviour
 				"notes_neutroniumapplications",
 				"notes_teleportation",
 				"notes_AI",
-				"cryotank_warnings",
-				"journal_inspace"
+				"cryotank_warning"
 			}
 		},
 		{
@@ -132,11 +152,20 @@ public class Unlocks : KMonoBehaviour
 			}
 		},
 		{
+			"dimensionalloreMeta",
+			new string[1]
+			{
+				"log9"
+			}
+		},
+		{
 			"space",
-			new string[2]
+			new string[4]
 			{
 				"display_spaceprop1",
-				"notice_pilot"
+				"notice_pilot",
+				"journal_inspace",
+				"notes_firstcolony"
 			}
 		}
 	};
@@ -235,13 +264,24 @@ public class Unlocks : KMonoBehaviour
 		return unlocked.Contains(unlockID);
 	}
 
+	public void Lock(string unlockID)
+	{
+		if (unlocked.Contains(unlockID))
+		{
+			unlocked.Remove(unlockID);
+			SaveUnlocks();
+			Game.Instance.Trigger(1594320620, unlockID);
+		}
+	}
+
 	public void Unlock(string unlockID)
 	{
 		if (string.IsNullOrEmpty(unlockID))
 		{
 			DebugUtil.DevAssert(test: false, "Unlock called with null or empty string");
+			return;
 		}
-		else if (!unlocked.Contains(unlockID))
+		if (!unlocked.Contains(unlockID))
 		{
 			unlocked.Add(unlockID);
 			SaveUnlocks();
@@ -250,6 +290,30 @@ public class Unlocks : KMonoBehaviour
 			if (messageNotification != null)
 			{
 				GetComponent<Notifier>().Add(messageNotification);
+			}
+		}
+		EvalMetaCategories();
+	}
+
+	private void EvalMetaCategories()
+	{
+		foreach (MetaUnlockCategory metaUnlockCategory in MetaUnlockCategories)
+		{
+			string metaCollectionID = metaUnlockCategory.metaCollectionID;
+			string mesaCollectionID = metaUnlockCategory.mesaCollectionID;
+			int mesaUnlockCount = metaUnlockCategory.mesaUnlockCount;
+			int num = 0;
+			string[] array = lockCollections[mesaCollectionID];
+			foreach (string unlockID in array)
+			{
+				if (IsUnlocked(unlockID))
+				{
+					num++;
+				}
+			}
+			if (num >= mesaUnlockCount)
+			{
+				UnlockNext(metaCollectionID);
 			}
 		}
 	}
@@ -270,8 +334,7 @@ public class Unlocks : KMonoBehaviour
 				Thread.Sleep(num * 100);
 				using FileStream fileStream = File.Open(UnlocksFilename, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
 				flag = true;
-				ASCIIEncoding aSCIIEncoding = new ASCIIEncoding();
-				byte[] bytes = aSCIIEncoding.GetBytes(s);
+				byte[] bytes = new ASCIIEncoding().GetBytes(s);
 				fileStream.Write(bytes, 0, bytes.Length);
 			}
 			catch (Exception ex)
@@ -319,8 +382,7 @@ public class Unlocks : KMonoBehaviour
 		try
 		{
 			string[] array2 = JsonConvert.DeserializeObject<string[]>(text);
-			string[] array3 = array2;
-			foreach (string text2 in array3)
+			foreach (string text2 in array2)
 			{
 				if (!string.IsNullOrEmpty(text2) && !unlocked.Contains(text2))
 				{
@@ -372,7 +434,6 @@ public class Unlocks : KMonoBehaviour
 		{
 			text = CodexCache.FindEntry(entryForLock).title;
 		}
-		MessageNotification messageNotification = null;
 		string text2 = UI.FormatAsLink(Strings.Get(text), entryForLock);
 		if (!string.IsNullOrEmpty(text))
 		{
@@ -388,8 +449,7 @@ public class Unlocks : KMonoBehaviour
 					}
 				}
 			}
-			CodexUnlockedMessage m = new CodexUnlockedMessage(lockID, text2);
-			return new MessageNotification(m);
+			return new MessageNotification(new CodexUnlockedMessage(lockID, text2));
 		}
 		return null;
 	}
@@ -477,8 +537,7 @@ public class Unlocks : KMonoBehaviour
 				{
 					break;
 				}
-				SubWorld.ZoneType subWorldZoneType = World.Instance.zoneRenderData.GetSubWorldZoneType(cell2);
-				if (subWorldZoneType == SubWorld.ZoneType.Space)
+				if (World.Instance.zoneRenderData.GetSubWorldZoneType(cell2) == SubWorld.ZoneType.Space)
 				{
 					Unlock("nearingsurface");
 					break;
@@ -494,16 +553,16 @@ public class Unlocks : KMonoBehaviour
 		{
 			num4--;
 			int num5 = Grid.XYToCell(x2, num4);
-			if (!Grid.IsValidCell(num5))
+			if (Grid.IsValidCell(num5))
 			{
-				break;
+				if (World.Instance.zoneRenderData.GetSubWorldZoneType(num5) == SubWorld.ZoneType.ToxicJungle && Grid.Element[num5].id == SimHashes.Magma)
+				{
+					Unlock("nearingmagma");
+					break;
+				}
+				continue;
 			}
-			SubWorld.ZoneType subWorldZoneType2 = World.Instance.zoneRenderData.GetSubWorldZoneType(num5);
-			if (subWorldZoneType2 == SubWorld.ZoneType.ToxicJungle && Grid.Element[num5].id == SimHashes.Magma)
-			{
-				Unlock("nearingmagma");
-				break;
-			}
+			break;
 		}
 	}
 }

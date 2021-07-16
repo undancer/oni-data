@@ -41,8 +41,7 @@ public abstract class BaseLogicWireConfig : IBuildingConfig
 	public override void DoPostConfigureUnderConstruction(GameObject go)
 	{
 		base.DoPostConfigureUnderConstruction(go);
-		Constructable component = go.GetComponent<Constructable>();
-		component.isDiggingRequired = false;
+		go.GetComponent<Constructable>().isDiggingRequired = false;
 		KAnimGraphTileVisualizer kAnimGraphTileVisualizer = go.AddOrGet<KAnimGraphTileVisualizer>();
 		kAnimGraphTileVisualizer.connectionSource = KAnimGraphTileVisualizer.ConnectionSource.Logic;
 		kAnimGraphTileVisualizer.isPhysicalBuilding = false;
@@ -50,13 +49,11 @@ public abstract class BaseLogicWireConfig : IBuildingConfig
 
 	protected void DoPostConfigureComplete(LogicWire.BitDepth rating, GameObject go)
 	{
-		LogicWire component = go.GetComponent<LogicWire>();
-		component.MaxBitDepth = rating;
+		go.GetComponent<LogicWire>().MaxBitDepth = rating;
 		int bitDepthAsInt = LogicWire.GetBitDepthAsInt(rating);
 		Descriptor item = default(Descriptor);
 		item.SetupDescriptor(string.Format(UI.BUILDINGEFFECTS.MAX_BITS, bitDepthAsInt), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.MAX_BITS));
-		Building component2 = go.GetComponent<Building>();
-		BuildingDef def = component2.Def;
+		BuildingDef def = go.GetComponent<Building>().Def;
 		if (def.EffectDescription == null)
 		{
 			def.EffectDescription = new List<Descriptor>();

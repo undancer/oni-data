@@ -11,12 +11,12 @@ public class FishFeederConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("FishFeeder", 1, 3, "fishfeeder_kanim", 100, 120f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.Entombable = true;
-		buildingDef.Floodable = true;
-		buildingDef.ForegroundLayer = Grid.SceneLayer.TileMain;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("FishFeeder", 1, 3, "fishfeeder_kanim", 100, 120f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
+		obj.AudioCategory = "Metal";
+		obj.Entombable = true;
+		obj.Floodable = true;
+		obj.ForegroundLayer = Grid.SceneLayer.TileMain;
+		return obj;
 	}
 
 	public override void DoPostConfigureUnderConstruction(GameObject go)
@@ -40,8 +40,7 @@ public class FishFeederConfig : IBuildingConfig
 		storage2.showInUI = true;
 		storage2.showDescriptor = true;
 		storage2.allowItemRemoval = false;
-		StorageLocker storageLocker = go.AddOrGet<StorageLocker>();
-		storageLocker.choreTypeID = Db.Get().ChoreTypes.RanchingFetch.Id;
+		go.AddOrGet<StorageLocker>().choreTypeID = Db.Get().ChoreTypes.RanchingFetch.Id;
 		go.AddOrGet<UserNameable>();
 		Effect effect = new Effect("AteFromFeeder", STRINGS.CREATURES.MODIFIERS.ATE_FROM_FEEDER.NAME, STRINGS.CREATURES.MODIFIERS.ATE_FROM_FEEDER.TOOLTIP, 600f, show_in_ui: true, trigger_floating_text: false, is_bad: false);
 		effect.Add(new AttributeModifier(Db.Get().Amounts.Wildness.deltaAttribute.Id, -71f / (678f * (float)Math.PI), STRINGS.CREATURES.MODIFIERS.ATE_FROM_FEEDER.NAME));
@@ -55,8 +54,7 @@ public class FishFeederConfig : IBuildingConfig
 	{
 		go.AddOrGetDef<StorageController.Def>();
 		go.AddOrGetDef<FishFeeder.Def>();
-		MakeBaseSolid.Def def = go.AddOrGetDef<MakeBaseSolid.Def>();
-		def.solidOffsets = new CellOffset[1]
+		go.AddOrGetDef<MakeBaseSolid.Def>().solidOffsets = new CellOffset[1]
 		{
 			new CellOffset(0, 0)
 		};

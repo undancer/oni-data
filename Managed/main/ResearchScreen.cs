@@ -66,11 +66,11 @@ public class ResearchScreen : KModalScreen
 
 	private bool panRight;
 
-	private bool rightMouseDown = false;
+	private bool rightMouseDown;
 
-	private bool leftMouseDown = false;
+	private bool leftMouseDown;
 
-	private bool isDragging = false;
+	private bool isDragging;
 
 	private Vector3 dragStartPosition;
 
@@ -80,13 +80,13 @@ public class ResearchScreen : KModalScreen
 
 	private Vector2 forceTargetPosition;
 
-	private bool zoomingToTarget = false;
+	private bool zoomingToTarget;
 
 	private float targetZoom = 1f;
 
 	private float currentZoom = 1f;
 
-	private bool zoomCenterLock = false;
+	private bool zoomCenterLock;
 
 	private Vector2 keyPanDelta = Vector3.zero;
 
@@ -165,6 +165,10 @@ public class ResearchScreen : KModalScreen
 
 	private void Update()
 	{
+		if (!base.canvas.enabled)
+		{
+			return;
+		}
 		RectTransform component = scrollContent.GetComponent<RectTransform>();
 		if (!isDragging && (rightMouseDown || leftMouseDown) && Vector2.Distance(dragStartPosition, KInputManager.GetMousePos()) > 1f)
 		{
@@ -177,14 +181,12 @@ public class ResearchScreen : KModalScreen
 			isDragging = false;
 		}
 		Vector2 anchoredPosition = component.anchoredPosition;
-		float t = Mathf.Min(effectiveZoomSpeed * Time.unscaledDeltaTime, 0.9f);
-		currentZoom = Mathf.Lerp(currentZoom, targetZoom, t);
+		currentZoom = Mathf.Lerp(t: Mathf.Min(effectiveZoomSpeed * Time.unscaledDeltaTime, 0.9f), a: currentZoom, b: targetZoom);
 		Vector2 zero = Vector2.zero;
 		Vector2 v = KInputManager.GetMousePos();
 		Vector2 b = (zoomCenterLock ? (component.InverseTransformPoint(new Vector2(Screen.width / 2, Screen.height / 2)) * currentZoom) : (component.InverseTransformPoint(v) * currentZoom));
 		component.localScale = new Vector3(currentZoom, currentZoom, 1f);
-		Vector2 a = (zoomCenterLock ? (component.InverseTransformPoint(new Vector2(Screen.width / 2, Screen.height / 2)) * currentZoom) : (component.InverseTransformPoint(v) * currentZoom));
-		zero = a - b;
+		zero = (Vector2)(zoomCenterLock ? (component.InverseTransformPoint(new Vector2(Screen.width / 2, Screen.height / 2)) * currentZoom) : (component.InverseTransformPoint(v) * currentZoom)) - b;
 		float d = keyboardScrollSpeed;
 		if (panUp)
 		{
@@ -219,10 +221,9 @@ public class ResearchScreen : KModalScreen
 			Vector2 size = GetComponent<RectTransform>().rect.size;
 			Vector2 vector4 = new Vector2(((0f - component.rect.size.x) / 2f - 250f) * currentZoom, -250f * currentZoom);
 			Vector2 vector5 = new Vector2(250f * currentZoom, (component.rect.size.y + 250f) * currentZoom - size.y);
-			Vector2 a2 = new Vector2(Mathf.Clamp(vector3.x, vector4.x, vector5.x), Mathf.Clamp(vector3.y, vector4.y, vector5.y));
+			Vector2 a = new Vector2(Mathf.Clamp(vector3.x, vector4.x, vector5.x), Mathf.Clamp(vector3.y, vector4.y, vector5.y));
 			forceTargetPosition = new Vector2(Mathf.Clamp(forceTargetPosition.x, vector4.x, vector5.x), Mathf.Clamp(forceTargetPosition.y, vector4.y, vector5.y));
-			a2 += dragInteria;
-			Vector2 vector6 = a2 - vector3;
+			Vector2 vector6 = a + dragInteria - vector3;
 			if (!panLeft && !panRight && !panUp && !panDown)
 			{
 				vector3 += vector6 * edgeClampFactor * Time.unscaledDeltaTime;
@@ -332,8 +333,7 @@ public class ResearchScreen : KModalScreen
 					continue;
 				}
 				ResourceTreeNode.Edge.EdgeType edgeType = edge.edgeType;
-				ResourceTreeNode.Edge.EdgeType edgeType2 = edgeType;
-				if ((uint)edgeType2 <= 1u || (uint)(edgeType2 - 4) <= 1u)
+				if ((uint)edgeType <= 1u || (uint)(edgeType - 4) <= 1u)
 				{
 					list.Add(edge.SrcTarget[0]);
 					list.Add(edge.path[0]);
@@ -366,9 +366,7 @@ public class ResearchScreen : KModalScreen
 		};
 		StartCoroutine(WaitAndSetActiveResearch());
 		base.OnSpawn();
-		RectTransform component = scrollContent.GetComponent<RectTransform>();
-		component.anchoredPosition = new Vector2(250f, -250f);
-		Show(show: false);
+		scrollContent.GetComponent<RectTransform>().anchoredPosition = new Vector2(250f, -250f);
 		zoomOutButton.onClick += delegate
 		{
 			ZoomOut();
@@ -377,6 +375,8 @@ public class ResearchScreen : KModalScreen
 		{
 			ZoomIn();
 		};
+		base.gameObject.SetActive(value: true);
+		Show(show: false);
 	}
 
 	protected override void OnCleanUp()
@@ -391,10 +391,10 @@ public class ResearchScreen : KModalScreen
 	private IEnumerator WaitAndSetActiveResearch()
 	{
 		yield return new WaitForEndOfFrame();
-		TechInstance tech = Research.Instance.GetTargetResearch();
-		if (tech != null)
+		TechInstance targetResearch = Research.Instance.GetTargetResearch();
+		if (targetResearch != null)
 		{
-			SetActiveResearch(tech.tech);
+			SetActiveResearch(targetResearch.tech);
 		}
 	}
 
@@ -534,6 +534,20 @@ public class ResearchScreen : KModalScreen
 		}
 	}
 
+	public override void Show(bool show = true)
+	{
+		mouseOver = false;
+		base.canvas.enabled = show;
+		CanvasGroup component = GetComponent<CanvasGroup>();
+		if (component != null)
+		{
+			component.interactable = show;
+			component.blocksRaycasts = show;
+			component.ignoreParentGroups = true;
+		}
+		OnShow(show);
+	}
+
 	protected override void OnShow(bool show)
 	{
 		base.OnShow(show);
@@ -555,6 +569,10 @@ public class ResearchScreen : KModalScreen
 
 	public override void OnKeyUp(KButtonEvent e)
 	{
+		if (!base.canvas.enabled)
+		{
+			return;
+		}
 		if (!e.Consumed)
 		{
 			if (e.IsAction(Action.MouseRight))
@@ -598,6 +616,10 @@ public class ResearchScreen : KModalScreen
 
 	public override void OnKeyDown(KButtonEvent e)
 	{
+		if (!base.canvas.enabled)
+		{
+			return;
+		}
 		if (!e.Consumed)
 		{
 			if (e.TryConsume(Action.MouseRight))
@@ -665,25 +687,26 @@ public class ResearchScreen : KModalScreen
 			filterString = filterString.ToUpper();
 			bool flag = false;
 			Tech tech = Db.Get().Techs.Get(techID);
-			string text = UI.StripLinkFormatting(tech.Name).ToLower();
-			flag = text.ToUpper().Contains(filterString);
+			flag = UI.StripLinkFormatting(tech.Name).ToLower().ToUpper()
+				.Contains(filterString);
 			if (!flag)
 			{
 				flag = tech.category.ToUpper().Contains(filterString);
-				foreach (TechItem unlockedItem in tech.unlockedItems)
 				{
-					string text2 = UI.StripLinkFormatting(unlockedItem.Name).ToLower();
-					if (text2.ToUpper().Contains(filterString))
+					foreach (TechItem unlockedItem in tech.unlockedItems)
 					{
-						flag = true;
-						break;
+						if (UI.StripLinkFormatting(unlockedItem.Name).ToLower().ToUpper()
+							.Contains(filterString))
+						{
+							return true;
+						}
+						if (UI.StripLinkFormatting(unlockedItem.description).ToLower().ToUpper()
+							.Contains(filterString))
+						{
+							return true;
+						}
 					}
-					string text3 = UI.StripLinkFormatting(unlockedItem.description).ToLower();
-					if (text3.ToUpper().Contains(filterString))
-					{
-						flag = true;
-						break;
-					}
+					return flag;
 				}
 			}
 			return flag;
@@ -698,8 +721,8 @@ public class ResearchScreen : KModalScreen
 			bool flag = false;
 			filterString = filterString.ToUpper();
 			TechItem techItem = Db.Get().TechItems.Get(techItemID);
-			string text = UI.StripLinkFormatting(techItem.Name).ToLower();
-			flag = text.ToUpper().Contains(filterString);
+			flag = UI.StripLinkFormatting(techItem.Name).ToLower().ToUpper()
+				.Contains(filterString);
 			if (!flag)
 			{
 				flag = techItem.Name.ToUpper().Contains(filterString) && techItem.description.ToUpper().Contains(filterString);

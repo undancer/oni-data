@@ -22,8 +22,7 @@ public class RoverModifiers : Modifiers, ISaveLoadable
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		ChoreConsumer component = GetComponent<ChoreConsumer>();
-		if (component != null)
+		if (GetComponent<ChoreConsumer>() != null)
 		{
 			Subscribe(-1988963660, OnBeginChoreDelegate);
 			Vector3 position = base.transform.GetPosition();

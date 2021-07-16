@@ -24,7 +24,7 @@ public class ResourceCategoryHeader : KMonoBehaviour, IPointerEnterHandler, IEve
 
 	public GameUtil.MeasureUnit Measure;
 
-	public bool IsOpen = false;
+	public bool IsOpen;
 
 	public ImageToggleState expandArrow;
 
@@ -38,11 +38,11 @@ public class ResourceCategoryHeader : KMonoBehaviour, IPointerEnterHandler, IEve
 
 	public Color TextColor_NonInteractable;
 
-	private string quantityString = null;
+	private string quantityString;
 
-	private float currentQuantity = 0f;
+	private float currentQuantity;
 
-	private bool anyDiscovered = false;
+	private bool anyDiscovered;
 
 	public const float chartHistoryLength = 3000f;
 
@@ -323,8 +323,7 @@ public class ResourceCategoryHeader : KMonoBehaviour, IPointerEnterHandler, IEve
 
 	private ResourceEntry NewResourceEntry(Tag resourceTag, GameUtil.MeasureUnit measure)
 	{
-		GameObject gameObject = Util.KInstantiateUI(Prefab_ResourceEntry, EntryContainer.gameObject, force_active: true);
-		ResourceEntry component = gameObject.GetComponent<ResourceEntry>();
+		ResourceEntry component = Util.KInstantiateUI(Prefab_ResourceEntry, EntryContainer.gameObject, force_active: true).GetComponent<ResourceEntry>();
 		component.SetTag(resourceTag, measure);
 		return component;
 	}

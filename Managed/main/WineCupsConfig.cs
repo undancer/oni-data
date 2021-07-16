@@ -30,11 +30,10 @@ public class WineCupsConfig : IEntityConfig
 		PrickleGrass prickleGrass = gameObject.AddOrGet<PrickleGrass>();
 		prickleGrass.positive_decor_effect = POSITIVE_DECOR_EFFECT;
 		prickleGrass.negative_decor_effect = NEGATIVE_DECOR_EFFECT;
-		GameObject seed = EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Hidden, "WineCupsSeed", STRINGS.CREATURES.SPECIES.SEEDS.WINECUPS.NAME, STRINGS.CREATURES.SPECIES.SEEDS.WINECUPS.DESC, Assets.GetAnim("seed_potted_cups_kanim"), "object", 1, new List<Tag>
+		EntityTemplates.CreateAndRegisterPreviewForPlant(EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Hidden, "WineCupsSeed", STRINGS.CREATURES.SPECIES.SEEDS.WINECUPS.NAME, STRINGS.CREATURES.SPECIES.SEEDS.WINECUPS.DESC, Assets.GetAnim("seed_potted_cups_kanim"), "object", 1, new List<Tag>
 		{
 			GameTags.DecorSeed
-		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 11, STRINGS.CREATURES.SPECIES.WINECUPS.DOMESTICATEDDESC);
-		EntityTemplates.CreateAndRegisterPreviewForPlant(seed, "WineCups_preview", Assets.GetAnim("potted_cups_kanim"), "place", 1, 1);
+		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 11, STRINGS.CREATURES.SPECIES.WINECUPS.DOMESTICATEDDESC), "WineCups_preview", Assets.GetAnim("potted_cups_kanim"), "place", 1, 1);
 		return gameObject;
 	}
 

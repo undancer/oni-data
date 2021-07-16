@@ -30,13 +30,13 @@ public class KleiAccount : ThreadedHttps<KleiAccount>
 
 	private const string UserIDFieldName = "UserID";
 
-	public static string KleiUserID = null;
+	public static string KleiUserID;
 
-	private GetUserIDdelegate gotUserID = null;
+	private GetUserIDdelegate gotUserID;
 
 	private const string AuthTicketKey = "AUTH_TICKET";
 
-	private byte[] authTicket = null;
+	private byte[] authTicket;
 
 	private const string TicketFieldName = "SteamTicket";
 
@@ -153,10 +153,20 @@ public class KleiAccount : ThreadedHttps<KleiAccount>
 
 	private Dictionary<string, object> BuildLoginRequest(byte[] ticket)
 	{
-		Dictionary<string, object> dictionary = new Dictionary<string, object>();
-		dictionary.Add("SteamTicket", EncodeToAsciiHEX(ticket));
-		dictionary.Add("Game", CLIENT_KEY);
-		dictionary.Add("NoEmail", true);
-		return dictionary;
+		return new Dictionary<string, object>
+		{
+			{
+				"SteamTicket",
+				EncodeToAsciiHEX(ticket)
+			},
+			{
+				"Game",
+				CLIENT_KEY
+			},
+			{
+				"NoEmail",
+				true
+			}
+		};
 	}
 }

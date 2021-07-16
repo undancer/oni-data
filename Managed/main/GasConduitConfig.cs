@@ -35,8 +35,7 @@ public class GasConduitConfig : IBuildingConfig
 	{
 		GeneratedBuildings.MakeBuildingAlwaysOperational(go);
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
-		Conduit conduit = go.AddOrGet<Conduit>();
-		conduit.type = ConduitType.Gas;
+		go.AddOrGet<Conduit>().type = ConduitType.Gas;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

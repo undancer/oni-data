@@ -9,29 +9,29 @@ public class RocketEnvelopeWindowTileConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("RocketEnvelopeWindowTile", 1, 1, "floor_glass_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.TRANSPARENTS, 800f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER0);
-		BuildingTemplates.CreateFoundationTileDef(buildingDef);
-		buildingDef.Floodable = false;
-		buildingDef.Entombable = false;
-		buildingDef.Overheatable = false;
-		buildingDef.UseStructureTemperature = false;
-		buildingDef.Replaceable = false;
-		buildingDef.Invincible = true;
-		buildingDef.BaseTimeUntilRepair = -1f;
-		buildingDef.AudioCategory = "Glass";
-		buildingDef.AudioSize = "small";
-		buildingDef.BaseTimeUntilRepair = -1f;
-		buildingDef.SceneLayer = Grid.SceneLayer.GlassTile;
-		buildingDef.isKAnimTile = true;
-		buildingDef.isSolidTile = true;
-		buildingDef.BlockTileIsTransparent = true;
-		buildingDef.BlockTileAtlas = Assets.GetTextureAtlas("tiles_glass");
-		buildingDef.BlockTilePlaceAtlas = Assets.GetTextureAtlas("tiles_glass_place");
-		buildingDef.BlockTileMaterial = Assets.GetMaterial("tiles_solid");
-		buildingDef.DecorBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_glass_tops_decor_info");
-		buildingDef.DecorPlaceBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_glass_tops_decor_place_info");
-		buildingDef.ConstructionOffsetFilter = BuildingDef.ConstructionOffsetFilter_OneDown;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("RocketEnvelopeWindowTile", 1, 1, "floor_glass_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.TRANSPARENTS, 800f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER0);
+		BuildingTemplates.CreateFoundationTileDef(obj);
+		obj.Floodable = false;
+		obj.Entombable = false;
+		obj.Overheatable = false;
+		obj.UseStructureTemperature = false;
+		obj.Replaceable = false;
+		obj.Invincible = true;
+		obj.BaseTimeUntilRepair = -1f;
+		obj.AudioCategory = "Glass";
+		obj.AudioSize = "small";
+		obj.BaseTimeUntilRepair = -1f;
+		obj.SceneLayer = Grid.SceneLayer.GlassTile;
+		obj.isKAnimTile = true;
+		obj.isSolidTile = true;
+		obj.BlockTileIsTransparent = true;
+		obj.BlockTileAtlas = Assets.GetTextureAtlas("tiles_glass");
+		obj.BlockTilePlaceAtlas = Assets.GetTextureAtlas("tiles_glass_place");
+		obj.BlockTileMaterial = Assets.GetMaterial("tiles_solid");
+		obj.DecorBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_glass_tops_decor_info");
+		obj.DecorPlaceBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_glass_tops_decor_place_info");
+		obj.ConstructionOffsetFilter = BuildingDef.ConstructionOffsetFilter_OneDown;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -42,12 +42,9 @@ public class RocketEnvelopeWindowTileConfig : IBuildingConfig
 		simCellOccupier.setTransparent = true;
 		simCellOccupier.notifyOnMelt = true;
 		go.AddOrGet<TileTemperature>();
-		KAnimGridTileVisualizer kAnimGridTileVisualizer = go.AddOrGet<KAnimGridTileVisualizer>();
-		kAnimGridTileVisualizer.blockTileConnectorID = BlockTileConnectorID;
-		BuildingHP buildingHP = go.AddOrGet<BuildingHP>();
-		buildingHP.destroyOnDamaged = true;
-		KPrefabID component = go.GetComponent<KPrefabID>();
-		component.AddTag(GameTags.Window);
+		go.AddOrGet<KAnimGridTileVisualizer>().blockTileConnectorID = BlockTileConnectorID;
+		go.AddOrGet<BuildingHP>().destroyOnDamaged = true;
+		go.GetComponent<KPrefabID>().AddTag(GameTags.Window);
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

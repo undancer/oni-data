@@ -88,7 +88,7 @@ public struct TagBits
 	{
 		for (int i = 0; i < 64; i++)
 		{
-			if ((bits & (ulong)(1L << i)) != 0)
+			if ((bits & (ulong)(1L << i)) != 0L)
 			{
 				int index = 64 * bits_idx + i;
 				tags.Add(inverseTagTable[index]);
@@ -220,7 +220,11 @@ public struct TagBits
 
 	public bool HasAll(ref TagBits tag_bits)
 	{
-		return (bits0 & tag_bits.bits0) == tag_bits.bits0 && (bits1 & tag_bits.bits1) == tag_bits.bits1 && (bits2 & tag_bits.bits2) == tag_bits.bits2 && (bits3 & tag_bits.bits3) == tag_bits.bits3 && (bits4 & tag_bits.bits4) == tag_bits.bits4 && (bits5 & tag_bits.bits5) == tag_bits.bits5 && (bits6 & tag_bits.bits6) == tag_bits.bits6 && (bits7 & tag_bits.bits7) == tag_bits.bits7;
+		if ((bits0 & tag_bits.bits0) == tag_bits.bits0 && (bits1 & tag_bits.bits1) == tag_bits.bits1 && (bits2 & tag_bits.bits2) == tag_bits.bits2 && (bits3 & tag_bits.bits3) == tag_bits.bits3 && (bits4 & tag_bits.bits4) == tag_bits.bits4 && (bits5 & tag_bits.bits5) == tag_bits.bits5 && (bits6 & tag_bits.bits6) == tag_bits.bits6)
+		{
+			return (bits7 & tag_bits.bits7) == tag_bits.bits7;
+		}
+		return false;
 	}
 
 	public bool HasAny(ref TagBits tag_bits)
@@ -230,7 +234,11 @@ public struct TagBits
 
 	public bool AreEqual(ref TagBits tag_bits)
 	{
-		return tag_bits.bits0 == bits0 && tag_bits.bits1 == bits1 && tag_bits.bits2 == bits2 && tag_bits.bits3 == bits3 && tag_bits.bits4 == bits4 && tag_bits.bits5 == bits5 && tag_bits.bits6 == bits6 && tag_bits.bits7 == bits7;
+		if (tag_bits.bits0 == bits0 && tag_bits.bits1 == bits1 && tag_bits.bits2 == bits2 && tag_bits.bits3 == bits3 && tag_bits.bits4 == bits4 && tag_bits.bits5 == bits5 && tag_bits.bits6 == bits6)
+		{
+			return tag_bits.bits7 == bits7;
+		}
+		return false;
 	}
 
 	public void And(ref TagBits rhs)

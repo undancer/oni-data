@@ -44,7 +44,7 @@ namespace ProcGen
 			}
 		}
 
-		private Tree voronoiTree = null;
+		private Tree voronoiTree;
 
 		[Serialize]
 		public MapGraph localGraph;
@@ -63,12 +63,12 @@ namespace ProcGen
 
 		private LineSegment rightEdge;
 
-		private SeededRandom myRandom = null;
+		private SeededRandom myRandom;
 
 		private WorldGen worldGen;
 
 		[Serialize]
-		private ExtraIO extra = null;
+		private ExtraIO extra;
 
 		[Serialize]
 		public int mapWidth
@@ -195,8 +195,7 @@ namespace ProcGen
 			for (int i = 0; i < randomPoints.Count; i++)
 			{
 				Cell cell2 = overworldGraph.AddNode(WorldGenTags.UnassignedNode.Name, randomPoints[i]);
-				VoronoiTree.Node node2 = voronoiTree.AddSite(new Diagram.Site((uint)cell2.NodeId, cell2.position), VoronoiTree.Node.NodeType.Internal);
-				node2.tags.Add(WorldGenTags.UnassignedNode);
+				voronoiTree.AddSite(new Diagram.Site((uint)cell2.NodeId, cell2.position), VoronoiTree.Node.NodeType.Internal).tags.Add(WorldGenTags.UnassignedNode);
 				cell2.tags.Add(WorldGenTags.UnassignedNode);
 			}
 			List<Diagram.Site> list2 = new List<Diagram.Site>();
@@ -228,8 +227,7 @@ namespace ProcGen
 				foreach (string overworldAddTag in worldGen.Settings.GetOverworldAddTags())
 				{
 					int childIndex = myRandom.RandomSource().Next(voronoiTree.ChildCount());
-					VoronoiTree.Node child = voronoiTree.GetChild(childIndex);
-					child.AddTag(new Tag(overworldAddTag));
+					voronoiTree.GetChild(childIndex).AddTag(new Tag(overworldAddTag));
 				}
 			}
 			if (usePD)
@@ -256,17 +254,13 @@ namespace ProcGen
 				Cell cell = graph.FindNodeByID(node.site.id);
 				cell.tags.Union(node.tags);
 				cell.SetPosition(node.site.position);
-				List<VoronoiTree.Node> neighbors = node.GetNeighbors();
-				foreach (VoronoiTree.Node item in neighbors)
+				foreach (VoronoiTree.Node neighbor in node.GetNeighbors())
 				{
-					Cell cell2 = graph.FindNodeByID(item.site.id);
-					Edge arc = graph.GetArc(cell, cell2);
-					if (arc == null)
+					Cell cell2 = graph.FindNodeByID(neighbor.site.id);
+					if (graph.GetArc(cell, cell2) == null)
 					{
 						int edgeIdx = -1;
-						LineSegment overlapSegment;
-						Polygon.Commonality commonality = node.site.poly.SharesEdge(item.site.poly, ref edgeIdx, out overlapSegment);
-						if (commonality == Polygon.Commonality.Edge)
+						if (node.site.poly.SharesEdge(neighbor.site.poly, ref edgeIdx, out var overlapSegment) == Polygon.Commonality.Edge)
 						{
 							Corner corner = graph.AddOrGetCorner(overlapSegment.p0.Value);
 							Corner corner2 = graph.AddOrGetCorner(overlapSegment.p1.Value);
@@ -318,10 +312,10 @@ namespace ProcGen
 			{
 			case World.AllowedCellsFilter.TagCommand.Default:
 			{
-				int k;
-				for (k = 0; k < filter.subworldNames.Count; k++)
+				int i;
+				for (i = 0; i < filter.subworldNames.Count; i++)
 				{
-					hashSet.UnionWith(subworlds.FindAll((WeightedSubWorld f) => f.subWorld.name == filter.subworldNames[k]));
+					hashSet.UnionWith(subworlds.FindAll((WeightedSubWorld f) => f.subWorld.name == filter.subworldNames[i]));
 				}
 				break;
 			}
@@ -331,10 +325,10 @@ namespace ProcGen
 				{
 					break;
 				}
-				int i;
-				for (i = 0; i < filter.subworldNames.Count; i++)
+				int j;
+				for (j = 0; j < filter.subworldNames.Count; j++)
 				{
-					hashSet.UnionWith(subworlds.FindAll((WeightedSubWorld f) => f.subWorld.name == filter.subworldNames[i]));
+					hashSet.UnionWith(subworlds.FindAll((WeightedSubWorld f) => f.subWorld.name == filter.subworldNames[j]));
 				}
 				break;
 			}
@@ -344,10 +338,10 @@ namespace ProcGen
 				{
 					break;
 				}
-				int j;
-				for (j = 0; j < filter.subworldNames.Count; j++)
+				int k;
+				for (k = 0; k < filter.subworldNames.Count; k++)
 				{
-					hashSet.UnionWith(subworlds.FindAll((WeightedSubWorld f) => f.subWorld.name == filter.subworldNames[j]));
+					hashSet.UnionWith(subworlds.FindAll((WeightedSubWorld f) => f.subWorld.name == filter.subworldNames[k]));
 				}
 				break;
 			}
@@ -376,27 +370,27 @@ namespace ProcGen
 			{
 			case World.AllowedCellsFilter.TagCommand.Default:
 			{
-				for (int j = 0; j < filter.zoneTypes.Count; j++)
+				for (int l = 0; l < filter.zoneTypes.Count; l++)
 				{
-					hashSet.UnionWith(subworldsByZoneType[filter.zoneTypes[j].ToString()]);
+					hashSet.UnionWith(subworldsByZoneType[filter.zoneTypes[l].ToString()]);
 				}
 				break;
 			}
 			case World.AllowedCellsFilter.TagCommand.AtTag:
 				if (vn.tags.Contains(filter.tag))
 				{
-					for (int l = 0; l < filter.zoneTypes.Count; l++)
+					for (int k = 0; k < filter.zoneTypes.Count; k++)
 					{
-						hashSet.UnionWith(subworldsByZoneType[filter.zoneTypes[l].ToString()]);
+						hashSet.UnionWith(subworldsByZoneType[filter.zoneTypes[k].ToString()]);
 					}
 				}
 				break;
 			case World.AllowedCellsFilter.TagCommand.NotAtTag:
 				if (!vn.tags.Contains(filter.tag))
 				{
-					for (int k = 0; k < filter.zoneTypes.Count; k++)
+					for (int j = 0; j < filter.zoneTypes.Count; j++)
 					{
-						hashSet.UnionWith(subworldsByZoneType[filter.zoneTypes[k].ToString()]);
+						hashSet.UnionWith(subworldsByZoneType[filter.zoneTypes[j].ToString()]);
 					}
 				}
 				break;
@@ -421,27 +415,27 @@ namespace ProcGen
 			{
 			case World.AllowedCellsFilter.TagCommand.Default:
 			{
-				for (int j = 0; j < filter.temperatureRanges.Count; j++)
+				for (int l = 0; l < filter.temperatureRanges.Count; l++)
 				{
-					hashSet.UnionWith(subworldsByTemperature[filter.temperatureRanges[j].ToString()]);
+					hashSet.UnionWith(subworldsByTemperature[filter.temperatureRanges[l].ToString()]);
 				}
 				break;
 			}
 			case World.AllowedCellsFilter.TagCommand.AtTag:
 				if (vn.tags.Contains(filter.tag))
 				{
-					for (int l = 0; l < filter.temperatureRanges.Count; l++)
+					for (int k = 0; k < filter.temperatureRanges.Count; k++)
 					{
-						hashSet.UnionWith(subworldsByTemperature[filter.temperatureRanges[l].ToString()]);
+						hashSet.UnionWith(subworldsByTemperature[filter.temperatureRanges[k].ToString()]);
 					}
 				}
 				break;
 			case World.AllowedCellsFilter.TagCommand.NotAtTag:
 				if (!vn.tags.Contains(filter.tag))
 				{
-					for (int k = 0; k < filter.temperatureRanges.Count; k++)
+					for (int j = 0; j < filter.temperatureRanges.Count; j++)
 					{
-						hashSet.UnionWith(subworldsByTemperature[filter.temperatureRanges[k].ToString()]);
+						hashSet.UnionWith(subworldsByTemperature[filter.temperatureRanges[j].ToString()]);
 					}
 				}
 				break;
@@ -566,8 +560,7 @@ namespace ProcGen
 				Node node = overworldGraph.FindNodeByID(item.site.id);
 				item.tags.Remove(WorldGenTags.UnassignedNode);
 				node.tags.Remove(WorldGenTags.UnassignedNode);
-				HashSet<WeightedSubWorld> collection = Filter(item, subworldsForWorld, dictionary, dictionary2);
-				List<WeightedSubWorld> list2 = new List<WeightedSubWorld>(collection);
+				List<WeightedSubWorld> list2 = new List<WeightedSubWorld>(Filter(item, subworldsForWorld, dictionary, dictionary2));
 				List<WeightedSubWorld> list3 = list2.FindAll((WeightedSubWorld x) => x.minCount > 0);
 				WeightedSubWorld weightedSubWorld;
 				if (list3.Count > 0)
@@ -698,10 +691,12 @@ namespace ProcGen
 
 		private void AddSubworldChildren()
 		{
-			TagSet tagSet = new TagSet();
-			tagSet.Add(WorldGenTags.Overworld);
+			new TagSet().Add(WorldGenTags.Overworld);
 			List<string> defaultMoveTags = worldGen.Settings.GetDefaultMoveTags();
-			TagSet tagSet2 = ((defaultMoveTags != null) ? new TagSet(defaultMoveTags) : null);
+			if (defaultMoveTags != null)
+			{
+				new TagSet(defaultMoveTags);
+			}
 			List<Feature> list = new List<Feature>();
 			foreach (KeyValuePair<string, int> globalFeature in worldGen.Settings.world.globalFeatures)
 			{
@@ -768,9 +763,7 @@ namespace ProcGen
 				{
 					density *= 0.8f;
 					avoidRadius *= 0.8f;
-					if (!worldGen.isRunningDebugGen)
-					{
-					}
+					_ = worldGen.isRunningDebugGen;
 				}
 				num++;
 			}
@@ -807,8 +800,7 @@ namespace ProcGen
 			if (sw.centralFeature != null)
 			{
 				list.Add(node.site.poly.Centroid());
-				VoronoiTree.Node node2 = CreateTreeNodeWithFeatureAndBiome(worldGen.Settings, sw, node, graph, sw.centralFeature, node.site.poly.Centroid(), tagSet3, -1);
-				node2.AddTag(WorldGenTags.CenteralFeature);
+				CreateTreeNodeWithFeatureAndBiome(worldGen.Settings, sw, node, graph, sw.centralFeature, node.site.poly.Centroid(), tagSet3, -1).AddTag(WorldGenTags.CenteralFeature);
 			}
 			node.dontRelaxChildren = sw.dontRelaxChildren;
 			int num = Mathf.Max(sw.features.Count + sw.extraBiomeChildren, sw.minChildCount);
@@ -838,9 +830,8 @@ namespace ProcGen
 				}
 				return;
 			}
-			if (sw.features.Count > points.Count)
-			{
-			}
+			_ = sw.features.Count;
+			_ = points.Count;
 			for (int m = 0; m < points.Count; m++)
 			{
 				Feature feature = null;
@@ -860,8 +851,7 @@ namespace ProcGen
 				for (int num2 = 0; num2 < tagSet2.Count; num2++)
 				{
 					Debug.Log($"Applying Moved Tag {tagSet2[num2].Name} to {node.site.id}");
-					VoronoiTree.Node child = node.GetChild(seededRandom.RandomSource().Next(node.ChildCount()));
-					child.AddTag(tagSet2[num2]);
+					node.GetChild(seededRandom.RandomSource().Next(node.ChildCount())).AddTag(tagSet2[num2]);
 				}
 			}
 		}
@@ -935,13 +925,11 @@ namespace ProcGen
 			voronoiTree.GetIntersectingLeafSites(bottomEdge, list2);
 			for (int i = 0; i < list.Count; i++)
 			{
-				VoronoiTree.Node nodeForSite = voronoiTree.GetNodeForSite(list[i]);
-				nodeForSite.AddTag(topTag);
+				voronoiTree.GetNodeForSite(list[i]).AddTag(topTag);
 			}
 			for (int j = 0; j < list2.Count; j++)
 			{
-				VoronoiTree.Node nodeForSite2 = voronoiTree.GetNodeForSite(list2[j]);
-				nodeForSite2.AddTag(bottomTag);
+				voronoiTree.GetNodeForSite(list2[j]).AddTag(bottomTag);
 			}
 		}
 
@@ -953,13 +941,11 @@ namespace ProcGen
 			voronoiTree.GetIntersectingLeafSites(rightEdge, list2);
 			for (int i = 0; i < list.Count; i++)
 			{
-				VoronoiTree.Node nodeForSite = voronoiTree.GetNodeForSite(list[i]);
-				nodeForSite.AddTag(leftTag);
+				voronoiTree.GetNodeForSite(list[i]).AddTag(leftTag);
 			}
 			for (int j = 0; j < list2.Count; j++)
 			{
-				VoronoiTree.Node nodeForSite2 = voronoiTree.GetNodeForSite(list2[j]);
-				nodeForSite2.AddTag(rightTag);
+				voronoiTree.GetNodeForSite(list2[j]).AddTag(rightTag);
 			}
 		}
 
@@ -967,19 +953,17 @@ namespace ProcGen
 		{
 			if (node.tags.Contains(WorldGenTags.AtStart))
 			{
-				float num = node.site.poly.Area();
-				return num > 2000f;
+				return node.site.poly.Area() > 2000f;
 			}
 			return false;
 		}
 
 		private void PropagateStartTag()
 		{
-			List<VoronoiTree.Node> startNodes = GetStartNodes();
-			foreach (VoronoiTree.Node item in startNodes)
+			foreach (VoronoiTree.Node startNode in GetStartNodes())
 			{
-				item.AddTagToNeighbors(WorldGenTags.NearStartLocation);
-				item.AddTag(WorldGenTags.IgnoreCaveOverride);
+				startNode.AddTagToNeighbors(WorldGenTags.NearStartLocation);
+				startNode.AddTag(WorldGenTags.IgnoreCaveOverride);
 			}
 		}
 
@@ -998,8 +982,7 @@ namespace ProcGen
 		public List<Node> GetTerrainNodesForTag(Tag tag)
 		{
 			List<Node> list = new List<Node>();
-			List<VoronoiTree.Node> leafNodesWithTag = GetLeafNodesWithTag(tag);
-			foreach (VoronoiTree.Node item in leafNodesWithTag)
+			foreach (VoronoiTree.Node item in GetLeafNodesWithTag(tag))
 			{
 				Node node = localGraph.FindNodeByID(item.site.id);
 				if (node != null)
@@ -1136,15 +1119,13 @@ namespace ProcGen
 				{
 					KeyValuePair<int, int> keyValuePair = extra.internalInternalParent[i];
 					Tree child = extra.internals[keyValuePair.Key];
-					Tree tree = extra.internals[keyValuePair.Value];
-					tree.AddChild(child);
+					extra.internals[keyValuePair.Value].AddChild(child);
 				}
 				for (int j = 0; j < extra.leafInternalParent.Count; j++)
 				{
 					KeyValuePair<int, int> keyValuePair2 = extra.leafInternalParent[j];
 					VoronoiTree.Node child2 = extra.leafs[keyValuePair2.Key];
-					Tree tree2 = extra.internals[keyValuePair2.Value];
-					tree2.AddChild(child2);
+					extra.internals[keyValuePair2.Value].AddChild(child2);
 				}
 			}
 			catch (Exception ex)

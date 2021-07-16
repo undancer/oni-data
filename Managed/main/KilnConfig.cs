@@ -23,14 +23,14 @@ public class KilnConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("Kiln", 2, 2, "kiln_kanim", 100, 30f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER1);
-		buildingDef.Overheatable = false;
-		buildingDef.RequiresPowerInput = false;
-		buildingDef.ExhaustKilowattsWhenActive = 16f;
-		buildingDef.SelfHeatKilowattsWhenActive = 4f;
-		buildingDef.AudioCategory = "HollowMetal";
-		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 1));
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("Kiln", 2, 2, "kiln_kanim", 100, 30f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER1);
+		obj.Overheatable = false;
+		obj.RequiresPowerInput = false;
+		obj.ExhaustKilowattsWhenActive = 16f;
+		obj.SelfHeatKilowattsWhenActive = 4f;
+		obj.AudioCategory = "HollowMetal";
+		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 1));
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

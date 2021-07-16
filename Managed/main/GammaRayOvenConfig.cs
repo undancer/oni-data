@@ -14,14 +14,14 @@ public class GammaRayOvenConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("GammaRayOven", 2, 2, "kiln_kanim", 30, 30f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: TUNING.BUILDINGS.DECOR.NONE);
-		BuildingTemplates.CreateElectricalBuildingDef(buildingDef);
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.AudioSize = "large";
-		buildingDef.EnergyConsumptionWhenActive = 60f;
-		buildingDef.ExhaustKilowattsWhenActive = 0.5f;
-		buildingDef.SelfHeatKilowattsWhenActive = 4f;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("GammaRayOven", 2, 2, "kiln_kanim", 30, 30f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: TUNING.BUILDINGS.DECOR.NONE);
+		BuildingTemplates.CreateElectricalBuildingDef(obj);
+		obj.AudioCategory = "Metal";
+		obj.AudioSize = "large";
+		obj.EnergyConsumptionWhenActive = 60f;
+		obj.ExhaustKilowattsWhenActive = 0.5f;
+		obj.SelfHeatKilowattsWhenActive = 4f;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -53,8 +53,7 @@ public class GammaRayOvenConfig : IBuildingConfig
 		{
 			new ComplexRecipe.RecipeElement("GammaMush".ToTag(), 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
-		string id = ComplexRecipeManager.MakeRecipeID("GammaRayOven", array, array2);
-		GammaMushConfig.recipe = new ComplexRecipe(id, array, array2)
+		GammaMushConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("GammaRayOven", array, array2), array, array2)
 		{
 			time = FOOD.RECIPES.SMALL_COOK_TIME,
 			description = ITEMS.FOOD.GAMMAMUSH.RECIPEDESC,
@@ -73,8 +72,7 @@ public class GammaRayOvenConfig : IBuildingConfig
 		{
 			new ComplexRecipe.RecipeElement("MicrowavedLettuce", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
-		string id2 = ComplexRecipeManager.MakeRecipeID("GammaRayOven", array3, array4);
-		MicrowavedLettuceConfig.recipe = new ComplexRecipe(id2, array3, array4)
+		MicrowavedLettuceConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("GammaRayOven", array3, array4), array3, array4)
 		{
 			time = FOOD.RECIPES.SMALL_COOK_TIME,
 			description = ITEMS.FOOD.MICROWAVEDLETTUCE.RECIPEDESC,
@@ -93,8 +91,7 @@ public class GammaRayOvenConfig : IBuildingConfig
 		{
 			new ComplexRecipe.RecipeElement("Popcorn", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
-		string id3 = ComplexRecipeManager.MakeRecipeID("GammaRayOven", array5, array6);
-		PopcornConfig.recipe = new ComplexRecipe(id3, array5, array6)
+		PopcornConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("GammaRayOven", array5, array6), array5, array6)
 		{
 			time = FOOD.RECIPES.SMALL_COOK_TIME,
 			description = ITEMS.FOOD.POPCORN.RECIPEDESC,

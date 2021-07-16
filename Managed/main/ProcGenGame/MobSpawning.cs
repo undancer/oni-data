@@ -207,81 +207,161 @@ namespace ProcGenGame
 			}
 			Element element = ElementLoader.elements[cells[cell].elementIdx];
 			Element element2 = ElementLoader.elements[cells[Grid.CellAbove(cell)].elementIdx];
-			Element element3 = ElementLoader.elements[cells[Grid.CellBelow(cell)].elementIdx];
+			_ = ElementLoader.elements[cells[Grid.CellBelow(cell)].elementIdx];
 			switch (mob.location)
 			{
 			case Mob.Location.Solid:
-				return !isNaturalCavity(cell) && element.IsSolid;
+				if (!isNaturalCavity(cell))
+				{
+					return element.IsSolid;
+				}
+				return false;
 			case Mob.Location.Ceiling:
 			{
-				bool result4 = true;
-				for (int num6 = 0; num6 < mob.width; num6++)
+				bool flag4 = true;
+				for (int num6 = 0; num6 < mob.height; num6++)
 				{
-					int num7 = MobWidthOffset(cell, num6);
-					Element element15 = ElementLoader.elements[cells[num7].elementIdx];
-					Element element16 = ElementLoader.elements[cells[Grid.CellAbove(num7)].elementIdx];
-					Element element17 = ElementLoader.elements[cells[Grid.CellBelow(num7)].elementIdx];
-					result4 = isNaturalCavity(num7) && !element15.IsSolid && element16.IsSolid && !element17.IsSolid && !element15.IsLiquid;
+					for (int num7 = 0; num7 < mob.width; num7++)
+					{
+						int num8 = Grid.OffsetCell(cell, num7, num6);
+						Element element11 = ElementLoader.elements[cells[num8].elementIdx];
+						Element element12 = ElementLoader.elements[cells[Grid.CellAbove(num8)].elementIdx];
+						Element element13 = ElementLoader.elements[cells[Grid.CellBelow(num8)].elementIdx];
+						flag4 = flag4 && isNaturalCavity(num8) && !element11.IsSolid && !element11.IsLiquid && !element13.IsSolid;
+						if (num6 == mob.height - 1)
+						{
+							flag4 = flag4 && element12.IsSolid;
+						}
+						if (!flag4)
+						{
+							break;
+						}
+					}
+					if (!flag4)
+					{
+						break;
+					}
 				}
-				return result4;
+				return flag4;
 			}
 			case Mob.Location.Floor:
 			{
-				bool result2 = true;
-				for (int l = 0; l < mob.width; l++)
+				bool flag5 = true;
+				for (int num9 = 0; num9 < mob.height; num9++)
 				{
-					int num3 = MobWidthOffset(cell, l);
-					Element element7 = ElementLoader.elements[cells[num3].elementIdx];
-					Element element8 = ElementLoader.elements[cells[Grid.CellAbove(num3)].elementIdx];
-					Element element9 = ElementLoader.elements[cells[Grid.CellBelow(num3)].elementIdx];
-					result2 = isNaturalCavity(num3) && !element7.IsSolid && !element8.IsSolid && element9.IsSolid && !element7.IsLiquid;
+					for (int num10 = 0; num10 < mob.width; num10++)
+					{
+						int num11 = Grid.OffsetCell(cell, num10, num9);
+						Element element14 = ElementLoader.elements[cells[num11].elementIdx];
+						Element element15 = ElementLoader.elements[cells[Grid.CellAbove(num11)].elementIdx];
+						Element element16 = ElementLoader.elements[cells[Grid.CellBelow(num11)].elementIdx];
+						flag5 = flag5 && isNaturalCavity(num11) && !element14.IsSolid && !element14.IsLiquid && !element15.IsSolid;
+						if (num9 == 0)
+						{
+							flag5 = flag5 && element16.IsSolid;
+						}
+						if (!flag5)
+						{
+							break;
+						}
+					}
+					if (!flag5)
+					{
+						break;
+					}
 				}
-				return result2;
+				return flag5;
 			}
 			case Mob.Location.LiquidFloor:
 			{
-				bool result = true;
-				for (int k = 0; k < mob.width; k++)
-				{
-					int num2 = MobWidthOffset(cell, k);
-					Element element4 = ElementLoader.elements[cells[num2].elementIdx];
-					Element element5 = ElementLoader.elements[cells[Grid.CellAbove(num2)].elementIdx];
-					Element element6 = ElementLoader.elements[cells[Grid.CellBelow(num2)].elementIdx];
-					result = isNaturalCavity(num2) && !element4.IsSolid && !element5.IsSolid && element6.IsSolid && element4.IsLiquid;
-				}
-				return result;
-			}
-			case Mob.Location.AnyFloor:
-			{
-				bool result3 = true;
-				for (int n = 0; n < mob.width; n++)
-				{
-					int num5 = MobWidthOffset(cell, n);
-					Element element12 = ElementLoader.elements[cells[num5].elementIdx];
-					Element element13 = ElementLoader.elements[cells[Grid.CellAbove(num5)].elementIdx];
-					Element element14 = ElementLoader.elements[cells[Grid.CellBelow(num5)].elementIdx];
-					result3 = isNaturalCavity(num5) && !element12.IsSolid && !element13.IsSolid && element14.IsSolid;
-				}
-				return result3;
-			}
-			case Mob.Location.Air:
-				return !element.IsSolid && !element2.IsSolid && !element.IsLiquid;
-			case Mob.Location.Water:
-				return (element.id == SimHashes.Water || element.id == SimHashes.DirtyWater) && (element2.id == SimHashes.Water || element2.id == SimHashes.DirtyWater);
-			case Mob.Location.Surface:
-			{
 				bool flag = true;
-				for (int m = 0; m < mob.width; m++)
+				for (int k = 0; k < mob.height; k++)
 				{
-					int num4 = MobWidthOffset(cell, m);
-					Element element10 = ElementLoader.elements[cells[num4].elementIdx];
-					Element element11 = ElementLoader.elements[cells[Grid.CellBelow(num4)].elementIdx];
-					flag = flag && element10.id == SimHashes.Vacuum && element11.IsSolid;
+					for (int l = 0; l < mob.width; l++)
+					{
+						int num2 = Grid.OffsetCell(cell, l, k);
+						Element element3 = ElementLoader.elements[cells[num2].elementIdx];
+						Element element4 = ElementLoader.elements[cells[Grid.CellAbove(num2)].elementIdx];
+						Element element5 = ElementLoader.elements[cells[Grid.CellBelow(num2)].elementIdx];
+						flag = flag && isNaturalCavity(cell) && !element3.IsSolid && !element4.IsSolid;
+						if (k == 0)
+						{
+							flag = flag && element3.IsLiquid && element5.IsSolid;
+						}
+						if (!flag)
+						{
+							break;
+						}
+					}
+					if (!flag)
+					{
+						break;
+					}
 				}
 				return flag;
 			}
+			case Mob.Location.AnyFloor:
+			{
+				bool flag2 = true;
+				for (int m = 0; m < mob.height; m++)
+				{
+					for (int n = 0; n < mob.width; n++)
+					{
+						int num3 = Grid.OffsetCell(cell, n, m);
+						Element element6 = ElementLoader.elements[cells[num3].elementIdx];
+						Element element7 = ElementLoader.elements[cells[Grid.CellAbove(num3)].elementIdx];
+						Element element8 = ElementLoader.elements[cells[Grid.CellBelow(num3)].elementIdx];
+						flag2 = flag2 && isNaturalCavity(cell) && !element6.IsSolid && !element7.IsSolid;
+						if (m == 0)
+						{
+							flag2 = flag2 && element8.IsSolid;
+						}
+						if (!flag2)
+						{
+							break;
+						}
+					}
+					if (!flag2)
+					{
+						break;
+					}
+				}
+				return flag2;
+			}
+			case Mob.Location.Air:
+				if (!element.IsSolid && !element2.IsSolid)
+				{
+					return !element.IsLiquid;
+				}
+				return false;
+			case Mob.Location.Water:
+				if (element.id == SimHashes.Water || element.id == SimHashes.DirtyWater)
+				{
+					if (element2.id != SimHashes.Water)
+					{
+						return element2.id == SimHashes.DirtyWater;
+					}
+					return true;
+				}
+				return false;
+			case Mob.Location.Surface:
+			{
+				bool flag3 = true;
+				for (int num4 = 0; num4 < mob.width; num4++)
+				{
+					int num5 = MobWidthOffset(cell, num4);
+					Element element9 = ElementLoader.elements[cells[num5].elementIdx];
+					Element element10 = ElementLoader.elements[cells[Grid.CellBelow(num5)].elementIdx];
+					flag3 = flag3 && element9.id == SimHashes.Vacuum && element10.IsSolid;
+				}
+				return flag3;
+			}
 			default:
-				return isNaturalCavity(cell) && !element.IsSolid;
+				if (isNaturalCavity(cell))
+				{
+					return !element.IsSolid;
+				}
+				return false;
 			}
 		}
 
@@ -315,13 +395,12 @@ namespace ProcGenGame
 				for (int j = 0; j < allCells.Count; j++)
 				{
 					int num = allCells[j];
-					Element element = ElementLoader.elements[cells[num].elementIdx];
-					if (!element.IsSolid && !invalidCells.Contains(num))
+					if (!ElementLoader.elements[cells[num].elementIdx].IsSolid && !invalidCells.Contains(num))
 					{
 						HashSet<int> hashSet = GameUtil.FloodCollectCells(num, delegate(int checkCell)
 						{
-							Element element2 = ElementLoader.elements[cells[checkCell].elementIdx];
-							return !invalidCells.Contains(checkCell) && !element2.IsSolid;
+							Element element = ElementLoader.elements[cells[checkCell].elementIdx];
+							return !invalidCells.Contains(checkCell) && !element.IsSolid;
 						}, 300, invalidCells);
 						if (hashSet != null && hashSet.Count > 0)
 						{

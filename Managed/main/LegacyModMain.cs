@@ -27,9 +27,9 @@ public class LegacyModMain
 	{
 		List<Type> list = new List<Type>();
 		Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-		foreach (Assembly assembly in assemblies)
+		for (int i = 0; i < assemblies.Length; i++)
 		{
-			Type[] types = assembly.GetTypes();
+			Type[] types = assemblies[i].GetTypes();
 			if (types != null)
 			{
 				list.AddRange(types);
@@ -51,8 +51,7 @@ public class LegacyModMain
 		UnityEngine.Object[] array = Resources.FindObjectsOfTypeAll(typeof(Component));
 		for (int i = 0; i < array.Length; i++)
 		{
-			Component component = (Component)array[i];
-			Type type = component.GetType();
+			Type type = ((Component)array[i]).GetType();
 			int value = 0;
 			dictionary.TryGetValue(type, out value);
 			dictionary[type] = value + 1;
@@ -81,8 +80,8 @@ public class LegacyModMain
 				null,
 				null
 			};
-			int count = item2.count;
-			obj[3] = count.ToString();
+			int i = item2.count;
+			obj[3] = i.ToString();
 			obj[4] = "\n";
 			text = string.Concat(obj);
 		}
@@ -95,8 +94,7 @@ public class LegacyModMain
 		UnityEngine.Object[] array = Resources.FindObjectsOfTypeAll(typeof(GameObject));
 		for (int i = 0; i < array.Length; i++)
 		{
-			GameObject gameObject = (GameObject)array[i];
-			Component[] components = gameObject.GetComponents<Component>();
+			Component[] components = ((GameObject)array[i]).GetComponents<Component>();
 			foreach (Component component in components)
 			{
 				if (!(component == null))
@@ -135,8 +133,7 @@ public class LegacyModMain
 	private static void DebugSelected(GameObject go)
 	{
 		Constructable component = go.GetComponent<Constructable>();
-		int num = 0;
-		num++;
+		_ = 0 + 1;
 		Debug.Log(component);
 	}
 
@@ -297,10 +294,9 @@ public class LegacyModMain
 		};
 		array[19] = elementInfo;
 		ElementInfo[] array2 = array;
-		ElementInfo[] array3 = array2;
-		for (int i = 0; i < array3.Length; i++)
+		for (int i = 0; i < array2.Length; i++)
 		{
-			ElementInfo elementInfo2 = array3[i];
+			ElementInfo elementInfo2 = array2[i];
 			Element element = ElementLoader.FindElementByHash(elementInfo2.id);
 			if (elementInfo2.decor != 0f)
 			{

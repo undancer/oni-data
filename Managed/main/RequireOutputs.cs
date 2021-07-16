@@ -11,7 +11,7 @@ public class RequireOutputs : KMonoBehaviour
 	[MyCmpReq]
 	private Operational operational;
 
-	public bool ignoreFullPipe = false;
+	public bool ignoreFullPipe;
 
 	private int utilityCell;
 
@@ -25,7 +25,7 @@ public class RequireOutputs : KMonoBehaviour
 
 	private bool previouslyHadRoom = true;
 
-	private bool connected = false;
+	private bool connected;
 
 	private Guid hasPipeGuid;
 
@@ -104,8 +104,7 @@ public class RequireOutputs : KMonoBehaviour
 		bool result = true;
 		if (connected)
 		{
-			IConduitFlow conduitFlow = GetConduitFlow();
-			result = conduitFlow.IsConduitEmpty(utilityCell);
+			result = GetConduitFlow().IsConduitEmpty(utilityCell);
 		}
 		return result;
 	}
@@ -168,6 +167,10 @@ public class RequireOutputs : KMonoBehaviour
 			break;
 		}
 		GameObject gameObject = Grid.Objects[cell, (int)layer];
-		return gameObject != null && gameObject.GetComponent<BuildingComplete>() != null;
+		if (gameObject != null)
+		{
+			return gameObject.GetComponent<BuildingComplete>() != null;
+		}
+		return false;
 	}
 }

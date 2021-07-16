@@ -25,13 +25,13 @@ public class BrushTool : InterfaceTool
 
 	protected Vector3 placementPivot;
 
-	protected bool interceptNumberKeysForPriority = false;
+	protected bool interceptNumberKeysForPriority;
 
 	protected List<Vector2> brushOffsets = new List<Vector2>();
 
-	protected bool affectFoundation = false;
+	protected bool affectFoundation;
 
-	private bool dragging = false;
+	private bool dragging;
 
 	protected int brushRadius = -1;
 
@@ -72,8 +72,7 @@ public class BrushTool : InterfaceTool
 		{
 			for (int j = 0; j < brushRadius * 2; j++)
 			{
-				float num = Vector2.Distance(new Vector2(i, j), new Vector2(brushRadius, brushRadius));
-				if (num < (float)brushRadius - 0.8f)
+				if (Vector2.Distance(new Vector2(i, j), new Vector2(brushRadius, brushRadius)) < (float)brushRadius - 0.8f)
 				{
 					brushOffsets.Add(new Vector2(i - brushRadius, j - brushRadius));
 				}
@@ -100,8 +99,7 @@ public class BrushTool : InterfaceTool
 			areaVisualizer = Util.KInstantiate(areaVisualizer);
 			areaVisualizer.SetActive(value: false);
 			areaVisualizer.GetComponent<RectTransform>().SetParent(base.transform);
-			Renderer component = areaVisualizer.GetComponent<Renderer>();
-			component.material.color = areaColour;
+			areaVisualizer.GetComponent<Renderer>().material.color = areaColour;
 		}
 	}
 
@@ -285,7 +283,11 @@ public class BrushTool : InterfaceTool
 
 	public override bool ShowHoverUI()
 	{
-		return dragging || base.ShowHoverUI();
+		if (!dragging)
+		{
+			return base.ShowHoverUI();
+		}
+		return true;
 	}
 
 	public override void LateUpdate()

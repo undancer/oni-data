@@ -1,4 +1,3 @@
-#define UNITY_ASSERTIONS
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,7 +35,7 @@ public class ElementLoader
 
 	public class ElementEntry
 	{
-		private string description_backing = null;
+		private string description_backing;
 
 		public string elementId
 		{
@@ -365,8 +364,7 @@ public class ElementLoader
 	{
 		elements = new List<Element>();
 		elementTable = new Dictionary<int, Element>();
-		List<ElementEntry> list = CollectElementsFromYAML();
-		foreach (ElementEntry item in list)
+		foreach (ElementEntry item in CollectElementsFromYAML())
 		{
 			int num = Hash.SDBMLower(item.elementId);
 			if (!elementTable.ContainsKey(num) && substanceTablesByDlc.ContainsKey(item.dlcId))
@@ -392,8 +390,7 @@ public class ElementLoader
 
 	private static void CopyEntryToElement(ElementEntry entry, Element elem)
 	{
-		int num = Hash.SDBMLower(entry.elementId);
-		UnityEngine.Debug.Assert(num == (int)elem.id);
+		Hash.SDBMLower(entry.elementId);
 		elem.tag = TagManager.Create(entry.elementId.ToString());
 		elem.specificHeatCapacity = entry.specificHeatCapacity;
 		elem.thermalConductivity = entry.thermalConductivity;
@@ -707,10 +704,9 @@ public class ElementLoader
 				}
 			}
 		}
-		IOrderedEnumerable<Element> source = from e in elements
+		elements = (from e in elements
 			orderby (int)(e.state & Element.State.Solid) descending, e.id
-			select e;
-		elements = source.ToList();
+			select e).ToList();
 		for (int i = 0; i < elements.Count; i++)
 		{
 			if (elements[i].substance != null)

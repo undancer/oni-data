@@ -12,9 +12,9 @@ public class ImageToggleStateThrobber : KMonoBehaviour
 
 	public float period = 2f;
 
-	public bool useScaledTime = false;
+	public bool useScaledTime;
 
-	private float t = 0f;
+	private float t;
 
 	public void OnEnable()
 	{
@@ -24,9 +24,9 @@ public class ImageToggleStateThrobber : KMonoBehaviour
 	public void OnDisable()
 	{
 		ImageToggleState[] array = targetImageToggleStates;
-		foreach (ImageToggleState imageToggleState in array)
+		for (int i = 0; i < array.Length; i++)
 		{
-			imageToggleState.ResetColor();
+			array[i].ResetColor();
 		}
 	}
 

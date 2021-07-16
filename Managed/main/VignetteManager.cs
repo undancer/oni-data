@@ -15,9 +15,9 @@ public class VignetteManager : GameStateMachine<VignetteManager, VignetteManager
 	{
 		private static Instance instance;
 
-		private bool isToggled = false;
+		private bool isToggled;
 
-		private bool hasTopPriorityChore = false;
+		private bool hasTopPriorityChore;
 
 		public Notification redAlertNotification = new Notification(MISC.NOTIFICATIONS.REDALERT.NAME, NotificationType.Bad, (List<Notification> notificationList, object data) => MISC.NOTIFICATIONS.REDALERT.TOOLTIP, null, expires: false);
 
@@ -55,7 +55,11 @@ public class VignetteManager : GameStateMachine<VignetteManager, VignetteManager
 
 		public bool IsOn()
 		{
-			return base.sm.isYellowAlert.Get(base.smi) || base.sm.isRedAlert.Get(base.smi);
+			if (!base.sm.isYellowAlert.Get(base.smi))
+			{
+				return base.sm.isRedAlert.Get(base.smi);
+			}
+			return true;
 		}
 
 		public bool IsRedAlert()

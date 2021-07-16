@@ -26,7 +26,11 @@ public class ClustercraftInteriorDoor : KMonoBehaviour, ISidescreenButtonControl
 	public bool SidescreenButtonInteractable()
 	{
 		WorldContainer myWorld = base.gameObject.GetMyWorld();
-		return myWorld.ParentWorldId != ClusterManager.INVALID_WORLD_IDX && myWorld.ParentWorldId != myWorld.id;
+		if (myWorld.ParentWorldId != ClusterManager.INVALID_WORLD_IDX)
+		{
+			return myWorld.ParentWorldId != myWorld.id;
+		}
+		return false;
 	}
 
 	public void OnSidescreenButtonPressed()

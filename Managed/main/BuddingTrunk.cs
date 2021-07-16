@@ -26,7 +26,7 @@ public class BuddingTrunk : KMonoBehaviour, ISim4000ms
 	private StatusItem growingBranchesStatusItem;
 
 	[Serialize]
-	private bool hasExtraSeedAvailable = false;
+	private bool hasExtraSeedAvailable;
 
 	private static readonly EventSystem.IntraObjectHandler<BuddingTrunk> OnNewGameSpawnDelegate = new EventSystem.IntraObjectHandler<BuddingTrunk>(delegate(BuddingTrunk component, object data)
 	{
@@ -193,8 +193,7 @@ public class BuddingTrunk : KMonoBehaviour, ISim4000ms
 		int num = 0;
 		for (int i = 0; i < buds.Length; i++)
 		{
-			Vector3 budPosition = GetBudPosition(i);
-			int cell = Grid.PosToCell(budPosition);
+			int cell = Grid.PosToCell(GetBudPosition(i));
 			if ((buds[i] == null || buds[i].Get() == null) && CanGrowInto(cell))
 			{
 				spawn_choices.Add(i);
@@ -210,8 +209,8 @@ public class BuddingTrunk : KMonoBehaviour, ISim4000ms
 			if (spawn_choices.Count > 0)
 			{
 				int num2 = spawn_choices[0];
-				Vector3 budPosition2 = GetBudPosition(num2);
-				GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(budPrefabID), budPosition2);
+				Vector3 budPosition = GetBudPosition(num2);
+				GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(budPrefabID), budPosition);
 				gameObject.SetActive(value: true);
 				gameObject.GetComponent<Growing>().OverrideMaturityLevel(growth_percentage);
 				gameObject.GetComponent<TreeBud>().SetTrunkPosition(this, num2);
@@ -236,7 +235,11 @@ public class BuddingTrunk : KMonoBehaviour, ISim4000ms
 		if (buds[idx] != null)
 		{
 			HarvestDesignatable harvestDesignatable = buds[idx].Get();
-			return (harvestDesignatable != null) ? harvestDesignatable.GetComponent<TreeBud>() : null;
+			if (!(harvestDesignatable != null))
+			{
+				return null;
+			}
+			return harvestDesignatable.GetComponent<TreeBud>();
 		}
 		return null;
 	}
@@ -248,8 +251,7 @@ public class BuddingTrunk : KMonoBehaviour, ISim4000ms
 			hasExtraSeedAvailable = false;
 			Vector3 position = base.transform.position;
 			position.z = Grid.GetLayerZ(Grid.SceneLayer.Ore);
-			GameObject gameObject = Util.KInstantiate(Assets.GetPrefab("ForestTreeSeed"), position);
-			gameObject.SetActive(value: true);
+			Util.KInstantiate(Assets.GetPrefab("ForestTreeSeed"), position).SetActive(value: true);
 		}
 	}
 

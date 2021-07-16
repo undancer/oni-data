@@ -20,6 +20,7 @@ namespace Klei.AI
 			{
 				GameplayEventPopupData gameplayEventPopupData = new GameplayEventPopupData(smi.gameplayEvent);
 				gameplayEventPopupData.minions = smi.minions;
+				gameplayEventPopupData.artifact = smi.artifact;
 				GameplayEventPopupData.PopupOption popupOption = gameplayEventPopupData.AddOption(smi.gameplayEvent.popupButtonText);
 				popupOption.callback = delegate
 				{
@@ -36,6 +37,7 @@ namespace Klei.AI
 					{
 						gameplayEventPopupData.SetTextParameter(textParameter.first, textParameter.second);
 					}
+					return gameplayEventPopupData;
 				}
 				return gameplayEventPopupData;
 			}
@@ -44,6 +46,8 @@ namespace Klei.AI
 		public class StatesInstance : GameplayEventStateMachine<States, StatesInstance, GameplayEventManager, SimpleEvent>.GameplayEventStateMachineInstance
 		{
 			public GameObject[] minions;
+
+			public GameObject artifact;
 
 			public List<Tuple<string, string>> textParameters;
 

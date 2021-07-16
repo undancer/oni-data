@@ -39,8 +39,7 @@ public class ConduitDiseaseManager : KCompactedVector<ConduitDiseaseManager.Data
 	{
 		if (disease_idx != byte.MaxValue)
 		{
-			Disease disease = Db.Get().Diseases[disease_idx];
-			return disease.elemGrowthInfo[elem_idx];
+			return Db.Get().Diseases[disease_idx].elemGrowthInfo[elem_idx];
 		}
 		return Disease.DEFAULT_GROWTH_INFO;
 	}
@@ -83,9 +82,7 @@ public class ConduitDiseaseManager : KCompactedVector<ConduitDiseaseManager.Data
 					float accumulatedError = value.accumulatedError;
 					accumulatedError += value.growthInfo.CalculateDiseaseCountDelta(value.diseaseCount, value.mass, dt);
 					Disease disease = Db.Get().Diseases[value.diseaseIdx];
-					float temperature = temperatureManager.GetTemperature(value.temperatureHandle);
-					float half_life_in_seconds = Disease.CalculateRangeHalfLife(temperature, ref disease.temperatureRange, ref disease.temperatureHalfLives);
-					float num = Disease.HalfLifeToGrowthRate(half_life_in_seconds, dt);
+					float num = Disease.HalfLifeToGrowthRate(Disease.CalculateRangeHalfLife(temperatureManager.GetTemperature(value.temperatureHandle), ref disease.temperatureRange, ref disease.temperatureHalfLives), dt);
 					accumulatedError += (float)value.diseaseCount * num - (float)value.diseaseCount;
 					int num2 = (int)accumulatedError;
 					value.accumulatedError = accumulatedError - (float)num2;

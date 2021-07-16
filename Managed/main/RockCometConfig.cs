@@ -43,8 +43,7 @@ public class RockCometConfig : IEntityConfig
 		kBatchedAnimController.isMovable = true;
 		kBatchedAnimController.initialAnim = "fall_loop";
 		kBatchedAnimController.initialMode = KAnim.PlayMode.Loop;
-		KCircleCollider2D kCircleCollider2D = gameObject.AddOrGet<KCircleCollider2D>();
-		kCircleCollider2D.radius = 0.5f;
+		gameObject.AddOrGet<KCircleCollider2D>().radius = 0.5f;
 		gameObject.AddTag(GameTags.Comet);
 		return gameObject;
 	}

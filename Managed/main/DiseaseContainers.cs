@@ -54,9 +54,9 @@ public class DiseaseContainers : KGameObjectSplitComponentManager<DiseaseHeader,
 			num += container.accumulatedError;
 			int num2 = (int)num;
 			container.accumulatedError = num - (float)num2;
-			bool flag = diseaseHeader2.diseaseCount > container.overpopulationCount;
-			bool flag2 = diseaseHeader2.diseaseCount + num2 > container.overpopulationCount;
-			if (flag != flag2)
+			bool num3 = diseaseHeader2.diseaseCount > container.overpopulationCount;
+			bool flag = diseaseHeader2.diseaseCount + num2 > container.overpopulationCount;
+			if (num3 != flag)
 			{
 				EvaluateGrowthConstants(diseaseHeader2, ref container);
 			}
@@ -83,8 +83,7 @@ public class DiseaseContainers : KGameObjectSplitComponentManager<DiseaseHeader,
 		float num = 0f;
 		ElemGrowthInfo elemGrowthInfo = disease.elemGrowthInfo[element_idx];
 		num += elemGrowthInfo.CalculateDiseaseCountDelta(disease_count, mass, dt);
-		float half_life_in_seconds = Disease.CalculateRangeHalfLife(temperature, ref disease.temperatureRange, ref disease.temperatureHalfLives);
-		float num2 = Disease.HalfLifeToGrowthRate(half_life_in_seconds, dt);
+		float num2 = Disease.HalfLifeToGrowthRate(Disease.CalculateRangeHalfLife(temperature, ref disease.temperatureRange, ref disease.temperatureHalfLives), dt);
 		num += (float)disease_count * num2 - (float)disease_count;
 		float num3 = Mathf.Pow(tags_multiplier_base, dt);
 		num += (float)disease_count * num3 - (float)disease_count;
@@ -116,10 +115,10 @@ public class DiseaseContainers : KGameObjectSplitComponentManager<DiseaseHeader,
 	{
 		GetData(h, out var header, out var payload);
 		SimUtil.DiseaseInfo diseaseInfo = SimUtil.CalculateFinalDiseaseInfo(disease_idx, disease_count, header.diseaseIdx, header.diseaseCount);
-		bool flag = header.diseaseIdx != diseaseInfo.idx;
+		bool num = header.diseaseIdx != diseaseInfo.idx;
 		header.diseaseIdx = diseaseInfo.idx;
 		header.diseaseCount = diseaseInfo.count;
-		if (flag && diseaseInfo.idx != byte.MaxValue)
+		if (num && diseaseInfo.idx != byte.MaxValue)
 		{
 			EvaluateGrowthConstants(header, ref payload);
 			SetData(h, header, ref payload);
@@ -128,7 +127,7 @@ public class DiseaseContainers : KGameObjectSplitComponentManager<DiseaseHeader,
 		{
 			SetHeader(h, header);
 		}
-		if (flag)
+		if (num)
 		{
 			header.primaryElement.Trigger(-283306403);
 		}
@@ -183,8 +182,7 @@ public class DiseaseContainers : KGameObjectSplitComponentManager<DiseaseHeader,
 				}
 				if (payload.isContainer)
 				{
-					Storage component = header.primaryElement.GetComponent<Storage>();
-					List<GameObject> items = component.items;
+					List<GameObject> items = header.primaryElement.GetComponent<Storage>().items;
 					for (int j = 0; j < items.Count; j++)
 					{
 						GameObject gameObject = items[j];

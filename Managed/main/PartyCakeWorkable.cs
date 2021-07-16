@@ -37,8 +37,7 @@ public class PartyCakeWorkable : Workable
 	protected override bool OnWorkTick(Worker worker, float dt)
 	{
 		base.OnWorkTick(worker, dt);
-		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
-		component.SetPositionPercent(GetPercentComplete());
+		GetComponent<KBatchedAnimController>().SetPositionPercent(GetPercentComplete());
 		return false;
 	}
 }

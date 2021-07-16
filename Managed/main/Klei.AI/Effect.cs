@@ -91,8 +91,7 @@ namespace Klei.AI
 
 		public static void AddModifierDescriptions(GameObject parent, List<Descriptor> descs, string effect_id, bool increase_indent = false)
 		{
-			Effect effect = Db.Get().effects.Get(effect_id);
-			foreach (AttributeModifier selfModifier in effect.SelfModifiers)
+			foreach (AttributeModifier selfModifier in Db.Get().effects.Get(effect_id).SelfModifiers)
 			{
 				Descriptor item = new Descriptor(string.Concat(Strings.Get("STRINGS.DUPLICANTS.ATTRIBUTES." + selfModifier.AttributeId.ToUpper() + ".NAME"), ": ", selfModifier.GetFormattedString()), "");
 				if (increase_indent)

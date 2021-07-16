@@ -36,15 +36,13 @@ public class SolidTransferArmConfig : IBuildingConfig
 	public override void DoPostConfigureUnderConstruction(GameObject go)
 	{
 		AddVisualizer(go, movable: false);
-		Constructable component = go.GetComponent<Constructable>();
-		component.requiredSkillPerk = Db.Get().SkillPerks.ConveyorBuild.Id;
+		go.GetComponent<Constructable>().requiredSkillPerk = Db.Get().SkillPerks.ConveyorBuild.Id;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
 		go.AddOrGet<LogicOperationalController>();
-		SolidTransferArm solidTransferArm = go.AddOrGet<SolidTransferArm>();
-		solidTransferArm.pickupRange = 4;
+		go.AddOrGet<SolidTransferArm>().pickupRange = 4;
 		AddVisualizer(go, movable: false);
 	}
 

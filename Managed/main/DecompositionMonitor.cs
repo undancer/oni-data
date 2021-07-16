@@ -63,7 +63,11 @@ public class DecompositionMonitor : GameStateMachine<DecompositionMonitor, Decom
 		public bool IsExposed()
 		{
 			KPrefabID component = base.smi.GetComponent<KPrefabID>();
-			return component == null || !component.HasTag(GameTags.Preserved);
+			if (!(component == null))
+			{
+				return !component.HasTag(GameTags.Preserved);
+			}
+			return true;
 		}
 
 		public bool IsRotten()
@@ -153,8 +157,7 @@ public class DecompositionMonitor : GameStateMachine<DecompositionMonitor, Decom
 			if (remainingRotMonsters > 0)
 			{
 				remainingRotMonsters--;
-				GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(new Tag("Glom")), smi.transform.GetPosition(), Grid.SceneLayer.Creatures);
-				gameObject.SetActive(value: true);
+				GameUtil.KInstantiate(Assets.GetPrefab(new Tag("Glom")), smi.transform.GetPosition(), Grid.SceneLayer.Creatures).SetActive(value: true);
 			}
 			smi.GoTo(rotten.exposed);
 		});

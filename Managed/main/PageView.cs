@@ -16,9 +16,9 @@ public class PageView : KMonoBehaviour
 	[SerializeField]
 	private int childrenPerPage = 8;
 
-	private int currentPage = 0;
+	private int currentPage;
 
-	private int oldChildCount = 0;
+	private int oldChildCount;
 
 	public Action<int> OnChangePage;
 

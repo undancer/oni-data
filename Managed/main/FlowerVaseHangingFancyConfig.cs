@@ -7,18 +7,18 @@ public class FlowerVaseHangingFancyConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("FlowerVaseHangingFancy", 1, 2, "flowervase_hanging_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.TRANSPARENTS, 800f, BuildLocationRule.OnCeiling, noise: NOISE_POLLUTION.NONE, decor: new EffectorValues
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("FlowerVaseHangingFancy", 1, 2, "flowervase_hanging_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.TRANSPARENTS, 800f, BuildLocationRule.OnCeiling, noise: NOISE_POLLUTION.NONE, decor: new EffectorValues
 		{
 			amount = BUILDINGS.DECOR.BONUS.TIER1.amount,
 			radius = BUILDINGS.DECOR.BONUS.TIER3.radius
 		});
-		buildingDef.Floodable = false;
-		buildingDef.Overheatable = false;
-		buildingDef.ViewMode = OverlayModes.Decor.ID;
-		buildingDef.AudioCategory = "Glass";
-		buildingDef.AudioSize = "large";
-		buildingDef.GenerateOffsets(1, 1);
-		return buildingDef;
+		obj.Floodable = false;
+		obj.Overheatable = false;
+		obj.ViewMode = OverlayModes.Decor.ID;
+		obj.AudioCategory = "Glass";
+		obj.AudioSize = "large";
+		obj.GenerateOffsets(1, 1);
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

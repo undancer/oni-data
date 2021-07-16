@@ -338,8 +338,7 @@ public class ManagementMenu : KIconToggleMenu
 	{
 		foreach (KeyValuePair<ManagementMenuToggleInfo, ScreenData> item in ScreenInfoMatch)
 		{
-			ManagementMenuToggleInfo key = item.Key;
-			key.SetNotificationDisplay(showAlertImage: false, showGlow: false, null, noAlertColorStyle);
+			item.Key.SetNotificationDisplay(showAlertImage: false, showGlow: false, null, noAlertColorStyle);
 		}
 	}
 
@@ -445,17 +444,29 @@ public class ManagementMenu : KIconToggleMenu
 
 	private bool ResearchAvailable()
 	{
-		return Components.ResearchCenters.Count > 0 || DebugHandler.InstantBuildMode;
+		if (Components.ResearchCenters.Count <= 0)
+		{
+			return DebugHandler.InstantBuildMode;
+		}
+		return true;
 	}
 
 	private bool SkillsAvailable()
 	{
-		return Components.RoleStations.Count > 0 || DebugHandler.InstantBuildMode;
+		if (Components.RoleStations.Count <= 0)
+		{
+			return DebugHandler.InstantBuildMode;
+		}
+		return true;
 	}
 
 	public static bool StarmapAvailable()
 	{
-		return Components.Telescopes.Count > 0 || DebugHandler.InstantBuildMode;
+		if (Components.Telescopes.Count <= 0)
+		{
+			return DebugHandler.InstantBuildMode;
+		}
+		return true;
 	}
 
 	public void CloseAll()
@@ -526,8 +537,7 @@ public class ManagementMenu : KIconToggleMenu
 					activeScreen.screen.Activate();
 				}
 				activeScreen.screen.Show();
-				List<ManagementMenuNotification> notificationsForAction = notificationDisplayer.GetNotificationsForAction(screenData.toggleInfo.hotKey);
-				foreach (ManagementMenuNotification item in notificationsForAction)
+				foreach (ManagementMenuNotification item in notificationDisplayer.GetNotificationsForAction(screenData.toggleInfo.hotKey))
 				{
 					if (item.customClickCallback != null)
 					{

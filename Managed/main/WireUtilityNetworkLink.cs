@@ -50,8 +50,7 @@ public class WireUtilityNetworkLink : UtilityNetworkLink, IWattageRating, IHaveU
 	public void AddNetworks(ICollection<UtilityNetwork> networks)
 	{
 		int networkCell = GetNetworkCell();
-		IUtilityNetworkMgr networkManager = GetNetworkManager();
-		UtilityNetwork networkForCell = networkManager.GetNetworkForCell(networkCell);
+		UtilityNetwork networkForCell = GetNetworkManager().GetNetworkForCell(networkCell);
 		if (networkForCell != null)
 		{
 			networks.Add(networkForCell);
@@ -61,8 +60,7 @@ public class WireUtilityNetworkLink : UtilityNetworkLink, IWattageRating, IHaveU
 	public bool IsConnectedToNetworks(ICollection<UtilityNetwork> networks)
 	{
 		int networkCell = GetNetworkCell();
-		IUtilityNetworkMgr networkManager = GetNetworkManager();
-		UtilityNetwork networkForCell = networkManager.GetNetworkForCell(networkCell);
+		UtilityNetwork networkForCell = GetNetworkManager().GetNetworkForCell(networkCell);
 		return networks.Contains(networkForCell);
 	}
 }

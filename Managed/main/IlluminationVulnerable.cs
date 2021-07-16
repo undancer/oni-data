@@ -8,7 +8,7 @@ public class IlluminationVulnerable : StateMachineComponent<IlluminationVulnerab
 {
 	public class StatesInstance : GameStateMachine<States, StatesInstance, IlluminationVulnerable, object>.GameInstance
 	{
-		public bool hasMaturity = false;
+		public bool hasMaturity;
 
 		public StatesInstance(IlluminationVulnerable master)
 			: base(master)
@@ -68,7 +68,7 @@ public class IlluminationVulnerable : StateMachineComponent<IlluminationVulnerab
 
 	private SchedulerHandle handle;
 
-	public bool prefersDarkness = false;
+	public bool prefersDarkness;
 
 	private AttributeInstance minLuxAttributeInstance;
 

@@ -100,17 +100,17 @@ namespace ProcGenGame
 
 		private Action<OfflineWorldGen.ErrorInfo> errorCallback;
 
-		private SeededRandom myRandom = null;
+		private SeededRandom myRandom;
 
-		private NoiseMapBuilderPlane heatSource = null;
+		private NoiseMapBuilderPlane heatSource;
 
-		private bool wasLoaded = false;
+		private bool wasLoaded;
 
 		public int polyIndex = -1;
 
-		public bool isStartingWorld = false;
+		public bool isStartingWorld;
 
-		public bool isModuleInterior = false;
+		public bool isModuleInterior;
 
 		public static string WORLDGEN_SAVE_FILENAME => System.IO.Path.Combine(Util.RootFolder(), "WorldGenDataSave.dat");
 
@@ -148,7 +148,17 @@ namespace ProcGenGame
 
 		public bool HasData => data != null;
 
-		public bool HasNoiseData => HasData && data.world != null;
+		public bool HasNoiseData
+		{
+			get
+			{
+				if (HasData)
+				{
+					return data.world != null;
+				}
+				return false;
+			}
+		}
 
 		public float[] DensityMap => data.world.density;
 
@@ -241,9 +251,7 @@ namespace ProcGenGame
 			{
 				TemplateCache.Init();
 			}
-			if (CustomGameSettings.Instance != null)
-			{
-			}
+			_ = CustomGameSettings.Instance != null;
 			if (Application.isPlaying)
 			{
 				Global.Instance.modManager.HandleErrors(pooledList);
@@ -430,7 +438,7 @@ namespace ProcGenGame
 				errorDesc = string.Format(UI.FRONTEND.SUPPORTWARNINGS.WORLD_GEN_FAILURE, settingsCoordinate),
 				exception = e
 			});
-			KCrashReporter.ReportErrorDevNotification("WorldgenFailure", e.StackTrace, $"{settingsCoordinate} - {e.Message} [Build: {469473u}]");
+			KCrashReporter.ReportErrorDevNotification("WorldgenFailure", e.StackTrace, $"{settingsCoordinate} - {e.Message} [Build: {471618u}]");
 		}
 
 		public void SetWorldSize(int width, int height)
@@ -823,11 +831,11 @@ namespace ProcGenGame
 			Diagram.Site site = n1.site;
 			n1.site = n2.site;
 			n2.site = site;
-			ProcGen.Node node = data.worldLayout.localGraph.FindNodeByID(n1.site.id);
-			ProcGen.Node node2 = data.worldLayout.localGraph.FindNodeByID(n2.site.id);
-			string type = node.type;
-			node.SetType(node2.type);
-			node2.SetType(type);
+			Cell cell = data.worldLayout.localGraph.FindNodeByID(n1.site.id);
+			ProcGen.Node node = data.worldLayout.localGraph.FindNodeByID(n2.site.id);
+			string type = cell.type;
+			cell.SetType(node.type);
+			node.SetType(type);
 		}
 
 		private void ApplyStartNode()
@@ -836,7 +844,7 @@ namespace ProcGenGame
 			if (leafNodesWithTag.Count != 0)
 			{
 				VoronoiTree.Node node = leafNodesWithTag[0];
-				VoronoiTree.Tree parent = node.parent;
+				_ = node.parent;
 				node.parent.AddTagToChildren(WorldGenTags.IgnoreCaveOverride);
 				node.parent.tags.Remove(WorldGenTags.StartLocation);
 			}
@@ -1387,18 +1395,15 @@ namespace ProcGenGame
 				int height = (int)Mathf.Ceil(overworldCell.poly.bounds.height + 2f);
 				int num2 = (int)Mathf.Floor(overworldCell.poly.bounds.xMin - 1f);
 				int num3 = (int)Mathf.Floor(overworldCell.poly.bounds.yMin - 1f);
-				Vector2 vector = new Vector2(num2, num3);
-				Vector2 point = vector;
+				Vector2 point;
+				Vector2 offset = (point = new Vector2(num2, num3));
 				NoiseMapBuilderCallback cb = delegate(int line)
 				{
 					updateProgressFn(UI.WORLDGEN.GENERATENOISE.key, (int)(currentProgress + perCell * ((float)line / (float)height)), WorldGenProgressStages.Stages.NoiseMapBuilder);
 				};
-				NoiseMapBuilderPlane nmbp = BuildNoiseSource(width, height, tree);
-				NoiseMap noiseMap = BuildNoiseMap(vector, tree.settings.zoom, nmbp, width, height, cb);
-				NoiseMapBuilderPlane nmbp2 = BuildNoiseSource(width, height, tree2);
-				NoiseMap noiseMap2 = BuildNoiseMap(vector, tree2.settings.zoom, nmbp2, width, height, cb);
-				NoiseMapBuilderPlane nmbp3 = BuildNoiseSource(width, height, tree3);
-				NoiseMap noiseMap3 = BuildNoiseMap(vector, tree3.settings.zoom, nmbp3, width, height, cb);
+				NoiseMap noiseMap = BuildNoiseMap(nmbp: BuildNoiseSource(width, height, tree), offset: offset, zoom: tree.settings.zoom, width: width, height: height, cb: cb);
+				NoiseMap noiseMap2 = BuildNoiseMap(nmbp: BuildNoiseSource(width, height, tree2), offset: offset, zoom: tree2.settings.zoom, width: width, height: height, cb: cb);
+				NoiseMap noiseMap3 = BuildNoiseMap(nmbp: BuildNoiseSource(width, height, tree3), offset: offset, zoom: tree3.settings.zoom, width: width, height: height, cb: cb);
 				point.x = (int)Mathf.Floor(overworldCell.poly.bounds.xMin);
 				while (point.x <= (float)(int)Mathf.Ceil(overworldCell.poly.bounds.xMax))
 				{

@@ -109,8 +109,7 @@ namespace Database
 			{
 				if (resource.Id == id)
 				{
-					result = resource.IsComplete();
-					break;
+					return resource.IsComplete();
 				}
 			}
 			return result;

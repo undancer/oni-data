@@ -172,8 +172,7 @@ public class AdditionalDetailsPanel : TargetScreen
 		if (element.IsSolid)
 		{
 			drawer.NewLabel(drawer.Format(UI.ELEMENTAL.MELTINGPOINT.NAME, GameUtil.GetFormattedTemperature(highTemp))).Tooltip(drawer.Format(UI.ELEMENTAL.MELTINGPOINT.TOOLTIP, GameUtil.GetFormattedTemperature(highTemp)));
-			ElementChunk component9 = selectedTarget.GetComponent<ElementChunk>();
-			if (component9 != null)
+			if (selectedTarget.GetComponent<ElementChunk>() != null)
 			{
 				AttributeModifier attributeModifier = component.Element.attributeModifiers.Find((AttributeModifier m) => m.AttributeId == Db.Get().BuildingAttributes.OverheatTemperature.Id);
 				if (attributeModifier != null)

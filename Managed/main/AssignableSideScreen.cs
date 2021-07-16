@@ -24,7 +24,7 @@ public class AssignableSideScreen : SideScreenContent
 
 	private Comparison<IAssignableIdentity> activeSortFunction;
 
-	private bool sortReversed = false;
+	private bool sortReversed;
 
 	private int targetAssignableSubscriptionHandle = -1;
 
@@ -85,7 +85,11 @@ public class AssignableSideScreen : SideScreenContent
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		return target.GetComponent<Assignable>() != null && target.GetComponent<Assignable>().CanBeAssigned && target.GetComponent<AssignmentGroupController>() == null;
+		if (target.GetComponent<Assignable>() != null && target.GetComponent<Assignable>().CanBeAssigned)
+		{
+			return target.GetComponent<AssignmentGroupController>() == null;
+		}
+		return false;
 	}
 
 	public override void SetTarget(GameObject target)

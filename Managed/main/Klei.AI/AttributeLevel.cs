@@ -52,13 +52,8 @@ namespace Klei.AI
 
 		public float GetExperienceForNextLevel()
 		{
-			float f = (float)level / (float)DUPLICANTSTATS.ATTRIBUTE_LEVELING.MAX_GAINED_ATTRIBUTE_LEVEL;
-			float num = Mathf.Pow(f, DUPLICANTSTATS.ATTRIBUTE_LEVELING.EXPERIENCE_LEVEL_POWER);
-			float num2 = num * (float)DUPLICANTSTATS.ATTRIBUTE_LEVELING.TARGET_MAX_LEVEL_CYCLE * 600f;
-			float f2 = ((float)level + 1f) / (float)DUPLICANTSTATS.ATTRIBUTE_LEVELING.MAX_GAINED_ATTRIBUTE_LEVEL;
-			float num3 = Mathf.Pow(f2, DUPLICANTSTATS.ATTRIBUTE_LEVELING.EXPERIENCE_LEVEL_POWER);
-			float num4 = num3 * (float)DUPLICANTSTATS.ATTRIBUTE_LEVELING.TARGET_MAX_LEVEL_CYCLE * 600f;
-			return num4 - num2;
+			float num = Mathf.Pow((float)level / (float)DUPLICANTSTATS.ATTRIBUTE_LEVELING.MAX_GAINED_ATTRIBUTE_LEVEL, DUPLICANTSTATS.ATTRIBUTE_LEVELING.EXPERIENCE_LEVEL_POWER) * (float)DUPLICANTSTATS.ATTRIBUTE_LEVELING.TARGET_MAX_LEVEL_CYCLE * 600f;
+			return Mathf.Pow(((float)level + 1f) / (float)DUPLICANTSTATS.ATTRIBUTE_LEVELING.MAX_GAINED_ATTRIBUTE_LEVEL, DUPLICANTSTATS.ATTRIBUTE_LEVELING.EXPERIENCE_LEVEL_POWER) * (float)DUPLICANTSTATS.ATTRIBUTE_LEVELING.TARGET_MAX_LEVEL_CYCLE * 600f - num;
 		}
 
 		public float GetPercentComplete()
@@ -77,7 +72,7 @@ namespace Klei.AI
 				PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Plus, attribute.modifier.Name, levels.transform, new Vector3(0f, 0.5f, 0f));
 			}
 			levels.GetComponent<Notifier>().Add(notification, string.Format(MISC.NOTIFICATIONS.LEVELUP.SUFFIX, attribute.modifier.Name, level));
-			StateMachine.Instance instance = new UpgradeFX.Instance(levels.GetComponent<KMonoBehaviour>(), new Vector3(0f, 0f, -0.1f));
+			UpgradeFX.Instance instance = new UpgradeFX.Instance(levels.GetComponent<KMonoBehaviour>(), new Vector3(0f, 0f, -0.1f));
 			ReportManager.Instance.ReportValue(ReportManager.ReportType.LevelUp, 1f, levels.GetProperName());
 			instance.StartSM();
 			levels.Trigger(-110704193, attribute.Id);

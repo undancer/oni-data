@@ -18,13 +18,13 @@ public class ThreadedHttps<T> where T : class, new()
 		}
 	}
 
-	protected string serviceName = null;
+	protected string serviceName;
 
-	protected string CLIENT_KEY = null;
+	protected string CLIENT_KEY;
 
-	protected string LIVE_ENDPOINT = null;
+	protected string LIVE_ENDPOINT;
 
-	private bool certFail = false;
+	private bool certFail;
 
 	private const int retryCount = 3;
 
@@ -34,13 +34,13 @@ public class ThreadedHttps<T> where T : class, new()
 
 	private EventWaitHandle _waitHandle = new AutoResetEvent(initialState: false);
 
-	protected bool shouldQuit = false;
+	protected bool shouldQuit;
 
-	protected bool quitOnError = false;
+	protected bool quitOnError;
 
 	private object _quitLock = new object();
 
-	protected bool singleSend = false;
+	protected bool singleSend;
 
 	public static T Instance => Singleton.instance;
 
@@ -172,8 +172,7 @@ public class ThreadedHttps<T> where T : class, new()
 					if (response != null)
 					{
 						using Stream stream2 = response.GetResponseStream();
-						StreamReader streamReader = new StreamReader(stream2);
-						text = streamReader.ReadToEnd();
+						text = new StreamReader(stream2).ReadToEnd();
 					}
 					else
 					{
@@ -187,9 +186,9 @@ public class ThreadedHttps<T> where T : class, new()
 				if (text != "OK")
 				{
 					stream = webResponse.GetResponseStream();
-					StreamReader streamReader2 = new StreamReader(stream);
-					string text2 = streamReader2.ReadToEnd();
-					streamReader2.Close();
+					StreamReader streamReader = new StreamReader(stream);
+					string text2 = streamReader.ReadToEnd();
+					streamReader.Close();
 					stream.Close();
 					text = serviceName + ": Server Responded with Status: [" + text + "] Response: " + text2;
 				}
@@ -254,12 +253,11 @@ public class ThreadedHttps<T> where T : class, new()
 
 	protected bool ShouldQuit()
 	{
-		bool result = false;
+		bool flag = false;
 		lock (_quitLock)
 		{
-			result = (shouldQuit && packets.Count == 0) || quitOnError;
+			return (shouldQuit && packets.Count == 0) || quitOnError;
 		}
-		return result;
 	}
 
 	protected void QuitOnError()
@@ -288,9 +286,10 @@ public class ThreadedHttps<T> where T : class, new()
 			{
 				result = packets[0];
 				packets.RemoveAt(0);
+				return result;
 			}
+			return result;
 		}
-		return result;
 	}
 
 	protected void PutPacket(byte[] packet, bool infront = false)

@@ -36,7 +36,7 @@ public static class BaseBeeConfig
 		radiationEmitter.emitRate = 0.1f;
 		if (!is_baby)
 		{
-			bee.radiationAmount = 48f;
+			bee.radiationOutputAmount = 24f;
 			radiationEmitter.radiusProportionalToRads = false;
 			radiationEmitter.emitRadiusX = 3;
 			radiationEmitter.emitRadiusY = 3;
@@ -46,7 +46,7 @@ public static class BaseBeeConfig
 		}
 		else
 		{
-			bee.radiationAmount = 12f;
+			bee.radiationOutputAmount = 12f;
 			radiationEmitter.radiusProportionalToRads = false;
 			radiationEmitter.emitRadiusX = 2;
 			radiationEmitter.emitRadiusY = 2;
@@ -55,7 +55,8 @@ public static class BaseBeeConfig
 			gameObject.AddOrGetDef<BeeHiveMonitor.Def>();
 			EntityTemplates.CreateAndRegisterBaggedCreature(gameObject, must_stand_on_top_for_pickup: true, allow_mark_for_capture: true);
 		}
-		radiationEmitter.emitRads = bee.radiationAmount;
+		gameObject.AddOrGetDef<OvercrowdingMonitor.Def>().spaceRequiredPerCreature = CREATURES.SPACE_REQUIREMENTS.TIER1;
+		gameObject.AddOrGetDef<BeeHappinessMonitor.Def>();
 		ElementConsumer elementConsumer = gameObject.AddOrGet<ElementConsumer>();
 		elementConsumer.elementToConsume = SimHashes.CarbonDioxide;
 		elementConsumer.consumptionRate = 0.1f;
@@ -94,7 +95,6 @@ public static class BaseBeeConfig
 
 	public static void SetupLoopingSounds(GameObject inst)
 	{
-		LoopingSounds component = inst.GetComponent<LoopingSounds>();
-		component.StartSound(GlobalAssets.GetSound("Bee_wings_LP"));
+		inst.GetComponent<LoopingSounds>().StartSound(GlobalAssets.GetSound("Bee_wings_LP"));
 	}
 }

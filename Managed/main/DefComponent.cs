@@ -19,8 +19,7 @@ public class DefComponent<T> where T : Component
 		for (i = 0; i < components.Length && !((UnityEngine.Object)components[i] == (UnityEngine.Object)cmp); i++)
 		{
 		}
-		T[] components2 = smi.gameObject.GetComponents<T>();
-		return components2[i];
+		return smi.gameObject.GetComponents<T>()[i];
 	}
 
 	public static implicit operator DefComponent<T>(T cmp)

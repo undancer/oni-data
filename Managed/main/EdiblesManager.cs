@@ -58,9 +58,12 @@ public class EdiblesManager : KMonoBehaviour
 			s_allFoodTypes.Add(this);
 		}
 
-		public FoodInfo AddEffects(List<string> effects)
+		public FoodInfo AddEffects(List<string> effects, string[] dlcIds)
 		{
-			Effects.AddRange(effects);
+			if (DlcManager.IsDlcListValidForCurrentContent(dlcIds))
+			{
+				Effects.AddRange(effects);
+			}
 			return this;
 		}
 	}

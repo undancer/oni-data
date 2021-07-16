@@ -64,18 +64,15 @@ public abstract class Need : KMonoBehaviour
 	{
 		if (modifier.modifier != null)
 		{
-			Attributes attributes = this.GetAttributes();
-			attributes.Add(modifier.modifier);
+			this.GetAttributes().Add(modifier.modifier);
 		}
 		if (modifier.statusItem != null)
 		{
-			KSelectable component = GetComponent<KSelectable>();
-			component.AddStatusItem(modifier.statusItem);
+			GetComponent<KSelectable>().AddStatusItem(modifier.statusItem);
 		}
 		if (modifier.thought != null)
 		{
-			ThoughtGraph.Instance sMI = this.GetSMI<ThoughtGraph.Instance>();
-			sMI.AddThought(modifier.thought);
+			this.GetSMI<ThoughtGraph.Instance>().AddThought(modifier.thought);
 		}
 	}
 
@@ -83,18 +80,15 @@ public abstract class Need : KMonoBehaviour
 	{
 		if (modifier.modifier != null)
 		{
-			Attributes attributes = this.GetAttributes();
-			attributes.Remove(modifier.modifier);
+			this.GetAttributes().Remove(modifier.modifier);
 		}
 		if (modifier.statusItem != null)
 		{
-			KSelectable component = GetComponent<KSelectable>();
-			component.RemoveStatusItem(modifier.statusItem);
+			GetComponent<KSelectable>().RemoveStatusItem(modifier.statusItem);
 		}
 		if (modifier.thought != null)
 		{
-			ThoughtGraph.Instance sMI = this.GetSMI<ThoughtGraph.Instance>();
-			sMI.RemoveThought(modifier.thought);
+			this.GetSMI<ThoughtGraph.Instance>().RemoveThought(modifier.thought);
 		}
 	}
 }

@@ -13,17 +13,15 @@ namespace NodeEditorFramework
 		public static void FetchNodes()
 		{
 			nodes = new Dictionary<Node, NodeData>();
-			IEnumerable<Assembly> enumerable = from assembly in AppDomain.CurrentDomain.GetAssemblies()
+			foreach (Assembly item in from assembly in AppDomain.CurrentDomain.GetAssemblies()
 				where assembly.FullName.Contains("Assembly")
-				select assembly;
-			foreach (Assembly item in enumerable)
+				select assembly)
 			{
 				foreach (Type item2 in from T in item.GetTypes()
 					where T.IsClass && !T.IsAbstract && T.IsSubclassOf(typeof(Node))
 					select T)
 				{
-					object[] customAttributes = item2.GetCustomAttributes(typeof(NodeAttribute), inherit: false);
-					NodeAttribute nodeAttribute = customAttributes[0] as NodeAttribute;
+					NodeAttribute nodeAttribute = item2.GetCustomAttributes(typeof(NodeAttribute), inherit: false)[0] as NodeAttribute;
 					if (nodeAttribute == null || !nodeAttribute.hide)
 					{
 						try

@@ -67,24 +67,23 @@ public class AudioOptionsScreen : KModalScreen
 			OnClose(base.gameObject);
 		};
 		sliderPool = new UIPool<SliderContainer>(sliderPrefab);
-		Dictionary<string, AudioMixer.UserVolumeBus> userVolumeSettings = AudioMixer.instance.userVolumeSettings;
-		foreach (KeyValuePair<string, AudioMixer.UserVolumeBus> item in userVolumeSettings)
+		foreach (KeyValuePair<string, AudioMixer.UserVolumeBus> userVolumeSetting in AudioMixer.instance.userVolumeSettings)
 		{
 			SliderContainer newSlider = sliderPool.GetFreeElement(sliderGroup, forceActive: true);
-			sliderBusMap.Add(newSlider.slider, item.Key);
-			newSlider.slider.value = item.Value.busLevel;
-			newSlider.nameLabel.text = item.Value.labelString;
-			newSlider.UpdateSliderLabel(item.Value.busLevel);
+			sliderBusMap.Add(newSlider.slider, userVolumeSetting.Key);
+			newSlider.slider.value = userVolumeSetting.Value.busLevel;
+			newSlider.nameLabel.text = userVolumeSetting.Value.labelString;
+			newSlider.UpdateSliderLabel(userVolumeSetting.Value.busLevel);
 			newSlider.slider.ClearReleaseHandleEvent();
 			newSlider.slider.onValueChanged.AddListener(delegate
 			{
 				OnReleaseHandle(newSlider.slider);
 			});
-			if (item.Key == "Master")
+			if (userVolumeSetting.Key == "Master")
 			{
 				newSlider.transform.SetSiblingIndex(2);
 				newSlider.slider.onValueChanged.AddListener(CheckMasterValue);
-				CheckMasterValue(item.Value.busLevel);
+				CheckMasterValue(userVolumeSetting.Value.busLevel);
 			}
 		}
 		HierarchyReferences component = alwaysPlayMusicButton.GetComponent<HierarchyReferences>();
@@ -95,8 +94,7 @@ public class AudioOptionsScreen : KModalScreen
 		{
 			ToggleAlwaysPlayMusic();
 		};
-		LocText reference = component.GetReference<LocText>("Label");
-		reference.SetText(UI.FRONTEND.AUDIO_OPTIONS_SCREEN.MUSIC_EVERY_CYCLE);
+		component.GetReference<LocText>("Label").SetText(UI.FRONTEND.AUDIO_OPTIONS_SCREEN.MUSIC_EVERY_CYCLE);
 		if (!KPlayerPrefs.HasKey(AlwaysPlayAutomation))
 		{
 			KPlayerPrefs.SetInt(AlwaysPlayAutomation, 1);
@@ -108,8 +106,7 @@ public class AudioOptionsScreen : KModalScreen
 		{
 			ToggleAlwaysPlayAutomation();
 		};
-		LocText reference2 = component2.GetReference<LocText>("Label");
-		reference2.SetText(UI.FRONTEND.AUDIO_OPTIONS_SCREEN.AUTOMATION_SOUNDS_ALWAYS);
+		component2.GetReference<LocText>("Label").SetText(UI.FRONTEND.AUDIO_OPTIONS_SCREEN.AUTOMATION_SOUNDS_ALWAYS);
 		component2.GetReference("CheckMark").gameObject.SetActive((KPlayerPrefs.GetInt(AlwaysPlayAutomation) == 1) ? true : false);
 		if (!KPlayerPrefs.HasKey(MuteOnFocusLost))
 		{
@@ -122,8 +119,7 @@ public class AudioOptionsScreen : KModalScreen
 		{
 			ToggleMuteOnFocusLost();
 		};
-		LocText reference3 = component3.GetReference<LocText>("Label");
-		reference3.SetText(UI.FRONTEND.AUDIO_OPTIONS_SCREEN.MUTE_ON_FOCUS_LOST);
+		component3.GetReference<LocText>("Label").SetText(UI.FRONTEND.AUDIO_OPTIONS_SCREEN.MUTE_ON_FOCUS_LOST);
 		component3.GetReference("CheckMark").gameObject.SetActive((KPlayerPrefs.GetInt(MuteOnFocusLost) == 1) ? true : false);
 	}
 

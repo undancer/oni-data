@@ -54,7 +54,11 @@ public class BlinkMonitor : GameStateMachine<BlinkMonitor, BlinkMonitor.Instance
 
 	private static bool CanBlink(Instance smi)
 	{
-		return SpeechMonitor.IsAllowedToPlaySpeech(smi.gameObject) && smi.Get<Navigator>().CurrentNavType != NavType.Ladder;
+		if (SpeechMonitor.IsAllowedToPlaySpeech(smi.gameObject))
+		{
+			return smi.Get<Navigator>().CurrentNavType != NavType.Ladder;
+		}
+		return false;
 	}
 
 	private static float GetRandomBlinkTime(Instance smi)

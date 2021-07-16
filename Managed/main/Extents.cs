@@ -54,8 +54,7 @@ public struct Extents
 		{
 			int val = 0;
 			int val2 = 0;
-			int cell2 = Grid.OffsetCell(cell, offset);
-			Grid.CellToXY(cell2, out val, out val2);
+			Grid.CellToXY(Grid.OffsetCell(cell, offset), out val, out val2);
 			num = Math.Min(num, val);
 			num2 = Math.Min(num2, val2);
 			num3 = Math.Max(num3, val);
@@ -79,8 +78,7 @@ public struct Extents
 			CellOffset rotatedCellOffset = Rotatable.GetRotatedCellOffset(offsets[i], orientation);
 			int val = 0;
 			int val2 = 0;
-			int cell2 = Grid.OffsetCell(cell, rotatedCellOffset);
-			Grid.CellToXY(cell2, out val, out val2);
+			Grid.CellToXY(Grid.OffsetCell(cell, rotatedCellOffset), out val, out val2);
 			num = Math.Min(num, val);
 			num2 = Math.Min(num2, val2);
 			num3 = Math.Max(num3, val);
@@ -103,8 +101,7 @@ public struct Extents
 		{
 			int val = 0;
 			int val2 = 0;
-			int cell2 = Grid.OffsetCell(cell, array[0]);
-			Grid.CellToXY(cell2, out val, out val2);
+			Grid.CellToXY(Grid.OffsetCell(cell, array[0]), out val, out val2);
 			num = Math.Min(num, val);
 			num2 = Math.Min(num2, val2);
 			num3 = Math.Max(num3, val);
@@ -118,6 +115,10 @@ public struct Extents
 
 	public bool Contains(Vector2I pos)
 	{
-		return x <= pos.x && pos.x < x + width && y <= pos.y && pos.y < y + height;
+		if (x <= pos.x && pos.x < x + width && y <= pos.y)
+		{
+			return pos.y < y + height;
+		}
+		return false;
 	}
 }

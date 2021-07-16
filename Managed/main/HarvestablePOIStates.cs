@@ -57,12 +57,10 @@ public class HarvestablePOIStates : GameStateMachine<HarvestablePOIStates, Harve
 		public List<Descriptor> GetDescriptors(GameObject go)
 		{
 			List<Descriptor> list = new List<Descriptor>();
-			Dictionary<SimHashes, float> elementsWithWeights = configuration.GetElementsWithWeights();
-			foreach (KeyValuePair<SimHashes, float> item in elementsWithWeights)
+			foreach (KeyValuePair<SimHashes, float> elementsWithWeight in configuration.GetElementsWithWeights())
 			{
-				SimHashes key = item.Key;
-				Element element = ElementLoader.FindElementByHash(key);
-				string arg = element.tag.ProperName();
+				SimHashes key = elementsWithWeight.Key;
+				string arg = ElementLoader.FindElementByHash(key).tag.ProperName();
 				list.Add(new Descriptor(string.Format(UI.SPACEDESTINATIONS.HARVESTABLE_POI.POI_PRODUCTION, arg), string.Format(UI.SPACEDESTINATIONS.HARVESTABLE_POI.POI_PRODUCTION_TOOLTIP, key.ToString())));
 			}
 			list.Add(new Descriptor($"{GameUtil.GetFormattedMass(poiCapacity)}/{GameUtil.GetFormattedMass(configuration.GetMaxCapacity())}", "Capacity"));

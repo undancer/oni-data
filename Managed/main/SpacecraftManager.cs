@@ -23,7 +23,7 @@ public class SpacecraftManager : KMonoBehaviour, ISim1000ms
 	private List<Spacecraft> spacecraft = new List<Spacecraft>();
 
 	[Serialize]
-	private int nextSpacecraftID = 0;
+	private int nextSpacecraftID;
 
 	public const int INVALID_DESTINATION_ID = -1;
 
@@ -31,7 +31,7 @@ public class SpacecraftManager : KMonoBehaviour, ISim1000ms
 	private int analyzeDestinationID = -1;
 
 	[Serialize]
-	public bool hasVisitedWormHole = false;
+	public bool hasVisitedWormHole;
 
 	[Serialize]
 	public List<SpaceDestination> destinations;
@@ -40,7 +40,7 @@ public class SpacecraftManager : KMonoBehaviour, ISim1000ms
 	public Dictionary<int, int> savedSpacecraftDestinations;
 
 	[Serialize]
-	public bool destinationsGenerated = false;
+	public bool destinationsGenerated;
 
 	[Serialize]
 	public Dictionary<int, float> destinationAnalysisScores = new Dictionary<int, float>();

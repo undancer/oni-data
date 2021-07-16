@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Bouncer : MonoBehaviour
 {
-	private bool m_bouncing = false;
+	private bool m_bouncing;
 
 	public float durationSecs = 0.3f;
 
@@ -32,40 +32,39 @@ public class Bouncer : MonoBehaviour
 		yield return new WaitForEndOfFrame();
 		for (; bouncesCompleted < numBounces; bouncesCompleted++)
 		{
-			float iterationTargetFrac = 1f / Mathf.Pow(2f, bouncesCompleted);
-			Vector3 iterationTarget = bounceTarget * iterationTargetFrac;
-			float iterationDurationFrac = 1f / (float)(bouncesCompleted + 1);
-			float iterationDuration = durationSecs * iterationDurationFrac;
+			float d = 1f / Mathf.Pow(2f, bouncesCompleted);
+			Vector3 iterationTarget = bounceTarget * d;
+			float num = 1f / (float)(bouncesCompleted + 1);
+			float iterationDuration = durationSecs * num;
 			float completion = 0f;
 			while (completion < 1f)
 			{
 				Vector3 position = base.gameObject.transform.position;
-				float t = Mathf.Min(Time.unscaledDeltaTime, 0.3f);
-				completion = Mathf.Min(completion + t / iterationDuration, 1f);
-				Vector3 bounceOffset = BounceSpline(completion) * iterationTarget;
+				float num2 = Mathf.Min(Time.unscaledDeltaTime, 0.3f);
+				completion = Mathf.Min(completion + num2 / iterationDuration, 1f);
+				Vector3 vector = BounceSpline(completion) * iterationTarget;
 				if (bounceTarget.x != 0f)
 				{
-					position.x = startPos.x + bounceOffset.x;
+					position.x = startPos.x + vector.x;
 				}
 				if (bounceTarget.y != 0f)
 				{
-					position.y = startPos.y + bounceOffset.y;
+					position.y = startPos.y + vector.y;
 				}
 				base.gameObject.transform.SetPosition(position);
 				yield return new WaitForEndOfFrame();
-				position = default(Vector3);
 			}
 		}
-		Vector3 finalPosition = base.gameObject.transform.position;
+		Vector3 position2 = base.gameObject.transform.position;
 		if (bounceTarget.x != 0f)
 		{
-			finalPosition.x = startPos.x;
+			position2.x = startPos.x;
 		}
 		if (bounceTarget.y != 0f)
 		{
-			finalPosition.y = startPos.y;
+			position2.y = startPos.y;
 		}
-		base.gameObject.transform.SetPosition(finalPosition);
+		base.gameObject.transform.SetPosition(position2);
 		m_bouncing = false;
 	}
 

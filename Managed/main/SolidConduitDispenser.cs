@@ -7,19 +7,19 @@ using UnityEngine;
 public class SolidConduitDispenser : KMonoBehaviour, ISaveLoadable, IConduitDispenser
 {
 	[SerializeField]
-	public SimHashes[] elementFilter = null;
+	public SimHashes[] elementFilter;
 
 	[SerializeField]
-	public bool invertElementFilter = false;
+	public bool invertElementFilter;
 
 	[SerializeField]
-	public bool alwaysDispense = false;
+	public bool alwaysDispense;
 
 	[SerializeField]
-	public bool useSecondaryOutput = false;
+	public bool useSecondaryOutput;
 
 	[SerializeField]
-	public bool solidOnly = false;
+	public bool solidOnly;
 
 	private static readonly Operational.Flag outputConduitFlag = new Operational.Flag("output_conduit", Operational.Flag.Type.Functional);
 
@@ -50,7 +50,11 @@ public class SolidConduitDispenser : KMonoBehaviour, ISaveLoadable, IConduitDisp
 		get
 		{
 			GameObject gameObject = Grid.Objects[utilityCell, 20];
-			return gameObject != null && gameObject.GetComponent<BuildingComplete>() != null;
+			if (gameObject != null)
+			{
+				return gameObject.GetComponent<BuildingComplete>() != null;
+			}
+			return false;
 		}
 	}
 
@@ -110,7 +114,11 @@ public class SolidConduitDispenser : KMonoBehaviour, ISaveLoadable, IConduitDisp
 	private bool isSolid(GameObject o)
 	{
 		PrimaryElement component = o.GetComponent<PrimaryElement>();
-		return component == null || component.Element.IsLiquid || component.Element.IsGas;
+		if (!(component == null) && !component.Element.IsLiquid)
+		{
+			return component.Element.IsGas;
+		}
+		return true;
 	}
 
 	private Pickupable FindSuitableItem()
@@ -129,7 +137,11 @@ public class SolidConduitDispenser : KMonoBehaviour, ISaveLoadable, IConduitDisp
 		round_robin_index %= list.Count;
 		GameObject gameObject = list[round_robin_index];
 		round_robin_index++;
-		return gameObject ? gameObject.GetComponent<Pickupable>() : null;
+		if (!gameObject)
+		{
+			return null;
+		}
+		return gameObject.GetComponent<Pickupable>();
 	}
 
 	private int GetConnectedNetworkID()

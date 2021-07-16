@@ -9,7 +9,7 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 
 	private InterfaceTool activeTool;
 
-	private bool DebugHidingCursor = false;
+	private bool DebugHidingCursor;
 
 	private Vector3 prevMousePos = new Vector3(float.PositiveInfinity, 0f, 0f);
 
@@ -17,13 +17,13 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 
 	private const float MIN_DRAG_TIME = 0.3f;
 
-	private Action dragAction = Action.Invalid;
+	private Action dragAction;
 
 	private bool draggingAllowed = true;
 
-	private bool dragging = false;
+	private bool dragging;
 
-	private bool queueStopDrag = false;
+	private bool queueStopDrag;
 
 	private Vector3 startDragPos;
 
@@ -81,9 +81,8 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 
 	public static Vector3 GetCursorPos(Vector3 mouse_pos)
 	{
-		Ray ray = Camera.main.ScreenPointToRay(mouse_pos);
 		Vector3 result;
-		if (Physics.Raycast(ray, out var hitInfo, float.PositiveInfinity, Game.BlockSelectionLayerMask))
+		if (Physics.Raycast(Camera.main.ScreenPointToRay(mouse_pos), out var hitInfo, float.PositiveInfinity, Game.BlockSelectionLayerMask))
 		{
 			result = hitInfo.point;
 		}
@@ -330,7 +329,11 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 
 	public bool IsDragging()
 	{
-		return draggingAllowed && dragAction != Action.Invalid;
+		if (draggingAllowed)
+		{
+			return dragAction != Action.Invalid;
+		}
+		return false;
 	}
 
 	public void AllowDragging(bool allow)
@@ -345,6 +348,10 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 
 	public Vector3 GetWorldDragDelta()
 	{
-		return draggingAllowed ? worldDragDelta : Vector3.zero;
+		if (!draggingAllowed)
+		{
+			return Vector3.zero;
+		}
+		return worldDragDelta;
 	}
 }

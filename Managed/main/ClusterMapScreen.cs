@@ -83,7 +83,7 @@ public class ClusterMapScreen : KScreen
 
 	private SelectMarker m_selectMarker;
 
-	private bool movingToTargetNISPosition = false;
+	private bool movingToTargetNISPosition;
 
 	private Vector3 targetNISPosition;
 
@@ -97,13 +97,22 @@ public class ClusterMapScreen : KScreen
 
 	private bool m_closeOnSelect;
 
-	private Coroutine activeMoveToTargetRoutine = null;
+	private Coroutine activeMoveToTargetRoutine;
 
 	public float floatCycleScale = 4f;
 
 	public float floatCycleOffset = 0.75f;
 
 	public float floatCycleSpeed = 0.75f;
+
+	public ClusterMapVisualizer GetEntityVisAnim(ClusterGridEntity entity)
+	{
+		if (m_gridEntityAnims.ContainsKey(entity))
+		{
+			return m_gridEntityAnims[entity];
+		}
+		return null;
+	}
 
 	public override float GetSortKey()
 	{
@@ -124,12 +133,12 @@ public class ClusterMapScreen : KScreen
 		base.OnPrefabInit();
 		m_selectMarker = Util.KInstantiateUI<SelectMarker>(selectMarkerPrefab, base.gameObject);
 		m_selectMarker.gameObject.SetActive(value: false);
+		Instance = this;
 	}
 
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		Instance = this;
 		Debug.Assert(cellVisPrefab.rectTransform().sizeDelta == new Vector2(2f, 2f), "The radius of the cellVisPrefab hex must be 1");
 		Debug.Assert(terrainVisPrefab.rectTransform().sizeDelta == new Vector2(2f, 2f), "The radius of the terrainVisPrefab hex must be 1");
 		Debug.Assert(mobileVisPrefab.rectTransform().sizeDelta == new Vector2(2f, 2f), "The radius of the mobileVisPrefab hex must be 1");
@@ -260,6 +269,7 @@ public class ClusterMapScreen : KScreen
 			CameraController.Instance.DisableUserCameraControl = true;
 			AudioMixer.instance.Start(AudioMixerSnapshots.Get().MENUStarmapNotPausedSnapshot);
 			MusicManager.instance.PlaySong("Music_Starmap");
+			UpdateTearStatus();
 		}
 		else
 		{
@@ -417,9 +427,9 @@ public class ClusterMapScreen : KScreen
 			AsteroidGridEntity component = worldContainer.GetComponent<AsteroidGridEntity>();
 			if (component != null && m_gridEntityVis.ContainsKey(component) && GetRevealLevel(component) == ClusterRevealLevel.Visible)
 			{
-				KBatchedAnimController firstAnim = m_gridEntityVis[component].GetFirstAnim();
+				KBatchedAnimController firstAnimController = m_gridEntityVis[component].GetFirstAnimController();
 				float y = floatCycleOffset + floatCycleScale * Mathf.Sin(floatCycleSpeed * (num + GameClock.Instance.GetTime()));
-				firstAnim.Offset = new Vector2(0f, y);
+				firstAnimController.Offset = new Vector2(0f, y);
 			}
 			num += 1f;
 		}
@@ -431,8 +441,8 @@ public class ClusterMapScreen : KScreen
 		{
 			foreach (ClusterGridEntity item in cellContent.Value)
 			{
-				ClusterRevealLevel cellRevealLevel = ClusterGrid.Instance.GetCellRevealLevel(cellContent.Key);
-				ClusterRevealLevel isVisibleInFOW = item.IsVisibleInFOW;
+				ClusterGrid.Instance.GetCellRevealLevel(cellContent.Key);
+				_ = item.IsVisibleInFOW;
 				if (GetRevealLevel(item) != 0 && !m_gridEntityVis.ContainsKey(item))
 				{
 					ClusterMapVisualizer original = null;
@@ -483,8 +493,7 @@ public class ClusterMapScreen : KScreen
 
 	private void RemoveDeletedEntities(object obj = null)
 	{
-		List<ClusterGridEntity> list = m_gridEntityVis.Keys.Where((ClusterGridEntity x) => x == null || x.gameObject == (GameObject)obj).ToList();
-		foreach (ClusterGridEntity item in list)
+		foreach (ClusterGridEntity item in m_gridEntityVis.Keys.Where((ClusterGridEntity x) => x == null || x.gameObject == (GameObject)obj).ToList())
 		{
 			Util.KDestroyGameObject(m_gridEntityVis[item]);
 			m_gridEntityVis.Remove(item);
@@ -518,7 +527,7 @@ public class ClusterMapScreen : KScreen
 		UpdatePaths();
 		foreach (KeyValuePair<ClusterGridEntity, ClusterMapVisualizer> gridEntityAnim in m_gridEntityAnims)
 		{
-			ClusterTraveler component = gridEntityAnim.Key.GetComponent<ClusterTraveler>();
+			gridEntityAnim.Key.GetComponent<ClusterTraveler>();
 			ClusterRevealLevel revealLevel = GetRevealLevel(gridEntityAnim.Key);
 			gridEntityAnim.Value.Show(revealLevel);
 			bool selected = m_selectedEntity == gridEntityAnim.Key;
@@ -537,9 +546,9 @@ public class ClusterMapScreen : KScreen
 		}
 		foreach (KeyValuePair<AxialI, ClusterMapVisualizer> item in m_cellVisByLocation)
 		{
-			ClusterMapHex component2 = item.Value.GetComponent<ClusterMapHex>();
+			ClusterMapHex component = item.Value.GetComponent<ClusterMapHex>();
 			AxialI key = item.Key;
-			component2.SetRevealed(ClusterGrid.Instance.GetCellRevealLevel(key));
+			component.SetRevealed(ClusterGrid.Instance.GetCellRevealLevel(key));
 		}
 		UpdateHexToggleStates();
 		FloatyAsteroidAnimation();
@@ -577,17 +586,25 @@ public class ClusterMapScreen : KScreen
 		if (m_mode == Mode.Default)
 		{
 			List<ClusterGridEntity> visibleEntitiesAtCell = ClusterGrid.Instance.GetVisibleEntitiesAtCell(newSelectionHex.location);
+			for (int num = visibleEntitiesAtCell.Count - 1; num >= 0; num--)
+			{
+				KSelectable component = visibleEntitiesAtCell[num].GetComponent<KSelectable>();
+				if (component == null || !component.IsSelectable)
+				{
+					visibleEntitiesAtCell.RemoveAt(num);
+				}
+			}
 			if (visibleEntitiesAtCell.Count == 0)
 			{
 				SetSelectedEntity(null);
 			}
 			else
 			{
-				int num = visibleEntitiesAtCell.IndexOf(m_selectedEntity);
+				int num2 = visibleEntitiesAtCell.IndexOf(m_selectedEntity);
 				int index = 0;
-				if (num >= 0)
+				if (num2 >= 0)
 				{
-					index = (num + 1) % visibleEntitiesAtCell.Count;
+					index = (num2 + 1) % visibleEntitiesAtCell.Count;
 				}
 				SetSelectedEntity(visibleEntitiesAtCell[index]);
 			}
@@ -596,8 +613,7 @@ public class ClusterMapScreen : KScreen
 		else if (m_mode == Mode.SelectDestination)
 		{
 			Debug.Assert(m_destinationSelector != null, "Selected a hex in SelectDestination mode with no ClusterDestinationSelector");
-			List<AxialI> path = ClusterGrid.Instance.GetPath(m_selectedHex.location, newSelectionHex.location, m_destinationSelector);
-			if (path != null)
+			if (ClusterGrid.Instance.GetPath(m_selectedHex.location, newSelectionHex.location, m_destinationSelector) != null)
 			{
 				m_destinationSelector.SetDestination(newSelectionHex.location);
 				if (m_closeOnSelect)
@@ -649,7 +665,10 @@ public class ClusterMapScreen : KScreen
 
 	private void UpdatePaths()
 	{
-		ClusterDestinationSelector clusterDestinationSelector = ((m_selectedEntity != null) ? m_selectedEntity.GetComponent<ClusterDestinationSelector>() : null);
+		if (m_selectedEntity != null)
+		{
+			m_selectedEntity.GetComponent<ClusterDestinationSelector>();
+		}
 		if (m_mode == Mode.SelectDestination && m_hoveredHex != null)
 		{
 			Debug.Assert(m_destinationSelector != null, "In SelectDestination mode without a destination selector");
@@ -690,5 +709,22 @@ public class ClusterMapScreen : KScreen
 		component = ClusterGrid.Instance.GetVisibleEntityOfLayerAtCell(selector.GetMyWorldLocation(), EntityLayer.Asteroid);
 		Debug.Assert(component != null, $"{selector} has no grid entity and isn't located at a visible asteroid at {selector.GetMyWorldLocation()}");
 		return component;
+	}
+
+	private void UpdateTearStatus()
+	{
+		ClusterPOIManager clusterPOIManager = null;
+		if (ClusterManager.Instance != null)
+		{
+			clusterPOIManager = ClusterManager.Instance.GetComponent<ClusterPOIManager>();
+		}
+		if (clusterPOIManager != null)
+		{
+			TemporalTear temporalTear = clusterPOIManager.GetTemporalTear();
+			if (temporalTear != null)
+			{
+				temporalTear.UpdateStatus();
+			}
+		}
 	}
 }

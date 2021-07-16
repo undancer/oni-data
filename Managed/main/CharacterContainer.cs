@@ -147,8 +147,7 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 			Reshuffle(is_starter: true);
 		};
 		List<IListableOption> list = new List<IListableOption>();
-		List<SkillGroup> list2 = new List<SkillGroup>(Db.Get().SkillGroups.resources);
-		foreach (SkillGroup item in list2)
+		foreach (SkillGroup item in new List<SkillGroup>(Db.Get().SkillGroups.resources))
 		{
 			list.Add(item);
 		}
@@ -268,8 +267,7 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 		{
 			animController.AddAnimOverrides(idle_anim);
 		}
-		HashedString name2 = new HashedString("crewSelect_fx_kanim");
-		KAnimFile anim = Assets.GetAnim(name2);
+		KAnimFile anim = Assets.GetAnim(new HashedString("crewSelect_fx_kanim"));
 		if (anim != null)
 		{
 			animController.AddAnimOverrides(anim);
@@ -301,9 +299,7 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 				LocText componentInChildren = gameObject.GetComponentInChildren<LocText>();
 				string format = ((trait.SelfModifiers[j].Value > 0f) ? UI.CHARACTERCONTAINER_ATTRIBUTEMODIFIER_INCREASED : UI.CHARACTERCONTAINER_ATTRIBUTEMODIFIER_DECREASED);
 				componentInChildren.text = string.Format(format, Strings.Get("STRINGS.DUPLICANTS.ATTRIBUTES." + trait.SelfModifiers[j].AttributeId.ToUpper() + ".NAME"));
-				if (trait.SelfModifiers[j].AttributeId == "GermResistance")
-				{
-				}
+				_ = trait.SelfModifiers[j].AttributeId == "GermResistance";
 				Klei.AI.Attribute attribute = Db.Get().Attributes.Get(trait.SelfModifiers[j].AttributeId);
 				string text = attribute.Description;
 				text = string.Concat(text, "\n\n", Strings.Get("STRINGS.DUPLICANTS.ATTRIBUTES." + trait.SelfModifiers[j].AttributeId.ToUpper() + ".NAME"), ": ", trait.SelfModifiers[j].GetFormattedString());
@@ -399,15 +395,7 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 			locText3.gameObject.SetActive(value: true);
 			locText3.text = skillGroup.Name;
 			string text7 = "";
-			if (skillGroup.choreGroupID != "")
-			{
-				ChoreGroup choreGroup = Db.Get().ChoreGroups.Get(skillGroup.choreGroupID);
-				text7 = string.Format(DUPLICANTS.ROLES.GROUPS.APTITUDE_DESCRIPTION_CHOREGROUP, skillGroup.Name, DUPLICANTSTATS.APTITUDE_BONUS, choreGroup.description);
-			}
-			else
-			{
-				text7 = string.Format(DUPLICANTS.ROLES.GROUPS.APTITUDE_DESCRIPTION, skillGroup.Name, DUPLICANTSTATS.APTITUDE_BONUS);
-			}
+			text7 = ((!(skillGroup.choreGroupID != "")) ? string.Format(DUPLICANTS.ROLES.GROUPS.APTITUDE_DESCRIPTION, skillGroup.Name, DUPLICANTSTATS.APTITUDE_BONUS) : string.Format(arg2: Db.Get().ChoreGroups.Get(skillGroup.choreGroupID).description, format: DUPLICANTS.ROLES.GROUPS.APTITUDE_DESCRIPTION_CHOREGROUP, arg0: skillGroup.Name, arg1: DUPLICANTSTATS.APTITUDE_BONUS));
 			locText3.GetComponent<ToolTip>().SetSimpleTooltip(text7);
 			float num = stats.StartingLevels[skillAptitude.Key.relevantAttributes[0].Id];
 			LocText locText4 = Util.KInstantiateUI<LocText>(attributeLabelAptitude.gameObject, gameObject5);
@@ -459,46 +447,45 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 			UnityEngine.Object.Destroy(icg);
 		});
 		iconGroups.Clear();
-		Klei.AI.Attributes attr = animController.gameObject.GetAttributes();
-		List<AttributeInstance> attributes = new List<AttributeInstance>(attr.AttributeTable);
-		attributes.RemoveAll((AttributeInstance at) => at.Attribute.ShowInUI != Klei.AI.Attribute.Display.Skill);
-		attributes = attributes.OrderBy((AttributeInstance at) => at.Name).ToList();
-		for (int i = 0; i < attributes.Count; i++)
+		List<AttributeInstance> list = new List<AttributeInstance>(animController.gameObject.GetAttributes().AttributeTable);
+		list.RemoveAll((AttributeInstance at) => at.Attribute.ShowInUI != Klei.AI.Attribute.Display.Skill);
+		list = list.OrderBy((AttributeInstance at) => at.Name).ToList();
+		for (int i = 0; i < list.Count; i++)
 		{
-			GameObject newIconGroup = Util.KInstantiateUI(iconGroup.gameObject, iconGroup.transform.parent.gameObject);
-			LocText label = newIconGroup.GetComponentInChildren<LocText>();
-			newIconGroup.SetActive(value: true);
-			float totalValue = attributes[i].GetTotalValue();
+			GameObject gameObject = Util.KInstantiateUI(iconGroup.gameObject, iconGroup.transform.parent.gameObject);
+			LocText componentInChildren = gameObject.GetComponentInChildren<LocText>();
+			gameObject.SetActive(value: true);
+			float totalValue = list[i].GetTotalValue();
 			if (totalValue > 0f)
 			{
-				label.color = Constants.POSITIVE_COLOR;
+				componentInChildren.color = Constants.POSITIVE_COLOR;
 			}
 			else if (totalValue == 0f)
 			{
-				label.color = Constants.NEUTRAL_COLOR;
+				componentInChildren.color = Constants.NEUTRAL_COLOR;
 			}
 			else
 			{
-				label.color = Constants.NEGATIVE_COLOR;
+				componentInChildren.color = Constants.NEGATIVE_COLOR;
 			}
-			label.text = string.Format(UI.CHARACTERCONTAINER_SKILL_VALUE, GameUtil.AddPositiveSign(totalValue.ToString(), totalValue > 0f), attributes[i].Name);
-			AttributeInstance attribute = attributes[i];
-			string tooltip = attribute.Description;
-			if (attribute.Attribute.converters.Count > 0)
+			componentInChildren.text = string.Format(UI.CHARACTERCONTAINER_SKILL_VALUE, GameUtil.AddPositiveSign(totalValue.ToString(), totalValue > 0f), list[i].Name);
+			AttributeInstance attributeInstance = list[i];
+			string text = attributeInstance.Description;
+			if (attributeInstance.Attribute.converters.Count > 0)
 			{
-				tooltip += "\n";
-				foreach (AttributeConverter converter in attribute.Attribute.converters)
+				text += "\n";
+				foreach (AttributeConverter converter2 in attributeInstance.Attribute.converters)
 				{
-					AttributeConverterInstance converter_instance = animController.gameObject.GetComponent<Klei.AI.AttributeConverters>().GetConverter(converter.Id);
-					string instance_details = converter_instance.DescriptionFromAttribute(converter_instance.Evaluate(), converter_instance.gameObject);
-					if (instance_details != null)
+					AttributeConverterInstance converter = animController.gameObject.GetComponent<Klei.AI.AttributeConverters>().GetConverter(converter2.Id);
+					string text2 = converter.DescriptionFromAttribute(converter.Evaluate(), converter.gameObject);
+					if (text2 != null)
 					{
-						tooltip = tooltip + "\n" + instance_details;
+						text = text + "\n" + text2;
 					}
 				}
 			}
-			newIconGroup.GetComponent<ToolTip>().SetSimpleTooltip(tooltip);
-			iconGroups.Add(newIconGroup);
+			gameObject.GetComponent<ToolTip>().SetSimpleTooltip(text);
+			iconGroups.Add(gameObject);
 		}
 	}
 
@@ -641,12 +628,20 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 
 	private bool IsCharacterRedundant()
 	{
-		return containers.Find((CharacterContainer c) => c != null && c.stats != null && c != this && c.stats.Name == stats.Name && c.stats.IsValid) != null || Components.LiveMinionIdentities.Items.Any((MinionIdentity id) => id.GetProperName() == stats.Name);
+		if (!(containers.Find((CharacterContainer c) => c != null && c.stats != null && c != this && c.stats.Name == stats.Name && c.stats.IsValid) != null))
+		{
+			return Components.LiveMinionIdentities.Items.Any((MinionIdentity id) => id.GetProperName() == stats.Name);
+		}
+		return true;
 	}
 
 	public string GetValueColor(bool isPositive)
 	{
-		return isPositive ? "<color=green>" : "<color=#ff2222ff>";
+		if (!isPositive)
+		{
+			return "<color=#ff2222ff>";
+		}
+		return "<color=green>";
 	}
 
 	public override void OnKeyDown(KButtonEvent e)

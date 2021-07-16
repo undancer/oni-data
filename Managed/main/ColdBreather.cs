@@ -97,7 +97,7 @@ public class ColdBreather : StateMachineComponent<ColdBreather.StatesInstance>, 
 
 	private const float EXHALE_PERIOD = 1f;
 
-	public float consumptionRate = 0f;
+	public float consumptionRate;
 
 	public float deltaEmitTemperature = -5f;
 
@@ -107,7 +107,7 @@ public class ColdBreather : StateMachineComponent<ColdBreather.StatesInstance>, 
 
 	private Tag lastEmitTag;
 
-	private int nextGasEmitIndex = 0;
+	private int nextGasEmitIndex;
 
 	private HandleVector<Game.ComplexCallbackInfo<Sim.MassEmittedCallback>>.Handle simEmitCBHandle = HandleVector<Game.ComplexCallbackInfo<Sim.MassEmittedCallback>>.InvalidHandle;
 

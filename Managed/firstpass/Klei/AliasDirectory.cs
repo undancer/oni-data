@@ -58,7 +58,6 @@ namespace Klei
 			{
 				return null;
 			}
-			byte[] array = null;
 			return File.ReadAllBytes(actualPath);
 		}
 
@@ -70,11 +69,10 @@ namespace Klei
 				return;
 			}
 			string[] files = Directory.GetFiles(actualPath);
-			string[] array = files;
-			foreach (string filename in array)
+			for (int i = 0; i < files.Length; i++)
 			{
-				string filename2 = FileSystem.Normalize(filename);
-				string virtualPath = GetVirtualPath(filename2);
+				string filename = FileSystem.Normalize(files[i]);
+				string virtualPath = GetVirtualPath(filename);
 				if (re.IsMatch(virtualPath))
 				{
 					result.Add(virtualPath);

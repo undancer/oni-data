@@ -61,7 +61,11 @@ public class Room : IAssignableIdentity
 	public Ownables GetSoleOwner()
 	{
 		List<Ownables> owners = GetOwners();
-		return (owners.Count > 0) ? owners[0] : null;
+		if (owners.Count <= 0)
+		{
+			return null;
+		}
+		return owners[0];
 	}
 
 	public bool HasOwner(Assignables owner)

@@ -16,21 +16,21 @@ public class RocketInteriorLiquidInputConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("RocketInteriorLiquidInput", 1, 1, "rocket_floor_plug_liquid_kanim", 30, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnRocketEnvelope, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER2);
-		buildingDef.InputConduitType = ConduitType.Liquid;
-		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
-		buildingDef.Overheatable = false;
-		buildingDef.Floodable = false;
-		buildingDef.Entombable = false;
-		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
-		buildingDef.ObjectLayer = ObjectLayer.Building;
-		buildingDef.SceneLayer = Grid.SceneLayer.Building;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.AudioSize = "small";
-		buildingDef.BaseTimeUntilRepair = -1f;
-		buildingDef.PermittedRotations = PermittedRotations.R360;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("RocketInteriorLiquidInput", 1, 1, "rocket_floor_plug_liquid_kanim", 30, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnRocketEnvelope, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER2);
+		obj.InputConduitType = ConduitType.Liquid;
+		obj.UtilityInputOffset = new CellOffset(0, 0);
+		obj.Overheatable = false;
+		obj.Floodable = false;
+		obj.Entombable = false;
+		obj.ViewMode = OverlayModes.LiquidConduits.ID;
+		obj.ObjectLayer = ObjectLayer.Building;
+		obj.SceneLayer = Grid.SceneLayer.Building;
+		obj.AudioCategory = "Metal";
+		obj.AudioSize = "small";
+		obj.BaseTimeUntilRepair = -1f;
+		obj.PermittedRotations = PermittedRotations.R360;
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.LiquidVentIDs, "RocketInteriorLiquidInput");
-		return buildingDef;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

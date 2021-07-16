@@ -8,7 +8,7 @@ public class MonumentTopConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("MonumentTop", 5, 5, "victory_monument_upper_kanim", 1000, 60f, new float[3]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("MonumentTop", 5, 5, "victory_monument_upper_kanim", 1000, 60f, new float[3]
 		{
 			2500f,
 			2500f,
@@ -19,25 +19,24 @@ public class MonumentTopConfig : IBuildingConfig
 			SimHashes.Diamond.ToString(),
 			SimHashes.Steel.ToString()
 		}, 9999f, BuildLocationRule.BuildingAttachPoint, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.BONUS.MONUMENT.INCOMPLETE);
-		BuildingTemplates.CreateMonumentBuildingDef(buildingDef);
-		buildingDef.SceneLayer = Grid.SceneLayer.BuildingFront;
-		buildingDef.OverheatTemperature = 2273.15f;
-		buildingDef.Floodable = false;
-		buildingDef.PermittedRotations = PermittedRotations.FlipH;
-		buildingDef.AttachmentSlotTag = "MonumentTop";
-		buildingDef.ObjectLayer = ObjectLayer.Building;
-		buildingDef.attachablePosition = new CellOffset(0, 0);
-		buildingDef.RequiresPowerInput = false;
-		buildingDef.CanMove = false;
-		return buildingDef;
+		BuildingTemplates.CreateMonumentBuildingDef(obj);
+		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
+		obj.OverheatTemperature = 2273.15f;
+		obj.Floodable = false;
+		obj.PermittedRotations = PermittedRotations.FlipH;
+		obj.AttachmentSlotTag = "MonumentTop";
+		obj.ObjectLayer = ObjectLayer.Building;
+		obj.attachablePosition = new CellOffset(0, 0);
+		obj.RequiresPowerInput = false;
+		obj.CanMove = false;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		go.AddOrGet<LoopingSounds>();
-		MonumentPart monumentPart = go.AddOrGet<MonumentPart>();
-		monumentPart.part = MonumentPart.Part.Top;
+		go.AddOrGet<MonumentPart>().part = MonumentPart.Part.Top;
 	}
 
 	public override void DoPostConfigurePreview(BuildingDef def, GameObject go)
@@ -74,6 +73,18 @@ public class MonumentTopConfig : IBuildingConfig
 			monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_o", "lightbug"));
 			monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_p", "slickster"));
 			monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_q", "pacu"));
+			if (DlcManager.IsExpansion1Active())
+			{
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_r", "bee"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_s", "critter"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_t", "caterpillar"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_u", "worm"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_v", "scout_bot"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_w", "MiMa"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_x", "Stinky"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_y", "Harold"));
+				monumentPart.selectableStatesAndSymbols.Add(new Tuple<string, string>("option_z", "Nails"));
+			}
 		};
 	}
 }

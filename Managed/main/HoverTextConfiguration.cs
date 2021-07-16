@@ -34,7 +34,7 @@ public class HoverTextConfiguration : KMonoBehaviour
 	public string ActionName = "";
 
 	[HideInInspector]
-	public string ToolName = null;
+	public string ToolName;
 
 	protected string backStr;
 

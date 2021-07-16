@@ -51,7 +51,7 @@ public class Recipe : IHasSortOrder
 
 	public GameObject FabricationVisualizer;
 
-	public SimHashes ResultElementOverride = (SimHashes)0;
+	public SimHashes ResultElementOverride;
 
 	public Sprite Icon;
 
@@ -75,7 +75,11 @@ public class Recipe : IHasSortOrder
 	{
 		get
 		{
-			return (nameOverride == null) ? Result.ProperName() : nameOverride;
+			if (nameOverride != null)
+			{
+				return nameOverride;
+			}
+			return Result.ProperName();
 		}
 		set
 		{
@@ -183,7 +187,7 @@ public class Recipe : IHasSortOrder
 			if (i < selected_elements.Count)
 			{
 				Element element = selected_elements[i];
-				if (element?.HasTag(Ingredients[i].tag) ?? false)
+				if (element != null && element.HasTag(Ingredients[i].tag))
 				{
 					list.Add(new Ingredient(GameTagExtensions.Create(element.id), num));
 					flag = true;
@@ -278,8 +282,7 @@ public class Recipe : IHasSortOrder
 
 	public BuildingDef GetBuildingDef()
 	{
-		GameObject prefab = Assets.GetPrefab(Result);
-		BuildingComplete component = prefab.GetComponent<BuildingComplete>();
+		BuildingComplete component = Assets.GetPrefab(Result).GetComponent<BuildingComplete>();
 		if (component != null)
 		{
 			return component.Def;
@@ -296,8 +299,7 @@ public class Recipe : IHasSortOrder
 		}
 		else
 		{
-			GameObject prefab = Assets.GetPrefab(Result);
-			KBatchedAnimController component = prefab.GetComponent<KBatchedAnimController>();
+			KBatchedAnimController component = Assets.GetPrefab(Result).GetComponent<KBatchedAnimController>();
 			if (component != null)
 			{
 				result = Def.GetUISpriteFromMultiObjectAnim(component.AnimFiles[0]);
@@ -308,6 +310,10 @@ public class Recipe : IHasSortOrder
 
 	public Color GetUIColor()
 	{
-		return (Icon != null) ? IconColor : Color.white;
+		if (!(Icon != null))
+		{
+			return Color.white;
+		}
+		return IconColor;
 	}
 }

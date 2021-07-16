@@ -27,16 +27,16 @@ public class DecontaminationShowerConfig : IBuildingConfig
 	public override BuildingDef CreateBuildingDef()
 	{
 		string[] rADIATION_CONTAINMENT = MATERIALS.RADIATION_CONTAINMENT;
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(construction_mass: new float[2]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: new float[2]
 		{
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER5[0],
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER2[0]
 		}, construction_materials: rADIATION_CONTAINMENT, melting_point: 1600f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER0, id: "DecontaminationShower", width: 2, height: 4, anim: "decontamination_shower_kanim", hitpoints: 250, construction_time: 120f, decor: BUILDINGS.DECOR.PENALTY.TIER3);
-		buildingDef.InputConduitType = ConduitType.Liquid;
-		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.UtilityInputOffset = new CellOffset(1, 2);
-		return buildingDef;
+		obj.InputConduitType = ConduitType.Liquid;
+		obj.ViewMode = OverlayModes.LiquidConduits.ID;
+		obj.AudioCategory = "Metal";
+		obj.UtilityInputOffset = new CellOffset(1, 2);
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -70,8 +70,7 @@ public class DecontaminationShowerConfig : IBuildingConfig
 		AutoStorageDropper.Def def = go.AddOrGetDef<AutoStorageDropper.Def>();
 		def.dropTag = SimHashes.DirtyWater.CreateTag();
 		def.dropOffset = new CellOffset(1, 0);
-		Storage storage = go.AddOrGet<Storage>();
-		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
+		go.AddOrGet<Storage>().SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

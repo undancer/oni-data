@@ -254,11 +254,12 @@ public class ToolMenu : KScreen
 	private Texture2D CreatePlaneTexture(out byte[] textureBytes, int width, int height)
 	{
 		textureBytes = new byte[width * height * 4];
-		Texture2D texture2D = new Texture2D(width, height, TextureUtil.TextureFormatToGraphicsFormat(TextureFormat.RGBA32), TextureCreationFlags.None);
-		texture2D.name = "toolEffectDisplayPlane";
-		texture2D.wrapMode = TextureWrapMode.Clamp;
-		texture2D.filterMode = FilterMode.Point;
-		return texture2D;
+		return new Texture2D(width, height, TextureUtil.TextureFormatToGraphicsFormat(TextureFormat.RGBA32), TextureCreationFlags.None)
+		{
+			name = "toolEffectDisplayPlane",
+			wrapMode = TextureWrapMode.Clamp,
+			filterMode = FilterMode.Point
+		};
 	}
 
 	private void Update()
@@ -771,27 +772,26 @@ public class ToolMenu : KScreen
 			Sprite sprite = Assets.GetSprite(toolCollection.icon);
 			if (sprite != null)
 			{
-				Image component = toggle.transform.Find("FG").GetComponent<Image>();
-				component.sprite = sprite;
+				toggle.transform.Find("FG").GetComponent<Image>().sprite = sprite;
 			}
 			Transform transform = toggle.transform.Find("Text");
 			if (transform != null)
 			{
-				LocText component2 = transform.GetComponent<LocText>();
-				if (component2 != null)
+				LocText component = transform.GetComponent<LocText>();
+				if (component != null)
 				{
-					component2.text = toolCollection.text;
+					component.text = toolCollection.text;
 				}
 			}
-			ToolTip component3 = toggle.GetComponent<ToolTip>();
-			if (!component3)
+			ToolTip component2 = toggle.GetComponent<ToolTip>();
+			if (!component2)
 			{
 				continue;
 			}
 			if (row[i].tools.Count == 1)
 			{
 				string newString = GameUtil.ReplaceHotkeyString(row[i].tools[0].tooltip, row[i].tools[0].hotkey);
-				component3.AddMultiStringTooltip(newString, ToggleToolTipTextStyleSetting);
+				component2.AddMultiStringTooltip(newString, ToggleToolTipTextStyleSetting);
 				continue;
 			}
 			string text = row[i].tooltip;
@@ -799,7 +799,7 @@ public class ToolMenu : KScreen
 			{
 				text = GameUtil.ReplaceHotkeyString(text, row[i].hotkey);
 			}
-			component3.AddMultiStringTooltip(text, ToggleToolTipTextStyleSetting);
+			component2.AddMultiStringTooltip(text, ToggleToolTipTextStyleSetting);
 		}
 	}
 
@@ -818,23 +818,22 @@ public class ToolMenu : KScreen
 				Sprite sprite = Assets.GetSprite(toolCollection.icon);
 				if (sprite != null)
 				{
-					Image component = gameObject.transform.Find("FG").GetComponent<Image>();
-					component.sprite = sprite;
+					gameObject.transform.Find("FG").GetComponent<Image>().sprite = sprite;
 				}
 				Transform transform = gameObject.transform.Find("Text");
 				if (transform != null)
 				{
-					LocText component2 = transform.GetComponent<LocText>();
-					if (component2 != null)
+					LocText component = transform.GetComponent<LocText>();
+					if (component != null)
 					{
-						component2.text = toolCollection.tools[j].text;
+						component.text = toolCollection.tools[j].text;
 					}
 				}
-				ToolTip component3 = gameObject.GetComponent<ToolTip>();
-				if ((bool)component3)
+				ToolTip component2 = gameObject.GetComponent<ToolTip>();
+				if ((bool)component2)
 				{
 					string newString = ((toolCollection.tools.Count > 1) ? GameUtil.ReplaceHotkeyString(toolCollection.tools[j].tooltip, toolCollection.hotkey, toolCollection.tools[j].hotkey) : GameUtil.ReplaceHotkeyString(toolCollection.tools[j].tooltip, toolCollection.tools[j].hotkey));
-					component3.AddMultiStringTooltip(newString, ToggleToolTipTextStyleSetting);
+					component2.AddMultiStringTooltip(newString, ToggleToolTipTextStyleSetting);
 				}
 			}
 		}

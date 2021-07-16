@@ -65,12 +65,7 @@ public class TelescopeSideScreen : SideScreenContent
 
 	private void RefreshDisplayState(object data = null)
 	{
-		if (SelectTool.Instance.selected == null)
-		{
-			return;
-		}
-		Telescope component = SelectTool.Instance.selected.GetComponent<Telescope>();
-		if (!(component == null))
+		if (!(SelectTool.Instance.selected == null) && !(SelectTool.Instance.selected.GetComponent<Telescope>() == null))
 		{
 			if (!SpacecraftManager.instance.HasAnalysisTarget())
 			{

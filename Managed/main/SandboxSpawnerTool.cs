@@ -41,8 +41,7 @@ public class SandboxSpawnerTool : InterfaceTool
 			}
 			else
 			{
-				GameObject gameObject = GameUtil.KInstantiate(prefab, Grid.CellToPosCBC(currentCell, Grid.SceneLayer.Creatures), Grid.SceneLayer.Creatures);
-				gameObject.SetActive(value: true);
+				GameUtil.KInstantiate(prefab, Grid.CellToPosCBC(currentCell, Grid.SceneLayer.Creatures), Grid.SceneLayer.Creatures).SetActive(value: true);
 			}
 			UISounds.PlaySound(UISounds.Sound.ClickObject);
 		}
@@ -70,8 +69,7 @@ public class SandboxSpawnerTool : InterfaceTool
 		Vector3 position = Grid.CellToPosCBC(currentCell, Grid.SceneLayer.Move);
 		gameObject.transform.SetLocalPosition(position);
 		gameObject.SetActive(value: true);
-		MinionStartingStats minionStartingStats = new MinionStartingStats(is_starter_minion: false);
-		minionStartingStats.Apply(gameObject);
+		new MinionStartingStats(is_starter_minion: false).Apply(gameObject);
 	}
 
 	public override void OnKeyDown(KButtonEvent e)

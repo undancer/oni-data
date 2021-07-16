@@ -72,7 +72,17 @@ public class ComplexFabricatorWorkable : Workable
 		}
 	}
 
-	public ComplexRecipe CurrentWorkingOrder => (fabricator != null) ? fabricator.CurrentWorkingOrder : null;
+	public ComplexRecipe CurrentWorkingOrder
+	{
+		get
+		{
+			if (!(fabricator != null))
+			{
+				return null;
+			}
+			return fabricator.CurrentWorkingOrder;
+		}
+	}
 
 	protected override void OnPrefabInit()
 	{
@@ -87,7 +97,11 @@ public class ComplexFabricatorWorkable : Workable
 	public override string GetConversationTopic()
 	{
 		string conversationTopic = fabricator.GetConversationTopic();
-		return (conversationTopic != null) ? conversationTopic : base.GetConversationTopic();
+		if (conversationTopic == null)
+		{
+			return base.GetConversationTopic();
+		}
+		return conversationTopic;
 	}
 
 	protected override void OnStartWork(Worker worker)

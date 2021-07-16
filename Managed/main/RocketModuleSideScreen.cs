@@ -161,9 +161,9 @@ public class RocketModuleSideScreen : SideScreenContent
 
 	private void ClickChangeModule()
 	{
-		SelectModuleSideScreen selectModuleSideScreen = (SelectModuleSideScreen)DetailsScreen.Instance.SetSecondarySideScreen(changeModuleSideScreen, UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.CHANGEMODULEPANEL);
-		selectModuleSideScreen.addingNewModule = false;
-		selectModuleSideScreen.SetTarget(reorderable.gameObject);
+		SelectModuleSideScreen obj = (SelectModuleSideScreen)DetailsScreen.Instance.SetSecondarySideScreen(changeModuleSideScreen, UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.CHANGEMODULEPANEL);
+		obj.addingNewModule = false;
+		obj.SetTarget(reorderable.gameObject);
 	}
 
 	private void ClickViewInterior()

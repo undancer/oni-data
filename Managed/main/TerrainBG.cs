@@ -65,9 +65,8 @@ public class TerrainBG : KMonoBehaviour
 	{
 		Mesh mesh = new Mesh();
 		mesh.name = name;
-		int num = 4;
-		Vector3[] array = new Vector3[num];
-		Vector2[] array2 = new Vector2[num];
+		Vector3[] array = new Vector3[4];
+		Vector2[] array2 = new Vector2[4];
 		int[] array3 = new int[6];
 		array = new Vector3[4]
 		{
@@ -103,9 +102,8 @@ public class TerrainBG : KMonoBehaviour
 	{
 		Mesh mesh = new Mesh();
 		mesh.name = name;
-		int num = 4;
-		Vector3[] array = new Vector3[num];
-		Vector2[] array2 = new Vector2[num];
+		Vector3[] array = new Vector3[4];
+		Vector2[] array2 = new Vector2[4];
 		int[] array3 = new int[6];
 		array = new Vector3[4]
 		{
@@ -141,9 +139,8 @@ public class TerrainBG : KMonoBehaviour
 	{
 		Mesh mesh = new Mesh();
 		mesh.name = name;
-		int num = 4;
-		Vector3[] array = new Vector3[num];
-		Vector2[] array2 = new Vector2[num];
+		Vector3[] array = new Vector3[4];
+		Vector2[] array2 = new Vector2[4];
 		int[] array3 = new int[6];
 		array = new Vector3[4]
 		{

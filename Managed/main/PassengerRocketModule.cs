@@ -10,7 +10,7 @@ public class PassengerRocketModule : KMonoBehaviour
 	}
 
 	[Serialize]
-	private RequestCrewState passengersRequested = RequestCrewState.Release;
+	private RequestCrewState passengersRequested;
 
 	private static readonly EventSystem.IntraObjectHandler<PassengerRocketModule> OnRocketOnGroundTagDelegate = GameUtil.CreateHasTagHandler(GameTags.RocketOnGround, delegate(PassengerRocketModule component, object data)
 	{
@@ -44,8 +44,7 @@ public class PassengerRocketModule : KMonoBehaviour
 		Subscribe(-71801987, RefreshDelegate);
 		Subscribe(-1277991738, OnLaunchDelegate);
 		Subscribe(-1432940121, OnReachableChangedDelegate);
-		ReachabilityMonitor.Instance instance = new ReachabilityMonitor.Instance(GetComponent<Workable>());
-		instance.StartSM();
+		new ReachabilityMonitor.Instance(GetComponent<Workable>()).StartSM();
 	}
 
 	protected override void OnCleanUp()
@@ -61,9 +60,9 @@ public class PassengerRocketModule : KMonoBehaviour
 
 	private void OnReachableChanged(object data)
 	{
-		bool flag = (bool)data;
+		bool num = (bool)data;
 		KSelectable component = GetComponent<KSelectable>();
-		if (flag)
+		if (num)
 		{
 			component.RemoveStatusItem(Db.Get().BuildingStatusItems.PassengerModuleUnreachable);
 		}
@@ -82,7 +81,15 @@ public class PassengerRocketModule : KMonoBehaviour
 	public bool ShouldCrewGetIn()
 	{
 		CraftModuleInterface craftInterface = GetComponent<RocketModuleCluster>().CraftInterface;
-		return passengersRequested == RequestCrewState.Request || (craftInterface.IsLaunchRequested() && craftInterface.CheckPreppedForLaunch());
+		if (passengersRequested != RequestCrewState.Request)
+		{
+			if (craftInterface.IsLaunchRequested())
+			{
+				return craftInterface.CheckPreppedForLaunch();
+			}
+			return false;
+		}
+		return true;
 	}
 
 	private void RefreshOrders()
@@ -177,9 +184,9 @@ public class PassengerRocketModule : KMonoBehaviour
 		{
 			return false;
 		}
-		foreach (IAssignableIdentity item2 in list)
+		foreach (MinionAssignablesProxy item2 in list)
 		{
-			if (((MinionAssignablesProxy)item2).GetTargetGameObject().GetMyWorldId() == Grid.WorldIdx[GetComponent<ClustercraftExteriorDoor>().TargetCell()])
+			if (item2.GetTargetGameObject().GetMyWorldId() == Grid.WorldIdx[GetComponent<ClustercraftExteriorDoor>().TargetCell()])
 			{
 				return true;
 			}
@@ -195,9 +202,9 @@ public class PassengerRocketModule : KMonoBehaviour
 			return new Tuple<int, int>(0, 0);
 		}
 		int num = 0;
-		foreach (IAssignableIdentity item in members)
+		foreach (MinionAssignablesProxy item in members)
 		{
-			if (((MinionAssignablesProxy)item).GetTargetGameObject().GetMyWorldId() != Grid.WorldIdx[GetComponent<ClustercraftExteriorDoor>().TargetCell()])
+			if (item.GetTargetGameObject().GetMyWorldId() != Grid.WorldIdx[GetComponent<ClustercraftExteriorDoor>().TargetCell()])
 			{
 				num++;
 			}
@@ -213,12 +220,11 @@ public class PassengerRocketModule : KMonoBehaviour
 			return false;
 		}
 		bool flag = false;
-		foreach (IAssignableIdentity item in members)
+		foreach (MinionAssignablesProxy item in members)
 		{
-			MinionAssignablesProxy minionAssignablesProxy = (MinionAssignablesProxy)item;
-			if (minionAssignablesProxy != null)
+			if (item != null)
 			{
-				MinionResume component = minionAssignablesProxy.GetTargetGameObject().GetComponent<MinionResume>();
+				MinionResume component = item.GetTargetGameObject().GetComponent<MinionResume>();
 				if (component != null && component.HasPerk(Db.Get().SkillPerks.CanUseRocketControlStation))
 				{
 					flag = true;
@@ -230,9 +236,9 @@ public class PassengerRocketModule : KMonoBehaviour
 		{
 			return false;
 		}
-		foreach (IAssignableIdentity item2 in members)
+		foreach (MinionAssignablesProxy item2 in members)
 		{
-			if (((MinionAssignablesProxy)item2).GetTargetGameObject().GetMyWorldId() != Grid.WorldIdx[GetComponent<ClustercraftExteriorDoor>().TargetCell()])
+			if (item2.GetTargetGameObject().GetMyWorldId() != Grid.WorldIdx[GetComponent<ClustercraftExteriorDoor>().TargetCell()])
 			{
 				return false;
 			}

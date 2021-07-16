@@ -16,7 +16,7 @@ public abstract class ProcessCondition
 		Ready
 	}
 
-	protected ProcessCondition parentCondition = null;
+	protected ProcessCondition parentCondition;
 
 	public abstract Status EvaluateCondition();
 

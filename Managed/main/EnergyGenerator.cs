@@ -75,13 +75,13 @@ public class EnergyGenerator : Generator, IGameObjectEffectDescriptor, ISingleSl
 	[Serialize]
 	private float batteryRefillPercent = 0.5f;
 
-	public bool ignoreBatteryRefillPercent = false;
+	public bool ignoreBatteryRefillPercent;
 
 	public bool hasMeter = true;
 
 	private static StatusItem batteriesSufficientlyFull;
 
-	public Meter.Offset meterOffset = Meter.Offset.Infront;
+	public Meter.Offset meterOffset;
 
 	[SerializeField]
 	public Formula formula;
@@ -154,8 +154,7 @@ public class EnergyGenerator : Generator, IGameObjectEffectDescriptor, ISingleSl
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		EnergyGenerator component = gameObject.GetComponent<EnergyGenerator>();
+		EnergyGenerator component = ((GameObject)data).GetComponent<EnergyGenerator>();
 		if (component != null)
 		{
 			batteryRefillPercent = component.batteryRefillPercent;
@@ -201,8 +200,7 @@ public class EnergyGenerator : Generator, IGameObjectEffectDescriptor, ISingleSl
 		if (hasMeter)
 		{
 			InputItem inputItem = formula.inputs[0];
-			float massAvailable = storage.GetMassAvailable(inputItem.tag);
-			float positionPercent = massAvailable / inputItem.maxStoredMass;
+			float positionPercent = storage.GetMassAvailable(inputItem.tag) / inputItem.maxStoredMass;
 			meter.SetPositionPercent(positionPercent);
 		}
 		ushort circuitID = base.CircuitID;
@@ -296,8 +294,7 @@ public class EnergyGenerator : Generator, IGameObjectEffectDescriptor, ISingleSl
 		for (int i = 0; i < formula.outputs.Length; i++)
 		{
 			OutputItem outputItem = formula.outputs[i];
-			Element element = ElementLoader.FindElementByHash(outputItem.element);
-			string arg = element.tag.ProperName();
+			string arg = ElementLoader.FindElementByHash(outputItem.element).tag.ProperName();
 			Descriptor item = default(Descriptor);
 			if (outputItem.minTemperature > 0f)
 			{
@@ -375,8 +372,7 @@ public class EnergyGenerator : Generator, IGameObjectEffectDescriptor, ISingleSl
 			storage.Store(go, hide_popups: true);
 			return;
 		}
-		int cell = Grid.PosToCell(base.transform.GetPosition());
-		int num2 = Grid.OffsetCell(cell, output.emitOffset);
+		int num2 = Grid.OffsetCell(Grid.PosToCell(base.transform.GetPosition()), output.emitOffset);
 		float temperature = Mathf.Max(root_pe.Temperature, output.minTemperature);
 		if (element.IsGas)
 		{

@@ -38,7 +38,11 @@ public class Growing : StateMachineComponent<Growing.StatesInstance>, IGameObjec
 
 		public bool IsWilting()
 		{
-			return base.master.wiltCondition != null && base.master.wiltCondition.IsWilting();
+			if (base.master.wiltCondition != null)
+			{
+				return base.master.wiltCondition.IsWilting();
+			}
+			return false;
 		}
 
 		public bool IsSleeping()
@@ -48,7 +52,11 @@ public class Growing : StateMachineComponent<Growing.StatesInstance>, IGameObjec
 
 		public bool CanExitStalled()
 		{
-			return !IsWilting() && !IsSleeping();
+			if (!IsWilting())
+			{
+				return !IsSleeping();
+			}
+			return false;
 		}
 	}
 
@@ -250,8 +258,7 @@ public class Growing : StateMachineComponent<Growing.StatesInstance>, IGameObjec
 
 	public float TimeUntilNextHarvest()
 	{
-		float num = maturity.GetMax() - maturity.value;
-		return num / maturity.GetDelta();
+		return (maturity.GetMax() - maturity.value) / maturity.GetDelta();
 	}
 
 	public float DomesticGrowthTime()
@@ -276,7 +283,11 @@ public class Growing : StateMachineComponent<Growing.StatesInstance>, IGameObjec
 
 	public float PercentOldAge()
 	{
-		return shouldGrowOld ? (oldAge.value / oldAge.GetMax()) : 0f;
+		if (!shouldGrowOld)
+		{
+			return 0f;
+		}
+		return oldAge.value / oldAge.GetMax();
 	}
 
 	public List<Descriptor> GetDescriptors(GameObject go)

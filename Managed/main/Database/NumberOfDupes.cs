@@ -4,7 +4,7 @@ namespace Database
 {
 	public class NumberOfDupes : VictoryColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
-		private int numDupes = 0;
+		private int numDupes;
 
 		public override string Name()
 		{

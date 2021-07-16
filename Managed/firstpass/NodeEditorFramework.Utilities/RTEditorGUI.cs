@@ -37,8 +37,7 @@ namespace NodeEditorFramework.Utilities
 			{
 				return totalPos;
 			}
-			Rect position = new Rect(totalPos.x + indent, totalPos.y, Mathf.Min(getLabelWidth() - indent, totalPos.width / 2f), totalPos.height);
-			GUI.Label(position, label, style);
+			GUI.Label(new Rect(totalPos.x + indent, totalPos.y, Mathf.Min(getLabelWidth() - indent, totalPos.width / 2f), totalPos.height), label, style);
 			return new Rect(totalPos.x + getLabelWidth(), totalPos.y, totalPos.width - getLabelWidth(), totalPos.height);
 		}
 
@@ -48,8 +47,7 @@ namespace NodeEditorFramework.Utilities
 			{
 				return totalPos;
 			}
-			Rect position = new Rect(totalPos.x + indent, totalPos.y, totalPos.width * percentage, totalPos.height);
-			GUI.Label(position, label, style);
+			GUI.Label(new Rect(totalPos.x + indent, totalPos.y, totalPos.width * percentage, totalPos.height), label, style);
 			return new Rect(totalPos.x + totalPos.width * percentage, totalPos.y, totalPos.width * (1f - percentage), totalPos.height);
 		}
 
@@ -212,9 +210,7 @@ namespace NodeEditorFramework.Utilities
 			{
 				style = GUI.skin.textField;
 			}
-			Rect fieldRect = GetFieldRect(label, style, options);
-			Rect position = PrefixLabel(fieldRect, 0.5f, label, style);
-			text = GUI.TextField(position, text);
+			text = GUI.TextField(PrefixLabel(GetFieldRect(label, style, options), 0.5f, label, style), text);
 			return text;
 		}
 
@@ -229,10 +225,9 @@ namespace NodeEditorFramework.Utilities
 			{
 				style = GUI.skin.textField;
 			}
-			Rect sliderRect = GetSliderRect(label, style, options);
-			Rect sliderRect2 = PrefixLabel(sliderRect, 0.5f, label, style);
-			selected = Mathf.RoundToInt(GUI.HorizontalSlider(GetSliderRect(sliderRect2), selected, 0f, selectableOptions.Length - 1));
-			GUI.Label(GetSliderFieldRect(sliderRect2), selectableOptions[selected]);
+			Rect sliderRect = PrefixLabel(GetSliderRect(label, style, options), 0.5f, label, style);
+			selected = Mathf.RoundToInt(GUI.HorizontalSlider(GetSliderRect(sliderRect), selected, 0f, selectableOptions.Length - 1));
+			GUI.Label(GetSliderFieldRect(sliderRect), selectableOptions[selected]);
 			return selected;
 		}
 
@@ -245,10 +240,9 @@ namespace NodeEditorFramework.Utilities
 
 		public static int MathPowerSliderRaw(GUIContent label, int baseValue, int power, int minPow, int maxPow, params GUILayoutOption[] options)
 		{
-			Rect sliderRect = GetSliderRect(label, GUI.skin.label, options);
-			Rect sliderRect2 = PrefixLabel(sliderRect, 0.5f, label, GUI.skin.label);
-			power = Mathf.RoundToInt(GUI.HorizontalSlider(GetSliderRect(sliderRect2), power, minPow, maxPow));
-			GUI.Label(GetSliderFieldRect(sliderRect2), Mathf.Pow(baseValue, power).ToString());
+			Rect sliderRect = PrefixLabel(GetSliderRect(label, GUI.skin.label, options), 0.5f, label, GUI.skin.label);
+			power = Mathf.RoundToInt(GUI.HorizontalSlider(GetSliderRect(sliderRect), power, minPow, maxPow));
+			GUI.Label(GetSliderFieldRect(sliderRect), Mathf.Pow(baseValue, power).ToString());
 			return power;
 		}
 
@@ -294,10 +288,9 @@ namespace NodeEditorFramework.Utilities
 
 		public static float Slider(GUIContent label, float value, float minValue, float maxValue, params GUILayoutOption[] options)
 		{
-			Rect sliderRect = GetSliderRect(label, GUI.skin.label, options);
-			Rect sliderRect2 = PrefixLabel(sliderRect, 0.5f, label, GUI.skin.label);
-			value = GUI.HorizontalSlider(GetSliderRect(sliderRect2), value, minValue, maxValue);
-			value = Mathf.Min(maxValue, Mathf.Max(minValue, FloatField(GetSliderFieldRect(sliderRect2), value, GUILayout.Width(60f))));
+			Rect sliderRect = PrefixLabel(GetSliderRect(label, GUI.skin.label, options), 0.5f, label, GUI.skin.label);
+			value = GUI.HorizontalSlider(GetSliderRect(sliderRect), value, minValue, maxValue);
+			value = Mathf.Min(maxValue, Mathf.Max(minValue, FloatField(GetSliderFieldRect(sliderRect), value, GUILayout.Width(60f))));
 			return value;
 		}
 
@@ -308,15 +301,12 @@ namespace NodeEditorFramework.Utilities
 
 		public static float FloatField(GUIContent label, float value, params GUILayoutOption[] options)
 		{
-			Rect fieldRect = GetFieldRect(label, GUI.skin.label, options);
-			Rect pos = PrefixLabel(fieldRect, 0.5f, label, GUI.skin.label);
-			return FloatField(pos, value, options);
+			return FloatField(PrefixLabel(GetFieldRect(label, GUI.skin.label, options), 0.5f, label, GUI.skin.label), value, options);
 		}
 
 		public static float FloatField(float value, params GUILayoutOption[] options)
 		{
-			Rect fieldRect = GetFieldRect(GUIContent.none, null, options);
-			return FloatField(fieldRect, value, options);
+			return FloatField(GetFieldRect(GUIContent.none, null, options), value, options);
 		}
 
 		public static float FloatField(Rect pos, float value, params GUILayoutOption[] options)
@@ -379,8 +369,7 @@ namespace NodeEditorFramework.Utilities
 			List<char> list = new List<char>(str);
 			for (int i = 0; i < list.Count; i++)
 			{
-				UnicodeCategory unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(str[i]);
-				if (unicodeCategory != UnicodeCategory.DecimalDigitNumber)
+				if (CharUnicodeInfo.GetUnicodeCategory(str[i]) != UnicodeCategory.DecimalDigitNumber)
 				{
 					list.RemoveRange(i, list.Count - i);
 					break;
@@ -431,9 +420,6 @@ namespace NodeEditorFramework.Utilities
 			{
 				GUIStyle style = new GUIStyle(GUI.skin.box);
 				flag = GUILayout.Button(label, style);
-			}
-			if (flag)
-			{
 			}
 			return obj;
 		}

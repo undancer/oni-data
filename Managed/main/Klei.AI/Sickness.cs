@@ -49,7 +49,7 @@ namespace Klei.AI
 
 		private float sicknessDuration = 600f;
 
-		public float fatalityDuration = 0f;
+		public float fatalityDuration;
 
 		public HashedString id;
 

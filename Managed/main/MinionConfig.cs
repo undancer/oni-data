@@ -66,6 +66,7 @@ public class MinionConfig : IEntityConfig
 			Storage.StoredItemModifier.Preserve,
 			Storage.StoredItemModifier.Seal
 		});
+		gameObject.AddTag(GameTags.CorrosionProof);
 		gameObject.AddOrGet<Health>();
 		OxygenBreather oxygenBreather = gameObject.AddOrGet<OxygenBreather>();
 		oxygenBreather.O2toCO2conversion = 0.02f;
@@ -112,8 +113,7 @@ public class MinionConfig : IEntityConfig
 		KBoxCollider2D kBoxCollider2D = gameObject.AddOrGet<KBoxCollider2D>();
 		kBoxCollider2D.offset = new Vector2(0f, 0.8f);
 		kBoxCollider2D.size = new Vector2(1f, 1.5f);
-		SnapOn snapOn = gameObject.AddOrGet<SnapOn>();
-		snapOn.snapPoints = new List<SnapOn.SnapPoint>(new SnapOn.SnapPoint[19]
+		gameObject.AddOrGet<SnapOn>().snapPoints = new List<SnapOn.SnapPoint>(new SnapOn.SnapPoint[19]
 		{
 			new SnapOn.SnapPoint
 			{
@@ -279,15 +279,12 @@ public class MinionConfig : IEntityConfig
 		gameObject.AddOrGet<FaceGraph>();
 		gameObject.AddOrGet<Accessorizer>();
 		gameObject.AddOrGet<Schedulable>();
-		LoopingSounds loopingSounds = gameObject.AddOrGet<LoopingSounds>();
-		loopingSounds.updatePosition = true;
+		gameObject.AddOrGet<LoopingSounds>().updatePosition = true;
 		gameObject.AddOrGet<AnimEventHandler>();
-		FactionAlignment factionAlignment = gameObject.AddOrGet<FactionAlignment>();
-		factionAlignment.Alignment = FactionManager.FactionID.Duplicant;
+		gameObject.AddOrGet<FactionAlignment>().Alignment = FactionManager.FactionID.Duplicant;
 		gameObject.AddOrGet<Weapon>();
 		gameObject.AddOrGet<RangedAttackable>();
-		CharacterOverlay characterOverlay = gameObject.AddOrGet<CharacterOverlay>();
-		characterOverlay.shouldShowName = true;
+		gameObject.AddOrGet<CharacterOverlay>().shouldShowName = true;
 		OccupyArea occupyArea = gameObject.AddOrGet<OccupyArea>();
 		occupyArea.objectLayers = new ObjectLayer[1];
 		occupyArea.ApplyToCells = false;
@@ -311,8 +308,7 @@ public class MinionConfig : IEntityConfig
 		gameObject.AddOrGet<MinionResume>();
 		DuplicantNoiseLevels.SetupNoiseLevels();
 		SetupLaserEffects(gameObject);
-		SymbolOverrideController symbolOverrideController = SymbolOverrideControllerUtil.AddToPrefab(gameObject);
-		symbolOverrideController.applySymbolOverridesEveryFrame = true;
+		SymbolOverrideControllerUtil.AddToPrefab(gameObject).applySymbolOverridesEveryFrame = true;
 		ConfigureSymbols(gameObject);
 		return gameObject;
 	}
@@ -439,16 +435,14 @@ public class MinionConfig : IEntityConfig
 			context = "demolish"
 		};
 		array[13] = laserEffect;
-		LaserEffect[] array2 = array;
 		KBatchedAnimController component = prefab.GetComponent<KBatchedAnimController>();
-		LaserEffect[] array3 = array2;
-		for (int i = 0; i < array3.Length; i++)
+		LaserEffect[] array2 = array;
+		for (int i = 0; i < array2.Length; i++)
 		{
-			LaserEffect laserEffect2 = array3[i];
+			LaserEffect laserEffect2 = array2[i];
 			GameObject gameObject2 = new GameObject(laserEffect2.id);
 			gameObject2.transform.parent = gameObject.transform;
-			KPrefabID kPrefabID = gameObject2.AddOrGet<KPrefabID>();
-			kPrefabID.PrefabTag = new Tag(laserEffect2.id);
+			gameObject2.AddOrGet<KPrefabID>().PrefabTag = new Tag(laserEffect2.id);
 			KBatchedAnimTracker kBatchedAnimTracker = gameObject2.AddOrGet<KBatchedAnimTracker>();
 			kBatchedAnimTracker.controller = component;
 			kBatchedAnimTracker.symbol = new HashedString("snapTo_rgtHand");
@@ -473,18 +467,15 @@ public class MinionConfig : IEntityConfig
 	{
 		AmountInstance amountInstance = Db.Get().Amounts.ImmuneLevel.Lookup(go);
 		amountInstance.value = amountInstance.GetMax();
-		AmountInstance amountInstance2 = Db.Get().Amounts.Bladder.Lookup(go);
-		amountInstance2.value = UnityEngine.Random.Range(0f, 10f);
-		AmountInstance amountInstance3 = Db.Get().Amounts.Stress.Lookup(go);
-		amountInstance3.value = 5f;
-		AmountInstance amountInstance4 = Db.Get().Amounts.Temperature.Lookup(go);
-		amountInstance4.value = 310.15f;
-		AmountInstance amountInstance5 = Db.Get().Amounts.Stamina.Lookup(go);
-		amountInstance5.value = amountInstance5.GetMax();
-		AmountInstance amountInstance6 = Db.Get().Amounts.Breath.Lookup(go);
-		amountInstance6.value = amountInstance6.GetMax();
-		AmountInstance amountInstance7 = Db.Get().Amounts.Calories.Lookup(go);
-		amountInstance7.value = 0.8875f * amountInstance7.GetMax();
+		Db.Get().Amounts.Bladder.Lookup(go).value = UnityEngine.Random.Range(0f, 10f);
+		Db.Get().Amounts.Stress.Lookup(go).value = 5f;
+		Db.Get().Amounts.Temperature.Lookup(go).value = 310.15f;
+		AmountInstance amountInstance2 = Db.Get().Amounts.Stamina.Lookup(go);
+		amountInstance2.value = amountInstance2.GetMax();
+		AmountInstance amountInstance3 = Db.Get().Amounts.Breath.Lookup(go);
+		amountInstance3.value = amountInstance3.GetMax();
+		AmountInstance amountInstance4 = Db.Get().Amounts.Calories.Lookup(go);
+		amountInstance4.value = 0.8875f * amountInstance4.GetMax();
 	}
 
 	public void OnSpawn(GameObject go)
@@ -500,21 +491,19 @@ public class MinionConfig : IEntityConfig
 		component.Add(new ToiletSensor(component));
 		component.Add(new MingleCellSensor(component));
 		component.Add(new BalloonStandCellSensor(component));
-		StateMachineController component2 = go.GetComponent<StateMachineController>();
-		RationalAi.Instance instance = new RationalAi.Instance(component2);
-		instance.StartSM();
+		new RationalAi.Instance(go.GetComponent<StateMachineController>()).StartSM();
 		if (go.GetComponent<OxygenBreather>().GetGasProvider() == null)
 		{
 			go.GetComponent<OxygenBreather>().SetGasProvider(new GasBreatherFromWorldProvider());
 		}
-		Navigator component3 = go.GetComponent<Navigator>();
-		component3.transitionDriver.overrideLayers.Add(new BipedTransitionLayer(component3, 3.325f, 2.5f));
-		component3.transitionDriver.overrideLayers.Add(new DoorTransitionLayer(component3));
-		component3.transitionDriver.overrideLayers.Add(new TubeTransitionLayer(component3));
-		component3.transitionDriver.overrideLayers.Add(new LadderDiseaseTransitionLayer(component3));
-		component3.transitionDriver.overrideLayers.Add(new ReactableTransitionLayer(component3));
-		component3.transitionDriver.overrideLayers.Add(new NavTeleportTransitionLayer(component3));
-		component3.transitionDriver.overrideLayers.Add(new SplashTransitionLayer(component3));
+		Navigator component2 = go.GetComponent<Navigator>();
+		component2.transitionDriver.overrideLayers.Add(new BipedTransitionLayer(component2, 3.325f, 2.5f));
+		component2.transitionDriver.overrideLayers.Add(new DoorTransitionLayer(component2));
+		component2.transitionDriver.overrideLayers.Add(new TubeTransitionLayer(component2));
+		component2.transitionDriver.overrideLayers.Add(new LadderDiseaseTransitionLayer(component2));
+		component2.transitionDriver.overrideLayers.Add(new ReactableTransitionLayer(component2));
+		component2.transitionDriver.overrideLayers.Add(new NavTeleportTransitionLayer(component2));
+		component2.transitionDriver.overrideLayers.Add(new SplashTransitionLayer(component2));
 		ThreatMonitor.Instance sMI = go.GetSMI<ThreatMonitor.Instance>();
 		if (sMI != null)
 		{

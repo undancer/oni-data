@@ -9,7 +9,7 @@ public class Harvestable : Workable
 	public HarvestDesignatable harvestDesignatable;
 
 	[Serialize]
-	protected bool canBeHarvested = false;
+	protected bool canBeHarvested;
 
 	protected Chore chore;
 
@@ -124,8 +124,7 @@ public class Harvestable : Workable
 		{
 			chore.Cancel("Cancel harvest");
 			chore = null;
-			KSelectable component = GetComponent<KSelectable>();
-			component.RemoveStatusItem(Db.Get().MiscStatusItems.PendingHarvest);
+			GetComponent<KSelectable>().RemoveStatusItem(Db.Get().MiscStatusItems.PendingHarvest);
 			harvestDesignatable.SetHarvestWhenReady(state: false);
 		}
 		harvestDesignatable.MarkedForHarvest = false;
@@ -143,8 +142,7 @@ public class Harvestable : Workable
 	public virtual void ForceCancelHarvest(object data = null)
 	{
 		OnCancel(null);
-		KSelectable component = GetComponent<KSelectable>();
-		component.RemoveStatusItem(Db.Get().MiscStatusItems.PendingHarvest);
+		GetComponent<KSelectable>().RemoveStatusItem(Db.Get().MiscStatusItems.PendingHarvest);
 		Game.Instance.userMenu.Refresh(base.gameObject);
 	}
 
@@ -157,7 +155,6 @@ public class Harvestable : Workable
 	protected override void OnStartWork(Worker worker)
 	{
 		base.OnStartWork(worker);
-		KSelectable component = GetComponent<KSelectable>();
-		component.RemoveStatusItem(Db.Get().MiscStatusItems.PendingHarvest);
+		GetComponent<KSelectable>().RemoveStatusItem(Db.Get().MiscStatusItems.PendingHarvest);
 	}
 }

@@ -57,8 +57,7 @@ namespace Klei.AI
 
 		public override void OnCure(GameObject go, object instance_data)
 		{
-			StatesInstance statesInstance = (StatesInstance)instance_data;
-			statesInstance.StopSM("Cured");
+			((StatesInstance)instance_data).StopSM("Cured");
 		}
 	}
 }

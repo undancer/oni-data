@@ -7,15 +7,15 @@ public class PhonoboxConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("Phonobox", 5, 3, "jukebot_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER1);
-		buildingDef.ViewMode = OverlayModes.Power.ID;
-		buildingDef.Floodable = true;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.Overheatable = true;
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 960f;
-		buildingDef.SelfHeatKilowattsWhenActive = 1f;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("Phonobox", 5, 3, "jukebot_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER1);
+		obj.ViewMode = OverlayModes.Power.ID;
+		obj.Floodable = true;
+		obj.AudioCategory = "Metal";
+		obj.Overheatable = true;
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 960f;
+		obj.SelfHeatKilowattsWhenActive = 1f;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

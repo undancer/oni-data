@@ -21,7 +21,11 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			return other is PublishedFileUpdateHandle_t && this == (PublishedFileUpdateHandle_t)other;
+			if (other is PublishedFileUpdateHandle_t)
+			{
+				return this == (PublishedFileUpdateHandle_t)other;
+			}
+			return false;
 		}
 
 		public override int GetHashCode()

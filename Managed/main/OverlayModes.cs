@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Klei.AI;
 using STRINGS;
 using TUNING;
@@ -91,8 +89,7 @@ public abstract class OverlayModes
 
 		protected override void OnSaveLoadRootRegistered(SaveLoadRoot item)
 		{
-			KPrefabID component = item.GetComponent<KPrefabID>();
-			Tag saveLoadTag = component.GetSaveLoadTag();
+			Tag saveLoadTag = item.GetComponent<KPrefabID>().GetSaveLoadTag();
 			if (targetIDs.Contains(saveLoadTag))
 			{
 				partition.Add(item);
@@ -153,8 +150,7 @@ public abstract class OverlayModes
 					}
 				}
 			});
-			IEnumerable allIntersecting = partition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y));
-			foreach (SaveLoadRoot item in allIntersecting)
+			foreach (SaveLoadRoot item in partition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y)))
 			{
 				if (item.GetComponent<Conduit>() != null)
 				{
@@ -209,19 +205,23 @@ public abstract class OverlayModes
 			Game.ConduitVisInfo conduitVisInfo = ((ViewMode() == LiquidConduits.ID) ? Game.Instance.liquidConduitVisInfo : Game.Instance.gasConduitVisInfo);
 			foreach (SaveLoadRoot layerTarget in layerTargets)
 			{
-				if (!(layerTarget == null) && layerTarget.GetComponent<IBridgedNetworkItem>() != null)
+				if (layerTarget == null || layerTarget.GetComponent<IBridgedNetworkItem>() == null)
 				{
-					BuildingDef def = layerTarget.GetComponent<Building>().Def;
-					Color32 tintColour = ((def.ThermalConductivity == 1f) ? GlobalAssets.Instance.colorSet.GetColorByName(conduitVisInfo.overlayTintName) : ((!(def.ThermalConductivity < 1f)) ? GlobalAssets.Instance.colorSet.GetColorByName(conduitVisInfo.overlayRadiantTintName) : GlobalAssets.Instance.colorSet.GetColorByName(conduitVisInfo.overlayInsulatedTintName)));
-					if (connectedNetworks.Count > 0 && (layerTarget.GetComponent<IBridgedNetworkItem>()?.IsConnectedToNetworks(connectedNetworks) ?? false))
+					continue;
+				}
+				BuildingDef def = layerTarget.GetComponent<Building>().Def;
+				Color32 tintColour = ((def.ThermalConductivity == 1f) ? GlobalAssets.Instance.colorSet.GetColorByName(conduitVisInfo.overlayTintName) : ((!(def.ThermalConductivity < 1f)) ? GlobalAssets.Instance.colorSet.GetColorByName(conduitVisInfo.overlayRadiantTintName) : GlobalAssets.Instance.colorSet.GetColorByName(conduitVisInfo.overlayInsulatedTintName)));
+				if (connectedNetworks.Count > 0)
+				{
+					IBridgedNetworkItem component2 = layerTarget.GetComponent<IBridgedNetworkItem>();
+					if (component2 != null && component2.IsConnectedToNetworks(connectedNetworks))
 					{
 						tintColour.r = (byte)((float)(int)tintColour.r * num);
 						tintColour.g = (byte)((float)(int)tintColour.g * num);
 						tintColour.b = (byte)((float)(int)tintColour.b * num);
 					}
-					KBatchedAnimController component2 = layerTarget.GetComponent<KBatchedAnimController>();
-					component2.TintColour = tintColour;
 				}
+				layerTarget.GetComponent<KBatchedAnimController>().TintColour = tintColour;
 			}
 		}
 
@@ -292,7 +292,7 @@ public abstract class OverlayModes
 
 		private List<UpdateCropInfo> updateCropInfo = new List<UpdateCropInfo>();
 
-		private int freeHarvestableNotificationIdx = 0;
+		private int freeHarvestableNotificationIdx;
 
 		private List<GameObject> harvestableNotificationList = new List<GameObject>();
 
@@ -328,11 +328,12 @@ public abstract class OverlayModes
 
 		public override List<LegendEntry> GetCustomLegendData()
 		{
-			List<LegendEntry> list = new List<LegendEntry>();
-			list.Add(new LegendEntry(UI.OVERLAYS.CROP.FULLY_GROWN, UI.OVERLAYS.CROP.TOOLTIPS.FULLY_GROWN, GlobalAssets.Instance.colorSet.cropGrown));
-			list.Add(new LegendEntry(UI.OVERLAYS.CROP.GROWING, UI.OVERLAYS.CROP.TOOLTIPS.GROWING, GlobalAssets.Instance.colorSet.cropGrowing));
-			list.Add(new LegendEntry(UI.OVERLAYS.CROP.GROWTH_HALTED, UI.OVERLAYS.CROP.TOOLTIPS.GROWTH_HALTED, GlobalAssets.Instance.colorSet.cropHalted));
-			return list;
+			return new List<LegendEntry>
+			{
+				new LegendEntry(UI.OVERLAYS.CROP.FULLY_GROWN, UI.OVERLAYS.CROP.TOOLTIPS.FULLY_GROWN, GlobalAssets.Instance.colorSet.cropGrown),
+				new LegendEntry(UI.OVERLAYS.CROP.GROWING, UI.OVERLAYS.CROP.TOOLTIPS.GROWING, GlobalAssets.Instance.colorSet.cropGrowing),
+				new LegendEntry(UI.OVERLAYS.CROP.GROWTH_HALTED, UI.OVERLAYS.CROP.TOOLTIPS.GROWTH_HALTED, GlobalAssets.Instance.colorSet.cropHalted)
+			};
 		}
 
 		public override void Update()
@@ -341,8 +342,7 @@ public abstract class OverlayModes
 			freeHarvestableNotificationIdx = 0;
 			Grid.GetVisibleExtents(out var min, out var max);
 			Mode.RemoveOffscreenTargets(layerTargets, min, max);
-			IEnumerable allIntersecting = partition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y));
-			foreach (HarvestDesignatable item in allIntersecting)
+			foreach (HarvestDesignatable item in partition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y)))
 			{
 				AddTargetIfVisible(item, min, max, layerTargets, targetLayer);
 			}
@@ -444,8 +444,7 @@ public abstract class OverlayModes
 		{
 			Grid.GetVisibleExtents(out var min, out var max);
 			Mode.RemoveOffscreenTargets(layerTargets, min, max);
-			IEnumerable allIntersecting = partition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y));
-			foreach (HarvestDesignatable item in allIntersecting)
+			foreach (HarvestDesignatable item in partition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y)))
 			{
 				AddTargetIfVisible(item, min, max, layerTargets, targetLayer);
 			}
@@ -561,8 +560,7 @@ public abstract class OverlayModes
 					}
 					else if (dp.GetComponent<MonumentPart>() != null && dp.GetComponent<MonumentPart>().IsMonumentCompleted())
 					{
-						List<GameObject> attachedNetwork = AttachableBuilding.GetAttachedNetwork(dp.GetComponent<AttachableBuilding>());
-						foreach (GameObject item in attachedNetwork)
+						foreach (GameObject item in AttachableBuilding.GetAttachedNetwork(dp.GetComponent<AttachableBuilding>()))
 						{
 							decorForCell = item.GetComponent<DecorProvider>().GetDecorForCell(cell);
 							if (decorForCell > 0f)
@@ -594,10 +592,11 @@ public abstract class OverlayModes
 
 		public override List<LegendEntry> GetCustomLegendData()
 		{
-			List<LegendEntry> list = new List<LegendEntry>();
-			list.Add(new LegendEntry(UI.OVERLAYS.DECOR.HIGHDECOR, UI.OVERLAYS.DECOR.TOOLTIPS.HIGHDECOR, GlobalAssets.Instance.colorSet.decorPositive));
-			list.Add(new LegendEntry(UI.OVERLAYS.DECOR.LOWDECOR, UI.OVERLAYS.DECOR.TOOLTIPS.LOWDECOR, GlobalAssets.Instance.colorSet.decorNegative));
-			return list;
+			return new List<LegendEntry>
+			{
+				new LegendEntry(UI.OVERLAYS.DECOR.HIGHDECOR, UI.OVERLAYS.DECOR.TOOLTIPS.HIGHDECOR, GlobalAssets.Instance.colorSet.decorPositive),
+				new LegendEntry(UI.OVERLAYS.DECOR.LOWDECOR, UI.OVERLAYS.DECOR.TOOLTIPS.LOWDECOR, GlobalAssets.Instance.colorSet.decorNegative)
+			};
 		}
 
 		public Decor()
@@ -619,8 +618,7 @@ public abstract class OverlayModes
 				new Tag("GasPermeableMembrane"),
 				new Tag("CarpetTile")
 			};
-			Tag[] array2 = array;
-			foreach (Tag item in array2)
+			foreach (Tag item in array)
 			{
 				targetIDs.Remove(item);
 			}
@@ -722,7 +720,7 @@ public abstract class OverlayModes
 
 		private int cameraLayerMask;
 
-		private int freeDiseaseUI = 0;
+		private int freeDiseaseUI;
 
 		private List<GameObject> diseaseUIList = new List<GameObject>();
 
@@ -798,11 +796,21 @@ public abstract class OverlayModes
 
 		public override Dictionary<string, ToolParameterMenu.ToggleState> CreateDefaultFilters()
 		{
-			Dictionary<string, ToolParameterMenu.ToggleState> dictionary = new Dictionary<string, ToolParameterMenu.ToggleState>();
-			dictionary.Add(ToolParameterMenu.FILTERLAYERS.ALL, ToolParameterMenu.ToggleState.On);
-			dictionary.Add(ToolParameterMenu.FILTERLAYERS.LIQUIDCONDUIT, ToolParameterMenu.ToggleState.Off);
-			dictionary.Add(ToolParameterMenu.FILTERLAYERS.GASCONDUIT, ToolParameterMenu.ToggleState.Off);
-			return dictionary;
+			return new Dictionary<string, ToolParameterMenu.ToggleState>
+			{
+				{
+					ToolParameterMenu.FILTERLAYERS.ALL,
+					ToolParameterMenu.ToggleState.On
+				},
+				{
+					ToolParameterMenu.FILTERLAYERS.LIQUIDCONDUIT,
+					ToolParameterMenu.ToggleState.Off
+				},
+				{
+					ToolParameterMenu.FILTERLAYERS.GASCONDUIT,
+					ToolParameterMenu.ToggleState.Off
+				}
+			};
 		}
 
 		public override void OnFiltersChanged()
@@ -906,8 +914,7 @@ public abstract class OverlayModes
 			AmountInstance amount_inst = target.GetComponent<Modifiers>().amounts.Get(Db.Get().Amounts.ImmuneLevel);
 			UpdateDiseaseInfo item = new UpdateDiseaseInfo(amount_inst, component);
 			KAnimControllerBase component2 = target.GetComponent<KAnimControllerBase>();
-			Vector3 position = ((component2 != null) ? component2.GetWorldPivot() : (target.transform.GetPosition() + Vector3.down));
-			gameObject.GetComponent<RectTransform>().SetPosition(position);
+			TransformExtensions.SetPosition(position: (component2 != null) ? component2.GetWorldPivot() : (target.transform.GetPosition() + Vector3.down), transform: gameObject.GetComponent<RectTransform>());
 			updateDiseaseInfo.Add(item);
 		}
 
@@ -1166,18 +1173,19 @@ public abstract class OverlayModes
 
 		public override List<LegendEntry> GetCustomLegendData()
 		{
-			List<LegendEntry> list = new List<LegendEntry>();
-			list.Add(new LegendEntry(UI.OVERLAYS.LOGIC.INPUT, UI.OVERLAYS.LOGIC.TOOLTIPS.INPUT, Color.white, null, Assets.GetSprite("logicInput")));
-			list.Add(new LegendEntry(UI.OVERLAYS.LOGIC.OUTPUT, UI.OVERLAYS.LOGIC.TOOLTIPS.OUTPUT, Color.white, null, Assets.GetSprite("logicOutput")));
-			list.Add(new LegendEntry(UI.OVERLAYS.LOGIC.RIBBON_INPUT, UI.OVERLAYS.LOGIC.TOOLTIPS.RIBBON_INPUT, Color.white, null, Assets.GetSprite("logic_ribbon_all_in")));
-			list.Add(new LegendEntry(UI.OVERLAYS.LOGIC.RIBBON_OUTPUT, UI.OVERLAYS.LOGIC.TOOLTIPS.RIBBON_OUTPUT, Color.white, null, Assets.GetSprite("logic_ribbon_all_out")));
-			list.Add(new LegendEntry(UI.OVERLAYS.LOGIC.RESET_UPDATE, UI.OVERLAYS.LOGIC.TOOLTIPS.RESET_UPDATE, Color.white, null, Assets.GetSprite("logicResetUpdate")));
-			list.Add(new LegendEntry(UI.OVERLAYS.LOGIC.CONTROL_INPUT, UI.OVERLAYS.LOGIC.TOOLTIPS.CONTROL_INPUT, Color.white, null, Assets.GetSprite("control_input_frame_legend")));
-			list.Add(new LegendEntry(UI.OVERLAYS.LOGIC.CIRCUIT_STATUS_HEADER, null, Color.white, null, null, displaySprite: false));
-			list.Add(new LegendEntry(UI.OVERLAYS.LOGIC.ONE, null, GlobalAssets.Instance.colorSet.logicOnText));
-			list.Add(new LegendEntry(UI.OVERLAYS.LOGIC.ZERO, null, GlobalAssets.Instance.colorSet.logicOffText));
-			list.Add(new LegendEntry(UI.OVERLAYS.LOGIC.DISCONNECTED, UI.OVERLAYS.LOGIC.TOOLTIPS.DISCONNECTED, GlobalAssets.Instance.colorSet.logicDisconnected));
-			return list;
+			return new List<LegendEntry>
+			{
+				new LegendEntry(UI.OVERLAYS.LOGIC.INPUT, UI.OVERLAYS.LOGIC.TOOLTIPS.INPUT, Color.white, null, Assets.GetSprite("logicInput")),
+				new LegendEntry(UI.OVERLAYS.LOGIC.OUTPUT, UI.OVERLAYS.LOGIC.TOOLTIPS.OUTPUT, Color.white, null, Assets.GetSprite("logicOutput")),
+				new LegendEntry(UI.OVERLAYS.LOGIC.RIBBON_INPUT, UI.OVERLAYS.LOGIC.TOOLTIPS.RIBBON_INPUT, Color.white, null, Assets.GetSprite("logic_ribbon_all_in")),
+				new LegendEntry(UI.OVERLAYS.LOGIC.RIBBON_OUTPUT, UI.OVERLAYS.LOGIC.TOOLTIPS.RIBBON_OUTPUT, Color.white, null, Assets.GetSprite("logic_ribbon_all_out")),
+				new LegendEntry(UI.OVERLAYS.LOGIC.RESET_UPDATE, UI.OVERLAYS.LOGIC.TOOLTIPS.RESET_UPDATE, Color.white, null, Assets.GetSprite("logicResetUpdate")),
+				new LegendEntry(UI.OVERLAYS.LOGIC.CONTROL_INPUT, UI.OVERLAYS.LOGIC.TOOLTIPS.CONTROL_INPUT, Color.white, null, Assets.GetSprite("control_input_frame_legend")),
+				new LegendEntry(UI.OVERLAYS.LOGIC.CIRCUIT_STATUS_HEADER, null, Color.white, null, null, displaySprite: false),
+				new LegendEntry(UI.OVERLAYS.LOGIC.ONE, null, GlobalAssets.Instance.colorSet.logicOnText),
+				new LegendEntry(UI.OVERLAYS.LOGIC.ZERO, null, GlobalAssets.Instance.colorSet.logicOffText),
+				new LegendEntry(UI.OVERLAYS.LOGIC.DISCONNECTED, UI.OVERLAYS.LOGIC.TOOLTIPS.DISCONNECTED, GlobalAssets.Instance.colorSet.logicDisconnected)
+			};
 		}
 
 		public Logic(LogicModeUI ui_asset)
@@ -1305,10 +1313,10 @@ public abstract class OverlayModes
 			{
 				if (!(root == null))
 				{
-					KPrefabID component10 = root.GetComponent<KPrefabID>();
-					if (component10 != null)
+					KPrefabID component12 = root.GetComponent<KPrefabID>();
+					if (component12 != null)
 					{
-						Tag prefabTag = component10.PrefabTag;
+						Tag prefabTag = component12.PrefabTag;
 						if (prefabTag == wire_id)
 						{
 							wireControllers.Remove(root.GetComponent<KBatchedAnimController>());
@@ -1344,8 +1352,7 @@ public abstract class OverlayModes
 			Mode.RemoveOffscreenTargets(ioTargets, workingIOTargets, min, max, FreeUI);
 			using (new KProfiler.Region("UpdateLogicOverlay"))
 			{
-				IEnumerable allIntersecting = gameObjPartition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y));
-				foreach (SaveLoadRoot item2 in allIntersecting)
+				foreach (SaveLoadRoot item2 in gameObjPartition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y)))
 				{
 					if (!(item2 != null))
 					{
@@ -1358,41 +1365,39 @@ public abstract class OverlayModes
 						{
 							if (!(root == null))
 							{
-								KPrefabID component5 = root.GetComponent<KPrefabID>();
-								if (HighlightItemIDs.Contains(component5.PrefabTag))
+								KPrefabID component9 = root.GetComponent<KPrefabID>();
+								if (HighlightItemIDs.Contains(component9.PrefabTag))
 								{
 									BridgeInfo item;
-									if (component5.PrefabTag == wire_id)
+									if (component9.PrefabTag == wire_id)
 									{
 										wireControllers.Add(root.GetComponent<KBatchedAnimController>());
 									}
-									else if (component5.PrefabTag == ribbon_id)
+									else if (component9.PrefabTag == ribbon_id)
 									{
 										ribbonControllers.Add(root.GetComponent<KBatchedAnimController>());
 									}
-									else if (component5.PrefabTag == bridge_id)
+									else if (component9.PrefabTag == bridge_id)
 									{
-										KBatchedAnimController component6 = root.GetComponent<KBatchedAnimController>();
-										LogicUtilityNetworkLink component7 = root.GetComponent<LogicUtilityNetworkLink>();
-										int networkCell2 = component7.GetNetworkCell();
+										KBatchedAnimController component10 = root.GetComponent<KBatchedAnimController>();
+										int networkCell2 = root.GetComponent<LogicUtilityNetworkLink>().GetNetworkCell();
 										HashSet<BridgeInfo> hashSet = bridgeControllers;
 										item = new BridgeInfo
 										{
 											cell = networkCell2,
-											controller = component6
+											controller = component10
 										};
 										hashSet.Add(item);
 									}
-									else if (component5.PrefabTag == ribbon_bridge_id)
+									else if (component9.PrefabTag == ribbon_bridge_id)
 									{
-										KBatchedAnimController component8 = root.GetComponent<KBatchedAnimController>();
-										LogicUtilityNetworkLink component9 = root.GetComponent<LogicUtilityNetworkLink>();
-										int networkCell3 = component9.GetNetworkCell();
+										KBatchedAnimController component11 = root.GetComponent<KBatchedAnimController>();
+										int networkCell3 = root.GetComponent<LogicUtilityNetworkLink>().GetNetworkCell();
 										HashSet<BridgeInfo> hashSet2 = ribbonBridgeControllers;
 										item = new BridgeInfo
 										{
 											cell = networkCell3,
-											controller = component8
+											controller = component11
 										};
 										hashSet2.Add(item);
 									}
@@ -1405,27 +1410,26 @@ public abstract class OverlayModes
 					{
 						Vector3 position = root.transform.GetPosition();
 						float z = position.z;
-						KPrefabID component3 = root.GetComponent<KPrefabID>();
-						if (component3 != null)
+						KPrefabID component7 = root.GetComponent<KPrefabID>();
+						if (component7 != null)
 						{
-							if (component3.HasTag(GameTags.OverlayInFrontOfConduits))
+							if (component7.HasTag(GameTags.OverlayInFrontOfConduits))
 							{
 								z = Grid.GetLayerZ(Grid.SceneLayer.LogicWires) - 0.2f;
 							}
-							else if (component3.HasTag(GameTags.OverlayBehindConduits))
+							else if (component7.HasTag(GameTags.OverlayBehindConduits))
 							{
 								z = Grid.GetLayerZ(Grid.SceneLayer.LogicWires) + 0.2f;
 							}
 						}
 						position.z = z;
 						root.transform.SetPosition(position);
-						KBatchedAnimController component4 = root.GetComponent<KBatchedAnimController>();
-						component4.enabled = false;
-						component4.enabled = true;
+						KBatchedAnimController component8 = root.GetComponent<KBatchedAnimController>();
+						component8.enabled = false;
+						component8.enabled = true;
 					});
 				}
-				IEnumerable allIntersecting2 = ioPartition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y));
-				foreach (ILogicUIElement item3 in allIntersecting2)
+				foreach (ILogicUIElement item3 in ioPartition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y)))
 				{
 					if (item3 != null)
 					{
@@ -1457,40 +1461,50 @@ public abstract class OverlayModes
 				logicOff.a = (logicOn.a = 0);
 				foreach (KBatchedAnimController wireController in wireControllers)
 				{
-					if (!(wireController == null))
+					if (wireController == null)
 					{
-						Color32 tintColour = logicOff;
-						LogicCircuitNetwork networkForCell = logicCircuitManager.GetNetworkForCell(Grid.PosToCell(wireController.transform.GetPosition()));
-						if (networkForCell != null)
-						{
-							tintColour = (networkForCell.IsBitActive(0) ? logicOn : logicOff);
-						}
-						if (connectedNetworks.Count > 0 && (wireController.GetComponent<IBridgedNetworkItem>()?.IsConnectedToNetworks(connectedNetworks) ?? false))
+						continue;
+					}
+					Color32 tintColour = logicOff;
+					LogicCircuitNetwork networkForCell = logicCircuitManager.GetNetworkForCell(Grid.PosToCell(wireController.transform.GetPosition()));
+					if (networkForCell != null)
+					{
+						tintColour = (networkForCell.IsBitActive(0) ? logicOn : logicOff);
+					}
+					if (connectedNetworks.Count > 0)
+					{
+						IBridgedNetworkItem component3 = wireController.GetComponent<IBridgedNetworkItem>();
+						if (component3 != null && component3.IsConnectedToNetworks(connectedNetworks))
 						{
 							tintColour.r = (byte)((float)(int)tintColour.r * num);
 							tintColour.g = (byte)((float)(int)tintColour.g * num);
 							tintColour.b = (byte)((float)(int)tintColour.b * num);
 						}
-						wireController.TintColour = tintColour;
 					}
+					wireController.TintColour = tintColour;
 				}
 				foreach (KBatchedAnimController ribbonController in ribbonControllers)
 				{
-					if (!(ribbonController == null))
+					if (ribbonController == null)
 					{
-						Color32 c = logicOff;
-						Color32 c2 = logicOff;
-						Color32 c3 = logicOff;
-						Color32 c4 = logicOff;
-						LogicCircuitNetwork networkForCell2 = logicCircuitManager.GetNetworkForCell(Grid.PosToCell(ribbonController.transform.GetPosition()));
-						if (networkForCell2 != null)
-						{
-							c = (networkForCell2.IsBitActive(0) ? logicOn : logicOff);
-							c2 = (networkForCell2.IsBitActive(1) ? logicOn : logicOff);
-							c3 = (networkForCell2.IsBitActive(2) ? logicOn : logicOff);
-							c4 = (networkForCell2.IsBitActive(3) ? logicOn : logicOff);
-						}
-						if (connectedNetworks.Count > 0 && (ribbonController.GetComponent<IBridgedNetworkItem>()?.IsConnectedToNetworks(connectedNetworks) ?? false))
+						continue;
+					}
+					Color32 c = logicOff;
+					Color32 c2 = logicOff;
+					Color32 c3 = logicOff;
+					Color32 c4 = logicOff;
+					LogicCircuitNetwork networkForCell2 = logicCircuitManager.GetNetworkForCell(Grid.PosToCell(ribbonController.transform.GetPosition()));
+					if (networkForCell2 != null)
+					{
+						c = (networkForCell2.IsBitActive(0) ? logicOn : logicOff);
+						c2 = (networkForCell2.IsBitActive(1) ? logicOn : logicOff);
+						c3 = (networkForCell2.IsBitActive(2) ? logicOn : logicOff);
+						c4 = (networkForCell2.IsBitActive(3) ? logicOn : logicOff);
+					}
+					if (connectedNetworks.Count > 0)
+					{
+						IBridgedNetworkItem component4 = ribbonController.GetComponent<IBridgedNetworkItem>();
+						if (component4 != null && component4.IsConnectedToNetworks(connectedNetworks))
 						{
 							c.r = (byte)((float)(int)c.r * num);
 							c.g = (byte)((float)(int)c.g * num);
@@ -1505,48 +1519,58 @@ public abstract class OverlayModes
 							c4.g = (byte)((float)(int)c4.g * num);
 							c4.b = (byte)((float)(int)c4.b * num);
 						}
-						ribbonController.SetSymbolTint(RIBBON_WIRE_1_SYMBOL_NAME, c);
-						ribbonController.SetSymbolTint(RIBBON_WIRE_2_SYMBOL_NAME, c2);
-						ribbonController.SetSymbolTint(RIBBON_WIRE_3_SYMBOL_NAME, c3);
-						ribbonController.SetSymbolTint(RIBBON_WIRE_4_SYMBOL_NAME, c4);
 					}
+					ribbonController.SetSymbolTint(RIBBON_WIRE_1_SYMBOL_NAME, c);
+					ribbonController.SetSymbolTint(RIBBON_WIRE_2_SYMBOL_NAME, c2);
+					ribbonController.SetSymbolTint(RIBBON_WIRE_3_SYMBOL_NAME, c3);
+					ribbonController.SetSymbolTint(RIBBON_WIRE_4_SYMBOL_NAME, c4);
 				}
 				foreach (BridgeInfo bridgeController in bridgeControllers)
 				{
-					if (!(bridgeController.controller == null))
+					if (bridgeController.controller == null)
 					{
-						Color32 tintColour2 = logicOff;
-						LogicCircuitNetwork networkForCell3 = logicCircuitManager.GetNetworkForCell(bridgeController.cell);
-						if (networkForCell3 != null)
-						{
-							tintColour2 = (networkForCell3.IsBitActive(0) ? logicOn : logicOff);
-						}
-						if (connectedNetworks.Count > 0 && (bridgeController.controller.GetComponent<IBridgedNetworkItem>()?.IsConnectedToNetworks(connectedNetworks) ?? false))
+						continue;
+					}
+					Color32 tintColour2 = logicOff;
+					LogicCircuitNetwork networkForCell3 = logicCircuitManager.GetNetworkForCell(bridgeController.cell);
+					if (networkForCell3 != null)
+					{
+						tintColour2 = (networkForCell3.IsBitActive(0) ? logicOn : logicOff);
+					}
+					if (connectedNetworks.Count > 0)
+					{
+						IBridgedNetworkItem component5 = bridgeController.controller.GetComponent<IBridgedNetworkItem>();
+						if (component5 != null && component5.IsConnectedToNetworks(connectedNetworks))
 						{
 							tintColour2.r = (byte)((float)(int)tintColour2.r * num);
 							tintColour2.g = (byte)((float)(int)tintColour2.g * num);
 							tintColour2.b = (byte)((float)(int)tintColour2.b * num);
 						}
-						bridgeController.controller.TintColour = tintColour2;
 					}
+					bridgeController.controller.TintColour = tintColour2;
 				}
 				foreach (BridgeInfo ribbonBridgeController in ribbonBridgeControllers)
 				{
-					if (!(ribbonBridgeController.controller == null))
+					if (ribbonBridgeController.controller == null)
 					{
-						Color32 c5 = logicOff;
-						Color32 c6 = logicOff;
-						Color32 c7 = logicOff;
-						Color32 c8 = logicOff;
-						LogicCircuitNetwork networkForCell4 = logicCircuitManager.GetNetworkForCell(ribbonBridgeController.cell);
-						if (networkForCell4 != null)
-						{
-							c5 = (networkForCell4.IsBitActive(0) ? logicOn : logicOff);
-							c6 = (networkForCell4.IsBitActive(1) ? logicOn : logicOff);
-							c7 = (networkForCell4.IsBitActive(2) ? logicOn : logicOff);
-							c8 = (networkForCell4.IsBitActive(3) ? logicOn : logicOff);
-						}
-						if (connectedNetworks.Count > 0 && (ribbonBridgeController.controller.GetComponent<IBridgedNetworkItem>()?.IsConnectedToNetworks(connectedNetworks) ?? false))
+						continue;
+					}
+					Color32 c5 = logicOff;
+					Color32 c6 = logicOff;
+					Color32 c7 = logicOff;
+					Color32 c8 = logicOff;
+					LogicCircuitNetwork networkForCell4 = logicCircuitManager.GetNetworkForCell(ribbonBridgeController.cell);
+					if (networkForCell4 != null)
+					{
+						c5 = (networkForCell4.IsBitActive(0) ? logicOn : logicOff);
+						c6 = (networkForCell4.IsBitActive(1) ? logicOn : logicOff);
+						c7 = (networkForCell4.IsBitActive(2) ? logicOn : logicOff);
+						c8 = (networkForCell4.IsBitActive(3) ? logicOn : logicOff);
+					}
+					if (connectedNetworks.Count > 0)
+					{
+						IBridgedNetworkItem component6 = ribbonBridgeController.controller.GetComponent<IBridgedNetworkItem>();
+						if (component6 != null && component6.IsConnectedToNetworks(connectedNetworks))
 						{
 							c5.r = (byte)((float)(int)c5.r * num);
 							c5.g = (byte)((float)(int)c5.g * num);
@@ -1561,11 +1585,11 @@ public abstract class OverlayModes
 							c8.g = (byte)((float)(int)c8.g * num);
 							c8.b = (byte)((float)(int)c8.b * num);
 						}
-						ribbonBridgeController.controller.SetSymbolTint(RIBBON_WIRE_1_SYMBOL_NAME, c5);
-						ribbonBridgeController.controller.SetSymbolTint(RIBBON_WIRE_2_SYMBOL_NAME, c6);
-						ribbonBridgeController.controller.SetSymbolTint(RIBBON_WIRE_3_SYMBOL_NAME, c7);
-						ribbonBridgeController.controller.SetSymbolTint(RIBBON_WIRE_4_SYMBOL_NAME, c8);
 					}
+					ribbonBridgeController.controller.SetSymbolTint(RIBBON_WIRE_1_SYMBOL_NAME, c5);
+					ribbonBridgeController.controller.SetSymbolTint(RIBBON_WIRE_2_SYMBOL_NAME, c6);
+					ribbonBridgeController.controller.SetSymbolTint(RIBBON_WIRE_3_SYMBOL_NAME, c7);
+					ribbonBridgeController.controller.SetSymbolTint(RIBBON_WIRE_4_SYMBOL_NAME, c8);
 				}
 			}
 			UpdateUI();
@@ -1633,13 +1657,11 @@ public abstract class OverlayModes
 		protected UniformGrid<ILogicUIElement> CreateLogicUIPartition()
 		{
 			UniformGrid<ILogicUIElement> uniformGrid = new UniformGrid<ILogicUIElement>(Grid.WidthInCells, Grid.HeightInCells, 8, 8);
-			LogicCircuitManager logicCircuitManager = Game.Instance.logicCircuitManager;
-			ReadOnlyCollection<ILogicUIElement> visElements = logicCircuitManager.GetVisElements();
-			foreach (ILogicUIElement item in visElements)
+			foreach (ILogicUIElement visElement in Game.Instance.logicCircuitManager.GetVisElements())
 			{
-				if (item != null)
+				if (visElement != null)
 				{
-					uniformGrid.Add(item);
+					uniformGrid.Add(visElement);
 				}
 			}
 			return uniformGrid;
@@ -1923,7 +1945,15 @@ public abstract class OverlayModes
 
 		protected bool InFilter(string layer, Dictionary<string, ToolParameterMenu.ToggleState> filter)
 		{
-			return (filter.ContainsKey(ToolParameterMenu.FILTERLAYERS.ALL) && filter[ToolParameterMenu.FILTERLAYERS.ALL] == ToolParameterMenu.ToggleState.On) || (filter.ContainsKey(layer) && filter[layer] == ToolParameterMenu.ToggleState.On);
+			if (!filter.ContainsKey(ToolParameterMenu.FILTERLAYERS.ALL) || filter[ToolParameterMenu.FILTERLAYERS.ALL] != 0)
+			{
+				if (filter.ContainsKey(layer))
+				{
+					return filter[layer] == ToolParameterMenu.ToggleState.On;
+				}
+				return false;
+			}
+			return true;
 		}
 
 		public void RegisterSaveLoadListeners()
@@ -1961,8 +1991,7 @@ public abstract class OverlayModes
 
 		protected static UniformGrid<T> PopulatePartition<T>(ICollection<Tag> tags) where T : IUniformGridObject
 		{
-			SaveManager saveManager = SaveLoader.Instance.saveManager;
-			Dictionary<Tag, List<SaveLoadRoot>> lists = saveManager.GetLists();
+			Dictionary<Tag, List<SaveLoadRoot>> lists = SaveLoader.Instance.saveManager.GetLists();
 			UniformGrid<T> uniformGrid = new UniformGrid<T>(Grid.WidthInCells, Grid.HeightInCells, 8, 8);
 			foreach (Tag tag in tags)
 			{
@@ -2316,9 +2345,9 @@ public abstract class OverlayModes
 
 		private Vector3 batteryUISmallTransformerOffset;
 
-		private int freePowerLabelIdx = 0;
+		private int freePowerLabelIdx;
 
-		private int freeBatteryUIIdx = 0;
+		private int freeBatteryUIIdx;
 
 		private List<LocText> powerLabels = new List<LocText>();
 
@@ -2411,8 +2440,7 @@ public abstract class OverlayModes
 			Mode.RemoveOffscreenTargets(layerTargets, min, max);
 			using (new KProfiler.Region("UpdatePowerOverlay"))
 			{
-				IEnumerable allIntersecting = partition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y));
-				foreach (SaveLoadRoot item in allIntersecting)
+				foreach (SaveLoadRoot item in partition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y)))
 				{
 					AddTargetIfVisible(item, min, max, layerTargets, targetLayer);
 				}
@@ -2445,8 +2473,7 @@ public abstract class OverlayModes
 					IBridgedNetworkItem component2 = layerTarget.GetComponent<IBridgedNetworkItem>();
 					if (component2 != null)
 					{
-						KMonoBehaviour kMonoBehaviour = component2 as KMonoBehaviour;
-						KBatchedAnimController component3 = kMonoBehaviour.GetComponent<KBatchedAnimController>();
+						KBatchedAnimController component3 = (component2 as KMonoBehaviour).GetComponent<KBatchedAnimController>();
 						int networkCell2 = component2.GetNetworkCell();
 						UtilityNetwork networkForCell = Game.Instance.electricalConduitSystem.GetNetworkForCell(networkCell2);
 						ushort circuitID = ((networkForCell != null) ? ((ushort)networkForCell.id) : ushort.MaxValue);
@@ -2555,8 +2582,7 @@ public abstract class OverlayModes
 				if (generator != null && consumer == null)
 				{
 					int num = int.MaxValue;
-					ManualGenerator component = generator.GetComponent<ManualGenerator>();
-					if (component == null)
+					if (generator.GetComponent<ManualGenerator>() == null)
 					{
 						generator.GetComponent<Operational>();
 						num = Mathf.Max(0, Mathf.RoundToInt(generator.WattageRating));
@@ -2566,12 +2592,12 @@ public abstract class OverlayModes
 						num = Mathf.Max(0, Mathf.RoundToInt(generator.WattageRating));
 					}
 					powerLabel.text = ((num != 0) ? ("+" + num) : num.ToString());
-					BuildingEnabledButton component2 = item.GetComponent<BuildingEnabledButton>();
-					Color color3 = (unitLabel.color = (powerLabel.color = ((component2 != null && !component2.IsEnabled) ? GlobalAssets.Instance.colorSet.powerBuildingDisabled : GlobalAssets.Instance.colorSet.powerGenerator)));
-					BuildingCellVisualizer component3 = generator.GetComponent<BuildingCellVisualizer>();
-					if (component3 != null)
+					BuildingEnabledButton component = item.GetComponent<BuildingEnabledButton>();
+					Color color3 = (unitLabel.color = (powerLabel.color = ((component != null && !component.IsEnabled) ? GlobalAssets.Instance.colorSet.powerBuildingDisabled : GlobalAssets.Instance.colorSet.powerGenerator)));
+					BuildingCellVisualizer component2 = generator.GetComponent<BuildingCellVisualizer>();
+					if (component2 != null)
 					{
-						Image outputIcon = component3.GetOutputIcon();
+						Image outputIcon = component2.GetOutputIcon();
 						if (outputIcon != null)
 						{
 							outputIcon.color = color3;
@@ -2580,8 +2606,8 @@ public abstract class OverlayModes
 				}
 				if (consumer != null)
 				{
-					BuildingEnabledButton component4 = item.GetComponent<BuildingEnabledButton>();
-					Color color4 = ((component4 != null && !component4.IsEnabled) ? GlobalAssets.Instance.colorSet.powerBuildingDisabled : GlobalAssets.Instance.colorSet.powerConsumer);
+					BuildingEnabledButton component3 = item.GetComponent<BuildingEnabledButton>();
+					Color color4 = ((component3 != null && !component3.IsEnabled) ? GlobalAssets.Instance.colorSet.powerBuildingDisabled : GlobalAssets.Instance.colorSet.powerConsumer);
 					int num2 = Mathf.Max(0, Mathf.RoundToInt(consumer.WattsNeededWhenActive));
 					string text = num2.ToString();
 					powerLabel.text = ((num2 != 0) ? ("-" + text) : text);
@@ -2662,20 +2688,19 @@ public abstract class OverlayModes
 			BatteryUI freeBatteryUI = GetFreeBatteryUI();
 			freeBatteryUI.SetContent(bat);
 			Vector3 b = Grid.CellToPos(bat.PowerCell, 0.5f, 0f, 0f);
-			bool flag = bat.powerTransformer != null;
-			float num = 1f;
+			bool num = bat.powerTransformer != null;
+			float num2 = 1f;
 			Rotatable component = bat.GetComponent<Rotatable>();
 			if (component != null && component.GetVisualizerFlipX())
 			{
-				num = -1f;
+				num2 = -1f;
 			}
 			Vector3 b2 = batteryUIOffset;
-			if (flag)
+			if (num)
 			{
-				int widthInCells = bat.GetComponent<Building>().Def.WidthInCells;
-				b2 = ((widthInCells == 2) ? batteryUISmallTransformerOffset : batteryUITransformerOffset);
+				b2 = ((bat.GetComponent<Building>().Def.WidthInCells == 2) ? batteryUISmallTransformerOffset : batteryUITransformerOffset);
 			}
-			b2.x *= num;
+			b2.x *= num2;
 			freeBatteryUI.GetComponent<RectTransform>().SetPosition(Vector3.up + b + b2);
 			updateBatteryInfo.Add(new UpdateBatteryInfo(bat, freeBatteryUI));
 		}
@@ -2815,8 +2840,7 @@ public abstract class OverlayModes
 
 		protected override void OnSaveLoadRootRegistered(SaveLoadRoot item)
 		{
-			KPrefabID component = item.GetComponent<KPrefabID>();
-			Tag saveLoadTag = component.GetSaveLoadTag();
+			Tag saveLoadTag = item.GetComponent<KPrefabID>().GetSaveLoadTag();
 			if (targetIDs.Contains(saveLoadTag))
 			{
 				partition.Add(item);
@@ -2851,8 +2875,7 @@ public abstract class OverlayModes
 		{
 			Grid.GetVisibleExtents(out var min, out var max);
 			Mode.RemoveOffscreenTargets(layerTargets, min, max);
-			IEnumerable allIntersecting = partition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y));
-			foreach (SaveLoadRoot item in allIntersecting)
+			foreach (SaveLoadRoot item in partition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y)))
 			{
 				AddTargetIfVisible(item, min, max, layerTargets, targetLayer);
 			}
@@ -2892,8 +2915,7 @@ public abstract class OverlayModes
 						tintColour.g = (byte)((float)(int)tintColour.g * num);
 						tintColour.b = (byte)((float)(int)tintColour.b * num);
 					}
-					KBatchedAnimController component3 = layerTarget.GetComponent<KBatchedAnimController>();
-					component3.TintColour = tintColour;
+					layerTarget.GetComponent<KBatchedAnimController>().TintColour = tintColour;
 				}
 			}
 		}
@@ -2974,10 +2996,8 @@ public abstract class OverlayModes
 				float t = 0.8f;
 				if (np != null)
 				{
-					float num = 0f;
 					int cell = Grid.PosToCell(CameraController.Instance.baseCamera.ScreenToWorldPoint(KInputManager.GetMousePos()));
-					num = (np as NoisePolluter).GetNoiseForCell(cell);
-					if (num < 36f)
+					if ((np as NoisePolluter).GetNoiseForCell(cell) < 36f)
 					{
 						t = 1f;
 						b = new Color(0.4f, 0.4f, 0.4f);
@@ -3031,8 +3051,7 @@ public abstract class OverlayModes
 		{
 			Grid.GetVisibleExtents(out var min, out var max);
 			Mode.RemoveOffscreenTargets(layerTargets, min, max);
-			IEnumerable allIntersecting = partition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y));
-			foreach (NoisePolluter item in allIntersecting)
+			foreach (NoisePolluter item in partition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y)))
 			{
 				AddTargetIfVisible(item, min, max, layerTargets, targetLayer);
 			}
@@ -3146,8 +3165,7 @@ public abstract class OverlayModes
 
 		protected override void OnSaveLoadRootRegistered(SaveLoadRoot item)
 		{
-			KPrefabID component = item.GetComponent<KPrefabID>();
-			Tag saveLoadTag = component.GetSaveLoadTag();
+			Tag saveLoadTag = item.GetComponent<KPrefabID>().GetSaveLoadTag();
 			if (targetIDs.Contains(saveLoadTag))
 			{
 				partition.Add(item);
@@ -3190,8 +3208,7 @@ public abstract class OverlayModes
 			freeUiIdx = 0;
 			Grid.GetVisibleExtents(out var min, out var max);
 			Mode.RemoveOffscreenTargets(layerTargets, min, max);
-			IEnumerable allIntersecting = partition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y));
-			foreach (SaveLoadRoot item in allIntersecting)
+			foreach (SaveLoadRoot item in partition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y)))
 			{
 				AddTargetIfVisible(item, min, max, layerTargets, targetLayer);
 			}
@@ -3201,8 +3218,7 @@ public abstract class OverlayModes
 				{
 					continue;
 				}
-				KBatchedAnimController component = layerTarget.GetComponent<KBatchedAnimController>();
-				component.TintColour = Color.white;
+				layerTarget.GetComponent<KBatchedAnimController>().TintColour = Color.white;
 				bool flag = false;
 				if (layerTarget.GetComponent<KPrefabID>().HasTag(GameTags.Suit))
 				{
@@ -3210,16 +3226,15 @@ public abstract class OverlayModes
 				}
 				else
 				{
-					SuitLocker component2 = layerTarget.GetComponent<SuitLocker>();
-					if (component2 != null)
+					SuitLocker component = layerTarget.GetComponent<SuitLocker>();
+					if (component != null)
 					{
-						flag = component2.GetStoredOutfit() != null;
+						flag = component.GetStoredOutfit() != null;
 					}
 				}
 				if (flag)
 				{
-					GameObject freeUI = GetFreeUI();
-					freeUI.GetComponent<RectTransform>().SetPosition(layerTarget.transform.GetPosition());
+					GetFreeUI().GetComponent<RectTransform>().SetPosition(layerTarget.transform.GetPosition());
 				}
 			}
 			for (int i = freeUiIdx; i < uiList.Count; i++)
@@ -3302,11 +3317,21 @@ public abstract class OverlayModes
 
 		public override Dictionary<string, ToolParameterMenu.ToggleState> CreateDefaultFilters()
 		{
-			Dictionary<string, ToolParameterMenu.ToggleState> dictionary = new Dictionary<string, ToolParameterMenu.ToggleState>();
-			dictionary.Add(ToolParameterMenu.FILTERLAYERS.ABSOLUTETEMPERATURE, ToolParameterMenu.ToggleState.On);
-			dictionary.Add(ToolParameterMenu.FILTERLAYERS.HEATFLOW, ToolParameterMenu.ToggleState.Off);
-			dictionary.Add(ToolParameterMenu.FILTERLAYERS.STATECHANGE, ToolParameterMenu.ToggleState.Off);
-			return dictionary;
+			return new Dictionary<string, ToolParameterMenu.ToggleState>
+			{
+				{
+					ToolParameterMenu.FILTERLAYERS.ABSOLUTETEMPERATURE,
+					ToolParameterMenu.ToggleState.On
+				},
+				{
+					ToolParameterMenu.FILTERLAYERS.HEATFLOW,
+					ToolParameterMenu.ToggleState.Off
+				},
+				{
+					ToolParameterMenu.FILTERLAYERS.STATECHANGE,
+					ToolParameterMenu.ToggleState.Off
+				}
+			};
 		}
 
 		public override List<LegendEntry> GetCustomLegendData()
@@ -3387,8 +3412,7 @@ public abstract class OverlayModes
 				Color result = Color.black;
 				if (primary_element != null)
 				{
-					Element element = (primary_element as PrimaryElement).Element;
-					result = element.substance.uiColour;
+					result = (primary_element as PrimaryElement).Element.substance.uiColour;
 				}
 				return result;
 			}, (KMonoBehaviour primary_element) => primary_element.gameObject.GetComponent<KBatchedAnimController>().IsVisible())
@@ -3433,8 +3457,7 @@ public abstract class OverlayModes
 			GameScenePartitioner.Instance.GatherEntries(extents, GameScenePartitioner.Instance.pickupablesLayer, list);
 			foreach (ScenePartitionerEntry item in list)
 			{
-				Pickupable pickupable = (Pickupable)item.obj;
-				PrimaryElement component = pickupable.gameObject.GetComponent<PrimaryElement>();
+				PrimaryElement component = ((Pickupable)item.obj).gameObject.GetComponent<PrimaryElement>();
 				if (component != null)
 				{
 					TryAddObject(component, min, max);
@@ -3478,17 +3501,45 @@ public abstract class OverlayModes
 
 		public override Dictionary<string, ToolParameterMenu.ToggleState> CreateDefaultFilters()
 		{
-			Dictionary<string, ToolParameterMenu.ToggleState> dictionary = new Dictionary<string, ToolParameterMenu.ToggleState>();
-			dictionary.Add(ToolParameterMenu.FILTERLAYERS.ALL, ToolParameterMenu.ToggleState.On);
-			dictionary.Add(ToolParameterMenu.FILTERLAYERS.METAL, ToolParameterMenu.ToggleState.Off);
-			dictionary.Add(ToolParameterMenu.FILTERLAYERS.BUILDABLE, ToolParameterMenu.ToggleState.Off);
-			dictionary.Add(ToolParameterMenu.FILTERLAYERS.FILTER, ToolParameterMenu.ToggleState.Off);
-			dictionary.Add(ToolParameterMenu.FILTERLAYERS.CONSUMABLEORE, ToolParameterMenu.ToggleState.Off);
-			dictionary.Add(ToolParameterMenu.FILTERLAYERS.ORGANICS, ToolParameterMenu.ToggleState.Off);
-			dictionary.Add(ToolParameterMenu.FILTERLAYERS.FARMABLE, ToolParameterMenu.ToggleState.Off);
-			dictionary.Add(ToolParameterMenu.FILTERLAYERS.GAS, ToolParameterMenu.ToggleState.Off);
-			dictionary.Add(ToolParameterMenu.FILTERLAYERS.LIQUID, ToolParameterMenu.ToggleState.Off);
-			return dictionary;
+			return new Dictionary<string, ToolParameterMenu.ToggleState>
+			{
+				{
+					ToolParameterMenu.FILTERLAYERS.ALL,
+					ToolParameterMenu.ToggleState.On
+				},
+				{
+					ToolParameterMenu.FILTERLAYERS.METAL,
+					ToolParameterMenu.ToggleState.Off
+				},
+				{
+					ToolParameterMenu.FILTERLAYERS.BUILDABLE,
+					ToolParameterMenu.ToggleState.Off
+				},
+				{
+					ToolParameterMenu.FILTERLAYERS.FILTER,
+					ToolParameterMenu.ToggleState.Off
+				},
+				{
+					ToolParameterMenu.FILTERLAYERS.CONSUMABLEORE,
+					ToolParameterMenu.ToggleState.Off
+				},
+				{
+					ToolParameterMenu.FILTERLAYERS.ORGANICS,
+					ToolParameterMenu.ToggleState.Off
+				},
+				{
+					ToolParameterMenu.FILTERLAYERS.FARMABLE,
+					ToolParameterMenu.ToggleState.Off
+				},
+				{
+					ToolParameterMenu.FILTERLAYERS.GAS,
+					ToolParameterMenu.ToggleState.Off
+				},
+				{
+					ToolParameterMenu.FILTERLAYERS.LIQUID,
+					ToolParameterMenu.ToggleState.Off
+				}
+			};
 		}
 
 		public override void OnFiltersChanged()

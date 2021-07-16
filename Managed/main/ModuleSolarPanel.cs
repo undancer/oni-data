@@ -63,9 +63,10 @@ public class ModuleSolarPanel : Generator
 		smi = new StatesInstance(this);
 		smi.StartSM();
 		accumulator = Game.Instance.accumulators.Add("Element", this);
-		BuildingDef def = GetComponent<BuildingComplete>().Def;
-		int num = Grid.PosToCell(this);
+		_ = GetComponent<BuildingComplete>().Def;
+		Grid.PosToCell(this);
 		meter = new MeterController(GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.Infront, Grid.SceneLayer.NoLayer, "meter_target", "meter_fill", "meter_frame", "meter_OL");
+		meter.gameObject.GetComponent<KBatchedAnimTracker>().matchParentOffset = true;
 	}
 
 	protected override void OnCleanUp()
@@ -97,7 +98,7 @@ public class ModuleSolarPanel : Generator
 	public override void EnergySim200ms(float dt)
 	{
 		base.EnergySim200ms(dt);
-		ushort circuitID = base.CircuitID;
+		_ = base.CircuitID;
 		operational.SetFlag(Generator.wireConnectedFlag, value: true);
 		operational.SetFlag(Generator.generatorConnectedFlag, value: true);
 		if (!operational.IsOperational)

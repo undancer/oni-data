@@ -58,8 +58,7 @@ namespace NodeEditorFramework
 			declaration = null;
 			Type = type;
 			Color = Color.white;
-			int hashCode = type.GetHashCode();
-			byte[] bytes = BitConverter.GetBytes(hashCode);
+			byte[] bytes = BitConverter.GetBytes(type.GetHashCode());
 			Color = new Color(Mathf.Pow((float)(int)bytes[0] / 255f, 0.5f), Mathf.Pow((float)(int)bytes[1] / 255f, 0.5f), Mathf.Pow((float)(int)bytes[2] / 255f, 0.5f));
 			InKnobTex = ResourceManager.GetTintedTexture("Textures/In_Knob.png", Color);
 			OutKnobTex = ResourceManager.GetTintedTexture("Textures/Out_Knob.png", Color);
@@ -67,7 +66,11 @@ namespace NodeEditorFramework
 
 		public bool isValid()
 		{
-			return Type != null && InKnobTex != null && OutKnobTex != null;
+			if (Type != null && InKnobTex != null)
+			{
+				return OutKnobTex != null;
+			}
+			return false;
 		}
 	}
 }

@@ -9,22 +9,22 @@ public class FlushToiletConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("FlushToilet", 2, 3, "toiletflush_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER1);
-		buildingDef.Overheatable = false;
-		buildingDef.ExhaustKilowattsWhenActive = 0.25f;
-		buildingDef.SelfHeatKilowattsWhenActive = 0f;
-		buildingDef.InputConduitType = ConduitType.Liquid;
-		buildingDef.OutputConduitType = ConduitType.Liquid;
-		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
-		buildingDef.DiseaseCellVisName = "FoodPoisoning";
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
-		buildingDef.UtilityOutputOffset = new CellOffset(1, 1);
-		buildingDef.PermittedRotations = PermittedRotations.FlipH;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("FlushToilet", 2, 3, "toiletflush_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER1);
+		obj.Overheatable = false;
+		obj.ExhaustKilowattsWhenActive = 0.25f;
+		obj.SelfHeatKilowattsWhenActive = 0f;
+		obj.InputConduitType = ConduitType.Liquid;
+		obj.OutputConduitType = ConduitType.Liquid;
+		obj.ViewMode = OverlayModes.LiquidConduits.ID;
+		obj.DiseaseCellVisName = "FoodPoisoning";
+		obj.AudioCategory = "Metal";
+		obj.UtilityInputOffset = new CellOffset(0, 0);
+		obj.UtilityOutputOffset = new CellOffset(1, 1);
+		obj.PermittedRotations = PermittedRotations.FlipH;
 		SoundEventVolumeCache.instance.AddVolume("toiletflush_kanim", "Lavatory_flush", NOISE_POLLUTION.NOISY.TIER3);
 		SoundEventVolumeCache.instance.AddVolume("toiletflush_kanim", "Lavatory_door_close", NOISE_POLLUTION.NOISY.TIER1);
 		SoundEventVolumeCache.instance.AddVolume("toiletflush_kanim", "Lavatory_door_open", NOISE_POLLUTION.NOISY.TIER1);
-		return buildingDef;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -66,8 +66,7 @@ public class FlushToiletConfig : IBuildingConfig
 		Ownable ownable = go.AddOrGet<Ownable>();
 		ownable.slotID = Db.Get().AssignableSlots.Toilet.Id;
 		ownable.canBePublic = true;
-		RequireOutputs requireOutputs = go.AddOrGet<RequireOutputs>();
-		requireOutputs.ignoreFullPipe = true;
+		go.AddOrGet<RequireOutputs>().ignoreFullPipe = true;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

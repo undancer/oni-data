@@ -196,7 +196,7 @@ public class Worker : KMonoBehaviour
 				dt = Mathf.Min(workable.WorkTimeRemaining + 0.01f, 5f);
 			}
 			Klei.AI.Attribute workAttribute = workable.GetWorkAttribute();
-			if (workAttribute?.IsTrainable ?? false)
+			if (workAttribute != null && workAttribute.IsTrainable)
 			{
 				float attributeExperienceMultiplier = workable.GetAttributeExperienceMultiplier();
 				GetComponent<AttributeLevels>().AddExperience(workAttribute.Id, dt, attributeExperienceMultiplier);
@@ -303,8 +303,7 @@ public class Worker : KMonoBehaviour
 		ChoreConsumer component = GetComponent<ChoreConsumer>();
 		if (component != null && component.choreDriver != null)
 		{
-			Chore currentChore = component.choreDriver.GetCurrentChore();
-			currentChore.Fail((text != null) ? text : "WorkChoreDisabled");
+			component.choreDriver.GetCurrentChore().Fail((text != null) ? text : "WorkChoreDisabled");
 		}
 	}
 
@@ -428,6 +427,22 @@ public class Worker : KMonoBehaviour
 		}
 	}
 
+	private void Update()
+	{
+		if (state == State.Working)
+		{
+			ForceSyncAnims();
+		}
+	}
+
+	private void ForceSyncAnims()
+	{
+		if (Time.deltaTime > 0f && kanimSynchronizer != null)
+		{
+			kanimSynchronizer.SyncTime();
+		}
+	}
+
 	public bool InstantlyFinish()
 	{
 		if (workable != null)
@@ -513,8 +528,7 @@ public class Worker : KMonoBehaviour
 
 	private void GetReactionEffect(GameObject reactor)
 	{
-		Effects component = GetComponent<Effects>();
-		component.Add("WorkEncouraged", should_save: true);
+		GetComponent<Effects>().Add("WorkEncouraged", should_save: true);
 	}
 
 	private bool ReactorIsOnFloor(GameObject reactor, Navigator.ActiveTransition transition)
@@ -531,7 +545,11 @@ public class Worker : KMonoBehaviour
 	private bool ReactorIsntPartying(GameObject reactor, Navigator.ActiveTransition transition)
 	{
 		ChoreConsumer component = reactor.GetComponent<ChoreConsumer>();
-		return component.choreDriver.HasChore() && component.choreDriver.GetCurrentChore().choreType != Db.Get().ChoreTypes.Party;
+		if (component.choreDriver.HasChore())
+		{
+			return component.choreDriver.GetCurrentChore().choreType != Db.Get().ChoreTypes.Party;
+		}
+		return false;
 	}
 
 	public void ClearPasserbyReactable()

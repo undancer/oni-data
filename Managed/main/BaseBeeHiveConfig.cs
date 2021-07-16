@@ -21,14 +21,13 @@ public class BaseBeeHiveConfig : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject gameObject = EntityTemplates.CreatePlacedEntity("BeeHive", STRINGS.BUILDINGS.PREFABS.BEEHIVE.NAME, STRINGS.BUILDINGS.PREFABS.BEEHIVE.DESC, 100f, Assets.GetAnim("beehive_kanim"), "grow_pre", Grid.SceneLayer.BuildingBack, 2, 3, TUNING.BUILDINGS.DECOR.BONUS.TIER0, NOISE_POLLUTION.NOISY.TIER0, SimHashes.Creature, null, TUNING.CREATURES.TEMPERATURE.FREEZING_3);
+		GameObject gameObject = EntityTemplates.CreatePlacedEntity("BeeHive", STRINGS.BUILDINGS.PREFABS.BEEHIVE.NAME, STRINGS.BUILDINGS.PREFABS.BEEHIVE.DESC, 100f, Assets.GetAnim("beehive_kanim"), "grow_pre", Grid.SceneLayer.Creatures, 2, 3, TUNING.BUILDINGS.DECOR.BONUS.TIER0, NOISE_POLLUTION.NOISY.TIER0, SimHashes.Creature, null, TUNING.CREATURES.TEMPERATURE.FREEZING_3);
 		KPrefabID kPrefabID = gameObject.AddOrGet<KPrefabID>();
 		kPrefabID.AddTag(GameTags.Experimental);
 		kPrefabID.AddTag(GameTags.Creature);
 		if (Sim.IsRadiationEnabled())
 		{
-			Storage storage = gameObject.AddOrGet<Storage>();
-			storage.storageFXOffset = new Vector3(1f, 1f, 0f);
+			gameObject.AddOrGet<Storage>().storageFXOffset = new Vector3(1f, 1f, 0f);
 			BeeHive.Def def = gameObject.AddOrGetDef<BeeHive.Def>();
 			def.beePrefabID = "Bee";
 			def.larvaPrefabID = "BeeBaby";
@@ -56,33 +55,24 @@ public class BaseBeeHiveConfig : IEntityConfig
 			Prioritizable.AddRef(gameObject);
 			gameObject.AddOrGet<Effects>();
 			gameObject.AddOrGet<TemperatureVulnerable>().Configure(TUNING.CREATURES.TEMPERATURE.FREEZING_9, TUNING.CREATURES.TEMPERATURE.FREEZING_10, TUNING.CREATURES.TEMPERATURE.FREEZING_1, TUNING.CREATURES.TEMPERATURE.FREEZING);
-			DrowningMonitor drowningMonitor = gameObject.AddOrGet<DrowningMonitor>();
-			drowningMonitor.canDrownToDeath = false;
+			gameObject.AddOrGet<DrowningMonitor>().canDrownToDeath = false;
 			gameObject.AddOrGet<EntombVulnerable>();
 			gameObject.AddOrGetDef<DeathMonitor.Def>();
 			gameObject.AddOrGetDef<AnimInterruptMonitor.Def>();
 			gameObject.AddOrGetDef<HiveGrowthMonitor.Def>();
-			FoundationMonitor foundationMonitor = gameObject.AddOrGet<FoundationMonitor>();
-			foundationMonitor.monitorCells = new CellOffset[2]
+			gameObject.AddOrGet<FoundationMonitor>().monitorCells = new CellOffset[2]
 			{
 				new CellOffset(0, -1),
 				new CellOffset(1, -1)
 			};
-			HiveEatingMonitor.Def def2 = gameObject.AddOrGetDef<HiveEatingMonitor.Def>();
-			def2.consumedOre = BeeHiveTuning.CONSUMED_ORE;
-			HiveHarvestMonitor.Def def3 = gameObject.AddOrGetDef<HiveHarvestMonitor.Def>();
-			def3.producedOre = BeeHiveTuning.PRODUCED_ORE;
-			def3.harvestThreshold = 10f;
+			gameObject.AddOrGetDef<HiveEatingMonitor.Def>().consumedOre = BeeHiveTuning.CONSUMED_ORE;
+			HiveHarvestMonitor.Def def2 = gameObject.AddOrGetDef<HiveHarvestMonitor.Def>();
+			def2.producedOre = BeeHiveTuning.PRODUCED_ORE;
+			def2.harvestThreshold = 10f;
 			HashSet<Tag> hashSet = new HashSet<Tag>();
 			hashSet.Add(BeeHiveTuning.CONSUMED_ORE);
-			Diet.Info[] infos = new Diet.Info[1]
-			{
-				new Diet.Info(hashSet, BeeHiveTuning.PRODUCED_ORE, BeeHiveTuning.CALORIES_PER_KG_OF_ORE, BeeHiveTuning.POOP_CONVERSTION_RATE)
-			};
-			Diet diet = new Diet(infos);
-			CreatureCalorieMonitor.Def def4 = gameObject.AddOrGetDef<CreatureCalorieMonitor.Def>();
-			def4.diet = diet;
-			def4.storePoop = true;
+			Diet diet = new Diet(new Diet.Info(hashSet, BeeHiveTuning.PRODUCED_ORE, BeeHiveTuning.CALORIES_PER_KG_OF_ORE, BeeHiveTuning.POOP_CONVERSTION_RATE));
+			gameObject.AddOrGetDef<BeehiveCalorieMonitor.Def>().diet = diet;
 			Trait trait = Db.Get().CreateTrait("BeeHiveBaseTrait", STRINGS.BUILDINGS.PREFABS.BEEHIVE.NAME, STRINGS.BUILDINGS.PREFABS.BEEHIVE.DESC, null, should_save: false, null, positive_trait: true, is_valid_starter_trait: true);
 			trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.maxAttribute.Id, BeeHiveTuning.STANDARD_STOMACH_SIZE, STRINGS.BUILDINGS.PREFABS.BEEHIVE.NAME));
 			trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.deltaAttribute.Id, (0f - BeeHiveTuning.STANDARD_CALORIES_PER_CYCLE) / 600f, STRINGS.BUILDINGS.PREFABS.BEEHIVE.NAME));
@@ -107,8 +97,7 @@ public class BaseBeeHiveConfig : IEntityConfig
 
 	public void OnPrefabInit(GameObject inst)
 	{
-		OccupyArea component = inst.GetComponent<OccupyArea>();
-		component.objectLayers = new ObjectLayer[1]
+		inst.GetComponent<OccupyArea>().objectLayers = new ObjectLayer[1]
 		{
 			ObjectLayer.Building
 		};

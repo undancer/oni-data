@@ -11,14 +11,12 @@ namespace Klei.AI
 
 		public float GetValue(string amount_id)
 		{
-			AmountInstance amountInstance = Get(amount_id);
-			return amountInstance.value;
+			return Get(amount_id).value;
 		}
 
 		public void SetValue(string amount_id, float value)
 		{
-			AmountInstance amountInstance = Get(amount_id);
-			amountInstance.value = value;
+			Get(amount_id).value = value;
 		}
 
 		public override AmountInstance Add(AmountInstance instance)

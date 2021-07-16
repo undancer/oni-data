@@ -124,7 +124,7 @@ public class GameplayEventInstance : ISaveLoadable
 			{
 				GameplayEvent gameplayEvent2 = Db.Get().GameplayEvents.TryGet(successEvent);
 				DebugUtil.DevAssert(gameplayEvent2 != null, $"GameplayEvent {successEvent} is null");
-				if (gameplayEvent2?.IsAllowed() ?? false)
+				if (gameplayEvent2 != null && gameplayEvent2.IsAllowed())
 				{
 					GameplayEventManager.Instance.StartNewEvent(gameplayEvent2);
 				}
@@ -135,7 +135,7 @@ public class GameplayEventInstance : ISaveLoadable
 			{
 				GameplayEvent gameplayEvent = Db.Get().GameplayEvents.TryGet(failureEvent);
 				DebugUtil.DevAssert(gameplayEvent != null, $"GameplayEvent {failureEvent} is null");
-				if (gameplayEvent?.IsAllowed() ?? false)
+				if (gameplayEvent != null && gameplayEvent.IsAllowed())
 				{
 					GameplayEventManager.Instance.StartNewEvent(gameplayEvent);
 				}
@@ -146,8 +146,8 @@ public class GameplayEventInstance : ISaveLoadable
 
 	public static GameplayEventInfoScreen ShowEventPopup(GameplayEventPopupData eventPopupData)
 	{
-		GameplayEventInfoScreen gameplayEventInfoScreen = (GameplayEventInfoScreen)KScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.GameplayEventInfoScreen.gameObject, GameScreenManager.Instance.ssOverlayCanvas.gameObject);
-		gameplayEventInfoScreen.SetEventData(eventPopupData);
+		GameplayEventInfoScreen obj = (GameplayEventInfoScreen)KScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.GameplayEventInfoScreen.gameObject, GameScreenManager.Instance.ssOverlayCanvas.gameObject);
+		obj.SetEventData(eventPopupData);
 		if (eventPopupData.focus != null)
 		{
 			WorldContainer myWorld = eventPopupData.focus.gameObject.GetMyWorld();
@@ -156,7 +156,7 @@ public class GameplayEventInstance : ISaveLoadable
 				CameraController.Instance.ActiveWorldStarWipe(myWorld.id, eventPopupData.focus.position);
 			}
 		}
-		return gameplayEventInfoScreen;
+		return obj;
 	}
 
 	public static Notification CreateStandardEventNotification(GameplayEventPopupData eventPopupData)
@@ -167,12 +167,13 @@ public class GameplayEventInstance : ISaveLoadable
 			return null;
 		}
 		eventPopupData.FinalizeText();
-		Notification notification = new Notification(eventPopupData.title, NotificationType.Event, null, null, expires: false, 0f, null, null, eventPopupData.focus);
-		notification.customClickCallback = delegate
+		return new Notification(eventPopupData.title, NotificationType.Event, null, null, expires: false, 0f, null, null, eventPopupData.focus)
 		{
-			ShowEventPopup(eventPopupData);
+			customClickCallback = delegate
+			{
+				ShowEventPopup(eventPopupData);
+			}
 		};
-		return notification;
 	}
 
 	public static Notification CreateStandardEventChosenNotification(GameplayEventPopupData eventPopupData)
@@ -183,12 +184,13 @@ public class GameplayEventInstance : ISaveLoadable
 			return null;
 		}
 		eventPopupData.FinalizeText();
-		Notification notification = new Notification(eventPopupData.title, NotificationType.Event, null, null, expires: false, 0f, null, null, eventPopupData.focus);
-		notification.customClickCallback = delegate
+		return new Notification(eventPopupData.title, NotificationType.Event, null, null, expires: false, 0f, null, null, eventPopupData.focus)
 		{
-			ShowEventPopup(eventPopupData);
+			customClickCallback = delegate
+			{
+				ShowEventPopup(eventPopupData);
+			}
 		};
-		return notification;
 	}
 
 	public static Notification CreateStandardCancelledNotification(GameplayEventPopupData eventPopupData)

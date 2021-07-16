@@ -75,8 +75,7 @@ public class LiquidPumpingStation : Workable, ISim200ms
 				a = Mathf.Max(a, 1f);
 				HandleVector<Game.ComplexCallbackInfo<Sim.MassConsumedCallback>>.Handle handle = Game.Instance.massConsumedCallbackManager.Add(OnSimConsumeCallback, this, "LiquidPumpingStation");
 				int depthAvailable = PumpingStationGuide.GetDepthAvailable(cell, pump);
-				int gameCell = Grid.OffsetCell(cell, new CellOffset(0, -depthAvailable));
-				SimMessages.ConsumeMass(gameCell, element, a, (byte)(depthAvailable + 1), handle.index);
+				SimMessages.ConsumeMass(Grid.OffsetCell(cell, new CellOffset(0, -depthAvailable)), element, a, (byte)(depthAvailable + 1), handle.index);
 			}
 		}
 
@@ -147,7 +146,7 @@ public class LiquidPumpingStation : Workable, ISim200ms
 
 	private LiquidInfo[] infos;
 
-	private int infoCount = 0;
+	private int infoCount;
 
 	private int depthAvailable = -1;
 
@@ -336,8 +335,7 @@ public class LiquidPumpingStation : Workable, ISim200ms
 			session.Cleanup();
 			session = null;
 		}
-		KAnimControllerBase component = GetComponent<KAnimControllerBase>();
-		component.Play("on");
+		GetComponent<KAnimControllerBase>().Play("on");
 	}
 
 	private void OnReservationsChanged()

@@ -30,8 +30,7 @@ public class ResearchModule : KMonoBehaviour
 	{
 		if (!DlcManager.FeatureClusterSpaceEnabled())
 		{
-			SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(SpacecraftManager.instance.GetSpacecraftID(GetComponent<RocketModule>().conditionManager.GetComponent<ILaunchableRocket>()));
-			SpaceDestination.ResearchOpportunity researchOpportunity = spacecraftDestination.TryCompleteResearchOpportunity();
+			SpaceDestination.ResearchOpportunity researchOpportunity = SpacecraftManager.instance.GetSpacecraftDestination(SpacecraftManager.instance.GetSpacecraftID(GetComponent<RocketModule>().conditionManager.GetComponent<ILaunchableRocket>())).TryCompleteResearchOpportunity();
 			if (researchOpportunity != null)
 			{
 				GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab("ResearchDatabank"), base.gameObject.transform.GetPosition(), Grid.SceneLayer.Ore);
@@ -46,14 +45,13 @@ public class ResearchModule : KMonoBehaviour
 					}
 					else
 					{
-						GameObject gameObject2 = GameUtil.KInstantiate(prefab, base.gameObject.transform.GetPosition(), Grid.SceneLayer.Ore);
-						gameObject2.SetActive(value: true);
+						GameUtil.KInstantiate(prefab, base.gameObject.transform.GetPosition(), Grid.SceneLayer.Ore).SetActive(value: true);
 					}
 				}
 			}
 		}
-		GameObject gameObject3 = GameUtil.KInstantiate(Assets.GetPrefab("ResearchDatabank"), base.gameObject.transform.GetPosition(), Grid.SceneLayer.Ore);
-		gameObject3.SetActive(value: true);
-		gameObject3.GetComponent<PrimaryElement>().Mass = ROCKETRY.DESTINATION_RESEARCH.EVERGREEN;
+		GameObject gameObject2 = GameUtil.KInstantiate(Assets.GetPrefab("ResearchDatabank"), base.gameObject.transform.GetPosition(), Grid.SceneLayer.Ore);
+		gameObject2.SetActive(value: true);
+		gameObject2.GetComponent<PrimaryElement>().Mass = ROCKETRY.DESTINATION_RESEARCH.EVERGREEN;
 	}
 }

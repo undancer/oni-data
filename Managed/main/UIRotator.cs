@@ -16,7 +16,6 @@ public class UIRotator : KMonoBehaviour
 
 	private void Update()
 	{
-		RectTransform component = GetComponent<RectTransform>();
-		component.Rotate(0f, 0f, rotationSpeed * Time.unscaledDeltaTime);
+		GetComponent<RectTransform>().Rotate(0f, 0f, rotationSpeed * Time.unscaledDeltaTime);
 	}
 }

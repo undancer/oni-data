@@ -18,12 +18,15 @@ namespace Database
 
 		public GameplaySeason BonusEvents;
 
+		public GameplaySeason RegolithMoonMeteorShowers;
+
 		public GameplaySeasons(ResourceSet parent)
 			: base("GameplaySeasons", parent)
 		{
-			MeteorShowers = Add(new GameplaySeason("MeteorShowers", GameplaySeason.Type.World, "", 50f, synchronizedToPeriod: false, -1f, alwaysLoad: false, -1, 200f, 300f).AddEvent(Db.Get().GameplayEvents.MeteorShowerIronEvent).AddEvent(Db.Get().GameplayEvents.MeteorShowerGoldEvent).AddEvent(Db.Get().GameplayEvents.MeteorShowerCopperEvent));
+			MeteorShowers = Add(new GameplaySeason("MeteorShowers", GameplaySeason.Type.World, "", 14f, synchronizedToPeriod: false, -1f, startActive: true).AddEvent(Db.Get().GameplayEvents.MeteorShowerIronEvent).AddEvent(Db.Get().GameplayEvents.MeteorShowerGoldEvent).AddEvent(Db.Get().GameplayEvents.MeteorShowerCopperEvent));
+			RegolithMoonMeteorShowers = Add(new GameplaySeason("RegolithMoonMeteorShowers", GameplaySeason.Type.World, "EXPANSION1_ID", 20f, synchronizedToPeriod: false, -1f, startActive: true).AddEvent(Db.Get().GameplayEvents.MeteorShowerDustEvent));
 			TemporalTearMeteorShowers = Add(new GameplaySeason("TemporalTearMeteorShowers", GameplaySeason.Type.World, "EXPANSION1_ID", 1f, synchronizedToPeriod: false, 0f).AddEvent(Db.Get().GameplayEvents.MeteorShowerFullereneEvent));
-			GassyMooteorShowers = Add(new GameplaySeason("GassyMooteorShowers", GameplaySeason.Type.World, "EXPANSION1_ID", 20f, synchronizedToPeriod: false, -1f, alwaysLoad: true).AddEvent(Db.Get().GameplayEvents.GassyMooteorEvent));
+			GassyMooteorShowers = Add(new GameplaySeason("GassyMooteorShowers", GameplaySeason.Type.World, "EXPANSION1_ID", 20f, synchronizedToPeriod: false, -1f, startActive: true).AddEvent(Db.Get().GameplayEvents.GassyMooteorEvent));
 		}
 	}
 }

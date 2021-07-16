@@ -14,7 +14,7 @@ public class PlaceTool : DragTool
 
 	public static PlaceTool Instance;
 
-	private bool active = false;
+	private bool active;
 
 	public static void DestroyInstance()
 	{
@@ -45,8 +45,7 @@ public class PlaceTool : DragTool
 		kBatchedAnimController.initialAnim = source.animName;
 		visualizer.SetActive(value: true);
 		ShowToolTip();
-		PlaceToolHoverTextCard component = GetComponent<PlaceToolHoverTextCard>();
-		component.currentPlaceable = source;
+		GetComponent<PlaceToolHoverTextCard>().currentPlaceable = source;
 		ResourceRemainingDisplayScreen.instance.ActivateDisplay(visualizer);
 		GridCompositor.Instance.ToggleMajor(on: true);
 	}

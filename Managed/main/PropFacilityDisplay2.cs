@@ -12,16 +12,16 @@ public class PropFacilityDisplay2 : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject gameObject = EntityTemplates.CreatePlacedEntity("PropFacilityDisplay2", STRINGS.BUILDINGS.PREFABS.PROPFACILITYDISPLAY2.NAME, STRINGS.BUILDINGS.PREFABS.PROPFACILITYDISPLAY2.DESC, 50f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("gravitas_display2_kanim"), initialAnim: "off", sceneLayer: Grid.SceneLayer.Building, width: 2, height: 3, element: SimHashes.Creature, additionalTags: new List<Tag>
+		GameObject obj = EntityTemplates.CreatePlacedEntity("PropFacilityDisplay2", STRINGS.BUILDINGS.PREFABS.PROPFACILITYDISPLAY2.NAME, STRINGS.BUILDINGS.PREFABS.PROPFACILITYDISPLAY2.DESC, 50f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("gravitas_display2_kanim"), initialAnim: "off", sceneLayer: Grid.SceneLayer.Building, width: 2, height: 3, element: SimHashes.Creature, additionalTags: new List<Tag>
 		{
 			GameTags.Gravitas
 		});
-		PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
+		PrimaryElement component = obj.GetComponent<PrimaryElement>();
 		component.SetElement(SimHashes.Steel);
 		component.Temperature = 294.15f;
-		gameObject.AddOrGet<LoreBearer>();
-		gameObject.AddOrGet<Demolishable>();
-		return gameObject;
+		obj.AddOrGet<LoreBearer>();
+		obj.AddOrGet<Demolishable>();
+		return obj;
 	}
 
 	public void OnPrefabInit(GameObject inst)

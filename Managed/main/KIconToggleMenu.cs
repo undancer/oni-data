@@ -53,8 +53,7 @@ public class KIconToggleMenu : KScreen
 		public virtual void SetToggle(KToggle toggle)
 		{
 			this.toggle = toggle;
-			ToolTip component = toggle.GetComponent<ToolTip>();
-			component.OnComplexToolTip = getTooltipText;
+			toggle.GetComponent<ToolTip>().OnComplexToolTip = getTooltipText;
 		}
 
 		protected virtual List<Tuple<string, TextStyleSetting>> DefaultGetTooltipText()

@@ -84,8 +84,7 @@ public class KToggleMenu : KScreen
 			{
 				OnClick(idx);
 			};
-			Text text = kToggle.GetComponentsInChildren<Text>(includeInactive: true)[0];
-			text.text = toggleInfo.text;
+			kToggle.GetComponentsInChildren<Text>(includeInactive: true)[0].text = toggleInfo.text;
 			toggleInfo.toggle = kToggle;
 			toggles.Add(kToggle);
 		}

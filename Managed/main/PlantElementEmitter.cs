@@ -16,7 +16,11 @@ public class PlantElementEmitter : StateMachineComponent<PlantElementEmitter.Sta
 			{
 				return false;
 			}
-			return base.master.wiltCondition != null && base.master.wiltCondition.IsWilting();
+			if (base.master.wiltCondition != null)
+			{
+				return base.master.wiltCondition.IsWilting();
+			}
+			return false;
 		}
 	}
 

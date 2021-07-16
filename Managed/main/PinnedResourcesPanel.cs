@@ -20,7 +20,7 @@ public class PinnedResourcesPanel : KScreen, IRender1000ms
 
 	public static PinnedResourcesPanel Instance;
 
-	private int clickIdx = 0;
+	private int clickIdx;
 
 	protected override void OnSpawn()
 	{
@@ -28,13 +28,18 @@ public class PinnedResourcesPanel : KScreen, IRender1000ms
 		Instance = this;
 		Populate();
 		Game.Instance.Subscribe(1983128072, Populate);
-		MultiToggle component = seeAllButton.GetComponent<MultiToggle>();
+		MultiToggle component = headerButton.GetComponent<MultiToggle>();
 		component.onClick = (System.Action)Delegate.Combine(component.onClick, (System.Action)delegate
+		{
+			Refresh();
+		});
+		MultiToggle component2 = seeAllButton.GetComponent<MultiToggle>();
+		component2.onClick = (System.Action)Delegate.Combine(component2.onClick, (System.Action)delegate
 		{
 			AllResourcesScreen.Instance.Show(!AllResourcesScreen.Instance.gameObject.activeSelf);
 		});
-		MultiToggle component2 = clearNewButton.GetComponent<MultiToggle>();
-		component2.onClick = (System.Action)Delegate.Combine(component2.onClick, (System.Action)delegate
+		MultiToggle component3 = clearNewButton.GetComponent<MultiToggle>();
+		component3.onClick = (System.Action)Delegate.Combine(component3.onClick, (System.Action)delegate
 		{
 			foreach (KeyValuePair<Tag, GameObject> row in rows)
 			{
@@ -146,8 +151,7 @@ public class PinnedResourcesPanel : KScreen, IRender1000ms
 	{
 		foreach (TagSet allowDisplayCategory in AllResourcesScreen.Instance.allowDisplayCategories)
 		{
-			Dictionary<Tag, HashSet<Tag>> discoveredResourcesFromTagSet = DiscoveredResources.Instance.GetDiscoveredResourcesFromTagSet(allowDisplayCategory);
-			foreach (KeyValuePair<Tag, HashSet<Tag>> item in discoveredResourcesFromTagSet)
+			foreach (KeyValuePair<Tag, HashSet<Tag>> item in DiscoveredResources.Instance.GetDiscoveredResourcesFromTagSet(allowDisplayCategory))
 			{
 				if (item.Value.Contains(tag))
 				{
@@ -289,6 +293,9 @@ public class PinnedResourcesPanel : KScreen, IRender1000ms
 
 	public void Render1000ms(float dt)
 	{
-		Refresh();
+		if (!(headerButton != null) || headerButton.CurrentState != 0)
+		{
+			Refresh();
+		}
 	}
 }

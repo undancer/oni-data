@@ -9,7 +9,7 @@ namespace Database
 
 		public int numCycles;
 
-		public int currentCycleCount = 0;
+		public int currentCycleCount;
 
 		public bool armsOutPerformingDupesThisCycle;
 

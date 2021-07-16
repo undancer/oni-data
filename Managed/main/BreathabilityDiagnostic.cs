@@ -21,8 +21,7 @@ public class BreathabilityDiagnostic : ColonyDiagnostic
 		{
 			foreach (MinionIdentity item in worldItems)
 			{
-				OxygenBreather component = item.GetComponent<OxygenBreather>();
-				OxygenBreather.IGasProvider gasProvider = component.GetGasProvider();
+				item.GetComponent<OxygenBreather>().GetGasProvider();
 				SuffocationMonitor.Instance sMI = item.GetSMI<SuffocationMonitor.Instance>();
 				if (sMI != null && sMI.IsInsideState(sMI.sm.nooxygen.suffocating))
 				{
@@ -35,8 +34,7 @@ public class BreathabilityDiagnostic : ColonyDiagnostic
 
 	private DiagnosticResult CheckLowBreathability()
 	{
-		List<MinionIdentity> worldItems = Components.LiveMinionIdentities.GetWorldItems(base.worldID);
-		if (worldItems.Count != 0 && tracker.GetAverageValue(trackerSampleCountSeconds) < 60f)
+		if (Components.LiveMinionIdentities.GetWorldItems(base.worldID).Count != 0 && tracker.GetAverageValue(trackerSampleCountSeconds) < 60f)
 		{
 			return new DiagnosticResult(DiagnosticResult.Opinion.Concern, UI.COLONY_DIAGNOSTICS.BREATHABILITYDIAGNOSTIC.POOR);
 		}

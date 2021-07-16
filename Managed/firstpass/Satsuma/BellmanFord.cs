@@ -118,8 +118,11 @@ namespace Satsuma
 			{
 				throw new InvalidOperationException("A negative cycle was found.");
 			}
-			double value;
-			return distance.TryGetValue(node, out value) ? value : double.PositiveInfinity;
+			if (!distance.TryGetValue(node, out var value))
+			{
+				return double.PositiveInfinity;
+			}
+			return value;
 		}
 
 		public Arc GetParentArc(Node node)
@@ -128,8 +131,11 @@ namespace Satsuma
 			{
 				throw new InvalidOperationException("A negative cycle was found.");
 			}
-			Arc value;
-			return parentArc.TryGetValue(node, out value) ? value : Arc.Invalid;
+			if (!parentArc.TryGetValue(node, out var value))
+			{
+				return Arc.Invalid;
+			}
+			return value;
 		}
 
 		public IPath GetPath(Node node)

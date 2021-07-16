@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using KSerialization;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 
 		private KAnimLink animLink;
 
-		private Coroutine activeAnimationRoutine = null;
+		private Coroutine activeAnimationRoutine;
 
 		private string[] towerBGAnimNames = new string[10]
 		{
@@ -93,15 +94,15 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 		{
 			while (currentHeight < targetHeight)
 			{
-				bool animComplete2 = false;
+				bool animComplete = false;
 				towerAnimControllers[currentHeight].Queue(towerBGAnimNames[currentHeight % towerBGAnimNames.Length] + towerBGAnimSuffix_on_pre);
 				towerAnimControllers[currentHeight].Queue(towerBGAnimNames[currentHeight % towerBGAnimNames.Length] + towerBGAnimSuffix_on);
 				towerAnimControllers[currentHeight].onAnimComplete += delegate
 				{
-					animComplete2 = true;
+					animComplete = true;
 				};
 				float delay = 0.25f;
-				while (!animComplete2 && delay > 0f)
+				while (!animComplete && delay > 0f)
 				{
 					delay -= Time.deltaTime;
 					yield return 0;
@@ -111,17 +112,17 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 			while (currentHeight > targetHeight)
 			{
 				currentHeight--;
-				bool animComplete = false;
+				bool animComplete2 = false;
 				towerAnimControllers[currentHeight].Queue(towerBGAnimNames[currentHeight % towerBGAnimNames.Length] + towerBGAnimSuffix_off_pre);
 				towerAnimControllers[currentHeight].Queue(towerBGAnimNames[currentHeight % towerBGAnimNames.Length] + towerBGAnimSuffix_off);
 				towerAnimControllers[currentHeight].onAnimComplete += delegate
 				{
-					animComplete = true;
+					animComplete2 = true;
 				};
-				float delay2 = 0.25f;
-				while (!animComplete && delay2 > 0f)
+				float delay = 0.25f;
+				while (!animComplete2 && delay > 0f)
 				{
-					delay2 -= Time.deltaTime;
+					delay -= Time.deltaTime;
 					yield return 0;
 				}
 			}
@@ -168,6 +169,27 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 	}
 
 	public int RocketBottomPosition => Grid.OffsetCell(Grid.PosToCell(this), baseModulePosition);
+
+	[OnDeserialized]
+	private void OnDeserialzed()
+	{
+		if (!SaveLoader.Instance.GameInfo.IsVersionOlderThan(7, 24))
+		{
+			return;
+		}
+		Building component = GetComponent<Building>();
+		if (!(component != null))
+		{
+			return;
+		}
+		component.RunOnArea(delegate(int cell)
+		{
+			if (Grid.IsValidCell(cell) && Grid.Solid[cell])
+			{
+				SimMessages.ReplaceElement(cell, SimHashes.Vacuum, CellEventLogger.Instance.LaunchpadDesolidify, 0f);
+			}
+		});
+	}
 
 	protected override void OnPrefabInit()
 	{
@@ -229,11 +251,8 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 
 	public bool IsLogicInputConnected()
 	{
-		LogicPorts component = GetComponent<LogicPorts>();
-		int portCell = component.GetPortCell(triggerPort);
-		LogicCircuitManager logicCircuitManager = Game.Instance.logicCircuitManager;
-		LogicCircuitNetwork networkForCell = logicCircuitManager.GetNetworkForCell(portCell);
-		return networkForCell != null;
+		int portCell = GetComponent<LogicPorts>().GetPortCell(triggerPort);
+		return Game.Instance.logicCircuitManager.GetNetworkForCell(portCell) != null;
 	}
 
 	public void Sim1000ms(float dt)
@@ -277,8 +296,7 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 		GameObject gameObject2 = Util.KInstantiate(Assets.GetPrefab("Clustercraft"));
 		gameObject2.SetActive(value: true);
 		Clustercraft component = gameObject2.GetComponent<Clustercraft>();
-		CraftModuleInterface component2 = component.GetComponent<CraftModuleInterface>();
-		component2.AddModule(gameObject.GetComponent<RocketModuleCluster>());
+		component.GetComponent<CraftModuleInterface>().AddModule(gameObject.GetComponent<RocketModuleCluster>());
 		component.Init(this.GetMyWorldLocation(), this);
 		if (gameObject.GetComponent<BuildingUnderConstruction>() != null)
 		{
@@ -334,13 +352,21 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 
 	public bool HasRocketWithCommandModule()
 	{
-		return HasRocket() && LandedRocket.CraftInterface.FindLaunchableRocket() != null;
+		if (HasRocket())
+		{
+			return LandedRocket.CraftInterface.FindLaunchableRocket() != null;
+		}
+		return false;
 	}
 
 	private GameObject GetRocketBaseModule()
 	{
 		GameObject gameObject = Grid.Objects[Grid.OffsetCell(Grid.PosToCell(base.gameObject), baseModulePosition), 1];
-		return (gameObject != null && gameObject.GetComponent<RocketModule>() != null) ? gameObject : null;
+		if (!(gameObject != null) || !(gameObject.GetComponent<RocketModule>() != null))
+		{
+			return null;
+		}
+		return gameObject;
 	}
 
 	public void DirtyTowerHeight()

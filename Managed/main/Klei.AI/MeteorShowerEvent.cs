@@ -15,24 +15,58 @@ namespace Klei.AI
 
 		public class States : GameplayEventStateMachine<States, StatesInstance, GameplayEventManager, MeteorShowerEvent>
 		{
+			public class RunningStates : State
+			{
+				public State bombarding;
+
+				public State snoozing;
+			}
+
 			public State planning;
 
-			public State running;
+			public RunningStates running;
 
 			public State finished;
 
-			public Signal doFinish;
+			public FloatParameter runTimeRemaining;
+
+			public FloatParameter bombardTimeRemaining;
+
+			public FloatParameter snoozeTimeRemaining;
 
 			public override void InitializeStates(out BaseState default_state)
 			{
 				base.InitializeStates(out default_state);
 				default_state = planning;
 				base.serializable = SerializeType.Both_DEPRECATED;
-				planning.GoTo(running);
-				running.Update(delegate(StatesInstance smi, float dt)
+				planning.Enter(delegate(StatesInstance smi)
 				{
-					smi.Update(dt);
-				}).OnSignal(doFinish, finished);
+					runTimeRemaining.Set(smi.gameplayEvent.duration, smi);
+					bombardTimeRemaining.Set(smi.gameplayEvent.secondsBombardmentOn.Get(), smi);
+					snoozeTimeRemaining.Set(smi.gameplayEvent.secondsBombardmentOff.Get(), smi);
+				}).GoTo(running);
+				running.DefaultState(running.snoozing).Update(delegate(StatesInstance smi, float dt)
+				{
+					runTimeRemaining.Delta(0f - dt, smi);
+				}).ParamTransition(runTimeRemaining, finished, GameStateMachine<States, StatesInstance, GameplayEventManager, object>.IsLTEZero);
+				running.bombarding.Exit(delegate(StatesInstance smi)
+				{
+					bombardTimeRemaining.Set(smi.gameplayEvent.secondsBombardmentOn.Get(), smi);
+				}).Update(delegate(StatesInstance smi, float dt)
+				{
+					bombardTimeRemaining.Delta(0f - dt, smi);
+				}).ParamTransition(bombardTimeRemaining, running.snoozing, GameStateMachine<States, StatesInstance, GameplayEventManager, object>.IsLTEZero)
+					.Update(delegate(StatesInstance smi, float dt)
+					{
+						smi.Bombarding(dt);
+					});
+				running.snoozing.Exit(delegate(StatesInstance smi)
+				{
+					snoozeTimeRemaining.Set(smi.gameplayEvent.secondsBombardmentOff.Get(), smi);
+				}).Update(delegate(StatesInstance smi, float dt)
+				{
+					snoozeTimeRemaining.Delta(0f - dt, smi);
+				}).ParamTransition(snoozeTimeRemaining, running.bombarding, GameStateMachine<States, StatesInstance, GameplayEventManager, object>.IsLTEZero);
 				finished.ReturnSuccess();
 			}
 		}
@@ -42,7 +76,7 @@ namespace Klei.AI
 			public GameObject activeMeteorBackground;
 
 			[Serialize]
-			private float nextMeteorTime = 0f;
+			private float nextMeteorTime;
 
 			[Serialize]
 			private float timeRemaining;
@@ -88,18 +122,22 @@ namespace Klei.AI
 				base.StopSM(reason);
 			}
 
-			public void Update(float dt)
+			public float TimeUntilNextShower()
+			{
+				if (IsInsideState(base.sm.running.bombarding))
+				{
+					return 0f;
+				}
+				return base.sm.snoozeTimeRemaining.Get(this);
+			}
+
+			public void Bombarding(float dt)
 			{
 				nextMeteorTime -= dt;
 				while (nextMeteorTime < 0f)
 				{
 					DoBombardment(gameplayEvent.bombardmentInfo);
 					nextMeteorTime += timeBetweenMeteors;
-				}
-				timeRemaining -= dt;
-				if (timeRemaining <= 0f)
-				{
-					base.sm.doFinish.Trigger(base.smi);
 				}
 			}
 
@@ -128,23 +166,29 @@ namespace Klei.AI
 				float x = (float)world.Width * Random.value + (float)world.WorldOffset.x;
 				float y = world.Height + world.WorldOffset.y - 1;
 				float layerZ = Grid.GetLayerZ(Grid.SceneLayer.FXFront);
-				GameObject gameObject = Util.KInstantiate(position: new Vector3(x, y, layerZ), original: Assets.GetPrefab(prefab), rotation: Quaternion.identity);
-				gameObject.SetActive(value: true);
-				return gameObject;
+				GameObject obj = Util.KInstantiate(position: new Vector3(x, y, layerZ), original: Assets.GetPrefab(prefab), rotation: Quaternion.identity);
+				obj.SetActive(value: true);
+				return obj;
 			}
 		}
 
 		private List<BombardmentInfo> bombardmentInfo;
 
+		private MathUtil.MinMax secondsBombardmentOff;
+
+		private MathUtil.MinMax secondsBombardmentOn;
+
 		private float secondsPerMeteor = 0.33f;
 
 		private float duration;
 
-		public MeteorShowerEvent(string id, float duration, float secondsPerMeteor = 0.33f)
+		public MeteorShowerEvent(string id, float duration, float secondsPerMeteor, MathUtil.MinMax secondsBombardmentOff = default(MathUtil.MinMax), MathUtil.MinMax secondsBombardmentOn = default(MathUtil.MinMax))
 			: base(id, 0, 0)
 		{
 			this.duration = duration;
 			this.secondsPerMeteor = secondsPerMeteor;
+			this.secondsBombardmentOff = secondsBombardmentOff;
+			this.secondsBombardmentOn = secondsBombardmentOn;
 			bombardmentInfo = new List<BombardmentInfo>();
 			tags.Add(GameTags.SpaceDanger);
 		}

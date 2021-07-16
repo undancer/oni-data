@@ -6,7 +6,7 @@ public class HeatCompressor : StateMachineComponent<HeatCompressor.StatesInstanc
 	public class StatesInstance : GameStateMachine<States, StatesInstance, HeatCompressor, object>.GameInstance
 	{
 		[Serialize]
-		public float heatRemovalTimer = 0f;
+		public float heatRemovalTimer;
 
 		public StatesInstance(HeatCompressor master)
 			: base(master)
@@ -25,15 +25,18 @@ public class HeatCompressor : StateMachineComponent<HeatCompressor.StatesInstanc
 			float result = 1f;
 			if (primaryElement != null)
 			{
-				float temperature = primaryElement.GetComponent<PrimaryElement>().Temperature;
-				result = Mathf.Clamp01(temperature / base.smi.master.MAX_CUBE_TEMPERATURE);
+				result = Mathf.Clamp01(primaryElement.GetComponent<PrimaryElement>().Temperature / base.smi.master.MAX_CUBE_TEMPERATURE);
 			}
 			return result;
 		}
 
 		public bool CanWork()
 		{
-			return GetRemainingCharge() < 1f && base.smi.master.heatCubeStorage.items.Count > 0;
+			if (GetRemainingCharge() < 1f)
+			{
+				return base.smi.master.heatCubeStorage.items.Count > 0;
+			}
+			return false;
 		}
 
 		public void StartNewHeatRemoval()
@@ -100,12 +103,12 @@ public class HeatCompressor : StateMachineComponent<HeatCompressor.StatesInstanc
 	public float heatRemovalTime = 100f;
 
 	[Serialize]
-	public float energyCompressed = 0f;
+	public float energyCompressed;
 
 	public float heat_sink_active_time = 9000f;
 
 	[Serialize]
-	public float time_active = 0f;
+	public float time_active;
 
 	public float MAX_CUBE_TEMPERATURE = 3000f;
 
@@ -152,8 +155,7 @@ public class HeatCompressor : StateMachineComponent<HeatCompressor.StatesInstanc
 		}
 		foreach (GameObject item2 in heatCubeStorage.items)
 		{
-			PrimaryElement component2 = item2.GetComponent<PrimaryElement>();
-			GameUtil.DeltaThermalEnergy(component2, energyCompressed / (float)heatCubeStorage.items.Count, 100000f);
+			GameUtil.DeltaThermalEnergy(item2.GetComponent<PrimaryElement>(), energyCompressed / (float)heatCubeStorage.items.Count, 100000f);
 		}
 		energyCompressed = 0f;
 	}

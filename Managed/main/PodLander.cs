@@ -31,24 +31,22 @@ public class PodLander : StateMachineComponent<PodLander.StatesInstance>, IGameO
 				float num = 10f;
 				smi.master.rocketSpeed = num - Mathf.Clamp(Mathf.Pow(smi.timeinstate / 3.5f, 4f), 0f, num - 2f);
 				smi.master.flightAnimOffset -= dt * smi.master.rocketSpeed;
-				KBatchedAnimController component2 = smi.master.GetComponent<KBatchedAnimController>();
-				component2.Offset = Vector3.up * smi.master.flightAnimOffset;
-				Vector3 positionIncludingOffset = component2.PositionIncludingOffset;
-				Vector3 pos = smi.master.gameObject.transform.GetPosition() + smi.master.GetComponent<KBatchedAnimController>().Offset;
-				int num2 = Grid.PosToCell(pos);
+				KBatchedAnimController component = smi.master.GetComponent<KBatchedAnimController>();
+				component.Offset = Vector3.up * smi.master.flightAnimOffset;
+				_ = component.PositionIncludingOffset;
+				int num2 = Grid.PosToCell(smi.master.gameObject.transform.GetPosition() + smi.master.GetComponent<KBatchedAnimController>().Offset);
 				if (Grid.IsValidCell(num2))
 				{
 					SimMessages.EmitMass(num2, (byte)ElementLoader.GetElementIndex(smi.master.exhaustElement), dt * smi.master.exhaustEmitRate, smi.master.exhaustTemperature, 0, 0);
 				}
-				if (component2.Offset.y <= 0f)
+				if (component.Offset.y <= 0f)
 				{
 					smi.GoTo(crashed);
 				}
 			}, UpdateRate.SIM_33ms);
 			crashed.PlayAnim("grounded").Enter(delegate(StatesInstance smi)
 			{
-				KBatchedAnimController component = smi.master.GetComponent<KBatchedAnimController>();
-				component.Offset = Vector3.zero;
+				smi.master.GetComponent<KBatchedAnimController>().Offset = Vector3.zero;
 				smi.master.rocketSpeed = 0f;
 				smi.master.ReleaseAstronaut();
 			});
@@ -59,7 +57,7 @@ public class PodLander : StateMachineComponent<PodLander.StatesInstance>, IGameO
 	private int landOffLocation;
 
 	[Serialize]
-	private float flightAnimOffset = 0f;
+	private float flightAnimOffset;
 
 	private float rocketSpeed;
 
@@ -71,7 +69,7 @@ public class PodLander : StateMachineComponent<PodLander.StatesInstance>, IGameO
 
 	private GameObject soundSpeakerObject;
 
-	private bool releasingAstronaut = false;
+	private bool releasingAstronaut;
 
 	protected override void OnSpawn()
 	{

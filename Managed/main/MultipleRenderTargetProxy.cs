@@ -5,7 +5,7 @@ public class MultipleRenderTargetProxy : MonoBehaviour
 {
 	public RenderTexture[] Textures = new RenderTexture[3];
 
-	private bool colouredOverlayBufferEnabled = false;
+	private bool colouredOverlayBufferEnabled;
 
 	private void Start()
 	{
@@ -39,8 +39,7 @@ public class MultipleRenderTargetProxy : MonoBehaviour
 			Textures[2].name = "MRT2";
 			array[2] = Textures[2].colorBuffer;
 		}
-		Camera component = GetComponent<Camera>();
-		component.SetTargetBuffers(array, Textures[0].depthBuffer);
+		GetComponent<Camera>().SetTargetBuffers(array, Textures[0].depthBuffer);
 		OnShadersReloaded();
 	}
 

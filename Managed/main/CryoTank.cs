@@ -90,7 +90,11 @@ public class CryoTank : StateMachineComponent<CryoTank.StatesInstance>, ISidescr
 
 	public bool SidescreenButtonInteractable()
 	{
-		return base.smi.IsInsideState(base.smi.sm.closed) && chore == null;
+		if (base.smi.IsInsideState(base.smi.sm.closed))
+		{
+			return chore == null;
+		}
+		return false;
 	}
 
 	public int ButtonSideScreenSortOrder()
@@ -112,8 +116,7 @@ public class CryoTank : StateMachineComponent<CryoTank.StatesInstance>, ISidescr
 		Vector3 position = Grid.CellToPosCBC(Grid.PosToCell(base.gameObject), Grid.SceneLayer.Move);
 		gameObject.transform.SetLocalPosition(position);
 		gameObject.SetActive(value: true);
-		MinionStartingStats minionStartingStats = new MinionStartingStats(is_starter_minion: false);
-		minionStartingStats.Apply(gameObject);
+		new MinionStartingStats(is_starter_minion: false).Apply(gameObject);
 		gameObject.GetComponent<MinionIdentity>().arrivalTime = Random.Range(-2000, -1000);
 		if (opener != null)
 		{

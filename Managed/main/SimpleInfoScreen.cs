@@ -44,9 +44,9 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 
 		private FadeStage fadeStage;
 
-		private float fade = 0f;
+		private float fade;
 
-		private float fadeInTime = 0f;
+		private float fadeInTime;
 
 		private float fadeOutTime = 1.8f;
 
@@ -116,8 +116,6 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 				}
 				break;
 			}
-			case FadeStage.WAIT:
-				break;
 			case FadeStage.OUT:
 			{
 				float num = fade;
@@ -129,6 +127,8 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 				}
 				break;
 			}
+			case FadeStage.WAIT:
+				break;
 			}
 		}
 
@@ -448,8 +448,7 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		if (category != null)
 		{
 			int num = -1;
-			List<StatusItemEntry> list = oldStatusItems.FindAll((StatusItemEntry e) => e.category == category);
-			foreach (StatusItemEntry item in list)
+			foreach (StatusItemEntry item in oldStatusItems.FindAll((StatusItemEntry e) => e.category == category))
 			{
 				num = item.GetIndex();
 				item.Destroy(immediate: true);
@@ -555,8 +554,7 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 			{
 				vitalsPanel.gameObject.SetActive(component9.GetPlanterStorage != null);
 			}
-			WiltCondition component10 = selectedTarget.gameObject.GetComponent<WiltCondition>();
-			if (component10 != null)
+			if (selectedTarget.gameObject.GetComponent<WiltCondition>() != null)
 			{
 				vitalsPanel.gameObject.SetActive(value: true);
 			}
@@ -764,8 +762,7 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		}
 		if (num == 0)
 		{
-			GameObject gameObject2 = AddOrGetStorageLabel(storageLabels, StoragePanel, "empty");
-			gameObject2.GetComponentInChildren<LocText>().text = UI.DETAILTABS.DETAILS.STORAGE_EMPTY;
+			AddOrGetStorageLabel(storageLabels, StoragePanel, "empty").GetComponentInChildren<LocText>().text = UI.DETAILTABS.DETAILS.STORAGE_EMPTY;
 		}
 	}
 
@@ -908,8 +905,7 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		if (labels.ContainsKey(id))
 		{
 			gameObject = labels[id];
-			KButton component = gameObject.GetComponent<KButton>();
-			component.ClearOnClick();
+			gameObject.GetComponent<KButton>().ClearOnClick();
 			Transform transform = gameObject.transform.Find("removeAttributeButton");
 			if (transform != null)
 			{
@@ -992,10 +988,7 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		{
 			UnityEngine.Object.Destroy(stampContainer.transform.GetChild(i).gameObject);
 		}
-		BuildingComplete component = target.GetComponent<BuildingComplete>();
-		if (!(component != null))
-		{
-		}
+		_ = target.GetComponent<BuildingComplete>() != null;
 	}
 
 	public void Sim1000ms(float dt)

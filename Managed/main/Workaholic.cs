@@ -41,7 +41,6 @@ public class Workaholic : StateMachineComponent<Workaholic.StatesInstance>
 
 	protected bool IsUncomfortable()
 	{
-		ChoreDriver component = base.smi.master.GetComponent<ChoreDriver>();
-		return component.GetCurrentChore() is IdleChore;
+		return base.smi.master.GetComponent<ChoreDriver>().GetCurrentChore() is IdleChore;
 	}
 }

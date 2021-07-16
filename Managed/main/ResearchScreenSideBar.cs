@@ -153,7 +153,7 @@ public class ResearchScreenSideBar : KScreen
 	[SerializeField]
 	private int activationPerFrame = 5;
 
-	private bool evenRow = false;
+	private bool evenRow;
 
 	protected override void OnSpawn()
 	{
@@ -247,8 +247,9 @@ public class ResearchScreenSideBar : KScreen
 		else if (!e.Consumed)
 		{
 			Vector2 vector = base.transform.rectTransform().InverseTransformPoint(KInputManager.GetMousePos());
-			if (vector.x >= 0f && vector.x <= base.transform.rectTransform().rect.width && !e.TryConsume(Action.MouseRight) && !e.TryConsume(Action.MouseLeft) && !e.TryConsume(Action.ZoomIn) && !e.TryConsume(Action.ZoomOut))
+			if (vector.x >= 0f && vector.x <= base.transform.rectTransform().rect.width && !e.TryConsume(Action.MouseRight) && !e.TryConsume(Action.MouseLeft) && !e.TryConsume(Action.ZoomIn))
 			{
+				e.TryConsume(Action.ZoomOut);
 			}
 		}
 	}
@@ -378,8 +379,7 @@ public class ResearchScreenSideBar : KScreen
 			filterButtons.Add(kvp.Key, gameObject);
 			filterStates.Add(kvp.Key, value: false);
 			MultiToggle toggle = gameObject.GetComponent<MultiToggle>();
-			LocText componentInChildren = gameObject.GetComponentInChildren<LocText>();
-			componentInChildren.SetText(Strings.Get("STRINGS.UI.RESEARCHSCREEN.FILTER_BUTTONS." + kvp.Key.ToUpper()));
+			gameObject.GetComponentInChildren<LocText>().SetText(Strings.Get("STRINGS.UI.RESEARCHSCREEN.FILTER_BUTTONS." + kvp.Key.ToUpper()));
 			MultiToggle multiToggle = toggle;
 			multiToggle.onClick = (System.Action)Delegate.Combine(multiToggle.onClick, (System.Action)delegate
 			{
@@ -438,8 +438,7 @@ public class ResearchScreenSideBar : KScreen
 		{
 			if (Research.Instance.GetTechInstance(techID).tech.costsByResearchTypeID.ContainsKey(Research.Instance.researchTypes.Types[i].id) && Research.Instance.GetTechInstance(techID).tech.costsByResearchTypeID[Research.Instance.researchTypes.Types[i].id] > 0f)
 			{
-				Transform child = component.GetReference<RectTransform>("BarRows").GetChild(1 + num);
-				HierarchyReferences component2 = child.GetComponent<HierarchyReferences>();
+				HierarchyReferences component2 = component.GetReference<RectTransform>("BarRows").GetChild(1 + num).GetComponent<HierarchyReferences>();
 				float num2 = progressInventory.PointsByTypeID[Research.Instance.researchTypes.Types[i].id] / Research.Instance.GetTechInstance(techID).tech.costsByResearchTypeID[Research.Instance.researchTypes.Types[i].id];
 				RectTransform rectTransform = component2.GetReference<Image>("Bar").rectTransform;
 				rectTransform.sizeDelta = new Vector2(rectTransform.parent.rectTransform().rect.width * num2, rectTransform.sizeDelta.y);
@@ -529,6 +528,7 @@ public class ResearchScreenSideBar : KScreen
 		flag = flag && ResearchScreen.TechItemPassesSearchFilter(techItemID, currentSearchString);
 		foreach (KeyValuePair<string, bool> filterState in filterStates)
 		{
+			_ = filterState;
 		}
 		return flag;
 	}
@@ -553,6 +553,7 @@ public class ResearchScreenSideBar : KScreen
 		flag = flag && ResearchScreen.TechPassesSearchFilter(techID, currentSearchString);
 		foreach (KeyValuePair<string, bool> filterState in filterStates)
 		{
+			_ = filterState;
 		}
 		return flag;
 	}

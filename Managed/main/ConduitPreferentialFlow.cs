@@ -29,8 +29,7 @@ public class ConduitPreferentialFlow : KMonoBehaviour, ISecondaryInput
 
 	protected override void OnCleanUp()
 	{
-		IUtilityNetworkMgr networkManager = Conduit.GetNetworkManager(portInfo.conduitType);
-		networkManager.RemoveFromNetworks(secondaryInput.Cell, secondaryInput, is_endpoint: true);
+		Conduit.GetNetworkManager(portInfo.conduitType).RemoveFromNetworks(secondaryInput.Cell, secondaryInput, is_endpoint: true);
 		Conduit.GetFlowManager(portInfo.conduitType).RemoveConduitUpdater(ConduitUpdate);
 		base.OnCleanUp();
 	}

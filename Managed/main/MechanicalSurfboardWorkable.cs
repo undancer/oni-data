@@ -36,8 +36,7 @@ public class MechanicalSurfboardWorkable : Workable, IWorkerPrioritizable
 	public override AnimInfo GetAnim(Worker worker)
 	{
 		AnimInfo result = default(AnimInfo);
-		Attributes attributes = worker.GetAttributes();
-		AttributeInstance attributeInstance = attributes.Get(Db.Get().Attributes.Athletics);
+		AttributeInstance attributeInstance = worker.GetAttributes().Get(Db.Get().Attributes.Athletics);
 		if (attributeInstance.GetTotalValue() <= 7f)
 		{
 			result.overrideAnims = new KAnimFile[1]

@@ -44,8 +44,7 @@ public class LeadSuitMonitor : GameStateMachine<LeadSuitMonitor, LeadSuitMonitor
 		wearingSuit.hasBattery.Update(CoolSuit).TagTransition(GameTags.SuitBatteryOut, wearingSuit.noBattery);
 		wearingSuit.noBattery.Enter(delegate(Instance smi)
 		{
-			GameObject go2 = smi.sm.owner.Get(smi);
-			Attributes attributes2 = go2.GetAttributes();
+			Attributes attributes2 = smi.sm.owner.Get(smi).GetAttributes();
 			if (attributes2 != null)
 			{
 				foreach (AttributeModifier noBatteryModifier in smi.noBatteryModifiers)
@@ -55,8 +54,7 @@ public class LeadSuitMonitor : GameStateMachine<LeadSuitMonitor, LeadSuitMonitor
 			}
 		}).Exit(delegate(Instance smi)
 		{
-			GameObject go = smi.sm.owner.Get(smi);
-			Attributes attributes = go.GetAttributes();
+			Attributes attributes = smi.sm.owner.Get(smi).GetAttributes();
 			if (attributes != null)
 			{
 				foreach (AttributeModifier noBatteryModifier2 in smi.noBatteryModifiers)
@@ -74,13 +72,7 @@ public class LeadSuitMonitor : GameStateMachine<LeadSuitMonitor, LeadSuitMonitor
 			return;
 		}
 		GameObject gameObject = smi.sm.owner.Get(smi);
-		if (!gameObject)
-		{
-			return;
-		}
-		ExternalTemperatureMonitor.Instance sMI = gameObject.GetSMI<ExternalTemperatureMonitor.Instance>();
-		float averageExternalTemperature = sMI.AverageExternalTemperature;
-		if (averageExternalTemperature >= smi.lead_suit_tank.coolingOperationalTemperature)
+		if ((bool)gameObject && gameObject.GetSMI<ExternalTemperatureMonitor.Instance>().AverageExternalTemperature >= smi.lead_suit_tank.coolingOperationalTemperature)
 		{
 			smi.lead_suit_tank.batteryCharge -= 1f / smi.lead_suit_tank.batteryDuration * dt;
 			if (smi.lead_suit_tank.IsEmpty())

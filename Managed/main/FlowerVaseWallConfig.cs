@@ -7,14 +7,14 @@ public class FlowerVaseWallConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("FlowerVaseWall", 1, 1, "flowervase_wall_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.RAW_METALS, 800f, BuildLocationRule.OnWall, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.Floodable = false;
-		buildingDef.Overheatable = false;
-		buildingDef.ViewMode = OverlayModes.Decor.ID;
-		buildingDef.AudioCategory = "Glass";
-		buildingDef.AudioSize = "large";
-		buildingDef.PermittedRotations = PermittedRotations.FlipH;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("FlowerVaseWall", 1, 1, "flowervase_wall_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.RAW_METALS, 800f, BuildLocationRule.OnWall, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
+		obj.Floodable = false;
+		obj.Overheatable = false;
+		obj.ViewMode = OverlayModes.Decor.ID;
+		obj.AudioCategory = "Glass";
+		obj.AudioSize = "large";
+		obj.PermittedRotations = PermittedRotations.FlipH;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

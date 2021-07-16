@@ -15,11 +15,11 @@ public class ElectricalUtilityNetwork : UtilityNetwork
 
 	private const float MIN_OVERLOAD_NOTIFICATION_DISPLAY_TIME = 5f;
 
-	private GameObject targetOverloadedWire = null;
+	private GameObject targetOverloadedWire;
 
-	private float timeOverloaded = 0f;
+	private float timeOverloaded;
 
-	private float timeOverloadNotificationDisplayed = 0f;
+	private float timeOverloadNotificationDisplayed;
 
 	public override void AddItem(object item)
 	{
@@ -75,8 +75,7 @@ public class ElectricalUtilityNetwork : UtilityNetwork
 		{
 			List<Wire> list3 = wireGroups[i];
 			List<WireUtilityNetworkLink> list4 = bridgeGroups[i];
-			Wire.WattageRating rating = (Wire.WattageRating)i;
-			float maxWattageAsFloat = Wire.GetMaxWattageAsFloat(rating);
+			float maxWattageAsFloat = Wire.GetMaxWattageAsFloat((Wire.WattageRating)i);
 			maxWattageAsFloat += POWER.FLOAT_FUDGE_FACTOR;
 			if (watts_used > maxWattageAsFloat && ((list4 != null && list4.Count > 0) || (list3 != null && list3.Count > 0)))
 			{
@@ -129,8 +128,7 @@ public class ElectricalUtilityNetwork : UtilityNetwork
 				{
 					Tutorial.Instance.TutorialMessage(Tutorial.TutorialMessages.TM_Power);
 				});
-				Notifier notifier = Game.Instance.FindOrAdd<Notifier>();
-				notifier.Add(overloadedNotification);
+				Game.Instance.FindOrAdd<Notifier>().Add(overloadedNotification);
 			}
 		}
 		else
@@ -148,8 +146,7 @@ public class ElectricalUtilityNetwork : UtilityNetwork
 	{
 		if (overloadedNotification != null)
 		{
-			Notifier notifier = Game.Instance.FindOrAdd<Notifier>();
-			notifier.Remove(overloadedNotification);
+			Game.Instance.FindOrAdd<Notifier>().Remove(overloadedNotification);
 			overloadedNotification = null;
 		}
 	}
@@ -161,8 +158,7 @@ public class ElectricalUtilityNetwork : UtilityNetwork
 			List<Wire> list = wireGroups[i];
 			if (list != null && list.Count > 0)
 			{
-				Wire.WattageRating rating = (Wire.WattageRating)i;
-				return Wire.GetMaxWattageAsFloat(rating);
+				return Wire.GetMaxWattageAsFloat((Wire.WattageRating)i);
 			}
 		}
 		return 0f;

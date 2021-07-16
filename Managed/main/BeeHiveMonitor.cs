@@ -30,8 +30,6 @@ public class BeeHiveMonitor : GameStateMachine<BeeHiveMonitor, BeeHiveMonitor.In
 
 	public bool CanGoHome(Instance smi)
 	{
-		Bee component = smi.gameObject.GetComponent<Bee>();
-		KPrefabID x = component.FindHiveInRoom();
-		return x != null;
+		return smi.gameObject.GetComponent<Bee>().FindHiveInRoom() != null;
 	}
 }

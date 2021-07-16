@@ -23,8 +23,7 @@ public class ResearchDatabankConfig : IEntityConfig
 			GameTags.IndustrialIngredient,
 			GameTags.Experimental
 		});
-		EntitySplitter entitySplitter = gameObject.AddOrGet<EntitySplitter>();
-		entitySplitter.maxStackSize = ROCKETRY.DESTINATION_RESEARCH.BASIC;
+		gameObject.AddOrGet<EntitySplitter>().maxStackSize = ROCKETRY.DESTINATION_RESEARCH.BASIC;
 		return gameObject;
 	}
 

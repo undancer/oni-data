@@ -19,7 +19,11 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			return other is RTime32 && this == (RTime32)other;
+			if (other is RTime32)
+			{
+				return this == (RTime32)other;
+			}
+			return false;
 		}
 
 		public override int GetHashCode()

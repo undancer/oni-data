@@ -95,7 +95,7 @@ namespace Klei.AI
 				if (!@event.WillNeverRunAgain())
 				{
 					allEventWillNotRunAgain = false;
-					break;
+					return result;
 				}
 			}
 			return result;
@@ -103,11 +103,15 @@ namespace Klei.AI
 
 		private float GetSeasonPeriod()
 		{
-			return Game.Instance.FastWorkersModeActive ? (Season.period / 2f) : Season.period;
+			return Season.period;
 		}
 
-		public bool IsEnded()
+		public bool ShouldGenerateEvents()
 		{
+			if (Season.minCycle > GameUtil.GetCurrentTimeInCycles())
+			{
+				return true;
+			}
 			if ((Season.finishAfterNumEvents != -1 && numStartEvents >= Season.finishAfterNumEvents) || allEventWillNotRunAgain)
 			{
 				return true;

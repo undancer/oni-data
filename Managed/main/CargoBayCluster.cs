@@ -10,7 +10,7 @@ public class CargoBayCluster : KMonoBehaviour, IUserControlledCapacity
 	public Storage storage;
 
 	[SerializeField]
-	public CargoBay.CargoType storageType = CargoBay.CargoType.Solids;
+	public CargoBay.CargoType storageType;
 
 	[Serialize]
 	private float userMaxCapacity;

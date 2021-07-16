@@ -30,7 +30,7 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 	private List<KeyValuePair<Ref<KPrefabID>, Permission>> savedPermissions = new List<KeyValuePair<Ref<KPrefabID>, Permission>>();
 
 	[Serialize]
-	private Permission _defaultPermission = Permission.Both;
+	private Permission _defaultPermission;
 
 	[Serialize]
 	public bool registered = true;
@@ -38,7 +38,7 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 	[Serialize]
 	public bool controlEnabled;
 
-	public Door.ControlState overrideAccess = Door.ControlState.Auto;
+	public Door.ControlState overrideAccess;
 
 	private static StatusItem accessControlActive;
 
@@ -124,8 +124,7 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		AccessControl component = gameObject.GetComponent<AccessControl>();
+		AccessControl component = ((GameObject)data).GetComponent<AccessControl>();
 		if (!(component != null))
 		{
 			return;
@@ -205,9 +204,9 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 			if (component != null)
 			{
 				int[] placementCells = component.PlacementCells;
-				foreach (int cell in placementCells)
+				for (int i = 0; i < placementCells.Length; i++)
 				{
-					Grid.RegisterRestriction(cell, orientation);
+					Grid.RegisterRestriction(placementCells[i], orientation);
 				}
 			}
 			else
@@ -215,39 +214,42 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 				CellOffset[] occupiedCellsOffsets = component2.OccupiedCellsOffsets;
 				foreach (CellOffset offset in occupiedCellsOffsets)
 				{
-					int cell2 = Grid.OffsetCell(Grid.PosToCell(component2), offset);
-					Grid.RegisterRestriction(cell2, orientation);
+					Grid.RegisterRestriction(Grid.OffsetCell(Grid.PosToCell(component2), offset), orientation);
 				}
 			}
 			if (isTeleporter)
 			{
-				int cell3 = GetComponent<NavTeleporter>().GetCell();
-				Grid.RegisterRestriction(cell3, orientation);
+				Grid.RegisterRestriction(GetComponent<NavTeleporter>().GetCell(), orientation);
 			}
 		}
 		else
 		{
 			if (component != null)
 			{
-				int[] placementCells2 = component.PlacementCells;
-				foreach (int cell4 in placementCells2)
+				if (component.GetMyWorldId() != ClusterManager.INVALID_WORLD_IDX)
 				{
-					Grid.UnregisterRestriction(cell4);
+					int[] placementCells = component.PlacementCells;
+					for (int i = 0; i < placementCells.Length; i++)
+					{
+						Grid.UnregisterRestriction(placementCells[i]);
+					}
 				}
 			}
 			else
 			{
-				CellOffset[] occupiedCellsOffsets2 = component2.OccupiedCellsOffsets;
-				foreach (CellOffset offset2 in occupiedCellsOffsets2)
+				CellOffset[] occupiedCellsOffsets = component2.OccupiedCellsOffsets;
+				foreach (CellOffset offset2 in occupiedCellsOffsets)
 				{
-					int cell5 = Grid.OffsetCell(Grid.PosToCell(component2), offset2);
-					Grid.UnregisterRestriction(cell5);
+					Grid.UnregisterRestriction(Grid.OffsetCell(Grid.PosToCell(component2), offset2));
 				}
 			}
 			if (isTeleporter)
 			{
-				int cell6 = GetComponent<NavTeleporter>().GetCell();
-				Grid.UnregisterRestriction(cell6);
+				int cell = GetComponent<NavTeleporter>().GetCell();
+				if (cell != Grid.InvalidCell)
+				{
+					Grid.UnregisterRestriction(cell);
+				}
 			}
 		}
 		registered = register;
@@ -289,9 +291,9 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 		if (component != null)
 		{
 			int[] placementCells = component.PlacementCells;
-			foreach (int cell in placementCells)
+			for (int i = 0; i < placementCells.Length; i++)
 			{
-				Grid.SetRestriction(cell, minionInstanceID, directions);
+				Grid.SetRestriction(placementCells[i], minionInstanceID, directions);
 			}
 		}
 		else
@@ -299,14 +301,12 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 			CellOffset[] occupiedCellsOffsets = component2.OccupiedCellsOffsets;
 			foreach (CellOffset offset in occupiedCellsOffsets)
 			{
-				int cell2 = Grid.OffsetCell(Grid.PosToCell(component2), offset);
-				Grid.SetRestriction(cell2, minionInstanceID, directions);
+				Grid.SetRestriction(Grid.OffsetCell(Grid.PosToCell(component2), offset), minionInstanceID, directions);
 			}
 		}
 		if (isTeleporter)
 		{
-			int cell3 = GetComponent<NavTeleporter>().GetCell();
-			Grid.SetRestriction(cell3, minionInstanceID, directions);
+			Grid.SetRestriction(GetComponent<NavTeleporter>().GetCell(), minionInstanceID, directions);
 		}
 	}
 
@@ -322,17 +322,16 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 		if (component != null)
 		{
 			int[] placementCells = component.PlacementCells;
-			foreach (int cell in placementCells)
+			for (int i = 0; i < placementCells.Length; i++)
 			{
-				Grid.ClearRestriction(cell, minionInstanceID);
+				Grid.ClearRestriction(placementCells[i], minionInstanceID);
 			}
 			return;
 		}
 		CellOffset[] occupiedCellsOffsets = component2.OccupiedCellsOffsets;
 		foreach (CellOffset offset in occupiedCellsOffsets)
 		{
-			int cell2 = Grid.OffsetCell(Grid.PosToCell(component2), offset);
-			Grid.ClearRestriction(cell2, minionInstanceID);
+			Grid.ClearRestriction(Grid.OffsetCell(Grid.PosToCell(component2), offset), minionInstanceID);
 		}
 	}
 
@@ -348,8 +347,7 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 
 	private MinionAssignablesProxy GetKeyForNavigator(Navigator minion)
 	{
-		MinionIdentity component = minion.GetComponent<MinionIdentity>();
-		return component.assignableProxy.Get();
+		return minion.GetComponent<MinionIdentity>().assignableProxy.Get();
 	}
 
 	public Permission GetSetPermission(MinionAssignablesProxy key)

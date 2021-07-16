@@ -46,11 +46,11 @@ public class SafeCellSensor : Sensor
 
 	public void RunSafeCellQuery(bool avoid_light)
 	{
-		MinionPathFinderAbilities minionPathFinderAbilities = (MinionPathFinderAbilities)navigator.GetCurrentAbilities();
-		minionPathFinderAbilities.SetIdleNavMaskEnabled(enabled: true);
+		MinionPathFinderAbilities obj = (MinionPathFinderAbilities)navigator.GetCurrentAbilities();
+		obj.SetIdleNavMaskEnabled(enabled: true);
 		SafeCellQuery safeCellQuery = PathFinderQueries.safeCellQuery.Reset(brain, avoid_light);
 		navigator.RunQuery(safeCellQuery);
-		minionPathFinderAbilities.SetIdleNavMaskEnabled(enabled: false);
+		obj.SetIdleNavMaskEnabled(enabled: false);
 		cell = safeCellQuery.GetResultCell();
 		if (cell == Grid.PosToCell(navigator))
 		{
@@ -83,6 +83,10 @@ public class SafeCellSensor : Sensor
 
 	public bool HasSafeCell()
 	{
-		return cell != Grid.InvalidCell && cell != Grid.PosToCell(sensors);
+		if (cell != Grid.InvalidCell)
+		{
+			return cell != Grid.PosToCell(sensors);
+		}
+		return false;
 	}
 }

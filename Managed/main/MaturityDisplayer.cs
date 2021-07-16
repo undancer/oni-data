@@ -35,8 +35,7 @@ public class MaturityDisplayer : AsPercentAmountDisplayer
 		Growing component = instance.gameObject.GetComponent<Growing>();
 		if (component.IsGrowing())
 		{
-			float num = instance.GetMax() - instance.value;
-			float seconds = num / instance.GetDelta();
+			float seconds = (instance.GetMax() - instance.value) / instance.GetDelta();
 			if (component != null && component.IsGrowing())
 			{
 				return tooltipDescription + string.Format(CREATURES.STATS.MATURITY.TOOLTIP_GROWING_CROP, GameUtil.GetFormattedCycles(seconds), GameUtil.GetFormattedCycles(component.TimeUntilNextHarvest()));

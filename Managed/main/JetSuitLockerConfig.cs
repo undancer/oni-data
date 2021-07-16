@@ -14,29 +14,27 @@ public class JetSuitLockerConfig : IBuildingConfig
 	public override BuildingDef CreateBuildingDef()
 	{
 		string[] rEFINED_METALS = MATERIALS.REFINED_METALS;
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(construction_mass: new float[1]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: new float[1]
 		{
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER3[0]
 		}, construction_materials: rEFINED_METALS, melting_point: 1600f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, id: "JetSuitLocker", width: 2, height: 4, anim: "changingarea_jetsuit_kanim", hitpoints: 30, construction_time: 30f, decor: BUILDINGS.DECOR.BONUS.TIER1);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 120f;
-		buildingDef.PreventIdleTraversalPastBuilding = true;
-		buildingDef.InputConduitType = ConduitType.Gas;
-		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 120f;
+		obj.PreventIdleTraversalPastBuilding = true;
+		obj.InputConduitType = ConduitType.Gas;
+		obj.UtilityInputOffset = new CellOffset(0, 0);
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.SuitIDs, "JetSuitLocker");
-		return buildingDef;
+		return obj;
 	}
 
 	private void AttachPort(GameObject go)
 	{
-		ConduitSecondaryInput conduitSecondaryInput = go.AddComponent<ConduitSecondaryInput>();
-		conduitSecondaryInput.portInfo = secondaryInputPort;
+		go.AddComponent<ConduitSecondaryInput>().portInfo = secondaryInputPort;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
-		SuitLocker suitLocker = go.AddOrGet<SuitLocker>();
-		suitLocker.OutfitTags = new Tag[1]
+		go.AddOrGet<SuitLocker>().OutfitTags = new Tag[1]
 		{
 			GameTags.JetSuit
 		};
@@ -47,16 +45,13 @@ public class JetSuitLockerConfig : IBuildingConfig
 		conduitConsumer.wrongElementResult = ConduitConsumer.WrongElementResult.Dump;
 		conduitConsumer.forceAlwaysSatisfied = true;
 		conduitConsumer.capacityKG = 200f;
-		JetSuitLocker jetSuitLocker = go.AddComponent<JetSuitLocker>();
-		jetSuitLocker.portInfo = secondaryInputPort;
-		AnimTileable animTileable = go.AddOrGet<AnimTileable>();
-		animTileable.tags = new Tag[2]
+		go.AddComponent<JetSuitLocker>().portInfo = secondaryInputPort;
+		go.AddOrGet<AnimTileable>().tags = new Tag[2]
 		{
 			new Tag("JetSuitLocker"),
 			new Tag("JetSuitMarker")
 		};
-		Storage storage = go.AddOrGet<Storage>();
-		storage.capacityKg = 500f;
+		go.AddOrGet<Storage>().capacityKg = 500f;
 		Prioritizable.AddRef(go);
 	}
 

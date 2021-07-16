@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Klei.AI;
 using KSerialization;
 using STRINGS;
 using UnityEngine;
@@ -32,7 +31,7 @@ public class BuildingHP : Workable
 
 	public class SMInstance : GameStateMachine<States, SMInstance, BuildingHP, object>.GameInstance
 	{
-		private ProgressBar progressBar = null;
+		private ProgressBar progressBar;
 
 		public SMInstance(BuildingHP master)
 			: base(master)
@@ -125,9 +124,8 @@ public class BuildingHP : Workable
 			if (base.master.damageSourceInfo.takeDamageEffect != 0)
 			{
 				BuildingDef def = base.master.GetComponent<BuildingComplete>().Def;
-				int cell = Grid.PosToCell(base.master);
-				int cell2 = Grid.OffsetCell(cell, 0, def.HeightInCells - 1);
-				Game.Instance.SpawnFX(base.master.damageSourceInfo.takeDamageEffect, cell2, 0f);
+				int cell = Grid.OffsetCell(Grid.PosToCell(base.master), 0, def.HeightInCells - 1);
+				Game.Instance.SpawnFX(base.master.damageSourceInfo.takeDamageEffect, cell, 0f);
 			}
 		}
 
@@ -152,9 +150,7 @@ public class BuildingHP : Workable
 				base.master.GetComponentsInChildren(kbacQueryList);
 				for (int i = 0; i < kbacQueryList.Count; i++)
 				{
-					Meter meter = kbacQueryList[i];
-					KBatchedAnimController component2 = meter.GetComponent<KBatchedAnimController>();
-					component2.SetBlendValue(value);
+					kbacQueryList[i].GetComponent<KBatchedAnimController>().SetBlendValue(value);
 				}
 			}
 		}
@@ -195,7 +191,7 @@ public class BuildingHP : Workable
 				{
 					smi.UpdateMeter();
 				})
-				.ToggleStatusItem((SMInstance smi) => (smi.master.damageSourceInfo.statusItemID != null) ? Db.Get().BuildingStatusItems.Get(smi.master.damageSourceInfo.statusItemID) : null)
+				.ToggleStatusItem((SMInstance smi) => (smi.master.damageSourceInfo.statusItemID == null) ? null : Db.Get().BuildingStatusItems.Get(smi.master.damageSourceInfo.statusItemID))
 				.Exit(delegate(SMInstance smi)
 				{
 					smi.ShowProgressBar(show: false);
@@ -257,9 +253,9 @@ public class BuildingHP : Workable
 
 	public static List<Meter> kbacQueryList = new List<Meter>();
 
-	public bool destroyOnDamaged = false;
+	public bool destroyOnDamaged;
 
-	public bool invincible = false;
+	public bool invincible;
 
 	[MyCmpGet]
 	private Building building;
@@ -268,7 +264,7 @@ public class BuildingHP : Workable
 
 	private float minDamagePopInterval = 4f;
 
-	private float lastPopTime = 0f;
+	private float lastPopTime;
 
 	public int HitPoints => hitpoints;
 
@@ -352,8 +348,7 @@ public class BuildingHP : Workable
 
 	protected override void OnCompleteWork(Worker worker)
 	{
-		AttributeInstance attributeInstance = Db.Get().Attributes.Machinery.Lookup(worker);
-		int num = (int)attributeInstance.GetTotalValue();
+		int num = (int)Db.Get().Attributes.Machinery.Lookup(worker).GetTotalValue();
 		int repair_amount = 10 + Math.Max(0, num * 10);
 		Repair(repair_amount);
 	}
@@ -374,9 +369,8 @@ public class BuildingHP : Workable
 		if (info.takeDamageEffect != 0)
 		{
 			BuildingDef def = GetComponent<BuildingComplete>().Def;
-			int cell = Grid.PosToCell(this);
-			int cell2 = Grid.OffsetCell(cell, 0, def.HeightInCells - 1);
-			Game.Instance.SpawnFX(info.takeDamageEffect, cell2, 0f);
+			int cell = Grid.OffsetCell(Grid.PosToCell(this), 0, def.HeightInCells - 1);
+			Game.Instance.SpawnFX(info.takeDamageEffect, cell, 0f);
 		}
 	}
 

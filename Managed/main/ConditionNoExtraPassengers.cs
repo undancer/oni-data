@@ -11,7 +11,11 @@ public class ConditionNoExtraPassengers : ProcessCondition
 
 	public override Status EvaluateCondition()
 	{
-		return (!module.CheckExtraPassengers()) ? Status.Ready : Status.Failure;
+		if (!module.CheckExtraPassengers())
+		{
+			return Status.Ready;
+		}
+		return Status.Failure;
 	}
 
 	public override string GetStatusMessage(Status status)

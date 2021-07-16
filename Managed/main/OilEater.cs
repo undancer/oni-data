@@ -40,9 +40,9 @@ public class OilEater : StateMachineComponent<OilEater.StatesInstance>
 				Object.Destroy(smi.master.GetComponent<KBatchedAnimController>());
 				smi.Schedule(0.5f, delegate(object data)
 				{
-					GameObject gameObject = (GameObject)data;
-					CreatureHelpers.DeselectCreature(gameObject);
-					Util.KDestroyGameObject(gameObject);
+					GameObject obj = (GameObject)data;
+					CreatureHelpers.DeselectCreature(obj);
+					Util.KDestroyGameObject(obj);
 				}, smi.master.gameObject);
 			});
 			blocked_from_growing.ToggleStatusItem(Db.Get().MiscStatusItems.RegionIsBlocked).EventTransition(GameHashes.EntombedChanged, alive, (StatesInstance smi) => alive.ForceUpdateStatus(smi.master.gameObject)).EventTransition(GameHashes.TooColdWarning, alive, (StatesInstance smi) => alive.ForceUpdateStatus(smi.master.gameObject))
@@ -70,7 +70,7 @@ public class OilEater : StateMachineComponent<OilEater.StatesInstance>
 
 	public float emitRate = 1f;
 
-	public float minEmitMass = 0f;
+	public float minEmitMass;
 
 	public Vector3 emitOffset = Vector3.zero;
 
@@ -99,9 +99,7 @@ public class OilEater : StateMachineComponent<OilEater.StatesInstance>
 			emittedMass += dt * emitRate;
 			if (emittedMass >= minEmitMass)
 			{
-				int gameCell = Grid.PosToCell(base.transform.GetPosition() + emitOffset);
-				PrimaryElement component = GetComponent<PrimaryElement>();
-				SimMessages.AddRemoveSubstance(gameCell, SimHashes.CarbonDioxide, CellEventLogger.Instance.ElementEmitted, emittedMass, component.Temperature, byte.MaxValue, 0);
+				SimMessages.AddRemoveSubstance(Grid.PosToCell(base.transform.GetPosition() + emitOffset), temperature: GetComponent<PrimaryElement>().Temperature, new_element: SimHashes.CarbonDioxide, ev: CellEventLogger.Instance.ElementEmitted, mass: emittedMass, disease_idx: byte.MaxValue, disease_count: 0);
 				emittedMass = 0f;
 			}
 		}

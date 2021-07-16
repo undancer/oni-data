@@ -51,7 +51,11 @@ public class SaveManager : KMonoBehaviour
 
 	public const int SAVE_MINOR_VERSION_ROTTABLE_TUNING = 23;
 
-	public const int SAVE_MINOR_VERSION = 23;
+	public const int SAVE_MINOR_VERSION_LAUNCH_PAD_SOLIDITY = 24;
+
+	public const int SAVE_MINOR_VERSION_BASE_GAME_MERGEDOWN = 25;
+
+	public const int SAVE_MINOR_VERSION = 25;
 
 	private Dictionary<Tag, GameObject> prefabMap = new Dictionary<Tag, GameObject>();
 
@@ -151,7 +155,7 @@ public class SaveManager : KMonoBehaviour
 	{
 		writer.Write(SAVE_HEADER);
 		writer.Write(7);
-		writer.Write(23);
+		writer.Write(25);
 		int num = 0;
 		foreach (KeyValuePair<Tag, List<SaveLoadRoot>> sceneObject in sceneObjects)
 		{
@@ -173,37 +177,33 @@ public class SaveManager : KMonoBehaviour
 		foreach (Tag orderedKey in orderedKeys)
 		{
 			List<SaveLoadRoot> list = sceneObjects[orderedKey];
-			int count = list.Count;
-			if (count <= 0)
+			if (list.Count <= 0)
 			{
 				continue;
 			}
 			foreach (SaveLoadRoot item in list)
 			{
-				if (item == null || !(item.GetComponent<SimCellOccupier>() != null))
+				if (!(item == null) && item.GetComponent<SimCellOccupier>() != null)
 				{
-					continue;
+					Write(orderedKey, list, writer);
+					break;
 				}
-				Write(orderedKey, list, writer);
-				break;
 			}
 		}
 		foreach (Tag orderedKey2 in orderedKeys)
 		{
 			List<SaveLoadRoot> list2 = sceneObjects[orderedKey2];
-			int count2 = list2.Count;
-			if (count2 <= 0)
+			if (list2.Count <= 0)
 			{
 				continue;
 			}
 			foreach (SaveLoadRoot item2 in list2)
 			{
-				if (item2 == null || !(item2.GetComponent<SimCellOccupier>() == null))
+				if (!(item2 == null) && item2.GetComponent<SimCellOccupier>() == null)
 				{
-					continue;
+					Write(orderedKey2, list2, writer);
+					break;
 				}
-				Write(orderedKey2, list2, writer);
-				break;
 			}
 		}
 	}
@@ -250,9 +250,9 @@ public class SaveManager : KMonoBehaviour
 		}
 		int num = reader.ReadInt32();
 		int num2 = reader.ReadInt32();
-		if (num != 7 || num2 > 23)
+		if (num != 7 || num2 > 25)
 		{
-			DebugUtil.LogWarningArgs($"SAVE FILE VERSION MISMATCH! Expected {7}.{23} but got {num}.{num2}");
+			DebugUtil.LogWarningArgs($"SAVE FILE VERSION MISMATCH! Expected {7}.{25} but got {num}.{num2}");
 			return false;
 		}
 		ClearScene();

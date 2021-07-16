@@ -18,8 +18,7 @@ public class SuitWearer : GameStateMachine<SuitWearer, SuitWearer.Instance>
 			navigator = master.GetComponent<Navigator>();
 			navigator.SetFlags(PathFinder.PotentialPath.Flags.PerformSuitChecks);
 			prefabInstanceID = navigator.GetComponent<KPrefabID>().InstanceID;
-			KBatchedAnimController component = master.GetComponent<KBatchedAnimController>();
-			component.SetSymbolVisiblity("snapto_neck", is_visible: false);
+			master.GetComponent<KBatchedAnimController>().SetSymbolVisiblity("snapto_neck", is_visible: false);
 		}
 
 		public void OnPathAdvanced(object data)

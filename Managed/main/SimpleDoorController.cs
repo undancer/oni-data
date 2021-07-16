@@ -55,7 +55,11 @@ public class SimpleDoorController : GameStateMachine<SimpleDoorController, Simpl
 
 		public bool IsOpen()
 		{
-			return IsInsideState(base.sm.active.open) || IsInsideState(base.sm.active.closedelay);
+			if (!IsInsideState(base.sm.active.open))
+			{
+				return IsInsideState(base.sm.active.closedelay);
+			}
+			return true;
 		}
 
 		public void Open()

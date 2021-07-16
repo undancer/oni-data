@@ -8,8 +8,7 @@ public class DeconstructToolHoverTextCard : HoverTextConfiguration
 
 	public override void UpdateHoverElements(List<KSelectable> selected)
 	{
-		ToolParameterMenu toolParameterMenu = ToolMenu.Instance.toolParameterMenu;
-		string lastEnabledFilter = toolParameterMenu.GetLastEnabledFilter();
+		string lastEnabledFilter = ToolMenu.Instance.toolParameterMenu.GetLastEnabledFilter();
 		HoverTextScreen instance = HoverTextScreen.Instance;
 		HoverTextDrawer hoverTextDrawer = instance.BeginDrawing();
 		int num = Grid.PosToCell(Camera.main.ScreenToWorldPoint(KInputManager.GetMousePos()));
@@ -31,8 +30,7 @@ public class DeconstructToolHoverTextCard : HoverTextConfiguration
 
 	protected override void ConfigureTitle(HoverTextScreen screen)
 	{
-		ToolParameterMenu toolParameterMenu = ToolMenu.Instance.toolParameterMenu;
-		string lastEnabledFilter = toolParameterMenu.GetLastEnabledFilter();
+		string lastEnabledFilter = ToolMenu.Instance.toolParameterMenu.GetLastEnabledFilter();
 		if (string.IsNullOrEmpty(ToolName) || lastEnabledFilter == "ALL")
 		{
 			ToolName = Strings.Get(ToolNameStringKey).String.ToUpper();

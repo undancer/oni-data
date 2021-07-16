@@ -21,7 +21,11 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			return other is HSteamListenSocket && this == (HSteamListenSocket)other;
+			if (other is HSteamListenSocket)
+			{
+				return this == (HSteamListenSocket)other;
+			}
+			return false;
 		}
 
 		public override int GetHashCode()

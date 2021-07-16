@@ -21,7 +21,7 @@ public class ScheduledUIInstantiation : KMonoBehaviour
 
 	public Instantiation[] UIElements;
 
-	public bool InstantiateOnAwake = false;
+	public bool InstantiateOnAwake;
 
 	public GameHashes InstantiationEvent = GameHashes.StartGameUser;
 

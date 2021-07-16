@@ -25,8 +25,7 @@ namespace YamlDotNet.Serialization.NodeDeserializers
 			IList list;
 			if (implementedGenericInterface != null)
 			{
-				Type[] genericArguments = implementedGenericInterface.GetGenericArguments();
-				tItem = genericArguments[0];
+				tItem = implementedGenericInterface.GetGenericArguments()[0];
 				value = _objectFactory.Create(expectedType);
 				list = value as IList;
 				if (list == null)

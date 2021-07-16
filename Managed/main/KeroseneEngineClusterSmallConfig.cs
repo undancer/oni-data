@@ -17,24 +17,24 @@ public class KeroseneEngineClusterSmallConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("KeroseneEngineClusterSmall", 3, 4, "rocket_petro_engine_small_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.ENGINE_MASS_SMALL, MATERIALS.REFINED_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
-		buildingDef.SceneLayer = Grid.SceneLayer.Building;
-		buildingDef.OverheatTemperature = 2273.15f;
-		buildingDef.Floodable = false;
-		buildingDef.AttachmentSlotTag = GameTags.Rocket;
-		buildingDef.ObjectLayer = ObjectLayer.Building;
-		buildingDef.attachablePosition = new CellOffset(0, 0);
-		buildingDef.UtilityInputOffset = new CellOffset(0, 2);
-		buildingDef.InputConduitType = ConduitType.Liquid;
-		buildingDef.GeneratorWattageRating = 240f;
-		buildingDef.GeneratorBaseCapacity = 4000f;
-		buildingDef.RequiresPowerInput = false;
-		buildingDef.RequiresPowerOutput = false;
-		buildingDef.CanMove = true;
-		buildingDef.Cancellable = false;
-		buildingDef.ShowInBuildMenu = false;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("KeroseneEngineClusterSmall", 3, 4, "rocket_petro_engine_small_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.ENGINE_MASS_SMALL, MATERIALS.REFINED_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		BuildingTemplates.CreateRocketBuildingDef(obj);
+		obj.SceneLayer = Grid.SceneLayer.Building;
+		obj.OverheatTemperature = 2273.15f;
+		obj.Floodable = false;
+		obj.AttachmentSlotTag = GameTags.Rocket;
+		obj.ObjectLayer = ObjectLayer.Building;
+		obj.attachablePosition = new CellOffset(0, 0);
+		obj.UtilityInputOffset = new CellOffset(0, 2);
+		obj.InputConduitType = ConduitType.Liquid;
+		obj.GeneratorWattageRating = 240f;
+		obj.GeneratorBaseCapacity = 4000f;
+		obj.RequiresPowerInput = false;
+		obj.RequiresPowerOutput = false;
+		obj.CanMove = true;
+		obj.Cancellable = false;
+		obj.ShowInBuildMenu = false;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -42,8 +42,7 @@ public class KeroseneEngineClusterSmallConfig : IBuildingConfig
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		go.AddOrGet<LoopingSounds>();
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
-		BuildingAttachPoint buildingAttachPoint = go.AddOrGet<BuildingAttachPoint>();
-		buildingAttachPoint.points = new BuildingAttachPoint.HardPoint[1]
+		go.AddOrGet<BuildingAttachPoint>().points = new BuildingAttachPoint.HardPoint[1]
 		{
 			new BuildingAttachPoint.HardPoint(new CellOffset(0, 4), GameTags.Rocket, null)
 		};
@@ -60,7 +59,7 @@ public class KeroseneEngineClusterSmallConfig : IBuildingConfig
 		rocketEngineCluster.explosionEffectHash = SpawnFXHashes.MeteorImpactDust;
 		rocketEngineCluster.exhaustElement = SimHashes.CarbonDioxide;
 		rocketEngineCluster.exhaustTemperature = 1263.15f;
-		ModuleGenerator moduleGenerator = go.AddOrGet<ModuleGenerator>();
+		go.AddOrGet<ModuleGenerator>();
 		Storage storage = go.AddOrGet<Storage>();
 		storage.capacityKg = 450f;
 		storage.SetDefaultStoredItemModifiers(new List<Storage.StoredItemModifier>

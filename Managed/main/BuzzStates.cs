@@ -104,8 +104,10 @@ public class BuzzStates : GameStateMachine<BuzzStates, BuzzStates.Instance, ISta
 	public void MoveToNewCell(Instance smi)
 	{
 		Navigator component = smi.GetComponent<Navigator>();
-		MoveCellQuery moveCellQuery = new MoveCellQuery(component.CurrentNavType);
-		moveCellQuery.allowLiquid = smi.gameObject.HasTag(GameTags.Amphibious);
+		MoveCellQuery moveCellQuery = new MoveCellQuery(component.CurrentNavType)
+		{
+			allowLiquid = smi.gameObject.HasTag(GameTags.Amphibious)
+		};
 		component.RunQuery(moveCellQuery);
 		component.GoTo(moveCellQuery.GetResultCell());
 	}
@@ -115,8 +117,7 @@ public class BuzzStates : GameStateMachine<BuzzStates, BuzzStates.Instance, ISta
 		KAnimControllerBase component = smi.GetComponent<KAnimControllerBase>();
 		Navigator component2 = smi.GetComponent<Navigator>();
 		NavType nav_type = component2.CurrentNavType;
-		Facing component3 = smi.GetComponent<Facing>();
-		if (component3.GetFacing())
+		if (smi.GetComponent<Facing>().GetFacing())
 		{
 			nav_type = NavGrid.MirrorNavType(nav_type);
 		}

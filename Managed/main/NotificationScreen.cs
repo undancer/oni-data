@@ -52,8 +52,7 @@ public class NotificationScreen : KScreen
 			}
 			if (label != null)
 			{
-				LocText reference = label.GetComponent<HierarchyReferences>().GetReference<LocText>("Text");
-				reference.text = message;
+				label.GetComponent<HierarchyReferences>().GetReference<LocText>("Text").text = message;
 			}
 		}
 	}
@@ -253,16 +252,14 @@ public class NotificationScreen : KScreen
 		base.OnSpawn();
 		initTime = KTime.Instance.UnscaledGameTime;
 		LocText[] componentsInChildren = LabelPrefab.GetComponentsInChildren<LocText>();
-		LocText[] array = componentsInChildren;
-		foreach (LocText locText in array)
+		for (int i = 0; i < componentsInChildren.Length; i++)
 		{
-			locText.color = normalColor;
+			componentsInChildren[i].color = normalColor;
 		}
 		componentsInChildren = MessagesPrefab.GetComponentsInChildren<LocText>();
-		LocText[] array2 = componentsInChildren;
-		foreach (LocText locText2 in array2)
+		for (int i = 0; i < componentsInChildren.Length; i++)
 		{
-			locText2.color = normalColor;
+			componentsInChildren[i].color = normalColor;
 		}
 		Subscribe(Messenger.Instance.gameObject, 1558809273, OnNewMessage);
 		foreach (Message message in Messenger.Instance.Messages)
@@ -299,15 +296,12 @@ public class NotificationScreen : KScreen
 			{
 				colors.normalColor = messageColorBG;
 				Debug.Assert(notification.GetType() == typeof(MessageNotification), $"Notification: \"{notification.titleText}\" is not of type MessageNotification");
-				Button reference2 = hierarchyReferences.GetReference<Button>("DismissButton");
-				reference2.onClick.AddListener(delegate
+				hierarchyReferences.GetReference<Button>("DismissButton").onClick.AddListener(delegate
 				{
-					List<Notification> list = notifications.FindAll((Notification n) => n.titleText == notification.titleText);
-					foreach (Notification item in list)
+					foreach (MessageNotification item in notifications.FindAll((Notification n) => n.titleText == notification.titleText))
 					{
-						MessageNotification messageNotification2 = (MessageNotification)item;
-						Messenger.Instance.RemoveMessage(messageNotification2.message);
-						messageNotification2.Clear();
+						Messenger.Instance.RemoveMessage(item.message);
+						item.Clear();
 					}
 				});
 			}
@@ -341,47 +335,47 @@ public class NotificationScreen : KScreen
 			entry = new Entry(hierarchyReferences.gameObject);
 			entriesByMessage[notification.titleText] = entry;
 			entries.Add(entry);
-			KImage reference3 = hierarchyReferences.GetReference<KImage>("Icon");
-			LocText reference4 = hierarchyReferences.GetReference<LocText>("Text");
+			KImage reference2 = hierarchyReferences.GetReference<KImage>("Icon");
+			LocText reference3 = hierarchyReferences.GetReference<LocText>("Text");
 			switch (notification.Type)
 			{
 			case NotificationType.Bad:
-				reference4.color = badColor;
-				reference3.sprite = icon_bad;
+				reference3.color = badColor;
+				reference2.sprite = icon_bad;
 				break;
 			case NotificationType.DuplicantThreatening:
-				reference4.color = badColor;
-				reference3.sprite = icon_threatening;
+				reference3.color = badColor;
+				reference2.sprite = icon_threatening;
 				break;
 			case NotificationType.Tutorial:
-				reference4.color = warningColor;
-				reference3.sprite = icon_warning;
+				reference3.color = warningColor;
+				reference2.sprite = icon_warning;
 				break;
 			case NotificationType.Messages:
 			{
-				reference4.color = messageColor;
-				reference3.sprite = icon_message;
+				reference3.color = messageColor;
+				reference2.sprite = icon_message;
 				MessageNotification messageNotification = notification as MessageNotification;
 				if (messageNotification != null)
 				{
 					TutorialMessage tutorialMessage = messageNotification.message as TutorialMessage;
 					if (tutorialMessage != null && !string.IsNullOrEmpty(tutorialMessage.videoClipId))
 					{
-						reference3.sprite = icon_video;
+						reference2.sprite = icon_video;
 					}
 				}
 				break;
 			}
 			case NotificationType.Event:
-				reference4.color = eventColor;
-				reference3.sprite = icon_event;
+				reference3.color = eventColor;
+				reference2.sprite = icon_event;
 				break;
 			default:
-				reference4.color = normalColor;
-				reference3.sprite = icon_normal;
+				reference3.color = normalColor;
+				reference2.sprite = icon_normal;
 				break;
 			}
-			reference3.color = reference4.color;
+			reference2.color = reference3.color;
 			string str = "";
 			if (KTime.Instance.UnscaledGameTime - initTime > 5f && notification.playSound)
 			{

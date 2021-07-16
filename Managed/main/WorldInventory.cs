@@ -20,14 +20,14 @@ public class WorldInventory : KMonoBehaviour, ISaveLoadable
 
 	private Dictionary<Tag, float> accessibleAmounts = new Dictionary<Tag, float>();
 
-	private bool hasValidCount = false;
+	private bool hasValidCount;
 
 	private static readonly EventSystem.IntraObjectHandler<WorldInventory> OnNewDayDelegate = new EventSystem.IntraObjectHandler<WorldInventory>(delegate(WorldInventory component, object data)
 	{
 		component.GenerateInventoryReport(data);
 	});
 
-	private int accessibleUpdateIndex = 0;
+	private int accessibleUpdateIndex;
 
 	private bool firstUpdate = true;
 
@@ -38,7 +38,11 @@ public class WorldInventory : KMonoBehaviour, ISaveLoadable
 		get
 		{
 			WorldContainer component = GetComponent<WorldContainer>();
-			return (component != null) ? component.id : (-1);
+			if (!(component != null))
+			{
+				return -1;
+			}
+			return component.id;
 		}
 	}
 
@@ -101,16 +105,13 @@ public class WorldInventory : KMonoBehaviour, ISaveLoadable
 			int num = i + 1;
 			i = num;
 		}
-		int t = 0;
-		while (t < Components.Pickupables.Count)
+		for (int j = 0; j < Components.Pickupables.Count; j++)
 		{
-			Pickupable pickupable = Components.Pickupables[t];
+			Pickupable pickupable = Components.Pickupables[j];
 			if (pickupable != null)
 			{
 				pickupable.GetSMI<ReachabilityMonitor.Instance>()?.UpdateReachability();
 			}
-			int num = t + 1;
-			t = num;
 		}
 	}
 
@@ -154,6 +155,7 @@ public class WorldInventory : KMonoBehaviour, ISaveLoadable
 			{
 				list.AddRange(item.KPrefabID.Tags);
 			}
+			return list;
 		}
 		return list;
 	}
@@ -191,18 +193,18 @@ public class WorldInventory : KMonoBehaviour, ISaveLoadable
 		{
 			if (additionalTag.IsValid)
 			{
-				foreach (Pickupable item in collection2)
 				{
-					if (item.HasTag(additionalTag))
+					foreach (Pickupable item in collection2)
 					{
-						num++;
+						if (item.HasTag(additionalTag))
+						{
+							num++;
+						}
 					}
+					return num;
 				}
 			}
-			else
-			{
-				num = collection2.Count;
-			}
+			num = collection2.Count;
 		}
 		return num;
 	}
@@ -218,9 +220,9 @@ public class WorldInventory : KMonoBehaviour, ISaveLoadable
 			if (num == accessibleUpdateIndex || firstUpdate)
 			{
 				Tag key = current.Key;
-				ICollection<Pickupable> value = current.Value;
+				HashSet<Pickupable> value = current.Value;
 				float num2 = 0f;
-				foreach (Pickupable item in value)
+				foreach (Pickupable item in (IEnumerable<Pickupable>)value)
 				{
 					if (item != null && item.GetMyWorldId() == worldId && !item.HasTag(GameTags.StoredPrivate))
 					{
@@ -283,8 +285,7 @@ public class WorldInventory : KMonoBehaviour, ISaveLoadable
 
 	private void OnRemovedFetchable(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		Pickupable component = gameObject.GetComponent<Pickupable>();
+		Pickupable component = ((GameObject)data).GetComponent<Pickupable>();
 		foreach (Tag tag in component.GetComponent<KPrefabID>().Tags)
 		{
 			if (Inventory.TryGetValue(tag, out var value))

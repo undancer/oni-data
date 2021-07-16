@@ -14,16 +14,16 @@ public class SludgePressConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("SludgePress", 4, 3, "sludge_press_kanim", 100, 30f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_MINERALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER1);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 120f;
-		buildingDef.SelfHeatKilowattsWhenActive = 4f;
-		buildingDef.OutputConduitType = ConduitType.Liquid;
-		buildingDef.UtilityOutputOffset = new CellOffset(1, 0);
-		buildingDef.ViewMode = OverlayModes.Power.ID;
-		buildingDef.AudioCategory = "HollowMetal";
-		buildingDef.AudioSize = "large";
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("SludgePress", 4, 3, "sludge_press_kanim", 100, 30f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.ALL_MINERALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER1);
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 120f;
+		obj.SelfHeatKilowattsWhenActive = 4f;
+		obj.OutputConduitType = ConduitType.Liquid;
+		obj.UtilityOutputOffset = new CellOffset(1, 0);
+		obj.ViewMode = OverlayModes.Power.ID;
+		obj.AudioCategory = "HollowMetal";
+		obj.AudioSize = "large";
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -57,8 +57,7 @@ public class SludgePressConfig : IBuildingConfig
 	private void AddRecipes(GameObject go)
 	{
 		float num = 150f;
-		List<Element> list = ElementLoader.elements.FindAll((Element e) => e.elementComposition != null);
-		foreach (Element item in list)
+		foreach (Element item in ElementLoader.elements.FindAll((Element e) => e.elementComposition != null))
 		{
 			ComplexRecipe.RecipeElement[] array = new ComplexRecipe.RecipeElement[1]
 			{

@@ -11,7 +11,7 @@ public class OxidizerTank : KMonoBehaviour, IUserControlledCapacity
 
 	private MeterController meter;
 
-	private bool isSuspended = false;
+	private bool isSuspended;
 
 	public bool consumeOnLand = true;
 
@@ -166,8 +166,7 @@ public class OxidizerTank : KMonoBehaviour, IUserControlledCapacity
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		OxidizerTank component = gameObject.GetComponent<OxidizerTank>();
+		OxidizerTank component = ((GameObject)data).GetComponent<OxidizerTank>();
 		if (component != null)
 		{
 			UserMaxCapacity = component.UserMaxCapacity;

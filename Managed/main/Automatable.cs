@@ -24,8 +24,7 @@ public class Automatable : KMonoBehaviour
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		Automatable component = gameObject.GetComponent<Automatable>();
+		Automatable component = ((GameObject)data).GetComponent<Automatable>();
 		if (component != null)
 		{
 			automationOnly = component.automationOnly;

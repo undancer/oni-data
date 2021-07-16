@@ -74,7 +74,11 @@ public class Gantry : Switch
 
 		public bool IsExtended()
 		{
-			return IsAutomated() ? logic_on : manual_on;
+			if (!IsAutomated())
+			{
+				return manual_on;
+			}
+			return logic_on;
 		}
 
 		public void SetSwitchState(bool on)
@@ -179,9 +183,9 @@ public class Gantry : Switch
 
 	private static string ResolveInfoStatusItemString(string format_str, object data)
 	{
-		Instance instance = (Instance)data;
-		string format = (instance.IsAutomated() ? BUILDING.STATUSITEMS.GANTRY.AUTOMATION_CONTROL : BUILDING.STATUSITEMS.GANTRY.MANUAL_CONTROL);
-		string arg = (instance.IsExtended() ? BUILDING.STATUSITEMS.GANTRY.EXTENDED : BUILDING.STATUSITEMS.GANTRY.RETRACTED);
+		Instance obj = (Instance)data;
+		string format = (obj.IsAutomated() ? BUILDING.STATUSITEMS.GANTRY.AUTOMATION_CONTROL : BUILDING.STATUSITEMS.GANTRY.MANUAL_CONTROL);
+		string arg = (obj.IsExtended() ? BUILDING.STATUSITEMS.GANTRY.EXTENDED : BUILDING.STATUSITEMS.GANTRY.RETRACTED);
 		return string.Format(format, arg);
 	}
 }

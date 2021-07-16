@@ -43,11 +43,7 @@ public class DreckoPlasticConfig : IEntityConfig
 		HashSet<Tag> hashSet = new HashSet<Tag>();
 		hashSet.Add("BasicSingleHarvestPlant".ToTag());
 		hashSet.Add("PrickleFlower".ToTag());
-		Diet.Info[] infos = new Diet.Info[1]
-		{
-			new Diet.Info(hashSet, POOP_ELEMENT, CALORIES_PER_DAY_OF_PLANT_EATEN, KG_POOP_PER_DAY_OF_PLANT, null, 0f, produce_solid_tile: false, eats_plants_directly: true)
-		};
-		Diet diet = new Diet(infos);
+		Diet diet = new Diet(new Diet.Info(hashSet, POOP_ELEMENT, CALORIES_PER_DAY_OF_PLANT_EATEN, KG_POOP_PER_DAY_OF_PLANT, null, 0f, produce_solid_tile: false, eats_plants_directly: true));
 		CreatureCalorieMonitor.Def def = prefab.AddOrGetDef<CreatureCalorieMonitor.Def>();
 		def.diet = diet;
 		def.minPoopSizeInCalories = MIN_POOP_SIZE_IN_CALORIES;
@@ -57,8 +53,7 @@ public class DreckoPlasticConfig : IEntityConfig
 		def2.itemDroppedOnShear = EMIT_ELEMENT;
 		def2.levelCount = 6;
 		def2.targetAtmosphere = SimHashes.Hydrogen;
-		SolidConsumerMonitor.Def def3 = prefab.AddOrGetDef<SolidConsumerMonitor.Def>();
-		def3.diet = diet;
+		prefab.AddOrGetDef<SolidConsumerMonitor.Def>().diet = diet;
 		return prefab;
 	}
 
@@ -69,8 +64,7 @@ public class DreckoPlasticConfig : IEntityConfig
 
 	public virtual GameObject CreatePrefab()
 	{
-		GameObject gameObject = CreateDrecko("DreckoPlastic", CREATURES.SPECIES.DRECKO.VARIANT_PLASTIC.NAME, CREATURES.SPECIES.DRECKO.VARIANT_PLASTIC.DESC, "drecko_kanim", is_baby: false);
-		return EntityTemplates.ExtendEntityToFertileCreature(gameObject, "DreckoPlasticEgg", CREATURES.SPECIES.DRECKO.VARIANT_PLASTIC.EGG_NAME, CREATURES.SPECIES.DRECKO.VARIANT_PLASTIC.DESC, "egg_drecko_kanim", DreckoTuning.EGG_MASS, "DreckoPlasticBaby", 90f, 30f, eggSortOrder: EGG_SORT_ORDER, egg_chances: DreckoTuning.EGG_CHANCES_PLASTIC);
+		return EntityTemplates.ExtendEntityToFertileCreature(CreateDrecko("DreckoPlastic", CREATURES.SPECIES.DRECKO.VARIANT_PLASTIC.NAME, CREATURES.SPECIES.DRECKO.VARIANT_PLASTIC.DESC, "drecko_kanim", is_baby: false), "DreckoPlasticEgg", CREATURES.SPECIES.DRECKO.VARIANT_PLASTIC.EGG_NAME, CREATURES.SPECIES.DRECKO.VARIANT_PLASTIC.DESC, "egg_drecko_kanim", DreckoTuning.EGG_MASS, "DreckoPlasticBaby", 90f, 30f, eggSortOrder: EGG_SORT_ORDER, egg_chances: DreckoTuning.EGG_CHANCES_PLASTIC);
 	}
 
 	public void OnPrefabInit(GameObject prefab)

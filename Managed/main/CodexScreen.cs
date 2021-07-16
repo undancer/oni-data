@@ -71,11 +71,11 @@ public class CodexScreen : KScreen
 	[SerializeField]
 	private RectTransform scrollContentPane;
 
-	private bool editingSearch = false;
+	private bool editingSearch;
 
 	private List<HistoryEntry> history = new List<HistoryEntry>();
 
-	private int currentHistoryIdx = 0;
+	private int currentHistoryIdx;
 
 	[Header("Hierarchy")]
 	[SerializeField]
@@ -364,8 +364,7 @@ public class CodexScreen : KScreen
 
 	private void ToggleCategoryOpen(GameObject header, bool open)
 	{
-		MultiToggle reference = header.GetComponent<HierarchyReferences>().GetReference<MultiToggle>("ExpandToggle");
-		reference.ChangeState(open ? 1 : 0);
+		header.GetComponent<HierarchyReferences>().GetReference<MultiToggle>("ExpandToggle").ChangeState(open ? 1 : 0);
 		header.GetComponent<HierarchyReferences>().GetReference("Content").gameObject.SetActive(open);
 	}
 
@@ -399,8 +398,7 @@ public class CodexScreen : KScreen
 		}
 		categoryHeaders.Add(categoryHeader);
 		categoryContent.SetActive(value: false);
-		MultiToggle reference2 = categoryHeader.GetComponent<HierarchyReferences>().GetReference<MultiToggle>("ExpandToggle");
-		reference2.onClick = delegate
+		categoryHeader.GetComponent<HierarchyReferences>().GetReference<MultiToggle>("ExpandToggle").onClick = delegate
 		{
 			ToggleCategoryOpen(categoryHeader, !categoryContent.activeSelf);
 		};
@@ -410,7 +408,7 @@ public class CodexScreen : KScreen
 	private void CategorizeEntries()
 	{
 		string text = "";
-		GameObject gameObject = navigatorContent.gameObject;
+		_ = navigatorContent.gameObject;
 		Dictionary<string, GameObject> dictionary = new Dictionary<string, GameObject>();
 		List<Tuple<string, CodexEntry>> list = new List<Tuple<string, CodexEntry>>();
 		foreach (KeyValuePair<string, CodexEntry> entry in CodexCache.entries)
@@ -434,9 +432,9 @@ public class CodexScreen : KScreen
 			{
 				NewCategoryHeader(new KeyValuePair<string, CodexEntry>(tuple.first, tuple.second), dictionary);
 			}
-			GameObject gameObject2 = Util.KInstantiateUI(prefabNavigatorEntry, dictionary[text], force_active: true);
+			GameObject gameObject = Util.KInstantiateUI(prefabNavigatorEntry, dictionary[text], force_active: true);
 			string id = tuple.second.id;
-			gameObject2.GetComponent<KButton>().onClick += delegate
+			gameObject.GetComponent<KButton>().onClick += delegate
 			{
 				ChangeArticle(id);
 			};
@@ -444,13 +442,13 @@ public class CodexScreen : KScreen
 			{
 				tuple.second.name = Strings.Get(tuple.second.title);
 			}
-			gameObject2.GetComponentInChildren<LocText>().text = tuple.second.name;
-			entryButtons.Add(tuple.second, gameObject2);
+			gameObject.GetComponentInChildren<LocText>().text = tuple.second.name;
+			entryButtons.Add(tuple.second, gameObject);
 			foreach (SubEntry subEntry in tuple.second.subEntries)
 			{
-				GameObject gameObject3 = Util.KInstantiateUI(prefabNavigatorEntry, dictionary[text], force_active: true);
+				GameObject gameObject2 = Util.KInstantiateUI(prefabNavigatorEntry, dictionary[text], force_active: true);
 				string subEntryId = subEntry.id;
-				gameObject3.GetComponent<KButton>().onClick += delegate
+				gameObject2.GetComponent<KButton>().onClick += delegate
 				{
 					ChangeArticle(subEntryId);
 				};
@@ -458,8 +456,8 @@ public class CodexScreen : KScreen
 				{
 					subEntry.name = Strings.Get(subEntry.title);
 				}
-				gameObject3.GetComponentInChildren<LocText>().text = subEntry.name;
-				subEntryButtons.Add(subEntry, gameObject3);
+				gameObject2.GetComponentInChildren<LocText>().text = subEntry.name;
+				subEntryButtons.Add(subEntry, gameObject2);
 				CodexCache.subEntries.Add(subEntry.id, subEntry);
 			}
 		}
@@ -597,7 +595,7 @@ public class CodexScreen : KScreen
 					gameObject3 = contentContainerPool.GetFreeElement(contentContainers.gameObject, forceActive: true).gameObject;
 					ConfigureContentContainer(contentContainer, gameObject3, flag && flag2);
 					a = contentContainer.lockID;
-					GameObject gameObject4 = ContentUIPools[typeof(CodexContentLockedIndicator)].GetFreeElement(gameObject3, forceActive: true).gameObject;
+					_ = ContentUIPools[typeof(CodexContentLockedIndicator)].GetFreeElement(gameObject3, forceActive: true).gameObject;
 				}
 				continue;
 			}
@@ -610,12 +608,12 @@ public class CodexScreen : KScreen
 			}
 			foreach (ICodexWidget item in contentContainer.content)
 			{
-				GameObject gameObject5 = null;
-				gameObject5 = ContentUIPools[item.GetType()].GetFreeElement(gameObject3, forceActive: true).gameObject;
-				item.Configure(gameObject5, displayPane, textStyles);
+				GameObject gameObject4 = null;
+				gameObject4 = ContentUIPools[item.GetType()].GetFreeElement(gameObject3, forceActive: true).gameObject;
+				item.Configure(gameObject4, displayPane, textStyles);
 				if (item == codexWidget)
 				{
-					rectTransform = gameObject5.rectTransform();
+					rectTransform = gameObject4.rectTransform();
 				}
 			}
 		}
@@ -642,26 +640,28 @@ public class CodexScreen : KScreen
 			history.Add(new HistoryEntry(id, Vector3.zero, text));
 			currentHistoryIdx = 0;
 		}
-		else if (historyMovement == HistoryDirection.Back)
+		else
 		{
-			history[currentHistoryIdx].position = displayPane.transform.localPosition;
-			currentHistoryIdx--;
-		}
-		else if (historyMovement == HistoryDirection.Forward)
-		{
-			history[currentHistoryIdx].position = displayPane.transform.localPosition;
-			currentHistoryIdx++;
-		}
-		else if (historyMovement == HistoryDirection.NewArticle || historyMovement == HistoryDirection.Up)
-		{
-			if (currentHistoryIdx == history.Count - 1)
+			switch (historyMovement)
 			{
-				history.Add(new HistoryEntry(activeEntryID, Vector3.zero, text));
+			case HistoryDirection.Back:
+				history[currentHistoryIdx].position = displayPane.transform.localPosition;
+				currentHistoryIdx--;
+				break;
+			case HistoryDirection.Forward:
 				history[currentHistoryIdx].position = displayPane.transform.localPosition;
 				currentHistoryIdx++;
-			}
-			else
+				break;
+			case HistoryDirection.Up:
+			case HistoryDirection.NewArticle:
 			{
+				if (currentHistoryIdx == history.Count - 1)
+				{
+					history.Add(new HistoryEntry(activeEntryID, Vector3.zero, text));
+					history[currentHistoryIdx].position = displayPane.transform.localPosition;
+					currentHistoryIdx++;
+					break;
+				}
 				for (int num4 = history.Count - 1; num4 > currentHistoryIdx; num4--)
 				{
 					history.RemoveAt(num4);
@@ -669,6 +669,8 @@ public class CodexScreen : KScreen
 				history.Add(new HistoryEntry(activeEntryID, Vector3.zero, text));
 				history[history.Count - 2].position = displayPane.transform.localPosition;
 				currentHistoryIdx++;
+				break;
+			}
 			}
 		}
 		if (currentHistoryIdx > 0)

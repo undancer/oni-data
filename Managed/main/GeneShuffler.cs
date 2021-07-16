@@ -94,7 +94,7 @@ public class GeneShuffler : Workable
 		component.OnStorageChange(data);
 	});
 
-	private bool storage_recursion_guard = false;
+	private bool storage_recursion_guard;
 
 	public bool WorkComplete => geneShufflerSMI.IsInsideState(geneShufflerSMI.sm.working.complete);
 
@@ -237,16 +237,16 @@ public class GeneShuffler : Workable
 			string id = list[Random.Range(0, list.Count)];
 			trait = Db.Get().traits.TryGet(id);
 			worker.GetComponent<Traits>().Add(trait);
-			InfoDialogScreen infoDialogScreen = (InfoDialogScreen)GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.InfoDialogScreen.gameObject, GameScreenManager.Instance.ssOverlayCanvas.gameObject);
+			InfoDialogScreen obj = (InfoDialogScreen)GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.InfoDialogScreen.gameObject, GameScreenManager.Instance.ssOverlayCanvas.gameObject);
 			string text = string.Format(UI.GENESHUFFLERMESSAGE.BODY_SUCCESS, worker.GetProperName(), trait.Name, trait.GetTooltip());
-			infoDialogScreen.SetHeader(UI.GENESHUFFLERMESSAGE.HEADER).AddPlainText(text).AddDefaultOK();
+			obj.SetHeader(UI.GENESHUFFLERMESSAGE.HEADER).AddPlainText(text).AddDefaultOK();
 			SetConsumed(consumed: true);
 		}
 		else
 		{
-			InfoDialogScreen infoDialogScreen2 = (InfoDialogScreen)GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.InfoDialogScreen.gameObject, GameScreenManager.Instance.ssOverlayCanvas.gameObject);
+			InfoDialogScreen obj2 = (InfoDialogScreen)GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.InfoDialogScreen.gameObject, GameScreenManager.Instance.ssOverlayCanvas.gameObject);
 			string text2 = string.Format(UI.GENESHUFFLERMESSAGE.BODY_FAILURE, worker.GetProperName());
-			infoDialogScreen2.SetHeader(UI.GENESHUFFLERMESSAGE.HEADER).AddPlainText(text2).AddDefaultOK();
+			obj2.SetHeader(UI.GENESHUFFLERMESSAGE.HEADER).AddPlainText(text2).AddDefaultOK();
 		}
 	}
 
@@ -288,8 +288,7 @@ public class GeneShuffler : Workable
 
 	public void RefreshSideScreen()
 	{
-		KSelectable component = GetComponent<KSelectable>();
-		if (component.IsSelected)
+		if (GetComponent<KSelectable>().IsSelected)
 		{
 			DetailsScreen.Instance.Refresh(base.gameObject);
 		}

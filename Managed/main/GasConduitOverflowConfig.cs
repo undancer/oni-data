@@ -42,16 +42,14 @@ public class GasConduitOverflowConfig : IBuildingConfig
 
 	private void AttachPort(GameObject go)
 	{
-		ConduitSecondaryOutput conduitSecondaryOutput = go.AddComponent<ConduitSecondaryOutput>();
-		conduitSecondaryOutput.portInfo = secondaryPort;
+		go.AddComponent<ConduitSecondaryOutput>().portInfo = secondaryPort;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		GeneratedBuildings.MakeBuildingAlwaysOperational(go);
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
-		ConduitOverflow conduitOverflow = go.AddOrGet<ConduitOverflow>();
-		conduitOverflow.portInfo = secondaryPort;
+		go.AddOrGet<ConduitOverflow>().portInfo = secondaryPort;
 		go.GetComponent<KPrefabID>().AddTag(GameTags.OverlayInFrontOfConduits);
 	}
 

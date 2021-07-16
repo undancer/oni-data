@@ -21,7 +21,7 @@ public class WallDamageSoundEvent : SoundEvent
 			num = GetAudioCategory(tile);
 			vector = Grid.CellToPos(tile);
 			vector.z = 0f;
-			GameObject gameObject = behaviour.controller.gameObject;
+			_ = behaviour.controller.gameObject;
 			if (base.objectIsSelectedAndVisible)
 			{
 				vector = SoundEvent.AudioHighlightListenerPosition(vector);

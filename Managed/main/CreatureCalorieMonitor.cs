@@ -26,7 +26,7 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 
 		public float deathTimer = 6000f;
 
-		public bool storePoop = false;
+		public bool storePoop;
 
 		public override void Configure(GameObject prefab)
 		{
@@ -41,8 +41,7 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 			if (diet.consumedTags.Count > 0)
 			{
 				float calorie_loss_per_second = 0f;
-				Trait trait = Db.Get().traits.Get(obj.GetComponent<Modifiers>().initialTraits[0]);
-				foreach (AttributeModifier selfModifier in trait.SelfModifiers)
+				foreach (AttributeModifier selfModifier in Db.Get().traits.Get(obj.GetComponent<Modifiers>().initialTraits[0]).SelfModifiers)
 				{
 					if (selfModifier.AttributeId == Db.Get().Amounts.Calories.deltaAttribute.Id)
 					{
@@ -56,8 +55,7 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 					dailyPlantGrowthConsumption = (0f - calorie_loss_per_second) / t.Value;
 					GameObject prefab = Assets.GetPrefab(t.Key.ToString());
 					Crop crop = prefab.GetComponent<Crop>();
-					float cropDuration = CROPS.CROP_TYPES.Find((Crop.CropVal m) => m.cropId == crop.cropId).cropDuration;
-					float num = cropDuration / 600f;
+					float num = CROPS.CROP_TYPES.Find((Crop.CropVal m) => m.cropId == crop.cropId).cropDuration / 600f;
 					float num2 = 1f / num;
 					return UI.BUILDINGEFFECTS.DIET_CONSUMED_ITEM.text.Replace("{Food}", t.Key.ProperName()).Replace("{Amount}", GameUtil.GetFormattedPlantGrowth((0f - calorie_loss_per_second) / t.Value * num2 * 100f, GameUtil.TimeSlice.PerCycle));
 				}).ToArray()));
@@ -184,8 +182,7 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 			}
 			else if (flag)
 			{
-				Facing component2 = owner.GetComponent<Facing>();
-				int num4 = component2.GetFrontCell();
+				int num4 = owner.GetComponent<Facing>().GetFrontCell();
 				if (!Grid.IsValidCell(num4))
 				{
 					Debug.LogWarningFormat("{0} attemping to Poop {1} on invalid cell {2} from cell {3}", owner, element.name, num4, num3);
@@ -197,12 +194,12 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 			{
 				element.substance.SpawnResource(Grid.CellToPosCCC(num3, Grid.SceneLayer.Ore), num, temperature, disease_idx, num2);
 			}
-			KPrefabID component3 = owner.GetComponent<KPrefabID>();
-			if (!Game.Instance.savedInfo.creaturePoopAmount.ContainsKey(component3.PrefabTag))
+			KPrefabID component2 = owner.GetComponent<KPrefabID>();
+			if (!Game.Instance.savedInfo.creaturePoopAmount.ContainsKey(component2.PrefabTag))
 			{
-				Game.Instance.savedInfo.creaturePoopAmount.Add(component3.PrefabTag, 0f);
+				Game.Instance.savedInfo.creaturePoopAmount.Add(component2.PrefabTag, 0f);
 			}
-			Game.Instance.savedInfo.creaturePoopAmount[component3.PrefabTag] += num;
+			Game.Instance.savedInfo.creaturePoopAmount[component2.PrefabTag] += num;
 			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, element.name, owner.transform);
 		}
 
@@ -230,14 +227,17 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 
 		public float GetFullness()
 		{
-			float totalConsumedCalories = GetTotalConsumedCalories();
-			return totalConsumedCalories / minPoopSizeInCalories;
+			return GetTotalConsumedCalories() / minPoopSizeInCalories;
 		}
 
 		public bool IsReadyToPoop()
 		{
 			float totalConsumedCalories = GetTotalConsumedCalories();
-			return totalConsumedCalories > 0f && totalConsumedCalories >= minPoopSizeInCalories;
+			if (totalConsumedCalories > 0f)
+			{
+				return totalConsumedCalories >= minPoopSizeInCalories;
+			}
+			return false;
 		}
 
 		public void Consume(Tag tag, float calories)
@@ -328,8 +328,7 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 
 		public bool IsHungry()
 		{
-			float calories0to = GetCalories0to1();
-			return calories0to < 0.9f;
+			return GetCalories0to1() < 0.9f;
 		}
 
 		public bool IsOutOfCalories()
@@ -398,8 +397,7 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 
 	private static void StarvationStartTime(Instance smi)
 	{
-		float num = smi.sm.starvationStartTime.Get(smi);
-		if (num == 0f)
+		if (smi.sm.starvationStartTime.Get(smi) == 0f)
 		{
 			smi.sm.starvationStartTime.Set(GameClock.Instance.GetTime(), smi);
 		}

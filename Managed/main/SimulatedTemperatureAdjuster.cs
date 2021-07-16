@@ -11,7 +11,7 @@ public class SimulatedTemperatureAdjuster
 
 	private float thermalConductivity;
 
-	private bool operational = false;
+	private bool active;
 
 	private Storage storage;
 
@@ -21,15 +21,10 @@ public class SimulatedTemperatureAdjuster
 		heatCapacity = heat_capacity;
 		thermalConductivity = thermal_conductivity;
 		this.storage = storage;
-		storage.gameObject.Subscribe(-592767678, OnOperationalChanged);
+		storage.gameObject.Subscribe(824508782, OnActivechanged);
 		storage.gameObject.Subscribe(-1697596308, OnStorageChanged);
-		operational = true;
 		Operational component = storage.gameObject.GetComponent<Operational>();
-		if (component != null)
-		{
-			operational = component.IsOperational;
-		}
-		OnOperationalChanged(operational);
+		OnActivechanged(component);
 	}
 
 	public List<Descriptor> GetDescriptors()
@@ -72,7 +67,7 @@ public class SimulatedTemperatureAdjuster
 			float num = temperature;
 			float heat_capacity = heatCapacity;
 			float thermal_conductivity = thermalConductivity;
-			if (!operational)
+			if (!active)
 			{
 				num = 0f;
 				heat_capacity = 0f;
@@ -82,10 +77,11 @@ public class SimulatedTemperatureAdjuster
 		}
 	}
 
-	private void OnOperationalChanged(object data)
+	private void OnActivechanged(object data)
 	{
-		operational = (bool)data;
-		if (operational)
+		Operational operational = (Operational)data;
+		active = operational.IsActive;
+		if (active)
 		{
 			foreach (GameObject item in storage.items)
 			{
@@ -131,7 +127,7 @@ public class SimulatedTemperatureAdjuster
 		Pickupable component2 = gameObject.GetComponent<Pickupable>();
 		if (!(component2 == null))
 		{
-			if (operational && component2.storage == storage)
+			if (active && component2.storage == storage)
 			{
 				Register(component);
 			}

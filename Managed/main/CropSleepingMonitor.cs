@@ -7,7 +7,7 @@ public class CropSleepingMonitor : GameStateMachine<CropSleepingMonitor, CropSle
 {
 	public class Def : BaseDef, IGameObjectEffectDescriptor
 	{
-		public bool prefersDarkness = false;
+		public bool prefersDarkness;
 
 		public List<Descriptor> GetDescriptors(GameObject obj)
 		{
@@ -36,16 +36,18 @@ public class CropSleepingMonitor : GameStateMachine<CropSleepingMonitor, CropSle
 
 		public bool IsSleeping()
 		{
-			BaseState currentState = GetCurrentState();
-			return currentState == base.smi.sm.sleeping;
+			return GetCurrentState() == base.smi.sm.sleeping;
 		}
 
 		public bool IsCellSafe(int cell)
 		{
-			Attribute minLightLux = Db.Get().PlantAttributes.MinLightLux;
-			AttributeInstance attributeInstance = minLightLux.Lookup(base.gameObject);
+			AttributeInstance attributeInstance = Db.Get().PlantAttributes.MinLightLux.Lookup(base.gameObject);
 			int num = Grid.LightIntensity[cell];
-			return base.def.prefersDarkness ? (num == 0) : ((float)num >= attributeInstance.GetTotalValue());
+			if (!base.def.prefersDarkness)
+			{
+				return (float)num >= attributeInstance.GetTotalValue();
+			}
+			return num == 0;
 		}
 	}
 

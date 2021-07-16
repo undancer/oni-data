@@ -87,7 +87,11 @@ public class GasLiquidExposureMonitor : GameStateMachine<GasLiquidExposureMonito
 
 		public bool IsMinorIrritation()
 		{
-			return exposure >= 8f && exposure < 15f;
+			if (exposure >= 8f)
+			{
+				return exposure < 15f;
+			}
+			return false;
 		}
 
 		public bool IsMajorIrritation()

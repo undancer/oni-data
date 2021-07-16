@@ -4,7 +4,7 @@ using UnityEngine.Rendering;
 
 public class TextureLerper
 {
-	private static int offsetCounter = 0;
+	private static int offsetCounter;
 
 	public string name;
 
@@ -104,8 +104,7 @@ public class TextureLerper
 		meshRenderer.shadowCastingMode = ShadowCastingMode.Off;
 		meshRenderer.lightProbeUsage = LightProbeUsage.Off;
 		meshRenderer.reflectionProbeUsage = ReflectionProbeUsage.Off;
-		MeshFilter meshFilter = meshGO.AddComponent<MeshFilter>();
-		meshFilter.mesh = mesh;
+		meshGO.AddComponent<MeshFilter>().mesh = mesh;
 		meshRenderer.sharedMaterial = Material;
 		cameraGO.SetLayerRecursively(layer);
 		offsetCounter++;

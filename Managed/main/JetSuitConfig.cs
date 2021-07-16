@@ -23,9 +23,17 @@ public class JetSuitConfig : IEquipmentConfig
 
 	public EquipmentDef CreateEquipmentDef()
 	{
-		Dictionary<string, float> dictionary = new Dictionary<string, float>();
-		dictionary.Add(SimHashes.Steel.ToString(), 200f);
-		dictionary.Add(SimHashes.Petroleum.ToString(), 25f);
+		new Dictionary<string, float>
+		{
+			{
+				SimHashes.Steel.ToString(),
+				200f
+			},
+			{
+				SimHashes.Petroleum.ToString(),
+				25f
+			}
+		};
 		List<AttributeModifier> list = new List<AttributeModifier>();
 		list.Add(new AttributeModifier(TUNING.EQUIPMENT.ATTRIBUTE_MOD_IDS.INSULATION, TUNING.EQUIPMENT.SUITS.ATMOSUIT_INSULATION, STRINGS.EQUIPMENT.PREFABS.ATMO_SUIT.NAME));
 		list.Add(new AttributeModifier(TUNING.EQUIPMENT.ATTRIBUTE_MOD_IDS.ATHLETICS, TUNING.EQUIPMENT.SUITS.ATMOSUIT_ATHLETICS, STRINGS.EQUIPMENT.PREFABS.ATMO_SUIT.NAME));
@@ -111,8 +119,7 @@ public class JetSuitConfig : IEquipmentConfig
 		suitTank.capacity = 75f;
 		suitTank.elementTag = GameTags.Breathable;
 		go.AddComponent<JetSuitTank>();
-		HelmetController helmetController = go.AddComponent<HelmetController>();
-		helmetController.has_jets = true;
+		go.AddComponent<HelmetController>().has_jets = true;
 		KPrefabID component = go.GetComponent<KPrefabID>();
 		component.AddTag(GameTags.Clothes);
 		component.AddTag(GameTags.PedestalDisplayable);

@@ -58,13 +58,12 @@ public class FloatHOTQueue<TValue>
 			while (pos > 0)
 			{
 				int num = (pos - 1) / 2;
-				if (_baseHeap[num].Key - _baseHeap[pos].Key > 0f)
+				if (!(_baseHeap[num].Key - _baseHeap[pos].Key > 0f))
 				{
-					ExchangeElements(num, pos);
-					pos = num;
-					continue;
+					break;
 				}
-				break;
+				ExchangeElements(num, pos);
+				pos = num;
 			}
 			return pos;
 		}

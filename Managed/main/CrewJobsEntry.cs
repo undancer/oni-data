@@ -127,9 +127,9 @@ public class CrewJobsEntry : CrewListEntry
 
 	private void OnPriorityPress(ChoreGroup chore_group)
 	{
-		bool flag = (consumer.IsPermittedByUser(chore_group) ? true : false);
+		int num = (consumer.IsPermittedByUser(chore_group) ? 1 : 0);
 		string name = "HUD_Click";
-		if (flag)
+		if (num != 0)
 		{
 			name = "HUD_Click_Deselect";
 		}
@@ -158,8 +158,7 @@ public class CrewJobsEntry : CrewListEntry
 					priorityButton.ToggleIcon.SetActive(flag);
 				}
 				float num = 0f;
-				AttributeInstance attributeInstance = attributes.Get(priorityButton.choreGroup.attribute);
-				num = Mathf.Min(attributeInstance.GetTotalValue() / 10f, 1f);
+				num = Mathf.Min(attributes.Get(priorityButton.choreGroup.attribute).GetTotalValue() / 10f, 1f);
 				Color baseBorderColor = priorityButton.baseBorderColor;
 				baseBorderColor.r = Mathf.Lerp(priorityButton.baseBorderColor.r, 184f / 255f, num);
 				baseBorderColor.g = Mathf.Lerp(priorityButton.baseBorderColor.g, 113f / 255f, num);

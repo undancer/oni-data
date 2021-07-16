@@ -38,9 +38,9 @@ public class EspressoMachine : StateMachineComponent<EspressoMachine.StatesInsta
 		private Chore CreateChore(StatesInstance smi)
 		{
 			Workable component = smi.master.GetComponent<EspressoMachineWorkable>();
-			Chore chore = new WorkChore<EspressoMachineWorkable>(Db.Get().ChoreTypes.Relax, component, null, run_until_complete: true, null, null, null, allow_in_red_alert: false, Db.Get().ScheduleBlockTypes.Recreation, ignore_schedule_block: false, only_when_operational: true, null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, PriorityScreen.PriorityClass.high);
-			chore.AddPrecondition(ChorePreconditions.instance.CanDoWorkerPrioritizable, component);
-			return chore;
+			WorkChore<EspressoMachineWorkable> workChore = new WorkChore<EspressoMachineWorkable>(Db.Get().ChoreTypes.Relax, component, null, run_until_complete: true, null, null, null, allow_in_red_alert: false, Db.Get().ScheduleBlockTypes.Recreation, ignore_schedule_block: false, only_when_operational: true, null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, PriorityScreen.PriorityClass.high);
+			workChore.AddPrecondition(ChorePreconditions.instance.CanDoWorkerPrioritizable, component);
+			return workChore;
 		}
 
 		private bool IsReady(StatesInstance smi)
@@ -54,8 +54,7 @@ public class EspressoMachine : StateMachineComponent<EspressoMachine.StatesInsta
 			{
 				return false;
 			}
-			float amountAvailable = smi.GetComponent<Storage>().GetAmountAvailable(INGREDIENT_TAG);
-			if (amountAvailable < INGREDIENT_MASS_PER_USE)
+			if (smi.GetComponent<Storage>().GetAmountAvailable(INGREDIENT_TAG) < INGREDIENT_MASS_PER_USE)
 			{
 				return false;
 			}

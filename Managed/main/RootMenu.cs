@@ -23,11 +23,11 @@ public class RootMenu : KScreen
 
 	private List<KScreen> subMenus = new List<KScreen>();
 
-	private TileScreen tileScreenInst = null;
+	private TileScreen tileScreenInst;
 
 	public bool canTogglePauseScreen = true;
 
-	public GameObject selectedGO = null;
+	public GameObject selectedGO;
 
 	public static RootMenu Instance
 	{

@@ -82,12 +82,20 @@ namespace Steamworks
 
 		public bool BBlankAnonAccount()
 		{
-			return GetAccountID() == new AccountID_t(0u) && BAnonAccount() && GetUnAccountInstance() == 0;
+			if (GetAccountID() == new AccountID_t(0u) && BAnonAccount())
+			{
+				return GetUnAccountInstance() == 0;
+			}
+			return false;
 		}
 
 		public bool BGameServerAccount()
 		{
-			return GetEAccountType() == EAccountType.k_EAccountTypeGameServer || GetEAccountType() == EAccountType.k_EAccountTypeAnonGameServer;
+			if (GetEAccountType() != EAccountType.k_EAccountTypeGameServer)
+			{
+				return GetEAccountType() == EAccountType.k_EAccountTypeAnonGameServer;
+			}
+			return true;
 		}
 
 		public bool BPersistentGameServerAccount()
@@ -117,17 +125,29 @@ namespace Steamworks
 
 		public bool IsLobby()
 		{
-			return GetEAccountType() == EAccountType.k_EAccountTypeChat && (GetUnAccountInstance() & 0x40000) != 0;
+			if (GetEAccountType() == EAccountType.k_EAccountTypeChat)
+			{
+				return (GetUnAccountInstance() & 0x40000) != 0;
+			}
+			return false;
 		}
 
 		public bool BIndividualAccount()
 		{
-			return GetEAccountType() == EAccountType.k_EAccountTypeIndividual || GetEAccountType() == EAccountType.k_EAccountTypeConsoleUser;
+			if (GetEAccountType() != EAccountType.k_EAccountTypeIndividual)
+			{
+				return GetEAccountType() == EAccountType.k_EAccountTypeConsoleUser;
+			}
+			return true;
 		}
 
 		public bool BAnonAccount()
 		{
-			return GetEAccountType() == EAccountType.k_EAccountTypeAnonUser || GetEAccountType() == EAccountType.k_EAccountTypeAnonGameServer;
+			if (GetEAccountType() != EAccountType.k_EAccountTypeAnonUser)
+			{
+				return GetEAccountType() == EAccountType.k_EAccountTypeAnonGameServer;
+			}
+			return true;
 		}
 
 		public bool BAnonUserAccount()
@@ -212,7 +232,11 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			return other is CSteamID && this == (CSteamID)other;
+			if (other is CSteamID)
+			{
+				return this == (CSteamID)other;
+			}
+			return false;
 		}
 
 		public override int GetHashCode()

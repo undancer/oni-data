@@ -56,13 +56,9 @@ public class ChoreDriver : StateMachineComponent<ChoreDriver.StatesInstance>
 		private void OnChoreRulesChanged()
 		{
 			Chore currentChore = GetCurrentChore();
-			if (currentChore != null)
+			if (currentChore != null && !GetComponent<ChoreConsumer>().IsPermittedOrEnabled(currentChore.choreType, currentChore))
 			{
-				ChoreConsumer component = GetComponent<ChoreConsumer>();
-				if (!component.IsPermittedOrEnabled(currentChore.choreType, currentChore))
-				{
-					EndChore("Permissions changed");
-				}
+				EndChore("Permissions changed");
 			}
 		}
 	}
@@ -173,8 +169,7 @@ public class ChoreDriver : StateMachineComponent<ChoreDriver.StatesInstance>
 		{
 			text2 = context.chore.GetType().Name;
 		}
-		string obj = "Stopping chore " + text + " to start " + text2 + " but stopping the first chore cancelled the second one.";
-		Debug.LogWarning(obj);
+		Debug.LogWarning("Stopping chore " + text + " to start " + text2 + " but stopping the first chore cancelled the second one.");
 	}
 
 	protected override void OnSpawn()

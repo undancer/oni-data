@@ -16,10 +16,10 @@ public class Studyable : Workable, ISidescreenButtonControl
 	private const float STUDY_WORK_TIME = 3600f;
 
 	[Serialize]
-	private bool studied = false;
+	private bool studied;
 
 	[Serialize]
-	private bool markedForStudy = false;
+	private bool markedForStudy;
 
 	private Guid statusItemGuid;
 
@@ -29,7 +29,17 @@ public class Studyable : Workable, ISidescreenButtonControl
 
 	public bool Studied => studied;
 
-	public bool Studying => chore != null && chore.InProgress();
+	public bool Studying
+	{
+		get
+		{
+			if (chore != null)
+			{
+				return chore.InProgress();
+			}
+			return false;
+		}
+	}
 
 	public string SidescreenTitleKey => "STRINGS.UI.UISIDESCREENS.STUDYABLE_SIDE_SCREEN.TITLE";
 

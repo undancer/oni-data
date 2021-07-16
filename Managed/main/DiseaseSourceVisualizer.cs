@@ -11,9 +11,9 @@ public class DiseaseSourceVisualizer : KMonoBehaviour
 
 	private GameObject visualizer;
 
-	private bool visible = false;
+	private bool visible;
 
-	public string alwaysShowDisease = null;
+	public string alwaysShowDisease;
 
 	protected override void OnSpawn()
 	{
@@ -68,8 +68,7 @@ public class DiseaseSourceVisualizer : KMonoBehaviour
 	{
 		Sprite overlaySprite = Assets.instance.DiseaseVisualization.overlaySprite;
 		Color32 colorByName = GlobalAssets.Instance.colorSet.GetColorByName(disease.overlayColourName);
-		Transform child = visualizer.transform.GetChild(0);
-		Image component = child.GetComponent<Image>();
+		Image component = visualizer.transform.GetChild(0).GetComponent<Image>();
 		component.sprite = overlaySprite;
 		component.color = colorByName;
 		visible = true;

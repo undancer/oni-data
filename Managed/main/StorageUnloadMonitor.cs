@@ -27,8 +27,7 @@ public class StorageUnloadMonitor : GameStateMachine<StorageUnloadMonitor, Stora
 		full.ToggleStatusItem(Db.Get().RobotStatusItems.DustBinFull, (Instance smi) => smi.gameObject).ToggleBehaviour(GameTags.Robots.Behaviours.UnloadBehaviour, (Instance data) => true).Transition(notFull, GameStateMachine<StorageUnloadMonitor, Instance, IStateMachineTarget, Def>.Not(WantsToUnload), UpdateRate.SIM_1000ms)
 			.Enter(delegate(Instance smi)
 			{
-				Storage storage = smi.master.gameObject.GetComponents<Storage>()[1];
-				if (storage.RemainingCapacity() <= 0f)
+				if (smi.master.gameObject.GetComponents<Storage>()[1].RemainingCapacity() <= 0f)
 				{
 					smi.master.gameObject.GetSMI<AnimInterruptMonitor.Instance>().PlayAnim("react_full");
 				}

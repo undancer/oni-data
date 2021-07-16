@@ -50,24 +50,27 @@ namespace ProcGen.Noise
 		{
 			if (transformerType == TransformerType.Turbulence)
 			{
-				Turbulence turbulence = new Turbulence();
-				turbulence.Power = power;
-				return turbulence;
+				return new Turbulence
+				{
+					Power = power
+				};
 			}
 			if (transformerType == TransformerType.RotatePoint)
 			{
-				RotatePoint rotatePoint = new RotatePoint();
-				rotatePoint.XAngle = vector.x;
-				rotatePoint.YAngle = vector.y;
-				rotatePoint.ZAngle = 0f;
-				return rotatePoint;
+				return new RotatePoint
+				{
+					XAngle = vector.x,
+					YAngle = vector.y,
+					ZAngle = 0f
+				};
 			}
 			if (transformerType == TransformerType.TranslatePoint)
 			{
-				TranslatePoint translatePoint = new TranslatePoint();
-				translatePoint.XTranslate = vector.x;
-				translatePoint.ZTranslate = vector.y;
-				return translatePoint;
+				return new TranslatePoint
+				{
+					XTranslate = vector.x,
+					ZTranslate = vector.y
+				};
 			}
 			return new Displace();
 		}
@@ -93,8 +96,8 @@ namespace ProcGen.Noise
 		{
 			if (transformerType == TransformerType.Turbulence)
 			{
-				Turbulence turbulence = target as Turbulence;
-				turbulence.SourceModule = sourceModule;
+				Turbulence obj = target as Turbulence;
+				obj.SourceModule = sourceModule;
 				IModule3D xDistortModule;
 				if (xModule == null)
 				{
@@ -105,8 +108,8 @@ namespace ProcGen.Noise
 				{
 					xDistortModule = xModule;
 				}
-				turbulence.XDistortModule = xDistortModule;
-				turbulence.YDistortModule = new Constant(0f);
+				obj.XDistortModule = xDistortModule;
+				obj.YDistortModule = new Constant(0f);
 				IModule3D zDistortModule;
 				if (yModule == null)
 				{
@@ -117,22 +120,20 @@ namespace ProcGen.Noise
 				{
 					zDistortModule = yModule;
 				}
-				turbulence.ZDistortModule = zDistortModule;
+				obj.ZDistortModule = zDistortModule;
 			}
 			else if (transformerType == TransformerType.RotatePoint)
 			{
-				RotatePoint rotatePoint = target as RotatePoint;
-				rotatePoint.SourceModule = sourceModule;
+				(target as RotatePoint).SourceModule = sourceModule;
 			}
 			else if (transformerType == TransformerType.TranslatePoint)
 			{
-				TranslatePoint translatePoint = target as TranslatePoint;
-				translatePoint.SourceModule = sourceModule;
+				(target as TranslatePoint).SourceModule = sourceModule;
 			}
 			else
 			{
-				Displace displace = target as Displace;
-				displace.SourceModule = sourceModule;
+				Displace obj2 = target as Displace;
+				obj2.SourceModule = sourceModule;
 				IModule3D xDisplaceModule;
 				if (xModule == null)
 				{
@@ -143,8 +144,8 @@ namespace ProcGen.Noise
 				{
 					xDisplaceModule = xModule;
 				}
-				displace.XDisplaceModule = xDisplaceModule;
-				displace.YDisplaceModule = new Constant(0f);
+				obj2.XDisplaceModule = xDisplaceModule;
+				obj2.YDisplaceModule = new Constant(0f);
 				IModule3D zDisplaceModule;
 				if (yModule == null)
 				{
@@ -155,7 +156,7 @@ namespace ProcGen.Noise
 				{
 					zDisplaceModule = yModule;
 				}
-				displace.ZDisplaceModule = zDisplaceModule;
+				obj2.ZDisplaceModule = zDisplaceModule;
 			}
 		}
 	}

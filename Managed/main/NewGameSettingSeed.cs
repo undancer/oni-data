@@ -46,7 +46,11 @@ public class NewGameSettingSeed : NewGameSettingWidget
 
 	private char ValidateInput(string text, int charIndex, char addedChar)
 	{
-		return ('0' <= addedChar && addedChar <= '9') ? addedChar : '\0';
+		if ('0' > addedChar || addedChar > '9')
+		{
+			return '\0';
+		}
+		return addedChar;
 	}
 
 	private void OnEndEdit(string text)

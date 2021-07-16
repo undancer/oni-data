@@ -124,7 +124,11 @@ public abstract class ClusterGridEntity : KMonoBehaviour
 			if (component != null)
 			{
 				ProcGen.World worldData = SettingsCache.worlds.GetWorldData(component.worldName);
-				return (worldData != null) ? Assets.GetSprite(worldData.asteroidIcon) : null;
+				if (worldData == null)
+				{
+					return null;
+				}
+				return Assets.GetSprite(worldData.asteroidIcon);
 			}
 		}
 		return null;
@@ -139,5 +143,9 @@ public abstract class ClusterGridEntity : KMonoBehaviour
 		ClusterLocationChangedEvent clusterLocationChangedEvent2 = clusterLocationChangedEvent;
 		Trigger(-1298331547, clusterLocationChangedEvent2);
 		Game.Instance.Trigger(-1298331547, clusterLocationChangedEvent2);
+		if (GetComponent<KSelectable>().IsSelected)
+		{
+			DetailsScreen.Instance.Refresh(base.gameObject);
+		}
 	}
 }

@@ -82,8 +82,7 @@ public struct TextureRegion
 
 	public void SetBytes(int x, int y, float v0, float v1)
 	{
-		int byteIdx = GetByteIdx(x, y);
-		int num = byteIdx / 4;
+		int num = GetByteIdx(x, y) / 4;
 		floatConverter.floats[num] = v0;
 		floatConverter.floats[num + 1] = v1;
 	}

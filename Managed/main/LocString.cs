@@ -90,9 +90,9 @@ public class LocString
 			}
 		}
 		Type[] nestedTypes = type.GetNestedTypes(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
-		foreach (Type type2 in nestedTypes)
+		for (int i = 0; i < nestedTypes.Length; i++)
 		{
-			CreateLocStringKeys(type2, text);
+			CreateLocStringKeys(nestedTypes[i], text);
 		}
 	}
 
@@ -100,10 +100,9 @@ public class LocString
 	{
 		List<string> list = new List<string>();
 		FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
-		FieldInfo[] array = fields;
-		foreach (FieldInfo fieldInfo in array)
+		for (int i = 0; i < fields.Length; i++)
 		{
-			LocString locString = (LocString)fieldInfo.GetValue(null);
+			LocString locString = (LocString)fields[i].GetValue(null);
 			list.Add(locString.text);
 		}
 		return list.ToArray();

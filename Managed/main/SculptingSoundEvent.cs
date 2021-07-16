@@ -86,8 +86,7 @@ public class SculptingSoundEvent : SoundEvent
 				Building component2 = workable.GetComponent<Building>();
 				if (component2 != null)
 				{
-					BuildingDef def = component2.Def;
-					switch (def.name)
+					switch (component2.Def.name)
 					{
 					case "MetalSculpture":
 						sound = GlobalAssets.GetSound("Hammer_sculpture_metal");

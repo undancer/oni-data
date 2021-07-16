@@ -21,7 +21,11 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			return other is UGCQueryHandle_t && this == (UGCQueryHandle_t)other;
+			if (other is UGCQueryHandle_t)
+			{
+				return this == (UGCQueryHandle_t)other;
+			}
+			return false;
 		}
 
 		public override int GetHashCode()

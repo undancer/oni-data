@@ -15,14 +15,14 @@ public class OilRefinery : StateMachineComponent<OilRefinery.StatesInstance>
 		public void TestAreaPressure()
 		{
 			base.smi.master.TestAreaPressure();
-			bool flag = base.smi.master.IsOverPressure();
-			bool flag2 = base.smi.master.IsOverWarningPressure();
-			if (flag)
+			bool num = base.smi.master.IsOverPressure();
+			bool flag = base.smi.master.IsOverWarningPressure();
+			if (num)
 			{
 				base.smi.master.wasOverPressure = true;
 				base.sm.isOverPressure.Set(value: true, this);
 			}
-			else if (base.smi.master.wasOverPressure && !flag2)
+			else if (base.smi.master.wasOverPressure && !flag)
 			{
 				base.sm.isOverPressure.Set(value: false, this);
 			}
@@ -107,7 +107,7 @@ public class OilRefinery : StateMachineComponent<OilRefinery.StatesInstance>
 		}
 	}
 
-	private bool wasOverPressure = false;
+	private bool wasOverPressure;
 
 	[SerializeField]
 	public float overpressureWarningMass = 4.5f;
@@ -145,7 +145,6 @@ public class OilRefinery : StateMachineComponent<OilRefinery.StatesInstance>
 	protected override void OnSpawn()
 	{
 		Subscribe(-1697596308, OnStorageChangedDelegate);
-		bool flag = true;
 		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
 		meter = new MeterController((KAnimControllerBase)component, "meter_target", "meter", Meter.Offset.Infront, Grid.SceneLayer.NoLayer, Vector3.zero, (string[])null);
 		base.smi.StartSM();
@@ -154,9 +153,7 @@ public class OilRefinery : StateMachineComponent<OilRefinery.StatesInstance>
 
 	private void OnStorageChanged(object data)
 	{
-		bool flag = true;
-		float massAvailable = storage.GetMassAvailable(SimHashes.CrudeOil);
-		float positionPercent = Mathf.Clamp01(massAvailable / maxSrcMass);
+		float positionPercent = Mathf.Clamp01(storage.GetMassAvailable(SimHashes.CrudeOil) / maxSrcMass);
 		meter.SetPositionPercent(positionPercent);
 	}
 

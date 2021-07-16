@@ -12,7 +12,7 @@ public class BaggedStates : GameStateMachine<BaggedStates, BaggedStates.Instance
 	public new class Instance : GameInstance
 	{
 		[Serialize]
-		public float baggedTime = 0f;
+		public float baggedTime;
 
 		public static readonly Chore.Precondition IsBagged = new Chore.Precondition
 		{
@@ -99,8 +99,7 @@ public class BaggedStates : GameStateMachine<BaggedStates, BaggedStates.Instance
 		{
 			return false;
 		}
-		float num = GameClock.Instance.GetTime() - smi.baggedTime;
-		if (num < smi.def.escapeTime)
+		if (GameClock.Instance.GetTime() - smi.baggedTime < smi.def.escapeTime)
 		{
 			return false;
 		}

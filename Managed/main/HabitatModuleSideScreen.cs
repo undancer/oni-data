@@ -24,7 +24,11 @@ public class HabitatModuleSideScreen : SideScreenContent
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		return target.GetComponent<Clustercraft>() != null && GetPassengerModule(target.GetComponent<Clustercraft>()) != null;
+		if (target.GetComponent<Clustercraft>() != null)
+		{
+			return GetPassengerModule(target.GetComponent<Clustercraft>()) != null;
+		}
+		return false;
 	}
 
 	public override void SetTarget(GameObject target)
@@ -37,13 +41,12 @@ public class HabitatModuleSideScreen : SideScreenContent
 
 	private PassengerRocketModule GetPassengerModule(Clustercraft craft)
 	{
-		CraftModuleInterface component = craft.GetComponent<CraftModuleInterface>();
-		foreach (Ref<RocketModuleCluster> clusterModule in component.ClusterModules)
+		foreach (Ref<RocketModuleCluster> clusterModule in craft.GetComponent<CraftModuleInterface>().ClusterModules)
 		{
-			PassengerRocketModule component2 = clusterModule.Get().GetComponent<PassengerRocketModule>();
-			if (component2 != null)
+			PassengerRocketModule component = clusterModule.Get().GetComponent<PassengerRocketModule>();
+			if (component != null)
 			{
-				return component2;
+				return component;
 			}
 		}
 		return null;
@@ -52,16 +55,14 @@ public class HabitatModuleSideScreen : SideScreenContent
 	private void RefreshModulePanel(PassengerRocketModule module)
 	{
 		HierarchyReferences component = GetComponent<HierarchyReferences>();
-		Image reference = component.GetReference<Image>("icon");
-		reference.sprite = Def.GetUISprite(module.gameObject).first;
-		KButton reference2 = component.GetReference<KButton>("button");
-		reference2.ClearOnClick();
-		reference2.onClick += delegate
+		component.GetReference<Image>("icon").sprite = Def.GetUISprite(module.gameObject).first;
+		KButton reference = component.GetReference<KButton>("button");
+		reference.ClearOnClick();
+		reference.onClick += delegate
 		{
 			ClusterManager.Instance.SetActiveWorld(module.GetComponent<ClustercraftExteriorDoor>().GetTargetWorld().id);
 			ManagementMenu.Instance.CloseAll();
 		};
-		LocText reference3 = component.GetReference<LocText>("label");
-		reference3.SetText(module.gameObject.GetProperName());
+		component.GetReference<LocText>("label").SetText(module.gameObject.GetProperName());
 	}
 }

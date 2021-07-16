@@ -142,8 +142,7 @@ public class ArcadeMachine : StateMachineComponent<ArcadeMachine.StatesInstance>
 		chores = new Chore[choreOffsets.Length];
 		for (int i = 0; i < workables.Length; i++)
 		{
-			int cell = Grid.OffsetCell(Grid.PosToCell(this), choreOffsets[i]);
-			Vector3 pos = Grid.CellToPosCBC(cell, Grid.SceneLayer.Move);
+			Vector3 pos = Grid.CellToPosCBC(Grid.OffsetCell(Grid.PosToCell(this), choreOffsets[i]), Grid.SceneLayer.Move);
 			GameObject go = ChoreHelpers.CreateLocator("ArcadeMachineWorkable", pos);
 			ArcadeMachineWorkable arcadeMachineWorkable = go.AddOrGet<ArcadeMachineWorkable>();
 			KSelectable kSelectable = go.AddOrGet<KSelectable>();
@@ -179,9 +178,9 @@ public class ArcadeMachine : StateMachineComponent<ArcadeMachine.StatesInstance>
 	private Chore CreateChore(int i)
 	{
 		Workable workable = workables[i];
-		Chore chore = new WorkChore<ArcadeMachineWorkable>(Db.Get().ChoreTypes.Relax, workable, null, run_until_complete: true, null, null, schedule_block: Db.Get().ScheduleBlockTypes.Recreation, on_end: OnSocialChoreEnd, allow_in_red_alert: false, ignore_schedule_block: false, only_when_operational: true, override_anims: null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, priority_class: PriorityScreen.PriorityClass.high);
-		chore.AddPrecondition(ChorePreconditions.instance.CanDoWorkerPrioritizable, workable);
-		return chore;
+		WorkChore<ArcadeMachineWorkable> obj = new WorkChore<ArcadeMachineWorkable>(Db.Get().ChoreTypes.Relax, workable, null, run_until_complete: true, null, null, schedule_block: Db.Get().ScheduleBlockTypes.Recreation, on_end: OnSocialChoreEnd, allow_in_red_alert: false, ignore_schedule_block: false, only_when_operational: true, override_anims: null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, priority_class: PriorityScreen.PriorityClass.high);
+		obj.AddPrecondition(ChorePreconditions.instance.CanDoWorkerPrioritizable, workable);
+		return obj;
 	}
 
 	private void OnSocialChoreEnd(Chore chore)
@@ -199,7 +198,7 @@ public class ArcadeMachine : StateMachineComponent<ArcadeMachine.StatesInstance>
 			Chore chore = chores[i];
 			if (update)
 			{
-				if (chore?.isComplete ?? true)
+				if (chore == null || chore.isComplete)
 				{
 					chores[i] = CreateChore(i);
 				}

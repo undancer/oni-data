@@ -42,8 +42,7 @@ public abstract class BaseWireConfig : IBuildingConfig
 	public override void DoPostConfigureUnderConstruction(GameObject go)
 	{
 		base.DoPostConfigureUnderConstruction(go);
-		Constructable component = go.GetComponent<Constructable>();
-		component.isDiggingRequired = false;
+		go.GetComponent<Constructable>().isDiggingRequired = false;
 		KAnimGraphTileVisualizer kAnimGraphTileVisualizer = go.AddOrGet<KAnimGraphTileVisualizer>();
 		kAnimGraphTileVisualizer.isPhysicalBuilding = false;
 		kAnimGraphTileVisualizer.connectionSource = KAnimGraphTileVisualizer.ConnectionSource.Electrical;
@@ -51,13 +50,11 @@ public abstract class BaseWireConfig : IBuildingConfig
 
 	protected void DoPostConfigureComplete(Wire.WattageRating rating, GameObject go)
 	{
-		Wire component = go.GetComponent<Wire>();
-		component.MaxWattageRating = rating;
+		go.GetComponent<Wire>().MaxWattageRating = rating;
 		float maxWattageAsFloat = Wire.GetMaxWattageAsFloat(rating);
 		Descriptor item = default(Descriptor);
 		item.SetupDescriptor(string.Format(UI.BUILDINGEFFECTS.MAX_WATTAGE, GameUtil.GetFormattedWattage(maxWattageAsFloat)), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.MAX_WATTAGE));
-		Building component2 = go.GetComponent<Building>();
-		BuildingDef def = component2.Def;
+		BuildingDef def = go.GetComponent<Building>().Def;
 		if (def.EffectDescription == null)
 		{
 			def.EffectDescription = new List<Descriptor>();

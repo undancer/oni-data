@@ -33,8 +33,7 @@ public class DestinationAsteroid2 : KMonoBehaviour
 		}
 		asteroidData = newAsteroidData;
 		ProcGen.World getStartWorld = newAsteroidData.GetStartWorld;
-		string s = (getStartWorld.asteroidIcon.IsNullOrWhiteSpace() ? AsteroidGridEntity.DEFAULT_ASTEROID_ICON_ANIM : getStartWorld.asteroidIcon);
-		Assets.TryGetAnim(s, out var anim);
+		Assets.TryGetAnim(getStartWorld.asteroidIcon.IsNullOrWhiteSpace() ? AsteroidGridEntity.DEFAULT_ASTEROID_ICON_ANIM : getStartWorld.asteroidIcon, out var anim);
 		if (DlcManager.FeatureClusterSpaceEnabled() && anim != null)
 		{
 			asteroidImage.gameObject.SetActive(value: false);

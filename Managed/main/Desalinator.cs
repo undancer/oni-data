@@ -159,7 +159,7 @@ public class Desalinator : StateMachineComponent<Desalinator.StatesInstance>
 	[Serialize]
 	private float _storageLeft = 1000f;
 
-	private ElementConverter[] converters = null;
+	private ElementConverter[] converters;
 
 	private static readonly EventSystem.IntraObjectHandler<Desalinator> OnConduitConnectionChangedDelegate = new EventSystem.IntraObjectHandler<Desalinator>(delegate(Desalinator component, object data)
 	{
@@ -194,7 +194,8 @@ public class Desalinator : StateMachineComponent<Desalinator.StatesInstance>
 		ManualDeliveryKG[] array = deliveryComponents;
 		foreach (ManualDeliveryKG manualDeliveryKG in array)
 		{
-			if (ElementLoader.GetElement(manualDeliveryKG.requestedItemTag)?.IsLiquid ?? false)
+			Element element = ElementLoader.GetElement(manualDeliveryKG.requestedItemTag);
+			if (element != null && element.IsLiquid)
 			{
 				manualDeliveryKG.Pause(pause, "pipe connected");
 			}

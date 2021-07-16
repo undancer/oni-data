@@ -52,10 +52,10 @@ public class RobotBatteryMonitor : GameStateMachine<RobotBatteryMonitor, RobotBa
 		default_state = drainingStates;
 		drainingStates.DefaultState(drainingStates.highBattery).Transition(deadBattery, BatteryDead).Transition(needsRechargeStates, NeedsRecharge);
 		drainingStates.highBattery.Transition(drainingStates.lowBattery, GameStateMachine<RobotBatteryMonitor, Instance, IStateMachineTarget, Def>.Not(ChargeDecent));
-		drainingStates.lowBattery.Transition(drainingStates.highBattery, ChargeDecent).ToggleStatusItem((Instance smi) => smi.def.canCharge ? Db.Get().RobotStatusItems.LowBattery : Db.Get().RobotStatusItems.LowBatteryNoCharge, (Instance smi) => smi.gameObject);
+		drainingStates.lowBattery.Transition(drainingStates.highBattery, ChargeDecent).ToggleStatusItem((Instance smi) => (!smi.def.canCharge) ? Db.Get().RobotStatusItems.LowBatteryNoCharge : Db.Get().RobotStatusItems.LowBattery, (Instance smi) => smi.gameObject);
 		needsRechargeStates.DefaultState(needsRechargeStates.lowBattery).Transition(deadBattery, BatteryDead).Transition(drainingStates, ChargeComplete)
 			.ToggleBehaviour(GameTags.Robots.Behaviours.RechargeBehaviour, (Instance smi) => smi.def.canCharge);
-		needsRechargeStates.lowBattery.ToggleStatusItem((Instance smi) => smi.def.canCharge ? Db.Get().RobotStatusItems.LowBattery : Db.Get().RobotStatusItems.LowBatteryNoCharge, (Instance smi) => smi.gameObject).Transition(needsRechargeStates.mediumBattery, ChargeDecent);
+		needsRechargeStates.lowBattery.ToggleStatusItem((Instance smi) => (!smi.def.canCharge) ? Db.Get().RobotStatusItems.LowBatteryNoCharge : Db.Get().RobotStatusItems.LowBattery, (Instance smi) => smi.gameObject).Transition(needsRechargeStates.mediumBattery, ChargeDecent);
 		needsRechargeStates.mediumBattery.Transition(needsRechargeStates.lowBattery, GameStateMachine<RobotBatteryMonitor, Instance, IStateMachineTarget, Def>.Not(ChargeDecent)).Transition(needsRechargeStates.trickleCharge, ChargeFull);
 		needsRechargeStates.trickleCharge.Transition(needsRechargeStates.mediumBattery, GameStateMachine<RobotBatteryMonitor, Instance, IStateMachineTarget, Def>.Not(ChargeFull));
 		deadBattery.ToggleStatusItem(Db.Get().RobotStatusItems.DeadBattery, (Instance smi) => smi.gameObject).Enter(delegate(Instance smi)
@@ -69,7 +69,11 @@ public class RobotBatteryMonitor : GameStateMachine<RobotBatteryMonitor, RobotBa
 
 	public static bool NeedsRecharge(Instance smi)
 	{
-		return smi.amountInstance.value <= 0f || GameClock.Instance.IsNighttime();
+		if (!(smi.amountInstance.value <= 0f))
+		{
+			return GameClock.Instance.IsNighttime();
+		}
+		return true;
 	}
 
 	public static bool ChargeDecent(Instance smi)
@@ -84,11 +88,19 @@ public class RobotBatteryMonitor : GameStateMachine<RobotBatteryMonitor, RobotBa
 
 	public static bool ChargeComplete(Instance smi)
 	{
-		return smi.amountInstance.value >= smi.amountInstance.GetMax() && !GameClock.Instance.IsNighttime();
+		if (smi.amountInstance.value >= smi.amountInstance.GetMax())
+		{
+			return !GameClock.Instance.IsNighttime();
+		}
+		return false;
 	}
 
 	public static bool BatteryDead(Instance smi)
 	{
-		return !smi.def.canCharge && smi.amountInstance.value == 0f;
+		if (!smi.def.canCharge)
+		{
+			return smi.amountInstance.value == 0f;
+		}
+		return false;
 	}
 }

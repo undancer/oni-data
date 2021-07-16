@@ -36,16 +36,35 @@ public class BuildingInternalConstructor : GameStateMachine<BuildingInternalCons
 
 		private ProgressBar progressBar;
 
-		public string SidescreenButtonText => base.smi.sm.constructionRequested.Get(base.smi) ? string.Format(UI.UISIDESCREENS.BUTTONMENUSIDESCREEN.DISALLOW_INTERNAL_CONSTRUCTOR.text, Assets.GetPrefab(base.def.outputIDs[0]).GetProperName()) : string.Format(UI.UISIDESCREENS.BUTTONMENUSIDESCREEN.ALLOW_INTERNAL_CONSTRUCTOR.text, Assets.GetPrefab(base.def.outputIDs[0]).GetProperName());
+		public string SidescreenButtonText
+		{
+			get
+			{
+				if (!base.smi.sm.constructionRequested.Get(base.smi))
+				{
+					return string.Format(UI.UISIDESCREENS.BUTTONMENUSIDESCREEN.ALLOW_INTERNAL_CONSTRUCTOR.text, Assets.GetPrefab(base.def.outputIDs[0]).GetProperName());
+				}
+				return string.Format(UI.UISIDESCREENS.BUTTONMENUSIDESCREEN.DISALLOW_INTERNAL_CONSTRUCTOR.text, Assets.GetPrefab(base.def.outputIDs[0]).GetProperName());
+			}
+		}
 
-		public string SidescreenButtonTooltip => base.smi.sm.constructionRequested.Get(base.smi) ? string.Format(UI.UISIDESCREENS.BUTTONMENUSIDESCREEN.DISALLOW_INTERNAL_CONSTRUCTOR_TOOLTIP.text, Assets.GetPrefab(base.def.outputIDs[0]).GetProperName()) : string.Format(UI.UISIDESCREENS.BUTTONMENUSIDESCREEN.ALLOW_INTERNAL_CONSTRUCTOR_TOOLTIP.text, Assets.GetPrefab(base.def.outputIDs[0]).GetProperName());
+		public string SidescreenButtonTooltip
+		{
+			get
+			{
+				if (!base.smi.sm.constructionRequested.Get(base.smi))
+				{
+					return string.Format(UI.UISIDESCREENS.BUTTONMENUSIDESCREEN.ALLOW_INTERNAL_CONSTRUCTOR_TOOLTIP.text, Assets.GetPrefab(base.def.outputIDs[0]).GetProperName());
+				}
+				return string.Format(UI.UISIDESCREENS.BUTTONMENUSIDESCREEN.DISALLOW_INTERNAL_CONSTRUCTOR_TOOLTIP.text, Assets.GetPrefab(base.def.outputIDs[0]).GetProperName());
+			}
+		}
 
 		public Instance(IStateMachineTarget master, Def def)
 			: base(master, def)
 		{
 			storage = def.storage.Get(this);
-			RocketModule component = GetComponent<RocketModule>();
-			component.AddModuleCondition(ProcessCondition.ProcessConditionType.RocketPrep, new InternalConstructionCompleteCondition(this));
+			GetComponent<RocketModule>().AddModuleCondition(ProcessCondition.ProcessConditionType.RocketPrep, new InternalConstructionCompleteCondition(this));
 		}
 
 		protected override void OnCleanUp()
@@ -107,18 +126,17 @@ public class BuildingInternalConstructor : GameStateMachine<BuildingInternalCons
 				float mass = massForConstruction.Mass;
 				float num = massForConstruction.Temperature * massForConstruction.Mass;
 				massForConstruction.Mass -= base.def.constructionMass;
-				float num2 = Mathf.Clamp(num / mass, 288.15f, 318.15f);
+				Mathf.Clamp(num / mass, 288.15f, 318.15f);
 			}
 			else
 			{
 				element_id = SimHashes.Cuprite;
-				float num2 = GetComponent<PrimaryElement>().Temperature;
+				_ = GetComponent<PrimaryElement>().Temperature;
 			}
 			foreach (string outputID in base.def.outputIDs)
 			{
 				GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(outputID), base.transform.GetPosition(), Grid.SceneLayer.Ore);
-				PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
-				component.SetElement(element_id, addTags: false);
+				gameObject.GetComponent<PrimaryElement>().SetElement(element_id, addTags: false);
 				gameObject.SetActive(value: true);
 				if (base.def.spawnIntoStorage)
 				{

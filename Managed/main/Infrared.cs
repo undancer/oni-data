@@ -88,13 +88,13 @@ public class Infrared : MonoBehaviour
 	{
 		switch (mode)
 		{
-		case Mode.Disabled:
-			break;
 		case Mode.Infrared:
 			GameComps.InfraredVisualizers.UpdateTemperature();
 			break;
 		case Mode.Disease:
 			GameComps.DiseaseContainers.UpdateOverlayColours();
+			break;
+		case Mode.Disabled:
 			break;
 		}
 	}

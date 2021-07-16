@@ -5,7 +5,7 @@ public abstract class SlicedUpdaterSim1000ms<T> : KMonoBehaviour, ISim200ms wher
 {
 	private class Slice
 	{
-		private float m_timeSinceLastUpdate = 0f;
+		private float m_timeSinceLastUpdate;
 
 		private List<T> m_updateList = new List<T>();
 
@@ -63,8 +63,7 @@ public abstract class SlicedUpdaterSim1000ms<T> : KMonoBehaviour, ISim200ms wher
 			{
 				return;
 			}
-			List<T> list = new List<T>(m_recentlyAdded.Keys);
-			foreach (T item in list)
+			foreach (T item in new List<T>(m_recentlyAdded.Keys))
 			{
 				m_recentlyAdded[item] += dt;
 			}
@@ -83,7 +82,7 @@ public abstract class SlicedUpdaterSim1000ms<T> : KMonoBehaviour, ISim200ms wher
 
 	private List<Slice> m_slices;
 
-	private int m_nextSliceIdx = 0;
+	private int m_nextSliceIdx;
 
 	protected override void OnPrefabInit()
 	{
@@ -105,8 +104,7 @@ public abstract class SlicedUpdaterSim1000ms<T> : KMonoBehaviour, ISim200ms wher
 
 	private int GetSliceIdx(T toBeUpdated)
 	{
-		KPrefabID component = toBeUpdated.GetComponent<KPrefabID>();
-		return component.InstanceID % m_slices.Count;
+		return toBeUpdated.GetComponent<KPrefabID>().InstanceID % m_slices.Count;
 	}
 
 	public void RegisterUpdate1000ms(T toBeUpdated)
@@ -133,13 +131,14 @@ public abstract class SlicedUpdaterSim1000ms<T> : KMonoBehaviour, ISim200ms wher
 		{
 			Slice slice = m_slices[m_nextSliceIdx];
 			num += slice.Count;
-			if (num > maxUpdatesPer200ms && num2 > 0)
+			if (num <= maxUpdatesPer200ms || num2 <= 0)
 			{
-				break;
+				slice.Update();
+				num2++;
+				m_nextSliceIdx = (m_nextSliceIdx + 1) % m_slices.Count;
+				continue;
 			}
-			slice.Update();
-			num2++;
-			m_nextSliceIdx = (m_nextSliceIdx + 1) % m_slices.Count;
+			break;
 		}
 	}
 }

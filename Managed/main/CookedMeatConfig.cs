@@ -15,8 +15,7 @@ public class CookedMeatConfig : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject template = EntityTemplates.CreateLooseEntity("CookedMeat", ITEMS.FOOD.COOKEDMEAT.NAME, ITEMS.FOOD.COOKEDMEAT.DESC, 1f, unitMass: false, Assets.GetAnim("barbeque_kanim"), "object", Grid.SceneLayer.Front, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.4f, isPickupable: true);
-		return EntityTemplates.ExtendEntityToFood(template, FOOD.FOOD_TYPES.COOKED_MEAT);
+		return EntityTemplates.ExtendEntityToFood(EntityTemplates.CreateLooseEntity("CookedMeat", ITEMS.FOOD.COOKEDMEAT.NAME, ITEMS.FOOD.COOKEDMEAT.DESC, 1f, unitMass: false, Assets.GetAnim("barbeque_kanim"), "object", Grid.SceneLayer.Front, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.4f, isPickupable: true), FOOD.FOOD_TYPES.COOKED_MEAT);
 	}
 
 	public void OnPrefabInit(GameObject inst)

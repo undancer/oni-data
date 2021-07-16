@@ -26,9 +26,7 @@ public class MassageTable : RelaxationPoint, IGameObjectEffectDescriptor, IActiv
 		fn = delegate(ref Chore.Precondition.Context context, object data)
 		{
 			IActivationRangeTarget activationRangeTarget = (IActivationRangeTarget)data;
-			AmountInstance amountInstance = Db.Get().Amounts.Stress.Lookup(context.consumerState.gameObject);
-			float value = amountInstance.value;
-			return value >= activationRangeTarget.ActivateValue;
+			return Db.Get().Amounts.Stress.Lookup(context.consumerState.gameObject).value >= activationRangeTarget.ActivateValue;
 		}
 	};
 
@@ -80,8 +78,7 @@ public class MassageTable : RelaxationPoint, IGameObjectEffectDescriptor, IActiv
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		MassageTable component = gameObject.GetComponent<MassageTable>();
+		MassageTable component = ((GameObject)data).GetComponent<MassageTable>();
 		if (component != null)
 		{
 			ActivateValue = component.ActivateValue;

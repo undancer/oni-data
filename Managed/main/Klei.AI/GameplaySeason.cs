@@ -42,7 +42,7 @@ namespace Klei.AI
 
 		public string dlcId;
 
-		public GameplaySeason(string id, Type type, string dlcId, float period, bool synchronizedToPeriod, float randomizedEventStartTime = -1f, bool alwaysLoad = false, int finishAfterNumEvents = -1, float minCycle = 0f, float maxCycle = float.PositiveInfinity, int numEventsToStartEachPeriod = 1)
+		public GameplaySeason(string id, Type type, string dlcId, float period, bool synchronizedToPeriod, float randomizedEventStartTime = -1f, bool startActive = false, int finishAfterNumEvents = -1, float minCycle = 0f, float maxCycle = float.PositiveInfinity, int numEventsToStartEachPeriod = 1)
 			: base(id)
 		{
 			this.type = type;
@@ -59,7 +59,7 @@ namespace Klei.AI
 				this.randomizedEventStartTime = new MathUtil.MinMax(0f - randomizedEventStartTime, randomizedEventStartTime);
 				DebugUtil.DevAssert((this.randomizedEventStartTime.max - this.randomizedEventStartTime.min) * 0.4f < period, $"Season {id} randomizedEventStartTime is greater than {0.4f}% of its period.");
 			}
-			startActive = alwaysLoad;
+			this.startActive = startActive;
 			this.finishAfterNumEvents = finishAfterNumEvents;
 			this.minCycle = minCycle;
 			this.maxCycle = maxCycle;

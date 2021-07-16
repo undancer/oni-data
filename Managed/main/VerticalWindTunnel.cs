@@ -90,13 +90,13 @@ public class VerticalWindTunnel : StateMachineComponent<VerticalWindTunnel.State
 
 	public static Operational.Flag validIntakeFlag = new Operational.Flag("valid_intake", Operational.Flag.Type.Requirement);
 
-	private bool invalidIntake = false;
+	private bool invalidIntake;
 
-	private float avgGasAccumTop = 0f;
+	private float avgGasAccumTop;
 
-	private float avgGasAccumBottom = 0f;
+	private float avgGasAccumBottom;
 
-	private int avgGasCounter = 0;
+	private int avgGasCounter;
 
 	public CellOffset[] choreOffsets = new CellOffset[3]
 	{
@@ -202,8 +202,7 @@ public class VerticalWindTunnel : StateMachineComponent<VerticalWindTunnel.State
 		chores = new Chore[choreOffsets.Length];
 		for (int i = 0; i < workables.Length; i++)
 		{
-			int cell = Grid.OffsetCell(Grid.PosToCell(this), choreOffsets[i]);
-			Vector3 pos = Grid.CellToPosCBC(cell, Grid.SceneLayer.Move);
+			Vector3 pos = Grid.CellToPosCBC(Grid.OffsetCell(Grid.PosToCell(this), choreOffsets[i]), Grid.SceneLayer.Move);
 			GameObject go = ChoreHelpers.CreateLocator("VerticalWindTunnelWorkable", pos);
 			KSelectable kSelectable = go.AddOrGet<KSelectable>();
 			kSelectable.SetName(this.GetProperName());
@@ -241,9 +240,9 @@ public class VerticalWindTunnel : StateMachineComponent<VerticalWindTunnel.State
 	private Chore CreateChore(int i)
 	{
 		Workable workable = workables[i];
-		Chore chore = new WorkChore<VerticalWindTunnelWorkable>(Db.Get().ChoreTypes.Relax, workable, null, run_until_complete: true, null, null, schedule_block: Db.Get().ScheduleBlockTypes.Recreation, on_end: OnSocialChoreEnd, allow_in_red_alert: false, ignore_schedule_block: false, only_when_operational: true, override_anims: null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, priority_class: PriorityScreen.PriorityClass.high);
-		chore.AddPrecondition(ChorePreconditions.instance.CanDoWorkerPrioritizable, workable);
-		return chore;
+		WorkChore<VerticalWindTunnelWorkable> obj = new WorkChore<VerticalWindTunnelWorkable>(Db.Get().ChoreTypes.Relax, workable, null, run_until_complete: true, null, null, schedule_block: Db.Get().ScheduleBlockTypes.Recreation, on_end: OnSocialChoreEnd, allow_in_red_alert: false, ignore_schedule_block: false, only_when_operational: true, override_anims: null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, priority_class: PriorityScreen.PriorityClass.high);
+		obj.AddPrecondition(ChorePreconditions.instance.CanDoWorkerPrioritizable, workable);
+		return obj;
 	}
 
 	private void OnSocialChoreEnd(Chore chore)
@@ -261,7 +260,7 @@ public class VerticalWindTunnel : StateMachineComponent<VerticalWindTunnel.State
 			Chore chore = chores[i];
 			if (update)
 			{
-				if (chore?.isComplete ?? true)
+				if (chore == null || chore.isComplete)
 				{
 					chores[i] = CreateChore(i);
 				}
@@ -323,7 +322,11 @@ public class VerticalWindTunnel : StateMachineComponent<VerticalWindTunnel.State
 			float num3 = avgGasAccumBottom / (float)num;
 			avgGasAccumBottom = 0f;
 			avgGasAccumTop = 0f;
-			return (double)num2 < 0.5 || (double)num3 < 0.5;
+			if (!((double)num2 < 0.5))
+			{
+				return (double)num3 < 0.5;
+			}
+			return true;
 		}
 		return invalidIntake;
 	}
@@ -355,8 +358,7 @@ public class VerticalWindTunnel : StateMachineComponent<VerticalWindTunnel.State
 		Building component = GetComponent<Building>();
 		Vector3 position = base.transform.GetPosition();
 		CellOffset offset = (isTop ? new CellOffset(0, component.Def.HeightInCells + 1) : new CellOffset(0, 0));
-		int gameCell = Grid.OffsetCell(Grid.XYToCell((int)position.x, (int)position.y), offset);
-		SimMessages.AddRemoveSubstance(gameCell, info.removedElemIdx, CellEventLogger.Instance.ElementEmitted, info.mass, info.temperature, info.diseaseIdx, info.diseaseCount);
+		SimMessages.AddRemoveSubstance(Grid.OffsetCell(Grid.XYToCell((int)position.x, (int)position.y), offset), info.removedElemIdx, CellEventLogger.Instance.ElementEmitted, info.mass, info.temperature, info.diseaseIdx, info.diseaseCount);
 	}
 
 	public void OnWorkableEvent(int player, Workable.WorkableEvent ev)

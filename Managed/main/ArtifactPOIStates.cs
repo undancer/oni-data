@@ -21,7 +21,7 @@ public class ArtifactPOIStates : GameStateMachine<ArtifactPOIStates, ArtifactPOI
 		public string artifactToHarvest;
 
 		[Serialize]
-		private int numHarvests = 0;
+		private int numHarvests;
 
 		public float poiCharge
 		{

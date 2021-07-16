@@ -28,8 +28,7 @@ public class MaskStation : StateMachineComponent<MaskStation.SMInstance>, IBasic
 				Cleanup();
 				return false;
 			}
-			Equipment equipment = new_reactor.GetComponent<MinionIdentity>().GetEquipment();
-			bool flag = !equipment.IsSlotOccupied(Db.Get().AssignableSlots.Suit);
+			bool flag = !new_reactor.GetComponent<MinionIdentity>().GetEquipment().IsSlotOccupied(Db.Get().AssignableSlots.Suit);
 			int x = transition.navGridTransition.x;
 			if (x == 0)
 			{
@@ -102,8 +101,7 @@ public class MaskStation : StateMachineComponent<MaskStation.SMInstance>, IBasic
 				}
 				GameObject gameObject = Util.KInstantiate(Assets.GetPrefab("Oxygen_Mask".ToTag()));
 				gameObject.SetActive(value: true);
-				List<GameObject> possibleMaterials = maskStation.GetPossibleMaterials();
-				SimHashes elementID = possibleMaterials[0].GetComponent<PrimaryElement>().ElementID;
+				SimHashes elementID = maskStation.GetPossibleMaterials()[0].GetComponent<PrimaryElement>().ElementID;
 				gameObject.GetComponent<PrimaryElement>().SetElement(elementID, addTags: false);
 				SuitTank component2 = gameObject.GetComponent<SuitTank>();
 				maskStation.materialStorage.ConsumeIgnoringDisease(maskStation.materialTag, maskStation.materialConsumedPerMask);
@@ -310,7 +308,7 @@ public class MaskStation : StateMachineComponent<MaskStation.SMInstance>, IBasic
 
 	public Meter.Offset materialsMeterOffset = Meter.Offset.Behind;
 
-	public Meter.Offset oxygenMeterOffset = Meter.Offset.Infront;
+	public Meter.Offset oxygenMeterOffset;
 
 	public string choreTypeID;
 
@@ -378,9 +376,9 @@ public class MaskStation : StateMachineComponent<MaskStation.SMInstance>, IBasic
 				for (int k = 0; k < elementConsumer.consumptionRadius; k++)
 				{
 					int num2 = num + k + Grid.WidthInCells * j;
-					bool flag = Grid.Element[num2].IsState(Element.State.Gas);
-					bool flag2 = Grid.Element[num2].id == elementConsumer.elementToConsume;
-					if (flag && flag2)
+					bool num3 = Grid.Element[num2].IsState(Element.State.Gas);
+					bool flag = Grid.Element[num2].id == elementConsumer.elementToConsume;
+					if (num3 && flag)
 					{
 						result = true;
 					}

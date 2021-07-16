@@ -44,12 +44,10 @@ namespace KSerialization
 
 		public static void Print()
 		{
-			if (serializationStats.Count > 0)
-			{
-			}
-			if (deserializationStats.Count <= 0)
-			{
-			}
+			_ = serializationStats.Count;
+			_ = 0;
+			_ = deserializationStats.Count;
+			_ = 0;
 		}
 
 		[Conditional("ENABLE_KSERIALIZER_STATS")]

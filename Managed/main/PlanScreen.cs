@@ -229,13 +229,13 @@ public class PlanScreen : KIconToggleMenu
 
 	public Dictionary<BuildingDef, KToggle> ActiveToggles = new Dictionary<BuildingDef, KToggle>();
 
-	private float timeSinceNotificationPing = 0f;
+	private float timeSinceNotificationPing;
 
 	private float notificationPingExpire = 0.5f;
 
 	private float specialNotificationEmbellishDelay = 8f;
 
-	private int notificationPingCount = 0;
+	private int notificationPingCount;
 
 	private GameObject selectedBuildingGameObject;
 
@@ -259,7 +259,7 @@ public class PlanScreen : KIconToggleMenu
 
 	private List<ToggleEntry> toggleEntries = new List<ToggleEntry>();
 
-	private int ignoreToolChangeMessages = 0;
+	private int ignoreToolChangeMessages;
 
 	private Dictionary<Def, RequirementsState> _buildableStates = new Dictionary<Def, RequirementsState>();
 
@@ -276,9 +276,9 @@ public class PlanScreen : KIconToggleMenu
 
 	private Building lastSelectedBuilding;
 
-	private int buildable_state_update_idx = 0;
+	private int buildable_state_update_idx;
 
-	private int building_button_refresh_idx = 0;
+	private int building_button_refresh_idx;
 
 	private float buildGrid_bg_width = 274f;
 
@@ -463,8 +463,7 @@ public class PlanScreen : KIconToggleMenu
 		toggles.ForEach(delegate(KToggle to)
 		{
 			ImageToggleState[] components = to.GetComponents<ImageToggleState>();
-			ImageToggleState[] array = components;
-			foreach (ImageToggleState imageToggleState in array)
+			foreach (ImageToggleState imageToggleState in components)
 			{
 				if (imageToggleState.TargetImage.sprite != null && imageToggleState.TargetImage.name == "FG" && !imageToggleState.useSprites)
 				{
@@ -511,8 +510,7 @@ public class PlanScreen : KIconToggleMenu
 			PopulateOrderInfo(planInfo.category, planInfo.data, category_map, order_map, ref building_index);
 			return;
 		}
-		IList<string> list = (IList<string>)data;
-		foreach (string item in list)
+		foreach (string item in (IList<string>)data)
 		{
 			Tag key = new Tag(item);
 			category_map[key] = category;
@@ -623,8 +621,7 @@ public class PlanScreen : KIconToggleMenu
 			}
 			foreach (ToggleInfo item in toggleInfo)
 			{
-				HashedString x = (HashedString)item.userData;
-				if (!(x == value))
+				if (!((HashedString)item.userData == value))
 				{
 					continue;
 				}
@@ -642,16 +639,15 @@ public class PlanScreen : KIconToggleMenu
 						string sound = GlobalAssets.GetSound("NewBuildable_Embellishment");
 						if (sound != null)
 						{
-							EventInstance instance = SoundEvent.BeginOneShot(sound, SoundListenerController.Instance.transform.GetPosition());
-							SoundEvent.EndOneShot(instance);
+							SoundEvent.EndOneShot(SoundEvent.BeginOneShot(sound, SoundListenerController.Instance.transform.GetPosition()));
 						}
 					}
 					string sound2 = GlobalAssets.GetSound("NewBuildable");
 					if (sound2 != null)
 					{
-						EventInstance instance2 = SoundEvent.BeginOneShot(sound2, SoundListenerController.Instance.transform.GetPosition());
-						instance2.setParameterByName("playCount", notificationPingCount);
-						SoundEvent.EndOneShot(instance2);
+						EventInstance instance = SoundEvent.BeginOneShot(sound2, SoundListenerController.Instance.transform.GetPosition());
+						instance.setParameterByName("playCount", notificationPingCount);
+						SoundEvent.EndOneShot(instance);
 					}
 				}
 				timeSinceNotificationPing = 0f;
@@ -712,8 +708,7 @@ public class PlanScreen : KIconToggleMenu
 			{
 				foreach (BuildingDef buildingDef in toggleEntry.buildingDefs)
 				{
-					RequirementsState requirementsState = BuildableState(buildingDef);
-					if (requirementsState == RequirementsState.Complete)
+					if (BuildableState(buildingDef) == RequirementsState.Complete)
 					{
 						flag = true;
 						flag2 = false;
@@ -747,9 +742,9 @@ public class PlanScreen : KIconToggleMenu
 				}
 				ImageToggleState.State state = ((activeCategoryInfo != null && toggleInfo.userData == activeCategoryInfo.userData) ? ImageToggleState.State.DisabledActive : ImageToggleState.State.Disabled);
 				ImageToggleState[] toggleImages = toggleEntry.toggleImages;
-				foreach (ImageToggleState imageToggleState in toggleImages)
+				for (int i = 0; i < toggleImages.Length; i++)
 				{
-					imageToggleState.SetState(state);
+					toggleImages[i].SetState(state);
 				}
 			}
 			else
@@ -758,10 +753,10 @@ public class PlanScreen : KIconToggleMenu
 				toggleInfo.toggle.fgImage.SetAlpha(1f);
 				gameObject.gameObject.SetActive(value: false);
 				ImageToggleState.State state2 = ((activeCategoryInfo == null || toggleInfo.userData != activeCategoryInfo.userData) ? ImageToggleState.State.Inactive : ImageToggleState.State.Active);
-				ImageToggleState[] toggleImages2 = toggleEntry.toggleImages;
-				foreach (ImageToggleState imageToggleState2 in toggleImages2)
+				ImageToggleState[] toggleImages = toggleEntry.toggleImages;
+				for (int i = 0; i < toggleImages.Length; i++)
 				{
-					imageToggleState2.SetState(state2);
+					toggleImages[i].SetState(state2);
 				}
 			}
 		}
@@ -963,7 +958,11 @@ public class PlanScreen : KIconToggleMenu
 
 	private static bool TechRequirementsMet(TechItem techItem)
 	{
-		return DebugHandler.InstantBuildMode || Game.Instance.SandboxModeActive || techItem == null || techItem.IsComplete();
+		if (!DebugHandler.InstantBuildMode && !Game.Instance.SandboxModeActive && techItem != null)
+		{
+			return techItem.IsComplete();
+		}
+		return true;
 	}
 
 	private static bool TechRequirementsUpcoming(TechItem techItem)
@@ -1071,9 +1070,7 @@ public class PlanScreen : KIconToggleMenu
 			}
 		}
 		Image fgImage = toggle.gameObject.GetComponent<KToggle>().fgImage;
-		RequirementsState requirementsState2 = requirementsState;
-		RequirementsState requirementsState3 = requirementsState2;
-		if (requirementsState3 == RequirementsState.Tech)
+		if (requirementsState == RequirementsState.Tech)
 		{
 			fgImage.sprite = Overlay_NeedTech;
 			fgImage.gameObject.SetActive(value: true);
@@ -1104,45 +1101,47 @@ public class PlanScreen : KIconToggleMenu
 	public static string GetTooltipForRequirementsState(BuildingDef def, RequirementsState state)
 	{
 		TechItem techItem = Db.Get().TechItems.TryGet(def.PrefabID);
-		string text = null;
+		string result = null;
 		if (Game.Instance.SandboxModeActive)
 		{
-			text = string.Concat(UIConstants.ColorPrefixYellow, UI.SANDBOXTOOLS.SETTINGS.INSTANT_BUILD.NAME, UIConstants.ColorSuffix);
+			result = string.Concat(UIConstants.ColorPrefixYellow, UI.SANDBOXTOOLS.SETTINGS.INSTANT_BUILD.NAME, UIConstants.ColorSuffix);
 		}
 		else if (DebugHandler.InstantBuildMode)
 		{
-			text = string.Concat(UIConstants.ColorPrefixYellow, UI.DEBUG_TOOLS.DEBUG_ACTIVE, UIConstants.ColorSuffix);
+			result = string.Concat(UIConstants.ColorPrefixYellow, UI.DEBUG_TOOLS.DEBUG_ACTIVE, UIConstants.ColorSuffix);
 		}
 		else
 		{
 			switch (state)
 			{
 			case RequirementsState.Tech:
-				text = string.Format(UI.PRODUCTINFO_REQUIRESRESEARCHDESC, techItem.ParentTech.Name);
+				result = string.Format(UI.PRODUCTINFO_REQUIRESRESEARCHDESC, techItem.ParentTech.Name);
 				break;
 			case RequirementsState.TelepadBuilt:
-				text = UI.PRODUCTINFO_UNIQUE_PER_WORLD;
+				result = UI.PRODUCTINFO_UNIQUE_PER_WORLD;
 				break;
 			case RequirementsState.RocketInteriorOnly:
-				text = UI.PRODUCTINFO_ROCKET_INTERIOR;
+				result = UI.PRODUCTINFO_ROCKET_INTERIOR;
 				break;
 			case RequirementsState.RocketInteriorForbidden:
-				text = UI.PRODUCTINFO_ROCKET_NOT_INTERIOR;
+				result = UI.PRODUCTINFO_ROCKET_NOT_INTERIOR;
 				break;
 			case RequirementsState.UniquePerWorld:
-				text = UI.PRODUCTINFO_UNIQUE_PER_WORLD;
+				result = UI.PRODUCTINFO_UNIQUE_PER_WORLD;
 				break;
 			case RequirementsState.Materials:
-				text = UI.PRODUCTINFO_MISSINGRESOURCES_HOVER;
-				foreach (Recipe.Ingredient ingredient in def.CraftRecipe.Ingredients)
+				result = UI.PRODUCTINFO_MISSINGRESOURCES_HOVER;
 				{
-					string str = string.Format("{0}{1}: {2}", "• ", ingredient.tag.ProperName(), GameUtil.GetFormattedMass(ingredient.amount));
-					text = text + "\n" + str;
+					foreach (Recipe.Ingredient ingredient in def.CraftRecipe.Ingredients)
+					{
+						string str = string.Format("{0}{1}: {2}", "• ", ingredient.tag.ProperName(), GameUtil.GetFormattedMass(ingredient.amount));
+						result = result + "\n" + str;
+					}
+					return result;
 				}
-				break;
 			}
 		}
-		return text;
+		return result;
 	}
 
 	private void PositionTooltip(KToggle toggle, ToolTip tip)
@@ -1165,8 +1164,9 @@ public class PlanScreen : KIconToggleMenu
 		{
 			return;
 		}
-		if (!mouseOver || !base.ConsumeMouseScroll || e.TryConsume(Action.ZoomIn) || e.TryConsume(Action.ZoomOut))
+		if (mouseOver && base.ConsumeMouseScroll && !e.TryConsume(Action.ZoomIn))
 		{
+			e.TryConsume(Action.ZoomOut);
 		}
 		if (e.IsAction(Action.CopyBuilding) && e.TryConsume(Action.CopyBuilding))
 		{
@@ -1221,8 +1221,7 @@ public class PlanScreen : KIconToggleMenu
 			if (buildingDef.isKAnimTile && buildingDef.isUtility)
 			{
 				IList<Tag> getSelectedElementAsList = productInfoScreen.materialSelectionPanel.GetSelectedElementAsList;
-				BaseUtilityBuildTool baseUtilityBuildTool = ((buildingDef.BuildingComplete.GetComponent<Wire>() != null) ? ((BaseUtilityBuildTool)WireBuildTool.Instance) : ((BaseUtilityBuildTool)UtilityBuildTool.Instance));
-				baseUtilityBuildTool.Activate(buildingDef, getSelectedElementAsList);
+				((buildingDef.BuildingComplete.GetComponent<Wire>() != null) ? ((BaseUtilityBuildTool)WireBuildTool.Instance) : ((BaseUtilityBuildTool)UtilityBuildTool.Instance)).Activate(buildingDef, getSelectedElementAsList);
 			}
 			else
 			{
@@ -1233,8 +1232,7 @@ public class PlanScreen : KIconToggleMenu
 
 	public void OnResearchComplete(object tech)
 	{
-		Tech tech2 = (Tech)tech;
-		foreach (TechItem unlockedItem in tech2.unlockedItems)
+		foreach (TechItem unlockedItem in ((Tech)tech).unlockedItems)
 		{
 			BuildingDef buildingDef = Assets.GetBuildingDef(unlockedItem.Id);
 			if (!(buildingDef != null))

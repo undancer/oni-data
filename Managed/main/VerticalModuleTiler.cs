@@ -14,9 +14,9 @@ public class VerticalModuleTiler : KMonoBehaviour
 
 	private Extents extents;
 
-	private AnimCapType topCapSetting = AnimCapType.ThreeWide;
+	private AnimCapType topCapSetting;
 
-	private AnimCapType bottomCapSetting = AnimCapType.ThreeWide;
+	private AnimCapType bottomCapSetting;
 
 	private bool manageTopCap = true;
 
@@ -75,8 +75,7 @@ public class VerticalModuleTiler : KMonoBehaviour
 
 	private void UpdateEndCaps()
 	{
-		int cell = Grid.PosToCell(this);
-		Grid.CellToXY(cell, out var _, out var _);
+		Grid.CellToXY(Grid.PosToCell(this), out var _, out var _);
 		int cellTop = GetCellTop();
 		int cellBottom = GetCellBottom();
 		if (Grid.IsValidCell(cellTop))

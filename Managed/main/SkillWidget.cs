@@ -178,8 +178,7 @@ public class SkillWidget : KMonoBehaviour, IPointerEnterHandler, IEventSystemHan
 	{
 		prerequisiteSkillWidgets.Clear();
 		List<Vector2> list = new List<Vector2>();
-		Skill skill = Db.Get().Skills.Get(skillID);
-		foreach (string priorSkill in skill.priorSkills)
+		foreach (string priorSkill in Db.Get().Skills.Get(skillID).priorSkills)
 		{
 			list.Add(skillsScreen.GetSkillWidgetLineTargetPosition(priorSkill));
 			prerequisiteSkillWidgets.Add(skillsScreen.GetSkillWidget(priorSkill));
@@ -229,11 +228,11 @@ public class SkillWidget : KMonoBehaviour, IPointerEnterHandler, IEventSystemHan
 		if (lines != null)
 		{
 			UILineRenderer[] array = lines;
-			foreach (UILineRenderer uILineRenderer in array)
+			foreach (UILineRenderer obj in array)
 			{
-				uILineRenderer.color = (on ? line_color_active : line_color_default);
-				uILineRenderer.LineThickness = (on ? 4 : 2);
-				uILineRenderer.SetAllDirty();
+				obj.color = (on ? line_color_active : line_color_default);
+				obj.LineThickness = (on ? 4 : 2);
+				obj.SetAllDirty();
 			}
 		}
 		for (int j = 0; j < prerequisiteSkillWidgets.Count; j++)
@@ -244,9 +243,7 @@ public class SkillWidget : KMonoBehaviour, IPointerEnterHandler, IEventSystemHan
 
 	public string SkillTooltip(Skill skill)
 	{
-		string str = "";
-		str += SkillPerksString(skill);
-		return str + "\n" + DuplicantSkillString(skill);
+		return string.Concat("" + SkillPerksString(skill), "\n", DuplicantSkillString(skill));
 	}
 
 	public static string SkillPerksString(Skill skill)
@@ -334,8 +331,7 @@ public class SkillWidget : KMonoBehaviour, IPointerEnterHandler, IEventSystemHan
 					{
 						flag = true;
 						string choreGroupID = Db.Get().SkillGroups.Get(skill.skillGroup).choreGroupID;
-						Traits component2 = minionIdentity.GetComponent<Traits>();
-						component2.IsChoreGroupDisabled(choreGroupID, out var disablingTrait);
+						minionIdentity.GetComponent<Traits>().IsChoreGroupDisabled(choreGroupID, out var disablingTrait);
 						text += "\n";
 						cAN_MASTER = UI.SKILLS_SCREEN.ASSIGNMENT_REQUIREMENTS.MASTERY.PREVENTED_BY_TRAIT;
 						text += string.Format(cAN_MASTER, disablingTrait.Name);

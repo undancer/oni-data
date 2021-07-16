@@ -390,5 +390,7 @@ public enum GameHashes
 	PlantSubspeciesProgress = -1531232972,
 	PlantSubspeciesComplete = -98362560,
 	LimitValveAmountChanged = -1722241721,
-	LockerDroppedContents = -372600542
+	LockerDroppedContents = -372600542,
+	Happy = 1890751808,
+	Unhappy = -647798969
 }

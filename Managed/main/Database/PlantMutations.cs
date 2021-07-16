@@ -90,8 +90,7 @@ namespace Database
 
 		public PlantMutation GetRandomMutation(string targetPlantPrefabID)
 		{
-			List<PlantMutation> tList = resources.Where((PlantMutation m) => !m.originalMutation && !m.restrictedPrefabIDs.Contains(targetPlantPrefabID) && (m.requiredPrefabIDs.Count == 0 || m.requiredPrefabIDs.Contains(targetPlantPrefabID))).ToList();
-			return tList.GetRandom();
+			return resources.Where((PlantMutation m) => !m.originalMutation && !m.restrictedPrefabIDs.Contains(targetPlantPrefabID) && (m.requiredPrefabIDs.Count == 0 || m.requiredPrefabIDs.Contains(targetPlantPrefabID))).ToList().GetRandom();
 		}
 	}
 }

@@ -96,9 +96,10 @@ public class ResearchCenter : Workable, IGameObjectEffectDescriptor, ISim200ms, 
 
 	protected virtual Chore CreateChore()
 	{
-		WorkChore<ResearchCenter> workChore = new WorkChore<ResearchCenter>(Db.Get().ChoreTypes.Research, this, null, run_until_complete: true, null, null, null, allow_in_red_alert: true, null, ignore_schedule_block: false, only_when_operational: true, null, is_preemptable: true);
-		workChore.preemption_cb = CanPreemptCB;
-		return workChore;
+		return new WorkChore<ResearchCenter>(Db.Get().ChoreTypes.Research, this, null, run_until_complete: true, null, null, null, allow_in_red_alert: true, null, ignore_schedule_block: false, only_when_operational: true, null, is_preemptable: true)
+		{
+			preemption_cb = CanPreemptCB
+		};
 	}
 
 	private static bool CanPreemptCB(Chore.Precondition.Context context)
@@ -106,8 +107,7 @@ public class ResearchCenter : Workable, IGameObjectEffectDescriptor, ISim200ms, 
 		Worker component = context.chore.driver.GetComponent<Worker>();
 		float num = Db.Get().AttributeConverters.ResearchSpeed.Lookup(component).Evaluate();
 		Worker worker = context.consumerState.worker;
-		float num2 = Db.Get().AttributeConverters.ResearchSpeed.Lookup(worker).Evaluate();
-		return num2 > num;
+		return Db.Get().AttributeConverters.ResearchSpeed.Lookup(worker).Evaluate() > num;
 	}
 
 	public override float GetPercentComplete()
@@ -261,10 +261,10 @@ public class ResearchCenter : Workable, IGameObjectEffectDescriptor, ISim200ms, 
 
 	public string GetStatusString()
 	{
-		string text = RESEARCH.MESSAGING.NORESEARCHSELECTED;
+		string result = RESEARCH.MESSAGING.NORESEARCHSELECTED;
 		if (Research.Instance.GetActiveResearch() != null)
 		{
-			text = "<b>" + Research.Instance.GetActiveResearch().tech.Name + "</b>";
+			result = "<b>" + Research.Instance.GetActiveResearch().tech.Name + "</b>";
 			int num = 0;
 			foreach (KeyValuePair<string, float> item in Research.Instance.GetActiveResearch().progressInventory.PointsByTypeID)
 			{
@@ -277,19 +277,22 @@ public class ResearchCenter : Workable, IGameObjectEffectDescriptor, ISim200ms, 
 			{
 				if (Research.Instance.GetActiveResearch().tech.costsByResearchTypeID[item2.Key] != 0f && item2.Key == research_point_type_id)
 				{
-					text = text + "\n   - " + Research.Instance.researchTypes.GetResearchType(item2.Key).name;
-					text = text + ": " + item2.Value + "/" + Research.Instance.GetActiveResearch().tech.costsByResearchTypeID[item2.Key];
+					result = result + "\n   - " + Research.Instance.researchTypes.GetResearchType(item2.Key).name;
+					result = result + ": " + item2.Value + "/" + Research.Instance.GetActiveResearch().tech.costsByResearchTypeID[item2.Key];
 				}
 			}
-			foreach (KeyValuePair<string, float> item3 in Research.Instance.GetActiveResearch().progressInventory.PointsByTypeID)
 			{
-				if (Research.Instance.GetActiveResearch().tech.costsByResearchTypeID[item3.Key] != 0f && !(item3.Key == research_point_type_id))
+				foreach (KeyValuePair<string, float> item3 in Research.Instance.GetActiveResearch().progressInventory.PointsByTypeID)
 				{
-					text = ((num <= 1) ? (text + "\n   - " + string.Format(RESEARCH.MESSAGING.RESEARCHTYPEREQUIRED, Research.Instance.researchTypes.GetResearchType(item3.Key).name)) : (text + "\n   - " + string.Format(RESEARCH.MESSAGING.RESEARCHTYPEALSOREQUIRED, Research.Instance.researchTypes.GetResearchType(item3.Key).name)));
+					if (Research.Instance.GetActiveResearch().tech.costsByResearchTypeID[item3.Key] != 0f && !(item3.Key == research_point_type_id))
+					{
+						result = ((num <= 1) ? (result + "\n   - " + string.Format(RESEARCH.MESSAGING.RESEARCHTYPEREQUIRED, Research.Instance.researchTypes.GetResearchType(item3.Key).name)) : (result + "\n   - " + string.Format(RESEARCH.MESSAGING.RESEARCHTYPEALSOREQUIRED, Research.Instance.researchTypes.GetResearchType(item3.Key).name)));
+					}
 				}
+				return result;
 			}
 		}
-		return text;
+		return result;
 	}
 
 	public override List<Descriptor> GetDescriptors(GameObject go)

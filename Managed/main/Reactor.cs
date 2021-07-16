@@ -128,8 +128,7 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 					smi.master.gameObject.GetComponent<KSelectable>().RemoveStatusItem(Db.Get().BuildingStatusItems.ReactorRefuelDisabled);
 					smi.master.refuelStausHandle = Guid.Empty;
 				}
-				PrimaryElement activeCoolant2 = smi.master.GetActiveCoolant();
-				if (activeCoolant2 != null)
+				if (smi.master.GetActiveCoolant() != null)
 				{
 					smi.master.Cool(dt);
 				}
@@ -224,8 +223,7 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 								}
 								float f = (float)num3 * (float)Math.PI / 180f;
 								component.Velocity = new Vector2((0f - Mathf.Cos(f)) * 20f, Mathf.Sin(f) * 20f);
-								KBatchedAnimController component2 = component.GetComponent<KBatchedAnimController>();
-								component2.Rotation = (float)(-num3) - 90f;
+								component.GetComponent<KBatchedAnimController>().Rotation = (float)(-num3) - 90f;
 								num2 -= NuclearWasteCometConfig.MASS;
 							}
 						}
@@ -287,9 +285,9 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 	private static float meterFrameScaleHack = 3f;
 
 	[Serialize]
-	private float spentFuel = 0f;
+	private float spentFuel;
 
-	private float timeSinceMeltdownEmit = 0f;
+	private float timeSinceMeltdownEmit;
 
 	private const float reactorMeltDownBonusMassAmount = 10f;
 
@@ -304,7 +302,7 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 
 	private float reactionMassTarget = 60f;
 
-	private int[] ventCells = null;
+	private int[] ventCells;
 
 	private float ReactionMassTarget
 	{
@@ -338,7 +336,11 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 		get
 		{
 			PrimaryElement storedCoolant = GetStoredCoolant();
-			return (storedCoolant == null) ? 0f : storedCoolant.Mass;
+			if (!(storedCoolant == null))
+			{
+				return storedCoolant.Mass;
+			}
+			return 0f;
 		}
 	}
 
@@ -528,7 +530,11 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 	private bool ReadyToCool()
 	{
 		PrimaryElement activeCoolant = GetActiveCoolant();
-		return activeCoolant != null && activeCoolant.Mass > 0f;
+		if (activeCoolant != null)
+		{
+			return activeCoolant.Mass > 0f;
+		}
+		return false;
 	}
 
 	private void DumpSpentFuel()

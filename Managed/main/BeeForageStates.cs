@@ -143,11 +143,7 @@ public class BeeForageStates : GameStateMachine<BeeForageStates, BeeForageStates
 			{
 				smi.GoTo(storage.dropMaterial);
 			}
-		}).MoveTo(delegate(Instance smi)
-		{
-			int cell = Grid.PosToCell(smi.targetHive.transform.GetPosition());
-			return Grid.OffsetCell(cell, smi.hiveCellOffset);
-		}, storage.storeMaterial, behaviourcomplete);
+		}).MoveTo((Instance smi) => Grid.OffsetCell(Grid.PosToCell(smi.targetHive.transform.GetPosition()), smi.hiveCellOffset), storage.storeMaterial, behaviourcomplete);
 		storage.storeMaterial.PlayAnim("deposit").Exit(StoreOre).OnAnimQueueComplete(behaviourcomplete.pre);
 		storage.dropMaterial.Enter(delegate(Instance smi)
 		{
@@ -160,8 +156,9 @@ public class BeeForageStates : GameStateMachine<BeeForageStates, BeeForageStates
 
 	private static void FindTarget(Instance smi)
 	{
-		if (!FindOre(smi) && !FindMineableCell(smi))
+		if (!FindOre(smi))
 		{
+			FindMineableCell(smi);
 		}
 	}
 
@@ -171,8 +168,7 @@ public class BeeForageStates : GameStateMachine<BeeForageStates, BeeForageStates
 		if ((bool)gameObject)
 		{
 			KBatchedAnimController component = smi.GetComponent<KBatchedAnimController>();
-			KAnim.Anim currentAnim = gameObject.GetComponent<KBatchedAnimController>().CurrentAnim;
-			KAnim.Build.Symbol source_symbol = currentAnim.animFile.build.symbols[0];
+			KAnim.Build.Symbol source_symbol = gameObject.GetComponent<KBatchedAnimController>().CurrentAnim.animFile.build.symbols[0];
 			component.GetComponent<SymbolOverrideController>().AddSymbolOverride(smi.oreSymbolHash, source_symbol, 5);
 			component.SetSymbolVisiblity(smi.oreSymbolHash, is_visible: true);
 			component.SetSymbolVisiblity(smi.oreLegSymbolHash, is_visible: true);
@@ -243,8 +239,7 @@ public class BeeForageStates : GameStateMachine<BeeForageStates, BeeForageStates
 	{
 		smi.targetMiningCell = Grid.InvalidCell;
 		MineableCellQuery mineableCellQuery = PathFinderQueries.mineableCellQuery.Reset(smi.def.oreTag, 20);
-		Navigator component = smi.GetComponent<Navigator>();
-		component.RunQuery(mineableCellQuery);
+		smi.GetComponent<Navigator>().RunQuery(mineableCellQuery);
 		if (mineableCellQuery.result_cells.Count > 0)
 		{
 			smi.targetMiningCell = mineableCellQuery.result_cells[Random.Range(0, mineableCellQuery.result_cells.Count)];

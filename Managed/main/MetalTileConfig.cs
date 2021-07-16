@@ -9,26 +9,26 @@ public class MetalTileConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("MetalTile", 1, 1, "floor_metal_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.REFINED_METALS, 800f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER2);
-		BuildingTemplates.CreateFoundationTileDef(buildingDef);
-		buildingDef.Floodable = false;
-		buildingDef.Entombable = false;
-		buildingDef.Overheatable = false;
-		buildingDef.UseStructureTemperature = false;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.AudioSize = "small";
-		buildingDef.BaseTimeUntilRepair = -1f;
-		buildingDef.SceneLayer = Grid.SceneLayer.TileMain;
-		buildingDef.isKAnimTile = true;
-		buildingDef.isSolidTile = true;
-		buildingDef.BlockTileMaterial = Assets.GetMaterial("tiles_solid");
-		buildingDef.BlockTileAtlas = Assets.GetTextureAtlas("tiles_metal");
-		buildingDef.BlockTilePlaceAtlas = Assets.GetTextureAtlas("tiles_metal_place");
-		buildingDef.BlockTileShineAtlas = Assets.GetTextureAtlas("tiles_metal_spec");
-		buildingDef.DecorBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_metal_tops_decor_info");
-		buildingDef.DecorPlaceBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_metal_tops_decor_place_info");
-		buildingDef.ConstructionOffsetFilter = BuildingDef.ConstructionOffsetFilter_OneDown;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("MetalTile", 1, 1, "floor_metal_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.REFINED_METALS, 800f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER2);
+		BuildingTemplates.CreateFoundationTileDef(obj);
+		obj.Floodable = false;
+		obj.Entombable = false;
+		obj.Overheatable = false;
+		obj.UseStructureTemperature = false;
+		obj.AudioCategory = "Metal";
+		obj.AudioSize = "small";
+		obj.BaseTimeUntilRepair = -1f;
+		obj.SceneLayer = Grid.SceneLayer.TileMain;
+		obj.isKAnimTile = true;
+		obj.isSolidTile = true;
+		obj.BlockTileMaterial = Assets.GetMaterial("tiles_solid");
+		obj.BlockTileAtlas = Assets.GetTextureAtlas("tiles_metal");
+		obj.BlockTilePlaceAtlas = Assets.GetTextureAtlas("tiles_metal_place");
+		obj.BlockTileShineAtlas = Assets.GetTextureAtlas("tiles_metal_spec");
+		obj.DecorBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_metal_tops_decor_info");
+		obj.DecorPlaceBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_metal_tops_decor_place_info");
+		obj.ConstructionOffsetFilter = BuildingDef.ConstructionOffsetFilter_OneDown;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -39,10 +39,8 @@ public class MetalTileConfig : IBuildingConfig
 		simCellOccupier.movementSpeedMultiplier = DUPLICANTSTATS.MOVEMENT.BONUS_3;
 		simCellOccupier.notifyOnMelt = true;
 		go.AddOrGet<TileTemperature>();
-		KAnimGridTileVisualizer kAnimGridTileVisualizer = go.AddOrGet<KAnimGridTileVisualizer>();
-		kAnimGridTileVisualizer.blockTileConnectorID = BlockTileConnectorID;
-		BuildingHP buildingHP = go.AddOrGet<BuildingHP>();
-		buildingHP.destroyOnDamaged = true;
+		go.AddOrGet<KAnimGridTileVisualizer>().blockTileConnectorID = BlockTileConnectorID;
+		go.AddOrGet<BuildingHP>().destroyOnDamaged = true;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

@@ -21,9 +21,9 @@ public class DiscoveredResources : KMonoBehaviour, ISaveLoadable, ISim4000ms
 
 	public void Discover(Tag tag, Tag categoryTag)
 	{
-		bool flag = Discovered.Add(tag);
+		bool num = Discovered.Add(tag);
 		DiscoverCategory(categoryTag, tag);
-		if (flag)
+		if (num)
 		{
 			if (this.OnDiscover != null)
 			{
@@ -53,7 +53,8 @@ public class DiscoveredResources : KMonoBehaviour, ISaveLoadable, ISim4000ms
 		HashSet<Tag> hashSet = new HashSet<Tag>();
 		foreach (Tag item in Discovered)
 		{
-			if (ElementLoader.GetElement(item)?.disabled ?? false)
+			Element element = ElementLoader.GetElement(item);
+			if (element != null && element.disabled)
 			{
 				hashSet.Add(item);
 				continue;
@@ -87,7 +88,11 @@ public class DiscoveredResources : KMonoBehaviour, ISaveLoadable, ISim4000ms
 
 	public bool IsDiscovered(Tag tag)
 	{
-		return Discovered.Contains(tag) || DiscoveredCategories.ContainsKey(tag);
+		if (!Discovered.Contains(tag))
+		{
+			return DiscoveredCategories.ContainsKey(tag);
+		}
+		return true;
 	}
 
 	public bool AnyDiscovered(ICollection<Tag> tags)
@@ -131,16 +136,15 @@ public class DiscoveredResources : KMonoBehaviour, ISaveLoadable, ISim4000ms
 
 	public static Tag GetCategoryForTags(HashSet<Tag> tags)
 	{
-		Tag result = Tag.Invalid;
+		Tag invalid = Tag.Invalid;
 		foreach (Tag tag in tags)
 		{
 			if (GameTags.AllCategories.Contains(tag) || GameTags.IgnoredMaterialCategories.Contains(tag))
 			{
-				result = tag;
-				break;
+				return tag;
 			}
 		}
-		return result;
+		return invalid;
 	}
 
 	public static Tag GetCategoryForEntity(KPrefabID entity)
@@ -148,8 +152,7 @@ public class DiscoveredResources : KMonoBehaviour, ISaveLoadable, ISim4000ms
 		ElementChunk component = entity.GetComponent<ElementChunk>();
 		if (component != null)
 		{
-			PrimaryElement component2 = component.GetComponent<PrimaryElement>();
-			return component2.Element.materialCategory;
+			return component.GetComponent<PrimaryElement>().Element.materialCategory;
 		}
 		return GetCategoryForTags(entity.Tags);
 	}

@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class LaunchInitializer : MonoBehaviour
 {
-	private const string BASE_BUILD_PREFIX = "MD";
+	private const string BASE_BUILD_PREFIX = "FA";
 
-	private const string EXPANSION1_BUILD_PREFIX = "EX1 S13";
+	private const string EXPANSION1_BUILD_PREFIX = "EX1 S14";
 
 	public GameObject[] SpawnPrefabs;
 
@@ -16,7 +16,11 @@ public class LaunchInitializer : MonoBehaviour
 
 	public static string BuildPrefix()
 	{
-		return DlcManager.IsExpansion1Active() ? "EX1 S13" : "MD";
+		if (!DlcManager.IsExpansion1Active())
+		{
+			return "FA";
+		}
+		return "EX1 S14";
 	}
 
 	private void Update()
@@ -32,12 +36,12 @@ public class LaunchInitializer : MonoBehaviour
 		GraphicsOptionsScreen.SetSettingsFromPrefs();
 		Util.ApplyInvariantCultureToThread(Thread.CurrentThread);
 		Debug.Log("Current date: " + System.DateTime.Now.ToString());
-		Debug.Log("release Build: " + 469473u);
+		Debug.Log("release Build: " + 471618u);
 		UnityEngine.Object.DontDestroyOnLoad(base.gameObject);
 		KPlayerPrefs.instance.Load();
 		DistributionPlatform.Initialize();
 		Debug.Log("DistributionPlatform initialized.");
-		Debug.Log("release Build: " + BuildPrefix() + "-" + 469473u);
+		Debug.Log("release Build: " + BuildPrefix() + "-" + 471618u);
 		Debug.Log($"EXPANSION1 installed: {DlcManager.IsExpansion1Installed()}  active: {DlcManager.IsExpansion1Active()}");
 		KFMOD.Initialize();
 		for (int i = 0; i < SpawnPrefabs.Length; i++)
@@ -54,15 +58,15 @@ public class LaunchInitializer : MonoBehaviour
 
 	private static void DeleteLingeringFiles()
 	{
-		string[] array = new string[3]
+		string[] obj = new string[3]
 		{
 			"fmod.log",
 			"load_stats_0.json",
 			"OxygenNotIncluded_Data/output_log.txt"
 		};
 		string directoryName = Path.GetDirectoryName(Application.dataPath);
-		string[] array2 = array;
-		foreach (string path in array2)
+		string[] array = obj;
+		foreach (string path in array)
 		{
 			string path2 = Path.Combine(directoryName, path);
 			try
@@ -72,9 +76,9 @@ public class LaunchInitializer : MonoBehaviour
 					File.Delete(path2);
 				}
 			}
-			catch (Exception obj)
+			catch (Exception obj2)
 			{
-				Debug.LogWarning(obj);
+				Debug.LogWarning(obj2);
 			}
 		}
 	}

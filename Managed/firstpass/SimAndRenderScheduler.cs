@@ -302,10 +302,9 @@ public class SimAndRenderScheduler
 	public void Add(object obj, bool load_balance = false)
 	{
 		UpdateRate[] implementedInterfaces = GetImplementedInterfaces(obj.GetType());
-		UpdateRate[] array = implementedInterfaces;
-		for (int i = 0; i < array.Length; i++)
+		for (int i = 0; i < implementedInterfaces.Length; i++)
 		{
-			switch (array[i])
+			switch (implementedInterfaces[i])
 			{
 			case UpdateRate.RENDER_EVERY_TICK:
 				renderEveryTick.Add((IRenderEveryTick)obj, load_balance);
@@ -338,10 +337,9 @@ public class SimAndRenderScheduler
 	public void Remove(object obj)
 	{
 		UpdateRate[] implementedInterfaces = GetImplementedInterfaces(obj.GetType());
-		UpdateRate[] array = implementedInterfaces;
-		for (int i = 0; i < array.Length; i++)
+		for (int i = 0; i < implementedInterfaces.Length; i++)
 		{
-			switch (array[i])
+			switch (implementedInterfaces[i])
 			{
 			case UpdateRate.RENDER_EVERY_TICK:
 				renderEveryTick.Remove((IRenderEveryTick)obj);

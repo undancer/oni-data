@@ -13,8 +13,7 @@ public class Trap : StateMachineComponent<Trap.StatesInstance>
 
 		public void OnTrapTriggered(object data)
 		{
-			GameObject gameObject = (GameObject)data;
-			KPrefabID component = gameObject.GetComponent<KPrefabID>();
+			KPrefabID component = ((GameObject)data).GetComponent<KPrefabID>();
 			base.master.contents.Set(component);
 			base.smi.sm.trapTriggered.Trigger(base.smi);
 		}

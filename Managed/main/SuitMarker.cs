@@ -38,8 +38,7 @@ public class SuitMarker : KMonoBehaviour
 			{
 				return false;
 			}
-			MinionIdentity component = new_reactor.GetComponent<MinionIdentity>();
-			if (component.GetEquipment().IsSlotOccupied(Db.Get().AssignableSlots.Suit))
+			if (new_reactor.GetComponent<MinionIdentity>().GetEquipment().IsSlotOccupied(Db.Get().AssignableSlots.Suit))
 			{
 				if (x < 0 && suitMarker.isRotated)
 				{
@@ -113,8 +112,7 @@ public class SuitMarker : KMonoBehaviour
 				suitMarker.GetAttachedLockers(pooledList);
 				foreach (SuitLocker item in pooledList)
 				{
-					KPrefabID fullyChargedOutfit = item.GetFullyChargedOutfit();
-					if (fullyChargedOutfit != null && flag)
+					if (item.GetFullyChargedOutfit() != null && flag)
 					{
 						item.EquipTo(equipment);
 						flag2 = true;
@@ -303,8 +301,7 @@ public class SuitMarker : KMonoBehaviour
 
 	public static bool DoesTraversalDirectionRequireSuit(int source_cell, int dest_cell, Grid.SuitMarker.Flags flags)
 	{
-		bool flag = Grid.CellColumn(dest_cell) > Grid.CellColumn(source_cell);
-		return flag == ((flags & Grid.SuitMarker.Flags.Rotated) == 0);
+		return Grid.CellColumn(dest_cell) > Grid.CellColumn(source_cell) == ((flags & Grid.SuitMarker.Flags.Rotated) == 0);
 	}
 
 	public bool DoesTraversalDirectionRequireSuit(int source_cell, int dest_cell)

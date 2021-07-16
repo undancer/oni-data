@@ -33,7 +33,7 @@ public class UIDupeRandomizer : MonoBehaviour
 
 	public AnimChoice[] anims;
 
-	private AccessorySlots slots = null;
+	private AccessorySlots slots;
 
 	protected virtual void Start()
 	{

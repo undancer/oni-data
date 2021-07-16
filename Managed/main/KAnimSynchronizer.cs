@@ -143,13 +143,11 @@ public class KAnimSynchronizer
 		float elapsedTime = masterController.GetElapsedTime();
 		for (int i = 0; i < Targets.Count; i++)
 		{
-			KAnimControllerBase kAnimControllerBase = Targets[i];
-			kAnimControllerBase.SetElapsedTime(elapsedTime);
+			Targets[i].SetElapsedTime(elapsedTime);
 		}
 		for (int j = 0; j < SyncedControllers.Count; j++)
 		{
-			KAnimSynchronizedController kAnimSynchronizedController = SyncedControllers[j];
-			kAnimSynchronizedController.synchronizedController.SetElapsedTime(elapsedTime);
+			SyncedControllers[j].synchronizedController.SetElapsedTime(elapsedTime);
 		}
 	}
 }

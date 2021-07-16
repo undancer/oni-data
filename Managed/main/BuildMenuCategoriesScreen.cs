@@ -19,7 +19,7 @@ public class BuildMenuCategoriesScreen : KIconToggleMenu
 	public Action<HashedString, int> onCategoryClicked;
 
 	[SerializeField]
-	public bool modalKeyInputBehaviour = false;
+	public bool modalKeyInputBehaviour;
 
 	[SerializeField]
 	private Image focusIndicator;
@@ -71,8 +71,7 @@ public class BuildMenuCategoriesScreen : KIconToggleMenu
 		else if (typeof(IList<BuildMenu.DisplayInfo>).IsAssignableFrom(data.GetType()))
 		{
 			subcategories = new List<HashedString>();
-			IList<BuildMenu.DisplayInfo> list2 = (IList<BuildMenu.DisplayInfo>)data;
-			foreach (BuildMenu.DisplayInfo item2 in list2)
+			foreach (BuildMenu.DisplayInfo item2 in (IList<BuildMenu.DisplayInfo>)data)
 			{
 				string iconName = item2.iconName;
 				string text = HashCache.Get().Get(item2.category).ToUpper();
@@ -90,8 +89,7 @@ public class BuildMenuCategoriesScreen : KIconToggleMenu
 			toggles.ForEach(delegate(KToggle to)
 			{
 				ImageToggleState[] components = to.GetComponents<ImageToggleState>();
-				ImageToggleState[] array = components;
-				foreach (ImageToggleState imageToggleState in array)
+				foreach (ImageToggleState imageToggleState in components)
 				{
 					if (imageToggleState.TargetImage.sprite != null && imageToggleState.TargetImage.name == "FG" && !imageToggleState.useSprites)
 					{
@@ -108,8 +106,7 @@ public class BuildMenuCategoriesScreen : KIconToggleMenu
 	{
 		UserData userData = (UserData)toggle_info.userData;
 		PlanScreen.RequirementsState requirementsState = userData.requirementsState;
-		PlanScreen.RequirementsState requirementsState2 = requirementsState;
-		if ((uint)(requirementsState2 - 2) <= 1u)
+		if ((uint)(requirementsState - 2) <= 1u)
 		{
 			if (selectedCategory != userData.category)
 			{
@@ -173,18 +170,16 @@ public class BuildMenuCategoriesScreen : KIconToggleMenu
 				break;
 			}
 			}
-			GameObject gameObject = item.toggle.fgImage.transform.Find("ResearchIcon").gameObject;
-			gameObject.gameObject.SetActive(flag);
+			item.toggle.fgImage.transform.Find("ResearchIcon").gameObject.gameObject.SetActive(flag);
 		}
 	}
 
 	private void SetImageToggleState(GameObject target, ImageToggleState.State state)
 	{
 		ImageToggleState[] components = target.GetComponents<ImageToggleState>();
-		ImageToggleState[] array = components;
-		foreach (ImageToggleState imageToggleState in array)
+		for (int i = 0; i < components.Length; i++)
 		{
-			imageToggleState.SetState(state);
+			components[i].SetState(state);
 		}
 	}
 
@@ -234,8 +229,7 @@ public class BuildMenuCategoriesScreen : KIconToggleMenu
 		UpdateBuildableStates(skip_flourish: false);
 		foreach (ToggleInfo item2 in toggleInfo)
 		{
-			UserData userData = (UserData)item2.userData;
-			HashedString item = userData.category;
+			HashedString item = ((UserData)item2.userData).category;
 			if (updated_categories.Contains(item))
 			{
 				item2.toggle.gameObject.GetComponent<PlanCategoryNotifications>().ToggleAttention(active: true);
@@ -280,8 +274,7 @@ public class BuildMenuCategoriesScreen : KIconToggleMenu
 				{
 					item.toggle.ActivateFlourish(state: false);
 					string text = "NotificationPing";
-					Animator component = item.toggle.GetComponent<Animator>();
-					if (!component.GetCurrentAnimatorStateInfo(0).IsTag(text))
+					if (!item.toggle.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag(text))
 					{
 						item.toggle.gameObject.GetComponent<Animator>().Play(text);
 						BuildMenu.Instance.PlayNewBuildingSounds();

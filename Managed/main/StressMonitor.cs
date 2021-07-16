@@ -32,7 +32,11 @@ public class StressMonitor : GameStateMachine<StressMonitor, StressMonitor.Insta
 
 		public bool HasHadEnough()
 		{
-			return allowStressBreak && stress.value >= 100f;
+			if (allowStressBreak)
+			{
+				return stress.value >= 100f;
+			}
+			return false;
 		}
 
 		public void ReportStress(float dt)

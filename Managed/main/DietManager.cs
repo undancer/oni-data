@@ -31,12 +31,11 @@ public class DietManager : KMonoBehaviour
 		foreach (KeyValuePair<Tag, Diet> diet in diets)
 		{
 			Diet.Info[] infos = diet.Value.infos;
-			foreach (Diet.Info info in infos)
+			for (int i = 0; i < infos.Length; i++)
 			{
-				foreach (Tag consumedTag in info.consumedTags)
+				foreach (Tag consumedTag in infos[i].consumedTags)
 				{
-					GameObject prefab = Assets.GetPrefab(consumedTag);
-					if (prefab == null)
+					if (Assets.GetPrefab(consumedTag) == null)
 					{
 						Debug.LogError($"Could not find prefab {consumedTag}, required by diet for {diet.Key}");
 					}

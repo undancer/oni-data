@@ -27,11 +27,12 @@ public class LightBugConfig : IEntityConfig
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.deltaAttribute.Id, (0f - LightBugTuning.STANDARD_CALORIES_PER_CYCLE) / 600f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.HitPoints.maxAttribute.Id, 5f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Age.maxAttribute.Id, 25f, name));
-		HashSet<Tag> hashSet = new HashSet<Tag>();
-		hashSet.Add(TagManager.Create(PrickleFruitConfig.ID));
-		hashSet.Add(TagManager.Create("GrilledPrickleFruit"));
-		hashSet.Add(SimHashes.Phosphorite.CreateTag());
-		return BaseLightBugConfig.SetupDiet(prefab, hashSet, Tag.Invalid, CALORIES_PER_KG_OF_ORE);
+		return BaseLightBugConfig.SetupDiet(prefab, new HashSet<Tag>
+		{
+			TagManager.Create(PrickleFruitConfig.ID),
+			TagManager.Create("GrilledPrickleFruit"),
+			SimHashes.Phosphorite.CreateTag()
+		}, Tag.Invalid, CALORIES_PER_KG_OF_ORE);
 	}
 
 	public string[] GetDlcIds()

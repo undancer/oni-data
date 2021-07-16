@@ -9,7 +9,7 @@ public class ThreatMonitor : GameStateMachine<ThreatMonitor, ThreatMonitor.Insta
 	{
 		public Health.HealthState fleethresholdState = Health.HealthState.Injured;
 
-		public Tag[] friendlyCreatureTags = null;
+		public Tag[] friendlyCreatureTags;
 	}
 
 	public class ThreatenedStates : State
@@ -65,7 +65,15 @@ public class ThreatMonitor : GameStateMachine<ThreatMonitor, ThreatMonitor.Insta
 
 		public bool IsValidRevengeTarget(bool isDuplicant)
 		{
-			return target != null && target.IsAlignmentActive() && (target.health == null || !target.health.IsDefeated()) && (!isDuplicant || !target.IsPlayerTargeted());
+			if (target != null && target.IsAlignmentActive() && (target.health == null || !target.health.IsDefeated()))
+			{
+				if (isDuplicant)
+				{
+					return !target.IsPlayerTargeted();
+				}
+				return true;
+			}
+			return false;
 		}
 	}
 
@@ -177,8 +185,7 @@ public class ThreatMonitor : GameStateMachine<ThreatMonitor, ThreatMonitor.Insta
 					return false;
 				}
 			}
-			bool flag = health.State >= base.smi.def.fleethresholdState;
-			return !flag;
+			return health.State < base.smi.def.fleethresholdState;
 		}
 
 		private void GotoThreatResponse()
@@ -252,8 +259,7 @@ public class ThreatMonitor : GameStateMachine<ThreatMonitor, ThreatMonitor.Insta
 			GameScenePartitioner.Instance.GatherEntries(extents, GameScenePartitioner.Instance.attackableEntitiesLayer, pooledList);
 			for (int i = 0; i < pooledList.Count; i++)
 			{
-				ScenePartitionerEntry scenePartitionerEntry = pooledList[i];
-				FactionAlignment factionAlignment = scenePartitionerEntry.obj as FactionAlignment;
+				FactionAlignment factionAlignment = pooledList[i].obj as FactionAlignment;
 				if (factionAlignment.transform == null || factionAlignment == alignment || !factionAlignment.IsAlignmentActive() || FactionManager.Instance.GetDisposition(alignment.Alignment, factionAlignment.Alignment) != FactionManager.Disposition.Attack)
 				{
 					continue;

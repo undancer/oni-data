@@ -131,7 +131,11 @@ namespace Delaunay
 				float num7 = num4 - coord.y;
 				flag3 = num5 * num5 > num6 * num6 + num7 * num7;
 			}
-			return (leftRight == Side.LEFT) ? flag3 : (!flag3);
+			if (leftRight != Side.LEFT)
+			{
+				return !flag3;
+			}
+			return flag3;
 		}
 	}
 }

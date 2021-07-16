@@ -198,24 +198,24 @@ public class KAnim
 
 		public Frame GetFrame(HashedString batchTag, int idx)
 		{
-			KBatchGroupData batchGroupData = KAnimBatchManager.Instance().GetBatchGroupData(batchTag);
-			return batchGroupData.GetFrame(idx + firstFrameIdx);
+			return KAnimBatchManager.Instance().GetBatchGroupData(batchTag).GetFrame(idx + firstFrameIdx);
 		}
 
 		public Anim Copy()
 		{
-			Anim anim = new Anim(animFile, index);
-			anim.name = name;
-			anim.id = id;
-			anim.hash = hash;
-			anim.rootSymbol = rootSymbol;
-			anim.frameRate = frameRate;
-			anim.firstFrameIdx = firstFrameIdx;
-			anim.numFrames = numFrames;
-			anim.totalTime = totalTime;
-			anim.scaledBoundingRadius = scaledBoundingRadius;
-			anim.unScaledSize = unScaledSize;
-			return anim;
+			return new Anim(animFile, index)
+			{
+				name = name,
+				id = id,
+				hash = hash,
+				rootSymbol = rootSymbol,
+				frameRate = frameRate,
+				firstFrameIdx = firstFrameIdx,
+				numFrames = numFrames,
+				totalTime = totalTime,
+				scaledBoundingRadius = scaledBoundingRadius,
+				unScaledSize = unScaledSize
+			};
 		}
 	}
 
@@ -299,8 +299,7 @@ public class KAnim
 
 			public bool HasFrame(int frame)
 			{
-				int frameIdx = GetFrameIdx(frame);
-				if (frameIdx >= 0)
+				if (GetFrameIdx(frame) >= 0)
 				{
 					return true;
 				}
@@ -310,8 +309,7 @@ public class KAnim
 			public SymbolFrameInstance GetFrame(int frame)
 			{
 				int frameIdx = GetFrameIdx(frame);
-				KBatchGroupData batchGroupData = KAnimBatchManager.Instance().GetBatchGroupData(build.batchTag);
-				return batchGroupData.GetSymbolFrameInstance(frameIdx);
+				return KAnimBatchManager.Instance().GetBatchGroupData(build.batchTag).GetSymbolFrameInstance(frameIdx);
 			}
 
 			public int CompareTo(object obj)
@@ -398,8 +396,7 @@ public class KAnim
 			{
 				Debug.LogError("Invalid texture index:" + index);
 			}
-			KBatchGroupData batchGroupData = KAnimBatchManager.Instance().GetBatchGroupData(batchTag);
-			return batchGroupData.GetTexure(textureStartIdx + index);
+			return KAnimBatchManager.Instance().GetBatchGroupData(batchTag).GetTexure(textureStartIdx + index);
 		}
 
 		public int GetSymbolOffset(KAnimHashedString symbol_name)

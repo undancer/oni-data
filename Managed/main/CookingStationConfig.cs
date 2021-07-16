@@ -9,14 +9,14 @@ public class CookingStationConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("CookingStation", 3, 2, "cookstation_kanim", 30, 30f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: TUNING.BUILDINGS.DECOR.NONE);
-		BuildingTemplates.CreateElectricalBuildingDef(buildingDef);
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.AudioSize = "large";
-		buildingDef.EnergyConsumptionWhenActive = 60f;
-		buildingDef.ExhaustKilowattsWhenActive = 0.5f;
-		buildingDef.SelfHeatKilowattsWhenActive = 4f;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("CookingStation", 3, 2, "cookstation_kanim", 30, 30f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER3, decor: TUNING.BUILDINGS.DECOR.NONE);
+		BuildingTemplates.CreateElectricalBuildingDef(obj);
+		obj.AudioCategory = "Metal";
+		obj.AudioSize = "large";
+		obj.EnergyConsumptionWhenActive = 60f;
+		obj.ExhaustKilowattsWhenActive = 0.5f;
+		obj.SelfHeatKilowattsWhenActive = 4f;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -48,8 +48,7 @@ public class CookingStationConfig : IBuildingConfig
 		{
 			new ComplexRecipe.RecipeElement("PickledMeal", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
-		string id = ComplexRecipeManager.MakeRecipeID("CookingStation", array, array2);
-		PickledMealConfig.recipe = new ComplexRecipe(id, array, array2)
+		PickledMealConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("CookingStation", array, array2), array, array2)
 		{
 			time = FOOD.RECIPES.SMALL_COOK_TIME,
 			description = ITEMS.FOOD.PICKLEDMEAL.RECIPEDESC,
@@ -68,8 +67,7 @@ public class CookingStationConfig : IBuildingConfig
 		{
 			new ComplexRecipe.RecipeElement("FriedMushBar".ToTag(), 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
-		string id2 = ComplexRecipeManager.MakeRecipeID("CookingStation", array3, array4);
-		FriedMushBarConfig.recipe = new ComplexRecipe(id2, array3, array4)
+		FriedMushBarConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("CookingStation", array3, array4), array3, array4)
 		{
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.FRIEDMUSHBAR.RECIPEDESC,
@@ -88,8 +86,7 @@ public class CookingStationConfig : IBuildingConfig
 		{
 			new ComplexRecipe.RecipeElement("FriedMushroom", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
-		string id3 = ComplexRecipeManager.MakeRecipeID("CookingStation", array5, array6);
-		FriedMushroomConfig.recipe = new ComplexRecipe(id3, array5, array6)
+		FriedMushroomConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("CookingStation", array5, array6), array5, array6)
 		{
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.FRIEDMUSHROOM.RECIPEDESC,
@@ -108,8 +105,7 @@ public class CookingStationConfig : IBuildingConfig
 		{
 			new ComplexRecipe.RecipeElement("CookedMeat", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
-		string id4 = ComplexRecipeManager.MakeRecipeID("CookingStation", array7, array8);
-		CookedMeatConfig.recipe = new ComplexRecipe(id4, array7, array8)
+		CookedMeatConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("CookingStation", array7, array8), array7, array8)
 		{
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.COOKEDMEAT.RECIPEDESC,
@@ -128,8 +124,7 @@ public class CookingStationConfig : IBuildingConfig
 		{
 			new ComplexRecipe.RecipeElement("CookedFish", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
-		string id5 = ComplexRecipeManager.MakeRecipeID("CookingStation", array9, array10);
-		CookedMeatConfig.recipe = new ComplexRecipe(id5, array9, array10)
+		CookedMeatConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("CookingStation", array9, array10), array9, array10)
 		{
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.COOKEDMEAT.RECIPEDESC,
@@ -148,8 +143,7 @@ public class CookingStationConfig : IBuildingConfig
 		{
 			new ComplexRecipe.RecipeElement("GrilledPrickleFruit", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
-		string id6 = ComplexRecipeManager.MakeRecipeID("CookingStation", array11, array12);
-		GrilledPrickleFruitConfig.recipe = new ComplexRecipe(id6, array11, array12)
+		GrilledPrickleFruitConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("CookingStation", array11, array12), array11, array12)
 		{
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.GRILLEDPRICKLEFRUIT.RECIPEDESC,
@@ -170,8 +164,7 @@ public class CookingStationConfig : IBuildingConfig
 			{
 				new ComplexRecipe.RecipeElement("SwampDelights", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 			};
-			string id7 = ComplexRecipeManager.MakeRecipeID("CookingStation", array13, array14);
-			CookedEggConfig.recipe = new ComplexRecipe(id7, array13, array14)
+			CookedEggConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("CookingStation", array13, array14), array13, array14)
 			{
 				time = FOOD.RECIPES.STANDARD_COOK_TIME,
 				description = ITEMS.FOOD.SWAMPDELIGHTS.RECIPEDESC,
@@ -191,8 +184,7 @@ public class CookingStationConfig : IBuildingConfig
 		{
 			new ComplexRecipe.RecipeElement("ColdWheatBread", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
-		string id8 = ComplexRecipeManager.MakeRecipeID("CookingStation", array15, array16);
-		ColdWheatBreadConfig.recipe = new ComplexRecipe(id8, array15, array16)
+		ColdWheatBreadConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("CookingStation", array15, array16), array15, array16)
 		{
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.COLDWHEATBREAD.RECIPEDESC,
@@ -211,8 +203,7 @@ public class CookingStationConfig : IBuildingConfig
 		{
 			new ComplexRecipe.RecipeElement("CookedEgg", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
-		string id9 = ComplexRecipeManager.MakeRecipeID("CookingStation", array17, array18);
-		CookedEggConfig.recipe = new ComplexRecipe(id9, array17, array18)
+		CookedEggConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("CookingStation", array17, array18), array17, array18)
 		{
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.COOKEDEGG.RECIPEDESC,
@@ -233,8 +224,7 @@ public class CookingStationConfig : IBuildingConfig
 			{
 				new ComplexRecipe.RecipeElement("WormBasicFood", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 			};
-			string id10 = ComplexRecipeManager.MakeRecipeID("CookingStation", array19, array20);
-			WormBasicFoodConfig.recipe = new ComplexRecipe(id10, array19, array20)
+			WormBasicFoodConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("CookingStation", array19, array20), array19, array20)
 			{
 				time = FOOD.RECIPES.STANDARD_COOK_TIME,
 				description = ITEMS.FOOD.WORMBASICFOOD.RECIPEDESC,
@@ -257,8 +247,7 @@ public class CookingStationConfig : IBuildingConfig
 			{
 				new ComplexRecipe.RecipeElement("WormSuperFood", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 			};
-			string id11 = ComplexRecipeManager.MakeRecipeID("CookingStation", array21, array22);
-			WormSuperFoodConfig.recipe = new ComplexRecipe(id11, array21, array22)
+			WormSuperFoodConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("CookingStation", array21, array22), array21, array22)
 			{
 				time = FOOD.RECIPES.STANDARD_COOK_TIME,
 				description = ITEMS.FOOD.WORMSUPERFOOD.RECIPEDESC,

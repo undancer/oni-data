@@ -120,10 +120,9 @@ public class InspectSaveScreen : KModalScreen
 		ConfirmDoAction(UI.FRONTEND.LOADSCREEN.CONFIRMDELETE, delegate
 		{
 			string[] files = Directory.GetFiles(currentPath);
-			string[] array = files;
-			foreach (string path in array)
+			for (int i = 0; i < files.Length; i++)
 			{
-				File.Delete(path);
+				File.Delete(files[i]);
 			}
 			Directory.Delete(currentPath);
 			CloseScreen();

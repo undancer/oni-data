@@ -72,8 +72,7 @@ public class WorldSelector : KScreen, ISim4000ms
 		worldRows.Clear();
 		foreach (int item in ClusterManager.Instance.GetWorldIDsSorted())
 		{
-			GameObject gameObject = Util.KInstantiateUI(worldRowPrefab, worldRowContainer);
-			MultiToggle component = gameObject.GetComponent<MultiToggle>();
+			MultiToggle component = Util.KInstantiateUI(worldRowPrefab, worldRowContainer).GetComponent<MultiToggle>();
 			worldRows.Add(item, component);
 			previousWorldDiagnosticStatus.Add(item, ColonyDiagnostic.DiagnosticResult.Opinion.Normal);
 			int id = item;
@@ -88,8 +87,7 @@ public class WorldSelector : KScreen, ISim4000ms
 	private void AddWorld(object data)
 	{
 		int num = (int)data;
-		GameObject gameObject = Util.KInstantiateUI(worldRowPrefab, worldRowContainer);
-		MultiToggle component = gameObject.GetComponent<MultiToggle>();
+		MultiToggle component = Util.KInstantiateUI(worldRowPrefab, worldRowContainer).GetComponent<MultiToggle>();
 		worldRows.Add(num, component);
 		previousWorldDiagnosticStatus.Add(num, ColonyDiagnostic.DiagnosticResult.Opinion.Normal);
 		int id = num;
@@ -172,8 +170,7 @@ public class WorldSelector : KScreen, ISim4000ms
 			{
 				Util.KDestroyGameObject(item);
 			}
-			HierarchyReferences component = worldRow.Value.GetComponent<HierarchyReferences>();
-			LocText reference = component.GetReference<LocText>("StatusLabel");
+			LocText reference = worldRow.Value.GetComponent<HierarchyReferences>().GetReference<LocText>("StatusLabel");
 			reference.SetText(ClusterManager.Instance.GetWorld(worldRow.Key).GetStatus());
 			reference.color = ColonyDiagnosticScreen.GetDiagnosticIndicationColor(ColonyDiagnosticUtility.Instance.GetWorldDiagnosticResult(worldRow.Key));
 		}
@@ -185,17 +182,16 @@ public class WorldSelector : KScreen, ISim4000ms
 		List<int> discoveredAsteroidIDsSorted = ClusterManager.Instance.GetDiscoveredAsteroidIDsSorted();
 		foreach (KeyValuePair<int, MultiToggle> worldRow in worldRows)
 		{
-			WorldContainer world = ClusterManager.Instance.GetWorld(worldRow.Key);
-			ClusterGridEntity component = world.GetComponent<ClusterGridEntity>();
+			ClusterGridEntity component = ClusterManager.Instance.GetWorld(worldRow.Key).GetComponent<ClusterGridEntity>();
 			ToolTip component2 = worldRow.Value.GetComponent<ToolTip>();
 			component2.ClearMultiStringTooltip();
-			WorldContainer world2 = ClusterManager.Instance.GetWorld(worldRow.Key);
-			if (world2 != null)
+			WorldContainer world = ClusterManager.Instance.GetWorld(worldRow.Key);
+			if (world != null)
 			{
 				component2.AddMultiStringTooltip(component.Name, titleTextSetting);
-				if (!world2.IsModuleInterior)
+				if (!world.IsModuleInterior)
 				{
-					int num2 = discoveredAsteroidIDsSorted.IndexOf(world2.id);
+					int num2 = discoveredAsteroidIDsSorted.IndexOf(world.id);
 					if (num2 != -1 && num2 <= 9)
 					{
 						component2.AddMultiStringTooltip(" ", bodyTextSetting);
@@ -207,9 +203,9 @@ public class WorldSelector : KScreen, ISim4000ms
 			{
 				component2.AddMultiStringTooltip(UI.CLUSTERMAP.UNKNOWN_DESTINATION, titleTextSetting);
 			}
-			if (ColonyDiagnosticUtility.Instance.GetWorldDiagnosticResult(world2.id) < ColonyDiagnostic.DiagnosticResult.Opinion.Normal)
+			if (ColonyDiagnosticUtility.Instance.GetWorldDiagnosticResult(world.id) < ColonyDiagnostic.DiagnosticResult.Opinion.Normal)
 			{
-				component2.AddMultiStringTooltip(ColonyDiagnosticUtility.Instance.GetWorldDiagnosticResultTooltip(world2.id), bodyTextSetting);
+				component2.AddMultiStringTooltip(ColonyDiagnosticUtility.Instance.GetWorldDiagnosticResultTooltip(world.id), bodyTextSetting);
 			}
 			num++;
 		}
@@ -323,14 +319,14 @@ public class WorldSelector : KScreen, ISim4000ms
 			indicator.sizeDelta = defaultIndicatorSize2 + Vector2.one * Mathf.RoundToInt(Mathf.Sin(6f * ((float)Math.PI * (k / bounceDuration))));
 			yield return 0;
 		}
-		for (float j = 0f; j < bounceDuration; j += Time.unscaledDeltaTime)
+		for (float k = 0f; k < bounceDuration; k += Time.unscaledDeltaTime)
 		{
-			indicator.sizeDelta = defaultIndicatorSize2 + Vector2.one * Mathf.RoundToInt(Mathf.Sin(6f * ((float)Math.PI * (j / bounceDuration))));
+			indicator.sizeDelta = defaultIndicatorSize2 + Vector2.one * Mathf.RoundToInt(Mathf.Sin(6f * ((float)Math.PI * (k / bounceDuration))));
 			yield return 0;
 		}
-		for (float i = 0f; i < bounceDuration; i += Time.unscaledDeltaTime)
+		for (float k = 0f; k < bounceDuration; k += Time.unscaledDeltaTime)
 		{
-			indicator.sizeDelta = defaultIndicatorSize2 + Vector2.one * Mathf.RoundToInt(Mathf.Sin(6f * ((float)Math.PI * (i / bounceDuration))));
+			indicator.sizeDelta = defaultIndicatorSize2 + Vector2.one * Mathf.RoundToInt(Mathf.Sin(6f * ((float)Math.PI * (k / bounceDuration))));
 			yield return 0;
 		}
 		defaultIndicatorSize2 = (indicator.sizeDelta = new Vector2(8f, 8f));

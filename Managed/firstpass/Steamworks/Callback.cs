@@ -24,7 +24,7 @@ namespace Steamworks
 
 		private bool m_bIsRegistered;
 
-		private bool m_bDisposed = false;
+		private bool m_bDisposed;
 
 		public override bool IsGameServer => m_bGameServer;
 

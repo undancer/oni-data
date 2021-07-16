@@ -25,9 +25,9 @@ public class ModularConduitPortTiler : KMonoBehaviour
 
 	private Extents extents;
 
-	private AnimCapType leftCapSetting = AnimCapType.Default;
+	private AnimCapType leftCapSetting;
 
-	private AnimCapType rightCapSetting = AnimCapType.Default;
+	private AnimCapType rightCapSetting;
 
 	private static readonly string leftCapDefaultStr = "#cap_left_default";
 
@@ -56,8 +56,7 @@ public class ModularConduitPortTiler : KMonoBehaviour
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		KPrefabID component = GetComponent<KPrefabID>();
-		component.AddTag(GameTags.ModularConduitPort, serialize: true);
+		GetComponent<KPrefabID>().AddTag(GameTags.ModularConduitPort, serialize: true);
 		if (tags == null || tags.Length == 0)
 		{
 			tags = new Tag[1]
@@ -101,8 +100,7 @@ public class ModularConduitPortTiler : KMonoBehaviour
 
 	private void UpdateEndCaps()
 	{
-		int cell = Grid.PosToCell(this);
-		Grid.CellToXY(cell, out var _, out var _);
+		Grid.CellToXY(Grid.PosToCell(this), out var _, out var _);
 		int cellLeft = GetCellLeft();
 		int cellRight = GetCellRight();
 		if (Grid.IsValidCell(cellLeft))
@@ -183,13 +181,9 @@ public class ModularConduitPortTiler : KMonoBehaviour
 	private bool HasLaunchpadNeighbour(int neighbour_cell)
 	{
 		GameObject gameObject = Grid.Objects[neighbour_cell, (int)objectLayer];
-		if (gameObject != null)
+		if (gameObject != null && gameObject.GetComponent<LaunchPad>() != null)
 		{
-			LaunchPad component = gameObject.GetComponent<LaunchPad>();
-			if (component != null)
-			{
-				return true;
-			}
+			return true;
 		}
 		return false;
 	}
@@ -207,16 +201,12 @@ public class ModularConduitPortTiler : KMonoBehaviour
 		int cellRight = GetCellRight();
 		if (Grid.IsValidCell(cellRight) && HasLaunchpadNeighbour(cellRight))
 		{
-			GameObject gameObject = Grid.Objects[cellRight, 1];
-			ModularConduitPortTiler component = gameObject.GetComponent<ModularConduitPortTiler>();
-			component.UpdateEndCaps();
+			Grid.Objects[cellRight, 1].GetComponent<ModularConduitPortTiler>().UpdateEndCaps();
 		}
 		int cellLeft = GetCellLeft();
 		if (Grid.IsValidCell(cellLeft) && HasLaunchpadNeighbour(cellLeft))
 		{
-			GameObject gameObject2 = Grid.Objects[cellLeft, 1];
-			ModularConduitPortTiler component2 = gameObject2.GetComponent<ModularConduitPortTiler>();
-			component2.UpdateEndCaps();
+			Grid.Objects[cellLeft, 1].GetComponent<ModularConduitPortTiler>().UpdateEndCaps();
 		}
 	}
 }

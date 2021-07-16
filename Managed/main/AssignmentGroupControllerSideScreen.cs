@@ -109,28 +109,27 @@ public class AssignmentGroupControllerSideScreen : KScreen
 			HierarchyReferences component3 = gameObject.GetComponent<HierarchyReferences>();
 			MultiToggle toggle = component3.GetReference<MultiToggle>("Toggle");
 			toggle.ChangeState(target.CheckMinionIsMember(minion) ? 1 : 0);
-			CrewPortrait reference = component3.GetReference<CrewPortrait>("Portrait");
-			reference.SetIdentityObject(minion, jobEnabled: false);
-			LocText reference2 = component3.GetReference<LocText>("Label");
-			LocText reference3 = component3.GetReference<LocText>("Designation");
+			component3.GetReference<CrewPortrait>("Portrait").SetIdentityObject(minion, jobEnabled: false);
+			LocText reference = component3.GetReference<LocText>("Label");
+			LocText reference2 = component3.GetReference<LocText>("Designation");
 			if (item.isSameWorld)
 			{
 				if (item.isPilot)
 				{
-					reference3.text = UI.UISIDESCREENS.ASSIGNMENTGROUPCONTROLLER.PILOT;
+					reference2.text = UI.UISIDESCREENS.ASSIGNMENTGROUPCONTROLLER.PILOT;
 				}
 				else
 				{
-					reference3.text = "";
+					reference2.text = "";
 				}
+				reference.color = Color.black;
 				reference2.color = Color.black;
-				reference3.color = Color.black;
 			}
 			else
 			{
+				reference.color = Color.grey;
 				reference2.color = Color.grey;
-				reference3.color = Color.grey;
-				reference3.text = UI.UISIDESCREENS.ASSIGNMENTGROUPCONTROLLER.OFFWORLD;
+				reference2.text = UI.UISIDESCREENS.ASSIGNMENTGROUPCONTROLLER.OFFWORLD;
 				gameObject.transform.SetAsLastSibling();
 			}
 			toggle.onClick = delegate

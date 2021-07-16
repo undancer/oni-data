@@ -155,9 +155,12 @@ public class MinionEquipmentPanel : KMonoBehaviour
 		if (list.Count > 0)
 		{
 			text += "\n";
-			foreach (Descriptor item in list)
 			{
-				text = text + "  • " + item.IndentedText() + "\n";
+				foreach (Descriptor item in list)
+				{
+					text = text + "  • " + item.IndentedText() + "\n";
+				}
+				return text;
 			}
 		}
 		return text;

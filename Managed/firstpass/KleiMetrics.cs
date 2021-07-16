@@ -93,17 +93,17 @@ public class KleiMetrics : ThreadedHttps<KleiMetrics>
 
 	private long currentSessionTicks = DateTime.Now.Ticks;
 
-	private float timeSinceLastUserAction = 0f;
+	private float timeSinceLastUserAction;
 
 	private long lastHeartBeatTicks = DateTime.Now.Ticks;
 
 	private long startTimeTicks = DateTime.Now.Ticks;
 
-	private bool shouldEndSession = false;
+	private bool shouldEndSession;
 
-	private bool shouldStartSession = false;
+	private bool shouldStartSession;
 
-	private bool hasStarted = false;
+	private bool hasStarted;
 
 	private Dictionary<string, object> userSession = new Dictionary<string, object>();
 
@@ -111,7 +111,7 @@ public class KleiMetrics : ThreadedHttps<KleiMetrics>
 
 	private System.Action SetStaticSessionVariables;
 
-	private bool sessionStarted = false;
+	private bool sessionStarted;
 
 	private long sessionStartUtcTicks = DateTime.UtcNow.Ticks;
 
@@ -146,8 +146,7 @@ public class KleiMetrics : ThreadedHttps<KleiMetrics>
 
 	protected string PostMetricData(Dictionary<string, object> data, string debug_source)
 	{
-		PostData postData = new PostData(CLIENT_KEY, data);
-		string s = JsonConvert.SerializeObject(postData);
+		string s = JsonConvert.SerializeObject(new PostData(CLIENT_KEY, data));
 		byte[] bytes = Encoding.UTF8.GetBytes(s);
 		if (isMultiThreaded)
 		{
@@ -160,13 +159,21 @@ public class KleiMetrics : ThreadedHttps<KleiMetrics>
 	public static string PlatformUserID()
 	{
 		DistributionPlatform.User localUser = DistributionPlatform.Inst.LocalUser;
-		return (localUser != null) ? localUser.Id.ToString() : "";
+		if (localUser == null)
+		{
+			return "";
+		}
+		return localUser.Id.ToString();
 	}
 
 	public static string UserID()
 	{
 		DistributionPlatform.User localUser = DistributionPlatform.Inst.LocalUser;
-		return (localUser != null) ? localUser.Id.ToString() : "";
+		if (localUser == null)
+		{
+			return "";
+		}
+		return localUser.Id.ToString();
 	}
 
 	private void IncrementSessionCount()
@@ -381,8 +388,7 @@ public class KleiMetrics : ThreadedHttps<KleiMetrics>
 			dictionary.Add(item.Key, item.Value);
 		}
 		dictionary.Add("SessionTimeSeconds", GetSessionTime());
-		int num = GameID();
-		if (num != -1)
+		if (GameID() != -1)
 		{
 			dictionary.Add("GameID", GameID());
 		}
@@ -396,10 +402,12 @@ public class KleiMetrics : ThreadedHttps<KleiMetrics>
 			try
 			{
 				SetDynamicSessionVariables(dictionary);
+				return dictionary;
 			}
 			catch (Exception ex)
 			{
 				Debug.LogError("Dynamic session variables may be set from a thread. " + ex.Message + "\n" + ex.StackTrace);
+				return dictionary;
 			}
 		}
 		return dictionary;
@@ -448,10 +456,9 @@ public class KleiMetrics : ThreadedHttps<KleiMetrics>
 		{
 			dictionary.Add("HeartBeatTimeOut", false);
 		}
-		Dictionary<string, object> hardwareStats = GetHardwareStats();
-		foreach (KeyValuePair<string, object> item in hardwareStats)
+		foreach (KeyValuePair<string, object> hardwareStat in GetHardwareStats())
 		{
-			dictionary.Add(item.Key, item.Value);
+			dictionary.Add(hardwareStat.Key, hardwareStat.Value);
 		}
 		PostMetricData(dictionary, "StartSession");
 		StartHeartBeat();
@@ -533,37 +540,128 @@ public class KleiMetrics : ThreadedHttps<KleiMetrics>
 
 	public static Dictionary<string, object> GetHardwareStats()
 	{
-		Dictionary<string, object> dictionary = new Dictionary<string, object>();
-		dictionary.Add("Platform", Application.platform.ToString());
-		dictionary.Add("OSname", SystemInfo.operatingSystem);
-		dictionary.Add("OSversion", Environment.OSVersion.Version.ToString());
-		dictionary.Add("CPUmodel", SystemInfo.deviceModel);
-		dictionary.Add("CPUdeviceType", SystemInfo.deviceType.ToString());
-		dictionary.Add("CPUarch", Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE"));
-		dictionary.Add("ProcBits", (IntPtr.Size == 4) ? 32 : 64);
-		dictionary.Add("CPUcount", SystemInfo.processorCount);
-		dictionary.Add("CPUtype", SystemInfo.processorType);
-		dictionary.Add("SystemMemoryMegs", SystemInfo.systemMemorySize);
-		dictionary.Add("GPUgraphicsDeviceID", SystemInfo.graphicsDeviceID);
-		dictionary.Add("GPUname", SystemInfo.graphicsDeviceName);
-		dictionary.Add("GPUgraphicsDeviceType", SystemInfo.graphicsDeviceType.ToString());
-		dictionary.Add("GPUgraphicsDeviceVendor", SystemInfo.graphicsDeviceVendor);
-		dictionary.Add("GPUgraphicsDeviceVendorID", SystemInfo.graphicsDeviceVendorID);
-		dictionary.Add("GPUgraphicsDeviceVersion", SystemInfo.graphicsDeviceVersion);
-		dictionary.Add("GPUmemoryMegs", SystemInfo.graphicsMemorySize);
-		dictionary.Add("GPUgraphicsMultiThreaded", SystemInfo.graphicsMultiThreaded);
-		dictionary.Add("GPUgraphicsShaderLevel", SystemInfo.graphicsShaderLevel);
-		dictionary.Add("GPUmaxTextureSize", SystemInfo.maxTextureSize);
-		dictionary.Add("GPUnpotSupport", SystemInfo.npotSupport.ToString());
-		dictionary.Add("GPUsupportedRenderTargetCount", SystemInfo.supportedRenderTargetCount);
-		dictionary.Add("GPUsupports2DArrayTextures", SystemInfo.supports2DArrayTextures);
-		dictionary.Add("GPUsupports3DTextures", SystemInfo.supports3DTextures);
-		dictionary.Add("GPUsupportsComputeShaders", SystemInfo.supportsComputeShaders);
-		dictionary.Add("GPUsupportsImageEffects", true);
-		dictionary.Add("GPUsupportsInstancing", SystemInfo.supportsInstancing);
-		dictionary.Add("GPUsupportsRenderToCubemap", true);
-		dictionary.Add("GPUsupportsShadows", SystemInfo.supportsShadows);
-		dictionary.Add("GPUsupportsSparseTextures", SystemInfo.supportsSparseTextures);
-		return dictionary;
+		return new Dictionary<string, object>
+		{
+			{
+				"Platform",
+				Application.platform.ToString()
+			},
+			{
+				"OSname",
+				SystemInfo.operatingSystem
+			},
+			{
+				"OSversion",
+				Environment.OSVersion.Version.ToString()
+			},
+			{
+				"CPUmodel",
+				SystemInfo.deviceModel
+			},
+			{
+				"CPUdeviceType",
+				SystemInfo.deviceType.ToString()
+			},
+			{
+				"CPUarch",
+				Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE")
+			},
+			{
+				"ProcBits",
+				(IntPtr.Size == 4) ? 32 : 64
+			},
+			{
+				"CPUcount",
+				SystemInfo.processorCount
+			},
+			{
+				"CPUtype",
+				SystemInfo.processorType
+			},
+			{
+				"SystemMemoryMegs",
+				SystemInfo.systemMemorySize
+			},
+			{
+				"GPUgraphicsDeviceID",
+				SystemInfo.graphicsDeviceID
+			},
+			{
+				"GPUname",
+				SystemInfo.graphicsDeviceName
+			},
+			{
+				"GPUgraphicsDeviceType",
+				SystemInfo.graphicsDeviceType.ToString()
+			},
+			{
+				"GPUgraphicsDeviceVendor",
+				SystemInfo.graphicsDeviceVendor
+			},
+			{
+				"GPUgraphicsDeviceVendorID",
+				SystemInfo.graphicsDeviceVendorID
+			},
+			{
+				"GPUgraphicsDeviceVersion",
+				SystemInfo.graphicsDeviceVersion
+			},
+			{
+				"GPUmemoryMegs",
+				SystemInfo.graphicsMemorySize
+			},
+			{
+				"GPUgraphicsMultiThreaded",
+				SystemInfo.graphicsMultiThreaded
+			},
+			{
+				"GPUgraphicsShaderLevel",
+				SystemInfo.graphicsShaderLevel
+			},
+			{
+				"GPUmaxTextureSize",
+				SystemInfo.maxTextureSize
+			},
+			{
+				"GPUnpotSupport",
+				SystemInfo.npotSupport.ToString()
+			},
+			{
+				"GPUsupportedRenderTargetCount",
+				SystemInfo.supportedRenderTargetCount
+			},
+			{
+				"GPUsupports2DArrayTextures",
+				SystemInfo.supports2DArrayTextures
+			},
+			{
+				"GPUsupports3DTextures",
+				SystemInfo.supports3DTextures
+			},
+			{
+				"GPUsupportsComputeShaders",
+				SystemInfo.supportsComputeShaders
+			},
+			{
+				"GPUsupportsImageEffects",
+				true
+			},
+			{
+				"GPUsupportsInstancing",
+				SystemInfo.supportsInstancing
+			},
+			{
+				"GPUsupportsRenderToCubemap",
+				true
+			},
+			{
+				"GPUsupportsShadows",
+				SystemInfo.supportsShadows
+			},
+			{
+				"GPUsupportsSparseTextures",
+				SystemInfo.supportsSparseTextures
+			}
+		};
 	}
 }

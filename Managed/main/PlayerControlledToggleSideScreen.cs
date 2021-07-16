@@ -29,9 +29,9 @@ public class PlayerControlledToggleSideScreen : SideScreenContent, IRenderEveryT
 
 	private const float KEYBOARD_COOLDOWN = 0.1f;
 
-	private bool keyDown = false;
+	private bool keyDown;
 
-	private bool currentState = false;
+	private bool currentState;
 
 	protected override void OnSpawn()
 	{

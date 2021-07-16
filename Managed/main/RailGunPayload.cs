@@ -100,12 +100,10 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 
 		public void UpdateLaunch(float dt)
 		{
-			WorldContainer myWorld = base.gameObject.GetMyWorld();
-			if (myWorld != null)
+			if (base.gameObject.GetMyWorld() != null)
 			{
-				Vector3 position = base.transform.GetPosition();
-				Vector3 position2 = position + new Vector3(0f, takeoffVelocity * dt, 0f);
-				base.transform.SetPosition(position2);
+				Vector3 position = base.transform.GetPosition() + new Vector3(0f, takeoffVelocity * dt, 0f);
+				base.transform.SetPosition(position);
 			}
 			else
 			{
@@ -116,13 +114,11 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 
 		public void UpdateLanding(float dt)
 		{
-			WorldContainer myWorld = base.gameObject.GetMyWorld();
-			if (myWorld != null)
+			if (base.gameObject.GetMyWorld() != null)
 			{
 				Vector3 position = base.transform.GetPosition();
 				position.y -= 0.5f;
-				int cell = Grid.PosToCell(position);
-				if (Grid.IsSolidCell(cell))
+				if (Grid.IsSolidCell(Grid.PosToCell(position)))
 				{
 					base.sm.onSurface.Set(value: true, this);
 				}

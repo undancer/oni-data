@@ -60,8 +60,7 @@ public class MinionModifiers : Modifiers, ISaveLoadable
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		ChoreConsumer component = GetComponent<ChoreConsumer>();
-		if (component != null)
+		if (GetComponent<ChoreConsumer>() != null)
 		{
 			Subscribe(1623392196, OnDeathDelegate);
 			Subscribe(-1506069671, OnAttachFollowCamDelegate);

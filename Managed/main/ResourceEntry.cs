@@ -51,7 +51,7 @@ public class ResourceEntry : KMonoBehaviour, IPointerEnterHandler, IEventSystemH
 
 	private float lastClickTime;
 
-	private List<Pickupable> cachedPickupables = null;
+	private List<Pickupable> cachedPickupables;
 
 	private float currentQuantity = float.MinValue;
 

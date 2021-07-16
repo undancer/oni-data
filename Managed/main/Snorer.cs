@@ -31,13 +31,11 @@ public class Snorer : StateMachineComponent<Snorer.StatesInstance>
 		private void StartSmallSnoreInternal(object data)
 		{
 			snoreHandle.ClearScheduler();
-			KBatchedAnimController component = base.smi.master.GetComponent<KBatchedAnimController>();
 			bool symbolVisible;
-			Matrix4x4 symbolTransform = component.GetSymbolTransform(HeadHash, out symbolVisible);
+			Matrix4x4 symbolTransform = base.smi.master.GetComponent<KBatchedAnimController>().GetSymbolTransform(HeadHash, out symbolVisible);
 			if (symbolVisible)
 			{
-				Vector4 column = symbolTransform.GetColumn(3);
-				Vector3 position = column;
+				Vector3 position = symbolTransform.GetColumn(3);
 				position.z = Grid.GetLayerZ(Grid.SceneLayer.FXFront);
 				snoreEffect = FXHelpers.CreateEffect("snore_fx_kanim", position);
 				snoreEffect.destroyOnAnimComplete = true;
@@ -107,9 +105,7 @@ public class Snorer : StateMachineComponent<Snorer.StatesInstance>
 
 		private float GetNewInterval()
 		{
-			float a = Util.GaussianRandom(5f);
-			a = Mathf.Max(a, 3f);
-			return Mathf.Min(a, 10f);
+			return Mathf.Min(Mathf.Max(Util.GaussianRandom(5f), 3f), 10f);
 		}
 	}
 

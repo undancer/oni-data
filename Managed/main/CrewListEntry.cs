@@ -14,7 +14,7 @@ public class CrewListEntry : KMonoBehaviour, IPointerEnterHandler, IEventSystemH
 
 	public GameObject crewPortraitParent;
 
-	protected bool mouseOver = false;
+	protected bool mouseOver;
 
 	public Image BorderHighlight;
 
@@ -74,8 +74,7 @@ public class CrewListEntry : KMonoBehaviour, IPointerEnterHandler, IEventSystemH
 
 	private string seniorityString()
 	{
-		Attributes attributes = identity.GetAttributes();
-		return attributes.GetProfessionString();
+		return identity.GetAttributes().GetProfessionString();
 	}
 
 	public void SelectCrewMember(bool focus)

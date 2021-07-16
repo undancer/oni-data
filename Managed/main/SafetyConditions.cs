@@ -42,14 +42,12 @@ public class SafetyConditions
 		IsNearby = new SafetyChecker.Condition("IsNearby", num *= 2, (int cell, int cost, SafetyChecker.Context context) => cost > 5);
 		IsNotLedge = new SafetyChecker.Condition("IsNotLedge", num *= 2, delegate(int cell, int cost, SafetyChecker.Context context)
 		{
-			int cell2 = Grid.CellLeft(cell);
-			int i = Grid.CellBelow(cell2);
+			int i = Grid.CellBelow(Grid.CellLeft(cell));
 			if (Grid.Solid[i])
 			{
 				return false;
 			}
-			int cell3 = Grid.CellRight(cell);
-			int i2 = Grid.CellBelow(cell3);
+			int i2 = Grid.CellBelow(Grid.CellRight(cell));
 			return Grid.Solid[i2] ? true : false;
 		});
 		IsNotLiquid = new SafetyChecker.Condition("IsNotLiquid", num *= 2, (int cell, int cost, SafetyChecker.Context context) => !Grid.Element[cell].IsLiquid);

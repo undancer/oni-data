@@ -43,14 +43,13 @@ public class ConduitElementSensor : ConduitSensor
 		int cell = Grid.PosToCell(this);
 		if (conduitType == ConduitType.Liquid || conduitType == ConduitType.Gas)
 		{
-			ConduitFlow flowManager = Conduit.GetFlowManager(conduitType);
-			ConduitFlow.ConduitContents contents = flowManager.GetContents(cell);
+			ConduitFlow.ConduitContents contents = Conduit.GetFlowManager(conduitType).GetContents(cell);
 			element = contents.element.CreateTag();
 			hasMass = contents.mass > 0f;
 			return;
 		}
-		SolidConduitFlow flowManager2 = SolidConduit.GetFlowManager();
-		Pickupable pickupable = flowManager2.GetPickupable(flowManager2.GetContents(cell).pickupableHandle);
+		SolidConduitFlow flowManager = SolidConduit.GetFlowManager();
+		Pickupable pickupable = flowManager.GetPickupable(flowManager.GetContents(cell).pickupableHandle);
 		KPrefabID kPrefabID = ((pickupable != null) ? pickupable.GetComponent<KPrefabID>() : null);
 		if (kPrefabID != null && pickupable.PrimaryElement.Mass > 0f)
 		{

@@ -35,7 +35,7 @@ public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 
 	public List<TagSet> allowDisplayCategories = new List<TagSet>();
 
-	private bool initialized = false;
+	private bool initialized;
 
 	protected override void OnPrefabInit()
 	{
@@ -141,7 +141,7 @@ public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 
 	private void SpawnRows()
 	{
-		WorldInventory worldInventory = ClusterManager.Instance.GetWorld(ClusterManager.Instance.activeWorldId).worldInventory;
+		_ = ClusterManager.Instance.GetWorld(ClusterManager.Instance.activeWorldId).worldInventory;
 		allowDisplayCategories.Add(GameTags.MaterialCategories);
 		allowDisplayCategories.Add(GameTags.CalorieCategories);
 		allowDisplayCategories.Add(GameTags.UnitCategories);

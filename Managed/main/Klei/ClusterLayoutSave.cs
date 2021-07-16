@@ -12,7 +12,7 @@ namespace Klei
 
 			public string name = string.Empty;
 
-			public bool isDiscovered = false;
+			public bool isDiscovered;
 
 			public List<string> traits = new List<string>();
 		}

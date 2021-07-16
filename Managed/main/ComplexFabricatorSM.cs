@@ -67,10 +67,9 @@ public class ComplexFabricatorSM : StateMachineComponent<ComplexFabricatorSM.Sta
 
 		public void RefreshHEPStatus(StatesInstance smi)
 		{
-			HighEnergyParticleStorage component = smi.master.GetComponent<HighEnergyParticleStorage>();
-			if (component != null && smi.master.fabricator.NeedsMoreHEPForQueuedRecipe())
+			if (smi.master.GetComponent<HighEnergyParticleStorage>() != null && smi.master.fabricator.NeedsMoreHEPForQueuedRecipe())
 			{
-				smi.master.GetComponent<KSelectable>().AddStatusItem(Db.Get().BuildingStatusItems.FabricatorLacksHEP);
+				smi.master.GetComponent<KSelectable>().AddStatusItem(Db.Get().BuildingStatusItems.FabricatorLacksHEP, smi.master.fabricator);
 			}
 			else
 			{

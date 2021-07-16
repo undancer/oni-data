@@ -19,7 +19,11 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			return other is RemotePlaySessionID_t && this == (RemotePlaySessionID_t)other;
+			if (other is RemotePlaySessionID_t)
+			{
+				return this == (RemotePlaySessionID_t)other;
+			}
+			return false;
 		}
 
 		public override int GetHashCode()

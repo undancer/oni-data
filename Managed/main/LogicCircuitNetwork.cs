@@ -8,9 +8,9 @@ public class LogicCircuitNetwork : UtilityNetwork
 {
 	public class LogicSoundPair
 	{
-		public int playedIndex = 0;
+		public int playedIndex;
 
-		public float lastPlayed = 0f;
+		public float lastPlayed;
 	}
 
 	private List<LogicWire>[] wireGroups = new List<LogicWire>[2];
@@ -25,7 +25,7 @@ public class LogicCircuitNetwork : UtilityNetwork
 
 	private int outputValue;
 
-	private bool resetting = false;
+	private bool resetting;
 
 	public static float logicSoundLastPlayedTime = 0f;
 
@@ -33,11 +33,11 @@ public class LogicCircuitNetwork : UtilityNetwork
 
 	private const float MIN_OVERLOAD_NOTIFICATION_DISPLAY_TIME = 5f;
 
-	private GameObject targetOverloadedWire = null;
+	private GameObject targetOverloadedWire;
 
-	private float timeOverloaded = 0f;
+	private float timeOverloaded;
 
-	private float timeOverloadNotificationDisplayed = 0f;
+	private float timeOverloadNotificationDisplayed;
 
 	private Notification overloadedNotification;
 
@@ -114,13 +114,11 @@ public class LogicCircuitNetwork : UtilityNetwork
 	{
 		if (item is ILogicEventReceiver)
 		{
-			ILogicEventReceiver logicEventReceiver = (ILogicEventReceiver)item;
-			logicEventReceiver.OnLogicNetworkConnectionChanged(connected: true);
+			((ILogicEventReceiver)item).OnLogicNetworkConnectionChanged(connected: true);
 		}
 		else if (item is ILogicEventSender)
 		{
-			ILogicEventSender logicEventSender = (ILogicEventSender)item;
-			logicEventSender.OnLogicNetworkConnectionChanged(connected: true);
+			((ILogicEventSender)item).OnLogicNetworkConnectionChanged(connected: true);
 		}
 	}
 
@@ -128,14 +126,13 @@ public class LogicCircuitNetwork : UtilityNetwork
 	{
 		if (item is ILogicEventReceiver)
 		{
-			ILogicEventReceiver logicEventReceiver = item as ILogicEventReceiver;
-			logicEventReceiver.ReceiveLogicEvent(0);
-			logicEventReceiver.OnLogicNetworkConnectionChanged(connected: false);
+			ILogicEventReceiver obj = item as ILogicEventReceiver;
+			obj.ReceiveLogicEvent(0);
+			obj.OnLogicNetworkConnectionChanged(connected: false);
 		}
 		else if (item is ILogicEventSender)
 		{
-			ILogicEventSender logicEventSender = item as ILogicEventSender;
-			logicEventSender.OnLogicNetworkConnectionChanged(connected: false);
+			(item as ILogicEventSender).OnLogicNetworkConnectionChanged(connected: false);
 		}
 	}
 
@@ -265,7 +262,6 @@ public class LogicCircuitNetwork : UtilityNetwork
 		{
 			Vector3 position = list[index].transform.GetPosition();
 			position.z = 0f;
-			string name = "Logic_Circuit_Toggle";
 			LogicSoundPair logicSoundPair = new LogicSoundPair();
 			if (!logicSoundRegister.ContainsKey(id))
 			{
@@ -286,7 +282,7 @@ public class LogicCircuitNetwork : UtilityNetwork
 				logicSoundRegister[id].lastPlayed = Time.time;
 			}
 			float value = (Time.time - logicSoundPair.lastPlayed) / 3f;
-			EventInstance instance2 = KFMOD.BeginOneShot(GlobalAssets.GetSound(name), position);
+			EventInstance instance2 = KFMOD.BeginOneShot(GlobalAssets.GetSound("Logic_Circuit_Toggle"), position);
 			instance2.setParameterByName("logic_volumeModifer", value);
 			instance2.setParameterByName("wireCount", num % 24);
 			instance2.setParameterByName("enabled", outputValue);
@@ -303,8 +299,7 @@ public class LogicCircuitNetwork : UtilityNetwork
 		{
 			List<LogicWire> list3 = wireGroups[i];
 			List<LogicUtilityNetworkLink> list4 = relevantBridges[i];
-			LogicWire.BitDepth rating = (LogicWire.BitDepth)i;
-			float num = LogicWire.GetBitDepthAsInt(rating);
+			float num = LogicWire.GetBitDepthAsInt((LogicWire.BitDepth)i);
 			if ((float)bits_used > num && ((list4 != null && list4.Count > 0) || (list3 != null && list3.Count > 0)))
 			{
 				flag = true;
@@ -352,8 +347,7 @@ public class LogicCircuitNetwork : UtilityNetwork
 			{
 				timeOverloadNotificationDisplayed = 0f;
 				overloadedNotification = new Notification(MISC.NOTIFICATIONS.LOGIC_CIRCUIT_OVERLOADED.NAME, NotificationType.BadMinor, null, null, expires: true, 0f, null, null, targetOverloadedWire.transform);
-				Notifier notifier = Game.Instance.FindOrAdd<Notifier>();
-				notifier.Add(overloadedNotification);
+				Game.Instance.FindOrAdd<Notifier>().Add(overloadedNotification);
 			}
 		}
 		else
@@ -371,8 +365,7 @@ public class LogicCircuitNetwork : UtilityNetwork
 	{
 		if (overloadedNotification != null)
 		{
-			Notifier notifier = Game.Instance.FindOrAdd<Notifier>();
-			notifier.Remove(overloadedNotification);
+			Game.Instance.FindOrAdd<Notifier>().Remove(overloadedNotification);
 			overloadedNotification = null;
 		}
 	}

@@ -94,7 +94,17 @@ public static class Localization
 
 		public string msgstr;
 
-		public bool IsPopulated => msgctxt != null && msgstr != null && msgstr.Length > 0;
+		public bool IsPopulated
+		{
+			get
+			{
+				if (msgctxt != null && msgstr != null)
+				{
+					return msgstr.Length > 0;
+				}
+				return false;
+			}
+		}
 	}
 
 	public enum SelectedLanguageType
@@ -146,7 +156,17 @@ public static class Localization
 
 	public static TMP_FontAsset FontAsset => sFontAsset;
 
-	public static bool IsRightToLeft => sLocale != null && sLocale.IsRightToLeft;
+	public static bool IsRightToLeft
+	{
+		get
+		{
+			if (sLocale == null)
+			{
+				return false;
+			}
+			return sLocale.IsRightToLeft;
+		}
+	}
 
 	private static IEnumerable<Type> CollectLocStringTreeRoots(string locstrings_namespace, Assembly assembly)
 	{
@@ -159,8 +179,7 @@ public static class Localization
 	{
 		Dictionary<string, object> dictionary = new Dictionary<string, object>();
 		FieldInfo[] fields = locstring_tree_root.GetFields();
-		FieldInfo[] array = fields;
-		foreach (FieldInfo fieldInfo in array)
+		foreach (FieldInfo fieldInfo in fields)
 		{
 			if (!(fieldInfo.FieldType != typeof(LocString)))
 			{
@@ -176,8 +195,7 @@ public static class Localization
 			}
 		}
 		Type[] nestedTypes = locstring_tree_root.GetNestedTypes();
-		Type[] array2 = nestedTypes;
-		foreach (Type type in array2)
+		foreach (Type type in nestedTypes)
 		{
 			Dictionary<string, object> dictionary2 = MakeRuntimeLocStringTree(type);
 			if (dictionary2.Count > 0)
@@ -319,11 +337,9 @@ public static class Localization
 			}
 		}
 		ClearLanguage();
-		GameObject gameObject = KScreenManager.AddChild(context, ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject);
-		KScreen component = gameObject.GetComponent<KScreen>();
+		KScreen component = KScreenManager.AddChild(context, ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject).GetComponent<KScreen>();
 		component.Activate();
-		ConfirmDialogScreen component2 = component.GetComponent<ConfirmDialogScreen>();
-		component2.PopupConfirmDialog(title_text: UI.CONFIRMDIALOG.DIALOG_HEADER, text: string.Format(UI.FRONTEND.TRANSLATIONS_SCREEN.MISSING_LANGUAGE_PACK, arg), confirm_text: UI.FRONTEND.TRANSLATIONS_SCREEN.RESTART, on_confirm: App.instance.Restart, on_cancel: null);
+		component.GetComponent<ConfirmDialogScreen>().PopupConfirmDialog(title_text: UI.CONFIRMDIALOG.DIALOG_HEADER, text: string.Format(UI.FRONTEND.TRANSLATIONS_SCREEN.MISSING_LANGUAGE_PACK, arg), confirm_text: UI.FRONTEND.TRANSLATIONS_SCREEN.RESTART, on_confirm: App.instance.Restart, on_cancel: null);
 	}
 
 	public static void LoadPreinstalledTranslation(string code)
@@ -348,17 +364,14 @@ public static class Localization
 		{
 			return false;
 		}
-		string[] lines = File.ReadAllLines(path, Encoding.UTF8);
-		bool flag = LoadTranslationFromLines(lines);
-		if (flag)
+		bool num = LoadTranslationFromLines(File.ReadAllLines(path, Encoding.UTF8));
+		if (num)
 		{
 			KPlayerPrefs.SetString(SELECTED_LANGUAGE_TYPE_KEY, source.ToString());
+			return num;
 		}
-		else
-		{
-			ClearLanguage();
-		}
-		return flag;
+		ClearLanguage();
+		return num;
 	}
 
 	private static bool LoadTranslationFromLines(string[] lines)
@@ -369,21 +382,20 @@ public static class Localization
 		}
 		sLocale = GetLocale(lines);
 		DebugUtil.LogArgs(" -> Locale is now ", sLocale.ToString());
-		bool flag = LoadTranslation(lines);
-		if (flag)
+		bool num = LoadTranslation(lines);
+		if (num)
 		{
 			currentFontName = GetFontName(lines);
 			SwapToLocalizedFont(currentFontName);
 		}
-		return flag;
+		return num;
 	}
 
 	private static bool LoadTranslation(string[] lines, bool isTemplate = false)
 	{
 		try
 		{
-			Dictionary<string, string> translated_strings = ExtractTranslatedStrings(lines, isTemplate);
-			OverloadStrings(translated_strings);
+			OverloadStrings(ExtractTranslatedStrings(lines, isTemplate));
 			return true;
 		}
 		catch (Exception ex)
@@ -395,8 +407,7 @@ public static class Localization
 
 	public static Dictionary<string, string> LoadStringsFile(string path, bool isTemplate)
 	{
-		string[] lines = File.ReadAllLines(path, Encoding.UTF8);
-		return ExtractTranslatedStrings(lines, isTemplate);
+		return ExtractTranslatedStrings(File.ReadAllLines(path, Encoding.UTF8), isTemplate);
 	}
 
 	public static Dictionary<string, string> ExtractTranslatedStrings(string[] lines, bool isTemplate = false)
@@ -456,12 +467,11 @@ public static class Localization
 		for (int i = idx + 1; i < all_lines.Length; i++)
 		{
 			string text2 = all_lines[i];
-			if (text2.StartsWith("\""))
+			if (!text2.StartsWith("\""))
 			{
-				list.Add(text2);
-				continue;
+				break;
 			}
-			break;
+			list.Add(text2);
 		}
 		string text3 = "";
 		foreach (string item in list)
@@ -537,8 +547,7 @@ public static class Localization
 	public static void OverloadStrings(Dictionary<string, string> translated_strings, string path, Type locstring_hierarchy, ref string parameter_errors, ref string link_errors, ref string link_count_errors)
 	{
 		FieldInfo[] fields = locstring_hierarchy.GetFields();
-		FieldInfo[] array = fields;
-		foreach (FieldInfo fieldInfo in array)
+		foreach (FieldInfo fieldInfo in fields)
 		{
 			if (fieldInfo.FieldType != typeof(LocString))
 			{
@@ -569,8 +578,7 @@ public static class Localization
 			}
 		}
 		Type[] nestedTypes = locstring_hierarchy.GetNestedTypes();
-		Type[] array2 = nestedTypes;
-		foreach (Type type in array2)
+		foreach (Type type in nestedTypes)
 		{
 			string path2 = path + "." + type.Name;
 			OverloadStrings(translated_strings, path2, type, ref parameter_errors, ref link_errors, ref link_count_errors);
@@ -669,8 +677,7 @@ public static class Localization
 		{
 			if (locale.MatchesCode(code))
 			{
-				result = locale;
-				break;
+				return locale;
 			}
 		}
 		return result;
@@ -711,8 +718,7 @@ public static class Localization
 
 	private static string GetFontName(string filename)
 	{
-		string[] lines = File.ReadAllLines(filename, Encoding.UTF8);
-		return GetFontName(lines);
+		return GetFontName(File.ReadAllLines(filename, Encoding.UTF8));
 	}
 
 	public static Locale GetDefaultLocale()
@@ -722,8 +728,7 @@ public static class Localization
 		{
 			if (locale.Lang == Language.Unspecified)
 			{
-				result = new Locale(locale);
-				break;
+				return new Locale(locale);
 			}
 		}
 		return result;
@@ -736,8 +741,7 @@ public static class Localization
 		{
 			if (locale.Lang == Language.Unspecified)
 			{
-				result = locale.FontName;
-				break;
+				return locale.FontName;
 			}
 		}
 		return result;
@@ -882,7 +886,11 @@ public static class Localization
 
 	private static bool HasSameOrLessLinkCountAsEnglish(string english_string, string translated_string)
 	{
-		return HasSameOrLessTokenCount(english_string, translated_string, "<link") && HasSameOrLessTokenCount(english_string, translated_string, "</link");
+		if (HasSameOrLessTokenCount(english_string, translated_string, "<link"))
+		{
+			return HasSameOrLessTokenCount(english_string, translated_string, "</link");
+		}
+		return false;
 	}
 
 	private static bool HasMatchingLinkTags(string str, int idx = 0)
@@ -925,24 +933,26 @@ public static class Localization
 		else if (matchCollection != null && matchCollection2 != null && matchCollection.Count == matchCollection2.Count)
 		{
 			result = true;
-			foreach (object item in matchCollection)
 			{
-				string a = item.ToString();
-				bool flag = false;
-				foreach (object item2 in matchCollection2)
+				foreach (object item in matchCollection)
 				{
-					string b = item2.ToString();
-					if (a == b)
+					string a = item.ToString();
+					bool flag = false;
+					foreach (object item2 in matchCollection2)
 					{
-						flag = true;
-						break;
+						string b = item2.ToString();
+						if (a == b)
+						{
+							flag = true;
+							break;
+						}
+					}
+					if (!flag)
+					{
+						return false;
 					}
 				}
-				if (!flag)
-				{
-					result = false;
-					break;
-				}
+				return result;
 			}
 		}
 		return result;
@@ -974,8 +984,7 @@ public static class Localization
 		string defaultLocalizationFilePath = GetDefaultLocalizationFilePath();
 		if (File.Exists(defaultLocalizationFilePath))
 		{
-			string[] lines = File.ReadAllLines(defaultLocalizationFilePath, Encoding.UTF8);
-			LoadTranslation(lines, isTemplate: true);
+			LoadTranslation(File.ReadAllLines(defaultLocalizationFilePath, Encoding.UTF8), isTemplate: true);
 		}
 		LanguageOptionsScreen.CleanUpSavedLanguageMod();
 	}

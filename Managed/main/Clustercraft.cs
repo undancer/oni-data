@@ -97,9 +97,9 @@ public class Clustercraft : ClusterGridEntity
 		}
 	};
 
-	public override bool IsVisible => status == CraftStatus.InFlight;
+	public override bool IsVisible => true;
 
-	public override ClusterRevealLevel IsVisibleInFOW => ClusterRevealLevel.Hidden;
+	public override ClusterRevealLevel IsVisibleInFOW => ClusterRevealLevel.Visible;
 
 	public CraftModuleInterface ModuleInterface => m_moduleInterface;
 
@@ -206,8 +206,7 @@ public class Clustercraft : ClusterGridEntity
 	public void Init(AxialI location, LaunchPad pad)
 	{
 		m_location = location;
-		RocketClusterDestinationSelector component = GetComponent<RocketClusterDestinationSelector>();
-		component.SetDestination(m_location);
+		GetComponent<RocketClusterDestinationSelector>().SetDestination(m_location);
 		SetRocketName(GameUtil.GenerateRandomRocketName());
 		if (pad != null)
 		{
@@ -224,13 +223,20 @@ public class Clustercraft : ClusterGridEntity
 
 	private bool CanTravel(bool tryingToLand)
 	{
-		return this.HasTag(GameTags.RocketInSpace) && (tryingToLand || HasResourcesToMove());
+		if (this.HasTag(GameTags.RocketInSpace))
+		{
+			if (!tryingToLand)
+			{
+				return HasResourcesToMove();
+			}
+			return true;
+		}
+		return false;
 	}
 
 	private bool CanTravelToCell(AxialI location)
 	{
-		ClusterGridEntity visibleEntityOfLayerAtCell = ClusterGrid.Instance.GetVisibleEntityOfLayerAtCell(location, EntityLayer.Asteroid);
-		if (visibleEntityOfLayerAtCell != null)
+		if (ClusterGrid.Instance.GetVisibleEntityOfLayerAtCell(location, EntityLayer.Asteroid) != null)
 		{
 			return CanLandAtAsteroid(location, mustLandImmediately: true);
 		}
@@ -295,7 +301,11 @@ public class Clustercraft : ClusterGridEntity
 
 	public bool IsFlightInProgress()
 	{
-		return Status == CraftStatus.InFlight && m_clusterTraveler.IsTraveling();
+		if (Status == CraftStatus.InFlight)
+		{
+			return m_clusterTraveler.IsTraveling();
+		}
+		return false;
 	}
 
 	public ClusterGridEntity GetPOIAtCurrentLocation()
@@ -327,7 +337,11 @@ public class Clustercraft : ClusterGridEntity
 
 	private bool CheckDesinationInRange()
 	{
-		return m_clusterTraveler.CurrentPath != null && Speed * m_clusterTraveler.TravelETA() <= ModuleInterface.Range;
+		if (m_clusterTraveler.CurrentPath == null)
+		{
+			return false;
+		}
+		return Speed * m_clusterTraveler.TravelETA() <= ModuleInterface.Range;
 	}
 
 	public bool HasResourcesToMove(int hexes = 1, CombustionResource combustionResource = CombustionResource.All)
@@ -346,8 +360,7 @@ public class Clustercraft : ClusterGridEntity
 		float num = 600f;
 		foreach (Ref<RocketModuleCluster> clusterModule in m_moduleInterface.ClusterModules)
 		{
-			RocketModuleCluster rocketModuleCluster = clusterModule.Get();
-			RocketEngineCluster component = rocketModuleCluster.GetComponent<RocketEngineCluster>();
+			RocketEngineCluster component = clusterModule.Get().GetComponent<RocketEngineCluster>();
 			if (!(component != null))
 			{
 				continue;
@@ -405,8 +418,7 @@ public class Clustercraft : ClusterGridEntity
 				foreach (KeyValuePair<Tag, float> item in component.GetOxidizersAvailable())
 				{
 					float num = dlc1OxidizerEfficiencies[item.Key];
-					float a = fuelEquivalentKGs / num;
-					float num2 = Mathf.Min(a, item.Value);
+					float num2 = Mathf.Min(fuelEquivalentKGs / num, item.Value);
 					if (num2 > 0f)
 					{
 						component.storage.ConsumeIgnoringDisease(item.Key, num2);
@@ -452,23 +464,24 @@ public class Clustercraft : ClusterGridEntity
 	public void DestroyCraftAndModules()
 	{
 		List<RocketModuleCluster> list = m_moduleInterface.ClusterModules.Select((Ref<RocketModuleCluster> x) => x.Get()).ToList();
-		foreach (RocketModuleCluster item in list)
+		for (int num = list.Count - 1; num >= 0; num--)
 		{
-			Storage component = item.GetComponent<Storage>();
+			RocketModuleCluster rocketModuleCluster = list[num];
+			Storage component = rocketModuleCluster.GetComponent<Storage>();
 			if (component != null)
 			{
 				component.ConsumeAllIgnoringDisease();
 			}
-			MinionStorage component2 = item.GetComponent<MinionStorage>();
+			MinionStorage component2 = rocketModuleCluster.GetComponent<MinionStorage>();
 			if (component2 != null)
 			{
 				List<MinionStorage.Info> storedMinionInfo = component2.GetStoredMinionInfo();
-				for (int num = storedMinionInfo.Count - 1; num >= 0; num--)
+				for (int num2 = storedMinionInfo.Count - 1; num2 >= 0; num2--)
 				{
-					component2.DeleteStoredMinion(storedMinionInfo[num].id);
+					component2.DeleteStoredMinion(storedMinionInfo[num2].id);
 				}
 			}
-			Util.KDestroyGameObject(item.gameObject);
+			Util.KDestroyGameObject(rocketModuleCluster.gameObject);
 		}
 		Util.KDestroyGameObject(base.gameObject);
 	}
@@ -536,8 +549,7 @@ public class Clustercraft : ClusterGridEntity
 			failReason = "<TEMP>The pad already has a rocket on it!<TEMP>";
 			return PadLandingStatus.CanLandEventually;
 		}
-		int num = ConditionFlightPathIsClear.PadTopEdgeDistanceToCeilingEdge(pad.gameObject);
-		if (num < ModuleInterface.RocketHeight)
+		if (ConditionFlightPathIsClear.PadTopEdgeDistanceToCeilingEdge(pad.gameObject) < ModuleInterface.RocketHeight)
 		{
 			failReason = UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_TOO_SHORT;
 			return PadLandingStatus.CanNeverLand;
@@ -551,8 +563,7 @@ public class Clustercraft : ClusterGridEntity
 		int rocketBottomPosition = pad.RocketBottomPosition;
 		foreach (Ref<RocketModuleCluster> clusterModule in ModuleInterface.ClusterModules)
 		{
-			RocketModuleCluster rocketModuleCluster = clusterModule.Get();
-			GameObject gameObject = rocketModuleCluster.gameObject;
+			GameObject gameObject = clusterModule.Get().gameObject;
 			int moduleRelativeVerticalPosition = ModuleInterface.GetModuleRelativeVerticalPosition(gameObject);
 			Building component = gameObject.GetComponent<Building>();
 			BuildingUnderConstruction component2 = gameObject.GetComponent<BuildingUnderConstruction>();
@@ -606,7 +617,15 @@ public class Clustercraft : ClusterGridEntity
 		{
 			string failReason;
 			PadLandingStatus padLandingStatus = CanLandAtPad(destinationPad, out failReason);
-			return padLandingStatus == PadLandingStatus.CanLandImmediately || (!mustLandImmediately && padLandingStatus == PadLandingStatus.CanLandEventually);
+			if (padLandingStatus != 0)
+			{
+				if (!mustLandImmediately)
+				{
+					return padLandingStatus == PadLandingStatus.CanLandEventually;
+				}
+				return false;
+			}
+			return true;
 		}
 		return FindValidLandingPad(location, mustLandImmediately) != null;
 	}
@@ -742,12 +761,21 @@ public class Clustercraft : ClusterGridEntity
 
 	public override bool ShowName()
 	{
-		return true;
+		return status != CraftStatus.Grounded;
+	}
+
+	public override bool ShowPath()
+	{
+		return status != CraftStatus.Grounded;
 	}
 
 	public override bool ShowProgressBar()
 	{
-		return HasResourcesToMove() && m_clusterTraveler.IsTraveling();
+		if (HasResourcesToMove())
+		{
+			return m_clusterTraveler.IsTraveling();
+		}
+		return false;
 	}
 
 	public override float GetProgress()

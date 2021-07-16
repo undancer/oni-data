@@ -29,17 +29,29 @@ public class Vent : KMonoBehaviour, IGameObjectEffectDescriptor
 
 		public bool NeedsExhaust()
 		{
-			return exhaust != null && base.master.GetEndPointState() != State.Ready && base.master.endpointType == Endpoint.Source;
+			if (exhaust != null && base.master.GetEndPointState() != State.Ready)
+			{
+				return base.master.endpointType == Endpoint.Source;
+			}
+			return false;
 		}
 
 		public bool Blocked()
 		{
-			return base.master.GetEndPointState() == State.Blocked && base.master.endpointType != Endpoint.Source;
+			if (base.master.GetEndPointState() == State.Blocked)
+			{
+				return base.master.endpointType != Endpoint.Source;
+			}
+			return false;
 		}
 
 		public bool OverPressure()
 		{
-			return exhaust != null && base.master.GetEndPointState() == State.OverPressure && base.master.endpointType != Endpoint.Source;
+			if (exhaust != null && base.master.GetEndPointState() == State.OverPressure)
+			{
+				return base.master.endpointType != Endpoint.Source;
+			}
+			return false;
 		}
 
 		public void CheckTransitions()
@@ -68,7 +80,11 @@ public class Vent : KMonoBehaviour, IGameObjectEffectDescriptor
 
 		public StatusItem SelectStatusItem(StatusItem gas_status_item, StatusItem liquid_status_item)
 		{
-			return (base.master.conduitType == ConduitType.Gas) ? gas_status_item : liquid_status_item;
+			if (base.master.conduitType != ConduitType.Gas)
+			{
+				return liquid_status_item;
+			}
+			return gas_status_item;
 		}
 	}
 
@@ -105,7 +121,7 @@ public class Vent : KMonoBehaviour, IGameObjectEffectDescriptor
 
 	private int cell = -1;
 
-	private int sortKey = 0;
+	private int sortKey;
 
 	[Serialize]
 	public Dictionary<SimHashes, float> lifeTimeVentMass = new Dictionary<SimHashes, float>();
@@ -116,7 +132,7 @@ public class Vent : KMonoBehaviour, IGameObjectEffectDescriptor
 	public ConduitType conduitType = ConduitType.Gas;
 
 	[SerializeField]
-	public Endpoint endpointType = Endpoint.Source;
+	public Endpoint endpointType;
 
 	[SerializeField]
 	public float overpressureMass = 1f;
@@ -213,8 +229,7 @@ public class Vent : KMonoBehaviour, IGameObjectEffectDescriptor
 
 	public bool IsConnected()
 	{
-		IUtilityNetworkMgr networkManager = Conduit.GetNetworkManager(conduitType);
-		UtilityNetwork networkForCell = networkManager.GetNetworkForCell(cell);
+		UtilityNetwork networkForCell = Conduit.GetNetworkManager(conduitType).GetNetworkForCell(cell);
 		if (networkForCell != null)
 		{
 			return (networkForCell as FlowUtilityNetwork).HasSinks;

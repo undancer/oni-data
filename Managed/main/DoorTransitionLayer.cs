@@ -102,7 +102,7 @@ public class DoorTransitionLayer : TransitionDriver.OverrideLayer
 			{
 				navDoor = gameObject.GetSMI<INavDoor>();
 			}
-			if (navDoor?.isSpawned ?? false)
+			if (navDoor != null && navDoor.isSpawned)
 			{
 				return navDoor;
 			}

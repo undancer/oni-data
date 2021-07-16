@@ -9,7 +9,7 @@ public class SelectToolHoverTextCard : HoverTextConfiguration
 
 	private Dictionary<HashedString, Func<bool>> overlayFilterMap = new Dictionary<HashedString, Func<bool>>();
 
-	public int recentNumberOfDisplayedSelectables = 0;
+	public int recentNumberOfDisplayedSelectables;
 
 	public int currentSelectedSelectableIndex = -1;
 
@@ -174,8 +174,7 @@ public class SelectToolHoverTextCard : HoverTextConfiguration
 		{
 			return;
 		}
-		HoverTextScreen instance = HoverTextScreen.Instance;
-		HoverTextDrawer hoverTextDrawer = instance.BeginDrawing();
+		HoverTextDrawer hoverTextDrawer = HoverTextScreen.Instance.BeginDrawing();
 		overlayValidHoverObjects.Clear();
 		foreach (KSelectable hoverObject in hoverObjects)
 		{
@@ -274,8 +273,7 @@ public class SelectToolHoverTextCard : HoverTextConfiguration
 						if (component.GetComponent<MonumentPart>() != null && component.GetComponent<MonumentPart>().IsMonumentCompleted())
 						{
 							text3 = MISC.MONUMENT_COMPLETE.NAME;
-							List<GameObject> attachedNetwork = AttachableBuilding.GetAttachedNetwork(component.GetComponent<AttachableBuilding>());
-							foreach (GameObject item3 in attachedNetwork)
+							foreach (GameObject item3 in AttachableBuilding.GetAttachedNetwork(component.GetComponent<AttachableBuilding>()))
 							{
 								highlightedObjects.Add(item3);
 							}
@@ -702,7 +700,7 @@ public class SelectToolHoverTextCard : HoverTextConfiguration
 			{
 				hoverTextDrawer.NewLine();
 				hoverTextDrawer.DrawIcon(iconDash);
-				Element element2 = Grid.Element[num];
+				Element obj = Grid.Element[num];
 				string text13 = cachedTemperatureString;
 				float num6 = Grid.Temperature[num];
 				if (num6 != cachedTemperature)
@@ -710,7 +708,7 @@ public class SelectToolHoverTextCard : HoverTextConfiguration
 					cachedTemperature = num6;
 					text13 = (cachedTemperatureString = GameUtil.GetFormattedTemperature(Grid.Temperature[num]));
 				}
-				string text14 = ((element2.specificHeatCapacity == 0f) ? "N/A" : text13);
+				string text14 = ((obj.specificHeatCapacity == 0f) ? "N/A" : text13);
 				hoverTextDrawer.DrawText(text14, Styles_BodyText.Standard);
 			}
 			if (CellSelectionObject.IsExposedToSpace(num))
@@ -828,7 +826,11 @@ public class SelectToolHoverTextCard : HoverTextConfiguration
 
 	private static bool ShouldShowOxygenOverlay(KSelectable selectable)
 	{
-		return selectable.GetComponent<AlgaeHabitat>() != null || selectable.GetComponent<Electrolyzer>() != null || selectable.GetComponent<AirFilter>() != null;
+		if (!(selectable.GetComponent<AlgaeHabitat>() != null) && !(selectable.GetComponent<Electrolyzer>() != null))
+		{
+			return selectable.GetComponent<AirFilter>() != null;
+		}
+		return true;
 	}
 
 	private static bool ShouldShowLightOverlay(KSelectable selectable)
@@ -838,23 +840,47 @@ public class SelectToolHoverTextCard : HoverTextConfiguration
 
 	private static bool ShouldShowRadiationOverlay(KSelectable selectable)
 	{
-		return selectable.GetComponent<HighEnergyParticle>() != null || (bool)selectable.GetComponent<HighEnergyParticlePort>();
+		if (!(selectable.GetComponent<HighEnergyParticle>() != null))
+		{
+			return selectable.GetComponent<HighEnergyParticlePort>();
+		}
+		return true;
 	}
 
 	private static bool ShouldShowGasConduitOverlay(KSelectable selectable)
 	{
-		return (selectable.GetComponent<Conduit>() != null && selectable.GetComponent<Conduit>().type == ConduitType.Gas) || (selectable.GetComponent<Filterable>() != null && selectable.GetComponent<Filterable>().filterElementState == Filterable.ElementState.Gas) || (selectable.GetComponent<Vent>() != null && selectable.GetComponent<Vent>().conduitType == ConduitType.Gas) || (selectable.GetComponent<Pump>() != null && selectable.GetComponent<Pump>().conduitType == ConduitType.Gas) || (selectable.GetComponent<ValveBase>() != null && selectable.GetComponent<ValveBase>().conduitType == ConduitType.Gas);
+		if ((!(selectable.GetComponent<Conduit>() != null) || selectable.GetComponent<Conduit>().type != ConduitType.Gas) && (!(selectable.GetComponent<Filterable>() != null) || selectable.GetComponent<Filterable>().filterElementState != Filterable.ElementState.Gas) && (!(selectable.GetComponent<Vent>() != null) || selectable.GetComponent<Vent>().conduitType != ConduitType.Gas) && (!(selectable.GetComponent<Pump>() != null) || selectable.GetComponent<Pump>().conduitType != ConduitType.Gas))
+		{
+			if (selectable.GetComponent<ValveBase>() != null)
+			{
+				return selectable.GetComponent<ValveBase>().conduitType == ConduitType.Gas;
+			}
+			return false;
+		}
+		return true;
 	}
 
 	private static bool ShouldShowLiquidConduitOverlay(KSelectable selectable)
 	{
-		return (selectable.GetComponent<Conduit>() != null && selectable.GetComponent<Conduit>().type == ConduitType.Liquid) || (selectable.GetComponent<Filterable>() != null && selectable.GetComponent<Filterable>().filterElementState == Filterable.ElementState.Liquid) || (selectable.GetComponent<Vent>() != null && selectable.GetComponent<Vent>().conduitType == ConduitType.Liquid) || (selectable.GetComponent<Pump>() != null && selectable.GetComponent<Pump>().conduitType == ConduitType.Liquid) || (selectable.GetComponent<ValveBase>() != null && selectable.GetComponent<ValveBase>().conduitType == ConduitType.Liquid);
+		if ((!(selectable.GetComponent<Conduit>() != null) || selectable.GetComponent<Conduit>().type != ConduitType.Liquid) && (!(selectable.GetComponent<Filterable>() != null) || selectable.GetComponent<Filterable>().filterElementState != Filterable.ElementState.Liquid) && (!(selectable.GetComponent<Vent>() != null) || selectable.GetComponent<Vent>().conduitType != ConduitType.Liquid) && (!(selectable.GetComponent<Pump>() != null) || selectable.GetComponent<Pump>().conduitType != ConduitType.Liquid))
+		{
+			if (selectable.GetComponent<ValveBase>() != null)
+			{
+				return selectable.GetComponent<ValveBase>().conduitType == ConduitType.Liquid;
+			}
+			return false;
+		}
+		return true;
 	}
 
 	private static bool ShouldShowPowerOverlay(KSelectable selectable)
 	{
 		Tag prefabTag = selectable.GetComponent<KPrefabID>().PrefabTag;
-		return OverlayScreen.WireIDs.Contains(prefabTag) || selectable.GetComponent<Battery>() != null || selectable.GetComponent<PowerTransformer>() != null || selectable.GetComponent<EnergyConsumer>() != null || selectable.GetComponent<EnergyGenerator>() != null;
+		if (!OverlayScreen.WireIDs.Contains(prefabTag) && !(selectable.GetComponent<Battery>() != null) && !(selectable.GetComponent<PowerTransformer>() != null) && !(selectable.GetComponent<EnergyConsumer>() != null))
+		{
+			return selectable.GetComponent<EnergyGenerator>() != null;
+		}
+		return true;
 	}
 
 	private static bool ShouldShowTileOverlay(KSelectable selectable)
@@ -864,13 +890,15 @@ public class SelectToolHoverTextCard : HoverTextConfiguration
 		if (component != null)
 		{
 			Element element = component.Element;
-			foreach (Tag tileOverlayFilter in Game.Instance.tileOverlayFilters)
 			{
-				if (element.HasTag(tileOverlayFilter))
+				foreach (Tag tileOverlayFilter in Game.Instance.tileOverlayFilters)
 				{
-					result = true;
-					break;
+					if (element.HasTag(tileOverlayFilter))
+					{
+						return true;
+					}
 				}
+				return result;
 			}
 		}
 		return result;
@@ -884,7 +912,11 @@ public class SelectToolHoverTextCard : HoverTextConfiguration
 	private static bool ShouldShowLogicOverlay(KSelectable selectable)
 	{
 		Tag prefabTag = selectable.GetComponent<KPrefabID>().PrefabTag;
-		return OverlayModes.Logic.HighlightItemIDs.Contains(prefabTag) || selectable.GetComponent<LogicPorts>() != null;
+		if (!OverlayModes.Logic.HighlightItemIDs.Contains(prefabTag))
+		{
+			return selectable.GetComponent<LogicPorts>() != null;
+		}
+		return true;
 	}
 
 	private static bool ShouldShowSolidConveyorOverlay(KSelectable selectable)
@@ -905,6 +937,10 @@ public class SelectToolHoverTextCard : HoverTextConfiguration
 
 	private static bool ShouldShowCropOverlay(KSelectable selectable)
 	{
-		return selectable.GetComponent<Uprootable>() != null || selectable.GetComponent<PlanterBox>() != null;
+		if (!(selectable.GetComponent<Uprootable>() != null))
+		{
+			return selectable.GetComponent<PlanterBox>() != null;
+		}
+		return true;
 	}
 }

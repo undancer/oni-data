@@ -46,13 +46,11 @@ public class ForestTreeConfig : IEntityConfig
 		array2[0] = consumeInfo;
 		EntityTemplates.ExtendPlantToFertilizable(gameObject, array2);
 		gameObject.AddComponent<StandardCropPlant>();
-		BuddingTrunk buddingTrunk = gameObject.AddOrGet<BuddingTrunk>();
-		buddingTrunk.budPrefabID = "ForestTreeBranch";
-		GameObject seed = EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Hidden, "ForestTreeSeed", STRINGS.CREATURES.SPECIES.SEEDS.WOOD_TREE.NAME, STRINGS.CREATURES.SPECIES.SEEDS.WOOD_TREE.DESC, Assets.GetAnim("seed_tree_kanim"), "object", 1, new List<Tag>
+		gameObject.AddOrGet<BuddingTrunk>().budPrefabID = "ForestTreeBranch";
+		EntityTemplates.CreateAndRegisterPreviewForPlant(EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Hidden, "ForestTreeSeed", STRINGS.CREATURES.SPECIES.SEEDS.WOOD_TREE.NAME, STRINGS.CREATURES.SPECIES.SEEDS.WOOD_TREE.DESC, Assets.GetAnim("seed_tree_kanim"), "object", 1, new List<Tag>
 		{
 			GameTags.CropSeed
-		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 4, STRINGS.CREATURES.SPECIES.WOOD_TREE.DOMESTICATEDDESC, EntityTemplates.CollisionShape.CIRCLE, 0.3f, 0.3f);
-		EntityTemplates.CreateAndRegisterPreviewForPlant(seed, "ForestTree_preview", Assets.GetAnim("tree_kanim"), "place", 3, 3);
+		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 4, STRINGS.CREATURES.SPECIES.WOOD_TREE.DOMESTICATEDDESC, EntityTemplates.CollisionShape.CIRCLE, 0.3f, 0.3f), "ForestTree_preview", Assets.GetAnim("tree_kanim"), "place", 3, 3);
 		return gameObject;
 	}
 

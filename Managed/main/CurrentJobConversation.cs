@@ -113,7 +113,6 @@ public class CurrentJobConversation : ConversationType
 
 	private string GetRoleForSpeaker(MinionIdentity speaker)
 	{
-		MinionResume component = speaker.GetComponent<MinionResume>();
-		return component.CurrentRole;
+		return speaker.GetComponent<MinionResume>().CurrentRole;
 	}
 }

@@ -35,14 +35,20 @@ namespace MIConvexHull
 			{
 				return true;
 			}
-			return (Source == voronoiEdge.Source && Target == voronoiEdge.Target) || (Source == voronoiEdge.Target && Target == voronoiEdge.Source);
+			if (Source != voronoiEdge.Source || Target != voronoiEdge.Target)
+			{
+				if (Source == voronoiEdge.Target)
+				{
+					return Target == voronoiEdge.Source;
+				}
+				return false;
+			}
+			return true;
 		}
 
 		public override int GetHashCode()
 		{
-			int num = 23;
-			num = num * 31 + Source.GetHashCode();
-			return num * 31 + Target.GetHashCode();
+			return (23 * 31 + Source.GetHashCode()) * 31 + Target.GetHashCode();
 		}
 	}
 }

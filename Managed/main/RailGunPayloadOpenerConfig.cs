@@ -20,22 +20,19 @@ public class RailGunPayloadOpenerConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("RailGunPayloadOpener", 3, 3, "railgun_emptier_kanim", 250, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.Floodable = false;
-		buildingDef.Overheatable = false;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.DefaultAnimState = "on";
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("RailGunPayloadOpener", 3, 3, "railgun_emptier_kanim", 250, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.NONE);
+		obj.Floodable = false;
+		obj.Overheatable = false;
+		obj.AudioCategory = "Metal";
+		obj.DefaultAnimState = "on";
+		return obj;
 	}
 
 	private void AttachPorts(GameObject go)
 	{
-		ConduitSecondaryOutput conduitSecondaryOutput = go.AddComponent<ConduitSecondaryOutput>();
-		conduitSecondaryOutput.portInfo = liquidOutputPort;
-		ConduitSecondaryOutput conduitSecondaryOutput2 = go.AddComponent<ConduitSecondaryOutput>();
-		conduitSecondaryOutput2.portInfo = gasOutputPort;
-		ConduitSecondaryOutput conduitSecondaryOutput3 = go.AddComponent<ConduitSecondaryOutput>();
-		conduitSecondaryOutput3.portInfo = solidOutputPort;
+		go.AddComponent<ConduitSecondaryOutput>().portInfo = liquidOutputPort;
+		go.AddComponent<ConduitSecondaryOutput>().portInfo = gasOutputPort;
+		go.AddComponent<ConduitSecondaryOutput>().portInfo = solidOutputPort;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

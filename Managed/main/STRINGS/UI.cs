@@ -502,6 +502,8 @@ namespace STRINGS
 
 				public static LocString NORMAL_FLIGHT = "    • This rocket is in flight towards its destination";
 
+				public static LocString NORMAL_UTILITY = "    • This rocket is performing a utility at its destination";
+
 				public static LocString NORMAL_LANDED = "    • This rocket is currently landed on a " + PRE_KEYWORD + "Rocket Platform" + PST_KEYWORD;
 
 				public static LocString WARNING_NO_DESTINATION = "    • This rocket is suspended in space with no set destination";
@@ -1271,6 +1273,41 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "Be kind when you handle it. It's very fragile.";
 			}
+
+			public class REACTOR_MODEL
+			{
+				public static LocString NAME = "Model Nuclear Power Plant";
+
+				public static LocString DESCRIPTION = "It's pronounced nuclear";
+			}
+
+			public class MOOD_RING
+			{
+				public static LocString NAME = "Radiation Mood Ring";
+
+				public static LocString DESCRIPTION = "How radioactive are you feeling?";
+			}
+
+			public class ORACLE
+			{
+				public static LocString NAME = "Useless Machine";
+
+				public static LocString DESCRIPTION = "What does it do?";
+			}
+
+			public class GRUB_STATUE
+			{
+				public static LocString NAME = "Grub Statue";
+
+				public static LocString DESCRIPTION = "Grub Grub";
+			}
+
+			public class HONEY_JAR
+			{
+				public static LocString NAME = "Honey Jar";
+
+				public static LocString DESCRIPTION = "This doesn't taste like uranium";
+			}
 		}
 
 		public class SANDBOXTOOLS
@@ -1518,6 +1555,8 @@ namespace STRINGS
 				public static LocString CHEEVOS = "Colony Achievements";
 
 				public static LocString ACHIEVEMENT_HEADER = "ACHIEVEMENTS";
+
+				public static LocString TIMELAPSE = "Timelapse";
 			}
 
 			public class STATS
@@ -2174,13 +2213,13 @@ namespace STRINGS
 
 			public class MOTD
 			{
-				public static LocString IMAGE_HEADER = "THE BIG MERGE";
+				public static LocString IMAGE_HEADER = "A BREATH OF FRESH AIR";
 
 				public static LocString NEWS_HEADER = "JOIN THE DISCUSSION";
 
 				public static LocString NEWS_BODY = "Stay up to date by joining our mailing list, or head on over to the forums and join the discussion.";
 
-				public static LocString PATCH_NOTES_SUMMARY = "Welcome to the <b>THE BIG MERGE</b>\n\n   •<indent=20px>Toggle between <i>Spaced Out!</i> and Base Game in the main menu without re-downloading the game.</indent>\n\n   •<indent=20px>Base Game now has all <i>Spaced Out!</i> bug fixes and quality-of-life improvements.</indent>\n\n   •<indent=20px>Several buildings and items have been added to the Base Game, including Oxygen Masks, and Meter Valves.</indent>\n\n   •<indent=20px>UI and Diagnostics improvements have been added to the Base Game.</indent>\n   \n   •<indent=20px>Significant updates to the Modding system, modders please see the forum for upgrade instructions.</indent>\n\nCheck out the full patch notes for more details!";
+				public static LocString PATCH_NOTES_SUMMARY = "Welcome to the newest update <b>A BREATH OF FRESH AIR</b>:\n\n•<indent=20px>Several buildings and items have been added to the Base Game, including Oxygen Masks, and Meter Valves.</indent>\n•<indent=20px>Base Game now has all <i>Spaced Out!</i> bug fixes and quality-of-life improvements.</indent>\n•<indent=20px>Updates to <i>Spaced Out!</i> Colony Imperatives</indent>\n•<indent=20px>Significant updates to the Modding system, modders please see the forum for upgrade instructions.</indent>\n•<indent=20px>Toggle between <i>Spaced Out!</i> and Base Game in the main menu without re-downloading the game.</indent>\n\n   Check out the full patch notes for more details!";
 
 				public static LocString UPDATE_TEXT = "LAUNCHED!";
 
@@ -3011,17 +3050,29 @@ namespace STRINGS
 
 			public class SAVEUPGRADEWARNINGS
 			{
-				public static LocString SUDDENMORALEHELPER = "Welcome to the Expressive Upgrade! This update introduces a new Morale system that replaces Food and Decor Expectations that were found in previous versions of the game.\n\nThe game you are trying to load was created before this system was introduced, and will need to be updated. You may either:\n\n\n1) Enable the new Morale system in this save, removing Food and Decor Expectations. It's possible that when you load your save your old colony won't meet your Duplicants' new Morale needs, so they'll receive a 5 cycle Morale boost to give you time to adjust.\n\n2) Disable Morale in this save. The new Morale mechanics will still be visible, but won't affect your Duplicants' stress. Food and Decor expectations will no longer exist in this save.";
-
 				public static LocString SUDDENMORALEHELPER_TITLE = "MORALE CHANGES";
+
+				public static LocString SUDDENMORALEHELPER = "Welcome to the Expressive Upgrade! This update introduces a new Morale system that replaces Food and Decor Expectations that were found in previous versions of the game.\n\nThe game you are trying to load was created before this system was introduced, and will need to be updated. You may either:\n\n\n1) Enable the new Morale system in this save, removing Food and Decor Expectations. It's possible that when you load your save your old colony won't meet your Duplicants' new Morale needs, so they'll receive a 5 cycle Morale boost to give you time to adjust.\n\n2) Disable Morale in this save. The new Morale mechanics will still be visible, but won't affect your Duplicants' stress. Food and Decor expectations will no longer exist in this save.";
 
 				public static LocString SUDDENMORALEHELPER_BUFF = "1) Bring on Morale!";
 
 				public static LocString SUDDENMORALEHELPER_DISABLE = "2) Disable Morale";
 
+				public static LocString NEWAUTOMATIONWARNING_TITLE = "AUTOMATION CHANGES";
+
 				public static LocString NEWAUTOMATIONWARNING = string.Concat("The following buildings have acquired new automation ports!\n\nTake a moment to check whether these buildings in your colony are now unintentionally connected to existing ", BUILDINGS.PREFABS.LOGICWIRE.NAME, "s.");
 
-				public static LocString NEWAUTOMATIONWARNING_TITLE = "AUTOMATION CHANGES";
+				public static LocString MERGEDOWNCHANGES_TITLE = "BREATH OF FRESH AIR UPDATE CHANGES";
+
+				public static LocString MERGEDOWNCHANGES = "Oxygen Not Included has had a <b>major update</b> since this save file was created! In addition to the <b>multitude of bug fixes and quality-of-life features</b>, please pay attention to these changes which may affect your existing colony:";
+
+				public static LocString MERGEDOWNCHANGES_FOOD = "•<indent=20px>Fridges are more effective for early-game food storage</indent>\n•<indent=20px><b>Both</b> freezing temperatures and a sterile gas are needed for <b>total food preservation</b>.</indent>";
+
+				public static LocString MERGEDOWNCHANGES_AIRFILTER = $"•<indent=20px>{BUILDINGS.PREFABS.AIRFILTER.NAME} now requires <b>5w Power</b>.</indent>\n•<indent=20px>Duplicants will get <b>Stinging Eyes</b> from gasses such as chlorine and hydrogen.</indent>";
+
+				public static LocString MERGEDOWNCHANGES_SIMULATION = $"•<indent=20px>Many <b>simulation bugs</b> have been fixed.</indent>\n•<indent=20px>This may <b>change the effectiveness</b> of certain contraptions and {BUILDINGS.PREFABS.STEAMTURBINE2.NAME} setups.</indent>";
+
+				public static LocString MERGEDOWNCHANGES_BUILDINGS = $"•<indent=20px>The <b>{BUILDINGS.PREFABS.OXYGENMASKSTATION.NAME}</b> has been added to aid early-game exploration.</indent>\n•<indent=20px>Use the new <b>Meter Valves</b> for precise control of resources in pipes.</indent>";
 			}
 
 			public static LocString GAME_VERSION = "Game Version: ";
@@ -4476,7 +4527,7 @@ namespace STRINGS
 
 				public static LocString UNREACHABLE = "The selected destination is beyond rocket reach";
 
-				public static LocString NOTSELECTED = "Select the rocket's nosecone to set a destination";
+				public static LocString NOTSELECTED = "Select the rocket's Command Module to set a destination";
 			}
 
 			public class HASFOOD
@@ -6575,6 +6626,13 @@ namespace STRINGS
 
 		public class UISIDESCREENS
 		{
+			public class ARTIFACTANALYSISSIDESCREEN
+			{
+				public static LocString NO_ARTIFACTS_DISCOVERED = "No artifacts analyzed";
+
+				public static LocString NO_ARTIFACTS_DISCOVERED_TOOLTIP = "A skilled artist can analyze artifacts";
+			}
+
 			public class BUTTONMENUSIDESCREEN
 			{
 				public static LocString TITLE = "Building Menu";
@@ -6618,6 +6676,15 @@ namespace STRINGS
 				public static LocString OPENSTARMAPBUTTON = "OPEN STARMAP";
 
 				public static LocString ANALYSIS_TARGET_HEADER = "Object Analysis";
+			}
+
+			public class TEMPORALTEARSIDESCREEN
+			{
+				public static LocString TITLE = "Temporal Tear";
+
+				public static LocString BUTTON_OPEN = "Enter Tear";
+
+				public static LocString BUTTON_CLOSED = "Tear Closed";
 			}
 
 			public class RAILGUNSIDESCREEN
@@ -10200,6 +10267,8 @@ namespace STRINGS
 
 			public static LocString DIET_CONSUMED = "    • Diet: {Foodlist}";
 
+			public static LocString DIET_STORED = "    • Stores: {Foodlist}";
+
 			public static LocString DIET_CONSUMED_ITEM = "{Food}: {Amount}";
 
 			public static LocString DIET_PRODUCED = "    • Excretion: {Items}";
@@ -10407,6 +10476,8 @@ namespace STRINGS
 			public class DAMAGE_POPS
 			{
 				public static LocString OVERHEAT = "Overheat Damage";
+
+				public static LocString CORROSIVE_ELEMENT = "Corrosive Element Damage";
 
 				public static LocString WRONG_ELEMENT = "Wrong Element Damage";
 
@@ -11410,13 +11481,13 @@ namespace STRINGS
 						Debug.LogWarningFormat("String has no open link tag: {0}");
 					}
 				}
+				return text2;
 			}
 			catch
 			{
 				Debug.Log("STRIP LINK FORMATTING FAILED ON: " + text);
-				text2 = text;
+				return text;
 			}
-			return text2;
 		}
 	}
 }

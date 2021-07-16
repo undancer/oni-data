@@ -17,7 +17,7 @@ public class HotTubConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("HotTub", 5, 2, "hottub_kanim", 30, 10f, new float[2]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("HotTub", 5, 2, "hottub_kanim", 30, 10f, new float[2]
 		{
 			200f,
 			200f
@@ -26,22 +26,22 @@ public class HotTubConfig : IBuildingConfig
 			"Metal",
 			"BuildingWood"
 		}, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER3);
-		buildingDef.SceneLayer = Grid.SceneLayer.BuildingFront;
-		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
-		buildingDef.Floodable = true;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.Overheatable = true;
-		buildingDef.OverheatTemperature = MINIMUM_WATER_TEMPERATURE;
-		buildingDef.InputConduitType = ConduitType.Liquid;
-		buildingDef.OutputConduitType = ConduitType.Liquid;
-		buildingDef.UtilityInputOffset = new CellOffset(-1, 0);
-		buildingDef.UtilityOutputOffset = new CellOffset(2, 0);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.PowerInputOffset = new CellOffset(-2, 0);
-		buildingDef.EnergyConsumptionWhenActive = 240f;
-		buildingDef.SelfHeatKilowattsWhenActive = 4f;
-		buildingDef.ExhaustKilowattsWhenActive = 1f;
-		return buildingDef;
+		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
+		obj.ViewMode = OverlayModes.LiquidConduits.ID;
+		obj.Floodable = true;
+		obj.AudioCategory = "Metal";
+		obj.Overheatable = true;
+		obj.OverheatTemperature = MINIMUM_WATER_TEMPERATURE;
+		obj.InputConduitType = ConduitType.Liquid;
+		obj.OutputConduitType = ConduitType.Liquid;
+		obj.UtilityInputOffset = new CellOffset(-1, 0);
+		obj.UtilityOutputOffset = new CellOffset(2, 0);
+		obj.RequiresPowerInput = true;
+		obj.PowerInputOffset = new CellOffset(-2, 0);
+		obj.EnergyConsumptionWhenActive = 240f;
+		obj.SelfHeatKilowattsWhenActive = 4f;
+		obj.ExhaustKilowattsWhenActive = 1f;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

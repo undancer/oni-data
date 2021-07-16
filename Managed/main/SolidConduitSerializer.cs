@@ -18,20 +18,15 @@ public class SolidConduitSerializer : KMonoBehaviour, ISaveLoadableDetails
 	public void Serialize(BinaryWriter writer)
 	{
 		SolidConduitFlow solidConduitFlow = Game.Instance.solidConduitFlow;
-		SolidConduitFlow.SOAInfo sOAInfo = solidConduitFlow.GetSOAInfo();
-		List<int> cells = sOAInfo.Cells;
+		List<int> cells = solidConduitFlow.GetSOAInfo().Cells;
 		int num = 0;
 		for (int i = 0; i < cells.Count; i++)
 		{
 			int cell = cells[i];
 			SolidConduitFlow.ConduitContents contents = solidConduitFlow.GetContents(cell);
-			if (contents.pickupableHandle.IsValid())
+			if (contents.pickupableHandle.IsValid() && (bool)solidConduitFlow.GetPickupable(contents.pickupableHandle))
 			{
-				Pickupable pickupable = solidConduitFlow.GetPickupable(contents.pickupableHandle);
-				if ((bool)pickupable)
-				{
-					num++;
-				}
+				num++;
 			}
 		}
 		writer.Write(num);
@@ -43,20 +38,20 @@ public class SolidConduitSerializer : KMonoBehaviour, ISaveLoadableDetails
 			{
 				continue;
 			}
-			Pickupable pickupable2 = solidConduitFlow.GetPickupable(contents2.pickupableHandle);
-			if ((bool)pickupable2)
+			Pickupable pickupable = solidConduitFlow.GetPickupable(contents2.pickupableHandle);
+			if ((bool)pickupable)
 			{
 				writer.Write(num2);
-				SaveLoadRoot component = pickupable2.GetComponent<SaveLoadRoot>();
+				SaveLoadRoot component = pickupable.GetComponent<SaveLoadRoot>();
 				if (component != null)
 				{
-					string name = pickupable2.GetComponent<KPrefabID>().GetSaveLoadTag().Name;
+					string name = pickupable.GetComponent<KPrefabID>().GetSaveLoadTag().Name;
 					writer.WriteKleiString(name);
 					component.Save(writer);
 				}
 				else
 				{
-					Debug.Log("Tried to save obj in solid conduit but obj has no SaveLoadRoot", pickupable2.gameObject);
+					Debug.Log("Tried to save obj in solid conduit but obj has no SaveLoadRoot", pickupable.gameObject);
 				}
 			}
 		}
@@ -69,8 +64,7 @@ public class SolidConduitSerializer : KMonoBehaviour, ISaveLoadableDetails
 		for (int i = 0; i < num; i++)
 		{
 			int cell = reader.ReadInt32();
-			string tag_string = reader.ReadKleiString();
-			Tag tag = TagManager.Create(tag_string);
+			Tag tag = TagManager.Create(reader.ReadKleiString());
 			SaveLoadRoot saveLoadRoot = SaveLoadRoot.Load(tag, reader);
 			if (saveLoadRoot != null)
 			{

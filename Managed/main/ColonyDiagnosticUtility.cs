@@ -4,7 +4,7 @@ using KSerialization;
 using STRINGS;
 using UnityEngine;
 
-public class ColonyDiagnosticUtility : KMonoBehaviour, ISim4000ms
+public class ColonyDiagnosticUtility : KMonoBehaviour, ISim1000ms
 {
 	public enum DisplaySetting
 	{
@@ -61,25 +61,23 @@ public class ColonyDiagnosticUtility : KMonoBehaviour, ISim4000ms
 		}
 	};
 
-	private bool ignoreFirstUpdate = true;
+	public static bool IgnoreFirstUpdate = true;
+
+	public static ColonyDiagnostic.DiagnosticResult NoDataResult = new ColonyDiagnostic.DiagnosticResult(ColonyDiagnostic.DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.NO_DATA);
 
 	public ColonyDiagnostic.DiagnosticResult.Opinion GetWorldDiagnosticResult(int worldID)
 	{
 		ColonyDiagnostic.DiagnosticResult.Opinion opinion = ColonyDiagnostic.DiagnosticResult.Opinion.Good;
 		foreach (ColonyDiagnostic item in worldDiagnostics[worldID])
 		{
-			DisplaySetting displaySetting = Instance.diagnosticDisplaySettings[worldID][item.id];
-			if (displaySetting != DisplaySetting.Never && !Instance.IsDiagnosticTutorialDisabled(item.id))
+			if (Instance.diagnosticDisplaySettings[worldID][item.id] != DisplaySetting.Never && !Instance.IsDiagnosticTutorialDisabled(item.id))
 			{
 				switch (diagnosticDisplaySettings[worldID][item.id])
 				{
 				case DisplaySetting.Always:
 				case DisplaySetting.AlertOnly:
-				{
-					int num = Math.Min((int)opinion, (int)item.LatestResult.opinion);
-					opinion = (ColonyDiagnostic.DiagnosticResult.Opinion)num;
+					opinion = (ColonyDiagnostic.DiagnosticResult.Opinion)Math.Min((int)opinion, (int)item.LatestResult.opinion);
 					break;
-				}
 				}
 			}
 		}
@@ -91,8 +89,7 @@ public class ColonyDiagnosticUtility : KMonoBehaviour, ISim4000ms
 		ColonyDiagnostic colonyDiagnostic = null;
 		foreach (ColonyDiagnostic item in worldDiagnostics[worldID])
 		{
-			DisplaySetting displaySetting = Instance.diagnosticDisplaySettings[worldID][item.id];
-			if (displaySetting == DisplaySetting.Never || Instance.IsDiagnosticTutorialDisabled(item.id))
+			if (Instance.diagnosticDisplaySettings[worldID][item.id] == DisplaySetting.Never || Instance.IsDiagnosticTutorialDisabled(item.id))
 			{
 				continue;
 			}
@@ -119,8 +116,7 @@ public class ColonyDiagnosticUtility : KMonoBehaviour, ISim4000ms
 		string text = "";
 		foreach (ColonyDiagnostic item in worldDiagnostics[worldID])
 		{
-			DisplaySetting displaySetting = Instance.diagnosticDisplaySettings[worldID][item.id];
-			if (displaySetting == DisplaySetting.Never || Instance.IsDiagnosticTutorialDisabled(item.id))
+			if (Instance.diagnosticDisplaySettings[worldID][item.id] == DisplaySetting.Never || Instance.IsDiagnosticTutorialDisabled(item.id))
 			{
 				continue;
 			}
@@ -206,10 +202,18 @@ public class ColonyDiagnosticUtility : KMonoBehaviour, ISim4000ms
 	private void RemoveWorld(object data)
 	{
 		int key = (int)data;
-		if (diagnosticDisplaySettings.Remove(key))
+		if (!diagnosticDisplaySettings.Remove(key))
 		{
-			worldDiagnostics.Remove(key);
+			return;
 		}
+		if (worldDiagnostics.TryGetValue(key, out var value))
+		{
+			foreach (ColonyDiagnostic item in value)
+			{
+				item.OnCleanUp();
+			}
+		}
+		worldDiagnostics.Remove(key);
 	}
 
 	public ColonyDiagnostic GetDiagnostic(string id, int worldID)
@@ -325,25 +329,11 @@ public class ColonyDiagnosticUtility : KMonoBehaviour, ISim4000ms
 		}
 	}
 
-	public void Sim4000ms(float dt)
+	public void Sim1000ms(float dt)
 	{
-		ColonyDiagnostic.DiagnosticResult diagnosticResult = default(ColonyDiagnostic.DiagnosticResult);
-		if (ignoreFirstUpdate)
+		if (IgnoreFirstUpdate)
 		{
-			diagnosticResult.Message = UI.COLONY_DIAGNOSTICS.NO_DATA;
-			diagnosticResult.opinion = ColonyDiagnostic.DiagnosticResult.Opinion.Normal;
-			diagnosticResult.clickThroughTarget = null;
-		}
-		foreach (KeyValuePair<int, List<ColonyDiagnostic>> worldDiagnostic in worldDiagnostics)
-		{
-			foreach (ColonyDiagnostic item in worldDiagnostic.Value)
-			{
-				item.SetResult(ignoreFirstUpdate ? diagnosticResult : item.Evaluate());
-			}
-		}
-		if (ignoreFirstUpdate)
-		{
-			ignoreFirstUpdate = false;
+			IgnoreFirstUpdate = false;
 		}
 	}
 

@@ -103,9 +103,7 @@ public class GameOptionsScreen : KModalButtonMenu
 
 	private void OnDefaultToCloudSaveToggle()
 	{
-		bool cloudSavesDefault = SaveLoader.GetCloudSavesDefault();
-		bool cloudSavesDefault2 = !cloudSavesDefault;
-		SaveLoader.SetCloudSavesDefault(cloudSavesDefault2);
+		SaveLoader.SetCloudSavesDefault(!SaveLoader.GetCloudSavesDefault());
 		RefreshCloudSaveToggle();
 	}
 
@@ -148,9 +146,9 @@ public class GameOptionsScreen : KModalButtonMenu
 	private void OnExpansion1ContentClicked()
 	{
 		Canvas componentInParent = GetComponentInParent<Canvas>();
-		InfoDialogScreen infoDialogScreen = Util.KInstantiateUI<InfoDialogScreen>(ScreenPrefabs.Instance.InfoDialogScreen.gameObject, componentInParent.gameObject).SetHeader(UI.FRONTEND.GAME_OPTIONS_SCREEN.EXPANSION1_CONTENT_TESTING_TITLE).AddPlainText(UI.FRONTEND.GAME_OPTIONS_SCREEN.EXPANSION1_CONTENT_TESTING_BODY)
-			.AddDefaultOK();
-		infoDialogScreen.gameObject.SetActive(value: true);
+		Util.KInstantiateUI<InfoDialogScreen>(ScreenPrefabs.Instance.InfoDialogScreen.gameObject, componentInParent.gameObject).SetHeader(UI.FRONTEND.GAME_OPTIONS_SCREEN.EXPANSION1_CONTENT_TESTING_TITLE).AddPlainText(UI.FRONTEND.GAME_OPTIONS_SCREEN.EXPANSION1_CONTENT_TESTING_BODY)
+			.AddDefaultOK()
+			.gameObject.SetActive(value: true);
 	}
 
 	private void OnUnlockSandboxMode()

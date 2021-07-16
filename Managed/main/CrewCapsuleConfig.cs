@@ -7,20 +7,20 @@ public class CrewCapsuleConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("CrewCapsule", 5, 19, "rocket_small_steam_kanim", 1000, 480f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER7, new string[1]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("CrewCapsule", 5, 19, "rocket_small_steam_kanim", 1000, 480f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER7, new string[1]
 		{
 			SimHashes.Steel.ToString()
 		}, 1600f, BuildLocationRule.BuildingAttachPoint, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.SceneLayer = Grid.SceneLayer.BuildingFront;
-		buildingDef.OverheatTemperature = 2273.15f;
-		buildingDef.Floodable = false;
-		buildingDef.AttachmentSlotTag = GameTags.Rocket;
-		buildingDef.ObjectLayer = ObjectLayer.Building;
-		buildingDef.UtilityInputOffset = new CellOffset(2, 6);
-		buildingDef.InputConduitType = ConduitType.Gas;
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 10f;
-		return buildingDef;
+		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
+		obj.OverheatTemperature = 2273.15f;
+		obj.Floodable = false;
+		obj.AttachmentSlotTag = GameTags.Rocket;
+		obj.ObjectLayer = ObjectLayer.Building;
+		obj.UtilityInputOffset = new CellOffset(2, 6);
+		obj.InputConduitType = ConduitType.Gas;
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 10f;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

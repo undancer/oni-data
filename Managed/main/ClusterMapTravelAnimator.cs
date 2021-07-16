@@ -33,12 +33,6 @@ public class ClusterMapTravelAnimator : GameStateMachine<ClusterMapTravelAnimato
 			base.sm.entityTarget.Set(entity, this);
 		}
 
-		public void PlayVisAnim(string animName, KAnim.PlayMode playMode)
-		{
-			ClusterMapVisualizer component = GetComponent<ClusterMapVisualizer>();
-			component.PlayAnim(animName, playMode);
-		}
-
 		public bool MoveTowards(Vector3 targetPosition, float dt)
 		{
 			RectTransform component = GetComponent<RectTransform>();
@@ -93,11 +87,11 @@ public class ClusterMapTravelAnimator : GameStateMachine<ClusterMapTravelAnimato
 
 	public State idle;
 
+	public State grounded;
+
 	public State repositioning;
 
-	public State takeoff;
-
-	public State landing;
+	public State surfaceTransitioning;
 
 	public TravelingStates traveling;
 
@@ -107,28 +101,17 @@ public class ClusterMapTravelAnimator : GameStateMachine<ClusterMapTravelAnimato
 	{
 		defaultState = idle;
 		root.OnTargetLost(entityTarget, null);
-		idle.Enter(delegate(StatesInstance smi)
-		{
-			smi.PlayVisAnim("idle_loop", KAnim.PlayMode.Loop);
-		}).Target(entityTarget).EventHandlerTransition(GameHashes.ClusterLocationChanged, (StatesInstance smi) => Game.Instance, repositioning, ClusterChangedAtMyLocation)
+		idle.Target(entityTarget).Transition(grounded, IsGrounded).Transition(surfaceTransitioning, IsSurfaceTransitioning)
+			.EventHandlerTransition(GameHashes.ClusterLocationChanged, (StatesInstance smi) => Game.Instance, repositioning, ClusterChangedAtMyLocation)
 			.EventTransition(GameHashes.ClusterDestinationChanged, traveling, IsTraveling)
 			.Target(masterTarget);
-		takeoff.Enter(delegate(StatesInstance smi)
+		grounded.Transition(surfaceTransitioning, IsSurfaceTransitioning);
+		surfaceTransitioning.Update(delegate(StatesInstance smi, float dt)
 		{
-			smi.PlayVisAnim("takeoff", KAnim.PlayMode.Once);
-		});
-		landing.Enter(delegate(StatesInstance smi)
-		{
-			smi.PlayVisAnim("landing", KAnim.PlayMode.Once);
-		});
-		repositioning.Enter(delegate(StatesInstance smi)
-		{
-			smi.PlayVisAnim("idle_loop", KAnim.PlayMode.Loop);
-		}).Transition(idle, DoReposition, UpdateRate.RENDER_EVERY_TICK);
-		traveling.DefaultState(traveling.orientToPath).Enter(delegate(StatesInstance smi)
-		{
-			smi.PlayVisAnim("inflight_loop", KAnim.PlayMode.Loop);
-		});
+			DoOrientToPath(smi);
+		}).Transition(repositioning, GameStateMachine<ClusterMapTravelAnimator, StatesInstance, ClusterMapVisualizer, object>.Not(IsSurfaceTransitioning));
+		repositioning.Transition(traveling.orientToIdle, DoReposition, UpdateRate.RENDER_EVERY_TICK);
+		traveling.DefaultState(traveling.orientToPath);
 		traveling.travelIdle.Target(entityTarget).EventHandlerTransition(GameHashes.ClusterLocationChanged, (StatesInstance smi) => Game.Instance, repositioning, ClusterChangedAtMyLocation).EventTransition(GameHashes.ClusterDestinationChanged, traveling.orientToIdle, GameStateMachine<ClusterMapTravelAnimator, StatesInstance, ClusterMapVisualizer, object>.Not(IsTraveling))
 			.EventTransition(GameHashes.ClusterDestinationChanged, traveling.orientToPath, GameStateMachine<ClusterMapTravelAnimator, StatesInstance, ClusterMapVisualizer, object>.Not(DoOrientToPath))
 			.EventTransition(GameHashes.ClusterLocationChanged, traveling.move, GameStateMachine<ClusterMapTravelAnimator, StatesInstance, ClusterMapVisualizer, object>.Not(DoMove))
@@ -136,15 +119,36 @@ public class ClusterMapTravelAnimator : GameStateMachine<ClusterMapTravelAnimato
 		traveling.orientToPath.Transition(traveling.travelIdle, DoOrientToPath, UpdateRate.RENDER_EVERY_TICK).Target(entityTarget).EventHandlerTransition(GameHashes.ClusterLocationChanged, (StatesInstance smi) => Game.Instance, repositioning, ClusterChangedAtMyLocation)
 			.Target(masterTarget);
 		traveling.move.Transition(traveling.travelIdle, DoMove, UpdateRate.RENDER_EVERY_TICK);
-		traveling.orientToIdle.Enter(delegate(StatesInstance smi)
-		{
-			smi.PlayVisAnim("idle_loop", KAnim.PlayMode.Loop);
-		}).Transition(idle, DoOrientToIdle, UpdateRate.RENDER_EVERY_TICK);
+		traveling.orientToIdle.Transition(idle, DoOrientToIdle, UpdateRate.RENDER_EVERY_TICK);
 	}
 
 	private bool IsTraveling(StatesInstance smi)
 	{
 		return smi.entity.GetComponent<ClusterTraveler>().IsTraveling();
+	}
+
+	private bool IsSurfaceTransitioning(StatesInstance smi)
+	{
+		Clustercraft clustercraft = smi.entity as Clustercraft;
+		if (clustercraft != null)
+		{
+			if (clustercraft.Status != Clustercraft.CraftStatus.Landing)
+			{
+				return clustercraft.Status == Clustercraft.CraftStatus.Launching;
+			}
+			return true;
+		}
+		return false;
+	}
+
+	private bool IsGrounded(StatesInstance smi)
+	{
+		Clustercraft clustercraft = smi.entity as Clustercraft;
+		if (clustercraft != null)
+		{
+			return clustercraft.Status == Clustercraft.CraftStatus.Grounded;
+		}
+		return false;
 	}
 
 	private bool DoReposition(StatesInstance smi)
@@ -173,6 +177,10 @@ public class ClusterMapTravelAnimator : GameStateMachine<ClusterMapTravelAnimato
 	private bool ClusterChangedAtMyLocation(StatesInstance smi, object data)
 	{
 		ClusterLocationChangedEvent clusterLocationChangedEvent = (ClusterLocationChangedEvent)data;
-		return clusterLocationChangedEvent.oldLocation == smi.entity.Location || clusterLocationChangedEvent.newLocation == smi.entity.Location;
+		if (!(clusterLocationChangedEvent.oldLocation == smi.entity.Location))
+		{
+			return clusterLocationChangedEvent.newLocation == smi.entity.Location;
+		}
+		return true;
 	}
 }

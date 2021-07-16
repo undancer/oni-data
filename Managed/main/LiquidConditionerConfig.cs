@@ -15,21 +15,21 @@ public class LiquidConditionerConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("LiquidConditioner", 2, 2, "liquidconditioner_kanim", 100, 120f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER6, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		BuildingTemplates.CreateElectricalBuildingDef(buildingDef);
-		buildingDef.EnergyConsumptionWhenActive = 1200f;
-		buildingDef.SelfHeatKilowattsWhenActive = 0f;
-		buildingDef.InputConduitType = ConduitType.Liquid;
-		buildingDef.OutputConduitType = ConduitType.Liquid;
-		buildingDef.Floodable = false;
-		buildingDef.PowerInputOffset = new CellOffset(1, 0);
-		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
-		buildingDef.PermittedRotations = PermittedRotations.FlipH;
-		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
-		buildingDef.OverheatTemperature = 398.15f;
-		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(1, 1));
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("LiquidConditioner", 2, 2, "liquidconditioner_kanim", 100, 120f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER6, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		BuildingTemplates.CreateElectricalBuildingDef(obj);
+		obj.EnergyConsumptionWhenActive = 1200f;
+		obj.SelfHeatKilowattsWhenActive = 0f;
+		obj.InputConduitType = ConduitType.Liquid;
+		obj.OutputConduitType = ConduitType.Liquid;
+		obj.Floodable = false;
+		obj.PowerInputOffset = new CellOffset(1, 0);
+		obj.UtilityInputOffset = new CellOffset(0, 0);
+		obj.PermittedRotations = PermittedRotations.FlipH;
+		obj.ViewMode = OverlayModes.LiquidConduits.ID;
+		obj.OverheatTemperature = 398.15f;
+		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(1, 1));
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.LiquidVentIDs, "LiquidConditioner");
-		return buildingDef;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

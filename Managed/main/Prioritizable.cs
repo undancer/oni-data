@@ -87,8 +87,7 @@ public class Prioritizable : KMonoBehaviour
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		Prioritizable component = gameObject.GetComponent<Prioritizable>();
+		Prioritizable component = ((GameObject)data).GetComponent<Prioritizable>();
 		if (component != null)
 		{
 			SetMasterPriority(component.GetMasterPriority());
@@ -187,7 +186,11 @@ public class Prioritizable : KMonoBehaviour
 
 	public bool IsTopPriority()
 	{
-		return masterPrioritySetting.priority_class == PriorityScreen.PriorityClass.topPriority && IsPrioritizable();
+		if (masterPrioritySetting.priority_class == PriorityScreen.PriorityClass.topPriority)
+		{
+			return IsPrioritizable();
+		}
+		return false;
 	}
 
 	protected override void OnCleanUp()

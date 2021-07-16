@@ -81,8 +81,7 @@ public class FertilityMonitor : GameStateMachine<FertilityMonitor, FertilityMoni
 					egg = initialBreedingWeight.egg,
 					weight = initialBreedingWeight.weight
 				});
-				List<FertilityModifier> forTag = Db.Get().FertilityModifiers.GetForTag(initialBreedingWeight.egg);
-				foreach (FertilityModifier item in forTag)
+				foreach (FertilityModifier item in Db.Get().FertilityModifiers.GetForTag(initialBreedingWeight.egg))
 				{
 					item.ApplyFunction(this, initialBreedingWeight.egg);
 				}
@@ -145,8 +144,7 @@ public class FertilityMonitor : GameStateMachine<FertilityMonitor, FertilityMoni
 			GameObject gameObject = (egg = Util.KInstantiate(prefab, position));
 			SymbolOverrideController component = GetComponent<SymbolOverrideController>();
 			string str = "egg01";
-			IncubationMonitor.Def def = prefab.GetDef<IncubationMonitor.Def>();
-			CreatureBrain component2 = Assets.GetPrefab(def.spawnedCreature).GetComponent<CreatureBrain>();
+			CreatureBrain component2 = Assets.GetPrefab(prefab.GetDef<IncubationMonitor.Def>().spawnedCreature).GetComponent<CreatureBrain>();
 			if (!string.IsNullOrEmpty(component2.symbolPrefix))
 			{
 				str = component2.symbolPrefix + "egg01";

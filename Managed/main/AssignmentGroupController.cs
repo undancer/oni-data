@@ -4,7 +4,7 @@ using KSerialization;
 
 public class AssignmentGroupController : KMonoBehaviour
 {
-	public bool generateGroupOnStart = false;
+	public bool generateGroupOnStart;
 
 	[Serialize]
 	private string _assignmentGroupID;
@@ -123,8 +123,7 @@ public class AssignmentGroupController : KMonoBehaviour
 	private void OnSerialize()
 	{
 		Debug.Assert(!string.IsNullOrEmpty(AssignmentGroupID), "Assignment group on " + base.gameObject.name + " has null or empty ID");
-		AssignmentGroup assignmentGroup = Game.Instance.assignmentManager.assignment_groups[AssignmentGroupID];
-		ReadOnlyCollection<IAssignableIdentity> members = assignmentGroup.GetMembers();
+		ReadOnlyCollection<IAssignableIdentity> members = Game.Instance.assignmentManager.assignment_groups[AssignmentGroupID].GetMembers();
 		minionsInGroupAtLoad = new Ref<MinionAssignablesProxy>[members.Count];
 		for (int i = 0; i < members.Count; i++)
 		{

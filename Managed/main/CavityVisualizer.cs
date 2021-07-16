@@ -51,9 +51,7 @@ public class CavityVisualizer : KMonoBehaviour
 				{
 					foreach (int item2 in item)
 					{
-						Vector3 center = Grid.CellToPos(item2);
-						center += Vector3.right / 2f + Vector3.up / 2f;
-						Gizmos.DrawCube(center, Vector3.one);
+						Gizmos.DrawCube(Grid.CellToPos(item2) + (Vector3.right / 2f + Vector3.up / 2f), Vector3.one);
 					}
 				}
 			}
@@ -65,9 +63,7 @@ public class CavityVisualizer : KMonoBehaviour
 		Gizmos.color = new Color(0f, 1f, 0f, 0.15f);
 		foreach (int spawnCell in spawnCells)
 		{
-			Vector3 center2 = Grid.CellToPos(spawnCell);
-			center2 += Vector3.right / 2f + Vector3.up / 2f;
-			Gizmos.DrawCube(center2, Vector3.one);
+			Gizmos.DrawCube(Grid.CellToPos(spawnCell) + (Vector3.right / 2f + Vector3.up / 2f), Vector3.one);
 		}
 	}
 }

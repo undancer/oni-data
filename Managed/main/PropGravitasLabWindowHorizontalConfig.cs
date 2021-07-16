@@ -12,22 +12,21 @@ public class PropGravitasLabWindowHorizontalConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("PropGravitasLabWindowHorizontal", 3, 2, "gravitas_lab_window_horizontal_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER_TINY, MATERIALS.GLASSES, 1600f, BuildLocationRule.NotInTiles, noise: NOISE_POLLUTION.NONE, decor: DECOR.BONUS.TIER0);
-		buildingDef.Entombable = false;
-		buildingDef.Floodable = false;
-		buildingDef.Overheatable = false;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.BaseTimeUntilRepair = -1f;
-		buildingDef.DefaultAnimState = "on";
-		buildingDef.ObjectLayer = ObjectLayer.Backwall;
-		buildingDef.SceneLayer = Grid.SceneLayer.Backwall;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("PropGravitasLabWindowHorizontal", 3, 2, "gravitas_lab_window_horizontal_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER_TINY, MATERIALS.GLASSES, 1600f, BuildLocationRule.NotInTiles, noise: NOISE_POLLUTION.NONE, decor: DECOR.BONUS.TIER0);
+		obj.Entombable = false;
+		obj.Floodable = false;
+		obj.Overheatable = false;
+		obj.AudioCategory = "Metal";
+		obj.BaseTimeUntilRepair = -1f;
+		obj.DefaultAnimState = "on";
+		obj.ObjectLayer = ObjectLayer.Backwall;
+		obj.SceneLayer = Grid.SceneLayer.Backwall;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
-		AnimTileable animTileable = go.AddOrGet<AnimTileable>();
-		animTileable.objectLayer = ObjectLayer.Backwall;
+		go.AddOrGet<AnimTileable>().objectLayer = ObjectLayer.Backwall;
 		go.AddComponent<ZoneTile>();
 		go.GetComponent<PrimaryElement>().SetElement(SimHashes.Glass);
 		go.GetComponent<PrimaryElement>().Temperature = 273f;

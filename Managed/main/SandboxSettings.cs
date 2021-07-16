@@ -37,7 +37,7 @@ public class SandboxSettings
 
 	public bool InstantBuild = true;
 
-	private bool hasRestoredElement = false;
+	private bool hasRestoredElement;
 
 	public Action<bool> OnChangeElement;
 

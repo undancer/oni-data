@@ -5,7 +5,7 @@ using UnityEngine;
 [AddComponentMenu("KMonoBehaviour/scripts/Trappable")]
 public class Trappable : KMonoBehaviour, IGameObjectEffectDescriptor
 {
-	private bool registered = false;
+	private bool registered;
 
 	private static readonly EventSystem.IntraObjectHandler<Trappable> OnStoreDelegate = new EventSystem.IntraObjectHandler<Trappable>(delegate(Trappable component, object data)
 	{
@@ -65,16 +65,16 @@ public class Trappable : KMonoBehaviour, IGameObjectEffectDescriptor
 
 	public List<Descriptor> GetDescriptors(GameObject go)
 	{
-		List<Descriptor> list = new List<Descriptor>();
-		list.Add(new Descriptor(UI.BUILDINGEFFECTS.CAPTURE_METHOD_TRAP, UI.BUILDINGEFFECTS.TOOLTIPS.CAPTURE_METHOD_TRAP));
-		return list;
+		return new List<Descriptor>
+		{
+			new Descriptor(UI.BUILDINGEFFECTS.CAPTURE_METHOD_TRAP, UI.BUILDINGEFFECTS.TOOLTIPS.CAPTURE_METHOD_TRAP)
+		};
 	}
 
 	public void OnStore(object data)
 	{
 		Storage storage = data as Storage;
-		Trap exists = (storage ? storage.GetComponent<Trap>() : null);
-		if ((bool)exists)
+		if ((bool)(storage ? storage.GetComponent<Trap>() : null))
 		{
 			base.gameObject.AddTag(GameTags.Trapped);
 		}

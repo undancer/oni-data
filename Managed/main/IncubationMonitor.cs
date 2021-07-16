@@ -60,7 +60,11 @@ public class IncubationMonitor : GameStateMachine<IncubationMonitor, IncubationM
 
 		public Storage GetStorage()
 		{
-			return (base.transform.parent != null) ? base.transform.parent.GetComponent<Storage>() : null;
+			if (!(base.transform.parent != null))
+			{
+				return null;
+			}
+			return base.transform.parent.GetComponent<Storage>();
 		}
 
 		public void OnStore(object data)

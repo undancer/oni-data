@@ -98,8 +98,7 @@ public class LeadSuitConfig : IEquipmentConfig
 		suitTank.element = "Oxygen";
 		suitTank.capacity = 40f;
 		suitTank.elementTag = GameTags.Breathable;
-		LeadSuitTank leadSuitTank = go.AddComponent<LeadSuitTank>();
-		leadSuitTank.batteryDuration = 200f;
+		go.AddComponent<LeadSuitTank>().batteryDuration = 200f;
 		go.AddComponent<HelmetController>();
 		KPrefabID component = go.GetComponent<KPrefabID>();
 		component.AddTag(GameTags.Clothes);

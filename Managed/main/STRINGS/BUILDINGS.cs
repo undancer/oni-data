@@ -361,7 +361,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Harvests resources from the universe.";
 
-				public static LocString EFFECT = "Enables a rocket to drill into interstellar debris and collect " + UI.FormatAsLink("gas", "ELEMENTS_GAS") + ", " + UI.FormatAsLink("liquid", "ELEMENTS_LIQUID") + " and " + UI.FormatAsLink("solid", "ELEMENTS_SOLID") + " resources from space.\n\nMust be built at the top of a rocket.";
+				public static LocString EFFECT = "Enables a rocket to drill into interstellar debris and collect " + UI.FormatAsLink("gas", "ELEMENTS_GAS") + ", " + UI.FormatAsLink("liquid", "ELEMENTS_LIQUID") + " and " + UI.FormatAsLink("solid", "ELEMENTS_SOLID") + " resources from space.\n\nMust be built at the top of a rocket with " + UI.FormatAsLink("gas", "ELEMENTS_GAS") + ", " + UI.FormatAsLink("liquid", "ELEMENTS_LIQUID") + " or " + UI.FormatAsLink("solid", "ELEMENTS_SOLID") + " Cargo Module attached to store the appropriate resources.";
 			}
 
 			public class CO2ENGINE
@@ -1005,6 +1005,10 @@ namespace STRINGS
 				public static LocString DESC = "Discover the mysteries of the past.";
 
 				public static LocString EFFECT = "Analyses and extracts " + UI.FormatAsLink("Neutronium", "UNOBTANIUM") + " from artifacts of interest.";
+
+				public static LocString PAYLOAD_DROP_RATE = string.Concat(ITEMS.INDUSTRIAL_PRODUCTS.GENE_SHUFFLER_RECHARGE.NAME, " drop chance: {chance}");
+
+				public static LocString PAYLOAD_DROP_RATE_TOOLTIP = string.Concat("This artifact has a {chance} to drop a ", ITEMS.INDUSTRIAL_PRODUCTS.GENE_SHUFFLER_RECHARGE.NAME, " when analyzed at the ", NAME);
 			}
 
 			public class CANVAS
@@ -4432,7 +4436,7 @@ namespace STRINGS
 
 			public class TEMPORALTEARANALYZER
 			{
-				public static LocString NAME = "Anomaly Scanner";
+				public static LocString NAME = "Temporal Tear Scanner";
 
 				public static LocString DESC = "Hard to say what this is for.\n\nWas it looking for something?";
 
@@ -4448,7 +4452,7 @@ namespace STRINGS
 					public static LocString TOOLTIP = "The big red button.";
 				}
 
-				public static LocString NAME = "Temporal Ripper";
+				public static LocString NAME = "Temporal Tear Opener";
 
 				public static LocString DESC = "R.I.P.\n\nLooks dangerous.";
 
@@ -4465,6 +4469,8 @@ namespace STRINGS
 			public static LocString CONDUIT_CONTENTS_BOILED = "pipe contents becoming too hot";
 
 			public static LocString BUILDING_OVERHEATED = "overheating";
+
+			public static LocString CORROSIVE_ELEMENT = "corrosive element";
 
 			public static LocString BAD_INPUT_ELEMENT = "receiving an incorrect substance";
 

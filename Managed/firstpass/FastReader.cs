@@ -6,7 +6,17 @@ public class FastReader : IReader
 
 	private byte[] bytes;
 
-	public bool IsFinished => bytes == null || idx == bytes.Length;
+	public bool IsFinished
+	{
+		get
+		{
+			if (bytes != null)
+			{
+				return idx == bytes.Length;
+			}
+			return true;
+		}
+	}
 
 	public int Position
 	{
@@ -27,112 +37,112 @@ public class FastReader : IReader
 
 	public unsafe byte ReadByte()
 	{
-		byte b = 0;
+		byte result;
 		fixed (byte* ptr = &bytes[idx])
 		{
-			b = *ptr;
+			result = *ptr;
 		}
 		idx++;
-		return b;
+		return result;
 	}
 
 	public unsafe sbyte ReadSByte()
 	{
-		sbyte b = 0;
+		byte result;
 		fixed (byte* ptr = &bytes[idx])
 		{
-			b = (sbyte)(*ptr);
+			result = *ptr;
 		}
 		idx++;
-		return b;
+		return (sbyte)result;
 	}
 
 	public unsafe ushort ReadUInt16()
 	{
-		ushort num = 0;
+		ushort result;
 		fixed (byte* ptr = &bytes[idx])
 		{
-			num = *(ushort*)ptr;
+			result = *(ushort*)ptr;
 		}
 		idx += 2;
-		return num;
+		return result;
 	}
 
 	public unsafe short ReadInt16()
 	{
-		short num = 0;
+		short result;
 		fixed (byte* ptr = &bytes[idx])
 		{
-			num = *(short*)ptr;
+			result = *(short*)ptr;
 		}
 		idx += 2;
-		return num;
+		return result;
 	}
 
 	public unsafe uint ReadUInt32()
 	{
-		uint num = 0u;
+		uint result;
 		fixed (byte* ptr = &bytes[idx])
 		{
-			num = *(uint*)ptr;
+			result = *(uint*)ptr;
 		}
 		idx += 4;
-		return num;
+		return result;
 	}
 
 	public unsafe int ReadInt32()
 	{
-		int num = 0;
+		int result;
 		fixed (byte* ptr = &bytes[idx])
 		{
-			num = *(int*)ptr;
+			result = *(int*)ptr;
 		}
 		idx += 4;
-		return num;
+		return result;
 	}
 
 	public unsafe ulong ReadUInt64()
 	{
-		ulong num = 0uL;
+		long result;
 		fixed (byte* ptr = &bytes[idx])
 		{
-			num = (ulong)(*(long*)ptr);
+			result = *(long*)ptr;
 		}
 		idx += 8;
-		return num;
+		return (ulong)result;
 	}
 
 	public unsafe long ReadInt64()
 	{
-		long num = 0L;
+		long result;
 		fixed (byte* ptr = &bytes[idx])
 		{
-			num = *(long*)ptr;
+			result = *(long*)ptr;
 		}
 		idx += 8;
-		return num;
+		return result;
 	}
 
 	public unsafe float ReadSingle()
 	{
-		float num = 0f;
+		float result;
 		fixed (byte* ptr = &bytes[idx])
 		{
-			num = *(float*)ptr;
+			result = *(float*)ptr;
 		}
 		idx += 4;
-		return num;
+		return result;
 	}
 
 	public unsafe double ReadDouble()
 	{
-		double num = 0.0;
+		double result;
 		fixed (byte* ptr = &bytes[idx])
 		{
-			num = *(double*)ptr;
+			result = *(double*)ptr;
 		}
 		idx += 8;
-		return num;
+		return result;
 	}
 
 	public char[] ReadChars(int length)

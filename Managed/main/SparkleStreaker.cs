@@ -43,8 +43,7 @@ public class SparkleStreaker : GameStateMachine<SparkleStreaker, SparkleStreaker
 
 		private void AddReactionEffect(GameObject reactor)
 		{
-			Effects component = reactor.GetComponent<Effects>();
-			component.Add("SawSparkleStreaker", should_save: true);
+			reactor.GetComponent<Effects>().Add("SawSparkleStreaker", should_save: true);
 		}
 
 		private bool ReactorIsOnFloor(GameObject reactor, Navigator.ActiveTransition transition)

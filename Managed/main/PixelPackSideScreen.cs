@@ -144,10 +144,8 @@ public class PixelPackSideScreen : SideScreenContent
 		for (int i = 0; i < targetPixelPack.colorSettings.Count; i++)
 		{
 			int current_id = i;
-			Image component = activeColors[i].GetComponent<Image>();
-			component.color = targetPixelPack.colorSettings[i].activeColor;
-			KButton component2 = activeColors[i].GetComponent<KButton>();
-			component2.onClick += delegate
+			activeColors[i].GetComponent<Image>().color = targetPixelPack.colorSettings[i].activeColor;
+			activeColors[i].GetComponent<KButton>().onClick += delegate
 			{
 				PixelPack.ColorPair value2 = targetPixelPack.colorSettings[current_id];
 				activeColors[current_id].GetComponent<Image>().color = paintingColor;
@@ -156,10 +154,8 @@ public class PixelPackSideScreen : SideScreenContent
 				targetPixelPack.UpdateColors();
 				HighlightUsedColors();
 			};
-			Image component3 = standbyColors[i].GetComponent<Image>();
-			component3.color = targetPixelPack.colorSettings[i].standbyColor;
-			KButton component4 = standbyColors[i].GetComponent<KButton>();
-			component4.onClick += delegate
+			standbyColors[i].GetComponent<Image>().color = targetPixelPack.colorSettings[i].standbyColor;
+			standbyColors[i].GetComponent<KButton>().onClick += delegate
 			{
 				PixelPack.ColorPair value = targetPixelPack.colorSettings[current_id];
 				standbyColors[current_id].GetComponent<Image>().color = paintingColor;

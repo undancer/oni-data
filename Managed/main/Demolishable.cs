@@ -4,14 +4,14 @@ using TUNING;
 
 public class Demolishable : Workable
 {
-	public Chore chore = null;
+	public Chore chore;
 
 	public bool allowDemolition = true;
 
 	[Serialize]
 	private bool isMarkedForDemolition;
 
-	private bool destroyed = false;
+	private bool destroyed;
 
 	private static readonly EventSystem.IntraObjectHandler<Demolishable> OnRefreshUserMenuDelegate = new EventSystem.IntraObjectHandler<Demolishable>(delegate(Demolishable component, object data)
 	{

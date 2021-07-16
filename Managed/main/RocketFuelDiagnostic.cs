@@ -16,8 +16,7 @@ public class RocketFuelDiagnostic : ColonyDiagnostic
 
 	public override DiagnosticResult Evaluate()
 	{
-		WorldContainer world = ClusterManager.Instance.GetWorld(base.worldID);
-		Clustercraft component = world.gameObject.GetComponent<Clustercraft>();
+		Clustercraft component = ClusterManager.Instance.GetWorld(base.worldID).gameObject.GetComponent<Clustercraft>();
 		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.NO_MINIONS);
 		if (ColonyDiagnosticUtility.IgnoreRocketsWithNoCrewRequested(base.worldID, out result))
 		{

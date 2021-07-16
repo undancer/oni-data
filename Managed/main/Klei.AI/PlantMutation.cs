@@ -32,17 +32,17 @@ namespace Klei.AI
 
 		private byte droppedDiseaseID = byte.MaxValue;
 
-		private int droppedDiseaseOnGrowAmount = 0;
+		private int droppedDiseaseOnGrowAmount;
 
-		private int droppedDiseaseContinuousAmount = 0;
+		private int droppedDiseaseContinuousAmount;
 
 		private byte harvestDiseaseID = byte.MaxValue;
 
-		private int harvestDiseaseAmount = 0;
+		private int harvestDiseaseAmount;
 
-		private bool forcePrefersDarkness = false;
+		private bool forcePrefersDarkness;
 
-		private bool forceSelfHarvestOnGrown = false;
+		private bool forceSelfHarvestOnGrown;
 
 		private PlantElementAbsorber.ConsumeInfo ensureIrrigationInfo;
 
@@ -114,16 +114,13 @@ namespace Klei.AI
 					target.GetComponent<Modifiers>().attributes.Add(Db.Get().PlantAttributes.MinLightLux);
 				}
 			}
-			if (droppedDiseaseID != byte.MaxValue)
-			{
-			}
+			_ = droppedDiseaseID;
+			_ = 255;
 			if (harvestDiseaseID != byte.MaxValue)
 			{
 				target.Subscribe(35625290, OnCropSpawnedAddDisease);
 			}
-			if (ensureIrrigationInfo.tag.IsValid)
-			{
-			}
+			_ = ensureIrrigationInfo.tag.IsValid;
 			Attributes attributes = target.GetAttributes();
 			AddTo(attributes);
 		}
@@ -136,8 +133,7 @@ namespace Klei.AI
 				SymbolOverrideController component2 = target.GetComponent<SymbolOverrideController>();
 				foreach (SymbolOverrideInfo item in symbolOverrideInfo)
 				{
-					KAnimFile anim = Assets.GetAnim(item.sourceAnim);
-					KAnim.Build.Symbol symbol = anim.GetData().build.GetSymbol(item.sourceSymbol);
+					KAnim.Build.Symbol symbol = Assets.GetAnim(item.sourceAnim).GetData().build.GetSymbol(item.sourceSymbol);
 					component2.AddSymbolOverride(item.targetSymbolName, symbol);
 				}
 			}
@@ -181,41 +177,37 @@ namespace Klei.AI
 			gameObject.name = target.name + nameSuffix;
 			gameObject.transform.parent = target.transform;
 			gameObject.AddComponent<LoopingSounds>();
-			KPrefabID component = gameObject.GetComponent<KPrefabID>();
-			component.PrefabTag = new Tag(gameObject.name);
-			OccupyArea component2 = target.GetComponent<OccupyArea>();
-			Extents extents = component2.GetExtents();
+			gameObject.GetComponent<KPrefabID>().PrefabTag = new Tag(gameObject.name);
+			Extents extents = target.GetComponent<OccupyArea>().GetExtents();
 			Vector3 position = target.transform.GetPosition();
 			position.x = (float)extents.x + (float)extents.width / 2f;
 			position.y = (float)extents.y + (float)extents.height / 2f;
 			position.z += offset;
 			gameObject.transform.SetPosition(position);
-			KBatchedAnimController component3 = gameObject.GetComponent<KBatchedAnimController>();
-			component3.AnimFiles = new KAnimFile[1]
+			KBatchedAnimController component = gameObject.GetComponent<KBatchedAnimController>();
+			component.AnimFiles = new KAnimFile[1]
 			{
 				Assets.GetAnim(anim)
 			};
-			component3.initialAnim = "idle";
-			component3.initialMode = KAnim.PlayMode.Loop;
-			component3.randomiseLoopedOffset = true;
-			component3.fgLayer = Grid.SceneLayer.NoLayer;
+			component.initialAnim = "idle";
+			component.initialMode = KAnim.PlayMode.Loop;
+			component.randomiseLoopedOffset = true;
+			component.fgLayer = Grid.SceneLayer.NoLayer;
 			if (target.HasTag(GameTags.Hanging))
 			{
-				component3.Rotation = 180f;
+				component.Rotation = 180f;
 			}
 			gameObject.SetActive(value: true);
 		}
 
 		private void OnHarvestBonusCrop(object data)
 		{
-			Crop crop = (Crop)data;
-			crop.SpawnSomeFruit(bonusCropID, bonusCropAmount);
+			((Crop)data).SpawnSomeFruit(bonusCropID, bonusCropAmount);
 		}
 
 		private void OnCropSpawnedAddDisease(object data)
 		{
-			GameObject gameObject = (GameObject)data;
-			gameObject.GetComponent<PrimaryElement>().AddDisease(harvestDiseaseID, harvestDiseaseAmount, Name);
+			((GameObject)data).GetComponent<PrimaryElement>().AddDisease(harvestDiseaseID, harvestDiseaseAmount, Name);
 		}
 
 		public string GetTooltip()

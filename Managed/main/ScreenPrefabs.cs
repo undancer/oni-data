@@ -105,8 +105,7 @@ public class ScreenPrefabs : KMonoBehaviour
 
 	public void ConfirmDoAction(string message, System.Action action, Transform parent)
 	{
-		ConfirmDialogScreen confirmDialogScreen = (ConfirmDialogScreen)KScreenManager.Instance.StartScreen(Instance.ConfirmDialogScreen.gameObject, parent.gameObject);
-		confirmDialogScreen.PopupConfirmDialog(message, action, delegate
+		((ConfirmDialogScreen)KScreenManager.Instance.StartScreen(Instance.ConfirmDialogScreen.gameObject, parent.gameObject)).PopupConfirmDialog(message, action, delegate
 		{
 		});
 	}

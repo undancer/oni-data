@@ -17,14 +17,14 @@ public class OreScrubberConfig : IBuildingConfig
 		{
 			"Metal"
 		};
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(construction_mass: new float[1]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: new float[1]
 		{
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER3[0]
 		}, construction_materials: array, melting_point: 1600f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, id: "OreScrubber", width: 3, height: 3, anim: "orescrubber_kanim", hitpoints: 30, construction_time: 30f, decor: BUILDINGS.DECOR.BONUS.TIER1);
-		buildingDef.UtilityInputOffset = new CellOffset(1, 1);
-		buildingDef.ForegroundLayer = Grid.SceneLayer.BuildingFront;
-		buildingDef.InputConduitType = ConduitType.Gas;
-		return buildingDef;
+		obj.UtilityInputOffset = new CellOffset(1, 1);
+		obj.ForegroundLayer = Grid.SceneLayer.BuildingFront;
+		obj.InputConduitType = ConduitType.Gas;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -49,8 +49,7 @@ public class OreScrubberConfig : IBuildingConfig
 		work.workTime = 10.200001f;
 		work.trackUses = true;
 		work.workLayer = Grid.SceneLayer.BuildingUse;
-		Storage storage = go.AddOrGet<Storage>();
-		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
+		go.AddOrGet<Storage>().SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

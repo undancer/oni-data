@@ -9,23 +9,23 @@ public class SolidConduitBridgeConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("SolidConduitBridge", 3, 1, "utilities_conveyorbridge_kanim", 10, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.Conduit, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.ObjectLayer = ObjectLayer.SolidConduitConnection;
-		buildingDef.SceneLayer = Grid.SceneLayer.SolidConduitBridges;
-		buildingDef.InputConduitType = ConduitType.Solid;
-		buildingDef.OutputConduitType = ConduitType.Solid;
-		buildingDef.Floodable = false;
-		buildingDef.Entombable = false;
-		buildingDef.Overheatable = false;
-		buildingDef.ViewMode = OverlayModes.SolidConveyor.ID;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.AudioSize = "small";
-		buildingDef.BaseTimeUntilRepair = -1f;
-		buildingDef.PermittedRotations = PermittedRotations.R360;
-		buildingDef.UtilityInputOffset = new CellOffset(-1, 0);
-		buildingDef.UtilityOutputOffset = new CellOffset(1, 0);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("SolidConduitBridge", 3, 1, "utilities_conveyorbridge_kanim", 10, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.Conduit, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
+		obj.ObjectLayer = ObjectLayer.SolidConduitConnection;
+		obj.SceneLayer = Grid.SceneLayer.SolidConduitBridges;
+		obj.InputConduitType = ConduitType.Solid;
+		obj.OutputConduitType = ConduitType.Solid;
+		obj.Floodable = false;
+		obj.Entombable = false;
+		obj.Overheatable = false;
+		obj.ViewMode = OverlayModes.SolidConveyor.ID;
+		obj.AudioCategory = "Metal";
+		obj.AudioSize = "small";
+		obj.BaseTimeUntilRepair = -1f;
+		obj.PermittedRotations = PermittedRotations.R360;
+		obj.UtilityInputOffset = new CellOffset(-1, 0);
+		obj.UtilityOutputOffset = new CellOffset(1, 0);
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.SolidConveyorIDs, "SolidConduitBridge");
-		return buildingDef;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -37,8 +37,7 @@ public class SolidConduitBridgeConfig : IBuildingConfig
 	public override void DoPostConfigureUnderConstruction(GameObject go)
 	{
 		base.DoPostConfigureUnderConstruction(go);
-		Constructable component = go.GetComponent<Constructable>();
-		component.requiredSkillPerk = Db.Get().SkillPerks.ConveyorBuild.Id;
+		go.GetComponent<Constructable>().requiredSkillPerk = Db.Get().SkillPerks.ConveyorBuild.Id;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

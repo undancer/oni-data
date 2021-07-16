@@ -14,18 +14,18 @@ public class LandingBeaconConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("LandingBeacon", 1, 3, "landing_beacon_kanim", 1000, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.PENALTY.TIER1);
-		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
-		buildingDef.SceneLayer = Grid.SceneLayer.BuildingFront;
-		buildingDef.OverheatTemperature = 398.15f;
-		buildingDef.Floodable = false;
-		buildingDef.ObjectLayer = ObjectLayer.Building;
-		buildingDef.RequiresPowerInput = false;
-		buildingDef.CanMove = false;
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 60f;
-		buildingDef.ViewMode = OverlayModes.Power.ID;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("LandingBeacon", 1, 3, "landing_beacon_kanim", 1000, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.PENALTY.TIER1);
+		BuildingTemplates.CreateRocketBuildingDef(obj);
+		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
+		obj.OverheatTemperature = 398.15f;
+		obj.Floodable = false;
+		obj.ObjectLayer = ObjectLayer.Building;
+		obj.RequiresPowerInput = false;
+		obj.CanMove = false;
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 60f;
+		obj.ViewMode = OverlayModes.Power.ID;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

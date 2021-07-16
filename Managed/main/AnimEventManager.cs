@@ -155,10 +155,10 @@ public class AnimEventManager
 		if (handle.IsValid())
 		{
 			IndirectionData data = indirectionData.GetData(handle);
-			KCompactedVector<EventPlayerData> kCompactedVector = (data.isUIData ? uiEventData : eventData);
-			EventPlayerData data2 = kCompactedVector.GetData(data.eventDataHandle);
+			KCompactedVector<EventPlayerData> obj = (data.isUIData ? uiEventData : eventData);
+			EventPlayerData data2 = obj.GetData(data.eventDataHandle);
 			data2.mode = mode;
-			kCompactedVector.SetData(data.eventDataHandle, data2);
+			obj.SetData(data.eventDataHandle, data2);
 		}
 	}
 
@@ -180,17 +180,16 @@ public class AnimEventManager
 	public float GetElapsedTime(HandleVector<int>.Handle handle)
 	{
 		IndirectionData data = indirectionData.GetData(handle);
-		KCompactedVector<EventPlayerData> kCompactedVector = (data.isUIData ? uiEventData : eventData);
-		return kCompactedVector.GetData(data.eventDataHandle).elapsedTime;
+		return (data.isUIData ? uiEventData : eventData).GetData(data.eventDataHandle).elapsedTime;
 	}
 
 	public void SetElapsedTime(HandleVector<int>.Handle handle, float elapsed_time)
 	{
 		IndirectionData data = indirectionData.GetData(handle);
-		KCompactedVector<EventPlayerData> kCompactedVector = (data.isUIData ? uiEventData : eventData);
-		EventPlayerData data2 = kCompactedVector.GetData(data.eventDataHandle);
+		KCompactedVector<EventPlayerData> obj = (data.isUIData ? uiEventData : eventData);
+		EventPlayerData data2 = obj.GetData(data.eventDataHandle);
 		data2.elapsedTime = elapsed_time;
-		kCompactedVector.SetData(data.eventDataHandle, data2);
+		obj.SetData(data.eventDataHandle, data2);
 	}
 
 	public void Update()
@@ -233,8 +232,7 @@ public class AnimEventManager
 			{
 				for (int j = 0; j < eventPlayerData.updatingEvents.Count; j++)
 				{
-					AnimEvent animEvent = eventPlayerData.updatingEvents[j];
-					animEvent.OnUpdate(eventPlayerData);
+					eventPlayerData.updatingEvents[j].OnUpdate(eventPlayerData);
 				}
 			}
 			event_data[i] = eventPlayerData;
@@ -250,8 +248,7 @@ public class AnimEventManager
 	{
 		for (int i = 0; i < data.events.Count; i++)
 		{
-			AnimEvent animEvent = data.events[i];
-			animEvent.Play(data);
+			data.events[i].Play(data);
 		}
 	}
 
@@ -259,8 +256,7 @@ public class AnimEventManager
 	{
 		for (int i = 0; i < data.events.Count; i++)
 		{
-			AnimEvent animEvent = data.events[i];
-			animEvent.Stop(data);
+			data.events[i].Stop(data);
 		}
 		if (data.updatingEvents != null)
 		{

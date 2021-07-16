@@ -17,7 +17,7 @@ public class ConduitConsumer : KMonoBehaviour, IConduitConsumer
 	public ConduitType conduitType;
 
 	[SerializeField]
-	public bool ignoreMinMassCheck = false;
+	public bool ignoreMinMassCheck;
 
 	[SerializeField]
 	public Tag capacityTag = GameTags.Any;
@@ -26,16 +26,16 @@ public class ConduitConsumer : KMonoBehaviour, IConduitConsumer
 	public float capacityKG = float.PositiveInfinity;
 
 	[SerializeField]
-	public bool forceAlwaysSatisfied = false;
+	public bool forceAlwaysSatisfied;
 
 	[SerializeField]
-	public bool alwaysConsume = false;
+	public bool alwaysConsume;
 
 	[SerializeField]
 	public bool keepZeroMassObject = true;
 
 	[SerializeField]
-	public bool useSecondaryInput = false;
+	public bool useSecondaryInput;
 
 	[SerializeField]
 	public bool isOn = true;
@@ -65,9 +65,9 @@ public class ConduitConsumer : KMonoBehaviour, IConduitConsumer
 
 	private HandleVector<int>.Handle partitionerEntry;
 
-	private bool satisfied = false;
+	private bool satisfied;
 
-	public WrongElementResult wrongElementResult = WrongElementResult.Destroy;
+	public WrongElementResult wrongElementResult;
 
 	public Storage Storage => storage;
 
@@ -78,7 +78,11 @@ public class ConduitConsumer : KMonoBehaviour, IConduitConsumer
 		get
 		{
 			GameObject gameObject = Grid.Objects[utilityCell, (conduitType == ConduitType.Gas) ? 12 : 16];
-			return gameObject != null && gameObject.GetComponent<BuildingComplete>() != null;
+			if (gameObject != null)
+			{
+				return gameObject.GetComponent<BuildingComplete>() != null;
+			}
+			return false;
 		}
 	}
 
@@ -89,29 +93,70 @@ public class ConduitConsumer : KMonoBehaviour, IConduitConsumer
 			bool result = false;
 			if (IsConnected)
 			{
-				ConduitFlow conduitManager = GetConduitManager();
-				result = conduitManager.GetContents(utilityCell).mass > 0f;
+				result = GetConduitManager().GetContents(utilityCell).mass > 0f;
 			}
 			return result;
 		}
 	}
 
-	public float stored_mass => (storage == null) ? 0f : ((capacityTag != GameTags.Any) ? storage.GetMassAvailable(capacityTag) : storage.MassStored());
+	public float stored_mass
+	{
+		get
+		{
+			if (!(storage == null))
+			{
+				if (!(capacityTag != GameTags.Any))
+				{
+					return storage.MassStored();
+				}
+				return storage.GetMassAvailable(capacityTag);
+			}
+			return 0f;
+		}
+	}
 
 	public float space_remaining_kg
 	{
 		get
 		{
 			float num = capacityKG - stored_mass;
-			return (storage == null) ? num : Mathf.Min(storage.RemainingCapacity(), num);
+			if (!(storage == null))
+			{
+				return Mathf.Min(storage.RemainingCapacity(), num);
+			}
+			return num;
 		}
 	}
 
 	public ConduitType TypeOfConduit => conduitType;
 
-	public bool IsAlmostEmpty => !ignoreMinMassCheck && MassAvailable < ConsumptionRate * 30f;
+	public bool IsAlmostEmpty
+	{
+		get
+		{
+			if (!ignoreMinMassCheck)
+			{
+				return MassAvailable < ConsumptionRate * 30f;
+			}
+			return false;
+		}
+	}
 
-	public bool IsEmpty => !ignoreMinMassCheck && (MassAvailable == 0f || MassAvailable < ConsumptionRate);
+	public bool IsEmpty
+	{
+		get
+		{
+			if (!ignoreMinMassCheck)
+			{
+				if (MassAvailable != 0f)
+				{
+					return MassAvailable < ConsumptionRate;
+				}
+				return true;
+			}
+			return false;
+		}
+	}
 
 	public float ConsumptionRate => consumptionRate;
 
@@ -119,7 +164,11 @@ public class ConduitConsumer : KMonoBehaviour, IConduitConsumer
 	{
 		get
 		{
-			return satisfied || !isConsuming;
+			if (!satisfied)
+			{
+				return !isConsuming;
+			}
+			return true;
 		}
 		set
 		{
@@ -132,8 +181,7 @@ public class ConduitConsumer : KMonoBehaviour, IConduitConsumer
 		get
 		{
 			int inputCell = GetInputCell();
-			ConduitFlow conduitManager = GetConduitManager();
-			return conduitManager.GetContents(inputCell).mass;
+			return GetConduitManager().GetContents(inputCell).mass;
 		}
 	}
 
@@ -287,8 +335,7 @@ public class ConduitConsumer : KMonoBehaviour, IConduitConsumer
 			if (wrongElementResult == WrongElementResult.Dump)
 			{
 				int disease_count2 = (int)((float)contents.diseaseCount * (num / contents.mass));
-				int gameCell = Grid.PosToCell(base.transform.GetPosition());
-				SimMessages.AddRemoveSubstance(gameCell, contents.element, CellEventLogger.Instance.ConduitConsumerWrongElement, num, contents.temperature, contents.diseaseIdx, disease_count2);
+				SimMessages.AddRemoveSubstance(Grid.PosToCell(base.transform.GetPosition()), contents.element, CellEventLogger.Instance.ConduitConsumerWrongElement, num, contents.temperature, contents.diseaseIdx, disease_count2);
 			}
 		}
 	}

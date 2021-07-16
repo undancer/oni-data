@@ -32,7 +32,11 @@ public class StaminaMonitor : GameStateMachine<StaminaMonitor, StaminaMonitor.In
 
 		public bool WantsToSleep()
 		{
-			return choreDriver.HasChore() && choreDriver.GetCurrentChore().SatisfiesUrge(Db.Get().Urges.Sleep);
+			if (choreDriver.HasChore())
+			{
+				return choreDriver.GetCurrentChore().SatisfiesUrge(Db.Get().Urges.Sleep);
+			}
+			return false;
 		}
 
 		public void TryExitSleepState()
@@ -46,14 +50,9 @@ public class StaminaMonitor : GameStateMachine<StaminaMonitor, StaminaMonitor.In
 		public bool IsSleeping()
 		{
 			bool result = false;
-			if (WantsToSleep())
+			if (WantsToSleep() && choreDriver.GetComponent<Worker>().workable != null)
 			{
-				Worker component = choreDriver.GetComponent<Worker>();
-				Workable workable = component.workable;
-				if (workable != null)
-				{
-					result = true;
-				}
+				result = true;
 			}
 			return result;
 		}

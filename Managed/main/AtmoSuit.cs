@@ -22,8 +22,7 @@ public class AtmoSuit : KMonoBehaviour
 			return;
 		}
 		Equippable component = GetComponent<Equippable>();
-		Storage component2 = GetComponent<Storage>();
-		bool flag = component2.Has(GameTags.AnyWater);
+		bool flag = GetComponent<Storage>().Has(GameTags.AnyWater);
 		if (!(component.assignee != null && flag))
 		{
 			return;
@@ -36,12 +35,11 @@ public class AtmoSuit : KMonoBehaviour
 		GameObject targetGameObject = soleOwner.GetComponent<MinionAssignablesProxy>().GetTargetGameObject();
 		if ((bool)targetGameObject)
 		{
-			Equipment component3 = ((KMonoBehaviour)component.assignee).GetComponent<Equipment>();
-			AssignableSlotInstance slot = component3.GetSlot(component.slot);
-			Effects component4 = targetGameObject.GetComponent<Effects>();
-			if (component4 != null && !component4.HasEffect("SoiledSuit") && !slot.IsUnassigning())
+			AssignableSlotInstance slot = ((KMonoBehaviour)component.assignee).GetComponent<Equipment>().GetSlot(component.slot);
+			Effects component2 = targetGameObject.GetComponent<Effects>();
+			if (component2 != null && !component2.HasEffect("SoiledSuit") && !slot.IsUnassigning())
 			{
-				component4.Add("SoiledSuit", should_save: true);
+				component2.Add("SoiledSuit", should_save: true);
 			}
 		}
 	}

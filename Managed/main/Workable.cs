@@ -31,7 +31,7 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 
 	protected bool showProgressBar = true;
 
-	public bool alwaysShowProgressBar = false;
+	public bool alwaysShowProgressBar;
 
 	protected bool lightEfficiencyBonus = true;
 
@@ -39,7 +39,7 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 
 	protected Guid lightEfficiencyBonusStatusItemHandle;
 
-	public bool currentlyLit = false;
+	public bool currentlyLit;
 
 	protected StatusItem workerStatusItem;
 
@@ -64,7 +64,7 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 	protected float attributeExperienceMultiplier = DUPLICANTSTATS.ATTRIBUTE_LEVELING.PART_DAY_EXPERIENCE;
 
 	[SerializeField]
-	protected string skillExperienceSkillGroup = null;
+	protected string skillExperienceSkillGroup;
 
 	[SerializeField]
 	protected float skillExperienceMultiplier = SKILLS.PART_DAY_EXPERIENCE;
@@ -96,7 +96,7 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 
 	[SerializeField]
 	[Tooltip("Whether to display number of uses in the details panel")]
-	public bool trackUses = false;
+	public bool trackUses;
 
 	[Serialize]
 	protected int numberOfUses;
@@ -113,7 +113,7 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 	protected bool shouldShowSkillPerkStatusItem = true;
 
 	[SerializeField]
-	public bool requireMinionToWork = false;
+	public bool requireMinionToWork;
 
 	protected StatusItem readyForSkillWorkStatusItem;
 
@@ -133,11 +133,11 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 		"working_pst"
 	};
 
-	public KAnim.PlayMode workAnimPlayMode = KAnim.PlayMode.Loop;
+	public KAnim.PlayMode workAnimPlayMode;
 
-	public bool faceTargetWhenWorking = false;
+	public bool faceTargetWhenWorking;
 
-	protected ProgressBar progressBar = null;
+	protected ProgressBar progressBar;
 
 	public Worker worker
 	{
@@ -175,7 +175,11 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 
 	public virtual float GetPercentComplete()
 	{
-		return (workTimeRemaining <= workTime) ? (1f - workTimeRemaining / workTime) : (-1f);
+		if (!(workTimeRemaining <= workTime))
+		{
+			return -1f;
+		}
+		return 1f - workTimeRemaining / workTime;
 	}
 
 	public virtual AnimInfo GetAnim(Worker worker)
@@ -242,8 +246,7 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 			Game.Instance.Unsubscribe(minionUpdateHandle);
 		}
 		minionUpdateHandle = Game.Instance.Subscribe(586301400, UpdateStatusItem);
-		KPrefabID component = GetComponent<KPrefabID>();
-		component.AddTag(GameTags.HasChores);
+		GetComponent<KPrefabID>().AddTag(GameTags.HasChores);
 		lightEfficiencyBonusStatusItem = Db.Get().DuplicantStatusItems.LightWorkEfficiencyBonus;
 		ShowProgressBar(alwaysShowProgressBar && workTimeRemaining < GetWorkTime());
 		UpdateStatusItem();
@@ -337,7 +340,11 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 			workTimeRemaining -= dt;
 			flag = OnWorkTick(worker, dt);
 		}
-		return flag || workTimeRemaining < 0f;
+		if (!flag)
+		{
+			return workTimeRemaining < 0f;
+		}
+		return true;
 	}
 
 	public virtual float GetEfficiencyMultiplier(Worker worker)
@@ -353,8 +360,7 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 			int num2 = Grid.PosToCell(worker.gameObject);
 			if (Grid.IsValidCell(num2))
 			{
-				int num3 = Grid.LightIntensity[num2];
-				if (num3 > 0)
+				if (Grid.LightIntensity[num2] > 0)
 				{
 					currentlyLit = true;
 					num += DUPLICANTSTATS.LIGHT.LIGHT_WORK_EFFICIENCY_BONUS;
@@ -388,7 +394,11 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 	public virtual string GetConversationTopic()
 	{
 		KPrefabID component = GetComponent<KPrefabID>();
-		return component.HasTag(GameTags.NotConversationTopic) ? null : component.PrefabTag.Name;
+		if (!component.HasTag(GameTags.NotConversationTopic))
+		{
+			return component.PrefabTag.Name;
+		}
+		return null;
 	}
 
 	public float GetAttributeExperienceMultiplier()

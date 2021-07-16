@@ -9,25 +9,25 @@ public class PlasticTileConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("PlasticTile", 1, 1, "floor_plastic_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.PLASTICS, 800f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER0);
-		BuildingTemplates.CreateFoundationTileDef(buildingDef);
-		buildingDef.Floodable = false;
-		buildingDef.Entombable = false;
-		buildingDef.Overheatable = false;
-		buildingDef.UseStructureTemperature = false;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.AudioSize = "small";
-		buildingDef.BaseTimeUntilRepair = -1f;
-		buildingDef.SceneLayer = Grid.SceneLayer.TileMain;
-		buildingDef.isKAnimTile = true;
-		buildingDef.isSolidTile = true;
-		buildingDef.BlockTileAtlas = Assets.GetTextureAtlas("tiles_plastic");
-		buildingDef.BlockTilePlaceAtlas = Assets.GetTextureAtlas("tiles_plastic_place");
-		buildingDef.BlockTileMaterial = Assets.GetMaterial("tiles_solid");
-		buildingDef.DecorBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_plastic_tops_decor_info");
-		buildingDef.DecorPlaceBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_plastic_tops_place_decor_info");
-		buildingDef.ConstructionOffsetFilter = BuildingDef.ConstructionOffsetFilter_OneDown;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("PlasticTile", 1, 1, "floor_plastic_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.PLASTICS, 800f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER0);
+		BuildingTemplates.CreateFoundationTileDef(obj);
+		obj.Floodable = false;
+		obj.Entombable = false;
+		obj.Overheatable = false;
+		obj.UseStructureTemperature = false;
+		obj.AudioCategory = "Metal";
+		obj.AudioSize = "small";
+		obj.BaseTimeUntilRepair = -1f;
+		obj.SceneLayer = Grid.SceneLayer.TileMain;
+		obj.isKAnimTile = true;
+		obj.isSolidTile = true;
+		obj.BlockTileAtlas = Assets.GetTextureAtlas("tiles_plastic");
+		obj.BlockTilePlaceAtlas = Assets.GetTextureAtlas("tiles_plastic_place");
+		obj.BlockTileMaterial = Assets.GetMaterial("tiles_solid");
+		obj.DecorBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_plastic_tops_decor_info");
+		obj.DecorPlaceBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_plastic_tops_place_decor_info");
+		obj.ConstructionOffsetFilter = BuildingDef.ConstructionOffsetFilter_OneDown;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -38,10 +38,8 @@ public class PlasticTileConfig : IBuildingConfig
 		simCellOccupier.movementSpeedMultiplier = DUPLICANTSTATS.MOVEMENT.BONUS_3;
 		simCellOccupier.notifyOnMelt = true;
 		go.AddOrGet<TileTemperature>();
-		KAnimGridTileVisualizer kAnimGridTileVisualizer = go.AddOrGet<KAnimGridTileVisualizer>();
-		kAnimGridTileVisualizer.blockTileConnectorID = BlockTileConnectorID;
-		BuildingHP buildingHP = go.AddOrGet<BuildingHP>();
-		buildingHP.destroyOnDamaged = true;
+		go.AddOrGet<KAnimGridTileVisualizer>().blockTileConnectorID = BlockTileConnectorID;
+		go.AddOrGet<BuildingHP>().destroyOnDamaged = true;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

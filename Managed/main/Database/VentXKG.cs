@@ -17,8 +17,7 @@ namespace Database
 		public override bool Success()
 		{
 			float num = 0f;
-			IUtilityNetworkMgr networkManager = Conduit.GetNetworkManager(ConduitType.Gas);
-			foreach (UtilityNetwork network in networkManager.GetNetworks())
+			foreach (UtilityNetwork network in Conduit.GetNetworkManager(ConduitType.Gas).GetNetworks())
 			{
 				FlowUtilityNetwork flowUtilityNetwork = network as FlowUtilityNetwork;
 				if (flowUtilityNetwork == null)
@@ -46,8 +45,7 @@ namespace Database
 		public override string GetProgress(bool complete)
 		{
 			float num = 0f;
-			IUtilityNetworkMgr networkManager = Conduit.GetNetworkManager(ConduitType.Gas);
-			foreach (UtilityNetwork network in networkManager.GetNetworks())
+			foreach (UtilityNetwork network in Conduit.GetNetworkManager(ConduitType.Gas).GetNetworks())
 			{
 				FlowUtilityNetwork flowUtilityNetwork = network as FlowUtilityNetwork;
 				if (flowUtilityNetwork == null)

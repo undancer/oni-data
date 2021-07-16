@@ -108,48 +108,56 @@ public class Geyser : StateMachineComponent<Geyser.StatesInstance>, IGameObjectE
 	{
 		float num = onDuration + offDuration;
 		float num2 = time % num;
-		float num3;
+		float result;
 		Phase phase;
 		if (num2 < onDuration)
 		{
-			num3 = Mathf.Max(onDuration - num2, 0f);
+			result = Mathf.Max(onDuration - num2, 0f);
 			phase = Phase.On;
 		}
 		else
 		{
-			num3 = Mathf.Max(onDuration + offDuration - num2, 0f);
+			result = Mathf.Max(onDuration + offDuration - num2, 0f);
 			phase = Phase.Off;
 		}
-		return (expectedPhase == Phase.Any || phase == expectedPhase) ? num3 : 0f;
+		if (expectedPhase != Phase.Any && phase != expectedPhase)
+		{
+			return 0f;
+		}
+		return result;
 	}
 
 	public float RemainingPhaseTimeFrom4(float onDuration, float pstDuration, float offDuration, float preDuration, float time, Phase expectedPhase)
 	{
 		float num = onDuration + pstDuration + offDuration + preDuration;
 		float num2 = time % num;
-		float num3;
+		float result;
 		Phase phase;
 		if (num2 < onDuration)
 		{
-			num3 = onDuration - num2;
+			result = onDuration - num2;
 			phase = Phase.On;
 		}
 		else if (num2 < onDuration + pstDuration)
 		{
-			num3 = onDuration + pstDuration - num2;
+			result = onDuration + pstDuration - num2;
 			phase = Phase.Pst;
 		}
 		else if (num2 < onDuration + pstDuration + offDuration)
 		{
-			num3 = onDuration + pstDuration + offDuration - num2;
+			result = onDuration + pstDuration + offDuration - num2;
 			phase = Phase.Off;
 		}
 		else
 		{
-			num3 = onDuration + pstDuration + offDuration + preDuration - num2;
+			result = onDuration + pstDuration + offDuration + preDuration - num2;
 			phase = Phase.Pre;
 		}
-		return (expectedPhase == Phase.Any || phase == expectedPhase) ? num3 : 0f;
+		if (expectedPhase != Phase.Any && phase != expectedPhase)
+		{
+			return 0f;
+		}
+		return result;
 	}
 
 	private float IdleDuration()
@@ -215,8 +223,7 @@ public class Geyser : StateMachineComponent<Geyser.StatesInstance>, IGameObjectE
 	public List<Descriptor> GetDescriptors(GameObject go)
 	{
 		List<Descriptor> list = new List<Descriptor>();
-		Element element = ElementLoader.FindElementByHash(configuration.GetElement());
-		string arg = element.tag.ProperName();
+		string arg = ElementLoader.FindElementByHash(configuration.GetElement()).tag.ProperName();
 		list.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.GEYSER_PRODUCTION, arg, GameUtil.GetFormattedMass(configuration.GetEmitRate(), GameUtil.TimeSlice.PerSecond), GameUtil.GetFormattedTemperature(configuration.GetTemperature())), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.GEYSER_PRODUCTION, configuration.GetElement().ToString(), GameUtil.GetFormattedMass(configuration.GetEmitRate(), GameUtil.TimeSlice.PerSecond), GameUtil.GetFormattedTemperature(configuration.GetTemperature()))));
 		if (configuration.GetDiseaseIdx() != byte.MaxValue)
 		{

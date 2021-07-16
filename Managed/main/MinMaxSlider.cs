@@ -20,11 +20,11 @@ public class MinMaxSlider : KMonoBehaviour
 
 	public LockingType lockType = LockingType.Drag;
 
-	public bool lockRange = false;
+	public bool lockRange;
 
 	public bool interactable = true;
 
-	public float minLimit = 0f;
+	public float minLimit;
 
 	public float maxLimit = 100f;
 
@@ -40,7 +40,7 @@ public class MinMaxSlider : KMonoBehaviour
 
 	public float currentExtraValue = 50f;
 
-	public Slider.Direction direction = Slider.Direction.LeftToRight;
+	public Slider.Direction direction;
 
 	public bool wholeNumbers = true;
 

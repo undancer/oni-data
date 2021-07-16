@@ -18,9 +18,9 @@ public class ChoreCountTracker : WorldTracker
 				continue;
 			}
 			ChoreGroup[] groups = chore.choreType.groups;
-			foreach (ChoreGroup choreGroup in groups)
+			for (int i = 0; i < groups.Length; i++)
 			{
-				if (choreGroup == this.choreGroup)
+				if (groups[i] == choreGroup)
 				{
 					num += 1f;
 					break;

@@ -62,8 +62,7 @@ public class SicknessTrigger : KMonoBehaviour, IGameObjectEffectDescriptor
 		{
 			string infection_source_info = trigger.sourceCallback(base.gameObject, target);
 			SicknessExposureInfo exposure_info = new SicknessExposureInfo(sickness.Id, infection_source_info);
-			Klei.AI.Sicknesses sicknesses2 = target.GetComponent<MinionModifiers>().sicknesses;
-			sicknesses2.Infect(exposure_info);
+			target.GetComponent<MinionModifiers>().sicknesses.Infect(exposure_info);
 		}
 		else
 		{

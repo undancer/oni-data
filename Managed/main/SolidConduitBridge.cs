@@ -49,7 +49,7 @@ public class SolidConduitBridge : ConduitBridgeBase
 			Pickupable pickupable = flowManager.GetPickupable(flowManager.GetContents(inputCell).pickupableHandle);
 			if (pickupable == null)
 			{
-				Pickupable pickupable2 = flowManager.RemovePickupable(inputCell);
+				flowManager.RemovePickupable(inputCell);
 				SendEmptyOnMassTransfer();
 				return;
 			}
@@ -65,26 +65,26 @@ public class SolidConduitBridge : ConduitBridgeBase
 			}
 			if (num2 < pickupable.PrimaryElement.Mass)
 			{
-				Pickupable pickupable3 = pickupable.Take(num2);
-				flowManager.AddPickupable(outputCell, pickupable3);
+				Pickupable pickupable2 = pickupable.Take(num2);
+				flowManager.AddPickupable(outputCell, pickupable2);
 				dispensing = true;
-				num = pickupable3.PrimaryElement.Mass;
+				num = pickupable2.PrimaryElement.Mass;
 				if (OnMassTransfer != null)
 				{
-					OnMassTransfer(pickupable3.PrimaryElement.ElementID, num, pickupable3.PrimaryElement.Temperature, pickupable3.PrimaryElement.DiseaseIdx, pickupable3.PrimaryElement.DiseaseCount, pickupable3);
+					OnMassTransfer(pickupable2.PrimaryElement.ElementID, num, pickupable2.PrimaryElement.Temperature, pickupable2.PrimaryElement.DiseaseIdx, pickupable2.PrimaryElement.DiseaseCount, pickupable2);
 				}
 			}
 			else
 			{
-				Pickupable pickupable4 = flowManager.RemovePickupable(inputCell);
-				if ((bool)pickupable4)
+				Pickupable pickupable3 = flowManager.RemovePickupable(inputCell);
+				if ((bool)pickupable3)
 				{
-					flowManager.AddPickupable(outputCell, pickupable4);
+					flowManager.AddPickupable(outputCell, pickupable3);
 					dispensing = true;
-					num = pickupable4.PrimaryElement.Mass;
+					num = pickupable3.PrimaryElement.Mass;
 					if (OnMassTransfer != null)
 					{
-						OnMassTransfer(pickupable4.PrimaryElement.ElementID, num, pickupable4.PrimaryElement.Temperature, pickupable4.PrimaryElement.DiseaseIdx, pickupable4.PrimaryElement.DiseaseCount, pickupable4);
+						OnMassTransfer(pickupable3.PrimaryElement.ElementID, num, pickupable3.PrimaryElement.Temperature, pickupable3.PrimaryElement.DiseaseIdx, pickupable3.PrimaryElement.DiseaseCount, pickupable3);
 					}
 				}
 			}

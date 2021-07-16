@@ -27,9 +27,9 @@ public class RocketThrustWidget : KMonoBehaviour, IPointerEnterHandler, IEventSy
 
 	private float totalWidth = 5f;
 
-	private bool mouseOver = false;
+	private bool mouseOver;
 
-	public CommandModule commandModule = null;
+	public CommandModule commandModule;
 
 	protected override void OnPrefabInit()
 	{

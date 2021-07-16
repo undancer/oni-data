@@ -129,8 +129,7 @@ public class ResearchEntry : KMonoBehaviour
 				b = new Vector2(0f, -20f);
 				b2 = new Vector2(0f, 20f);
 			}
-			GameObject gameObject = Util.KInstantiateUI(linePrefab, lineContainer.gameObject, force_active: true);
-			UILineRenderer component = gameObject.GetComponent<UILineRenderer>();
+			UILineRenderer component = Util.KInstantiateUI(linePrefab, lineContainer.gameObject, force_active: true).GetComponent<UILineRenderer>();
 			float num2 = 32f;
 			component.Points = new Vector2[4]
 			{
@@ -200,11 +199,9 @@ public class ResearchEntry : KMonoBehaviour
 					text += ", ";
 				}
 				text += unlockedItem.Name;
-				KImage reference = component2.GetReference<KImage>("Icon");
-				reference.sprite = unlockedItem.UISprite();
-				KImage reference2 = component2.GetReference<KImage>("Background");
-				KImage reference3 = component2.GetReference<KImage>("DLCOverlay");
-				reference3.gameObject.SetActive(!DlcManager.IsValidForVanilla(unlockedItem.dlcIds));
+				component2.GetReference<KImage>("Icon").sprite = unlockedItem.UISprite();
+				component2.GetReference<KImage>("Background");
+				component2.GetReference<KImage>("DLCOverlay").gameObject.SetActive(!DlcManager.IsValidForVanilla(unlockedItem.dlcIds));
 				string text2 = $"{unlockedItem.Name}\n{unlockedItem.description}";
 				if (!DlcManager.IsValidForVanilla(unlockedItem.dlcIds))
 				{
@@ -318,13 +315,12 @@ public class ResearchEntry : KMonoBehaviour
 			}
 			foreach (KeyValuePair<string, GameObject> item in progressBarsByResearchTypeID)
 			{
-				Transform child = item.Value.transform.GetChild(0);
-				child.GetComponentsInChildren<Image>()[1].color = Color.white;
+				item.Value.transform.GetChild(0).GetComponentsInChildren<Image>()[1].color = Color.white;
 			}
 			Image[] componentsInChildren = iconPanel.GetComponentsInChildren<Image>();
-			foreach (Image image in componentsInChildren)
+			for (int i = 0; i < componentsInChildren.Length; i++)
 			{
-				image.material = StandardUIMaterial;
+				componentsInChildren[i].material = StandardUIMaterial;
 			}
 			return;
 		}
@@ -337,13 +333,12 @@ public class ResearchEntry : KMonoBehaviour
 			toggle.ClearOnClick();
 			foreach (KeyValuePair<string, GameObject> item2 in progressBarsByResearchTypeID)
 			{
-				Transform child2 = item2.Value.transform.GetChild(0);
-				child2.GetComponentsInChildren<Image>()[1].color = Color.white;
+				item2.Value.transform.GetChild(0).GetComponentsInChildren<Image>()[1].color = Color.white;
 			}
-			Image[] componentsInChildren2 = iconPanel.GetComponentsInChildren<Image>();
-			foreach (Image image2 in componentsInChildren2)
+			Image[] componentsInChildren = iconPanel.GetComponentsInChildren<Image>();
+			for (int i = 0; i < componentsInChildren.Length; i++)
 			{
-				image2.material = StandardUIMaterial;
+				componentsInChildren[i].material = StandardUIMaterial;
 			}
 			return;
 		}
@@ -354,8 +349,7 @@ public class ResearchEntry : KMonoBehaviour
 		toggle.onClick += OnResearchClicked;
 		foreach (KeyValuePair<string, GameObject> item3 in progressBarsByResearchTypeID)
 		{
-			Transform child3 = item3.Value.transform.GetChild(0);
-			child3.GetComponentsInChildren<Image>()[1].color = new Color(133f / 255f, 133f / 255f, 133f / 255f);
+			item3.Value.transform.GetChild(0).GetComponentsInChildren<Image>()[1].color = new Color(133f / 255f, 133f / 255f, 133f / 255f);
 		}
 	}
 

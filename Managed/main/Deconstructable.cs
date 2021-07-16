@@ -6,7 +6,7 @@ using UnityEngine;
 [AddComponentMenu("KMonoBehaviour/Workable/Deconstructable")]
 public class Deconstructable : Workable
 {
-	public Chore chore = null;
+	public Chore chore;
 
 	public bool allowDeconstruction = true;
 
@@ -35,7 +35,7 @@ public class Deconstructable : Workable
 
 	private static readonly Vector2 INITIAL_VELOCITY_RANGE = new Vector2(0.5f, 4f);
 
-	private bool destroyed = false;
+	private bool destroyed;
 
 	private CellOffset[] placementOffsets
 	{
@@ -186,8 +186,7 @@ public class Deconstructable : Workable
 			if (component != null && component.Def.ReplacementLayer != ObjectLayer.NumLayers)
 			{
 				int cell = Grid.PosToCell(component);
-				GameObject x = Grid.Objects[cell, (int)component.Def.ReplacementLayer];
-				if (x != null)
+				if (Grid.Objects[cell, (int)component.Def.ReplacementLayer] != null)
 				{
 					return;
 				}
@@ -284,8 +283,7 @@ public class Deconstructable : Workable
 			{
 				int num3 = j % placementOffsets.Length;
 				int cell3 = Grid.OffsetCell(cell, placementOffsets[num3]);
-				GameObject prefab = Assets.GetPrefab(src_element);
-				gameObject = GameUtil.KInstantiate(prefab, Grid.CellToPosCBC(cell3, Grid.SceneLayer.Ore), Grid.SceneLayer.Ore);
+				gameObject = GameUtil.KInstantiate(Assets.GetPrefab(src_element), Grid.CellToPosCBC(cell3, Grid.SceneLayer.Ore), Grid.SceneLayer.Ore);
 				gameObject.SetActive(value: true);
 			}
 		}

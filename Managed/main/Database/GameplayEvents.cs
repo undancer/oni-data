@@ -23,6 +23,8 @@ namespace Database
 
 		public GameplayEvent MeteorShowerFullereneEvent;
 
+		public GameplayEvent MeteorShowerDustEvent;
+
 		public GameplayEvent GassyMooteorEvent;
 
 		public GameplayEvent PrickleFlowerBlightEvent;
@@ -69,6 +71,8 @@ namespace Database
 
 		public GameplayEvent WarpWorldReveal;
 
+		public GameplayEvent ArtifactReveal;
+
 		public GameplayEvents(ResourceSet parent)
 			: base("GameplayEvents", parent)
 		{
@@ -77,14 +81,16 @@ namespace Database
 			EclipseEvent = Add(new EclipseEvent());
 			SatelliteCrashEvent = Add(new SatelliteCrashEvent());
 			FoodFightEvent = Add(new FoodFightEvent());
-			MeteorShowerIronEvent = Add(new MeteorShowerEvent("MeteorShowerIronEvent", 80f).AddMeteor(IronCometConfig.ID, 1f).AddMeteor(RockCometConfig.ID, 2f).AddMeteor(DustCometConfig.ID, 5f));
-			MeteorShowerGoldEvent = Add(new MeteorShowerEvent("MeteorShowerGoldEvent", 80f).AddMeteor(GoldCometConfig.ID, 2f).AddMeteor(RockCometConfig.ID, 0.5f).AddMeteor(DustCometConfig.ID, 5f));
-			MeteorShowerCopperEvent = Add(new MeteorShowerEvent("MeteorShowerCopperEvent", 25f).AddMeteor(CopperCometConfig.ID, 1f).AddMeteor(RockCometConfig.ID, 1f));
-			MeteorShowerFullereneEvent = Add(new MeteorShowerEvent("MeteorShowerFullereneEvent", 80f).AddMeteor(FullereneCometConfig.ID, 1f).AddMeteor(RockCometConfig.ID, 4f).AddMeteor(DustCometConfig.ID, 10f));
-			GassyMooteorEvent = Add(new MeteorShowerEvent("GassyMooteorEvent ", 15f, 5f).AddMeteor(GassyMooCometConfig.ID, 1f));
+			MeteorShowerIronEvent = Add(new MeteorShowerEvent("MeteorShowerIronEvent", 6000f, 1.25f, secondsBombardmentOn: new MathUtil.MinMax(100f, 400f), secondsBombardmentOff: new MathUtil.MinMax(300f, 1200f)).AddMeteor(IronCometConfig.ID, 1f).AddMeteor(RockCometConfig.ID, 2f).AddMeteor(DustCometConfig.ID, 5f));
+			MeteorShowerGoldEvent = Add(new MeteorShowerEvent("MeteorShowerGoldEvent", 3000f, 0.4f, secondsBombardmentOn: new MathUtil.MinMax(50f, 100f), secondsBombardmentOff: new MathUtil.MinMax(800f, 1200f)).AddMeteor(GoldCometConfig.ID, 2f).AddMeteor(RockCometConfig.ID, 0.5f).AddMeteor(DustCometConfig.ID, 5f));
+			MeteorShowerCopperEvent = Add(new MeteorShowerEvent("MeteorShowerCopperEvent", 4200f, 5.5f, secondsBombardmentOn: new MathUtil.MinMax(100f, 400f), secondsBombardmentOff: new MathUtil.MinMax(300f, 1200f)).AddMeteor(CopperCometConfig.ID, 1f).AddMeteor(RockCometConfig.ID, 1f));
+			MeteorShowerFullereneEvent = Add(new MeteorShowerEvent("MeteorShowerFullereneEvent", 80f, 0.33f, secondsBombardmentOn: new MathUtil.MinMax(80f, 80f), secondsBombardmentOff: new MathUtil.MinMax(1f, 1f)).AddMeteor(FullereneCometConfig.ID, 1f).AddMeteor(RockCometConfig.ID, 4f).AddMeteor(DustCometConfig.ID, 10f));
+			MeteorShowerDustEvent = Add(new MeteorShowerEvent("MeteorShowerDustEvent", 9000f, 2f, secondsBombardmentOn: new MathUtil.MinMax(100f, 400f), secondsBombardmentOff: new MathUtil.MinMax(300f, 1200f)).AddMeteor(RockCometConfig.ID, 1f).AddMeteor(DustCometConfig.ID, 5f));
+			GassyMooteorEvent = Add(new MeteorShowerEvent("GassyMooteorEvent", 15f, 5f, secondsBombardmentOn: new MathUtil.MinMax(15f, 15f), secondsBombardmentOff: new MathUtil.MinMax(1f, 1f)).AddMeteor(GassyMooCometConfig.ID, 1f));
 			PrickleFlowerBlightEvent = Add(new PlantBlightEvent("PrickleFlowerBlightEvent", "PrickleFlower", 3600f, 30f));
 			CryoFriend = Add(new SimpleEvent("CryoFriend", GAMEPLAY_EVENTS.EVENT_TYPES.CRYOFRIEND.NAME, GAMEPLAY_EVENTS.EVENT_TYPES.CRYOFRIEND.DESCRIPTION, GAMEPLAY_EVENTS.EVENT_TYPES.CRYOFRIEND.BUTTON).SetVisuals(null, "cryofriend_kanim"));
 			WarpWorldReveal = Add(new SimpleEvent("WarpWorldReveal", GAMEPLAY_EVENTS.EVENT_TYPES.WARPWORLDREVEAL.NAME, GAMEPLAY_EVENTS.EVENT_TYPES.WARPWORLDREVEAL.DESCRIPTION, GAMEPLAY_EVENTS.EVENT_TYPES.WARPWORLDREVEAL.BUTTON).SetVisuals(null, "warpworldreveal_kanim"));
+			ArtifactReveal = Add(new SimpleEvent("ArtifactReveal", GAMEPLAY_EVENTS.EVENT_TYPES.ARTIFACT_REVEAL.NAME, GAMEPLAY_EVENTS.EVENT_TYPES.ARTIFACT_REVEAL.DESCRIPTION, GAMEPLAY_EVENTS.EVENT_TYPES.ARTIFACT_REVEAL.BUTTON).SetVisuals("event_bg_01", "analyzeartifact_kanim"));
 			BonusEvents();
 		}
 
@@ -123,11 +129,7 @@ namespace Database
 			BonusOxygen = Add(new BonusEvent("BonusOxygen").TriggerOnUseBuilding(1, "MineralDeoxidizer").AddPrecondition(instance2.BuildingExists("MineralDeoxidizer")).AddPrecondition(instance2.Not(instance2.PastEventCount("BonusAlgae"))));
 			BonusAlgae = Add(new BonusEvent("BonusAlgae", "BonusOxygen").TriggerOnUseBuilding(1, "AlgaeHabitat").AddPrecondition(instance2.BuildingExists("AlgaeHabitat")).AddPrecondition(instance2.Not(instance2.PastEventCount("BonusOxygen"))));
 			BonusGenerator = Add(new BonusEvent("BonusGenerator").TriggerOnUseBuilding(1, "ManualGenerator").AddPrecondition(instance2.BuildingExists("ManualGenerator")));
-			BonusDoor = Add(new BonusEvent("BonusDoor").TriggerOnUseBuilding(1, "Door").SetExtraCondition(delegate(BonusEvent.GameplayEventData data)
-			{
-				Door component = data.building.GetComponent<Door>();
-				return component.RequestedState == Door.ControlState.Locked;
-			}).AddPrecondition(instance2.RoomBuilt(roomTypes.Barracks)));
+			BonusDoor = Add(new BonusEvent("BonusDoor").TriggerOnUseBuilding(1, "Door").SetExtraCondition((BonusEvent.GameplayEventData data) => data.building.GetComponent<Door>().RequestedState == Door.ControlState.Locked).AddPrecondition(instance2.RoomBuilt(roomTypes.Barracks)));
 			BonusHitTheBooks = Add(new BonusEvent("BonusHitTheBooks", null, 1, preSelectMinion: true).TriggerOnWorkableComplete(1, typeof(ResearchCenter), typeof(NuclearResearchCenterWorkable)).AddPrecondition(instance2.BuildingExists("ResearchCenter")).AddMinionFilter(instance.HasSkillAptitude(skills.Researching1)));
 			BonusLitWorkspace = Add(new BonusEvent("BonusLitWorkspace").TriggerOnWorkableComplete(1).SetExtraCondition((BonusEvent.GameplayEventData data) => data.workable.currentlyLit).AddPrecondition(instance2.CycleRestriction(10f)));
 			BonusTalker = Add(new BonusEvent("BonusTalker", null, 1, preSelectMinion: true).TriggerOnWorkableComplete(3, typeof(SocialGatheringPointWorkable)).SetExtraCondition((BonusEvent.GameplayEventData data) => (data.workable as SocialGatheringPointWorkable).timesConversed > 0).AddPrecondition(instance2.CycleRestriction(10f)));
@@ -137,9 +139,7 @@ namespace Database
 		{
 			foreach (GameplayEvent resource in resources)
 			{
-				if (resource.popupAnimFileName == null)
-				{
-				}
+				_ = resource.popupAnimFileName == null;
 				if (resource is BonusEvent)
 				{
 					VerifyBonusEvent(resource as BonusEvent);

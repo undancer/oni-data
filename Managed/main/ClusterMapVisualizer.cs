@@ -167,7 +167,7 @@ public class ClusterMapVisualizer : KMonoBehaviour
 
 	public AlertVignette alertVignette;
 
-	public bool doesTransitionAnimation = false;
+	public bool doesTransitionAnimation;
 
 	[HideInInspector]
 	public Transform animContainer;
@@ -180,9 +180,9 @@ public class ClusterMapVisualizer : KMonoBehaviour
 
 	private List<KBatchedAnimController> animControllers;
 
-	private bool isSelected = false;
+	private bool isSelected;
 
-	private ClusterRevealLevel lastRevealLevel = ClusterRevealLevel.Hidden;
+	private ClusterRevealLevel lastRevealLevel;
 
 	public void Init(ClusterGridEntity entity, ClusterMapPathDrawer pathDrawer)
 	{
@@ -211,8 +211,11 @@ public class ClusterMapVisualizer : KMonoBehaviour
 		base.OnSpawn();
 		if (doesTransitionAnimation)
 		{
-			ClusterMapTravelAnimator.StatesInstance statesInstance = new ClusterMapTravelAnimator.StatesInstance(this, entity);
-			statesInstance.StartSM();
+			new ClusterMapTravelAnimator.StatesInstance(this, entity).StartSM();
+		}
+		if (entity is Clustercraft)
+		{
+			new ClusterMapRocketAnimator.StatesInstance(this, entity).StartSM();
 		}
 	}
 
@@ -239,16 +242,16 @@ public class ClusterMapVisualizer : KMonoBehaviour
 				isSelected = selected;
 				RefreshPathDrawing();
 			}
-			GetFirstAnim().SetSymbolVisiblity("selected", selected);
+			GetFirstAnimController().SetSymbolVisiblity("selected", selected);
 		}
 	}
 
 	public void PlayAnim(string animName, KAnim.PlayMode playMode)
 	{
-		GetFirstAnim().Play(animName, playMode);
+		GetFirstAnimController().Play(animName, playMode);
 	}
 
-	public KBatchedAnimController GetFirstAnim()
+	public KBatchedAnimController GetFirstAnimController()
 	{
 		return animControllers[0];
 	}

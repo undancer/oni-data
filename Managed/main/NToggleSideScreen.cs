@@ -61,30 +61,30 @@ public class NToggleSideScreen : SideScreenContent
 			{
 				buttonList[i].isOn = true;
 				ImageToggleState[] componentsInChildren = buttonList[i].GetComponentsInChildren<ImageToggleState>();
-				foreach (ImageToggleState imageToggleState in componentsInChildren)
+				for (int j = 0; j < componentsInChildren.Length; j++)
 				{
-					imageToggleState.SetActive();
+					componentsInChildren[j].SetActive();
 				}
 				buttonList[i].GetComponent<ImageToggleStateThrobber>().enabled = false;
 			}
 			else if (target.QueuedOption == i)
 			{
 				buttonList[i].isOn = true;
-				ImageToggleState[] componentsInChildren2 = buttonList[i].GetComponentsInChildren<ImageToggleState>();
-				foreach (ImageToggleState imageToggleState2 in componentsInChildren2)
+				ImageToggleState[] componentsInChildren = buttonList[i].GetComponentsInChildren<ImageToggleState>();
+				for (int j = 0; j < componentsInChildren.Length; j++)
 				{
-					imageToggleState2.SetActive();
+					componentsInChildren[j].SetActive();
 				}
 				buttonList[i].GetComponent<ImageToggleStateThrobber>().enabled = true;
 			}
 			else
 			{
 				buttonList[i].isOn = false;
-				ImageToggleState[] componentsInChildren3 = buttonList[i].GetComponentsInChildren<ImageToggleState>();
-				foreach (ImageToggleState imageToggleState3 in componentsInChildren3)
+				ImageToggleState[] componentsInChildren = buttonList[i].GetComponentsInChildren<ImageToggleState>();
+				foreach (ImageToggleState obj in componentsInChildren)
 				{
-					imageToggleState3.SetInactive();
-					imageToggleState3.SetInactive();
+					obj.SetInactive();
+					obj.SetInactive();
 				}
 				buttonList[i].GetComponent<ImageToggleStateThrobber>().enabled = false;
 			}

@@ -40,8 +40,7 @@ public class HighEnergyParticleConfig : IEntityConfig
 		radiationEmitter.emitRadiusX = 3;
 		radiationEmitter.emitRadiusY = 3;
 		radiationEmitter.emitRads = 4f * ((float)radiationEmitter.emitRadiusX / 6f);
-		HighEnergyParticle highEnergyParticle = gameObject.AddComponent<HighEnergyParticle>();
-		highEnergyParticle.speed = 8f;
+		gameObject.AddComponent<HighEnergyParticle>().speed = 8f;
 		return gameObject;
 	}
 

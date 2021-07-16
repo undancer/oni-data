@@ -118,7 +118,7 @@ public class Diet
 
 	public List<KeyValuePair<Tag, float>> producedTags;
 
-	public bool eatsPlantsDirectly = false;
+	public bool eatsPlantsDirectly;
 
 	private Dictionary<Tag, Info> consumedTagToInfo = new Dictionary<Tag, Info>();
 

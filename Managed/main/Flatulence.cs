@@ -34,10 +34,7 @@ public class Flatulence : StateMachineComponent<Flatulence.StatesInstance>
 
 		private float GetNewInterval()
 		{
-			float mu = TRAITS.FLATULENCE_EMIT_INTERVAL_MAX - TRAITS.FLATULENCE_EMIT_INTERVAL_MIN;
-			float a = Util.GaussianRandom(mu);
-			a = Mathf.Max(a, TRAITS.FLATULENCE_EMIT_INTERVAL_MIN);
-			return Mathf.Min(a, TRAITS.FLATULENCE_EMIT_INTERVAL_MAX);
+			return Mathf.Min(Mathf.Max(Util.GaussianRandom(TRAITS.FLATULENCE_EMIT_INTERVAL_MAX - TRAITS.FLATULENCE_EMIT_INTERVAL_MIN), TRAITS.FLATULENCE_EMIT_INTERVAL_MIN), TRAITS.FLATULENCE_EMIT_INTERVAL_MAX);
 		}
 	}
 
@@ -80,23 +77,20 @@ public class Flatulence : StateMachineComponent<Flatulence.StatesInstance>
 				if (minionIdentity.gameObject != gameObject.gameObject)
 				{
 					Vector2 b = minionIdentity.transform.GetPosition();
-					float num = Vector2.SqrMagnitude(a - b);
-					if (num <= 2.25f)
+					if (Vector2.SqrMagnitude(a - b) <= 2.25f)
 					{
 						minionIdentity.Trigger(508119890, Strings.Get("STRINGS.DUPLICANTS.DISEASES.PUTRIDODOUR.CRINGE_EFFECT").String);
 						minionIdentity.gameObject.GetSMI<ThoughtGraph.Instance>().AddThought(Db.Get().Thoughts.PutridOdour);
 					}
 				}
 			}
-			int gameCell = Grid.PosToCell(gameObject.transform.GetPosition());
-			SimMessages.AddRemoveSubstance(gameCell, SimHashes.Methane, CellEventLogger.Instance.ElementConsumerSimUpdate, 0.1f, value, byte.MaxValue, 0);
+			SimMessages.AddRemoveSubstance(Grid.PosToCell(gameObject.transform.GetPosition()), SimHashes.Methane, CellEventLogger.Instance.ElementConsumerSimUpdate, 0.1f, value, byte.MaxValue, 0);
 			KBatchedAnimController kBatchedAnimController = FXHelpers.CreateEffect("odor_fx_kanim", gameObject.transform.GetPosition(), gameObject.transform, update_looping_sounds_position: true);
 			kBatchedAnimController.Play(WorkLoopAnims);
 			kBatchedAnimController.destroyOnAnimComplete = true;
 		}
-		GameObject gameObject2 = gameObject;
-		bool flag = SoundEvent.ObjectIsSelectedAndVisible(gameObject2);
-		Vector3 vector = gameObject2.GetComponent<Transform>().GetPosition();
+		bool flag = SoundEvent.ObjectIsSelectedAndVisible(gameObject);
+		Vector3 vector = gameObject.GetComponent<Transform>().GetPosition();
 		vector.z = 0f;
 		float volume = 1f;
 		if (flag)

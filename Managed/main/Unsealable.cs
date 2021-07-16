@@ -8,7 +8,7 @@ public class Unsealable : Workable
 	public bool facingRight;
 
 	[Serialize]
-	public bool unsealed = false;
+	public bool unsealed;
 
 	private Unsealable()
 	{

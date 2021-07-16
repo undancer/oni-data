@@ -36,11 +36,11 @@ public class Element : IComparable<Element>
 
 	public float strength;
 
-	public float flow = 0f;
+	public float flow;
 
-	public float maxCompression = 0f;
+	public float maxCompression;
 
-	public float viscosity = 0f;
+	public float viscosity;
 
 	public float minHorizontalFlow = float.PositiveInfinity;
 
@@ -56,7 +56,7 @@ public class Element : IComparable<Element>
 
 	public State state;
 
-	public byte hardness = 0;
+	public byte hardness;
 
 	public float lowTemp;
 
@@ -72,11 +72,11 @@ public class Element : IComparable<Element>
 
 	public SimHashes highTempTransitionOreID = SimHashes.Vacuum;
 
-	public float highTempTransitionOreMassConversion = 0f;
+	public float highTempTransitionOreMassConversion;
 
 	public SimHashes lowTempTransitionOreID = SimHashes.Vacuum;
 
-	public float lowTempTransitionOreMassConversion = 0f;
+	public float lowTempTransitionOreMassConversion;
 
 	public SimHashes sublimateId;
 
@@ -132,7 +132,17 @@ public class Element : IComparable<Element>
 
 	public bool IsTemperatureInsulated => (state & State.TemperatureInsulated) != 0;
 
-	public bool HasTransitionUp => highTempTransitionTarget != 0 && highTempTransitionTarget != SimHashes.Unobtanium && highTempTransition != null && highTempTransition != this;
+	public bool HasTransitionUp
+	{
+		get
+		{
+			if (highTempTransitionTarget != 0 && highTempTransitionTarget != SimHashes.Unobtanium && highTempTransition != null)
+			{
+				return highTempTransition != this;
+			}
+			return false;
+		}
+	}
 
 	public string name
 	{
@@ -229,6 +239,7 @@ public class Element : IComparable<Element>
 				string formattedString = attributeModifier.GetFormattedString();
 				str = str + "\n" + string.Format(DUPLICANTS.MODIFIERS.MODIFIER_FORMAT, name, formattedString);
 			}
+			return str;
 		}
 		return str;
 	}

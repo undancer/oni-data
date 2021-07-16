@@ -16,10 +16,10 @@ public class RationTracker : KMonoBehaviour, ISaveLoadable
 	private static RationTracker instance;
 
 	[Serialize]
-	public Frame currentFrame = default(Frame);
+	public Frame currentFrame;
 
 	[Serialize]
-	public Frame previousFrame = default(Frame);
+	public Frame previousFrame;
 
 	[Serialize]
 	public Dictionary<string, float> caloriesConsumedByFood = new Dictionary<string, float>();
@@ -63,21 +63,21 @@ public class RationTracker : KMonoBehaviour, ISaveLoadable
 		{
 			foreach (Pickupable item in pickupables)
 			{
-				if (item.KPrefabID.HasTag(GameTags.StoredPrivate))
+				if (!item.KPrefabID.HasTag(GameTags.StoredPrivate))
 				{
-					continue;
-				}
-				Edible component = item.GetComponent<Edible>();
-				num += component.Calories;
-				if (unitCountByFoodType != null)
-				{
-					if (!unitCountByFoodType.ContainsKey(component.FoodID))
+					Edible component = item.GetComponent<Edible>();
+					num += component.Calories;
+					if (unitCountByFoodType != null)
 					{
-						unitCountByFoodType[component.FoodID] = 0f;
+						if (!unitCountByFoodType.ContainsKey(component.FoodID))
+						{
+							unitCountByFoodType[component.FoodID] = 0f;
+						}
+						unitCountByFoodType[component.FoodID] += component.Units;
 					}
-					unitCountByFoodType[component.FoodID] += component.Units;
 				}
 			}
+			return num;
 		}
 		return num;
 	}
@@ -99,6 +99,7 @@ public class RationTracker : KMonoBehaviour, ISaveLoadable
 					}
 				}
 			}
+			return num;
 		}
 		return num;
 	}

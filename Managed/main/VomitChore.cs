@@ -39,38 +39,31 @@ public class VomitChore : Chore<VomitChore.StatesInstance>
 
 		public void SpawnDirtyWater(float dt)
 		{
-			if (!(dt > 0f))
+			if (dt > 0f)
 			{
-				return;
-			}
-			float totalTime = GetComponent<KBatchedAnimController>().CurrentAnim.totalTime;
-			float num = dt / totalTime;
-			Sicknesses sicknesses = base.master.GetComponent<MinionModifiers>().sicknesses;
-			SimUtil.DiseaseInfo invalid = SimUtil.DiseaseInfo.Invalid;
-			for (int i = 0; i < sicknesses.Count; i++)
-			{
-				SicknessInstance sicknessInstance = sicknesses[i];
-				if (sicknessInstance.modifier.sicknessType == Sickness.SicknessType.Pathogen)
+				float totalTime = GetComponent<KBatchedAnimController>().CurrentAnim.totalTime;
+				float num = dt / totalTime;
+				Sicknesses sicknesses = base.master.GetComponent<MinionModifiers>().sicknesses;
+				SimUtil.DiseaseInfo invalid = SimUtil.DiseaseInfo.Invalid;
+				for (int i = 0; i < sicknesses.Count && sicknesses[i].modifier.sicknessType != 0; i++)
 				{
-					break;
 				}
-			}
-			Facing component = base.sm.vomiter.Get(base.smi).GetComponent<Facing>();
-			int num2 = Grid.PosToCell(component.transform.GetPosition());
-			int frontCell = component.GetFrontCell();
-			int num3 = frontCell;
-			if (!CanEmitLiquid(num3))
-			{
-				num3 = num2;
-			}
-			Equippable equippable = GetComponent<SuitEquipper>().IsWearingAirtightSuit();
-			if (equippable != null)
-			{
-				equippable.GetComponent<Storage>().AddLiquid(SimHashes.DirtyWater, STRESS.VOMIT_AMOUNT * num, bodyTemperature.value, invalid.idx, invalid.count);
-			}
-			else
-			{
-				SimMessages.AddRemoveSubstance(num3, SimHashes.DirtyWater, CellEventLogger.Instance.Vomit, STRESS.VOMIT_AMOUNT * num, bodyTemperature.value, invalid.idx, invalid.count);
+				Facing component = base.sm.vomiter.Get(base.smi).GetComponent<Facing>();
+				int num2 = Grid.PosToCell(component.transform.GetPosition());
+				int num3 = component.GetFrontCell();
+				if (!CanEmitLiquid(num3))
+				{
+					num3 = num2;
+				}
+				Equippable equippable = GetComponent<SuitEquipper>().IsWearingAirtightSuit();
+				if (equippable != null)
+				{
+					equippable.GetComponent<Storage>().AddLiquid(SimHashes.DirtyWater, STRESS.VOMIT_AMOUNT * num, bodyTemperature.value, invalid.idx, invalid.count);
+				}
+				else
+				{
+					SimMessages.AddRemoveSubstance(num3, SimHashes.DirtyWater, CellEventLogger.Instance.Vomit, STRESS.VOMIT_AMOUNT * num, bodyTemperature.value, invalid.idx, invalid.count);
+				}
 			}
 		}
 

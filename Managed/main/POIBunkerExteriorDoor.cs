@@ -37,18 +37,14 @@ public class POIBunkerExteriorDoor : IBuildingConfig
 		go.AddOrGet<Unsealable>();
 		go.AddOrGet<KBoxCollider2D>();
 		Prioritizable.AddRef(go);
-		Workable workable = go.AddOrGet<Workable>();
-		workable.workTime = 5f;
-		KBatchedAnimController kBatchedAnimController = go.AddOrGet<KBatchedAnimController>();
-		kBatchedAnimController.fgLayer = Grid.SceneLayer.BuildingFront;
+		go.AddOrGet<Workable>().workTime = 5f;
+		go.AddOrGet<KBatchedAnimController>().fgLayer = Grid.SceneLayer.BuildingFront;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		AccessControl component = go.GetComponent<AccessControl>();
-		component.controlEnabled = false;
+		go.GetComponent<AccessControl>().controlEnabled = false;
 		go.GetComponent<Deconstructable>().allowDeconstruction = false;
-		KBatchedAnimController component2 = go.GetComponent<KBatchedAnimController>();
-		component2.initialAnim = "closed";
+		go.GetComponent<KBatchedAnimController>().initialAnim = "closed";
 	}
 }

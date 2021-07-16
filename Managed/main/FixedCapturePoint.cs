@@ -123,8 +123,7 @@ public class FixedCapturePoint : GameStateMachine<FixedCapturePoint, FixedCaptur
 			{
 				return false;
 			}
-			int navigationCost = capturable.GetComponent<Navigator>().GetNavigationCost(capture_cell);
-			if (navigationCost == -1)
+			if (capturable.GetComponent<Navigator>().GetNavigationCost(capture_cell) == -1)
 			{
 				return false;
 			}

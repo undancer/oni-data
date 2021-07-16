@@ -32,7 +32,15 @@ internal class NestingPoopState : GameStateMachine<NestingPoopState, NestingPoop
 
 		private static bool IsValidNestingCell(int cell, object arg)
 		{
-			return Grid.IsValidCell(cell) && !Grid.Solid[cell] && Grid.Solid[Grid.CellBelow(cell)] && (IsValidPoopFromCell(cell, look_left: true) || IsValidPoopFromCell(cell, look_left: false));
+			if (Grid.IsValidCell(cell) && !Grid.Solid[cell] && Grid.Solid[Grid.CellBelow(cell)])
+			{
+				if (!IsValidPoopFromCell(cell, look_left: true))
+				{
+					return IsValidPoopFromCell(cell, look_left: false);
+				}
+				return true;
+			}
+			return false;
 		}
 
 		private static bool IsValidPoopFromCell(int cell, bool look_left)
@@ -41,11 +49,19 @@ internal class NestingPoopState : GameStateMachine<NestingPoopState, NestingPoop
 			{
 				int num = Grid.CellDownLeft(cell);
 				int num2 = Grid.CellLeft(cell);
-				return Grid.IsValidCell(num) && Grid.Solid[num] && Grid.IsValidCell(num2) && !Grid.Solid[num2];
+				if (Grid.IsValidCell(num) && Grid.Solid[num] && Grid.IsValidCell(num2))
+				{
+					return !Grid.Solid[num2];
+				}
+				return false;
 			}
 			int num3 = Grid.CellDownRight(cell);
 			int num4 = Grid.CellRight(cell);
-			return Grid.IsValidCell(num3) && Grid.Solid[num3] && Grid.IsValidCell(num4) && !Grid.Solid[num4];
+			if (Grid.IsValidCell(num3) && Grid.Solid[num3] && Grid.IsValidCell(num4))
+			{
+				return !Grid.Solid[num4];
+			}
+			return false;
 		}
 
 		public int GetPoopPosition()
@@ -133,8 +149,7 @@ internal class NestingPoopState : GameStateMachine<NestingPoopState, NestingPoop
 		}).GoTo(pooping);
 		pooping.Enter(delegate(Instance smi)
 		{
-			Facing component = smi.master.GetComponent<Facing>();
-			component.SetFacing(Grid.PosToCell(smi.master.gameObject) > smi.targetPoopCell);
+			smi.master.GetComponent<Facing>().SetFacing(Grid.PosToCell(smi.master.gameObject) > smi.targetPoopCell);
 		}).ToggleStatusItem(CREATURES.STATUSITEMS.EXPELLING_SOLID.NAME, CREATURES.STATUSITEMS.EXPELLING_SOLID.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, default(HashedString), 129022, null, null, Db.Get().StatusItemCategories.Main).PlayAnim("poop")
 			.OnAnimQueueComplete(behaviourcomplete);
 		behaviourcomplete.Enter(delegate(Instance smi)

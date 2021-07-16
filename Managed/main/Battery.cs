@@ -26,7 +26,7 @@ public class Battery : KMonoBehaviour, IEnergyConsumer, ICircuitConnected, IGame
 
 	protected MeterController meter;
 
-	public float joulesLostPerSecond = 0f;
+	public float joulesLostPerSecond;
 
 	[SerializeField]
 	public int powerSortOrder;
@@ -50,7 +50,7 @@ public class Battery : KMonoBehaviour, IEnergyConsumer, ICircuitConnected, IGame
 
 	private float dt;
 
-	private float joulesConsumed = 0f;
+	private float joulesConsumed;
 
 	public float WattsUsed
 	{

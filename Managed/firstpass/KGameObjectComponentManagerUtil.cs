@@ -10,8 +10,7 @@ public static class KGameObjectComponentManagerUtil
 		writer.Write(0);
 		long position2 = writer.BaseStream.Position;
 		HandleVector<int>.Handle handle = mgr.GetHandle(go);
-		DataType data = mgr.GetData(handle);
-		Serializer.SerializeTypeless(data, writer);
+		Serializer.SerializeTypeless(mgr.GetData(handle), writer);
 		long position3 = writer.BaseStream.Position;
 		long num = position3 - position2;
 		writer.BaseStream.Position = position;

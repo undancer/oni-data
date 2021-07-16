@@ -21,7 +21,11 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			return other is HServerListRequest && this == (HServerListRequest)other;
+			if (other is HServerListRequest)
+			{
+				return this == (HServerListRequest)other;
+			}
+			return false;
 		}
 
 		public override int GetHashCode()

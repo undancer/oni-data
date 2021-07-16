@@ -10,7 +10,7 @@ public class PerformanceMonitor : MonoBehaviour
 
 	private LinkedList<float> frameTimes = new LinkedList<float>();
 
-	private float frameTimeTotal = 0f;
+	private float frameTimeTotal;
 
 	private static readonly int frameRateWindowSize = 150;
 
@@ -20,7 +20,17 @@ public class PerformanceMonitor : MonoBehaviour
 
 	public ulong NumFramesBelow30 => numFramesBelow30;
 
-	public float FPS => (frameTimeTotal == 0f) ? 0f : ((float)frameTimes.Count / frameTimeTotal);
+	public float FPS
+	{
+		get
+		{
+			if (frameTimeTotal != 0f)
+			{
+				return (float)frameTimes.Count / frameTimeTotal;
+			}
+			return 0f;
+		}
+	}
 
 	private void Update()
 	{

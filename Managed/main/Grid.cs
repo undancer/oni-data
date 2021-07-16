@@ -764,9 +764,6 @@ public class Grid
 	public static void SetSolid(int cell, bool solid, CellSolidEvent ev)
 	{
 		UpdateBuildMask(cell, BuildFlags.Solid, solid);
-		if (ev == null)
-		{
-		}
 	}
 
 	private static void UpdateVisMask(int i, VisFlags flag, bool state)
@@ -922,8 +919,7 @@ public class Grid
 			{
 				return false;
 			}
-			bool test = reservedInstanceIDs.Add(minionInstanceID);
-			DebugUtil.Assert(test);
+			DebugUtil.Assert(reservedInstanceIDs.Add(minionInstanceID));
 			return true;
 		}
 		return reservedInstanceIDs.Remove(minionInstanceID);
@@ -949,7 +945,11 @@ public class Grid
 			return false;
 		}
 		HashSet<int> reservedInstanceIDs = tubeEntrance.reservedInstanceIDs;
-		return reservedInstanceIDs.Count < tubeEntrance.reservationCapacity || reservedInstanceIDs.Contains(minionInstanceID);
+		if (reservedInstanceIDs.Count >= tubeEntrance.reservationCapacity)
+		{
+			return reservedInstanceIDs.Contains(minionInstanceID);
+		}
+		return true;
 	}
 
 	public static bool HasReservedTubeEntrance(int cell, int minionInstanceID)
@@ -998,8 +998,7 @@ public class Grid
 			{
 				return false;
 			}
-			bool test = minionIDsWithSuitReservations.Add(minionInstanceID);
-			DebugUtil.Assert(test);
+			DebugUtil.Assert(minionIDsWithSuitReservations.Add(minionInstanceID));
 			return true;
 		}
 		return minionIDsWithSuitReservations.Remove(minionInstanceID);
@@ -1016,8 +1015,7 @@ public class Grid
 			{
 				return false;
 			}
-			bool test = minionIDsWithEmptyLockerReservations.Add(minionInstanceID);
-			DebugUtil.Assert(test);
+			DebugUtil.Assert(minionIDsWithEmptyLockerReservations.Add(minionInstanceID));
 			return true;
 		}
 		return minionIDsWithEmptyLockerReservations.Remove(minionInstanceID);
@@ -1055,7 +1053,11 @@ public class Grid
 		}
 		SuitMarker suitMarker = suitMarkers[cell];
 		HashSet<int> minionIDsWithSuitReservations = suitMarker.minionIDsWithSuitReservations;
-		return minionIDsWithSuitReservations.Count < suitMarker.suitCount || minionIDsWithSuitReservations.Contains(minionInstanceID);
+		if (minionIDsWithSuitReservations.Count >= suitMarker.suitCount)
+		{
+			return minionIDsWithSuitReservations.Contains(minionInstanceID);
+		}
+		return true;
 	}
 
 	public static bool HasEmptyLocker(int cell, int minionInstanceID)
@@ -1066,7 +1068,11 @@ public class Grid
 		}
 		SuitMarker suitMarker = suitMarkers[cell];
 		HashSet<int> minionIDsWithEmptyLockerReservations = suitMarker.minionIDsWithEmptyLockerReservations;
-		return minionIDsWithEmptyLockerReservations.Count < suitMarker.emptyLockerCount || minionIDsWithEmptyLockerReservations.Contains(minionInstanceID);
+		if (minionIDsWithEmptyLockerReservations.Count >= suitMarker.emptyLockerCount)
+		{
+			return minionIDsWithEmptyLockerReservations.Contains(minionInstanceID);
+		}
+		return true;
 	}
 
 	public unsafe static void InitializeCells()
@@ -1118,12 +1124,20 @@ public class Grid
 
 	public static int CellLeft(int cell)
 	{
-		return (cell % WidthInCells > 0) ? (cell - 1) : (-1);
+		if (cell % WidthInCells <= 0)
+		{
+			return -1;
+		}
+		return cell - 1;
 	}
 
 	public static int CellRight(int cell)
 	{
-		return (cell % WidthInCells < WidthInCells - 1) ? (cell + 1) : (-1);
+		if (cell % WidthInCells >= WidthInCells - 1)
+		{
+			return -1;
+		}
+		return cell + 1;
 	}
 
 	public static CellOffset GetOffset(int cell)
@@ -1230,7 +1244,15 @@ public class Grid
 	public static bool IsCellOffsetValid(int cell, int x, int y)
 	{
 		CellToXY(cell, out var x2, out var y2);
-		return x2 + x >= 0 && x2 + x < WidthInCells && y2 + y >= 0 && y2 + y < HeightInCells;
+		if (x2 + x >= 0 && x2 + x < WidthInCells)
+		{
+			if (y2 + y >= 0)
+			{
+				return y2 + y < HeightInCells;
+			}
+			return false;
+		}
+		return false;
 	}
 
 	public static bool IsCellOffsetValid(int cell, CellOffset offset)
@@ -1260,28 +1282,52 @@ public class Grid
 			return false;
 		}
 		WorldContainer world = ClusterManager.Instance.GetWorld(WorldIdx[cell]);
+		if (world == null)
+		{
+			return false;
+		}
 		Vector2I vector2I = CellToXY(cell);
-		return (float)vector2I.x >= world.minimumBounds.x && (float)vector2I.x <= world.maximumBounds.x && (float)vector2I.y >= world.minimumBounds.y && (float)vector2I.y <= world.maximumBounds.y - (float)TopBorderHeight;
+		if ((float)vector2I.x >= world.minimumBounds.x && (float)vector2I.x <= world.maximumBounds.x && (float)vector2I.y >= world.minimumBounds.y)
+		{
+			return (float)vector2I.y <= world.maximumBounds.y - (float)TopBorderHeight;
+		}
+		return false;
 	}
 
 	public static bool IsWorldValidCell(int cell)
 	{
-		return IsValidCell(cell) && WorldIdx[cell] != ClusterManager.INVALID_WORLD_IDX;
+		if (IsValidCell(cell))
+		{
+			return WorldIdx[cell] != ClusterManager.INVALID_WORLD_IDX;
+		}
+		return false;
 	}
 
 	public static bool IsValidCell(int cell)
 	{
-		return cell >= 0 && cell < CellCount;
+		if (cell >= 0)
+		{
+			return cell < CellCount;
+		}
+		return false;
 	}
 
 	public static bool IsActiveWorld(int cell)
 	{
-		return ClusterManager.Instance != null && ClusterManager.Instance.activeWorldId == WorldIdx[cell];
+		if (ClusterManager.Instance != null)
+		{
+			return ClusterManager.Instance.activeWorldId == WorldIdx[cell];
+		}
+		return false;
 	}
 
 	public static bool AreCellsInSameWorld(int cell, int world_cell)
 	{
-		return IsValidCell(cell) && IsValidCell(world_cell) && WorldIdx[cell] == WorldIdx[world_cell];
+		if (IsValidCell(cell) && IsValidCell(world_cell))
+		{
+			return WorldIdx[cell] == WorldIdx[world_cell];
+		}
+		return false;
 	}
 
 	public static bool IsCellOpenToSpace(int cell)
@@ -1290,50 +1336,43 @@ public class Grid
 		{
 			return false;
 		}
-		GameObject x = Objects[cell, 2];
-		if (x != null)
+		if (Objects[cell, 2] != null)
 		{
 			return false;
 		}
-		SubWorld.ZoneType subWorldZoneType = World.Instance.zoneRenderData.GetSubWorldZoneType(cell);
-		return subWorldZoneType == SubWorld.ZoneType.Space;
+		return World.Instance.zoneRenderData.GetSubWorldZoneType(cell) == SubWorld.ZoneType.Space;
 	}
 
 	public static int PosToCell(Vector2 pos)
 	{
 		float x = pos.x;
-		float num = pos.y + 0.05f;
-		int num2 = (int)num;
-		int num3 = (int)x;
-		return num2 * WidthInCells + num3;
+		int num = (int)(pos.y + 0.05f);
+		int num2 = (int)x;
+		return num * WidthInCells + num2;
 	}
 
 	public static int PosToCell(Vector3 pos)
 	{
 		float x = pos.x;
-		float num = pos.y + 0.05f;
-		int num2 = (int)num;
-		int num3 = (int)x;
-		return num2 * WidthInCells + num3;
+		int num = (int)(pos.y + 0.05f);
+		int num2 = (int)x;
+		return num * WidthInCells + num2;
 	}
 
 	public static void PosToXY(Vector3 pos, out int x, out int y)
 	{
-		int cell = PosToCell(pos);
-		CellToXY(cell, out x, out y);
+		CellToXY(PosToCell(pos), out x, out y);
 	}
 
 	public static void PosToXY(Vector3 pos, out Vector2I xy)
 	{
-		int cell = PosToCell(pos);
-		CellToXY(cell, out xy.x, out xy.y);
+		CellToXY(PosToCell(pos), out xy.x, out xy.y);
 	}
 
 	public static Vector2I PosToXY(Vector3 pos)
 	{
-		int cell = PosToCell(pos);
 		Vector2I result = default(Vector2I);
-		CellToXY(cell, out result.x, out result.y);
+		CellToXY(PosToCell(pos), out result.x, out result.y);
 		return result;
 	}
 
@@ -1406,13 +1445,13 @@ public class Grid
 
 	public static void Reveal(int cell, byte visibility = byte.MaxValue)
 	{
-		bool flag = Spawnable[cell] == 0 && visibility > 0;
+		bool num = Spawnable[cell] == 0 && visibility > 0;
 		Spawnable[cell] = Math.Max(visibility, Visible[cell]);
 		if (!PreventFogOfWarReveal[cell])
 		{
 			Visible[cell] = Math.Max(visibility, Visible[cell]);
 		}
-		if (flag && OnReveal != null)
+		if (num && OnReveal != null)
 		{
 			OnReveal(cell);
 		}
@@ -1488,7 +1527,11 @@ public class Grid
 
 	public static bool IsSolidCell(int cell)
 	{
-		return IsValidCell(cell) && Solid[cell];
+		if (IsValidCell(cell))
+		{
+			return Solid[cell];
+		}
+		return false;
 	}
 
 	public unsafe static bool IsSubstantialLiquid(int cell, float threshold = 0.35f)
@@ -1530,8 +1573,7 @@ public class Grid
 
 	public static bool IsLiquid(int cell)
 	{
-		Element element = ElementLoader.elements[ElementIdx[cell]];
-		if (element.IsLiquid)
+		if (ElementLoader.elements[ElementIdx[cell]].IsLiquid)
 		{
 			return true;
 		}
@@ -1540,8 +1582,7 @@ public class Grid
 
 	public static bool IsGas(int cell)
 	{
-		Element element = ElementLoader.elements[ElementIdx[cell]];
-		if (element.IsGas)
+		if (ElementLoader.elements[ElementIdx[cell]].IsGas)
 		{
 			return true;
 		}
@@ -1565,12 +1606,20 @@ public class Grid
 
 	public static bool IsVisible(int cell)
 	{
-		return Visible[cell] > 0 || !PropertyTextures.IsFogOfWarEnabled;
+		if (Visible[cell] <= 0)
+		{
+			return !PropertyTextures.IsFogOfWarEnabled;
+		}
+		return true;
 	}
 
 	public static bool VisibleBlockingCB(int cell)
 	{
-		return !Transparent[cell] && IsSolidCell(cell);
+		if (!Transparent[cell])
+		{
+			return IsSolidCell(cell);
+		}
+		return false;
 	}
 
 	public static bool VisibilityTest(int x, int y, int x2, int y2, bool blocking_tile_visible = false)
@@ -1729,7 +1778,6 @@ public class Grid
 	[Conditional("UNITY_EDITOR")]
 	public static void DrawBoxOnCell(int cell, Color color, float offset = 0f)
 	{
-		Vector3 vector = CellToPos(cell) + new Vector3(0.5f, 0.5f, 0f);
-		float num = 0.5f + offset;
+		_ = CellToPos(cell) + new Vector3(0.5f, 0.5f, 0f);
 	}
 }

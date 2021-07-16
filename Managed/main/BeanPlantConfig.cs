@@ -39,8 +39,7 @@ public class BeanPlantConfig : IEntityConfig
 		};
 		array2[0] = consumeInfo;
 		EntityTemplates.ExtendPlantToFertilizable(gameObject, array2);
-		PressureVulnerable pressureVulnerable = gameObject.AddOrGet<PressureVulnerable>();
-		pressureVulnerable.Configure(0.025f, 0f, 10f, 30f, new SimHashes[1]
+		gameObject.AddOrGet<PressureVulnerable>().Configure(0.025f, 0f, 10f, 30f, new SimHashes[1]
 		{
 			SimHashes.CarbonDioxide
 		});

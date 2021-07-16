@@ -133,8 +133,7 @@ public class GameplayEventInfoScreen : KModalScreen
 			{
 				CreateOptionIcon(gameObject, informationIcon);
 			}
-			GameObject gameObject2 = Util.KInstantiateUI(optionTextPrefab, gameObject);
-			gameObject2.GetComponent<LocText>().text = ((option.description == null) ? ("<b>" + option.mainText + "</b>") : ("<b>" + option.mainText + "</b>\n<i>(" + option.description + ")</i>"));
+			Util.KInstantiateUI(optionTextPrefab, gameObject).GetComponent<LocText>().text = ((option.description == null) ? ("<b>" + option.mainText + "</b>") : ("<b>" + option.mainText + "</b>\n<i>(" + option.description + ")</i>"));
 			foreach (GameplayEventPopupData.PopupOptionIcon consequenceIcon in option.consequenceIcons)
 			{
 				CreateOptionIcon(gameObject, consequenceIcon);
@@ -224,27 +223,33 @@ public class GameplayEventInfoScreen : KModalScreen
 			Debug.LogWarning("Event " + data.title + " has no anim data");
 			return;
 		}
-		Transform transform = CreateAnimLayer(midgroundGroup, anim, "event").transform;
-		KBatchedAnimController component = transform.GetComponent<KBatchedAnimController>();
-		if (data.minions == null)
+		KBatchedAnimController component = CreateAnimLayer(midgroundGroup, anim, "event").transform.GetComponent<KBatchedAnimController>();
+		if (data.minions != null)
 		{
-			return;
-		}
-		for (int i = 0; i < data.minions.Length; i++)
-		{
-			if (data.minions[i] == null)
+			for (int i = 0; i < data.minions.Length; i++)
 			{
-				DebugUtil.LogWarningArgs($"GameplayEventInfoScreen unable to display minion {i}");
+				if (data.minions[i] == null)
+				{
+					DebugUtil.LogWarningArgs($"GameplayEventInfoScreen unable to display minion {i}");
+				}
+				string s = $"dupe{i + 1:D2}";
+				if (component.HasAnimation(s))
+				{
+					CreateAnimLayer(midgroundGroup, anim, s, data.minions[i]);
+				}
 			}
-			string s = $"dupe{i + 1:D2}";
-			if (component.HasAnimation(s))
+		}
+		if (data.artifact != null)
+		{
+			string s2 = "artifact";
+			if (component.HasAnimation(s2))
 			{
-				CreateAnimLayer(midgroundGroup, anim, s, data.minions[i]);
+				CreateAnimLayer(midgroundGroup, anim, s2, null, data.artifact);
 			}
 		}
 	}
 
-	private GameObject CreateAnimLayer(Transform parent, KAnimFile animFile, HashedString animName, GameObject minion = null, string targetSymbol = null)
+	private GameObject CreateAnimLayer(Transform parent, KAnimFile animFile, HashedString animName, GameObject minion = null, GameObject artifact = null, string targetSymbol = null)
 	{
 		GameObject gameObject = Object.Instantiate(animPrefab, parent);
 		KBatchedAnimController component = gameObject.GetComponent<KBatchedAnimController>();
@@ -261,8 +266,7 @@ public class GameplayEventInfoScreen : KModalScreen
 			SymbolOverrideController component2 = component.GetComponent<SymbolOverrideController>();
 			if (loadMinionFromPersonalities)
 			{
-				UIDupeSymbolOverride component3 = component.GetComponent<UIDupeSymbolOverride>();
-				component3.Apply(minion.GetComponent<MinionIdentity>());
+				component.GetComponent<UIDupeSymbolOverride>().Apply(minion.GetComponent<MinionIdentity>());
 			}
 			else
 			{
@@ -275,10 +279,22 @@ public class GameplayEventInfoScreen : KModalScreen
 			}
 			MinionConfig.ConfigureSymbols(gameObject);
 		}
+		if (artifact != null)
+		{
+			SymbolOverrideController component3 = component.GetComponent<SymbolOverrideController>();
+			KBatchedAnimController component4 = artifact.GetComponent<KBatchedAnimController>();
+			string initialAnim = component4.initialAnim;
+			initialAnim = initialAnim.Replace("idle_", "artifact_");
+			initialAnim = initialAnim.Replace("_loop", "");
+			KAnim.Build.Symbol symbol = component4.AnimFiles[0].GetData().build.GetSymbol(initialAnim);
+			if (symbol != null)
+			{
+				component3.AddSymbolOverride("snapTo_artifact", symbol);
+			}
+		}
 		if (targetSymbol != null)
 		{
-			KBatchedAnimTracker kBatchedAnimTracker = gameObject.AddOrGet<KBatchedAnimTracker>();
-			kBatchedAnimTracker.symbol = targetSymbol;
+			gameObject.AddOrGet<KBatchedAnimTracker>().symbol = targetSymbol;
 		}
 		gameObject.SetActive(value: true);
 		component.Play(animName, KAnim.PlayMode.Loop);

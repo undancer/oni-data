@@ -25,7 +25,7 @@ public class ToolTip : KMonoBehaviour, IPointerEnterHandler, IEventSystemHandler
 
 	public delegate List<Tuple<string, TextStyleSetting>> ComplexTooltipDelegate();
 
-	public bool UseFixedStringKey = false;
+	public bool UseFixedStringKey;
 
 	public string FixedStringKey = "";
 
@@ -35,11 +35,11 @@ public class ToolTip : KMonoBehaviour, IPointerEnterHandler, IEventSystemHandler
 
 	public bool worldSpace;
 
-	public bool forceRefresh = false;
+	public bool forceRefresh;
 
-	public bool refreshWhileHovering = false;
+	public bool refreshWhileHovering;
 
-	private bool isHovering = false;
+	private bool isHovering;
 
 	private float lastUpdateTime;
 
@@ -195,8 +195,7 @@ public class ToolTip : KMonoBehaviour, IPointerEnterHandler, IEventSystemHandler
 				return;
 			}
 			ClearMultiStringTooltip();
-			List<Tuple<string, TextStyleSetting>> list = OnComplexToolTip();
-			foreach (Tuple<string, TextStyleSetting> item in list)
+			foreach (Tuple<string, TextStyleSetting> item in OnComplexToolTip())
 			{
 				AddMultiStringTooltip(item.first, item.second);
 			}

@@ -3,7 +3,7 @@ using KSerialization;
 [SerializationConfig(MemberSerialization.OptIn)]
 public class LogicElementSensor : Switch, ISaveLoadable, ISim200ms
 {
-	private bool wasOn = false;
+	private bool wasOn;
 
 	public Element.State desiredState = Element.State.Gas;
 
@@ -11,7 +11,7 @@ public class LogicElementSensor : Switch, ISaveLoadable, ISim200ms
 
 	private bool[] samples = new bool[8];
 
-	private int sampleIdx = 0;
+	private int sampleIdx;
 
 	private byte desiredElementIdx = byte.MaxValue;
 
@@ -23,8 +23,7 @@ public class LogicElementSensor : Switch, ISaveLoadable, ISim200ms
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		Filterable component = GetComponent<Filterable>();
-		component.onFilterChanged += OnElementSelected;
+		GetComponent<Filterable>().onFilterChanged += OnElementSelected;
 	}
 
 	protected override void OnSpawn()
@@ -49,9 +48,9 @@ public class LogicElementSensor : Switch, ISaveLoadable, ISim200ms
 		sampleIdx = 0;
 		bool flag = true;
 		bool[] array = samples;
-		foreach (bool flag2 in array)
+		for (int j = 0; j < array.Length; j++)
 		{
-			flag = flag2 && flag;
+			flag = array[j] && flag;
 		}
 		if (base.IsSwitchedOn != flag)
 		{

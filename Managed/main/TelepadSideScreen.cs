@@ -38,6 +38,8 @@ public class TelepadSideScreen : SideScreenContent
 
 	private Dictionary<string, Dictionary<ColonyAchievementRequirement, GameObject>> entries = new Dictionary<string, Dictionary<ColonyAchievementRequirement, GameObject>>();
 
+	private Dictionary<ColonyAchievement, Dictionary<ColonyAchievementRequirement, GameObject>> victoryAchievementWidgets = new Dictionary<ColonyAchievement, Dictionary<ColonyAchievementRequirement, GameObject>>();
+
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
@@ -127,11 +129,12 @@ public class TelepadSideScreen : SideScreenContent
 	{
 		foreach (ColonyAchievement resource in Db.Get().ColonyAchievements.resources)
 		{
-			if (!resource.isVictoryCondition)
+			if (!resource.isVictoryCondition || resource.Disabled)
 			{
 				continue;
 			}
 			Dictionary<ColonyAchievementRequirement, GameObject> dictionary = new Dictionary<ColonyAchievementRequirement, GameObject>();
+			victoryAchievementWidgets.Add(resource, dictionary);
 			GameObject gameObject = Util.KInstantiateUI(conditionContainerTemplate, victoryConditionsContainer, force_active: true);
 			gameObject.GetComponent<HierarchyReferences>().GetReference<LocText>("Label").SetText(resource.Name);
 			foreach (ColonyAchievementRequirement item in resource.requirementChecklist)
@@ -157,13 +160,20 @@ public class TelepadSideScreen : SideScreenContent
 	{
 		foreach (ColonyAchievement resource in Db.Get().ColonyAchievements.resources)
 		{
-			if (!resource.isVictoryCondition)
+			if (!resource.isVictoryCondition || resource.Disabled)
 			{
 				continue;
 			}
 			foreach (ColonyAchievementRequirement item in resource.requirementChecklist)
 			{
 				entries[resource.Id][item].GetComponent<HierarchyReferences>().GetReference<Image>("Check").enabled = item.Success();
+			}
+		}
+		foreach (KeyValuePair<ColonyAchievement, Dictionary<ColonyAchievementRequirement, GameObject>> victoryAchievementWidget in victoryAchievementWidgets)
+		{
+			foreach (KeyValuePair<ColonyAchievementRequirement, GameObject> item2 in victoryAchievementWidget.Value)
+			{
+				item2.Value.GetComponent<ToolTip>().SetSimpleTooltip(item2.Key.GetProgress(item2.Key.Success()));
 			}
 		}
 	}
@@ -181,12 +191,11 @@ public class TelepadSideScreen : SideScreenContent
 		bool active = false;
 		foreach (MinionResume minionResume in Components.MinionResumes)
 		{
-			if (minionResume.HasTag(GameTags.Dead) || minionResume.TotalSkillPointsGained - minionResume.SkillsMastered <= 0)
+			if (!minionResume.HasTag(GameTags.Dead) && minionResume.TotalSkillPointsGained - minionResume.SkillsMastered > 0)
 			{
-				continue;
+				active = true;
+				break;
 			}
-			active = true;
-			break;
 		}
 		skillPointsAvailable.gameObject.SetActive(active);
 	}

@@ -10,11 +10,19 @@ public class FilteredDragTool : DragTool
 
 	private Dictionary<string, ToolParameterMenu.ToggleState> currentFilterTargets;
 
-	private bool active = false;
+	private bool active;
 
 	public bool IsActiveLayer(string layer)
 	{
-		return currentFilterTargets[ToolParameterMenu.FILTERLAYERS.ALL] == ToolParameterMenu.ToggleState.On || (currentFilterTargets.ContainsKey(layer.ToUpper()) && currentFilterTargets[layer.ToUpper()] == ToolParameterMenu.ToggleState.On);
+		if (currentFilterTargets[ToolParameterMenu.FILTERLAYERS.ALL] != 0)
+		{
+			if (currentFilterTargets.ContainsKey(layer.ToUpper()))
+			{
+				return currentFilterTargets[layer.ToUpper()] == ToolParameterMenu.ToggleState.On;
+			}
+			return false;
+		}
+		return true;
 	}
 
 	public bool IsActiveLayer(ObjectLayer layer)
@@ -26,14 +34,9 @@ public class FilteredDragTool : DragTool
 		bool result = false;
 		foreach (KeyValuePair<string, ToolParameterMenu.ToggleState> currentFilterTarget in currentFilterTargets)
 		{
-			if (currentFilterTarget.Value == ToolParameterMenu.ToggleState.On)
+			if (currentFilterTarget.Value == ToolParameterMenu.ToggleState.On && GetObjectLayerFromFilterLayer(currentFilterTarget.Key) == layer)
 			{
-				ObjectLayer objectLayerFromFilterLayer = GetObjectLayerFromFilterLayer(currentFilterTarget.Key);
-				if (objectLayerFromFilterLayer == layer)
-				{
-					result = true;
-					break;
-				}
+				return true;
 			}
 		}
 		return result;
@@ -197,8 +200,7 @@ public class FilteredDragTool : DragTool
 		currentFilterTargets = filterTargets;
 		if (text != null)
 		{
-			List<string> list = new List<string>(filterTargets.Keys);
-			foreach (string item in list)
+			foreach (string item in new List<string>(filterTargets.Keys))
 			{
 				filterTargets[item] = ToolParameterMenu.ToggleState.Disabled;
 				if (item == text)

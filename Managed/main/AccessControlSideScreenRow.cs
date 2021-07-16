@@ -35,8 +35,7 @@ public class AccessControlSideScreenRow : AccessControlSideScreenDoor
 	protected override void UpdateButtonStates(bool isDefault)
 	{
 		base.UpdateButtonStates(isDefault);
-		ToolTip component = defaultButton.GetComponent<ToolTip>();
-		component.SetSimpleTooltip(isDefault ? UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.SET_TO_CUSTOM : UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.SET_TO_DEFAULT);
+		defaultButton.GetComponent<ToolTip>().SetSimpleTooltip(isDefault ? UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.SET_TO_CUSTOM : UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.SET_TO_DEFAULT);
 		defaultControls.SetActive(isDefault);
 		customControls.SetActive(!isDefault);
 	}

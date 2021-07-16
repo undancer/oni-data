@@ -42,6 +42,7 @@ public class StateMachineManager : Singleton<StateMachineManager>, IScheduler
 				{
 					item(value);
 				}
+				return value;
 			}
 		}
 		return value;
@@ -64,9 +65,7 @@ public class StateMachineManager : Singleton<StateMachineManager>, IScheduler
 	{
 		parameters[0] = master;
 		parameters[1] = def;
-		StateMachine stateMachine = Singleton<StateMachineManager>.Instance.CreateStateMachine(def.GetStateMachineType());
-		Type stateMachineInstanceType = stateMachine.GetStateMachineInstanceType();
-		return (StateMachine.Instance)Activator.CreateInstance(stateMachineInstanceType, parameters);
+		return (StateMachine.Instance)Activator.CreateInstance(Singleton<StateMachineManager>.Instance.CreateStateMachine(def.GetStateMachineType()).GetStateMachineInstanceType(), parameters);
 	}
 
 	public void Clear()

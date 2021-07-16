@@ -15,8 +15,7 @@ public class FriedMushroomConfig : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject template = EntityTemplates.CreateLooseEntity("FriedMushroom", ITEMS.FOOD.FRIEDMUSHROOM.NAME, ITEMS.FOOD.FRIEDMUSHROOM.DESC, 1f, unitMass: false, Assets.GetAnim("funguscapfried_kanim"), "object", Grid.SceneLayer.Front, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.6f, isPickupable: true);
-		return EntityTemplates.ExtendEntityToFood(template, FOOD.FOOD_TYPES.FRIED_MUSHROOM);
+		return EntityTemplates.ExtendEntityToFood(EntityTemplates.CreateLooseEntity("FriedMushroom", ITEMS.FOOD.FRIEDMUSHROOM.NAME, ITEMS.FOOD.FRIEDMUSHROOM.DESC, 1f, unitMass: false, Assets.GetAnim("funguscapfried_kanim"), "object", Grid.SceneLayer.Front, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.6f, isPickupable: true), FOOD.FOOD_TYPES.FRIED_MUSHROOM);
 	}
 
 	public void OnPrefabInit(GameObject inst)

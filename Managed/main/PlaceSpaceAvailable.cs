@@ -14,11 +14,11 @@ public class PlaceSpaceAvailable : SelectModuleCondition
 			{
 				return false;
 			}
-			int cell2 = Grid.OffsetCell(Grid.PosToCell(existingModule), 0, existingModule.GetComponent<Building>().Def.HeightInCells);
-			CellOffset[] placementOffsets3 = selectedPart.PlacementOffsets;
-			foreach (CellOffset offset3 in placementOffsets3)
+			int cell = Grid.OffsetCell(Grid.PosToCell(existingModule), 0, existingModule.GetComponent<Building>().Def.HeightInCells);
+			CellOffset[] placementOffsets = selectedPart.PlacementOffsets;
+			foreach (CellOffset offset2 in placementOffsets)
 			{
-				if (!ReorderableBuilding.CheckCellClear(Grid.OffsetCell(cell2, offset3), existingModule))
+				if (!ReorderableBuilding.CheckCellClear(Grid.OffsetCell(cell, offset2), existingModule))
 				{
 					return false;
 				}
@@ -31,11 +31,11 @@ public class PlaceSpaceAvailable : SelectModuleCondition
 			{
 				return false;
 			}
-			int cell = Grid.PosToCell(existingModule);
-			CellOffset[] placementOffsets2 = selectedPart.PlacementOffsets;
-			foreach (CellOffset offset2 in placementOffsets2)
+			int cell2 = Grid.PosToCell(existingModule);
+			CellOffset[] placementOffsets = selectedPart.PlacementOffsets;
+			foreach (CellOffset offset3 in placementOffsets)
 			{
-				if (!ReorderableBuilding.CheckCellClear(Grid.OffsetCell(cell, offset2), existingModule))
+				if (!ReorderableBuilding.CheckCellClear(Grid.OffsetCell(cell2, offset3), existingModule))
 				{
 					return false;
 				}

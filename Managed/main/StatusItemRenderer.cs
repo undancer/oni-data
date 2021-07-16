@@ -153,12 +153,7 @@ public class StatusItemRenderer
 					return;
 				}
 				int num = Grid.PosToCell(vector);
-				if (Grid.IsValidCell(num) && (!Grid.IsVisible(num) || Grid.WorldIdx[num] != ClusterManager.Instance.activeWorldId))
-				{
-					return;
-				}
-				KSelectable component2 = transform.GetComponent<KSelectable>();
-				if (!component2.IsSelectable)
+				if ((Grid.IsValidCell(num) && (!Grid.IsVisible(num) || Grid.WorldIdx[num] != ClusterManager.Instance.activeWorldId)) || !transform.GetComponent<KSelectable>().IsSelectable)
 				{
 					return;
 				}
@@ -166,9 +161,9 @@ public class StatusItemRenderer
 				if (dirty)
 				{
 					int num2 = 0;
-					foreach (StatusItem statusItem3 in statusItems)
+					foreach (StatusItem statusItem2 in statusItems)
 					{
-						if (statusItem3.UseConditionalCallback(overlay, transform) || !(overlay != OverlayModes.None.ID) || !(statusItem3.render_overlay != overlay))
+						if (statusItem2.UseConditionalCallback(overlay, transform) || !(overlay != OverlayModes.None.ID) || !(statusItem2.render_overlay != overlay))
 						{
 							num2++;
 						}
@@ -190,8 +185,7 @@ public class StatusItemRenderer
 					{
 						for (int i = 0; i < statusItems.Count; i++)
 						{
-							StatusItem statusItem = statusItems[i];
-							if (statusItem.notificationType != NotificationType.Neutral)
+							if (statusItems[i].notificationType != NotificationType.Neutral)
 							{
 								c3 = renderer.backgroundColor;
 								break;
@@ -205,8 +199,8 @@ public class StatusItemRenderer
 					int num5 = 0;
 					for (int j = 0; j < statusItems.Count; j++)
 					{
-						StatusItem statusItem2 = statusItems[j];
-						if (statusItem2.UseConditionalCallback(overlay, transform) || !(overlay != OverlayModes.None.ID) || !(statusItem2.render_overlay != overlay))
+						StatusItem statusItem = statusItems[j];
+						if (statusItem.UseConditionalCallback(overlay, transform) || !(overlay != OverlayModes.None.ID) || !(statusItem.render_overlay != overlay))
 						{
 							float x = (float)num5 * num3 * 2f - num3 * (float)(num2 - 1);
 							if (statusItems[j].sprite == null)
@@ -232,9 +226,9 @@ public class StatusItemRenderer
 				return;
 			}
 			string text = "Error cleaning up status items:";
-			foreach (StatusItem statusItem4 in statusItems)
+			foreach (StatusItem statusItem3 in statusItems)
 			{
-				text += statusItem4.Id;
+				text += statusItem3.Id;
 			}
 			Debug.LogWarning(text);
 		}
@@ -274,22 +268,22 @@ public class StatusItemRenderer
 			Vector2 b = new Vector2(size.x * scale * 0.5f, size.y * scale * 0.5f);
 			Vector2 vector2 = a - b;
 			Vector2 vector3 = a + b;
-			return pos.x >= vector2.x && pos.x <= vector3.x && pos.y >= vector2.y && pos.y <= vector3.y;
+			if (pos.x >= vector2.x && pos.x <= vector3.x && pos.y >= vector2.y)
+			{
+				return pos.y <= vector3.y;
+			}
+			return false;
 		}
 
 		public void GetIntersection(Vector2 pos, List<InterfaceTool.Intersection> intersections, float scale)
 		{
-			if (Intersects(pos, scale))
+			if (Intersects(pos, scale) && transform.GetComponent<KSelectable>().IsSelectable)
 			{
-				KSelectable component = transform.GetComponent<KSelectable>();
-				if (component.IsSelectable)
+				intersections.Add(new InterfaceTool.Intersection
 				{
-					intersections.Add(new InterfaceTool.Intersection
-					{
-						component = transform.GetComponent<KSelectable>(),
-						distance = -100f
-					});
-				}
+					component = transform.GetComponent<KSelectable>(),
+					distance = -100f
+				});
 			}
 		}
 

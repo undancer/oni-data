@@ -1,11 +1,9 @@
-#define ENABLE_PROFILER
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using STRINGS;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Profiling;
 using UnityEngine.UI;
 
 public class SelectModuleSideScreen : KScreen
@@ -291,11 +289,10 @@ public class SelectModuleSideScreen : KScreen
 		}
 		foreach (SelectModuleCondition buildCondition in buildingComplete.GetComponent<ReorderableBuilding>().buildConditions)
 		{
-			if ((buildCondition.IgnoreInSanboxMode() && (DebugHandler.InstantBuildMode || Game.Instance.SandboxModeActive)) || buildCondition.EvaluateCondition((module == null) ? launchPad.gameObject : module.gameObject, def, selectionContext))
+			if ((!buildCondition.IgnoreInSanboxMode() || (!DebugHandler.InstantBuildMode && !Game.Instance.SandboxModeActive)) && !buildCondition.EvaluateCondition((module == null) ? launchPad.gameObject : module.gameObject, def, selectionContext))
 			{
-				continue;
+				return false;
 			}
-			return false;
 		}
 		return true;
 	}
@@ -320,8 +317,8 @@ public class SelectModuleSideScreen : KScreen
 		GameObject gameObject = Util.KInstantiateUI(categoryPrefab, categoryContent, force_active: true);
 		HierarchyReferences component = gameObject.GetComponent<HierarchyReferences>();
 		categories.Add(gameObject);
-		LocText reference = component.GetReference<LocText>("label");
-		Transform reference2 = component.GetReference<Transform>("content");
+		component.GetReference<LocText>("label");
+		Transform reference = component.GetReference<Transform>("content");
 		List<GameObject> prefabsWithComponent = Assets.GetPrefabsWithComponent<RocketModuleCluster>();
 		foreach (string id in moduleButtonSortOrder)
 		{
@@ -331,7 +328,7 @@ public class SelectModuleSideScreen : KScreen
 				Debug.LogWarning("Found an id [" + id + "] in moduleButtonSortOrder in SelectModuleSideScreen.cs that doesn't have a corresponding rocket part!");
 				continue;
 			}
-			GameObject gameObject2 = Util.KInstantiateUI(moduleButtonPrefab, reference2.gameObject, force_active: true);
+			GameObject gameObject2 = Util.KInstantiateUI(moduleButtonPrefab, reference.gameObject, force_active: true);
 			gameObject2.GetComponentsInChildren<Image>()[1].sprite = Def.GetUISprite(part).first;
 			LocText componentInChildren = gameObject2.GetComponentInChildren<LocText>();
 			componentInChildren.text = part.GetProperName();
@@ -443,12 +440,9 @@ public class SelectModuleSideScreen : KScreen
 			}
 			else
 			{
-				GameObject gameObject = null;
-				gameObject = Assets.GetPrefab(module.GetComponent<KPrefabID>().PrefabID());
-				ReorderableBuilding component = gameObject.GetComponent<ReorderableBuilding>();
-				List<SelectModuleCondition> buildConditions = component.buildConditions;
-				ReorderableBuilding component2 = def.BuildingComplete.GetComponent<ReorderableBuilding>();
-				if (buildConditions.Find((SelectModuleCondition match) => match is TopOnly) != null || component2.buildConditions.Find((SelectModuleCondition match) => match is EngineOnBottom) != null)
+				List<SelectModuleCondition> buildConditions = Assets.GetPrefab(module.GetComponent<KPrefabID>().PrefabID()).GetComponent<ReorderableBuilding>().buildConditions;
+				ReorderableBuilding component = def.BuildingComplete.GetComponent<ReorderableBuilding>();
+				if (buildConditions.Find((SelectModuleCondition match) => match is TopOnly) != null || component.buildConditions.Find((SelectModuleCondition match) => match is EngineOnBottom) != null)
 				{
 					result = SelectModuleCondition.SelectionContext.AddModuleBelow;
 				}
@@ -464,13 +458,7 @@ public class SelectModuleSideScreen : KScreen
 		string text = "";
 		for (int i = 0; i < buildConditions.Count; i++)
 		{
-			Profiler.BeginSample("CONDITION: " + buildConditions[i].GetType().Name);
-			if (buildConditions[i].IgnoreInSanboxMode() && (DebugHandler.InstantBuildMode || Game.Instance.SandboxModeActive))
-			{
-				Profiler.EndSample();
-				continue;
-			}
-			if (!buildConditions[i].EvaluateCondition((module == null) ? launchPad.gameObject : module.gameObject, def, selectionContext))
+			if ((!buildConditions[i].IgnoreInSanboxMode() || (!DebugHandler.InstantBuildMode && !Game.Instance.SandboxModeActive)) && !buildConditions[i].EvaluateCondition((module == null) ? launchPad.gameObject : module.gameObject, def, selectionContext))
 			{
 				if (!string.IsNullOrEmpty(text))
 				{
@@ -478,7 +466,6 @@ public class SelectModuleSideScreen : KScreen
 				}
 				text += buildConditions[i].GetStatusTooltip(ready: false, def);
 			}
-			Profiler.EndSample();
 		}
 		return text;
 	}
@@ -511,7 +498,7 @@ public class SelectModuleSideScreen : KScreen
 		GameObject gameObject = null;
 		if (module != null)
 		{
-			GameObject gameObject2 = module.gameObject;
+			_ = module.gameObject;
 			gameObject = ((!addingNewModule) ? module.GetComponent<ReorderableBuilding>().ConvertModule(selectedModuleDef, materialSelectionPanel.GetSelectedElementAsList) : module.GetComponent<ReorderableBuilding>().AddModule(selectedModuleDef, materialSelectionPanel.GetSelectedElementAsList));
 		}
 		else

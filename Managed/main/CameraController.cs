@@ -36,7 +36,7 @@ public class CameraController : KMonoBehaviour, IInputHandler
 
 	private const float FIXED_Z = -100f;
 
-	public bool FreeCameraEnabled = false;
+	public bool FreeCameraEnabled;
 
 	public float zoomSpeed;
 
@@ -68,7 +68,7 @@ public class CameraController : KMonoBehaviour, IInputHandler
 
 	private float overrideZoomSpeed;
 
-	private bool panning = false;
+	private bool panning;
 
 	private Vector3 keyPanDelta;
 
@@ -78,15 +78,15 @@ public class CameraController : KMonoBehaviour, IInputHandler
 	[SerializeField]
 	private LayerMask timelapseOverlayCameraCullingMask;
 
-	private bool userCameraControlDisabled = false;
+	private bool userCameraControlDisabled;
 
-	private bool panLeft = false;
+	private bool panLeft;
 
-	private bool panRight = false;
+	private bool panRight;
 
-	private bool panUp = false;
+	private bool panUp;
 
-	private bool panDown = false;
+	private bool panDown;
 
 	[NonSerialized]
 	public Camera baseCamera;
@@ -142,11 +142,11 @@ public class CameraController : KMonoBehaviour, IInputHandler
 
 	private float cinemaEasing = 0.05f;
 
-	private float cinemaZoomVelocity = 0f;
+	private float cinemaZoomVelocity;
 
 	private Coroutine activeFadeRoutine;
 
-	private float smoothDt = 0f;
+	private float smoothDt;
 
 	public string handlerName => base.gameObject.name;
 
@@ -282,8 +282,7 @@ public class CameraController : KMonoBehaviour, IInputHandler
 		overlayCamera.renderingPath = RenderingPath.Forward;
 		overlayCamera.allowHDR = false;
 		overlayCamera.tag = "Untagged";
-		CameraReferenceTexture cameraReferenceTexture = overlayCamera.gameObject.AddComponent<CameraReferenceTexture>();
-		cameraReferenceTexture.referenceCamera = baseCamera;
+		overlayCamera.gameObject.AddComponent<CameraReferenceTexture>().referenceCamera = baseCamera;
 		ColorCorrectionLookup component = overlayCamera.GetComponent<ColorCorrectionLookup>();
 		component.Convert(dayColourCube, "");
 		component.Convert2(nightColourCube, "");
@@ -322,6 +321,7 @@ public class CameraController : KMonoBehaviour, IInputHandler
 		Camera camera = CloneCamera(overlayCamera, "timelapseCamera");
 		Timelapser timelapser = camera.gameObject.AddComponent<Timelapser>();
 		camera.transparencySortMode = TransparencySortMode.Orthographic;
+		camera.depth = baseCamera.depth + 2f;
 		Game.Instance.timelapser = timelapser;
 		GameScreenManager.Instance.SetCamera(GameScreenManager.UIRenderTarget.ScreenSpaceCamera, uiCamera);
 		GameScreenManager.Instance.SetCamera(GameScreenManager.UIRenderTarget.WorldSpace, uiCamera);
@@ -339,9 +339,10 @@ public class CameraController : KMonoBehaviour, IInputHandler
 
 	public static Camera CloneCamera(Camera camera, string name)
 	{
-		GameObject gameObject = new GameObject();
-		gameObject.name = name;
-		Camera camera2 = gameObject.AddComponent<Camera>();
+		Camera camera2 = new GameObject
+		{
+			name = name
+		}.AddComponent<Camera>();
 		camera2.CopyFrom(camera);
 		return camera2;
 	}
@@ -434,8 +435,8 @@ public class CameraController : KMonoBehaviour, IInputHandler
 		while (percent < 1f)
 		{
 			percent += Time.unscaledDeltaTime * speed;
-			float currentAlphaPercentage = MathUtil.ReRange(percent, 0f, 1f, startBlackPercent, targetBlackPercent);
-			fadePlane.color = new Color(0f, 0f, 0f, currentAlphaPercentage);
+			float a = MathUtil.ReRange(percent, 0f, 1f, startBlackPercent, targetBlackPercent);
+			fadePlane.color = new Color(0f, 0f, 0f, a);
 			yield return 0;
 		}
 		fadePlane.color = new Color(0f, 0f, 0f, targetBlackPercent);
@@ -1201,7 +1202,11 @@ public class CameraController : KMonoBehaviour, IInputHandler
 	public bool IsVisiblePos(Vector3 pos)
 	{
 		GridArea visibleArea = GridVisibleArea.GetVisibleArea();
-		return visibleArea.Min <= pos && pos <= visibleArea.Max;
+		if (visibleArea.Min <= pos)
+		{
+			return pos <= visibleArea.Max;
+		}
+		return false;
 	}
 
 	protected override void OnCleanUp()
@@ -1239,8 +1244,19 @@ public class CameraController : KMonoBehaviour, IInputHandler
 		{
 			Vector3 followPos = GetFollowPos();
 			Vector2 a = new Vector2(base.transform.GetLocalPosition().x, base.transform.GetLocalPosition().y);
-			Vector2 vector = Vector2.Lerp(a, followPos, Time.unscaledDeltaTime * 25f);
-			followTargetPos = new Vector3(vector.x, vector.y, base.transform.GetLocalPosition().z);
+			byte b = Grid.WorldIdx[Grid.PosToCell(followPos)];
+			if (ClusterManager.Instance.activeWorldId != b)
+			{
+				Transform transform = followTarget;
+				SetFollowTarget(null);
+				ClusterManager.Instance.SetActiveWorld(b);
+				SetFollowTarget(transform);
+			}
+			else
+			{
+				Vector2 vector = Vector2.Lerp(a, followPos, Time.unscaledDeltaTime * 25f);
+				followTargetPos = new Vector3(vector.x, vector.y, base.transform.GetLocalPosition().z);
+			}
 		}
 	}
 

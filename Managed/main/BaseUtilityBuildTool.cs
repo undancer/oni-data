@@ -16,8 +16,7 @@ public class BaseUtilityBuildTool : DragTool
 
 		public void Play(string anim)
 		{
-			KBatchedAnimController component = visualizer.GetComponent<KBatchedAnimController>();
-			component.Play(anim);
+			visualizer.GetComponent<KBatchedAnimController>().Play(anim);
 		}
 	}
 
@@ -31,11 +30,11 @@ public class BaseUtilityBuildTool : DragTool
 
 	private Coroutine visUpdater;
 
-	private int buildingCount = 0;
+	private int buildingCount;
 
 	private int lastCell = -1;
 
-	private BuildingCellVisualizer previousCellConnection = null;
+	private BuildingCellVisualizer previousCellConnection;
 
 	private int previousCell;
 
@@ -47,8 +46,7 @@ public class BaseUtilityBuildTool : DragTool
 
 	private void Play(GameObject go, string anim)
 	{
-		KBatchedAnimController component = go.GetComponent<KBatchedAnimController>();
-		component.Play(anim);
+		go.GetComponent<KBatchedAnimController>().Play(anim);
 	}
 
 	protected override void OnActivateTool()
@@ -65,11 +63,10 @@ public class BaseUtilityBuildTool : DragTool
 		}
 		visualizer.SetActive(value: true);
 		Play(visualizer, "None_Place");
-		BuildToolHoverTextCard component2 = GetComponent<BuildToolHoverTextCard>();
-		component2.currentDef = def;
+		GetComponent<BuildToolHoverTextCard>().currentDef = def;
 		ResourceRemainingDisplayScreen.instance.ActivateDisplay(visualizer);
-		IHaveUtilityNetworkMgr component3 = def.BuildingComplete.GetComponent<IHaveUtilityNetworkMgr>();
-		conduitMgr = component3.GetNetworkManager();
+		IHaveUtilityNetworkMgr component2 = def.BuildingComplete.GetComponent<IHaveUtilityNetworkMgr>();
+		conduitMgr = component2.GetNetworkManager();
 	}
 
 	protected override void OnDeactivateTool(InterfaceTool new_tool)
@@ -387,27 +384,23 @@ public class BaseUtilityBuildTool : DragTool
 				path[0] = CreateVisualizer(node);
 			}
 			ApplyPathToConduitSystem();
-			int i = 0;
-			while (i < path.Count)
+			for (int i = 0; i < path.Count; i++)
 			{
-				PathNode node3 = path[i];
-				node3 = CreateVisualizer(node3);
-				path[i] = node3;
-				string vis_string = conduitMgr.GetVisualizerString(node3.cell) + "_place";
-				KBatchedAnimController kbac = node3.visualizer.GetComponent<KBatchedAnimController>();
-				if (kbac.HasAnimation(vis_string))
+				PathNode node2 = path[i];
+				node2 = CreateVisualizer(node2);
+				path[i] = node2;
+				string text = conduitMgr.GetVisualizerString(node2.cell) + "_place";
+				KBatchedAnimController component = node2.visualizer.GetComponent<KBatchedAnimController>();
+				if (component.HasAnimation(text))
 				{
-					node3.Play(vis_string);
+					node2.Play(text);
 				}
 				else
 				{
-					node3.Play(conduitMgr.GetVisualizerString(node3.cell));
+					node2.Play(conduitMgr.GetVisualizerString(node2.cell));
 				}
-				kbac.TintColour = (def.IsValidBuildLocation(null, node3.cell, Orientation.Neutral, out var reason) ? Color.white : Color.red);
-				TileVisualizer.RefreshCell(node3.cell, def.TileLayer, def.ReplacementLayer);
-				reason = null;
-				int num = i + 1;
-				i = num;
+				component.TintColour = (def.IsValidBuildLocation(null, node2.cell, Orientation.Neutral, out var _) ? Color.white : Color.red);
+				TileVisualizer.RefreshCell(node2.cell, def.TileLayer, def.ReplacementLayer);
 			}
 			conduitMgr.UnstashVisualGrids();
 			yield return null;

@@ -91,26 +91,22 @@ public class StateMachineSerializer
 				Deserializer.DeserializeTypeless(smi, entryData);
 			}
 			StateMachine.SerializeType serializable = smi.GetStateMachine().serializable;
-			int num;
 			switch (serializable)
 			{
 			case StateMachine.SerializeType.Never:
 				return false;
 			case StateMachine.SerializeType.ParamsOnly:
 			case StateMachine.SerializeType.Both_DEPRECATED:
-				num = ((!entryData.IsFinished) ? 1 : 0);
-				break;
-			default:
-				num = 0;
-				break;
-			}
-			if (num != 0)
 			{
-				StateMachine.Parameter.Context[] parameterContexts = smi.GetParameterContexts();
-				int num2 = entryData.ReadInt32();
-				for (int i = 0; i < num2; i++)
+				if (entryData.IsFinished)
 				{
-					int num3 = entryData.ReadInt32();
+					break;
+				}
+				StateMachine.Parameter.Context[] parameterContexts = smi.GetParameterContexts();
+				int num = entryData.ReadInt32();
+				for (int i = 0; i < num; i++)
+				{
+					int num2 = entryData.ReadInt32();
 					int position = entryData.Position;
 					string text = entryData.ReadKleiString();
 					text = text.Replace("Version=2.0.0.0", "Version=4.0.0.0");
@@ -124,8 +120,10 @@ public class StateMachineSerializer
 							break;
 						}
 					}
-					entryData.SkipBytes(num3 - (entryData.Position - position));
+					entryData.SkipBytes(num2 - (entryData.Position - position));
 				}
+				break;
+			}
 			}
 			if (serializable == StateMachine.SerializeType.Both_DEPRECATED || serializable == StateMachine.SerializeType.CurrentStateOnly_DEPRECATED)
 			{
@@ -325,6 +323,10 @@ public class StateMachineSerializer
 
 	private static bool DoesVersionHaveTypeSuffix(int version)
 	{
-		return version >= 20 || version == 11;
+		if (version < 20)
+		{
+			return version == 11;
+		}
+		return true;
 	}
 }

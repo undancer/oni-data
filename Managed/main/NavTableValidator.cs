@@ -35,7 +35,11 @@ public class NavTableValidator
 			{
 				return false;
 			}
-			return (buildFlags & Grid.BuildFlags.Solid) == 0 || (buildFlags & Grid.BuildFlags.DupePassable) != 0;
+			if ((buildFlags & Grid.BuildFlags.Solid) != 0)
+			{
+				return (buildFlags & Grid.BuildFlags.DupePassable) != 0;
+			}
+			return true;
 		}
 		return (buildFlags & (Grid.BuildFlags.Solid | Grid.BuildFlags.CritterImpassable)) == 0;
 	}

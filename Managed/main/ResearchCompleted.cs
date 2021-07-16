@@ -15,7 +15,11 @@ public class ResearchCompleted : SelectModuleCondition
 			return true;
 		}
 		TechItem techItem = Db.Get().TechItems.TryGet(selectedPart.PrefabID);
-		return DebugHandler.InstantBuildMode || Game.Instance.SandboxModeActive || techItem == null || techItem.IsComplete();
+		if (!DebugHandler.InstantBuildMode && !Game.Instance.SandboxModeActive && techItem != null)
+		{
+			return techItem.IsComplete();
+		}
+		return true;
 	}
 
 	public override string GetStatusTooltip(bool ready, BuildingDef selectedPart)

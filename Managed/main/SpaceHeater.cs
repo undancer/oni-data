@@ -91,12 +91,12 @@ public class SpaceHeater : StateMachineComponent<SpaceHeater.StatesInstance>, IG
 
 	public float targetTemperature = 308.15f;
 
-	public float minimumCellMass = 0f;
+	public float minimumCellMass;
 
 	public int radius = 2;
 
 	[SerializeField]
-	private bool heatLiquid = false;
+	private bool heatLiquid;
 
 	[MyCmpReq]
 	private Operational operational;
@@ -123,8 +123,7 @@ public class SpaceHeater : StateMachineComponent<SpaceHeater.StatesInstance>, IG
 	private MonitorState MonitorHeating(float dt)
 	{
 		monitorCells.Clear();
-		int cell = Grid.PosToCell(base.transform.GetPosition());
-		GameUtil.GetNonSolidCells(cell, radius, monitorCells);
+		GameUtil.GetNonSolidCells(Grid.PosToCell(base.transform.GetPosition()), radius, monitorCells);
 		int num = 0;
 		float num2 = 0f;
 		for (int i = 0; i < monitorCells.Count; i++)
@@ -137,7 +136,11 @@ public class SpaceHeater : StateMachineComponent<SpaceHeater.StatesInstance>, IG
 		}
 		if (num == 0)
 		{
-			return heatLiquid ? MonitorState.NotEnoughLiquid : MonitorState.NotEnoughGas;
+			if (!heatLiquid)
+			{
+				return MonitorState.NotEnoughGas;
+			}
+			return MonitorState.NotEnoughLiquid;
 		}
 		if (num2 / (float)num >= targetTemperature)
 		{

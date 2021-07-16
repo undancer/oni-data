@@ -14,19 +14,19 @@ public class SolidCargoBaySmallConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("SolidCargoBaySmall", 3, 3, "rocket_storage_solid_small_kanim", 1000, 30f, BUILDINGS.ROCKETRY_MASS_KG.HOLLOW_TIER1, MATERIALS.REFINED_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
-		buildingDef.SceneLayer = Grid.SceneLayer.Building;
-		buildingDef.Invincible = true;
-		buildingDef.OverheatTemperature = 2273.15f;
-		buildingDef.Floodable = false;
-		buildingDef.AttachmentSlotTag = GameTags.Rocket;
-		buildingDef.ObjectLayer = ObjectLayer.Building;
-		buildingDef.RequiresPowerInput = false;
-		buildingDef.attachablePosition = new CellOffset(0, 0);
-		buildingDef.CanMove = true;
-		buildingDef.Cancellable = false;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("SolidCargoBaySmall", 3, 3, "rocket_storage_solid_small_kanim", 1000, 30f, BUILDINGS.ROCKETRY_MASS_KG.HOLLOW_TIER1, MATERIALS.REFINED_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		BuildingTemplates.CreateRocketBuildingDef(obj);
+		obj.SceneLayer = Grid.SceneLayer.Building;
+		obj.Invincible = true;
+		obj.OverheatTemperature = 2273.15f;
+		obj.Floodable = false;
+		obj.AttachmentSlotTag = GameTags.Rocket;
+		obj.ObjectLayer = ObjectLayer.Building;
+		obj.RequiresPowerInput = false;
+		obj.attachablePosition = new CellOffset(0, 0);
+		obj.CanMove = true;
+		obj.Cancellable = false;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -34,8 +34,7 @@ public class SolidCargoBaySmallConfig : IBuildingConfig
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		go.AddOrGet<LoopingSounds>();
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
-		BuildingAttachPoint buildingAttachPoint = go.AddOrGet<BuildingAttachPoint>();
-		buildingAttachPoint.points = new BuildingAttachPoint.HardPoint[1]
+		go.AddOrGet<BuildingAttachPoint>().points = new BuildingAttachPoint.HardPoint[1]
 		{
 			new BuildingAttachPoint.HardPoint(new CellOffset(0, 3), GameTags.Rocket, null)
 		};

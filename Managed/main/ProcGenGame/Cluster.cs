@@ -25,7 +25,7 @@ namespace ProcGenGame
 
 		private int seed;
 
-		private SeededRandom myRandom = null;
+		private SeededRandom myRandom;
 
 		private bool doSimSettle = true;
 
@@ -53,7 +53,17 @@ namespace ProcGenGame
 			private set;
 		}
 
-		public bool IsGenerating => thread != null && thread.IsAlive;
+		public bool IsGenerating
+		{
+			get
+			{
+				if (thread != null)
+				{
+					return thread.IsAlive;
+				}
+				return false;
+			}
+		}
 
 		private Cluster()
 		{
@@ -178,7 +188,7 @@ namespace ProcGenGame
 			currentWorld.SetClusterLocation(AxialI.ZERO);
 			HashSet<AxialI> assignedLocations = new HashSet<AxialI>();
 			HashSet<AxialI> worldForbiddenLocations = new HashSet<AxialI>();
-			HashSet<AxialI> hashSet = new HashSet<AxialI>();
+			new HashSet<AxialI>();
 			HashSet<AxialI> poiWorldAvoidance = new HashSet<AxialI>();
 			int maxRadius = 2;
 			for (int i = 0; i < worlds.Count; i++)
@@ -233,9 +243,9 @@ namespace ProcGenGame
 				List<string> pois = item3.pois;
 				for (int j = 0; j < item3.numToSpawn; j++)
 				{
-					bool flag = myRandom.RandomRange(0f, 1f) <= num;
+					bool num4 = myRandom.RandomRange(0f, 1f) <= num;
 					List<AxialI> list3 = null;
-					if (flag && num3 < num2 && !item3.avoidClumping)
+					if (num4 && num3 < num2 && !item3.avoidClumping)
 					{
 						num3++;
 						list3 = (from location in AxialUtil.GetRings(AxialI.ZERO, item3.allowedRings.min, Mathf.Min(item3.allowedRings.max, numRings - 1))
@@ -376,14 +386,15 @@ namespace ProcGenGame
 				{
 					DebugUtil.Assert(0 < cluster.worlds.Count);
 					cluster.currentWorld = cluster.worlds[0];
+					return cluster;
 				}
+				return cluster;
 			}
 			catch (Exception ex)
 			{
 				DebugUtil.LogErrorArgs("SolarSystem.Load Error!\n", ex.Message, ex.StackTrace);
-				cluster = null;
+				return null;
 			}
-			return cluster;
 		}
 
 		public void LoadClusterLayoutSim(List<SimSaveFileStructure> loadedWorlds)

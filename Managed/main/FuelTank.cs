@@ -135,8 +135,7 @@ public class FuelTank : KMonoBehaviour, IUserControlledCapacity, IFuelTank
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		FuelTank component = gameObject.GetComponent<FuelTank>();
+		FuelTank component = ((GameObject)data).GetComponent<FuelTank>();
 		if (component != null)
 		{
 			UserMaxCapacity = component.UserMaxCapacity;

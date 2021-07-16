@@ -26,19 +26,19 @@ public class Operational : KMonoBehaviour
 	}
 
 	[Serialize]
-	public float inactiveStartTime = 0f;
+	public float inactiveStartTime;
 
 	[Serialize]
-	public float activeStartTime = 0f;
+	public float activeStartTime;
 
 	[Serialize]
 	private List<float> uptimeData = new List<float>();
 
 	[Serialize]
-	private float activeTime = 0f;
+	private float activeTime;
 
 	[Serialize]
-	private float inactiveTime = 0f;
+	private float inactiveTime;
 
 	private int MAX_DATA_POINTS = 5;
 
@@ -233,8 +233,7 @@ public class Operational : KMonoBehaviour
 		if (IsActive)
 		{
 			float num = (IsActive ? activeStartTime : inactiveStartTime);
-			float time = GameClock.Instance.GetTime();
-			float num2 = time - num;
+			float num2 = GameClock.Instance.GetTime() - num;
 			return (activeTime + num2) / GameClock.Instance.GetTimeSinceStartOfCycle();
 		}
 		return activeTime / GameClock.Instance.GetTimeSinceStartOfCycle();

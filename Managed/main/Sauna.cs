@@ -34,15 +34,19 @@ public class Sauna : StateMachineComponent<Sauna.StatesInstance>, IGameObjectEff
 		private Chore CreateChore(StatesInstance smi)
 		{
 			Workable component = smi.master.GetComponent<SaunaWorkable>();
-			Chore chore = new WorkChore<SaunaWorkable>(Db.Get().ChoreTypes.Relax, component, null, run_until_complete: true, null, null, null, allow_in_red_alert: false, Db.Get().ScheduleBlockTypes.Recreation, ignore_schedule_block: false, only_when_operational: true, null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, PriorityScreen.PriorityClass.high);
-			chore.AddPrecondition(ChorePreconditions.instance.CanDoWorkerPrioritizable, component);
-			return chore;
+			WorkChore<SaunaWorkable> workChore = new WorkChore<SaunaWorkable>(Db.Get().ChoreTypes.Relax, component, null, run_until_complete: true, null, null, null, allow_in_red_alert: false, Db.Get().ScheduleBlockTypes.Recreation, ignore_schedule_block: false, only_when_operational: true, null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, PriorityScreen.PriorityClass.high);
+			workChore.AddPrecondition(ChorePreconditions.instance.CanDoWorkerPrioritizable, component);
+			return workChore;
 		}
 
 		private bool IsReady(StatesInstance smi)
 		{
 			PrimaryElement primaryElement = smi.GetComponent<Storage>().FindPrimaryElement(SimHashes.Steam);
-			return primaryElement != null && primaryElement.Mass >= smi.master.steamPerUseKG;
+			if (primaryElement != null)
+			{
+				return primaryElement.Mass >= smi.master.steamPerUseKG;
+			}
+			return false;
 		}
 	}
 

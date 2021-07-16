@@ -25,7 +25,7 @@ public class FilteredStorage
 
 	private bool hasMeter = true;
 
-	private bool useLogicMeter = false;
+	private bool useLogicMeter;
 
 	private ChoreType choreType;
 
@@ -141,7 +141,11 @@ public class FilteredStorage
 		{
 			meter.SetPositionPercent(num);
 		}
-		return (num >= 1f) ? true : false;
+		if (!(num >= 1f))
+		{
+			return false;
+		}
+		return true;
 	}
 
 	private void OnFetchComplete()
@@ -177,7 +181,11 @@ public class FilteredStorage
 	private bool IsFunctional()
 	{
 		Operational component = storage.GetComponent<Operational>();
-		return component == null || component.IsFunctional;
+		if (!(component == null))
+		{
+			return component.IsFunctional;
+		}
+		return true;
 	}
 
 	private void OnFilterChanged(Tag[] tags)

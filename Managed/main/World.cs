@@ -1,4 +1,3 @@
-#define UNITY_ASSERTIONS
 using System;
 using System.Collections.Generic;
 using Klei;
@@ -113,7 +112,6 @@ public class World : KMonoBehaviour
 		for (int l = 0; l < num_liquid_change_info; l++)
 		{
 			int cellIdx3 = liquid_change_info[l].cellIdx;
-			UnityEngine.Debug.Assert(Grid.IsValidCell(cellIdx3));
 			changedCells.Add(cellIdx3);
 			if (OnLiquidChanged != null)
 			{

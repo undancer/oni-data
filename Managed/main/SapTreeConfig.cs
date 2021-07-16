@@ -46,8 +46,7 @@ public class SapTreeConfig : IEntityConfig
 		gameObject.AddOrGet<RangedAttackable>();
 		gameObject.AddWeapon(5f, 5f, AttackProperties.DamageType.Standard, AttackProperties.TargetType.AreaOfEffect, 1, 2f);
 		gameObject.AddOrGet<WiltCondition>();
-		TemperatureVulnerable temperatureVulnerable = gameObject.AddOrGet<TemperatureVulnerable>();
-		temperatureVulnerable.Configure(173.15f, 0f, 373.15f, 1023.15f);
+		gameObject.AddOrGet<TemperatureVulnerable>().Configure(173.15f, 0f, 373.15f, 1023.15f);
 		gameObject.AddOrGet<EntombVulnerable>();
 		gameObject.AddOrGet<LoopingSounds>();
 		gameObject.AddOrGet<OccupyArea>().objectLayers = new ObjectLayer[1]

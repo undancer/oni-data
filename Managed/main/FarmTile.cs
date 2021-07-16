@@ -10,7 +10,11 @@ public class FarmTile : StateMachineComponent<FarmTile.SMInstance>
 		public bool HasWater()
 		{
 			PrimaryElement primaryElement = base.master.storage.FindPrimaryElement(SimHashes.Water);
-			return primaryElement != null && primaryElement.Mass > 0f;
+			if (primaryElement != null)
+			{
+				return primaryElement.Mass > 0f;
+			}
+			return false;
 		}
 	}
 

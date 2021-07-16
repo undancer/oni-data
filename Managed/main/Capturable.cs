@@ -74,7 +74,6 @@ public class Capturable : Workable, IGameObjectEffectDescriptor
 	public override Vector3 GetTargetPoint()
 	{
 		Vector3 result = base.transform.GetPosition();
-		float num = result.y + 0.65f;
 		KBoxCollider2D component = GetComponent<KBoxCollider2D>();
 		if (component != null)
 		{
@@ -188,14 +187,12 @@ public class Capturable : Workable, IGameObjectEffectDescriptor
 
 	protected override void OnStartWork(Worker worker)
 	{
-		KPrefabID component = GetComponent<KPrefabID>();
-		component.AddTag(GameTags.Creatures.Stunned);
+		GetComponent<KPrefabID>().AddTag(GameTags.Creatures.Stunned);
 	}
 
 	protected override void OnStopWork(Worker worker)
 	{
-		KPrefabID component = GetComponent<KPrefabID>();
-		component.RemoveTag(GameTags.Creatures.Stunned);
+		GetComponent<KPrefabID>().RemoveTag(GameTags.Creatures.Stunned);
 	}
 
 	protected override void OnCompleteWork(Worker worker)

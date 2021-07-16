@@ -94,12 +94,20 @@ public struct Vector2I : IComparable<Vector2I>, IEquatable<Vector2I>
 
 	public static bool operator ==(Vector2I u, Vector2I v)
 	{
-		return u.x == v.x && u.y == v.y;
+		if (u.x == v.x)
+		{
+			return u.y == v.y;
+		}
+		return false;
 	}
 
 	public static bool operator !=(Vector2I u, Vector2I v)
 	{
-		return u.x != v.x || u.y != v.y;
+		if (u.x == v.x)
+		{
+			return u.y != v.y;
+		}
+		return true;
 	}
 
 	public static Vector2I Min(Vector2I v, Vector2I w)
@@ -114,22 +122,38 @@ public struct Vector2I : IComparable<Vector2I>, IEquatable<Vector2I>
 
 	public static bool operator <(Vector2I u, Vector2I v)
 	{
-		return u.x < v.x && u.y < v.y;
+		if (u.x < v.x)
+		{
+			return u.y < v.y;
+		}
+		return false;
 	}
 
 	public static bool operator >(Vector2I u, Vector2I v)
 	{
-		return u.x > v.x && u.y > v.y;
+		if (u.x > v.x)
+		{
+			return u.y > v.y;
+		}
+		return false;
 	}
 
 	public static bool operator <=(Vector2I u, Vector2I v)
 	{
-		return u.x <= v.x && u.y <= v.y;
+		if (u.x <= v.x)
+		{
+			return u.y <= v.y;
+		}
+		return false;
 	}
 
 	public static bool operator >=(Vector2I u, Vector2I v)
 	{
-		return u.x >= v.x && u.y >= v.y;
+		if (u.x >= v.x)
+		{
+			return u.y >= v.y;
+		}
+		return false;
 	}
 
 	public static implicit operator Vector2(Vector2I v)
@@ -152,7 +176,11 @@ public struct Vector2I : IComparable<Vector2I>, IEquatable<Vector2I>
 
 	public bool Equals(Vector2I v)
 	{
-		return v.x == x && v.y == y;
+		if (v.x == x)
+		{
+			return v.y == y;
+		}
+		return false;
 	}
 
 	public override int GetHashCode()
@@ -162,22 +190,38 @@ public struct Vector2I : IComparable<Vector2I>, IEquatable<Vector2I>
 
 	public static bool operator <=(Vector2I u, Vector2 v)
 	{
-		return (float)u.x <= v.x && (float)u.y <= v.y;
+		if ((float)u.x <= v.x)
+		{
+			return (float)u.y <= v.y;
+		}
+		return false;
 	}
 
 	public static bool operator >=(Vector2I u, Vector2 v)
 	{
-		return (float)u.x >= v.x && (float)u.y >= v.y;
+		if ((float)u.x >= v.x)
+		{
+			return (float)u.y >= v.y;
+		}
+		return false;
 	}
 
 	public static bool operator <=(Vector2 u, Vector2I v)
 	{
-		return u.x <= (float)v.x && u.y <= (float)v.y;
+		if (u.x <= (float)v.x)
+		{
+			return u.y <= (float)v.y;
+		}
+		return false;
 	}
 
 	public static bool operator >=(Vector2 u, Vector2I v)
 	{
-		return u.x >= (float)v.x && u.y >= (float)v.y;
+		if (u.x >= (float)v.x)
+		{
+			return u.y >= (float)v.y;
+		}
+		return false;
 	}
 
 	public override string ToString()

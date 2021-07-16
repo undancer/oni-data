@@ -10,13 +10,13 @@ public class SimTemperatureTransfer : KMonoBehaviour
 
 	private const float MIN_MASS_FOR_TEMPERATURE_TRANSFER = 0.01f;
 
-	public float deltaKJ = 0f;
+	public float deltaKJ;
 
 	public Action<SimTemperatureTransfer> onSimRegistered;
 
 	protected int simHandle = -1;
 
-	private float pendingEnergyModifications = 0f;
+	private float pendingEnergyModifications;
 
 	[SerializeField]
 	protected float surfaceArea = 10f;
@@ -136,8 +136,7 @@ public class SimTemperatureTransfer : KMonoBehaviour
 		PrimaryElement component = GetComponent<PrimaryElement>();
 		Element element = component.Element;
 		Singleton<CellChangeMonitor>.Instance.RegisterCellChangedHandler(base.transform, OnCellChanged, "SimTemperatureTransfer.OnSpawn");
-		int cell = Grid.PosToCell(this);
-		if (!Grid.IsValidCell(cell) || component.Element.HasTag(GameTags.Special) || element.specificHeatCapacity == 0f)
+		if (!Grid.IsValidCell(Grid.PosToCell(this)) || component.Element.HasTag(GameTags.Special) || element.specificHeatCapacity == 0f)
 		{
 			base.enabled = false;
 		}
@@ -256,12 +255,7 @@ public class SimTemperatureTransfer : KMonoBehaviour
 			return;
 		}
 		PrimaryElement component = GetComponent<PrimaryElement>();
-		if (!(component.Mass > 0f))
-		{
-			return;
-		}
-		Element element = component.Element;
-		if (!element.IsTemperatureInsulated)
+		if (component.Mass > 0f && !component.Element.IsTemperatureInsulated)
 		{
 			int gameCell = Grid.PosToCell(base.transform.GetPosition());
 			simHandle = -2;
@@ -303,8 +297,7 @@ public class SimTemperatureTransfer : KMonoBehaviour
 		{
 			simHandle = handle;
 			int handleIndex = Sim.GetHandleIndex(handle);
-			float temperature = Game.Instance.simData.elementChunks[handleIndex].temperature;
-			if (temperature <= 0f)
+			if (Game.Instance.simData.elementChunks[handleIndex].temperature <= 0f)
 			{
 				KCrashReporter.Assert(condition: false, "Bad temperature");
 			}

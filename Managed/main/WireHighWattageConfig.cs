@@ -7,9 +7,9 @@ public class WireHighWattageConfig : BaseWireConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = CreateBuildingDef("HighWattageWire", "utilities_electric_insulated_kanim", 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, 0.05f, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER5);
-		buildingDef.BuildLocationRule = BuildLocationRule.NotInTiles;
-		return buildingDef;
+		BuildingDef obj = CreateBuildingDef("HighWattageWire", "utilities_electric_insulated_kanim", 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, 0.05f, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER5);
+		obj.BuildLocationRule = BuildLocationRule.NotInTiles;
+		return obj;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

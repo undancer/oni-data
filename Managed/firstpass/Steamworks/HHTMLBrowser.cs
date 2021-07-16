@@ -21,7 +21,11 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			return other is HHTMLBrowser && this == (HHTMLBrowser)other;
+			if (other is HHTMLBrowser)
+			{
+				return this == (HHTMLBrowser)other;
+			}
+			return false;
 		}
 
 		public override int GetHashCode()

@@ -16,15 +16,15 @@ public class TimeOfDay : KMonoBehaviour, ISaveLoadable
 	}
 
 	[Serialize]
-	private float scale = 0f;
+	private float scale;
 
-	private TimeRegion timeRegion = TimeRegion.Invalid;
+	private TimeRegion timeRegion;
 
 	private EventInstance nightLPEvent;
 
 	public static TimeOfDay Instance;
 
-	private bool isEclipse = false;
+	private bool isEclipse;
 
 	public static void DestroyInstance()
 	{
@@ -110,8 +110,7 @@ public class TimeOfDay : KMonoBehaviour, ISaveLoadable
 	private float UpdateSunlightIntensity()
 	{
 		float daytimeDurationInPercentage = GameClock.Instance.GetDaytimeDurationInPercentage();
-		float currentCycleAsPercentage = GameClock.Instance.GetCurrentCycleAsPercentage();
-		float num = currentCycleAsPercentage / daytimeDurationInPercentage;
+		float num = GameClock.Instance.GetCurrentCycleAsPercentage() / daytimeDurationInPercentage;
 		if (num >= 1f || isEclipse)
 		{
 			num = 0f;

@@ -15,14 +15,14 @@ public class WashSinkConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("WashSink", 2, 3, "wash_sink_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER0, decor: BUILDINGS.DECOR.BONUS.TIER1);
-		buildingDef.InputConduitType = ConduitType.Liquid;
-		buildingDef.OutputConduitType = ConduitType.Liquid;
-		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
-		buildingDef.UtilityOutputOffset = new CellOffset(1, 1);
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("WashSink", 2, 3, "wash_sink_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER0, decor: BUILDINGS.DECOR.BONUS.TIER1);
+		obj.InputConduitType = ConduitType.Liquid;
+		obj.OutputConduitType = ConduitType.Liquid;
+		obj.ViewMode = OverlayModes.LiquidConduits.ID;
+		obj.AudioCategory = "Metal";
+		obj.UtilityInputOffset = new CellOffset(0, 0);
+		obj.UtilityOutputOffset = new CellOffset(1, 1);
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -60,8 +60,7 @@ public class WashSinkConfig : IBuildingConfig
 		storage.doDiseaseTransfer = false;
 		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
 		go.AddOrGet<LoopingSounds>();
-		RequireOutputs requireOutputs = go.AddOrGet<RequireOutputs>();
-		requireOutputs.ignoreFullPipe = true;
+		go.AddOrGet<RequireOutputs>().ignoreFullPipe = true;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

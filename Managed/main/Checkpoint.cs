@@ -9,7 +9,7 @@ public class Checkpoint : StateMachineComponent<Checkpoint.SMInstance>
 
 		private Navigator reactor_navigator;
 
-		private bool rotated = false;
+		private bool rotated;
 
 		public CheckpointReactable(Checkpoint checkpoint)
 			: base(checkpoint.gameObject, "CheckpointReactable", Db.Get().ChoreTypes.Checkpoint, 1, 1)
@@ -143,7 +143,17 @@ public class Checkpoint : StateMachineComponent<Checkpoint.SMInstance>
 		component.OnOperationalChanged(data);
 	});
 
-	private bool RedLightDesiredState => hasLogicWire && !hasInputHigh && operational.IsOperational;
+	private bool RedLightDesiredState
+	{
+		get
+		{
+			if (hasLogicWire && !hasInputHigh)
+			{
+				return operational.IsOperational;
+			}
+			return false;
+		}
+	}
 
 	public bool RedLight => redLight;
 
@@ -182,16 +192,13 @@ public class Checkpoint : StateMachineComponent<Checkpoint.SMInstance>
 
 	private LogicCircuitNetwork GetNetwork()
 	{
-		LogicPorts component = GetComponent<LogicPorts>();
-		int portCell = component.GetPortCell(PORT_ID);
-		LogicCircuitManager logicCircuitManager = Game.Instance.logicCircuitManager;
-		return logicCircuitManager.GetNetworkForCell(portCell);
+		int portCell = GetComponent<LogicPorts>().GetPortCell(PORT_ID);
+		return Game.Instance.logicCircuitManager.GetNetworkForCell(portCell);
 	}
 
 	private static string ResolveInfoStatusItem_Logic(string format_str, object data)
 	{
-		Checkpoint checkpoint = (Checkpoint)data;
-		return checkpoint.RedLight ? BUILDING.STATUSITEMS.CHECKPOINT.LOGIC_CONTROLLED_CLOSED : BUILDING.STATUSITEMS.CHECKPOINT.LOGIC_CONTROLLED_OPEN;
+		return ((Checkpoint)data).RedLight ? BUILDING.STATUSITEMS.CHECKPOINT.LOGIC_CONTROLLED_CLOSED : BUILDING.STATUSITEMS.CHECKPOINT.LOGIC_CONTROLLED_OPEN;
 	}
 
 	private void CreateNewReactable()

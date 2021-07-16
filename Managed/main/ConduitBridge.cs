@@ -51,16 +51,15 @@ public class ConduitBridge : ConduitBridgeBase, IBridgedNetworkItem
 		}
 		if (num > 0f)
 		{
-			float num2 = num / contents.mass;
-			int disease_count = (int)(num2 * (float)contents.diseaseCount);
-			float num3 = flowManager.AddElement(outputCell, contents.element, num, contents.temperature, contents.diseaseIdx, disease_count);
-			if (num3 > 0f)
+			int disease_count = (int)(num / contents.mass * (float)contents.diseaseCount);
+			float num2 = flowManager.AddElement(outputCell, contents.element, num, contents.temperature, contents.diseaseIdx, disease_count);
+			if (num2 > 0f)
 			{
-				flowManager.RemoveElement(inputCell, num3);
+				flowManager.RemoveElement(inputCell, num2);
 				Game.Instance.accumulators.Accumulate(accumulator, contents.mass);
 				if (OnMassTransfer != null)
 				{
-					OnMassTransfer(contents.element, num3, contents.temperature, contents.diseaseIdx, disease_count, null);
+					OnMassTransfer(contents.element, num2, contents.temperature, contents.diseaseIdx, disease_count, null);
 				}
 			}
 			else
@@ -91,9 +90,12 @@ public class ConduitBridge : ConduitBridgeBase, IBridgedNetworkItem
 
 	public bool IsConnectedToNetworks(ICollection<UtilityNetwork> networks)
 	{
-		bool flag = false;
 		IUtilityNetworkMgr networkManager = Conduit.GetNetworkManager(type);
-		return flag || networks.Contains(networkManager.GetNetworkForCell(inputCell)) || networks.Contains(networkManager.GetNetworkForCell(outputCell));
+		if (0 == 0 && !networks.Contains(networkManager.GetNetworkForCell(inputCell)))
+		{
+			return networks.Contains(networkManager.GetNetworkForCell(outputCell));
+		}
+		return true;
 	}
 
 	public int GetNetworkCell()

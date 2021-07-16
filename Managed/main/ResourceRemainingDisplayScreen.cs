@@ -13,9 +13,9 @@ public class ResourceRemainingDisplayScreen : KScreen
 
 	private List<Tag> selected_elements = new List<Tag>();
 
-	private int numberOfPendingConstructions = 0;
+	private int numberOfPendingConstructions;
 
-	private int displayedConstructionCostMultiplier = 0;
+	private int displayedConstructionCostMultiplier;
 
 	private RectTransform rect;
 

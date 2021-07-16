@@ -7,16 +7,16 @@ public class LadderFastConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("LadderFast", 1, 1, "ladder_plastic_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.PLASTICS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER0);
-		BuildingTemplates.CreateLadderDef(buildingDef);
-		buildingDef.Floodable = false;
-		buildingDef.Overheatable = false;
-		buildingDef.Entombable = false;
-		buildingDef.AudioCategory = "Plastic";
-		buildingDef.AudioSize = "small";
-		buildingDef.BaseTimeUntilRepair = -1f;
-		buildingDef.DragBuild = true;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("LadderFast", 1, 1, "ladder_plastic_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.PLASTICS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER0);
+		BuildingTemplates.CreateLadderDef(obj);
+		obj.Floodable = false;
+		obj.Overheatable = false;
+		obj.Entombable = false;
+		obj.AudioCategory = "Plastic";
+		obj.AudioSize = "small";
+		obj.BaseTimeUntilRepair = -1f;
+		obj.DragBuild = true;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

@@ -106,50 +106,46 @@ public class ModuleFlightUtilitySideScreen : SideScreenContent
 	private void RefreshModulePanel(IEmptyableCargo module)
 	{
 		HierarchyReferences hierarchyReferences = modulePanels[module];
-		Image reference = hierarchyReferences.GetReference<Image>("icon");
-		reference.sprite = Def.GetUISprite(module.master.gameObject).first;
-		KButton reference2 = hierarchyReferences.GetReference<KButton>("button");
-		reference2.isInteractable = module.CanEmptyCargo();
-		reference2.ClearOnClick();
-		reference2.onClick += module.EmptyCargo;
-		KButton reference3 = hierarchyReferences.GetReference<KButton>("repeatButton");
+		hierarchyReferences.GetReference<Image>("icon").sprite = Def.GetUISprite(module.master.gameObject).first;
+		KButton reference = hierarchyReferences.GetReference<KButton>("button");
+		reference.isInteractable = module.CanEmptyCargo();
+		reference.ClearOnClick();
+		reference.onClick += module.EmptyCargo;
+		KButton reference2 = hierarchyReferences.GetReference<KButton>("repeatButton");
 		if (module.CanAutoDeploy)
 		{
 			StyleRepeatButton(module);
-			reference3.ClearOnClick();
-			reference3.onClick += delegate
+			reference2.ClearOnClick();
+			reference2.onClick += delegate
 			{
 				OnRepeatClicked(module);
 			};
+			reference2.gameObject.SetActive(value: true);
+		}
+		else
+		{
+			reference2.gameObject.SetActive(value: false);
+		}
+		DropDown reference3 = hierarchyReferences.GetReference<DropDown>("dropDown");
+		reference3.targetDropDownContainer = GameScreenManager.Instance.ssOverlayCanvas;
+		reference3.Close();
+		CrewPortrait reference4 = hierarchyReferences.GetReference<CrewPortrait>("selectedPortrait");
+		WorldContainer component = (module as StateMachine.Instance).GetMaster().GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<WorldContainer>();
+		if (component != null && module.ChooseDuplicant)
+		{
+			int id = component.id;
 			reference3.gameObject.SetActive(value: true);
+			reference3.Initialize(Components.LiveMinionIdentities.GetWorldItems(id), OnDuplicantEntryClick, null, PadDropDownEntryRefreshAction, displaySelectedValueWhenClosed: true, module);
+			reference3.selectedLabel.text = ((module.ChosenDuplicant != null) ? GetDuplicantRowName(module.ChosenDuplicant) : UI.UISIDESCREENS.MODULEFLIGHTUTILITYSIDESCREEN.SELECT_DUPLICANT.ToString());
+			reference4.gameObject.SetActive(value: true);
+			reference4.SetIdentityObject(module.ChosenDuplicant, jobEnabled: false);
 		}
 		else
 		{
 			reference3.gameObject.SetActive(value: false);
-		}
-		DropDown reference4 = hierarchyReferences.GetReference<DropDown>("dropDown");
-		reference4.targetDropDownContainer = GameScreenManager.Instance.ssOverlayCanvas;
-		reference4.Close();
-		CrewPortrait reference5 = hierarchyReferences.GetReference<CrewPortrait>("selectedPortrait");
-		RocketModuleCluster component = (module as StateMachine.Instance).GetMaster().GetComponent<RocketModuleCluster>();
-		CraftModuleInterface craftInterface = component.CraftInterface;
-		WorldContainer component2 = craftInterface.GetComponent<WorldContainer>();
-		if (component2 != null && module.ChooseDuplicant)
-		{
-			int id = component2.id;
-			reference4.gameObject.SetActive(value: true);
-			reference4.Initialize(Components.LiveMinionIdentities.GetWorldItems(id), OnDuplicantEntryClick, null, PadDropDownEntryRefreshAction, displaySelectedValueWhenClosed: true, module);
-			reference4.selectedLabel.text = ((module.ChosenDuplicant != null) ? GetDuplicantRowName(module.ChosenDuplicant) : UI.UISIDESCREENS.MODULEFLIGHTUTILITYSIDESCREEN.SELECT_DUPLICANT.ToString());
-			reference5.gameObject.SetActive(value: true);
-			reference5.SetIdentityObject(module.ChosenDuplicant, jobEnabled: false);
-		}
-		else
-		{
 			reference4.gameObject.SetActive(value: false);
-			reference5.gameObject.SetActive(value: false);
 		}
-		LocText reference6 = hierarchyReferences.GetReference<LocText>("label");
-		reference6.SetText(module.master.gameObject.GetProperName());
+		hierarchyReferences.GetReference<LocText>("label").SetText(module.master.gameObject.GetProperName());
 	}
 
 	private string GetDuplicantRowName(MinionIdentity minion)
@@ -174,10 +170,8 @@ public class ModuleFlightUtilitySideScreen : SideScreenContent
 		IEmptyableCargo emptyableCargo = (IEmptyableCargo)data;
 		emptyableCargo.ChosenDuplicant = chosenDuplicant;
 		HierarchyReferences hierarchyReferences = modulePanels[emptyableCargo];
-		DropDown reference = hierarchyReferences.GetReference<DropDown>("dropDown");
-		reference.selectedLabel.text = ((emptyableCargo.ChosenDuplicant != null) ? GetDuplicantRowName(emptyableCargo.ChosenDuplicant) : UI.UISIDESCREENS.MODULEFLIGHTUTILITYSIDESCREEN.SELECT_DUPLICANT.ToString());
-		CrewPortrait reference2 = hierarchyReferences.GetReference<CrewPortrait>("selectedPortrait");
-		reference2.SetIdentityObject(emptyableCargo.ChosenDuplicant, jobEnabled: false);
+		hierarchyReferences.GetReference<DropDown>("dropDown").selectedLabel.text = ((emptyableCargo.ChosenDuplicant != null) ? GetDuplicantRowName(emptyableCargo.ChosenDuplicant) : UI.UISIDESCREENS.MODULEFLIGHTUTILITYSIDESCREEN.SELECT_DUPLICANT.ToString());
+		hierarchyReferences.GetReference<CrewPortrait>("selectedPortrait").SetIdentityObject(emptyableCargo.ChosenDuplicant, jobEnabled: false);
 		RefreshAll();
 	}
 
@@ -190,8 +184,7 @@ public class ModuleFlightUtilitySideScreen : SideScreenContent
 
 	private void StyleRepeatButton(IEmptyableCargo module)
 	{
-		HierarchyReferences hierarchyReferences = modulePanels[module];
-		KButton reference = hierarchyReferences.GetReference<KButton>("repeatButton");
+		KButton reference = modulePanels[module].GetReference<KButton>("repeatButton");
 		reference.bgImage.colorStyleSetting = (module.AutoDeploy ? repeatOn : repeatOff);
 		reference.bgImage.ApplyColorStyleSetting();
 	}

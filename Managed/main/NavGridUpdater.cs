@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class NavGridUpdater
 {
@@ -31,8 +30,7 @@ public class NavGridUpdater
 		{
 			for (int i = 0; i < Grid.WidthInCells; i++)
 			{
-				int cell = startCell + i;
-				CreateLinksForCell(cell, navTable, maxLinksPerCell, links, transitionsByNavType, teleportTransitions);
+				CreateLinksForCell(startCell + i, navTable, maxLinksPerCell, links, transitionsByNavType, teleportTransitions);
 			}
 		}
 	}
@@ -61,9 +59,9 @@ public class NavGridUpdater
 			{
 				int cell = startCell + i;
 				NavTableValidator[] array = validators;
-				foreach (NavTableValidator navTableValidator in array)
+				for (int j = 0; j < array.Length; j++)
 				{
-					navTableValidator.UpdateCell(cell, navTable, boundingOffsets);
+					array[j].UpdateCell(cell, navTable, boundingOffsets);
 				}
 			}
 		}
@@ -91,9 +89,9 @@ public class NavGridUpdater
 	{
 		foreach (int dirty_solid_cell in dirty_solid_cells)
 		{
-			foreach (NavTableValidator navTableValidator in validators)
+			for (int i = 0; i < validators.Length; i++)
 			{
-				navTableValidator.UpdateCell(dirty_solid_cell, nav_table, bounding_offsets);
+				validators[i].UpdateCell(dirty_solid_cell, nav_table, bounding_offsets);
 			}
 		}
 	}
@@ -137,20 +135,20 @@ public class NavGridUpdater
 			NavGrid.Transition[] array2 = array;
 			for (int j = 0; j < array2.Length; j++)
 			{
-				NavGrid.Transition transition = array2[j];
-				NavGrid.Transition transition2 = transition;
-				if (transition.start == NavType.Teleport && teleport_transitions.ContainsKey(cell))
+				NavGrid.Transition transition;
+				NavGrid.Transition transition2 = (transition = array2[j]);
+				if (transition2.start == NavType.Teleport && teleport_transitions.ContainsKey(cell))
 				{
 					Grid.CellToXY(cell, out var x, out var y);
-					int num3 = teleport_transitions[cell];
+					_ = teleport_transitions[cell];
 					Grid.CellToXY(teleport_transitions[cell], out var x2, out var y2);
-					transition2.x = x2 - x;
-					transition2.y = y2 - y;
+					transition.x = x2 - x;
+					transition.y = y2 - y;
 				}
-				int num4 = transition2.IsValid(cell, nav_table);
-				if (num4 != Grid.InvalidCell)
+				int num3 = transition.IsValid(cell, nav_table);
+				if (num3 != Grid.InvalidCell)
 				{
-					links[num] = new NavGrid.Link(num4, transition2.start, transition2.end, transition2.id, transition2.cost);
+					links[num] = new NavGrid.Link(num3, transition.start, transition.end, transition.id, transition.cost);
 					num++;
 					num2++;
 				}
@@ -176,8 +174,8 @@ public class NavGridUpdater
 
 	public static void DebugDrawPath(int start_cell, int end_cell)
 	{
-		Vector3 vector = Grid.CellToPosCCF(start_cell, Grid.SceneLayer.Move);
-		Vector3 vector2 = Grid.CellToPosCCF(end_cell, Grid.SceneLayer.Move);
+		Grid.CellToPosCCF(start_cell, Grid.SceneLayer.Move);
+		Grid.CellToPosCCF(end_cell, Grid.SceneLayer.Move);
 	}
 
 	public static void DebugDrawPath(PathFinder.Path path)

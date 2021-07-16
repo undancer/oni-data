@@ -17,10 +17,8 @@ namespace YamlDotNet.Samples
 		public void Main()
 		{
 			StringReader input = new StringReader("\nscalar: a scalar\nsequence:\n  - one\n  - two\n");
-			Deserializer deserializer = new DeserializerBuilder().Build();
-			object graph = deserializer.Deserialize(input);
-			Serializer serializer = new SerializerBuilder().JsonCompatible().Build();
-			string value = serializer.Serialize(graph);
+			object graph = new DeserializerBuilder().Build().Deserialize(input);
+			string value = new SerializerBuilder().JsonCompatible().Build().Serialize(graph);
 			output.WriteLine(value);
 		}
 	}

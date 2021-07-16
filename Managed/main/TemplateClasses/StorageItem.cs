@@ -72,9 +72,13 @@ namespace TemplateClasses
 
 		public StorageItem Clone()
 		{
-			StorageItem storageItem = new StorageItem(id, units, temperature, element, diseaseName, diseaseCount, isOre);
-			storageItem.rottable.rotAmount = rottable.rotAmount;
-			return storageItem;
+			return new StorageItem(id, units, temperature, element, diseaseName, diseaseCount, isOre)
+			{
+				rottable = 
+				{
+					rotAmount = rottable.rotAmount
+				}
+			};
 		}
 	}
 }

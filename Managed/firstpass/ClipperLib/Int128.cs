@@ -46,7 +46,11 @@ namespace ClipperLib
 			{
 				return false;
 			}
-			return val1.hi == val2.hi && val1.lo == val2.lo;
+			if (val1.hi == val2.hi)
+			{
+				return val1.lo == val2.lo;
+			}
+			return false;
 		}
 
 		public static bool operator !=(Int128 val1, Int128 val2)
@@ -61,7 +65,11 @@ namespace ClipperLib
 				return false;
 			}
 			Int128 @int = (Int128)obj;
-			return @int.hi == hi && @int.lo == lo;
+			if (@int.hi == hi)
+			{
+				return @int.lo == lo;
+			}
+			return false;
 		}
 
 		public override int GetHashCode()
@@ -105,7 +113,7 @@ namespace ClipperLib
 
 		public static Int128 operator -(Int128 val)
 		{
-			if (val.lo == 0)
+			if (val.lo == 0L)
 			{
 				return new Int128(-val.hi, 0uL);
 			}
@@ -116,7 +124,7 @@ namespace ClipperLib
 		{
 			if (val.hi < 0)
 			{
-				if (val.lo == 0)
+				if (val.lo == 0L)
 				{
 					return (double)val.hi * 1.8446744073709552E+19;
 				}
@@ -127,7 +135,7 @@ namespace ClipperLib
 
 		public static Int128 Int128Mul(long lhs, long rhs)
 		{
-			bool flag = lhs < 0 != rhs < 0;
+			bool num = lhs < 0 != rhs < 0;
 			if (lhs < 0)
 			{
 				lhs = -lhs;
@@ -136,21 +144,25 @@ namespace ClipperLib
 			{
 				rhs = -rhs;
 			}
-			ulong num = (ulong)lhs >> 32;
-			ulong num2 = (ulong)(lhs & 0xFFFFFFFFu);
-			ulong num3 = (ulong)rhs >> 32;
-			ulong num4 = (ulong)(rhs & 0xFFFFFFFFu);
-			ulong num5 = num * num3;
+			ulong num2 = (ulong)lhs >> 32;
+			ulong num3 = (ulong)(lhs & 0xFFFFFFFFu);
+			ulong num4 = (ulong)rhs >> 32;
+			ulong num5 = (ulong)(rhs & 0xFFFFFFFFu);
 			ulong num6 = num2 * num4;
-			ulong num7 = num * num4 + num2 * num3;
-			long num8 = (long)(num5 + (num7 >> 32));
-			ulong num9 = (num7 << 32) + num6;
-			if (num9 < num6)
+			ulong num7 = num3 * num5;
+			ulong num8 = num2 * num5 + num3 * num4;
+			long num9 = (long)(num6 + (num8 >> 32));
+			ulong num10 = (num8 << 32) + num7;
+			if (num10 < num7)
 			{
-				num8++;
+				num9++;
 			}
-			Int128 @int = new Int128(num8, num9);
-			return flag ? (-@int) : @int;
+			Int128 @int = new Int128(num9, num10);
+			if (!num)
+			{
+				return @int;
+			}
+			return -@int;
 		}
 	}
 }

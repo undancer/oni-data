@@ -41,7 +41,7 @@ public class DeliverToSweepLockerStates : GameStateMachine<DeliverToSweepLockerS
 	{
 		default_state = movingToStorage;
 		idle.ScheduleGoTo(1f, movingToStorage);
-		movingToStorage.MoveTo((Instance smi) => (GetSweepLocker(smi) == null) ? Grid.InvalidCell : Grid.PosToCell(GetSweepLocker(smi)), unloading, idle);
+		movingToStorage.MoveTo((Instance smi) => (!(GetSweepLocker(smi) == null)) ? Grid.PosToCell(GetSweepLocker(smi)) : Grid.InvalidCell, unloading, idle);
 		unloading.Enter(delegate(Instance smi)
 		{
 			Storage sweepLocker = GetSweepLocker(smi);

@@ -10,7 +10,7 @@ public class Ladder : KMonoBehaviour, IGameObjectEffectDescriptor
 
 	public float downwardsMovementSpeedMultiplier = 1f;
 
-	public bool isPole = false;
+	public bool isPole;
 
 	protected override void OnPrefabInit()
 	{
@@ -32,8 +32,7 @@ public class Ladder : KMonoBehaviour, IGameObjectEffectDescriptor
 	{
 		base.OnCleanUp();
 		int num = Grid.PosToCell(this);
-		GameObject x = Grid.Objects[num, 24];
-		if (x == null)
+		if (Grid.Objects[num, 24] == null)
 		{
 			Grid.HasPole[num] = false;
 			Grid.HasLadder[num] = false;

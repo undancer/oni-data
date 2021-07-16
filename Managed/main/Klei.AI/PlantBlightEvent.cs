@@ -71,14 +71,12 @@ namespace Klei.AI
 				{
 					return true;
 				}
-				List<Crop> list = Components.Crops.Items.FindAll((Crop p) => p.name == smi.gameplayEvent.targetPlantPrefab);
-				foreach (Crop item in list)
+				foreach (Crop item in Components.Crops.Items.FindAll((Crop p) => p.name == smi.gameplayEvent.targetPlantPrefab))
 				{
-					if (gameObject.gameObject == item.gameObject || !item.HasTag(GameTags.Blighted))
+					if (!(gameObject.gameObject == item.gameObject) && item.HasTag(GameTags.Blighted))
 					{
-						continue;
+						return false;
 					}
-					return false;
 				}
 				return true;
 			}

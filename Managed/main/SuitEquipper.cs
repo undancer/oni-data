@@ -17,9 +17,7 @@ public class SuitEquipper : KMonoBehaviour
 
 	private void OnRefreshUserMenu(object data)
 	{
-		MinionIdentity component = GetComponent<MinionIdentity>();
-		Equipment equipment = component.GetEquipment();
-		foreach (EquipmentSlotInstance slot in equipment.Slots)
+		foreach (EquipmentSlotInstance slot in GetComponent<MinionIdentity>().GetEquipment().Slots)
 		{
 			Equippable equippable = slot.assignable as Equippable;
 			if ((bool)equippable && equippable.unequippable)
@@ -36,15 +34,12 @@ public class SuitEquipper : KMonoBehaviour
 	public Equippable IsWearingAirtightSuit()
 	{
 		Equippable result = null;
-		MinionIdentity component = GetComponent<MinionIdentity>();
-		Equipment equipment = component.GetEquipment();
-		foreach (EquipmentSlotInstance slot in equipment.Slots)
+		foreach (EquipmentSlotInstance slot in GetComponent<MinionIdentity>().GetEquipment().Slots)
 		{
 			Equippable equippable = slot.assignable as Equippable;
 			if ((bool)equippable && equippable.GetComponent<KPrefabID>().HasTag(GameTags.AirtightSuit))
 			{
-				result = equippable;
-				break;
+				return equippable;
 			}
 		}
 		return result;

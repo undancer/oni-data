@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using STRINGS;
 using UnityEngine;
 
@@ -13,8 +12,7 @@ public class ConditionHasEngine : ProcessCondition
 
 	public override Status EvaluateCondition()
 	{
-		List<GameObject> attachedNetwork = AttachableBuilding.GetAttachedNetwork(launchable.LaunchableGameObject.GetComponent<AttachableBuilding>());
-		foreach (GameObject item in attachedNetwork)
+		foreach (GameObject item in AttachableBuilding.GetAttachedNetwork(launchable.LaunchableGameObject.GetComponent<AttachableBuilding>()))
 		{
 			if (item.GetComponent<RocketEngine>() != null || (bool)item.GetComponent<RocketEngineCluster>())
 			{

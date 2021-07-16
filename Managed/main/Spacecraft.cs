@@ -31,10 +31,10 @@ public class Spacecraft
 	public MissionState state;
 
 	[Serialize]
-	private float missionElapsed = 0f;
+	private float missionElapsed;
 
 	[Serialize]
-	private float missionDuration = 0f;
+	private float missionDuration;
 
 	public LaunchConditionManager launchConditions
 	{
@@ -104,16 +104,15 @@ public class Spacecraft
 
 	private float GetPilotNavigationEfficiency()
 	{
-		MinionStorage component = launchConditions.GetComponent<MinionStorage>();
-		List<MinionStorage.Info> storedMinionInfo = component.GetStoredMinionInfo();
+		List<MinionStorage.Info> storedMinionInfo = launchConditions.GetComponent<MinionStorage>().GetStoredMinionInfo();
 		if (storedMinionInfo.Count < 1)
 		{
 			return 1f;
 		}
-		StoredMinionIdentity component2 = storedMinionInfo[0].serializedMinion.Get().GetComponent<StoredMinionIdentity>();
+		StoredMinionIdentity component = storedMinionInfo[0].serializedMinion.Get().GetComponent<StoredMinionIdentity>();
 		string b = Db.Get().Attributes.SpaceNavigation.Id;
 		float num = 1f;
-		foreach (KeyValuePair<string, bool> item in component2.MasteryBySkillID)
+		foreach (KeyValuePair<string, bool> item in component.MasteryBySkillID)
 		{
 			foreach (SkillPerk perk in Db.Get().Skills.Get(item.Key).perks)
 			{

@@ -319,8 +319,7 @@ namespace Database
 			{
 				if (data is SleepChore.StatesInstance)
 				{
-					SleepChore.StatesInstance statesInstance2 = (SleepChore.StatesInstance)data;
-					string stateChangeNoiseSource = statesInstance2.stateChangeNoiseSource;
+					string stateChangeNoiseSource = ((SleepChore.StatesInstance)data).stateChangeNoiseSource;
 					if (!string.IsNullOrEmpty(stateChangeNoiseSource))
 					{
 						string text7 = DUPLICANTS.STATUSITEMS.SLEEPING.TOOLTIP;
@@ -468,9 +467,9 @@ namespace Database
 			Incapacitated.AddNotification();
 			Incapacitated.resolveStringCallback = delegate(string str, object data)
 			{
-				IncapacitationMonitor.Instance instance3 = (IncapacitationMonitor.Instance)data;
-				float bleedLifeTime = instance3.GetBleedLifeTime(instance3);
-				str = str.Replace("{CauseOfIncapacitation}", instance3.GetCauseOfIncapacitation().Name);
+				IncapacitationMonitor.Instance instance2 = (IncapacitationMonitor.Instance)data;
+				float bleedLifeTime = instance2.GetBleedLifeTime(instance2);
+				str = str.Replace("{CauseOfIncapacitation}", instance2.GetCauseOfIncapacitation().Name);
 				return str.Replace("{TimeUntilDeath}", GameUtil.GetFormattedTime(bleedLifeTime));
 			};
 			Relocating = CreateStatusItem("Relocating", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
@@ -551,11 +550,7 @@ namespace Database
 			BalloonArtistHandingOut = CreateStatusItem("BalloonArtistHandingOut", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			Partying = CreateStatusItem("Partying", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Good, allow_multiples: false, OverlayModes.None.ID);
 			GasLiquidIrritation = CreateStatusItem("GasLiquidIrritated", "DUPLICANTS", "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
-			GasLiquidIrritation.resolveStringCallback = delegate(string str, object data)
-			{
-				GasLiquidExposureMonitor.Instance instance2 = (GasLiquidExposureMonitor.Instance)data;
-				return instance2.IsMajorIrritation() ? DUPLICANTS.STATUSITEMS.GASLIQUIDEXPOSURE.NAME_MAJOR : DUPLICANTS.STATUSITEMS.GASLIQUIDEXPOSURE.NAME_MINOR;
-			};
+			GasLiquidIrritation.resolveStringCallback = (string str, object data) => ((GasLiquidExposureMonitor.Instance)data).IsMajorIrritation() ? DUPLICANTS.STATUSITEMS.GASLIQUIDEXPOSURE.NAME_MAJOR : DUPLICANTS.STATUSITEMS.GASLIQUIDEXPOSURE.NAME_MINOR;
 			GasLiquidIrritation.resolveTooltipCallback = delegate(string str, object data)
 			{
 				GasLiquidExposureMonitor.Instance instance = (GasLiquidExposureMonitor.Instance)data;

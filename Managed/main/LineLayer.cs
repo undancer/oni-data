@@ -35,7 +35,7 @@ public class LineLayer : GraphLayer
 
 	protected float fillFadePixels = 15f;
 
-	public bool fillAreaUnderLine = false;
+	public bool fillAreaUnderLine;
 
 	private Texture2D areaTexture;
 
@@ -63,8 +63,7 @@ public class LineLayer : GraphLayer
 		{
 			InitAreaTexture();
 			Vector2 b = CalculateMin(points);
-			Vector2 a = CalculateMax(points);
-			Vector2 vector = a - b;
+			Vector2 vector = CalculateMax(points) - b;
 			areaTexture.filterMode = FilterMode.Point;
 			for (int j = 0; j < areaTexture.width; j++)
 			{

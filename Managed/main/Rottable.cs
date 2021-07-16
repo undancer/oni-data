@@ -123,19 +123,12 @@ public class Rottable : GameStateMachine<Rottable, Rottable.Instance, IStateMach
 
 		public void RefreshModifiers(float dt)
 		{
-			IStateMachineTarget master = GetMaster();
-			if (master.isNull)
-			{
-				return;
-			}
-			int cell = Grid.PosToCell(base.gameObject);
-			if (!Grid.IsValidCell(cell))
+			if (GetMaster().isNull || !Grid.IsValidCell(Grid.PosToCell(base.gameObject)))
 			{
 				return;
 			}
 			rotAmountInstance.deltaAttribute.ClearModifiers();
-			KPrefabID component = GetComponent<KPrefabID>();
-			if (!component.HasAnyTags(PRESERVED_TAGS))
+			if (!GetComponent<KPrefabID>().HasAnyTags(PRESERVED_TAGS))
 			{
 				switch (RefrigerationLevel(this))
 				{
@@ -185,8 +178,7 @@ public class Rottable : GameStateMachine<Rottable, Rottable.Instance, IStateMach
 
 		public bool IsRotLevelStackable(Instance other)
 		{
-			float num = Mathf.Abs(RotConstitutionPercentage - other.RotConstitutionPercentage);
-			return num < 0.1f;
+			return Mathf.Abs(RotConstitutionPercentage - other.RotConstitutionPercentage) < 0.1f;
 		}
 
 		public string GetToolTip()
@@ -379,7 +371,7 @@ public class Rottable : GameStateMachine<Rottable, Rottable.Instance, IStateMach
 
 	public static void SetStatusItems(IRottable rottable)
 	{
-		int num = Grid.PosToCell(rottable.gameObject);
+		Grid.PosToCell(rottable.gameObject);
 		KSelectable component = rottable.gameObject.GetComponent<KSelectable>();
 		switch (RefrigerationLevel(rottable))
 		{
@@ -413,7 +405,11 @@ public class Rottable : GameStateMachine<Rottable, Rottable.Instance, IStateMach
 		if (component != null && component.storage != null)
 		{
 			Refrigerator component2 = component.storage.GetComponent<Refrigerator>();
-			return component2 != null && component2.IsActive();
+			if (component2 != null)
+			{
+				return component2.IsActive();
+			}
+			return false;
 		}
 		return false;
 	}

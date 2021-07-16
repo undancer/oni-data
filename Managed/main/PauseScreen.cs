@@ -145,8 +145,7 @@ public class PauseScreen : KModalButtonMenu
 		if (!string.IsNullOrEmpty(filename) && File.Exists(filename))
 		{
 			base.gameObject.SetActive(value: false);
-			ConfirmDialogScreen confirmDialogScreen = (ConfirmDialogScreen)GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, base.transform.parent.gameObject);
-			confirmDialogScreen.PopupConfirmDialog(string.Format(UI.FRONTEND.SAVESCREEN.OVERWRITEMESSAGE, System.IO.Path.GetFileNameWithoutExtension(filename)), delegate
+			((ConfirmDialogScreen)GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, base.transform.parent.gameObject)).PopupConfirmDialog(string.Format(UI.FRONTEND.SAVESCREEN.OVERWRITEMESSAGE, System.IO.Path.GetFileNameWithoutExtension(filename)), delegate
 			{
 				DoSave(filename);
 				base.gameObject.SetActive(value: true);
@@ -167,8 +166,7 @@ public class PauseScreen : KModalButtonMenu
 		catch (IOException ex)
 		{
 			IOException e = ex;
-			ConfirmDialogScreen component = Util.KInstantiateUI(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, base.transform.parent.gameObject, force_active: true).GetComponent<ConfirmDialogScreen>();
-			component.PopupConfirmDialog(string.Format(UI.FRONTEND.SAVESCREEN.IO_ERROR, e.ToString()), delegate
+			Util.KInstantiateUI(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, base.transform.parent.gameObject, force_active: true).GetComponent<ConfirmDialogScreen>().PopupConfirmDialog(string.Format(UI.FRONTEND.SAVESCREEN.IO_ERROR, e.ToString()), delegate
 			{
 				Deactivate();
 			}, null, UI.FRONTEND.SAVESCREEN.REPORT_BUG, delegate
@@ -181,8 +179,7 @@ public class PauseScreen : KModalButtonMenu
 	private void ConfirmDecision(string text, System.Action onConfirm)
 	{
 		base.gameObject.SetActive(value: false);
-		ConfirmDialogScreen confirmDialogScreen = (ConfirmDialogScreen)GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, base.transform.parent.gameObject);
-		confirmDialogScreen.PopupConfirmDialog(text, onConfirm, OnCancelPopup);
+		((ConfirmDialogScreen)GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, base.transform.parent.gameObject)).PopupConfirmDialog(text, onConfirm, OnCancelPopup);
 	}
 
 	private void OnLoad()

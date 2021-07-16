@@ -65,7 +65,11 @@ namespace YamlDotNet.RepresentationModel
 		public override bool Equals(object obj)
 		{
 			YamlScalarNode yamlScalarNode = obj as YamlScalarNode;
-			return yamlScalarNode != null && Equals(yamlScalarNode) && YamlNode.SafeEquals(Value, yamlScalarNode.Value);
+			if (yamlScalarNode != null && Equals(yamlScalarNode))
+			{
+				return YamlNode.SafeEquals(Value, yamlScalarNode.Value);
+			}
+			return false;
 		}
 
 		public override int GetHashCode()

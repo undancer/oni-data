@@ -32,15 +32,14 @@ public class LogicWire : KMonoBehaviour, IFirstFrameCallback, IHaveUtilityNetwor
 		component.OnBuildingFullyRepaired(data);
 	});
 
-	private System.Action firstFrameCallback = null;
+	private System.Action firstFrameCallback;
 
 	public bool IsConnected
 	{
 		get
 		{
 			int cell = Grid.PosToCell(base.transform.GetPosition());
-			LogicCircuitNetwork logicCircuitNetwork = Game.Instance.logicCircuitSystem.GetNetworkForCell(cell) as LogicCircuitNetwork;
-			return logicCircuitNetwork != null;
+			return Game.Instance.logicCircuitSystem.GetNetworkForCell(cell) is LogicCircuitNetwork;
 		}
 	}
 
@@ -62,8 +61,7 @@ public class LogicWire : KMonoBehaviour, IFirstFrameCallback, IHaveUtilityNetwor
 		Subscribe(774203113, OnBuildingBrokenDelegate);
 		Subscribe(-1735440190, OnBuildingFullyRepairedDelegate);
 		Connect();
-		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
-		component.SetSymbolVisiblity(OutlineSymbol, is_visible: false);
+		GetComponent<KBatchedAnimController>().SetSymbolVisiblity(OutlineSymbol, is_visible: false);
 	}
 
 	protected override void OnCleanUp()

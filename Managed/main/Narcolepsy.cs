@@ -68,10 +68,7 @@ public class Narcolepsy : StateMachineComponent<Narcolepsy.StatesInstance>
 
 		private float GetNewInterval(float min, float max)
 		{
-			float mu = max - min;
-			float a = Util.GaussianRandom(mu);
-			a = Mathf.Max(a, min);
-			a = Mathf.Min(a, max);
+			Mathf.Min(Mathf.Max(Util.GaussianRandom(max - min), min), max);
 			return Random.Range(min, max);
 		}
 	}

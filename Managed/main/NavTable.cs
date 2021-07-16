@@ -22,8 +22,7 @@ public class NavTable
 	{
 		if (Grid.IsValidCell(cell))
 		{
-			short num = NavTypeMasks[(uint)nav_type];
-			return (num & ValidCells[cell]) != 0;
+			return (NavTypeMasks[(uint)nav_type] & ValidCells[cell]) != 0;
 		}
 		return false;
 	}
@@ -32,8 +31,7 @@ public class NavTable
 	{
 		short num = NavTypeMasks[(uint)nav_type];
 		short num2 = ValidCells[cell];
-		bool flag = (num2 & num) != 0;
-		if (flag != is_valid)
+		if ((num2 & num) != 0 != is_valid)
 		{
 			if (is_valid)
 			{

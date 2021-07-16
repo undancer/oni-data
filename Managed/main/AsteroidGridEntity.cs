@@ -83,12 +83,7 @@ public class AsteroidGridEntity : ClusterGridEntity
 
 	public void OnFogOfWarRevealed(object data = null)
 	{
-		if (data == null)
-		{
-			return;
-		}
-		AxialI u = (AxialI)data;
-		if (u != m_location || !ClusterGrid.Instance.IsCellVisible(base.Location))
+		if (data == null || (AxialI)data != m_location || !ClusterGrid.Instance.IsCellVisible(base.Location))
 		{
 			return;
 		}

@@ -68,12 +68,11 @@ public class MinionGroupProber : KMonoBehaviour, IGroupProber
 		{
 			return false;
 		}
-		bool result = false;
+		bool flag = false;
 		lock (access)
 		{
-			result = IsReachable_AssumeLock(cell);
+			return IsReachable_AssumeLock(cell);
 		}
-		return result;
 	}
 
 	public bool IsReachable(int cell, CellOffset[] offsets)
@@ -89,12 +88,11 @@ public class MinionGroupProber : KMonoBehaviour, IGroupProber
 			{
 				if (IsReachable_AssumeLock(Grid.OffsetCell(cell, offset)))
 				{
-					result = true;
-					break;
+					return true;
 				}
 			}
+			return result;
 		}
-		return result;
 	}
 
 	public bool IsAllReachable(int cell, CellOffset[] offsets)
@@ -108,21 +106,17 @@ public class MinionGroupProber : KMonoBehaviour, IGroupProber
 		{
 			if (IsReachable_AssumeLock(cell))
 			{
-				result = true;
+				return true;
 			}
-			else
+			foreach (CellOffset offset in offsets)
 			{
-				foreach (CellOffset offset in offsets)
+				if (IsReachable_AssumeLock(Grid.OffsetCell(cell, offset)))
 				{
-					if (IsReachable_AssumeLock(Grid.OffsetCell(cell, offset)))
-					{
-						result = true;
-						break;
-					}
+					return true;
 				}
 			}
+			return result;
 		}
-		return result;
 	}
 
 	public bool IsReachable(Workable workable)

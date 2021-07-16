@@ -34,12 +34,11 @@ namespace Klei.AI
 					num++;
 					KPrefabID cmp = list[Random.Range(0, list.Count)];
 					locator_cell = Grid.OffsetCell(offset: new CellOffset(Random.Range(-2, 3), 0), cell: Grid.PosToCell(cmp));
-					if (Grid.HasDoor[locator_cell] || Game.Instance.roomProber.GetCavityForCell(locator_cell) != room.cavity || chores.Find((Chore match) => Grid.PosToCell(match.target.gameObject) == locator_cell) != null)
+					if (!Grid.HasDoor[locator_cell] && Game.Instance.roomProber.GetCavityForCell(locator_cell) == room.cavity && chores.Find((Chore match) => Grid.PosToCell(match.target.gameObject) == locator_cell) == null)
 					{
-						continue;
+						flag = true;
+						break;
 					}
-					flag = true;
-					break;
 				}
 				if (!flag)
 				{
@@ -148,8 +147,7 @@ namespace Klei.AI
 				warmup.wait.ScheduleGoTo(60f, warmup.start);
 				warmup.start.Enter(PopulateTargetsAndText).Enter(delegate(StatesInstance smi)
 				{
-					Room chosenRoom = GetChosenRoom(smi);
-					if (chosenRoom == null)
+					if (GetChosenRoom(smi) == null)
 					{
 						smi.GoTo(canceled);
 					}
@@ -195,7 +193,6 @@ namespace Klei.AI
 					smi.sm.guest.Get(smi),
 					smi.sm.planner.Get(smi)
 				};
-				bool flag = true;
 				GameplayEventPopupData.PopupOption popupOption = gameplayEventPopupData.AddOption(GAMEPLAY_EVENTS.EVENT_TYPES.PARTY.ACCEPT_OPTION_NAME, GAMEPLAY_EVENTS.EVENT_TYPES.PARTY.ACCEPT_OPTION_DESC);
 				popupOption.callback = delegate
 				{
@@ -203,7 +200,7 @@ namespace Klei.AI
 				};
 				popupOption.AddPositiveIcon(Assets.GetSprite("overlay_materials"), Effect.CreateFullTooltip(effect, showDuration: true));
 				popupOption.tooltip = GAMEPLAY_EVENTS.EVENT_TYPES.PARTY.ACCEPT_OPTION_DESC;
-				if (!flag)
+				if (1 == 0)
 				{
 					popupOption.AddInformationIcon("Cake must be built");
 					popupOption.allowed = false;

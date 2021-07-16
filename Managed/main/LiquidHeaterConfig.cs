@@ -9,17 +9,17 @@ public class LiquidHeaterConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("LiquidHeater", 4, 1, "boiler_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 3200f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER1);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.Floodable = false;
-		buildingDef.EnergyConsumptionWhenActive = 960f;
-		buildingDef.ExhaustKilowattsWhenActive = 4000f;
-		buildingDef.SelfHeatKilowattsWhenActive = 64f;
-		buildingDef.ViewMode = OverlayModes.Power.ID;
-		buildingDef.AudioCategory = "SolidMetal";
-		buildingDef.OverheatTemperature = 398.15f;
-		buildingDef.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(1, 0));
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("LiquidHeater", 4, 1, "boiler_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 3200f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER1);
+		obj.RequiresPowerInput = true;
+		obj.Floodable = false;
+		obj.EnergyConsumptionWhenActive = 960f;
+		obj.ExhaustKilowattsWhenActive = 4000f;
+		obj.SelfHeatKilowattsWhenActive = 64f;
+		obj.ViewMode = OverlayModes.Power.ID;
+		obj.AudioCategory = "SolidMetal";
+		obj.OverheatTemperature = 398.15f;
+		obj.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(1, 0));
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

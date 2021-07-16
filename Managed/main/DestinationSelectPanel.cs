@@ -43,7 +43,7 @@ public class DestinationSelectPanel : KMonoBehaviour
 
 	private static int chosenClusterCategorySetting;
 
-	private float offset = 0f;
+	private float offset;
 
 	private int selectedIndex = -1;
 
@@ -61,7 +61,7 @@ public class DestinationSelectPanel : KMonoBehaviour
 
 	private Vector2 dragLastPos;
 
-	private bool isDragging = false;
+	private bool isDragging;
 
 	private const string debugFmt = "{world}: {seed} [{traits}] {{settings}}";
 
@@ -206,8 +206,7 @@ public class DestinationSelectPanel : KMonoBehaviour
 		for (int i = 0; i < clusterKeys.Count; i++)
 		{
 			float x = offset + (float)i * asteroidXSeparation;
-			DestinationAsteroid2 asteroid = GetAsteroid(clusterKeys[i], (i == selectedIndex) ? asteroidFocusScale : 1f);
-			asteroid.transform.SetLocalPosition(new Vector3(x, (i == selectedIndex) ? (5f + 10f * Mathf.Sin(Time.realtimeSinceStartup * 1f)) : 0f, 0f));
+			GetAsteroid(clusterKeys[i], (i == selectedIndex) ? asteroidFocusScale : 1f).transform.SetLocalPosition(new Vector3(x, (i == selectedIndex) ? (5f + 10f * Mathf.Sin(Time.realtimeSinceStartup * 1f)) : 0f, 0f));
 		}
 		EndAsteroidDrawing();
 	}
@@ -308,7 +307,7 @@ public class DestinationSelectPanel : KMonoBehaviour
 
 	public string GetDefaultAsteroid()
 	{
-		return asteroidData.Keys.First();
+		return clusterKeys.First();
 	}
 
 	public ColonyDestinationAsteroidBeltData SelectDefaultAsteroid(int seed)

@@ -46,8 +46,7 @@ public class RocketEngineCluster : StateMachineComponent<RocketEngineCluster.Sta
 
 		public void DoBurn(float dt)
 		{
-			Vector3 pos = base.smi.master.gameObject.transform.GetPosition() + base.smi.master.animController.Offset;
-			int num = Grid.PosToCell(pos);
+			int num = Grid.PosToCell(base.smi.master.gameObject.transform.GetPosition() + base.smi.master.animController.Offset);
 			if (Grid.AreCellsInSameWorld(num, pad_cell))
 			{
 				SimMessages.EmitMass(num, (byte)ElementLoader.GetElementIndex(base.smi.master.exhaustElement), dt * base.smi.master.exhaustEmitRate, base.smi.master.exhaustTemperature, base.smi.master.exhaustDiseaseIdx, base.smi.master.exhaustDiseaseCount);
@@ -174,13 +173,16 @@ public class RocketEngineCluster : StateMachineComponent<RocketEngineCluster.Sta
 
 		private bool IsReadyToLaunch(StatesInstance smi)
 		{
-			RocketModuleCluster component = smi.GetComponent<RocketModuleCluster>();
-			return component.CraftInterface.CheckPreppedForLaunch();
+			return smi.GetComponent<RocketModuleCluster>().CraftInterface.CheckPreppedForLaunch();
 		}
 
 		public bool IsRocketAirborne(StatesInstance smi)
 		{
-			return smi.master.HasTag(GameTags.RocketNotOnGround) && !smi.master.HasTag(GameTags.RocketInSpace);
+			if (smi.master.HasTag(GameTags.RocketNotOnGround))
+			{
+				return !smi.master.HasTag(GameTags.RocketInSpace);
+			}
+			return false;
 		}
 	}
 
@@ -200,13 +202,13 @@ public class RocketEngineCluster : StateMachineComponent<RocketEngineCluster.Sta
 
 	public int maxModules = 32;
 
-	public int maxHeight = 0;
+	public int maxHeight;
 
 	public bool mainEngine = true;
 
 	public byte exhaustDiseaseIdx = byte.MaxValue;
 
-	public int exhaustDiseaseCount = 0;
+	public int exhaustDiseaseCount;
 
 	public bool emitRadiation;
 

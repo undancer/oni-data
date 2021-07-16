@@ -98,15 +98,11 @@ public class SapTree : GameStateMachine<SapTree, SapTree.StatesInstance, IStateM
 
 		public void EatFoodItem(float dt)
 		{
-			GameObject gameObject = base.sm.foodItem.Get(this);
-			Pickupable component = gameObject.GetComponent<Pickupable>();
-			Pickupable pickupable = component.Take(base.def.massEatRate * dt);
-			Edible component2 = pickupable.GetComponent<Edible>();
-			float num = component2.Calories * 0.001f;
-			float mass = num * base.def.kcalorieToKGConversionRatio;
+			Pickupable pickupable = base.sm.foodItem.Get(this).GetComponent<Pickupable>().Take(base.def.massEatRate * dt);
+			float mass = pickupable.GetComponent<Edible>().Calories * 0.001f * base.def.kcalorieToKGConversionRatio;
 			Util.KDestroyGameObject(pickupable.gameObject);
-			PrimaryElement component3 = GetComponent<PrimaryElement>();
-			storage.AddLiquid(SimHashes.Resin, mass, component3.Temperature, byte.MaxValue, 0, keep_zero_mass: true, do_disease_transfer: false);
+			PrimaryElement component = GetComponent<PrimaryElement>();
+			storage.AddLiquid(SimHashes.Resin, mass, component.Temperature, byte.MaxValue, 0, keep_zero_mass: true, do_disease_transfer: false);
 			base.sm.storedSap.Set(storage.GetMassAvailable(SimHashes.Resin.CreateTag()), this);
 		}
 
@@ -128,8 +124,7 @@ public class SapTree : GameStateMachine<SapTree, SapTree.StatesInstance, IStateM
 			foreach (ScenePartitionerEntry item in pooledList)
 			{
 				Pickupable pickupable = item.obj as Pickupable;
-				Edible component = pickupable.GetComponent<Edible>();
-				if (component != null)
+				if (pickupable.GetComponent<Edible>() != null)
 				{
 					base.sm.foodItem.Set(pickupable.gameObject, this);
 					return;
@@ -147,8 +142,7 @@ public class SapTree : GameStateMachine<SapTree, SapTree.StatesInstance, IStateM
 
 		private void OnMinionChanged(object obj)
 		{
-			GameObject x = obj as GameObject;
-			if (x != null)
+			if (obj as GameObject != null)
 			{
 				base.sm.hasNearbyEnemy.Set(value: true, this);
 			}

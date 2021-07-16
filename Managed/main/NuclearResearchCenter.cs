@@ -110,8 +110,7 @@ public class NuclearResearchCenter : StateMachineComponent<NuclearResearchCenter
 			Worker component = context.chore.driver.GetComponent<Worker>();
 			float num = Db.Get().AttributeConverters.ResearchSpeed.Lookup(component).Evaluate();
 			Worker worker = context.consumerState.worker;
-			float num2 = Db.Get().AttributeConverters.ResearchSpeed.Lookup(worker).Evaluate();
-			return num2 > num;
+			return Db.Get().AttributeConverters.ResearchSpeed.Lookup(worker).Evaluate() > num;
 		}
 	}
 
@@ -129,7 +128,7 @@ public class NuclearResearchCenter : StateMachineComponent<NuclearResearchCenter
 	[MyCmpReq]
 	private HighEnergyParticleStorage particleStorage;
 
-	public Meter.Offset particleMeterOffset = Meter.Offset.Infront;
+	public Meter.Offset particleMeterOffset;
 
 	private MeterController particleMeter;
 
@@ -172,9 +171,10 @@ public class NuclearResearchCenter : StateMachineComponent<NuclearResearchCenter
 
 	public List<Descriptor> GetDescriptors(GameObject go)
 	{
-		List<Descriptor> list = new List<Descriptor>();
-		list.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.RESEARCH_MATERIALS, inputMaterial.ProperName(), GameUtil.GetFormattedByTag(inputMaterial, materialPerPoint)), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.RESEARCH_MATERIALS, inputMaterial.ProperName(), GameUtil.GetFormattedByTag(inputMaterial, materialPerPoint)), Descriptor.DescriptorType.Requirement));
-		list.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.PRODUCES_RESEARCH_POINTS, Research.Instance.researchTypes.GetResearchType(researchTypeID).name), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.PRODUCES_RESEARCH_POINTS, Research.Instance.researchTypes.GetResearchType(researchTypeID).name)));
-		return list;
+		return new List<Descriptor>
+		{
+			new Descriptor(string.Format(UI.BUILDINGEFFECTS.RESEARCH_MATERIALS, inputMaterial.ProperName(), GameUtil.GetFormattedByTag(inputMaterial, materialPerPoint)), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.RESEARCH_MATERIALS, inputMaterial.ProperName(), GameUtil.GetFormattedByTag(inputMaterial, materialPerPoint)), Descriptor.DescriptorType.Requirement),
+			new Descriptor(string.Format(UI.BUILDINGEFFECTS.PRODUCES_RESEARCH_POINTS, Research.Instance.researchTypes.GetResearchType(researchTypeID).name), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.PRODUCES_RESEARCH_POINTS, Research.Instance.researchTypes.GetResearchType(researchTypeID).name))
+		};
 	}
 }

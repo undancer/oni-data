@@ -11,8 +11,7 @@ public class EmoteMonitor : GameStateMachine<EmoteMonitor, EmoteMonitor.Instance
 
 		public void OnStartChore(object o)
 		{
-			Chore chore = (Chore)o;
-			if (chore.SatisfiesUrge(Db.Get().Urges.Emote))
+			if (((Chore)o).SatisfiesUrge(Db.Get().Urges.Emote))
 			{
 				GoTo(base.sm.satisfied);
 			}

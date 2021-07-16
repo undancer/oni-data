@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using STRINGS;
 using UnityEngine;
 
@@ -19,14 +18,13 @@ public class PowerUseDiagnostic : ColonyDiagnostic
 		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS);
 		result.opinion = DiagnosticResult.Opinion.Normal;
 		result.Message = UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.NORMAL;
-		IList<UtilityNetwork> networks = Game.Instance.electricalConduitSystem.GetNetworks();
-		foreach (ElectricalUtilityNetwork item in networks)
+		foreach (ElectricalUtilityNetwork network in Game.Instance.electricalConduitSystem.GetNetworks())
 		{
-			if (item.allWires == null || item.allWires.Count == 0)
+			if (network.allWires == null || network.allWires.Count == 0)
 			{
 				continue;
 			}
-			int num = Grid.PosToCell(item.allWires[0]);
+			int num = Grid.PosToCell(network.allWires[0]);
 			if (Grid.WorldIdx[num] == base.worldID)
 			{
 				ushort circuitID = Game.Instance.circuitManager.GetCircuitID(num);
@@ -34,11 +32,11 @@ public class PowerUseDiagnostic : ColonyDiagnostic
 				float wattsUsedByCircuit = Game.Instance.circuitManager.GetWattsUsedByCircuit(circuitID);
 				if (wattsUsedByCircuit > maxSafeWattageForCircuit)
 				{
-					GameObject gameObject = item.allWires[0].gameObject;
+					GameObject gameObject = network.allWires[0].gameObject;
 					result.clickThroughTarget = new Tuple<Vector3, GameObject>(gameObject.transform.position, gameObject);
 					result.opinion = DiagnosticResult.Opinion.Concern;
 					result.Message = string.Format(UI.COLONY_DIAGNOSTICS.POWERUSEDIAGNOSTIC.CIRCUIT_OVER_CAPACITY, GameUtil.GetFormattedWattage(wattsUsedByCircuit), GameUtil.GetFormattedWattage(maxSafeWattageForCircuit));
-					break;
+					return result;
 				}
 			}
 		}

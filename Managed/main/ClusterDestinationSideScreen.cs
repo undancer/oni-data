@@ -75,8 +75,16 @@ public class ClusterDestinationSideScreen : SideScreenContent
 	public override bool IsValidForTarget(GameObject target)
 	{
 		ClusterDestinationSelector component = target.GetComponent<ClusterDestinationSelector>();
-		return (component != null && component.assignable) || (target.GetComponent<RocketModule>() != null && target.HasTag(GameTags.LaunchButtonRocketModule)) || (target.GetComponent<RocketControlStation>() != null && target.GetComponent<RocketControlStation>().GetMyWorld().GetComponent<Clustercraft>()
-			.Status != Clustercraft.CraftStatus.Launching);
+		if ((!(component != null) || !component.assignable) && (!(target.GetComponent<RocketModule>() != null) || !target.HasTag(GameTags.LaunchButtonRocketModule)))
+		{
+			if (target.GetComponent<RocketControlStation>() != null)
+			{
+				return target.GetComponent<RocketControlStation>().GetMyWorld().GetComponent<Clustercraft>()
+					.Status != Clustercraft.CraftStatus.Launching;
+			}
+			return false;
+		}
+		return true;
 	}
 
 	public override void SetTarget(GameObject target)

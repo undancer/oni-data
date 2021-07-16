@@ -102,7 +102,7 @@ public class StatusItemGroup
 
 	public Guid SetStatusItem(StatusItemCategory category, StatusItem item, object data = null)
 	{
-		if (item?.allowMultiples ?? false)
+		if (item != null && item.allowMultiples)
 		{
 			throw new ArgumentException(item.Name + " allows multiple instances of itself to be active so you must access it via its handle");
 		}
@@ -250,8 +250,7 @@ public class StatusItemGroup
 
 	private static string OnToolTip(List<Notification> notifications, object data)
 	{
-		StatusItem statusItem = (StatusItem)data;
-		return statusItem.notificationTooltipText + notifications.ReduceMessages();
+		return ((StatusItem)data).notificationTooltipText + notifications.ReduceMessages();
 	}
 
 	public void Destroy()

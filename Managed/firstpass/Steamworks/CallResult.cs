@@ -17,7 +17,7 @@ namespace Steamworks
 
 		private SteamAPICall_t m_hAPICall = SteamAPICall_t.Invalid;
 
-		private bool m_bDisposed = false;
+		private bool m_bDisposed;
 
 		public SteamAPICall_t Handle => m_hAPICall;
 
@@ -89,8 +89,7 @@ namespace Steamworks
 
 		internal override void OnRunCallResult(IntPtr pvParam, bool bFailed, ulong hSteamAPICall_)
 		{
-			SteamAPICall_t x = (SteamAPICall_t)hSteamAPICall_;
-			if (x == m_hAPICall)
+			if ((SteamAPICall_t)hSteamAPICall_ == m_hAPICall)
 			{
 				try
 				{

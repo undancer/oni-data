@@ -13,18 +13,18 @@ public class ScoutModuleConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("ScoutModule", 3, 3, "rocket_scout_cargo_module_kanim", 1000, 30f, BUILDINGS.ROCKETRY_MASS_KG.HOLLOW_TIER1, MATERIALS.RAW_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		BuildingTemplates.CreateRocketBuildingDef(buildingDef);
-		buildingDef.DefaultAnimState = "deployed";
-		buildingDef.AttachmentSlotTag = GameTags.Rocket;
-		buildingDef.SceneLayer = Grid.SceneLayer.Building;
-		buildingDef.OverheatTemperature = 2273.15f;
-		buildingDef.Floodable = false;
-		buildingDef.ObjectLayer = ObjectLayer.Building;
-		buildingDef.RequiresPowerInput = false;
-		buildingDef.CanMove = true;
-		buildingDef.Cancellable = false;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("ScoutModule", 3, 3, "rocket_scout_cargo_module_kanim", 1000, 30f, BUILDINGS.ROCKETRY_MASS_KG.HOLLOW_TIER1, MATERIALS.RAW_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		BuildingTemplates.CreateRocketBuildingDef(obj);
+		obj.DefaultAnimState = "deployed";
+		obj.AttachmentSlotTag = GameTags.Rocket;
+		obj.SceneLayer = Grid.SceneLayer.Building;
+		obj.OverheatTemperature = 2273.15f;
+		obj.Floodable = false;
+		obj.ObjectLayer = ObjectLayer.Building;
+		obj.RequiresPowerInput = false;
+		obj.CanMove = true;
+		obj.Cancellable = false;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -45,13 +45,11 @@ public class ScoutModuleConfig : IBuildingConfig
 		def.spawnIntoStorage = true;
 		def.storage = storage;
 		def.constructionSymbol = "under_construction";
-		BuildingInternalConstructorWorkable buildingInternalConstructorWorkable = go.AddOrGet<BuildingInternalConstructorWorkable>();
-		buildingInternalConstructorWorkable.SetWorkTime(30f);
+		go.AddOrGet<BuildingInternalConstructorWorkable>().SetWorkTime(30f);
 		JettisonableCargoModule.Def def2 = go.AddOrGetDef<JettisonableCargoModule.Def>();
 		def2.landerPrefabID = "ScoutLander".ToTag();
 		def2.landerContainer = storage;
-		BuildingAttachPoint buildingAttachPoint = go.AddOrGet<BuildingAttachPoint>();
-		buildingAttachPoint.points = new BuildingAttachPoint.HardPoint[1]
+		go.AddOrGet<BuildingAttachPoint>().points = new BuildingAttachPoint.HardPoint[1]
 		{
 			new BuildingAttachPoint.HardPoint(new CellOffset(0, 3), GameTags.Rocket, null)
 		};

@@ -46,8 +46,7 @@ public class ArtifactPOIConfig : IMultiEntityConfig
 	public List<GameObject> CreatePrefabs()
 	{
 		List<GameObject> list = new List<GameObject>();
-		List<ArtifactPOIParams> list2 = GenerateConfigs();
-		foreach (ArtifactPOIParams item in list2)
+		foreach (ArtifactPOIParams item in GenerateConfigs())
 		{
 			list.Add(CreateArtifactPOI(item.id, item.anim, Strings.Get(item.nameStringKey), Strings.Get(item.descStringKey), item.poiType.idHash));
 		}
@@ -58,12 +57,12 @@ public class ArtifactPOIConfig : IMultiEntityConfig
 	{
 		GameObject gameObject = EntityTemplates.CreateEntity(id, id);
 		gameObject.AddOrGet<SaveLoadRoot>();
-		ArtifactPOIConfigurator artifactPOIConfigurator = gameObject.AddOrGet<ArtifactPOIConfigurator>();
-		artifactPOIConfigurator.presetType = poiType;
+		gameObject.AddOrGet<ArtifactPOIConfigurator>().presetType = poiType;
 		ArtifactPOIClusterGridEntity artifactPOIClusterGridEntity = gameObject.AddOrGet<ArtifactPOIClusterGridEntity>();
 		artifactPOIClusterGridEntity.m_name = name;
 		artifactPOIClusterGridEntity.m_Anim = anim;
 		gameObject.AddOrGetDef<ArtifactPOIStates.Def>();
+		gameObject.AddOrGet<LoreBearer>();
 		return gameObject;
 	}
 

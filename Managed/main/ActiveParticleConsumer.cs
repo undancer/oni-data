@@ -10,13 +10,14 @@ public class ActiveParticleConsumer : GameStateMachine<ActiveParticleConsumer, A
 
 		public float minParticlesForOperational = 1f;
 
-		public string meterSymbolName = null;
+		public string meterSymbolName;
 
 		public List<Descriptor> GetDescriptors(GameObject go)
 		{
-			List<Descriptor> list = new List<Descriptor>();
-			list.Add(new Descriptor(UI.BUILDINGEFFECTS.ACTIVE_PARTICLE_CONSUMPTION.Replace("{Rate}", GameUtil.GetFormattedHighEnergyParticles(activeConsumptionRate, GameUtil.TimeSlice.PerSecond)), UI.BUILDINGEFFECTS.TOOLTIPS.ACTIVE_PARTICLE_CONSUMPTION.Replace("{Rate}", GameUtil.GetFormattedHighEnergyParticles(activeConsumptionRate, GameUtil.TimeSlice.PerSecond)), Descriptor.DescriptorType.Requirement));
-			return list;
+			return new List<Descriptor>
+			{
+				new Descriptor(UI.BUILDINGEFFECTS.ACTIVE_PARTICLE_CONSUMPTION.Replace("{Rate}", GameUtil.GetFormattedHighEnergyParticles(activeConsumptionRate, GameUtil.TimeSlice.PerSecond)), UI.BUILDINGEFFECTS.TOOLTIPS.ACTIVE_PARTICLE_CONSUMPTION.Replace("{Rate}", GameUtil.GetFormattedHighEnergyParticles(activeConsumptionRate, GameUtil.TimeSlice.PerSecond)), Descriptor.DescriptorType.Requirement)
+			};
 		}
 	}
 
@@ -29,7 +30,7 @@ public class ActiveParticleConsumer : GameStateMachine<ActiveParticleConsumer, A
 
 	public new class Instance : GameInstance
 	{
-		public bool ShowWorkingStatus = false;
+		public bool ShowWorkingStatus;
 
 		public HighEnergyParticleStorage storage;
 
@@ -41,7 +42,7 @@ public class ActiveParticleConsumer : GameStateMachine<ActiveParticleConsumer, A
 
 		public void Update(float dt)
 		{
-			float num = storage.ConsumeAndGet(dt * base.def.activeConsumptionRate);
+			storage.ConsumeAndGet(dt * base.def.activeConsumptionRate);
 		}
 	}
 

@@ -16,9 +16,9 @@ public class Vignette : KMonoBehaviour
 
 	private LoopingSounds looping_sounds;
 
-	private bool showingRedAlert = false;
+	private bool showingRedAlert;
 
-	private bool showingYellowAlert = false;
+	private bool showingYellowAlert;
 
 	public static void DestroyInstance()
 	{

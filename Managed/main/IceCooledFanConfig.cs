@@ -21,13 +21,13 @@ public class IceCooledFanConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("IceCooledFan", 2, 2, "fanice_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.SelfHeatKilowattsWhenActive = (0f - COOLING_RATE) * 0.25f;
-		buildingDef.ExhaustKilowattsWhenActive = (0f - COOLING_RATE) * 0.75f;
-		buildingDef.Overheatable = false;
-		buildingDef.ViewMode = OverlayModes.Temperature.ID;
-		buildingDef.AudioCategory = "Metal";
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("IceCooledFan", 2, 2, "fanice_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		obj.SelfHeatKilowattsWhenActive = (0f - COOLING_RATE) * 0.25f;
+		obj.ExhaustKilowattsWhenActive = (0f - COOLING_RATE) * 0.75f;
+		obj.Overheatable = false;
+		obj.ViewMode = OverlayModes.Temperature.ID;
+		obj.AudioCategory = "Metal";
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -39,8 +39,7 @@ public class IceCooledFanConfig : IBuildingConfig
 		storage2.capacityKg = 50f;
 		storage2.SetDefaultStoredItemModifiers(Storage.StandardInsulatedStorage);
 		go.AddOrGet<BuildingComplete>().isManuallyOperated = true;
-		MinimumOperatingTemperature minimumOperatingTemperature = go.AddOrGet<MinimumOperatingTemperature>();
-		minimumOperatingTemperature.minimumTemperature = 273.15f;
+		go.AddOrGet<MinimumOperatingTemperature>().minimumTemperature = 273.15f;
 		go.AddOrGet<LoopingSounds>();
 		Prioritizable.AddRef(go);
 		IceCooledFan iceCooledFan = go.AddOrGet<IceCooledFan>();
@@ -60,8 +59,7 @@ public class IceCooledFanConfig : IBuildingConfig
 		manualDeliveryKG.refillMass = ICE_CAPACITY * 0.2f;
 		manualDeliveryKG.minimumMass = 10f;
 		manualDeliveryKG.choreTypeIDHash = Db.Get().ChoreTypes.MachineFetch.IdHash;
-		IceCooledFanWorkable iceCooledFanWorkable = go.AddOrGet<IceCooledFanWorkable>();
-		iceCooledFanWorkable.overrideAnims = new KAnimFile[1]
+		go.AddOrGet<IceCooledFanWorkable>().overrideAnims = new KAnimFile[1]
 		{
 			Assets.GetAnim("anim_interacts_icefan_kanim")
 		};

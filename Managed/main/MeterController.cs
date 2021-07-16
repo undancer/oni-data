@@ -44,8 +44,7 @@ public class MeterController
 		gameObject.SetActive(value: false);
 		gameObject.transform.parent = building_controller.transform;
 		this.gameObject = gameObject;
-		KPrefabID component = gameObject.GetComponent<KPrefabID>();
-		component.PrefabTag = new Tag(name);
+		gameObject.GetComponent<KPrefabID>().PrefabTag = new Tag(name);
 		Vector3 position = building_controller.transform.GetPosition();
 		switch (front_back)
 		{
@@ -60,25 +59,25 @@ public class MeterController
 			break;
 		}
 		gameObject.transform.SetPosition(position);
-		KBatchedAnimController component2 = gameObject.GetComponent<KBatchedAnimController>();
-		component2.AnimFiles = new KAnimFile[1]
+		KBatchedAnimController component = gameObject.GetComponent<KBatchedAnimController>();
+		component.AnimFiles = new KAnimFile[1]
 		{
 			building_controller.AnimFiles[0]
 		};
-		component2.initialAnim = meter_animation;
-		component2.fgLayer = Grid.SceneLayer.NoLayer;
-		component2.initialMode = KAnim.PlayMode.Paused;
-		component2.isMovable = true;
-		component2.FlipX = building_controller.FlipX;
-		component2.FlipY = building_controller.FlipY;
+		component.initialAnim = meter_animation;
+		component.fgLayer = Grid.SceneLayer.NoLayer;
+		component.initialMode = KAnim.PlayMode.Paused;
+		component.isMovable = true;
+		component.FlipX = building_controller.FlipX;
+		component.FlipY = building_controller.FlipY;
 		if (Meter.Offset.UserSpecified == front_back)
 		{
-			component2.sceneLayer = user_specified_render_layer;
+			component.sceneLayer = user_specified_render_layer;
 		}
-		meterController = component2;
-		KBatchedAnimTracker component3 = gameObject.GetComponent<KBatchedAnimTracker>();
-		component3.offset = tracker_offset;
-		component3.symbol = new HashedString(meter_target);
+		meterController = component;
+		KBatchedAnimTracker component2 = gameObject.GetComponent<KBatchedAnimTracker>();
+		component2.offset = tracker_offset;
+		component2.symbol = new HashedString(meter_target);
 		gameObject.SetActive(value: true);
 		building_controller.SetSymbolVisiblity(meter_target, is_visible: false);
 		if (symbols_to_hide != null)
@@ -88,7 +87,7 @@ public class MeterController
 				building_controller.SetSymbolVisiblity(symbols_to_hide[i], is_visible: false);
 			}
 		}
-		link = new KAnimLink(building_controller, component2);
+		link = new KAnimLink(building_controller, component);
 	}
 
 	public MeterController(KAnimControllerBase building_controller, KBatchedAnimController meter_controller, params string[] symbol_names)
@@ -101,8 +100,7 @@ public class MeterController
 			{
 				building_controller.SetSymbolVisiblity(symbol_names[i], is_visible: false);
 			}
-			KBatchedAnimTracker component = meterController.GetComponent<KBatchedAnimTracker>();
-			component.symbol = new HashedString(symbol_names[0]);
+			meterController.GetComponent<KBatchedAnimTracker>().symbol = new HashedString(symbol_names[0]);
 		}
 	}
 

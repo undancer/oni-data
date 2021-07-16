@@ -128,9 +128,7 @@ namespace Klei.AI
 				{
 					smi.GoTo(smi.sm.active.seenNotification);
 				});
-				string text = GAMEPLAY_EVENTS.BONUS_EVENT_DESCRIPTION;
-				text = text.Replace("{effects}", Effect.CreateTooltip(effect, showDuration: false, " ", showHeader: false));
-				text = text.Replace("{durration}", GameUtil.GetFormattedCycles(effect.duration));
+				((string)GAMEPLAY_EVENTS.BONUS_EVENT_DESCRIPTION).Replace("{effects}", Effect.CreateTooltip(effect, showDuration: false, " ", showHeader: false)).Replace("{durration}", GameUtil.GetFormattedCycles(effect.duration));
 				foreach (AttributeModifier selfModifier in effect.SelfModifiers)
 				{
 					Attribute attribute = Db.Get().Attributes.TryGet(selfModifier.AttributeId);
@@ -318,7 +316,7 @@ namespace Klei.AI
 
 		public int numTimesToTrigger;
 
-		public TriggerType triggerType = TriggerType.None;
+		public TriggerType triggerType;
 
 		public HashSet<Tag> buildingTrigger;
 
@@ -328,7 +326,7 @@ namespace Klei.AI
 
 		public ConditionFn extraCondition;
 
-		public bool roomHasOwnable = false;
+		public bool roomHasOwnable;
 
 		public BonusEvent(string id, string overrideEffect = null, int numTimesAllowed = 1, bool preSelectMinion = false, int priority = 0)
 			: base(id, priority, 0)
@@ -397,8 +395,7 @@ namespace Klei.AI
 			Effect effect = Db.Get().effects.Get(this.effect);
 			if (effect.SelfModifiers.Count > 0)
 			{
-				Attribute attribute = Db.Get().Attributes.TryGet(effect.SelfModifiers[0].AttributeId);
-				return Assets.GetSprite(attribute.uiFullColourSprite);
+				return Assets.GetSprite(Db.Get().Attributes.TryGet(effect.SelfModifiers[0].AttributeId).uiFullColourSprite);
 			}
 			return null;
 		}
@@ -408,8 +405,7 @@ namespace Klei.AI
 			Effect effect = Db.Get().effects.Get(this.effect);
 			if (effect.SelfModifiers.Count > 0)
 			{
-				Attribute attribute = Db.Get().Attributes.TryGet(effect.SelfModifiers[0].AttributeId);
-				return attribute.Name;
+				return Db.Get().Attributes.TryGet(effect.SelfModifiers[0].AttributeId).Name;
 			}
 			return null;
 		}

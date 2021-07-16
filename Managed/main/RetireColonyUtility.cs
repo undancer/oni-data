@@ -37,8 +37,7 @@ public static class RetireColonyUtility
 			Directory.CreateDirectory(text3);
 		}
 		string path = Path.Combine(text3, text2 + ".json");
-		RetiredColonyData currentColonyRetiredColonyData = GetCurrentColonyRetiredColonyData();
-		string s = JsonConvert.SerializeObject(currentColonyRetiredColonyData);
+		string s = JsonConvert.SerializeObject(GetCurrentColonyRetiredColonyData());
 		bool flag = false;
 		int num = 0;
 		while (!flag && num < 5)
@@ -48,8 +47,7 @@ public static class RetireColonyUtility
 				Thread.Sleep(num * 100);
 				using FileStream fileStream = File.Open(path, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
 				flag = true;
-				Encoding uTF = Encoding.UTF8;
-				byte[] bytes = uTF.GetBytes(s);
+				byte[] bytes = Encoding.UTF8.GetBytes(s);
 				fileStream.Write(bytes, 0, bytes.Length);
 			}
 			catch (Exception ex)
@@ -81,49 +79,90 @@ public static class RetireColonyUtility
 		{
 			array2[j] = Components.BuildingCompletes[j];
 		}
-		return new RetiredColonyData(SaveGame.Instance.BaseName, GameClock.Instance.GetCycle(), System.DateTime.Now.ToShortDateString(), list.ToArray(), array, array2);
+		string startWorld = null;
+		Dictionary<string, string> dictionary = new Dictionary<string, string>();
+		foreach (WorldContainer worldContainer in ClusterManager.Instance.WorldContainers)
+		{
+			if (worldContainer.IsDiscovered && !worldContainer.IsModuleInterior)
+			{
+				dictionary.Add(worldContainer.GetComponent<ClusterGridEntity>().Name, worldContainer.worldName);
+				if (worldContainer.IsStartWorld)
+				{
+					startWorld = worldContainer.GetComponent<ClusterGridEntity>().Name;
+				}
+			}
+		}
+		return new RetiredColonyData(SaveGame.Instance.BaseName, GameClock.Instance.GetCycle(), System.DateTime.Now.ToShortDateString(), list.ToArray(), array, array2, startWorld, dictionary);
 	}
 
 	private static RetiredColonyData LoadRetiredColony(string file, bool skipStats, Encoding enc)
 	{
 		RetiredColonyData retiredColonyData = new RetiredColonyData();
-		using (FileStream stream = File.Open(file, FileMode.Open))
+		using FileStream stream = File.Open(file, FileMode.Open);
+		using StreamReader reader = new StreamReader(stream, enc);
+		using JsonReader jsonReader = new JsonTextReader(reader);
+		string a = string.Empty;
+		List<string> list = new List<string>();
+		List<Tuple<string, int>> list2 = new List<Tuple<string, int>>();
+		List<RetiredColonyData.RetiredDuplicantData> list3 = new List<RetiredColonyData.RetiredDuplicantData>();
+		List<RetiredColonyData.RetiredColonyStatistic> list4 = new List<RetiredColonyData.RetiredColonyStatistic>();
+		Dictionary<string, string> dictionary = new Dictionary<string, string>();
+		while (jsonReader.Read())
 		{
-			using StreamReader reader = new StreamReader(stream, enc);
-			using JsonReader jsonReader = new JsonTextReader(reader);
-			string a = string.Empty;
-			List<string> list = new List<string>();
-			List<Tuple<string, int>> list2 = new List<Tuple<string, int>>();
-			List<RetiredColonyData.RetiredDuplicantData> list3 = new List<RetiredColonyData.RetiredDuplicantData>();
-			List<RetiredColonyData.RetiredColonyStatistic> list4 = new List<RetiredColonyData.RetiredColonyStatistic>();
-			while (jsonReader.Read())
+			JsonToken tokenType = jsonReader.TokenType;
+			if (tokenType == JsonToken.PropertyName)
 			{
-				JsonToken tokenType = jsonReader.TokenType;
-				if (tokenType == JsonToken.PropertyName)
+				a = jsonReader.Value.ToString();
+			}
+			if (tokenType == JsonToken.String && a == "colonyName")
+			{
+				retiredColonyData.colonyName = jsonReader.Value.ToString();
+			}
+			if (tokenType == JsonToken.String && a == "date")
+			{
+				retiredColonyData.date = jsonReader.Value.ToString();
+			}
+			if (tokenType == JsonToken.Integer && a == "cycleCount")
+			{
+				retiredColonyData.cycleCount = int.Parse(jsonReader.Value.ToString());
+			}
+			if (tokenType == JsonToken.String && a == "achievements")
+			{
+				list.Add(jsonReader.Value.ToString());
+			}
+			if (tokenType == JsonToken.StartObject && a == "Duplicants")
+			{
+				string a2 = null;
+				RetiredColonyData.RetiredDuplicantData retiredDuplicantData = new RetiredColonyData.RetiredDuplicantData();
+				retiredDuplicantData.accessories = new Dictionary<string, string>();
+				while (jsonReader.Read())
 				{
-					a = jsonReader.Value.ToString();
-				}
-				if (tokenType == JsonToken.String && a == "colonyName")
-				{
-					retiredColonyData.colonyName = jsonReader.Value.ToString();
-				}
-				if (tokenType == JsonToken.String && a == "date")
-				{
-					retiredColonyData.date = jsonReader.Value.ToString();
-				}
-				if (tokenType == JsonToken.Integer && a == "cycleCount")
-				{
-					retiredColonyData.cycleCount = int.Parse(jsonReader.Value.ToString());
-				}
-				if (tokenType == JsonToken.String && a == "achievements")
-				{
-					list.Add(jsonReader.Value.ToString());
-				}
-				if (tokenType == JsonToken.StartObject && a == "Duplicants")
-				{
-					string a2 = null;
-					RetiredColonyData.RetiredDuplicantData retiredDuplicantData = new RetiredColonyData.RetiredDuplicantData();
-					retiredDuplicantData.accessories = new Dictionary<string, string>();
+					tokenType = jsonReader.TokenType;
+					if (tokenType == JsonToken.EndObject)
+					{
+						break;
+					}
+					if (tokenType == JsonToken.PropertyName)
+					{
+						a2 = jsonReader.Value.ToString();
+					}
+					if (a2 == "name" && tokenType == JsonToken.String)
+					{
+						retiredDuplicantData.name = jsonReader.Value.ToString();
+					}
+					if (a2 == "age" && tokenType == JsonToken.Integer)
+					{
+						retiredDuplicantData.age = int.Parse(jsonReader.Value.ToString());
+					}
+					if (a2 == "skillPointsGained" && tokenType == JsonToken.Integer)
+					{
+						retiredDuplicantData.skillPointsGained = int.Parse(jsonReader.Value.ToString());
+					}
+					if (!(a2 == "accessories"))
+					{
+						continue;
+					}
+					string text = null;
 					while (jsonReader.Read())
 					{
 						tokenType = jsonReader.TokenType;
@@ -133,77 +172,47 @@ public static class RetireColonyUtility
 						}
 						if (tokenType == JsonToken.PropertyName)
 						{
-							a2 = jsonReader.Value.ToString();
+							text = jsonReader.Value.ToString();
 						}
-						if (a2 == "name" && tokenType == JsonToken.String)
+						if (text != null && jsonReader.Value != null && tokenType == JsonToken.String)
 						{
-							retiredDuplicantData.name = jsonReader.Value.ToString();
-						}
-						if (a2 == "age" && tokenType == JsonToken.Integer)
-						{
-							retiredDuplicantData.age = int.Parse(jsonReader.Value.ToString());
-						}
-						if (a2 == "skillPointsGained" && tokenType == JsonToken.Integer)
-						{
-							retiredDuplicantData.skillPointsGained = int.Parse(jsonReader.Value.ToString());
-						}
-						if (!(a2 == "accessories"))
-						{
-							continue;
-						}
-						string text = null;
-						while (jsonReader.Read())
-						{
-							tokenType = jsonReader.TokenType;
-							if (tokenType == JsonToken.EndObject)
-							{
-								break;
-							}
-							if (tokenType == JsonToken.PropertyName)
-							{
-								text = jsonReader.Value.ToString();
-							}
-							if (text != null && jsonReader.Value != null && tokenType == JsonToken.String)
-							{
-								string value = jsonReader.Value.ToString();
-								retiredDuplicantData.accessories.Add(text, value);
-							}
+							string value = jsonReader.Value.ToString();
+							retiredDuplicantData.accessories.Add(text, value);
 						}
 					}
-					list3.Add(retiredDuplicantData);
 				}
-				if (tokenType == JsonToken.StartObject && a == "buildings")
+				list3.Add(retiredDuplicantData);
+			}
+			if (tokenType == JsonToken.StartObject && a == "buildings")
+			{
+				string a3 = null;
+				string a4 = null;
+				int b = 0;
+				while (jsonReader.Read())
 				{
-					string a3 = null;
-					string a4 = null;
-					int b = 0;
-					while (jsonReader.Read())
+					tokenType = jsonReader.TokenType;
+					if (tokenType == JsonToken.EndObject)
 					{
-						tokenType = jsonReader.TokenType;
-						if (tokenType == JsonToken.EndObject)
-						{
-							break;
-						}
-						if (tokenType == JsonToken.PropertyName)
-						{
-							a3 = jsonReader.Value.ToString();
-						}
-						if (a3 == "first" && tokenType == JsonToken.String)
-						{
-							a4 = jsonReader.Value.ToString();
-						}
-						if (a3 == "second" && tokenType == JsonToken.Integer)
-						{
-							b = int.Parse(jsonReader.Value.ToString());
-						}
+						break;
 					}
-					Tuple<string, int> item = new Tuple<string, int>(a4, b);
-					list2.Add(item);
+					if (tokenType == JsonToken.PropertyName)
+					{
+						a3 = jsonReader.Value.ToString();
+					}
+					if (a3 == "first" && tokenType == JsonToken.String)
+					{
+						a4 = jsonReader.Value.ToString();
+					}
+					if (a3 == "second" && tokenType == JsonToken.Integer)
+					{
+						b = int.Parse(jsonReader.Value.ToString());
+					}
 				}
-				if (tokenType != JsonToken.StartObject || !(a == "Stats"))
-				{
-					continue;
-				}
+				Tuple<string, int> item = new Tuple<string, int>(a4, b);
+				list2.Add(item);
+			}
+			if (tokenType == JsonToken.StartObject && a == "Stats")
+			{
 				if (skipStats)
 				{
 					break;
@@ -271,11 +280,37 @@ public static class RetireColonyUtility
 				retiredColonyStatistic.value = list5.ToArray();
 				list4.Add(retiredColonyStatistic);
 			}
-			retiredColonyData.Duplicants = list3.ToArray();
-			retiredColonyData.Stats = list4.ToArray();
-			retiredColonyData.achievements = list.ToArray();
-			retiredColonyData.buildings = list2;
+			if (tokenType == JsonToken.StartObject && a == "worldIdentities")
+			{
+				string text2 = null;
+				while (jsonReader.Read())
+				{
+					tokenType = jsonReader.TokenType;
+					if (tokenType == JsonToken.EndObject)
+					{
+						break;
+					}
+					if (tokenType == JsonToken.PropertyName)
+					{
+						text2 = jsonReader.Value.ToString();
+					}
+					if (text2 != null && jsonReader.Value != null && tokenType == JsonToken.String)
+					{
+						string value2 = jsonReader.Value.ToString();
+						dictionary.Add(text2, value2);
+					}
+				}
+			}
+			if (tokenType == JsonToken.String && a == "startWorld")
+			{
+				retiredColonyData.startWorld = jsonReader.Value.ToString();
+			}
 		}
+		retiredColonyData.Duplicants = list3.ToArray();
+		retiredColonyData.Stats = list4.ToArray();
+		retiredColonyData.achievements = list.ToArray();
+		retiredColonyData.buildings = list2;
+		retiredColonyData.worldIdentities = dictionary;
 		return retiredColonyData;
 	}
 
@@ -293,9 +328,9 @@ public static class RetireColonyUtility
 		}
 		path = Path.Combine(Util.RootFolder(), Util.GetRetiredColoniesFolderName());
 		string[] directories = Directory.GetDirectories(path);
-		foreach (string path2 in directories)
+		for (int i = 0; i < directories.Length; i++)
 		{
-			string[] files = Directory.GetFiles(path2);
+			string[] files = Directory.GetFiles(directories[i]);
 			foreach (string text in files)
 			{
 				if (!text.EndsWith(".json"))
@@ -329,10 +364,14 @@ public static class RetireColonyUtility
 		return list.ToArray();
 	}
 
-	public static string[] LoadColonySlideshowFiles(string colonyName)
+	public static string[] LoadColonySlideshowFiles(string colonyName, string world_name)
 	{
 		string path = StripInvalidCharacters(colonyName);
 		string text = Path.Combine(Path.Combine(Util.RootFolder(), Util.GetRetiredColoniesFolderName()), path);
+		if (!world_name.IsNullOrWhiteSpace())
+		{
+			text = Path.Combine(text, world_name);
+		}
 		List<string> list = new List<string>();
 		if (Directory.Exists(text))
 		{
@@ -378,12 +417,16 @@ public static class RetireColonyUtility
 		return list.ToArray();
 	}
 
-	public static Sprite LoadRetiredColonyPreview(string colonyName)
+	public static Sprite LoadRetiredColonyPreview(string colonyName, string startName = null)
 	{
 		try
 		{
 			string path = StripInvalidCharacters(colonyName);
 			string text = Path.Combine(Path.Combine(Util.RootFolder(), Util.GetRetiredColoniesFolderName()), path);
+			if (!startName.IsNullOrWhiteSpace())
+			{
+				text = Path.Combine(text, startName);
+			}
 			List<string> list = new List<string>();
 			if (Directory.Exists(text))
 			{

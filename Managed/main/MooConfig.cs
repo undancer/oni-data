@@ -34,16 +34,11 @@ public class MooConfig : IEntityConfig
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Age.maxAttribute.Id, 75f, name));
 		HashSet<Tag> hashSet = new HashSet<Tag>();
 		hashSet.Add("GasGrass".ToTag());
-		Diet.Info[] infos = new Diet.Info[1]
-		{
-			new Diet.Info(hashSet, POOP_ELEMENT, CALORIES_PER_DAY_OF_PLANT_EATEN, KG_POOP_PER_DAY_OF_PLANT)
-		};
-		Diet diet = new Diet(infos);
+		Diet diet = new Diet(new Diet.Info(hashSet, POOP_ELEMENT, CALORIES_PER_DAY_OF_PLANT_EATEN, KG_POOP_PER_DAY_OF_PLANT));
 		CreatureCalorieMonitor.Def def = gameObject.AddOrGetDef<CreatureCalorieMonitor.Def>();
 		def.diet = diet;
 		def.minPoopSizeInCalories = MIN_POOP_SIZE_IN_CALORIES;
-		SolidConsumerMonitor.Def def2 = gameObject.AddOrGetDef<SolidConsumerMonitor.Def>();
-		def2.diet = diet;
+		gameObject.AddOrGetDef<SolidConsumerMonitor.Def>().diet = diet;
 		return gameObject;
 	}
 

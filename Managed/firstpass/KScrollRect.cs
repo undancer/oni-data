@@ -15,7 +15,7 @@ public class KScrollRect : ScrollRect
 
 	private Dictionary<SoundType, string> currentSounds = new Dictionary<SoundType, string>();
 
-	private float scrollVelocity = 0f;
+	private float scrollVelocity;
 
 	private bool default_intertia = true;
 
@@ -30,10 +30,10 @@ public class KScrollRect : ScrollRect
 	private float scrollDeceleration = 0.25f;
 
 	[SerializeField]
-	public bool forceContentMatchWidth = false;
+	public bool forceContentMatchWidth;
 
 	[SerializeField]
-	public bool forceContentMatchHeight = false;
+	public bool forceContentMatchHeight;
 
 	[SerializeField]
 	public bool allowHorizontalScrollWheel = true;
@@ -44,23 +44,23 @@ public class KScrollRect : ScrollRect
 	[SerializeField]
 	public bool allowRightMouseScroll;
 
-	private bool panUp = false;
+	private bool panUp;
 
-	private bool panDown = false;
+	private bool panDown;
 
-	private bool panRight = false;
+	private bool panRight;
 
-	private bool panLeft = false;
+	private bool panLeft;
 
-	private Vector3 keyboardScrollDelta = default(Vector3);
+	private Vector3 keyboardScrollDelta;
 
 	private float keyboardScrollSpeed = 1f;
 
-	private bool startDrag = false;
+	private bool startDrag;
 
-	private bool stopDrag = false;
+	private bool stopDrag;
 
-	private bool autoScrolling = false;
+	private bool autoScrolling;
 
 	private float autoScrollTargetVerticalPos;
 
@@ -106,8 +106,7 @@ public class KScrollRect : ScrollRect
 	{
 		if (base.vertical && base.verticalScrollbar != null)
 		{
-			RectTransform rectTransform = ((base.viewport == null) ? base.gameObject.GetComponent<RectTransform>() : base.viewport.rectTransform());
-			float num = Mathf.Min(rectTransform.rect.size.y, base.content.sizeDelta.y) / base.content.sizeDelta.y;
+			float num = Mathf.Min(((base.viewport == null) ? base.gameObject.GetComponent<RectTransform>() : base.viewport.rectTransform()).rect.size.y, base.content.sizeDelta.y) / base.content.sizeDelta.y;
 			float num2 = Mathf.Abs(base.verticalScrollbar.size - num);
 			if (Mathf.Abs(num2) < 0.001f)
 			{
@@ -117,8 +116,7 @@ public class KScrollRect : ScrollRect
 		}
 		if (base.horizontal && base.horizontalScrollbar != null)
 		{
-			RectTransform rectTransform2 = ((base.viewport == null) ? base.gameObject.GetComponent<RectTransform>() : base.viewport.rectTransform());
-			float num3 = Mathf.Min(rectTransform2.rect.size.x, base.content.sizeDelta.x) / base.content.sizeDelta.x;
+			float num3 = Mathf.Min(((base.viewport == null) ? base.gameObject.GetComponent<RectTransform>() : base.viewport.rectTransform()).rect.size.x, base.content.sizeDelta.x) / base.content.sizeDelta.x;
 			float num4 = Mathf.Abs(base.horizontalScrollbar.size - num3);
 			if (Mathf.Abs(num4) < 0.001f)
 			{

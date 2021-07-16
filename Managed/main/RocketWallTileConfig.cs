@@ -14,31 +14,31 @@ public class RocketWallTileConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("RocketWallTile", 1, 1, "floor_rocket_kanim", 1000, 60f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, new string[1]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("RocketWallTile", 1, 1, "floor_rocket_kanim", 1000, 60f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, new string[1]
 		{
 			SimHashes.Steel.ToString()
 		}, 800f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER0);
-		buildingDef.DebugOnly = true;
-		BuildingTemplates.CreateFoundationTileDef(buildingDef);
-		buildingDef.Floodable = false;
-		buildingDef.Entombable = false;
-		buildingDef.Overheatable = false;
-		buildingDef.UseStructureTemperature = false;
-		buildingDef.Replaceable = false;
-		buildingDef.Invincible = true;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.AudioSize = "small";
-		buildingDef.BaseTimeUntilRepair = -1f;
-		buildingDef.SceneLayer = Grid.SceneLayer.TileMain;
-		buildingDef.isKAnimTile = true;
-		buildingDef.isSolidTile = true;
-		buildingDef.BlockTileAtlas = Assets.GetTextureAtlas("tiles_rocket_wall_int");
-		buildingDef.BlockTilePlaceAtlas = Assets.GetTextureAtlas("tiles_rocket_wall_int_place");
-		buildingDef.BlockTileMaterial = Assets.GetMaterial("tiles_solid");
-		buildingDef.DecorBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_rocket_wall_ext_decor_info");
-		buildingDef.DecorPlaceBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_rocket_wall_ext_place_decor_info");
-		buildingDef.ConstructionOffsetFilter = BuildingDef.ConstructionOffsetFilter_OneDown;
-		return buildingDef;
+		obj.DebugOnly = true;
+		BuildingTemplates.CreateFoundationTileDef(obj);
+		obj.Floodable = false;
+		obj.Entombable = false;
+		obj.Overheatable = false;
+		obj.UseStructureTemperature = false;
+		obj.Replaceable = false;
+		obj.Invincible = true;
+		obj.AudioCategory = "Metal";
+		obj.AudioSize = "small";
+		obj.BaseTimeUntilRepair = -1f;
+		obj.SceneLayer = Grid.SceneLayer.TileMain;
+		obj.isKAnimTile = true;
+		obj.isSolidTile = true;
+		obj.BlockTileAtlas = Assets.GetTextureAtlas("tiles_rocket_wall_int");
+		obj.BlockTilePlaceAtlas = Assets.GetTextureAtlas("tiles_rocket_wall_int_place");
+		obj.BlockTileMaterial = Assets.GetMaterial("tiles_solid");
+		obj.DecorBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_rocket_wall_ext_decor_info");
+		obj.DecorPlaceBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_rocket_wall_ext_place_decor_info");
+		obj.ConstructionOffsetFilter = BuildingDef.ConstructionOffsetFilter_OneDown;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -49,10 +49,8 @@ public class RocketWallTileConfig : IBuildingConfig
 		simCellOccupier.strengthMultiplier = 10f;
 		simCellOccupier.notifyOnMelt = true;
 		go.AddOrGet<TileTemperature>();
-		KAnimGridTileVisualizer kAnimGridTileVisualizer = go.AddOrGet<KAnimGridTileVisualizer>();
-		kAnimGridTileVisualizer.blockTileConnectorID = BlockTileConnectorID;
-		BuildingHP buildingHP = go.AddOrGet<BuildingHP>();
-		buildingHP.destroyOnDamaged = true;
+		go.AddOrGet<KAnimGridTileVisualizer>().blockTileConnectorID = BlockTileConnectorID;
+		go.AddOrGet<BuildingHP>().destroyOnDamaged = true;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)
@@ -63,8 +61,7 @@ public class RocketWallTileConfig : IBuildingConfig
 		component.AddTag(GameTags.FloorTiles);
 		component.AddTag(GameTags.RocketEnvelopeTile);
 		component.AddTag(GameTags.NoRocketRefund);
-		Deconstructable component2 = go.GetComponent<Deconstructable>();
-		component2.allowDeconstruction = false;
+		go.GetComponent<Deconstructable>().allowDeconstruction = false;
 	}
 
 	public override void DoPostConfigureUnderConstruction(GameObject go)

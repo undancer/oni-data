@@ -184,13 +184,12 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 			else
 			{
 				int activeWorldId2 = ClusterManager.Instance.activeWorldId;
-				int num = (int)ColonyDiagnosticUtility.Instance.diagnosticDisplaySettings[activeWorldId2][id];
-				int num2 = num - 1;
-				if (num2 < 0)
+				int num = (int)(ColonyDiagnosticUtility.Instance.diagnosticDisplaySettings[activeWorldId2][id] - 1);
+				if (num < 0)
 				{
-					num2 = 2;
+					num = 2;
 				}
-				ColonyDiagnosticUtility.Instance.diagnosticDisplaySettings[activeWorldId2][id] = (ColonyDiagnosticUtility.DisplaySetting)num2;
+				ColonyDiagnosticUtility.Instance.diagnosticDisplaySettings[activeWorldId2][id] = (ColonyDiagnosticUtility.DisplaySetting)num;
 			}
 			RefreshRows();
 			ColonyDiagnosticScreen.Instance.RefreshAll();
@@ -212,11 +211,10 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 			GameObject gameObject2 = Util.KInstantiateUI(subDiagnosticLinePrefab, reference2.gameObject, force_active: true);
 			gameObject2.GetComponent<ToolTip>().SetSimpleTooltip(string.Format(UI.DIAGNOSTICS_SCREEN.CRITERIA_TOOLTIP, diagnostic.name, sub.name));
 			HierarchyReferences component3 = gameObject2.GetComponent<HierarchyReferences>();
-			LocText reference3 = component3.GetReference<LocText>("Label");
-			reference3.SetText(sub.name);
+			component3.GetReference<LocText>("Label").SetText(sub.name);
 			criteriaRows[diagnostic.id].Add(sub.id, gameObject2);
-			MultiToggle reference4 = component3.GetReference<MultiToggle>("PinToggle");
-			reference4.onClick = (System.Action)Delegate.Combine(reference4.onClick, (System.Action)delegate
+			MultiToggle reference3 = component3.GetReference<MultiToggle>("PinToggle");
+			reference3.onClick = (System.Action)Delegate.Combine(reference3.onClick, (System.Action)delegate
 			{
 				int activeWorldId = ClusterManager.Instance.activeWorldId;
 				bool flag = ColonyDiagnosticUtility.Instance.IsCriteriaEnabled(activeWorldId, diagnostic.id, sub.id);
@@ -225,13 +223,13 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 			});
 		}
 		subrowContainerOpen.Add(diagnostic.id, value: false);
-		MultiToggle reference5 = component.GetReference<MultiToggle>("SubrowToggle");
-		reference5.onClick = (System.Action)Delegate.Combine(reference5.onClick, (System.Action)delegate
+		MultiToggle reference4 = component.GetReference<MultiToggle>("SubrowToggle");
+		reference4.onClick = (System.Action)Delegate.Combine(reference4.onClick, (System.Action)delegate
 		{
 			subrowContainerOpen[diagnostic.id] = !subrowContainerOpen[diagnostic.id];
 			RefreshSubrows();
 		});
-		component.GetReference<MultiToggle>("MainToggle").onClick = reference5.onClick;
+		component.GetReference<MultiToggle>("MainToggle").onClick = reference4.onClick;
 	}
 
 	private void FilterRowBySearch(Tag tag, string filter)
@@ -260,8 +258,7 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 		}
 		filter = filter.ToUpper();
 		string id = tag.ToString();
-		string text = ColonyDiagnosticUtility.Instance.GetDiagnosticName(id).ToUpper();
-		if (text.Contains(filter) || tag.Name.ToUpper().Contains(filter))
+		if (ColonyDiagnosticUtility.Instance.GetDiagnosticName(id).ToUpper().Contains(filter) || tag.Name.ToUpper().Contains(filter))
 		{
 			return true;
 		}
@@ -276,9 +273,9 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 			return false;
 		}
 		DiagnosticCriterion[] array = criteria;
-		foreach (DiagnosticCriterion diagnosticCriterion in array)
+		for (int i = 0; i < array.Length; i++)
 		{
-			if (diagnosticCriterion.name.ToUpper().Contains(filter))
+			if (array[i].name.ToUpper().Contains(filter))
 			{
 				return true;
 			}
@@ -337,7 +334,7 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 
 	public void RefreshRows()
 	{
-		WorldInventory worldInventory = ClusterManager.Instance.GetWorld(ClusterManager.Instance.activeWorldId).worldInventory;
+		_ = ClusterManager.Instance.GetWorld(ClusterManager.Instance.activeWorldId).worldInventory;
 		if (allowRefresh)
 		{
 			foreach (KeyValuePair<string, GameObject> diagnosticRow in diagnosticRows)
@@ -368,19 +365,16 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 			DebugUtil.DevAssert(subrowContainerOpen.ContainsKey(diagnosticRow.Key), "AllDiagnosticsScreen subrowContainerOpen does not contain key " + diagnosticRow.Key + " - it should have been added in SpawnRows");
 			HierarchyReferences component = diagnosticRow.Value.GetComponent<HierarchyReferences>();
 			component.GetReference<MultiToggle>("SubrowToggle").ChangeState(subrowContainerOpen[diagnosticRow.Key] ? 1 : 0);
-			RectTransform reference = component.GetReference<RectTransform>("SubRows");
-			reference.gameObject.SetActive(subrowContainerOpen[diagnosticRow.Key]);
+			component.GetReference<RectTransform>("SubRows").gameObject.SetActive(subrowContainerOpen[diagnosticRow.Key]);
 			int num = 0;
 			foreach (KeyValuePair<string, GameObject> item in criteriaRows[diagnosticRow.Key])
 			{
-				GameObject value = item.Value;
-				HierarchyReferences component2 = value.GetComponent<HierarchyReferences>();
-				MultiToggle reference2 = component2.GetReference<MultiToggle>("PinToggle");
+				MultiToggle reference = item.Value.GetComponent<HierarchyReferences>().GetReference<MultiToggle>("PinToggle");
 				int activeWorldId = ClusterManager.Instance.activeWorldId;
 				string key = diagnosticRow.Key;
 				string key2 = item.Key;
 				bool flag = ColonyDiagnosticUtility.Instance.IsCriteriaEnabled(activeWorldId, key, key2);
-				reference2.ChangeState(flag ? 1 : 0);
+				reference.ChangeState(flag ? 1 : 0);
 				if (flag)
 				{
 					num++;

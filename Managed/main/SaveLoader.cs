@@ -23,9 +23,9 @@ public class SaveLoader : KMonoBehaviour
 
 		public SimHashes containedElement = SimHashes.Vacuum;
 
-		public float containedMass = 0f;
+		public float containedMass;
 
-		public float containedTemperature = 0f;
+		public float containedTemperature;
 	}
 
 	[SerializationConfig(KSerialization.MemberSerialization.OptOut)]
@@ -112,13 +112,13 @@ public class SaveLoader : KMonoBehaviour
 	[MyCmpGet]
 	private GridSettings gridSettings;
 
-	private bool saveFileCorrupt = false;
+	private bool saveFileCorrupt;
 
 	private bool compressSaveData = true;
 
-	private int lastUncompressedSize = 0;
+	private int lastUncompressedSize;
 
-	public bool saveAsText = false;
+	public bool saveAsText;
 
 	public const string MAINMENU_LEVELNAME = "launchscene";
 
@@ -145,7 +145,7 @@ public class SaveLoader : KMonoBehaviour
 
 	private const float SAVE_BUFFER_HEAD_ROOM = 0.1f;
 
-	private bool mustRestartOnFail = false;
+	private bool mustRestartOnFail;
 
 	public const string METRIC_SAVED_PREFAB_KEY = "SavedPrefabs";
 
@@ -167,7 +167,7 @@ public class SaveLoader : KMonoBehaviour
 
 	public const string METRIC_FRAME_TIME = "AverageFrameTime";
 
-	private static bool force_infinity = false;
+	private static bool force_infinity;
 
 	public bool loadedFromSave
 	{
@@ -220,13 +220,6 @@ public class SaveLoader : KMonoBehaviour
 
 	private void MoveCorruptFile(string filename)
 	{
-		try
-		{
-		}
-		catch
-		{
-			File.Replace(filename, filename + "_", filename + "_.bak", ignoreMetadataErrors: true);
-		}
 	}
 
 	protected override void OnSpawn()
@@ -326,22 +319,19 @@ public class SaveLoader : KMonoBehaviour
 				saveFileRoot.active_mods.Add(mod.label);
 			}
 		}
-		using (MemoryStream memoryStream = new MemoryStream())
+		using MemoryStream memoryStream = new MemoryStream();
+		using (BinaryWriter writer = new BinaryWriter(memoryStream))
 		{
-			using (BinaryWriter writer = new BinaryWriter(memoryStream))
-			{
-				Camera.main.transform.parent.GetComponent<CameraController>().Save(writer);
-			}
-			saveFileRoot.streamed["Camera"] = memoryStream.ToArray();
+			Camera.main.transform.parent.GetComponent<CameraController>().Save(writer);
 		}
+		saveFileRoot.streamed["Camera"] = memoryStream.ToArray();
 		return saveFileRoot;
 	}
 
 	private void Save(BinaryWriter writer)
 	{
 		writer.WriteKleiString("world");
-		SaveFileRoot obj = PrepSaveFile();
-		Serializer.Serialize(obj, writer);
+		Serializer.Serialize(PrepSaveFile(), writer);
 		Game.SaveSettings(writer);
 		Sim.Save(writer, 0, 0);
 		saveManager.Save(writer);
@@ -350,8 +340,7 @@ public class SaveLoader : KMonoBehaviour
 
 	private bool Load(IReader reader)
 	{
-		string a = reader.ReadKleiString();
-		Debug.Assert(a == "world");
+		Debug.Assert(reader.ReadKleiString() == "world");
 		Deserializer deserializer = new Deserializer(reader);
 		SaveFileRoot saveFileRoot = new SaveFileRoot();
 		deserializer.Deserialize(saveFileRoot);
@@ -412,16 +401,7 @@ public class SaveLoader : KMonoBehaviour
 		Sim.AllocateCells(saveFileRoot.WidthInCells, saveFileRoot.HeightInCells);
 		SimMessages.CreateDiseaseTable(Db.Get().Diseases);
 		Sim.HandleMessage(SimMessageHashes.ClearUnoccupiedCells, 0, null);
-		IReader reader2;
-		if (saveFileRoot.streamed.ContainsKey("Sim"))
-		{
-			byte[] bytes = saveFileRoot.streamed["Sim"];
-			reader2 = new FastReader(bytes);
-		}
-		else
-		{
-			reader2 = reader;
-		}
+		IReader reader2 = ((!saveFileRoot.streamed.ContainsKey("Sim")) ? reader : new FastReader(saveFileRoot.streamed["Sim"]));
 		if (Sim.LoadWorld(reader2) != 0)
 		{
 			DebugUtil.LogWarningArgs("\n--- Error loading save ---\nSimDLL found bad data\n");
@@ -445,10 +425,9 @@ public class SaveLoader : KMonoBehaviour
 		}
 		Grid.Damage = BytesToFloat(saveFileRoot.streamed["GridDamage"]);
 		Game.Instance.Load(deserializer);
-		FastReader reader3 = new FastReader(saveFileRoot.streamed["Camera"]);
-		CameraSaveData.Load(reader3);
+		CameraSaveData.Load(new FastReader(saveFileRoot.streamed["Camera"]));
 		ClusterManager.Instance.InitializeWorldGrid();
-		List<SimMessages.WorldOffsetData> worldOffsets = ClusterManager.Instance.WorldContainers.Select(delegate(WorldContainer container)
+		SimMessages.DefineWorldOffsets(ClusterManager.Instance.WorldContainers.Select(delegate(WorldContainer container)
 		{
 			SimMessages.WorldOffsetData result = default(SimMessages.WorldOffsetData);
 			result.worldOffsetX = container.WorldOffset.x;
@@ -456,32 +435,29 @@ public class SaveLoader : KMonoBehaviour
 			result.worldSizeX = container.WorldSize.x;
 			result.worldSizeY = container.WorldSize.y;
 			return result;
-		}).ToList();
-		SimMessages.DefineWorldOffsets(worldOffsets);
+		}).ToList());
 		return true;
 	}
 
 	public static string GetSavePrefix()
 	{
-		string path = Util.RootFolder();
-		return System.IO.Path.Combine(path, "save_files/");
+		return System.IO.Path.Combine(Util.RootFolder(), "save_files/");
 	}
 
 	public static string GetCloudSavePrefix()
 	{
-		string path = Util.RootFolder();
-		string path2 = System.IO.Path.Combine(path, "cloud_save_files/");
+		string path = System.IO.Path.Combine(Util.RootFolder(), "cloud_save_files/");
 		string userID = GetUserID();
 		if (string.IsNullOrEmpty(userID))
 		{
 			return null;
 		}
-		path2 = System.IO.Path.Combine(path2, userID);
-		if (!System.IO.Directory.Exists(path2))
+		path = System.IO.Path.Combine(path, userID);
+		if (!System.IO.Directory.Exists(path))
 		{
-			System.IO.Directory.CreateDirectory(path2);
+			System.IO.Directory.CreateDirectory(path);
 		}
-		return path2;
+		return path;
 	}
 
 	public static string GetSavePrefixAndCreateFolder()
@@ -517,7 +493,7 @@ public class SaveLoader : KMonoBehaviour
 		{
 			return filename;
 		}
-		string text = filename.Replace('\\', '/');
+		filename.Replace('\\', '/');
 		return System.IO.Path.GetFileName(filename);
 	}
 
@@ -566,8 +542,7 @@ public class SaveLoader : KMonoBehaviour
 		{
 			return GetAutoSavePrefix();
 		}
-		string directoryName = System.IO.Path.GetDirectoryName(activeSaveFilePath);
-		return System.IO.Path.Combine(directoryName, "auto_save");
+		return System.IO.Path.Combine(System.IO.Path.GetDirectoryName(activeSaveFilePath), "auto_save");
 	}
 
 	public static string GetAutosaveFilePath()
@@ -609,8 +584,7 @@ public class SaveLoader : KMonoBehaviour
 				System.IO.Directory.CreateDirectory(save_dir);
 			}
 			string[] files = System.IO.Directory.GetFiles(save_dir, "*.sav", search);
-			string[] array = files;
-			foreach (string text in array)
+			foreach (string text in files)
 			{
 				try
 				{
@@ -629,7 +603,9 @@ public class SaveLoader : KMonoBehaviour
 			if (sort)
 			{
 				list.Sort((SaveFileEntry x, SaveFileEntry y) => y.timeStamp.CompareTo(x.timeStamp));
+				return list;
 			}
+			return list;
 		}
 		catch (Exception ex2)
 		{
@@ -642,15 +618,14 @@ public class SaveLoader : KMonoBehaviour
 			{
 				text2 = string.Format(UI.FRONTEND.SUPPORTWARNINGS.SAVE_DIRECTORY_INSUFFICIENT_SPACE, save_dir);
 			}
-			if (text2 == null)
+			if (text2 != null)
 			{
-				throw ex2;
+				GameObject parent = ((FrontEndManager.Instance == null) ? GameScreenManager.Instance.ssOverlayCanvas : FrontEndManager.Instance.gameObject);
+				Util.KInstantiateUI(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, parent, force_active: true).GetComponent<ConfirmDialogScreen>().PopupConfirmDialog(text2, null, null);
+				return list;
 			}
-			GameObject parent = ((FrontEndManager.Instance == null) ? GameScreenManager.Instance.ssOverlayCanvas : FrontEndManager.Instance.gameObject);
-			ConfirmDialogScreen component = Util.KInstantiateUI(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, parent, force_active: true).GetComponent<ConfirmDialogScreen>();
-			component.PopupConfirmDialog(text2, null, null);
+			throw ex2;
 		}
-		return list;
 	}
 
 	public static List<SaveFileEntry> GetAllFiles(bool sort, SaveType type = SaveType.both)
@@ -684,8 +659,11 @@ public class SaveLoader : KMonoBehaviour
 
 	public static bool GetCloudSavesDefault()
 	{
-		string cloudSavesDefaultPref = GetCloudSavesDefaultPref();
-		return (!(cloudSavesDefaultPref == "Disabled")) ? true : false;
+		if (!(GetCloudSavesDefaultPref() == "Disabled"))
+		{
+			return true;
+		}
+		return false;
 	}
 
 	public static string GetCloudSavesDefaultPref()
@@ -700,8 +678,7 @@ public class SaveLoader : KMonoBehaviour
 
 	public static void SetCloudSavesDefault(bool value)
 	{
-		string cloudSavesDefaultPref = (value ? "Enabled" : "Disabled");
-		SetCloudSavesDefaultPref(cloudSavesDefaultPref);
+		SetCloudSavesDefaultPref(value ? "Enabled" : "Disabled");
 	}
 
 	public static void SetCloudSavesDefaultPref(string pref)
@@ -718,8 +695,7 @@ public class SaveLoader : KMonoBehaviour
 
 	public static bool GetCloudSavesAvailable()
 	{
-		string userID = GetUserID();
-		if (string.IsNullOrEmpty(userID))
+		if (string.IsNullOrEmpty(GetUserID()))
 		{
 			return false;
 		}
@@ -748,7 +724,7 @@ public class SaveLoader : KMonoBehaviour
 			Tuple<SaveGame.Header, SaveGame.GameInfo> fileInfo = SaveGame.GetFileInfo(allFiles[i].path);
 			if (fileInfo != null)
 			{
-				SaveGame.Header first = fileInfo.first;
+				_ = fileInfo.first;
 				SaveGame.GameInfo second = fileInfo.second;
 				if (second.saveMajorVersion >= 7 && DlcManager.GetHighestActiveDlcId() == second.dlcId)
 				{
@@ -792,20 +768,14 @@ public class SaveLoader : KMonoBehaviour
 		RetireColonyUtility.SaveColonySummaryData();
 		if (isAutoSave && !GenericGameSettings.instance.keepAllAutosaves)
 		{
-			string activeAutoSavePath = GetActiveAutoSavePath();
-			List<SaveFileEntry> saveFiles = GetSaveFiles(activeAutoSavePath, sort: true);
+			List<SaveFileEntry> saveFiles = GetSaveFiles(GetActiveAutoSavePath(), sort: true);
 			List<string> list = new List<string>();
 			foreach (SaveFileEntry item in saveFiles)
 			{
 				Tuple<SaveGame.Header, SaveGame.GameInfo> fileInfo = SaveGame.GetFileInfo(item.path);
-				if (fileInfo != null)
+				if (fileInfo != null && SaveGame.GetSaveUniqueID(fileInfo.second) == Instance.GameInfo.colonyGuid.ToString())
 				{
-					SaveGame.GameInfo second = fileInfo.second;
-					string saveUniqueID = SaveGame.GetSaveUniqueID(second);
-					if (saveUniqueID == Instance.GameInfo.colonyGuid.ToString())
-					{
-						list.Add(item.path);
-					}
+					list.Add(item.path);
 				}
 			}
 			for (int num = list.Count - 1; num >= 9; num--)
@@ -834,8 +804,7 @@ public class SaveLoader : KMonoBehaviour
 				}
 			}
 		}
-		int capacity = (int)((float)lastUncompressedSize * 1.1f);
-		using (MemoryStream memoryStream = new MemoryStream(capacity))
+		using (MemoryStream memoryStream = new MemoryStream((int)((float)lastUncompressedSize * 1.1f)))
 		{
 			using BinaryWriter writer = new BinaryWriter(memoryStream);
 			Save(writer);
@@ -867,15 +836,13 @@ public class SaveLoader : KMonoBehaviour
 				if (ex4 is UnauthorizedAccessException)
 				{
 					DebugUtil.LogArgs("UnauthorizedAccessException for " + filename);
-					ConfirmDialogScreen confirmDialogScreen = (ConfirmDialogScreen)GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, GameScreenManager.Instance.ssOverlayCanvas.gameObject);
-					confirmDialogScreen.PopupConfirmDialog(string.Format(UI.CRASHSCREEN.SAVEFAILED, "Unauthorized Access Exception"), null, null);
+					((ConfirmDialogScreen)GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, GameScreenManager.Instance.ssOverlayCanvas.gameObject)).PopupConfirmDialog(string.Format(UI.CRASHSCREEN.SAVEFAILED, "Unauthorized Access Exception"), null, null);
 					return GetActiveSaveFilePath();
 				}
 				if (ex4 is IOException)
 				{
 					DebugUtil.LogArgs("IOException (probably out of disk space) for " + filename);
-					ConfirmDialogScreen confirmDialogScreen2 = (ConfirmDialogScreen)GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, GameScreenManager.Instance.ssOverlayCanvas.gameObject);
-					confirmDialogScreen2.PopupConfirmDialog(string.Format(UI.CRASHSCREEN.SAVEFAILED, "IOException. You may not have enough free space!"), null, null);
+					((ConfirmDialogScreen)GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, GameScreenManager.Instance.ssOverlayCanvas.gameObject)).PopupConfirmDialog(string.Format(UI.CRASHSCREEN.SAVEFAILED, "IOException. You may not have enough free space!"), null, null);
 					return GetActiveSaveFilePath();
 				}
 				throw ex4;
@@ -893,9 +860,7 @@ public class SaveLoader : KMonoBehaviour
 
 	public static SaveGame.GameInfo LoadHeader(string filename, out SaveGame.Header header)
 	{
-		byte[] bytes = File.ReadAllBytes(filename);
-		IReader br = new FastReader(bytes);
-		return SaveGame.GetHeader(br, out header, filename);
+		return SaveGame.GetHeader(new FastReader(File.ReadAllBytes(filename)), out header, filename);
 	}
 
 	public bool Load(string filename)
@@ -946,16 +911,7 @@ public class SaveLoader : KMonoBehaviour
 				if (IsSaveCloud(filename))
 				{
 					string cloudSavePrefix = GetCloudSavePrefix();
-					if (cloudSavePrefix != null)
-					{
-						text = System.IO.Path.Combine(cloudSavePrefix, GameInfo.baseName, originalSaveFileName2);
-					}
-					else
-					{
-						string directoryName = System.IO.Path.GetDirectoryName(filename);
-						directoryName = directoryName.Replace("auto_save", "");
-						text = System.IO.Path.Combine(directoryName, GameInfo.baseName, originalSaveFileName2);
-					}
+					text = ((cloudSavePrefix == null) ? System.IO.Path.Combine(System.IO.Path.GetDirectoryName(filename).Replace("auto_save", ""), GameInfo.baseName, originalSaveFileName2) : System.IO.Path.Combine(cloudSavePrefix, GameInfo.baseName, originalSaveFileName2));
 				}
 				else
 				{
@@ -1024,7 +980,7 @@ public class SaveLoader : KMonoBehaviour
 		Sim.SIM_Initialize(Sim.DLL_MessageHandler);
 		SimMessages.CreateSimElementsTable(ElementLoader.elements);
 		Sim.AllocateCells(m_clusterLayout.size.x, m_clusterLayout.size.y);
-		List<SimMessages.WorldOffsetData> worldOffsets = m_clusterLayout.worlds.Select(delegate(WorldGen world)
+		SimMessages.DefineWorldOffsets(m_clusterLayout.worlds.Select(delegate(WorldGen world)
 		{
 			SimMessages.WorldOffsetData result = default(SimMessages.WorldOffsetData);
 			result.worldOffsetX = world.WorldOffset.x;
@@ -1032,8 +988,7 @@ public class SaveLoader : KMonoBehaviour
 			result.worldSizeX = world.WorldSize.x;
 			result.worldSizeY = world.WorldSize.y;
 			return result;
-		}).ToList();
-		SimMessages.DefineWorldOffsets(worldOffsets);
+		}).ToList());
 		SimMessages.CreateDiseaseTable(Db.Get().Diseases);
 		Sim.HandleMessage(SimMessageHashes.ClearUnoccupiedCells, 0, null);
 		try
@@ -1103,8 +1058,7 @@ public class SaveLoader : KMonoBehaviour
 			{
 				continue;
 			}
-			Modifiers component = item.gameObject.GetComponent<Modifiers>();
-			Amounts amounts = component.amounts;
+			Amounts amounts = item.gameObject.GetComponent<Modifiers>().amounts;
 			List<MinionAttrFloatData> list2 = new List<MinionAttrFloatData>(amounts.Count);
 			foreach (AmountInstance item2 in amounts)
 			{
@@ -1118,10 +1072,10 @@ public class SaveLoader : KMonoBehaviour
 					});
 				}
 			}
-			MinionResume component2 = item.gameObject.GetComponent<MinionResume>();
-			float totalExperienceGained = component2.TotalExperienceGained;
+			MinionResume component = item.gameObject.GetComponent<MinionResume>();
+			float totalExperienceGained = component.TotalExperienceGained;
 			List<string> list3 = new List<string>();
-			foreach (KeyValuePair<string, bool> item3 in component2.MasteryBySkillID)
+			foreach (KeyValuePair<string, bool> item3 in component.MasteryBySkillID)
 			{
 				if (item3.Value)
 				{

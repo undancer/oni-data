@@ -16,7 +16,7 @@ public class SolidLimitValveConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("SolidLimitValve", 1, 2, "limit_valve_solid_kanim", 30, 10f, new float[2]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("SolidLimitValve", 1, 2, "limit_valve_solid_kanim", 30, 10f, new float[2]
 		{
 			TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER0[0],
 			TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER1[0]
@@ -25,31 +25,31 @@ public class SolidLimitValveConfig : IBuildingConfig
 			"RefinedMetal",
 			"Plastic"
 		}, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER1, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER0);
-		buildingDef.InputConduitType = ConduitType.Solid;
-		buildingDef.OutputConduitType = ConduitType.Solid;
-		buildingDef.Floodable = false;
-		buildingDef.Entombable = false;
-		buildingDef.Overheatable = false;
-		buildingDef.ViewMode = OverlayModes.SolidConveyor.ID;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.AudioSize = "small";
-		buildingDef.BaseTimeUntilRepair = -1f;
-		buildingDef.PermittedRotations = PermittedRotations.R360;
-		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
-		buildingDef.UtilityOutputOffset = new CellOffset(0, 1);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 10f;
-		buildingDef.PowerInputOffset = new CellOffset(0, 1);
-		buildingDef.LogicInputPorts = new List<LogicPorts.Port>
+		obj.InputConduitType = ConduitType.Solid;
+		obj.OutputConduitType = ConduitType.Solid;
+		obj.Floodable = false;
+		obj.Entombable = false;
+		obj.Overheatable = false;
+		obj.ViewMode = OverlayModes.SolidConveyor.ID;
+		obj.AudioCategory = "Metal";
+		obj.AudioSize = "small";
+		obj.BaseTimeUntilRepair = -1f;
+		obj.PermittedRotations = PermittedRotations.R360;
+		obj.UtilityInputOffset = new CellOffset(0, 0);
+		obj.UtilityOutputOffset = new CellOffset(0, 1);
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 10f;
+		obj.PowerInputOffset = new CellOffset(0, 1);
+		obj.LogicInputPorts = new List<LogicPorts.Port>
 		{
 			new LogicPorts.Port(LimitValve.RESET_PORT_ID, new CellOffset(0, 1), STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.LOGIC_PORT_RESET, STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.RESET_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.RESET_PORT_INACTIVE, show_wire_missing_icon: false, LogicPortSpriteType.ResetUpdate, display_custom_name: true)
 		};
-		buildingDef.LogicOutputPorts = new List<LogicPorts.Port>
+		obj.LogicOutputPorts = new List<LogicPorts.Port>
 		{
 			LogicPorts.Port.OutputPort(LimitValve.OUTPUT_PORT_ID, new CellOffset(0, 0), STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.LOGIC_PORT_OUTPUT, STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.OUTPUT_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.OUTPUT_PORT_INACTIVE)
 		};
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.SolidConveyorIDs, "SolidLimitValve");
-		return buildingDef;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -60,8 +60,7 @@ public class SolidLimitValveConfig : IBuildingConfig
 	public override void DoPostConfigureComplete(GameObject go)
 	{
 		go.AddOrGetDef<PoweredActiveTransitionController.Def>();
-		RequireOutputs requireOutputs = go.AddOrGet<RequireOutputs>();
-		requireOutputs.ignoreFullPipe = true;
+		go.AddOrGet<RequireOutputs>().ignoreFullPipe = true;
 		go.AddOrGet<SolidConduitBridge>();
 		LimitValve limitValve = go.AddOrGet<LimitValve>();
 		limitValve.conduitType = ConduitType.Solid;

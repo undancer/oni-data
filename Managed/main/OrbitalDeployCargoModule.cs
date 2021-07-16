@@ -31,7 +31,7 @@ public class OrbitalDeployCargoModule : GameStateMachine<OrbitalDeployCargoModul
 		private Storage storage;
 
 		[Serialize]
-		private bool autoDeploy = false;
+		private bool autoDeploy;
 
 		public bool AutoDeploy
 		{
@@ -64,8 +64,7 @@ public class OrbitalDeployCargoModule : GameStateMachine<OrbitalDeployCargoModul
 			: base(master, def)
 		{
 			storage = GetComponent<Storage>();
-			RocketModule component = GetComponent<RocketModule>();
-			component.AddModuleCondition(ProcessCondition.ProcessConditionType.RocketStorage, new LoadingCompleteCondition(storage));
+			GetComponent<RocketModule>().AddModuleCondition(ProcessCondition.ProcessConditionType.RocketStorage, new LoadingCompleteCondition(storage));
 		}
 
 		public bool NeedsVisualUpdate()
@@ -110,14 +109,13 @@ public class OrbitalDeployCargoModule : GameStateMachine<OrbitalDeployCargoModul
 
 		public void DeployCargoPods()
 		{
-			RocketModuleCluster component = base.master.GetComponent<RocketModuleCluster>();
-			Clustercraft component2 = component.CraftInterface.GetComponent<Clustercraft>();
-			ClusterGridEntity orbitAsteroid = component2.GetOrbitAsteroid();
+			Clustercraft component = base.master.GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>();
+			ClusterGridEntity orbitAsteroid = component.GetOrbitAsteroid();
 			if (orbitAsteroid != null)
 			{
-				WorldContainer component3 = orbitAsteroid.GetComponent<WorldContainer>();
-				int id = component3.id;
-				Vector3 position = new Vector3(component3.minimumBounds.x + 1f, component3.maximumBounds.y, Grid.GetLayerZ(Grid.SceneLayer.Front));
+				WorldContainer component2 = orbitAsteroid.GetComponent<WorldContainer>();
+				_ = component2.id;
+				Vector3 position = new Vector3(component2.minimumBounds.x + 1f, component2.maximumBounds.y, Grid.GetLayerZ(Grid.SceneLayer.Front));
 				while (storage.MassStored() > 0f)
 				{
 					GameObject gameObject = Util.KInstantiate(Assets.GetPrefab("RailGunPayload"), position);
@@ -130,8 +128,7 @@ public class OrbitalDeployCargoModule : GameStateMachine<OrbitalDeployCargoModul
 						}
 					}
 					gameObject.SetActive(value: true);
-					RailGunPayload.StatesInstance sMI = gameObject.GetSMI<RailGunPayload.StatesInstance>();
-					sMI.Land(component2.Location, component3.GetMyWorldLocation());
+					gameObject.GetSMI<RailGunPayload.StatesInstance>().Land(component.Location, component2.GetMyWorldLocation());
 				}
 			}
 			CheckIfLoaded();
@@ -149,8 +146,7 @@ public class OrbitalDeployCargoModule : GameStateMachine<OrbitalDeployCargoModul
 
 		public bool IsValidDropLocation()
 		{
-			Clustercraft component = GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>();
-			return component.GetOrbitAsteroid() != null;
+			return GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>().GetOrbitAsteroid() != null;
 		}
 
 		public void EmptyCargo()
@@ -160,7 +156,11 @@ public class OrbitalDeployCargoModule : GameStateMachine<OrbitalDeployCargoModul
 
 		public bool CanEmptyCargo()
 		{
-			return base.sm.hasCargo.Get(base.smi) && IsValidDropLocation();
+			if (base.sm.hasCargo.Get(base.smi))
+			{
+				return IsValidDropLocation();
+			}
+			return false;
 		}
 	}
 

@@ -10,9 +10,9 @@ public class Butcherable : Workable, ISaveLoadable
 	[MyCmpGet]
 	private Harvestable harvestable;
 
-	private bool readyToButcher = false;
+	private bool readyToButcher;
 
-	private bool butchered = false;
+	private bool butchered;
 
 	public string[] Drops;
 

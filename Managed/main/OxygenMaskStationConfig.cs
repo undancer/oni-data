@@ -24,15 +24,15 @@ public class OxygenMaskStationConfig : IBuildingConfig
 	public override BuildingDef CreateBuildingDef()
 	{
 		string[] rAW_MINERALS = MATERIALS.RAW_MINERALS;
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(construction_mass: BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, construction_materials: rAW_MINERALS, melting_point: 1600f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER0, id: "OxygenMaskStation", width: 2, height: 3, anim: "oxygen_mask_station_kanim", hitpoints: 30, construction_time: 30f, decor: BUILDINGS.DECOR.BONUS.TIER1);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 60f;
-		buildingDef.ExhaustKilowattsWhenActive = 0.5f;
-		buildingDef.SelfHeatKilowattsWhenActive = 1f;
-		buildingDef.PermittedRotations = PermittedRotations.FlipH;
-		buildingDef.PreventIdleTraversalPastBuilding = true;
-		buildingDef.Deprecated = true;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, construction_materials: rAW_MINERALS, melting_point: 1600f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER0, id: "OxygenMaskStation", width: 2, height: 3, anim: "oxygen_mask_station_kanim", hitpoints: 30, construction_time: 30f, decor: BUILDINGS.DECOR.BONUS.TIER1);
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 60f;
+		obj.ExhaustKilowattsWhenActive = 0.5f;
+		obj.SelfHeatKilowattsWhenActive = 1f;
+		obj.PermittedRotations = PermittedRotations.FlipH;
+		obj.PreventIdleTraversalPastBuilding = true;
+		obj.Deprecated = true;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

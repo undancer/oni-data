@@ -56,12 +56,11 @@ public class NuclearWaste : GameStateMachine<NuclearWaste, NuclearWaste.Instance
 			}
 		}, UpdateRate.SIM_4000ms).EventHandler(GameHashes.Absorb, delegate(Instance smi, object otherObject)
 		{
-			Pickupable pickupable = (Pickupable)otherObject;
-			float timeAlive = pickupable.GetSMI<Instance>().timeAlive;
-			float mass = pickupable.GetComponent<PrimaryElement>().Mass;
+			Pickupable obj = (Pickupable)otherObject;
+			float timeAlive = obj.GetSMI<Instance>().timeAlive;
+			float mass = obj.GetComponent<PrimaryElement>().Mass;
 			float mass2 = smi.master.GetComponent<PrimaryElement>().Mass;
-			float num = mass2 - mass;
-			float num2 = (smi.timeAlive = (num * smi.timeAlive + mass * timeAlive) / mass2);
+			float num = (smi.timeAlive = ((mass2 - mass) * smi.timeAlive + mass * timeAlive) / mass2);
 			string animToPlay = smi.GetAnimToPlay();
 			if (smi.GetComponent<KBatchedAnimController>().GetCurrentAnim().name != animToPlay)
 			{

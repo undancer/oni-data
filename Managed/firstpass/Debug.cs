@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class Debug
 {
-	private static bool s_loggingDisabled = false;
+	private static bool s_loggingDisabled;
 
 	public static bool isDebugBuild => UnityEngine.Debug.isDebugBuild;
 
@@ -28,8 +28,7 @@ public static class Debug
 
 	private static void WriteTimeStamped(params object[] objs)
 	{
-		string value = TimeStamp() + DebugUtil.BuildString(objs);
-		Console.WriteLine(value);
+		Console.WriteLine(TimeStamp() + DebugUtil.BuildString(objs));
 	}
 
 	public static void Break()

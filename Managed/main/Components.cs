@@ -97,13 +97,9 @@ public class Components
 			foreach (T item in Items)
 			{
 				bool flag = (item as KMonoBehaviour).GetMyWorldId() == worldId;
-				if (!flag && checkChildWorlds)
+				if (!flag && checkChildWorlds && (item as KMonoBehaviour).GetMyWorld().ParentWorldId == worldId)
 				{
-					WorldContainer myWorld = (item as KMonoBehaviour).GetMyWorld();
-					if (myWorld.ParentWorldId == worldId)
-					{
-						flag = true;
-					}
+					flag = true;
 				}
 				if (flag)
 				{
@@ -259,6 +255,10 @@ public class Components
 	public static Cmps<Reactor> NuclearReactors = new Cmps<Reactor>();
 
 	public static Cmps<BuildingComplete> EntombedBuildings = new Cmps<BuildingComplete>();
+
+	public static Cmps<SpaceArtifact> SpaceArtifacts = new Cmps<SpaceArtifact>();
+
+	public static Cmps<ArtifactAnalysisStationWorkable> ArtifactAnalysisStations = new Cmps<ArtifactAnalysisStationWorkable>();
 
 	public static Cmps<IncubationMonitor.Instance> IncubationMonitors = new Cmps<IncubationMonitor.Instance>();
 

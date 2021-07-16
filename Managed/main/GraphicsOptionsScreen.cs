@@ -96,7 +96,7 @@ internal class GraphicsOptionsScreen : KModalScreen
 
 	private int colorModeId;
 
-	private bool colorModeChanged = false;
+	private bool colorModeChanged;
 
 	private Settings originalSettings;
 
@@ -222,10 +222,10 @@ internal class GraphicsOptionsScreen : KModalScreen
 			}
 			if (num <= 1 || num2 <= 1)
 			{
-				Resolution[] array2 = Screen.resolutions;
-				for (int j = 0; j < array2.Length; j++)
+				array = Screen.resolutions;
+				for (int i = 0; i < array.Length; i++)
 				{
-					Resolution resolution2 = array2[j];
+					Resolution resolution2 = array[i];
 					if (resolution2.width == 1280)
 					{
 						num = resolution2.width;
@@ -236,10 +236,10 @@ internal class GraphicsOptionsScreen : KModalScreen
 			}
 			if (num <= 1 || num2 <= 1)
 			{
-				Resolution[] array3 = Screen.resolutions;
-				for (int k = 0; k < array3.Length; k++)
+				array = Screen.resolutions;
+				for (int i = 0; i < array.Length; i++)
 				{
-					Resolution resolution3 = array3[k];
+					Resolution resolution3 = array[i];
 					if (resolution3.width > 1 && resolution3.height > 1 && resolution3.refreshRate > 0)
 					{
 						num = resolution3.width;
@@ -251,10 +251,10 @@ internal class GraphicsOptionsScreen : KModalScreen
 			if (num <= 1 || num2 <= 1)
 			{
 				string text = "Could not find a suitable resolution for this screen! Reported available resolutions are:";
-				Resolution[] array4 = Screen.resolutions;
-				for (int l = 0; l < array4.Length; l++)
+				array = Screen.resolutions;
+				for (int i = 0; i < array.Length; i++)
 				{
-					Resolution resolution4 = array4[l];
+					Resolution resolution4 = array[i];
 					text += $"\n{resolution4.width}x{resolution4.height} @ {resolution4.refreshRate}hz";
 				}
 				Debug.LogError(text);
@@ -304,10 +304,10 @@ internal class GraphicsOptionsScreen : KModalScreen
 	private void UpdateUIScale(float value)
 	{
 		KCanvasScaler[] canvasScalers = CanvasScalers;
-		foreach (KCanvasScaler kCanvasScaler in canvasScalers)
+		foreach (KCanvasScaler obj in canvasScalers)
 		{
 			float userScale = value / 100f;
-			kCanvasScaler.SetUserScale(userScale);
+			obj.SetUserScale(userScale);
 			KPlayerPrefs.SetFloat(KCanvasScaler.UIScalePrefKey, value);
 		}
 		ScreenResize.Instance.TriggerResize();
@@ -389,13 +389,13 @@ internal class GraphicsOptionsScreen : KModalScreen
 	private int GetResolutionIndex(Resolution resolution)
 	{
 		int num = -1;
-		int num2 = -1;
+		int result = -1;
 		for (int i = 0; i < resolutions.Count; i++)
 		{
 			Resolution resolution2 = resolutions[i];
 			if (resolution2.width == resolution.width && resolution2.height == resolution.height && resolution2.refreshRate == 0)
 			{
-				num2 = i;
+				result = i;
 			}
 			if (resolution2.width == resolution.width && resolution2.height == resolution.height && Math.Abs(resolution2.refreshRate - resolution.refreshRate) <= 1)
 			{
@@ -403,7 +403,11 @@ internal class GraphicsOptionsScreen : KModalScreen
 				break;
 			}
 		}
-		return (num == -1) ? num2 : num;
+		if (num != -1)
+		{
+			return num;
+		}
+		return result;
 	}
 
 	private Settings CaptureSettings()

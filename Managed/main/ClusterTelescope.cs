@@ -23,7 +23,7 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 
 	public new class Instance : GameInstance
 	{
-		private float m_percentClear = 0f;
+		private float m_percentClear;
 
 		[Serialize]
 		private bool m_hasAnalyzeTarget;
@@ -66,8 +66,7 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 
 		public bool HasSkyVisibility()
 		{
-			Building component = GetComponent<Building>();
-			Extents extents = component.GetExtents();
+			Extents extents = GetComponent<Building>().GetExtents();
 			int num = Mathf.Max(0, extents.x - base.def.clearScanCellRadius);
 			int num2 = Mathf.Min(extents.x + base.def.clearScanCellRadius);
 			int y = extents.y + extents.height - 3;
@@ -82,7 +81,6 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 					num6++;
 				}
 			}
-			bool flag = num6 < num3;
 			m_percentClear = (float)num6 / (float)num3;
 			return m_percentClear > 0f;
 		}
@@ -93,7 +91,7 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 		[MySmiReq]
 		private Instance m_telescope;
 
-		private ClusterFogOfWarManager.Instance m_fowManager = null;
+		private ClusterFogOfWarManager.Instance m_fowManager;
 
 		private GameObject telescopeTargetMarker;
 
@@ -138,7 +136,7 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 			{
 				return;
 			}
-			KPrefabID component = worker.GetComponent<KPrefabID>();
+			worker.GetComponent<KPrefabID>();
 			switch (ev)
 			{
 			case WorkableEvent.WorkStarted:
@@ -174,9 +172,8 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 				telescopeTargetMarker.GetComponent<TelescopeTarget>().Init(analyzeTarget);
 				currentTarget = analyzeTarget;
 			}
-			float num = ROCKETRY.CLUSTER_FOW.POINTS_TO_REVEAL / ROCKETRY.CLUSTER_FOW.DEFAULT_CYCLES_PER_REVEAL;
-			float num2 = num / 600f;
-			float points = dt * num2;
+			float num = ROCKETRY.CLUSTER_FOW.POINTS_TO_REVEAL / ROCKETRY.CLUSTER_FOW.DEFAULT_CYCLES_PER_REVEAL / 600f;
+			float points = dt * num;
 			m_fowManager.EarnRevealPointsForLocation(currentTarget, points);
 			return base.OnWorkTick(worker, dt);
 		}
@@ -191,9 +188,7 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 	private static string GetStatusItemString(string src_str, object data)
 	{
 		Instance instance = (Instance)data;
-		string text = src_str;
-		text = text.Replace("{VISIBILITY}", GameUtil.GetFormattedPercent(instance.PercentClear * 100f));
-		return text.Replace("{RADIUS}", instance.def.clearScanCellRadius.ToString());
+		return src_str.Replace("{VISIBILITY}", GameUtil.GetFormattedPercent(instance.PercentClear * 100f)).Replace("{RADIUS}", instance.def.clearScanCellRadius.ToString());
 	}
 
 	public override void InitializeStates(out BaseState default_state)

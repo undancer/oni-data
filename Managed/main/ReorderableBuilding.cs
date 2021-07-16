@@ -11,9 +11,9 @@ public class ReorderableBuilding : KMonoBehaviour
 
 	public string templateBuildingID = "UnconstructedRocketModule";
 
-	private bool cancelShield = false;
+	private bool cancelShield;
 
-	private bool reorderingAnimUnderway = false;
+	private bool reorderingAnimUnderway;
 
 	private KBatchedAnimController animController;
 
@@ -213,8 +213,7 @@ public class ReorderableBuilding : KMonoBehaviour
 		cancelShield = true;
 		List<GameObject> buildings = new List<GameObject>();
 		buildings.Add(base.gameObject);
-		AttachableBuilding component = GetComponent<AttachableBuilding>();
-		AttachableBuilding.GetAttachedAbove(component, ref buildings);
+		AttachableBuilding.GetAttachedAbove(GetComponent<AttachableBuilding>(), ref buildings);
 		if (amount > 0)
 		{
 			buildings.Reverse();
@@ -222,9 +221,7 @@ public class ReorderableBuilding : KMonoBehaviour
 		foreach (GameObject item in buildings)
 		{
 			UnmarkBuilding(item, null);
-			int cell = Grid.PosToCell(item);
-			int cell2 = Grid.OffsetCell(cell, 0, amount);
-			item.transform.SetPosition(Grid.CellToPos(cell2, CellAlignment.Bottom, Grid.SceneLayer.BuildingFront));
+			TransformExtensions.SetPosition(position: Grid.CellToPos(Grid.OffsetCell(Grid.PosToCell(item), 0, amount), CellAlignment.Bottom, Grid.SceneLayer.BuildingFront), transform: item.transform);
 			MarkBuilding(item, null);
 			item.GetComponent<ReorderableBuilding>().ApplyAnimOffset(-amount);
 		}
@@ -336,11 +333,9 @@ public class ReorderableBuilding : KMonoBehaviour
 			}
 		}
 		CellOffset[] occupiedOffsets = GetOccupiedOffsets();
-		CellOffset[] array = occupiedOffsets;
-		foreach (CellOffset offset in array)
+		foreach (CellOffset offset in occupiedOffsets)
 		{
-			int checkCell = Grid.OffsetCell(Grid.OffsetCell(Grid.PosToCell(base.gameObject), offset), 0, moveAmount);
-			if (!CheckCellClear(checkCell, base.gameObject))
+			if (!CheckCellClear(Grid.OffsetCell(Grid.OffsetCell(Grid.PosToCell(base.gameObject), offset), 0, moveAmount), base.gameObject))
 			{
 				return false;
 			}
@@ -365,14 +360,14 @@ public class ReorderableBuilding : KMonoBehaviour
 	{
 		int cell = Grid.PosToCell(base.gameObject);
 		int num = toModule.HeightInCells - GetComponent<Building>().Def.HeightInCells;
-		Building component = base.gameObject.GetComponent<Building>();
-		BuildingAttachPoint component2 = base.gameObject.GetComponent<BuildingAttachPoint>();
+		base.gameObject.GetComponent<Building>();
+		BuildingAttachPoint component = base.gameObject.GetComponent<BuildingAttachPoint>();
 		GameObject gameObject = null;
-		if (component2 != null && component2.points[0].attachedBuilding != null)
+		if (component != null && component.points[0].attachedBuilding != null)
 		{
-			gameObject = component2.points[0].attachedBuilding.gameObject;
-			component2.points[0].attachedBuilding = null;
-			Components.BuildingAttachPoints.Remove(component2);
+			gameObject = component.points[0].attachedBuilding.gameObject;
+			component.points[0].attachedBuilding = null;
+			Components.BuildingAttachPoints.Remove(component);
 		}
 		UnmarkBuilding(base.gameObject, null);
 		if (materials == null)
@@ -395,11 +390,11 @@ public class ReorderableBuilding : KMonoBehaviour
 		}
 		GameObject gameObject2 = null;
 		gameObject2 = ((!DebugHandler.InstantBuildMode && (!Game.Instance.SandboxModeActive || !SandboxToolParameterMenu.instance.settings.InstantBuild)) ? toModule.TryPlace(base.gameObject, Grid.CellToPosCBC(cell, toModule.SceneLayer), Orientation.Neutral, materials) : toModule.Build(cell, Orientation.Neutral, null, materials, 273.15f, playsound: true, GameClock.Instance.GetTime()));
-		RocketModuleCluster component3 = GetComponent<RocketModuleCluster>();
-		RocketModuleCluster component4 = gameObject2.GetComponent<RocketModuleCluster>();
-		if (component3 != null && component4 != null)
+		RocketModuleCluster component2 = GetComponent<RocketModuleCluster>();
+		RocketModuleCluster component3 = gameObject2.GetComponent<RocketModuleCluster>();
+		if (component2 != null && component3 != null)
 		{
-			component3.CraftInterface.AddModule(component4);
+			component2.CraftInterface.AddModule(component3);
 		}
 		Util.KDestroyGameObject(base.gameObject);
 		return gameObject2;
@@ -434,7 +429,11 @@ public class ReorderableBuilding : KMonoBehaviour
 				return false;
 			}
 		}
-		return text != templateBuildingID && text != Assets.GetBuildingDef(templateBuildingID).BuildingUnderConstruction.PrefabID();
+		if (text != templateBuildingID)
+		{
+			return text != Assets.GetBuildingDef(templateBuildingID).BuildingUnderConstruction.PrefabID();
+		}
+		return false;
 	}
 
 	public bool CanRemoveModule()
@@ -449,8 +448,7 @@ public class ReorderableBuilding : KMonoBehaviour
 		{
 			return false;
 		}
-		AttachableBuilding component2 = GetComponent<AttachableBuilding>();
-		if (component2 == null || GetComponent<RocketEngineCluster>() != null)
+		if (GetComponent<AttachableBuilding>() == null || GetComponent<RocketEngineCluster>() != null)
 		{
 			return false;
 		}

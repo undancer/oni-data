@@ -15,18 +15,18 @@ public class JuicerConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("Juicer", 3, 4, "juicer_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER1);
-		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
-		buildingDef.Floodable = true;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.Overheatable = true;
-		buildingDef.InputConduitType = ConduitType.Liquid;
-		buildingDef.UtilityInputOffset = new CellOffset(1, 1);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.PowerInputOffset = new CellOffset(1, 0);
-		buildingDef.EnergyConsumptionWhenActive = 120f;
-		buildingDef.SelfHeatKilowattsWhenActive = 0.5f;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("Juicer", 3, 4, "juicer_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER1);
+		obj.ViewMode = OverlayModes.LiquidConduits.ID;
+		obj.Floodable = true;
+		obj.AudioCategory = "Metal";
+		obj.Overheatable = true;
+		obj.InputConduitType = ConduitType.Liquid;
+		obj.UtilityInputOffset = new CellOffset(1, 1);
+		obj.RequiresPowerInput = true;
+		obj.PowerInputOffset = new CellOffset(1, 0);
+		obj.EnergyConsumptionWhenActive = 120f;
+		obj.SelfHeatKilowattsWhenActive = 0.5f;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -60,8 +60,7 @@ public class JuicerConfig : IBuildingConfig
 		manualDeliveryKG3.refillMass = 5f;
 		manualDeliveryKG3.minimumMass = 1f;
 		manualDeliveryKG3.choreTypeIDHash = Db.Get().ChoreTypes.MachineFetch.IdHash;
-		JuicerWorkable juicerWorkable = go.AddOrGet<JuicerWorkable>();
-		juicerWorkable.basePriority = RELAXATION.PRIORITY.TIER5;
+		go.AddOrGet<JuicerWorkable>().basePriority = RELAXATION.PRIORITY.TIER5;
 		EdiblesManager.FoodInfo foodInfo = EdiblesManager.GetFoodInfo(MushroomConfig.ID);
 		EdiblesManager.FoodInfo foodInfo2 = EdiblesManager.GetFoodInfo(PrickleFruitConfig.ID);
 		EdiblesManager.FoodInfo foodInfo3 = EdiblesManager.GetFoodInfo("BasicPlantFood");

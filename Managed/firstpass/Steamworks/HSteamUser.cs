@@ -19,7 +19,11 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			return other is HSteamUser && this == (HSteamUser)other;
+			if (other is HSteamUser)
+			{
+				return this == (HSteamUser)other;
+			}
+			return false;
 		}
 
 		public override int GetHashCode()

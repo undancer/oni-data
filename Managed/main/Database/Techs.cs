@@ -809,8 +809,7 @@ namespace Database
 			list.Sort((TechTreeTitle a, TechTreeTitle b) => a.center.y.CompareTo(b.center.y));
 			foreach (ResourceTreeNode item in resourceTreeLoader)
 			{
-				string a2 = item.Id.Substring(0, 1);
-				if (string.Equals(a2, "_"))
+				if (string.Equals(item.Id.Substring(0, 1), "_"))
 				{
 					continue;
 				}
@@ -847,8 +846,7 @@ namespace Database
 			foreach (Tech resource in resources)
 			{
 				resource.tier = GetTier(resource);
-				List<Tuple<string, float>> list2 = TECH_TIERS[resource.tier];
-				foreach (Tuple<string, float> item2 in list2)
+				foreach (Tuple<string, float> item2 in TECH_TIERS[resource.tier])
 				{
 					if (!resource.costsByResearchTypeID.ContainsKey(item2.first))
 					{

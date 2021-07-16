@@ -19,9 +19,9 @@ public class EmoteReactable : Reactable
 
 	private KBatchedAnimController kbac;
 
-	public Expression expression = null;
+	public Expression expression;
 
-	public Thought thought = null;
+	public Thought thought;
 
 	private KAnimFile animset;
 
@@ -29,7 +29,7 @@ public class EmoteReactable : Reactable
 
 	private int currentStep = -1;
 
-	private float elapsed = 0f;
+	private float elapsed;
 
 	public EmoteReactable(GameObject gameObject, HashedString id, ChoreType chore_type, HashedString animset, int range_width = 15, int range_height = 8, float min_reactable_time = 0f, float min_reactor_time = 20f, float max_trigger_time = float.PositiveInfinity)
 		: base(gameObject, id, chore_type, range_width, range_height, follow_transform: true, min_reactable_time, min_reactor_time, max_trigger_time)

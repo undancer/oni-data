@@ -6,11 +6,17 @@ public class MySmi : MyAttributeManager<StateMachine.Instance>
 {
 	public static void Init()
 	{
-		Dictionary<Type, MethodInfo> dictionary = new Dictionary<Type, MethodInfo>();
-		dictionary.Add(typeof(MySmiGet), typeof(MySmi).GetMethod("FindSmi"));
-		dictionary.Add(typeof(MySmiReq), typeof(MySmi).GetMethod("RequireSmi"));
-		Dictionary<Type, MethodInfo> attributeMap = dictionary;
-		MyAttributes.Register(new MySmi(attributeMap));
+		MyAttributes.Register(new MySmi(new Dictionary<Type, MethodInfo>
+		{
+			{
+				typeof(MySmiGet),
+				typeof(MySmi).GetMethod("FindSmi")
+			},
+			{
+				typeof(MySmiReq),
+				typeof(MySmi).GetMethod("RequireSmi")
+			}
+		}));
 	}
 
 	public MySmi(Dictionary<Type, MethodInfo> attributeMap)

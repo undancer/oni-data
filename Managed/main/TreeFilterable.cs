@@ -86,11 +86,10 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 		}
 		foreach (Tag item2 in DiscoveredResources.Instance.GetDiscoveredResourcesFromTag(category_tag))
 		{
-			if (item2 == tag || acceptedTags.Contains(item2))
+			if (!(item2 == tag) && !acceptedTags.Contains(item2))
 			{
-				continue;
+				return;
 			}
-			return;
 		}
 		AddTagToFilter(tag);
 	}
@@ -155,8 +154,7 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		TreeFilterable component = gameObject.GetComponent<TreeFilterable>();
+		TreeFilterable component = ((GameObject)data).GetComponent<TreeFilterable>();
 		if (component != null)
 		{
 			UpdateFilters(component.GetTags());
@@ -262,8 +260,7 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 	private void RefreshTint()
 	{
 		bool flag = acceptedTags != null && acceptedTags.Count != 0;
-		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
-		component.TintColour = (flag ? filterTint : noFilterTint);
+		GetComponent<KBatchedAnimController>().TintColour = (flag ? filterTint : noFilterTint);
 		GetComponent<KSelectable>().ToggleStatusItem(Db.Get().BuildingStatusItems.NoStorageFilterSet, !flag, this);
 	}
 }

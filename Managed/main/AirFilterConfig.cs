@@ -18,16 +18,16 @@ public class AirFilterConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("AirFilter", 1, 1, "co2filter_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER0, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.Overheatable = false;
-		buildingDef.ViewMode = OverlayModes.Oxygen.ID;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.PowerInputOffset = new CellOffset(0, 0);
-		buildingDef.EnergyConsumptionWhenActive = 5f;
-		buildingDef.ExhaustKilowattsWhenActive = 0.125f;
-		buildingDef.SelfHeatKilowattsWhenActive = 0.5f;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("AirFilter", 1, 1, "co2filter_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER0, decor: BUILDINGS.DECOR.NONE);
+		obj.Overheatable = false;
+		obj.ViewMode = OverlayModes.Oxygen.ID;
+		obj.AudioCategory = "Metal";
+		obj.RequiresPowerInput = true;
+		obj.PowerInputOffset = new CellOffset(0, 0);
+		obj.EnergyConsumptionWhenActive = 5f;
+		obj.ExhaustKilowattsWhenActive = 0.125f;
+		obj.SelfHeatKilowattsWhenActive = 0.5f;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -70,8 +70,7 @@ public class AirFilterConfig : IBuildingConfig
 		manualDeliveryKG.capacity = 320.00003f;
 		manualDeliveryKG.refillMass = 32.000004f;
 		manualDeliveryKG.choreTypeIDHash = Db.Get().ChoreTypes.FetchCritical.IdHash;
-		AirFilter airFilter = go.AddOrGet<AirFilter>();
-		airFilter.filterTag = new Tag("Filter");
+		go.AddOrGet<AirFilter>().filterTag = new Tag("Filter");
 		go.AddOrGet<KBatchedAnimController>().randomiseLoopedOffset = true;
 	}
 

@@ -30,10 +30,8 @@ public class MinionSelectPreviewConfig : IEntityConfig
 		MinionConfig.AddMinionAmounts(minionModifiers);
 		gameObject.AddOrGet<AttributeLevels>();
 		gameObject.AddOrGet<AttributeConverters>();
-		MinionIdentity minionIdentity = gameObject.AddOrGet<MinionIdentity>();
-		minionIdentity.addToIdentityList = false;
-		BoxCollider2D boxCollider2D = gameObject.AddOrGet<BoxCollider2D>();
-		boxCollider2D.size = new Vector2(1f, 1f);
+		gameObject.AddOrGet<MinionIdentity>().addToIdentityList = false;
+		gameObject.AddOrGet<BoxCollider2D>().size = new Vector2(1f, 1f);
 		gameObject.AddOrGet<FaceGraph>();
 		gameObject.AddOrGet<Accessorizer>();
 		KBatchedAnimController kBatchedAnimController = gameObject.AddOrGet<KBatchedAnimController>();

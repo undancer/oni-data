@@ -38,10 +38,11 @@ namespace Klei.AI
 
 			public override GameplayEventPopupData GenerateEventPopupData(StatesInstance smi)
 			{
-				GameplayEventPopupData gameplayEventPopupData = new GameplayEventPopupData(smi.gameplayEvent);
-				gameplayEventPopupData.location = GAMEPLAY_EVENTS.LOCATIONS.SUN;
-				gameplayEventPopupData.whenDescription = GAMEPLAY_EVENTS.TIMES.NOW;
-				return gameplayEventPopupData;
+				return new GameplayEventPopupData(smi.gameplayEvent)
+				{
+					location = GAMEPLAY_EVENTS.LOCATIONS.SUN,
+					whenDescription = GAMEPLAY_EVENTS.TIMES.NOW
+				};
 			}
 		}
 

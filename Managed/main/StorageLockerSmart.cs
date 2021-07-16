@@ -1,6 +1,3 @@
-#define DEBUG
-using System.Diagnostics;
-
 public class StorageLockerSmart : StorageLocker
 {
 	[MyCmpGet]
@@ -48,12 +45,11 @@ public class StorageLockerSmart : StorageLocker
 
 	private void UpdateLogicAndActiveState()
 	{
-		System.Diagnostics.Debug.WriteLine("UpdateLogicAndActiveState");
-		bool flag = filteredStorage.IsFull();
+		bool num = filteredStorage.IsFull();
 		bool isOperational = operational.IsOperational;
-		bool flag2 = flag && isOperational;
-		ports.SendSignal(FilteredStorage.FULL_PORT_ID, flag2 ? 1 : 0);
-		filteredStorage.SetLogicMeter(flag2);
+		bool flag = num && isOperational;
+		ports.SendSignal(FilteredStorage.FULL_PORT_ID, flag ? 1 : 0);
+		filteredStorage.SetLogicMeter(flag);
 		operational.SetActive(isOperational);
 	}
 }

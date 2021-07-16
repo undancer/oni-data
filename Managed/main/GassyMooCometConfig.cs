@@ -44,8 +44,7 @@ public class GassyMooCometConfig : IEntityConfig
 		kBatchedAnimController.initialAnim = "fall_loop";
 		kBatchedAnimController.initialMode = KAnim.PlayMode.Loop;
 		kBatchedAnimController.visibilityType = KAnimControllerBase.VisibilityType.OffscreenUpdate;
-		KCircleCollider2D kCircleCollider2D = gameObject.AddOrGet<KCircleCollider2D>();
-		kCircleCollider2D.radius = 0.5f;
+		gameObject.AddOrGet<KCircleCollider2D>().radius = 0.5f;
 		gameObject.AddTag(GameTags.Comet);
 		return gameObject;
 	}

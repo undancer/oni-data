@@ -39,7 +39,7 @@ public class VideoScreen : KModalScreen
 
 	private EventInstance audioHandle;
 
-	private bool victoryLoopQueued = false;
+	private bool victoryLoopQueued;
 
 	private string victoryLoopMessage = "";
 
@@ -134,6 +134,7 @@ public class VideoScreen : KModalScreen
 
 	public void PlayVideo(VideoClip clip, bool unskippable = false, string overrideAudioSnapshot = "", bool showProceedButton = false)
 	{
+		Debug.Assert(clip != null);
 		for (int i = 0; i < overlayContainer.childCount; i++)
 		{
 			UnityEngine.Object.Destroy(overlayContainer.GetChild(i).gameObject);
@@ -185,8 +186,7 @@ public class VideoScreen : KModalScreen
 			}
 		}
 		DebugUtil.Assert(videoOverlay != null, "Could not find a template named ", overlayTemplate);
-		VideoOverlay videoOverlay2 = Util.KInstantiateUI<VideoOverlay>(videoOverlay.gameObject, overlayContainer.gameObject, force_active: true);
-		videoOverlay2.SetText(strings);
+		Util.KInstantiateUI<VideoOverlay>(videoOverlay.gameObject, overlayContainer.gameObject, force_active: true).SetText(strings);
 		overlayContainer.gameObject.SetActive(value: true);
 	}
 
@@ -213,9 +213,9 @@ public class VideoScreen : KModalScreen
 		videoPlayer.Play();
 		proceedButton.gameObject.SetActive(value: true);
 		yield return new WaitForSecondsRealtime(1f);
-		for (float i = 1f; i >= 0f; i -= Time.unscaledDeltaTime)
+		for (float j = 1f; j >= 0f; j -= Time.unscaledDeltaTime)
 		{
-			fadeOverlay.color = new Color(color.r, color.g, color.b, i);
+			fadeOverlay.color = new Color(color.r, color.g, color.b, j);
 			yield return 0;
 		}
 		fadeOverlay.color = new Color(color.r, color.g, color.b, 0f);

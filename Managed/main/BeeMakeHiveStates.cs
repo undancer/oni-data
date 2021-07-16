@@ -26,8 +26,7 @@ public class BeeMakeHiveStates : GameStateMachine<BeeMakeHiveStates, BeeMakeHive
 			component.ElementID = SimHashes.Creature;
 			component.Temperature = base.gameObject.GetComponent<PrimaryElement>().Temperature;
 			gameObject.SetActive(value: true);
-			BeeHive.StatesInstance sMI = gameObject.GetSMI<BeeHive.StatesInstance>();
-			sMI.SetUpNewHive();
+			gameObject.GetSMI<BeeHive.StatesInstance>().SetUpNewHive();
 		}
 	}
 
@@ -58,9 +57,7 @@ public class BeeMakeHiveStates : GameStateMachine<BeeMakeHiveStates, BeeMakeHive
 		moveToBuildLocation.MoveTo((Instance smi) => smi.targetBuildCell, doBuild, behaviourcomplete);
 		doBuild.PlayAnim("hive_grow_pre").EventHandler(GameHashes.AnimQueueComplete, delegate(Instance smi)
 		{
-			Bee component = smi.gameObject.GetComponent<Bee>();
-			KPrefabID x = component.FindHiveInRoom();
-			if (x == null)
+			if (smi.gameObject.GetComponent<Bee>().FindHiveInRoom() == null)
 			{
 				smi.builtHome = true;
 				smi.BuildHome();
@@ -81,8 +78,7 @@ public class BeeMakeHiveStates : GameStateMachine<BeeMakeHiveStates, BeeMakeHive
 		smi.targetBuildCell = Grid.InvalidCell;
 		GameObject prefab = Assets.GetPrefab("BeeHive".ToTag());
 		BuildingPlacementQuery buildingPlacementQuery = PathFinderQueries.buildingPlacementQuery.Reset(1, prefab);
-		Navigator component = smi.GetComponent<Navigator>();
-		component.RunQuery(buildingPlacementQuery);
+		smi.GetComponent<Navigator>().RunQuery(buildingPlacementQuery);
 		if (buildingPlacementQuery.result_cells.Count > 0)
 		{
 			smi.targetBuildCell = buildingPlacementQuery.result_cells[Random.Range(0, buildingPlacementQuery.result_cells.Count)];

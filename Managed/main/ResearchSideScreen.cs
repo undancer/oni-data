@@ -70,7 +70,11 @@ public class ResearchSideScreen : SideScreenContent
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		return target.GetComponent<ResearchCenter>() != null || target.GetComponent<NuclearResearchCenter>() != null;
+		if (!(target.GetComponent<ResearchCenter>() != null))
+		{
+			return target.GetComponent<NuclearResearchCenter>() != null;
+		}
+		return true;
 	}
 
 	private void RefreshDisplayState(object data = null)

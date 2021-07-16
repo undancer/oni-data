@@ -128,7 +128,11 @@ namespace Delaunay
 
 		public Vertex Vertex(Side leftRight)
 		{
-			return (leftRight == Side.LEFT) ? _leftVertex : _rightVertex;
+			if (leftRight != 0)
+			{
+				return _rightVertex;
+			}
+			return _leftVertex;
 		}
 
 		public void SetVertex(Side leftRight, Vertex v)
@@ -145,7 +149,11 @@ namespace Delaunay
 
 		public bool IsPartOfConvexHull()
 		{
-			return _leftVertex == null || _rightVertex == null;
+			if (_leftVertex != null)
+			{
+				return _rightVertex == null;
+			}
+			return true;
 		}
 
 		public float SitesDistance()
@@ -342,8 +350,8 @@ namespace Delaunay
 		public void ClipVertices(Polygon bounds)
 		{
 			LineSegment lineSegment = new LineSegment(null, null);
-			bool flag = (double)a == 1.0 && (double)b >= 0.0;
-			if (flag)
+			bool num = (double)a == 1.0 && (double)b >= 0.0;
+			if (num)
 			{
 				lineSegment.p0 = _rightVertex.Coord;
 				lineSegment.p1 = _leftVertex.Coord;
@@ -356,7 +364,7 @@ namespace Delaunay
 			LineSegment intersectingSegment = new LineSegment(null, null);
 			bounds.ClipSegment(lineSegment, ref intersectingSegment);
 			_clippedVertices = new Dictionary<Side, Vector2?>();
-			if (!flag)
+			if (!num)
 			{
 				_clippedVertices[Side.LEFT] = intersectingSegment.p0;
 				_clippedVertices[Side.RIGHT] = intersectingSegment.p1;

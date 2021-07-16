@@ -25,17 +25,19 @@ public class Repairable : Workable
 		{
 			PrimaryElement component = GetComponent<PrimaryElement>();
 			float num = component.Mass * 0.1f;
-			Storage storageProxy = base.smi.master.storageProxy;
-			PrimaryElement primaryElement = storageProxy.FindPrimaryElement(component.ElementID);
-			return primaryElement != null && primaryElement.Mass >= num;
+			PrimaryElement primaryElement = base.smi.master.storageProxy.FindPrimaryElement(component.ElementID);
+			if (primaryElement != null)
+			{
+				return primaryElement.Mass >= num;
+			}
+			return false;
 		}
 
 		public KeyValuePair<Tag, float> GetRequiredMass()
 		{
 			PrimaryElement component = GetComponent<PrimaryElement>();
 			float num = component.Mass * 0.1f;
-			Storage storageProxy = base.smi.master.storageProxy;
-			PrimaryElement primaryElement = storageProxy.FindPrimaryElement(component.ElementID);
+			PrimaryElement primaryElement = base.smi.master.storageProxy.FindPrimaryElement(component.ElementID);
 			float value = ((primaryElement != null) ? Math.Max(0f, num - primaryElement.Mass) : num);
 			return new KeyValuePair<Tag, float>(component.Element.tag, value);
 		}
@@ -121,8 +123,7 @@ public class Repairable : Workable
 		private Chore CreateFetchChore(SMInstance smi)
 		{
 			PrimaryElement component = smi.master.GetComponent<PrimaryElement>();
-			Storage storageProxy = smi.master.storageProxy;
-			PrimaryElement primaryElement = storageProxy.FindPrimaryElement(component.ElementID);
+			PrimaryElement primaryElement = smi.master.storageProxy.FindPrimaryElement(component.ElementID);
 			float amount = component.Mass * 0.1f - ((primaryElement != null) ? primaryElement.Mass : 0f);
 			Tag[] tags = new Tag[1]
 			{
@@ -159,8 +160,7 @@ public class Repairable : Workable
 					bool result = true;
 					if (data != null)
 					{
-						Breakable breakable = (Breakable)data;
-						result = breakable.worker == null;
+						result = ((Breakable)data).worker == null;
 					}
 					return result;
 				}
@@ -193,7 +193,7 @@ public class Repairable : Workable
 	[Serialize]
 	private byte[] storedData;
 
-	private float timeSpentRepairing = 0f;
+	private float timeSpentRepairing;
 
 	private static readonly Operational.Flag repairedFlag = new Operational.Flag("repaired", Operational.Flag.Type.Functional);
 
@@ -252,8 +252,7 @@ public class Repairable : Workable
 	{
 		if (base.gameObject != null && smi != null)
 		{
-			StateMachine.BaseState currentState = smi.GetCurrentState();
-			if (currentState == smi.sm.forbidden)
+			if (smi.GetCurrentState() == smi.sm.forbidden)
 			{
 				Game.Instance.userMenu.AddButton(base.gameObject, new KIconButtonMenu.ButtonInfo("action_repair", STRINGS.BUILDINGS.REPAIRABLE.ENABLE_AUTOREPAIR.NAME, AllowRepair, Action.NumActions, null, null, null, STRINGS.BUILDINGS.REPAIRABLE.ENABLE_AUTOREPAIR.TOOLTIP), 0.5f);
 			}
@@ -297,21 +296,17 @@ public class Repairable : Workable
 
 	protected override bool OnWorkTick(Worker worker, float dt)
 	{
-		PrimaryElement component = GetComponent<PrimaryElement>();
-		float num = Mathf.Sqrt(component.Mass);
-		float num2 = ((expectedRepairTime < 0f) ? num : expectedRepairTime);
-		float num3 = num2 * 0.1f;
-		if (timeSpentRepairing >= num3)
+		float num = Mathf.Sqrt(GetComponent<PrimaryElement>().Mass);
+		float num2 = ((expectedRepairTime < 0f) ? num : expectedRepairTime) * 0.1f;
+		if (timeSpentRepairing >= num2)
 		{
-			timeSpentRepairing -= num3;
-			int num4 = 0;
+			timeSpentRepairing -= num2;
+			int num3 = 0;
 			if (worker != null)
 			{
-				AttributeInstance attributeInstance = Db.Get().Attributes.Machinery.Lookup(worker);
-				num4 = (int)attributeInstance.GetTotalValue();
+				num3 = (int)Db.Get().Attributes.Machinery.Lookup(worker).GetTotalValue();
 			}
-			int num5 = 10 + Math.Max(0, num4 * 10);
-			int repair_amount = Mathf.CeilToInt((float)num5 * 0.1f);
+			int repair_amount = Mathf.CeilToInt((float)(10 + Math.Max(0, num3 * 10)) * 0.1f);
 			hp.Repair(repair_amount);
 			if (hp.HitPoints >= hp.MaxHitPoints)
 			{

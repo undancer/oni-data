@@ -22,8 +22,9 @@ public class ScenePartitionerEntry
 
 	public ScenePartitionerEntry(string name, object obj, int x, int y, int width, int height, ScenePartitionerLayer layer, ScenePartitioner partitioner, Action<object> event_callback)
 	{
-		if (x < 0 || y < 0 || width < 0 || height < 0)
+		if (x >= 0 && y >= 0 && width >= 0)
 		{
+			_ = 0;
 		}
 		this.x = x;
 		this.y = y;

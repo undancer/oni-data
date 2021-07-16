@@ -17,8 +17,7 @@ public class ConsumableInfoTableColumn : CheckboxTableColumn
 	public override GameObject GetHeaderWidget(GameObject parent)
 	{
 		GameObject headerWidget = base.GetHeaderWidget(parent);
-		LocText componentInChildren = headerWidget.GetComponentInChildren<LocText>();
-		if (componentInChildren != null)
+		if (headerWidget.GetComponentInChildren<LocText>() != null)
 		{
 			headerWidget.GetComponentInChildren<LocText>().text = get_header_label(headerWidget);
 		}

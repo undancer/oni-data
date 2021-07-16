@@ -29,8 +29,7 @@ public class BaseStaterpillarConfig
 		{
 			gameObject.AddOrGetDef<ProducePowerMonitor.Def>();
 		}
-		ThreatMonitor.Def def = gameObject.AddOrGetDef<ThreatMonitor.Def>();
-		def.fleethresholdState = Health.HealthState.Dead;
+		gameObject.AddOrGetDef<ThreatMonitor.Def>().fleethresholdState = Health.HealthState.Dead;
 		gameObject.AddWeapon(1f, 1f);
 		EntityTemplates.CreateAndRegisterBaggedCreature(gameObject, must_stand_on_top_for_pickup: true, allow_mark_for_capture: true);
 		gameObject.AddOrGetDef<RanchableMonitor.Def>();
@@ -64,15 +63,9 @@ public class BaseStaterpillarConfig
 
 	public static GameObject SetupDiet(GameObject prefab, HashSet<Tag> consumed_tags, Tag producedTag, float caloriesPerKg)
 	{
-		Diet.Info[] infos = new Diet.Info[1]
-		{
-			new Diet.Info(consumed_tags, producedTag, caloriesPerKg, StaterpillarTuning.POOP_CONVERSTION_RATE)
-		};
-		Diet diet = new Diet(infos);
-		CreatureCalorieMonitor.Def def = prefab.AddOrGetDef<CreatureCalorieMonitor.Def>();
-		def.diet = diet;
-		SolidConsumerMonitor.Def def2 = prefab.AddOrGetDef<SolidConsumerMonitor.Def>();
-		def2.diet = diet;
+		Diet diet = new Diet(new Diet.Info(consumed_tags, producedTag, caloriesPerKg, StaterpillarTuning.POOP_CONVERSTION_RATE));
+		prefab.AddOrGetDef<CreatureCalorieMonitor.Def>().diet = diet;
+		prefab.AddOrGetDef<SolidConsumerMonitor.Def>().diet = diet;
 		return prefab;
 	}
 

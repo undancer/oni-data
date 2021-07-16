@@ -40,7 +40,12 @@ public class ClusterGridWorldSideScreen : SideScreenContent
 
 	private void OnClickView()
 	{
-		ClusterManager.Instance.SetActiveWorld(targetEntity.GetComponent<WorldContainer>().id);
+		WorldContainer component = targetEntity.GetComponent<WorldContainer>();
+		if (!component.IsDupeVisited)
+		{
+			component.LookAtSurface();
+		}
+		ClusterManager.Instance.SetActiveWorld(component.id);
 		ManagementMenu.Instance.CloseAll();
 	}
 }

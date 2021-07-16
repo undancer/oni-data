@@ -12,7 +12,7 @@ public static class Util
 {
 	private static HashSet<char> defaultInvalidUserInputChars = new HashSet<char>(Path.GetInvalidPathChars());
 
-	private static HashSet<char> additionalInvalidUserInputChars = new HashSet<char>(new char[9]
+	private static HashSet<char> additionalInvalidUserInputChars = new HashSet<char>(new char[10]
 	{
 		'<',
 		'>',
@@ -22,7 +22,8 @@ public static class Util
 		'?',
 		'*',
 		'\\',
-		'!'
+		'!',
+		'.'
 	});
 
 	private static System.Random random = new System.Random();
@@ -196,9 +197,9 @@ public static class Util
 	{
 		KMonoBehaviour.isPoolPreInit = true;
 		KMonoBehaviour[] components = go.GetComponents<KMonoBehaviour>();
-		foreach (KMonoBehaviour kMonoBehaviour in components)
+		for (int i = 0; i < components.Length; i++)
 		{
-			kMonoBehaviour.InitializeComponent();
+			components[i].InitializeComponent();
 		}
 		KMonoBehaviour.isPoolPreInit = false;
 	}
@@ -276,8 +277,7 @@ public static class Util
 
 	public static T KInstantiateUI<T>(GameObject original, GameObject parent = null, bool force_active = false) where T : Component
 	{
-		GameObject gameObject = KInstantiateUI(original, parent, force_active);
-		return gameObject.GetComponent<T>();
+		return KInstantiateUI(original, parent, force_active).GetComponent<T>();
 	}
 
 	public static GameObject KInstantiateUI(GameObject original, GameObject parent = null, bool force_active = false)
@@ -388,8 +388,7 @@ public static class Util
 		double num = random.NextDouble();
 		double num2 = random.NextDouble();
 		double num3 = Mathf.Sqrt(-2f * Mathf.Log((float)num)) * Mathf.Sin((float)Math.PI * 2f * (float)num2);
-		double num4 = (double)mu + (double)sigma * num3;
-		return (float)num4;
+		return (float)((double)mu + (double)sigma * num3);
 	}
 
 	public static void Shuffle<T>(this IList<T> list)
@@ -426,8 +425,7 @@ public static class Util
 		}
 		for (int i = 0; i < go.transform.childCount; i++)
 		{
-			Transform child = go.transform.GetChild(i);
-			GetBounds(child.gameObject, ref bounds, ref first);
+			GetBounds(go.transform.GetChild(i).gameObject, ref bounds, ref first);
 		}
 	}
 
@@ -554,8 +552,7 @@ public static class Util
 	{
 		if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
 		{
-			string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-			return Path.Combine(folderPath, "Klei");
+			return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Klei");
 		}
 		return defaultRootFolder;
 	}
@@ -647,7 +644,11 @@ public static class Util
 
 	public static bool IsNullOrWhiteSpace(this string str)
 	{
-		return string.IsNullOrEmpty(str) || str == " ";
+		if (!string.IsNullOrEmpty(str))
+		{
+			return str == " ";
+		}
+		return true;
 	}
 
 	public static void ApplyInvariantCultureToThread(Thread thread)

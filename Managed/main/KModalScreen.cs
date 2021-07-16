@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class KModalScreen : KScreen
 {
-	private bool shown = false;
+	private bool shown;
 
 	public bool pause = true;
 
@@ -21,8 +21,7 @@ public class KModalScreen : KScreen
 		screen.ConsumeMouseScroll = true;
 		screen.activateOnSpawn = true;
 		GameObject gameObject = new GameObject("background");
-		LayoutElement layoutElement = gameObject.AddComponent<LayoutElement>();
-		layoutElement.ignoreLayout = true;
+		gameObject.AddComponent<LayoutElement>().ignoreLayout = true;
 		gameObject.AddComponent<CanvasRenderer>();
 		Image image = gameObject.AddComponent<Image>();
 		image.color = new Color32(0, 0, 0, 160);

@@ -7,12 +7,21 @@ public class MyCmp : MyAttributeManager<Component>
 {
 	public static void Init()
 	{
-		Dictionary<Type, MethodInfo> dictionary = new Dictionary<Type, MethodInfo>();
-		dictionary.Add(typeof(MyCmpAdd), typeof(MyCmp).GetMethod("FindOrAddComponent"));
-		dictionary.Add(typeof(MyCmpGet), typeof(MyCmp).GetMethod("FindComponent"));
-		dictionary.Add(typeof(MyCmpReq), typeof(MyCmp).GetMethod("RequireComponent"));
-		Dictionary<Type, MethodInfo> attributeMap = dictionary;
-		MyAttributes.Register(new MyCmp(attributeMap, Util.SpawnComponent));
+		MyAttributes.Register(new MyCmp(new Dictionary<Type, MethodInfo>
+		{
+			{
+				typeof(MyCmpAdd),
+				typeof(MyCmp).GetMethod("FindOrAddComponent")
+			},
+			{
+				typeof(MyCmpGet),
+				typeof(MyCmp).GetMethod("FindComponent")
+			},
+			{
+				typeof(MyCmpReq),
+				typeof(MyCmp).GetMethod("RequireComponent")
+			}
+		}, Util.SpawnComponent));
 	}
 
 	public MyCmp(Dictionary<Type, MethodInfo> attributeMap, Action<Component> spawnFunc)

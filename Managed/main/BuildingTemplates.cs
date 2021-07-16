@@ -105,9 +105,9 @@ public class BuildingTemplates
 
 	public static Storage CreateDefaultStorage(GameObject go, bool forceCreate = false)
 	{
-		Storage storage = (forceCreate ? go.AddComponent<Storage>() : go.AddOrGet<Storage>());
-		storage.capacityKg = 2000f;
-		return storage;
+		Storage obj = (forceCreate ? go.AddComponent<Storage>() : go.AddOrGet<Storage>());
+		obj.capacityKg = 2000f;
+		return obj;
 	}
 
 	public static void CreateComplexFabricatorStorage(GameObject go, ComplexFabricator fabricator)
@@ -155,23 +155,21 @@ public class BuildingTemplates
 		}
 		if (clusterRocket)
 		{
-			RocketModule rocketModule2 = buildingUnderConstruction.AddOrGet<RocketModuleCluster>();
+			buildingUnderConstruction.AddOrGet<RocketModuleCluster>();
 		}
 		else
 		{
-			RocketModule rocketModule2 = buildingUnderConstruction.AddOrGet<RocketModule>();
+			buildingUnderConstruction.AddOrGet<RocketModule>();
 		}
 		AttachableBuilding component2 = template.GetComponent<AttachableBuilding>();
 		if (component2 != null)
 		{
-			AttachableBuilding attachableBuilding = buildingUnderConstruction.AddOrGet<AttachableBuilding>();
-			attachableBuilding.attachableToTag = component2.attachableToTag;
+			buildingUnderConstruction.AddOrGet<AttachableBuilding>().attachableToTag = component2.attachableToTag;
 		}
 		BuildingAttachPoint component3 = template.GetComponent<BuildingAttachPoint>();
 		if (component3 != null)
 		{
-			BuildingAttachPoint buildingAttachPoint = buildingUnderConstruction.AddOrGet<BuildingAttachPoint>();
-			buildingAttachPoint.points = component3.points;
+			buildingUnderConstruction.AddOrGet<BuildingAttachPoint>().points = component3.points;
 		}
 		template.GetComponent<Building>().Def.ThermalConductivity = 0.1f;
 		Storage component4 = template.GetComponent<Storage>();

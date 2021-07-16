@@ -49,10 +49,7 @@ public class RequireAttachedComponent : ProcessCondition
 
 	public override string GetStatusMessage(Status status)
 	{
-		if (status == Status.Ready)
-		{
-			return typeNameString;
-		}
+		_ = 2;
 		return typeNameString;
 	}
 

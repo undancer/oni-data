@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Database;
 using KSerialization;
 using STRINGS;
 using UnityEngine;
@@ -24,12 +25,14 @@ public class TemporalTearOpener : GameStateMachine<TemporalTearOpener, TemporalT
 		public State has_target;
 
 		public State has_los;
+
+		public State enough_colonies;
 	}
 
 	public new class Instance : GameInstance, ISidescreenButtonControl
 	{
 		[Serialize]
-		private float m_particlesConsumed = 0f;
+		private float m_particlesConsumed;
 
 		private MeterController m_meter;
 
@@ -45,8 +48,7 @@ public class TemporalTearOpener : GameStateMachine<TemporalTearOpener, TemporalT
 
 		public bool HasLineOfSight()
 		{
-			Building component = GetComponent<Building>();
-			Extents extents = component.GetExtents();
+			Extents extents = GetComponent<Building>().GetExtents();
 			int x = extents.x;
 			int num = extents.x + extents.width - 1;
 			for (int i = x; i <= num; i++)
@@ -58,6 +60,25 @@ public class TemporalTearOpener : GameStateMachine<TemporalTearOpener, TemporalT
 				}
 			}
 			return true;
+		}
+
+		public bool HasSufficientColonies()
+		{
+			return CountColonies() >= EstablishColonies.BASE_COUNT;
+		}
+
+		public int CountColonies()
+		{
+			int num = 0;
+			for (int i = 0; i < Components.Telepads.Count; i++)
+			{
+				Activatable component = Components.Telepads[i].GetComponent<Activatable>();
+				if (component == null || component.IsActivated)
+				{
+					num++;
+				}
+			}
+			return num;
 		}
 
 		public bool ConsumeParticlesAndCheckComplete(float dt)
@@ -89,17 +110,22 @@ public class TemporalTearOpener : GameStateMachine<TemporalTearOpener, TemporalT
 			Vector3 position = base.gameObject.transform.position;
 			position.y += 3.25f;
 			Quaternion rotation = Quaternion.Euler(-90f, 90f, 0f);
-			GameObject gameObject = Util.KInstantiate(EffectPrefabs.Instance.OpenTemporalTearBeam, position, rotation, base.gameObject);
+			Util.KInstantiate(EffectPrefabs.Instance.OpenTemporalTearBeam, position, rotation, base.gameObject);
 		}
 
 		public void OpenTemporalTear()
 		{
+			ClusterManager.Instance.GetClusterPOIManager().RevealTemporalTear();
 			ClusterManager.Instance.GetClusterPOIManager().OpenTemporalTear(this.GetMyWorldId());
 		}
 
 		public bool SidescreenEnabled()
 		{
-			return GetCurrentState() == base.sm.ready;
+			if (GetCurrentState() != base.sm.ready)
+			{
+				return DebugHandler.InstantBuildMode;
+			}
+			return true;
 		}
 
 		public bool SidescreenButtonInteractable()
@@ -122,6 +148,8 @@ public class TemporalTearOpener : GameStateMachine<TemporalTearOpener, TemporalT
 
 	private static StatusItem s_noLosStatus = new StatusItem("Temporal_Tear_Opener_No_Los", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false);
 
+	private static StatusItem s_insufficient_colonies = CreateColoniesStatusItem();
+
 	private static StatusItem s_noTargetStatus = new StatusItem("Temporal_Tear_Opener_No_Target", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false);
 
 	private static StatusItem s_progressStatus = CreateProgressStatusItem();
@@ -138,16 +166,30 @@ public class TemporalTearOpener : GameStateMachine<TemporalTearOpener, TemporalT
 
 	private State inert;
 
+	private static StatusItem CreateColoniesStatusItem()
+	{
+		return new StatusItem("Temporal_Tear_Opener_Insufficient_Colonies", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false)
+		{
+			resolveStringCallback = delegate(string str, object data)
+			{
+				Instance instance = (Instance)data;
+				str = str.Replace("{progress}", $"({instance.CountColonies()}/{EstablishColonies.BASE_COUNT})");
+				return str;
+			}
+		};
+	}
+
 	private static StatusItem CreateProgressStatusItem()
 	{
-		StatusItem statusItem = new StatusItem("Temporal_Tear_Opener_Progress", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false);
-		statusItem.resolveStringCallback = delegate(string str, object data)
+		return new StatusItem("Temporal_Tear_Opener_Progress", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false)
 		{
-			Instance instance = (Instance)data;
-			str = str.Replace("{progress}", GameUtil.GetFormattedPercent(instance.GetPercentComplete()));
-			return str;
+			resolveStringCallback = delegate(string str, object data)
+			{
+				Instance instance = (Instance)data;
+				str = str.Replace("{progress}", GameUtil.GetFormattedPercent(instance.GetPercentComplete()));
+				return str;
+			}
 		};
-		return statusItem;
 	}
 
 	public override void InitializeStates(out BaseState default_state)
@@ -165,11 +207,20 @@ public class TemporalTearOpener : GameStateMachine<TemporalTearOpener, TemporalT
 				smi.GoTo(check_requirements);
 			}
 		});
-		check_requirements.PlayAnim("off").DefaultState(check_requirements.has_target);
+		check_requirements.PlayAnim("off").DefaultState(check_requirements.has_target).Enter(delegate(Instance smi)
+		{
+			smi.GetComponent<HighEnergyParticleStorage>().receiverOpen = false;
+		});
 		check_requirements.has_target.ToggleStatusItem(s_noTargetStatus).UpdateTransition(check_requirements.has_los, (Instance smi, float dt) => ClusterManager.Instance.GetClusterPOIManager().IsTemporalTearRevealed());
-		check_requirements.has_los.ToggleStatusItem(s_noLosStatus).UpdateTransition(charging, (Instance smi, float dt) => smi.HasLineOfSight());
+		check_requirements.has_los.ToggleStatusItem(s_noLosStatus).UpdateTransition(check_requirements.enough_colonies, (Instance smi, float dt) => smi.HasLineOfSight());
+		check_requirements.enough_colonies.ToggleStatusItem(s_insufficient_colonies).UpdateTransition(charging, (Instance smi, float dt) => smi.HasSufficientColonies());
 		charging.DefaultState(charging.idle).PlayAnim("on").ToggleStatusItem(s_progressStatus, (Instance smi) => smi)
-			.UpdateTransition(check_requirements.has_los, (Instance smi, float dt) => !smi.HasLineOfSight());
+			.UpdateTransition(check_requirements.has_los, (Instance smi, float dt) => !smi.HasLineOfSight())
+			.UpdateTransition(check_requirements.enough_colonies, (Instance smi, float dt) => !smi.HasSufficientColonies())
+			.Enter(delegate(Instance smi)
+			{
+				smi.GetComponent<HighEnergyParticleStorage>().receiverOpen = true;
+			});
 		charging.idle.EventTransition(GameHashes.OnParticleStorageChanged, charging.consuming, (Instance smi) => !smi.GetComponent<HighEnergyParticleStorage>().IsEmpty());
 		charging.consuming.EventTransition(GameHashes.OnParticleStorageChanged, charging.idle, (Instance smi) => smi.GetComponent<HighEnergyParticleStorage>().IsEmpty()).UpdateTransition(ready, (Instance smi, float dt) => smi.ConsumeParticlesAndCheckComplete(dt));
 		ready.ToggleNotification((Instance smi) => new Notification(BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION, NotificationType.Good, (List<Notification> a, object b) => BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION_TOOLTIP, null, expires: false)).PlayAnim("working_pre").QueueAnim("working_loop", loop: true);
@@ -178,7 +229,7 @@ public class TemporalTearOpener : GameStateMachine<TemporalTearOpener, TemporalT
 			smi.CreateBeamFX();
 		}).ScheduleGoTo(5f, opening_tear_finish);
 		opening_tear_finish.PlayAnim("working_pst").OnAnimQueueComplete(inert);
-		inert.Enter(delegate(Instance smi)
+		inert.PlayAnim("inert").Enter(delegate(Instance smi)
 		{
 			smi.OpenTemporalTear();
 		});

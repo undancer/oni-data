@@ -46,8 +46,7 @@ public class Teleporter : KMonoBehaviour
 		int num2 = Mathf.Min(ID_LENGTH, component.inputPorts.Count);
 		for (int i = 0; i < num2; i++)
 		{
-			ILogicUIElement logicUIElement = component.inputPorts[i];
-			int logicUICell = logicUIElement.GetLogicUICell();
+			int logicUICell = component.inputPorts[i].GetLogicUICell();
 			int item = logicCircuitManager.GetNetworkForCell(logicUICell)?.OutputValue ?? 1;
 			list.Add(item);
 		}
@@ -71,7 +70,11 @@ public class Teleporter : KMonoBehaviour
 
 	public bool IsValidTeleportTarget(Teleporter from_tele)
 	{
-		return from_tele.teleporterID == teleporterID && operational.IsOperational;
+		if (from_tele.teleporterID == teleporterID)
+		{
+			return operational.IsOperational;
+		}
+		return false;
 	}
 
 	public Teleporter FindTeleportTarget()
@@ -124,8 +127,7 @@ public class Teleporter : KMonoBehaviour
 				MinionIdentity component = gameObject.GetComponent<MinionIdentity>();
 				if (component != null)
 				{
-					ChoreProvider component2 = component.GetComponent<ChoreProvider>();
-					new EmoteChore(component2, Db.Get().ChoreTypes.EmoteHighPriority, "anim_interacts_portal_kanim", Telepad.PortalBirthAnim, null);
+					new EmoteChore(component.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_interacts_portal_kanim", Telepad.PortalBirthAnim, null);
 				}
 				else
 				{

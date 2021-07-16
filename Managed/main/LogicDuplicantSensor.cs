@@ -12,7 +12,7 @@ public class LogicDuplicantSensor : Switch, ISim1000ms, ISim200ms
 
 	public int pickupRange = 4;
 
-	private bool wasOn = false;
+	private bool wasOn;
 
 	private List<Pickupable> duplicants = new List<Pickupable>();
 
@@ -150,8 +150,7 @@ public class LogicDuplicantSensor : Switch, ISim1000ms, ISim200ms
 
 	private bool IsPickupableRelevantToMyInterests(Pickupable pickupable)
 	{
-		KPrefabID kPrefabID = pickupable.KPrefabID;
-		if (!kPrefabID.HasAnyTags(ref tagBits))
+		if (!pickupable.KPrefabID.HasAnyTags(ref tagBits))
 		{
 			return false;
 		}
@@ -185,8 +184,7 @@ public class LogicDuplicantSensor : Switch, ISim1000ms, ISim200ms
 
 	private void UpdateLogicCircuit()
 	{
-		LogicPorts component = GetComponent<LogicPorts>();
-		component.SendSignal(LogicSwitch.PORT_ID, switchedOn ? 1 : 0);
+		GetComponent<LogicPorts>().SendSignal(LogicSwitch.PORT_ID, switchedOn ? 1 : 0);
 	}
 
 	private void UpdateVisualState(bool force = false)

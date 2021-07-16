@@ -61,7 +61,6 @@ public class ClusterDestinationSelector : KMonoBehaviour
 
 	public virtual bool IsAtDestination()
 	{
-		AxialI myWorldLocation = this.GetMyWorldLocation();
-		return myWorldLocation == m_destination;
+		return this.GetMyWorldLocation() == m_destination;
 	}
 }

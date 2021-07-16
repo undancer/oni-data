@@ -11,7 +11,17 @@ namespace ProcGen
 
 		public World world => mutatedWorldData.world;
 
-		public static string ClusterDefaultName => DlcManager.FeatureClusterSpaceEnabled() ? "expansion1::clusters/SandstoneStartCluster" : "clusters/SandstoneDefault";
+		public static string ClusterDefaultName
+		{
+			get
+			{
+				if (!DlcManager.FeatureClusterSpaceEnabled())
+				{
+					return "clusters/SandstoneDefault";
+				}
+				return "expansion1::clusters/SandstoneStartCluster";
+			}
+		}
 
 		public WorldGenSettings(string worldName, List<string> traits, bool assertMissingTraits)
 		{
@@ -105,12 +115,12 @@ namespace ProcGen
 				res = (T)obj;
 				return true;
 			}
-			bool flag = parser(obj as string, out res);
-			if (flag)
+			bool num = parser(obj as string, out res);
+			if (num)
 			{
 				set.data[target] = res;
 			}
-			return flag;
+			return num;
 		}
 
 		private T GetSetting<T>(string target, ParserFn<T> parser)

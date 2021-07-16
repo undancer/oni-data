@@ -71,14 +71,25 @@ public class SpriteListDialogScreen : KModalScreen
 		});
 	}
 
-	public void AddSprite(Sprite sprite, string text)
+	public void AddSprite(Sprite sprite, string text, float width = -1f, float height = -1f)
 	{
 		GameObject gameObject = Util.KInstantiateUI(listPrefab, listPanel, force_active: true);
 		gameObject.GetComponentInChildren<LocText>().text = text;
 		Image componentInChildren = gameObject.GetComponentInChildren<Image>();
 		componentInChildren.sprite = sprite;
-		AspectRatioFitter component = componentInChildren.gameObject.GetComponent<AspectRatioFitter>();
-		float num2 = (component.aspectRatio = sprite.rect.width / sprite.rect.height);
+		if (width >= 0f || height >= 0f)
+		{
+			componentInChildren.GetComponent<AspectRatioFitter>().enabled = false;
+			LayoutElement component = componentInChildren.GetComponent<LayoutElement>();
+			component.minWidth = width;
+			component.preferredWidth = width;
+			component.minHeight = height;
+			component.preferredHeight = height;
+		}
+		else
+		{
+			float num2 = (componentInChildren.GetComponent<AspectRatioFitter>().aspectRatio = sprite.rect.width / sprite.rect.height);
+		}
 	}
 
 	public void PopupConfirmDialog(string text, string title_text = null)

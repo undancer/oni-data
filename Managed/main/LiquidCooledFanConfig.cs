@@ -7,16 +7,16 @@ public class LiquidCooledFanConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("LiquidCooledFan", 2, 2, "fanliquid_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.ExhaustKilowattsWhenActive = 0f;
-		buildingDef.SelfHeatKilowattsWhenActive = 0f;
-		buildingDef.Overheatable = false;
-		buildingDef.ViewMode = OverlayModes.Temperature.ID;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
-		buildingDef.UtilityOutputOffset = new CellOffset(0, 0);
-		buildingDef.Deprecated = true;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("LiquidCooledFan", 2, 2, "fanliquid_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		obj.ExhaustKilowattsWhenActive = 0f;
+		obj.SelfHeatKilowattsWhenActive = 0f;
+		obj.Overheatable = false;
+		obj.ViewMode = OverlayModes.Temperature.ID;
+		obj.AudioCategory = "Metal";
+		obj.UtilityInputOffset = new CellOffset(0, 0);
+		obj.UtilityOutputOffset = new CellOffset(0, 0);
+		obj.Deprecated = true;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

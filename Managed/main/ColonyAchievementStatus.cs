@@ -6,9 +6,9 @@ using Database;
 
 public class ColonyAchievementStatus
 {
-	public bool success = false;
+	public bool success;
 
-	public bool failed = false;
+	public bool failed;
 
 	private ColonyAchievement m_achievement;
 
@@ -21,7 +21,7 @@ public class ColonyAchievementStatus
 
 	public void UpdateAchievement()
 	{
-		if (Requirements.Count <= 0)
+		if (Requirements.Count <= 0 || m_achievement.Disabled)
 		{
 			return;
 		}
@@ -42,20 +42,20 @@ public class ColonyAchievementStatus
 			int num = reader.ReadInt32();
 			for (int i = 0; i < num; i++)
 			{
-				string typeName = reader.ReadKleiString();
-				Type type = Type.GetType(typeName);
+				Type type = Type.GetType(reader.ReadKleiString());
 				if (type != null)
 				{
-					AchievementRequirementSerialization_Deprecated achievementRequirementSerialization_Deprecated = FormatterServices.GetUninitializedObject(type) as AchievementRequirementSerialization_Deprecated;
-					Debug.Assert(achievementRequirementSerialization_Deprecated != null, $"Cannot deserialize old data for type {type}");
-					achievementRequirementSerialization_Deprecated.Deserialize(reader);
+					AchievementRequirementSerialization_Deprecated obj = FormatterServices.GetUninitializedObject(type) as AchievementRequirementSerialization_Deprecated;
+					Debug.Assert(obj != null, $"Cannot deserialize old data for type {type}");
+					obj.Deserialize(reader);
 				}
 			}
 		}
-		ColonyAchievementStatus colonyAchievementStatus = new ColonyAchievementStatus(achievementId);
-		colonyAchievementStatus.success = flag;
-		colonyAchievementStatus.failed = flag2;
-		return colonyAchievementStatus;
+		return new ColonyAchievementStatus(achievementId)
+		{
+			success = flag,
+			failed = flag2
+		};
 	}
 
 	public void Serialize(BinaryWriter writer)

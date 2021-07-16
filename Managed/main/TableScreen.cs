@@ -20,19 +20,19 @@ public class TableScreen : KScreen
 
 	protected bool has_default_duplicant_row = true;
 
-	private bool rows_dirty = false;
+	private bool rows_dirty;
 
 	protected Comparison<IAssignableIdentity> active_sort_method;
 
 	protected TableColumn active_sort_column;
 
-	protected bool sort_is_reversed = false;
+	protected bool sort_is_reversed;
 
-	private int active_cascade_coroutine_count = 0;
+	private int active_cascade_coroutine_count;
 
 	private HandleVector<int>.Handle current_looping_sound = HandleVector<int>.InvalidHandle;
 
-	private bool incubating = false;
+	private bool incubating;
 
 	private int removeWorldHandle = -1;
 
@@ -497,9 +497,9 @@ public class TableScreen : KScreen
 		SuperCheckboxTableColumn superCheckboxTableColumn = new SuperCheckboxTableColumn(columns_affected, on_load_action, get_value_action, on_press_action, set_value_action, sort_comparison, on_tooltip);
 		if (RegisterColumn(id, superCheckboxTableColumn))
 		{
-			foreach (CheckboxTableColumn checkboxTableColumn in columns_affected)
+			foreach (CheckboxTableColumn obj in columns_affected)
 			{
-				checkboxTableColumn.on_set_action = (Action<GameObject, ResultValues>)Delegate.Combine(checkboxTableColumn.on_set_action, new Action<GameObject, ResultValues>(superCheckboxTableColumn.MarkDirty));
+				obj.on_set_action = (Action<GameObject, ResultValues>)Delegate.Combine(obj.on_set_action, new Action<GameObject, ResultValues>(superCheckboxTableColumn.MarkDirty));
 			}
 			superCheckboxTableColumn.MarkDirty();
 			return superCheckboxTableColumn;
@@ -619,10 +619,8 @@ public class TableScreen : KScreen
 	{
 		MultiToggle multiToggle = null;
 		multiToggle = widget_go.GetComponent<MultiToggle>();
-		TableRow widgetRow = GetWidgetRow(widget_go);
-		TableRow.RowType rowType = widgetRow.rowType;
-		TableRow.RowType rowType2 = rowType;
-		if ((uint)rowType2 <= 2u)
+		TableRow.RowType rowType = GetWidgetRow(widget_go).rowType;
+		if ((uint)rowType <= 2u)
 		{
 			multiToggle.ChangeState((int)get_value_checkbox_column_super(minion, widget_go));
 		}
@@ -630,14 +628,14 @@ public class TableScreen : KScreen
 
 	public virtual ResultValues get_value_checkbox_column_super(IAssignableIdentity minion, GameObject widget_go)
 	{
-		SuperCheckboxTableColumn superCheckboxTableColumn = GetWidgetColumn(widget_go) as SuperCheckboxTableColumn;
+		SuperCheckboxTableColumn obj = GetWidgetColumn(widget_go) as SuperCheckboxTableColumn;
 		TableRow widgetRow = GetWidgetRow(widget_go);
 		bool flag = true;
 		bool flag2 = true;
 		bool flag3 = false;
 		bool flag4 = false;
 		bool flag5 = false;
-		CheckboxTableColumn[] columns_affected = superCheckboxTableColumn.columns_affected;
+		CheckboxTableColumn[] columns_affected = obj.columns_affected;
 		foreach (CheckboxTableColumn checkboxTableColumn in columns_affected)
 		{
 			if (!checkboxTableColumn.isRevealed)
@@ -670,9 +668,6 @@ public class TableScreen : KScreen
 				flag2 = false;
 				flag = false;
 				break;
-			}
-			if (!flag5)
-			{
 			}
 		}
 		ResultValues result = ResultValues.Partial;
@@ -727,26 +722,26 @@ public class TableScreen : KScreen
 			{
 				continue;
 			}
-			GameObject widget = checkBoxToggleColumns[i].widgets_by_row[row];
-			if (!(widget == ignore_widget) && checkBoxToggleColumns[i].isRevealed)
+			GameObject gameObject = checkBoxToggleColumns[i].widgets_by_row[row];
+			if (!(gameObject == ignore_widget) && checkBoxToggleColumns[i].isRevealed)
 			{
-				bool needsSetting = false;
-				switch ((GetWidgetColumn(widget) as CheckboxTableColumn).get_value_action(row.GetIdentity(), widget))
+				bool flag = false;
+				switch ((GetWidgetColumn(gameObject) as CheckboxTableColumn).get_value_action(row.GetIdentity(), gameObject))
 				{
 				case ResultValues.False:
-					needsSetting = ((state != 0) ? true : false);
+					flag = ((state != 0) ? true : false);
 					break;
 				case ResultValues.Partial:
 				case ResultValues.ConditionalGroup:
-					needsSetting = true;
+					flag = true;
 					break;
 				case ResultValues.True:
-					needsSetting = ((state != ResultValues.True) ? true : false);
+					flag = ((state != ResultValues.True) ? true : false);
 					break;
 				}
-				if (needsSetting)
+				if (flag)
 				{
-					(GetWidgetColumn(widget) as CheckboxTableColumn).on_set_action(widget, state);
+					(GetWidgetColumn(gameObject) as CheckboxTableColumn).on_set_action(gameObject, state);
 					yield return null;
 				}
 			}
@@ -770,21 +765,21 @@ public class TableScreen : KScreen
 			GameObject widget = rows[i].GetWidget(checkBoxToggleColumn);
 			if (!(widget == header_widget_go))
 			{
-				bool needsSetting = false;
+				bool flag = false;
 				switch ((GetWidgetColumn(widget) as CheckboxTableColumn).get_value_action(rows[i].GetIdentity(), widget))
 				{
 				case ResultValues.False:
-					needsSetting = ((state != 0) ? true : false);
+					flag = ((state != 0) ? true : false);
 					break;
 				case ResultValues.Partial:
 				case ResultValues.ConditionalGroup:
-					needsSetting = true;
+					flag = true;
 					break;
 				case ResultValues.True:
-					needsSetting = ((state != ResultValues.True) ? true : false);
+					flag = ((state != ResultValues.True) ? true : false);
 					break;
 				}
-				if (needsSetting)
+				if (flag)
 				{
 					(GetWidgetColumn(widget) as CheckboxTableColumn).on_set_action(widget, state);
 					yield return null;
@@ -834,14 +829,12 @@ public class TableScreen : KScreen
 	protected void on_tooltip_sort_alphabetically(IAssignableIdentity minion, GameObject widget_go, ToolTip tooltip)
 	{
 		tooltip.ClearMultiStringTooltip();
-		TableRow widgetRow = GetWidgetRow(widget_go);
-		switch (widgetRow.rowType)
+		switch (GetWidgetRow(widget_go).rowType)
 		{
-		case TableRow.RowType.Default:
-			break;
 		case TableRow.RowType.Header:
 			tooltip.AddMultiStringTooltip(UI.TABLESCREENS.COLUMN_SORT_BY_NAME, null);
 			break;
+		case TableRow.RowType.Default:
 		case TableRow.RowType.Minion:
 			break;
 		}

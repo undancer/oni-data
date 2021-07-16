@@ -142,21 +142,21 @@ namespace ClipperLib
 			m_ClipFillType = clipFillType;
 			m_ClipType = clipType;
 			m_UsingPolyTree = false;
-			bool flag;
 			try
 			{
-				flag = ExecuteInternal();
+				bool flag = ExecuteInternal();
 				if (flag)
 				{
 					BuildResult(solution);
+					return flag;
 				}
+				return flag;
 			}
 			finally
 			{
 				DisposeAllPolyPts();
 				m_ExecuteLocked = false;
 			}
-			return flag;
 		}
 
 		public bool Execute(ClipType clipType, PolyTree polytree, PolyFillType subjFillType, PolyFillType clipFillType)
@@ -170,21 +170,21 @@ namespace ClipperLib
 			m_ClipFillType = clipFillType;
 			m_ClipType = clipType;
 			m_UsingPolyTree = true;
-			bool flag;
 			try
 			{
-				flag = ExecuteInternal();
+				bool flag = ExecuteInternal();
 				if (flag)
 				{
 					BuildResult2(polytree);
+					return flag;
 				}
+				return flag;
 			}
 			finally
 			{
 				DisposeAllPolyPts();
 				m_ExecuteLocked = false;
 			}
-			return flag;
 		}
 
 		public bool Execute(ClipType clipType, List<List<IntPoint>> solution)
@@ -286,9 +286,7 @@ namespace ClipperLib
 
 		private void DisposeOutRec(int index)
 		{
-			OutRec outRec = m_PolyOuts[index];
-			outRec.Pts = null;
-			outRec = null;
+			m_PolyOuts[index].Pts = null;
 			m_PolyOuts[index] = null;
 		}
 
@@ -975,7 +973,11 @@ namespace ClipperLib
 			{
 				Swap(ref seg2a, ref seg2b);
 			}
-			return seg1a < seg2b && seg2a < seg1b;
+			if (seg1a < seg2b)
+			{
+				return seg2a < seg1b;
+			}
+			return false;
 		}
 
 		private void SetHoleState(TEdge e, OutRec outRec)
@@ -1033,7 +1035,15 @@ namespace ClipperLib
 				prev = prev.Next;
 			}
 			double num4 = Math.Abs(GetDx(btmPt2.Pt, prev.Pt));
-			return (num >= num3 && num >= num4) || (num2 >= num3 && num2 >= num4);
+			if (!(num >= num3) || !(num >= num4))
+			{
+				if (num2 >= num3)
+				{
+					return num2 >= num4;
+				}
+				return false;
+			}
+			return true;
 		}
 
 		private OutPt GetBottomPt(OutPt pp)
@@ -1589,17 +1599,16 @@ namespace ClipperLib
 					}
 					tEdge3 = nextInAEL;
 				}
-				if (horzEdge.NextInLML != null && ClipperBase.IsHorizontal(horzEdge.NextInLML))
+				if (horzEdge.NextInLML == null || !ClipperBase.IsHorizontal(horzEdge.NextInLML))
 				{
-					UpdateEdgeIntoAEL(ref horzEdge);
-					if (horzEdge.OutIdx >= 0)
-					{
-						AddOutPt(horzEdge, horzEdge.Bot);
-					}
-					GetHorzDirection(horzEdge, out Dir, out Left, out Right);
-					continue;
+					break;
 				}
-				break;
+				UpdateEdgeIntoAEL(ref horzEdge);
+				if (horzEdge.OutIdx >= 0)
+				{
+					AddOutPt(horzEdge, horzEdge.Bot);
+				}
+				GetHorzDirection(horzEdge, out Dir, out Left, out Right);
 			}
 			if (horzEdge.NextInLML != null)
 			{
@@ -1644,22 +1653,38 @@ namespace ClipperLib
 
 		private TEdge GetNextInAEL(TEdge e, Direction Direction)
 		{
-			return (Direction == Direction.dLeftToRight) ? e.NextInAEL : e.PrevInAEL;
+			if (Direction != Direction.dLeftToRight)
+			{
+				return e.PrevInAEL;
+			}
+			return e.NextInAEL;
 		}
 
 		private bool IsMinima(TEdge e)
 		{
-			return e != null && e.Prev.NextInLML != e && e.Next.NextInLML != e;
+			if (e != null && e.Prev.NextInLML != e)
+			{
+				return e.Next.NextInLML != e;
+			}
+			return false;
 		}
 
 		private bool IsMaxima(TEdge e, double Y)
 		{
-			return e != null && (double)e.Top.Y == Y && e.NextInLML == null;
+			if (e != null && (double)e.Top.Y == Y)
+			{
+				return e.NextInLML == null;
+			}
+			return false;
 		}
 
 		private bool IsIntermediate(TEdge e, double Y)
 		{
-			return (double)e.Top.Y == Y && e.NextInLML != null;
+			if ((double)e.Top.Y == Y)
+			{
+				return e.NextInLML != null;
+			}
+			return false;
 		}
 
 		private TEdge GetMaximaPair(TEdge e)
@@ -1745,19 +1770,22 @@ namespace ClipperLib
 						tEdge = nextInSEL;
 					}
 				}
-				if (tEdge.PrevInSEL != null)
+				if (tEdge.PrevInSEL == null)
 				{
-					tEdge.PrevInSEL.NextInSEL = null;
-					continue;
+					break;
 				}
-				break;
+				tEdge.PrevInSEL.NextInSEL = null;
 			}
 			m_SortedEdges = null;
 		}
 
 		private bool EdgesAdjacent(IntersectNode inode)
 		{
-			return inode.Edge1.NextInSEL == inode.Edge2 || inode.Edge1.PrevInSEL == inode.Edge2;
+			if (inode.Edge1.NextInSEL != inode.Edge2)
+			{
+				return inode.Edge1.PrevInSEL == inode.Edge2;
+			}
+			return true;
 		}
 
 		private static int IntersectNodeSort(IntersectNode node1, IntersectNode node2)
@@ -1804,7 +1832,11 @@ namespace ClipperLib
 
 		internal static long Round(double value)
 		{
-			return (value < 0.0) ? ((long)(value - 0.5)) : ((long)(value + 0.5));
+			if (!(value < 0.0))
+			{
+				return (long)(value + 0.5);
+			}
+			return (long)(value - 0.5);
 		}
 
 		private static long TopX(TEdge edge, long currentY)
@@ -1825,7 +1857,7 @@ namespace ClipperLib
 				ip.X = TopX(edge1, ip.Y);
 				return;
 			}
-			if (edge1.Delta.X == 0)
+			if (edge1.Delta.X == 0L)
 			{
 				ip.X = edge1.Bot.X;
 				if (ClipperBase.IsHorizontal(edge2))
@@ -1838,7 +1870,7 @@ namespace ClipperLib
 					ip.Y = Round((double)ip.X / edge2.Dx + num);
 				}
 			}
-			else if (edge2.Delta.X == 0)
+			else if (edge2.Delta.X == 0L)
 			{
 				ip.X = edge2.Bot.X;
 				if (ClipperBase.IsHorizontal(edge1))
@@ -2597,13 +2629,9 @@ namespace ClipperLib
 			for (int i = 0; i < m_PolyOuts.Count; i++)
 			{
 				OutRec outRec = m_PolyOuts[i];
-				if (outRec.Pts != null && outRec.FirstLeft != null)
+				if (outRec.Pts != null && outRec.FirstLeft != null && ParseFirstLeft(outRec.FirstLeft) == OldOutRec && Poly2ContainsPoly1(outRec.Pts, NewOutRec.Pts))
 				{
-					OutRec outRec2 = ParseFirstLeft(outRec.FirstLeft);
-					if (outRec2 == OldOutRec && Poly2ContainsPoly1(outRec.Pts, NewOutRec.Pts))
-					{
-						outRec.FirstLeft = NewOutRec;
-					}
+					outRec.FirstLeft = NewOutRec;
 				}
 			}
 		}

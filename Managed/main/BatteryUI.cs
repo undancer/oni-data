@@ -63,12 +63,11 @@ public class BatteryUI : KMonoBehaviour
 		float num = 0f;
 		foreach (KeyValuePair<float, float> item in sizeMap)
 		{
-			if (bat.Capacity > item.Key)
+			if (!(bat.Capacity > item.Key))
 			{
-				continue;
+				num = item.Value;
+				break;
 			}
-			num = item.Value;
-			break;
 		}
 		batteryBG.sprite = ((bat.Capacity >= 40000f) ? bigBatteryBG : regularBatteryBG);
 		float y = 25f;

@@ -14,16 +14,16 @@ public class AdvancedApothecaryConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("AdvancedApothecary", 3, 3, "medicine_nuclear_kanim", 250, 240f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.REFINED_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
-		buildingDef.ExhaustKilowattsWhenActive = 0.5f;
-		buildingDef.SelfHeatKilowattsWhenActive = 2f;
-		buildingDef.UseHighEnergyParticleInputPort = true;
-		buildingDef.HighEnergyParticleInputOffset = new CellOffset(0, 2);
-		buildingDef.ViewMode = OverlayModes.Radiation.ID;
-		buildingDef.AudioCategory = "Glass";
-		buildingDef.AudioSize = "large";
-		buildingDef.Deprecated = true;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("AdvancedApothecary", 3, 3, "medicine_nuclear_kanim", 250, 240f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.REFINED_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE);
+		obj.ExhaustKilowattsWhenActive = 0.5f;
+		obj.SelfHeatKilowattsWhenActive = 2f;
+		obj.UseHighEnergyParticleInputPort = true;
+		obj.HighEnergyParticleInputOffset = new CellOffset(0, 2);
+		obj.ViewMode = OverlayModes.Radiation.ID;
+		obj.AudioCategory = "Glass";
+		obj.AudioSize = "large";
+		obj.Deprecated = true;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -32,8 +32,7 @@ public class AdvancedApothecaryConfig : IBuildingConfig
 		HighEnergyParticleStorage highEnergyParticleStorage = go.AddOrGet<HighEnergyParticleStorage>();
 		highEnergyParticleStorage.autoStore = true;
 		highEnergyParticleStorage.capacity = 400f;
-		HighEnergyParticlePort highEnergyParticlePort = go.AddOrGet<HighEnergyParticlePort>();
-		highEnergyParticlePort.requireOperational = false;
+		go.AddOrGet<HighEnergyParticlePort>().requireOperational = false;
 		go.AddOrGet<DropAllWorkable>();
 		go.AddOrGet<BuildingComplete>().isManuallyOperated = true;
 		AdvancedApothecary fabricator = go.AddOrGet<AdvancedApothecary>();

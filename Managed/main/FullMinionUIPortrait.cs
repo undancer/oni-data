@@ -22,8 +22,7 @@ public class FullMinionUIPortrait : IEntityConfig
 		LayoutElement layoutElement = gameObject.AddOrGet<LayoutElement>();
 		layoutElement.preferredHeight = 100f;
 		layoutElement.preferredWidth = 100f;
-		BoxCollider2D boxCollider2D = gameObject.AddOrGet<BoxCollider2D>();
-		boxCollider2D.size = new Vector2(1f, 1f);
+		gameObject.AddOrGet<BoxCollider2D>().size = new Vector2(1f, 1f);
 		gameObject.AddOrGet<FaceGraph>();
 		gameObject.AddOrGet<Accessorizer>();
 		KBatchedAnimController kBatchedAnimController = gameObject.AddOrGet<KBatchedAnimController>();

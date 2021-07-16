@@ -1,7 +1,5 @@
-#define UNITY_ASSERTIONS
 using System;
 using System.Diagnostics;
-using UnityEngine;
 
 namespace Klei.AI
 {
@@ -69,13 +67,16 @@ namespace Klei.AI
 
 		public void SetValue(float value)
 		{
-			UnityEngine.Debug.Assert(!IsReadonly);
 			Value = value;
 		}
 
 		public string GetDescription()
 		{
-			return (DescriptionCB != null) ? DescriptionCB() : Description;
+			if (DescriptionCB == null)
+			{
+				return Description;
+			}
+			return DescriptionCB();
 		}
 
 		public string GetFormattedString()

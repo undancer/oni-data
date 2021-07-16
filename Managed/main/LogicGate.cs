@@ -128,9 +128,9 @@ public class LogicGate : LogicGateBase, ILogicEventSender, ILogicNetworkConnecti
 
 	private const bool IS_CIRCUIT_ENDPOINT = true;
 
-	private bool connected = false;
+	private bool connected;
 
-	protected bool cleaningUp = false;
+	protected bool cleaningUp;
 
 	private int lastAnimState = -1;
 
@@ -643,9 +643,7 @@ public class LogicGate : LogicGateBase, ILogicEventSender, ILogicNetworkConnecti
 		if (base.RequiresFourInputs && base.RequiresControlInputs)
 		{
 			outputValueOne = 0;
-			Op op = base.op;
-			Op op2 = op;
-			if (op2 == Op.Multiplexer)
+			if (op == Op.Multiplexer)
 			{
 				if (!LogicCircuitNetwork.IsBitActive(0, value3))
 				{
@@ -677,9 +675,7 @@ public class LogicGate : LogicGateBase, ILogicEventSender, ILogicNetworkConnecti
 			outputThreeSender.SetValue(0);
 			outputValueFour = 0;
 			outputFourSender.SetValue(0);
-			Op op3 = base.op;
-			Op op4 = op3;
-			if (op4 == Op.Demultiplexer)
+			if (op == Op.Demultiplexer)
 			{
 				if (!LogicCircuitNetwork.IsBitActive(0, value2))
 				{
@@ -705,7 +701,7 @@ public class LogicGate : LogicGateBase, ILogicEventSender, ILogicNetworkConnecti
 				}
 			}
 		}
-		switch (base.op)
+		switch (op)
 		{
 		case Op.And:
 			outputValueOne = value & num;
@@ -729,9 +725,7 @@ public class LogicGate : LogicGateBase, ILogicEventSender, ILogicNetworkConnecti
 					bitDepth = component.MaxBitDepth;
 				}
 			}
-			LogicWire.BitDepth bitDepth2 = bitDepth;
-			LogicWire.BitDepth bitDepth3 = bitDepth2;
-			if (bitDepth3 != 0 && bitDepth3 == LogicWire.BitDepth.FourBit)
+			if (bitDepth != 0 && bitDepth == LogicWire.BitDepth.FourBit)
 			{
 				uint num4 = (uint)value;
 				num4 = ~num4;
@@ -784,9 +778,17 @@ public class LogicGate : LogicGateBase, ILogicEventSender, ILogicNetworkConnecti
 			}
 			return 0;
 		case PortId.InputThree:
-			return base.RequiresFourInputs ? inputThree.Value : 0;
+			if (!base.RequiresFourInputs)
+			{
+				return 0;
+			}
+			return inputThree.Value;
 		case PortId.InputFour:
-			return base.RequiresFourInputs ? inputFour.Value : 0;
+			if (!base.RequiresFourInputs)
+			{
+				return 0;
+			}
+			return inputFour.Value;
 		case PortId.OutputOne:
 			return outputValueOne;
 		case PortId.OutputTwo:
@@ -811,9 +813,7 @@ public class LogicGate : LogicGateBase, ILogicEventSender, ILogicNetworkConnecti
 			return false;
 		}
 		int cell = PortCell(port);
-		LogicCircuitManager logicCircuitManager = Game.Instance.logicCircuitManager;
-		LogicCircuitNetwork networkForCell = logicCircuitManager.GetNetworkForCell(cell);
-		return networkForCell != null;
+		return Game.Instance.logicCircuitManager.GetNetworkForCell(cell) != null;
 	}
 
 	public void SetPortDescriptions(LogicGateDescriptions descriptions)
@@ -823,20 +823,79 @@ public class LogicGate : LogicGateBase, ILogicEventSender, ILogicNetworkConnecti
 
 	public LogicGateDescriptions.Description GetPortDescription(PortId port)
 	{
-		return port switch
+		switch (port)
 		{
-			PortId.InputOne => (descriptions.inputOne != null) ? descriptions.inputOne : ((base.RequiresTwoInputs || base.RequiresFourInputs) ? INPUT_ONE_MULTI_DESCRIPTION : INPUT_ONE_SINGLE_DESCRIPTION), 
-			PortId.InputTwo => (descriptions.inputTwo != null) ? descriptions.inputTwo : INPUT_TWO_DESCRIPTION, 
-			PortId.InputThree => (descriptions.inputThree != null) ? descriptions.inputThree : INPUT_THREE_DESCRIPTION, 
-			PortId.InputFour => (descriptions.inputFour != null) ? descriptions.inputFour : INPUT_FOUR_DESCRIPTION, 
-			PortId.OutputOne => (descriptions.inputOne != null) ? descriptions.inputOne : (base.RequiresFourOutputs ? OUTPUT_ONE_MULTI_DESCRIPTION : OUTPUT_ONE_SINGLE_DESCRIPTION), 
-			PortId.OutputTwo => (descriptions.outputTwo != null) ? descriptions.outputTwo : OUTPUT_TWO_DESCRIPTION, 
-			PortId.OutputThree => (descriptions.outputThree != null) ? descriptions.outputThree : OUTPUT_THREE_DESCRIPTION, 
-			PortId.OutputFour => (descriptions.outputFour != null) ? descriptions.outputFour : OUTPUT_FOUR_DESCRIPTION, 
-			PortId.ControlOne => (descriptions.controlOne != null) ? descriptions.controlOne : CONTROL_ONE_DESCRIPTION, 
-			PortId.ControlTwo => (descriptions.controlTwo != null) ? descriptions.controlTwo : CONTROL_TWO_DESCRIPTION, 
-			_ => descriptions.outputOne, 
-		};
+		case PortId.InputOne:
+			if (descriptions.inputOne == null)
+			{
+				if (!base.RequiresTwoInputs && !base.RequiresFourInputs)
+				{
+					return INPUT_ONE_SINGLE_DESCRIPTION;
+				}
+				return INPUT_ONE_MULTI_DESCRIPTION;
+			}
+			return descriptions.inputOne;
+		case PortId.InputTwo:
+			if (descriptions.inputTwo == null)
+			{
+				return INPUT_TWO_DESCRIPTION;
+			}
+			return descriptions.inputTwo;
+		case PortId.InputThree:
+			if (descriptions.inputThree == null)
+			{
+				return INPUT_THREE_DESCRIPTION;
+			}
+			return descriptions.inputThree;
+		case PortId.InputFour:
+			if (descriptions.inputFour == null)
+			{
+				return INPUT_FOUR_DESCRIPTION;
+			}
+			return descriptions.inputFour;
+		case PortId.OutputOne:
+			if (descriptions.inputOne == null)
+			{
+				if (!base.RequiresFourOutputs)
+				{
+					return OUTPUT_ONE_SINGLE_DESCRIPTION;
+				}
+				return OUTPUT_ONE_MULTI_DESCRIPTION;
+			}
+			return descriptions.inputOne;
+		case PortId.OutputTwo:
+			if (descriptions.outputTwo == null)
+			{
+				return OUTPUT_TWO_DESCRIPTION;
+			}
+			return descriptions.outputTwo;
+		case PortId.OutputThree:
+			if (descriptions.outputThree == null)
+			{
+				return OUTPUT_THREE_DESCRIPTION;
+			}
+			return descriptions.outputThree;
+		case PortId.OutputFour:
+			if (descriptions.outputFour == null)
+			{
+				return OUTPUT_FOUR_DESCRIPTION;
+			}
+			return descriptions.outputFour;
+		case PortId.ControlOne:
+			if (descriptions.controlOne == null)
+			{
+				return CONTROL_ONE_DESCRIPTION;
+			}
+			return descriptions.controlOne;
+		case PortId.ControlTwo:
+			if (descriptions.controlTwo == null)
+			{
+				return CONTROL_TWO_DESCRIPTION;
+			}
+			return descriptions.controlTwo;
+		default:
+			return descriptions.outputOne;
+		}
 	}
 
 	public int GetLogicValue()
@@ -945,8 +1004,7 @@ public class LogicGate : LogicGateBase, ILogicEventSender, ILogicNetworkConnecti
 			{
 				KAnimHashedString symbol = multiplexerSymbols[i];
 				KAnimHashedString kAnimHashedString = multiplexerBloomSymbols[i];
-				int num2 = Array.IndexOf(array, kAnimHashedString);
-				bool flag = num2 != -1 && logicCircuitNetwork != null;
+				bool flag = Array.IndexOf(array, kAnimHashedString) != -1 && logicCircuitNetwork != null;
 				SetBloomSymbolShowing(flag, component, symbol, kAnimHashedString);
 				if (flag)
 				{
@@ -956,27 +1014,26 @@ public class LogicGate : LogicGateBase, ILogicEventSender, ILogicNetworkConnecti
 		}
 		else if (op == Op.Demultiplexer)
 		{
-			int num3 = LogicCircuitNetwork.GetBitValue(0, controlOne.Value) * 2 + LogicCircuitNetwork.GetBitValue(0, controlTwo.Value);
-			if (lastAnimState != num3)
+			int num2 = LogicCircuitNetwork.GetBitValue(0, controlOne.Value) * 2 + LogicCircuitNetwork.GetBitValue(0, controlTwo.Value);
+			if (lastAnimState != num2)
 			{
 				if (lastAnimState == -1)
 				{
-					component.Play(num3.ToString());
+					component.Play(num2.ToString());
 				}
 				else
 				{
-					component.Play(lastAnimState + "_" + num3);
+					component.Play(lastAnimState + "_" + num2);
 				}
 			}
-			lastAnimState = num3;
-			KAnimHashedString[] array2 = demultiplexerSymbolPaths[num3];
+			lastAnimState = num2;
+			KAnimHashedString[] array2 = demultiplexerSymbolPaths[num2];
 			LogicCircuitNetwork logicCircuitNetwork2 = Game.Instance.logicCircuitSystem.GetNetworkForCell(inputOne.GetLogicCell()) as LogicCircuitNetwork;
 			for (int j = 0; j < demultiplexerSymbols.Length; j++)
 			{
 				KAnimHashedString symbol2 = demultiplexerSymbols[j];
 				KAnimHashedString kAnimHashedString2 = demultiplexerBloomSymbols[j];
-				int num4 = Array.IndexOf(array2, kAnimHashedString2);
-				bool flag2 = num4 != -1 && logicCircuitNetwork2 != null;
+				bool flag2 = Array.IndexOf(array2, kAnimHashedString2) != -1 && logicCircuitNetwork2 != null;
 				SetBloomSymbolShowing(flag2, component, symbol2, kAnimHashedString2);
 				if (flag2)
 				{
@@ -1007,26 +1064,25 @@ public class LogicGate : LogicGateBase, ILogicEventSender, ILogicNetworkConnecti
 		else if (op == Op.And || op == Op.Xor || op == Op.Not || op == Op.Or)
 		{
 			int outputCellOne = base.OutputCellOne;
-			LogicCircuitNetwork logicCircuitNetwork3 = Game.Instance.logicCircuitSystem.GetNetworkForCell(outputCellOne) as LogicCircuitNetwork;
-			if (logicCircuitNetwork3 == null)
+			if (!(Game.Instance.logicCircuitSystem.GetNetworkForCell(outputCellOne) is LogicCircuitNetwork))
 			{
 				component.Play("off");
 				return;
 			}
 			if (base.RequiresTwoInputs)
 			{
-				int num5 = inputOne.Value * 2 + inputTwo.Value;
-				if (lastAnimState != num5)
+				int num3 = inputOne.Value * 2 + inputTwo.Value;
+				if (lastAnimState != num3)
 				{
 					if (lastAnimState == -1)
 					{
-						component.Play(num5.ToString());
+						component.Play(num3.ToString());
 					}
 					else
 					{
-						component.Play(lastAnimState + "_" + num5);
+						component.Play(lastAnimState + "_" + num3);
 					}
-					lastAnimState = num5;
+					lastAnimState = num3;
 				}
 				return;
 			}
@@ -1047,8 +1103,7 @@ public class LogicGate : LogicGateBase, ILogicEventSender, ILogicNetworkConnecti
 		else
 		{
 			int outputCellOne2 = base.OutputCellOne;
-			LogicCircuitNetwork logicCircuitNetwork4 = Game.Instance.logicCircuitSystem.GetNetworkForCell(outputCellOne2) as LogicCircuitNetwork;
-			if (logicCircuitNetwork4 == null)
+			if (!(Game.Instance.logicCircuitSystem.GetNetworkForCell(outputCellOne2) is LogicCircuitNetwork))
 			{
 				component.Play("off");
 			}

@@ -94,6 +94,12 @@ namespace Database
 
 		public StatusItem StoredItemDurability;
 
+		public StatusItem ArtifactEntombed;
+
+		public StatusItem TearOpen;
+
+		public StatusItem TearClosed;
+
 		public MiscStatusItems(ResourceSet parent)
 			: base("MiscStatusItems", parent)
 		{
@@ -130,15 +136,15 @@ namespace Database
 			OreMass = CreateStatusItem("OreMass", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			OreMass.resolveStringCallback = delegate(string str, object data)
 			{
-				GameObject gameObject5 = (GameObject)data;
-				str = str.Replace("{Mass}", GameUtil.GetFormattedMass(gameObject5.GetComponent<PrimaryElement>().Mass));
+				GameObject gameObject2 = (GameObject)data;
+				str = str.Replace("{Mass}", GameUtil.GetFormattedMass(gameObject2.GetComponent<PrimaryElement>().Mass));
 				return str;
 			};
 			OreTemp = CreateStatusItem("OreTemp", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			OreTemp.resolveStringCallback = delegate(string str, object data)
 			{
-				GameObject gameObject4 = (GameObject)data;
-				str = str.Replace("{Temp}", GameUtil.GetFormattedTemperature(gameObject4.GetComponent<PrimaryElement>().Temperature));
+				GameObject gameObject = (GameObject)data;
+				str = str.Replace("{Temp}", GameUtil.GetFormattedTemperature(gameObject.GetComponent<PrimaryElement>().Temperature));
 				return str;
 			};
 			ElementalState = CreateStatusItem("ElementalState", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
@@ -292,27 +298,27 @@ namespace Database
 			HighEnergyParticleCount = CreateStatusItem("HighEnergyParticleCount", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			HighEnergyParticleCount.resolveStringCallback = delegate(string str, object data)
 			{
-				GameObject gameObject3 = (GameObject)data;
-				str = GameUtil.GetFormattedHighEnergyParticles(gameObject3.GetComponent<HighEnergyParticle>().payload);
+				str = GameUtil.GetFormattedHighEnergyParticles(((GameObject)data).GetComponent<HighEnergyParticle>().payload);
 				return str;
 			};
 			Durability = CreateStatusItem("Durability", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			Durability.resolveStringCallback = delegate(string str, object data)
 			{
-				GameObject gameObject2 = (GameObject)data;
-				Durability component2 = gameObject2.GetComponent<Durability>();
+				Durability component2 = ((GameObject)data).GetComponent<Durability>();
 				str = str.Replace("{durability}", GameUtil.GetFormattedPercent(component2.GetDurability() * 100f));
 				return str;
 			};
 			StoredItemDurability = CreateStatusItem("StoredItemDurability", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			StoredItemDurability.resolveStringCallback = delegate(string str, object data)
 			{
-				GameObject gameObject = (GameObject)data;
-				Durability component = gameObject.GetComponent<Durability>();
+				Durability component = ((GameObject)data).GetComponent<Durability>();
 				float percent = ((component != null) ? (component.GetDurability() * 100f) : 100f);
 				str = str.Replace("{durability}", GameUtil.GetFormattedPercent(percent));
 				return str;
 			};
+			ArtifactEntombed = CreateStatusItem("ArtifactEntombed", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			TearOpen = CreateStatusItem("TearOpen", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			TearClosed = CreateStatusItem("TearClosed", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 		}
 	}
 }

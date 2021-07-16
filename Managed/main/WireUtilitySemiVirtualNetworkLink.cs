@@ -39,8 +39,7 @@ public class WireUtilitySemiVirtualNetworkLink : UtilityNetworkLink, IHaveUtilit
 		}
 		else
 		{
-			WorldContainer myWorld = this.GetMyWorld();
-			CraftModuleInterface component2 = myWorld.GetComponent<CraftModuleInterface>();
+			CraftModuleInterface component2 = this.GetMyWorld().GetComponent<CraftModuleInterface>();
 			if (component2 != null)
 			{
 				VirtualCircuitKey = component2;
@@ -88,8 +87,7 @@ public class WireUtilitySemiVirtualNetworkLink : UtilityNetworkLink, IHaveUtilit
 	public void AddNetworks(ICollection<UtilityNetwork> networks)
 	{
 		int networkCell = GetNetworkCell();
-		IUtilityNetworkMgr networkManager = GetNetworkManager();
-		UtilityNetwork networkForCell = networkManager.GetNetworkForCell(networkCell);
+		UtilityNetwork networkForCell = GetNetworkManager().GetNetworkForCell(networkCell);
 		if (networkForCell != null)
 		{
 			networks.Add(networkForCell);
@@ -99,8 +97,7 @@ public class WireUtilitySemiVirtualNetworkLink : UtilityNetworkLink, IHaveUtilit
 	public bool IsConnectedToNetworks(ICollection<UtilityNetwork> networks)
 	{
 		int networkCell = GetNetworkCell();
-		IUtilityNetworkMgr networkManager = GetNetworkManager();
-		UtilityNetwork networkForCell = networkManager.GetNetworkForCell(networkCell);
+		UtilityNetwork networkForCell = GetNetworkManager().GetNetworkForCell(networkCell);
 		return networks.Contains(networkForCell);
 	}
 }

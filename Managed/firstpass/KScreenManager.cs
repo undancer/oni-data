@@ -6,9 +6,9 @@ using UnityEngine.EventSystems;
 [AddComponentMenu("KMonoBehaviour/Plugins/KScreenManager")]
 public class KScreenManager : KMonoBehaviour, IInputHandler
 {
-	private static bool quitting = false;
+	private static bool quitting;
 
-	private static bool inputDisabled = false;
+	private static bool inputDisabled;
 
 	private List<KScreen> screenStack = new List<KScreen>();
 
@@ -65,8 +65,7 @@ public class KScreenManager : KMonoBehaviour, IInputHandler
 		{
 			for (int num = screenStack.Count - 1; num >= 0; num--)
 			{
-				KScreen kScreen = screenStack[num];
-				kScreen.Deactivate();
+				screenStack[num].Deactivate();
 			}
 		}
 	}
@@ -74,21 +73,18 @@ public class KScreenManager : KMonoBehaviour, IInputHandler
 	public GameObject ActivateScreen(GameObject screen, GameObject parent)
 	{
 		AddExistingChild(parent, screen);
-		KScreen component = screen.GetComponent<KScreen>();
-		component.Activate();
+		screen.GetComponent<KScreen>().Activate();
 		return screen;
 	}
 
 	public KScreen InstantiateScreen(GameObject screenPrefab, GameObject parent)
 	{
-		GameObject gameObject = AddChild(parent, screenPrefab);
-		return gameObject.GetComponent<KScreen>();
+		return AddChild(parent, screenPrefab).GetComponent<KScreen>();
 	}
 
 	public KScreen StartScreen(GameObject screenPrefab, GameObject parent)
 	{
-		GameObject gameObject = AddChild(parent, screenPrefab);
-		KScreen component = gameObject.GetComponent<KScreen>();
+		KScreen component = AddChild(parent, screenPrefab).GetComponent<KScreen>();
 		component.Activate();
 		return component;
 	}

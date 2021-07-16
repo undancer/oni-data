@@ -167,7 +167,11 @@ public class SteamUGCService : MonoBehaviour
 
 	public bool IsSubscribed(PublishedFileId_t item)
 	{
-		return downloads.Contains(item) || proxies.Contains(item) || queries.Contains(item) || publishes.Any((SteamUGCDetails_t candidate) => candidate.m_nPublishedFileId == item) || mods.Exists((Mod candidate) => candidate.fileId == item);
+		if (!downloads.Contains(item) && !proxies.Contains(item) && !queries.Contains(item) && !publishes.Any((SteamUGCDetails_t candidate) => candidate.m_nPublishedFileId == item))
+		{
+			return mods.Exists((Mod candidate) => candidate.fileId == item);
+		}
+		return true;
 	}
 
 	public Mod FindMod(PublishedFileId_t item)
@@ -188,8 +192,7 @@ public class SteamUGCService : MonoBehaviour
 		{
 			SteamRemoteStorage.UGCDownload(details.m_hPreviewFile, 0u);
 			array = new byte[details.m_nPreviewFileSize];
-			int num = SteamRemoteStorage.UGCRead(details.m_hPreviewFile, array, details.m_nPreviewFileSize, 0u, EUGCReadAction.k_EUGCRead_ContinueReadingUntilFinished);
-			if (num != details.m_nPreviewFileSize)
+			if (SteamRemoteStorage.UGCRead(details.m_hPreviewFile, array, details.m_nPreviewFileSize, 0u, EUGCReadAction.k_EUGCRead_ContinueReadingUntilFinished) != details.m_nPreviewFileSize)
 			{
 				if (retry_counts[details.m_nPublishedFileId] % 100 == 0)
 				{
@@ -247,8 +250,7 @@ public class SteamUGCService : MonoBehaviour
 		HashSetPool<PublishedFileId_t, SteamUGCService>.PooledHashSet published = HashSetPool<PublishedFileId_t, SteamUGCService>.Allocate();
 		foreach (SteamUGCDetails_t publish in publishes)
 		{
-			EItemState itemState = (EItemState)SteamUGC.GetItemState(publish.m_nPublishedFileId);
-			if ((itemState & (EItemState.k_EItemStateDownloading | EItemState.k_EItemStateDownloadPending)) == 0)
+			if ((SteamUGC.GetItemState(publish.m_nPublishedFileId) & 0x30) == 0)
 			{
 				Debug.LogFormat("Steam: updating info for mod {0}", publish.m_rgchTitle);
 				Mod mod4 = new Mod(publish, LoadPreviewImage(publish));
@@ -316,8 +318,8 @@ public class SteamUGCService : MonoBehaviour
 		}
 		foreach (PublishedFileId_t download in downloads)
 		{
-			EItemState itemState2 = (EItemState)SteamUGC.GetItemState(download);
-			if (((itemState2 & EItemState.k_EItemStateInstalled) == 0 || (itemState2 & EItemState.k_EItemStateNeedsUpdate) != 0) && (itemState2 & (EItemState.k_EItemStateDownloading | EItemState.k_EItemStateDownloadPending)) == 0)
+			EItemState itemState = (EItemState)SteamUGC.GetItemState(download);
+			if (((itemState & EItemState.k_EItemStateInstalled) == 0 || (itemState & EItemState.k_EItemStateNeedsUpdate) != 0) && (itemState & (EItemState.k_EItemStateDownloading | EItemState.k_EItemStateDownloadPending)) == 0)
 			{
 				SteamUGC.DownloadItem(download, bHighPriority: false);
 			}
@@ -464,11 +466,13 @@ public class SteamUGCService : MonoBehaviour
 				zipEntry.Extract(memoryStream);
 				memoryStream.Flush();
 				result = memoryStream.ToArray();
+				return result;
 			}
+			return result;
 		}
 		catch (Exception)
 		{
+			return result;
 		}
-		return result;
 	}
 }

@@ -62,9 +62,7 @@ public class Clinic : Workable, IGameObjectEffectDescriptor, ISingleSliderContro
 				bool result = false;
 				if (base.master.IsValidEffect(effect))
 				{
-					Worker worker = base.smi.master.worker;
-					Effects component = worker.GetComponent<Effects>();
-					result = component.HasEffect(effect);
+					result = base.smi.master.worker.GetComponent<Effects>().HasEffect(effect);
 				}
 				return result;
 			}
@@ -114,8 +112,7 @@ public class Clinic : Workable, IGameObjectEffectDescriptor, ISingleSliderContro
 			default_state = unoperational;
 			unoperational.EventTransition(GameHashes.OperationalChanged, operational, (Instance smi) => smi.GetComponent<Operational>().IsOperational).Enter(delegate(Instance smi)
 			{
-				Assignable component4 = smi.master.GetComponent<Assignable>();
-				component4.Unassign();
+				smi.master.GetComponent<Assignable>().Unassign();
 			});
 			operational.DefaultState(operational.idle).EventTransition(GameHashes.OperationalChanged, unoperational, (Instance smi) => !smi.master.GetComponent<Operational>().IsOperational).EventTransition(GameHashes.AssigneeChanged, unoperational)
 				.ToggleRecurringChore((Instance smi) => smi.master.CreateWorkChore(Db.Get().ChoreTypes.Heal, allow_prioritization: false, allow_in_red_alert: true, PriorityScreen.PriorityClass.personalNeeds), (Instance smi) => !string.IsNullOrEmpty(smi.master.healthEffect))
@@ -136,8 +133,7 @@ public class Clinic : Workable, IGameObjectEffectDescriptor, ISingleSliderContro
 				smi.StartEffect(smi.master.healthEffect, should_save: false);
 				smi.StartEffect(smi.master.diseaseEffect, should_save: false);
 				bool flag = false;
-				Worker worker2 = smi.master.worker;
-				if (worker2 != null)
+				if (smi.master.worker != null)
 				{
 					flag = smi.HasEffect(smi.master.doctoredHealthEffect) || smi.HasEffect(smi.master.doctoredDiseaseEffect) || smi.HasEffect(smi.master.doctoredPlaceholderEffect);
 				}
@@ -186,8 +182,7 @@ public class Clinic : Workable, IGameObjectEffectDescriptor, ISingleSliderContro
 				}
 			}).ScheduleGoTo(delegate(Instance smi)
 			{
-				Worker worker = smi.master.worker;
-				Effects component2 = worker.GetComponent<Effects>();
+				Effects component2 = smi.master.worker.GetComponent<Effects>();
 				float num = smi.master.doctorVisitInterval;
 				if (smi.HasEffect(smi.master.doctoredHealthEffect))
 				{
@@ -255,8 +250,7 @@ public class Clinic : Workable, IGameObjectEffectDescriptor, ISingleSliderContro
 		description = DUPLICANTS.CHORES.PRECONDITIONS.IS_NOT_BEING_ATTACKED,
 		fn = delegate(ref Chore.Precondition.Context context, object data)
 		{
-			Clinic clinic = (Clinic)data;
-			return clinic.IsHealthBelowThreshold(context.consumerState.gameObject);
+			return ((Clinic)data).IsHealthBelowThreshold(context.consumerState.gameObject);
 		}
 	};
 
@@ -380,9 +374,7 @@ public class Clinic : Workable, IGameObjectEffectDescriptor, ISingleSliderContro
 			}
 			if (!flag && IsValidEffect(diseaseEffect))
 			{
-				MinionModifiers component2 = minionIdentity.GetComponent<MinionModifiers>();
-				Sicknesses sicknesses = component2.sicknesses;
-				flag = sicknesses.Count > 0;
+				flag = minionIdentity.GetComponent<MinionModifiers>().sicknesses.Count > 0;
 			}
 		}
 		return flag;
@@ -415,12 +407,20 @@ public class Clinic : Workable, IGameObjectEffectDescriptor, ISingleSliderContro
 
 	private bool IsValidEffect(string effect)
 	{
-		return effect != null && effect != "";
+		if (effect != null)
+		{
+			return effect != "";
+		}
+		return false;
 	}
 
 	private bool AllowDoctoring()
 	{
-		return IsValidEffect(doctoredDiseaseEffect) || IsValidEffect(doctoredHealthEffect);
+		if (!IsValidEffect(doctoredDiseaseEffect))
+		{
+			return IsValidEffect(doctoredHealthEffect);
+		}
+		return true;
 	}
 
 	public override List<Descriptor> GetDescriptors(GameObject go)

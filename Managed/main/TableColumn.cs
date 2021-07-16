@@ -22,9 +22,19 @@ public class TableColumn : IRender1000ms
 
 	private Func<bool> revealed;
 
-	protected bool dirty = false;
+	protected bool dirty;
 
-	public bool isRevealed => revealed == null || revealed();
+	public bool isRevealed
+	{
+		get
+		{
+			if (revealed == null)
+			{
+				return true;
+			}
+			return revealed();
+		}
+	}
 
 	public bool isDirty => dirty;
 

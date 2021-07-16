@@ -28,8 +28,7 @@ public class ArtifactHarvestModule : GameStateMachine<ArtifactHarvestModule, Art
 
 		public void HarvestFromPOI(float dt)
 		{
-			Clustercraft component = GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>();
-			ClusterGridEntity pOIAtCurrentLocation = component.GetPOIAtCurrentLocation();
+			ClusterGridEntity pOIAtCurrentLocation = GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>().GetPOIAtCurrentLocation();
 			if (pOIAtCurrentLocation.IsNullOrDestroyed())
 			{
 				return;
@@ -38,8 +37,7 @@ public class ArtifactHarvestModule : GameStateMachine<ArtifactHarvestModule, Art
 			if (((bool)pOIAtCurrentLocation.GetComponent<ArtifactPOIClusterGridEntity>() || (bool)pOIAtCurrentLocation.GetComponent<HarvestablePOIClusterGridEntity>()) && !sMI.IsNullOrDestroyed())
 			{
 				bool flag = false;
-				string artifactToHarvest = sMI.GetArtifactToHarvest();
-				GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(artifactToHarvest), base.transform.position);
+				GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(sMI.GetArtifactToHarvest()), base.transform.position);
 				gameObject.SetActive(value: true);
 				receptacle.ForceDeposit(gameObject);
 				storage.Store(gameObject);

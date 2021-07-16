@@ -4,7 +4,7 @@ public class FrameDelayedHandleVector<T> : HandleVector<T>
 {
 	private List<Handle>[] frameDelayedFreeHandles = new List<Handle>[3];
 
-	private int curFrame = 0;
+	private int curFrame;
 
 	public FrameDelayedHandleVector(int initial_size)
 		: base(initial_size)
@@ -20,9 +20,9 @@ public class FrameDelayedHandleVector<T> : HandleVector<T>
 		freeHandles.Clear();
 		items.Clear();
 		List<Handle>[] array = frameDelayedFreeHandles;
-		foreach (List<Handle> list in array)
+		for (int i = 0; i < array.Length; i++)
 		{
-			list.Clear();
+			array[i].Clear();
 		}
 	}
 

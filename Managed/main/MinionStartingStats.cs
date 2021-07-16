@@ -145,9 +145,9 @@ public class MinionStartingStats : ITelepadDeliverable
 			{
 				return false;
 			}
-			float num6 = Mathf.Abs(Util.GaussianRandom());
-			int num7 = traitPossibilities.Count;
-			int num8;
+			Mathf.Abs(Util.GaussianRandom());
+			int num6 = traitPossibilities.Count;
+			int num7;
 			if (!positiveTrait)
 			{
 				if (DUPLICANTSTATS.rarityDeckActive.Count < 1)
@@ -158,7 +158,7 @@ public class MinionStartingStats : ITelepadDeliverable
 				{
 					DUPLICANTSTATS.rarityDeckActive.ShuffleSeeded(randSeed);
 				}
-				num8 = DUPLICANTSTATS.rarityDeckActive[DUPLICANTSTATS.rarityDeckActive.Count - 1];
+				num7 = DUPLICANTSTATS.rarityDeckActive[DUPLICANTSTATS.rarityDeckActive.Count - 1];
 				DUPLICANTSTATS.rarityDeckActive.RemoveAt(DUPLICANTSTATS.rarityDeckActive.Count - 1);
 			}
 			else
@@ -180,17 +180,17 @@ public class MinionStartingStats : ITelepadDeliverable
 					list.Add(rarityBalance + 2);
 				}
 				list.ShuffleSeeded(randSeed);
-				num8 = list[0];
-				num8 = Mathf.Max(DUPLICANTSTATS.RARITY_COMMON, num8);
-				num8 = Mathf.Min(DUPLICANTSTATS.RARITY_LEGENDARY, num8);
+				num7 = list[0];
+				num7 = Mathf.Max(DUPLICANTSTATS.RARITY_COMMON, num7);
+				num7 = Mathf.Min(DUPLICANTSTATS.RARITY_LEGENDARY, num7);
 			}
 			List<DUPLICANTSTATS.TraitVal> list2 = new List<DUPLICANTSTATS.TraitVal>(traitPossibilities);
-			for (int num9 = list2.Count - 1; num9 > -1; num9--)
+			for (int num8 = list2.Count - 1; num8 > -1; num8--)
 			{
-				if (list2[num9].rarity != num8)
+				if (list2[num8].rarity != num7)
 				{
-					list2.RemoveAt(num9);
-					num7--;
+					list2.RemoveAt(num8);
+					num6--;
 				}
 			}
 			list2.ShuffleSeeded(randSeed);
@@ -198,11 +198,11 @@ public class MinionStartingStats : ITelepadDeliverable
 			{
 				if (!DlcManager.IsContentActive(item.dlcId))
 				{
-					num7--;
+					num6--;
 				}
 				else if (selectedTraits.Contains(item.id))
 				{
-					num7--;
+					num6--;
 				}
 				else
 				{
@@ -210,19 +210,19 @@ public class MinionStartingStats : ITelepadDeliverable
 					if (trait4 == null)
 					{
 						Debug.LogWarning("Trying to add nonexistent trait: " + item.id);
-						num7--;
+						num6--;
 					}
 					else if (is_starter_minion && !trait4.ValidStarterTrait)
 					{
-						num7--;
+						num6--;
 					}
 					else if (AreTraitAndAptitudesExclusive(item, skillAptitudes))
 					{
-						num7--;
+						num6--;
 					}
 					else if (is_starter_minion && guaranteedAptitudeID != null && AreTraitAndArchetypeExclusive(item, guaranteedAptitudeID))
 					{
-						num7--;
+						num6--;
 					}
 					else
 					{
@@ -241,7 +241,7 @@ public class MinionStartingStats : ITelepadDeliverable
 							}
 							return true;
 						}
-						num7--;
+						num6--;
 					}
 				}
 			}
@@ -426,8 +426,7 @@ public class MinionStartingStats : ITelepadDeliverable
 
 	public void ApplyRace(GameObject go)
 	{
-		MinionIdentity component = go.GetComponent<MinionIdentity>();
-		component.voiceIdx = voiceIdx;
+		go.GetComponent<MinionIdentity>().voiceIdx = voiceIdx;
 	}
 
 	public static KCompBuilder.BodyData CreateBodyData(Personality p)
@@ -480,8 +479,7 @@ public class MinionStartingStats : ITelepadDeliverable
 		gameObject.transform.SetLocalPosition(location);
 		Apply(gameObject);
 		Immigration.Instance.ApplyDefaultPersonalPriorities(gameObject);
-		ChoreProvider component = gameObject.GetComponent<ChoreProvider>();
-		new EmoteChore(component, Db.Get().ChoreTypes.EmoteHighPriority, "anim_interacts_portal_kanim", Telepad.PortalBirthAnim, null);
+		new EmoteChore(gameObject.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_interacts_portal_kanim", Telepad.PortalBirthAnim, null);
 		return gameObject;
 	}
 

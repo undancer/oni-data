@@ -28,32 +28,38 @@ public class BuildWatermark : KScreen
 		RefreshText();
 	}
 
-	public void RefreshText()
+	public static string GetBuildText()
 	{
 		string str = LaunchInitializer.BuildPrefix() + "-";
-		bool flag = true;
-		bool flag2 = DistributionPlatform.Initialized && DistributionPlatform.Inst.IsArchiveBranch;
-		button.ClearOnClick();
 		if (Application.isEditor)
 		{
 			str += "<EDITOR>";
 		}
 		else
 		{
-			str += 469473u;
+			str += 471618u;
 			if (DebugHandler.enabled)
 			{
 				str += "-D";
 			}
 		}
+		return str;
+	}
+
+	public void RefreshText()
+	{
+		bool flag = true;
+		bool flag2 = DistributionPlatform.Initialized && DistributionPlatform.Inst.IsArchiveBranch;
+		string buildText = GetBuildText();
+		button.ClearOnClick();
 		if (flag)
 		{
-			textDisplay.SetText(string.Format(UI.DEVELOPMENTBUILDS.WATERMARK, str));
+			textDisplay.SetText(string.Format(UI.DEVELOPMENTBUILDS.WATERMARK, buildText));
 			toolTip.ClearMultiStringTooltip();
 		}
 		else
 		{
-			textDisplay.SetText(string.Format(UI.DEVELOPMENTBUILDS.TESTING_WATERMARK, str));
+			textDisplay.SetText(string.Format(UI.DEVELOPMENTBUILDS.TESTING_WATERMARK, buildText));
 			toolTip.SetSimpleTooltip(UI.DEVELOPMENTBUILDS.TESTING_TOOLTIP);
 			if (interactable)
 			{
@@ -68,8 +74,7 @@ public class BuildWatermark : KScreen
 
 	private void ShowTestingMessage()
 	{
-		ConfirmDialogScreen confirmDialogScreen = Util.KInstantiateUI<ConfirmDialogScreen>(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, Global.Instance.globalCanvas, force_active: true);
-		confirmDialogScreen.PopupConfirmDialog(UI.DEVELOPMENTBUILDS.TESTING_MESSAGE, delegate
+		Util.KInstantiateUI<ConfirmDialogScreen>(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, Global.Instance.globalCanvas, force_active: true).PopupConfirmDialog(UI.DEVELOPMENTBUILDS.TESTING_MESSAGE, delegate
 		{
 			Application.OpenURL("https://forums.kleientertainment.com/klei-bug-tracker/oni/");
 		}, delegate

@@ -6,7 +6,7 @@ namespace Database
 {
 	public class DupesCompleteChoreInExoSuitForCycles : ColonyAchievementRequirement, AchievementRequirementSerialization_Deprecated
 	{
-		public int currentCycleStreak = 0;
+		public int currentCycleStreak;
 
 		public int numCycles;
 

@@ -35,8 +35,7 @@ public class NewBaseScreen : KScreen
 	public static Vector2I SetInitialCamera()
 	{
 		Vector2I baseStartPos = SaveLoader.Instance.cachedGSD.baseStartPos;
-		int cell = Grid.OffsetCell(0, baseStartPos.x, baseStartPos.y);
-		Vector3 pos = Grid.CellToPosCCC(Grid.OffsetCell(cell, 0, -2), Grid.SceneLayer.Background);
+		Vector3 pos = Grid.CellToPosCCC(Grid.OffsetCell(Grid.OffsetCell(0, baseStartPos.x, baseStartPos.y), 0, -2), Grid.SceneLayer.Background);
 		CameraController.Instance.SetMaxOrthographicSize(40f);
 		CameraController.Instance.SnapTo(pos);
 		CameraController.Instance.SetTargetPos(pos, 20f, playSound: false);

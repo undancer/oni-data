@@ -7,14 +7,14 @@ public class DevRadiationGeneratorConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("DevRadiationGenerator", 1, 1, "dev_generator_kanim", 100, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.ALL_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.PENALTY.TIER2);
-		buildingDef.ViewMode = OverlayModes.Radiation.ID;
-		buildingDef.AudioCategory = "HollowMetal";
-		buildingDef.AudioSize = "large";
-		buildingDef.Floodable = false;
-		buildingDef.Overheatable = false;
-		buildingDef.DebugOnly = true;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("DevRadiationGenerator", 1, 1, "dev_generator_kanim", 100, 3f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.ALL_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.PENALTY.TIER2);
+		obj.ViewMode = OverlayModes.Radiation.ID;
+		obj.AudioCategory = "HollowMetal";
+		obj.AudioSize = "large";
+		obj.Floodable = false;
+		obj.Overheatable = false;
+		obj.DebugOnly = true;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

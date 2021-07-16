@@ -171,7 +171,6 @@ public class SweepStates : GameStateMachine<SweepStates, SweepStates.Instance, I
 		{
 			if (this != null && mass_cb_info.mass > 0f)
 			{
-				float mass = mass_cb_info.mass;
 				SubstanceChunk substanceChunk = LiquidSourceManager.Instance.CreateChunk(ElementLoader.elements[mass_cb_info.elemIdx], mass_cb_info.mass, mass_cb_info.temperature, mass_cb_info.diseaseIdx, mass_cb_info.diseaseCount, Grid.CellToPosCCC(cell, Grid.SceneLayer.Ore));
 				substanceChunk.transform.SetPosition(substanceChunk.transform.GetPosition() + new Vector3((UnityEngine.Random.value - 0.5f) * 0.5f, 0f, 0f));
 				TryStore(substanceChunk.gameObject, smi);
@@ -185,8 +184,7 @@ public class SweepStates : GameStateMachine<SweepStates, SweepStates.Instance, I
 		GameObject gameObject = Grid.Objects[cell, 3];
 		if (gameObject != null)
 		{
-			Pickupable component = gameObject.GetComponent<Pickupable>();
-			ObjectLayerListItem nextItem = component.objectLayerListItem.nextItem;
+			ObjectLayerListItem nextItem = gameObject.GetComponent<Pickupable>().objectLayerListItem.nextItem;
 			if (nextItem != null)
 			{
 				return TryStore(nextItem.gameObject, smi);
@@ -218,15 +216,15 @@ public class SweepStates : GameStateMachine<SweepStates, SweepStates.Instance, I
 			bool flag = false;
 			if (component.TotalAmount > 10f)
 			{
-				EntitySplitter component3 = component.GetComponent<EntitySplitter>();
+				component.GetComponent<EntitySplitter>();
 				component = EntitySplitter.Split(component, Mathf.Min(10f, storage.RemainingCapacity()));
-				float value = smi.gameObject.GetAmounts().GetValue(Db.Get().Amounts.InternalBattery.Id);
+				smi.gameObject.GetAmounts().GetValue(Db.Get().Amounts.InternalBattery.Id);
 				storage.Store(component.gameObject);
 				flag = true;
 			}
 			else
 			{
-				float value2 = smi.gameObject.GetAmounts().GetValue(Db.Get().Amounts.InternalBattery.Id);
+				smi.gameObject.GetAmounts().GetValue(Db.Get().Amounts.InternalBattery.Id);
 				storage.Store(component.gameObject);
 				flag = true;
 			}
@@ -254,12 +252,11 @@ public class SweepStates : GameStateMachine<SweepStates, SweepStates.Instance, I
 		for (; i < 1; i++)
 		{
 			invalidCell = (smi.sm.headingRight.Get(smi) ? Grid.CellRight(num) : Grid.CellLeft(num));
-			if (Grid.IsValidCell(invalidCell) && !Grid.Solid[invalidCell] && Grid.IsValidCell(Grid.CellBelow(invalidCell)) && Grid.Solid[Grid.CellBelow(invalidCell)])
+			if (!Grid.IsValidCell(invalidCell) || Grid.Solid[invalidCell] || !Grid.IsValidCell(Grid.CellBelow(invalidCell)) || !Grid.Solid[Grid.CellBelow(invalidCell)])
 			{
-				num = invalidCell;
-				continue;
+				break;
 			}
-			break;
+			num = invalidCell;
 		}
 		if (num == Grid.PosToCell(smi))
 		{

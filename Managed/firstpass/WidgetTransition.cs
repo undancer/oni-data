@@ -16,11 +16,21 @@ public class WidgetTransition : MonoBehaviour
 
 	private const float FADEIN_SPEED = 6f;
 
-	private bool fadingIn = false;
+	private bool fadingIn;
 
-	private CanvasGroup canvasGroup = null;
+	private CanvasGroup canvasGroup;
 
-	private CanvasGroup CanvasGroup => (canvasGroup == null) ? (canvasGroup = base.gameObject.FindOrAddUnityComponent<CanvasGroup>()) : canvasGroup;
+	private CanvasGroup CanvasGroup
+	{
+		get
+		{
+			if (!(canvasGroup == null))
+			{
+				return canvasGroup;
+			}
+			return canvasGroup = base.gameObject.FindOrAddUnityComponent<CanvasGroup>();
+		}
+	}
 
 	public void SetTransitionType(TransitionType transitionType)
 	{

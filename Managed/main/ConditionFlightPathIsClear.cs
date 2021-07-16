@@ -7,7 +7,7 @@ public class ConditionFlightPathIsClear : ProcessCondition
 
 	private int bufferWidth;
 
-	private bool hasClearSky = false;
+	private bool hasClearSky;
 
 	private int obstructedTile = -1;
 
@@ -22,7 +22,11 @@ public class ConditionFlightPathIsClear : ProcessCondition
 	public override Status EvaluateCondition()
 	{
 		Update();
-		return hasClearSky ? Status.Ready : Status.Failure;
+		if (!hasClearSky)
+		{
+			return Status.Failure;
+		}
+		return Status.Ready;
 	}
 
 	public override StatusItem GetStatusItem(Status status)
@@ -69,8 +73,7 @@ public class ConditionFlightPathIsClear : ProcessCondition
 
 	public void Update()
 	{
-		Building component = module.GetComponent<Building>();
-		Extents extents = component.GetExtents();
+		Extents extents = module.GetComponent<Building>().GetExtents();
 		int x = extents.x - bufferWidth;
 		int x2 = extents.x + extents.width - 1 + bufferWidth;
 		int y = extents.y;
@@ -90,10 +93,10 @@ public class ConditionFlightPathIsClear : ProcessCondition
 
 	public static int PadTopEdgeDistanceToCeilingEdge(GameObject launchpad)
 	{
-		float y = launchpad.GetMyWorld().maximumBounds.y;
+		_ = launchpad.GetMyWorld().maximumBounds;
 		int num = (int)launchpad.GetMyWorld().maximumBounds.y;
-		int y2 = Grid.CellToXY(launchpad.GetComponent<LaunchPad>().RocketBottomPosition).y;
-		return num - Grid.TopBorderHeight - y2 + 1;
+		int y = Grid.CellToXY(launchpad.GetComponent<LaunchPad>().RocketBottomPosition).y;
+		return num - Grid.TopBorderHeight - y + 1;
 	}
 
 	public static bool CheckFlightPathClear(CraftModuleInterface craft, GameObject launchpad, out int obstruction)
@@ -112,8 +115,7 @@ public class ConditionFlightPathIsClear : ProcessCondition
 					for (int j = 0; j < widthInCells; j++)
 					{
 						int num2 = Grid.XYToCell(j + (vector2I.x - widthInCells / 2), i + vector2I.y);
-						GameObject gameObject = Grid.Objects[num2, 1];
-						bool flag = Grid.Solid[num2] && (gameObject == null || !gameObject.HasTag(GameTags.DontBlockRockets));
+						bool flag = Grid.Solid[num2];
 						if (!Grid.IsValidCell(num2) || Grid.WorldIdx[num2] != Grid.WorldIdx[launchpad.GetComponent<LaunchPad>().RocketBottomPosition] || flag)
 						{
 							obstruction = num2;
@@ -140,12 +142,8 @@ public class ConditionFlightPathIsClear : ProcessCondition
 		{
 			if (!Grid.IsValidCell(num2) || Grid.Solid[num2])
 			{
-				GameObject gameObject = Grid.Objects[num2, 1];
-				if (gameObject == null || !gameObject.HasTag(GameTags.DontBlockRockets))
-				{
-					obstruction = num2;
-					return false;
-				}
+				obstruction = num2;
+				return false;
 			}
 			num2 = Grid.CellAbove(num2);
 		}
@@ -160,9 +158,7 @@ public class ConditionFlightPathIsClear : ProcessCondition
 		}
 		if (Grid.Objects[obstructedTile, 1] != null)
 		{
-			GameObject gameObject = Grid.Objects[obstructedTile, 1];
-			BuildingDef def = gameObject.GetComponent<Building>().Def;
-			return def.Name;
+			return Grid.Objects[obstructedTile, 1].GetComponent<Building>().Def.Name;
 		}
 		return string.Format(BUILDING.STATUSITEMS.PATH_NOT_CLEAR.TILE_FORMAT, Grid.Element[obstructedTile].tag.ProperName());
 	}

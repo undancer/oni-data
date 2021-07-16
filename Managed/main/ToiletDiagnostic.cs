@@ -32,10 +32,10 @@ public class ToiletDiagnostic : ColonyDiagnostic
 
 	private DiagnosticResult CheckEnoughToilets()
 	{
-		List<IUsable> worldItems = Components.Toilets.GetWorldItems(base.worldID);
-		List<MinionIdentity> worldItems2 = Components.LiveMinionIdentities.GetWorldItems(base.worldID);
+		Components.Toilets.GetWorldItems(base.worldID);
+		List<MinionIdentity> worldItems = Components.LiveMinionIdentities.GetWorldItems(base.worldID);
 		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS);
-		if (worldItems2.Count == 0)
+		if (worldItems.Count == 0)
 		{
 			result.opinion = DiagnosticResult.Opinion.Normal;
 			result.Message = UI.COLONY_DIAGNOSTICS.NO_MINIONS;

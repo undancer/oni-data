@@ -58,17 +58,17 @@ public class OfflineWorldGen : KMonoBehaviour
 
 	public string mainGameLevel = "backend";
 
-	private bool shouldStop = false;
+	private bool shouldStop;
 
 	private StringKey currentConvertedCurrentStage;
 
-	private float currentPercent = 0f;
+	private float currentPercent;
 
-	public bool debug = false;
+	public bool debug;
 
 	private bool trackProgress = true;
 
-	private bool doWorldGen = false;
+	private bool doWorldGen;
 
 	[SerializeField]
 	private LocText titleText;
@@ -107,13 +107,13 @@ public class OfflineWorldGen : KMonoBehaviour
 		UI.WORLDGEN.GENERATESOLARSYSTEM
 	};
 
-	private WorldGenProgressStages.Stages currentStage = WorldGenProgressStages.Stages.Failure;
+	private WorldGenProgressStages.Stages currentStage;
 
-	private bool loadTriggered = false;
+	private bool loadTriggered;
 
-	private bool startedExitFlow = false;
+	private bool startedExitFlow;
 
-	private int seed = 0;
+	private int seed;
 
 	private void TrackProgress(string text)
 	{
@@ -126,8 +126,7 @@ public class OfflineWorldGen : KMonoBehaviour
 	public static bool CanLoadSave()
 	{
 		bool flag = true;
-		string activeSaveFilePath = SaveLoader.GetActiveSaveFilePath();
-		flag = WorldGen.CanLoad(activeSaveFilePath);
+		flag = WorldGen.CanLoad(SaveLoader.GetActiveSaveFilePath());
 		if (!flag)
 		{
 			SaveLoader.SetActiveSaveFilePath(null);
@@ -158,8 +157,7 @@ public class OfflineWorldGen : KMonoBehaviour
 				ValidDimensions validDimensions = this.validDimensions[i];
 				componentInChildren.text = validDimensions.name.ToString();
 				int idx = i;
-				KButton component2 = gameObject.GetComponent<KButton>();
-				component2.onClick += delegate
+				gameObject.GetComponent<KButton>().onClick += delegate
 				{
 					DoWorldGen(idx);
 					ToggleGenerationUI();
@@ -293,8 +291,7 @@ public class OfflineWorldGen : KMonoBehaviour
 		{
 			foreach (ErrorInfo error in errors)
 			{
-				ConfirmDialogScreen confirmDialogScreen = Util.KInstantiateUI<ConfirmDialogScreen>(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, FrontEndManager.Instance.gameObject, force_active: true);
-				confirmDialogScreen.PopupConfirmDialog(error.errorDesc, OnConfirmExit, null);
+				Util.KInstantiateUI<ConfirmDialogScreen>(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, FrontEndManager.Instance.gameObject, force_active: true).PopupConfirmDialog(error.errorDesc, OnConfirmExit, null);
 			}
 		}
 		errorMutex.ReleaseMutex();
@@ -319,11 +316,9 @@ public class OfflineWorldGen : KMonoBehaviour
 
 	private void RemoveButtons()
 	{
-		int childCount = buttonRoot.childCount;
-		for (int num = childCount - 1; num >= 0; num--)
+		for (int num = buttonRoot.childCount - 1; num >= 0; num--)
 		{
-			Transform child = buttonRoot.GetChild(num);
-			UnityEngine.Object.Destroy(child.gameObject);
+			UnityEngine.Object.Destroy(buttonRoot.GetChild(num).gameObject);
 		}
 	}
 

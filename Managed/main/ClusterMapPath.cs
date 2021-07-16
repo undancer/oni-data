@@ -79,8 +79,7 @@ public class ClusterMapPath : MonoBehaviour
 		if (m_nodes.Count > 1)
 		{
 			Vector2 b = m_nodes[0];
-			Vector2 a = m_nodes[1];
-			Vector2 to = a - b;
+			Vector2 to = m_nodes[1] - b;
 			return Vector2.SignedAngle(Vector2.up, to);
 		}
 		return 0f;

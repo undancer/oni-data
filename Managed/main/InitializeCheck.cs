@@ -23,7 +23,7 @@ public class InitializeCheck : MonoBehaviour
 
 	public Sprite sadDupe;
 
-	private SavePathIssue test_issue = SavePathIssue.Ok;
+	private SavePathIssue test_issue;
 
 	public static SavePathIssue savePathState
 	{
@@ -62,8 +62,7 @@ public class InitializeCheck : MonoBehaviour
 	private void ShowErrorDialog(string msg)
 	{
 		GameObject parent = CreateUIRoot();
-		ConfirmDialogScreen confirmDialogScreen = Util.KInstantiateUI<ConfirmDialogScreen>(this.confirmDialogScreen.gameObject, parent, force_active: true);
-		confirmDialogScreen.PopupConfirmDialog(msg, Quit, null, null, null, null, null, null, sadDupe);
+		Util.KInstantiateUI<ConfirmDialogScreen>(confirmDialogScreen.gameObject, parent, force_active: true).PopupConfirmDialog(msg, Quit, null, null, null, null, null, null, sadDupe);
 	}
 
 	private void ShowFileErrorDialogs()
@@ -106,7 +105,7 @@ public class InitializeCheck : MonoBehaviour
 		catch
 		{
 			savePathState = SavePathIssue.WriteTestFail;
-			goto IL_0115;
+			goto IL_00e7;
 		}
 		using (FileStream fileStream2 = File.Open(savePrefix + testSave, FileMode.Create, FileAccess.Write))
 		{
@@ -120,7 +119,7 @@ public class InitializeCheck : MonoBehaviour
 			{
 				fileStream2.Close();
 				savePathState = SavePathIssue.SpaceTestFail;
-				goto IL_0115;
+				goto IL_00e7;
 			}
 		}
 		try
@@ -136,8 +135,8 @@ public class InitializeCheck : MonoBehaviour
 		{
 			savePathState = SavePathIssue.WorldGenFilesFail;
 		}
-		goto IL_0115;
-		IL_0115:
+		goto IL_00e7;
+		IL_00e7:
 		try
 		{
 			if (File.Exists(savePrefix + testFile))

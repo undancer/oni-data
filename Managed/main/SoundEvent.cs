@@ -8,7 +8,7 @@ public class SoundEvent : AnimEvent
 {
 	public static int IGNORE_INTERVAL = -1;
 
-	protected bool isDynamic = false;
+	protected bool isDynamic;
 
 	public string sound
 	{
@@ -70,8 +70,9 @@ public class SoundEvent : AnimEvent
 		{
 			sound = GlobalAssets.GetSound(sound_name);
 			soundHash = new HashedString(sound);
-			if (sound != null && !(sound == ""))
+			if (sound != null)
 			{
+				_ = sound == "";
 			}
 		}
 		minInterval = min_interval;
@@ -169,8 +170,7 @@ public class SoundEvent : AnimEvent
 	{
 		Vector3 vector = behaviour.GetComponent<Transform>().GetPosition();
 		vector.z = 0f;
-		GameObject gameObject = behaviour.controller.gameObject;
-		if (ObjectIsSelectedAndVisible(gameObject))
+		if (ObjectIsSelectedAndVisible(behaviour.controller.gameObject))
 		{
 			vector = AudioHighlightListenerPosition(vector);
 		}

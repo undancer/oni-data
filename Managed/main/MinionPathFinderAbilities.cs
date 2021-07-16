@@ -6,9 +6,9 @@ public class MinionPathFinderAbilities : PathFinderAbilities
 
 	private int proxyID;
 
-	private bool out_of_fuel = false;
+	private bool out_of_fuel;
 
-	private bool idleNavMaskEnabled = false;
+	private bool idleNavMaskEnabled;
 
 	public MinionPathFinderAbilities(Navigator navigator)
 		: base(navigator)

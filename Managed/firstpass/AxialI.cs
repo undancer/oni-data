@@ -130,32 +130,56 @@ public struct AxialI : IEquatable<AxialI>
 
 	public static bool operator ==(AxialI u, AxialI v)
 	{
-		return u.r == v.r && u.q == v.q;
+		if (u.r == v.r)
+		{
+			return u.q == v.q;
+		}
+		return false;
 	}
 
 	public static bool operator !=(AxialI u, AxialI v)
 	{
-		return u.r != v.r || u.q != v.q;
+		if (u.r == v.r)
+		{
+			return u.q != v.q;
+		}
+		return true;
 	}
 
 	public static bool operator <(AxialI u, AxialI v)
 	{
-		return u.r < v.r && u.q < v.q;
+		if (u.r < v.r)
+		{
+			return u.q < v.q;
+		}
+		return false;
 	}
 
 	public static bool operator >(AxialI u, AxialI v)
 	{
-		return u.r > v.r && u.q > v.q;
+		if (u.r > v.r)
+		{
+			return u.q > v.q;
+		}
+		return false;
 	}
 
 	public static bool operator <=(AxialI u, AxialI v)
 	{
-		return u.r <= v.r && u.q <= v.q;
+		if (u.r <= v.r)
+		{
+			return u.q <= v.q;
+		}
+		return false;
 	}
 
 	public static bool operator >=(AxialI u, AxialI v)
 	{
-		return u.r >= v.r && u.q >= v.q;
+		if (u.r >= v.r)
+		{
+			return u.q >= v.q;
+		}
+		return false;
 	}
 
 	public override bool Equals(object obj)
@@ -173,7 +197,11 @@ public struct AxialI : IEquatable<AxialI>
 
 	public bool Equals(AxialI v)
 	{
-		return v.r == r && v.q == q;
+		if (v.r == r)
+		{
+			return v.q == q;
+		}
+		return false;
 	}
 
 	public override int GetHashCode()

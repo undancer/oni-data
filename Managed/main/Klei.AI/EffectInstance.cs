@@ -78,15 +78,18 @@ namespace Klei.AI
 
 		private bool NotInATube(GameObject go, Navigator.ActiveTransition transition)
 		{
-			return transition.navGridTransition.start != NavType.Tube && transition.navGridTransition.end != NavType.Tube;
+			if (transition.navGridTransition.start != NavType.Tube)
+			{
+				return transition.navGridTransition.end != NavType.Tube;
+			}
+			return false;
 		}
 
 		public override void OnCleanUp()
 		{
 			if (statusItem != null)
 			{
-				KSelectable component = base.gameObject.GetComponent<KSelectable>();
-				component.RemoveStatusItem(statusItem);
+				base.gameObject.GetComponent<KSelectable>().RemoveStatusItem(statusItem);
 				statusItem = null;
 			}
 			if (reactable != null)
@@ -103,7 +106,11 @@ namespace Klei.AI
 
 		public bool IsExpired()
 		{
-			return effect.duration > 0f && timeRemaining <= 0f;
+			if (effect.duration > 0f)
+			{
+				return timeRemaining <= 0f;
+			}
+			return false;
 		}
 
 		private void ConfigureStatusItem()
@@ -126,13 +133,13 @@ namespace Klei.AI
 		private string ResolveTooltip(string str, object data)
 		{
 			string text = str;
-			EffectInstance effectInstance = (EffectInstance)data;
-			string text2 = Effect.CreateTooltip(effectInstance.effect, showDuration: false);
+			EffectInstance obj = (EffectInstance)data;
+			string text2 = Effect.CreateTooltip(obj.effect, showDuration: false);
 			if (!string.IsNullOrEmpty(text2))
 			{
 				text = text + "\n\n" + text2;
 			}
-			if (effectInstance.effect.duration > 0f)
+			if (obj.effect.duration > 0f)
 			{
 				text = text + "\n\n" + string.Format(DUPLICANTS.MODIFIERS.TIME_REMAINING, GameUtil.GetFormattedCycles(GetTimeRemaining()));
 			}

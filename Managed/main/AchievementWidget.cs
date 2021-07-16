@@ -75,35 +75,34 @@ public class AchievementWidget : KMonoBehaviour
 		SetNeverAchieved();
 		if (GetComponent<Canvas>() == null)
 		{
-			Canvas canvas = base.gameObject.AddComponent<Canvas>();
-			canvas.sortingOrder = 1;
+			base.gameObject.AddComponent<Canvas>().sortingOrder = 1;
 		}
 		GetComponent<Canvas>().overrideSorting = true;
 		yield return new WaitForSecondsRealtime(startDelay);
-		KScrollRect scrollRect = base.transform.parent.parent.GetComponent<KScrollRect>();
-		float scrollTarget = 1f + base.transform.localPosition.y / scrollRect.content.rect.height;
-		scrollRect.SetSmoothAutoScrollTarget(scrollTarget);
+		KScrollRect component = base.transform.parent.parent.GetComponent<KScrollRect>();
+		float smoothAutoScrollTarget = 1f + base.transform.localPosition.y / component.content.rect.height;
+		component.SetSmoothAutoScrollTarget(smoothAutoScrollTarget);
 		GameObject icon = GetComponent<HierarchyReferences>().GetReference<Image>("icon").transform.parent.gameObject;
 		KBatchedAnimController[] array = sparks;
-		foreach (KBatchedAnimController fx in array)
+		foreach (KBatchedAnimController kBatchedAnimController in array)
 		{
-			if (fx.transform.parent != icon.transform.parent)
+			if (kBatchedAnimController.transform.parent != icon.transform.parent)
 			{
-				fx.GetComponent<KBatchedAnimController>().TintColour = new Color(1f, 0.86f, 0.56f, 1f);
-				fx.transform.SetParent(icon.transform.parent);
-				fx.transform.SetSiblingIndex(icon.transform.GetSiblingIndex());
-				fx.GetComponent<KBatchedAnimCanvasRenderer>().compare = CompareFunction.Always;
+				kBatchedAnimController.GetComponent<KBatchedAnimController>().TintColour = new Color(1f, 0.86f, 0.56f, 1f);
+				kBatchedAnimController.transform.SetParent(icon.transform.parent);
+				kBatchedAnimController.transform.SetSiblingIndex(icon.transform.GetSiblingIndex());
+				kBatchedAnimController.GetComponent<KBatchedAnimCanvasRenderer>().compare = CompareFunction.Always;
 			}
 		}
-		HierarchyReferences refs = GetComponent<HierarchyReferences>();
-		refs.GetReference<Image>("iconBG").color = color_dark_red;
-		refs.GetReference<Image>("iconBorder").color = color_gold;
-		refs.GetReference<Image>("icon").color = color_gold;
+		HierarchyReferences component2 = GetComponent<HierarchyReferences>();
+		component2.GetReference<Image>("iconBG").color = color_dark_red;
+		component2.GetReference<Image>("iconBorder").color = color_gold;
+		component2.GetReference<Image>("icon").color = color_gold;
 		bool colorChanged = false;
-		EventInstance achievementUnlockedSound = KFMOD.BeginOneShot(GlobalAssets.GetSound("AchievementUnlocked"), Vector3.zero);
-		int pitchParamValue = Mathf.RoundToInt(MathUtil.Clamp(1f, 7f, startDelay - startDelay % 1f / 1f)) - 1;
-		achievementUnlockedSound.setParameterByName("num_achievements", pitchParamValue);
-		KFMOD.EndOneShot(achievementUnlockedSound);
+		EventInstance instance = KFMOD.BeginOneShot(GlobalAssets.GetSound("AchievementUnlocked"), Vector3.zero);
+		int num = Mathf.RoundToInt(MathUtil.Clamp(1f, 7f, startDelay - startDelay % 1f / 1f)) - 1;
+		instance.setParameterByName("num_achievements", num);
+		KFMOD.EndOneShot(instance);
 		for (float j = 0f; j < 1.2f; j += Time.unscaledDeltaTime)
 		{
 			icon.transform.localScale = Vector3.one * flourish_iconScaleCurve.Evaluate(j);
@@ -111,17 +110,17 @@ public class AchievementWidget : KMonoBehaviour
 			if (j > 1f && !colorChanged)
 			{
 				colorChanged = true;
-				KBatchedAnimController[] array2 = sparks;
-				foreach (KBatchedAnimController fx2 in array2)
+				array = sparks;
+				for (int k = 0; k < array.Length; k++)
 				{
-					fx2.Play("spark");
+					array[k].Play("spark");
 				}
 				SetAchievedNow();
 			}
 			yield return 0;
 		}
 		icon.transform.localScale = Vector3.one;
-		for (float i = 0f; i < 0.3f; i += Time.unscaledDeltaTime)
+		for (float j = 0f; j < 0.3f; j += Time.unscaledDeltaTime)
 		{
 			yield return 0;
 		}
@@ -131,44 +130,41 @@ public class AchievementWidget : KMonoBehaviour
 
 	public void SetAchievedNow()
 	{
-		MultiToggle component = GetComponent<MultiToggle>();
-		component.ChangeState(1);
-		HierarchyReferences component2 = GetComponent<HierarchyReferences>();
-		component2.GetReference<Image>("iconBG").color = color_dark_red;
-		component2.GetReference<Image>("iconBorder").color = color_gold;
-		component2.GetReference<Image>("icon").color = color_gold;
+		GetComponent<MultiToggle>().ChangeState(1);
+		HierarchyReferences component = GetComponent<HierarchyReferences>();
+		component.GetReference<Image>("iconBG").color = color_dark_red;
+		component.GetReference<Image>("iconBorder").color = color_gold;
+		component.GetReference<Image>("icon").color = color_gold;
 		LocText[] componentsInChildren = GetComponentsInChildren<LocText>();
-		foreach (LocText locText in componentsInChildren)
+		for (int i = 0; i < componentsInChildren.Length; i++)
 		{
-			locText.color = Color.white;
+			componentsInChildren[i].color = Color.white;
 		}
 		ConfigureToolTip(GetComponent<ToolTip>(), COLONY_ACHIEVEMENTS.ACHIEVED_THIS_COLONY_TOOLTIP);
 	}
 
 	public void SetAchievedBefore()
 	{
-		MultiToggle component = GetComponent<MultiToggle>();
-		component.ChangeState(1);
-		HierarchyReferences component2 = GetComponent<HierarchyReferences>();
-		component2.GetReference<Image>("iconBG").color = color_dark_red;
-		component2.GetReference<Image>("iconBorder").color = color_gold;
-		component2.GetReference<Image>("icon").color = color_gold;
+		GetComponent<MultiToggle>().ChangeState(1);
+		HierarchyReferences component = GetComponent<HierarchyReferences>();
+		component.GetReference<Image>("iconBG").color = color_dark_red;
+		component.GetReference<Image>("iconBorder").color = color_gold;
+		component.GetReference<Image>("icon").color = color_gold;
 		LocText[] componentsInChildren = GetComponentsInChildren<LocText>();
-		foreach (LocText locText in componentsInChildren)
+		for (int i = 0; i < componentsInChildren.Length; i++)
 		{
-			locText.color = Color.white;
+			componentsInChildren[i].color = Color.white;
 		}
 		ConfigureToolTip(GetComponent<ToolTip>(), COLONY_ACHIEVEMENTS.ACHIEVED_OTHER_COLONY_TOOLTIP);
 	}
 
 	public void SetNeverAchieved()
 	{
-		MultiToggle component = GetComponent<MultiToggle>();
-		component.ChangeState(2);
-		HierarchyReferences component2 = GetComponent<HierarchyReferences>();
-		component2.GetReference<Image>("iconBG").color = color_dark_grey;
-		component2.GetReference<Image>("iconBorder").color = color_grey;
-		component2.GetReference<Image>("icon").color = color_grey;
+		GetComponent<MultiToggle>().ChangeState(2);
+		HierarchyReferences component = GetComponent<HierarchyReferences>();
+		component.GetReference<Image>("iconBG").color = color_dark_grey;
+		component.GetReference<Image>("iconBorder").color = color_grey;
+		component.GetReference<Image>("icon").color = color_grey;
 		LocText[] componentsInChildren = GetComponentsInChildren<LocText>();
 		foreach (LocText locText in componentsInChildren)
 		{
@@ -179,12 +175,11 @@ public class AchievementWidget : KMonoBehaviour
 
 	public void SetNotAchieved()
 	{
-		MultiToggle component = GetComponent<MultiToggle>();
-		component.ChangeState(2);
-		HierarchyReferences component2 = GetComponent<HierarchyReferences>();
-		component2.GetReference<Image>("iconBG").color = color_dark_grey;
-		component2.GetReference<Image>("iconBorder").color = color_grey;
-		component2.GetReference<Image>("icon").color = color_grey;
+		GetComponent<MultiToggle>().ChangeState(2);
+		HierarchyReferences component = GetComponent<HierarchyReferences>();
+		component.GetReference<Image>("iconBG").color = color_dark_grey;
+		component.GetReference<Image>("iconBorder").color = color_grey;
+		component.GetReference<Image>("icon").color = color_grey;
 		LocText[] componentsInChildren = GetComponentsInChildren<LocText>();
 		foreach (LocText locText in componentsInChildren)
 		{
@@ -195,15 +190,14 @@ public class AchievementWidget : KMonoBehaviour
 
 	public void SetFailed()
 	{
-		MultiToggle component = GetComponent<MultiToggle>();
-		component.ChangeState(2);
-		HierarchyReferences component2 = GetComponent<HierarchyReferences>();
-		component2.GetReference<Image>("iconBG").color = color_dark_grey;
-		component2.GetReference<Image>("iconBG").SetAlpha(0.5f);
-		component2.GetReference<Image>("iconBorder").color = color_grey;
-		component2.GetReference<Image>("iconBorder").SetAlpha(0.5f);
-		component2.GetReference<Image>("icon").color = color_grey;
-		component2.GetReference<Image>("icon").SetAlpha(0.5f);
+		GetComponent<MultiToggle>().ChangeState(2);
+		HierarchyReferences component = GetComponent<HierarchyReferences>();
+		component.GetReference<Image>("iconBG").color = color_dark_grey;
+		component.GetReference<Image>("iconBG").SetAlpha(0.5f);
+		component.GetReference<Image>("iconBorder").color = color_grey;
+		component.GetReference<Image>("iconBorder").SetAlpha(0.5f);
+		component.GetReference<Image>("icon").color = color_grey;
+		component.GetReference<Image>("icon").SetAlpha(0.5f);
 		LocText[] componentsInChildren = GetComponentsInChildren<LocText>();
 		foreach (LocText locText in componentsInChildren)
 		{
@@ -277,8 +271,7 @@ public class AchievementWidget : KMonoBehaviour
 
 	private void SetDescription(string str, HierarchyReferences refs)
 	{
-		LocText reference = refs.GetReference<LocText>("Desc");
-		reference.SetText(str);
+		refs.GetReference<LocText>("Desc").SetText(str);
 	}
 
 	private void SetIcon(Sprite sprite, Color color, HierarchyReferences refs)
@@ -291,8 +284,7 @@ public class AchievementWidget : KMonoBehaviour
 
 	private void ShowIcon(bool show, HierarchyReferences refs)
 	{
-		Image reference = refs.GetReference<Image>("Icon");
-		reference.gameObject.SetActive(show);
+		refs.GetReference<Image>("Icon").gameObject.SetActive(show);
 	}
 
 	private void ShowRequirement(bool succeed, ColonyAchievementRequirement req)

@@ -68,7 +68,11 @@ namespace Database
 					num += item.Value;
 				}
 			}
-			return complete ? amountToProduce : num;
+			if (!complete)
+			{
+				return num;
+			}
+			return amountToProduce;
 		}
 	}
 }

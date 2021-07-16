@@ -21,7 +21,7 @@ public class StressDiagnostic : ColonyDiagnostic
 		if (worldItems.Count == 0)
 		{
 			result.opinion = DiagnosticResult.Opinion.Normal;
-			string text = (TrackerTool.Instance.IsRocketInterior(base.worldID) ? UI.COLONY_DIAGNOSTICS.ROCKET : UI.CLUSTERMAP.PLANETOID_KEYWORD);
+			_ = (string)(TrackerTool.Instance.IsRocketInterior(base.worldID) ? UI.COLONY_DIAGNOSTICS.ROCKET : UI.CLUSTERMAP.PLANETOID_KEYWORD);
 			result.Message = UI.COLONY_DIAGNOSTICS.NO_MINIONS;
 		}
 		else

@@ -27,8 +27,7 @@ namespace Klei.AI.DiseaseGrowthRules
 
 		public float CalculateExposureDiseaseCountDelta(int disease_count, float dt)
 		{
-			float num = Disease.HalfLifeToGrowthRate(populationHalfLife, dt);
-			return (num - 1f) * (float)disease_count;
+			return (Disease.HalfLifeToGrowthRate(populationHalfLife, dt) - 1f) * (float)disease_count;
 		}
 	}
 }

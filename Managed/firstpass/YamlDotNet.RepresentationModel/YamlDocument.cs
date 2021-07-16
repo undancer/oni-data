@@ -118,8 +118,7 @@ namespace YamlDotNet.RepresentationModel
 
 		private void AssignAnchors()
 		{
-			AnchorAssigningVisitor anchorAssigningVisitor = new AnchorAssigningVisitor();
-			anchorAssigningVisitor.AssignAnchors(this);
+			new AnchorAssigningVisitor().AssignAnchors(this);
 		}
 
 		internal void Save(IEmitter emitter, bool assignAnchors = true)

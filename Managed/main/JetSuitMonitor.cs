@@ -34,12 +34,20 @@ public class JetSuitMonitor : GameStateMachine<JetSuitMonitor, JetSuitMonitor.In
 
 	public static bool ShouldStartFlying(Instance smi)
 	{
-		return (bool)smi.navigator && smi.navigator.CurrentNavType == NavType.Hover;
+		if ((bool)smi.navigator)
+		{
+			return smi.navigator.CurrentNavType == NavType.Hover;
+		}
+		return false;
 	}
 
 	public static bool ShouldStopFlying(Instance smi)
 	{
-		return !smi.navigator || smi.navigator.CurrentNavType != NavType.Hover;
+		if ((bool)smi.navigator)
+		{
+			return smi.navigator.CurrentNavType != NavType.Hover;
+		}
+		return true;
 	}
 
 	public static void StartFlying(Instance smi)

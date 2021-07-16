@@ -21,7 +21,11 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			return other is PartyBeaconID_t && this == (PartyBeaconID_t)other;
+			if (other is PartyBeaconID_t)
+			{
+				return this == (PartyBeaconID_t)other;
+			}
+			return false;
 		}
 
 		public override int GetHashCode()

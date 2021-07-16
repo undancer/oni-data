@@ -24,8 +24,7 @@ namespace Klei.AI
 				{
 					return;
 				}
-				Room room = list[UnityEngine.Random.Range(0, list.Count)];
-				List<GameObject> buildingsOnFloor = room.GetBuildingsOnFloor();
+				List<GameObject> buildingsOnFloor = list[UnityEngine.Random.Range(0, list.Count)].GetBuildingsOnFloor();
 				for (int i = 0; i < Math.Min(Components.LiveMinionIdentities.Count, buildingsOnFloor.Count); i++)
 				{
 					MinionIdentity master = Components.LiveMinionIdentities[i];
@@ -126,13 +125,11 @@ namespace Klei.AI
 				GameplayEventPopupData gameplayEventPopupData = new GameplayEventPopupData(smi.gameplayEvent);
 				gameplayEventPopupData.location = GAMEPLAY_EVENTS.LOCATIONS.PRINTING_POD;
 				gameplayEventPopupData.whenDescription = string.Format(GAMEPLAY_EVENTS.TIMES.IN_CYCLES, 0.1f);
-				GameplayEventPopupData.PopupOption popupOption = gameplayEventPopupData.AddOption(GAMEPLAY_EVENTS.EVENT_TYPES.FOOD_FIGHT.ACCEPT_OPTION_NAME);
-				popupOption.callback = delegate
+				gameplayEventPopupData.AddOption(GAMEPLAY_EVENTS.EVENT_TYPES.FOOD_FIGHT.ACCEPT_OPTION_NAME).callback = delegate
 				{
 					smi.GoTo(smi.sm.warmup.wait);
 				};
-				GameplayEventPopupData.PopupOption popupOption2 = gameplayEventPopupData.AddOption(GAMEPLAY_EVENTS.EVENT_TYPES.FOOD_FIGHT.REJECT_OPTION_NAME);
-				popupOption2.callback = delegate
+				gameplayEventPopupData.AddOption(GAMEPLAY_EVENTS.EVENT_TYPES.FOOD_FIGHT.REJECT_OPTION_NAME).callback = delegate
 				{
 					smi.GoTo(smi.sm.canceled);
 				};

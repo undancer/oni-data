@@ -45,7 +45,7 @@ public class ColonyDestinationSelectScreen : NewGameFlowScreen
 
 	private System.Random random;
 
-	private bool isEditingCoordinate = false;
+	private bool isEditingCoordinate;
 
 	protected override void OnPrefabInit()
 	{
@@ -98,8 +98,7 @@ public class ColonyDestinationSelectScreen : NewGameFlowScreen
 		ToolTip component6 = component4.GetComponent<ToolTip>();
 		component5.toolTip = $"{UI.FRONTEND.CUSTOMGAMESETTINGSSCREEN.SETTINGS.SAVETOCLOUD.TOOLTIP}\n{UI.FRONTEND.CUSTOMGAMESETTINGSSCREEN.SETTINGS.SAVETOCLOUD.TOOLTIP_EXTRA}";
 		component6.toolTip = $"{UI.FRONTEND.CUSTOMGAMESETTINGSSCREEN.SETTINGS.SAVETOCLOUD.TOOLTIP_LOCAL}\n{UI.FRONTEND.CUSTOMGAMESETTINGSSCREEN.SETTINGS.SAVETOCLOUD.TOOLTIP_EXTRA}";
-		string id = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.SaveToCloud).id;
-		bool flag = id == "Enabled";
+		bool flag = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.SaveToCloud).id == "Enabled";
 		component2.text = (flag ? UI.FRONTEND.LOADSCREEN.CLOUD_SAVE : UI.FRONTEND.LOADSCREEN.LOCAL_SAVE);
 		component3.gameObject.SetActive(flag);
 		component3.ClearOnClick();

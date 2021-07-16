@@ -33,7 +33,7 @@ public class ReceptacleMonitor : StateMachineComponent<ReceptacleMonitor.StatesI
 		}
 	}
 
-	private bool replanted = false;
+	private bool replanted;
 
 	public bool Replanted => replanted;
 
@@ -114,8 +114,9 @@ public class ReceptacleMonitor : StateMachineComponent<ReceptacleMonitor.StatesI
 
 	public List<Descriptor> GetDescriptors(GameObject go)
 	{
-		List<Descriptor> list = new List<Descriptor>();
-		list.Add(new Descriptor(UI.GAMEOBJECTEFFECTS.REQUIRES_RECEPTACLE, UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_RECEPTACLE, Descriptor.DescriptorType.Requirement));
-		return list;
+		return new List<Descriptor>
+		{
+			new Descriptor(UI.GAMEOBJECTEFFECTS.REQUIRES_RECEPTACLE, UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_RECEPTACLE, Descriptor.DescriptorType.Requirement)
+		};
 	}
 }

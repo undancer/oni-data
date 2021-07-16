@@ -103,13 +103,11 @@ public class AmountStateConversation : ConversationType
 	{
 		if (Db.Get().Amounts.Exists(topic))
 		{
-			Amount amount = Db.Get().Amounts.Get(topic);
-			return Assets.GetSprite(amount.thoughtSprite);
+			return Assets.GetSprite(Db.Get().Amounts.Get(topic).thoughtSprite);
 		}
 		if (Db.Get().Attributes.Exists(topic))
 		{
-			Attribute attribute = Db.Get().Attributes.Get(topic);
-			return Assets.GetSprite(attribute.thoughtSprite);
+			return Assets.GetSprite(Db.Get().Attributes.Get(topic).thoughtSprite);
 		}
 		return null;
 	}

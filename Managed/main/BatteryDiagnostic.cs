@@ -18,15 +18,14 @@ public class BatteryDiagnostic : ColonyDiagnostic
 	{
 		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS);
 		int num = 5;
-		IList<UtilityNetwork> networks = Game.Instance.electricalConduitSystem.GetNetworks();
-		foreach (ElectricalUtilityNetwork item in networks)
+		foreach (ElectricalUtilityNetwork network in Game.Instance.electricalConduitSystem.GetNetworks())
 		{
-			if (item.allWires == null || item.allWires.Count == 0)
+			if (network.allWires == null || network.allWires.Count == 0)
 			{
 				continue;
 			}
 			float num2 = 0f;
-			int num3 = Grid.PosToCell(item.allWires[0]);
+			int num3 = Grid.PosToCell(network.allWires[0]);
 			if (Grid.WorldIdx[num3] != base.worldID)
 			{
 				continue;
@@ -37,11 +36,11 @@ public class BatteryDiagnostic : ColonyDiagnostic
 			{
 				continue;
 			}
-			foreach (Battery item2 in Game.Instance.circuitManager.GetBatteriesOnCircuit(circuitID))
+			foreach (Battery item in Game.Instance.circuitManager.GetBatteriesOnCircuit(circuitID))
 			{
 				result.opinion = DiagnosticResult.Opinion.Normal;
 				result.Message = UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.NORMAL;
-				num2 += item2.capacity;
+				num2 += item.capacity;
 			}
 			if (num2 < Game.Instance.circuitManager.GetWattsUsedByCircuit(circuitID) * (float)num)
 			{
@@ -60,14 +59,13 @@ public class BatteryDiagnostic : ColonyDiagnostic
 	public DiagnosticResult CheckDead()
 	{
 		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS);
-		IList<UtilityNetwork> networks = Game.Instance.electricalConduitSystem.GetNetworks();
-		foreach (ElectricalUtilityNetwork item in networks)
+		foreach (ElectricalUtilityNetwork network in Game.Instance.electricalConduitSystem.GetNetworks())
 		{
-			if (item.allWires == null || item.allWires.Count == 0)
+			if (network.allWires == null || network.allWires.Count == 0)
 			{
 				continue;
 			}
-			int num = Grid.PosToCell(item.allWires[0]);
+			int num = Grid.PosToCell(network.allWires[0]);
 			if (Grid.WorldIdx[num] != base.worldID)
 			{
 				continue;
@@ -78,16 +76,15 @@ public class BatteryDiagnostic : ColonyDiagnostic
 			{
 				continue;
 			}
-			foreach (Battery item2 in Game.Instance.circuitManager.GetBatteriesOnCircuit(circuitID))
+			foreach (Battery item in Game.Instance.circuitManager.GetBatteriesOnCircuit(circuitID))
 			{
-				if (!ColonyDiagnosticUtility.PastNewBuildingGracePeriod(item2.transform) || item2.CircuitID == ushort.MaxValue || item2.JoulesAvailable != 0f)
+				if (ColonyDiagnosticUtility.PastNewBuildingGracePeriod(item.transform) && item.CircuitID != ushort.MaxValue && item.JoulesAvailable == 0f)
 				{
-					continue;
+					result.opinion = DiagnosticResult.Opinion.Concern;
+					result.Message = UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.DEAD_BATTERY;
+					result.clickThroughTarget = new Tuple<Vector3, GameObject>(item.transform.position, item.gameObject);
+					break;
 				}
-				result.opinion = DiagnosticResult.Opinion.Concern;
-				result.Message = UI.COLONY_DIAGNOSTICS.BATTERYDIAGNOSTIC.DEAD_BATTERY;
-				result.clickThroughTarget = new Tuple<Vector3, GameObject>(item2.transform.position, item2.gameObject);
-				break;
 			}
 		}
 		return result;

@@ -11,7 +11,11 @@ public class ConditionPilotOnBoard : ProcessCondition
 
 	public override Status EvaluateCondition()
 	{
-		return module.CheckPilotBoarded() ? Status.Ready : Status.Failure;
+		if (!module.CheckPilotBoarded())
+		{
+			return Status.Failure;
+		}
+		return Status.Ready;
 	}
 
 	public override string GetStatusMessage(Status status)

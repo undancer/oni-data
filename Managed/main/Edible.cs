@@ -40,7 +40,7 @@ public class Edible : Workable, IGameObjectEffectDescriptor
 
 	private AttributeModifier caloriesLitSpaceModifier = new AttributeModifier("CaloriesDelta", (1f + DUPLICANTSTATS.LIGHT.LIGHT_WORK_EFFICIENCY_BONUS) / 2E-05f, DUPLICANTS.MODIFIERS.EATINGCALORIES.NAME, is_multiplier: false, uiOnly: true);
 
-	private AttributeModifier currentModifier = null;
+	private AttributeModifier currentModifier;
 
 	private static readonly EventSystem.IntraObjectHandler<Edible> OnCraftDelegate = new EventSystem.IntraObjectHandler<Edible>(delegate(Edible component, object data)
 	{
@@ -205,9 +205,17 @@ public class Edible : Workable, IGameObjectEffectDescriptor
 		MinionResume component = worker.GetComponent<MinionResume>();
 		if (component != null && component.CurrentHat != null)
 		{
-			return flag ? saltHatWorkAnims : hatWorkAnims;
+			if (!flag)
+			{
+				return hatWorkAnims;
+			}
+			return saltHatWorkAnims;
 		}
-		return flag ? saltWorkAnims : normalWorkAnims;
+		if (!flag)
+		{
+			return normalWorkAnims;
+		}
+		return saltWorkAnims;
 	}
 
 	public override HashedString[] GetWorkPstAnims(Worker worker, bool successfully_completed)
@@ -216,9 +224,17 @@ public class Edible : Workable, IGameObjectEffectDescriptor
 		MinionResume component = worker.GetComponent<MinionResume>();
 		if (component != null && component.CurrentHat != null)
 		{
-			return flag ? saltHatWorkPstAnim : hatWorkPstAnim;
+			if (!flag)
+			{
+				return hatWorkPstAnim;
+			}
+			return saltHatWorkPstAnim;
 		}
-		return flag ? saltWorkPstAnim : normalWorkPstAnim;
+		if (!flag)
+		{
+			return normalWorkPstAnim;
+		}
+		return saltWorkPstAnim;
 	}
 
 	private void OnCraft(object data)
@@ -229,9 +245,13 @@ public class Edible : Workable, IGameObjectEffectDescriptor
 	public float GetFeedingTime(Worker worker)
 	{
 		float num = Calories * 2E-05f;
-		if (worker != null && (worker.GetSMI<BingeEatChore.StatesInstance>()?.IsBingeEating() ?? false))
+		if (worker != null)
 		{
-			num /= 2f;
+			BingeEatChore.StatesInstance sMI = worker.GetSMI<BingeEatChore.StatesInstance>();
+			if (sMI != null && sMI.IsBingeEating())
+			{
+				num /= 2f;
+			}
 		}
 		return num;
 	}
@@ -243,8 +263,7 @@ public class Edible : Workable, IGameObjectEffectDescriptor
 		caloriesConsumed = 0f;
 		unitsConsumed = 0f;
 		totalUnits = Units;
-		KPrefabID component = worker.GetComponent<KPrefabID>();
-		component.AddTag(GameTags.AlwaysConverse);
+		worker.GetComponent<KPrefabID>().AddTag(GameTags.AlwaysConverse);
 		totalConsumableCalories = Units * foodInfo.CaloriesPerUnit;
 		StartConsuming();
 	}
@@ -276,8 +295,7 @@ public class Edible : Workable, IGameObjectEffectDescriptor
 			worker.GetAttributes().Remove(currentModifier);
 			currentModifier = null;
 		}
-		KPrefabID component = worker.GetComponent<KPrefabID>();
-		component.RemoveTag(GameTags.AlwaysConverse);
+		worker.GetComponent<KPrefabID>().RemoveTag(GameTags.AlwaysConverse);
 		StopConsuming(worker);
 	}
 
@@ -355,13 +373,9 @@ public class Edible : Workable, IGameObjectEffectDescriptor
 
 	private void AddQualityEffects(Worker worker)
 	{
-		Attributes attributes = worker.GetAttributes();
-		AttributeInstance attributeInstance = attributes.Add(Db.Get().Attributes.FoodExpectation);
-		float totalValue = attributeInstance.GetTotalValue();
-		int num = Mathf.RoundToInt(totalValue);
+		int num = Mathf.RoundToInt(worker.GetAttributes().Add(Db.Get().Attributes.FoodExpectation).GetTotalValue());
 		int qualityLevel = FoodInfo.Quality + num;
-		Effects component = worker.GetComponent<Effects>();
-		component.Add(GetEffectForFoodQuality(qualityLevel), should_save: true);
+		worker.GetComponent<Effects>().Add(GetEffectForFoodQuality(qualityLevel), should_save: true);
 	}
 
 	protected override void OnCleanUp()

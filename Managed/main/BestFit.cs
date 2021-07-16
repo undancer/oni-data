@@ -144,6 +144,10 @@ public class BestFit
 		}
 		vector2I.y = Math.Max(newWorldSize.y + vector2I2.y, Grid.HeightInCells);
 		newWorldOffset = vector2I2;
-		return vector2I2.x + newWorldSize.x <= Grid.WidthInCells && vector2I2.y + newWorldSize.y <= Grid.HeightInCells;
+		if (vector2I2.x + newWorldSize.x <= Grid.WidthInCells)
+		{
+			return vector2I2.y + newWorldSize.y <= Grid.HeightInCells;
+		}
+		return false;
 	}
 }

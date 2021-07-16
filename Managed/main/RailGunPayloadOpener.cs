@@ -110,10 +110,8 @@ public class RailGunPayloadOpener : StateMachineComponent<RailGunPayloadOpener.S
 
 	protected override void OnCleanUp()
 	{
-		IUtilityNetworkMgr networkManager = Conduit.GetNetworkManager(liquidPortInfo.conduitType);
-		networkManager.RemoveFromNetworks(liquidOutputCell, liquidNetworkItem, is_endpoint: true);
-		networkManager = Conduit.GetNetworkManager(gasPortInfo.conduitType);
-		networkManager.RemoveFromNetworks(gasOutputCell, gasNetworkItem, is_endpoint: true);
+		Conduit.GetNetworkManager(liquidPortInfo.conduitType).RemoveFromNetworks(liquidOutputCell, liquidNetworkItem, is_endpoint: true);
+		Conduit.GetNetworkManager(gasPortInfo.conduitType).RemoveFromNetworks(gasOutputCell, gasNetworkItem, is_endpoint: true);
 		Game.Instance.solidConduitSystem.RemoveFromNetworks(solidOutputCell, solidDispenser, is_endpoint: true);
 		base.OnCleanUp();
 	}
@@ -149,8 +147,7 @@ public class RailGunPayloadOpener : StateMachineComponent<RailGunPayloadOpener.S
 		if (component != null && component.items.Count > 0)
 		{
 			GameObject gameObject = payloadStorage.items[0];
-			Storage component2 = gameObject.GetComponent<Storage>();
-			component2.Transfer(resourceStorage);
+			gameObject.GetComponent<Storage>().Transfer(resourceStorage);
 			Util.KDestroyGameObject(gameObject);
 			component.ConsumeIgnoringDisease(payloadStorage.items[0]);
 		}
@@ -158,7 +155,11 @@ public class RailGunPayloadOpener : StateMachineComponent<RailGunPayloadOpener.S
 
 	public bool HasSecondaryConduitType(ConduitType type)
 	{
-		return type == gasPortInfo.conduitType || type == liquidPortInfo.conduitType || type == solidPortInfo.conduitType;
+		if (type != gasPortInfo.conduitType && type != liquidPortInfo.conduitType)
+		{
+			return type == solidPortInfo.conduitType;
+		}
+		return true;
 	}
 
 	public CellOffset GetSecondaryConduitOffset(ConduitType type)

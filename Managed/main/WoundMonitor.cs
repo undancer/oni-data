@@ -118,8 +118,7 @@ public class WoundMonitor : GameStateMachine<WoundMonitor, WoundMonitor.Instance
 		{
 			AssignableSlot clinic = Db.Get().AssignableSlots.Clinic;
 			Ownables soleOwner = base.gameObject.GetComponent<MinionIdentity>().GetSoleOwner();
-			AssignableSlotInstance slot = soleOwner.GetSlot(clinic);
-			if (slot.assignable == null)
+			if (soleOwner.GetSlot(clinic).assignable == null)
 			{
 				soleOwner.AutoAssignSlot(clinic);
 			}

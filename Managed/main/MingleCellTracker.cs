@@ -22,8 +22,7 @@ public class MingleCellTracker : KMonoBehaviour, ISim1000ms
 				for (int j = room.cavity.minX; j <= room.cavity.maxX; j++)
 				{
 					int num = Grid.XYToCell(j, i);
-					CavityInfo cavityForCell = roomProber.GetCavityForCell(num);
-					if (cavityForCell == room.cavity && minionGroupProber.IsReachable(num) && !Grid.HasLadder[num] && !Grid.HasTube[num] && !Grid.IsLiquid(num) && Grid.Element[num].id == SimHashes.Oxygen)
+					if (roomProber.GetCavityForCell(num) == room.cavity && minionGroupProber.IsReachable(num) && !Grid.HasLadder[num] && !Grid.HasTube[num] && !Grid.IsLiquid(num) && Grid.Element[num].id == SimHashes.Oxygen)
 					{
 						mingleCells.Add(num);
 					}

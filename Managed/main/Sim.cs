@@ -876,7 +876,11 @@ public static class Sim
 
 	public static bool IsValidHandle(int h)
 	{
-		return h != -1 && h != -2;
+		if (h != -1)
+		{
+			return h != -2;
+		}
+		return false;
 	}
 
 	public static int GetHandleIndex(int h)

@@ -25,9 +25,9 @@ public class UraniumCentrifuge : ComplexFabricator
 	private void DropEnrichedProducts(object data)
 	{
 		Storage[] components = GetComponents<Storage>();
-		foreach (Storage storage in components)
+		for (int i = 0; i < components.Length; i++)
 		{
-			storage.Drop(ElementLoader.FindElementByHash(SimHashes.EnrichedUranium).tag);
+			components[i].Drop(ElementLoader.FindElementByHash(SimHashes.EnrichedUranium).tag);
 		}
 	}
 
@@ -38,8 +38,7 @@ public class UraniumCentrifuge : ComplexFabricator
 		GameObject gameObject = Grid.Objects[cell, 16];
 		if (gameObject != null)
 		{
-			PrimaryElement component2 = gameObject.GetComponent<PrimaryElement>();
-			if (component2.Element.highTemp > ElementLoader.FindElementByHash(SimHashes.MoltenUranium).lowTemp)
+			if (gameObject.GetComponent<PrimaryElement>().Element.highTemp > ElementLoader.FindElementByHash(SimHashes.MoltenUranium).lowTemp)
 			{
 				component.RemoveStatusItem(statusHandle);
 			}

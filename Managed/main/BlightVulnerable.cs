@@ -35,7 +35,7 @@ public class BlightVulnerable : StateMachineComponent<BlightVulnerable.StatesIns
 
 	private SchedulerHandle handle;
 
-	public bool prefersDarkness = false;
+	public bool prefersDarkness;
 
 	protected override void OnPrefabInit()
 	{

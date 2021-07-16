@@ -91,18 +91,17 @@ public class Grave : StateMachineComponent<Grave.StatesInstance>
 		while (true)
 		{
 			KAnim.Anim anim2 = anim.GetData().GetAnim(num);
-			if (anim2 != null)
+			if (anim2 == null)
 			{
-				if (anim2.name == "working_pre")
-				{
-					float workTime = (float)(anim2.numFrames - 3) / anim2.frameRate;
-					component.SetWorkTime(workTime);
-					break;
-				}
-				num++;
-				continue;
+				break;
 			}
-			break;
+			if (anim2.name == "working_pre")
+			{
+				float workTime = (float)(anim2.numFrames - 3) / anim2.frameRate;
+				component.SetWorkTime(workTime);
+				break;
+			}
+			num++;
 		}
 		base.OnSpawn();
 		base.smi.StartSM();
@@ -127,8 +126,5 @@ public class Grave : StateMachineComponent<Grave.StatesInstance>
 
 	private void OnWorkEvent(Workable.WorkableEvent evt)
 	{
-		if (evt == Workable.WorkableEvent.WorkStarted)
-		{
-		}
 	}
 }

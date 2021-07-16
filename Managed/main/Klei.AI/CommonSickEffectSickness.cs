@@ -13,8 +13,7 @@ namespace Klei.AI
 
 		public override void OnCure(GameObject go, object instance_data)
 		{
-			KAnimControllerBase kAnimControllerBase = (KAnimControllerBase)instance_data;
-			kAnimControllerBase.gameObject.DeleteObject();
+			((KAnimControllerBase)instance_data).gameObject.DeleteObject();
 		}
 	}
 }

@@ -33,7 +33,7 @@ public class CrewJobsScreen : CrewListScreen<CrewJobsEntry>
 
 	private bool dirty;
 
-	private float screenWidth = 0f;
+	private float screenWidth;
 
 	protected override void OnActivate()
 	{
@@ -57,8 +57,7 @@ public class CrewJobsScreen : CrewListScreen<CrewJobsEntry>
 		base.SpawnEntries();
 		foreach (MinionIdentity item in Components.LiveMinionIdentities.Items)
 		{
-			GameObject gameObject = Util.KInstantiateUI(Prefab_CrewEntry, EntriesPanelTransform.gameObject);
-			CrewJobsEntry component = gameObject.GetComponent<CrewJobsEntry>();
+			CrewJobsEntry component = Util.KInstantiateUI(Prefab_CrewEntry, EntriesPanelTransform.gameObject).GetComponent<CrewJobsEntry>();
 			component.Populate(item);
 			EntryObjects.Add(component);
 		}
@@ -92,14 +91,10 @@ public class CrewJobsScreen : CrewListScreen<CrewJobsEntry>
 		int childCount = ColumnTitlesContainer.childCount;
 		for (int i = 0; i < childCount; i++)
 		{
-			if (i < choreGroups.Count)
+			if (i < choreGroups.Count && ColumnTitlesContainer.GetChild(i).Find("Title").GetComponentInChildren<Toggle>() == lastSortToggle)
 			{
-				Toggle componentInChildren = ColumnTitlesContainer.GetChild(i).Find("Title").GetComponentInChildren<Toggle>();
-				if (componentInChildren == lastSortToggle)
-				{
-					SortByEffectiveness(choreGroups[i], lastSortReversed, playSound: false);
-					return;
-				}
+				SortByEffectiveness(choreGroups[i], lastSortReversed, playSound: false);
+				return;
 			}
 		}
 		if (SortEveryoneToggle == lastSortToggle)

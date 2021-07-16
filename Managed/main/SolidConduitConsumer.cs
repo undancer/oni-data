@@ -11,10 +11,10 @@ public class SolidConduitConsumer : KMonoBehaviour, IConduitConsumer
 	public float capacityKG = float.PositiveInfinity;
 
 	[SerializeField]
-	public bool alwaysConsume = false;
+	public bool alwaysConsume;
 
 	[SerializeField]
-	public bool useSecondaryInput = false;
+	public bool useSecondaryInput;
 
 	[MyCmpReq]
 	private Operational operational;
@@ -42,7 +42,11 @@ public class SolidConduitConsumer : KMonoBehaviour, IConduitConsumer
 		get
 		{
 			GameObject gameObject = Grid.Objects[utilityCell, 20];
-			return gameObject != null && gameObject.GetComponent<BuildingComplete>() != null;
+			if (gameObject != null)
+			{
+				return gameObject.GetComponent<BuildingComplete>() != null;
+			}
+			return false;
 		}
 	}
 

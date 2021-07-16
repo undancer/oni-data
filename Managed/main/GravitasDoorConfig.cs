@@ -14,19 +14,19 @@ public class GravitasDoorConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("GravitasDoor", 1, 3, "gravitas_door_internal_kanim", 30, 10f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: TUNING.BUILDINGS.DECOR.NONE, temperature_modification_mass_scale: 1f);
-		buildingDef.ShowInBuildMenu = false;
-		buildingDef.Entombable = false;
-		buildingDef.Floodable = false;
-		buildingDef.Invincible = true;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.PermittedRotations = PermittedRotations.R90;
-		buildingDef.ForegroundLayer = Grid.SceneLayer.InteriorWall;
-		buildingDef.LogicInputPorts = DoorConfig.CreateSingleInputPortList(new CellOffset(0, 0));
-		buildingDef.LogicInputPorts = CreateSingleInputPortList(new CellOffset(0, 0));
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("GravitasDoor", 1, 3, "gravitas_door_internal_kanim", 30, 10f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: TUNING.BUILDINGS.DECOR.NONE, temperature_modification_mass_scale: 1f);
+		obj.ShowInBuildMenu = false;
+		obj.Entombable = false;
+		obj.Floodable = false;
+		obj.Invincible = true;
+		obj.AudioCategory = "Metal";
+		obj.PermittedRotations = PermittedRotations.R90;
+		obj.ForegroundLayer = Grid.SceneLayer.InteriorWall;
+		obj.LogicInputPorts = DoorConfig.CreateSingleInputPortList(new CellOffset(0, 0));
+		obj.LogicInputPorts = CreateSingleInputPortList(new CellOffset(0, 0));
 		SoundEventVolumeCache.instance.AddVolume("gravitas_door_internal_kanim", "GravitasDoorInternal_open", NOISE_POLLUTION.NOISY.TIER2);
 		SoundEventVolumeCache.instance.AddVolume("gravitas_door_internal_kanim", "GravitasDoorInternal_close", NOISE_POLLUTION.NOISY.TIER2);
-		return buildingDef;
+		return obj;
 	}
 
 	public static List<LogicPorts.Port> CreateSingleInputPortList(CellOffset offset)
@@ -46,12 +46,9 @@ public class GravitasDoorConfig : IBuildingConfig
 		door.doorOpeningSoundEventName = "GravitasDoorInternal_open";
 		door.doorClosingSoundEventName = "GravitasDoorInternal_close";
 		go.AddOrGet<ZoneTile>();
-		AccessControl accessControl = go.AddOrGet<AccessControl>();
-		accessControl.controlEnabled = true;
-		CopyBuildingSettings copyBuildingSettings = go.AddOrGet<CopyBuildingSettings>();
-		copyBuildingSettings.copyGroupTag = GameTags.Door;
-		Workable workable = go.AddOrGet<Workable>();
-		workable.workTime = 3f;
+		go.AddOrGet<AccessControl>().controlEnabled = true;
+		go.AddOrGet<CopyBuildingSettings>().copyGroupTag = GameTags.Door;
+		go.AddOrGet<Workable>().workTime = 3f;
 		go.AddOrGet<KBoxCollider2D>();
 		Prioritizable.AddRef(go);
 		Object.DestroyImmediate(go.GetComponent<BuildingEnabledButton>());

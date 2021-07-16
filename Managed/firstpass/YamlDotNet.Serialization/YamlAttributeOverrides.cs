@@ -26,7 +26,11 @@ namespace YamlDotNet.Serialization
 			public override bool Equals(object obj)
 			{
 				AttributeKey attributeKey = (AttributeKey)obj;
-				return AttributeType.Equals(attributeKey.AttributeType) && PropertyName.Equals(attributeKey.PropertyName);
+				if (AttributeType.Equals(attributeKey.AttributeType))
+				{
+					return PropertyName.Equals(attributeKey.PropertyName);
+				}
+				return false;
 			}
 
 			public override int GetHashCode()
@@ -50,7 +54,11 @@ namespace YamlDotNet.Serialization
 			public override bool Equals(object obj)
 			{
 				AttributeMapping attributeMapping = obj as AttributeMapping;
-				return attributeMapping != null && RegisteredType.Equals(attributeMapping.RegisteredType) && Attribute.Equals(attributeMapping.Attribute);
+				if (attributeMapping != null && RegisteredType.Equals(attributeMapping.RegisteredType))
+				{
+					return Attribute.Equals(attributeMapping.Attribute);
+				}
+				return false;
 			}
 
 			public override int GetHashCode()

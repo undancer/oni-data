@@ -29,7 +29,7 @@ public class ColonyAchievementTracker : KMonoBehaviour, ISaveLoadableDetails, IR
 	private int forceCheckAchievementHandle = -1;
 
 	[Serialize]
-	private int updatingAchievement = 0;
+	private int updatingAchievement;
 
 	[Serialize]
 	private List<string> completedAchievementsToDisplay = new List<string>();
@@ -318,8 +318,7 @@ public class ColonyAchievementTracker : KMonoBehaviour, ISaveLoadableDetails, IR
 			return;
 		}
 		bool flag = false;
-		Equipment equipment = driver.GetComponent<MinionIdentity>().GetEquipment();
-		foreach (EquipmentSlotInstance slot in equipment.Slots)
+		foreach (EquipmentSlotInstance slot in driver.GetComponent<MinionIdentity>().GetEquipment().Slots)
 		{
 			Equippable equippable = slot.assignable as Equippable;
 			if ((bool)equippable)

@@ -19,12 +19,10 @@ public class FoodSplatConfig : IEntityConfig
 
 	public void OnPrefabInit(GameObject inst)
 	{
-		OccupyArea occupyArea = inst.AddOrGet<OccupyArea>();
-		occupyArea.OccupiedCellsOffsets = new CellOffset[1];
+		inst.AddOrGet<OccupyArea>().OccupiedCellsOffsets = new CellOffset[1];
 		inst.AddComponent<Modifiers>();
 		inst.AddOrGet<KSelectable>();
-		DecorProvider decorProvider = inst.AddOrGet<DecorProvider>();
-		decorProvider.SetValues(DECOR.PENALTY.TIER2);
+		inst.AddOrGet<DecorProvider>().SetValues(DECOR.PENALTY.TIER2);
 		inst.AddOrGetDef<Splat.Def>();
 		inst.AddOrGet<SplatWorkable>();
 	}

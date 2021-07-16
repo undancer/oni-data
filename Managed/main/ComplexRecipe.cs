@@ -28,7 +28,7 @@ public class ComplexRecipe
 
 		public bool storeElement;
 
-		public bool inheritElement = false;
+		public bool inheritElement;
 
 		public float amount
 		{
@@ -70,15 +70,15 @@ public class ComplexRecipe
 
 	public GameObject FabricationVisualizer;
 
-	public int consumedHEP = 0;
+	public int consumedHEP;
 
-	public RecipeNameDisplay nameDisplay = RecipeNameDisplay.Ingredient;
+	public RecipeNameDisplay nameDisplay;
 
 	public string description;
 
 	public List<Tag> fabricators;
 
-	public int sortOrder = 0;
+	public int sortOrder;
 
 	public string requiredTech;
 
@@ -115,16 +115,13 @@ public class ComplexRecipe
 		{
 			return true;
 		}
-		Tech tech = Db.Get().Techs.Get(requiredTech);
-		return tech.IsComplete();
+		return Db.Get().Techs.Get(requiredTech).IsComplete();
 	}
 
 	public Sprite GetUIIcon()
 	{
 		Sprite result = null;
-		Tag tag = ((nameDisplay == RecipeNameDisplay.Ingredient) ? ingredients[0].material : results[0].material);
-		GameObject prefab = Assets.GetPrefab(tag);
-		KBatchedAnimController component = prefab.GetComponent<KBatchedAnimController>();
+		KBatchedAnimController component = Assets.GetPrefab((nameDisplay == RecipeNameDisplay.Ingredient) ? ingredients[0].material : results[0].material).GetComponent<KBatchedAnimController>();
 		if (component != null)
 		{
 			result = Def.GetUISpriteFromMultiObjectAnim(component.AnimFiles[0]);

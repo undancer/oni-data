@@ -1,5 +1,6 @@
 using System;
 using KSerialization;
+using STRINGS;
 using UnityEngine;
 
 [SerializationConfig(MemberSerialization.OptIn)]
@@ -50,7 +51,9 @@ public class Sublimates : KMonoBehaviour, ISim200ms
 	private KSelectable selectable;
 
 	[SerializeField]
-	public SpawnFXHashes spawnFXHash = SpawnFXHashes.None;
+	public SpawnFXHashes spawnFXHash;
+
+	public bool decayStorage;
 
 	[SerializeField]
 	public Info info;
@@ -109,9 +112,9 @@ public class Sublimates : KMonoBehaviour, ISim200ms
 
 	private void OnSplitFromChunk(object data)
 	{
-		Pickupable pickupable = data as Pickupable;
-		PrimaryElement component = pickupable.GetComponent<PrimaryElement>();
-		Sublimates component2 = pickupable.GetComponent<Sublimates>();
+		Pickupable obj = data as Pickupable;
+		PrimaryElement component = obj.GetComponent<PrimaryElement>();
+		Sublimates component2 = obj.GetComponent<Sublimates>();
 		if (!(component2 == null))
 		{
 			float mass = primaryElement.Mass;
@@ -126,7 +129,14 @@ public class Sublimates : KMonoBehaviour, ISim200ms
 	public void Sim200ms(float dt)
 	{
 		int num = Grid.PosToCell(base.transform.GetPosition());
-		if (!Grid.IsValidCell(num) || this.HasTag(GameTags.Sealed))
+		if (!Grid.IsValidCell(num))
+		{
+			return;
+		}
+		bool flag = this.HasTag(GameTags.Sealed);
+		Pickupable component = GetComponent<Pickupable>();
+		Storage storage = ((component != null) ? component.storage : null);
+		if ((flag && !decayStorage) || (flag && storage != null && storage.HasTag(GameTags.CorrosionProof)))
 		{
 			return;
 		}
@@ -148,36 +158,47 @@ public class Sublimates : KMonoBehaviour, ISim200ms
 				num4 = Mathf.Min(num4, mass);
 				sublimatedMass += num4;
 				mass -= num4;
-				if (sublimatedMass > info.minSublimationAmount)
+				if (!(sublimatedMass > info.minSublimationAmount))
 				{
-					float num5 = sublimatedMass / primaryElement.Mass;
-					byte b = byte.MaxValue;
-					int num6 = 0;
-					if (info.diseaseIdx == byte.MaxValue)
+					return;
+				}
+				float num5 = sublimatedMass / primaryElement.Mass;
+				byte b = byte.MaxValue;
+				int num6 = 0;
+				if (info.diseaseIdx == byte.MaxValue)
+				{
+					b = primaryElement.DiseaseIdx;
+					num6 = (int)((float)primaryElement.DiseaseCount * num5);
+					primaryElement.ModifyDiseaseCount(-num6, "Sublimates.SimUpdate");
+				}
+				else
+				{
+					float num7 = sublimatedMass / info.sublimationRate;
+					b = info.diseaseIdx;
+					num6 = (int)((float)info.diseaseCount * num7);
+				}
+				float num8 = Mathf.Min(sublimatedMass, info.maxDestinationMass - num2);
+				if (num8 > 0f)
+				{
+					Emit(num, num8, primaryElement.Temperature, b, num6);
+					sublimatedMass = Mathf.Max(0f, sublimatedMass - num8);
+					primaryElement.Mass = Mathf.Max(0f, primaryElement.Mass - num8);
+					UpdateStorage();
+					RefreshStatusItem(EmitState.Emitting);
+					if (flag && decayStorage && storage != null)
 					{
-						b = primaryElement.DiseaseIdx;
-						num6 = (int)((float)primaryElement.DiseaseCount * num5);
-						primaryElement.ModifyDiseaseCount(-num6, "Sublimates.SimUpdate");
+						storage.Trigger(-794517298, new BuildingHP.DamageSourceInfo
+						{
+							damage = 1,
+							source = BUILDINGS.DAMAGESOURCES.CORROSIVE_ELEMENT,
+							popString = UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.CORROSIVE_ELEMENT,
+							fullDamageEffectName = "smoke_damage_kanim"
+						});
 					}
-					else
-					{
-						float num7 = sublimatedMass / info.sublimationRate;
-						b = info.diseaseIdx;
-						num6 = (int)((float)info.diseaseCount * num7);
-					}
-					float num8 = Mathf.Min(sublimatedMass, info.maxDestinationMass - num2);
-					if (num8 > 0f)
-					{
-						Emit(num, num8, primaryElement.Temperature, b, num6);
-						sublimatedMass = Mathf.Max(0f, sublimatedMass - num8);
-						primaryElement.Mass = Mathf.Max(0f, primaryElement.Mass - num8);
-						UpdateStorage();
-						RefreshStatusItem(EmitState.Emitting);
-					}
-					else
-					{
-						RefreshStatusItem(EmitState.BlockedOnPressure);
-					}
+				}
+				else
+				{
+					RefreshStatusItem(EmitState.BlockedOnPressure);
 				}
 			}
 			else if (sublimatedMass > 0f)

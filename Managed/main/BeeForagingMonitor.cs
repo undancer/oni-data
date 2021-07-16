@@ -40,12 +40,16 @@ public class BeeForagingMonitor : GameStateMachine<BeeForagingMonitor, BeeForagi
 		KPrefabID kPrefabID = smi.master.GetComponent<Bee>().FindHiveInRoom();
 		if (kPrefabID != null)
 		{
-			CreatureCalorieMonitor.Instance sMI = kPrefabID.GetSMI<CreatureCalorieMonitor.Instance>();
+			BeehiveCalorieMonitor.Instance sMI = kPrefabID.GetSMI<BeehiveCalorieMonitor.Instance>();
 			if (sMI == null || !sMI.IsHungry())
 			{
 				flag = false;
 			}
 		}
-		return flag && kPrefabID != null;
+		if (flag)
+		{
+			return kPrefabID != null;
+		}
+		return false;
 	}
 }

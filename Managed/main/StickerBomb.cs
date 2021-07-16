@@ -8,7 +8,7 @@ public class StickerBomb : StateMachineComponent<StickerBomb.StatesInstance>
 	public class StatesInstance : GameStateMachine<States, StatesInstance, StickerBomb, object>.GameInstance
 	{
 		[Serialize]
-		public float destroyTime = 0f;
+		public float destroyTime;
 
 		public StatesInstance(StickerBomb master)
 			: base(master)
@@ -78,36 +78,36 @@ public class StickerBomb : StateMachineComponent<StickerBomb.StatesInstance>
 	public static List<int> BuildCellOffsets(Vector3 position)
 	{
 		List<int> list = new List<int>();
-		bool flag = position.x % 1f < 0.5f;
-		bool flag2 = position.y % 1f > 0.5f;
-		int num = Grid.PosToCell(position);
-		list.Add(num);
-		if (flag)
+		bool num = position.x % 1f < 0.5f;
+		bool flag = position.y % 1f > 0.5f;
+		int num2 = Grid.PosToCell(position);
+		list.Add(num2);
+		if (num)
 		{
-			list.Add(Grid.CellLeft(num));
-			if (flag2)
+			list.Add(Grid.CellLeft(num2));
+			if (flag)
 			{
-				list.Add(Grid.CellAbove(num));
-				list.Add(Grid.CellUpLeft(num));
+				list.Add(Grid.CellAbove(num2));
+				list.Add(Grid.CellUpLeft(num2));
 			}
 			else
 			{
-				list.Add(Grid.CellBelow(num));
-				list.Add(Grid.CellDownLeft(num));
+				list.Add(Grid.CellBelow(num2));
+				list.Add(Grid.CellDownLeft(num2));
 			}
 		}
 		else
 		{
-			list.Add(Grid.CellRight(num));
-			if (flag2)
+			list.Add(Grid.CellRight(num2));
+			if (flag)
 			{
-				list.Add(Grid.CellAbove(num));
-				list.Add(Grid.CellUpRight(num));
+				list.Add(Grid.CellAbove(num2));
+				list.Add(Grid.CellUpRight(num2));
 			}
 			else
 			{
-				list.Add(Grid.CellBelow(num));
-				list.Add(Grid.CellDownRight(num));
+				list.Add(Grid.CellBelow(num2));
+				list.Add(Grid.CellDownRight(num2));
 			}
 		}
 		return list;

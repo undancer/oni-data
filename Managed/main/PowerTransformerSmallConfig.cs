@@ -7,24 +7,24 @@ public class PowerTransformerSmallConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("PowerTransformerSmall", 2, 2, "transformer_small_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.RAW_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.PENALTY.TIER1);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.RequiresPowerOutput = true;
-		buildingDef.UseWhitePowerOutputConnectorColour = true;
-		buildingDef.PowerInputOffset = new CellOffset(0, 1);
-		buildingDef.PowerOutputOffset = new CellOffset(1, 0);
-		buildingDef.ElectricalArrowOffset = new CellOffset(1, 0);
-		buildingDef.ExhaustKilowattsWhenActive = 0.25f;
-		buildingDef.SelfHeatKilowattsWhenActive = 1f;
-		buildingDef.ViewMode = OverlayModes.Power.ID;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.ExhaustKilowattsWhenActive = 0f;
-		buildingDef.SelfHeatKilowattsWhenActive = 1f;
-		buildingDef.Entombable = true;
-		buildingDef.GeneratorWattageRating = 1000f;
-		buildingDef.GeneratorBaseCapacity = 1000f;
-		buildingDef.PermittedRotations = PermittedRotations.FlipH;
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("PowerTransformerSmall", 2, 2, "transformer_small_kanim", 30, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER3, MATERIALS.RAW_METALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: BUILDINGS.DECOR.PENALTY.TIER1);
+		obj.RequiresPowerInput = true;
+		obj.RequiresPowerOutput = true;
+		obj.UseWhitePowerOutputConnectorColour = true;
+		obj.PowerInputOffset = new CellOffset(0, 1);
+		obj.PowerOutputOffset = new CellOffset(1, 0);
+		obj.ElectricalArrowOffset = new CellOffset(1, 0);
+		obj.ExhaustKilowattsWhenActive = 0.25f;
+		obj.SelfHeatKilowattsWhenActive = 1f;
+		obj.ViewMode = OverlayModes.Power.ID;
+		obj.AudioCategory = "Metal";
+		obj.ExhaustKilowattsWhenActive = 0f;
+		obj.SelfHeatKilowattsWhenActive = 1f;
+		obj.Entombable = true;
+		obj.GeneratorWattageRating = 1000f;
+		obj.GeneratorBaseCapacity = 1000f;
+		obj.PermittedRotations = PermittedRotations.FlipH;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -36,8 +36,7 @@ public class PowerTransformerSmallConfig : IBuildingConfig
 		battery.powerSortOrder = 1000;
 		battery.capacity = def.GeneratorWattageRating;
 		battery.chargeWattage = def.GeneratorWattageRating;
-		PowerTransformer powerTransformer = go.AddComponent<PowerTransformer>();
-		powerTransformer.powerDistributionOrder = 9;
+		go.AddComponent<PowerTransformer>().powerDistributionOrder = 9;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

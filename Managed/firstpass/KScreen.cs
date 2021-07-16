@@ -9,9 +9,9 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 	public delegate void PointerExitActions(PointerEventData eventData);
 
 	[SerializeField]
-	public bool activateOnSpawn = false;
+	public bool activateOnSpawn;
 
-	private bool _isEditing = false;
+	private bool _isEditing;
 
 	public const float MODAL_SCREEN_SORT_KEY = 100f;
 
@@ -25,11 +25,11 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 
 	private bool isActive;
 
-	protected bool mouseOver = false;
+	protected bool mouseOver;
 
-	public WidgetTransition.TransitionType transitionType = WidgetTransition.TransitionType.SlideFromRight;
+	public WidgetTransition.TransitionType transitionType;
 
-	public bool fadeIn = false;
+	public bool fadeIn;
 
 	public string displayName;
 
@@ -37,7 +37,7 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 
 	public PointerExitActions pointerExitActions;
 
-	private bool hasFocus = false;
+	private bool hasFocus;
 
 	public string handlerName => base.gameObject.name;
 
@@ -156,18 +156,18 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 		{
 			e.Consumed = true;
 		}
-		if (!mouseOver || !ConsumeMouseScroll || e.Consumed || e.TryConsume(Action.ZoomIn) || e.TryConsume(Action.ZoomOut))
+		if (mouseOver && ConsumeMouseScroll && !e.Consumed && !e.TryConsume(Action.ZoomIn))
 		{
+			e.TryConsume(Action.ZoomOut);
 		}
 		if (e.Consumed)
 		{
 			return;
 		}
 		KScrollRect[] componentsInChildren = GetComponentsInChildren<KScrollRect>();
-		KScrollRect[] array = componentsInChildren;
-		foreach (KScrollRect kScrollRect in array)
+		for (int i = 0; i < componentsInChildren.Length; i++)
 		{
-			kScrollRect.OnKeyDown(e);
+			componentsInChildren[i].OnKeyDown(e);
 			if (e.Consumed)
 			{
 				break;
@@ -182,10 +182,9 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 			return;
 		}
 		KScrollRect[] componentsInChildren = GetComponentsInChildren<KScrollRect>();
-		KScrollRect[] array = componentsInChildren;
-		foreach (KScrollRect kScrollRect in array)
+		for (int i = 0; i < componentsInChildren.Length; i++)
 		{
-			kScrollRect.OnKeyUp(e);
+			componentsInChildren[i].OnKeyUp(e);
 			if (e.Consumed)
 			{
 				break;
@@ -271,7 +270,7 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 		}
 	}
 
-	public void Show(bool show = true)
+	public virtual void Show(bool show = true)
 	{
 		mouseOver = false;
 		base.gameObject.SetActive(show);
@@ -286,7 +285,6 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 
 	private void InitWidgetTransition()
 	{
-		WidgetTransition widgetTransition = base.gameObject.FindOrAddUnityComponent<WidgetTransition>();
-		widgetTransition.SetTransitionType(transitionType);
+		base.gameObject.FindOrAddUnityComponent<WidgetTransition>().SetTransitionType(transitionType);
 	}
 }

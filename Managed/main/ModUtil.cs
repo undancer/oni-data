@@ -12,8 +12,7 @@ public static class ModUtil
 		int num = BUILDINGS.PLANORDER.FindIndex((PlanScreen.PlanInfo x) => x.category == category);
 		if (num >= 0)
 		{
-			IList<string> data = BUILDINGS.PLANORDER[num].data;
-			data.Add(building_id);
+			((ICollection<string>)BUILDINGS.PLANORDER[num].data).Add(building_id);
 		}
 	}
 
@@ -22,8 +21,7 @@ public static class ModUtil
 		BuildMenu.DisplayInfo info = BuildMenu.OrderedBuildings.GetInfo(category);
 		if (!(info.category != category))
 		{
-			IList<BuildMenu.BuildingInfo> list = info.data as IList<BuildMenu.BuildingInfo>;
-			list.Add(new BuildMenu.BuildingInfo(building_id, hotkey));
+			(info.data as IList<BuildMenu.BuildingInfo>).Add(new BuildMenu.BuildingInfo(building_id, hotkey));
 		}
 	}
 
@@ -37,8 +35,7 @@ public static class ModUtil
 		groupFile.groupID = animCommandFile.GetGroupName(kAnimFile);
 		groupFile.commandDirectory = "assets/" + name;
 		animCommandFile.AddGroupFile(groupFile);
-		KAnimGroupFile groupFile2 = KAnimGroupFile.GetGroupFile();
-		if (groupFile2.AddAnimMod(groupFile, animCommandFile, kAnimFile) == KAnimGroupFile.AddModResult.Added)
+		if (KAnimGroupFile.GetGroupFile().AddAnimMod(groupFile, animCommandFile, kAnimFile) == KAnimGroupFile.AddModResult.Added)
 		{
 			Assets.ModLoadedKAnims.Add(kAnimFile);
 		}
@@ -55,8 +52,7 @@ public static class ModUtil
 		groupFile.groupID = animCommandFile.GetGroupName(kAnimFile);
 		groupFile.commandDirectory = "assets/" + name;
 		animCommandFile.AddGroupFile(groupFile);
-		KAnimGroupFile groupFile2 = KAnimGroupFile.GetGroupFile();
-		groupFile2.AddAnimFile(groupFile, animCommandFile, kAnimFile);
+		KAnimGroupFile.GetGroupFile().AddAnimFile(groupFile, animCommandFile, kAnimFile);
 		Assets.ModLoadedKAnims.Add(kAnimFile);
 		return kAnimFile;
 	}
@@ -70,17 +66,18 @@ public static class ModUtil
 
 	public static Substance CreateSubstance(string name, Element.State state, KAnimFile kanim, Material material, Color32 colour, Color32 ui_colour, Color32 conduit_colour)
 	{
-		Substance substance = new Substance();
-		substance.name = name;
-		substance.nameTag = TagManager.Create(name);
-		substance.elementID = (SimHashes)Hash.SDBMLower(name);
-		substance.anim = kanim;
-		substance.colour = colour;
-		substance.uiColour = ui_colour;
-		substance.conduitColour = conduit_colour;
-		substance.material = material;
-		substance.renderedByWorld = (state & Element.State.Solid) == Element.State.Solid;
-		return substance;
+		return new Substance
+		{
+			name = name,
+			nameTag = TagManager.Create(name),
+			elementID = (SimHashes)Hash.SDBMLower(name),
+			anim = kanim,
+			colour = colour,
+			uiColour = ui_colour,
+			conduitColour = conduit_colour,
+			material = material,
+			renderedByWorld = ((state & Element.State.Solid) == Element.State.Solid)
+		};
 	}
 
 	public static void RegisterForTranslation(Type locstring_tree_root)

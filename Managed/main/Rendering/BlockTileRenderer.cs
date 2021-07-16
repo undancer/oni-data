@@ -39,7 +39,7 @@ namespace Rendering
 				public string name;
 			}
 
-			private AtlasInfo[] atlasInfo = null;
+			private AtlasInfo[] atlasInfo;
 
 			private bool[,] dirtyChunks;
 
@@ -121,18 +121,14 @@ namespace Rendering
 				{
 					decorRenderInfo = new DecorRenderInfo(num, num2, queryLayer, def, blockTileDecorInfo);
 				}
-				string name = def.BlockTileAtlas.items[0].name;
-				int length = name.Length;
-				int num3 = (length -= 4);
-				int num4 = num3 - 8;
-				int num5 = num4 - 1;
-				int startIndex = num5 - 8;
+				int num3 = def.BlockTileAtlas.items[0].name.Length - 4 - 8;
+				int startIndex = num3 - 1 - 8;
 				atlasInfo = new AtlasInfo[def.BlockTileAtlas.items.Length];
 				for (int k = 0; k < atlasInfo.Length; k++)
 				{
 					TextureAtlas.Item item = def.BlockTileAtlas.items[k];
 					string value = item.name.Substring(startIndex, 8);
-					string value2 = item.name.Substring(num4, 8);
+					string value2 = item.name.Substring(num3, 8);
 					int requiredConnections = Convert.ToInt32(value, 2);
 					int forbiddenConnections = Convert.ToInt32(value2, 2);
 					atlasInfo[k].requiredConnections = (Bits)requiredConnections;
@@ -236,9 +232,9 @@ namespace Rendering
 						Bits connectionBits = renderer.GetConnectionBits(j, i, queryLayer);
 						for (int k = 0; k < atlasInfo.Length; k++)
 						{
-							bool flag = (atlasInfo[k].requiredConnections & connectionBits) == atlasInfo[k].requiredConnections;
-							bool flag2 = (atlasInfo[k].forbiddenConnections & connectionBits) != 0;
-							if (flag && !flag2)
+							bool num2 = (atlasInfo[k].requiredConnections & connectionBits) == atlasInfo[k].requiredConnections;
+							bool flag = (atlasInfo[k].forbiddenConnections & connectionBits) != 0;
+							if (num2 && !flag)
 							{
 								Color cellColour = renderer.GetCellColour(num, element);
 								AddVertexInfo(atlasInfo[k], trimUVSize, j, i, connectionBits, cellColour, vertices, uvs, indices, colours);
@@ -469,26 +465,26 @@ namespace Rendering
 					{
 						continue;
 					}
-					bool flag = (connection_bits & decor.requiredConnections) == decor.requiredConnections;
-					bool flag2 = (connection_bits & decor.forbiddenConnections) != 0;
-					if (!flag || flag2)
+					bool num = (connection_bits & decor.requiredConnections) == decor.requiredConnections;
+					bool flag = (connection_bits & decor.forbiddenConnections) != 0;
+					if (!num || flag)
 					{
 						continue;
 					}
-					float num = PerlinSimplexNoise.noise((float)(i + x + connection_bits) * simplex_scale.x, (float)(i + y + connection_bits) * simplex_scale.y);
-					if (!(num < decor.probabilityCutoff))
+					float num2 = PerlinSimplexNoise.noise((float)(i + x + connection_bits) * simplex_scale.x, (float)(i + y + connection_bits) * simplex_scale.y);
+					if (!(num2 < decor.probabilityCutoff))
 					{
-						int num2 = (int)((float)(decor.variants.Length - 1) * num);
+						int num3 = (int)((float)(decor.variants.Length - 1) * num2);
 						int count = vertices.Count;
-						Vector3 b = new Vector3(x, y, z_offset) + decor.variants[num2].offset;
-						Vector3[] vertices2 = decor.variants[num2].atlasItem.vertices;
+						Vector3 b = new Vector3(x, y, z_offset) + decor.variants[num3].offset;
+						Vector3[] vertices2 = decor.variants[num3].atlasItem.vertices;
 						foreach (Vector3 a in vertices2)
 						{
 							vertices.Add(a + b);
 							colours.Add(colour);
 						}
-						uvs.AddRange(decor.variants[num2].atlasItem.uvs);
-						int[] indices = decor.variants[num2].atlasItem.indices;
+						uvs.AddRange(decor.variants[num3].atlasItem.uvs);
+						int[] indices = decor.variants[num3].atlasItem.indices;
 						for (int k = 0; k < indices.Length; k += 3)
 						{
 							triangles.Add(new TriangleInfo
@@ -505,7 +501,7 @@ namespace Rendering
 		}
 
 		[SerializeField]
-		private bool forceRebuild = false;
+		private bool forceRebuild;
 
 		[SerializeField]
 		private Color highlightColour = new Color(1.25f, 1.25f, 1.25f, 1f);
@@ -534,7 +530,15 @@ namespace Rendering
 
 		public static RenderInfoLayer GetRenderInfoLayer(bool isReplacement, SimHashes element)
 		{
-			return isReplacement ? RenderInfoLayer.Replacement : ((element == SimHashes.Void) ? RenderInfoLayer.UnderConstruction : RenderInfoLayer.Built);
+			if (!isReplacement)
+			{
+				if (element == SimHashes.Void)
+				{
+					return RenderInfoLayer.UnderConstruction;
+				}
+				return RenderInfoLayer.Built;
+			}
+			return RenderInfoLayer.Replacement;
 		}
 
 		public BlockTileRenderer()
@@ -556,7 +560,11 @@ namespace Rendering
 
 		private static bool MatchesDef(GameObject go, BuildingDef def)
 		{
-			return go != null && go.GetComponent<Building>().Def == def;
+			if (go != null)
+			{
+				return go.GetComponent<Building>().Def == def;
+			}
+			return false;
 		}
 
 		public virtual Bits GetConnectionBits(int x, int y, int query_layer)

@@ -12,7 +12,7 @@ public class UIDupeSymbolOverride : MonoBehaviour
 
 	private KBatchedAnimController animController;
 
-	private AccessorySlots slots = null;
+	private AccessorySlots slots;
 
 	private SymbolOverrideController symbolOverrideController;
 

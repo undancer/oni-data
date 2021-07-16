@@ -295,13 +295,17 @@ public static class CreatureHelpers
 
 	private static bool isInFavoredFleeDirection(int targetFleeCell, int threatCell, GameObject self)
 	{
-		bool flag = ((Grid.CellToPos(threatCell).x < self.transform.GetPosition().x) ? true : false);
-		bool flag2 = ((Grid.CellToPos(threatCell).x < Grid.CellToPos(targetFleeCell).x) ? true : false);
-		return flag == flag2;
+		int num = ((Grid.CellToPos(threatCell).x < self.transform.GetPosition().x) ? 1 : 0);
+		bool flag = ((Grid.CellToPos(threatCell).x < Grid.CellToPos(targetFleeCell).x) ? true : false);
+		return num == (flag ? 1 : 0);
 	}
 
 	private static bool CanFleeTo(int cell, Navigator nav)
 	{
-		return nav.CanReach(cell) || nav.CanReach(Grid.OffsetCell(cell, -1, -1)) || nav.CanReach(Grid.OffsetCell(cell, 1, -1)) || nav.CanReach(Grid.OffsetCell(cell, -1, 1)) || nav.CanReach(Grid.OffsetCell(cell, 1, 1));
+		if (!nav.CanReach(cell) && !nav.CanReach(Grid.OffsetCell(cell, -1, -1)) && !nav.CanReach(Grid.OffsetCell(cell, 1, -1)) && !nav.CanReach(Grid.OffsetCell(cell, -1, 1)))
+		{
+			return nav.CanReach(Grid.OffsetCell(cell, 1, 1));
+		}
+		return true;
 	}
 }

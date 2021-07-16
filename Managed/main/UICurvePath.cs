@@ -17,11 +17,11 @@ public class UICurvePath : KMonoBehaviour
 
 	public bool loop = true;
 
-	public bool animateScale = false;
+	public bool animateScale;
 
 	public Vector3 initialScale;
 
-	private float startDelay = 0f;
+	private float startDelay;
 
 	public float initialAlpha = 0.5f;
 
@@ -103,14 +103,13 @@ public class UICurvePath : KMonoBehaviour
 			D = endPoint.position;
 		}
 		Gizmos.color = Color.white;
-		Vector3 a = A;
+		_ = A;
 		float num = 0.02f;
 		int num2 = Mathf.FloorToInt(1f / num);
 		for (int i = 1; i <= num2; i++)
 		{
 			float t = (float)i * num;
-			Vector3 vector = DeCasteljausAlgorithm(t);
-			a = vector;
+			DeCasteljausAlgorithm(t);
 		}
 		Gizmos.color = Color.green;
 	}

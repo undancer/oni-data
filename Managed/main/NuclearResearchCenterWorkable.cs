@@ -8,7 +8,7 @@ public class NuclearResearchCenterWorkable : Workable
 	private Operational operational;
 
 	[Serialize]
-	private float pointsProduced = 0f;
+	private float pointsProduced;
 
 	private NuclearResearchCenter nrc;
 

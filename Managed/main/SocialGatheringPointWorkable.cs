@@ -48,11 +48,10 @@ public class SocialGatheringPointWorkable : Workable, IWorkerPrioritizable
 
 	protected override bool OnWorkTick(Worker worker, float dt)
 	{
-		Schedulable component = worker.GetComponent<Schedulable>();
-		if (!component.IsAllowed(Db.Get().ScheduleBlockTypes.Recreation))
+		if (!worker.GetComponent<Schedulable>().IsAllowed(Db.Get().ScheduleBlockTypes.Recreation))
 		{
-			Effects component2 = worker.GetComponent<Effects>();
-			if (string.IsNullOrEmpty(specificEffect) || component2.HasEffect(specificEffect))
+			Effects component = worker.GetComponent<Effects>();
+			if (string.IsNullOrEmpty(specificEffect) || component.HasEffect(specificEffect))
 			{
 				return true;
 			}
@@ -63,8 +62,7 @@ public class SocialGatheringPointWorkable : Workable, IWorkerPrioritizable
 	protected override void OnStartWork(Worker worker)
 	{
 		base.OnStartWork(worker);
-		KPrefabID component = worker.GetComponent<KPrefabID>();
-		component.AddTag(GameTags.AlwaysConverse);
+		worker.GetComponent<KPrefabID>().AddTag(GameTags.AlwaysConverse);
 		worker.Subscribe(-594200555, OnStartedTalking);
 		worker.Subscribe(25860745, OnStoppedTalking);
 		timesConversed = 0;
@@ -73,8 +71,7 @@ public class SocialGatheringPointWorkable : Workable, IWorkerPrioritizable
 	protected override void OnStopWork(Worker worker)
 	{
 		base.OnStopWork(worker);
-		KPrefabID component = worker.GetComponent<KPrefabID>();
-		component.RemoveTag(GameTags.AlwaysConverse);
+		worker.GetComponent<KPrefabID>().RemoveTag(GameTags.AlwaysConverse);
 		worker.Unsubscribe(-594200555, OnStartedTalking);
 		worker.Unsubscribe(25860745, OnStoppedTalking);
 	}
@@ -105,8 +102,7 @@ public class SocialGatheringPointWorkable : Workable, IWorkerPrioritizable
 		}
 		else
 		{
-			Facing component2 = base.worker.GetComponent<Facing>();
-			component2.Face(talker.transform.GetPosition());
+			base.worker.GetComponent<Facing>().Face(talker.transform.GetPosition());
 			lastTalker = talker;
 		}
 		timesConversed++;
@@ -119,13 +115,9 @@ public class SocialGatheringPointWorkable : Workable, IWorkerPrioritizable
 	public bool GetWorkerPriority(Worker worker, out int priority)
 	{
 		priority = basePriority;
-		if (!string.IsNullOrEmpty(specificEffect))
+		if (!string.IsNullOrEmpty(specificEffect) && worker.GetComponent<Effects>().HasEffect(specificEffect))
 		{
-			Effects component = worker.GetComponent<Effects>();
-			if (component.HasEffect(specificEffect))
-			{
-				priority = RELAXATION.PRIORITY.RECENTLY_USED;
-			}
+			priority = RELAXATION.PRIORITY.RECENTLY_USED;
 		}
 		return true;
 	}

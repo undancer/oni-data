@@ -12,7 +12,7 @@ public class MaterialSelector : KScreen
 
 	public Dictionary<Tag, KToggle> ElementToggles = new Dictionary<Tag, KToggle>();
 
-	public int selectorIndex = 0;
+	public int selectorIndex;
 
 	public SelectMaterialActions selectMaterialActions;
 
@@ -115,8 +115,7 @@ public class MaterialSelector : KScreen
 				KToggle component2 = gameObject.GetComponent<KToggle>();
 				ElementToggles.Add(item2, component2);
 				component2.group = toggleGroup;
-				ToolTip component3 = gameObject.gameObject.GetComponent<ToolTip>();
-				component3.toolTip = item2.ProperName();
+				gameObject.gameObject.GetComponent<ToolTip>().toolTip = item2.ProperName();
 			}
 		}
 		RefreshToggleContents();
@@ -181,8 +180,7 @@ public class MaterialSelector : KScreen
 				list.Add(elementToggle.Key);
 			}
 			list.Sort(ElementSorter);
-			int num = list.IndexOf(elem);
-			float x = (float)num / (float)(list.Count - 1);
+			float x = (float)list.IndexOf(elem) / (float)(list.Count - 1);
 			ScrollRect.normalizedPosition = new Vector2(x, 0f);
 		}
 		RefreshToggleContents();
@@ -197,9 +195,9 @@ public class MaterialSelector : KScreen
 			GameObject gameObject = value.gameObject;
 			LocText[] componentsInChildren = gameObject.GetComponentsInChildren<LocText>();
 			LocText locText = componentsInChildren[0];
-			LocText locText2 = componentsInChildren[1];
+			LocText obj = componentsInChildren[1];
 			Image image = gameObject.GetComponentsInChildren<Image>()[1];
-			locText2.text = Util.FormatWholeNumber(ClusterManager.Instance.activeWorld.worldInventory.GetAmount(elem, includeRelatedWorlds: true));
+			obj.text = Util.FormatWholeNumber(ClusterManager.Instance.activeWorld.worldInventory.GetAmount(elem, includeRelatedWorlds: true));
 			locText.text = Util.FormatWholeNumber(activeMass);
 			GameObject gameObject2 = Assets.TryGetPrefab(elementToggle.Key);
 			if (gameObject2 != null)
@@ -226,7 +224,11 @@ public class MaterialSelector : KScreen
 
 	private bool IsEnoughMass(Tag t)
 	{
-		return ClusterManager.Instance.activeWorld.worldInventory.GetAmount(t, includeRelatedWorlds: true) >= activeMass || DebugHandler.InstantBuildMode || Game.Instance.SandboxModeActive || AllowInsufficientMaterialBuild();
+		if (!(ClusterManager.Instance.activeWorld.worldInventory.GetAmount(t, includeRelatedWorlds: true) >= activeMass) && !DebugHandler.InstantBuildMode && !Game.Instance.SandboxModeActive)
+		{
+			return AllowInsufficientMaterialBuild();
+		}
+		return true;
 	}
 
 	public bool AutoSelectAvailableMaterial()
@@ -324,8 +326,7 @@ public class MaterialSelector : KScreen
 		int num = 0;
 		foreach (KeyValuePair<Tag, KToggle> elementToggle in ElementToggles)
 		{
-			KToggle value = elementToggle.Value;
-			if (value.gameObject.activeSelf)
+			if (elementToggle.Value.gameObject.activeSelf)
 			{
 				num++;
 			}

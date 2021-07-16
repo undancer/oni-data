@@ -13,22 +13,21 @@ public class OxygenMaskLockerConfig : IBuildingConfig
 	public override BuildingDef CreateBuildingDef()
 	{
 		string[] rAW_METALS = MATERIALS.RAW_METALS;
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(construction_mass: new float[2]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: new float[2]
 		{
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER2[0],
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER1[0]
 		}, construction_materials: rAW_METALS, melting_point: 1600f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, id: "OxygenMaskLocker", width: 1, height: 2, anim: "oxygen_mask_locker_kanim", hitpoints: 30, construction_time: 30f, decor: BUILDINGS.DECOR.BONUS.TIER1);
-		buildingDef.PreventIdleTraversalPastBuilding = true;
-		buildingDef.InputConduitType = ConduitType.Gas;
-		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
+		obj.PreventIdleTraversalPastBuilding = true;
+		obj.InputConduitType = ConduitType.Gas;
+		obj.UtilityInputOffset = new CellOffset(0, 0);
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.SuitIDs, "OxygenMaskLocker");
-		return buildingDef;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
-		SuitLocker suitLocker = go.AddOrGet<SuitLocker>();
-		suitLocker.OutfitTags = new Tag[1]
+		go.AddOrGet<SuitLocker>().OutfitTags = new Tag[1]
 		{
 			GameTags.OxygenMask
 		};
@@ -39,8 +38,7 @@ public class OxygenMaskLockerConfig : IBuildingConfig
 		conduitConsumer.wrongElementResult = ConduitConsumer.WrongElementResult.Dump;
 		conduitConsumer.forceAlwaysSatisfied = true;
 		conduitConsumer.capacityKG = 30f;
-		AnimTileable animTileable = go.AddOrGet<AnimTileable>();
-		animTileable.tags = new Tag[2]
+		go.AddOrGet<AnimTileable>().tags = new Tag[2]
 		{
 			new Tag("OxygenMaskLocker"),
 			new Tag("OxygenMaskMarker")

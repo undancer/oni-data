@@ -20,26 +20,26 @@ public class LaunchPadConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("LaunchPad", 7, 2, "rocket_launchpad_kanim", 1000, 120f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.REFINED_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: TUNING.BUILDINGS.DECOR.NONE);
-		buildingDef.SceneLayer = Grid.SceneLayer.BuildingBack;
-		buildingDef.OverheatTemperature = 2273.15f;
-		buildingDef.Floodable = false;
-		buildingDef.UseStructureTemperature = false;
-		buildingDef.AttachmentSlotTag = GameTags.Rocket;
-		buildingDef.ObjectLayer = ObjectLayer.Building;
-		buildingDef.attachablePosition = new CellOffset(0, 0);
-		buildingDef.RequiresPowerInput = false;
-		buildingDef.DefaultAnimState = "idle";
-		buildingDef.CanMove = false;
-		buildingDef.LogicInputPorts = new List<LogicPorts.Port>
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("LaunchPad", 7, 2, "rocket_launchpad_kanim", 1000, 120f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.REFINED_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: TUNING.BUILDINGS.DECOR.NONE);
+		obj.SceneLayer = Grid.SceneLayer.BuildingBack;
+		obj.OverheatTemperature = 2273.15f;
+		obj.Floodable = false;
+		obj.UseStructureTemperature = false;
+		obj.AttachmentSlotTag = GameTags.Rocket;
+		obj.ObjectLayer = ObjectLayer.Building;
+		obj.attachablePosition = new CellOffset(0, 0);
+		obj.RequiresPowerInput = false;
+		obj.DefaultAnimState = "idle";
+		obj.CanMove = false;
+		obj.LogicInputPorts = new List<LogicPorts.Port>
 		{
 			LogicPorts.Port.InputPort("TriggerLaunch", new CellOffset(-1, 0), STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_LAUNCH, STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_LAUNCH_ACTIVE, STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_LAUNCH_INACTIVE)
 		};
-		buildingDef.LogicOutputPorts = new List<LogicPorts.Port>
+		obj.LogicOutputPorts = new List<LogicPorts.Port>
 		{
 			LogicPorts.Port.OutputPort("LaunchReady", new CellOffset(1, 0), STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_READY, STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_READY_ACTIVE, STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_READY_INACTIVE)
 		};
-		return buildingDef;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -48,8 +48,7 @@ public class LaunchPadConfig : IBuildingConfig
 		go.AddOrGet<LoopingSounds>();
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
 		go.GetComponent<KPrefabID>().AddTag(GameTags.NotRocketInteriorBuilding);
-		Storage storage = go.AddOrGet<Storage>();
-		storage.SetDefaultStoredItemModifiers(new List<Storage.StoredItemModifier>
+		go.AddOrGet<Storage>().SetDefaultStoredItemModifiers(new List<Storage.StoredItemModifier>
 		{
 			Storage.StoredItemModifier.Hide,
 			Storage.StoredItemModifier.Seal,
@@ -58,21 +57,20 @@ public class LaunchPadConfig : IBuildingConfig
 		LaunchPad launchPad = go.AddOrGet<LaunchPad>();
 		launchPad.triggerPort = "TriggerLaunch";
 		launchPad.statusPort = "LaunchReady";
-		MakeBaseSolid.Def def = go.AddOrGetDef<MakeBaseSolid.Def>();
-		def.solidOffsets = new CellOffset[7];
+		FakeFloorAdder fakeFloorAdder = go.AddOrGet<FakeFloorAdder>();
+		fakeFloorAdder.floorOffsets = new CellOffset[7];
 		for (int i = 0; i < 7; i++)
 		{
-			def.solidOffsets[i] = new CellOffset(i - 3, 1);
+			fakeFloorAdder.floorOffsets[i] = new CellOffset(i - 3, 1);
 		}
 		go.AddOrGet<LaunchPadConditions>();
-		ChainedBuilding.Def def2 = go.AddOrGetDef<ChainedBuilding.Def>();
-		def2.headBuildingTag = "LaunchPad".ToTag();
-		def2.linkBuildingTag = BaseModularLaunchpadPortConfig.LinkTag;
-		def2.objectLayer = ObjectLayer.Building;
+		ChainedBuilding.Def def = go.AddOrGetDef<ChainedBuilding.Def>();
+		def.headBuildingTag = "LaunchPad".ToTag();
+		def.linkBuildingTag = BaseModularLaunchpadPortConfig.LinkTag;
+		def.objectLayer = ObjectLayer.Building;
 		go.AddOrGetDef<LaunchPadMaterialDistributor.Def>();
 		go.AddOrGet<UserNameable>();
-		CharacterOverlay characterOverlay = go.AddOrGet<CharacterOverlay>();
-		characterOverlay.shouldShowName = true;
+		go.AddOrGet<CharacterOverlay>().shouldShowName = true;
 		ModularConduitPortTiler modularConduitPortTiler = go.AddOrGet<ModularConduitPortTiler>();
 		modularConduitPortTiler.manageRightCap = true;
 		modularConduitPortTiler.manageLeftCap = false;
@@ -81,7 +79,5 @@ public class LaunchPadConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		KPrefabID component = go.GetComponent<KPrefabID>();
-		component.AddTag(GameTags.DontBlockRockets);
 	}
 }

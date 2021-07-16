@@ -32,7 +32,7 @@ public class TreeFilterableSideScreen : SideScreenContent
 
 	private GameObject target;
 
-	private bool visualDirty = false;
+	private bool visualDirty;
 
 	private KImage onlyAllowTransportItemsImg;
 
@@ -184,7 +184,11 @@ public class TreeFilterableSideScreen : SideScreenContent
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		return target.GetComponent<TreeFilterable>() != null && target.GetComponent<FlatTagFilterable>() == null;
+		if (target.GetComponent<TreeFilterable>() != null)
+		{
+			return target.GetComponent<FlatTagFilterable>() == null;
+		}
+		return false;
 	}
 
 	public override void SetTarget(GameObject target)
@@ -272,8 +276,7 @@ public class TreeFilterableSideScreen : SideScreenContent
 		freeElement.Parent = this;
 		tagRowMap.Add(rowTag, freeElement);
 		Dictionary<Tag, bool> dictionary = new Dictionary<Tag, bool>();
-		List<TagOrderInfo> tagsSortedAlphabetically = GetTagsSortedAlphabetically(DiscoveredResources.Instance.GetDiscoveredResourcesFromTag(rowTag));
-		foreach (TagOrderInfo item in tagsSortedAlphabetically)
+		foreach (TagOrderInfo item in GetTagsSortedAlphabetically(DiscoveredResources.Instance.GetDiscoveredResourcesFromTag(rowTag)))
 		{
 			dictionary.Add(item.tag, targetFilterable.ContainsTag(item.tag) || targetFilterable.ContainsTag(rowTag));
 		}
@@ -296,8 +299,7 @@ public class TreeFilterableSideScreen : SideScreenContent
 		if (storage.storageFilters != null && storage.storageFilters.Count >= 1)
 		{
 			bool flag = target.GetComponent<CreatureDeliveryPoint>() != null;
-			List<TagOrderInfo> tagsSortedAlphabetically = GetTagsSortedAlphabetically(storage.storageFilters);
-			foreach (TagOrderInfo item in tagsSortedAlphabetically)
+			foreach (TagOrderInfo item in GetTagsSortedAlphabetically(storage.storageFilters))
 			{
 				Tag tag = item.tag;
 				if (flag || DiscoveredResources.Instance.IsDiscovered(tag))

@@ -10,19 +10,19 @@ using UnityEngine;
 public class EnergyConsumer : KMonoBehaviour, ISaveLoadable, IEnergyConsumer, ICircuitConnected, IGameObjectEffectDescriptor
 {
 	[MyCmpReq]
-	private Building building = null;
+	private Building building;
 
 	[MyCmpGet]
-	protected Operational operational = null;
+	protected Operational operational;
 
 	[MyCmpGet]
 	private KSelectable selectable;
 
 	[SerializeField]
-	public int powerSortOrder = 0;
+	public int powerSortOrder;
 
 	[Serialize]
-	protected float circuitOverloadTime = 0f;
+	protected float circuitOverloadTime;
 
 	public static readonly Operational.Flag PoweredFlag = new Operational.Flag("powered", Operational.Flag.Type.Requirement);
 
@@ -101,8 +101,6 @@ public class EnergyConsumer : KMonoBehaviour, ISaveLoadable, IEnergyConsumer, IC
 	}
 
 	public float WattsNeededWhenActive => building.Def.EnergyConsumptionWhenActive;
-
-	public float BaseWattsNeededWhenActive => building.Def.EnergyConsumptionWhenActive;
 
 	protected override void OnPrefabInit()
 	{

@@ -18,10 +18,8 @@ public class StoredMinionConfig : IEntityConfig
 		gameObject.AddOrGet<Traits>();
 		gameObject.AddOrGet<Schedulable>();
 		gameObject.AddOrGet<StoredMinionIdentity>();
-		KSelectable kSelectable = gameObject.AddOrGet<KSelectable>();
-		kSelectable.IsSelectable = false;
-		MinionModifiers minionModifiers = gameObject.AddOrGet<MinionModifiers>();
-		minionModifiers.addBaseTraits = false;
+		gameObject.AddOrGet<KSelectable>().IsSelectable = false;
+		gameObject.AddOrGet<MinionModifiers>().addBaseTraits = false;
 		return gameObject;
 	}
 

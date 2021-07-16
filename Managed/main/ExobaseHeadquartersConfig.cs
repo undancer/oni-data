@@ -12,25 +12,24 @@ public class ExobaseHeadquartersConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("ExobaseHeadquarters", 3, 3, "porta_pod_y_kanim", 250, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.ALL_MINERALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER5);
-		buildingDef.Floodable = false;
-		buildingDef.Overheatable = false;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.BaseTimeUntilRepair = 400f;
-		buildingDef.ShowInBuildMenu = true;
-		buildingDef.DefaultAnimState = "idle";
-		buildingDef.OnePerWorld = true;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("ExobaseHeadquarters", 3, 3, "porta_pod_y_kanim", 250, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.ALL_MINERALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER5);
+		obj.Floodable = false;
+		obj.Overheatable = false;
+		obj.AudioCategory = "Metal";
+		obj.BaseTimeUntilRepair = 400f;
+		obj.ShowInBuildMenu = true;
+		obj.DefaultAnimState = "idle";
+		obj.OnePerWorld = true;
 		SoundEventVolumeCache.instance.AddVolume("hqbase_kanim", "Portal_LP", NOISE_POLLUTION.NOISY.TIER3);
 		SoundEventVolumeCache.instance.AddVolume("hqbase_kanim", "Portal_open", NOISE_POLLUTION.NOISY.TIER4);
 		SoundEventVolumeCache.instance.AddVolume("hqbase_kanim", "Portal_close", NOISE_POLLUTION.NOISY.TIER4);
-		return buildingDef;
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		go.AddOrGet<LoreBearer>();
-		Telepad telepad = go.AddOrGet<Telepad>();
-		telepad.startingSkillPoints = 1f;
+		go.AddOrGet<Telepad>().startingSkillPoints = 1f;
 		SocialGatheringPoint socialGatheringPoint = go.AddOrGet<SocialGatheringPoint>();
 		socialGatheringPoint.choreOffsets = new CellOffset[6]
 		{

@@ -55,11 +55,11 @@ public abstract class StateMachine
 			public StateMachineUpdater.BaseUpdateBucket bucket;
 		}
 
-		public string serializationSuffix = null;
+		public string serializationSuffix;
 
 		protected LoggerFSSSS log;
 
-		protected Status status = Status.Initialized;
+		protected Status status;
 
 		protected StateMachine stateMachine;
 
@@ -153,12 +153,20 @@ public abstract class StateMachine
 
 		public bool IsConsoleLoggingEnabled()
 		{
-			return enableConsoleLogging || stateMachine.debugSettings.enableConsoleLogging;
+			if (!enableConsoleLogging)
+			{
+				return stateMachine.debugSettings.enableConsoleLogging;
+			}
+			return true;
 		}
 
 		public bool IsBreakOnGoToEnabled()
 		{
-			return breakOnGoTo || stateMachine.debugSettings.breakOnGoTo;
+			if (!breakOnGoTo)
+			{
+				return stateMachine.debugSettings.breakOnGoTo;
+			}
+			return true;
 		}
 
 		public LoggerFSSSS GetLog()
@@ -543,16 +551,14 @@ public abstract class StateMachine
 
 	public void CreateStates(object state_machine)
 	{
-		Type type = state_machine.GetType();
-		FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
-		FieldInfo[] array = fields;
-		foreach (FieldInfo fieldInfo in array)
+		FieldInfo[] fields = state_machine.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
+		foreach (FieldInfo fieldInfo in fields)
 		{
 			bool flag = false;
 			object[] customAttributes = fieldInfo.GetCustomAttributes(inherit: false);
-			foreach (object obj in customAttributes)
+			for (int j = 0; j < customAttributes.Length; j++)
 			{
-				if (obj.GetType() == typeof(DoNotAutoCreate))
+				if (customAttributes[j].GetType() == typeof(DoNotAutoCreate))
 				{
 					flag = true;
 					break;
@@ -765,9 +771,9 @@ public class StateMachine<StateMachineType, StateMachineInstanceType, MasterType
 			}
 			if (state.parameterTransitions != null)
 			{
-				foreach (ParameterTransition parameterTransition3 in state.parameterTransitions)
+				foreach (ParameterTransition parameterTransition2 in state.parameterTransitions)
 				{
-					parameterTransition3.Register(smi);
+					parameterTransition2.Register(smi);
 				}
 			}
 			if (state.updateActions != null)
@@ -800,21 +806,19 @@ public class StateMachine<StateMachineType, StateMachineInstanceType, MasterType
 			}
 			if (state.parameterTransitions != null)
 			{
-				foreach (ParameterTransition parameterTransition4 in state.parameterTransitions)
+				foreach (ParameterTransition parameterTransition3 in state.parameterTransitions)
 				{
 					if (num != gotoId)
 					{
 						return;
 					}
-					parameterTransition4.Evaluate(smi);
+					parameterTransition3.Evaluate(smi);
 				}
 			}
 			if (num == gotoId)
 			{
 				ExecuteActions((State)state, state.enterActions);
-				if (num == gotoId)
-				{
-				}
+				_ = gotoId;
 			}
 		}
 
@@ -889,9 +893,9 @@ public class StateMachine<StateMachineType, StateMachineInstanceType, MasterType
 				foreach (UpdateAction updateAction in state.updateActions)
 				{
 					int updateTableIdx = updateAction.updateTableIdx;
-					UpdateBucketWithUpdater<StateMachineInstanceType> updateBucketWithUpdater = (UpdateBucketWithUpdater<StateMachineInstanceType>)smi.updateTable[updateTableIdx].bucket;
+					UpdateBucketWithUpdater<StateMachineInstanceType> obj = (UpdateBucketWithUpdater<StateMachineInstanceType>)smi.updateTable[updateTableIdx].bucket;
 					smi.updateTable[updateTableIdx].bucket = null;
-					updateBucketWithUpdater.Remove(smi.updateTable[updateTableIdx].handle);
+					obj.Remove(smi.updateTable[updateTableIdx].handle);
 				}
 			}
 			stackEntry.schedulerGroup.Reset();
@@ -1001,8 +1005,7 @@ public class StateMachine<StateMachineType, StateMachineInstanceType, MasterType
 					return;
 				}
 				int num = ++gotoId;
-				State state = base_state as State;
-				BaseState[] branch = state.branch;
+				BaseState[] branch = (base_state as State).branch;
 				int i;
 				for (i = 0; i < stackSize && i < branch.Length && stateStack[i].state == branch[i]; i++)
 				{
@@ -1037,8 +1040,7 @@ public class StateMachine<StateMachineType, StateMachineInstanceType, MasterType
 						text2 = base_state.name;
 					}
 					string text3 = "(NULL).";
-					IStateMachineTarget master = GetMaster();
-					if (!master.isNull)
+					if (!GetMaster().isNull)
 					{
 						text3 = "(" + base.gameObject.name + ").";
 					}
@@ -1228,15 +1230,13 @@ public class StateMachine<StateMachineType, StateMachineInstanceType, MasterType
 
 		public ParameterType Set(ParameterType value, StateMachineInstanceType smi)
 		{
-			Context context = (Context)smi.GetParameterContext(this);
-			context.Set(value, smi);
+			((Context)smi.GetParameterContext(this)).Set(value, smi);
 			return value;
 		}
 
 		public ParameterType Get(StateMachineInstanceType smi)
 		{
-			Context context = (Context)smi.GetParameterContext(this);
-			return context.value;
+			return ((Context)smi.GetParameterContext(this)).value;
 		}
 	}
 
@@ -1694,8 +1694,7 @@ public class StateMachine<StateMachineType, StateMachineInstanceType, MasterType
 
 		public bool IsNull(StateMachineInstanceType smi)
 		{
-			GameObject x = Get(smi);
-			return x == null;
+			return Get(smi) == null;
 		}
 
 		public ComponentType Get<ComponentType>(StateMachineInstanceType smi)
@@ -1786,8 +1785,7 @@ public class StateMachine<StateMachineType, StateMachineInstanceType, MasterType
 
 		public void Trigger(StateMachineInstanceType smi)
 		{
-			Context context = (Context)smi.GetParameterContext(this);
-			context.Set(null, smi);
+			((Context)smi.GetParameterContext(this)).Set(null, smi);
 		}
 
 		public override Parameter.Context CreateContext()
@@ -1840,10 +1838,8 @@ public class StateMachine<StateMachineType, StateMachineInstanceType, MasterType
 
 	public void BindStates(State parent_state, object state_machine)
 	{
-		Type type = state_machine.GetType();
-		FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
-		FieldInfo[] array = fields;
-		foreach (FieldInfo fieldInfo in array)
+		FieldInfo[] fields = state_machine.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
+		foreach (FieldInfo fieldInfo in fields)
 		{
 			if (fieldInfo.FieldType.IsSubclassOf(typeof(BaseState)))
 			{

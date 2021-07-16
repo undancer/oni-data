@@ -11,7 +11,7 @@ public class OverlayMenu : KIconToggleMenu
 		public string requiredTechItem;
 
 		[SerializeField]
-		private int activeToggleInfo = 0;
+		private int activeToggleInfo;
 
 		public OverlayToggleGroup(string text, string icon_name, List<OverlayToggleInfo> toggle_group, string required_tech_item = "", Action hot_key = Action.NumActions, string tooltip = "", string tooltip_header = "")
 			: base(text, icon_name, null, hot_key, tooltip, tooltip_header)

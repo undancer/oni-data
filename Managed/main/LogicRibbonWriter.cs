@@ -28,7 +28,7 @@ public class LogicRibbonWriter : KMonoBehaviour, ILogicRibbonBitSelector, IRende
 	public int bitDepth = 4;
 
 	[Serialize]
-	public int selectedBit = 0;
+	public int selectedBit;
 
 	[Serialize]
 	private int currentValue;
@@ -81,8 +81,7 @@ public class LogicRibbonWriter : KMonoBehaviour, ILogicRibbonBitSelector, IRende
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		LogicRibbonWriter component = gameObject.GetComponent<LogicRibbonWriter>();
+		LogicRibbonWriter component = ((GameObject)data).GetComponent<LogicRibbonWriter>();
 		if (component != null)
 		{
 			SetBitSelection(component.selectedBit);
@@ -92,8 +91,7 @@ public class LogicRibbonWriter : KMonoBehaviour, ILogicRibbonBitSelector, IRende
 	private void UpdateLogicCircuit()
 	{
 		int new_value = currentValue << selectedBit;
-		LogicPorts component = GetComponent<LogicPorts>();
-		component.SendSignal(OUTPUT_PORT_ID, new_value);
+		GetComponent<LogicPorts>().SendSignal(OUTPUT_PORT_ID, new_value);
 	}
 
 	public void Render200ms(float dt)
@@ -107,8 +105,7 @@ public class LogicRibbonWriter : KMonoBehaviour, ILogicRibbonBitSelector, IRende
 		if (ports != null)
 		{
 			int portCell = ports.GetPortCell(INPUT_PORT_ID);
-			LogicCircuitManager logicCircuitManager = Game.Instance.logicCircuitManager;
-			result = logicCircuitManager.GetNetworkForCell(portCell);
+			result = Game.Instance.logicCircuitManager.GetNetworkForCell(portCell);
 		}
 		return result;
 	}
@@ -119,8 +116,7 @@ public class LogicRibbonWriter : KMonoBehaviour, ILogicRibbonBitSelector, IRende
 		if (ports != null)
 		{
 			int portCell = ports.GetPortCell(OUTPUT_PORT_ID);
-			LogicCircuitManager logicCircuitManager = Game.Instance.logicCircuitManager;
-			result = logicCircuitManager.GetNetworkForCell(portCell);
+			result = Game.Instance.logicCircuitManager.GetNetworkForCell(portCell);
 		}
 		return result;
 	}
@@ -157,8 +153,7 @@ public class LogicRibbonWriter : KMonoBehaviour, ILogicRibbonBitSelector, IRende
 		if (ports != null)
 		{
 			int portCell = ports.GetPortCell(OUTPUT_PORT_ID);
-			LogicCircuitManager logicCircuitManager = Game.Instance.logicCircuitManager;
-			logicCircuitNetwork = logicCircuitManager.GetNetworkForCell(portCell);
+			logicCircuitNetwork = Game.Instance.logicCircuitManager.GetNetworkForCell(portCell);
 		}
 		return logicCircuitNetwork?.IsBitActive(bit) ?? false;
 	}
@@ -166,13 +161,21 @@ public class LogicRibbonWriter : KMonoBehaviour, ILogicRibbonBitSelector, IRende
 	public int GetInputValue()
 	{
 		LogicPorts component = GetComponent<LogicPorts>();
-		return (component != null) ? component.GetInputValue(INPUT_PORT_ID) : 0;
+		if (!(component != null))
+		{
+			return 0;
+		}
+		return component.GetInputValue(INPUT_PORT_ID);
 	}
 
 	public int GetOutputValue()
 	{
 		LogicPorts component = GetComponent<LogicPorts>();
-		return (component != null) ? component.GetOutputValue(OUTPUT_PORT_ID) : 0;
+		if (!(component != null))
+		{
+			return 0;
+		}
+		return component.GetOutputValue(OUTPUT_PORT_ID);
 	}
 
 	public void UpdateVisuals()

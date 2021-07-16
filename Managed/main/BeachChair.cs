@@ -135,9 +135,9 @@ public class BeachChair : StateMachineComponent<BeachChair.StatesInstance>, IGam
 		private Chore CreateChore(StatesInstance smi)
 		{
 			Workable component = smi.master.GetComponent<BeachChairWorkable>();
-			Chore chore = new WorkChore<BeachChairWorkable>(Db.Get().ChoreTypes.Relax, component, null, run_until_complete: true, null, null, null, allow_in_red_alert: false, Db.Get().ScheduleBlockTypes.Recreation, ignore_schedule_block: false, only_when_operational: true, null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, PriorityScreen.PriorityClass.high);
-			chore.AddPrecondition(ChorePreconditions.instance.CanDoWorkerPrioritizable, component);
-			return chore;
+			WorkChore<BeachChairWorkable> workChore = new WorkChore<BeachChairWorkable>(Db.Get().ChoreTypes.Relax, component, null, run_until_complete: true, null, null, null, allow_in_red_alert: false, Db.Get().ScheduleBlockTypes.Recreation, ignore_schedule_block: false, only_when_operational: true, null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, PriorityScreen.PriorityClass.high);
+			workChore.AddPrecondition(ChorePreconditions.instance.CanDoWorkerPrioritizable, component);
+			return workChore;
 		}
 	}
 
@@ -183,11 +183,13 @@ public class BeachChair : StateMachineComponent<BeachChair.StatesInstance>, IGam
 
 	List<Descriptor> IGameObjectEffectDescriptor.GetDescriptors(GameObject go)
 	{
-		List<Descriptor> list = new List<Descriptor>();
-		list.Add(new Descriptor(UI.BUILDINGEFFECTS.RECREATION, UI.BUILDINGEFFECTS.TOOLTIPS.RECREATION));
-		AddModifierDescriptions(list, specificEffectLit, high_lux: true);
-		AddModifierDescriptions(list, specificEffectUnlit, high_lux: false);
-		return list;
+		List<Descriptor> obj = new List<Descriptor>
+		{
+			new Descriptor(UI.BUILDINGEFFECTS.RECREATION, UI.BUILDINGEFFECTS.TOOLTIPS.RECREATION)
+		};
+		AddModifierDescriptions(obj, specificEffectLit, high_lux: true);
+		AddModifierDescriptions(obj, specificEffectUnlit, high_lux: false);
+		return obj;
 	}
 
 	public void SetLit(bool v)

@@ -13,7 +13,7 @@ public class RadiationGridEmitter
 
 	public int projectionCount = 20;
 
-	public int direction = 0;
+	public int direction;
 
 	public int angle = 360;
 

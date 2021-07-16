@@ -100,9 +100,9 @@ public class RoomType : Resource
 		if (this.upgrade_paths != null)
 		{
 			RoomType[] upgrade_paths2 = this.upgrade_paths;
-			foreach (RoomType roomType in upgrade_paths2)
+			for (int i = 0; i < upgrade_paths2.Length; i++)
 			{
-				Debug.Assert(roomType != null, name + " has a null upgrade path. Maybe it wasn't initialized yet.");
+				Debug.Assert(upgrade_paths2[i] != null, name + " has a null upgrade path. Maybe it wasn't initialized yet.");
 			}
 		}
 	}
@@ -116,9 +116,9 @@ public class RoomType : Resource
 		if (this.additional_constraints != null)
 		{
 			RoomConstraints.Constraint[] additional_constraints = this.additional_constraints;
-			foreach (RoomConstraints.Constraint constraint in additional_constraints)
+			for (int i = 0; i < additional_constraints.Length; i++)
 			{
-				if (!constraint.isSatisfied(candidate_room))
+				if (!additional_constraints[i].isSatisfied(candidate_room))
 				{
 					return RoomIdentificationResult.primary_satisfied;
 				}

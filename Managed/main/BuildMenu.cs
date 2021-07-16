@@ -57,20 +57,19 @@ public class BuildMenu : KScreen
 			DisplayInfo result = default(DisplayInfo);
 			if (data != null && typeof(IList<DisplayInfo>).IsAssignableFrom(data.GetType()))
 			{
-				IList<DisplayInfo> list = (IList<DisplayInfo>)data;
-				foreach (DisplayInfo item in list)
+				foreach (DisplayInfo item in (IList<DisplayInfo>)data)
 				{
 					result = item.GetInfo(category);
 					if (result.category == category)
 					{
-						break;
+						return result;
 					}
 					if (item.category == category)
 					{
-						result = item;
-						break;
+						return item;
 					}
 				}
+				return result;
 			}
 			return result;
 		}
@@ -101,23 +100,23 @@ public class BuildMenu : KScreen
 
 	private Stack<KIconToggleMenu> submenuStack = new Stack<KIconToggleMenu>();
 
-	private bool selecting = false;
+	private bool selecting;
 
-	private bool updating = false;
+	private bool updating;
 
-	private bool deactivateToolQueued = false;
+	private bool deactivateToolQueued;
 
 	[SerializeField]
 	private Vector2 rootMenuOffset = Vector2.zero;
 
 	[SerializeField]
-	private PadInfo rootMenuPadding = default(PadInfo);
+	private PadInfo rootMenuPadding;
 
 	[SerializeField]
 	private Vector2 nestedMenuOffset = Vector2.zero;
 
 	[SerializeField]
-	private PadInfo nestedMenuPadding = default(PadInfo);
+	private PadInfo nestedMenuPadding;
 
 	[SerializeField]
 	private Vector2 buildingsMenuOffset = Vector2.zero;
@@ -514,7 +513,7 @@ public class BuildMenu : KScreen
 
 	private float updateInterval = 1f;
 
-	private float elapsedTime = 0f;
+	private float elapsedTime;
 
 	public static BuildMenu Instance
 	{
@@ -541,8 +540,7 @@ public class BuildMenu : KScreen
 
 	public static bool UseHotkeyBuildMenu()
 	{
-		int @int = KPlayerPrefs.GetInt("ENABLE_HOTKEY_BUILD_MENU");
-		return @int != 0;
+		return KPlayerPrefs.GetInt("ENABLE_HOTKEY_BUILD_MENU") != 0;
 	}
 
 	protected override void OnSpawn()
@@ -597,8 +595,7 @@ public class BuildMenu : KScreen
 			HashedString key = submenu2.Key;
 			if (!(key == ROOT_HASHSTR) && categorizedCategoryMap.TryGetValue(key, out var value2))
 			{
-				BuildMenuCategoriesScreen value3 = submenu2.Value;
-				Image component = value3.GetComponent<Image>();
+				Image component = submenu2.Value.GetComponent<Image>();
 				if (component != null)
 				{
 					component.enabled = value2.Count > 0;
@@ -622,8 +619,7 @@ public class BuildMenu : KScreen
 			{
 				anchoredPosition = rootMenuOffset;
 				padInfo = rootMenuPadding;
-				Image component2 = value.GetComponent<Image>();
-				component2.enabled = false;
+				value.GetComponent<Image>().enabled = false;
 			}
 			else
 			{
@@ -643,8 +639,7 @@ public class BuildMenu : KScreen
 	{
 		foreach (KeyValuePair<HashedString, BuildMenuCategoriesScreen> submenu in submenus)
 		{
-			BuildMenuCategoriesScreen value = submenu.Value;
-			value.UpdateBuildableStates(skip_flourish: true);
+			submenu.Value.UpdateBuildableStates(skip_flourish: true);
 		}
 	}
 
@@ -685,12 +680,12 @@ public class BuildMenu : KScreen
 		}
 		else if (typeof(IList<DisplayInfo>).IsAssignableFrom(type))
 		{
-			IList<DisplayInfo> list2 = (IList<DisplayInfo>)data;
+			IList<DisplayInfo> obj = (IList<DisplayInfo>)data;
 			if (!categorized_category_map.TryGetValue(category, out var value2))
 			{
 				value2 = (categorized_category_map[category] = new List<HashedString>());
 			}
-			foreach (DisplayInfo item in list2)
+			foreach (DisplayInfo item in obj)
 			{
 				value2.Add(item.category);
 				PopulateCategorizedMaps(item.category, depth + 1, item.data, category_map, order_map, ref building_index, categorized_building_map, categorized_category_map);
@@ -698,8 +693,7 @@ public class BuildMenu : KScreen
 		}
 		else
 		{
-			IList<BuildingInfo> list4 = (IList<BuildingInfo>)data;
-			foreach (BuildingInfo item2 in list4)
+			foreach (BuildingInfo item2 in (IList<BuildingInfo>)data)
 			{
 				Tag key = new Tag(item2.id);
 				category_map[key] = category;
@@ -721,8 +715,9 @@ public class BuildMenu : KScreen
 	{
 		if (!e.Consumed)
 		{
-			if (!mouseOver || !base.ConsumeMouseScroll || e.TryConsume(Action.ZoomIn) || e.TryConsume(Action.ZoomOut))
+			if (mouseOver && base.ConsumeMouseScroll && !e.TryConsume(Action.ZoomIn))
 			{
+				e.TryConsume(Action.ZoomOut);
 			}
 			if (!e.Consumed && selectedCategory.IsValid && e.TryConsume(Action.Escape))
 			{
@@ -773,8 +768,7 @@ public class BuildMenu : KScreen
 		productInfoScreen.Close();
 		while (submenuStack.Count > 0)
 		{
-			KIconToggleMenu kIconToggleMenu = submenuStack.Pop();
-			kIconToggleMenu.Close();
+			submenuStack.Pop().Close();
 			productInfoScreen.Close();
 		}
 		selectedCategory = HashedString.Invalid;
@@ -803,16 +797,15 @@ public class BuildMenu : KScreen
 				string sound = GlobalAssets.GetSound("NewBuildable_Embellishment");
 				if (sound != null)
 				{
-					EventInstance instance = SoundEvent.BeginOneShot(sound, SoundListenerController.Instance.transform.GetPosition());
-					SoundEvent.EndOneShot(instance);
+					SoundEvent.EndOneShot(SoundEvent.BeginOneShot(sound, SoundListenerController.Instance.transform.GetPosition()));
 				}
 			}
 			string sound2 = GlobalAssets.GetSound("NewBuildable");
 			if (sound2 != null)
 			{
-				EventInstance instance2 = SoundEvent.BeginOneShot(sound2, SoundListenerController.Instance.transform.GetPosition());
-				instance2.setParameterByName("playCount", Instance.notificationPingCount);
-				SoundEvent.EndOneShot(instance2);
+				EventInstance instance = SoundEvent.BeginOneShot(sound2, SoundListenerController.Instance.transform.GetPosition());
+				instance.setParameterByName("playCount", Instance.notificationPingCount);
+				SoundEvent.EndOneShot(instance);
 			}
 		}
 		timeSinceNotificationPing = 0f;
@@ -880,8 +873,7 @@ public class BuildMenu : KScreen
 		if (selectedBuilding.isKAnimTile && selectedBuilding.isUtility)
 		{
 			IList<Tag> getSelectedElementAsList = productInfoScreen.materialSelectionPanel.GetSelectedElementAsList;
-			BaseUtilityBuildTool baseUtilityBuildTool = ((selectedBuilding.BuildingComplete.GetComponent<Wire>() != null) ? ((BaseUtilityBuildTool)WireBuildTool.Instance) : ((BaseUtilityBuildTool)UtilityBuildTool.Instance));
-			baseUtilityBuildTool.Activate(selectedBuilding, getSelectedElementAsList);
+			((selectedBuilding.BuildingComplete.GetComponent<Wire>() != null) ? ((BaseUtilityBuildTool)WireBuildTool.Instance) : ((BaseUtilityBuildTool)UtilityBuildTool.Instance)).Activate(selectedBuilding, getSelectedElementAsList);
 		}
 		else
 		{
@@ -900,8 +892,7 @@ public class BuildMenu : KScreen
 		buildingsScreen.SetHasFocus(has_focus: false);
 		foreach (KeyValuePair<HashedString, BuildMenuCategoriesScreen> submenu in submenus)
 		{
-			BuildMenuCategoriesScreen value = submenu.Value;
-			value.SetHasFocus(has_focus: false);
+			submenu.Value.SetHasFocus(has_focus: false);
 		}
 		ToolMenu.Instance.ClearSelection();
 		if (def != null)
@@ -937,8 +928,7 @@ public class BuildMenu : KScreen
 			{
 				if (item is BuildMenuCategoriesScreen)
 				{
-					BuildMenuCategoriesScreen buildMenuCategoriesScreen = item as BuildMenuCategoriesScreen;
-					buildMenuCategoriesScreen.SetHasFocus(has_focus: false);
+					(item as BuildMenuCategoriesScreen).SetHasFocus(has_focus: false);
 				}
 			}
 			selectedCategory = new_category;
@@ -994,12 +984,13 @@ public class BuildMenu : KScreen
 		while (true)
 		{
 			HashedString parentCategory = GetParentCategory(child_category);
-			if (parentCategory == HashedString.Invalid)
+			if (!(parentCategory == HashedString.Invalid))
 			{
-				break;
+				categories.Add(parentCategory);
+				child_category = parentCategory;
+				continue;
 			}
-			categories.Add(parentCategory);
-			child_category = parentCategory;
+			break;
 		}
 	}
 
@@ -1028,8 +1019,7 @@ public class BuildMenu : KScreen
 	{
 		foreach (KeyValuePair<HashedString, BuildMenuCategoriesScreen> submenu in submenus)
 		{
-			BuildMenuCategoriesScreen value = submenu.Value;
-			value.UpdateNotifications(updated_categories);
+			submenu.Value.UpdateNotifications(updated_categories);
 		}
 	}
 

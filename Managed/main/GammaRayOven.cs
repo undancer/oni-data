@@ -34,20 +34,18 @@ public class GammaRayOven : ComplexFabricator, IGameObjectEffectDescriptor
 			Debug.Assert(worker != null, "How did we get a null worker?");
 			if (diseaseCountKillRate > 0)
 			{
-				PrimaryElement component2 = GetComponent<PrimaryElement>();
+				PrimaryElement component = GetComponent<PrimaryElement>();
 				int num = Math.Max(1, (int)((float)diseaseCountKillRate * dt));
-				component2.ModifyDiseaseCount(-num, "GammaRayOven");
+				component.ModifyDiseaseCount(-num, "GammaRayOven");
 			}
 		});
-		Radiator component = GetComponent<Radiator>();
-		component.emitter.enabled = false;
+		GetComponent<Radiator>().emitter.enabled = false;
 		Subscribe(824508782, UpdateRadiator);
 	}
 
 	private void UpdateRadiator(object data)
 	{
-		Radiator component = GetComponent<Radiator>();
-		component.emitter.enabled = operational.IsActive;
+		GetComponent<Radiator>().emitter.enabled = operational.IsActive;
 	}
 
 	protected override List<GameObject> SpawnOrderProduct(ComplexRecipe recipe)

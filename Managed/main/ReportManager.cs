@@ -247,8 +247,7 @@ public class ReportManager : KMonoBehaviour
 
 		public void AddData(ReportType reportType, float value, string note = null, string context = null)
 		{
-			ReportEntry entry = GetEntry(reportType);
-			entry.AddData(noteStorage, value, note, context);
+			GetEntry(reportType).AddData(noteStorage, value, note, context);
 		}
 	}
 
@@ -305,7 +304,11 @@ public class ReportManager : KMonoBehaviour
 			{
 				public bool Equals(NoteEntryKey a, NoteEntryKey b)
 				{
-					return a.noteHash == b.noteHash && a.isPositive == b.isPositive;
+					if (a.noteHash == b.noteHash)
+					{
+						return a.isPositive == b.isPositive;
+					}
+					return false;
 				}
 
 				public int GetHashCode(NoteEntryKey a)
@@ -614,8 +617,7 @@ public class ReportManager : KMonoBehaviour
 	{
 		if (noteStorageBytes == null)
 		{
-			int num = reader.ReadInt32();
-			Debug.Assert(num == 0);
+			Debug.Assert(reader.ReadInt32() == 0);
 			BinaryReader binaryReader = new BinaryReader(new MemoryStream(reader.RawBytes()));
 			binaryReader.BaseStream.Position = reader.Position;
 			noteStorage.Deserialize(binaryReader);

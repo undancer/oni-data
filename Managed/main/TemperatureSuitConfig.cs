@@ -15,8 +15,7 @@ public class TemperatureSuitConfig : IEquipmentConfig
 
 	public EquipmentDef CreateEquipmentDef()
 	{
-		Dictionary<string, float> dictionary = new Dictionary<string, float>();
-		dictionary.Add(SimHashes.Ice.ToString(), 300f);
+		new Dictionary<string, float>().Add(SimHashes.Ice.ToString(), 300f);
 		List<AttributeModifier> list = new List<AttributeModifier>();
 		list.Add(new AttributeModifier(TUNING.EQUIPMENT.ATTRIBUTE_MOD_IDS.INSULATION, TUNING.EQUIPMENT.SUITS.TEMPERATURESUIT_INSULATION, STRINGS.EQUIPMENT.PREFABS.TEMPERATURE_SUIT.NAME));
 		list.Add(new AttributeModifier(TUNING.EQUIPMENT.ATTRIBUTE_MOD_IDS.ATHLETICS, TUNING.EQUIPMENT.SUITS.TEMPERATURESUIT_ATHLETICS, STRINGS.EQUIPMENT.PREFABS.TEMPERATURE_SUIT.NAME));
@@ -34,7 +33,6 @@ public class TemperatureSuitConfig : IEquipmentConfig
 		SuitTank suitTank = go.AddComponent<SuitTank>();
 		suitTank.element = "Water";
 		suitTank.amount = 100f;
-		KPrefabID component = go.GetComponent<KPrefabID>();
-		component.AddTag(GameTags.PedestalDisplayable);
+		go.GetComponent<KPrefabID>().AddTag(GameTags.PedestalDisplayable);
 	}
 }

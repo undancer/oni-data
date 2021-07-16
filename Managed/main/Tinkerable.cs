@@ -52,13 +52,13 @@ public class Tinkerable : Workable
 
 	private SchedulerHandle updateHandle;
 
-	private bool hasReservedMaterial = false;
+	private bool hasReservedMaterial;
 
 	public static Tinkerable MakePowerTinkerable(GameObject prefab)
 	{
-		RoomTracker roomTracker = prefab.AddOrGet<RoomTracker>();
-		roomTracker.requiredRoomType = Db.Get().RoomTypes.PowerPlant.Id;
-		roomTracker.requirement = RoomTracker.Requirement.TrackingOnly;
+		RoomTracker obj = prefab.AddOrGet<RoomTracker>();
+		obj.requiredRoomType = Db.Get().RoomTypes.PowerPlant.Id;
+		obj.requirement = RoomTracker.Requirement.TrackingOnly;
 		Tinkerable tinkerable = prefab.AddOrGet<Tinkerable>();
 		tinkerable.tinkerMaterialTag = PowerControlStationConfig.TINKER_TOOLS;
 		tinkerable.tinkerMaterialAmount = 1f;
@@ -77,8 +77,7 @@ public class Tinkerable : Workable
 		tinkerable.shouldShowSkillPerkStatusItem = false;
 		prefab.AddOrGet<Storage>();
 		prefab.AddOrGet<Effects>();
-		KPrefabID component = prefab.GetComponent<KPrefabID>();
-		component.prefabInitFn += delegate(GameObject inst)
+		prefab.GetComponent<KPrefabID>().prefabInitFn += delegate(GameObject inst)
 		{
 			inst.GetComponent<Tinkerable>().SetOffsetTable(OffsetGroups.InvertedStandardTable);
 		};
@@ -87,9 +86,9 @@ public class Tinkerable : Workable
 
 	public static Tinkerable MakeFarmTinkerable(GameObject prefab)
 	{
-		RoomTracker roomTracker = prefab.AddOrGet<RoomTracker>();
-		roomTracker.requiredRoomType = Db.Get().RoomTypes.Farm.Id;
-		roomTracker.requirement = RoomTracker.Requirement.TrackingOnly;
+		RoomTracker obj = prefab.AddOrGet<RoomTracker>();
+		obj.requiredRoomType = Db.Get().RoomTypes.Farm.Id;
+		obj.requirement = RoomTracker.Requirement.TrackingOnly;
 		Tinkerable tinkerable = prefab.AddOrGet<Tinkerable>();
 		tinkerable.tinkerMaterialTag = FarmStationConfig.TINKER_TOOLS;
 		tinkerable.tinkerMaterialAmount = 1f;
@@ -108,8 +107,7 @@ public class Tinkerable : Workable
 		tinkerable.shouldShowSkillPerkStatusItem = false;
 		prefab.AddOrGet<Storage>();
 		prefab.AddOrGet<Effects>();
-		KPrefabID component = prefab.GetComponent<KPrefabID>();
-		component.prefabInitFn += delegate(GameObject inst)
+		prefab.GetComponent<KPrefabID>().prefabInitFn += delegate(GameObject inst)
 		{
 			inst.GetComponent<Tinkerable>().SetOffsetTable(OffsetGroups.InvertedStandardTable);
 		};
@@ -160,8 +158,7 @@ public class Tinkerable : Workable
 
 	private void OnStorageChange(object data)
 	{
-		GameObject go = (GameObject)data;
-		if (go.HasTag(tinkerMaterialTag))
+		if (((GameObject)data).HasTag(tinkerMaterialTag))
 		{
 			QueueUpdateChore();
 		}
@@ -185,11 +182,11 @@ public class Tinkerable : Workable
 	{
 		Operational component = GetComponent<Operational>();
 		bool flag = component == null || component.IsFunctional;
-		bool flag2 = HasEffect();
-		bool flag3 = RoomHasActiveTinkerstation();
-		bool flag4 = !flag2 && flag3 && flag;
-		bool flag5 = flag2 || !flag3;
-		if (chore == null && flag4)
+		bool num = HasEffect();
+		bool flag2 = RoomHasActiveTinkerstation();
+		bool flag3 = !num && flag2 && flag;
+		bool flag4 = num || !flag2;
+		if (chore == null && flag3)
 		{
 			UpdateMaterialReservation(shouldReserve: true);
 			if (HasMaterial())
@@ -208,13 +205,12 @@ public class Tinkerable : Workable
 				}, null, null, null, run_until_complete: true, OnFetchComplete, null, null, FetchOrder2.OperationalRequirement.Functional);
 			}
 			chore.AddPrecondition(ChorePreconditions.instance.HasSkillPerk, requiredSkillPerk);
-			RoomTracker component2 = GetComponent<RoomTracker>();
-			if (!string.IsNullOrEmpty(component2.requiredRoomType))
+			if (!string.IsNullOrEmpty(GetComponent<RoomTracker>().requiredRoomType))
 			{
 				chore.AddPrecondition(ChorePreconditions.instance.IsInMyRoom, Grid.PosToCell(base.transform.GetPosition()));
 			}
 		}
-		else if (chore != null && flag5)
+		else if (chore != null && flag4)
 		{
 			UpdateMaterialReservation(shouldReserve: false);
 			chore.Cancel("No longer needed");
@@ -234,15 +230,10 @@ public class Tinkerable : Workable
 		}
 		foreach (KPrefabID building in roomTracker.room.buildings)
 		{
-			if (building == null)
+			if (!(building == null))
 			{
-				continue;
-			}
-			TinkerStation component = building.GetComponent<TinkerStation>();
-			if (component != null && component.outputPrefab == tinkerMaterialTag)
-			{
-				Operational component2 = building.GetComponent<Operational>();
-				if (component2.IsOperational)
+				TinkerStation component = building.GetComponent<TinkerStation>();
+				if (component != null && component.outputPrefab == tinkerMaterialTag && building.GetComponent<Operational>().IsOperational)
 				{
 					return true;
 				}

@@ -19,7 +19,7 @@ public class TinkerStation : Workable, IGameObjectEffectDescriptor, ISim1000ms
 	[MyCmpAdd]
 	private Storage storage;
 
-	public bool useFilteredStorage = false;
+	public bool useFilteredStorage;
 
 	protected FilteredStorage filteredStorage;
 
@@ -105,7 +105,11 @@ public class TinkerStation : Workable, IGameObjectEffectDescriptor, ISim1000ms
 	private bool CorrectRolePrecondition(MinionIdentity worker)
 	{
 		MinionResume component = worker.GetComponent<MinionResume>();
-		return component != null && component.HasPerk(requiredSkillPerk);
+		if (component != null)
+		{
+			return component.HasPerk(requiredSkillPerk);
+		}
+		return false;
 	}
 
 	private void OnOperationalChanged(object data)
@@ -173,7 +177,11 @@ public class TinkerStation : Workable, IGameObjectEffectDescriptor, ISim1000ms
 
 	private bool ToolsRequested()
 	{
-		return MaterialNeeds.GetAmount(outputPrefab, base.gameObject.GetMyWorldId(), includeRelatedWorlds: false) > 0f && this.GetMyWorld().worldInventory.GetAmount(outputPrefab, includeRelatedWorlds: true) <= 0f;
+		if (MaterialNeeds.GetAmount(outputPrefab, base.gameObject.GetMyWorldId(), includeRelatedWorlds: false) > 0f)
+		{
+			return this.GetMyWorld().worldInventory.GetAmount(outputPrefab, includeRelatedWorlds: true) <= 0f;
+		}
+		return false;
 	}
 
 	public override List<Descriptor> GetDescriptors(GameObject go)
@@ -196,11 +204,14 @@ public class TinkerStation : Workable, IGameObjectEffectDescriptor, ISim1000ms
 			Effect effect = Db.Get().effects.Get(list[0].addedEffect);
 			descriptors.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.ADDED_EFFECT, effect.Name), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.ADDED_EFFECT, effect.Name, Effect.CreateTooltip(effect, showDuration: true))));
 			descriptors.Add(new Descriptor(UI.BUILDINGEFFECTS.IMPROVED_BUILDINGS, UI.BUILDINGEFFECTS.TOOLTIPS.IMPROVED_BUILDINGS));
-			foreach (Tinkerable item3 in list)
 			{
-				Descriptor item = new Descriptor(string.Format(UI.BUILDINGEFFECTS.IMPROVED_BUILDINGS_ITEM, item3.GetProperName()), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.IMPROVED_BUILDINGS_ITEM, item3.GetProperName()));
-				item.IncreaseIndent();
-				descriptors.Add(item);
+				foreach (Tinkerable item3 in list)
+				{
+					Descriptor item = new Descriptor(string.Format(UI.BUILDINGEFFECTS.IMPROVED_BUILDINGS_ITEM, item3.GetProperName()), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.IMPROVED_BUILDINGS_ITEM, item3.GetProperName()));
+					item.IncreaseIndent();
+					descriptors.Add(item);
+				}
+				return descriptors;
 			}
 		}
 		return descriptors;
@@ -209,8 +220,7 @@ public class TinkerStation : Workable, IGameObjectEffectDescriptor, ISim1000ms
 	public static TinkerStation AddTinkerStation(GameObject go, string required_room_type)
 	{
 		TinkerStation result = go.AddOrGet<TinkerStation>();
-		RoomTracker roomTracker = go.AddOrGet<RoomTracker>();
-		roomTracker.requiredRoomType = required_room_type;
+		go.AddOrGet<RoomTracker>().requiredRoomType = required_room_type;
 		return result;
 	}
 }

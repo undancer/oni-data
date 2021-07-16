@@ -25,18 +25,18 @@ public class MetalRefineryConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("MetalRefinery", 3, 4, "metalrefinery_kanim", 30, 60f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.ALL_MINERALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER6, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.EnergyConsumptionWhenActive = 1200f;
-		buildingDef.SelfHeatKilowattsWhenActive = 16f;
-		buildingDef.InputConduitType = ConduitType.Liquid;
-		buildingDef.UtilityInputOffset = new CellOffset(-1, 1);
-		buildingDef.OutputConduitType = ConduitType.Liquid;
-		buildingDef.UtilityOutputOffset = new CellOffset(1, 0);
-		buildingDef.ViewMode = OverlayModes.Power.ID;
-		buildingDef.AudioCategory = "HollowMetal";
-		buildingDef.AudioSize = "large";
-		return buildingDef;
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("MetalRefinery", 3, 4, "metalrefinery_kanim", 30, 60f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.ALL_MINERALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER6, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
+		obj.RequiresPowerInput = true;
+		obj.EnergyConsumptionWhenActive = 1200f;
+		obj.SelfHeatKilowattsWhenActive = 16f;
+		obj.InputConduitType = ConduitType.Liquid;
+		obj.UtilityInputOffset = new CellOffset(-1, 1);
+		obj.OutputConduitType = ConduitType.Liquid;
+		obj.UtilityOutputOffset = new CellOffset(1, 0);
+		obj.ViewMode = OverlayModes.Power.ID;
+		obj.AudioCategory = "HollowMetal";
+		obj.AudioSize = "large";
+		return obj;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
@@ -63,8 +63,7 @@ public class MetalRefineryConfig : IBuildingConfig
 		{
 			Assets.GetAnim("anim_interacts_metalrefinery_kanim")
 		};
-		RequireOutputs requireOutputs = go.AddOrGet<RequireOutputs>();
-		requireOutputs.ignoreFullPipe = true;
+		go.AddOrGet<RequireOutputs>().ignoreFullPipe = true;
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
 		conduitConsumer.capacityTag = GameTags.Liquid;
 		conduitConsumer.capacityKG = 800f;
@@ -76,13 +75,11 @@ public class MetalRefineryConfig : IBuildingConfig
 		conduitDispenser.conduitType = ConduitType.Liquid;
 		conduitDispenser.elementFilter = null;
 		conduitDispenser.alwaysDispense = true;
-		List<Element> list = ElementLoader.elements.FindAll((Element e) => e.IsSolid && e.HasTag(GameTags.Metal));
-		foreach (Element item in list)
+		foreach (Element item in ElementLoader.elements.FindAll((Element e) => e.IsSolid && e.HasTag(GameTags.Metal)))
 		{
 			if (!item.HasTag(GameTags.Noncrushable))
 			{
-				Element highTempTransition = item.highTempTransition;
-				Element lowTempTransition = highTempTransition.lowTempTransition;
+				Element lowTempTransition = item.highTempTransition.lowTempTransition;
 				if (lowTempTransition != item)
 				{
 					ComplexRecipe.RecipeElement[] array = new ComplexRecipe.RecipeElement[1]

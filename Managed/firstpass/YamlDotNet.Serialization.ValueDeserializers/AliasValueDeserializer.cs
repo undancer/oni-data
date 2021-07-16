@@ -95,7 +95,11 @@ namespace YamlDotNet.Serialization.ValueDeserializers
 					value = new ValuePromise(anchorAlias);
 					aliasState.Add(anchorAlias.Value, value);
 				}
-				return value.HasValue ? value.Value : value;
+				if (!value.HasValue)
+				{
+					return value;
+				}
+				return value.Value;
 			}
 			string text = null;
 			NodeEvent nodeEvent = parser.Peek<NodeEvent>();

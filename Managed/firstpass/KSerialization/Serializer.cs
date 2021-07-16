@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 
 namespace KSerialization
@@ -19,8 +18,7 @@ namespace KSerialization
 
 		public static void Serialize(object obj, BinaryWriter writer)
 		{
-			Type type = obj.GetType();
-			SerializationTemplate serializationTemplate = Manager.GetSerializationTemplate(type);
+			SerializationTemplate serializationTemplate = Manager.GetSerializationTemplate(obj.GetType());
 			string kTypeString = obj.GetType().GetKTypeString();
 			writer.WriteKleiString(kTypeString);
 			serializationTemplate.SerializeData(obj, writer);
@@ -28,9 +26,7 @@ namespace KSerialization
 
 		public static void SerializeTypeless(object obj, BinaryWriter writer)
 		{
-			Type type = obj.GetType();
-			SerializationTemplate serializationTemplate = Manager.GetSerializationTemplate(type);
-			serializationTemplate.SerializeData(obj, writer);
+			Manager.GetSerializationTemplate(obj.GetType()).SerializeData(obj, writer);
 		}
 	}
 }

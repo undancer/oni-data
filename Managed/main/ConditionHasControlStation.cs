@@ -11,7 +11,11 @@ public class ConditionHasControlStation : ProcessCondition
 
 	public override Status EvaluateCondition()
 	{
-		return (Components.RocketControlStations.GetWorldItems(module.CraftInterface.GetComponent<WorldContainer>().id).Count > 0) ? Status.Ready : Status.Failure;
+		if (Components.RocketControlStations.GetWorldItems(module.CraftInterface.GetComponent<WorldContainer>().id).Count <= 0)
+		{
+			return Status.Failure;
+		}
+		return Status.Ready;
 	}
 
 	public override string GetStatusMessage(Status status)

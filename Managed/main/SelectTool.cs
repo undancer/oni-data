@@ -17,7 +17,7 @@ public class SelectTool : InterfaceTool
 
 	private bool delayedSkipSound;
 
-	private KSelectable previousSelection = null;
+	private KSelectable previousSelection;
 
 	public static void DestroyInstance()
 	{

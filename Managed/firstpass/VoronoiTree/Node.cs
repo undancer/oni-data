@@ -35,15 +35,15 @@ namespace VoronoiTree
 
 			public delegate string NodeTypeOverride(Vector2 position);
 
-			public SplitType splitType = (SplitType)0;
+			public SplitType splitType;
 
-			public TagSet dontCopyTags = null;
+			public TagSet dontCopyTags;
 
-			public TagSet moveTags = null;
+			public TagSet moveTags;
 
 			public int minChildCount = 2;
 
-			public NodeTypeOverride typeOverride = null;
+			public NodeTypeOverride typeOverride;
 
 			public Action<Tree, SplitCommand> SplitFunction;
 		}
@@ -55,7 +55,7 @@ namespace VoronoiTree
 		[Serialize]
 		public NodeType type;
 
-		public VisitedType visited = VisitedType.NotVisited;
+		public VisitedType visited;
 
 		public LoggerSSF log;
 
@@ -249,8 +249,7 @@ namespace VoronoiTree
 			hashSet.Add(new Diagram.Site(maxIndex + 2, new Vector2(site.poly.bounds.xMax + 500f, site.poly.bounds.yMin + site.poly.bounds.height / 2f)));
 			hashSet.Add(new Diagram.Site(maxIndex + 3, new Vector2(site.poly.bounds.xMin + site.poly.bounds.width / 2f, site.poly.bounds.yMin - 500f)));
 			hashSet.Add(new Diagram.Site(maxIndex + 4, new Vector2(site.poly.bounds.xMin + site.poly.bounds.width / 2f, site.poly.bounds.yMax + 500f)));
-			Rect bounds = new Rect(site.poly.bounds.xMin - 500f, site.poly.bounds.yMin - 500f, site.poly.bounds.width + 500f, site.poly.bounds.height + 500f);
-			Diagram diagram = new Diagram(bounds, hashSet);
+			Diagram diagram = new Diagram(new Rect(site.poly.bounds.xMin - 500f, site.poly.bounds.yMin - 500f, site.poly.bounds.width + 500f, site.poly.bounds.height + 500f), hashSet);
 			for (int j = 0; j < diagramSites.Count; j++)
 			{
 				if (diagramSites[j].id > maxIndex)
@@ -354,9 +353,7 @@ namespace VoronoiTree
 					}
 					int edgeIdx = -1;
 					Polygon.DebugLog($"Testing for {home.id} common edge with {site.id}");
-					LineSegment overlapSegment;
-					Polygon.Commonality commonality = home.poly.SharesEdge(site.poly, ref edgeIdx, out overlapSegment);
-					if (commonality == Polygon.Commonality.Edge)
+					if (home.poly.SharesEdge(site.poly, ref edgeIdx, out var _) == Polygon.Commonality.Edge)
 					{
 						hashSet.Add(new KeyValuePair<uint, int>(niter.Current, edgeIdx));
 						Polygon.DebugLog($" -> {home.id} common edge with {site.id}: {edgeIdx}");

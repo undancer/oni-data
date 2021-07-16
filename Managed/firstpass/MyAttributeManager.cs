@@ -58,13 +58,12 @@ public abstract class MyAttributeManager<T> : IAttributeManager where T : class
 	private void GetFieldDatas(List<FieldData> field_data_list, Type type)
 	{
 		FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-		FieldInfo[] array = fields;
-		foreach (FieldInfo fieldInfo in array)
+		foreach (FieldInfo fieldInfo in fields)
 		{
 			object[] customAttributes = fieldInfo.GetCustomAttributes(inherit: false);
-			foreach (object obj in customAttributes)
+			for (int j = 0; j < customAttributes.Length; j++)
 			{
-				Type type2 = obj.GetType();
+				Type type2 = customAttributes[j].GetType();
 				if (!IsFunctionAttribute(type2))
 				{
 					continue;
@@ -116,8 +115,7 @@ public abstract class MyAttributeManager<T> : IAttributeManager where T : class
 	{
 		Type type = obj.GetType();
 		FieldData[] fields = GetFields(type);
-		FieldData[] array = fields;
-		foreach (FieldData fieldData in array)
+		foreach (FieldData fieldData in fields)
 		{
 			AttrFns attrFns = fieldData.attrFns;
 			FieldInfo fieldInfo = fieldData.fieldInfo;
@@ -133,8 +131,7 @@ public abstract class MyAttributeManager<T> : IAttributeManager where T : class
 	{
 		Type type = obj.GetType();
 		FieldData[] fields = GetFields(type);
-		FieldData[] array = fields;
-		foreach (FieldData fieldData in array)
+		foreach (FieldData fieldData in fields)
 		{
 			AttrFns attrFns = fieldData.attrFns;
 			FieldInfo fieldInfo = fieldData.fieldInfo;

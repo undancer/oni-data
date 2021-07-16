@@ -34,35 +34,32 @@ public class RailGunConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef("RailGun", 5, 6, "rail_gun_kanim", 250, 30f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: TUNING.BUILDINGS.DECOR.NONE);
-		buildingDef.Floodable = false;
-		buildingDef.Overheatable = false;
-		buildingDef.AudioCategory = "Metal";
-		buildingDef.BaseTimeUntilRepair = 400f;
-		buildingDef.DefaultAnimState = "off";
-		buildingDef.RequiresPowerInput = true;
-		buildingDef.PowerInputOffset = new CellOffset(-2, 0);
-		buildingDef.EnergyConsumptionWhenActive = 240f;
-		buildingDef.ViewMode = OverlayModes.Power.ID;
-		buildingDef.ExhaustKilowattsWhenActive = 0.5f;
-		buildingDef.SelfHeatKilowattsWhenActive = 2f;
-		buildingDef.UseHighEnergyParticleInputPort = true;
-		buildingDef.HighEnergyParticleInputOffset = new CellOffset(-2, 1);
-		buildingDef.LogicInputPorts = new List<LogicPorts.Port>
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("RailGun", 5, 6, "rail_gun_kanim", 250, 30f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, decor: TUNING.BUILDINGS.DECOR.NONE);
+		obj.Floodable = false;
+		obj.Overheatable = false;
+		obj.AudioCategory = "Metal";
+		obj.BaseTimeUntilRepair = 400f;
+		obj.DefaultAnimState = "off";
+		obj.RequiresPowerInput = true;
+		obj.PowerInputOffset = new CellOffset(-2, 0);
+		obj.EnergyConsumptionWhenActive = 240f;
+		obj.ViewMode = OverlayModes.Power.ID;
+		obj.ExhaustKilowattsWhenActive = 0.5f;
+		obj.SelfHeatKilowattsWhenActive = 2f;
+		obj.UseHighEnergyParticleInputPort = true;
+		obj.HighEnergyParticleInputOffset = new CellOffset(-2, 1);
+		obj.LogicInputPorts = new List<LogicPorts.Port>
 		{
 			LogicPorts.Port.InputPort(RailGun.PORT_ID, new CellOffset(-2, 2), STRINGS.BUILDINGS.PREFABS.RAILGUN.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.RAILGUN.LOGIC_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.RAILGUN.LOGIC_PORT_INACTIVE)
 		};
-		return buildingDef;
+		return obj;
 	}
 
 	private void AttachPorts(GameObject go)
 	{
-		ConduitSecondaryInput conduitSecondaryInput = go.AddComponent<ConduitSecondaryInput>();
-		conduitSecondaryInput.portInfo = liquidInputPort;
-		ConduitSecondaryInput conduitSecondaryInput2 = go.AddComponent<ConduitSecondaryInput>();
-		conduitSecondaryInput2.portInfo = gasInputPort;
-		ConduitSecondaryInput conduitSecondaryInput3 = go.AddComponent<ConduitSecondaryInput>();
-		conduitSecondaryInput3.portInfo = solidInputPort;
+		go.AddComponent<ConduitSecondaryInput>().portInfo = liquidInputPort;
+		go.AddComponent<ConduitSecondaryInput>().portInfo = gasInputPort;
+		go.AddComponent<ConduitSecondaryInput>().portInfo = solidInputPort;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

@@ -30,8 +30,7 @@ public class MournMonitor : GameStateMachine<MournMonitor, MournMonitor.Instance
 	private bool ShouldMourn(Instance smi)
 	{
 		Effect effect = Db.Get().effects.Get("Mourning");
-		Effects component = smi.master.GetComponent<Effects>();
-		return component.HasEffect(effect);
+		return smi.master.GetComponent<Effects>().HasEffect(effect);
 	}
 
 	private void OnEffectAdded(Instance smi, object data)

@@ -74,7 +74,11 @@ namespace Steamworks
 
 		public bool IsSet()
 		{
-			return m_ip0 != 0L || m_ip1 != 0;
+			if (m_ip0 == 0L)
+			{
+				return m_ip1 != 0;
+			}
+			return true;
 		}
 	}
 }

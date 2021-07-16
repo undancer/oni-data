@@ -15,9 +15,9 @@ namespace Klei.AI
 
 		public bool ValidStarterTrait;
 
-		public Action<GameObject> OnAddTrait = null;
+		public Action<GameObject> OnAddTrait;
 
-		public Func<string> TooltipCB = null;
+		public Func<string> TooltipCB;
 
 		public Func<string> ExtendedTooltip;
 
@@ -121,9 +121,9 @@ namespace Klei.AI
 			if (ExtendedTooltip != null)
 			{
 				Delegate[] invocationList = ExtendedTooltip.GetInvocationList();
-				foreach (Delegate @delegate in invocationList)
+				for (int i = 0; i < invocationList.Length; i++)
 				{
-					Func<string> func = (Func<string>)@delegate;
+					Func<string> func = (Func<string>)invocationList[i];
 					text = text + "\n" + func();
 				}
 			}

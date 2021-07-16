@@ -33,8 +33,7 @@ public class MultitoolController : GameStateMachine<MultitoolController, Multito
 
 		public void PlayLoop()
 		{
-			KAnimControllerBase kAnimControllerBase = base.sm.worker.Get<KAnimControllerBase>(base.smi);
-			if (kAnimControllerBase.currentAnim != anims[1])
+			if (base.sm.worker.Get<KAnimControllerBase>(base.smi).currentAnim != anims[1])
 			{
 				base.sm.worker.Get<KAnimControllerBase>(base.smi).Play(anims[1], KAnim.PlayMode.Loop);
 			}
@@ -42,8 +41,7 @@ public class MultitoolController : GameStateMachine<MultitoolController, Multito
 
 		public void PlayPost()
 		{
-			KAnimControllerBase kAnimControllerBase = base.sm.worker.Get<KAnimControllerBase>(base.smi);
-			if (kAnimControllerBase.currentAnim != anims[2])
+			if (base.sm.worker.Get<KAnimControllerBase>(base.smi).currentAnim != anims[2])
 			{
 				base.sm.worker.Get<KAnimControllerBase>(base.smi).Play(anims[2]);
 			}

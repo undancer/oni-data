@@ -53,8 +53,7 @@ public class BaseModularLaunchpadPortConfig
 		component.AddTag(LinkTag);
 		component.AddTag(GameTags.ModularConduitPort);
 		component.AddTag(GameTags.NotRocketInteriorBuilding);
-		ModularConduitPortController.Def def = go.AddOrGetDef<ModularConduitPortController.Def>();
-		def.mode = (isLoader ? ModularConduitPortController.Mode.Load : ModularConduitPortController.Mode.Unload);
+		go.AddOrGetDef<ModularConduitPortController.Def>().mode = (isLoader ? ModularConduitPortController.Mode.Load : ModularConduitPortController.Mode.Unload);
 		if (!isLoader)
 		{
 			Storage storage = go.AddComponent<Storage>();
@@ -122,10 +121,10 @@ public class BaseModularLaunchpadPortConfig
 				conduitConsumer.capacityKG = storageSize;
 			}
 		}
-		ChainedBuilding.Def def2 = go.AddOrGetDef<ChainedBuilding.Def>();
-		def2.headBuildingTag = "LaunchPad".ToTag();
-		def2.linkBuildingTag = LinkTag;
-		def2.objectLayer = ObjectLayer.Building;
+		ChainedBuilding.Def def = go.AddOrGetDef<ChainedBuilding.Def>();
+		def.headBuildingTag = "LaunchPad".ToTag();
+		def.linkBuildingTag = LinkTag;
+		def.objectLayer = ObjectLayer.Building;
 		go.AddOrGet<LogicOperationalController>();
 	}
 

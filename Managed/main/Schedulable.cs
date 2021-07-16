@@ -16,7 +16,11 @@ public class Schedulable : KMonoBehaviour
 			DebugUtil.LogWarningArgs($"Trying to schedule {schedule_block_type.Id} but {base.gameObject.name} is not on a valid world. Grid cell: {Grid.PosToCell(base.gameObject.GetComponent<KPrefabID>())}");
 			return false;
 		}
-		return myWorld.AlertManager.IsRedAlert() || ScheduleManager.Instance.IsAllowed(this, schedule_block_type);
+		if (!myWorld.AlertManager.IsRedAlert())
+		{
+			return ScheduleManager.Instance.IsAllowed(this, schedule_block_type);
+		}
+		return true;
 	}
 
 	public void OnScheduleChanged(Schedule schedule)

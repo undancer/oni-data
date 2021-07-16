@@ -44,7 +44,11 @@ namespace YamlDotNet.Core.Tokens
 		public override bool Equals(object obj)
 		{
 			TagDirective tagDirective = obj as TagDirective;
-			return tagDirective != null && handle.Equals(tagDirective.handle) && prefix.Equals(tagDirective.prefix);
+			if (tagDirective != null && handle.Equals(tagDirective.handle))
+			{
+				return prefix.Equals(tagDirective.prefix);
+			}
+			return false;
 		}
 
 		public override int GetHashCode()

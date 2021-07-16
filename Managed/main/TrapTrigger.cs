@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TrapTrigger : KMonoBehaviour
@@ -17,8 +16,7 @@ public class TrapTrigger : KMonoBehaviour
 		base.OnSpawn();
 		GameObject gameObject = base.gameObject;
 		partitionerEntry = GameScenePartitioner.Instance.Add("Trap", gameObject, Grid.PosToCell(gameObject), GameScenePartitioner.Instance.trapsLayer, OnCreatureOnTrap);
-		List<GameObject> items = storage.items;
-		foreach (GameObject item in items)
+		foreach (GameObject item in storage.items)
 		{
 			SetStoredPosition(item);
 			KBoxCollider2D component = item.GetComponent<KBoxCollider2D>();
@@ -35,8 +33,7 @@ public class TrapTrigger : KMonoBehaviour
 		position.x += trappedOffset.x;
 		position.y += trappedOffset.y;
 		go.transform.SetPosition(position);
-		KBatchedAnimController component = go.GetComponent<KBatchedAnimController>();
-		component.SetSceneLayer(Grid.SceneLayer.BuildingBack);
+		go.GetComponent<KBatchedAnimController>().SetSceneLayer(Grid.SceneLayer.BuildingBack);
 	}
 
 	public void OnCreatureOnTrap(object data)

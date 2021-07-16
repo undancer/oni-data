@@ -26,8 +26,7 @@ public class RadiationBalanceDisplayer : StandardAmountDisplayer
 	public override string GetTooltip(Amount master, AmountInstance instance)
 	{
 		string text = "";
-		RadiationMonitor.Instance sMI = instance.gameObject.GetSMI<RadiationMonitor.Instance>();
-		if (sMI != null)
+		if (instance.gameObject.GetSMI<RadiationMonitor.Instance>() != null)
 		{
 			int num = Grid.PosToCell(instance.gameObject);
 			if (Grid.IsValidCell(num))

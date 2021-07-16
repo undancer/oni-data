@@ -7,7 +7,7 @@ public class BrainScheduler : KMonoBehaviour, IRenderEveryTick, ICPULoad
 {
 	private class Tuning : TuningData<Tuning>
 	{
-		public bool disableAsyncPathProbes = false;
+		public bool disableAsyncPathProbes;
 
 		public float frameTime = 5f;
 	}
@@ -22,9 +22,9 @@ public class BrainScheduler : KMonoBehaviour, IRenderEveryTick, ICPULoad
 
 		private WorkItemCollection<Navigator.PathProbeTask, object> pathProbeJob = new WorkItemCollection<Navigator.PathProbeTask, object>();
 
-		private int nextUpdateBrain = 0;
+		private int nextUpdateBrain;
 
-		private int nextPathProbeBrain = 0;
+		private int nextPathProbeBrain;
 
 		public Tag tag
 		{
@@ -139,7 +139,7 @@ public class BrainScheduler : KMonoBehaviour, IRenderEveryTick, ICPULoad
 
 		private void AsyncPathProbe()
 		{
-			int probeSize = this.probeSize;
+			_ = probeSize;
 			pathProbeJob.Reset(null);
 			for (int i = 0; i != brains.Count; i++)
 			{
@@ -151,7 +151,7 @@ public class BrainScheduler : KMonoBehaviour, IRenderEveryTick, ICPULoad
 					if (component != null)
 					{
 						component.executePathProbeTaskAsync = true;
-						component.PathProber.potentialCellsPerUpdate = this.probeSize;
+						component.PathProber.potentialCellsPerUpdate = probeSize;
 						component.pathProbeTask.Update();
 						pathProbeJob.Add(component.pathProbeTask);
 						if (pathProbeJob.Count == probeCount)

@@ -56,8 +56,7 @@ public class OreSizeVisualizerComponents : KGameObjectComponentManager<OreSizeVi
 		float num = primaryElement.Mass;
 		if (other_data != null)
 		{
-			Pickupable pickupable = (Pickupable)other_data;
-			PrimaryElement component = pickupable.GetComponent<PrimaryElement>();
+			PrimaryElement component = ((Pickupable)other_data).GetComponent<PrimaryElement>();
 			num += component.Mass;
 		}
 		MassTier massTier = default(MassTier);
@@ -69,12 +68,11 @@ public class OreSizeVisualizerComponents : KGameObjectComponentManager<OreSizeVi
 				break;
 			}
 		}
-		KBatchedAnimController component2 = primaryElement.GetComponent<KBatchedAnimController>();
-		component2.Play(massTier.animName);
-		KCircleCollider2D component3 = primaryElement.GetComponent<KCircleCollider2D>();
-		if (component3 != null)
+		primaryElement.GetComponent<KBatchedAnimController>().Play(massTier.animName);
+		KCircleCollider2D component2 = primaryElement.GetComponent<KCircleCollider2D>();
+		if (component2 != null)
 		{
-			component3.radius = massTier.colliderRadius;
+			component2.radius = massTier.colliderRadius;
 		}
 		primaryElement.Trigger(1807976145);
 	}

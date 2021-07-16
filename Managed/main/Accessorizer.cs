@@ -34,8 +34,7 @@ public class Accessorizer : KMonoBehaviour
 		{
 			return;
 		}
-		SymbolOverrideController component = animController.GetComponent<SymbolOverrideController>();
-		component.AddSymbolOverride(accessory.slot.targetSymbolId, accessory.symbol);
+		animController.GetComponent<SymbolOverrideController>().AddSymbolOverride(accessory.slot.targetSymbolId, accessory.symbol);
 		if (!HasAccessory(accessory))
 		{
 			ResourceRef<Accessory> resourceRef = new ResourceRef<Accessory>(accessory);
@@ -49,8 +48,7 @@ public class Accessorizer : KMonoBehaviour
 	public void RemoveAccessory(Accessory accessory)
 	{
 		accessories.RemoveAll((ResourceRef<Accessory> x) => x.Get() == accessory);
-		SymbolOverrideController component = animController.GetComponent<SymbolOverrideController>();
-		component.TryRemoveSymbolOverride(accessory.slot.targetSymbolId);
+		animController.GetComponent<SymbolOverrideController>().TryRemoveSymbolOverride(accessory.slot.targetSymbolId);
 	}
 
 	public void ApplyAccessories()

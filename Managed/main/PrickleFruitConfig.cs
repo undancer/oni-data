@@ -20,8 +20,7 @@ public class PrickleFruitConfig : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject template = EntityTemplates.CreateLooseEntity(ID, ITEMS.FOOD.PRICKLEFRUIT.NAME, ITEMS.FOOD.PRICKLEFRUIT.DESC, 1f, unitMass: false, Assets.GetAnim("bristleberry_kanim"), "object", Grid.SceneLayer.Front, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.4f, isPickupable: true);
-		return EntityTemplates.ExtendEntityToFood(template, FOOD.FOOD_TYPES.PRICKLEFRUIT);
+		return EntityTemplates.ExtendEntityToFood(EntityTemplates.CreateLooseEntity(ID, ITEMS.FOOD.PRICKLEFRUIT.NAME, ITEMS.FOOD.PRICKLEFRUIT.DESC, 1f, unitMass: false, Assets.GetAnim("bristleberry_kanim"), "object", Grid.SceneLayer.Front, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.4f, isPickupable: true), FOOD.FOOD_TYPES.PRICKLEFRUIT);
 	}
 
 	public void OnPrefabInit(GameObject inst)

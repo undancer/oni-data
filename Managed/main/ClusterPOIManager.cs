@@ -35,13 +35,27 @@ public class ClusterPOIManager : KMonoBehaviour
 		}
 	}
 
+	public void RegisterTemporalTear(TemporalTear temporalTear)
+	{
+		m_temporalTear.Set(temporalTear);
+	}
+
+	public bool HasTemporalTear()
+	{
+		return m_temporalTear.Get() != null;
+	}
+
+	public TemporalTear GetTemporalTear()
+	{
+		return m_temporalTear.Get();
+	}
+
 	private void UpgradeOldSaves()
 	{
 		bool flag = false;
 		foreach (KeyValuePair<AxialI, List<ClusterGridEntity>> cellContent in ClusterGrid.Instance.cellContents)
 		{
-			List<ClusterGridEntity> value = cellContent.Value;
-			foreach (ClusterGridEntity item in value)
+			foreach (ClusterGridEntity item in cellContent.Value)
 			{
 				if ((bool)item.GetComponent<HarvestablePOIClusterGridEntity>() || (bool)item.GetComponent<ArtifactPOIClusterGridEntity>())
 				{
@@ -56,8 +70,7 @@ public class ClusterPOIManager : KMonoBehaviour
 		}
 		if (!flag)
 		{
-			ClusterPOIManager clusterPOIManager = ClusterManager.Instance.GetClusterPOIManager();
-			clusterPOIManager.SpawnSpacePOIsInLegacySave();
+			ClusterManager.Instance.GetClusterPOIManager().SpawnSpacePOIsInLegacySave();
 		}
 	}
 
@@ -131,37 +144,33 @@ public class ClusterPOIManager : KMonoBehaviour
 			"HarvestableSpacePOI_RadioactiveAsteroidField"
 		});
 		List<AxialI> list = new List<AxialI>();
+		string[] array;
 		foreach (KeyValuePair<int[], string[]> item in dictionary)
 		{
 			int[] key = item.Key;
 			string[] value = item.Value;
-			List<AxialI> rings = AxialUtil.GetRings(AxialI.ZERO, key[0], key[1]);
+			int minRadius = Mathf.Min(key[0], ClusterGrid.Instance.numRings - 1);
+			int maxRadius = Mathf.Min(key[1], ClusterGrid.Instance.numRings - 1);
+			List<AxialI> rings = AxialUtil.GetRings(AxialI.ZERO, minRadius, maxRadius);
 			List<AxialI> list2 = new List<AxialI>();
 			foreach (AxialI item2 in rings)
 			{
+				_ = ClusterGrid.Instance;
+				_ = ClusterGrid.Instance.cellContents;
+				_ = ClusterGrid.Instance.cellContents[item2];
 				if (ClusterGrid.Instance.cellContents[item2].Count == 0 && ClusterGrid.Instance.GetVisibleEntityOfLayerAtAdjacentCell(item2, EntityLayer.Asteroid) == null)
 				{
 					list2.Add(item2);
 				}
 			}
-			string[] array = value;
-			foreach (string s in array)
+			array = value;
+			for (int i = 0; i < array.Length; i++)
 			{
-				GameObject prefab = Assets.GetPrefab(s);
-				GameObject gameObject = Util.KInstantiate(prefab);
+				GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(array[i]));
 				AxialI axialI = list2[Random.Range(0, list2.Count - 1)];
 				list2.Remove(axialI);
 				list.Add(axialI);
-				HarvestablePOIClusterGridEntity component = gameObject.GetComponent<HarvestablePOIClusterGridEntity>();
-				if (component != null)
-				{
-					component.Init(axialI);
-				}
-				ArtifactPOIClusterGridEntity component2 = gameObject.GetComponent<ArtifactPOIClusterGridEntity>();
-				if (component2 != null)
-				{
-					component2.Init(axialI);
-				}
+				gameObject.GetComponent<ClusterGridEntity>().Location = axialI;
 				gameObject.SetActive(value: true);
 			}
 		}
@@ -174,7 +183,9 @@ public class ClusterPOIManager : KMonoBehaviour
 			"ArtifactSpacePOI_GravitasSpaceStation8",
 			"ArtifactSpacePOI_RussellsTeapot"
 		};
-		List<AxialI> rings2 = AxialUtil.GetRings(AxialI.ZERO, 2, 11);
+		int minRadius2 = Mathf.Min(2, ClusterGrid.Instance.numRings - 1);
+		int maxRadius2 = Mathf.Min(11, ClusterGrid.Instance.numRings - 1);
+		List<AxialI> rings2 = AxialUtil.GetRings(AxialI.ZERO, minRadius2, maxRadius2);
 		List<AxialI> list3 = new List<AxialI>();
 		foreach (AxialI item3 in rings2)
 		{
@@ -183,21 +194,21 @@ public class ClusterPOIManager : KMonoBehaviour
 				list3.Add(item3);
 			}
 		}
-		string[] array3 = array2;
-		foreach (string s2 in array3)
+		array = array2;
+		for (int i = 0; i < array.Length; i++)
 		{
-			GameObject gameObject2 = Util.KInstantiate(Assets.GetPrefab(s2));
+			GameObject gameObject2 = Util.KInstantiate(Assets.GetPrefab(array[i]));
 			AxialI axialI2 = list3[Random.Range(0, list3.Count - 1)];
 			list3.Remove(axialI2);
-			HarvestablePOIClusterGridEntity component3 = gameObject2.GetComponent<HarvestablePOIClusterGridEntity>();
-			if (component3 != null)
+			HarvestablePOIClusterGridEntity component = gameObject2.GetComponent<HarvestablePOIClusterGridEntity>();
+			if (component != null)
 			{
-				component3.Init(axialI2);
+				component.Init(axialI2);
 			}
-			ArtifactPOIClusterGridEntity component4 = gameObject2.GetComponent<ArtifactPOIClusterGridEntity>();
-			if (component4 != null)
+			ArtifactPOIClusterGridEntity component2 = gameObject2.GetComponent<ArtifactPOIClusterGridEntity>();
+			if (component2 != null)
 			{
-				component4.Init(axialI2);
+				component2.Init(axialI2);
 			}
 			gameObject2.SetActive(value: true);
 		}
@@ -209,16 +220,7 @@ public class ClusterPOIManager : KMonoBehaviour
 		foreach (KeyValuePair<AxialI, string> poiPlacement in clusterLayout.poiPlacements)
 		{
 			GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(poiPlacement.Value));
-			HarvestablePOIClusterGridEntity component = gameObject.GetComponent<HarvestablePOIClusterGridEntity>();
-			if (component != null)
-			{
-				component.Init(poiPlacement.Key);
-			}
-			ArtifactPOIClusterGridEntity component2 = gameObject.GetComponent<ArtifactPOIClusterGridEntity>();
-			if (component2 != null)
-			{
-				component2.Init(poiPlacement.Key);
-			}
+			gameObject.GetComponent<ClusterGridEntity>().Location = poiPlacement.Key;
 			gameObject.SetActive(value: true);
 		}
 	}
@@ -253,8 +255,7 @@ public class ClusterPOIManager : KMonoBehaviour
 		else if (!m_temporalTear.Get().IsOpen())
 		{
 			m_temporalTear.Get().Open();
-			GameplaySeasonManager.Instance sMI = ClusterManager.Instance.GetWorld(openerWorldId).GetSMI<GameplaySeasonManager.Instance>();
-			sMI.StartNewSeason(Db.Get().GameplaySeasons.TemporalTearMeteorShowers);
+			ClusterManager.Instance.GetWorld(openerWorldId).GetSMI<GameplaySeasonManager.Instance>().StartNewSeason(Db.Get().GameplaySeasons.TemporalTearMeteorShowers);
 		}
 	}
 

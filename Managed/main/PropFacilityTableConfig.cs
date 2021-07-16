@@ -12,15 +12,15 @@ public class PropFacilityTableConfig : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject gameObject = EntityTemplates.CreatePlacedEntity("PropFacilityTable", STRINGS.BUILDINGS.PREFABS.PROPFACILITYTABLE.NAME, STRINGS.BUILDINGS.PREFABS.PROPFACILITYTABLE.DESC, 50f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("gravitas_table_kanim"), initialAnim: "off", sceneLayer: Grid.SceneLayer.Building, width: 4, height: 2, element: SimHashes.Creature, additionalTags: new List<Tag>
+		GameObject obj = EntityTemplates.CreatePlacedEntity("PropFacilityTable", STRINGS.BUILDINGS.PREFABS.PROPFACILITYTABLE.NAME, STRINGS.BUILDINGS.PREFABS.PROPFACILITYTABLE.DESC, 50f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("gravitas_table_kanim"), initialAnim: "off", sceneLayer: Grid.SceneLayer.Building, width: 4, height: 2, element: SimHashes.Creature, additionalTags: new List<Tag>
 		{
 			GameTags.Gravitas
 		});
-		PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
+		PrimaryElement component = obj.GetComponent<PrimaryElement>();
 		component.SetElement(SimHashes.Steel);
 		component.Temperature = 294.15f;
-		gameObject.AddOrGet<Demolishable>();
-		return gameObject;
+		obj.AddOrGet<Demolishable>();
+		return obj;
 	}
 
 	public void OnPrefabInit(GameObject inst)

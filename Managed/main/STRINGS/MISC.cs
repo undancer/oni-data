@@ -586,6 +586,27 @@ namespace STRINGS
 
 				public static LocString TOOLTIP = "Items lose durability each time they are equipped, and can no longer be put on by a Duplicant once they reach 0% durability\n\nItems can be repaired using the " + UI.FormatAsLink("Crafting Station", "CRAFTINGTABLE");
 			}
+
+			public class ARTIFACTENTOMBED
+			{
+				public static LocString NAME = "Entombed Artifact";
+
+				public static LocString TOOLTIP = "This artifact is trapped in an obscuring shell limiting its decor. A skilled artist can remove it at the " + BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.NAME;
+			}
+
+			public class TEAROPEN
+			{
+				public static LocString NAME = "Temporal Tear open";
+
+				public static LocString TOOLTIP = "An open passage through spacetime";
+			}
+
+			public class TEARCLOSED
+			{
+				public static LocString NAME = "Temporal Tear closed";
+
+				public static LocString TOOLTIP = "Perhaps some technology could open the passage";
+			}
 		}
 
 		public class POPFX

@@ -12,11 +12,10 @@ namespace MIConvexHull
 
 		public static ITriangulation<DefaultVertex, DefaultTriangulationCell<DefaultVertex>> CreateDelaunay(IList<double[]> data)
 		{
-			List<DefaultVertex> data2 = data.Select((double[] p) => new DefaultVertex
+			return DelaunayTriangulation<DefaultVertex, DefaultTriangulationCell<DefaultVertex>>.Create(data.Select((double[] p) => new DefaultVertex
 			{
 				Position = p
-			}).ToList();
-			return DelaunayTriangulation<DefaultVertex, DefaultTriangulationCell<DefaultVertex>>.Create(data2);
+			}).ToList());
 		}
 
 		public static ITriangulation<TVertex, TFace> CreateDelaunay<TVertex, TFace>(IList<TVertex> data) where TVertex : IVertex where TFace : TriangulationCell<TVertex, TFace>, new()
@@ -36,11 +35,10 @@ namespace MIConvexHull
 
 		public static VoronoiMesh<DefaultVertex, DefaultTriangulationCell<DefaultVertex>, VoronoiEdge<DefaultVertex, DefaultTriangulationCell<DefaultVertex>>> CreateVoronoi(IList<double[]> data)
 		{
-			List<DefaultVertex> data2 = data.Select((double[] p) => new DefaultVertex
+			return VoronoiMesh<DefaultVertex, DefaultTriangulationCell<DefaultVertex>, VoronoiEdge<DefaultVertex, DefaultTriangulationCell<DefaultVertex>>>.Create(data.Select((double[] p) => new DefaultVertex
 			{
 				Position = p.ToArray()
-			}).ToList();
-			return VoronoiMesh<DefaultVertex, DefaultTriangulationCell<DefaultVertex>, VoronoiEdge<DefaultVertex, DefaultTriangulationCell<DefaultVertex>>>.Create(data2);
+			}).ToList());
 		}
 
 		public static VoronoiMesh<TVertex, TCell, VoronoiEdge<TVertex, TCell>> CreateVoronoi<TVertex, TCell>(IList<TVertex> data) where TVertex : IVertex where TCell : TriangulationCell<TVertex, TCell>, new()

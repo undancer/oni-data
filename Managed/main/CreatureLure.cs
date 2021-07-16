@@ -42,7 +42,7 @@ public class CreatureLure : StateMachineComponent<CreatureLure.StatesInstance>
 			working.Enter(delegate(StatesInstance smi)
 			{
 				smi.master.GetComponent<KSelectable>().RemoveStatusItem(Db.Get().BuildingStatusItems.AwaitingBaitDelivery);
-				HashedString batchTag = ElementLoader.FindElementByName(smi.master.activeBaitSetting.ToString()).substance.anim.batchTag;
+				_ = ElementLoader.FindElementByName(smi.master.activeBaitSetting.ToString()).substance.anim.batchTag;
 				KAnim.Build build = ElementLoader.FindElementByName(smi.master.activeBaitSetting.ToString()).substance.anim.GetData().build;
 				KAnim.Build.Symbol symbol = build.GetSymbol(new KAnimHashedString(build.name));
 				HashedString target_symbol = "slime_mold";
@@ -67,8 +67,7 @@ public class CreatureLure : StateMachineComponent<CreatureLure.StatesInstance>
 
 		private static void ClearBait(Instance smi)
 		{
-			Lure.Instance sMI = smi.GetSMI<Lure.Instance>();
-			if (sMI != null)
+			if (smi.GetSMI<Lure.Instance>() != null)
 			{
 				smi.GetSMI<Lure.Instance>().SetActiveLures(null);
 			}
@@ -112,8 +111,7 @@ public class CreatureLure : StateMachineComponent<CreatureLure.StatesInstance>
 
 	private void OnCopySettings(object data)
 	{
-		GameObject gameObject = (GameObject)data;
-		CreatureLure component = gameObject.GetComponent<CreatureLure>();
+		CreatureLure component = ((GameObject)data).GetComponent<CreatureLure>();
 		if (component != null)
 		{
 			ChangeBaitSetting(component.activeBaitSetting);

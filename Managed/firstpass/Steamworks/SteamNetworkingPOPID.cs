@@ -19,7 +19,11 @@ namespace Steamworks
 
 		public override bool Equals(object other)
 		{
-			return other is SteamNetworkingPOPID && this == (SteamNetworkingPOPID)other;
+			if (other is SteamNetworkingPOPID)
+			{
+				return this == (SteamNetworkingPOPID)other;
+			}
+			return false;
 		}
 
 		public override int GetHashCode()

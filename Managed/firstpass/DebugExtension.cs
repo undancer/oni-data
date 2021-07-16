@@ -24,14 +24,14 @@ public static class DebugExtension
 
 	public static void DebugExtense(float x, float y, float z, Vector3 center, Color color, float duration = 0f, bool depthTest = true)
 	{
-		Vector3 vector = center + new Vector3(x, y, z);
-		Vector3 vector2 = center + new Vector3(x, y, 0f - z);
-		Vector3 vector3 = center + new Vector3(0f - x, y, z);
-		Vector3 vector4 = center + new Vector3(0f - x, y, 0f - z);
-		Vector3 vector5 = center + new Vector3(x, 0f - y, z);
-		Vector3 vector6 = center + new Vector3(x, 0f - y, 0f - z);
-		Vector3 vector7 = center + new Vector3(0f - x, 0f - y, z);
-		Vector3 vector8 = center + new Vector3(0f - x, 0f - y, 0f - z);
+		_ = center + new Vector3(x, y, z);
+		_ = center + new Vector3(x, y, 0f - z);
+		_ = center + new Vector3(0f - x, y, z);
+		_ = center + new Vector3(0f - x, y, 0f - z);
+		_ = center + new Vector3(x, 0f - y, z);
+		_ = center + new Vector3(x, 0f - y, 0f - z);
+		_ = center + new Vector3(0f - x, 0f - y, z);
+		_ = center + new Vector3(0f - x, 0f - y, 0f - z);
 	}
 
 	public static void DebugAABB(AABB3 bounds, Color color, float duration = 0f, bool depthTest = true)
@@ -57,14 +57,14 @@ public static class DebugExtension
 
 	public static void DebugLocalCube(Transform transform, Vector3 size, Color color, Vector3 center = default(Vector3), float duration = 0f, bool depthTest = true)
 	{
-		Vector3 vector = transform.TransformPoint(center + -size * 0.5f);
-		Vector3 vector2 = transform.TransformPoint(center + new Vector3(size.x, 0f - size.y, 0f - size.z) * 0.5f);
-		Vector3 vector3 = transform.TransformPoint(center + new Vector3(size.x, 0f - size.y, size.z) * 0.5f);
-		Vector3 vector4 = transform.TransformPoint(center + new Vector3(0f - size.x, 0f - size.y, size.z) * 0.5f);
-		Vector3 vector5 = transform.TransformPoint(center + new Vector3(0f - size.x, size.y, 0f - size.z) * 0.5f);
-		Vector3 vector6 = transform.TransformPoint(center + new Vector3(size.x, size.y, 0f - size.z) * 0.5f);
-		Vector3 vector7 = transform.TransformPoint(center + size * 0.5f);
-		Vector3 vector8 = transform.TransformPoint(center + new Vector3(0f - size.x, size.y, size.z) * 0.5f);
+		transform.TransformPoint(center + -size * 0.5f);
+		transform.TransformPoint(center + new Vector3(size.x, 0f - size.y, 0f - size.z) * 0.5f);
+		transform.TransformPoint(center + new Vector3(size.x, 0f - size.y, size.z) * 0.5f);
+		transform.TransformPoint(center + new Vector3(0f - size.x, 0f - size.y, size.z) * 0.5f);
+		transform.TransformPoint(center + new Vector3(0f - size.x, size.y, 0f - size.z) * 0.5f);
+		transform.TransformPoint(center + new Vector3(size.x, size.y, 0f - size.z) * 0.5f);
+		transform.TransformPoint(center + size * 0.5f);
+		transform.TransformPoint(center + new Vector3(0f - size.x, size.y, size.z) * 0.5f);
 	}
 
 	public static void DebugLocalCube(Transform transform, Vector3 size, Vector3 center = default(Vector3), float duration = 0f, bool depthTest = true)
@@ -75,14 +75,14 @@ public static class DebugExtension
 	public static void DebugLocalCube(Matrix4x4 space, Vector3 size, Color color, Vector3 center = default(Vector3), float duration = 0f, bool depthTest = true)
 	{
 		color = ((color == default(Color)) ? Color.white : color);
-		Vector3 vector = space.MultiplyPoint3x4(center + -size * 0.5f);
-		Vector3 vector2 = space.MultiplyPoint3x4(center + new Vector3(size.x, 0f - size.y, 0f - size.z) * 0.5f);
-		Vector3 vector3 = space.MultiplyPoint3x4(center + new Vector3(size.x, 0f - size.y, size.z) * 0.5f);
-		Vector3 vector4 = space.MultiplyPoint3x4(center + new Vector3(0f - size.x, 0f - size.y, size.z) * 0.5f);
-		Vector3 vector5 = space.MultiplyPoint3x4(center + new Vector3(0f - size.x, size.y, 0f - size.z) * 0.5f);
-		Vector3 vector6 = space.MultiplyPoint3x4(center + new Vector3(size.x, size.y, 0f - size.z) * 0.5f);
-		Vector3 vector7 = space.MultiplyPoint3x4(center + size * 0.5f);
-		Vector3 vector8 = space.MultiplyPoint3x4(center + new Vector3(0f - size.x, size.y, size.z) * 0.5f);
+		space.MultiplyPoint3x4(center + -size * 0.5f);
+		space.MultiplyPoint3x4(center + new Vector3(size.x, 0f - size.y, 0f - size.z) * 0.5f);
+		space.MultiplyPoint3x4(center + new Vector3(size.x, 0f - size.y, size.z) * 0.5f);
+		space.MultiplyPoint3x4(center + new Vector3(0f - size.x, 0f - size.y, size.z) * 0.5f);
+		space.MultiplyPoint3x4(center + new Vector3(0f - size.x, size.y, 0f - size.z) * 0.5f);
+		space.MultiplyPoint3x4(center + new Vector3(size.x, size.y, 0f - size.z) * 0.5f);
+		space.MultiplyPoint3x4(center + size * 0.5f);
+		space.MultiplyPoint3x4(center + new Vector3(0f - size.x, size.y, size.z) * 0.5f);
 	}
 
 	public static void DebugLocalCube(Matrix4x4 space, Vector3 size, Vector3 center = default(Vector3), float duration = 0f, bool depthTest = true)
@@ -105,16 +105,15 @@ public static class DebugExtension
 		matrix4x[8] = rhs.x;
 		matrix4x[9] = rhs.y;
 		matrix4x[10] = rhs.z;
-		Vector3 vector3 = position + matrix4x.MultiplyPoint3x4(new Vector3(Mathf.Cos(0f), 0f, Mathf.Sin(0f)));
-		Vector3 vector4 = Vector3.zero;
+		_ = position + matrix4x.MultiplyPoint3x4(new Vector3(Mathf.Cos(0f), 0f, Mathf.Sin(0f)));
+		Vector3 point = Vector3.zero;
 		color = ((color == default(Color)) ? Color.white : color);
 		for (int i = 0; (float)i < 364f / jumpPerSegment; i++)
 		{
-			vector4.x = Mathf.Cos((float)i * jumpPerSegment * ((float)Math.PI / 180f));
-			vector4.z = Mathf.Sin((float)i * jumpPerSegment * ((float)Math.PI / 180f));
-			vector4.y = 0f;
-			vector4 = position + matrix4x.MultiplyPoint3x4(vector4);
-			vector3 = vector4;
+			point.x = Mathf.Cos((float)i * jumpPerSegment * ((float)Math.PI / 180f));
+			point.z = Mathf.Sin((float)i * jumpPerSegment * ((float)Math.PI / 180f));
+			point.y = 0f;
+			point = position + matrix4x.MultiplyPoint3x4(point);
 		}
 	}
 
@@ -141,17 +140,14 @@ public static class DebugExtension
 	public static void DebugWireSphere(Vector3 position, Color color, float radius = 1f, float duration = 0f, bool depthTest = true)
 	{
 		float num = 10f;
-		Vector3 vector = new Vector3(position.x, position.y + radius * Mathf.Sin(0f), position.z + radius * Mathf.Cos(0f));
-		Vector3 vector2 = new Vector3(position.x + radius * Mathf.Cos(0f), position.y, position.z + radius * Mathf.Sin(0f));
-		Vector3 vector3 = new Vector3(position.x + radius * Mathf.Cos(0f), position.y + radius * Mathf.Sin(0f), position.z);
+		new Vector3(position.x, position.y + radius * Mathf.Sin(0f), position.z + radius * Mathf.Cos(0f));
+		new Vector3(position.x + radius * Mathf.Cos(0f), position.y, position.z + radius * Mathf.Sin(0f));
+		new Vector3(position.x + radius * Mathf.Cos(0f), position.y + radius * Mathf.Sin(0f), position.z);
 		for (int i = 1; i < 37; i++)
 		{
-			Vector3 vector4 = new Vector3(position.x, position.y + radius * Mathf.Sin(num * (float)i * ((float)Math.PI / 180f)), position.z + radius * Mathf.Cos(num * (float)i * ((float)Math.PI / 180f)));
-			Vector3 vector5 = new Vector3(position.x + radius * Mathf.Cos(num * (float)i * ((float)Math.PI / 180f)), position.y, position.z + radius * Mathf.Sin(num * (float)i * ((float)Math.PI / 180f)));
-			Vector3 vector6 = new Vector3(position.x + radius * Mathf.Cos(num * (float)i * ((float)Math.PI / 180f)), position.y + radius * Mathf.Sin(num * (float)i * ((float)Math.PI / 180f)), position.z);
-			vector = vector4;
-			vector2 = vector5;
-			vector3 = vector6;
+			Vector3 vector = new Vector3(position.x, position.y + radius * Mathf.Sin(num * (float)i * ((float)Math.PI / 180f)), position.z + radius * Mathf.Cos(num * (float)i * ((float)Math.PI / 180f)));
+			Vector3 vector2 = new Vector3(position.x + radius * Mathf.Cos(num * (float)i * ((float)Math.PI / 180f)), position.y, position.z + radius * Mathf.Sin(num * (float)i * ((float)Math.PI / 180f)));
+			new Vector3(position.x + radius * Mathf.Cos(num * (float)i * ((float)Math.PI / 180f)), position.y + radius * Mathf.Sin(num * (float)i * ((float)Math.PI / 180f)), position.z);
 		}
 	}
 
@@ -164,7 +160,7 @@ public static class DebugExtension
 	{
 		Vector3 vector = (end - start).normalized * radius;
 		Vector3 rhs = Vector3.Slerp(vector, -vector, 0.5f);
-		Vector3 vector2 = Vector3.Cross(vector, rhs).normalized * radius;
+		_ = Vector3.Cross(vector, rhs).normalized * radius;
 		DebugCircle(start, vector, color, radius, duration, depthTest);
 		DebugCircle(end, -vector, color, radius, duration, depthTest);
 		DebugCircle((start + end) * 0.5f, vector, color, radius, duration, depthTest);
@@ -180,7 +176,7 @@ public static class DebugExtension
 		float magnitude = direction.magnitude;
 		Vector3 vector = direction;
 		Vector3 vector2 = Vector3.Slerp(vector, -vector, 0.5f);
-		Vector3 vector3 = Vector3.Cross(vector, vector2).normalized * magnitude;
+		_ = Vector3.Cross(vector, vector2).normalized * magnitude;
 		direction = direction.normalized;
 		Vector3 direction2 = Vector3.Slerp(vector, vector2, angle / 90f);
 		Plane plane = new Plane(-direction, position + vector);
@@ -219,12 +215,12 @@ public static class DebugExtension
 	{
 		Vector3 vector = (end - start).normalized * radius;
 		Vector3 rhs = Vector3.Slerp(vector, -vector, 0.5f);
-		Vector3 vector2 = Vector3.Cross(vector, rhs).normalized * radius;
+		_ = Vector3.Cross(vector, rhs).normalized * radius;
 		float magnitude = (start - end).magnitude;
 		float d = Mathf.Max(0f, magnitude * 0.5f - radius);
-		Vector3 vector3 = (end + start) * 0.5f;
-		start = vector3 + (start - vector3).normalized * d;
-		end = vector3 + (end - vector3).normalized * d;
+		Vector3 vector2 = (end + start) * 0.5f;
+		start = vector2 + (start - vector2).normalized * d;
+		end = vector2 + (end - vector2).normalized * d;
 		DebugCircle(start, vector, color, radius, duration, depthTest);
 		DebugCircle(end, -vector, color, radius, duration, depthTest);
 		for (int i = 1; i < 26; i++)
@@ -398,15 +394,14 @@ public static class DebugExtension
 		matrix4x[8] = rhs.x;
 		matrix4x[9] = rhs.y;
 		matrix4x[10] = rhs.z;
-		Vector3 vector2 = position + matrix4x.MultiplyPoint3x4(new Vector3(Mathf.Cos(0f), 0f, Mathf.Sin(0f)));
-		Vector3 vector3 = Vector3.zero;
+		_ = position + matrix4x.MultiplyPoint3x4(new Vector3(Mathf.Cos(0f), 0f, Mathf.Sin(0f)));
+		Vector3 point = Vector3.zero;
 		for (int i = 0; i < 91; i++)
 		{
-			vector3.x = Mathf.Cos((float)(i * 4) * ((float)Math.PI / 180f));
-			vector3.z = Mathf.Sin((float)(i * 4) * ((float)Math.PI / 180f));
-			vector3.y = 0f;
-			vector3 = position + matrix4x.MultiplyPoint3x4(vector3);
-			vector2 = vector3;
+			point.x = Mathf.Cos((float)(i * 4) * ((float)Math.PI / 180f));
+			point.z = Mathf.Sin((float)(i * 4) * ((float)Math.PI / 180f));
+			point.y = 0f;
+			point = position + matrix4x.MultiplyPoint3x4(point);
 		}
 	}
 

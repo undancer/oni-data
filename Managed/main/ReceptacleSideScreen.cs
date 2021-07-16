@@ -89,7 +89,7 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 	private Sprite elementPlaceholderSpr;
 
 	[SerializeField]
-	private bool hideUndiscoveredEntities = false;
+	private bool hideUndiscoveredEntities;
 
 	protected ReceptacleToggle selectedEntityToggle;
 
@@ -134,9 +134,9 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 		});
 		entityToggles.Clear();
 		Tag[] possibleDepositObjectTags = target.possibleDepositObjectTags;
-		foreach (Tag tag in possibleDepositObjectTags)
+		for (int i = 0; i < possibleDepositObjectTags.Length; i++)
 		{
-			List<GameObject> prefabsWithTag = Assets.GetPrefabsWithTag(tag);
+			List<GameObject> prefabsWithTag = Assets.GetPrefabsWithTag(possibleDepositObjectTags[i]);
 			if (targetReceptacle.rotatable == null)
 			{
 				prefabsWithTag.RemoveAll(delegate(GameObject go)
@@ -337,7 +337,11 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 
 	private bool CanDepositEntity(SelectableEntity entity)
 	{
-		return ValidRotationForDeposit(entity.direction) && (!RequiresAvailableAmountToDeposit() || GetAvailableAmount(entity.tag) > 0f) && AdditionalCanDepositTest();
+		if (ValidRotationForDeposit(entity.direction) && (!RequiresAvailableAmountToDeposit() || GetAvailableAmount(entity.tag) > 0f))
+		{
+			return AdditionalCanDepositTest();
+		}
+		return false;
 	}
 
 	protected virtual bool AdditionalCanDepositTest()
@@ -371,22 +375,23 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 
 	private void ConfigureActiveEntity(Tag tag)
 	{
-		GameObject prefab = Assets.GetPrefab(tag);
-		string properName = prefab.GetProperName();
+		string properName = Assets.GetPrefab(tag).GetProperName();
 		activeEntityContainer.GetComponentInChildrenOnly<LocText>().text = properName;
 		activeEntityContainer.transform.GetChild(0).gameObject.GetComponentInChildrenOnly<Image>().sprite = GetEntityIcon(tag);
 	}
 
 	protected virtual Sprite GetEntityIcon(Tag prefabTag)
 	{
-		GameObject prefab = Assets.GetPrefab(prefabTag);
-		Tuple<Sprite, Color> uISprite = Def.GetUISprite(prefab);
-		return uISprite.first;
+		return Def.GetUISprite(Assets.GetPrefab(prefabTag)).first;
 	}
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		return target.GetComponent<SingleEntityReceptacle>() != null && target.GetComponent<PlantablePlot>() == null && target.GetComponent<EggIncubator>() == null;
+		if (target.GetComponent<SingleEntityReceptacle>() != null && target.GetComponent<PlantablePlot>() == null)
+		{
+			return target.GetComponent<EggIncubator>() == null;
+		}
+		return false;
 	}
 
 	public override void SetTarget(GameObject target)
@@ -513,7 +518,11 @@ public class ReceptacleSideScreen : SideScreenContent, IRender1000ms
 
 	private bool ValidRotationForDeposit(SingleEntityReceptacle.ReceptacleDirection depositDir)
 	{
-		return targetReceptacle.rotatable == null || depositDir == targetReceptacle.Direction;
+		if (!(targetReceptacle.rotatable == null))
+		{
+			return depositDir == targetReceptacle.Direction;
+		}
+		return true;
 	}
 
 	protected virtual void ToggleClicked(ReceptacleToggle toggle)

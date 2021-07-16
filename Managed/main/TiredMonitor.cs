@@ -18,12 +18,12 @@ public class TiredMonitor : GameStateMachine<TiredMonitor, TiredMonitor.Instance
 
 		public bool AllowInterruptClear()
 		{
-			bool flag = GameClock.Instance.GetCycle() > interruptedDay + 1;
-			if (flag)
+			bool num = GameClock.Instance.GetCycle() > interruptedDay + 1;
+			if (num)
 			{
 				interruptedDay = -1;
 			}
-			return flag;
+			return num;
 		}
 	}
 

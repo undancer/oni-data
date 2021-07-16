@@ -15,12 +15,12 @@ public class HarvestDesignatable : KMonoBehaviour
 	protected bool isMarkedForHarvest;
 
 	[Serialize]
-	private bool isInPlanterBox = false;
+	private bool isInPlanterBox;
 
 	public bool showUserMenuButtons = true;
 
 	[Serialize]
-	protected bool harvestWhenReady = false;
+	protected bool harvestWhenReady;
 
 	public RectTransform HarvestWhenReadyOverlayIcon;
 
@@ -108,10 +108,8 @@ public class HarvestDesignatable : KMonoBehaviour
 		if (!(HarvestWhenReadyOverlayIcon != null) && GetComponent<AttackableBase>() == null)
 		{
 			HarvestWhenReadyOverlayIcon = Util.KInstantiate(Assets.UIPrefabs.HarvestWhenReadyOverlayIcon, GameScreenManager.Instance.worldSpaceCanvas).GetComponent<RectTransform>();
-			OccupyArea component = GetComponent<OccupyArea>();
-			Extents extents = component.GetExtents();
-			KPrefabID component2 = GetComponent<KPrefabID>();
-			TransformExtensions.SetPosition(position: component2.HasTag(GameTags.Hanging) ? new Vector3((float)(extents.x + extents.width / 2) + 0.5f, extents.y + extents.height) : new Vector3((float)(extents.x + extents.width / 2) + 0.5f, extents.y), transform: HarvestWhenReadyOverlayIcon.transform);
+			Extents extents = GetComponent<OccupyArea>().GetExtents();
+			TransformExtensions.SetPosition(position: GetComponent<KPrefabID>().HasTag(GameTags.Hanging) ? new Vector3((float)(extents.x + extents.width / 2) + 0.5f, extents.y + extents.height) : new Vector3((float)(extents.x + extents.width / 2) + 0.5f, extents.y), transform: HarvestWhenReadyOverlayIcon.transform);
 			RefreshOverlayIcon();
 		}
 	}
@@ -153,17 +151,17 @@ public class HarvestDesignatable : KMonoBehaviour
 		HierarchyReferences component = HarvestWhenReadyOverlayIcon.GetComponent<HierarchyReferences>();
 		if (harvestWhenReady)
 		{
-			Image image = (Image)component.GetReference("On");
-			image.gameObject.SetActive(value: true);
-			image.color = GlobalAssets.Instance.colorSet.harvestEnabled;
+			Image obj = (Image)component.GetReference("On");
+			obj.gameObject.SetActive(value: true);
+			obj.color = GlobalAssets.Instance.colorSet.harvestEnabled;
 			component.GetReference("Off").gameObject.SetActive(value: false);
 		}
 		else
 		{
 			component.GetReference("On").gameObject.SetActive(value: false);
-			Image image2 = (Image)component.GetReference("Off");
-			image2.gameObject.SetActive(value: true);
-			image2.color = GlobalAssets.Instance.colorSet.harvestDisabled;
+			Image obj2 = (Image)component.GetReference("Off");
+			obj2.gameObject.SetActive(value: true);
+			obj2.color = GlobalAssets.Instance.colorSet.harvestDisabled;
 		}
 	}
 
@@ -205,8 +203,7 @@ public class HarvestDesignatable : KMonoBehaviour
 			OnCancel();
 			if (CanBeHarvested() && isInPlanterBox)
 			{
-				KSelectable component = GetComponent<KSelectable>();
-				component.AddStatusItem(Db.Get().MiscStatusItems.NotMarkedForHarvest, this);
+				GetComponent<KSelectable>().AddStatusItem(Db.Get().MiscStatusItems.NotMarkedForHarvest, this);
 			}
 		}
 		Trigger(-266953818);

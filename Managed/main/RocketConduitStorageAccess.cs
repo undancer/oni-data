@@ -45,8 +45,7 @@ public class RocketConduitStorageAccess : KMonoBehaviour, ISim200ms
 		float num2 = targetLevel - num;
 		foreach (Ref<RocketModuleCluster> clusterModule in craftModuleInterface.ClusterModules)
 		{
-			RocketModuleCluster rocketModuleCluster = clusterModule.Get();
-			CargoBayCluster component = rocketModuleCluster.GetComponent<CargoBayCluster>();
+			CargoBayCluster component = clusterModule.Get().GetComponent<CargoBayCluster>();
 			if (!(component != null) || component.storageType != cargoType)
 			{
 				continue;
@@ -79,11 +78,10 @@ public class RocketConduitStorageAccess : KMonoBehaviour, ISim200ms
 			{
 				continue;
 			}
-			float num4 = Mathf.Min(0f - num2, component.storage.RemainingCapacity());
-			for (int num5 = storage.items.Count - 1; num5 >= 0; num5--)
+			Mathf.Min(0f - num2, component.storage.RemainingCapacity());
+			for (int num4 = storage.items.Count - 1; num4 >= 0; num4--)
 			{
-				GameObject gameObject2 = storage.items[num5];
-				Pickupable pickupable2 = gameObject2.GetComponent<Pickupable>().Take(0f - num2);
+				Pickupable pickupable2 = storage.items[num4].GetComponent<Pickupable>().Take(0f - num2);
 				if (pickupable2 != null)
 				{
 					num2 += pickupable2.PrimaryElement.Mass;

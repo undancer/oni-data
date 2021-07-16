@@ -31,12 +31,7 @@ public class ToiletWorkableUse : Workable, IGameObjectEffectDescriptor
 		{
 			worker.gameObject.GetComponent<KSelectable>().AddStatusItem(Db.Get().DuplicantStatusItems.ExpellingRads);
 		}
-		Room roomOfGameObject = Game.Instance.roomProber.GetRoomOfGameObject(base.gameObject);
-		if (roomOfGameObject != null)
-		{
-			RoomType roomType = roomOfGameObject.roomType;
-			roomType.TriggerRoomEffects(GetComponent<KPrefabID>(), worker.GetComponent<Effects>());
-		}
+		Game.Instance.roomProber.GetRoomOfGameObject(base.gameObject)?.roomType.TriggerRoomEffects(GetComponent<KPrefabID>(), worker.GetComponent<Effects>());
 	}
 
 	protected override void OnStopWork(Worker worker)
@@ -53,16 +48,15 @@ public class ToiletWorkableUse : Workable, IGameObjectEffectDescriptor
 
 	protected override void OnCompleteWork(Worker worker)
 	{
-		AmountInstance amountInstance = Db.Get().Amounts.Bladder.Lookup(worker);
-		amountInstance.SetValue(0f);
+		Db.Get().Amounts.Bladder.Lookup(worker).SetValue(0f);
 		worker.gameObject.GetComponent<KSelectable>().RemoveStatusItem(Db.Get().DuplicantStatusItems.ExpellingRads);
-		AmountInstance amountInstance2 = Db.Get().Amounts.RadiationBalance.Lookup(worker);
-		float num = Math.Min(amountInstance2.value, 60f);
+		AmountInstance amountInstance = Db.Get().Amounts.RadiationBalance.Lookup(worker);
+		float num = Math.Min(amountInstance.value, 60f);
 		if (num >= 1f)
 		{
 			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Negative, Math.Floor(num).ToString() + UI.UNITSUFFIXES.RADIATION.RADS, worker.transform, Vector3.up * 2f);
 		}
-		amountInstance2.ApplyDelta(0f - num);
+		amountInstance.ApplyDelta(0f - num);
 		timesUsed++;
 		Trigger(-350347868, worker);
 		base.OnCompleteWork(worker);
