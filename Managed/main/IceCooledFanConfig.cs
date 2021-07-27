@@ -59,10 +59,7 @@ public class IceCooledFanConfig : IBuildingConfig
 		manualDeliveryKG.refillMass = ICE_CAPACITY * 0.2f;
 		manualDeliveryKG.minimumMass = 10f;
 		manualDeliveryKG.choreTypeIDHash = Db.Get().ChoreTypes.MachineFetch.IdHash;
-		go.AddOrGet<IceCooledFanWorkable>().overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_icefan_kanim")
-		};
+		go.AddOrGet<IceCooledFanWorkable>().overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_icefan_kanim") };
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

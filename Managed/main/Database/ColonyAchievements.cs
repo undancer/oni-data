@@ -131,19 +131,7 @@ namespace Database
 			}, "", "", "", "", null, "", "and_nowhere_to_go"));
 			TameAllBasicCritters = Add(new ColonyAchievement("TameAllBasicCritters", "TAME_BASIC_CRITTERS", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.TAME_BASIC_CRITTERS, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.TAME_BASIC_CRITTERS_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
 			{
-				new CritterTypesWithTraits(new List<Tag>
-				{
-					"Drecko",
-					"Hatch",
-					"LightBug",
-					"Mole",
-					"Oilfloater",
-					"Pacu",
-					"Puft",
-					"Moo",
-					"Crab",
-					"Squirrel"
-				})
+				new CritterTypesWithTraits(new List<Tag> { "Drecko", "Hatch", "LightBug", "Mole", "Oilfloater", "Pacu", "Puft", "Moo", "Crab", "Squirrel" })
 			}, "", "", "", "", null, "", "Animal_friends"));
 			Build4NatureReserves = Add(new ColonyAchievement("Build4NatureReserves", "BUILD_NATURE_RESERVES", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.BUILD_NATURE_RESERVES, string.Format(COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.BUILD_NATURE_RESERVES_DESCRIPTION, Db.Get().RoomTypes.NatureReserve.Name, 4), isVictoryCondition: false, new List<ColonyAchievementRequirement>
 			{
@@ -155,10 +143,7 @@ namespace Database
 			}, "", "", "", "", null, "", "no_place_like_clone"));
 			TameAGassyMoo = Add(new ColonyAchievement("TameAGassyMoo", "TAME_GASSYMOO", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.TAME_GASSYMOO, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.TAME_GASSYMOO_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
 			{
-				new CritterTypesWithTraits(new List<Tag>
-				{
-					"Moo"
-				})
+				new CritterTypesWithTraits(new List<Tag> { "Moo" })
 			}, "", "", "", "", null, "", "moovin_on_up"));
 			CoolBuildingTo6K = Add(new ColonyAchievement("CoolBuildingTo6K", "SIXKELVIN_BUILDING", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SIXKELVIN_BUILDING, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SIXKELVIN_BUILDING_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
 			{
@@ -184,13 +169,7 @@ namespace Database
 			}, "", "", "", "", null, "", "Locavore"));
 			Generate240000kJClean = Add(new ColonyAchievement("Generate240000kJClean", "CLEAN_ENERGY", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.CLEAN_ENERGY, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.CLEAN_ENERGY_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
 			{
-				new ProduceXEngeryWithoutUsingYList(240000f, new List<Tag>
-				{
-					"MethaneGenerator",
-					"PetroleumGenerator",
-					"WoodGasGenerator",
-					"Generator"
-				})
+				new ProduceXEngeryWithoutUsingYList(240000f, new List<Tag> { "MethaneGenerator", "PetroleumGenerator", "WoodGasGenerator", "Generator" })
 			}, "", "", "", "", null, "", "sustainably_sustaining"));
 			BuildOutsideStartBiome = Add(new ColonyAchievement("BuildOutsideStartBiome", "BUILD_OUTSIDE_BIOME", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.BUILD_OUTSIDE_BIOME, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.BUILD_OUTSIDE_BIOME_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
 			{
@@ -221,11 +200,7 @@ namespace Database
 			}, "", "", "", "", null, "", "enter_oil_biome"));
 			EatCookedFood = Add(new ColonyAchievement("EatCookedFood", "COOKED_FOOD", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.COOKED_FOOD, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.COOKED_FOOD_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
 			{
-				new EatXKCalProducedByY(1, new List<Tag>
-				{
-					"GourmetCookingStation",
-					"CookingStation"
-				})
+				new EatXKCalProducedByY(1, new List<Tag> { "GourmetCookingStation", "CookingStation" })
 			}, "", "", "", "", null, "", "its_not_raw"));
 			BasicPumping = Add(new ColonyAchievement("BasicPumping", "BASIC_PUMPING", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.BASIC_PUMPING, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.BASIC_PUMPING_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
 			{
@@ -233,11 +208,7 @@ namespace Database
 			}, "", "", "", "", null, "", "BasicPumping"));
 			BasicComforts = Add(new ColonyAchievement("BasicComforts", "BASIC_COMFORTS", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.BASIC_COMFORTS, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.BASIC_COMFORTS_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
 			{
-				new AtLeastOneBuildingForEachDupe(new List<Tag>
-				{
-					"FlushToilet",
-					"Outhouse"
-				}),
+				new AtLeastOneBuildingForEachDupe(new List<Tag> { "FlushToilet", "Outhouse" }),
 				new AtLeastOneBuildingForEachDupe(new List<Tag>
 				{
 					BedConfig.ID,
@@ -265,22 +236,8 @@ namespace Database
 			{
 				new CritterTypeExists(new List<Tag>
 				{
-					"DreckoPlasticBaby",
-					"HatchHardBaby",
-					"HatchMetalBaby",
-					"HatchVeggieBaby",
-					"LightBugBlackBaby",
-					"LightBugBlueBaby",
-					"LightBugCrystalBaby",
-					"LightBugOrangeBaby",
-					"LightBugPinkBaby",
-					"LightBugPurpleBaby",
-					"OilfloaterDecorBaby",
-					"OilfloaterHighTempBaby",
-					"PacuCleanerBaby",
-					"PacuTropicalBaby",
-					"PuftBleachstoneBaby",
-					"PuftOxyliteBaby"
+					"DreckoPlasticBaby", "HatchHardBaby", "HatchMetalBaby", "HatchVeggieBaby", "LightBugBlackBaby", "LightBugBlueBaby", "LightBugCrystalBaby", "LightBugOrangeBaby", "LightBugPinkBaby", "LightBugPurpleBaby",
+					"OilfloaterDecorBaby", "OilfloaterHighTempBaby", "PacuCleanerBaby", "PacuTropicalBaby", "PuftBleachstoneBaby", "PuftOxyliteBaby"
 				})
 			}, "", "", "", "", null, "", "good_egg"));
 			CuredDisease = Add(new ColonyAchievement("CuredDisease", "CURED_DISEASE", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.CURED_DISEASE, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.CURED_DISEASE_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>

@@ -5,11 +5,7 @@ using UnityEngine.UI;
 
 public class CodexLabelWithLargeIcon : CodexLabelWithIcon
 {
-	public string linkID
-	{
-		get;
-		set;
-	}
+	public string linkID { get; set; }
 
 	public CodexLabelWithLargeIcon()
 	{

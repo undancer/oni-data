@@ -2,11 +2,7 @@ namespace ProcGen
 {
 	public class LevelLayerSettings : IMerge<LevelLayerSettings>
 	{
-		public LevelLayer LevelLayers
-		{
-			get;
-			private set;
-		}
+		public LevelLayer LevelLayers { get; private set; }
 
 		public LevelLayerSettings()
 		{

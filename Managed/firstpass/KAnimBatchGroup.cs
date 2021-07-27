@@ -27,11 +27,7 @@ public class KAnimBatchGroup
 
 			public int cacheIndex = -1;
 
-			public Texture2D texture
-			{
-				get;
-				private set;
-			}
+			public Texture2D texture { get; private set; }
 
 			public byte[] bytes => floatConverter.bytes;
 
@@ -215,35 +211,15 @@ public class KAnimBatchGroup
 
 	private Material[] materials;
 
-	public int maxGroupSize
-	{
-		get;
-		private set;
-	}
+	public int maxGroupSize { get; private set; }
 
-	public Mesh mesh
-	{
-		get;
-		private set;
-	}
+	public Mesh mesh { get; private set; }
 
-	public HashedString batchID
-	{
-		get;
-		private set;
-	}
+	public HashedString batchID { get; private set; }
 
-	public KBatchGroupData data
-	{
-		get;
-		private set;
-	}
+	public KBatchGroupData data { get; private set; }
 
-	public KAnimBatchTextureCache.Entry buildAndAnimTex
-	{
-		get;
-		private set;
-	}
+	public KAnimBatchTextureCache.Entry buildAndAnimTex { get; private set; }
 
 	public bool InitOK => float4sPerSide > 0;
 

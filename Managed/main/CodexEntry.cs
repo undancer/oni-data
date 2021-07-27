@@ -61,13 +61,13 @@ public class CodexEntry
 		set
 		{
 			_dlcIds = value;
-			string str = "";
+			string text = "";
 			for (int i = 0; i < value.Length; i++)
 			{
-				str += value[i];
+				text += value[i];
 				if (i != value.Length - 1)
 				{
-					str += "\n";
+					text += "\n";
 				}
 			}
 		}

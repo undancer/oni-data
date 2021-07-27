@@ -58,9 +58,9 @@ public class ScheduledUIInstantiation : KMonoBehaviour
 			{
 				if (DlcManager.IsContentActive(instantiation.RequiredDlcId))
 				{
-					Vector3 v = gameObject.rectTransform().anchoredPosition;
+					Vector3 vector = gameObject.rectTransform().anchoredPosition;
 					GameObject gameObject2 = Util.KInstantiateUI(gameObject, instantiation.parent.gameObject);
-					gameObject2.rectTransform().anchoredPosition = v;
+					gameObject2.rectTransform().anchoredPosition = vector;
 					gameObject2.rectTransform().localScale = Vector3.one;
 					instantiatedObjects.Add(gameObject2);
 				}

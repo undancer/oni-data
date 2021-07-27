@@ -35,11 +35,7 @@ public class ReportScreen : KScreen
 
 	private ReportManager.DailyReport currentReport;
 
-	public static ReportScreen Instance
-	{
-		get;
-		private set;
-	}
+	public static ReportScreen Instance { get; private set; }
 
 	public static void DestroyInstance()
 	{

@@ -26,10 +26,7 @@ public class BeachChairWorkable : Workable, IWorkerPrioritizable
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_beach_chair_kanim")
-		};
+		overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_beach_chair_kanim") };
 		workAnims = null;
 		workingPstComplete = null;
 		workingPstFailed = null;

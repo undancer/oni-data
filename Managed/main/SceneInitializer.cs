@@ -13,11 +13,7 @@ public class SceneInitializer : MonoBehaviour
 
 	public List<GameObject> prefabs = new List<GameObject>();
 
-	public static SceneInitializer Instance
-	{
-		get;
-		private set;
-	}
+	public static SceneInitializer Instance { get; private set; }
 
 	private void Awake()
 	{

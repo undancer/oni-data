@@ -30,11 +30,7 @@ public class GameplayEventInstance : ISaveLoadable
 
 	private GameplayEvent _gameplayEvent;
 
-	public StateMachine.Instance smi
-	{
-		get;
-		private set;
-	}
+	public StateMachine.Instance smi { get; private set; }
 
 	public bool seenNotification
 	{
@@ -81,9 +77,9 @@ public class GameplayEventInstance : ISaveLoadable
 	public void StartEvent()
 	{
 		GameplayEventManager.Instance.Trigger(1491341646, this);
-		StateMachine.Instance smi = this.smi;
-		smi.OnStop = (Action<string, StateMachine.Status>)Delegate.Combine(smi.OnStop, new Action<string, StateMachine.Status>(OnStop));
-		this.smi.StartSM();
+		StateMachine.Instance instance = smi;
+		instance.OnStop = (Action<string, StateMachine.Status>)Delegate.Combine(instance.OnStop, new Action<string, StateMachine.Status>(OnStop));
+		smi.StartSM();
 	}
 
 	public void RegisterMonitorCallback(GameObject go)

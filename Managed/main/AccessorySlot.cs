@@ -4,17 +4,9 @@ public class AccessorySlot : Resource
 {
 	private KAnimFile file;
 
-	public KAnimHashedString targetSymbolId
-	{
-		get;
-		private set;
-	}
+	public KAnimHashedString targetSymbolId { get; private set; }
 
-	public List<Accessory> accessories
-	{
-		get;
-		private set;
-	}
+	public List<Accessory> accessories { get; private set; }
 
 	public AccessorySlot(string id, ResourceSet parent, KAnimFile swap_build, string build_symbol_override = null)
 		: base(id, parent)

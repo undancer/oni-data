@@ -20,11 +20,7 @@ public class HighEnergyParticleStorage : KMonoBehaviour, IStorage
 
 	public float Particles => particles;
 
-	public bool allowUIItemRemoval
-	{
-		get;
-		set;
-	}
+	public bool allowUIItemRemoval { get; set; }
 
 	protected override void OnPrefabInit()
 	{
@@ -124,10 +120,7 @@ public class HighEnergyParticleStorage : KMonoBehaviour, IStorage
 
 	public List<GameObject> GetItems()
 	{
-		return new List<GameObject>
-		{
-			base.gameObject
-		};
+		return new List<GameObject> { base.gameObject };
 	}
 
 	public bool IsFull()

@@ -28,23 +28,11 @@ namespace Satsuma
 
 		private class ArcProperties
 		{
-			public Node U
-			{
-				get;
-				private set;
-			}
+			public Node U { get; private set; }
 
-			public Node V
-			{
-				get;
-				private set;
-			}
+			public Node V { get; private set; }
 
-			public bool IsEdge
-			{
-				get;
-				private set;
-			}
+			public bool IsEdge { get; private set; }
 
 			public ArcProperties(Node u, Node v, bool isEdge)
 			{

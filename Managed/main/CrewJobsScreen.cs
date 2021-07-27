@@ -180,12 +180,12 @@ public class CrewJobsScreen : CrewListScreen<CrewJobsEntry>
 
 	private void ToggleAllTasksEveryone()
 	{
-		string name = "HUD_Click_Deselect";
+		string text = "HUD_Click_Deselect";
 		if (EveryoneAllTaskToggle.Value != everyoneToggleState.on)
 		{
-			name = "HUD_Click";
+			text = "HUD_Click";
 		}
-		KMonoBehaviour.PlaySound(GlobalAssets.GetSound(name));
+		KMonoBehaviour.PlaySound(GlobalAssets.GetSound(text));
 		for (int i = 0; i < choreGroups.Count; i++)
 		{
 			SetJobEveryone(EveryoneAllTaskToggle.Value != everyoneToggleState.on, choreGroups[i]);
@@ -207,12 +207,12 @@ public class CrewJobsScreen : CrewListScreen<CrewJobsEntry>
 
 	private void ToggleJobEveryone(Button button, ChoreGroup chore_group)
 	{
-		string name = "HUD_Click_Deselect";
+		string text = "HUD_Click_Deselect";
 		if (EveryoneToggles[button] != everyoneToggleState.on)
 		{
-			name = "HUD_Click";
+			text = "HUD_Click";
 		}
-		KMonoBehaviour.PlaySound(GlobalAssets.GetSound(name));
+		KMonoBehaviour.PlaySound(GlobalAssets.GetSound(text));
 		foreach (CrewJobsEntry entryObject in EntryObjects)
 		{
 			entryObject.consumer.SetPermittedByUser(chore_group, EveryoneToggles[button] != everyoneToggleState.on);

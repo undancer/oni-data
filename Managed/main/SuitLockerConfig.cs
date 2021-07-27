@@ -24,10 +24,7 @@ public class SuitLockerConfig : IBuildingConfig
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
-		go.AddOrGet<SuitLocker>().OutfitTags = new Tag[1]
-		{
-			GameTags.AtmoSuit
-		};
+		go.AddOrGet<SuitLocker>().OutfitTags = new Tag[1] { GameTags.AtmoSuit };
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
 		conduitConsumer.conduitType = ConduitType.Gas;
 		conduitConsumer.consumptionRate = 1f;

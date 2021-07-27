@@ -39,15 +39,9 @@ public class PowerControlStationConfig : IBuildingConfig
 		Storage storage = go.AddOrGet<Storage>();
 		storage.capacityKg = 50f;
 		storage.showInUI = true;
-		storage.storageFilters = new List<Tag>
-		{
-			MATERIAL_FOR_TINKER
-		};
+		storage.storageFilters = new List<Tag> { MATERIAL_FOR_TINKER };
 		TinkerStation tinkerStation = go.AddOrGet<TinkerStation>();
-		tinkerStation.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_electricianworkdesk_kanim")
-		};
+		tinkerStation.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_electricianworkdesk_kanim") };
 		tinkerStation.inputMaterial = MATERIAL_FOR_TINKER;
 		tinkerStation.massPerTinker = 5f;
 		tinkerStation.outputPrefab = TINKER_TOOLS;

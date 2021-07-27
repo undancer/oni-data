@@ -30,11 +30,7 @@ public class ToolTipScreen : KScreen
 
 	private bool tooltipIncubating = true;
 
-	public static ToolTipScreen Instance
-	{
-		get;
-		private set;
-	}
+	public static ToolTipScreen Instance { get; private set; }
 
 	protected override void OnActivate()
 	{

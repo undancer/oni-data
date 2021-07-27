@@ -26,8 +26,8 @@ public class MaterialsAvailable : SelectModuleCondition
 		string text = UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MATERIALS_AVAILABLE.FAILED;
 		foreach (Recipe.Ingredient ingredient in selectedPart.CraftRecipe.Ingredients)
 		{
-			string str = "\n" + string.Format("{0}{1}: {2}", "• ", ingredient.tag.ProperName(), GameUtil.GetFormattedMass(ingredient.amount));
-			text += str;
+			string text2 = "\n" + string.Format("{0}{1}: {2}", "• ", ingredient.tag.ProperName(), GameUtil.GetFormattedMass(ingredient.amount));
+			text += text2;
 		}
 		return text;
 	}

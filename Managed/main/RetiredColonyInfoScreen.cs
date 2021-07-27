@@ -816,15 +816,15 @@ public class RetiredColonyInfoScreen : KModalScreen
 		}
 		foreach (KeyValuePair<string, string> worldPair in data.worldIdentities)
 		{
-			GameObject gameObject = Util.KInstantiateUI(worldPrefab, container, force_active: true);
-			HierarchyReferences component = gameObject.GetComponent<HierarchyReferences>();
+			GameObject obj = Util.KInstantiateUI(worldPrefab, container, force_active: true);
+			HierarchyReferences component = obj.GetComponent<HierarchyReferences>();
 			ProcGen.World worldData = SettingsCache.worlds.GetWorldData(worldPair.Value);
 			Sprite sprite = ((worldData != null) ? ColonyDestinationAsteroidBeltData.GetUISprite(worldData.asteroidIcon) : null);
 			if (sprite != null)
 			{
 				component.GetReference<Image>("Portrait").sprite = sprite;
 			}
-			gameObject.GetComponent<KButton>().onClick += delegate
+			obj.GetComponent<KButton>().onClick += delegate
 			{
 				focusedWorld = worldPair.Key;
 				LoadScreenshot(data, focusedWorld);

@@ -32,10 +32,10 @@ public class InstantiateUIPrefabChild : KMonoBehaviour
 		{
 			if (!(gameObject == null))
 			{
-				Vector3 v = gameObject.rectTransform().anchoredPosition;
+				Vector3 vector = gameObject.rectTransform().anchoredPosition;
 				GameObject gameObject2 = Object.Instantiate(gameObject);
 				gameObject2.transform.SetParent(base.transform);
-				gameObject2.rectTransform().anchoredPosition = v;
+				gameObject2.rectTransform().anchoredPosition = vector;
 				gameObject2.rectTransform().localScale = Vector3.one;
 				if (setAsFirstSibling)
 				{

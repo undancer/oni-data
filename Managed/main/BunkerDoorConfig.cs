@@ -7,13 +7,7 @@ public class BunkerDoorConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("BunkerDoor", 4, 1, "door_bunker_kanim", 1000, 120f, new float[1]
-		{
-			500f
-		}, new string[1]
-		{
-			SimHashes.Steel.ToString()
-		}, 1600f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE, temperature_modification_mass_scale: 1f);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("BunkerDoor", 4, 1, "door_bunker_kanim", 1000, 120f, new float[1] { 500f }, new string[1] { SimHashes.Steel.ToString() }, 1600f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.NONE, temperature_modification_mass_scale: 1f);
 		obj.RequiresPowerInput = true;
 		obj.EnergyConsumptionWhenActive = 120f;
 		obj.OverheatTemperature = 1273.15f;

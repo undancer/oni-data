@@ -31,10 +31,7 @@ namespace Database
 				Db.Get().ScheduleBlockTypes.Hygiene,
 				Db.Get().ScheduleBlockTypes.Work
 			});
-			Worktime = Add("Worktime", 18, UI.SCHEDULEGROUPS.WORKTIME.NAME, UI.SCHEDULEGROUPS.WORKTIME.DESCRIPTION, UI.SCHEDULEGROUPS.WORKTIME.NOTIFICATION_TOOLTIP, new List<ScheduleBlockType>
-			{
-				Db.Get().ScheduleBlockTypes.Work
-			}, alarm: true);
+			Worktime = Add("Worktime", 18, UI.SCHEDULEGROUPS.WORKTIME.NAME, UI.SCHEDULEGROUPS.WORKTIME.DESCRIPTION, UI.SCHEDULEGROUPS.WORKTIME.NOTIFICATION_TOOLTIP, new List<ScheduleBlockType> { Db.Get().ScheduleBlockTypes.Work }, alarm: true);
 			Recreation = Add("Recreation", 2, UI.SCHEDULEGROUPS.RECREATION.NAME, UI.SCHEDULEGROUPS.RECREATION.DESCRIPTION, UI.SCHEDULEGROUPS.RECREATION.NOTIFICATION_TOOLTIP, new List<ScheduleBlockType>
 			{
 				Db.Get().ScheduleBlockTypes.Hygiene,
@@ -42,10 +39,7 @@ namespace Database
 				Db.Get().ScheduleBlockTypes.Recreation,
 				Db.Get().ScheduleBlockTypes.Work
 			});
-			Sleep = Add("Sleep", 3, UI.SCHEDULEGROUPS.SLEEP.NAME, UI.SCHEDULEGROUPS.SLEEP.DESCRIPTION, UI.SCHEDULEGROUPS.SLEEP.NOTIFICATION_TOOLTIP, new List<ScheduleBlockType>
-			{
-				Db.Get().ScheduleBlockTypes.Sleep
-			});
+			Sleep = Add("Sleep", 3, UI.SCHEDULEGROUPS.SLEEP.NAME, UI.SCHEDULEGROUPS.SLEEP.DESCRIPTION, UI.SCHEDULEGROUPS.SLEEP.NOTIFICATION_TOOLTIP, new List<ScheduleBlockType> { Db.Get().ScheduleBlockTypes.Sleep });
 			int num = 0;
 			foreach (ScheduleGroup allGroup in allGroups)
 			{

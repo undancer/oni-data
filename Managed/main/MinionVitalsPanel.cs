@@ -26,13 +26,13 @@ public class MinionVitalsPanel : KMonoBehaviour
 
 		public bool TryUpdate(Amounts amounts)
 		{
-			foreach (AmountInstance amount2 in amounts)
+			foreach (AmountInstance amount in amounts)
 			{
-				if (amount == amount2.amount && !amount2.hide)
+				if (this.amount == amount.amount && !amount.hide)
 				{
-					locText.SetText(amount.GetDescription(amount2));
-					toolTip.toolTip = toolTipFunc(amount2);
-					imageToggle.SetValue(amount2);
+					locText.SetText(this.amount.GetDescription(amount));
+					toolTip.toolTip = toolTipFunc(amount);
+					imageToggle.SetValue(amount);
 					return true;
 				}
 			}
@@ -55,12 +55,12 @@ public class MinionVitalsPanel : KMonoBehaviour
 
 		public bool TryUpdate(Attributes attributes)
 		{
-			foreach (AttributeInstance attribute2 in attributes)
+			foreach (AttributeInstance attribute in attributes)
 			{
-				if (attribute == attribute2.modifier && !attribute2.hide)
+				if (this.attribute == attribute.modifier && !attribute.hide)
 				{
-					locText.SetText(attribute.GetDescription(attribute2));
-					toolTip.toolTip = toolTipFunc(attribute2);
+					locText.SetText(this.attribute.GetDescription(attribute));
+					toolTip.toolTip = toolTipFunc(attribute);
 					return true;
 				}
 			}

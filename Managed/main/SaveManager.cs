@@ -63,13 +63,7 @@ public class SaveManager : KMonoBehaviour
 
 	public static int DEBUG_OnlyLoadThisCellsObjects = -1;
 
-	private static readonly char[] SAVE_HEADER = new char[4]
-	{
-		'K',
-		'S',
-		'A',
-		'V'
-	};
+	private static readonly char[] SAVE_HEADER = new char[4] { 'K', 'S', 'A', 'V' };
 
 	private List<Tag> orderedKeys = new List<Tag>();
 
@@ -170,10 +164,7 @@ public class SaveManager : KMonoBehaviour
 		orderedKeys.Remove(SaveGame.Instance.PrefabID());
 		orderedKeys = orderedKeys.OrderBy((Tag a) => a.Name == "StickerBomb").ToList();
 		orderedKeys = orderedKeys.OrderBy((Tag a) => a.Name.Contains("UnderConstruction")).ToList();
-		Write(SaveGame.Instance.PrefabID(), new List<SaveLoadRoot>(new SaveLoadRoot[1]
-		{
-			SaveGame.Instance.GetComponent<SaveLoadRoot>()
-		}), writer);
+		Write(SaveGame.Instance.PrefabID(), new List<SaveLoadRoot>(new SaveLoadRoot[1] { SaveGame.Instance.GetComponent<SaveLoadRoot>() }), writer);
 		foreach (Tag orderedKey in orderedKeys)
 		{
 			List<SaveLoadRoot> list = sceneObjects[orderedKey];
@@ -276,8 +267,8 @@ public class SaveManager : KMonoBehaviour
 				sceneObjects[key] = value2;
 				for (int k = 0; k < num4; k++)
 				{
-					SaveLoadRoot x = SaveLoadRoot.Load(value, reader);
-					if (DEBUG_OnlyLoadThisCellsObjects == -1 && x == null)
+					SaveLoadRoot saveLoadRoot = SaveLoadRoot.Load(value, reader);
+					if (DEBUG_OnlyLoadThisCellsObjects == -1 && saveLoadRoot == null)
 					{
 						Debug.LogError("Error loading data [" + text + "]");
 						return false;

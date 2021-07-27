@@ -12,11 +12,7 @@ namespace Satsuma
 
 		private int edgeCount;
 
-		public IGraph Graph
-		{
-			get;
-			private set;
-		}
+		public IGraph Graph { get; private set; }
 
 		public Matching(IGraph graph)
 		{

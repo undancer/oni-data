@@ -6,11 +6,7 @@ using ProcGen;
 [DebuggerDisplay("{content} {bandSize} {maxValue}")]
 public class ElementGradient : Gradient<string>
 {
-	public SampleDescriber.Override overrides
-	{
-		get;
-		set;
-	}
+	public SampleDescriber.Override overrides { get; set; }
 
 	public ElementGradient()
 		: base((string)null, 0f)

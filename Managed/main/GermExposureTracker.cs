@@ -11,11 +11,7 @@ public class GermExposureTracker : KMonoBehaviour
 	{
 		public GermExposureMonitor.Instance monitor;
 
-		public float weight
-		{
-			get;
-			set;
-		}
+		public float weight { get; set; }
 	}
 
 	public static GermExposureTracker Instance;

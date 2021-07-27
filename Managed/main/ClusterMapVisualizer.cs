@@ -191,9 +191,9 @@ public class ClusterMapVisualizer : KMonoBehaviour
 		animControllers = new List<KBatchedAnimController>();
 		if (animContainer == null)
 		{
-			GameObject gameObject = new GameObject("AnimContainer", typeof(RectTransform));
+			GameObject obj = new GameObject("AnimContainer", typeof(RectTransform));
 			RectTransform component = GetComponent<RectTransform>();
-			RectTransform component2 = gameObject.GetComponent<RectTransform>();
+			RectTransform component2 = obj.GetComponent<RectTransform>();
 			component2.SetParent(component, worldPositionStays: false);
 			component2.SetLocalPosition(new Vector3(0f, 0f, 0f));
 			component2.sizeDelta = component.sizeDelta;
@@ -288,10 +288,7 @@ public class ClusterMapVisualizer : KMonoBehaviour
 				foreach (ClusterGridEntity.AnimConfig animConfig in entity.AnimConfigs)
 				{
 					KBatchedAnimController kBatchedAnimController = Object.Instantiate(animControllerPrefab, animContainer);
-					kBatchedAnimController.AnimFiles = new KAnimFile[1]
-					{
-						animConfig.animFile
-					};
+					kBatchedAnimController.AnimFiles = new KAnimFile[1] { animConfig.animFile };
 					kBatchedAnimController.initialMode = KAnim.PlayMode.Loop;
 					kBatchedAnimController.initialAnim = animConfig.initialAnim;
 					kBatchedAnimController.gameObject.AddComponent<LoopingSounds>();
@@ -323,7 +320,7 @@ public class ClusterMapVisualizer : KMonoBehaviour
 				mapPath = pathDrawer.AddPath();
 			}
 			mapPath.SetPoints(ClusterMapPathDrawer.GetDrawPathList(base.transform.GetLocalPosition(), list));
-			Color color = (isSelected ? ClusterMapScreen.Instance.rocketSelectedPathColor : (entity.ShowPath() ? ClusterMapScreen.Instance.rocketPathColor : new Color(0f, 0f, 0f, 0f)));
+			Color color = (isSelected ? ClusterMapScreen.Instance.rocketSelectedPathColor : ((!entity.ShowPath()) ? new Color(0f, 0f, 0f, 0f) : ClusterMapScreen.Instance.rocketPathColor));
 			mapPath.SetColor(color);
 		}
 		else if (mapPath != null)

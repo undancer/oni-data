@@ -25,11 +25,7 @@ public class InitializeCheck : MonoBehaviour
 
 	private SavePathIssue test_issue;
 
-	public static SavePathIssue savePathState
-	{
-		get;
-		private set;
-	}
+	public static SavePathIssue savePathState { get; private set; }
 
 	private void Awake()
 	{

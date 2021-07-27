@@ -19,9 +19,9 @@ namespace KSerialization
 
 		public static bool Deserialize(object obj, IReader reader)
 		{
-			string b = reader.ReadKleiString();
+			string text = reader.ReadKleiString();
 			Type type = obj.GetType();
-			if (type.GetKTypeString() == b)
+			if (type.GetKTypeString() == text)
 			{
 				return DeserializeTypeless(type, obj, reader);
 			}

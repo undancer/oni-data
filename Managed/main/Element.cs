@@ -144,23 +144,11 @@ public class Element : IComparable<Element>
 		}
 	}
 
-	public string name
-	{
-		get;
-		set;
-	}
+	public string name { get; set; }
 
-	public string nameUpperCase
-	{
-		get;
-		set;
-	}
+	public string nameUpperCase { get; set; }
 
-	public string description
-	{
-		get;
-		set;
-	}
+	public string description { get; set; }
 
 	public float PressureToMass(float pressure)
 	{
@@ -196,52 +184,52 @@ public class Element : IComparable<Element>
 
 	public string FullDescription(bool addHardnessColor = true)
 	{
-		string str = Description();
+		string text = Description();
 		if (IsSolid)
 		{
-			str += "\n\n";
-			str += string.Format(ELEMENTS.ELEMENTDESCSOLID, GetMaterialCategoryTag().ProperName(), GameUtil.GetFormattedTemperature(highTemp), GameUtil.GetHardnessString(this, addHardnessColor));
+			text += "\n\n";
+			text += string.Format(ELEMENTS.ELEMENTDESCSOLID, GetMaterialCategoryTag().ProperName(), GameUtil.GetFormattedTemperature(highTemp), GameUtil.GetHardnessString(this, addHardnessColor));
 		}
 		else if (IsLiquid)
 		{
-			str += "\n\n";
-			str += string.Format(ELEMENTS.ELEMENTDESCLIQUID, GetMaterialCategoryTag().ProperName(), GameUtil.GetFormattedTemperature(lowTemp), GameUtil.GetFormattedTemperature(highTemp));
+			text += "\n\n";
+			text += string.Format(ELEMENTS.ELEMENTDESCLIQUID, GetMaterialCategoryTag().ProperName(), GameUtil.GetFormattedTemperature(lowTemp), GameUtil.GetFormattedTemperature(highTemp));
 		}
 		else if (!IsVacuum)
 		{
-			str += "\n\n";
-			str += string.Format(ELEMENTS.ELEMENTDESCGAS, GetMaterialCategoryTag().ProperName(), GameUtil.GetFormattedTemperature(lowTemp));
+			text += "\n\n";
+			text += string.Format(ELEMENTS.ELEMENTDESCGAS, GetMaterialCategoryTag().ProperName(), GameUtil.GetFormattedTemperature(lowTemp));
 		}
-		string text = ELEMENTS.THERMALPROPERTIES;
-		text = text.Replace("{SPECIFIC_HEAT_CAPACITY}", GameUtil.GetFormattedSHC(specificHeatCapacity));
-		text = text.Replace("{THERMAL_CONDUCTIVITY}", GameUtil.GetFormattedThermalConductivity(thermalConductivity));
-		str = str + "\n" + text;
+		string text2 = ELEMENTS.THERMALPROPERTIES;
+		text2 = text2.Replace("{SPECIFIC_HEAT_CAPACITY}", GameUtil.GetFormattedSHC(specificHeatCapacity));
+		text2 = text2.Replace("{THERMAL_CONDUCTIVITY}", GameUtil.GetFormattedThermalConductivity(thermalConductivity));
+		text = text + "\n" + text2;
 		if (oreTags.Length != 0 && !IsVacuum)
 		{
-			str += "\n\n";
-			string text2 = "";
+			text += "\n\n";
+			string text3 = "";
 			for (int i = 0; i < oreTags.Length; i++)
 			{
 				Tag tag = new Tag(oreTags[i]);
-				text2 += tag.ProperName();
+				text3 += tag.ProperName();
 				if (i < oreTags.Length - 1)
 				{
-					text2 += ", ";
+					text3 += ", ";
 				}
 			}
-			str += string.Format(ELEMENTS.ELEMENTPROPERTIES, text2);
+			text += string.Format(ELEMENTS.ELEMENTPROPERTIES, text3);
 		}
 		if (attributeModifiers.Count > 0)
 		{
 			foreach (AttributeModifier attributeModifier in attributeModifiers)
 			{
-				string name = Db.Get().BuildingAttributes.Get(attributeModifier.AttributeId).Name;
+				string arg = Db.Get().BuildingAttributes.Get(attributeModifier.AttributeId).Name;
 				string formattedString = attributeModifier.GetFormattedString();
-				str = str + "\n" + string.Format(DUPLICANTS.MODIFIERS.MODIFIER_FORMAT, name, formattedString);
+				text = text + "\n" + string.Format(DUPLICANTS.MODIFIERS.MODIFIER_FORMAT, arg, formattedString);
 			}
-			return str;
+			return text;
 		}
-		return str;
+		return text;
 	}
 
 	public string Description()

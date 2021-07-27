@@ -5,23 +5,11 @@ namespace ProcGen
 	[Serializable]
 	public class WeightedSimHash : IWeighted
 	{
-		public string element
-		{
-			get;
-			private set;
-		}
+		public string element { get; private set; }
 
-		public float weight
-		{
-			get;
-			set;
-		}
+		public float weight { get; set; }
 
-		public SampleDescriber.Override overrides
-		{
-			get;
-			private set;
-		}
+		public SampleDescriber.Override overrides { get; private set; }
 
 		public WeightedSimHash()
 		{

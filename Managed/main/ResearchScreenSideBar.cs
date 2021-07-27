@@ -240,6 +240,10 @@ public class ResearchScreenSideBar : KScreen
 
 	public override void OnKeyDown(KButtonEvent e)
 	{
+		if (researchScreen != null && (bool)researchScreen.canvas && !researchScreen.canvas.enabled)
+		{
+			return;
+		}
 		if (base.isEditing)
 		{
 			e.Consumed = true;

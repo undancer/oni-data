@@ -149,18 +149,15 @@ public class AutoMiner : StateMachineComponent<AutoMiner.Instance>, ISim1000ms
 		base.OnSpawn();
 		hitEffectPrefab = Assets.GetPrefab("fx_dig_splash");
 		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
-		string name = component.name + ".gun";
-		arm_go = new GameObject(name);
+		string text = component.name + ".gun";
+		arm_go = new GameObject(text);
 		arm_go.SetActive(value: false);
 		arm_go.transform.parent = component.transform;
 		looping_sounds = arm_go.AddComponent<LoopingSounds>();
 		rotateSound = GlobalAssets.GetSound(rotateSound);
-		arm_go.AddComponent<KPrefabID>().PrefabTag = new Tag(name);
+		arm_go.AddComponent<KPrefabID>().PrefabTag = new Tag(text);
 		arm_anim_ctrl = arm_go.AddComponent<KBatchedAnimController>();
-		arm_anim_ctrl.AnimFiles = new KAnimFile[1]
-		{
-			component.AnimFiles[0]
-		};
+		arm_anim_ctrl.AnimFiles = new KAnimFile[1] { component.AnimFiles[0] };
 		arm_anim_ctrl.initialAnim = "gun";
 		arm_anim_ctrl.isMovable = true;
 		arm_anim_ctrl.sceneLayer = Grid.SceneLayer.TransferArm;
@@ -204,11 +201,11 @@ public class AutoMiner : StateMachineComponent<AutoMiner.Instance>, ISim1000ms
 	{
 		if (HasDigCell)
 		{
-			Vector3 a = Grid.CellToPosCCC(dig_cell, Grid.SceneLayer.TileMain);
-			a.z = 0f;
+			Vector3 vector = Grid.CellToPosCCC(dig_cell, Grid.SceneLayer.TileMain);
+			vector.z = 0f;
 			Vector3 position = arm_go.transform.GetPosition();
 			position.z = 0f;
-			Vector3 target_dir = Vector3.Normalize(a - position);
+			Vector3 target_dir = Vector3.Normalize(vector - position);
 			RotateArm(target_dir, warp: false, dt);
 		}
 	}
@@ -244,11 +241,11 @@ public class AutoMiner : StateMachineComponent<AutoMiner.Instance>, ISim1000ms
 			Diggable.DoDigTick(dig_cell, dt);
 			float percentComplete = Grid.Damage[dig_cell];
 			mining_sounds.SetPercentComplete(percentComplete);
-			Vector3 a = Grid.CellToPosCCC(dig_cell, Grid.SceneLayer.FXFront2);
-			a.z = 0f;
+			Vector3 vector = Grid.CellToPosCCC(dig_cell, Grid.SceneLayer.FXFront2);
+			vector.z = 0f;
 			Vector3 position = arm_go.transform.GetPosition();
 			position.z = 0f;
-			float sqrMagnitude = (a - position).sqrMagnitude;
+			float sqrMagnitude = (vector - position).sqrMagnitude;
 			arm_anim_ctrl.GetBatchInstanceData().SetClipRadius(position.x, position.y, sqrMagnitude, do_clip: true);
 			if (!ValidDigCell(dig_cell))
 			{

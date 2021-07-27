@@ -74,10 +74,7 @@ public class MessStation : Workable, IGameObjectEffectDescriptor
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_use_machine_kanim")
-		};
+		overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_use_machine_kanim") };
 	}
 
 	protected override void OnCompleteWork(Worker worker)

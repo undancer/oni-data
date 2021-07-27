@@ -46,14 +46,8 @@ public class HeadquartersConfig : IBuildingConfig
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.LightSource);
 		go.GetComponent<KPrefabID>().AddTag(GameTags.Experimental);
 		RoleStation roleStation = go.AddOrGet<RoleStation>();
-		roleStation.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_hqbase_skill_upgrade_kanim")
-		};
-		roleStation.workAnims = new HashedString[1]
-		{
-			"upgrade"
-		};
+		roleStation.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_hqbase_skill_upgrade_kanim") };
+		roleStation.workAnims = new HashedString[1] { "upgrade" };
 		roleStation.workingPstComplete = null;
 		roleStation.workingPstFailed = null;
 	}

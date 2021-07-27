@@ -1,31 +1,14 @@
 public interface IEmptyableCargo
 {
-	IStateMachineTarget master
-	{
-		get;
-	}
+	IStateMachineTarget master { get; }
 
-	bool CanAutoDeploy
-	{
-		get;
-	}
+	bool CanAutoDeploy { get; }
 
-	bool AutoDeploy
-	{
-		get;
-		set;
-	}
+	bool AutoDeploy { get; set; }
 
-	bool ChooseDuplicant
-	{
-		get;
-	}
+	bool ChooseDuplicant { get; }
 
-	MinionIdentity ChosenDuplicant
-	{
-		get;
-		set;
-	}
+	MinionIdentity ChosenDuplicant { get; set; }
 
 	bool CanEmptyCargo();
 

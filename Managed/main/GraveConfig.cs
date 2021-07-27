@@ -8,10 +8,7 @@ public class GraveConfig : IBuildingConfig
 
 	private static KAnimFile[] STORAGE_OVERRIDE_ANIM_FILES;
 
-	private static readonly HashedString[] STORAGE_WORK_ANIMS = new HashedString[1]
-	{
-		"working_pre"
-	};
+	private static readonly HashedString[] STORAGE_WORK_ANIMS = new HashedString[1] { "working_pre" };
 
 	private static readonly HashedString STORAGE_PST_ANIM = HashedString.Invalid;
 
@@ -33,19 +30,13 @@ public class GraveConfig : IBuildingConfig
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
-		STORAGE_OVERRIDE_ANIM_FILES = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_bury_dupe_kanim")
-		};
+		STORAGE_OVERRIDE_ANIM_FILES = new KAnimFile[1] { Assets.GetAnim("anim_bury_dupe_kanim") };
 		Storage storage = go.AddOrGet<Storage>();
 		storage.showInUI = true;
 		storage.SetDefaultStoredItemModifiers(StorageModifiers);
 		storage.overrideAnims = STORAGE_OVERRIDE_ANIM_FILES;
 		storage.workAnims = STORAGE_WORK_ANIMS;
-		storage.workingPstComplete = new HashedString[1]
-		{
-			STORAGE_PST_ANIM
-		};
+		storage.workingPstComplete = new HashedString[1] { STORAGE_PST_ANIM };
 		storage.synchronizeAnims = false;
 		storage.useGunForDelivery = false;
 		storage.workAnimPlayMode = KAnim.PlayMode.Once;

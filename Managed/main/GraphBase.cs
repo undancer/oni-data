@@ -109,10 +109,10 @@ public class GraphBase : KMonoBehaviour
 			array[i + 1] = GetRelativePosition(absolute_point2);
 			if (prefab_guide_horizontal_label != null)
 			{
-				GameObject gameObject2 = Util.KInstantiateUI(prefab_guide_horizontal_label, gameObject, force_active: true);
-				gameObject2.GetComponent<LocText>().alignment = TextAlignmentOptions.MidlineLeft;
-				gameObject2.GetComponent<LocText>().text = ((int)axis_y.guide_frequency * (i / 2)).ToString();
-				gameObject2.rectTransform().SetLocalPosition(new Vector2(8f, (float)i * (base.gameObject.rectTransform().rect.height / (float)array.Length)) - base.gameObject.rectTransform().rect.size / 2f);
+				GameObject obj = Util.KInstantiateUI(prefab_guide_horizontal_label, gameObject, force_active: true);
+				obj.GetComponent<LocText>().alignment = TextAlignmentOptions.MidlineLeft;
+				obj.GetComponent<LocText>().text = ((int)axis_y.guide_frequency * (i / 2)).ToString();
+				obj.rectTransform().SetLocalPosition(new Vector2(8f, (float)i * (base.gameObject.rectTransform().rect.height / (float)array.Length)) - base.gameObject.rectTransform().rect.size / 2f);
 			}
 		}
 		gameObject.GetComponent<UILineRenderer>().Points = array;
@@ -136,10 +136,10 @@ public class GraphBase : KMonoBehaviour
 			array[i + 1] = GetRelativePosition(absolute_point2);
 			if (prefab_guide_vertical_label != null)
 			{
-				GameObject gameObject2 = Util.KInstantiateUI(prefab_guide_vertical_label, gameObject, force_active: true);
-				gameObject2.GetComponent<LocText>().alignment = TextAlignmentOptions.Bottom;
-				gameObject2.GetComponent<LocText>().text = ((int)axis_x.guide_frequency * (i / 2)).ToString();
-				gameObject2.rectTransform().SetLocalPosition(new Vector2((float)i * (base.gameObject.rectTransform().rect.width / (float)array.Length), 4f) - base.gameObject.rectTransform().rect.size / 2f);
+				GameObject obj = Util.KInstantiateUI(prefab_guide_vertical_label, gameObject, force_active: true);
+				obj.GetComponent<LocText>().alignment = TextAlignmentOptions.Bottom;
+				obj.GetComponent<LocText>().text = ((int)axis_x.guide_frequency * (i / 2)).ToString();
+				obj.rectTransform().SetLocalPosition(new Vector2((float)i * (base.gameObject.rectTransform().rect.width / (float)array.Length), 4f) - base.gameObject.rectTransform().rect.size / 2f);
 			}
 		}
 		gameObject.GetComponent<UILineRenderer>().Points = array;

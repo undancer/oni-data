@@ -48,10 +48,7 @@ public class GlassForgeConfig : IBuildingConfig
 		glassForge.buildStorage.SetDefaultStoredItemModifiers(RefineryStoredItemModifiers);
 		glassForge.outStorage.SetDefaultStoredItemModifiers(RefineryStoredItemModifiers);
 		glassForge.outputOffset = new Vector3(1f, 0.5f);
-		complexFabricatorWorkable.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_metalrefinery_kanim")
-		};
+		complexFabricatorWorkable.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_metalrefinery_kanim") };
 		ConduitDispenser conduitDispenser = go.AddOrGet<ConduitDispenser>();
 		conduitDispenser.storage = glassForge.outStorage;
 		conduitDispenser.conduitType = ConduitType.Liquid;
@@ -72,10 +69,7 @@ public class GlassForgeConfig : IBuildingConfig
 			time = 40f,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
 			description = string.Format(STRINGS.BUILDINGS.PREFABS.GLASSFORGE.RECIPE_DESCRIPTION, ElementLoader.GetElement(array2[0].material).name, ElementLoader.GetElement(array[0].material).name),
-			fabricators = new List<Tag>
-			{
-				TagManager.Create("GlassForge")
-			}
+			fabricators = new List<Tag> { TagManager.Create("GlassForge") }
 		};
 		ComplexRecipeManager.Get().AddObsoleteIDMapping(obsolete_id, text);
 		Prioritizable.AddRef(go);

@@ -35,10 +35,7 @@ public class NuclearWasteCometConfig : IEntityConfig
 		primaryElement.SetElement(SimHashes.Corium);
 		primaryElement.Temperature = (comet.temperatureRange.x + comet.temperatureRange.y) / 2f;
 		KBatchedAnimController kBatchedAnimController = gameObject.AddOrGet<KBatchedAnimController>();
-		kBatchedAnimController.AnimFiles = new KAnimFile[1]
-		{
-			Assets.GetAnim("nuclear_metldown_comet_fx_kanim")
-		};
+		kBatchedAnimController.AnimFiles = new KAnimFile[1] { Assets.GetAnim("nuclear_metldown_comet_fx_kanim") };
 		kBatchedAnimController.isMovable = true;
 		kBatchedAnimController.initialAnim = "fall_loop";
 		kBatchedAnimController.initialMode = KAnim.PlayMode.Loop;

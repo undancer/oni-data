@@ -88,12 +88,7 @@ public class SicknessMonitor : GameStateMachine<SicknessMonitor, SicknessMonitor
 
 	private static readonly HashedString SickPostKAnim = "anim_cheer_kanim";
 
-	private static readonly HashedString[] SickPostAnims = new HashedString[3]
-	{
-		"cheer_pre",
-		"cheer_loop",
-		"cheer_pst"
-	};
+	private static readonly HashedString[] SickPostAnims = new HashedString[3] { "cheer_pre", "cheer_loop", "cheer_pst" };
 
 	public override void InitializeStates(out BaseState default_state)
 	{

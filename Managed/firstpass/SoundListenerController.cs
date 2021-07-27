@@ -6,11 +6,7 @@ public class SoundListenerController : MonoBehaviour
 {
 	private VCA loopingVCA;
 
-	public static SoundListenerController Instance
-	{
-		get;
-		private set;
-	}
+	public static SoundListenerController Instance { get; private set; }
 
 	private void Awake()
 	{

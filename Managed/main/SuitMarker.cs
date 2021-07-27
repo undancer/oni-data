@@ -95,16 +95,16 @@ public class SuitMarker : KMonoBehaviour
 
 		private void Run()
 		{
-			if (base.reactor == null || suitMarker == null)
+			if (reactor == null || suitMarker == null)
 			{
 				return;
 			}
-			GameObject reactor = base.reactor;
-			Equipment equipment = reactor.GetComponent<MinionIdentity>().GetEquipment();
+			GameObject obj = reactor;
+			Equipment equipment = obj.GetComponent<MinionIdentity>().GetEquipment();
 			bool flag = !equipment.IsSlotOccupied(Db.Get().AssignableSlots.Suit);
-			reactor.GetComponent<KBatchedAnimController>().RemoveAnimOverrides(suitMarker.interactAnim);
+			obj.GetComponent<KBatchedAnimController>().RemoveAnimOverrides(suitMarker.interactAnim);
 			bool flag2 = false;
-			Navigator component = reactor.GetComponent<Navigator>();
+			Navigator component = obj.GetComponent<Navigator>();
 			bool flag3 = component != null && (component.flags & suitMarker.PathFlag) != 0;
 			if (flag || flag3)
 			{
@@ -315,7 +315,7 @@ public class SuitMarker : KMonoBehaviour
 		GetAttachedLockers(pooledList);
 		int num = 0;
 		int num2 = 0;
-		KPrefabID x = null;
+		KPrefabID kPrefabID = null;
 		foreach (SuitLocker item in pooledList)
 		{
 			if (item.CanDropOffSuit())
@@ -326,13 +326,13 @@ public class SuitMarker : KMonoBehaviour
 			{
 				num2++;
 			}
-			if (x == null)
+			if (kPrefabID == null)
 			{
-				x = item.GetStoredOutfit();
+				kPrefabID = item.GetStoredOutfit();
 			}
 		}
 		pooledList.Recycle();
-		bool flag = x != null;
+		bool flag = kPrefabID != null;
 		if (flag != hasAvailableSuit)
 		{
 			GetComponent<KAnimControllerBase>().Play(flag ? "off" : "no_suit");

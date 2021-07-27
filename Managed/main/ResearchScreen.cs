@@ -132,13 +132,13 @@ public class ResearchScreen : KModalScreen
 	{
 		base.OnPrefabInit();
 		base.ConsumeMouseScroll = true;
-		Transform transform = base.transform;
+		Transform parent = base.transform;
 		while (m_Raycaster == null)
 		{
-			m_Raycaster = transform.GetComponent<GraphicRaycaster>();
+			m_Raycaster = parent.GetComponent<GraphicRaycaster>();
 			if (m_Raycaster == null)
 			{
-				transform = transform.parent;
+				parent = parent.parent;
 			}
 		}
 	}
@@ -157,8 +157,8 @@ public class ResearchScreen : KModalScreen
 
 	public void ZoomToTech(string techID)
 	{
-		Vector2 a = (Vector2)entryMap[Db.Get().Techs.Get(techID)].rectTransform().GetLocalPosition() + new Vector2((0f - foreground.rectTransform().rect.size.x) / 2f, foreground.rectTransform().rect.size.y / 2f);
-		forceTargetPosition = -a;
+		Vector2 vector = (Vector2)entryMap[Db.Get().Techs.Get(techID)].rectTransform().GetLocalPosition() + new Vector2((0f - foreground.rectTransform().rect.size.x) / 2f, foreground.rectTransform().rect.size.y / 2f);
+		forceTargetPosition = -vector;
 		zoomingToTarget = true;
 		targetZoom = maxZoom;
 	}
@@ -183,67 +183,67 @@ public class ResearchScreen : KModalScreen
 		Vector2 anchoredPosition = component.anchoredPosition;
 		currentZoom = Mathf.Lerp(t: Mathf.Min(effectiveZoomSpeed * Time.unscaledDeltaTime, 0.9f), a: currentZoom, b: targetZoom);
 		Vector2 zero = Vector2.zero;
-		Vector2 v = KInputManager.GetMousePos();
-		Vector2 b = (zoomCenterLock ? (component.InverseTransformPoint(new Vector2(Screen.width / 2, Screen.height / 2)) * currentZoom) : (component.InverseTransformPoint(v) * currentZoom));
+		Vector2 vector = KInputManager.GetMousePos();
+		Vector2 vector2 = (zoomCenterLock ? (component.InverseTransformPoint(new Vector2(Screen.width / 2, Screen.height / 2)) * currentZoom) : (component.InverseTransformPoint(vector) * currentZoom));
 		component.localScale = new Vector3(currentZoom, currentZoom, 1f);
-		zero = (Vector2)(zoomCenterLock ? (component.InverseTransformPoint(new Vector2(Screen.width / 2, Screen.height / 2)) * currentZoom) : (component.InverseTransformPoint(v) * currentZoom)) - b;
-		float d = keyboardScrollSpeed;
+		zero = (Vector2)(zoomCenterLock ? (component.InverseTransformPoint(new Vector2(Screen.width / 2, Screen.height / 2)) * currentZoom) : (component.InverseTransformPoint(vector) * currentZoom)) - vector2;
+		float num = keyboardScrollSpeed;
 		if (panUp)
 		{
-			keyPanDelta -= Vector2.up * Time.unscaledDeltaTime * d;
+			keyPanDelta -= Vector2.up * Time.unscaledDeltaTime * num;
 		}
 		else if (panDown)
 		{
-			keyPanDelta += Vector2.up * Time.unscaledDeltaTime * d;
+			keyPanDelta += Vector2.up * Time.unscaledDeltaTime * num;
 		}
 		if (panLeft)
 		{
-			keyPanDelta += Vector2.right * Time.unscaledDeltaTime * d;
+			keyPanDelta += Vector2.right * Time.unscaledDeltaTime * num;
 		}
 		else if (panRight)
 		{
-			keyPanDelta -= Vector2.right * Time.unscaledDeltaTime * d;
+			keyPanDelta -= Vector2.right * Time.unscaledDeltaTime * num;
 		}
-		Vector2 vector = new Vector2(Mathf.Lerp(0f, keyPanDelta.x, Time.unscaledDeltaTime * keyPanEasing), Mathf.Lerp(0f, keyPanDelta.y, Time.unscaledDeltaTime * keyPanEasing));
-		keyPanDelta -= vector;
+		Vector2 vector3 = new Vector2(Mathf.Lerp(0f, keyPanDelta.x, Time.unscaledDeltaTime * keyPanEasing), Mathf.Lerp(0f, keyPanDelta.y, Time.unscaledDeltaTime * keyPanEasing));
+		keyPanDelta -= vector3;
 		Vector2 zero2 = Vector2.zero;
 		if (isDragging)
 		{
-			Vector2 vector2 = KInputManager.GetMousePos() - dragLastPosition;
-			zero2 += vector2;
+			Vector2 vector4 = KInputManager.GetMousePos() - dragLastPosition;
+			zero2 += vector4;
 			dragLastPosition = KInputManager.GetMousePos();
-			dragInteria = Vector2.ClampMagnitude(dragInteria + vector2, 400f);
+			dragInteria = Vector2.ClampMagnitude(dragInteria + vector4, 400f);
 		}
 		dragInteria *= Mathf.Max(0f, 1f - Time.unscaledDeltaTime * 4f);
-		Vector2 vector3 = anchoredPosition + zero + keyPanDelta + zero2;
+		Vector2 vector5 = anchoredPosition + zero + keyPanDelta + zero2;
 		if (!isDragging)
 		{
 			Vector2 size = GetComponent<RectTransform>().rect.size;
-			Vector2 vector4 = new Vector2(((0f - component.rect.size.x) / 2f - 250f) * currentZoom, -250f * currentZoom);
-			Vector2 vector5 = new Vector2(250f * currentZoom, (component.rect.size.y + 250f) * currentZoom - size.y);
-			Vector2 a = new Vector2(Mathf.Clamp(vector3.x, vector4.x, vector5.x), Mathf.Clamp(vector3.y, vector4.y, vector5.y));
-			forceTargetPosition = new Vector2(Mathf.Clamp(forceTargetPosition.x, vector4.x, vector5.x), Mathf.Clamp(forceTargetPosition.y, vector4.y, vector5.y));
-			Vector2 vector6 = a + dragInteria - vector3;
+			Vector2 vector6 = new Vector2(((0f - component.rect.size.x) / 2f - 250f) * currentZoom, -250f * currentZoom);
+			Vector2 vector7 = new Vector2(250f * currentZoom, (component.rect.size.y + 250f) * currentZoom - size.y);
+			Vector2 vector8 = new Vector2(Mathf.Clamp(vector5.x, vector6.x, vector7.x), Mathf.Clamp(vector5.y, vector6.y, vector7.y));
+			forceTargetPosition = new Vector2(Mathf.Clamp(forceTargetPosition.x, vector6.x, vector7.x), Mathf.Clamp(forceTargetPosition.y, vector6.y, vector7.y));
+			Vector2 vector9 = vector8 + dragInteria - vector5;
 			if (!panLeft && !panRight && !panUp && !panDown)
 			{
-				vector3 += vector6 * edgeClampFactor * Time.unscaledDeltaTime;
+				vector5 += vector9 * edgeClampFactor * Time.unscaledDeltaTime;
 			}
 			else
 			{
-				vector3 += vector6;
-				if (vector6.x < 0f)
+				vector5 += vector9;
+				if (vector9.x < 0f)
 				{
 					keyPanDelta.x = Mathf.Min(0f, keyPanDelta.x);
 				}
-				if (vector6.x > 0f)
+				if (vector9.x > 0f)
 				{
 					keyPanDelta.x = Mathf.Max(0f, keyPanDelta.x);
 				}
-				if (vector6.y < 0f)
+				if (vector9.y < 0f)
 				{
 					keyPanDelta.y = Mathf.Min(0f, keyPanDelta.y);
 				}
-				if (vector6.y > 0f)
+				if (vector9.y > 0f)
 				{
 					keyPanDelta.y = Mathf.Max(0f, keyPanDelta.y);
 				}
@@ -251,13 +251,13 @@ public class ResearchScreen : KModalScreen
 		}
 		if (zoomingToTarget)
 		{
-			vector3 = Vector2.Lerp(vector3, forceTargetPosition, Time.unscaledDeltaTime * 4f);
-			if (Vector3.Distance(vector3, forceTargetPosition) < 1f || isDragging || panLeft || panRight || panUp || panDown)
+			vector5 = Vector2.Lerp(vector5, forceTargetPosition, Time.unscaledDeltaTime * 4f);
+			if (Vector3.Distance(vector5, forceTargetPosition) < 1f || isDragging || panLeft || panRight || panUp || panDown)
 			{
 				zoomingToTarget = false;
 			}
 		}
-		component.anchoredPosition = vector3;
+		component.anchoredPosition = vector5;
 	}
 
 	protected override void OnSpawn()
@@ -284,20 +284,20 @@ public class ResearchScreen : KModalScreen
 		resources2.Sort((TechTreeTitle x, TechTreeTitle y) => y.center.y.CompareTo(x.center.y));
 		float x2 = 0f;
 		float y2 = 125f;
-		Vector2 b = new Vector2(x2, y2);
+		Vector2 vector = new Vector2(x2, y2);
 		for (int i = 0; i < resources2.Count; i++)
 		{
 			ResearchTreeTitle researchTreeTitle = Util.KInstantiateUI<ResearchTreeTitle>(researchTreeTitlePrefab.gameObject, treeTitles);
 			TechTreeTitle techTreeTitle = resources2[i];
 			researchTreeTitle.name = techTreeTitle.Name + " Title";
-			Vector3 v = techTreeTitle.center + b;
-			researchTreeTitle.transform.rectTransform().anchoredPosition = v;
+			Vector3 vector2 = techTreeTitle.center + vector;
+			researchTreeTitle.transform.rectTransform().anchoredPosition = vector2;
 			float height = techTreeTitle.height;
 			if (i + 1 < resources2.Count)
 			{
 				TechTreeTitle techTreeTitle2 = resources2[i + 1];
-				Vector3 vector = techTreeTitle2.center + b;
-				height += v.y - (vector.y + techTreeTitle2.height);
+				Vector3 vector3 = techTreeTitle2.center + vector;
+				height += vector2.y - (vector3.y + techTreeTitle2.height);
 			}
 			else
 			{
@@ -310,14 +310,14 @@ public class ResearchScreen : KModalScreen
 		List<Vector2> list = new List<Vector2>();
 		float x3 = 0f;
 		float y3 = 0f;
-		Vector2 b2 = new Vector2(x3, y3);
+		Vector2 vector4 = new Vector2(x3, y3);
 		for (int j = 0; j < resources.Count; j++)
 		{
 			ResearchEntry researchEntry = Util.KInstantiateUI<ResearchEntry>(entryPrefab.gameObject, scrollContent);
 			Tech tech = resources[j];
 			researchEntry.name = tech.Name + " Panel";
-			Vector3 v2 = tech.center + b2;
-			researchEntry.transform.rectTransform().anchoredPosition = v2;
+			Vector3 vector5 = tech.center + vector4;
+			researchEntry.transform.rectTransform().anchoredPosition = vector5;
 			researchEntry.transform.rectTransform().sizeDelta = new Vector2(tech.width, tech.height);
 			entryMap.Add(tech, researchEntry);
 			if (tech.edges.Count <= 0)

@@ -159,14 +159,8 @@ public class KleiAccount : ThreadedHttps<KleiAccount>
 				"SteamTicket",
 				EncodeToAsciiHEX(ticket)
 			},
-			{
-				"Game",
-				CLIENT_KEY
-			},
-			{
-				"NoEmail",
-				true
-			}
+			{ "Game", CLIENT_KEY },
+			{ "NoEmail", true }
 		};
 	}
 }

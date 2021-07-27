@@ -30,39 +30,21 @@ namespace KMod
 
 		public class PackagedModInfo
 		{
-			public string supportedContent
-			{
-				get;
-				set;
-			}
+			public string supportedContent { get; set; }
 
 			[Obsolete("Use minimumSupportedBuild instead!")]
-			public int lastWorkingBuild
-			{
-				get;
-				set;
-			}
+			public int lastWorkingBuild { get; set; }
 
-			public int minimumSupportedBuild
-			{
-				get;
-				set;
-			}
+			public int minimumSupportedBuild { get; set; }
 
-			public int APIVersion
-			{
-				get;
-				set;
-			}
+			public int APIVersion { get; set; }
 
-			public string version
-			{
-				get;
-				set;
-			}
+			public string version { get; set; }
 		}
 
-		public const int MOD_API_VERSION_OLD = 0;
+		public const int MOD_API_VERSION_NONE = 0;
+
+		public const int MOD_API_VERSION_HARMONY1 = 1;
 
 		public const int MOD_API_VERSION_HARMONY2 = 2;
 
@@ -112,59 +94,26 @@ namespace KMod
 
 		public const int MAX_CRASH_COUNT = 3;
 
-		private static readonly List<string> PREVIEW_FILENAMES = new List<string>
-		{
-			"preview.png",
-			"Preview.png",
-			"PREVIEW.PNG"
-		};
+		private static readonly List<string> PREVIEW_FILENAMES = new List<string> { "preview.png", "Preview.png", "PREVIEW.PNG" };
 
-		public Content available_content
-		{
-			get;
-			private set;
-		}
+		public Content available_content { get; private set; }
 
 		[JsonProperty]
-		public string staticID
-		{
-			get;
-			private set;
-		}
+		public string staticID { get; private set; }
 
-		public LocString manage_tooltip
-		{
-			get;
-			private set;
-		}
+		public LocString manage_tooltip { get; private set; }
 
-		public System.Action on_managed
-		{
-			get;
-			private set;
-		}
+		public System.Action on_managed { get; private set; }
 
 		public bool is_managed => manage_tooltip != null;
 
 		public string title => label.title;
 
-		public string description
-		{
-			get;
-			private set;
-		}
+		public string description { get; private set; }
 
-		public Content loaded_content
-		{
-			get;
-			private set;
-		}
+		public Content loaded_content { get; private set; }
 
-		public bool DevModCrashTriggered
-		{
-			get;
-			private set;
-		}
+		public bool DevModCrashTriggered { get; private set; }
 
 		public string ContentPath => Path.Combine(label.install_path, relative_root);
 
@@ -268,7 +217,7 @@ namespace KMod
 				Debug.LogWarning($"{label}: File source does not appear to be valid, skipping. ({label.install_path})");
 				return;
 			}
-			KModHeader header = KModUtil.GetHeader(file_source, label.defaultStaticID, label.title, description);
+			KModHeader header = KModUtil.GetHeader(file_source, label.defaultStaticID, label.title, description, IsDev);
 			if (label.title != header.title)
 			{
 				Debug.Log("\t" + label.title + " has a mod.yaml with the title `" + header.title + "`, using that from now on.");
@@ -380,8 +329,9 @@ namespace KMod
 				}
 			}
 			list2 = list2.Where((ArchivedVersion v) => DoesModSupportCurrentContent(v.info)).ToList();
+			list2 = list2.Where((ArchivedVersion v) => v.info.APIVersion == 2 || v.info.APIVersion == 0).ToList();
 			ArchivedVersion archivedVersion2 = (from v in list2
-				where (long)v.info.minimumSupportedBuild <= 471618L
+				where (long)v.info.minimumSupportedBuild <= 472345L
 				orderby v.info.minimumSupportedBuild descending
 				select v).FirstOrDefault();
 			if (archivedVersion2 == null)
@@ -416,7 +366,11 @@ namespace KMod
 				ModDevLogError(string.Format("\t{0}: Failed to read {1} in folder '{2}', skipping", label, "mod_info.yaml", text));
 				return null;
 			}
-			PackagedModInfo packagedModInfo = YamlIO.Parse<PackagedModInfo>(text2, default(FileHandle));
+			YamlIO.ErrorHandler handle_error = delegate(YamlIO.Error e, bool force_warning)
+			{
+				YamlIO.LogError(e, !IsDev);
+			};
+			PackagedModInfo packagedModInfo = YamlIO.Parse<PackagedModInfo>(text2, default(FileHandle), handle_error);
 			if (packagedModInfo == null)
 			{
 				ModDevLogError(string.Format("\t{0}: Failed to parse {1} in folder '{2}', text is {3}", label, "mod_info.yaml", text, text2));

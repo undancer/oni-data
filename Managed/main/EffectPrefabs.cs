@@ -14,11 +14,7 @@ public class EffectPrefabs : MonoBehaviour
 
 	public GameObject OpenTemporalTearBeam;
 
-	public static EffectPrefabs Instance
-	{
-		get;
-		private set;
-	}
+	public static EffectPrefabs Instance { get; private set; }
 
 	private void Awake()
 	{

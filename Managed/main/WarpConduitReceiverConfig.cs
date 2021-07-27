@@ -47,23 +47,10 @@ public class WarpConduitReceiverConfig : IBuildingConfig
 		warpConduitReceiver.solidPortInfo = solidOutputPort;
 		Activatable activatable = go.AddOrGet<Activatable>();
 		activatable.synchronizeAnims = true;
-		activatable.workAnims = new HashedString[2]
-		{
-			"touchpanel_interact_pre",
-			"touchpanel_interact_loop"
-		};
-		activatable.workingPstComplete = new HashedString[1]
-		{
-			"touchpanel_interact_pst"
-		};
-		activatable.workingPstFailed = new HashedString[1]
-		{
-			"touchpanel_interact_pst"
-		};
-		activatable.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_warp_conduit_receiver_kanim")
-		};
+		activatable.workAnims = new HashedString[2] { "touchpanel_interact_pre", "touchpanel_interact_loop" };
+		activatable.workingPstComplete = new HashedString[1] { "touchpanel_interact_pst" };
+		activatable.workingPstFailed = new HashedString[1] { "touchpanel_interact_pst" };
+		activatable.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_warp_conduit_receiver_kanim") };
 		activatable.SetWorkTime(30f);
 		go.AddComponent<ConduitSecondaryOutput>();
 		go.GetComponent<KPrefabID>().AddTag(GameTags.Gravitas);

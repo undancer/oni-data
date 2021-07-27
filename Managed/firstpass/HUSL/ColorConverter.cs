@@ -9,46 +9,16 @@ namespace HUSL
 	{
 		protected static double[][] M = new double[3][]
 		{
-			new double[3]
-			{
-				3.240969941904521,
-				-1.537383177570093,
-				-0.498610760293
-			},
-			new double[3]
-			{
-				-0.96924363628087,
-				1.87596750150772,
-				0.041555057407175
-			},
-			new double[3]
-			{
-				0.055630079696993,
-				-0.20397695888897,
-				1.056971514242878
-			}
+			new double[3] { 3.240969941904521, -1.537383177570093, -0.498610760293 },
+			new double[3] { -0.96924363628087, 1.87596750150772, 0.041555057407175 },
+			new double[3] { 0.055630079696993, -0.20397695888897, 1.056971514242878 }
 		};
 
 		protected static double[][] MInv = new double[3][]
 		{
-			new double[3]
-			{
-				0.41239079926595,
-				0.35758433938387,
-				0.18048078840183
-			},
-			new double[3]
-			{
-				0.21263900587151,
-				0.71516867876775,
-				0.072192315360733
-			},
-			new double[3]
-			{
-				0.019330818715591,
-				0.11919477979462,
-				0.95053215224966
-			}
+			new double[3] { 0.41239079926595, 0.35758433938387, 0.18048078840183 },
+			new double[3] { 0.21263900587151, 0.71516867876775, 0.072192315360733 },
+			new double[3] { 0.019330818715591, 0.11919477979462, 0.95053215224966 }
 		};
 
 		protected static double RefX = 0.95045592705167;
@@ -114,11 +84,7 @@ namespace HUSL
 			{
 				double num2 = bounds[i][0];
 				double num3 = bounds[i][1];
-				double num4 = IntersectLineLine(new double[2]
-				{
-					num2,
-					num3
-				}, new double[2]
+				double num4 = IntersectLineLine(new double[2] { num2, num3 }, new double[2]
 				{
 					-1.0 / num2,
 					0.0
@@ -262,12 +228,7 @@ namespace HUSL
 			}
 			double num7 = 13.0 * num6 * (num4 - RefU);
 			double num8 = 13.0 * num6 * (num5 - RefV);
-			return new double[3]
-			{
-				num6,
-				num7,
-				num8
-			};
+			return new double[3] { num6, num7, num8 };
 		}
 
 		public static IList<double> LUVToXYZ(IList<double> tuple)
@@ -284,12 +245,7 @@ namespace HUSL
 			double num6 = LToY(num);
 			double num7 = 0.0 - 9.0 * num6 * num4 / ((num4 - 4.0) * num5 - num4 * num5);
 			double num8 = (9.0 * num6 - 15.0 * num5 * num6 - num5 * num7) / (3.0 * num5);
-			return new double[3]
-			{
-				num7,
-				num6,
-				num8
-			};
+			return new double[3] { num7, num6, num8 };
 		}
 
 		public static IList<double> LUVToLCH(IList<double> tuple)
@@ -303,12 +259,7 @@ namespace HUSL
 			{
 				num4 = 360.0 + num4;
 			}
-			return new double[3]
-			{
-				num,
-				num3,
-				num4
-			};
+			return new double[3] { num, num3, num4 };
 		}
 
 		public static IList<double> LCHToLUV(IList<double> tuple)
@@ -318,12 +269,7 @@ namespace HUSL
 			double num3 = tuple[2] / 360.0 * 2.0 * Math.PI;
 			double num4 = Math.Cos(num3) * num2;
 			double num5 = Math.Sin(num3) * num2;
-			return new double[3]
-			{
-				num,
-				num4,
-				num5
-			};
+			return new double[3] { num, num4, num5 };
 		}
 
 		public static IList<double> HUSLToLCH(IList<double> tuple)
@@ -336,26 +282,11 @@ namespace HUSL
 				if (!(num3 < 1E-08))
 				{
 					double num4 = MaxChromaForLH(num3, num) / 100.0 * num2;
-					return new double[3]
-					{
-						num3,
-						num4,
-						num
-					};
+					return new double[3] { num3, num4, num };
 				}
-				return new double[3]
-				{
-					0.0,
-					0.0,
-					num
-				};
+				return new double[3] { 0.0, 0.0, num };
 			}
-			return new double[3]
-			{
-				100.0,
-				0.0,
-				num
-			};
+			return new double[3] { 100.0, 0.0, num };
 		}
 
 		public static IList<double> LCHToHUSL(IList<double> tuple)
@@ -369,26 +300,11 @@ namespace HUSL
 				{
 					double num4 = MaxChromaForLH(num, num3);
 					double num5 = num2 / num4 * 100.0;
-					return new double[3]
-					{
-						num3,
-						num5,
-						num
-					};
+					return new double[3] { num3, num5, num };
 				}
-				return new double[3]
-				{
-					num3,
-					0.0,
-					0.0
-				};
+				return new double[3] { num3, 0.0, 0.0 };
 			}
-			return new double[3]
-			{
-				num3,
-				0.0,
-				100.0
-			};
+			return new double[3] { num3, 0.0, 100.0 };
 		}
 
 		public static IList<double> HUSLPToLCH(IList<double> tuple)
@@ -401,26 +317,11 @@ namespace HUSL
 				if (!(num3 < 1E-08))
 				{
 					double num4 = MaxSafeChromaForL(num3) / 100.0 * num2;
-					return new double[3]
-					{
-						num3,
-						num4,
-						num
-					};
+					return new double[3] { num3, num4, num };
 				}
-				return new double[3]
-				{
-					0.0,
-					0.0,
-					num
-				};
+				return new double[3] { 0.0, 0.0, num };
 			}
-			return new double[3]
-			{
-				100.0,
-				0.0,
-				num
-			};
+			return new double[3] { 100.0, 0.0, num };
 		}
 
 		public static IList<double> LCHToHUSLP(IList<double> tuple)
@@ -434,26 +335,11 @@ namespace HUSL
 				{
 					double num4 = MaxSafeChromaForL(num);
 					double num5 = num2 / num4 * 100.0;
-					return new double[3]
-					{
-						num3,
-						num5,
-						num
-					};
+					return new double[3] { num3, num5, num };
 				}
-				return new double[3]
-				{
-					num3,
-					0.0,
-					0.0
-				};
+				return new double[3] { num3, 0.0, 0.0 };
 			}
-			return new double[3]
-			{
-				num3,
-				0.0,
-				100.0
-			};
+			return new double[3] { num3, 0.0, 100.0 };
 		}
 
 		public static string RGBToHex(IList<double> tuple)
@@ -524,23 +410,13 @@ namespace HUSL
 
 		public static Color HUSLToColor(float h, float s, float l)
 		{
-			IList<double> list = HUSLToRGB(new List<double>(new double[3]
-			{
-				h,
-				s,
-				l
-			}));
+			IList<double> list = HUSLToRGB(new List<double>(new double[3] { h, s, l }));
 			return new Color((float)list[0], (float)list[1], (float)list[2]);
 		}
 
 		public static Color HUSLPToColor(float h, float s, float l)
 		{
-			IList<double> list = HUSLPToRGB(new List<double>(new double[3]
-			{
-				h,
-				s,
-				l
-			}));
+			IList<double> list = HUSLPToRGB(new List<double>(new double[3] { h, s, l }));
 			return new Color((float)list[0], (float)list[1], (float)list[2]);
 		}
 	}

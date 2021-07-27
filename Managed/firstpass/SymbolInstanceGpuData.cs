@@ -41,11 +41,7 @@ public class SymbolInstanceGpuData
 
 	private SymbolInstance[] symbolInstances => symbolInstancesConverter.symbolInstances;
 
-	public int version
-	{
-		get;
-		private set;
-	}
+	public int version { get; private set; }
 
 	public SymbolInstanceGpuData(int symbol_count)
 	{

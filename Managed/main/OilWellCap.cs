@@ -215,10 +215,7 @@ public class OilWellCap : Workable, ISingleSliderControl, ISliderControl, IEleme
 		accumulator = Game.Instance.accumulators.Add("pressuregas", this);
 		showProgressBar = false;
 		SetWorkTime(float.PositiveInfinity);
-		overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_oil_cap_kanim")
-		};
+		overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_oil_cap_kanim") };
 		workingStatusItem = Db.Get().BuildingStatusItems.ReleasingPressure;
 		attributeConverter = Db.Get().AttributeConverters.MachinerySpeed;
 		attributeExperienceMultiplier = DUPLICANTSTATS.ATTRIBUTE_LEVELING.PART_DAY_EXPERIENCE;

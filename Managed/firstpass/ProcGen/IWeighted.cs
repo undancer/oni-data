@@ -2,10 +2,6 @@ namespace ProcGen
 {
 	public interface IWeighted
 	{
-		float weight
-		{
-			get;
-			set;
-		}
+		float weight { get; set; }
 	}
 }

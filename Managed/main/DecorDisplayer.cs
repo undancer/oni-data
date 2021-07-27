@@ -19,19 +19,19 @@ public class DecorDisplayer : StandardAmountDisplayer
 
 	public override string GetTooltip(Amount master, AmountInstance instance)
 	{
-		string str = string.Format(master.description, formatter.GetFormattedValue(instance.value));
+		string text = string.Format(master.description, formatter.GetFormattedValue(instance.value));
 		int cell = Grid.PosToCell(instance.gameObject);
 		if (Grid.IsValidCell(cell))
 		{
-			str += string.Format(DUPLICANTS.STATS.DECOR.TOOLTIP_CURRENT, GameUtil.GetDecorAtCell(cell));
+			text += string.Format(DUPLICANTS.STATS.DECOR.TOOLTIP_CURRENT, GameUtil.GetDecorAtCell(cell));
 		}
-		str += "\n";
+		text += "\n";
 		DecorMonitor.Instance sMI = instance.gameObject.GetSMI<DecorMonitor.Instance>();
 		if (sMI != null)
 		{
-			str += string.Format(DUPLICANTS.STATS.DECOR.TOOLTIP_AVERAGE_TODAY, formatter.GetFormattedValue(sMI.GetTodaysAverageDecor()));
-			str += string.Format(DUPLICANTS.STATS.DECOR.TOOLTIP_AVERAGE_YESTERDAY, formatter.GetFormattedValue(sMI.GetYesterdaysAverageDecor()));
+			text += string.Format(DUPLICANTS.STATS.DECOR.TOOLTIP_AVERAGE_TODAY, formatter.GetFormattedValue(sMI.GetTodaysAverageDecor()));
+			text += string.Format(DUPLICANTS.STATS.DECOR.TOOLTIP_AVERAGE_YESTERDAY, formatter.GetFormattedValue(sMI.GetYesterdaysAverageDecor()));
 		}
-		return str;
+		return text;
 	}
 }

@@ -31,13 +31,7 @@ public class GameClock : KMonoBehaviour, ISaveLoadable, ISim33ms, IRender1000ms
 
 	public static readonly string NewCycleKey = "NewCycle";
 
-	private Dictionary<string, object> newDayMetric = new Dictionary<string, object>
-	{
-		{
-			NewCycleKey,
-			null
-		}
-	};
+	private Dictionary<string, object> newDayMetric = new Dictionary<string, object> { { NewCycleKey, null } };
 
 	public static void DestroyInstance()
 	{
@@ -85,6 +79,10 @@ public class GameClock : KMonoBehaviour, ISaveLoadable, ISim33ms, IRender1000ms
 			cycle++;
 			timeSinceStartOfCycle -= 600f;
 			Trigger(631075836);
+			foreach (WorldContainer worldContainer in ClusterManager.Instance.WorldContainers)
+			{
+				worldContainer.Trigger(631075836);
+			}
 			flag = true;
 		}
 		if (!isNight && IsNighttime())

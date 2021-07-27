@@ -24,17 +24,10 @@ public class LuxuryBedConfig : IBuildingConfig
 	{
 		go.GetComponent<KAnimControllerBase>().initialAnim = "off";
 		Bed bed = go.AddOrGet<Bed>();
-		bed.effects = new string[2]
-		{
-			"LuxuryBedStamina",
-			"BedHealth"
-		};
+		bed.effects = new string[2] { "LuxuryBedStamina", "BedHealth" };
 		bed.workLayer = Grid.SceneLayer.BuildingFront;
 		Sleepable sleepable = go.AddOrGet<Sleepable>();
-		sleepable.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_sleep_bed_kanim")
-		};
+		sleepable.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_sleep_bed_kanim") };
 		sleepable.workLayer = Grid.SceneLayer.BuildingFront;
 		go.AddOrGet<Ownable>().slotID = Db.Get().AssignableSlots.Bed.Id;
 	}

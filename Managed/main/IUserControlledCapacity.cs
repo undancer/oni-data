@@ -1,33 +1,14 @@
 public interface IUserControlledCapacity
 {
-	float UserMaxCapacity
-	{
-		get;
-		set;
-	}
+	float UserMaxCapacity { get; set; }
 
-	float AmountStored
-	{
-		get;
-	}
+	float AmountStored { get; }
 
-	float MinCapacity
-	{
-		get;
-	}
+	float MinCapacity { get; }
 
-	float MaxCapacity
-	{
-		get;
-	}
+	float MaxCapacity { get; }
 
-	bool WholeValues
-	{
-		get;
-	}
+	bool WholeValues { get; }
 
-	LocString CapacityUnits
-	{
-		get;
-	}
+	LocString CapacityUnits { get; }
 }

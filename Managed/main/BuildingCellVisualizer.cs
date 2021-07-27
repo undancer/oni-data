@@ -305,9 +305,9 @@ public class BuildingCellVisualizer : KMonoBehaviour
 					int powerOutputCell = building.GetPowerOutputCell();
 					int circuitID2 = Game.Instance.circuitManager.GetCircuitID(powerOutputCell);
 					Color color = (building.Def.UseWhitePowerOutputConnectorColour ? Color.white : resources.electricityOutputColor);
-					Color32 c = ((component != null && !component.IsEnabled) ? Color.gray : color);
+					Color32 color2 = ((component != null && !component.IsEnabled) ? Color.gray : color);
 					Sprite icon_img2 = ((!flag && circuitID2 != 65535) ? resources.electricityConnectedIcon : resources.electricityInputIcon);
-					DrawUtilityIcon(powerOutputCell, icon_img2, ref outputVisualizer, c, GetWireColor(powerOutputCell), 1f);
+					DrawUtilityIcon(powerOutputCell, icon_img2, ref outputVisualizer, color2, GetWireColor(powerOutputCell), 1f);
 				}
 				return;
 			}
@@ -316,8 +316,8 @@ public class BuildingCellVisualizer : KMonoBehaviour
 			if (component2 != null)
 			{
 				int cell = Grid.PosToCell(base.transform.GetPosition());
-				Color32 c2 = (component2.IsHandlerOn() ? resources.switchColor : resources.switchOffColor);
-				DrawUtilityIcon(cell, resources.switchIcon, ref outputVisualizer, c2, Color.white, 1f);
+				Color32 color3 = (component2.IsHandlerOn() ? resources.switchColor : resources.switchOffColor);
+				DrawUtilityIcon(cell, resources.switchIcon, ref outputVisualizer, color3, Color.white, 1f);
 				flag2 = false;
 			}
 			else

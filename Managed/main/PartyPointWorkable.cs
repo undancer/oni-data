@@ -29,10 +29,7 @@ public class PartyPointWorkable : Workable, IWorkerPrioritizable
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_generic_convo_kanim")
-		};
+		overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_generic_convo_kanim") };
 		workAnimPlayMode = KAnim.PlayMode.Loop;
 		faceTargetWhenWorking = true;
 		workerStatusItem = Db.Get().DuplicantStatusItems.Socializing;
@@ -51,37 +48,16 @@ public class PartyPointWorkable : Workable, IWorkerPrioritizable
 		switch (activity)
 		{
 		case ActivityType.Talk:
-			workAnims = new HashedString[1]
-			{
-				"idle"
-			};
-			workerOverrideAnims = new KAnimFile[1][]
-			{
-				new KAnimFile[1]
-				{
-					Assets.GetAnim("anim_generic_convo_kanim")
-				}
-			};
+			workAnims = new HashedString[1] { "idle" };
+			workerOverrideAnims = new KAnimFile[1][] { new KAnimFile[1] { Assets.GetAnim("anim_generic_convo_kanim") } };
 			break;
 		case ActivityType.Dance:
-			workAnims = new HashedString[1]
-			{
-				"working_loop"
-			};
+			workAnims = new HashedString[1] { "working_loop" };
 			workerOverrideAnims = new KAnimFile[3][]
 			{
-				new KAnimFile[1]
-				{
-					Assets.GetAnim("anim_interacts_phonobox_danceone_kanim")
-				},
-				new KAnimFile[1]
-				{
-					Assets.GetAnim("anim_interacts_phonobox_dancetwo_kanim")
-				},
-				new KAnimFile[1]
-				{
-					Assets.GetAnim("anim_interacts_phonobox_dancethree_kanim")
-				}
+				new KAnimFile[1] { Assets.GetAnim("anim_interacts_phonobox_danceone_kanim") },
+				new KAnimFile[1] { Assets.GetAnim("anim_interacts_phonobox_dancetwo_kanim") },
+				new KAnimFile[1] { Assets.GetAnim("anim_interacts_phonobox_dancethree_kanim") }
 			};
 			break;
 		}

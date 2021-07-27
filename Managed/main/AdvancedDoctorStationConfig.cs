@@ -36,20 +36,14 @@ public class AdvancedDoctorStationConfig : IBuildingConfig
 		manualDeliveryKG.choreTypeIDHash = Db.Get().ChoreTypes.DoctorFetch.IdHash;
 		manualDeliveryKG.operationalRequirement = FetchOrder2.OperationalRequirement.Functional;
 		DoctorStation doctorStation = go.AddOrGet<DoctorStation>();
-		doctorStation.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_medical_bed_kanim")
-		};
+		doctorStation.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_medical_bed_kanim") };
 		doctorStation.workLayer = Grid.SceneLayer.BuildingFront;
 		RoomTracker roomTracker = go.AddOrGet<RoomTracker>();
 		roomTracker.requiredRoomType = Db.Get().RoomTypes.Hospital.Id;
 		roomTracker.requirement = RoomTracker.Requirement.CustomRecommended;
 		roomTracker.customStatusItemID = Db.Get().BuildingStatusItems.ClinicOutsideHospital.Id;
 		DoctorStationDoctorWorkable doctorStationDoctorWorkable = go.AddOrGet<DoctorStationDoctorWorkable>();
-		doctorStationDoctorWorkable.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_medical_bed_doctor_kanim")
-		};
+		doctorStationDoctorWorkable.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_medical_bed_doctor_kanim") };
 		doctorStationDoctorWorkable.SetWorkTime(60f);
 		doctorStationDoctorWorkable.requiredSkillPerk = Db.Get().SkillPerks.CanAdvancedMedicine.Id;
 	}

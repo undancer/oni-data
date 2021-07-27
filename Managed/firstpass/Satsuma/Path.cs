@@ -16,23 +16,11 @@ namespace Satsuma
 
 		private int edgeCount;
 
-		public IGraph Graph
-		{
-			get;
-			private set;
-		}
+		public IGraph Graph { get; private set; }
 
-		public Node FirstNode
-		{
-			get;
-			private set;
-		}
+		public Node FirstNode { get; private set; }
 
-		public Node LastNode
-		{
-			get;
-			private set;
-		}
+		public Node LastNode { get; private set; }
 
 		public Path(IGraph graph)
 		{

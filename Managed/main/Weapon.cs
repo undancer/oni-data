@@ -62,10 +62,7 @@ public class Weapon : KMonoBehaviour
 
 	public void AttackTarget(GameObject target)
 	{
-		AttackTargets(new GameObject[1]
-		{
-			target
-		});
+		AttackTargets(new GameObject[1] { target });
 	}
 
 	public void AttackTargets(GameObject[] targets)

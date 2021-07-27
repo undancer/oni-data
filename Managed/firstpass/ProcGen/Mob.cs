@@ -22,30 +22,14 @@ namespace ProcGen
 			AnyFloor
 		}
 
-		public string prefabName
-		{
-			get;
-			private set;
-		}
+		public string prefabName { get; private set; }
 
-		public int width
-		{
-			get;
-			private set;
-		}
+		public int width { get; private set; }
 
-		public int height
-		{
-			get;
-			private set;
-		}
+		public int height { get; private set; }
 
 		[StringEnumConverter]
-		public Location location
-		{
-			get;
-			private set;
-		}
+		public Location location { get; private set; }
 
 		public Mob()
 		{

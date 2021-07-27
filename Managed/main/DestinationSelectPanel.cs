@@ -234,10 +234,7 @@ public class DestinationSelectPanel : KMonoBehaviour
 				if (anim != null)
 				{
 					componentInChildren.SetVisiblity(is_visible: true);
-					componentInChildren.SwapAnims(new KAnimFile[1]
-					{
-						anim
-					});
+					componentInChildren.SwapAnims(new KAnimFile[1] { anim });
 					componentInChildren.initialMode = KAnim.PlayMode.Loop;
 					componentInChildren.initialAnim = "idle_loop";
 					componentInChildren.gameObject.SetActive(value: true);

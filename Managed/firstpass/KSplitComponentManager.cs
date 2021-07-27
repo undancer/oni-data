@@ -25,11 +25,7 @@ public abstract class KSplitComponentManager<Header, Payload> : KSplitCompactedV
 
 	private List<CleanupInfo> shadowCleanupList = new List<CleanupInfo>();
 
-	public string Name
-	{
-		get;
-		set;
-	}
+	public string Name { get; set; }
 
 	public KSplitComponentManager()
 		: base(0)

@@ -26,95 +26,35 @@ namespace ProcGen
 
 		public string filePath;
 
-		public List<WorldPlacement> worldPlacements
-		{
-			get;
-			set;
-		}
+		public List<WorldPlacement> worldPlacements { get; set; }
 
-		public List<SpaceMapPOIPlacement> poiPlacements
-		{
-			get;
-			set;
-		}
+		public List<SpaceMapPOIPlacement> poiPlacements { get; set; }
 
-		public string name
-		{
-			get;
-			set;
-		}
+		public string name { get; set; }
 
-		public string description
-		{
-			get;
-			set;
-		}
+		public string description { get; set; }
 
-		public string requiredDlcId
-		{
-			get;
-			set;
-		}
+		public string requiredDlcId { get; set; }
 
-		public string forbiddenDlcId
-		{
-			get;
-			set;
-		}
+		public string forbiddenDlcId { get; set; }
 
-		public int difficulty
-		{
-			get;
-			set;
-		}
+		public int difficulty { get; set; }
 
-		public Skip skip
-		{
-			get;
-			private set;
-		}
+		public Skip skip { get; private set; }
 
-		public int clusterCategory
-		{
-			get;
-			private set;
-		}
+		public int clusterCategory { get; private set; }
 
-		public int startWorldIndex
-		{
-			get;
-			set;
-		}
+		public int startWorldIndex { get; set; }
 
-		public int width
-		{
-			get;
-			set;
-		}
+		public int width { get; set; }
 
-		public int height
-		{
-			get;
-			set;
-		}
+		public int height { get; set; }
 
-		public int numRings
-		{
-			get;
-			set;
-		}
+		public int numRings { get; set; }
 
-		public int menuOrder
-		{
-			get;
-			set;
-		}
+		public int menuOrder { get; set; }
 
-		public string coordinatePrefix
-		{
-			get;
-			private set;
-		}
+		public string coordinatePrefix { get; private set; }
 
 		public ClusterLayout()
 		{

@@ -32,10 +32,7 @@ public class EntombVulnerable : KMonoBehaviour, IWiltCause
 
 	public string WiltStateString => Db.Get().CreatureStatusItems.Entombed.resolveStringCallback(CREATURES.STATUSITEMS.ENTOMBED.LINE_ITEM, base.gameObject);
 
-	public WiltCondition.Condition[] Conditions => new WiltCondition.Condition[1]
-	{
-		WiltCondition.Condition.Entombed
-	};
+	public WiltCondition.Condition[] Conditions => new WiltCondition.Condition[1] { WiltCondition.Condition.Entombed };
 
 	protected override void OnSpawn()
 	{

@@ -35,10 +35,7 @@ public class OuthouseConfig : IBuildingConfig
 		toilet.diseaseId = "FoodPoisoning";
 		toilet.diseasePerFlush = 100000;
 		toilet.diseaseOnDupePerFlush = 100000;
-		KAnimFile[] overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_outhouse_kanim")
-		};
+		KAnimFile[] overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_outhouse_kanim") };
 		ToiletWorkableUse toiletWorkableUse = go.AddOrGet<ToiletWorkableUse>();
 		toiletWorkableUse.overrideAnims = overrideAnims;
 		toiletWorkableUse.workLayer = Grid.SceneLayer.BuildingFront;

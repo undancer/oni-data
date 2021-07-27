@@ -475,10 +475,7 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 
 	private void CreateFetchChore()
 	{
-		fetchChore = new FetchChore(Db.Get().ChoreTypes.EquipmentFetch, GetComponent<Storage>(), 1f, OutfitTags, null, new Tag[1]
-		{
-			GameTags.Assigned
-		}, null, run_until_complete: true, null, null, null, FetchOrder2.OperationalRequirement.None);
+		fetchChore = new FetchChore(Db.Get().ChoreTypes.EquipmentFetch, GetComponent<Storage>(), 1f, OutfitTags, null, new Tag[1] { GameTags.Assigned }, null, run_until_complete: true, null, null, null, FetchOrder2.OperationalRequirement.None);
 		fetchChore.allowMultifetch = false;
 	}
 

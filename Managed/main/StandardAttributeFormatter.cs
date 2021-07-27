@@ -7,11 +7,7 @@ public class StandardAttributeFormatter : IAttributeFormatter
 {
 	public GameUtil.UnitClass unitClass;
 
-	public GameUtil.TimeSlice DeltaTimeSlice
-	{
-		get;
-		set;
-	}
+	public GameUtil.TimeSlice DeltaTimeSlice { get; set; }
 
 	public StandardAttributeFormatter(GameUtil.UnitClass unitClass, GameUtil.TimeSlice deltaTimeSlice)
 	{

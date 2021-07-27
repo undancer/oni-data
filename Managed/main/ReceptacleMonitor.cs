@@ -37,10 +37,7 @@ public class ReceptacleMonitor : StateMachineComponent<ReceptacleMonitor.StatesI
 
 	public bool Replanted => replanted;
 
-	WiltCondition.Condition[] IWiltCause.Conditions => new WiltCondition.Condition[1]
-	{
-		WiltCondition.Condition.Receptacle
-	};
+	WiltCondition.Condition[] IWiltCause.Conditions => new WiltCondition.Condition[1] { WiltCondition.Condition.Receptacle };
 
 	public string WiltStateString
 	{

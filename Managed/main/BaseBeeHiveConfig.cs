@@ -31,10 +31,7 @@ public class BaseBeeHiveConfig : IEntityConfig
 			BeeHive.Def def = gameObject.AddOrGetDef<BeeHive.Def>();
 			def.beePrefabID = "Bee";
 			def.larvaPrefabID = "BeeBaby";
-			KAnimFile[] overrideAnims = new KAnimFile[1]
-			{
-				Assets.GetAnim("anim_interacts_beehive_kanim")
-			};
+			KAnimFile[] overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_beehive_kanim") };
 			HiveWorkableEmpty hiveWorkableEmpty = gameObject.AddOrGet<HiveWorkableEmpty>();
 			hiveWorkableEmpty.workTime = 15f;
 			hiveWorkableEmpty.overrideAnims = overrideAnims;
@@ -97,10 +94,7 @@ public class BaseBeeHiveConfig : IEntityConfig
 
 	public void OnPrefabInit(GameObject inst)
 	{
-		inst.GetComponent<OccupyArea>().objectLayers = new ObjectLayer[1]
-		{
-			ObjectLayer.Building
-		};
+		inst.GetComponent<OccupyArea>().objectLayers = new ObjectLayer[1] { ObjectLayer.Building };
 	}
 
 	public void OnSpawn(GameObject inst)

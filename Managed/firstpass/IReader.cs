@@ -1,14 +1,8 @@
 public interface IReader
 {
-	int Position
-	{
-		get;
-	}
+	int Position { get; }
 
-	bool IsFinished
-	{
-		get;
-	}
+	bool IsFinished { get; }
 
 	byte ReadByte();
 

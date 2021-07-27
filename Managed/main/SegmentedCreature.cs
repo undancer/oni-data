@@ -39,22 +39,9 @@ public class SegmentedCreature : GameStateMachine<SegmentedCreature, SegmentedCr
 
 		public int animFrameOffset;
 
-		public HashSet<HashedString> retractWhenStartingAnimNames = new HashSet<HashedString>
-		{
-			"trapped",
-			"trussed",
-			"escape",
-			"drown_pre",
-			"drown_loop",
-			"drown_pst"
-		};
+		public HashSet<HashedString> retractWhenStartingAnimNames = new HashSet<HashedString> { "trapped", "trussed", "escape", "drown_pre", "drown_loop", "drown_pst" };
 
-		public HashSet<HashedString> retractWhenEndingAnimNames = new HashSet<HashedString>
-		{
-			"floor_floor_2_0",
-			"grooming_pst",
-			"fall"
-		};
+		public HashSet<HashedString> retractWhenEndingAnimNames = new HashSet<HashedString> { "floor_floor_2_0", "grooming_pst", "fall" };
 	}
 
 	public class RectractStates : State
@@ -128,10 +115,7 @@ public class SegmentedCreature : GameStateMachine<SegmentedCreature, SegmentedCr
 					pivot = base.def.tailPivot;
 				}
 				KBatchedAnimController kBatchedAnimController = gameObject.AddOrGet<KBatchedAnimController>();
-				kBatchedAnimController.AnimFiles = new KAnimFile[1]
-				{
-					kAnimFile
-				};
+				kBatchedAnimController.AnimFiles = new KAnimFile[1] { kAnimFile };
 				kBatchedAnimController.isMovable = true;
 				kBatchedAnimController.SetSymbolVisiblity(base.smi.def.segmentTrackerSymbol, is_visible: false);
 				kBatchedAnimController.sceneLayer = value.animController.sceneLayer;
@@ -256,9 +240,9 @@ public class SegmentedCreature : GameStateMachine<SegmentedCreature, SegmentedCr
 				if (symbol.IsValid)
 				{
 					bool symbolVisible;
-					Vector3 a = animController.GetSymbolTransform(symbol, out symbolVisible).GetColumn(3);
-					a.z = zRelativeOffset;
-					return a + vector;
+					Vector3 vector2 = animController.GetSymbolTransform(symbol, out symbolVisible).GetColumn(3);
+					vector2.z = zRelativeOffset;
+					return vector2 + vector;
 				}
 				return m_transform.position + vector;
 			}

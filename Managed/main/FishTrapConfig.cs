@@ -23,10 +23,7 @@ public class FishTrapConfig : IBuildingConfig
 		storage.SetDefaultStoredItemModifiers(StoredItemModifiers);
 		storage.sendOnStoreOnSpawn = true;
 		TrapTrigger trapTrigger = go.AddOrGet<TrapTrigger>();
-		trapTrigger.trappableCreatures = new Tag[1]
-		{
-			GameTags.Creatures.Swimmer
-		};
+		trapTrigger.trappableCreatures = new Tag[1] { GameTags.Creatures.Swimmer };
 		trapTrigger.trappedOffset = new Vector2(0f, 1f);
 		go.AddOrGet<Trap>();
 	}
@@ -39,9 +36,6 @@ public class FishTrapConfig : IBuildingConfig
 			new CellOffset(0, 0)
 		};
 		def.radius = 32;
-		def.initialLures = new Tag[1]
-		{
-			GameTags.Creatures.FishTrapLure
-		};
+		def.initialLures = new Tag[1] { GameTags.Creatures.FishTrapLure };
 	}
 }

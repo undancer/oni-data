@@ -22,10 +22,7 @@ public class EspressoMachineWorkable : Workable, IWorkerPrioritizable
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_espresso_machine_kanim")
-		};
+		overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_espresso_machine_kanim") };
 		showProgressBar = true;
 		resetProgressOnStop = true;
 		synchronizeAnims = false;

@@ -21,11 +21,7 @@ public class ScheduleMinionWidget : KMonoBehaviour
 	[SerializeField]
 	private GameObject earlyBirdIcon;
 
-	public Schedulable schedulable
-	{
-		get;
-		private set;
-	}
+	public Schedulable schedulable { get; private set; }
 
 	public void ChangeAssignment(Schedule targetSchedule, Schedulable schedulable)
 	{

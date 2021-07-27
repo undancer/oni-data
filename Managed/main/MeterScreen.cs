@@ -57,11 +57,7 @@ public class MeterScreen : KScreen, IRender1000ms
 
 	private Dictionary<string, float> rationsDict;
 
-	public static MeterScreen Instance
-	{
-		get;
-		private set;
-	}
+	public static MeterScreen Instance { get; private set; }
 
 	public bool StartValuesSet => startValuesSet;
 

@@ -8,83 +8,31 @@ public class SubEntry
 
 	public Color iconColor = Color.white;
 
-	public List<ContentContainer> contentContainers
-	{
-		get;
-		set;
-	}
+	public List<ContentContainer> contentContainers { get; set; }
 
-	public string parentEntryID
-	{
-		get;
-		set;
-	}
+	public string parentEntryID { get; set; }
 
-	public string id
-	{
-		get;
-		set;
-	}
+	public string id { get; set; }
 
-	public string name
-	{
-		get;
-		set;
-	}
+	public string name { get; set; }
 
-	public string title
-	{
-		get;
-		set;
-	}
+	public string title { get; set; }
 
-	public string subtitle
-	{
-		get;
-		set;
-	}
+	public string subtitle { get; set; }
 
-	public Sprite icon
-	{
-		get;
-		set;
-	}
+	public Sprite icon { get; set; }
 
-	public int layoutPriority
-	{
-		get;
-		set;
-	}
+	public int layoutPriority { get; set; }
 
-	public bool disabled
-	{
-		get;
-		set;
-	}
+	public bool disabled { get; set; }
 
-	public string lockID
-	{
-		get;
-		set;
-	}
+	public string lockID { get; set; }
 
-	public string[] dlcIds
-	{
-		get;
-		set;
-	}
+	public string[] dlcIds { get; set; }
 
-	public string sortString
-	{
-		get;
-		set;
-	}
+	public string sortString { get; set; }
 
-	public bool showBeforeGeneratedCategoryLinks
-	{
-		get;
-		set;
-	}
+	public bool showBeforeGeneratedCategoryLinks { get; set; }
 
 	public SubEntry()
 	{

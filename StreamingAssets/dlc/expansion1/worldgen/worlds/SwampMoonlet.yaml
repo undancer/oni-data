@@ -13,6 +13,7 @@ defaultsOverrides:
   data:
     OverworldDensityMin: 18
     OverworldDensityMax: 18
+    OverworldSampleBehaviour: PoissonDisk
   startingWorldElements: [] # remove the algae check
 
 startSubworldName: expansion1::subworlds/swamp/SwampStart

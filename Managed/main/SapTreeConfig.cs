@@ -22,10 +22,7 @@ public class SapTreeConfig : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject gameObject = EntityTemplates.CreatePlacedEntity("SapTree", STRINGS.CREATURES.SPECIES.SAPTREE.NAME, STRINGS.CREATURES.SPECIES.SAPTREE.DESC, 1f, decor: POSITIVE_DECOR_EFFECT, anim: Assets.GetAnim("gravitas_sap_tree_kanim"), initialAnim: "idle", sceneLayer: Grid.SceneLayer.BuildingFront, width: 5, height: 5, noise: default(EffectorValues), element: SimHashes.Creature, additionalTags: new List<Tag>
-		{
-			GameTags.Decoration
-		});
+		GameObject gameObject = EntityTemplates.CreatePlacedEntity("SapTree", STRINGS.CREATURES.SPECIES.SAPTREE.NAME, STRINGS.CREATURES.SPECIES.SAPTREE.DESC, 1f, decor: POSITIVE_DECOR_EFFECT, anim: Assets.GetAnim("gravitas_sap_tree_kanim"), initialAnim: "idle", sceneLayer: Grid.SceneLayer.BuildingFront, width: 5, height: 5, noise: default(EffectorValues), element: SimHashes.Creature, additionalTags: new List<Tag> { GameTags.Decoration });
 		SapTree.Def def = gameObject.AddOrGetDef<SapTree.Def>();
 		def.foodSenseArea = new Vector2I(5, 1);
 		def.massEatRate = 5f;
@@ -49,10 +46,7 @@ public class SapTreeConfig : IEntityConfig
 		gameObject.AddOrGet<TemperatureVulnerable>().Configure(173.15f, 0f, 373.15f, 1023.15f);
 		gameObject.AddOrGet<EntombVulnerable>();
 		gameObject.AddOrGet<LoopingSounds>();
-		gameObject.AddOrGet<OccupyArea>().objectLayers = new ObjectLayer[1]
-		{
-			ObjectLayer.Building
-		};
+		gameObject.AddOrGet<OccupyArea>().objectLayers = new ObjectLayer[1] { ObjectLayer.Building };
 		return gameObject;
 	}
 

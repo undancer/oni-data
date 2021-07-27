@@ -33,10 +33,7 @@ public class AdvancedCureConfig : IEntityConfig
 			time = 200f,
 			description = ITEMS.PILLS.ADVANCEDCURE.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				text
-			},
+			fabricators = new List<Tag> { text },
 			sortOrder = 20,
 			requiredTech = "MedicineIV"
 		};

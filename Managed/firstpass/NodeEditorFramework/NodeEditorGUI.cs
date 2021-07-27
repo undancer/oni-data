@@ -108,8 +108,8 @@ namespace NodeEditorFramework
 			{
 			case ConnectionDrawMethod.Bezier:
 			{
-				float d = 80f;
-				RTEditorGUI.DrawBezier(startPos, endPos, startPos + startDir * d, endPos + endDir * d, col * Color.gray, null, 3f);
+				float num = 80f;
+				RTEditorGUI.DrawBezier(startPos, endPos, startPos + startDir * num, endPos + endDir * num, col * Color.gray, null, 3f);
 				break;
 			}
 			case ConnectionDrawMethod.StraightLine:

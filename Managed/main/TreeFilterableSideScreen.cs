@@ -301,10 +301,10 @@ public class TreeFilterableSideScreen : SideScreenContent
 			bool flag = target.GetComponent<CreatureDeliveryPoint>() != null;
 			foreach (TagOrderInfo item in GetTagsSortedAlphabetically(storage.storageFilters))
 			{
-				Tag tag = item.tag;
-				if (flag || DiscoveredResources.Instance.IsDiscovered(tag))
+				Tag rowTag = item.tag;
+				if (flag || DiscoveredResources.Instance.IsDiscovered(rowTag))
 				{
-					AddRow(tag);
+					AddRow(rowTag);
 				}
 			}
 			visualDirty = true;

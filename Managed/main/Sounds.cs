@@ -59,11 +59,7 @@ public class Sounds : KMonoBehaviour
 	[EventRef]
 	public string[] OreSplashSoundsMigrated;
 
-	public static Sounds Instance
-	{
-		get;
-		private set;
-	}
+	public static Sounds Instance { get; private set; }
 
 	public static void DestroyInstance()
 	{

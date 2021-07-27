@@ -14,41 +14,17 @@ namespace Satsuma
 
 		private double CapacityMultiplier;
 
-		public IGraph Graph
-		{
-			get;
-			private set;
-		}
+		public IGraph Graph { get; private set; }
 
-		public Func<Arc, double> Capacity
-		{
-			get;
-			private set;
-		}
+		public Func<Arc, double> Capacity { get; private set; }
 
-		public Node Source
-		{
-			get;
-			private set;
-		}
+		public Node Source { get; private set; }
 
-		public Node Target
-		{
-			get;
-			private set;
-		}
+		public Node Target { get; private set; }
 
-		public double FlowSize
-		{
-			get;
-			private set;
-		}
+		public double FlowSize { get; private set; }
 
-		public double Error
-		{
-			get;
-			private set;
-		}
+		public double Error { get; private set; }
 
 		public IEnumerable<KeyValuePair<Arc, double>> NonzeroArcs => flow.Where((KeyValuePair<Arc, double> kv) => kv.Value != 0.0);
 

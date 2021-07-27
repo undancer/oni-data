@@ -100,9 +100,9 @@ public class OffscreenIndicator : KMonoBehaviour
 		}
 		arrow.SetActive(value: true);
 		arrow.rectTransform().SetLocalPosition(Vector3.zero);
-		Vector3 b = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
-		b.z = target.transform.position.z;
-		Vector3 normalized = (target.transform.position - b).normalized;
+		Vector3 vector2 = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
+		vector2.z = target.transform.position.z;
+		Vector3 normalized = (target.transform.position - vector2).normalized;
 		arrow.transform.up = normalized;
 		UpdateTargetIconPosition(target, arrow);
 	}
@@ -128,11 +128,11 @@ public class OffscreenIndicator : KMonoBehaviour
 
 	public Vector3 Vector3Maxamize(Vector3 vector)
 	{
-		Vector3 a = vector;
+		Vector3 vector2 = vector;
 		float num = 0f;
 		num = ((vector.x > num) ? vector.x : num);
 		num = ((vector.y > num) ? vector.y : num);
 		num = ((vector.z > num) ? vector.z : num);
-		return a / num;
+		return vector2 / num;
 	}
 }

@@ -69,17 +69,9 @@ namespace VoronoiTree
 
 		public int siteIndex;
 
-		public Voronoi diagram
-		{
-			get;
-			private set;
-		}
+		public Voronoi diagram { get; private set; }
 
-		public int completeIterations
-		{
-			get;
-			set;
-		}
+		public int completeIterations { get; set; }
 
 		public Diagram()
 		{

@@ -5,35 +5,17 @@ namespace Satsuma
 {
 	public interface IFlow<TCapacity>
 	{
-		IGraph Graph
-		{
-			get;
-		}
+		IGraph Graph { get; }
 
-		Func<Arc, TCapacity> Capacity
-		{
-			get;
-		}
+		Func<Arc, TCapacity> Capacity { get; }
 
-		Node Source
-		{
-			get;
-		}
+		Node Source { get; }
 
-		Node Target
-		{
-			get;
-		}
+		Node Target { get; }
 
-		TCapacity FlowSize
-		{
-			get;
-		}
+		TCapacity FlowSize { get; }
 
-		IEnumerable<KeyValuePair<Arc, TCapacity>> NonzeroArcs
-		{
-			get;
-		}
+		IEnumerable<KeyValuePair<Arc, TCapacity>> NonzeroArcs { get; }
 
 		TCapacity Flow(Arc arc);
 	}

@@ -42,16 +42,16 @@ public class CO2Manager : KMonoBehaviour, ISim33ms
 
 	private GameObject InstantiateCO2()
 	{
-		GameObject gameObject = GameUtil.KInstantiate(prefab, Grid.SceneLayer.Front);
-		gameObject.SetActive(value: false);
-		return gameObject;
+		GameObject obj = GameUtil.KInstantiate(prefab, Grid.SceneLayer.Front);
+		obj.SetActive(value: false);
+		return obj;
 	}
 
 	private GameObject InstantiateBreath()
 	{
-		GameObject gameObject = GameUtil.KInstantiate(breathPrefab, Grid.SceneLayer.Front);
-		gameObject.SetActive(value: false);
-		return gameObject;
+		GameObject obj = GameUtil.KInstantiate(breathPrefab, Grid.SceneLayer.Front);
+		obj.SetActive(value: false);
+		return obj;
 	}
 
 	public void Sim33ms(float dt)
@@ -136,10 +136,10 @@ public class CO2Manager : KMonoBehaviour, ISim33ms
 	public void SpawnCO2(Vector3 position, float mass, float temperature, bool flip)
 	{
 		position.z = Grid.GetLayerZ(Grid.SceneLayer.Front);
-		GameObject gameObject = co2Pool.GetInstance();
-		gameObject.transform.SetPosition(position);
-		gameObject.SetActive(value: true);
-		CO2 component = gameObject.GetComponent<CO2>();
+		GameObject obj = co2Pool.GetInstance();
+		obj.transform.SetPosition(position);
+		obj.SetActive(value: true);
+		CO2 component = obj.GetComponent<CO2>();
 		component.mass = mass;
 		component.temperature = temperature;
 		component.velocity = Vector3.zero;
@@ -156,10 +156,10 @@ public class CO2Manager : KMonoBehaviour, ISim33ms
 	{
 		position.z = Grid.GetLayerZ(Grid.SceneLayer.Front);
 		SpawnCO2(position, mass, temperature, flip);
-		GameObject gameObject = breathPool.GetInstance();
-		gameObject.transform.SetPosition(position);
-		gameObject.SetActive(value: true);
-		KBatchedAnimController component = gameObject.GetComponent<KBatchedAnimController>();
+		GameObject obj = breathPool.GetInstance();
+		obj.transform.SetPosition(position);
+		obj.SetActive(value: true);
+		KBatchedAnimController component = obj.GetComponent<KBatchedAnimController>();
 		component.TintColour = tintColour;
 		component.onDestroySelf = OnDestroyBreath;
 		component.FlipX = flip;

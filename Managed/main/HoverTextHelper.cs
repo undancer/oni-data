@@ -5,13 +5,7 @@ public class HoverTextHelper
 {
 	private static readonly string[] massStrings = new string[4];
 
-	private static readonly string[] invalidCellMassStrings = new string[4]
-	{
-		"",
-		"",
-		"",
-		""
-	};
+	private static readonly string[] invalidCellMassStrings = new string[4] { "", "", "", "" };
 
 	private static float cachedMass = -1f;
 

@@ -37,115 +37,21 @@ public class Timelapser : KMonoBehaviour
 
 	private int[] timelapseScreenshotCycles = new int[100]
 	{
-		1,
-		2,
-		3,
-		4,
-		5,
-		6,
-		7,
-		8,
-		9,
-		10,
-		11,
-		12,
-		13,
-		14,
-		15,
-		16,
-		17,
-		18,
-		19,
-		20,
-		21,
-		22,
-		23,
-		24,
-		25,
-		26,
-		27,
-		28,
-		29,
-		30,
-		31,
-		32,
-		33,
-		34,
-		35,
-		36,
-		37,
-		38,
-		39,
-		40,
-		41,
-		42,
-		43,
-		44,
-		45,
-		46,
-		47,
-		48,
-		49,
-		50,
-		55,
-		60,
-		65,
-		70,
-		75,
-		80,
-		85,
-		90,
-		95,
-		100,
-		110,
-		120,
-		130,
-		140,
-		150,
-		160,
-		170,
-		180,
-		190,
-		200,
-		210,
-		220,
-		230,
-		240,
-		250,
-		260,
-		270,
-		280,
-		290,
-		200,
-		310,
-		320,
-		330,
-		340,
-		350,
-		360,
-		370,
-		380,
-		390,
-		400,
-		410,
-		420,
-		430,
-		440,
-		450,
-		460,
-		470,
-		480,
-		490,
-		500
+		1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+		11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+		21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+		31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+		41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+		55, 60, 65, 70, 75, 80, 85, 90, 95, 100,
+		110, 120, 130, 140, 150, 160, 170, 180, 190, 200,
+		210, 220, 230, 240, 250, 260, 270, 280, 290, 200,
+		310, 320, 330, 340, 350, 360, 370, 380, 390, 400,
+		410, 420, 430, 440, 450, 460, 470, 480, 490, 500
 	};
 
 	public bool CapturingTimelapseScreenshot => screenshotActive;
 
-	public Texture2D freezeTexture
-	{
-		get;
-		private set;
-	}
+	public Texture2D freezeTexture { get; private set; }
 
 	private bool timelapseUserEnabled => SaveGame.Instance.TimelapseResolution.x > 0;
 
@@ -414,8 +320,8 @@ public class Timelapser : KMonoBehaviour
 				path2 = Path.Combine(path2, path);
 			}
 			DebugUtil.LogArgs("Saving screenshot to", path2);
-			string format = "0000.##";
-			path2 = path2 + "_cycle_" + GameClock.Instance.GetCycle().ToString(format);
+			string text3 = "0000.##";
+			path2 = path2 + "_cycle_" + GameClock.Instance.GetCycle().ToString(text3);
 			if (debugScreenShot)
 			{
 				path2 = path2 + "_" + System.DateTime.Now.Day + "-" + System.DateTime.Now.Month + "_" + System.DateTime.Now.Hour + "-" + System.DateTime.Now.Minute + "-" + System.DateTime.Now.Second;

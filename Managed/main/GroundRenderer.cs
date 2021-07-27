@@ -507,11 +507,11 @@ public class GroundRenderer : KMonoBehaviour
 	private GroundMasks.BiomeMaskData GetBiomeMask(SubWorld.ZoneType zone_type)
 	{
 		GroundMasks.BiomeMaskData result = null;
-		string a = zone_type.ToString().ToLower();
+		string text = zone_type.ToString().ToLower();
 		foreach (KeyValuePair<string, GroundMasks.BiomeMaskData> biomeMask in masks.biomeMasks)
 		{
 			string key = biomeMask.Key;
-			if (a == key)
+			if (text == key)
 			{
 				return biomeMask.Value;
 			}

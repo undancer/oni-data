@@ -21,10 +21,7 @@ public static class BaseMooConfig
 			inst.GetAttributes().Add(Db.Get().Attributes.MaxUnderwaterTravelCost);
 		};
 		gameObject.AddOrGet<LoopingSounds>();
-		gameObject.AddOrGetDef<LureableMonitor.Def>().lures = new Tag[1]
-		{
-			SimHashes.BleachStone.CreateTag()
-		};
+		gameObject.AddOrGetDef<LureableMonitor.Def>().lures = new Tag[1] { SimHashes.BleachStone.CreateTag() };
 		gameObject.AddOrGetDef<ThreatMonitor.Def>();
 		gameObject.AddOrGetDef<SubmergedMonitor.Def>();
 		EntityTemplates.CreateAndRegisterBaggedCreature(gameObject, must_stand_on_top_for_pickup: true, allow_mark_for_capture: false);

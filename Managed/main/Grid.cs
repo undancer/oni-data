@@ -1482,8 +1482,8 @@ public class Grid
 			return CellToPosCTC(cell, layer);
 		case CellAlignment.RandomInternal:
 		{
-			Vector3 b = new Vector3(UnityEngine.Random.Range(-0.3f, 0.3f), 0f, 0f);
-			return CellToPosCCC(cell, layer) + b;
+			Vector3 vector = new Vector3(UnityEngine.Random.Range(-0.3f, 0.3f), 0f, 0f);
+			return CellToPosCCC(cell, layer) + vector;
 		}
 		default:
 			return CellToPosCCC(cell, layer);
@@ -1652,10 +1652,10 @@ public class Grid
 	{
 		int num = 2;
 		int cellDistance = GetCellDistance(startCell, endCell);
-		Vector2 a = (CellToPos(endCell) - CellToPos(startCell)).normalized;
+		Vector2 vector = (CellToPos(endCell) - CellToPos(startCell)).normalized;
 		for (float num2 = 0f; num2 < (float)cellDistance; num2 = Mathf.Min(num2 + 1f / (float)num, cellDistance))
 		{
-			int num3 = PosToCell(CellToPos(startCell) + (Vector3)(a * num2));
+			int num3 = PosToCell(CellToPos(startCell) + (Vector3)(vector * num2));
 			if (GetCellDistance(startCell, num3) <= cellDistance)
 			{
 				outputCells.Add(num3);

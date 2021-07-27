@@ -2,15 +2,9 @@ public class KAnimConverter
 {
 	public interface IAnimConverter
 	{
-		SymbolInstanceGpuData symbolInstanceGpuData
-		{
-			get;
-		}
+		SymbolInstanceGpuData symbolInstanceGpuData { get; }
 
-		SymbolOverrideInfoGpuData symbolOverrideInfoGpuData
-		{
-			get;
-		}
+		SymbolOverrideInfoGpuData symbolOverrideInfoGpuData { get; }
 
 		int GetMaxVisible();
 

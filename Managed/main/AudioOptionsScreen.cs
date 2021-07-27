@@ -43,13 +43,7 @@ public class AudioOptionsScreen : KModalScreen
 
 	public static readonly string MuteOnFocusLost = "MuteOnFocusLost";
 
-	private Dictionary<string, object> alwaysPlayMusicMetric = new Dictionary<string, object>
-	{
-		{
-			AlwaysPlayMusicKey,
-			null
-		}
-	};
+	private Dictionary<string, object> alwaysPlayMusicMetric = new Dictionary<string, object> { { AlwaysPlayMusicKey, null } };
 
 	private List<KFMOD.AudioDevice> audioDevices = new List<KFMOD.AudioDevice>();
 
@@ -100,9 +94,9 @@ public class AudioOptionsScreen : KModalScreen
 			KPlayerPrefs.SetInt(AlwaysPlayAutomation, 1);
 		}
 		HierarchyReferences component2 = alwaysPlayAutomationButton.GetComponent<HierarchyReferences>();
-		GameObject gameObject2 = component2.GetReference("Button").gameObject;
-		gameObject2.GetComponent<ToolTip>().SetSimpleTooltip(UI.FRONTEND.AUDIO_OPTIONS_SCREEN.AUTOMATION_SOUNDS_ALWAYS_TOOLTIP);
-		gameObject2.GetComponent<KButton>().onClick += delegate
+		GameObject obj = component2.GetReference("Button").gameObject;
+		obj.GetComponent<ToolTip>().SetSimpleTooltip(UI.FRONTEND.AUDIO_OPTIONS_SCREEN.AUTOMATION_SOUNDS_ALWAYS_TOOLTIP);
+		obj.GetComponent<KButton>().onClick += delegate
 		{
 			ToggleAlwaysPlayAutomation();
 		};
@@ -113,9 +107,9 @@ public class AudioOptionsScreen : KModalScreen
 			KPlayerPrefs.SetInt(MuteOnFocusLost, 0);
 		}
 		HierarchyReferences component3 = muteOnFocusLostToggle.GetComponent<HierarchyReferences>();
-		GameObject gameObject3 = component3.GetReference("Button").gameObject;
-		gameObject3.GetComponent<ToolTip>().SetSimpleTooltip(UI.FRONTEND.AUDIO_OPTIONS_SCREEN.MUTE_ON_FOCUS_LOST_TOOLTIP);
-		gameObject3.GetComponent<KButton>().onClick += delegate
+		GameObject obj2 = component3.GetReference("Button").gameObject;
+		obj2.GetComponent<ToolTip>().SetSimpleTooltip(UI.FRONTEND.AUDIO_OPTIONS_SCREEN.MUTE_ON_FOCUS_LOST_TOOLTIP);
+		obj2.GetComponent<KButton>().onClick += delegate
 		{
 			ToggleMuteOnFocusLost();
 		};
@@ -172,8 +166,8 @@ public class AudioOptionsScreen : KModalScreen
 		for (int i = 0; i < numdrivers; i++)
 		{
 			KFMOD.AudioDevice item = default(KFMOD.AudioDevice);
-			RuntimeManager.CoreSystem.getDriverInfo(i, out var name, 64, out item.guid, out item.systemRate, out item.speakerMode, out item.speakerModeChannels);
-			item.name = name;
+			RuntimeManager.CoreSystem.getDriverInfo(i, out var text, 64, out item.guid, out item.systemRate, out item.speakerMode, out item.speakerModeChannels);
+			item.name = text;
 			item.fmod_id = i;
 			audioDevices.Add(item);
 			audioDeviceOptions.Add(new Dropdown.OptionData(item.name));

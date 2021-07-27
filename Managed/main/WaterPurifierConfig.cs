@@ -75,10 +75,7 @@ public class WaterPurifierConfig : IBuildingConfig
 		ConduitDispenser conduitDispenser = go.AddOrGet<ConduitDispenser>();
 		conduitDispenser.conduitType = ConduitType.Liquid;
 		conduitDispenser.invertElementFilter = true;
-		conduitDispenser.elementFilter = new SimHashes[1]
-		{
-			SimHashes.DirtyWater
-		};
+		conduitDispenser.elementFilter = new SimHashes[1] { SimHashes.DirtyWater };
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

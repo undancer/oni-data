@@ -4,53 +4,21 @@ public class Diet
 {
 	public class Info
 	{
-		public HashSet<Tag> consumedTags
-		{
-			get;
-			private set;
-		}
+		public HashSet<Tag> consumedTags { get; private set; }
 
-		public Tag producedElement
-		{
-			get;
-			private set;
-		}
+		public Tag producedElement { get; private set; }
 
-		public float caloriesPerKg
-		{
-			get;
-			private set;
-		}
+		public float caloriesPerKg { get; private set; }
 
-		public float producedConversionRate
-		{
-			get;
-			private set;
-		}
+		public float producedConversionRate { get; private set; }
 
-		public byte diseaseIdx
-		{
-			get;
-			private set;
-		}
+		public byte diseaseIdx { get; private set; }
 
-		public float diseasePerKgProduced
-		{
-			get;
-			private set;
-		}
+		public float diseasePerKgProduced { get; private set; }
 
-		public bool produceSolidTile
-		{
-			get;
-			private set;
-		}
+		public bool produceSolidTile { get; private set; }
 
-		public bool eatsPlantsDirectly
-		{
-			get;
-			private set;
-		}
+		public bool eatsPlantsDirectly { get; private set; }
 
 		public Info(HashSet<Tag> consumed_tags, Tag produced_element, float calories_per_kg, float produced_conversion_rate = 1f, string disease_id = null, float disease_per_kg_produced = 0f, bool produce_solid_tile = false, bool eats_plants_directly = false)
 		{
@@ -122,11 +90,7 @@ public class Diet
 
 	private Dictionary<Tag, Info> consumedTagToInfo = new Dictionary<Tag, Info>();
 
-	public Info[] infos
-	{
-		get;
-		private set;
-	}
+	public Info[] infos { get; private set; }
 
 	public Diet(params Info[] infos)
 	{

@@ -237,16 +237,13 @@ public class Deconstructable : Workable
 	private void SpawnItemsFromConstruction(float temperature, byte disease_idx, int disease_count)
 	{
 		Building component = GetComponent<Building>();
-		float[] array = ((!(component != null)) ? new float[1]
-		{
-			GetComponent<PrimaryElement>().Mass
-		} : component.Def.Mass);
+		float[] array = ((!(component != null)) ? new float[1] { GetComponent<PrimaryElement>().Mass } : component.Def.Mass);
 		for (int i = 0; i < constructionElements.Length && array.Length > i; i++)
 		{
 			GameObject gameObject = SpawnItem(base.transform.GetPosition(), constructionElements[i], array[i], temperature, disease_idx, disease_count);
 			int num = Grid.PosToCell(gameObject.transform.GetPosition());
 			int num2 = Grid.CellAbove(num);
-			Vector2 initial_velocity = (((Grid.IsValidCell(num) && Grid.Solid[num]) || (Grid.IsValidCell(num2) && Grid.Solid[num2])) ? Vector2.zero : new Vector2(Random.Range(-1f, 1f) * INITIAL_VELOCITY_RANGE.x, INITIAL_VELOCITY_RANGE.y));
+			Vector2 initial_velocity = (((!Grid.IsValidCell(num) || !Grid.Solid[num]) && (!Grid.IsValidCell(num2) || !Grid.Solid[num2])) ? new Vector2(Random.Range(-1f, 1f) * INITIAL_VELOCITY_RANGE.x, INITIAL_VELOCITY_RANGE.y) : Vector2.zero);
 			if (GameComps.Fallers.Has(gameObject))
 			{
 				GameComps.Fallers.Remove(gameObject);
@@ -259,15 +256,15 @@ public class Deconstructable : Workable
 	{
 		GameObject gameObject = null;
 		int cell = Grid.PosToCell(position);
-		CellOffset[] placementOffsets = this.placementOffsets;
+		CellOffset[] array = placementOffsets;
 		Element element = ElementLoader.GetElement(src_element);
 		if (element != null)
 		{
 			float num = src_mass;
 			for (int i = 0; (float)i < src_mass / 400f; i++)
 			{
-				int num2 = i % placementOffsets.Length;
-				int cell2 = Grid.OffsetCell(cell, placementOffsets[num2]);
+				int num2 = i % array.Length;
+				int cell2 = Grid.OffsetCell(cell, array[num2]);
 				float mass = num;
 				if (num > 400f)
 				{
@@ -281,8 +278,8 @@ public class Deconstructable : Workable
 		{
 			for (int j = 0; (float)j < src_mass; j++)
 			{
-				int num3 = j % placementOffsets.Length;
-				int cell3 = Grid.OffsetCell(cell, placementOffsets[num3]);
+				int num3 = j % array.Length;
+				int cell3 = Grid.OffsetCell(cell, array[num3]);
 				gameObject = GameUtil.KInstantiate(Assets.GetPrefab(src_element), Grid.CellToPosCBC(cell3, Grid.SceneLayer.Ore), Grid.SceneLayer.Ore);
 				gameObject.SetActive(value: true);
 			}

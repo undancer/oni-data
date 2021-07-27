@@ -103,10 +103,7 @@ public class GourmetCookingStationConfig : IBuildingConfig
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.SALSA.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"GourmetCookingStation"
-			},
+			fabricators = new List<Tag> { "GourmetCookingStation" },
 			sortOrder = 300
 		};
 		ComplexRecipe.RecipeElement[] array3 = new ComplexRecipe.RecipeElement[2]
@@ -123,10 +120,7 @@ public class GourmetCookingStationConfig : IBuildingConfig
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.MUSHROOMWRAP.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"GourmetCookingStation"
-			},
+			fabricators = new List<Tag> { "GourmetCookingStation" },
 			sortOrder = 400
 		};
 		ComplexRecipe.RecipeElement[] array5 = new ComplexRecipe.RecipeElement[2]
@@ -143,10 +137,7 @@ public class GourmetCookingStationConfig : IBuildingConfig
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.SURFANDTURF.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"GourmetCookingStation"
-			},
+			fabricators = new List<Tag> { "GourmetCookingStation" },
 			sortOrder = 500
 		};
 		ComplexRecipe.RecipeElement[] array7 = new ComplexRecipe.RecipeElement[2]
@@ -163,10 +154,7 @@ public class GourmetCookingStationConfig : IBuildingConfig
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.SPICEBREAD.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"GourmetCookingStation"
-			},
+			fabricators = new List<Tag> { "GourmetCookingStation" },
 			sortOrder = 600
 		};
 		ComplexRecipe.RecipeElement[] array9 = new ComplexRecipe.RecipeElement[2]
@@ -183,10 +171,7 @@ public class GourmetCookingStationConfig : IBuildingConfig
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.SPICYTOFU.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"GourmetCookingStation"
-			},
+			fabricators = new List<Tag> { "GourmetCookingStation" },
 			sortOrder = 800
 		};
 		ComplexRecipe.RecipeElement[] array11 = new ComplexRecipe.RecipeElement[3]
@@ -204,10 +189,7 @@ public class GourmetCookingStationConfig : IBuildingConfig
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.BURGER.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"GourmetCookingStation"
-			},
+			fabricators = new List<Tag> { "GourmetCookingStation" },
 			sortOrder = 900
 		};
 		if (DlcManager.IsExpansion1Active())
@@ -227,10 +209,7 @@ public class GourmetCookingStationConfig : IBuildingConfig
 				time = FOOD.RECIPES.STANDARD_COOK_TIME,
 				description = ITEMS.FOOD.BERRYPIE.RECIPEDESC,
 				nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-				fabricators = new List<Tag>
-				{
-					"GourmetCookingStation"
-				},
+				fabricators = new List<Tag> { "GourmetCookingStation" },
 				sortOrder = 900
 			};
 		}

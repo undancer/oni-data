@@ -8,11 +8,7 @@ public class MonumentBottomConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("MonumentBottom", 5, 5, "victory_monument_base_kanim", 1000, 60f, new float[2]
-		{
-			7500f,
-			2500f
-		}, new string[2]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("MonumentBottom", 5, 5, "victory_monument_base_kanim", 1000, 60f, new float[2] { 7500f, 2500f }, new string[2]
 		{
 			SimHashes.Steel.ToString(),
 			SimHashes.Obsidian.ToString()

@@ -2704,12 +2704,7 @@ namespace STRINGS
 
 				public static LocString TIER3 = "Exposure";
 
-				public static readonly LocString[] EXPOSURE_TIERS = new LocString[3]
-				{
-					TIER1,
-					TIER2,
-					TIER3
-				};
+				public static readonly LocString[] EXPOSURE_TIERS = new LocString[3] { TIER1, TIER2, TIER3 };
 
 				public static LocString NAME = "{Severity} to {Sickness} Germs";
 

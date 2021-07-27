@@ -102,16 +102,13 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 			Sleepable sleepable = base.sm.bed.Get<Sleepable>(base.smi);
 			if (sleepable.GetComponent<Building>() == null)
 			{
-				string s = base.sm.sleeper.Get<Navigator>(base.smi).CurrentNavType switch
+				string text = base.sm.sleeper.Get<Navigator>(base.smi).CurrentNavType switch
 				{
 					NavType.Ladder => "anim_sleep_ladder_kanim", 
 					NavType.Pole => "anim_sleep_pole_kanim", 
 					_ => "anim_sleep_floor_kanim", 
 				};
-				sleepable.overrideAnims = new KAnimFile[1]
-				{
-					Assets.GetAnim(s)
-				};
+				sleepable.overrideAnims = new KAnimFile[1] { Assets.GetAnim(text) };
 			}
 		}
 	}

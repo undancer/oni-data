@@ -14,6 +14,8 @@ public class PinnedResourcesPanel : KScreen, IRender1000ms
 
 	public MultiToggle clearNewButton;
 
+	public KButton clearAllButton;
+
 	public MultiToggle seeAllButton;
 
 	private Dictionary<Tag, GameObject> rows = new Dictionary<Tag, GameObject>();
@@ -41,16 +43,44 @@ public class PinnedResourcesPanel : KScreen, IRender1000ms
 		MultiToggle component3 = clearNewButton.GetComponent<MultiToggle>();
 		component3.onClick = (System.Action)Delegate.Combine(component3.onClick, (System.Action)delegate
 		{
-			foreach (KeyValuePair<Tag, GameObject> row in rows)
-			{
-				if (row.Value.activeSelf && DiscoveredResources.Instance.newDiscoveries.ContainsKey(row.Key))
-				{
-					DiscoveredResources.Instance.newDiscoveries.Remove(row.Key);
-				}
-			}
+			ClearAllNew();
 		});
+		clearAllButton.onClick += delegate
+		{
+			ClearAllNew();
+			UnPinAll();
+			Refresh();
+		};
 		AllResourcesScreen.Instance.Init();
 		Refresh();
+	}
+
+	public void ClearExcessiveNewItems()
+	{
+		if (DiscoveredResources.Instance.CheckAllDiscoveredAreNew())
+		{
+			DiscoveredResources.Instance.newDiscoveries.Clear();
+		}
+	}
+
+	private void ClearAllNew()
+	{
+		foreach (KeyValuePair<Tag, GameObject> row in rows)
+		{
+			if (row.Value.activeSelf && DiscoveredResources.Instance.newDiscoveries.ContainsKey(row.Key))
+			{
+				DiscoveredResources.Instance.newDiscoveries.Remove(row.Key);
+			}
+		}
+	}
+
+	private void UnPinAll()
+	{
+		WorldInventory worldInventory = ClusterManager.Instance.GetWorld(ClusterManager.Instance.activeWorldId).worldInventory;
+		foreach (KeyValuePair<Tag, GameObject> row in rows)
+		{
+			worldInventory.pinnedResources.Remove(row.Key);
+		}
 	}
 
 	public void Populate(object data = null)

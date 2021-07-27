@@ -34,11 +34,7 @@ public class AssignableSideScreen : SideScreenContent
 
 	private List<MinionAssignablesProxy> identityList = new List<MinionAssignablesProxy>();
 
-	public Assignable targetAssignable
-	{
-		get;
-		private set;
-	}
+	public Assignable targetAssignable { get; private set; }
 
 	public override string GetTitle()
 	{

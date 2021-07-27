@@ -9,11 +9,7 @@ namespace ProcGen
 
 		private TagSet mobkeys;
 
-		public ComposableDictionary<string, Mob> MobLookupTable
-		{
-			get;
-			private set;
-		}
+		public ComposableDictionary<string, Mob> MobLookupTable { get; private set; }
 
 		public MobSettings()
 		{

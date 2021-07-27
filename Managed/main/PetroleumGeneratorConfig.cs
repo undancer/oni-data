@@ -25,14 +25,8 @@ public class PetroleumGeneratorConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		string[] array = new string[1]
-		{
-			"Metal"
-		};
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: new float[1]
-		{
-			BUILDINGS.CONSTRUCTION_MASS_KG.TIER5[0]
-		}, construction_materials: array, melting_point: 2400f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, id: "PetroleumGenerator", width: 3, height: 4, anim: "generatorpetrol_kanim", hitpoints: 100, construction_time: 480f, decor: BUILDINGS.DECOR.PENALTY.TIER2);
+		string[] array = new string[1] { "Metal" };
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: new float[1] { BUILDINGS.CONSTRUCTION_MASS_KG.TIER5[0] }, construction_materials: array, melting_point: 2400f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER5, id: "PetroleumGenerator", width: 3, height: 4, anim: "generatorpetrol_kanim", hitpoints: 100, construction_time: 480f, decor: BUILDINGS.DECOR.PENALTY.TIER2);
 		obj.GeneratorWattageRating = 2000f;
 		obj.GeneratorBaseCapacity = 2000f;
 		obj.ExhaustKilowattsWhenActive = 4f;

@@ -20,19 +20,13 @@ public class ConversationMonitor : GameStateMachine<ConversationMonitor, Convers
 
 		private List<string> personalTopics;
 
-		private static readonly List<string> randomTopics = new List<string>
-		{
-			"Headquarters"
-		};
+		private static readonly List<string> randomTopics = new List<string> { "Headquarters" };
 
 		public Instance(IStateMachineTarget master, Def def)
 			: base(master, def)
 		{
 			recentTopics = new Queue<string>();
-			favouriteTopics = new List<string>
-			{
-				randomTopics[UnityEngine.Random.Range(0, randomTopics.Count)]
-			};
+			favouriteTopics = new List<string> { randomTopics[UnityEngine.Random.Range(0, randomTopics.Count)] };
 			personalTopics = new List<string>();
 		}
 

@@ -30,8 +30,8 @@ namespace Klei
 		{
 			if (filename.StartsWith(prefix))
 			{
-				string str = filename.Substring(prefix.Length);
-				return FileSystem.Normalize(root + str);
+				string text = filename.Substring(prefix.Length);
+				return FileSystem.Normalize(root + text);
 			}
 			return filename;
 		}
@@ -40,8 +40,8 @@ namespace Klei
 		{
 			if (filename.StartsWith(root))
 			{
-				string str = filename.Substring(root.Length);
-				return FileSystem.Normalize(prefix + str);
+				string text = filename.Substring(root.Length);
+				return FileSystem.Normalize(prefix + text);
 			}
 			return filename;
 		}

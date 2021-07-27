@@ -13,10 +13,7 @@ public class WireRefinedBridgeConfig : WireBridgeConfig
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = base.CreateBuildingDef();
-		buildingDef.AnimFiles = new KAnimFile[1]
-		{
-			Assets.GetAnim("utilityelectricbridgeconductive_kanim")
-		};
+		buildingDef.AnimFiles = new KAnimFile[1] { Assets.GetAnim("utilityelectricbridgeconductive_kanim") };
 		buildingDef.Mass = BUILDINGS.CONSTRUCTION_MASS_KG.TIER0;
 		buildingDef.MaterialCategory = MATERIALS.REFINED_METALS;
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.WireIDs, "WireRefinedBridge");

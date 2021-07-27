@@ -29,17 +29,9 @@ public class FaceGraph : KMonoBehaviour
 
 	private static int FIRST_SIDEWAYS_FRAME = 29;
 
-	public Expression overrideExpression
-	{
-		get;
-		private set;
-	}
+	public Expression overrideExpression { get; private set; }
 
-	public Expression currentExpression
-	{
-		get;
-		private set;
-	}
+	public Expression currentExpression { get; private set; }
 
 	public IEnumerator<Expression> GetEnumerator()
 	{

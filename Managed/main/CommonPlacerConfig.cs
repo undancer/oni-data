@@ -54,11 +54,7 @@ public class CommonPlacerConfig
 			type = EasingAnimations.AnimationScales.AnimationType.EaseOutBack,
 			easingMultiplier = 1f
 		};
-		easingAnimations.scales = new EasingAnimations.AnimationScales[2]
-		{
-			animationScales,
-			animationScales2
-		};
+		easingAnimations.scales = new EasingAnimations.AnimationScales[2] { animationScales, animationScales2 };
 		return gameObject;
 	}
 }

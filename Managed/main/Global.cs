@@ -34,11 +34,7 @@ public class Global : MonoBehaviour
 
 	public static readonly string LanguageCodeKey = "LanguageCode";
 
-	public static Global Instance
-	{
-		get;
-		private set;
-	}
+	public static Global Instance { get; private set; }
 
 	public static BindingEntry[] GenerateDefaultBindings(bool hotKeyBuildMenuPermitted = true)
 	{
@@ -341,8 +337,8 @@ public class Global : MonoBehaviour
 		Singleton<KBatchedAnimUpdater>.CreateInstance();
 		Localization.Initialize();
 		modManager.Load(Content.Translation);
-		modManager.distribution_platforms.Add(new Local("Local", Label.DistributionPlatform.Local));
-		modManager.distribution_platforms.Add(new Local("Dev", Label.DistributionPlatform.Dev));
+		modManager.distribution_platforms.Add(new Local("Local", Label.DistributionPlatform.Local, isDevFolder: false));
+		modManager.distribution_platforms.Add(new Local("Dev", Label.DistributionPlatform.Dev, isDevFolder: true));
 		mainThread = Thread.CurrentThread;
 		KProfiler.main_thread = Thread.CurrentThread;
 		RestoreLegacyMetricsSetting();
@@ -481,7 +477,7 @@ public class Global : MonoBehaviour
 	private void SetONIStaticSessionVariables()
 	{
 		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Branch", "release");
-		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Build", 471618u);
+		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Build", 472345u);
 		if (KPlayerPrefs.HasKey(UnitConfigurationScreen.MassUnitKey))
 		{
 			ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable(UnitConfigurationScreen.MassUnitKey, ((GameUtil.MassUnit)KPlayerPrefs.GetInt(UnitConfigurationScreen.MassUnitKey)).ToString());

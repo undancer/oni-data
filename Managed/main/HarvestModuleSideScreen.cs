@@ -44,10 +44,10 @@ public class HarvestModuleSideScreen : SideScreenContent, ISimEveryTick
 	{
 		foreach (Ref<RocketModuleCluster> clusterModule in craft.GetComponent<CraftModuleInterface>().ClusterModules)
 		{
-			GameObject gameObject = clusterModule.Get().gameObject;
-			if (gameObject.GetDef<ResourceHarvestModule.Def>() != null)
+			GameObject go = clusterModule.Get().gameObject;
+			if (go.GetDef<ResourceHarvestModule.Def>() != null)
 			{
-				return gameObject.GetSMI<ResourceHarvestModule.StatesInstance>();
+				return go.GetSMI<ResourceHarvestModule.StatesInstance>();
 			}
 		}
 		return null;

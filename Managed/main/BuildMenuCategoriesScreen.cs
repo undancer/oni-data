@@ -142,15 +142,15 @@ public class BuildMenuCategoriesScreen : KIconToggleMenu
 		foreach (ToggleInfo item in toggleInfo)
 		{
 			UserData userData = (UserData)item.userData;
-			HashedString x = userData.category;
-			PlanScreen.RequirementsState categoryRequirements = GetCategoryRequirements(x);
+			HashedString hashedString = userData.category;
+			PlanScreen.RequirementsState categoryRequirements = GetCategoryRequirements(hashedString);
 			bool flag = categoryRequirements == PlanScreen.RequirementsState.Tech;
 			item.toggle.gameObject.SetActive(!flag);
 			switch (categoryRequirements)
 			{
 			case PlanScreen.RequirementsState.Complete:
 			{
-				ImageToggleState.State state2 = ((!selectedCategory.IsValid || x != selectedCategory) ? ImageToggleState.State.Inactive : ImageToggleState.State.Active);
+				ImageToggleState.State state2 = ((!selectedCategory.IsValid || hashedString != selectedCategory) ? ImageToggleState.State.Inactive : ImageToggleState.State.Active);
 				if (!userData.currentToggleState.HasValue || userData.currentToggleState.GetValueOrDefault() != state2)
 				{
 					userData.currentToggleState = state2;
@@ -161,7 +161,7 @@ public class BuildMenuCategoriesScreen : KIconToggleMenu
 			case PlanScreen.RequirementsState.Materials:
 			{
 				item.toggle.fgImage.SetAlpha(flag ? (64f / 255f) : 1f);
-				ImageToggleState.State state = ((selectedCategory.IsValid && x == selectedCategory) ? ImageToggleState.State.DisabledActive : ImageToggleState.State.Disabled);
+				ImageToggleState.State state = ((selectedCategory.IsValid && hashedString == selectedCategory) ? ImageToggleState.State.DisabledActive : ImageToggleState.State.Disabled);
 				if (!userData.currentToggleState.HasValue || userData.currentToggleState.GetValueOrDefault() != state)
 				{
 					userData.currentToggleState = state;
@@ -273,10 +273,10 @@ public class BuildMenuCategoriesScreen : KIconToggleMenu
 				if (!skip_flourish)
 				{
 					item.toggle.ActivateFlourish(state: false);
-					string text = "NotificationPing";
-					if (!item.toggle.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag(text))
+					string stateName = "NotificationPing";
+					if (!item.toggle.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag(stateName))
 					{
-						item.toggle.gameObject.GetComponent<Animator>().Play(text);
+						item.toggle.gameObject.GetComponent<Animator>().Play(stateName);
 						BuildMenu.Instance.PlayNewBuildingSounds();
 					}
 				}

@@ -9,99 +9,39 @@ public class MotdServerClient
 {
 	public class MotdUpdateData
 	{
-		public string last_update_time
-		{
-			get;
-			set;
-		}
+		public string last_update_time { get; set; }
 
-		public string next_update_time
-		{
-			get;
-			set;
-		}
+		public string next_update_time { get; set; }
 
-		public string update_text_override
-		{
-			get;
-			set;
-		}
+		public string update_text_override { get; set; }
 	}
 
 	public class MotdResponse
 	{
-		public int version
-		{
-			get;
-			set;
-		}
+		public int version { get; set; }
 
-		public string image_header_text
-		{
-			get;
-			set;
-		}
+		public string image_header_text { get; set; }
 
-		public int image_version
-		{
-			get;
-			set;
-		}
+		public int image_version { get; set; }
 
-		public string image_url
-		{
-			get;
-			set;
-		}
+		public string image_url { get; set; }
 
-		public string image_link_url
-		{
-			get;
-			set;
-		}
+		public string image_link_url { get; set; }
 
-		public string news_header_text
-		{
-			get;
-			set;
-		}
+		public string news_header_text { get; set; }
 
-		public string news_body_text
-		{
-			get;
-			set;
-		}
+		public string news_body_text { get; set; }
 
-		public string patch_notes_summary
-		{
-			get;
-			set;
-		}
+		public string patch_notes_summary { get; set; }
 
-		public string patch_notes_link_url
-		{
-			get;
-			set;
-		}
+		public string patch_notes_link_url { get; set; }
 
-		public MotdUpdateData vanilla_update_data
-		{
-			get;
-			set;
-		}
+		public MotdUpdateData vanilla_update_data { get; set; }
 
-		public MotdUpdateData expansion1_update_data
-		{
-			get;
-			set;
-		}
+		public MotdUpdateData expansion1_update_data { get; set; }
 
 		[JsonIgnore]
-		public Texture2D image_texture
-		{
-			get;
-			set;
-		}
+		public Texture2D image_texture { get; set; }
 	}
 
 	private Action<MotdResponse, string> m_callback;

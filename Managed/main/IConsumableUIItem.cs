@@ -1,27 +1,12 @@
 public interface IConsumableUIItem
 {
-	string ConsumableId
-	{
-		get;
-	}
+	string ConsumableId { get; }
 
-	string ConsumableName
-	{
-		get;
-	}
+	string ConsumableName { get; }
 
-	int MajorOrder
-	{
-		get;
-	}
+	int MajorOrder { get; }
 
-	int MinorOrder
-	{
-		get;
-	}
+	int MinorOrder { get; }
 
-	bool Display
-	{
-		get;
-	}
+	bool Display { get; }
 }

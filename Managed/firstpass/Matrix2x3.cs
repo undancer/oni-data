@@ -28,8 +28,8 @@ public struct Matrix2x3
 
 	public override bool Equals(object obj)
 	{
-		Matrix2x3 n = (Matrix2x3)obj;
-		return this == n;
+		Matrix2x3 matrix2x = (Matrix2x3)obj;
+		return this == matrix2x;
 	}
 
 	public override int GetHashCode()

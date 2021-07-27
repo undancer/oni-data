@@ -567,17 +567,9 @@ public class Game : KMonoBehaviour
 
 	private float lastTimeWorkStarted = float.NegativeInfinity;
 
-	public KInputHandler inputHandler
-	{
-		get;
-		set;
-	}
+	public KInputHandler inputHandler { get; set; }
 
-	public static Game Instance
-	{
-		get;
-		private set;
-	}
+	public static Game Instance { get; private set; }
 
 	public bool SaveToCloudActive
 	{
@@ -642,17 +634,9 @@ public class Game : KMonoBehaviour
 		}
 	}
 
-	public StatusItemRenderer statusItemRenderer
-	{
-		get;
-		private set;
-	}
+	public StatusItemRenderer statusItemRenderer { get; private set; }
 
-	public PrioritizableRenderer prioritizableRenderer
-	{
-		get;
-		private set;
-	}
+	public PrioritizableRenderer prioritizableRenderer { get; private set; }
 
 	public float LastTimeWorkStarted => lastTimeWorkStarted;
 
@@ -796,9 +780,9 @@ public class Game : KMonoBehaviour
 		}
 		if (SaveLoader.Instance.ClusterLayout != null)
 		{
-			foreach (WorldGen world2 in SaveLoader.Instance.ClusterLayout.worlds)
+			foreach (WorldGen world in SaveLoader.Instance.ClusterLayout.worlds)
 			{
-				Reset(world2.data.gameSpawnData, world2.WorldOffset);
+				Reset(world.data.gameSpawnData, world.WorldOffset);
 			}
 			NewBaseScreen.SetInitialCamera();
 		}
@@ -851,7 +835,7 @@ public class Game : KMonoBehaviour
 		DestroyInstances();
 	}
 
-	private void UnsafeOnSpawn()
+	private unsafe void UnsafeOnSpawn()
 	{
 		world.UpdateCellInfo(gameSolidInfo, callbackInfo, 0, null, 0, null);
 	}
@@ -1432,7 +1416,7 @@ public class Game : KMonoBehaviour
 		{
 			return;
 		}
-		uint num = 471618u;
+		uint num = 472345u;
 		string text = System.DateTime.Now.ToShortDateString();
 		string text2 = System.DateTime.Now.ToShortTimeString();
 		string fileName = Path.GetFileName(GenericGameSettings.instance.performanceCapture.saveGame);
@@ -1492,8 +1476,8 @@ public class Game : KMonoBehaviour
 			{
 				if (item.Value)
 				{
-					Vector2I v = new Vector2I(item.Key.X + world_offset.X, item.Key.Y + world_offset.Y);
-					Grid.PreventFogOfWarReveal[Grid.PosToCell(v)] = item.Value;
+					Vector2I vector2I = new Vector2I(item.Key.X + world_offset.X, item.Key.Y + world_offset.Y);
+					Grid.PreventFogOfWarReveal[Grid.PosToCell(vector2I)] = item.Value;
 				}
 			}
 		}
@@ -1530,15 +1514,15 @@ public class Game : KMonoBehaviour
 			};
 			Func<GameObject> instantiator = delegate
 			{
-				GameObject gameObject = GameUtil.KInstantiate(fxSpawnData[fx_idx].fxPrefab, Grid.SceneLayer.Front);
-				KBatchedAnimController component2 = gameObject.GetComponent<KBatchedAnimController>();
+				GameObject obj2 = GameUtil.KInstantiate(fxSpawnData[fx_idx].fxPrefab, Grid.SceneLayer.Front);
+				KBatchedAnimController component2 = obj2.GetComponent<KBatchedAnimController>();
 				component2.enabled = false;
-				gameObject.SetActive(value: true);
+				obj2.SetActive(value: true);
 				component2.onDestroySelf = delegate(GameObject go)
 				{
 					destroyer(fxSpawnData[fx_idx].id, go);
 				};
-				return gameObject;
+				return obj2;
 			};
 			ObjectPool pool = new ObjectPool(instantiator, fxSpawnData[fx_idx].initialCount);
 			fxPools[(int)fxSpawnData[fx_idx].id] = pool;
@@ -1552,13 +1536,13 @@ public class Game : KMonoBehaviour
 						activeFX[num] |= fx_mask;
 						GameObject instance = pool.GetInstance();
 						SpawnPoolData spawnPoolData = fxSpawnData[fx_idx];
-						Quaternion rotation2 = Quaternion.identity;
+						Quaternion quaternion = Quaternion.identity;
 						bool flipX = false;
-						string s = spawnPoolData.initialAnim;
+						string text = spawnPoolData.initialAnim;
 						switch (spawnPoolData.rotationConfig)
 						{
 						case SpawnRotationConfig.Normal:
-							rotation2 = Quaternion.Euler(0f, 0f, rotation);
+							quaternion = Quaternion.Euler(0f, 0f, rotation);
 							break;
 						case SpawnRotationConfig.StringName:
 						{
@@ -1567,24 +1551,24 @@ public class Game : KMonoBehaviour
 							{
 								num2 += spawnPoolData.rotationData.Length;
 							}
-							s = spawnPoolData.rotationData[num2].animName;
+							text = spawnPoolData.rotationData[num2].animName;
 							flipX = spawnPoolData.rotationData[num2].flip;
 							break;
 						}
 						}
 						pos += spawnPoolData.spawnOffset;
-						Vector2 v = UnityEngine.Random.insideUnitCircle;
-						v.x *= spawnPoolData.spawnRandomOffset.x;
-						v.y *= spawnPoolData.spawnRandomOffset.y;
-						v = rotation2 * v;
-						pos.x += v.x;
-						pos.y += v.y;
+						Vector2 vector = UnityEngine.Random.insideUnitCircle;
+						vector.x *= spawnPoolData.spawnRandomOffset.x;
+						vector.y *= spawnPoolData.spawnRandomOffset.y;
+						vector = quaternion * vector;
+						pos.x += vector.x;
+						pos.y += vector.y;
 						instance.transform.SetPosition(pos);
-						instance.transform.rotation = rotation2;
+						instance.transform.rotation = quaternion;
 						KBatchedAnimController component = instance.GetComponent<KBatchedAnimController>();
 						component.FlipX = flipX;
 						component.TintColour = spawnPoolData.colour;
-						component.Play(s);
+						component.Play(text);
 						component.enabled = true;
 					}
 				});

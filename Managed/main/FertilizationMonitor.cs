@@ -70,10 +70,7 @@ public class FertilizationMonitor : GameStateMachine<FertilizationMonitor, Ferti
 
 		public float total_fertilizer_available => total_available_mass;
 
-		public WiltCondition.Condition[] Conditions => new WiltCondition.Condition[1]
-		{
-			WiltCondition.Condition.Fertilized
-		};
+		public WiltCondition.Condition[] Conditions => new WiltCondition.Condition[1] { WiltCondition.Condition.Fertilized };
 
 		public string WiltStateString
 		{

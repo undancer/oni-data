@@ -14,13 +14,7 @@ public class EntombedItemVisualizer : KMonoBehaviour
 	[SerializeField]
 	private GameObject entombedItemPrefab;
 
-	private static readonly string[] EntombedVisualizerAnims = new string[4]
-	{
-		"idle1",
-		"idle2",
-		"idle3",
-		"idle4"
-	};
+	private static readonly string[] EntombedVisualizerAnims = new string[4] { "idle1", "idle2", "idle3", "idle4" };
 
 	private ObjectPool entombedItemPool;
 
@@ -51,9 +45,9 @@ public class EntombedItemVisualizer : KMonoBehaviour
 				instance.transform.rotation = Quaternion.Euler(0f, 0f, Random.value * 360f);
 				KBatchedAnimController component = instance.GetComponent<KBatchedAnimController>();
 				int num = Random.Range(0, EntombedVisualizerAnims.Length);
-				string s = (component.initialAnim = EntombedVisualizerAnims[num]);
+				string text = (component.initialAnim = EntombedVisualizerAnims[num]);
 				instance.SetActive(value: true);
-				component.Play(s);
+				component.Play(text);
 				value.controller = component;
 			}
 			value.refCount++;
@@ -107,8 +101,8 @@ public class EntombedItemVisualizer : KMonoBehaviour
 
 	private GameObject InstantiateEntombedObject()
 	{
-		GameObject gameObject = GameUtil.KInstantiate(entombedItemPrefab, Grid.SceneLayer.FXFront);
-		gameObject.SetActive(value: false);
-		return gameObject;
+		GameObject obj = GameUtil.KInstantiate(entombedItemPrefab, Grid.SceneLayer.FXFront);
+		obj.SetActive(value: false);
+		return obj;
 	}
 }

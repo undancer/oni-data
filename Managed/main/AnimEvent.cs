@@ -10,25 +10,13 @@ public class AnimEvent
 	public bool OnExit;
 
 	[SerializeField]
-	public string name
-	{
-		get;
-		private set;
-	}
+	public string name { get; private set; }
 
 	[SerializeField]
-	public string file
-	{
-		get;
-		private set;
-	}
+	public string file { get; private set; }
 
 	[SerializeField]
-	public int frame
-	{
-		get;
-		private set;
-	}
+	public int frame { get; private set; }
 
 	public AnimEvent()
 	{

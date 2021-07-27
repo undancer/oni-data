@@ -12,19 +12,16 @@ public static class AxialUtil
 		}
 		if (radius == 0)
 		{
-			return new List<AxialI>
-			{
-				center
-			};
+			return new List<AxialI> { center };
 		}
 		List<AxialI> list = new List<AxialI>();
 		for (int i = 0; i < AxialI.DIRECTIONS.Count; i++)
 		{
-			AxialI u = center + AxialI.DIRECTIONS[i] * radius;
-			AxialI v = AxialI.CLOCKWISE[i];
+			AxialI axialI = center + AxialI.DIRECTIONS[i] * radius;
+			AxialI axialI2 = AxialI.CLOCKWISE[i];
 			for (int j = 0; j < radius; j++)
 			{
-				list.Add(u + v * j);
+				list.Add(axialI + axialI2 * j);
 			}
 		}
 		return list;

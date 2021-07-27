@@ -1,14 +1,8 @@
 public interface IComponentManager
 {
-	int Count
-	{
-		get;
-	}
+	int Count { get; }
 
-	string Name
-	{
-		get;
-	}
+	string Name { get; }
 
 	void Spawn();
 

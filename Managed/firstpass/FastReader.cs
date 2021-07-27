@@ -81,13 +81,13 @@ public class FastReader : IReader
 
 	public unsafe uint ReadUInt32()
 	{
-		uint result;
+		int result;
 		fixed (byte* ptr = &bytes[idx])
 		{
-			result = *(uint*)ptr;
+			result = *(int*)ptr;
 		}
 		idx += 4;
-		return result;
+		return (uint)result;
 	}
 
 	public unsafe int ReadInt32()

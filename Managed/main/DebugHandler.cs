@@ -42,19 +42,11 @@ public class DebugHandler : IInputHandler
 
 	private static int activeWorldBeforeOverride = -1;
 
-	public static bool enabled
-	{
-		get;
-		private set;
-	}
+	public static bool enabled { get; private set; }
 
 	public string handlerName => "DebugHandler";
 
-	public KInputHandler inputHandler
-	{
-		get;
-		set;
-	}
+	public KInputHandler inputHandler { get; set; }
 
 	public DebugHandler()
 	{
@@ -119,7 +111,7 @@ public class DebugHandler : IInputHandler
 		enabled = debugEnabled;
 	}
 
-	public void OnKeyDown(KButtonEvent e)
+	public unsafe void OnKeyDown(KButtonEvent e)
 	{
 		if (!enabled)
 		{

@@ -25,8 +25,8 @@ public class ClustercraftExteriorDoor : KMonoBehaviour
 		base.OnSpawn();
 		if (targetWorldId < 0)
 		{
-			GameObject gameObject = GetComponent<RocketModuleCluster>().CraftInterface.gameObject;
-			WorldContainer worldContainer = ClusterManager.Instance.CreateRocketInteriorWorld(gameObject, interiorTemplateName, delegate
+			GameObject craft_go = GetComponent<RocketModuleCluster>().CraftInterface.gameObject;
+			WorldContainer worldContainer = ClusterManager.Instance.CreateRocketInteriorWorld(craft_go, interiorTemplateName, delegate
 			{
 				PairWithInteriorDoor();
 			});
@@ -95,8 +95,8 @@ public class ClustercraftExteriorDoor : KMonoBehaviour
 
 	public void FerryMinion(GameObject minion)
 	{
-		Vector3 b = Vector3.left * 3f;
-		minion.transform.SetPosition(Grid.CellToPos(Grid.PosToCell(targetDoor.transform.position + b), CellAlignment.Bottom, Grid.SceneLayer.Move));
+		Vector3 vector = Vector3.left * 3f;
+		minion.transform.SetPosition(Grid.CellToPos(Grid.PosToCell(targetDoor.transform.position + vector), CellAlignment.Bottom, Grid.SceneLayer.Move));
 		ClusterManager.Instance.MigrateMinion(minion.GetComponent<MinionIdentity>(), targetDoor.GetMyWorldId());
 	}
 

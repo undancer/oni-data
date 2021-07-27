@@ -119,10 +119,7 @@ public class ScenariosMenu : KModalScreen, SteamUGCService.IClient
 		SteamUGC.GetItemInstallInfo(item, out var punSizeOnDisk, out var pchFolder, 1024u, out var punTimeStamp);
 		DebugUtil.LogArgs("LoadScenario", pchFolder, punSizeOnDisk, punTimeStamp);
 		System.DateTime lastModified;
-		byte[] bytesFromZip = SteamUGCService.GetBytesFromZip(item, new string[1]
-		{
-			".sav"
-		}, out lastModified);
+		byte[] bytesFromZip = SteamUGCService.GetBytesFromZip(item, new string[1] { ".sav" }, out lastModified);
 		string text = Path.Combine(SaveLoader.GetSavePrefix(), "scenario.sav");
 		File.WriteAllBytes(text, bytesFromZip);
 		SaveLoader.SetActiveSaveFilePath(text);

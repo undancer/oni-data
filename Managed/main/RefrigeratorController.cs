@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using STRINGS;
 using UnityEngine;
 
 public class RefrigeratorController : GameStateMachine<RefrigeratorController, RefrigeratorController.StatesInstance, IStateMachineTarget, RefrigeratorController.Def>
 {
-	public class Def : BaseDef
+	public class Def : BaseDef, IGameObjectEffectDescriptor
 	{
 		public float activeCoolingStartBuffer = 2f;
 
@@ -16,6 +17,21 @@ public class RefrigeratorController : GameStateMachine<RefrigeratorController, R
 		public float simulatedThermalConductivity = 1000f;
 
 		public float powerSaverEnergyUsage;
+
+		public float coolingHeatKW;
+
+		public float steadyHeatKW;
+
+		public List<Descriptor> GetDescriptors(GameObject go)
+		{
+			List<Descriptor> list = new List<Descriptor>();
+			list.AddRange(SimulatedTemperatureAdjuster.GetDescriptors(simulatedInternalTemperature));
+			Descriptor item = default(Descriptor);
+			string formattedHeatEnergy = GameUtil.GetFormattedHeatEnergy(coolingHeatKW * 1000f);
+			item.SetupDescriptor(string.Format(UI.BUILDINGEFFECTS.HEATGENERATED, formattedHeatEnergy), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.HEATGENERATED, formattedHeatEnergy));
+			list.Add(item);
+			return list;
+		}
 	}
 
 	public class OperationalStates : State
@@ -25,7 +41,7 @@ public class RefrigeratorController : GameStateMachine<RefrigeratorController, R
 		public State steady;
 	}
 
-	public class StatesInstance : GameInstance, IGameObjectEffectDescriptor
+	public class StatesInstance : GameInstance
 	{
 		[MyCmpReq]
 		public Operational operational;
@@ -33,12 +49,15 @@ public class RefrigeratorController : GameStateMachine<RefrigeratorController, R
 		[MyCmpReq]
 		public Storage storage;
 
+		private HandleVector<int>.Handle structureTemperature;
+
 		private SimulatedTemperatureAdjuster temperatureAdjuster;
 
 		public StatesInstance(IStateMachineTarget master, Def def)
 			: base(master, def)
 		{
 			temperatureAdjuster = new SimulatedTemperatureAdjuster(def.simulatedInternalTemperature, def.simulatedInternalHeatCapacity, def.simulatedThermalConductivity, storage);
+			structureTemperature = GameComps.StructureTemperatures.GetHandle(base.gameObject);
 		}
 
 		protected override void OnCleanUp()
@@ -70,9 +89,14 @@ public class RefrigeratorController : GameStateMachine<RefrigeratorController, R
 			}
 		}
 
-		public List<Descriptor> GetDescriptors(GameObject go)
+		public void ApplyCoolingExhaust(float dt)
 		{
-			return SimulatedTemperatureAdjuster.GetDescriptors(base.def.simulatedInternalTemperature);
+			GameComps.StructureTemperatures.ProduceEnergy(structureTemperature, base.def.coolingHeatKW * dt, BUILDING.STATUSITEMS.OPERATINGENERGY.FOOD_TRANSFER, dt);
+		}
+
+		public void ApplySteadyExhaust(float dt)
+		{
+			GameComps.StructureTemperatures.ProduceEnergy(structureTemperature, base.def.steadyHeatKW * dt, BUILDING.STATUSITEMS.OPERATINGENERGY.FOOD_TRANSFER, dt);
 		}
 	}
 
@@ -92,11 +116,18 @@ public class RefrigeratorController : GameStateMachine<RefrigeratorController, R
 			{
 				smi.operational.SetActive(value: false);
 			});
-		operational.cooling.UpdateTransition(operational.steady, AllFoodCool, UpdateRate.SIM_4000ms, load_balance: true).ToggleStatusItem(Db.Get().BuildingStatusItems.FridgeCooling, (StatesInstance smi) => smi, Db.Get().StatusItemCategories.Main);
-		operational.steady.UpdateTransition(operational.cooling, AnyWarmFood, UpdateRate.SIM_4000ms, load_balance: true).ToggleStatusItem(Db.Get().BuildingStatusItems.FridgeSteady, (StatesInstance smi) => smi, Db.Get().StatusItemCategories.Main).Enter(delegate(StatesInstance smi)
+		operational.cooling.Update("Cooling exhaust", delegate(StatesInstance smi, float dt)
 		{
-			smi.SetEnergySaver(energySaving: true);
-		})
+			smi.ApplyCoolingExhaust(dt);
+		}, UpdateRate.SIM_200ms, load_balance: true).UpdateTransition(operational.steady, AllFoodCool, UpdateRate.SIM_4000ms, load_balance: true).ToggleStatusItem(Db.Get().BuildingStatusItems.FridgeCooling, (StatesInstance smi) => smi, Db.Get().StatusItemCategories.Main);
+		operational.steady.Update("Cooling exhaust", delegate(StatesInstance smi, float dt)
+		{
+			smi.ApplySteadyExhaust(dt);
+		}, UpdateRate.SIM_200ms, load_balance: true).UpdateTransition(operational.cooling, AnyWarmFood, UpdateRate.SIM_4000ms, load_balance: true).ToggleStatusItem(Db.Get().BuildingStatusItems.FridgeSteady, (StatesInstance smi) => smi, Db.Get().StatusItemCategories.Main)
+			.Enter(delegate(StatesInstance smi)
+			{
+				smi.SetEnergySaver(energySaving: true);
+			})
 			.Exit(delegate(StatesInstance smi)
 			{
 				smi.SetEnergySaver(energySaving: false);

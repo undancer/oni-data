@@ -33,17 +33,9 @@ namespace ClipperLib
 
 		private const double def_arc_tolerance = 0.25;
 
-		public double ArcTolerance
-		{
-			get;
-			set;
-		}
+		public double ArcTolerance { get; set; }
 
-		public double MiterLimit
-		{
-			get;
-			set;
-		}
+		public double MiterLimit { get; set; }
 
 		public ClipperOffset(double miterLimit = 2.0, double arcTolerance = 0.25)
 		{

@@ -28,11 +28,7 @@ public class RoomTracker : KMonoBehaviour, IGameObjectEffectDescriptor
 		component.OnUpdateRoom(data);
 	});
 
-	public Room room
-	{
-		get;
-		private set;
-	}
+	public Room room { get; private set; }
 
 	protected override void OnPrefabInit()
 	{
@@ -110,16 +106,16 @@ public class RoomTracker : KMonoBehaviour, IGameObjectEffectDescriptor
 		List<Descriptor> list = new List<Descriptor>();
 		if (!string.IsNullOrEmpty(requiredRoomType))
 		{
-			string name = Db.Get().RoomTypes.Get(requiredRoomType).Name;
+			string arg = Db.Get().RoomTypes.Get(requiredRoomType).Name;
 			switch (requirement)
 			{
 			case Requirement.Recommended:
 			case Requirement.CustomRecommended:
-				list.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.PREFERS_ROOM, name), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.PREFERS_ROOM, name), Descriptor.DescriptorType.Requirement));
+				list.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.PREFERS_ROOM, arg), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.PREFERS_ROOM, arg), Descriptor.DescriptorType.Requirement));
 				break;
 			case Requirement.Required:
 			case Requirement.CustomRequired:
-				list.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.REQUIRESROOM, name), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.REQUIRESROOM, name), Descriptor.DescriptorType.Requirement));
+				list.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.REQUIRESROOM, arg), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.REQUIRESROOM, arg), Descriptor.DescriptorType.Requirement));
 				break;
 			}
 		}

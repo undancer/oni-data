@@ -31,11 +31,7 @@ public class UISounds : KMonoBehaviour
 	[SerializeField]
 	private SoundData[] soundData;
 
-	public static UISounds Instance
-	{
-		get;
-		private set;
-	}
+	public static UISounds Instance { get; private set; }
 
 	public static void DestroyInstance()
 	{

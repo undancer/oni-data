@@ -7,25 +7,13 @@ namespace Satsuma
 	{
 		private List<TNode> tour;
 
-		public IList<TNode> Nodes
-		{
-			get;
-			private set;
-		}
+		public IList<TNode> Nodes { get; private set; }
 
-		public Func<TNode, TNode, double> Cost
-		{
-			get;
-			private set;
-		}
+		public Func<TNode, TNode, double> Cost { get; private set; }
 
 		public IEnumerable<TNode> Tour => tour;
 
-		public double TourCost
-		{
-			get;
-			private set;
-		}
+		public double TourCost { get; private set; }
 
 		public CheapestLinkTsp(IList<TNode> nodes, Func<TNode, TNode, double> cost)
 		{

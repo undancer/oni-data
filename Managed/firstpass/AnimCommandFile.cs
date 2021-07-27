@@ -27,55 +27,23 @@ public class AnimCommandFile
 	private List<KAnimGroupFile.GroupFile> groupFiles = new List<KAnimGroupFile.GroupFile>();
 
 	[StringEnumConverter]
-	public ConfigType Type
-	{
-		get;
-		private set;
-	}
+	public ConfigType Type { get; private set; }
 
 	[StringEnumConverter]
-	public GroupBy TagGroup
-	{
-		get;
-		private set;
-	}
+	public GroupBy TagGroup { get; private set; }
 
 	[StringEnumConverter]
-	public KAnimBatchGroup.RendererType RendererType
-	{
-		get;
-		private set;
-	}
+	public KAnimBatchGroup.RendererType RendererType { get; private set; }
 
-	public string TargetBuild
-	{
-		get;
-		private set;
-	}
+	public string TargetBuild { get; private set; }
 
-	public string AnimTargetBuild
-	{
-		get;
-		private set;
-	}
+	public string AnimTargetBuild { get; private set; }
 
-	public string SwapTargetBuild
-	{
-		get;
-		private set;
-	}
+	public string SwapTargetBuild { get; private set; }
 
-	public Dictionary<string, List<string>> DefaultBuilds
-	{
-		get;
-		private set;
-	}
+	public Dictionary<string, List<string>> DefaultBuilds { get; private set; }
 
-	public int MaxGroupSize
-	{
-		get;
-		private set;
-	}
+	public int MaxGroupSize { get; private set; }
 
 	public AnimCommandFile()
 	{

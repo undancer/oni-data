@@ -583,18 +583,18 @@ public class CodexScreen : KScreen
 			CodexCache.entries[id].CreateContentContainerCollection();
 		}
 		bool flag2 = false;
-		string a = "";
+		string text3 = "";
 		for (int i = 0; i < CodexCache.entries[id].contentContainers.Count; i++)
 		{
 			ContentContainer contentContainer = CodexCache.entries[id].contentContainers[i];
 			GameObject gameObject3;
 			if (!string.IsNullOrEmpty(contentContainer.lockID) && !Game.Instance.unlocks.IsUnlocked(contentContainer.lockID))
 			{
-				if (a != contentContainer.lockID)
+				if (text3 != contentContainer.lockID)
 				{
 					gameObject3 = contentContainerPool.GetFreeElement(contentContainers.gameObject, forceActive: true).gameObject;
 					ConfigureContentContainer(contentContainer, gameObject3, flag && flag2);
-					a = contentContainer.lockID;
+					text3 = contentContainer.lockID;
 					_ = ContentUIPools[typeof(CodexContentLockedIndicator)].GetFreeElement(gameObject3, forceActive: true).gameObject;
 				}
 				continue;
@@ -617,24 +617,24 @@ public class CodexScreen : KScreen
 				}
 			}
 		}
-		string text3 = "";
-		string text4 = id;
+		string text4 = "";
+		string text5 = id;
 		int num3 = 0;
-		while (text4 != CodexCache.FormatLinkID("HOME") && num3 < 10)
+		while (text5 != CodexCache.FormatLinkID("HOME") && num3 < 10)
 		{
 			num3++;
-			if (text4 != null)
+			if (text5 != null)
 			{
-				text3 = ((!(text4 != id)) ? text3.Insert(0, CodexCache.entries[text4].name) : text3.Insert(0, CodexCache.entries[text4].name + " > "));
-				text4 = CodexCache.entries[text4].parentId;
+				text4 = ((!(text5 != id)) ? text4.Insert(0, CodexCache.entries[text5].name) : text4.Insert(0, CodexCache.entries[text5].name + " > "));
+				text5 = CodexCache.entries[text5].parentId;
 			}
 			else
 			{
-				text4 = CodexCache.entries[CodexCache.FormatLinkID("HOME")].id;
-				text3 = text3.Insert(0, CodexCache.entries[text4].name + " > ");
+				text5 = CodexCache.entries[CodexCache.FormatLinkID("HOME")].id;
+				text4 = text4.Insert(0, CodexCache.entries[text5].name + " > ");
 			}
 		}
-		currentLocationText.text = ((text3 == "") ? ("<b>" + UI.StripLinkFormatting(CodexCache.entries["HOME"].name) + "</b>") : text3);
+		currentLocationText.text = ((text4 == "") ? ("<b>" + UI.StripLinkFormatting(CodexCache.entries["HOME"].name) + "</b>") : text4);
 		if (history.Count == 0)
 		{
 			history.Add(new HistoryEntry(id, Vector3.zero, text));

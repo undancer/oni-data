@@ -22,10 +22,7 @@ public abstract class KCollider2D : KMonoBehaviour, IRenderEveryTick
 		}
 	}
 
-	public abstract Bounds bounds
-	{
-		get;
-	}
+	public abstract Bounds bounds { get; }
 
 	protected override void OnPrefabInit()
 	{

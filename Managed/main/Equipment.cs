@@ -13,11 +13,7 @@ public class Equipment : Assignables
 		component.destroyed = true;
 	});
 
-	public bool destroyed
-	{
-		get;
-		private set;
-	}
+	public bool destroyed { get; private set; }
 
 	public GameObject GetTargetGameObject()
 	{
@@ -268,8 +264,8 @@ public class Equipment : Assignables
 
 	private void SetEquippableStoredModifiers(Equippable equippable, bool isStoring)
 	{
-		GameObject gameObject = equippable.gameObject;
-		Storage.MakeItemTemperatureInsulated(gameObject, isStoring, is_initializing: false);
-		Storage.MakeItemInvisible(gameObject, isStoring, is_initializing: false);
+		GameObject go = equippable.gameObject;
+		Storage.MakeItemTemperatureInsulated(go, isStoring, is_initializing: false);
+		Storage.MakeItemInvisible(go, isStoring, is_initializing: false);
 	}
 }

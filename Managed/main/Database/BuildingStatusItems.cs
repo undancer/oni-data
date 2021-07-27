@@ -906,10 +906,10 @@ namespace Database
 			Toilet = CreateStatusItem("Toilet", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			Toilet.resolveStringCallback = delegate(string str, object data)
 			{
-				Toilet.StatesInstance statesInstance5 = (Toilet.StatesInstance)data;
-				if (statesInstance5 != null)
+				Toilet.StatesInstance statesInstance6 = (Toilet.StatesInstance)data;
+				if (statesInstance6 != null)
 				{
-					str = str.Replace("{FlushesRemaining}", statesInstance5.GetFlushesRemaining().ToString());
+					str = str.Replace("{FlushesRemaining}", statesInstance6.GetFlushesRemaining().ToString());
 				}
 				return str;
 			};
@@ -1151,10 +1151,10 @@ namespace Database
 			Grave = CreateStatusItem("Grave", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			Grave.resolveStringCallback = delegate(string str, object data)
 			{
-				Grave.StatesInstance statesInstance4 = (Grave.StatesInstance)data;
-				string text2 = str.Replace("{DeadDupe}", statesInstance4.master.graveName);
+				Grave.StatesInstance statesInstance5 = (Grave.StatesInstance)data;
+				string text2 = str.Replace("{DeadDupe}", statesInstance5.master.graveName);
 				string[] strings = LocString.GetStrings(typeof(NAMEGEN.GRAVE.EPITAPHS));
-				int num = statesInstance4.master.epitaphIdx % strings.Length;
+				int num = statesInstance5.master.epitaphIdx % strings.Length;
 				return text2.Replace("{Epitaph}", strings[num]);
 			};
 			GraveEmpty = CreateStatusItem("GraveEmpty", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
@@ -1171,8 +1171,8 @@ namespace Database
 			WellPressurizing = CreateStatusItem("WellPressurizing", BUILDING.STATUSITEMS.WELL_PRESSURIZING.NAME, BUILDING.STATUSITEMS.WELL_PRESSURIZING.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			WellPressurizing.resolveStringCallback = delegate(string str, object data)
 			{
-				OilWellCap.StatesInstance statesInstance3 = (OilWellCap.StatesInstance)data;
-				return (statesInstance3 != null) ? string.Format(str, GameUtil.GetFormattedPercent(100f * statesInstance3.GetPressurePercent())) : str;
+				OilWellCap.StatesInstance statesInstance4 = (OilWellCap.StatesInstance)data;
+				return (statesInstance4 != null) ? string.Format(str, GameUtil.GetFormattedPercent(100f * statesInstance4.GetPressurePercent())) : str;
 			};
 			WellOverpressure = CreateStatusItem("WellOverpressure", BUILDING.STATUSITEMS.WELL_OVERPRESSURE.NAME, BUILDING.STATUSITEMS.WELL_OVERPRESSURE.TOOLTIP, "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			ReleasingPressure = CreateStatusItem("ReleasingPressure", BUILDING.STATUSITEMS.RELEASING_PRESSURE.NAME, BUILDING.STATUSITEMS.RELEASING_PRESSURE.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
@@ -1345,6 +1345,12 @@ namespace Database
 			InOrbitRequired = CreateStatusItem("InOrbitRequired", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			ReactorRefuelDisabled = CreateStatusItem("ReactorRefuelDisabled", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			FridgeCooling = CreateStatusItem("FridgeCooling", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			FridgeCooling.resolveStringCallback = delegate(string str, object data)
+			{
+				RefrigeratorController.StatesInstance statesInstance3 = (RefrigeratorController.StatesInstance)data;
+				str = str.Replace("{UsedPower}", GameUtil.GetFormattedWattage(statesInstance3.GetNormalPower())).Replace("{MaxPower}", GameUtil.GetFormattedWattage(statesInstance3.GetNormalPower()));
+				return str;
+			};
 			FridgeSteady = CreateStatusItem("FridgeSteady", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			FridgeSteady.resolveStringCallback = delegate(string str, object data)
 			{

@@ -29,10 +29,7 @@ public class GoldCometConfig : IEntityConfig
 		primaryElement.SetElement(SimHashes.GoldAmalgam);
 		primaryElement.Temperature = (comet.temperatureRange.x + comet.temperatureRange.y) / 2f;
 		KBatchedAnimController kBatchedAnimController = gameObject.AddOrGet<KBatchedAnimController>();
-		kBatchedAnimController.AnimFiles = new KAnimFile[1]
-		{
-			Assets.GetAnim("meteor_gold_kanim")
-		};
+		kBatchedAnimController.AnimFiles = new KAnimFile[1] { Assets.GetAnim("meteor_gold_kanim") };
 		kBatchedAnimController.isMovable = true;
 		kBatchedAnimController.initialAnim = "fall_loop";
 		kBatchedAnimController.initialMode = KAnim.PlayMode.Loop;

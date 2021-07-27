@@ -17,11 +17,7 @@ public class HandSanitizerConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		string[] array = new string[2]
-		{
-			"Metal",
-			"BleachStone"
-		};
+		string[] array = new string[2] { "Metal", "BleachStone" };
 		BuildingDef result = BuildingTemplates.CreateBuildingDef(construction_mass: new float[2]
 		{
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER2[0],
@@ -42,10 +38,7 @@ public class HandSanitizerConfig : IBuildingConfig
 		handSanitizer.consumedElement = SimHashes.BleachStone;
 		handSanitizer.diseaseRemovalCount = 480000;
 		HandSanitizer.Work work = go.AddOrGet<HandSanitizer.Work>();
-		work.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_handsanitizer_kanim")
-		};
+		work.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_handsanitizer_kanim") };
 		work.workTime = 1.8f;
 		work.trackUses = true;
 		Storage storage = go.AddOrGet<Storage>();

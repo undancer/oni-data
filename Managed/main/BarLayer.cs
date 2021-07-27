@@ -15,13 +15,13 @@ public class BarLayer : GraphLayer
 
 	public void NewBar(int[] values, float x_position, string ID = "")
 	{
-		GameObject gameObject = Util.KInstantiateUI(prefab_bar, bar_container, force_active: true);
+		GameObject obj = Util.KInstantiateUI(prefab_bar, bar_container, force_active: true);
 		if (ID == "")
 		{
 			ID = bars.Count.ToString();
 		}
-		gameObject.name = $"bar_{ID}";
-		GraphedBar component = gameObject.GetComponent<GraphedBar>();
+		obj.name = $"bar_{ID}";
+		GraphedBar component = obj.GetComponent<GraphedBar>();
 		component.SetFormat(bar_formats[bars.Count % bar_formats.Length]);
 		int[] array = new int[values.Length];
 		for (int i = 0; i < values.Length; i++)

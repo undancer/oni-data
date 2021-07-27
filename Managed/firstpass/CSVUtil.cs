@@ -5,23 +5,9 @@ using UnityEngine;
 
 public static class CSVUtil
 {
-	private static char[] _listSeparators = new char[5]
-	{
-		',',
-		';',
-		'+',
-		'|',
-		'\n'
-	};
+	private static char[] _listSeparators = new char[5] { ',', ';', '+', '|', '\n' };
 
-	private static char[] _enumSeperators = new char[5]
-	{
-		',',
-		';',
-		'+',
-		'|',
-		' '
-	};
+	private static char[] _enumSeperators = new char[5] { ',', ';', '+', '|', ' ' };
 
 	public static bool IsValidColumn(string[,] grid, int col)
 	{

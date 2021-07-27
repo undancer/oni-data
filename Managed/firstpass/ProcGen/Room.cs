@@ -36,24 +36,12 @@ namespace ProcGen
 		private List<WeightedMob> bucket;
 
 		[StringEnumConverter]
-		public Shape shape
-		{
-			get;
-			private set;
-		}
+		public Shape shape { get; private set; }
 
 		[StringEnumConverter]
-		public Selection mobselection
-		{
-			get;
-			private set;
-		}
+		public Selection mobselection { get; private set; }
 
-		public List<WeightedMob> mobs
-		{
-			get;
-			private set;
-		}
+		public List<WeightedMob> mobs { get; private set; }
 
 		public Room()
 		{

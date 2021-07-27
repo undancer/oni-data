@@ -145,10 +145,7 @@ public class Health : KMonoBehaviour, ISaveLoadable
 			});
 			if (!base.gameObject.GetComponent<Navigator>().IsMoving())
 			{
-				EmoteChore emoteChore = new EmoteChore(base.gameObject.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteIdle, "anim_hits_kanim", new HashedString[1]
-				{
-					"hit"
-				}, null);
+				EmoteChore emoteChore = new EmoteChore(base.gameObject.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteIdle, "anim_hits_kanim", new HashedString[1] { "hit" }, null);
 				emoteChore.PairReactable(selfEmoteReactable);
 				selfEmoteReactable.PairEmote(emoteChore);
 			}

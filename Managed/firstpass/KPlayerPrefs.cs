@@ -41,23 +41,11 @@ public class KPlayerPrefs
 		}
 	}
 
-	public Dictionary<string, string> strings
-	{
-		get;
-		private set;
-	}
+	public Dictionary<string, string> strings { get; private set; }
 
-	public Dictionary<string, int> ints
-	{
-		get;
-		private set;
-	}
+	public Dictionary<string, int> ints { get; private set; }
 
-	public Dictionary<string, float> floats
-	{
-		get;
-		private set;
-	}
+	public Dictionary<string, float> floats { get; private set; }
 
 	public KPlayerPrefs()
 	{

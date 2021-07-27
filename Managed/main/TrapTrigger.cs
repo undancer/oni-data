@@ -14,8 +14,8 @@ public class TrapTrigger : KMonoBehaviour
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		GameObject gameObject = base.gameObject;
-		partitionerEntry = GameScenePartitioner.Instance.Add("Trap", gameObject, Grid.PosToCell(gameObject), GameScenePartitioner.Instance.trapsLayer, OnCreatureOnTrap);
+		GameObject go = base.gameObject;
+		partitionerEntry = GameScenePartitioner.Instance.Add("Trap", go, Grid.PosToCell(go), GameScenePartitioner.Instance.trapsLayer, OnCreatureOnTrap);
 		foreach (GameObject item in storage.items)
 		{
 			SetStoredPosition(item);

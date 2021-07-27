@@ -15,27 +15,13 @@ public class DlcManager
 
 	public const string EXPANSION1_DIRECTORY = "expansion1";
 
-	public static readonly string[] AVAILABLE_VANILLA_ONLY = new string[1]
-	{
-		""
-	};
+	public static readonly string[] AVAILABLE_VANILLA_ONLY = new string[1] { "" };
 
-	public static readonly string[] AVAILABLE_EXPANSION1_ONLY = new string[1]
-	{
-		"EXPANSION1_ID"
-	};
+	public static readonly string[] AVAILABLE_EXPANSION1_ONLY = new string[1] { "EXPANSION1_ID" };
 
-	public static readonly string[] AVAILABLE_ALL_VERSIONS = new string[2]
-	{
-		"",
-		"EXPANSION1_ID"
-	};
+	public static readonly string[] AVAILABLE_ALL_VERSIONS = new string[2] { "", "EXPANSION1_ID" };
 
-	public static List<string> RELEASE_ORDER = new List<string>
-	{
-		"",
-		"EXPANSION1_ID"
-	};
+	public static List<string> RELEASE_ORDER = new List<string> { "", "EXPANSION1_ID" };
 
 	public static bool IsVanillaId(string dlcId)
 	{
@@ -119,14 +105,7 @@ public class DlcManager
 
 	public static void ToggleDLC(string id)
 	{
-		if (Application.isEditor || DistributionPlatform.Inst.IsDLCPurchased(id))
-		{
-			SetContentSettingEnabled(id, !IsContentSettingEnabled(id));
-			if ((bool)App.instance)
-			{
-				App.instance.Restart();
-			}
-		}
+		SetContentSettingEnabled(id, !IsContentSettingEnabled(id));
 	}
 
 	public static bool IsContentActive(string dlcId)
@@ -225,14 +204,71 @@ public class DlcManager
 		return list;
 	}
 
+	public static List<string> GetActiveDLCIds()
+	{
+		List<string> list = new List<string>();
+		for (int num = RELEASE_ORDER.Count - 1; num >= 0; num--)
+		{
+			string text = RELEASE_ORDER[num];
+			if (!IsVanillaId(text) && IsContentActive(text))
+			{
+				list.Add(text);
+			}
+		}
+		return list;
+	}
+
+	public static string GetContentLetter(string dlcId)
+	{
+		if (dlcId != null)
+		{
+			if (dlcId != null && dlcId.Length == 0)
+			{
+				return "B";
+			}
+			if (dlcId == "EXPANSION1_ID")
+			{
+				return "S";
+			}
+		}
+		Debug.LogError("No content letter exists for " + dlcId);
+		return null;
+	}
+
+	public static string GetActiveContentLetters()
+	{
+		if (IsPureVanilla())
+		{
+			return GetContentLetter("");
+		}
+		string text = "";
+		for (int i = 0; i < RELEASE_ORDER.Count; i++)
+		{
+			string dlcId = RELEASE_ORDER[i];
+			if (!IsVanillaId(dlcId) && IsContentActive(dlcId))
+			{
+				text += GetContentLetter(dlcId);
+			}
+		}
+		return text;
+	}
+
 	private static void SetContentSettingEnabled(string dlcId, bool enabled)
 	{
 		Debug.Assert(dlcId != "", "There is no KPlayerPrefs value for vanilla - it is always enabled");
-		if (enabled && !CheckPlatformSubscription(dlcId))
+		bool flag = Application.isEditor || DistributionPlatform.Inst.IsDLCPurchased(dlcId);
+		if (!enabled || flag)
 		{
-			DistributionPlatform.Inst.ToggleDLCSubscription(dlcId);
+			KPlayerPrefs.SetInt(dlcId + ".ENABLED", enabled ? 1 : 0);
+			if (enabled && !CheckPlatformSubscription(dlcId))
+			{
+				DistributionPlatform.Inst.ToggleDLCSubscription(dlcId);
+			}
+			else if ((bool)App.instance)
+			{
+				App.instance.Restart();
+			}
 		}
-		KPlayerPrefs.SetInt(dlcId + ".ENABLED", enabled ? 1 : 0);
 	}
 
 	public static bool IsPureVanilla()
@@ -248,12 +284,6 @@ public class DlcManager
 	public static bool IsExpansion1Active()
 	{
 		return IsContentActive("EXPANSION1_ID");
-	}
-
-	public static void SetExpansion1Enabled(bool active)
-	{
-		Debug.Assert(!active || CheckPlatformSubscription("EXPANSION1_ID"), "Cannot set Expansion1 active if it isn't installed");
-		SetContentSettingEnabled("EXPANSION1_ID", active);
 	}
 
 	public static bool FeatureRadiationEnabled()

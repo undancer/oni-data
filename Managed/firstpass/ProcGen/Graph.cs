@@ -23,11 +23,7 @@ namespace ProcGen
 
 		public List<A> arcs => arcList;
 
-		public CustomGraph baseGraph
-		{
-			get;
-			private set;
-		}
+		public CustomGraph baseGraph { get; private set; }
 
 		public void SetSeed(int seed)
 		{
@@ -243,12 +239,12 @@ namespace ProcGen
 			{
 				flag = true;
 				Func<Satsuma.Node, PointD> initialPositions = (Satsuma.Node n) => GetPositionForNode(n);
-				CustomGraph baseGraph = this.baseGraph;
+				CustomGraph graph = baseGraph;
 				int seed = num;
-				ForceDirectedLayout forceDirectedLayout = new ForceDirectedLayout(baseGraph, initialPositions, seed);
+				ForceDirectedLayout forceDirectedLayout = new ForceDirectedLayout(graph, initialPositions, seed);
 				forceDirectedLayout.ExternalForce = (PointD point) => GetForceForBoundry(point, bounds);
 				forceDirectedLayout.Run();
-				IEnumerator<Satsuma.Node> enumerator = this.baseGraph.Nodes().GetEnumerator();
+				IEnumerator<Satsuma.Node> enumerator = baseGraph.Nodes().GetEnumerator();
 				int num2 = 0;
 				while (enumerator.MoveNext())
 				{

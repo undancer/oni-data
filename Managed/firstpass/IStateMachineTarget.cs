@@ -3,25 +3,13 @@ using UnityEngine;
 
 public interface IStateMachineTarget
 {
-	GameObject gameObject
-	{
-		get;
-	}
+	GameObject gameObject { get; }
 
-	Transform transform
-	{
-		get;
-	}
+	Transform transform { get; }
 
-	string name
-	{
-		get;
-	}
+	string name { get; }
 
-	bool isNull
-	{
-		get;
-	}
+	bool isNull { get; }
 
 	int Subscribe(int hash, Action<object> handler);
 

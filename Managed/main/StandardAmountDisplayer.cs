@@ -47,23 +47,23 @@ public class StandardAmountDisplayer : IAmountDisplayer
 
 	public virtual string GetTooltip(Amount master, AmountInstance instance)
 	{
-		string str = "";
-		str = ((master.description.IndexOf("{1}") <= -1) ? (str + string.Format(master.description, formatter.GetFormattedValue(instance.value))) : (str + string.Format(master.description, formatter.GetFormattedValue(instance.value), GameUtil.GetIdentityDescriptor(instance.gameObject))));
-		str += "\n\n";
+		string text = "";
+		text = ((master.description.IndexOf("{1}") <= -1) ? (text + string.Format(master.description, formatter.GetFormattedValue(instance.value))) : (text + string.Format(master.description, formatter.GetFormattedValue(instance.value), GameUtil.GetIdentityDescriptor(instance.gameObject))));
+		text += "\n\n";
 		if (formatter.DeltaTimeSlice == GameUtil.TimeSlice.PerCycle)
 		{
-			str += string.Format(UI.CHANGEPERCYCLE, formatter.GetFormattedValue(instance.deltaAttribute.GetTotalDisplayValue(), GameUtil.TimeSlice.PerCycle));
+			text += string.Format(UI.CHANGEPERCYCLE, formatter.GetFormattedValue(instance.deltaAttribute.GetTotalDisplayValue(), GameUtil.TimeSlice.PerCycle));
 		}
 		else if (formatter.DeltaTimeSlice == GameUtil.TimeSlice.PerSecond)
 		{
-			str += string.Format(UI.CHANGEPERSECOND, formatter.GetFormattedValue(instance.deltaAttribute.GetTotalDisplayValue(), GameUtil.TimeSlice.PerSecond));
+			text += string.Format(UI.CHANGEPERSECOND, formatter.GetFormattedValue(instance.deltaAttribute.GetTotalDisplayValue(), GameUtil.TimeSlice.PerSecond));
 		}
 		for (int i = 0; i != instance.deltaAttribute.Modifiers.Count; i++)
 		{
 			AttributeModifier attributeModifier = instance.deltaAttribute.Modifiers[i];
-			str = str + "\n" + string.Format(UI.MODIFIER_ITEM_TEMPLATE, attributeModifier.GetDescription(), formatter.GetFormattedModifier(attributeModifier));
+			text = text + "\n" + string.Format(UI.MODIFIER_ITEM_TEMPLATE, attributeModifier.GetDescription(), formatter.GetFormattedModifier(attributeModifier));
 		}
-		return str;
+		return text;
 	}
 
 	public string GetFormattedAttribute(AttributeInstance instance)

@@ -9,10 +9,7 @@ public class MassageTable : RelaxationPoint, IGameObjectEffectDescriptor, IActiv
 	[Serialize]
 	private float activateValue = 50f;
 
-	private static readonly string[] EffectsRemoved = new string[1]
-	{
-		"SoreBack"
-	};
+	private static readonly string[] EffectsRemoved = new string[1] { "SoreBack" };
 
 	private static readonly EventSystem.IntraObjectHandler<MassageTable> OnCopySettingsDelegate = new EventSystem.IntraObjectHandler<MassageTable>(delegate(MassageTable component, object data)
 	{

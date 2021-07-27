@@ -46,11 +46,7 @@ public class ScheduleScreenEntry : KMonoBehaviour
 
 	private Dictionary<string, int> blockTypeCounts = new Dictionary<string, int>();
 
-	public Schedule schedule
-	{
-		get;
-		private set;
-	}
+	public Schedule schedule { get; private set; }
 
 	public void Setup(Schedule schedule, Dictionary<string, ColorStyleSetting> paintStyles, Action<ScheduleScreenEntry, float> onPaintDragged)
 	{
@@ -90,10 +86,10 @@ public class ScheduleScreenEntry : KMonoBehaviour
 	protected override void OnCleanUp()
 	{
 		base.OnCleanUp();
-		if (this.schedule != null)
+		if (schedule != null)
 		{
-			Schedule schedule = this.schedule;
-			schedule.onChanged = (Action<Schedule>)Delegate.Remove(schedule.onChanged, new Action<Schedule>(OnScheduleChanged));
+			Schedule obj = schedule;
+			obj.onChanged = (Action<Schedule>)Delegate.Remove(obj.onChanged, new Action<Schedule>(OnScheduleChanged));
 		}
 	}
 

@@ -118,7 +118,7 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 		if (base.occupyingObject == null && (requestedEntityTag != component.requestedEntityTag || component.occupyingObject != null))
 		{
 			Tag entityTag = component.requestedEntityTag;
-			Tag requestedEntityAdditionalFilterTag = component.requestedEntityAdditionalFilterTag;
+			Tag additionalFilterTag = component.requestedEntityAdditionalFilterTag;
 			if (component.occupyingObject != null)
 			{
 				SeedProducer component2 = component.occupyingObject.GetComponent<SeedProducer>();
@@ -128,7 +128,7 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 				}
 			}
 			CancelActiveRequest();
-			CreateOrder(entityTag, requestedEntityAdditionalFilterTag);
+			CreateOrder(entityTag, additionalFilterTag);
 		}
 		if (!(base.occupyingObject != null))
 		{
@@ -214,15 +214,15 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 		if (component != null)
 		{
 			Vector3 position = Grid.CellToPosCBC(Grid.PosToCell(this), plantLayer);
-			GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(component.PlantID), position, plantLayer);
-			MutantPlant component2 = gameObject.GetComponent<MutantPlant>();
+			GameObject obj = GameUtil.KInstantiate(Assets.GetPrefab(component.PlantID), position, plantLayer);
+			MutantPlant component2 = obj.GetComponent<MutantPlant>();
 			if (component2 != null)
 			{
 				component.GetComponent<MutantPlant>().CopyMutationsTo(component2);
 			}
-			gameObject.SetActive(value: true);
+			obj.SetActive(value: true);
 			destroyEntityOnDeposit = true;
-			return gameObject;
+			return obj;
 		}
 		destroyEntityOnDeposit = false;
 		return depositedEntity;

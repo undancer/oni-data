@@ -32,7 +32,7 @@ public class LogicControlInputUI : KMonoBehaviour
 
 	public void SetContent(LogicCircuitNetwork network)
 	{
-		Color32 c = ((network == null) ? GlobalAssets.Instance.colorSet.logicDisconnected : (network.IsBitActive(0) ? colourOn : colourOff));
-		icon.color = c;
+		Color32 color = ((network == null) ? GlobalAssets.Instance.colorSet.logicDisconnected : (network.IsBitActive(0) ? colourOn : colourOff));
+		icon.color = color;
 	}
 }

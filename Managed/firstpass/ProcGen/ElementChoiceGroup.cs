@@ -8,17 +8,9 @@ namespace ProcGen
 	public class ElementChoiceGroup<T>
 	{
 		[StringEnumConverter]
-		public Room.Selection selectionMethod
-		{
-			get;
-			private set;
-		}
+		public Room.Selection selectionMethod { get; private set; }
 
-		public List<T> choices
-		{
-			get;
-			private set;
-		}
+		public List<T> choices { get; private set; }
 
 		public ElementChoiceGroup()
 		{

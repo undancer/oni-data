@@ -104,15 +104,15 @@ public class PopFX : KMonoBehaviour
 			}
 			if (trackTarget && targetTransform != null)
 			{
-				Vector3 v = PopFXManager.Instance.WorldToScreen(targetTransform.GetPosition() + offset + Vector3.up * lifeElapsed * (Speed * lifeElapsed));
-				v.z = 0f;
-				base.gameObject.rectTransform().anchoredPosition = v;
+				Vector3 vector = PopFXManager.Instance.WorldToScreen(targetTransform.GetPosition() + offset + Vector3.up * lifeElapsed * (Speed * lifeElapsed));
+				vector.z = 0f;
+				base.gameObject.rectTransform().anchoredPosition = vector;
 			}
 			else
 			{
-				Vector3 v2 = PopFXManager.Instance.WorldToScreen(startPos + offset + Vector3.up * lifeElapsed * (Speed * (lifeElapsed / 2f)));
-				v2.z = 0f;
-				base.gameObject.rectTransform().anchoredPosition = v2;
+				Vector3 vector2 = PopFXManager.Instance.WorldToScreen(startPos + offset + Vector3.up * lifeElapsed * (Speed * (lifeElapsed / 2f)));
+				vector2.z = 0f;
+				base.gameObject.rectTransform().anchoredPosition = vector2;
 			}
 			canvasGroup.alpha = (isActiveWorld ? (1.5f * ((lifetime - lifeElapsed) / lifetime)) : 0f);
 		}

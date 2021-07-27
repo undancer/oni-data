@@ -123,10 +123,7 @@ public class MinionBrain : Brain
 			ReactionMonitor.Instance sMI = base.gameObject.GetSMI<ReactionMonitor.Instance>();
 			if (sMI != null)
 			{
-				EmoteChore emoteChore = new EmoteChore(base.gameObject.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteIdle, kanim_file_name, new HashedString[1]
-				{
-					"react"
-				}, null);
+				EmoteChore emoteChore = new EmoteChore(base.gameObject.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteIdle, kanim_file_name, new HashedString[1] { "react" }, null);
 				SelfEmoteReactable selfEmoteReactable = new SelfEmoteReactable(base.gameObject, reactable_id, Db.Get().ChoreTypes.Cough, kanim_file_name, max_trigger_time);
 				emoteChore.PairReactable(selfEmoteReactable);
 				selfEmoteReactable.AddStep(new EmoteReactable.EmoteStep

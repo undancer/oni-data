@@ -2,55 +2,23 @@ using System.Collections.Generic;
 
 public class BatchSet
 {
-	public KAnimBatchGroup group
-	{
-		get;
-		private set;
-	}
+	public KAnimBatchGroup group { get; private set; }
 
-	protected List<KAnimBatch> batches
-	{
-		get;
-		private set;
-	}
+	protected List<KAnimBatch> batches { get; private set; }
 
-	public Vector2I idx
-	{
-		get;
-		private set;
-	}
+	public Vector2I idx { get; private set; }
 
-	public BatchKey key
-	{
-		get;
-		private set;
-	}
+	public BatchKey key { get; private set; }
 
-	public bool dirty
-	{
-		get;
-		private set;
-	}
+	public bool dirty { get; private set; }
 
-	public bool active
-	{
-		get;
-		private set;
-	}
+	public bool active { get; private set; }
 
 	public int batchCount => batches.Count;
 
-	public int dirtyBatchLastFrame
-	{
-		get;
-		private set;
-	}
+	public int dirtyBatchLastFrame { get; private set; }
 
-	public int lastDirtyFrame
-	{
-		get;
-		private set;
-	}
+	public int lastDirtyFrame { get; private set; }
 
 	public BatchSet(KAnimBatchGroup batchGroup, BatchKey batchKey, Vector2I spacialIdx)
 	{

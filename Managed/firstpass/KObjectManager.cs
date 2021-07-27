@@ -7,11 +7,7 @@ public class KObjectManager : MonoBehaviour
 
 	private List<int> pendingDestroys = new List<int>();
 
-	public static KObjectManager Instance
-	{
-		get;
-		private set;
-	}
+	public static KObjectManager Instance { get; private set; }
 
 	public static void DestroyInstance()
 	{

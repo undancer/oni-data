@@ -145,14 +145,8 @@ public class TemperatureMonitor : GameStateMachine<TemperatureMonitor, Temperatu
 			SicknessTrigger component = smi.master.GetComponent<SicknessTrigger>();
 			if (component != null)
 			{
-				component.AddTrigger(GameHashes.TooHotSickness, new string[1]
-				{
-					"HeatSickness"
-				}, (GameObject s, GameObject t) => DUPLICANTS.DISEASES.INFECTIONSOURCES.INTERNAL_TEMPERATURE);
-				component.AddTrigger(GameHashes.TooColdSickness, new string[1]
-				{
-					"ColdSickness"
-				}, (GameObject s, GameObject t) => DUPLICANTS.DISEASES.INFECTIONSOURCES.INTERNAL_TEMPERATURE);
+				component.AddTrigger(GameHashes.TooHotSickness, new string[1] { "HeatSickness" }, (GameObject s, GameObject t) => DUPLICANTS.DISEASES.INFECTIONSOURCES.INTERNAL_TEMPERATURE);
+				component.AddTrigger(GameHashes.TooColdSickness, new string[1] { "ColdSickness" }, (GameObject s, GameObject t) => DUPLICANTS.DISEASES.INFECTIONSOURCES.INTERNAL_TEMPERATURE);
 			}
 		}).Update("UpdateTemperature", delegate(Instance smi, float dt)
 		{

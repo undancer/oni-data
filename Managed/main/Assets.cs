@@ -291,13 +291,7 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 
 	private void SubstanceListHookup()
 	{
-		Dictionary<string, SubstanceTable> dictionary = new Dictionary<string, SubstanceTable>
-		{
-			{
-				"",
-				substanceTable
-			}
-		};
+		Dictionary<string, SubstanceTable> dictionary = new Dictionary<string, SubstanceTable> { { "", substanceTable } };
 		if (BundledAssetsLoader.instance.Expansion1Assets != null)
 		{
 			dictionary["EXPANSION1_ID"] = BundledAssetsLoader.instance.Expansion1Assets.SubstanceTable;
@@ -450,13 +444,13 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 
 	public static GameObject GetPrefab(Tag tag)
 	{
-		GameObject gameObject = TryGetPrefab(tag);
-		if (gameObject == null)
+		GameObject obj = TryGetPrefab(tag);
+		if (obj == null)
 		{
 			Tag tag2 = tag;
 			Debug.LogWarning("Missing prefab: " + tag2.ToString());
 		}
-		return gameObject;
+		return obj;
 	}
 
 	public static GameObject TryGetPrefab(Tag tag)

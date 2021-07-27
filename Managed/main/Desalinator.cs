@@ -92,11 +92,7 @@ public class Desalinator : StateMachineComponent<Desalinator.StatesInstance>
 
 		public State empty;
 
-		private static readonly HashedString[] FULL_ANIMS = new HashedString[2]
-		{
-			"working_pst",
-			"off"
-		};
+		private static readonly HashedString[] FULL_ANIMS = new HashedString[2] { "working_pst", "off" };
 
 		public FloatParameter saltStorageLeft = new FloatParameter(0f);
 

@@ -153,7 +153,7 @@ public class TouristModule : StateMachineComponent<TouristModule.StatesInstance>
 
 	private void OnAssigneeChanged(object data)
 	{
-		if (GetComponent<MinionStorage>().GetStoredMinionInfo().Count > 0)
+		if (base.gameObject.HasTag(GameTags.RocketOnGround) && GetComponent<MinionStorage>().GetStoredMinionInfo().Count > 0)
 		{
 			ReleaseAstronaut(null);
 			Game.Instance.userMenu.Refresh(base.gameObject);

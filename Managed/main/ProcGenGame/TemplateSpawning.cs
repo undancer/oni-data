@@ -297,9 +297,9 @@ namespace ProcGenGame
 
 		private static bool IsPOIOverlappingHighTemperatureDelta(RectInt paddedTemplateBounds, SubWorld subworld, ref List<TerrainCell> allCells, WorldGenSettings settings)
 		{
-			Vector2 b = 2f * Vector2.one * m_poiPadding;
-			Vector2 b2 = 2f * Vector2.one * 3f;
-			Rect rect = new Rect(paddedTemplateBounds.position, paddedTemplateBounds.size - b + b2);
+			Vector2 vector = 2f * Vector2.one * m_poiPadding;
+			Vector2 vector2 = 2f * Vector2.one * 3f;
+			Rect rect = new Rect(paddedTemplateBounds.position, paddedTemplateBounds.size - vector + vector2);
 			Temperature temperature = SettingsCache.temperatures[subworld.temperatureRange];
 			for (int i = 0; i < allCells.Count; i++)
 			{
@@ -475,32 +475,32 @@ namespace ProcGenGame
 			}
 			if (num != 1)
 			{
-				string str = "BAD ALLOWED CELLS FILTER in FEATURE RULES!";
-				str += "\nA filter can only specify one of `tagcommand`, `subworldNames`, `zoneTypes`, or `temperatureRanges`.";
-				str += "\nFound a filter with the following:";
+				string text = "BAD ALLOWED CELLS FILTER in FEATURE RULES!";
+				text += "\nA filter can only specify one of `tagcommand`, `subworldNames`, `zoneTypes`, or `temperatureRanges`.";
+				text += "\nFound a filter with the following:";
 				if (filter.tagcommand != 0)
 				{
-					str += "\ntagcommand:\n\t";
-					str += filter.tagcommand;
-					str += "\ntag:\n\t";
-					str += filter.tag;
+					text += "\ntagcommand:\n\t";
+					text += filter.tagcommand;
+					text += "\ntag:\n\t";
+					text += filter.tag;
 				}
 				if (filter.subworldNames != null && filter.subworldNames.Count > 0)
 				{
-					str += "\nsubworldNames:\n\t";
-					str += string.Join(", ", filter.subworldNames);
+					text += "\nsubworldNames:\n\t";
+					text += string.Join(", ", filter.subworldNames);
 				}
 				if (filter.zoneTypes != null && filter.zoneTypes.Count > 0)
 				{
-					str += "\nzoneTypes:\n";
-					str += string.Join(", ", filter.zoneTypes);
+					text += "\nzoneTypes:\n";
+					text += string.Join(", ", filter.zoneTypes);
 				}
 				if (filter.temperatureRanges != null && filter.temperatureRanges.Count > 0)
 				{
-					str += "\ntemperatureRanges:\n";
-					str += string.Join(", ", filter.temperatureRanges);
+					text += "\ntemperatureRanges:\n";
+					text += string.Join(", ", filter.temperatureRanges);
 				}
-				Debug.LogError(str);
+				Debug.LogError(text);
 				return false;
 			}
 			return true;

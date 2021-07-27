@@ -1,10 +1,6 @@
 public class ResourceTracker : WorldTracker
 {
-	public Tag tag
-	{
-		get;
-		private set;
-	}
+	public Tag tag { get; private set; }
 
 	public ResourceTracker(int worldID, Tag materialCategoryTag)
 		: base(worldID)

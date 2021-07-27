@@ -4,11 +4,7 @@ namespace Satsuma
 {
 	public struct DisjointSetSet<T> : IEquatable<DisjointSetSet<T>>
 	{
-		public T Representative
-		{
-			get;
-			private set;
-		}
+		public T Representative { get; private set; }
 
 		public DisjointSetSet(T representative)
 		{

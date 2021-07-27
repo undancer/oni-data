@@ -517,24 +517,24 @@ public class ElementConverter : StateMachineComponent<ElementConverter.StatesIns
 			{
 				OutputElement outputElement = array2[i];
 				Descriptor item2 = default(Descriptor);
-				LocString loc_string;
-				LocString loc_string2;
+				LocString locString;
+				LocString locString2;
 				if (outputElement.useEntityTemperature)
 				{
-					loc_string = UI.BUILDINGEFFECTS.ELEMENTEMITTED_ENTITYTEMP;
-					loc_string2 = UI.BUILDINGEFFECTS.TOOLTIPS.ELEMENTEMITTED_ENTITYTEMP;
+					locString = UI.BUILDINGEFFECTS.ELEMENTEMITTED_ENTITYTEMP;
+					locString2 = UI.BUILDINGEFFECTS.TOOLTIPS.ELEMENTEMITTED_ENTITYTEMP;
 				}
 				else if (outputElement.minOutputTemperature > 0f)
 				{
-					loc_string = UI.BUILDINGEFFECTS.ELEMENTEMITTED_MINTEMP;
-					loc_string2 = UI.BUILDINGEFFECTS.TOOLTIPS.ELEMENTEMITTED_MINTEMP;
+					locString = UI.BUILDINGEFFECTS.ELEMENTEMITTED_MINTEMP;
+					locString2 = UI.BUILDINGEFFECTS.TOOLTIPS.ELEMENTEMITTED_MINTEMP;
 				}
 				else
 				{
-					loc_string = UI.BUILDINGEFFECTS.ELEMENTEMITTED_INPUTTEMP;
-					loc_string2 = UI.BUILDINGEFFECTS.TOOLTIPS.ELEMENTEMITTED_INPUTTEMP;
+					locString = UI.BUILDINGEFFECTS.ELEMENTEMITTED_INPUTTEMP;
+					locString2 = UI.BUILDINGEFFECTS.TOOLTIPS.ELEMENTEMITTED_INPUTTEMP;
 				}
-				item2.SetupDescriptor(string.Format(loc_string, outputElement.Name, GameUtil.GetFormattedMass(outputElement.massGenerationRate, GameUtil.TimeSlice.PerSecond, GameUtil.MetricMassFormat.UseThreshold, includeSuffix: true, "{0:0.##}"), GameUtil.GetFormattedTemperature(outputElement.minOutputTemperature)), string.Format(loc_string2, outputElement.Name, GameUtil.GetFormattedMass(outputElement.massGenerationRate, GameUtil.TimeSlice.PerSecond, GameUtil.MetricMassFormat.UseThreshold, includeSuffix: true, "{0:0.##}"), GameUtil.GetFormattedTemperature(outputElement.minOutputTemperature)));
+				item2.SetupDescriptor(string.Format(locString, outputElement.Name, GameUtil.GetFormattedMass(outputElement.massGenerationRate, GameUtil.TimeSlice.PerSecond, GameUtil.MetricMassFormat.UseThreshold, includeSuffix: true, "{0:0.##}"), GameUtil.GetFormattedTemperature(outputElement.minOutputTemperature)), string.Format(locString2, outputElement.Name, GameUtil.GetFormattedMass(outputElement.massGenerationRate, GameUtil.TimeSlice.PerSecond, GameUtil.MetricMassFormat.UseThreshold, includeSuffix: true, "{0:0.##}"), GameUtil.GetFormattedTemperature(outputElement.minOutputTemperature)));
 				list.Add(item2);
 			}
 		}

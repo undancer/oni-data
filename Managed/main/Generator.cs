@@ -32,10 +32,7 @@ public class Generator : KMonoBehaviour, ISaveLoadable, IEnergyProducer, ICircui
 
 	private float capacity;
 
-	public static readonly Tag[] DEFAULT_CONNECTED_TAGS = new Tag[1]
-	{
-		GameTags.Operational
-	};
+	public static readonly Tag[] DEFAULT_CONNECTED_TAGS = new Tag[1] { GameTags.Operational };
 
 	[SerializeField]
 	public Tag[] connectedTags = DEFAULT_CONNECTED_TAGS;
@@ -77,27 +74,15 @@ public class Generator : KMonoBehaviour, ISaveLoadable, IEnergyProducer, ICircui
 		}
 	}
 
-	public int PowerCell
-	{
-		get;
-		private set;
-	}
+	public int PowerCell { get; private set; }
 
 	public ushort CircuitID => Game.Instance.circuitManager.GetCircuitID(this);
 
 	private float Efficiency => Mathf.Max(1f + generatorOutputAttribute.GetTotalValue() / 100f, 0f);
 
-	public bool IsVirtual
-	{
-		get;
-		protected set;
-	}
+	public bool IsVirtual { get; protected set; }
 
-	public object VirtualCircuitKey
-	{
-		get;
-		protected set;
-	}
+	public object VirtualCircuitKey { get; protected set; }
 
 	protected override void OnPrefabInit()
 	{

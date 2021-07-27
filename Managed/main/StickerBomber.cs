@@ -168,19 +168,19 @@ public class StickerBomber : GameStateMachine<StickerBomber, StickerBomber.Insta
 			private void PlaceSticker()
 			{
 				stickersPlaced++;
-				Vector3 a = Grid.CellToPos(placementCell);
+				Vector3 vector = Grid.CellToPos(placementCell);
 				int num = 10;
 				while (num > 0)
 				{
 					num--;
-					Vector3 position = a + new Vector3(UnityEngine.Random.Range(0f - tile_random_range, tile_random_range), UnityEngine.Random.Range(0f - tile_random_range, tile_random_range), -2.5f);
+					Vector3 position = vector + new Vector3(UnityEngine.Random.Range(0f - tile_random_range, tile_random_range), UnityEngine.Random.Range(0f - tile_random_range, tile_random_range), -2.5f);
 					if (StickerBomb.CanPlaceSticker(StickerBomb.BuildCellOffsets(position)))
 					{
-						GameObject gameObject = Util.KInstantiate(Assets.GetPrefab("StickerBomb".ToTag()), position, Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0f - tile_random_rotation, tile_random_rotation)));
-						StickerBomb component = gameObject.GetComponent<StickerBomb>();
+						GameObject obj = Util.KInstantiate(Assets.GetPrefab("StickerBomb".ToTag()), position, Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0f - tile_random_rotation, tile_random_rotation)));
+						StickerBomb component = obj.GetComponent<StickerBomb>();
 						string stickerType = reactor.GetComponent<MinionIdentity>().stickerType;
 						component.SetStickerType(stickerType);
-						gameObject.SetActive(value: true);
+						obj.SetActive(value: true);
 						num = 0;
 					}
 				}

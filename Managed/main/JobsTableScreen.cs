@@ -128,7 +128,7 @@ public class JobsTableScreen : TableScreen
 			GetWidgetRow(widget_go).SelectAndFocusMinion();
 		}, base.compare_rows_alphabetical, null, base.on_tooltip_sort_alphabetically);
 		List<ChoreGroup> list = new List<ChoreGroup>(Db.Get().ChoreGroups.resources);
-		from @group in list
+		_ = from @group in list
 			orderby @group.DefaultPersonalPriority descending, @group.Name
 			select @group;
 		foreach (ChoreGroup item2 in list)
@@ -395,10 +395,10 @@ public class JobsTableScreen : TableScreen
 			case TableRow.RowType.Minion:
 			case TableRow.RowType.StoredMinon:
 			{
-				bool flag = GetPriorityManager(widgetRow).IsChoreGroupDisabled(choreGroup);
+				bool raycastTarget = GetPriorityManager(widgetRow).IsChoreGroupDisabled(choreGroup);
 				HierarchyReferences component = widget_go.GetComponent<HierarchyReferences>();
-				(component.GetReference("FG") as KImage).raycastTarget = flag;
-				(component.GetReference("FGToolTip") as ToolTip).enabled = flag;
+				(component.GetReference("FG") as KImage).raycastTarget = raycastTarget;
+				(component.GetReference("FGToolTip") as ToolTip).enabled = raycastTarget;
 				break;
 			}
 			}
@@ -846,15 +846,15 @@ public class JobsTableScreen : TableScreen
 	{
 		bool result = false;
 		Transform transform = parent.transform;
-		Transform transform2 = obj.transform;
-		while (transform2 != null)
+		Transform parent2 = obj.transform;
+		while (parent2 != null)
 		{
-			if (transform2 == transform)
+			if (parent2 == transform)
 			{
 				result = true;
 				break;
 			}
-			transform2 = transform2.parent;
+			parent2 = parent2.parent;
 		}
 		return result;
 	}
@@ -923,17 +923,17 @@ public class JobsTableScreen : TableScreen
 			selectable.Select();
 			items_root.SetActive(value: true);
 		};
-		GameObject gameObject = hierarchyReferences.GetReference("ItemTemplate").gameObject;
+		GameObject original = hierarchyReferences.GetReference("ItemTemplate").gameObject;
 		for (int num = 5; num >= 0; num--)
 		{
 			PriorityInfo priorityInfo = GetPriorityInfo(num);
 			if (priorityInfo.name != null)
 			{
-				GameObject gameObject2 = Util.KInstantiateUI(gameObject, items_root, force_active: true);
-				KButton component2 = gameObject2.GetComponent<KButton>();
-				HierarchyReferences component3 = gameObject2.GetComponent<HierarchyReferences>();
+				GameObject obj2 = Util.KInstantiateUI(original, items_root, force_active: true);
+				KButton component2 = obj2.GetComponent<KButton>();
+				HierarchyReferences component3 = obj2.GetComponent<HierarchyReferences>();
 				KImage kImage = component3.GetReference("Icon") as KImage;
-				LocText obj2 = component3.GetReference("Label") as LocText;
+				LocText obj3 = component3.GetReference("Label") as LocText;
 				int new_priority = num;
 				component2.onClick += delegate
 				{
@@ -941,7 +941,7 @@ public class JobsTableScreen : TableScreen
 					UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
 				};
 				kImage.sprite = priorityInfo.sprite;
-				obj2.text = priorityInfo.name;
+				obj3.text = priorityInfo.name;
 			}
 		}
 	}

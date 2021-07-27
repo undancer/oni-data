@@ -18,11 +18,7 @@ public class Traces : KMonoBehaviour
 
 	public List<Entry> DestroyTraces = new List<Entry>();
 
-	public static Traces Instance
-	{
-		get;
-		private set;
-	}
+	public static Traces Instance { get; private set; }
 
 	public static void DestroyInstance()
 	{

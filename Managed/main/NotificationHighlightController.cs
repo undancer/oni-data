@@ -86,29 +86,29 @@ public class NotificationHighlightController : KMonoBehaviour
 		if (componentInParent != null)
 		{
 			RectTransform rectTransform2 = componentInParent.rectTransform();
-			Vector3 a = rectTransform2.TransformPoint(rectTransform2.rect.min);
-			Vector3 a2 = rectTransform2.TransformPoint(rectTransform2.rect.max);
-			Vector3 b = highlightBox.TransformPoint(highlightBox.rect.min);
-			Vector3 b2 = highlightBox.TransformPoint(highlightBox.rect.max);
-			Vector3 vector = a - b;
-			Vector3 vector2 = a2 - b2;
-			if (vector.x > 0f)
+			Vector3 vector = rectTransform2.TransformPoint(rectTransform2.rect.min);
+			Vector3 vector2 = rectTransform2.TransformPoint(rectTransform2.rect.max);
+			Vector3 vector3 = highlightBox.TransformPoint(highlightBox.rect.min);
+			Vector3 vector4 = highlightBox.TransformPoint(highlightBox.rect.max);
+			Vector3 vector5 = vector - vector3;
+			Vector3 vector6 = vector2 - vector4;
+			if (vector5.x > 0f)
 			{
-				highlightBox.anchoredPosition += new Vector2(vector.x, 0f);
-				highlightBox.sizeDelta -= new Vector2(vector.x, 0f);
+				highlightBox.anchoredPosition += new Vector2(vector5.x, 0f);
+				highlightBox.sizeDelta -= new Vector2(vector5.x, 0f);
 			}
-			else if (vector.y > 0f)
+			else if (vector5.y > 0f)
 			{
-				highlightBox.anchoredPosition += new Vector2(0f, vector.y);
-				highlightBox.sizeDelta -= new Vector2(0f, vector.y);
+				highlightBox.anchoredPosition += new Vector2(0f, vector5.y);
+				highlightBox.sizeDelta -= new Vector2(0f, vector5.y);
 			}
-			if (vector2.x < 0f)
+			if (vector6.x < 0f)
 			{
-				highlightBox.sizeDelta += new Vector2(vector2.x, 0f);
+				highlightBox.sizeDelta += new Vector2(vector6.x, 0f);
 			}
-			if (vector2.y < 0f)
+			if (vector6.y < 0f)
 			{
-				highlightBox.sizeDelta += new Vector2(0f, vector2.y);
+				highlightBox.sizeDelta += new Vector2(0f, vector6.y);
 			}
 		}
 		highlightBox.gameObject.SetActive(highlightBox.sizeDelta.x > 0f && highlightBox.sizeDelta.y > 0f);

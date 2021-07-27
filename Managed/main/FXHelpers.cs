@@ -23,10 +23,7 @@ public static class FXHelpers
 		}
 		else
 		{
-			component.AnimFiles = new KAnimFile[1]
-			{
-				anim
-			};
+			component.AnimFiles = new KAnimFile[1] { anim };
 		}
 		if (!set_inactive)
 		{

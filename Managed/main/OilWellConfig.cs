@@ -14,10 +14,7 @@ public class OilWellConfig : IEntityConfig
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("OilWell", STRINGS.CREATURES.SPECIES.OIL_WELL.NAME, STRINGS.CREATURES.SPECIES.OIL_WELL.DESC, 2000f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER1, noise: NOISE_POLLUTION.NOISY.TIER5, anim: Assets.GetAnim("geyser_side_oil_kanim"), initialAnim: "off", sceneLayer: Grid.SceneLayer.BuildingBack, width: 4, height: 2);
-		gameObject.GetComponent<OccupyArea>().objectLayers = new ObjectLayer[1]
-		{
-			ObjectLayer.Building
-		};
+		gameObject.GetComponent<OccupyArea>().objectLayers = new ObjectLayer[1] { ObjectLayer.Building };
 		PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
 		component.SetElement(SimHashes.SedimentaryRock);
 		component.Temperature = 372.15f;

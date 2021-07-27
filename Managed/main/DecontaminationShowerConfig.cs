@@ -54,10 +54,7 @@ public class DecontaminationShowerConfig : IBuildingConfig
 		handSanitizer.canSanitizeStorage = true;
 		go.AddOrGet<DirectionControl>();
 		HandSanitizer.Work work = go.AddOrGet<HandSanitizer.Work>();
-		work.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_decontamination_shower_kanim")
-		};
+		work.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_decontamination_shower_kanim") };
 		work.workLayer = Grid.SceneLayer.BuildingUse;
 		work.workTime = 15f;
 		work.trackUses = true;

@@ -116,13 +116,13 @@ public class OrbitalMechanics : KMonoBehaviour, IRenderEveryTick
 	{
 		float num = data.periodInCycles * 600f;
 		float f = (applyOverrides ? (overridePercent / 100f) : (time / num - (float)(int)(time / num))) * 2f * (float)Math.PI;
-		float d = 0.5f * data.radiusScale;
+		float num2 = 0.5f * data.radiusScale;
 		float yGridPercent = data.yGridPercent;
-		Vector3 a = new Vector3(0.5f, yGridPercent, 0f);
-		Vector3 a2 = new Vector3(Mathf.Cos(f), 0f, Mathf.Sin(f));
-		behind = a2.z > data.behindZ;
-		Vector3 b = Quaternion.Euler(data.angle, 0f, 0f) * (a2 * d);
-		Vector3 result = a + b;
+		Vector3 vector = new Vector3(0.5f, yGridPercent, 0f);
+		Vector3 vector2 = new Vector3(Mathf.Cos(f), 0f, Mathf.Sin(f));
+		behind = vector2.z > data.behindZ;
+		Vector3 vector3 = Quaternion.Euler(data.angle, 0f, 0f) * (vector2 * num2);
+		Vector3 result = vector + vector3;
 		result.z = data.renderZ;
 		return result;
 	}

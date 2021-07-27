@@ -19,10 +19,7 @@ public class ObjectDispenserConfig : IBuildingConfig
 		obj.PermittedRotations = PermittedRotations.FlipH;
 		obj.EnergyConsumptionWhenActive = 60f;
 		obj.ExhaustKilowattsWhenActive = 0.125f;
-		obj.LogicInputPorts = new List<LogicPorts.Port>
-		{
-			LogicPorts.Port.InputPort(ObjectDispenser.PORT_ID, new CellOffset(0, 1), STRINGS.BUILDINGS.PREFABS.OBJECTDISPENSER.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.OBJECTDISPENSER.LOGIC_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.OBJECTDISPENSER.LOGIC_PORT_INACTIVE)
-		};
+		obj.LogicInputPorts = new List<LogicPorts.Port> { LogicPorts.Port.InputPort(ObjectDispenser.PORT_ID, new CellOffset(0, 1), STRINGS.BUILDINGS.PREFABS.OBJECTDISPENSER.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.OBJECTDISPENSER.LOGIC_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.OBJECTDISPENSER.LOGIC_PORT_INACTIVE) };
 		SoundEventVolumeCache.instance.AddVolume("ventliquid_kanim", "LiquidVent_squirt", NOISE_POLLUTION.NOISY.TIER0);
 		return obj;
 	}

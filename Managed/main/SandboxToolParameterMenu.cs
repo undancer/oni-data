@@ -611,7 +611,7 @@ public class SandboxToolParameterMenu : KScreen
 		GameObject gameObject = Util.KInstantiateUI(selectorPropertyPrefab, base.gameObject, force_active: true);
 		HierarchyReferences component = gameObject.GetComponent<HierarchyReferences>();
 		GameObject panel = component.GetReference("ScrollPanel").gameObject;
-		GameObject gameObject2 = component.GetReference("Content").gameObject;
+		GameObject parent = component.GetReference("Content").gameObject;
 		InputField filterInputField = component.GetReference<InputField>("Filter");
 		component.GetReference<LocText>("Label").SetText(selector.labelText);
 		Game.Instance.Subscribe(1174281782, delegate
@@ -632,10 +632,10 @@ public class SandboxToolParameterMenu : KScreen
 				filterInputField.onValueChanged.Invoke(filterInputField.text);
 			}
 		};
-		GameObject gameObject3 = component.GetReference("optionPrefab").gameObject;
+		GameObject original = component.GetReference("optionPrefab").gameObject;
 		selector.row = gameObject;
 		selector.optionButtons = new List<KeyValuePair<object, GameObject>>();
-		GameObject clearFilterButton = Util.KInstantiateUI(gameObject3, gameObject2);
+		GameObject clearFilterButton = Util.KInstantiateUI(original, parent);
 		clearFilterButton.GetComponentInChildren<LocText>().text = UI.SANDBOXTOOLS.FILTERS.BACK;
 		clearFilterButton.GetComponentsInChildren<Image>()[1].enabled = false;
 		clearFilterButton.GetComponent<KButton>().onClick += delegate
@@ -662,15 +662,15 @@ public class SandboxToolParameterMenu : KScreen
 			SelectorValue.SearchFilter[] filters = selector.filters;
 			foreach (SelectorValue.SearchFilter filter in filters)
 			{
-				GameObject gameObject4 = Util.KInstantiateUI(gameObject3, gameObject2);
-				gameObject4.SetActive(filter.parentFilter == null);
-				gameObject4.GetComponentInChildren<LocText>().text = filter.Name;
+				GameObject gameObject2 = Util.KInstantiateUI(original, parent);
+				gameObject2.SetActive(filter.parentFilter == null);
+				gameObject2.GetComponentInChildren<LocText>().text = filter.Name;
 				if (filter.icon != null)
 				{
-					gameObject4.GetComponentsInChildren<Image>()[1].sprite = filter.icon.first;
-					gameObject4.GetComponentsInChildren<Image>()[1].color = filter.icon.second;
+					gameObject2.GetComponentsInChildren<Image>()[1].sprite = filter.icon.first;
+					gameObject2.GetComponentsInChildren<Image>()[1].color = filter.icon.second;
 				}
-				gameObject4.GetComponent<KButton>().onClick += delegate
+				gameObject2.GetComponent<KButton>().onClick += delegate
 				{
 					selector.currentFilter = filter;
 					clearFilterButton.SetActive(value: true);
@@ -691,30 +691,30 @@ public class SandboxToolParameterMenu : KScreen
 					});
 					panel.GetComponent<KScrollRect>().verticalNormalizedPosition = 1f;
 				};
-				selector.optionButtons.Add(new KeyValuePair<object, GameObject>(filter, gameObject4));
+				selector.optionButtons.Add(new KeyValuePair<object, GameObject>(filter, gameObject2));
 			}
 		}
 		object[] options = selector.options;
 		foreach (object option in options)
 		{
-			GameObject gameObject5 = Util.KInstantiateUI(gameObject3, gameObject2, force_active: true);
-			gameObject5.GetComponentInChildren<LocText>().text = selector.getOptionName(option);
-			gameObject5.GetComponent<KButton>().onClick += delegate
+			GameObject gameObject3 = Util.KInstantiateUI(original, parent, force_active: true);
+			gameObject3.GetComponentInChildren<LocText>().text = selector.getOptionName(option);
+			gameObject3.GetComponent<KButton>().onClick += delegate
 			{
 				selector.onValueChanged(option);
 				panel.SetActive(value: false);
 			};
 			Tuple<Sprite, Color> tuple = selector.getOptionSprite(option);
-			gameObject5.GetComponentsInChildren<Image>()[1].sprite = tuple.first;
-			gameObject5.GetComponentsInChildren<Image>()[1].color = tuple.second;
-			selector.optionButtons.Add(new KeyValuePair<object, GameObject>(option, gameObject5));
+			gameObject3.GetComponentsInChildren<Image>()[1].sprite = tuple.first;
+			gameObject3.GetComponentsInChildren<Image>()[1].color = tuple.second;
+			selector.optionButtons.Add(new KeyValuePair<object, GameObject>(option, gameObject3));
 			if (option is SelectorValue.SearchFilter)
 			{
-				gameObject5.SetActive((option as SelectorValue.SearchFilter).parentFilter == null);
+				gameObject3.SetActive((option as SelectorValue.SearchFilter).parentFilter == null);
 			}
 			else
 			{
-				gameObject5.SetActive(value: false);
+				gameObject3.SetActive(value: false);
 			}
 		}
 		selector.button = reference;
@@ -767,10 +767,8 @@ public class SandboxToolParameterMenu : KScreen
 			if (selector.filterOptionFunction != null)
 			{
 				object[] options2 = selector.options;
-				object option2 = default(object);
-				for (int j = 0; j < options2.Length; j++)
+				foreach (object option2 in options2)
 				{
-					option2 = options2[j];
 					foreach (KeyValuePair<object, GameObject> item in selector.optionButtons.FindAll((KeyValuePair<object, GameObject> match) => match.Key == option2))
 					{
 						if (string.IsNullOrEmpty(filterString))

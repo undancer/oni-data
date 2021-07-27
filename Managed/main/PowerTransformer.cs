@@ -53,8 +53,8 @@ public class PowerTransformer : Generator
 	public override void EnergySim200ms(float dt)
 	{
 		base.EnergySim200ms(dt);
-		float joulesAvailable = (operational.IsOperational ? Math.Min(battery.JoulesAvailable, base.WattageRating * dt) : 0f);
-		AssignJoulesAvailable(joulesAvailable);
+		float num = (operational.IsOperational ? Math.Min(battery.JoulesAvailable, base.WattageRating * dt) : 0f);
+		AssignJoulesAvailable(num);
 		ushort circuitID = battery.CircuitID;
 		ushort circuitID2 = base.CircuitID;
 		bool flag = circuitID == circuitID2 && circuitID != ushort.MaxValue;

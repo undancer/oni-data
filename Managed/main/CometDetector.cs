@@ -94,10 +94,13 @@ public class CometDetector : GameStateMachine<CometDetector, CometDetector.Insta
 				foreach (GameplayEventInstance meteorShower in meteorShowers)
 				{
 					MeteorShowerEvent.StatesInstance statesInstance = meteorShower.smi as MeteorShowerEvent.StatesInstance;
-					num = Mathf.Min(num, statesInstance.TimeUntilNextShower());
+					if (statesInstance != null)
+					{
+						num = Mathf.Min(num, statesInstance.TimeUntilNextShower());
+					}
 				}
 				meteorShowers.Clear();
-				if (num < detectTime)
+				if (num <= detectTime)
 				{
 					component.AddTag(GameTags.Detecting);
 				}

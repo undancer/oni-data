@@ -44,17 +44,9 @@ namespace ClipperLib
 
 		private bool m_UsingPolyTree;
 
-		public bool ReverseSolution
-		{
-			get;
-			set;
-		}
+		public bool ReverseSolution { get; set; }
 
-		public bool StrictlySimple
-		{
-			get;
-			set;
-		}
+		public bool StrictlySimple { get; set; }
 
 		public Clipper(int InitOptions = 0)
 		{

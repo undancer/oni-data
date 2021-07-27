@@ -45,17 +45,9 @@ public class KAnimGroupFile : ScriptableObject
 
 	public class GroupFile
 	{
-		public string groupID
-		{
-			get;
-			set;
-		}
+		public string groupID { get; set; }
 
-		public string commandDirectory
-		{
-			get;
-			set;
-		}
+		public string commandDirectory { get; set; }
 	}
 
 	public enum AddModResult
@@ -294,12 +286,12 @@ public class KAnimGroupFile : ScriptableObject
 						Debug.LogWarning("Build File [" + kAnimFile.GetData().name + "] has 0 bytes");
 						continue;
 					}
-					HashedString hash = new HashedString(kAnimFile.name);
-					HashCache.Get().Add(hash.HashValue, kAnimFile.name);
+					HashedString hashedString = new HashedString(kAnimFile.name);
+					HashCache.Get().Add(hashedString.HashValue, kAnimFile.name);
 					KAnimFileData file = KGlobalAnimParser.Get().GetFile(kAnimFile);
 					file.maxVisSymbolFrames = 0;
 					file.batchTag = batchTag;
-					file.buildIndex = KGlobalAnimParser.ParseBuildData(kBatchGroupData, hash, new FastReader(kAnimFile.buildBytes), kAnimFile.textureList);
+					file.buildIndex = KGlobalAnimParser.ParseBuildData(kBatchGroupData, hashedString, new FastReader(kAnimFile.buildBytes), kAnimFile.textureList);
 					fileData.Add(kAnimFile.GetInstanceID(), file);
 				}
 			}

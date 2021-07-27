@@ -19,24 +19,20 @@ public class DecorProvider : KMonoBehaviour, IGameObjectEffectDescriptor
 
 		private HandleVector<int>.Handle solidChangedPartitionerEntry;
 
-		public float decor
-		{
-			get;
-			private set;
-		}
+		public float decor { get; private set; }
 
 		public Splat(DecorProvider provider)
 		{
 			this = default(Splat);
-			AttributeInstance decor = provider.decor;
-			this.decor = 0f;
-			if (decor != null)
+			AttributeInstance attributeInstance = provider.decor;
+			decor = 0f;
+			if (attributeInstance != null)
 			{
-				this.decor = decor.GetTotalValue();
+				decor = attributeInstance.GetTotalValue();
 			}
 			if (provider.HasTag(GameTags.Stored))
 			{
-				this.decor = 0f;
+				decor = 0f;
 			}
 			int num = Grid.PosToCell(provider.gameObject);
 			if (!Grid.IsValidCell(num))
@@ -45,9 +41,9 @@ public class DecorProvider : KMonoBehaviour, IGameObjectEffectDescriptor
 			}
 			if (!Grid.Transparent[num] && Grid.Solid[num] && provider.simCellOccupier == null)
 			{
-				this.decor = 0f;
+				decor = 0f;
 			}
-			if (this.decor != 0f)
+			if (decor != 0f)
 			{
 				provider.cellCount = 0;
 				this.provider = provider;
@@ -323,18 +319,18 @@ public class DecorProvider : KMonoBehaviour, IGameObjectEffectDescriptor
 			float totalValue = decor.GetTotalValue();
 			float totalValue2 = decorRadius.GetTotalValue();
 			string arg = ((baseDecor > 0f) ? "produced" : "consumed");
-			string str = ((baseDecor > 0f) ? UI.BUILDINGEFFECTS.TOOLTIPS.DECORPROVIDED : UI.BUILDINGEFFECTS.TOOLTIPS.DECORDECREASED);
-			str = str + "\n\n" + decor.GetAttributeValueTooltip();
-			string text = GameUtil.AddPositiveSign(totalValue.ToString(), totalValue > 0f);
-			Descriptor item = new Descriptor(string.Format(UI.BUILDINGEFFECTS.DECORPROVIDED, arg, text, totalValue2), string.Format(str, text, totalValue2));
+			string text = ((baseDecor > 0f) ? UI.BUILDINGEFFECTS.TOOLTIPS.DECORPROVIDED : UI.BUILDINGEFFECTS.TOOLTIPS.DECORDECREASED);
+			text = text + "\n\n" + decor.GetAttributeValueTooltip();
+			string text2 = GameUtil.AddPositiveSign(totalValue.ToString(), totalValue > 0f);
+			Descriptor item = new Descriptor(string.Format(UI.BUILDINGEFFECTS.DECORPROVIDED, arg, text2, totalValue2), string.Format(text, text2, totalValue2));
 			list.Add(item);
 		}
 		else if (baseDecor != 0f)
 		{
 			string arg2 = ((baseDecor >= 0f) ? "produced" : "consumed");
 			string format = ((baseDecor >= 0f) ? UI.BUILDINGEFFECTS.TOOLTIPS.DECORPROVIDED : UI.BUILDINGEFFECTS.TOOLTIPS.DECORDECREASED);
-			string text2 = GameUtil.AddPositiveSign(baseDecor.ToString(), baseDecor > 0f);
-			Descriptor item2 = new Descriptor(string.Format(UI.BUILDINGEFFECTS.DECORPROVIDED, arg2, text2, baseRadius), string.Format(format, text2, baseRadius));
+			string text3 = GameUtil.AddPositiveSign(baseDecor.ToString(), baseDecor > 0f);
+			Descriptor item2 = new Descriptor(string.Format(UI.BUILDINGEFFECTS.DECORPROVIDED, arg2, text3, baseRadius), string.Format(format, text3, baseRadius));
 			list.Add(item2);
 		}
 		return list;

@@ -83,10 +83,7 @@ public class EntityTemplates
 			}
 		}
 		KBatchedAnimController kBatchedAnimController = template.AddOrGet<KBatchedAnimController>();
-		kBatchedAnimController.AnimFiles = new KAnimFile[1]
-		{
-			anim
-		};
+		kBatchedAnimController.AnimFiles = new KAnimFile[1] { anim };
 		kBatchedAnimController.sceneLayer = sceneLayer;
 		kBatchedAnimController.initialAnim = initialAnim;
 		template.AddOrGet<StateMachineController>();
@@ -203,10 +200,7 @@ public class EntityTemplates
 			trait.Add(new AttributeModifier(Db.Get().PlantAttributes.MaxRadiationThreshold.Id, max_radiation, baseTraitName));
 			template.AddOrGetDef<RadiationVulnerable.Def>();
 		}
-		template.AddOrGet<OccupyArea>().objectLayers = new ObjectLayer[1]
-		{
-			ObjectLayer.Building
-		};
+		template.AddOrGet<OccupyArea>().objectLayers = new ObjectLayer[1] { ObjectLayer.Building };
 		KPrefabID component2 = template.GetComponent<KPrefabID>();
 		if (crop_id != null)
 		{
@@ -500,10 +494,7 @@ public class EntityTemplates
 		pickupable.sortOrder = element.buildMenuSort;
 		gameObject.AddOrGet<KSelectable>().SetName(element.name);
 		KBatchedAnimController kBatchedAnimController = gameObject.AddOrGet<KBatchedAnimController>();
-		kBatchedAnimController.AnimFiles = new KAnimFile[1]
-		{
-			element.substance.anim
-		};
+		kBatchedAnimController.AnimFiles = new KAnimFile[1] { element.substance.anim };
 		kBatchedAnimController.sceneLayer = Grid.SceneLayer.Front;
 		kBatchedAnimController.initialAnim = "idle1";
 		kBatchedAnimController.isMovable = true;
@@ -614,10 +605,7 @@ public class EntityTemplates
 
 	public static GameObject ExtendPlantToIrrigated(GameObject template, PlantElementAbsorber.ConsumeInfo info)
 	{
-		return ExtendPlantToIrrigated(template, new PlantElementAbsorber.ConsumeInfo[1]
-		{
-			info
-		});
+		return ExtendPlantToIrrigated(template, new PlantElementAbsorber.ConsumeInfo[1] { info });
 	}
 
 	public static GameObject ExtendPlantToIrrigated(GameObject template, PlantElementAbsorber.ConsumeInfo[] consume_info)
@@ -704,10 +692,7 @@ public class EntityTemplates
 		gameObject.UpdateComponentRequirement<SaveLoadRoot>(required: false);
 		gameObject.AddOrGet<EntityPreview>().objectLayer = object_layer;
 		OccupyArea occupyArea = gameObject.AddOrGet<OccupyArea>();
-		occupyArea.objectLayers = new ObjectLayer[1]
-		{
-			object_layer
-		};
+		occupyArea.objectLayers = new ObjectLayer[1] { object_layer };
 		occupyArea.ApplyToCells = false;
 		gameObject.AddOrGet<Storage>();
 		Assets.AddPrefab(gameObject.GetComponent<KPrefabID>());

@@ -31,10 +31,7 @@ public class ArtifactAnalysisStationWorkable : Workable
 		attributeExperienceMultiplier = DUPLICANTSTATS.ATTRIBUTE_LEVELING.PART_DAY_EXPERIENCE;
 		skillExperienceSkillGroup = Db.Get().SkillGroups.Research.Id;
 		skillExperienceMultiplier = SKILLS.PART_DAY_EXPERIENCE;
-		overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_artifact_analysis_kanim")
-		};
+		overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_artifact_analysis_kanim") };
 		SetWorkTime(150f);
 		showProgressBar = true;
 		lightEfficiencyBonus = true;
@@ -68,14 +65,14 @@ public class ArtifactAnalysisStationWorkable : Workable
 
 	private void InitialDisplayStoredArtifact()
 	{
-		GameObject gameObject = GetComponent<Storage>().GetItems()[0];
-		KBatchedAnimController component = gameObject.GetComponent<KBatchedAnimController>();
+		GameObject obj = GetComponent<Storage>().GetItems()[0];
+		KBatchedAnimController component = obj.GetComponent<KBatchedAnimController>();
 		if (component != null)
 		{
 			component.GetBatchInstanceData().ClearOverrideTransformMatrix();
 		}
-		gameObject.transform.SetPosition(new Vector3(base.transform.position.x, base.transform.position.y, Grid.GetLayerZ(Grid.SceneLayer.BuildingBack)));
-		gameObject.SetActive(value: true);
+		obj.transform.SetPosition(new Vector3(base.transform.position.x, base.transform.position.y, Grid.GetLayerZ(Grid.SceneLayer.BuildingBack)));
+		obj.SetActive(value: true);
 		component.enabled = false;
 		component.enabled = true;
 		PositionArtifact();
@@ -94,11 +91,11 @@ public class ArtifactAnalysisStationWorkable : Workable
 
 	private void PositionArtifact()
 	{
-		GameObject gameObject = GetComponent<Storage>().GetItems()[0];
+		GameObject obj = GetComponent<Storage>().GetItems()[0];
 		bool symbolVisible;
 		Vector3 position = animController.GetSymbolTransform("snapTo_artifact", out symbolVisible).GetColumn(3);
 		position.z = Grid.GetLayerZ(Grid.SceneLayer.BuildingBack);
-		gameObject.transform.SetPosition(position);
+		obj.transform.SetPosition(position);
 	}
 
 	protected override void OnCompleteWork(Worker worker)

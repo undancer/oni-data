@@ -62,36 +62,13 @@ public class SafetyConditions
 		IsCooling = new SafetyChecker.Condition("IsCooling", num *= 2, (int cell, int cost, SafetyChecker.Context context) => false);
 		HasSomeOxygen = new SafetyChecker.Condition("HasSomeOxygen", num *= 2, (int cell, int cost, SafetyChecker.Context context) => context.oxygenBreather.IsBreathableElementAtCell(cell));
 		IsClear = new SafetyChecker.Condition("IsClear", num *= 2, (int cell, int cost, SafetyChecker.Context context) => context.minionBrain.IsCellClear(cell));
-		WarmUpChecker = new SafetyChecker(new List<SafetyChecker.Condition>
-		{
-			IsWarming
-		}.ToArray());
-		CoolDownChecker = new SafetyChecker(new List<SafetyChecker.Condition>
-		{
-			IsCooling
-		}.ToArray());
-		List<SafetyChecker.Condition> list = new List<SafetyChecker.Condition>
-		{
-			HasSomeOxygen,
-			IsNotDoor
-		};
+		WarmUpChecker = new SafetyChecker(new List<SafetyChecker.Condition> { IsWarming }.ToArray());
+		CoolDownChecker = new SafetyChecker(new List<SafetyChecker.Condition> { IsCooling }.ToArray());
+		List<SafetyChecker.Condition> list = new List<SafetyChecker.Condition> { HasSomeOxygen, IsNotDoor };
 		RecoverBreathChecker = new SafetyChecker(list.ToArray());
-		List<SafetyChecker.Condition> list2 = new List<SafetyChecker.Condition>(list)
-		{
-			IsNotLiquid,
-			IsCorrectTemperature
-		};
+		List<SafetyChecker.Condition> list2 = new List<SafetyChecker.Condition>(list) { IsNotLiquid, IsCorrectTemperature };
 		SafeCellChecker = new SafetyChecker(list2.ToArray());
-		IdleCellChecker = new SafetyChecker(new List<SafetyChecker.Condition>(list2)
-		{
-			IsClear,
-			IsNotLadder
-		}.ToArray());
-		VomitCellChecker = new SafetyChecker(new List<SafetyChecker.Condition>
-		{
-			IsNotLiquid,
-			IsNotLedge,
-			IsNearby
-		}.ToArray());
+		IdleCellChecker = new SafetyChecker(new List<SafetyChecker.Condition>(list2) { IsClear, IsNotLadder }.ToArray());
+		VomitCellChecker = new SafetyChecker(new List<SafetyChecker.Condition> { IsNotLiquid, IsNotLedge, IsNearby }.ToArray());
 	}
 }

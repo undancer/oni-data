@@ -6,23 +6,11 @@ namespace ProcGen
 	[Serializable]
 	public class Feature
 	{
-		public string type
-		{
-			get;
-			set;
-		}
+		public string type { get; set; }
 
-		public List<string> tags
-		{
-			get;
-			private set;
-		}
+		public List<string> tags { get; private set; }
 
-		public List<string> excludesTags
-		{
-			get;
-			private set;
-		}
+		public List<string> excludesTags { get; private set; }
 
 		public Feature()
 		{

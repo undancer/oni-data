@@ -28,10 +28,7 @@ public class HighEnergyParticleRedirectorConfig : IBuildingConfig
 		obj.HighEnergyParticleInputOffset = new CellOffset(0, 0);
 		obj.UseHighEnergyParticleOutputPort = true;
 		obj.HighEnergyParticleOutputOffset = new CellOffset(0, 1);
-		obj.LogicInputPorts = new List<LogicPorts.Port>
-		{
-			LogicPorts.Port.InputPort(HighEnergyParticleRedirector.PORT_ID, new CellOffset(0, 1), STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLEREDIRECTOR.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLEREDIRECTOR.LOGIC_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLEREDIRECTOR.LOGIC_PORT_INACTIVE)
-		};
+		obj.LogicInputPorts = new List<LogicPorts.Port> { LogicPorts.Port.InputPort(HighEnergyParticleRedirector.PORT_ID, new CellOffset(0, 1), STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLEREDIRECTOR.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLEREDIRECTOR.LOGIC_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLEREDIRECTOR.LOGIC_PORT_INACTIVE) };
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.RadiationIDs, "HighEnergyParticleRedirector");
 		obj.Deprecated = !Sim.IsRadiationEnabled();
 		return obj;

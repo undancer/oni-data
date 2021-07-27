@@ -44,11 +44,7 @@ public class SkillMinionWidget : KMonoBehaviour, IPointerEnterHandler, IEventSys
 	[SerializeField]
 	private TextStyleSetting TooltipTextStyle_AbilityNegativeModifier;
 
-	public IAssignableIdentity assignableIdentity
-	{
-		get;
-		private set;
-	}
+	public IAssignableIdentity assignableIdentity { get; private set; }
 
 	public void SetMinon(IAssignableIdentity identity)
 	{

@@ -301,8 +301,8 @@ public class DragTool : InterfaceTool
 			input = GetRegularizedPos(input, minimize: false);
 			input2 = GetRegularizedPos(input2, minimize: true);
 			Vector2 vector2 = input - input2;
-			Vector2 v = (input + input2) * 0.5f;
-			areaVisualizer.transform.SetPosition(new Vector2(v.x, v.y));
+			Vector2 vector3 = (input + input2) * 0.5f;
+			areaVisualizer.transform.SetPosition(new Vector2(vector3.x, vector3.y));
 			int num = (int)(input.x - input2.x + (input.y - input2.y) - 1f);
 			if (areaVisualizerSpriteRenderer.size != vector2)
 			{
@@ -322,7 +322,7 @@ public class DragTool : InterfaceTool
 				Vector2I vector2I = new Vector2I(Mathf.RoundToInt(vector2.x), Mathf.RoundToInt(vector2.y));
 				LocText component = NameDisplayScreen.Instance.GetWorldText(areaVisualizerText).GetComponent<LocText>();
 				component.text = string.Format(UI.TOOLS.TOOL_AREA_FMT, vector2I.x, vector2I.y, vector2I.x * vector2I.y);
-				TransformExtensions.SetPosition(position: v, transform: component.transform);
+				TransformExtensions.SetPosition(position: vector3, transform: component.transform);
 			}
 			break;
 		}
@@ -356,14 +356,14 @@ public class DragTool : InterfaceTool
 	private void AddDragPoints(Vector3 cursorPos, Vector3 previousCursorPos)
 	{
 		cursorPos = ClampPositionToWorld(cursorPos, ClusterManager.Instance.activeWorld);
-		Vector3 a = cursorPos - previousCursorPos;
-		float magnitude = a.magnitude;
+		Vector3 vector = cursorPos - previousCursorPos;
+		float magnitude = vector.magnitude;
 		float num = Grid.CellSizeInMeters * 0.25f;
 		int num2 = 1 + (int)(magnitude / num);
-		a.Normalize();
+		vector.Normalize();
 		for (int i = 0; i < num2; i++)
 		{
-			Vector3 cursorPos2 = previousCursorPos + a * ((float)i * num);
+			Vector3 cursorPos2 = previousCursorPos + vector * ((float)i * num);
 			AddDragPoint(cursorPos2);
 		}
 	}

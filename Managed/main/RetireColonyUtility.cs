@@ -101,7 +101,7 @@ public static class RetireColonyUtility
 		using FileStream stream = File.Open(file, FileMode.Open);
 		using StreamReader reader = new StreamReader(stream, enc);
 		using JsonReader jsonReader = new JsonTextReader(reader);
-		string a = string.Empty;
+		string text = string.Empty;
 		List<string> list = new List<string>();
 		List<Tuple<string, int>> list2 = new List<Tuple<string, int>>();
 		List<RetiredColonyData.RetiredDuplicantData> list3 = new List<RetiredColonyData.RetiredDuplicantData>();
@@ -112,27 +112,27 @@ public static class RetireColonyUtility
 			JsonToken tokenType = jsonReader.TokenType;
 			if (tokenType == JsonToken.PropertyName)
 			{
-				a = jsonReader.Value.ToString();
+				text = jsonReader.Value.ToString();
 			}
-			if (tokenType == JsonToken.String && a == "colonyName")
+			if (tokenType == JsonToken.String && text == "colonyName")
 			{
 				retiredColonyData.colonyName = jsonReader.Value.ToString();
 			}
-			if (tokenType == JsonToken.String && a == "date")
+			if (tokenType == JsonToken.String && text == "date")
 			{
 				retiredColonyData.date = jsonReader.Value.ToString();
 			}
-			if (tokenType == JsonToken.Integer && a == "cycleCount")
+			if (tokenType == JsonToken.Integer && text == "cycleCount")
 			{
 				retiredColonyData.cycleCount = int.Parse(jsonReader.Value.ToString());
 			}
-			if (tokenType == JsonToken.String && a == "achievements")
+			if (tokenType == JsonToken.String && text == "achievements")
 			{
 				list.Add(jsonReader.Value.ToString());
 			}
-			if (tokenType == JsonToken.StartObject && a == "Duplicants")
+			if (tokenType == JsonToken.StartObject && text == "Duplicants")
 			{
-				string a2 = null;
+				string text2 = null;
 				RetiredColonyData.RetiredDuplicantData retiredDuplicantData = new RetiredColonyData.RetiredDuplicantData();
 				retiredDuplicantData.accessories = new Dictionary<string, string>();
 				while (jsonReader.Read())
@@ -144,25 +144,25 @@ public static class RetireColonyUtility
 					}
 					if (tokenType == JsonToken.PropertyName)
 					{
-						a2 = jsonReader.Value.ToString();
+						text2 = jsonReader.Value.ToString();
 					}
-					if (a2 == "name" && tokenType == JsonToken.String)
+					if (text2 == "name" && tokenType == JsonToken.String)
 					{
 						retiredDuplicantData.name = jsonReader.Value.ToString();
 					}
-					if (a2 == "age" && tokenType == JsonToken.Integer)
+					if (text2 == "age" && tokenType == JsonToken.Integer)
 					{
 						retiredDuplicantData.age = int.Parse(jsonReader.Value.ToString());
 					}
-					if (a2 == "skillPointsGained" && tokenType == JsonToken.Integer)
+					if (text2 == "skillPointsGained" && tokenType == JsonToken.Integer)
 					{
 						retiredDuplicantData.skillPointsGained = int.Parse(jsonReader.Value.ToString());
 					}
-					if (!(a2 == "accessories"))
+					if (!(text2 == "accessories"))
 					{
 						continue;
 					}
-					string text = null;
+					string text3 = null;
 					while (jsonReader.Read())
 					{
 						tokenType = jsonReader.TokenType;
@@ -172,21 +172,21 @@ public static class RetireColonyUtility
 						}
 						if (tokenType == JsonToken.PropertyName)
 						{
-							text = jsonReader.Value.ToString();
+							text3 = jsonReader.Value.ToString();
 						}
-						if (text != null && jsonReader.Value != null && tokenType == JsonToken.String)
+						if (text3 != null && jsonReader.Value != null && tokenType == JsonToken.String)
 						{
 							string value = jsonReader.Value.ToString();
-							retiredDuplicantData.accessories.Add(text, value);
+							retiredDuplicantData.accessories.Add(text3, value);
 						}
 					}
 				}
 				list3.Add(retiredDuplicantData);
 			}
-			if (tokenType == JsonToken.StartObject && a == "buildings")
+			if (tokenType == JsonToken.StartObject && text == "buildings")
 			{
-				string a3 = null;
-				string a4 = null;
+				string text4 = null;
+				string a = null;
 				int b = 0;
 				while (jsonReader.Read())
 				{
@@ -197,27 +197,27 @@ public static class RetireColonyUtility
 					}
 					if (tokenType == JsonToken.PropertyName)
 					{
-						a3 = jsonReader.Value.ToString();
+						text4 = jsonReader.Value.ToString();
 					}
-					if (a3 == "first" && tokenType == JsonToken.String)
+					if (text4 == "first" && tokenType == JsonToken.String)
 					{
-						a4 = jsonReader.Value.ToString();
+						a = jsonReader.Value.ToString();
 					}
-					if (a3 == "second" && tokenType == JsonToken.Integer)
+					if (text4 == "second" && tokenType == JsonToken.Integer)
 					{
 						b = int.Parse(jsonReader.Value.ToString());
 					}
 				}
-				Tuple<string, int> item = new Tuple<string, int>(a4, b);
+				Tuple<string, int> item = new Tuple<string, int>(a, b);
 				list2.Add(item);
 			}
-			if (tokenType == JsonToken.StartObject && a == "Stats")
+			if (tokenType == JsonToken.StartObject && text == "Stats")
 			{
 				if (skipStats)
 				{
 					break;
 				}
-				string a5 = null;
+				string text5 = null;
 				RetiredColonyData.RetiredColonyStatistic retiredColonyStatistic = new RetiredColonyData.RetiredColonyStatistic();
 				List<Tuple<float, float>> list5 = new List<Tuple<float, float>>();
 				while (jsonReader.Read())
@@ -229,30 +229,30 @@ public static class RetireColonyUtility
 					}
 					if (tokenType == JsonToken.PropertyName)
 					{
-						a5 = jsonReader.Value.ToString();
+						text5 = jsonReader.Value.ToString();
 					}
-					if (a5 == "id" && tokenType == JsonToken.String)
+					if (text5 == "id" && tokenType == JsonToken.String)
 					{
 						retiredColonyStatistic.id = jsonReader.Value.ToString();
 					}
-					if (a5 == "name" && tokenType == JsonToken.String)
+					if (text5 == "name" && tokenType == JsonToken.String)
 					{
 						retiredColonyStatistic.name = jsonReader.Value.ToString();
 					}
-					if (a5 == "nameX" && tokenType == JsonToken.String)
+					if (text5 == "nameX" && tokenType == JsonToken.String)
 					{
 						retiredColonyStatistic.nameX = jsonReader.Value.ToString();
 					}
-					if (a5 == "nameY" && tokenType == JsonToken.String)
+					if (text5 == "nameY" && tokenType == JsonToken.String)
 					{
 						retiredColonyStatistic.nameY = jsonReader.Value.ToString();
 					}
-					if (!(a5 == "value") || tokenType != JsonToken.StartObject)
+					if (!(text5 == "value") || tokenType != JsonToken.StartObject)
 					{
 						continue;
 					}
-					string a6 = null;
-					float a7 = 0f;
+					string text6 = null;
+					float a2 = 0f;
 					float b2 = 0f;
 					while (jsonReader.Read())
 					{
@@ -263,26 +263,26 @@ public static class RetireColonyUtility
 						}
 						if (tokenType == JsonToken.PropertyName)
 						{
-							a6 = jsonReader.Value.ToString();
+							text6 = jsonReader.Value.ToString();
 						}
-						if (a6 == "first" && (tokenType == JsonToken.Float || tokenType == JsonToken.Integer))
+						if (text6 == "first" && (tokenType == JsonToken.Float || tokenType == JsonToken.Integer))
 						{
-							a7 = float.Parse(jsonReader.Value.ToString());
+							a2 = float.Parse(jsonReader.Value.ToString());
 						}
-						if (a6 == "second" && (tokenType == JsonToken.Float || tokenType == JsonToken.Integer))
+						if (text6 == "second" && (tokenType == JsonToken.Float || tokenType == JsonToken.Integer))
 						{
 							b2 = float.Parse(jsonReader.Value.ToString());
 						}
 					}
-					Tuple<float, float> item2 = new Tuple<float, float>(a7, b2);
+					Tuple<float, float> item2 = new Tuple<float, float>(a2, b2);
 					list5.Add(item2);
 				}
 				retiredColonyStatistic.value = list5.ToArray();
 				list4.Add(retiredColonyStatistic);
 			}
-			if (tokenType == JsonToken.StartObject && a == "worldIdentities")
+			if (tokenType == JsonToken.StartObject && text == "worldIdentities")
 			{
-				string text2 = null;
+				string text7 = null;
 				while (jsonReader.Read())
 				{
 					tokenType = jsonReader.TokenType;
@@ -292,16 +292,16 @@ public static class RetireColonyUtility
 					}
 					if (tokenType == JsonToken.PropertyName)
 					{
-						text2 = jsonReader.Value.ToString();
+						text7 = jsonReader.Value.ToString();
 					}
-					if (text2 != null && jsonReader.Value != null && tokenType == JsonToken.String)
+					if (text7 != null && jsonReader.Value != null && tokenType == JsonToken.String)
 					{
 						string value2 = jsonReader.Value.ToString();
-						dictionary.Add(text2, value2);
+						dictionary.Add(text7, value2);
 					}
 				}
 			}
-			if (tokenType == JsonToken.String && a == "startWorld")
+			if (tokenType == JsonToken.String && text == "startWorld")
 			{
 				retiredColonyData.startWorld = jsonReader.Value.ToString();
 			}

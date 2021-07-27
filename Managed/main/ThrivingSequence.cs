@@ -46,15 +46,7 @@ public static class ThrivingSequence
 			if (liveMinionIdentity != null)
 			{
 				liveMinionIdentity.GetComponent<Facing>().Face(cameraTaget.transform.position.x);
-				new EmoteChore(liveMinionIdentity.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[6]
-				{
-					"cheer_pre",
-					"cheer_loop",
-					"cheer_pst",
-					"cheer_pre",
-					"cheer_loop",
-					"cheer_pst"
-				}, null);
+				new EmoteChore(liveMinionIdentity.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[6] { "cheer_pre", "cheer_loop", "cheer_pst", "cheer_pre", "cheer_loop", "cheer_pst" }, null);
 			}
 		}
 		yield return new WaitForSecondsRealtime(0.5f);
@@ -102,15 +94,7 @@ public static class ThrivingSequence
 				if (liveMinionIdentity2 != null)
 				{
 					liveMinionIdentity2.GetComponent<Facing>().Face(cameraTaget.transform.position.x);
-					new EmoteChore(liveMinionIdentity2.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[6]
-					{
-						"cheer_pre",
-						"cheer_loop",
-						"cheer_pst",
-						"cheer_pre",
-						"cheer_loop",
-						"cheer_pst"
-					}, null);
+					new EmoteChore(liveMinionIdentity2.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[6] { "cheer_pre", "cheer_loop", "cheer_pst", "cheer_pre", "cheer_loop", "cheer_pst" }, null);
 				}
 			}
 			yield return new WaitForSecondsRealtime(0.5f);
@@ -135,15 +119,7 @@ public static class ThrivingSequence
 			if (liveMinionIdentity3 != null)
 			{
 				liveMinionIdentity3.GetComponent<Facing>().Face(cameraTaget.transform.position.x);
-				new EmoteChore(liveMinionIdentity3.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[6]
-				{
-					"cheer_pre",
-					"cheer_loop",
-					"cheer_pst",
-					"cheer_pre",
-					"cheer_loop",
-					"cheer_pst"
-				}, null);
+				new EmoteChore(liveMinionIdentity3.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[6] { "cheer_pre", "cheer_loop", "cheer_pst", "cheer_pre", "cheer_loop", "cheer_pst" }, null);
 			}
 		}
 		yield return new WaitForSecondsRealtime(0.5f);

@@ -23,15 +23,15 @@ public class VisibilityTester : KMonoBehaviour
 		{
 			int cell = Grid.PosToCell(SelectTool.Instance.selected);
 			int mouseCell = DebugHandler.GetMouseCell();
-			string str = "";
-			str = str + "Source Cell: " + cell + "\n";
-			str = str + "Target Cell: " + mouseCell + "\n";
-			str = str + "Visible: " + Grid.VisibilityTest(cell, mouseCell);
+			string text = "";
+			text = text + "Source Cell: " + cell + "\n";
+			text = text + "Target Cell: " + mouseCell + "\n";
+			text = text + "Visible: " + Grid.VisibilityTest(cell, mouseCell);
 			for (int i = 0; i < 10000; i++)
 			{
 				Grid.VisibilityTest(cell, mouseCell);
 			}
-			DebugText.Instance.Draw(str, Grid.CellToPosCCC(mouseCell, Grid.SceneLayer.Move), Color.white);
+			DebugText.Instance.Draw(text, Grid.CellToPosCCC(mouseCell, Grid.SceneLayer.Move), Color.white);
 		}
 	}
 }

@@ -20,27 +20,13 @@ public class Sleepable : Workable
 
 	private bool isDoneSleeping;
 
-	private static readonly HashedString[] normalWorkAnims = new HashedString[2]
-	{
-		"working_pre",
-		"working_loop"
-	};
+	private static readonly HashedString[] normalWorkAnims = new HashedString[2] { "working_pre", "working_loop" };
 
-	private static readonly HashedString[] hatWorkAnims = new HashedString[2]
-	{
-		"hat_pre",
-		"working_loop"
-	};
+	private static readonly HashedString[] hatWorkAnims = new HashedString[2] { "hat_pre", "working_loop" };
 
-	private static readonly HashedString[] normalWorkPstAnim = new HashedString[1]
-	{
-		"working_pst"
-	};
+	private static readonly HashedString[] normalWorkPstAnim = new HashedString[1] { "working_pst" };
 
-	private static readonly HashedString[] hatWorkPstAnim = new HashedString[1]
-	{
-		"hat_pst"
-	};
+	private static readonly HashedString[] hatWorkPstAnim = new HashedString[1] { "hat_pst" };
 
 	private Sleepable()
 	{
@@ -134,10 +120,7 @@ public class Sleepable : Workable
 		}
 		if (stretchOnWake && Random.value < 0.33f)
 		{
-			new EmoteChore(worker.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_react_morning_stretch_kanim", new HashedString[1]
-			{
-				"react"
-			}, null);
+			new EmoteChore(worker.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_react_morning_stretch_kanim", new HashedString[1] { "react" }, null);
 		}
 		if (worker.GetAmounts().Get(Db.Get().Amounts.Stamina).value < worker.GetAmounts().Get(Db.Get().Amounts.Stamina).GetMax())
 		{

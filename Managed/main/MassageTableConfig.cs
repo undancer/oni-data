@@ -24,10 +24,7 @@ public class MassageTableConfig : IBuildingConfig
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.MassageTable);
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.DeStressingBuilding);
 		MassageTable massageTable = go.AddOrGet<MassageTable>();
-		massageTable.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_masseur_kanim")
-		};
+		massageTable.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_masseur_kanim") };
 		massageTable.stressModificationValue = -30f;
 		massageTable.roomStressModificationValue = -60f;
 		massageTable.workLayer = Grid.SceneLayer.BuildingFront;

@@ -109,7 +109,7 @@ public class HarvestDesignatable : KMonoBehaviour
 		{
 			HarvestWhenReadyOverlayIcon = Util.KInstantiate(Assets.UIPrefabs.HarvestWhenReadyOverlayIcon, GameScreenManager.Instance.worldSpaceCanvas).GetComponent<RectTransform>();
 			Extents extents = GetComponent<OccupyArea>().GetExtents();
-			TransformExtensions.SetPosition(position: GetComponent<KPrefabID>().HasTag(GameTags.Hanging) ? new Vector3((float)(extents.x + extents.width / 2) + 0.5f, extents.y + extents.height) : new Vector3((float)(extents.x + extents.width / 2) + 0.5f, extents.y), transform: HarvestWhenReadyOverlayIcon.transform);
+			TransformExtensions.SetPosition(position: (!GetComponent<KPrefabID>().HasTag(GameTags.Hanging)) ? new Vector3((float)(extents.x + extents.width / 2) + 0.5f, extents.y) : new Vector3((float)(extents.x + extents.width / 2) + 0.5f, extents.y + extents.height), transform: HarvestWhenReadyOverlayIcon.transform);
 			RefreshOverlayIcon();
 		}
 	}

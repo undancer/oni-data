@@ -91,10 +91,10 @@ public class UnstableGroundManager : KMonoBehaviour
 
 	private GameObject InstantiateObj(GameObject prefab)
 	{
-		GameObject gameObject = GameUtil.KInstantiate(prefab, Grid.SceneLayer.BuildingBack);
-		gameObject.SetActive(value: false);
-		gameObject.name = "UnstablePool";
-		return gameObject;
+		GameObject obj = GameUtil.KInstantiate(prefab, Grid.SceneLayer.BuildingBack);
+		obj.SetActive(value: false);
+		obj.name = "UnstablePool";
+		return obj;
 	}
 
 	public void Spawn(int cell, Element element, float mass, float temperature, byte disease_idx, int disease_count)

@@ -12,6 +12,10 @@ layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
 
 defaultsOverrides:
   startingWorldElements: [] # remove the algae check
+  data:
+    OverworldDensityMin: 20
+    OverworldDensityMax: 20
+    OverworldSampleBehaviour: PoissonDisk
 
 # List all the subworld files to load
 subworldFiles:

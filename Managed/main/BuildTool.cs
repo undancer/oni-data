@@ -138,12 +138,12 @@ public class BuildTool : DragTool
 		}
 		if (def.isKAnimTile)
 		{
-			GameObject x = null;
+			GameObject gameObject2 = null;
 			if (def.ReplacementLayer != ObjectLayer.NumLayers)
 			{
-				x = Grid.Objects[lastCell, (int)def.ReplacementLayer];
+				gameObject2 = Grid.Objects[lastCell, (int)def.ReplacementLayer];
 			}
-			if ((gameObject == null || gameObject.GetComponent<Constructable>() == null) && (x == null || x == visualizer))
+			if ((gameObject == null || gameObject.GetComponent<Constructable>() == null) && (gameObject2 == null || gameObject2 == visualizer))
 			{
 				World.Instance.blockTileRenderer.RemoveBlock(def, isReplacement: false, SimHashes.Void, lastCell);
 				World.Instance.blockTileRenderer.RemoveBlock(def, isReplacement: true, SimHashes.Void, lastCell);
@@ -195,12 +195,12 @@ public class BuildTool : DragTool
 				}
 				if (def.isKAnimTile)
 				{
-					GameObject x = null;
+					GameObject gameObject2 = null;
 					if (def.ReplacementLayer != ObjectLayer.NumLayers)
 					{
-						x = Grid.Objects[num, (int)def.ReplacementLayer];
+						gameObject2 = Grid.Objects[num, (int)def.ReplacementLayer];
 					}
-					if (gameObject == null || (gameObject.GetComponent<Constructable>() == null && x == null))
+					if (gameObject == null || (gameObject.GetComponent<Constructable>() == null && gameObject2 == null))
 					{
 						TileVisualizer.RefreshCell(num, def.TileLayer, def.ReplacementLayer);
 						if (def.BlockTileAtlas != null)

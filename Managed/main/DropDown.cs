@@ -49,11 +49,7 @@ public class DropDown : KMonoBehaviour
 
 	private KCanvasScaler canvasScaler;
 
-	public bool open
-	{
-		get;
-		private set;
-	}
+	public bool open { get; private set; }
 
 	public List<IListableOption> Entries => entries;
 
@@ -225,8 +221,8 @@ public class DropDown : KMonoBehaviour
 		}
 		scrollRect.rectTransform().sizeDelta = new Vector2(scrollRect.rectTransform().sizeDelta.x, 32f * (float)Mathf.Min(contentContainer.childCount, 8));
 		Vector3 position = dropdownAlignmentTarget.TransformPoint(dropdownAlignmentTarget.rect.x, dropdownAlignmentTarget.rect.y, 0f);
-		Vector2 v = new Vector2(Mathf.Min(0f, (float)Screen.width - (position.x + rowEntryPrefab.GetComponent<LayoutElement>().minWidth)), 0f - Mathf.Min(0f, position.y - scrollRect.rectTransform().sizeDelta.y));
-		position += (Vector3)v;
+		Vector2 vector = new Vector2(Mathf.Min(0f, (float)Screen.width - (position.x + rowEntryPrefab.GetComponent<LayoutElement>().minWidth)), 0f - Mathf.Min(0f, position.y - scrollRect.rectTransform().sizeDelta.y));
+		position += (Vector3)vector;
 		scrollRect.rectTransform().SetPosition(position);
 	}
 

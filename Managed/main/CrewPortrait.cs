@@ -30,11 +30,7 @@ public class CrewPortrait : KMonoBehaviour
 
 	private bool areEventsRegistered;
 
-	public IAssignableIdentity identityObject
-	{
-		get;
-		private set;
-	}
+	public IAssignableIdentity identityObject { get; private set; }
 
 	protected override void OnPrefabInit()
 	{
@@ -277,8 +273,8 @@ public class CrewPortrait : KMonoBehaviour
 			RefreshHat(storedMinionIdentity, controller);
 		}
 		float num = (controller.animScale = 0.25f);
-		string s = "ui_idle";
-		controller.Play(s, KAnim.PlayMode.Loop);
+		string text = "ui_idle";
+		controller.Play(text, KAnim.PlayMode.Loop);
 		controller.SetSymbolVisiblity("snapTo_neck", is_visible: false);
 		controller.SetSymbolVisiblity("snapTo_goggles", is_visible: false);
 	}

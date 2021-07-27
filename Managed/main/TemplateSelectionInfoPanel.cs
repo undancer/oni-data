@@ -18,17 +18,7 @@ public class TemplateSelectionInfoPanel : KMonoBehaviour, IRender1000ms
 	[SerializeField]
 	private KButton save_button;
 
-	private Func<List<int>, string>[] details = new Func<List<int>, string>[8]
-	{
-		TotalMass,
-		AverageMass,
-		AverageTemperature,
-		TotalJoules,
-		JoulesPerKilogram,
-		MassPerElement,
-		TotalRadiation,
-		AverageRadiation
-	};
+	private Func<List<int>, string>[] details = new Func<List<int>, string>[8] { TotalMass, AverageMass, AverageTemperature, TotalJoules, JoulesPerKilogram, MassPerElement, TotalRadiation, AverageRadiation };
 
 	private static List<Tuple<Element, float>> mass_per_element = new List<Tuple<Element, float>>();
 
@@ -45,14 +35,14 @@ public class TemplateSelectionInfoPanel : KMonoBehaviour, IRender1000ms
 
 	public void SaveCurrentDetails()
 	{
-		string str = "";
+		string text = "";
 		for (int i = 0; i < details.Length; i++)
 		{
-			str = str + details[i](DebugBaseTemplateButton.Instance.SelectedCells) + "\n";
+			text = text + details[i](DebugBaseTemplateButton.Instance.SelectedCells) + "\n";
 		}
-		str += UI.HORIZONTAL_BR_RULE;
-		str += saved_detail_label.text;
-		saved_detail_label.text = str;
+		text += UI.HORIZONTAL_BR_RULE;
+		text += saved_detail_label.text;
+		saved_detail_label.text = text;
 	}
 
 	public void Render1000ms(float dt)

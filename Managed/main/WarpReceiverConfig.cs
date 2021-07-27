@@ -35,10 +35,7 @@ public class WarpReceiverConfig : IEntityConfig
 	public void OnPrefabInit(GameObject inst)
 	{
 		inst.GetComponent<WarpReceiver>().workLayer = Grid.SceneLayer.Building;
-		inst.GetComponent<OccupyArea>().objectLayers = new ObjectLayer[1]
-		{
-			ObjectLayer.Building
-		};
+		inst.GetComponent<OccupyArea>().objectLayers = new ObjectLayer[1] { ObjectLayer.Building };
 		inst.GetComponent<Deconstructable>();
 	}
 

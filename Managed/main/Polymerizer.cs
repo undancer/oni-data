@@ -109,7 +109,7 @@ public class Polymerizer : StateMachineComponent<Polymerizer.StatesInstance>
 		if (primary_elem.Mass >= emitMass)
 		{
 			plasticMeter.SetPositionPercent(0f);
-			GameObject gameObject = storage.Drop(primary_elem.gameObject);
+			GameObject obj = storage.Drop(primary_elem.gameObject);
 			Rotatable component = GetComponent<Rotatable>();
 			Vector3 vector = component.transform.GetPosition() + component.GetRotatedOffset(emitOffset);
 			int i = Grid.PosToCell(vector);
@@ -117,7 +117,7 @@ public class Polymerizer : StateMachineComponent<Polymerizer.StatesInstance>
 			{
 				vector += component.GetRotatedOffset(Vector3.left);
 			}
-			gameObject.transform.SetPosition(vector);
+			obj.transform.SetPosition(vector);
 			PrimaryElement primaryElement = storage.FindPrimaryElement(exhaustElement);
 			if (primaryElement != null)
 			{

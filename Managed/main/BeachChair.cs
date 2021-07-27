@@ -44,24 +44,11 @@ public class BeachChair : StateMachineComponent<BeachChair.StatesInstance>, IGam
 
 		private ReadyStates ready;
 
-		private HashedString[] UNLIT_PST_ANIMS = new HashedString[2]
-		{
-			"working_unlit_pst",
-			"working_pst"
-		};
+		private HashedString[] UNLIT_PST_ANIMS = new HashedString[2] { "working_unlit_pst", "working_pst" };
 
-		private HashedString[] LIT_PST_ANIMS = new HashedString[2]
-		{
-			"working_lit_pst",
-			"working_pst"
-		};
+		private HashedString[] LIT_PST_ANIMS = new HashedString[2] { "working_lit_pst", "working_pst" };
 
-		private string[] SILLY_ANIMS = new string[3]
-		{
-			"working_lit_loop1",
-			"working_lit_loop2",
-			"working_lit_loop3"
-		};
+		private string[] SILLY_ANIMS = new string[3] { "working_lit_loop1", "working_lit_loop2", "working_lit_loop3" };
 
 		public override void InitializeStates(out BaseState default_state)
 		{

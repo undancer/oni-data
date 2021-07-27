@@ -65,11 +65,7 @@ public class Recipe : IHasSortOrder
 
 	public string TechUnlock;
 
-	public int sortOrder
-	{
-		get;
-		set;
-	}
+	public int sortOrder { get; set; }
 
 	public string Name
 	{
@@ -122,10 +118,7 @@ public class Recipe : IHasSortOrder
 
 	public Recipe SetFabricator(string fabricator, float fabricationTime)
 	{
-		fabricators = new string[1]
-		{
-			fabricator
-		};
+		fabricators = new string[1] { fabricator };
 		FabricationTime = fabricationTime;
 		RecipeManager.Get().Add(this);
 		return this;

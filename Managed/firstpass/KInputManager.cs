@@ -10,17 +10,9 @@ public class KInputManager
 
 	public static Vector3 lockedMousePos;
 
-	public static bool isFocused
-	{
-		get;
-		private set;
-	}
+	public static bool isFocused { get; private set; }
 
-	public static long lastUserActionTicks
-	{
-		get;
-		private set;
-	}
+	public static long lastUserActionTicks { get; private set; }
 
 	public static void SetUserActive()
 	{

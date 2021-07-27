@@ -97,10 +97,7 @@ namespace NodeEditorFramework
 
 		private static void CallEventHandlers(NodeEditorInputInfo inputInfo, bool late)
 		{
-			object[] args = new object[1]
-			{
-				inputInfo
-			};
+			object[] args = new object[1] { inputInfo };
 			foreach (KeyValuePair<EventHandlerAttribute, Delegate> eventHandler in eventHandlers)
 			{
 				if ((!eventHandler.Key.handledEvent.HasValue || eventHandler.Key.handledEvent == inputInfo.inputEvent.type) && (late ? (eventHandler.Key.priority >= 100) : (eventHandler.Key.priority < 100)))
@@ -116,10 +113,7 @@ namespace NodeEditorFramework
 
 		private static void CallHotkeys(NodeEditorInputInfo inputInfo, KeyCode keyCode, EventModifiers mods)
 		{
-			object[] args = new object[1]
-			{
-				inputInfo
-			};
+			object[] args = new object[1] { inputInfo };
 			foreach (KeyValuePair<HotkeyAttribute, Delegate> hotkeyHandler in hotkeyHandlers)
 			{
 				if (hotkeyHandler.Key.handledHotKey == keyCode && (!hotkeyHandler.Key.modifiers.HasValue || hotkeyHandler.Key.modifiers == mods) && (!hotkeyHandler.Key.limitingEventType.HasValue || hotkeyHandler.Key.limitingEventType == inputInfo.inputEvent.type))
@@ -142,11 +136,7 @@ namespace NodeEditorFramework
 					contextMenu.AddItem(new GUIContent(contextEntry.Key.contextPath), on: false, contextEntry.Value, inputInfo);
 				}
 			}
-			object[] args = new object[2]
-			{
-				inputInfo,
-				contextMenu
-			};
+			object[] args = new object[2] { inputInfo, contextMenu };
 			foreach (KeyValuePair<ContextFillerAttribute, Delegate> contextFiller in contextFillers)
 			{
 				if (contextFiller.Key.contextType == contextType)

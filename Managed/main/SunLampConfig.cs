@@ -7,15 +7,7 @@ public class SunLampConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("SunLamp", 2, 4, "sun_lamp_kanim", 10, 60f, new float[2]
-		{
-			200f,
-			50f
-		}, new string[2]
-		{
-			"RefinedMetal",
-			"Glass"
-		}, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER3);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("SunLamp", 2, 4, "sun_lamp_kanim", 10, 60f, new float[2] { 200f, 50f }, new string[2] { "RefinedMetal", "Glass" }, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER3);
 		obj.RequiresPowerInput = true;
 		obj.EnergyConsumptionWhenActive = 960f;
 		obj.SelfHeatKilowattsWhenActive = 4f;

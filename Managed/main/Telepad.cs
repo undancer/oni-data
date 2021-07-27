@@ -50,11 +50,7 @@ public class Telepad : StateMachineComponent<Telepad.StatesInstance>
 
 		public State unoperational;
 
-		private static readonly HashedString[] workingAnims = new HashedString[2]
-		{
-			"working_loop",
-			"working_pst"
-		};
+		private static readonly HashedString[] workingAnims = new HashedString[2] { "working_loop", "working_pst" };
 
 		public override void InitializeStates(out BaseState default_state)
 		{
@@ -105,10 +101,7 @@ public class Telepad : StateMachineComponent<Telepad.StatesInstance>
 
 	public float startingSkillPoints;
 
-	public static readonly HashedString[] PortalBirthAnim = new HashedString[1]
-	{
-		"portalbirth"
-	};
+	public static readonly HashedString[] PortalBirthAnim = new HashedString[1] { "portalbirth" };
 
 	protected override void OnPrefabInit()
 	{

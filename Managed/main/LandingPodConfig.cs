@@ -21,10 +21,7 @@ public class LandingPodConfig : IEntityConfig
 
 	public void OnPrefabInit(GameObject inst)
 	{
-		inst.GetComponent<OccupyArea>().objectLayers = new ObjectLayer[1]
-		{
-			ObjectLayer.Building
-		};
+		inst.GetComponent<OccupyArea>().objectLayers = new ObjectLayer[1] { ObjectLayer.Building };
 	}
 
 	public void OnSpawn(GameObject inst)

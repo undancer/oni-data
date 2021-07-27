@@ -12,11 +12,7 @@ public class ScannerModuleConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("ScannerModule", 5, 5, "rocket_scanner_module_kanim", 1000, 120f, new float[2]
-		{
-			350f,
-			1000f
-		}, new string[2]
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("ScannerModule", 5, 5, "rocket_scanner_module_kanim", 1000, 120f, new float[2] { 350f, 1000f }, new string[2]
 		{
 			SimHashes.Steel.ToString(),
 			SimHashes.Polypropylene.ToString()

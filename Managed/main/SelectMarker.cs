@@ -31,7 +31,7 @@ public class SelectMarker : KMonoBehaviour
 		{
 			position.y += 2f;
 		}
-		Vector3 b = new Vector3(0f, (Mathf.Sin(Time.unscaledTime * 4f) + 1f) * animationOffset, 0f);
-		base.transform.SetPosition(position + b);
+		Vector3 vector = new Vector3(0f, (Mathf.Sin(Time.unscaledTime * 4f) + 1f) * animationOffset, 0f);
+		base.transform.SetPosition(position + vector);
 	}
 }

@@ -10,12 +10,7 @@ public class ButtonSoundPlayer : WidgetSoundPlayer
 		OnClick_Rejected
 	}
 
-	public static string[] default_values = new string[3]
-	{
-		"HUD_Click_Open",
-		"HUD_Mouseover",
-		"Negative"
-	};
+	public static string[] default_values = new string[3] { "HUD_Click_Open", "HUD_Mouseover", "Negative" };
 
 	public Func<bool> AcceptClickCondition;
 

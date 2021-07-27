@@ -201,9 +201,9 @@ public class EnergyInfoScreen : TargetScreen
 			generatorsPanel.SetActive(value: false);
 			consumersPanel.SetActive(value: false);
 			batteriesPanel.SetActive(value: false);
-			GameObject gameObject2 = AddOrGetLabel(overviewLabels, overviewPanel, "nocircuit");
-			gameObject2.GetComponent<LocText>().text = UI.DETAILTABS.ENERGYGENERATOR.DISCONNECTED;
-			gameObject2.SetActive(value: true);
+			GameObject obj = AddOrGetLabel(overviewLabels, overviewPanel, "nocircuit");
+			obj.GetComponent<LocText>().text = UI.DETAILTABS.ENERGYGENERATOR.DISCONNECTED;
+			obj.SetActive(value: true);
 		}
 	}
 

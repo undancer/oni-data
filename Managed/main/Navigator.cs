@@ -191,23 +191,11 @@ public class Navigator : StateMachineComponent<Navigator.StatesInstance>, ISaveL
 
 	public bool executePathProbeTaskAsync;
 
-	public KMonoBehaviour target
-	{
-		get;
-		set;
-	}
+	public KMonoBehaviour target { get; set; }
 
-	public CellOffset[] targetOffsets
-	{
-		get;
-		private set;
-	}
+	public CellOffset[] targetOffsets { get; private set; }
 
-	public NavGrid NavGrid
-	{
-		get;
-		private set;
-	}
+	public NavGrid NavGrid { get; private set; }
 
 	public void Serialize(BinaryWriter writer)
 	{

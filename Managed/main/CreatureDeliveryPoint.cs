@@ -82,10 +82,7 @@ public class CreatureDeliveryPoint : StateMachineComponent<CreatureDeliveryPoint
 		component.RefreshCreatureCount(data);
 	});
 
-	private Tag[] requiredFetchTags = new Tag[1]
-	{
-		GameTags.Creatures.Deliverable
-	};
+	private Tag[] requiredFetchTags = new Tag[1] { GameTags.Creatures.Deliverable };
 
 	float IUserControlledCapacity.UserMaxCapacity
 	{

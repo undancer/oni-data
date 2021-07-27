@@ -30,11 +30,7 @@ public class GameScreenManager : KMonoBehaviour
 
 	public Image fadePlaneFront;
 
-	public static GameScreenManager Instance
-	{
-		get;
-		private set;
-	}
+	public static GameScreenManager Instance { get; private set; }
 
 	public static Color[] UIColors => Instance.uiColors;
 

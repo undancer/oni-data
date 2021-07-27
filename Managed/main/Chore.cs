@@ -300,81 +300,31 @@ public abstract class Chore
 
 	public static PrioritySetting DefaultPrioritySetting = new PrioritySetting(PriorityScreen.PriorityClass.basic, 5);
 
-	public int id
-	{
-		get;
-		private set;
-	}
+	public int id { get; private set; }
 
-	public ChoreDriver driver
-	{
-		get;
-		set;
-	}
+	public ChoreDriver driver { get; set; }
 
-	public ChoreDriver lastDriver
-	{
-		get;
-		set;
-	}
+	public ChoreDriver lastDriver { get; set; }
 
-	public ChoreType choreType
-	{
-		get;
-		set;
-	}
+	public ChoreType choreType { get; set; }
 
-	public ChoreProvider provider
-	{
-		get;
-		set;
-	}
+	public ChoreProvider provider { get; set; }
 
-	public ChoreConsumer overrideTarget
-	{
-		get;
-		private set;
-	}
+	public ChoreConsumer overrideTarget { get; private set; }
 
-	public bool isComplete
-	{
-		get;
-		protected set;
-	}
+	public bool isComplete { get; protected set; }
 
-	public IStateMachineTarget target
-	{
-		get;
-		protected set;
-	}
+	public IStateMachineTarget target { get; protected set; }
 
-	public bool runUntilComplete
-	{
-		get;
-		set;
-	}
+	public bool runUntilComplete { get; set; }
 
-	public int priorityMod
-	{
-		get;
-		set;
-	}
+	public int priorityMod { get; set; }
 
-	public abstract GameObject gameObject
-	{
-		get;
-	}
+	public abstract GameObject gameObject { get; }
 
-	public abstract bool isNull
-	{
-		get;
-	}
+	public abstract bool isNull { get; }
 
-	public bool IsPreemptable
-	{
-		get;
-		protected set;
-	}
+	public bool IsPreemptable { get; protected set; }
 
 	protected abstract StateMachine.Instance GetSMI();
 
@@ -673,11 +623,7 @@ public abstract class Chore
 }
 public class Chore<StateMachineInstanceType> : Chore, IStateMachineTarget where StateMachineInstanceType : StateMachine.Instance
 {
-	public StateMachineInstanceType smi
-	{
-		get;
-		protected set;
-	}
+	public StateMachineInstanceType smi { get; protected set; }
 
 	public override GameObject gameObject => base.target.gameObject;
 

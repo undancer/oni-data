@@ -27,10 +27,7 @@ public class OxygenMaskLockerConfig : IBuildingConfig
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
-		go.AddOrGet<SuitLocker>().OutfitTags = new Tag[1]
-		{
-			GameTags.OxygenMask
-		};
+		go.AddOrGet<SuitLocker>().OutfitTags = new Tag[1] { GameTags.OxygenMask };
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
 		conduitConsumer.conduitType = ConduitType.Gas;
 		conduitConsumer.consumptionRate = 1f;

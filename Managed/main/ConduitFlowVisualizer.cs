@@ -260,9 +260,9 @@ public class ConduitFlowVisualizer
 				{
 					int cell = conduit.GetCell(context.outer.flowManager);
 					int cellFromDirection = ConduitFlow.GetCellFromDirection(cell, lastFlowInfo.direction);
-					Vector2I v = Grid.CellToXY(cell);
-					Vector2I vector2I = Grid.CellToXY(cellFromDirection);
-					Vector2 pos = ((cell == -1) ? ((Vector2)v) : Vector2.Lerp(new Vector2(v.x, v.y), new Vector2(vector2I.x, vector2I.y), context.lerp_percent));
+					Vector2I vector2I = Grid.CellToXY(cell);
+					Vector2I vector2I2 = Grid.CellToXY(cellFromDirection);
+					Vector2 pos = ((cell == -1) ? ((Vector2)vector2I) : Vector2.Lerp(new Vector2(vector2I.x, vector2I.y), new Vector2(vector2I2.x, vector2I2.y), context.lerp_percent));
 					Color32 cellTintColour = context.outer.GetCellTintColour(cell);
 					Color32 cellTintColour2 = context.outer.GetCellTintColour(cellFromDirection);
 					Color32 color = Color32.Lerp(cellTintColour, cellTintColour2, context.lerp_percent);
@@ -402,9 +402,9 @@ public class ConduitFlowVisualizer
 	{
 		if (element != null)
 		{
-			Color c = element.substance.conduitColour;
-			c.a = 128f;
-			return c;
+			Color color = element.substance.conduitColour;
+			color.a = 128f;
+			return color;
 		}
 		return default_color;
 	}

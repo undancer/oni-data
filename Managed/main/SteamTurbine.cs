@@ -21,16 +21,9 @@ public class SteamTurbine : Generator
 
 		public OperationalStates operational;
 
-		private static readonly HashedString[] ACTIVE_ANIMS = new HashedString[2]
-		{
-			"working_pre",
-			"working_loop"
-		};
+		private static readonly HashedString[] ACTIVE_ANIMS = new HashedString[2] { "working_pre", "working_loop" };
 
-		private static readonly HashedString[] TOOHOT_ANIMS = new HashedString[1]
-		{
-			"working_pre"
-		};
+		private static readonly HashedString[] TOOHOT_ANIMS = new HashedString[1] { "working_pre" };
 
 		public override void InitializeStates(out BaseState default_state)
 		{
@@ -272,11 +265,7 @@ public class SteamTurbine : Generator
 
 	private float lastSampleTime = -1f;
 
-	public int BlockedInputs
-	{
-		get;
-		private set;
-	}
+	public int BlockedInputs { get; private set; }
 
 	public int TotalInputs => srcCells.Length;
 

@@ -13,10 +13,7 @@ public class WireRefinedBridgeHighWattageConfig : WireBridgeHighWattageConfig
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef buildingDef = base.CreateBuildingDef();
-		buildingDef.AnimFiles = new KAnimFile[1]
-		{
-			Assets.GetAnim("heavywatttile_conductive_kanim")
-		};
+		buildingDef.AnimFiles = new KAnimFile[1] { Assets.GetAnim("heavywatttile_conductive_kanim") };
 		buildingDef.Mass = BUILDINGS.CONSTRUCTION_MASS_KG.TIER2;
 		buildingDef.MaterialCategory = MATERIALS.REFINED_METALS;
 		buildingDef.SceneLayer = Grid.SceneLayer.WireBridges;

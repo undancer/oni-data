@@ -13,14 +13,8 @@ public class OreScrubberConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		string[] array = new string[1]
-		{
-			"Metal"
-		};
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: new float[1]
-		{
-			BUILDINGS.CONSTRUCTION_MASS_KG.TIER3[0]
-		}, construction_materials: array, melting_point: 1600f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, id: "OreScrubber", width: 3, height: 3, anim: "orescrubber_kanim", hitpoints: 30, construction_time: 30f, decor: BUILDINGS.DECOR.BONUS.TIER1);
+		string[] array = new string[1] { "Metal" };
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: new float[1] { BUILDINGS.CONSTRUCTION_MASS_KG.TIER3[0] }, construction_materials: array, melting_point: 1600f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, id: "OreScrubber", width: 3, height: 3, anim: "orescrubber_kanim", hitpoints: 30, construction_time: 30f, decor: BUILDINGS.DECOR.BONUS.TIER1);
 		obj.UtilityInputOffset = new CellOffset(1, 1);
 		obj.ForegroundLayer = Grid.SceneLayer.BuildingFront;
 		obj.InputConduitType = ConduitType.Gas;
@@ -42,10 +36,7 @@ public class OreScrubberConfig : IBuildingConfig
 		conduitConsumer.capacityTag = ElementLoader.FindElementByHash(SimHashes.ChlorineGas).tag;
 		go.AddOrGet<DirectionControl>();
 		OreScrubber.Work work = go.AddOrGet<OreScrubber.Work>();
-		work.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_ore_scrubber_kanim")
-		};
+		work.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_ore_scrubber_kanim") };
 		work.workTime = 10.200001f;
 		work.trackUses = true;
 		work.workLayer = Grid.SceneLayer.BuildingUse;

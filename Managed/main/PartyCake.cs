@@ -67,10 +67,7 @@ public class PartyCake : GameStateMachine<PartyCake, PartyCake.StatesInstance, I
 
 	private static Chore CreateFetchChore(StatesInstance smi)
 	{
-		return new FetchChore(Db.Get().ChoreTypes.FarmFetch, smi.GetComponent<Storage>(), 10f, new Tag[1]
-		{
-			"MushBar".ToTag()
-		}, null, null, null, run_until_complete: true, null, null, null, FetchOrder2.OperationalRequirement.Functional);
+		return new FetchChore(Db.Get().ChoreTypes.FarmFetch, smi.GetComponent<Storage>(), 10f, new Tag[1] { "MushBar".ToTag() }, null, null, null, run_until_complete: true, null, null, null, FetchOrder2.OperationalRequirement.Functional);
 	}
 
 	private static Chore CreateWorkChore(StatesInstance smi)

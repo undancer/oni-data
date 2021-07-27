@@ -213,10 +213,7 @@ public class GeyserGenericConfig : IMultiEntityConfig
 	public static GameObject CreateGeyser(string id, string anim, int width, int height, string name, string desc, HashedString presetType, float geyserTemperature)
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity(id, name, desc, 2000f, width: width, height: height, decor: BUILDINGS.DECOR.BONUS.TIER1, noise: NOISE_POLLUTION.NOISY.TIER6, anim: Assets.GetAnim(anim), initialAnim: "inactive", sceneLayer: Grid.SceneLayer.BuildingBack);
-		gameObject.AddOrGet<OccupyArea>().objectLayers = new ObjectLayer[1]
-		{
-			ObjectLayer.Building
-		};
+		gameObject.AddOrGet<OccupyArea>().objectLayers = new ObjectLayer[1] { ObjectLayer.Building };
 		PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
 		component.SetElement(SimHashes.Katairite);
 		component.Temperature = geyserTemperature;

@@ -42,10 +42,7 @@ public class AlgaeHabitatConfig : IBuildingConfig
 	{
 		Storage storage = go.AddOrGet<Storage>();
 		storage.showInUI = true;
-		List<Tag> storageFilters = new List<Tag>
-		{
-			SimHashes.DirtyWater.CreateTag()
-		};
+		List<Tag> storageFilters = new List<Tag> { SimHashes.DirtyWater.CreateTag() };
 		Tag tag = SimHashes.Algae.CreateTag();
 		Tag tag2 = SimHashes.Water.CreateTag();
 		Storage storage2 = go.AddComponent<Storage>();
@@ -66,10 +63,7 @@ public class AlgaeHabitatConfig : IBuildingConfig
 		manualDeliveryKG2.capacity = 360f;
 		manualDeliveryKG2.refillMass = 72f;
 		manualDeliveryKG2.choreTypeIDHash = Db.Get().ChoreTypes.FetchCritical.IdHash;
-		KAnimFile[] overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_algae_terarrium_kanim")
-		};
+		KAnimFile[] overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_algae_terarrium_kanim") };
 		AlgaeHabitatEmpty algaeHabitatEmpty = go.AddOrGet<AlgaeHabitatEmpty>();
 		algaeHabitatEmpty.workTime = 5f;
 		algaeHabitatEmpty.overrideAnims = overrideAnims;

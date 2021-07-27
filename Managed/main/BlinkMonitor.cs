@@ -84,8 +84,8 @@ public class BlinkMonitor : GameStateMachine<BlinkMonitor, BlinkMonitor.Instance
 
 	public static void BeginBlinking(Instance smi)
 	{
-		string s = "eyes1";
-		smi.eyes.Play(s);
+		string text = "eyes1";
+		smi.eyes.Play(text);
 		UpdateBlinking(smi, 0f);
 	}
 
@@ -107,7 +107,7 @@ public class BlinkMonitor : GameStateMachine<BlinkMonitor, BlinkMonitor.Instance
 		{
 			return;
 		}
-		HashedString hash = HashedString.Invalid;
+		HashedString hashedString = HashedString.Invalid;
 		for (int i = 0; i < frame.numElements; i++)
 		{
 			int num = frame.firstElementIdx + i;
@@ -116,11 +116,11 @@ public class BlinkMonitor : GameStateMachine<BlinkMonitor, BlinkMonitor.Instance
 				KAnim.Anim.FrameElement frameElement = batch.group.data.frameElements[num];
 				if (!(frameElement.symbol == HashedString.Invalid))
 				{
-					hash = frameElement.symbol;
+					hashedString = frameElement.symbol;
 					break;
 				}
 			}
 		}
-		smi.GetComponent<SymbolOverrideController>().AddSymbolOverride(HASH_SNAPTO_EYES, smi.eyes.AnimFiles[0].GetData().build.GetSymbol(hash), 3);
+		smi.GetComponent<SymbolOverrideController>().AddSymbolOverride(HASH_SNAPTO_EYES, smi.eyes.AnimFiles[0].GetData().build.GetSymbol(hashedString), 3);
 	}
 }

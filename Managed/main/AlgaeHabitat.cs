@@ -152,11 +152,11 @@ public class AlgaeHabitat : StateMachineComponent<AlgaeHabitat.SMInstance>
 	private void ConfigurePollutedWaterOutput()
 	{
 		Storage storage = null;
-		Tag tag = ElementLoader.FindElementByHash(SimHashes.DirtyWater).tag;
+		Tag item = ElementLoader.FindElementByHash(SimHashes.DirtyWater).tag;
 		Storage[] components = GetComponents<Storage>();
 		foreach (Storage storage2 in components)
 		{
-			if (storage2.storageFilters.Contains(tag))
+			if (storage2.storageFilters.Contains(item))
 			{
 				storage = storage2;
 				break;

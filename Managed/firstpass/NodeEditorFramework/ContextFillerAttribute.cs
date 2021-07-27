@@ -7,11 +7,7 @@ namespace NodeEditorFramework
 	[AttributeUsage(AttributeTargets.Method)]
 	public class ContextFillerAttribute : Attribute
 	{
-		public ContextType contextType
-		{
-			get;
-			private set;
-		}
+		public ContextType contextType { get; private set; }
 
 		public ContextFillerAttribute(ContextType type)
 		{

@@ -1,9 +1,6 @@
 public interface IEnergyProducer
 {
-	float JoulesAvailable
-	{
-		get;
-	}
+	float JoulesAvailable { get; }
 
 	void ConsumeEnergy(float joules);
 }

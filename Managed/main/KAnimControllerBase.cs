@@ -149,17 +149,9 @@ public abstract class KAnimControllerBase : MonoBehaviour
 
 	private static HashedString snaptoPivot = new HashedString("snapTo_pivot");
 
-	public string debugName
-	{
-		get;
-		private set;
-	}
+	public string debugName { get; private set; }
 
-	public KAnim.Build curBuild
-	{
-		get;
-		protected set;
-	}
+	public KAnim.Build curBuild { get; protected set; }
 
 	public new bool enabled
 	{
@@ -186,17 +178,9 @@ public abstract class KAnimControllerBase : MonoBehaviour
 
 	public bool HasBatchInstanceData => batchInstanceData != null;
 
-	public SymbolInstanceGpuData symbolInstanceGpuData
-	{
-		get;
-		protected set;
-	}
+	public SymbolInstanceGpuData symbolInstanceGpuData { get; protected set; }
 
-	public SymbolOverrideInfoGpuData symbolOverrideInfoGpuData
-	{
-		get;
-		protected set;
-	}
+	public SymbolOverrideInfoGpuData symbolOverrideInfoGpuData { get; protected set; }
 
 	public Color32 TintColour
 	{
@@ -258,41 +242,17 @@ public abstract class KAnimControllerBase : MonoBehaviour
 		}
 	}
 
-	public int previousFrame
-	{
-		get;
-		protected set;
-	}
+	public int previousFrame { get; protected set; }
 
-	public int currentFrame
-	{
-		get;
-		protected set;
-	}
+	public int currentFrame { get; protected set; }
 
-	public string currentAnim
-	{
-		get;
-		protected set;
-	}
+	public string currentAnim { get; protected set; }
 
-	public string currentAnimFile
-	{
-		get;
-		protected set;
-	}
+	public string currentAnimFile { get; protected set; }
 
-	public KAnimHashedString currentAnimFileHash
-	{
-		get;
-		protected set;
-	}
+	public KAnimHashedString currentAnimFileHash { get; protected set; }
 
-	public float PlaySpeedMultiplier
-	{
-		get;
-		set;
-	}
+	public float PlaySpeedMultiplier { get; set; }
 
 	public KAnim.PlayMode PlayMode
 	{

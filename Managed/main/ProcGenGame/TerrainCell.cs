@@ -94,23 +94,11 @@ namespace ProcGenGame
 
 		public Polygon poly => site.poly;
 
-		public Cell node
-		{
-			get;
-			private set;
-		}
+		public Cell node { get; private set; }
 
-		public Diagram.Site site
-		{
-			get;
-			private set;
-		}
+		public Diagram.Site site { get; private set; }
 
-		public Dictionary<Tag, int> distancesToTags
-		{
-			get;
-			private set;
-		}
+		public Dictionary<Tag, int> distancesToTags { get; private set; }
 
 		public bool HasMobs
 		{
@@ -124,11 +112,7 @@ namespace ProcGenGame
 			}
 		}
 
-		public List<KeyValuePair<int, Tag>> mobs
-		{
-			get;
-			private set;
-		}
+		public List<KeyValuePair<int, Tag>> mobs { get; private set; }
 
 		protected TerrainCell()
 		{

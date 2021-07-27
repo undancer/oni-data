@@ -4,11 +4,7 @@ public class SeededRandom
 {
 	private Random rnd;
 
-	public int seed
-	{
-		get;
-		private set;
-	}
+	public int seed { get; private set; }
 
 	public SeededRandom(int seed)
 	{

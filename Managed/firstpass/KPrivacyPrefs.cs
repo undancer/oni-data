@@ -8,11 +8,7 @@ public class KPrivacyPrefs
 
 	public static readonly string FILENAME = "kprivacyprefs.yaml";
 
-	public bool disableDataCollection
-	{
-		get;
-		set;
-	}
+	public bool disableDataCollection { get; set; }
 
 	public static KPrivacyPrefs instance
 	{

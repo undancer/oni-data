@@ -27,16 +27,9 @@ namespace Satsuma
 			Node node2 = graph.V(arc);
 			if (!allowDuplicates && node == node2)
 			{
-				return new Node[1]
-				{
-					node
-				};
+				return new Node[1] { node };
 			}
-			return new Node[2]
-			{
-				node,
-				node2
-			};
+			return new Node[2] { node, node2 };
 		}
 	}
 }

@@ -104,10 +104,7 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 			attributeExperienceMultiplier = DUPLICANTSTATS.ATTRIBUTE_LEVELING.ALL_DAY_EXPERIENCE;
 			skillExperienceSkillGroup = Db.Get().SkillGroups.Research.Id;
 			skillExperienceMultiplier = SKILLS.ALL_DAY_EXPERIENCE;
-			overrideAnims = new KAnimFile[1]
-			{
-				Assets.GetAnim("anim_interacts_telescope_low_kanim")
-			};
+			overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_telescope_low_kanim") };
 			requiredSkillPerk = Db.Get().SkillPerks.CanUseClusterTelescope.Id;
 			workLayer = Grid.SceneLayer.BuildingUse;
 		}

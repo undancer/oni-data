@@ -130,13 +130,7 @@ public class Shower : Workable, IGameObjectEffectDescriptor
 
 	public const float WATER_PER_USE = 5f;
 
-	private static readonly string[] EffectsRemoved = new string[4]
-	{
-		"SoakingWet",
-		"WetFeet",
-		"MinorIrritation",
-		"MajorIrritation"
-	};
+	private static readonly string[] EffectsRemoved = new string[4] { "SoakingWet", "WetFeet", "MinorIrritation", "MajorIrritation" };
 
 	private Shower()
 	{

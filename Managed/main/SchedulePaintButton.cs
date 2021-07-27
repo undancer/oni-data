@@ -17,11 +17,7 @@ public class SchedulePaintButton : KMonoBehaviour
 	[SerializeField]
 	private ToolTip toolTip;
 
-	public ScheduleGroup group
-	{
-		get;
-		private set;
-	}
+	public ScheduleGroup group { get; private set; }
 
 	public void SetGroup(ScheduleGroup group, Dictionary<string, ColorStyleSetting> styles, Action<SchedulePaintButton> onClick)
 	{

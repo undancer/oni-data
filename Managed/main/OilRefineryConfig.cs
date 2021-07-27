@@ -52,10 +52,7 @@ public class OilRefineryConfig : IBuildingConfig
 		ConduitDispenser conduitDispenser = go.AddOrGet<ConduitDispenser>();
 		conduitDispenser.conduitType = ConduitType.Liquid;
 		conduitDispenser.invertElementFilter = true;
-		conduitDispenser.elementFilter = new SimHashes[1]
-		{
-			SimHashes.CrudeOil
-		};
+		conduitDispenser.elementFilter = new SimHashes[1] { SimHashes.CrudeOil };
 		go.AddOrGet<Storage>().showInUI = true;
 		ElementConverter elementConverter = go.AddOrGet<ElementConverter>();
 		elementConverter.consumedElements = new ElementConverter.ConsumedElement[1]

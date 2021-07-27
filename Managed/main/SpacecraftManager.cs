@@ -84,14 +84,8 @@ public class SpacecraftManager : KMonoBehaviour, ISim1000ms
 		List<List<string>> list = new List<List<string>>
 		{
 			new List<string>(),
-			new List<string>
-			{
-				spaceDestinationTypes.OilyAsteroid.Id
-			},
-			new List<string>
-			{
-				spaceDestinationTypes.Satellite.Id
-			},
+			new List<string> { spaceDestinationTypes.OilyAsteroid.Id },
+			new List<string> { spaceDestinationTypes.Satellite.Id },
 			new List<string>
 			{
 				spaceDestinationTypes.Satellite.Id,

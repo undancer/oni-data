@@ -121,11 +121,7 @@ public class FetchChore : Chore<FetchChore.StatesInstance>
 		}
 	}
 
-	public Storage destination
-	{
-		get;
-		private set;
-	}
+	public Storage destination { get; private set; }
 
 	public void FetchAreaBegin(Precondition.Context context, float amount_to_be_fetched)
 	{
@@ -155,19 +151,19 @@ public class FetchChore : Chore<FetchChore.StatesInstance>
 
 	public Pickupable FindFetchTarget(ChoreConsumerState consumer_state)
 	{
-		Pickupable target = null;
+		Pickupable result = null;
 		if (destination != null)
 		{
 			if (consumer_state.hasSolidTransferArm)
 			{
-				consumer_state.solidTransferArm.FindFetchTarget(destination, tagBits, requiredTagBits, forbiddenTagBits, originalAmount, ref target);
+				consumer_state.solidTransferArm.FindFetchTarget(destination, tagBits, requiredTagBits, forbiddenTagBits, originalAmount, ref result);
 			}
 			else
 			{
-				target = Game.Instance.fetchManager.FindFetchTarget(destination, ref tagBits, ref requiredTagBits, ref forbiddenTagBits, originalAmount);
+				result = Game.Instance.fetchManager.FindFetchTarget(destination, ref tagBits, ref requiredTagBits, ref forbiddenTagBits, originalAmount);
 			}
 		}
-		return target;
+		return result;
 	}
 
 	public override void Begin(Precondition.Context context)

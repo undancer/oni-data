@@ -414,17 +414,9 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 
 	public IList<Ref<RocketModuleCluster>> parts => GetComponent<RocketModuleCluster>().CraftInterface.ClusterModules;
 
-	public bool isLanding
-	{
-		get;
-		private set;
-	}
+	public bool isLanding { get; private set; }
 
-	public float rocketSpeed
-	{
-		get;
-		private set;
-	}
+	public float rocketSpeed { get; private set; }
 
 	public LaunchableRocketRegisterType registerType => LaunchableRocketRegisterType.Clustercraft;
 

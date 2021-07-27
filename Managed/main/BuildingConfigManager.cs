@@ -12,10 +12,7 @@ public class BuildingConfigManager : KMonoBehaviour
 
 	private Dictionary<IBuildingConfig, BuildingDef> configTable = new Dictionary<IBuildingConfig, BuildingDef>();
 
-	private string[] NonBuildableBuildings = new string[1]
-	{
-		"Headquarters"
-	};
+	private string[] NonBuildableBuildings = new string[1] { "Headquarters" };
 
 	private HashSet<Type> defaultKComponents = new HashSet<Type>();
 

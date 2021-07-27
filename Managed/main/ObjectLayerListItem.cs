@@ -6,23 +6,11 @@ public class ObjectLayerListItem
 
 	private ObjectLayer layer;
 
-	public ObjectLayerListItem previousItem
-	{
-		get;
-		private set;
-	}
+	public ObjectLayerListItem previousItem { get; private set; }
 
-	public ObjectLayerListItem nextItem
-	{
-		get;
-		private set;
-	}
+	public ObjectLayerListItem nextItem { get; private set; }
 
-	public GameObject gameObject
-	{
-		get;
-		private set;
-	}
+	public GameObject gameObject { get; private set; }
 
 	public ObjectLayerListItem(GameObject gameObject, ObjectLayer layer, int new_cell)
 	{

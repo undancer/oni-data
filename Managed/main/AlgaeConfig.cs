@@ -12,9 +12,6 @@ public class AlgaeConfig : IOreConfig
 
 	public GameObject CreatePrefab()
 	{
-		return EntityTemplates.CreateSolidOreEntity(ElementID, new List<Tag>
-		{
-			GameTags.Life
-		});
+		return EntityTemplates.CreateSolidOreEntity(ElementID, new List<Tag> { GameTags.Life });
 	}
 }

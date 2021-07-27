@@ -294,11 +294,7 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		component.OnRefreshData(data);
 	});
 
-	public GameObject StoragePanel
-	{
-		get;
-		private set;
-	}
+	public GameObject StoragePanel { get; private set; }
 
 	public SimpleInfoScreen()
 	{
@@ -332,8 +328,8 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		fertilityPanel.SetTitle(UI.DETAILTABS.SIMPLEINFO.GROUPNAME_FERTILITY);
 		infoPanel = Util.KInstantiateUI(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
 		infoPanel.GetComponent<CollapsibleDetailContentPanel>().HeaderLabel.text = UI.DETAILTABS.SIMPLEINFO.GROUPNAME_DESCRIPTION;
-		GameObject gameObject = infoPanel.GetComponent<CollapsibleDetailContentPanel>().Content.gameObject;
-		descriptionContainer = Util.KInstantiateUI<DescriptionContainer>(DescriptionContainerTemplate, gameObject);
+		GameObject parent = infoPanel.GetComponent<CollapsibleDetailContentPanel>().Content.gameObject;
+		descriptionContainer = Util.KInstantiateUI<DescriptionContainer>(DescriptionContainerTemplate, parent);
 		worldLifePanel = Util.KInstantiateUI<CollapsibleDetailContentPanel>(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
 		worldLifePanel.SetTitle(UI.DETAILTABS.SIMPLEINFO.GROUPNAME_LIFE);
 		worldElementsPanel = Util.KInstantiateUI<CollapsibleDetailContentPanel>(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
@@ -345,7 +341,7 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		StoragePanel = Util.KInstantiateUI(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
 		stressPanel = Util.KInstantiateUI(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
 		stressDrawer = new DetailsPanelDrawer(attributesLabelTemplate, stressPanel.GetComponent<CollapsibleDetailContentPanel>().Content.gameObject);
-		stampContainer = Util.KInstantiateUI(StampContainerTemplate, gameObject);
+		stampContainer = Util.KInstantiateUI(StampContainerTemplate, parent);
 		Subscribe(-1514841199, OnRefreshDataDelegate);
 	}
 
@@ -769,8 +765,8 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 	private void RefreshWorld()
 	{
 		WorldContainer worldContainer = ((selectedTarget == null) ? null : selectedTarget.GetComponent<WorldContainer>());
-		AsteroidGridEntity x = ((selectedTarget == null) ? null : selectedTarget.GetComponent<AsteroidGridEntity>());
-		bool flag = worldContainer != null && x != null;
+		AsteroidGridEntity asteroidGridEntity = ((selectedTarget == null) ? null : selectedTarget.GetComponent<AsteroidGridEntity>());
+		bool flag = worldContainer != null && asteroidGridEntity != null;
 		worldBiomesPanel.gameObject.SetActive(flag);
 		worldGeysersPanel.gameObject.SetActive(flag);
 		if (!flag)
@@ -844,9 +840,9 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 
 	private void RefreshProcessConditions()
 	{
-		foreach (GameObject processConditionRow2 in processConditionRows)
+		foreach (GameObject processConditionRow in processConditionRows)
 		{
-			Util.KDestroyGameObject(processConditionRow2);
+			Util.KDestroyGameObject(processConditionRow);
 		}
 		processConditionRows.Clear();
 		if (!DlcManager.FeatureClusterSpaceEnabled())

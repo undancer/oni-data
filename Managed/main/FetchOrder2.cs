@@ -25,41 +25,17 @@ public class FetchOrder2
 
 	private OperationalRequirement operationalRequirement = OperationalRequirement.None;
 
-	public float TotalAmount
-	{
-		get;
-		set;
-	}
+	public float TotalAmount { get; set; }
 
-	public int PriorityMod
-	{
-		get;
-		set;
-	}
+	public int PriorityMod { get; set; }
 
-	public Tag[] Tags
-	{
-		get;
-		protected set;
-	}
+	public Tag[] Tags { get; protected set; }
 
-	public Tag[] RequiredTags
-	{
-		get;
-		protected set;
-	}
+	public Tag[] RequiredTags { get; protected set; }
 
-	public Tag[] ForbiddenTags
-	{
-		get;
-		protected set;
-	}
+	public Tag[] ForbiddenTags { get; protected set; }
 
-	public Storage Destination
-	{
-		get;
-		set;
-	}
+	public Storage Destination { get; set; }
 
 	private float UnfetchedAmount
 	{
@@ -283,11 +259,11 @@ public class FetchOrder2
 	{
 		if (!condition)
 		{
-			string str = "FetchOrder error: " + message;
-			str = ((!(Destination == null)) ? (str + "\nDestination: " + Destination.name) : (str + "\nDestination: None"));
-			str = str + "\nTotal Amount: " + TotalAmount;
-			str = str + "\nUnfetched Amount: " + _UnfetchedAmount;
-			Debug.LogError(str);
+			string text = "FetchOrder error: " + message;
+			text = ((!(Destination == null)) ? (text + "\nDestination: " + Destination.name) : (text + "\nDestination: None"));
+			text = text + "\nTotal Amount: " + TotalAmount;
+			text = text + "\nUnfetched Amount: " + _UnfetchedAmount;
+			Debug.LogError(text);
 		}
 	}
 }

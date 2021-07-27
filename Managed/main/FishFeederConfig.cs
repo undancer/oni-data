@@ -64,10 +64,7 @@ public class FishFeederConfig : IBuildingConfig
 	public override void ConfigurePost(BuildingDef def)
 	{
 		List<Tag> list = new List<Tag>();
-		foreach (KeyValuePair<Tag, Diet> item in DietManager.CollectDiets(new Tag[1]
-		{
-			GameTags.Creatures.Species.PacuSpecies
-		}))
+		foreach (KeyValuePair<Tag, Diet> item in DietManager.CollectDiets(new Tag[1] { GameTags.Creatures.Species.PacuSpecies }))
 		{
 			list.Add(item.Key);
 		}

@@ -45,10 +45,7 @@ public class DivergentWormConfig : IEntityConfig
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Age.maxAttribute.Id, 150f, name));
 		prefab.AddWeapon(2f, 3f);
 		List<Diet.Info> list = BaseDivergentConfig.BasicSulfurDiet(SimHashes.Mud.CreateTag(), CALORIES_PER_KG_OF_ORE, TUNING.CREATURES.CONVERSION_EFFICIENCY.BAD_2, null, 0f);
-		list.Add(new Diet.Info(new HashSet<Tag>
-		{
-			SimHashes.Sucrose.CreateTag()
-		}, SimHashes.Mud.CreateTag(), CALORIES_PER_KG_OF_SUCROSE));
+		list.Add(new Diet.Info(new HashSet<Tag> { SimHashes.Sucrose.CreateTag() }, SimHashes.Mud.CreateTag(), CALORIES_PER_KG_OF_SUCROSE));
 		GameObject gameObject = BaseDivergentConfig.SetupDiet(prefab, list, CALORIES_PER_KG_OF_ORE, MINI_POOP_SIZE_IN_KG);
 		SegmentedCreature.Def def = gameObject.AddOrGetDef<SegmentedCreature.Def>();
 		def.segmentTrackerSymbol = new HashedString("segmenttracker");

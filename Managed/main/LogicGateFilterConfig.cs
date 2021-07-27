@@ -5,10 +5,7 @@ public class LogicGateFilterConfig : LogicGateBaseConfig
 {
 	public const string ID = "LogicGateFILTER";
 
-	protected override CellOffset[] InputPortOffsets => new CellOffset[1]
-	{
-		CellOffset.none
-	};
+	protected override CellOffset[] InputPortOffsets => new CellOffset[1] { CellOffset.none };
 
 	protected override CellOffset[] OutputPortOffsets => new CellOffset[1]
 	{

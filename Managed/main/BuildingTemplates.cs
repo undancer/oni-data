@@ -29,10 +29,7 @@ public class BuildingTemplates
 		}
 		buildingDef.BuildLocationRule = build_location_rule;
 		buildingDef.ObjectLayer = ObjectLayer.Building;
-		buildingDef.AnimFiles = new KAnimFile[1]
-		{
-			Assets.GetAnim(anim)
-		};
+		buildingDef.AnimFiles = new KAnimFile[1] { Assets.GetAnim(anim) };
 		buildingDef.GenerateOffsets();
 		buildingDef.BaseDecor = decor.amount;
 		buildingDef.BaseDecorRadius = decor.radius;
@@ -61,24 +58,15 @@ public class BuildingTemplates
 			GameTags.FloorTiles,
 			GameTags.Ladders
 		};
-		def.EquivalentReplacementLayers = new List<ObjectLayer>
-		{
-			ObjectLayer.ReplacementLadder
-		};
+		def.EquivalentReplacementLayers = new List<ObjectLayer> { ObjectLayer.ReplacementLadder };
 	}
 
 	public static void CreateLadderDef(BuildingDef def)
 	{
 		def.TileLayer = ObjectLayer.LadderTile;
 		def.ReplacementLayer = ObjectLayer.ReplacementLadder;
-		def.ReplacementTags = new List<Tag>
-		{
-			GameTags.Ladders
-		};
-		def.EquivalentReplacementLayers = new List<ObjectLayer>
-		{
-			ObjectLayer.ReplacementTile
-		};
+		def.ReplacementTags = new List<Tag> { GameTags.Ladders };
+		def.EquivalentReplacementLayers = new List<ObjectLayer> { ObjectLayer.ReplacementTile };
 	}
 
 	public static void CreateElectricalBuildingDef(BuildingDef def)
@@ -149,10 +137,6 @@ public class BuildingTemplates
 			template.AddOrGet<VerticalModuleTiler>();
 		}
 		GameObject buildingUnderConstruction = def.BuildingUnderConstruction;
-		if (def.Cancellable)
-		{
-			Debug.LogError(def.Name + " Def should be marked 'Cancellable = false' as they implment their own cancel logic in ReorderableBuilding");
-		}
 		if (clusterRocket)
 		{
 			buildingUnderConstruction.AddOrGet<RocketModuleCluster>();
@@ -189,6 +173,10 @@ public class BuildingTemplates
 		DebugUtil.Assert(Array.IndexOf(def.RequiredDlcIds, "EXPANSION1_ID") != -1, "Only expansion1 rocket engines should be expanded to Cluster Modules.");
 		template.AddOrGet<ReorderableBuilding>();
 		buildingUnderConstruction.AddOrGet<ReorderableBuilding>();
+		if (def.Cancellable)
+		{
+			Debug.LogError(def.Name + " Def should be marked 'Cancellable = false' as they implement their own cancel logic in ReorderableBuilding");
+		}
 		template.GetComponent<ReorderableBuilding>().buildConditions.Add(new ResearchCompleted());
 		template.GetComponent<ReorderableBuilding>().buildConditions.Add(new MaterialsAvailable());
 		template.GetComponent<ReorderableBuilding>().buildConditions.Add(new PlaceSpaceAvailable());

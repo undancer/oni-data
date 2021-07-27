@@ -12,29 +12,13 @@ namespace Satsuma
 
 		private readonly PriorityQueue<Node, double> priorityQueue;
 
-		public IGraph Graph
-		{
-			get;
-			private set;
-		}
+		public IGraph Graph { get; private set; }
 
-		public Func<Arc, double> Cost
-		{
-			get;
-			private set;
-		}
+		public Func<Arc, double> Cost { get; private set; }
 
-		public DijkstraMode Mode
-		{
-			get;
-			private set;
-		}
+		public DijkstraMode Mode { get; private set; }
 
-		public double NullCost
-		{
-			get;
-			private set;
-		}
+		public double NullCost { get; private set; }
 
 		public IEnumerable<Node> ReachedNodes => parentArc.Keys;
 

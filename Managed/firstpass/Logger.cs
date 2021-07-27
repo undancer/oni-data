@@ -8,22 +8,11 @@ public abstract class Logger
 
 	protected string name;
 
-	public bool enableConsoleLogging
-	{
-		get;
-		set;
-	}
+	public bool enableConsoleLogging { get; set; }
 
-	public bool breakOnLog
-	{
-		get;
-		set;
-	}
+	public bool breakOnLog { get; set; }
 
-	public abstract int Count
-	{
-		get;
-	}
+	public abstract int Count { get; }
 
 	public Logger(string name)
 	{

@@ -38,10 +38,7 @@ public class CompostConfig : IBuildingConfig
 		go.AddOrGet<Compost>().simulatedInternalTemperature = 348.15f;
 		CompostWorkable compostWorkable = go.AddOrGet<CompostWorkable>();
 		compostWorkable.workTime = 20f;
-		compostWorkable.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_compost_kanim")
-		};
+		compostWorkable.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_compost_kanim") };
 		ElementConverter elementConverter = go.AddOrGet<ElementConverter>();
 		elementConverter.consumedElements = new ElementConverter.ConsumedElement[1]
 		{

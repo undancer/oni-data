@@ -6,23 +6,11 @@ namespace Satsuma
 	{
 		private Dijkstra dijkstra;
 
-		public IGraph Graph
-		{
-			get;
-			private set;
-		}
+		public IGraph Graph { get; private set; }
 
-		public Func<Arc, double> Cost
-		{
-			get;
-			private set;
-		}
+		public Func<Arc, double> Cost { get; private set; }
 
-		public Func<Node, double> Heuristic
-		{
-			get;
-			private set;
-		}
+		public Func<Node, double> Heuristic { get; private set; }
 
 		public AStar(IGraph graph, Func<Arc, double> cost, Func<Node, double> heuristic)
 		{

@@ -1,14 +1,8 @@
 public interface ISliderControl
 {
-	string SliderTitleKey
-	{
-		get;
-	}
+	string SliderTitleKey { get; }
 
-	string SliderUnits
-	{
-		get;
-	}
+	string SliderUnits { get; }
 
 	int SliderDecimalPlaces(int index);
 

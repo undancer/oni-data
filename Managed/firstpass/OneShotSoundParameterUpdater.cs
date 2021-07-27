@@ -11,11 +11,7 @@ public abstract class OneShotSoundParameterUpdater
 		public HashedString path;
 	}
 
-	public HashedString parameter
-	{
-		get;
-		private set;
-	}
+	public HashedString parameter { get; private set; }
 
 	public OneShotSoundParameterUpdater(HashedString parameter)
 	{

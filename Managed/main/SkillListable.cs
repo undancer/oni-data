@@ -4,17 +4,9 @@ public class SkillListable : IListableOption
 {
 	public LocString name;
 
-	public string skillName
-	{
-		get;
-		private set;
-	}
+	public string skillName { get; private set; }
 
-	public string skillHat
-	{
-		get;
-		private set;
-	}
+	public string skillHat { get; private set; }
 
 	public SkillListable(string name)
 	{

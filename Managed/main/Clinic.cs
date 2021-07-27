@@ -217,10 +217,7 @@ public class Clinic : Workable, IGameObjectEffectDescriptor, ISingleSliderContro
 	[MyCmpReq]
 	private Assignable assignable;
 
-	private static readonly string[] EffectsRemoved = new string[1]
-	{
-		"SoreBack"
-	};
+	private static readonly string[] EffectsRemoved = new string[1] { "SoreBack" };
 
 	private const int MAX_RANGE = 10;
 
@@ -267,10 +264,7 @@ public class Clinic : Workable, IGameObjectEffectDescriptor, ISingleSliderContro
 	{
 		base.OnPrefabInit();
 		showProgressBar = false;
-		assignable.subSlots = new AssignableSlot[1]
-		{
-			Db.Get().AssignableSlots.MedicalBed
-		};
+		assignable.subSlots = new AssignableSlot[1] { Db.Get().AssignableSlots.MedicalBed };
 		assignable.AddAutoassignPrecondition(CanAutoAssignTo);
 		assignable.AddAssignPrecondition(CanManuallyAssignTo);
 	}

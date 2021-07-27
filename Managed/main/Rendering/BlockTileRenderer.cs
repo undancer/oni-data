@@ -272,7 +272,7 @@ namespace Rendering
 			private void AddVertexInfo(AtlasInfo atlas_info, Vector2 uv_trim_size, int x, int y, Bits connection_bits, Color color, List<Vector3> vertices, List<Vector2> uvs, List<int> indices, List<Color> colours)
 			{
 				Vector2 vector = new Vector2(x, y);
-				Vector2 v = vector + new Vector2(1f, 1f);
+				Vector2 vector2 = vector + new Vector2(1f, 1f);
 				Vector2 item = new Vector2(atlas_info.uvBox.x, atlas_info.uvBox.w);
 				Vector2 item2 = new Vector2(atlas_info.uvBox.z, atlas_info.uvBox.y);
 				if ((connection_bits & Bits.Left) == 0)
@@ -285,7 +285,7 @@ namespace Rendering
 				}
 				if ((connection_bits & Bits.Right) == 0)
 				{
-					v.x += 0.25f;
+					vector2.x += 0.25f;
 				}
 				else
 				{
@@ -293,7 +293,7 @@ namespace Rendering
 				}
 				if ((connection_bits & Bits.Up) == 0)
 				{
-					v.y += 0.25f;
+					vector2.y += 0.25f;
 				}
 				else
 				{
@@ -309,9 +309,9 @@ namespace Rendering
 				}
 				int count = vertices.Count;
 				vertices.Add(vector);
-				vertices.Add(new Vector2(v.x, vector.y));
-				vertices.Add(v);
-				vertices.Add(new Vector2(vector.x, v.y));
+				vertices.Add(new Vector2(vector2.x, vector.y));
+				vertices.Add(vector2);
+				vertices.Add(new Vector2(vector.x, vector2.y));
 				uvs.Add(item);
 				uvs.Add(new Vector2(item2.x, item.y));
 				uvs.Add(item2);
@@ -476,11 +476,11 @@ namespace Rendering
 					{
 						int num3 = (int)((float)(decor.variants.Length - 1) * num2);
 						int count = vertices.Count;
-						Vector3 b = new Vector3(x, y, z_offset) + decor.variants[num3].offset;
+						Vector3 vector = new Vector3(x, y, z_offset) + decor.variants[num3].offset;
 						Vector3[] vertices2 = decor.variants[num3].atlasItem.vertices;
-						foreach (Vector3 a in vertices2)
+						foreach (Vector3 vector2 in vertices2)
 						{
-							vertices.Add(a + b);
+							vertices.Add(vector2 + vector);
 							colours.Add(colour);
 						}
 						uvs.AddRange(decor.variants[num3].atlasItem.uvs);

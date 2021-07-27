@@ -17,15 +17,7 @@ public class HotTubConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("HotTub", 5, 2, "hottub_kanim", 30, 10f, new float[2]
-		{
-			200f,
-			200f
-		}, new string[2]
-		{
-			"Metal",
-			"BuildingWood"
-		}, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER3);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("HotTub", 5, 2, "hottub_kanim", 30, 10f, new float[2] { 200f, 200f }, new string[2] { "Metal", "BuildingWood" }, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER3);
 		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
 		obj.ViewMode = OverlayModes.LiquidConduits.ID;
 		obj.Floodable = true;

@@ -293,13 +293,13 @@ public class ModsScreen : KModalScreen
 
 	private void OnToggleAllClicked()
 	{
-		bool enabled = AreAnyModsDisabled();
+		bool flag = AreAnyModsDisabled();
 		Manager modManager = Global.Instance.modManager;
 		foreach (Mod mod in modManager.mods)
 		{
 			if (ShouldDisplayMod(mod))
 			{
-				modManager.EnableMod(mod.label, enabled, this);
+				modManager.EnableMod(mod.label, flag, this);
 			}
 		}
 		BuildDisplay();

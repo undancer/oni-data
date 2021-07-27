@@ -39,11 +39,11 @@ public class LureSideScreen : SideScreenContent
 			Tag key = bait;
 			if (!toggles_by_tag.ContainsKey(bait))
 			{
-				GameObject gameObject = Util.KInstantiateUI(prefab_toggle, toggle_container, force_active: true);
-				Image reference = gameObject.GetComponent<HierarchyReferences>().GetReference<Image>("FGImage");
-				gameObject.GetComponent<HierarchyReferences>().GetReference<LocText>("Label").text = ElementLoader.GetElement(bait).name;
+				GameObject obj = Util.KInstantiateUI(prefab_toggle, toggle_container, force_active: true);
+				Image reference = obj.GetComponent<HierarchyReferences>().GetReference<Image>("FGImage");
+				obj.GetComponent<HierarchyReferences>().GetReference<LocText>("Label").text = ElementLoader.GetElement(bait).name;
 				reference.sprite = Def.GetUISpriteFromMultiObjectAnim(ElementLoader.GetElement(bait).substance.anim);
-				MultiToggle component = gameObject.GetComponent<MultiToggle>();
+				MultiToggle component = obj.GetComponent<MultiToggle>();
 				toggles_by_tag.Add(key, component);
 			}
 			toggles_by_tag[bait].onClick = delegate

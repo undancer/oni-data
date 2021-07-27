@@ -20,10 +20,7 @@ public class StateMachineComponent<StateMachineInstanceType> : StateMachineCompo
 		{
 			if (_smi == null)
 			{
-				_smi = (StateMachineInstanceType)Activator.CreateInstance(typeof(StateMachineInstanceType), new object[1]
-				{
-					this
-				});
+				_smi = (StateMachineInstanceType)Activator.CreateInstance(typeof(StateMachineInstanceType), new object[1] { this });
 			}
 			return _smi;
 		}

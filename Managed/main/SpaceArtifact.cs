@@ -118,7 +118,7 @@ public class SpaceArtifact : KMonoBehaviour, IGameObjectEffectDescriptor
 
 	private void UpdateAnim()
 	{
-		string s = ((!base.gameObject.HasTag(GameTags.CharmedArtifact)) ? uniqueAnimNameFragment : ("entombed_" + uniqueAnimNameFragment.Replace("idle_", "")));
-		GetComponent<KBatchedAnimController>().Play(s, KAnim.PlayMode.Loop);
+		string text = ((!base.gameObject.HasTag(GameTags.CharmedArtifact)) ? uniqueAnimNameFragment : ("entombed_" + uniqueAnimNameFragment.Replace("idle_", "")));
+		GetComponent<KBatchedAnimController>().Play(text, KAnim.PlayMode.Loop);
 	}
 }

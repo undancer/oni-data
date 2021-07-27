@@ -22,11 +22,7 @@ public class LogicSwitch : Switch, IPlayerControlledToggle, ISim33ms
 
 	public string SideScreenTitleKey => "STRINGS.BUILDINGS.PREFABS.LOGICSWITCH.SIDESCREEN_TITLE";
 
-	public bool ToggleRequested
-	{
-		get;
-		set;
-	}
+	public bool ToggleRequested { get; set; }
 
 	protected override void OnPrefabInit()
 	{

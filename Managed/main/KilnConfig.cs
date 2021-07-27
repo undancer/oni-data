@@ -71,10 +71,7 @@ public class KilnConfig : IBuildingConfig
 		{
 			time = 40f,
 			description = string.Format(STRINGS.BUILDINGS.PREFABS.EGGCRACKER.RECIPE_DESCRIPTION, ElementLoader.FindElementByHash(SimHashes.Clay).name, ElementLoader.FindElementByHash(SimHashes.Ceramic).name),
-			fabricators = new List<Tag>
-			{
-				TagManager.Create("Kiln")
-			},
+			fabricators = new List<Tag> { TagManager.Create("Kiln") },
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result
 		};
 		ComplexRecipeManager.Get().AddObsoleteIDMapping(obsolete_id, text);
@@ -93,10 +90,7 @@ public class KilnConfig : IBuildingConfig
 		{
 			time = 40f,
 			description = string.Format(STRINGS.BUILDINGS.PREFABS.EGGCRACKER.RECIPE_DESCRIPTION, ElementLoader.FindElementByHash(SimHashes.Carbon).name, ElementLoader.FindElementByHash(SimHashes.RefinedCarbon).name),
-			fabricators = new List<Tag>
-			{
-				TagManager.Create("Kiln")
-			},
+			fabricators = new List<Tag> { TagManager.Create("Kiln") },
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result
 		};
 		ComplexRecipeManager.Get().AddObsoleteIDMapping(obsolete_id2, text2);

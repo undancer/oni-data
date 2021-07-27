@@ -76,7 +76,7 @@ public class SculptingSoundEvent : SoundEvent
 		{
 			vector.z = 0f;
 		}
-		string sound = GlobalAssets.GetSound("Hammer_sculpture");
+		string ev = GlobalAssets.GetSound("Hammer_sculpture");
 		Worker component = behaviour.GetComponent<Worker>();
 		if (component != null)
 		{
@@ -89,16 +89,16 @@ public class SculptingSoundEvent : SoundEvent
 					switch (component2.Def.name)
 					{
 					case "MetalSculpture":
-						sound = GlobalAssets.GetSound("Hammer_sculpture_metal");
+						ev = GlobalAssets.GetSound("Hammer_sculpture_metal");
 						break;
 					case "MarbleSculpture":
-						sound = GlobalAssets.GetSound("Hammer_sculpture_marble");
+						ev = GlobalAssets.GetSound("Hammer_sculpture_marble");
 						break;
 					}
 				}
 			}
 		}
-		EventInstance instance = SoundEvent.BeginOneShot(sound, vector, volume);
+		EventInstance instance = SoundEvent.BeginOneShot(ev, vector, volume);
 		if (instance.isValid())
 		{
 			if (num >= 0)

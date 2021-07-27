@@ -8,15 +8,7 @@ public class CanvasTallConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("CanvasTall", 2, 3, "painting_tall_kanim", 30, 120f, new float[2]
-		{
-			400f,
-			1f
-		}, new string[2]
-		{
-			"Metal",
-			"BuildingFiber"
-		}, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: new EffectorValues
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("CanvasTall", 2, 3, "painting_tall_kanim", 30, 120f, new float[2] { 400f, 1f }, new string[2] { "Metal", "BuildingFiber" }, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: new EffectorValues
 		{
 			amount = 15,
 			radius = 6

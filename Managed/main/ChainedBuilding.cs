@@ -22,8 +22,8 @@ public class ChainedBuilding : GameStateMachine<ChainedBuilding, ChainedBuilding
 		public StatesInstance(IStateMachineTarget master, Def def)
 			: base(master, def)
 		{
-			BuildingDef def2 = master.GetComponent<Building>().Def;
-			widthInCells = def2.WidthInCells;
+			BuildingDef buildingDef = master.GetComponent<Building>().Def;
+			widthInCells = buildingDef.WidthInCells;
 			int cell = Grid.PosToCell(this);
 			neighbourCheckCells = new List<int>
 			{

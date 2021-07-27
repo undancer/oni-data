@@ -191,20 +191,20 @@ public class Rotatable : KMonoBehaviour, ISaveLoadable
 			}
 			if (num != 0f)
 			{
-				Matrix2x3 n = Matrix2x3.Translate(-pivot);
-				Matrix2x3 n2 = Matrix2x3.Rotate(num * ((float)Math.PI / 180f));
-				Matrix2x3 matrix2x = Matrix2x3.Translate(pivot) * n2 * n;
-				Vector2 v = new Vector2(-0.5f * (float)width, 0f);
-				Vector2 v2 = new Vector2(0.5f * (float)width, height);
-				Vector2 v3 = new Vector2(0f, 0.5f * (float)height);
-				v = matrix2x.MultiplyPoint(v);
-				v2 = matrix2x.MultiplyPoint(v2);
-				v3 = matrix2x.MultiplyPoint(v3);
-				float num2 = Mathf.Min(v.x, v2.x);
-				float num3 = Mathf.Max(v.x, v2.x);
-				float num4 = Mathf.Min(v.y, v2.y);
-				float num5 = Mathf.Max(v.y, v2.y);
-				component.offset = v3;
+				Matrix2x3 matrix2x = Matrix2x3.Translate(-pivot);
+				Matrix2x3 matrix2x2 = Matrix2x3.Rotate(num * ((float)Math.PI / 180f));
+				Matrix2x3 matrix2x3 = Matrix2x3.Translate(pivot) * matrix2x2 * matrix2x;
+				Vector2 vector = new Vector2(-0.5f * (float)width, 0f);
+				Vector2 vector2 = new Vector2(0.5f * (float)width, height);
+				Vector2 vector3 = new Vector2(0f, 0.5f * (float)height);
+				vector = matrix2x3.MultiplyPoint(vector);
+				vector2 = matrix2x3.MultiplyPoint(vector2);
+				vector3 = matrix2x3.MultiplyPoint(vector3);
+				float num2 = Mathf.Min(vector.x, vector2.x);
+				float num3 = Mathf.Max(vector.x, vector2.x);
+				float num4 = Mathf.Min(vector.y, vector2.y);
+				float num5 = Mathf.Max(vector.y, vector2.y);
+				component.offset = vector3;
 				component.size = new Vector2(num3 - num2, num5 - num4);
 			}
 		}

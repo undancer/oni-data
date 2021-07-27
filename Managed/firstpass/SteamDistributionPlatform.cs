@@ -44,13 +44,7 @@ internal class SteamDistributionPlatform : MonoBehaviour, DistributionPlatform.I
 
 	private SteamUser mLocalUser;
 
-	private Dictionary<string, uint> DLCtoSteamIDMap = new Dictionary<string, uint>
-	{
-		{
-			"EXPANSION1_ID",
-			1452490u
-		}
-	};
+	private Dictionary<string, uint> DLCtoSteamIDMap = new Dictionary<string, uint> { { "EXPANSION1_ID", 1452490u } };
 
 	public bool Initialized => SteamManager.Initialized;
 

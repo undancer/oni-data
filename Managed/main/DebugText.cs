@@ -49,12 +49,12 @@ public class DebugText : KMonoBehaviour
 		texts.Clear();
 		foreach (Entry entry in entries)
 		{
-			GameObject gameObject = new GameObject();
-			RectTransform rectTransform = gameObject.AddComponent<RectTransform>();
+			GameObject obj = new GameObject();
+			RectTransform rectTransform = obj.AddComponent<RectTransform>();
 			rectTransform.SetParent(GameScreenManager.Instance.worldSpaceCanvas.GetComponent<RectTransform>());
-			gameObject.transform.SetPosition(entry.pos);
+			obj.transform.SetPosition(entry.pos);
 			rectTransform.localScale = new Vector3(0.02f, 0.02f, 1f);
-			Text text = gameObject.AddComponent<Text>();
+			Text text = obj.AddComponent<Text>();
 			text.font = Assets.DebugFont;
 			text.text = entry.text;
 			text.color = entry.color;

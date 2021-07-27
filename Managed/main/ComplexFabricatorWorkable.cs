@@ -178,15 +178,15 @@ public class ComplexFabricatorWorkable : Workable
 
 	private void UpdateOrderProgress(Worker worker, float dt)
 	{
-		float workTime = GetWorkTime();
-		float num = Mathf.Clamp01((workTime - base.WorkTimeRemaining) / workTime);
+		float num = GetWorkTime();
+		float num2 = Mathf.Clamp01((num - base.WorkTimeRemaining) / num);
 		if ((bool)fabricator)
 		{
-			fabricator.OrderProgress = num;
+			fabricator.OrderProgress = num2;
 		}
 		if (meter != null)
 		{
-			meter.SetPositionPercent(num);
+			meter.SetPositionPercent(num2);
 		}
 	}
 

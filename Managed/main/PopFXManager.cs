@@ -99,9 +99,9 @@ public class PopFXManager : KScreen
 
 	private PopFX CreatePopFX()
 	{
-		GameObject gameObject = Util.KInstantiate(Prefab_PopFX, base.gameObject, "Pooled_PopFX");
-		gameObject.transform.localScale = Vector3.one;
-		return gameObject.GetComponent<PopFX>();
+		GameObject obj = Util.KInstantiate(Prefab_PopFX, base.gameObject, "Pooled_PopFX");
+		obj.transform.localScale = Vector3.one;
+		return obj.GetComponent<PopFX>();
 	}
 
 	public void RecycleFX(PopFX fx)

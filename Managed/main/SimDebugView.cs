@@ -499,15 +499,7 @@ public class SimDebugView : KMonoBehaviour
 			new Vector2(0f, 2f),
 			new Vector2(1f, 2f)
 		};
-		array3 = new int[6]
-		{
-			0,
-			2,
-			1,
-			1,
-			2,
-			3
-		};
+		array3 = new int[6] { 0, 2, 1, 1, 2, 3 };
 		mesh2.vertices = array;
 		mesh2.uv = array2;
 		mesh2.triangles = array3;
@@ -854,13 +846,13 @@ public class SimDebugView : KMonoBehaviour
 
 	private static Color GetPressureMapColour(SimDebugView instance, int cell)
 	{
-		Color32 c = Color.black;
+		Color32 color = Color.black;
 		if (Grid.Pressure[cell] > 0f)
 		{
 			float num = Mathf.Clamp((Grid.Pressure[cell] - instance.minPressureExpected) / (instance.maxPressureExpected - instance.minPressureExpected), 0f, 1f) * 0.9f;
-			c = new Color(num, num, num, 1f);
+			color = new Color(num, num, num, 1f);
 		}
-		return c;
+		return color;
 	}
 
 	private static Color GetOxygenMapColour(SimDebugView instance, int cell)

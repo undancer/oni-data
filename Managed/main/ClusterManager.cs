@@ -200,11 +200,11 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 	private WorldContainer CreateAsteroidWorldContainer(WorldGen world)
 	{
 		int nextWorldId = GetNextWorldId();
-		GameObject gameObject = Util.KInstantiate(Assets.GetPrefab("Asteroid"));
-		WorldContainer component = gameObject.GetComponent<WorldContainer>();
+		GameObject obj = Util.KInstantiate(Assets.GetPrefab("Asteroid"));
+		WorldContainer component = obj.GetComponent<WorldContainer>();
 		component.SetID(nextWorldId);
 		component.SetWorldDetails(world);
-		AsteroidGridEntity component2 = gameObject.GetComponent<AsteroidGridEntity>();
+		AsteroidGridEntity component2 = obj.GetComponent<AsteroidGridEntity>();
 		if (world != null)
 		{
 			AxialI clusterLocation = world.GetClusterLocation();
@@ -215,7 +215,7 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 		{
 			component2.Init("", AxialI.ZERO, "");
 		}
-		gameObject.SetActive(value: true);
+		obj.SetActive(value: true);
 		return component;
 	}
 

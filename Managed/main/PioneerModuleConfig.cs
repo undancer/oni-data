@@ -38,10 +38,7 @@ public class PioneerModuleConfig : IBuildingConfig
 		storage.SetDefaultStoredItemModifiers(Storage.StandardInsulatedStorage);
 		BuildingInternalConstructor.Def def = go.AddOrGetDef<BuildingInternalConstructor.Def>();
 		def.constructionMass = 400f;
-		def.outputIDs = new List<string>
-		{
-			"PioneerLander"
-		};
+		def.outputIDs = new List<string> { "PioneerLander" };
 		def.spawnIntoStorage = true;
 		def.storage = storage;
 		def.constructionSymbol = "under_construction";

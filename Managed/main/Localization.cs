@@ -134,13 +134,7 @@ public static class Localization
 
 	public static string DEFAULT_LANGUAGE_CODE = "en";
 
-	public static readonly List<string> PreinstalledLanguages = new List<string>
-	{
-		DEFAULT_LANGUAGE_CODE,
-		"zh_klei",
-		"ko_klei",
-		"ru_klei"
-	};
+	public static readonly List<string> PreinstalledLanguages = new List<string> { DEFAULT_LANGUAGE_CODE, "zh_klei", "ko_klei", "ru_klei" };
 
 	public static string SELECTED_LANGUAGE_TYPE_KEY = "SelectedLanguageType";
 
@@ -873,14 +867,8 @@ public static class Localization
 
 	private static bool HasSameOrLessTokenCount(string english_string, string translated_string, string token)
 	{
-		int num = english_string.Split(new string[1]
-		{
-			token
-		}, StringSplitOptions.None).Length;
-		int num2 = translated_string.Split(new string[1]
-		{
-			token
-		}, StringSplitOptions.None).Length;
+		int num = english_string.Split(new string[1] { token }, StringSplitOptions.None).Length;
+		int num2 = translated_string.Split(new string[1] { token }, StringSplitOptions.None).Length;
 		return num >= num2;
 	}
 
@@ -936,12 +924,12 @@ public static class Localization
 			{
 				foreach (object item in matchCollection)
 				{
-					string a = item.ToString();
+					string text = item.ToString();
 					bool flag = false;
 					foreach (object item2 in matchCollection2)
 					{
-						string b = item2.ToString();
-						if (a == b)
+						string text2 = item2.ToString();
+						if (text == text2)
 						{
 							flag = true;
 							break;
@@ -991,10 +979,7 @@ public static class Localization
 
 	private static string ReverseText(string source)
 	{
-		char[] separator = new char[1]
-		{
-			'\n'
-		};
+		char[] separator = new char[1] { '\n' };
 		string[] array = source.Split(separator);
 		string text = "";
 		int num = 0;

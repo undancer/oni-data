@@ -11,11 +11,7 @@ public class Resource
 
 	public bool Disabled;
 
-	public ResourceGuid Guid
-	{
-		get;
-		private set;
-	}
+	public ResourceGuid Guid { get; private set; }
 
 	public Resource()
 	{

@@ -146,8 +146,8 @@ public class LaunchButtonSideScreen : SideScreenContent
 			}
 			else
 			{
-				LocString loc_string = (DebugHandler.InstantBuildMode ? UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_BUTTON_DEBUG : UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_BUTTON);
-				launchButton.GetComponentInChildren<LocText>().text = loc_string;
+				LocString locString = (DebugHandler.InstantBuildMode ? UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_BUTTON_DEBUG : UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_BUTTON);
+				launchButton.GetComponentInChildren<LocText>().text = locString;
 				launchButton.GetComponentInChildren<ToolTip>().toolTip = UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_BUTTON_TOOLTIP;
 			}
 		}

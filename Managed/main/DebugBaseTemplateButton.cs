@@ -41,11 +41,7 @@ public class DebugBaseTemplateButton : KScreen
 
 	public List<int> SelectedCells = new List<int>();
 
-	public static DebugBaseTemplateButton Instance
-	{
-		get;
-		private set;
-	}
+	public static DebugBaseTemplateButton Instance { get; private set; }
 
 	public static void DestroyInstance()
 	{

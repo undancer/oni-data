@@ -14,11 +14,7 @@ namespace ProcGen
 		[Serialize]
 		public TagSet tags;
 
-		public Satsuma.Arc arc
-		{
-			get;
-			private set;
-		}
+		public Satsuma.Arc arc { get; private set; }
 
 		public void SetArc(Satsuma.Arc arc)
 		{

@@ -66,10 +66,7 @@ public class IrrigationMonitor : GameStateMachine<IrrigationMonitor, IrrigationM
 
 		public float total_fertilizer_available => total_available_mass;
 
-		public WiltCondition.Condition[] Conditions => new WiltCondition.Condition[1]
-		{
-			WiltCondition.Condition.Irrigation
-		};
+		public WiltCondition.Condition[] Conditions => new WiltCondition.Condition[1] { WiltCondition.Condition.Irrigation };
 
 		public string WiltStateString
 		{

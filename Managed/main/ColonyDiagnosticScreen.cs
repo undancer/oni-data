@@ -39,11 +39,7 @@ public class ColonyDiagnosticScreen : KScreen, ISim1000ms
 
 		private Coroutine activeRoutine;
 
-		public GameObject gameObject
-		{
-			get;
-			private set;
-		}
+		public GameObject gameObject { get; private set; }
 
 		public DiagnosticRow(int worldID, GameObject gameObject, ColonyDiagnostic diagnostic)
 		{
@@ -338,9 +334,9 @@ public class ColonyDiagnosticScreen : KScreen, ISim1000ms
 		{
 			return null;
 		}
-		GameObject gameObject = Util.KInstantiateUI(linePrefab, parent, force_active: true);
-		parentCollection.Add(new DiagnosticRow(worldID, gameObject, diagnostic));
-		return gameObject;
+		GameObject result = Util.KInstantiateUI(linePrefab, parent, force_active: true);
+		parentCollection.Add(new DiagnosticRow(worldID, result, diagnostic));
+		return result;
 	}
 
 	public static void SetIndication(ColonyDiagnostic.DiagnosticResult.Opinion opinion, GameObject indicatorGameObject)

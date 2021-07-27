@@ -59,10 +59,7 @@ public class MetalRefineryConfig : IBuildingConfig
 		liquidCooledRefinery.buildStorage.SetDefaultStoredItemModifiers(RefineryStoredItemModifiers);
 		liquidCooledRefinery.outStorage.SetDefaultStoredItemModifiers(RefineryStoredItemModifiers);
 		liquidCooledRefinery.outputOffset = new Vector3(1f, 0.5f);
-		complexFabricatorWorkable.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_metalrefinery_kanim")
-		};
+		complexFabricatorWorkable.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_metalrefinery_kanim") };
 		go.AddOrGet<RequireOutputs>().ignoreFullPipe = true;
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
 		conduitConsumer.capacityTag = GameTags.Liquid;
@@ -97,10 +94,7 @@ public class MetalRefineryConfig : IBuildingConfig
 						time = 40f,
 						description = string.Format(STRINGS.BUILDINGS.PREFABS.METALREFINERY.RECIPE_DESCRIPTION, lowTempTransition.name, item.name),
 						nameDisplay = ComplexRecipe.RecipeNameDisplay.IngredientToResult,
-						fabricators = new List<Tag>
-						{
-							TagManager.Create("MetalRefinery")
-						}
+						fabricators = new List<Tag> { TagManager.Create("MetalRefinery") }
 					};
 					ComplexRecipeManager.Get().AddObsoleteIDMapping(obsolete_id, text);
 				}
@@ -124,10 +118,7 @@ public class MetalRefineryConfig : IBuildingConfig
 			time = 40f,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.IngredientToResult,
 			description = string.Format(STRINGS.BUILDINGS.PREFABS.METALREFINERY.RECIPE_DESCRIPTION, ElementLoader.FindElementByHash(SimHashes.Steel).name, ElementLoader.FindElementByHash(SimHashes.Iron).name),
-			fabricators = new List<Tag>
-			{
-				TagManager.Create("MetalRefinery")
-			}
+			fabricators = new List<Tag> { TagManager.Create("MetalRefinery") }
 		};
 		ComplexRecipeManager.Get().AddObsoleteIDMapping(obsolete_id2, text2);
 		Prioritizable.AddRef(go);

@@ -116,16 +116,7 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 	[SerializeField]
 	private Sprite enabledSpr;
 
-	private static readonly HashedString[] idleAnims = new HashedString[7]
-	{
-		"anim_idle_healthy_kanim",
-		"anim_idle_susceptible_kanim",
-		"anim_idle_keener_kanim",
-		"anim_idle_coaster_kanim",
-		"anim_idle_fastfeet_kanim",
-		"anim_idle_breatherdeep_kanim",
-		"anim_idle_breathershallow_kanim"
-	};
+	private static readonly HashedString[] idleAnims = new HashedString[7] { "anim_idle_healthy_kanim", "anim_idle_susceptible_kanim", "anim_idle_keener_kanim", "anim_idle_coaster_kanim", "anim_idle_fastfeet_kanim", "anim_idle_breatherdeep_kanim", "anim_idle_breathershallow_kanim" };
 
 	public float baseCharacterScale = 0.38f;
 
@@ -261,8 +252,8 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 		stats.ApplyRace(animController.gameObject);
 		stats.ApplyAccessories(animController.gameObject);
 		stats.ApplyExperience(animController.gameObject);
-		HashedString name = idleAnims[UnityEngine.Random.Range(0, idleAnims.Length)];
-		idle_anim = Assets.GetAnim(name);
+		HashedString hashedString = idleAnims[UnityEngine.Random.Range(0, idleAnims.Length)];
+		idle_anim = Assets.GetAnim(hashedString);
 		if (idle_anim != null)
 		{
 			animController.AddAnimOverrides(idle_anim);

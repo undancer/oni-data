@@ -189,7 +189,7 @@ public class SaveGame : KMonoBehaviour, ISaveLoadable
 		text = JsonConvert.SerializeObject(new GameInfo(GameClock.Instance.GetCycle(), Components.LiveMinionIdentities.Count, baseName, isAutoSave, originalSaveFileName, SaveLoader.Instance.GameInfo.clusterId, SaveLoader.Instance.GameInfo.worldTraits, SaveLoader.Instance.GameInfo.colonyGuid, DlcManager.GetHighestActiveDlcId(), sandboxEnabled));
 		byte[] bytes = Encoding.UTF8.GetBytes(text);
 		header = default(Header);
-		header.buildVersion = 471618u;
+		header.buildVersion = 472345u;
 		header.headerSize = bytes.Length;
 		header.headerVersion = 1u;
 		header.compression = (isCompressed ? 1 : 0);
@@ -216,10 +216,10 @@ public class SaveGame : KMonoBehaviour, ISaveLoadable
 				return new Tuple<Header, GameInfo>(header, b);
 			}
 		}
-		catch (Exception obj)
+		catch (Exception ex)
 		{
 			Debug.LogWarning("Exception while loading " + filename);
-			Debug.LogWarning(obj);
+			Debug.LogWarning(ex);
 		}
 		return null;
 	}

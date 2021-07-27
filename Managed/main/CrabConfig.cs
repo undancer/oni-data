@@ -44,10 +44,7 @@ public class CrabConfig : IEntityConfig
 	{
 		GameObject prefab = CreateCrab("Crab", STRINGS.CREATURES.SPECIES.CRAB.NAME, STRINGS.CREATURES.SPECIES.CRAB.DESC, "pincher_kanim", is_baby: false, "CrabShell");
 		prefab = EntityTemplates.ExtendEntityToFertileCreature(prefab, "CrabEgg", STRINGS.CREATURES.SPECIES.CRAB.EGG_NAME, STRINGS.CREATURES.SPECIES.CRAB.DESC, "egg_pincher_kanim", CrabTuning.EGG_MASS, "CrabBaby", 60.000004f, 20f, CrabTuning.EGG_CHANCES_BASE, EGG_SORT_ORDER);
-		prefab.AddOrGetDef<EggProtectionMonitor.Def>().allyTags = new Tag[1]
-		{
-			GameTags.Creatures.CrabFriend
-		};
+		prefab.AddOrGetDef<EggProtectionMonitor.Def>().allyTags = new Tag[1] { GameTags.Creatures.CrabFriend };
 		return prefab;
 	}
 

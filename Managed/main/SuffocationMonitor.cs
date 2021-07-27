@@ -38,11 +38,7 @@ public class SuffocationMonitor : GameStateMachine<SuffocationMonitor, Suffocati
 
 		private float highPressureTime;
 
-		public OxygenBreather oxygenBreather
-		{
-			get;
-			private set;
-		}
+		public OxygenBreather oxygenBreather { get; private set; }
 
 		public Instance(OxygenBreather oxygen_breather)
 			: base((IStateMachineTarget)oxygen_breather)

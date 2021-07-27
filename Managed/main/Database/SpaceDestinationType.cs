@@ -26,17 +26,9 @@ namespace Database
 
 		public int cyclesToRecover;
 
-		public int maxiumMass
-		{
-			get;
-			private set;
-		}
+		public int maxiumMass { get; private set; }
 
-		public int minimumMass
-		{
-			get;
-			private set;
-		}
+		public int minimumMass { get; private set; }
 
 		public float replishmentPerCycle => 1000f / (float)cyclesToRecover;
 

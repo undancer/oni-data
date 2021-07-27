@@ -115,17 +115,9 @@ public class KleiMetrics : ThreadedHttps<KleiMetrics>
 
 	private long sessionStartUtcTicks = DateTime.UtcNow.Ticks;
 
-	public bool isMultiThreaded
-	{
-		get;
-		protected set;
-	}
+	public bool isMultiThreaded { get; protected set; }
 
-	public bool enabled
-	{
-		get;
-		private set;
-	}
+	public bool enabled { get; private set; }
 
 	public KleiMetrics()
 	{
@@ -642,18 +634,12 @@ public class KleiMetrics : ThreadedHttps<KleiMetrics>
 				"GPUsupportsComputeShaders",
 				SystemInfo.supportsComputeShaders
 			},
-			{
-				"GPUsupportsImageEffects",
-				true
-			},
+			{ "GPUsupportsImageEffects", true },
 			{
 				"GPUsupportsInstancing",
 				SystemInfo.supportsInstancing
 			},
-			{
-				"GPUsupportsRenderToCubemap",
-				true
-			},
+			{ "GPUsupportsRenderToCubemap", true },
 			{
 				"GPUsupportsShadows",
 				SystemInfo.supportsShadows

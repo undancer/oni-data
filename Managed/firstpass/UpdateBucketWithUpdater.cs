@@ -69,8 +69,8 @@ public class UpdateBucketWithUpdater<DataType> : StateMachineUpdater.BaseUpdateB
 			batch_update_delegate(dataList, dt);
 			return;
 		}
-		int count = dataList.Count;
-		for (int i = 0; i < count; i++)
+		int num = dataList.Count;
+		for (int i = 0; i < num; i++)
 		{
 			Entry value = dataList[i];
 			if (value.updater != null)

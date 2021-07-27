@@ -1,66 +1,28 @@
 public interface IThresholdSwitch
 {
-	float Threshold
-	{
-		get;
-		set;
-	}
+	float Threshold { get; set; }
 
-	bool ActivateAboveThreshold
-	{
-		get;
-		set;
-	}
+	bool ActivateAboveThreshold { get; set; }
 
-	float CurrentValue
-	{
-		get;
-	}
+	float CurrentValue { get; }
 
-	float RangeMin
-	{
-		get;
-	}
+	float RangeMin { get; }
 
-	float RangeMax
-	{
-		get;
-	}
+	float RangeMax { get; }
 
-	LocString Title
-	{
-		get;
-	}
+	LocString Title { get; }
 
-	LocString ThresholdValueName
-	{
-		get;
-	}
+	LocString ThresholdValueName { get; }
 
-	string AboveToolTip
-	{
-		get;
-	}
+	string AboveToolTip { get; }
 
-	string BelowToolTip
-	{
-		get;
-	}
+	string BelowToolTip { get; }
 
-	ThresholdScreenLayoutType LayoutType
-	{
-		get;
-	}
+	ThresholdScreenLayoutType LayoutType { get; }
 
-	int IncrementScale
-	{
-		get;
-	}
+	int IncrementScale { get; }
 
-	NonLinearSlider.Range[] GetRanges
-	{
-		get;
-	}
+	NonLinearSlider.Range[] GetRanges { get; }
 
 	float GetRangeMinInputField();
 

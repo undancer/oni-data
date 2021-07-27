@@ -34,8 +34,8 @@ public struct InfraredVisualizerData
 		}
 		if (!(num < 0f))
 		{
-			Color32 c = SimDebugView.Instance.NormalizedTemperature(num);
-			controller.OverlayColour = c;
+			Color32 color = SimDebugView.Instance.NormalizedTemperature(num);
+			controller.OverlayColour = color;
 		}
 	}
 

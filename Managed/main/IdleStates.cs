@@ -26,11 +26,7 @@ public class IdleStates : GameStateMachine<IdleStates, IdleStates.Instance, ISta
 
 		private int maxIterations;
 
-		public bool allowLiquid
-		{
-			get;
-			set;
-		}
+		public bool allowLiquid { get; set; }
 
 		public MoveCellQuery(NavType navType)
 		{

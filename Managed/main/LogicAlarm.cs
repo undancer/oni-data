@@ -48,17 +48,9 @@ public class LogicAlarm : KMonoBehaviour, ISaveLoadable
 
 	public static readonly HashedString INPUT_PORT_ID = new HashedString("LogicAlarmInput");
 
-	protected static readonly HashedString[] ON_ANIMS = new HashedString[2]
-	{
-		"on_pre",
-		"on_loop"
-	};
+	protected static readonly HashedString[] ON_ANIMS = new HashedString[2] { "on_pre", "on_loop" };
 
-	protected static readonly HashedString[] OFF_ANIMS = new HashedString[2]
-	{
-		"on_pst",
-		"off"
-	};
+	protected static readonly HashedString[] OFF_ANIMS = new HashedString[2] { "on_pst", "off" };
 
 	protected override void OnPrefabInit()
 	{

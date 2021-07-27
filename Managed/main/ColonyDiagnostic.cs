@@ -85,11 +85,7 @@ public abstract class ColonyDiagnostic : ISim4000ms
 
 	protected float trackerSampleCountSeconds = 4f;
 
-	public int worldID
-	{
-		get;
-		protected set;
-	}
+	public int worldID { get; protected set; }
 
 	public DiagnosticResult LatestResult
 	{

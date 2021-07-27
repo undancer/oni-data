@@ -5,45 +5,21 @@ public class DistributionPlatform : MonoBehaviour
 {
 	public interface Implementation
 	{
-		bool Initialized
-		{
-			get;
-		}
+		bool Initialized { get; }
 
-		string Name
-		{
-			get;
-		}
+		string Name { get; }
 
-		string Platform
-		{
-			get;
-		}
+		string Platform { get; }
 
-		string AccountLoginEndpoint
-		{
-			get;
-		}
+		string AccountLoginEndpoint { get; }
 
-		string MetricsClientKey
-		{
-			get;
-		}
+		string MetricsClientKey { get; }
 
-		string MetricsUserIDField
-		{
-			get;
-		}
+		string MetricsUserIDField { get; }
 
-		User LocalUser
-		{
-			get;
-		}
+		User LocalUser { get; }
 
-		bool IsArchiveBranch
-		{
-			get;
-		}
+		bool IsArchiveBranch { get; }
 
 		string ApplyWordFilter(string text);
 
@@ -65,20 +41,24 @@ public class DistributionPlatform : MonoBehaviour
 
 	public abstract class User
 	{
-		public abstract UserId Id
-		{
-			get;
-		}
+		public abstract UserId Id { get; }
 
-		public abstract string Name
-		{
-			get;
-		}
+		public abstract string Name { get; }
 	}
 
 	private static Implementation sImpl;
 
-	public static bool Initialized => Impl.Initialized;
+	public static bool Initialized
+	{
+		get
+		{
+			if (Impl == null)
+			{
+				return false;
+			}
+			return Impl.Initialized;
+		}
+	}
 
 	public static Implementation Inst => Impl;
 

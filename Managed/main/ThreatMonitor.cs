@@ -240,9 +240,9 @@ public class ThreatMonitor : GameStateMachine<ThreatMonitor, ThreatMonitor.Insta
 
 		public bool CheckForThreats()
 		{
-			GameObject x = ((!revengeThreat.IsValidRevengeTarget(IAmADuplicant)) ? FindThreat() : revengeThreat.target.gameObject);
-			SetMainThreat(x);
-			return x != null;
+			GameObject gameObject = ((!revengeThreat.IsValidRevengeTarget(IAmADuplicant)) ? FindThreat() : revengeThreat.target.gameObject);
+			SetMainThreat(gameObject);
+			return gameObject != null;
 		}
 
 		public GameObject FindThreat()

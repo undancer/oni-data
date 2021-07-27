@@ -152,9 +152,9 @@ public class KToggle : Toggle
 	{
 		if (artExtension.animator != null && artExtension.animator.isInitialized)
 		{
-			Animator animator = artExtension.animator;
-			animator.SetBool("Toggled", value: false);
-			animator.Play("idle", 0);
+			Animator obj = artExtension.animator;
+			obj.SetBool("Toggled", value: false);
+			obj.Play("idle", 0);
 		}
 	}
 

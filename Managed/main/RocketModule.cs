@@ -153,10 +153,7 @@ public class RocketModule : KMonoBehaviour
 		gameObject.transform.SetPosition(position);
 		gameObject.transform.parent = base.transform;
 		KBatchedAnimController kBatchedAnimController = gameObject.AddOrGet<KBatchedAnimController>();
-		kBatchedAnimController.AnimFiles = new KAnimFile[1]
-		{
-			bgAnimFile
-		};
+		kBatchedAnimController.AnimFiles = new KAnimFile[1] { bgAnimFile };
 		kBatchedAnimController.initialAnim = rocket_module_bg_anim;
 		kBatchedAnimController.fgLayer = Grid.SceneLayer.NoLayer;
 		kBatchedAnimController.initialMode = KAnim.PlayMode.Paused;

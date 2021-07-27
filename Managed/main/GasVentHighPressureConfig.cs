@@ -11,11 +11,7 @@ public class GasVentHighPressureConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		string[] array = new string[2]
-		{
-			"RefinedMetal",
-			"Plastic"
-		};
+		string[] array = new string[2] { "RefinedMetal", "Plastic" };
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: new float[2]
 		{
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER3[0],

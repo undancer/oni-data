@@ -33,11 +33,7 @@ namespace VoronoiTree
 
 		private Vector2? centroid;
 
-		public bool dummy
-		{
-			get;
-			set;
-		}
+		public bool dummy { get; set; }
 
 		public Vector2 Circumcenter
 		{

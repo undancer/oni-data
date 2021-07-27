@@ -4,11 +4,7 @@ namespace MIConvexHull
 	{
 		private FaceConnector last;
 
-		public FaceConnector First
-		{
-			get;
-			private set;
-		}
+		public FaceConnector First { get; private set; }
 
 		private void AddFirst(FaceConnector connector)
 		{

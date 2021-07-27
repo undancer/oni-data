@@ -124,20 +124,20 @@ public class GroundMasks : ScriptableObject
 		for (int i = 0; i < items.Length; i++)
 		{
 			TextureAtlas.Item item = items[i];
-			string name = item.name;
-			int num = name.IndexOf('/');
-			string text = name.Substring(0, num);
-			string value = name.Substring(num + 1, 4);
-			text = text.ToLower();
-			for (int num2 = text.IndexOf('_'); num2 != -1; num2 = text.IndexOf('_'))
+			string text = item.name;
+			int num = text.IndexOf('/');
+			string text2 = text.Substring(0, num);
+			string value = text.Substring(num + 1, 4);
+			text2 = text2.ToLower();
+			for (int num2 = text2.IndexOf('_'); num2 != -1; num2 = text2.IndexOf('_'))
 			{
-				text = text.Remove(num2, 1);
+				text2 = text2.Remove(num2, 1);
 			}
 			BiomeMaskData value2 = null;
-			if (!biomeMasks.TryGetValue(text, out value2))
+			if (!biomeMasks.TryGetValue(text2, out value2))
 			{
-				value2 = new BiomeMaskData(text);
-				biomeMasks[text] = value2;
+				value2 = new BiomeMaskData(text2);
+				biomeMasks[text2] = value2;
 			}
 			int num3 = Convert.ToInt32(value, 2);
 			Tile tile = value2.tiles[num3];

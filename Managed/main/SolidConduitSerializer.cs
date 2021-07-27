@@ -45,8 +45,8 @@ public class SolidConduitSerializer : KMonoBehaviour, ISaveLoadableDetails
 				SaveLoadRoot component = pickupable.GetComponent<SaveLoadRoot>();
 				if (component != null)
 				{
-					string name = pickupable.GetComponent<KPrefabID>().GetSaveLoadTag().Name;
-					writer.WriteKleiString(name);
+					string str = pickupable.GetComponent<KPrefabID>().GetSaveLoadTag().Name;
+					writer.WriteKleiString(str);
 					component.Save(writer);
 				}
 				else

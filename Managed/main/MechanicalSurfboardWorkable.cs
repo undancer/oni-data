@@ -39,24 +39,15 @@ public class MechanicalSurfboardWorkable : Workable, IWorkerPrioritizable
 		AttributeInstance attributeInstance = worker.GetAttributes().Get(Db.Get().Attributes.Athletics);
 		if (attributeInstance.GetTotalValue() <= 7f)
 		{
-			result.overrideAnims = new KAnimFile[1]
-			{
-				Assets.GetAnim(surfboard.interactAnims[0])
-			};
+			result.overrideAnims = new KAnimFile[1] { Assets.GetAnim(surfboard.interactAnims[0]) };
 		}
 		else if (attributeInstance.GetTotalValue() <= 15f)
 		{
-			result.overrideAnims = new KAnimFile[1]
-			{
-				Assets.GetAnim(surfboard.interactAnims[1])
-			};
+			result.overrideAnims = new KAnimFile[1] { Assets.GetAnim(surfboard.interactAnims[1]) };
 		}
 		else
 		{
-			result.overrideAnims = new KAnimFile[1]
-			{
-				Assets.GetAnim(surfboard.interactAnims[2])
-			};
+			result.overrideAnims = new KAnimFile[1] { Assets.GetAnim(surfboard.interactAnims[2]) };
 		}
 		return result;
 	}

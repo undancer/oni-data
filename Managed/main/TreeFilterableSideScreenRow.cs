@@ -162,9 +162,9 @@ public class TreeFilterableSideScreenRow : KMonoBehaviour
 
 	private void UpdateArrowToggleState()
 	{
-		bool flag = ((arrowToggle.CurrentState != 0) ? true : false);
-		elementGroup.SetActive(flag);
-		bgImg.enabled = flag;
+		bool active = ((arrowToggle.CurrentState != 0) ? true : false);
+		elementGroup.SetActive(active);
+		bgImg.enabled = active;
 	}
 
 	private void ArrowToggleDisabledClick()

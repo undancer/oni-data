@@ -21,11 +21,7 @@ public class CodexRecipePanel : CodexWidget<CodexRecipePanel>
 
 	private Recipe recipe;
 
-	public string linkID
-	{
-		get;
-		set;
-	}
+	public string linkID { get; set; }
 
 	public CodexRecipePanel()
 	{

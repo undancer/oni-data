@@ -360,11 +360,7 @@ public class Scenario : KMonoBehaviour
 
 	public bool ClearExistingScene = true;
 
-	public bool[] ReplaceElementMask
-	{
-		get;
-		set;
-	}
+	public bool[] ReplaceElementMask { get; set; }
 
 	public static void DestroyInstance()
 	{
@@ -907,15 +903,15 @@ public class Scenario : KMonoBehaviour
 		}
 		Element element2 = ElementLoader.FindElementByHash(element);
 		Debug.Assert(element2 != null, "Missing primary element '" + Enum.GetName(typeof(SimHashes), element) + "' in '" + prefab_id + "'");
-		GameObject gameObject = buildingDef.Build(buildingDef.GetBuildingCell(cell), Orientation.Neutral, null, new Tag[2]
+		GameObject obj = buildingDef.Build(buildingDef.GetBuildingCell(cell), Orientation.Neutral, null, new Tag[2]
 		{
 			element2.tag,
 			ElementLoader.FindElementByHash(SimHashes.SedimentaryRock).tag
 		}, 293.15f, playsound: false);
-		PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
+		PrimaryElement component = obj.GetComponent<PrimaryElement>();
 		component.InternalTemperature = 300f;
 		component.Temperature = 300f;
-		return gameObject;
+		return obj;
 	}
 
 	private void SpawnOre(int x, int y, SimHashes element = SimHashes.Cuprite)

@@ -57,13 +57,13 @@ public class ConduitDiseaseSensor : ConduitThresholdSensor, IThresholdSwitch
 		{
 			animController.Play(ConduitSensor.ON_ANIMS, KAnim.PlayMode.Loop);
 			GetContentsDisease(out var diseaseIdx, out var _, out var _);
-			Color32 c = Color.white;
+			Color32 color = Color.white;
 			if (diseaseIdx != 255)
 			{
 				Disease disease = Db.Get().Diseases[diseaseIdx];
-				c = GlobalAssets.Instance.colorSet.GetColorByName(disease.overlayColourName);
+				color = GlobalAssets.Instance.colorSet.GetColorByName(disease.overlayColourName);
 			}
-			animController.SetSymbolTint(TINT_SYMBOL, c);
+			animController.SetSymbolTint(TINT_SYMBOL, color);
 		}
 		else
 		{

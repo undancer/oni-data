@@ -11,12 +11,7 @@ namespace Delaunay
 
 		public Triangle(Site a, Site b, Site c)
 		{
-			_sites = new List<Site>
-			{
-				a,
-				b,
-				c
-			};
+			_sites = new List<Site> { a, b, c };
 		}
 
 		public void Dispose()

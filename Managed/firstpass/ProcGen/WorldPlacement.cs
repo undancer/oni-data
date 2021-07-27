@@ -5,53 +5,21 @@ namespace ProcGen
 	[DebuggerDisplay("{world} ({x}, {y})")]
 	public class WorldPlacement
 	{
-		public string world
-		{
-			get;
-			set;
-		}
+		public string world { get; set; }
 
-		public MinMaxI allowedRings
-		{
-			get;
-			set;
-		}
+		public MinMaxI allowedRings { get; set; }
 
-		public int buffer
-		{
-			get;
-			set;
-		}
+		public int buffer { get; set; }
 
-		public int x
-		{
-			get;
-			private set;
-		}
+		public int x { get; private set; }
 
-		public int y
-		{
-			get;
-			private set;
-		}
+		public int y { get; private set; }
 
-		public int width
-		{
-			get;
-			private set;
-		}
+		public int width { get; private set; }
 
-		public int height
-		{
-			get;
-			private set;
-		}
+		public int height { get; private set; }
 
-		public bool startWorld
-		{
-			get;
-			set;
-		}
+		public bool startWorld { get; set; }
 
 		public WorldPlacement()
 		{

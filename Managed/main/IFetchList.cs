@@ -2,10 +2,7 @@ using System.Collections.Generic;
 
 public interface IFetchList
 {
-	Storage Destination
-	{
-		get;
-	}
+	Storage Destination { get; }
 
 	float GetMinimumAmount(Tag tag);
 

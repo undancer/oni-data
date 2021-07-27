@@ -28,17 +28,9 @@ public class AnimEventManager
 
 		public KBatchedAnimController controller;
 
-		public int currentFrame
-		{
-			get;
-			set;
-		}
+		public int currentFrame { get; set; }
 
-		public int previousFrame
-		{
-			get;
-			set;
-		}
+		public int previousFrame { get; set; }
 
 		public string name => controller.name;
 

@@ -20,9 +20,9 @@ namespace Steamworks
 				}
 				byte[] array = new byte[Encoding.UTF8.GetByteCount(str) + 1];
 				Encoding.UTF8.GetBytes(str, 0, str.Length, array, 0);
-				IntPtr intPtr = Marshal.AllocHGlobal(array.Length);
-				Marshal.Copy(array, 0, intPtr, array.Length);
-				SetHandle(intPtr);
+				IntPtr destination = Marshal.AllocHGlobal(array.Length);
+				Marshal.Copy(array, 0, destination, array.Length);
+				SetHandle(destination);
 			}
 
 			protected override bool ReleaseHandle()

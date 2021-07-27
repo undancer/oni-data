@@ -47,10 +47,7 @@ public class CreatureBait : StateMachineComponent<CreatureBait.StatesInstance>
 		base.OnSpawn();
 		Tag[] constructionElements = GetComponent<Deconstructable>().constructionElements;
 		baitElement = constructionElements[1];
-		base.gameObject.GetSMI<Lure.Instance>().SetActiveLures(new Tag[1]
-		{
-			baitElement
-		});
+		base.gameObject.GetSMI<Lure.Instance>().SetActiveLures(new Tag[1] { baitElement });
 		base.smi.StartSM();
 	}
 }

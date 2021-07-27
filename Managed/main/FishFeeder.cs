@@ -124,9 +124,9 @@ public class FishFeeder : GameStateMachine<FishFeeder, FishFeeder.Instance, ISta
 			anim.SetSceneLayer(Grid.SceneLayer.Building);
 			anim.Play("ball");
 			anim.Stop();
-			foreach (HashedString hash in ball_symbols)
+			foreach (HashedString hashedString in ball_symbols)
 			{
-				anim.SetSymbolVisiblity(hash, is_visible: false);
+				anim.SetSymbolVisiblity(hashedString, is_visible: false);
 			}
 			Storage[] components = smi.gameObject.GetComponents<Storage>();
 			topStorage = components[0];

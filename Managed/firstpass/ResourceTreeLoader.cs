@@ -39,13 +39,15 @@ public class ResourceTreeLoader<T> : ResourceLoader<T> where T : ResourceTreeNod
 				if (xmlReader.ReadToFollowing("NodeLabel"))
 				{
 					string text = xmlReader.ReadString();
-					T val = new T();
-					val.Id = text;
-					val.Name = text;
-					val.nodeX = nodeX;
-					val.nodeY = nodeY;
-					val.width = num;
-					val.height = num2;
+					T val = new T
+					{
+						Id = text,
+						Name = text,
+						nodeX = nodeX,
+						nodeY = nodeY,
+						width = num,
+						height = num2
+					};
 					dictionary[value] = val;
 					resources.Add(val);
 				}

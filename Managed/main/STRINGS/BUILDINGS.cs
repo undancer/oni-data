@@ -207,11 +207,11 @@ namespace STRINGS
 
 			public class CARGOBAY
 			{
-				public static LocString NAME = UI.FormatAsLink("Large Cargo Bay", "CARGOBAY");
+				public static LocString NAME = UI.FormatAsLink("Cargo Bay", "CARGOBAY");
 
-				public static LocString DESC = "Holds more than a regular cargo bay.";
+				public static LocString DESC = "Duplicants will fill cargo bays with any resources they find during space missions.";
 
-				public static LocString EFFECT = "Allows Duplicants to store most of the " + UI.FormatAsLink("Solid Materials", "ELEMENTS_SOLID") + " found during space missions.\n\nStored resources become available to the colony upon the rocket's return.";
+				public static LocString EFFECT = "Allows Duplicants to store any " + UI.FormatAsLink("Solid Materials", "ELEMENTS_SOLID") + " found during space missions.\n\nStored resources become available to the colony upon the rocket's return.";
 			}
 
 			public class CARGOBAYCLUSTER
@@ -906,11 +906,11 @@ namespace STRINGS
 
 			public class LIQUIDCARGOBAY
 			{
-				public static LocString NAME = UI.FormatAsLink("Large Liquid Cargo Tank", "LIQUIDCARGOBAY");
+				public static LocString NAME = UI.FormatAsLink("Liquid Cargo Tank", "LIQUIDCARGOBAY");
 
-				public static LocString DESC = "Holds more than a regular cargo tank.";
+				public static LocString DESC = "Duplicants will fill cargo bays with any resources they find during space missions.";
 
-				public static LocString EFFECT = "Allows Duplicants to store most of the " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + " resources found during space missions.\n\nStored resources become available to the colony upon the rocket's return.";
+				public static LocString EFFECT = "Allows Duplicants to store any " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + " resources found during space missions.\n\nStored resources become available to the colony upon the rocket's return.";
 			}
 
 			public class LIQUIDCARGOBAYCLUSTER
@@ -1292,11 +1292,11 @@ namespace STRINGS
 
 			public class GASCARGOBAY
 			{
-				public static LocString NAME = UI.FormatAsLink("Large Gas Cargo Canister", "GASCARGOBAY");
+				public static LocString NAME = UI.FormatAsLink("Gas Cargo Canister", "GASCARGOBAY");
 
-				public static LocString DESC = "Holds more than a typical gas cargo canister.";
+				public static LocString DESC = "Duplicants will fill cargo bays with any resources they find during space missions.";
 
-				public static LocString EFFECT = "Allows Duplicants to store most of the " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " resources found during space missions.\n\nStored resources become available to the colony upon the rocket's return.";
+				public static LocString EFFECT = "Allows Duplicants to store any " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " resources found during space missions.\n\nStored resources become available to the colony upon the rocket's return.";
 			}
 
 			public class GASCARGOBAYCLUSTER

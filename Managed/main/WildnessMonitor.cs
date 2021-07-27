@@ -31,11 +31,7 @@ public class WildnessMonitor : GameStateMachine<WildnessMonitor, WildnessMonitor
 
 	public State tame;
 
-	private static readonly KAnimHashedString[] DOMESTICATION_SYMBOLS = new KAnimHashedString[2]
-	{
-		"tag",
-		"snapto_tag"
-	};
+	private static readonly KAnimHashedString[] DOMESTICATION_SYMBOLS = new KAnimHashedString[2] { "tag", "snapto_tag" };
 
 	public override void InitializeStates(out BaseState default_state)
 	{

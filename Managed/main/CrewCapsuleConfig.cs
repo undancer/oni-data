@@ -7,10 +7,7 @@ public class CrewCapsuleConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("CrewCapsule", 5, 19, "rocket_small_steam_kanim", 1000, 480f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER7, new string[1]
-		{
-			SimHashes.Steel.ToString()
-		}, 1600f, BuildLocationRule.BuildingAttachPoint, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("CrewCapsule", 5, 19, "rocket_small_steam_kanim", 1000, 480f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER7, new string[1] { SimHashes.Steel.ToString() }, 1600f, BuildLocationRule.BuildingAttachPoint, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
 		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
 		obj.OverheatTemperature = 2273.15f;
 		obj.Floodable = false;

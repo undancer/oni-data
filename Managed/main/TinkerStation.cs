@@ -141,9 +141,9 @@ public class TinkerStation : Workable, IGameObjectEffectDescriptor, ISim1000ms
 	{
 		base.OnCompleteWork(worker);
 		storage.ConsumeAndGetDisease(inputMaterial, massPerTinker, out var _, out var _, out var _);
-		GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(outputPrefab), base.transform.GetPosition(), Grid.SceneLayer.Ore);
-		gameObject.GetComponent<PrimaryElement>().Temperature = outputTemperature;
-		gameObject.SetActive(value: true);
+		GameObject obj = GameUtil.KInstantiate(Assets.GetPrefab(outputPrefab), base.transform.GetPosition(), Grid.SceneLayer.Ore);
+		obj.GetComponent<PrimaryElement>().Temperature = outputTemperature;
+		obj.SetActive(value: true);
 		chore = null;
 	}
 

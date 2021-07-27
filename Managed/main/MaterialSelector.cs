@@ -109,13 +109,13 @@ public class MaterialSelector : KScreen
 		{
 			if (!ElementToggles.ContainsKey(item2))
 			{
-				GameObject gameObject = Util.KInstantiate(TogglePrefab, LayoutContainer, "MaterialSelection_" + item2.ProperName());
-				gameObject.transform.localScale = Vector3.one;
-				gameObject.SetActive(value: true);
-				KToggle component2 = gameObject.GetComponent<KToggle>();
+				GameObject obj = Util.KInstantiate(TogglePrefab, LayoutContainer, "MaterialSelection_" + item2.ProperName());
+				obj.transform.localScale = Vector3.one;
+				obj.SetActive(value: true);
+				KToggle component2 = obj.GetComponent<KToggle>();
 				ElementToggles.Add(item2, component2);
 				component2.group = toggleGroup;
-				gameObject.gameObject.GetComponent<ToolTip>().toolTip = item2.ProperName();
+				obj.gameObject.GetComponent<ToolTip>().toolTip = item2.ProperName();
 			}
 		}
 		RefreshToggleContents();

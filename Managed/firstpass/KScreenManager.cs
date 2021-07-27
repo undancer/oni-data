@@ -18,19 +18,11 @@ public class KScreenManager : KMonoBehaviour, IInputHandler
 
 	private KScreen lastConsumedEventScreen;
 
-	public static KScreenManager Instance
-	{
-		get;
-		private set;
-	}
+	public static KScreenManager Instance { get; private set; }
 
 	public string handlerName => base.gameObject.name;
 
-	public KInputHandler inputHandler
-	{
-		get;
-		set;
-	}
+	public KInputHandler inputHandler { get; set; }
 
 	private void OnApplicationQuit()
 	{

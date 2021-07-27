@@ -15,10 +15,7 @@ public class OxidizerTankLiquidClusterConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("OxidizerTankLiquidCluster", 5, 2, "rocket_cluster_oxidizer_tank_liquid_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.FUEL_TANK_DRY_MASS, new string[1]
-		{
-			SimHashes.Steel.ToString()
-		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("OxidizerTankLiquidCluster", 5, 2, "rocket_cluster_oxidizer_tank_liquid_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.FUEL_TANK_DRY_MASS, new string[1] { SimHashes.Steel.ToString() }, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
 		BuildingTemplates.CreateRocketBuildingDef(obj);
 		obj.DefaultAnimState = "grounded";
 		obj.SceneLayer = Grid.SceneLayer.Building;
@@ -51,10 +48,7 @@ public class OxidizerTankLiquidClusterConfig : IBuildingConfig
 	{
 		Storage storage = go.AddOrGet<Storage>();
 		storage.capacityKg = 450f;
-		storage.storageFilters = new List<Tag>
-		{
-			SimHashes.LiquidOxygen.CreateTag()
-		};
+		storage.storageFilters = new List<Tag> { SimHashes.LiquidOxygen.CreateTag() };
 		storage.SetDefaultStoredItemModifiers(new List<Storage.StoredItemModifier>
 		{
 			Storage.StoredItemModifier.Hide,

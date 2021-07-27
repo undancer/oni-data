@@ -32,10 +32,7 @@ public class MicrobeMusherConfig : IBuildingConfig
 		microbeMusher.mushbarSpawnOffset = new Vector3(1f, 0f, 0f);
 		go.AddOrGet<FabricatorIngredientStatusManager>();
 		go.AddOrGet<CopyBuildingSettings>();
-		go.AddOrGet<ComplexFabricatorWorkable>().overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_musher_kanim")
-		};
+		go.AddOrGet<ComplexFabricatorWorkable>().overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_musher_kanim") };
 		microbeMusher.sideScreenStyle = ComplexFabricatorSideScreen.StyleSetting.ListQueueHybrid;
 		BuildingTemplates.CreateComplexFabricatorStorage(go, microbeMusher);
 		ConfigureRecipes();
@@ -58,10 +55,7 @@ public class MicrobeMusherConfig : IBuildingConfig
 			time = 40f,
 			description = ITEMS.FOOD.MUSHBAR.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"MicrobeMusher"
-			},
+			fabricators = new List<Tag> { "MicrobeMusher" },
 			sortOrder = 1
 		};
 		ComplexRecipe.RecipeElement[] array3 = new ComplexRecipe.RecipeElement[2]
@@ -78,10 +72,7 @@ public class MicrobeMusherConfig : IBuildingConfig
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.BASICPLANTBAR.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"MicrobeMusher"
-			},
+			fabricators = new List<Tag> { "MicrobeMusher" },
 			sortOrder = 2
 		};
 		ComplexRecipe.RecipeElement[] array5 = new ComplexRecipe.RecipeElement[2]
@@ -98,10 +89,7 @@ public class MicrobeMusherConfig : IBuildingConfig
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.TOFU.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"MicrobeMusher"
-			},
+			fabricators = new List<Tag> { "MicrobeMusher" },
 			sortOrder = 3
 		};
 		ComplexRecipe.RecipeElement[] array7 = new ComplexRecipe.RecipeElement[2]
@@ -118,10 +106,7 @@ public class MicrobeMusherConfig : IBuildingConfig
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.FRUITCAKE.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"MicrobeMusher"
-			},
+			fabricators = new List<Tag> { "MicrobeMusher" },
 			sortOrder = 3
 		};
 	}

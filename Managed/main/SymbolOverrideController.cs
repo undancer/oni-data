@@ -55,11 +55,7 @@ public class SymbolOverrideController : KMonoBehaviour
 
 	public SymbolEntry[] GetSymbolOverrides => symbolOverrides.ToArray();
 
-	public int version
-	{
-		get;
-		private set;
-	}
+	public int version { get; private set; }
 
 	protected override void OnPrefabInit()
 	{

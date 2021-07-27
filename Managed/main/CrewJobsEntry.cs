@@ -47,18 +47,14 @@ public class CrewJobsEntry : CrewListEntry
 
 	private CrewJobsScreen.everyoneToggleState rowToggleState;
 
-	public ChoreConsumer consumer
-	{
-		get;
-		private set;
-	}
+	public ChoreConsumer consumer { get; private set; }
 
 	public override void Populate(MinionIdentity _identity)
 	{
 		base.Populate(_identity);
-		this.consumer = _identity.GetComponent<ChoreConsumer>();
-		ChoreConsumer consumer = this.consumer;
-		consumer.choreRulesChanged = (System.Action)Delegate.Combine(consumer.choreRulesChanged, new System.Action(Dirty));
+		consumer = _identity.GetComponent<ChoreConsumer>();
+		ChoreConsumer choreConsumer = consumer;
+		choreConsumer.choreRulesChanged = (System.Action)Delegate.Combine(choreConsumer.choreRulesChanged, new System.Action(Dirty));
 		foreach (ChoreGroup resource in Db.Get().ChoreGroups.resources)
 		{
 			CreateChoreButton(resource);
@@ -113,12 +109,12 @@ public class CrewJobsEntry : CrewListEntry
 	private void ToggleTasksAll(Button button)
 	{
 		bool flag = rowToggleState != CrewJobsScreen.everyoneToggleState.on;
-		string name = "HUD_Click_Deselect";
+		string text = "HUD_Click_Deselect";
 		if (flag)
 		{
-			name = "HUD_Click";
+			text = "HUD_Click";
 		}
-		KMonoBehaviour.PlaySound(GlobalAssets.GetSound(name));
+		KMonoBehaviour.PlaySound(GlobalAssets.GetSound(text));
 		foreach (ChoreGroup resource in Db.Get().ChoreGroups.resources)
 		{
 			consumer.SetPermittedByUser(resource, flag);
@@ -128,12 +124,12 @@ public class CrewJobsEntry : CrewListEntry
 	private void OnPriorityPress(ChoreGroup chore_group)
 	{
 		int num = (consumer.IsPermittedByUser(chore_group) ? 1 : 0);
-		string name = "HUD_Click";
+		string text = "HUD_Click";
 		if (num != 0)
 		{
-			name = "HUD_Click_Deselect";
+			text = "HUD_Click_Deselect";
 		}
-		KMonoBehaviour.PlaySound(GlobalAssets.GetSound(name));
+		KMonoBehaviour.PlaySound(GlobalAssets.GetSound(text));
 		consumer.SetPermittedByUser(chore_group, !consumer.IsPermittedByUser(chore_group));
 	}
 
@@ -276,10 +272,10 @@ public class CrewJobsEntry : CrewListEntry
 	protected override void OnCleanUp()
 	{
 		base.OnCleanUp();
-		if (this.consumer != null)
+		if (consumer != null)
 		{
-			ChoreConsumer consumer = this.consumer;
-			consumer.choreRulesChanged = (System.Action)Delegate.Remove(consumer.choreRulesChanged, new System.Action(Dirty));
+			ChoreConsumer choreConsumer = consumer;
+			choreConsumer.choreRulesChanged = (System.Action)Delegate.Remove(choreConsumer.choreRulesChanged, new System.Action(Dirty));
 		}
 	}
 }

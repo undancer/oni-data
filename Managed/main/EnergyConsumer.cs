@@ -34,11 +34,7 @@ public class EnergyConsumer : KMonoBehaviour, ISaveLoadable, IEnergyConsumer, IC
 
 	public int PowerSortOrder => powerSortOrder;
 
-	public int PowerCell
-	{
-		get;
-		private set;
-	}
+	public int PowerCell { get; private set; }
 
 	public bool HasWire => Grid.Objects[PowerCell, 26] != null;
 
@@ -58,23 +54,11 @@ public class EnergyConsumer : KMonoBehaviour, ISaveLoadable, IEnergyConsumer, IC
 
 	public string Name => selectable.GetName();
 
-	public bool IsVirtual
-	{
-		get;
-		private set;
-	}
+	public bool IsVirtual { get; private set; }
 
-	public object VirtualCircuitKey
-	{
-		get;
-		private set;
-	}
+	public object VirtualCircuitKey { get; private set; }
 
-	public ushort CircuitID
-	{
-		get;
-		private set;
-	}
+	public ushort CircuitID { get; private set; }
 
 	public float BaseWattageRating
 	{

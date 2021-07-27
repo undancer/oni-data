@@ -32,10 +32,7 @@ public class Baggable : KMonoBehaviour
 		pickupable.workAnimPlayMode = KAnim.PlayMode.Once;
 		pickupable.workingPstComplete = null;
 		pickupable.workingPstFailed = null;
-		pickupable.overrideAnims = new KAnimFile[1]
-		{
-			minionAnimOverride
-		};
+		pickupable.overrideAnims = new KAnimFile[1] { minionAnimOverride };
 		pickupable.trackOnPickup = false;
 		pickupable.useGunforPickup = useGunForPickup;
 		pickupable.synchronizeAnims = false;

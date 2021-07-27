@@ -46,11 +46,7 @@ public class WattsonMessage : KScreen
 
 	private List<SchedulerHandle> scheduleHandles = new List<SchedulerHandle>();
 
-	private static readonly HashedString[] WorkLoopAnims = new HashedString[2]
-	{
-		"working_pre",
-		"working_loop"
-	};
+	private static readonly HashedString[] WorkLoopAnims = new HashedString[2] { "working_pre", "working_loop" };
 
 	private int birthsComplete;
 
@@ -170,17 +166,11 @@ public class WattsonMessage : KScreen
 				minionIdentity.gameObject.transform.SetPosition(new Vector3(telepad.transform.GetPosition().x + (float)idx - 1.5f, telepad.transform.GetPosition().y, minionIdentity.gameObject.transform.GetPosition().z));
 				GameObject gameObject = minionIdentity.gameObject;
 				ChoreProvider chore_provider = gameObject.GetComponent<ChoreProvider>();
-				EmoteChore chorePre = new EmoteChore(chore_provider, Db.Get().ChoreTypes.EmoteHighPriority, "anim_interacts_portal_kanim", new HashedString[1]
-				{
-					"portalbirth_pre_" + idx
-				}, KAnim.PlayMode.Loop);
+				EmoteChore chorePre = new EmoteChore(chore_provider, Db.Get().ChoreTypes.EmoteHighPriority, "anim_interacts_portal_kanim", new HashedString[1] { "portalbirth_pre_" + idx }, KAnim.PlayMode.Loop);
 				UIScheduler.Instance.Schedule("DupeBirth", (float)idx * 0.5f, delegate
 				{
 					chorePre.Cancel("Done looping");
-					EmoteChore emoteChore = new EmoteChore(chore_provider, Db.Get().ChoreTypes.EmoteHighPriority, "anim_interacts_portal_kanim", new HashedString[1]
-					{
-						"portalbirth_" + idx
-					}, null);
+					EmoteChore emoteChore = new EmoteChore(chore_provider, Db.Get().ChoreTypes.EmoteHighPriority, "anim_interacts_portal_kanim", new HashedString[1] { "portalbirth_" + idx }, null);
 					emoteChore.onComplete = (Action<Chore>)Delegate.Combine(emoteChore.onComplete, (Action<Chore>)delegate
 					{
 						birthsComplete++;
@@ -193,11 +183,7 @@ public class WattsonMessage : KScreen
 			}
 			UIScheduler.Instance.Schedule("Welcome", 6.6f, delegate
 			{
-				kac.Play(new HashedString[2]
-				{
-					"working_pst",
-					"idle"
-				});
+				kac.Play(new HashedString[2] { "working_pst", "idle" });
 			});
 			CameraController.Instance.DisableUserCameraControl = true;
 		}

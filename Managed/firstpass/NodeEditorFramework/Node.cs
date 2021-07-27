@@ -30,10 +30,7 @@ namespace NodeEditorFramework
 		[NonSerialized]
 		private Node startRecursiveSearchNode;
 
-		public abstract string GetID
-		{
-			get;
-		}
+		public abstract string GetID { get; }
 
 		public virtual bool AllowRecursion => false;
 
@@ -302,10 +299,10 @@ namespace NodeEditorFramework
 		protected static void ReassignOutputType(ref NodeOutput output, Type newOutputType)
 		{
 			Node body = output.body;
-			string name = output.name;
+			string outputName = output.name;
 			IEnumerable<NodeInput> enumerable = output.connections.Where((NodeInput connection) => connection.typeData.Type.IsAssignableFrom(newOutputType));
 			output.Delete();
-			NodeEditorCallbacks.IssueOnAddNodeKnob(NodeOutput.Create(body, name, newOutputType.AssemblyQualifiedName));
+			NodeEditorCallbacks.IssueOnAddNodeKnob(NodeOutput.Create(body, outputName, newOutputType.AssemblyQualifiedName));
 			output = body.Outputs[body.Outputs.Count - 1];
 			foreach (NodeInput item in enumerable)
 			{
@@ -316,14 +313,14 @@ namespace NodeEditorFramework
 		protected static void ReassignInputType(ref NodeInput input, Type newInputType)
 		{
 			Node body = input.body;
-			string name = input.name;
+			string inputName = input.name;
 			NodeOutput nodeOutput = null;
 			if (input.connection != null && newInputType.IsAssignableFrom(input.connection.typeData.Type))
 			{
 				nodeOutput = input.connection;
 			}
 			input.Delete();
-			NodeEditorCallbacks.IssueOnAddNodeKnob(NodeInput.Create(body, name, newInputType.AssemblyQualifiedName));
+			NodeEditorCallbacks.IssueOnAddNodeKnob(NodeInput.Create(body, inputName, newInputType.AssemblyQualifiedName));
 			input = body.Inputs[body.Inputs.Count - 1];
 			if (nodeOutput != null)
 			{

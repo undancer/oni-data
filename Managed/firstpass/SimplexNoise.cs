@@ -22,17 +22,7 @@ public class SimplexNoise
 
 	private const float onesixth = 355f / (678f * (float)Math.PI);
 
-	private static int[] T = new int[8]
-	{
-		21,
-		56,
-		50,
-		44,
-		13,
-		19,
-		7,
-		42
-	};
+	private static int[] T = new int[8] { 21, 56, 50, 44, 13, 19, 7, 42 };
 
 	public static float noise(float x, float y, float z)
 	{

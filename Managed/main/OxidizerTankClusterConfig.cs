@@ -16,10 +16,7 @@ public class OxidizerTankClusterConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("OxidizerTankCluster", 5, 5, "rocket_oxidizer_tank_kanim", 1000, 60f, TUNING.BUILDINGS.ROCKETRY_MASS_KG.FUEL_TANK_DRY_MASS, new string[1]
-		{
-			SimHashes.Steel.ToString()
-		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: TUNING.BUILDINGS.DECOR.NONE);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("OxidizerTankCluster", 5, 5, "rocket_oxidizer_tank_kanim", 1000, 60f, TUNING.BUILDINGS.ROCKETRY_MASS_KG.FUEL_TANK_DRY_MASS, new string[1] { SimHashes.Steel.ToString() }, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: TUNING.BUILDINGS.DECOR.NONE);
 		BuildingTemplates.CreateRocketBuildingDef(obj);
 		obj.DefaultAnimState = "grounded";
 		obj.SceneLayer = Grid.SceneLayer.Building;

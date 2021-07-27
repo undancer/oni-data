@@ -46,11 +46,7 @@ public abstract class GameplayEvent : Resource, IComparable<GameplayEvent>
 
 	public List<Tag> tags;
 
-	public int importance
-	{
-		get;
-		private set;
-	}
+	public int importance { get; private set; }
 
 	public virtual bool IsAllowed()
 	{

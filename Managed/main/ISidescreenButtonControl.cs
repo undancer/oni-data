@@ -1,14 +1,8 @@
 public interface ISidescreenButtonControl
 {
-	string SidescreenButtonText
-	{
-		get;
-	}
+	string SidescreenButtonText { get; }
 
-	string SidescreenButtonTooltip
-	{
-		get;
-	}
+	string SidescreenButtonTooltip { get; }
 
 	bool SidescreenEnabled();
 

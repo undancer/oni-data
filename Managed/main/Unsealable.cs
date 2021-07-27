@@ -27,10 +27,7 @@ public class Unsealable : Workable
 	{
 		faceTargetWhenWorking = true;
 		base.OnPrefabInit();
-		overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_door_poi_kanim")
-		};
+		overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_door_poi_kanim") };
 	}
 
 	protected override void OnSpawn()

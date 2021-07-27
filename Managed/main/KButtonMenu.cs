@@ -195,10 +195,9 @@ public class KButtonMenu : KScreen
 				binfo.popupOptions = binfo.onPopulatePopup();
 			}
 			string[] popupOptions = binfo.popupOptions;
-			string delegate_str = default(string);
 			foreach (string text in popupOptions)
 			{
-				delegate_str = text;
+				string delegate_str = text;
 				list.Add(new ButtonInfo(delegate_str, delegate
 				{
 					binfo.onPopupClick(delegate_str);
@@ -212,16 +211,16 @@ public class KButtonMenu : KScreen
 			component.SetButtons(list.ToArray());
 			RootMenu.Instance.AddSubMenu(component);
 			Game.Instance.LocalPlayer.ScreenManager.ActivateScreen(component.gameObject);
-			Vector3 b = default(Vector3);
+			Vector3 vector = default(Vector3);
 			if (Util.IsOnLeftSideOfScreen(button.transform.GetPosition()))
 			{
-				b.x = button.GetComponent<RectTransform>().rect.width * 0.25f;
+				vector.x = button.GetComponent<RectTransform>().rect.width * 0.25f;
 			}
 			else
 			{
-				b.x = (0f - button.GetComponent<RectTransform>().rect.width) * 0.25f;
+				vector.x = (0f - button.GetComponent<RectTransform>().rect.width) * 0.25f;
 			}
-			component.transform.SetPosition(button.transform.GetPosition() + b);
+			component.transform.SetPosition(button.transform.GetPosition() + vector);
 		};
 		binfo.onClick = unityAction;
 		buttonClickedEvent.AddListener(unityAction);

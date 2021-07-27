@@ -92,11 +92,7 @@ public class FetchManager : KMonoBehaviour, ISim1000ms
 
 		private Dictionary<int, int> cellCosts = new Dictionary<int, int>();
 
-		public Tag prefabId
-		{
-			get;
-			private set;
-		}
+		public Tag prefabId { get; private set; }
 
 		public FetchablesByPrefabId(Tag prefab_id)
 		{

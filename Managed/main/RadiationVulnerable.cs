@@ -35,10 +35,7 @@ public class RadiationVulnerable : GameStateMachine<RadiationVulnerable, Radiati
 
 		private AttributeInstance maxRadiationAttributeInstance;
 
-		public WiltCondition.Condition[] Conditions => new WiltCondition.Condition[1]
-		{
-			WiltCondition.Condition.Radiation
-		};
+		public WiltCondition.Condition[] Conditions => new WiltCondition.Condition[1] { WiltCondition.Condition.Radiation };
 
 		public string WiltStateString
 		{

@@ -1,15 +1,8 @@
 public interface IPlayerControlledToggle
 {
-	string SideScreenTitleKey
-	{
-		get;
-	}
+	string SideScreenTitleKey { get; }
 
-	bool ToggleRequested
-	{
-		get;
-		set;
-	}
+	bool ToggleRequested { get; set; }
 
 	void ToggledByPlayer();
 

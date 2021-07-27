@@ -25,11 +25,7 @@ public abstract class KComponentManager<T> : KCompactedVector<T>, IComponentMana
 
 	private List<CleanupInfo> shadowCleanupList = new List<CleanupInfo>();
 
-	public string Name
-	{
-		get;
-		set;
-	}
+	public string Name { get; set; }
 
 	public KComponentManager()
 		: base(0)

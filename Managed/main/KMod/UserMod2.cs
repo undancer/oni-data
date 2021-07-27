@@ -6,23 +6,11 @@ namespace KMod
 {
 	public class UserMod2
 	{
-		public Assembly assembly
-		{
-			get;
-			set;
-		}
+		public Assembly assembly { get; set; }
 
-		public string path
-		{
-			get;
-			set;
-		}
+		public string path { get; set; }
 
-		public Mod mod
-		{
-			get;
-			set;
-		}
+		public Mod mod { get; set; }
 
 		public virtual void OnLoad(Harmony harmony)
 		{

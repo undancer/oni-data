@@ -36,10 +36,7 @@ public static class AutoRocketUtility
 	private static GameObject AddEngine(LaunchPad selectedPad)
 	{
 		BuildingDef buildingDef = Assets.GetBuildingDef("KeroseneEngineClusterSmall");
-		List<Tag> elements = new List<Tag>
-		{
-			SimHashes.Steel.CreateTag()
-		};
+		List<Tag> elements = new List<Tag> { SimHashes.Steel.CreateTag() };
 		GameObject gameObject = selectedPad.AddBaseModule(buildingDef, elements);
 		Element element = ElementLoader.GetElement(gameObject.GetComponent<RocketEngineCluster>().fuelTag);
 		Storage component = gameObject.GetComponent<Storage>();
@@ -64,10 +61,7 @@ public static class AutoRocketUtility
 	{
 		ReorderableBuilding component = baseModule.GetComponent<ReorderableBuilding>();
 		BuildingDef buildingDef = Assets.GetBuildingDef("HabitatModuleMedium");
-		List<Tag> buildMaterials = new List<Tag>
-		{
-			SimHashes.Cuprite.CreateTag()
-		};
+		List<Tag> buildMaterials = new List<Tag> { SimHashes.Cuprite.CreateTag() };
 		return component.AddModule(buildingDef, buildMaterials);
 	}
 
@@ -75,10 +69,7 @@ public static class AutoRocketUtility
 	{
 		ReorderableBuilding component = baseModule.GetComponent<ReorderableBuilding>();
 		BuildingDef buildingDef = Assets.GetBuildingDef("SolidCargoBaySmall");
-		List<Tag> buildMaterials = new List<Tag>
-		{
-			SimHashes.Steel.CreateTag()
-		};
+		List<Tag> buildMaterials = new List<Tag> { SimHashes.Steel.CreateTag() };
 		return component.AddModule(buildingDef, buildMaterials);
 	}
 
@@ -100,10 +91,7 @@ public static class AutoRocketUtility
 	{
 		ReorderableBuilding component = baseModule.GetComponent<ReorderableBuilding>();
 		BuildingDef buildingDef = Assets.GetBuildingDef("SmallOxidizerTank");
-		List<Tag> buildMaterials = new List<Tag>
-		{
-			SimHashes.Cuprite.CreateTag()
-		};
+		List<Tag> buildMaterials = new List<Tag> { SimHashes.Cuprite.CreateTag() };
 		return component.AddModule(buildingDef, buildMaterials);
 	}
 

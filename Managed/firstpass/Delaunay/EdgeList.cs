@@ -23,12 +23,12 @@ namespace Delaunay
 
 		public void Dispose()
 		{
-			Halfedge halfedge = _leftEnd;
-			while (halfedge != _rightEnd)
+			Halfedge edgeListRightNeighbor = _leftEnd;
+			while (edgeListRightNeighbor != _rightEnd)
 			{
-				Halfedge halfedge2 = halfedge;
-				halfedge = halfedge.edgeListRightNeighbor;
-				halfedge2.Dispose();
+				Halfedge halfedge = edgeListRightNeighbor;
+				edgeListRightNeighbor = edgeListRightNeighbor.edgeListRightNeighbor;
+				halfedge.Dispose();
 			}
 			_leftEnd = null;
 			_rightEnd.Dispose();

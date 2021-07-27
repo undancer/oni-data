@@ -23,11 +23,7 @@ public class Harvestable : Workable
 		component.OnCancel(data);
 	});
 
-	public Worker completed_by
-	{
-		get;
-		protected set;
-	}
+	public Worker completed_by { get; protected set; }
 
 	public bool CanBeHarvested => canBeHarvested;
 

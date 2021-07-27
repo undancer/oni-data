@@ -19,18 +19,15 @@ public class CookingStation : ComplexFabricator, IGameObjectEffectDescriptor
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		base.workable.requiredSkillPerk = Db.Get().SkillPerks.CanElectricGrill.Id;
-		base.workable.WorkerStatusItem = Db.Get().DuplicantStatusItems.Cooking;
-		base.workable.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_cookstation_kanim")
-		};
-		base.workable.AttributeConverter = Db.Get().AttributeConverters.CookingSpeed;
-		base.workable.AttributeExperienceMultiplier = DUPLICANTSTATS.ATTRIBUTE_LEVELING.MOST_DAY_EXPERIENCE;
-		base.workable.SkillExperienceSkillGroup = Db.Get().SkillGroups.Cooking.Id;
-		base.workable.SkillExperienceMultiplier = SKILLS.MOST_DAY_EXPERIENCE;
-		ComplexFabricatorWorkable workable = base.workable;
-		workable.OnWorkTickActions = (Action<Worker, float>)Delegate.Combine(workable.OnWorkTickActions, (Action<Worker, float>)delegate(Worker worker, float dt)
+		workable.requiredSkillPerk = Db.Get().SkillPerks.CanElectricGrill.Id;
+		workable.WorkerStatusItem = Db.Get().DuplicantStatusItems.Cooking;
+		workable.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_cookstation_kanim") };
+		workable.AttributeConverter = Db.Get().AttributeConverters.CookingSpeed;
+		workable.AttributeExperienceMultiplier = DUPLICANTSTATS.ATTRIBUTE_LEVELING.MOST_DAY_EXPERIENCE;
+		workable.SkillExperienceSkillGroup = Db.Get().SkillGroups.Cooking.Id;
+		workable.SkillExperienceMultiplier = SKILLS.MOST_DAY_EXPERIENCE;
+		ComplexFabricatorWorkable complexFabricatorWorkable = workable;
+		complexFabricatorWorkable.OnWorkTickActions = (Action<Worker, float>)Delegate.Combine(complexFabricatorWorkable.OnWorkTickActions, (Action<Worker, float>)delegate(Worker worker, float dt)
 		{
 			Debug.Assert(worker != null, "How did we get a null worker?");
 			if (diseaseCountKillRate > 0)

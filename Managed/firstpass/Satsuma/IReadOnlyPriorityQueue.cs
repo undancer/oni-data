@@ -4,15 +4,9 @@ namespace Satsuma
 {
 	public interface IReadOnlyPriorityQueue<TElement, TPriority>
 	{
-		int Count
-		{
-			get;
-		}
+		int Count { get; }
 
-		IEnumerable<KeyValuePair<TElement, TPriority>> Items
-		{
-			get;
-		}
+		IEnumerable<KeyValuePair<TElement, TPriority>> Items { get; }
 
 		bool Contains(TElement element);
 

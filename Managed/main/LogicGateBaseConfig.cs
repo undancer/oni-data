@@ -3,20 +3,11 @@ using UnityEngine;
 
 public abstract class LogicGateBaseConfig : IBuildingConfig
 {
-	protected abstract CellOffset[] InputPortOffsets
-	{
-		get;
-	}
+	protected abstract CellOffset[] InputPortOffsets { get; }
 
-	protected abstract CellOffset[] OutputPortOffsets
-	{
-		get;
-	}
+	protected abstract CellOffset[] OutputPortOffsets { get; }
 
-	protected abstract CellOffset[] ControlPortOffsets
-	{
-		get;
-	}
+	protected abstract CellOffset[] ControlPortOffsets { get; }
 
 	protected BuildingDef CreateBuildingDef(string ID, string anim, int width = 2, int height = 2)
 	{

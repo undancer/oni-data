@@ -42,12 +42,7 @@ public class DupeGreetingManager : KMonoBehaviour, ISim200ms
 
 	private Dictionary<MinionIdentity, float> cooldowns;
 
-	private static readonly List<string> waveAnims = new List<string>
-	{
-		"anim_react_wave_kanim",
-		"anim_react_wave_shy_kanim",
-		"anim_react_fingerguns_kanim"
-	};
+	private static readonly List<string> waveAnims = new List<string> { "anim_react_wave_kanim", "anim_react_wave_shy_kanim", "anim_react_fingerguns_kanim" };
 
 	protected override void OnPrefabInit()
 	{

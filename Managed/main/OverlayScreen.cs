@@ -144,8 +144,8 @@ public class OverlayScreen : KMonoBehaviour
 	private void RegisterModes()
 	{
 		modeInfos.Clear();
-		OverlayModes.None mode = new OverlayModes.None();
-		RegisterMode(mode);
+		OverlayModes.None none = new OverlayModes.None();
+		RegisterMode(none);
 		RegisterMode(new OverlayModes.Oxygen());
 		RegisterMode(new OverlayModes.Power(powerLabelParent, powerLabelPrefab, batUIPrefab, powerLabelOffset, batteryUIOffset, batteryUITransformerOffset, batteryUISmallTransformerOffset));
 		RegisterMode(new OverlayModes.Temperature());

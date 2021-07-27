@@ -51,34 +51,9 @@ public class SelectModuleSideScreen : KScreen
 
 	private List<string> moduleButtonSortOrder = new List<string>
 	{
-		"CO2Engine",
-		"SugarEngine",
-		"SteamEngineCluster",
-		"KeroseneEngineClusterSmall",
-		"KeroseneEngineCluster",
-		"HEPEngine",
-		"HydrogenEngineCluster",
-		"HabitatModuleSmall",
-		"HabitatModuleMedium",
-		"NoseconeBasic",
-		"NoseconeHarvest",
-		"OrbitalCargoModule",
-		"ScoutModule",
-		"PioneerModule",
-		"LiquidFuelTankCluster",
-		"SmallOxidizerTank",
-		"OxidizerTankCluster",
-		"OxidizerTankLiquidCluster",
-		"SolidCargoBaySmall",
-		"LiquidCargoBaySmall",
-		"GasCargoBaySmall",
-		"CargoBayCluster",
-		"LiquidCargoBayCluster",
-		"GasCargoBayCluster",
-		"BatteryModule",
-		"SolarPanelModule",
-		"ArtifactCargoBay",
-		"ScannerModule"
+		"CO2Engine", "SugarEngine", "SteamEngineCluster", "KeroseneEngineClusterSmall", "KeroseneEngineCluster", "HEPEngine", "HydrogenEngineCluster", "HabitatModuleSmall", "HabitatModuleMedium", "NoseconeBasic",
+		"NoseconeHarvest", "OrbitalCargoModule", "ScoutModule", "PioneerModule", "LiquidFuelTankCluster", "SmallOxidizerTank", "OxidizerTankCluster", "OxidizerTankLiquidCluster", "SolidCargoBaySmall", "LiquidCargoBaySmall",
+		"GasCargoBaySmall", "CargoBayCluster", "LiquidCargoBayCluster", "GasCargoBayCluster", "BatteryModule", "SolarPanelModule", "ArtifactCargoBay", "ScannerModule"
 	};
 
 	protected override void OnShow(bool show)
@@ -351,7 +326,7 @@ public class SelectModuleSideScreen : KScreen
 	private void SetupBuildingTooltip(ToolTip tooltip, BuildingDef def)
 	{
 		tooltip.ClearMultiStringTooltip();
-		string name = def.Name;
+		string newString = def.Name;
 		string text = def.Effect;
 		RocketModuleCluster component = def.BuildingComplete.GetComponent<RocketModuleCluster>();
 		BuildingDef buildingDef = ((GetSelectionContext(def) == SelectModuleCondition.SelectionContext.ReplaceModule) ? module.GetComponent<Building>().Def : null);
@@ -424,7 +399,7 @@ public class SelectModuleSideScreen : KScreen
 				text = text + "\n\n" + string.Format(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.ENGINE_MAX_HEIGHT, num6);
 			}
 		}
-		tooltip.AddMultiStringTooltip(name, PlanScreen.Instance.buildingToolTipSettings.BuildButtonName);
+		tooltip.AddMultiStringTooltip(newString, PlanScreen.Instance.buildingToolTipSettings.BuildButtonName);
 		tooltip.AddMultiStringTooltip(text, PlanScreen.Instance.buildingToolTipSettings.BuildButtonDescription);
 		AddErrorTooltips(tooltip, def);
 	}

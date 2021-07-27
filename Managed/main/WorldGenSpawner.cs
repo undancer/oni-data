@@ -17,38 +17,26 @@ public class WorldGenSpawner : KMonoBehaviour
 
 		private HandleVector<int>.Handle solidChangedPartitionerEntry;
 
-		public Prefab spawnInfo
-		{
-			get;
-			private set;
-		}
+		public Prefab spawnInfo { get; private set; }
 
-		public bool isSpawned
-		{
-			get;
-			private set;
-		}
+		public bool isSpawned { get; private set; }
 
-		public int cell
-		{
-			get;
-			private set;
-		}
+		public int cell { get; private set; }
 
 		public Spawnable(Prefab spawn_info)
 		{
 			spawnInfo = spawn_info;
-			int num = Grid.XYToCell(spawnInfo.location_x, spawnInfo.location_y);
+			int arg = Grid.XYToCell(spawnInfo.location_x, spawnInfo.location_y);
 			GameObject prefab = Assets.GetPrefab(spawn_info.id);
 			if (prefab != null)
 			{
 				WorldSpawnableMonitor.Def def = prefab.GetDef<WorldSpawnableMonitor.Def>();
 				if (def != null && def.adjustSpawnLocationCb != null)
 				{
-					num = def.adjustSpawnLocationCb(num);
+					arg = def.adjustSpawnLocationCb(arg);
 				}
 			}
-			cell = num;
+			cell = arg;
 			Debug.Assert(Grid.IsValidCell(cell));
 			if (Grid.Spawnable[cell] > 0)
 			{

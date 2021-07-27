@@ -23,30 +23,15 @@ public abstract class ClusterGridEntity : KMonoBehaviour
 
 	public bool isWorldEntity;
 
-	public abstract string Name
-	{
-		get;
-	}
+	public abstract string Name { get; }
 
-	public abstract EntityLayer Layer
-	{
-		get;
-	}
+	public abstract EntityLayer Layer { get; }
 
-	public abstract List<AnimConfig> AnimConfigs
-	{
-		get;
-	}
+	public abstract List<AnimConfig> AnimConfigs { get; }
 
-	public abstract bool IsVisible
-	{
-		get;
-	}
+	public abstract bool IsVisible { get; }
 
-	public abstract ClusterRevealLevel IsVisibleInFOW
-	{
-		get;
-	}
+	public abstract ClusterRevealLevel IsVisibleInFOW { get; }
 
 	public AxialI Location
 	{

@@ -303,17 +303,17 @@ public class CustomGameSettings : KMonoBehaviour
 		{
 			if (!(qualitySetting.Key == CustomGameSettingConfigs.WorldgenSeed.id))
 			{
-				string b = null;
+				string text = null;
 				switch (mode)
 				{
 				case CustomGameMode.Nosweat:
-					b = qualitySetting.Value.GetNoSweatDefaultLevelId();
+					text = qualitySetting.Value.GetNoSweatDefaultLevelId();
 					break;
 				case CustomGameMode.Survival:
-					b = qualitySetting.Value.GetDefaultLevelId();
+					text = qualitySetting.Value.GetDefaultLevelId();
 					break;
 				}
-				if (data.ContainsKey(qualitySetting.Key) && data[qualitySetting.Key] != b)
+				if (data.ContainsKey(qualitySetting.Key) && data[qualitySetting.Key] != text)
 				{
 					return false;
 				}

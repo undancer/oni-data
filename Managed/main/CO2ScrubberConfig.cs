@@ -67,10 +67,7 @@ public class CO2ScrubberConfig : IBuildingConfig
 		ConduitDispenser conduitDispenser = go.AddOrGet<ConduitDispenser>();
 		conduitDispenser.conduitType = ConduitType.Liquid;
 		conduitDispenser.invertElementFilter = true;
-		conduitDispenser.elementFilter = new SimHashes[1]
-		{
-			SimHashes.Water
-		};
+		conduitDispenser.elementFilter = new SimHashes[1] { SimHashes.Water };
 		go.AddOrGet<KBatchedAnimController>().randomiseLoopedOffset = true;
 	}
 

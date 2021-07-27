@@ -1,13 +1,6 @@
 public interface IInputHandler
 {
-	string handlerName
-	{
-		get;
-	}
+	string handlerName { get; }
 
-	KInputHandler inputHandler
-	{
-		get;
-		set;
-	}
+	KInputHandler inputHandler { get; set; }
 }

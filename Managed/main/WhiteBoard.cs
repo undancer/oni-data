@@ -17,10 +17,10 @@ public class WhiteBoard : KGameObjectComponentManager<WhiteBoard.Data>, IKCompon
 
 	protected override void OnCleanUp(HandleVector<int>.Handle h)
 	{
-		Data data = GetData(h);
-		data.keyValueStore.Clear();
-		data.keyValueStore = null;
-		SetData(h, data);
+		Data new_data = GetData(h);
+		new_data.keyValueStore.Clear();
+		new_data.keyValueStore = null;
+		SetData(h, new_data);
 	}
 
 	public bool HasValue(HandleVector<int>.Handle h, HashedString key)
@@ -41,9 +41,9 @@ public class WhiteBoard : KGameObjectComponentManager<WhiteBoard.Data>, IKCompon
 	{
 		if (h.IsValid())
 		{
-			Data data = GetData(h);
-			data.keyValueStore[key] = value;
-			SetData(h, data);
+			Data new_data = GetData(h);
+			new_data.keyValueStore[key] = value;
+			SetData(h, new_data);
 		}
 	}
 
@@ -51,9 +51,9 @@ public class WhiteBoard : KGameObjectComponentManager<WhiteBoard.Data>, IKCompon
 	{
 		if (h.IsValid())
 		{
-			Data data = GetData(h);
-			data.keyValueStore.Remove(key);
-			SetData(h, data);
+			Data new_data = GetData(h);
+			new_data.keyValueStore.Remove(key);
+			SetData(h, new_data);
 		}
 	}
 }

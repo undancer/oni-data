@@ -117,21 +117,11 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 
 	protected StatusItem readyForSkillWorkStatusItem;
 
-	public HashedString[] workAnims = new HashedString[2]
-	{
-		"working_pre",
-		"working_loop"
-	};
+	public HashedString[] workAnims = new HashedString[2] { "working_pre", "working_loop" };
 
-	public HashedString[] workingPstComplete = new HashedString[1]
-	{
-		"working_pst"
-	};
+	public HashedString[] workingPstComplete = new HashedString[1] { "working_pst" };
 
-	public HashedString[] workingPstFailed = new HashedString[1]
-	{
-		"working_pst"
-	};
+	public HashedString[] workingPstFailed = new HashedString[1] { "working_pst" };
 
 	public KAnim.PlayMode workAnimPlayMode;
 
@@ -139,11 +129,7 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 
 	protected ProgressBar progressBar;
 
-	public Worker worker
-	{
-		get;
-		protected set;
-	}
+	public Worker worker { get; protected set; }
 
 	public float WorkTimeRemaining
 	{
@@ -157,11 +143,7 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 		}
 	}
 
-	public bool preferUnreservedCell
-	{
-		get;
-		set;
-	}
+	public bool preferUnreservedCell { get; set; }
 
 	public virtual float GetWorkTime()
 	{

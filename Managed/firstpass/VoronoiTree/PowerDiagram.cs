@@ -126,17 +126,9 @@ namespace VoronoiTree
 				site.position[1]
 			};
 
-			public PowerDiagramSite site
-			{
-				get;
-				set;
-			}
+			public PowerDiagramSite site { get; set; }
 
-			public bool visited
-			{
-				get;
-				set;
-			}
+			public bool visited { get; set; }
 
 			public DualSite2d(PowerDiagramSite site)
 			{
@@ -154,23 +146,11 @@ namespace VoronoiTree
 				coord[2]
 			};
 
-			public Vector3 coord
-			{
-				get;
-				set;
-			}
+			public Vector3 coord { get; set; }
 
-			public PowerDiagramSite site
-			{
-				get;
-				set;
-			}
+			public PowerDiagramSite site { get; set; }
 
-			public bool visited
-			{
-				get;
-				set;
-			}
+			public bool visited { get; set; }
 
 			public DualSite3d()
 				: this(0.0, 0.0, 0.0)
@@ -211,17 +191,9 @@ namespace VoronoiTree
 
 		private ConvexHull<DualSite3d, ConvexFaceExt<DualSite3d>> debug_LastHull;
 
-		public VoronoiMesh<DualSite2d, PowerDiagramSite, VoronoiEdge<DualSite2d, PowerDiagramSite>> voronoiMesh
-		{
-			get;
-			private set;
-		}
+		public VoronoiMesh<DualSite2d, PowerDiagramSite, VoronoiEdge<DualSite2d, PowerDiagramSite>> voronoiMesh { get; private set; }
 
-		public int completedIterations
-		{
-			get;
-			set;
-		}
+		public int completedIterations { get; set; }
 
 		public List<PowerDiagramSite> GetSites()
 		{
@@ -248,13 +220,13 @@ namespace VoronoiTree
 				}
 				num++;
 			}
-			Vector2 b = bounds.Centroid();
+			Vector2 vector = bounds.Centroid();
 			for (int i = 0; i < bounds.Vertices.Count; i++)
 			{
-				Vector2 vector = bounds.Vertices[i];
-				Vector2 vector2 = bounds.Vertices[(i < bounds.Vertices.Count - 1) ? (i + 1) : 0];
-				Vector2 b2 = (vector - b).normalized * 1000f;
-				PowerDiagramSite powerDiagramSite = new PowerDiagramSite(vector + b2)
+				Vector2 vector2 = bounds.Vertices[i];
+				Vector2 vector3 = bounds.Vertices[(i < bounds.Vertices.Count - 1) ? (i + 1) : 0];
+				Vector2 vector4 = (vector2 - vector).normalized * 1000f;
+				PowerDiagramSite powerDiagramSite = new PowerDiagramSite(vector2 + vector4)
 				{
 					dummy = true
 				};
@@ -262,8 +234,8 @@ namespace VoronoiTree
 				powerDiagramSite.weight = Mathf.Epsilon;
 				powerDiagramSite.currentWeight = Mathf.Epsilon;
 				dualSites.Add(new DualSite2d(powerDiagramSite));
-				Vector2 b3 = ((vector2 - vector) * 0.5f + vector2 - b).normalized * 1000f;
-				PowerDiagramSite powerDiagramSite2 = new PowerDiagramSite(vector2 + b3)
+				Vector2 vector5 = ((vector3 - vector2) * 0.5f + vector3 - vector).normalized * 1000f;
+				PowerDiagramSite powerDiagramSite2 = new PowerDiagramSite(vector3 + vector5)
 				{
 					dummy = true,
 					weight = Mathf.Epsilon,
@@ -285,9 +257,9 @@ namespace VoronoiTree
 					site.position = site.poly.Centroid();
 					continue;
 				}
-				string str = site.id.ToString();
+				string text = site.id.ToString();
 				Vector2 position = site.position;
-				throw new Exception("site poly is null for [" + str + "]" + position.ToString());
+				throw new Exception("site poly is null for [" + text + "]" + position.ToString());
 			}
 			for (int i = 0; i <= maxIterations; i++)
 			{
@@ -598,9 +570,9 @@ namespace VoronoiTree
 					site.currentWeight = Mathf.Max(site.currentWeight, 1f);
 					continue;
 				}
-				string str = site.id.ToString();
+				string text = site.id.ToString();
 				Vector2 position = site.position;
-				throw new Exception("site poly is null for [" + str + "]" + position.ToString());
+				throw new Exception("site poly is null for [" + text + "]" + position.ToString());
 			}
 			float num = 0f;
 			foreach (PowerDiagramSite site2 in sites)

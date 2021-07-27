@@ -181,16 +181,13 @@ public class HelmetController : KMonoBehaviour
 		{
 			return null;
 		}
-		string name2 = assigneeController.name + "." + name;
-		GameObject gameObject = new GameObject(name2);
+		string text = assigneeController.name + "." + name;
+		GameObject gameObject = new GameObject(text);
 		gameObject.SetActive(value: false);
 		gameObject.transform.parent = assigneeController.transform;
-		gameObject.AddComponent<KPrefabID>().PrefabTag = new Tag(name2);
+		gameObject.AddComponent<KPrefabID>().PrefabTag = new Tag(text);
 		KBatchedAnimController kBatchedAnimController = gameObject.AddComponent<KBatchedAnimController>();
-		kBatchedAnimController.AnimFiles = new KAnimFile[1]
-		{
-			tracked_anim_file
-		};
+		kBatchedAnimController.AnimFiles = new KAnimFile[1] { tracked_anim_file };
 		kBatchedAnimController.initialAnim = anim_clip;
 		kBatchedAnimController.isMovable = true;
 		kBatchedAnimController.sceneLayer = layer;

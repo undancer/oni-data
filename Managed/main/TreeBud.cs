@@ -102,18 +102,15 @@ public class TreeBud : KMonoBehaviour, IWiltCause
 
 	public string WiltStateString => "    • " + DUPLICANTS.STATS.TRUNKHEALTH.NAME;
 
-	public WiltCondition.Condition[] Conditions => new WiltCondition.Condition[1]
-	{
-		WiltCondition.Condition.UnhealthyRoot
-	};
+	public WiltCondition.Condition[] Conditions => new WiltCondition.Condition[1] { WiltCondition.Condition.UnhealthyRoot };
 
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
 		simRenderLoadBalance = true;
 		int cell = Grid.PosToCell(base.gameObject);
-		GameObject x = Grid.Objects[cell, 5];
-		if (x != null && x != base.gameObject)
+		GameObject gameObject = Grid.Objects[cell, 5];
+		if (gameObject != null && gameObject != base.gameObject)
 		{
 			Util.KDestroyGameObject(base.gameObject);
 		}

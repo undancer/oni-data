@@ -37,10 +37,7 @@ public class DestinationAsteroid2 : KMonoBehaviour
 		if (DlcManager.FeatureClusterSpaceEnabled() && anim != null)
 		{
 			asteroidImage.gameObject.SetActive(value: false);
-			animController.AnimFiles = new KAnimFile[1]
-			{
-				anim
-			};
+			animController.AnimFiles = new KAnimFile[1] { anim };
 			animController.initialMode = KAnim.PlayMode.Loop;
 			animController.initialAnim = "idle_loop";
 			animController.gameObject.SetActive(value: true);

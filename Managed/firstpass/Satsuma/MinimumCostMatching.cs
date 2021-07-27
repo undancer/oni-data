@@ -6,41 +6,17 @@ namespace Satsuma
 {
 	public sealed class MinimumCostMatching
 	{
-		public IGraph Graph
-		{
-			get;
-			private set;
-		}
+		public IGraph Graph { get; private set; }
 
-		public Func<Node, bool> IsRed
-		{
-			get;
-			private set;
-		}
+		public Func<Node, bool> IsRed { get; private set; }
 
-		public Func<Arc, double> Cost
-		{
-			get;
-			private set;
-		}
+		public Func<Arc, double> Cost { get; private set; }
 
-		public int MinimumMatchingSize
-		{
-			get;
-			private set;
-		}
+		public int MinimumMatchingSize { get; private set; }
 
-		public int MaximumMatchingSize
-		{
-			get;
-			private set;
-		}
+		public int MaximumMatchingSize { get; private set; }
 
-		public IMatching Matching
-		{
-			get;
-			private set;
-		}
+		public IMatching Matching { get; private set; }
 
 		public MinimumCostMatching(IGraph graph, Func<Node, bool> isRed, Func<Arc, double> cost, int minimumMatchingSize = 0, int maximumMatchingSize = int.MaxValue)
 		{

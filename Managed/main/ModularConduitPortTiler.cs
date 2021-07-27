@@ -59,10 +59,7 @@ public class ModularConduitPortTiler : KMonoBehaviour
 		GetComponent<KPrefabID>().AddTag(GameTags.ModularConduitPort, serialize: true);
 		if (tags == null || tags.Length == 0)
 		{
-			tags = new Tag[1]
-			{
-				GameTags.ModularConduitPort
-			};
+			tags = new Tag[1] { GameTags.ModularConduitPort };
 		}
 	}
 

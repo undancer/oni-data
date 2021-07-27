@@ -119,91 +119,39 @@ public class KAnimBatch
 
 	private bool needsWrite;
 
-	public int id
-	{
-		get;
-		private set;
-	}
+	public int id { get; private set; }
 
 	public bool dirty => dirtySet.Count > 0;
 
 	public int dirtyCount => dirtySet.Count;
 
-	public bool active
-	{
-		get;
-		private set;
-	}
+	public bool active { get; private set; }
 
 	public int size => controllers.Count;
 
-	public Vector3 position
-	{
-		get;
-		private set;
-	}
+	public Vector3 position { get; private set; }
 
-	public int layer
-	{
-		get;
-		private set;
-	}
+	public int layer { get; private set; }
 
 	public List<KAnimConverter.IAnimConverter> Controllers => controllers;
 
-	public KAnimBatchGroup.MaterialType materialType
-	{
-		get;
-		private set;
-	}
+	public KAnimBatchGroup.MaterialType materialType { get; private set; }
 
-	public HashedString batchGroup
-	{
-		get;
-		private set;
-	}
+	public HashedString batchGroup { get; private set; }
 
-	public BatchSet batchset
-	{
-		get;
-		private set;
-	}
+	public BatchSet batchset { get; private set; }
 
-	public KAnimBatchGroup group
-	{
-		get;
-		private set;
-	}
+	public KAnimBatchGroup group { get; private set; }
 
-	public int writtenLastFrame
-	{
-		get;
-		private set;
-	}
+	public int writtenLastFrame { get; private set; }
 
-	public MaterialPropertyBlock matProperties
-	{
-		get;
-		private set;
-	}
+	public MaterialPropertyBlock matProperties { get; private set; }
 
-	public KAnimBatchGroup.KAnimBatchTextureCache.Entry dataTex
-	{
-		get;
-		private set;
-	}
+	public KAnimBatchGroup.KAnimBatchTextureCache.Entry dataTex { get; private set; }
 
-	public KAnimBatchGroup.KAnimBatchTextureCache.Entry symbolInstanceTex
-	{
-		get;
-		private set;
-	}
+	public KAnimBatchGroup.KAnimBatchTextureCache.Entry symbolInstanceTex { get; private set; }
 
-	public KAnimBatchGroup.KAnimBatchTextureCache.Entry symbolOverrideInfoTex
-	{
-		get;
-		private set;
-	}
+	public KAnimBatchGroup.KAnimBatchTextureCache.Entry symbolOverrideInfoTex { get; private set; }
 
 	public KAnimBatch(KAnimBatchGroup group, int layer, float z, KAnimBatchGroup.MaterialType material_type)
 	{

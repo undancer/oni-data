@@ -13,11 +13,7 @@ public class ScheduleBlockButton : KMonoBehaviour
 
 	private Dictionary<string, ColorStyleSetting> paintStyles;
 
-	public int idx
-	{
-		get;
-		private set;
-	}
+	public int idx { get; private set; }
 
 	public void Setup(int idx, Dictionary<string, ColorStyleSetting> paintStyles, int totalBlocks)
 	{

@@ -38,10 +38,7 @@ public class WashSinkConfig : IBuildingConfig
 		handSanitizer.dirtyMeterOffset = Meter.Offset.Behind;
 		go.AddOrGet<DirectionControl>();
 		HandSanitizer.Work work = go.AddOrGet<HandSanitizer.Work>();
-		work.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_washbasin_kanim")
-		};
+		work.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_washbasin_kanim") };
 		work.workTime = 5f;
 		work.trackUses = true;
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
@@ -52,10 +49,7 @@ public class WashSinkConfig : IBuildingConfig
 		ConduitDispenser conduitDispenser = go.AddOrGet<ConduitDispenser>();
 		conduitDispenser.conduitType = ConduitType.Liquid;
 		conduitDispenser.invertElementFilter = true;
-		conduitDispenser.elementFilter = new SimHashes[1]
-		{
-			SimHashes.Water
-		};
+		conduitDispenser.elementFilter = new SimHashes[1] { SimHashes.Water };
 		Storage storage = go.AddOrGet<Storage>();
 		storage.doDiseaseTransfer = false;
 		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);

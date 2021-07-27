@@ -153,9 +153,9 @@ public class Overheatable : StateMachineComponent<Overheatable.StatesInstance>, 
 		{
 			string formattedValue = overheatTemp.GetFormattedValue();
 			string formattedValue2 = fatalTemp.GetFormattedValue();
-			string str = UI.BUILDINGEFFECTS.TOOLTIPS.OVERHEAT_TEMP;
-			str = str + "\n\n" + overheatTemp.GetAttributeValueTooltip();
-			Descriptor item = new Descriptor(string.Format(UI.BUILDINGEFFECTS.OVERHEAT_TEMP, formattedValue, formattedValue2), string.Format(str, formattedValue, formattedValue2));
+			string text = UI.BUILDINGEFFECTS.TOOLTIPS.OVERHEAT_TEMP;
+			text = text + "\n\n" + overheatTemp.GetAttributeValueTooltip();
+			Descriptor item = new Descriptor(string.Format(UI.BUILDINGEFFECTS.OVERHEAT_TEMP, formattedValue, formattedValue2), string.Format(text, formattedValue, formattedValue2));
 			list.Add(item);
 		}
 		else if (baseOverheatTemp != 0f)

@@ -68,10 +68,7 @@ public class NuclearReactorConfig : IBuildingConfig
 		obj.InputConduitType = ConduitType.Liquid;
 		obj.ViewMode = OverlayModes.LiquidConduits.ID;
 		obj.UtilityInputOffset = new CellOffset(-2, 2);
-		obj.LogicInputPorts = new List<LogicPorts.Port>
-		{
-			LogicPorts.Port.InputPort("CONTROL_FUEL_DELIVERY", new CellOffset(0, 0), STRINGS.BUILDINGS.PREFABS.NUCLEARREACTOR.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.NUCLEARREACTOR.INPUT_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.NUCLEARREACTOR.INPUT_PORT_INACTIVE, show_wire_missing_icon: false, display_custom_name: true)
-		};
+		obj.LogicInputPorts = new List<LogicPorts.Port> { LogicPorts.Port.InputPort("CONTROL_FUEL_DELIVERY", new CellOffset(0, 0), STRINGS.BUILDINGS.PREFABS.NUCLEARREACTOR.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.NUCLEARREACTOR.INPUT_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.NUCLEARREACTOR.INPUT_PORT_INACTIVE, show_wire_missing_icon: false, display_custom_name: true) };
 		obj.ViewMode = OverlayModes.Temperature.ID;
 		obj.AudioCategory = "HollowMetal";
 		obj.AudioSize = "large";

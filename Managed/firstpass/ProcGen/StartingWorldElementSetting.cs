@@ -5,16 +5,8 @@ namespace ProcGen
 	[Serializable]
 	public class StartingWorldElementSetting
 	{
-		public string element
-		{
-			get;
-			private set;
-		}
+		public string element { get; private set; }
 
-		public float amount
-		{
-			get;
-			private set;
-		}
+		public float amount { get; private set; }
 	}
 }

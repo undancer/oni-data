@@ -14,10 +14,7 @@ public class JetSuitLockerConfig : IBuildingConfig
 	public override BuildingDef CreateBuildingDef()
 	{
 		string[] rEFINED_METALS = MATERIALS.REFINED_METALS;
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: new float[1]
-		{
-			BUILDINGS.CONSTRUCTION_MASS_KG.TIER3[0]
-		}, construction_materials: rEFINED_METALS, melting_point: 1600f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, id: "JetSuitLocker", width: 2, height: 4, anim: "changingarea_jetsuit_kanim", hitpoints: 30, construction_time: 30f, decor: BUILDINGS.DECOR.BONUS.TIER1);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: new float[1] { BUILDINGS.CONSTRUCTION_MASS_KG.TIER3[0] }, construction_materials: rEFINED_METALS, melting_point: 1600f, build_location_rule: BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, id: "JetSuitLocker", width: 2, height: 4, anim: "changingarea_jetsuit_kanim", hitpoints: 30, construction_time: 30f, decor: BUILDINGS.DECOR.BONUS.TIER1);
 		obj.RequiresPowerInput = true;
 		obj.EnergyConsumptionWhenActive = 120f;
 		obj.PreventIdleTraversalPastBuilding = true;
@@ -34,10 +31,7 @@ public class JetSuitLockerConfig : IBuildingConfig
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
-		go.AddOrGet<SuitLocker>().OutfitTags = new Tag[1]
-		{
-			GameTags.JetSuit
-		};
+		go.AddOrGet<SuitLocker>().OutfitTags = new Tag[1] { GameTags.JetSuit };
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
 		conduitConsumer.conduitType = ConduitType.Gas;
 		conduitConsumer.consumptionRate = 1f;

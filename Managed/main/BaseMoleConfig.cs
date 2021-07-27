@@ -5,13 +5,7 @@ using UnityEngine;
 
 public static class BaseMoleConfig
 {
-	private static readonly string[] SolidIdleAnims = new string[4]
-	{
-		"idle1",
-		"idle2",
-		"idle3",
-		"idle4"
-	};
+	private static readonly string[] SolidIdleAnims = new string[4] { "idle1", "idle2", "idle3", "idle4" };
 
 	public static GameObject BaseMole(string id, string name, string desc, string traitId, string anim_file, bool is_baby)
 	{
@@ -55,10 +49,7 @@ public static class BaseMoleConfig
 		List<Diet.Info> list = new List<Diet.Info>();
 		foreach (Tag elementTag in elementTags)
 		{
-			list.Add(new Diet.Info(new HashSet<Tag>
-			{
-				elementTag
-			}, elementTag, caloriesPerKg, producedConversionRate, null, 0f, produce_solid_tile: true));
+			list.Add(new Diet.Info(new HashSet<Tag> { elementTag }, elementTag, caloriesPerKg, producedConversionRate, null, 0f, produce_solid_tile: true));
 		}
 		return list;
 	}

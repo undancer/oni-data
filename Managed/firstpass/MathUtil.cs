@@ -4,17 +4,9 @@ public static class MathUtil
 {
 	public struct MinMax
 	{
-		public float min
-		{
-			get;
-			private set;
-		}
+		public float min { get; private set; }
 
-		public float max
-		{
-			get;
-			private set;
-		}
+		public float max { get; private set; }
 
 		public MinMax(float min, float max)
 		{
@@ -45,17 +37,9 @@ public static class MathUtil
 
 	public class Pair<T, U>
 	{
-		public T First
-		{
-			get;
-			set;
-		}
+		public T First { get; set; }
 
-		public U Second
-		{
-			get;
-			set;
-		}
+		public U Second { get; set; }
 
 		public Pair()
 		{
@@ -149,18 +133,11 @@ public static class MathUtil
 		if (num3 == 0f)
 		{
 			Vector3 vector2 = num * ray.direction + ray.origin;
-			return new Vector3[1]
-			{
-				vector2
-			};
+			return new Vector3[1] { vector2 };
 		}
 		Vector3 vector3 = (num - Mathf.Sqrt(num3)) * ray.direction + ray.origin;
 		Vector3 vector4 = (num + Mathf.Sqrt(num3)) * ray.direction + ray.origin;
-		return new Vector3[2]
-		{
-			vector3,
-			vector4
-		};
+		return new Vector3[2] { vector3, vector4 };
 	}
 
 	public static float AngleSigned(Vector3 v1, Vector3 v2, Vector3 n)

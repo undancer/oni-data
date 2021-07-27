@@ -123,15 +123,15 @@ public class BuildingComplete : Building
 		base.OnSpawn();
 		primaryElement = GetComponent<PrimaryElement>();
 		int cell = Grid.PosToCell(base.transform.GetPosition());
-		int[] placementCells = base.PlacementCells;
-		for (int i = 0; i < placementCells.Length; i++)
+		int[] array = base.PlacementCells;
+		for (int i = 0; i < array.Length; i++)
 		{
-			SimMessages.SetCellProperties(placementCells[i], 128);
+			SimMessages.SetCellProperties(array[i], 128);
 		}
 		if (Def.IsFoundation)
 		{
-			placementCells = base.PlacementCells;
-			foreach (int num in placementCells)
+			array = base.PlacementCells;
+			foreach (int num in array)
 			{
 				Grid.Foundation[num] = true;
 				Game.Instance.roomProber.SolidChangedEvent(num, ignoreDoors: false);
@@ -267,8 +267,8 @@ public class BuildingComplete : Building
 			}
 			if (Def.IsFoundation)
 			{
-				int[] placementCells = base.PlacementCells;
-				foreach (int num in placementCells)
+				int[] array = base.PlacementCells;
+				foreach (int num in array)
 				{
 					Grid.Foundation[num] = false;
 					Game.Instance.roomProber.SolidChangedEvent(num, ignoreDoors: false);

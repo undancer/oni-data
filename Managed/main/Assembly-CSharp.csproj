@@ -8,81 +8,83 @@
     <LangVersion>8.0</LangVersion>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>../UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.UI.dll</HintPath>
+      <HintPath>../UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>../Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.UIModule.dll</HintPath>
+      <HintPath>../UnityEngine.UIModule.dll</HintPath>
     </Reference>
     <Reference Include="System.Core">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/System.Core.dll</HintPath>
+      <HintPath>../System.Core.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/Newtonsoft.Json.dll</HintPath>
+      <HintPath>../Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="FMODUnity">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/FMODUnity.dll</HintPath>
+      <HintPath>../FMODUnity.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ParticleSystemModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.ParticleSystemModule.dll</HintPath>
+      <HintPath>../UnityEngine.ParticleSystemModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>../UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VideoModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.VideoModule.dll</HintPath>
+      <HintPath>../UnityEngine.VideoModule.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>../Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>../UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/Ionic.Zip.dll</HintPath>
+      <HintPath>../Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AnimationModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.AnimationModule.dll</HintPath>
+      <HintPath>../UnityEngine.AnimationModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.UnityWebRequestModule.dll</HintPath>
+      <HintPath>../UnityEngine.UnityWebRequestModule.dll</HintPath>
     </Reference>
     <Reference Include="LibNoiseDotNet">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/LibNoiseDotNet.dll</HintPath>
+      <HintPath>../LibNoiseDotNet.dll</HintPath>
     </Reference>
     <Reference Include="0Harmony">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/0Harmony.dll</HintPath>
+      <HintPath>../0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Physics2DModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.Physics2DModule.dll</HintPath>
+      <HintPath>../UnityEngine.Physics2DModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.InputLegacyModule.dll</HintPath>
+      <HintPath>../UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AssetBundleModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.AssetBundleModule.dll</HintPath>
+      <HintPath>../UnityEngine.AssetBundleModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ScreenCaptureModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.ScreenCaptureModule.dll</HintPath>
+      <HintPath>../UnityEngine.ScreenCaptureModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ImageConversionModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.ImageConversionModule.dll</HintPath>
+      <HintPath>../UnityEngine.ImageConversionModule.dll</HintPath>
     </Reference>
     <Reference Include="ArabicSupport">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/ArabicSupport.dll</HintPath>
+      <HintPath>../ArabicSupport.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>../UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestTextureModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+      <HintPath>../UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

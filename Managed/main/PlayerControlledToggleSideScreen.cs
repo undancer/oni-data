@@ -6,17 +6,9 @@ public class PlayerControlledToggleSideScreen : SideScreenContent, IRenderEveryT
 
 	public KButton toggleButton;
 
-	protected static readonly HashedString[] ON_ANIMS = new HashedString[2]
-	{
-		"on_pre",
-		"on"
-	};
+	protected static readonly HashedString[] ON_ANIMS = new HashedString[2] { "on_pre", "on" };
 
-	protected static readonly HashedString[] OFF_ANIMS = new HashedString[2]
-	{
-		"off_pre",
-		"off"
-	};
+	protected static readonly HashedString[] OFF_ANIMS = new HashedString[2] { "off_pre", "off" };
 
 	public float animScaleBase = 0.25f;
 

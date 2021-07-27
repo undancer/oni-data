@@ -28,9 +28,9 @@ namespace Database
 
 		public PlantMutation AddPlantMutation(string id)
 		{
-			StringEntry entry = Strings.Get(new StringKey("STRINGS.CREATURES.PLANT_MUTATIONS." + id.ToUpper() + ".NAME"));
-			StringEntry entry2 = Strings.Get(new StringKey("STRINGS.CREATURES.PLANT_MUTATIONS." + id.ToUpper() + ".DESCRIPTION"));
-			PlantMutation plantMutation = new PlantMutation(id, entry, entry2);
+			StringEntry stringEntry = Strings.Get(new StringKey("STRINGS.CREATURES.PLANT_MUTATIONS." + id.ToUpper() + ".NAME"));
+			StringEntry stringEntry2 = Strings.Get(new StringKey("STRINGS.CREATURES.PLANT_MUTATIONS." + id.ToUpper() + ".DESCRIPTION"));
+			PlantMutation plantMutation = new PlantMutation(id, stringEntry, stringEntry2);
 			Add(plantMutation);
 			return plantMutation;
 		}

@@ -55,17 +55,9 @@ public class KPrefabID : KMonoBehaviour, ISaveLoadable
 		}
 	}
 
-	public bool pendingDestruction
-	{
-		get;
-		private set;
-	}
+	public bool pendingDestruction { get; private set; }
 
-	public bool conflicted
-	{
-		get;
-		private set;
-	}
+	public bool conflicted { get; private set; }
 
 	public HashSet<Tag> Tags
 	{

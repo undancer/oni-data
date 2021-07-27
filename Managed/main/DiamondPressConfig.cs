@@ -46,10 +46,7 @@ public class DiamondPressConfig : IBuildingConfig
 		highEnergyParticleStorage.autoStore = true;
 		ComplexFabricatorWorkable complexFabricatorWorkable = go.AddOrGet<ComplexFabricatorWorkable>();
 		BuildingTemplates.CreateComplexFabricatorStorage(go, complexFabricator);
-		complexFabricatorWorkable.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_diamond_press_kanim")
-		};
+		complexFabricatorWorkable.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_diamond_press_kanim") };
 		ComplexRecipe.RecipeElement[] array = new ComplexRecipe.RecipeElement[1]
 		{
 			new ComplexRecipe.RecipeElement(SimHashes.RefinedCarbon.CreateTag(), 100f)
@@ -63,10 +60,7 @@ public class DiamondPressConfig : IBuildingConfig
 			time = 80f,
 			description = string.Format(STRINGS.BUILDINGS.PREFABS.DIAMONDPRESS.REFINED_CARBON_RECIPE_DESCRIPTION, SimHashes.Diamond.CreateTag().ProperName(), SimHashes.RefinedCarbon.CreateTag().ProperName()),
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.IngredientToResult,
-			fabricators = new List<Tag>
-			{
-				TagManager.Create("DiamondPress")
-			}
+			fabricators = new List<Tag> { TagManager.Create("DiamondPress") }
 		};
 		Prioritizable.AddRef(go);
 	}

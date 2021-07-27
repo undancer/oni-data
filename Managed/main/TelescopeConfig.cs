@@ -39,10 +39,7 @@ public class TelescopeConfig : IBuildingConfig
 		Prioritizable.AddRef(go);
 		Telescope telescope = go.AddOrGet<Telescope>();
 		telescope.clearScanCellRadius = 5;
-		telescope.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_telescope_kanim")
-		};
+		telescope.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_telescope_kanim") };
 		telescope.requiredSkillPerk = Db.Get().SkillPerks.CanStudyWorldObjects.Id;
 		telescope.workLayer = Grid.SceneLayer.BuildingFront;
 		Storage storage = go.AddOrGet<Storage>();

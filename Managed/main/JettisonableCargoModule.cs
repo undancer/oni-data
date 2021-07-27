@@ -33,11 +33,7 @@ public class JettisonableCargoModule : GameStateMachine<JettisonableCargoModule,
 
 		private MinionIdentity chosenDuplicant;
 
-		public bool AutoDeploy
-		{
-			get;
-			set;
-		}
+		public bool AutoDeploy { get; set; }
 
 		public bool CanAutoDeploy => false;
 

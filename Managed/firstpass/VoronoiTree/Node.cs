@@ -67,17 +67,9 @@ namespace VoronoiTree
 
 		public Dictionary<Tag, int> minDistanceToTag = new Dictionary<Tag, int>();
 
-		public Tree parent
-		{
-			get;
-			private set;
-		}
+		public Tree parent { get; private set; }
 
-		public PowerDiagram debug_LastPD
-		{
-			get;
-			private set;
-		}
+		public PowerDiagram debug_LastPD { get; private set; }
 
 		public void SetParent(Tree newParent)
 		{

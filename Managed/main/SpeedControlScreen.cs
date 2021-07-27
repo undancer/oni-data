@@ -46,11 +46,7 @@ public class SpeedControlScreen : KScreen
 
 	private float stepTime;
 
-	public static SpeedControlScreen Instance
-	{
-		get;
-		private set;
-	}
+	public static SpeedControlScreen Instance { get; private set; }
 
 	public bool IsPaused => pauseCount > 0;
 
@@ -66,13 +62,7 @@ public class SpeedControlScreen : KScreen
 		slowButton = speedButtonWidget_slow.GetComponent<KToggle>();
 		mediumButton = speedButtonWidget_medium.GetComponent<KToggle>();
 		fastButton = speedButtonWidget_fast.GetComponent<KToggle>();
-		KToggle[] array = new KToggle[4]
-		{
-			pauseButton,
-			slowButton,
-			mediumButton,
-			fastButton
-		};
+		KToggle[] array = new KToggle[4] { pauseButton, slowButton, mediumButton, fastButton };
 		for (int i = 0; i < array.Length; i++)
 		{
 			array[i].soundPlayer.Enabled = false;

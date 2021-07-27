@@ -46,12 +46,7 @@ public class Flatulence : StateMachineComponent<Flatulence.StatesInstance>
 
 	private const float MaxDistanceSq = 2.25f;
 
-	private static readonly HashedString[] WorkLoopAnims = new HashedString[3]
-	{
-		"working_pre",
-		"working_loop",
-		"working_pst"
-	};
+	private static readonly HashedString[] WorkLoopAnims = new HashedString[3] { "working_pre", "working_loop", "working_pst" };
 
 	protected override void OnSpawn()
 	{
@@ -70,14 +65,14 @@ public class Flatulence : StateMachineComponent<Flatulence.StatesInstance>
 		else
 		{
 			Components.Cmps<MinionIdentity> liveMinionIdentities = Components.LiveMinionIdentities;
-			Vector2 a = gameObject.transform.GetPosition();
+			Vector2 vector = gameObject.transform.GetPosition();
 			for (int i = 0; i < liveMinionIdentities.Count; i++)
 			{
 				MinionIdentity minionIdentity = liveMinionIdentities[i];
 				if (minionIdentity.gameObject != gameObject.gameObject)
 				{
-					Vector2 b = minionIdentity.transform.GetPosition();
-					if (Vector2.SqrMagnitude(a - b) <= 2.25f)
+					Vector2 vector2 = minionIdentity.transform.GetPosition();
+					if (Vector2.SqrMagnitude(vector - vector2) <= 2.25f)
 					{
 						minionIdentity.Trigger(508119890, Strings.Get("STRINGS.DUPLICANTS.DISEASES.PUTRIDODOUR.CRINGE_EFFECT").String);
 						minionIdentity.gameObject.GetSMI<ThoughtGraph.Instance>().AddThought(Db.Get().Thoughts.PutridOdour);
@@ -90,18 +85,18 @@ public class Flatulence : StateMachineComponent<Flatulence.StatesInstance>
 			kBatchedAnimController.destroyOnAnimComplete = true;
 		}
 		bool flag = SoundEvent.ObjectIsSelectedAndVisible(gameObject);
-		Vector3 vector = gameObject.GetComponent<Transform>().GetPosition();
-		vector.z = 0f;
+		Vector3 vector3 = gameObject.GetComponent<Transform>().GetPosition();
+		vector3.z = 0f;
 		float volume = 1f;
 		if (flag)
 		{
-			vector = SoundEvent.AudioHighlightListenerPosition(vector);
+			vector3 = SoundEvent.AudioHighlightListenerPosition(vector3);
 			volume = SoundEvent.GetVolume(flag);
 		}
 		else
 		{
-			vector.z = 0f;
+			vector3.z = 0f;
 		}
-		KFMOD.PlayOneShot(GlobalAssets.GetSound("Dupe_Flatulence"), vector, volume);
+		KFMOD.PlayOneShot(GlobalAssets.GetSound("Dupe_Flatulence"), vector3, volume);
 	}
 }

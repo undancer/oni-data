@@ -22,8 +22,8 @@ public class BuildingDamageSoundEvent : SoundEvent
 		Worker component = behaviour.GetComponent<Worker>();
 		if (component == null)
 		{
-			string sound = GlobalAssets.GetSound("Building_Dmg_Metal");
-			if (base.objectIsSelectedAndVisible || SoundEvent.ShouldPlaySound(behaviour.controller, sound, base.looping, isDynamic))
+			string text = GlobalAssets.GetSound("Building_Dmg_Metal");
+			if (base.objectIsSelectedAndVisible || SoundEvent.ShouldPlaySound(behaviour.controller, text, base.looping, isDynamic))
 			{
 				SoundEvent.PlayOneShot(base.sound, sound_pos, SoundEvent.GetVolume(base.objectIsSelectedAndVisible));
 				return;
@@ -38,14 +38,14 @@ public class BuildingDamageSoundEvent : SoundEvent
 		if (component2 != null)
 		{
 			BuildingDef def = component2.Def;
-			string sound2 = GlobalAssets.GetSound(StringFormatter.Combine(base.name, "_", def.AudioCategory));
-			if (sound2 == null)
+			string text2 = GlobalAssets.GetSound(StringFormatter.Combine(base.name, "_", def.AudioCategory));
+			if (text2 == null)
 			{
-				sound2 = GlobalAssets.GetSound("Building_Dmg_Metal");
+				text2 = GlobalAssets.GetSound("Building_Dmg_Metal");
 			}
-			if (sound2 != null && (base.objectIsSelectedAndVisible || SoundEvent.ShouldPlaySound(behaviour.controller, sound2, base.looping, isDynamic)))
+			if (text2 != null && (base.objectIsSelectedAndVisible || SoundEvent.ShouldPlaySound(behaviour.controller, text2, base.looping, isDynamic)))
 			{
-				SoundEvent.PlayOneShot(sound2, sound_pos, SoundEvent.GetVolume(base.objectIsSelectedAndVisible));
+				SoundEvent.PlayOneShot(text2, sound_pos, SoundEvent.GetVolume(base.objectIsSelectedAndVisible));
 			}
 		}
 	}

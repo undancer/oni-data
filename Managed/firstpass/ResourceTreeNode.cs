@@ -20,23 +20,11 @@ public class ResourceTreeNode : Resource
 
 		public Vector2f targetOffset = new Vector2f(0, 0);
 
-		public EdgeType edgeType
-		{
-			get;
-			private set;
-		}
+		public EdgeType edgeType { get; private set; }
 
-		public ResourceTreeNode source
-		{
-			get;
-			private set;
-		}
+		public ResourceTreeNode source { get; private set; }
 
-		public ResourceTreeNode target
-		{
-			get;
-			private set;
-		}
+		public ResourceTreeNode target { get; private set; }
 
 		public List<Vector2> SrcTarget => new List<Vector2>
 		{
@@ -44,11 +32,7 @@ public class ResourceTreeNode : Resource
 			TargetPos()
 		};
 
-		public List<Vector2> path
-		{
-			get;
-			private set;
-		}
+		public List<Vector2> path { get; private set; }
 
 		private Vector2 SourcePos()
 		{

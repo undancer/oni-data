@@ -4,17 +4,9 @@ using UnityEngine.UI;
 
 public abstract class CodexWidget<SubClass> : ICodexWidget
 {
-	public int preferredWidth
-	{
-		get;
-		set;
-	}
+	public int preferredWidth { get; set; }
 
-	public int preferredHeight
-	{
-		get;
-		set;
-	}
+	public int preferredHeight { get; set; }
 
 	protected CodexWidget()
 	{

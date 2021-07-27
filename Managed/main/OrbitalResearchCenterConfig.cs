@@ -48,10 +48,7 @@ public class OrbitalResearchCenterConfig : IBuildingConfig
 		manualDeliveryKG.capacity = 75f;
 		manualDeliveryKG.choreTypeIDHash = Db.Get().ChoreTypes.ResearchFetch.IdHash;
 		ResearchCenter researchCenter = go.AddOrGet<ResearchCenter>();
-		researchCenter.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_orbital_research_station_kanim")
-		};
+		researchCenter.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_orbital_research_station_kanim") };
 		researchCenter.research_point_type_id = "orbital";
 		researchCenter.inputMaterial = INPUT_MATERIAL;
 		researchCenter.mass_per_point = 5f;

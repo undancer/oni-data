@@ -27,12 +27,7 @@ public class HotTubWorkerStateMachine : GameStateMachine<HotTubWorkerStateMachin
 
 	public TargetParameter worker;
 
-	public static string[] workAnimLoopVariants = new string[3]
-	{
-		"working_loop1",
-		"working_loop2",
-		"working_loop3"
-	};
+	public static string[] workAnimLoopVariants = new string[3] { "working_loop1", "working_loop2", "working_loop3" };
 
 	public override void InitializeStates(out BaseState default_state)
 	{

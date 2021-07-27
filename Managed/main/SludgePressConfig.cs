@@ -37,14 +37,8 @@ public class SludgePressConfig : IBuildingConfig
 		go.AddOrGet<CopyBuildingSettings>();
 		ComplexFabricatorWorkable complexFabricatorWorkable = go.AddOrGet<ComplexFabricatorWorkable>();
 		BuildingTemplates.CreateComplexFabricatorStorage(go, complexFabricator);
-		complexFabricatorWorkable.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_sludge_press_kanim")
-		};
-		complexFabricatorWorkable.workingPstComplete = new HashedString[1]
-		{
-			"working_pst_complete"
-		};
+		complexFabricatorWorkable.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_sludge_press_kanim") };
+		complexFabricatorWorkable.workingPstComplete = new HashedString[1] { "working_pst_complete" };
 		ConduitDispenser conduitDispenser = go.AddOrGet<ConduitDispenser>();
 		conduitDispenser.conduitType = ConduitType.Liquid;
 		conduitDispenser.alwaysDispense = true;
@@ -78,10 +72,7 @@ public class SludgePressConfig : IBuildingConfig
 				time = 20f,
 				description = string.Format(STRINGS.BUILDINGS.PREFABS.SLUDGEPRESS.RECIPE_DESCRIPTION, item.name),
 				nameDisplay = ComplexRecipe.RecipeNameDisplay.Composite,
-				fabricators = new List<Tag>
-				{
-					TagManager.Create("SludgePress")
-				}
+				fabricators = new List<Tag> { TagManager.Create("SludgePress") }
 			};
 			ComplexRecipeManager.Get().AddObsoleteIDMapping(obsolete_id, text);
 		}

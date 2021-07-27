@@ -27,11 +27,11 @@ public class OreSizeVisualizerComponents : KGameObjectComponentManager<OreSizeVi
 		{
 			OnMassChanged(handle, ev_data);
 		};
-		OreSizeVisualizerData data = GetData(handle);
-		data.onMassChangedCB = action;
-		data.primaryElement.Subscribe(-2064133523, action);
-		data.primaryElement.Subscribe(1335436905, action);
-		SetData(handle, data);
+		OreSizeVisualizerData new_data = GetData(handle);
+		new_data.onMassChangedCB = action;
+		new_data.primaryElement.Subscribe(-2064133523, action);
+		new_data.primaryElement.Subscribe(1335436905, action);
+		SetData(handle, new_data);
 	}
 
 	protected override void OnSpawn(HandleVector<int>.Handle handle)
@@ -41,12 +41,12 @@ public class OreSizeVisualizerComponents : KGameObjectComponentManager<OreSizeVi
 
 	protected override void OnCleanUp(HandleVector<int>.Handle handle)
 	{
-		OreSizeVisualizerData data = GetData(handle);
-		if (data.primaryElement != null)
+		OreSizeVisualizerData oreSizeVisualizerData = GetData(handle);
+		if (oreSizeVisualizerData.primaryElement != null)
 		{
-			Action<object> onMassChangedCB = data.onMassChangedCB;
-			data.primaryElement.Unsubscribe(-2064133523, onMassChangedCB);
-			data.primaryElement.Unsubscribe(1335436905, onMassChangedCB);
+			Action<object> onMassChangedCB = oreSizeVisualizerData.onMassChangedCB;
+			oreSizeVisualizerData.primaryElement.Unsubscribe(-2064133523, onMassChangedCB);
+			oreSizeVisualizerData.primaryElement.Unsubscribe(1335436905, onMassChangedCB);
 		}
 	}
 

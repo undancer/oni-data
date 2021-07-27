@@ -13,11 +13,7 @@ public class PixelPackConfig : IBuildingConfig
 		{
 			TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER2[0],
 			TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER0[0]
-		}, new string[2]
-		{
-			"Glass",
-			"RefinedMetal"
-		}, 1600f, BuildLocationRule.NotInTiles, noise: NOISE_POLLUTION.NONE, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER3);
+		}, new string[2] { "Glass", "RefinedMetal" }, 1600f, BuildLocationRule.NotInTiles, noise: NOISE_POLLUTION.NONE, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER3);
 		obj.Overheatable = false;
 		obj.Floodable = false;
 		obj.Entombable = false;
@@ -27,10 +23,7 @@ public class PixelPackConfig : IBuildingConfig
 		obj.EnergyConsumptionWhenActive = 10f;
 		obj.SelfHeatKilowattsWhenActive = 0f;
 		obj.ExhaustKilowattsWhenActive = 0f;
-		obj.LogicInputPorts = new List<LogicPorts.Port>
-		{
-			LogicPorts.Port.RibbonInputPort(PixelPack.PORT_ID, new CellOffset(0, 0), STRINGS.BUILDINGS.PREFABS.PIXELPACK.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.PIXELPACK.INPUT_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.PIXELPACK.INPUT_PORT_INACTIVE)
-		};
+		obj.LogicInputPorts = new List<LogicPorts.Port> { LogicPorts.Port.RibbonInputPort(PixelPack.PORT_ID, new CellOffset(0, 0), STRINGS.BUILDINGS.PREFABS.PIXELPACK.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.PIXELPACK.INPUT_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.PIXELPACK.INPUT_PORT_INACTIVE) };
 		obj.ViewMode = OverlayModes.Logic.ID;
 		obj.AudioCategory = "Metal";
 		obj.ObjectLayer = ObjectLayer.Backwall;

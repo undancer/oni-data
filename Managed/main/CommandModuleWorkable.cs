@@ -17,10 +17,7 @@ public class CommandModuleWorkable : Workable
 		base.OnPrefabInit();
 		SetOffsets(entryOffsets);
 		synchronizeAnims = false;
-		overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_incubator_kanim")
-		};
+		overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_incubator_kanim") };
 		SetWorkTime(float.PositiveInfinity);
 		showProgressBar = false;
 	}
@@ -36,14 +33,14 @@ public class CommandModuleWorkable : Workable
 		{
 			if (DlcManager.IsExpansion1Active())
 			{
-				GameObject gameObject = worker.gameObject;
+				GameObject minion = worker.gameObject;
 				CompleteWork(worker);
-				GetComponent<ClustercraftExteriorDoor>().FerryMinion(gameObject);
+				GetComponent<ClustercraftExteriorDoor>().FerryMinion(minion);
 				return true;
 			}
-			GameObject gameObject2 = worker.gameObject;
+			GameObject minion2 = worker.gameObject;
 			CompleteWork(worker);
-			GetComponent<MinionStorage>().SerializeMinion(gameObject2);
+			GetComponent<MinionStorage>().SerializeMinion(minion2);
 			return true;
 		}
 		return base.OnWorkTick(worker, dt);

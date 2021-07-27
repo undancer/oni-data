@@ -18,17 +18,9 @@ namespace ProcGen
 			ExtremelyHot
 		}
 
-		public float min
-		{
-			get;
-			private set;
-		}
+		public float min { get; private set; }
 
-		public float max
-		{
-			get;
-			private set;
-		}
+		public float max { get; private set; }
 
 		public Temperature()
 		{

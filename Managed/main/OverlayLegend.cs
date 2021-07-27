@@ -106,13 +106,13 @@ public class OverlayLegend : KScreen
 	{
 		foreach (OverlayInfo overlayInfo in overlayInfoList)
 		{
-			string name = overlayInfo.name;
-			name = name.Replace("NAME", "");
+			string text = overlayInfo.name;
+			text = text.Replace("NAME", "");
 			for (int i = 0; i < overlayInfo.infoUnits.Count; i++)
 			{
 				string description = overlayInfo.infoUnits[i].description;
-				description = description.Replace(name, "");
-				description = name + "TOOLTIPS." + description;
+				description = description.Replace(text, "");
+				description = text + "TOOLTIPS." + description;
 				overlayInfo.infoUnits[i].tooltip = description;
 			}
 		}
@@ -153,6 +153,7 @@ public class OverlayLegend : KScreen
 					}
 				}
 			}
+			GetComponent<LayoutElement>().minWidth = (DlcManager.FeatureClusterSpaceEnabled() ? 322 : 288);
 			ClearLegend();
 		}
 		else
@@ -407,16 +408,16 @@ public class OverlayLegend : KScreen
 			component.color = ((i == 0) ? new Color(1f, 1f, 1f, 0.7f) : Color.Lerp(dbColours[i * 2], dbColours[Mathf.Min(dbColours.Length - 1, i * 2 + 1)], 0.5f));
 			component.enabled = true;
 			component.type = Image.Type.Simple;
-			string str = names[i].ToUpper();
+			string text = names[i].ToUpper();
 			int num = (int)values.GetValue(i);
 			int num2 = (int)values.GetValue(i);
 			LocText componentInChildren = freeUnitObject.GetComponentInChildren<LocText>();
-			componentInChildren.text = string.Concat(Strings.Get("STRINGS.UI.OVERLAYS.NOISE_POLLUTION.NAMES." + str), " ", string.Format(UI.OVERLAYS.NOISE_POLLUTION.RANGE, num));
+			componentInChildren.text = string.Concat(Strings.Get("STRINGS.UI.OVERLAYS.NOISE_POLLUTION.NAMES." + text), " ", string.Format(UI.OVERLAYS.NOISE_POLLUTION.RANGE, num));
 			componentInChildren.color = Color.white;
 			componentInChildren.enabled = true;
 			ToolTip component2 = freeUnitObject.GetComponent<ToolTip>();
 			component2.enabled = true;
-			component2.toolTip = string.Format(Strings.Get("STRINGS.UI.OVERLAYS.NOISE_POLLUTION.TOOLTIPS." + str), num, num2);
+			component2.toolTip = string.Format(Strings.Get("STRINGS.UI.OVERLAYS.NOISE_POLLUTION.TOOLTIPS." + text), num, num2);
 			freeUnitObject.SetActive(value: true);
 			freeUnitObject.transform.SetParent(activeUnitsParent.transform);
 		}

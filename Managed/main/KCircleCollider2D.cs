@@ -33,8 +33,8 @@ public class KCircleCollider2D : KCollider2D
 	public override bool Intersects(Vector2 pos)
 	{
 		Vector3 position = base.transform.GetPosition();
-		Vector2 b = new Vector2(position.x, position.y) + base.offset;
-		return (pos - b).sqrMagnitude <= _radius * _radius;
+		Vector2 vector = new Vector2(position.x, position.y) + base.offset;
+		return (pos - vector).sqrMagnitude <= _radius * _radius;
 	}
 
 	private void OnDrawGizmosSelected()

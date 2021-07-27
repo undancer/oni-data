@@ -31,10 +31,7 @@ public class BasicRadPillConfig : IEntityConfig
 			time = 50f,
 			description = ITEMS.PILLS.BASICRADPILL.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"Apothecary"
-			},
+			fabricators = new List<Tag> { "Apothecary" },
 			sortOrder = 10
 		};
 		return gameObject;

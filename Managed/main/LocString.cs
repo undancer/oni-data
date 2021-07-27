@@ -7,17 +7,9 @@ public class LocString
 {
 	public const BindingFlags data_member_fields = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy;
 
-	public string text
-	{
-		get;
-		private set;
-	}
+	public string text { get; private set; }
 
-	public StringKey key
-	{
-		get;
-		private set;
-	}
+	public StringKey key { get; private set; }
 
 	public LocString(string text)
 	{

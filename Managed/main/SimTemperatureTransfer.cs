@@ -107,8 +107,8 @@ public class SimTemperatureTransfer : KMonoBehaviour
 					Element element2 = ElementLoader.FindElementByHash(simHashes);
 					if (element2.IsSolid)
 					{
-						GameObject obj = element2.substance.SpawnResource(value.transform.GetPosition(), num4, component.Temperature, component.DiseaseIdx, num5, prevent_merge: true, forceTemperature: false, manual_activation: true);
-						element2.substance.ActivateSubstanceGameObject(obj, component.DiseaseIdx, num5);
+						GameObject gameObject = element2.substance.SpawnResource(value.transform.GetPosition(), num4, component.Temperature, component.DiseaseIdx, num5, prevent_merge: true, forceTemperature: false, manual_activation: true);
+						element2.substance.ActivateSubstanceGameObject(gameObject, component.DiseaseIdx, num5);
 					}
 					else
 					{

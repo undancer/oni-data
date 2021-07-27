@@ -41,16 +41,16 @@ public class AsPercentAmountDisplayer : IAmountDisplayer
 
 	public virtual string GetTooltip(Amount master, AmountInstance instance)
 	{
-		string str = string.Format(master.description, formatter.GetFormattedValue(instance.value));
-		str += "\n\n";
-		str = ((formatter.DeltaTimeSlice != GameUtil.TimeSlice.PerCycle) ? (str + string.Format(UI.CHANGEPERSECOND, formatter.GetFormattedValue(ToPercent(instance.deltaAttribute.GetTotalDisplayValue(), instance), GameUtil.TimeSlice.PerSecond))) : (str + string.Format(UI.CHANGEPERCYCLE, formatter.GetFormattedValue(ToPercent(instance.deltaAttribute.GetTotalDisplayValue(), instance), GameUtil.TimeSlice.PerCycle))));
+		string text = string.Format(master.description, formatter.GetFormattedValue(instance.value));
+		text += "\n\n";
+		text = ((formatter.DeltaTimeSlice != GameUtil.TimeSlice.PerCycle) ? (text + string.Format(UI.CHANGEPERSECOND, formatter.GetFormattedValue(ToPercent(instance.deltaAttribute.GetTotalDisplayValue(), instance), GameUtil.TimeSlice.PerSecond))) : (text + string.Format(UI.CHANGEPERCYCLE, formatter.GetFormattedValue(ToPercent(instance.deltaAttribute.GetTotalDisplayValue(), instance), GameUtil.TimeSlice.PerCycle))));
 		for (int i = 0; i != instance.deltaAttribute.Modifiers.Count; i++)
 		{
 			AttributeModifier attributeModifier = instance.deltaAttribute.Modifiers[i];
 			float modifierContribution = instance.deltaAttribute.GetModifierContribution(attributeModifier);
-			str = str + "\n" + string.Format(UI.MODIFIER_ITEM_TEMPLATE, attributeModifier.GetDescription(), formatter.GetFormattedValue(ToPercent(modifierContribution, instance), formatter.DeltaTimeSlice));
+			text = text + "\n" + string.Format(UI.MODIFIER_ITEM_TEMPLATE, attributeModifier.GetDescription(), formatter.GetFormattedValue(ToPercent(modifierContribution, instance), formatter.DeltaTimeSlice));
 		}
-		return str;
+		return text;
 	}
 
 	public string GetFormattedAttribute(AttributeInstance instance)

@@ -4,10 +4,7 @@ using UnityEngine;
 
 public abstract class ConduitSensorConfig : IBuildingConfig
 {
-	protected abstract ConduitType ConduitType
-	{
-		get;
-	}
+	protected abstract ConduitType ConduitType { get; }
 
 	protected BuildingDef CreateBuildingDef(string ID, string anim, float[] required_mass, string[] required_materials, List<LogicPorts.Port> output_ports)
 	{

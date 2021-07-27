@@ -37,10 +37,7 @@ public class HighEnergyParticleSpawnerConfig : IBuildingConfig
 		obj.EnergyConsumptionWhenActive = 480f;
 		obj.ExhaustKilowattsWhenActive = 1f;
 		obj.SelfHeatKilowattsWhenActive = 4f;
-		obj.LogicInputPorts = new List<LogicPorts.Port>
-		{
-			LogicPorts.Port.InputPort(HighEnergyParticleSpawner.PORT_ID, new CellOffset(0, 0), STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.LOGIC_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.LOGIC_PORT_INACTIVE)
-		};
+		obj.LogicInputPorts = new List<LogicPorts.Port> { LogicPorts.Port.InputPort(HighEnergyParticleSpawner.PORT_ID, new CellOffset(0, 0), STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.LOGIC_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.LOGIC_PORT_INACTIVE) };
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.RadiationIDs, "HighEnergyParticleSpawner");
 		obj.Deprecated = !Sim.IsRadiationEnabled();
 		return obj;

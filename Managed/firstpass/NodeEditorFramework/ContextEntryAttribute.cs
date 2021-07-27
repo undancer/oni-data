@@ -6,17 +6,9 @@ namespace NodeEditorFramework
 	[AttributeUsage(AttributeTargets.Method)]
 	public class ContextEntryAttribute : Attribute
 	{
-		public ContextType contextType
-		{
-			get;
-			private set;
-		}
+		public ContextType contextType { get; private set; }
 
-		public string contextPath
-		{
-			get;
-			private set;
-		}
+		public string contextPath { get; private set; }
 
 		public ContextEntryAttribute(ContextType type, string path)
 		{

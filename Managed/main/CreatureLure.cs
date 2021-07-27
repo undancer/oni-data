@@ -49,10 +49,7 @@ public class CreatureLure : StateMachineComponent<CreatureLure.StatesInstance>
 				SymbolOverrideController component = smi.GetComponent<SymbolOverrideController>();
 				component.TryRemoveSymbolOverride(target_symbol);
 				component.AddSymbolOverride(target_symbol, symbol);
-				smi.GetSMI<Lure.Instance>().SetActiveLures(new Tag[1]
-				{
-					smi.master.activeBaitSetting
-				});
+				smi.GetSMI<Lure.Instance>().SetActiveLures(new Tag[1] { smi.master.activeBaitSetting });
 			}).Exit(ClearBait).QueueAnim("working_pre")
 				.QueueAnim("working_loop", loop: true)
 				.EventTransition(GameHashes.OnStorageChange, empty, (StatesInstance smi) => smi.master.baitStorage.IsEmpty() && smi.master.activeBaitSetting != Tag.Invalid)
@@ -152,10 +149,7 @@ public class CreatureLure : StateMachineComponent<CreatureLure.StatesInstance>
 			baitStorage.DropAll();
 		}
 		base.smi.GoTo(base.smi.sm.idle);
-		baitStorage.storageFilters = new List<Tag>
-		{
-			activeBaitSetting
-		};
+		baitStorage.storageFilters = new List<Tag> { activeBaitSetting };
 		if (baitSetting != Tag.Invalid)
 		{
 			GetComponent<KSelectable>().RemoveStatusItem(Db.Get().BuildingStatusItems.NoLureElementSelected);
@@ -179,10 +173,7 @@ public class CreatureLure : StateMachineComponent<CreatureLure.StatesInstance>
 		GetComponent<KSelectable>().RemoveStatusItem(Db.Get().BuildingStatusItems.AwaitingBaitDelivery);
 		if (!(activeBaitSetting == Tag.Invalid))
 		{
-			fetchChore = new FetchChore(Db.Get().ChoreTypes.RanchingFetch, baitStorage, 100f, new Tag[1]
-			{
-				activeBaitSetting
-			}, null, null, null, run_until_complete: true, null, null, null, FetchOrder2.OperationalRequirement.None);
+			fetchChore = new FetchChore(Db.Get().ChoreTypes.RanchingFetch, baitStorage, 100f, new Tag[1] { activeBaitSetting }, null, null, null, run_until_complete: true, null, null, null, FetchOrder2.OperationalRequirement.None);
 			GetComponent<KSelectable>().AddStatusItem(Db.Get().BuildingStatusItems.AwaitingBaitDelivery);
 		}
 	}

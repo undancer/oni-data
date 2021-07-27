@@ -23,10 +23,7 @@ public abstract class ConduitThresholdSensor : ConduitSensor
 		component.OnCopySettings(data);
 	});
 
-	public abstract float CurrentValue
-	{
-		get;
-	}
+	public abstract float CurrentValue { get; }
 
 	public float Threshold
 	{

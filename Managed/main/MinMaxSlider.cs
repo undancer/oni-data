@@ -75,11 +75,7 @@ public class MinMaxSlider : KMonoBehaviour
 
 	private Vector3 mousePos;
 
-	public Mode mode
-	{
-		get;
-		private set;
-	}
+	public Mode mode { get; private set; }
 
 	protected override void OnSpawn()
 	{

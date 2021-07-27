@@ -24,17 +24,9 @@ namespace Delaunay
 
 		private List<Vector2> _region;
 
-		public uint color
-		{
-			get;
-			private set;
-		}
+		public uint color { get; private set; }
 
-		public float weight
-		{
-			get;
-			private set;
-		}
+		public float weight { get; private set; }
 
 		internal List<Edge> edges => _edges;
 

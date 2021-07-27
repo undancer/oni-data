@@ -35,17 +35,9 @@ public class FactionAlignment : KMonoBehaviour
 	});
 
 	[MyCmpAdd]
-	public Health health
-	{
-		get;
-		private set;
-	}
+	public Health health { get; private set; }
 
-	public AttackableBase attackable
-	{
-		get;
-		private set;
-	}
+	public AttackableBase attackable { get; private set; }
 
 	protected override void OnSpawn()
 	{

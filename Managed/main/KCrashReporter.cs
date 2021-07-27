@@ -80,20 +80,11 @@ public class KCrashReporter : MonoBehaviour
 
 	private static string dataRoot;
 
-	private static readonly string[] IgnoreStrings = new string[3]
-	{
-		"Releasing render texture whose render buffer is set as Camera's target buffer with Camera.SetTargetBuffers!",
-		"The profiler has run out of samples for this frame. This frame will be skipped. Increase the sample limit using Profiler.maxNumberOfSamplesPerFrame",
-		"Trying to add Text (LocText) for graphic rebuild while we are already inside a graphic rebuild loop. This is not supported."
-	};
+	private static readonly string[] IgnoreStrings = new string[3] { "Releasing render texture whose render buffer is set as Camera's target buffer with Camera.SetTargetBuffers!", "The profiler has run out of samples for this frame. This frame will be skipped. Increase the sample limit using Profiler.maxNumberOfSamplesPerFrame", "Trying to add Text (LocText) for graphic rebuild while we are already inside a graphic rebuild loop. This is not supported." };
 
 	private static HashSet<int> previouslyReportedDevNotifications;
 
-	public static bool hasReportedError
-	{
-		get;
-		private set;
-	}
+	public static bool hasReportedError { get; private set; }
 
 	public static event Action<string> onCrashReported;
 
@@ -285,25 +276,20 @@ public class KCrashReporter : MonoBehaviour
 				byte[] array = File.ReadAllBytes(save_file);
 				string text = "----" + System.DateTime.Now.Ticks.ToString("x");
 				webClient.Headers.Add("Content-Type", "multipart/form-data; boundary=" + text);
-				string str = "";
-				string text2;
+				string text2 = "";
+				string text3;
 				using (SHA1CryptoServiceProvider sHA1CryptoServiceProvider = new SHA1CryptoServiceProvider())
 				{
-					text2 = BitConverter.ToString(sHA1CryptoServiceProvider.ComputeHash(array)).Replace("-", "");
+					text3 = BitConverter.ToString(sHA1CryptoServiceProvider.ComputeHash(array)).Replace("-", "");
 				}
-				str += string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"\r\n\r\n{2}\r\n", text, "hash", text2);
+				text2 += string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"\r\n\r\n{2}\r\n", text, "hash", text3);
 				if (metadata != null)
 				{
 					string arg = JsonConvert.SerializeObject(metadata);
-					str += string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"\r\n\r\n{2}\r\n", text, "metadata", arg);
+					text2 += string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"\r\n\r\n{2}\r\n", text, "metadata", arg);
 				}
-				str += string.Format("--{0}\r\nContent-Disposition: form-data; name=\"save\"; filename=\"{1}\"\r\nContent-Type: {2}\r\n\r\n", new object[3]
-				{
-					text,
-					save_file,
-					"application/x-spss-sav"
-				});
-				byte[] bytes = encoding.GetBytes(str);
+				text2 += string.Format("--{0}\r\nContent-Disposition: form-data; name=\"save\"; filename=\"{1}\"\r\nContent-Type: {2}\r\n\r\n", new object[3] { text, save_file, "application/x-spss-sav" });
+				byte[] bytes = encoding.GetBytes(text2);
 				string s = $"\r\n--{text}--\r\n";
 				byte[] bytes2 = encoding.GetBytes(s);
 				byte[] array2 = new byte[bytes.Length + array.Length + bytes2.Length];
@@ -314,7 +300,7 @@ public class KCrashReporter : MonoBehaviour
 				try
 				{
 					webClient.UploadData(address, "POST", array2);
-					return text2;
+					return text3;
 				}
 				catch (Exception obj)
 				{
@@ -357,13 +343,13 @@ public class KCrashReporter : MonoBehaviour
 		}
 		details = "DevNotification: " + notification_name + " - " + details;
 		int hashValue = new HashedString(notification_name).HashValue;
-		bool hasReportedError = KCrashReporter.hasReportedError;
+		bool num = hasReportedError;
 		if (!previouslyReportedDevNotifications.Contains(hashValue))
 		{
 			previouslyReportedDevNotifications.Add(hashValue);
 			ReportError(notification_name, stack_trace, null, null, null, details);
 		}
-		KCrashReporter.hasReportedError = hasReportedError;
+		hasReportedError = num;
 	}
 
 	public static void ReportError(string msg, string stack_trace, string save_file_hash, ConfirmDialogScreen confirm_prefab, GameObject confirm_parent, string userMessage = "")
@@ -404,8 +390,8 @@ public class KCrashReporter : MonoBehaviour
 			}
 			if (string.IsNullOrEmpty(stack_trace))
 			{
-				string arg = LaunchInitializer.BuildPrefix() + "-" + 471618u;
-				stack_trace = $"No stack trace {arg}\n\n{msg}";
+				string buildText = BuildWatermark.GetBuildText();
+				stack_trace = $"No stack trace {buildText}\n\n{msg}";
 			}
 			List<string> list = new List<string>();
 			if (debugWasUsed)
@@ -417,17 +403,7 @@ public class KCrashReporter : MonoBehaviour
 				list.Add("(Mods Active)");
 			}
 			list.Add(msg);
-			string[] array = new string[8]
-			{
-				"Debug:LogError",
-				"UnityEngine.Debug",
-				"Output:LogError",
-				"DebugUtil:Assert",
-				"System.Array",
-				"System.Collections",
-				"KCrashReporter.Assert",
-				"No stack trace."
-			};
+			string[] array = new string[8] { "Debug:LogError", "UnityEngine.Debug", "Output:LogError", "DebugUtil:Assert", "System.Array", "System.Collections", "KCrashReporter.Assert", "No stack trace." };
 			string[] array2 = stack_trace.Split('\n');
 			foreach (string text2 in array2)
 			{
@@ -460,7 +436,7 @@ public class KCrashReporter : MonoBehaviour
 			}
 			else
 			{
-				userMessage = "[" + BuildWatermark.GetBuildText() + "] " + userMessage;
+				userMessage = "[" + BuildWatermark.GetBuildText() + "]" + userMessage;
 				if (!string.IsNullOrEmpty(save_file_hash))
 				{
 					userMessage = userMessage + "\nsave_hash: " + save_file_hash;
@@ -474,7 +450,7 @@ public class KCrashReporter : MonoBehaviour
 				error.callstack = error.callstack + "\n" + Guid.NewGuid().ToString();
 			}
 			error.fullstack = $"{msg}\n\n{stack_trace}";
-			error.build = 471618;
+			error.build = 472345;
 			error.log = GetLogContents();
 			error.summaryline = string.Join("\n", list.ToArray());
 			error.user_message = userMessage;
@@ -513,13 +489,11 @@ public class KCrashReporter : MonoBehaviour
 	public static void ReportBug(string msg, string save_file, GameObject confirmParent)
 	{
 		string stack_trace = "Bug Report From: " + GetUserID() + " at " + System.DateTime.Now.ToString();
-		string save_file_hash = UploadSaveFile(save_file, stack_trace, new Dictionary<string, string>
+		string save_file_hash = UploadSaveFile(save_file, stack_trace, new Dictionary<string, string> { 
 		{
-			{
-				"user",
-				GetUserID()
-			}
-		});
+			"user",
+			GetUserID()
+		} });
 		ReportError(msg, stack_trace, save_file_hash, ScreenPrefabs.Instance.ConfirmDialogScreen, confirmParent);
 	}
 
@@ -545,13 +519,11 @@ public class KCrashReporter : MonoBehaviour
 				text = Path.Combine(Path.GetDirectoryName(dataRoot), dmp_filename);
 				text2 = Path.Combine(Path.GetDirectoryName(dataRoot), fileNameWithoutExtension + ".sav");
 				File.Move(text, text2);
-				save_file_hash = UploadSaveFile(text2, stack_trace, new Dictionary<string, string>
+				save_file_hash = UploadSaveFile(text2, stack_trace, new Dictionary<string, string> { 
 				{
-					{
-						"user",
-						GetUserID()
-					}
-				});
+					"user",
+					GetUserID()
+				} });
 			}
 			ReportError(msg, stack_trace, save_file_hash, null, null);
 			if (dmp_filename != null)

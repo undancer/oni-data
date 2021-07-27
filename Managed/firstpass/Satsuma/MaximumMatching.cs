@@ -11,17 +11,9 @@ namespace Satsuma
 
 		private Dictionary<Node, Arc> parentArc;
 
-		public IGraph Graph
-		{
-			get;
-			private set;
-		}
+		public IGraph Graph { get; private set; }
 
-		public Func<Node, bool> IsRed
-		{
-			get;
-			private set;
-		}
+		public Func<Node, bool> IsRed { get; private set; }
 
 		public IMatching Matching => matching;
 

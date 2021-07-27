@@ -108,11 +108,7 @@ public class CreatureCalorieMonitor : GameStateMachine<CreatureCalorieMonitor, C
 
 		private bool storePoop;
 
-		public Diet diet
-		{
-			get;
-			private set;
-		}
+		public Diet diet { get; private set; }
 
 		public Stomach(Diet diet, GameObject owner, float min_poop_size_in_calories, bool storePoop)
 		{

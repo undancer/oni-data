@@ -1,10 +1,6 @@
 public interface IUtilityItem
 {
-	UtilityConnections Connections
-	{
-		get;
-		set;
-	}
+	UtilityConnections Connections { get; set; }
 
 	void UpdateConnections(UtilityConnections Connections);
 

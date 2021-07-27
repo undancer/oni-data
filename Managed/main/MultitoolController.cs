@@ -132,138 +132,38 @@ public class MultitoolController : GameStateMachine<MultitoolController, Multito
 	{
 		new string[4][]
 		{
-			new string[3]
-			{
-				"{verb}_dn_pre",
-				"{verb}_dn_loop",
-				"{verb}_dn_pst"
-			},
-			new string[3]
-			{
-				"ladder_{verb}_dn_pre",
-				"ladder_{verb}_dn_loop",
-				"ladder_{verb}_dn_pst"
-			},
-			new string[3]
-			{
-				"pole_{verb}_dn_pre",
-				"pole_{verb}_dn_loop",
-				"pole_{verb}_dn_pst"
-			},
-			new string[3]
-			{
-				"jetpack_{verb}_dn_pre",
-				"jetpack_{verb}_dn_loop",
-				"jetpack_{verb}_dn_pst"
-			}
+			new string[3] { "{verb}_dn_pre", "{verb}_dn_loop", "{verb}_dn_pst" },
+			new string[3] { "ladder_{verb}_dn_pre", "ladder_{verb}_dn_loop", "ladder_{verb}_dn_pst" },
+			new string[3] { "pole_{verb}_dn_pre", "pole_{verb}_dn_loop", "pole_{verb}_dn_pst" },
+			new string[3] { "jetpack_{verb}_dn_pre", "jetpack_{verb}_dn_loop", "jetpack_{verb}_dn_pst" }
 		},
 		new string[4][]
 		{
-			new string[3]
-			{
-				"{verb}_diag_dn_pre",
-				"{verb}_diag_dn_loop",
-				"{verb}_diag_dn_pst"
-			},
-			new string[3]
-			{
-				"ladder_{verb}_diag_dn_pre",
-				"ladder_{verb}_loop_diag_dn",
-				"ladder_{verb}_diag_dn_pst"
-			},
-			new string[3]
-			{
-				"pole_{verb}_diag_dn_pre",
-				"pole_{verb}_loop_diag_dn",
-				"pole_{verb}_diag_dn_pst"
-			},
-			new string[3]
-			{
-				"jetpack_{verb}_diag_dn_pre",
-				"jetpack_{verb}_diag_dn_loop",
-				"jetpack_{verb}_diag_dn_pst"
-			}
+			new string[3] { "{verb}_diag_dn_pre", "{verb}_diag_dn_loop", "{verb}_diag_dn_pst" },
+			new string[3] { "ladder_{verb}_diag_dn_pre", "ladder_{verb}_loop_diag_dn", "ladder_{verb}_diag_dn_pst" },
+			new string[3] { "pole_{verb}_diag_dn_pre", "pole_{verb}_loop_diag_dn", "pole_{verb}_diag_dn_pst" },
+			new string[3] { "jetpack_{verb}_diag_dn_pre", "jetpack_{verb}_diag_dn_loop", "jetpack_{verb}_diag_dn_pst" }
 		},
 		new string[4][]
 		{
-			new string[3]
-			{
-				"{verb}_fwd_pre",
-				"{verb}_fwd_loop",
-				"{verb}_fwd_pst"
-			},
-			new string[3]
-			{
-				"ladder_{verb}_pre",
-				"ladder_{verb}_loop",
-				"ladder_{verb}_pst"
-			},
-			new string[3]
-			{
-				"pole_{verb}_pre",
-				"pole_{verb}_loop",
-				"pole_{verb}_pst"
-			},
-			new string[3]
-			{
-				"jetpack_{verb}_fwd_pre",
-				"jetpack_{verb}_fwd_loop",
-				"jetpack_{verb}_fwd_pst"
-			}
+			new string[3] { "{verb}_fwd_pre", "{verb}_fwd_loop", "{verb}_fwd_pst" },
+			new string[3] { "ladder_{verb}_pre", "ladder_{verb}_loop", "ladder_{verb}_pst" },
+			new string[3] { "pole_{verb}_pre", "pole_{verb}_loop", "pole_{verb}_pst" },
+			new string[3] { "jetpack_{verb}_fwd_pre", "jetpack_{verb}_fwd_loop", "jetpack_{verb}_fwd_pst" }
 		},
 		new string[4][]
 		{
-			new string[3]
-			{
-				"{verb}_diag_up_pre",
-				"{verb}_diag_up_loop",
-				"{verb}_diag_up_pst"
-			},
-			new string[3]
-			{
-				"ladder_{verb}_diag_up_pre",
-				"ladder_{verb}_loop_diag_up",
-				"ladder_{verb}_diag_up_pst"
-			},
-			new string[3]
-			{
-				"pole_{verb}_diag_up_pre",
-				"pole_{verb}_loop_diag_up",
-				"pole_{verb}_diag_up_pst"
-			},
-			new string[3]
-			{
-				"jetpack_{verb}_diag_up_pre",
-				"jetpack_{verb}_diag_up_loop",
-				"jetpack_{verb}_diag_up_pst"
-			}
+			new string[3] { "{verb}_diag_up_pre", "{verb}_diag_up_loop", "{verb}_diag_up_pst" },
+			new string[3] { "ladder_{verb}_diag_up_pre", "ladder_{verb}_loop_diag_up", "ladder_{verb}_diag_up_pst" },
+			new string[3] { "pole_{verb}_diag_up_pre", "pole_{verb}_loop_diag_up", "pole_{verb}_diag_up_pst" },
+			new string[3] { "jetpack_{verb}_diag_up_pre", "jetpack_{verb}_diag_up_loop", "jetpack_{verb}_diag_up_pst" }
 		},
 		new string[4][]
 		{
-			new string[3]
-			{
-				"{verb}_up_pre",
-				"{verb}_up_loop",
-				"{verb}_up_pst"
-			},
-			new string[3]
-			{
-				"ladder_{verb}_up_pre",
-				"ladder_{verb}_up_loop",
-				"ladder_{verb}_up_pst"
-			},
-			new string[3]
-			{
-				"pole_{verb}_up_pre",
-				"pole_{verb}_up_loop",
-				"pole_{verb}_up_pst"
-			},
-			new string[3]
-			{
-				"jetpack_{verb}_up_pre",
-				"jetpack_{verb}_up_loop",
-				"jetpack_{verb}_up_pst"
-			}
+			new string[3] { "{verb}_up_pre", "{verb}_up_loop", "{verb}_up_pst" },
+			new string[3] { "ladder_{verb}_up_pre", "ladder_{verb}_up_loop", "ladder_{verb}_up_pst" },
+			new string[3] { "pole_{verb}_up_pre", "pole_{verb}_up_loop", "pole_{verb}_up_pst" },
+			new string[3] { "jetpack_{verb}_up_pre", "jetpack_{verb}_up_loop", "jetpack_{verb}_up_pst" }
 		}
 	};
 

@@ -13,16 +13,8 @@ namespace ProcGen
 		}
 
 		[StringEnumConverter]
-		public ChangeType change
-		{
-			get;
-			private set;
-		}
+		public ChangeType change { get; private set; }
 
-		public MinMax value
-		{
-			get;
-			private set;
-		}
+		public MinMax value { get; private set; }
 	}
 }

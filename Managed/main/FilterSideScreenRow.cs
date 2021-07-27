@@ -28,17 +28,9 @@ public class FilterSideScreenRow : KMonoBehaviour
 	[SerializeField]
 	public KButton button;
 
-	public new Tag tag
-	{
-		get;
-		private set;
-	}
+	public new Tag tag { get; private set; }
 
-	public bool isSelected
-	{
-		get;
-		private set;
-	}
+	public bool isSelected { get; private set; }
 
 	protected override void OnSpawn()
 	{

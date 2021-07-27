@@ -21,25 +21,13 @@ namespace ProcGen
 		[Serialize]
 		public TagSet biomeSpecificTags = new TagSet();
 
-		internal Satsuma.Node node
-		{
-			get;
-			private set;
-		}
+		internal Satsuma.Node node { get; private set; }
 
 		[Serialize]
-		public string type
-		{
-			get;
-			private set;
-		}
+		public string type { get; private set; }
 
 		[Serialize]
-		public Vector2 position
-		{
-			get;
-			private set;
-		}
+		public Vector2 position { get; private set; }
 
 		public void SetNode(Satsuma.Node node)
 		{

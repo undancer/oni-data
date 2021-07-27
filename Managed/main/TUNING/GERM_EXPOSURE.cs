@@ -6,20 +6,9 @@ namespace TUNING
 	{
 		public const float MIN_EXPOSURE_PERIOD = 540f;
 
-		public static readonly int[] INHALE_TICK_THRESHOLD = new int[4]
-		{
-			5,
-			10,
-			15,
-			20
-		};
+		public static readonly int[] INHALE_TICK_THRESHOLD = new int[4] { 5, 10, 15, 20 };
 
-		public static readonly float[] EXPOSURE_TIER_RESISTANCE_BONUSES = new float[3]
-		{
-			3f,
-			1.5f,
-			0f
-		};
+		public static readonly float[] EXPOSURE_TIER_RESISTANCE_BONUSES = new float[3] { 3f, 1.5f, 0f };
 
 		public const int MAX_EXPOSURE_TIER = 3;
 
@@ -30,15 +19,9 @@ namespace TUNING
 				germ_id = "FoodPoisoning",
 				sickness_id = "FoodSickness",
 				exposure_threshold = 100,
-				excluded_traits = new List<string>
-				{
-					"IronGut"
-				},
+				excluded_traits = new List<string> { "IronGut" },
 				base_resistance = 2,
-				excluded_effects = new List<string>
-				{
-					"FoodSicknessRecovery"
-				}
+				excluded_effects = new List<string> { "FoodSicknessRecovery" }
 			},
 			new ExposureType
 			{
@@ -46,10 +29,7 @@ namespace TUNING
 				sickness_id = "SlimeSickness",
 				exposure_threshold = 100,
 				base_resistance = 4,
-				excluded_effects = new List<string>
-				{
-					"SlimeSicknessRecovery"
-				}
+				excluded_effects = new List<string> { "SlimeSicknessRecovery" }
 			},
 			new ExposureType
 			{
@@ -57,10 +37,7 @@ namespace TUNING
 				sickness_id = "ZombieSickness",
 				exposure_threshold = 1,
 				base_resistance = -2,
-				excluded_effects = new List<string>
-				{
-					"ZombieSicknessRecovery"
-				}
+				excluded_effects = new List<string> { "ZombieSicknessRecovery" }
 			},
 			new ExposureType
 			{
@@ -68,10 +45,7 @@ namespace TUNING
 				sickness_id = null,
 				exposure_threshold = 1,
 				base_resistance = -2,
-				excluded_effects = new List<string>
-				{
-					"ZombieSicknessRecovery"
-				}
+				excluded_effects = new List<string> { "ZombieSicknessRecovery" }
 			},
 			new ExposureType
 			{
@@ -79,14 +53,8 @@ namespace TUNING
 				sickness_id = "Allergies",
 				exposure_threshold = 2,
 				infect_immediately = true,
-				required_traits = new List<string>
-				{
-					"Allergies"
-				},
-				excluded_effects = new List<string>
-				{
-					"HistamineSuppression"
-				}
+				required_traits = new List<string> { "Allergies" },
+				excluded_effects = new List<string> { "HistamineSuppression" }
 			},
 			new ExposureType
 			{
@@ -94,10 +62,7 @@ namespace TUNING
 				infection_effect = "SmelledFlowers",
 				exposure_threshold = 2,
 				infect_immediately = true,
-				excluded_traits = new List<string>
-				{
-					"Allergies"
-				}
+				excluded_traits = new List<string> { "Allergies" }
 			}
 		};
 	}

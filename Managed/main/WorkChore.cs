@@ -67,11 +67,7 @@ public class WorkChore<WorkableType> : Chore<WorkChore<WorkableType>.StatesInsta
 
 	public Func<Precondition.Context, bool> preemption_cb;
 
-	public bool onlyWhenOperational
-	{
-		get;
-		private set;
-	}
+	public bool onlyWhenOperational { get; private set; }
 
 	public override string ToString()
 	{

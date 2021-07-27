@@ -26,17 +26,9 @@ namespace MIConvexHull
 	}
 	public class ConvexHull<TVertex, TFace> where TVertex : IVertex where TFace : ConvexFace<TVertex, TFace>, new()
 	{
-		public IEnumerable<TVertex> Points
-		{
-			get;
-			internal set;
-		}
+		public IEnumerable<TVertex> Points { get; internal set; }
 
-		public IEnumerable<TFace> Faces
-		{
-			get;
-			internal set;
-		}
+		public IEnumerable<TFace> Faces { get; internal set; }
 
 		internal ConvexHull()
 		{

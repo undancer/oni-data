@@ -16,6 +16,7 @@ defaultsOverrides:
     OverworldDensityMin: 30
     OverworldDensityMax: 30
     OverworldAvoidRadius: 30
+    OverworldSampleBehaviour: PoissonDisk
 
 startSubworldName: subworlds/magma/Bottom
 startingBaseTemplate: bases/sandstoneBase

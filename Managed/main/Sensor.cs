@@ -4,11 +4,7 @@ public class Sensor
 {
 	protected Sensors sensors;
 
-	public string Name
-	{
-		get;
-		private set;
-	}
+	public string Name { get; private set; }
 
 	public GameObject gameObject => sensors.gameObject;
 

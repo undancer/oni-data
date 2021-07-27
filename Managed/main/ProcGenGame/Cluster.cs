@@ -41,17 +41,9 @@ namespace ProcGenGame
 
 		private Thread thread;
 
-		public ClusterLayout clusterLayout
-		{
-			get;
-			private set;
-		}
+		public ClusterLayout clusterLayout { get; private set; }
 
-		public bool IsGenerationComplete
-		{
-			get;
-			private set;
-		}
+		public bool IsGenerationComplete { get; private set; }
 
 		public bool IsGenerating
 		{
@@ -182,9 +174,9 @@ namespace ProcGenGame
 		public void AssignClusterLocations()
 		{
 			myRandom = new SeededRandom(seed);
-			ClusterLayout clusterLayout = SettingsCache.clusterLayouts.clusterCache[Id];
-			List<WorldPlacement> worldPlacements = clusterLayout.worldPlacements;
-			List<SpaceMapPOIPlacement> list = clusterLayout.poiPlacements;
+			ClusterLayout obj = SettingsCache.clusterLayouts.clusterCache[Id];
+			List<WorldPlacement> worldPlacements = obj.worldPlacements;
+			List<SpaceMapPOIPlacement> list = obj.poiPlacements;
 			currentWorld.SetClusterLocation(AxialI.ZERO);
 			HashSet<AxialI> assignedLocations = new HashSet<AxialI>();
 			HashSet<AxialI> worldForbiddenLocations = new HashSet<AxialI>();

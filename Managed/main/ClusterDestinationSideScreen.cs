@@ -27,17 +27,9 @@ public class ClusterDestinationSideScreen : SideScreenContent
 
 	private int m_refreshHandle = -1;
 
-	private ClusterDestinationSelector targetSelector
-	{
-		get;
-		set;
-	}
+	private ClusterDestinationSelector targetSelector { get; set; }
 
-	private RocketClusterDestinationSelector targetRocketSelector
-	{
-		get;
-		set;
-	}
+	private RocketClusterDestinationSelector targetRocketSelector { get; set; }
 
 	protected override void OnSpawn()
 	{

@@ -54,10 +54,7 @@ public class Refrigerator : KMonoBehaviour, IUserControlledCapacity
 
 	protected override void OnPrefabInit()
 	{
-		filteredStorage = new FilteredStorage(this, null, new Tag[1]
-		{
-			GameTags.Compostable
-		}, this, use_logic_meter: true, Db.Get().ChoreTypes.FoodFetch);
+		filteredStorage = new FilteredStorage(this, null, new Tag[1] { GameTags.Compostable }, this, use_logic_meter: true, Db.Get().ChoreTypes.FoodFetch);
 	}
 
 	protected override void OnSpawn()

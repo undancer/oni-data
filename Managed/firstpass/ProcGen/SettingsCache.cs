@@ -27,10 +27,7 @@ namespace ProcGen
 
 		private static Dictionary<string, BiomeSettings> biomeSettingsCache = new Dictionary<string, BiomeSettings>();
 
-		private static string[] s_sourceDelimiter = new string[1]
-		{
-			"::"
-		};
+		private static string[] s_sourceDelimiter = new string[1] { "::" };
 
 		private static Dictionary<string, string> s_cachedPaths = new Dictionary<string, string>();
 
@@ -50,47 +47,19 @@ namespace ProcGen
 
 		private const string TRAITS_PATH = "traits";
 
-		public static LevelLayerSettings layers
-		{
-			get;
-			private set;
-		}
+		public static LevelLayerSettings layers { get; private set; }
 
-		public static ComposableDictionary<string, River> rivers
-		{
-			get;
-			private set;
-		}
+		public static ComposableDictionary<string, River> rivers { get; private set; }
 
-		public static ComposableDictionary<string, Room> rooms
-		{
-			get;
-			private set;
-		}
+		public static ComposableDictionary<string, Room> rooms { get; private set; }
 
-		public static ComposableDictionary<Temperature.Range, Temperature> temperatures
-		{
-			get;
-			private set;
-		}
+		public static ComposableDictionary<Temperature.Range, Temperature> temperatures { get; private set; }
 
-		public static ComposableDictionary<string, List<WeightedSimHash>> borders
-		{
-			get;
-			private set;
-		}
+		public static ComposableDictionary<string, List<WeightedSimHash>> borders { get; private set; }
 
-		public static DefaultSettings defaults
-		{
-			get;
-			set;
-		}
+		public static DefaultSettings defaults { get; set; }
 
-		public static MobSettings mobs
-		{
-			get;
-			private set;
-		}
+		public static MobSettings mobs { get; private set; }
 
 		public static string GetAbsoluteContentPath(string dlcId, string optionalSubpath = "")
 		{

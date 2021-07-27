@@ -37,11 +37,7 @@ public class PathFinder
 
 		public NavType navType;
 
-		public Flags flags
-		{
-			get;
-			private set;
-		}
+		public Flags flags { get; private set; }
 
 		public PotentialPath(int cell, NavType nav_type, Flags flags)
 		{

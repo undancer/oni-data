@@ -72,17 +72,9 @@ public class WorldContainer : KMonoBehaviour
 	private List<Prioritizable> yellowAlertTasks = new List<Prioritizable>();
 
 	[Serialize]
-	public WorldInventory worldInventory
-	{
-		get;
-		private set;
-	}
+	public WorldInventory worldInventory { get; private set; }
 
-	public Dictionary<Tag, float> materialNeeds
-	{
-		get;
-		private set;
-	}
+	public Dictionary<Tag, float> materialNeeds { get; private set; }
 
 	public bool IsModuleInterior => isModuleInterior;
 
@@ -122,11 +114,7 @@ public class WorldContainer : KMonoBehaviour
 		}
 	}
 
-	public int ParentWorldId
-	{
-		get;
-		private set;
-	}
+	public int ParentWorldId { get; private set; }
 
 	public Vector2 minimumBounds => new Vector2(worldOffset.x, worldOffset.y);
 
@@ -321,10 +309,7 @@ public class WorldContainer : KMonoBehaviour
 		list.Sort((Vector2 v1, Vector2 v2) => IsClockwise(v1, v2, pos));
 		overworldCell.poly = new Polygon(list);
 		overworldCell.zoneType = SubWorld.ZoneType.RocketInterior;
-		overworldCell.tags = new TagSet
-		{
-			WorldGenTags.RocketInterior
-		};
+		overworldCell.tags = new TagSet { WorldGenTags.RocketInterior };
 		clusterDetailSave.overworldCells.Add(overworldCell);
 		Rect rect = new Rect(pos.x - num + 1f, pos.y - num2 + 1f, template.info.size.X, template.info.size.Y);
 		for (int i = (int)rect.yMin; (float)i < rect.yMax; i++)
@@ -354,10 +339,10 @@ public class WorldContainer : KMonoBehaviour
 			m_subworldNames = new List<string>();
 			foreach (WeightedSubworldName subworldFile in world.Settings.world.subworldFiles)
 			{
-				string name = subworldFile.name;
-				name = name.Substring(0, name.LastIndexOf('/'));
-				name = name.Substring(name.LastIndexOf('/') + 1, name.Length - (name.LastIndexOf('/') + 1));
-				m_subworldNames.Add(name);
+				string text = subworldFile.name;
+				text = text.Substring(0, text.LastIndexOf('/'));
+				text = text.Substring(text.LastIndexOf('/') + 1, text.Length - (text.LastIndexOf('/') + 1));
+				m_subworldNames.Add(text);
 			}
 		}
 		else
@@ -366,10 +351,7 @@ public class WorldContainer : KMonoBehaviour
 			worldOffset = Vector2I.zero;
 			worldSize = new Vector2I(Grid.WidthInCells, Grid.HeightInCells);
 			isDiscovered = true;
-			m_seasonIds = new List<string>
-			{
-				Db.Get().GameplaySeasons.MeteorShowers.Id
-			};
+			m_seasonIds = new List<string> { Db.Get().GameplaySeasons.MeteorShowers.Id };
 		}
 	}
 

@@ -33,11 +33,7 @@ public class BuzzStates : GameStateMachine<BuzzStates, BuzzStates.Instance, ISta
 
 		private int maxIterations;
 
-		public bool allowLiquid
-		{
-			get;
-			set;
-		}
+		public bool allowLiquid { get; set; }
 
 		public MoveCellQuery(NavType navType)
 		{

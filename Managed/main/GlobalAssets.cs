@@ -18,11 +18,7 @@ public class GlobalAssets : KMonoBehaviour
 
 	public ColorSet[] colorSetOptions;
 
-	public static GlobalAssets Instance
-	{
-		get;
-		private set;
-	}
+	public static GlobalAssets Instance { get; private set; }
 
 	protected override void OnPrefabInit()
 	{

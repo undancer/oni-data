@@ -148,10 +148,7 @@ public class TravelTubeEntrance : StateMachineComponent<TravelTubeEntrance.SMIns
 			base.OnPrefabInit();
 			resetProgressOnStop = true;
 			showProgressBar = false;
-			overrideAnims = new KAnimFile[1]
-			{
-				Assets.GetAnim("anim_interacts_tube_launcher_kanim")
-			};
+			overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_tube_launcher_kanim") };
 			workLayer = Grid.SceneLayer.BuildingUse;
 		}
 

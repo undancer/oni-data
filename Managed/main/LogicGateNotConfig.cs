@@ -4,10 +4,7 @@ public class LogicGateNotConfig : LogicGateBaseConfig
 {
 	public const string ID = "LogicGateNOT";
 
-	protected override CellOffset[] InputPortOffsets => new CellOffset[1]
-	{
-		CellOffset.none
-	};
+	protected override CellOffset[] InputPortOffsets => new CellOffset[1] { CellOffset.none };
 
 	protected override CellOffset[] OutputPortOffsets => new CellOffset[1]
 	{

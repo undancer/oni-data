@@ -69,10 +69,7 @@ public class Moppable : Workable, ISim1000ms, ISim200ms
 		SetWorkTime(float.PositiveInfinity);
 		GetComponent<KSelectable>().SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().MiscStatusItems.WaitingForMop);
 		Subscribe(493375141, OnRefreshUserMenuDelegate);
-		overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_mop_dirtywater_kanim")
-		};
+		overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_mop_dirtywater_kanim") };
 		partitionerEntry = GameScenePartitioner.Instance.Add("Moppable.OnSpawn", base.gameObject, new Extents(Grid.PosToCell(this), new CellOffset[1]
 		{
 			new CellOffset(0, 0)

@@ -410,8 +410,8 @@ public abstract class OverlayModes
 		{
 			GameObject freeCropUI = GetFreeCropUI();
 			UpdateCropInfo item = new UpdateCropInfo(harvestable, freeCropUI);
-			Vector3 b = Grid.CellToPos(Grid.PosToCell(harvestable), 0.5f, -1.25f, 0f);
-			freeCropUI.GetComponent<RectTransform>().SetPosition(Vector3.up + b);
+			Vector3 vector = Grid.CellToPos(Grid.PosToCell(harvestable), 0.5f, -1.25f, 0f);
+			freeCropUI.GetComponent<RectTransform>().SetPosition(Vector3.up + vector);
 			updateCropInfo.Add(item);
 		}
 	}
@@ -1489,41 +1489,41 @@ public abstract class OverlayModes
 					{
 						continue;
 					}
-					Color32 c = logicOff;
-					Color32 c2 = logicOff;
-					Color32 c3 = logicOff;
-					Color32 c4 = logicOff;
+					Color32 color = logicOff;
+					Color32 color2 = logicOff;
+					Color32 color3 = logicOff;
+					Color32 color4 = logicOff;
 					LogicCircuitNetwork networkForCell2 = logicCircuitManager.GetNetworkForCell(Grid.PosToCell(ribbonController.transform.GetPosition()));
 					if (networkForCell2 != null)
 					{
-						c = (networkForCell2.IsBitActive(0) ? logicOn : logicOff);
-						c2 = (networkForCell2.IsBitActive(1) ? logicOn : logicOff);
-						c3 = (networkForCell2.IsBitActive(2) ? logicOn : logicOff);
-						c4 = (networkForCell2.IsBitActive(3) ? logicOn : logicOff);
+						color = (networkForCell2.IsBitActive(0) ? logicOn : logicOff);
+						color2 = (networkForCell2.IsBitActive(1) ? logicOn : logicOff);
+						color3 = (networkForCell2.IsBitActive(2) ? logicOn : logicOff);
+						color4 = (networkForCell2.IsBitActive(3) ? logicOn : logicOff);
 					}
 					if (connectedNetworks.Count > 0)
 					{
 						IBridgedNetworkItem component4 = ribbonController.GetComponent<IBridgedNetworkItem>();
 						if (component4 != null && component4.IsConnectedToNetworks(connectedNetworks))
 						{
-							c.r = (byte)((float)(int)c.r * num);
-							c.g = (byte)((float)(int)c.g * num);
-							c.b = (byte)((float)(int)c.b * num);
-							c2.r = (byte)((float)(int)c2.r * num);
-							c2.g = (byte)((float)(int)c2.g * num);
-							c2.b = (byte)((float)(int)c2.b * num);
-							c3.r = (byte)((float)(int)c3.r * num);
-							c3.g = (byte)((float)(int)c3.g * num);
-							c3.b = (byte)((float)(int)c3.b * num);
-							c4.r = (byte)((float)(int)c4.r * num);
-							c4.g = (byte)((float)(int)c4.g * num);
-							c4.b = (byte)((float)(int)c4.b * num);
+							color.r = (byte)((float)(int)color.r * num);
+							color.g = (byte)((float)(int)color.g * num);
+							color.b = (byte)((float)(int)color.b * num);
+							color2.r = (byte)((float)(int)color2.r * num);
+							color2.g = (byte)((float)(int)color2.g * num);
+							color2.b = (byte)((float)(int)color2.b * num);
+							color3.r = (byte)((float)(int)color3.r * num);
+							color3.g = (byte)((float)(int)color3.g * num);
+							color3.b = (byte)((float)(int)color3.b * num);
+							color4.r = (byte)((float)(int)color4.r * num);
+							color4.g = (byte)((float)(int)color4.g * num);
+							color4.b = (byte)((float)(int)color4.b * num);
 						}
 					}
-					ribbonController.SetSymbolTint(RIBBON_WIRE_1_SYMBOL_NAME, c);
-					ribbonController.SetSymbolTint(RIBBON_WIRE_2_SYMBOL_NAME, c2);
-					ribbonController.SetSymbolTint(RIBBON_WIRE_3_SYMBOL_NAME, c3);
-					ribbonController.SetSymbolTint(RIBBON_WIRE_4_SYMBOL_NAME, c4);
+					ribbonController.SetSymbolTint(RIBBON_WIRE_1_SYMBOL_NAME, color);
+					ribbonController.SetSymbolTint(RIBBON_WIRE_2_SYMBOL_NAME, color2);
+					ribbonController.SetSymbolTint(RIBBON_WIRE_3_SYMBOL_NAME, color3);
+					ribbonController.SetSymbolTint(RIBBON_WIRE_4_SYMBOL_NAME, color4);
 				}
 				foreach (BridgeInfo bridgeController in bridgeControllers)
 				{
@@ -1555,41 +1555,41 @@ public abstract class OverlayModes
 					{
 						continue;
 					}
-					Color32 c5 = logicOff;
-					Color32 c6 = logicOff;
-					Color32 c7 = logicOff;
-					Color32 c8 = logicOff;
+					Color32 color5 = logicOff;
+					Color32 color6 = logicOff;
+					Color32 color7 = logicOff;
+					Color32 color8 = logicOff;
 					LogicCircuitNetwork networkForCell4 = logicCircuitManager.GetNetworkForCell(ribbonBridgeController.cell);
 					if (networkForCell4 != null)
 					{
-						c5 = (networkForCell4.IsBitActive(0) ? logicOn : logicOff);
-						c6 = (networkForCell4.IsBitActive(1) ? logicOn : logicOff);
-						c7 = (networkForCell4.IsBitActive(2) ? logicOn : logicOff);
-						c8 = (networkForCell4.IsBitActive(3) ? logicOn : logicOff);
+						color5 = (networkForCell4.IsBitActive(0) ? logicOn : logicOff);
+						color6 = (networkForCell4.IsBitActive(1) ? logicOn : logicOff);
+						color7 = (networkForCell4.IsBitActive(2) ? logicOn : logicOff);
+						color8 = (networkForCell4.IsBitActive(3) ? logicOn : logicOff);
 					}
 					if (connectedNetworks.Count > 0)
 					{
 						IBridgedNetworkItem component6 = ribbonBridgeController.controller.GetComponent<IBridgedNetworkItem>();
 						if (component6 != null && component6.IsConnectedToNetworks(connectedNetworks))
 						{
-							c5.r = (byte)((float)(int)c5.r * num);
-							c5.g = (byte)((float)(int)c5.g * num);
-							c5.b = (byte)((float)(int)c5.b * num);
-							c6.r = (byte)((float)(int)c6.r * num);
-							c6.g = (byte)((float)(int)c6.g * num);
-							c6.b = (byte)((float)(int)c6.b * num);
-							c7.r = (byte)((float)(int)c7.r * num);
-							c7.g = (byte)((float)(int)c7.g * num);
-							c7.b = (byte)((float)(int)c7.b * num);
-							c8.r = (byte)((float)(int)c8.r * num);
-							c8.g = (byte)((float)(int)c8.g * num);
-							c8.b = (byte)((float)(int)c8.b * num);
+							color5.r = (byte)((float)(int)color5.r * num);
+							color5.g = (byte)((float)(int)color5.g * num);
+							color5.b = (byte)((float)(int)color5.b * num);
+							color6.r = (byte)((float)(int)color6.r * num);
+							color6.g = (byte)((float)(int)color6.g * num);
+							color6.b = (byte)((float)(int)color6.b * num);
+							color7.r = (byte)((float)(int)color7.r * num);
+							color7.g = (byte)((float)(int)color7.g * num);
+							color7.b = (byte)((float)(int)color7.b * num);
+							color8.r = (byte)((float)(int)color8.r * num);
+							color8.g = (byte)((float)(int)color8.g * num);
+							color8.b = (byte)((float)(int)color8.b * num);
 						}
 					}
-					ribbonBridgeController.controller.SetSymbolTint(RIBBON_WIRE_1_SYMBOL_NAME, c5);
-					ribbonBridgeController.controller.SetSymbolTint(RIBBON_WIRE_2_SYMBOL_NAME, c6);
-					ribbonBridgeController.controller.SetSymbolTint(RIBBON_WIRE_3_SYMBOL_NAME, c7);
-					ribbonBridgeController.controller.SetSymbolTint(RIBBON_WIRE_4_SYMBOL_NAME, c8);
+					ribbonBridgeController.controller.SetSymbolTint(RIBBON_WIRE_1_SYMBOL_NAME, color5);
+					ribbonBridgeController.controller.SetSymbolTint(RIBBON_WIRE_2_SYMBOL_NAME, color6);
+					ribbonBridgeController.controller.SetSymbolTint(RIBBON_WIRE_3_SYMBOL_NAME, color7);
+					ribbonBridgeController.controller.SetSymbolTint(RIBBON_WIRE_4_SYMBOL_NAME, color8);
 				}
 			}
 			UpdateUI();
@@ -1604,7 +1604,7 @@ public abstract class OverlayModes
 			foreach (UIInfo data in uiInfo.GetDataList())
 			{
 				LogicCircuitNetwork networkForCell = Game.Instance.logicCircuitManager.GetNetworkForCell(data.cell);
-				Color32 c = logicDisconnected;
+				Color32 color = logicDisconnected;
 				LogicControlInputUI component = data.instance.GetComponent<LogicControlInputUI>();
 				if (component != null)
 				{
@@ -1622,11 +1622,11 @@ public abstract class OverlayModes
 				{
 					if (networkForCell != null)
 					{
-						c = (networkForCell.IsBitActive(0) ? logicOn : logicOff);
+						color = (networkForCell.IsBitActive(0) ? logicOn : logicOff);
 					}
-					if (data.image.color != c)
+					if (data.image.color != color)
 					{
-						data.image.color = c;
+						data.image.color = color;
 					}
 				}
 			}
@@ -2648,8 +2648,8 @@ public abstract class OverlayModes
 				component.gameObject.SetActive(value: true);
 				freePowerLabel.enabled = true;
 				component.enabled = true;
-				Vector3 a = Grid.CellToPos(componentInChildren2.PowerCell, 0.5f, 0f, 0f);
-				freePowerLabel.rectTransform.SetPosition(a + powerLabelOffset + Vector3.up * (num * 0.02f));
+				Vector3 vector = Grid.CellToPos(componentInChildren2.PowerCell, 0.5f, 0f, 0f);
+				freePowerLabel.rectTransform.SetPosition(vector + powerLabelOffset + Vector3.up * (num * 0.02f));
 				if (componentInChildren != null && componentInChildren.PowerCell == componentInChildren2.PowerCell)
 				{
 					num -= 15f;
@@ -2666,8 +2666,8 @@ public abstract class OverlayModes
 				freePowerLabel2.gameObject.name = item.gameObject.name + "power label";
 				freePowerLabel2.enabled = true;
 				component2.enabled = true;
-				Vector3 a2 = Grid.CellToPos(componentInChildren.PowerCell, 0.5f, 0f, 0f);
-				freePowerLabel2.rectTransform.SetPosition(a2 + powerLabelOffset + Vector3.up * (num * 0.02f));
+				Vector3 vector2 = Grid.CellToPos(componentInChildren.PowerCell, 0.5f, 0f, 0f);
+				freePowerLabel2.rectTransform.SetPosition(vector2 + powerLabelOffset + Vector3.up * (num * 0.02f));
 				SetToolTip(freePowerLabel2, UI.OVERLAYS.POWER.WATTS_CONSUMED);
 				updatePowerInfo.Add(new UpdatePowerInfo(item, freePowerLabel2, component2, null, componentInChildren));
 			}
@@ -2687,7 +2687,7 @@ public abstract class OverlayModes
 		{
 			BatteryUI freeBatteryUI = GetFreeBatteryUI();
 			freeBatteryUI.SetContent(bat);
-			Vector3 b = Grid.CellToPos(bat.PowerCell, 0.5f, 0f, 0f);
+			Vector3 vector = Grid.CellToPos(bat.PowerCell, 0.5f, 0f, 0f);
 			bool num = bat.powerTransformer != null;
 			float num2 = 1f;
 			Rotatable component = bat.GetComponent<Rotatable>();
@@ -2695,13 +2695,13 @@ public abstract class OverlayModes
 			{
 				num2 = -1f;
 			}
-			Vector3 b2 = batteryUIOffset;
+			Vector3 vector2 = batteryUIOffset;
 			if (num)
 			{
-				b2 = ((bat.GetComponent<Building>().Def.WidthInCells == 2) ? batteryUISmallTransformerOffset : batteryUITransformerOffset);
+				vector2 = ((bat.GetComponent<Building>().Def.WidthInCells == 2) ? batteryUISmallTransformerOffset : batteryUITransformerOffset);
 			}
-			b2.x *= num2;
-			freeBatteryUI.GetComponent<RectTransform>().SetPosition(Vector3.up + b + b2);
+			vector2.x *= num2;
+			freeBatteryUI.GetComponent<RectTransform>().SetPosition(Vector3.up + vector + vector2);
 			updateBatteryInfo.Add(new UpdateBatteryInfo(bat, freeBatteryUI));
 		}
 

@@ -23,11 +23,7 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 
 	private Dictionary<ProcessCondition, Guid> conditionStatuses = new Dictionary<ProcessCondition, Guid>();
 
-	public List<RocketModule> rocketModules
-	{
-		get;
-		private set;
-	}
+	public List<RocketModule> rocketModules { get; private set; }
 
 	public void DEBUG_TraceModuleDestruction(string moduleName, string state, string stackTrace)
 	{
@@ -162,10 +158,6 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 				{
 					return false;
 				}
-			}
-			if (launchable.registerType == LaunchableRocketRegisterType.Spacecraft)
-			{
-				return CheckAbleToFly();
 			}
 		}
 		return true;

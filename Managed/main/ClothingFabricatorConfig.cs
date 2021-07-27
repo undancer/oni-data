@@ -25,10 +25,7 @@ public class ClothingFabricatorConfig : IBuildingConfig
 		go.AddOrGet<DropAllWorkable>();
 		Prioritizable.AddRef(go);
 		ComplexFabricator complexFabricator = go.AddOrGet<ComplexFabricator>();
-		go.AddOrGet<ComplexFabricatorWorkable>().overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_clothingfactory_kanim")
-		};
+		go.AddOrGet<ComplexFabricatorWorkable>().overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_clothingfactory_kanim") };
 		go.AddOrGet<ComplexFabricatorWorkable>().AnimOffset = new Vector3(-1f, 0f, 0f);
 		complexFabricator.sideScreenStyle = ComplexFabricatorSideScreen.StyleSetting.ListQueueHybrid;
 		go.AddOrGet<FabricatorIngredientStatusManager>();
@@ -52,10 +49,7 @@ public class ClothingFabricatorConfig : IBuildingConfig
 			time = TUNING.EQUIPMENT.VESTS.WARM_VEST_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.WARM_VEST.RECIPE_DESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"ClothingFabricator"
-			},
+			fabricators = new List<Tag> { "ClothingFabricator" },
 			sortOrder = 1
 		};
 		ComplexRecipe.RecipeElement[] array3 = new ComplexRecipe.RecipeElement[1]
@@ -71,10 +65,7 @@ public class ClothingFabricatorConfig : IBuildingConfig
 			time = TUNING.EQUIPMENT.VESTS.COOL_VEST_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.COOL_VEST.RECIPE_DESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"ClothingFabricator"
-			},
+			fabricators = new List<Tag> { "ClothingFabricator" },
 			sortOrder = 1
 		};
 		ComplexRecipe.RecipeElement[] array5 = new ComplexRecipe.RecipeElement[1]
@@ -90,10 +81,7 @@ public class ClothingFabricatorConfig : IBuildingConfig
 			time = TUNING.EQUIPMENT.VESTS.FUNKY_VEST_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.FUNKY_VEST.RECIPE_DESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"ClothingFabricator"
-			},
+			fabricators = new List<Tag> { "ClothingFabricator" },
 			sortOrder = 1
 		};
 	}

@@ -7,11 +7,7 @@ public class GameInputMapping
 {
 	public static BindingEntry[] KeyBindings;
 
-	public static BindingEntry[] DefaultBindings
-	{
-		get;
-		private set;
-	}
+	public static BindingEntry[] DefaultBindings { get; private set; }
 
 	private static string BindingsFilename => Path.Combine(Util.RootFolder(), "keybindings.json");
 
@@ -36,12 +32,7 @@ public class GameInputMapping
 
 	public static HashSet<string> GetAxis()
 	{
-		return new HashSet<string>
-		{
-			"Mouse X",
-			"Mouse Y",
-			"Mouse ScrollWheel"
-		};
+		return new HashSet<string> { "Mouse X", "Mouse Y", "Mouse ScrollWheel" };
 	}
 
 	public static void SetDefaultKeyBindings(BindingEntry[] default_keybindings)
@@ -109,9 +100,9 @@ public class GameInputMapping
 			BindingEntry bindingEntry = keyBindings[i];
 			bool flag = false;
 			BindingEntry[] defaultBindings = DefaultBindings;
-			foreach (BindingEntry b in defaultBindings)
+			foreach (BindingEntry bindingEntry2 in defaultBindings)
 			{
-				if (bindingEntry == b)
+				if (bindingEntry == bindingEntry2)
 				{
 					flag = true;
 					break;

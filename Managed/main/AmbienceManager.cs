@@ -392,25 +392,25 @@ public class AmbienceManager : KMonoBehaviour
 		Vector2I min = visibleArea.Min;
 		Vector2I max = visibleArea.Max;
 		Vector2I vector2I = min + (max - min) / 2;
-		Vector3 a = Camera.main.ViewportToWorldPoint(new Vector3(1f, 1f, Camera.main.transform.GetPosition().z));
-		Vector3 vector = Camera.main.ViewportToWorldPoint(new Vector3(0f, 0f, Camera.main.transform.GetPosition().z));
-		Vector3 a2 = vector + (a - vector) / 2f;
-		Vector3 a3 = a - vector;
-		if (a3.x > a3.y)
+		Vector3 vector = Camera.main.ViewportToWorldPoint(new Vector3(1f, 1f, Camera.main.transform.GetPosition().z));
+		Vector3 vector2 = Camera.main.ViewportToWorldPoint(new Vector3(0f, 0f, Camera.main.transform.GetPosition().z));
+		Vector3 vector3 = vector2 + (vector - vector2) / 2f;
+		Vector3 vector4 = vector - vector2;
+		if (vector4.x > vector4.y)
 		{
-			a3.y = a3.x;
+			vector4.y = vector4.x;
 		}
 		else
 		{
-			a3.x = a3.y;
+			vector4.x = vector4.y;
 		}
-		a = a2 + a3 / 2f;
-		vector = a2 - a3 / 2f;
-		Vector3 vector2 = a3 / 2f / 2f;
-		quadrants[0].Update(new Vector2I(min.x, min.y), new Vector2I(vector2I.x, vector2I.y), new Vector3(vector.x + vector2.x, vector.y + vector2.y, emitterZPosition));
-		quadrants[1].Update(new Vector2I(vector2I.x, min.y), new Vector2I(max.x, vector2I.y), new Vector3(a2.x + vector2.x, vector.y + vector2.y, emitterZPosition));
-		quadrants[2].Update(new Vector2I(min.x, vector2I.y), new Vector2I(vector2I.x, max.y), new Vector3(vector.x + vector2.x, a2.y + vector2.y, emitterZPosition));
-		quadrants[3].Update(new Vector2I(vector2I.x, vector2I.y), new Vector2I(max.x, max.y), new Vector3(a2.x + vector2.x, a2.y + vector2.y, emitterZPosition));
+		vector = vector3 + vector4 / 2f;
+		vector2 = vector3 - vector4 / 2f;
+		Vector3 vector5 = vector4 / 2f / 2f;
+		quadrants[0].Update(new Vector2I(min.x, min.y), new Vector2I(vector2I.x, vector2I.y), new Vector3(vector2.x + vector5.x, vector2.y + vector5.y, emitterZPosition));
+		quadrants[1].Update(new Vector2I(vector2I.x, min.y), new Vector2I(max.x, vector2I.y), new Vector3(vector3.x + vector5.x, vector2.y + vector5.y, emitterZPosition));
+		quadrants[2].Update(new Vector2I(min.x, vector2I.y), new Vector2I(vector2I.x, max.y), new Vector3(vector2.x + vector5.x, vector3.y + vector5.y, emitterZPosition));
+		quadrants[3].Update(new Vector2I(vector2I.x, vector2I.y), new Vector2I(max.x, max.y), new Vector3(vector3.x + vector5.x, vector3.y + vector5.y, emitterZPosition));
 		float num = 0f;
 		float num2 = 0f;
 		float num3 = 0f;

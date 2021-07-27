@@ -117,17 +117,9 @@ public class KAnim
 
 		public Vector2 unScaledSize = Vector2.zero;
 
-		public int index
-		{
-			get;
-			private set;
-		}
+		public int index { get; private set; }
 
-		public KAnimFileData animFile
-		{
-			get;
-			private set;
-		}
+		public KAnimFileData animFile { get; private set; }
 
 		public Anim(KAnimFileData anim_file, int idx)
 		{

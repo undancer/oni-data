@@ -94,14 +94,7 @@ public class ScaleGrowthMonitor : GameStateMachine<ScaleGrowthMonitor, ScaleGrow
 
 	private AttributeModifier scaleGrowthModifier;
 
-	private static HashedString[] SCALE_SYMBOL_NAMES = new HashedString[5]
-	{
-		"scale_0",
-		"scale_1",
-		"scale_2",
-		"scale_3",
-		"scale_4"
-	};
+	private static HashedString[] SCALE_SYMBOL_NAMES = new HashedString[5] { "scale_0", "scale_1", "scale_2", "scale_3", "scale_4" };
 
 	public override void InitializeStates(out BaseState default_state)
 	{

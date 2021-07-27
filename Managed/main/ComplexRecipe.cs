@@ -30,11 +30,7 @@ public class ComplexRecipe
 
 		public bool inheritElement;
 
-		public float amount
-		{
-			get;
-			private set;
-		}
+		public float amount { get; private set; }
 
 		public RecipeElement(Tag material, float amount, bool inheritElement)
 		{

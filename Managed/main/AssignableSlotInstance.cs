@@ -8,11 +8,7 @@ public abstract class AssignableSlotInstance
 
 	private bool unassigning;
 
-	public Assignables assignables
-	{
-		get;
-		private set;
-	}
+	public Assignables assignables { get; private set; }
 
 	public GameObject gameObject => assignables.gameObject;
 

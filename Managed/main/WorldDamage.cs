@@ -24,11 +24,7 @@ public class WorldDamage : KMonoBehaviour
 
 	private List<int> expiredCells = new List<int>();
 
-	public static WorldDamage Instance
-	{
-		get;
-		private set;
-	}
+	public static WorldDamage Instance { get; private set; }
 
 	public static void DestroyInstance()
 	{
@@ -71,13 +67,20 @@ public class WorldDamage : KMonoBehaviour
 					BuildingHP component = gameObject.GetComponent<BuildingHP>();
 					if (component != null)
 					{
-						int damage = Mathf.RoundToInt(Mathf.Max((float)component.HitPoints - (1f - num) * (float)component.MaxHitPoints, 0f));
-						gameObject.Trigger(-794517298, new BuildingHP.DamageSourceInfo
+						if (!component.invincible)
 						{
-							damage = damage,
-							source = source_name,
-							popString = pop_text
-						});
+							int damage = Mathf.RoundToInt(Mathf.Max((float)component.HitPoints - (1f - num) * (float)component.MaxHitPoints, 0f));
+							gameObject.Trigger(-794517298, new BuildingHP.DamageSourceInfo
+							{
+								damage = damage,
+								source = source_name,
+								popString = pop_text
+							});
+						}
+						else
+						{
+							num = 0f;
+						}
 					}
 				}
 			}

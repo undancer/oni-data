@@ -28,10 +28,7 @@ public class GenericFabricatorConfig : IBuildingConfig
 		complexFabricator.sideScreenStyle = ComplexFabricatorSideScreen.StyleSetting.ListQueueHybrid;
 		go.AddOrGet<FabricatorIngredientStatusManager>();
 		go.AddOrGet<CopyBuildingSettings>();
-		go.AddOrGet<ComplexFabricatorWorkable>().overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_fabricator_generic_kanim")
-		};
+		go.AddOrGet<ComplexFabricatorWorkable>().overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_fabricator_generic_kanim") };
 		go.AddOrGet<ComplexFabricatorWorkable>().AnimOffset = new Vector3(-1f, 0f, 0f);
 		complexFabricator.fetchChoreTypeIdHash = Db.Get().ChoreTypes.FabricateFetch.IdHash;
 		BuildingTemplates.CreateComplexFabricatorStorage(go, complexFabricator);

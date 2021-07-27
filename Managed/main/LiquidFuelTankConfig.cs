@@ -15,12 +15,9 @@ public class LiquidFuelTankConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("LiquidFuelTank", 5, 5, "rocket_liquid_fuel_tank_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.FUEL_TANK_DRY_MASS, new string[1]
-		{
-			SimHashes.Steel.ToString()
-		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("LiquidFuelTank", 5, 5, "rocket_liquid_fuel_tank_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.FUEL_TANK_DRY_MASS, new string[1] { SimHashes.Steel.ToString() }, 9999f, BuildLocationRule.BuildingAttachPoint, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
 		BuildingTemplates.CreateRocketBuildingDef(obj);
-		obj.SceneLayer = Grid.SceneLayer.Building;
+		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
 		obj.OverheatTemperature = 2273.15f;
 		obj.Floodable = false;
 		obj.AttachmentSlotTag = GameTags.Rocket;
@@ -30,7 +27,6 @@ public class LiquidFuelTankConfig : IBuildingConfig
 		obj.RequiresPowerInput = false;
 		obj.attachablePosition = new CellOffset(0, 0);
 		obj.CanMove = true;
-		obj.Cancellable = false;
 		return obj;
 	}
 

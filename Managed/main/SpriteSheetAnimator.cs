@@ -142,14 +142,14 @@ public class SpriteSheetAnimator
 			{
 				AnimInfo animInfo = anim_infos[i];
 				Vector2 vector = animInfo.size * 0.5f;
-				Vector3 b = animInfo.rotation * -vector;
-				Vector3 b2 = animInfo.rotation * new Vector2(vector.x, 0f - vector.y);
-				Vector3 b3 = animInfo.rotation * new Vector2(0f - vector.x, vector.y);
-				Vector3 b4 = animInfo.rotation * vector;
-				pooledList.Add(animInfo.pos + b);
-				pooledList.Add(animInfo.pos + b2);
-				pooledList.Add(animInfo.pos + b4);
-				pooledList.Add(animInfo.pos + b3);
+				Vector3 vector2 = animInfo.rotation * -vector;
+				Vector3 vector3 = animInfo.rotation * new Vector2(vector.x, 0f - vector.y);
+				Vector3 vector4 = animInfo.rotation * new Vector2(0f - vector.x, vector.y);
+				Vector3 vector5 = animInfo.rotation * vector;
+				pooledList.Add(animInfo.pos + vector2);
+				pooledList.Add(animInfo.pos + vector3);
+				pooledList.Add(animInfo.pos + vector5);
+				pooledList.Add(animInfo.pos + vector4);
 				GetUVs(animInfo.frame, out var uv_bl, out var uv_br, out var uv_tl, out var uv_tr);
 				pooledList2.Add(uv_bl);
 				pooledList2.Add(uv_br);
@@ -174,15 +174,15 @@ public class SpriteSheetAnimator
 			for (int j = 0; j < count2; j++)
 			{
 				AnimInfo animInfo2 = anim_infos[j];
-				Vector2 vector2 = animInfo2.size * 0.5f;
-				Vector3 b5 = -vector2;
-				Vector3 b6 = new Vector2(vector2.x, 0f - vector2.y);
-				Vector3 b7 = new Vector2(0f - vector2.x, vector2.y);
-				Vector3 b8 = vector2;
-				pooledList.Add(animInfo2.pos + b5);
-				pooledList.Add(animInfo2.pos + b6);
-				pooledList.Add(animInfo2.pos + b8);
-				pooledList.Add(animInfo2.pos + b7);
+				Vector2 vector6 = animInfo2.size * 0.5f;
+				Vector3 vector7 = -vector6;
+				Vector3 vector8 = new Vector2(vector6.x, 0f - vector6.y);
+				Vector3 vector9 = new Vector2(0f - vector6.x, vector6.y);
+				Vector3 vector10 = vector6;
+				pooledList.Add(animInfo2.pos + vector7);
+				pooledList.Add(animInfo2.pos + vector8);
+				pooledList.Add(animInfo2.pos + vector10);
+				pooledList.Add(animInfo2.pos + vector9);
 				GetUVs(animInfo2.frame, out var uv_bl2, out var uv_br2, out var uv_tl2, out var uv_tr2);
 				pooledList2.Add(uv_bl2);
 				pooledList2.Add(uv_br2);

@@ -2,10 +2,7 @@ using UnityEngine;
 
 public interface IOreConfig
 {
-	SimHashes ElementID
-	{
-		get;
-	}
+	SimHashes ElementID { get; }
 
 	GameObject CreatePrefab();
 }

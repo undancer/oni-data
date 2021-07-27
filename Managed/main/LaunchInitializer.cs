@@ -36,12 +36,12 @@ public class LaunchInitializer : MonoBehaviour
 		GraphicsOptionsScreen.SetSettingsFromPrefs();
 		Util.ApplyInvariantCultureToThread(Thread.CurrentThread);
 		Debug.Log("Current date: " + System.DateTime.Now.ToString());
-		Debug.Log("release Build: " + 471618u);
+		Debug.Log("release Build: " + BuildWatermark.GetBuildText());
 		UnityEngine.Object.DontDestroyOnLoad(base.gameObject);
 		KPlayerPrefs.instance.Load();
 		DistributionPlatform.Initialize();
 		Debug.Log("DistributionPlatform initialized.");
-		Debug.Log("release Build: " + BuildPrefix() + "-" + 471618u);
+		Debug.Log("release Build: " + BuildWatermark.GetBuildText());
 		Debug.Log($"EXPANSION1 installed: {DlcManager.IsExpansion1Installed()}  active: {DlcManager.IsExpansion1Active()}");
 		KFMOD.Initialize();
 		for (int i = 0; i < SpawnPrefabs.Length; i++)
@@ -58,12 +58,7 @@ public class LaunchInitializer : MonoBehaviour
 
 	private static void DeleteLingeringFiles()
 	{
-		string[] obj = new string[3]
-		{
-			"fmod.log",
-			"load_stats_0.json",
-			"OxygenNotIncluded_Data/output_log.txt"
-		};
+		string[] obj = new string[3] { "fmod.log", "load_stats_0.json", "OxygenNotIncluded_Data/output_log.txt" };
 		string directoryName = Path.GetDirectoryName(Application.dataPath);
 		string[] array = obj;
 		foreach (string path in array)

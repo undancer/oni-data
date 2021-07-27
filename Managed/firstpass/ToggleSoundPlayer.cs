@@ -11,13 +11,7 @@ public class ToggleSoundPlayer : WidgetSoundPlayer
 		OnClick_Rejected
 	}
 
-	public static readonly string[] default_values = new string[4]
-	{
-		"HUD_Click",
-		"HUD_Click_Deselect",
-		"HUD_Mouseover",
-		"Negative"
-	};
+	public static readonly string[] default_values = new string[4] { "HUD_Click", "HUD_Click_Deselect", "HUD_Mouseover", "Negative" };
 
 	public Func<bool> AcceptClickCondition;
 

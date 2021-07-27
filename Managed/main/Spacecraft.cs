@@ -110,14 +110,14 @@ public class Spacecraft
 			return 1f;
 		}
 		StoredMinionIdentity component = storedMinionInfo[0].serializedMinion.Get().GetComponent<StoredMinionIdentity>();
-		string b = Db.Get().Attributes.SpaceNavigation.Id;
+		string text = Db.Get().Attributes.SpaceNavigation.Id;
 		float num = 1f;
 		foreach (KeyValuePair<string, bool> item in component.MasteryBySkillID)
 		{
 			foreach (SkillPerk perk in Db.Get().Skills.Get(item.Key).perks)
 			{
 				SkillAttributePerk skillAttributePerk = perk as SkillAttributePerk;
-				if (skillAttributePerk != null && skillAttributePerk.modifier.AttributeId == b)
+				if (skillAttributePerk != null && skillAttributePerk.modifier.AttributeId == text)
 				{
 					num += skillAttributePerk.modifier.Value;
 				}
@@ -175,15 +175,15 @@ public class Spacecraft
 	public void TemporallyTear()
 	{
 		SpacecraftManager.instance.hasVisitedWormHole = true;
-		LaunchConditionManager launchConditions = this.launchConditions;
-		for (int num = launchConditions.rocketModules.Count - 1; num >= 0; num--)
+		LaunchConditionManager launchConditionManager = launchConditions;
+		for (int num = launchConditionManager.rocketModules.Count - 1; num >= 0; num--)
 		{
-			Storage component = launchConditions.rocketModules[num].GetComponent<Storage>();
+			Storage component = launchConditionManager.rocketModules[num].GetComponent<Storage>();
 			if (component != null)
 			{
 				component.ConsumeAllIgnoringDisease();
 			}
-			MinionStorage component2 = launchConditions.rocketModules[num].GetComponent<MinionStorage>();
+			MinionStorage component2 = launchConditionManager.rocketModules[num].GetComponent<MinionStorage>();
 			if (component2 != null)
 			{
 				List<MinionStorage.Info> storedMinionInfo = component2.GetStoredMinionInfo();
@@ -192,7 +192,7 @@ public class Spacecraft
 					component2.DeleteStoredMinion(storedMinionInfo[num2].id);
 				}
 			}
-			Util.KDestroyGameObject(launchConditions.rocketModules[num].gameObject);
+			Util.KDestroyGameObject(launchConditionManager.rocketModules[num].gameObject);
 		}
 	}
 

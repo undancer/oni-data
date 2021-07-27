@@ -122,14 +122,14 @@ public class ModifierSet : ScriptableObject
 			{
 				continue;
 			}
-			string text = Strings.Get($"STRINGS.DUPLICANTS.MODIFIERS.{modifierInfo.Id.ToUpper()}.NAME");
-			string description = Strings.Get($"STRINGS.DUPLICANTS.MODIFIERS.{modifierInfo.Id.ToUpper()}.TOOLTIP");
-			Effect effect = new Effect(modifierInfo.Id, text, description, modifierInfo.Duration * 600f, modifierInfo.ShowInUI && modifierInfo.Type != "Need", modifierInfo.TriggerFloatingText, modifierInfo.IsBad, modifierInfo.EmoteAnim, modifierInfo.EmoteCooldown, modifierInfo.StompGroup, modifierInfo.CustomIcon);
+			string description = Strings.Get($"STRINGS.DUPLICANTS.MODIFIERS.{modifierInfo.Id.ToUpper()}.NAME");
+			string description2 = Strings.Get($"STRINGS.DUPLICANTS.MODIFIERS.{modifierInfo.Id.ToUpper()}.TOOLTIP");
+			Effect effect = new Effect(modifierInfo.Id, description, description2, modifierInfo.Duration * 600f, modifierInfo.ShowInUI && modifierInfo.Type != "Need", modifierInfo.TriggerFloatingText, modifierInfo.IsBad, modifierInfo.EmoteAnim, modifierInfo.EmoteCooldown, modifierInfo.StompGroup, modifierInfo.CustomIcon);
 			foreach (ModifierInfo modifierInfo2 in modifierInfos)
 			{
 				if (modifierInfo2.Id == modifierInfo.Id)
 				{
-					effect.Add(new AttributeModifier(modifierInfo2.Attribute, ConvertValue(modifierInfo2.Value, modifierInfo2.Units), text, modifierInfo2.Multiplier));
+					effect.Add(new AttributeModifier(modifierInfo2.Attribute, ConvertValue(modifierInfo2.Value, modifierInfo2.Units), description, modifierInfo2.Multiplier));
 				}
 			}
 			effects.Add(effect);

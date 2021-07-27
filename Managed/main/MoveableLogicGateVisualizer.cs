@@ -67,11 +67,11 @@ public class MoveableLogicGateVisualizer : LogicGateBase
 
 	private GameObject CreateUIElem(int cell, bool is_input)
 	{
-		GameObject gameObject = Util.KInstantiate(LogicGateBase.uiSrcData.prefab, Grid.CellToPosCCC(cell, Grid.SceneLayer.Front), Quaternion.identity, GameScreenManager.Instance.worldSpaceCanvas);
-		Image component = gameObject.GetComponent<Image>();
+		GameObject obj = Util.KInstantiate(LogicGateBase.uiSrcData.prefab, Grid.CellToPosCCC(cell, Grid.SceneLayer.Front), Quaternion.identity, GameScreenManager.Instance.worldSpaceCanvas);
+		Image component = obj.GetComponent<Image>();
 		component.sprite = (is_input ? LogicGateBase.uiSrcData.inputSprite : LogicGateBase.uiSrcData.outputSprite);
 		component.raycastTarget = false;
-		return gameObject;
+		return obj;
 	}
 
 	private void Register()

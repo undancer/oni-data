@@ -6,23 +6,11 @@ namespace ProcGen
 	[Serializable]
 	public class WeightedBiome : IWeighted
 	{
-		public string name
-		{
-			get;
-			private set;
-		}
+		public string name { get; private set; }
 
-		public float weight
-		{
-			get;
-			set;
-		}
+		public float weight { get; set; }
 
-		public List<string> tags
-		{
-			get;
-			private set;
-		}
+		public List<string> tags { get; private set; }
 
 		public WeightedBiome()
 		{

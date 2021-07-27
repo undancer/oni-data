@@ -265,17 +265,17 @@ public static class GarbageProfiler
 							Type[] genericArguments = fieldType.GetGenericArguments();
 							bool flag = false;
 							Type[] array4 = array2;
-							foreach (Type right in array4)
+							foreach (Type type2 in array4)
 							{
-								if (!(genericTypeDefinition == right))
+								if (!(genericTypeDefinition == type2))
 								{
 									continue;
 								}
 								bool flag2 = true;
 								Type[] array5 = genericArguments;
-								foreach (Type type2 in array5)
+								foreach (Type type3 in array5)
 								{
-									if (!Helper.IsPOD(type2) && Array.IndexOf(array, type2) < 0)
+									if (!Helper.IsPOD(type3) && Array.IndexOf(array, type3) < 0)
 									{
 										flag2 = false;
 										break;

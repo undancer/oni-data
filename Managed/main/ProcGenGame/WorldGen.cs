@@ -134,17 +134,9 @@ namespace ProcGenGame
 
 		public int BaseBot => Settings.GetBaseLocation().bottom;
 
-		public Dictionary<string, object> stats
-		{
-			get;
-			private set;
-		}
+		public Dictionary<string, object> stats { get; private set; }
 
-		public Data data
-		{
-			get;
-			private set;
-		}
+		public Data data { get; private set; }
 
 		public bool HasData => data != null;
 
@@ -192,11 +184,7 @@ namespace ProcGenGame
 
 		public HashSet<int> HighPriorityClaimedCells => highPriorityClaims;
 
-		public WorldGenSettings Settings
-		{
-			get;
-			private set;
-		}
+		public WorldGenSettings Settings { get; private set; }
 
 		public static string GetSIMSaveFilename(int baseID = -1)
 		{
@@ -438,7 +426,7 @@ namespace ProcGenGame
 				errorDesc = string.Format(UI.FRONTEND.SUPPORTWARNINGS.WORLD_GEN_FAILURE, settingsCoordinate),
 				exception = e
 			});
-			KCrashReporter.ReportErrorDevNotification("WorldgenFailure", e.StackTrace, $"{settingsCoordinate} - {e.Message} [Build: {471618u}]");
+			KCrashReporter.ReportErrorDevNotification("WorldgenFailure", e.StackTrace, settingsCoordinate + " - " + e.Message);
 		}
 
 		public void SetWorldSize(int width, int height)
@@ -1338,9 +1326,9 @@ namespace ProcGenGame
 				ProcGen.Noise.Tree tree = SettingsCache.noise.GetTree("noise/Default");
 				ProcGen.Noise.Tree tree2 = SettingsCache.noise.GetTree("noise/DefaultCave");
 				ProcGen.Noise.Tree tree3 = SettingsCache.noise.GetTree("noise/DefaultDensity");
-				string s = "noise/Default";
-				string s2 = "noise/DefaultCave";
-				string s3 = "noise/DefaultDensity";
+				string text = "noise/Default";
+				string text2 = "noise/DefaultCave";
+				string text3 = "noise/DefaultDensity";
 				SubWorld subWorld = Settings.GetSubWorld(overworldCell.node.type);
 				if (subWorld == null)
 				{
@@ -1354,7 +1342,7 @@ namespace ProcGenGame
 						if (tree4 != null)
 						{
 							tree = tree4;
-							s = subWorld.biomeNoise;
+							text = subWorld.biomeNoise;
 						}
 					}
 					if (subWorld.overrideNoise != null)
@@ -1363,7 +1351,7 @@ namespace ProcGenGame
 						if (tree5 != null)
 						{
 							tree2 = tree5;
-							s2 = subWorld.overrideNoise;
+							text2 = subWorld.overrideNoise;
 						}
 					}
 					if (subWorld.densityNoise != null)
@@ -1372,24 +1360,24 @@ namespace ProcGenGame
 						if (tree6 != null)
 						{
 							tree3 = tree6;
-							s3 = subWorld.densityNoise;
+							text3 = subWorld.densityNoise;
 						}
 					}
 				}
-				if (!dictionary.TryGetValue(s, out var value))
+				if (!dictionary.TryGetValue(text, out var value))
 				{
 					value = new NoiseNormalizationStats(BaseNoiseMap);
-					dictionary.Add(s, value);
+					dictionary.Add(text, value);
 				}
-				if (!dictionary.TryGetValue(s2, out var value2))
+				if (!dictionary.TryGetValue(text2, out var value2))
 				{
 					value2 = new NoiseNormalizationStats(OverrideMap);
-					dictionary.Add(s2, value2);
+					dictionary.Add(text2, value2);
 				}
-				if (!dictionary.TryGetValue(s3, out var value3))
+				if (!dictionary.TryGetValue(text3, out var value3))
 				{
 					value3 = new NoiseNormalizationStats(DensityMap);
-					dictionary.Add(s3, value3);
+					dictionary.Add(text3, value3);
 				}
 				int width = (int)Mathf.Ceil(overworldCell.poly.bounds.width + 2f);
 				int height = (int)Mathf.Ceil(overworldCell.poly.bounds.height + 2f);

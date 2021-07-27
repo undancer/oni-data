@@ -72,23 +72,11 @@ namespace Satsuma
 			}
 		}
 
-		public IGraph Graph
-		{
-			get;
-			private set;
-		}
+		public IGraph Graph { get; private set; }
 
-		public bool Acyclic
-		{
-			get;
-			private set;
-		}
+		public bool Acyclic { get; private set; }
 
-		public List<Node> Order
-		{
-			get;
-			private set;
-		}
+		public List<Node> Order { get; private set; }
 
 		public TopologicalOrder(IGraph graph, Flags flags = Flags.None)
 		{

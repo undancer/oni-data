@@ -12,35 +12,15 @@ public class ChoreType : Resource
 
 	public string reportName;
 
-	public Urge urge
-	{
-		get;
-		private set;
-	}
+	public Urge urge { get; private set; }
 
-	public ChoreGroup[] groups
-	{
-		get;
-		private set;
-	}
+	public ChoreGroup[] groups { get; private set; }
 
-	public int priority
-	{
-		get;
-		private set;
-	}
+	public int priority { get; private set; }
 
-	public int interruptPriority
-	{
-		get;
-		set;
-	}
+	public int interruptPriority { get; set; }
 
-	public int explicitPriority
-	{
-		get;
-		private set;
-	}
+	public int explicitPriority { get; private set; }
 
 	private string ResolveStringCallback(string str, object data)
 	{

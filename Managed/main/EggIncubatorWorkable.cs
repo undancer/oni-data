@@ -8,10 +8,7 @@ public class EggIncubatorWorkable : Workable
 	{
 		base.OnPrefabInit();
 		synchronizeAnims = false;
-		overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_incubator_kanim")
-		};
+		overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_incubator_kanim") };
 		SetWorkTime(15f);
 		showProgressBar = true;
 		requiredSkillPerk = Db.Get().SkillPerks.CanWrangleCreatures.Id;

@@ -57,10 +57,7 @@ namespace Satsuma
 						Parent.Count++;
 						if (Parent.Components != null)
 						{
-							Parent.Components.Add(new HashSet<Node>
-							{
-								node
-							});
+							Parent.Components.Add(new HashSet<Node> { node });
 						}
 					}
 					if (Parent.Cutvertices != null && Parent.Cutvertices[node] == 0)
@@ -101,29 +98,13 @@ namespace Satsuma
 			}
 		}
 
-		public IGraph Graph
-		{
-			get;
-			private set;
-		}
+		public IGraph Graph { get; private set; }
 
-		public int Count
-		{
-			get;
-			private set;
-		}
+		public int Count { get; private set; }
 
-		public List<HashSet<Node>> Components
-		{
-			get;
-			private set;
-		}
+		public List<HashSet<Node>> Components { get; private set; }
 
-		public Dictionary<Node, int> Cutvertices
-		{
-			get;
-			private set;
-		}
+		public Dictionary<Node, int> Cutvertices { get; private set; }
 
 		public BiNodeConnectedComponents(IGraph graph, Flags flags = Flags.None)
 		{

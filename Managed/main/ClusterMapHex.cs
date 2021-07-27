@@ -25,11 +25,7 @@ public class ClusterMapHex : MultiToggle, ICanvasRaycastFilter
 	[MyCmpGet]
 	private ToolTip m_tooltip;
 
-	public AxialI location
-	{
-		get;
-		private set;
-	}
+	public AxialI location { get; private set; }
 
 	protected override void OnPrefabInit()
 	{

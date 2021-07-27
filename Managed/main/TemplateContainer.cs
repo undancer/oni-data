@@ -11,72 +11,28 @@ public class TemplateContainer
 	[Serializable]
 	public class Info
 	{
-		public Vector2f size
-		{
-			get;
-			set;
-		}
+		public Vector2f size { get; set; }
 
-		public int area
-		{
-			get;
-			set;
-		}
+		public int area { get; set; }
 
-		public Tag[] tags
-		{
-			get;
-			set;
-		}
+		public Tag[] tags { get; set; }
 	}
 
-	public string name
-	{
-		get;
-		private set;
-	}
+	public string name { get; private set; }
 
-	public int priority
-	{
-		get;
-		set;
-	}
+	public int priority { get; set; }
 
-	public Info info
-	{
-		get;
-		set;
-	}
+	public Info info { get; set; }
 
-	public List<Cell> cells
-	{
-		get;
-		set;
-	}
+	public List<Cell> cells { get; set; }
 
-	public List<Prefab> buildings
-	{
-		get;
-		set;
-	}
+	public List<Prefab> buildings { get; set; }
 
-	public List<Prefab> pickupables
-	{
-		get;
-		set;
-	}
+	public List<Prefab> pickupables { get; set; }
 
-	public List<Prefab> elementalOres
-	{
-		get;
-		set;
-	}
+	public List<Prefab> elementalOres { get; set; }
 
-	public List<Prefab> otherEntities
-	{
-		get;
-		set;
-	}
+	public List<Prefab> otherEntities { get; set; }
 
 	public void Init(List<Cell> _cells, List<Prefab> _buildings, List<Prefab> _pickupables, List<Prefab> _elementalOres, List<Prefab> _otherEntities)
 	{

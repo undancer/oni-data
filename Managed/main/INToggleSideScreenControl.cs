@@ -2,35 +2,17 @@ using System.Collections.Generic;
 
 public interface INToggleSideScreenControl
 {
-	string SidescreenTitleKey
-	{
-		get;
-	}
+	string SidescreenTitleKey { get; }
 
-	List<LocString> Options
-	{
-		get;
-	}
+	List<LocString> Options { get; }
 
-	List<LocString> Tooltips
-	{
-		get;
-	}
+	List<LocString> Tooltips { get; }
 
-	string Description
-	{
-		get;
-	}
+	string Description { get; }
 
-	int SelectedOption
-	{
-		get;
-	}
+	int SelectedOption { get; }
 
-	int QueuedOption
-	{
-		get;
-	}
+	int QueuedOption { get; }
 
 	void QueueSelectedOption(int option);
 }

@@ -6,10 +6,7 @@ public class EggIncubatorConfig : IBuildingConfig
 {
 	public const string ID = "EggIncubator";
 
-	public static readonly List<Storage.StoredItemModifier> IncubatorStorage = new List<Storage.StoredItemModifier>
-	{
-		Storage.StoredItemModifier.Preserve
-	};
+	public static readonly List<Storage.StoredItemModifier> IncubatorStorage = new List<Storage.StoredItemModifier> { Storage.StoredItemModifier.Preserve };
 
 	public override BuildingDef CreateBuildingDef()
 	{

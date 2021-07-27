@@ -172,14 +172,14 @@ public class StatusItemRenderer
 					MeshBuilder meshBuilder = new MeshBuilder(num2 + 6, material);
 					float num3 = 0.25f;
 					float z = -5f;
-					Vector2 b = new Vector2(0.05f, -0.05f);
+					Vector2 vector2 = new Vector2(0.05f, -0.05f);
 					float num4 = 0.02f;
-					Color32 c = new Color32(0, 0, 0, byte.MaxValue);
-					Color32 c2 = new Color32(0, 0, 0, 75);
-					Color32 c3 = renderer.neutralColor;
+					Color32 color = new Color32(0, 0, 0, byte.MaxValue);
+					Color32 color2 = new Color32(0, 0, 0, 75);
+					Color32 color3 = renderer.neutralColor;
 					if (renderer.selectedHandle == handle || renderer.highlightHandle == handle)
 					{
-						c3 = renderer.selectedColor;
+						color3 = renderer.selectedColor;
 					}
 					else
 					{
@@ -187,15 +187,15 @@ public class StatusItemRenderer
 						{
 							if (statusItems[i].notificationType != NotificationType.Neutral)
 							{
-								c3 = renderer.backgroundColor;
+								color3 = renderer.backgroundColor;
 								break;
 							}
 						}
 					}
-					meshBuilder.AddQuad(new Vector2(0f, 0.29f) + b, new Vector2(0.05f, 0.05f), z, renderer.arrowSprite, c2);
-					meshBuilder.AddQuad(new Vector2(0f, 0f) + b, new Vector2(num3 * (float)num2, num3), z, renderer.backgroundSprite, c2);
-					meshBuilder.AddQuad(new Vector2(0f, 0f), new Vector2(num3 * (float)num2 + num4, num3 + num4), z, renderer.backgroundSprite, c);
-					meshBuilder.AddQuad(new Vector2(0f, 0f), new Vector2(num3 * (float)num2, num3), z, renderer.backgroundSprite, c3);
+					meshBuilder.AddQuad(new Vector2(0f, 0.29f) + vector2, new Vector2(0.05f, 0.05f), z, renderer.arrowSprite, color2);
+					meshBuilder.AddQuad(new Vector2(0f, 0f) + vector2, new Vector2(num3 * (float)num2, num3), z, renderer.backgroundSprite, color2);
+					meshBuilder.AddQuad(new Vector2(0f, 0f), new Vector2(num3 * (float)num2 + num4, num3 + num4), z, renderer.backgroundSprite, color);
+					meshBuilder.AddQuad(new Vector2(0f, 0f), new Vector2(num3 * (float)num2, num3), z, renderer.backgroundSprite, color3);
 					int num5 = 0;
 					for (int j = 0; j < statusItems.Count; j++)
 					{
@@ -210,12 +210,12 @@ public class StatusItemRenderer
 								statusItems[j].sprite = Assets.GetTintedSprite("status_item_exclamation");
 							}
 							Sprite sprite = statusItems[j].sprite.sprite;
-							meshBuilder.AddQuad(new Vector2(x, 0f), new Vector2(num3, num3), z, sprite, c);
+							meshBuilder.AddQuad(new Vector2(x, 0f), new Vector2(num3, num3), z, sprite, color);
 							num5++;
 						}
 					}
-					meshBuilder.AddQuad(new Vector2(0f, 0.29f + num4), new Vector2(0.05f + num4, 0.05f + num4), z, renderer.arrowSprite, c);
-					meshBuilder.AddQuad(new Vector2(0f, 0.29f), new Vector2(0.05f, 0.05f), z, renderer.arrowSprite, c3);
+					meshBuilder.AddQuad(new Vector2(0f, 0.29f + num4), new Vector2(0.05f + num4, 0.05f + num4), z, renderer.arrowSprite, color);
+					meshBuilder.AddQuad(new Vector2(0f, 0.29f), new Vector2(0.05f, 0.05f), z, renderer.arrowSprite, color3);
 					meshBuilder.End(mesh);
 					dirty = false;
 				}
@@ -263,14 +263,14 @@ public class StatusItemRenderer
 			}
 			Bounds bounds = mesh.bounds;
 			Vector3 vector = transform.GetPosition() + offset + bounds.center;
-			Vector2 a = new Vector2(vector.x, vector.y);
+			Vector2 vector2 = new Vector2(vector.x, vector.y);
 			Vector3 size = bounds.size;
-			Vector2 b = new Vector2(size.x * scale * 0.5f, size.y * scale * 0.5f);
-			Vector2 vector2 = a - b;
-			Vector2 vector3 = a + b;
-			if (pos.x >= vector2.x && pos.x <= vector3.x && pos.y >= vector2.y)
+			Vector2 vector3 = new Vector2(size.x * scale * 0.5f, size.y * scale * 0.5f);
+			Vector2 vector4 = vector2 - vector3;
+			Vector2 vector5 = vector2 + vector3;
+			if (pos.x >= vector4.x && pos.x <= vector5.x && pos.y >= vector4.y)
 			{
-				return pos.y <= vector3.y;
+				return pos.y <= vector5.y;
 			}
 			return false;
 		}
@@ -335,59 +335,23 @@ public class StatusItemRenderer
 
 	public List<Entry> visibleEntries = new List<Entry>();
 
-	public int layer
-	{
-		get;
-		private set;
-	}
+	public int layer { get; private set; }
 
-	public int selectedHandle
-	{
-		get;
-		private set;
-	}
+	public int selectedHandle { get; private set; }
 
-	public int highlightHandle
-	{
-		get;
-		private set;
-	}
+	public int highlightHandle { get; private set; }
 
-	public Color32 backgroundColor
-	{
-		get;
-		private set;
-	}
+	public Color32 backgroundColor { get; private set; }
 
-	public Color32 selectedColor
-	{
-		get;
-		private set;
-	}
+	public Color32 selectedColor { get; private set; }
 
-	public Color32 neutralColor
-	{
-		get;
-		private set;
-	}
+	public Color32 neutralColor { get; private set; }
 
-	public Sprite arrowSprite
-	{
-		get;
-		private set;
-	}
+	public Sprite arrowSprite { get; private set; }
 
-	public Sprite backgroundSprite
-	{
-		get;
-		private set;
-	}
+	public Sprite backgroundSprite { get; private set; }
 
-	public float scale
-	{
-		get;
-		private set;
-	}
+	public float scale { get; private set; }
 
 	public StatusItemRenderer()
 	{

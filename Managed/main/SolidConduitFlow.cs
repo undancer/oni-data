@@ -681,12 +681,12 @@ public class SolidConduitFlow : IConduitFlow
 
 	public void RefreshPaths()
 	{
-		foreach (List<Conduit> path2 in pathList)
+		foreach (List<Conduit> path in pathList)
 		{
-			for (int i = 0; i < path2.Count - 1; i++)
+			for (int i = 0; i < path.Count - 1; i++)
 			{
-				Conduit conduit = path2[i];
-				Conduit target_conduit = path2[i + 1];
+				Conduit conduit = path[i];
+				Conduit target_conduit = path[i + 1];
 				if (conduit.GetTargetFlowDirection(this) == FlowDirection.None)
 				{
 					FlowDirection direction = GetDirection(conduit, target_conduit);
@@ -795,15 +795,15 @@ public class SolidConduitFlow : IConduitFlow
 
 	private void TryAdd(List<Conduit> new_path)
 	{
-		foreach (List<Conduit> path2 in pathList)
+		foreach (List<Conduit> path in pathList)
 		{
-			if (path2.Count < new_path.Count)
+			if (path.Count < new_path.Count)
 			{
 				continue;
 			}
 			bool flag = false;
-			int num = path2.FindIndex((Conduit t) => t.idx == new_path[0].idx);
-			int num2 = path2.FindIndex((Conduit t) => t.idx == new_path[new_path.Count - 1].idx);
+			int num = path.FindIndex((Conduit t) => t.idx == new_path[0].idx);
+			int num2 = path.FindIndex((Conduit t) => t.idx == new_path[new_path.Count - 1].idx);
 			if (num != -1 && num2 != -1)
 			{
 				flag = true;
@@ -811,7 +811,7 @@ public class SolidConduitFlow : IConduitFlow
 				int num4 = 0;
 				while (num3 < num2)
 				{
-					if (path2[num3].idx != new_path[num4].idx)
+					if (path[num3].idx != new_path[num4].idx)
 					{
 						flag = false;
 						break;
@@ -862,12 +862,12 @@ public class SolidConduitFlow : IConduitFlow
 				}
 			}
 		}
-		foreach (List<Conduit> path3 in pathList)
+		foreach (List<Conduit> path2 in pathList)
 		{
 			for (int num11 = new_path.Count - 1; num11 >= 0; num11--)
 			{
 				Conduit new_conduit = new_path[num11];
-				if (path3.FindIndex((Conduit t) => t.idx == new_conduit.idx) != -1 && Mathf.IsPowerOfTwo(soaInfo.GetPermittedFlowDirections(new_conduit.idx)))
+				if (path2.FindIndex((Conduit t) => t.idx == new_conduit.idx) != -1 && Mathf.IsPowerOfTwo(soaInfo.GetPermittedFlowDirections(new_conduit.idx)))
 				{
 					new_path.RemoveAt(num11);
 				}
@@ -960,9 +960,9 @@ public class SolidConduitFlow : IConduitFlow
 		elapsedTime -= 1f;
 		lastUpdateTime = Time.time;
 		soaInfo.BeginFrame(this);
-		foreach (List<Conduit> path2 in pathList)
+		foreach (List<Conduit> path in pathList)
 		{
-			foreach (Conduit item in path2)
+			foreach (Conduit item in path)
 			{
 				UpdateConduit(item);
 			}

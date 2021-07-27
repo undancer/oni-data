@@ -45,11 +45,11 @@ public class LogicBitSelectorSideScreen : SideScreenContent, IRenderEveryTick
 			int i = j;
 			if (!toggles_by_int.ContainsKey(j))
 			{
-				GameObject gameObject = Util.KInstantiateUI(rowPrefab, rowPrefab.transform.parent.gameObject, force_active: true);
-				gameObject.GetComponent<HierarchyReferences>().GetReference<LocText>("bitName").SetText(string.Format(UI.UISIDESCREENS.LOGICBITSELECTORSIDESCREEN.BIT, j + 1));
-				gameObject.GetComponent<HierarchyReferences>().GetReference<KImage>("stateIcon").color = (target.IsBitActive(j) ? activeColor : inactiveColor);
-				gameObject.GetComponent<HierarchyReferences>().GetReference<LocText>("stateText").SetText(target.IsBitActive(j) ? UI.UISIDESCREENS.LOGICBITSELECTORSIDESCREEN.STATE_ACTIVE : UI.UISIDESCREENS.LOGICBITSELECTORSIDESCREEN.STATE_INACTIVE);
-				MultiToggle component = gameObject.GetComponent<MultiToggle>();
+				GameObject obj = Util.KInstantiateUI(rowPrefab, rowPrefab.transform.parent.gameObject, force_active: true);
+				obj.GetComponent<HierarchyReferences>().GetReference<LocText>("bitName").SetText(string.Format(UI.UISIDESCREENS.LOGICBITSELECTORSIDESCREEN.BIT, j + 1));
+				obj.GetComponent<HierarchyReferences>().GetReference<KImage>("stateIcon").color = (target.IsBitActive(j) ? activeColor : inactiveColor);
+				obj.GetComponent<HierarchyReferences>().GetReference<LocText>("stateText").SetText(target.IsBitActive(j) ? UI.UISIDESCREENS.LOGICBITSELECTORSIDESCREEN.STATE_ACTIVE : UI.UISIDESCREENS.LOGICBITSELECTORSIDESCREEN.STATE_INACTIVE);
+				MultiToggle component = obj.GetComponent<MultiToggle>();
 				toggles_by_int.Add(j, component);
 			}
 			toggles_by_int[j].onClick = delegate

@@ -410,11 +410,11 @@ public class ClusterMapScreen : KScreen
 	{
 		float t = Mathf.Min(4f * Time.unscaledDeltaTime, 0.9f);
 		m_currentZoomScale = Mathf.Lerp(m_currentZoomScale, m_targetZoomScale, t);
-		Vector2 v = KInputManager.GetMousePos();
-		Vector3 b = mapScrollRect.content.InverseTransformPoint(v);
+		Vector2 vector = KInputManager.GetMousePos();
+		Vector3 vector2 = mapScrollRect.content.InverseTransformPoint(vector);
 		mapScrollRect.content.localScale = new Vector3(m_currentZoomScale, m_currentZoomScale, 1f);
-		Vector3 a = mapScrollRect.content.InverseTransformPoint(v);
-		mapScrollRect.content.localPosition += (a - b) * m_currentZoomScale;
+		Vector3 vector3 = mapScrollRect.content.InverseTransformPoint(vector);
+		mapScrollRect.content.localPosition += (vector3 - vector2) * m_currentZoomScale;
 		MoveToNISPosition();
 		FloatyAsteroidAnimation();
 	}

@@ -449,10 +449,7 @@ public class MinionConfig : IEntityConfig
 			kBatchedAnimTracker.offset = new Vector3(195f, -35f, 0f);
 			kBatchedAnimTracker.useTargetPoint = true;
 			KBatchedAnimController kBatchedAnimController = gameObject2.AddOrGet<KBatchedAnimController>();
-			kBatchedAnimController.AnimFiles = new KAnimFile[1]
-			{
-				Assets.GetAnim(laserEffect2.animFile)
-			};
+			kBatchedAnimController.AnimFiles = new KAnimFile[1] { Assets.GetAnim(laserEffect2.animFile) };
 			KBatchedAnimEventToggler.Entry entry = default(KBatchedAnimEventToggler.Entry);
 			entry.anim = laserEffect2.anim;
 			entry.context = laserEffect2.context;

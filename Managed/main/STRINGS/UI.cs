@@ -6594,6 +6594,8 @@ namespace STRINGS
 
 			public static LocString CLEAR_NEW_RESOURCES = "Clear New";
 
+			public static LocString CLEAR_ALL = "Unpin all resources";
+
 			public static LocString SEE_ALL = "+ See All ({0})";
 
 			public static LocString NEW_TAG = "NEW";
@@ -7675,12 +7677,7 @@ namespace STRINGS
 
 				public static LocString LABEL_LOAD = "Load Only";
 
-				public static readonly List<LocString> LABELS = new List<LocString>
-				{
-					LABEL_UNLOAD,
-					LABEL_BOTH,
-					LABEL_LOAD
-				};
+				public static readonly List<LocString> LABELS = new List<LocString> { LABEL_UNLOAD, LABEL_BOTH, LABEL_LOAD };
 
 				public static LocString TOOLTIP_UNLOAD = "This pump will attempt to <b>Unload</b> cargo from the landed rocket, but not attempt to load new cargo";
 
@@ -7688,12 +7685,7 @@ namespace STRINGS
 
 				public static LocString TOOLTIP_LOAD = "This pump will attempt to <b>Load</b> cargo onto the landed rocket, but will not unload it";
 
-				public static readonly List<LocString> TOOLTIPS = new List<LocString>
-				{
-					TOOLTIP_UNLOAD,
-					TOOLTIP_BOTH,
-					TOOLTIP_LOAD
-				};
+				public static readonly List<LocString> TOOLTIPS = new List<LocString> { TOOLTIP_UNLOAD, TOOLTIP_BOTH, TOOLTIP_LOAD };
 
 				public static LocString DESCRIPTION = "";
 			}

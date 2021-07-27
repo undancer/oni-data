@@ -1,14 +1,8 @@
 public interface ILogicRibbonBitSelector
 {
-	string SideScreenTitle
-	{
-		get;
-	}
+	string SideScreenTitle { get; }
 
-	string SideScreenDescription
-	{
-		get;
-	}
+	string SideScreenDescription { get; }
 
 	void SetBitSelection(int bit);
 

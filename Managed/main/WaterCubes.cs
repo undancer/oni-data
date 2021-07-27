@@ -10,11 +10,7 @@ public class WaterCubes : KMonoBehaviour
 
 	private GameObject cubes;
 
-	public static WaterCubes Instance
-	{
-		get;
-		private set;
-	}
+	public static WaterCubes Instance { get; private set; }
 
 	public static void DestroyInstance()
 	{
@@ -29,12 +25,12 @@ public class WaterCubes : KMonoBehaviour
 	public void Init()
 	{
 		cubes = Util.NewGameObject(base.gameObject, "WaterCubes");
-		GameObject gameObject = new GameObject();
-		gameObject.name = "WaterCubesMesh";
-		gameObject.transform.parent = cubes.transform;
+		GameObject obj = new GameObject();
+		obj.name = "WaterCubesMesh";
+		obj.transform.parent = cubes.transform;
 		material.renderQueue = RenderQueues.Liquid;
-		MeshFilter meshFilter = gameObject.AddComponent<MeshFilter>();
-		MeshRenderer meshRenderer = gameObject.AddComponent<MeshRenderer>();
+		MeshFilter meshFilter = obj.AddComponent<MeshFilter>();
+		MeshRenderer meshRenderer = obj.AddComponent<MeshRenderer>();
 		meshRenderer.sharedMaterial = material;
 		meshRenderer.shadowCastingMode = ShadowCastingMode.Off;
 		meshRenderer.receiveShadows = false;
@@ -85,15 +81,7 @@ public class WaterCubes : KMonoBehaviour
 			new Vector4(0f, 1f, 0f, -1f),
 			new Vector4(0f, 1f, 0f, -1f)
 		};
-		array5 = new int[6]
-		{
-			0,
-			2,
-			1,
-			1,
-			2,
-			3
-		};
+		array5 = new int[6] { 0, 2, 1, 1, 2, 3 };
 		mesh.vertices = array;
 		mesh.uv = array2;
 		mesh.uv2 = array2;

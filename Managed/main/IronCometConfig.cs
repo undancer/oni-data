@@ -29,10 +29,7 @@ public class IronCometConfig : IEntityConfig
 		primaryElement.SetElement(SimHashes.Iron);
 		primaryElement.Temperature = (comet.temperatureRange.x + comet.temperatureRange.y) / 2f;
 		KBatchedAnimController kBatchedAnimController = gameObject.AddOrGet<KBatchedAnimController>();
-		kBatchedAnimController.AnimFiles = new KAnimFile[1]
-		{
-			Assets.GetAnim("meteor_metal_kanim")
-		};
+		kBatchedAnimController.AnimFiles = new KAnimFile[1] { Assets.GetAnim("meteor_metal_kanim") };
 		kBatchedAnimController.isMovable = true;
 		kBatchedAnimController.initialAnim = "fall_loop";
 		kBatchedAnimController.initialMode = KAnim.PlayMode.Loop;

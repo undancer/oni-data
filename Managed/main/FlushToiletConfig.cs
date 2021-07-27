@@ -39,10 +39,7 @@ public class FlushToiletConfig : IBuildingConfig
 		flushToilet.diseaseId = "FoodPoisoning";
 		flushToilet.diseasePerFlush = 100000;
 		flushToilet.diseaseOnDupePerFlush = 5000;
-		KAnimFile[] overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_toiletflush_kanim")
-		};
+		KAnimFile[] overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_toiletflush_kanim") };
 		ToiletWorkableUse toiletWorkableUse = go.AddOrGet<ToiletWorkableUse>();
 		toiletWorkableUse.overrideAnims = overrideAnims;
 		toiletWorkableUse.workLayer = Grid.SceneLayer.BuildingFront;
@@ -55,10 +52,7 @@ public class FlushToiletConfig : IBuildingConfig
 		ConduitDispenser conduitDispenser = go.AddOrGet<ConduitDispenser>();
 		conduitDispenser.conduitType = ConduitType.Liquid;
 		conduitDispenser.invertElementFilter = true;
-		conduitDispenser.elementFilter = new SimHashes[1]
-		{
-			SimHashes.Water
-		};
+		conduitDispenser.elementFilter = new SimHashes[1] { SimHashes.Water };
 		Storage storage = go.AddOrGet<Storage>();
 		storage.capacityKg = 25f;
 		storage.doDiseaseTransfer = false;

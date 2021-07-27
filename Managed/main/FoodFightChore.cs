@@ -104,9 +104,9 @@ public class FoodFightChore : Chore<FoodFightChore.StatesInstance>
 				GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(FoodCometConfig.ID), smi.master.transform.position + Vector3.up);
 				gameObject.SetActive(value: true);
 				Comet comet = gameObject.GetComponent<Comet>();
-				Vector3 a = attackableTarget.Get(smi).transform.position - smi.master.transform.position;
-				a.Normalize();
-				comet.Velocity = a * 5f;
+				Vector3 vector = attackableTarget.Get(smi).transform.position - smi.master.transform.position;
+				vector.Normalize();
+				comet.Velocity = vector * 5f;
 				Comet comet2 = comet;
 				comet2.OnImpact = (System.Action)Delegate.Combine(comet2.OnImpact, (System.Action)delegate
 				{

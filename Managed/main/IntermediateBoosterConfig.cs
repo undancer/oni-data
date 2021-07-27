@@ -31,10 +31,7 @@ public class IntermediateBoosterConfig : IEntityConfig
 			time = 100f,
 			description = ITEMS.PILLS.INTERMEDIATEBOOSTER.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"Apothecary"
-			},
+			fabricators = new List<Tag> { "Apothecary" },
 			sortOrder = 5
 		};
 		return gameObject;

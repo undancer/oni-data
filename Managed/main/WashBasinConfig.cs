@@ -31,10 +31,7 @@ public class WashBasinConfig : IBuildingConfig
 		handSanitizer.dumpWhenFull = true;
 		go.AddOrGet<DirectionControl>();
 		HandSanitizer.Work work = go.AddOrGet<HandSanitizer.Work>();
-		work.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_washbasin_kanim")
-		};
+		work.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_washbasin_kanim") };
 		work.workTime = 5f;
 		work.trackUses = true;
 		Storage storage = go.AddOrGet<Storage>();

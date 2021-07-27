@@ -71,30 +71,14 @@ namespace ProcGen
 		private ExtraIO extra;
 
 		[Serialize]
-		public int mapWidth
-		{
-			get;
-			private set;
-		}
+		public int mapWidth { get; private set; }
 
 		[Serialize]
-		public int mapHeight
-		{
-			get;
-			private set;
-		}
+		public int mapHeight { get; private set; }
 
-		public bool layoutOK
-		{
-			get;
-			private set;
-		}
+		public bool layoutOK { get; private set; }
 
-		public static LevelLayer levelLayerGradient
-		{
-			get;
-			private set;
-		}
+		public static LevelLayer levelLayerGradient { get; private set; }
 
 		public WorldLayout(WorldGen worldGen, int seed)
 		{
@@ -819,10 +803,10 @@ namespace ProcGen
 			}
 			if (points.Count < num)
 			{
-				string str = "";
+				string text = "";
 				for (int l = 0; l < node.site.poly.Vertices.Count; l++)
 				{
-					str = str + node.site.poly.Vertices[l].ToString() + ", ";
+					text = text + node.site.poly.Vertices[l].ToString() + ", ";
 				}
 				if (worldGen.isRunningDebugGen)
 				{

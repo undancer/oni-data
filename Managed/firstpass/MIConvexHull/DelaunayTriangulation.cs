@@ -5,11 +5,7 @@ namespace MIConvexHull
 {
 	public class DelaunayTriangulation<TVertex, TCell> : ITriangulation<TVertex, TCell> where TVertex : IVertex where TCell : TriangulationCell<TVertex, TCell>, new()
 	{
-		public IEnumerable<TCell> Cells
-		{
-			get;
-			private set;
-		}
+		public IEnumerable<TCell> Cells { get; private set; }
 
 		private DelaunayTriangulation()
 		{

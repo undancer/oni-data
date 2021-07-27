@@ -23,11 +23,7 @@ public class ElementEmitter : SimComponent
 
 	private HandleVector<Game.CallbackInfo>.Handle onUnblockedHandle = HandleVector<Game.CallbackInfo>.InvalidHandle;
 
-	public bool isEmitterBlocked
-	{
-		get;
-		private set;
-	}
+	public bool isEmitterBlocked { get; private set; }
 
 	protected override void OnSpawn()
 	{

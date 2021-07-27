@@ -350,7 +350,14 @@ public class PropertyTextures : KMonoBehaviour, ISim200ms
 		WorldContainer activeWorld = ClusterManager.Instance.activeWorld;
 		Vector2I worldOffset = activeWorld.WorldOffset;
 		Vector2I worldSize = activeWorld.WorldSize;
-		Shader.SetGlobalVector(ClusterWorldSizeID, new Vector4(worldSize.x, worldSize.y, 1f / (float)(worldSize.x + worldOffset.x), 1f / (float)(worldSize.y + worldOffset.y)));
+		if (DlcManager.IsPureVanilla() || (CameraController.Instance != null && CameraController.Instance.ignoreClusterFX))
+		{
+			Shader.SetGlobalVector(ClusterWorldSizeID, new Vector4(Grid.WidthInCells, Grid.HeightInCells, 0f, 0f));
+		}
+		else
+		{
+			Shader.SetGlobalVector(ClusterWorldSizeID, new Vector4(worldSize.x, worldSize.y, 1f / (float)(worldSize.x + worldOffset.x), 1f / (float)(worldSize.y + worldOffset.y)));
+		}
 		Shader.SetGlobalVector(PropTexWsToCsID, new Vector4(0f, 0f, 1f, 1f));
 		Shader.SetGlobalVector(PropTexCsToWsID, new Vector4(0f, 0f, 1f, 1f));
 		Shader.SetGlobalFloat(TopBorderHeightID, ClusterManager.Instance.activeWorld.FullyEnclosedBorder ? 0f : ((float)Grid.TopBorderHeight));

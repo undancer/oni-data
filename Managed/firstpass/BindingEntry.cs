@@ -88,8 +88,8 @@ public struct BindingEntry : IEquatable<BindingEntry>
 		{
 			return false;
 		}
-		BindingEntry b = (BindingEntry)o;
-		return this == b;
+		BindingEntry bindingEntry = (BindingEntry)o;
+		return this == bindingEntry;
 	}
 
 	public override int GetHashCode()

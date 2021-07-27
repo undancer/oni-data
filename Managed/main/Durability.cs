@@ -89,10 +89,10 @@ public class Durability : KMonoBehaviour
 
 	public void ConvertToWornObject()
 	{
-		GameObject gameObject = GameUtil.KInstantiate(Assets.GetPrefab(wornEquipmentPrefabID), Grid.SceneLayer.Ore);
-		gameObject.transform.SetPosition(base.transform.GetPosition());
-		gameObject.GetComponent<PrimaryElement>().SetElement(GetComponent<PrimaryElement>().ElementID, addTags: false);
-		gameObject.SetActive(value: true);
+		GameObject obj = GameUtil.KInstantiate(Assets.GetPrefab(wornEquipmentPrefabID), Grid.SceneLayer.Ore);
+		obj.transform.SetPosition(base.transform.GetPosition());
+		obj.GetComponent<PrimaryElement>().SetElement(GetComponent<PrimaryElement>().ElementID, addTags: false);
+		obj.SetActive(value: true);
 		Storage component = base.gameObject.GetComponent<Storage>();
 		if ((bool)component)
 		{

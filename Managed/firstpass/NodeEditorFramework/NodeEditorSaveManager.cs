@@ -286,10 +286,7 @@ namespace NodeEditorFramework
 			{
 				nodeEditorState = ScriptableObject.CreateInstance<NodeEditorState>();
 				nodeEditorState.canvas = canvas;
-				canvas.editorStates = new NodeEditorState[1]
-				{
-					nodeEditorState
-				};
+				canvas.editorStates = new NodeEditorState[1] { nodeEditorState };
 			}
 			nodeEditorState.name = stateName;
 			return nodeEditorState;

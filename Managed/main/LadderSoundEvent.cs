@@ -40,10 +40,10 @@ public class LadderSoundEvent : SoundEvent
 		}
 		if (buildingDef != null)
 		{
-			string sound = GlobalAssets.GetSound((buildingDef.PrefabID == "LadderFast") ? StringFormatter.Combine(base.name, "_Plastic") : base.name);
-			if (sound != null)
+			string text = GlobalAssets.GetSound((buildingDef.PrefabID == "LadderFast") ? StringFormatter.Combine(base.name, "_Plastic") : base.name);
+			if (text != null)
 			{
-				SoundEvent.PlayOneShot(sound, vector, volume);
+				SoundEvent.PlayOneShot(text, vector, volume);
 			}
 		}
 	}

@@ -21,11 +21,7 @@ public class Turbine : KMonoBehaviour
 
 		public OperationalStates operational;
 
-		private static readonly HashedString[] ACTIVE_ANIMS = new HashedString[2]
-		{
-			"working_pre",
-			"working_loop"
-		};
+		private static readonly HashedString[] ACTIVE_ANIMS = new HashedString[2] { "working_pre", "working_loop" };
 
 		public override void InitializeStates(out BaseState default_state)
 		{

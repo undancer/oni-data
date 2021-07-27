@@ -102,11 +102,7 @@ public class LoadScreen : KModalScreen
 
 	private InspectSaveScreen inspectScreenInstance;
 
-	public static LoadScreen Instance
-	{
-		get;
-		private set;
-	}
+	public static LoadScreen Instance { get; private set; }
 
 	public static void DestroyInstance()
 	{
@@ -357,10 +353,10 @@ public class LoadScreen : KModalScreen
 			{
 				Directory.Delete(path);
 			}
-			catch (Exception obj)
+			catch (Exception ex)
 			{
 				Debug.LogWarning("Failed to remove empty directory `" + path + "`...");
-				Debug.LogWarning(obj);
+				Debug.LogWarning(ex);
 			}
 		}
 	}
@@ -412,10 +408,10 @@ public class LoadScreen : KModalScreen
 			flag = fileInfo.Length == fileInfo2.Length;
 			flag2 = fileHash == fileHash2;
 		}
-		catch (Exception obj)
+		catch (Exception ex)
 		{
 			Debug.LogWarning("FileMatch / file match failed for `" + file + "` vs `" + other_file + "`!");
-			Debug.LogWarning(obj);
+			Debug.LogWarning(ex);
 			return false;
 		}
 		matches.first = flag;
@@ -869,7 +865,7 @@ public class LoadScreen : KModalScreen
 		{
 			if (display != null)
 			{
-				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 471618u, 25);
+				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 472345u, 25);
 			}
 			return false;
 		}
@@ -1036,7 +1032,15 @@ public class LoadScreen : KModalScreen
 		Image component = freeElement.GetReference<RectTransform>("Preview").GetComponent<Image>();
 		SetPreview(firstSave.FileName, colonyName, component, fallbackToTimelapse: true);
 		KImage reference = freeElement.GetReference<KImage>("DlcIcon");
-		reference.GetComponent<ToolTip>().SetSimpleTooltip(UI.FRONTEND.LOADSCREEN.SAVE_FROM_SPACED_OUT_TOOLTIP);
+		if (firstSave.FileInfo.dlcId == "EXPANSION1_ID")
+		{
+			reference.enabled = true;
+			reference.GetComponent<ToolTip>().SetSimpleTooltip(UI.FRONTEND.LOADSCREEN.SAVE_FROM_SPACED_OUT_TOOLTIP);
+		}
+		else
+		{
+			reference.enabled = false;
+		}
 		RectTransform reference2 = freeElement.GetReference<RectTransform>("LocationIcons");
 		bool flag = CloudSavesVisible();
 		reference2.gameObject.SetActive(flag);
@@ -1081,7 +1085,6 @@ public class LoadScreen : KModalScreen
 		KButton component2 = freeElement.GetReference<RectTransform>("Button").GetComponent<KButton>();
 		component2.ClearOnClick();
 		component2.isInteractable = isInteractable;
-		reference.gameObject.SetActive(DlcManager.IsExpansion1Id(firstSave.FileInfo.dlcId));
 		component2.onClick += delegate
 		{
 			ShowColony(saves);
@@ -1121,9 +1124,9 @@ public class LoadScreen : KModalScreen
 				preview.gameObject.SetActive(value: true);
 			}
 		}
-		catch (Exception obj)
+		catch (Exception ex)
 		{
-			Debug.Log(obj);
+			Debug.Log(ex);
 		}
 	}
 
@@ -1141,7 +1144,7 @@ public class LoadScreen : KModalScreen
 		{
 			return true;
 		}
-		return header.buildVersion > 471618;
+		return header.buildVersion > 472345;
 	}
 
 	private static bool IsSaveFromCurrentDLC(SaveGame.GameInfo gameInfo, out string saveDlcName)
@@ -1195,9 +1198,8 @@ public class LoadScreen : KModalScreen
 			string message = (DlcManager.IsVanillaId(selectedSave.dlcId) ? UI.FRONTEND.LOADSCREEN.VANILLA_RESTART : UI.FRONTEND.LOADSCREEN.EXPANSION1_RESTART);
 			ConfirmDoAction(message, delegate
 			{
-				DlcManager.SetExpansion1Enabled(!DlcManager.IsExpansion1Active());
 				KPlayerPrefs.SetString("AutoResumeSaveFile", selectedSave.filename);
-				App.instance.Restart();
+				DlcManager.ToggleDLC("EXPANSION1_ID");
 			});
 		}
 		else
@@ -1222,10 +1224,10 @@ public class LoadScreen : KModalScreen
 		SaveGame.GameInfo gameInfo = SaveLoader.LoadHeader(filename, out header);
 		string arg = null;
 		string arg2 = null;
-		if (header.buildVersion > 471618)
+		if (header.buildVersion > 472345)
 		{
 			arg = header.buildVersion.ToString();
-			arg2 = 471618u.ToString();
+			arg2 = 472345u.ToString();
 		}
 		else if (gameInfo.saveMajorVersion < 7)
 		{

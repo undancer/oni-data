@@ -174,13 +174,13 @@ public class FilterSideScreen : SideScreenContent
 
 	private void RefreshUI()
 	{
-		LocString loc_string = targetFilterable.filterElementState switch
+		LocString locString = targetFilterable.filterElementState switch
 		{
 			Filterable.ElementState.Solid => UI.UISIDESCREENS.FILTERSIDESCREEN.FILTEREDELEMENT.SOLID, 
 			Filterable.ElementState.Gas => UI.UISIDESCREENS.FILTERSIDESCREEN.FILTEREDELEMENT.GAS, 
 			_ => UI.UISIDESCREENS.FILTERSIDESCREEN.FILTEREDELEMENT.LIQUID, 
 		};
-		currentSelectionLabel.text = string.Format(loc_string, UI.UISIDESCREENS.FILTERSIDESCREEN.NOELEMENTSELECTED);
+		currentSelectionLabel.text = string.Format(locString, UI.UISIDESCREENS.FILTERSIDESCREEN.NOELEMENTSELECTED);
 		foreach (KeyValuePair<Tag, SortedDictionary<Tag, FilterSideScreenRow>> item in filterRowMap)
 		{
 			foreach (KeyValuePair<Tag, FilterSideScreenRow> item2 in item.Value)
@@ -191,7 +191,7 @@ public class FilterSideScreen : SideScreenContent
 				{
 					if (item2.Value.tag != GameTags.Void)
 					{
-						currentSelectionLabel.text = string.Format(loc_string, targetFilterable.SelectedTag.ProperName());
+						currentSelectionLabel.text = string.Format(locString, targetFilterable.SelectedTag.ProperName());
 					}
 					else
 					{

@@ -34,12 +34,12 @@ public abstract class SubstanceSource : KMonoBehaviour
 
 	public Tag GetElementTag()
 	{
-		Tag result = Tag.Invalid;
+		Tag invalid = Tag.Invalid;
 		if (base.gameObject != null && primaryElement != null && primaryElement.Element != null)
 		{
-			result = primaryElement.Element.tag;
+			invalid = primaryElement.Element.tag;
 		}
-		return result;
+		return invalid;
 	}
 
 	public Tag GetMaterialCategoryTag()

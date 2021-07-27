@@ -21,14 +21,7 @@ public class QualityOfLifeNeed : Need, ISim4000ms
 		component.OnScheduleBlocksTick(data);
 	});
 
-	private static List<string> breakLengthEffects = new List<string>
-	{
-		"Break1",
-		"Break2",
-		"Break3",
-		"Break4",
-		"Break5"
-	};
+	private static List<string> breakLengthEffects = new List<string> { "Break1", "Break2", "Break3", "Break4", "Break5" };
 
 	protected override void OnPrefabInit()
 	{

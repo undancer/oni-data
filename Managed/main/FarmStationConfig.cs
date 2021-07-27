@@ -42,10 +42,7 @@ public class FarmStationConfig : IBuildingConfig
 		manualDeliveryKG.capacity = 50f;
 		manualDeliveryKG.choreTypeIDHash = Db.Get().ChoreTypes.FarmFetch.IdHash;
 		TinkerStation tinkerStation = go.AddOrGet<TinkerStation>();
-		tinkerStation.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_planttender_kanim")
-		};
+		tinkerStation.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_planttender_kanim") };
 		tinkerStation.inputMaterial = MATERIAL_FOR_TINKER;
 		tinkerStation.massPerTinker = 5f;
 		tinkerStation.outputPrefab = TINKER_TOOLS;

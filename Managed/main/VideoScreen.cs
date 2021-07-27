@@ -204,10 +204,7 @@ public class VideoScreen : KModalScreen
 		MusicManager.instance.SetSongParameter("Music_Victory_03_StoryAndSummary", "songSection", 1f);
 		closeButton.gameObject.SetActive(value: true);
 		proceedButton.gameObject.SetActive(value: true);
-		SetOverlayText("VictoryEnd", new List<string>
-		{
-			victoryLoopMessage
-		});
+		SetOverlayText("VictoryEnd", new List<string> { victoryLoopMessage });
 		videoPlayer.clip = Assets.GetVideo(victoryLoopClip);
 		videoPlayer.isLooping = true;
 		videoPlayer.Play();

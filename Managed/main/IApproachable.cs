@@ -2,10 +2,7 @@ using UnityEngine;
 
 public interface IApproachable
 {
-	Transform transform
-	{
-		get;
-	}
+	Transform transform { get; }
 
 	CellOffset[] GetOffsets();
 

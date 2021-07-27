@@ -37,10 +37,7 @@ public class WarpPortalConfig : IEntityConfig
 	{
 		inst.GetComponent<WarpPortal>().workLayer = Grid.SceneLayer.Building;
 		inst.GetComponent<Ownable>().slotID = Db.Get().AssignableSlots.WarpPortal.Id;
-		inst.GetComponent<OccupyArea>().objectLayers = new ObjectLayer[1]
-		{
-			ObjectLayer.Building
-		};
+		inst.GetComponent<OccupyArea>().objectLayers = new ObjectLayer[1] { ObjectLayer.Building };
 		inst.GetComponent<Deconstructable>();
 	}
 

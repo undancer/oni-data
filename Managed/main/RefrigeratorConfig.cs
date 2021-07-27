@@ -14,11 +14,9 @@ public class RefrigeratorConfig : IBuildingConfig
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef("Refrigerator", 1, 2, "fridge_kanim", 30, 10f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_MINERALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER0, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER1);
 		obj.RequiresPowerInput = true;
 		obj.EnergyConsumptionWhenActive = 120f;
-		obj.ExhaustKilowattsWhenActive = 0.5f;
-		obj.LogicOutputPorts = new List<LogicPorts.Port>
-		{
-			LogicPorts.Port.OutputPort(FilteredStorage.FULL_PORT_ID, new CellOffset(0, 1), STRINGS.BUILDINGS.PREFABS.REFRIGERATOR.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.REFRIGERATOR.LOGIC_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.REFRIGERATOR.LOGIC_PORT_INACTIVE)
-		};
+		obj.SelfHeatKilowattsWhenActive = 0.125f;
+		obj.ExhaustKilowattsWhenActive = 0f;
+		obj.LogicOutputPorts = new List<LogicPorts.Port> { LogicPorts.Port.OutputPort(FilteredStorage.FULL_PORT_ID, new CellOffset(0, 1), STRINGS.BUILDINGS.PREFABS.REFRIGERATOR.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.REFRIGERATOR.LOGIC_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.REFRIGERATOR.LOGIC_PORT_INACTIVE) };
 		obj.Floodable = false;
 		obj.ViewMode = OverlayModes.Power.ID;
 		obj.AudioCategory = "Metal";
@@ -41,7 +39,10 @@ public class RefrigeratorConfig : IBuildingConfig
 		Prioritizable.AddRef(go);
 		go.AddOrGet<TreeFilterable>();
 		go.AddOrGet<Refrigerator>();
-		go.AddOrGetDef<RefrigeratorController.Def>().powerSaverEnergyUsage = 20f;
+		RefrigeratorController.Def def = go.AddOrGetDef<RefrigeratorController.Def>();
+		def.powerSaverEnergyUsage = 20f;
+		def.coolingHeatKW = 0.375f;
+		def.steadyHeatKW = 0f;
 		go.AddOrGet<UserNameable>();
 		go.AddOrGet<DropAllWorkable>();
 		go.AddOrGetDef<StorageController.Def>();

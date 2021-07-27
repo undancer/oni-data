@@ -113,16 +113,16 @@ public class StructureTemperatureComponents : KGameObjectSplitComponentManager<S
 		int num = 0;
 		int num2 = 0;
 		int num3 = 0;
-		GetDataLists(out var headers, out var payloads);
+		GetDataLists(out var list, out var list2);
 		ListPool<int, StructureTemperatureComponents>.PooledList pooledList = ListPool<int, StructureTemperatureComponents>.Allocate();
-		pooledList.Capacity = Math.Max(pooledList.Capacity, headers.Count);
+		pooledList.Capacity = Math.Max(pooledList.Capacity, list.Count);
 		ListPool<int, StructureTemperatureComponents>.PooledList pooledList2 = ListPool<int, StructureTemperatureComponents>.Allocate();
-		pooledList2.Capacity = Math.Max(pooledList2.Capacity, headers.Count);
+		pooledList2.Capacity = Math.Max(pooledList2.Capacity, list.Count);
 		ListPool<int, StructureTemperatureComponents>.PooledList pooledList3 = ListPool<int, StructureTemperatureComponents>.Allocate();
-		pooledList3.Capacity = Math.Max(pooledList3.Capacity, headers.Count);
-		for (int i = 0; i != headers.Count; i++)
+		pooledList3.Capacity = Math.Max(pooledList3.Capacity, list.Count);
+		for (int i = 0; i != list.Count; i++)
 		{
-			StructureTemperatureHeader value = headers[i];
+			StructureTemperatureHeader value = list[i];
 			if (Sim.IsValidHandle(value.simHandle))
 			{
 				pooledList.Add(i);
@@ -130,7 +130,7 @@ public class StructureTemperatureComponents : KGameObjectSplitComponentManager<S
 				{
 					pooledList2.Add(i);
 					value.dirty = false;
-					headers[i] = value;
+					list[i] = value;
 				}
 				if (value.isActiveBuilding)
 				{
@@ -140,22 +140,22 @@ public class StructureTemperatureComponents : KGameObjectSplitComponentManager<S
 		}
 		foreach (int item in pooledList2)
 		{
-			StructureTemperaturePayload payload = payloads[item];
+			StructureTemperaturePayload payload = list2[item];
 			UpdateSimState(ref payload);
 		}
 		foreach (int item2 in pooledList2)
 		{
-			if (payloads[item2].pendingEnergyModifications != 0f)
+			if (list2[item2].pendingEnergyModifications != 0f)
 			{
-				StructureTemperaturePayload value2 = payloads[item2];
+				StructureTemperaturePayload value2 = list2[item2];
 				SimMessages.ModifyBuildingEnergy(value2.simHandleCopy, value2.pendingEnergyModifications, 0f, 10000f);
 				value2.pendingEnergyModifications = 0f;
-				payloads[item2] = value2;
+				list2[item2] = value2;
 			}
 		}
 		foreach (int item3 in pooledList3)
 		{
-			StructureTemperaturePayload value3 = payloads[item3];
+			StructureTemperaturePayload value3 = list2[item3];
 			if (value3.operational == null || value3.operational.IsActive)
 			{
 				num++;
@@ -193,7 +193,7 @@ public class StructureTemperatureComponents : KGameObjectSplitComponentManager<S
 				value3.primaryElement.GetComponent<KSelectable>().SetStatusItem(Db.Get().StatusItemCategories.OperatingEnergy, null);
 				value3.isActiveStatusItemSet = false;
 			}
-			payloads[item3] = value3;
+			list2[item3] = value3;
 		}
 		pooledList3.Recycle();
 		pooledList2.Recycle();

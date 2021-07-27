@@ -44,65 +44,25 @@ namespace ProcGen
 				TryAll
 			}
 
-			public List<string> names
-			{
-				get;
-				private set;
-			}
+			public List<string> names { get; private set; }
 
-			public ListRule listRule
-			{
-				get;
-				private set;
-			}
+			public ListRule listRule { get; private set; }
 
-			public int someCount
-			{
-				get;
-				private set;
-			}
+			public int someCount { get; private set; }
 
-			public int moreCount
-			{
-				get;
-				private set;
-			}
+			public int moreCount { get; private set; }
 
-			public int times
-			{
-				get;
-				private set;
-			}
+			public int times { get; private set; }
 
-			public float priority
-			{
-				get;
-				private set;
-			}
+			public float priority { get; private set; }
 
-			public bool allowDuplicates
-			{
-				get;
-				private set;
-			}
+			public bool allowDuplicates { get; private set; }
 
-			public bool allowExtremeTemperatureOverlap
-			{
-				get;
-				private set;
-			}
+			public bool allowExtremeTemperatureOverlap { get; private set; }
 
-			public bool useRelaxedFiltering
-			{
-				get;
-				private set;
-			}
+			public bool useRelaxedFiltering { get; private set; }
 
-			public List<AllowedCellsFilter> allowedCellsFilter
-			{
-				get;
-				private set;
-			}
+			public List<AllowedCellsFilter> allowedCellsFilter { get; private set; }
 
 			public TemplateSpawnRules()
 			{
@@ -147,53 +107,21 @@ namespace ProcGen
 				All
 			}
 
-			public TagCommand tagcommand
-			{
-				get;
-				private set;
-			}
+			public TagCommand tagcommand { get; private set; }
 
-			public string tag
-			{
-				get;
-				private set;
-			}
+			public string tag { get; private set; }
 
-			public int minDistance
-			{
-				get;
-				private set;
-			}
+			public int minDistance { get; private set; }
 
-			public int maxDistance
-			{
-				get;
-				private set;
-			}
+			public int maxDistance { get; private set; }
 
-			public Command command
-			{
-				get;
-				private set;
-			}
+			public Command command { get; private set; }
 
-			public List<Temperature.Range> temperatureRanges
-			{
-				get;
-				private set;
-			}
+			public List<Temperature.Range> temperatureRanges { get; private set; }
 
-			public List<SubWorld.ZoneType> zoneTypes
-			{
-				get;
-				private set;
-			}
+			public List<SubWorld.ZoneType> zoneTypes { get; private set; }
 
-			public List<string> subworldNames
-			{
-				get;
-				private set;
-			}
+			public List<string> subworldNames { get; private set; }
 
 			public AllowedCellsFilter()
 			{
@@ -219,131 +147,47 @@ namespace ProcGen
 
 		public string filePath;
 
-		public string name
-		{
-			get;
-			private set;
-		}
+		public string name { get; private set; }
 
-		public string description
-		{
-			get;
-			private set;
-		}
+		public string description { get; private set; }
 
-		public string nameTable
-		{
-			get;
-			private set;
-		}
+		public string nameTable { get; private set; }
 
-		public bool disableWorldTraits
-		{
-			get;
-			private set;
-		}
+		public bool disableWorldTraits { get; private set; }
 
-		public string asteroidIcon
-		{
-			get;
-			private set;
-		}
+		public string asteroidIcon { get; private set; }
 
-		public Skip skip
-		{
-			get;
-			private set;
-		}
+		public Skip skip { get; private set; }
 
-		public bool moduleInterior
-		{
-			get;
-			private set;
-		}
+		public bool moduleInterior { get; private set; }
 
-		public WorldCategory category
-		{
-			get;
-			private set;
-		}
+		public WorldCategory category { get; private set; }
 
-		public Vector2I worldsize
-		{
-			get;
-			private set;
-		}
+		public Vector2I worldsize { get; private set; }
 
-		public DefaultSettings defaultsOverrides
-		{
-			get;
-			private set;
-		}
+		public DefaultSettings defaultsOverrides { get; private set; }
 
-		public LayoutMethod layoutMethod
-		{
-			get;
-			private set;
-		}
+		public LayoutMethod layoutMethod { get; private set; }
 
-		public List<WeightedSubworldName> subworldFiles
-		{
-			get;
-			private set;
-		}
+		public List<WeightedSubworldName> subworldFiles { get; private set; }
 
-		public List<AllowedCellsFilter> unknownCellsAllowedSubworlds
-		{
-			get;
-			private set;
-		}
+		public List<AllowedCellsFilter> unknownCellsAllowedSubworlds { get; private set; }
 
-		public string startSubworldName
-		{
-			get;
-			private set;
-		}
+		public string startSubworldName { get; private set; }
 
-		public string startingBaseTemplate
-		{
-			get;
-			set;
-		}
+		public string startingBaseTemplate { get; set; }
 
-		public MinMax startingBasePositionHorizontal
-		{
-			get;
-			private set;
-		}
+		public MinMax startingBasePositionHorizontal { get; private set; }
 
-		public MinMax startingBasePositionVertical
-		{
-			get;
-			private set;
-		}
+		public MinMax startingBasePositionVertical { get; private set; }
 
-		public Dictionary<string, int> globalFeatures
-		{
-			get;
-			private set;
-		}
+		public Dictionary<string, int> globalFeatures { get; private set; }
 
-		public List<TemplateSpawnRules> worldTemplateRules
-		{
-			get;
-			private set;
-		}
+		public List<TemplateSpawnRules> worldTemplateRules { get; private set; }
 
-		public List<string> seasons
-		{
-			get;
-			private set;
-		}
+		public List<string> seasons { get; private set; }
 
-		public bool adjacentTemporalTear
-		{
-			get;
-			private set;
-		}
+		public bool adjacentTemporalTear { get; private set; }
 
 		public World()
 		{
@@ -358,12 +202,12 @@ namespace ProcGen
 
 		public void ModStartLocation(MinMax hMod, MinMax vMod)
 		{
-			MinMax startingBasePositionHorizontal = this.startingBasePositionHorizontal;
-			MinMax startingBasePositionVertical = this.startingBasePositionVertical;
-			startingBasePositionHorizontal.Mod(hMod);
-			startingBasePositionVertical.Mod(vMod);
-			this.startingBasePositionHorizontal = startingBasePositionHorizontal;
-			this.startingBasePositionVertical = startingBasePositionVertical;
+			MinMax minMax = startingBasePositionHorizontal;
+			MinMax minMax2 = startingBasePositionVertical;
+			minMax.Mod(hMod);
+			minMax2.Mod(vMod);
+			startingBasePositionHorizontal = minMax;
+			startingBasePositionVertical = minMax2;
 		}
 
 		public void Validate()

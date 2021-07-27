@@ -139,11 +139,7 @@ public class NotificationScreen : KScreen
 
 	private Dictionary<string, Entry> entriesByMessage = new Dictionary<string, Entry>();
 
-	public static NotificationScreen Instance
-	{
-		get;
-		private set;
-	}
+	public static NotificationScreen Instance { get; private set; }
 
 	public Color32 BadColorBG => badColorBG;
 
@@ -376,18 +372,18 @@ public class NotificationScreen : KScreen
 				break;
 			}
 			reference2.color = reference3.color;
-			string str = "";
+			string text = "";
 			if (KTime.Instance.UnscaledGameTime - initTime > 5f && notification.playSound)
 			{
 				PlayDingSound(notification, 0);
 			}
 			else
 			{
-				str = "too early";
+				text = "too early";
 			}
 			if (AudioDebug.Get().debugNotificationSounds)
 			{
-				Debug.Log("Notification(" + notification.titleText + "):" + str);
+				Debug.Log("Notification(" + notification.titleText + "):" + text);
 			}
 		}
 		entry.Add(notification);

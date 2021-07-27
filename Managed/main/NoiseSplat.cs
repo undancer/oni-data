@@ -22,17 +22,9 @@ public class NoiseSplat : IUniformGridObject
 
 	private List<Pair<int, float>> decibels = new List<Pair<int, float>>();
 
-	public int dB
-	{
-		get;
-		private set;
-	}
+	public int dB { get; private set; }
 
-	public float deathTime
-	{
-		get;
-		private set;
-	}
+	public float deathTime { get; private set; }
 
 	public string GetName()
 	{

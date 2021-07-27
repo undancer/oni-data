@@ -7,53 +7,21 @@ namespace ProcGen
 	[SerializationConfig(MemberSerialization.OptOut)]
 	public class River : Path
 	{
-		public string element
-		{
-			get;
-			set;
-		}
+		public string element { get; set; }
 
-		public string backgroundElement
-		{
-			get;
-			set;
-		}
+		public string backgroundElement { get; set; }
 
-		public float widthCenter
-		{
-			get;
-			set;
-		}
+		public float widthCenter { get; set; }
 
-		public float widthBorder
-		{
-			get;
-			set;
-		}
+		public float widthBorder { get; set; }
 
-		public float temperature
-		{
-			get;
-			set;
-		}
+		public float temperature { get; set; }
 
-		public float maxMass
-		{
-			get;
-			set;
-		}
+		public float maxMass { get; set; }
 
-		public float flowIn
-		{
-			get;
-			set;
-		}
+		public float flowIn { get; set; }
 
-		public float flowOut
-		{
-			get;
-			set;
-		}
+		public float flowOut { get; set; }
 
 		public River()
 		{

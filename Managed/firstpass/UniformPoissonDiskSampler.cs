@@ -106,16 +106,16 @@ public class UniformPoissonDiskSampler
 		bool flag = false;
 		while (!flag)
 		{
-			float d = Mathf.Min(settings.Dimensions.x, settings.Dimensions.y) / 2f;
-			Vector2 a = new Vector2(myRandom.RandomValue(), myRandom.RandomValue());
-			Vector2 vector = settings.Center + a * d;
-			if (!settings.RejectionSqDistance.HasValue || !(Vector2.SqrMagnitude(settings.Center - vector) > settings.RejectionSqDistance))
+			float num = Mathf.Min(settings.Dimensions.x, settings.Dimensions.y) / 2f;
+			Vector2 vector = new Vector2(myRandom.RandomValue(), myRandom.RandomValue());
+			Vector2 vector2 = settings.Center + vector * num;
+			if (!settings.RejectionSqDistance.HasValue || !(Vector2.SqrMagnitude(settings.Center - vector2) > settings.RejectionSqDistance))
 			{
 				flag = true;
-				Vector2 vector2 = Denormalize(vector, settings.TopLeft, settings.CellSize);
-				state.Grid[(int)vector2.x, (int)vector2.y] = vector;
-				state.ActivePoints.Add(vector);
-				state.Points.Add(vector);
+				Vector2 vector3 = Denormalize(vector2, settings.TopLeft, settings.CellSize);
+				state.Grid[(int)vector3.x, (int)vector3.y] = vector2;
+				state.ActivePoints.Add(vector2);
+				state.Points.Add(vector2);
 			}
 		}
 	}

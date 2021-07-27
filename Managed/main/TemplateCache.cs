@@ -8,11 +8,7 @@ public static class TemplateCache
 
 	private static Dictionary<string, TemplateContainer> templates;
 
-	public static bool Initted
-	{
-		get;
-		private set;
-	}
+	public static bool Initted { get; private set; }
 
 	public static void Init()
 	{

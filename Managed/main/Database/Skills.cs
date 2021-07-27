@@ -97,63 +97,27 @@ namespace Database
 			{
 				Db.Get().SkillPerks.IncreaseDigSpeedMedium,
 				Db.Get().SkillPerks.CanDigNearlyImpenetrable
-			}, new List<string>
-			{
-				Mining1.Id
-			}));
+			}, new List<string> { Mining1.Id }));
 			Mining3 = AddSkill(new Skill("Mining3", DUPLICANTS.ROLES.SENIOR_MINER.NAME, DUPLICANTS.ROLES.SENIOR_MINER.DESCRIPTION, "", 2, "hat_role_mining3", "skillbadge_role_mining3", Db.Get().SkillGroups.Mining.Id, new List<SkillPerk>
 			{
 				Db.Get().SkillPerks.IncreaseDigSpeedLarge,
 				Db.Get().SkillPerks.CanDigSuperDuperHard
-			}, new List<string>
-			{
-				Mining2.Id
-			}));
-			Mining4 = AddSkill(new Skill("Mining4", DUPLICANTS.ROLES.MASTER_MINER.NAME, DUPLICANTS.ROLES.MASTER_MINER.DESCRIPTION, "EXPANSION1_ID", 3, "hat_role_mining4", "skillbadge_role_mining4", Db.Get().SkillGroups.Mining.Id, new List<SkillPerk>
-			{
-				Db.Get().SkillPerks.CanDigRadioactiveMaterials
-			}, new List<string>
-			{
-				Mining3.Id
-			}));
-			Building1 = AddSkill(new Skill("Building1", DUPLICANTS.ROLES.JUNIOR_BUILDER.NAME, DUPLICANTS.ROLES.JUNIOR_BUILDER.DESCRIPTION, "", 0, "hat_role_building1", "skillbadge_role_building1", Db.Get().SkillGroups.Building.Id, new List<SkillPerk>
-			{
-				Db.Get().SkillPerks.IncreaseConstructionSmall
-			}));
-			Building2 = AddSkill(new Skill("Building2", DUPLICANTS.ROLES.BUILDER.NAME, DUPLICANTS.ROLES.BUILDER.DESCRIPTION, "", 1, "hat_role_building2", "skillbadge_role_building2", Db.Get().SkillGroups.Building.Id, new List<SkillPerk>
-			{
-				Db.Get().SkillPerks.IncreaseConstructionMedium
-			}, new List<string>
-			{
-				Building1.Id
-			}));
+			}, new List<string> { Mining2.Id }));
+			Mining4 = AddSkill(new Skill("Mining4", DUPLICANTS.ROLES.MASTER_MINER.NAME, DUPLICANTS.ROLES.MASTER_MINER.DESCRIPTION, "EXPANSION1_ID", 3, "hat_role_mining4", "skillbadge_role_mining4", Db.Get().SkillGroups.Mining.Id, new List<SkillPerk> { Db.Get().SkillPerks.CanDigRadioactiveMaterials }, new List<string> { Mining3.Id }));
+			Building1 = AddSkill(new Skill("Building1", DUPLICANTS.ROLES.JUNIOR_BUILDER.NAME, DUPLICANTS.ROLES.JUNIOR_BUILDER.DESCRIPTION, "", 0, "hat_role_building1", "skillbadge_role_building1", Db.Get().SkillGroups.Building.Id, new List<SkillPerk> { Db.Get().SkillPerks.IncreaseConstructionSmall }));
+			Building2 = AddSkill(new Skill("Building2", DUPLICANTS.ROLES.BUILDER.NAME, DUPLICANTS.ROLES.BUILDER.DESCRIPTION, "", 1, "hat_role_building2", "skillbadge_role_building2", Db.Get().SkillGroups.Building.Id, new List<SkillPerk> { Db.Get().SkillPerks.IncreaseConstructionMedium }, new List<string> { Building1.Id }));
 			Building3 = AddSkill(new Skill("Building3", DUPLICANTS.ROLES.SENIOR_BUILDER.NAME, DUPLICANTS.ROLES.SENIOR_BUILDER.DESCRIPTION, "", 2, "hat_role_building3", "skillbadge_role_building3", Db.Get().SkillGroups.Building.Id, new List<SkillPerk>
 			{
 				Db.Get().SkillPerks.IncreaseConstructionLarge,
 				Db.Get().SkillPerks.CanDemolish
-			}, new List<string>
-			{
-				Building2.Id
-			}));
-			Farming1 = AddSkill(new Skill("Farming1", DUPLICANTS.ROLES.JUNIOR_FARMER.NAME, DUPLICANTS.ROLES.JUNIOR_FARMER.DESCRIPTION, "", 0, "hat_role_farming1", "skillbadge_role_farming1", Db.Get().SkillGroups.Farming.Id, new List<SkillPerk>
-			{
-				Db.Get().SkillPerks.IncreaseBotanySmall
-			}));
+			}, new List<string> { Building2.Id }));
+			Farming1 = AddSkill(new Skill("Farming1", DUPLICANTS.ROLES.JUNIOR_FARMER.NAME, DUPLICANTS.ROLES.JUNIOR_FARMER.DESCRIPTION, "", 0, "hat_role_farming1", "skillbadge_role_farming1", Db.Get().SkillGroups.Farming.Id, new List<SkillPerk> { Db.Get().SkillPerks.IncreaseBotanySmall }));
 			Farming2 = AddSkill(new Skill("Farming2", DUPLICANTS.ROLES.FARMER.NAME, DUPLICANTS.ROLES.FARMER.DESCRIPTION, "", 1, "hat_role_farming2", "skillbadge_role_farming2", Db.Get().SkillGroups.Farming.Id, new List<SkillPerk>
 			{
 				Db.Get().SkillPerks.IncreaseBotanyMedium,
 				Db.Get().SkillPerks.CanFarmTinker
-			}, new List<string>
-			{
-				Farming1.Id
-			}));
-			Farming3 = AddSkill(new Skill("Farming3", DUPLICANTS.ROLES.SENIOR_FARMER.NAME, DUPLICANTS.ROLES.SENIOR_FARMER.DESCRIPTION, "", 2, "hat_role_farming3", "skillbadge_role_farming3", Db.Get().SkillGroups.Farming.Id, new List<SkillPerk>
-			{
-				Db.Get().SkillPerks.IncreaseBotanyLarge
-			}, new List<string>
-			{
-				Farming2.Id
-			}));
+			}, new List<string> { Farming1.Id }));
+			Farming3 = AddSkill(new Skill("Farming3", DUPLICANTS.ROLES.SENIOR_FARMER.NAME, DUPLICANTS.ROLES.SENIOR_FARMER.DESCRIPTION, "", 2, "hat_role_farming3", "skillbadge_role_farming3", Db.Get().SkillGroups.Farming.Id, new List<SkillPerk> { Db.Get().SkillPerks.IncreaseBotanyLarge }, new List<string> { Farming2.Id }));
 			if (DlcManager.FeaturePlantMutationsEnabled())
 			{
 				Farming3.perks.Add(Db.Get().SkillPerks.CanIdentifyMutantSeeds);
@@ -163,17 +127,8 @@ namespace Database
 				Db.Get().SkillPerks.CanWrangleCreatures,
 				Db.Get().SkillPerks.CanUseRanchStation,
 				Db.Get().SkillPerks.IncreaseRanchingSmall
-			}, new List<string>
-			{
-				Farming1.Id
-			}));
-			Ranching2 = AddSkill(new Skill("Ranching2", DUPLICANTS.ROLES.SENIOR_RANCHER.NAME, DUPLICANTS.ROLES.SENIOR_RANCHER.DESCRIPTION, "", 2, "hat_role_rancher2", "skillbadge_role_rancher2", Db.Get().SkillGroups.Ranching.Id, new List<SkillPerk>
-			{
-				Db.Get().SkillPerks.IncreaseRanchingMedium
-			}, new List<string>
-			{
-				Ranching1.Id
-			}));
+			}, new List<string> { Farming1.Id }));
+			Ranching2 = AddSkill(new Skill("Ranching2", DUPLICANTS.ROLES.SENIOR_RANCHER.NAME, DUPLICANTS.ROLES.SENIOR_RANCHER.DESCRIPTION, "", 2, "hat_role_rancher2", "skillbadge_role_rancher2", Db.Get().SkillGroups.Ranching.Id, new List<SkillPerk> { Db.Get().SkillPerks.IncreaseRanchingMedium }, new List<string> { Ranching1.Id }));
 			Researching1 = AddSkill(new Skill("Researching1", DUPLICANTS.ROLES.JUNIOR_RESEARCHER.NAME, DUPLICANTS.ROLES.JUNIOR_RESEARCHER.DESCRIPTION, "", 0, "hat_role_research1", "skillbadge_role_research1", Db.Get().SkillGroups.Research.Id, new List<SkillPerk>
 			{
 				Db.Get().SkillPerks.IncreaseLearningSmall,
@@ -183,78 +138,41 @@ namespace Database
 			{
 				Db.Get().SkillPerks.IncreaseLearningMedium,
 				Db.Get().SkillPerks.CanStudyWorldObjects
-			}, new List<string>
-			{
-				Researching1.Id
-			}));
+			}, new List<string> { Researching1.Id }));
 			AtomicResearch = AddSkill(new Skill("AtomicResearch", DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.NAME, DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.DESCRIPTION, "EXPANSION1_ID", 2, "hat_role_research5", "skillbadge_role_research3", Db.Get().SkillGroups.Research.Id, new List<SkillPerk>
 			{
 				Db.Get().SkillPerks.IncreaseLearningLarge,
 				Db.Get().SkillPerks.AllowNuclearResearch
-			}, new List<string>
-			{
-				Researching2.Id
-			}));
+			}, new List<string> { Researching2.Id }));
 			Researching4 = AddSkill(new Skill("Researching4", DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.NAME, DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.DESCRIPTION, "EXPANSION1_ID", 2, "hat_role_research4", "skillbadge_role_research3", Db.Get().SkillGroups.Research.Id, new List<SkillPerk>
 			{
 				Db.Get().SkillPerks.IncreaseLearningLarge,
 				Db.Get().SkillPerks.AllowNuclearResearch
-			}, new List<string>
-			{
-				Researching2.Id
-			}));
+			}, new List<string> { Researching2.Id }));
 			Researching4.deprecated = true;
 			Researching3 = AddSkill(new Skill("Researching3", DUPLICANTS.ROLES.SENIOR_RESEARCHER.NAME, DUPLICANTS.ROLES.SENIOR_RESEARCHER.DESCRIPTION, "", 2, "hat_role_research3", "skillbadge_role_research3", Db.Get().SkillGroups.Research.Id, new List<SkillPerk>
 			{
 				Db.Get().SkillPerks.IncreaseLearningLarge,
 				Db.Get().SkillPerks.AllowInterstellarResearch
-			}, new List<string>
-			{
-				Researching2.Id
-			}));
+			}, new List<string> { Researching2.Id }));
 			Researching3.deprecated = DlcManager.IsExpansion1Active();
-			Astronomy = AddSkill(new Skill("Astronomy", DUPLICANTS.ROLES.SENIOR_RESEARCHER.NAME, DUPLICANTS.ROLES.SENIOR_RESEARCHER.DESCRIPTION, "EXPANSION1_ID", 1, "hat_role_research3", "skillbadge_role_research2", Db.Get().SkillGroups.Research.Id, new List<SkillPerk>
-			{
-				Db.Get().SkillPerks.CanUseClusterTelescope
-			}, new List<string>
-			{
-				Researching1.Id
-			}));
+			Astronomy = AddSkill(new Skill("Astronomy", DUPLICANTS.ROLES.SENIOR_RESEARCHER.NAME, DUPLICANTS.ROLES.SENIOR_RESEARCHER.DESCRIPTION, "EXPANSION1_ID", 1, "hat_role_research3", "skillbadge_role_research2", Db.Get().SkillGroups.Research.Id, new List<SkillPerk> { Db.Get().SkillPerks.CanUseClusterTelescope }, new List<string> { Researching1.Id }));
 			SpaceResearch = AddSkill(new Skill("SpaceResearch", DUPLICANTS.ROLES.SPACE_RESEARCHER.NAME, DUPLICANTS.ROLES.SPACE_RESEARCHER.DESCRIPTION, "EXPANSION1_ID", 2, "hat_role_research4", "skillbadge_role_research3", Db.Get().SkillGroups.Research.Id, new List<SkillPerk>
 			{
 				Db.Get().SkillPerks.IncreaseLearningLargeSpace,
 				Db.Get().SkillPerks.AllowOrbitalResearch
-			}, new List<string>
-			{
-				Astronomy.Id
-			}));
+			}, new List<string> { Astronomy.Id }));
 			if (DlcManager.IsExpansion1Active())
 			{
-				RocketPiloting1 = AddSkill(new Skill("RocketPiloting1", DUPLICANTS.ROLES.ROCKETPILOT.NAME, DUPLICANTS.ROLES.ROCKETPILOT.DESCRIPTION, "EXPANSION1_ID", 0, "hat_role_astronaut1", "skillbadge_role_rocketry1", Db.Get().SkillGroups.Rocketry.Id, new List<SkillPerk>
-				{
-					Db.Get().SkillPerks.CanUseRocketControlStation
-				}, new List<string>()));
-				RocketPiloting2 = AddSkill(new Skill("RocketPiloting2", DUPLICANTS.ROLES.SENIOR_ROCKETPILOT.NAME, DUPLICANTS.ROLES.SENIOR_ROCKETPILOT.DESCRIPTION, "EXPANSION1_ID", 2, "hat_role_astronaut2", "skillbadge_role_rocketry3", Db.Get().SkillGroups.Rocketry.Id, new List<SkillPerk>
-				{
-					Db.Get().SkillPerks.IncreaseRocketSpeedSmall
-				}, new List<string>
-				{
-					RocketPiloting1.Id,
-					Astronomy.Id
-				}));
+				RocketPiloting1 = AddSkill(new Skill("RocketPiloting1", DUPLICANTS.ROLES.ROCKETPILOT.NAME, DUPLICANTS.ROLES.ROCKETPILOT.DESCRIPTION, "EXPANSION1_ID", 0, "hat_role_astronaut1", "skillbadge_role_rocketry1", Db.Get().SkillGroups.Rocketry.Id, new List<SkillPerk> { Db.Get().SkillPerks.CanUseRocketControlStation }, new List<string>()));
+				RocketPiloting2 = AddSkill(new Skill("RocketPiloting2", DUPLICANTS.ROLES.SENIOR_ROCKETPILOT.NAME, DUPLICANTS.ROLES.SENIOR_ROCKETPILOT.DESCRIPTION, "EXPANSION1_ID", 2, "hat_role_astronaut2", "skillbadge_role_rocketry3", Db.Get().SkillGroups.Rocketry.Id, new List<SkillPerk> { Db.Get().SkillPerks.IncreaseRocketSpeedSmall }, new List<string> { RocketPiloting1.Id, Astronomy.Id }));
 			}
 			Cooking1 = AddSkill(new Skill("Cooking1", DUPLICANTS.ROLES.JUNIOR_COOK.NAME, DUPLICANTS.ROLES.JUNIOR_COOK.DESCRIPTION, "", 0, "hat_role_cooking1", "skillbadge_role_cooking1", Db.Get().SkillGroups.Cooking.Id, new List<SkillPerk>
 			{
 				Db.Get().SkillPerks.IncreaseCookingSmall,
 				Db.Get().SkillPerks.CanElectricGrill
 			}));
-			Cooking2 = AddSkill(new Skill("Cooking2", DUPLICANTS.ROLES.COOK.NAME, DUPLICANTS.ROLES.COOK.DESCRIPTION, "", 1, "hat_role_cooking2", "skillbadge_role_cooking2", Db.Get().SkillGroups.Cooking.Id, new List<SkillPerk>
-			{
-				Db.Get().SkillPerks.IncreaseCookingMedium
-			}, new List<string>
-			{
-				Cooking1.Id
-			}));
+			Cooking2 = AddSkill(new Skill("Cooking2", DUPLICANTS.ROLES.COOK.NAME, DUPLICANTS.ROLES.COOK.DESCRIPTION, "", 1, "hat_role_cooking2", "skillbadge_role_cooking2", Db.Get().SkillGroups.Cooking.Id, new List<SkillPerk> { Db.Get().SkillPerks.IncreaseCookingMedium }, new List<string> { Cooking1.Id }));
 			Arting1 = AddSkill(new Skill("Arting1", DUPLICANTS.ROLES.JUNIOR_ARTIST.NAME, DUPLICANTS.ROLES.JUNIOR_ARTIST.DESCRIPTION, "", 0, "hat_role_art1", "skillbadge_role_art1", Db.Get().SkillGroups.Art.Id, new List<SkillPerk>
 			{
 				Db.Get().SkillPerks.CanArt,
@@ -265,10 +183,7 @@ namespace Database
 			{
 				Db.Get().SkillPerks.CanArtOkay,
 				Db.Get().SkillPerks.IncreaseArtMedium
-			}, new List<string>
-			{
-				Arting1.Id
-			}));
+			}, new List<string> { Arting1.Id }));
 			if (DlcManager.FeatureClusterSpaceEnabled())
 			{
 				Arting2.perks.Add(Db.Get().SkillPerks.CanStudyArtifact);
@@ -277,10 +192,7 @@ namespace Database
 			{
 				Db.Get().SkillPerks.CanArtGreat,
 				Db.Get().SkillPerks.IncreaseArtLarge
-			}, new List<string>
-			{
-				Arting2.Id
-			}));
+			}, new List<string> { Arting2.Id }));
 			Hauling1 = AddSkill(new Skill("Hauling1", DUPLICANTS.ROLES.HAULER.NAME, DUPLICANTS.ROLES.HAULER.DESCRIPTION, "", 0, "hat_role_hauling1", "skillbadge_role_hauling1", Db.Get().SkillGroups.Hauling.Id, new List<SkillPerk>
 			{
 				Db.Get().SkillPerks.IncreaseStrengthGofer,
@@ -290,28 +202,15 @@ namespace Database
 			{
 				Db.Get().SkillPerks.IncreaseStrengthCourier,
 				Db.Get().SkillPerks.IncreaseCarryAmountMedium
-			}, new List<string>
-			{
-				Hauling1.Id
-			}));
+			}, new List<string> { Hauling1.Id }));
 			if (DlcManager.IsExpansion1Active())
 			{
-				ThermalSuits = AddSkill(new Skill("ThermalSuits", DUPLICANTS.ROLES.THERMAL_SUIT_WEARER.NAME, DUPLICANTS.ROLES.THERMAL_SUIT_WEARER.DESCRIPTION, "EXPANSION1_ID", 1, "hat_role_suits1", "skillbadge_role_suits2", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk>
-				{
-					Db.Get().SkillPerks.IncreaseAthleticsLarge
-				}, new List<string>
-				{
-					Hauling1.Id,
-					RocketPiloting1.Id
-				}));
+				ThermalSuits = AddSkill(new Skill("ThermalSuits", DUPLICANTS.ROLES.THERMAL_SUIT_WEARER.NAME, DUPLICANTS.ROLES.THERMAL_SUIT_WEARER.DESCRIPTION, "EXPANSION1_ID", 1, "hat_role_suits1", "skillbadge_role_suits2", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk> { Db.Get().SkillPerks.IncreaseAthleticsLarge }, new List<string> { Hauling1.Id, RocketPiloting1.Id }));
 				Suits1 = AddSkill(new Skill("Suits1", DUPLICANTS.ROLES.SUIT_EXPERT.NAME, DUPLICANTS.ROLES.SUIT_EXPERT.DESCRIPTION, "EXPANSION1_ID", 2, "hat_role_suits1", "skillbadge_role_suits3", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk>
 				{
 					Db.Get().SkillPerks.ExosuitExpertise,
 					Db.Get().SkillPerks.IncreaseAthleticsMedium
-				}, new List<string>
-				{
-					DlcManager.IsExpansion1Active() ? ThermalSuits.Id : Hauling2.Id
-				}));
+				}, new List<string> { DlcManager.IsExpansion1Active() ? ThermalSuits.Id : Hauling2.Id }));
 			}
 			else
 			{
@@ -319,82 +218,37 @@ namespace Database
 				{
 					Db.Get().SkillPerks.ExosuitExpertise,
 					Db.Get().SkillPerks.IncreaseAthleticsMedium
-				}, new List<string>
-				{
-					Hauling2.Id
-				}));
+				}, new List<string> { Hauling2.Id }));
 			}
-			Technicals1 = AddSkill(new Skill("Technicals1", DUPLICANTS.ROLES.MACHINE_TECHNICIAN.NAME, DUPLICANTS.ROLES.MACHINE_TECHNICIAN.DESCRIPTION, "", 0, "hat_role_technicals1", "skillbadge_role_technicals1", Db.Get().SkillGroups.Technicals.Id, new List<SkillPerk>
-			{
-				Db.Get().SkillPerks.IncreaseMachinerySmall
-			}));
+			Technicals1 = AddSkill(new Skill("Technicals1", DUPLICANTS.ROLES.MACHINE_TECHNICIAN.NAME, DUPLICANTS.ROLES.MACHINE_TECHNICIAN.DESCRIPTION, "", 0, "hat_role_technicals1", "skillbadge_role_technicals1", Db.Get().SkillGroups.Technicals.Id, new List<SkillPerk> { Db.Get().SkillPerks.IncreaseMachinerySmall }));
 			Technicals2 = AddSkill(new Skill("Technicals2", DUPLICANTS.ROLES.POWER_TECHNICIAN.NAME, DUPLICANTS.ROLES.POWER_TECHNICIAN.DESCRIPTION, "", 1, "hat_role_technicals2", "skillbadge_role_technicals2", Db.Get().SkillGroups.Technicals.Id, new List<SkillPerk>
 			{
 				Db.Get().SkillPerks.IncreaseMachineryMedium,
 				Db.Get().SkillPerks.CanPowerTinker
-			}, new List<string>
-			{
-				Technicals1.Id
-			}));
+			}, new List<string> { Technicals1.Id }));
 			Engineering1 = AddSkill(new Skill("Engineering1", DUPLICANTS.ROLES.MECHATRONIC_ENGINEER.NAME, DUPLICANTS.ROLES.MECHATRONIC_ENGINEER.DESCRIPTION, "", 2, "hat_role_engineering1", "skillbadge_role_engineering1", Db.Get().SkillGroups.Technicals.Id, new List<SkillPerk>
 			{
 				Db.Get().SkillPerks.IncreaseMachineryLarge,
 				Db.Get().SkillPerks.IncreaseConstructionMechatronics,
 				Db.Get().SkillPerks.ConveyorBuild
-			}, new List<string>
-			{
-				Technicals2.Id,
-				Hauling2.Id
-			}));
-			Basekeeping1 = AddSkill(new Skill("Basekeeping1", DUPLICANTS.ROLES.HANDYMAN.NAME, DUPLICANTS.ROLES.HANDYMAN.DESCRIPTION, "", 0, "hat_role_basekeeping1", "skillbadge_role_basekeeping1", Db.Get().SkillGroups.Basekeeping.Id, new List<SkillPerk>
-			{
-				Db.Get().SkillPerks.IncreaseStrengthGroundskeeper
-			}));
+			}, new List<string> { Technicals2.Id, Hauling2.Id }));
+			Basekeeping1 = AddSkill(new Skill("Basekeeping1", DUPLICANTS.ROLES.HANDYMAN.NAME, DUPLICANTS.ROLES.HANDYMAN.DESCRIPTION, "", 0, "hat_role_basekeeping1", "skillbadge_role_basekeeping1", Db.Get().SkillGroups.Basekeeping.Id, new List<SkillPerk> { Db.Get().SkillPerks.IncreaseStrengthGroundskeeper }));
 			Basekeeping2 = AddSkill(new Skill("Basekeeping2", DUPLICANTS.ROLES.PLUMBER.NAME, DUPLICANTS.ROLES.PLUMBER.DESCRIPTION, "", 1, "hat_role_basekeeping2", "skillbadge_role_basekeeping2", Db.Get().SkillGroups.Basekeeping.Id, new List<SkillPerk>
 			{
 				Db.Get().SkillPerks.IncreaseStrengthPlumber,
 				Db.Get().SkillPerks.CanDoPlumbing
-			}, new List<string>
-			{
-				Basekeeping1.Id
-			}));
+			}, new List<string> { Basekeeping1.Id }));
 			if (DlcManager.IsExpansion1Active())
 			{
-				Astronauting1 = AddSkill(new Skill("Astronauting1", DUPLICANTS.ROLES.USELESSSKILL.NAME, DUPLICANTS.ROLES.USELESSSKILL.DESCRIPTION, "EXPANSION1_ID", 3, "hat_role_astronaut1", "skillbadge_role_astronaut1", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk>
-				{
-					Db.Get().SkillPerks.IncreaseAthleticsMedium
-				}, new List<string>
-				{
-					Researching3.Id,
-					Suits1.Id
-				}));
+				Astronauting1 = AddSkill(new Skill("Astronauting1", DUPLICANTS.ROLES.USELESSSKILL.NAME, DUPLICANTS.ROLES.USELESSSKILL.DESCRIPTION, "EXPANSION1_ID", 3, "hat_role_astronaut1", "skillbadge_role_astronaut1", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk> { Db.Get().SkillPerks.IncreaseAthleticsMedium }, new List<string> { Researching3.Id, Suits1.Id }));
 				Astronauting1.deprecated = true;
-				Astronauting2 = AddSkill(new Skill("Astronauting2", DUPLICANTS.ROLES.USELESSSKILL.NAME, DUPLICANTS.ROLES.USELESSSKILL.DESCRIPTION, "EXPANSION1_ID", 4, "hat_role_astronaut2", "skillbadge_role_astronaut2", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk>
-				{
-					Db.Get().SkillPerks.IncreaseAthleticsMedium
-				}, new List<string>
-				{
-					Astronauting1.Id
-				}));
+				Astronauting2 = AddSkill(new Skill("Astronauting2", DUPLICANTS.ROLES.USELESSSKILL.NAME, DUPLICANTS.ROLES.USELESSSKILL.DESCRIPTION, "EXPANSION1_ID", 4, "hat_role_astronaut2", "skillbadge_role_astronaut2", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk> { Db.Get().SkillPerks.IncreaseAthleticsMedium }, new List<string> { Astronauting1.Id }));
 				Astronauting2.deprecated = true;
 			}
 			else
 			{
-				Astronauting1 = AddSkill(new Skill("Astronauting1", DUPLICANTS.ROLES.ASTRONAUTTRAINEE.NAME, DUPLICANTS.ROLES.ASTRONAUTTRAINEE.DESCRIPTION, "", 3, "hat_role_astronaut1", "skillbadge_role_astronaut1", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk>
-				{
-					Db.Get().SkillPerks.CanUseRockets
-				}, new List<string>
-				{
-					Researching3.Id,
-					Suits1.Id
-				}));
-				Astronauting2 = AddSkill(new Skill("Astronauting2", DUPLICANTS.ROLES.ASTRONAUT.NAME, DUPLICANTS.ROLES.ASTRONAUT.DESCRIPTION, "", 4, "hat_role_astronaut2", "skillbadge_role_astronaut2", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk>
-				{
-					Db.Get().SkillPerks.FasterSpaceFlight
-				}, new List<string>
-				{
-					Astronauting1.Id
-				}));
+				Astronauting1 = AddSkill(new Skill("Astronauting1", DUPLICANTS.ROLES.ASTRONAUTTRAINEE.NAME, DUPLICANTS.ROLES.ASTRONAUTTRAINEE.DESCRIPTION, "", 3, "hat_role_astronaut1", "skillbadge_role_astronaut1", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk> { Db.Get().SkillPerks.CanUseRockets }, new List<string> { Researching3.Id, Suits1.Id }));
+				Astronauting2 = AddSkill(new Skill("Astronauting2", DUPLICANTS.ROLES.ASTRONAUT.NAME, DUPLICANTS.ROLES.ASTRONAUT.DESCRIPTION, "", 4, "hat_role_astronaut2", "skillbadge_role_astronaut2", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk> { Db.Get().SkillPerks.FasterSpaceFlight }, new List<string> { Astronauting1.Id }));
 			}
 			Medicine1 = AddSkill(new Skill("Medicine1", DUPLICANTS.ROLES.JUNIOR_MEDIC.NAME, DUPLICANTS.ROLES.JUNIOR_MEDIC.DESCRIPTION, "", 0, "hat_role_medicalaid1", "skillbadge_role_medicalaid1", Db.Get().SkillGroups.MedicalAid.Id, new List<SkillPerk>
 			{
@@ -405,18 +259,12 @@ namespace Database
 			{
 				Db.Get().SkillPerks.CanDoctor,
 				Db.Get().SkillPerks.IncreaseCaringMedium
-			}, new List<string>
-			{
-				Medicine1.Id
-			}));
+			}, new List<string> { Medicine1.Id }));
 			Medicine3 = AddSkill(new Skill("Medicine3", DUPLICANTS.ROLES.SENIOR_MEDIC.NAME, DUPLICANTS.ROLES.SENIOR_MEDIC.DESCRIPTION, "", 2, "hat_role_medicalaid3", "skillbadge_role_medicalaid3", Db.Get().SkillGroups.MedicalAid.Id, new List<SkillPerk>
 			{
 				Db.Get().SkillPerks.CanAdvancedMedicine,
 				Db.Get().SkillPerks.IncreaseCaringLarge
-			}, new List<string>
-			{
-				Medicine2.Id
-			}));
+			}, new List<string> { Medicine2.Id }));
 		}
 
 		private Skill AddSkill(Skill skill)

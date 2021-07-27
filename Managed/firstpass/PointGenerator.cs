@@ -165,11 +165,11 @@ public static class PointGenerator
 		int num3 = num * (num + 1);
 		bool flag = num3 - index < num;
 		int num4 = 2 * (num2 ^ (flag ? 1 : 0)) - 1;
-		Vector2I v = new Vector2I(-num4, 2 * num2 - 1);
-		Vector2I u = new Vector2I(-((num2 == 0 && flag) ? 1 : 0), 0) + v * (num / 2);
-		Vector2I v2 = new Vector2I((!flag) ? 1 : 0, flag ? 1 : 0) * num4;
-		int s = index - num3 + 2 * num - (flag ? 1 : 0) * num;
-		return u + v2 * s;
+		Vector2I vector2I = new Vector2I(-num4, 2 * num2 - 1);
+		Vector2I vector2I2 = new Vector2I(-((num2 == 0 && flag) ? 1 : 0), 0) + vector2I * (num / 2);
+		Vector2I vector2I3 = new Vector2I((!flag) ? 1 : 0, flag ? 1 : 0) * num4;
+		int num5 = index - num3 + 2 * num - (flag ? 1 : 0) * num;
+		return vector2I2 + vector2I3 * num5;
 	}
 
 	public static List<Vector2> GetSpaceFillingSpiral(Rect boundingArea, float density)

@@ -6,23 +6,11 @@ namespace Satsuma
 {
 	public sealed class Prim<TCost> where TCost : IComparable<TCost>
 	{
-		public IGraph Graph
-		{
-			get;
-			private set;
-		}
+		public IGraph Graph { get; private set; }
 
-		public Func<Arc, TCost> Cost
-		{
-			get;
-			private set;
-		}
+		public Func<Arc, TCost> Cost { get; private set; }
 
-		public HashSet<Arc> Forest
-		{
-			get;
-			private set;
-		}
+		public HashSet<Arc> Forest { get; private set; }
 
 		public Prim(IGraph graph, Func<Arc, TCost> cost)
 		{

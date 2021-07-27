@@ -11,301 +11,109 @@ public class ElementLoader
 {
 	public class ElementEntryCollection
 	{
-		public ElementEntry[] elements
-		{
-			get;
-			set;
-		}
+		public ElementEntry[] elements { get; set; }
 	}
 
 	public class ElementComposition
 	{
-		public string elementID
-		{
-			get;
-			set;
-		}
+		public string elementID { get; set; }
 
-		public float percentage
-		{
-			get;
-			set;
-		}
+		public float percentage { get; set; }
 	}
 
 	public class ElementEntry
 	{
 		private string description_backing;
 
-		public string elementId
-		{
-			get;
-			set;
-		}
+		public string elementId { get; set; }
 
-		public float specificHeatCapacity
-		{
-			get;
-			set;
-		}
+		public float specificHeatCapacity { get; set; }
 
-		public float thermalConductivity
-		{
-			get;
-			set;
-		}
+		public float thermalConductivity { get; set; }
 
-		public float solidSurfaceAreaMultiplier
-		{
-			get;
-			set;
-		}
+		public float solidSurfaceAreaMultiplier { get; set; }
 
-		public float liquidSurfaceAreaMultiplier
-		{
-			get;
-			set;
-		}
+		public float liquidSurfaceAreaMultiplier { get; set; }
 
-		public float gasSurfaceAreaMultiplier
-		{
-			get;
-			set;
-		}
+		public float gasSurfaceAreaMultiplier { get; set; }
 
-		public float defaultMass
-		{
-			get;
-			set;
-		}
+		public float defaultMass { get; set; }
 
-		public float defaultTemperature
-		{
-			get;
-			set;
-		}
+		public float defaultTemperature { get; set; }
 
-		public float defaultPressure
-		{
-			get;
-			set;
-		}
+		public float defaultPressure { get; set; }
 
-		public float molarMass
-		{
-			get;
-			set;
-		}
+		public float molarMass { get; set; }
 
-		public float lightAbsorptionFactor
-		{
-			get;
-			set;
-		}
+		public float lightAbsorptionFactor { get; set; }
 
-		public float radiationAbsorptionFactor
-		{
-			get;
-			set;
-		}
+		public float radiationAbsorptionFactor { get; set; }
 
-		public float radiationPer1000Mass
-		{
-			get;
-			set;
-		}
+		public float radiationPer1000Mass { get; set; }
 
-		public string lowTempTransitionTarget
-		{
-			get;
-			set;
-		}
+		public string lowTempTransitionTarget { get; set; }
 
-		public float lowTemp
-		{
-			get;
-			set;
-		}
+		public float lowTemp { get; set; }
 
-		public string highTempTransitionTarget
-		{
-			get;
-			set;
-		}
+		public string highTempTransitionTarget { get; set; }
 
-		public float highTemp
-		{
-			get;
-			set;
-		}
+		public float highTemp { get; set; }
 
-		public string lowTempTransitionOreId
-		{
-			get;
-			set;
-		}
+		public string lowTempTransitionOreId { get; set; }
 
-		public float lowTempTransitionOreMassConversion
-		{
-			get;
-			set;
-		}
+		public float lowTempTransitionOreMassConversion { get; set; }
 
-		public string highTempTransitionOreId
-		{
-			get;
-			set;
-		}
+		public string highTempTransitionOreId { get; set; }
 
-		public float highTempTransitionOreMassConversion
-		{
-			get;
-			set;
-		}
+		public float highTempTransitionOreMassConversion { get; set; }
 
-		public string sublimateId
-		{
-			get;
-			set;
-		}
+		public string sublimateId { get; set; }
 
-		public string sublimateFx
-		{
-			get;
-			set;
-		}
+		public string sublimateFx { get; set; }
 
-		public float sublimateRate
-		{
-			get;
-			set;
-		}
+		public float sublimateRate { get; set; }
 
-		public float sublimateEfficiency
-		{
-			get;
-			set;
-		}
+		public float sublimateEfficiency { get; set; }
 
-		public float sublimateProbability
-		{
-			get;
-			set;
-		}
+		public float sublimateProbability { get; set; }
 
-		public float offGasPercentage
-		{
-			get;
-			set;
-		}
+		public float offGasPercentage { get; set; }
 
-		public string materialCategory
-		{
-			get;
-			set;
-		}
+		public string materialCategory { get; set; }
 
-		public string[] tags
-		{
-			get;
-			set;
-		}
+		public string[] tags { get; set; }
 
-		public bool isDisabled
-		{
-			get;
-			set;
-		}
+		public bool isDisabled { get; set; }
 
-		public float strength
-		{
-			get;
-			set;
-		}
+		public float strength { get; set; }
 
-		public float maxMass
-		{
-			get;
-			set;
-		}
+		public float maxMass { get; set; }
 
-		public byte hardness
-		{
-			get;
-			set;
-		}
+		public byte hardness { get; set; }
 
-		public float toxicity
-		{
-			get;
-			set;
-		}
+		public float toxicity { get; set; }
 
-		public float liquidCompression
-		{
-			get;
-			set;
-		}
+		public float liquidCompression { get; set; }
 
-		public float speed
-		{
-			get;
-			set;
-		}
+		public float speed { get; set; }
 
-		public float minHorizontalFlow
-		{
-			get;
-			set;
-		}
+		public float minHorizontalFlow { get; set; }
 
-		public float minVerticalFlow
-		{
-			get;
-			set;
-		}
+		public float minVerticalFlow { get; set; }
 
-		public string convertId
-		{
-			get;
-			set;
-		}
+		public string convertId { get; set; }
 
-		public float flow
-		{
-			get;
-			set;
-		}
+		public float flow { get; set; }
 
-		public int buildMenuSort
-		{
-			get;
-			set;
-		}
+		public int buildMenuSort { get; set; }
 
-		public Element.State state
-		{
-			get;
-			set;
-		}
+		public Element.State state { get; set; }
 
-		public string localizationID
-		{
-			get;
-			set;
-		}
+		public string localizationID { get; set; }
 
-		public string dlcId
-		{
-			get;
-			set;
-		}
+		public string dlcId { get; set; }
 
-		public ElementComposition[] composition
-		{
-			get;
-			set;
-		}
+		public ElementComposition[] composition { get; set; }
 
 		public string description
 		{

@@ -15,30 +15,14 @@ public class ContentContainer
 
 	public GameObject go;
 
-	public List<ICodexWidget> content
-	{
-		get;
-		set;
-	}
+	public List<ICodexWidget> content { get; set; }
 
-	public string lockID
-	{
-		get;
-		set;
-	}
+	public string lockID { get; set; }
 
 	[StringEnumConverter]
-	public ContentLayout contentLayout
-	{
-		get;
-		set;
-	}
+	public ContentLayout contentLayout { get; set; }
 
-	public bool showBeforeGeneratedContent
-	{
-		get;
-		set;
-	}
+	public bool showBeforeGeneratedContent { get; set; }
 
 	public ContentContainer()
 	{

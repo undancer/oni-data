@@ -20,13 +20,13 @@ public class KModalScreen : KScreen
 	{
 		screen.ConsumeMouseScroll = true;
 		screen.activateOnSpawn = true;
-		GameObject gameObject = new GameObject("background");
-		gameObject.AddComponent<LayoutElement>().ignoreLayout = true;
-		gameObject.AddComponent<CanvasRenderer>();
-		Image image = gameObject.AddComponent<Image>();
+		GameObject obj = new GameObject("background");
+		obj.AddComponent<LayoutElement>().ignoreLayout = true;
+		obj.AddComponent<CanvasRenderer>();
+		Image image = obj.AddComponent<Image>();
 		image.color = new Color32(0, 0, 0, 160);
 		image.raycastTarget = true;
-		RectTransform component = gameObject.GetComponent<RectTransform>();
+		RectTransform component = obj.GetComponent<RectTransform>();
 		component.SetParent(screen.transform);
 		ResizeBackground(component);
 		return component;

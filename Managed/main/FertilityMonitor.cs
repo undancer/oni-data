@@ -143,13 +143,13 @@ public class FertilityMonitor : GameStateMachine<FertilityMonitor, FertilityMoni
 			GameObject prefab = Assets.GetPrefab(invalid);
 			GameObject gameObject = (egg = Util.KInstantiate(prefab, position));
 			SymbolOverrideController component = GetComponent<SymbolOverrideController>();
-			string str = "egg01";
+			string text = "egg01";
 			CreatureBrain component2 = Assets.GetPrefab(prefab.GetDef<IncubationMonitor.Def>().spawnedCreature).GetComponent<CreatureBrain>();
 			if (!string.IsNullOrEmpty(component2.symbolPrefix))
 			{
-				str = component2.symbolPrefix + "egg01";
+				text = component2.symbolPrefix + "egg01";
 			}
-			KAnim.Build.Symbol symbol = egg.GetComponent<KBatchedAnimController>().AnimFiles[0].GetData().build.GetSymbol(str);
+			KAnim.Build.Symbol symbol = egg.GetComponent<KBatchedAnimController>().AnimFiles[0].GetData().build.GetSymbol(text);
 			if (symbol != null)
 			{
 				component.AddSymbolOverride(targetEggSymbol, symbol);

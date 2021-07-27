@@ -391,6 +391,8 @@ namespace STRINGS
 				public static LocString EXHAUSTING = "Excess produced";
 
 				public static LocString PIPECONTENTS_TRANSFER = "Transferred from pipes";
+
+				public static LocString FOOD_TRANSFER = "Internal Cooling";
 			}
 
 			public class FLOODED
@@ -2362,16 +2364,16 @@ namespace STRINGS
 
 			public class FRIDGECOOLING
 			{
-				public static LocString NAME = "Cooling Contents";
+				public static LocString NAME = "Cooling Contents: {UsedPower}";
 
-				public static LocString TOOLTIP = "The contents of this food storage are still being cooled down.";
+				public static LocString TOOLTIP = "The contents of this food storage are still being cooled down, using {UsedPower} of {MaxPower}.";
 			}
 
 			public class FRIDGESTEADY
 			{
 				public static LocString NAME = "Energy Saver: {UsedPower}";
 
-				public static LocString TOOLTIP = "Energy saver activated, using {UsedPower} of {MaxPower}\n\nThe contents of this food storage are at refrigeration temperatures and need no further cooling.";
+				public static LocString TOOLTIP = "Energy saver activated, using {UsedPower} of {MaxPower}\n\nThe contents of this food storage are at refrigeration temperatures.";
 			}
 		}
 

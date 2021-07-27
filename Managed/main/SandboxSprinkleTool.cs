@@ -62,15 +62,15 @@ public class SandboxSprinkleTool : BrushTool
 		{
 			if (recentlyAffectedCells.Contains(item))
 			{
-				Color radiusIndicatorColor = base.radiusIndicatorColor;
-				Color color2 = recentAffectedCellColor[item];
-				color2.a = 0.2f;
-				Color color3 = new Color((radiusIndicatorColor.r + color2.r) / 2f, (radiusIndicatorColor.g + color2.g) / 2f, (radiusIndicatorColor.b + color2.b) / 2f, radiusIndicatorColor.a + (1f - radiusIndicatorColor.a) * color2.a);
-				colors.Add(new ToolMenu.CellColorData(item, color3));
+				Color color2 = radiusIndicatorColor;
+				Color color3 = recentAffectedCellColor[item];
+				color3.a = 0.2f;
+				Color color4 = new Color((color2.r + color3.r) / 2f, (color2.g + color3.g) / 2f, (color2.b + color3.b) / 2f, color2.a + (1f - color2.a) * color3.a);
+				colors.Add(new ToolMenu.CellColorData(item, color4));
 			}
 			else
 			{
-				colors.Add(new ToolMenu.CellColorData(item, base.radiusIndicatorColor));
+				colors.Add(new ToolMenu.CellColorData(item, radiusIndicatorColor));
 			}
 		}
 	}

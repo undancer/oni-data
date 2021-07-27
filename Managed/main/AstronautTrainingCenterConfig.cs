@@ -28,10 +28,7 @@ public class AstronautTrainingCenterConfig : IBuildingConfig
 		astronautTrainingCenter.workTime = float.PositiveInfinity;
 		astronautTrainingCenter.requiredSkillPerk = Db.Get().SkillPerks.CanTrainToBeAstronaut.Id;
 		astronautTrainingCenter.daysToMasterRole = 10f;
-		astronautTrainingCenter.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_centrifuge_kanim")
-		};
+		astronautTrainingCenter.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_centrifuge_kanim") };
 		astronautTrainingCenter.workLayer = Grid.SceneLayer.BuildingFront;
 	}
 

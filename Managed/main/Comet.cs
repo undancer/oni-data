@@ -168,8 +168,8 @@ public class Comet : KMonoBehaviour, ISim33ms
 		Game.Instance.SpawnFX(explosionEffectHash, pos2, 0f);
 		Substance substance = element.substance;
 		int num = UnityEngine.Random.Range(explosionOreCount.x, explosionOreCount.y + 1);
-		Vector2 a = -velocity.normalized;
-		Vector2 a2 = new Vector2(a.y, 0f - a.x);
+		Vector2 vector = -velocity.normalized;
+		Vector2 vector2 = new Vector2(vector.y, 0f - vector.x);
 		ListPool<ScenePartitionerEntry, Comet>.PooledList pooledList = ListPool<ScenePartitionerEntry, Comet>.Allocate();
 		GameScenePartitioner.Instance.GatherEntries((int)pos.x - 3, (int)pos.y - 3, 6, 6, GameScenePartitioner.Instance.pickupablesLayer, pooledList);
 		foreach (ScenePartitionerEntry item2 in pooledList)
@@ -212,8 +212,8 @@ public class Comet : KMonoBehaviour, ISim33ms
 		float temperature = UnityEngine.Random.Range(explosionTemperatureRange.x, explosionTemperatureRange.y);
 		for (int k = 0; k < num; k++)
 		{
-			Vector2 normalized2 = (a + a2 * UnityEngine.Random.Range(-1f, 1f)).normalized;
-			Vector3 v = normalized2 * UnityEngine.Random.Range(explosionSpeedRange.x, explosionSpeedRange.y);
+			Vector2 normalized2 = (vector + vector2 * UnityEngine.Random.Range(-1f, 1f)).normalized;
+			Vector3 vector3 = normalized2 * UnityEngine.Random.Range(explosionSpeedRange.x, explosionSpeedRange.y);
 			Vector3 position = normalized2.normalized * 0.75f;
 			position += new Vector3(0f, 0.55f, 0f);
 			position += pos;
@@ -222,7 +222,7 @@ public class Comet : KMonoBehaviour, ISim33ms
 			{
 				GameComps.Fallers.Remove(go);
 			}
-			GameComps.Fallers.Add(go, v);
+			GameComps.Fallers.Add(go, vector3);
 		}
 		if (addTiles > 0)
 		{
@@ -445,11 +445,11 @@ public class Comet : KMonoBehaviour, ISim33ms
 			num2 -= 1f;
 			num2 = Mathf.Ceil(position.y + num2) - 0.2f - position.y;
 			float x = num2 * num;
-			Vector3 b = new Vector3(x, num2, 0f);
-			int num3 = Grid.PosToCell(position + b);
+			Vector3 vector = new Vector3(x, num2, 0f);
+			int num3 = Grid.PosToCell(position + vector);
 			if (Grid.IsValidCell(num3) && Grid.Solid[num3])
 			{
-				return b.magnitude;
+				return vector.magnitude;
 			}
 		}
 		return 6f;

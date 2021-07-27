@@ -6,17 +6,9 @@ public abstract class ConduitSensor : Switch
 
 	protected KBatchedAnimController animController;
 
-	protected static readonly HashedString[] ON_ANIMS = new HashedString[2]
-	{
-		"on_pre",
-		"on"
-	};
+	protected static readonly HashedString[] ON_ANIMS = new HashedString[2] { "on_pre", "on" };
 
-	protected static readonly HashedString[] OFF_ANIMS = new HashedString[2]
-	{
-		"on_pst",
-		"off"
-	};
+	protected static readonly HashedString[] OFF_ANIMS = new HashedString[2] { "on_pst", "off" };
 
 	protected abstract void ConduitUpdate(float dt);
 

@@ -64,10 +64,7 @@ public class PolymerizerConfig : IBuildingConfig
 		ConduitDispenser conduitDispenser = go.AddOrGet<ConduitDispenser>();
 		conduitDispenser.conduitType = ConduitType.Gas;
 		conduitDispenser.invertElementFilter = false;
-		conduitDispenser.elementFilter = new SimHashes[1]
-		{
-			SimHashes.CarbonDioxide
-		};
+		conduitDispenser.elementFilter = new SimHashes[1] { SimHashes.CarbonDioxide };
 		ElementConverter elementConverter = go.AddOrGet<ElementConverter>();
 		elementConverter.consumedElements = new ElementConverter.ConsumedElement[1]
 		{

@@ -135,8 +135,11 @@ public class MinionPersonalityPanel : TargetScreen
 			{
 				if (item.Value != 0f)
 				{
-					SkillGroup skillGroup = Db.Get().SkillGroups.Get(item.Key);
-					bioDrawer.NewLabel("  • " + skillGroup.Name).Tooltip(string.Format(DUPLICANTS.ROLES.GROUPS.APTITUDE_DESCRIPTION, skillGroup.Name, item.Value));
+					SkillGroup skillGroup = Db.Get().SkillGroups.TryGet(item.Key);
+					if (skillGroup != null)
+					{
+						bioDrawer.NewLabel("  • " + skillGroup.Name).Tooltip(string.Format(DUPLICANTS.ROLES.GROUPS.APTITUDE_DESCRIPTION, skillGroup.Name, item.Value));
+					}
 				}
 			}
 		}

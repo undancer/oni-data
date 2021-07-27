@@ -98,8 +98,8 @@ public class KAnimSynchronizer
 			return;
 		}
 		KAnim.Anim currentAnim = masterController.GetCurrentAnim();
-		string s = ((currentAnim != null) ? (currentAnim.name + controller.Postfix) : string.Empty);
-		if (!string.IsNullOrEmpty(controller.synchronizedController.defaultAnim) && !controller.synchronizedController.HasAnimation(s))
+		string text = ((currentAnim != null) ? (currentAnim.name + controller.Postfix) : string.Empty);
+		if (!string.IsNullOrEmpty(controller.synchronizedController.defaultAnim) && !controller.synchronizedController.HasAnimation(text))
 		{
 			controller.Play(controller.synchronizedController.defaultAnim, KAnim.PlayMode.Loop);
 		}
@@ -108,7 +108,7 @@ public class KAnimSynchronizer
 			KAnim.PlayMode mode = masterController.GetMode();
 			float playSpeed = masterController.GetPlaySpeed();
 			float elapsedTime = masterController.GetElapsedTime();
-			controller.Play(s, mode, playSpeed, elapsedTime);
+			controller.Play(text, mode, playSpeed, elapsedTime);
 			Facing component = controller.synchronizedController.GetComponent<Facing>();
 			if (component != null)
 			{

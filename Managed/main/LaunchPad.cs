@@ -15,19 +15,7 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 
 		private Coroutine activeAnimationRoutine;
 
-		private string[] towerBGAnimNames = new string[10]
-		{
-			"A1",
-			"A2",
-			"A3",
-			"B",
-			"C",
-			"D",
-			"E1",
-			"E2",
-			"F1",
-			"F2"
-		};
+		private string[] towerBGAnimNames = new string[10] { "A1", "A2", "A3", "B", "C", "D", "E1", "E2", "F1", "F2" };
 
 		private string towerBGAnimSuffix_on = "_on";
 
@@ -57,10 +45,7 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 			gameObject.transform.SetLocalPosition(Grid.CellSizeInMeters * Vector3.up * (towerAnimControllers.Count + pad.baseModulePosition.y));
 			gameObject.transform.SetPosition(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, Grid.GetLayerZ(Grid.SceneLayer.Backwall)));
 			KBatchedAnimController kBatchedAnimController = gameObject.AddComponent<KBatchedAnimController>();
-			kBatchedAnimController.AnimFiles = new KAnimFile[1]
-			{
-				Assets.GetAnim("rocket_launchpad_tower_kanim")
-			};
+			kBatchedAnimController.AnimFiles = new KAnimFile[1] { Assets.GetAnim("rocket_launchpad_tower_kanim") };
 			gameObject.SetActive(value: true);
 			towerAnimControllers.Add(kBatchedAnimController);
 			kBatchedAnimController.initialAnim = towerBGAnimNames[towerAnimControllers.Count % towerBGAnimNames.Length] + towerBGAnimSuffix_off;
@@ -293,9 +278,9 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 		int cell = Grid.OffsetCell(Grid.PosToCell(base.gameObject), baseModulePosition);
 		GameObject gameObject = null;
 		gameObject = ((!DebugHandler.InstantBuildMode && !Game.Instance.SandboxModeActive) ? moduleDefID.TryPlace(null, Grid.CellToPosCBC(cell, moduleDefID.SceneLayer), Orientation.Neutral, elements) : moduleDefID.Build(cell, Orientation.Neutral, null, elements, 293.15f, playsound: true, GameClock.Instance.GetTime()));
-		GameObject gameObject2 = Util.KInstantiate(Assets.GetPrefab("Clustercraft"));
-		gameObject2.SetActive(value: true);
-		Clustercraft component = gameObject2.GetComponent<Clustercraft>();
+		GameObject obj = Util.KInstantiate(Assets.GetPrefab("Clustercraft"));
+		obj.SetActive(value: true);
+		Clustercraft component = obj.GetComponent<Clustercraft>();
 		component.GetComponent<CraftModuleInterface>().AddModule(gameObject.GetComponent<RocketModuleCluster>());
 		component.Init(this.GetMyWorldLocation(), this);
 		if (gameObject.GetComponent<BuildingUnderConstruction>() != null)

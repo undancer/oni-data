@@ -29,11 +29,7 @@ public class RootMenu : KScreen
 
 	public GameObject selectedGO;
 
-	public static RootMenu Instance
-	{
-		get;
-		private set;
-	}
+	public static RootMenu Instance { get; private set; }
 
 	public static void DestroyInstance()
 	{

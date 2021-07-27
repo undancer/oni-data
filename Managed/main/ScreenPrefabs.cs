@@ -92,11 +92,7 @@ public class ScreenPrefabs : KMonoBehaviour
 
 	public ComicViewer ComicViewer;
 
-	public static ScreenPrefabs Instance
-	{
-		get;
-		private set;
-	}
+	public static ScreenPrefabs Instance { get; private set; }
 
 	protected override void OnPrefabInit()
 	{

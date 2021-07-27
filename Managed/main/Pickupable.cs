@@ -32,23 +32,11 @@ public class Pickupable : Workable, IHasSortOrder
 
 	public class PickupableStartWorkInfo : Worker.StartWorkInfo
 	{
-		public float amount
-		{
-			get;
-			private set;
-		}
+		public float amount { get; private set; }
 
-		public Pickupable originalPickupable
-		{
-			get;
-			private set;
-		}
+		public Pickupable originalPickupable { get; private set; }
 
-		public Action<GameObject> setResultCb
-		{
-			get;
-			private set;
-		}
+		public Action<GameObject> setResultCb { get; private set; }
 
 		public PickupableStartWorkInfo(Pickupable pickupable, float amount, Action<GameObject> set_result_cb)
 			: base(pickupable.targetWorkable)
@@ -176,37 +164,17 @@ public class Pickupable : Workable, IHasSortOrder
 		}
 	}
 
-	public Storage storage
-	{
-		get;
-		set;
-	}
+	public Storage storage { get; set; }
 
 	public float MinTakeAmount => 0f;
 
-	public bool prevent_absorb_until_stored
-	{
-		get;
-		set;
-	}
+	public bool prevent_absorb_until_stored { get; set; }
 
-	public bool isKinematic
-	{
-		get;
-		set;
-	}
+	public bool isKinematic { get; set; }
 
-	public bool wasAbsorbed
-	{
-		get;
-		private set;
-	}
+	public bool wasAbsorbed { get; private set; }
 
-	public int cachedCell
-	{
-		get;
-		private set;
-	}
+	public int cachedCell { get; private set; }
 
 	public bool IsEntombed
 	{
@@ -235,11 +203,7 @@ public class Pickupable : Workable, IHasSortOrder
 
 	public float UnreservedAmount => TotalAmount - ReservedAmount;
 
-	public float ReservedAmount
-	{
-		get;
-		private set;
-	}
+	public float ReservedAmount { get; private set; }
 
 	public float TotalAmount
 	{
@@ -554,15 +518,15 @@ public class Pickupable : Workable, IHasSortOrder
 		}
 		GameScenePartitioner.Instance.UpdatePosition(solidPartitionerEntry, num);
 		GameScenePartitioner.Instance.UpdatePosition(partitionerEntry, num);
-		int cachedCell = this.cachedCell;
+		int num3 = cachedCell;
 		UpdateCachedCell(num);
 		if (!flag)
 		{
 			NotifyChanged(num);
 		}
-		if (Grid.IsValidCell(cachedCell) && num != cachedCell)
+		if (Grid.IsValidCell(num3) && num != num3)
 		{
-			NotifyChanged(cachedCell);
+			NotifyChanged(num3);
 		}
 	}
 
@@ -732,7 +696,7 @@ public class Pickupable : Workable, IHasSortOrder
 		}
 		if (flag)
 		{
-			int cachedCell = this.cachedCell;
+			int new_cell = cachedCell;
 			RefreshStorageTags(data);
 			if ((object)storage != null)
 			{
@@ -746,7 +710,7 @@ public class Pickupable : Workable, IHasSortOrder
 				}
 				UpdateCachedCell(Grid.PosToCell(storage));
 			}
-			NotifyChanged(cachedCell);
+			NotifyChanged(new_cell);
 			if (component != null)
 			{
 				component.SetRegistered(registered: false);
@@ -870,16 +834,16 @@ public class Pickupable : Workable, IHasSortOrder
 
 	private void OnOreSizeChanged(object data)
 	{
-		Vector3 v = Vector3.zero;
+		Vector3 vector = Vector3.zero;
 		HandleVector<int>.Handle handle = GameComps.Gravities.GetHandle(base.gameObject);
 		if (handle.IsValid())
 		{
-			v = GameComps.Gravities.GetData(handle).velocity;
+			vector = GameComps.Gravities.GetData(handle).velocity;
 		}
 		RemoveFaller();
 		if (!KPrefabID.HasTag(GameTags.Stored))
 		{
-			AddFaller(v);
+			AddFaller(vector);
 		}
 	}
 

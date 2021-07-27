@@ -95,9 +95,9 @@ public class InterfaceTool : KMonoBehaviour
 		UnityEngine.EventSystems.EventSystem current = UnityEngine.EventSystems.EventSystem.current;
 		if (current != null)
 		{
-			Vector3 v = new Vector3(KInputManager.GetMousePos().x, KInputManager.GetMousePos().y, 0f);
+			Vector3 vector = new Vector3(KInputManager.GetMousePos().x, KInputManager.GetMousePos().y, 0f);
 			PointerEventData pointerEventData = new PointerEventData(current);
-			pointerEventData.position = v;
+			pointerEventData.position = vector;
 			current.RaycastAll(pointerEventData, castResults);
 			result = castResults.Count == 0;
 		}

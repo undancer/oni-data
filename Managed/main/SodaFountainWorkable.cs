@@ -20,10 +20,7 @@ public class SodaFountainWorkable : Workable, IWorkerPrioritizable
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_sodamaker_kanim")
-		};
+		overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_sodamaker_kanim") };
 		showProgressBar = true;
 		resetProgressOnStop = true;
 		synchronizeAnims = false;

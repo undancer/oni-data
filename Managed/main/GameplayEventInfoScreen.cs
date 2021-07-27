@@ -144,9 +144,9 @@ public class GameplayEventInfoScreen : KModalScreen
 
 	private void CreateOptionIcon(GameObject option, GameplayEventPopupData.PopupOptionIcon optionIcon)
 	{
-		GameObject gameObject = Util.KInstantiateUI(optionIconPrefab, option);
-		gameObject.GetComponent<ToolTip>().SetSimpleTooltip(optionIcon.tooltip);
-		HierarchyReferences component = gameObject.GetComponent<HierarchyReferences>();
+		GameObject obj = Util.KInstantiateUI(optionIconPrefab, option);
+		obj.GetComponent<ToolTip>().SetSimpleTooltip(optionIcon.tooltip);
+		HierarchyReferences component = obj.GetComponent<HierarchyReferences>();
 		Image reference = component.GetReference<Image>("Mask");
 		Image reference2 = component.GetReference<Image>("Border");
 		Image reference3 = component.GetReference<Image>("Icon");
@@ -154,7 +154,7 @@ public class GameplayEventInfoScreen : KModalScreen
 		{
 			reference3.transform.localScale *= optionIcon.scale;
 		}
-		Color32 c = Color.white;
+		Color32 color = Color.white;
 		switch (optionIcon.containerType)
 		{
 		case GameplayEventPopupData.PopupOptionIcon.ContainerType.Neutral:
@@ -164,7 +164,7 @@ public class GameplayEventInfoScreen : KModalScreen
 			{
 				optionIcon.sprite = Assets.GetSprite("knob");
 			}
-			c = GlobalAssets.Instance.colorSet.eventNeutral;
+			color = GlobalAssets.Instance.colorSet.eventNeutral;
 			break;
 		case GameplayEventPopupData.PopupOptionIcon.ContainerType.Positive:
 			reference.sprite = Assets.GetSprite("container_fill_positive");
@@ -174,13 +174,13 @@ public class GameplayEventInfoScreen : KModalScreen
 			{
 				optionIcon.sprite = Assets.GetSprite("icon_positive");
 			}
-			c = GlobalAssets.Instance.colorSet.eventPositive;
+			color = GlobalAssets.Instance.colorSet.eventPositive;
 			break;
 		case GameplayEventPopupData.PopupOptionIcon.ContainerType.Negative:
 			reference.sprite = Assets.GetSprite("container_fill_negative");
 			reference2.sprite = Assets.GetSprite("container_border_negative");
 			reference3.rectTransform.localPosition += Vector3.up * 1f;
-			c = GlobalAssets.Instance.colorSet.eventNegative;
+			color = GlobalAssets.Instance.colorSet.eventNegative;
 			if (optionIcon.sprite == null)
 			{
 				optionIcon.sprite = Assets.GetSprite("cancel");
@@ -191,7 +191,7 @@ public class GameplayEventInfoScreen : KModalScreen
 			reference2.enabled = false;
 			break;
 		}
-		reference.color = c;
+		reference.color = color;
 		reference3.sprite = optionIcon.sprite;
 		if (optionIcon.sprite == null)
 		{
@@ -232,19 +232,19 @@ public class GameplayEventInfoScreen : KModalScreen
 				{
 					DebugUtil.LogWarningArgs($"GameplayEventInfoScreen unable to display minion {i}");
 				}
-				string s = $"dupe{i + 1:D2}";
-				if (component.HasAnimation(s))
+				string text = $"dupe{i + 1:D2}";
+				if (component.HasAnimation(text))
 				{
-					CreateAnimLayer(midgroundGroup, anim, s, data.minions[i]);
+					CreateAnimLayer(midgroundGroup, anim, text, data.minions[i]);
 				}
 			}
 		}
 		if (data.artifact != null)
 		{
-			string s2 = "artifact";
-			if (component.HasAnimation(s2))
+			string text2 = "artifact";
+			if (component.HasAnimation(text2))
 			{
-				CreateAnimLayer(midgroundGroup, anim, s2, null, data.artifact);
+				CreateAnimLayer(midgroundGroup, anim, text2, null, data.artifact);
 			}
 		}
 	}

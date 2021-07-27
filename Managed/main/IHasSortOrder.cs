@@ -1,8 +1,4 @@
 public interface IHasSortOrder
 {
-	int sortOrder
-	{
-		get;
-		set;
-	}
+	int sortOrder { get; set; }
 }

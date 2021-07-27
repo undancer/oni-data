@@ -7,11 +7,7 @@ public class MeterController
 
 	private KAnimLink link;
 
-	public KBatchedAnimController meterController
-	{
-		get;
-		private set;
-	}
+	public KBatchedAnimController meterController { get; private set; }
 
 	public MeterController(KMonoBehaviour target, Meter.Offset front_back, Grid.SceneLayer user_specified_render_layer, params string[] symbols_to_hide)
 	{
@@ -60,10 +56,7 @@ public class MeterController
 		}
 		gameObject.transform.SetPosition(position);
 		KBatchedAnimController component = gameObject.GetComponent<KBatchedAnimController>();
-		component.AnimFiles = new KAnimFile[1]
-		{
-			building_controller.AnimFiles[0]
-		};
+		component.AnimFiles = new KAnimFile[1] { building_controller.AnimFiles[0] };
 		component.initialAnim = meter_animation;
 		component.fgLayer = Grid.SceneLayer.NoLayer;
 		component.initialMode = KAnim.PlayMode.Paused;

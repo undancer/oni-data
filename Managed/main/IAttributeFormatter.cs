@@ -3,11 +3,7 @@ using Klei.AI;
 
 public interface IAttributeFormatter
 {
-	GameUtil.TimeSlice DeltaTimeSlice
-	{
-		get;
-		set;
-	}
+	GameUtil.TimeSlice DeltaTimeSlice { get; set; }
 
 	string GetFormattedAttribute(AttributeInstance instance);
 

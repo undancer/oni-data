@@ -6,17 +6,9 @@ namespace Satsuma
 {
 	public sealed class HamiltonianCycle
 	{
-		public IGraph Graph
-		{
-			get;
-			private set;
-		}
+		public IGraph Graph { get; private set; }
 
-		public IPath Cycle
-		{
-			get;
-			private set;
-		}
+		public IPath Cycle { get; private set; }
 
 		public HamiltonianCycle(IGraph graph)
 		{

@@ -58,10 +58,10 @@ public class OptionsMenuScreen : KModalButtonMenu
 	protected override void OnActivate()
 	{
 		base.OnActivate();
-		GameObject[] buttonObjects = base.buttonObjects;
-		for (int i = 0; i < buttonObjects.Length; i++)
+		GameObject[] array = buttonObjects;
+		for (int i = 0; i < array.Length; i++)
 		{
-			_ = buttonObjects[i];
+			_ = array[i];
 		}
 	}
 

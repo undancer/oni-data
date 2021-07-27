@@ -40,18 +40,12 @@ public class OxygenMaskStationConfig : IBuildingConfig
 		Storage storage = go.AddComponent<Storage>();
 		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
 		storage.showInUI = true;
-		storage.storageFilters = new List<Tag>
-		{
-			GameTags.Metal
-		};
+		storage.storageFilters = new List<Tag> { GameTags.Metal };
 		storage.capacityKg = 45f;
 		Storage storage2 = go.AddComponent<Storage>();
 		storage2.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
 		storage2.showInUI = true;
-		storage2.storageFilters = new List<Tag>
-		{
-			GameTags.Breathable
-		};
+		storage2.storageFilters = new List<Tag> { GameTags.Breathable };
 		MaskStation maskStation = go.AddOrGet<MaskStation>();
 		maskStation.materialConsumedPerMask = 15f;
 		maskStation.oxygenConsumedPerMask = 20f;

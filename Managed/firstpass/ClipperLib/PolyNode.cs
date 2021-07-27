@@ -26,11 +26,7 @@ namespace ClipperLib
 
 		public bool IsHole => IsHoleNode();
 
-		public bool IsOpen
-		{
-			get;
-			set;
-		}
+		public bool IsOpen { get; set; }
 
 		private bool IsHoleNode()
 		{

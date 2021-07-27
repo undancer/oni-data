@@ -2,10 +2,7 @@ using UnityEngine;
 
 public interface IUsable
 {
-	Transform transform
-	{
-		get;
-	}
+	Transform transform { get; }
 
 	bool IsUsable();
 }

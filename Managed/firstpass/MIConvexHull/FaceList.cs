@@ -4,11 +4,7 @@ namespace MIConvexHull
 	{
 		private ConvexFaceInternal last;
 
-		public ConvexFaceInternal First
-		{
-			get;
-			private set;
-		}
+		public ConvexFaceInternal First { get; private set; }
 
 		private void AddFirst(ConvexFaceInternal face)
 		{

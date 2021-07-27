@@ -60,10 +60,7 @@ namespace Database
 			{
 				RoomDetails.SIZE,
 				RoomDetails.BUILDING_COUNT
-			}, 1, null, single_assignee: false, priority_building_use: false, new string[1]
-			{
-				"RoomBathroom"
-			}, 2));
+			}, 1, null, single_assignee: false, priority_building_use: false, new string[1] { "RoomBathroom" }, 2));
 			Latrine = Add(new RoomType("Latrine", ROOMS.TYPES.LATRINE.NAME, ROOMS.TYPES.LATRINE.TOOLTIP, ROOMS.TYPES.LATRINE.EFFECT, Db.Get().RoomTypeCategories.Bathroom, RoomConstraints.TOILET, new RoomConstraints.Constraint[4]
 			{
 				RoomConstraints.WASH_STATION,
@@ -74,13 +71,7 @@ namespace Database
 			{
 				RoomDetails.SIZE,
 				RoomDetails.BUILDING_COUNT
-			}, 1, new RoomType[1]
-			{
-				PlumbedBathroom
-			}, single_assignee: false, priority_building_use: false, new string[1]
-			{
-				"RoomLatrine"
-			}, 1));
+			}, 1, new RoomType[1] { PlumbedBathroom }, single_assignee: false, priority_building_use: false, new string[1] { "RoomLatrine" }, 1));
 			Bedroom = Add(new RoomType("Bedroom", ROOMS.TYPES.BEDROOM.NAME, ROOMS.TYPES.BEDROOM.TOOLTIP, ROOMS.TYPES.BEDROOM.EFFECT, Db.Get().RoomTypeCategories.Sleep, RoomConstraints.LUXURY_BED_SINGLE, new RoomConstraints.Constraint[6]
 			{
 				RoomConstraints.NO_COTS,
@@ -93,10 +84,7 @@ namespace Database
 			{
 				RoomDetails.SIZE,
 				RoomDetails.BUILDING_COUNT
-			}, 1, null, single_assignee: false, priority_building_use: false, new string[1]
-			{
-				"RoomBedroom"
-			}, 4));
+			}, 1, null, single_assignee: false, priority_building_use: false, new string[1] { "RoomBedroom" }, 4));
 			Barracks = Add(new RoomType("Barracks", ROOMS.TYPES.BARRACKS.NAME, ROOMS.TYPES.BARRACKS.TOOLTIP, ROOMS.TYPES.BARRACKS.EFFECT, Db.Get().RoomTypeCategories.Sleep, RoomConstraints.BED_SINGLE, new RoomConstraints.Constraint[3]
 			{
 				RoomConstraints.NO_INDUSTRIAL_MACHINERY,
@@ -106,13 +94,7 @@ namespace Database
 			{
 				RoomDetails.SIZE,
 				RoomDetails.BUILDING_COUNT
-			}, 1, new RoomType[1]
-			{
-				Bedroom
-			}, single_assignee: false, priority_building_use: false, new string[1]
-			{
-				"RoomBarracks"
-			}, 3));
+			}, 1, new RoomType[1] { Bedroom }, single_assignee: false, priority_building_use: false, new string[1] { "RoomBarracks" }, 3));
 			GreatHall = Add(new RoomType("GreatHall", ROOMS.TYPES.GREATHALL.NAME, ROOMS.TYPES.GREATHALL.TOOLTIP, ROOMS.TYPES.GREATHALL.EFFECT, Db.Get().RoomTypeCategories.Food, RoomConstraints.MESS_STATION_SINGLE, new RoomConstraints.Constraint[5]
 			{
 				RoomConstraints.NO_INDUSTRIAL_MACHINERY,
@@ -124,10 +106,7 @@ namespace Database
 			{
 				RoomDetails.SIZE,
 				RoomDetails.BUILDING_COUNT
-			}, 1, null, single_assignee: false, priority_building_use: false, new string[1]
-			{
-				"RoomGreatHall"
-			}, 6));
+			}, 1, null, single_assignee: false, priority_building_use: false, new string[1] { "RoomGreatHall" }, 6));
 			MessHall = Add(new RoomType("MessHall", ROOMS.TYPES.MESSHALL.NAME, ROOMS.TYPES.MESSHALL.TOOLTIP, ROOMS.TYPES.MESSHALL.EFFECT, Db.Get().RoomTypeCategories.Food, RoomConstraints.MESS_STATION_SINGLE, new RoomConstraints.Constraint[3]
 			{
 				RoomConstraints.NO_INDUSTRIAL_MACHINERY,
@@ -137,13 +116,7 @@ namespace Database
 			{
 				RoomDetails.SIZE,
 				RoomDetails.BUILDING_COUNT
-			}, 1, new RoomType[1]
-			{
-				GreatHall
-			}, single_assignee: false, priority_building_use: false, new string[1]
-			{
-				"RoomMessHall"
-			}, 5));
+			}, 1, new RoomType[1] { GreatHall }, single_assignee: false, priority_building_use: false, new string[1] { "RoomMessHall" }, 5));
 			MassageClinic = Add(new RoomType("MassageClinic", ROOMS.TYPES.MASSAGE_CLINIC.NAME, ROOMS.TYPES.MASSAGE_CLINIC.TOOLTIP, ROOMS.TYPES.MASSAGE_CLINIC.EFFECT, Db.Get().RoomTypeCategories.Hospital, RoomConstraints.MASSAGE_TABLE, new RoomConstraints.Constraint[4]
 			{
 				RoomConstraints.NO_INDUSTRIAL_MACHINERY,
@@ -227,10 +200,7 @@ namespace Database
 				RoomDetails.BUILDING_COUNT,
 				RoomDetails.CREATURE_COUNT,
 				RoomDetails.PLANT_COUNT
-			}, 1, null, single_assignee: false, priority_building_use: false, new string[1]
-			{
-				"RoomNatureReserve"
-			}, 16));
+			}, 1, null, single_assignee: false, priority_building_use: false, new string[1] { "RoomNatureReserve" }, 16));
 			Park = Add(new RoomType("Park", ROOMS.TYPES.PARK.NAME, ROOMS.TYPES.PARK.TOOLTIP, ROOMS.TYPES.PARK.EFFECT, Db.Get().RoomTypeCategories.Park, RoomConstraints.PARK_BUILDING, new RoomConstraints.Constraint[4]
 			{
 				RoomConstraints.WILDPLANT,
@@ -243,13 +213,7 @@ namespace Database
 				RoomDetails.BUILDING_COUNT,
 				RoomDetails.CREATURE_COUNT,
 				RoomDetails.PLANT_COUNT
-			}, 1, new RoomType[1]
-			{
-				NatureReserve
-			}, single_assignee: false, priority_building_use: false, new string[1]
-			{
-				"RoomPark"
-			}, 15));
+			}, 1, new RoomType[1] { NatureReserve }, single_assignee: false, priority_building_use: false, new string[1] { "RoomPark" }, 15));
 		}
 
 		public Assignables[] GetAssignees(Room room)

@@ -15,14 +15,8 @@ public class Bed : Workable, IGameObjectEffectDescriptor, IBasicBuilding
 
 	private static Dictionary<string, string> roomSleepingEffects = new Dictionary<string, string>
 	{
-		{
-			"Barracks",
-			"BarracksStamina"
-		},
-		{
-			"Bedroom",
-			"BedroomStamina"
-		}
+		{ "Barracks", "BarracksStamina" },
+		{ "Bedroom", "BedroomStamina" }
 	};
 
 	protected override void OnPrefabInit()

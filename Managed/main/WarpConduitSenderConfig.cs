@@ -55,23 +55,10 @@ public class WarpConduitSenderConfig : IBuildingConfig
 		warpConduitSender.solidStorage.capacityKg = 100f;
 		Activatable activatable = go.AddOrGet<Activatable>();
 		activatable.synchronizeAnims = true;
-		activatable.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_warp_conduit_sender_kanim")
-		};
-		activatable.workAnims = new HashedString[2]
-		{
-			"sending_pre",
-			"sending_loop"
-		};
-		activatable.workingPstComplete = new HashedString[1]
-		{
-			"sending_pst"
-		};
-		activatable.workingPstFailed = new HashedString[1]
-		{
-			"sending_pre"
-		};
+		activatable.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_warp_conduit_sender_kanim") };
+		activatable.workAnims = new HashedString[2] { "sending_pre", "sending_loop" };
+		activatable.workingPstComplete = new HashedString[1] { "sending_pst" };
+		activatable.workingPstFailed = new HashedString[1] { "sending_pre" };
 		activatable.SetWorkTime(30f);
 	}
 

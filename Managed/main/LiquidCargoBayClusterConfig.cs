@@ -14,10 +14,7 @@ public class LiquidCargoBayClusterConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("LiquidCargoBayCluster", 5, 5, "rocket_cluster_storage_liquid_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.CARGO_MASS, new string[1]
-		{
-			SimHashes.Steel.ToString()
-		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("LiquidCargoBayCluster", 5, 5, "rocket_cluster_storage_liquid_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.CARGO_MASS, new string[1] { SimHashes.Steel.ToString() }, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
 		BuildingTemplates.CreateRocketBuildingDef(obj);
 		obj.SceneLayer = Grid.SceneLayer.Building;
 		obj.OverheatTemperature = 2273.15f;

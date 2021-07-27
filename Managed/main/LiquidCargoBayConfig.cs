@@ -12,12 +12,9 @@ public class LiquidCargoBayConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("LiquidCargoBay", 5, 5, "rocket_storage_liquid_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.CARGO_MASS, new string[1]
-		{
-			SimHashes.Steel.ToString()
-		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("LiquidCargoBay", 5, 5, "rocket_storage_liquid_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.CARGO_MASS, new string[1] { SimHashes.Steel.ToString() }, 9999f, BuildLocationRule.BuildingAttachPoint, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
 		BuildingTemplates.CreateRocketBuildingDef(obj);
-		obj.SceneLayer = Grid.SceneLayer.Building;
+		obj.SceneLayer = Grid.SceneLayer.BuildingFront;
 		obj.OverheatTemperature = 2273.15f;
 		obj.Floodable = false;
 		obj.AttachmentSlotTag = GameTags.Rocket;
@@ -26,7 +23,6 @@ public class LiquidCargoBayConfig : IBuildingConfig
 		obj.UtilityOutputOffset = new CellOffset(0, 3);
 		obj.RequiresPowerInput = false;
 		obj.CanMove = true;
-		obj.Cancellable = false;
 		obj.attachablePosition = new CellOffset(0, 0);
 		return obj;
 	}
@@ -47,7 +43,7 @@ public class LiquidCargoBayConfig : IBuildingConfig
 		CargoBay cargoBay = go.AddOrGet<CargoBay>();
 		cargoBay.storage = go.AddOrGet<Storage>();
 		cargoBay.storageType = CargoBay.CargoType.Liquids;
-		cargoBay.storage.capacityKg = 2000f;
+		cargoBay.storage.capacityKg = 1000f;
 		cargoBay.storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
 		ConduitDispenser conduitDispenser = go.AddOrGet<ConduitDispenser>();
 		conduitDispenser.conduitType = ConduitType.Liquid;

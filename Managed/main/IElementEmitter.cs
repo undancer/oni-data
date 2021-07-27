@@ -1,12 +1,6 @@
 public interface IElementEmitter
 {
-	SimHashes Element
-	{
-		get;
-	}
+	SimHashes Element { get; }
 
-	float AverageEmitRate
-	{
-		get;
-	}
+	float AverageEmitRate { get; }
 }

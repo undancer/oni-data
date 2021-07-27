@@ -66,41 +66,17 @@ namespace Satsuma
 
 		private IEnumerator<Arc> EnteringArcEnumerator;
 
-		public IGraph Graph
-		{
-			get;
-			private set;
-		}
+		public IGraph Graph { get; private set; }
 
-		public Func<Arc, long> LowerBound
-		{
-			get;
-			private set;
-		}
+		public Func<Arc, long> LowerBound { get; private set; }
 
-		public Func<Arc, long> UpperBound
-		{
-			get;
-			private set;
-		}
+		public Func<Arc, long> UpperBound { get; private set; }
 
-		public Func<Node, long> Supply
-		{
-			get;
-			private set;
-		}
+		public Func<Node, long> Supply { get; private set; }
 
-		public Func<Arc, double> Cost
-		{
-			get;
-			private set;
-		}
+		public Func<Arc, double> Cost { get; private set; }
 
-		public SimplexState State
-		{
-			get;
-			private set;
-		}
+		public SimplexState State { get; private set; }
 
 		public IEnumerable<KeyValuePair<Arc, long>> Forest => Tree.Where((KeyValuePair<Arc, long> kv) => Graph.HasArc(kv.Key));
 
@@ -369,10 +345,7 @@ namespace Satsuma
 				UpdatePotentialDfs updatePotentialDfs = new UpdatePotentialDfs();
 				updatePotentialDfs.Parent = this;
 				updatePotentialDfs.Diff = num7;
-				updatePotentialDfs.Run(TreeSubgraph, new Node[1]
-				{
-					node2
-				});
+				updatePotentialDfs.Run(TreeSubgraph, new Node[1] { node2 });
 			}
 			Tree[arc] = Flow(arc) + num6;
 			if (flag)

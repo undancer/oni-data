@@ -38,10 +38,7 @@ public class PlaceTool : DragTool
 		kBatchedAnimController.visibilityType = KAnimControllerBase.VisibilityType.Always;
 		kBatchedAnimController.isMovable = true;
 		kBatchedAnimController.SetLayer(LayerMask.NameToLayer("Place"));
-		kBatchedAnimController.AnimFiles = new KAnimFile[1]
-		{
-			Assets.GetAnim(source.kAnimName)
-		};
+		kBatchedAnimController.AnimFiles = new KAnimFile[1] { Assets.GetAnim(source.kAnimName) };
 		kBatchedAnimController.initialAnim = source.animName;
 		visualizer.SetActive(value: true);
 		ShowToolTip();

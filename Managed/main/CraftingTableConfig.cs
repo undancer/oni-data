@@ -33,10 +33,7 @@ public class CraftingTableConfig : IBuildingConfig
 		complexFabricator.sideScreenStyle = ComplexFabricatorSideScreen.StyleSetting.ListQueueHybrid;
 		go.AddOrGet<FabricatorIngredientStatusManager>();
 		go.AddOrGet<CopyBuildingSettings>();
-		go.AddOrGet<ComplexFabricatorWorkable>().overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_craftingstation_kanim")
-		};
+		go.AddOrGet<ComplexFabricatorWorkable>().overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_craftingstation_kanim") };
 		Prioritizable.AddRef(go);
 		BuildingTemplates.CreateComplexFabricatorStorage(go, complexFabricator);
 		ConfigureRecipes();
@@ -57,10 +54,7 @@ public class CraftingTableConfig : IBuildingConfig
 			time = TUNING.EQUIPMENT.SUITS.OXYMASK_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.OXYGEN_MASK.RECIPE_DESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.ResultWithIngredient,
-			fabricators = new List<Tag>
-			{
-				"CraftingTable"
-			},
+			fabricators = new List<Tag> { "CraftingTable" },
 			requiredTech = Db.Get().TechItems.oxygenMask.parentTechId
 		};
 		ComplexRecipe.RecipeElement[] array3 = new ComplexRecipe.RecipeElement[1]
@@ -76,10 +70,7 @@ public class CraftingTableConfig : IBuildingConfig
 			time = TUNING.EQUIPMENT.SUITS.OXYMASK_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.OXYGEN_MASK.RECIPE_DESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.ResultWithIngredient,
-			fabricators = new List<Tag>
-			{
-				"CraftingTable"
-			},
+			fabricators = new List<Tag> { "CraftingTable" },
 			requiredTech = Db.Get().TechItems.oxygenMask.parentTechId
 		};
 		ComplexRecipe.RecipeElement[] array5 = new ComplexRecipe.RecipeElement[1]
@@ -95,10 +86,7 @@ public class CraftingTableConfig : IBuildingConfig
 			time = TUNING.EQUIPMENT.SUITS.OXYMASK_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.OXYGEN_MASK.RECIPE_DESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.ResultWithIngredient,
-			fabricators = new List<Tag>
-			{
-				"CraftingTable"
-			},
+			fabricators = new List<Tag> { "CraftingTable" },
 			requiredTech = Db.Get().TechItems.oxygenMask.parentTechId
 		};
 		if (ElementLoader.FindElementByHash(SimHashes.Cobaltite) != null)
@@ -116,10 +104,7 @@ public class CraftingTableConfig : IBuildingConfig
 				time = TUNING.EQUIPMENT.SUITS.OXYMASK_FABTIME,
 				description = STRINGS.EQUIPMENT.PREFABS.OXYGEN_MASK.RECIPE_DESC,
 				nameDisplay = ComplexRecipe.RecipeNameDisplay.ResultWithIngredient,
-				fabricators = new List<Tag>
-				{
-					"CraftingTable"
-				},
+				fabricators = new List<Tag> { "CraftingTable" },
 				requiredTech = Db.Get().TechItems.oxygenMask.parentTechId
 			};
 		}
@@ -136,10 +121,7 @@ public class CraftingTableConfig : IBuildingConfig
 			time = TUNING.EQUIPMENT.SUITS.OXYMASK_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.OXYGEN_MASK.RECIPE_DESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.ResultWithIngredient,
-			fabricators = new List<Tag>
-			{
-				"CraftingTable"
-			},
+			fabricators = new List<Tag> { "CraftingTable" },
 			requiredTech = Db.Get().TechItems.oxygenMask.parentTechId
 		};
 	}

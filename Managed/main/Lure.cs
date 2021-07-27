@@ -53,12 +53,12 @@ public class Lure : GameStateMachine<Lure, Lure.Instance, IStateMachineTarget, L
 			{
 				return false;
 			}
-			foreach (Tag a in creature_lures)
+			foreach (Tag tag in creature_lures)
 			{
 				Tag[] array = lures;
-				foreach (Tag b in array)
+				foreach (Tag tag2 in array)
 				{
-					if (a == b)
+					if (tag == tag2)
 					{
 						return true;
 					}

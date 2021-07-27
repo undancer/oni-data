@@ -403,8 +403,10 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 			}
 			queued.Enqueue(item);
 			visitedCells.Add(item);
-			NetworkType val = new NetworkType();
-			val.id = networks.Count;
+			NetworkType val = new NetworkType
+			{
+				id = networks.Count
+			};
 			networks.Add(val);
 			while (queued.Count > 0)
 			{
@@ -511,8 +513,10 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 			{
 				continue;
 			}
-			NetworkType val2 = new NetworkType();
-			val2.id = networks.Count;
+			NetworkType val2 = new NetworkType
+			{
+				id = networks.Count
+			};
 			visitedVirtualKeys.Add(virtualItem.Key);
 			virtualKeyToNetworkIdx[virtualItem.Key] = val2.id;
 			foreach (object item4 in virtualItem.Value)
@@ -533,8 +537,10 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 			{
 				continue;
 			}
-			NetworkType val3 = new NetworkType();
-			val3.id = networks.Count;
+			NetworkType val3 = new NetworkType
+			{
+				id = networks.Count
+			};
 			visitedVirtualKeys.Add(virtualEndpoint.Key);
 			virtualKeyToNetworkIdx[virtualEndpoint.Key] = val3.id;
 			foreach (object item6 in virtualEndpoints[virtualEndpoint.Key])

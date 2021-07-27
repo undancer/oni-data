@@ -4,17 +4,9 @@ using UnityEngine.UI;
 
 public class CodexLabelWithIcon : CodexWidget<CodexLabelWithIcon>
 {
-	public CodexImage icon
-	{
-		get;
-		set;
-	}
+	public CodexImage icon { get; set; }
 
-	public CodexText label
-	{
-		get;
-		set;
-	}
+	public CodexText label { get; set; }
 
 	public CodexLabelWithIcon()
 	{

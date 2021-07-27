@@ -65,17 +65,9 @@ public class AirConditioner : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDe
 
 	private static readonly Func<int, object, bool> UpdateStateCbDelegate = (int cell, object data) => UpdateStateCb(cell, data);
 
-	public float lastEnvTemp
-	{
-		get;
-		private set;
-	}
+	public float lastEnvTemp { get; private set; }
 
-	public float lastGasTemp
-	{
-		get;
-		private set;
-	}
+	public float lastGasTemp { get; private set; }
 
 	public float TargetTemperature => targetTemperature;
 

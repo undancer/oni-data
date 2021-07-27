@@ -35,19 +35,11 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 
 	public string handlerName => "PlayerController";
 
-	public KInputHandler inputHandler
-	{
-		get;
-		set;
-	}
+	public KInputHandler inputHandler { get; set; }
 
 	public InterfaceTool ActiveTool => activeTool;
 
-	public static PlayerController Instance
-	{
-		get;
-		private set;
-	}
+	public static PlayerController Instance { get; private set; }
 
 	public static void DestroyInstance()
 	{

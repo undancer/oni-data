@@ -8,53 +8,21 @@ namespace ProcGen
 	public class FeatureSettings
 	{
 		[StringEnumConverter]
-		public Room.Shape shape
-		{
-			get;
-			private set;
-		}
+		public Room.Shape shape { get; private set; }
 
-		public List<int> borders
-		{
-			get;
-			private set;
-		}
+		public List<int> borders { get; private set; }
 
-		public MinMax blobSize
-		{
-			get;
-			private set;
-		}
+		public MinMax blobSize { get; private set; }
 
-		public string forceBiome
-		{
-			get;
-			private set;
-		}
+		public string forceBiome { get; private set; }
 
-		public List<string> biomeTags
-		{
-			get;
-			private set;
-		}
+		public List<string> biomeTags { get; private set; }
 
-		public List<MobReference> internalMobs
-		{
-			get;
-			private set;
-		}
+		public List<MobReference> internalMobs { get; private set; }
 
-		public List<string> tags
-		{
-			get;
-			private set;
-		}
+		public List<string> tags { get; private set; }
 
-		public Dictionary<string, ElementChoiceGroup<WeightedSimHash>> ElementChoiceGroups
-		{
-			get;
-			private set;
-		}
+		public Dictionary<string, ElementChoiceGroup<WeightedSimHash>> ElementChoiceGroups { get; private set; }
 
 		public FeatureSettings()
 		{

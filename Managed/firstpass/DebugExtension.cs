@@ -217,10 +217,10 @@ public static class DebugExtension
 		Vector3 rhs = Vector3.Slerp(vector, -vector, 0.5f);
 		_ = Vector3.Cross(vector, rhs).normalized * radius;
 		float magnitude = (start - end).magnitude;
-		float d = Mathf.Max(0f, magnitude * 0.5f - radius);
+		float num = Mathf.Max(0f, magnitude * 0.5f - radius);
 		Vector3 vector2 = (end + start) * 0.5f;
-		start = vector2 + (start - vector2).normalized * d;
-		end = vector2 + (end - vector2).normalized * d;
+		start = vector2 + (start - vector2).normalized * num;
+		end = vector2 + (end - vector2).normalized * num;
 		DebugCircle(start, vector, color, radius, duration, depthTest);
 		DebugCircle(end, -vector, color, radius, duration, depthTest);
 		for (int i = 1; i < 26; i++)
@@ -429,19 +429,19 @@ public static class DebugExtension
 	{
 		Vector3 vector = (end - start).normalized * radius;
 		Vector3 vector2 = Vector3.Slerp(vector, -vector, 0.5f);
-		Vector3 b = Vector3.Cross(vector, vector2).normalized * radius;
+		Vector3 vector3 = Vector3.Cross(vector, vector2).normalized * radius;
 		DrawCircle(start, vector, color, radius);
 		DrawCircle(end, -vector, color, radius);
 		DrawCircle((start + end) * 0.5f, vector, color, radius);
 		Color color2 = Gizmos.color;
 		Gizmos.color = color;
-		Gizmos.DrawLine(start + b, end + b);
-		Gizmos.DrawLine(start - b, end - b);
+		Gizmos.DrawLine(start + vector3, end + vector3);
+		Gizmos.DrawLine(start - vector3, end - vector3);
 		Gizmos.DrawLine(start + vector2, end + vector2);
 		Gizmos.DrawLine(start - vector2, end - vector2);
-		Gizmos.DrawLine(start - b, start + b);
+		Gizmos.DrawLine(start - vector3, start + vector3);
 		Gizmos.DrawLine(start - vector2, start + vector2);
-		Gizmos.DrawLine(end - b, end + b);
+		Gizmos.DrawLine(end - vector3, end + vector3);
 		Gizmos.DrawLine(end - vector2, end + vector2);
 		Gizmos.color = color2;
 	}
@@ -510,10 +510,10 @@ public static class DebugExtension
 		Color color2 = Gizmos.color;
 		Gizmos.color = color;
 		float magnitude = (start - end).magnitude;
-		float d = Mathf.Max(0f, magnitude * 0.5f - radius);
+		float num = Mathf.Max(0f, magnitude * 0.5f - radius);
 		Vector3 vector4 = (end + start) * 0.5f;
-		start = vector4 + (start - vector4).normalized * d;
-		end = vector4 + (end - vector4).normalized * d;
+		start = vector4 + (start - vector4).normalized * num;
+		end = vector4 + (end - vector4).normalized * num;
 		DrawCircle(start, vector, color, radius);
 		DrawCircle(end, -vector, color, radius);
 		Gizmos.DrawLine(start + vector3, end + vector3);

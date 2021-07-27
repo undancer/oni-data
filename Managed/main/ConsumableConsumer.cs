@@ -26,10 +26,10 @@ public class ConsumableConsumer : KMonoBehaviour
 
 	public bool IsPermitted(string consumable_id)
 	{
-		Tag b = new Tag(consumable_id);
+		Tag tag = new Tag(consumable_id);
 		for (int i = 0; i < forbiddenTags.Length; i++)
 		{
-			if (forbiddenTags[i] == b)
+			if (forbiddenTags[i] == tag)
 			{
 				return false;
 			}

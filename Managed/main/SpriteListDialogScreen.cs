@@ -73,9 +73,9 @@ public class SpriteListDialogScreen : KModalScreen
 
 	public void AddSprite(Sprite sprite, string text, float width = -1f, float height = -1f)
 	{
-		GameObject gameObject = Util.KInstantiateUI(listPrefab, listPanel, force_active: true);
-		gameObject.GetComponentInChildren<LocText>().text = text;
-		Image componentInChildren = gameObject.GetComponentInChildren<Image>();
+		GameObject obj = Util.KInstantiateUI(listPrefab, listPanel, force_active: true);
+		obj.GetComponentInChildren<LocText>().text = text;
+		Image componentInChildren = obj.GetComponentInChildren<Image>();
 		componentInChildren.sprite = sprite;
 		if (width >= 0f || height >= 0f)
 		{

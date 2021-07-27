@@ -42,10 +42,7 @@ public class ReorderableBuilding : KMonoBehaviour
 		gameObject.transform.SetPosition(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, Grid.GetLayerZ(Grid.SceneLayer.BuildingBack)));
 		gameObject.SetActive(value: false);
 		reorderArmController = gameObject.AddComponent<KBatchedAnimController>();
-		reorderArmController.AnimFiles = new KAnimFile[1]
-		{
-			Assets.GetAnim("rocket_module_switching_arm_kanim")
-		};
+		reorderArmController.AnimFiles = new KAnimFile[1] { Assets.GetAnim("rocket_module_switching_arm_kanim") };
 		reorderArmController.initialAnim = "off";
 		gameObject.SetActive(value: true);
 		int cell = Grid.PosToCell(gameObject);
@@ -117,10 +114,10 @@ public class ReorderableBuilding : KMonoBehaviour
 
 	private GameObject AddModuleCommon(BuildingDef def, IList<Tag> buildMaterials, int cell)
 	{
-		GameObject gameObject = ((!DebugHandler.InstantBuildMode && (!Game.Instance.SandboxModeActive || !SandboxToolParameterMenu.instance.settings.InstantBuild)) ? def.TryPlace(null, Grid.CellToPosCBC(cell, def.SceneLayer), Orientation.Neutral, buildMaterials) : def.Build(cell, Orientation.Neutral, null, buildMaterials, 273.15f, playsound: true, GameClock.Instance.GetTime()));
+		GameObject result = ((!DebugHandler.InstantBuildMode && (!Game.Instance.SandboxModeActive || !SandboxToolParameterMenu.instance.settings.InstantBuild)) ? def.TryPlace(null, Grid.CellToPosCBC(cell, def.SceneLayer), Orientation.Neutral, buildMaterials) : def.Build(cell, Orientation.Neutral, null, buildMaterials, 273.15f, playsound: true, GameClock.Instance.GetTime()));
 		RebuildNetworks();
-		RocketSpecificPostAdd(gameObject, cell);
-		return gameObject;
+		RocketSpecificPostAdd(result, cell);
+		return result;
 	}
 
 	private void RocketSpecificPostAdd(GameObject obj, int cell)
@@ -171,12 +168,12 @@ public class ReorderableBuilding : KMonoBehaviour
 		{
 			animController.Offset = new Vector3(animController.Offset.x, 0f, animController.Offset.z);
 			reorderingAnimUnderway = false;
-			string s = GetComponent<Building>().Def.WidthInCells + "x" + GetComponent<Building>().Def.HeightInCells + "_ungrab";
-			if (!reorderArmController.HasAnimation(s))
+			string text = GetComponent<Building>().Def.WidthInCells + "x" + GetComponent<Building>().Def.HeightInCells + "_ungrab";
+			if (!reorderArmController.HasAnimation(text))
 			{
-				s = "3x3_ungrab";
+				text = "3x3_ungrab";
 			}
-			reorderArmController.Play(s);
+			reorderArmController.Play(text);
 			reorderArmController.Queue("off");
 			loopingSounds.StopSound(GlobalAssets.GetSound(reorderSound));
 		}
@@ -281,12 +278,12 @@ public class ReorderableBuilding : KMonoBehaviour
 	{
 		animController.Offset = new Vector3(animController.Offset.x, animController.Offset.y + amount, animController.Offset.z);
 		reorderArmController.Offset = animController.Offset;
-		string s = GetComponent<Building>().Def.WidthInCells + "x" + GetComponent<Building>().Def.HeightInCells + "_grab";
-		if (!reorderArmController.HasAnimation(s))
+		string text = GetComponent<Building>().Def.WidthInCells + "x" + GetComponent<Building>().Def.HeightInCells + "_grab";
+		if (!reorderArmController.HasAnimation(text))
 		{
-			s = "3x3_grab";
+			text = "3x3_grab";
 		}
-		reorderArmController.Play(s);
+		reorderArmController.Play(text);
 		reorderArmController.onAnimComplete += StartReorderingAnim;
 	}
 

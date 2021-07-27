@@ -88,10 +88,10 @@ public class MaskStation : StateMachineComponent<MaskStation.SMInstance>, IBasic
 
 		private void Run()
 		{
-			GameObject reactor = base.reactor;
-			Equipment equipment = reactor.GetComponent<MinionIdentity>().GetEquipment();
+			GameObject obj = reactor;
+			Equipment equipment = obj.GetComponent<MinionIdentity>().GetEquipment();
 			bool flag = !equipment.IsSlotOccupied(Db.Get().AssignableSlots.Suit);
-			Navigator component = reactor.GetComponent<Navigator>();
+			Navigator component = obj.GetComponent<Navigator>();
 			bool flag2 = component != null && (component.flags & maskStation.PathFlag) != 0;
 			if (flag)
 			{
@@ -99,14 +99,14 @@ public class MaskStation : StateMachineComponent<MaskStation.SMInstance>, IBasic
 				{
 					return;
 				}
-				GameObject gameObject = Util.KInstantiate(Assets.GetPrefab("Oxygen_Mask".ToTag()));
-				gameObject.SetActive(value: true);
+				GameObject obj2 = Util.KInstantiate(Assets.GetPrefab("Oxygen_Mask".ToTag()));
+				obj2.SetActive(value: true);
 				SimHashes elementID = maskStation.GetPossibleMaterials()[0].GetComponent<PrimaryElement>().ElementID;
-				gameObject.GetComponent<PrimaryElement>().SetElement(elementID, addTags: false);
-				SuitTank component2 = gameObject.GetComponent<SuitTank>();
+				obj2.GetComponent<PrimaryElement>().SetElement(elementID, addTags: false);
+				SuitTank component2 = obj2.GetComponent<SuitTank>();
 				maskStation.materialStorage.ConsumeIgnoringDisease(maskStation.materialTag, maskStation.materialConsumedPerMask);
 				maskStation.oxygenStorage.Transfer(component2.storage, component2.elementTag, maskStation.oxygenConsumedPerMask, block_events: false, hide_popups: true);
-				Equippable component3 = gameObject.GetComponent<Equippable>();
+				Equippable component3 = obj2.GetComponent<Equippable>();
 				component3.Assign(equipment.GetComponent<IAssignableIdentity>());
 				component3.isEquipped = true;
 			}

@@ -4,11 +4,7 @@ public class SchedulerGroup
 {
 	private List<SchedulerHandle> handles = new List<SchedulerHandle>();
 
-	public Scheduler scheduler
-	{
-		get;
-		private set;
-	}
+	public Scheduler scheduler { get; private set; }
 
 	public SchedulerGroup(Scheduler scheduler)
 	{

@@ -49,23 +49,11 @@ public class Operational : KMonoBehaviour
 		component.OnNewBuilding(data);
 	});
 
-	public bool IsFunctional
-	{
-		get;
-		private set;
-	}
+	public bool IsFunctional { get; private set; }
 
-	public bool IsOperational
-	{
-		get;
-		private set;
-	}
+	public bool IsOperational { get; private set; }
 
-	public bool IsActive
-	{
-		get;
-		private set;
-	}
+	public bool IsActive { get; private set; }
 
 	[OnSerializing]
 	private void OnSerializing()

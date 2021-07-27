@@ -10,11 +10,7 @@ public static class BaseDivergentConfig
 
 	public const float CROP_TENDED_MULTIPLIER_EFFECT = 0.05f;
 
-	public static string[] ignoreEffectGroup = new string[2]
-	{
-		"DivergentCropTended",
-		"DivergentCropTendedWorm"
-	};
+	public static string[] ignoreEffectGroup = new string[2] { "DivergentCropTended", "DivergentCropTendedWorm" };
 
 	public static GameObject BaseDivergent(string id, string name, string desc, float mass, string anim_file, string traitId, bool is_baby, float num_tended_per_cycle = 8f, string symbolOverridePrefix = null, string cropTendingEffect = "DivergentCropTended", int meatAmount = 1, bool is_pacifist = true)
 	{
@@ -50,11 +46,7 @@ public static class BaseDivergentConfig
 			crop_tending_pre = "wormwood_tending_pre",
 			crop_tending = "wormwood_tending",
 			crop_tending_pst = "wormwood_tending_pst",
-			hide_symbols_after_pre = new string[2]
-			{
-				"flower",
-				"flower_wilted"
-			}
+			hide_symbols_after_pre = new string[2] { "flower", "flower_wilted" }
 		});
 		def.ignoreEffectGroup = ignoreEffectGroup;
 		ChoreTable.Builder chore_table = new ChoreTable.Builder().Add(new DeathStates.Def()).Add(new AnimInterruptStates.Def()).Add(new GrowUpStates.Def())

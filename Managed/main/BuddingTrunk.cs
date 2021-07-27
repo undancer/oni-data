@@ -210,11 +210,11 @@ public class BuddingTrunk : KMonoBehaviour, ISim4000ms
 			{
 				int num2 = spawn_choices[0];
 				Vector3 budPosition = GetBudPosition(num2);
-				GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(budPrefabID), budPosition);
-				gameObject.SetActive(value: true);
-				gameObject.GetComponent<Growing>().OverrideMaturityLevel(growth_percentage);
-				gameObject.GetComponent<TreeBud>().SetTrunkPosition(this, num2);
-				HarvestDesignatable component = gameObject.GetComponent<HarvestDesignatable>();
+				GameObject obj = Util.KInstantiate(Assets.GetPrefab(budPrefabID), budPosition);
+				obj.SetActive(value: true);
+				obj.GetComponent<Growing>().OverrideMaturityLevel(growth_percentage);
+				obj.GetComponent<TreeBud>().SetTrunkPosition(this, num2);
+				HarvestDesignatable component = obj.GetComponent<HarvestDesignatable>();
 				buds[num2] = new Ref<HarvestDesignatable>(component);
 				UpdateBudHarvestState(component);
 				TryRollNewSeed();

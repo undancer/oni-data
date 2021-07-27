@@ -74,12 +74,7 @@ public class MechanicalSurfboard : StateMachineComponent<MechanicalSurfboard.Sta
 
 	public float minOperationalWaterKG;
 
-	public string[] interactAnims = new string[3]
-	{
-		"anim_interacts_mechanical_surfboard_kanim",
-		"anim_interacts_mechanical_surfboard2_kanim",
-		"anim_interacts_mechanical_surfboard3_kanim"
-	};
+	public string[] interactAnims = new string[3] { "anim_interacts_mechanical_surfboard_kanim", "anim_interacts_mechanical_surfboard2_kanim", "anim_interacts_mechanical_surfboard3_kanim" };
 
 	protected override void OnSpawn()
 	{

@@ -37,12 +37,7 @@ public class CringeMonitor : GameStateMachine<CringeMonitor, CringeMonitor.Insta
 		}
 	}
 
-	private static readonly HashedString[] CringeAnims = new HashedString[3]
-	{
-		"cringe_pre",
-		"cringe_loop",
-		"cringe_pst"
-	};
+	private static readonly HashedString[] CringeAnims = new HashedString[3] { "cringe_pre", "cringe_loop", "cringe_pst" };
 
 	public State idle;
 

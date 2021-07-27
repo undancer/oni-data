@@ -180,10 +180,7 @@ public class ManualDeliveryKG : KMonoBehaviour, ISim1000ms
 				this.fetchList.ShowStatusItem = ShowStatusItem;
 				this.fetchList.MinimumAmount[requestedItemTag] = Mathf.Max(PICKUPABLETUNING.MINIMUM_PICKABLE_AMOUNT, minimumMass);
 				FetchList2 fetchList = this.fetchList;
-				Tag[] tags = new Tag[1]
-				{
-					requestedItemTag
-				};
+				Tag[] tags = new Tag[1] { requestedItemTag };
 				float amount = b;
 				fetchList.Add(tags, null, forbiddenTags, amount);
 				this.fetchList.Submit(null, check_storage_contents: false);

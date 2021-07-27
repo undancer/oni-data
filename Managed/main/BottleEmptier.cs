@@ -11,11 +11,7 @@ public class BottleEmptier : StateMachineComponent<BottleEmptier.StatesInstance>
 	{
 		private FetchChore chore;
 
-		public MeterController meter
-		{
-			get;
-			private set;
-		}
+		public MeterController meter { get; private set; }
 
 		public StatesInstance(BottleEmptier smi)
 			: base(smi)
@@ -31,10 +27,7 @@ public class BottleEmptier : StateMachineComponent<BottleEmptier.StatesInstance>
 		{
 			GetComponent<KBatchedAnimController>();
 			Tag[] tags = GetComponent<TreeFilterable>().GetTags();
-			Tag[] forbidden_tags = (base.master.allowManualPumpingStationFetching ? new Tag[0] : new Tag[1]
-			{
-				GameTags.LiquidSource
-			});
+			Tag[] forbidden_tags = (base.master.allowManualPumpingStationFetching ? new Tag[0] : new Tag[1] { GameTags.LiquidSource });
 			Storage component = GetComponent<Storage>();
 			chore = new FetchChore(Db.Get().ChoreTypes.StorageFetch, component, component.Capacity(), tags, null, forbidden_tags);
 		}

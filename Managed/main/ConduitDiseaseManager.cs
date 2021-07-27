@@ -59,15 +59,15 @@ public class ConduitDiseaseManager : KCompactedVector<ConduitDiseaseManager.Data
 
 	public void SetData(HandleVector<int>.Handle handle, ref ConduitFlow.ConduitContents contents)
 	{
-		Data data = GetData(handle);
-		data.diseaseCount = contents.diseaseCount;
-		if (contents.diseaseIdx != data.diseaseIdx)
+		Data new_data = GetData(handle);
+		new_data.diseaseCount = contents.diseaseCount;
+		if (contents.diseaseIdx != new_data.diseaseIdx)
 		{
-			data.diseaseIdx = contents.diseaseIdx;
+			new_data.diseaseIdx = contents.diseaseIdx;
 			byte elem_idx = (byte)ElementLoader.GetElementIndex(contents.element);
-			data.growthInfo = GetGrowthInfo(contents.diseaseIdx, elem_idx);
+			new_data.growthInfo = GetGrowthInfo(contents.diseaseIdx, elem_idx);
 		}
-		SetData(handle, data);
+		SetData(handle, new_data);
 	}
 
 	public void Sim200ms(float dt)
@@ -101,21 +101,21 @@ public class ConduitDiseaseManager : KCompactedVector<ConduitDiseaseManager.Data
 
 	public void ModifyDiseaseCount(HandleVector<int>.Handle h, int disease_count_delta)
 	{
-		Data data = GetData(h);
-		data.diseaseCount = Math.Max(0, data.diseaseCount + disease_count_delta);
-		if (data.diseaseCount == 0)
+		Data new_data = GetData(h);
+		new_data.diseaseCount = Math.Max(0, new_data.diseaseCount + disease_count_delta);
+		if (new_data.diseaseCount == 0)
 		{
-			data.diseaseIdx = byte.MaxValue;
+			new_data.diseaseIdx = byte.MaxValue;
 		}
-		SetData(h, data);
+		SetData(h, new_data);
 	}
 
 	public void AddDisease(HandleVector<int>.Handle h, byte disease_idx, int disease_count)
 	{
-		Data data = GetData(h);
-		SimUtil.DiseaseInfo diseaseInfo = SimUtil.CalculateFinalDiseaseInfo(disease_idx, disease_count, data.diseaseIdx, data.diseaseCount);
-		data.diseaseIdx = diseaseInfo.idx;
-		data.diseaseCount = diseaseInfo.count;
-		SetData(h, data);
+		Data new_data = GetData(h);
+		SimUtil.DiseaseInfo diseaseInfo = SimUtil.CalculateFinalDiseaseInfo(disease_idx, disease_count, new_data.diseaseIdx, new_data.diseaseCount);
+		new_data.diseaseIdx = diseaseInfo.idx;
+		new_data.diseaseCount = diseaseInfo.count;
+		SetData(h, new_data);
 	}
 }

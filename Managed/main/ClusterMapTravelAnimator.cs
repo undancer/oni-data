@@ -44,8 +44,8 @@ public class ClusterMapTravelAnimator : GameStateMachine<ClusterMapTravelAnimato
 			float num = TuningData<Tuning>.Get().visualizerTransitionSpeed * dt;
 			if (num < magnitude)
 			{
-				Vector3 b = normalized * num;
-				component.SetLocalPosition(localPosition + b);
+				Vector3 vector2 = normalized * num;
+				component.SetLocalPosition(localPosition + vector2);
 				component2.RefreshPathDrawing();
 				return false;
 			}

@@ -57,10 +57,7 @@ public class SleepChoreMonitor : GameStateMachine<SleepChoreMonitor, SleepChoreM
 		{
 			Sleepable safeFloorLocator = SleepChore.GetSafeFloorLocator(base.master.gameObject);
 			safeFloorLocator.effectName = "PassedOutSleep";
-			safeFloorLocator.wakeEffects = new List<string>
-			{
-				"SoreBack"
-			};
+			safeFloorLocator.wakeEffects = new List<string> { "SoreBack" };
 			safeFloorLocator.stretchOnWake = false;
 			return safeFloorLocator.gameObject;
 		}
@@ -69,10 +66,7 @@ public class SleepChoreMonitor : GameStateMachine<SleepChoreMonitor, SleepChoreM
 		{
 			Sleepable safeFloorLocator = SleepChore.GetSafeFloorLocator(base.master.gameObject);
 			safeFloorLocator.effectName = "FloorSleep";
-			safeFloorLocator.wakeEffects = new List<string>
-			{
-				"SoreBack"
-			};
+			safeFloorLocator.wakeEffects = new List<string> { "SoreBack" };
 			safeFloorLocator.stretchOnWake = false;
 			return safeFloorLocator.gameObject;
 		}

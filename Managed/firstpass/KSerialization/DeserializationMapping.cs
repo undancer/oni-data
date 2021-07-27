@@ -162,10 +162,7 @@ namespace KSerialization
 			}
 			if (template.customDeserialize != null)
 			{
-				template.customDeserialize.Invoke(obj, new object[1]
-				{
-					reader
-				});
+				template.customDeserialize.Invoke(obj, new object[1] { reader });
 			}
 			if (template.onDeserialized != null)
 			{

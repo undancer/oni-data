@@ -123,11 +123,7 @@ public class CryoTank : StateMachineComponent<CryoTank.StatesInstance>, ISidescr
 			opener.GetComponent<Effects>().Add(Db.Get().effects.Get("CryoFriend"), should_save: true);
 			gameObject.GetComponent<Effects>().Add(Db.Get().effects.Get("CryoFriend"), should_save: true);
 			SimpleEvent.StatesInstance statesInstance = GameplayEventManager.Instance.StartNewEvent(Db.Get().GameplayEvents.CryoFriend).smi as SimpleEvent.StatesInstance;
-			statesInstance.minions = new GameObject[2]
-			{
-				gameObject,
-				opener
-			};
+			statesInstance.minions = new GameObject[2] { gameObject, opener };
 			statesInstance.SetTextParameter("dupe", opener.GetProperName());
 			statesInstance.SetTextParameter("friend", gameObject.GetProperName());
 			statesInstance.ShowEventPopup();

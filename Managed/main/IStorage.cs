@@ -3,11 +3,7 @@ using UnityEngine;
 
 public interface IStorage
 {
-	bool allowUIItemRemoval
-	{
-		get;
-		set;
-	}
+	bool allowUIItemRemoval { get; set; }
 
 	bool ShouldShowInUI();
 

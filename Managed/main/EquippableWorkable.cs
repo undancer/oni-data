@@ -16,10 +16,7 @@ public class EquippableWorkable : Workable, ISaveLoadable
 	{
 		base.OnPrefabInit();
 		workerStatusItem = Db.Get().DuplicantStatusItems.Equipping;
-		overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_equip_clothing_kanim")
-		};
+		overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_equip_clothing_kanim") };
 		synchronizeAnims = false;
 	}
 

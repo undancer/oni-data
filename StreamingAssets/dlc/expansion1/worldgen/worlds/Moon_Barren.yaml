@@ -11,6 +11,7 @@ defaultsOverrides:
   data:
     OverworldDensityMin: 10
     OverworldDensityMax: 10
+    OverworldSampleBehaviour: PoissonDisk
   defaultMoveTags: 
   overworldAddTags: 
 

@@ -25,10 +25,7 @@ public class ShowerConfig : IBuildingConfig
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.WashStation);
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.AdvancedWashStation);
 		Shower shower = go.AddOrGet<Shower>();
-		shower.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_shower_kanim")
-		};
+		shower.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_shower_kanim") };
 		shower.workTime = 15f;
 		shower.outputTargetElement = SimHashes.DirtyWater;
 		shower.fractionalDiseaseRemoval = 0.95f;
@@ -43,10 +40,7 @@ public class ShowerConfig : IBuildingConfig
 		ConduitDispenser conduitDispenser = go.AddOrGet<ConduitDispenser>();
 		conduitDispenser.conduitType = ConduitType.Liquid;
 		conduitDispenser.invertElementFilter = true;
-		conduitDispenser.elementFilter = new SimHashes[1]
-		{
-			SimHashes.Water
-		};
+		conduitDispenser.elementFilter = new SimHashes[1] { SimHashes.Water };
 		ElementConverter elementConverter = go.AddOrGet<ElementConverter>();
 		elementConverter.consumedElements = new ElementConverter.ConsumedElement[1]
 		{

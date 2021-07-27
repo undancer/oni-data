@@ -8,19 +8,11 @@ namespace Satsuma
 	{
 		private List<TNode> tour;
 
-		public Func<TNode, TNode, double> Cost
-		{
-			get;
-			private set;
-		}
+		public Func<TNode, TNode, double> Cost { get; private set; }
 
 		public IEnumerable<TNode> Tour => tour;
 
-		public double TourCost
-		{
-			get;
-			private set;
-		}
+		public double TourCost { get; private set; }
 
 		public Opt2Tsp(Func<TNode, TNode, double> cost, IEnumerable<TNode> tour, double? tourCost)
 		{

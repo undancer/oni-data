@@ -138,63 +138,22 @@ namespace ProcGen
 
 		public static readonly Tag DEBUG_NoSplitForChildCount = TagManager.Create("DEBUG_NoSplitForChildCount");
 
-		public static readonly TagSet DebugTags = new TagSet(new Tag[6]
-		{
-			DEBUG_Split,
-			DEBUG_SplitForChildCount,
-			DEBUG_SplitTopSite,
-			DEBUG_SplitBottomSite,
-			DEBUG_SplitLargeStartingSites,
-			DEBUG_NoSplitForChildCount
-		});
+		public static readonly TagSet DebugTags = new TagSet(new Tag[6] { DEBUG_Split, DEBUG_SplitForChildCount, DEBUG_SplitTopSite, DEBUG_SplitBottomSite, DEBUG_SplitLargeStartingSites, DEBUG_NoSplitForChildCount });
 
-		public static readonly TagSet MapTags = new TagSet(new Tag[6]
-		{
-			Cell,
-			Edge,
-			Corner,
-			EdgeUnpassable,
-			EdgeClosed,
-			EdgeOpen
-		});
+		public static readonly TagSet MapTags = new TagSet(new Tag[6] { Cell, Edge, Corner, EdgeUnpassable, EdgeClosed, EdgeOpen });
 
 		public static readonly TagSet CommandTags = new TagSet(new Tag[11]
 		{
-			IgnoreCaveOverride,
-			ErodePointToCentroid,
-			ErodePointToCentroidInv,
-			DistFunctionPointCentroid,
-			DistFunctionPointEdge,
-			SplitOnParentDensity,
-			SplitTwice,
-			UltraHighDensitySplit,
-			VeryHighDensitySplit,
-			HighDensitySplit,
+			IgnoreCaveOverride, ErodePointToCentroid, ErodePointToCentroidInv, DistFunctionPointCentroid, DistFunctionPointEdge, SplitOnParentDensity, SplitTwice, UltraHighDensitySplit, VeryHighDensitySplit, HighDensitySplit,
 			MediumDensitySplit
 		});
 
 		public static readonly TagSet WorldTags = new TagSet(new Tag[12]
 		{
-			UnassignedNode,
-			Feature,
-			CenteralFeature,
-			Overworld,
-			NearSurface,
-			NearDepths,
-			AtSurface,
-			AtDepths,
-			AtEdge,
-			AtStart,
-			StartNear,
-			StartMedium
+			UnassignedNode, Feature, CenteralFeature, Overworld, NearSurface, NearDepths, AtSurface, AtDepths, AtEdge, AtStart,
+			StartNear, StartMedium
 		});
 
-		public static readonly TagSet DistanceTags = new TagSet(new Tag[4]
-		{
-			AtSurface,
-			AtDepths,
-			AtEdge,
-			AtStart
-		});
+		public static readonly TagSet DistanceTags = new TagSet(new Tag[4] { AtSurface, AtDepths, AtEdge, AtStart });
 	}
 }

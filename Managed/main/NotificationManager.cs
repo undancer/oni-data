@@ -7,11 +7,7 @@ public class NotificationManager : KMonoBehaviour
 
 	private List<Notification> notifications = new List<Notification>();
 
-	public static NotificationManager Instance
-	{
-		get;
-		private set;
-	}
+	public static NotificationManager Instance { get; private set; }
 
 	public event Action<Notification> notificationAdded;
 

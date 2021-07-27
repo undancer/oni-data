@@ -23,34 +23,34 @@ public class BuildingLoader : KMonoBehaviour
 
 	private GameObject CreateTemplate()
 	{
-		GameObject gameObject = new GameObject();
-		gameObject.SetActive(value: false);
-		gameObject.AddOrGet<KPrefabID>();
-		gameObject.AddOrGet<KSelectable>();
-		gameObject.AddOrGet<StateMachineController>();
-		PrimaryElement primaryElement = gameObject.AddOrGet<PrimaryElement>();
+		GameObject obj = new GameObject();
+		obj.SetActive(value: false);
+		obj.AddOrGet<KPrefabID>();
+		obj.AddOrGet<KSelectable>();
+		obj.AddOrGet<StateMachineController>();
+		PrimaryElement primaryElement = obj.AddOrGet<PrimaryElement>();
 		primaryElement.Mass = 1f;
 		primaryElement.Temperature = 293f;
-		return gameObject;
+		return obj;
 	}
 
 	private GameObject CreatePreviewTemplate()
 	{
-		GameObject gameObject = CreateTemplate();
-		gameObject.AddComponent<BuildingPreview>();
-		return gameObject;
+		GameObject obj = CreateTemplate();
+		obj.AddComponent<BuildingPreview>();
+		return obj;
 	}
 
 	private GameObject CreateConstructionTemplate()
 	{
-		GameObject gameObject = CreateTemplate();
-		gameObject.AddOrGet<BuildingUnderConstruction>();
-		gameObject.AddOrGet<Constructable>();
-		gameObject.AddComponent<Storage>().doDiseaseTransfer = false;
-		gameObject.AddOrGet<Prioritizable>();
-		gameObject.AddOrGet<Notifier>();
-		gameObject.AddOrGet<SaveLoadRoot>();
-		return gameObject;
+		GameObject obj = CreateTemplate();
+		obj.AddOrGet<BuildingUnderConstruction>();
+		obj.AddOrGet<Constructable>();
+		obj.AddComponent<Storage>().doDiseaseTransfer = false;
+		obj.AddOrGet<Prioritizable>();
+		obj.AddOrGet<Notifier>();
+		obj.AddOrGet<SaveLoadRoot>();
+		return obj;
 	}
 
 	public GameObject CreateBuilding(BuildingDef def, GameObject go, GameObject parent = null)

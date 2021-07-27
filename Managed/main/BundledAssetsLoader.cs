@@ -5,11 +5,7 @@ public class BundledAssetsLoader : KMonoBehaviour
 {
 	public static BundledAssetsLoader instance;
 
-	public BundledAssets Expansion1Assets
-	{
-		get;
-		private set;
-	}
+	public BundledAssets Expansion1Assets { get; private set; }
 
 	protected override void OnPrefabInit()
 	{

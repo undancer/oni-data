@@ -11,23 +11,11 @@ namespace Satsuma
 
 		private readonly Dictionary<Node, Arc> parentArc;
 
-		public IGraph Graph
-		{
-			get;
-			private set;
-		}
+		public IGraph Graph { get; private set; }
 
-		public Func<Arc, double> Cost
-		{
-			get;
-			private set;
-		}
+		public Func<Arc, double> Cost { get; private set; }
 
-		public IPath NegativeCycle
-		{
-			get;
-			private set;
-		}
+		public IPath NegativeCycle { get; private set; }
 
 		public IEnumerable<Node> ReachedNodes => parentArc.Keys;
 

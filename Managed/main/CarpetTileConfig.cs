@@ -9,15 +9,7 @@ public class CarpetTileConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("CarpetTile", 1, 1, "floor_carpet_kanim", 100, 30f, new float[2]
-		{
-			200f,
-			2f
-		}, new string[2]
-		{
-			"BuildableRaw",
-			"BuildingFiber"
-		}, 1600f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER3);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("CarpetTile", 1, 1, "floor_carpet_kanim", 100, 30f, new float[2] { 200f, 2f }, new string[2] { "BuildableRaw", "BuildingFiber" }, 1600f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER3);
 		BuildingTemplates.CreateFoundationTileDef(obj);
 		obj.Floodable = false;
 		obj.Overheatable = false;

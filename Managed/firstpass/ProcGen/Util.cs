@@ -9,13 +9,13 @@ namespace ProcGen
 		public static HashSet<Vector2> GetPointsOnHermiteCurve(Vector2 p0, Vector2 p1, Vector2 t0, Vector2 t1, int numberOfPoints)
 		{
 			HashSet<Vector2> hashSet = new HashSet<Vector2>();
-			Vector2 a = t0 - p0;
-			Vector2 a2 = t1 - p1;
+			Vector2 vector = t0 - p0;
+			Vector2 vector2 = t1 - p1;
 			float num = 1f / (float)numberOfPoints;
 			for (int i = 0; i < numberOfPoints; i++)
 			{
 				float num2 = (float)i * num;
-				Vector2 item = (2f * num2 * num2 * num2 - 3f * num2 * num2 + 1f) * p0 + (num2 * num2 * num2 - 2f * num2 * num2 + num2) * a + (-2f * num2 * num2 * num2 + 3f * num2 * num2) * p1 + (num2 * num2 * num2 - num2 * num2) * a2;
+				Vector2 item = (2f * num2 * num2 * num2 - 3f * num2 * num2 + 1f) * p0 + (num2 * num2 * num2 - 2f * num2 * num2 + num2) * vector + (-2f * num2 * num2 * num2 + 3f * num2 * num2) * p1 + (num2 * num2 * num2 - num2 * num2) * vector2;
 				hashSet.Add(item);
 			}
 			return hashSet;
@@ -27,10 +27,10 @@ namespace ProcGen
 			float num = 1f / (float)numberOfPoints;
 			for (int i = 0; i < controlPoints.Count - 1; i++)
 			{
-				Vector2 a = controlPoints[i];
-				Vector2 a2 = controlPoints[i + 1];
-				Vector2 a3 = ((i <= 0) ? (controlPoints[i + 1] - controlPoints[i]) : (0.5f * (controlPoints[i + 1] - controlPoints[i - 1])));
-				Vector2 a4 = ((i >= controlPoints.Count - 2) ? (controlPoints[i + 1] - controlPoints[i]) : (0.5f * (controlPoints[i + 2] - controlPoints[i])));
+				Vector2 vector = controlPoints[i];
+				Vector2 vector2 = controlPoints[i + 1];
+				Vector2 vector3 = ((i <= 0) ? (controlPoints[i + 1] - controlPoints[i]) : (0.5f * (controlPoints[i + 1] - controlPoints[i - 1])));
+				Vector2 vector4 = ((i >= controlPoints.Count - 2) ? (controlPoints[i + 1] - controlPoints[i]) : (0.5f * (controlPoints[i + 2] - controlPoints[i])));
 				if (i == controlPoints.Count - 2)
 				{
 					num = 1f / ((float)numberOfPoints - 1f);
@@ -38,7 +38,7 @@ namespace ProcGen
 				for (int j = 0; j < numberOfPoints; j++)
 				{
 					float num2 = (float)j * num;
-					Vector2 item = (2f * num2 * num2 * num2 - 3f * num2 * num2 + 1f) * a + (num2 * num2 * num2 - 2f * num2 * num2 + num2) * a3 + (-2f * num2 * num2 * num2 + 3f * num2 * num2) * a2 + (num2 * num2 * num2 - num2 * num2) * a4;
+					Vector2 item = (2f * num2 * num2 * num2 - 3f * num2 * num2 + 1f) * vector + (num2 * num2 * num2 - 2f * num2 * num2 + num2) * vector3 + (-2f * num2 * num2 * num2 + 3f * num2 * num2) * vector2 + (num2 * num2 * num2 - num2 * num2) * vector4;
 					hashSet.Add(item);
 				}
 			}
@@ -52,16 +52,16 @@ namespace ProcGen
 			{
 				return GetLine(p0, p1);
 			}
-			Vector2 a = p1 - p0;
+			Vector2 vector = p1 - p0;
 			Vector2 p2 = p0;
-			Vector2 vector = p1;
+			Vector2 vector2 = p1;
 			for (int i = 0; i < numberOfBreaks; i++)
 			{
-				vector = p0 + a * (1f / (float)numberOfBreaks) * i + Vector2.one * rand.RandomRange(0f - staggerRange, staggerRange);
-				list.AddRange(GetLine(p2, vector));
-				p2 = vector;
+				vector2 = p0 + vector * (1f / (float)numberOfBreaks) * i + Vector2.one * rand.RandomRange(0f - staggerRange, staggerRange);
+				list.AddRange(GetLine(p2, vector2));
+				p2 = vector2;
 			}
-			list.AddRange(GetLine(vector, p1));
+			list.AddRange(GetLine(vector2, p1));
 			return list;
 		}
 

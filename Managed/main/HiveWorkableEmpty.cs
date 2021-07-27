@@ -4,11 +4,7 @@ using UnityEngine;
 [AddComponentMenu("KMonoBehaviour/Workable/HiveWorkableEmpty")]
 public class HiveWorkableEmpty : Workable
 {
-	private static readonly HashedString[] WORK_ANIMS = new HashedString[2]
-	{
-		"working_pre",
-		"working_loop"
-	};
+	private static readonly HashedString[] WORK_ANIMS = new HashedString[2] { "working_pre", "working_loop" };
 
 	private static readonly HashedString PST_ANIM = new HashedString("working_pst");
 
@@ -21,13 +17,7 @@ public class HiveWorkableEmpty : Workable
 		skillExperienceSkillGroup = Db.Get().SkillGroups.Basekeeping.Id;
 		skillExperienceMultiplier = SKILLS.PART_DAY_EXPERIENCE;
 		workAnims = WORK_ANIMS;
-		workingPstComplete = new HashedString[1]
-		{
-			PST_ANIM
-		};
-		workingPstFailed = new HashedString[1]
-		{
-			PST_ANIM
-		};
+		workingPstComplete = new HashedString[1] { PST_ANIM };
+		workingPstFailed = new HashedString[1] { PST_ANIM };
 	}
 }

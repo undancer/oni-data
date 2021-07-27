@@ -17,16 +17,7 @@ public class SaveConfigurationScreen
 	[SerializeField]
 	private LocText autosaveDescriptionLabel;
 
-	private int[] sliderValueToCycleCount = new int[7]
-	{
-		-1,
-		50,
-		20,
-		10,
-		5,
-		2,
-		1
-	};
+	private int[] sliderValueToCycleCount = new int[7] { -1, 50, 20, 10, 5, 2, 1 };
 
 	private Vector2I[] sliderValueToResolution = new Vector2I[7]
 	{

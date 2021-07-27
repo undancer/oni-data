@@ -81,23 +81,23 @@ public class RequiresFoundation : KGameObjectComponentManager<RequiresFoundation
 
 	protected override void OnCleanUp(HandleVector<int>.Handle h)
 	{
-		Data data = GetData(h);
-		GameScenePartitioner.Instance.Free(ref data.solidPartitionerEntry);
-		GameScenePartitioner.Instance.Free(ref data.buildingPartitionerEntry);
-		SetData(h, data);
+		Data new_data = GetData(h);
+		GameScenePartitioner.Instance.Free(ref new_data.solidPartitionerEntry);
+		GameScenePartitioner.Instance.Free(ref new_data.buildingPartitionerEntry);
+		SetData(h, new_data);
 	}
 
 	private void OnSolidChanged(HandleVector<int>.Handle h)
 	{
-		Data data = GetData(h);
-		SimCellOccupier component = data.go.GetComponent<SimCellOccupier>();
+		Data new_data = GetData(h);
+		SimCellOccupier component = new_data.go.GetComponent<SimCellOccupier>();
 		if (component == null || component.IsReady())
 		{
-			Rotatable component2 = data.go.GetComponent<Rotatable>();
+			Rotatable component2 = new_data.go.GetComponent<Rotatable>();
 			Orientation orientation = ((component2 != null) ? component2.GetOrientation() : Orientation.Neutral);
-			bool is_solid = BuildingDef.CheckFoundation(data.cell, orientation, data.buildRule, data.width, data.height);
-			UpdateSolidState(is_solid, ref data);
-			SetData(h, data);
+			bool is_solid = BuildingDef.CheckFoundation(new_data.cell, orientation, new_data.buildRule, new_data.width, new_data.height);
+			UpdateSolidState(is_solid, ref new_data);
+			SetData(h, new_data);
 		}
 	}
 

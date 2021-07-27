@@ -3,23 +3,11 @@ using UnityEngine;
 
 public class CodexTextWithTooltip : CodexWidget<CodexTextWithTooltip>
 {
-	public string text
-	{
-		get;
-		set;
-	}
+	public string text { get; set; }
 
-	public string tooltip
-	{
-		get;
-		set;
-	}
+	public string tooltip { get; set; }
 
-	public CodexTextStyle style
-	{
-		get;
-		set;
-	}
+	public CodexTextStyle style { get; set; }
 
 	public string stringKey
 	{

@@ -7,11 +7,7 @@ public class EntityPrefabs : KMonoBehaviour
 
 	public GameObject ForegroundLayer;
 
-	public static EntityPrefabs Instance
-	{
-		get;
-		private set;
-	}
+	public static EntityPrefabs Instance { get; private set; }
 
 	public static void DestroyInstance()
 	{

@@ -29,10 +29,10 @@ public class ConduitFlow : IConduitFlow
 			public void Initialize(int conduitCount, ConduitFlow manager)
 			{
 				Initialize(conduitCount);
-				Task[] tasks = base.tasks;
-				for (int i = 0; i < tasks.Length; i++)
+				Task[] array = tasks;
+				for (int i = 0; i < array.Length; i++)
 				{
-					tasks[i].manager = manager;
+					array[i].manager = manager;
 				}
 			}
 		}
@@ -783,9 +783,9 @@ public class ConduitFlow : IConduitFlow
 
 		public float GetEffectiveCapacity(float maximum_capacity)
 		{
-			float mass = this.mass;
-			DebugUtil.DevAssert(mass <= maximum_capacity, $"Effective mass cannot be greater than capacity! mass={mass}, capcity={maximum_capacity}");
-			return Mathf.Max(0f, maximum_capacity - mass);
+			float num = mass;
+			DebugUtil.DevAssert(num <= maximum_capacity, $"Effective mass cannot be greater than capacity! mass={num}, capcity={maximum_capacity}");
+			return Mathf.Max(0f, maximum_capacity - num);
 		}
 
 		public void AddMass(float amount)
@@ -1690,11 +1690,7 @@ public class ConduitFlow : IConduitFlow
 
 		private DictionaryPool<int, Sink, ConduitFlow>.PooledDictionary sinks;
 
-		public bool continue_updating
-		{
-			get;
-			private set;
-		}
+		public bool continue_updating { get; private set; }
 
 		public UpdateNetworkTask(Network network)
 		{

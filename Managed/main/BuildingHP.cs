@@ -87,8 +87,8 @@ public class BuildingHP : Workable
 				component.interactable = false;
 				component.blocksRaycasts = false;
 				progressBar.Update();
-				float d = 0.15f;
-				Vector3 position = base.gameObject.transform.GetPosition() + Vector3.down * d;
+				float num = 0.15f;
+				Vector3 position = base.gameObject.transform.GetPosition() + Vector3.down * num;
 				position.z += 0.05f;
 				Rotatable component2 = GetComponent<Rotatable>();
 				if (component2 == null || component2.GetOrientation() == Orientation.Neutral || base.smi.master.building.Def.WidthInCells < 2 || base.smi.master.building.Def.HeightInCells < 2)
@@ -123,8 +123,8 @@ public class BuildingHP : Workable
 		{
 			if (base.master.damageSourceInfo.takeDamageEffect != 0)
 			{
-				BuildingDef def = base.master.GetComponent<BuildingComplete>().Def;
-				int cell = Grid.OffsetCell(Grid.PosToCell(base.master), 0, def.HeightInCells - 1);
+				BuildingDef buildingDef = base.master.GetComponent<BuildingComplete>().Def;
+				int cell = Grid.OffsetCell(Grid.PosToCell(base.master), 0, buildingDef.HeightInCells - 1);
 				Game.Instance.SpawnFX(base.master.damageSourceInfo.takeDamageEffect, cell, 0f);
 			}
 		}
@@ -135,9 +135,9 @@ public class BuildingHP : Workable
 			{
 				return null;
 			}
-			BuildingDef def = base.master.GetComponent<BuildingComplete>().Def;
+			BuildingDef buildingDef = base.master.GetComponent<BuildingComplete>().Def;
 			Vector3 zero = Vector3.zero;
-			return new FXAnim.Instance(offset: (def.HeightInCells > 1) ? new Vector3(0f, def.HeightInCells - 1, 0f) : new Vector3(0f, 0.5f, 0f), master: base.smi.master, kanim_file: base.master.damageSourceInfo.fullDamageEffectName, anim: "idle", mode: KAnim.PlayMode.Loop, tint_colour: Color.white);
+			return new FXAnim.Instance(offset: (buildingDef.HeightInCells <= 1) ? new Vector3(0f, 0.5f, 0f) : new Vector3(0f, buildingDef.HeightInCells - 1, 0f), master: base.smi.master, kanim_file: base.master.damageSourceInfo.fullDamageEffectName, anim: "idle", mode: KAnim.PlayMode.Loop, tint_colour: Color.white);
 		}
 
 		public void SetCrackOverlayValue(float value)

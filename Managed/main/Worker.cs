@@ -15,11 +15,7 @@ public class Worker : KMonoBehaviour
 
 	public class StartWorkInfo
 	{
-		public Workable workable
-		{
-			get;
-			set;
-		}
+		public Workable workable { get; set; }
 
 		public StartWorkInfo(Workable workable)
 		{
@@ -69,17 +65,9 @@ public class Worker : KMonoBehaviour
 
 	private Reactable passerbyReactable;
 
-	public State state
-	{
-		get;
-		private set;
-	}
+	public State state { get; private set; }
 
-	public StartWorkInfo startWorkInfo
-	{
-		get;
-		private set;
-	}
+	public StartWorkInfo startWorkInfo { get; private set; }
 
 	public Workable workable
 	{
@@ -357,7 +345,7 @@ public class Worker : KMonoBehaviour
 			}
 			Debug.LogError(base.name + "." + text + ".state should be idle but instead it's:" + state);
 		}
-		string name = workable.GetType().Name;
+		string text2 = workable.GetType().Name;
 		try
 		{
 			base.gameObject.AddTag(GameTags.PerformingWorkRequest);
@@ -421,8 +409,8 @@ public class Worker : KMonoBehaviour
 		}
 		catch (Exception ex)
 		{
-			string str = "Exception in: Worker.StartWork(" + name + ")";
-			DebugUtil.LogErrorArgs(this, str + "\n" + ex.ToString());
+			string text3 = "Exception in: Worker.StartWork(" + text2 + ")";
+			DebugUtil.LogErrorArgs(this, text3 + "\n" + ex.ToString());
 			throw;
 		}
 	}

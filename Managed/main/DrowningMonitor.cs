@@ -62,10 +62,7 @@ public class DrowningMonitor : KMonoBehaviour, IWiltCause, ISlicedSim1000ms
 
 	public bool Drowning => drowning;
 
-	WiltCondition.Condition[] IWiltCause.Conditions => new WiltCondition.Condition[1]
-	{
-		WiltCondition.Condition.Drowning
-	};
+	WiltCondition.Condition[] IWiltCause.Conditions => new WiltCondition.Condition[1] { WiltCondition.Condition.Drowning };
 
 	public string WiltStateString
 	{

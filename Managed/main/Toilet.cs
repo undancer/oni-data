@@ -154,11 +154,7 @@ public class Toilet : StateMachineComponent<Toilet.StatesInstance>, ISaveLoadabl
 
 		public State fullWaitingForClean;
 
-		private static readonly HashedString[] FULL_ANIMS = new HashedString[2]
-		{
-			"full_pre",
-			"full"
-		};
+		private static readonly HashedString[] FULL_ANIMS = new HashedString[2] { "full_pre", "full" };
 
 		public IntParameter flushes = new IntParameter(0);
 

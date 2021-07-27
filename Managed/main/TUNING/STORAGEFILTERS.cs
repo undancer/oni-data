@@ -11,15 +11,9 @@ namespace TUNING
 			GameTags.Medicine
 		};
 
-		public static List<Tag> BAGABLE_CREATURES = new List<Tag>
-		{
-			GameTags.BagableCreature
-		};
+		public static List<Tag> BAGABLE_CREATURES = new List<Tag> { GameTags.BagableCreature };
 
-		public static List<Tag> SWIMMING_CREATURES = new List<Tag>
-		{
-			GameTags.SwimmingCreature
-		};
+		public static List<Tag> SWIMMING_CREATURES = new List<Tag> { GameTags.SwimmingCreature };
 
 		public static List<Tag> NOT_EDIBLE_SOLIDS = new List<Tag>
 		{
@@ -46,10 +40,7 @@ namespace TUNING
 			GameTags.Other
 		};
 
-		public static List<Tag> LIQUIDS = new List<Tag>
-		{
-			GameTags.Liquid
-		};
+		public static List<Tag> LIQUIDS = new List<Tag> { GameTags.Liquid };
 
 		public static List<Tag> GASES = new List<Tag>
 		{

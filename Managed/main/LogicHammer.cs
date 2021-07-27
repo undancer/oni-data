@@ -38,21 +38,11 @@ public class LogicHammer : Switch
 
 	private bool wasOn;
 
-	protected static readonly HashedString[] ON_HIT_ANIMS = new HashedString[1]
-	{
-		"on_hit"
-	};
+	protected static readonly HashedString[] ON_HIT_ANIMS = new HashedString[1] { "on_hit" };
 
-	protected static readonly HashedString[] ON_MISS_ANIMS = new HashedString[1]
-	{
-		"on_miss"
-	};
+	protected static readonly HashedString[] ON_MISS_ANIMS = new HashedString[1] { "on_miss" };
 
-	protected static readonly HashedString[] OFF_ANIMS = new HashedString[2]
-	{
-		"off_pre",
-		"off"
-	};
+	protected static readonly HashedString[] OFF_ANIMS = new HashedString[2] { "off_pre", "off" };
 
 	protected override void OnSpawn()
 	{
@@ -183,15 +173,15 @@ public class LogicHammer : Switch
 			}
 			if (text != null)
 			{
-				string name = StringFormatter.Combine(SOUND_EVENT_PREFIX, text);
-				name = GlobalAssets.GetSound(name, force_no_warning: true);
-				if (name == null)
+				string text2 = StringFormatter.Combine(SOUND_EVENT_PREFIX, text);
+				text2 = GlobalAssets.GetSound(text2, force_no_warning: true);
+				if (text2 == null)
 				{
-					name = GlobalAssets.GetSound(DEFAULT_NO_SOUND_EVENT);
+					text2 = GlobalAssets.GetSound(DEFAULT_NO_SOUND_EVENT);
 				}
 				Vector3 position = base.transform.position;
 				position.z = 0f;
-				EventInstance instance = KFMOD.BeginOneShot(name, position);
+				EventInstance instance = KFMOD.BeginOneShot(text2, position);
 				if (!float.IsNaN(num))
 				{
 					instance.setParameterByName(PARAMETER_NAME, num);

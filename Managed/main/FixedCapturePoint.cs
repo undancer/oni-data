@@ -31,17 +31,9 @@ public class FixedCapturePoint : GameStateMachine<FixedCapturePoint, FixedCaptur
 	[SerializationConfig(MemberSerialization.OptIn)]
 	public new class Instance : GameInstance, ICheckboxControl
 	{
-		public FixedCapturableMonitor.Instance targetCapturable
-		{
-			get;
-			private set;
-		}
+		public FixedCapturableMonitor.Instance targetCapturable { get; private set; }
 
-		public bool shouldCreatureGoGetCaptured
-		{
-			get;
-			private set;
-		}
+		public bool shouldCreatureGoGetCaptured { get; private set; }
 
 		string ICheckboxControl.CheckboxTitleKey => UI.UISIDESCREENS.CAPTURE_POINT_SIDE_SCREEN.TITLE.key.String;
 

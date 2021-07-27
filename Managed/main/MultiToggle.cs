@@ -83,11 +83,11 @@ public class MultiToggle : KMonoBehaviour, IPointerClickHandler, IEventSystemHan
 		catch
 		{
 			string text = base.gameObject.name;
-			Transform transform = base.transform;
-			while (transform.parent != null)
+			Transform parent = base.transform;
+			while (parent.parent != null)
 			{
-				text = text.Insert(0, transform.name + ">");
-				transform = transform.parent;
+				text = text.Insert(0, parent.name + ">");
+				parent = parent.parent;
 			}
 			Debug.LogError("Multi Toggle state index out of range: " + text + " idx:" + new_state_index, base.gameObject);
 		}

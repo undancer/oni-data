@@ -3856,10 +3856,8 @@ msgstr "打印舱太少{progress}"
 msgctxt ""
 "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES."
 "TOOLTIP"
-msgid ""
-"This device relies on a sufficiently large network of activated Printing "
-"Pods{progress}"
-msgstr "这台设备需要依赖一个足够大的激活的打印舱网络{progress}"
+msgid "This device relies on a network of activated Printing Pods {progress}"
+msgstr "这台设备需要依赖激活的打印舱网络{progress}"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_LOS.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_LOS.NAME"
@@ -3892,13 +3890,13 @@ msgstr "充能进程：{progress}"
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.TOOLTIP"
 msgid ""
 "This device must be charged with a high number of Radbolts. Operation can "
-"commence once this device is fully charged."
-msgstr "这台设备必须用大量的辐射粒子充能。充能完毕后即可操作。"
+"commence once this device is fully charged"
+msgstr "这台设备必须用大量的辐射粒子充能。充能完毕后即可操作"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION"
-msgid "Temporal Ripper fully charged"
-msgstr "时空撕裂器已充能完毕"
+msgid "Temporal Tear Opener fully charged"
+msgstr "时空裂口开启器已充能完毕"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION_TOOLTIP
 msgctxt ""
@@ -15409,8 +15407,8 @@ msgstr "牢固的门，配有复杂的基因锁。"
 
 #. STRINGS.BUILDINGS.PREFABS.TEMPORALTEARANALYZER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.TEMPORALTEARANALYZER.NAME"
-msgid "Anomaly Scanner"
-msgstr "异常扫描仪"
+msgid "Temporal Tear Scanner"
+msgstr "时空裂口扫描器"
 
 #. STRINGS.BUILDINGS.PREFABS.TEMPORALTEAROPENER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.TEMPORALTEAROPENER.DESC"
@@ -15430,8 +15428,8 @@ msgstr "牢固的门，配有复杂的基因锁。"
 
 #. STRINGS.BUILDINGS.PREFABS.TEMPORALTEAROPENER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.TEMPORALTEAROPENER.NAME"
-msgid "Temporal Ripper"
-msgstr "时空撕裂器"
+msgid "Temporal Tear Opener"
+msgstr "时空裂口开启器"
 
 #. STRINGS.BUILDINGS.PREFABS.TEMPORALTEAROPENER.SIDESCREEN.TEXT
 msgctxt "STRINGS.BUILDINGS.PREFABS.TEMPORALTEAROPENER.SIDESCREEN.TEXT"
@@ -30752,8 +30750,8 @@ msgstr "食物供应较低"
 
 #. STRINGS.CREATURES.STATUSITEMS.HIVEHUNGRY.TOOLTIP
 msgctxt "STRINGS.CREATURES.STATUSITEMS.HIVEHUNGRY.TOOLTIP"
-msgid "The food reserves in this hive are running low."
-msgstr "蜂巢中储备的食物不多了。"
+msgid "The food reserves in this hive are running low"
+msgstr "蜂巢中储备的食物不多了"
 
 #. STRINGS.CREATURES.STATUSITEMS.HOT.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.HOT.NAME"
@@ -31271,7 +31269,7 @@ msgstr "这只小动物很饿，如果没人喂食很快就要饿死了"
 #. STRINGS.CREATURES.STATUSITEMS.STERILIZINGATMOSPHERE.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.STERILIZINGATMOSPHERE.NAME"
 msgid "Sterile Atmosphere"
-msgstr "抑腐环境"
+msgstr "防腐环境"
 
 #. STRINGS.CREATURES.STATUSITEMS.STERILIZINGATMOSPHERE.TOOLTIP
 msgctxt "STRINGS.CREATURES.STATUSITEMS.STERILIZINGATMOSPHERE.TOOLTIP"
@@ -38093,7 +38091,7 @@ msgstr "正常环境"
 #. STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.STERILE
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTATMOSPHERE.STERILE"
 msgid "Sterile Atmosphere"
-msgstr "抑腐环境"
+msgstr "防腐环境"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.FROZEN
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ROTTEMPERATURE.FROZEN"
@@ -53372,8 +53370,8 @@ msgstr ""
 
 #. STRINGS.MISC.STATUSITEMS.TEARCLOSED.NAME
 msgctxt "STRINGS.MISC.STATUSITEMS.TEARCLOSED.NAME"
-msgid "Spacetime passage closed"
-msgstr "时空通道关闭"
+msgid "Temporal Tear closed"
+msgstr "时空裂口关闭"
 
 #. STRINGS.MISC.STATUSITEMS.TEARCLOSED.TOOLTIP
 msgctxt "STRINGS.MISC.STATUSITEMS.TEARCLOSED.TOOLTIP"
@@ -53382,8 +53380,8 @@ msgstr "也许某些科技能够打开这个通道"
 
 #. STRINGS.MISC.STATUSITEMS.TEAROPEN.NAME
 msgctxt "STRINGS.MISC.STATUSITEMS.TEAROPEN.NAME"
-msgid "Spacetime passage open"
-msgstr "时空通道开启"
+msgid "Temporal Tear open"
+msgstr "时空裂口开启"
 
 #. STRINGS.MISC.STATUSITEMS.TEAROPEN.TOOLTIP
 msgctxt "STRINGS.MISC.STATUSITEMS.TEAROPEN.TOOLTIP"
@@ -68853,7 +68851,7 @@ msgid ""
 "for <b>total food preservation</b>.</indent>"
 msgstr ""
 "•<indent=20px>冰箱对于前期食物储存更高效了。</indent>\n"
-"•<indent=20px>需要合适的冷藏温度和抑腐气体才能<b>完全保存住食物</b>。</"
+"•<indent=20px>需要合适的冷藏温度和防腐气体才能<b>完全保存住食物</b>。</"
 "indent>"
 
 #. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_SIMULATION
@@ -79660,8 +79658,8 @@ msgstr "未分析工艺品"
 msgctxt ""
 "STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN."
 "NO_ARTIFACTS_DISCOVERED_TOOLTIP"
-msgid "A skilled artist can analyze artifacts."
-msgstr "一名熟练的艺术家能够分析工艺品。"
+msgid "A skilled artist can analyze artifacts"
+msgstr "一名熟练的艺术家能够分析工艺品"
 
 #. STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP
 msgctxt "STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP"
@@ -85970,13 +85968,14 @@ msgstr "粘性小行星"
 #. STRINGS.WORLDS.REGOLITHMOONLET.DESCRIPTION
 msgctxt "STRINGS.WORLDS.REGOLITHMOONLET.DESCRIPTION"
 msgid ""
-"A small, dusty world with plenty of craters.\n"
+"A small, cold world with plenty of craters.\n"
 "\n"
-"<smallcaps>Regolith Asteroids have frequent meteor showers</smallcaps>"
+"<smallcaps>Regolith Asteroids have frequent meteor showers and are chalk "
+"full of Regolith, an incredibly useful filtration material. </smallcaps>"
 msgstr ""
 "一个满是尘土，有许多陨石坑的小型世界。\n"
 "\n"
-"<smallcaps>浮土小行星有频繁的陨石雨</smallcaps>"
+"<smallcaps>浮土小行星有频繁的陨石雨，表面的浮土可用作过滤材料。</smallcaps>"
 
 #. STRINGS.WORLDS.REGOLITHMOONLET.NAME
 msgctxt "STRINGS.WORLDS.REGOLITHMOONLET.NAME"
@@ -86343,6 +86342,22 @@ msgstr ""
 msgctxt "STRINGS.WORLDS.WATERMOONLET.NAME"
 msgid "Water Asteroid"
 msgstr "水域小行星"
+
+#~ msgctxt "STRINGS.BUILDINGS.PREFABS.TEMPORALTEARANALYZER.NAME"
+#~ msgid "Anomaly Scanner"
+#~ msgstr "异常扫描仪"
+
+#~ msgctxt "STRINGS.BUILDINGS.PREFABS.TEMPORALTEAROPENER.NAME"
+#~ msgid "Temporal Ripper"
+#~ msgstr "时空撕裂器"
+
+#~ msgctxt "STRINGS.MISC.STATUSITEMS.TEARCLOSED.NAME"
+#~ msgid "Spacetime passage closed"
+#~ msgstr "时空通道关闭"
+
+#~ msgctxt "STRINGS.MISC.STATUSITEMS.TEAROPEN.NAME"
+#~ msgid "Spacetime passage open"
+#~ msgstr "时空通道开启"
 
 #~ msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_TARGET.NAME"
 #~ msgid "Target: None"

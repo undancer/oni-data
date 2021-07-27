@@ -160,10 +160,10 @@ public class TableRow : KMonoBehaviour
 			Vector2 vector3 = (rectTransform.anchorMin = (rectTransform.anchorMax = new Vector2(0f, 1f)));
 			rectTransform.sizeDelta = new Vector2(width, rectTransform.sizeDelta.y);
 			RectTransform rectTransform2 = scrollers[scrollerBorder.Key].transform.parent.rectTransform();
-			Vector3 a = scrollers[scrollerBorder.Key].transform.parent.rectTransform().GetLocalPosition() - new Vector3(rectTransform2.sizeDelta.x / 2f, -1f * (rectTransform2.sizeDelta.y / 2f), 0f);
-			a.y = 0f;
+			Vector3 vector4 = scrollers[scrollerBorder.Key].transform.parent.rectTransform().GetLocalPosition() - new Vector3(rectTransform2.sizeDelta.x / 2f, -1f * (rectTransform2.sizeDelta.y / 2f), 0f);
+			vector4.y = 0f;
 			rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, 374f);
-			rectTransform.SetLocalPosition(a + Vector3.up * rectTransform.GetLocalPosition().y + Vector3.up * (0f - rectTransform.anchoredPosition.y));
+			rectTransform.SetLocalPosition(vector4 + Vector3.up * rectTransform.GetLocalPosition().y + Vector3.up * (0f - rectTransform.anchoredPosition.y));
 		}
 	}
 

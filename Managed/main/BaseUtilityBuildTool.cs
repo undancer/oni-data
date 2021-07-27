@@ -459,8 +459,8 @@ public class BaseUtilityBuildTool : DragTool
 			if (def.ReplacementLayer != ObjectLayer.NumLayers && !DebugHandler.InstantBuildMode && (!Game.Instance.SandboxModeActive || !SandboxToolParameterMenu.instance.settings.InstantBuild) && def.IsValidBuildLocation(null, vector, Orientation.Neutral))
 			{
 				GameObject gameObject2 = Grid.Objects[pathNode.cell, (int)def.TileLayer];
-				GameObject x = Grid.Objects[pathNode.cell, (int)def.ReplacementLayer];
-				if (gameObject2 != null && x == null)
+				GameObject gameObject3 = Grid.Objects[pathNode.cell, (int)def.ReplacementLayer];
+				if (gameObject2 != null && gameObject3 == null)
 				{
 					BuildingComplete component3 = gameObject2.GetComponent<BuildingComplete>();
 					bool flag2 = gameObject2.GetComponent<PrimaryElement>().Element.tag != selectedElements[0];

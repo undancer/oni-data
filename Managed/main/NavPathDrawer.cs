@@ -11,11 +11,7 @@ public class NavPathDrawer : KMonoBehaviour
 
 	private Navigator navigator;
 
-	public static NavPathDrawer Instance
-	{
-		get;
-		private set;
-	}
+	public static NavPathDrawer Instance { get; private set; }
 
 	public static void DestroyInstance()
 	{
@@ -114,12 +110,12 @@ public class NavPathDrawer : KMonoBehaviour
 				PathFinder.PotentialPath potential_path = new PathFinder.PotentialPath(Grid.PosToCell(component), component.CurrentNavType, component.flags);
 				PathFinder.Path path = default(PathFinder.Path);
 				PathFinder.UpdatePath(component.NavGrid, component.GetCurrentAbilities(), potential_path, PathFinderQueries.cellQuery.Reset(mouseCell), ref path);
-				string str = "";
-				str = str + "Source: " + Grid.PosToCell(component) + "\n";
-				str = str + "Dest: " + mouseCell + "\n";
-				str = str + "Cost: " + path.cost;
+				string text = "";
+				text = text + "Source: " + Grid.PosToCell(component) + "\n";
+				text = text + "Dest: " + mouseCell + "\n";
+				text = text + "Cost: " + path.cost;
 				DrawPath(path, component.GetComponent<KAnimControllerBase>().GetPivotSymbolPosition(), Color.green);
-				DebugText.Instance.Draw(str, Grid.CellToPosCCC(mouseCell, Grid.SceneLayer.Move), Color.white);
+				DebugText.Instance.Draw(text, Grid.CellToPosCCC(mouseCell, Grid.SceneLayer.Move), Color.white);
 			}
 		}
 	}

@@ -12,35 +12,15 @@ public class SteamUGCService : MonoBehaviour
 	{
 		public Texture2D previewImage;
 
-		public string title
-		{
-			get;
-			private set;
-		}
+		public string title { get; private set; }
 
-		public string description
-		{
-			get;
-			private set;
-		}
+		public string description { get; private set; }
 
-		public PublishedFileId_t fileId
-		{
-			get;
-			private set;
-		}
+		public PublishedFileId_t fileId { get; private set; }
 
-		public ulong lastUpdateTime
-		{
-			get;
-			private set;
-		}
+		public ulong lastUpdateTime { get; private set; }
 
-		public List<string> tags
-		{
-			get;
-			private set;
-		}
+		public List<string> tags { get; private set; }
 
 		public Mod(SteamUGCDetails_t item, Texture2D previewImage)
 		{
@@ -94,14 +74,7 @@ public class SteamUGCService : MonoBehaviour
 
 	private Dictionary<PublishedFileId_t, int> retry_counts = new Dictionary<PublishedFileId_t, int>();
 
-	private static readonly string[] previewFileNames = new string[5]
-	{
-		"preview.png",
-		"Preview.png",
-		"PREVIEW.png",
-		".png",
-		".jpg"
-	};
+	private static readonly string[] previewFileNames = new string[5] { "preview.png", "Preview.png", "PREVIEW.png", ".png", ".jpg" };
 
 	private List<IClient> clients = new List<IClient>();
 
@@ -358,14 +331,7 @@ public class SteamUGCService : MonoBehaviour
 		}
 		case EResult.k_EResultBusy:
 		{
-			string[] obj2 = new string[5]
-			{
-				"Steam: [OnSteamUGCQueryDetailsCompleted] - handle: ",
-				null,
-				null,
-				null,
-				null
-			};
+			string[] obj2 = new string[5] { "Steam: [OnSteamUGCQueryDetailsCompleted] - handle: ", null, null, null, null };
 			UGCQueryHandle_t handle = pCallback.m_handle;
 			obj2[1] = handle.ToString();
 			obj2[2] = " -- Result: ";
@@ -376,19 +342,7 @@ public class SteamUGCService : MonoBehaviour
 		}
 		default:
 		{
-			string[] obj = new string[10]
-			{
-				"Steam: [OnSteamUGCQueryDetailsCompleted] - handle: ",
-				null,
-				null,
-				null,
-				null,
-				null,
-				null,
-				null,
-				null,
-				null
-			};
+			string[] obj = new string[10] { "Steam: [OnSteamUGCQueryDetailsCompleted] - handle: ", null, null, null, null, null, null, null, null, null };
 			UGCQueryHandle_t handle = pCallback.m_handle;
 			obj[1] = handle.ToString();
 			obj[2] = " -- Result: ";

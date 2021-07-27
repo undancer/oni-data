@@ -26,32 +26,20 @@ public class BrainScheduler : KMonoBehaviour, IRenderEveryTick, ICPULoad
 
 		private int nextPathProbeBrain;
 
-		public Tag tag
-		{
-			get;
-			private set;
-		}
+		public Tag tag { get; private set; }
 
-		public int probeSize
-		{
-			get;
-			private set;
-		}
+		public int probeSize { get; private set; }
 
-		public int probeCount
-		{
-			get;
-			private set;
-		}
+		public int probeCount { get; private set; }
 
 		protected BrainGroup(Tag tag)
 		{
 			this.tag = tag;
 			probeSize = InitialProbeSize();
 			probeCount = InitialProbeCount();
-			string str = tag.ToString();
-			increaseLoadLabel = "IncLoad" + str;
-			decreaseLoadLabel = "DecLoad" + str;
+			string text = tag.ToString();
+			increaseLoadLabel = "IncLoad" + text;
+			decreaseLoadLabel = "DecLoad" + text;
 		}
 
 		public void AddBrain(Brain brain)
@@ -78,31 +66,31 @@ public class BrainScheduler : KMonoBehaviour, IRenderEveryTick, ICPULoad
 			num += num2 - probeCount;
 			probeCount = num2;
 			float num3 = Math.Min(1f, (float)probeCount / (float)CPUBudget.coreCount);
-			float num4 = num3 * (float)this.probeSize;
-			float num5 = num3 * (float)this.probeSize;
+			float num4 = num3 * (float)probeSize;
+			float num5 = num3 * (float)probeSize;
 			float num6 = currentFrameTime / num5;
 			float num7 = frameTimeDelta / num6;
 			if (num == 0)
 			{
 				float num8 = num4 + num7 / (float)CPUBudget.coreCount;
 				int num9 = MathUtil.Clamp(MinProbeSize(), IdealProbeSize(), (int)(num8 / num3));
-				num += num9 - this.probeSize;
-				this.probeSize = num9;
+				num += num9 - probeSize;
+				probeSize = num9;
 			}
 			if (num == 0)
 			{
 				int num10 = Math.Max(1, (int)num3 + (flag ? 1 : (-1)));
-				int probeSize = MathUtil.Clamp(MinProbeSize(), IdealProbeSize(), (int)((num5 + num7) / (float)num10));
-				int num11 = Math.Min(brains.Count, num10 * CPUBudget.coreCount);
-				num += num11 - probeCount;
-				probeCount = num11;
-				this.probeSize = probeSize;
+				int num11 = MathUtil.Clamp(MinProbeSize(), IdealProbeSize(), (int)((num5 + num7) / (float)num10));
+				int num12 = Math.Min(brains.Count, num10 * CPUBudget.coreCount);
+				num += num12 - probeCount;
+				probeCount = num12;
+				probeSize = num11;
 			}
 			if (num == 0 && flag)
 			{
-				int num12 = this.probeSize + ProbeSizeStep();
-				num += num12 - this.probeSize;
-				this.probeSize = num12;
+				int num13 = probeSize + ProbeSizeStep();
+				num += num13 - probeSize;
+				probeSize = num13;
 			}
 			if (num >= 0 && num <= 0)
 			{

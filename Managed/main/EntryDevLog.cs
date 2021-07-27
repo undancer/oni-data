@@ -16,29 +16,13 @@ public class EntryDevLog
 			YAMLData
 		}
 
-		public ActionType actionType
-		{
-			get;
-			private set;
-		}
+		public ActionType actionType { get; private set; }
 
-		public string target
-		{
-			get;
-			private set;
-		}
+		public string target { get; private set; }
 
-		public object newValue
-		{
-			get;
-			private set;
-		}
+		public object newValue { get; private set; }
 
-		public string author
-		{
-			get;
-			private set;
-		}
+		public string author { get; private set; }
 
 		public ModificationRecord(ActionType actionType, string target, object newValue, string author)
 		{
@@ -69,31 +53,11 @@ public class EntryDevLog
 	private string TrimAuthor()
 	{
 		string text = "";
-		string[] array = new string[7]
-		{
-			"Invoke",
-			"CreateInstance",
-			"AwakeInternal",
-			"Internal",
-			"<>",
-			"YamlDotNet",
-			"Deserialize"
-		};
+		string[] array = new string[7] { "Invoke", "CreateInstance", "AwakeInternal", "Internal", "<>", "YamlDotNet", "Deserialize" };
 		string[] array2 = new string[13]
 		{
-			".ctor",
-			"Trigger",
-			"AddContentContainerRange",
-			"AddContentContainer",
-			"InsertContentContainer",
-			"KInstantiateUI",
-			"Start",
-			"InitializeComponentAwake",
-			"TrimAuthor",
-			"InsertModificationRecord",
-			"AddModificationRecord",
-			"SetValue",
-			"Write"
+			".ctor", "Trigger", "AddContentContainerRange", "AddContentContainer", "InsertContentContainer", "KInstantiateUI", "Start", "InitializeComponentAwake", "TrimAuthor", "InsertModificationRecord",
+			"AddModificationRecord", "SetValue", "Write"
 		};
 		StackTrace stackTrace = new StackTrace();
 		int num = 0;

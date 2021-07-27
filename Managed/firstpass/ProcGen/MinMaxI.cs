@@ -5,17 +5,9 @@ namespace ProcGen
 	[Serializable]
 	public struct MinMaxI
 	{
-		public int min
-		{
-			get;
-			private set;
-		}
+		public int min { get; private set; }
 
-		public int max
-		{
-			get;
-			private set;
-		}
+		public int max { get; private set; }
 
 		public MinMaxI(int min, int max)
 		{

@@ -167,10 +167,10 @@ public class BrushTool : InterfaceTool
 
 	private static int GetGridDistance(int cell, int center_cell)
 	{
-		Vector2I u = Grid.CellToXY(cell);
-		Vector2I v = Grid.CellToXY(center_cell);
-		Vector2I vector2I = u - v;
-		return Math.Abs(vector2I.x) + Math.Abs(vector2I.y);
+		Vector2I vector2I = Grid.CellToXY(cell);
+		Vector2I vector2I2 = Grid.CellToXY(center_cell);
+		Vector2I vector2I3 = vector2I - vector2I2;
+		return Math.Abs(vector2I3.x) + Math.Abs(vector2I3.y);
 	}
 
 	private void Paint()

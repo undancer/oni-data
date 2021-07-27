@@ -50,12 +50,12 @@ public class VoiceSoundEvent : SoundEvent
 		{
 			vector = SoundEvent.AudioHighlightListenerPosition(vector);
 		}
-		string sound = GlobalAssets.GetSound(assetName, force_no_warning: true);
-		if (!SoundEvent.ShouldPlaySound(controller, sound, looping, is_dynamic: false))
+		string text = GlobalAssets.GetSound(assetName, force_no_warning: true);
+		if (!SoundEvent.ShouldPlaySound(controller, text, looping, is_dynamic: false))
 		{
 			return eventInstance;
 		}
-		if (sound != null)
+		if (text != null)
 		{
 			if (looping)
 			{
@@ -64,15 +64,15 @@ public class VoiceSoundEvent : SoundEvent
 				{
 					Debug.Log(controller.name + " is missing LoopingSounds component. ");
 				}
-				else if (!component3.StartSound(sound))
+				else if (!component3.StartSound(text))
 				{
-					DebugUtil.LogWarningArgs($"SoundEvent has invalid sound [{sound}] on behaviour [{controller.name}]");
+					DebugUtil.LogWarningArgs($"SoundEvent has invalid sound [{text}] on behaviour [{controller.name}]");
 				}
 			}
 			else
 			{
-				eventInstance = SoundEvent.BeginOneShot(sound, vector);
-				if (sound.Contains("sleep_") && controller.GetComponent<Traits>().HasTrait("Snorer"))
+				eventInstance = SoundEvent.BeginOneShot(text, vector);
+				if (text.Contains("sleep_") && controller.GetComponent<Traits>().HasTrait("Snorer"))
 				{
 					eventInstance.setParameterByName("snoring", 1f);
 				}
@@ -113,8 +113,8 @@ public class VoiceSoundEvent : SoundEvent
 			LoopingSounds component = behaviour.GetComponent<LoopingSounds>();
 			if (component != null)
 			{
-				string sound = GlobalAssets.GetSound(GetAssetName(base.name, component), force_no_warning: true);
-				component.StopSound(sound);
+				string asset = GlobalAssets.GetSound(GetAssetName(base.name, component), force_no_warning: true);
+				component.StopSound(asset);
 			}
 		}
 	}

@@ -26,17 +26,11 @@ public class RecentThingConversation : ConversationType
 		},
 		{
 			Conversation.ModeType.Agreement,
-			new List<Conversation.ModeType>
-			{
-				Conversation.ModeType.Satisfaction
-			}
+			new List<Conversation.ModeType> { Conversation.ModeType.Satisfaction }
 		},
 		{
 			Conversation.ModeType.Disagreement,
-			new List<Conversation.ModeType>
-			{
-				Conversation.ModeType.Dissatisfaction
-			}
+			new List<Conversation.ModeType> { Conversation.ModeType.Dissatisfaction }
 		},
 		{
 			Conversation.ModeType.Musing,

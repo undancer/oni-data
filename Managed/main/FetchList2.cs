@@ -56,17 +56,9 @@ public class FetchList2 : IFetchList
 		}
 	}
 
-	public Storage Destination
-	{
-		get;
-		private set;
-	}
+	public Storage Destination { get; private set; }
 
-	public int PriorityMod
-	{
-		get;
-		private set;
-	}
+	public int PriorityMod { get; private set; }
 
 	public FetchList2(Storage destination, ChoreType chore_type)
 	{
@@ -98,10 +90,7 @@ public class FetchList2 : IFetchList
 
 	public void Add(Tag tag, Tag[] required_tags = null, Tag[] forbidden_tags = null, float amount = 1f, FetchOrder2.OperationalRequirement operationalRequirementDEPRECATED = FetchOrder2.OperationalRequirement.None)
 	{
-		Add(new Tag[1]
-		{
-			tag
-		}, required_tags, forbidden_tags, amount, operationalRequirementDEPRECATED);
+		Add(new Tag[1] { tag }, required_tags, forbidden_tags, amount, operationalRequirementDEPRECATED);
 	}
 
 	public float GetMinimumAmount(Tag tag)

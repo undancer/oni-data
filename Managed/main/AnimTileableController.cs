@@ -33,10 +33,7 @@ public class AnimTileableController : KMonoBehaviour
 		base.OnPrefabInit();
 		if (tags == null || tags.Length == 0)
 		{
-			tags = new Tag[1]
-			{
-				GetComponent<KPrefabID>().PrefabTag
-			};
+			tags = new Tag[1] { GetComponent<KPrefabID>().PrefabTag };
 		}
 	}
 

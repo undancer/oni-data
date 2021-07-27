@@ -169,43 +169,19 @@ public class SaveLoader : KMonoBehaviour
 
 	private static bool force_infinity;
 
-	public bool loadedFromSave
-	{
-		get;
-		private set;
-	}
+	public bool loadedFromSave { get; private set; }
 
-	public static SaveLoader Instance
-	{
-		get;
-		private set;
-	}
+	public static SaveLoader Instance { get; private set; }
 
-	public Action<Cluster> OnWorldGenComplete
-	{
-		get;
-		set;
-	}
+	public Action<Cluster> OnWorldGenComplete { get; set; }
 
 	public Cluster ClusterLayout => m_clusterLayout;
 
-	public SaveGame.GameInfo GameInfo
-	{
-		get;
-		private set;
-	}
+	public SaveGame.GameInfo GameInfo { get; private set; }
 
-	public GameSpawnData cachedGSD
-	{
-		get;
-		private set;
-	}
+	public GameSpawnData cachedGSD { get; private set; }
 
-	public WorldDetailSave clusterDetailSave
-	{
-		get;
-		private set;
-	}
+	public WorldDetailSave clusterDetailSave { get; private set; }
 
 	public static void DestroyInstance()
 	{

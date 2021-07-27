@@ -74,10 +74,7 @@ public class OilRefinery : StateMachineComponent<OilRefinery.StatesInstance>
 			workerStatusItem = null;
 			skillExperienceSkillGroup = Db.Get().SkillGroups.Technicals.Id;
 			skillExperienceMultiplier = SKILLS.MOST_DAY_EXPERIENCE;
-			overrideAnims = new KAnimFile[1]
-			{
-				Assets.GetAnim("anim_interacts_oilrefinery_kanim")
-			};
+			overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_oilrefinery_kanim") };
 		}
 
 		protected override void OnSpawn()

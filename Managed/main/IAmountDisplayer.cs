@@ -2,10 +2,7 @@ using Klei.AI;
 
 public interface IAmountDisplayer
 {
-	IAttributeFormatter Formatter
-	{
-		get;
-	}
+	IAttributeFormatter Formatter { get; }
 
 	string GetValueString(Amount master, AmountInstance instance);
 

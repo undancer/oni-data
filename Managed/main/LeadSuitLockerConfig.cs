@@ -30,10 +30,7 @@ public class LeadSuitLockerConfig : IBuildingConfig
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
-		go.AddOrGet<SuitLocker>().OutfitTags = new Tag[1]
-		{
-			GameTags.LeadSuit
-		};
+		go.AddOrGet<SuitLocker>().OutfitTags = new Tag[1] { GameTags.LeadSuit };
 		go.AddOrGet<LeadSuitLocker>();
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
 		conduitConsumer.conduitType = ConduitType.Gas;

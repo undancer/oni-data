@@ -27,11 +27,7 @@ public class UraniumCentrifugeConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		string[] array = new string[2]
-		{
-			"RefinedMetal",
-			"Plastic"
-		};
+		string[] array = new string[2] { "RefinedMetal", "Plastic" };
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: new float[2]
 		{
 			TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5[0],
@@ -82,10 +78,7 @@ public class UraniumCentrifugeConfig : IBuildingConfig
 			time = 40f,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
 			description = STRINGS.BUILDINGS.PREFABS.URANIUMCENTRIFUGE.RECIPE_DESCRIPTION,
-			fabricators = new List<Tag>
-			{
-				TagManager.Create("UraniumCentrifuge")
-			}
+			fabricators = new List<Tag> { TagManager.Create("UraniumCentrifuge") }
 		};
 		Prioritizable.AddRef(go);
 	}

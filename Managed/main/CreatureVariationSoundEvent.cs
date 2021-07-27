@@ -7,16 +7,16 @@ public class CreatureVariationSoundEvent : SoundEvent
 
 	public override void PlaySound(AnimEventManager.EventPlayerData behaviour)
 	{
-		string sound = base.sound;
+		string text = base.sound;
 		CreatureBrain component = behaviour.GetComponent<CreatureBrain>();
 		if (component != null && !string.IsNullOrEmpty(component.symbolPrefix))
 		{
-			string sound2 = GlobalAssets.GetSound(StringFormatter.Combine(component.symbolPrefix, base.name));
-			if (!string.IsNullOrEmpty(sound2))
+			string text2 = GlobalAssets.GetSound(StringFormatter.Combine(component.symbolPrefix, base.name));
+			if (!string.IsNullOrEmpty(text2))
 			{
-				sound = sound2;
+				text = text2;
 			}
 		}
-		PlaySound(behaviour, sound);
+		PlaySound(behaviour, text);
 	}
 }

@@ -195,10 +195,7 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 		gameObject.SetActive(value: false);
 		gameObject.transform.SetPosition(Grid.CellToPosCCC(Grid.PosToCell(base.smi.master.transform.position), Grid.SceneLayer.FXFront));
 		KBatchedAnimController fxAnim = gameObject.AddComponent<KBatchedAnimController>();
-		fxAnim.AnimFiles = new KAnimFile[1]
-		{
-			Assets.GetAnim("hep_impact_kanim")
-		};
+		fxAnim.AnimFiles = new KAnimFile[1] { Assets.GetAnim("hep_impact_kanim") };
 		fxAnim.initialAnim = "graze";
 		gameObject.SetActive(value: true);
 		switch (collisionType)

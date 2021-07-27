@@ -32,16 +32,16 @@ public class Bouncer : MonoBehaviour
 		yield return new WaitForEndOfFrame();
 		for (; bouncesCompleted < numBounces; bouncesCompleted++)
 		{
-			float d = 1f / Mathf.Pow(2f, bouncesCompleted);
-			Vector3 iterationTarget = bounceTarget * d;
-			float num = 1f / (float)(bouncesCompleted + 1);
-			float iterationDuration = durationSecs * num;
+			float num = 1f / Mathf.Pow(2f, bouncesCompleted);
+			Vector3 iterationTarget = bounceTarget * num;
+			float num2 = 1f / (float)(bouncesCompleted + 1);
+			float iterationDuration = durationSecs * num2;
 			float completion = 0f;
 			while (completion < 1f)
 			{
 				Vector3 position = base.gameObject.transform.position;
-				float num2 = Mathf.Min(Time.unscaledDeltaTime, 0.3f);
-				completion = Mathf.Min(completion + num2 / iterationDuration, 1f);
+				float num3 = Mathf.Min(Time.unscaledDeltaTime, 0.3f);
+				completion = Mathf.Min(completion + num3 / iterationDuration, 1f);
 				Vector3 vector = BounceSpline(completion) * iterationTarget;
 				if (bounceTarget.x != 0f)
 				{

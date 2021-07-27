@@ -62,12 +62,12 @@ public class LineLayer : GraphLayer
 		if (fillAreaUnderLine)
 		{
 			InitAreaTexture();
-			Vector2 b = CalculateMin(points);
-			Vector2 vector = CalculateMax(points) - b;
+			Vector2 vector = CalculateMin(points);
+			Vector2 vector2 = CalculateMax(points) - vector;
 			areaTexture.filterMode = FilterMode.Point;
 			for (int j = 0; j < areaTexture.width; j++)
 			{
-				float num = b.x + vector.x * ((float)j / (float)areaTexture.width);
+				float num = vector.x + vector2.x * ((float)j / (float)areaTexture.width);
 				if (points.Length <= 1)
 				{
 					continue;
@@ -81,13 +81,13 @@ public class LineLayer : GraphLayer
 						break;
 					}
 				}
-				Vector2 vector2 = new Vector2(points[num2].first - points[num2 - 1].first, points[num2].second - points[num2 - 1].second);
-				float num3 = (num - points[num2 - 1].first) / vector2.x;
+				Vector2 vector3 = new Vector2(points[num2].first - points[num2 - 1].first, points[num2].second - points[num2 - 1].second);
+				float num3 = (num - points[num2 - 1].first) / vector3.x;
 				bool flag = false;
 				int num4 = -1;
 				for (int num5 = areaTexture.height - 1; num5 >= 0; num5--)
 				{
-					if (!flag && b.y + vector.y * ((float)num5 / (float)areaTexture.height) < points[num2 - 1].second + vector2.y * num3)
+					if (!flag && vector.y + vector2.y * ((float)num5 / (float)areaTexture.height) < points[num2 - 1].second + vector3.y * num3)
 					{
 						flag = true;
 						num4 = num5;
@@ -112,9 +112,9 @@ public class LineLayer : GraphLayer
 				return line.GetComponent<GraphedLine>();
 			}
 		}
-		GameObject gameObject = Util.KInstantiateUI(prefab_line, line_container, force_active: true);
-		gameObject.name = text;
-		GraphedLine component = gameObject.GetComponent<GraphedLine>();
+		GameObject obj = Util.KInstantiateUI(prefab_line, line_container, force_active: true);
+		obj.name = text;
+		GraphedLine component = obj.GetComponent<GraphedLine>();
 		lines.Add(component);
 		return component;
 	}
@@ -277,13 +277,13 @@ public class LineLayer : GraphLayer
 
 	public GraphedLine NewLine(Vector2[] points, string ID = "")
 	{
-		GameObject gameObject = Util.KInstantiateUI(prefab_line, line_container, force_active: true);
+		GameObject obj = Util.KInstantiateUI(prefab_line, line_container, force_active: true);
 		if (ID == "")
 		{
 			ID = lines.Count.ToString();
 		}
-		gameObject.name = $"line_{ID}";
-		GraphedLine component = gameObject.GetComponent<GraphedLine>();
+		obj.name = $"line_{ID}";
+		GraphedLine component = obj.GetComponent<GraphedLine>();
 		if (points.Length > compressDataToPointCount)
 		{
 			Vector2[] array = new Vector2[compressDataToPointCount];

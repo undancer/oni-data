@@ -18,11 +18,11 @@ public class ClosestEdibleSensor : Sensor
 		TagBits forbid_tags = new TagBits(GetComponent<ConsumableConsumer>().forbiddenTags);
 		Pickupable pickupable = Game.Instance.fetchManager.FindEdibleFetchTarget(GetComponent<Storage>(), ref edibleTagBits, ref TagBits.None, ref forbid_tags, 0f);
 		bool flag = edibleInReachButNotPermitted;
-		Edible x = null;
+		Edible edible = null;
 		bool flag2 = false;
 		if (pickupable != null)
 		{
-			x = pickupable.GetComponent<Edible>();
+			edible = pickupable.GetComponent<Edible>();
 			flag2 = true;
 			flag = false;
 		}
@@ -30,12 +30,12 @@ public class ClosestEdibleSensor : Sensor
 		{
 			flag = Game.Instance.fetchManager.FindFetchTarget(GetComponent<Storage>(), ref edibleTagBits, ref TagBits.None, ref TagBits.None, 0f) != null;
 		}
-		if (x != edible || hasEdible != flag2)
+		if (edible != this.edible || hasEdible != flag2)
 		{
-			edible = x;
+			this.edible = edible;
 			hasEdible = flag2;
 			edibleInReachButNotPermitted = flag;
-			Trigger(86328522, edible);
+			Trigger(86328522, this.edible);
 		}
 	}
 

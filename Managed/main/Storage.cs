@@ -123,10 +123,7 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 	};
 
 	[SerializeField]
-	private List<StoredItemModifier> defaultStoredItemModifers = new List<StoredItemModifier>
-	{
-		StoredItemModifier.Hide
-	};
+	private List<StoredItemModifier> defaultStoredItemModifers = new List<StoredItemModifier> { StoredItemModifier.Hide };
 
 	public static readonly List<StoredItemModifier> StandardSealedStorage = new List<StoredItemModifier>
 	{
@@ -178,11 +175,7 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		}
 	}
 
-	public bool allowUIItemRemoval
-	{
-		get;
-		set;
-	}
+	public bool allowUIItemRemoval { get; set; }
 
 	public GameObject this[int idx] => items[idx];
 
@@ -338,20 +331,20 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		GameObject result = go;
 		if (!hide_popups && PopFXManager.Instance != null)
 		{
-			LocString loc_string;
-			Transform transform;
+			LocString locString;
+			Transform target_transform;
 			if (fxPrefix == FXPrefix.Delivered)
 			{
-				loc_string = UI.DELIVERED;
-				transform = base.transform;
+				locString = UI.DELIVERED;
+				target_transform = base.transform;
 			}
 			else
 			{
-				loc_string = UI.PICKEDUP;
-				transform = go.transform;
+				locString = UI.PICKEDUP;
+				target_transform = go.transform;
 			}
-			string text = (Assets.IsTagCountable(go.PrefabID()) ? string.Format(loc_string, (int)component.Units, go.GetProperName()) : string.Format(loc_string, GameUtil.GetFormattedMass(component.Units), go.GetProperName()));
-			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, text, transform, storageFXOffset);
+			string text = (Assets.IsTagCountable(go.PrefabID()) ? string.Format(locString, (int)component.Units, go.GetProperName()) : string.Format(locString, GameUtil.GetFormattedMass(component.Units), go.GetProperName()));
+			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Resource, text, target_transform, storageFXOffset);
 		}
 		go.transform.parent = base.transform;
 		Vector3 position = Grid.CellToPosCCC(Grid.PosToCell(this), Grid.SceneLayer.Move);
@@ -1448,8 +1441,8 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 				SaveLoadRoot component = gameObject.GetComponent<SaveLoadRoot>();
 				if (component != null)
 				{
-					string name = gameObject.GetComponent<KPrefabID>().GetSaveLoadTag().Name;
-					writer.WriteKleiString(name);
+					string str = gameObject.GetComponent<KPrefabID>().GetSaveLoadTag().Name;
+					writer.WriteKleiString(str);
 					component.Save(writer);
 				}
 				else

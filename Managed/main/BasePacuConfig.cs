@@ -66,10 +66,7 @@ public static class BasePacuConfig
 		def.diet = diet;
 		def.minPoopSizeInCalories = CALORIES_PER_KG_OF_ORE * MIN_POOP_SIZE_IN_KG;
 		gameObject.AddOrGetDef<SolidConsumerMonitor.Def>().diet = diet;
-		gameObject.AddOrGetDef<LureableMonitor.Def>().lures = new Tag[1]
-		{
-			GameTags.Creatures.FishTrapLure
-		};
+		gameObject.AddOrGetDef<LureableMonitor.Def>().lures = new Tag[1] { GameTags.Creatures.FishTrapLure };
 		if (!string.IsNullOrEmpty(symbol_prefix))
 		{
 			gameObject.AddOrGet<SymbolOverrideController>().ApplySymbolOverridesByAffix(Assets.GetAnim(anim_file), symbol_prefix);

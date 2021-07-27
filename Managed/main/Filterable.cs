@@ -70,10 +70,7 @@ public class Filterable : KMonoBehaviour
 				}
 			}
 		}
-		dictionary.Add(GameTags.Void, new HashSet<Tag>
-		{
-			GameTags.Void
-		});
+		dictionary.Add(GameTags.Void, new HashSet<Tag> { GameTags.Void });
 		return dictionary;
 	}
 

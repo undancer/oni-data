@@ -17,10 +17,7 @@ public class SubmersionMonitor : KMonoBehaviour, IGameObjectEffectDescriptor, IW
 
 	public bool Dry => dry;
 
-	WiltCondition.Condition[] IWiltCause.Conditions => new WiltCondition.Condition[1]
-	{
-		WiltCondition.Condition.DryingOut
-	};
+	WiltCondition.Condition[] IWiltCause.Conditions => new WiltCondition.Condition[1] { WiltCondition.Condition.DryingOut };
 
 	public string WiltStateString
 	{

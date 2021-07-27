@@ -17,10 +17,7 @@ public class Staterpillar : KMonoBehaviour
 
 	protected override void OnPrefabInit()
 	{
-		generatorElement = new List<Tag>
-		{
-			SimHashes.Creature.CreateTag()
-		};
+		generatorElement = new List<Tag> { SimHashes.Creature.CreateTag() };
 		generatorDef = Assets.GetBuildingDef(StaterpillarGeneratorConfig.ID);
 		base.OnPrefabInit();
 	}

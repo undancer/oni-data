@@ -30,20 +30,21 @@ public class BuildWatermark : KScreen
 
 	public static string GetBuildText()
 	{
-		string str = LaunchInitializer.BuildPrefix() + "-";
+		string text = (DistributionPlatform.Initialized ? (LaunchInitializer.BuildPrefix() + "-") : "??-");
 		if (Application.isEditor)
 		{
-			str += "<EDITOR>";
+			text += "<EDITOR>";
 		}
 		else
 		{
-			str += 471618u;
+			text += 472345u;
+			text = ((!DistributionPlatform.Initialized) ? (text + "-?") : (text + "-" + DlcManager.GetActiveContentLetters()));
 			if (DebugHandler.enabled)
 			{
-				str += "-D";
+				text += "D";
 			}
 		}
-		return str;
+		return text;
 	}
 
 	public void RefreshText()

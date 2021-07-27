@@ -25,10 +25,7 @@ public class GeneticAnalysisStationWorkable : Workable
 		attributeExperienceMultiplier = DUPLICANTSTATS.ATTRIBUTE_LEVELING.PART_DAY_EXPERIENCE;
 		skillExperienceSkillGroup = Db.Get().SkillGroups.Research.Id;
 		skillExperienceMultiplier = SKILLS.PART_DAY_EXPERIENCE;
-		overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_genetic_analysisstation_kanim")
-		};
+		overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_genetic_analysisstation_kanim") };
 		SetWorkTime(150f);
 		showProgressBar = true;
 		lightEfficiencyBonus = true;

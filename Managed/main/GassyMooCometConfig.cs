@@ -28,18 +28,12 @@ public class GassyMooCometConfig : IEntityConfig
 		gassyMooComet.explosionEffectHash = SpawnFXHashes.MeteorImpactDust;
 		gassyMooComet.addTiles = 0;
 		gassyMooComet.destroyOnExplode = false;
-		gassyMooComet.craterPrefabs = new string[1]
-		{
-			"Moo"
-		};
+		gassyMooComet.craterPrefabs = new string[1] { "Moo" };
 		PrimaryElement primaryElement = gameObject.AddOrGet<PrimaryElement>();
 		primaryElement.SetElement(SimHashes.Creature);
 		primaryElement.Temperature = (gassyMooComet.temperatureRange.x + gassyMooComet.temperatureRange.y) / 2f;
 		KBatchedAnimController kBatchedAnimController = gameObject.AddOrGet<KBatchedAnimController>();
-		kBatchedAnimController.AnimFiles = new KAnimFile[1]
-		{
-			Assets.GetAnim("meteor_gassymoo_kanim")
-		};
+		kBatchedAnimController.AnimFiles = new KAnimFile[1] { Assets.GetAnim("meteor_gassymoo_kanim") };
 		kBatchedAnimController.isMovable = true;
 		kBatchedAnimController.initialAnim = "fall_loop";
 		kBatchedAnimController.initialMode = KAnim.PlayMode.Loop;

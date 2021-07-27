@@ -82,15 +82,7 @@ public class TerrainBG : KMonoBehaviour
 			new Vector2(0f, 1f),
 			new Vector2(1f, 1f)
 		};
-		array3 = new int[6]
-		{
-			0,
-			2,
-			1,
-			1,
-			2,
-			3
-		};
+		array3 = new int[6] { 0, 2, 1, 1, 2, 3 };
 		mesh.vertices = array;
 		mesh.uv = array2;
 		mesh.triangles = array3;
@@ -119,15 +111,7 @@ public class TerrainBG : KMonoBehaviour
 			new Vector2(0f, 1f),
 			new Vector2(1f, 1f)
 		};
-		array3 = new int[6]
-		{
-			0,
-			2,
-			1,
-			1,
-			2,
-			3
-		};
+		array3 = new int[6] { 0, 2, 1, 1, 2, 3 };
 		mesh.vertices = array;
 		mesh.uv = array2;
 		mesh.triangles = array3;
@@ -156,15 +140,7 @@ public class TerrainBG : KMonoBehaviour
 			new Vector2(0f, 1f),
 			new Vector2(1f, 1f)
 		};
-		array3 = new int[6]
-		{
-			0,
-			2,
-			1,
-			1,
-			2,
-			3
-		};
+		array3 = new int[6] { 0, 2, 1, 1, 2, 3 };
 		mesh.vertices = array;
 		mesh.uv = array2;
 		mesh.triangles = array3;

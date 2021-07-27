@@ -31,10 +31,7 @@ public class EffectConfigs : IMultiEntityConfig
 			new
 			{
 				id = AttackSplashId,
-				animFiles = new string[1]
-				{
-					"attack_beam_contact_fx_kanim"
-				},
+				animFiles = new string[1] { "attack_beam_contact_fx_kanim" },
 				initialAnim = "loop",
 				initialMode = KAnim.PlayMode.Loop,
 				destroyOnAnimComplete = false
@@ -42,10 +39,7 @@ public class EffectConfigs : IMultiEntityConfig
 			new
 			{
 				id = OreAbsorbId,
-				animFiles = new string[1]
-				{
-					"ore_collision_kanim"
-				},
+				animFiles = new string[1] { "ore_collision_kanim" },
 				initialAnim = "idle",
 				initialMode = KAnim.PlayMode.Once,
 				destroyOnAnimComplete = true
@@ -53,10 +47,7 @@ public class EffectConfigs : IMultiEntityConfig
 			new
 			{
 				id = PlantDeathId,
-				animFiles = new string[1]
-				{
-					"plant_death_fx_kanim"
-				},
+				animFiles = new string[1] { "plant_death_fx_kanim" },
 				initialAnim = "plant_death",
 				initialMode = KAnim.PlayMode.Once,
 				destroyOnAnimComplete = true
@@ -64,10 +55,7 @@ public class EffectConfigs : IMultiEntityConfig
 			new
 			{
 				id = BuildSplashId,
-				animFiles = new string[1]
-				{
-					"sparks_radial_build_kanim"
-				},
+				animFiles = new string[1] { "sparks_radial_build_kanim" },
 				initialAnim = "loop",
 				initialMode = KAnim.PlayMode.Loop,
 				destroyOnAnimComplete = false
@@ -75,10 +63,7 @@ public class EffectConfigs : IMultiEntityConfig
 			new
 			{
 				id = DemolishSplashId,
-				animFiles = new string[1]
-				{
-					"poi_demolish_impact_kanim"
-				},
+				animFiles = new string[1] { "poi_demolish_impact_kanim" },
 				initialAnim = "POI_demolish_impact",
 				initialMode = KAnim.PlayMode.Loop,
 				destroyOnAnimComplete = false

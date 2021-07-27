@@ -18,11 +18,7 @@ public class MinionAssignablesProxy : KMonoBehaviour, IAssignableIdentity
 		component.OnAssignablesChanged(data);
 	});
 
-	public IAssignableIdentity target
-	{
-		get;
-		private set;
-	}
+	public IAssignableIdentity target { get; private set; }
 
 	public bool IsConfigured => slotsConfigured;
 
@@ -86,10 +82,7 @@ public class MinionAssignablesProxy : KMonoBehaviour, IAssignableIdentity
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		ownables = new List<Ownables>
-		{
-			base.gameObject.AddOrGet<Ownables>()
-		};
+		ownables = new List<Ownables> { base.gameObject.AddOrGet<Ownables>() };
 		Components.MinionAssignablesProxy.Add(this);
 		ConfigureAssignableSlots();
 	}
@@ -250,19 +243,19 @@ public class MinionAssignablesProxy : KMonoBehaviour, IAssignableIdentity
 		{
 			assignableProxyRef = new Ref<MinionAssignablesProxy>();
 		}
-		GameObject gameObject = ((KMonoBehaviour)source).gameObject;
+		GameObject targetGO = ((KMonoBehaviour)source).gameObject;
 		MinionAssignablesProxy minionAssignablesProxy = assignableProxyRef.Get();
 		if (minionAssignablesProxy == null)
 		{
-			GameObject gameObject2 = GameUtil.KInstantiate(Assets.GetPrefab(MinionAssignablesProxyConfig.ID), Grid.SceneLayer.NoLayer);
-			minionAssignablesProxy = gameObject2.GetComponent<MinionAssignablesProxy>();
-			minionAssignablesProxy.SetTarget(source, gameObject);
-			gameObject2.SetActive(value: true);
+			GameObject obj = GameUtil.KInstantiate(Assets.GetPrefab(MinionAssignablesProxyConfig.ID), Grid.SceneLayer.NoLayer);
+			minionAssignablesProxy = obj.GetComponent<MinionAssignablesProxy>();
+			minionAssignablesProxy.SetTarget(source, targetGO);
+			obj.SetActive(value: true);
 			assignableProxyRef.Set(minionAssignablesProxy);
 		}
 		else
 		{
-			minionAssignablesProxy.SetTarget(source, gameObject);
+			minionAssignablesProxy.SetTarget(source, targetGO);
 		}
 		return assignableProxyRef;
 	}

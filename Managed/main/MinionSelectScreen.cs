@@ -22,9 +22,9 @@ public class MinionSelectScreen : CharacterSelectionController
 			MusicManager.instance.SetSongParameter("Music_FrontEnd", "songSection", 2f);
 		}
 		GameObject parent = GameObject.Find("ScreenSpaceOverlayCanvas");
-		GameObject gameObject = Util.KInstantiateUI(wattsonMessagePrefab.gameObject, parent);
-		gameObject.name = "WattsonMessage";
-		gameObject.SetActive(value: false);
+		GameObject obj = Util.KInstantiateUI(wattsonMessagePrefab.gameObject, parent);
+		obj.name = "WattsonMessage";
+		obj.SetActive(value: false);
 		Game.Instance.Subscribe(-1992507039, OnBaseAlreadyCreated);
 		backButton.onClick += delegate
 		{

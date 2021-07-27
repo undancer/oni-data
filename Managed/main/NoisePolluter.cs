@@ -36,17 +36,9 @@ public class NoisePolluter : KMonoBehaviour, IPolluter
 		component.OnActiveChanged(data);
 	});
 
-	public string sourceName
-	{
-		get;
-		private set;
-	}
+	public string sourceName { get; private set; }
 
-	public bool active
-	{
-		get;
-		private set;
-	}
+	public bool active { get; private set; }
 
 	public static bool IsNoiseableCell(int cell)
 	{
@@ -129,9 +121,9 @@ public class NoisePolluter : KMonoBehaviour, IPolluter
 				splat.Clear();
 			}
 			KSelectable component = GetComponent<KSelectable>();
-			string name = ((component != null) ? component.GetName() : base.name);
-			GameObject gameObject = GetComponent<KMonoBehaviour>().gameObject;
-			splat = AudioEventManager.Get().CreateNoiseSplat(GetPosition(), noise, radius, name, gameObject);
+			string text = ((component != null) ? component.GetName() : base.name);
+			GameObject go = GetComponent<KMonoBehaviour>().gameObject;
+			splat = AudioEventManager.Get().CreateNoiseSplat(GetPosition(), noise, radius, text, go);
 		}
 	}
 
@@ -252,10 +244,10 @@ public class NoisePolluter : KMonoBehaviour, IPolluter
 		{
 			float totalValue = dB.GetTotalValue();
 			float totalValue2 = dBRadius.GetTotalValue();
-			string str = ((noise > 0) ? UI.BUILDINGEFFECTS.TOOLTIPS.NOISE_POLLUTION_INCREASE : UI.BUILDINGEFFECTS.TOOLTIPS.NOISE_POLLUTION_DECREASE);
-			str = str + "\n\n" + dB.GetAttributeValueTooltip();
+			string text = ((noise > 0) ? UI.BUILDINGEFFECTS.TOOLTIPS.NOISE_POLLUTION_INCREASE : UI.BUILDINGEFFECTS.TOOLTIPS.NOISE_POLLUTION_DECREASE);
+			text = text + "\n\n" + dB.GetAttributeValueTooltip();
 			string arg = GameUtil.AddPositiveSign(totalValue.ToString(), totalValue > 0f);
-			Descriptor item = new Descriptor(string.Format(UI.BUILDINGEFFECTS.NOISE_CREATED, arg, totalValue2), string.Format(str, arg, totalValue2));
+			Descriptor item = new Descriptor(string.Format(UI.BUILDINGEFFECTS.NOISE_CREATED, arg, totalValue2), string.Format(text, arg, totalValue2));
 			list.Add(item);
 		}
 		else if (noise != 0)

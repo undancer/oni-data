@@ -53,11 +53,7 @@ public class Light2D : KMonoBehaviour, IGameObjectEffectDescriptor
 		}
 	}
 
-	public LightGridManager.LightGridEmitter emitter
-	{
-		get;
-		private set;
-	}
+	public LightGridManager.LightGridEmitter emitter { get; private set; }
 
 	public Color Color
 	{
@@ -107,11 +103,7 @@ public class Light2D : KMonoBehaviour, IGameObjectEffectDescriptor
 		}
 	}
 
-	public float IntensityAnimation
-	{
-		get;
-		set;
-	}
+	public float IntensityAnimation { get; set; }
 
 	public Vector2 Offset
 	{
@@ -258,13 +250,13 @@ public class Light2D : KMonoBehaviour, IGameObjectEffectDescriptor
 			FullRemove();
 			return RefreshResult.Removed;
 		}
-		int num = Grid.PosToCell(base.transform.GetPosition() + (Vector3)Offset);
-		if (!Grid.IsValidCell(num))
+		int cell = Grid.PosToCell(base.transform.GetPosition() + (Vector3)Offset);
+		if (!Grid.IsValidCell(cell))
 		{
 			FullRemove();
 			return RefreshResult.Removed;
 		}
-		origin = num;
+		origin = cell;
 		if (dirty_shape)
 		{
 			RemoveFromScenePartitioner();

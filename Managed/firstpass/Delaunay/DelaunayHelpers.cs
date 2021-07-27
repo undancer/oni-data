@@ -9,17 +9,9 @@ namespace Delaunay
 	{
 		public class LineSegmentWithSites : LineSegment
 		{
-			public uint id0
-			{
-				get;
-				private set;
-			}
+			public uint id0 { get; private set; }
 
-			public uint id1
-			{
-				get;
-				private set;
-			}
+			public uint id1 { get; private set; }
 
 			public LineSegmentWithSites(Vector2? p0, Vector2? p1, uint id0, uint id1)
 				: base(p0, p1)

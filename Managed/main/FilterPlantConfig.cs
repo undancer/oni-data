@@ -42,10 +42,7 @@ public class FilterPlantConfig : IEntityConfig
 		EntityTemplates.ExtendPlantToIrrigated(gameObject, array2);
 		gameObject.AddOrGet<StandardCropPlant>();
 		gameObject.AddOrGet<SaltPlant>();
-		gameObject.AddOrGet<PressureVulnerable>().Configure(0.025f, 0f, 10f, 30f, new SimHashes[1]
-		{
-			SimHashes.Oxygen
-		});
+		gameObject.AddOrGet<PressureVulnerable>().Configure(0.025f, 0f, 10f, 30f, new SimHashes[1] { SimHashes.Oxygen });
 		gameObject.GetComponent<KPrefabID>().prefabInitFn += delegate(GameObject inst)
 		{
 			inst.GetComponent<PressureVulnerable>().safe_atmospheres.Add(ElementLoader.FindElementByHash(SimHashes.Oxygen));
@@ -59,10 +56,7 @@ public class FilterPlantConfig : IEntityConfig
 		elementConsumer.consumptionRadius = 4;
 		elementConsumer.sampleCellOffset = new Vector3(0f, 0f);
 		elementConsumer.consumptionRate = 0.008333334f;
-		EntityTemplates.CreateAndRegisterPreviewForPlant(EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Harvest, "FilterPlantSeed", STRINGS.CREATURES.SPECIES.SEEDS.FILTERPLANT.NAME, STRINGS.CREATURES.SPECIES.SEEDS.FILTERPLANT.DESC, Assets.GetAnim("seed_cactus_kanim"), "object", 1, new List<Tag>
-		{
-			GameTags.CropSeed
-		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 21, STRINGS.CREATURES.SPECIES.FILTERPLANT.DOMESTICATEDDESC, EntityTemplates.CollisionShape.CIRCLE, 0.35f, 0.35f), "FilterPlant_preview", Assets.GetAnim("cactus_kanim"), "place", 1, 2);
+		EntityTemplates.CreateAndRegisterPreviewForPlant(EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Harvest, "FilterPlantSeed", STRINGS.CREATURES.SPECIES.SEEDS.FILTERPLANT.NAME, STRINGS.CREATURES.SPECIES.SEEDS.FILTERPLANT.DESC, Assets.GetAnim("seed_cactus_kanim"), "object", 1, new List<Tag> { GameTags.CropSeed }, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 21, STRINGS.CREATURES.SPECIES.FILTERPLANT.DOMESTICATEDDESC, EntityTemplates.CollisionShape.CIRCLE, 0.35f, 0.35f), "FilterPlant_preview", Assets.GetAnim("cactus_kanim"), "place", 1, 2);
 		return gameObject;
 	}
 

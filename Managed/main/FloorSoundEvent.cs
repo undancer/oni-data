@@ -22,18 +22,18 @@ public class FloorSoundEvent : SoundEvent
 			vector = component.GetPivotSymbolPosition();
 		}
 		int num = Grid.PosToCell(vector);
-		string sound = GlobalAssets.GetSound(StringFormatter.Combine(GetAudioCategory(Grid.CellBelow(num)), "_", base.name), force_no_warning: true);
-		if (sound == null)
+		string text = GlobalAssets.GetSound(StringFormatter.Combine(GetAudioCategory(Grid.CellBelow(num)), "_", base.name), force_no_warning: true);
+		if (text == null)
 		{
-			sound = GlobalAssets.GetSound(StringFormatter.Combine("Rock_", base.name), force_no_warning: true);
-			if (sound == null)
+			text = GlobalAssets.GetSound(StringFormatter.Combine("Rock_", base.name), force_no_warning: true);
+			if (text == null)
 			{
-				sound = GlobalAssets.GetSound(base.name, force_no_warning: true);
+				text = GlobalAssets.GetSound(base.name, force_no_warning: true);
 			}
 		}
 		GameObject gameObject = behaviour.controller.gameObject;
 		base.objectIsSelectedAndVisible = SoundEvent.ObjectIsSelectedAndVisible(gameObject);
-		if (SoundEvent.IsLowPrioritySound(sound) && !base.objectIsSelectedAndVisible)
+		if (SoundEvent.IsLowPrioritySound(text) && !base.objectIsSelectedAndVisible)
 		{
 			return;
 		}
@@ -52,10 +52,10 @@ public class FloorSoundEvent : SoundEvent
 		if (isLiquid)
 		{
 			num2 = SoundUtil.GetLiquidDepth(num);
-			string sound2 = GlobalAssets.GetSound("Liquid_footstep", force_no_warning: true);
-			if (sound2 != null && (base.objectIsSelectedAndVisible || SoundEvent.ShouldPlaySound(behaviour.controller, sound2, base.looping, isDynamic)))
+			string text2 = GlobalAssets.GetSound("Liquid_footstep", force_no_warning: true);
+			if (text2 != null && (base.objectIsSelectedAndVisible || SoundEvent.ShouldPlaySound(behaviour.controller, text2, base.looping, isDynamic)))
 			{
-				FMOD.Studio.EventInstance instance = SoundEvent.BeginOneShot(sound2, vector, SoundEvent.GetVolume(base.objectIsSelectedAndVisible));
+				FMOD.Studio.EventInstance instance = SoundEvent.BeginOneShot(text2, vector, SoundEvent.GetVolume(base.objectIsSelectedAndVisible));
 				if (num2 > 0f)
 				{
 					instance.setParameterByName("liquidDepth", num2);
@@ -63,11 +63,11 @@ public class FloorSoundEvent : SoundEvent
 				SoundEvent.EndOneShot(instance);
 			}
 		}
-		if (sound == null || (!base.objectIsSelectedAndVisible && !SoundEvent.ShouldPlaySound(behaviour.controller, sound, base.looping, isDynamic)))
+		if (text == null || (!base.objectIsSelectedAndVisible && !SoundEvent.ShouldPlaySound(behaviour.controller, text, base.looping, isDynamic)))
 		{
 			return;
 		}
-		FMOD.Studio.EventInstance instance2 = SoundEvent.BeginOneShot(sound, vector);
+		FMOD.Studio.EventInstance instance2 = SoundEvent.BeginOneShot(text, vector);
 		if (instance2.isValid())
 		{
 			if (num2 > 0f)

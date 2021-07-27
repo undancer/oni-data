@@ -13,29 +13,13 @@ namespace Satsuma
 			CreateBridges = 0x2
 		}
 
-		public IGraph Graph
-		{
-			get;
-			private set;
-		}
+		public IGraph Graph { get; private set; }
 
-		public int Count
-		{
-			get;
-			private set;
-		}
+		public int Count { get; private set; }
 
-		public List<HashSet<Node>> Components
-		{
-			get;
-			private set;
-		}
+		public List<HashSet<Node>> Components { get; private set; }
 
-		public HashSet<Arc> Bridges
-		{
-			get;
-			private set;
-		}
+		public HashSet<Arc> Bridges { get; private set; }
 
 		public BiEdgeConnectedComponents(IGraph graph, Flags flags = Flags.None)
 		{

@@ -137,21 +137,11 @@ public class Artable : Workable
 		SetStage(potential_stages[0].id, skip_effect: false);
 		if (potential_stages[0].cheerOnComplete)
 		{
-			new EmoteChore(worker.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[3]
-			{
-				"cheer_pre",
-				"cheer_loop",
-				"cheer_pst"
-			}, null);
+			new EmoteChore(worker.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[3] { "cheer_pre", "cheer_loop", "cheer_pst" }, null);
 		}
 		else
 		{
-			new EmoteChore(worker.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_disappointed_kanim", new HashedString[3]
-			{
-				"disappointed_pre",
-				"disappointed_loop",
-				"disappointed_pst"
-			}, null);
+			new EmoteChore(worker.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_disappointed_kanim", new HashedString[3] { "disappointed_pre", "disappointed_loop", "disappointed_pst" }, null);
 		}
 		shouldShowSkillPerkStatusItem = false;
 		UpdateStatusItem();

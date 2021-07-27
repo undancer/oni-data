@@ -1762,12 +1762,12 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 
 		public State EnterTransition(State state, Transition.ConditionCallback condition)
 		{
-			string str = "(Stop)";
+			string text = "(Stop)";
 			if (state != null)
 			{
-				str = state.name;
+				text = state.name;
 			}
-			Enter("Transition(" + str + ")", delegate(StateMachineInstanceType smi)
+			Enter("Transition(" + text + ")", delegate(StateMachineInstanceType smi)
 			{
 				if (condition(smi))
 				{
@@ -1779,19 +1779,19 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 
 		public State Transition(State state, Transition.ConditionCallback condition, UpdateRate update_rate = UpdateRate.SIM_200ms)
 		{
-			string str = "(Stop)";
+			string text = "(Stop)";
 			if (state != null)
 			{
-				str = state.name;
+				text = state.name;
 			}
-			Enter("Transition(" + str + ")", delegate(StateMachineInstanceType smi)
+			Enter("Transition(" + text + ")", delegate(StateMachineInstanceType smi)
 			{
 				if (condition(smi))
 				{
 					smi.GoTo(state);
 				}
 			});
-			FastUpdate("Transition(" + str + ")", new TransitionUpdater(condition, state), update_rate);
+			FastUpdate("Transition(" + text + ")", new TransitionUpdater(condition, state), update_rate);
 			return this;
 		}
 
@@ -1803,12 +1803,12 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 
 		public State GoTo(State state)
 		{
-			string str = "(null)";
+			string text = "(null)";
 			if (state != null)
 			{
-				str = state.name;
+				text = state.name;
 			}
-			Update("GoTo(" + str + ")", delegate(StateMachineInstanceType smi, float dt)
+			Update("GoTo(" + text + ")", delegate(StateMachineInstanceType smi, float dt)
 			{
 				smi.GoTo(state);
 			});
@@ -1937,10 +1937,7 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 
 		public State TagTransition(Tag tag, State state, bool on_remove = false)
 		{
-			return TagTransition(new Tag[1]
-			{
-				tag
-			}, state, on_remove);
+			return TagTransition(new Tag[1] { tag }, state, on_remove);
 		}
 
 		public State EventTransition(GameHashes evt, Func<StateMachineInstanceType, KMonoBehaviour> global_event_system_callback, State state, Transition.ConditionCallback condition = null)
@@ -2043,15 +2040,15 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 			TargetParameter state_target = GetStateTarget();
 			Enter("PlayAnim(" + anim + ", " + mode.ToString() + ")", delegate(StateMachineInstanceType smi)
 			{
-				string str = "";
+				string text = "";
 				if (suffix_callback != null)
 				{
-					str = suffix_callback(smi);
+					text = suffix_callback(smi);
 				}
 				KAnimControllerBase kAnimControllerBase = state_target.Get<KAnimControllerBase>(smi);
 				if (kAnimControllerBase != null)
 				{
-					kAnimControllerBase.Play(anim + str, mode);
+					kAnimControllerBase.Play(anim + text, mode);
 				}
 			});
 			return this;
@@ -2067,15 +2064,15 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 			}
 			Enter("QueueAnim(" + mode.ToString() + ")", delegate(StateMachineInstanceType smi)
 			{
-				string str = "";
+				string text = "";
 				if (suffix_callback != null)
 				{
-					str = suffix_callback(smi);
+					text = suffix_callback(smi);
 				}
 				KAnimControllerBase kAnimControllerBase = state_target.Get<KAnimControllerBase>(smi);
 				if (kAnimControllerBase != null)
 				{
-					kAnimControllerBase.Queue(anim_cb(smi) + str, mode);
+					kAnimControllerBase.Queue(anim_cb(smi) + text, mode);
 				}
 			});
 			return this;
@@ -2091,15 +2088,15 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 			}
 			Enter("QueueAnim(" + anim + ", " + mode.ToString() + ")", delegate(StateMachineInstanceType smi)
 			{
-				string str = "";
+				string text = "";
 				if (suffix_callback != null)
 				{
-					str = suffix_callback(smi);
+					text = suffix_callback(smi);
 				}
 				KAnimControllerBase kAnimControllerBase = state_target.Get<KAnimControllerBase>(smi);
 				if (kAnimControllerBase != null)
 				{
-					kAnimControllerBase.Queue(anim + str, mode);
+					kAnimControllerBase.Queue(anim + text, mode);
 				}
 			});
 			return this;

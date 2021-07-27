@@ -41,11 +41,7 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 
 	public string handlerName => base.gameObject.name;
 
-	public KInputHandler inputHandler
-	{
-		get;
-		set;
-	}
+	public KInputHandler inputHandler { get; set; }
 
 	public virtual bool HasFocus => hasFocus;
 
@@ -64,19 +60,11 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 
 	public Canvas canvas => _canvas;
 
-	public string screenName
-	{
-		get;
-		private set;
-	}
+	public string screenName { get; private set; }
 
 	public bool GetMouseOver => mouseOver;
 
-	public bool ConsumeMouseScroll
-	{
-		get;
-		set;
-	}
+	public bool ConsumeMouseScroll { get; set; }
 
 	public void SetIsEditing(bool state)
 	{

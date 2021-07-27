@@ -30,17 +30,9 @@ public class RanchStation : GameStateMachine<RanchStation, RanchStation.Instance
 
 	public new class Instance : GameInstance
 	{
-		public RanchableMonitor.Instance targetRanchable
-		{
-			get;
-			private set;
-		}
+		public RanchableMonitor.Instance targetRanchable { get; private set; }
 
-		public bool shouldCreatureGoGetRanched
-		{
-			get;
-			private set;
-		}
+		public bool shouldCreatureGoGetRanched { get; private set; }
 
 		public Instance(IStateMachineTarget master, Def def)
 			: base(master, def)
@@ -118,16 +110,16 @@ public class RanchStation : GameStateMachine<RanchStation, RanchStation.Instance
 				TriggerRanchStationNoLongerAvailable();
 				return;
 			}
-			if (this.targetRanchable != null && !CanRanchableBeRanchedAtRanchStation(this.targetRanchable, this, cavityForCell, targetRanchCell))
+			if (targetRanchable != null && !CanRanchableBeRanchedAtRanchStation(targetRanchable, this, cavityForCell, targetRanchCell))
 			{
 				TriggerRanchStationNoLongerAvailable();
 			}
-			if (!this.targetRanchable.IsNullOrStopped())
+			if (!targetRanchable.IsNullOrStopped())
 			{
 				return;
 			}
 			CavityInfo cavityForCell2 = Game.Instance.roomProber.GetCavityForCell(targetRanchCell);
-			RanchableMonitor.Instance targetRanchable = null;
+			RanchableMonitor.Instance instance = null;
 			if (cavityForCell2 != null && cavityForCell2.creatures != null)
 			{
 				foreach (KPrefabID creature in cavityForCell2.creatures)
@@ -137,16 +129,16 @@ public class RanchStation : GameStateMachine<RanchStation, RanchStation.Instance
 						RanchableMonitor.Instance sMI = creature.GetSMI<RanchableMonitor.Instance>();
 						if (!sMI.IsNullOrStopped() && CanRanchableBeRanchedAtRanchStation(sMI, this, cavityForCell2, targetRanchCell))
 						{
-							targetRanchable = sMI;
+							instance = sMI;
 							break;
 						}
 					}
 				}
 			}
-			this.targetRanchable = targetRanchable;
-			if (!this.targetRanchable.IsNullOrStopped())
+			targetRanchable = instance;
+			if (!targetRanchable.IsNullOrStopped())
 			{
-				this.targetRanchable.targetRanchStation = this;
+				targetRanchable.targetRanchStation = this;
 			}
 		}
 

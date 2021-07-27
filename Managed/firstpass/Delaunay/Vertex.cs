@@ -81,7 +81,7 @@ namespace Delaunay
 				return null;
 			}
 			float num2 = (edge.c * edge2.b - edge2.c * edge.b) / num;
-			float y = (edge2.c * edge.a - edge.c * edge2.a) / num;
+			float num3 = (edge2.c * edge.a - edge.c * edge2.a) / num;
 			Halfedge halfedge2;
 			Edge edge3;
 			if (Voronoi.CompareByYThenX(edge.rightSite, edge2.rightSite) < 0)
@@ -99,7 +99,7 @@ namespace Delaunay
 			{
 				return null;
 			}
-			return Create(num2, y);
+			return Create(num2, num3);
 		}
 	}
 }

@@ -26,11 +26,7 @@ namespace ClipperLib
 
 		internal bool m_HasOpenPaths;
 
-		public bool PreserveCollinear
-		{
-			get;
-			set;
-		}
+		public bool PreserveCollinear { get; set; }
 
 		internal static bool near_zero(double val)
 		{

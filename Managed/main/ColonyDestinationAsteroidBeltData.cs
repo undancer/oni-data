@@ -24,37 +24,17 @@ public class ColonyDestinationAsteroidBeltData
 		new Tuple<string, string, string>(WORLDS.SURVIVAL_CHANCE.LEASTHOSPITABLE, "", "9636DF")
 	};
 
-	public float TargetScale
-	{
-		get;
-		set;
-	}
+	public float TargetScale { get; set; }
 
-	public float Scale
-	{
-		get;
-		set;
-	}
+	public float Scale { get; set; }
 
-	public int seed
-	{
-		get;
-		private set;
-	}
+	public int seed { get; private set; }
 
 	public string startWorldPath => startWorld.filePath;
 
-	public Sprite sprite
-	{
-		get;
-		private set;
-	}
+	public Sprite sprite { get; private set; }
 
-	public int difficulty
-	{
-		get;
-		private set;
-	}
+	public int difficulty { get; private set; }
 
 	public string startWorldName => Strings.Get(startWorld.name);
 
@@ -82,11 +62,7 @@ public class ColonyDestinationAsteroidBeltData
 		}
 	}
 
-	public List<ProcGen.World> worlds
-	{
-		get;
-		private set;
-	}
+	public List<ProcGen.World> worlds { get; private set; }
 
 	public ProcGen.World GetStartWorld => startWorld;
 

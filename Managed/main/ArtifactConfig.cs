@@ -105,10 +105,7 @@ public class ArtifactConfig : IMultiEntityConfig
 		{
 			return null;
 		}
-		GameObject gameObject = EntityTemplates.CreateLooseEntity("artifact_" + id.ToLower(), name, desc, 25f, unitMass: true, Assets.GetAnim(animFile), initial_anim, Grid.SceneLayer.Ore, EntityTemplates.CollisionShape.RECTANGLE, 1f, 1f, isPickupable: true, SORTORDER.BUILDINGELEMENTS, element, new List<Tag>
-		{
-			GameTags.MiscPickupable
-		});
+		GameObject gameObject = EntityTemplates.CreateLooseEntity("artifact_" + id.ToLower(), name, desc, 25f, unitMass: true, Assets.GetAnim(animFile), initial_anim, Grid.SceneLayer.Ore, EntityTemplates.CollisionShape.RECTANGLE, 1f, 1f, isPickupable: true, SORTORDER.BUILDINGELEMENTS, element, new List<Tag> { GameTags.MiscPickupable });
 		gameObject.AddOrGet<OccupyArea>().OccupiedCellsOffsets = EntityTemplates.GenerateOffsets(1, 1);
 		DecorProvider decorProvider = gameObject.AddOrGet<DecorProvider>();
 		decorProvider.SetValues(artifact_tier.decorValues);

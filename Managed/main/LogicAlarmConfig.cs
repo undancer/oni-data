@@ -17,10 +17,7 @@ public class LogicAlarmConfig : IBuildingConfig
 		obj.AudioCategory = "Metal";
 		obj.SceneLayer = Grid.SceneLayer.Building;
 		obj.AlwaysOperational = true;
-		obj.LogicInputPorts = new List<LogicPorts.Port>
-		{
-			LogicPorts.Port.InputPort(LogicAlarm.INPUT_PORT_ID, new CellOffset(0, 0), STRINGS.BUILDINGS.PREFABS.LOGICALARM.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.LOGICALARM.INPUT_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.LOGICALARM.INPUT_PORT_INACTIVE, show_wire_missing_icon: true)
-		};
+		obj.LogicInputPorts = new List<LogicPorts.Port> { LogicPorts.Port.InputPort(LogicAlarm.INPUT_PORT_ID, new CellOffset(0, 0), STRINGS.BUILDINGS.PREFABS.LOGICALARM.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.LOGICALARM.INPUT_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.LOGICALARM.INPUT_PORT_INACTIVE, show_wire_missing_icon: true) };
 		SoundEventVolumeCache.instance.AddVolume("door_internal_kanim", "Open_DoorInternal", NOISE_POLLUTION.NOISY.TIER3);
 		SoundEventVolumeCache.instance.AddVolume("door_internal_kanim", "Close_DoorInternal", NOISE_POLLUTION.NOISY.TIER3);
 		GeneratedBuildings.RegisterWithOverlay(OverlayModes.Logic.HighlightItemIDs, ID);

@@ -213,7 +213,7 @@ public class WorldInventory : KMonoBehaviour, ISaveLoadable
 	{
 		int num = 0;
 		Dictionary<Tag, HashSet<Pickupable>>.Enumerator enumerator = Inventory.GetEnumerator();
-		int worldId = this.worldId;
+		int num2 = worldId;
 		while (enumerator.MoveNext())
 		{
 			KeyValuePair<Tag, HashSet<Pickupable>> current = enumerator.Current;
@@ -221,24 +221,25 @@ public class WorldInventory : KMonoBehaviour, ISaveLoadable
 			{
 				Tag key = current.Key;
 				HashSet<Pickupable> value = current.Value;
-				float num2 = 0f;
+				float num3 = 0f;
 				foreach (Pickupable item in (IEnumerable<Pickupable>)value)
 				{
-					if (item != null && item.GetMyWorldId() == worldId && !item.HasTag(GameTags.StoredPrivate))
+					if (item != null && item.GetMyWorldId() == num2 && !item.HasTag(GameTags.StoredPrivate))
 					{
-						num2 += item.TotalAmount;
+						num3 += item.TotalAmount;
 					}
 				}
 				if (!hasValidCount && accessibleUpdateIndex + 1 >= Inventory.Count)
 				{
 					hasValidCount = true;
-					if (this.worldId == ClusterManager.Instance.activeWorldId)
+					if (worldId == ClusterManager.Instance.activeWorldId)
 					{
 						hasValidCount = true;
+						PinnedResourcesPanel.Instance.ClearExcessiveNewItems();
 						PinnedResourcesPanel.Instance.Refresh();
 					}
 				}
-				accessibleAmounts[key] = num2;
+				accessibleAmounts[key] = num3;
 				accessibleUpdateIndex = (accessibleUpdateIndex + 1) % Inventory.Count;
 				break;
 			}
@@ -265,19 +266,19 @@ public class WorldInventory : KMonoBehaviour, ISaveLoadable
 			return;
 		}
 		KPrefabID component2 = component.GetComponent<KPrefabID>();
-		Tag tag = component2.PrefabID();
-		if (!Inventory.ContainsKey(tag))
+		Tag key = component2.PrefabID();
+		if (!Inventory.ContainsKey(key))
 		{
 			Tag categoryForEntity = DiscoveredResources.GetCategoryForEntity(component2);
 			DebugUtil.DevAssertArgs(categoryForEntity.IsValid, component.name, "was found by worldinventory but doesn't have a category! Add it to the element definition.");
-			DiscoveredResources.Instance.Discover(tag, categoryForEntity);
+			DiscoveredResources.Instance.Discover(key, categoryForEntity);
 		}
-		foreach (Tag tag2 in component2.Tags)
+		foreach (Tag tag in component2.Tags)
 		{
-			if (!Inventory.TryGetValue(tag2, out var value))
+			if (!Inventory.TryGetValue(tag, out var value))
 			{
 				value = new HashSet<Pickupable>();
-				Inventory[tag2] = value;
+				Inventory[tag] = value;
 			}
 			value.Add(component);
 		}

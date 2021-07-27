@@ -1167,8 +1167,8 @@ public class StarmapScreen : KModalScreen
 				foreach (SpaceDestination.ResearchOpportunity researchOpportunity in selectedDestination.researchOpportunities)
 				{
 					BreakdownListRow breakdownListRow = destinationDetailsResearch.AddRow();
-					string name = ((researchOpportunity.discoveredRareResource != SimHashes.Void) ? $"(!!) {researchOpportunity.description}" : researchOpportunity.description);
-					breakdownListRow.ShowCheckmarkData(name, researchOpportunity.dataValue.ToString(), researchOpportunity.completed ? BreakdownListRow.Status.Green : BreakdownListRow.Status.Default);
+					string text = ((researchOpportunity.discoveredRareResource != SimHashes.Void) ? $"(!!) {researchOpportunity.description}" : researchOpportunity.description);
+					breakdownListRow.ShowCheckmarkData(text, researchOpportunity.dataValue.ToString(), researchOpportunity.completed ? BreakdownListRow.Status.Green : BreakdownListRow.Status.Default);
 				}
 			}
 			destinationAnalysisProgressBar.SetFillPercentage(SpacecraftManager.instance.GetDestinationAnalysisScore(selectedDestination.id) / (float)ROCKETRY.DESTINATION_ANALYSIS.COMPLETE);
@@ -1376,19 +1376,19 @@ public class StarmapScreen : KModalScreen
 				float num = ((duration == 0f) ? 0f : (1f - timeLeft / duration));
 				bool num2 = num > 0.5f;
 				Vector2 vector = new Vector2(0f, 0f - rowsContiner.rect.size.y);
-				Vector3 b = starmapPlanet.rectTransform().localPosition + new Vector3(starmapPlanet.rectTransform().sizeDelta.x * 0.5f, 0f, 0f);
-				b = starmapPlanet.transform.parent.rectTransform().localPosition + b;
-				Vector2 vector2 = new Vector2(b.x, b.y);
-				float x = Vector2.Distance(vector, vector2);
-				Vector2 vector3 = vector2 - vector;
-				float z = Mathf.Atan2(vector3.y, vector3.x) * 57.29578f;
-				Vector2 v = (num2 ? new Vector2(Mathf.Lerp(vector.x, vector2.x, 1f - num * 2f + 1f), Mathf.Lerp(vector.y, vector2.y, 1f - num * 2f + 1f)) : new Vector2(Mathf.Lerp(vector.x, vector2.x, num * 2f), Mathf.Lerp(vector.y, vector2.y, num * 2f)));
+				Vector3 vector2 = starmapPlanet.rectTransform().localPosition + new Vector3(starmapPlanet.rectTransform().sizeDelta.x * 0.5f, 0f, 0f);
+				vector2 = starmapPlanet.transform.parent.rectTransform().localPosition + vector2;
+				Vector2 vector3 = new Vector2(vector2.x, vector2.y);
+				float x = Vector2.Distance(vector, vector3);
+				Vector2 vector4 = vector3 - vector;
+				float z = Mathf.Atan2(vector4.y, vector4.x) * 57.29578f;
+				Vector2 vector5 = ((!num2) ? new Vector2(Mathf.Lerp(vector.x, vector3.x, num * 2f), Mathf.Lerp(vector.y, vector3.y, num * 2f)) : new Vector2(Mathf.Lerp(vector.x, vector3.x, 1f - num * 2f + 1f), Mathf.Lerp(vector.y, vector3.y, 1f - num * 2f + 1f)));
 				visualizeRocketLabel.text = GetTextForState(spacecraft.state).first;
 				visualizeRocketProgress.text = GameUtil.GetFormattedPercent(num * 100f);
 				visualizeRocketTrajectory.transform.SetLocalPosition(vector);
 				visualizeRocketTrajectory.rectTransform.sizeDelta = new Vector2(x, visualizeRocketTrajectory.rectTransform.sizeDelta.y);
 				visualizeRocketTrajectory.rectTransform.localRotation = Quaternion.Euler(0f, 0f, z);
-				visualizeRocketImage.transform.SetLocalPosition(v);
+				visualizeRocketImage.transform.SetLocalPosition(vector5);
 			}
 		}
 		else

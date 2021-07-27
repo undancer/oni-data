@@ -38,13 +38,7 @@ public class ColonyAchievementTracker : KMonoBehaviour, ISaveLoadableDetails, IR
 
 	public static readonly string UnlockedAchievementKey = "UnlockedAchievement";
 
-	private Dictionary<string, object> unlockedAchievementMetric = new Dictionary<string, object>
-	{
-		{
-			UnlockedAchievementKey,
-			null
-		}
-	};
+	private Dictionary<string, object> unlockedAchievementMetric = new Dictionary<string, object> { { UnlockedAchievementKey, null } };
 
 	private static readonly EventSystem.IntraObjectHandler<ColonyAchievementTracker> OnNewDayDelegate = new EventSystem.IntraObjectHandler<ColonyAchievementTracker>(delegate(ColonyAchievementTracker component, object data)
 	{
@@ -71,6 +65,19 @@ public class ColonyAchievementTracker : KMonoBehaviour, ISaveLoadableDetails, IR
 		}
 		forceCheckAchievementHandle = Game.Instance.Subscribe(395452326, CheckAchievements);
 		Subscribe(631075836, OnNewDayDelegate);
+		UpgradeTamedCritterAchievements();
+	}
+
+	private void UpgradeTamedCritterAchievements()
+	{
+		foreach (ColonyAchievementRequirement item in Db.Get().ColonyAchievements.TameAllBasicCritters.requirementChecklist)
+		{
+			(item as CritterTypesWithTraits)?.UpdateSavedState();
+		}
+		foreach (ColonyAchievementRequirement item2 in Db.Get().ColonyAchievements.TameAGassyMoo.requirementChecklist)
+		{
+			(item2 as CritterTypesWithTraits)?.UpdateSavedState();
+		}
 	}
 
 	public void RenderEveryTick(float dt)
@@ -337,10 +344,7 @@ public class ColonyAchievementTracker : KMonoBehaviour, ISaveLoadableDetails, IR
 			int instanceID = driver.GetComponent<KPrefabID>().InstanceID;
 			if (!dupesCompleteChoresInSuits.ContainsKey(cycle))
 			{
-				dupesCompleteChoresInSuits.Add(cycle, new List<int>
-				{
-					instanceID
-				});
+				dupesCompleteChoresInSuits.Add(cycle, new List<int> { instanceID });
 			}
 			else if (!dupesCompleteChoresInSuits[cycle].Contains(instanceID))
 			{

@@ -26,13 +26,13 @@ public class InfraredVisualizerComponents : KGameObjectComponentManager<Infrared
 
 	public void ClearOverlayColour()
 	{
-		Color32 c = Color.black;
+		Color32 color = Color.black;
 		for (int i = 0; i < data.Count; i++)
 		{
 			KAnimControllerBase controller = data[i].controller;
 			if (controller != null)
 			{
-				controller.OverlayColour = c;
+				controller.OverlayColour = color;
 			}
 		}
 	}

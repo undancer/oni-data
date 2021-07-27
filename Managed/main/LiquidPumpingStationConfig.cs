@@ -23,10 +23,7 @@ public class LiquidPumpingStationConfig : IBuildingConfig
 	{
 		go.AddOrGet<LoopingSounds>();
 		go.AddOrGet<BuildingComplete>().isManuallyOperated = true;
-		go.AddOrGet<LiquidPumpingStation>().overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_waterpump_kanim")
-		};
+		go.AddOrGet<LiquidPumpingStation>().overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_waterpump_kanim") };
 		Storage storage = go.AddOrGet<Storage>();
 		storage.showInUI = false;
 		storage.allowItemRemoval = true;
@@ -41,10 +38,7 @@ public class LiquidPumpingStationConfig : IBuildingConfig
 		gameObject.transform.SetLocalPosition(Vector3.zero);
 		KBatchedAnimController kBatchedAnimController = gameObject.AddComponent<KBatchedAnimController>();
 		kBatchedAnimController.Offset = go.GetComponent<Building>().Def.GetVisualizerOffset();
-		kBatchedAnimController.AnimFiles = new KAnimFile[1]
-		{
-			Assets.GetAnim(new HashedString("waterpump_kanim"))
-		};
+		kBatchedAnimController.AnimFiles = new KAnimFile[1] { Assets.GetAnim(new HashedString("waterpump_kanim")) };
 		kBatchedAnimController.initialAnim = "place_guide";
 		kBatchedAnimController.visibilityType = KAnimControllerBase.VisibilityType.OffscreenUpdate;
 		kBatchedAnimController.isMovable = true;

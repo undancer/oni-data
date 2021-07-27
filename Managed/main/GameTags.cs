@@ -505,23 +505,9 @@ public class GameTags
 
 	public static readonly Tag TemperatureSuit = TagManager.Create("Temperature_Suit");
 
-	public static readonly List<Tag> AllSuitTags = new List<Tag>
-	{
-		Suit,
-		AquaSuit,
-		AtmoSuit,
-		JetSuit,
-		TemperatureSuit,
-		LeadSuit
-	};
+	public static readonly List<Tag> AllSuitTags = new List<Tag> { Suit, AquaSuit, AtmoSuit, JetSuit, TemperatureSuit, LeadSuit };
 
-	public static readonly List<Tag> OxygenSuitTags = new List<Tag>
-	{
-		AtmoSuit,
-		AquaSuit,
-		JetSuit,
-		LeadSuit
-	};
+	public static readonly List<Tag> OxygenSuitTags = new List<Tag> { AtmoSuit, AquaSuit, JetSuit, LeadSuit };
 
 	public static readonly Tag EquippableBalloon = TagManager.Create("EquippableBalloon");
 
@@ -533,13 +519,7 @@ public class GameTags
 
 	public static readonly Tag FunkyVest = TagManager.Create("Funky_Vest");
 
-	public static readonly List<Tag> AllClothesTags = new List<Tag>
-	{
-		Clothes,
-		WarmVest,
-		CoolVest,
-		FunkyVest
-	};
+	public static readonly List<Tag> AllClothesTags = new List<Tag> { Clothes, WarmVest, CoolVest, FunkyVest };
 
 	public static readonly Tag Assigned = TagManager.Create("Assigned");
 
@@ -693,63 +673,21 @@ public class GameTags
 
 	public static TagSet GasElements = new TagSet();
 
-	public static TagSet CalorieCategories = new TagSet
-	{
-		Edible
-	};
+	public static TagSet CalorieCategories = new TagSet { Edible };
 
-	public static TagSet UnitCategories = new TagSet
-	{
-		Medicine,
-		MedicalSupplies,
-		Seed,
-		Egg,
-		Clothes,
-		IndustrialIngredient,
-		Compostable,
-		HighEnergyParticle
-	};
+	public static TagSet UnitCategories = new TagSet { Medicine, MedicalSupplies, Seed, Egg, Clothes, IndustrialIngredient, Compostable, HighEnergyParticle };
 
-	public static TagSet IgnoredMaterialCategories = new TagSet
-	{
-		Special,
-		IgnoreMaterialCategory
-	};
+	public static TagSet IgnoredMaterialCategories = new TagSet { Special, IgnoreMaterialCategory };
 
 	public static TagSet MaterialCategories = new TagSet
 	{
-		Alloy,
-		Metal,
-		RefinedMetal,
-		BuildableRaw,
-		BuildableProcessed,
-		Filter,
-		Liquifiable,
-		Liquid,
-		Breathable,
-		Unbreathable,
-		ConsumableOre,
-		Organics,
-		Farmable,
-		Agriculture,
-		Other,
-		ManufacturedMaterial,
-		CookingIngredient,
-		RareMaterials
+		Alloy, Metal, RefinedMetal, BuildableRaw, BuildableProcessed, Filter, Liquifiable, Liquid, Breathable, Unbreathable,
+		ConsumableOre, Organics, Farmable, Agriculture, Other, ManufacturedMaterial, CookingIngredient, RareMaterials
 	};
 
-	public static TagSet MaterialBuildingElements = new TagSet
-	{
-		BuildingFiber,
-		BuildingWood
-	};
+	public static TagSet MaterialBuildingElements = new TagSet { BuildingFiber, BuildingWood };
 
-	public static TagSet OtherEntityTags = new TagSet
-	{
-		BagableCreature,
-		SwimmingCreature,
-		MiscPickupable
-	};
+	public static TagSet OtherEntityTags = new TagSet { BagableCreature, SwimmingCreature, MiscPickupable };
 
 	public static TagSet AllCategories = new TagSet(CalorieCategories, UnitCategories, MaterialCategories, MaterialBuildingElements, OtherEntityTags);
 

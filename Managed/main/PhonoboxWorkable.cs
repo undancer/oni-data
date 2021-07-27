@@ -15,18 +15,9 @@ public class PhonoboxWorkable : Workable, IWorkerPrioritizable
 
 	public KAnimFile[][] workerOverrideAnims = new KAnimFile[3][]
 	{
-		new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_phonobox_danceone_kanim")
-		},
-		new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_phonobox_dancetwo_kanim")
-		},
-		new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_phonobox_dancethree_kanim")
-		}
+		new KAnimFile[1] { Assets.GetAnim("anim_interacts_phonobox_danceone_kanim") },
+		new KAnimFile[1] { Assets.GetAnim("anim_interacts_phonobox_dancetwo_kanim") },
+		new KAnimFile[1] { Assets.GetAnim("anim_interacts_phonobox_dancethree_kanim") }
 	};
 
 	private PhonoboxWorkable()

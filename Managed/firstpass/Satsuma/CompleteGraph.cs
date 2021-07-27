@@ -7,11 +7,7 @@ namespace Satsuma
 	{
 		private readonly int nodeCount;
 
-		public bool Directed
-		{
-			get;
-			private set;
-		}
+		public bool Directed { get; private set; }
 
 		public CompleteGraph(int nodeCount, Directedness directedness)
 		{

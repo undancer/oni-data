@@ -17,17 +17,9 @@ namespace TemplateClasses
 		[Serializable]
 		public class template_amount_value
 		{
-			public string id
-			{
-				get;
-				set;
-			}
+			public string id { get; set; }
 
-			public float value
-			{
-				get;
-				set;
-			}
+			public float value { get; set; }
 
 			public template_amount_value()
 			{
@@ -40,95 +32,35 @@ namespace TemplateClasses
 			}
 		}
 
-		public string id
-		{
-			get;
-			set;
-		}
+		public string id { get; set; }
 
-		public int location_x
-		{
-			get;
-			set;
-		}
+		public int location_x { get; set; }
 
-		public int location_y
-		{
-			get;
-			set;
-		}
+		public int location_y { get; set; }
 
-		public SimHashes element
-		{
-			get;
-			set;
-		}
+		public SimHashes element { get; set; }
 
-		public float temperature
-		{
-			get;
-			set;
-		}
+		public float temperature { get; set; }
 
-		public float units
-		{
-			get;
-			set;
-		}
+		public float units { get; set; }
 
-		public string diseaseName
-		{
-			get;
-			set;
-		}
+		public string diseaseName { get; set; }
 
-		public int diseaseCount
-		{
-			get;
-			set;
-		}
+		public int diseaseCount { get; set; }
 
-		public Orientation rotationOrientation
-		{
-			get;
-			set;
-		}
+		public Orientation rotationOrientation { get; set; }
 
-		public List<StorageItem> storage
-		{
-			get;
-			set;
-		}
+		public List<StorageItem> storage { get; set; }
 
-		public Type type
-		{
-			get;
-			set;
-		}
+		public Type type { get; set; }
 
-		public int connections
-		{
-			get;
-			set;
-		}
+		public int connections { get; set; }
 
-		public Rottable rottable
-		{
-			get;
-			set;
-		}
+		public Rottable rottable { get; set; }
 
-		public template_amount_value[] amounts
-		{
-			get;
-			set;
-		}
+		public template_amount_value[] amounts { get; set; }
 
-		public template_amount_value[] other_values
-		{
-			get;
-			set;
-		}
+		public template_amount_value[] other_values { get; set; }
 
 		public Prefab()
 		{

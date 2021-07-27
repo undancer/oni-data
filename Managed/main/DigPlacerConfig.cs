@@ -18,11 +18,7 @@ public class DigPlacerConfig : CommonPlacerConfig, IEntityConfig
 		Diggable diggable = gameObject.AddOrGet<Diggable>();
 		diggable.workTime = 5f;
 		diggable.synchronizeAnims = false;
-		diggable.workAnims = new HashedString[2]
-		{
-			"place",
-			"release"
-		};
+		diggable.workAnims = new HashedString[2] { "place", "release" };
 		diggable.materials = Assets.instance.digPlacerAssets.materials;
 		diggable.materialDisplay = gameObject.GetComponentInChildren<MeshRenderer>(includeInactive: true);
 		gameObject.AddOrGet<CancellableDig>();

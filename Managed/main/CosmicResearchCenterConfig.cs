@@ -47,10 +47,7 @@ public class CosmicResearchCenterConfig : IBuildingConfig
 		manualDeliveryKG.capacity = 300f;
 		manualDeliveryKG.choreTypeIDHash = Db.Get().ChoreTypes.ResearchFetch.IdHash;
 		ResearchCenter researchCenter = go.AddOrGet<ResearchCenter>();
-		researchCenter.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_research_space_kanim")
-		};
+		researchCenter.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_research_space_kanim") };
 		researchCenter.research_point_type_id = "space";
 		researchCenter.inputMaterial = INPUT_MATERIAL;
 		researchCenter.mass_per_point = 1f;

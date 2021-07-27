@@ -63,7 +63,7 @@ public class BuildingChoresPanelDupeRow : KMonoBehaviour
 		num += num2;
 		text = text.Replace("{Description}", (context.chore.driver == choreConsumer.choreDriver) ? UI.DETAILTABS.BUILDING_CHORES.DUPE_TOOLTIP_DESC_ACTIVE : UI.DETAILTABS.BUILDING_CHORES.DUPE_TOOLTIP_DESC_INACTIVE);
 		string newValue = GameUtil.ChoreGroupsForChoreType(context.chore.choreType);
-		string newValue2 = UI.UISIDESCREENS.MINIONTODOSIDESCREEN.TOOLTIP_NA.text;
+		string text2 = UI.UISIDESCREENS.MINIONTODOSIDESCREEN.TOOLTIP_NA.text;
 		if (flag && context.chore.choreType.groups.Length != 0)
 		{
 			ChoreGroup choreGroup = context.chore.choreType.groups[0];
@@ -74,7 +74,7 @@ public class BuildingChoresPanelDupeRow : KMonoBehaviour
 					choreGroup = context.chore.choreType.groups[i];
 				}
 			}
-			newValue2 = choreGroup.Name;
+			text2 = choreGroup.Name;
 		}
 		text = text.Replace("{Name}", choreConsumer.name);
 		text = text.Replace("{Errand}", GameUtil.GetChoreName(context.chore, context.data));
@@ -84,7 +84,7 @@ public class BuildingChoresPanelDupeRow : KMonoBehaviour
 		}
 		text = text.Replace("{Rank}", rank.ToString());
 		text = text.Replace("{Groups}", newValue);
-		text = text.Replace("{BestGroup}", newValue2);
+		text = text.Replace("{BestGroup}", text2);
 		text = text.Replace("{PersonalPriority}", JobsTableScreen.priorityInfo[personalPriority].name.text);
 		text = text.Replace("{PersonalPriorityValue}", (personalPriority * 10).ToString());
 		text = text.Replace("{Building}", context.chore.gameObject.GetProperName());

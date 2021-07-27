@@ -117,56 +117,22 @@ public class VerticalWindTunnel : StateMachineComponent<VerticalWindTunnel.State
 
 	public HashSet<int> players = new HashSet<int>();
 
-	public HashedString[] overrideAnims = new HashedString[3]
-	{
-		"anim_interacts_windtunnel_center_kanim",
-		"anim_interacts_windtunnel_left_kanim",
-		"anim_interacts_windtunnel_right_kanim"
-	};
+	public HashedString[] overrideAnims = new HashedString[3] { "anim_interacts_windtunnel_center_kanim", "anim_interacts_windtunnel_left_kanim", "anim_interacts_windtunnel_right_kanim" };
 
 	public string[][] workPreAnims = new string[3][]
 	{
-		new string[2]
-		{
-			"weak_working_front_pre",
-			"weak_working_back_pre"
-		},
-		new string[2]
-		{
-			"medium_working_front_pre",
-			"medium_working_back_pre"
-		},
-		new string[2]
-		{
-			"strong_working_front_pre",
-			"strong_working_back_pre"
-		}
+		new string[2] { "weak_working_front_pre", "weak_working_back_pre" },
+		new string[2] { "medium_working_front_pre", "medium_working_back_pre" },
+		new string[2] { "strong_working_front_pre", "strong_working_back_pre" }
 	};
 
-	public string[] workAnims = new string[3]
-	{
-		"weak_working_loop",
-		"medium_working_loop",
-		"strong_working_loop"
-	};
+	public string[] workAnims = new string[3] { "weak_working_loop", "medium_working_loop", "strong_working_loop" };
 
 	public string[][] workPstAnims = new string[3][]
 	{
-		new string[2]
-		{
-			"weak_working_back_pst",
-			"weak_working_front_pst"
-		},
-		new string[2]
-		{
-			"medium_working_back_pst",
-			"medium_working_front_pst"
-		},
-		new string[2]
-		{
-			"strong_working_back_pst",
-			"strong_working_front_pst"
-		}
+		new string[2] { "weak_working_back_pst", "weak_working_front_pst" },
+		new string[2] { "medium_working_back_pst", "medium_working_front_pst" },
+		new string[2] { "strong_working_back_pst", "strong_working_front_pst" }
 	};
 
 	protected override void OnPrefabInit()

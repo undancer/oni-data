@@ -41,6 +41,7 @@ public class SolarPanelConfig : IBuildingConfig
 		go.AddOrGet<SolarPanel>().powerDistributionOrder = 9;
 		go.AddOrGetDef<PoweredActiveController.Def>();
 		MakeBaseSolid.Def def = go.AddOrGetDef<MakeBaseSolid.Def>();
+		def.occupyFoundationLayer = false;
 		def.solidOffsets = new CellOffset[7];
 		for (int i = 0; i < 7; i++)
 		{

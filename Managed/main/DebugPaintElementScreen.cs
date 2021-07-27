@@ -103,11 +103,7 @@ public class DebugPaintElementScreen : KScreen
 
 	private string filter;
 
-	public static DebugPaintElementScreen Instance
-	{
-		get;
-		private set;
-	}
+	public static DebugPaintElementScreen Instance { get; private set; }
 
 	public static void DestroyInstance()
 	{
@@ -346,8 +342,8 @@ public class DebugPaintElementScreen : KScreen
 			diseaseButton.GetComponentInChildren<LocText>().text = "None";
 			return;
 		}
-		string name = Db.Get().Diseases[diseaseIdx].Name;
-		diseaseButton.GetComponentInChildren<LocText>().text = name;
+		string text = Db.Get().Diseases[diseaseIdx].Name;
+		diseaseButton.GetComponentInChildren<LocText>().text = text;
 	}
 
 	private void OnChangeFOWReveal()

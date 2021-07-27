@@ -238,18 +238,15 @@ public class SolidTransferArm : StateMachineComponent<SolidTransferArm.SMInstanc
 	{
 		base.OnSpawn();
 		KBatchedAnimController component = GetComponent<KBatchedAnimController>();
-		string name = component.name + ".arm";
-		arm_go = new GameObject(name);
+		string text = component.name + ".arm";
+		arm_go = new GameObject(text);
 		arm_go.SetActive(value: false);
 		arm_go.transform.parent = component.transform;
 		looping_sounds = arm_go.AddComponent<LoopingSounds>();
 		rotateSound = GlobalAssets.GetSound(rotateSound);
-		arm_go.AddComponent<KPrefabID>().PrefabTag = new Tag(name);
+		arm_go.AddComponent<KPrefabID>().PrefabTag = new Tag(text);
 		arm_anim_ctrl = arm_go.AddComponent<KBatchedAnimController>();
-		arm_anim_ctrl.AnimFiles = new KAnimFile[1]
-		{
-			component.AnimFiles[0]
-		};
+		arm_anim_ctrl.AnimFiles = new KAnimFile[1] { component.AnimFiles[0] };
 		arm_anim_ctrl.initialAnim = "arm";
 		arm_anim_ctrl.isMovable = true;
 		arm_anim_ctrl.sceneLayer = Grid.SceneLayer.TransferArm;

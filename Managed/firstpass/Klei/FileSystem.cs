@@ -149,15 +149,15 @@ namespace Klei
 					path = path.Substring(0, num + 1);
 				}
 				normalized_path = (path = Normalize(path));
-				string str = filename_glob_pattern.Replace(".", "\\.").Replace("*", ".*");
-				string str2 = path.Replace("\\", "\\\\").Replace("/", "\\/").Replace("(", "\\(")
+				string text = filename_glob_pattern.Replace(".", "\\.").Replace("*", ".*");
+				string text2 = path.Replace("\\", "\\\\").Replace("/", "\\/").Replace("(", "\\(")
 					.Replace(")", "\\)")
 					.Replace("[", "\\[")
 					.Replace("]", "\\]")
 					.Replace(".", "\\.")
 					.Replace("+", "\\+");
-				str2 = str2 + "/" + str + "$";
-				filename_regex = new Regex(str2);
+				text2 = text2 + "/" + text + "$";
+				filename_regex = new Regex(text2);
 			}
 		}
 

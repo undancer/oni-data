@@ -88,29 +88,15 @@ public class KInputController : IInputHandler
 		KKeyCode.RightShift
 	};
 
-	private static readonly KKeyCode[] capsCodes = new KKeyCode[1]
-	{
-		KKeyCode.CapsLock
-	};
+	private static readonly KKeyCode[] capsCodes = new KKeyCode[1] { KKeyCode.CapsLock };
 
-	private static readonly KKeyCode[] backtickCodes = new KKeyCode[1]
-	{
-		KKeyCode.BackQuote
-	};
+	private static readonly KKeyCode[] backtickCodes = new KKeyCode[1] { KKeyCode.BackQuote };
 
 	public string handlerName => "KInputController";
 
-	public KInputHandler inputHandler
-	{
-		get;
-		set;
-	}
+	public KInputHandler inputHandler { get; set; }
 
-	public bool IsGamepad
-	{
-		get;
-		private set;
-	}
+	public bool IsGamepad { get; private set; }
 
 	public KInputController(bool is_gamepad)
 	{

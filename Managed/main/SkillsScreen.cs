@@ -370,9 +370,9 @@ public class SkillsScreen : KModalScreen
 		}
 		while (moraleNotches.Count > Mathf.RoundToInt(f))
 		{
-			GameObject gameObject2 = moraleNotches[moraleNotches.Count - 1];
-			moraleNotches.Remove(gameObject2);
-			UnityEngine.Object.Destroy(gameObject2);
+			GameObject item = moraleNotches[moraleNotches.Count - 1];
+			moraleNotches.Remove(item);
+			UnityEngine.Object.Destroy(item);
 		}
 		for (int i = 0; i < moraleNotches.Count; i++)
 		{
@@ -393,15 +393,15 @@ public class SkillsScreen : KModalScreen
 		}
 		while (expectationNotches.Count < Mathf.RoundToInt(f))
 		{
-			GameObject gameObject3 = UnityEngine.Object.Instantiate(expectationNotch, expectationNotch.transform.parent);
-			gameObject3.SetActive(value: true);
-			expectationNotches.Add(gameObject3);
+			GameObject gameObject2 = UnityEngine.Object.Instantiate(expectationNotch, expectationNotch.transform.parent);
+			gameObject2.SetActive(value: true);
+			expectationNotches.Add(gameObject2);
 		}
 		while (expectationNotches.Count > Mathf.RoundToInt(f))
 		{
-			GameObject gameObject4 = expectationNotches[expectationNotches.Count - 1];
-			expectationNotches.Remove(gameObject4);
-			UnityEngine.Object.Destroy(gameObject4);
+			GameObject item2 = expectationNotches[expectationNotches.Count - 1];
+			expectationNotches.Remove(item2);
+			UnityEngine.Object.Destroy(item2);
 		}
 		for (int j = 0; j < expectationNotches.Count; j++)
 		{
@@ -446,9 +446,9 @@ public class SkillsScreen : KModalScreen
 		}
 		List<KeyValuePair<string, float>> list3 = dictionary.ToList();
 		list3.Sort((KeyValuePair<string, float> pair1, KeyValuePair<string, float> pair2) => pair2.Value.CompareTo(pair1.Value));
-		foreach (KeyValuePair<string, float> item in list3)
+		foreach (KeyValuePair<string, float> item3 in list3)
 		{
-			text = text + "    • " + item.Key + ": " + ((item.Value > 0f) ? UIConstants.ColorPrefixGreen : UIConstants.ColorPrefixRed) + item.Value + UIConstants.ColorSuffix + "\n";
+			text = text + "    • " + item3.Key + ": " + ((item3.Value > 0f) ? UIConstants.ColorPrefixGreen : UIConstants.ColorPrefixRed) + item3.Value + UIConstants.ColorSuffix + "\n";
 		}
 		text += "\n";
 		text = text + GameUtil.ApplyBoldString(UI.SKILLS_SCREEN.MORALE_EXPECTATION) + ": " + attributeInstance2.GetTotalValue() + "\n";
@@ -498,15 +498,15 @@ public class SkillsScreen : KModalScreen
 			return;
 		}
 		MinionResume component = minionIdentity.GetComponent<MinionResume>();
-		string s = "hat_role_none";
+		string text = "hat_role_none";
 		if (skill != null)
 		{
 			selectedHat.sprite = Assets.GetSprite((skill as SkillListable).skillHat);
 			if (component != null)
 			{
-				s = (skill as SkillListable).skillHat;
-				component.SetHats(component.CurrentHat, s);
-				if (component.OwnsHat(s))
+				text = (skill as SkillListable).skillHat;
+				component.SetHats(component.CurrentHat, text);
+				if (component.OwnsHat(text))
 				{
 					new PutOnHatChore(component, Db.Get().ChoreTypes.SwitchHat);
 				}
@@ -514,7 +514,7 @@ public class SkillsScreen : KModalScreen
 		}
 		else
 		{
-			selectedHat.sprite = Assets.GetSprite(s);
+			selectedHat.sprite = Assets.GetSprite(text);
 			if (component != null)
 			{
 				component.SetHats(component.CurrentHat, null);

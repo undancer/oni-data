@@ -27,11 +27,7 @@ public class SuitSuffocationMonitor : GameStateMachine<SuitSuffocationMonitor, S
 
 		private OxygenBreather masterOxygenBreather;
 
-		public SuitTank suitTank
-		{
-			get;
-			private set;
-		}
+		public SuitTank suitTank { get; private set; }
 
 		public Instance(IStateMachineTarget master, SuitTank suit_tank)
 			: base(master)

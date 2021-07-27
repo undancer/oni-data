@@ -7,11 +7,7 @@ public class ChoreProvider : KMonoBehaviour
 {
 	public List<Chore> chores = new List<Chore>();
 
-	public string Name
-	{
-		get;
-		private set;
-	}
+	public string Name { get; private set; }
 
 	protected override void OnSpawn()
 	{

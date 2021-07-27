@@ -13,10 +13,7 @@ public class PlayAnimsStates : GameStateMachine<PlayAnimsStates, PlayAnimsStates
 		public string statusItemTooltip;
 
 		public Def(Tag tag, bool loop, string anim, string status_item_name, string status_item_tooltip)
-			: this(tag, loop, new string[1]
-			{
-				anim
-			}, status_item_name, status_item_tooltip)
+			: this(tag, loop, new string[1] { anim }, status_item_name, status_item_tooltip)
 		{
 		}
 

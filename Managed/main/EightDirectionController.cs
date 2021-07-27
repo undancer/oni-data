@@ -15,11 +15,7 @@ public class EightDirectionController
 
 	private KAnimLink link;
 
-	public KBatchedAnimController controller
-	{
-		get;
-		private set;
-	}
+	public KBatchedAnimController controller { get; private set; }
 
 	public EightDirectionController(KAnimControllerBase buildingController, string targetSymbol, string defaultAnim, Offset frontBank)
 	{
@@ -35,10 +31,7 @@ public class EightDirectionController
 		gameObject.AddComponent<KPrefabID>().PrefabTag = new Tag(name);
 		this.defaultAnim = defaultAnim;
 		controller = gameObject.AddOrGet<KBatchedAnimController>();
-		controller.AnimFiles = new KAnimFile[1]
-		{
-			buildingController.AnimFiles[0]
-		};
+		controller.AnimFiles = new KAnimFile[1] { buildingController.AnimFiles[0] };
 		controller.initialAnim = defaultAnim;
 		controller.isMovable = true;
 		controller.sceneLayer = Grid.SceneLayer.NoLayer;

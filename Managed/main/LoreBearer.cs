@@ -58,44 +58,44 @@ public class LoreBearer : KMonoBehaviour, ISidescreenButtonControl
 			string text = Game.Instance.unlocks.UnlockNext("emails");
 			if (text != null)
 			{
-				string str = "SEARCH" + UnityEngine.Random.Range(1, 6);
-				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_COMPUTER_SUCCESS." + str));
+				string text2 = "SEARCH" + UnityEngine.Random.Range(1, 6);
+				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_COMPUTER_SUCCESS." + text2));
 				infoDialogScreen.AddOption(UI.USERMENUACTIONS.READLORE.GOTODATABASE, OpenCodexByLockKeyID(text));
 			}
 			else
 			{
-				string str2 = "SEARCH" + UnityEngine.Random.Range(1, 8);
-				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_COMPUTER_FAIL." + str2));
+				string text3 = "SEARCH" + UnityEngine.Random.Range(1, 8);
+				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_COMPUTER_FAIL." + text3));
 			}
 		}
 		else if (base.gameObject.name == "GeneShuffler" || base.gameObject.name == "MassiveHeatSink")
 		{
-			string text2 = Game.Instance.unlocks.UnlockNext("researchnotes");
-			if (text2 != null)
+			string text4 = Game.Instance.unlocks.UnlockNext("researchnotes");
+			if (text4 != null)
 			{
-				string str3 = "SEARCH" + UnityEngine.Random.Range(1, 3);
-				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_TECHNOLOGY_SUCCESS." + str3));
-				infoDialogScreen.AddOption(UI.USERMENUACTIONS.READLORE.GOTODATABASE, OpenCodexByLockKeyID(text2));
+				string text5 = "SEARCH" + UnityEngine.Random.Range(1, 3);
+				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_TECHNOLOGY_SUCCESS." + text5));
+				infoDialogScreen.AddOption(UI.USERMENUACTIONS.READLORE.GOTODATABASE, OpenCodexByLockKeyID(text4));
 			}
 			else
 			{
-				string str4 = "SEARCH1";
-				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_OBJECT_FAIL." + str4));
+				string text6 = "SEARCH1";
+				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_OBJECT_FAIL." + text6));
 			}
 		}
 		else if (base.gameObject.GetProperName() == (string)BUILDINGS.PREFABS.PROPGRAVITASJAR1.NAME || base.gameObject.name == (string)BUILDINGS.PREFABS.PROPGRAVITASJAR2.NAME || base.gameObject.name == (string)BUILDINGS.PREFABS.PROPGRAVITASDISPLAY4.NAME)
 		{
-			string text3 = Game.Instance.unlocks.UnlockNext("dimensionallore");
-			if (text3 != null)
+			string text7 = Game.Instance.unlocks.UnlockNext("dimensionallore");
+			if (text7 != null)
 			{
-				string str5 = "SEARCH" + UnityEngine.Random.Range(1, 6);
-				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_OBJECT_SUCCESS." + str5));
-				infoDialogScreen.AddOption(UI.USERMENUACTIONS.READLORE.GOTODATABASE, OpenCodexByLockKeyID(text3));
+				string text8 = "SEARCH" + UnityEngine.Random.Range(1, 6);
+				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_OBJECT_SUCCESS." + text8));
+				infoDialogScreen.AddOption(UI.USERMENUACTIONS.READLORE.GOTODATABASE, OpenCodexByLockKeyID(text7));
 			}
 			else
 			{
-				string str6 = "SEARCH1";
-				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_OBJECT_FAIL." + str6));
+				string text9 = "SEARCH1";
+				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_OBJECT_FAIL." + text9));
 			}
 		}
 		else if (base.gameObject.name == "PropReceptionDesk")
@@ -160,32 +160,32 @@ public class LoreBearer : KMonoBehaviour, ISidescreenButtonControl
 		}
 		else if (base.gameObject.name.Contains("ArtifactSpacePOI"))
 		{
-			string text4 = Game.Instance.unlocks.UnlockNext("space");
-			if (text4 != null)
+			string text10 = Game.Instance.unlocks.UnlockNext("space");
+			if (text10 != null)
 			{
-				string str7 = "SEARCH" + UnityEngine.Random.Range(1, 7);
-				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_SPACEPOI_SUCCESS." + str7));
-				infoDialogScreen.AddOption(UI.USERMENUACTIONS.READLORE.GOTODATABASE, OpenCodexByLockKeyID(text4));
+				string text11 = "SEARCH" + UnityEngine.Random.Range(1, 7);
+				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_SPACEPOI_SUCCESS." + text11));
+				infoDialogScreen.AddOption(UI.USERMENUACTIONS.READLORE.GOTODATABASE, OpenCodexByLockKeyID(text10));
 			}
 			else
 			{
-				string str8 = "SEARCH" + UnityEngine.Random.Range(1, 4);
-				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_SPACEPOI_FAIL." + str8));
+				string text12 = "SEARCH" + UnityEngine.Random.Range(1, 4);
+				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_SPACEPOI_FAIL." + text12));
 			}
 		}
 		else
 		{
-			string text5 = Game.Instance.unlocks.UnlockNext("journals");
-			if (text5 != null)
+			string text13 = Game.Instance.unlocks.UnlockNext("journals");
+			if (text13 != null)
 			{
-				string str9 = "SEARCH" + UnityEngine.Random.Range(1, 6);
-				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_OBJECT_SUCCESS." + str9));
-				infoDialogScreen.AddOption(UI.USERMENUACTIONS.READLORE.GOTODATABASE, OpenCodexByLockKeyID(text5));
+				string text14 = "SEARCH" + UnityEngine.Random.Range(1, 6);
+				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_OBJECT_SUCCESS." + text14));
+				infoDialogScreen.AddOption(UI.USERMENUACTIONS.READLORE.GOTODATABASE, OpenCodexByLockKeyID(text13));
 			}
 			else
 			{
-				string str10 = "SEARCH1";
-				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_OBJECT_FAIL." + str10));
+				string text15 = "SEARCH1";
+				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_OBJECT_FAIL." + text15));
 			}
 		}
 	}

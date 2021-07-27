@@ -211,10 +211,7 @@ namespace NodeEditorFramework
 		public static void RecalculateFrom(Node node)
 		{
 			node.ClearCalculation();
-			workList = new List<Node>
-			{
-				node
-			};
+			workList = new List<Node> { node };
 			StartCalculation();
 		}
 

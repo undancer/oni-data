@@ -12,11 +12,7 @@ public class NoseconeBasicConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("NoseconeBasic", 5, 2, "rocket_nosecone_default_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.HOLLOW_TIER2, new string[2]
-		{
-			"RefinedMetal",
-			"Insulator"
-		}, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("NoseconeBasic", 5, 2, "rocket_nosecone_default_kanim", 1000, 60f, BUILDINGS.ROCKETRY_MASS_KG.HOLLOW_TIER2, new string[2] { "RefinedMetal", "Insulator" }, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
 		BuildingTemplates.CreateRocketBuildingDef(obj);
 		obj.AttachmentSlotTag = GameTags.Rocket;
 		obj.SceneLayer = Grid.SceneLayer.Building;

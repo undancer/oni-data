@@ -32,8 +32,8 @@ public class DiseaseOverlayWidget : KMonoBehaviour
 			return;
 		}
 		KAnimControllerBase component = gameObject.GetComponent<KAnimControllerBase>();
-		Vector3 a = ((component != null) ? component.GetWorldPivot() : (gameObject.transform.GetPosition() + Vector3.down));
-		base.transform.SetPosition(a + offset);
+		Vector3 vector = ((component != null) ? component.GetWorldPivot() : (gameObject.transform.GetPosition() + Vector3.down));
+		base.transform.SetPosition(vector + offset);
 		if (value_src != null)
 		{
 			progressFill.transform.parent.gameObject.SetActive(value: true);

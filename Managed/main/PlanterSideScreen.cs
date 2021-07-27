@@ -401,7 +401,7 @@ public class PlanterSideScreen : ReceptacleSideScreen
 		base.RestoreSelectionFromOccupant();
 		PlantablePlot plantablePlot = (PlantablePlot)targetReceptacle;
 		Tag tag = Tag.Invalid;
-		Tag tag2 = Tag.Invalid;
+		Tag value = Tag.Invalid;
 		bool flag = false;
 		if (plantablePlot.Occupant != null)
 		{
@@ -409,15 +409,15 @@ public class PlanterSideScreen : ReceptacleSideScreen
 			MutantPlant component = plantablePlot.Occupant.GetComponent<MutantPlant>();
 			if (component != null)
 			{
-				tag2 = component.SubSpeciesID;
+				value = component.SubSpeciesID;
 			}
 		}
 		else if (plantablePlot.GetActiveRequest != null)
 		{
 			tag = plantablePlot.requestedEntityTag;
-			tag2 = plantablePlot.requestedEntityAdditionalFilterTag;
+			value = plantablePlot.requestedEntityAdditionalFilterTag;
 			selectedDepositObjectTag = tag;
-			selectedDepositObjectAdditionalTag = tag2;
+			selectedDepositObjectAdditionalTag = value;
 			flag = true;
 		}
 		if (!(tag != Tag.Invalid))
@@ -426,19 +426,19 @@ public class PlanterSideScreen : ReceptacleSideScreen
 		}
 		if (!entityPreviousSelectionMap.ContainsKey(plantablePlot) || flag)
 		{
-			int value = 0;
+			int value2 = 0;
 			foreach (KeyValuePair<ReceptacleToggle, SelectableEntity> item in depositObjectMap)
 			{
 				if (item.Value.tag == tag)
 				{
-					value = entityToggles.IndexOf(item.Key);
+					value2 = entityToggles.IndexOf(item.Key);
 				}
 			}
 			if (!entityPreviousSelectionMap.ContainsKey(plantablePlot))
 			{
 				entityPreviousSelectionMap.Add(plantablePlot, -1);
 			}
-			entityPreviousSelectionMap[plantablePlot] = value;
+			entityPreviousSelectionMap[plantablePlot] = value2;
 		}
 		if (!entityPreviousSubSelectionMap.ContainsKey(plantablePlot))
 		{
@@ -446,7 +446,7 @@ public class PlanterSideScreen : ReceptacleSideScreen
 		}
 		if (entityPreviousSubSelectionMap[plantablePlot] == Tag.Invalid || flag)
 		{
-			entityPreviousSubSelectionMap[plantablePlot] = tag2;
+			entityPreviousSubSelectionMap[plantablePlot] = value;
 		}
 	}
 }

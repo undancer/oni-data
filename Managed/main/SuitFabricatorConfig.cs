@@ -28,10 +28,7 @@ public class SuitFabricatorConfig : IBuildingConfig
 		complexFabricator.sideScreenStyle = ComplexFabricatorSideScreen.StyleSetting.ListQueueHybrid;
 		go.AddOrGet<FabricatorIngredientStatusManager>();
 		go.AddOrGet<CopyBuildingSettings>();
-		go.AddOrGet<ComplexFabricatorWorkable>().overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_suit_fabricator_kanim")
-		};
+		go.AddOrGet<ComplexFabricatorWorkable>().overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_suit_fabricator_kanim") };
 		Prioritizable.AddRef(go);
 		BuildingTemplates.CreateComplexFabricatorStorage(go, complexFabricator);
 		ConfigureRecipes();
@@ -53,10 +50,7 @@ public class SuitFabricatorConfig : IBuildingConfig
 			time = TUNING.EQUIPMENT.SUITS.ATMOSUIT_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.ATMO_SUIT.RECIPE_DESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.ResultWithIngredient,
-			fabricators = new List<Tag>
-			{
-				"SuitFabricator"
-			},
+			fabricators = new List<Tag> { "SuitFabricator" },
 			requiredTech = Db.Get().TechItems.atmoSuit.parentTechId,
 			sortOrder = 1
 		};
@@ -74,10 +68,7 @@ public class SuitFabricatorConfig : IBuildingConfig
 			time = TUNING.EQUIPMENT.SUITS.ATMOSUIT_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.ATMO_SUIT.RECIPE_DESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.ResultWithIngredient,
-			fabricators = new List<Tag>
-			{
-				"SuitFabricator"
-			},
+			fabricators = new List<Tag> { "SuitFabricator" },
 			requiredTech = Db.Get().TechItems.atmoSuit.parentTechId,
 			sortOrder = 1
 		};
@@ -95,18 +86,15 @@ public class SuitFabricatorConfig : IBuildingConfig
 			time = TUNING.EQUIPMENT.SUITS.ATMOSUIT_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.ATMO_SUIT.RECIPE_DESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.ResultWithIngredient,
-			fabricators = new List<Tag>
-			{
-				"SuitFabricator"
-			},
+			fabricators = new List<Tag> { "SuitFabricator" },
 			requiredTech = Db.Get().TechItems.atmoSuit.parentTechId,
 			sortOrder = 1
 		};
-		if (ElementLoader.FindElementByHash(SimHashes.Cobaltite) != null)
+		if (ElementLoader.FindElementByHash(SimHashes.Cobalt) != null)
 		{
 			ComplexRecipe.RecipeElement[] array7 = new ComplexRecipe.RecipeElement[2]
 			{
-				new ComplexRecipe.RecipeElement(SimHashes.Cobaltite.CreateTag(), 300f, inheritElement: true),
+				new ComplexRecipe.RecipeElement(SimHashes.Cobalt.CreateTag(), 300f, inheritElement: true),
 				new ComplexRecipe.RecipeElement("BasicFabric".ToTag(), 2f)
 			};
 			ComplexRecipe.RecipeElement[] array8 = new ComplexRecipe.RecipeElement[1]
@@ -118,10 +106,7 @@ public class SuitFabricatorConfig : IBuildingConfig
 				time = TUNING.EQUIPMENT.SUITS.ATMOSUIT_FABTIME,
 				description = STRINGS.EQUIPMENT.PREFABS.ATMO_SUIT.RECIPE_DESC,
 				nameDisplay = ComplexRecipe.RecipeNameDisplay.ResultWithIngredient,
-				fabricators = new List<Tag>
-				{
-					"SuitFabricator"
-				},
+				fabricators = new List<Tag> { "SuitFabricator" },
 				requiredTech = Db.Get().TechItems.atmoSuit.parentTechId,
 				sortOrder = 1
 			};
@@ -140,10 +125,7 @@ public class SuitFabricatorConfig : IBuildingConfig
 			time = TUNING.EQUIPMENT.SUITS.ATMOSUIT_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.ATMO_SUIT.RECIPE_DESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.ResultWithIngredient,
-			fabricators = new List<Tag>
-			{
-				"SuitFabricator"
-			},
+			fabricators = new List<Tag> { "SuitFabricator" },
 			requiredTech = Db.Get().TechItems.atmoSuit.parentTechId,
 			sortOrder = 2
 		};
@@ -161,10 +143,7 @@ public class SuitFabricatorConfig : IBuildingConfig
 			time = TUNING.EQUIPMENT.SUITS.ATMOSUIT_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.JET_SUIT.RECIPE_DESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.ResultWithIngredient,
-			fabricators = new List<Tag>
-			{
-				"SuitFabricator"
-			},
+			fabricators = new List<Tag> { "SuitFabricator" },
 			requiredTech = Db.Get().TechItems.jetSuit.parentTechId,
 			sortOrder = 3
 		};
@@ -182,10 +161,7 @@ public class SuitFabricatorConfig : IBuildingConfig
 			time = TUNING.EQUIPMENT.SUITS.ATMOSUIT_FABTIME,
 			description = STRINGS.EQUIPMENT.PREFABS.JET_SUIT.RECIPE_DESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.ResultWithIngredient,
-			fabricators = new List<Tag>
-			{
-				"SuitFabricator"
-			},
+			fabricators = new List<Tag> { "SuitFabricator" },
 			requiredTech = Db.Get().TechItems.jetSuit.parentTechId,
 			sortOrder = 4
 		};
@@ -205,10 +181,7 @@ public class SuitFabricatorConfig : IBuildingConfig
 				time = TUNING.EQUIPMENT.SUITS.ATMOSUIT_FABTIME,
 				description = STRINGS.EQUIPMENT.PREFABS.LEAD_SUIT.RECIPE_DESC,
 				nameDisplay = ComplexRecipe.RecipeNameDisplay.ResultWithIngredient,
-				fabricators = new List<Tag>
-				{
-					"SuitFabricator"
-				},
+				fabricators = new List<Tag> { "SuitFabricator" },
 				requiredTech = Db.Get().TechItems.leadSuit.parentTechId,
 				sortOrder = 5
 			};
@@ -229,10 +202,7 @@ public class SuitFabricatorConfig : IBuildingConfig
 				time = TUNING.EQUIPMENT.SUITS.ATMOSUIT_FABTIME,
 				description = STRINGS.EQUIPMENT.PREFABS.LEAD_SUIT.RECIPE_DESC,
 				nameDisplay = ComplexRecipe.RecipeNameDisplay.ResultWithIngredient,
-				fabricators = new List<Tag>
-				{
-					"SuitFabricator"
-				},
+				fabricators = new List<Tag> { "SuitFabricator" },
 				requiredTech = Db.Get().TechItems.leadSuit.parentTechId,
 				sortOrder = 6
 			};

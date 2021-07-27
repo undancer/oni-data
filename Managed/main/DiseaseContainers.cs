@@ -167,7 +167,7 @@ public class DiseaseContainers : KGameObjectSplitComponentManager<DiseaseHeader,
 			{
 				continue;
 			}
-			Color32 c = color;
+			Color32 color2 = color;
 			Vector3 position = controller.transform.GetPosition();
 			if (visibleArea.Min <= position && position <= visibleArea.Max)
 			{
@@ -177,7 +177,7 @@ public class DiseaseContainers : KGameObjectSplitComponentManager<DiseaseHeader,
 				GetVisualDiseaseIdxAndCount(header, ref payload, out disease_idx, out disease_count);
 				if (disease_idx != 255)
 				{
-					c = GlobalAssets.Instance.colorSet.GetColorByName(diseases[disease_idx].overlayColourName);
+					color2 = GlobalAssets.Instance.colorSet.GetColorByName(diseases[disease_idx].overlayColourName);
 					num = disease_count;
 				}
 				if (payload.isContainer)
@@ -197,12 +197,12 @@ public class DiseaseContainers : KGameObjectSplitComponentManager<DiseaseHeader,
 							if (header2.diseaseCount > num && header2.diseaseIdx != byte.MaxValue)
 							{
 								num = header2.diseaseCount;
-								c = GlobalAssets.Instance.colorSet.GetColorByName(diseases[header2.diseaseIdx].overlayColourName);
+								color2 = GlobalAssets.Instance.colorSet.GetColorByName(diseases[header2.diseaseIdx].overlayColourName);
 							}
 						}
 					}
 				}
-				c.a = SimUtil.DiseaseCountToAlpha254(num);
+				color2.a = SimUtil.DiseaseCountToAlpha254(num);
 				if (payload.conduitType != 0)
 				{
 					ConduitFlow flowManager = Conduit.GetFlowManager(payload.conduitType);
@@ -211,12 +211,12 @@ public class DiseaseContainers : KGameObjectSplitComponentManager<DiseaseHeader,
 					if (contents.diseaseIdx != byte.MaxValue && contents.diseaseCount > num)
 					{
 						num = contents.diseaseCount;
-						c = GlobalAssets.Instance.colorSet.GetColorByName(diseases[contents.diseaseIdx].overlayColourName);
-						c.a = byte.MaxValue;
+						color2 = GlobalAssets.Instance.colorSet.GetColorByName(diseases[contents.diseaseIdx].overlayColourName);
+						color2.a = byte.MaxValue;
 					}
 				}
 			}
-			controller.OverlayColour = c;
+			controller.OverlayColour = color2;
 		}
 	}
 

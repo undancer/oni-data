@@ -6,19 +6,11 @@ public class WireUtilityNetworkLink : UtilityNetworkLink, IWattageRating, IHaveU
 	[SerializeField]
 	public Wire.WattageRating maxWattageRating;
 
-	public bool IsVirtual
-	{
-		get;
-		private set;
-	}
+	public bool IsVirtual { get; private set; }
 
 	public int PowerCell => GetNetworkCell();
 
-	public object VirtualCircuitKey
-	{
-		get;
-		private set;
-	}
+	public object VirtualCircuitKey { get; private set; }
 
 	public Wire.WattageRating GetMaxWattageRating()
 	{

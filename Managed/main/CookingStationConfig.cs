@@ -26,10 +26,7 @@ public class CookingStationConfig : IBuildingConfig
 		cookingStation.heatedTemperature = 368.15f;
 		go.AddOrGet<FabricatorIngredientStatusManager>();
 		go.AddOrGet<CopyBuildingSettings>();
-		go.AddOrGet<ComplexFabricatorWorkable>().overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_cookstation_kanim")
-		};
+		go.AddOrGet<ComplexFabricatorWorkable>().overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_cookstation_kanim") };
 		cookingStation.sideScreenStyle = ComplexFabricatorSideScreen.StyleSetting.ListQueueHybrid;
 		Prioritizable.AddRef(go);
 		go.AddOrGet<DropAllWorkable>();
@@ -53,10 +50,7 @@ public class CookingStationConfig : IBuildingConfig
 			time = FOOD.RECIPES.SMALL_COOK_TIME,
 			description = ITEMS.FOOD.PICKLEDMEAL.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"CookingStation"
-			},
+			fabricators = new List<Tag> { "CookingStation" },
 			sortOrder = 21
 		};
 		ComplexRecipe.RecipeElement[] array3 = new ComplexRecipe.RecipeElement[1]
@@ -72,10 +66,7 @@ public class CookingStationConfig : IBuildingConfig
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.FRIEDMUSHBAR.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"CookingStation"
-			},
+			fabricators = new List<Tag> { "CookingStation" },
 			sortOrder = 1
 		};
 		ComplexRecipe.RecipeElement[] array5 = new ComplexRecipe.RecipeElement[1]
@@ -91,10 +82,7 @@ public class CookingStationConfig : IBuildingConfig
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.FRIEDMUSHROOM.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"CookingStation"
-			},
+			fabricators = new List<Tag> { "CookingStation" },
 			sortOrder = 20
 		};
 		ComplexRecipe.RecipeElement[] array7 = new ComplexRecipe.RecipeElement[1]
@@ -110,10 +98,7 @@ public class CookingStationConfig : IBuildingConfig
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.COOKEDMEAT.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"CookingStation"
-			},
+			fabricators = new List<Tag> { "CookingStation" },
 			sortOrder = 21
 		};
 		ComplexRecipe.RecipeElement[] array9 = new ComplexRecipe.RecipeElement[1]
@@ -129,10 +114,7 @@ public class CookingStationConfig : IBuildingConfig
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.COOKEDMEAT.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"CookingStation"
-			},
+			fabricators = new List<Tag> { "CookingStation" },
 			sortOrder = 21
 		};
 		ComplexRecipe.RecipeElement[] array11 = new ComplexRecipe.RecipeElement[1]
@@ -148,10 +130,7 @@ public class CookingStationConfig : IBuildingConfig
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.GRILLEDPRICKLEFRUIT.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"CookingStation"
-			},
+			fabricators = new List<Tag> { "CookingStation" },
 			sortOrder = 20
 		};
 		if (DlcManager.IsExpansion1Active())
@@ -169,10 +148,7 @@ public class CookingStationConfig : IBuildingConfig
 				time = FOOD.RECIPES.STANDARD_COOK_TIME,
 				description = ITEMS.FOOD.SWAMPDELIGHTS.RECIPEDESC,
 				nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-				fabricators = new List<Tag>
-				{
-					"CookingStation"
-				},
+				fabricators = new List<Tag> { "CookingStation" },
 				sortOrder = 20
 			};
 		}
@@ -189,10 +165,7 @@ public class CookingStationConfig : IBuildingConfig
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.COLDWHEATBREAD.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"CookingStation"
-			},
+			fabricators = new List<Tag> { "CookingStation" },
 			sortOrder = 50
 		};
 		ComplexRecipe.RecipeElement[] array17 = new ComplexRecipe.RecipeElement[1]
@@ -208,10 +181,7 @@ public class CookingStationConfig : IBuildingConfig
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.COOKEDEGG.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"CookingStation"
-			},
+			fabricators = new List<Tag> { "CookingStation" },
 			sortOrder = 1
 		};
 		if (DlcManager.IsExpansion1Active())
@@ -229,10 +199,7 @@ public class CookingStationConfig : IBuildingConfig
 				time = FOOD.RECIPES.STANDARD_COOK_TIME,
 				description = ITEMS.FOOD.WORMBASICFOOD.RECIPEDESC,
 				nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-				fabricators = new List<Tag>
-				{
-					"CookingStation"
-				},
+				fabricators = new List<Tag> { "CookingStation" },
 				sortOrder = 20
 			};
 		}
@@ -252,10 +219,7 @@ public class CookingStationConfig : IBuildingConfig
 				time = FOOD.RECIPES.STANDARD_COOK_TIME,
 				description = ITEMS.FOOD.WORMSUPERFOOD.RECIPEDESC,
 				nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-				fabricators = new List<Tag>
-				{
-					"CookingStation"
-				},
+				fabricators = new List<Tag> { "CookingStation" },
 				sortOrder = 20
 			};
 		}

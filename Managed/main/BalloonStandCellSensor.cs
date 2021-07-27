@@ -54,19 +54,11 @@ public class BalloonStandCellSensor : Sensor
 			{
 				if (cavityForCell3 != null && cavityForCell3.handle == cavityForCell.handle && navigator.NavGrid.NavTable.IsValid(num3) && navigator.NavGrid.NavTable.IsValid(num4))
 				{
-					pooledList.Add(new int[2]
-					{
-						mingleCell,
-						num4
-					});
+					pooledList.Add(new int[2] { mingleCell, num4 });
 				}
 				if (cavityForCell2 != null && cavityForCell2.handle == cavityForCell.handle && navigator.NavGrid.NavTable.IsValid(num5) && navigator.NavGrid.NavTable.IsValid(num6))
 				{
-					pooledList.Add(new int[2]
-					{
-						mingleCell,
-						num6
-					});
+					pooledList.Add(new int[2] { mingleCell, num6 });
 				}
 			}
 		}

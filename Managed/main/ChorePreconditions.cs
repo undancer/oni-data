@@ -667,12 +667,12 @@ public class ChorePreconditions
 			description = DUPLICANTS.CHORES.PRECONDITIONS.NOT_CHORE_CREATOR,
 			fn = delegate(ref Chore.Precondition.Context context, object data)
 			{
-				GameObject y = (GameObject)data;
+				GameObject gameObject = (GameObject)data;
 				if (context.consumerState.consumer == null)
 				{
 					return false;
 				}
-				return (!(context.consumerState.gameObject == y)) ? true : false;
+				return (!(context.consumerState.gameObject == gameObject)) ? true : false;
 			}
 		});
 		isPreemptable = (IsGettingMoreStressed = new Chore.Precondition

@@ -67,89 +67,33 @@ public class BuildingCellVisualizerResources : ScriptableObject
 
 	private static BuildingCellVisualizerResources _Instance;
 
-	public Material backgroundMaterial
-	{
-		get;
-		set;
-	}
+	public Material backgroundMaterial { get; set; }
 
-	public Material iconBackgroundMaterial
-	{
-		get;
-		set;
-	}
+	public Material iconBackgroundMaterial { get; set; }
 
-	public Material powerInputMaterial
-	{
-		get;
-		set;
-	}
+	public Material powerInputMaterial { get; set; }
 
-	public Material powerOutputMaterial
-	{
-		get;
-		set;
-	}
+	public Material powerOutputMaterial { get; set; }
 
-	public Material liquidInputMaterial
-	{
-		get;
-		set;
-	}
+	public Material liquidInputMaterial { get; set; }
 
-	public Material liquidOutputMaterial
-	{
-		get;
-		set;
-	}
+	public Material liquidOutputMaterial { get; set; }
 
-	public Material gasInputMaterial
-	{
-		get;
-		set;
-	}
+	public Material gasInputMaterial { get; set; }
 
-	public Material gasOutputMaterial
-	{
-		get;
-		set;
-	}
+	public Material gasOutputMaterial { get; set; }
 
-	public Material highEnergyParticleInputMaterial
-	{
-		get;
-		set;
-	}
+	public Material highEnergyParticleInputMaterial { get; set; }
 
-	public Material highEnergyParticleOutputMaterial
-	{
-		get;
-		set;
-	}
+	public Material highEnergyParticleOutputMaterial { get; set; }
 
-	public Mesh backgroundMesh
-	{
-		get;
-		set;
-	}
+	public Mesh backgroundMesh { get; set; }
 
-	public Mesh iconMesh
-	{
-		get;
-		set;
-	}
+	public Mesh iconMesh { get; set; }
 
-	public int backgroundLayer
-	{
-		get;
-		set;
-	}
+	public int backgroundLayer { get; set; }
 
-	public int iconLayer
-	{
-		get;
-		set;
-	}
+	public int iconLayer { get; set; }
 
 	public static void DestroyInstance()
 	{
@@ -206,15 +150,7 @@ public class BuildingCellVisualizerResources : ScriptableObject
 			new Vector2(0f, 1f),
 			new Vector2(1f, 1f)
 		};
-		mesh.triangles = new int[6]
-		{
-			0,
-			1,
-			2,
-			2,
-			1,
-			3
-		};
+		mesh.triangles = new int[6] { 0, 1, 2, 2, 1, 3 };
 		mesh.RecalculateBounds();
 		return mesh;
 	}

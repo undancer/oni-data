@@ -13,10 +13,7 @@ public class BackgroundEarthConfig : IEntityConfig
 	{
 		GameObject gameObject = EntityTemplates.CreateEntity(ID, ID);
 		KBatchedAnimController kBatchedAnimController = gameObject.AddOrGet<KBatchedAnimController>();
-		kBatchedAnimController.AnimFiles = new KAnimFile[1]
-		{
-			Assets.GetAnim("earth_kanim")
-		};
+		kBatchedAnimController.AnimFiles = new KAnimFile[1] { Assets.GetAnim("earth_kanim") };
 		kBatchedAnimController.isMovable = true;
 		kBatchedAnimController.initialAnim = "idle";
 		kBatchedAnimController.initialMode = KAnim.PlayMode.Loop;

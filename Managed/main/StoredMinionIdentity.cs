@@ -80,18 +80,10 @@ public class StoredMinionIdentity : KMonoBehaviour, ISaveLoadable, IAssignableId
 	public MinionModifiers minionModifiers;
 
 	[Serialize]
-	public string genderStringKey
-	{
-		get;
-		set;
-	}
+	public string genderStringKey { get; set; }
 
 	[Serialize]
-	public string nameStringKey
-	{
-		get;
-		set;
-	}
+	public string nameStringKey { get; set; }
 
 	[OnDeserialized]
 	private void OnDeserializedMethod()

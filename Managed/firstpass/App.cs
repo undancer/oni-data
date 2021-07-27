@@ -72,12 +72,7 @@ public class App : MonoBehaviour
 		loadingSceneName = null;
 		currentSceneName = null;
 		types = new List<Type>();
-		sleepIntervals = new float[3]
-		{
-			8.333333f,
-			16.666666f,
-			33.333332f
-		};
+		sleepIntervals = new float[3] { 8.333333f, 16.666666f, 33.333332f };
 		Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
 		foreach (Assembly assembly in assemblies)
 		{

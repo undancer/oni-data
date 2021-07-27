@@ -4,11 +4,7 @@ namespace Satsuma
 {
 	public struct Node : IEquatable<Node>
 	{
-		public long Id
-		{
-			get;
-			private set;
-		}
+		public long Id { get; private set; }
 
 		public static Node Invalid => new Node(0L);
 

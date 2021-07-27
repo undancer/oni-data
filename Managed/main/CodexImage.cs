@@ -4,17 +4,9 @@ using UnityEngine.UI;
 
 public class CodexImage : CodexWidget<CodexImage>
 {
-	public Sprite sprite
-	{
-		get;
-		set;
-	}
+	public Sprite sprite { get; set; }
 
-	public Color color
-	{
-		get;
-		set;
-	}
+	public Color color { get; set; }
 
 	public string spriteName
 	{

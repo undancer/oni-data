@@ -41,7 +41,7 @@ public class CrewRationsEntry : CrewListEntry
 			float min = amount.GetMin();
 			float max = amount.GetMax();
 			float num = max - min;
-			string str = Mathf.RoundToInt((num - (max - amount.value)) / num * 100f).ToString();
+			string text = Mathf.RoundToInt((num - (max - amount.value)) / num * 100f).ToString();
 			if (amount.amount == Db.Get().Amounts.Stress)
 			{
 				currentStressText.text = amount.GetValueString();
@@ -50,12 +50,12 @@ public class CrewRationsEntry : CrewListEntry
 			}
 			else if (amount.amount == Db.Get().Amounts.Calories)
 			{
-				currentCaloriesText.text = str + "%";
+				currentCaloriesText.text = text + "%";
 				currentCaloriesText.GetComponent<ToolTip>().toolTip = amount.GetTooltip();
 			}
 			else if (amount.amount == Db.Get().Amounts.HitPoints)
 			{
-				currentHealthText.text = str + "%";
+				currentHealthText.text = text + "%";
 				currentHealthText.GetComponent<ToolTip>().toolTip = amount.GetTooltip();
 			}
 		}

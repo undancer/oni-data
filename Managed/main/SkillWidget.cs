@@ -79,11 +79,7 @@ public class SkillWidget : KMonoBehaviour, IPointerEnterHandler, IEventSystemHan
 
 	public Material desaturatedMaterial;
 
-	public string skillID
-	{
-		get;
-		private set;
-	}
+	public string skillID { get; private set; }
 
 	public void Refresh(string skillID)
 	{
@@ -94,8 +90,8 @@ public class SkillWidget : KMonoBehaviour, IPointerEnterHandler, IEventSystemHan
 			return;
 		}
 		Name.text = skill.Name;
-		LocText name = Name;
-		name.text = name.text + "\n(" + Db.Get().SkillGroups.Get(skill.skillGroup).Name + ")";
+		LocText locText = Name;
+		locText.text = locText.text + "\n(" + Db.Get().SkillGroups.Get(skill.skillGroup).Name + ")";
 		this.skillID = skillID;
 		tooltip.SetSimpleTooltip(SkillTooltip(skill));
 		skillsScreen.GetMinionIdentity(skillsScreen.CurrentlySelectedMinion, out var minionIdentity, out var storedMinionIdentity);
@@ -263,8 +259,8 @@ public class SkillWidget : KMonoBehaviour, IPointerEnterHandler, IEventSystemHan
 	public string CriteriaString(Skill skill)
 	{
 		bool flag = false;
-		string str = "";
-		str = string.Concat(str, "<b>", UI.ROLES_SCREEN.ASSIGNMENT_REQUIREMENTS.TITLE, "</b>\n");
+		string text = "";
+		text = string.Concat(text, "<b>", UI.ROLES_SCREEN.ASSIGNMENT_REQUIREMENTS.TITLE, "</b>\n");
 		SkillGroup skillGroup = Db.Get().SkillGroups.Get(skill.skillGroup);
 		if (skillGroup != null && skillGroup.relevantAttributes != null)
 		{
@@ -272,7 +268,7 @@ public class SkillWidget : KMonoBehaviour, IPointerEnterHandler, IEventSystemHan
 			{
 				if (relevantAttribute != null)
 				{
-					str = str + "    • " + string.Format(UI.SKILLS_SCREEN.ASSIGNMENT_REQUIREMENTS.SKILLGROUP_ENABLED.DESCRIPTION, relevantAttribute.Name) + "\n";
+					text = text + "    • " + string.Format(UI.SKILLS_SCREEN.ASSIGNMENT_REQUIREMENTS.SKILLGROUP_ENABLED.DESCRIPTION, relevantAttribute.Name) + "\n";
 					flag = true;
 				}
 			}
@@ -282,19 +278,19 @@ public class SkillWidget : KMonoBehaviour, IPointerEnterHandler, IEventSystemHan
 			flag = true;
 			for (int i = 0; i < skill.priorSkills.Count; i++)
 			{
-				str = str + "    • " + $"{Db.Get().Skills.Get(skill.priorSkills[i]).Name}";
-				str += "</color>";
+				text = text + "    • " + $"{Db.Get().Skills.Get(skill.priorSkills[i]).Name}";
+				text += "</color>";
 				if (i != skill.priorSkills.Count - 1)
 				{
-					str += "\n";
+					text += "\n";
 				}
 			}
 		}
 		if (!flag)
 		{
-			str = str + "    • " + string.Format(UI.ROLES_SCREEN.ASSIGNMENT_REQUIREMENTS.NONE, skill.Name);
+			text = text + "    • " + string.Format(UI.ROLES_SCREEN.ASSIGNMENT_REQUIREMENTS.NONE, skill.Name);
 		}
-		return str;
+		return text;
 	}
 
 	public string DuplicantSkillString(Skill skill)

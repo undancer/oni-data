@@ -217,10 +217,7 @@ public static class RoomConstraints
 
 	public static Constraint MASSAGE_TABLE = new Constraint((KPrefabID bc) => bc.HasTag(ConstraintTags.MassageTable), null, 1, ROOMS.CRITERIA.MASSAGE_TABLE.NAME, ROOMS.CRITERIA.MASSAGE_TABLE.DESCRIPTION);
 
-	public static Constraint MESS_STATION_SINGLE = new Constraint((KPrefabID bc) => bc.HasTag(ConstraintTags.MessTable), null, 1, ROOMS.CRITERIA.MESS_STATION_SINGLE.NAME, ROOMS.CRITERIA.MESS_STATION_SINGLE.DESCRIPTION, new List<Constraint>
-	{
-		REC_BUILDING
-	});
+	public static Constraint MESS_STATION_SINGLE = new Constraint((KPrefabID bc) => bc.HasTag(ConstraintTags.MessTable), null, 1, ROOMS.CRITERIA.MESS_STATION_SINGLE.NAME, ROOMS.CRITERIA.MESS_STATION_SINGLE.DESCRIPTION, new List<Constraint> { REC_BUILDING });
 
 	public static Constraint RESEARCH_STATION = new Constraint((KPrefabID bc) => bc.HasTag(ConstraintTags.ResearchStation), null, 1, ROOMS.CRITERIA.RESEARCH_STATION.NAME, ROOMS.CRITERIA.RESEARCH_STATION.DESCRIPTION);
 
@@ -232,12 +229,7 @@ public static class RoomConstraints
 
 	public static Constraint ADVANCED_WASH_STATION = new Constraint((KPrefabID bc) => bc.HasTag(ConstraintTags.AdvancedWashStation), null, 1, ROOMS.CRITERIA.ADVANCED_WASH_STATION.NAME, ROOMS.CRITERIA.ADVANCED_WASH_STATION.DESCRIPTION);
 
-	public static Constraint CLINIC = new Constraint((KPrefabID bc) => bc.HasTag(ConstraintTags.Clinic), null, 1, ROOMS.CRITERIA.CLINIC.NAME, ROOMS.CRITERIA.CLINIC.DESCRIPTION, new List<Constraint>
-	{
-		TOILET,
-		FLUSH_TOILET,
-		MESS_STATION_SINGLE
-	});
+	public static Constraint CLINIC = new Constraint((KPrefabID bc) => bc.HasTag(ConstraintTags.Clinic), null, 1, ROOMS.CRITERIA.CLINIC.NAME, ROOMS.CRITERIA.CLINIC.DESCRIPTION, new List<Constraint> { TOILET, FLUSH_TOILET, MESS_STATION_SINGLE });
 
 	public static Constraint PARK_BUILDING = new Constraint((KPrefabID bc) => bc.HasTag(ConstraintTags.Park), null, 1, ROOMS.CRITERIA.PARK_BUILDING.NAME, ROOMS.CRITERIA.PARK_BUILDING.DESCRIPTION);
 
@@ -304,25 +296,25 @@ public static class RoomConstraints
 
 	public static string RoomCriteriaString(Room room)
 	{
-		string str = "";
+		string text = "";
 		RoomType roomType = room.roomType;
 		if (roomType != Db.Get().RoomTypes.Neutral)
 		{
-			str = string.Concat(str, "<b>", ROOMS.CRITERIA.HEADER, "</b>");
-			str = str + "\n    • " + roomType.primary_constraint.name;
+			text = string.Concat(text, "<b>", ROOMS.CRITERIA.HEADER, "</b>");
+			text = text + "\n    • " + roomType.primary_constraint.name;
 			if (roomType.additional_constraints != null)
 			{
 				Constraint[] additional_constraints = roomType.additional_constraints;
 				foreach (Constraint constraint in additional_constraints)
 				{
-					str = ((!constraint.isSatisfied(room)) ? (str + "\n<color=#F44A47FF>    • " + constraint.name + "</color>") : (str + "\n    • " + constraint.name));
+					text = ((!constraint.isSatisfied(room)) ? (text + "\n<color=#F44A47FF>    • " + constraint.name + "</color>") : (text + "\n    • " + constraint.name));
 				}
 			}
 		}
 		else
 		{
 			RoomType[] possibleRoomTypes = Db.Get().RoomTypes.GetPossibleRoomTypes(room);
-			str += ((possibleRoomTypes.Length > 1) ? string.Concat("<b>", ROOMS.CRITERIA.POSSIBLE_TYPES_HEADER, "</b>") : "");
+			text += ((possibleRoomTypes.Length > 1) ? string.Concat("<b>", ROOMS.CRITERIA.POSSIBLE_TYPES_HEADER, "</b>") : "");
 			RoomType[] array = possibleRoomTypes;
 			foreach (RoomType roomType2 in array)
 			{
@@ -330,11 +322,11 @@ public static class RoomConstraints
 				{
 					continue;
 				}
-				if (str != "")
+				if (text != "")
 				{
-					str += "\n";
+					text += "\n";
 				}
-				str = str + "<b><color=#BCBCBC>    • " + roomType2.Name + "</b> (" + roomType2.primary_constraint.name + ")</color>";
+				text = text + "<b><color=#BCBCBC>    • " + roomType2.Name + "</b> (" + roomType2.primary_constraint.name + ")</color>";
 				bool flag = false;
 				if (roomType2.additional_constraints != null)
 				{
@@ -344,7 +336,7 @@ public static class RoomConstraints
 						if (!constraint2.isSatisfied(room))
 						{
 							flag = true;
-							str = ((constraint2.building_criteria == null) ? (str + "\n<color=#F44A47FF>        • " + string.Format(ROOMS.CRITERIA.CRITERIA_FAILED.FAILED, constraint2.name) + "</color>") : (str + "\n<color=#F44A47FF>        • " + string.Format(ROOMS.CRITERIA.CRITERIA_FAILED.MISSING_BUILDING, constraint2.name) + "</color>"));
+							text = ((constraint2.building_criteria == null) ? (text + "\n<color=#F44A47FF>        • " + string.Format(ROOMS.CRITERIA.CRITERIA_FAILED.FAILED, constraint2.name) + "</color>") : (text + "\n<color=#F44A47FF>        • " + string.Format(ROOMS.CRITERIA.CRITERIA_FAILED.MISSING_BUILDING, constraint2.name) + "</color>"));
 						}
 					}
 				}
@@ -363,10 +355,10 @@ public static class RoomConstraints
 				}
 				if (flag2)
 				{
-					str = string.Concat(str, "\n<color=#F44A47FF>        • ", ROOMS.CRITERIA.NO_TYPE_CONFLICTS, "</color>");
+					text = string.Concat(text, "\n<color=#F44A47FF>        • ", ROOMS.CRITERIA.NO_TYPE_CONFLICTS, "</color>");
 				}
 			}
 		}
-		return str;
+		return text;
 	}
 }

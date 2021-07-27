@@ -59,13 +59,11 @@ namespace NodeEditorFramework
 
 		internal static void FetchTypes()
 		{
-			types = new Dictionary<string, TypeData>
+			types = new Dictionary<string, TypeData> { 
 			{
-				{
-					"None",
-					new TypeData(typeof(object))
-				}
-			};
+				"None",
+				new TypeData(typeof(object))
+			} };
 			foreach (Assembly item in from assembly in AppDomain.CurrentDomain.GetAssemblies()
 				where assembly.FullName.Contains("Assembly")
 				select assembly)

@@ -594,8 +594,8 @@ public class BuildingDef : Def
 		}
 		case BuildLocationRule.NotInTiles:
 		{
-			GameObject x = Grid.Objects[cell, 9];
-			if (x != null && x != source_go)
+			GameObject gameObject3 = Grid.Objects[cell, 9];
+			if (gameObject3 != null && gameObject3 != source_go)
 			{
 				flag = false;
 			}
@@ -605,19 +605,19 @@ public class BuildingDef : Def
 			}
 			else
 			{
-				GameObject gameObject3 = Grid.Objects[cell, (int)ObjectLayer];
-				if (gameObject3 != null)
+				GameObject gameObject4 = Grid.Objects[cell, (int)ObjectLayer];
+				if (gameObject4 != null)
 				{
 					if (ReplacementLayer == ObjectLayer.NumLayers)
 					{
-						if (gameObject3 != source_go)
+						if (gameObject4 != source_go)
 						{
 							flag = false;
 						}
 					}
 					else
 					{
-						Building component2 = gameObject3.GetComponent<Building>();
+						Building component2 = gameObject4.GetComponent<Building>();
 						if (component2 != null && component2.Def.ReplacementLayer != ReplacementLayer)
 						{
 							flag = false;
@@ -1061,20 +1061,20 @@ public class BuildingDef : Def
 			break;
 		case BuildLocationRule.NotInTiles:
 		{
-			GameObject x = Grid.Objects[cell, 9];
-			flag = (x == null || x == source_go) && !Grid.HasDoor[cell];
+			GameObject gameObject2 = Grid.Objects[cell, 9];
+			flag = (gameObject2 == null || gameObject2 == source_go) && !Grid.HasDoor[cell];
 			if (flag)
 			{
-				GameObject gameObject2 = Grid.Objects[cell, (int)ObjectLayer];
-				if (gameObject2 != null)
+				GameObject gameObject3 = Grid.Objects[cell, (int)ObjectLayer];
+				if (gameObject3 != null)
 				{
 					if (ReplacementLayer == ObjectLayer.NumLayers)
 					{
-						flag = flag && (gameObject2 == null || gameObject2 == source_go);
+						flag = flag && (gameObject3 == null || gameObject3 == source_go);
 					}
 					else
 					{
-						Building component3 = gameObject2.GetComponent<Building>();
+						Building component3 = gameObject3.GetComponent<Building>();
 						flag = component3 == null || component3.Def.ReplacementLayer == ReplacementLayer;
 					}
 				}
@@ -1207,8 +1207,8 @@ public class BuildingDef : Def
 		{
 			CellOffset rotatedCellOffset = Rotatable.GetRotatedCellOffset(PowerInputOffset, orientation);
 			int cell2 = Grid.OffsetCell(cell, rotatedCellOffset);
-			GameObject x = Grid.Objects[cell2, 29];
-			if (x != null && x != source_go)
+			GameObject gameObject = Grid.Objects[cell2, 29];
+			if (gameObject != null && gameObject != source_go)
 			{
 				fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_WIRECONNECTORS_OVERLAP;
 				return false;
@@ -1218,8 +1218,8 @@ public class BuildingDef : Def
 		{
 			CellOffset rotatedCellOffset2 = Rotatable.GetRotatedCellOffset(PowerOutputOffset, orientation);
 			int cell3 = Grid.OffsetCell(cell, rotatedCellOffset2);
-			GameObject x2 = Grid.Objects[cell3, 29];
-			if (x2 != null && x2 != source_go)
+			GameObject gameObject2 = Grid.Objects[cell3, 29];
+			if (gameObject2 != null && gameObject2 != source_go)
 			{
 				fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_WIRECONNECTORS_OVERLAP;
 				return false;
@@ -1415,8 +1415,8 @@ public class BuildingDef : Def
 		{
 		case ConduitType.Gas:
 		{
-			GameObject x3 = Grid.Objects[utility_cell, 15];
-			if (x3 != null && x3 != source_go)
+			GameObject gameObject3 = Grid.Objects[utility_cell, 15];
+			if (gameObject3 != null && gameObject3 != source_go)
 			{
 				result = false;
 				fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_GASPORTS_OVERLAP;
@@ -1425,8 +1425,8 @@ public class BuildingDef : Def
 		}
 		case ConduitType.Liquid:
 		{
-			GameObject x2 = Grid.Objects[utility_cell, 19];
-			if (x2 != null && x2 != source_go)
+			GameObject gameObject2 = Grid.Objects[utility_cell, 19];
+			if (gameObject2 != null && gameObject2 != source_go)
 			{
 				result = false;
 				fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_LIQUIDPORTS_OVERLAP;
@@ -1435,8 +1435,8 @@ public class BuildingDef : Def
 		}
 		case ConduitType.Solid:
 		{
-			GameObject x = Grid.Objects[utility_cell, 23];
-			if (x != null && x != source_go)
+			GameObject gameObject = Grid.Objects[utility_cell, 23];
+			if (gameObject != null && gameObject != source_go)
 			{
 				result = false;
 				fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_SOLIDPORTS_OVERLAP;

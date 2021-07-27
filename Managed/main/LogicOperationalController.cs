@@ -23,10 +23,7 @@ public class LogicOperationalController : KMonoBehaviour
 
 	public static List<LogicPorts.Port> CreateSingleInputPortList(CellOffset offset)
 	{
-		return new List<LogicPorts.Port>
-		{
-			LogicPorts.Port.InputPort(PORT_ID, offset, UI.LOGIC_PORTS.CONTROL_OPERATIONAL, UI.LOGIC_PORTS.CONTROL_OPERATIONAL_ACTIVE, UI.LOGIC_PORTS.CONTROL_OPERATIONAL_INACTIVE)
-		};
+		return new List<LogicPorts.Port> { LogicPorts.Port.InputPort(PORT_ID, offset, UI.LOGIC_PORTS.CONTROL_OPERATIONAL, UI.LOGIC_PORTS.CONTROL_OPERATIONAL_ACTIVE, UI.LOGIC_PORTS.CONTROL_OPERATIONAL_INACTIVE) };
 	}
 
 	protected override void OnSpawn()

@@ -9,10 +9,7 @@ public class Sculpture : Artable
 		base.OnPrefabInit();
 		if (sculptureOverrides == null)
 		{
-			sculptureOverrides = new KAnimFile[1]
-			{
-				Assets.GetAnim("anim_interacts_sculpture_kanim")
-			};
+			sculptureOverrides = new KAnimFile[1] { Assets.GetAnim("anim_interacts_sculpture_kanim") };
 		}
 		overrideAnims = sculptureOverrides;
 		synchronizeAnims = false;

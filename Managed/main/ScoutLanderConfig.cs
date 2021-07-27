@@ -47,10 +47,7 @@ public class ScoutLanderConfig : IEntityConfig
 	{
 		OccupyArea component = inst.GetComponent<OccupyArea>();
 		component.ApplyToCells = false;
-		component.objectLayers = new ObjectLayer[1]
-		{
-			ObjectLayer.Building
-		};
+		component.objectLayers = new ObjectLayer[1] { ObjectLayer.Building };
 	}
 
 	public void OnSpawn(GameObject inst)

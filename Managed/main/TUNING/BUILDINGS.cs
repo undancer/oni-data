@@ -87,148 +87,62 @@ namespace TUNING
 
 		public class CONSTRUCTION_MASS_KG
 		{
-			public static readonly float[] TIER_TINY = new float[1]
-			{
-				5f
-			};
+			public static readonly float[] TIER_TINY = new float[1] { 5f };
 
-			public static readonly float[] TIER0 = new float[1]
-			{
-				25f
-			};
+			public static readonly float[] TIER0 = new float[1] { 25f };
 
-			public static readonly float[] TIER1 = new float[1]
-			{
-				50f
-			};
+			public static readonly float[] TIER1 = new float[1] { 50f };
 
-			public static readonly float[] TIER2 = new float[1]
-			{
-				100f
-			};
+			public static readonly float[] TIER2 = new float[1] { 100f };
 
-			public static readonly float[] TIER3 = new float[1]
-			{
-				200f
-			};
+			public static readonly float[] TIER3 = new float[1] { 200f };
 
-			public static readonly float[] TIER4 = new float[1]
-			{
-				400f
-			};
+			public static readonly float[] TIER4 = new float[1] { 400f };
 
-			public static readonly float[] TIER5 = new float[1]
-			{
-				800f
-			};
+			public static readonly float[] TIER5 = new float[1] { 800f };
 
-			public static readonly float[] TIER6 = new float[1]
-			{
-				1200f
-			};
+			public static readonly float[] TIER6 = new float[1] { 1200f };
 
-			public static readonly float[] TIER7 = new float[1]
-			{
-				2000f
-			};
+			public static readonly float[] TIER7 = new float[1] { 2000f };
 		}
 
 		public class ROCKETRY_MASS_KG
 		{
-			public static float[] COMMAND_MODULE_MASS = new float[1]
-			{
-				200f
-			};
+			public static float[] COMMAND_MODULE_MASS = new float[1] { 200f };
 
-			public static float[] CARGO_MASS = new float[2]
-			{
-				1000f,
-				1000f
-			};
+			public static float[] CARGO_MASS = new float[2] { 1000f, 1000f };
 
-			public static float[] CARGO_MASS_SMALL = new float[2]
-			{
-				400f,
-				400f
-			};
+			public static float[] CARGO_MASS_SMALL = new float[2] { 400f, 400f };
 
-			public static float[] FUEL_TANK_DRY_MASS = new float[1]
-			{
-				100f
-			};
+			public static float[] FUEL_TANK_DRY_MASS = new float[1] { 100f };
 
-			public static float[] FUEL_TANK_WET_MASS = new float[1]
-			{
-				900f
-			};
+			public static float[] FUEL_TANK_WET_MASS = new float[1] { 900f };
 
-			public static float[] FUEL_TANK_WET_MASS_SMALL = new float[1]
-			{
-				300f
-			};
+			public static float[] FUEL_TANK_WET_MASS_SMALL = new float[1] { 300f };
 
-			public static float[] FUEL_TANK_WET_MASS_GAS = new float[1]
-			{
-				100f
-			};
+			public static float[] FUEL_TANK_WET_MASS_GAS = new float[1] { 100f };
 
-			public static float[] FUEL_TANK_WET_MASS_GAS_LARGE = new float[1]
-			{
-				150f
-			};
+			public static float[] FUEL_TANK_WET_MASS_GAS_LARGE = new float[1] { 150f };
 
-			public static float[] OXIDIZER_TANK_OXIDIZER_MASS = new float[1]
-			{
-				900f
-			};
+			public static float[] OXIDIZER_TANK_OXIDIZER_MASS = new float[1] { 900f };
 
-			public static float[] ENGINE_MASS_SMALL = new float[1]
-			{
-				200f
-			};
+			public static float[] ENGINE_MASS_SMALL = new float[1] { 200f };
 
-			public static float[] ENGINE_MASS_LARGE = new float[1]
-			{
-				500f
-			};
+			public static float[] ENGINE_MASS_LARGE = new float[1] { 500f };
 
-			public static float[] HOLLOW_TIER1 = new float[2]
-			{
-				200f,
-				100f
-			};
+			public static float[] HOLLOW_TIER1 = new float[2] { 200f, 100f };
 
-			public static float[] HOLLOW_TIER2 = new float[2]
-			{
-				400f,
-				200f
-			};
+			public static float[] HOLLOW_TIER2 = new float[2] { 400f, 200f };
 
-			public static float[] HOLLOW_TIER3 = new float[2]
-			{
-				800f,
-				400f
-			};
+			public static float[] HOLLOW_TIER3 = new float[2] { 800f, 400f };
 
-			public static float[] DENSE_TIER0 = new float[1]
-			{
-				200f
-			};
+			public static float[] DENSE_TIER0 = new float[1] { 200f };
 
-			public static float[] DENSE_TIER1 = new float[1]
-			{
-				500f
-			};
+			public static float[] DENSE_TIER1 = new float[1] { 500f };
 
-			public static float[] DENSE_TIER2 = new float[1]
-			{
-				1000f
-			};
+			public static float[] DENSE_TIER2 = new float[1] { 1000f };
 
-			public static float[] DENSE_TIER3 = new float[1]
-			{
-				2000f
-			};
+			public static float[] DENSE_TIER3 = new float[1] { 2000f };
 		}
 
 		public class ENERGY_CONSUMPTION_WHEN_ACTIVE
@@ -663,42 +577,11 @@ namespace TUNING
 		{
 			new PlanScreen.PlanInfo(new HashedString("Base"), hideIfNotResearched: false, new List<string>
 			{
-				"Ladder",
-				"FirePole",
-				"LadderFast",
-				"Tile",
-				"GasPermeableMembrane",
-				"MeshTile",
-				"InsulationTile",
-				"PlasticTile",
-				"MetalTile",
-				"GlassTile",
-				"BunkerTile",
-				"CarpetTile",
-				"ExobaseHeadquarters",
-				"Door",
-				"ManualPressureDoor",
-				"PressureDoor",
-				"BunkerDoor",
-				"StorageLocker",
-				"StorageLockerSmart",
-				"LiquidReservoir",
-				"GasReservoir",
-				"ObjectDispenser",
-				"TravelTube",
-				"TravelTubeEntrance",
-				"TravelTubeWallBridge"
+				"Ladder", "FirePole", "LadderFast", "Tile", "GasPermeableMembrane", "MeshTile", "InsulationTile", "PlasticTile", "MetalTile", "GlassTile",
+				"BunkerTile", "CarpetTile", "ExobaseHeadquarters", "Door", "ManualPressureDoor", "PressureDoor", "BunkerDoor", "StorageLocker", "StorageLockerSmart", "LiquidReservoir",
+				"GasReservoir", "ObjectDispenser", "TravelTube", "TravelTubeEntrance", "TravelTubeWallBridge"
 			}),
-			new PlanScreen.PlanInfo(new HashedString("Oxygen"), hideIfNotResearched: false, new List<string>
-			{
-				"MineralDeoxidizer",
-				"SublimationStation",
-				"AlgaeHabitat",
-				"AirFilter",
-				"CO2Scrubber",
-				"Electrolyzer",
-				"RustDeoxidizer"
-			}),
+			new PlanScreen.PlanInfo(new HashedString("Oxygen"), hideIfNotResearched: false, new List<string> { "MineralDeoxidizer", "SublimationStation", "AlgaeHabitat", "AirFilter", "CO2Scrubber", "Electrolyzer", "RustDeoxidizer" }),
 			new PlanScreen.PlanInfo(new HashedString("Power"), hideIfNotResearched: false, new List<string>
 			{
 				"DevGenerator",
@@ -732,24 +615,8 @@ namespace TUNING
 			}),
 			new PlanScreen.PlanInfo(new HashedString("Food"), hideIfNotResearched: false, new List<string>
 			{
-				"MicrobeMusher",
-				"CookingStation",
-				"GourmetCookingStation",
-				"PlanterBox",
-				"FarmTile",
-				"HydroponicFarm",
-				"RationBox",
-				"Refrigerator",
-				"CreatureDeliveryPoint",
-				"FishDeliveryPoint",
-				"CreatureFeeder",
-				"FishFeeder",
-				"EggIncubator",
-				"EggCracker",
-				"CreatureTrap",
-				"FishTrap",
-				"AirborneCreatureLure",
-				"FlyingCreatureBait"
+				"MicrobeMusher", "CookingStation", "GourmetCookingStation", "PlanterBox", "FarmTile", "HydroponicFarm", "RationBox", "Refrigerator", "CreatureDeliveryPoint", "FishDeliveryPoint",
+				"CreatureFeeder", "FishFeeder", "EggIncubator", "EggCracker", "CreatureTrap", "FishTrap", "AirborneCreatureLure", "FlyingCreatureBait"
 			}),
 			new PlanScreen.PlanInfo(new HashedString("Plumbing"), hideIfNotResearched: false, new List<string>
 			{
@@ -803,36 +670,10 @@ namespace TUNING
 			}),
 			new PlanScreen.PlanInfo(new HashedString("Refining"), hideIfNotResearched: false, new List<string>
 			{
-				"Compost",
-				"WaterPurifier",
-				"Desalinator",
-				"FertilizerMaker",
-				"AlgaeDistillery",
-				"EthanolDistillery",
-				"RockCrusher",
-				"Kiln",
-				"SludgePress",
-				"MetalRefinery",
-				"GlassForge",
-				"OilRefinery",
-				"Polymerizer",
-				"OxyliteRefinery",
-				"SupermaterialRefinery",
-				"DiamondPress"
+				"Compost", "WaterPurifier", "Desalinator", "FertilizerMaker", "AlgaeDistillery", "EthanolDistillery", "RockCrusher", "Kiln", "SludgePress", "MetalRefinery",
+				"GlassForge", "OilRefinery", "Polymerizer", "OxyliteRefinery", "SupermaterialRefinery", "DiamondPress"
 			}),
-			new PlanScreen.PlanInfo(new HashedString("Medical"), hideIfNotResearched: false, new List<string>
-			{
-				"WashBasin",
-				"WashSink",
-				"HandSanitizer",
-				"DecontaminationShower",
-				"Apothecary",
-				"DoctorStation",
-				"AdvancedDoctorStation",
-				"MedicalCot",
-				"MassageTable",
-				"Grave"
-			}),
+			new PlanScreen.PlanInfo(new HashedString("Medical"), hideIfNotResearched: false, new List<string> { "WashBasin", "WashSink", "HandSanitizer", "DecontaminationShower", "Apothecary", "DoctorStation", "AdvancedDoctorStation", "MedicalCot", "MassageTable", "Grave" }),
 			new PlanScreen.PlanInfo(new HashedString("Furniture"), hideIfNotResearched: false, new List<string>
 			{
 				BedConfig.ID,
@@ -875,47 +716,14 @@ namespace TUNING
 			}),
 			new PlanScreen.PlanInfo(new HashedString("Equipment"), hideIfNotResearched: false, new List<string>
 			{
-				"ResearchCenter",
-				"AdvancedResearchCenter",
-				"NuclearResearchCenter",
-				"OrbitalResearchCenter",
-				"CosmicResearchCenter",
-				"Telescope",
-				"PowerControlStation",
-				"FarmStation",
-				"GeneticAnalysisStation",
-				"RanchStation",
-				"ShearingStation",
-				"RoleStation",
-				"ResetSkillsStation",
-				"ArtifactAnalysisStation",
-				"CraftingTable",
-				"ClothingFabricator",
-				"SuitFabricator",
-				"OxygenMaskMarker",
-				"OxygenMaskLocker",
-				"SuitMarker",
-				"SuitLocker",
-				"JetSuitMarker",
-				"JetSuitLocker",
-				"LeadSuitMarker",
-				"LeadSuitLocker",
-				"AstronautTrainingCenter"
+				"ResearchCenter", "AdvancedResearchCenter", "NuclearResearchCenter", "OrbitalResearchCenter", "CosmicResearchCenter", "Telescope", "PowerControlStation", "FarmStation", "GeneticAnalysisStation", "RanchStation",
+				"ShearingStation", "RoleStation", "ResetSkillsStation", "ArtifactAnalysisStation", "CraftingTable", "ClothingFabricator", "SuitFabricator", "OxygenMaskMarker", "OxygenMaskLocker", "SuitMarker",
+				"SuitLocker", "JetSuitMarker", "JetSuitLocker", "LeadSuitMarker", "LeadSuitLocker", "AstronautTrainingCenter"
 			}),
 			new PlanScreen.PlanInfo(new HashedString("Utilities"), hideIfNotResearched: true, new List<string>
 			{
-				"SpaceHeater",
-				"LiquidHeater",
-				"LiquidCooledFan",
-				"IceCooledFan",
-				"IceMachine",
-				"AirConditioner",
-				"LiquidConditioner",
-				"OreScrubber",
-				"OilWellCap",
-				"ThermalBlock",
-				"ExteriorWall",
-				"SweepBotStation"
+				"SpaceHeater", "LiquidHeater", "LiquidCooledFan", "IceCooledFan", "IceMachine", "AirConditioner", "LiquidConditioner", "OreScrubber", "OilWellCap", "ThermalBlock",
+				"ExteriorWall", "SweepBotStation"
 			}),
 			new PlanScreen.PlanInfo(new HashedString("Automation"), hideIfNotResearched: true, new List<string>
 			{
@@ -1003,14 +811,7 @@ namespace TUNING
 				"RailGunPayloadOpener",
 				"LandingBeacon"
 			}),
-			new PlanScreen.PlanInfo(new HashedString("HEP"), hideIfNotResearched: true, new List<string>
-			{
-				"NuclearReactor",
-				"UraniumCentrifuge",
-				"HighEnergyParticleSpawner",
-				"HighEnergyParticleRedirector",
-				"DevRadiationGenerator"
-			}, "EXPANSION1_ID")
+			new PlanScreen.PlanInfo(new HashedString("HEP"), hideIfNotResearched: true, new List<string> { "NuclearReactor", "UraniumCentrifuge", "HighEnergyParticleSpawner", "HighEnergyParticleRedirector", "DevRadiationGenerator" }, "EXPANSION1_ID")
 		};
 
 		public static List<Type> COMPONENT_DESCRIPTION_ORDER = new List<Type>

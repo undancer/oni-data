@@ -18,10 +18,7 @@ public class LogicDuplicantSensor : Switch, ISim1000ms, ISim200ms
 
 	private HandleVector<int>.Handle pickupablesChangedEntry;
 
-	public static TagBits tagBits = new TagBits(new Tag[1]
-	{
-		GameTags.DupeBrain
-	});
+	public static TagBits tagBits = new TagBits(new Tag[1] { GameTags.DupeBrain });
 
 	private bool pickupablesDirty;
 

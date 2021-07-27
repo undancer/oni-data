@@ -27,17 +27,9 @@ public class LureableMonitor : GameStateMachine<LureableMonitor, LureableMonitor
 
 			private Tag[] lures;
 
-			public int cost
-			{
-				get;
-				private set;
-			}
+			public int cost { get; private set; }
 
-			public GameObject result
-			{
-				get;
-				private set;
-			}
+			public GameObject result { get; private set; }
 
 			public LureIterator(Navigator navigator, Tag[] lures)
 			{

@@ -42,10 +42,7 @@ public class GeneShufflerConfig : IEntityConfig
 	{
 		inst.GetComponent<GeneShuffler>().workLayer = Grid.SceneLayer.Building;
 		inst.GetComponent<Ownable>().slotID = Db.Get().AssignableSlots.GeneShuffler.Id;
-		inst.GetComponent<OccupyArea>().objectLayers = new ObjectLayer[1]
-		{
-			ObjectLayer.Building
-		};
+		inst.GetComponent<OccupyArea>().objectLayers = new ObjectLayer[1] { ObjectLayer.Building };
 		inst.GetComponent<Deconstructable>();
 	}
 

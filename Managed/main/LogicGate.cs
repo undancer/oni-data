@@ -300,145 +300,33 @@ public class LogicGate : LogicGateBase, ILogicEventSender, ILogicNetworkConnecti
 
 	private static KAnimHashedString[][] multiplexerSymbolPaths = new KAnimHashedString[4][]
 	{
-		new KAnimHashedString[5]
-		{
-			LINE_LEFT_1_SYMBOL_BLOOM,
-			FLIPPER_1_SYMBOL_BLOOM,
-			LINE_RIGHT_1_SYMBOL_BLOOM,
-			FLIPPER_3_SYMBOL_BLOOM,
-			OUTPUT_SYMBOL_BLOOM
-		},
-		new KAnimHashedString[5]
-		{
-			LINE_LEFT_2_SYMBOL_BLOOM,
-			FLIPPER_1_SYMBOL_BLOOM,
-			LINE_RIGHT_1_SYMBOL_BLOOM,
-			FLIPPER_3_SYMBOL_BLOOM,
-			OUTPUT_SYMBOL_BLOOM
-		},
-		new KAnimHashedString[5]
-		{
-			LINE_LEFT_3_SYMBOL_BLOOM,
-			FLIPPER_2_SYMBOL_BLOOM,
-			LINE_RIGHT_2_SYMBOL_BLOOM,
-			FLIPPER_3_SYMBOL_BLOOM,
-			OUTPUT_SYMBOL_BLOOM
-		},
-		new KAnimHashedString[5]
-		{
-			LINE_LEFT_4_SYMBOL_BLOOM,
-			FLIPPER_2_SYMBOL_BLOOM,
-			LINE_RIGHT_2_SYMBOL_BLOOM,
-			FLIPPER_3_SYMBOL_BLOOM,
-			OUTPUT_SYMBOL_BLOOM
-		}
+		new KAnimHashedString[5] { LINE_LEFT_1_SYMBOL_BLOOM, FLIPPER_1_SYMBOL_BLOOM, LINE_RIGHT_1_SYMBOL_BLOOM, FLIPPER_3_SYMBOL_BLOOM, OUTPUT_SYMBOL_BLOOM },
+		new KAnimHashedString[5] { LINE_LEFT_2_SYMBOL_BLOOM, FLIPPER_1_SYMBOL_BLOOM, LINE_RIGHT_1_SYMBOL_BLOOM, FLIPPER_3_SYMBOL_BLOOM, OUTPUT_SYMBOL_BLOOM },
+		new KAnimHashedString[5] { LINE_LEFT_3_SYMBOL_BLOOM, FLIPPER_2_SYMBOL_BLOOM, LINE_RIGHT_2_SYMBOL_BLOOM, FLIPPER_3_SYMBOL_BLOOM, OUTPUT_SYMBOL_BLOOM },
+		new KAnimHashedString[5] { LINE_LEFT_4_SYMBOL_BLOOM, FLIPPER_2_SYMBOL_BLOOM, LINE_RIGHT_2_SYMBOL_BLOOM, FLIPPER_3_SYMBOL_BLOOM, OUTPUT_SYMBOL_BLOOM }
 	};
 
-	private static KAnimHashedString[] multiplexerSymbols = new KAnimHashedString[10]
-	{
-		LINE_LEFT_1_SYMBOL,
-		LINE_LEFT_2_SYMBOL,
-		LINE_LEFT_3_SYMBOL,
-		LINE_LEFT_4_SYMBOL,
-		LINE_RIGHT_1_SYMBOL,
-		LINE_RIGHT_2_SYMBOL,
-		FLIPPER_1_SYMBOL,
-		FLIPPER_2_SYMBOL,
-		FLIPPER_3_SYMBOL,
-		OUTPUT_SYMBOL
-	};
+	private static KAnimHashedString[] multiplexerSymbols = new KAnimHashedString[10] { LINE_LEFT_1_SYMBOL, LINE_LEFT_2_SYMBOL, LINE_LEFT_3_SYMBOL, LINE_LEFT_4_SYMBOL, LINE_RIGHT_1_SYMBOL, LINE_RIGHT_2_SYMBOL, FLIPPER_1_SYMBOL, FLIPPER_2_SYMBOL, FLIPPER_3_SYMBOL, OUTPUT_SYMBOL };
 
-	private static KAnimHashedString[] multiplexerBloomSymbols = new KAnimHashedString[10]
-	{
-		LINE_LEFT_1_SYMBOL_BLOOM,
-		LINE_LEFT_2_SYMBOL_BLOOM,
-		LINE_LEFT_3_SYMBOL_BLOOM,
-		LINE_LEFT_4_SYMBOL_BLOOM,
-		LINE_RIGHT_1_SYMBOL_BLOOM,
-		LINE_RIGHT_2_SYMBOL_BLOOM,
-		FLIPPER_1_SYMBOL_BLOOM,
-		FLIPPER_2_SYMBOL_BLOOM,
-		FLIPPER_3_SYMBOL_BLOOM,
-		OUTPUT_SYMBOL_BLOOM
-	};
+	private static KAnimHashedString[] multiplexerBloomSymbols = new KAnimHashedString[10] { LINE_LEFT_1_SYMBOL_BLOOM, LINE_LEFT_2_SYMBOL_BLOOM, LINE_LEFT_3_SYMBOL_BLOOM, LINE_LEFT_4_SYMBOL_BLOOM, LINE_RIGHT_1_SYMBOL_BLOOM, LINE_RIGHT_2_SYMBOL_BLOOM, FLIPPER_1_SYMBOL_BLOOM, FLIPPER_2_SYMBOL_BLOOM, FLIPPER_3_SYMBOL_BLOOM, OUTPUT_SYMBOL_BLOOM };
 
 	private static KAnimHashedString[][] demultiplexerSymbolPaths = new KAnimHashedString[4][]
 	{
-		new KAnimHashedString[4]
-		{
-			INPUT_SYMBOL_BLOOM,
-			LINE_LEFT_1_SYMBOL_BLOOM,
-			LINE_RIGHT_1_SYMBOL_BLOOM,
-			OUTPUT1_SYMBOL
-		},
-		new KAnimHashedString[4]
-		{
-			INPUT_SYMBOL_BLOOM,
-			LINE_LEFT_1_SYMBOL_BLOOM,
-			LINE_RIGHT_2_SYMBOL_BLOOM,
-			OUTPUT2_SYMBOL
-		},
-		new KAnimHashedString[4]
-		{
-			INPUT_SYMBOL_BLOOM,
-			LINE_LEFT_2_SYMBOL_BLOOM,
-			LINE_RIGHT_3_SYMBOL_BLOOM,
-			OUTPUT3_SYMBOL
-		},
-		new KAnimHashedString[4]
-		{
-			INPUT_SYMBOL_BLOOM,
-			LINE_LEFT_2_SYMBOL_BLOOM,
-			LINE_RIGHT_4_SYMBOL_BLOOM,
-			OUTPUT4_SYMBOL
-		}
+		new KAnimHashedString[4] { INPUT_SYMBOL_BLOOM, LINE_LEFT_1_SYMBOL_BLOOM, LINE_RIGHT_1_SYMBOL_BLOOM, OUTPUT1_SYMBOL },
+		new KAnimHashedString[4] { INPUT_SYMBOL_BLOOM, LINE_LEFT_1_SYMBOL_BLOOM, LINE_RIGHT_2_SYMBOL_BLOOM, OUTPUT2_SYMBOL },
+		new KAnimHashedString[4] { INPUT_SYMBOL_BLOOM, LINE_LEFT_2_SYMBOL_BLOOM, LINE_RIGHT_3_SYMBOL_BLOOM, OUTPUT3_SYMBOL },
+		new KAnimHashedString[4] { INPUT_SYMBOL_BLOOM, LINE_LEFT_2_SYMBOL_BLOOM, LINE_RIGHT_4_SYMBOL_BLOOM, OUTPUT4_SYMBOL }
 	};
 
-	private static KAnimHashedString[] demultiplexerSymbols = new KAnimHashedString[7]
-	{
-		INPUT_SYMBOL,
-		LINE_LEFT_1_SYMBOL,
-		LINE_LEFT_2_SYMBOL,
-		LINE_RIGHT_1_SYMBOL,
-		LINE_RIGHT_2_SYMBOL,
-		LINE_RIGHT_3_SYMBOL,
-		LINE_RIGHT_4_SYMBOL
-	};
+	private static KAnimHashedString[] demultiplexerSymbols = new KAnimHashedString[7] { INPUT_SYMBOL, LINE_LEFT_1_SYMBOL, LINE_LEFT_2_SYMBOL, LINE_RIGHT_1_SYMBOL, LINE_RIGHT_2_SYMBOL, LINE_RIGHT_3_SYMBOL, LINE_RIGHT_4_SYMBOL };
 
-	private static KAnimHashedString[] demultiplexerBloomSymbols = new KAnimHashedString[7]
-	{
-		INPUT_SYMBOL_BLOOM,
-		LINE_LEFT_1_SYMBOL_BLOOM,
-		LINE_LEFT_2_SYMBOL_BLOOM,
-		LINE_RIGHT_1_SYMBOL_BLOOM,
-		LINE_RIGHT_2_SYMBOL_BLOOM,
-		LINE_RIGHT_3_SYMBOL_BLOOM,
-		LINE_RIGHT_4_SYMBOL_BLOOM
-	};
+	private static KAnimHashedString[] demultiplexerBloomSymbols = new KAnimHashedString[7] { INPUT_SYMBOL_BLOOM, LINE_LEFT_1_SYMBOL_BLOOM, LINE_LEFT_2_SYMBOL_BLOOM, LINE_RIGHT_1_SYMBOL_BLOOM, LINE_RIGHT_2_SYMBOL_BLOOM, LINE_RIGHT_3_SYMBOL_BLOOM, LINE_RIGHT_4_SYMBOL_BLOOM };
 
-	private static KAnimHashedString[] demultiplexerOutputSymbols = new KAnimHashedString[4]
-	{
-		OUTPUT1_SYMBOL,
-		OUTPUT2_SYMBOL,
-		OUTPUT3_SYMBOL,
-		OUTPUT4_SYMBOL
-	};
+	private static KAnimHashedString[] demultiplexerOutputSymbols = new KAnimHashedString[4] { OUTPUT1_SYMBOL, OUTPUT2_SYMBOL, OUTPUT3_SYMBOL, OUTPUT4_SYMBOL };
 
-	private static KAnimHashedString[] demultiplexerOutputRedSymbols = new KAnimHashedString[4]
-	{
-		OUTPUT1_SYMBOL_BLM_RED,
-		OUTPUT2_SYMBOL_BLM_RED,
-		OUTPUT3_SYMBOL_BLM_RED,
-		OUTPUT4_SYMBOL_BLM_RED
-	};
+	private static KAnimHashedString[] demultiplexerOutputRedSymbols = new KAnimHashedString[4] { OUTPUT1_SYMBOL_BLM_RED, OUTPUT2_SYMBOL_BLM_RED, OUTPUT3_SYMBOL_BLM_RED, OUTPUT4_SYMBOL_BLM_RED };
 
-	private static KAnimHashedString[] demultiplexerOutputGreenSymbols = new KAnimHashedString[4]
-	{
-		OUTPUT1_SYMBOL_BLM_GRN,
-		OUTPUT2_SYMBOL_BLM_GRN,
-		OUTPUT3_SYMBOL_BLM_GRN,
-		OUTPUT4_SYMBOL_BLM_GRN
-	};
+	private static KAnimHashedString[] demultiplexerOutputGreenSymbols = new KAnimHashedString[4] { OUTPUT1_SYMBOL_BLM_GRN, OUTPUT2_SYMBOL_BLM_GRN, OUTPUT3_SYMBOL_BLM_GRN, OUTPUT4_SYMBOL_BLM_GRN };
 
 	private Color activeTintColor = new Color(46f / 85f, 84f / 85f, 76f / 255f);
 
@@ -1045,13 +933,7 @@ public class LogicGate : LogicGateBase, ILogicEventSender, ILogicNetworkConnecti
 			{
 				component.SetSymbolTint(INPUT1_SYMBOL_BLOOM, (inputOne.Value == 0) ? inactiveTintColor : activeTintColor);
 			}
-			int[] array3 = new int[4]
-			{
-				base.OutputCellOne,
-				base.OutputCellTwo,
-				base.OutputCellThree,
-				base.OutputCellFour
-			};
+			int[] array3 = new int[4] { base.OutputCellOne, base.OutputCellTwo, base.OutputCellThree, base.OutputCellFour };
 			for (int k = 0; k < demultiplexerOutputSymbols.Length; k++)
 			{
 				KAnimHashedString kAnimHashedString3 = demultiplexerOutputSymbols[k];

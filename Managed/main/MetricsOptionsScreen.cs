@@ -18,10 +18,10 @@ public class MetricsOptionsScreen : KModalScreen
 	{
 		base.OnSpawn();
 		title.SetText(UI.FRONTEND.METRICS_OPTIONS_SCREEN.TITLE);
-		GameObject gameObject = enableButton.GetComponent<HierarchyReferences>().GetReference("Button").gameObject;
-		gameObject.GetComponent<ToolTip>().SetSimpleTooltip(UI.FRONTEND.METRICS_OPTIONS_SCREEN.TOOLTIP);
-		gameObject.transform.GetChild(0).gameObject.SetActive(!KPrivacyPrefs.instance.disableDataCollection);
-		gameObject.GetComponent<KButton>().onClick += delegate
+		GameObject obj = enableButton.GetComponent<HierarchyReferences>().GetReference("Button").gameObject;
+		obj.GetComponent<ToolTip>().SetSimpleTooltip(UI.FRONTEND.METRICS_OPTIONS_SCREEN.TOOLTIP);
+		obj.transform.GetChild(0).gameObject.SetActive(!KPrivacyPrefs.instance.disableDataCollection);
+		obj.GetComponent<KButton>().onClick += delegate
 		{
 			OnClickToggle();
 		};

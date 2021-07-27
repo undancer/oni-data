@@ -88,11 +88,7 @@ public class JobManager
 
 	private static bool runSingleThreaded;
 
-	public bool isShuttingDown
-	{
-		get;
-		private set;
-	}
+	public bool isShuttingDown { get; private set; }
 
 	private void Initialize()
 	{

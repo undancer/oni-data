@@ -9,11 +9,7 @@ public class Edible : Workable, IGameObjectEffectDescriptor
 {
 	public class EdibleStartWorkInfo : Worker.StartWorkInfo
 	{
-		public float amount
-		{
-			get;
-			private set;
-		}
+		public float amount { get; private set; }
 
 		public EdibleStartWorkInfo(Workable workable, float amount)
 			: base(workable)
@@ -47,80 +43,31 @@ public class Edible : Workable, IGameObjectEffectDescriptor
 		component.OnCraft(data);
 	});
 
-	private static readonly HashedString[] normalWorkAnims = new HashedString[2]
-	{
-		"working_pre",
-		"working_loop"
-	};
+	private static readonly HashedString[] normalWorkAnims = new HashedString[2] { "working_pre", "working_loop" };
 
-	private static readonly HashedString[] hatWorkAnims = new HashedString[2]
-	{
-		"hat_pre",
-		"working_loop"
-	};
+	private static readonly HashedString[] hatWorkAnims = new HashedString[2] { "hat_pre", "working_loop" };
 
-	private static readonly HashedString[] saltWorkAnims = new HashedString[2]
-	{
-		"salt_pre",
-		"salt_loop"
-	};
+	private static readonly HashedString[] saltWorkAnims = new HashedString[2] { "salt_pre", "salt_loop" };
 
-	private static readonly HashedString[] saltHatWorkAnims = new HashedString[2]
-	{
-		"salt_hat_pre",
-		"salt_hat_loop"
-	};
+	private static readonly HashedString[] saltHatWorkAnims = new HashedString[2] { "salt_hat_pre", "salt_hat_loop" };
 
-	private static readonly HashedString[] normalWorkPstAnim = new HashedString[1]
-	{
-		"working_pst"
-	};
+	private static readonly HashedString[] normalWorkPstAnim = new HashedString[1] { "working_pst" };
 
-	private static readonly HashedString[] hatWorkPstAnim = new HashedString[1]
-	{
-		"hat_pst"
-	};
+	private static readonly HashedString[] hatWorkPstAnim = new HashedString[1] { "hat_pst" };
 
-	private static readonly HashedString[] saltWorkPstAnim = new HashedString[1]
-	{
-		"salt_pst"
-	};
+	private static readonly HashedString[] saltWorkPstAnim = new HashedString[1] { "salt_pst" };
 
-	private static readonly HashedString[] saltHatWorkPstAnim = new HashedString[1]
-	{
-		"salt_hat_pst"
-	};
+	private static readonly HashedString[] saltHatWorkPstAnim = new HashedString[1] { "salt_hat_pst" };
 
 	private static Dictionary<int, string> qualityEffects = new Dictionary<int, string>
 	{
-		{
-			-1,
-			"EdibleMinus3"
-		},
-		{
-			0,
-			"EdibleMinus2"
-		},
-		{
-			1,
-			"EdibleMinus1"
-		},
-		{
-			2,
-			"Edible0"
-		},
-		{
-			3,
-			"Edible1"
-		},
-		{
-			4,
-			"Edible2"
-		},
-		{
-			5,
-			"Edible3"
-		}
+		{ -1, "EdibleMinus3" },
+		{ 0, "EdibleMinus2" },
+		{ 1, "EdibleMinus1" },
+		{ 2, "Edible0" },
+		{ 3, "Edible1" },
+		{ 4, "Edible2" },
+		{ 5, "Edible3" }
 	};
 
 	public float Units
@@ -160,11 +107,7 @@ public class Edible : Workable, IGameObjectEffectDescriptor
 		}
 	}
 
-	public bool isBeingConsumed
-	{
-		get;
-		private set;
-	}
+	public bool isBeingConsumed { get; private set; }
 
 	private Edible()
 	{
@@ -343,10 +286,7 @@ public class Edible : Workable, IGameObjectEffectDescriptor
 		PrimaryElement component = base.gameObject.GetComponent<PrimaryElement>();
 		if (component != null && component.DiseaseCount > 0)
 		{
-			new EmoteChore(worker.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_react_contaminated_food_kanim", new HashedString[1]
-			{
-				"react"
-			}, null);
+			new EmoteChore(worker.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_react_contaminated_food_kanim", new HashedString[1] { "react" }, null);
 		}
 		for (int i = 0; i < foodInfo.Effects.Count; i++)
 		{

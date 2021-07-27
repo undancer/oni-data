@@ -9,10 +9,7 @@ public class BunkerTileConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("BunkerTile", 1, 1, "floor_bunker_kanim", 1000, 60f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, new string[1]
-		{
-			SimHashes.Steel.ToString()
-		}, 800f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER0);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("BunkerTile", 1, 1, "floor_bunker_kanim", 1000, 60f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER2, new string[1] { SimHashes.Steel.ToString() }, 800f, BuildLocationRule.Tile, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER0);
 		BuildingTemplates.CreateFoundationTileDef(obj);
 		obj.Floodable = false;
 		obj.Entombable = false;

@@ -44,10 +44,7 @@ public class RailGunPayloadOpenerConfig : IBuildingConfig
 		railGunPayloadOpener.payloadStorage = go.AddComponent<Storage>();
 		railGunPayloadOpener.payloadStorage.showInUI = false;
 		railGunPayloadOpener.payloadStorage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
-		railGunPayloadOpener.payloadStorage.storageFilters = new List<Tag>
-		{
-			GameTags.RailGunPayloadEmptyable
-		};
+		railGunPayloadOpener.payloadStorage.storageFilters = new List<Tag> { GameTags.RailGunPayloadEmptyable };
 		railGunPayloadOpener.resourceStorage = go.AddComponent<Storage>();
 		railGunPayloadOpener.resourceStorage.showInUI = true;
 		railGunPayloadOpener.resourceStorage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);

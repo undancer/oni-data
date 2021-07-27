@@ -328,12 +328,12 @@ public class NameDisplayScreen : KScreen
 		{
 			return;
 		}
-		HashedString x = OverlayModes.None.ID;
+		HashedString hashedString = OverlayModes.None.ID;
 		if (OverlayScreen.Instance != null)
 		{
-			x = OverlayScreen.Instance.GetMode();
+			hashedString = OverlayScreen.Instance.GetMode();
 		}
-		bool flag = !(Camera.main == null) && Camera.main.orthographicSize < HideDistance && x == OverlayModes.None.ID;
+		bool flag = !(Camera.main == null) && Camera.main.orthographicSize < HideDistance && hashedString == OverlayModes.None.ID;
 		int num = entries.Count;
 		int num2 = 0;
 		while (num2 < num)

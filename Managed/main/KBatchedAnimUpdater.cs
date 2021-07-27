@@ -477,7 +477,7 @@ public class KBatchedAnimUpdater : Singleton<KBatchedAnimUpdater>
 		Grid.GetVisibleExtents(out min.x, out min.y, out max.x, out max.y);
 		min.x -= 4;
 		min.y -= 4;
-		if (CameraController.Instance != null)
+		if (CameraController.Instance != null && DlcManager.IsExpansion1Active())
 		{
 			CameraController.Instance.GetWorldCamera(out var worldOffset, out var worldSize);
 			min.x = Math.Min(worldOffset.x + worldSize.x - 1, Math.Max(worldOffset.x, min.x));

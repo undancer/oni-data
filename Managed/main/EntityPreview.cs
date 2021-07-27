@@ -21,11 +21,7 @@ public class EntityPreview : KMonoBehaviour
 
 	private static readonly Func<int, object, bool> ValidTestDelegate = (int cell, object data) => ValidTest(cell, data);
 
-	public bool Valid
-	{
-		get;
-		private set;
-	}
+	public bool Valid { get; private set; }
 
 	protected override void OnSpawn()
 	{

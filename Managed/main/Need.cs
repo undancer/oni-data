@@ -21,23 +21,11 @@ public abstract class Need : KMonoBehaviour
 
 	protected ModifierType currentStressModifier;
 
-	public string Name
-	{
-		get;
-		protected set;
-	}
+	public string Name { get; protected set; }
 
-	public string ExpectationTooltip
-	{
-		get;
-		protected set;
-	}
+	public string ExpectationTooltip { get; protected set; }
 
-	public string Tooltip
-	{
-		get;
-		protected set;
-	}
+	public string Tooltip { get; protected set; }
 
 	public Attribute GetExpectationAttribute()
 	{

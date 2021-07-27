@@ -13,10 +13,7 @@ using UnityEngine.UI;
 
 public class LanguageOptionsScreen : KModalScreen, SteamUGCService.IClient
 {
-	private static readonly string[] poFile = new string[1]
-	{
-		"strings.po"
-	};
+	private static readonly string[] poFile = new string[1] { "strings.po" };
 
 	public const string KPLAYER_PREFS_LANGUAGE_KEY = "InstalledLanguage";
 

@@ -6,11 +6,7 @@ public class AmbientSoundManager : KMonoBehaviour
 	[MyCmpAdd]
 	private LoopingSounds loopingSounds;
 
-	public static AmbientSoundManager Instance
-	{
-		get;
-		private set;
-	}
+	public static AmbientSoundManager Instance { get; private set; }
 
 	public static void Destroy()
 	{

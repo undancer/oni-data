@@ -388,47 +388,19 @@ public class NavGrid
 
 	private Color[] debugColorLookup;
 
-	public NavTable NavTable
-	{
-		get;
-		private set;
-	}
+	public NavTable NavTable { get; private set; }
 
-	public NavGraph NavGraph
-	{
-		get;
-		private set;
-	}
+	public NavGraph NavGraph { get; private set; }
 
-	public Transition[] transitions
-	{
-		get;
-		set;
-	}
+	public Transition[] transitions { get; set; }
 
-	public Transition[][] transitionsByNavType
-	{
-		get;
-		private set;
-	}
+	public Transition[][] transitionsByNavType { get; private set; }
 
-	public int updateRangeX
-	{
-		get;
-		private set;
-	}
+	public int updateRangeX { get; private set; }
 
-	public int updateRangeY
-	{
-		get;
-		private set;
-	}
+	public int updateRangeY { get; private set; }
 
-	public int maxLinksPerCell
-	{
-		get;
-		private set;
-	}
+	public int maxLinksPerCell { get; private set; }
 
 	public static NavType MirrorNavType(NavType nav_type)
 	{

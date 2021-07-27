@@ -135,12 +135,7 @@ public class WarpPortal : Workable
 
 	private Coroutine delayWarpRoutine;
 
-	private static readonly HashedString[] printing_anim = new HashedString[3]
-	{
-		"printing_pre",
-		"printing_loop",
-		"printing_pst"
-	};
+	private static readonly HashedString[] printing_anim = new HashedString[3] { "printing_pre", "printing_loop", "printing_pst" };
 
 	public bool ReadyToWarp => warpPortalSMI.IsInsideState(warpPortalSMI.sm.occupied.waiting);
 
@@ -181,10 +176,7 @@ public class WarpPortal : Workable
 		{
 			ClusterManager.Instance.GetWorld(GetTargetWorldID()).SetDiscovered(reveal_surface: true);
 			SimpleEvent.StatesInstance statesInstance = GameplayEventManager.Instance.StartNewEvent(Db.Get().GameplayEvents.WarpWorldReveal).smi as SimpleEvent.StatesInstance;
-			statesInstance.minions = new GameObject[1]
-			{
-				Components.LiveMinionIdentities[0].gameObject
-			};
+			statesInstance.minions = new GameObject[1] { Components.LiveMinionIdentities[0].gameObject };
 			statesInstance.callback = delegate
 			{
 				ManagementMenu.Instance.OpenClusterMap();
@@ -293,19 +285,9 @@ public class WarpPortal : Workable
 		}, null, null, allow_in_red_alert: true, null, ignore_schedule_block: false, only_when_operational: true, Assets.GetAnim("anim_interacts_warp_portal_sender_kanim"), is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, PriorityScreen.PriorityClass.high);
 		SetWorkTime(float.PositiveInfinity);
 		workLayer = Grid.SceneLayer.Building;
-		workAnims = new HashedString[2]
-		{
-			"sending_pre",
-			"sending_loop"
-		};
-		workingPstComplete = new HashedString[1]
-		{
-			"sending_pst"
-		};
-		workingPstFailed = new HashedString[1]
-		{
-			"idle_loop"
-		};
+		workAnims = new HashedString[2] { "sending_pre", "sending_loop" };
+		workingPstComplete = new HashedString[1] { "sending_pst" };
+		workingPstFailed = new HashedString[1] { "idle_loop" };
 		showProgressBar = false;
 	}
 

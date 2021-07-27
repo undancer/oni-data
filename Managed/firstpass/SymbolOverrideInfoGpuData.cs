@@ -50,11 +50,7 @@ public class SymbolOverrideInfoGpuData
 
 	private SymbolOverrideInfo[] symbolOverrideInfos => symbolOverrideInfoConverter.symbolOverrideInfos;
 
-	public int version
-	{
-		get;
-		private set;
-	}
+	public int version { get; private set; }
 
 	public SymbolOverrideInfoGpuData(int symbol_count)
 	{

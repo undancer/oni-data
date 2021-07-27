@@ -7,11 +7,7 @@ public class DiggerMonitor : GameStateMachine<DiggerMonitor, DiggerMonitor.Insta
 {
 	public class Def : BaseDef
 	{
-		public int depthToDig
-		{
-			get;
-			set;
-		}
+		public int depthToDig { get; set; }
 	}
 
 	public new class Instance : GameInstance

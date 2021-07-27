@@ -80,11 +80,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 
 	private int focusedUnrefrigFood = -1;
 
-	public static Tutorial Instance
-	{
-		get;
-		private set;
-	}
+	public static Tutorial Instance { get; private set; }
 
 	public static void ResetHiddenTutorialMessages()
 	{

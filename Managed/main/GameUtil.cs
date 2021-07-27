@@ -480,18 +480,18 @@ public static class GameUtil
 
 	public static string GetFormattedUnits(float units, TimeSlice timeSlice = TimeSlice.None, bool displaySuffix = true, string floatFormatOverride = "")
 	{
-		string str = ((units == 1f) ? UI.UNITSUFFIXES.UNIT : UI.UNITSUFFIXES.UNITS);
+		string text = ((units == 1f) ? UI.UNITSUFFIXES.UNIT : UI.UNITSUFFIXES.UNITS);
 		units = ApplyTimeSlice(units, timeSlice);
-		string text = GetStandardFloat(units);
+		string text2 = GetStandardFloat(units);
 		if (!floatFormatOverride.IsNullOrWhiteSpace())
 		{
-			text = string.Format(floatFormatOverride, units);
+			text2 = string.Format(floatFormatOverride, units);
 		}
 		if (displaySuffix)
 		{
-			text += str;
+			text2 += text;
 		}
-		return AddTimeSliceText(text, timeSlice);
+		return AddTimeSliceText(text2, timeSlice);
 	}
 
 	public static string GetFormattedRocketRange(float range, TimeSlice timeSlice, bool displaySuffix = true)
@@ -551,14 +551,14 @@ public static class GameUtil
 
 	public static string GetFormattedCalories(float calories, TimeSlice timeSlice = TimeSlice.None, bool forceKcal = true)
 	{
-		string str = UI.UNITSUFFIXES.CALORIES.CALORIE;
+		string text = UI.UNITSUFFIXES.CALORIES.CALORIE;
 		if (Mathf.Abs(calories) >= 1000f || forceKcal)
 		{
 			calories /= 1000f;
-			str = UI.UNITSUFFIXES.CALORIES.KILOCALORIE;
+			text = UI.UNITSUFFIXES.CALORIES.KILOCALORIE;
 		}
 		calories = ApplyTimeSlice(calories, timeSlice);
-		return AddTimeSliceText(GetStandardFloat(calories) + str, timeSlice);
+		return AddTimeSliceText(GetStandardFloat(calories) + text, timeSlice);
 	}
 
 	public static string GetFormattedPlantGrowth(float percent, TimeSlice timeSlice = TimeSlice.None)
@@ -601,38 +601,38 @@ public static class GameUtil
 
 	public static string GetFormattedHighEnergyParticles(float units, TimeSlice timeSlice = TimeSlice.None)
 	{
-		string str = ((units == 1f) ? UI.UNITSUFFIXES.HIGHENERGYPARTICLES.PARTRICLE : UI.UNITSUFFIXES.HIGHENERGYPARTICLES.PARTRICLES);
+		string text = ((units == 1f) ? UI.UNITSUFFIXES.HIGHENERGYPARTICLES.PARTRICLE : UI.UNITSUFFIXES.HIGHENERGYPARTICLES.PARTRICLES);
 		units = ApplyTimeSlice(units, timeSlice);
-		return AddTimeSliceText(GetStandardFloat(units) + str, timeSlice);
+		return AddTimeSliceText(GetStandardFloat(units) + text, timeSlice);
 	}
 
 	public static string GetFormattedWattage(float watts, WattageFormatterUnit unit = WattageFormatterUnit.Automatic, bool displayUnits = true)
 	{
-		LocString loc_string = "";
+		LocString locString = "";
 		switch (unit)
 		{
 		case WattageFormatterUnit.Automatic:
 			if (Mathf.Abs(watts) > 1000f)
 			{
 				watts /= 1000f;
-				loc_string = UI.UNITSUFFIXES.ELECTRICAL.KILOWATT;
+				locString = UI.UNITSUFFIXES.ELECTRICAL.KILOWATT;
 			}
 			else
 			{
-				loc_string = UI.UNITSUFFIXES.ELECTRICAL.WATT;
+				locString = UI.UNITSUFFIXES.ELECTRICAL.WATT;
 			}
 			break;
 		case WattageFormatterUnit.Kilowatts:
 			watts /= 1000f;
-			loc_string = UI.UNITSUFFIXES.ELECTRICAL.KILOWATT;
+			locString = UI.UNITSUFFIXES.ELECTRICAL.KILOWATT;
 			break;
 		case WattageFormatterUnit.Watts:
-			loc_string = UI.UNITSUFFIXES.ELECTRICAL.WATT;
+			locString = UI.UNITSUFFIXES.ELECTRICAL.WATT;
 			break;
 		}
 		if (displayUnits)
 		{
-			return FloatToString(watts, "###0.##") + loc_string;
+			return FloatToString(watts, "###0.##") + locString;
 		}
 		return FloatToString(watts, "###0.##");
 	}
@@ -671,29 +671,29 @@ public static class GameUtil
 
 	public static string GetFormattedHeatEnergyRate(float dtu_s, HeatEnergyFormatterUnit unit = HeatEnergyFormatterUnit.Automatic)
 	{
-		LocString loc_string = "";
+		LocString locString = "";
 		switch (unit)
 		{
 		case HeatEnergyFormatterUnit.Automatic:
 			if (Mathf.Abs(dtu_s) > 1000f)
 			{
 				dtu_s /= 1000f;
-				loc_string = UI.UNITSUFFIXES.HEAT.KDTU_S;
+				locString = UI.UNITSUFFIXES.HEAT.KDTU_S;
 			}
 			else
 			{
-				loc_string = UI.UNITSUFFIXES.HEAT.DTU_S;
+				locString = UI.UNITSUFFIXES.HEAT.DTU_S;
 			}
 			break;
 		case HeatEnergyFormatterUnit.KDTU_S:
 			dtu_s /= 1000f;
-			loc_string = UI.UNITSUFFIXES.HEAT.KDTU_S;
+			locString = UI.UNITSUFFIXES.HEAT.KDTU_S;
 			break;
 		case HeatEnergyFormatterUnit.DTU_S:
-			loc_string = UI.UNITSUFFIXES.HEAT.DTU_S;
+			locString = UI.UNITSUFFIXES.HEAT.DTU_S;
 			break;
 		}
-		return FloatToString(dtu_s, "###0.##") + loc_string;
+		return FloatToString(dtu_s, "###0.##") + locString;
 	}
 
 	public static string GetFormattedInt(float num, TimeSlice timeSlice = TimeSlice.None)
@@ -792,10 +792,10 @@ public static class GameUtil
 		{
 			adjectives = LocString.GetStrings(typeof(DUPLICANTS.NEEDS.FOOD_QUALITY.ADJECTIVES));
 		}
-		LocString loc_string = ((quality >= 0) ? DUPLICANTS.NEEDS.FOOD_QUALITY.ADJECTIVE_FORMAT_POSITIVE : DUPLICANTS.NEEDS.FOOD_QUALITY.ADJECTIVE_FORMAT_NEGATIVE);
+		LocString obj = ((quality >= 0) ? DUPLICANTS.NEEDS.FOOD_QUALITY.ADJECTIVE_FORMAT_POSITIVE : DUPLICANTS.NEEDS.FOOD_QUALITY.ADJECTIVE_FORMAT_NEGATIVE);
 		int value = quality - DUPLICANTS.NEEDS.FOOD_QUALITY.ADJECTIVE_INDEX_OFFSET;
 		value = Mathf.Clamp(value, 0, adjectives.Length);
-		return string.Format(loc_string, adjectives[value], AddPositiveSign(quality.ToString(), quality > 0));
+		return string.Format(obj, adjectives[value], AddPositiveSign(quality.ToString(), quality > 0));
 	}
 
 	public static string GetFormattedBytes(ulong amount)
@@ -817,22 +817,22 @@ public static class GameUtil
 	public static string GetFormattedInfomation(float amount, TimeSlice timeSlice = TimeSlice.None)
 	{
 		amount = ApplyTimeSlice(amount, timeSlice);
-		string str = "";
+		string text = "";
 		if (amount < 1024f)
 		{
-			str = UI.UNITSUFFIXES.INFORMATION.KILOBYTE;
+			text = UI.UNITSUFFIXES.INFORMATION.KILOBYTE;
 		}
 		else if (amount < 1048576f)
 		{
 			amount /= 1000f;
-			str = UI.UNITSUFFIXES.INFORMATION.MEGABYTE;
+			text = UI.UNITSUFFIXES.INFORMATION.MEGABYTE;
 		}
 		else if (amount < 1.0737418E+09f)
 		{
 			amount /= 1048576f;
-			str = UI.UNITSUFFIXES.INFORMATION.GIGABYTE;
+			text = UI.UNITSUFFIXES.INFORMATION.GIGABYTE;
 		}
-		return AddTimeSliceText(amount + str, timeSlice);
+		return AddTimeSliceText(amount + text, timeSlice);
 	}
 
 	public static LocString GetCurrentMassUnit(bool useSmallUnit = false)
@@ -857,10 +857,10 @@ public static class GameUtil
 			return UI.CALCULATING;
 		}
 		mass = ApplyTimeSlice(mass, timeSlice);
-		string str;
+		string text;
 		if (massUnit == MassUnit.Kilograms)
 		{
-			str = UI.UNITSUFFIXES.MASS.TONNE;
+			text = UI.UNITSUFFIXES.MASS.TONNE;
 			switch (massFormat)
 			{
 			case MetricMassFormat.UseThreshold:
@@ -870,73 +870,73 @@ public static class GameUtil
 				{
 					if (num < 5E-06f)
 					{
-						str = UI.UNITSUFFIXES.MASS.MICROGRAM;
+						text = UI.UNITSUFFIXES.MASS.MICROGRAM;
 						mass = Mathf.Floor(mass * 1E+09f);
 					}
 					else if (num < 0.005f)
 					{
 						mass *= 1000000f;
-						str = UI.UNITSUFFIXES.MASS.MILLIGRAM;
+						text = UI.UNITSUFFIXES.MASS.MILLIGRAM;
 					}
 					else if (Mathf.Abs(mass) < 5f)
 					{
 						mass *= 1000f;
-						str = UI.UNITSUFFIXES.MASS.GRAM;
+						text = UI.UNITSUFFIXES.MASS.GRAM;
 					}
 					else if (Mathf.Abs(mass) < 5000f)
 					{
-						str = UI.UNITSUFFIXES.MASS.KILOGRAM;
+						text = UI.UNITSUFFIXES.MASS.KILOGRAM;
 					}
 					else
 					{
 						mass /= 1000f;
-						str = UI.UNITSUFFIXES.MASS.TONNE;
+						text = UI.UNITSUFFIXES.MASS.TONNE;
 					}
 				}
 				else
 				{
-					str = UI.UNITSUFFIXES.MASS.KILOGRAM;
+					text = UI.UNITSUFFIXES.MASS.KILOGRAM;
 				}
 				break;
 			}
 			case MetricMassFormat.Kilogram:
-				str = UI.UNITSUFFIXES.MASS.KILOGRAM;
+				text = UI.UNITSUFFIXES.MASS.KILOGRAM;
 				break;
 			case MetricMassFormat.Gram:
 				mass *= 1000f;
-				str = UI.UNITSUFFIXES.MASS.GRAM;
+				text = UI.UNITSUFFIXES.MASS.GRAM;
 				break;
 			case MetricMassFormat.Tonne:
 				mass /= 1000f;
-				str = UI.UNITSUFFIXES.MASS.TONNE;
+				text = UI.UNITSUFFIXES.MASS.TONNE;
 				break;
 			}
 		}
 		else
 		{
 			mass /= 2.2f;
-			str = UI.UNITSUFFIXES.MASS.POUND;
+			text = UI.UNITSUFFIXES.MASS.POUND;
 			if (massFormat == MetricMassFormat.UseThreshold)
 			{
 				float num2 = Mathf.Abs(mass);
 				if (num2 < 5f && num2 > 0.001f)
 				{
 					mass *= 256f;
-					str = UI.UNITSUFFIXES.MASS.DRACHMA;
+					text = UI.UNITSUFFIXES.MASS.DRACHMA;
 				}
 				else
 				{
 					mass *= 7000f;
-					str = UI.UNITSUFFIXES.MASS.GRAIN;
+					text = UI.UNITSUFFIXES.MASS.GRAIN;
 				}
 			}
 		}
 		if (!includeSuffix)
 		{
-			str = "";
+			text = "";
 			timeSlice = TimeSlice.None;
 		}
-		return AddTimeSliceText(string.Format(floatFormat, mass) + str, timeSlice);
+		return AddTimeSliceText(string.Format(floatFormat, mass) + text, timeSlice);
 	}
 
 	public static string GetFormattedTime(float seconds, string floatFormat = "F0")
@@ -1621,36 +1621,36 @@ public static class GameUtil
 		{
 			return GetKeycodeLocalized(mKeyCode).ToUpper();
 		}
-		string str = "";
+		string text = "";
 		switch (bindingEntry.mModifier)
 		{
 		case Modifier.Shift:
-			str = GetKeycodeLocalized(KKeyCode.LeftShift).ToUpper();
+			text = GetKeycodeLocalized(KKeyCode.LeftShift).ToUpper();
 			break;
 		case Modifier.Ctrl:
-			str = GetKeycodeLocalized(KKeyCode.LeftControl).ToUpper();
+			text = GetKeycodeLocalized(KKeyCode.LeftControl).ToUpper();
 			break;
 		case Modifier.CapsLock:
-			str = GetKeycodeLocalized(KKeyCode.CapsLock).ToUpper();
+			text = GetKeycodeLocalized(KKeyCode.CapsLock).ToUpper();
 			break;
 		case Modifier.Alt:
-			str = GetKeycodeLocalized(KKeyCode.LeftAlt).ToUpper();
+			text = GetKeycodeLocalized(KKeyCode.LeftAlt).ToUpper();
 			break;
 		case Modifier.Backtick:
-			str = GetKeycodeLocalized(KKeyCode.BackQuote).ToUpper();
+			text = GetKeycodeLocalized(KKeyCode.BackQuote).ToUpper();
 			break;
 		}
-		return str + " + " + GetKeycodeLocalized(mKeyCode).ToUpper();
+		return text + " + " + GetKeycodeLocalized(mKeyCode).ToUpper();
 	}
 
 	public static void CreateExplosion(Vector3 explosion_pos)
 	{
-		Vector2 b = new Vector2(explosion_pos.x, explosion_pos.y);
+		Vector2 vector = new Vector2(explosion_pos.x, explosion_pos.y);
 		float num = 5f * 5f;
 		foreach (Health item in Components.Health.Items)
 		{
 			Vector3 position = item.transform.GetPosition();
-			float sqrMagnitude = (new Vector2(position.x, position.y) - b).sqrMagnitude;
+			float sqrMagnitude = (new Vector2(position.x, position.y) - vector).sqrMagnitude;
 			if (num >= sqrMagnitude && item != null)
 			{
 				item.Damage(item.maxHitPoints);
@@ -2304,8 +2304,8 @@ public static class GameUtil
 		{
 			text = RandomValueFromSeparatedString(Strings.Get(NAMEGEN.WORLD.ROOTS.GENERIC));
 		}
-		string str = RandomValueFromSeparatedString(NAMEGEN.WORLD.SUFFIXES.GENERICLIST);
-		return text + str;
+		string text2 = RandomValueFromSeparatedString(NAMEGEN.WORLD.SUFFIXES.GENERICLIST);
+		return text + text2;
 	}
 
 	public static float GetThermalComfort(int cell, float tolerance = -0.08368001f)
@@ -2391,7 +2391,7 @@ public static class GameUtil
 	public static string GetFormattedDecor(float value, bool enforce_max = false)
 	{
 		string arg = "";
-		LocString loc_string = ((value > DecorMonitor.MAXIMUM_DECOR_VALUE && enforce_max) ? UI.OVERLAYS.DECOR.MAXIMUM_DECOR : UI.OVERLAYS.DECOR.VALUE);
+		LocString locString = ((value > DecorMonitor.MAXIMUM_DECOR_VALUE && enforce_max) ? UI.OVERLAYS.DECOR.MAXIMUM_DECOR : UI.OVERLAYS.DECOR.VALUE);
 		if (enforce_max)
 		{
 			value = Math.Min(value, DecorMonitor.MAXIMUM_DECOR_VALUE);
@@ -2402,9 +2402,9 @@ public static class GameUtil
 		}
 		else if (!(value < 0f))
 		{
-			loc_string = UI.OVERLAYS.DECOR.VALUE_ZERO;
+			locString = UI.OVERLAYS.DECOR.VALUE_ZERO;
 		}
-		return string.Format(loc_string, arg, value);
+		return string.Format(locString, arg, value);
 	}
 
 	public static Color GetDecorColourFromValue(int decor)
@@ -2439,14 +2439,14 @@ public static class GameUtil
 
 	public static string GetMaterialTooltips(Element element)
 	{
-		string str = element.tag.ProperName();
+		string text = element.tag.ProperName();
 		foreach (AttributeModifier attributeModifier in element.attributeModifiers)
 		{
 			string name = Db.Get().BuildingAttributes.Get(attributeModifier.AttributeId).Name;
 			string formattedString = attributeModifier.GetFormattedString();
-			str = str + "\n    • " + string.Format(DUPLICANTS.MODIFIERS.MODIFIER_FORMAT, name, formattedString);
+			text = text + "\n    • " + string.Format(DUPLICANTS.MODIFIERS.MODIFIER_FORMAT, name, formattedString);
 		}
-		return str + GetSignificantMaterialPropertyTooltips(element);
+		return text + GetSignificantMaterialPropertyTooltips(element);
 	}
 
 	public static string GetSignificantMaterialPropertyTooltips(Element element)

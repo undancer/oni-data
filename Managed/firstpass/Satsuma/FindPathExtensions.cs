@@ -76,10 +76,7 @@ namespace Satsuma
 
 		public static IPath FindPath(this IGraph graph, Node source, Node target, Dfs.Direction direction)
 		{
-			return graph.FindPath(new Node[1]
-			{
-				source
-			}, (Node x) => x == target, direction);
+			return graph.FindPath(new Node[1] { source }, (Node x) => x == target, direction);
 		}
 	}
 }

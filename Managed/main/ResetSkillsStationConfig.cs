@@ -26,10 +26,7 @@ public class ResetSkillsStationConfig : IBuildingConfig
 		go.AddOrGet<Ownable>().slotID = Db.Get().AssignableSlots.ResetSkillsStation.Id;
 		ResetSkillsStation resetSkillsStation = go.AddOrGet<ResetSkillsStation>();
 		resetSkillsStation.workTime = 180f;
-		resetSkillsStation.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_reSpeccer_kanim")
-		};
+		resetSkillsStation.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_reSpeccer_kanim") };
 		resetSkillsStation.workLayer = Grid.SceneLayer.BuildingFront;
 	}
 

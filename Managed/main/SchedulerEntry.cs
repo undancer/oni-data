@@ -21,11 +21,7 @@ public struct SchedulerEntry
 
 	public float time;
 
-	public Details details
-	{
-		get;
-		private set;
-	}
+	public Details details { get; private set; }
 
 	public Action<object> callback => details.callback;
 

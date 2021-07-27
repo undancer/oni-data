@@ -116,12 +116,12 @@ public class UICurvePath : KMonoBehaviour
 
 	private Vector3 DeCasteljausAlgorithm(float t)
 	{
-		float d = 1f - t;
-		Vector3 a = d * A + t * B;
-		Vector3 a2 = d * B + t * C;
-		Vector3 a3 = d * C + t * D;
-		Vector3 a4 = d * a + t * a2;
-		Vector3 a5 = d * a2 + t * a3;
-		return d * a4 + t * a5;
+		float num = 1f - t;
+		Vector3 vector = num * A + t * B;
+		Vector3 vector2 = num * B + t * C;
+		Vector3 vector3 = num * C + t * D;
+		Vector3 vector4 = num * vector + t * vector2;
+		Vector3 vector5 = num * vector2 + t * vector3;
+		return num * vector4 + t * vector5;
 	}
 }

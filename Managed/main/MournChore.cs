@@ -58,11 +58,7 @@ public class MournChore : Chore<MournChore.StatesInstance>
 
 		public State completed;
 
-		private static readonly HashedString[] WORK_ANIMS = new HashedString[2]
-		{
-			"working_pre",
-			"working_loop"
-		};
+		private static readonly HashedString[] WORK_ANIMS = new HashedString[2] { "working_pre", "working_loop" };
 
 		public override void InitializeStates(out BaseState default_state)
 		{

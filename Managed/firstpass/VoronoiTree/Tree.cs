@@ -13,11 +13,7 @@ namespace VoronoiTree
 
 		public bool dontRelaxChildren;
 
-		public SeededRandom myRandom
-		{
-			get;
-			private set;
-		}
+		public SeededRandom myRandom { get; private set; }
 
 		public Tree()
 			: base(NodeType.Internal)

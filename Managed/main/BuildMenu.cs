@@ -515,11 +515,7 @@ public class BuildMenu : KScreen
 
 	private float elapsedTime;
 
-	public static BuildMenu Instance
-	{
-		get;
-		private set;
-	}
+	public static BuildMenu Instance { get; private set; }
 
 	public BuildingDef SelectedBuildingDef => selectedBuilding;
 

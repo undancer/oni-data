@@ -91,9 +91,9 @@ public class InfoDialogScreen : KModalScreen
 
 	public InfoDialogScreen AddOption(string text, Action<InfoDialogScreen> action, bool rightSide = false)
 	{
-		GameObject gameObject = Util.KInstantiateUI(rightSide ? rightButtonPrefab : leftButtonPrefab, rightSide ? rightButtonPanel : leftButtonPanel, force_active: true);
-		gameObject.gameObject.GetComponentInChildren<LocText>().text = text;
-		gameObject.gameObject.GetComponent<KButton>().onClick += delegate
+		GameObject obj = Util.KInstantiateUI(rightSide ? rightButtonPrefab : leftButtonPrefab, rightSide ? rightButtonPanel : leftButtonPanel, force_active: true);
+		obj.gameObject.GetComponentInChildren<LocText>().text = text;
+		obj.gameObject.GetComponent<KButton>().onClick += delegate
 		{
 			action(this);
 		};

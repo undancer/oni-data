@@ -117,10 +117,7 @@ public class Tinkerable : Workable
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_use_machine_kanim")
-		};
+		overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_use_machine_kanim") };
 		workerStatusItem = Db.Get().DuplicantStatusItems.Tinkering;
 		attributeConverter = Db.Get().AttributeConverters.MachinerySpeed;
 		faceTargetWhenWorking = true;
@@ -199,10 +196,7 @@ public class Tinkerable : Workable
 			}
 			else
 			{
-				chore = new FetchChore(Db.Get().ChoreTypes.GetByHash(choreTypeFetch), storage, tinkerMaterialAmount, new Tag[1]
-				{
-					tinkerMaterialTag
-				}, null, null, null, run_until_complete: true, OnFetchComplete, null, null, FetchOrder2.OperationalRequirement.Functional);
+				chore = new FetchChore(Db.Get().ChoreTypes.GetByHash(choreTypeFetch), storage, tinkerMaterialAmount, new Tag[1] { tinkerMaterialTag }, null, null, null, run_until_complete: true, OnFetchComplete, null, null, FetchOrder2.OperationalRequirement.Functional);
 			}
 			chore.AddPrecondition(ChorePreconditions.instance.HasSkillPerk, requiredSkillPerk);
 			if (!string.IsNullOrEmpty(GetComponent<RoomTracker>().requiredRoomType))

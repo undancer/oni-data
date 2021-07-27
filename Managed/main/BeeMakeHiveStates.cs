@@ -21,12 +21,12 @@ public class BeeMakeHiveStates : GameStateMachine<BeeMakeHiveStates, BeeMakeHive
 		public void BuildHome()
 		{
 			Vector3 position = Grid.CellToPos(targetBuildCell);
-			GameObject gameObject = Util.KInstantiate(Assets.GetPrefab("BeeHive".ToTag()), position, Quaternion.identity);
-			PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
+			GameObject obj = Util.KInstantiate(Assets.GetPrefab("BeeHive".ToTag()), position, Quaternion.identity);
+			PrimaryElement component = obj.GetComponent<PrimaryElement>();
 			component.ElementID = SimHashes.Creature;
 			component.Temperature = base.gameObject.GetComponent<PrimaryElement>().Temperature;
-			gameObject.SetActive(value: true);
-			gameObject.GetSMI<BeeHive.StatesInstance>().SetUpNewHive();
+			obj.SetActive(value: true);
+			obj.GetSMI<BeeHive.StatesInstance>().SetUpNewHive();
 		}
 	}
 

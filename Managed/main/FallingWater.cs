@@ -294,41 +294,41 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 			b = Mathf.Min(num2, b);
 			num2 = Mathf.Max(0, num2 - b);
 			int frame = UnityEngine.Random.Range(0, numFrames);
-			Vector2 b2 = (disable_randomness ? Vector2.zero : new Vector2(jitterStep * Mathf.Sin(offset), jitterStep * Mathf.Sin(offset + 17f)));
-			Vector2 b3 = (disable_randomness ? Vector2.zero : new Vector2(UnityEngine.Random.Range(0f - multipleOffsetRange.x, multipleOffsetRange.x), UnityEngine.Random.Range(0f - multipleOffsetRange.y, multipleOffsetRange.y)));
+			Vector2 vector = (disable_randomness ? Vector2.zero : new Vector2(jitterStep * Mathf.Sin(offset), jitterStep * Mathf.Sin(offset + 17f)));
+			Vector2 vector2 = (disable_randomness ? Vector2.zero : new Vector2(UnityEngine.Random.Range(0f - multipleOffsetRange.x, multipleOffsetRange.x), UnityEngine.Random.Range(0f - multipleOffsetRange.y, multipleOffsetRange.y)));
 			Element element = ElementLoader.elements[elementIdx];
-			Vector2 vector = root_pos;
+			Vector2 vector3 = root_pos;
 			bool flag = !skip_decor && SpawnLiquidTopDecor(time, Grid.CellLeft(num), flip: false, element);
 			bool flag2 = !skip_decor && SpawnLiquidTopDecor(time, Grid.CellRight(num), flip: true, element);
-			Vector2 vector2 = Vector2.ClampMagnitude(initialOffset + b2 + b3, 1f);
+			Vector2 vector4 = Vector2.ClampMagnitude(initialOffset + vector + vector2, 1f);
 			if (flag || flag2)
 			{
 				if (flag && flag2)
 				{
-					vector += vector2;
-					vector.x += 0.5f;
+					vector3 += vector4;
+					vector3.x += 0.5f;
 				}
 				else if (flag)
 				{
-					vector += vector2;
+					vector3 += vector4;
 				}
 				else
 				{
-					vector.x += 1f - vector2.x;
-					vector.y += vector2.y;
+					vector3.x += 1f - vector4.x;
+					vector3.y += vector4.y;
 				}
 			}
 			else
 			{
-				vector += vector2;
-				vector.x += 0.5f;
+				vector3 += vector4;
+				vector3.x += 0.5f;
 			}
-			int num6 = Grid.PosToCell(vector);
+			int num6 = Grid.PosToCell(vector3);
 			if ((Grid.Element[num6].state & Element.State.Solid) == Element.State.Solid || (Grid.Properties[num6] & 2u) != 0)
 			{
-				vector.y = Mathf.Floor(vector.y + 1f);
+				vector3.y = Mathf.Floor(vector3.y + 1f);
 			}
-			physics.Add(new ParticlePhysics(vector, Vector2.zero, frame, elementIdx));
+			physics.Add(new ParticlePhysics(vector3, Vector2.zero, frame, elementIdx));
 			particleProperties.Add(new ParticleProperties(elementIdx, num4, temperature, disease_idx, b, debug_track));
 		}
 	}
@@ -365,11 +365,11 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 		if (time - num >= minSpawnDelay || forceSplash)
 		{
 			lastSpawnTime[cell] = time;
-			Vector2 a = Grid.CellToPos2D(cell);
-			a.x = x - 0.5f;
+			Vector2 vector = Grid.CellToPos2D(cell);
+			vector.x = x - 0.5f;
 			int num2 = UnityEngine.Random.Range(0, liquid_splash.names.Length);
-			Vector2 vector = a + new Vector2(liquid_splash.offset.x, liquid_splash.offset.y);
-			SpriteSheetAnimManager.instance.Play(liquid_splash.names[num2], new Vector3(vector.x, vector.y, renderOffset.z), new Vector2(liquid_splash.size.x, liquid_splash.size.y), Color.white);
+			Vector2 vector2 = vector + new Vector2(liquid_splash.offset.x, liquid_splash.offset.y);
+			SpriteSheetAnimManager.instance.Play(liquid_splash.names[num2], new Vector3(vector2.x, vector2.y, renderOffset.z), new Vector2(liquid_splash.size.x, liquid_splash.size.y), Color.white);
 		}
 	}
 
@@ -388,9 +388,9 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 			Vector3 vector2 = value.position;
 			Grid.PosToXY(vector2, out var x, out var y);
 			value.velocity += vector;
-			Vector3 b = value.velocity * dt;
-			Vector3 v = vector2 + b;
-			value.position = v;
+			Vector3 vector3 = value.velocity * dt;
+			Vector3 vector4 = vector2 + vector3;
+			value.position = vector4;
 			physics[i] = value;
 			Grid.PosToXY(value.position, out var _, out var y2);
 			int num = ((y > y2) ? y : y2);
@@ -616,10 +616,10 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 		splashSounds[cell] = value;
 		if (flag2)
 		{
-			EventInstance instance = SoundEvent.BeginOneShot(liquid_splash_initial, vector);
-			instance.setParameterByName("liquidDepth", SoundUtil.GetLiquidDepth(cell));
-			instance.setParameterByName("liquidVolume", GetParticleVolume(particleProperties.mass));
-			SoundEvent.EndOneShot(instance);
+			EventInstance eventInstance = SoundEvent.BeginOneShot(liquid_splash_initial, vector);
+			eventInstance.setParameterByName("liquidDepth", SoundUtil.GetLiquidDepth(cell));
+			eventInstance.setParameterByName("liquidVolume", GetParticleVolume(particleProperties.mass));
+			SoundEvent.EndOneShot(eventInstance);
 		}
 	}
 
@@ -644,10 +644,10 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 		colours.Clear();
 		float num = particleSize.x * 0.5f;
 		float num2 = particleSize.y * 0.5f;
-		Vector2 a = new Vector2(0f - num, 0f - num2);
-		Vector2 a2 = new Vector2(num, 0f - num2);
-		Vector2 a3 = new Vector2(num, num2);
-		Vector2 a4 = new Vector2(0f - num, num2);
+		Vector2 vector = new Vector2(0f - num, 0f - num2);
+		Vector2 vector2 = new Vector2(num, 0f - num2);
+		Vector2 vector3 = new Vector2(num, num2);
+		Vector2 vector4 = new Vector2(0f - num, num2);
 		float y = 1f;
 		float y2 = 0f;
 		int num3 = Mathf.Min(physics.Count, 16249);
@@ -658,11 +658,11 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 		for (int i = 0; i < num3; i++)
 		{
 			Vector2 position = physics[i].position;
-			float d = Mathf.Lerp(0.25f, 1f, Mathf.Clamp01(particleProperties[i].mass / particleMassToSplit));
-			vertices.Add(position + a * d);
-			vertices.Add(position + a2 * d);
-			vertices.Add(position + a3 * d);
-			vertices.Add(position + a4 * d);
+			float num4 = Mathf.Lerp(0.25f, 1f, Mathf.Clamp01(particleProperties[i].mass / particleMassToSplit));
+			vertices.Add(position + vector * num4);
+			vertices.Add(position + vector2 * num4);
+			vertices.Add(position + vector3 * num4);
+			vertices.Add(position + vector4 * num4);
 			int frame = physics[i].frame;
 			float x = (float)frame * uvFrameSize.x;
 			float x2 = (float)(frame + 1) * uvFrameSize.x;
@@ -675,13 +675,13 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 			colours.Add(colour);
 			colours.Add(colour);
 			colours.Add(colour);
-			int num4 = i * 4;
-			indices.Add(num4);
-			indices.Add(num4 + 1);
-			indices.Add(num4 + 2);
-			indices.Add(num4);
-			indices.Add(num4 + 2);
-			indices.Add(num4 + 3);
+			int num5 = i * 4;
+			indices.Add(num5);
+			indices.Add(num5 + 1);
+			indices.Add(num5 + 2);
+			indices.Add(num5);
+			indices.Add(num5 + 2);
+			indices.Add(num5 + 3);
 		}
 		mesh.Clear();
 		mesh.SetVertices(vertices);
@@ -694,19 +694,19 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 
 	private KBatchedAnimController SpawnMist()
 	{
-		GameObject instance = mistPool.GetInstance();
-		instance.SetActive(value: true);
-		KBatchedAnimController component = instance.GetComponent<KBatchedAnimController>();
+		GameObject obj = mistPool.GetInstance();
+		obj.SetActive(value: true);
+		KBatchedAnimController component = obj.GetComponent<KBatchedAnimController>();
 		component.Play("loop", KAnim.PlayMode.Loop);
 		return component;
 	}
 
 	private GameObject InstantiateMist()
 	{
-		GameObject gameObject = GameUtil.KInstantiate(mistEffect, Grid.SceneLayer.BuildingBack);
-		gameObject.SetActive(value: false);
-		gameObject.GetComponent<KBatchedAnimController>().onDestroySelf = ReleaseMist;
-		return gameObject;
+		GameObject obj = GameUtil.KInstantiate(mistEffect, Grid.SceneLayer.BuildingBack);
+		obj.SetActive(value: false);
+		obj.GetComponent<KBatchedAnimController>().onDestroySelf = ReleaseMist;
+		return obj;
 	}
 
 	private void ReleaseMist(GameObject go)

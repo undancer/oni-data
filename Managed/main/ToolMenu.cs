@@ -189,8 +189,8 @@ public class ToolMenu : KScreen
 
 	private void OnOverlayChanged(object overlay_data)
 	{
-		HashedString y = (HashedString)overlay_data;
-		if (PlayerController.Instance.ActiveTool != null && PlayerController.Instance.ActiveTool.ViewMode != OverlayModes.None.ID && PlayerController.Instance.ActiveTool.ViewMode != y)
+		HashedString hashedString = (HashedString)overlay_data;
+		if (PlayerController.Instance.ActiveTool != null && PlayerController.Instance.ActiveTool.ViewMode != OverlayModes.None.ID && PlayerController.Instance.ActiveTool.ViewMode != hashedString)
 		{
 			ChooseCollection(null);
 			ChooseTool(null);
@@ -352,29 +352,29 @@ public class ToolMenu : KScreen
 	{
 		GameObject parent = Util.KInstantiateUI(prefabToolRow, base.gameObject, force_active: true);
 		GameObject gameObject = Util.KInstantiateUI(largeToolSet, parent, force_active: true);
-		GameObject gameObject2 = Util.KInstantiateUI(smallToolSet, parent, force_active: true);
-		GameObject gameObject3 = Util.KInstantiateUI(smallToolBottomRow, gameObject2, force_active: true);
-		GameObject gameObject4 = Util.KInstantiateUI(smallToolTopRow, gameObject2, force_active: true);
-		GameObject gameObject5 = Util.KInstantiateUI(sandboxToolSet, parent, force_active: true);
+		GameObject parent2 = Util.KInstantiateUI(smallToolSet, parent, force_active: true);
+		GameObject gameObject2 = Util.KInstantiateUI(smallToolBottomRow, parent2, force_active: true);
+		GameObject gameObject3 = Util.KInstantiateUI(smallToolTopRow, parent2, force_active: true);
+		GameObject gameObject4 = Util.KInstantiateUI(sandboxToolSet, parent, force_active: true);
 		bool flag = true;
 		for (int i = 0; i < collections.Count; i++)
 		{
-			GameObject parent2;
+			GameObject parent3;
 			if (collections == sandboxTools)
 			{
-				parent2 = gameObject5;
+				parent3 = gameObject4;
 			}
 			else if (collections[i].largeIcon)
 			{
-				parent2 = gameObject;
+				parent3 = gameObject;
 			}
 			else
 			{
-				parent2 = (flag ? gameObject4 : gameObject3);
+				parent3 = (flag ? gameObject3 : gameObject2);
 				flag = !flag;
 			}
 			ToolCollection tc = collections[i];
-			tc.toggle = Util.KInstantiateUI((collections[i].tools.Count > 1) ? collectionIconPrefab : ((collections == sandboxTools) ? sandboxToolIconPrefab : (collections[i].largeIcon ? toolIconLargePrefab : toolIconPrefab)), parent2, force_active: true);
+			tc.toggle = Util.KInstantiateUI((collections[i].tools.Count > 1) ? collectionIconPrefab : ((collections == sandboxTools) ? sandboxToolIconPrefab : (collections[i].largeIcon ? toolIconLargePrefab : toolIconPrefab)), parent3, force_active: true);
 			KToggle component = tc.toggle.GetComponent<KToggle>();
 			component.soundPlayer.Enabled = false;
 			component.onClick += delegate
@@ -389,36 +389,36 @@ public class ToolMenu : KScreen
 			{
 				continue;
 			}
-			GameObject gameObject6 = null;
+			GameObject gameObject5 = null;
 			if (tc.tools.Count < smallCollectionMax)
 			{
-				gameObject6 = Util.KInstantiateUI(Prefab_collectionContainer, parent2, force_active: true);
-				gameObject6.transform.SetSiblingIndex(gameObject6.transform.GetSiblingIndex() - 1);
-				gameObject6.transform.localScale = Vector3.one;
-				gameObject6.rectTransform().sizeDelta = new Vector2(tc.tools.Count * 75, 50f);
-				tc.MaskContainer = gameObject6.GetComponentInChildren<Mask>().gameObject;
-				gameObject6.SetActive(value: false);
+				gameObject5 = Util.KInstantiateUI(Prefab_collectionContainer, parent3, force_active: true);
+				gameObject5.transform.SetSiblingIndex(gameObject5.transform.GetSiblingIndex() - 1);
+				gameObject5.transform.localScale = Vector3.one;
+				gameObject5.rectTransform().sizeDelta = new Vector2(tc.tools.Count * 75, 50f);
+				tc.MaskContainer = gameObject5.GetComponentInChildren<Mask>().gameObject;
+				gameObject5.SetActive(value: false);
 			}
 			else
 			{
-				gameObject6 = Util.KInstantiateUI(Prefab_collectionContainerWindow, parent2, force_active: true);
-				gameObject6.transform.localScale = Vector3.one;
-				gameObject6.GetComponentInChildren<LocText>().SetText(tc.text.ToUpper());
-				tc.MaskContainer = gameObject6.GetComponentInChildren<GridLayoutGroup>().gameObject;
-				gameObject6.SetActive(value: false);
+				gameObject5 = Util.KInstantiateUI(Prefab_collectionContainerWindow, parent3, force_active: true);
+				gameObject5.transform.localScale = Vector3.one;
+				gameObject5.GetComponentInChildren<LocText>().SetText(tc.text.ToUpper());
+				tc.MaskContainer = gameObject5.GetComponentInChildren<GridLayoutGroup>().gameObject;
+				gameObject5.SetActive(value: false);
 			}
-			tc.UIMenuDisplay = gameObject6;
+			tc.UIMenuDisplay = gameObject5;
 			for (int j = 0; j < tc.tools.Count; j++)
 			{
 				ToolInfo ti = tc.tools[j];
-				GameObject gameObject7 = Util.KInstantiateUI((collections == sandboxTools) ? sandboxToolIconPrefab : (collections[i].largeIcon ? toolIconLargePrefab : toolIconPrefab), tc.MaskContainer, force_active: true);
-				gameObject7.name = ti.text;
-				ti.toggle = gameObject7.GetComponent<KToggle>();
+				GameObject gameObject6 = Util.KInstantiateUI((collections == sandboxTools) ? sandboxToolIconPrefab : (collections[i].largeIcon ? toolIconLargePrefab : toolIconPrefab), tc.MaskContainer, force_active: true);
+				gameObject6.name = ti.text;
+				ti.toggle = gameObject6.GetComponent<KToggle>();
 				if (ti.collection.tools.Count > 1)
 				{
 					RectTransform rectTransform = null;
 					rectTransform = ti.toggle.gameObject.GetComponentInChildren<SetTextStyleSetting>().rectTransform();
-					if (gameObject7.name.Length > 12)
+					if (gameObject6.name.Length > 12)
 					{
 						rectTransform.GetComponent<SetTextStyleSetting>().SetStyle(CategoryLabelTextStyle_LeftAlign);
 						rectTransform.anchoredPosition = new Vector2(16f, rectTransform.anchoredPosition.y);
@@ -439,13 +439,13 @@ public class ToolMenu : KScreen
 		{
 			UnityEngine.Object.Destroy(gameObject);
 		}
-		if (gameObject3.transform.childCount == 0 && gameObject4.transform.childCount == 0)
+		if (gameObject2.transform.childCount == 0 && gameObject3.transform.childCount == 0)
 		{
-			UnityEngine.Object.Destroy(gameObject2);
+			UnityEngine.Object.Destroy(parent2);
 		}
-		if (gameObject5.transform.childCount == 0)
+		if (gameObject4.transform.childCount == 0)
 		{
-			UnityEngine.Object.Destroy(gameObject5);
+			UnityEngine.Object.Destroy(gameObject4);
 		}
 	}
 

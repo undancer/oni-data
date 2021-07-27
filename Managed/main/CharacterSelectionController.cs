@@ -41,11 +41,7 @@ public class CharacterSelectionController : KModalScreen
 
 	public System.Action OnProceedEvent;
 
-	public bool IsStarterMinion
-	{
-		get;
-		set;
-	}
+	public bool IsStarterMinion { get; set; }
 
 	public bool AllowsReplacing => allowsReplacing;
 
@@ -120,10 +116,10 @@ public class CharacterSelectionController : KModalScreen
 	{
 		if (selectedDeliverables != null && selectedDeliverables.Count != 0)
 		{
-			ITelepadDeliverable obj = selectedDeliverables[selectedDeliverables.Count - 1];
+			ITelepadDeliverable telepadDeliverable = selectedDeliverables[selectedDeliverables.Count - 1];
 			if (OnReplacedEvent != null)
 			{
-				OnReplacedEvent(obj);
+				OnReplacedEvent(telepadDeliverable);
 			}
 		}
 	}

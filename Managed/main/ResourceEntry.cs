@@ -177,14 +177,14 @@ public class ResourceEntry : KMonoBehaviour, IPointerEnterHandler, IEventSystemH
 	private string OnToolTip()
 	{
 		GetAmounts(doExtras: true, out var available, out var total, out var reserved);
-		string str = NameLabel.text + "\n";
-		str += string.Format(UI.RESOURCESCREEN.AVAILABLE_TOOLTIP, ResourceCategoryScreen.QuantityTextForMeasure(available, Measure), ResourceCategoryScreen.QuantityTextForMeasure(reserved, Measure), ResourceCategoryScreen.QuantityTextForMeasure(total, Measure));
+		string text = NameLabel.text + "\n";
+		text += string.Format(UI.RESOURCESCREEN.AVAILABLE_TOOLTIP, ResourceCategoryScreen.QuantityTextForMeasure(available, Measure), ResourceCategoryScreen.QuantityTextForMeasure(reserved, Measure), ResourceCategoryScreen.QuantityTextForMeasure(total, Measure));
 		float delta = TrackerTool.Instance.GetResourceStatistic(ClusterManager.Instance.activeWorldId, Resource).GetDelta(150f);
 		if (delta != 0f)
 		{
-			return str + "\n\n" + string.Format(UI.RESOURCESCREEN.TREND_TOOLTIP, (delta > 0f) ? UI.RESOURCESCREEN.INCREASING_STR : UI.RESOURCESCREEN.DECREASING_STR, GameUtil.GetFormattedMass(Mathf.Abs(delta)));
+			return text + "\n\n" + string.Format(UI.RESOURCESCREEN.TREND_TOOLTIP, (delta > 0f) ? UI.RESOURCESCREEN.INCREASING_STR : UI.RESOURCESCREEN.DECREASING_STR, GameUtil.GetFormattedMass(Mathf.Abs(delta)));
 		}
-		return str + "\n\n" + UI.RESOURCESCREEN.TREND_TOOLTIP_NO_CHANGE;
+		return text + "\n\n" + UI.RESOURCESCREEN.TREND_TOOLTIP_NO_CHANGE;
 	}
 
 	public void SetName(string name)

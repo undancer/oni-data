@@ -21,14 +21,8 @@ public class SocialGatheringPointWorkable : Workable, IWorkerPrioritizable
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_generic_convo_kanim")
-		};
-		workAnims = new HashedString[1]
-		{
-			"idle"
-		};
+		overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_generic_convo_kanim") };
+		workAnims = new HashedString[1] { "idle" };
 		faceTargetWhenWorking = true;
 		workerStatusItem = Db.Get().DuplicantStatusItems.Socializing;
 		synchronizeAnims = false;

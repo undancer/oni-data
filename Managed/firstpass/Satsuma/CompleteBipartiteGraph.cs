@@ -11,23 +11,11 @@ namespace Satsuma
 			Blue
 		}
 
-		public int RedNodeCount
-		{
-			get;
-			private set;
-		}
+		public int RedNodeCount { get; private set; }
 
-		public int BlueNodeCount
-		{
-			get;
-			private set;
-		}
+		public int BlueNodeCount { get; private set; }
 
-		public bool Directed
-		{
-			get;
-			private set;
-		}
+		public bool Directed { get; private set; }
 
 		public CompleteBipartiteGraph(int redNodeCount, int blueNodeCount, Directedness directedness)
 		{

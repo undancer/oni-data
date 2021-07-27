@@ -195,16 +195,16 @@ public class KButton : KMonoBehaviour, IPointerEnterHandler, IEventSystemHandler
 		{
 			bgImage = GetComponent<KImage>();
 			string arg = "";
-			Transform transform = base.transform;
+			Transform parent = base.transform;
 			for (int i = 0; i < 5; i++)
 			{
-				if (!(transform.parent != null))
+				if (!(parent.parent != null))
 				{
 					break;
 				}
-				transform = transform.parent;
-				string name = transform.name;
-				arg = $"{name}/{arg}";
+				parent = parent.parent;
+				string arg2 = parent.name;
+				arg = $"{arg2}/{arg}";
 			}
 			if (bgImage == null)
 			{

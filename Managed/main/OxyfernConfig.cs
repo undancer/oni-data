@@ -27,10 +27,7 @@ public class OxyfernConfig : IEntityConfig
 	public GameObject CreatePrefab()
 	{
 		GameObject template = EntityTemplates.CreatePlacedEntity("Oxyfern", STRINGS.CREATURES.SPECIES.OXYFERN.NAME, STRINGS.CREATURES.SPECIES.OXYFERN.DESC, 1f, decor: DECOR.PENALTY.TIER1, anim: Assets.GetAnim("oxy_fern_kanim"), initialAnim: "idle_full", sceneLayer: Grid.SceneLayer.BuildingBack, width: 1, height: 2);
-		template = EntityTemplates.ExtendEntityToBasicPlant(template, 253.15f, 273.15f, 313.15f, 373.15f, new SimHashes[1]
-		{
-			SimHashes.CarbonDioxide
-		}, pressure_sensitive: true, 0f, 0.025f, null, can_drown: true, can_tinker: false, require_solid_tile: true, should_grow_old: true, 2400f, 0f, 220f, "OxyfernOriginal", STRINGS.CREATURES.SPECIES.OXYFERN.NAME);
+		template = EntityTemplates.ExtendEntityToBasicPlant(template, 253.15f, 273.15f, 313.15f, 373.15f, new SimHashes[1] { SimHashes.CarbonDioxide }, pressure_sensitive: true, 0f, 0.025f, null, can_drown: true, can_tinker: false, require_solid_tile: true, should_grow_old: true, 2400f, 0f, 220f, "OxyfernOriginal", STRINGS.CREATURES.SPECIES.OXYFERN.NAME);
 		Tag tag = ElementLoader.FindElementByHash(SimHashes.Water).tag;
 		GameObject template2 = template;
 		PlantElementAbsorber.ConsumeInfo[] array = new PlantElementAbsorber.ConsumeInfo[1];
@@ -75,10 +72,7 @@ public class OxyfernConfig : IEntityConfig
 		{
 			new ElementConverter.OutputElement(0.031250004f, SimHashes.Oxygen, 0f, useEntityTemperature: true, storeOutput: false, 0f, 1f, 0.75f)
 		};
-		EntityTemplates.CreateAndRegisterPreviewForPlant(EntityTemplates.CreateAndRegisterSeedForPlant(template, SeedProducer.ProductionType.Hidden, "OxyfernSeed", STRINGS.CREATURES.SPECIES.SEEDS.OXYFERN.NAME, STRINGS.CREATURES.SPECIES.SEEDS.OXYFERN.DESC, Assets.GetAnim("seed_oxyfern_kanim"), "object", 1, new List<Tag>
-		{
-			GameTags.CropSeed
-		}, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 20, STRINGS.CREATURES.SPECIES.OXYFERN.DOMESTICATEDDESC, EntityTemplates.CollisionShape.CIRCLE, 0.3f, 0.3f), "Oxyfern_preview", Assets.GetAnim("oxy_fern_kanim"), "place", 1, 2);
+		EntityTemplates.CreateAndRegisterPreviewForPlant(EntityTemplates.CreateAndRegisterSeedForPlant(template, SeedProducer.ProductionType.Hidden, "OxyfernSeed", STRINGS.CREATURES.SPECIES.SEEDS.OXYFERN.NAME, STRINGS.CREATURES.SPECIES.SEEDS.OXYFERN.DESC, Assets.GetAnim("seed_oxyfern_kanim"), "object", 1, new List<Tag> { GameTags.CropSeed }, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 20, STRINGS.CREATURES.SPECIES.OXYFERN.DOMESTICATEDDESC, EntityTemplates.CollisionShape.CIRCLE, 0.3f, 0.3f), "Oxyfern_preview", Assets.GetAnim("oxy_fern_kanim"), "place", 1, 2);
 		SoundEventVolumeCache.instance.AddVolume("oxy_fern_kanim", "MealLice_harvest", NOISE_POLLUTION.CREATURES.TIER3);
 		SoundEventVolumeCache.instance.AddVolume("oxy_fern_kanim", "MealLice_LP", NOISE_POLLUTION.CREATURES.TIER4);
 		return template;

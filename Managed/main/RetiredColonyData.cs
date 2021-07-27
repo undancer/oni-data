@@ -120,59 +120,23 @@ public class RetiredColonyData
 		public Dictionary<string, string> accessories;
 	}
 
-	public string colonyName
-	{
-		get;
-		set;
-	}
+	public string colonyName { get; set; }
 
-	public int cycleCount
-	{
-		get;
-		set;
-	}
+	public int cycleCount { get; set; }
 
-	public string date
-	{
-		get;
-		set;
-	}
+	public string date { get; set; }
 
-	public string[] achievements
-	{
-		get;
-		set;
-	}
+	public string[] achievements { get; set; }
 
-	public RetiredDuplicantData[] Duplicants
-	{
-		get;
-		set;
-	}
+	public RetiredDuplicantData[] Duplicants { get; set; }
 
-	public List<Tuple<string, int>> buildings
-	{
-		get;
-		set;
-	}
+	public List<Tuple<string, int>> buildings { get; set; }
 
-	public RetiredColonyStatistic[] Stats
-	{
-		get;
-		set;
-	}
+	public RetiredColonyStatistic[] Stats { get; set; }
 
-	public Dictionary<string, string> worldIdentities
-	{
-		get;
-		set;
-	}
+	public Dictionary<string, string> worldIdentities { get; set; }
 
-	public string startWorld
-	{
-		get;
-		set;
-	}
+	public string startWorld { get; set; }
 
 	public RetiredColonyData()
 	{

@@ -98,11 +98,11 @@ public class SnapOn : KMonoBehaviour
 	private static KAnim.Build.Symbol GetSymbol(KAnimFile anim_file, string symbol_name)
 	{
 		KAnim.Build.Symbol result = anim_file.GetData().build.symbols[0];
-		KAnimHashedString y = new KAnimHashedString(symbol_name);
+		KAnimHashedString kAnimHashedString = new KAnimHashedString(symbol_name);
 		KAnim.Build.Symbol[] symbols = anim_file.GetData().build.symbols;
 		foreach (KAnim.Build.Symbol symbol in symbols)
 		{
-			if (symbol.hash == y)
+			if (symbol.hash == kAnimHashedString)
 			{
 				result = symbol;
 				break;

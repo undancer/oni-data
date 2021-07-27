@@ -88,22 +88,12 @@ public class RailGunPayloadOpener : StateMachineComponent<RailGunPayloadOpener.S
 		solidOutputCell = Grid.OffsetCell(Grid.PosToCell(this), solidPortInfo.offset);
 		solidDispenser = CreateSolidConduitDispenser(solidOutputCell, out solidNetworkItem);
 		deliveryComponents = GetComponents<ManualDeliveryKG>();
-		payloadStorage.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interact_railgun_emptier_kanim")
-		};
+		payloadStorage.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interact_railgun_emptier_kanim") };
 		payloadStorage.useGunForDelivery = false;
 		payloadStorage.synchronizeAnims = true;
-		payloadStorage.workAnims = new HashedString[2]
-		{
-			"working_pre",
-			"working_loop"
-		};
+		payloadStorage.workAnims = new HashedString[2] { "working_pre", "working_loop" };
 		payloadStorage.storageWorkTime = delivery_time;
-		payloadStorage.workingPstComplete = new HashedString[1]
-		{
-			"working_pst"
-		};
+		payloadStorage.workingPstComplete = new HashedString[1] { "working_pst" };
 		payloadStorage.SetOffsets(delivery_offset);
 		base.smi.StartSM();
 	}
@@ -146,9 +136,9 @@ public class RailGunPayloadOpener : StateMachineComponent<RailGunPayloadOpener.S
 		Storage component = GetComponent<Storage>();
 		if (component != null && component.items.Count > 0)
 		{
-			GameObject gameObject = payloadStorage.items[0];
-			gameObject.GetComponent<Storage>().Transfer(resourceStorage);
-			Util.KDestroyGameObject(gameObject);
+			GameObject obj = payloadStorage.items[0];
+			obj.GetComponent<Storage>().Transfer(resourceStorage);
+			Util.KDestroyGameObject(obj);
 			component.ConsumeIgnoringDisease(payloadStorage.items[0]);
 		}
 	}

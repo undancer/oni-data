@@ -62,11 +62,11 @@ public class Substance
 				Pickupable component = gameObject2.GetComponent<Pickupable>();
 				if (component != null)
 				{
-					Tag b = GameTagExtensions.Create(elementID);
+					Tag tag = GameTagExtensions.Create(elementID);
 					for (ObjectLayerListItem objectLayerListItem = component.objectLayerListItem; objectLayerListItem != null; objectLayerListItem = objectLayerListItem.nextItem)
 					{
 						KPrefabID component2 = objectLayerListItem.gameObject.GetComponent<KPrefabID>();
-						if (component2.PrefabTag == b)
+						if (component2.PrefabTag == tag)
 						{
 							PrimaryElement component3 = component2.GetComponent<PrimaryElement>();
 							if (component3.Mass + mass <= PrimaryElement.MAX_MASS)

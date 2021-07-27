@@ -60,10 +60,7 @@ namespace YamlDotNet
 			{
 				return type.GetProperties(instancePublic);
 			}
-			return new Type[1]
-			{
-				type
-			}.Concat(type.GetInterfaces()).SelectMany((Type i) => i.GetProperties(instancePublic));
+			return new Type[1] { type }.Concat(type.GetInterfaces()).SelectMany((Type i) => i.GetProperties(instancePublic));
 		}
 
 		public static IEnumerable<MethodInfo> GetPublicStaticMethods(this Type type)

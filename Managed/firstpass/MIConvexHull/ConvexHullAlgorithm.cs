@@ -357,11 +357,7 @@ namespace MIConvexHull
 			int num2 = boundingBoxPoints[indexOfDimensionWithLeastExtremes].Last();
 			boundingBoxPoints[indexOfDimensionWithLeastExtremes].RemoveAt(0);
 			boundingBoxPoints[indexOfDimensionWithLeastExtremes].RemoveAt(boundingBoxPoints[indexOfDimensionWithLeastExtremes].Count - 1);
-			List<int> list = new List<int>
-			{
-				num,
-				num2
-			};
+			List<int> list = new List<int> { num, num2 };
 			VertexVisited[num] = (VertexVisited[num2] = true);
 			CurrentVertex = num;
 			UpdateCenter();
@@ -938,33 +934,33 @@ namespace MIConvexHull
 				{
 					array2[j] = (TVertex)Vertices[convexFaceInternal.Vertices[j]];
 				}
-				int num = i;
-				TFace val = new TFace();
-				val.Vertices = array2;
-				val.Adjacency = new TFace[NumOfDimensions];
-				val.Normal = (IsLifted ? null : convexFaceInternal.Normal);
-				array[num] = val;
+				array[i] = new TFace
+				{
+					Vertices = array2,
+					Adjacency = new TFace[NumOfDimensions],
+					Normal = (IsLifted ? null : convexFaceInternal.Normal)
+				};
 				convexFaceInternal.Tag = i;
 			}
 			for (int k = 0; k < count; k++)
 			{
 				ConvexFaceInternal convexFaceInternal2 = FacePool[convexFaces[k]];
-				TFace val2 = array[k];
+				TFace val = array[k];
 				for (int l = 0; l < NumOfDimensions; l++)
 				{
 					if (convexFaceInternal2.AdjacentFaces[l] >= 0)
 					{
-						val2.Adjacency[l] = array[FacePool[convexFaceInternal2.AdjacentFaces[l]].Tag];
+						val.Adjacency[l] = array[FacePool[convexFaceInternal2.AdjacentFaces[l]].Tag];
 					}
 				}
 				if (convexFaceInternal2.IsNormalFlipped)
 				{
-					TVertex val3 = val2.Vertices[0];
-					val2.Vertices[0] = val2.Vertices[NumOfDimensions - 1];
-					val2.Vertices[NumOfDimensions - 1] = val3;
-					TFace val4 = val2.Adjacency[0];
-					val2.Adjacency[0] = val2.Adjacency[NumOfDimensions - 1];
-					val2.Adjacency[NumOfDimensions - 1] = val4;
+					TVertex val2 = val.Vertices[0];
+					val.Vertices[0] = val.Vertices[NumOfDimensions - 1];
+					val.Vertices[NumOfDimensions - 1] = val2;
+					TFace val3 = val.Adjacency[0];
+					val.Adjacency[0] = val.Adjacency[NumOfDimensions - 1];
+					val.Adjacency[NumOfDimensions - 1] = val3;
 				}
 			}
 			return array;

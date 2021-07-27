@@ -14,35 +14,15 @@ namespace Satsuma
 
 		private readonly PriorityQueue<Node, long> active;
 
-		public IGraph Graph
-		{
-			get;
-			private set;
-		}
+		public IGraph Graph { get; private set; }
 
-		public Func<Arc, long> Capacity
-		{
-			get;
-			private set;
-		}
+		public Func<Arc, long> Capacity { get; private set; }
 
-		public Node Source
-		{
-			get;
-			private set;
-		}
+		public Node Source { get; private set; }
 
-		public Node Target
-		{
-			get;
-			private set;
-		}
+		public Node Target { get; private set; }
 
-		public long FlowSize
-		{
-			get;
-			private set;
-		}
+		public long FlowSize { get; private set; }
 
 		public IEnumerable<KeyValuePair<Arc, long>> NonzeroArcs => flow.Where((KeyValuePair<Arc, long> kv) => kv.Value != 0);
 
@@ -175,11 +155,11 @@ namespace Satsuma
 			FlowSize = 0L;
 			foreach (Arc item4 in Graph.Arcs(Source))
 			{
-				Node a = Graph.U(item4);
-				Node b = Graph.V(item4);
-				if (!(a == b) && flow.TryGetValue(item4, out var value2))
+				Node node5 = Graph.U(item4);
+				Node node6 = Graph.V(item4);
+				if (!(node5 == node6) && flow.TryGetValue(item4, out var value2))
 				{
-					if (a == Source)
+					if (node5 == Source)
 					{
 						FlowSize += value2;
 					}

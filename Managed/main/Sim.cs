@@ -200,8 +200,8 @@ public static class Sim
 			}
 			int num = elements.FindIndex((global::Element ele) => ele.id == e.lowTempTransitionTarget);
 			int num2 = elements.FindIndex((global::Element ele) => ele.id == e.highTempTransitionTarget);
-			lowTempTransitionIdx = (byte)((num >= 0) ? num : 255);
-			highTempTransitionIdx = (byte)((num2 >= 0) ? num2 : 255);
+			lowTempTransitionIdx = (byte)((num >= 0) ? ((uint)num) : 255u);
+			highTempTransitionIdx = (byte)((num2 >= 0) ? ((uint)num2) : 255u);
 			elementsTableIdx = (byte)elements.IndexOf(e);
 			specificHeatCapacity = e.specificHeatCapacity;
 			thermalConductivity = e.thermalConductivity;
@@ -919,9 +919,9 @@ public static class Sim
 	public unsafe static void Save(BinaryWriter writer, int x, int y)
 	{
 		int num = default(int);
-		byte* value = SIM_BeginSave(&num, x, y);
+		byte* intPtr = SIM_BeginSave(&num, x, y);
 		byte[] array = new byte[num];
-		Marshal.Copy((IntPtr)value, array, 0, num);
+		Marshal.Copy((IntPtr)intPtr, array, 0, num);
 		SIM_EndSave();
 		writer.Write(num);
 		writer.Write(array);
@@ -930,12 +930,12 @@ public static class Sim
 	public unsafe static int LoadWorld(IReader reader)
 	{
 		int num = reader.ReadInt32();
-		IntPtr value;
+		IntPtr intPtr;
 		fixed (byte* msg = reader.ReadBytes(num))
 		{
-			value = SIM_HandleMessage(-672538170, num, msg);
+			intPtr = SIM_HandleMessage(-672538170, num, msg);
 		}
-		if (value == IntPtr.Zero)
+		if (intPtr == IntPtr.Zero)
 		{
 			return -1;
 		}
@@ -958,12 +958,12 @@ public static class Sim
 	public unsafe static int Load(IReader reader)
 	{
 		int num = reader.ReadInt32();
-		IntPtr value;
+		IntPtr intPtr;
 		fixed (byte* msg = reader.ReadBytes(num))
 		{
-			value = SIM_HandleMessage(-672538170, num, msg);
+			intPtr = SIM_HandleMessage(-672538170, num, msg);
 		}
-		if (value == IntPtr.Zero)
+		if (intPtr == IntPtr.Zero)
 		{
 			return -1;
 		}
@@ -1016,9 +1016,9 @@ public static class Sim
 			}
 			else
 			{
-				string str = Marshal.PtrToStringAnsi(ptr2->file);
+				string text = Marshal.PtrToStringAnsi(ptr2->file);
 				int line = ptr2->line;
-				stack_trace2 = str + ":" + line;
+				stack_trace2 = text + ":" + line;
 			}
 			KCrashReporter.ReportSimDLLCrash(msg, stack_trace2, null);
 			return 0;

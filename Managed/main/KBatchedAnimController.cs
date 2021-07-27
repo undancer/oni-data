@@ -60,11 +60,7 @@ public class KBatchedAnimController : KAnimControllerBase, KAnimConverter.IAnimC
 		}
 	}
 
-	public HashedString batchGroupID
-	{
-		get;
-		private set;
-	}
+	public HashedString batchGroupID { get; private set; }
 
 	public int GetCurrentFrameIndex()
 	{
@@ -174,25 +170,25 @@ public class KBatchedAnimController : KAnimControllerBase, KAnimConverter.IAnimC
 
 	private void SetBatchGroup(KAnimFileData kafd)
 	{
-		if (!this.batchGroupID.IsValid || kafd == null || !(this.batchGroupID == kafd.batchTag))
+		if (!batchGroupID.IsValid || kafd == null || !(batchGroupID == kafd.batchTag))
 		{
-			DebugUtil.Assert(!this.batchGroupID.IsValid, "Should only be setting the batch group once.");
+			DebugUtil.Assert(!batchGroupID.IsValid, "Should only be setting the batch group once.");
 			DebugUtil.Assert(kafd != null, "Null anim data!! For", base.name);
 			base.curBuild = kafd.build;
 			DebugUtil.Assert(base.curBuild != null, "Null build for anim!! ", base.name, kafd.name);
 			KAnimGroupFile.Group group = KAnimGroupFile.GetGroup(base.curBuild.batchTag);
-			HashedString batchGroupID = kafd.build.batchTag;
+			HashedString hashedString = kafd.build.batchTag;
 			if (group.renderType == KAnimBatchGroup.RendererType.DontRender || group.renderType == KAnimBatchGroup.RendererType.AnimOnly)
 			{
 				bool isValid = group.swapTarget.IsValid;
 				HashedString id = group.id;
 				Debug.Assert(isValid, "Invalid swap target fro group [" + id.ToString() + "]");
-				batchGroupID = group.swapTarget;
+				hashedString = group.swapTarget;
 			}
-			this.batchGroupID = batchGroupID;
-			base.symbolInstanceGpuData = new SymbolInstanceGpuData(KAnimBatchManager.instance.GetBatchGroupData(this.batchGroupID).maxSymbolsPerBuild);
-			base.symbolOverrideInfoGpuData = new SymbolOverrideInfoGpuData(KAnimBatchManager.instance.GetBatchGroupData(this.batchGroupID).symbolFrameInstances.Count);
-			if (!this.batchGroupID.IsValid || this.batchGroupID == KAnimBatchManager.NO_BATCH)
+			batchGroupID = hashedString;
+			base.symbolInstanceGpuData = new SymbolInstanceGpuData(KAnimBatchManager.instance.GetBatchGroupData(batchGroupID).maxSymbolsPerBuild);
+			base.symbolOverrideInfoGpuData = new SymbolOverrideInfoGpuData(KAnimBatchManager.instance.GetBatchGroupData(batchGroupID).symbolFrameInstances.Count);
+			if (!batchGroupID.IsValid || batchGroupID == KAnimBatchManager.NO_BATCH)
 			{
 				Debug.LogError("Batch is not ready: " + base.name);
 			}
@@ -264,7 +260,7 @@ public class KBatchedAnimController : KAnimControllerBase, KAnimConverter.IAnimC
 		{
 			return;
 		}
-		if (!forceRebuild && (mode == KAnim.PlayMode.Paused || stopped || curAnim == null || (mode == KAnim.PlayMode.Once && curAnim != null && (base.elapsedTime > curAnim.totalTime || curAnim.totalTime <= 0f) && animQueue.Count == 0)))
+		if (!forceRebuild && (mode == KAnim.PlayMode.Paused || stopped || curAnim == null || (mode == KAnim.PlayMode.Once && curAnim != null && (elapsedTime > curAnim.totalTime || curAnim.totalTime <= 0f) && animQueue.Count == 0)))
 		{
 			SuspendUpdates(suspend: true);
 		}
@@ -272,23 +268,23 @@ public class KBatchedAnimController : KAnimControllerBase, KAnimConverter.IAnimC
 		{
 			if (visibilityType == VisibilityType.OffscreenUpdate && !stopped && mode != KAnim.PlayMode.Paused)
 			{
-				SetElapsedTime(base.elapsedTime + dt * playSpeed);
+				SetElapsedTime(elapsedTime + dt * playSpeed);
 			}
 			return;
 		}
-		curAnimFrameIdx = GetFrameIdx(base.elapsedTime, absolute: true);
+		curAnimFrameIdx = GetFrameIdx(elapsedTime, absolute: true);
 		if (eventManagerHandle.IsValid() && aem != null)
 		{
-			float elapsedTime = aem.GetElapsedTime(eventManagerHandle);
-			if ((int)((base.elapsedTime - elapsedTime) * 100f) != 0)
+			float num = aem.GetElapsedTime(eventManagerHandle);
+			if ((int)((elapsedTime - num) * 100f) != 0)
 			{
 				UpdateAnimEventSequenceTime();
 			}
 		}
-		UpdateFrame(base.elapsedTime);
+		UpdateFrame(elapsedTime);
 		if (!stopped && mode != KAnim.PlayMode.Paused)
 		{
-			SetElapsedTime(base.elapsedTime + dt * playSpeed);
+			SetElapsedTime(elapsedTime + dt * playSpeed);
 		}
 		forceRebuild = false;
 	}
@@ -428,8 +424,8 @@ public class KBatchedAnimController : KAnimControllerBase, KAnimConverter.IAnimC
 
 	public override Matrix2x3 GetTransformMatrix()
 	{
-		Vector3 v = base.PositionIncludingOffset;
-		v.z = 0f;
+		Vector3 vector = base.PositionIncludingOffset;
+		vector.z = 0f;
 		Vector2 scale = new Vector2(animScale * animWidth, (0f - animScale) * animHeight);
 		if (materialType == KAnimBatchGroup.MaterialType.UI)
 		{
@@ -457,7 +453,7 @@ public class KBatchedAnimController : KAnimControllerBase, KAnimConverter.IAnimC
 			{
 				num = 1f / scaler.scaleFactor;
 			}
-			v = (rt.localToWorldMatrix.MultiplyPoint(rt.pivot) + offset) * num - screenOffset;
+			vector = (rt.localToWorldMatrix.MultiplyPoint(rt.pivot) + offset) * num - screenOffset;
 			float num2 = animWidth * animScale;
 			float num3 = animHeight * animScale;
 			if (setScaleFromAnim && curAnim != null)
@@ -473,16 +469,16 @@ public class KBatchedAnimController : KAnimControllerBase, KAnimConverter.IAnimC
 			scale = new Vector3(rt.lossyScale.x * num2 * num, (0f - rt.lossyScale.y) * num3 * num, rt.lossyScale.z * num);
 			pivot = rt.pivot;
 		}
-		Matrix2x3 n = Matrix2x3.Scale(scale);
-		Matrix2x3 n2 = Matrix2x3.Scale(new Vector2(flipX ? (-1f) : 1f, flipY ? (-1f) : 1f));
+		Matrix2x3 matrix2x = Matrix2x3.Scale(scale);
+		Matrix2x3 matrix2x2 = Matrix2x3.Scale(new Vector2(flipX ? (-1f) : 1f, flipY ? (-1f) : 1f));
 		if (rotation != 0f)
 		{
-			Matrix2x3 n3 = Matrix2x3.Translate(-pivot);
-			Matrix2x3 n4 = Matrix2x3.Rotate(rotation * ((float)Math.PI / 180f));
-			Matrix2x3 n5 = Matrix2x3.Translate(pivot) * n4 * n3;
-			return Matrix2x3.TRS(v, base.transform.rotation, base.transform.localScale) * n5 * n * navMatrix * n2;
+			Matrix2x3 matrix2x3 = Matrix2x3.Translate(-pivot);
+			Matrix2x3 matrix2x4 = Matrix2x3.Rotate(rotation * ((float)Math.PI / 180f));
+			Matrix2x3 matrix2x5 = Matrix2x3.Translate(pivot) * matrix2x4 * matrix2x3;
+			return Matrix2x3.TRS(vector, base.transform.rotation, base.transform.localScale) * matrix2x5 * matrix2x * navMatrix * matrix2x2;
 		}
-		return Matrix2x3.TRS(v, base.transform.rotation, base.transform.localScale) * n * navMatrix * n2;
+		return Matrix2x3.TRS(vector, base.transform.rotation, base.transform.localScale) * matrix2x * navMatrix * matrix2x2;
 	}
 
 	public override Matrix4x4 GetSymbolTransform(HashedString symbol, out bool symbolVisible)

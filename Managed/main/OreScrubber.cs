@@ -48,13 +48,11 @@ public class OreScrubber : StateMachineComponent<OreScrubber.SMInstance>, IGameO
 
 		public Dictionary<Tag, float> GetNeededMass()
 		{
-			return new Dictionary<Tag, float>
+			return new Dictionary<Tag, float> { 
 			{
-				{
-					base.master.consumedElement.CreateTag(),
-					base.master.massConsumedPerUse
-				}
-			};
+				base.master.consumedElement.CreateTag(),
+				base.master.massConsumedPerUse
+			} };
 		}
 
 		public void OnCompleteWork(Worker worker)
@@ -216,8 +214,8 @@ public class OreScrubber : StateMachineComponent<OreScrubber.SMInstance>, IGameO
 	public List<Descriptor> RequirementDescriptors()
 	{
 		List<Descriptor> list = new List<Descriptor>();
-		string name = ElementLoader.FindElementByHash(consumedElement).name;
-		list.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.ELEMENTCONSUMEDPERUSE, name, GameUtil.GetFormattedMass(massConsumedPerUse)), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.ELEMENTCONSUMEDPERUSE, name, GameUtil.GetFormattedMass(massConsumedPerUse)), Descriptor.DescriptorType.Requirement));
+		string arg = ElementLoader.FindElementByHash(consumedElement).name;
+		list.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.ELEMENTCONSUMEDPERUSE, arg, GameUtil.GetFormattedMass(massConsumedPerUse)), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.ELEMENTCONSUMEDPERUSE, arg, GameUtil.GetFormattedMass(massConsumedPerUse)), Descriptor.DescriptorType.Requirement));
 		return list;
 	}
 

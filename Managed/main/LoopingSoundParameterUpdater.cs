@@ -16,11 +16,7 @@ public abstract class LoopingSoundParameterUpdater
 		public bool objectIsSelectedAndVisible;
 	}
 
-	public HashedString parameter
-	{
-		get;
-		private set;
-	}
+	public HashedString parameter { get; private set; }
 
 	public LoopingSoundParameterUpdater(HashedString parameter)
 	{

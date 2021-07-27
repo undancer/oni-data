@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using KSerialization;
 using UnityEngine;
 
@@ -51,10 +52,7 @@ public class RationBox : KMonoBehaviour, IUserControlledCapacity, IRender1000ms,
 
 	protected override void OnPrefabInit()
 	{
-		filteredStorage = new FilteredStorage(this, null, new Tag[1]
-		{
-			GameTags.Compostable
-		}, this, use_logic_meter: false, Db.Get().ChoreTypes.FoodFetch);
+		filteredStorage = new FilteredStorage(this, null, new Tag[1] { GameTags.Compostable }, this, use_logic_meter: false, Db.Get().ChoreTypes.FoodFetch);
 		Subscribe(-592767678, OnOperationalChangedDelegate);
 		Subscribe(-905833192, OnCopySettingsDelegate);
 		DiscoveredResources.Instance.Discover("FieldRation".ToTag(), GameTags.Edible);
@@ -96,6 +94,7 @@ public class RationBox : KMonoBehaviour, IUserControlledCapacity, IRender1000ms,
 		Rottable.SetStatusItems(this);
 	}
 
+	[SpecialName]
 	GameObject IRottable.get_gameObject()
 	{
 		return base.gameObject;

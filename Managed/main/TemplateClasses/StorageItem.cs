@@ -5,53 +5,21 @@ namespace TemplateClasses
 	[Serializable]
 	public class StorageItem
 	{
-		public string id
-		{
-			get;
-			set;
-		}
+		public string id { get; set; }
 
-		public SimHashes element
-		{
-			get;
-			set;
-		}
+		public SimHashes element { get; set; }
 
-		public float units
-		{
-			get;
-			set;
-		}
+		public float units { get; set; }
 
-		public bool isOre
-		{
-			get;
-			set;
-		}
+		public bool isOre { get; set; }
 
-		public float temperature
-		{
-			get;
-			set;
-		}
+		public float temperature { get; set; }
 
-		public string diseaseName
-		{
-			get;
-			set;
-		}
+		public string diseaseName { get; set; }
 
-		public int diseaseCount
-		{
-			get;
-			set;
-		}
+		public int diseaseCount { get; set; }
 
-		public Rottable rottable
-		{
-			get;
-			set;
-		}
+		public Rottable rottable { get; set; }
 
 		public StorageItem()
 		{

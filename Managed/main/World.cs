@@ -23,17 +23,9 @@ public class World : KMonoBehaviour
 
 	private List<int> changedCells = new List<int>();
 
-	public static World Instance
-	{
-		get;
-		private set;
-	}
+	public static World Instance { get; private set; }
 
-	public SubworldZoneRenderData zoneRenderData
-	{
-		get;
-		private set;
-	}
+	public SubworldZoneRenderData zoneRenderData { get; private set; }
 
 	protected override void OnPrefabInit()
 	{

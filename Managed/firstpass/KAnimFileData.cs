@@ -25,17 +25,9 @@ public class KAnimFileData
 
 	public int maxVisSymbolFrames;
 
-	public string name
-	{
-		get;
-		private set;
-	}
+	public string name { get; private set; }
 
-	public KAnimHashedString hashName
-	{
-		get;
-		private set;
-	}
+	public KAnimHashedString hashName { get; private set; }
 
 	public KAnim.Build build
 	{

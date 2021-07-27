@@ -14,10 +14,7 @@ public class LadderPOIConfig : IEntityConfig
 	{
 		int num = 1;
 		int num2 = 1;
-		GameObject gameObject = EntityTemplates.CreatePlacedEntity("PropLadder", STRINGS.BUILDINGS.PREFABS.PROPLADDER.NAME, STRINGS.BUILDINGS.PREFABS.PROPLADDER.DESC, 50f, width: num, height: num2, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("ladder_poi_kanim"), initialAnim: "off", sceneLayer: Grid.SceneLayer.Building, element: SimHashes.Creature, additionalTags: new List<Tag>
-		{
-			GameTags.Gravitas
-		});
+		GameObject gameObject = EntityTemplates.CreatePlacedEntity("PropLadder", STRINGS.BUILDINGS.PREFABS.PROPLADDER.NAME, STRINGS.BUILDINGS.PREFABS.PROPLADDER.DESC, 50f, width: num, height: num2, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("ladder_poi_kanim"), initialAnim: "off", sceneLayer: Grid.SceneLayer.Building, element: SimHashes.Creature, additionalTags: new List<Tag> { GameTags.Gravitas });
 		PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
 		component.SetElement(SimHashes.Polypropylene);
 		component.Temperature = 294.15f;
@@ -28,10 +25,7 @@ public class LadderPOIConfig : IEntityConfig
 		Object.DestroyImmediate(gameObject.AddOrGet<OccupyArea>());
 		OccupyArea occupyArea = gameObject.AddOrGet<OccupyArea>();
 		occupyArea.OccupiedCellsOffsets = EntityTemplates.GenerateOffsets(num, num2);
-		occupyArea.objectLayers = new ObjectLayer[1]
-		{
-			ObjectLayer.Building
-		};
+		occupyArea.objectLayers = new ObjectLayer[1] { ObjectLayer.Building };
 		gameObject.AddOrGet<Demolishable>();
 		return gameObject;
 	}

@@ -5,23 +5,11 @@ namespace ProcGen
 	[Serializable]
 	public class WeightedName : IWeighted
 	{
-		public string name
-		{
-			get;
-			private set;
-		}
+		public string name { get; private set; }
 
-		public string overrideName
-		{
-			get;
-			private set;
-		}
+		public string overrideName { get; private set; }
 
-		public float weight
-		{
-			get;
-			set;
-		}
+		public float weight { get; set; }
 
 		public WeightedName()
 		{

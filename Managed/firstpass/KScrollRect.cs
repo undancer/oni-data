@@ -64,11 +64,7 @@ public class KScrollRect : ScrollRect
 
 	private float autoScrollTargetVerticalPos;
 
-	public bool isDragging
-	{
-		get;
-		private set;
-	}
+	public bool isDragging { get; private set; }
 
 	protected override void Awake()
 	{

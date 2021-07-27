@@ -66,15 +66,7 @@ public class ManualGenerator : Workable, ISingleSliderControl, ISliderControl
 
 	private GeneratePowerSM.Instance smi;
 
-	private static readonly KAnimHashedString[] symbol_names = new KAnimHashedString[6]
-	{
-		"meter",
-		"meter_target",
-		"meter_fill",
-		"meter_frame",
-		"meter_light",
-		"meter_tubing"
-	};
+	private static readonly KAnimHashedString[] symbol_names = new KAnimHashedString[6] { "meter", "meter_target", "meter_fill", "meter_frame", "meter_light", "meter_tubing" };
 
 	private static readonly EventSystem.IntraObjectHandler<ManualGenerator> OnOperationalChangedDelegate = new EventSystem.IntraObjectHandler<ManualGenerator>(delegate(ManualGenerator component, object data)
 	{
@@ -158,10 +150,7 @@ public class ManualGenerator : Workable, ISingleSliderControl, ISliderControl
 		Building component2 = GetComponent<Building>();
 		powerCell = component2.GetPowerOutputCell();
 		OnActiveChanged(null);
-		overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_generatormanual_kanim")
-		};
+		overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_generatormanual_kanim") };
 		smi = new GeneratePowerSM.Instance(this);
 		smi.StartSM();
 		Game.Instance.energySim.AddManualGenerator(this);

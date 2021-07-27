@@ -122,8 +122,8 @@ public class GroupSelectorWidget : MonoBehaviour
 
 	private GameObject CreateItem(int idx, Action<int> on_click, GameObject parent, bool is_selected_item)
 	{
-		GameObject gameObject = Util.KInstantiateUI(itemTemplate, parent, force_active: true);
-		KButton component = gameObject.GetComponent<KButton>();
+		GameObject obj = Util.KInstantiateUI(itemTemplate, parent, force_active: true);
+		KButton component = obj.GetComponent<KButton>();
 		component.onClick += delegate
 		{
 			on_click(idx);
@@ -141,8 +141,8 @@ public class GroupSelectorWidget : MonoBehaviour
 				}
 			}
 		}
-		gameObject.GetComponent<ToolTip>().OnToolTip = () => itemCallbacks.getItemHoverText(widgetID, options[idx].userData, is_selected_item);
-		return gameObject;
+		obj.GetComponent<ToolTip>().OnToolTip = () => itemCallbacks.getItemHoverText(widgetID, options[idx].userData, is_selected_item);
+		return obj;
 	}
 
 	public bool IsSubPanelOpen()

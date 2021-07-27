@@ -3,11 +3,7 @@ using UnityEngine;
 
 public class CodexVideo : CodexWidget<CodexVideo>
 {
-	public string name
-	{
-		get;
-		set;
-	}
+	public string name { get; set; }
 
 	public string videoName
 	{
@@ -21,17 +17,9 @@ public class CodexVideo : CodexWidget<CodexVideo>
 		}
 	}
 
-	public string overlayName
-	{
-		get;
-		set;
-	}
+	public string overlayName { get; set; }
 
-	public List<string> overlayTexts
-	{
-		get;
-		set;
-	}
+	public List<string> overlayTexts { get; set; }
 
 	public void ConfigureVideo(VideoWidget videoWidget, string clipName, string overlayName = null, List<string> overlayTexts = null)
 	{

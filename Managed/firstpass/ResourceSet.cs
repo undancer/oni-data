@@ -5,10 +5,7 @@ using System.Reflection;
 [Serializable]
 public abstract class ResourceSet : Resource
 {
-	public abstract int Count
-	{
-		get;
-	}
+	public abstract int Count { get; }
 
 	public ResourceSet()
 	{
@@ -101,9 +98,9 @@ public class ResourceSet<T> : ResourceSet where T : Resource
 				return resource;
 			}
 		}
-		string str = typeof(T).ToString();
+		string text = typeof(T).ToString();
 		HashedString hashedString = id;
-		Debug.LogError("Could not find " + str + ": " + hashedString.ToString());
+		Debug.LogError("Could not find " + text + ": " + hashedString.ToString());
 		return null;
 	}
 

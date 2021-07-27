@@ -36,17 +36,9 @@ public class LogicDiseaseSensor : Switch, ISaveLoadable, IThresholdSwitch, ISim2
 		component.OnCopySettings(data);
 	});
 
-	private static readonly HashedString[] ON_ANIMS = new HashedString[2]
-	{
-		"on_pre",
-		"on_loop"
-	};
+	private static readonly HashedString[] ON_ANIMS = new HashedString[2] { "on_pre", "on_loop" };
 
-	private static readonly HashedString[] OFF_ANIMS = new HashedString[2]
-	{
-		"on_pst",
-		"off"
-	};
+	private static readonly HashedString[] OFF_ANIMS = new HashedString[2] { "on_pst", "off" };
 
 	private static readonly HashedString TINT_SYMBOL = "germs";
 
@@ -212,13 +204,13 @@ public class LogicDiseaseSensor : Switch, ISaveLoadable, IThresholdSwitch, ISim2
 			animController.Play(ON_ANIMS, KAnim.PlayMode.Loop);
 			int i = Grid.PosToCell(this);
 			byte b = Grid.DiseaseIdx[i];
-			Color32 c = Color.white;
+			Color32 color = Color.white;
 			if (b != byte.MaxValue)
 			{
 				Disease disease = Db.Get().Diseases[b];
-				c = GlobalAssets.Instance.colorSet.GetColorByName(disease.overlayColourName);
+				color = GlobalAssets.Instance.colorSet.GetColorByName(disease.overlayColourName);
 			}
-			animController.SetSymbolTint(TINT_SYMBOL, c);
+			animController.SetSymbolTint(TINT_SYMBOL, color);
 		}
 		else
 		{

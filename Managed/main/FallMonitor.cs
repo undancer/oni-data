@@ -117,10 +117,7 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 		{
 			if (shouldPlayEmotes && Random.Range(0, 9) == 8)
 			{
-				new EmoteChore(base.master.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_react_floor_missing_kanim", new HashedString[1]
-				{
-					"react"
-				}, KAnim.PlayMode.Once, flipRecoverEmote);
+				new EmoteChore(base.master.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_react_floor_missing_kanim", new HashedString[1] { "react" }, KAnim.PlayMode.Once, flipRecoverEmote);
 			}
 		}
 
@@ -236,12 +233,7 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 			int backCell = GetComponent<Facing>().GetBackCell();
 			int num2 = Grid.CellAbove(backCell);
 			int num3 = Grid.CellBelow(backCell);
-			int[] array = new int[3]
-			{
-				backCell,
-				num2,
-				num3
-			};
+			int[] array = new int[3] { backCell, num2, num3 };
 			foreach (int cell in array)
 			{
 				if (IsValidNavCell(cell))

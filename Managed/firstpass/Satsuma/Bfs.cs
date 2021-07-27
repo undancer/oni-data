@@ -12,11 +12,7 @@ namespace Satsuma
 
 		private readonly Queue<Node> queue;
 
-		public IGraph Graph
-		{
-			get;
-			private set;
-		}
+		public IGraph Graph { get; private set; }
 
 		public IEnumerable<Node> ReachedNodes => parentArc.Keys;
 

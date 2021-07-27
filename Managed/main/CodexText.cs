@@ -3,17 +3,9 @@ using UnityEngine;
 
 public class CodexText : CodexWidget<CodexText>
 {
-	public string text
-	{
-		get;
-		set;
-	}
+	public string text { get; set; }
 
-	public CodexTextStyle style
-	{
-		get;
-		set;
-	}
+	public CodexTextStyle style { get; set; }
 
 	public string stringKey
 	{

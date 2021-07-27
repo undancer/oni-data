@@ -37,10 +37,7 @@ public class SupermaterialRefineryConfig : IBuildingConfig
 		go.AddOrGet<CopyBuildingSettings>();
 		ComplexFabricatorWorkable complexFabricatorWorkable = go.AddOrGet<ComplexFabricatorWorkable>();
 		BuildingTemplates.CreateComplexFabricatorStorage(go, complexFabricator);
-		complexFabricatorWorkable.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_supermaterial_refinery_kanim")
-		};
+		complexFabricatorWorkable.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_supermaterial_refinery_kanim") };
 		Prioritizable.AddRef(go);
 		float num = 0.01f;
 		float num2 = (1f - num) * 0.5f;
@@ -59,10 +56,7 @@ public class SupermaterialRefineryConfig : IBuildingConfig
 			time = 80f,
 			description = STRINGS.BUILDINGS.PREFABS.SUPERMATERIALREFINERY.SUPERCOOLANT_RECIPE_DESCRIPTION,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				TagManager.Create("SupermaterialRefinery")
-			}
+			fabricators = new List<Tag> { TagManager.Create("SupermaterialRefinery") }
 		};
 		if (DlcManager.IsExpansion1Active())
 		{
@@ -83,10 +77,7 @@ public class SupermaterialRefineryConfig : IBuildingConfig
 				time = 80f,
 				description = STRINGS.BUILDINGS.PREFABS.SUPERMATERIALREFINERY.FULLERENE_RECIPE_DESCRIPTION,
 				nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-				fabricators = new List<Tag>
-				{
-					TagManager.Create("SupermaterialRefinery")
-				}
+				fabricators = new List<Tag> { TagManager.Create("SupermaterialRefinery") }
 			};
 		}
 		float num5 = 0.15f;
@@ -107,10 +98,7 @@ public class SupermaterialRefineryConfig : IBuildingConfig
 			time = 80f,
 			description = STRINGS.BUILDINGS.PREFABS.SUPERMATERIALREFINERY.SUPERINSULATOR_RECIPE_DESCRIPTION,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				TagManager.Create("SupermaterialRefinery")
-			}
+			fabricators = new List<Tag> { TagManager.Create("SupermaterialRefinery") }
 		};
 		float num8 = 0.05f;
 		ComplexRecipe.RecipeElement[] array7 = new ComplexRecipe.RecipeElement[2]
@@ -127,10 +115,7 @@ public class SupermaterialRefineryConfig : IBuildingConfig
 			time = 80f,
 			description = STRINGS.BUILDINGS.PREFABS.SUPERMATERIALREFINERY.TEMPCONDUCTORSOLID_RECIPE_DESCRIPTION,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				TagManager.Create("SupermaterialRefinery")
-			}
+			fabricators = new List<Tag> { TagManager.Create("SupermaterialRefinery") }
 		};
 		float num9 = 0.35f;
 		ComplexRecipe.RecipeElement[] array9 = new ComplexRecipe.RecipeElement[2]
@@ -147,10 +132,7 @@ public class SupermaterialRefineryConfig : IBuildingConfig
 			time = 80f,
 			description = STRINGS.BUILDINGS.PREFABS.SUPERMATERIALREFINERY.VISCOGEL_RECIPE_DESCRIPTION,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				TagManager.Create("SupermaterialRefinery")
-			}
+			fabricators = new List<Tag> { TagManager.Create("SupermaterialRefinery") }
 		};
 	}
 

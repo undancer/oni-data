@@ -101,11 +101,7 @@ public class DetailsScreen : KTabMenu
 
 	private List<KeyValuePair<GameObject, int>> sortedSideScreens = new List<KeyValuePair<GameObject, int>>();
 
-	public GameObject target
-	{
-		get;
-		private set;
-	}
+	public GameObject target { get; private set; }
 
 	public static void DestroyInstance()
 	{
@@ -222,9 +218,9 @@ public class DetailsScreen : KTabMenu
 		}
 		bool result = false;
 		KPrefabID component = go.GetComponent<KPrefabID>();
-		foreach (Tag b in excluded_tags)
+		foreach (Tag tag in excluded_tags)
 		{
-			if (component.PrefabTag == b)
+			if (component.PrefabTag == tag)
 			{
 				result = true;
 				break;
@@ -577,18 +573,18 @@ public class DetailsScreen : KTabMenu
 		{
 			TabTitle.SetTitle(target.GetProperName());
 			MinionIdentity minionIdentity = null;
-			UserNameable x = null;
+			UserNameable userNameable = null;
 			if (target != null)
 			{
 				minionIdentity = target.gameObject.GetComponent<MinionIdentity>();
-				x = target.gameObject.GetComponent<UserNameable>();
+				userNameable = target.gameObject.GetComponent<UserNameable>();
 			}
 			if (minionIdentity != null)
 			{
 				TabTitle.SetSubText(minionIdentity.GetComponent<MinionResume>().GetSkillsSubtitle());
 				TabTitle.SetUserEditable(editable: true);
 			}
-			else if (x != null)
+			else if (userNameable != null)
 			{
 				TabTitle.SetSubText("");
 				TabTitle.SetUserEditable(editable: true);

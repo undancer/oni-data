@@ -148,16 +148,16 @@ public class OfflineWorldGen : KMonoBehaviour
 			mainText.text = UI.WORLDGEN.CHOOSEWORLDSIZE.ToString();
 			for (int i = 0; i < this.validDimensions.Length; i++)
 			{
-				GameObject gameObject = UnityEngine.Object.Instantiate(buttonPrefab);
-				gameObject.SetActive(value: true);
-				RectTransform component = gameObject.GetComponent<RectTransform>();
+				GameObject obj = UnityEngine.Object.Instantiate(buttonPrefab);
+				obj.SetActive(value: true);
+				RectTransform component = obj.GetComponent<RectTransform>();
 				component.SetParent(buttonRoot);
 				component.localScale = Vector3.one;
-				LocText componentInChildren = gameObject.GetComponentInChildren<LocText>();
+				LocText componentInChildren = obj.GetComponentInChildren<LocText>();
 				ValidDimensions validDimensions = this.validDimensions[i];
 				componentInChildren.text = validDimensions.name.ToString();
 				int idx = i;
-				gameObject.GetComponent<KButton>().onClick += delegate
+				obj.GetComponent<KButton>().onClick += delegate
 				{
 					DoWorldGen(idx);
 					ToggleGenerationUI();

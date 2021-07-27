@@ -24,11 +24,7 @@ public class CircuitSwitch : Switch, IPlayerControlledToggle, ISim33ms
 
 	public string SideScreenTitleKey => "STRINGS.BUILDINGS.PREFABS.SWITCH.SIDESCREEN_TITLE";
 
-	public bool ToggleRequested
-	{
-		get;
-		set;
-	}
+	public bool ToggleRequested { get; set; }
 
 	protected override void OnPrefabInit()
 	{
@@ -59,10 +55,10 @@ public class CircuitSwitch : Switch, IPlayerControlledToggle, ISim33ms
 		{
 			UnsubscribeFromWire(attachedWire);
 		}
-		bool switchedOn = base.switchedOn;
-		base.switchedOn = true;
+		bool flag = switchedOn;
+		switchedOn = true;
 		UpdateCircuit(should_update_anim: false);
-		base.switchedOn = switchedOn;
+		switchedOn = flag;
 	}
 
 	private void OnCopySettings(object data)

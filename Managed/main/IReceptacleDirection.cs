@@ -1,7 +1,4 @@
 public interface IReceptacleDirection
 {
-	SingleEntityReceptacle.ReceptacleDirection Direction
-	{
-		get;
-	}
+	SingleEntityReceptacle.ReceptacleDirection Direction { get; }
 }

@@ -224,9 +224,9 @@ public class EggProtectionMonitor : GameStateMachine<EggProtectionMonitor, EggPr
 			{
 				return false;
 			}
-			GameObject x = FindThreat();
-			SetMainThreat(x);
-			return x != null;
+			GameObject gameObject = FindThreat();
+			SetMainThreat(gameObject);
+			return gameObject != null;
 		}
 
 		public GameObject FindThreat()

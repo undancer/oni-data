@@ -580,14 +580,14 @@ public static class OffsetGroups
 		}
 		HashSet<CellOffset> hashSet = new HashSet<CellOffset>();
 		CellOffset[] array = area_offsets;
-		foreach (CellOffset a in array)
+		foreach (CellOffset cellOffset in array)
 		{
 			CellOffset[][] array2 = table;
 			foreach (CellOffset[] array3 in array2)
 			{
 				if (filter == null || Array.IndexOf(filter, array3[0]) == -1)
 				{
-					CellOffset item = a + array3[0];
+					CellOffset item = cellOffset + array3[0];
 					hashSet.Add(item);
 				}
 			}
@@ -595,24 +595,24 @@ public static class OffsetGroups
 		List<CellOffset[]> list = new List<CellOffset[]>();
 		foreach (CellOffset item2 in hashSet)
 		{
-			CellOffset b = area_offsets[0];
+			CellOffset cellOffset2 = area_offsets[0];
 			array = area_offsets;
-			foreach (CellOffset cellOffset in array)
+			foreach (CellOffset cellOffset3 in array)
 			{
-				if ((item2 - b).GetOffsetDistance() > (item2 - cellOffset).GetOffsetDistance())
+				if ((item2 - cellOffset2).GetOffsetDistance() > (item2 - cellOffset3).GetOffsetDistance())
 				{
-					b = cellOffset;
+					cellOffset2 = cellOffset3;
 				}
 			}
 			CellOffset[][] array2 = table;
 			foreach (CellOffset[] array4 in array2)
 			{
-				if ((filter == null || Array.IndexOf(filter, array4[0]) == -1) && array4[0] + b == item2)
+				if ((filter == null || Array.IndexOf(filter, array4[0]) == -1) && array4[0] + cellOffset2 == item2)
 				{
 					CellOffset[] array5 = new CellOffset[array4.Length];
 					for (int k = 0; k < array4.Length; k++)
 					{
-						array5[k] = array4[k] + b;
+						array5[k] = array4[k] + cellOffset2;
 					}
 					list.Add(array5);
 				}

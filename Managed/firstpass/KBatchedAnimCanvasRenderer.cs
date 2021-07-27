@@ -27,11 +27,7 @@ public class KBatchedAnimCanvasRenderer : MonoBehaviour, IMaskable
 
 	private Vector4 _ClipRect = new Vector4(0f, 0f, 0f, 1f);
 
-	public CanvasRenderer canvass
-	{
-		get;
-		private set;
-	}
+	public CanvasRenderer canvass { get; private set; }
 
 	public CompareFunction compare
 	{

@@ -259,9 +259,9 @@ public class CropTendingStates : GameStateMachine<CropTendingStates, CropTending
 		if (component != null)
 		{
 			string[] array = hide_symbols_after_pre;
-			foreach (string str in array)
+			foreach (string text in array)
 			{
-				component.SetSymbolVisiblity(str, isVisible);
+				component.SetSymbolVisiblity(text, isVisible);
 			}
 		}
 	}

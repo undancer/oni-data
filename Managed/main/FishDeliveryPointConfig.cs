@@ -28,10 +28,7 @@ public class FishDeliveryPointConfig : IBuildingConfig
 			new HashedString("working_pre")
 		};
 		storage.workAnimPlayMode = KAnim.PlayMode.Once;
-		storage.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_fishrelocator_kanim")
-		};
+		storage.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_fishrelocator_kanim") };
 		storage.synchronizeAnims = false;
 		storage.useGunForDelivery = false;
 		storage.allowSettingOnlyFetchMarkedItems = false;

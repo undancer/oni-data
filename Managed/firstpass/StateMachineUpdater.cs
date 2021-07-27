@@ -15,17 +15,9 @@ public class StateMachineUpdater : Singleton<StateMachineUpdater>
 
 		private int nextBucketFrame;
 
-		public float secondsPerSubTick
-		{
-			get;
-			private set;
-		}
+		public float secondsPerSubTick { get; private set; }
 
-		public UpdateRate updateRate
-		{
-			get;
-			private set;
-		}
+		public UpdateRate updateRate { get; private set; }
 
 		public int subTickCount => bucketFrames.Count;
 
@@ -94,16 +86,9 @@ public class StateMachineUpdater : Singleton<StateMachineUpdater>
 	{
 		public int frame;
 
-		public string name
-		{
-			get;
-			private set;
-		}
+		public string name { get; private set; }
 
-		public abstract int count
-		{
-			get;
-		}
+		public abstract int count { get; }
 
 		public BaseUpdateBucket(string name)
 		{

@@ -110,11 +110,11 @@ public class StateMachineSerializer
 					int position = entryData.Position;
 					string text = entryData.ReadKleiString();
 					text = text.Replace("Version=2.0.0.0", "Version=4.0.0.0");
-					string b = entryData.ReadKleiString();
+					string text2 = entryData.ReadKleiString();
 					StateMachine.Parameter.Context[] array = parameterContexts;
 					foreach (StateMachine.Parameter.Context context in array)
 					{
-						if (context.parameter.name == b && (version > 10 || !(context.parameter.GetType().Name == "TargetParameter")) && context.GetType().FullName == text)
+						if (context.parameter.name == text2 && (version > 10 || !(context.parameter.GetType().Name == "TargetParameter")) && context.GetType().FullName == text)
 						{
 							context.Deserialize(entryData, smi);
 							break;
@@ -186,12 +186,12 @@ public class StateMachineSerializer
 			string typeName = reader.ReadKleiString();
 			string text = (DoesVersionHaveTypeSuffix(serializerVersion) ? reader.ReadKleiString() : null);
 			string text2 = reader.ReadKleiString();
-			Type left = Type.GetType(typeName);
-			if (left == null)
+			Type type = Type.GetType(typeName);
+			if (type == null)
 			{
 				return null;
 			}
-			return new OldEntryV11(num, num2, left, text, text2);
+			return new OldEntryV11(num, num2, type, text, text2);
 		}
 
 		private static List<OldEntryV11> ReadEntries(IReader reader, int serializerVersion)

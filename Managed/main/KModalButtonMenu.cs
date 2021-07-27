@@ -90,10 +90,10 @@ public class KModalButtonMenu : KButtonMenu
 
 	protected GameObject ActivateChildScreen(GameObject screenPrefab)
 	{
-		GameObject gameObject = (childDialog = Util.KInstantiateUI(screenPrefab, base.transform.parent.gameObject));
-		gameObject.Subscribe(476357528, Unhide);
+		GameObject result = (childDialog = Util.KInstantiateUI(screenPrefab, base.transform.parent.gameObject));
+		result.Subscribe(476357528, Unhide);
 		Hide();
-		return gameObject;
+		return result;
 	}
 
 	private void Hide()

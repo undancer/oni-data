@@ -15,17 +15,9 @@ namespace Satsuma
 
 		private ArcFilter arcFilter;
 
-		protected IGraph Graph
-		{
-			get;
-			private set;
-		}
+		protected IGraph Graph { get; private set; }
 
-		protected int Level
-		{
-			get;
-			private set;
-		}
+		protected int Level { get; private set; }
 
 		public void Run(IGraph graph, IEnumerable<Node> roots = null)
 		{

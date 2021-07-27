@@ -32,10 +32,7 @@ public class AntihistamineConfig : IEntityConfig
 			time = 100f,
 			description = ITEMS.PILLS.ANTIHISTAMINE.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"Apothecary"
-			},
+			fabricators = new List<Tag> { "Apothecary" },
 			sortOrder = 10
 		};
 		return gameObject;

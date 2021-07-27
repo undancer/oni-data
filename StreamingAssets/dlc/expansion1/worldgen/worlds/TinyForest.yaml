@@ -17,6 +17,7 @@ defaultsOverrides:
     OverworldDensityMin: 30
     OverworldDensityMax: 30
     OverworldAvoidRadius: 30
+    OverworldSampleBehaviour: PoissonDisk
   startingWorldElements: [] # remove the algae check
   
 startSubworldName: subworlds/forest/ForestStart

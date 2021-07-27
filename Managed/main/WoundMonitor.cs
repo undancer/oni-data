@@ -42,21 +42,21 @@ public class WoundMonitor : GameStateMachine<WoundMonitor, WoundMonitor.Instance
 			KAnim.PlayMode playMode = kBatchedAnimController.PlayMode;
 			if (text == null || (!text.Contains("hit") && !text.Contains("2_0") && !text.Contains("2_1") && !text.Contains("2_-1") && !text.Contains("2_-2") && !text.Contains("1_-1") && !text.Contains("1_-2") && !text.Contains("1_1") && !text.Contains("1_2") && !text.Contains("breathe_") && !text.Contains("death_") && !text.Contains("impact")))
 			{
-				string s = "hit";
+				string text2 = "hit";
 				AttackChore.StatesInstance sMI = base.gameObject.GetSMI<AttackChore.StatesInstance>();
 				if (sMI != null && sMI.GetCurrentState() == sMI.sm.attack)
 				{
-					s = sMI.master.GetHitAnim();
+					text2 = sMI.master.GetHitAnim();
 				}
 				if (worker.GetComponent<Navigator>().CurrentNavType == NavType.Ladder)
 				{
-					s = "hit_ladder";
+					text2 = "hit_ladder";
 				}
 				else if (worker.GetComponent<Navigator>().CurrentNavType == NavType.Pole)
 				{
-					s = "hit_pole";
+					text2 = "hit_pole";
 				}
-				kBatchedAnimController.Play(s);
+				kBatchedAnimController.Play(text2);
 				if (text != null)
 				{
 					kBatchedAnimController.Queue(text, playMode);
@@ -75,8 +75,8 @@ public class WoundMonitor : GameStateMachine<WoundMonitor, WoundMonitor.Instance
 			KAnim.PlayMode playMode = kBatchedAnimController.PlayMode;
 			if (text == null || (!text.Contains("impact") && !text.Contains("2_0") && !text.Contains("2_1") && !text.Contains("2_-1") && !text.Contains("2_-2") && !text.Contains("1_-1") && !text.Contains("1_-2") && !text.Contains("1_1") && !text.Contains("1_2") && !text.Contains("breathe_") && !text.Contains("death_")))
 			{
-				string s = "impact";
-				kBatchedAnimController.Play(s);
+				string text2 = "impact";
+				kBatchedAnimController.Play(text2);
 				if (text != null)
 				{
 					kBatchedAnimController.Queue(text, playMode);

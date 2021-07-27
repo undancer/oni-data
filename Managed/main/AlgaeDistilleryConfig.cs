@@ -42,10 +42,7 @@ public class AlgaeDistilleryConfig : IBuildingConfig
 		algaeDistillery.emitMass = 30f;
 		ConduitDispenser conduitDispenser = go.AddOrGet<ConduitDispenser>();
 		conduitDispenser.conduitType = ConduitType.Liquid;
-		conduitDispenser.elementFilter = new SimHashes[1]
-		{
-			SimHashes.DirtyWater
-		};
+		conduitDispenser.elementFilter = new SimHashes[1] { SimHashes.DirtyWater };
 		Storage storage = go.AddOrGet<Storage>();
 		storage.capacityKg = 1000f;
 		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);

@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using KSerialization;
 using UnityEngine;
 
@@ -21,11 +22,7 @@ public class KMonoBehaviour : MonoBehaviour, IStateMachineTarget, ISaveLoadable,
 
 	protected bool simRenderLoadBalance;
 
-	public bool isSpawned
-	{
-		get;
-		private set;
-	}
+	public bool isSpawned { get; private set; }
 
 	public new Transform transform => base.transform;
 
@@ -305,11 +302,13 @@ public class KMonoBehaviour : MonoBehaviour, IStateMachineTarget, ISaveLoadable,
 		return GetComponent<ComponentType>();
 	}
 
+	[SpecialName]
 	GameObject IStateMachineTarget.get_gameObject()
 	{
 		return base.gameObject;
 	}
 
+	[SpecialName]
 	string IStateMachineTarget.get_name()
 	{
 		return base.name;

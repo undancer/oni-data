@@ -34,11 +34,7 @@ public class SimAndRenderScheduler
 
 	public class BaseUpdaterManager
 	{
-		public UpdateRate updateRate
-		{
-			get;
-			private set;
-		}
+		public UpdateRate updateRate { get; private set; }
 
 		protected BaseUpdaterManager(UpdateRate update_rate)
 		{

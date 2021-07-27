@@ -103,13 +103,7 @@ namespace Database
 					SimHashes.Obsidian,
 					new MathUtil.MinMax(100f, 200f)
 				}
-			}, new Dictionary<string, int>
-			{
-				{
-					"HatchMetal",
-					3
-				}
-			}, Db.Get().ArtifactDropRates.Mediocre, 128000000, 127988000, 12));
+			}, new Dictionary<string, int> { { "HatchMetal", 3 } }, Db.Get().ArtifactDropRates.Mediocre, 128000000, 127988000, 12));
 			RockyAsteroid = Add(new SpaceDestinationType("RockyAsteroid", parent, UI.SPACEDESTINATIONS.ASTEROIDS.ROCKYASTEROID.NAME, UI.SPACEDESTINATIONS.ASTEROIDS.ROCKYASTEROID.DESCRIPTION, 32, "new_12", new Dictionary<SimHashes, MathUtil.MinMax>
 			{
 				{
@@ -124,13 +118,7 @@ namespace Database
 					SimHashes.IgneousRock,
 					new MathUtil.MinMax(100f, 200f)
 				}
-			}, new Dictionary<string, int>
-			{
-				{
-					"HatchHard",
-					3
-				}
-			}, Db.Get().ArtifactDropRates.Good, 128000000, 127988000, 18));
+			}, new Dictionary<string, int> { { "HatchHard", 3 } }, Db.Get().ArtifactDropRates.Good, 128000000, 127988000, 18));
 			CarbonaceousAsteroid = Add(new SpaceDestinationType("CarbonaceousAsteroid", parent, UI.SPACEDESTINATIONS.ASTEROIDS.CARBONACEOUSASTEROID.NAME, UI.SPACEDESTINATIONS.ASTEROIDS.CARBONACEOUSASTEROID.DESCRIPTION, 32, "new_08", new Dictionary<SimHashes, MathUtil.MinMax>
 			{
 				{
@@ -162,14 +150,8 @@ namespace Database
 				}
 			}, new Dictionary<string, int>
 			{
-				{
-					"ColdBreatherSeed",
-					3
-				},
-				{
-					"ColdWheatSeed",
-					4
-				}
+				{ "ColdBreatherSeed", 3 },
+				{ "ColdWheatSeed", 4 }
 			}, Db.Get().ArtifactDropRates.Great, 256000000, 255982000, 24));
 			OrganicDwarf = Add(new SpaceDestinationType("OrganicDwarf", parent, UI.SPACEDESTINATIONS.DWARFPLANETS.ORGANICDWARF.NAME, UI.SPACEDESTINATIONS.DWARFPLANETS.ORGANICDWARF.DESCRIPTION, 64, "organicAsteroid", new Dictionary<SimHashes, MathUtil.MinMax>
 			{
@@ -187,14 +169,8 @@ namespace Database
 				}
 			}, new Dictionary<string, int>
 			{
-				{
-					"Moo",
-					1
-				},
-				{
-					"GasGrassSeed",
-					4
-				}
+				{ "Moo", 1 },
+				{ "GasGrassSeed", 4 }
 			}, Db.Get().ArtifactDropRates.Great, 256000000, 255982000, 30));
 			DustyMoon = Add(new SpaceDestinationType("DustyMoon", parent, UI.SPACEDESTINATIONS.DWARFPLANETS.DUSTYDWARF.NAME, UI.SPACEDESTINATIONS.DWARFPLANETS.DUSTYDWARF.DESCRIPTION, 64, "new_05", new Dictionary<SimHashes, MathUtil.MinMax>
 			{
@@ -231,14 +207,8 @@ namespace Database
 				}
 			}, new Dictionary<string, int>
 			{
-				{
-					"PrickleFlowerSeed",
-					4
-				},
-				{
-					"PacuEgg",
-					4
-				}
+				{ "PrickleFlowerSeed", 4 },
+				{ "PacuEgg", 4 }
 			}, Db.Get().ArtifactDropRates.Amazing, 384000000, 383980000, 54));
 			VolcanoPlanet = Add(new SpaceDestinationType("VolcanoPlanet", parent, UI.SPACEDESTINATIONS.PLANETS.VOLCANOPLANET.NAME, UI.SPACEDESTINATIONS.PLANETS.VOLCANOPLANET.DESCRIPTION, 96, "planet", new Dictionary<SimHashes, MathUtil.MinMax>
 			{
@@ -299,13 +269,7 @@ namespace Database
 					SimHashes.Brine,
 					new MathUtil.MinMax(100f, 200f)
 				}
-			}, new Dictionary<string, int>
-			{
-				{
-					"SaltPlantSeed",
-					3
-				}
-			}, Db.Get().ArtifactDropRates.Bad, 256000000, 255982000, 30));
+			}, new Dictionary<string, int> { { "SaltPlantSeed", 3 } }, Db.Get().ArtifactDropRates.Bad, 256000000, 255982000, 30));
 			RustPlanet = Add(new SpaceDestinationType("RustPlanet", parent, UI.SPACEDESTINATIONS.PLANETS.RUSTPLANET.NAME, UI.SPACEDESTINATIONS.PLANETS.RUSTPLANET.DESCRIPTION, 96, "new_06", new Dictionary<SimHashes, MathUtil.MinMax>
 			{
 				{
@@ -329,14 +293,8 @@ namespace Database
 				}
 			}, new Dictionary<string, int>
 			{
-				{
-					"Squirrel",
-					1
-				},
-				{
-					"ForestTreeSeed",
-					4
-				}
+				{ "Squirrel", 1 },
+				{ "ForestTreeSeed", 4 }
 			}, Db.Get().ArtifactDropRates.Mediocre, 384000000, 383980000, 24));
 			RedDwarf = Add(new SpaceDestinationType("RedDwarf", parent, UI.SPACEDESTINATIONS.DWARFPLANETS.REDDWARF.NAME, UI.SPACEDESTINATIONS.DWARFPLANETS.REDDWARF.DESCRIPTION, 64, "sun", new Dictionary<SimHashes, MathUtil.MinMax>
 			{
@@ -434,20 +392,12 @@ namespace Database
 					SimHashes.CrushedRock,
 					new MathUtil.MinMax(100f, 200f)
 				}
-			}, new Dictionary<string, int>
+			}, new Dictionary<string, int> { { "Crab", 1 } }, Db.Get().ArtifactDropRates.Bad, 384000000, 383980000, 60));
+			Wormhole = Add(new SpaceDestinationType("Wormhole", parent, UI.SPACEDESTINATIONS.WORMHOLE.NAME, UI.SPACEDESTINATIONS.WORMHOLE.DESCRIPTION, 96, "new_03", new Dictionary<SimHashes, MathUtil.MinMax> { 
 			{
-				{
-					"Crab",
-					1
-				}
-			}, Db.Get().ArtifactDropRates.Bad, 384000000, 383980000, 60));
-			Wormhole = Add(new SpaceDestinationType("Wormhole", parent, UI.SPACEDESTINATIONS.WORMHOLE.NAME, UI.SPACEDESTINATIONS.WORMHOLE.DESCRIPTION, 96, "new_03", new Dictionary<SimHashes, MathUtil.MinMax>
-			{
-				{
-					SimHashes.Vacuum,
-					new MathUtil.MinMax(100f, 200f)
-				}
-			}, null, Db.Get().ArtifactDropRates.Perfect, 0, 0, 0));
+				SimHashes.Vacuum,
+				new MathUtil.MinMax(100f, 200f)
+			} }, null, Db.Get().ArtifactDropRates.Perfect, 0, 0, 0));
 			Earth = Add(new SpaceDestinationType("Earth", parent, UI.SPACEDESTINATIONS.PLANETS.SHATTEREDPLANET.NAME, UI.SPACEDESTINATIONS.PLANETS.SHATTEREDPLANET.DESCRIPTION, 96, "earth", new Dictionary<SimHashes, MathUtil.MinMax>(), null, Db.Get().ArtifactDropRates.None, 0, 0, 0, visitable: false));
 		}
 	}

@@ -66,11 +66,7 @@ public class StatusItemGroup
 
 	private Vector3 offset = new Vector3(0f, 0f, 0f);
 
-	public GameObject gameObject
-	{
-		get;
-		private set;
-	}
+	public GameObject gameObject { get; private set; }
 
 	public IEnumerator<Entry> GetEnumerator()
 	{

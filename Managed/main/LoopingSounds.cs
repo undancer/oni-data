@@ -49,8 +49,8 @@ public class LoopingSounds : KMonoBehaviour
 			LoopingSoundEvent loopingSoundEvent = default(LoopingSoundEvent);
 			loopingSoundEvent.asset = asset;
 			LoopingSoundEvent item = loopingSoundEvent;
-			GameObject gameObject = base.gameObject;
-			objectIsSelectedAndVisible = SoundEvent.ObjectIsSelectedAndVisible(gameObject);
+			GameObject go = base.gameObject;
+			objectIsSelectedAndVisible = SoundEvent.ObjectIsSelectedAndVisible(go);
 			if (objectIsSelectedAndVisible)
 			{
 				sound_pos = SoundEvent.AudioHighlightListenerPosition(base.transform.GetPosition());
@@ -79,8 +79,8 @@ public class LoopingSounds : KMonoBehaviour
 			LoopingSoundEvent loopingSoundEvent = default(LoopingSoundEvent);
 			loopingSoundEvent.asset = asset;
 			LoopingSoundEvent item = loopingSoundEvent;
-			GameObject gameObject = base.gameObject;
-			objectIsSelectedAndVisible = SoundEvent.ObjectIsSelectedAndVisible(gameObject);
+			GameObject go = base.gameObject;
+			objectIsSelectedAndVisible = SoundEvent.ObjectIsSelectedAndVisible(go);
 			if (objectIsSelectedAndVisible)
 			{
 				sound_pos = SoundEvent.AudioHighlightListenerPosition(base.transform.GetPosition());
@@ -109,8 +109,8 @@ public class LoopingSounds : KMonoBehaviour
 			LoopingSoundEvent loopingSoundEvent = default(LoopingSoundEvent);
 			loopingSoundEvent.asset = asset;
 			LoopingSoundEvent item = loopingSoundEvent;
-			GameObject gameObject = base.gameObject;
-			objectIsSelectedAndVisible = SoundEvent.ObjectIsSelectedAndVisible(gameObject);
+			GameObject go = base.gameObject;
+			objectIsSelectedAndVisible = SoundEvent.ObjectIsSelectedAndVisible(go);
 			if (objectIsSelectedAndVisible)
 			{
 				sound_pos = SoundEvent.AudioHighlightListenerPosition(base.transform.GetPosition());
@@ -224,15 +224,15 @@ public class LoopingSounds : KMonoBehaviour
 	{
 		if (AudioDebug.Get().debugGameEventSounds)
 		{
-			HashedString name = ev.Name;
-			Debug.Log("GameSoundEvent: " + name.ToString());
+			HashedString hashedString = ev.Name;
+			Debug.Log("GameSoundEvent: " + hashedString.ToString());
 		}
 		List<AnimEvent> events = GameAudioSheets.Get().GetEvents(ev.Name);
 		if (events == null)
 		{
 			return;
 		}
-		Vector2 v = base.transform.GetPosition();
+		Vector2 vector = base.transform.GetPosition();
 		for (int i = 0; i < events.Count; i++)
 		{
 			SoundEvent soundEvent = events[i] as SoundEvent;
@@ -240,7 +240,7 @@ public class LoopingSounds : KMonoBehaviour
 			{
 				break;
 			}
-			if (!CameraController.Instance.IsAudibleSound(v, soundEvent.sound))
+			if (!CameraController.Instance.IsAudibleSound(vector, soundEvent.sound))
 			{
 				continue;
 			}
@@ -253,12 +253,12 @@ public class LoopingSounds : KMonoBehaviour
 			{
 				if (Time.time - value > soundEvent.minInterval)
 				{
-					SoundEvent.PlayOneShot(soundEvent.sound, v);
+					SoundEvent.PlayOneShot(soundEvent.sound, vector);
 				}
 			}
 			else
 			{
-				SoundEvent.PlayOneShot(soundEvent.sound, v);
+				SoundEvent.PlayOneShot(soundEvent.sound, vector);
 			}
 			lastTimePlayed[soundEvent.soundHash] = Time.time;
 		}

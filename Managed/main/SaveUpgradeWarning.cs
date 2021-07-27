@@ -29,15 +29,7 @@ public class SaveUpgradeWarning : KMonoBehaviour
 	[MyCmpReq]
 	private Game game;
 
-	private static string[] buildingIDsWithNewPorts = new string[6]
-	{
-		"LiquidVent",
-		"GasVent",
-		"GasVentHighPressure",
-		"SolidVent",
-		"LiquidReservoir",
-		"GasReservoir"
-	};
+	private static string[] buildingIDsWithNewPorts = new string[6] { "LiquidVent", "GasVent", "GasVentHighPressure", "SolidVent", "LiquidReservoir", "GasReservoir" };
 
 	protected override void OnPrefabInit()
 	{

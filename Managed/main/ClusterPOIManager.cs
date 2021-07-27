@@ -77,72 +77,12 @@ public class ClusterPOIManager : KMonoBehaviour
 	public void SpawnSpacePOIsInLegacySave()
 	{
 		Dictionary<int[], string[]> dictionary = new Dictionary<int[], string[]>();
-		dictionary.Add(new int[2]
-		{
-			2,
-			3
-		}, new string[1]
-		{
-			"HarvestableSpacePOI_SandyOreField"
-		});
-		dictionary.Add(new int[2]
-		{
-			5,
-			7
-		}, new string[1]
-		{
-			"HarvestableSpacePOI_OrganicMassField"
-		});
-		dictionary.Add(new int[2]
-		{
-			8,
-			11
-		}, new string[5]
-		{
-			"HarvestableSpacePOI_GildedAsteroidField",
-			"HarvestableSpacePOI_GlimmeringAsteroidField",
-			"HarvestableSpacePOI_HeliumCloud",
-			"HarvestableSpacePOI_OilyAsteroidField",
-			"HarvestableSpacePOI_FrozenOreField"
-		});
-		dictionary.Add(new int[2]
-		{
-			10,
-			11
-		}, new string[2]
-		{
-			"HarvestableSpacePOI_RadioactiveGasCloud",
-			"HarvestableSpacePOI_RadioactiveAsteroidField"
-		});
-		dictionary.Add(new int[2]
-		{
-			5,
-			7
-		}, new string[5]
-		{
-			"HarvestableSpacePOI_RockyAsteroidField",
-			"HarvestableSpacePOI_InterstellarIceField",
-			"HarvestableSpacePOI_InterstellarOcean",
-			"HarvestableSpacePOI_SandyOreField",
-			"HarvestableSpacePOI_SwampyOreField"
-		});
-		dictionary.Add(new int[2]
-		{
-			7,
-			11
-		}, new string[10]
-		{
-			"HarvestableSpacePOI_MetallicAsteroidField",
-			"HarvestableSpacePOI_SatelliteField",
-			"HarvestableSpacePOI_ChlorineCloud",
-			"HarvestableSpacePOI_OxidizedAsteroidField",
-			"HarvestableSpacePOI_OxygenRichAsteroidField",
-			"HarvestableSpacePOI_GildedAsteroidField",
-			"HarvestableSpacePOI_HeliumCloud",
-			"HarvestableSpacePOI_OilyAsteroidField",
-			"HarvestableSpacePOI_FrozenOreField",
-			"HarvestableSpacePOI_RadioactiveAsteroidField"
-		});
+		dictionary.Add(new int[2] { 2, 3 }, new string[1] { "HarvestableSpacePOI_SandyOreField" });
+		dictionary.Add(new int[2] { 5, 7 }, new string[1] { "HarvestableSpacePOI_OrganicMassField" });
+		dictionary.Add(new int[2] { 8, 11 }, new string[5] { "HarvestableSpacePOI_GildedAsteroidField", "HarvestableSpacePOI_GlimmeringAsteroidField", "HarvestableSpacePOI_HeliumCloud", "HarvestableSpacePOI_OilyAsteroidField", "HarvestableSpacePOI_FrozenOreField" });
+		dictionary.Add(new int[2] { 10, 11 }, new string[2] { "HarvestableSpacePOI_RadioactiveGasCloud", "HarvestableSpacePOI_RadioactiveAsteroidField" });
+		dictionary.Add(new int[2] { 5, 7 }, new string[5] { "HarvestableSpacePOI_RockyAsteroidField", "HarvestableSpacePOI_InterstellarIceField", "HarvestableSpacePOI_InterstellarOcean", "HarvestableSpacePOI_SandyOreField", "HarvestableSpacePOI_SwampyOreField" });
+		dictionary.Add(new int[2] { 7, 11 }, new string[10] { "HarvestableSpacePOI_MetallicAsteroidField", "HarvestableSpacePOI_SatelliteField", "HarvestableSpacePOI_ChlorineCloud", "HarvestableSpacePOI_OxidizedAsteroidField", "HarvestableSpacePOI_OxygenRichAsteroidField", "HarvestableSpacePOI_GildedAsteroidField", "HarvestableSpacePOI_HeliumCloud", "HarvestableSpacePOI_OilyAsteroidField", "HarvestableSpacePOI_FrozenOreField", "HarvestableSpacePOI_RadioactiveAsteroidField" });
 		List<AxialI> list = new List<AxialI>();
 		string[] array;
 		foreach (KeyValuePair<int[], string[]> item in dictionary)
@@ -166,23 +106,15 @@ public class ClusterPOIManager : KMonoBehaviour
 			array = value;
 			for (int i = 0; i < array.Length; i++)
 			{
-				GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(array[i]));
+				GameObject obj = Util.KInstantiate(Assets.GetPrefab(array[i]));
 				AxialI axialI = list2[Random.Range(0, list2.Count - 1)];
 				list2.Remove(axialI);
 				list.Add(axialI);
-				gameObject.GetComponent<ClusterGridEntity>().Location = axialI;
-				gameObject.SetActive(value: true);
+				obj.GetComponent<ClusterGridEntity>().Location = axialI;
+				obj.SetActive(value: true);
 			}
 		}
-		string[] array2 = new string[6]
-		{
-			"ArtifactSpacePOI_GravitasSpaceStation1",
-			"ArtifactSpacePOI_GravitasSpaceStation4",
-			"ArtifactSpacePOI_GravitasSpaceStation5",
-			"ArtifactSpacePOI_GravitasSpaceStation6",
-			"ArtifactSpacePOI_GravitasSpaceStation8",
-			"ArtifactSpacePOI_RussellsTeapot"
-		};
+		string[] array2 = new string[6] { "ArtifactSpacePOI_GravitasSpaceStation1", "ArtifactSpacePOI_GravitasSpaceStation4", "ArtifactSpacePOI_GravitasSpaceStation5", "ArtifactSpacePOI_GravitasSpaceStation6", "ArtifactSpacePOI_GravitasSpaceStation8", "ArtifactSpacePOI_RussellsTeapot" };
 		int minRadius2 = Mathf.Min(2, ClusterGrid.Instance.numRings - 1);
 		int maxRadius2 = Mathf.Min(11, ClusterGrid.Instance.numRings - 1);
 		List<AxialI> rings2 = AxialUtil.GetRings(AxialI.ZERO, minRadius2, maxRadius2);
@@ -197,20 +129,20 @@ public class ClusterPOIManager : KMonoBehaviour
 		array = array2;
 		for (int i = 0; i < array.Length; i++)
 		{
-			GameObject gameObject2 = Util.KInstantiate(Assets.GetPrefab(array[i]));
+			GameObject obj2 = Util.KInstantiate(Assets.GetPrefab(array[i]));
 			AxialI axialI2 = list3[Random.Range(0, list3.Count - 1)];
 			list3.Remove(axialI2);
-			HarvestablePOIClusterGridEntity component = gameObject2.GetComponent<HarvestablePOIClusterGridEntity>();
+			HarvestablePOIClusterGridEntity component = obj2.GetComponent<HarvestablePOIClusterGridEntity>();
 			if (component != null)
 			{
 				component.Init(axialI2);
 			}
-			ArtifactPOIClusterGridEntity component2 = gameObject2.GetComponent<ArtifactPOIClusterGridEntity>();
+			ArtifactPOIClusterGridEntity component2 = obj2.GetComponent<ArtifactPOIClusterGridEntity>();
 			if (component2 != null)
 			{
 				component2.Init(axialI2);
 			}
-			gameObject2.SetActive(value: true);
+			obj2.SetActive(value: true);
 		}
 	}
 
@@ -219,9 +151,9 @@ public class ClusterPOIManager : KMonoBehaviour
 		Debug.Log("PopulatePOIsFromWorldGen");
 		foreach (KeyValuePair<AxialI, string> poiPlacement in clusterLayout.poiPlacements)
 		{
-			GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(poiPlacement.Value));
-			gameObject.GetComponent<ClusterGridEntity>().Location = poiPlacement.Key;
-			gameObject.SetActive(value: true);
+			GameObject obj = Util.KInstantiate(Assets.GetPrefab(poiPlacement.Value));
+			obj.GetComponent<ClusterGridEntity>().Location = poiPlacement.Key;
+			obj.SetActive(value: true);
 		}
 	}
 

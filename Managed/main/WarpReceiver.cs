@@ -60,19 +60,9 @@ public class WarpReceiver : Workable
 		}, null, null, allow_in_red_alert: true, null, ignore_schedule_block: false, only_when_operational: true, override_anims, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, PriorityScreen.PriorityClass.high);
 		Workable component = GetComponent<Workable>();
 		component.workLayer = Grid.SceneLayer.Building;
-		component.workAnims = new HashedString[2]
-		{
-			"printing_pre",
-			"printing_loop"
-		};
-		component.workingPstComplete = new HashedString[1]
-		{
-			"printing_pst"
-		};
-		component.workingPstFailed = new HashedString[1]
-		{
-			"printing_pst"
-		};
+		component.workAnims = new HashedString[2] { "printing_pre", "printing_loop" };
+		component.workingPstComplete = new HashedString[1] { "printing_pst" };
+		component.workingPstFailed = new HashedString[1] { "printing_pst" };
 		component.synchronizeAnims = true;
 		float num = 0f;
 		KAnimFileData data = anim.GetData();

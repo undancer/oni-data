@@ -1,17 +1,8 @@
 public interface ICircuitConnected
 {
-	bool IsVirtual
-	{
-		get;
-	}
+	bool IsVirtual { get; }
 
-	int PowerCell
-	{
-		get;
-	}
+	int PowerCell { get; }
 
-	object VirtualCircuitKey
-	{
-		get;
-	}
+	object VirtualCircuitKey { get; }
 }

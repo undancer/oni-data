@@ -568,11 +568,7 @@ public class ReportManager : KMonoBehaviour
 
 	public List<DailyReport> reports => dailyReports;
 
-	public static ReportManager Instance
-	{
-		get;
-		private set;
-	}
+	public static ReportManager Instance { get; private set; }
 
 	public DailyReport TodaysReport => todaysReport;
 

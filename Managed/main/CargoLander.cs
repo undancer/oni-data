@@ -105,40 +105,34 @@ public class CargoLander : GameStateMachine<CargoLander, CargoLander.StatesInsta
 				List<MinionStorage.Info> storedMinionInfo = component.GetStoredMinionInfo();
 				for (int num = storedMinionInfo.Count - 1; num >= 0; num--)
 				{
-					GameObject gameObject = component.DeserializeMinion(storedMinionInfo[num].id, base.transform.GetPosition());
-					gameObject.GetComponent<Navigator>().SetCurrentNavType(NavType.Floor);
-					ChoreProvider component2 = gameObject.GetComponent<ChoreProvider>();
+					GameObject obj = component.DeserializeMinion(storedMinionInfo[num].id, base.transform.GetPosition());
+					obj.GetComponent<Navigator>().SetCurrentNavType(NavType.Floor);
+					ChoreProvider component2 = obj.GetComponent<ChoreProvider>();
 					if (component2 != null)
 					{
-						new EmoteChore(component2, Db.Get().ChoreTypes.EmoteHighPriority, "anim_interacts_pioneer_cargo_lander_kanim", new HashedString[1]
-						{
-							"enter"
-						}, KAnim.PlayMode.Once);
+						new EmoteChore(component2, Db.Get().ChoreTypes.EmoteHighPriority, "anim_interacts_pioneer_cargo_lander_kanim", new HashedString[1] { "enter" }, KAnim.PlayMode.Once);
 					}
 				}
 			}
 			Storage component3 = GetComponent<Storage>();
 			if (component3 != null)
 			{
-				GameObject gameObject2 = component3.FindFirst("ScoutRover");
-				if (gameObject2 != null)
+				GameObject gameObject = component3.FindFirst("ScoutRover");
+				if (gameObject != null)
 				{
-					component3.Drop(gameObject2);
+					component3.Drop(gameObject);
 					Vector3 position2 = base.master.transform.GetPosition();
 					position2.z = Grid.GetLayerZ(Grid.SceneLayer.Creatures);
-					gameObject2.transform.SetPosition(position2);
-					ChoreProvider component4 = gameObject2.GetComponent<ChoreProvider>();
+					gameObject.transform.SetPosition(position2);
+					ChoreProvider component4 = gameObject.GetComponent<ChoreProvider>();
 					if (component4 != null)
 					{
-						KBatchedAnimController component5 = gameObject2.GetComponent<KBatchedAnimController>();
+						KBatchedAnimController component5 = gameObject.GetComponent<KBatchedAnimController>();
 						if (component5 != null)
 						{
 							component5.Play("enter");
 						}
-						new EmoteChore(component4, Db.Get().ChoreTypes.EmoteHighPriority, null, new HashedString[1]
-						{
-							"enter"
-						}, KAnim.PlayMode.Once);
+						new EmoteChore(component4, Db.Get().ChoreTypes.EmoteHighPriority, null, new HashedString[1] { "enter" }, KAnim.PlayMode.Once);
 					}
 				}
 				component3.DropAll(position);

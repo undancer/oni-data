@@ -3,11 +3,7 @@ using System.Collections.Generic;
 
 public class ManagementMenuNotificationDisplayer : NotificationDisplayer
 {
-	public List<ManagementMenuNotification> displayedManagementMenuNotifications
-	{
-		get;
-		private set;
-	}
+	public List<ManagementMenuNotification> displayedManagementMenuNotifications { get; private set; }
 
 	public event System.Action onNotificationsChanged;
 

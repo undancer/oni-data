@@ -149,25 +149,25 @@ public class Crop : KMonoBehaviour, IGameObjectEffectDescriptor
 	public List<Descriptor> InformationDescriptors(GameObject go)
 	{
 		List<Descriptor> list = new List<Descriptor>();
-		Tag tag = new Tag(cropVal.cropId);
-		GameObject prefab = Assets.GetPrefab(tag);
+		Tag item = new Tag(cropVal.cropId);
+		GameObject prefab = Assets.GetPrefab(item);
 		Edible component = prefab.GetComponent<Edible>();
 		Klei.AI.Attribute yieldAmount = Db.Get().PlantAttributes.YieldAmount;
 		float preModifiedAttributeValue = go.GetComponent<Modifiers>().GetPreModifiedAttributeValue(yieldAmount);
 		if (component != null)
 		{
-			DebugUtil.Assert(GameTags.DisplayAsCalories.Contains(tag), "Trying to display crop info for an edible fruit which isn't displayed as calories!", tag.ToString());
+			DebugUtil.Assert(GameTags.DisplayAsCalories.Contains(item), "Trying to display crop info for an edible fruit which isn't displayed as calories!", item.ToString());
 			float caloriesPerUnit = component.FoodInfo.CaloriesPerUnit;
 			float calories = caloriesPerUnit * preModifiedAttributeValue;
 			string formattedCalories = GameUtil.GetFormattedCalories(calories);
-			Descriptor item = new Descriptor(string.Format(UI.UISIDESCREENS.PLANTERSIDESCREEN.YIELD, prefab.GetProperName(), formattedCalories), string.Format(UI.UISIDESCREENS.PLANTERSIDESCREEN.TOOLTIPS.YIELD, "", GameUtil.GetFormattedCalories(caloriesPerUnit), GameUtil.GetFormattedCalories(calories)));
-			list.Add(item);
+			Descriptor item2 = new Descriptor(string.Format(UI.UISIDESCREENS.PLANTERSIDESCREEN.YIELD, prefab.GetProperName(), formattedCalories), string.Format(UI.UISIDESCREENS.PLANTERSIDESCREEN.TOOLTIPS.YIELD, "", GameUtil.GetFormattedCalories(caloriesPerUnit), GameUtil.GetFormattedCalories(calories)));
+			list.Add(item2);
 		}
 		else
 		{
-			string formattedCalories = ((!GameTags.DisplayAsUnits.Contains(tag)) ? GameUtil.GetFormattedMass(cropVal.numProduced) : GameUtil.GetFormattedUnits(cropVal.numProduced, GameUtil.TimeSlice.None, displaySuffix: false));
-			Descriptor item2 = new Descriptor(string.Format(UI.UISIDESCREENS.PLANTERSIDESCREEN.YIELD_NONFOOD, prefab.GetProperName(), formattedCalories), string.Format(UI.UISIDESCREENS.PLANTERSIDESCREEN.TOOLTIPS.YIELD_NONFOOD, formattedCalories));
-			list.Add(item2);
+			string formattedCalories = ((!GameTags.DisplayAsUnits.Contains(item)) ? GameUtil.GetFormattedMass(cropVal.numProduced) : GameUtil.GetFormattedUnits(cropVal.numProduced, GameUtil.TimeSlice.None, displaySuffix: false));
+			Descriptor item3 = new Descriptor(string.Format(UI.UISIDESCREENS.PLANTERSIDESCREEN.YIELD_NONFOOD, prefab.GetProperName(), formattedCalories), string.Format(UI.UISIDESCREENS.PLANTERSIDESCREEN.TOOLTIPS.YIELD_NONFOOD, formattedCalories));
+			list.Add(item3);
 		}
 		return list;
 	}

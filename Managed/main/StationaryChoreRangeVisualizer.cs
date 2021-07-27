@@ -38,11 +38,7 @@ public class StationaryChoreRangeVisualizer : KMonoBehaviour
 
 	private static readonly string AnimName = "transferarmgrid_kanim";
 
-	private static readonly HashedString[] PreAnims = new HashedString[2]
-	{
-		"grid_pre",
-		"grid_loop"
-	};
+	private static readonly HashedString[] PreAnims = new HashedString[2] { "grid_pre", "grid_loop" };
 
 	private static readonly HashedString PostAnim = "grid_pst";
 

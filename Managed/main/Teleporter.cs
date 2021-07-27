@@ -18,11 +18,7 @@ public class Teleporter : KMonoBehaviour
 	});
 
 	[Serialize]
-	public int teleporterID
-	{
-		get;
-		private set;
-	}
+	public int teleporterID { get; private set; }
 
 	protected override void OnPrefabInit()
 	{
@@ -122,18 +118,18 @@ public class Teleporter : KMonoBehaviour
 			int cell = Grid.PosToCell(teleporter);
 			foreach (ScenePartitionerEntry item in pooledList)
 			{
-				GameObject gameObject = (item.obj as Pickupable).gameObject;
-				Vector3 b = gameObject.transform.GetPosition() - position;
-				MinionIdentity component = gameObject.GetComponent<MinionIdentity>();
+				GameObject obj = (item.obj as Pickupable).gameObject;
+				Vector3 vector = obj.transform.GetPosition() - position;
+				MinionIdentity component = obj.GetComponent<MinionIdentity>();
 				if (component != null)
 				{
 					new EmoteChore(component.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_interacts_portal_kanim", Telepad.PortalBirthAnim, null);
 				}
 				else
 				{
-					b += Vector3.up;
+					vector += Vector3.up;
 				}
-				gameObject.transform.SetLocalPosition(Grid.CellToPosCBC(cell, Grid.SceneLayer.Move) + b);
+				obj.transform.SetLocalPosition(Grid.CellToPosCBC(cell, Grid.SceneLayer.Move) + vector);
 			}
 			pooledList.Recycle();
 		}

@@ -59,15 +59,7 @@ public class LightBuffer : MonoBehaviour
 			new Vector2(1f, 0f),
 			new Vector2(1f, 1f)
 		};
-		Mesh.triangles = new int[6]
-		{
-			0,
-			1,
-			2,
-			2,
-			1,
-			3
-		};
+		Mesh.triangles = new int[6] { 0, 1, 2, 2, 1, 3 };
 		Mesh.bounds = new Bounds(Vector3.zero, new Vector3(float.MaxValue, float.MaxValue, float.MaxValue));
 		Texture = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.ARGBHalf);
 		Texture.name = "LightBuffer";

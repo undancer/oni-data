@@ -42,10 +42,7 @@ public class ResearchCenterConfig : IBuildingConfig
 		manualDeliveryKG.capacity = 750f;
 		manualDeliveryKG.choreTypeIDHash = Db.Get().ChoreTypes.ResearchFetch.IdHash;
 		ResearchCenter researchCenter = go.AddOrGet<ResearchCenter>();
-		researchCenter.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_research_center_kanim")
-		};
+		researchCenter.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_research_center_kanim") };
 		researchCenter.research_point_type_id = "basic";
 		researchCenter.inputMaterial = INPUT_MATERIAL;
 		researchCenter.mass_per_point = 50f;

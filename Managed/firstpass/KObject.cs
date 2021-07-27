@@ -4,11 +4,7 @@ public class KObject
 {
 	private EventSystem eventSystem;
 
-	public int id
-	{
-		get;
-		private set;
-	}
+	public int id { get; private set; }
 
 	public bool hasEventSystem => eventSystem != null;
 

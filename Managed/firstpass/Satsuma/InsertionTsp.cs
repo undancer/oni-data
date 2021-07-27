@@ -14,31 +14,15 @@ namespace Satsuma
 
 		private PriorityQueue<TNode, double> insertableNodeQueue;
 
-		public IEnumerable<TNode> Nodes
-		{
-			get;
-			private set;
-		}
+		public IEnumerable<TNode> Nodes { get; private set; }
 
-		public Func<TNode, TNode, double> Cost
-		{
-			get;
-			private set;
-		}
+		public Func<TNode, TNode, double> Cost { get; private set; }
 
-		public TspSelectionRule SelectionRule
-		{
-			get;
-			private set;
-		}
+		public TspSelectionRule SelectionRule { get; private set; }
 
 		public IEnumerable<TNode> Tour => tour;
 
-		public double TourCost
-		{
-			get;
-			private set;
-		}
+		public double TourCost { get; private set; }
 
 		public InsertionTsp(IEnumerable<TNode> nodes, Func<TNode, TNode, double> cost, TspSelectionRule selectionRule = TspSelectionRule.Farthest)
 		{

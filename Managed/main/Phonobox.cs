@@ -104,12 +104,7 @@ public class Phonobox : StateMachineComponent<Phonobox.StatesInstance>, IGameObj
 
 	private HashSet<Worker> players = new HashSet<Worker>();
 
-	private static string[] building_anims = new string[3]
-	{
-		"working_loop",
-		"working_loop2",
-		"working_loop3"
-	};
+	private static string[] building_anims = new string[3] { "working_loop", "working_loop2", "working_loop3" };
 
 	protected override void OnSpawn()
 	{

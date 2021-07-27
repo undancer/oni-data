@@ -12,10 +12,10 @@ public class FullPuftTransitionLayer : TransitionDriver.OverrideLayer
 		if (sMI != null && sMI.stomach.IsReadyToPoop())
 		{
 			KBatchedAnimController component = navigator.GetComponent<KBatchedAnimController>();
-			string s = HashCache.Get().Get(transition.anim.HashValue) + "_full";
-			if (component.HasAnimation(s))
+			string text = HashCache.Get().Get(transition.anim.HashValue) + "_full";
+			if (component.HasAnimation(text))
 			{
-				transition.anim = s;
+				transition.anim = text;
 			}
 		}
 	}

@@ -7,17 +7,9 @@ namespace NodeEditorFramework
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 	public class EventHandlerAttribute : Attribute
 	{
-		public EventType? handledEvent
-		{
-			get;
-			private set;
-		}
+		public EventType? handledEvent { get; private set; }
 
-		public int priority
-		{
-			get;
-			private set;
-		}
+		public int priority { get; private set; }
 
 		public EventHandlerAttribute(EventType eventType, int priorityValue)
 		{

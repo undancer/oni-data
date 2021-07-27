@@ -105,35 +105,35 @@ public class ResearchSideScreen : SideScreenContent
 			DescriptionText.text = string.Concat("<b>", UI.UISIDESCREENS.RESEARCHSIDESCREEN.NOSELECTEDRESEARCH, "</b>");
 			return;
 		}
-		string str = "";
+		string text2 = "";
 		if (!activeResearch.tech.costsByResearchTypeID.ContainsKey(text) || activeResearch.tech.costsByResearchTypeID[text] <= 0f)
 		{
-			str += "<color=#7f7f7f>";
+			text2 += "<color=#7f7f7f>";
 		}
-		str = str + "<b>" + activeResearch.tech.Name + "</b>";
+		text2 = text2 + "<b>" + activeResearch.tech.Name + "</b>";
 		if (!activeResearch.tech.costsByResearchTypeID.ContainsKey(text) || activeResearch.tech.costsByResearchTypeID[text] <= 0f)
 		{
-			str += "</color>";
+			text2 += "</color>";
 		}
 		foreach (KeyValuePair<string, float> item in activeResearch.tech.costsByResearchTypeID)
 		{
 			if (item.Value != 0f)
 			{
 				bool flag = item.Key == text;
-				str += "\n   ";
-				str += "<b>";
+				text2 += "\n   ";
+				text2 += "<b>";
 				if (!flag)
 				{
-					str += "<color=#7f7f7f>";
+					text2 += "<color=#7f7f7f>";
 				}
-				str = str + "- " + Research.Instance.researchTypes.GetResearchType(item.Key).name + ": " + activeResearch.progressInventory.PointsByTypeID[item.Key] + "/" + activeResearch.tech.costsByResearchTypeID[item.Key];
+				text2 = text2 + "- " + Research.Instance.researchTypes.GetResearchType(item.Key).name + ": " + activeResearch.progressInventory.PointsByTypeID[item.Key] + "/" + activeResearch.tech.costsByResearchTypeID[item.Key];
 				if (!flag)
 				{
-					str += "</color>";
+					text2 += "</color>";
 				}
-				str += "</b>";
+				text2 += "</b>";
 			}
 		}
-		DescriptionText.text = str;
+		DescriptionText.text = text2;
 	}
 }

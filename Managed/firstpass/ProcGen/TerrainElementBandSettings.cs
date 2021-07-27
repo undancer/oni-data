@@ -6,11 +6,7 @@ namespace ProcGen
 	[Serializable]
 	public class TerrainElementBandSettings
 	{
-		public Dictionary<string, ElementBandConfiguration> BiomeBackgroundElementBandConfigurations
-		{
-			get;
-			private set;
-		}
+		public Dictionary<string, ElementBandConfiguration> BiomeBackgroundElementBandConfigurations { get; private set; }
 
 		public TerrainElementBandSettings()
 		{

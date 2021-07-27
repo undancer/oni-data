@@ -101,13 +101,7 @@ public class ResearchEntry : KMonoBehaviour
 
 	public static readonly string UnlockedTechKey = "UnlockedTech";
 
-	private Dictionary<string, object> unlockedTechMetric = new Dictionary<string, object>
-	{
-		{
-			UnlockedTechKey,
-			null
-		}
-	};
+	private Dictionary<string, object> unlockedTechMetric = new Dictionary<string, object> { { UnlockedTechKey, null } };
 
 	protected override void OnSpawn()
 	{
@@ -117,26 +111,26 @@ public class ResearchEntry : KMonoBehaviour
 		foreach (Tech item in targetTech.requiredTech)
 		{
 			float num = targetTech.width / 2f + 18f;
-			Vector2 b = Vector2.zero;
-			Vector2 b2 = Vector2.zero;
+			Vector2 vector = Vector2.zero;
+			Vector2 vector2 = Vector2.zero;
 			if (item.center.y > targetTech.center.y + 2f)
 			{
-				b = new Vector2(0f, 20f);
-				b2 = new Vector2(0f, -20f);
+				vector = new Vector2(0f, 20f);
+				vector2 = new Vector2(0f, -20f);
 			}
 			else if (item.center.y < targetTech.center.y - 2f)
 			{
-				b = new Vector2(0f, -20f);
-				b2 = new Vector2(0f, 20f);
+				vector = new Vector2(0f, -20f);
+				vector2 = new Vector2(0f, 20f);
 			}
 			UILineRenderer component = Util.KInstantiateUI(linePrefab, lineContainer.gameObject, force_active: true).GetComponent<UILineRenderer>();
 			float num2 = 32f;
 			component.Points = new Vector2[4]
 			{
-				new Vector2(0f, 0f) + b,
-				new Vector2(0f - num2, 0f) + b,
-				new Vector2(0f - num2, item.center.y - targetTech.center.y) + b2,
-				new Vector2(0f - (targetTech.center.x - num - (item.center.x + num)) + 2f, item.center.y - targetTech.center.y) + b2
+				new Vector2(0f, 0f) + vector,
+				new Vector2(0f - num2, 0f) + vector,
+				new Vector2(0f - num2, item.center.y - targetTech.center.y) + vector2,
+				new Vector2(0f - (targetTech.center.x - num - (item.center.x + num)) + 2f, item.center.y - targetTech.center.y) + vector2
 			};
 			component.LineThickness = lineThickness_inactive;
 			component.color = inactiveLineColor;
@@ -391,9 +385,9 @@ public class ResearchEntry : KMonoBehaviour
 
 	private GameObject GetFreeIcon()
 	{
-		GameObject gameObject = Util.KInstantiateUI(iconPrefab, iconPanel);
-		gameObject.SetActive(value: true);
-		return gameObject;
+		GameObject obj = Util.KInstantiateUI(iconPrefab, iconPanel);
+		obj.SetActive(value: true);
+		return obj;
 	}
 
 	private Image GetFreeLine()

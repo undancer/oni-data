@@ -23,25 +23,9 @@ public struct AxialI : IEquatable<AxialI>
 
 	public static readonly AxialI WEST = new AxialI(-1, 0);
 
-	public static readonly List<AxialI> DIRECTIONS = new List<AxialI>
-	{
-		NORTHWEST,
-		NORTHEAST,
-		EAST,
-		SOUTHEAST,
-		SOUTHWEST,
-		WEST
-	};
+	public static readonly List<AxialI> DIRECTIONS = new List<AxialI> { NORTHWEST, NORTHEAST, EAST, SOUTHEAST, SOUTHWEST, WEST };
 
-	public static readonly List<AxialI> CLOCKWISE = new List<AxialI>
-	{
-		EAST,
-		SOUTHEAST,
-		SOUTHWEST,
-		WEST,
-		NORTHWEST,
-		NORTHEAST
-	};
+	public static readonly List<AxialI> CLOCKWISE = new List<AxialI> { EAST, SOUTHEAST, SOUTHWEST, WEST, NORTHWEST, NORTHEAST };
 
 	[Serialize]
 	public int r;

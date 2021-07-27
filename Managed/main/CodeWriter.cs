@@ -190,12 +190,12 @@ public class CodeWriter
 
 	private void InternalNamedParameter(string name, string value, bool last_parameter)
 	{
-		string str = "";
+		string text = "";
 		if (!last_parameter)
 		{
-			str = ",";
+			text = ",";
 		}
-		Line(name + ":" + value + str);
+		Line(name + ":" + value + text);
 	}
 
 	public void NamedParameterBool(string name, bool value, bool last_parameter = false)
@@ -233,16 +233,16 @@ public class CodeWriter
 
 	public void FunctionCall(string function_name, params string[] parameters)
 	{
-		string str = function_name + "(";
+		string text = function_name + "(";
 		for (int i = 0; i < parameters.Length; i++)
 		{
-			str += parameters[i];
+			text += parameters[i];
 			if (i != parameters.Length - 1)
 			{
-				str += ", ";
+				text += ", ";
 			}
 		}
-		Line(str + ");");
+		Line(text + ");");
 	}
 
 	public void StructureFieldInitializer(string field, string value)
@@ -252,17 +252,17 @@ public class CodeWriter
 
 	public void StructureArrayFieldInitializer(string field, string field_type, params string[] values)
 	{
-		string str = field + " = new " + field_type + "[]{ ";
+		string text = field + " = new " + field_type + "[]{ ";
 		for (int i = 0; i < values.Length; i++)
 		{
-			str += values[i];
+			text += values[i];
 			if (i < values.Length - 1)
 			{
-				str += ", ";
+				text += ", ";
 			}
 		}
-		str += " },";
-		Line(str);
+		text += " },";
+		Line(text);
 	}
 
 	public void Line(string text = "")

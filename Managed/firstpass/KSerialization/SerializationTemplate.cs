@@ -269,10 +269,7 @@ namespace KSerialization
 			}
 			if (customSerialize != null)
 			{
-				customSerialize.Invoke(obj, new object[1]
-				{
-					writer
-				});
+				customSerialize.Invoke(obj, new object[1] { writer });
 			}
 			if (onSerialized != null)
 			{

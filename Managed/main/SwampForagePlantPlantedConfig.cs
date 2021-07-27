@@ -15,10 +15,7 @@ public class SwampForagePlantPlantedConfig : IEntityConfig
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("SwampForagePlantPlanted", STRINGS.CREATURES.SPECIES.SWAMPFORAGEPLANTPLANTED.NAME, STRINGS.CREATURES.SPECIES.SWAMPFORAGEPLANTPLANTED.DESC, 100f, decor: DECOR.BONUS.TIER1, anim: Assets.GetAnim("swamptuber_kanim"), initialAnim: "idle", sceneLayer: Grid.SceneLayer.BuildingBack, width: 1, height: 2);
 		gameObject.AddOrGet<SimTemperatureTransfer>();
-		gameObject.AddOrGet<OccupyArea>().objectLayers = new ObjectLayer[1]
-		{
-			ObjectLayer.Building
-		};
+		gameObject.AddOrGet<OccupyArea>().objectLayers = new ObjectLayer[1] { ObjectLayer.Building };
 		gameObject.AddOrGet<EntombVulnerable>();
 		gameObject.AddOrGet<Prioritizable>();
 		gameObject.AddOrGet<Uprootable>();

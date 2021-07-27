@@ -288,11 +288,7 @@ public class PlanScreen : KIconToggleMenu
 
 	private int buildGrid_maxRowsBeforeScroll = 5;
 
-	public static PlanScreen Instance
-	{
-		get;
-		private set;
-	}
+	public static PlanScreen Instance { get; private set; }
 
 	public static Dictionary<HashedString, string> IconNameMap => iconNameMap;
 
@@ -443,10 +439,10 @@ public class PlanScreen : KIconToggleMenu
 			{
 				continue;
 			}
-			Action action = (Action)((i < 14) ? (36 + i) : 266);
+			Action action = ((i < 14) ? ((Action)(36 + i)) : Action.NumActions);
 			string icon = iconNameMap[planInfo.category];
-			string str = HashCache.Get().Get(planInfo.category).ToUpper();
-			ToggleInfo toggleInfo = new ToggleInfo(UI.StripLinkFormatting(Strings.Get("STRINGS.UI.BUILDCATEGORIES." + str + ".NAME")), icon, planInfo.category, action, GameUtil.ReplaceHotkeyString(Strings.Get("STRINGS.UI.BUILDCATEGORIES." + str + ".TOOLTIP"), action));
+			string text = HashCache.Get().Get(planInfo.category).ToUpper();
+			ToggleInfo toggleInfo = new ToggleInfo(UI.StripLinkFormatting(Strings.Get("STRINGS.UI.BUILDCATEGORIES." + text + ".NAME")), icon, planInfo.category, action, GameUtil.ReplaceHotkeyString(Strings.Get("STRINGS.UI.BUILDCATEGORIES." + text + ".TOOLTIP"), action));
 			list.Add(toggleInfo);
 			PopulateOrderInfo(planInfo.category, planInfo.data, tagCategoryMap, tagOrderMap, ref building_index);
 			List<BuildingDef> list2 = new List<BuildingDef>();
@@ -1019,9 +1015,9 @@ public class PlanScreen : KIconToggleMenu
 		ToolTip component = toggle.gameObject.GetComponent<ToolTip>();
 		PositionTooltip(toggle, component);
 		component.ClearMultiStringTooltip();
-		string name = def.Name;
+		string newString = def.Name;
 		string effect = def.Effect;
-		component.AddMultiStringTooltip(name, buildingToolTipSettings.BuildButtonName);
+		component.AddMultiStringTooltip(newString, buildingToolTipSettings.BuildButtonName);
 		component.AddMultiStringTooltip(effect, buildingToolTipSettings.BuildButtonDescription);
 		LocText componentInChildren = toggle.GetComponentInChildren<LocText>();
 		if (componentInChildren != null)
@@ -1134,8 +1130,8 @@ public class PlanScreen : KIconToggleMenu
 				{
 					foreach (Recipe.Ingredient ingredient in def.CraftRecipe.Ingredients)
 					{
-						string str = string.Format("{0}{1}: {2}", "• ", ingredient.tag.ProperName(), GameUtil.GetFormattedMass(ingredient.amount));
-						result = result + "\n" + str;
+						string text = string.Format("{0}{1}: {2}", "• ", ingredient.tag.ProperName(), GameUtil.GetFormattedMass(ingredient.amount));
+						result = result + "\n" + text;
 					}
 					return result;
 				}

@@ -104,10 +104,7 @@ public class Studyable : Workable, ISidescreenButtonControl
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_use_machine_kanim")
-		};
+		overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_use_machine_kanim") };
 		faceTargetWhenWorking = true;
 		synchronizeAnims = false;
 		workerStatusItem = Db.Get().DuplicantStatusItems.Studying;

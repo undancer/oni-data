@@ -52,17 +52,9 @@ namespace MIConvexHull
 			}
 		}
 
-		public IEnumerable<TCell> Vertices
-		{
-			get;
-			private set;
-		}
+		public IEnumerable<TCell> Vertices { get; private set; }
 
-		public IEnumerable<TEdge> Edges
-		{
-			get;
-			private set;
-		}
+		public IEnumerable<TEdge> Edges { get; private set; }
 
 		private VoronoiMesh()
 		{
@@ -83,10 +75,11 @@ namespace MIConvexHull
 					TCell val = item.Adjacency[i];
 					if (val != null)
 					{
-						TEdge val2 = new TEdge();
-						val2.Source = item;
-						val2.Target = val;
-						hashSet.Add(val2);
+						hashSet.Add(new TEdge
+						{
+							Source = item,
+							Target = val
+						});
 					}
 				}
 			}

@@ -13,6 +13,7 @@ defaultsOverrides:
   data:
     OverworldDensityMin: 18
     OverworldDensityMax: 18
+    OverworldSampleBehaviour: PoissonDisk
 
 startSubworldName: expansion1::subworlds/sandstone/SandstoneStart
 startingBaseTemplate: bases/sandstoneBase

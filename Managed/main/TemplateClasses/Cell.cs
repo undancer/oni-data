@@ -5,53 +5,21 @@ namespace TemplateClasses
 	[Serializable]
 	public class Cell
 	{
-		public SimHashes element
-		{
-			get;
-			set;
-		}
+		public SimHashes element { get; set; }
 
-		public float mass
-		{
-			get;
-			set;
-		}
+		public float mass { get; set; }
 
-		public float temperature
-		{
-			get;
-			set;
-		}
+		public float temperature { get; set; }
 
-		public string diseaseName
-		{
-			get;
-			set;
-		}
+		public string diseaseName { get; set; }
 
-		public int diseaseCount
-		{
-			get;
-			set;
-		}
+		public int diseaseCount { get; set; }
 
-		public int location_x
-		{
-			get;
-			set;
-		}
+		public int location_x { get; set; }
 
-		public int location_y
-		{
-			get;
-			set;
-		}
+		public int location_y { get; set; }
 
-		public bool preventFoWReveal
-		{
-			get;
-			set;
-		}
+		public bool preventFoWReveal { get; set; }
 
 		public Cell()
 		{

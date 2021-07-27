@@ -10,6 +10,8 @@ namespace Database
 
 		private bool hasTrait;
 
+		private Dictionary<Tag, bool> revisedCritterTypesToCheckState = new Dictionary<Tag, bool>();
+
 		public CritterTypesWithTraits(List<Tag> critterTypes)
 		{
 			foreach (Tag critterType in critterTypes)
@@ -26,14 +28,27 @@ namespace Database
 		public override bool Success()
 		{
 			HashSet<Tag> tamedCritterTypes = SaveGame.Instance.GetComponent<ColonyAchievementTracker>().tamedCritterTypes;
+			bool flag = true;
 			foreach (KeyValuePair<Tag, bool> item in critterTypesToCheck)
 			{
-				if (!tamedCritterTypes.Contains(item.Key))
-				{
-					return false;
-				}
+				flag = flag && tamedCritterTypes.Contains(item.Key);
 			}
-			return true;
+			UpdateSavedState();
+			return flag;
+		}
+
+		public void UpdateSavedState()
+		{
+			revisedCritterTypesToCheckState.Clear();
+			HashSet<Tag> tamedCritterTypes = SaveGame.Instance.GetComponent<ColonyAchievementTracker>().tamedCritterTypes;
+			foreach (KeyValuePair<Tag, bool> item in critterTypesToCheck)
+			{
+				revisedCritterTypesToCheckState.Add(item.Key, tamedCritterTypes.Contains(item.Key));
+			}
+			foreach (KeyValuePair<Tag, bool> item2 in revisedCritterTypesToCheckState)
+			{
+				critterTypesToCheck[item2.Key] = item2.Value;
+			}
 		}
 
 		public void Deserialize(IReader reader)

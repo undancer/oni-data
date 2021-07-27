@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using KSerialization;
 using UnityEngine;
 
@@ -295,10 +296,7 @@ public class Door : Workable, ISaveLoadable, ISim200ms, INavDoor
 
 	public static readonly HashedString OPEN_CLOSE_PORT_ID = new HashedString("DoorOpenClose");
 
-	private static readonly KAnimFile[] OVERRIDE_ANIMS = new KAnimFile[1]
-	{
-		Assets.GetAnim("anim_use_remote_kanim")
-	};
+	private static readonly KAnimFile[] OVERRIDE_ANIMS = new KAnimFile[1] { Assets.GetAnim("anim_use_remote_kanim") };
 
 	private static readonly EventSystem.IntraObjectHandler<Door> OnOperationalChangedDelegate = new EventSystem.IntraObjectHandler<Door>(delegate(Door component, object data)
 	{
@@ -865,6 +863,7 @@ public class Door : Workable, ISaveLoadable, ISim200ms, INavDoor
 		}
 	}
 
+	[SpecialName]
 	bool INavDoor.get_isSpawned()
 	{
 		return base.isSpawned;

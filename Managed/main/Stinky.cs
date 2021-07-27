@@ -60,12 +60,7 @@ public class Stinky : StateMachineComponent<Stinky.StatesInstance>
 
 	private KBatchedAnimController stinkyController;
 
-	private static readonly HashedString[] WorkLoopAnims = new HashedString[3]
-	{
-		"working_pre",
-		"working_loop",
-		"working_pst"
-	};
+	private static readonly HashedString[] WorkLoopAnims = new HashedString[3] { "working_pre", "working_loop", "working_pst" };
 
 	protected override void OnSpawn()
 	{
@@ -76,14 +71,14 @@ public class Stinky : StateMachineComponent<Stinky.StatesInstance>
 	{
 		GameObject gameObject = (GameObject)data;
 		Components.Cmps<MinionIdentity> liveMinionIdentities = Components.LiveMinionIdentities;
-		Vector2 a = gameObject.transform.GetPosition();
+		Vector2 vector = gameObject.transform.GetPosition();
 		for (int i = 0; i < liveMinionIdentities.Count; i++)
 		{
 			MinionIdentity minionIdentity = liveMinionIdentities[i];
 			if (minionIdentity.gameObject != gameObject.gameObject)
 			{
-				Vector2 b = minionIdentity.transform.GetPosition();
-				if (Vector2.SqrMagnitude(a - b) <= 2.25f)
+				Vector2 vector2 = minionIdentity.transform.GetPosition();
+				if (Vector2.SqrMagnitude(vector - vector2) <= 2.25f)
 				{
 					minionIdentity.Trigger(508119890, Strings.Get("STRINGS.DUPLICANTS.DISEASES.PUTRIDODOUR.CRINGE_EFFECT").String);
 					minionIdentity.GetComponent<Effects>().Add("SmelledStinky", should_save: true);
@@ -93,17 +88,17 @@ public class Stinky : StateMachineComponent<Stinky.StatesInstance>
 		}
 		SimMessages.AddRemoveSubstance(Grid.PosToCell(gameObject.transform.GetPosition()), temperature: Db.Get().Amounts.Temperature.Lookup(this).value, new_element: SimHashes.ContaminatedOxygen, ev: CellEventLogger.Instance.ElementConsumerSimUpdate, mass: 0.0025000002f, disease_idx: byte.MaxValue, disease_count: 0);
 		bool flag = SoundEvent.ObjectIsSelectedAndVisible(gameObject);
-		Vector3 vector = gameObject.GetComponent<Transform>().GetPosition();
+		Vector3 vector3 = gameObject.GetComponent<Transform>().GetPosition();
 		float volume = 1f;
 		if (flag)
 		{
-			vector = SoundEvent.AudioHighlightListenerPosition(vector);
+			vector3 = SoundEvent.AudioHighlightListenerPosition(vector3);
 			volume = SoundEvent.GetVolume(flag);
 		}
 		else
 		{
-			vector.z = 0f;
+			vector3.z = 0f;
 		}
-		KFMOD.PlayOneShot(GlobalAssets.GetSound("Dupe_Flatulence"), vector, volume);
+		KFMOD.PlayOneShot(GlobalAssets.GetSound("Dupe_Flatulence"), vector3, volume);
 	}
 }

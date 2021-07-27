@@ -99,30 +99,12 @@ public static class BaseHatchConfig
 	public static List<Diet.Info> MetalDiet(Tag poopTag, float caloriesPerKg, float producedConversionRate, string diseaseId, float diseasePerKgProduced)
 	{
 		List<Diet.Info> list = new List<Diet.Info>();
-		list.Add(new Diet.Info(new HashSet<Tag>(new Tag[1]
-		{
-			SimHashes.Cuprite.CreateTag()
-		}), (poopTag == GameTags.Metal) ? SimHashes.Copper.CreateTag() : poopTag, caloriesPerKg, producedConversionRate, diseaseId, diseasePerKgProduced));
-		list.Add(new Diet.Info(new HashSet<Tag>(new Tag[1]
-		{
-			SimHashes.GoldAmalgam.CreateTag()
-		}), (poopTag == GameTags.Metal) ? SimHashes.Gold.CreateTag() : poopTag, caloriesPerKg, producedConversionRate, diseaseId, diseasePerKgProduced));
-		list.Add(new Diet.Info(new HashSet<Tag>(new Tag[1]
-		{
-			SimHashes.IronOre.CreateTag()
-		}), (poopTag == GameTags.Metal) ? SimHashes.Iron.CreateTag() : poopTag, caloriesPerKg, producedConversionRate, diseaseId, diseasePerKgProduced));
-		list.Add(new Diet.Info(new HashSet<Tag>(new Tag[1]
-		{
-			SimHashes.Wolframite.CreateTag()
-		}), (poopTag == GameTags.Metal) ? SimHashes.Tungsten.CreateTag() : poopTag, caloriesPerKg, producedConversionRate, diseaseId, diseasePerKgProduced));
-		list.Add(new Diet.Info(new HashSet<Tag>(new Tag[1]
-		{
-			SimHashes.AluminumOre.CreateTag()
-		}), (poopTag == GameTags.Metal) ? SimHashes.Aluminum.CreateTag() : poopTag, caloriesPerKg, producedConversionRate, diseaseId, diseasePerKgProduced));
-		list.Add(new Diet.Info(new HashSet<Tag>(new Tag[1]
-		{
-			SimHashes.Electrum.CreateTag()
-		}), (poopTag == GameTags.Metal) ? SimHashes.Gold.CreateTag() : poopTag, caloriesPerKg, producedConversionRate, diseaseId, diseasePerKgProduced));
+		list.Add(new Diet.Info(new HashSet<Tag>(new Tag[1] { SimHashes.Cuprite.CreateTag() }), (poopTag == GameTags.Metal) ? SimHashes.Copper.CreateTag() : poopTag, caloriesPerKg, producedConversionRate, diseaseId, diseasePerKgProduced));
+		list.Add(new Diet.Info(new HashSet<Tag>(new Tag[1] { SimHashes.GoldAmalgam.CreateTag() }), (poopTag == GameTags.Metal) ? SimHashes.Gold.CreateTag() : poopTag, caloriesPerKg, producedConversionRate, diseaseId, diseasePerKgProduced));
+		list.Add(new Diet.Info(new HashSet<Tag>(new Tag[1] { SimHashes.IronOre.CreateTag() }), (poopTag == GameTags.Metal) ? SimHashes.Iron.CreateTag() : poopTag, caloriesPerKg, producedConversionRate, diseaseId, diseasePerKgProduced));
+		list.Add(new Diet.Info(new HashSet<Tag>(new Tag[1] { SimHashes.Wolframite.CreateTag() }), (poopTag == GameTags.Metal) ? SimHashes.Tungsten.CreateTag() : poopTag, caloriesPerKg, producedConversionRate, diseaseId, diseasePerKgProduced));
+		list.Add(new Diet.Info(new HashSet<Tag>(new Tag[1] { SimHashes.AluminumOre.CreateTag() }), (poopTag == GameTags.Metal) ? SimHashes.Aluminum.CreateTag() : poopTag, caloriesPerKg, producedConversionRate, diseaseId, diseasePerKgProduced));
+		list.Add(new Diet.Info(new HashSet<Tag>(new Tag[1] { SimHashes.Electrum.CreateTag() }), (poopTag == GameTags.Metal) ? SimHashes.Gold.CreateTag() : poopTag, caloriesPerKg, producedConversionRate, diseaseId, diseasePerKgProduced));
 		return list;
 	}
 

@@ -23,59 +23,23 @@ public class Notification
 
 	private string notifierName;
 
-	public NotificationType Type
-	{
-		get;
-		set;
-	}
+	public NotificationType Type { get; set; }
 
-	public Notifier Notifier
-	{
-		get;
-		set;
-	}
+	public Notifier Notifier { get; set; }
 
-	public Transform clickFocus
-	{
-		get;
-		set;
-	}
+	public Transform clickFocus { get; set; }
 
-	public float Time
-	{
-		get;
-		set;
-	}
+	public float Time { get; set; }
 
-	public float GameTime
-	{
-		get;
-		set;
-	}
+	public float GameTime { get; set; }
 
-	public float Delay
-	{
-		get;
-		set;
-	}
+	public float Delay { get; set; }
 
-	public int Idx
-	{
-		get;
-		set;
-	}
+	public int Idx { get; set; }
 
-	public Func<List<Notification>, object, string> ToolTip
-	{
-		get;
-		set;
-	}
+	public Func<List<Notification>, object, string> ToolTip { get; set; }
 
-	public string titleText
-	{
-		get;
-		private set;
-	}
+	public string titleText { get; private set; }
 
 	public string NotifierName
 	{

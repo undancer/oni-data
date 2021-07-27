@@ -5,30 +5,15 @@ public class FlowUtilityNetwork : UtilityNetwork
 {
 	public interface IItem
 	{
-		int Cell
-		{
-			get;
-		}
+		int Cell { get; }
 
-		FlowUtilityNetwork Network
-		{
-			set;
-		}
+		FlowUtilityNetwork Network { set; }
 
-		Endpoint EndpointType
-		{
-			get;
-		}
+		Endpoint EndpointType { get; }
 
-		ConduitType ConduitType
-		{
-			get;
-		}
+		ConduitType ConduitType { get; }
 
-		GameObject GameObject
-		{
-			get;
-		}
+		GameObject GameObject { get; }
 	}
 
 	public class NetworkItem : IItem

@@ -12,10 +12,7 @@ public class VendingMachineConfig : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject gameObject = EntityTemplates.CreatePlacedEntity("VendingMachine", STRINGS.BUILDINGS.PREFABS.VENDINGMACHINE.NAME, STRINGS.BUILDINGS.PREFABS.VENDINGMACHINE.DESC, 100f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("vendingmachine_kanim"), initialAnim: "on", sceneLayer: Grid.SceneLayer.Building, width: 2, height: 3, element: SimHashes.Creature, additionalTags: new List<Tag>
-		{
-			GameTags.Gravitas
-		});
+		GameObject gameObject = EntityTemplates.CreatePlacedEntity("VendingMachine", STRINGS.BUILDINGS.PREFABS.VENDINGMACHINE.NAME, STRINGS.BUILDINGS.PREFABS.VENDINGMACHINE.DESC, 100f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("vendingmachine_kanim"), initialAnim: "on", sceneLayer: Grid.SceneLayer.Building, width: 2, height: 3, element: SimHashes.Creature, additionalTags: new List<Tag> { GameTags.Gravitas });
 		PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
 		component.SetElement(SimHashes.Unobtanium);
 		component.Temperature = 294.15f;
@@ -28,23 +25,14 @@ public class VendingMachineConfig : IEntityConfig
 		setLocker.dropOffset = new Vector2I(1, 1);
 		gameObject.AddOrGet<LoreBearer>();
 		gameObject.AddOrGet<LoopingSounds>();
-		gameObject.AddOrGet<OccupyArea>().objectLayers = new ObjectLayer[1]
-		{
-			ObjectLayer.Building
-		};
+		gameObject.AddOrGet<OccupyArea>().objectLayers = new ObjectLayer[1] { ObjectLayer.Building };
 		return gameObject;
 	}
 
 	public void OnPrefabInit(GameObject inst)
 	{
 		SetLocker component = inst.GetComponent<SetLocker>();
-		component.possible_contents_ids = new string[1][]
-		{
-			new string[1]
-			{
-				"FieldRation"
-			}
-		};
+		component.possible_contents_ids = new string[1][] { new string[1] { "FieldRation" } };
 		component.ChooseContents();
 	}
 

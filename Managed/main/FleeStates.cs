@@ -54,20 +54,20 @@ public class FleeStates : GameStateMachine<FleeStates, FleeStates.Instance, ISta
 		});
 		cower.Enter(delegate(Instance smi)
 		{
-			string s = "DEFAULT COWER ANIMATION";
+			string text = "DEFAULT COWER ANIMATION";
 			if (smi.Get<KBatchedAnimController>().HasAnimation("cower"))
 			{
-				s = "cower";
+				text = "cower";
 			}
 			else if (smi.Get<KBatchedAnimController>().HasAnimation("idle"))
 			{
-				s = "idle";
+				text = "idle";
 			}
 			else if (smi.Get<KBatchedAnimController>().HasAnimation("idle_loop"))
 			{
-				s = "idle_loop";
+				text = "idle_loop";
 			}
-			smi.Get<KBatchedAnimController>().Play(s, KAnim.PlayMode.Loop);
+			smi.Get<KBatchedAnimController>().Play(text, KAnim.PlayMode.Loop);
 		}).ScheduleGoTo(2f, behaviourcomplete);
 		behaviourcomplete.BehaviourComplete(GameTags.Creatures.Flee);
 	}

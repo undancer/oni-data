@@ -13,15 +13,7 @@ public class BeachChairConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("BeachChair", 2, 3, "beach_chair_kanim", 30, 60f, new float[2]
-		{
-			400f,
-			2f
-		}, new string[2]
-		{
-			"BuildableRaw",
-			"BuildingFiber"
-		}, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER4);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("BeachChair", 2, 3, "beach_chair_kanim", 30, 60f, new float[2] { 400f, 2f }, new string[2] { "BuildableRaw", "BuildingFiber" }, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER4);
 		obj.Floodable = true;
 		obj.AudioCategory = "Metal";
 		obj.Overheatable = true;

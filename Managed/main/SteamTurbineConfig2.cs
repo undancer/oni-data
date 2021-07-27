@@ -21,11 +21,7 @@ public class SteamTurbineConfig2 : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		string[] array = new string[2]
-		{
-			"RefinedMetal",
-			"Plastic"
-		};
+		string[] array = new string[2] { "RefinedMetal", "Plastic" };
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef(construction_mass: new float[2]
 		{
 			BUILDINGS.CONSTRUCTION_MASS_KG.TIER5[0],
@@ -74,10 +70,7 @@ public class SteamTurbineConfig2 : IBuildingConfig
 		steamTurbine.maxSelfHeat = 64f;
 		steamTurbine.wasteHeatToTurbinePercent = 0.1f;
 		ConduitDispenser conduitDispenser = go.AddOrGet<ConduitDispenser>();
-		conduitDispenser.elementFilter = new SimHashes[1]
-		{
-			SimHashes.Water
-		};
+		conduitDispenser.elementFilter = new SimHashes[1] { SimHashes.Water };
 		conduitDispenser.conduitType = ConduitType.Liquid;
 		conduitDispenser.storage = storage;
 		conduitDispenser.alwaysDispense = true;

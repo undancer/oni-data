@@ -7,38 +7,23 @@ public class CurrentJobConversation : ConversationType
 	{
 		{
 			Conversation.ModeType.Query,
-			new List<Conversation.ModeType>
-			{
-				Conversation.ModeType.Statement
-			}
+			new List<Conversation.ModeType> { Conversation.ModeType.Statement }
 		},
 		{
 			Conversation.ModeType.Satisfaction,
-			new List<Conversation.ModeType>
-			{
-				Conversation.ModeType.Agreement
-			}
+			new List<Conversation.ModeType> { Conversation.ModeType.Agreement }
 		},
 		{
 			Conversation.ModeType.Nominal,
-			new List<Conversation.ModeType>
-			{
-				Conversation.ModeType.Musing
-			}
+			new List<Conversation.ModeType> { Conversation.ModeType.Musing }
 		},
 		{
 			Conversation.ModeType.Dissatisfaction,
-			new List<Conversation.ModeType>
-			{
-				Conversation.ModeType.Disagreement
-			}
+			new List<Conversation.ModeType> { Conversation.ModeType.Disagreement }
 		},
 		{
 			Conversation.ModeType.Stressing,
-			new List<Conversation.ModeType>
-			{
-				Conversation.ModeType.Disagreement
-			}
+			new List<Conversation.ModeType> { Conversation.ModeType.Disagreement }
 		},
 		{
 			Conversation.ModeType.Agreement,

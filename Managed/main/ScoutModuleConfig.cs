@@ -37,11 +37,7 @@ public class ScoutModuleConfig : IBuildingConfig
 		storage.SetDefaultStoredItemModifiers(Storage.StandardInsulatedStorage);
 		BuildingInternalConstructor.Def def = go.AddOrGetDef<BuildingInternalConstructor.Def>();
 		def.constructionMass = 500f;
-		def.outputIDs = new List<string>
-		{
-			"ScoutLander",
-			"ScoutRover"
-		};
+		def.outputIDs = new List<string> { "ScoutLander", "ScoutRover" };
 		def.spawnIntoStorage = true;
 		def.storage = storage;
 		def.constructionSymbol = "under_construction";

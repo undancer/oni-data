@@ -85,10 +85,7 @@ public abstract class StateMachine
 
 		public static bool error;
 
-		public abstract float timeinstate
-		{
-			get;
-		}
+		public abstract float timeinstate { get; }
 
 		public GameObject gameObject => GetMaster().gameObject;
 
@@ -206,16 +203,16 @@ public abstract class StateMachine
 
 		public override string ToString()
 		{
-			string str = "";
+			string text = "";
 			if (GetCurrentState() != null)
 			{
-				str = GetCurrentState().name;
+				text = GetCurrentState().name;
 			}
 			else if (GetStatus() != 0)
 			{
-				str = GetStatus().ToString();
+				text = GetStatus().ToString();
 			}
-			return stateMachine.ToString() + "(" + str + ")";
+			return stateMachine.ToString() + "(" + text + ")";
 		}
 
 		public virtual void StartSM()
@@ -499,17 +496,9 @@ public abstract class StateMachine
 
 	public bool saveHistory;
 
-	public int version
-	{
-		get;
-		protected set;
-	}
+	public int version { get; protected set; }
 
-	public SerializeType serializable
-	{
-		get;
-		protected set;
-	}
+	public SerializeType serializable { get; protected set; }
 
 	public StateMachine()
 	{
@@ -637,25 +626,13 @@ public class StateMachine<StateMachineType, StateMachineInstanceType, MasterType
 
 		private StackEntry[] stateStack;
 
-		public StateMachineType sm
-		{
-			get;
-			private set;
-		}
+		public StateMachineType sm { get; private set; }
 
 		protected StateMachineInstanceType smi => (StateMachineInstanceType)(Instance)this;
 
-		public MasterType master
-		{
-			get;
-			private set;
-		}
+		public MasterType master { get; private set; }
 
-		public DefType def
-		{
-			get;
-			set;
-		}
+		public DefType def { get; set; }
 
 		public bool isMasterNull => internalSm.masterTarget.IsNull((StateMachineInstanceType)(Instance)this);
 
@@ -843,10 +820,10 @@ public class StateMachine<StateMachineType, StateMachineInstanceType, MasterType
 					{
 						Error();
 						string text = "(NULL).";
-						IStateMachineTarget master = GetMaster();
-						if (!master.isNull)
+						IStateMachineTarget stateMachineTarget = GetMaster();
+						if (!stateMachineTarget.isNull)
 						{
-							KPrefabID component = master.GetComponent<KPrefabID>();
+							KPrefabID component = stateMachineTarget.GetComponent<KPrefabID>();
 							text = ((!(component != null)) ? ("(" + base.gameObject.name + ").") : ("(" + component.PrefabTag.ToString() + ")."));
 						}
 						string text2 = "Exception in: " + text + stateMachine.ToString() + "." + state.name + ".";
@@ -1044,8 +1021,8 @@ public class StateMachine<StateMachineType, StateMachineInstanceType, MasterType
 					{
 						text3 = "(" + base.gameObject.name + ").";
 					}
-					string str = "Exception in: " + text3 + stateMachine.ToString() + ".GoTo(" + text2 + ")";
-					DebugUtil.LogErrorArgs(controller, str + "\n" + ex.ToString());
+					string text4 = "Exception in: " + text3 + stateMachine.ToString() + ".GoTo(" + text2 + ")";
+					DebugUtil.LogErrorArgs(controller, text4 + "\n" + ex.ToString());
 				}
 			}
 		}
@@ -1846,8 +1823,8 @@ public class StateMachine<StateMachineType, StateMachineInstanceType, MasterType
 				State state = (State)fieldInfo.GetValue(state_machine);
 				if (state != parent_state)
 				{
-					string name = fieldInfo.Name;
-					BindState(parent_state, state, name);
+					string state_name = fieldInfo.Name;
+					BindState(parent_state, state, state_name);
 					BindStates(state, state);
 				}
 			}

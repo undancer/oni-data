@@ -7,17 +7,9 @@ public class AssignmentGroup : IAssignableIdentity
 
 	public List<Ownables> current_owners = new List<Ownables>();
 
-	public string id
-	{
-		get;
-		private set;
-	}
+	public string id { get; private set; }
 
-	public string name
-	{
-		get;
-		private set;
-	}
+	public string name { get; private set; }
 
 	public AssignmentGroup(string id, IAssignableIdentity[] members, string name)
 	{

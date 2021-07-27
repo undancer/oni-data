@@ -4,11 +4,7 @@ public class CellCostQuery : PathFinderQuery
 
 	private int maxCost;
 
-	public int resultCost
-	{
-		get;
-		private set;
-	}
+	public int resultCost { get; private set; }
 
 	public void Reset(int target_cell, int max_cost)
 	{

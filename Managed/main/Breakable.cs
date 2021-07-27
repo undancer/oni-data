@@ -22,10 +22,7 @@ public class Breakable : Workable
 	{
 		base.OnPrefabInit();
 		showProgressBar = false;
-		overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_break_kanim")
-		};
+		overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_break_kanim") };
 		SetWorkTime(float.PositiveInfinity);
 	}
 

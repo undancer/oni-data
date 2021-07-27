@@ -52,11 +52,7 @@ public class KAnimBatchManager
 		Shader.PropertyToID("atlas11")
 	};
 
-	public int dirtyBatchLastFrame
-	{
-		get;
-		private set;
-	}
+	public int dirtyBatchLastFrame { get; private set; }
 
 	public static KAnimBatchManager instance => Singleton<KAnimBatchManager>.Instance;
 

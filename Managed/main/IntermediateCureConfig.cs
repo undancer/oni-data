@@ -33,10 +33,7 @@ public class IntermediateCureConfig : IEntityConfig
 			time = 100f,
 			description = ITEMS.PILLS.INTERMEDIATECURE.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				text
-			},
+			fabricators = new List<Tag> { text },
 			sortOrder = 10,
 			requiredTech = "MedicineII"
 		};

@@ -8,51 +8,53 @@
     <LangVersion>8.0</LangVersion>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>../UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.UI.dll</HintPath>
+      <HintPath>../UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.UIModule.dll</HintPath>
+      <HintPath>../UnityEngine.UIModule.dll</HintPath>
     </Reference>
     <Reference Include="FMODUnity">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/FMODUnity.dll</HintPath>
+      <HintPath>../FMODUnity.dll</HintPath>
     </Reference>
     <Reference Include="System.Core">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/System.Core.dll</HintPath>
+      <HintPath>../System.Core.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/Newtonsoft.Json.dll</HintPath>
+      <HintPath>../Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>../Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AnimationModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.AnimationModule.dll</HintPath>
+      <HintPath>../UnityEngine.AnimationModule.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/System.Xml.dll</HintPath>
+      <HintPath>../System.Xml.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>../UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/System.Xml.Linq.dll</HintPath>
+      <HintPath>../System.Xml.Linq.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>../UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
     <Reference Include="LibNoiseDotNet">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/LibNoiseDotNet.dll</HintPath>
+      <HintPath>../LibNoiseDotNet.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/Ionic.Zip.dll</HintPath>
+      <HintPath>../Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>/Users/undancer/Library/Application Support/Steam/steamapps/common/OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Data/Managed/UnityEngine.InputLegacyModule.dll</HintPath>
+      <HintPath>../UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

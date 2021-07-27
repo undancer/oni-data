@@ -2,8 +2,5 @@ using UnityEngine;
 
 public interface IBasicBuilding
 {
-	Transform transform
-	{
-		get;
-	}
+	Transform transform { get; }
 }

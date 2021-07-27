@@ -150,35 +150,15 @@ public class CameraController : KMonoBehaviour, IInputHandler
 
 	public string handlerName => base.gameObject.name;
 
-	public KInputHandler inputHandler
-	{
-		get;
-		set;
-	}
+	public KInputHandler inputHandler { get; set; }
 
-	public float targetOrthographicSize
-	{
-		get;
-		private set;
-	}
+	public float targetOrthographicSize { get; private set; }
 
-	public bool isTargetPosSet
-	{
-		get;
-		set;
-	}
+	public bool isTargetPosSet { get; set; }
 
-	public Vector3 targetPos
-	{
-		get;
-		private set;
-	}
+	public Vector3 targetPos { get; private set; }
 
-	public bool ignoreClusterFX
-	{
-		get;
-		private set;
-	}
+	public bool ignoreClusterFX { get; private set; }
 
 	public int cameraActiveCluster => ClusterManager.Instance.activeWorldId;
 
@@ -202,11 +182,7 @@ public class CameraController : KMonoBehaviour, IInputHandler
 		}
 	}
 
-	public static CameraController Instance
-	{
-		get;
-		private set;
-	}
+	public static CameraController Instance { get; private set; }
 
 	public void ToggleClusterFX()
 	{
@@ -836,8 +812,8 @@ public class CameraController : KMonoBehaviour, IInputHandler
 	{
 		Ray ray = cam.ScreenPointToRay(mousePos);
 		Vector3 direction = ray.direction;
-		Vector3 b = direction * Mathf.Abs(cam.transform.GetPosition().z / direction.z);
-		return ray.origin + b;
+		Vector3 vector = direction * Mathf.Abs(cam.transform.GetPosition().z / direction.z);
+		return ray.origin + vector;
 	}
 
 	private void CinemaCamUpdate()
@@ -881,14 +857,14 @@ public class CameraController : KMonoBehaviour, IInputHandler
 			float t = Mathf.Min(num2 * unscaledDeltaTime, 0.1f);
 			SetOrthographicsSize(Mathf.Lerp(main.orthographicSize, targetOrthographicSize, t));
 		}
-		Vector3 b = Vector3.zero;
+		Vector3 vector = Vector3.zero;
 		float num5 = 0f;
 		if (isTargetPosSet)
 		{
 			float num6 = cinemaEasing * TuningData<Tuning>.Get().targetZoomEasingFactor;
 			float num7 = cinemaEasing * TuningData<Tuning>.Get().targetPanEasingFactor;
 			float num8 = targetOrthographicSize - main.orthographicSize;
-			Vector3 vector = targetPos - localPosition;
+			Vector3 vector2 = targetPos - localPosition;
 			float num9;
 			float num10;
 			if (!cinemaToggleEasing)
@@ -900,16 +876,16 @@ public class CameraController : KMonoBehaviour, IInputHandler
 			{
 				DebugUtil.LogArgs("Min zoom of:", num2 * unscaledDeltaTime, Mathf.Abs(num8) * num6 * unscaledDeltaTime);
 				num9 = Mathf.Min(num2 * unscaledDeltaTime, Mathf.Abs(num8) * num6 * unscaledDeltaTime);
-				DebugUtil.LogArgs("Min pan of:", num4 * unscaledDeltaTime, vector.magnitude * num7 * unscaledDeltaTime);
-				num10 = Mathf.Min(num4 * unscaledDeltaTime, vector.magnitude * num7 * unscaledDeltaTime);
+				DebugUtil.LogArgs("Min pan of:", num4 * unscaledDeltaTime, vector2.magnitude * num7 * unscaledDeltaTime);
+				num10 = Mathf.Min(num4 * unscaledDeltaTime, vector2.magnitude * num7 * unscaledDeltaTime);
 			}
 			num5 = ((!(Mathf.Abs(num8) < num9)) ? (Mathf.Sign(num8) * num9) : num8);
-			b = ((!(vector.magnitude < num10)) ? (vector.normalized * num10) : vector);
-			if (Mathf.Abs(num5) < 0.001f && b.magnitude < 0.001f)
+			vector = ((!(vector2.magnitude < num10)) ? (vector2.normalized * num10) : vector2);
+			if (Mathf.Abs(num5) < 0.001f && vector.magnitude < 0.001f)
 			{
 				isTargetPosSet = false;
 				num5 = num8;
-				b = vector;
+				vector = vector2;
 			}
 			SetOrthographicsSize(main.orthographicSize + num5 * (main.orthographicSize / 20f));
 		}
@@ -917,12 +893,12 @@ public class CameraController : KMonoBehaviour, IInputHandler
 		{
 			panning = false;
 		}
-		Vector3 b2 = Vector3.zero;
+		Vector3 vector3 = Vector3.zero;
 		if (panning)
 		{
-			b2 = -PlayerController.Instance.GetWorldDragDelta();
+			vector3 = -PlayerController.Instance.GetWorldDragDelta();
 			isTargetPosSet = false;
-			if (b2.magnitude > 0f)
+			if (vector3.magnitude > 0f)
 			{
 				ClearFollowTarget();
 			}
@@ -965,16 +941,16 @@ public class CameraController : KMonoBehaviour, IInputHandler
 				keyPanDelta = zero;
 			}
 		}
-		Vector3 vector2 = localPosition + b + b2 + keyPanDelta * unscaledDeltaTime;
+		Vector3 vector4 = localPosition + vector + vector3 + keyPanDelta * unscaledDeltaTime;
 		if (followTarget != null)
 		{
-			vector2.x = followTargetPos.x;
-			vector2.y = followTargetPos.y;
+			vector4.x = followTargetPos.x;
+			vector4.y = followTargetPos.y;
 		}
-		vector2.z = -100f;
-		if ((double)(vector2 - base.transform.GetLocalPosition()).magnitude > 0.001)
+		vector4.z = -100f;
+		if ((double)(vector4 - base.transform.GetLocalPosition()).magnitude > 0.001)
 		{
-			base.transform.SetLocalPosition(vector2);
+			base.transform.SetLocalPosition(vector4);
 		}
 	}
 
@@ -994,30 +970,30 @@ public class CameraController : KMonoBehaviour, IInputHandler
 		base.transform.SetLocalPosition(localPosition);
 		Vector3 position3 = main.WorldToViewportPoint(position);
 		position2.z = position3.z;
-		Vector3 b = main.ViewportToWorldPoint(position3) - main.ViewportToWorldPoint(position2);
+		Vector3 vector2 = main.ViewportToWorldPoint(position3) - main.ViewportToWorldPoint(position2);
 		if (isTargetPosSet)
 		{
-			b = Vector3.Lerp(localPosition, targetPos, num * smoothDt) - localPosition;
-			if (b.magnitude < 0.001f)
+			vector2 = Vector3.Lerp(localPosition, targetPos, num * smoothDt) - localPosition;
+			if (vector2.magnitude < 0.001f)
 			{
 				isTargetPosSet = false;
-				b = targetPos - localPosition;
+				vector2 = targetPos - localPosition;
 			}
 		}
 		if (!PlayerController.Instance.IsDragging())
 		{
 			panning = false;
 		}
-		Vector3 b2 = Vector3.zero;
+		Vector3 vector3 = Vector3.zero;
 		if (panning)
 		{
-			b2 = -PlayerController.Instance.GetWorldDragDelta();
+			vector3 = -PlayerController.Instance.GetWorldDragDelta();
 			isTargetPosSet = false;
 		}
-		Vector3 vector2 = localPosition + b + b2;
+		Vector3 vector4 = localPosition + vector2 + vector3;
 		if (panning)
 		{
-			if (b2.magnitude > 0f)
+			if (vector3.magnitude > 0f)
 			{
 				ClearFollowTarget();
 			}
@@ -1053,20 +1029,20 @@ public class CameraController : KMonoBehaviour, IInputHandler
 				isTargetPosSet = false;
 				overrideZoomSpeed = 0f;
 			}
-			Vector3 vector3 = new Vector3(Mathf.Lerp(0f, keyPanDelta.x, smoothDt * keyPanningEasing), Mathf.Lerp(0f, keyPanDelta.y, smoothDt * keyPanningEasing), 0f);
-			keyPanDelta -= vector3;
-			vector2.x += vector3.x;
-			vector2.y += vector3.y;
+			Vector3 vector5 = new Vector3(Mathf.Lerp(0f, keyPanDelta.x, smoothDt * keyPanningEasing), Mathf.Lerp(0f, keyPanDelta.y, smoothDt * keyPanningEasing), 0f);
+			keyPanDelta -= vector5;
+			vector4.x += vector5.x;
+			vector4.y += vector5.y;
 		}
 		if (followTarget != null)
 		{
-			vector2.x = followTargetPos.x;
-			vector2.y = followTargetPos.y;
+			vector4.x = followTargetPos.x;
+			vector4.y = followTargetPos.y;
 		}
-		vector2.z = -100f;
-		if ((double)(vector2 - base.transform.GetLocalPosition()).magnitude > 0.001)
+		vector4.z = -100f;
+		if ((double)(vector4 - base.transform.GetLocalPosition()).magnitude > 0.001)
 		{
-			base.transform.SetLocalPosition(vector2);
+			base.transform.SetLocalPosition(vector4);
 		}
 	}
 
@@ -1117,9 +1093,9 @@ public class CameraController : KMonoBehaviour, IInputHandler
 		if (!Game.Instance.IsLoading() && !FreeCameraEnabled)
 		{
 			Camera main = Camera.main;
-			float d = 0.33f;
-			Ray ray = main.ViewportPointToRay(Vector3.zero + Vector3.one * d);
-			Ray ray2 = main.ViewportPointToRay(Vector3.one - Vector3.one * d);
+			float num = 0.33f;
+			Ray ray = main.ViewportPointToRay(Vector3.zero + Vector3.one * num);
+			Ray ray2 = main.ViewportPointToRay(Vector3.one - Vector3.one * num);
 			float distance = Mathf.Abs(ray.origin.z / ray.direction.z);
 			float distance2 = Mathf.Abs(ray2.origin.z / ray2.direction.z);
 			Vector3 point = ray.GetPoint(distance);
@@ -1127,22 +1103,22 @@ public class CameraController : KMonoBehaviour, IInputHandler
 			WorldContainer activeWorld = ClusterManager.Instance.activeWorld;
 			if (!(point2.x - point.x > (float)activeWorld.Width * Grid.CellSizeInMeters) && !(point2.y - point.y > (float)activeWorld.Height * Grid.CellSizeInMeters))
 			{
-				Vector3 b = base.transform.GetPosition() - ray.origin;
-				Vector3 vector = point;
-				vector.x = Mathf.Max(activeWorld.minimumBounds.x * Grid.CellSizeInMeters, vector.x);
-				vector.y = Mathf.Max(activeWorld.minimumBounds.y * Grid.CellSizeInMeters, vector.y);
-				ray.origin = vector;
+				Vector3 vector = base.transform.GetPosition() - ray.origin;
+				Vector3 vector2 = point;
+				vector2.x = Mathf.Max(activeWorld.minimumBounds.x * Grid.CellSizeInMeters, vector2.x);
+				vector2.y = Mathf.Max(activeWorld.minimumBounds.y * Grid.CellSizeInMeters, vector2.y);
+				ray.origin = vector2;
 				ray.direction = -ray.direction;
-				vector = ray.GetPoint(distance);
-				base.transform.SetPosition(vector + b);
-				b = base.transform.GetPosition() - ray2.origin;
-				vector = point2;
-				vector.x = Mathf.Min(activeWorld.maximumBounds.x * Grid.CellSizeInMeters, vector.x);
-				vector.y = Mathf.Min(activeWorld.maximumBounds.y * Grid.CellSizeInMeters * MAX_Y_SCALE, vector.y);
-				ray2.origin = vector;
+				vector2 = ray.GetPoint(distance);
+				base.transform.SetPosition(vector2 + vector);
+				vector = base.transform.GetPosition() - ray2.origin;
+				vector2 = point2;
+				vector2.x = Mathf.Min(activeWorld.maximumBounds.x * Grid.CellSizeInMeters, vector2.x);
+				vector2.y = Mathf.Min(activeWorld.maximumBounds.y * Grid.CellSizeInMeters * MAX_Y_SCALE, vector2.y);
+				ray2.origin = vector2;
 				ray2.direction = -ray2.direction;
-				vector = ray2.GetPoint(distance2);
-				Vector3 position = vector + b;
+				vector2 = ray2.GetPoint(distance2);
+				Vector3 position = vector2 + vector;
 				position.z = -100f;
 				base.transform.SetPosition(position);
 			}

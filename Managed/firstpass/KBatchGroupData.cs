@@ -15,23 +15,11 @@ public class KBatchGroupData
 
 	private const int NULL_DATA_FRAME_ID = -1010;
 
-	public HashedString groupID
-	{
-		get;
-		private set;
-	}
+	public HashedString groupID { get; private set; }
 
-	public bool isSwap
-	{
-		get;
-		private set;
-	}
+	public bool isSwap { get; private set; }
 
-	public int maxVisibleSymbols
-	{
-		get;
-		private set;
-	}
+	public int maxVisibleSymbols { get; private set; }
 
 	public int maxSymbolsPerBuild => frameElementSymbols.Count;
 
@@ -39,77 +27,29 @@ public class KBatchGroupData
 
 	public int animDataStartOffset => symbolFrameInstances.Count * 16;
 
-	public List<KAnim.Anim> anims
-	{
-		get;
-		private set;
-	}
+	public List<KAnim.Anim> anims { get; private set; }
 
-	public Dictionary<KAnimHashedString, int> animIndex
-	{
-		get;
-		private set;
-	}
+	public Dictionary<KAnimHashedString, int> animIndex { get; private set; }
 
-	public Dictionary<KAnimHashedString, int> animCount
-	{
-		get;
-		private set;
-	}
+	public Dictionary<KAnimHashedString, int> animCount { get; private set; }
 
-	public List<KAnim.Anim.Frame> animFrames
-	{
-		get;
-		private set;
-	}
+	public List<KAnim.Anim.Frame> animFrames { get; private set; }
 
-	public List<KAnim.Anim.FrameElement> frameElements
-	{
-		get;
-		private set;
-	}
+	public List<KAnim.Anim.FrameElement> frameElements { get; private set; }
 
-	public List<KAnim.Build> builds
-	{
-		get;
-		private set;
-	}
+	public List<KAnim.Build> builds { get; private set; }
 
-	public List<KAnim.Build.Symbol> frameElementSymbols
-	{
-		get;
-		private set;
-	}
+	public List<KAnim.Build.Symbol> frameElementSymbols { get; private set; }
 
-	public Dictionary<KAnimHashedString, int> frameElementSymbolIndices
-	{
-		get;
-		private set;
-	}
+	public Dictionary<KAnimHashedString, int> frameElementSymbolIndices { get; private set; }
 
-	public List<KAnim.Build.SymbolFrameInstance> symbolFrameInstances
-	{
-		get;
-		private set;
-	}
+	public List<KAnim.Build.SymbolFrameInstance> symbolFrameInstances { get; private set; }
 
-	public Dictionary<KAnimHashedString, int> textureStartIndex
-	{
-		get;
-		private set;
-	}
+	public Dictionary<KAnimHashedString, int> textureStartIndex { get; private set; }
 
-	public Dictionary<KAnimHashedString, int> firstSymbolIndex
-	{
-		get;
-		private set;
-	}
+	public Dictionary<KAnimHashedString, int> firstSymbolIndex { get; private set; }
 
-	public List<Texture2D> textures
-	{
-		get;
-		private set;
-	}
+	public List<Texture2D> textures { get; private set; }
 
 	public KBatchGroupData(HashedString id)
 	{
@@ -328,18 +268,18 @@ public class KBatchGroupData
 
 	public void WriteAnimData(int start_index, float[] data)
 	{
-		List<KAnim.Anim.Frame> animFrames = GetAnimFrames();
+		List<KAnim.Anim.Frame> list = GetAnimFrames();
 		List<KAnim.Anim.FrameElement> animFrameElements = GetAnimFrameElements();
-		int num = 1 + ((animFrames.Count == 0) ? symbolFrameInstances.Count : animFrames.Count);
-		if (animFrames.Count == 0 && symbolFrameInstances.Count == 0 && animFrameElements.Count == 0)
+		int num = 1 + ((list.Count == 0) ? symbolFrameInstances.Count : list.Count);
+		if (list.Count == 0 && symbolFrameInstances.Count == 0 && animFrameElements.Count == 0)
 		{
-			Debug.LogError("Eh, no data " + animFrames.Count + " " + symbolFrameInstances.Count + " " + animFrameElements.Count);
+			Debug.LogError("Eh, no data " + list.Count + " " + symbolFrameInstances.Count + " " + animFrameElements.Count);
 		}
 		data[start_index++] = num;
-		data[start_index++] = animFrames.Count;
+		data[start_index++] = list.Count;
 		data[start_index++] = animFrameElements.Count;
 		data[start_index++] = symbolFrameInstances.Count;
-		if (animFrames.Count == 0)
+		if (list.Count == 0)
 		{
 			for (int i = 0; i < symbolFrameInstances.Count; i++)
 			{
@@ -353,9 +293,9 @@ public class KBatchGroupData
 			}
 			return;
 		}
-		for (int k = 0; k < animFrames.Count; k++)
+		for (int k = 0; k < list.Count; k++)
 		{
-			Write(data, start_index, k, animFrames[k]);
+			Write(data, start_index, k, list[k]);
 			start_index += 4;
 		}
 		for (int l = 0; l < animFrameElements.Count; l++)

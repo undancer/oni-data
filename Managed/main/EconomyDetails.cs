@@ -11,17 +11,9 @@ public class EconomyDetails
 	{
 		public class Type
 		{
-			public string id
-			{
-				get;
-				private set;
-			}
+			public string id { get; private set; }
 
-			public string unit
-			{
-				get;
-				private set;
-			}
+			public string unit { get; private set; }
 
 			public Type(string id, string unit)
 			{
@@ -30,17 +22,9 @@ public class EconomyDetails
 			}
 		}
 
-		public Tag tag
-		{
-			get;
-			private set;
-		}
+		public Tag tag { get; private set; }
 
-		public Type type
-		{
-			get;
-			private set;
-		}
+		public Type type { get; private set; }
 
 		public Resource(Tag tag, Type type)
 		{
@@ -51,23 +35,11 @@ public class EconomyDetails
 
 	public class BiomeTransformation
 	{
-		public Tag tag
-		{
-			get;
-			private set;
-		}
+		public Tag tag { get; private set; }
 
-		public Resource resource
-		{
-			get;
-			private set;
-		}
+		public Resource resource { get; private set; }
 
-		public float ratio
-		{
-			get;
-			private set;
-		}
+		public float ratio { get; private set; }
 
 		public BiomeTransformation(Tag tag, Resource resource, float ratio)
 		{
@@ -88,23 +60,11 @@ public class EconomyDetails
 
 	public class Ratio
 	{
-		public Resource input
-		{
-			get;
-			private set;
-		}
+		public Resource input { get; private set; }
 
-		public Resource output
-		{
-			get;
-			private set;
-		}
+		public Resource output { get; private set; }
 
-		public bool allowNegativeOutput
-		{
-			get;
-			private set;
-		}
+		public bool allowNegativeOutput { get; private set; }
 
 		public Ratio(Resource input, Resource output, bool allow_negative_output)
 		{
@@ -118,17 +78,9 @@ public class EconomyDetails
 	{
 		public class Entry
 		{
-			public Tag tag
-			{
-				get;
-				private set;
-			}
+			public Tag tag { get; private set; }
 
-			public float count
-			{
-				get;
-				private set;
-			}
+			public float count { get; private set; }
 
 			public Entry(Tag tag, float count)
 			{
@@ -141,23 +93,11 @@ public class EconomyDetails
 
 		private List<Entry> entries = new List<Entry>();
 
-		public string name
-		{
-			get;
-			private set;
-		}
+		public string name { get; private set; }
 
-		public float defaultCount
-		{
-			get;
-			private set;
-		}
+		public float defaultCount { get; private set; }
 
-		public float timeInSeconds
-		{
-			get;
-			set;
-		}
+		public float timeInSeconds { get; set; }
 
 		public Scenario(string name, float default_count, Func<Transformation, bool> filter)
 		{
@@ -205,17 +145,9 @@ public class EconomyDetails
 	{
 		public class Delta
 		{
-			public Resource resource
-			{
-				get;
-				private set;
-			}
+			public Resource resource { get; private set; }
 
-			public float amount
-			{
-				get;
-				set;
-			}
+			public float amount { get; set; }
 
 			public Delta(Resource resource, float amount)
 			{
@@ -226,11 +158,7 @@ public class EconomyDetails
 
 		public class Type
 		{
-			public string id
-			{
-				get;
-				private set;
-			}
+			public string id { get; private set; }
 
 			public Type(string id)
 			{
@@ -240,29 +168,13 @@ public class EconomyDetails
 
 		public List<Delta> deltas = new List<Delta>();
 
-		public Tag tag
-		{
-			get;
-			private set;
-		}
+		public Tag tag { get; private set; }
 
-		public Type type
-		{
-			get;
-			private set;
-		}
+		public Type type { get; private set; }
 
-		public float timeInSeconds
-		{
-			get;
-			private set;
-		}
+		public float timeInSeconds { get; private set; }
 
-		public bool timeInvariant
-		{
-			get;
-			private set;
-		}
+		public bool timeInvariant { get; private set; }
 
 		public Transformation(Tag tag, Type type, float time_in_seconds, bool timeInvariant = false)
 		{
@@ -478,7 +390,7 @@ public class EconomyDetails
 			o.Write(", " + item2.output.tag.Name + "(" + item2.output.type.unit + ")/" + item2.input.tag.Name + "(" + item2.input.type.unit + ")");
 			num++;
 		}
-		string str = "B";
+		string text = "B";
 		o.Write("\n");
 		int num2 = 1;
 		transformations.Sort((Transformation x, Transformation y) => x.tag.Name.CompareTo(y.tag.Name));
@@ -490,7 +402,7 @@ public class EconomyDetails
 				num2++;
 			}
 		}
-		string text = "B" + (num2 + 4);
+		string text2 = "B" + (num2 + 4);
 		int num3 = 1;
 		for (int j = 0; j < transformations.Count; j++)
 		{
@@ -515,7 +427,7 @@ public class EconomyDetails
 			{
 				o.Write(",\"invariant\"");
 			}
-			string a = str + num3;
+			string a = text + num3;
 			float num4 = 0f;
 			bool flag = false;
 			foreach (Resource item3 in used_resources)
@@ -539,7 +451,7 @@ public class EconomyDetails
 					}
 					if (!transformation2.timeInvariant)
 					{
-						WriteProduct(o, a, (delta.amount / transformation2.timeInSeconds).ToString("0.00000"), text);
+						WriteProduct(o, a, (delta.amount / transformation2.timeInSeconds).ToString("0.00000"), text2);
 					}
 					else
 					{
@@ -550,7 +462,7 @@ public class EconomyDetails
 			o.Write(",");
 			if (flag)
 			{
-				WriteProduct(o, a, (num4 / transformation2.timeInSeconds).ToString("0.00000"), text);
+				WriteProduct(o, a, (num4 / transformation2.timeInSeconds).ToString("0.00000"), text2);
 			}
 			foreach (Ratio item4 in list)
 			{
@@ -569,22 +481,22 @@ public class EconomyDetails
 		{
 			if (k >= num5 && k < num5 + used_resources.Count)
 			{
-				string text2 = ((char)(65 + k % 26)).ToString();
+				string text3 = ((char)(65 + k % 26)).ToString();
 				int num6 = Mathf.FloorToInt((float)k / 26f);
 				if (num6 > 0)
 				{
-					text2 = (char)(65 + num6 - 1) + text2;
+					text3 = (char)(65 + num6 - 1) + text3;
 				}
-				o.Write("\"=SUM(" + text2 + "2: " + text2 + num2 + ")\"");
+				o.Write("\"=SUM(" + text3 + "2: " + text3 + num2 + ")\"");
 			}
 			o.Write(",");
 		}
-		string str2 = "B" + (num2 + 5);
+		string text4 = "B" + (num2 + 5);
 		o.Write("\n");
 		o.Write("\nTiming:");
 		o.Write("\nTimeInSeconds:," + scenario.timeInSeconds);
 		o.Write("\nSecondsPerCycle:," + 600f);
-		o.Write("\nCycles:,=" + text + "/" + str2);
+		o.Write("\nCycles:,=" + text2 + "/" + text4);
 	}
 
 	public Resource CreateResource(Tag tag, Resource.Type resource_type)

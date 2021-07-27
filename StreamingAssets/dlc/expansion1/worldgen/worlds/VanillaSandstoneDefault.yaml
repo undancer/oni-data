@@ -12,6 +12,12 @@ worldsize:
 layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
 #                                in order to use this.
 
+defaultsOverrides:
+  data:
+    OverworldDensityMin: 20
+    OverworldDensityMax: 20
+    OverworldSampleBehaviour: PoissonDisk
+
 # List all the subworld files to load
 subworldFiles:
   - name: subworlds/sandstone/SandstoneStart

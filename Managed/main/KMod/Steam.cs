@@ -35,7 +35,7 @@ namespace KMod
 				return null;
 			}
 			ZipFile zipFile = new ZipFile(pchFolder);
-			KModHeader header = KModUtil.GetHeader(zipFile, label2.defaultStaticID, subscribed.title, subscribed.description);
+			KModHeader header = KModUtil.GetHeader(zipFile, label2.defaultStaticID, subscribed.title, subscribed.description, devMod: false);
 			label2.title = header.title;
 			return new Mod(label2, header.staticID, header.description, zipFile, UI.FRONTEND.MODS.TOOLTIPS.MANAGE_STEAM_SUBSCRIPTION, delegate
 			{

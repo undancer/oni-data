@@ -134,8 +134,8 @@ public class StandardCropPlant : StateMachineComponent<StandardCropPlant.StatesI
 		private static string GetWiltAnim(StatesInstance smi)
 		{
 			float num = smi.master.growing.PercentOfCurrentHarvest();
-			string str = ((num < 0.75f) ? "1" : ((!(num < 1f)) ? "3" : "2"));
-			return smi.master.anims.wilt_base + str;
+			string text = ((num < 0.75f) ? "1" : ((!(num < 1f)) ? "3" : "2"));
+			return smi.master.anims.wilt_base + text;
 		}
 
 		private static void RefreshPositionPercent(StatesInstance smi, float dt)

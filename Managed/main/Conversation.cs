@@ -71,9 +71,9 @@ public class Conversation
 				if (_modes == null)
 				{
 					_modes = new Dictionary<int, Mode>();
-					foreach (Mode mode2 in modeList)
+					foreach (Mode mode in modeList)
 					{
-						_modes[(int)mode2.type] = mode2;
+						_modes[(int)mode.type] = mode;
 					}
 				}
 				return _modes;

@@ -107,28 +107,14 @@ public class ArcadeMachine : StateMachineComponent<ArcadeMachine.StatesInstance>
 
 	public KAnimFile[][] overrideAnims = new KAnimFile[2][]
 	{
-		new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_arcade_cabinet_playerone_kanim")
-		},
-		new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_arcade_cabinet_playertwo_kanim")
-		}
+		new KAnimFile[1] { Assets.GetAnim("anim_interacts_arcade_cabinet_playerone_kanim") },
+		new KAnimFile[1] { Assets.GetAnim("anim_interacts_arcade_cabinet_playertwo_kanim") }
 	};
 
 	public HashedString[][] workAnims = new HashedString[2][]
 	{
-		new HashedString[2]
-		{
-			"working_pre",
-			"working_loop_one_p"
-		},
-		new HashedString[2]
-		{
-			"working_pre",
-			"working_loop_two_p"
-		}
+		new HashedString[2] { "working_pre", "working_loop_one_p" },
+		new HashedString[2] { "working_pre", "working_loop_two_p" }
 	};
 
 	protected override void OnSpawn()

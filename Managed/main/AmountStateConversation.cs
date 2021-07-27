@@ -8,10 +8,7 @@ public class AmountStateConversation : ConversationType
 	{
 		{
 			Conversation.ModeType.Query,
-			new List<Conversation.ModeType>
-			{
-				Conversation.ModeType.Statement
-			}
+			new List<Conversation.ModeType> { Conversation.ModeType.Statement }
 		},
 		{
 			Conversation.ModeType.Satisfaction,
@@ -63,15 +60,7 @@ public class AmountStateConversation : ConversationType
 		}
 	};
 
-	public static List<string> targets = new List<string>
-	{
-		"Stress",
-		"QualityOfLife",
-		"HitPoints",
-		"Calories",
-		"Stamina",
-		"ImmuneLevel"
-	};
+	public static List<string> targets = new List<string> { "Stress", "QualityOfLife", "HitPoints", "Calories", "Stamina", "ImmuneLevel" };
 
 	public AmountStateConversation()
 	{

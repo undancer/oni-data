@@ -60,15 +60,7 @@ public class TextureLerper
 			new Vector3(0f, 1f, 0f),
 			new Vector3(1f, 0f, 0f)
 		};
-		mesh.triangles = new int[6]
-		{
-			0,
-			1,
-			2,
-			0,
-			3,
-			1
-		};
+		mesh.triangles = new int[6] { 0, 1, 2, 0, 3, 1 };
 		mesh.uv = new Vector2[4]
 		{
 			new Vector2(0f, 0f),

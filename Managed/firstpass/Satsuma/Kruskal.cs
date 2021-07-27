@@ -12,35 +12,15 @@ namespace Satsuma
 
 		private DisjointSet<Node> components;
 
-		public IGraph Graph
-		{
-			get;
-			private set;
-		}
+		public IGraph Graph { get; private set; }
 
-		public Func<Arc, TCost> Cost
-		{
-			get;
-			private set;
-		}
+		public Func<Arc, TCost> Cost { get; private set; }
 
-		public Func<Node, int> MaxDegree
-		{
-			get;
-			private set;
-		}
+		public Func<Node, int> MaxDegree { get; private set; }
 
-		public HashSet<Arc> Forest
-		{
-			get;
-			private set;
-		}
+		public HashSet<Arc> Forest { get; private set; }
 
-		public Dictionary<Node, int> Degree
-		{
-			get;
-			private set;
-		}
+		public Dictionary<Node, int> Degree { get; private set; }
 
 		public Kruskal(IGraph graph, Func<Arc, TCost> cost, Func<Node, int> maxDegree = null)
 		{
@@ -85,19 +65,19 @@ namespace Satsuma
 			{
 				return false;
 			}
-			DisjointSetSet<Node> a = components.WhereIs(node);
+			DisjointSetSet<Node> disjointSetSet = components.WhereIs(node);
 			Node node2 = Graph.V(arc);
 			if (MaxDegree != null && Degree[node2] >= MaxDegree(node2))
 			{
 				return false;
 			}
-			DisjointSetSet<Node> b = components.WhereIs(node2);
-			if (a == b)
+			DisjointSetSet<Node> disjointSetSet2 = components.WhereIs(node2);
+			if (disjointSetSet == disjointSetSet2)
 			{
 				return false;
 			}
 			Forest.Add(arc);
-			components.Union(a, b);
+			components.Union(disjointSetSet, disjointSetSet2);
 			Degree[node]++;
 			Degree[node2]++;
 			arcsToGo--;

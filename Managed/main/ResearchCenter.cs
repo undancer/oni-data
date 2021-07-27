@@ -106,8 +106,8 @@ public class ResearchCenter : Workable, IGameObjectEffectDescriptor, ISim200ms, 
 	{
 		Worker component = context.chore.driver.GetComponent<Worker>();
 		float num = Db.Get().AttributeConverters.ResearchSpeed.Lookup(component).Evaluate();
-		Worker worker = context.consumerState.worker;
-		return Db.Get().AttributeConverters.ResearchSpeed.Lookup(worker).Evaluate() > num;
+		Worker cmp = context.consumerState.worker;
+		return Db.Get().AttributeConverters.ResearchSpeed.Lookup(cmp).Evaluate() > num;
 	}
 
 	public override float GetPercentComplete()

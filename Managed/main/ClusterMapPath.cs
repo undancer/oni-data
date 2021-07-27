@@ -61,10 +61,10 @@ public class ClusterMapPath : MonoBehaviour
 			pathStart.transform.localPosition = lineRenderer.Points[0];
 			pathStart.gameObject.SetActive(value: true);
 			Vector2 vector = lineRenderer.Points[lineRenderer.Points.Length - 1];
-			Vector2 b = lineRenderer.Points[lineRenderer.Points.Length - 2];
+			Vector2 vector2 = lineRenderer.Points[lineRenderer.Points.Length - 2];
 			pathEnd.transform.localPosition = vector;
-			Vector2 v = vector - b;
-			pathEnd.transform.rotation = Quaternion.LookRotation(Vector3.forward, v);
+			Vector2 vector3 = vector - vector2;
+			pathEnd.transform.rotation = Quaternion.LookRotation(Vector3.forward, vector3);
 			pathEnd.gameObject.SetActive(value: true);
 		}
 		else
@@ -78,8 +78,8 @@ public class ClusterMapPath : MonoBehaviour
 	{
 		if (m_nodes.Count > 1)
 		{
-			Vector2 b = m_nodes[0];
-			Vector2 to = m_nodes[1] - b;
+			Vector2 vector = m_nodes[0];
+			Vector2 to = m_nodes[1] - vector;
 			return Vector2.SignedAngle(Vector2.up, to);
 		}
 		return 0f;

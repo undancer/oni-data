@@ -53,10 +53,7 @@ public class LiquidCooledFanConfig : IBuildingConfig
 		elementConsumer.showDescriptor = false;
 		LiquidCooledFanWorkable liquidCooledFanWorkable = go.AddOrGet<LiquidCooledFanWorkable>();
 		liquidCooledFanWorkable.SetWorkTime(20f);
-		liquidCooledFanWorkable.overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_liquidfan_kanim")
-		};
+		liquidCooledFanWorkable.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_liquidfan_kanim") };
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

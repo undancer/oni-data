@@ -8,35 +8,15 @@ namespace NodeEditorFramework
 	{
 		private IConnectionTypeDeclaration declaration;
 
-		public string Identifier
-		{
-			get;
-			private set;
-		}
+		public string Identifier { get; private set; }
 
-		public Type Type
-		{
-			get;
-			private set;
-		}
+		public Type Type { get; private set; }
 
-		public Color Color
-		{
-			get;
-			private set;
-		}
+		public Color Color { get; private set; }
 
-		public Texture2D InKnobTex
-		{
-			get;
-			private set;
-		}
+		public Texture2D InKnobTex { get; private set; }
 
-		public Texture2D OutKnobTex
-		{
-			get;
-			private set;
-		}
+		public Texture2D OutKnobTex { get; private set; }
 
 		internal TypeData(IConnectionTypeDeclaration typeDecl)
 		{

@@ -21,9 +21,9 @@ public class KTabMenuHeader : KMonoBehaviour
 
 	public void Add(string name, OnClick onClick, int id)
 	{
-		GameObject gameObject = Util.KInstantiateUI(prefab.gameObject);
-		gameObject.SetActive(value: true);
-		RectTransform component = gameObject.GetComponent<RectTransform>();
+		GameObject obj = Util.KInstantiateUI(prefab.gameObject);
+		obj.SetActive(value: true);
+		RectTransform component = obj.GetComponent<RectTransform>();
 		component.transform.SetParent(base.transform, worldPositionStays: false);
 		component.name = name;
 		Text componentInChildren = component.GetComponentInChildren<Text>();
@@ -32,7 +32,7 @@ public class KTabMenuHeader : KMonoBehaviour
 			componentInChildren.text = name.ToUpper();
 		}
 		ActivateTabArtwork(id);
-		gameObject.GetComponent<KButton>().onClick += delegate
+		obj.GetComponent<KButton>().onClick += delegate
 		{
 			onClick(id);
 		};
@@ -40,8 +40,8 @@ public class KTabMenuHeader : KMonoBehaviour
 
 	public void Add(Sprite icon, string name, OnClick onClick, int id, string tooltip = "")
 	{
-		GameObject gameObject = Util.KInstantiateUI(prefab.gameObject);
-		RectTransform component = gameObject.GetComponent<RectTransform>();
+		GameObject obj = Util.KInstantiateUI(prefab.gameObject);
+		RectTransform component = obj.GetComponent<RectTransform>();
 		component.transform.SetParent(base.transform, worldPositionStays: false);
 		component.name = name;
 		if (tooltip == "")
@@ -58,7 +58,7 @@ public class KTabMenuHeader : KMonoBehaviour
 		{
 			componentInChildren.TitleText.text = name;
 		}
-		KToggle component2 = gameObject.GetComponent<KToggle>();
+		KToggle component2 = obj.GetComponent<KToggle>();
 		if ((bool)component2 && (bool)component2.fgImage)
 		{
 			component2.fgImage.sprite = icon;

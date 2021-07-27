@@ -4,17 +4,9 @@ public class SafetyChecker
 	{
 		public delegate bool Callback(int cell, int cost, Context context);
 
-		public Callback callback
-		{
-			get;
-			private set;
-		}
+		public Callback callback { get; private set; }
 
-		public int mask
-		{
-			get;
-			private set;
-		}
+		public int mask { get; private set; }
 
 		public Condition(string id, int condition_mask, Callback condition_callback)
 		{
@@ -49,11 +41,7 @@ public class SafetyChecker
 		}
 	}
 
-	public Condition[] conditions
-	{
-		get;
-		private set;
-	}
+	public Condition[] conditions { get; private set; }
 
 	public SafetyChecker(Condition[] conditions)
 	{

@@ -89,9 +89,9 @@ public class ResourceCategoryScreen : KScreen
 		}
 		for (int i = 0; i < 1; i++)
 		{
-			Tag tag = DisplayedCategoryKeys[categoryUpdatePacer];
-			ResourceCategoryHeader resourceCategoryHeader = DisplayedCategories[tag];
-			if (DiscoveredResources.Instance.IsDiscovered(tag) && !resourceCategoryHeader.gameObject.activeInHierarchy)
+			Tag key = DisplayedCategoryKeys[categoryUpdatePacer];
+			ResourceCategoryHeader resourceCategoryHeader = DisplayedCategories[key];
+			if (DiscoveredResources.Instance.IsDiscovered(key) && !resourceCategoryHeader.gameObject.activeInHierarchy)
 			{
 				resourceCategoryHeader.gameObject.SetActive(value: true);
 			}
@@ -110,9 +110,9 @@ public class ResourceCategoryScreen : KScreen
 
 	private ResourceCategoryHeader NewCategoryHeader(Tag categoryTag, GameUtil.MeasureUnit measure)
 	{
-		GameObject gameObject = Util.KInstantiateUI(Prefab_CategoryBar, CategoryContainer.gameObject);
-		gameObject.name = "CategoryHeader_" + categoryTag.Name;
-		ResourceCategoryHeader component = gameObject.GetComponent<ResourceCategoryHeader>();
+		GameObject obj = Util.KInstantiateUI(Prefab_CategoryBar, CategoryContainer.gameObject);
+		obj.name = "CategoryHeader_" + categoryTag.Name;
+		ResourceCategoryHeader component = obj.GetComponent<ResourceCategoryHeader>();
 		component.SetTag(categoryTag, measure);
 		return component;
 	}

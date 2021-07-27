@@ -251,18 +251,18 @@ public class ComplexFabricatorSideScreen : SideScreenContent
 				ComplexRecipe.RecipeElement[] ingredients = recipe.ingredients;
 				foreach (ComplexRecipe.RecipeElement recipeElement in ingredients)
 				{
-					GameObject gameObject = Util.KInstantiateUI(component2.GetReference("FromIconPrefab").gameObject, component2.GetReference("FromIcons").gameObject, force_active: true);
-					gameObject.GetComponent<Image>().sprite = Def.GetUISprite(recipeElement.material).first;
-					gameObject.GetComponent<Image>().color = Def.GetUISprite(recipeElement.material).second;
-					gameObject.gameObject.name = recipeElement.material.Name;
+					GameObject obj = Util.KInstantiateUI(component2.GetReference("FromIconPrefab").gameObject, component2.GetReference("FromIcons").gameObject, force_active: true);
+					obj.GetComponent<Image>().sprite = Def.GetUISprite(recipeElement.material).first;
+					obj.GetComponent<Image>().color = Def.GetUISprite(recipeElement.material).second;
+					obj.gameObject.name = recipeElement.material.Name;
 				}
 				ingredients = recipe.results;
 				foreach (ComplexRecipe.RecipeElement recipeElement2 in ingredients)
 				{
-					GameObject gameObject2 = Util.KInstantiateUI(component2.GetReference("ToIconPrefab").gameObject, component2.GetReference("ToIcons").gameObject, force_active: true);
-					gameObject2.GetComponent<Image>().sprite = Def.GetUISprite(recipeElement2.material).first;
-					gameObject2.GetComponent<Image>().color = Def.GetUISprite(recipeElement2.material).second;
-					gameObject2.gameObject.name = recipeElement2.material.Name;
+					GameObject obj2 = Util.KInstantiateUI(component2.GetReference("ToIconPrefab").gameObject, component2.GetReference("ToIcons").gameObject, force_active: true);
+					obj2.GetComponent<Image>().sprite = Def.GetUISprite(recipeElement2.material).first;
+					obj2.GetComponent<Image>().color = Def.GetUISprite(recipeElement2.material).second;
+					obj2.gameObject.name = recipeElement2.material.Name;
 				}
 				break;
 			}

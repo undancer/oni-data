@@ -37,8 +37,8 @@ public class HoverTextScreen : KScreen
 
 	private void Update()
 	{
-		bool enabled = PlayerController.Instance.ActiveTool.ShowHoverUI();
-		drawer.SetEnabled(enabled);
+		bool flag = PlayerController.Instance.ActiveTool.ShowHoverUI();
+		drawer.SetEnabled(flag);
 	}
 
 	public Sprite GetSprite(string byName)

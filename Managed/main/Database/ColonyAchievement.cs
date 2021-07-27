@@ -25,11 +25,7 @@ namespace Database
 
 		public Action<KMonoBehaviour> victorySequence;
 
-		public string victoryNISSnapshot
-		{
-			get;
-			private set;
-		}
+		public string victoryNISSnapshot { get; private set; }
 
 		public ColonyAchievement(string Id, string steamAchievementId, string Name, string description, bool isVictoryCondition, List<ColonyAchievementRequirement> requirementChecklist, string messageTitle = "", string messageBody = "", string videoDataName = "", string victoryLoopVideo = "", Action<KMonoBehaviour> VictorySequence = null, string victorySnapshot = "", string icon = "")
 			: base(Id, Name)

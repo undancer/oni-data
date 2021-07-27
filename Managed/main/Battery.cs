@@ -35,10 +35,7 @@ public class Battery : KMonoBehaviour, IEnergyConsumer, ICircuitConnected, IGame
 
 	private CircuitManager.ConnectionStatus connectionStatus;
 
-	public static readonly Tag[] DEFAULT_CONNECTED_TAGS = new Tag[1]
-	{
-		GameTags.Operational
-	};
+	public static readonly Tag[] DEFAULT_CONNECTED_TAGS = new Tag[1] { GameTags.Operational };
 
 	[SerializeField]
 	public Tag[] connectedTags = DEFAULT_CONNECTED_TAGS;
@@ -52,11 +49,7 @@ public class Battery : KMonoBehaviour, IEnergyConsumer, ICircuitConnected, IGame
 
 	private float joulesConsumed;
 
-	public float WattsUsed
-	{
-		get;
-		private set;
-	}
+	public float WattsUsed { get; private set; }
 
 	public float WattsNeededWhenActive => 0f;
 
@@ -68,21 +61,13 @@ public class Battery : KMonoBehaviour, IEnergyConsumer, ICircuitConnected, IGame
 
 	public float Capacity => capacity;
 
-	public float ChargeCapacity
-	{
-		get;
-		private set;
-	}
+	public float ChargeCapacity { get; private set; }
 
 	public int PowerSortOrder => powerSortOrder;
 
 	public string Name => GetComponent<KSelectable>().GetName();
 
-	public int PowerCell
-	{
-		get;
-		private set;
-	}
+	public int PowerCell { get; private set; }
 
 	public ushort CircuitID => Game.Instance.circuitManager.GetCircuitID(this);
 
@@ -90,17 +75,9 @@ public class Battery : KMonoBehaviour, IEnergyConsumer, ICircuitConnected, IGame
 
 	public bool IsPowered => connectionStatus == CircuitManager.ConnectionStatus.Powered;
 
-	public bool IsVirtual
-	{
-		get;
-		protected set;
-	}
+	public bool IsVirtual { get; protected set; }
 
-	public object VirtualCircuitKey
-	{
-		get;
-		protected set;
-	}
+	public object VirtualCircuitKey { get; protected set; }
 
 	protected override void OnSpawn()
 	{

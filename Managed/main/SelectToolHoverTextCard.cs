@@ -33,10 +33,7 @@ public class SelectToolHoverTextCard : HoverTextConfiguration
 
 	public static List<GameObject> highlightedObjects = new List<GameObject>();
 
-	private static readonly List<Type> hiddenChoreConsumerTypes = new List<Type>
-	{
-		typeof(KSelectableHealthBar)
-	};
+	private static readonly List<Type> hiddenChoreConsumerTypes = new List<Type> { typeof(KSelectableHealthBar) };
 
 	private int maskOverlay;
 

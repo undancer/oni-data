@@ -27,10 +27,7 @@ public class BalloonStandConfig : IEntityConfig
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreateEntity(ID, ID, is_selectable: false);
-		KAnimFile[] overrideAnims = new KAnimFile[1]
-		{
-			Assets.GetAnim("anim_interacts_balloon_receiver_kanim")
-		};
+		KAnimFile[] overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_balloon_receiver_kanim") };
 		GetBalloonWorkable getBalloonWorkable = gameObject.AddOrGet<GetBalloonWorkable>();
 		getBalloonWorkable.workTime = 2f;
 		getBalloonWorkable.workLayer = Grid.SceneLayer.BuildingFront;

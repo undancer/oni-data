@@ -10,53 +10,21 @@ public class SoundEvent : AnimEvent
 
 	protected bool isDynamic;
 
-	public string sound
-	{
-		get;
-		private set;
-	}
+	public string sound { get; private set; }
 
-	public HashedString soundHash
-	{
-		get;
-		private set;
-	}
+	public HashedString soundHash { get; private set; }
 
-	public bool looping
-	{
-		get;
-		private set;
-	}
+	public bool looping { get; private set; }
 
-	public bool ignorePause
-	{
-		get;
-		set;
-	}
+	public bool ignorePause { get; set; }
 
-	public bool shouldCameraScalePosition
-	{
-		get;
-		set;
-	}
+	public bool shouldCameraScalePosition { get; set; }
 
-	public float minInterval
-	{
-		get;
-		private set;
-	}
+	public float minInterval { get; private set; }
 
-	public bool objectIsSelectedAndVisible
-	{
-		get;
-		set;
-	}
+	public bool objectIsSelectedAndVisible { get; set; }
 
-	public EffectorValues noiseValues
-	{
-		get;
-		set;
-	}
+	public EffectorValues noiseValues { get; set; }
 
 	public SoundEvent()
 	{

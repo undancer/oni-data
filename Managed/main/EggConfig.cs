@@ -37,10 +37,7 @@ public class EggConfig
 		new ComplexRecipe(text, array, array2)
 		{
 			description = string.Format(STRINGS.BUILDINGS.PREFABS.EGGCRACKER.RECIPE_DESCRIPTION, name, arg),
-			fabricators = new List<Tag>
-			{
-				"EggCracker"
-			},
+			fabricators = new List<Tag> { "EggCracker" },
 			time = 5f
 		};
 		ComplexRecipeManager.Get().AddObsoleteIDMapping(obsolete_id, text);

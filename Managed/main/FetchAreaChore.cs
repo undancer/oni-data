@@ -13,36 +13,24 @@ public class FetchAreaChore : Chore<FetchAreaChore.StatesInstance>
 
 			private Action<Chore> onFetchChoreCleanup;
 
-			public Storage destination
-			{
-				get;
-				private set;
-			}
+			public Storage destination { get; private set; }
 
-			public float amount
-			{
-				get;
-				private set;
-			}
+			public float amount { get; private set; }
 
-			public FetchChore chore
-			{
-				get;
-				private set;
-			}
+			public FetchChore chore { get; private set; }
 
 			public Delivery(Precondition.Context context, float amount_to_be_fetched, Action<FetchChore> on_cancelled)
 			{
 				this = default(Delivery);
-				this.chore = context.chore as FetchChore;
-				amount = this.chore.originalAmount;
-				destination = this.chore.destination;
-				this.chore.SetOverrideTarget(context.consumerState.consumer);
+				chore = context.chore as FetchChore;
+				amount = chore.originalAmount;
+				destination = chore.destination;
+				chore.SetOverrideTarget(context.consumerState.consumer);
 				onCancelled = on_cancelled;
 				onFetchChoreCleanup = OnFetchChoreCleanup;
-				this.chore.FetchAreaBegin(context, amount_to_be_fetched);
-				FetchChore chore = this.chore;
-				chore.onCleanup = (Action<Chore>)Delegate.Combine(chore.onCleanup, onFetchChoreCleanup);
+				chore.FetchAreaBegin(context, amount_to_be_fetched);
+				FetchChore fetchChore = chore;
+				fetchChore.onCleanup = (Action<Chore>)Delegate.Combine(fetchChore.onCleanup, onFetchChoreCleanup);
 			}
 
 			public void Complete(List<Pickupable> deliverables)
@@ -53,8 +41,8 @@ public class FetchAreaChore : Chore<FetchAreaChore.StatesInstance>
 					{
 						return;
 					}
-					FetchChore chore = this.chore;
-					chore.onCleanup = (Action<Chore>)Delegate.Remove(chore.onCleanup, onFetchChoreCleanup);
+					FetchChore fetchChore = chore;
+					fetchChore.onCleanup = (Action<Chore>)Delegate.Remove(fetchChore.onCleanup, onFetchChoreCleanup);
 					float num = amount;
 					Pickupable pickupable = null;
 					for (int i = 0; i < deliverables.Count; i++)
@@ -67,11 +55,11 @@ public class FetchAreaChore : Chore<FetchAreaChore.StatesInstance>
 						{
 							if (num < PICKUPABLETUNING.MINIMUM_PICKABLE_AMOUNT)
 							{
-								destination.ForceStore(this.chore.tags[0], num);
+								destination.ForceStore(chore.tags[0], num);
 							}
 							continue;
 						}
-						if (!IsPickupableStillValidForChore(deliverables[i], this.chore))
+						if (!IsPickupableStillValidForChore(deliverables[i], chore))
 						{
 							Debug.LogError($"Attempting to store {deliverables[i]} in a {destination} which did not request it");
 							continue;
@@ -88,11 +76,11 @@ public class FetchAreaChore : Chore<FetchAreaChore.StatesInstance>
 							}
 						}
 					}
-					if (this.chore.overrideTarget != null)
+					if (chore.overrideTarget != null)
 					{
-						this.chore.FetchAreaEnd(this.chore.overrideTarget.GetComponent<ChoreDriver>(), pickupable, is_success: true);
+						chore.FetchAreaEnd(chore.overrideTarget.GetComponent<ChoreDriver>(), pickupable, is_success: true);
 					}
-					this.chore = null;
+					chore = null;
 				}
 			}
 
@@ -106,11 +94,11 @@ public class FetchAreaChore : Chore<FetchAreaChore.StatesInstance>
 
 			public void Cleanup()
 			{
-				if (this.chore != null)
+				if (chore != null)
 				{
-					FetchChore chore = this.chore;
-					chore.onCleanup = (Action<Chore>)Delegate.Remove(chore.onCleanup, onFetchChoreCleanup);
-					this.chore.FetchAreaEnd(null, null, is_success: false);
+					FetchChore fetchChore = chore;
+					fetchChore.onCleanup = (Action<Chore>)Delegate.Remove(fetchChore.onCleanup, onFetchChoreCleanup);
+					chore.FetchAreaEnd(null, null, is_success: false);
 				}
 			}
 		}
@@ -119,17 +107,9 @@ public class FetchAreaChore : Chore<FetchAreaChore.StatesInstance>
 		{
 			private int handle;
 
-			public float amount
-			{
-				get;
-				private set;
-			}
+			public float amount { get; private set; }
 
-			public Pickupable pickupable
-			{
-				get;
-				private set;
-			}
+			public Pickupable pickupable { get; private set; }
 
 			public Reservation(ChoreConsumer consumer, Pickupable pickupable, float reservation_amount)
 			{

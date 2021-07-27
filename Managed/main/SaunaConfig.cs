@@ -11,15 +11,7 @@ public class SaunaConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("Sauna", 3, 3, "sauna_kanim", 30, 60f, new float[2]
-		{
-			100f,
-			100f
-		}, new string[2]
-		{
-			"Metal",
-			"BuildingWood"
-		}, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER2);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("Sauna", 3, 3, "sauna_kanim", 30, 60f, new float[2] { 100f, 100f }, new string[2] { "Metal", "BuildingWood" }, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER2);
 		obj.ViewMode = OverlayModes.GasConduits.ID;
 		obj.Floodable = true;
 		obj.AudioCategory = "Metal";
@@ -47,10 +39,7 @@ public class SaunaConfig : IBuildingConfig
 		conduitConsumer.alwaysConsume = true;
 		ConduitDispenser conduitDispenser = go.AddOrGet<ConduitDispenser>();
 		conduitDispenser.conduitType = ConduitType.Liquid;
-		conduitDispenser.elementFilter = new SimHashes[1]
-		{
-			SimHashes.Water
-		};
+		conduitDispenser.elementFilter = new SimHashes[1] { SimHashes.Water };
 		go.AddOrGet<SaunaWorkable>().basePriority = RELAXATION.PRIORITY.TIER3;
 		Sauna sauna = go.AddOrGet<Sauna>();
 		sauna.steamPerUseKG = 25f;

@@ -31,10 +31,7 @@ public class IntermediateRadPillConfig : IEntityConfig
 			time = 50f,
 			description = ITEMS.PILLS.INTERMEDIATERADPILL.RECIPEDESC,
 			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
-			fabricators = new List<Tag>
-			{
-				"AdvancedApothecary"
-			},
+			fabricators = new List<Tag> { "AdvancedApothecary" },
 			sortOrder = 21
 		};
 		return gameObject;

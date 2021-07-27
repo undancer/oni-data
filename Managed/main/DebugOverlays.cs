@@ -2,24 +2,13 @@ using System;
 
 public class DebugOverlays : KScreen
 {
-	public static DebugOverlays instance
-	{
-		get;
-		private set;
-	}
+	public static DebugOverlays instance { get; private set; }
 
 	protected override void OnPrefabInit()
 	{
 		instance = this;
 		KPopupMenu componentInChildren = GetComponentInChildren<KPopupMenu>();
-		componentInChildren.SetOptions(new string[5]
-		{
-			"None",
-			"Rooms",
-			"Lighting",
-			"Style",
-			"Flow"
-		});
+		componentInChildren.SetOptions(new string[5] { "None", "Rooms", "Lighting", "Style", "Flow" });
 		componentInChildren.OnSelect = (Action<string, int>)Delegate.Combine(componentInChildren.OnSelect, new Action<string, int>(OnSelect));
 		base.gameObject.SetActive(value: false);
 	}
