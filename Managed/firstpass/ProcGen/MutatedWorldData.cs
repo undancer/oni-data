@@ -63,6 +63,14 @@ namespace ProcGen
 				}
 				world.globalFeatures[globalFeatureMod.Key] += globalFeatureMod.Value;
 			}
+			foreach (string rule in trait.removeWorldTemplateRulesById)
+			{
+				world.worldTemplateRules.RemoveAll((World.TemplateSpawnRules x) => x.ruleId == rule);
+			}
+			foreach (World.TemplateSpawnRules additionalWorldTemplateRule in trait.additionalWorldTemplateRules)
+			{
+				world.worldTemplateRules.Add(additionalWorldTemplateRule);
+			}
 			foreach (KeyValuePair<string, ElementBandConfiguration> biomeBackgroundElementBandConfiguration in biomes.BiomeBackgroundElementBandConfigurations)
 			{
 				foreach (ElementGradient item in biomeBackgroundElementBandConfiguration.Value)

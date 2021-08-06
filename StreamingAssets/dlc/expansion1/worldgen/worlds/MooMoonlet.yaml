@@ -27,6 +27,10 @@ subworldFiles:
   - name: expansion1::subworlds/moo/MooChasms
   - name: expansion1::subworlds/moo/MooCore
 
+fixedTraits:
+  - sunlightVeryHigh
+  - cosmicRadiationMedHigh
+
 unknownCellsAllowedSubworlds: 
   - tagcommand: Default
     command: Replace

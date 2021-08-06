@@ -4,5 +4,17 @@ colorHex: 8494A1
 exclusiveWith:
   - traits/GeoActive
 
-globalFeatureTemplateMods:
-  geysers/generic: -3
+removeWorldTemplateRulesById:
+ - GenericGeysers
+
+additionalWorldTemplateRules:
+  - names:
+    - geysers/generic
+    listRule: TryOne
+    times: 9 # -3 base amount
+    ruleId: GenericGeysers
+    allowDuplicates: true
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning

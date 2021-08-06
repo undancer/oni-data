@@ -543,9 +543,15 @@ public class Grid
 		{
 			get
 			{
-				int num = (int)((float)(int)exposedToSunlight[i] / 255f * Game.Instance.currentSunlightIntensity);
-				int num2 = LightCount[i];
-				return num + num2;
+				float num = Game.Instance.currentFallbackSunlightIntensity;
+				WorldContainer world = ClusterManager.Instance.GetWorld(WorldIdx[i]);
+				if (world != null)
+				{
+					num = world.currentSunlightIntensity;
+				}
+				int num2 = (int)((float)(int)exposedToSunlight[i] / 255f * num);
+				int num3 = LightCount[i];
+				return num2 + num3;
 			}
 		}
 	}

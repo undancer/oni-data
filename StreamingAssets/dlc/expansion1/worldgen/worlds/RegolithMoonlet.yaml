@@ -31,6 +31,10 @@ subworldFiles:
   - name: expansion1::subworlds/barren/EmptyCaves
     overridePower: 1
   
+fixedTraits:
+  - sunlightVeryVeryVeryHigh
+  - cosmicRadiationMedHigh
+  
 unknownCellsAllowedSubworlds: 
   - tagcommand: Default
     command: Replace

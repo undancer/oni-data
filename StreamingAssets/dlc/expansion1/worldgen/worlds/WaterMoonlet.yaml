@@ -38,6 +38,10 @@ subworldFiles:
   - name: expansion1::subworlds/aquatic/GraphiteCaves
   - name: expansion1::subworlds/barren/BarrenCore # placeholder until core is developed further
   
+fixedTraits:
+  - sunlightHigh
+  - cosmicRadiationMedLow
+  
 unknownCellsAllowedSubworlds:
   - tagcommand: Default
     command: Replace

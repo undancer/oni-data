@@ -28,8 +28,10 @@ namespace ProcGenGame
 			}
 			Vector2I a = new Vector2I(0, 0);
 			Vector2I size = data.world.size;
-			List<Pair<Vector2I, Vector2I>> list = new List<Pair<Vector2I, Vector2I>>();
-			list.Add(new Pair<Vector2I, Vector2I>(a, size));
+			List<Game.SimActiveRegion> list = new List<Game.SimActiveRegion>();
+			Game.SimActiveRegion simActiveRegion = new Game.SimActiveRegion();
+			simActiveRegion.region = new Pair<Vector2I, Vector2I>(a, size);
+			list.Add(simActiveRegion);
 			for (int j = 0; j < 500; j++)
 			{
 				if (j == 498)

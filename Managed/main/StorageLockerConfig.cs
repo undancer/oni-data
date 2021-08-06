@@ -30,6 +30,7 @@ public class StorageLockerConfig : IBuildingConfig
 		go.AddOrGet<CopyBuildingSettings>().copyGroupTag = GameTags.StorageLocker;
 		go.AddOrGet<StorageLocker>();
 		go.AddOrGet<UserNameable>();
+		go.AddOrGetDef<RocketUsageRestriction.Def>();
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

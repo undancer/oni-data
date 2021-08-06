@@ -44,6 +44,10 @@ subworldFiles:
     minCount: 1
   - name: expansion1::subworlds/magma/BottomSmall
   
+fixedTraits:
+  - sunlightMedHigh
+  - cosmicRadiationMed
+  
 unknownCellsAllowedSubworlds: 
   - tagcommand: Default
     command: Replace

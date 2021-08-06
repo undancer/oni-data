@@ -200,11 +200,11 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 	private WorldContainer CreateAsteroidWorldContainer(WorldGen world)
 	{
 		int nextWorldId = GetNextWorldId();
-		GameObject obj = Util.KInstantiate(Assets.GetPrefab("Asteroid"));
-		WorldContainer component = obj.GetComponent<WorldContainer>();
+		GameObject gameObject = Util.KInstantiate(Assets.GetPrefab("Asteroid"));
+		WorldContainer component = gameObject.GetComponent<WorldContainer>();
 		component.SetID(nextWorldId);
 		component.SetWorldDetails(world);
-		AsteroidGridEntity component2 = obj.GetComponent<AsteroidGridEntity>();
+		AsteroidGridEntity component2 = gameObject.GetComponent<AsteroidGridEntity>();
 		if (world != null)
 		{
 			AxialI clusterLocation = world.GetClusterLocation();
@@ -215,7 +215,15 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 		{
 			component2.Init("", AxialI.ZERO, "");
 		}
-		obj.SetActive(value: true);
+		if (component.IsStartWorld)
+		{
+			OrbitalMechanics component3 = gameObject.GetComponent<OrbitalMechanics>();
+			if (component3 != null)
+			{
+				component3.CreateOrbitalObject(Db.Get().OrbitalTypeCategories.backgroundEarth.Id);
+			}
+		}
+		gameObject.SetActive(value: true);
 		return component;
 	}
 
@@ -494,6 +502,7 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 				}
 				craft_go.GetComponent<CraftModuleInterface>().TriggerEventOnCraftAndRocket(GameHashes.RocketInteriorComplete, null);
 			});
+			craft_go.AddComponent<OrbitalMechanics>().CreateOrbitalObject(Db.Get().OrbitalTypeCategories.landed.Id);
 			Trigger(-1280433810, worldContainer.id);
 			return worldContainer;
 		}

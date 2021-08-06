@@ -10,6 +10,7 @@ using Klei.CustomSettings;
 using KSerialization;
 using ProcGenGame;
 using STRINGS;
+using TUNING;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -214,6 +215,22 @@ public class Game : KMonoBehaviour
 		}
 	}
 
+	public class SimActiveRegion
+	{
+		public Pair<Vector2I, Vector2I> region;
+
+		public float currentSunlightIntensity;
+
+		public float currentCosmicRadiationIntensity;
+
+		public SimActiveRegion()
+		{
+			region = default(Pair<Vector2I, Vector2I>);
+			currentSunlightIntensity = FIXEDTRAITS.SUNLIGHT.DEFAULT_VALUE;
+			currentCosmicRadiationIntensity = FIXEDTRAITS.COSMICRADIATION.DEFAULT_VALUE;
+		}
+	}
+
 	private enum SpawnRotationConfig
 	{
 		Normal,
@@ -369,7 +386,7 @@ public class Game : KMonoBehaviour
 
 	public Element VisualTunerElement;
 
-	public float currentSunlightIntensity;
+	public float currentFallbackSunlightIntensity;
 
 	public RoomProber roomProber;
 
@@ -539,7 +556,7 @@ public class Game : KMonoBehaviour
 
 	private bool isLoading;
 
-	private List<Pair<Vector2I, Vector2I>> simActiveRegions = new List<Pair<Vector2I, Vector2I>>();
+	private List<SimActiveRegion> simActiveRegions = new List<SimActiveRegion>();
 
 	private HashedString previousOverlayMode = OverlayModes.None.ID;
 
@@ -1236,7 +1253,11 @@ public class Game : KMonoBehaviour
 		{
 			if (worldContainer.IsDiscovered)
 			{
-				simActiveRegions.Add(new Pair<Vector2I, Vector2I>(worldContainer.WorldOffset, worldContainer.WorldOffset + worldContainer.WorldSize));
+				SimActiveRegion simActiveRegion = new SimActiveRegion();
+				simActiveRegion.region = new Pair<Vector2I, Vector2I>(worldContainer.WorldOffset, worldContainer.WorldOffset + worldContainer.WorldSize);
+				simActiveRegion.currentSunlightIntensity = worldContainer.currentSunlightIntensity;
+				simActiveRegion.currentCosmicRadiationIntensity = worldContainer.currentCosmicIntensity;
+				simActiveRegions.Add(simActiveRegion);
 			}
 		}
 		Debug.Assert(simActiveRegions.Count > 0, "Cannot send a frame to the sim with zero active regions");
@@ -1416,7 +1437,7 @@ public class Game : KMonoBehaviour
 		{
 			return;
 		}
-		uint num = 472345u;
+		uint num = 473720u;
 		string text = System.DateTime.Now.ToShortDateString();
 		string text2 = System.DateTime.Now.ToShortTimeString();
 		string fileName = Path.GetFileName(GenericGameSettings.instance.performanceCapture.saveGame);

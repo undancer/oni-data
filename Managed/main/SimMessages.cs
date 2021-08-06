@@ -1357,21 +1357,23 @@ public static class SimMessages
 		}
 	}
 
-	public unsafe static void NewGameFrame(float elapsed_seconds, List<Pair<Vector2I, Vector2I>> activeRegions)
+	public unsafe static void NewGameFrame(float elapsed_seconds, List<Game.SimActiveRegion> activeRegions)
 	{
 		Debug.Assert(activeRegions.Count > 0, "NewGameFrame cannot be called with zero activeRegions");
 		Sim.NewGameFrame* ptr = stackalloc Sim.NewGameFrame[activeRegions.Count];
 		Sim.NewGameFrame* ptr2 = ptr;
-		foreach (Pair<Vector2I, Vector2I> activeRegion in activeRegions)
+		foreach (Game.SimActiveRegion activeRegion in activeRegions)
 		{
-			Pair<Vector2I, Vector2I> pair = activeRegion;
-			pair.first = new Vector2I(MathUtil.Clamp(0, Grid.WidthInCells - 1, activeRegion.first.x), MathUtil.Clamp(0, Grid.HeightInCells - 1, activeRegion.first.y));
-			pair.second = new Vector2I(MathUtil.Clamp(0, Grid.WidthInCells - 1, activeRegion.second.x), MathUtil.Clamp(0, Grid.HeightInCells - 1, activeRegion.second.y));
+			Pair<Vector2I, Vector2I> region = activeRegion.region;
+			region.first = new Vector2I(MathUtil.Clamp(0, Grid.WidthInCells - 1, activeRegion.region.first.x), MathUtil.Clamp(0, Grid.HeightInCells - 1, activeRegion.region.first.y));
+			region.second = new Vector2I(MathUtil.Clamp(0, Grid.WidthInCells - 1, activeRegion.region.second.x), MathUtil.Clamp(0, Grid.HeightInCells - 1, activeRegion.region.second.y));
 			ptr2->elapsedSeconds = elapsed_seconds;
-			ptr2->minX = pair.first.x;
-			ptr2->minY = pair.first.y;
-			ptr2->maxX = pair.second.x;
-			ptr2->maxY = pair.second.y;
+			ptr2->minX = region.first.x;
+			ptr2->minY = region.first.y;
+			ptr2->maxX = region.second.x;
+			ptr2->maxY = region.second.y;
+			ptr2->currentSunlightIntensity = activeRegion.currentSunlightIntensity;
+			ptr2->currentCosmicRadiationIntensity = activeRegion.currentCosmicRadiationIntensity;
 			ptr2++;
 		}
 		Sim.SIM_HandleMessage(-775326397, sizeof(Sim.NewGameFrame) * activeRegions.Count, (byte*)ptr);

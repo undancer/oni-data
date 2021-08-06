@@ -543,7 +543,7 @@ elements:
     lowTempTransitionTarget: Water
     defaultTemperature: 400
     defaultPressure: 57
-    molarMass: 13.01528
+    molarMass: 18.01528
     toxicity: 0
     lightAbsorptionFactor: 0.1
     radiationAbsorptionFactor: 0.08

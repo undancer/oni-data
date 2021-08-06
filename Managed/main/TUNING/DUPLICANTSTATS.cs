@@ -659,7 +659,7 @@ namespace TUNING
 				statBonus = SMALL_STATPOINT_BONUS,
 				rarity = RARITY_COMMON,
 				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "ConstructionUp", "CantBuild" }
+				mutuallyExclusiveTraits = new List<string> { "RanchingUp" }
 			};
 			list2.Add(item);
 			item = new TraitVal

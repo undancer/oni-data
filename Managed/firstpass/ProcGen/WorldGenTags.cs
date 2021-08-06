@@ -40,6 +40,8 @@ namespace ProcGen
 
 		public static readonly Tag ErodePointToBorderInv = TagManager.Create("ErodePointToBorderInv");
 
+		public static readonly Tag ErodePointToBorderWeak = TagManager.Create("ErodePointToBorderWeak");
+
 		public static readonly Tag ErodePointToWorldTop = TagManager.Create("ErodePointToWorldTop");
 
 		public static readonly Tag ErodePointToWorldTopOrSide = TagManager.Create("ErodePointToWorldTopOrSide");

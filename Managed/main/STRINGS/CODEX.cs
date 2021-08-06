@@ -1129,6 +1129,18 @@ namespace STRINGS
 			public static LocString SUBTITLE = "ENCRYPTION LEVEL: THREE";
 		}
 
+		public class C8_TIMESORDER
+		{
+			public class BODY
+			{
+				public static LocString CONTAINER1 = "We have been successfully using the Temporal Bow now for some time with no obvious consequences. I should be happy that this works so well, but several questions gnaw at my brain late at night.\n\nIf Time's Arrow is moving forward the Laws of Entropy declare that the universe should be moving from a state of order to one of chaos. If the Temporal Bow bends to a previous point in time to a point when things were more orderly, logic would dictate that we are making this point more chaotic by taking things from it. All known laws of the natural universe suggests that this should have affected our Present Day, but all evidence points to that not being true. It appears the theory that we cannot change our past was incorrect!\n\nThis suggests that Time is, in fact, not an arrow but several arrows, each pointing different directions. Fundamentally, this proves the existence of other timelines - different dimensions - some of which we can assume have also built their own Temporal Bow.\n\nThe promise of crossing this final dimensional threshold is too tempting. Imagine what things Gravitas has invented in another dimension!! I must find a way to tear open the fabric of spacetime and tap into the limitless human potential of a thousand alternate timelines.";
+			}
+
+			public static LocString TITLE = "Time's Order";
+
+			public static LocString SUBTITLE = "ENCRYPTION LEVEL: THREE";
+		}
+
 		public class B5_ANTS
 		{
 			public class BODY
@@ -1490,11 +1502,25 @@ namespace STRINGS
 					public static LocString BODY = "As the Duplicants scout further out I've begun to piece together a better view of our surroundings.\n\nThanks to their efforts, I've determined that this planet has enough resources to settle a longterm colony.\n\nBut... something is off. I've also detected deposits of Abyssalite and Neutronium in this planet's composition, manmade elements that shouldn't occur in nature.\n\nIs this really the target location?\n\n";
 				}
 
+				public class OUTSIDESTARTINGDLC1
+				{
+					public static LocString TITLE = "Regional Analysis";
+
+					public static LocString BODY = "As my Duplicants have ventured further into their surroundings I've been able to determine a more detailed picture of our surroundings.\n\nUnfortunately, I've concluded that this planetoid does not have enough resources to settle a longterm colony.\n\nI can only hope that we will somehow be able to reach another asteroid before our resources run out.\n\n";
+				}
+
 				public class LOG3
 				{
 					public static LocString TITLE = "Cycle 15";
 
 					public static LocString BODY = "As far as I can tell, we are hundreds of miles beneath the surface of the planet. Digging our way out will take some time.\n\nMy Duplicants will survive, but they were not meant for sustained underground living. Under what possible circumstances could my Pod have ended up here?\n\n";
+				}
+
+				public class LOG3DLC1
+				{
+					public static LocString TITLE = "Cycle 10";
+
+					public static LocString BODY = "As my Duplicants venture out into the neighbouring worlds, there is an ever increasing chance that they will encounter hostile environments unsafe for unprotected individuals. A prudent course of action would be to start research and training for equipment that could protect my Duplicants when they encounter such adverse environments.\n\nThese first few cycles have been occupied with building the basics for my colony, but now is time I should start planning for the future. We cannot merely life day-to-day without purpose. If we are to survive for any significant time, we must strive for a purpose.\n\n";
 				}
 
 				public class SURFACEBREACH
@@ -2384,7 +2410,7 @@ namespace STRINGS
 
 			public static LocString HEADER_1 = "Light";
 
-			public static LocString PARAGRAPH_1 = string.Concat("Most of the asteroid is dark. Light sources such as the ", BUILDINGS.PREFABS.CEILINGLIGHT.NAME, " or ", CREATURES.SPECIES.LIGHTBUG.NAME, " can gives Duplicants a much appreciated boost to Morale and productivity. Many plants are also sensitive to the amount of light they receive.\n\n");
+			public static LocString PARAGRAPH_1 = string.Concat("Most of the asteroid is dark. Light sources such as the ", BUILDINGS.PREFABS.CEILINGLIGHT.NAME, " or ", CREATURES.SPECIES.LIGHTBUG.NAME, " improves Decor and gives Duplicants a boost to their productivity. Many plants are also sensitive to the amount of light they receive.\n\n");
 
 			public static LocString HEADER_2 = "Light Sources";
 
@@ -2392,7 +2418,7 @@ namespace STRINGS
 
 			public static LocString HEADER_3 = "Measuring Light";
 
-			public static LocString PARAGRAPH_3 = string.Concat("The amount of light on a cell is measured in Lux. Lux has a dramatic range - A simple ", BUILDINGS.PREFABS.CEILINGLIGHT.NAME, " produces ", 1800.ToString(), " Lux, while the sun will regularly produce values as high as ", 80000.ToString(), " Lux. The ", BUILDINGS.PREFABS.SOLARPANEL.NAME, " generates power proportional to how many Lux it is exposed to.\n\n");
+			public static LocString PARAGRAPH_3 = string.Concat("The amount of light on a cell is measured in Lux. Lux has a dramatic range - A simple ", BUILDINGS.PREFABS.CEILINGLIGHT.NAME, " produces ", 1800.ToString(), " Lux, while the sun can produce values as high as ", 80000.ToString(), " Lux. The ", BUILDINGS.PREFABS.SOLARPANEL.NAME, " generates power proportional to how many Lux it is exposed to.\n\n");
 		}
 
 		public class MORALE

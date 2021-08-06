@@ -61,6 +61,7 @@ public class FlushToiletConfig : IBuildingConfig
 		ownable.slotID = Db.Get().AssignableSlots.Toilet.Id;
 		ownable.canBePublic = true;
 		go.AddOrGet<RequireOutputs>().ignoreFullPipe = true;
+		go.AddOrGetDef<RocketUsageRestriction.Def>();
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

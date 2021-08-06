@@ -84,6 +84,11 @@ internal class SteamDistributionPlatform : MonoBehaviour, DistributionPlatform.I
 		}
 	}
 
+	public bool IsDLCStatusReady()
+	{
+		return true;
+	}
+
 	public string ApplyWordFilter(string text)
 	{
 		return text;

@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class TimeRangeSideScreen : SideScreenContent, IRender200ms
 {
+	public Image imageInactiveZone;
+
 	public Image imageActiveZone;
 
 	private LogicTimeOfDaySensor targetTimedSwitch;
@@ -38,6 +40,8 @@ public class TimeRangeSideScreen : SideScreenContent, IRender200ms
 
 	public override void SetTarget(GameObject target)
 	{
+		imageActiveZone.color = GlobalAssets.Instance.colorSet.logicOnSidescreen;
+		imageInactiveZone.color = GlobalAssets.Instance.colorSet.logicOffSidescreen;
 		base.SetTarget(target);
 		targetTimedSwitch = target.GetComponent<LogicTimeOfDaySensor>();
 		duration.onValueChanged.RemoveAllListeners();

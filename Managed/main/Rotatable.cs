@@ -164,48 +164,49 @@ public class Rotatable : KMonoBehaviour, ISaveLoadable
 		KBoxCollider2D component = GetComponent<KBoxCollider2D>();
 		if (!(component == null))
 		{
-			float num = 0f;
+			float num = 0.5f * (float)((width + 1) % 2);
+			float num2 = 0f;
 			switch (orientation)
 			{
 			case Orientation.R90:
-				num = -90f;
+				num2 = -90f;
 				break;
 			case Orientation.R180:
-				num = -180f;
+				num2 = -180f;
 				break;
 			case Orientation.R270:
-				num = -270f;
+				num2 = -270f;
 				break;
 			case Orientation.FlipH:
-				component.offset = new Vector2(width % 2 - 1, 0.5f * (float)height);
+				component.offset = new Vector2(num + (float)(width % 2) - 1f, 0.5f * (float)height);
 				component.size = new Vector2(width, height);
 				break;
 			case Orientation.FlipV:
-				component.offset = new Vector2(0f, -0.5f * (float)(height - 2));
+				component.offset = new Vector2(num, -0.5f * (float)(height - 2));
 				component.size = new Vector2(width, height);
 				break;
 			default:
-				component.offset = new Vector2(0f, 0.5f * (float)height);
+				component.offset = new Vector2(num, 0.5f * (float)height);
 				component.size = new Vector2(width, height);
 				break;
 			}
-			if (num != 0f)
+			if (num2 != 0f)
 			{
 				Matrix2x3 matrix2x = Matrix2x3.Translate(-pivot);
-				Matrix2x3 matrix2x2 = Matrix2x3.Rotate(num * ((float)Math.PI / 180f));
-				Matrix2x3 matrix2x3 = Matrix2x3.Translate(pivot) * matrix2x2 * matrix2x;
+				Matrix2x3 matrix2x2 = Matrix2x3.Rotate(num2 * ((float)Math.PI / 180f));
+				Matrix2x3 matrix2x3 = Matrix2x3.Translate(pivot + new Vector3(num, 0f, 0f)) * matrix2x2 * matrix2x;
 				Vector2 vector = new Vector2(-0.5f * (float)width, 0f);
 				Vector2 vector2 = new Vector2(0.5f * (float)width, height);
 				Vector2 vector3 = new Vector2(0f, 0.5f * (float)height);
 				vector = matrix2x3.MultiplyPoint(vector);
 				vector2 = matrix2x3.MultiplyPoint(vector2);
 				vector3 = matrix2x3.MultiplyPoint(vector3);
-				float num2 = Mathf.Min(vector.x, vector2.x);
-				float num3 = Mathf.Max(vector.x, vector2.x);
-				float num4 = Mathf.Min(vector.y, vector2.y);
-				float num5 = Mathf.Max(vector.y, vector2.y);
+				float num3 = Mathf.Min(vector.x, vector2.x);
+				float num4 = Mathf.Max(vector.x, vector2.x);
+				float num5 = Mathf.Min(vector.y, vector2.y);
+				float num6 = Mathf.Max(vector.y, vector2.y);
 				component.offset = vector3;
-				component.size = new Vector2(num3 - num2, num5 - num4);
+				component.size = new Vector2(num4 - num3, num6 - num5);
 			}
 		}
 	}

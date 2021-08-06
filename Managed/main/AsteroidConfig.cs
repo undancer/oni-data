@@ -16,6 +16,7 @@ public class AsteroidConfig : IEntityConfig
 		gameObject.AddOrGet<WorldInventory>();
 		gameObject.AddOrGet<WorldContainer>();
 		gameObject.AddOrGet<AsteroidGridEntity>();
+		gameObject.AddOrGet<OrbitalMechanics>();
 		gameObject.AddOrGetDef<GameplaySeasonManager.Def>();
 		gameObject.AddOrGetDef<AlertStateManager.Def>();
 		return gameObject;

@@ -15,6 +15,6 @@ biomes:
     #  massMultiplier: 50
 tags:
   - IgnoreCaveOverride
-  - ErodePointToBorder
+  - ErodePointToBorderWeak
   - NoGlobalFeatureSpawning
 zoneType: MagmaCore

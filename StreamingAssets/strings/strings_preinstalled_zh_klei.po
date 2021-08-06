@@ -1275,13 +1275,15 @@ msgstr ""
 
 #. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.NAME"
-msgid "Cooling Contents"
-msgstr "冷却内容物"
+msgid "Cooling Contents: {UsedPower}"
+msgstr "冷却内容物：{UsedPower}"
 
 #. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.TOOLTIP"
-msgid "The contents of this food storage are still being cooled down."
-msgstr "在此储存的食物仍在降温中。"
+msgid ""
+"{UsedPower} of {MaxPower} are being used to cool the contents of this food "
+"storage"
+msgstr "已使用{MaxPower}中的{UsedPower}电力来冷却内容物"
 
 #. STRINGS.BUILDING.STATUSITEMS.FRIDGESTEADY.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGESTEADY.NAME"
@@ -1291,14 +1293,14 @@ msgstr "节能模式：{UsedPower}"
 #. STRINGS.BUILDING.STATUSITEMS.FRIDGESTEADY.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGESTEADY.TOOLTIP"
 msgid ""
-"Energy saver activated, using {UsedPower} of {MaxPower}\n"
+"The contents of this food storage are at refrigeration temperatures\n"
 "\n"
-"The contents of this food storage are at refrigeration temperatures and need "
-"no further cooling."
+"Energy Saver mode has been automatically activated using only {UsedPower} of "
+"{MaxPower}"
 msgstr ""
-"已激活节能模式，使用{UsedPower}而不是{MaxPower}电力\n"
+"在此储存的食物已处于冷藏温度\n"
 "\n"
-"在此储存的食物都处于冷藏温度，不需要进一步降温了。"
+"节能模式已自动激活，只使用{{MaxPower}中的{UsedPower}电力。"
 
 #. STRINGS.BUILDING.STATUSITEMS.GANTRY.AUTOMATION_CONTROL
 msgctxt "STRINGS.BUILDING.STATUSITEMS.GANTRY.AUTOMATION_CONTROL"
@@ -2685,6 +2687,18 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.NORMAL.TOOLTIP"
 msgid "Nothing out of the ordinary here"
 msgstr "这里一切正常"
 
+#. STRINGS.BUILDING.STATUSITEMS.NOROCKETRESTRICTION.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.NOROCKETRESTRICTION.NAME"
+msgid "Not Controlled"
+msgstr "不受控制"
+
+#. STRINGS.BUILDING.STATUSITEMS.NOROCKETRESTRICTION.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.NOROCKETRESTRICTION.TOOLTIP"
+msgid ""
+"This building is not controlled by a <link=\"ROCKETCONTROLSTATION\">Rocket "
+"Control Station</link>"
+msgstr "这个建筑不受<link=\"ROCKETCONTROLSTATION\">火箭控制台</link>控制"
+
 #. STRINGS.BUILDING.STATUSITEMS.NOSTORAGEFILTERSET.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.NOSTORAGEFILTERSET.NAME"
 msgid "Filters Not Designated"
@@ -2865,6 +2879,11 @@ msgstr "开启"
 msgctxt "STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.EXHAUSTING"
 msgid "Excess produced"
 msgstr "额外排放"
+
+#. STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.FOOD_TRANSFER
+msgctxt "STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.FOOD_TRANSFER"
+msgid "Internal Cooling"
+msgstr "正在内部冷却"
 
 #. STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.LINEITEM
 msgctxt "STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.LINEITEM"
@@ -3444,6 +3463,38 @@ msgid ""
 "Platform</style>"
 msgstr "高火箭可能无法在这个<style=\"KKeyword\">火箭平台</style>上着陆"
 
+#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONACTIVE.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONACTIVE.NAME"
+msgid "Access: Restricted"
+msgstr "许可：限制"
+
+#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONACTIVE.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONACTIVE.TOOLTIP"
+msgid ""
+"This building cannot be operated while restricted, though it can be filled\n"
+"\n"
+"Controlled by a <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>"
+msgstr ""
+"受限制时，这个建筑不能操作，但可以装填材料\n"
+"\n"
+"受<link=\"ROCKETCOMMANDCONSOLE\">火箭控制台</link>控制"
+
+#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONINACTIVE.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONINACTIVE.NAME"
+msgid "Access: Not Restricted"
+msgstr "许可：不受限制"
+
+#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONINACTIVE.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONINACTIVE.TOOLTIP"
+msgid ""
+"This building's operation is not restricted\n"
+"\n"
+"Controlled by a <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>"
+msgstr ""
+"这个建筑的操作不受限制\n"
+"\n"
+"受<link=\"ROCKETCOMMANDCONSOLE\">火箭控制台</link>控制"
+
 #. STRINGS.BUILDING.STATUSITEMS.ROCKETSTRANDED.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETSTRANDED.NAME"
 msgid "Stranded"
@@ -3856,8 +3907,10 @@ msgstr "打印舱太少{progress}"
 msgctxt ""
 "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES."
 "TOOLTIP"
-msgid "This device relies on a network of activated Printing Pods {progress}"
-msgstr "这台设备需要依赖激活的打印舱网络{progress}"
+msgid ""
+"To open the Temporal Tear, this device relies on a network of activated "
+"Printing Pods {progress}"
+msgstr "想要打开时空裂口，这台设备需要依赖激活的打印舱网络{progress}"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_LOS.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_LOS.NAME"
@@ -3877,9 +3930,9 @@ msgstr "时空裂口未揭示"
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_TARGET.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_TARGET.TOOLTIP"
 msgid ""
-"This machine is meant to target something in space, but the target is not "
-"yet revealed."
-msgstr "这台机器用于瞄准太空中的某个东西的，但那个目标尚未揭示。"
+"This machine is meant to target something in space, but the target has not "
+"yet been revealed"
+msgstr "这台机器用于瞄准太空中的某个东西的，但那个目标尚未揭示"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.NAME"
@@ -3889,9 +3942,13 @@ msgstr "充能进程：{progress}"
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.TOOLTIP"
 msgid ""
-"This device must be charged with a high number of Radbolts. Operation can "
-"commence once this device is fully charged"
-msgstr "这台设备必须用大量的辐射粒子充能。充能完毕后即可操作"
+"This device must be charged with a high number of Radbolts\n"
+"\n"
+"Operation can commence once this device is fully charged"
+msgstr ""
+"这台设备必须用大量的辐射粒子充能\n"
+"\n"
+"充能完毕后即可操作"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION"
@@ -4778,7 +4835,7 @@ msgstr ""
 "消耗<link=\"ALGAE\">藻类</link>来生产<link=\"OXYGEN\">氧气</link>并去除一些"
 "<link=\"CARBONDIOXIDE\">二氧化碳</link>。\n"
 "\n"
-"在<link=\"LIGHT\">光照</link>下可获得10%的效率提升。"
+"在<link=\"LIGHT\">光照</link>下可提升10%的效率。"
 
 #. STRINGS.BUILDINGS.PREFABS.ALGAEHABITAT.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ALGAEHABITAT.NAME"
@@ -5405,26 +5462,28 @@ msgstr "信手涂鸦"
 
 #. STRINGS.BUILDINGS.PREFABS.CARGOBAY.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.CARGOBAY.DESC"
-msgid "Holds more than a regular cargo bay."
-msgstr "比常规的货舱能携带更多东西。"
+msgid ""
+"Duplicants will fill cargo bays with any resources they find during space "
+"missions."
+msgstr "复制人会把他们在太空任务中找到的任何资源来填入货舱。"
 
 #. STRINGS.BUILDINGS.PREFABS.CARGOBAY.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.CARGOBAY.EFFECT"
 msgid ""
-"Allows Duplicants to store most of the <link=\"ELEMENTSSOLID\">Solid "
-"Materials</link> found during space missions.\n"
+"Allows Duplicants to store any <link=\"ELEMENTSSOLID\">Solid Materials</"
+"link> found during space missions.\n"
 "\n"
 "Stored resources become available to the colony upon the rocket's return."
 msgstr ""
-"允许复制人储存在太空任务中找到的大部分<link=\"ELEMENTSSOLID\">固体</link>资"
+"允许复制人储存在太空任务中找到的任何<link=\"ELEMENTSSOLID\">固体</link>资"
 "源。\n"
 "\n"
 "待火箭返回后，所储存的资源便可供殖民地使用。"
 
 #. STRINGS.BUILDINGS.PREFABS.CARGOBAY.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.CARGOBAY.NAME"
-msgid "<link=\"CARGOBAY\">Large Cargo Bay</link>"
-msgstr "<link=\"CARGOBAY\">大型货舱</link>"
+msgid "<link=\"CARGOBAY\">Cargo Bay</link>"
+msgstr "<link=\"CARGOBAY\">货舱</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.CARGOBAYCLUSTER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.CARGOBAYCLUSTER.DESC"
@@ -5628,7 +5687,7 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.CLUSTERTELESCOPE.DESC"
 msgid ""
 "Telescopes are necessary for studying space, allowing rocket travel to other "
 "worlds."
-msgstr "望远镜是研究太空的必要工具，允许火箭探索其他世界。"
+msgstr "望远镜是研究太空的必要工具，允许火箭探索其他星球。"
 
 #. STRINGS.BUILDINGS.PREFABS.CLUSTERTELESCOPE.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.CLUSTERTELESCOPE.EFFECT"
@@ -5898,7 +5957,7 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.CRAFTINGTABLE.DESC"
 msgid ""
 "Crafting stations allow Duplicants to make oxygen masks to wear in low "
 "breathability areas."
-msgstr "工作台可以让复制制作在低氧区域穿戴的氧气面罩。"
+msgstr "工作台可以让复制人制作在低氧区域穿戴的氧气面罩。"
 
 #. STRINGS.BUILDINGS.PREFABS.CRAFTINGTABLE.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.CRAFTINGTABLE.EFFECT"
@@ -6953,26 +7012,27 @@ msgstr "<link=\"GASBOTTLER\">气体罐装器</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.GASCARGOBAY.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASCARGOBAY.DESC"
-msgid "Holds more than a typical gas cargo canister."
-msgstr "比常规的气罐货舱能携带更多东西。"
+msgid ""
+"Duplicants will fill cargo bays with any resources they find during space "
+"missions."
+msgstr "复制人会把他们在太空任务中找到的任何资源来填入货舱。"
 
 #. STRINGS.BUILDINGS.PREFABS.GASCARGOBAY.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASCARGOBAY.EFFECT"
 msgid ""
-"Allows Duplicants to store most of the <link=\"ELEMENTSGAS\">Gas</link> "
-"resources found during space missions.\n"
+"Allows Duplicants to store any <link=\"ELEMENTSGAS\">Gas</link> resources "
+"found during space missions.\n"
 "\n"
 "Stored resources become available to the colony upon the rocket's return."
 msgstr ""
-"允许复制人储存在太空任务中找到的大部分<link=\"ELEMENTSGAS\">气体</link>资"
-"源。\n"
+"允许复制人储存在太空任务中找到的任何<link=\"ELEMENTSGAS\">气体</link>资源。\n"
 "\n"
 "待火箭返回后，所储存的资源便可供殖民地使用。"
 
 #. STRINGS.BUILDINGS.PREFABS.GASCARGOBAY.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASCARGOBAY.NAME"
-msgid "<link=\"GASCARGOBAY\">Large Gas Cargo Canister</link>"
-msgstr "<link=\"GASCARGOBAY\">大型气罐货舱</link>"
+msgid "<link=\"GASCARGOBAY\">Gas Cargo Canister</link>"
+msgstr "<link=\"GASCARGOBAY\">气罐货舱</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.GASCARGOBAYCLUSTER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASCARGOBAYCLUSTER.DESC"
@@ -8746,26 +8806,28 @@ msgstr "<link=\"LEADSUITMARKER\">铅服检查站</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.LIQUIDCARGOBAY.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDCARGOBAY.DESC"
-msgid "Holds more than a regular cargo tank."
-msgstr "比常规的液缸货舱能携带更多东西。"
+msgid ""
+"Duplicants will fill cargo bays with any resources they find during space "
+"missions."
+msgstr "复制人会把他们在太空任务中找到的任何资源来填入货舱。"
 
 #. STRINGS.BUILDINGS.PREFABS.LIQUIDCARGOBAY.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDCARGOBAY.EFFECT"
 msgid ""
-"Allows Duplicants to store most of the <link=\"ELEMENTSLIQUID\">Liquid</"
-"link> resources found during space missions.\n"
+"Allows Duplicants to store any <link=\"ELEMENTSLIQUID\">Liquid</link> "
+"resources found during space missions.\n"
 "\n"
 "Stored resources become available to the colony upon the rocket's return."
 msgstr ""
-"允许复制人储存在太空任务中找到的大部分<link=\"ELEMENTSLIQUID\">液体</link>资"
+"允许复制人储存在太空任务中找到的任何<link=\"ELEMENTSLIQUID\">液体</link>资"
 "源。\n"
 "\n"
 "待火箭返回后，所储存的资源便可供殖民地使用。"
 
 #. STRINGS.BUILDINGS.PREFABS.LIQUIDCARGOBAY.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDCARGOBAY.NAME"
-msgid "<link=\"LIQUIDCARGOBAY\">Large Liquid Cargo Tank</link>"
-msgstr "<link=\"LIQUIDCARGOBAY\">大型液缸货舱</link>"
+msgid "<link=\"LIQUIDCARGOBAY\">Liquid Cargo Tank</link>"
+msgstr "<link=\"LIQUIDCARGOBAY\">液缸货舱</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.LIQUIDCARGOBAYCLUSTER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDCARGOBAYCLUSTER.DESC"
@@ -9449,6 +9511,28 @@ msgstr "通知"
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICALARM.NAME"
 msgid "<link=\"LOGICALARM\">Automated Notifier</link>"
 msgstr "<link=\"LOGIC\">自动化通知器</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICCLUSTERLOCATIONSENSOR.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICCLUSTERLOCATIONSENSOR.DESC"
+msgid ""
+"Starmap Location sensors can signal when a spacecraft is at a certain "
+"location"
+msgstr "星图位置传感器能在火箭处于某个位置时发出信号"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICCLUSTERLOCATIONSENSOR.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICCLUSTERLOCATIONSENSOR.EFFECT"
+msgid ""
+"Send <b><style=\"logic_on\">Green Signals</style></b> at the chosen starmap "
+"locations and <b><style=\"logic_off\">Red Signals</style></b> everywhere "
+"else."
+msgstr ""
+"在选择的星图位置时输出<b><style=\"logic_on\">绿色信号</style></b>，在其他位置"
+"时输出<b><style=\"logic_off\">红色信号</style></b>。"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICCLUSTERLOCATIONSENSOR.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICCLUSTERLOCATIONSENSOR.NAME"
+msgid "<link=\"LOGICCLUSTERLOCATIONSENSOR\">Starmap Location Sensor</link>"
+msgstr "<link=\"LOGICCLUSTERLOCATIONSENSOR\">星图位置传感器</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.LOGICCOUNTER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICCOUNTER.DESC"
@@ -11953,7 +12037,7 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.ORBITALCARGOMODULE.DESC"
 msgid ""
 "It's a generally good idea to pack some supplies when exploring unknown "
 "worlds."
-msgstr "在探索未知世界时，通常打包一些补给是个好主意。"
+msgstr "在探索未知星球时，通常打包一些补给是个好主意。"
 
 #. STRINGS.BUILDINGS.PREFABS.ORBITALCARGOMODULE.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ORBITALCARGOMODULE.EFFECT"
@@ -12931,7 +13015,7 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.PROPFACILITYWALLDEGREE.DESC"
 msgid ""
 "Certification in Applied Physics, awarded in recognition of one \"Jacquelyn "
 "A. Stern\"."
-msgstr "应用物理学的证书，授予\"杰奎琳·A·斯特恩\"。"
+msgstr "应用物理学的证书，授予\"杰奎琳A.斯特恩\"。"
 
 #. STRINGS.BUILDINGS.PREFABS.PROPFACILITYWALLDEGREE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPFACILITYWALLDEGREE.NAME"
@@ -13284,13 +13368,13 @@ msgstr "发射开关"
 msgctxt "STRINGS.BUILDINGS.PREFABS.RAILGUN.LOGIC_PORT_ACTIVE"
 msgid ""
 "<b><style=\"logic_on\">Green Signal</style></b>: Enable payload launching."
-msgstr "<b><style=\"logic_on\">绿色信号</style></b>：启用载货发射"
+msgstr "<b><style=\"logic_on\">绿色信号</style></b>：启用载货发射。"
 
 #. STRINGS.BUILDINGS.PREFABS.RAILGUN.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.RAILGUN.LOGIC_PORT_INACTIVE"
 msgid ""
 "<b><style=\"logic_off\">Red Signal</style></b>: Disable payload launching."
-msgstr "<b><style=\"logic_off\">红色信号</style></b>：禁用载货发射"
+msgstr "<b><style=\"logic_off\">红色信号</style></b>：禁用载货发射。"
 
 #. STRINGS.BUILDINGS.PREFABS.RAILGUN.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.RAILGUN.NAME"
@@ -13566,14 +13650,34 @@ msgstr "当屏幕保护程序启动时，需要有人来晃动一下控制杆。
 #. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.EFFECT"
 msgid ""
-"Allows Duplicants to use pilot-operated rockets.\n"
+"Allows Duplicants to use pilot-operated rockets and control access to "
+"interior buildings.\n"
 "\n"
 "Assigned Duplicants must have the <link=\"PILOT\">Rocket Piloting</link> "
 "skill."
 msgstr ""
-"复制人可以在火箭控制台中监视火箭飞行。\n"
+"允许复制人操作火箭并控制内部建筑的使用许可。\n"
 "\n"
 "必须具有<link=\"PILOT\">火箭驾驶</link>技能的复制人才能使用。"
+
+#. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT
+msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT"
+msgid "Restrict Building Usage"
+msgstr "限制建筑使用"
+
+#. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT_ACTIVE"
+msgid ""
+"<b><style=\"logic_on\">Green Signal</style></b>: Restrict access to interior "
+"buildings"
+msgstr "<b><style=\"logic_on\">绿色信号</style></b>：限制内部建筑的使用"
+
+#. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT_INACTIVE"
+msgid ""
+"<b><style=\"logic_off\">Red Signal</style></b>: Unrestrict access to "
+"interior buildings"
+msgstr "<b><style=\"logic_off\">红色信号</style></b>：不限制内部建筑的使用"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.NAME"
@@ -16102,7 +16206,7 @@ msgstr "一个有你需要的一切的地点。"
 #. STRINGS.CLUSTER_NAMES.DEFAULT.NAME
 msgctxt "STRINGS.CLUSTER_NAMES.DEFAULT.NAME"
 msgid "Single World"
-msgstr "单一世界"
+msgstr "单一星球"
 
 #. STRINGS.CLUSTER_NAMES.FOREST_START_CLUSTER.DESCRIPTION
 msgctxt "STRINGS.CLUSTER_NAMES.FOREST_START_CLUSTER.DESCRIPTION"
@@ -16119,7 +16223,7 @@ msgstr "森林星群"
 #. STRINGS.CLUSTER_NAMES.MILKYWAY.DESCRIPTION
 msgctxt "STRINGS.CLUSTER_NAMES.MILKYWAY.DESCRIPTION"
 msgid "Large locations with resources shared between worlds."
-msgstr "在世界之间分享资源的大型地点。"
+msgstr "在星球之间分享资源的大型地点。"
 
 #. STRINGS.CLUSTER_NAMES.MILKYWAY.NAME
 msgctxt "STRINGS.CLUSTER_NAMES.MILKYWAY.NAME"
@@ -16158,7 +16262,7 @@ msgstr "资源共享有限的两个舒适地点。"
 #. STRINGS.CLUSTER_NAMES.TWO_SMALL_WORLDS.NAME
 msgctxt "STRINGS.CLUSTER_NAMES.TWO_SMALL_WORLDS.NAME"
 msgid "Two Small Worlds"
-msgstr "两个小世界"
+msgstr "两个小星球"
 
 #. STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.DESCRIPTION
 msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.DESCRIPTION"
@@ -16179,6 +16283,16 @@ msgstr "一个起始更大的类地行星组成的星群。"
 msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_CLUSTER.NAME"
 msgid "Large Terra Cluster"
 msgstr "大型类地星群"
+
+#. STRINGS.CLUSTER_NAMES.VANILLA_SWAMP_CLUSTER.DESCRIPTION
+msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_SWAMP_CLUSTER.DESCRIPTION"
+msgid "A cluster of planets with a larger swampy planetoid to start on."
+msgstr "一个起始更大的沼泽行星组成的星群。"
+
+#. STRINGS.CLUSTER_NAMES.VANILLA_SWAMP_CLUSTER.NAME
+msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_SWAMP_CLUSTER.NAME"
+msgid "Large Swamp Cluster"
+msgstr "大型沼泽星群"
 
 #. STRINGS.CODEX.A0_PRELIMINARYCALCULATIONS.BODY.CONTAINER2
 msgctxt "STRINGS.CODEX.A0_PRELIMINARYCALCULATIONS.BODY.CONTAINER2"
@@ -20777,7 +20891,7 @@ msgstr "加密级别：三"
 #. STRINGS.CODEX.B7_TIMESARROWTHOUGHTS.TITLE
 msgctxt "STRINGS.CODEX.B7_TIMESARROWTHOUGHTS.TITLE"
 msgid "Time's Arrow Thoughts"
-msgstr "关于时空之弓的想法"
+msgstr "关于时间之箭的想法"
 
 #. STRINGS.CODEX.B8_MAGAZINEARTICLE.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.B8_MAGAZINEARTICLE.BODY.CONTAINER1"
@@ -21386,6 +21500,58 @@ msgctxt "STRINGS.CODEX.C7_FIRSTCOLONY.TITLE"
 msgid "Director's Notes"
 msgstr "主管的笔记"
 
+#. STRINGS.CODEX.C8_TIMESORDER.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.C8_TIMESORDER.BODY.CONTAINER1"
+msgid ""
+"We have been successfully using the Temporal Bow now for some time with no "
+"obvious consequences. I should be happy that this works so well, but several "
+"questions gnaw at my brain late at night.\n"
+"\n"
+"If Time's Arrow is moving forward the Laws of Entropy declare that the "
+"universe should be moving from a state of order to one of chaos. If the "
+"Temporal Bow bends to a previous point in time to a point when things were "
+"more orderly, logic would dictate that we are making this point more chaotic "
+"by taking things from it. All known laws of the natural universe suggests "
+"that this should have affected our Present Day, but all evidence points to "
+"that not being true. It appears the theory that we cannot change our past "
+"was incorrect!\n"
+"\n"
+"This suggests that Time is, in fact, not an arrow but several arrows, each "
+"pointing different directions. Fundamentally, this proves the existence of "
+"other timelines - different dimensions - some of which we can assume have "
+"also built their own Temporal Bow.\n"
+"\n"
+"The promise of crossing this final dimensional threshold is too tempting. "
+"Imagine what things Gravitas has invented in another dimension!! I must find "
+"a way to tear open the fabric of spacetime and tap into the limitless human "
+"potential of a thousand alternate timelines."
+msgstr ""
+"现在我们已经成功使用时空之弓有一段时间了，而且没有明显的后果。我应该对此感到"
+"高兴，但仍有几个问题在深夜使我难以入眠。\n"
+"\n"
+"如果时间之箭是向前运动的，那么根据熵定律，宇宙应该从有序变为无序。如果时空之"
+"弓将以前的时间点弯向更有序的时间点，逻辑上因为我们从中拿了东西，那么这个时间"
+"点就会变得更加无序。所有的自然宇宙定律都表明这会影响到我们现在的日子，但所有"
+"证据表明这不对。似乎我们不能改变我们过去的理论是错的！\n"
+"\n"
+"这表明，时间事实上不是一个箭，而是几个箭，每个箭都指向着不同的方向。从根本上"
+"讲，这证明了其他时间线的存在，即不同的维度，我们可以假设其中一些维度也建立了"
+"时空之弓。\n"
+"\n"
+"跨过这个最终维度阈的想法实在是太诱人了。想象一下，在另一个维度的庄严科技会发"
+"明什么呢！我必须找到撕开时空结构的方法，并从成百上千不同的时间线中挖掘人类的"
+"无限潜力。"
+
+#. STRINGS.CODEX.C8_TIMESORDER.SUBTITLE
+msgctxt "STRINGS.CODEX.C8_TIMESORDER.SUBTITLE"
+msgid "ENCRYPTION LEVEL: THREE"
+msgstr "加密级别：三"
+
+#. STRINGS.CODEX.C8_TIMESORDER.TITLE
+msgctxt "STRINGS.CODEX.C8_TIMESORDER.TITLE"
+msgid "Time's Order"
+msgstr "时间的秩序"
+
 #. STRINGS.CODEX.CLEANER.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.CLEANER.BODY.CONTAINER1"
 msgid "<smallcaps>Pictured: \"Gulp Fish\" Pacu variant</smallcaps>"
@@ -21522,7 +21688,7 @@ msgstr "食用性香料植物"
 #. STRINGS.CODEX.DASHASALTVINE.TITLE
 msgctxt "STRINGS.CODEX.DASHASALTVINE.TITLE"
 msgid "Balm Lily"
-msgstr "芳香百合"
+msgstr "沙盐藤"
 
 #. STRINGS.CODEX.DECOR.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.DECOR.BODY.CONTAINER1"
@@ -22510,14 +22676,14 @@ msgstr "光的衡量"
 msgctxt "STRINGS.CODEX.LIGHT.PARAGRAPH_1"
 msgid ""
 "Most of the asteroid is dark. Light sources such as the <link=\"CEILINGLIGHT"
-"\">Ceiling Light</link> or <link=\"LIGHTBUG\">Shine Bug</link> can gives "
-"Duplicants a much appreciated boost to Morale and productivity. Many plants "
-"are also sensitive to the amount of light they receive.\n"
+"\">Ceiling Light</link> or <link=\"LIGHTBUG\">Shine Bug</link> improves "
+"Decor and gives Duplicants a boost to their productivity. Many plants are "
+"also sensitive to the amount of light they receive.\n"
 "\n"
 msgstr ""
 "小行星的大多数区域是黑暗的。像是<link=\"CEILINGLIGHT\">吸顶灯</link>或者"
-"<link=\"LIGHTBUG\">发光虫</link>这样的光源可以给复制人的士气和生产力带来加"
-"成。一些植物也同样对光照敏感。\n"
+"<link=\"LIGHTBUG\">发光虫</link>这样的光源可以提高装饰度并给复制人的生产力带"
+"来加成。一些植物也同样对光照敏感。\n"
 "\n"
 
 #. STRINGS.CODEX.LIGHT.PARAGRAPH_2
@@ -22539,15 +22705,15 @@ msgctxt "STRINGS.CODEX.LIGHT.PARAGRAPH_3"
 msgid ""
 "The amount of light on a cell is measured in Lux. Lux has a dramatic range - "
 "A simple <link=\"CEILINGLIGHT\">Ceiling Light</link> produces 1800 Lux, "
-"while the sun will regularly produce values as high as 80000 Lux. The <link="
-"\"SOLARPANEL\">Solar Panel</link> generates power proportional to how many "
-"Lux it is exposed to.\n"
+"while the sun can produce values as high as 80000 Lux. The <link=\"SOLARPANEL"
+"\">Solar Panel</link> generates power proportional to how many Lux it is "
+"exposed to.\n"
 "\n"
 msgstr ""
 "一个格子中光线量以勒克斯为单位衡量。勒克斯有着巨大的变化范围 - 一个简单的"
-"<link=\"CEILINGLIGHT\">吸顶灯</link>能提供1800勒克斯的光，而太阳光直接就能产"
-"生80000勒克斯的光。<link=\"SOLARPANEL\">太阳能板</link>发电量与有多少光暴露在"
-"上面成正比。\n"
+"<link=\"CEILINGLIGHT\">吸顶灯</link>能提供1800勒克斯的光，而太阳光能产生高达"
+"80000勒克斯的光。<link=\"SOLARPANEL\">太阳能板</link>发电量与有多少光暴露在上"
+"面成正比。\n"
 
 #. STRINGS.CODEX.LIGHT.TITLE
 msgctxt "STRINGS.CODEX.LIGHT.TITLE"
@@ -22600,9 +22766,9 @@ msgid ""
 "It is deadly when consumed, however creatures that mistakenly eat it are "
 "said to experience a state of extreme calm before death."
 msgstr ""
-"醇锦菇是一种真菌，以切割时易于繁殖而闻名。\n"
+"醇锦菇是一种真菌，以切割后易于繁殖而闻名。\n"
 "\n"
-"食用它是致命的，然而据说误食了醇锦菇的生物死亡前会体验到一种极度平静的状态。"
+"食用它是致死的，然而据说误食了醇锦菇的生物死亡前会体验到一种极度平静的状态。"
 
 #. STRINGS.CODEX.MELLOWMALLOW.SUBTITLE
 msgctxt "STRINGS.CODEX.MELLOWMALLOW.SUBTITLE"
@@ -22862,16 +23028,16 @@ msgid ""
 "in order to ensure my colony's survival."
 msgstr ""
 "我的复制人对周围空间的调查收获了一些有趣的结果。我们并不孤独！……至少在小行星"
-"水平上。我们似乎处于一个\"星群世界\"——包含着许多我的复制人可以去探索的其他小"
-"行星。\n"
+"水平上。我们似乎处于一个\"星群\"——包含着许多我的复制人可以去探索的其他小行"
+"星。\n"
 "\n"
-"由于这个世界的资源是有限的，我必须建造必要的设施来促进各个世界的探索和运输，"
+"由于这个星球的资源是有限的，我必须建造必要的设施来促进各个星球的探索和运输，"
 "以确保我的殖民地的生存状况。"
 
 #. STRINGS.CODEX.MYLOG.BODY.CLUSTERWORLDS.TITLE
 msgctxt "STRINGS.CODEX.MYLOG.BODY.CLUSTERWORLDS.TITLE"
 msgid "Cluster of Worlds"
-msgstr "星群世界"
+msgstr "星群"
 
 #. STRINGS.CODEX.MYLOG.BODY.DUPLICANTDEATH.BODY
 msgctxt "STRINGS.CODEX.MYLOG.BODY.DUPLICANTDEATH.BODY"
@@ -23001,6 +23167,34 @@ msgctxt "STRINGS.CODEX.MYLOG.BODY.LOG3.TITLE"
 msgid "Cycle 15"
 msgstr "周期 15"
 
+#. STRINGS.CODEX.MYLOG.BODY.LOG3DLC1.BODY
+msgctxt "STRINGS.CODEX.MYLOG.BODY.LOG3DLC1.BODY"
+msgid ""
+"As my Duplicants venture out into the neighbouring worlds, there is an ever "
+"increasing chance that they will encounter hostile environments unsafe for "
+"unprotected individuals. A prudent course of action would be to start "
+"research and training for equipment that could protect my Duplicants when "
+"they encounter such adverse environments.\n"
+"\n"
+"These first few cycles have been occupied with building the basics for my "
+"colony, but now is time I should start planning for the future. We cannot "
+"merely life day-to-day without purpose. If we are to survive for any "
+"significant time, we must strive for a purpose.\n"
+"\n"
+msgstr ""
+"如果我的复制人要前往周围星球，那么很有可能就会遇到有危害的环境，对于没有防备"
+"的复制人来说很危险。所以我需要谨慎行事，在复制人进入这些不利环境之前就开始研"
+"究防护设备并对复制人进行训练。\n"
+"\n"
+"前几周期已经用来建设我的殖民地的基础部分，但现在是时候规划未来了。我们不能每"
+"天漫无目的地生活，如果我们想要长时间生存下去，我们必须为一个目标奋斗。\n"
+"\n"
+
+#. STRINGS.CODEX.MYLOG.BODY.LOG3DLC1.TITLE
+msgctxt "STRINGS.CODEX.MYLOG.BODY.LOG3DLC1.TITLE"
+msgid "Cycle 10"
+msgstr "周期 10"
+
 #. STRINGS.CODEX.MYLOG.BODY.LOG4.BODY
 msgctxt "STRINGS.CODEX.MYLOG.BODY.LOG4.BODY"
 msgid ""
@@ -23012,7 +23206,7 @@ msgid ""
 msgstr ""
 "今天我的殖民地成功运作连续一千周期了。我认为这是一个巨大的成功！\n"
 "\n"
-"想象一下，要是我们的母星世界能看到我们现在这样会多自豪啊。\n"
+"想象一下，要是我们的母星能看到我们现在这样会多自豪啊。\n"
 "\n"
 
 #. STRINGS.CODEX.MYLOG.BODY.LOG4.TITLE
@@ -23307,6 +23501,30 @@ msgctxt "STRINGS.CODEX.MYLOG.BODY.OUTSIDESTARTINGBIOME.TITLE"
 msgid "Geographical Survey"
 msgstr "地理调查"
 
+#. STRINGS.CODEX.MYLOG.BODY.OUTSIDESTARTINGDLC1.BODY
+msgctxt "STRINGS.CODEX.MYLOG.BODY.OUTSIDESTARTINGDLC1.BODY"
+msgid ""
+"As my Duplicants have ventured further into their surroundings I've been "
+"able to determine a more detailed picture of our surroundings.\n"
+"\n"
+"Unfortunately, I've concluded that this planetoid does not have enough "
+"resources to settle a longterm colony.\n"
+"\n"
+"I can only hope that we will somehow be able to reach another asteroid "
+"before our resources run out.\n"
+"\n"
+msgstr ""
+"随着我的复制人在周围进一步探索，我对我们周围环境已有了更详细的认识。\n"
+"\n"
+"不幸的是，我的结论为，这个星球没有足够的资源来维持长期的殖民地。\n"
+"\n"
+"我只能希望在我们的资源用光之前能以某种方式到达另一个小行星。\n"
+
+#. STRINGS.CODEX.MYLOG.BODY.OUTSIDESTARTINGDLC1.TITLE
+msgctxt "STRINGS.CODEX.MYLOG.BODY.OUTSIDESTARTINGDLC1.TITLE"
+msgid "Regional Analysis"
+msgstr "区域分析"
+
 #. STRINGS.CODEX.MYLOG.BODY.PLANETARYECHOES.BODY
 msgctxt "STRINGS.CODEX.MYLOG.BODY.PLANETARYECHOES.BODY"
 msgid ""
@@ -23489,7 +23707,7 @@ msgstr ""
 "我的复制人发现了一个奇怪的新设备，似乎是之前庄严科技的残余物。激活设备后，我"
 "的复制人被某个未知的高科技设备扫描了，随后我就检测到一次巨量的信息传输！\n"
 "\n"
-"值得注意的是，我的复制人在另一个完全不同的世界的遥远的地点重新出现了！我现在"
+"值得注意的是，我的复制人在另一个完全不同的星球的遥远的地点重新出现了！我现在"
 "可以访问临近小行星上的另一个废弃的庄严科技设施了！要明白这件事我必须进行进一"
 "步分析，但同时，我必须保持警惕，时刻追踪我的两个殖民地。"
 
@@ -24426,7 +24644,7 @@ msgstr "电池电量：<b>{0}焦</b>"
 
 #. STRINGS.CODEX.ROBOT_DESCRIPTORS.STORAGE.CAPACITY
 msgctxt "STRINGS.CODEX.ROBOT_DESCRIPTORS.STORAGE.CAPACITY"
-msgid "Internal storage: <b>{0} Kg</b>"
+msgid "Internal storage: <b>{0} kg</b>"
 msgstr "内部储存：<b>{0}千克</b>"
 
 #. STRINGS.CODEX.ROVER.BODY.CONTAINER1
@@ -25353,7 +25571,7 @@ msgstr "氧气不堵"
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.BASIC_PUMPING_DESCRIPTION
 msgctxt ""
 "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.BASIC_PUMPING_DESCRIPTION"
-msgid "Distribute 1000  Kg of Oxygen using gas vents."
+msgid "Distribute 1000  kg of Oxygen using gas vents."
 msgstr "使用排气口排出1000千克的氧气。"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.BUILD_NATURE_RESERVES
@@ -25587,7 +25805,7 @@ msgid ""
 "Have Duplicants consume 400,000kcal of food without planting any seeds in "
 "Planter Boxes, Farm Tiles, or Hydroponic Farms."
 msgstr ""
-"让复制人消耗400,000千卡的食物而不在种植盒、土培砖、液培砖中种任何种子。"
+"让复制人消耗400,000千卡的食物而不在种植箱、土培砖、液培砖中种任何种子。"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.PLUMBED_WASHROOMS
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.PLUMBED_WASHROOMS"
@@ -26629,7 +26847,7 @@ msgid ""
 msgstr ""
 "这只小动物被关在门、砖块或封闭空间内\n"
 "\n"
-"听起来就不舒服！"
+"听着就不舒服！"
 
 #. STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDED.NAME
 msgctxt "STRINGS.CREATURES.MODIFIERS.DIVERGENTPLANTTENDED.NAME"
@@ -27173,7 +27391,7 @@ msgid ""
 "Farms</link>, and absorb <link=\"HEAT\">Heat</link> by respiring through "
 "their porous outer membranes."
 msgstr ""
-"冰息萝卜可以生长在<link=\"PLANTERBOX\">种植盒</link>，<link=\"FARMTILE\">土培"
+"冰息萝卜可以生长在<link=\"PLANTERBOX\">种植箱</link>，<link=\"FARMTILE\">土培"
 "砖</link>或<link=\"HYDROPONICFARM\">液培砖</link>中，通过其多孔外膜呼吸来吸收"
 "<link=\"HEAT\">热量</link>。"
 
@@ -27195,7 +27413,7 @@ msgid ""
 "Farms</link>, and absorb <link=\"HEAT\">Heat</link> by respiring through "
 "their porous outer membranes."
 msgstr ""
-"冰息萝卜可以生长在<link=\"PLANTERBOX\">种植盒</link>，<link=\"FARMTILE\">土培"
+"冰息萝卜可以生长在<link=\"PLANTERBOX\">种植箱</link>，<link=\"FARMTILE\">土培"
 "砖</link>或<link=\"HYDROPONICFARM\">液培砖</link>中，通过其多孔外膜呼吸来吸收"
 "<link=\"HEAT\">热量</link>。"
 
@@ -32201,7 +32419,7 @@ msgstr ""
 "复制人的<style=\"KKeyword\">士气</style>必须超过他们的<style=\"KKeyword\">士"
 "气需求</style>，否则他们将开始积累<style=\"KKeyword\">压力</style>。\n"
 "\n"
-"向复制人提供更高质量的<style=\"KKeyword\">食物</style>，在殖民地日程表中分配"
+"为复制人提供更高质量的<style=\"KKeyword\">食物</style>，在殖民地日程表中分配"
 "更多的<style=\"KKeyword\">休息时间</style>，或者为复制人建造更好的<style="
 "\"KKeyword\">卫生间</style>和<style=\"KKeyword\">卧室</style>，可以提高他们的"
 "<style=\"KKeyword\">士气</style>。"
@@ -34211,7 +34429,7 @@ msgstr "在{Selected}的房间外"
 #. STRINGS.DUPLICANTS.CHORES.PRECONDITIONS.IS_IN_MY_WORLD
 msgctxt "STRINGS.DUPLICANTS.CHORES.PRECONDITIONS.IS_IN_MY_WORLD"
 msgid "Outside world"
-msgstr "处于世界之外"
+msgstr "处于星球之外"
 
 #. STRINGS.DUPLICANTS.CHORES.PRECONDITIONS.IS_MARKED_FOR_DECONSTRUCTION
 msgctxt "STRINGS.DUPLICANTS.CHORES.PRECONDITIONS.IS_MARKED_FOR_DECONSTRUCTION"
@@ -49635,7 +49853,7 @@ msgid ""
 "\n"
 "The inside is almost completely uncooked, despite the crunch on the outside."
 msgstr ""
-"油炸变硬的泥糕。\n"
+"油炸变硬的泥膏。\n"
 "\n"
 "尽管外面酥脆，不过里面基本没熟。"
 
@@ -49647,7 +49865,7 @@ msgstr "<link=\"FRIEDMUSHBAR\">炸泥膏</link>"
 #. STRINGS.ITEMS.FOOD.FRIEDMUSHBAR.RECIPEDESC
 msgctxt "STRINGS.ITEMS.FOOD.FRIEDMUSHBAR.RECIPEDESC"
 msgid "Deep fried, solidified mudslop."
-msgstr "油炸变硬的泥糕。"
+msgstr "油炸变硬的泥膏。"
 
 #. STRINGS.ITEMS.FOOD.FRIEDMUSHROOM.DESC
 msgctxt "STRINGS.ITEMS.FOOD.FRIEDMUSHROOM.DESC"
@@ -49686,7 +49904,7 @@ msgstr ""
 #. STRINGS.ITEMS.FOOD.FRUITCAKE.NAME
 msgctxt "STRINGS.ITEMS.FOOD.FRUITCAKE.NAME"
 msgid "<link=\"FRUITCAKE\">Berry Sludge</link>"
-msgstr "<link=\"FRUITCAKE\">浆果泥糕</link>"
+msgstr "<link=\"FRUITCAKE\">浆果糕</link>"
 
 #. STRINGS.ITEMS.FOOD.FRUITCAKE.RECIPEDESC
 msgctxt "STRINGS.ITEMS.FOOD.FRUITCAKE.RECIPEDESC"
@@ -49703,7 +49921,7 @@ msgstr "辐照过的泥土和水组成的混合物，令人不安但很美味。
 #. STRINGS.ITEMS.FOOD.GAMMAMUSH.NAME
 msgctxt "STRINGS.ITEMS.FOOD.GAMMAMUSH.NAME"
 msgid "<link=\"GAMMAMUSH\">Gamma Mush</link>"
-msgstr "<link=\"GAMMAMUSH\">伽马泥糕</link>"
+msgstr "<link=\"GAMMAMUSH\">伽马泥膏</link>"
 
 #. STRINGS.ITEMS.FOOD.GAMMAMUSH.RECIPEDESC
 msgctxt "STRINGS.ITEMS.FOOD.GAMMAMUSH.RECIPEDESC"
@@ -49835,7 +50053,7 @@ msgid ""
 "\n"
 "Mush Bars are preferable to starvation, but only just barely."
 msgstr ""
-"一种可食用的腐烂泥糕。\n"
+"一种可食用的腐烂泥膏。\n"
 "\n"
 "吃软泥膏总比饿着强，但也强不到哪去。"
 
@@ -49852,7 +50070,7 @@ msgid ""
 "<link=\"MUSHBAR\">Mush Bar</link>s are preferable to starvation, but only "
 "just barely."
 msgstr ""
-"一种可食用的腐烂泥糕。\n"
+"一种可食用的腐烂泥膏。\n"
 "\n"
 "吃<link=\"MUSHBAR\">软泥膏</link>总比饿着强，但也强不到哪去。"
 
@@ -56507,6 +56725,7 @@ msgid ""
 "Shrub\n"
 "Herb\n"
 "Grow\n"
+"Verd\n"
 "Bark\n"
 msgstr ""
 "素蔬\n"
@@ -56517,6 +56736,7 @@ msgstr ""
 "灌木\n"
 "草木\n"
 "茂盛\n"
+"绿色\n"
 "树皮\n"
 
 #. STRINGS.NAMEGEN.WORLD.ROOTS.GENERIC
@@ -56628,6 +56848,10 @@ msgid ""
 "Toast\n"
 "Scorch\n"
 "Burn\n"
+"Obsid\n"
+"Lav\n"
+"Melt\n"
+"Hot\n"
 "Char\n"
 msgstr ""
 "炽火\n"
@@ -56635,6 +56859,10 @@ msgstr ""
 "灼热\n"
 "焦热\n"
 "滚烫\n"
+"黑耀\n"
+"熔岩\n"
+"熔化\n"
+"酷热\n"
 "焦化\n"
 
 #. STRINGS.NAMEGEN.WORLD.ROOTS.MOO
@@ -56643,13 +56871,23 @@ msgid ""
 "Moom\n"
 "Gas\n"
 "Udder\n"
+"Heffer\n"
+"Belch\n"
 "Calf\n"
+"Cud\n"
+"Gass\n"
+"Methan\n"
 "Bull\n"
 msgstr ""
 "哞月\n"
 "燃气\n"
 "牛乳\n"
+"母牛\n"
+"嗝气\n"
 "牛崽\n"
+"反刍\n"
+"释气\n"
+"甲烷\n"
 "公牛\n"
 
 #. STRINGS.NAMEGEN.WORLD.ROOTS.OILY
@@ -56657,10 +56895,13 @@ msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.OILY"
 msgid ""
 "Greas\n"
 "Slick\n"
-"Gas\n"
+"Oil\n"
 "Petr\n"
 "Fuel\n"
 "Combust\n"
+"Greas\n"
+"Crud\n"
+"Viscous\n"
 "Pitch\n"
 msgstr ""
 "油脂\n"
@@ -56670,6 +56911,59 @@ msgstr ""
 "燃料\n"
 "燃烧\n"
 "柏油\n"
+"原油\n"
+"粘稠\n"
+"沥青\n"
+
+#. STRINGS.NAMEGEN.WORLD.ROOTS.RADIOACTIVE
+msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.RADIOACTIVE"
+msgid ""
+"Rad\n"
+"Contam\n"
+"Hazard\n"
+"Glow\n"
+"Tox\n"
+"Irrad\n"
+"Radioact\n"
+"Atom\n"
+"Zap\n"
+"Ray\n"
+msgstr ""
+"辐射\n"
+"污染\n"
+"危害\n"
+"发光\n"
+"毒物\n"
+"辐照\n"
+"放射\n"
+"原子\n"
+"速粒\n"
+"射线\n"
+
+#. STRINGS.NAMEGEN.WORLD.ROOTS.REGOLITH
+msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.REGOLITH"
+msgid ""
+"Filt\n"
+"Regol\n"
+"Siev\n"
+"Sift\n"
+"Meteor\n"
+"Sand\n"
+"Rock\n"
+"Dust\n"
+"Sedim\n"
+"Silt\n"
+msgstr ""
+"滤土\n"
+"浮土\n"
+"漏土\n"
+"筛土\n"
+"陨石\n"
+"沙土\n"
+"岩土\n"
+"尘土\n"
+"沉积\n"
+"粉沙\n"
 
 #. STRINGS.NAMEGEN.WORLD.ROOTS.SULFUR
 msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.SULFUR"
@@ -56699,6 +56993,7 @@ msgid ""
 "Smell\n"
 "Yuck\n"
 "Reek\n"
+"Blag\n"
 "Ooz\n"
 msgstr ""
 "粘糊\n"
@@ -56709,6 +57004,7 @@ msgstr ""
 "臭气\n"
 "恶心\n"
 "泥糊\n"
+"糊弄\n"
 "稀泥\n"
 
 #. STRINGS.NAMEGEN.WORLD.ROOTS.TERRA
@@ -56720,6 +57016,9 @@ msgid ""
 "Beaut\n"
 "Equ\n"
 "Pleth\n"
+"Idyll\n"
+"Halcy\n"
+"Pastor\n"
 "Vital\n"
 msgstr ""
 "泥土\n"
@@ -56728,6 +57027,9 @@ msgstr ""
 "美好\n"
 "平稳\n"
 "繁盛\n"
+"无瑕\n"
+"宁静\n"
+"田园\n"
 "万生\n"
 
 #. STRINGS.NAMEGEN.WORLD.ROOTS.TUNDRA
@@ -56740,6 +57042,8 @@ msgid ""
 "Freez\n"
 "Chill\n"
 "Frig\n"
+"Froid\n"
+"Cold\n"
 "Frost\n"
 msgstr ""
 "寒息\n"
@@ -56749,16 +57053,34 @@ msgstr ""
 "冰冻\n"
 "严寒\n"
 "冷酷\n"
+"制冷\n"
+"寒冷\n"
 "冰霜\n"
 
 #. STRINGS.NAMEGEN.WORLD.ROOTS.WATER
 msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.WATER"
 msgid ""
 "Wat\n"
-"HydrAu\n"
+"Damp\n"
+"Moist\n"
+"Drench\n"
+"Aytch Tew\n"
+"Hydr\n"
+"Flood\n"
+"Irrig\n"
+"Soaker\n"
+"Aqu\n"
 msgstr ""
-"水域\n"
-"水力\n"
+"纯水\n"
+"潮湿\n"
+"湿润\n"
+"浸湿\n"
+"湿围\n"
+"液压\n"
+"洪水\n"
+"灌溉\n"
+"浸泡\n"
+"水剂\n"
 
 #. STRINGS.NAMEGEN.WORLD.SPACECRAFT_PREFIX
 msgctxt "STRINGS.NAMEGEN.WORLD.SPACECRAFT_PREFIX"
@@ -57181,7 +57503,7 @@ msgstr "烟雾弥漫的大型火箭引擎。"
 msgctxt "STRINGS.RESEARCH.TECHS.BETTERHYDROCARBONPROPULSION.NAME"
 msgid ""
 "<link=\"BETTERHYDROCARBONPROPULSION\">Improved Hydrocarbon Propulsion</link>"
-msgstr "<link=\"BETTERHYDROCARBONPROPULSION\">改良烃类燃料推进学</link>"
+msgstr "<link=\"BETTERHYDROCARBONPROPULSION\">改良烃类燃料推进</link>"
 
 #. STRINGS.RESEARCH.TECHS.BIOENGINEERING.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.BIOENGINEERING.DESC"
@@ -57282,7 +57604,7 @@ msgstr "一个半强力的引擎，能推动你进入银河系更深处。"
 #. STRINGS.RESEARCH.TECHS.CRYOFUELPROPULSION.NAME
 msgctxt "STRINGS.RESEARCH.TECHS.CRYOFUELPROPULSION.NAME"
 msgid "<link=\"CRYOFUELPROPULSION\">Cryofuel Propulsion</link>"
-msgstr "<link=\"CRYOFUELPROPULSION\">低温燃料推进学</link>"
+msgstr "<link=\"CRYOFUELPROPULSION\">低温燃料推进</link>"
 
 #. STRINGS.RESEARCH.TECHS.DIRECTEDAIRSTREAMS.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.DIRECTEDAIRSTREAMS.DESC"
@@ -57548,7 +57870,7 @@ msgstr "烟雾弥漫的大型火箭引擎。"
 #. STRINGS.RESEARCH.TECHS.HYDROCARBONPROPULSION.NAME
 msgctxt "STRINGS.RESEARCH.TECHS.HYDROCARBONPROPULSION.NAME"
 msgid "<link=\"HYDROCARBONPROPULSION\">Hydrocarbon Propulsion</link>"
-msgstr "<link=\"HYDROCARBONPROPULSION\">烃类燃料推进学</link>"
+msgstr "<link=\"HYDROCARBONPROPULSION\">烃类燃料推进</link>"
 
 #. STRINGS.RESEARCH.TECHS.IMPROVEDCOMBUSTION.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.IMPROVEDCOMBUSTION.DESC"
@@ -57807,7 +58129,7 @@ msgstr "全新的辐射技术让你到达另一颗星星。"
 #. STRINGS.RESEARCH.TECHS.NUCLEARPROPULSION.NAME
 msgctxt "STRINGS.RESEARCH.TECHS.NUCLEARPROPULSION.NAME"
 msgid "<link=\"NUCLEARPROPULSION\">Radbolt Propulsion</link>"
-msgstr "<link=\"NUCLEARPROPULSION\">辐射粒子推进学</link>"
+msgstr "<link=\"NUCLEARPROPULSION\">辐射粒子推进</link>"
 
 #. STRINGS.RESEARCH.TECHS.NUCLEARREFINEMENT.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.NUCLEARREFINEMENT.DESC"
@@ -59902,6 +60224,38 @@ msgstr ""
 "射蜂，但如果我们想要建立更高等级的核技术，我的殖民地就必须前往这片危险的生"
 "态。"
 
+#. STRINGS.SUBWORLDS.REGOLITH.DESC
+msgctxt "STRINGS.SUBWORLDS.REGOLITH.DESC"
+msgid ""
+"The Regolith Biome contains a bounty of <link=\"REGOLITH\">Regolith</link> "
+"which is very useful as a material for filtration."
+msgstr "浮土生态中含有大量<link=\"REGOLITH\">浮土</link>，可用作过滤材料。"
+
+#. STRINGS.SUBWORLDS.REGOLITH.NAME
+msgctxt "STRINGS.SUBWORLDS.REGOLITH.NAME"
+msgid "Regolith"
+msgstr "浮土"
+
+#. STRINGS.SUBWORLDS.REGOLITH.UTILITY
+msgctxt "STRINGS.SUBWORLDS.REGOLITH.UTILITY"
+msgid ""
+"Lingering within the layers of Regolith are the pernicious <link="
+"\"MOLESPECIES\">Shove Voles</link> which eat valuable resources and excrete "
+"them at half the original mass.\n"
+"\n"
+"Fortunately these pests can be wrangled up and used as a good food source "
+"for my Duplicants. However, extra care must be taken to contain these "
+"critters in pens made from either double thick walls or from <link="
+"\"REFINEDMETAL\">Refined Metal</link> since they are capable of burrowing "
+"through most other materials."
+msgstr ""
+"在浮土层中徘徊的是可恶的<link=\"MOLESPECIES\">锹环田鼠</link>，它们会吃掉宝贵"
+"的资源并排出原物质的一半质量。\n"
+"\n"
+"幸运的是，这些害兽可以抓起来作为我的复制人的食物来源。然而必须要额外注意，想"
+"要围住这些小动物就需要双倍厚墙或者<link=\"REFINEDMETAL\">精炼金属</link>，因"
+"为它们有挖穿大多数材料的能力。"
+
 #. STRINGS.SUBWORLDS.RUST.DESC
 msgctxt "STRINGS.SUBWORLDS.RUST.DESC"
 msgid ""
@@ -60885,6 +61239,16 @@ msgid "{0}: {1} per <link=\"RESEARCH\">Research</link> point"
 msgstr ""
 "{0}：每点<link=\"RESEARCH\">研究</link>消耗<style=\"consumed\">{1}</style>"
 
+#. STRINGS.UI.BUILDINGEFFECTS.ROCKETRESTRICTION_BUILDINGS
+msgctxt "STRINGS.UI.BUILDINGEFFECTS.ROCKETRESTRICTION_BUILDINGS"
+msgid "    • Buildings: {buildinglist}"
+msgstr "    • 建筑：{buildinglist}"
+
+#. STRINGS.UI.BUILDINGEFFECTS.ROCKETRESTRICTION_HEADER
+msgctxt "STRINGS.UI.BUILDINGEFFECTS.ROCKETRESTRICTION_HEADER"
+msgid "Restriction Control:"
+msgstr "限制控制："
+
 #. STRINGS.UI.BUILDINGEFFECTS.SCALE_GROWTH
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.SCALE_GROWTH"
 msgid "Shearable {Item}: {Amount} per {Time}"
@@ -61339,7 +61703,7 @@ msgid ""
 "\">Volume</style> and <style=\"KKeyword\">Specific Heat Capacity</style> of "
 "the pumped <style=\"KKeyword\">Gas</style>\n"
 "\n"
-"Cooling 1  Kg of <link=\"OXYGEN\">Oxygen</link> the entire <b>{1}</b> will "
+"Cooling 1  kg of <link=\"OXYGEN\">Oxygen</link> the entire <b>{1}</b> will "
 "output <b>{0}</b>"
 msgstr ""
 "基于泵送<style=\"KKeyword\">气体</style>的<style=\"KKeyword\">量</style>和"
@@ -61354,7 +61718,7 @@ msgid ""
 "\">Volume</style> and <style=\"KKeyword\">Specific Heat Capacity</style> of "
 "the pumped <style=\"KKeyword\">Liquid</style>\n"
 "\n"
-"Cooling 10  Kg of <link=\"WATER\">Water</link> the entire <b>{1}</b> will "
+"Cooling 10  kg of <link=\"WATER\">Water</link> the entire <b>{1}</b> will "
 "output <b>{0}</b>"
 msgstr ""
 "基于泵送<style=\"KKeyword\">液体</style>的<style=\"KKeyword\">量</style>和"
@@ -61688,6 +62052,22 @@ msgid ""
 msgstr ""
 "这个研究站每生成一个<style=\"KKeyword\">研究点</style>会消耗<style=\"consumed"
 "\">{1}</style>的<style=\"KKeyword\">{0}</style>"
+
+#. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.ROCKETRESTRICTION_BUILDINGS
+msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.ROCKETRESTRICTION_BUILDINGS"
+msgid ""
+"This station controls the operational status of the following buildings:\n"
+"\n"
+"{buildinglist}"
+msgstr ""
+"这里可以控制以下建筑的操作状态：\n"
+"\n"
+"{buildinglist}"
+
+#. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.ROCKETRESTRICTION_HEADER
+msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.ROCKETRESTRICTION_HEADER"
+msgid "Controls whether a building is operational within a rocket interior"
+msgstr "控制火箭内的建筑是否可操作"
 
 #. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.SCALE_GROWTH
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.SCALE_GROWTH"
@@ -62851,7 +63231,7 @@ msgstr "<b>食物</b>"
 #. STRINGS.UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA.CHECKWORLDHASMINIONS
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA.CHECKWORLDHASMINIONS"
 msgid "Check world has Duplicants"
-msgstr "检查世界有复制人"
+msgstr "检查星球有复制人"
 
 #. STRINGS.UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_FAIL
 msgctxt "STRINGS.UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_FAIL"
@@ -63504,9 +63884,9 @@ msgid ""
 "more fun for everyone. If you use the box below to submit a crash report to "
 "us, we can use this information to get the issue sorted out.\""
 msgstr ""
-"\"哎呀！很抱歉，似乎你的游戏出现错误了。不过没关系，正是通过这些错误，我们找"
-"到并修复问题，让每个人的游戏体验更加有趣。如果你使用下方的方框向我们报告错"
-"误，我们可以利用你提供的信息修复问题。\""
+"\"哎呀！很抱歉，似乎你的游戏出现错误了。不过没关系，我们正是通过找到问题并将"
+"其修复，来让每个人的游戏体验更加有趣。如果你使用下方的方框向我们报告错误，我"
+"们可以利用你提供的信息修复问题。\""
 
 #. STRINGS.UI.CRASHSCREEN.TITLE_MODS
 msgctxt "STRINGS.UI.CRASHSCREEN.TITLE_MODS"
@@ -63951,7 +64331,7 @@ msgid ""
 "Low germ count in this area is causing germs to die rapidly\n"
 "\n"
 "Fewer than {0} germs are on this {1} of material.\n"
-"({2} germs/ Kg)"
+"({2} germs/ kg)"
 msgstr ""
 "这片区域病菌量少，导致病菌快速死亡\n"
 "\n"
@@ -64025,7 +64405,7 @@ msgid ""
 "the population stabilizes\n"
 "\n"
 "A maximum of {0} can be on this {1} of material.\n"
-"({2} germs/ Kg)"
+"({2} germs/ kg)"
 msgstr ""
 "这片区域病菌量过多，因此在数量稳定之前，病菌会快速死亡\n"
 "\n"
@@ -68445,8 +68825,8 @@ msgstr "Steam创意工坊"
 
 #. STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER
 msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
-msgid "A BREATH OF FRESH AIR"
-msgstr "沁人心脾"
+msgid "SOLAR SWAMPED UPDATE"
+msgstr "柔光泥潭更新"
 
 #. STRINGS.UI.FRONTEND.MOTD.NEWS_BODY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.NEWS_BODY"
@@ -68464,31 +68844,37 @@ msgstr "加入讨论"
 #. STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY"
 msgid ""
-"Welcome to the newest update <b>A BREATH OF FRESH AIR</b>:\n"
+"Welcome to the <b>SOLAR SWAMPED UPDATE</b>:\n"
 "\n"
-"•<indent=20px>Several buildings and items have been added to the Base Game, "
-"including Oxygen Masks, and Meter Valves.</indent>\n"
-"•<indent=20px>Base Game now has all <i>Spaced Out!</i> bug fixes and quality-"
-"of-life improvements.</indent>\n"
-"•<indent=20px>Updates to <i>Spaced Out!</i> Colony Imperatives</indent>\n"
-"•<indent=20px>Significant updates to the Modding system, modders please see "
-"the forum for upgrade instructions.</indent>\n"
-"•<indent=20px>Toggle between <i>Spaced Out!</i> and Base Game in the main "
-"menu without re-downloading the game.</indent>\n"
+"<b><i>Spaced Out!</i></b>\n"
+"•<indent=20px>Added a third Classic Cluster: play on the Swamp Start to try "
+"the new biomes in a larger world</indent>\n"
+"•<indent=20px>Variable sunlight intensity per-world, changing the "
+"progression of solar panels</indent>\n"
+"•<indent=20px>New Location Sensor and usage restrictions on the Rocket "
+"Control Station to keep rockets prepped for their mission</indent>\n"
+"<b>Base Game</b>\n"
+"•<indent=20px>Numerous worldgen fixes to bugs introduced in the last update "
+"(Only affects newly generated worlds)</indent>\n"
+"•<indent=20px>Other bug fixes, including resolving several issues with Space "
+"Scanners</indent>\n"
 "\n"
 "   Check out the full patch notes for more details!"
 msgstr ""
-"欢迎来到<b>沁人心脾更新</b>\n"
+"欢迎来到<b>柔光泥潭更新</b>：\n"
 "\n"
-"•<indent=20px>数个建筑和物品添加到了本体，包括氧气面罩和计量阀。</indent>\n"
-"•<indent=20px>本体游戏现在有<i>《眼冒金星！》</i>全部的修复和生活质量改进。</"
+"<b><I>《眼冒金星！》</i></b>\n"
+"•<indent=20px>添加了第三个经典风格星群：试试在大型星球上开始的沼泽开局吧</"
 "indent>\n"
-"•<indent=20px>更新了<i>《眼冒金星！》<i>的殖民地使命。</indent>\n"
-"•<indent=20px>对模组系统进行了大改动，作者们请查看论坛的升级说明。</indent>\n"
-"•<indent=20px>在主菜单切换<i>《眼冒金星！》</i>和本体游戏时不再需要重新下载游"
-"戏了。</indent>\n"
+"•<indent=20px>每个星球的光照强度不同，改变了太阳能板的发展</indent>\n"
+"•<indent=20px>新的位置传感器和火箭控制台限制的使用能让火箭为执行任务做好准备"
+"</indent>\n"
+"<b>本体游戏</b>\n"
+"•<indent=20px>修复了上次更新后引发的数个世界生成问题（只对新生成的世界有效）"
+"</indent>\n"
+"•<indent=20px>其他的修复，包括解决了与太空扫描仪有关的几个问题</indent>\n"
 "\n"
-"请查看完整的更新日志了解详情！"
+"   查看完整的更新日志来了解详情！"
 
 #. STRINGS.UI.FRONTEND.MOTD.UPDATE_TEXT
 msgctxt "STRINGS.UI.FRONTEND.MOTD.UPDATE_TEXT"
@@ -68824,22 +69210,25 @@ msgstr ""
 #. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_AIRFILTER
 msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_AIRFILTER"
 msgid ""
-"•<indent=20px>MISSING. now requires <b>5w Power</b>.</indent>\n"
+"•<indent=20px><link=\"AIRFILTER\">Deodorizer</link> now requires <b>5w "
+"Power</b>.</indent>\n"
 "•<indent=20px>Duplicants will get <b>Stinging Eyes</b> from gasses such as "
 "chlorine and hydrogen.</indent>"
 msgstr ""
-"•<indent=20px>空气净化器现在需要<b>5瓦电</b>。</indent>\n"
+"•<indent=20px><link=\"AIRFILTER\">空气净化器</link>现在需要<b>5瓦电</b>。</"
+"indent>\n"
 "•<indent=20px>复制人在氯气或氢气等气体中会受到<b>眼部刺激</b>。</indent>"
 
 #. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_BUILDINGS
 msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_BUILDINGS"
 msgid ""
-"•<indent=20px>The <b>MISSING.</b> has been added to aid early-game "
-"exploration.</indent>\n"
+"•<indent=20px>The <b><link=\"OXYGENMASKSTATION\">Oxygen Mask Station</link></"
+"b> has been added to aid early-game exploration.</indent>\n"
 "•<indent=20px>Use the new <b>Meter Valves</b> for precise control of "
 "resources in pipes.</indent>"
 msgstr ""
-"•<indent=20px>添加了<b>氧气面罩</b>以帮助前期游戏的探索。</indent>\n"
+"•<indent=20px>添加了<b><link=\"OXYGENMASKSTATION\">氧气面罩</link></b>以帮助"
+"前期游戏的探索。</indent>\n"
 "•<indent=20px>使用新的<b>计量阀</b>来精准控制管道中的资源。</indent>"
 
 #. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_FOOD
@@ -68859,10 +69248,12 @@ msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_SIMULATION"
 msgid ""
 "•<indent=20px>Many <b>simulation bugs</b> have been fixed.</indent>\n"
 "•<indent=20px>This may <b>change the effectiveness</b> of certain "
-"contraptions and MISSING. setups.</indent>"
+"contraptions and <link=\"STEAMTURBINE2\">Steam Turbine</link> setups.</"
+"indent>"
 msgstr ""
 "•<indent=20px>许多<b>模拟问题</b>已修复。</indent>\n"
-"•<indent=20px>这可能会<b>改变</b>某些结构和蒸汽涡轮的<b>效率</b>。</indent>"
+"•<indent=20px>这可能会<b>改变</b>某些结构和<link=\"STEAMTURBINE2\">蒸汽涡轮机"
+"</link>的<b>效率</b>。</indent>"
 
 #. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_TITLE
 msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_TITLE"
@@ -69120,14 +69511,15 @@ msgstr ""
 msgctxt "STRINGS.UI.FRONTEND.SUPPORTWARNINGS.WORLD_GEN_FAILURE"
 msgid ""
 "A problem occurred while generating a world from this seed:\n"
-"{0}. \n"
+"{0}.\n"
 "\n"
-"Please try again with a different seed."
+"Unfortunately, not all seeds germinate. Please try again with a different "
+"seed."
 msgstr ""
 "当生成这一种子的世界时出现了问题：\n"
 "{0}。\n"
 "\n"
-"请尝试另一个种子。"
+"不幸的是，并非所有种子都能发芽。请尝试另一个种子。"
 
 #. STRINGS.UI.FRONTEND.SUPPORTWARNINGS.WORLD_GEN_FILES
 msgctxt "STRINGS.UI.FRONTEND.SUPPORTWARNINGS.WORLD_GEN_FILES"
@@ -73223,6 +73615,11 @@ msgstr ""
 "------------------\n"
 "点击展开"
 
+#. STRINGS.UI.RESOURCESCREEN.CLEAR_ALL
+msgctxt "STRINGS.UI.RESOURCESCREEN.CLEAR_ALL"
+msgid "Unpin all resources"
+msgstr "取消所有固定资源"
+
 #. STRINGS.UI.RESOURCESCREEN.CLEAR_NEW_RESOURCES
 msgctxt "STRINGS.UI.RESOURCESCREEN.CLEAR_NEW_RESOURCES"
 msgid "Clear New"
@@ -75208,6 +75605,11 @@ msgctxt "STRINGS.UI.SKILLS_SCREEN.SORT_BY_SKILL_AVAILABLE"
 msgid "Skill Points"
 msgstr "技能点"
 
+#. STRINGS.UI.SPACEARTIFACTS.AMELIASWATCH.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.AMELIASWATCH.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.AMELIASWATCH.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.AMELIASWATCH.DESCRIPTION"
 msgid ""
@@ -75254,6 +75656,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.ARTIFACTTIERS.TIER5"
 msgid "Rarity 5"
 msgstr "稀有度5"
 
+#. STRINGS.UI.SPACEARTIFACTS.BIOLUMROCK.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.BIOLUMROCK.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.BIOLUMROCK.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.BIOLUMROCK.DESCRIPTION"
 msgid ""
@@ -75265,6 +75672,11 @@ msgstr "上面繁盛的菌落就是造成这块石头能发出浅蓝色光的原
 msgctxt "STRINGS.UI.SPACEARTIFACTS.BIOLUMROCK.NAME"
 msgid "Bioluminescent Rock"
 msgstr "发光岩石"
+
+#. STRINGS.UI.SPACEARTIFACTS.BLENDER.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.BLENDER.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.BLENDER.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.BLENDER.DESCRIPTION"
@@ -75278,6 +75690,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.BLENDER.NAME"
 msgid "Blender"
 msgstr "搅拌机"
 
+#. STRINGS.UI.SPACEARTIFACTS.BRICKPHONE.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.BRICKPHONE.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.BRICKPHONE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.BRICKPHONE.DESCRIPTION"
 msgid "It still works."
@@ -75288,6 +75705,18 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.BRICKPHONE.NAME"
 msgid "Strange Brick"
 msgstr "奇怪的大哥大"
 
+#. STRINGS.UI.SPACEARTIFACTS.DNAMODEL.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.DNAMODEL.ARTIFACT"
+msgid ""
+"A physical representation of the building blocks of life.\n"
+"\n"
+"This one contains trace amounts of a Genetic Ooze prototype that was once "
+"used by Gravitas."
+msgstr ""
+"生命组成的物理模型。\n"
+"\n"
+"这个上面含有痕量的遗传生物软泥原型，层被庄严科技使用。"
+
 #. STRINGS.UI.SPACEARTIFACTS.DNAMODEL.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.DNAMODEL.DESCRIPTION"
 msgid "An educational model of genetic information."
@@ -75297,6 +75726,13 @@ msgstr "一个遗传信息的教学模型。"
 msgctxt "STRINGS.UI.SPACEARTIFACTS.DNAMODEL.NAME"
 msgid "Double Helix Model"
 msgstr "双螺旋模型"
+
+#. STRINGS.UI.SPACEARTIFACTS.EGGROCK.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.EGGROCK.ARTIFACT"
+msgid ""
+"The words \"Happy Farters Day Dad. Love Macy\" appear on the bottom of this "
+"rock, written in a childlish scrawl."
+msgstr "石头底下有非常潦草笔迹，\"腹气节快乐爸爸。爱爱梅西吧\"。"
 
 #. STRINGS.UI.SPACEARTIFACTS.EGGROCK.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.EGGROCK.DESCRIPTION"
@@ -75310,6 +75746,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.EGGROCK.NAME"
 msgid "Egg-Shaped Rock"
 msgstr "蛋形岩石"
 
+#. STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.DESCRIPTION"
 msgid "Grub Grub"
@@ -75317,8 +75758,21 @@ msgstr "果虫虫果"
 
 #. STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.NAME
 msgctxt "STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.NAME"
-msgid "Grub Statue"
+msgid "Grubgrub Statue"
 msgstr "果虫雕像"
+
+#. STRINGS.UI.SPACEARTIFACTS.HATCHFOSSIL.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.HATCHFOSSIL.ARTIFACT"
+msgid ""
+"The preservation of this skeleton occurred artificially using a technique "
+"called the \"The Ali Method\".\n"
+"\n"
+"It should be noted that this fossilization technique was pioneered by one "
+"Dr. Ashkan Seyed Ali, an employee of Gravitas."
+msgstr ""
+"这份骨骼的人工保存使用了名为\"阿氏方法\"的技艺。\n"
+"\n"
+"应当指出的是，这种化石技艺是由庄严科技的雇员，阿思肯·赛义德·阿里博士开创的。"
 
 #. STRINGS.UI.SPACEARTIFACTS.HATCHFOSSIL.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.HATCHFOSSIL.DESCRIPTION"
@@ -75330,6 +75784,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.HATCHFOSSIL.NAME"
 msgid "Pristine Fossil"
 msgstr "远古化石"
 
+#. STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.DESCRIPTION"
 msgid "This doesn't taste like uranium"
@@ -75339,6 +75798,11 @@ msgstr "尝起来不像铀"
 msgctxt "STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.NAME"
 msgid "Honey Jar"
 msgstr "蜂蜜罐"
+
+#. STRINGS.UI.SPACEARTIFACTS.MAGMALAMP.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.MAGMALAMP.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.MAGMALAMP.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MAGMALAMP.DESCRIPTION"
@@ -75350,6 +75814,18 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.MAGMALAMP.NAME"
 msgid "Magma Lamp"
 msgstr "岩浆台灯"
 
+#. STRINGS.UI.SPACEARTIFACTS.MODERNART.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.MODERNART.ARTIFACT"
+msgid ""
+"A sculpture of the Neoplastism movement of Modern Art.\n"
+"\n"
+"Gravitas records show that this piece was once used in a presentation called "
+"'Form and Function and the Corporate Aesthetic'."
+msgstr ""
+"现代艺术中新塑造主义运动的雕塑。\n"
+"\n"
+"庄严科技的记录表明，这件作品曾经用于\"形式与功能和企业美学\"的演讲中。"
+
 #. STRINGS.UI.SPACEARTIFACTS.MODERNART.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MODERNART.DESCRIPTION"
 msgid "I don't get it."
@@ -75359,6 +75835,11 @@ msgstr "令我摸不着头脑。"
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MODERNART.NAME"
 msgid "Modern Art"
 msgstr "现代艺术体"
+
+#. STRINGS.UI.SPACEARTIFACTS.MOLDAVITE.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.MOLDAVITE.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.MOLDAVITE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MOLDAVITE.DESCRIPTION"
@@ -75370,6 +75851,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.MOLDAVITE.NAME"
 msgid "Moldavite"
 msgstr "捷克陨石"
 
+#. STRINGS.UI.SPACEARTIFACTS.MOOD_RING.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.MOOD_RING.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.MOOD_RING.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MOOD_RING.DESCRIPTION"
 msgid "How radioactive are you feeling?"
@@ -75380,6 +75866,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.MOOD_RING.NAME"
 msgid "Radiation Mood Ring"
 msgstr "放射性情绪环"
 
+#. STRINGS.UI.SPACEARTIFACTS.MOONMOONMOON.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.MOONMOONMOON.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.MOONMOONMOON.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MOONMOONMOON.DESCRIPTION"
 msgid "A moon's moon's moon. It's very small."
@@ -75389,6 +75880,11 @@ msgstr "一个月球的月球的月球。非常小。"
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MOONMOONMOON.NAME"
 msgid "Moonmoonmoon"
 msgstr "月之月之月"
+
+#. STRINGS.UI.SPACEARTIFACTS.OBELISK.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.OBELISK.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.OBELISK.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.OBELISK.DESCRIPTION"
@@ -75406,6 +75902,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.OBELISK.NAME"
 msgid "Small Obelisk"
 msgstr "小型方碑"
 
+#. STRINGS.UI.SPACEARTIFACTS.OFFICEMUG.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.OFFICEMUG.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.OFFICEMUG.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.OFFICEMUG.DESCRIPTION"
 msgid ""
@@ -75417,6 +75918,19 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.OFFICEMUG.NAME"
 msgid "Office Mug"
 msgstr "办公马克杯"
 
+#. STRINGS.UI.SPACEARTIFACTS.OKAYXRAY.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.OKAYXRAY.ARTIFACT"
+msgid ""
+"The description on this X-ray indicates that it was taken in the Gravitas "
+"Medical Facility.\n"
+"\n"
+"Most likely this X-ray was performed to investigate an injury that occurred "
+"within the facility."
+msgstr ""
+"这张X光照片上写着这是由庄严科技医疗设施拍摄的。\n"
+"\n"
+"这张X光照片最有可能是调查设施内发生的一次损伤用的。"
+
 #. STRINGS.UI.SPACEARTIFACTS.OKAYXRAY.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.OKAYXRAY.DESCRIPTION"
 msgid "Ew, weird. It has five fingers!"
@@ -75426,6 +75940,11 @@ msgstr "呃，真奇怪。它有五根手指！"
 msgctxt "STRINGS.UI.SPACEARTIFACTS.OKAYXRAY.NAME"
 msgid "Old X-Ray"
 msgstr "老旧的X光照片"
+
+#. STRINGS.UI.SPACEARTIFACTS.ORACLE.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.ORACLE.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.ORACLE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.ORACLE.DESCRIPTION"
@@ -75437,6 +75956,19 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.ORACLE.NAME"
 msgid "Useless Machine"
 msgstr "无用的机器"
 
+#. STRINGS.UI.SPACEARTIFACTS.PERCOLATOR.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.PERCOLATOR.ARTIFACT"
+msgid ""
+"A coffee percolator with the reminants of a blend of coffee that was a "
+"personal favorite of Dr. Hassan Aydem.\n"
+"\n"
+"He would specifically reserve the consumption of this particular blend for "
+"when he was reviewing research papers on Sunday afternoons."
+msgstr ""
+"这个咖啡壶里还剩下一些混合咖啡，这是哈桑·艾德姆博士的个人最爱。\n"
+"\n"
+"他会特别地保留一些混合咖啡以在周日下午查阅科研论文时喝。"
+
 #. STRINGS.UI.SPACEARTIFACTS.PERCOLATOR.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.PERCOLATOR.DESCRIPTION"
 msgid "Don't drink from it! There was a pacu... IN the percolator!"
@@ -75447,6 +75979,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.PERCOLATOR.NAME"
 msgid "Percolator"
 msgstr "咖啡壶"
 
+#. STRINGS.UI.SPACEARTIFACTS.PLASMALAMP.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.PLASMALAMP.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.PLASMALAMP.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.PLASMALAMP.DESCRIPTION"
 msgid "No space colony is complete without one."
@@ -75456,6 +75993,16 @@ msgstr "没有这个太空殖民地就不完整。"
 msgctxt "STRINGS.UI.SPACEARTIFACTS.PLASMALAMP.NAME"
 msgid "Plasma Lamp"
 msgstr "等离子灯"
+
+#. STRINGS.UI.SPACEARTIFACTS.RAINBOWEGGROCK.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.RAINBOWEGGROCK.ARTIFACT"
+msgid ""
+"The words \"Happy Father's Day, Dad. Love you!\" appear on the bottom of "
+"this rock, written in very neat handwriting. The words are surrounded by "
+"four hearts drawn in what appears to be a pink gel pen."
+msgstr ""
+"石头底下有非常整齐的笔迹，\"父亲节快乐，爸爸。爱你！\"。文字周围有四个心形图"
+"案，看上去使用粉色凝胶笔画上去的。"
 
 #. STRINGS.UI.SPACEARTIFACTS.RAINBOWEGGROCK.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.RAINBOWEGGROCK.DESCRIPTION"
@@ -75474,15 +76021,32 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.RAINBOWEGGROCK.NAME"
 msgid "Egg-Shaped Rock"
 msgstr "蛋形岩石"
 
+#. STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.DESCRIPTION"
-msgid "It's pronounced nuclear"
-msgstr "它声称这是清洁能源"
+msgid "It's pronounced nu-clear."
+msgstr "那个念油。"
 
 #. STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.NAME
 msgctxt "STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.NAME"
 msgid "Model Nuclear Power Plant"
 msgstr "核电厂模型"
+
+#. STRINGS.UI.SPACEARTIFACTS.ROBOTARM.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.ROBOTARM.ARTIFACT"
+msgid ""
+"A commercially available robot arm that has had a significant amount of "
+"modifications made to it.\n"
+"\n"
+"The initials B.A. appear on one of the fingers."
+msgstr ""
+"一种市售的机器人手臂，被做了大量的修改。\n"
+"\n"
+"其中一个手指上有B.A.缩写字样。"
 
 #. STRINGS.UI.SPACEARTIFACTS.ROBOTARM.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.ROBOTARM.DESCRIPTION"
@@ -75494,6 +76058,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.ROBOTARM.NAME"
 msgid "Robot Arm"
 msgstr "机器人的手臂"
 
+#. STRINGS.UI.SPACEARTIFACTS.ROCKTORNADO.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.ROCKTORNADO.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.ROCKTORNADO.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.ROCKTORNADO.DESCRIPTION"
 msgid "It's unclear how it formed, although I'm glad it did."
@@ -75503,6 +76072,11 @@ msgstr "我很高兴能形成这个东西，但不清楚是怎么形成的。"
 msgctxt "STRINGS.UI.SPACEARTIFACTS.ROCKTORNADO.NAME"
 msgid "Tornado Rock"
 msgstr "龙卷风岩石"
+
+#. STRINGS.UI.SPACEARTIFACTS.RUBIKSCUBE.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.RUBIKSCUBE.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.RUBIKSCUBE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.RUBIKSCUBE.DESCRIPTION"
@@ -75514,6 +76088,21 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.RUBIKSCUBE.NAME"
 msgid "Rubik's Cube"
 msgstr "魔方"
 
+#. STRINGS.UI.SPACEARTIFACTS.SANDSTONE.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.SANDSTONE.ARTIFACT"
+msgid ""
+"This sample of sandstone appears to have been processed by the Gravitas "
+"Mining Gun that was made available to the general public.\n"
+"\n"
+"Note: Gravitas public Mining Gun model is different than ones used by "
+"Duplicants in its larger size, and extra precautionary features added in "
+"order to be compliant with national safety standards."
+msgstr ""
+"这份砂岩样品似乎是由庄严科技向公众提供的采矿枪处理的。\n"
+"\n"
+"注意：庄严科技公共采矿枪模型与复制人使用的不一样，其尺寸更大，并为了符合国家"
+"安全标准，增加了额外的预防功能。"
+
 #. STRINGS.UI.SPACEARTIFACTS.SANDSTONE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.SANDSTONE.DESCRIPTION"
 msgid "A beautiful rock composed of multiple layers of sediment."
@@ -75524,6 +76113,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.SANDSTONE.NAME"
 msgid "Sandstone"
 msgstr "砂岩"
 
+#. STRINGS.UI.SPACEARTIFACTS.SAXOPHONE.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.SAXOPHONE.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.SAXOPHONE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.SAXOPHONE.DESCRIPTION"
 msgid "The name \"Pesquet\" is barely legible on the inside."
@@ -75533,6 +76127,20 @@ msgstr "在里面的名字\"佩斯凯\"几乎看不清了。"
 msgctxt "STRINGS.UI.SPACEARTIFACTS.SAXOPHONE.NAME"
 msgid "Mangled Saxophone"
 msgstr "损坏的萨克斯"
+
+#. STRINGS.UI.SPACEARTIFACTS.SHIELDGENERATOR.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.SHIELDGENERATOR.ARTIFACT"
+msgid ""
+"The energy field produced by this shield generator completely ignores those "
+"light behaviors which are wave-like and focuses instead on its particle "
+"behaviors.\n"
+"\n"
+"This appears to be possible when light is slowed down until it stops."
+msgstr ""
+"由这台护盾发生器产生的能量场能完全忽略掉类似波的光行为，只集中于其粒子行"
+"为。\n"
+"\n"
+"当光减慢直到停止前是有可能的。"
 
 #. STRINGS.UI.SPACEARTIFACTS.SHIELDGENERATOR.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.SHIELDGENERATOR.DESCRIPTION"
@@ -75545,6 +76153,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.SHIELDGENERATOR.NAME"
 msgid "Shield Generator"
 msgstr "护盾发生器"
 
+#. STRINGS.UI.SPACEARTIFACTS.SINK.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.SINK.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.SINK.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.SINK.DESCRIPTION"
 msgid "No collection is complete without it."
@@ -75554,6 +76167,11 @@ msgstr "没有这个收集品就不完整。"
 msgctxt "STRINGS.UI.SPACEARTIFACTS.SINK.NAME"
 msgid "Sink"
 msgstr "水槽"
+
+#. STRINGS.UI.SPACEARTIFACTS.SOLARSYSTEM.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.SOLARSYSTEM.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.SOLARSYSTEM.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.SOLARSYSTEM.DESCRIPTION"
@@ -75567,6 +76185,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.SOLARSYSTEM.NAME"
 msgid "Self-Contained System"
 msgstr "自控系统"
 
+#. STRINGS.UI.SPACEARTIFACTS.STETHOSCOPE.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.STETHOSCOPE.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.STETHOSCOPE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.STETHOSCOPE.DESCRIPTION"
 msgid "Listens to Duplicant heartbeats, or gurgly tummies."
@@ -75576,6 +76199,11 @@ msgstr "聆听复制人的心跳，或咕噜噜的肚子。"
 msgctxt "STRINGS.UI.SPACEARTIFACTS.STETHOSCOPE.NAME"
 msgid "Stethoscope"
 msgstr "听诊器"
+
+#. STRINGS.UI.SPACEARTIFACTS.TEAPOT.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.TEAPOT.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.TEAPOT.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.TEAPOT.DESCRIPTION"
@@ -75587,6 +76215,11 @@ msgstr "来自太空深处的茶壶，上面覆盖着一层厚厚的中子物质
 msgctxt "STRINGS.UI.SPACEARTIFACTS.TEAPOT.NAME"
 msgid "Encrusted Teapot"
 msgstr "镶壳茶壶"
+
+#. STRINGS.UI.SPACEARTIFACTS.VHS.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.VHS.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.VHS.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.VHS.DESCRIPTION"
@@ -76636,7 +77269,7 @@ msgstr "无法发射"
 #. STRINGS.UI.STARMAP.CARGOEMPTY.NAME
 msgctxt "STRINGS.UI.STARMAP.CARGOEMPTY.NAME"
 msgid "Emptied Cargo Bay"
-msgstr "生物货舱已清空"
+msgstr "货舱已清空"
 
 #. STRINGS.UI.STARMAP.CARGOEMPTY.TOOLTIP
 msgctxt "STRINGS.UI.STARMAP.CARGOEMPTY.TOOLTIP"
@@ -76917,18 +77550,18 @@ msgstr ""
 msgctxt ""
 "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CONSTRUCTION_COMPLETE.STATUS.FAILURE"
 msgid "No active construction"
-msgstr "没有需要进行的建造"
+msgstr "没有仍在进行的建造"
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CONSTRUCTION_COMPLETE.STATUS.READY
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CONSTRUCTION_COMPLETE.STATUS.READY"
 msgid "No active construction"
-msgstr "没有需要进行的建造"
+msgstr "没有仍在进行的建造"
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CONSTRUCTION_COMPLETE.STATUS.WARNING
 msgctxt ""
 "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CONSTRUCTION_COMPLETE.STATUS.WARNING"
 msgid "No active construction"
-msgstr "没有需要进行的建造"
+msgstr "没有仍在进行的建造"
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.CONSTRUCTION_COMPLETE.TOOLTIP.FAILURE
 msgctxt ""
@@ -77608,7 +78241,7 @@ msgstr "工艺品"
 #. STRINGS.UI.STARMAP.LISTTITLES.DESTINATION_MASS
 msgctxt "STRINGS.UI.STARMAP.LISTTITLES.DESTINATION_MASS"
 msgid "World Mass Available"
-msgstr "可用的世界质量"
+msgstr "可用的星球质量"
 
 #. STRINGS.UI.STARMAP.LISTTITLES.DISTANCE
 msgctxt "STRINGS.UI.STARMAP.LISTTITLES.DISTANCE"
@@ -78919,7 +79552,7 @@ msgid ""
 "World has no <link=\"HEADQUARTERS\">Printing Pod</link> or <link="
 "\"EXOBASEHEADQUARTERS\">Mini-Pod</link>"
 msgstr ""
-"世界没有<link=\"HEADQUARTERS\">打印舱</link>或<link=\"EXOBASEHEADQUARTERS\">"
+"星球没有<link=\"HEADQUARTERS\">打印舱</link>或<link=\"EXOBASEHEADQUARTERS\">"
 "迷你舱</link>"
 
 #. STRINGS.UI.TOOLTIPS.HELP_BUILDLOCATION_NOT_IN_TILES
@@ -79031,7 +79664,7 @@ msgstr "显示每一格的热量"
 #. STRINGS.UI.TOOLTIPS.LIGHTSOVERLAYSTRING
 msgctxt "STRINGS.UI.TOOLTIPS.LIGHTSOVERLAYSTRING"
 msgid "Displays the visibility radius of light sources {Hotkey}"
-msgstr "显示光源的可见度半径 {Hotkey}"
+msgstr "显示光源的可见度范围 {Hotkey}"
 
 #. STRINGS.UI.TOOLTIPS.LIQUIDVENTOVERLAYSTRING
 msgctxt "STRINGS.UI.TOOLTIPS.LIQUIDVENTOVERLAYSTRING"
@@ -79658,8 +80291,8 @@ msgstr "未分析工艺品"
 msgctxt ""
 "STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN."
 "NO_ARTIFACTS_DISCOVERED_TOOLTIP"
-msgid "A skilled artist can analyze artifacts"
-msgstr "一名熟练的艺术家能够分析工艺品"
+msgid "Analyzing artifacts requires a skilled artist"
+msgstr "需要一名熟练的艺术家分析工艺品"
 
 #. STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP
 msgctxt "STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP"
@@ -80000,6 +80633,22 @@ msgstr "无着陆点"
 msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.TITLE"
 msgid "Destination"
 msgstr "目的地"
+
+#. STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.EMPTY_SPACE_ROW
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.EMPTY_SPACE_ROW"
+msgid "In Space"
+msgstr "在太空中"
+
+#. STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.HEADER
+msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.HEADER"
+msgid "Send Green signal at locations"
+msgstr "在特定位置发送绿色信号"
+
+#. STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.TITLE
+msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.TITLE"
+msgid "Location Filter"
+msgstr "地点筛选项"
 
 #. STRINGS.UI.UISIDESCREENS.CLUSTERWORLDSIDESCREEN.TITLE
 msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERWORLDSIDESCREEN.TITLE"
@@ -81457,7 +82106,7 @@ msgid ""
 msgstr ""
 "{Description}\n"
 "\n"
-"<b>{Errand}</b>是一种个人需求任务，在所有常规杂务之前完成。\n"
+"<b>{Errand}</b>是一种个人需求任务，会在所有常规任务之前完成。\n"
 "\n"
 "总<style=\"KKeyword\">优先值</style>：{TotalPriority}\n"
 "    • 个人需求：{ClassPriority}\n"
@@ -82127,7 +82776,7 @@ msgstr "上方没有可以交换的舱块"
 msgctxt ""
 "STRINGS.UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.BUTTONVIEWEXTERIOR.DESC"
 msgid "Switch to external world view"
-msgstr "切换到外部世界视图"
+msgstr "切换到外部星球视图"
 
 #. STRINGS.UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.BUTTONVIEWEXTERIOR.INVALID
 msgctxt ""
@@ -82210,7 +82859,7 @@ msgstr "<b>{0}</b>"
 #. STRINGS.UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.RANGE
 msgctxt ""
 "STRINGS.UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.RANGE"
-msgid "    • Potential Range: {0}/1 Kg Fuel ({1})"
+msgid "    • Potential Range: {0}/1 kg Fuel ({1})"
 msgstr "    • 潜在范围：{0}/千克燃料（{1}）"
 
 #. STRINGS.UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.SPEED
@@ -82229,6 +82878,60 @@ msgstr "火箭构筑数据："
 msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.TITLE"
 msgid "Rocket Module"
 msgstr "火箭舱块"
+
+#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.AUTOMATION
+msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.AUTOMATION"
+msgid "Automation Controlled"
+msgstr "受自动化控制"
+
+#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.AUTOMATION_TOOLTIP
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.AUTOMATION_TOOLTIP"
+msgid ""
+"Building restrictions are managed by automation\n"
+"\n"
+"Buildings with their access restricted cannot be operated, though they can "
+"still be filled"
+msgstr ""
+"内部建筑限制由自动化管理\n"
+"\n"
+"限制的建筑不能操作，但可以装填材料"
+
+#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.BUILDING_RESTRICTIONS_LABEL
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN."
+"BUILDING_RESTRICTIONS_LABEL"
+msgid "Interior Building Restrictions"
+msgstr "内部建筑限制"
+
+#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.GROUNDED_RESTRICTION_BUTTON
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN."
+"GROUNDED_RESTRICTION_BUTTON"
+msgid "Grounded"
+msgstr "在地面"
+
+#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.GROUNDED_RESTRICTION_BUTTON_TOOLTIP
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN."
+"GROUNDED_RESTRICTION_BUTTON_TOOLTIP"
+msgid ""
+"Buildings with their access restricted cannot be operated while grounded, "
+"though they can still be filled"
+msgstr "建筑在地面的操作许可受限，但可以装填材料"
+
+#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.NONE_RESTRICTION_BUTTON
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.NONE_RESTRICTION_BUTTON"
+msgid "None"
+msgstr "无"
+
+#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.NONE_RESTRICTION_BUTTON_TOOLTIP
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN."
+"NONE_RESTRICTION_BUTTON_TOOLTIP"
+msgid "There are no restrictions on buildings inside this rocket"
+msgstr "火箭内的建筑都无限制"
 
 #. STRINGS.UI.UISIDESCREENS.ROLESTATION.OPENROLESBUTTON
 msgctxt "STRINGS.UI.UISIDESCREENS.ROLESTATION.OPENROLESBUTTON"
@@ -83256,7 +83959,7 @@ msgstr "克"
 
 #. STRINGS.UI.UNITSUFFIXES.MASS.KILOGRAM
 msgctxt "STRINGS.UI.UNITSUFFIXES.MASS.KILOGRAM"
-msgid " Kg"
+msgid " kg"
 msgstr "千克"
 
 #. STRINGS.UI.UNITSUFFIXES.MASS.MICROGRAM
@@ -84415,6 +85118,32 @@ msgctxt "STRINGS.UI.USERMENUACTIONS.RELOCATE.TOOLTIP_OFF"
 msgid "Cancel this relocation order"
 msgstr "取消这条搬迁指令"
 
+#. STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.NAME_CONTROLLED
+msgctxt "STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.NAME_CONTROLLED"
+msgid "Controlled"
+msgstr "受控制"
+
+#. STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.NAME_UNCONTROLLED
+msgctxt "STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.NAME_UNCONTROLLED"
+msgid "Uncontrolled"
+msgstr "未受控制"
+
+#. STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.TOOLTIP_CONTROLLED
+msgctxt "STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.TOOLTIP_CONTROLLED"
+msgid ""
+"Allow this building's operation to be controlled by a <link="
+"\"ROCKETCONTROLSTATION\">Rocket Control Station</link>"
+msgstr ""
+"允许这个建筑的操作受<link=\"ROCKETCOMMANDCONSOLE\">火箭控制台</link>控制"
+
+#. STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.TOOLTIP_UNCONTROLLED
+msgctxt ""
+"STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.TOOLTIP_UNCONTROLLED"
+msgid ""
+"Do not allow this building to be controlled by a <link=\"ROCKETCONTROLSTATION"
+"\">Rocket Control Station</link>"
+msgstr "不允许这个建筑受<link=\"ROCKETCONTROLSTATION\">火箭控制台</link>控制"
+
 #. STRINGS.UI.USERMENUACTIONS.SELECTRESEARCH.NAME
 msgctxt "STRINGS.UI.USERMENUACTIONS.SELECTRESEARCH.NAME"
 msgid "Select Research"
@@ -85391,7 +86120,7 @@ msgstr "教程："
 #. STRINGS.WORLD_TRAITS.BOULDERS_LARGE.DESCRIPTION
 msgctxt "STRINGS.WORLD_TRAITS.BOULDERS_LARGE.DESCRIPTION"
 msgid "Huge boulders make digging through this world more difficult"
-msgstr "大型石块使挖穿这个世界更困难了"
+msgstr "大型石块使挖穿这个星球更困难了"
 
 #. STRINGS.WORLD_TRAITS.BOULDERS_LARGE.NAME
 msgctxt "STRINGS.WORLD_TRAITS.BOULDERS_LARGE.NAME"
@@ -85401,7 +86130,7 @@ msgstr "大型石块"
 #. STRINGS.WORLD_TRAITS.BOULDERS_MEDIUM.DESCRIPTION
 msgctxt "STRINGS.WORLD_TRAITS.BOULDERS_MEDIUM.DESCRIPTION"
 msgid "Mid-sized boulders make digging through this world more difficult"
-msgstr "中型石块使挖穿这个世界更困难了"
+msgstr "中型石块使挖穿这个星球更困难了"
 
 #. STRINGS.WORLD_TRAITS.BOULDERS_MEDIUM.NAME
 msgctxt "STRINGS.WORLD_TRAITS.BOULDERS_MEDIUM.NAME"
@@ -85412,7 +86141,7 @@ msgstr "中型石块"
 msgctxt "STRINGS.WORLD_TRAITS.BOULDERS_MIXED.DESCRIPTION"
 msgid ""
 "Boulders of various sizes make digging through this world more difficult"
-msgstr "各种大小的石块使挖穿这个世界更困难了"
+msgstr "各种大小的石块使挖穿这个星球更困难了"
 
 #. STRINGS.WORLD_TRAITS.BOULDERS_MIXED.NAME
 msgctxt "STRINGS.WORLD_TRAITS.BOULDERS_MIXED.NAME"
@@ -85422,7 +86151,7 @@ msgstr "混合型石块"
 #. STRINGS.WORLD_TRAITS.BOULDERS_SMALL.DESCRIPTION
 msgctxt "STRINGS.WORLD_TRAITS.BOULDERS_SMALL.DESCRIPTION"
 msgid "Tiny boulders make digging through this world more difficult"
-msgstr "小型石块使挖穿这个世界更困难了"
+msgstr "小型石块使挖穿这个星球更困难了"
 
 #. STRINGS.WORLD_TRAITS.BOULDERS_SMALL.NAME
 msgctxt "STRINGS.WORLD_TRAITS.BOULDERS_SMALL.NAME"
@@ -85435,7 +86164,7 @@ msgid ""
 "Most of the <style=\"KKeyword\">Oil</style> in this world will need to be "
 "extracted with <link=\"OILWELLCAP\">Oil Well</link>s"
 msgstr ""
-"这个世界的大多数<style=\"KKeyword\">原油</style>必须通过<link=\"OILWELLCAP\">"
+"这个星球的大多数<style=\"KKeyword\">原油</style>必须通过<link=\"OILWELLCAP\">"
 "油井</link>提取出来"
 
 #. STRINGS.WORLD_TRAITS.DEEP_OIL.NAME
@@ -85446,7 +86175,7 @@ msgstr "被圈闭的原油"
 #. STRINGS.WORLD_TRAITS.FROZEN_CORE.DESCRIPTION
 msgctxt "STRINGS.WORLD_TRAITS.FROZEN_CORE.DESCRIPTION"
 msgid "This world has a chilly core of solid <link=\"ICE\">Ice</link>"
-msgstr "这个世界有着由固体<link=\"ICE\">冰</link>组成的冰冷核心"
+msgstr "这个星球有着由固体<link=\"ICE\">冰</link>组成的冰冷核心"
 
 #. STRINGS.WORLD_TRAITS.FROZEN_CORE.NAME
 msgctxt "STRINGS.WORLD_TRAITS.FROZEN_CORE.NAME"
@@ -85459,7 +86188,7 @@ msgid ""
 "This world has more <style=\"KKeyword\">Geysers</style> and <style=\"KKeyword"
 "\">Vents</style> than usual"
 msgstr ""
-"这个世界有比通常更多的<style=\"KKeyword\">间歇泉</style>和<style=\"KKeyword"
+"这个星球有比通常更多的<style=\"KKeyword\">间歇泉</style>和<style=\"KKeyword"
 "\">喷孔</style>"
 
 #. STRINGS.WORLD_TRAITS.GEOACTIVE.NAME
@@ -85471,7 +86200,7 @@ msgstr "活跃性地质"
 msgctxt "STRINGS.WORLD_TRAITS.GEODES.DESCRIPTION"
 msgid ""
 "Large geodes containing rare material caches are deposited across this world"
-msgstr "这个世界沉积了许多含有稀有物质的大型晶洞"
+msgstr "这个星球沉积了许多含有稀有物质的大型晶洞"
 
 #. STRINGS.WORLD_TRAITS.GEODES.NAME
 msgctxt "STRINGS.WORLD_TRAITS.GEODES.NAME"
@@ -85484,7 +86213,7 @@ msgid ""
 "This world has fewer <style=\"KKeyword\">Geysers</style> and <style="
 "\"KKeyword\">Vents</style> than usual"
 msgstr ""
-"这个世界有比通常更少的<style=\"KKeyword\">间歇泉</style>和<style=\"KKeyword"
+"这个星球有比通常更少的<style=\"KKeyword\">间歇泉</style>和<style=\"KKeyword"
 "\">喷孔</style>"
 
 #. STRINGS.WORLD_TRAITS.GEODORMANT.NAME
@@ -85497,7 +86226,7 @@ msgctxt "STRINGS.WORLD_TRAITS.GLACIERS_LARGE.DESCRIPTION"
 msgid ""
 "Huge chunks of primordial <link=\"ICE\">Ice</link> are scattered across this "
 "world"
-msgstr "这个世界中分散着许多大块的原生<link=\"ICE\">冰</link>"
+msgstr "这个星球中分散着许多大块的原生<link=\"ICE\">冰</link>"
 
 #. STRINGS.WORLD_TRAITS.GLACIERS_LARGE.NAME
 msgctxt "STRINGS.WORLD_TRAITS.GLACIERS_LARGE.NAME"
@@ -85521,7 +86250,7 @@ msgctxt "STRINGS.WORLD_TRAITS.MAGMA_VENTS.DESCRIPTION"
 msgid ""
 "The <link=\"MAGMA\">Magma</link> from this world's core has leaked into the "
 "mantle and crust"
-msgstr "这个世界核心区的<link=\"MAGMA\">岩浆</link>已经蔓延到了地幔和地壳中"
+msgstr "这个星球核心区的<link=\"MAGMA\">岩浆</link>已经蔓延到了地幔和地壳中"
 
 #. STRINGS.WORLD_TRAITS.MAGMA_VENTS.NAME
 msgctxt "STRINGS.WORLD_TRAITS.MAGMA_VENTS.NAME"
@@ -85533,7 +86262,7 @@ msgctxt "STRINGS.WORLD_TRAITS.METAL_POOR.DESCRIPTION"
 msgid ""
 "There is a reduced amount of <style=\"KKeyword\">Metal Ore</style> on this "
 "world, proceed with caution!"
-msgstr "这个世界的<style=\"KKeyword\">金属矿石</style>数量较少，谨慎行事！"
+msgstr "这个星球的<style=\"KKeyword\">金属矿石</style>数量较少，谨慎行事！"
 
 #. STRINGS.WORLD_TRAITS.METAL_POOR.NAME
 msgctxt "STRINGS.WORLD_TRAITS.METAL_POOR.NAME"
@@ -85575,19 +86304,19 @@ msgctxt "STRINGS.WORLD_TRAITS.NO_TRAITS.DESCRIPTION"
 msgid ""
 "This world exists in a particularly stable configuration each time it is "
 "encountered"
-msgstr "每次遇到的这个世界都会以特别稳定的状态存在"
+msgstr "每次遇到的这个星球都会以特别稳定的状态存在"
 
 #. STRINGS.WORLD_TRAITS.NO_TRAITS.NAME
 msgctxt "STRINGS.WORLD_TRAITS.NO_TRAITS.NAME"
 msgid "<i>This world is stable and has no unusual features.</i>"
-msgstr "<i>这个世界很稳定，没有什么不寻常的特质。</i>"
+msgstr "<i>这个星球很稳定，没有什么不寻常的特质。</i>"
 
 #. STRINGS.WORLD_TRAITS.SLIME_SPLATS.DESCRIPTION
 msgctxt "STRINGS.WORLD_TRAITS.SLIME_SPLATS.DESCRIPTION"
 msgid ""
 "Sickly <link=\"SLIMEMOLD\">Slime</link> growths have crept all over this "
 "world"
-msgstr "黏黏的<link=\"SLIMEMOLD\">菌泥</link>在这个世界上到处都是"
+msgstr "黏黏的<link=\"SLIMEMOLD\">菌泥</link>在这个星球上到处都是"
 
 #. STRINGS.WORLD_TRAITS.SLIME_SPLATS.NAME
 msgctxt "STRINGS.WORLD_TRAITS.SLIME_SPLATS.NAME"
@@ -85598,7 +86327,7 @@ msgstr "粘液菌团"
 msgctxt "STRINGS.WORLD_TRAITS.SUBSURFACE_OCEAN.DESCRIPTION"
 msgid ""
 "Below the crust of this world is a <link=\"SALTWATER\">Salt Water</link> sea"
-msgstr "这个世界外壳之下是由<link=\"SALTWATER\">盐水</link>构成的海"
+msgstr "这个星球外壳之下是由<link=\"SALTWATER\">盐水</link>构成的海"
 
 #. STRINGS.WORLD_TRAITS.SUBSURFACE_OCEAN.NAME
 msgctxt "STRINGS.WORLD_TRAITS.SUBSURFACE_OCEAN.NAME"
@@ -85610,7 +86339,7 @@ msgctxt "STRINGS.WORLD_TRAITS.VOLCANOES.DESCRIPTION"
 msgid ""
 "Several active <style=\"KKeyword\">Volcanoes</style> have been detected in "
 "this world"
-msgstr "这个世界上能检测到许多活<style=\"KKeyword\">火山</style>"
+msgstr "这个星球上能检测到许多活<style=\"KKeyword\">火山</style>"
 
 #. STRINGS.WORLD_TRAITS.VOLCANOES.NAME
 msgctxt "STRINGS.WORLD_TRAITS.VOLCANOES.NAME"
@@ -85747,7 +86476,7 @@ msgid ""
 "<smallcaps>Irradiated Forest Asteroids have an abundance of metal for the "
 "taking if Duplicants can withstand the planetoid's radiation.</smallcaps>"
 msgstr ""
-"一个受辐射显著影响的中型砂岩和森林世界。\n"
+"一个受辐射显著影响的中型砂岩和森林星球。\n"
 "\n"
 "<smallcaps>辐照森林小行星有着丰富的金属，只要复制人能承受得住小行星的辐射就可"
 "以开发。</smallcaps>"
@@ -85776,15 +86505,33 @@ msgctxt "STRINGS.WORLDS.MARSHYMOONLET.NAME"
 msgid "Marshy Asteroid"
 msgstr "湿地小行星"
 
+#. STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
+msgctxt "STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION"
+msgid ""
+"A large-ish forested asteroid with a frozen radioactive core.\n"
+"\n"
+"<smallcaps>While Radioactive Forest Asteroid are largely foresty, they also "
+"contain a great deal of rust and ocean.</smallcaps>"
+msgstr ""
+"一个大型森林星球，有着冻结的放射性核心。\n"
+"\n"
+"<smallcaps>虽然放射性森林小行星有着大片的森林，但同样也含有大量的铁锈和海洋。"
+"</smallcaps>"
+
+#. STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.NAME
+msgctxt "STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.NAME"
+msgid "Radioactive Forest Asteroid"
+msgstr "放射性森林小行星"
+
 #. STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
 msgctxt "STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION"
 msgid ""
 "A large-ish partially frozen world with a radioactive core.\n"
 "\n"
-"<smallcaps>While Radioactive Swamp Asteroid are largely swampy, they also "
+"<smallcaps>While Radioactive Swamp Asteroids are largely swampy, they also "
 "contain a great deal of rust.</smallcaps>"
 msgstr ""
-"一个部分冻结的世界，有着放射性核心。\n"
+"一个大型星球，有着冻结的放射性核心。\n"
 "\n"
 "<smallcaps>虽然放射性沼泽小行星有着大片的沼泽，但同样也含有大量的铁锈。</"
 "smallcaps>"
@@ -85797,12 +86544,12 @@ msgstr "放射性沼泽小行星"
 #. STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
 msgctxt "STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION"
 msgid ""
-"A large-ish world with a radioactive core.\n"
+"A large-ish terra world with a radioactive core.\n"
 "\n"
 "<smallcaps>The Radioactive Terra Asteroid is fairly dry and sandy, but does "
 "contain areas of jungle.</smallcaps>"
 msgstr ""
-"一个很大的世界，有着放射性核心。\n"
+"一个大型类地星球，有着冻结的放射性核心。\n"
 "\n"
 "<smallcaps>虽然放射性类地小行星相当地干燥，但也含有丛林地区。</smallcaps>"
 
@@ -85819,7 +86566,7 @@ msgid ""
 "<smallcaps>Irradiated Marsh Asteroids have an abundance of metal for the "
 "taking if Duplicants can withstand the planetoid's radiation.</smallcaps>"
 msgstr ""
-"一个受辐射显著影响的湿地世界。\n"
+"一个受辐射显著影响的湿地星球。\n"
 "\n"
 "<smallcaps>辐照湿地小行星有着丰富的金属，只要复制人能承受得住小行星的辐射就可"
 "以开发。</smallcaps>"
@@ -85837,7 +86584,7 @@ msgid ""
 "<smallcaps>Moo Asteroids are the natural breeding ground of Gassy Moos due "
 "to their abundance of Gas Grass and Methane.</smallcaps>"
 msgstr ""
-"一个有着独特本地生物形态的小世界。\n"
+"一个有着独特本地生物形态的小星球。\n"
 "\n"
 "<smallcaps>海牛小行星是释气海牛的天然栖息地，因为这里有丰富的释气草和甲烷。</"
 "smallcaps>"
@@ -85857,7 +86604,7 @@ msgid ""
 "alive.</smallcaps>\n"
 "\n"
 msgstr ""
-"一个更小的小行星，环绕在更大的，资源更多的世界上。\n"
+"一个更小的小行星，环绕在更大的，资源更多的星球上。\n"
 "\n"
 "<smallcaps>荒芜之月有丰富的矿物，但如果你的殖民地找不到足够的资源生存，你的复"
 "制人很早就需要离开这个地点。</smallcaps>\n"
@@ -85936,7 +86683,7 @@ msgid ""
 "<smallcaps>Duplicants must sift through a great deal of rust and ocean to "
 "reach the prize of this planetoid's oil.</smallcaps>"
 msgstr ""
-"一个生锈的中型世界，有着油性核心。\n"
+"一个生锈的中型星球，有着油性核心。\n"
 "\n"
 "<smallcaps>复制人必须经过大量的铁锈和海洋区域才能获得小行星的原油奖励。</"
 "smallcaps>"
@@ -85973,7 +86720,7 @@ msgid ""
 "<smallcaps>Regolith Asteroids have frequent meteor showers and are chalk "
 "full of Regolith, an incredibly useful filtration material. </smallcaps>"
 msgstr ""
-"一个满是尘土，有许多陨石坑的小型世界。\n"
+"一个满是尘土，有许多陨石坑的小型星球。\n"
 "\n"
 "<smallcaps>浮土小行星有频繁的陨石雨，表面的浮土可用作过滤材料。</smallcaps>"
 
@@ -86033,7 +86780,7 @@ msgid ""
 "this planet suggest a strong fuel source lurks somewhere beneath the surface."
 "</smallcaps>"
 msgstr ""
-"一个娇小的岩石世界，有着油质核心。\n"
+"一个娇小的岩石星球，有着油质核心。\n"
 "\n"
 "<smallcaps>尽管从太空中看上去没什么东西，但这颗小行星的数据表明，在地表下面伏"
 "藏着丰富的燃料资源。</smallcaps>"
@@ -86134,7 +86881,7 @@ msgid ""
 msgstr ""
 "一个大型，受污染的沼泽小行星。\n"
 "\n"
-"<smallcaps>沼泽小行星有大量的冰冻泥浆和荒地。距离地表很近，可以快速实现世界间"
+"<smallcaps>沼泽小行星有大量的冰冻泥浆和荒地。距离地表很近，可以快速实现星球间"
 "的转送。</smallcaps>"
 
 #. STRINGS.WORLDS.SWAMPMOONLET.NAME
@@ -86150,7 +86897,7 @@ msgid ""
 "<smallcaps>Irradiated Swamps have a high concentration of rare swampy and "
 "radioactive resources but are also chocked full of dangers.</smallcaps>"
 msgstr ""
-"一个有着放射性核心的沼泽小世界。\n"
+"一个有着放射性核心的沼泽小星球。\n"
 "\n"
 "<smallcaps>辐照沼泽有着高集中度的沼泽和放射性稀有资源，但也充满了危险。</"
 "smallcaps>"
@@ -86169,10 +86916,10 @@ msgid ""
 "compact area. With a short distance to the surface, inter-world travel can "
 "be achieved quickly.</smallcaps>"
 msgstr ""
-"一个较小世界，各种资源都很平衡。\n"
+"一个较小星球，各种资源都很平衡。\n"
 "\n"
 "<smallcaps>类地小行星上紧凑的区域有你需要开始殖民地的一切。距离地表很近，可以"
-"快速实现世界间的转送。</smallcaps>"
+"快速实现星球间的转送。</smallcaps>"
 
 #. STRINGS.WORLDS.TERRAMOONLET.NAME
 msgctxt "STRINGS.WORLDS.TERRAMOONLET.NAME"
@@ -86210,7 +86957,7 @@ msgstr "小型空洞，开发人员用"
 #. STRINGS.WORLDS.TINYFOREST.DESCRIPTION
 msgctxt "STRINGS.WORLDS.TINYFOREST.DESCRIPTION"
 msgid "A petite forest world for nature loving devs."
-msgstr "一个小森林世界，适合喜欢自然的开发者。"
+msgstr "一个小森林星球，适合喜欢自然的开发者。"
 
 #. STRINGS.WORLDS.TINYFOREST.NAME
 msgctxt "STRINGS.WORLDS.TINYFOREST.NAME"
@@ -86220,7 +86967,7 @@ msgstr "小型森林，开发人员用"
 #. STRINGS.WORLDS.TINYICE.DESCRIPTION
 msgctxt "STRINGS.WORLDS.TINYICE.DESCRIPTION"
 msgid "A tiny ice cold world for dev snow forts."
-msgstr "一个冰冷小世界，适合开发者的雪堡。"
+msgstr "一个冰冷小星球，适合开发者的雪堡。"
 
 #. STRINGS.WORLDS.TINYICE.NAME
 msgctxt "STRINGS.WORLDS.TINYICE.NAME"
@@ -86278,12 +87025,73 @@ msgstr "苔原小行星"
 #. STRINGS.WORLDS.TWINMOONLET.DESCRIPTION
 msgctxt "STRINGS.WORLDS.TWINMOONLET.DESCRIPTION"
 msgid "Two small dev worlds for the price of one."
-msgstr "两个小型开发者世界，买一送一。"
+msgstr "两个小型开发者星球，买一送一。"
 
 #. STRINGS.WORLDS.TWINMOONLET.NAME
 msgctxt "STRINGS.WORLDS.TWINMOONLET.NAME"
 msgid "Tiny Twin Asteroid FOR DEVS"
 msgstr "小型双子小行星，开发人员用"
+
+#. STRINGS.WORLDS.VANILLAFORESTDEFAULT.DESCRIPTION
+msgctxt "STRINGS.WORLDS.VANILLAFORESTDEFAULT.DESCRIPTION"
+msgid ""
+"A lush location rich in wildlife and life-sustaining resources.\n"
+"\n"
+"<smallcaps>Establishing a foothold on Verdante will be challenging due to "
+"reduced food and oxygen options. However, abundant biological and mineral "
+"resources should afford excellent long-term growth.</smallcaps>\n"
+"\n"
+msgstr ""
+"一个繁盛的地点，有丰富的野生动物和维持生命的资源。\n"
+"\n"
+"<smallcaps>由于食物和氧气的来源减少了，在翠绿星体上稳定下来是一项非常有挑战的"
+"事。然而，丰富的动物性和矿石资源也能提供良好的长期发展。</smallcaps>\n"
+"\n"
+
+#. STRINGS.WORLDS.VANILLAFORESTDEFAULT.NAME
+msgctxt "STRINGS.WORLDS.VANILLAFORESTDEFAULT.NAME"
+msgid "Verdante"
+msgstr "翠绿星体"
+
+#. STRINGS.WORLDS.VANILLASANDSTONEDEFAULT.DESCRIPTION
+msgctxt "STRINGS.WORLDS.VANILLASANDSTONEDEFAULT.DESCRIPTION"
+msgid ""
+"A promising location with a balanced variety of resources.\n"
+"\n"
+"<smallcaps>Terra meets all the requirements for Duplicant life and holds no "
+"surprises. It's an ideal location for a first attempt at establishing a "
+"colony.</smallcaps>\n"
+"\n"
+msgstr ""
+"一个资源种类均衡的地点。\n"
+"\n"
+"<smallcaps>类地星体满足复制人生存的所有需求并且毫无意外。这是第一次尝试建立殖"
+"民地的理想地点。</smallcaps>\n"
+"\n"
+
+#. STRINGS.WORLDS.VANILLASANDSTONEDEFAULT.NAME
+msgctxt "STRINGS.WORLDS.VANILLASANDSTONEDEFAULT.NAME"
+msgid "Terra"
+msgstr "类地星体"
+
+#. STRINGS.WORLDS.VANILLASWAMPDEFAULT.DESCRIPTION
+msgctxt "STRINGS.WORLDS.VANILLASWAMPDEFAULT.DESCRIPTION"
+msgid ""
+"A large, polluted swamp world.\n"
+"\n"
+"<smallcaps>Swampy Asteroids are a great mass of frozen slush and wasteland. "
+"With a short distance to the surface, inter-world travel can be achieved "
+"quickly.</smallcaps>"
+msgstr ""
+"一个大型，受污染的沼泽小行星。\n"
+"\n"
+"<smallcaps>沼泽小行星有大量的冰冻泥浆和荒地。距离地表很近，可以快速实现星球间"
+"的转送。</smallcaps>"
+
+#. STRINGS.WORLDS.VANILLASWAMPDEFAULT.NAME
+msgctxt "STRINGS.WORLDS.VANILLASWAMPDEFAULT.NAME"
+msgid "Swampy Asteroid"
+msgstr "沼泽小行星"
 
 #. STRINGS.WORLDS.VOLCANIC.DESCRIPTION
 msgctxt "STRINGS.WORLDS.VOLCANIC.DESCRIPTION"
@@ -86314,7 +87122,7 @@ msgid ""
 "<smallcaps>While Oily Swamp Asteroids are largely swampy, they also contain "
 "a great deal of rust.</smallcaps>"
 msgstr ""
-"一个部分冻结的世界，有着油性核心。\n"
+"一个部分冻结的星球，有着油性核心。\n"
 "\n"
 "<smallcaps>虽然油质沼泽小行星有着大片的沼泽，但同样也含有大量的铁锈。</"
 "smallcaps>"
@@ -86333,7 +87141,7 @@ msgid ""
 "natural source of Graphite, but Duplicants should come prepared for a swim.</"
 "smallcaps>"
 msgstr ""
-"一个充满着水的小型世界。\n"
+"一个充满着水的小型星球。\n"
 "\n"
 "<smallcaps>水域小行星可以提供各种液体资源，并且是石墨的来源，但复制人得准备游"
 "泳了。</smallcaps>"
@@ -86342,6 +87150,154 @@ msgstr ""
 msgctxt "STRINGS.WORLDS.WATERMOONLET.NAME"
 msgid "Water Asteroid"
 msgstr "水域小行星"
+
+#~ msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONINACTIVE.NAME"
+#~ msgid "Restriction: Allowed"
+#~ msgstr "限制：允许"
+
+#~ msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
+#~ msgid "A BREATH OF FRESH AIR"
+#~ msgstr "沁人心脾"
+
+#~ msgctxt "STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY"
+#~ msgid ""
+#~ "Welcome to the newest update <b>A BREATH OF FRESH AIR</b>:\n"
+#~ "\n"
+#~ "•<indent=20px>Several buildings and items have been added to the Base "
+#~ "Game, including Oxygen Masks, and Meter Valves.</indent>\n"
+#~ "•<indent=20px>Base Game now has all <i>Spaced Out!</i> bug fixes and "
+#~ "quality-of-life improvements.</indent>\n"
+#~ "•<indent=20px>Updates to <i>Spaced Out!</i> Colony Imperatives</indent>\n"
+#~ "•<indent=20px>Significant updates to the Modding system, modders please "
+#~ "see the forum for upgrade instructions.</indent>\n"
+#~ "•<indent=20px>Toggle between <i>Spaced Out!</i> and Base Game in the main "
+#~ "menu without re-downloading the game.</indent>\n"
+#~ "\n"
+#~ "   Check out the full patch notes for more details!"
+#~ msgstr ""
+#~ "欢迎来到<b>沁人心脾更新</b>\n"
+#~ "\n"
+#~ "•<indent=20px>数个建筑和物品添加到了本体，包括氧气面罩和计量阀。</"
+#~ "indent>\n"
+#~ "•<indent=20px>本体游戏现在有<i>《眼冒金星！》</i>全部的修复和生活质量改"
+#~ "进。</indent>\n"
+#~ "•<indent=20px>更新了<i>《眼冒金星！》<i>的殖民地使命。</indent>\n"
+#~ "•<indent=20px>对模组系统进行了大改动，作者们请查看论坛的升级说明。</"
+#~ "indent>\n"
+#~ "•<indent=20px>在主菜单切换<i>《眼冒金星！》</i>和本体游戏时不再需要重新下"
+#~ "载游戏了。</indent>\n"
+#~ "\n"
+#~ "请查看完整的更新日志了解详情！"
+
+#~ msgctxt ""
+#~ "STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN."
+#~ "NO_ARTIFACTS_DISCOVERED_TOOLTIP"
+#~ msgid "A skilled artist can analyze artifacts"
+#~ msgstr "一名熟练的艺术家能够分析工艺品"
+
+#~ msgctxt ""
+#~ "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN."
+#~ "GROUNDED_RESTRICTION_BUTTON_TOOLTIP"
+#~ msgid ""
+#~ "While the rocket is grounded some interior buildings have their operation "
+#~ "and storage withdrawl restricted."
+#~ msgstr "火箭在地面时时，某些内部建筑的操作和存储的取用将受限制。"
+
+#~ msgctxt "STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.NAME_CONTROLLED"
+#~ msgid "Restrict"
+#~ msgstr "限制"
+
+#~ msgctxt ""
+#~ "STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.NAME_UNCONTROLLED"
+#~ msgid "Unrestrict"
+#~ msgstr "不限制"
+
+#~ msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONACTIVE.NAME"
+#~ msgid "Restricted Access"
+#~ msgstr "限制的通行"
+
+#~ msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONACTIVE.TOOLTIP"
+#~ msgid ""
+#~ "This building cannot be operated and storage cannot be withdrawn from."
+#~ msgstr "这些建筑无法操作，也不能从存储中取用资源。"
+
+#~ msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONCONTROLLED.NAME"
+#~ msgid "Controlled Building"
+#~ msgstr "受控制的建筑"
+
+#~ msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONUNCONTROLLED.NAME"
+#~ msgid "Uncontrolled Building"
+#~ msgstr "未受控制的建筑"
+
+#~ msgctxt ""
+#~ "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.AUTOMATION_TOOLTIP"
+#~ msgid "This setting is managed by automation"
+#~ msgstr "这项设置由自动化管理"
+
+#~ msgctxt ""
+#~ "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN."
+#~ "NONE_RESTRICTION_BUTTON_TOOLTIP"
+#~ msgid "Buildings are not restricted."
+#~ msgstr "建筑不受限制。"
+
+#~ msgctxt ""
+#~ "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN."
+#~ "SPACE_RESTRICTION_BUTTON"
+#~ msgid "Space Use Only"
+#~ msgstr "仅在太空中使用"
+
+#~ msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.TITLE"
+#~ msgid "Building Usage Restrictions"
+#~ msgstr "建筑使用限制"
+
+#~ msgctxt ""
+#~ "STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.TOOLTIP_UNCONTROLLED"
+#~ msgid ""
+#~ "This building is not controlled by the <link=\"ROCKETCONTROLSTATION"
+#~ "\">Rocket Control Station</link>."
+#~ msgstr "这个建筑未受<link=\"ROCKETCONTROLSTATION\">火箭控制台</link>控制。"
+
+#~ msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGESTEADY.TOOLTIP"
+#~ msgid ""
+#~ "Energy saver activated, using {UsedPower} of {MaxPower}\n"
+#~ "\n"
+#~ "The contents of this food storage are at refrigeration temperatures."
+#~ msgstr ""
+#~ "已激活节能模式，使用{{MaxPower}中的{UsedPower}\n"
+#~ "\n"
+#~ "在此储存的食物都处于冷藏温度。"
+
+#~ msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.WATER"
+#~ msgid ""
+#~ "Wat\n"
+#~ "HydrAu\n"
+#~ msgstr ""
+#~ "水域\n"
+#~ "水力\n"
+
+#~ msgctxt "STRINGS.UI.UNITSUFFIXES.MASS.KILOGRAM"
+#~ msgid " Kg"
+#~ msgstr "千克"
+
+#~ msgctxt "STRINGS.BUILDINGS.PREFABS.CARGOBAY.DESC"
+#~ msgid "Holds more than a regular cargo bay."
+#~ msgstr "比常规的货舱能携带更多东西。"
+
+#~ msgctxt "STRINGS.BUILDINGS.PREFABS.GASCARGOBAY.DESC"
+#~ msgid "Holds more than a typical gas cargo canister."
+#~ msgstr "比常规的气罐货舱能携带更多东西。"
+
+#~ msgctxt "STRINGS.BUILDINGS.PREFABS.GASCARGOBAY.NAME"
+#~ msgid "<link=\"GASCARGOBAY\">Large Gas Cargo Canister</link>"
+#~ msgstr "<link=\"GASCARGOBAY\">大型气罐货舱</link>"
+
+#~ msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDCARGOBAY.DESC"
+#~ msgid "Holds more than a regular cargo tank."
+#~ msgstr "比常规的液缸货舱能携带更多东西。"
+
+#~ msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDCARGOBAY.NAME"
+#~ msgid "<link=\"LIQUIDCARGOBAY\">Large Liquid Cargo Tank</link>"
+#~ msgstr "<link=\"LIQUIDCARGOBAY\">大型液缸货舱</link>"
 
 #~ msgctxt "STRINGS.BUILDINGS.PREFABS.TEMPORALTEARANALYZER.NAME"
 #~ msgid "Anomaly Scanner"
@@ -87770,10 +88726,6 @@ msgstr "水域小行星"
 #~ "It is recommended that all boxes on the Launch Checklist be checked "
 #~ "before launching"
 #~ msgstr "建议在发射前使发射检查表的框全部打勾"
-
-#~ msgctxt "STRINGS.UI.STARMAP.DESTINATIONSELECTION.NOTSELECTED"
-#~ msgid "Destination not set"
-#~ msgstr "未设置目的地"
 
 #~ msgctxt "STRINGS.UI.STARMAP.DESTINATIONSELECTION.UNREACHABLE"
 #~ msgid "Destination beyond reach"
@@ -89241,10 +90193,6 @@ msgstr "水域小行星"
 #~ msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.WILDNESSDELTA.NAME"
 #~ msgid "Wildness"
 #~ msgstr "野性"
-
-#~ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.BADSLEEP.NAME"
-#~ msgid "Unrested"
-#~ msgstr "倦怠"
 
 #~ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.MODIFIER_FORMAT"
 #~ msgid "{0}: {1}"
@@ -94332,10 +95280,6 @@ msgstr "水域小行星"
 #~ "STRINGS.UI.FRONTEND.CUSTOMGAMESETTINGSSCREEN.SETTINGS.IMMUNESYSTEM.NAME"
 #~ msgid "Germ Resistance"
 #~ msgstr "病菌抗性"
-
-#~ msgctxt "STRINGS.UI.FRONTEND.MOD_DIALOGS.LOAD_FAILURE.RESTART_NOW"
-#~ msgid "Restart"
-#~ msgstr "重启"
 
 #~ msgctxt "STRINGS.UI.FRONTEND.MOD_DIALOGS.MOD_ERRORS_ON_BOOT.DEV_CONTINUE"
 #~ msgid "CONTINUE"

@@ -89,6 +89,8 @@ public class Db : EntityModifierSet
 
 	public TechTreeTitles TechTreeTitles;
 
+	public OrbitalTypeCategories OrbitalTypeCategories;
+
 	public static Db Get()
 	{
 		if (_Instance == null)
@@ -140,7 +142,11 @@ public class Db : EntityModifierSet
 		ChoreTypes = new ChoreTypes(Root);
 		GameplayEvents = new GameplayEvents(Root);
 		GameplaySeasons = new GameplaySeasons(Root);
-		PlantMutations = new PlantMutations(Root);
+		if (DlcManager.FeaturePlantMutationsEnabled())
+		{
+			PlantMutations = new PlantMutations(Root);
+		}
+		OrbitalTypeCategories = new OrbitalTypeCategories(Root);
 		Effect effect = new Effect("CenterOfAttention", DUPLICANTS.MODIFIERS.CENTEROFATTENTION.NAME, DUPLICANTS.MODIFIERS.CENTEROFATTENTION.TOOLTIP, 0f, show_in_ui: true, trigger_floating_text: true, is_bad: false);
 		effect.Add(new AttributeModifier("StressDelta", -0.008333334f, DUPLICANTS.MODIFIERS.CENTEROFATTENTION.NAME));
 		effects.Add(effect);

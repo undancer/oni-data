@@ -212,6 +212,7 @@ worldTemplateRules:
     - geysers/generic
     listRule: TryOne
     times: 12
+    ruleId: GenericGeysers
     allowDuplicates: true
     allowedCellsFilter:
       - command: Replace

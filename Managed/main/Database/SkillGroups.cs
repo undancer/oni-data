@@ -58,7 +58,7 @@ namespace Database
 			Research.requiredChoreGroups = new List<string> { Db.Get().ChoreGroups.Research.Id };
 			if (DlcManager.FeatureClusterSpaceEnabled())
 			{
-				Rocketry = Add(new SkillGroup("Rocketry", Db.Get().ChoreGroups.Rocketry.Id, DUPLICANTS.CHOREGROUPS.ROCKETRY.NAME, "icon_errand_tidy", "icon_archetype_tidy"));
+				Rocketry = Add(new SkillGroup("Rocketry", Db.Get().ChoreGroups.Rocketry.Id, DUPLICANTS.CHOREGROUPS.ROCKETRY.NAME, "icon_errand_rocketry", "icon_archetype_rocketry"));
 				Rocketry.relevantAttributes = new List<Attribute> { Db.Get().ChoreGroups.Rocketry.attribute };
 				Rocketry.requiredChoreGroups = new List<string> { Db.Get().ChoreGroups.Rocketry.Id };
 			}

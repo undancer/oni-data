@@ -298,7 +298,13 @@ namespace STRINGS
 
 				public static LocString DESC = "Someone needs to be around to jiggle the controls when the screensaver comes on.";
 
-				public static LocString EFFECT = "Allows Duplicants to use pilot-operated rockets.\n\nAssigned Duplicants must have the " + UI.FormatAsLink("Rocket Piloting", "PILOT") + " skill.";
+				public static LocString EFFECT = "Allows Duplicants to use pilot-operated rockets and control access to interior buildings.\n\nAssigned Duplicants must have the " + UI.FormatAsLink("Rocket Piloting", "PILOT") + " skill.";
+
+				public static LocString LOGIC_PORT = "Restrict Building Usage";
+
+				public static LocString LOGIC_PORT_ACTIVE = UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + ": Restrict access to interior buildings";
+
+				public static LocString LOGIC_PORT_INACTIVE = UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ": Unrestrict access to interior buildings";
 			}
 
 			public class RESEARCHMODULE
@@ -3279,6 +3285,15 @@ namespace STRINGS
 				public static LocString COUNT_CRITTER_LABEL = "Count Critters";
 
 				public static LocString COUNT_EGG_LABEL = "Count Eggs";
+			}
+
+			public class LOGICCLUSTERLOCATIONSENSOR
+			{
+				public static LocString NAME = UI.FormatAsLink("Starmap Location Sensor", "LOGICCLUSTERLOCATIONSENSOR");
+
+				public static LocString DESC = "Starmap Location sensors can signal when a spacecraft is at a certain location";
+
+				public static LocString EFFECT = "Send " + UI.FormatAsAutomationState("Green Signals", UI.AutomationState.Active) + " at the chosen starmap locations and " + UI.FormatAsAutomationState("Red Signals", UI.AutomationState.Standby) + " everywhere else.";
 			}
 
 			public class LOGICDUPLICANTSENSOR

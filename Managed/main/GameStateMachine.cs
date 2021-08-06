@@ -1682,6 +1682,42 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 			return this;
 		}
 
+		public State ScheduleAction(string name, Func<StateMachineInstanceType, float> time_cb, Action<StateMachineInstanceType> action)
+		{
+			Enter("ScheduleAction(" + name + ")", delegate(StateMachineInstanceType smi)
+			{
+				smi.Schedule(time_cb(smi), delegate
+				{
+					action(smi);
+				});
+			});
+			return this;
+		}
+
+		public State ScheduleAction(string name, float time, Action<StateMachineInstanceType> action)
+		{
+			Enter("ScheduleAction(" + time + ", " + name + ")", delegate(StateMachineInstanceType smi)
+			{
+				smi.Schedule(time, delegate
+				{
+					action(smi);
+				});
+			});
+			return this;
+		}
+
+		public State ScheduleActionNextFrame(string name, Action<StateMachineInstanceType> action)
+		{
+			Enter("ScheduleActionNextFrame(" + name + ")", delegate(StateMachineInstanceType smi)
+			{
+				smi.ScheduleNextFrame(delegate
+				{
+					action(smi);
+				});
+			});
+			return this;
+		}
+
 		public State EventHandler(GameHashes evt, Func<StateMachineInstanceType, KMonoBehaviour> global_event_system_callback, Callback callback)
 		{
 			return EventHandler(evt, global_event_system_callback, delegate(StateMachineInstanceType smi, object d)

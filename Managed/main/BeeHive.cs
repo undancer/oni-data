@@ -31,8 +31,6 @@ public class BeeHive : GameStateMachine<BeeHive, BeeHive.StatesInstance, IStateM
 
 	public class StatesInstance : GameInstance
 	{
-		private Coroutine newGameSpawnRoutine;
-
 		public StatesInstance(IStateMachineTarget master, Def def)
 			: base(master, def)
 		{
@@ -141,7 +139,10 @@ public class BeeHive : GameStateMachine<BeeHive, BeeHive.StatesInstance, IStateM
 		enabled.grownStates.dayTime.EventTransition(GameHashes.Nighttime, (StatesInstance smi) => GameClock.Instance, enabled.grownStates.nightTime, (StatesInstance smi) => GameClock.Instance.IsNighttime());
 		enabled.grownStates.nightTime.EventTransition(GameHashes.NewDay, (StatesInstance smi) => GameClock.Instance, enabled.grownStates.dayTime, (StatesInstance smi) => GameClock.Instance.GetTimeSinceStartOfCycle() <= 1f).Exit(delegate(StatesInstance smi)
 		{
-			smi.SpawnNewLarvaFromHive();
+			if (!GameClock.Instance.IsNighttime())
+			{
+				smi.SpawnNewLarvaFromHive();
+			}
 		});
 	}
 }

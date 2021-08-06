@@ -55,6 +55,7 @@ public class WashSinkConfig : IBuildingConfig
 		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
 		go.AddOrGet<LoopingSounds>();
 		go.AddOrGet<RequireOutputs>().ignoreFullPipe = true;
+		go.AddOrGetDef<RocketUsageRestriction.Def>();
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

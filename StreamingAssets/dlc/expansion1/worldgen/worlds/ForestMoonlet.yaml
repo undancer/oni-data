@@ -25,6 +25,10 @@ startingBasePositionVertical:
   min: 0.46
   max: 0.46
 
+fixedTraits:
+  - sunlightVeryLow
+  - cosmicRadiationMed
+
 # List all the subworld files to load
 subworldFiles:
   - name: expansion1::subworlds/forest/med_ForestStart

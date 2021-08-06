@@ -157,6 +157,18 @@ public class SkillsScreen : KModalScreen
 		}
 		MinionResume component3 = targetGameObject3.GetComponent<MinionResume>();
 		MinionResume component4 = targetGameObject4.GetComponent<MinionResume>();
+		if (component3 == null && component4 == null)
+		{
+			return 0;
+		}
+		if (component3 == null)
+		{
+			return -1;
+		}
+		if (component4 == null)
+		{
+			return 1;
+		}
 		float num = component3.AvailableSkillpoints;
 		float value = component4.AvailableSkillpoints;
 		return num.CompareTo(value);
@@ -182,6 +194,18 @@ public class SkillsScreen : KModalScreen
 		}
 		MinionResume component = targetGameObject.GetComponent<MinionResume>();
 		MinionResume component2 = targetGameObject2.GetComponent<MinionResume>();
+		if (component == null && component2 == null)
+		{
+			return 0;
+		}
+		if (component == null)
+		{
+			return -1;
+		}
+		if (component2 == null)
+		{
+			return 1;
+		}
 		AttributeInstance attributeInstance = Db.Get().Attributes.QualityOfLife.Lookup(component);
 		Db.Get().Attributes.QualityOfLifeExpectation.Lookup(component);
 		AttributeInstance attributeInstance2 = Db.Get().Attributes.QualityOfLife.Lookup(component2);

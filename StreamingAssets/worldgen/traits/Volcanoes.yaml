@@ -27,3 +27,15 @@ additionalUnknownCellFilters:
     command: ExceptWith
     subworldNames:
       - subworlds/magma/VolcanoBiome
+
+additionalWorldTemplateRules:
+  - names:
+      - geysers/volcanohole
+    listRule: TryOne
+    times: 8
+    allowDuplicates: true
+    allowExtremeTemperatureOverlap: true # VolcanoBiome has 1 child so this should be fine in most cases
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - subworlds/magma/VolcanoBiome

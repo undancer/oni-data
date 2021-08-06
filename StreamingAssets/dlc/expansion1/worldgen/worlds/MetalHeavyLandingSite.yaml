@@ -29,6 +29,10 @@ startingBasePositionVertical:
   min: 0.75
   max: 0.75
 
+fixedTraits:
+  - sunlightLow
+  - cosmicRadiationMedLow
+
 # List all the subworld files to load
 subworldFiles:
   - name: expansion1::subworlds/barren/LargeChasmStart

@@ -31,7 +31,11 @@ public class IlluminationVulnerable : StateMachineComponent<IlluminationVulnerab
 			default_state = comfortable;
 			root.Update("Illumination", delegate(StatesInstance smi, float dt)
 			{
-				smi.master.GetAmounts().Get(Db.Get().Amounts.Illumination).SetValue(Grid.LightCount[Grid.PosToCell(smi.master.gameObject)]);
+				int num = Grid.PosToCell(smi.master.gameObject);
+				if (Grid.IsValidCell(num))
+				{
+					smi.master.GetAmounts().Get(Db.Get().Amounts.Illumination).SetValue(Grid.LightCount[num]);
+				}
 			}, UpdateRate.SIM_1000ms);
 			comfortable.Update("Illumination.Comfortable", delegate(StatesInstance smi, float dt)
 			{
@@ -144,6 +148,10 @@ public class IlluminationVulnerable : StateMachineComponent<IlluminationVulnerab
 
 	public bool IsCellSafe(int cell)
 	{
+		if (!Grid.IsValidCell(cell))
+		{
+			return false;
+		}
 		if (prefersDarkness)
 		{
 			return Grid.LightIntensity[cell] == 0;

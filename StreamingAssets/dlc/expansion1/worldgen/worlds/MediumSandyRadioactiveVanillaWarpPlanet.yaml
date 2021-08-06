@@ -9,6 +9,10 @@ worldsize:
   Y: 176
 layoutMethod: PowerTree
 
+fixedTraits:
+  - sunlightMedLow
+  - cosmicRadiationMedHigh
+
 defaultsOverrides:
   data:
     DrawWorldBorderOverVacuum: false
@@ -52,10 +56,10 @@ subworldFiles:
     minCount: 6
     
 unknownCellsAllowedSubworlds: 
-#  - tagcommand: Default
-#    command: Replace
-#    subworldNames:
-#      - expansion1::subworlds/swamp/Swamp
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/sandstone/med_SandstoneWarp
   - tagcommand: DistanceFromTag
     tag: AtStart
     minDistance: 1

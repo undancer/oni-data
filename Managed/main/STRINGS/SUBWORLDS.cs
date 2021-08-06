@@ -163,5 +163,14 @@ namespace STRINGS
 
 			public static LocString UTILITY = "In addition to " + UI.FormatAsLink("Natural Gas", "METHANE") + ", the highly toxic " + UI.FormatAsLink("Chlorine", "CHLORINEGAS") + " is also present in gas form. In fact, Chlorine is present here in " + UI.FormatAsLink("gas", "ELEMENTS_GAS") + ", " + UI.FormatAsLink("liquid", "ELEMENTS_LIQUID") + ", and " + UI.FormatAsLink("solid", "ELEMENTS_SOLID") + " states, largely due to the presence of " + UI.FormatAsLink("Bleach Stone", "BLEACHSTONE") + ".\n\n" + UI.FormatAsLink("Igneous Rock", "IGNEOUSROCK") + " and its denser form, " + UI.FormatAsLink("Granite", "GRANITE") + ", provide some useful construction materials, but the real star of this biome are the " + UI.FormatAsLink("Gassy Moos", "MOO") + " who consume " + UI.FormatAsLink("Gas Grass", "GASGRASS") + " and excrete " + UI.FormatAsLink("Natural Gas", "METHANE") + ". While Gassy Moos cannot be bred domestically, Gassy Mooteors regularly fall from space onto this biome, making it the best way to find a reliable source of these elusive creatures.\n\nWith no breathable " + UI.FormatAsLink("Oxygen", "OXYGEN") + " in this biome my Duplicants will need to be properly prepared before they venture too far into its depths.";
 		}
+
+		public static class REGOLITH
+		{
+			public static LocString NAME = "Regolith";
+
+			public static LocString DESC = "The Regolith Biome contains a bounty of " + UI.FormatAsLink("Regolith", "REGOLITH") + " which is very useful as a material for filtration.";
+
+			public static LocString UTILITY = "Lingering within the layers of Regolith are the pernicious " + UI.FormatAsLink("Shove Voles", "MOLESPECIES") + " which eat valuable resources and excrete them at half the original mass.\n\nFortunately these pests can be wrangled up and used as a good food source for my Duplicants. However, extra care must be taken to contain these critters in pens made from either double thick walls or from " + UI.FormatAsLink("Refined Metal", "REFINEDMETAL") + " since they are capable of burrowing through most other materials.";
+		}
 	}
 }

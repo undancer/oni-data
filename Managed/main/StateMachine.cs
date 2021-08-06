@@ -101,6 +101,8 @@ public abstract class StateMachine
 
 		public abstract SchedulerHandle Schedule(float time, Action<object> callback, object callback_data = null);
 
+		public abstract SchedulerHandle ScheduleNextFrame(Action<object> callback, object callback_data = null);
+
 		public virtual void FreeResources()
 		{
 			stateMachine = null;
@@ -884,6 +886,12 @@ public class StateMachine<StateMachineType, StateMachineInstanceType, MasterType
 		{
 			string name = null;
 			return Singleton<StateMachineManager>.Instance.Schedule(name, time, callback, callback_data, currentSchedulerGroup);
+		}
+
+		public override SchedulerHandle ScheduleNextFrame(Action<object> callback, object callback_data = null)
+		{
+			string name = null;
+			return Singleton<StateMachineManager>.Instance.ScheduleNextFrame(name, callback, callback_data, currentSchedulerGroup);
 		}
 
 		public override void StartSM()

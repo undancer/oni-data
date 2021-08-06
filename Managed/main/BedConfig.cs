@@ -29,5 +29,6 @@ public class BedConfig : IBuildingConfig
 		sleepable.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_sleep_bed_kanim") };
 		sleepable.workLayer = Grid.SceneLayer.BuildingFront;
 		go.AddOrGet<Ownable>().slotID = Db.Get().AssignableSlots.Bed.Id;
+		go.AddOrGetDef<RocketUsageRestriction.Def>();
 	}
 }

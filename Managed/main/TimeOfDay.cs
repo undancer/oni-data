@@ -116,7 +116,12 @@ public class TimeOfDay : KMonoBehaviour, ISaveLoadable
 			num = 0f;
 		}
 		float num2 = Mathf.Sin(num * (float)Math.PI);
-		Game.Instance.currentSunlightIntensity = num2 * 80000f;
+		Game.Instance.currentFallbackSunlightIntensity = num2 * 80000f;
+		foreach (WorldContainer worldContainer in ClusterManager.Instance.WorldContainers)
+		{
+			worldContainer.currentSunlightIntensity = num2 * (float)worldContainer.sunlight;
+			worldContainer.currentCosmicIntensity = worldContainer.cosmicRadiation;
+		}
 		return num2;
 	}
 

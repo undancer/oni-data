@@ -1,5 +1,5 @@
-name: STRINGS.WORLDS.SWAMPMOONLET.NAME
-description: STRINGS.WORLDS.SWAMPMOONLET.DESCRIPTION
+name: STRINGS.WORLDS.VANILLASWAMPDEFAULT.NAME
+description: STRINGS.WORLDS.VANILLASWAMPDEFAULT.DESCRIPTION
 nameTable: SWAMP
 asteroidIcon: asteroid_swamp_start_kanim
 disableWorldTraits: true
@@ -24,6 +24,10 @@ startingBasePositionHorizontal:
 startingBasePositionVertical:
   min: 0.46
   max: 0.46
+
+fixedTraits:
+  - sunlightLow
+  - cosmicRadiationVeryLow
 
 # List all the subworld files to load
 subworldFiles:

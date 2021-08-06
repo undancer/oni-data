@@ -319,7 +319,8 @@ namespace Database
 				LogicElementSensorLiquidConfig.ID,
 				"LogicGateNOT",
 				LogicTimeOfDaySensorConfig.ID,
-				LogicTimerSensorConfig.ID
+				LogicTimerSensorConfig.ID,
+				LogicClusterLocationSensorConfig.ID
 			}, this);
 			new Tech("LogicCircuits", new List<string> { "LogicGateAND", "LogicGateOR", "LogicGateBUFFER", "LogicGateFILTER" }, this);
 			new Tech("ParallelAutomation", new List<string>

@@ -21,6 +21,8 @@ public class ArtifactPOIConfigurator : KMonoBehaviour
 
 		public string dlcID;
 
+		public List<string> orbitalObject = new List<string> { Db.Get().OrbitalTypeCategories.gravitas.Id };
+
 		public ArtifactPOIType(string id, string harvestableArtifactID = null, bool destroyOnHarvest = false, float poiRechargeTimeMin = 30000f, float poiRechargeTimeMax = 60000f, string dlcID = "EXPANSION1_ID")
 		{
 			this.id = id;

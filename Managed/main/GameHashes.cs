@@ -325,6 +325,7 @@ public enum GameHashes
 	RocketRequestLaunch = 191901966,
 	RocketReadyToLaunch = -849456099,
 	UpdateRocketStatus = -688990705,
+	RocketRestrictionChanged = 1861523068,
 	StoragePriorityChanged = -1626373771,
 	StorageCapacityChanged = -945020481,
 	AttachmentNetworkChanged = 486707561,

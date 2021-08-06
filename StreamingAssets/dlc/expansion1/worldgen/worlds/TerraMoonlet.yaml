@@ -24,6 +24,10 @@ startingBasePositionVertical:
   min: 0.46
   max: 0.46
 
+fixedTraits:
+  - sunlightVeryLow
+  - cosmicRadiationLow
+
 subworldFiles:
   - name: subworlds/space/Space
   - name: subworlds/magma/Bottom

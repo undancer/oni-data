@@ -50,6 +50,7 @@ public class HandSanitizerConfig : IBuildingConfig
 		manualDeliveryKG.capacity = 15f;
 		manualDeliveryKG.refillMass = 3f;
 		manualDeliveryKG.choreTypeIDHash = Db.Get().ChoreTypes.FetchCritical.IdHash;
+		go.AddOrGetDef<RocketUsageRestriction.Def>();
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

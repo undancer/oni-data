@@ -1,23 +1,24 @@
-name: STRINGS.WORLDS.SANDSTONE_DEFAULT.NAME
-description: STRINGS.WORLDS.SANDSTONE_DEFAULT.DESCRIPTION
+name: STRINGS.WORLDS.VANILLASANDSTONEDEFAULT.NAME
+description: STRINGS.WORLDS.VANILLASANDSTONEDEFAULT.DESCRIPTION
 nameTable: TERRA
 asteroidIcon: asteroid_vanilla_sandstone_start_kanim
 disableWorldTraits: true
 
 worldsize:
-#  X: 256
-#  Y: 412
   X: 240
   Y: 380
 layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
 #                                in order to use this.
+
+fixedTraits:
+  - sunlightMed
+  - cosmicRadiationMed
 
 defaultsOverrides:
   data:
     OverworldDensityMin: 20
     OverworldDensityMax: 20
     OverworldSampleBehaviour: PoissonDisk
-
 # List all the subworld files to load
 subworldFiles:
   - name: subworlds/sandstone/SandstoneStart
@@ -39,7 +40,6 @@ subworldFiles:
   - name: expansion1::subworlds/oil/OilWells
   - name: expansion1::subworlds/oil/OilSparse
   - name: expansion1::subworlds/space/SpaceWithNoBorder
-#  - name: subworlds/space/Surface
   - name: expansion1::subworlds/space/HospitableClassicSurface
   - name: expansion1::subworlds/wasteland/WastelandBeetle
   - name: expansion1::subworlds/wasteland/WastelandWorm

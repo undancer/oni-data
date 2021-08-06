@@ -54,6 +54,10 @@ unknownCellsAllowedSubworlds:
     subworldNames:
       - expansion1::subworlds/frozen/FrozenCore
 
+fixedTraits:
+  - sunlightVeryVeryLow
+  - cosmicRadiationHigh
+
 worldTemplateRules:
   # Gravitas
   - names:

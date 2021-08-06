@@ -1,0 +1,13 @@
+name: STRINGS.WORLDS.TINYEMPTY.NAME
+description: STRINGS.WORLDS.TINYEMPTY.DESCRIPTION
+menuOrder: 102
+coordinatePrefix: TNY-E-C
+skip: EditorOnly
+
+numRings: 12
+startWorldIndex: 0 
+worldPlacements:
+- world: worlds/TinyEmpty
+  allowedRings:
+    min: 0
+    max: 0

@@ -44,6 +44,8 @@ namespace ProcGen
 				TryAll
 			}
 
+			public string ruleId { get; private set; }
+
 			public List<string> names { get; private set; }
 
 			public ListRule listRule { get; private set; }
@@ -187,6 +189,8 @@ namespace ProcGen
 
 		public List<string> seasons { get; private set; }
 
+		public List<string> fixedTraits { get; private set; }
+
 		public bool adjacentTemporalTear { get; private set; }
 
 		public World()
@@ -197,6 +201,7 @@ namespace ProcGen
 			startingBasePositionVertical = new MinMax(0.5f, 0.5f);
 			globalFeatures = new Dictionary<string, int>();
 			seasons = new List<string>();
+			fixedTraits = new List<string>();
 			category = WorldCategory.Asteroid;
 		}
 

@@ -1083,6 +1083,8 @@ namespace STRINGS
 				public static LocString NAME = "Percolator";
 
 				public static LocString DESCRIPTION = "Don't drink from it! There was a pacu... IN the percolator!";
+
+				public static LocString ARTIFACT = "A coffee percolator with the reminants of a blend of coffee that was a personal favorite of Dr. Hassan Aydem.\n\nHe would specifically reserve the consumption of this particular blend for when he was reviewing research papers on Sunday afternoons.";
 			}
 
 			public class ROBOTARM
@@ -1090,6 +1092,8 @@ namespace STRINGS
 				public static LocString NAME = "Robot Arm";
 
 				public static LocString DESCRIPTION = "It's not functional. Just cool.";
+
+				public static LocString ARTIFACT = "A commercially available robot arm that has had a significant amount of modifications made to it.\n\nThe initials B.A. appear on one of the fingers.";
 			}
 
 			public class HATCHFOSSIL
@@ -1097,6 +1101,8 @@ namespace STRINGS
 				public static LocString NAME = "Pristine Fossil";
 
 				public static LocString DESCRIPTION = "The preserved bones of an early species of Hatch.";
+
+				public static LocString ARTIFACT = "The preservation of this skeleton occurred artificially using a technique called the \"The Ali Method\".\n\nIt should be noted that this fossilization technique was pioneered by one Dr. Ashkan Seyed Ali, an employee of Gravitas.";
 			}
 
 			public class MODERNART
@@ -1104,6 +1110,8 @@ namespace STRINGS
 				public static LocString NAME = "Modern Art";
 
 				public static LocString DESCRIPTION = "I don't get it.";
+
+				public static LocString ARTIFACT = "A sculpture of the Neoplastism movement of Modern Art.\n\nGravitas records show that this piece was once used in a presentation called 'Form and Function and the Corporate Aesthetic'.";
 			}
 
 			public class EGGROCK
@@ -1111,6 +1119,8 @@ namespace STRINGS
 				public static LocString NAME = "Egg-Shaped Rock";
 
 				public static LocString DESCRIPTION = "It's unclear whether this is its naturally occurring shape, or if its appearance as been sculpted.";
+
+				public static LocString ARTIFACT = "The words \"Happy Farters Day Dad. Love Macy\" appear on the bottom of this rock, written in a childlish scrawl.";
 			}
 
 			public class RAINBOWEGGROCK
@@ -1118,6 +1128,8 @@ namespace STRINGS
 				public static LocString NAME = "Egg-Shaped Rock";
 
 				public static LocString DESCRIPTION = "It's unclear whether this is its naturally occurring shape, or if its appearance as been sculpted.\n\nThis one is rainbow colored.";
+
+				public static LocString ARTIFACT = "The words \"Happy Father's Day, Dad. Love you!\" appear on the bottom of this rock, written in very neat handwriting. The words are surrounded by four hearts drawn in what appears to be a pink gel pen.";
 			}
 
 			public class OKAYXRAY
@@ -1125,6 +1137,8 @@ namespace STRINGS
 				public static LocString NAME = "Old X-Ray";
 
 				public static LocString DESCRIPTION = "Ew, weird. It has five fingers!";
+
+				public static LocString ARTIFACT = "The description on this X-ray indicates that it was taken in the Gravitas Medical Facility.\n\nMost likely this X-ray was performed to investigate an injury that occurred within the facility.";
 			}
 
 			public class SHIELDGENERATOR
@@ -1132,6 +1146,8 @@ namespace STRINGS
 				public static LocString NAME = "Shield Generator";
 
 				public static LocString DESCRIPTION = "A mechanical prototype capable of producing a small section of shielding.";
+
+				public static LocString ARTIFACT = "The energy field produced by this shield generator completely ignores those light behaviors which are wave-like and focuses instead on its particle behaviors.\n\nThis appears to be possible when light is slowed down until it stops.";
 			}
 
 			public class TEAPOT
@@ -1139,6 +1155,8 @@ namespace STRINGS
 				public static LocString NAME = "Encrusted Teapot";
 
 				public static LocString DESCRIPTION = "A teapot from the depths of space, coated in a thick layer of Neutronium.";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class DNAMODEL
@@ -1146,6 +1164,8 @@ namespace STRINGS
 				public static LocString NAME = "Double Helix Model";
 
 				public static LocString DESCRIPTION = "An educational model of genetic information.";
+
+				public static LocString ARTIFACT = "A physical representation of the building blocks of life.\n\nThis one contains trace amounts of a Genetic Ooze prototype that was once used by Gravitas.";
 			}
 
 			public class SANDSTONE
@@ -1153,6 +1173,8 @@ namespace STRINGS
 				public static LocString NAME = "Sandstone";
 
 				public static LocString DESCRIPTION = "A beautiful rock composed of multiple layers of sediment.";
+
+				public static LocString ARTIFACT = "This sample of sandstone appears to have been processed by the Gravitas Mining Gun that was made available to the general public.\n\nNote: Gravitas public Mining Gun model is different than ones used by Duplicants in its larger size, and extra precautionary features added in order to be compliant with national safety standards.";
 			}
 
 			public class MAGMALAMP
@@ -1160,6 +1182,8 @@ namespace STRINGS
 				public static LocString NAME = "Magma Lamp";
 
 				public static LocString DESCRIPTION = "The sequel to \"Lava Lamp\".";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class OBELISK
@@ -1167,6 +1191,8 @@ namespace STRINGS
 				public static LocString NAME = "Small Obelisk";
 
 				public static LocString DESCRIPTION = "A rectangular stone piece.\n\nIts function is unclear.";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class RUBIKSCUBE
@@ -1174,6 +1200,8 @@ namespace STRINGS
 				public static LocString NAME = "Rubik's Cube";
 
 				public static LocString DESCRIPTION = "This mystery of the universe has already been solved.";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class OFFICEMUG
@@ -1181,6 +1209,8 @@ namespace STRINGS
 				public static LocString NAME = "Office Mug";
 
 				public static LocString DESCRIPTION = "An intermediary place to store espresso before you move it to your mouth.";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class AMELIASWATCH
@@ -1188,6 +1218,8 @@ namespace STRINGS
 				public static LocString NAME = "Wrist Watch";
 
 				public static LocString DESCRIPTION = "It was discovered in a package labeled \"To be entrusted to Dr. Walker\".";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class MOONMOONMOON
@@ -1195,6 +1227,8 @@ namespace STRINGS
 				public static LocString NAME = "Moonmoonmoon";
 
 				public static LocString DESCRIPTION = "A moon's moon's moon. It's very small.";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class BIOLUMROCK
@@ -1202,6 +1236,8 @@ namespace STRINGS
 				public static LocString NAME = "Bioluminescent Rock";
 
 				public static LocString DESCRIPTION = "A thriving colony of tiny, microscopic organisms is responsible for giving it its bluish glow.";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class PLASMALAMP
@@ -1209,6 +1245,8 @@ namespace STRINGS
 				public static LocString NAME = "Plasma Lamp";
 
 				public static LocString DESCRIPTION = "No space colony is complete without one.";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class MOLDAVITE
@@ -1216,6 +1254,8 @@ namespace STRINGS
 				public static LocString NAME = "Moldavite";
 
 				public static LocString DESCRIPTION = "A unique green stone formed from the impact of a meteorite.";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class BRICKPHONE
@@ -1223,6 +1263,8 @@ namespace STRINGS
 				public static LocString NAME = "Strange Brick";
 
 				public static LocString DESCRIPTION = "It still works.";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class SOLARSYSTEM
@@ -1230,6 +1272,8 @@ namespace STRINGS
 				public static LocString NAME = "Self-Contained System";
 
 				public static LocString DESCRIPTION = "A marvel of the cosmos, inside this display is an entirely self-contained solar system.";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class SINK
@@ -1237,6 +1281,8 @@ namespace STRINGS
 				public static LocString NAME = "Sink";
 
 				public static LocString DESCRIPTION = "No collection is complete without it.";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class ROCKTORNADO
@@ -1244,6 +1290,8 @@ namespace STRINGS
 				public static LocString NAME = "Tornado Rock";
 
 				public static LocString DESCRIPTION = "It's unclear how it formed, although I'm glad it did.";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class BLENDER
@@ -1251,6 +1299,8 @@ namespace STRINGS
 				public static LocString NAME = "Blender";
 
 				public static LocString DESCRIPTION = "Equipment used to conduct experiments answering the age-old question, \"Could that blend\"?";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class SAXOPHONE
@@ -1258,6 +1308,8 @@ namespace STRINGS
 				public static LocString NAME = "Mangled Saxophone";
 
 				public static LocString DESCRIPTION = "The name \"Pesquet\" is barely legible on the inside.";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class STETHOSCOPE
@@ -1265,6 +1317,8 @@ namespace STRINGS
 				public static LocString NAME = "Stethoscope";
 
 				public static LocString DESCRIPTION = "Listens to Duplicant heartbeats, or gurgly tummies.";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class VHS
@@ -1272,13 +1326,17 @@ namespace STRINGS
 				public static LocString NAME = "Archaic Tech";
 
 				public static LocString DESCRIPTION = "Be kind when you handle it. It's very fragile.";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class REACTOR_MODEL
 			{
 				public static LocString NAME = "Model Nuclear Power Plant";
 
-				public static LocString DESCRIPTION = "It's pronounced nuclear";
+				public static LocString DESCRIPTION = "It's pronounced nu-clear.";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class MOOD_RING
@@ -1286,6 +1344,8 @@ namespace STRINGS
 				public static LocString NAME = "Radiation Mood Ring";
 
 				public static LocString DESCRIPTION = "How radioactive are you feeling?";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class ORACLE
@@ -1293,13 +1353,17 @@ namespace STRINGS
 				public static LocString NAME = "Useless Machine";
 
 				public static LocString DESCRIPTION = "What does it do?";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class GRUB_STATUE
 			{
-				public static LocString NAME = "Grub Statue";
+				public static LocString NAME = "Grubgrub Statue";
 
 				public static LocString DESCRIPTION = "Grub Grub";
+
+				public static LocString ARTIFACT = "";
 			}
 
 			public class HONEY_JAR
@@ -1307,6 +1371,8 @@ namespace STRINGS
 				public static LocString NAME = "Honey Jar";
 
 				public static LocString DESCRIPTION = "This doesn't taste like uranium";
+
+				public static LocString ARTIFACT = "";
 			}
 		}
 
@@ -2103,9 +2169,13 @@ namespace STRINGS
 
 					public static LocString ACTIVATE_EXPANSION1_DESC = "The game will need to restart in order to activate <i>Spaced Out!</i>";
 
+					public static LocString ACTIVATE_EXPANSION1_RAIL_DESC = "<i>Spaced Out!</i> will be activated the next time you launch the game. The game will now close.";
+
 					public static LocString DEACTIVATE_EXPANSION1 = "DEACTIVATE DLC";
 
 					public static LocString DEACTIVATE_EXPANSION1_DESC = "The game will need to restart in order to activate the <i>Oxygen Not Included</i> base game.";
+
+					public static LocString DEACTIVATE_EXPANSION1_RAIL_DESC = "<i>Spaced Out!</i> will be deactivated the next time you launch the game. The game will now close.";
 				}
 
 				public static LocString STARTDEMO = "START DEMO";
@@ -2213,13 +2283,13 @@ namespace STRINGS
 
 			public class MOTD
 			{
-				public static LocString IMAGE_HEADER = "A BREATH OF FRESH AIR";
+				public static LocString IMAGE_HEADER = "SOLAR SWAMPED UPDATE";
 
 				public static LocString NEWS_HEADER = "JOIN THE DISCUSSION";
 
 				public static LocString NEWS_BODY = "Stay up to date by joining our mailing list, or head on over to the forums and join the discussion.";
 
-				public static LocString PATCH_NOTES_SUMMARY = "Welcome to the newest update <b>A BREATH OF FRESH AIR</b>:\n\n•<indent=20px>Several buildings and items have been added to the Base Game, including Oxygen Masks, and Meter Valves.</indent>\n•<indent=20px>Base Game now has all <i>Spaced Out!</i> bug fixes and quality-of-life improvements.</indent>\n•<indent=20px>Updates to <i>Spaced Out!</i> Colony Imperatives</indent>\n•<indent=20px>Significant updates to the Modding system, modders please see the forum for upgrade instructions.</indent>\n•<indent=20px>Toggle between <i>Spaced Out!</i> and Base Game in the main menu without re-downloading the game.</indent>\n\n   Check out the full patch notes for more details!";
+				public static LocString PATCH_NOTES_SUMMARY = "Welcome to the <b>SOLAR SWAMPED UPDATE</b>:\n\n<b><i>Spaced Out!</i></b>\n•<indent=20px>Added a third Classic Cluster: play on the Swamp Start to try the new biomes in a larger world</indent>\n•<indent=20px>Variable sunlight intensity per-world, changing the progression of solar panels</indent>\n•<indent=20px>New Location Sensor and usage restrictions on the Rocket Control Station to keep rockets prepped for their mission</indent>\n<b>Base Game</b>\n•<indent=20px>Numerous worldgen fixes to bugs introduced in the last update (Only affects newly generated worlds)</indent>\n•<indent=20px>Other bug fixes, including resolving several issues with Space Scanners</indent>\n\n   Check out the full patch notes for more details!";
 
 				public static LocString UPDATE_TEXT = "LAUNCHED!";
 
@@ -3035,7 +3105,7 @@ namespace STRINGS
 
 				public static LocString WORLD_GEN_FILES = "A problem occurred while accessing certain game files that will prevent starting new games.\n\nPlease ensure you can modify these files and re-launch the game:\n\n{0}";
 
-				public static LocString WORLD_GEN_FAILURE = "A problem occurred while generating a world from this seed:\n{0}. \n\nPlease try again with a different seed.";
+				public static LocString WORLD_GEN_FAILURE = "A problem occurred while generating a world from this seed:\n{0}.\n\nUnfortunately, not all seeds germinate. Please try again with a different seed.";
 
 				public static LocString PLAYER_PREFS_CORRUPTED = "A problem occurred while loading your game options.\nThey have been reset to their default settings.\n\n";
 
@@ -3068,11 +3138,11 @@ namespace STRINGS
 
 				public static LocString MERGEDOWNCHANGES_FOOD = "•<indent=20px>Fridges are more effective for early-game food storage</indent>\n•<indent=20px><b>Both</b> freezing temperatures and a sterile gas are needed for <b>total food preservation</b>.</indent>";
 
-				public static LocString MERGEDOWNCHANGES_AIRFILTER = $"•<indent=20px>{BUILDINGS.PREFABS.AIRFILTER.NAME} now requires <b>5w Power</b>.</indent>\n•<indent=20px>Duplicants will get <b>Stinging Eyes</b> from gasses such as chlorine and hydrogen.</indent>";
+				public static LocString MERGEDOWNCHANGES_AIRFILTER = string.Concat("•<indent=20px>", BUILDINGS.PREFABS.AIRFILTER.NAME, " now requires <b>5w Power</b>.</indent>\n•<indent=20px>Duplicants will get <b>Stinging Eyes</b> from gasses such as chlorine and hydrogen.</indent>");
 
-				public static LocString MERGEDOWNCHANGES_SIMULATION = $"•<indent=20px>Many <b>simulation bugs</b> have been fixed.</indent>\n•<indent=20px>This may <b>change the effectiveness</b> of certain contraptions and {BUILDINGS.PREFABS.STEAMTURBINE2.NAME} setups.</indent>";
+				public static LocString MERGEDOWNCHANGES_SIMULATION = string.Concat("•<indent=20px>Many <b>simulation bugs</b> have been fixed.</indent>\n•<indent=20px>This may <b>change the effectiveness</b> of certain contraptions and ", BUILDINGS.PREFABS.STEAMTURBINE2.NAME, " setups.</indent>");
 
-				public static LocString MERGEDOWNCHANGES_BUILDINGS = $"•<indent=20px>The <b>{BUILDINGS.PREFABS.OXYGENMASKSTATION.NAME}</b> has been added to aid early-game exploration.</indent>\n•<indent=20px>Use the new <b>Meter Valves</b> for precise control of resources in pipes.</indent>";
+				public static LocString MERGEDOWNCHANGES_BUILDINGS = string.Concat("•<indent=20px>The <b>", BUILDINGS.PREFABS.OXYGENMASKSTATION.NAME, "</b> has been added to aid early-game exploration.</indent>\n•<indent=20px>Use the new <b>Meter Valves</b> for precise control of resources in pipes.</indent>");
 			}
 
 			public static LocString GAME_VERSION = "Game Version: ";
@@ -5353,7 +5423,7 @@ namespace STRINGS
 			{
 				public static LocString TONNE = " t";
 
-				public static LocString KILOGRAM = " Kg";
+				public static LocString KILOGRAM = " kg";
 
 				public static LocString GRAM = " g";
 
@@ -6632,7 +6702,7 @@ namespace STRINGS
 			{
 				public static LocString NO_ARTIFACTS_DISCOVERED = "No artifacts analyzed";
 
-				public static LocString NO_ARTIFACTS_DISCOVERED_TOOLTIP = "A skilled artist can analyze artifacts";
+				public static LocString NO_ARTIFACTS_DISCOVERED_TOOLTIP = "Analyzing artifacts requires a skilled artist";
 			}
 
 			public class BUTTONMENUSIDESCREEN
@@ -6796,6 +6866,32 @@ namespace STRINGS
 				public static LocString CHANGEMODULEPANEL = "Add or Change Module";
 
 				public static LocString ENGINE_MAX_HEIGHT = "This engine allows a <b>Maximum Rocket Height</b> of {0}";
+			}
+
+			public class CLUSTERLOCATIONFILTERSIDESCREEN
+			{
+				public static LocString TITLE = "Location Filter";
+
+				public static LocString HEADER = "Send Green signal at locations";
+
+				public static LocString EMPTY_SPACE_ROW = "In Space";
+			}
+
+			public class ROCKETRESTRICTIONSIDESCREEN
+			{
+				public static LocString BUILDING_RESTRICTIONS_LABEL = "Interior Building Restrictions";
+
+				public static LocString NONE_RESTRICTION_BUTTON = "None";
+
+				public static LocString NONE_RESTRICTION_BUTTON_TOOLTIP = "There are no restrictions on buildings inside this rocket";
+
+				public static LocString GROUNDED_RESTRICTION_BUTTON = "Grounded";
+
+				public static LocString GROUNDED_RESTRICTION_BUTTON_TOOLTIP = "Buildings with their access restricted cannot be operated while grounded, though they can still be filled";
+
+				public static LocString AUTOMATION = "Automation Controlled";
+
+				public static LocString AUTOMATION_TOOLTIP = "Building restrictions are managed by automation\n\nBuildings with their access restricted cannot be operated, though they can still be filled";
 			}
 
 			public class HABITATMODULESIDESCREEN
@@ -8325,6 +8421,17 @@ namespace STRINGS
 				public static LocString NAME_OFF = "Cancel Demolition";
 
 				public static LocString TOOLTIP_OFF = "Cancel this demolition order";
+			}
+
+			public class ROCKETUSAGERESTRICTION
+			{
+				public static LocString NAME_UNCONTROLLED = "Uncontrolled";
+
+				public static LocString TOOLTIP_UNCONTROLLED = "Do not allow this building to be controlled by a " + BUILDINGS.PREFABS.ROCKETCONTROLSTATION.NAME;
+
+				public static LocString NAME_CONTROLLED = "Controlled";
+
+				public static LocString TOOLTIP_CONTROLLED = "Allow this building's operation to be controlled by a " + BUILDINGS.PREFABS.ROCKETCONTROLSTATION.NAME;
 			}
 
 			public class MANUAL_DELIVERY
@@ -10064,6 +10171,10 @@ namespace STRINGS
 
 				public static LocString DIET_PRODUCED = "This critter will \"produce\" the following materials:\n\n{Items}";
 
+				public static LocString ROCKETRESTRICTION_HEADER = "Controls whether a building is operational within a rocket interior";
+
+				public static LocString ROCKETRESTRICTION_BUILDINGS = "This station controls the operational status of the following buildings:\n\n{buildinglist}";
+
 				public static LocString SCALE_GROWTH = "This critter can be sheared every <b>{Time}</b> to produce " + FormatAsPositiveModifier("{Amount}") + " of " + PRE_KEYWORD + "{Item}" + PST_KEYWORD;
 
 				public static LocString SCALE_GROWTH_ATMO = "This critter can be sheared every <b>{Time}</b> to produce " + FormatAsPositiveRate("{Amount}") + " of " + PRE_KEYWORD + "{Item}" + PST_KEYWORD + HORIZONTAL_BR_RULE + "It must be kept in " + PRE_KEYWORD + "{Atmosphere}" + PST_KEYWORD + "-rich environments to regrow sheared " + PRE_KEYWORD + "{Item}" + PST_KEYWORD;
@@ -10274,6 +10385,10 @@ namespace STRINGS
 			public static LocString SCALE_GROWTH_ATMO = "Shearable {Item}: {Amount} per {Time} ({Atmosphere})";
 
 			public static LocString ACCESS_CONTROL = "Duplicant Access Permissions";
+
+			public static LocString ROCKETRESTRICTION_HEADER = "Restriction Control:";
+
+			public static LocString ROCKETRESTRICTION_BUILDINGS = "    • Buildings: {buildinglist}";
 
 			public static LocString ITEM_TEMPERATURE_ADJUST = "Stored " + FormatAsLink("Temperature", "HEAT") + ": {0}";
 

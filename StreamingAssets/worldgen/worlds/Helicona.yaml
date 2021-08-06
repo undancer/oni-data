@@ -98,9 +98,8 @@ worldTemplateRules:
       - poi/frozen/heatsink_b
       - poi/frozen/heatsink_c
       - poi/frozen/heatsink_d
-    listRule: GuaranteeSomeTryMore
-    someCount: 1
-    moreCount: 2
+    listRule: TrySome
+    someCount: 3
     priority: 100 
     allowedCellsFilter:
       - command: Replace
@@ -120,6 +119,7 @@ worldTemplateRules:
     - geysers/generic
     listRule: TryOne
     times: 12
+    ruleId: GenericGeysers
     allowDuplicates: true
     allowedCellsFilter:
       - command: Replace

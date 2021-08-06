@@ -589,6 +589,10 @@ public static class Sim
 		public int maxX;
 
 		public int maxY;
+
+		public float currentSunlightIntensity;
+
+		public float currentCosmicRadiationIntensity;
 	}
 
 	[StructLayout(LayoutKind.Sequential, Pack = 4)]

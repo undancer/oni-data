@@ -1,84 +1,41 @@
 using System;
+using System.Collections.Generic;
+using KSerialization;
 using UnityEngine;
 
+[SerializationConfig(MemberSerialization.OptIn)]
 [AddComponentMenu("KMonoBehaviour/scripts/OrbitalMechanics")]
-public class OrbitalMechanics : KMonoBehaviour, IRenderEveryTick
+public class OrbitalMechanics : KMonoBehaviour
 {
-	[Serializable]
-	private struct OrbitData
+	[Serialize]
+	private List<Ref<OrbitalObject>> orbitingObjects = new List<Ref<OrbitalObject>>();
+
+	private EventSystem.IntraObjectHandler<OrbitalMechanics> OnClusterLocationChangedDelegate = new EventSystem.IntraObjectHandler<OrbitalMechanics>(delegate(OrbitalMechanics cmp, object data)
 	{
-		public string prefabTag;
-
-		public float periodInCycles;
-
-		public float yGridPercent;
-
-		public float angle;
-
-		public float radiusScale;
-
-		public bool rotatesBehind;
-
-		public float behindZ;
-
-		public Vector3 scale;
-
-		public float distance;
-
-		public float renderZ;
-	}
-
-	[SerializeField]
-	private OrbitData[] orbitData;
-
-	[SerializeField]
-	private bool applyOverrides;
-
-	[SerializeField]
-	[Range(0f, 100f)]
-	private float overridePercent;
-
-	[SerializeField]
-	private GameObject[] orbitingObjects;
+		cmp.OnClusterLocationChanged(data);
+	});
 
 	protected override void OnPrefabInit()
 	{
-		base.OnPrefabInit();
-		orbitingObjects = null;
+		Subscribe(-1298331547, OnClusterLocationChangedDelegate);
 	}
 
-	protected override void OnSpawn()
+	private void OnClusterLocationChanged(object data)
 	{
-		base.OnSpawn();
-		Rebuild();
+		UpdateLocation(((ClusterLocationChangedEvent)data).newLocation);
 	}
 
-	public void RenderEveryTick(float dt)
+	protected override void OnCleanUp()
 	{
-		if (orbitData == null || orbitingObjects == null)
+		if (orbitingObjects == null)
 		{
 			return;
 		}
-		float time = GameClock.Instance.GetTime();
-		for (int i = 0; i < orbitingObjects.Length; i++)
+		foreach (Ref<OrbitalObject> orbitingObject in orbitingObjects)
 		{
-			OrbitData data = orbitData[i];
-			bool behind;
-			Vector3 vector = CalculatePos(ref data, time, out behind);
-			vector.y -= 0.5f;
-			Vector3 position = vector;
-			position.x = Camera.main.ViewportToWorldPoint(vector).x;
-			position.y = Camera.main.ViewportToWorldPoint(vector).y;
-			bool flag = !data.rotatesBehind || !behind;
-			GameObject gameObject = orbitingObjects[i];
-			if (gameObject != null)
+			if (!orbitingObject.Get().IsNullOrDestroyed())
 			{
-				gameObject.transform.SetPosition(position);
-				gameObject.transform.localScale = Vector3.one * Camera.main.orthographicSize / data.distance;
-				if (gameObject.activeSelf != flag)
-				{
-					gameObject.SetActive(flag);
-				}
+				Util.KDestroyGameObject(orbitingObject.Get());
 			}
 		}
 	}
@@ -86,44 +43,96 @@ public class OrbitalMechanics : KMonoBehaviour, IRenderEveryTick
 	[ContextMenu("Rebuild")]
 	private void Rebuild()
 	{
+		List<string> list = new List<string>();
 		if (orbitingObjects != null)
 		{
-			GameObject[] array = orbitingObjects;
-			for (int i = 0; i < array.Length; i++)
+			foreach (Ref<OrbitalObject> orbitingObject in orbitingObjects)
 			{
-				Util.KDestroyGameObject(array[i]);
+				if (!orbitingObject.Get().IsNullOrDestroyed())
+				{
+					list.Add(orbitingObject.Get().orbitalDBId);
+					Util.KDestroyGameObject(orbitingObject.Get());
+				}
 			}
-			orbitingObjects = null;
+			orbitingObjects = new List<Ref<OrbitalObject>>();
 		}
-		if (orbitData != null && orbitData.Length != 0)
+		if (list.Count > 0)
 		{
-			float time = GameClock.Instance.GetTime();
-			orbitingObjects = new GameObject[orbitData.Length];
-			for (int j = 0; j < orbitData.Length; j++)
+			for (int i = 0; i < list.Count; i++)
 			{
-				OrbitData data = orbitData[j];
-				GameObject prefab = Assets.GetPrefab(data.prefabTag);
-				bool behind;
-				Vector3 position = CalculatePos(ref data, time, out behind);
-				GameObject gameObject = Util.KInstantiate(prefab, position);
-				gameObject.SetActive(value: true);
-				orbitingObjects[j] = gameObject;
+				CreateOrbitalObject(list[i]);
 			}
 		}
 	}
 
-	private Vector3 CalculatePos(ref OrbitData data, float time, out bool behind)
+	private void UpdateLocation(AxialI location)
 	{
-		float num = data.periodInCycles * 600f;
-		float f = (applyOverrides ? (overridePercent / 100f) : (time / num - (float)(int)(time / num))) * 2f * (float)Math.PI;
-		float num2 = 0.5f * data.radiusScale;
-		float yGridPercent = data.yGridPercent;
-		Vector3 vector = new Vector3(0.5f, yGridPercent, 0f);
-		Vector3 vector2 = new Vector3(Mathf.Cos(f), 0f, Mathf.Sin(f));
-		behind = vector2.z > data.behindZ;
-		Vector3 vector3 = Quaternion.Euler(data.angle, 0f, 0f) * (vector2 * num2);
-		Vector3 result = vector + vector3;
-		result.z = data.renderZ;
-		return result;
+		if (orbitingObjects.Count > 0)
+		{
+			foreach (Ref<OrbitalObject> orbitingObject in orbitingObjects)
+			{
+				if (!orbitingObject.Get().IsNullOrDestroyed())
+				{
+					Util.KDestroyGameObject(orbitingObject.Get());
+				}
+			}
+			orbitingObjects = new List<Ref<OrbitalObject>>();
+		}
+		ClusterGridEntity visibleEntityOfLayerAtCell = ClusterGrid.Instance.GetVisibleEntityOfLayerAtCell(location, EntityLayer.POI);
+		if (visibleEntityOfLayerAtCell != null)
+		{
+			ArtifactPOIClusterGridEntity component = visibleEntityOfLayerAtCell.GetComponent<ArtifactPOIClusterGridEntity>();
+			if (component != null)
+			{
+				ArtifactPOIStates.Instance sMI = component.GetSMI<ArtifactPOIStates.Instance>();
+				if (sMI != null && sMI.configuration.poiType.orbitalObject != null)
+				{
+					foreach (string item in sMI.configuration.poiType.orbitalObject)
+					{
+						CreateOrbitalObject(item);
+					}
+				}
+			}
+			HarvestablePOIClusterGridEntity component2 = visibleEntityOfLayerAtCell.GetComponent<HarvestablePOIClusterGridEntity>();
+			if (!(component2 != null))
+			{
+				return;
+			}
+			HarvestablePOIStates.Instance sMI2 = component2.GetSMI<HarvestablePOIStates.Instance>();
+			if (sMI2 != null && sMI2.configuration.poiType.orbitalObject != null)
+			{
+				List<string> orbitalObject = sMI2.configuration.poiType.orbitalObject;
+				System.Random random = new System.Random();
+				float num = sMI2.poiCapacity / sMI2.configuration.GetMaxCapacity() * (float)sMI2.configuration.poiType.maxNumOrbitingObjects;
+				for (int i = 0; (float)i < num; i++)
+				{
+					int index = random.Next(orbitalObject.Count);
+					CreateOrbitalObject(orbitalObject[index]);
+				}
+			}
+			return;
+		}
+		Clustercraft component3 = GetComponent<Clustercraft>();
+		if (component3 != null)
+		{
+			if (component3.GetOrbitAsteroid() != null || component3.Status == Clustercraft.CraftStatus.Launching)
+			{
+				CreateOrbitalObject(Db.Get().OrbitalTypeCategories.orbit.Id);
+			}
+			else if (component3.Status == Clustercraft.CraftStatus.Landing)
+			{
+				CreateOrbitalObject(Db.Get().OrbitalTypeCategories.landed.Id);
+			}
+		}
+	}
+
+	public void CreateOrbitalObject(string orbit_db_name)
+	{
+		WorldContainer component = GetComponent<WorldContainer>();
+		GameObject obj = Util.KInstantiate(Assets.GetPrefab(OrbitalBGConfig.ID), base.gameObject);
+		OrbitalObject component2 = obj.GetComponent<OrbitalObject>();
+		component2.Init(orbit_db_name, component);
+		obj.SetActive(value: true);
+		orbitingObjects.Add(new Ref<OrbitalObject>(component2));
 	}
 }

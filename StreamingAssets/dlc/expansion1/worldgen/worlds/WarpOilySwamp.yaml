@@ -9,6 +9,10 @@ worldsize:
   Y: 153
 layoutMethod: PowerTree
 
+fixedTraits:
+  - sunlightMedLow
+  - cosmicRadiationLow
+
 defaultsOverrides:
   data:
     DrawWorldBorderOverVacuum: false

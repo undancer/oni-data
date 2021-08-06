@@ -90,7 +90,6 @@ TerrainBiomeLookupTable:
     DeadOasis:
     - content: Oxygen
       bandSize: 0.03
-      massOverride: 
     - content: CrushedIce
       bandSize: 0.01
     - content: Ice

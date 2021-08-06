@@ -1,7 +1,10 @@
+using System.Collections.Generic;
+using System.Linq;
 using KSerialization;
+using STRINGS;
 using UnityEngine;
 
-public class RocketControlStation : StateMachineComponent<RocketControlStation.StatesInstance>
+public class RocketControlStation : StateMachineComponent<RocketControlStation.StatesInstance>, IGameObjectEffectDescriptor
 {
 	public class States : GameStateMachine<States, StatesInstance, RocketControlStation>
 	{
@@ -25,7 +28,7 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 			public State fadein;
 		}
 
-		private TargetParameter clusterCraft;
+		public TargetParameter clusterCraft;
 
 		private State unoperational;
 
@@ -48,7 +51,8 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 			root.Enter("SetTarget", delegate(StatesInstance smi)
 			{
 				clusterCraft.Set(GetRocket(smi), smi);
-			}).Exit(delegate(StatesInstance smi)
+				clusterCraft.Get(smi).Subscribe(-1582839653, smi.master.OnTagsChanged);
+			}).Target(masterTarget).Exit(delegate(StatesInstance smi)
 			{
 				SetRocketSpeed(smi, 0.5f);
 			});
@@ -185,19 +189,131 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 		}
 	}
 
+	public static List<Tag> CONTROLLED_BUILDINGS = new List<Tag>();
+
+	private const int UNNETWORKED_VALUE = 1;
+
 	[Serialize]
 	public float TimeRemaining;
+
+	private int m_logicUsageRestrictionState;
+
+	[Serialize]
+	private bool m_restrictWhenGrounded;
+
+	public static readonly HashedString PORT_ID = "LogicUsageRestriction";
+
+	private static readonly EventSystem.IntraObjectHandler<RocketControlStation> OnLogicValueChangedDelegate = new EventSystem.IntraObjectHandler<RocketControlStation>(delegate(RocketControlStation component, object data)
+	{
+		component.OnLogicValueChanged(data);
+	});
+
+	private static readonly EventSystem.IntraObjectHandler<RocketControlStation> OnRocketRestrictionChanged = new EventSystem.IntraObjectHandler<RocketControlStation>(delegate(RocketControlStation component, object data)
+	{
+		component.UpdateRestrictionAnimSymbol(data);
+	});
+
+	public bool RestrictWhenGrounded
+	{
+		get
+		{
+			return m_restrictWhenGrounded;
+		}
+		set
+		{
+			m_restrictWhenGrounded = value;
+			Trigger(1861523068);
+		}
+	}
+
+	public bool BuildingRestrictionsActive
+	{
+		get
+		{
+			if (IsLogicInputConnected())
+			{
+				return m_logicUsageRestrictionState == 1;
+			}
+			GameObject gameObject = base.smi.sm.clusterCraft.Get(base.smi);
+			if (RestrictWhenGrounded && gameObject != null)
+			{
+				return gameObject.gameObject.HasTag(GameTags.RocketOnGround);
+			}
+			return false;
+		}
+	}
 
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
 		base.smi.StartSM();
 		Components.RocketControlStations.Add(this);
+		Subscribe(-801688580, OnLogicValueChangedDelegate);
+		Subscribe(1861523068, OnRocketRestrictionChanged);
+		CheckWireState();
+		UpdateRestrictionAnimSymbol();
 	}
 
 	protected override void OnCleanUp()
 	{
 		base.OnCleanUp();
 		Components.RocketControlStations.Remove(this);
+	}
+
+	public bool IsLogicInputConnected()
+	{
+		return GetNetwork() != null;
+	}
+
+	public void OnLogicValueChanged(object data)
+	{
+		LogicValueChanged logicValueChanged = (LogicValueChanged)data;
+		if (logicValueChanged.portID == PORT_ID)
+		{
+			m_logicUsageRestrictionState = logicValueChanged.newValue;
+			Trigger(1861523068);
+		}
+	}
+
+	public void OnTagsChanged(object obj)
+	{
+		if (((TagChangedEventData)obj).tag == GameTags.RocketOnGround)
+		{
+			Trigger(1861523068);
+		}
+	}
+
+	private LogicCircuitNetwork GetNetwork()
+	{
+		int portCell = GetComponent<LogicPorts>().GetPortCell(PORT_ID);
+		return Game.Instance.logicCircuitManager.GetNetworkForCell(portCell);
+	}
+
+	private LogicCircuitNetwork CheckWireState()
+	{
+		LogicCircuitNetwork network = GetNetwork();
+		int num = network?.OutputValue ?? 1;
+		if (num != m_logicUsageRestrictionState)
+		{
+			m_logicUsageRestrictionState = num;
+			Trigger(1861523068);
+		}
+		return network;
+	}
+
+	private void UpdateRestrictionAnimSymbol(object o = null)
+	{
+		GetComponent<KAnimControllerBase>().SetSymbolVisiblity("restriction_sign", BuildingRestrictionsActive);
+	}
+
+	public List<Descriptor> GetDescriptors(GameObject go)
+	{
+		List<Descriptor> obj = new List<Descriptor>
+		{
+			new Descriptor(UI.BUILDINGEFFECTS.ROCKETRESTRICTION_HEADER, UI.BUILDINGEFFECTS.TOOLTIPS.ROCKETRESTRICTION_HEADER)
+		};
+		string newValue = string.Join(", ", CONTROLLED_BUILDINGS.Select((Tag t) => Strings.Get("STRINGS.BUILDINGS.PREFABS." + t.Name.ToUpper() + ".NAME").String).ToArray());
+		obj.Add(new Descriptor(UI.BUILDINGEFFECTS.ROCKETRESTRICTION_BUILDINGS.text.Replace("{buildinglist}", newValue), UI.BUILDINGEFFECTS.TOOLTIPS.ROCKETRESTRICTION_BUILDINGS.text.Replace("{buildinglist}", newValue)));
+		return obj;
 	}
 }

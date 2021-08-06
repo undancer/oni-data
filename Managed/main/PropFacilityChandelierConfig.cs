@@ -16,6 +16,7 @@ public class PropFacilityChandelierConfig : IEntityConfig
 		PrimaryElement component = obj.GetComponent<PrimaryElement>();
 		component.SetElement(SimHashes.Steel);
 		component.Temperature = 294.15f;
+		obj.AddOrGet<Demolishable>();
 		return obj;
 	}
 

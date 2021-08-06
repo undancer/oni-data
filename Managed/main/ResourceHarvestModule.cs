@@ -55,7 +55,8 @@ public class ResourceHarvestModule : GameStateMachine<ResourceHarvestModule, Res
 			{
 				return;
 			}
-			Dictionary<SimHashes, float> elementsWithWeights = pOIAtCurrentLocation.GetSMI<HarvestablePOIStates.Instance>().configuration.GetElementsWithWeights();
+			HarvestablePOIStates.Instance sMI = pOIAtCurrentLocation.GetSMI<HarvestablePOIStates.Instance>();
+			Dictionary<SimHashes, float> elementsWithWeights = sMI.configuration.GetElementsWithWeights();
 			float num = 0f;
 			foreach (KeyValuePair<SimHashes, float> item in elementsWithWeights)
 			{
@@ -114,6 +115,7 @@ public class ResourceHarvestModule : GameStateMachine<ResourceHarvestModule, Res
 				}
 				num5 += num8;
 			}
+			sMI.DeltaPOICapacity(0f - num3);
 			ConsumeDiamond(num3 * 0.05f);
 			if (num5 > 0f)
 			{

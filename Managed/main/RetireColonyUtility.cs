@@ -439,10 +439,6 @@ public static class RetireColonyUtility
 					}
 				}
 			}
-			else
-			{
-				Debug.LogWarningFormat("LoadColonyPreview path does not exist or is not directory [{0}]", text);
-			}
 			if (list.Count > 0)
 			{
 				Texture2D texture2D = new Texture2D(512, 768);

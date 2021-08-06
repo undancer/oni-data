@@ -18,6 +18,10 @@ public class ColorSet : ScriptableObject
 
 	public Color32 logicOffText;
 
+	public Color32 logicOnSidescreen;
+
+	public Color32 logicOffSidescreen;
+
 	[Header("Decor")]
 	public Color32 decorPositive;
 

@@ -461,6 +461,12 @@ namespace Database
 
 		public StatusItem SpacePOIWasting;
 
+		public StatusItem RocketRestrictionActive;
+
+		public StatusItem RocketRestrictionInactive;
+
+		public StatusItem NoRocketRestriction;
+
 		public BuildingStatusItems(ResourceSet parent)
 			: base("BuildingStatusItems", parent)
 		{
@@ -1393,6 +1399,9 @@ namespace Database
 				float mass = (float)data;
 				return string.Format(BUILDING.STATUSITEMS.SPACEPOIWASTING.NAME, GameUtil.GetFormattedMass(mass, GameUtil.TimeSlice.PerSecond));
 			};
+			RocketRestrictionActive = new StatusItem("ROCKETRESTRICTIONACTIVE", "BUILDING", "status_item_rocket_restricted", StatusItem.IconType.Custom, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			RocketRestrictionInactive = new StatusItem("ROCKETRESTRICTIONINACTIVE", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			NoRocketRestriction = new StatusItem("NOROCKETRESTRICTION", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 		}
 
 		private static bool ShowInUtilityOverlay(HashedString mode, object data)

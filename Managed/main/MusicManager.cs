@@ -26,6 +26,9 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 		public bool dynamic;
 
 		[NonSerialized]
+		public string requiredDlcId = "";
+
+		[NonSerialized]
 		public bool useTimeOfDay;
 
 		[NonSerialized]
@@ -61,6 +64,10 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 		[Tooltip("Some songs have different possible start locations. Enter how many start locations this song is set up to support.")]
 		[SerializeField]
 		public int numberOfVariations;
+
+		[Tooltip("Should playback of this song be limited to an active DLC?")]
+		[SerializeField]
+		public string requiredDlcId = "";
 	}
 
 	[Serializable]
@@ -77,6 +84,17 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 	{
 		[EventRef]
 		public string fmodEvent;
+
+		[Tooltip("Should playback of this song be limited to an active DLC?")]
+		[SerializeField]
+		public string requiredDlcId = "";
+	}
+
+	public enum TypeOfMusic
+	{
+		DynamicSong,
+		MiniSong,
+		None
 	}
 
 	public class DynamicSongPlaylist
@@ -128,23 +146,17 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 			unplayedSongs.Clear();
 			foreach (KeyValuePair<string, SongInfo> item in songMap)
 			{
-				unplayedSongs.Add(item.Key);
+				if (DlcManager.IsContentActive(item.Value.requiredDlcId))
+				{
+					unplayedSongs.Add(item.Key);
+				}
 			}
 		}
-	}
-
-	public enum TypeOfMusic
-	{
-		DynamicSong,
-		MiniSong,
-		None
 	}
 
 	private const string VARIATION_ID = "variation";
 
 	private const string INTERRUPTED_DIMMED_ID = "interrupted_dimmed";
-
-	private SongInfo[] songs;
 
 	[Header("Song Lists")]
 	[Tooltip("Play during the daytime. The mix of the song is affected by the player's input, like pausing the sim, activating an overlay, or zooming in and out.")]
@@ -153,7 +165,7 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 
 	[Tooltip("Simple dynamic songs which are more ambient in nature, which play quietly during \"non-music\" days. These are affected by Pause and OverlayActive.")]
 	[SerializeField]
-	private Stinger[] miniSongs;
+	private Minisong[] miniSongs;
 
 	[Tooltip("Triggered by in-game events, such as completing research or night-time falling. They will temporarily interrupt a dynamicSong, fading the dynamicSong back in after the stinger is complete.")]
 	[SerializeField]
@@ -166,23 +178,6 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 	private Dictionary<string, SongInfo> songMap = new Dictionary<string, SongInfo>();
 
 	public Dictionary<string, SongInfo> activeSongs = new Dictionary<string, SongInfo>();
-
-	[NonSerialized]
-	public List<string> MusicDebugLog = new List<string>();
-
-	private DynamicSongPlaylist fullSongPlaylist = new DynamicSongPlaylist();
-
-	private DynamicSongPlaylist miniSongPlaylist = new DynamicSongPlaylist();
-
-	[NonSerialized]
-	public SongInfo activeDynamicSong;
-
-	[NonSerialized]
-	public DynamicSongPlaylist activePlaylist;
-
-	private TypeOfMusic nextMusicType;
-
-	private int musicTypeIterator;
 
 	[Space]
 	[Header("Tuning Values")]
@@ -208,21 +203,32 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 	[NonSerialized]
 	public bool alwaysPlayMusic;
 
+	private DynamicSongPlaylist fullSongPlaylist = new DynamicSongPlaylist();
+
+	private DynamicSongPlaylist miniSongPlaylist = new DynamicSongPlaylist();
+
+	[NonSerialized]
+	public SongInfo activeDynamicSong;
+
+	[NonSerialized]
+	public DynamicSongPlaylist activePlaylist;
+
+	private TypeOfMusic nextMusicType;
+
+	private int musicTypeIterator;
+
 	private float time;
 
 	private float timeOfDayUpdateRate = 2f;
 
 	private static MusicManager _instance;
 
+	[NonSerialized]
+	public List<string> MusicDebugLog = new List<string>();
+
 	public Dictionary<string, SongInfo> SongMap => songMap;
 
-	public Dictionary<string, SongInfo> ActiveSongs => activeSongs;
-
 	public static MusicManager instance => _instance;
-
-	private void Log(string s)
-	{
-	}
 
 	public void PlaySong(string song_name, bool canWait = false)
 	{
@@ -510,19 +516,6 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 		}
 	}
 
-	protected override void OnSpawn()
-	{
-		base.OnSpawn();
-		if (!RuntimeManager.IsInitialized)
-		{
-			base.enabled = false;
-		}
-		else if (KPlayerPrefs.HasKey(AudioOptionsScreen.AlwaysPlayMusicKey))
-		{
-			alwaysPlayMusic = ((KPlayerPrefs.GetInt(AudioOptionsScreen.AlwaysPlayMusicKey) == 1) ? true : false);
-		}
-	}
-
 	public void PlayDynamicMusic()
 	{
 		if (DynamicMusicIsActive())
@@ -699,6 +692,19 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 		return false;
 	}
 
+	protected override void OnSpawn()
+	{
+		base.OnSpawn();
+		if (!RuntimeManager.IsInitialized)
+		{
+			base.enabled = false;
+		}
+		else if (KPlayerPrefs.HasKey(AudioOptionsScreen.AlwaysPlayMusicKey))
+		{
+			alwaysPlayMusic = ((KPlayerPrefs.GetInt(AudioOptionsScreen.AlwaysPlayMusicKey) == 1) ? true : false);
+		}
+	}
+
 	protected override void OnPrefabInit()
 	{
 		_instance = this;
@@ -713,7 +719,7 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 	}
 
 	[ContextMenu("Reload")]
-	private void ReloadSongs()
+	private void ConfigureSongs()
 	{
 		songMap.Clear();
 		DynamicSong[] array = fullSongs;
@@ -722,6 +728,7 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 			string simpleSoundEventName = Assets.GetSimpleSoundEventName(dynamicSong.fmodEvent);
 			SongInfo songInfo = new SongInfo();
 			songInfo.fmodEvent = dynamicSong.fmodEvent;
+			songInfo.requiredDlcId = dynamicSong.requiredDlcId;
 			songInfo.priority = 100;
 			songInfo.interruptsActiveMusic = false;
 			songInfo.dynamic = true;
@@ -731,12 +738,13 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 			songMap[simpleSoundEventName] = songInfo;
 			fullSongPlaylist.songMap[simpleSoundEventName] = songInfo;
 		}
-		Stinger[] array2 = miniSongs;
-		foreach (Stinger stinger in array2)
+		Minisong[] array2 = miniSongs;
+		foreach (Minisong minisong in array2)
 		{
-			string simpleSoundEventName2 = Assets.GetSimpleSoundEventName(stinger.fmodEvent);
+			string simpleSoundEventName2 = Assets.GetSimpleSoundEventName(minisong.fmodEvent);
 			SongInfo songInfo2 = new SongInfo();
-			songInfo2.fmodEvent = stinger.fmodEvent;
+			songInfo2.fmodEvent = minisong.fmodEvent;
+			songInfo2.requiredDlcId = minisong.requiredDlcId;
 			songInfo2.priority = 100;
 			songInfo2.interruptsActiveMusic = false;
 			songInfo2.dynamic = true;
@@ -746,12 +754,12 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 			songMap[simpleSoundEventName2] = songInfo2;
 			miniSongPlaylist.songMap[simpleSoundEventName2] = songInfo2;
 		}
-		array2 = stingers;
-		foreach (Stinger stinger2 in array2)
+		Stinger[] array3 = stingers;
+		foreach (Stinger stinger in array3)
 		{
-			string simpleSoundEventName3 = Assets.GetSimpleSoundEventName(stinger2.fmodEvent);
+			string simpleSoundEventName3 = Assets.GetSimpleSoundEventName(stinger.fmodEvent);
 			SongInfo songInfo3 = new SongInfo();
-			songInfo3.fmodEvent = stinger2.fmodEvent;
+			songInfo3.fmodEvent = stinger.fmodEvent;
 			songInfo3.priority = 100;
 			songInfo3.interruptsActiveMusic = true;
 			songInfo3.dynamic = false;
@@ -759,8 +767,8 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 			songInfo3.numberOfVariations = 0;
 			SongMap[simpleSoundEventName3] = songInfo3;
 		}
-		SongInfo[] array3 = menuSongs;
-		foreach (SongInfo songInfo4 in array3)
+		SongInfo[] array4 = menuSongs;
+		foreach (SongInfo songInfo4 in array4)
 		{
 			string simpleSoundEventName4 = Assets.GetSimpleSoundEventName(songInfo4.fmodEvent);
 			SongInfo songInfo5 = new SongInfo();
@@ -780,6 +788,10 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 
 	public void OnAfterDeserialize()
 	{
-		ReloadSongs();
+		ConfigureSongs();
+	}
+
+	private void Log(string s)
+	{
 	}
 }

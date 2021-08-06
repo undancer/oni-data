@@ -2048,6 +2048,27 @@ namespace STRINGS
 				public static LocString TOOLTIP = "This building has no view of space\n\nTo properly function, this building requires an unblocked view of space";
 			}
 
+			public class ROCKETRESTRICTIONACTIVE
+			{
+				public static LocString NAME = "Access: Restricted";
+
+				public static LocString TOOLTIP = "This building cannot be operated while restricted, though it can be filled\n\nControlled by a " + BUILDINGS.PREFABS.ROCKETCONTROLSTATION.NAME;
+			}
+
+			public class ROCKETRESTRICTIONINACTIVE
+			{
+				public static LocString NAME = "Access: Not Restricted";
+
+				public static LocString TOOLTIP = "This building's operation is not restricted\n\nControlled by a " + BUILDINGS.PREFABS.ROCKETCONTROLSTATION.NAME;
+			}
+
+			public class NOROCKETRESTRICTION
+			{
+				public static LocString NAME = "Not Controlled";
+
+				public static LocString TOOLTIP = "This building is not controlled by a " + BUILDINGS.PREFABS.ROCKETCONTROLSTATION.NAME;
+			}
+
 			public class TOP_PRIORITY_CHORE
 			{
 				public static LocString NAME = "Top Priority";
@@ -2091,7 +2112,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Temporal Tear not revealed";
 
-				public static LocString TOOLTIP = "This machine is meant to target something in space, but the target is not yet revealed.";
+				public static LocString TOOLTIP = "This machine is meant to target something in space, but the target has not yet been revealed";
 			}
 
 			public class TEMPORAL_TEAR_OPENER_NO_LOS
@@ -2105,14 +2126,14 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Too few Printing Pods {progress}";
 
-				public static LocString TOOLTIP = "This device relies on a network of activated Printing Pods {progress}";
+				public static LocString TOOLTIP = "To open the Temporal Tear, this device relies on a network of activated Printing Pods {progress}";
 			}
 
 			public class TEMPORAL_TEAR_OPENER_PROGRESS
 			{
 				public static LocString NAME = "Charging Progress: {progress}";
 
-				public static LocString TOOLTIP = "This device must be charged with a high number of Radbolts. Operation can commence once this device is fully charged";
+				public static LocString TOOLTIP = "This device must be charged with a high number of Radbolts\n\nOperation can commence once this device is fully charged";
 			}
 
 			public class TEMPORAL_TEAR_OPENER_READY
@@ -2366,14 +2387,14 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Cooling Contents: {UsedPower}";
 
-				public static LocString TOOLTIP = "The contents of this food storage are still being cooled down, using {UsedPower} of {MaxPower}.";
+				public static LocString TOOLTIP = "{UsedPower} of {MaxPower} are being used to cool the contents of this food storage";
 			}
 
 			public class FRIDGESTEADY
 			{
 				public static LocString NAME = "Energy Saver: {UsedPower}";
 
-				public static LocString TOOLTIP = "Energy saver activated, using {UsedPower} of {MaxPower}\n\nThe contents of this food storage are at refrigeration temperatures.";
+				public static LocString TOOLTIP = "The contents of this food storage are at refrigeration temperatures\n\nEnergy Saver mode has been automatically activated using only {UsedPower} of {MaxPower}";
 			}
 		}
 

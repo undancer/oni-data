@@ -118,7 +118,8 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 			{
 				Vector3 position = base.transform.GetPosition();
 				position.y -= 0.5f;
-				if (Grid.IsSolidCell(Grid.PosToCell(position)))
+				int cell = Grid.PosToCell(position);
+				if (Grid.IsWorldValidCell(cell) && Grid.IsSolidCell(cell))
 				{
 					base.sm.onSurface.Set(value: true, this);
 				}
@@ -185,7 +186,11 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 			smi.animController.randomiseLoopedOffset = false;
 		}).PlayAnim("landed", KAnim.PlayMode.Loop)
 			.EventTransition(GameHashes.OnStore, grounded.idle);
-		takeoff.DefaultState(takeoff.launch).PlayAnim("launching").OnSignal(beginTravelling, travel)
+		takeoff.DefaultState(takeoff.launch).Enter(delegate(StatesInstance smi)
+		{
+			onSurface.Set(value: false, smi);
+		}).PlayAnim("launching")
+			.OnSignal(beginTravelling, travel)
 			.Enter(delegate(StatesInstance smi)
 			{
 				smi.GetComponent<Pickupable>().deleteOffGrid = false;
@@ -198,7 +203,11 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 		{
 			smi.UpdateLaunch(dt);
 		}, UpdateRate.SIM_EVERY_TICK);
-		travel.DefaultState(travel.travelling).PlayAnim("idle").ToggleTag(GameTags.EntityInSpace)
+		travel.DefaultState(travel.travelling).Enter(delegate(StatesInstance smi)
+		{
+			onSurface.Set(value: false, smi);
+		}).PlayAnim("idle")
+			.ToggleTag(GameTags.EntityInSpace)
 			.ToggleMainStatusItem(Db.Get().BuildingStatusItems.InFlight, (StatesInstance smi) => smi.GetComponent<ClusterTraveler>());
 		travel.travelling.EventTransition(GameHashes.ClusterDestinationReached, travel.transferWorlds).Enter(delegate(StatesInstance smi)
 		{
@@ -209,7 +218,7 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 			smi.StartLand();
 		}).GoTo(landing.landing);
 		landing.DefaultState(landing.landing).ParamTransition(onSurface, grounded.crater, GameStateMachine<RailGunPayload, StatesInstance, IStateMachineTarget, Def>.IsTrue).ParamTransition(destinationWorld, takeoff, (StatesInstance smi, int p) => p != -1);
-		landing.landing.PlayAnim("falling").Update("Landing", delegate(StatesInstance smi, float dt)
+		landing.landing.PlayAnim("falling", KAnim.PlayMode.Loop).Update("Landing", delegate(StatesInstance smi, float dt)
 		{
 			smi.UpdateLanding(dt);
 		}).ToggleGravity(landing.impact);

@@ -1,5 +1,5 @@
-name: STRINGS.WORLDS.FOREST_LUSH.NAME # Verdante
-description: STRINGS.WORLDS.FOREST_LUSH.DESCRIPTION
+name: STRINGS.WORLDS.VANILLAFORESTDEFAULT.NAME # Verdante
+description: STRINGS.WORLDS.VANILLAFORESTDEFAULT.DESCRIPTION
 nameTable: FOREST
 asteroidIcon: asteroid_vanilla_forest_start_kanim
 disableWorldTraits: true
@@ -9,6 +9,10 @@ worldsize:
   Y: 380
 layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
 #                                in order to use this.
+
+fixedTraits:
+  - sunlightMed
+  - cosmicRadiationMed
 
 defaultsOverrides:
   startingWorldElements: [] # remove the algae check

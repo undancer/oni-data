@@ -83,10 +83,27 @@ public class CometDetector : GameStateMachine<CometDetector, CometDetector.Insta
 			detectorNetwork.StopSM(reason);
 		}
 
-		public void ScanSky()
+		public void UpdateDetectionState(bool currentDetection, bool expectedDetectionForState)
+		{
+			KPrefabID component = GetComponent<KPrefabID>();
+			if (currentDetection)
+			{
+				component.AddTag(GameTags.Detecting);
+			}
+			else
+			{
+				component.RemoveTag(GameTags.Detecting);
+			}
+			if (currentDetection == expectedDetectionForState)
+			{
+				SetLogicSignal(currentDetection);
+			}
+		}
+
+		public void ScanSky(bool expectedDetectionForState)
 		{
 			float detectTime = GetDetectTime();
-			KPrefabID component = GetComponent<KPrefabID>();
+			GetComponent<KPrefabID>();
 			if (targetCraft.Get() == null)
 			{
 				SaveGame.Instance.GetComponent<GameplayEventManager>().GetActiveEventsOfType<MeteorShowerEvent>(this.GetMyWorldId(), ref meteorShowers);
@@ -100,14 +117,7 @@ public class CometDetector : GameStateMachine<CometDetector, CometDetector.Insta
 					}
 				}
 				meteorShowers.Clear();
-				if (num <= detectTime)
-				{
-					component.AddTag(GameTags.Detecting);
-				}
-				else
-				{
-					component.RemoveTag(GameTags.Detecting);
-				}
+				UpdateDetectionState(num < detectTime, expectedDetectionForState);
 			}
 			else
 			{
@@ -115,15 +125,15 @@ public class CometDetector : GameStateMachine<CometDetector, CometDetector.Insta
 				if (spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.Destroyed)
 				{
 					targetCraft.Set(null);
-					component.RemoveTag(GameTags.Detecting);
+					UpdateDetectionState(currentDetection: false, expectedDetectionForState);
 				}
 				else if (spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.Launching || spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.WaitingToLand || spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.Landing || (spacecraftFromLaunchConditionManager.state == Spacecraft.MissionState.Underway && spacecraftFromLaunchConditionManager.GetTimeLeft() <= detectTime))
 				{
-					component.AddTag(GameTags.Detecting);
+					UpdateDetectionState(currentDetection: true, expectedDetectionForState);
 				}
 				else
 				{
-					component.RemoveTag(GameTags.Detecting);
+					UpdateDetectionState(currentDetection: false, expectedDetectionForState);
 				}
 			}
 		}
@@ -161,7 +171,10 @@ public class CometDetector : GameStateMachine<CometDetector, CometDetector.Insta
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = off;
-		off.PlayAnim("off").EventTransition(GameHashes.OperationalChanged, on, (Instance smi) => smi.GetComponent<Operational>().IsOperational);
+		off.PlayAnim("off").EventTransition(GameHashes.OperationalChanged, on, (Instance smi) => smi.GetComponent<Operational>().IsOperational).Update("Scan Sky", delegate(Instance smi, float dt)
+		{
+			smi.ScanSky(expectedDetectionForState: false);
+		}, UpdateRate.SIM_4000ms);
 		on.DefaultState(on.pre).ToggleStatusItem(Db.Get().BuildingStatusItems.DetectorScanning).Enter("ToggleActive", delegate(Instance smi)
 		{
 			smi.GetComponent<Operational>().SetActive(value: true);
@@ -169,23 +182,29 @@ public class CometDetector : GameStateMachine<CometDetector, CometDetector.Insta
 			.Exit("ToggleActive", delegate(Instance smi)
 			{
 				smi.GetComponent<Operational>().SetActive(value: false);
+			});
+		on.pre.PlayAnim("on_pre").OnAnimQueueComplete(on.loop);
+		on.loop.PlayAnim("on", KAnim.PlayMode.Loop).EventTransition(GameHashes.OperationalChanged, on.pst, (Instance smi) => !smi.GetComponent<Operational>().IsOperational).TagTransition(GameTags.Detecting, on.working)
+			.Enter("UpdateLogic", delegate(Instance smi)
+			{
+				smi.UpdateDetectionState(smi.HasTag(GameTags.Detecting), expectedDetectionForState: false);
 			})
 			.Update("Scan Sky", delegate(Instance smi, float dt)
 			{
-				smi.ScanSky();
+				smi.ScanSky(expectedDetectionForState: false);
 			});
-		on.pre.PlayAnim("on_pre").OnAnimQueueComplete(on.loop);
-		on.loop.PlayAnim("on", KAnim.PlayMode.Loop).EventTransition(GameHashes.OperationalChanged, on.pst, (Instance smi) => !smi.GetComponent<Operational>().IsOperational).TagTransition(GameTags.Detecting, on.working);
 		on.pst.PlayAnim("on_pst").OnAnimQueueComplete(off);
-		on.working.DefaultState(on.working.pre).ToggleStatusItem(Db.Get().BuildingStatusItems.IncomingMeteors).Enter("ToggleActive", delegate(Instance smi)
+		on.working.DefaultState(on.working.pre).ToggleStatusItem(Db.Get().BuildingStatusItems.IncomingMeteors).Enter("UpdateLogic", delegate(Instance smi)
 		{
-			smi.GetComponent<Operational>().SetActive(value: true);
 			smi.SetLogicSignal(on: true);
 		})
-			.Exit("ToggleActive", delegate(Instance smi)
+			.Exit("UpdateLogic", delegate(Instance smi)
 			{
-				smi.GetComponent<Operational>().SetActive(value: false);
 				smi.SetLogicSignal(on: false);
+			})
+			.Update("Scan Sky", delegate(Instance smi, float dt)
+			{
+				smi.ScanSky(expectedDetectionForState: true);
 			});
 		on.working.pre.PlayAnim("detect_pre").OnAnimQueueComplete(on.working.loop);
 		on.working.loop.PlayAnim("detect_loop", KAnim.PlayMode.Loop).EventTransition(GameHashes.OperationalChanged, on.working.pst, (Instance smi) => !smi.GetComponent<Operational>().IsOperational).EventTransition(GameHashes.ActiveChanged, on.working.pst, (Instance smi) => !smi.GetComponent<Operational>().IsActive)

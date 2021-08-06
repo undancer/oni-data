@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class LaunchInitializer : MonoBehaviour
 {
-	private const string BASE_BUILD_PREFIX = "FA";
+	private const string BASE_BUILD_PREFIX = "U33";
 
-	private const string EXPANSION1_BUILD_PREFIX = "EX1 S14";
+	private const string EXPANSION1_BUILD_PREFIX = "U33";
 
 	public GameObject[] SpawnPrefabs;
 
@@ -18,9 +18,9 @@ public class LaunchInitializer : MonoBehaviour
 	{
 		if (!DlcManager.IsExpansion1Active())
 		{
-			return "FA";
+			return "U33";
 		}
-		return "EX1 S14";
+		return "U33";
 	}
 
 	private void Update()
@@ -29,17 +29,24 @@ public class LaunchInitializer : MonoBehaviour
 		{
 			return;
 		}
-		if (!SystemInfo.SupportsTextureFormat(TextureFormat.RGBAFloat))
+		if (!DistributionPlatform.Initialized)
 		{
-			Debug.LogError("Machine does not support RGBAFloat32");
+			if (!SystemInfo.SupportsTextureFormat(TextureFormat.RGBAFloat))
+			{
+				Debug.LogError("Machine does not support RGBAFloat32");
+			}
+			GraphicsOptionsScreen.SetSettingsFromPrefs();
+			Util.ApplyInvariantCultureToThread(Thread.CurrentThread);
+			Debug.Log("Current date: " + System.DateTime.Now.ToString());
+			Debug.Log("release Build: " + BuildWatermark.GetBuildText());
+			UnityEngine.Object.DontDestroyOnLoad(base.gameObject);
+			KPlayerPrefs.instance.Load();
+			DistributionPlatform.Initialize();
 		}
-		GraphicsOptionsScreen.SetSettingsFromPrefs();
-		Util.ApplyInvariantCultureToThread(Thread.CurrentThread);
-		Debug.Log("Current date: " + System.DateTime.Now.ToString());
-		Debug.Log("release Build: " + BuildWatermark.GetBuildText());
-		UnityEngine.Object.DontDestroyOnLoad(base.gameObject);
-		KPlayerPrefs.instance.Load();
-		DistributionPlatform.Initialize();
+		if (!DistributionPlatform.Inst.IsDLCStatusReady())
+		{
+			return;
+		}
 		Debug.Log("DistributionPlatform initialized.");
 		Debug.Log("release Build: " + BuildWatermark.GetBuildText());
 		Debug.Log($"EXPANSION1 installed: {DlcManager.IsExpansion1Installed()}  active: {DlcManager.IsExpansion1Active()}");

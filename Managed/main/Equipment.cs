@@ -205,27 +205,30 @@ public class Equipment : Assignables
 			if (!slot.IsUnassigning())
 			{
 				PrimaryElement component5 = equippable.GetComponent<PrimaryElement>();
-				SimUtil.DiseaseInfo invalid = SimUtil.DiseaseInfo.Invalid;
-				invalid.idx = component5.DiseaseIdx;
-				invalid.count = (int)((float)component5.DiseaseCount * 0.33f);
-				PrimaryElement component6 = targetGameObject.GetComponent<PrimaryElement>();
-				SimUtil.DiseaseInfo invalid2 = SimUtil.DiseaseInfo.Invalid;
-				invalid2.idx = component6.DiseaseIdx;
-				invalid2.count = (int)((float)component6.DiseaseCount * 0.33f);
-				component6.ModifyDiseaseCount(-invalid2.count, "Equipment.Unequip");
-				component5.ModifyDiseaseCount(-invalid.count, "Equipment.Unequip");
-				if (invalid2.count > 0)
+				if (component5 != null)
 				{
-					component5.AddDisease(invalid2.idx, invalid2.count, "Equipment.Unequip");
-				}
-				if (invalid.count > 0)
-				{
-					component6.AddDisease(invalid.idx, invalid.count, "Equipment.Unequip");
-				}
-				Durability component7 = equippable.GetComponent<Durability>();
-				if (component7 != null && component7.IsWornOut())
-				{
-					component7.ConvertToWornObject();
+					SimUtil.DiseaseInfo invalid = SimUtil.DiseaseInfo.Invalid;
+					invalid.idx = component5.DiseaseIdx;
+					invalid.count = (int)((float)component5.DiseaseCount * 0.33f);
+					PrimaryElement component6 = targetGameObject.GetComponent<PrimaryElement>();
+					SimUtil.DiseaseInfo invalid2 = SimUtil.DiseaseInfo.Invalid;
+					invalid2.idx = component6.DiseaseIdx;
+					invalid2.count = (int)((float)component6.DiseaseCount * 0.33f);
+					component6.ModifyDiseaseCount(-invalid2.count, "Equipment.Unequip");
+					component5.ModifyDiseaseCount(-invalid.count, "Equipment.Unequip");
+					if (invalid2.count > 0)
+					{
+						component5.AddDisease(invalid2.idx, invalid2.count, "Equipment.Unequip");
+					}
+					if (invalid.count > 0)
+					{
+						component6.AddDisease(invalid.idx, invalid.count, "Equipment.Unequip");
+					}
+					Durability component7 = equippable.GetComponent<Durability>();
+					if (component7 != null && component7.IsWornOut())
+					{
+						component7.ConvertToWornObject();
+					}
 				}
 			}
 		}

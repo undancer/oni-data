@@ -76,7 +76,7 @@ public class CO2Manager : KMonoBehaviour, ISim33ms
 				if (!flag)
 				{
 					Element element = Grid.Element[num4];
-					flag = element.IsLiquid || element.IsSolid;
+					flag = element.IsLiquid || element.IsSolid || (Grid.Properties[num4] & 1) != 0;
 				}
 				if (flag)
 				{

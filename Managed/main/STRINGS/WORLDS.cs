@@ -125,6 +125,27 @@ namespace STRINGS
 			public static LocString DESCRIPTION = "A marshy world with significant radiation.\n\n<smallcaps>Irradiated Marsh Asteroids have an abundance of metal for the taking if Duplicants can withstand the planetoid's radiation.</smallcaps>";
 		}
 
+		public class VANILLASANDSTONEDEFAULT
+		{
+			public static LocString NAME = "Terra";
+
+			public static LocString DESCRIPTION = "A promising location with a balanced variety of resources.\n\n<smallcaps>Terra meets all the requirements for Duplicant life and holds no surprises. It's an ideal location for a first attempt at establishing a colony.</smallcaps>\n\n";
+		}
+
+		public class VANILLAFORESTDEFAULT
+		{
+			public static LocString NAME = "Verdante";
+
+			public static LocString DESCRIPTION = "A lush location rich in wildlife and life-sustaining resources.\n\n<smallcaps>Establishing a foothold on Verdante will be challenging due to reduced food and oxygen options. However, abundant biological and mineral resources should afford excellent long-term growth.</smallcaps>\n\n";
+		}
+
+		public class VANILLASWAMPDEFAULT
+		{
+			public static LocString NAME = "Swampy Asteroid";
+
+			public static LocString DESCRIPTION = "A large, polluted swamp world.\n\n<smallcaps>Swampy Asteroids are a great mass of frozen slush and wasteland. With a short distance to the surface, inter-world travel can be achieved quickly.</smallcaps>";
+		}
+
 		public class SWAMPYLANDINGSITE
 		{
 			public static LocString NAME = "Irradiated Swampy Asteroid";
@@ -164,14 +185,21 @@ namespace STRINGS
 		{
 			public static LocString NAME = "Radioactive Swamp Asteroid";
 
-			public static LocString DESCRIPTION = "A large-ish partially frozen world with a radioactive core.\n\n<smallcaps>While Radioactive Swamp Asteroid are largely swampy, they also contain a great deal of rust.</smallcaps>";
+			public static LocString DESCRIPTION = "A large-ish partially frozen world with a radioactive core.\n\n<smallcaps>While Radioactive Swamp Asteroids are largely swampy, they also contain a great deal of rust.</smallcaps>";
+		}
+
+		public class MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET
+		{
+			public static LocString NAME = "Radioactive Forest Asteroid";
+
+			public static LocString DESCRIPTION = "A large-ish forested asteroid with a frozen radioactive core.\n\n<smallcaps>While Radioactive Forest Asteroid are largely foresty, they also contain a great deal of rust and ocean.</smallcaps>";
 		}
 
 		public class MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET
 		{
 			public static LocString NAME = "Radioactive Terra Asteroid";
 
-			public static LocString DESCRIPTION = "A large-ish world with a radioactive core.\n\n<smallcaps>The Radioactive Terra Asteroid is fairly dry and sandy, but does contain areas of jungle.</smallcaps>";
+			public static LocString DESCRIPTION = "A large-ish terra world with a radioactive core.\n\n<smallcaps>The Radioactive Terra Asteroid is fairly dry and sandy, but does contain areas of jungle.</smallcaps>";
 		}
 
 		public class STRANGERICHSANDSTONE

@@ -807,6 +807,7 @@ namespace TUNING
 				"RocketInteriorGasOutput",
 				"RocketInteriorSolidInput",
 				"RocketInteriorSolidOutput",
+				LogicClusterLocationSensorConfig.ID,
 				"RailGun",
 				"RailGunPayloadOpener",
 				"LandingBeacon"
