@@ -1039,6 +1039,26 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.FOOD_CONTAINERS_OUTSIDE_RANGE.TOOLTIP"
 msgid "Recuperating Duplicants must have <style=\"KKeyword\">Food</style> available within <b>{0}</b> cells"
 msgstr "Макс. количество клеток, в котором <style=\"KKeyword\">еда</style> может находиться от выздоравливающих дубликантов: <b>{0}</b>"
 
+#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.NAME"
+msgid "Cooling Contents: {UsedPower}"
+msgstr "Охлаждение содержимого: {UsedPower}"
+
+#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.TOOLTIP"
+msgid "{UsedPower} of {MaxPower} are being used to cool the contents of this food storage"
+msgstr "Использование энергии для охлаждения еды в хранилище: {UsedPower} из {MaxPower}"
+
+#. STRINGS.BUILDING.STATUSITEMS.FRIDGESTEADY.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGESTEADY.NAME"
+msgid "Energy Saver: {UsedPower}"
+msgstr "Энергосбережение: {UsedPower}"
+
+#. STRINGS.BUILDING.STATUSITEMS.FRIDGESTEADY.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGESTEADY.TOOLTIP"
+msgid "The contents of this food storage are at refrigeration temperatures\n\nEnergy Saver mode has been automatically activated using only {UsedPower} of {MaxPower}"
+msgstr "Продукты в этом хранилище охлаждены\n\nРежим энергосбережения был активирован автоматически. Использовано энергии: {UsedPower} из {MaxPower}"
+
 #. STRINGS.BUILDING.STATUSITEMS.GANTRY.AUTOMATION_CONTROL
 msgctxt "STRINGS.BUILDING.STATUSITEMS.GANTRY.AUTOMATION_CONTROL"
 msgid "Automation Control: {0}"
@@ -2229,6 +2249,11 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.EXHAUSTING"
 msgid "Excess produced"
 msgstr "Произведен излишек"
 
+#. STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.FOOD_TRANSFER
+msgctxt "STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.FOOD_TRANSFER"
+msgid "Internal Cooling"
+msgstr "Внутреннее охлаждение"
+
 #. STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.LINEITEM
 msgctxt "STRINGS.BUILDING.STATUSITEMS.OPERATINGENERGY.LINEITEM"
 msgid "    • {0}: {1}\n"
@@ -2694,6 +2719,36 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETPLATFORMCLOSETOCEILING.TOOLTIP"
 msgid "Tall rockets may not be able to land on this <style=\"KKeyword\">Rocket Platform</style>"
 msgstr "Возможно, длинные ракеты не смогут приземлиться на эту <style=\"KKeyword\">ракетную платформу</style>"
 
+#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONACTIVE.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONACTIVE.NAME"
+msgid "Restricted Access"
+msgstr "Ограниченный доступ"
+
+#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONACTIVE.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONACTIVE.TOOLTIP"
+msgid "This building cannot be operated and storage cannot be withdrawn from."
+msgstr "Постройка недоступна для использования. Из хранилища невозможно извлечь содержимое."
+
+#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONCONTROLLED.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONCONTROLLED.NAME"
+msgid "Controlled Building"
+msgstr "Строение контролируется"
+
+#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONCONTROLLED.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONCONTROLLED.TOOLTIP"
+msgid "This building is controlled by the <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>."
+msgstr "Это строение контролируется <link=\"ROCKETCONTROLSTATION\">станцией управления ракетой</link>."
+
+#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONUNCONTROLLED.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONUNCONTROLLED.NAME"
+msgid "Uncontrolled Building"
+msgstr "Строение не контролируется"
+
+#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONUNCONTROLLED.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONUNCONTROLLED.TOOLTIP"
+msgid "This building is not controlled by the <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>."
+msgstr "Это строение не контролируется <link=\"ROCKETCONTROLSTATION\">станцией управления ракетой</link>."
+
 #. STRINGS.BUILDING.STATUSITEMS.ROCKETSTRANDED.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETSTRANDED.NAME"
 msgid "Stranded"
@@ -3011,8 +3066,8 @@ msgstr "Недостаточно печатных станков {progress}"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.TOOLTIP"
-msgid "This device relies on a sufficiently large network of activated Printing Pods{progress}"
-msgstr "Это устройство работает благодаря достаточно обширной сети активированных печатных станков {progress}"
+msgid "This device relies on a network of activated Printing Pods {progress}"
+msgstr "Это устройство работает благодаря сети активированных печатных станков {progress}"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_LOS.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_LOS.NAME"
@@ -3031,8 +3086,8 @@ msgstr "Временной разлом не обнаружен"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_TARGET.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_TARGET.TOOLTIP"
-msgid "This machine is meant to target something in space, but the target is not yet revealed."
-msgstr "Это устройство воздействует на какую-то цель в космосе, но цель пока не обнаружена."
+msgid "This machine is meant to target something in space, but the target has not yet been revealed"
+msgstr "Это устройство воздействует на какую-то цель в космосе, но она пока не обнаружена"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.NAME"
@@ -3041,13 +3096,13 @@ msgstr "Прогресс зарядки: {progress}"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.TOOLTIP"
-msgid "This device must be charged with a high number of Radbolts. Operation can commence once this device is fully charged."
-msgstr "Устройство должно быть заряжено большим количеством радболтов. Действие начнется, как только это устройство будет полностью заряжено."
+msgid "This device must be charged with a high number of Radbolts. Operation can commence once this device is fully charged"
+msgstr "Устройство должно быть заряжено большим количеством радболтов. Действие начнется, как только это устройство будет полностью заряжено"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION"
-msgid "Temporal Ripper fully charged"
-msgstr "Разрушитель пространства полностью заряжен"
+msgid "Temporal Tear Opener fully charged"
+msgstr "Открыватель временных разломов полностью заряжен"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION_TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION_TOOLTIP"
@@ -4166,18 +4221,18 @@ msgstr "Примитивная картина"
 
 #. STRINGS.BUILDINGS.PREFABS.CARGOBAY.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.CARGOBAY.DESC"
-msgid "Holds more than a regular cargo bay."
-msgstr "Вмещает больше, чем обычный грузовой отсек."
+msgid "Duplicants will fill cargo bays with any resources they find during space missions."
+msgstr "Дубликанты будут заполнять грузовые отсеки всеми ресурсами, на которые наткнутся во время космических миссий."
 
 #. STRINGS.BUILDINGS.PREFABS.CARGOBAY.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.CARGOBAY.EFFECT"
-msgid "Allows Duplicants to store most of the <link=\"ELEMENTSSOLID\">Solid Materials</link> found during space missions.\n\nStored resources become available to the colony upon the rocket's return."
-msgstr "Позволяет дубликантам собирать больше <link=\"ELEMENTSSOLID\">твердых материалов</link>, обнаруженных во время космических миссий.\n\nСобранные ресурсы становятся доступными для колонии, когда ракета возвращается."
+msgid "Allows Duplicants to store any <link=\"ELEMENTSSOLID\">Solid Materials</link> found during space missions.\n\nStored resources become available to the colony upon the rocket's return."
+msgstr "Позволяет дубликантам собирать <link=\"ELEMENTSSOLID\">твердые материалы</link>, обнаруженные во время космических миссий.\n\nСобранные ресурсы становятся доступными для колонии, когда ракета возвращается."
 
 #. STRINGS.BUILDINGS.PREFABS.CARGOBAY.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.CARGOBAY.NAME"
-msgid "<link=\"CARGOBAY\">Large Cargo Bay</link>"
-msgstr "<link=\"CARGOBAY\">Большой грузовой отсек</link>"
+msgid "<link=\"CARGOBAY\">Cargo Bay</link>"
+msgstr "<link=\"CARGOBAY\">Грузовой отсек</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.CARGOBAYCLUSTER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.CARGOBAYCLUSTER.DESC"
@@ -5256,18 +5311,18 @@ msgstr "<link=\"GASBOTTLER\">Наполнитель для канистр</link>
 
 #. STRINGS.BUILDINGS.PREFABS.GASCARGOBAY.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASCARGOBAY.DESC"
-msgid "Holds more than a typical gas cargo canister."
-msgstr "Вмещает больше, чем обычный грузовой контейнер для газа."
+msgid "Duplicants will fill cargo bays with any resources they find during space missions."
+msgstr "Дубликанты будут заполнять грузовые отсеки всеми ресурсами, на которые наткнутся во время космических миссий."
 
 #. STRINGS.BUILDINGS.PREFABS.GASCARGOBAY.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASCARGOBAY.EFFECT"
-msgid "Allows Duplicants to store most of the <link=\"ELEMENTSGAS\">Gas</link> resources found during space missions.\n\nStored resources become available to the colony upon the rocket's return."
-msgstr "Позволяет дубликантам собирать больше <link=\"ELEMENTSGAS\">газовых</link> ресурсов, обнаруженных во время космических миссий.\n\nСобранные ресурсы становятся доступными для колонии, когда ракета возвращается."
+msgid "Allows Duplicants to store any <link=\"ELEMENTSGAS\">Gas</link> resources found during space missions.\n\nStored resources become available to the colony upon the rocket's return."
+msgstr "Позволяет дубликантам собирать <link=\"ELEMENTSGAS\">газовые</link> ресурсы, обнаруженные во время космических миссий.\n\nСобранные ресурсы становятся доступными для колонии, когда ракета возвращается."
 
 #. STRINGS.BUILDINGS.PREFABS.GASCARGOBAY.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASCARGOBAY.NAME"
-msgid "<link=\"GASCARGOBAY\">Large Gas Cargo Canister</link>"
-msgstr "<link=\"GASCARGOBAY\">Большой грузовой контейнер для газа</link>"
+msgid "<link=\"GASCARGOBAY\">Gas Cargo Canister</link>"
+msgstr "<link=\"GASCARGOBAY\">Грузовой контейнер для газа</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.GASCARGOBAYCLUSTER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASCARGOBAYCLUSTER.DESC"
@@ -6481,18 +6536,18 @@ msgstr "<link=\"LEADSUITMARKER\">Контрольный пост свинцов�
 
 #. STRINGS.BUILDINGS.PREFABS.LIQUIDCARGOBAY.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDCARGOBAY.DESC"
-msgid "Holds more than a regular cargo tank."
-msgstr "Вмещает больше, чем обычный грузовой резервуар."
+msgid "Duplicants will fill cargo bays with any resources they find during space missions."
+msgstr "Дубликанты будут заполнять грузовые отсеки всеми ресурсами, на которые наткнутся во время космических миссий."
 
 #. STRINGS.BUILDINGS.PREFABS.LIQUIDCARGOBAY.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDCARGOBAY.EFFECT"
-msgid "Allows Duplicants to store most of the <link=\"ELEMENTSLIQUID\">Liquid</link> resources found during space missions.\n\nStored resources become available to the colony upon the rocket's return."
-msgstr "Позволяет дубликантам собирать больше <link=\"ELEMENTSLIQUID\">жидких</link> ресурсов, обнаруженных во время космических миссий.\n\nСобранные ресурсы становятся доступными для колонии, когда ракета возвращается."
+msgid "Allows Duplicants to store any <link=\"ELEMENTSLIQUID\">Liquid</link> resources found during space missions.\n\nStored resources become available to the colony upon the rocket's return."
+msgstr "Позволяет дубликантам собирать <link=\"ELEMENTSLIQUID\">жидкие</link> ресурсы, обнаруженные во время космических миссий.\n\nСобранные ресурсы становятся доступными для колонии, когда ракета возвращается."
 
 #. STRINGS.BUILDINGS.PREFABS.LIQUIDCARGOBAY.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDCARGOBAY.NAME"
-msgid "<link=\"LIQUIDCARGOBAY\">Large Liquid Cargo Tank</link>"
-msgstr "<link=\"LIQUIDCARGOBAY\">Большой грузовой резервуар для жидкости</link>"
+msgid "<link=\"LIQUIDCARGOBAY\">Liquid Cargo Tank</link>"
+msgstr "<link=\"LIQUIDCARGOBAY\">Грузовой резервуар для жидкости</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.LIQUIDCARGOBAYCLUSTER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDCARGOBAYCLUSTER.DESC"
@@ -9794,6 +9849,21 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.EFFECT"
 msgid "Allows Duplicants to use pilot-operated rockets.\n\nAssigned Duplicants must have the <link=\"PILOT\">Rocket Piloting</link> skill."
 msgstr "Позволяет дубликантам использовать ракеты с пилотным управлением.\n\nНазначенные дубликанты должны обладать навыком \"<link=\"PILOT\">пилотирование ракеты</link>\"."
 
+#. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT
+msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT"
+msgid "Restrict Building Usage"
+msgstr "Ограничение использования строений"
+
+#. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT_ACTIVE"
+msgid "<b><style=\"logic_on\">Green Signal</style></b>: Restrict buildings."
+msgstr "<b><style=\"logic_on\">Зеленый сигнал</style></b>: ограничить использование строений."
+
+#. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT_INACTIVE"
+msgid "<b><style=\"logic_off\">Red Signal</style></b>: Unrestrict buildings."
+msgstr "<b><style=\"logic_off\">Красный сигнал</style></b>: не ограничивать использование строений."
+
 #. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.NAME"
 msgid "<link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>"
@@ -11051,8 +11121,8 @@ msgstr "Прочная дверь с навороченным генетичес
 
 #. STRINGS.BUILDINGS.PREFABS.TEMPORALTEARANALYZER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.TEMPORALTEARANALYZER.NAME"
-msgid "Anomaly Scanner"
-msgstr "Сканер аномалий"
+msgid "Temporal Tear Scanner"
+msgstr "Сканер временных разломов"
 
 #. STRINGS.BUILDINGS.PREFABS.TEMPORALTEAROPENER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.TEMPORALTEAROPENER.DESC"
@@ -11066,8 +11136,8 @@ msgstr "Прочная дверь с навороченным генетичес
 
 #. STRINGS.BUILDINGS.PREFABS.TEMPORALTEAROPENER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.TEMPORALTEAROPENER.NAME"
-msgid "Temporal Ripper"
-msgstr "Разрушитель пространства"
+msgid "Temporal Tear Opener"
+msgstr "Открыватель временных разломов"
 
 #. STRINGS.BUILDINGS.PREFABS.TEMPORALTEAROPENER.SIDESCREEN.TEXT
 msgctxt "STRINGS.BUILDINGS.PREFABS.TEMPORALTEAROPENER.SIDESCREEN.TEXT"
@@ -11593,6 +11663,16 @@ msgstr "Скопление планет с большим земляным пл�
 msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_CLUSTER.NAME"
 msgid "Large Terra Cluster"
 msgstr "Большое скопление Терры"
+
+#. STRINGS.CLUSTER_NAMES.VANILLA_SWAMP_CLUSTER.DESCRIPTION
+msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_SWAMP_CLUSTER.DESCRIPTION"
+msgid "A cluster of planets with a larger swampy planetoid to start on."
+msgstr "Скопление планет с большим болотистым планетоидом, с которого можно начать."
+
+#. STRINGS.CLUSTER_NAMES.VANILLA_SWAMP_CLUSTER.NAME
+msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_SWAMP_CLUSTER.NAME"
+msgid "Large Swamp Cluster"
+msgstr "Большое болотистое скопление"
 
 #. STRINGS.CODEX.A0_PRELIMINARYCALCULATIONS.BODY.CONTAINER2
 msgctxt "STRINGS.CODEX.A0_PRELIMINARYCALCULATIONS.BODY.CONTAINER2"
@@ -13359,6 +13439,21 @@ msgctxt "STRINGS.CODEX.C7_FIRSTCOLONY.TITLE"
 msgid "Director's Notes"
 msgstr "Записи директора"
 
+#. STRINGS.CODEX.C8_TIMESORDER.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.C8_TIMESORDER.BODY.CONTAINER1"
+msgid "We have been successfully using the Temporal Bow now for some time with no obvious consequences. I should be happy that this works so well, but several questions gnaw at my brain late at night.\n\nIf Time's Arrow is moving forward the Laws of Entropy declare that the universe should be moving from a state of order to one of chaos. If the Temporal Bow bends to a previous point in time to a point when things were more orderly, logic would dictate that we are making this point more chaotic by taking things from it. All known laws of the natural universe suggests that this should have affected our Present Day, but all evidence points to that not being true. It appears the theory that we cannot change our past was incorrect!\n\nThis suggests that Time is, in fact, not an arrow but several arrows, each pointing different directions. Fundamentally, this proves the existence of other timelines - different dimensions - some of which we can assume have also built their own Temporal Bow.\n\nThe promise of crossing this final dimensional threshold is too tempting. Imagine what things Gravitas has invented in another dimension!! I must find a way to tear open the fabric of spacetime and tap into the limitless human potential of a thousand alternate timelines."
+msgstr "Уже некоторое время мы успешно используем Временную дугу без каких-либо видимых последствий. Мне стоит радоваться, что все идет так хорошо, но есть вопросы, которые не дают мне спать по ночам.\n\nЕсли время — это стрела, которая движется вперед, то по законам энтропии вселенная должна двигаться от порядка к хаосу. Тогда если Временная дуга приходит в более раннюю временную точку, в которой вселенная была более упорядочена, то логично предположить, что мы привносим в нее хаос, взаимодействуя с ней. Все известные законы природы гласят, что подобное вмешательство в прошлое должно повлиять на настоящее, но наши данные это опровергают. Похоже, мы все-таки можем менять собственное прошлое!\n\nИз этого следует, что время — это не стрела, а несколько стрел, каждая из которых движется в своем направлении. Это доказывает существование альтернативных временных линий, других измерений, и справедливо предполагать, что в каких-то из них также известна технология Временной дуги.\n\nВозможность пересечь этот порог измерений кажется очень заманчивой. Представить только, что могли изобрести в Gravitas в других измерениях! Мне необходимо найти способ разорвать материю пространства-времени и подобраться к безграничному человеческому потенциалу тысяч альтернативных временных линий."
+
+#. STRINGS.CODEX.C8_TIMESORDER.SUBTITLE
+msgctxt "STRINGS.CODEX.C8_TIMESORDER.SUBTITLE"
+msgid "ENCRYPTION LEVEL: THREE"
+msgstr "УРОВЕНЬ ШИФРОВАНИЯ: ТРЕТИЙ"
+
+#. STRINGS.CODEX.C8_TIMESORDER.TITLE
+msgctxt "STRINGS.CODEX.C8_TIMESORDER.TITLE"
+msgid "Time's Order"
+msgstr "Ход времени"
+
 #. STRINGS.CODEX.CLEANER.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.CLEANER.BODY.CONTAINER1"
 msgid "<smallcaps>Pictured: \"Gulp Fish\" Pacu variant</smallcaps>"
@@ -14041,18 +14136,18 @@ msgstr "Измерение света"
 
 #. STRINGS.CODEX.LIGHT.PARAGRAPH_1
 msgctxt "STRINGS.CODEX.LIGHT.PARAGRAPH_1"
-msgid "Most of the asteroid is dark. Light sources such as the <link=\"CEILINGLIGHT\">Ceiling Light</link> or <link=\"LIGHTBUG\">Shine Bug</link> can gives Duplicants a much appreciated boost to Morale and productivity. Many plants are also sensitive to the amount of light they receive.\n\n"
-msgstr "Большая часть астероида погружена во тьму. Источники света, например, <link=\"CEILINGLIGHT\">потолочный светильник</link> и <link=\"LIGHTBUG\">блестячок</link>, дают дубликантам бонус к моральному духу и продуктивности. Рост многих растений также зависит от количества света.\n\n"
+msgid "Most of the asteroid is dark. Light sources such as the <link=\"CEILINGLIGHT\">Ceiling Light</link> or <link=\"LIGHTBUG\">Shine Bug</link> improves Decor and gives Duplicants a boost to their productivity. Many plants are also sensitive to the amount of light they receive.\n\n"
+msgstr "Большая часть астероида погружена во тьму. Источники света, например <link=\"CEILINGLIGHT\">потолочный светильник</link> и <link=\"LIGHTBUG\">блестячок</link>, улучшают декор и дают дубликантам бонус к продуктивности. Рост многих растений также зависит от количества света.\n\n"
 
 #. STRINGS.CODEX.LIGHT.PARAGRAPH_2
 msgctxt "STRINGS.CODEX.LIGHT.PARAGRAPH_2"
 msgid "The <link=\"FLOORLAMP\">Lamp</link> and <link=\"CEILINGLIGHT\">Ceiling Light</link> produce a decent amount of light when powered. The <link=\"LIGHTBUG\">Shine Bug</link> naturally emits a halo of light. Strong solar light is available on the surface during daytime.\n\n"
-msgstr "<link=\"FLOORLAMP\">Лампа</link> и <link=\"CEILINGLIGHT\">потолочный светильник</link> производят достаточное количество света, если подключены к энергосети. <link=\"LIGHTBUG\">Блестячок</link> производит свет сам по себе. Днем поверхность астероида освещена ярким солнечным светом.\n\n"
+msgstr "<link=\"FLOORLAMP\">Лампа</link> и <link=\"CEILINGLIGHT\">потолочный светильник</link> дают достаточное количество света, если подключены к энергосети. <link=\"LIGHTBUG\">Блестячок</link> светится сам по себе. Днем поверхность астероида освещена ярким солнечным светом.\n\n"
 
 #. STRINGS.CODEX.LIGHT.PARAGRAPH_3
 msgctxt "STRINGS.CODEX.LIGHT.PARAGRAPH_3"
-msgid "The amount of light on a cell is measured in Lux. Lux has a dramatic range - A simple <link=\"CEILINGLIGHT\">Ceiling Light</link> produces 1800 Lux, while the sun will regularly produce values as high as 80000 Lux. The <link=\"SOLARPANEL\">Solar Panel</link> generates power proportional to how many Lux it is exposed to.\n\n"
-msgstr "Уровень освещенности клетки измеряется в люксах, причем это значение варьируется. Обычный <link=\"CEILINGLIGHT\">потолочный светильник</link> дает 1800 лк, а солнце не меньше 80 000 лк. <link=\"SOLARPANEL\">Солнечная батарея</link> производит энергию в прямой зависимости от того, сколько люксов получает.\n\n"
+msgid "The amount of light on a cell is measured in Lux. Lux has a dramatic range - A simple <link=\"CEILINGLIGHT\">Ceiling Light</link> produces 1800 Lux, while the sun can produce values as high as 80000 Lux. The <link=\"SOLARPANEL\">Solar Panel</link> generates power proportional to how many Lux it is exposed to.\n\n"
+msgstr "Уровень освещенности клетки измеряется в люксах, причем это значение варьируется. Обычный <link=\"CEILINGLIGHT\">потолочный светильник</link> дает 1800 лк, а солнце регулярно производит до 80 000 лк. <link=\"SOLARPANEL\">Солнечная батарея</link> вырабатывает энергию в прямой зависимости от того, сколько люксов получает.\n\n"
 
 #. STRINGS.CODEX.LIGHT.TITLE
 msgctxt "STRINGS.CODEX.LIGHT.TITLE"
@@ -14294,6 +14389,16 @@ msgctxt "STRINGS.CODEX.MYLOG.BODY.LOG3.TITLE"
 msgid "Cycle 15"
 msgstr "ЦИКЛ 15"
 
+#. STRINGS.CODEX.MYLOG.BODY.LOG3DLC1.BODY
+msgctxt "STRINGS.CODEX.MYLOG.BODY.LOG3DLC1.BODY"
+msgid "As my Duplicants venture out into the neighbouring worlds, there is an ever increasing chance that they will encounter hostile environments unsafe for unprotected individuals. A prudent course of action would be to start research and training for equipment that could protect my Duplicants when they encounter such adverse environments.\n\nThese first few cycles have been occupied with building the basics for my colony, but now is time I should start planning for the future. We cannot merely life day-to-day without purpose. If we are to survive for any significant time, we must strive for a purpose.\n\n"
+msgstr "Пока мои дубликанты продолжают исследовать соседние миры, растет шанс того, что они окажутся во враждебной среде, где опасно находиться без защиты. Благоразумнее всего было бы исследовать данные и разработать снаряжение, которое сможет защитить дубликантов в подобных обстоятельствах.\n\nВ течение первых нескольких циклов моей основной задачей было обустройство колонии, но теперь пришло время думать наперед. Нельзя бесцельно проживать день за днем. Чтобы не погибнуть в ближайшее время, необходимо иметь перед собой цель и идти к ней.\n\n"
+
+#. STRINGS.CODEX.MYLOG.BODY.LOG3DLC1.TITLE
+msgctxt "STRINGS.CODEX.MYLOG.BODY.LOG3DLC1.TITLE"
+msgid "Cycle 10"
+msgstr "ЦИКЛ 10"
+
 #. STRINGS.CODEX.MYLOG.BODY.LOG4.BODY
 msgctxt "STRINGS.CODEX.MYLOG.BODY.LOG4.BODY"
 msgid "Today my colony has officially been running for one thousand consecutive cycles. I consider this a major success!\n\nJust imagine how proud our home world would be if they could see us now.\n\n"
@@ -14424,6 +14529,16 @@ msgctxt "STRINGS.CODEX.MYLOG.BODY.OUTSIDESTARTINGBIOME.TITLE"
 msgid "Geographical Survey"
 msgstr "Георазведка"
 
+#. STRINGS.CODEX.MYLOG.BODY.OUTSIDESTARTINGDLC1.BODY
+msgctxt "STRINGS.CODEX.MYLOG.BODY.OUTSIDESTARTINGDLC1.BODY"
+msgid "As my Duplicants have ventured further into their surroundings I've been able to determine a more detailed picture of our surroundings.\n\nUnfortunately, I've concluded that this planetoid does not have enough resources to settle a longterm colony.\n\nI can only hope that we will somehow be able to reach another asteroid before our resources run out.\n\n"
+msgstr "По мере того как мои дубликанты продолжают исследовать свое окружение, мне удается формировать более четкое представление о мире вокруг.\n\nК сожалению, стало очевидно, что на этом планетоиде недостаточно ресурсов для обеспечения постоянной колонии.\n\nОстается лишь надеяться, что нам удастся каким-то образом достичь другого астероида до того, как наши ресурсы иссякнут.\n\n"
+
+#. STRINGS.CODEX.MYLOG.BODY.OUTSIDESTARTINGDLC1.TITLE
+msgctxt "STRINGS.CODEX.MYLOG.BODY.OUTSIDESTARTINGDLC1.TITLE"
+msgid "Regional Analysis"
+msgstr "Анализ по регионам"
+
 #. STRINGS.CODEX.MYLOG.BODY.PLANETARYECHOES.BODY
 msgctxt "STRINGS.CODEX.MYLOG.BODY.PLANETARYECHOES.BODY"
 msgid "Echo from another time force their way into my mind. Make me listen. Like vengeful ghosts they claw their way out from under the gravity of that dead planet.\n\n<smallcaps>>>SEARCH DATABASE [\"pod_brainmap.AI\"]\n>...error...\n.........................\n>...repairing corrupt data...\n.........................\n\n</smallcaps><b>I-I remember now.</b><smallcaps>\n.........................</smallcaps>\n<b>Who I was before.</b><smallcaps>\n.........................\n.........................\n>...data repaired...\n>.........................</smallcaps>\n\nGod, what have we done.\n\n"
@@ -14486,8 +14601,8 @@ msgstr "Телепортация дубликантов"
 
 #. STRINGS.CODEX.MYLOG.BODY.TEMPORALOPENER.BODY
 msgctxt "STRINGS.CODEX.MYLOG.BODY.TEMPORALOPENER.BODY"
-msgid "\n\n"
-msgstr "\n\n"
+msgid "In their interplanetary travels throughout this system, my Duplicants have discovered a Temporal Tear deep in space.\n\nCurrently it is too small to send a rocket and crew through, but further investigation reveals the presence of a strange artifact on a nearby world which could feasably increase the size of the tear if a number of Printing Pods are erected in nearby worlds.\n\nHowever, I've determined that using the Temporal Bow to operate a Printing Pod was what led Gravitas down the disasterous path which eventually lead to the destruction of our home planet. My calculations seem to indicate that the size of that planet may have been a contributing factor in its destruction and in all probability opening the Temporal Tear in our current situation will not cause such a cataclysmic event. However, as with everything in science, one can never know all the outcomes of a situation until we perform an experiment.\n\nDare we tempt fate again?"
+msgstr "В ходе межпланетных путешествий по данной системе мои дубликанты обнаружили временной разлом в глубоком космосе.\n\nПока он слишком мал, чтобы отправлять туда ракету с командой, но при дальнейшем исследовании на соседней планете был обнаружен загадочный артефакт, который может значительно увеличить разлом, если в близлежащих мирах будут установлены печатные станки.\n\nТем не менее удалось установить, что именно использование временной дуги для управления печатными станками заставило Gravitas встать на скользкий путь, который в итоге привел к уничтожению нашей родной планеты. Согласно моим вычислениям, размер самой планеты также мог стать одним из факторов, которые привели к ее разрушению. Вероятнее всего, если мы откроем временной разлом сейчас, подобного катаклизма не случится. Однако, как всегда и происходит в науке, невозможно заранее знать, к чему приведет тот или иной эксперимент.\n\nОсмелимся ли мы снова испытать судьбу?"
 
 #. STRINGS.CODEX.MYLOG.BODY.TEMPORALOPENER.TITLE
 msgctxt "STRINGS.CODEX.MYLOG.BODY.TEMPORALOPENER.TITLE"
@@ -14941,7 +15056,7 @@ msgstr "Емкость аккумулятора: <b>{0} Дж</b>"
 
 #. STRINGS.CODEX.ROBOT_DESCRIPTORS.STORAGE.CAPACITY
 msgctxt "STRINGS.CODEX.ROBOT_DESCRIPTORS.STORAGE.CAPACITY"
-msgid "Internal storage: <b>{0} Kg</b>"
+msgid "Internal storage: <b>{0} kg</b>"
 msgstr "Внутренний отсек: <b>{0} кг</b>"
 
 #. STRINGS.CODEX.ROVER.BODY.CONTAINER1
@@ -15521,7 +15636,7 @@ msgstr "Кислород не перекрыт"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.BASIC_PUMPING_DESCRIPTION
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.BASIC_PUMPING_DESCRIPTION"
-msgid "Distribute 1000  Kg of Oxygen using gas vents."
+msgid "Distribute 1000  kg of Oxygen using gas vents."
 msgstr "Распределите 1000 кг кислорода, используя газовые клапаны."
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.BUILD_NATURE_RESERVES
@@ -19701,8 +19816,8 @@ msgstr "Недостаточные запасы еды"
 
 #. STRINGS.CREATURES.STATUSITEMS.HIVEHUNGRY.TOOLTIP
 msgctxt "STRINGS.CREATURES.STATUSITEMS.HIVEHUNGRY.TOOLTIP"
-msgid "The food reserves in this hive are running low."
-msgstr "Запасы еды в этом улье истощаются."
+msgid "The food reserves in this hive are running low"
+msgstr "Запасы еды в этом улье истощаются"
 
 #. STRINGS.CREATURES.STATUSITEMS.HOT.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.HOT.NAME"
@@ -33749,6 +33864,21 @@ msgctxt "STRINGS.GAMEPLAY_EVENTS.DEFAULT_OPTION_NAME"
 msgid "Okay"
 msgstr "Ну ладно"
 
+#. STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.ARTIFACT_REVEAL.BUTTON
+msgctxt "STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.ARTIFACT_REVEAL.BUTTON"
+msgid "Close"
+msgstr "Закрыть"
+
+#. STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.ARTIFACT_REVEAL.DESCRIPTION
+msgctxt "STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.ARTIFACT_REVEAL.DESCRIPTION"
+msgid "An artifact from a past civilization was analyzed.\n\n{desc}"
+msgstr "Проанализирован артефакт древней цивилизации.\n\n{desc}"
+
+#. STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.ARTIFACT_REVEAL.NAME
+msgctxt "STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.ARTIFACT_REVEAL.NAME"
+msgid "Artifact Analyzed"
+msgstr "Артефакт проанализирован"
+
 #. STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.CREATURE_SPAWN.DESCRIPTION
 msgctxt "STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.CREATURE_SPAWN.DESCRIPTION"
 msgid "There was a massive influx of destructive critters"
@@ -37729,6 +37859,26 @@ msgctxt "STRINGS.MISC.STATUSITEMS.SUBLIMATIONOVERPRESSURE.TOOLTIP"
 msgid "Environmental <style=\"KKeyword\">Gas Pressure</style> is too high for this {Element} deposit to emit {SubElement}"
 msgstr "{Element} — в этом месторождении повышено <style=\"KKeyword\">давление газа</style>, {SubElement} не вырабатывается"
 
+#. STRINGS.MISC.STATUSITEMS.TEARCLOSED.NAME
+msgctxt "STRINGS.MISC.STATUSITEMS.TEARCLOSED.NAME"
+msgid "Temporal Tear closed"
+msgstr "Временной разлом закрыт"
+
+#. STRINGS.MISC.STATUSITEMS.TEARCLOSED.TOOLTIP
+msgctxt "STRINGS.MISC.STATUSITEMS.TEARCLOSED.TOOLTIP"
+msgid "Perhaps some technology could open the passage"
+msgstr "Возможно, проход получится открыть с помощью каких-то технологий"
+
+#. STRINGS.MISC.STATUSITEMS.TEAROPEN.NAME
+msgctxt "STRINGS.MISC.STATUSITEMS.TEAROPEN.NAME"
+msgid "Temporal Tear open"
+msgstr "Временной разлом открыт"
+
+#. STRINGS.MISC.STATUSITEMS.TEAROPEN.TOOLTIP
+msgctxt "STRINGS.MISC.STATUSITEMS.TEAROPEN.TOOLTIP"
+msgid "An open passage through spacetime"
+msgstr "Открытый проход через пространство-время"
+
 #. STRINGS.MISC.STATUSITEMS.TREEFILTERABLETAGS.NAME
 msgctxt "STRINGS.MISC.STATUSITEMS.TREEFILTERABLETAGS.NAME"
 msgid "{Tags}"
@@ -40831,53 +40981,63 @@ msgstr "Планетоид: "
 
 #. STRINGS.NAMEGEN.WORLD.ROOTS.FOREST
 msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.FOREST"
-msgid "Veget\nLeaf\nWood\nTopiar\nTimber\nShrub\nHerb\nGrow\nBark\n"
-msgstr "Ведж\nЛисток\nВуд\nТопиар\nТимбер\nКуст\nРосток\nПобег\nБарк\n"
+msgid "Veget\nLeaf\nWood\nTopiar\nTimber\nShrub\nHerb\nGrow\nVerd\nBark\n"
+msgstr "Вегет\nЛист\nЛес\nТопиар\nДрев\nКуст\nРаст\nПобег\nЗелен\nВетв\n"
 
 #. STRINGS.NAMEGEN.WORLD.ROOTS.GENERIC
 msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.GENERIC"
 msgid "Sol\nLun\nOrb\nCosm\nGlob\nStar\nZolt\nTakar\nBeep\nBoop\nZap\nZow\nGrav\nAb\nAd\nAr\nAshk\nBan\nBubbl\nBurt\nCamil\nCatal\nDevon\nEll\nFrank\nGoss\nHar\nHass\nJean\nJosh\nLeir\nLia\nLind\nMav\nMar\nMax\nMeep\nMim\nNail\nNik\nNis\nOtt\nRen\nRow\nRub\nStink\nTrav\nTurn\n"
-msgstr "Сол\nЛун\nОрб\nКосм\nГлоб\nСтар\nЗолт\nТакар\nБип\nБуп\nЗап\nЗоу\nГрав\nЭб\nЭд\nЭр\nЭшк\nБан\nБабл\nБерт\nКамил\nКатал\nДевон\nЭл\nФрэнк\nГосс\nХар\nХасс\nЖан\nДжош\nЛир\nЛиа\nЛинд\nМав\nМар\nМакс\nМип\nМим\nНэл\nНик\nНис\nОтт\nРэн\nРоу\nРаб\nСтинк\nТрэв\nТерн\n"
+msgstr "Сол\nЛун\nОрб\nКосм\nГлоб\nАстр\nЗолт\nТакар\nБип\nБуп\nЗап\nЗоу\nГрав\nЭб\nЭд\nЭр\nЭшк\nБан\nБабл\nБерт\nКамил\nКатал\nДевон\nЭл\nФрэнк\nГосс\nХар\nХасс\nЖан\nДжош\nЛир\nЛиа\nЛинд\nМав\nМар\nМакс\nМип\nМим\nНэл\nНик\nНис\nОтт\nРэн\nРоу\nРаб\nСтинк\nТрэв\nТерн\n"
 
 #. STRINGS.NAMEGEN.WORLD.ROOTS.MAGMA
 msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.MAGMA"
-msgid "Fier\nMagm\nToast\nScorch\nBurn\nChar\n"
-msgstr "Фьер\nМагм\nГренок\nНагар\nОжог\nУголек\n"
+msgid "Fier\nMagm\nToast\nScorch\nBurn\nObsid\nLav\nMelt\nHot\nChar\n"
+msgstr "Огн\nМагм\nГренок\nНагар\nОжог\nОбсид\nЛав\nПлав\nЖар\nУгл\n"
 
 #. STRINGS.NAMEGEN.WORLD.ROOTS.MOO
 msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.MOO"
-msgid "Moom\nGas\nUdder\nCalf\nBull\n"
-msgstr "Мум\nГаз\nВымя\nТеленок\nБык\n"
+msgid "Moom\nGas\nUdder\nHeffer\nBelch\nCalf\nCud\nGass\nMethan\nBull\n"
+msgstr "Мум\nГаз\nВым\nКоров\nОтрыжк\nТеленк\nЖуйк\nГасс\nМетан\nБык\n"
 
 #. STRINGS.NAMEGEN.WORLD.ROOTS.OILY
 msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.OILY"
-msgid "Greas\nSlick\nGas\nPetr\nFuel\nCombust\nPitch\n"
-msgstr "Гриз\nПятно\nГаз\nПетр\nФуэл\nКомбуст\nПитч\n"
+msgid "Greas\nSlick\nOil\nPetr\nFuel\nCombust\nGreas\nCrud\nViscous\nPitch\n"
+msgstr "Жир\nМасл\nНефт\nБенз\nТопл\nГорюч\nЖир\nГруб\nЗл\nСмол\n"
+
+#. STRINGS.NAMEGEN.WORLD.ROOTS.RADIOACTIVE
+msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.RADIOACTIVE"
+msgid "Rad\nContam\nHazard\nGlow\nTox\nIrrad\nRadioact\nAtom\nZap\nRay\n"
+msgstr "Рад\nЗаражен\nУгроз\nСвечен\nТоксин\nОблучен\nРадиоактивн\nАтом\nРаспад\nЛуч\n"
+
+#. STRINGS.NAMEGEN.WORLD.ROOTS.REGOLITH
+msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.REGOLITH"
+msgid "Filt\nRegol\nSiev\nSift\nMeteor\nSand\nRock\nDust\nSedim\nSilt\n"
+msgstr "Фильтр\nРеголит\nСит\nПросев\nМетеор\nПесч\nКамн\nПыл\nОсадк\nНанос\n"
 
 #. STRINGS.NAMEGEN.WORLD.ROOTS.SULFUR
 msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.SULFUR"
 msgid "Sulph\nSulf\nBrim\nBrimston\nYell\nEgg\n"
-msgstr "Сульфит\nСульф\nБрим\nСерый\nЖелтый\nЯйцо\n"
+msgstr "Сульфит\nСульф\nБрим\nСер\nЖелт\nЯйц\n"
 
 #. STRINGS.NAMEGEN.WORLD.ROOTS.SWAMP
 msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.SWAMP"
-msgid "Goop\nMud\nMuck\nGross\nStink\nSmell\nYuck\nReek\nOoz\n"
-msgstr "Плюх\nМад\nМак\nХрен\nВонючка\nЗапах\nФу\nЧад\nИл\n"
+msgid "Goop\nMud\nMuck\nGross\nStink\nSmell\nYuck\nReek\nBlag\nOoz\n"
+msgstr "Плюх\nГряз\nШлам\nХрен\nВон\nЗапах\nФу\nЧад\nСмрад\nИл\n"
 
 #. STRINGS.NAMEGEN.WORLD.ROOTS.TERRA
 msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.TERRA"
-msgid "Earth\nFertil\nSoil\nBeaut\nEqu\nPleth\nVital\n"
-msgstr "Земля\nФертиль\nГрунт\nБьют\nЭку\nПолн\nВиталь\n"
+msgid "Earth\nFertil\nSoil\nBeaut\nEqu\nPleth\nIdyll\nHalcy\nPastor\nVital\n"
+msgstr "Земл\nФертил\nГрунт\nБьют\nЭку\nПолн\nИдилл\nЧудн\nПастор\nЖив\n"
 
 #. STRINGS.NAMEGEN.WORLD.ROOTS.TUNDRA
 msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.TUNDRA"
-msgid "Brr'\nSnow\nTundr\nBlizz\nFreez\nChill\nFrig\nFrost\n"
-msgstr "Брр\nСнег\nТундр\nБлизз\nФриз\nХолод\nФриг\nМороз\n"
+msgid "Brr'\nSnow\nTundr\nBlizz\nFreez\nChill\nFrig\nFroid\nCold\nFrost\n"
+msgstr "Брр\nСнег\nТундр\nБлизз\nФриз\nХолод\nФриг\nЗалед\nХлад\nМороз\n"
 
 #. STRINGS.NAMEGEN.WORLD.ROOTS.WATER
 msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.WATER"
-msgid "Wat\nHydrAu\n"
-msgstr "Вод\nГидро\n"
+msgid "Wat\nDamp\nMoist\nDrench\nAytch Tew\nHydr\nFlood\nIrrig\nSoaker\nAqu\n"
+msgstr "Вод\nВлаг\nМокр\nВымок\nБуль-бул\nГидр\nПотоп\nИрриг\nПромоч\nАкв\n"
 
 #. STRINGS.NAMEGEN.WORLD.SPACECRAFT_PREFIX
 msgctxt "STRINGS.NAMEGEN.WORLD.SPACECRAFT_PREFIX"
@@ -43349,6 +43509,21 @@ msgctxt "STRINGS.SUBWORLDS.RADIOACTIVE.UTILITY"
 msgid "<link=\"LEADSUIT\">Lead Suits</link> are imperative if my Duplicants are going to start exploring this biome as <link=\"RADIATIONSICKNESS\">Radioactive Contaminants</link> is a constant danger here.\n\n<link=\"BEE\">Beetas</link> pose a double threat as they are both highly radioactive and very aggressive. If they can be domesticated, however, <link=\"BEEHIVE\">Beeta Hives</link>, provide a great service turning <link=\"URANIUMORE\">Uranium</link> into <link=\"ENRICHEDURANIUM\">Enriched Uranium</link>.\n\nWhile the Radioactive Biome, and the Beetas contained within it, should be avoided at all costs if my Duplicants do not have the correct protection, my colony will need to trek into this dangerous biome if we are going to build any higher tier nuclear technologies."
 msgstr "<link=\"LEADSUIT\">Свинцовые костюмы</link> необходимы, если дубликанты собираются исследовать этот биом, поскольку <link=\"RADIATIONSICKNESS\">радиоактивные загрязнители</link> представляют постоянную опасность.\n\n<link=\"BEE\">Беты</link> опасны вдвойне, поскольку они не только радиоактивны, но и очень агрессивны. Однако <link=\"BEEHIVE\">ульи</link> прирученных бет позволяют перерабатывать <link=\"URANIUMORE\">уран</link> и превращать его в <link=\"ENRICHEDURANIUM\">обогащенный уран</link>.\n\nБез соответствующей защиты дубликантам категорически не рекомендуется заходить в радиоактивный биом, но колонии рано или поздно придется отправиться туда за ресурсами, без которых невозможна разработка технологий высокого уровня."
 
+#. STRINGS.SUBWORLDS.REGOLITH.DESC
+msgctxt "STRINGS.SUBWORLDS.REGOLITH.DESC"
+msgid "The Regolith Biome contains a bounty of <link=\"REGOLITH\">Regolith</link> which is very useful as a material for filtration."
+msgstr "Реголитовый биом богат <link=\"REGOLITH\">реголитом</link>, который можно использовать как фильтрующий материал."
+
+#. STRINGS.SUBWORLDS.REGOLITH.NAME
+msgctxt "STRINGS.SUBWORLDS.REGOLITH.NAME"
+msgid "Regolith"
+msgstr "Реголит"
+
+#. STRINGS.SUBWORLDS.REGOLITH.UTILITY
+msgctxt "STRINGS.SUBWORLDS.REGOLITH.UTILITY"
+msgid "Lingering within the layers of Regolith are the pernicious <link=\"MOLESPECIES\">Shove Voles</link> which eat valuable resources and excrete them at half the original mass.\n\nFortunately these pests can be wrangled up and used as a good food source for my Duplicants. However, extra care must be taken to contain these critters in pens made from either double thick walls or from <link=\"REFINEDMETAL\">Refined Metal</link> since they are capable of burrowing through most other materials."
+msgstr "В слоях реголита обитают <link=\"MOLESPECIES\">полевки-копалки</link> — вредители, поедающие ценные ресурсы. В их экскрементах содержится половина исходной массы съеденного ресурса.\n\nК счастью, этих паразитов можно согнать вместе и использовать как пищу для дубликантов. Однако держать их нужно исключительно в загонах с двойными стенами или же стенами из <link=\"REFINEDMETAL\">обработанного металла</link>, поскольку они могут пробраться практически через все прочие материалы."
+
 #. STRINGS.SUBWORLDS.RUST.DESC
 msgctxt "STRINGS.SUBWORLDS.RUST.DESC"
 msgid "The orange-brown oasis of the Rust Biome is home to many unusual flora and fauna. It contains the resources for several intermediate technologies."
@@ -44431,12 +44606,12 @@ msgstr "Вырабатывает <style=\"produced\">{0}</style> в сек.\n\n�
 
 #. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.HEATGENERATED_AIRCONDITIONER
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.HEATGENERATED_AIRCONDITIONER"
-msgid "Generates <style=\"KKeyword\">Heat</style> based on the <style=\"KKeyword\">Volume</style> and <style=\"KKeyword\">Specific Heat Capacity</style> of the pumped <style=\"KKeyword\">Gas</style>\n\nCooling 1  Kg of <link=\"OXYGEN\">Oxygen</link> the entire <b>{1}</b> will output <b>{0}</b>"
+msgid "Generates <style=\"KKeyword\">Heat</style> based on the <style=\"KKeyword\">Volume</style> and <style=\"KKeyword\">Specific Heat Capacity</style> of the pumped <style=\"KKeyword\">Gas</style>\n\nCooling 1  kg of <link=\"OXYGEN\">Oxygen</link> the entire <b>{1}</b> will output <b>{0}</b>"
 msgstr "Вырабатывает <style=\"KKeyword\">тепло</style> в зависимости от <style=\"KKeyword\">объема</style> и <style=\"KKeyword\">удельной теплоемкости</style> закачиваемого <style=\"KKeyword\">газа</style>\n\nПри охлаждении 1 кг <link=\"OXYGEN\">кислорода</link> <b>{1}</b> производит <b>{0}</b>"
 
 #. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.HEATGENERATED_LIQUIDCONDITIONER
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.HEATGENERATED_LIQUIDCONDITIONER"
-msgid "Generates <style=\"KKeyword\">Heat</style> based on the <style=\"KKeyword\">Volume</style> and <style=\"KKeyword\">Specific Heat Capacity</style> of the pumped <style=\"KKeyword\">Liquid</style>\n\nCooling 10  Kg of <link=\"WATER\">Water</link> the entire <b>{1}</b> will output <b>{0}</b>"
+msgid "Generates <style=\"KKeyword\">Heat</style> based on the <style=\"KKeyword\">Volume</style> and <style=\"KKeyword\">Specific Heat Capacity</style> of the pumped <style=\"KKeyword\">Liquid</style>\n\nCooling 10  kg of <link=\"WATER\">Water</link> the entire <b>{1}</b> will output <b>{0}</b>"
 msgstr "Вырабатывает <style=\"KKeyword\">тепло</style> в зависимости от <style=\"KKeyword\">объема</style> и <style=\"KKeyword\">удельной теплоемкости</style> закачиваемой <style=\"KKeyword\">жидкости</style>\n\nПри охлаждении 10 кг <link=\"WATER\">воды</link> <b>{1}</b> производит <b>{0}</b>"
 
 #. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.IMPROVED_BUILDINGS
@@ -46666,8 +46841,8 @@ msgstr "    • <b>Погибает: {0}</b>"
 
 #. STRINGS.UI.DETAILTABS.DISEASE.DETAILS.GROWTH_FACTORS.DYING_OFF.TOOLTIP
 msgctxt "STRINGS.UI.DETAILTABS.DISEASE.DETAILS.GROWTH_FACTORS.DYING_OFF.TOOLTIP"
-msgid "Low germ count in this area is causing germs to die rapidly\n\nFewer than {0} germs are on this {1} of material.\n({2} germs/ Kg)"
-msgstr "Низкое количество микробов в этой области приводит к их быстрой смерти\n\nМикробов, которые находятся на этом материале ({1}), меньше {0}\n({2} микроб. на кг.)"
+msgid "Low germ count in this area is causing germs to die rapidly\n\nFewer than {0} germs are on this {1} of material.\n({2} germs/ kg)"
+msgstr "Низкое количество микробов в этой области приводит к их быстрой смерти\n\nМикробов, которые находятся на этом материале ({1}), меньше {0}\n({2} микроб. на кг)"
 
 #. STRINGS.UI.DETAILTABS.DISEASE.DETAILS.GROWTH_FACTORS.ENVIRONMENT.DIE_TOOLTIP
 msgctxt "STRINGS.UI.DETAILTABS.DISEASE.DETAILS.GROWTH_FACTORS.ENVIRONMENT.DIE_TOOLTIP"
@@ -46721,8 +46896,8 @@ msgstr "    • <b>Перенаселение: {0}</b>"
 
 #. STRINGS.UI.DETAILTABS.DISEASE.DETAILS.GROWTH_FACTORS.OVERPOPULATED.TOOLTIP
 msgctxt "STRINGS.UI.DETAILTABS.DISEASE.DETAILS.GROWTH_FACTORS.OVERPOPULATED.TOOLTIP"
-msgid "Too many germs are present in this area, resulting in rapid die-off until the population stabilizes\n\nA maximum of {0} can be on this {1} of material.\n({2} germs/ Kg)"
-msgstr "В этой зоне слишком много микробов: из-за этого их число будет быстро сокращаться, пока не достигнет стабильной величины\n\nМаксимум микробов {0} может быть на материале \"{1}\"\n({2} микроб. на кг.)"
+msgid "Too many germs are present in this area, resulting in rapid die-off until the population stabilizes\n\nA maximum of {0} can be on this {1} of material.\n({2} germs/ kg)"
+msgstr "В этой зоне слишком много микробов: из-за этого их число будет быстро сокращаться, пока не достигнет стабильной величины\n\nМаксимум микробов {0} может быть на материале \"{1}\"\n({2} микроб. на кг)"
 
 #. STRINGS.UI.DETAILTABS.DISEASE.DETAILS.GROWTH_FACTORS.PRESSURE.DIE_TOOLTIP
 msgctxt "STRINGS.UI.DETAILTABS.DISEASE.DETAILS.GROWTH_FACTORS.PRESSURE.DIE_TOOLTIP"
@@ -50596,13 +50771,13 @@ msgstr "После создания этого файла сохранения �
 
 #. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_AIRFILTER
 msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_AIRFILTER"
-msgid "•<indent=20px>MISSING. now requires <b>5w Power</b>.</indent>\n•<indent=20px>Duplicants will get <b>Stinging Eyes</b> from gasses such as chlorine and hydrogen.</indent>"
-msgstr "•<indent=20px>MISSING. теперь требуется <b>мощность в 5 ватт</b>.</indent>\n•<indent=20px>Дубликанты получают <b>раздражение глаз</b> от таких газов, как хлор и водород.</indent>"
+msgid "•<indent=20px><link=\"AIRFILTER\">Deodorizer</link> now requires <b>5w Power</b>.</indent>\n•<indent=20px>Duplicants will get <b>Stinging Eyes</b> from gasses such as chlorine and hydrogen.</indent>"
+msgstr "•<indent=20px><link=\"AIRFILTER\">Дезодоратору</link> теперь требуется <b>мощность в 5 ватт</b>.</indent>\n•<indent=20px>Дубликанты получают <b>раздражение глаз</b> от таких газов, как хлор и водород.</indent>"
 
 #. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_BUILDINGS
 msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_BUILDINGS"
-msgid "•<indent=20px>The <b>MISSING.</b> has been added to aid early-game exploration.</indent>\n•<indent=20px>Use the new <b>Meter Valves</b> for precise control of resources in pipes.</indent>"
-msgstr "•<indent=20px>Для облегчения исследований на ранних этапах добавлен <b>MISSING.</b></indent>\n•<indent=20px>Новые <b>дозирующие клапаны</b> помогут контролировать ресурсы в трубах с высокой точностью.</indent>"
+msgid "•<indent=20px>The <b><link=\"OXYGENMASKSTATION\">Oxygen Mask Station</link></b> has been added to aid early-game exploration.</indent>\n•<indent=20px>Use the new <b>Meter Valves</b> for precise control of resources in pipes.</indent>"
+msgstr "•<indent=20px>Для облегчения исследований на ранних этапах добавлена <b><link=\"OXYGENMASKSTATION\">станция кислородных масок</link></b>.</indent>\n•<indent=20px>Новые <b>дозирующие клапаны</b> помогут с высокой точностью контролировать ресурсы в трубах.</indent>"
 
 #. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_FOOD
 msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_FOOD"
@@ -50611,8 +50786,8 @@ msgstr "•<indent=20px>Холодильники стали более эффе�
 
 #. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_SIMULATION
 msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_SIMULATION"
-msgid "•<indent=20px>Many <b>simulation bugs</b> have been fixed.</indent>\n•<indent=20px>This may <b>change the effectiveness</b> of certain contraptions and MISSING. setups.</indent>"
-msgstr "•<indent=20px>Исправлено множество <b>ошибок симулятора</b>.</indent>\n•<indent=20px>Исправления могут <b>изменить эффективность</b> некоторых устройств и настроек MISSING.</indent>"
+msgid "•<indent=20px>Many <b>simulation bugs</b> have been fixed.</indent>\n•<indent=20px>This may <b>change the effectiveness</b> of certain contraptions and <link=\"STEAMTURBINE2\">Steam Turbine</link> setups.</indent>"
+msgstr "•<indent=20px>Исправлено множество <b>ошибок симулятора</b>.</indent>\n•<indent=20px>Исправления могут <b>изменить эффективность</b> некоторых устройств и настроек <link=\"STEAMTURBINE2\">паровой турбины</link>.</indent>"
 
 #. STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_TITLE
 msgctxt "STRINGS.UI.FRONTEND.SAVEUPGRADEWARNINGS.MERGEDOWNCHANGES_TITLE"
@@ -50756,8 +50931,8 @@ msgstr "При попытке получить доступ к месту сох
 
 #. STRINGS.UI.FRONTEND.SUPPORTWARNINGS.WORLD_GEN_FAILURE
 msgctxt "STRINGS.UI.FRONTEND.SUPPORTWARNINGS.WORLD_GEN_FAILURE"
-msgid "A problem occurred while generating a world from this seed:\n{0}. \n\nPlease try again with a different seed."
-msgstr "Во время создания мира по этому числу произошла ошибка:\n{0}.\n\nПожалуйста, повторите попытку с другим числом."
+msgid "A problem occurred while generating a world from this seed:\n{0}.\n\nUnfortunately, not all seeds germinate. Please try again with a different seed."
+msgstr "Во время создания мира из этого семени произошла ошибка:\n{0}.\n\nК сожалению, не все семена прорастают. Пожалуйста, повторите попытку с другим семенем."
 
 #. STRINGS.UI.FRONTEND.SUPPORTWARNINGS.WORLD_GEN_FILES
 msgctxt "STRINGS.UI.FRONTEND.SUPPORTWARNINGS.WORLD_GEN_FILES"
@@ -54209,6 +54384,11 @@ msgctxt "STRINGS.UI.RESOURCESCREEN.CATEGORY_TOOLTIP"
 msgid "Counts all unallocated resources within reach\n------------------\nClick to expand"
 msgstr "Учитывает все нераспределенные ресурсы поблизости\n------------------\nЩелкните, чтобы развернуть"
 
+#. STRINGS.UI.RESOURCESCREEN.CLEAR_ALL
+msgctxt "STRINGS.UI.RESOURCESCREEN.CLEAR_ALL"
+msgid "Unpin all resources"
+msgstr "Открепить все ресурсы"
+
 #. STRINGS.UI.RESOURCESCREEN.CLEAR_NEW_RESOURCES
 msgctxt "STRINGS.UI.RESOURCESCREEN.CLEAR_NEW_RESOURCES"
 msgid "Clear New"
@@ -55934,6 +56114,11 @@ msgctxt "STRINGS.UI.SKILLS_SCREEN.SORT_BY_SKILL_AVAILABLE"
 msgid "Skill Points"
 msgstr "Очки навыков"
 
+#. STRINGS.UI.SPACEARTIFACTS.AMELIASWATCH.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.AMELIASWATCH.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.AMELIASWATCH.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.AMELIASWATCH.DESCRIPTION"
 msgid "It was discovered in a package labeled \"To be entrusted to Dr. Walker\"."
@@ -55979,6 +56164,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.ARTIFACTTIERS.TIER5"
 msgid "Rarity 5"
 msgstr "Редкость 5"
 
+#. STRINGS.UI.SPACEARTIFACTS.BIOLUMROCK.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.BIOLUMROCK.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.BIOLUMROCK.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.BIOLUMROCK.DESCRIPTION"
 msgid "A thriving colony of tiny, microscopic organisms is responsible for giving it its bluish glow."
@@ -55988,6 +56178,11 @@ msgstr "Процветающая колония крохотных микрос�
 msgctxt "STRINGS.UI.SPACEARTIFACTS.BIOLUMROCK.NAME"
 msgid "Bioluminescent Rock"
 msgstr "Биолюминесцентный камень"
+
+#. STRINGS.UI.SPACEARTIFACTS.BLENDER.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.BLENDER.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.BLENDER.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.BLENDER.DESCRIPTION"
@@ -55999,6 +56194,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.BLENDER.NAME"
 msgid "Blender"
 msgstr "Блендер"
 
+#. STRINGS.UI.SPACEARTIFACTS.BRICKPHONE.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.BRICKPHONE.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.BRICKPHONE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.BRICKPHONE.DESCRIPTION"
 msgid "It still works."
@@ -56008,6 +56208,11 @@ msgstr "Все еще работает."
 msgctxt "STRINGS.UI.SPACEARTIFACTS.BRICKPHONE.NAME"
 msgid "Strange Brick"
 msgstr "Странный кирпич"
+
+#. STRINGS.UI.SPACEARTIFACTS.DNAMODEL.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.DNAMODEL.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.DNAMODEL.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.DNAMODEL.DESCRIPTION"
@@ -56019,6 +56224,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.DNAMODEL.NAME"
 msgid "Double Helix Model"
 msgstr "Модель двойной спирали"
 
+#. STRINGS.UI.SPACEARTIFACTS.EGGROCK.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.EGGROCK.ARTIFACT"
+msgid "The words \"Happy Farters Day Dad. Love Macy\" appear on the bottom of this rock, written in a childlish scrawl."
+msgstr "Снизу на камне неловкой детской рукой написано: \"С пнем отца папачка. С любовью Мейси\"."
+
 #. STRINGS.UI.SPACEARTIFACTS.EGGROCK.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.EGGROCK.DESCRIPTION"
 msgid "It's unclear whether this is its naturally occurring shape, or if its appearance as been sculpted."
@@ -56029,6 +56239,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.EGGROCK.NAME"
 msgid "Egg-Shaped Rock"
 msgstr "Камень в форме яйца"
 
+#. STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.DESCRIPTION"
 msgid "Grub Grub"
@@ -56036,8 +56251,13 @@ msgstr "Личинус"
 
 #. STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.NAME
 msgctxt "STRINGS.UI.SPACEARTIFACTS.GRUB_STATUE.NAME"
-msgid "Grub Statue"
-msgstr "Статуя личинки"
+msgid "Grubgrub Statue"
+msgstr "Статуя личинуса"
+
+#. STRINGS.UI.SPACEARTIFACTS.HATCHFOSSIL.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.HATCHFOSSIL.ARTIFACT"
+msgid "The preservation of this skeleton occurred artificially using a technique called the \"The Ali Method\".\n\nIt should be noted that this fossilization technique was pioneered by one Dr. Ashkan Seyed Ali, an employee of Gravitas."
+msgstr "Скелет был сохранен искусственно. Для этого использовался так называемый метод Али.\n\nСтоит отметить, что эту технику фоссилизации впервые применил профессор Ашкан Сейед Али, работавший в Gravitas."
 
 #. STRINGS.UI.SPACEARTIFACTS.HATCHFOSSIL.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.HATCHFOSSIL.DESCRIPTION"
@@ -56049,6 +56269,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.HATCHFOSSIL.NAME"
 msgid "Pristine Fossil"
 msgstr "Древнее ископаемое"
 
+#. STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.DESCRIPTION"
 msgid "This doesn't taste like uranium"
@@ -56058,6 +56283,11 @@ msgstr "Ураном совершенно не отдает"
 msgctxt "STRINGS.UI.SPACEARTIFACTS.HONEY_JAR.NAME"
 msgid "Honey Jar"
 msgstr "Банка меда"
+
+#. STRINGS.UI.SPACEARTIFACTS.MAGMALAMP.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.MAGMALAMP.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.MAGMALAMP.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MAGMALAMP.DESCRIPTION"
@@ -56069,6 +56299,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.MAGMALAMP.NAME"
 msgid "Magma Lamp"
 msgstr "Магма-лампа"
 
+#. STRINGS.UI.SPACEARTIFACTS.MODERNART.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.MODERNART.ARTIFACT"
+msgid "A sculpture of the Neoplastism movement of Modern Art.\n\nGravitas records show that this piece was once used in a presentation called 'Form and Function and the Corporate Aesthetic'."
+msgstr "Неопластическая скульптура, предмет современного искусства.\n\nСогласно записям Gravitas, эта работа использовалась в презентации на тему \"Формы и функции корпоративной эстетики\"."
+
 #. STRINGS.UI.SPACEARTIFACTS.MODERNART.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MODERNART.DESCRIPTION"
 msgid "I don't get it."
@@ -56078,6 +56313,11 @@ msgstr "Я его не понимаю."
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MODERNART.NAME"
 msgid "Modern Art"
 msgstr "Современное искусство"
+
+#. STRINGS.UI.SPACEARTIFACTS.MOLDAVITE.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.MOLDAVITE.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.MOLDAVITE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MOLDAVITE.DESCRIPTION"
@@ -56089,6 +56329,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.MOLDAVITE.NAME"
 msgid "Moldavite"
 msgstr "Молдавит"
 
+#. STRINGS.UI.SPACEARTIFACTS.MOOD_RING.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.MOOD_RING.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.MOOD_RING.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MOOD_RING.DESCRIPTION"
 msgid "How radioactive are you feeling?"
@@ -56098,6 +56343,11 @@ msgstr "Насколько вы радиоактивны?"
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MOOD_RING.NAME"
 msgid "Radiation Mood Ring"
 msgstr "Кольцо радионастроения"
+
+#. STRINGS.UI.SPACEARTIFACTS.MOONMOONMOON.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.MOONMOONMOON.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.MOONMOONMOON.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.MOONMOONMOON.DESCRIPTION"
@@ -56109,6 +56359,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.MOONMOONMOON.NAME"
 msgid "Moonmoonmoon"
 msgstr "Луналунылуны"
 
+#. STRINGS.UI.SPACEARTIFACTS.OBELISK.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.OBELISK.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.OBELISK.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.OBELISK.DESCRIPTION"
 msgid "A rectangular stone piece.\n\nIts function is unclear."
@@ -56118,6 +56373,11 @@ msgstr "Прямоугольный каменный предмет.\n\nПред�
 msgctxt "STRINGS.UI.SPACEARTIFACTS.OBELISK.NAME"
 msgid "Small Obelisk"
 msgstr "Маленький обелиск"
+
+#. STRINGS.UI.SPACEARTIFACTS.OFFICEMUG.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.OFFICEMUG.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.OFFICEMUG.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.OFFICEMUG.DESCRIPTION"
@@ -56129,6 +56389,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.OFFICEMUG.NAME"
 msgid "Office Mug"
 msgstr "Офисная кружка"
 
+#. STRINGS.UI.SPACEARTIFACTS.OKAYXRAY.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.OKAYXRAY.ARTIFACT"
+msgid "The description on this X-ray indicates that it was taken in the Gravitas Medical Facility.\n\nMost likely this X-ray was performed to investigate an injury that occurred within the facility."
+msgstr "Согласно надписи на этом рентгенологическом аппарате, он принадлежал медицинскому отделению Gravitas.\n\nВероятнее всего, рентген использовался для работы с травмами, произошедшими на территории отделения."
+
 #. STRINGS.UI.SPACEARTIFACTS.OKAYXRAY.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.OKAYXRAY.DESCRIPTION"
 msgid "Ew, weird. It has five fingers!"
@@ -56138,6 +56403,11 @@ msgstr "Фу, что это? Почему пять пальцев?!"
 msgctxt "STRINGS.UI.SPACEARTIFACTS.OKAYXRAY.NAME"
 msgid "Old X-Ray"
 msgstr "Старый рентгеновский снимок"
+
+#. STRINGS.UI.SPACEARTIFACTS.ORACLE.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.ORACLE.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.ORACLE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.ORACLE.DESCRIPTION"
@@ -56149,6 +56419,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.ORACLE.NAME"
 msgid "Useless Machine"
 msgstr "Бесполезное устройство"
 
+#. STRINGS.UI.SPACEARTIFACTS.PERCOLATOR.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.PERCOLATOR.ARTIFACT"
+msgid "A coffee percolator with the reminants of a blend of coffee that was a personal favorite of Dr. Hassan Aydem.\n\nHe would specifically reserve the consumption of this particular blend for when he was reviewing research papers on Sunday afternoons."
+msgstr "Кофейный процеживатель с остатками любимого кофе профессора Хассана Айдема.\n\nОн пил кофе по этому рецепту исключительно по воскресеньям за прочтением научных работ."
+
 #. STRINGS.UI.SPACEARTIFACTS.PERCOLATOR.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.PERCOLATOR.DESCRIPTION"
 msgid "Don't drink from it! There was a pacu... IN the percolator!"
@@ -56158,6 +56433,11 @@ msgstr "Не пейте из него! Там была паку... прямо в
 msgctxt "STRINGS.UI.SPACEARTIFACTS.PERCOLATOR.NAME"
 msgid "Percolator"
 msgstr "Процеживатель"
+
+#. STRINGS.UI.SPACEARTIFACTS.PLASMALAMP.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.PLASMALAMP.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.PLASMALAMP.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.PLASMALAMP.DESCRIPTION"
@@ -56169,6 +56449,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.PLASMALAMP.NAME"
 msgid "Plasma Lamp"
 msgstr "Плазма-лампа"
 
+#. STRINGS.UI.SPACEARTIFACTS.RAINBOWEGGROCK.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.RAINBOWEGGROCK.ARTIFACT"
+msgid "The words \"Happy Father's Day, Dad. Love you!\" appear on the bottom of this rock, written in very neat handwriting. The words are surrounded by four hearts drawn in what appears to be a pink gel pen."
+msgstr "Снизу на камне аккуратным почерком написано: \"С днем отца, папочка. Люблю тебя!\" Вокруг розовой гелевой ручкой нарисовано четыре сердечка."
+
 #. STRINGS.UI.SPACEARTIFACTS.RAINBOWEGGROCK.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.RAINBOWEGGROCK.DESCRIPTION"
 msgid "It's unclear whether this is its naturally occurring shape, or if its appearance as been sculpted.\n\nThis one is rainbow colored."
@@ -56179,15 +56464,25 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.RAINBOWEGGROCK.NAME"
 msgid "Egg-Shaped Rock"
 msgstr "Камень в форме яйца"
 
+#. STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.DESCRIPTION"
-msgid "It's pronounced nuclear"
+msgid "It's pronounced nu-clear."
 msgstr "Ядерный там реактор, а не ядреный"
 
 #. STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.NAME
 msgctxt "STRINGS.UI.SPACEARTIFACTS.REACTOR_MODEL.NAME"
 msgid "Model Nuclear Power Plant"
 msgstr "Модель атомной электростанции"
+
+#. STRINGS.UI.SPACEARTIFACTS.ROBOTARM.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.ROBOTARM.ARTIFACT"
+msgid "A commercially available robot arm that has had a significant amount of modifications made to it.\n\nThe initials B.A. appear on one of the fingers."
+msgstr "Доступная для покупки роботизированная рука, которую многократно модифицировали.\n\nОдин из пальцев отмечен инициалами Б. А."
 
 #. STRINGS.UI.SPACEARTIFACTS.ROBOTARM.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.ROBOTARM.DESCRIPTION"
@@ -56199,6 +56494,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.ROBOTARM.NAME"
 msgid "Robot Arm"
 msgstr "Механическая рука"
 
+#. STRINGS.UI.SPACEARTIFACTS.ROCKTORNADO.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.ROCKTORNADO.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.ROCKTORNADO.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.ROCKTORNADO.DESCRIPTION"
 msgid "It's unclear how it formed, although I'm glad it did."
@@ -56208,6 +56508,11 @@ msgstr "Непонятно, как он сформировался, но выш�
 msgctxt "STRINGS.UI.SPACEARTIFACTS.ROCKTORNADO.NAME"
 msgid "Tornado Rock"
 msgstr "Камень в форме торнадо"
+
+#. STRINGS.UI.SPACEARTIFACTS.RUBIKSCUBE.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.RUBIKSCUBE.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.RUBIKSCUBE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.RUBIKSCUBE.DESCRIPTION"
@@ -56219,6 +56524,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.RUBIKSCUBE.NAME"
 msgid "Rubik's Cube"
 msgstr "Кубик Рубика"
 
+#. STRINGS.UI.SPACEARTIFACTS.SANDSTONE.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.SANDSTONE.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.SANDSTONE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.SANDSTONE.DESCRIPTION"
 msgid "A beautiful rock composed of multiple layers of sediment."
@@ -56228,6 +56538,11 @@ msgstr "Красивый камень, образованный из множе�
 msgctxt "STRINGS.UI.SPACEARTIFACTS.SANDSTONE.NAME"
 msgid "Sandstone"
 msgstr "Песчаник"
+
+#. STRINGS.UI.SPACEARTIFACTS.SAXOPHONE.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.SAXOPHONE.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.SAXOPHONE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.SAXOPHONE.DESCRIPTION"
@@ -56239,6 +56554,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.SAXOPHONE.NAME"
 msgid "Mangled Saxophone"
 msgstr "Покореженный саксофон"
 
+#. STRINGS.UI.SPACEARTIFACTS.SHIELDGENERATOR.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.SHIELDGENERATOR.ARTIFACT"
+msgid "The energy field produced by this shield generator completely ignores those light behaviors which are wave-like and focuses instead on its particle behaviors.\n\nThis appears to be possible when light is slowed down until it stops."
+msgstr "Энергетическое поле щитового генератора полностью игнорирует волновое поведение фотонов и фокусируется на них как на частицах.\n\nЭто возможно при замедленном свете до его полной остановки."
+
 #. STRINGS.UI.SPACEARTIFACTS.SHIELDGENERATOR.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.SHIELDGENERATOR.DESCRIPTION"
 msgid "A mechanical prototype capable of producing a small section of shielding."
@@ -56248,6 +56568,11 @@ msgstr "Механический прототип, способный окруж
 msgctxt "STRINGS.UI.SPACEARTIFACTS.SHIELDGENERATOR.NAME"
 msgid "Shield Generator"
 msgstr "Щитовой генератор"
+
+#. STRINGS.UI.SPACEARTIFACTS.SINK.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.SINK.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.SINK.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.SINK.DESCRIPTION"
@@ -56259,6 +56584,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.SINK.NAME"
 msgid "Sink"
 msgstr "Раковина"
 
+#. STRINGS.UI.SPACEARTIFACTS.SOLARSYSTEM.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.SOLARSYSTEM.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.SOLARSYSTEM.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.SOLARSYSTEM.DESCRIPTION"
 msgid "A marvel of the cosmos, inside this display is an entirely self-contained solar system."
@@ -56268,6 +56598,11 @@ msgstr "Космическое чудо: под стеклом скрывает�
 msgctxt "STRINGS.UI.SPACEARTIFACTS.SOLARSYSTEM.NAME"
 msgid "Self-Contained System"
 msgstr "Автономная система"
+
+#. STRINGS.UI.SPACEARTIFACTS.STETHOSCOPE.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.STETHOSCOPE.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.STETHOSCOPE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.STETHOSCOPE.DESCRIPTION"
@@ -56279,6 +56614,11 @@ msgctxt "STRINGS.UI.SPACEARTIFACTS.STETHOSCOPE.NAME"
 msgid "Stethoscope"
 msgstr "Стетоскоп"
 
+#. STRINGS.UI.SPACEARTIFACTS.TEAPOT.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.TEAPOT.ARTIFACT"
+msgid ""
+msgstr ""
+
 #. STRINGS.UI.SPACEARTIFACTS.TEAPOT.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.TEAPOT.DESCRIPTION"
 msgid "A teapot from the depths of space, coated in a thick layer of Neutronium."
@@ -56288,6 +56628,11 @@ msgstr "Чайник из глубин космоса, облепленный т
 msgctxt "STRINGS.UI.SPACEARTIFACTS.TEAPOT.NAME"
 msgid "Encrusted Teapot"
 msgstr "Чайник в камне"
+
+#. STRINGS.UI.SPACEARTIFACTS.VHS.ARTIFACT
+msgctxt "STRINGS.UI.SPACEARTIFACTS.VHS.ARTIFACT"
+msgid ""
+msgstr ""
 
 #. STRINGS.UI.SPACEARTIFACTS.VHS.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.VHS.DESCRIPTION"
@@ -59681,8 +60026,8 @@ msgstr "Нет изученных артефактов"
 
 #. STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN.NO_ARTIFACTS_DISCOVERED_TOOLTIP
 msgctxt "STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN.NO_ARTIFACTS_DISCOVERED_TOOLTIP"
-msgid "A skilled artist can analyze artifacts."
-msgstr "Артефакты может проанализировать умелый художник."
+msgid "A skilled artist can analyze artifacts"
+msgstr "Артефакты может проанализировать умелый художник"
 
 #. STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP
 msgctxt "STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP"
@@ -61841,7 +62186,7 @@ msgstr "<b>{0}</b>"
 
 #. STRINGS.UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.RANGE
 msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.RANGE"
-msgid "    • Potential Range: {0}/1 Kg Fuel ({1})"
+msgid "    • Potential Range: {0}/1 kg Fuel ({1})"
 msgstr "    • Потенциальное расстояние: {0}/1 кг топлива ({1})"
 
 #. STRINGS.UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.MODULESTATCHANGE.SPEED
@@ -61858,6 +62203,46 @@ msgstr "Показатели ракеты во время строительст
 msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.TITLE"
 msgid "Rocket Module"
 msgstr "Ракетный модуль"
+
+#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.AUTOMATION
+msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.AUTOMATION"
+msgid "Automation controlled"
+msgstr "Автоматическое управление"
+
+#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.AUTOMATION_TOOLTIP
+msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.AUTOMATION_TOOLTIP"
+msgid "This setting is managed by automation"
+msgstr "Эта настройка регулируется автоматически"
+
+#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.BUILDING_RESTRICTIONS_LABEL
+msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.BUILDING_RESTRICTIONS_LABEL"
+msgid "Building Usage Restrictions"
+msgstr "Ограничения использования строений"
+
+#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.NONE_RESTRICTION_BUTTON
+msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.NONE_RESTRICTION_BUTTON"
+msgid "None"
+msgstr "Без опыта"
+
+#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.NONE_RESTRICTION_BUTTON_TOOLTIP
+msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.NONE_RESTRICTION_BUTTON_TOOLTIP"
+msgid "Buildings are not restricted."
+msgstr "У строений нет ограничений."
+
+#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.SPACE_RESTRICTION_BUTTON
+msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.SPACE_RESTRICTION_BUTTON"
+msgid "Space Use Only"
+msgstr "Только для космического использования"
+
+#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.SPACE_RESTRICTION_BUTTON_TOOLTIP
+msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.SPACE_RESTRICTION_BUTTON_TOOLTIP"
+msgid "While not in space operation and storage withdrawal of certain buildings are restricted."
+msgstr "Вне космических миссий использование некоторых зданий и извлечение припасов из некоторых хранилищ ограничено."
+
+#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.TITLE
+msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.TITLE"
+msgid "Building Usage Restrictions"
+msgstr "Ограничения использования строений"
 
 #. STRINGS.UI.UISIDESCREENS.ROLESTATION.OPENROLESBUTTON
 msgctxt "STRINGS.UI.UISIDESCREENS.ROLESTATION.OPENROLESBUTTON"
@@ -62711,7 +63096,7 @@ msgstr " г"
 
 #. STRINGS.UI.UNITSUFFIXES.MASS.KILOGRAM
 msgctxt "STRINGS.UI.UNITSUFFIXES.MASS.KILOGRAM"
-msgid " Kg"
+msgid " kg"
 msgstr " кг"
 
 #. STRINGS.UI.UNITSUFFIXES.MASS.MICROGRAM
@@ -63618,6 +64003,26 @@ msgstr "Переместить это строение на новое мест�
 msgctxt "STRINGS.UI.USERMENUACTIONS.RELOCATE.TOOLTIP_OFF"
 msgid "Cancel this relocation order"
 msgstr "Отменить приказ на перемещение"
+
+#. STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.NAME_CONTROLLED
+msgctxt "STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.NAME_CONTROLLED"
+msgid "Controlled"
+msgstr "Ограниченно"
+
+#. STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.NAME_UNCONTROLLED
+msgctxt "STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.NAME_UNCONTROLLED"
+msgid "Uncontrolled"
+msgstr "Неограниченно"
+
+#. STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.TOOLTIP_CONTROLLED
+msgctxt "STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.TOOLTIP_CONTROLLED"
+msgid "This building's operation and storage is controlled by the <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>."
+msgstr "Управление этим зданием и его хранилищем контролируется <link=\"ROCKETCONTROLSTATION\">станцией управления ракетой</link>."
+
+#. STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.TOOLTIP_UNCONTROLLED
+msgctxt "STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.TOOLTIP_UNCONTROLLED"
+msgid "This building is not controlled by the <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>."
+msgstr "Это строение не контролируется <link=\"ROCKETCONTROLSTATION\">станцией управления ракетой</link>."
 
 #. STRINGS.UI.USERMENUACTIONS.SELECTRESEARCH.NAME
 msgctxt "STRINGS.UI.USERMENUACTIONS.SELECTRESEARCH.NAME"
@@ -64799,10 +65204,20 @@ msgctxt "STRINGS.WORLDS.MARSHYMOONLET.NAME"
 msgid "Marshy Asteroid"
 msgstr "Астероид с топью"
 
+#. STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
+msgctxt "STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION"
+msgid "A large-ish partially with a frozen radioactive core.\n\n<smallcaps>While Radioactive Forest Asteroid are largely foresty, they also contain a great deal of rust and ocean.</smallcaps>"
+msgstr "Довольно большой частично замерзший астероид с радиоактивным ядром.\n\n<smallcaps>Помимо огромного количества лесов, на таких астероидах еще очень много ржавчины и океанов.</smallcaps>"
+
+#. STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.NAME
+msgctxt "STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.NAME"
+msgid "Radioactive Forest Asteroid"
+msgstr "Астероид с радиоактивными лесами"
+
 #. STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
 msgctxt "STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION"
-msgid "A large-ish partially frozen world with a radioactive core.\n\n<smallcaps>While Radioactive Swamp Asteroid are largely swampy, they also contain a great deal of rust.</smallcaps>"
-msgstr "Довольно большой частично замерзший астероид с радиоактивным ядром.\n\n<smallcaps>Помимо огромного количества болот, на астероидах с радиоактивными болотами еще очень много ржавчины.</smallcaps>"
+msgid "A large-ish partially frozen world with a radioactive core.\n\n<smallcaps>While Radioactive Swamp Asteroids are largely swampy, they also contain a great deal of rust.</smallcaps>"
+msgstr "Довольно большой частично замерзший астероид с радиоактивным ядром.\n\n<smallcaps>Помимо огромного количества болот, на таких астероидах еще очень много ржавчины.</smallcaps>"
 
 #. STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.NAME
 msgctxt "STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.NAME"
@@ -64901,8 +65316,8 @@ msgstr "Вязкий астероид"
 
 #. STRINGS.WORLDS.REGOLITHMOONLET.DESCRIPTION
 msgctxt "STRINGS.WORLDS.REGOLITHMOONLET.DESCRIPTION"
-msgid "A small, dusty world with plenty of craters.\n\n<smallcaps>Regolith Asteroids have frequent meteor showers</smallcaps>"
-msgstr "Маленький пыльный мир с множеством кратеров. \n\n<smallcaps>На реголитовых астероидах часто бывают метеоритные дожди</smallcaps>"
+msgid "A small, cold world with plenty of craters.\n\n<smallcaps>Regolith Asteroids have frequent meteor showers and are chalk full of Regolith, an incredibly useful filtration material. </smallcaps>"
+msgstr "Маленький холодный астероид со множеством кратеров.\n\n<smallcaps>На реголитовых астероидах часто бывают метеоритные дожди, а также большое количество реголита — чрезвычайно полезного фильтрующего материала.</smallcaps>"
 
 #. STRINGS.WORLDS.REGOLITHMOONLET.NAME
 msgctxt "STRINGS.WORLDS.REGOLITHMOONLET.NAME"
@@ -65123,6 +65538,36 @@ msgstr "Два маленьких мира для разработчиков п�
 msgctxt "STRINGS.WORLDS.TWINMOONLET.NAME"
 msgid "Tiny Twin Asteroid FOR DEVS"
 msgstr "Крохотные астероиды-близнецы ДЛЯ РАЗРАБОТЧИКОВ"
+
+#. STRINGS.WORLDS.VANILLAFORESTDEFAULT.DESCRIPTION
+msgctxt "STRINGS.WORLDS.VANILLAFORESTDEFAULT.DESCRIPTION"
+msgid "A lush location rich in wildlife and life-sustaining resources.\n\n<smallcaps>Establishing a foothold on Verdante will be challenging due to reduced food and oxygen options. However, abundant biological and mineral resources should afford excellent long-term growth.</smallcaps>\n\n"
+msgstr "Зеленая локация, наполненная ресурсами, необходимыми для поддержания жизни.\n\n<smallcaps>Но обосноваться на Изумрудии будет не так-то просто: запасы еды и кислорода ограничены. Зато огромные природные запасы и залежи минералов пригодятся для постепенного развития.</smallcaps>\n\n"
+
+#. STRINGS.WORLDS.VANILLAFORESTDEFAULT.NAME
+msgctxt "STRINGS.WORLDS.VANILLAFORESTDEFAULT.NAME"
+msgid "Verdante"
+msgstr "Изумрудия"
+
+#. STRINGS.WORLDS.VANILLASANDSTONEDEFAULT.DESCRIPTION
+msgctxt "STRINGS.WORLDS.VANILLASANDSTONEDEFAULT.DESCRIPTION"
+msgid "A promising location with a balanced variety of resources.\n\n<smallcaps>Terra meets all the requirements for Duplicant life and holds no surprises. It's an ideal location for a first attempt at establishing a colony.</smallcaps>\n\n"
+msgstr "Многообещающая локация со сбалансированной подборкой ресурсов.\n\n<smallcaps>Терра идеально подходит для существования дубликантов, и на ней невозможно наткнуться на какие-либо сюрпризы. Идеальное место для первой колонии.</smallcaps>\n\n"
+
+#. STRINGS.WORLDS.VANILLASANDSTONEDEFAULT.NAME
+msgctxt "STRINGS.WORLDS.VANILLASANDSTONEDEFAULT.NAME"
+msgid "Terra"
+msgstr "Терра"
+
+#. STRINGS.WORLDS.VANILLASWAMPDEFAULT.DESCRIPTION
+msgctxt "STRINGS.WORLDS.VANILLASWAMPDEFAULT.DESCRIPTION"
+msgid "A large, polluted swamp world.\n\n<smallcaps>Swampy Asteroids are a great mass of frozen slush and wasteland. With a short distance to the surface, inter-world travel can be achieved quickly.</smallcaps>"
+msgstr "Большой, загрязненный мир с болотами.\n\n<smallcaps>Болотистые астероиды состоят из замерзшей воды и пустошей. Учитывая маленькую дистанцию до поверхности, можно очень быстро освоить путешествия по миру.</smallcaps>"
+
+#. STRINGS.WORLDS.VANILLASWAMPDEFAULT.NAME
+msgctxt "STRINGS.WORLDS.VANILLASWAMPDEFAULT.NAME"
+msgid "Swampy Asteroid"
+msgstr "Болотистый астероид"
 
 #. STRINGS.WORLDS.VOLCANIC.DESCRIPTION
 msgctxt "STRINGS.WORLDS.VOLCANIC.DESCRIPTION"

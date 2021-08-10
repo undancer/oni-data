@@ -62,8 +62,11 @@ public class BestFit
 			list.Add(new Rect(position.x, position.y, item.width, item.height));
 			item.SetPosition(position);
 		}
-		result.x += 136;
-		result.y = Math.Max(result.y, 136);
+		if (DlcManager.FeatureClusterSpaceEnabled())
+		{
+			result.x += 136;
+			result.y = Math.Max(result.y, 136);
+		}
 		return result;
 	}
 
