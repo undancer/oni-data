@@ -865,7 +865,7 @@ public class LoadScreen : KModalScreen
 		{
 			if (display != null)
 			{
-				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 474141u, 25);
+				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 474321u, 25);
 			}
 			return false;
 		}
@@ -1144,7 +1144,7 @@ public class LoadScreen : KModalScreen
 		{
 			return true;
 		}
-		return header.buildVersion > 474141;
+		return header.buildVersion > 474321;
 	}
 
 	private static bool IsSaveFromCurrentDLC(SaveGame.GameInfo gameInfo, out string saveDlcName)
@@ -1224,10 +1224,10 @@ public class LoadScreen : KModalScreen
 		SaveGame.GameInfo gameInfo = SaveLoader.LoadHeader(filename, out header);
 		string arg = null;
 		string arg2 = null;
-		if (header.buildVersion > 474141)
+		if (header.buildVersion > 474321)
 		{
 			arg = header.buildVersion.ToString();
-			arg2 = 474141u.ToString();
+			arg2 = 474321u.ToString();
 		}
 		else if (gameInfo.saveMajorVersion < 7)
 		{

@@ -33,7 +33,7 @@ namespace Database
 			iceCloud = new OrbitalData("iceCloud", this, "starmap_ice_cloud_kanim");
 			iceRock = new OrbitalData("iceRock", this, "starmap_ice_kanim");
 			purpleGas = new OrbitalData("purpleGas", this, "starmap_purple_gas_kanim");
-			radioactiveGas = new OrbitalData("radioactiveGas", this, "starmap_radioactive_gas");
+			radioactiveGas = new OrbitalData("radioactiveGas", this, "starmap_radioactive_gas_kanim");
 			rocky = new OrbitalData("rocky", this, "starmap_rocky_kanim");
 			gravitas = new OrbitalData("gravitas", this, "starmap_space_junk_kanim");
 			orbit = new OrbitalData("orbit", this, "starmap_orbit_kanim", "", OrbitalData.OrbitalType.inOrbit, 0f, 0.25f, 0.5f, -350f, 350f, 1.05f, rotatesBehind: false, 0.05f, 4f);
