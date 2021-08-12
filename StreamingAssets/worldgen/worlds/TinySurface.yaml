@@ -1,9 +1,7 @@
 name: STRINGS.WORLDS.TINYSURFACE.NAME
 description: STRINGS.WORLDS.TINYSURFACE.DESCRIPTION
-coordinatePrefix: TNY-F
-difficulty: -1
-tier: -1
 disableWorldTraits: true
+asteroidIcon: asteroid_swamp_rocket_kanim
 
 worldsize:
   X: 32
@@ -24,7 +22,7 @@ defaultsOverrides:
   startingWorldElements: [] # remove the algae check
 
 
-# List all the zone files to load
+# List all the subworld files to load
 subworldFiles:
   - name: subworlds/space/Space
   - name: subworlds/space/SurfaceCrags

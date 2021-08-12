@@ -1,12 +1,11 @@
 name: STRINGS.WORLDS.TINYEMPTY.NAME
 description: STRINGS.WORLDS.TINYEMPTY.DESCRIPTION
-requiredDlcId: EXPANSION1_ID
 menuOrder: 102
+coordinatePrefix: TNY-E-C
 skip: EditorOnly
-coordinatePrefix: TNY-E
 
+numRings: 12
 startWorldIndex: 0 
-numRings: 9
 worldPlacements:
 - world: worlds/TinyEmpty
   allowedRings:

@@ -1,0 +1,95 @@
+using System;
+using System.Runtime.InteropServices;
+
+namespace Epic.OnlineServices.Sessions
+{
+	[StructLayout(LayoutKind.Sequential, Pack = 8)]
+	internal struct ActiveSessionInfoInternal : IDisposable
+	{
+		private int m_ApiVersion;
+
+		[MarshalAs(UnmanagedType.LPStr)]
+		private string m_SessionName;
+
+		private IntPtr m_LocalUserId;
+
+		private OnlineSessionState m_State;
+
+		private IntPtr m_SessionDetails;
+
+		public int ApiVersion
+		{
+			get
+			{
+				int target = Helper.GetDefault<int>();
+				Helper.TryMarshalGet(m_ApiVersion, out target);
+				return target;
+			}
+			set
+			{
+				Helper.TryMarshalSet(ref m_ApiVersion, value);
+			}
+		}
+
+		public string SessionName
+		{
+			get
+			{
+				string target = Helper.GetDefault<string>();
+				Helper.TryMarshalGet(m_SessionName, out target);
+				return target;
+			}
+			set
+			{
+				Helper.TryMarshalSet(ref m_SessionName, value);
+			}
+		}
+
+		public ProductUserId LocalUserId
+		{
+			get
+			{
+				ProductUserId target = Helper.GetDefault<ProductUserId>();
+				Helper.TryMarshalGet(m_LocalUserId, out target);
+				return target;
+			}
+			set
+			{
+				Helper.TryMarshalSet(ref m_LocalUserId, value);
+			}
+		}
+
+		public OnlineSessionState State
+		{
+			get
+			{
+				OnlineSessionState target = Helper.GetDefault<OnlineSessionState>();
+				Helper.TryMarshalGet(m_State, out target);
+				return target;
+			}
+			set
+			{
+				Helper.TryMarshalSet(ref m_State, value);
+			}
+		}
+
+		public SessionDetailsInfoInternal? SessionDetails
+		{
+			get
+			{
+				SessionDetailsInfoInternal? target = Helper.GetDefault<SessionDetailsInfoInternal?>();
+				Helper.TryMarshalGet(m_SessionDetails, out target);
+				return target;
+			}
+			set
+			{
+				Helper.TryMarshalSet(ref m_SessionDetails, value);
+			}
+		}
+
+		public void Dispose()
+		{
+			Helper.TryMarshalDispose(ref m_SessionDetails);
+		}
+	}
+}

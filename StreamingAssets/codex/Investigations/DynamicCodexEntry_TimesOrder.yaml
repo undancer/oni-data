@@ -1,0 +1,23 @@
+id: "TimesOrder"
+title: STRINGS.CODEX.C8_TIMESORDER.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_timesorder
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.C8_TIMESORDER.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.C8_TIMESORDER.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_timesorder
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.C8_TIMESORDER.BODY.CONTAINER1
+          style: Body

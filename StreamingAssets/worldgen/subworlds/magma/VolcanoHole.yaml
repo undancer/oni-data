@@ -1,9 +1,9 @@
 biomeNoise: noise/Generic
 temperatureRange: ExtremelyHot
-minChildCount: 4
+minChildCount: 8
 density:
-  min: 35
-  max: 45
+  min: 20
+  max: 30
 avoidRadius: 50.0
 sampleBehaviour: PoissonDisk
 biomes:
@@ -11,8 +11,6 @@ biomes:
     weight: 1
     #overrides:
     #  massMultiplier: 50
-featureTemplates:
-  feature_geyser_volcanohole: 5
 tags:
   - IgnoreCaveOverride
   - NoGlobalFeatureSpawning

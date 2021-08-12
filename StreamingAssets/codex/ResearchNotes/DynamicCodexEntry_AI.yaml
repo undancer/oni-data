@@ -1,0 +1,23 @@
+id: "AI"
+title: STRINGS.CODEX.B10_AI.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_AI
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B10_AI.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B10_AI.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: notes_AI
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B10_AI.BODY.CONTAINER1
+          style: Body

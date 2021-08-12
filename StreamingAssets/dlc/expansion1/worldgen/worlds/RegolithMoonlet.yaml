@@ -1,0 +1,98 @@
+name: STRINGS.WORLDS.REGOLITHMOONLET.NAME
+description: STRINGS.WORLDS.REGOLITHMOONLET.DESCRIPTION
+nameTable: REGOLITH
+asteroidIcon: asteroid_regolith_moonlet_kanim
+disableWorldTraits: true
+
+worldsize:
+  X: 160
+  Y: 96
+layoutMethod: PowerTree
+
+defaultsOverrides:
+  data:
+    DrawWorldBorderOverVacuum: false
+    DrawWorldBorder: true
+    WorldBorderThickness: 2
+    WorldBorderRange: 1
+    OverworldDensityMin: 15
+    OverworldDensityMax: 15
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+
+# List all the zone files to load
+subworldFiles:
+  - name: subworlds/space/Space
+    overridePower: 1
+  - name: expansion1::subworlds/regolith/BarrenDust
+    overridePower: 1
+  - name: expansion1::subworlds/regolith/DeadOasis
+    overridePower: 1
+  - name: expansion1::subworlds/barren/EmptyCaves
+    overridePower: 1
+  
+fixedTraits:
+  - sunlightVeryVeryVeryHigh
+  - cosmicRadiationMedHigh
+  
+unknownCellsAllowedSubworlds: 
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/regolith/BarrenDust
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 3
+    maxDistance: 3
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/regolith/BarrenDust
+  - tagcommand: DistanceFromTag
+    tag: AtEdge
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/barren/EmptyCaves
+  - tagcommand: DistanceFromTag
+    tag: AtEdge
+    minDistance: 3
+    maxDistance: 3
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/barren/EmptyCaves
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 0
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 0
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/regolith/DeadOasis
+      
+seasons:
+  - RegolithMoonMeteorShowers
+
+worldTemplateRules:
+  - names:
+    - geysers/steam
+    - geysers/hot_steam
+    listRule: TryOne
+    times: 2
+    allowDuplicates: true
+    priority: 50
+    allowedCellsFilter:
+    - command: Replace
+      tagcommand: DistanceFromTag
+      tag: AtDepths
+      minDistance: 0
+      maxDistance: 0
+    - command: IntersectWith
+      zoneTypes: [ FrozenWastes ]
+    

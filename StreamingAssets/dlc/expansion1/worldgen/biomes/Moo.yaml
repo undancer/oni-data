@@ -1,0 +1,40 @@
+TerrainBiomeLookupTable:
+  # keys to remove from in-memory structure when this file is loaded
+  remove: [] 
+  # elements to add from in-memory structure when this file is loaded
+  add:
+    Basic:
+    - content: IgneousRock
+      bandSize: 1.5
+    - content: Granite
+      bandSize: 0.25
+    - content: Chlorine
+      bandSize: 0.5
+    Lacy:
+    - content: Vacuum
+      bandSize: 0.5
+    # - content: Granite
+    #   bandSize: 0.75
+    - content: Chlorine
+      bandSize: 0.5
+    - content: BleachStone
+      bandSize: 0.5
+    - content: Granite
+      bandSize: 0.5
+    Core:
+    - content: SolidCarbonDioxide
+      bandSize: 0.2
+      overrides:
+        massOverride: 8
+    - content: Granite
+      bandSize: 0.3
+    - content: IgneousRock
+      bandSize: 0.3
+    - content: Granite
+      bandSize: 0.15
+    - content: IgneousRock
+      bandSize: 0.2
+    - content: BleachStone
+      bandSize: 0.2
+    - content: SolidChlorine
+      bandSize: 0.3

@@ -26,12 +26,10 @@ data:
   UltraHighSplitDensityMin: 1
   UltraHighSplitDensityMax: 5
   SplitTopAndBottomSitesMaxArea: 3000
-  OverworldDensityMin: 20
-  OverworldDensityMax: 20
+  OverworldDensityMin: 600
+  OverworldDensityMax: 700
   OverworldAvoidRadius: 72.0
-  OverworldSampleBehaviour: PoissonDisk
-  OverworldRelaxIterations: 0
-  OverworldRelaxEnergyMin: 10000.0
+  OverworldSampleBehaviour: UniformHex
   OverworldMinNodes: 5
   OverworldMaxNodes: 200
   DrawWorldBorder: true

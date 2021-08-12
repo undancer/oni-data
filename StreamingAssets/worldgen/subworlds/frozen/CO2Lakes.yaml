@@ -23,37 +23,12 @@ features:
   - type: features/frozen/SandGeode
 tags:
   - IgnoreCaveOverride
-pointsOfInterest:
-   heatsinks_a:
-    - poi_ice_heatsink_a
-    - poi_ice_heatsink_b
-    - poi_ice_heatsink_c
-    - poi_ice_heatsink_d
-   ruins_a:
-    - poi_ice_lab_basement
-    - poi_ice_lab_splitroom
-    - poi_ice_frag_vendingmachine
-    - poi_ice_frag_lockers
-   heatsinks_b:
-    - poi_ice_heatsink_a
-    - poi_ice_heatsink_b
-    - poi_ice_heatsink_c
-    - poi_ice_heatsink_d
-   ruins_b:
-    - poi_ice_lab_basement
-    - poi_ice_lab_splitroom
-    - poi_ice_frag_vendingmachine
-    - poi_ice_frag_lockers
-   heatsinks_c:
-    - poi_ice_heatsink_a
-    - poi_ice_heatsink_b
-    - poi_ice_heatsink_c
-    - poi_ice_heatsink_d
-   ruins_c:
-    - poi_ice_lab_basement
-    - poi_ice_lab_splitroom
-    - poi_ice_frag_vendingmachine
-    - poi_ice_frag_lockers
-# featureTemplates:
-  # feature_geyser_generic: 2
+subworldTemplateRules:
+  - names:
+      - poi/frozen/lab_basement
+      - poi/frozen/lab_splitroom
+      - poi/frozen/frag_vendingmachine
+      - poi/frozen/frag_lockers
+    listRule: TrySome
+    someCount: 3
 zoneType: FrozenWastes

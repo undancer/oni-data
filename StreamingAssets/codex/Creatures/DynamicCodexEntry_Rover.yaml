@@ -1,0 +1,22 @@
+id: "ScoutRover"
+title: STRINGS.CODEX.ROVER.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.ROVER.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.ROVER.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.ROVER.BODY.CONTAINER1
+          style: Body

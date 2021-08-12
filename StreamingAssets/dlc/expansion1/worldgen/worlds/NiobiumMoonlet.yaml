@@ -1,0 +1,90 @@
+name: STRINGS.WORLDS.NIOBIUMMOONLET.NAME
+description: STRINGS.WORLDS.NIOBIUMMOONLET.DESCRIPTION
+nameTable: MAGMA
+asteroidIcon: asteroid_niobium_planet_kanim
+disableWorldTraits: true
+
+worldsize:
+  X: 64
+  Y: 96
+layoutMethod: PowerTree
+
+defaultsOverrides:
+  data:
+    DrawWorldBorderOverVacuum: false
+    DrawWorldBorder: true
+    WorldBorderThickness: 2
+    WorldBorderRange: 1
+    OverworldDensityMin: 15
+    OverworldDensityMax: 15
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+
+# List all the subworld files to load
+subworldFiles:
+  - name: subworlds/space/Space
+  - name: expansion1::subworlds/magma/MagmaSurface
+  - name: expansion1::subworlds/niobium/NiobiumPatch
+    minCount: 2
+    maxCount: 3
+    overridePower: 1.25
+  - name: expansion1::subworlds/magma/BottomSmall
+    minCount: 1
+
+fixedTraits:
+  - sunlightVeryVeryHigh
+  - cosmicRadiationHigh
+
+unknownCellsAllowedSubworlds:
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/magma/MagmaSurface
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 3
+    maxDistance: 3
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/niobium/NiobiumPatch
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 0
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/magma/BottomSmall
+      - expansion1::subworlds/niobium/NiobiumPatch
+
+worldTemplateRules:
+  - names:
+      - expansion1::geysers/molten_niobium
+    listRule: GuaranteeAll
+    priority: 98 # placed later than the mining room since this is easier to fit
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - expansion1::subworlds/niobium/NiobiumPatch
+  - names:
+      - expansion1::poi/genericGravitas/poi_mining_room
+    listRule: GuaranteeAll
+    priority: 99
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - expansion1::subworlds/niobium/NiobiumPatch
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures

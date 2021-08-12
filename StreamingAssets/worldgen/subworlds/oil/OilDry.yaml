@@ -21,8 +21,6 @@ biomes:
     #  massMultiplier: 50
 features:
   - type: features/oilpockets/DiamondClumpSmall
-pointsOfInterest:
 tags:
   - IgnoreCaveOverride
-featureTemplates:
 zoneType: OilField

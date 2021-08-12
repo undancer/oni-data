@@ -1,0 +1,24 @@
+id: "MovedRabbits"
+title: STRINGS.CODEX.B3_MOVEDRABBITS.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_movedrabbits
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B3_MOVEDRABBITS.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.B3_MOVEDRABBITS.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_movedrabbits
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.B3_MOVEDRABBITS.BODY.CONTAINER1
+          style: Body

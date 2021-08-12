@@ -20,6 +20,4 @@ tags:
   - IgnoreCaveOverride
 features:
   - type: features/forest/SmallFrozenLake
-# featureTemplates:
-  # feature_geyser_generic: 2
 zoneType: Forest

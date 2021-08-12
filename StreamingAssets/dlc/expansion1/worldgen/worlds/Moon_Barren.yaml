@@ -1,0 +1,69 @@
+name: STRINGS.WORLDS.MOON_BARREN.NAME
+description: STRINGS.WORLDS.MOON_BARREN.DESCRIPTION
+disableWorldTraits: true
+
+worldsize:
+  X: 96
+  Y: 96
+layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
+#                                in order to use this.
+defaultsOverrides:
+  data:
+    OverworldDensityMin: 10
+    OverworldDensityMax: 10
+    OverworldSampleBehaviour: PoissonDisk
+  defaultMoveTags: 
+  overworldAddTags: 
+
+
+# List all the subworld files to load
+subworldFiles:
+  - name: expansion1::subworlds/moon_barren/BarrenStart
+  - name: expansion1::subworlds/moon_barren/BarrenGranite
+  - name: expansion1::subworlds/moon_barren/SurfaceCrags
+  - name: subworlds/space/Space
+
+startSubworldName: expansion1::subworlds/moon_barren/BarrenStart
+startingBaseTemplate: bases/sandstoneBase
+startingBasePositionHorizontal:
+  min: 0.2
+  max: 0.2
+startingBasePositionVertical:
+  min: 0.2
+  max: 0.7
+
+# Rivers:
+#   - River
+
+# Specify where subworlds can spawn. These rules are processed in order and their effects are cumulative.
+unknownCellsAllowedSubworlds: 
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - subworlds/moon_barren/BarrenGranite
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - subworlds/moon_barren/SurfaceCrags
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 3
+    command: UnionWith
+    subworldNames:
+      - subworlds/space/SurfaceCrags
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 0
+    maxDistance: 1
+    command: ExceptWith
+    subworldNames:
+      - subworlds/space/SurfaceCrags

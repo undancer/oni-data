@@ -11,9 +11,7 @@ biomes:
   - name: biomes/Magma/MagmaVent
     weight: 1
 tags:
-  - ErodePointToBorder
+  - ErodePointToBorderWeak # Base game tuning
   - IgnoreCaveOverride
   - NoGlobalFeatureSpawning
-featureTemplates:
-  feature_geyser_volcanohole: 8
 zoneType: MagmaCore

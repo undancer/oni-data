@@ -4,8 +4,6 @@ TerrainBiomeLookupTable:
   # elements to add from in-memory structure when this file is loaded
   add:
     Basic:
-    # - content: UraniumOre
-    #   bandSize: 0.1
     - content: IronOre
       bandSize: 0.03
     - content: MaficRock
@@ -21,8 +19,6 @@ TerrainBiomeLookupTable:
       overrides:
         massMultiplier: 1.1
     Snowy:
-    # - content: UraniumOre
-    #   bandSize: 0.1
     - content: IronOre
       bandSize: 0.03
     - content: MaficRock
@@ -40,8 +36,6 @@ TerrainBiomeLookupTable:
       bandSize: 0.05
     - content: MaficRock
       bandSize: 0.1
-    # - content: UraniumOre
-    #   bandSize: 0.1
     - content: Rust
       bandSize: 0.35
     - content: CarbonDioxide

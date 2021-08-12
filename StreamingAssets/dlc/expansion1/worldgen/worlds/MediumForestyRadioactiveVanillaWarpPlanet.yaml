@@ -1,0 +1,264 @@
+name: STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.NAME
+description: STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
+nameTable: FOREST
+asteroidIcon: asteroid_vanilla_swamp_warp_kanim
+disableWorldTraits: true
+
+worldsize:
+  X: 160
+  Y: 176
+layoutMethod: PowerTree
+
+fixedTraits:
+  - sunlightMedLow
+  - cosmicRadiationMedHigh
+
+defaultsOverrides:
+  data:
+    DrawWorldBorderOverVacuum: false
+    DrawWorldBorder: true
+    WorldBorderThickness: 3
+    WorldBorderRange: 1
+    OverworldDensityMin: 18
+    OverworldDensityMax: 18
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+    POIPadding: 1
+
+startSubworldName: expansion1::subworlds/forest/ForestWarpStart
+startingBaseTemplate:  expansion1::bases/warpworldForestBase
+startingBasePositionHorizontal:
+  min: 0.475
+  max: 0.525
+startingBasePositionVertical:
+  min: 0.4
+  max: 0.45
+
+# List all the subworld files to load
+subworldFiles:
+  - name: expansion1::subworlds/space/SpaceWithSandyBorder    
+  - name: expansion1::subworlds/radioactive/med_Radioactive #core
+    minCount: 3
+  - name: expansion1::subworlds/radioactive/med_UraniumFields #core
+    minCount: 1
+  - name: expansion1::subworlds/radioactive/med_FrozenUraniumFields #core
+    minCount: 2
+  - name: expansion1::subworlds/frozen/FrozenCore #core
+    minCount: 2
+  - name: expansion1::subworlds/forest/ForestWarpStart # center
+  - name: expansion1::subworlds/forest/med_Forest # ring 1
+  - name: expansion1::subworlds/rust/med_Rust # ring 2/3
+    minCount: 6
+#    maxCount: 6
+  - name: expansion1::subworlds/ocean/med_Ocean #ring 3/ 4/ surface
+    minCount: 6
+    
+unknownCellsAllowedSubworlds: 
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/forest/med_Forest
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 2
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/forest/med_Forest
+      - expansion1::subworlds/rust/med_Rust
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 3
+    maxDistance: 3
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/ocean/med_Ocean
+      - expansion1::subworlds/rust/med_Rust
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 4
+    maxDistance: 4
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/ocean/med_Ocean
+      - expansion1::subworlds/rust/med_Rust
+  - tagcommand: DistanceFromTag # Space with crust
+    tag: AtSurface
+    minDistance: 0
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/space/SpaceWithSandyBorder
+  - tagcommand: DistanceFromTag # Swamp surrounds Start
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/ocean/med_Ocean
+      - expansion1::subworlds/rust/med_Rust
+  - tagcommand: DistanceFromTag # Oil
+    tag: AtDepths
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/radioactive/med_Radioactive
+      - expansion1::subworlds/radioactive/med_UraniumFields
+  - tagcommand: DistanceFromTag # Core
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 0
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/radioactive/med_FrozenUraniumFields
+      - expansion1::subworlds/frozen/FrozenCore
+
+worldTemplateRules:
+  # Frozen Uranium
+  - names:
+      - expansion1::poi/radioactive/uranium_fields_liquid_co2_geyser
+      - expansion1::poi/radioactive/uranium_fields_liquid_co2_geyser_b
+      - expansion1::poi/radioactive/uranium_fields_liquid_co2_geyser_c
+    listRule: GuaranteeSomeTryMore
+    someCount: 1
+    moreCount: 1
+    priority: 100
+    allowExtremeTemperatureOverlap: true # This is acceptable
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [Radioactive]
+      - command: IntersectWith
+        subworldNames:
+          - expansion1::subworlds/radioactive/med_UraniumFields
+          - expansion1::subworlds/radioactive/med_FrozenUraniumFields
+  # Ocean
+  - names:
+      - poi/poi_ocean_geyser_saltwater
+    listRule: GuaranteeOne
+    priority: 100 
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [Ocean]
+  # Gravitas
+  - names:
+    - expansion1::poi/warp/sender
+    - expansion1::poi/warp/receiver
+    listRule: GuaranteeAll
+    priority: 500
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 2
+      - command: IntersectWith
+        zoneTypes: [ Forest, Ocean, Rust ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+#  # Boons
+  - names:
+    - expansion1::poi/boon/bedroom
+    - expansion1::poi/boon/washroom
+    - expansion1::poi/boon/power
+    - expansion1::poi/boon/kitchen
+    listRule: TrySome
+    someCount: 2
+    priority: 50
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtSurface
+        minDistance: 2
+        maxDistance: 2
+      - command: IntersectWith
+        zoneTypes: [ Forest, Rust, Ocean ]
+  - names:
+    - expansion1::poi/boon/bedroom
+    - expansion1::poi/boon/washroom
+    - expansion1::poi/boon/power
+    - expansion1::poi/boon/kitchen
+    - expansion1::poi/boon/well
+    - expansion1::poi/boon/farm
+    listRule: TrySome
+    someCount: 2
+    priority: 50
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 3
+      - command: IntersectWith
+        zoneTypes: [ Forest, Rust, Ocean ]
+  # Curated geysers
+  - names:
+    - expansion1::geysers/molten_aluminum
+    - expansion1::geysers/molten_cobalt
+    - geysers/molten_copper
+    - geysers/molten_gold
+    - geysers/molten_iron
+    - geysers/steam
+    - geysers/hot_steam
+    - geysers/hot_water
+    listRule: TrySome
+    someCount: 3
+    priority: 50
+    allowedCellsFilter:
+    - command: Replace
+      tagcommand: DistanceFromTag
+      tag: AtStart
+      minDistance: 1
+      maxDistance: 99
+    - command: ExceptWith
+      tagcommand: DistanceFromTag
+      tag: AtSurface
+      minDistance: 0
+      maxDistance: 2
+  - names:
+    - geysers/filthy_water
+    - geysers/salt_water
+    - geysers/slush_water
+    - expansion1::geysers/slush_salt_water
+    listRule: TrySome
+    someCount: 1
+    priority: 50
+    allowedCellsFilter:
+    - command: Replace
+      tagcommand: DistanceFromTag
+      tag: AtStart
+      minDistance: 1
+      maxDistance: 99
+    - command: ExceptWith
+      tagcommand: DistanceFromTag
+      tag: AtSurface
+      minDistance: 0
+      maxDistance: 2
+  - names:
+    - geysers/slimy_po2
+    - geysers/methane
+    - geysers/chlorine_gas
+    - geysers/hot_co2
+    - geysers/hot_hydrogen
+    - geysers/hot_po2
+    - expansion1::geysers/liquid_sulfur
+    - geysers/liquid_co2
+    - geysers/small_volcano
+    listRule: TrySome
+    someCount: 2
+    priority: 50
+    allowedCellsFilter:
+    - command: Replace
+      tagcommand: DistanceFromTag
+      tag: AtStart
+      minDistance: 1
+      maxDistance: 99
+    - command: ExceptWith
+      tagcommand: DistanceFromTag
+      tag: AtSurface
+      minDistance: 0
+      maxDistance: 2

@@ -4,5 +4,14 @@ colorHex: F8A22E
 exclusiveWith:
   - traits/GeoDormant
 
-globalFeatureTemplateMods:
-  feature_geyser_generic: 4
+additionalWorldTemplateRules:
+  - names:
+    - geysers/generic
+    listRule: TryOne
+    times: 4
+    ruleId: GenericGeysers
+    allowDuplicates: true
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning

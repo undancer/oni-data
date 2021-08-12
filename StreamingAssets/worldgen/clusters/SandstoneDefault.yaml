@@ -1,7 +1,11 @@
 name: STRINGS.CLUSTER_NAMES.DEFAULT.NAME
 description: STRINGS.CLUSTER_NAMES.DEFAULT.DESCRIPTION
-menuOrder: 0
 coordinatePrefix: SNDST-A
+#forbiddenDlcId: EXPANSION1_ID # Uncomment when we remove the default cluster
+
+difficulty: 0
+menuOrder: 0
+
 startWorldIndex: 0
 worldPlacements:
 - world: worlds/SandstoneDefault

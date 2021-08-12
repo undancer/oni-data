@@ -66,6 +66,10 @@
     "maxToneIndex": 14,
     "firstLastToneSpacing": 3
   },
+  "ClusterMapTravelAnimator+Tuning": {
+    "visualizerTransitionSpeed": 0.5,
+    "visualizerRotationSpeed": 50.0
+  },
   "WattsonMessage+Tuning": {
     "initialOrthographicSize": 20.0
   },
@@ -92,5 +96,12 @@
     "probeSizeStep": 100,
     "estimatedFrameTime": 1.0,
     "loadBalanceThreshold": 0.1
+  },
+  "LaunchableRocketCluster+StatesInstance+Tuning": {
+    "takeoffAccelPower": 4.0,
+    "maxAccelerationDistance": 25.0,
+    "warmupTime": 5.0,
+    "heightSpeedPower": 0.5,
+    "heightSpeedFactor": 1.0
   }
 }

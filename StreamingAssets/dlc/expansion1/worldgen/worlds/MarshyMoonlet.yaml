@@ -1,0 +1,141 @@
+name: STRINGS.WORLDS.MARSHYMOONLET.NAME
+description: STRINGS.WORLDS.MARSHYMOONLET.DESCRIPTION
+nameTable: SWAMP
+asteroidIcon: asteroid_marshy_moonlet_kanim
+disableWorldTraits: true
+
+# Notes:
+# - Marsh/Jungle do not have their default geysers
+
+worldsize:
+  X: 64
+  Y: 96
+layoutMethod: PowerTree
+
+defaultsOverrides:
+  data:
+    DrawWorldBorderOverVacuum: false
+    DrawWorldBorder: true
+    WorldBorderThickness: 2
+    WorldBorderRange: 1
+    OverworldDensityMin: 15
+    OverworldDensityMax: 15
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+    POIPadding: 1
+
+startSubworldName: expansion1::subworlds/marsh/med_HotMarshStart
+startingBaseTemplate: expansion1::poi/sap_tree_room
+startingBasePositionHorizontal:
+  min: 0.35
+  max: 0.65
+startingBasePositionVertical:
+  min: 0.50
+  max: 0.55
+
+# List all the subworld files to load
+subworldFiles:
+  - name: subworlds/space/Space
+  - name: expansion1::subworlds/space/SpaceWithOrganicBorder
+  - name: expansion1::subworlds/marsh/med_HotMarshStart
+  - name: expansion1::subworlds/marsh/med_HotMarshLandingSite
+  - name: expansion1::subworlds/marsh/med_HotMarshInactive
+  - name: expansion1::subworlds/jungle/med_JungleInactive
+    minCount: 1
+  - name: expansion1::subworlds/magma/BottomSmall
+  
+fixedTraits:
+  - sunlightMedHigh
+  - cosmicRadiationMed
+  
+unknownCellsAllowedSubworlds: 
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/marsh/med_HotMarshInactive
+      - expansion1::subworlds/jungle/med_JungleInactive
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag # Space with crust
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/space/SpaceWithOrganicBorder
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/marsh/med_HotMarshLandingSite
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 3
+    maxDistance: 3
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/marsh/med_HotMarshInactive
+      - expansion1::subworlds/jungle/med_JungleInactive
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 0
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/magma/BottomSmall
+
+worldTemplateRules:
+  # Place one tungsten volcano anywhere so at least one spawns
+  - names:
+    - expansion1::geysers/molten_tungsten_compact
+    listRule: GuaranteeAll
+    times: 1
+    priority: 150
+    useRelaxedFiltering: true # Marsh contains a lot of features, this means they can be replaced
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 2
+      - command: ExceptWith
+        zoneTypes: [ Space ]
+  # Try to place tungsten volcanoes in the core
+  - names:
+    - expansion1::geysers/molten_tungsten_exposed_compact
+    listRule: TryOne
+    times: 2
+    allowDuplicates: true
+    priority: 140
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [ MagmaCore ]
+  # Curated Geysers
+  - names:
+    - geysers/slimy_po2
+    - geysers/methane
+    - geysers/chlorine_gas
+    - geysers/hot_co2
+    - geysers/hot_hydrogen
+    - geysers/hot_po2
+    listRule: TryOne
+    times: 2
+    allowDuplicates: true
+    priority: 50
+    useRelaxedFiltering: true # Marsh contains a lot of features, this means they can be replaced
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 99
+      - command: ExceptWith
+        zoneTypes: [ Space ]        
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures

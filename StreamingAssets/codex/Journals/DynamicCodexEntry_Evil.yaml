@@ -1,0 +1,42 @@
+id: "Evil"
+title: STRINGS.CODEX.C01_EVIL.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_evil
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.C01_EVIL.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.C01_EVIL.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_evil
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.C01_EVIL.BODY.CONTAINER1
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_evil
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.C01_EVIL.BODY.CONTAINER2
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_evil
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.C01_EVIL.BODY.CONTAINER3
+          style: Body
+

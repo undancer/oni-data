@@ -1,10 +1,11 @@
 id: "MyLog29"
 title: STRINGS.CODEX.MYLOG.BODY.TELEPORT.TITLE
-
+dlcIds:
+  - "EXPANSION1_ID"
 contentContainers:
 #-----------------------------
   - contentLayout: Vertical
-    lockID: //--TODO
+    lockID: #//--TODO
     content:
       - !CodexText
           stringKey: STRINGS.CODEX.MYLOG.BODY.TELEPORT.TITLE

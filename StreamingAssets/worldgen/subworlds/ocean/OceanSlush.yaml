@@ -17,10 +17,4 @@ biomes:
 tags:
   - IgnoreCaveOverride
   - River
-pointsOfInterest:
-  geysers_a:
-    - poi_ocean_geyser_saltwater
-features:
-  - type: features/ocean/SlushPool
-  - type: features/ocean/SlushPool
 zoneType: Ocean

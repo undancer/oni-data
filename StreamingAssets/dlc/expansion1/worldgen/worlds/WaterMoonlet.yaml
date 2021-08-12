@@ -1,0 +1,137 @@
+name: STRINGS.WORLDS.WATERMOONLET.NAME
+description: STRINGS.WORLDS.WATERMOONLET.DESCRIPTION
+nameTable: WATER
+asteroidIcon: asteroid_water_moonlet_kanim
+disableWorldTraits: true
+
+worldsize:
+  X: 80
+  Y: 174
+layoutMethod: PowerTree
+
+startSubworldName: expansion1::subworlds/aquatic/OpenWaterStart
+startingBaseTemplate: expansion1::bases/waterBase
+startingBasePositionHorizontal:
+  min: 0.3
+  max: 0.7
+startingBasePositionVertical:
+  min: 0.80
+  max: 0.80
+
+defaultsOverrides:
+  data:
+    DrawWorldBorderOverVacuum: false
+    DrawWorldBorder: true
+    WorldBorderThickness: 4
+    WorldBorderRange: 2
+    OverworldDensityMin: 15
+    OverworldDensityMax: 15
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+    POIPadding: 2
+
+subworldFiles:
+  - name: subworlds/space/Space
+  - name: expansion1::subworlds/aquatic/SurfaceBeach
+  - name: expansion1::subworlds/aquatic/OpenWaterStart
+  - name: expansion1::subworlds/aquatic/OpenWater  
+  - name: expansion1::subworlds/aquatic/GraphiteCaves
+  - name: expansion1::subworlds/barren/BarrenCore # placeholder until core is developed further
+  
+fixedTraits:
+  - sunlightHigh
+  - cosmicRadiationMedLow
+  
+unknownCellsAllowedSubworlds:
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/aquatic/OpenWater
+  # Surface
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 2 
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/aquatic/SurfaceBeach
+  # Space
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 0
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  # Above Core     
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 1
+    maxDistance: 1 
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/aquatic/GraphiteCaves
+  # Core
+  - tagcommand: AtTag
+    tag: AtDepths
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/barren/BarrenCore
+
+worldTemplateRules:
+  # OpenWater
+  - names: # Geyser geodes
+    - expansion1::poi/aquatic/dirty_water_geode
+    - expansion1::poi/aquatic/cool_slush_geode
+    - expansion1::poi/aquatic/salt_geyser_geode
+    - expansion1::poi/aquatic/hot_water_geode
+    listRule: TrySome
+    someCount: 2
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - expansion1::subworlds/aquatic/OpenWater
+      - command: ExceptWith
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 2
+  - names: # Large geodes
+    - expansion1::poi/aquatic/large_geode
+    - expansion1::poi/aquatic/large_coal_geode
+    listRule: TryOne
+    someCount: 2
+    priority: 40 # place before others
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - expansion1::subworlds/aquatic/OpenWater
+      - command: ExceptWith
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 2
+  - names: # Smaller geods
+    - expansion1::poi/aquatic/small_oxylite_geode
+    listRule: TrySome
+    someCount: 1 # todo: expand with more
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - expansion1::subworlds/aquatic/OpenWater
+      - command: ExceptWith
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 2
+  - names:
+    - expansion1::poi/genericGravitas/poi_thermo_building
+    listRule: GuaranteeAll
+    priority: 450
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - expansion1::subworlds/aquatic/GraphiteCaves
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures

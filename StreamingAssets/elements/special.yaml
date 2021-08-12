@@ -16,7 +16,8 @@ elements:
     hardness: 0
     molarMass: 0
     lightAbsorptionFactor: 0
-    radiationAbsorptionFactor: 0.5
+    radiationAbsorptionFactor: 0
+    radiationPer1000Mass: 0
     materialCategory: Special
     buildMenuSort: 1
     isDisabled: false
@@ -40,7 +41,8 @@ elements:
     hardness: 0
     molarMass: 0
     lightAbsorptionFactor: 0
-    radiationAbsorptionFactor: 0.5
+    radiationAbsorptionFactor: 0
+    radiationPer1000Mass: 0
     materialCategory: Special
     buildMenuSort: 1
     isDisabled: false
@@ -65,6 +67,7 @@ elements:
     molarMass: 0
     lightAbsorptionFactor: 0
     radiationAbsorptionFactor: 0.5
+    radiationPer1000Mass: 0
     materialCategory: Special
     buildMenuSort: 1
     isDisabled: false

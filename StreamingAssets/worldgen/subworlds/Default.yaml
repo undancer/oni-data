@@ -50,5 +50,4 @@ features:
   - type: features/sedimentary/MediumLake  
 tags:
   - IgnoreCaveOverride
-pointsOfInterest:
 zoneType: Sandstone

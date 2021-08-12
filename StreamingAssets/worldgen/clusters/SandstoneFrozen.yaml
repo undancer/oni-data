@@ -1,8 +1,11 @@
 name: STRINGS.CLUSTER_NAMES.DEFAULT.NAME
 description: STRINGS.CLUSTER_NAMES.DEFAULT.DESCRIPTION
-forbiddenDlcId: EXPANSION1_ID
-menuOrder: 2
 coordinatePrefix: S-FRZ
+forbiddenDlcId: EXPANSION1_ID
+
+difficulty: 2
+menuOrder: 2
+
 startWorldIndex: 0
 worldPlacements:
 - world: worlds/SandstoneFrozen
